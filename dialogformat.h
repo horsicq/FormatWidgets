@@ -1,0 +1,127 @@
+// copyright (c) 2017-2019 hors<horsicq@gmail.com>
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+//
+#ifndef DIALOGFORMAT_H
+#define DIALOGFORMAT_H
+
+#include <QFile>
+#include <QWidget>
+#include <QDialog>
+#include <QTreeWidgetItem>
+#include <QTableWidget>
+#include <QHeaderView>
+#include <QMessageBox>
+#include <QPushButton>
+#include "qlineedithex.h"
+#include "qcomboboxex.h"
+#include "qdatetimeeditx.h"
+
+class DialogFormat : public QDialog
+{
+    Q_OBJECT
+public:
+    struct OPTIONS
+    {
+        QString sBackupFileName;
+        bool bEdited;
+    };
+
+    enum VAL_TYPE
+    {
+        VAL_TYPE_UNKNOWN=0,
+        VAL_TYPE_DATA,
+        VAL_TYPE_FLAGS,
+        VAL_TYPE_RELADDRESS,
+        VAL_TYPE_ADDRESS,
+        VAL_TYPE_OFFSET,
+        VAL_TYPE_SIZE,
+        VAL_TYPE_TEXT
+    };
+
+    struct HEADER_RECORD
+    {
+        int nData;
+        const char *pszName;
+        int nSize;
+        const char *pszType;
+        VAL_TYPE vtype;
+    };
+    struct DIRECTORY_ENTRY_RECORD
+    {
+        int nData;
+        const char *pszName;
+        int nSize[2];
+        const char *pszType[2];
+        VAL_TYPE vtype[2];
+    };
+
+    enum HEADER_COLUMN
+    {
+        HEADER_COLUMN_NAME=0,
+        HEADER_COLUMN_TYPE,
+        HEADER_COLUMN_VALUE,
+        HEADER_COLUMN_INFO
+    };
+
+    enum DIRECTORY_COLUMN
+    {
+        DIRECTORY_COLUMN_NUMBER=0,
+        DIRECTORY_COLUMN_NAME,
+        DIRECTORY_COLUMN_ADDRESS,
+        DIRECTORY_COLUMN_SIZE
+    };
+
+    DialogFormat(QIODevice *pDevice,OPTIONS *pOptions,QWidget *parent = nullptr);
+    ~DialogFormat();
+    QIODevice *getDevice();
+    OPTIONS *getOptions();
+    QTreeWidgetItem *createNewItem(int nUserData, QString sTitle);
+    bool createHeaderTable(int type,QTableWidget *pTableWidget, const HEADER_RECORD *pRecords, QLineEditHEX **ppLineEdits, int nRecordCount,int nPosition=0);
+
+    bool createDirectoryTable(int type,QTableWidget *pTableWidget, const DIRECTORY_ENTRY_RECORD *pRecords, QLineEditHEX **ppLineEdits1,QLineEditHEX **ppLineEdits2, int nRecordCount);
+    bool createSectionTable(int type,QTableWidget *pTableWidget, const HEADER_RECORD *pRecords,int nRecordCount);
+    void setLineEditsReadOnly(QLineEditHEX **ppLineEdits,int nCount,bool bState);
+    void setComboBoxesReadOnly(QComboBoxEx **ppComboBoxes,int nCount,bool bState);
+    void setPushButtonReadOnly(QPushButton **ppPushButtons,int nCount,bool bState);
+    void setDateTimeEditReadOnly(QDateTimeEditX **ppDateTimeEdits,int nCount,bool bState);
+
+    void _blockSignals(QObject **ppObjects,int nCount,bool bState);
+    QComboBoxEx *createComboBox(QTableWidget *pTableWidget, QMap<quint64,QString> mapData, int type, int nData, QComboBoxEx::CBTYPE cbtype,quint64 nMask=0);
+    QDateTimeEditX *createDateTimeEdit(QTableWidget *pTableWidget,int type, int nData,QDateTimeEditX::DT_TYPE dtType);
+    QPushButton *createPushButton(QTableWidget *pTableWidget,int type, int nData,QString sText);
+    int getSymbolWidth();
+    void setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition);
+    virtual bool _setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition)=0;
+    virtual void setReadonly(bool bState)=0;
+    virtual void blockSignals(bool bState)=0;
+    virtual void adjustHeaderTable(int type,QTableWidget *pTableWidget);
+public slots:
+    void hexValueChanged(quint64 nValue);
+    void textValueChanged(QString sText);
+private slots:
+    virtual void reloadData()=0;
+private:
+    void saveBackup();
+private:
+    QIODevice *pDevice;
+    OPTIONS *pOptions;
+};
+
+#endif // DIALOGFORMAT_H
