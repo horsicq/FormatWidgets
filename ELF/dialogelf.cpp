@@ -40,6 +40,8 @@ DialogELF::DialogELF(QIODevice *pDevice, OPTIONS *pOptions, QWidget *parent) :
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_Elf_Ehdr,"Elf_Ehdr"));
 
         ui->treeWidgetNavi->expandAll();
+
+        ui->treeWidgetNavi->setCurrentItem(ui->treeWidgetNavi->topLevelItem(0));
     }
 }
 

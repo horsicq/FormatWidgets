@@ -72,6 +72,8 @@ DialogPE::DialogPE(QIODevice *pDevice,OPTIONS *pOptions, QWidget *parent) :
         }
 
         ui->treeWidgetNavi->expandAll();
+
+        ui->treeWidgetNavi->setCurrentItem(ui->treeWidgetNavi->topLevelItem(0));
     }
 }
 
