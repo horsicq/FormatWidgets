@@ -1089,12 +1089,6 @@ void DialogPE::adjustHeaderTable(int type, QTableWidget *pTableWidget)
         pTableWidget->setColumnWidth(2,nSymbolWidth*14);
         pTableWidget->setColumnWidth(3,nSymbolWidth*22);
         break;
-    case SPE::TYPE_IMAGE_SECTION_HEADER:
-        pTableWidget->setColumnWidth(0,nSymbolWidth*18);
-        pTableWidget->setColumnWidth(1,nSymbolWidth*6);
-        pTableWidget->setColumnWidth(2,nSymbolWidth*14);
-        pTableWidget->setColumnWidth(3,nSymbolWidth*22);
-        break;
     case SPE::TYPE_EXPORT:
         pTableWidget->setColumnWidth(0,nSymbolWidth*18);
         pTableWidget->setColumnWidth(1,nSymbolWidth*6);

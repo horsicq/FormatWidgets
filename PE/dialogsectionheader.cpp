@@ -116,6 +116,21 @@ void DialogSectionHeader::blockSignals(bool bState)
     _blockSignals((QObject **)comboBox,__CB_size,bState);
 }
 
+void DialogSectionHeader::adjustHeaderTable(int type, QTableWidget *pTableWidget)
+{
+    int nSymbolWidth=getSymbolWidth();
+
+    switch(type)
+    {
+    case SPE::TYPE_IMAGE_SECTION_HEADER:
+        pTableWidget->setColumnWidth(0,nSymbolWidth*18);
+        pTableWidget->setColumnWidth(1,nSymbolWidth*6);
+        pTableWidget->setColumnWidth(2,nSymbolWidth*14);
+        pTableWidget->setColumnWidth(3,nSymbolWidth*22);
+        break;
+    }
+}
+
 void DialogSectionHeader::on_checkBoxReadonly_toggled(bool checked)
 {
     setReadonly(checked);
