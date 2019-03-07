@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>770</width>
-    <height>253</height>
+    <width>658</width>
+    <height>349</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -75,6 +75,9 @@
       </column>
      </widget>
      <widget class="QStackedWidget" name="stackedWidgetInfo">
+      <property name="currentIndex">
+       <number>5</number>
+      </property>
       <widget class="QWidget" name="page_IMAGE_DOS_HEADER">
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <property name="spacing">
@@ -110,7 +113,7 @@
            <bool>false</bool>
           </attribute>
           <attribute name="verticalHeaderDefaultSectionSize">
-           <number>20</number>
+           <number>21</number>
           </attribute>
          </widget>
         </item>
@@ -151,7 +154,7 @@
            <bool>false</bool>
           </attribute>
           <attribute name="verticalHeaderDefaultSectionSize">
-           <number>20</number>
+           <number>21</number>
           </attribute>
          </widget>
         </item>
@@ -192,7 +195,7 @@
            <bool>false</bool>
           </attribute>
           <attribute name="verticalHeaderDefaultSectionSize">
-           <number>20</number>
+           <number>21</number>
           </attribute>
          </widget>
         </item>
@@ -233,7 +236,7 @@
            <bool>false</bool>
           </attribute>
           <attribute name="verticalHeaderDefaultSectionSize">
-           <number>20</number>
+           <number>21</number>
           </attribute>
          </widget>
         </item>
@@ -274,7 +277,7 @@
            <bool>false</bool>
           </attribute>
           <attribute name="verticalHeaderDefaultSectionSize">
-           <number>20</number>
+           <number>21</number>
           </attribute>
          </widget>
         </item>
@@ -318,8 +321,18 @@
            <bool>false</bool>
           </attribute>
           <attribute name="verticalHeaderDefaultSectionSize">
-           <number>20</number>
+           <number>21</number>
           </attribute>
+         </widget>
+        </item>
+        <item>
+         <widget class="QHexView" name="widgetSectionHex" native="true">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
          </widget>
         </item>
        </layout>
@@ -362,7 +375,7 @@
            <bool>false</bool>
           </attribute>
           <attribute name="verticalHeaderDefaultSectionSize">
-           <number>20</number>
+           <number>21</number>
           </attribute>
          </widget>
         </item>
@@ -387,7 +400,7 @@
            <bool>false</bool>
           </attribute>
           <attribute name="verticalHeaderDefaultSectionSize">
-           <number>20</number>
+           <number>21</number>
           </attribute>
          </widget>
         </item>
@@ -428,7 +441,7 @@
            <bool>false</bool>
           </attribute>
           <attribute name="verticalHeaderDefaultSectionSize">
-           <number>20</number>
+           <number>21</number>
           </attribute>
          </widget>
         </item>
@@ -453,7 +466,7 @@
            <bool>false</bool>
           </attribute>
           <attribute name="verticalHeaderDefaultSectionSize">
-           <number>20</number>
+           <number>21</number>
           </attribute>
          </widget>
         </item>
@@ -522,7 +535,7 @@
            <bool>false</bool>
           </attribute>
           <attribute name="verticalHeaderDefaultSectionSize">
-           <number>20</number>
+           <number>21</number>
           </attribute>
          </widget>
         </item>
@@ -547,7 +560,7 @@
            <bool>false</bool>
           </attribute>
           <attribute name="verticalHeaderDefaultSectionSize">
-           <number>20</number>
+           <number>21</number>
           </attribute>
          </widget>
         </item>
@@ -558,6 +571,14 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QHexView</class>
+   <extends>QWidget</extends>
+   <header>qhexview.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

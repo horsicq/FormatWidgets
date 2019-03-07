@@ -16,6 +16,11 @@ DEPENDPATH += $$PWD/PE
     include(../Controls/qdatetimeeditx.pri)
 }
 
+!contains(XCONFIG, qhexview) {
+    XCONFIG += qhexview
+    include(../QHexView/qhexview.pri)
+}
+
 HEADERS += \
     $$PWD/dialogformat.h 
 

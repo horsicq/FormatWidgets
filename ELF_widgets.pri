@@ -6,21 +6,6 @@ DEPENDPATH += $$PWD/ELF
     include(../Formats/qelf.pri)
 }
 
-!contains(XCONFIG, qlineedithex) {
-    XCONFIG += qlineedithex
-    include(../Controls/qlineedithex.pri)
-}
-
-!contains(XCONFIG, qcomboboxex) {
-    XCONFIG += qcomboboxex
-    include(../Controls/qcomboboxex.pri)
-}
-
-!contains(XCONFIG, qdatetimeeditx) {
-    XCONFIG += qdatetimeeditx
-    include(../Controls/qdatetimeeditx.pri)
-}
-
 !contains(XCONFIG, Format_widgets) {
     XCONFIG += Format_widgets
     include(Format_widgets.pri)
