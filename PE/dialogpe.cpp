@@ -38,9 +38,12 @@ DialogPE::DialogPE(QIODevice *pDevice,OPTIONS *pOptions, QWidget *parent) :
     memset(pushButton,0,sizeof pushButton);
     memset(dateTimeEdit,0,sizeof dateTimeEdit);
 
+    pSubDeviceSection=nullptr;
+    pSubDeviceOverlay=nullptr;
+
     ui->checkBoxReadonly->setChecked(true);
 
-    QPE pe(pDevice);
+    QPE pe(pDevice,getOptions()->bIsImage);
 
     if(pe.isValid())
     {
@@ -70,9 +73,12 @@ DialogPE::DialogPE(QIODevice *pDevice,OPTIONS *pOptions, QWidget *parent) :
         {
             ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_RELOCS,tr("Relocs")));
         }
+        if(pe.isOverlayPresent())
+        {
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_OVERLAY,tr("Overlay")));
+        }
 
         ui->treeWidgetNavi->expandAll();
-
         ui->treeWidgetNavi->setCurrentItem(ui->treeWidgetNavi->topLevelItem(0));
     }
 }
@@ -92,7 +98,7 @@ bool DialogPE::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
 
     if(getDevice()->isWritable())
     {
-        QPE pe(getDevice());
+        QPE pe(getDevice(),getOptions()->bIsImage);
         if(pe.isValid())
         {
             switch(nStype)
@@ -402,6 +408,8 @@ void DialogPE::setReadonly(bool bState)
     setComboBoxesReadOnly(comboBox,__CB_size,bState);
     setPushButtonReadOnly(pushButton,__PB_size,bState);
     setDateTimeEditReadOnly(dateTimeEdit,__DT_size,bState);
+
+    ui->widgetSectionHex->setReadonly(bState);
 }
 
 void DialogPE::blockSignals(bool bState)
@@ -490,7 +498,7 @@ void DialogPE::widgetAction()
         switch(nNdata)
         {
         case N_IMAGE_OPTIONAL_HEADER::CheckSum:
-            QPE pe(getDevice());
+            QPE pe(getDevice(),getOptions()->bIsImage);
             if(pe.isValid())
             {
                 quint32 nCheckSum=pe.calculateCheckSum();
@@ -525,7 +533,7 @@ void DialogPE::reloadData()
     int nData=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole).toInt();
     ui->stackedWidgetInfo->setCurrentIndex(nData);
 
-    QPE pe(getDevice());
+    QPE pe(getDevice(),getOptions()->bIsImage);
     if(pe.isValid())
     {
         if(nData==SPE::TYPE_IMAGE_DOS_HEADER)
@@ -749,14 +757,19 @@ void DialogPE::reloadData()
 
             ui->tableWidget_Sections->setRowCount(nCount);
 
-
-
 //            record.sName=QString((char *)pList->at(i).Name);
 //            record.sName.resize(qMin(record.sName.length(),S_IMAGE_SIZEOF_SHORT_NAME));
 
             for(int i=0;i<nCount;i++)
             {
-                ui->tableWidget_Sections->setItem(i,0,new QTableWidgetItem(QString::number(i)));
+                QTableWidgetItem *itemNumber=new QTableWidgetItem();
+                itemNumber->setText(QString::number(i));
+                itemNumber->setData(Qt::UserRole+SECTION_DATA_SIZE,listSections.at(i).SizeOfRawData);
+                itemNumber->setData(Qt::UserRole+SECTION_DATA_OFFSET,listSections.at(i).PointerToRawData);
+                itemNumber->setData(Qt::UserRole+SECTION_DATA_ADDRESS,listSections.at(i).VirtualAddress);
+                itemNumber->setData(Qt::UserRole+SECTION_DATA_VSIZE,listSections.at(i).Misc.VirtualSize);
+
+                ui->tableWidget_Sections->setItem(i,0,itemNumber);
 
                 QTableWidgetItem *itemName=new QTableWidgetItem();
                 QString sName=QString((char *)listSections.at(i).Name);
@@ -773,6 +786,11 @@ void DialogPE::reloadData()
                 ui->tableWidget_Sections->setItem(i,N_IMAGE_SECTION_HEADER::NumberOfRelocations+1,  new QTableWidgetItem(QBinary::valueToHex(listSections.at(i).NumberOfRelocations)));
                 ui->tableWidget_Sections->setItem(i,N_IMAGE_SECTION_HEADER::NumberOfLinenumbers+1,  new QTableWidgetItem(QBinary::valueToHex(listSections.at(i).NumberOfLinenumbers)));
                 ui->tableWidget_Sections->setItem(i,N_IMAGE_SECTION_HEADER::Characteristics+1,      new QTableWidgetItem(QBinary::valueToHex(listSections.at(i).Characteristics)));
+            }
+
+            if(nCount)
+            {
+                ui->tableWidget_Sections->setCurrentCell(0,0);
             }
         }
         else if(nData==SPE::TYPE_EXPORT)
@@ -949,6 +967,28 @@ void DialogPE::reloadData()
                 ui->tableWidget_Relocs->selectRow(0);
             }
         }
+        else if(nData==SPE::TYPE_OVERLAY)
+        {
+            if(pSubDeviceOverlay)
+            {
+                pSubDeviceOverlay->close();
+                delete pSubDeviceOverlay;
+            }
+
+            qint64 nOverLayOffset=pe.getOverlayOffset();
+            qint64 nOverlaySize=pe.getOverlaySize();
+
+            pSubDeviceOverlay=new SubDevice(getDevice(),nOverLayOffset,nOverlaySize,this);
+
+            pSubDeviceOverlay->open(getDevice()->openMode());
+
+            QHexView::OPTIONS options={0};
+
+            options.nBaseAddress=nOverLayOffset;
+            options.sBackupFileName=getOptions()->sBackupFileName;
+
+            ui->widgetOverlayHex->setData(pSubDeviceOverlay,&options);
+        }
 
         setReadonly(ui->checkBoxReadonly->isChecked());
     }
@@ -974,7 +1014,7 @@ void DialogPE::loadImportLibrary(int nNumber)
 {
     ui->tableWidget_ImportFunctions->setRowCount(0);
 
-    QPE pe(getDevice());
+    QPE pe(getDevice(),getOptions()->bIsImage);
     if(pe.isValid())
     {
         bool bIs64=pe.is64();
@@ -1021,7 +1061,7 @@ void DialogPE::loadRelocs(qint64 nOffset)
 {
     ui->tableWidget_RelocsPositions->setRowCount(0);
 
-    QPE pe(getDevice());
+    QPE pe(getDevice(),getOptions()->bIsImage);
     if(pe.isValid())
     {
         QList<QPE::RELOCS_POSITION> listRelocsPositions=pe.getRelocsPositions(nOffset);
@@ -1161,4 +1201,39 @@ bool DialogPE::createSectionTable(int type, QTableWidget *pTableWidget, const Di
     pTableWidget->horizontalHeader()->setVisible(true);
 
     return true;
+}
+
+void DialogPE::on_tableWidget_Sections_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
+{
+    if(currentRow!=-1)
+    {
+        qint64 nOffset=ui->tableWidget_Sections->item(currentRow,0)->data(Qt::UserRole+SECTION_DATA_OFFSET).toLongLong();
+        qint64 nSize=ui->tableWidget_Sections->item(currentRow,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
+        qint64 nAddress=ui->tableWidget_Sections->item(currentRow,0)->data(Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
+        qint64 nVSize=ui->tableWidget_Sections->item(currentRow,0)->data(Qt::UserRole+SECTION_DATA_VSIZE).toLongLong();
+
+        if(pSubDeviceSection)
+        {
+            pSubDeviceSection->close();
+            delete pSubDeviceSection;
+        }
+
+        if(getOptions()->bIsImage)
+        {
+            pSubDeviceSection=new SubDevice(getDevice(),nAddress,nVSize,this);
+        }
+        else
+        {
+            pSubDeviceSection=new SubDevice(getDevice(),nOffset,nSize,this);
+        }
+
+        pSubDeviceSection->open(getDevice()->openMode());
+
+        QHexView::OPTIONS options={0};
+
+        options.nBaseAddress=nAddress;
+        options.sBackupFileName=getOptions()->sBackupFileName;
+
+        ui->widgetSectionHex->setData(pSubDeviceSection,&options);
+    }
 }

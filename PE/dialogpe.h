@@ -57,6 +57,8 @@ private slots:
     void on_tableWidget_Relocs_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
 
     bool createSectionTable(int type, QTableWidget *pTableWidget, const DialogFormat::HEADER_RECORD *pRecords, int nRecordCount);
+    void on_tableWidget_Sections_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
+
 private:
     enum CB
     {
@@ -96,6 +98,9 @@ private:
     QDateTimeEditX *dateTimeEdit[__DT_size];
 
     bool bInit[SPE::__TYPE_size];
+
+    SubDevice *pSubDeviceSection;
+    SubDevice *pSubDeviceOverlay;
 };
 
 #endif // DIALOGPE_H

@@ -41,6 +41,7 @@ public:
     {
         QString sBackupFileName;
         bool bEdited;
+        bool bIsImage;
     };
 
     enum VAL_TYPE
@@ -86,6 +87,14 @@ public:
         DIRECTORY_COLUMN_NAME,
         DIRECTORY_COLUMN_ADDRESS,
         DIRECTORY_COLUMN_SIZE
+    };
+
+    enum SECTION_DATA
+    {
+        SECTION_DATA_OFFSET=0,
+        SECTION_DATA_SIZE,
+        SECTION_DATA_ADDRESS,
+        SECTION_DATA_VSIZE
     };
 
     DialogFormat(QIODevice *pDevice,OPTIONS *pOptions,QWidget *parent = nullptr);

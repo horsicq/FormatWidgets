@@ -76,7 +76,7 @@
      </widget>
      <widget class="QStackedWidget" name="stackedWidgetInfo">
       <property name="currentIndex">
-       <number>5</number>
+       <number>10</number>
       </property>
       <widget class="QWidget" name="page_IMAGE_DOS_HEADER">
        <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -563,6 +563,28 @@
            <number>21</number>
           </attribute>
          </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="page_Overlay">
+       <layout class="QVBoxLayout" name="verticalLayout_11">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QHexView" name="widgetOverlayHex" native="true"/>
         </item>
        </layout>
       </widget>

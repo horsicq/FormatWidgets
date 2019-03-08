@@ -38,6 +38,7 @@ namespace SPE
         TYPE_IMPORT,
         TYPE_RESOURCE,
         TYPE_RELOCS,
+        TYPE_OVERLAY,
         __TYPE_size,
         TYPE_IMAGE_SECTION_HEADER,
         TYPE_EXPORT_FUNCTION,
