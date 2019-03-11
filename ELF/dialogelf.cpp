@@ -33,7 +33,7 @@ DialogELF::DialogELF(QIODevice *pDevice, OPTIONS *pOptions, QWidget *parent) :
 
     ui->checkBoxReadonly->setChecked(true);
 
-    QELF elf(pDevice,getOptions()->bIsImage);
+    QELF elf(pDevice,getOptions()->bIsImage,getOptions()->nImageAddress);
 
     if(elf.isValid())
     {
@@ -60,7 +60,7 @@ bool DialogELF::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, i
 
     if(getDevice()->isWritable())
     {
-        QELF elf(getDevice(),getOptions()->bIsImage);
+        QELF elf(getDevice(),getOptions()->bIsImage,getOptions()->nImageAddress);
         if(elf.isValid())
         {
             switch(nStype)
@@ -211,7 +211,7 @@ void DialogELF::reloadData()
     int nData=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole).toInt();
     ui->stackedWidgetInfo->setCurrentIndex(nData);
 
-    QELF elf(getDevice(),getOptions()->bIsImage);
+    QELF elf(getDevice(),getOptions()->bIsImage,getOptions()->nImageAddress);
     if(elf.isValid())
     {
         if(nData==SELF::TYPE_Elf_Ehdr)

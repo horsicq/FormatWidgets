@@ -40,10 +40,11 @@ DialogPE::DialogPE(QIODevice *pDevice,OPTIONS *pOptions, QWidget *parent) :
 
     pSubDeviceSection=nullptr;
     pSubDeviceOverlay=nullptr;
+    pSubDeviceResource=nullptr;
 
     ui->checkBoxReadonly->setChecked(true);
 
-    QPE pe(pDevice,getOptions()->bIsImage);
+    QPE pe(pDevice,getOptions()->bIsImage,getOptions()->nImageAddress);
 
     if(pe.isValid())
     {
@@ -98,7 +99,7 @@ bool DialogPE::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
 
     if(getDevice()->isWritable())
     {
-        QPE pe(getDevice(),getOptions()->bIsImage);
+        QPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageAddress);
         if(pe.isValid())
         {
             switch(nStype)
@@ -498,7 +499,7 @@ void DialogPE::widgetAction()
         switch(nNdata)
         {
         case N_IMAGE_OPTIONAL_HEADER::CheckSum:
-            QPE pe(getDevice(),getOptions()->bIsImage);
+            QPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageAddress);
             if(pe.isValid())
             {
                 quint32 nCheckSum=pe.calculateCheckSum();
@@ -533,7 +534,7 @@ void DialogPE::reloadData()
     int nData=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole).toInt();
     ui->stackedWidgetInfo->setCurrentIndex(nData);
 
-    QPE pe(getDevice(),getOptions()->bIsImage);
+    QPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageAddress);
     if(pe.isValid())
     {
         if(nData==SPE::TYPE_IMAGE_DOS_HEADER)
@@ -764,6 +765,7 @@ void DialogPE::reloadData()
             {
                 QTableWidgetItem *itemNumber=new QTableWidgetItem();
                 itemNumber->setText(QString::number(i));
+
                 itemNumber->setData(Qt::UserRole+SECTION_DATA_SIZE,listSections.at(i).SizeOfRawData);
                 itemNumber->setData(Qt::UserRole+SECTION_DATA_OFFSET,listSections.at(i).PointerToRawData);
                 itemNumber->setData(Qt::UserRole+SECTION_DATA_ADDRESS,listSections.at(i).VirtualAddress);
@@ -861,6 +863,12 @@ void DialogPE::reloadData()
         }
         else if(nData==SPE::TYPE_RESOURCE)
         {
+            if(pSubDeviceResource)
+            {
+                pSubDeviceResource->close();
+                delete pSubDeviceResource;
+            }
+
             ui->treeWidgetResource->clear();
 
             QPE::RESOURCE_HEADER rh=pe.getResourceHeader();
@@ -932,6 +940,10 @@ void DialogPE::reloadData()
                                 sRecordText=QString("%1").arg(record.rin.nID);
                             }
                             pRecord->setText(0,sRecordText);
+
+                            // TODO
+                            pRecord->setData(0,Qt::UserRole+SECTION_DATA_SIZE,record.data_entry.Size);
+                            pRecord->setData(0,Qt::UserRole+SECTION_DATA_OFFSET,record.data_entry.OffsetToData);
                         }
                     }
                 }
@@ -979,7 +991,6 @@ void DialogPE::reloadData()
             qint64 nOverlaySize=pe.getOverlaySize();
 
             pSubDeviceOverlay=new SubDevice(getDevice(),nOverLayOffset,nOverlaySize,this);
-
             pSubDeviceOverlay->open(getDevice()->openMode());
 
             QHexView::OPTIONS options={0};
@@ -1014,7 +1025,7 @@ void DialogPE::loadImportLibrary(int nNumber)
 {
     ui->tableWidget_ImportFunctions->setRowCount(0);
 
-    QPE pe(getDevice(),getOptions()->bIsImage);
+    QPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageAddress);
     if(pe.isValid())
     {
         bool bIs64=pe.is64();
@@ -1061,7 +1072,7 @@ void DialogPE::loadRelocs(qint64 nOffset)
 {
     ui->tableWidget_RelocsPositions->setRowCount(0);
 
-    QPE pe(getDevice(),getOptions()->bIsImage);
+    QPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageAddress);
     if(pe.isValid())
     {
         QList<QPE::RELOCS_POSITION> listRelocsPositions=pe.getRelocsPositions(nOffset);
@@ -1218,6 +1229,7 @@ void DialogPE::on_tableWidget_Sections_currentCellChanged(int currentRow, int cu
             delete pSubDeviceSection;
         }
 
+        // TODO Addresses!!!
         if(getOptions()->bIsImage)
         {
             pSubDeviceSection=new SubDevice(getDevice(),nAddress,nVSize,this);
@@ -1236,4 +1248,13 @@ void DialogPE::on_tableWidget_Sections_currentCellChanged(int currentRow, int cu
 
         ui->widgetSectionHex->setData(pSubDeviceSection,&options);
     }
+}
+
+void DialogPE::on_treeWidgetResource_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
+{
+    // TODO
+//    if(current->data(0,Qt::UserRole))
+//    {
+
+//    }
 }

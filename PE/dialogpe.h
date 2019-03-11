@@ -59,6 +59,8 @@ private slots:
     bool createSectionTable(int type, QTableWidget *pTableWidget, const DialogFormat::HEADER_RECORD *pRecords, int nRecordCount);
     void on_tableWidget_Sections_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
 
+    void on_treeWidgetResource_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
+
 private:
     enum CB
     {
@@ -101,6 +103,7 @@ private:
 
     SubDevice *pSubDeviceSection;
     SubDevice *pSubDeviceOverlay;
+    SubDevice *pSubDeviceResource;
 };
 
 #endif // DIALOGPE_H

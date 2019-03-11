@@ -42,6 +42,7 @@ public:
         QString sBackupFileName;
         bool bEdited;
         bool bIsImage;
+        qint64 nImageAddress;
     };
 
     enum VAL_TYPE

@@ -76,7 +76,7 @@
      </widget>
      <widget class="QStackedWidget" name="stackedWidgetInfo">
       <property name="currentIndex">
-       <number>10</number>
+       <number>8</number>
       </property>
       <widget class="QWidget" name="page_IMAGE_DOS_HEADER">
        <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -473,7 +473,7 @@
        </layout>
       </widget>
       <widget class="QWidget" name="page_Resource">
-       <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <layout class="QVBoxLayout" name="verticalLayout_12">
         <property name="leftMargin">
          <number>0</number>
         </property>
@@ -496,6 +496,16 @@
             <string notr="true">1</string>
            </property>
           </column>
+         </widget>
+        </item>
+        <item>
+         <widget class="QHexView" name="widgetResourceHex" native="true">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
          </widget>
         </item>
        </layout>
