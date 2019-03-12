@@ -21,7 +21,7 @@
 #ifndef PE_DEFS_H
 #define PE_DEFS_H
 
-#include "../dialogformat.h"
+#include "../formatwidget.h"
 #include "qpe.h"
 
 namespace SPE
@@ -86,7 +86,7 @@ namespace N_IMAGE_DOS_HEADER
         __data_size
     };
 
-    extern const DialogFormat::HEADER_RECORD records[__data_size];
+    extern const FormatWidget::HEADER_RECORD records[__data_size];
 }
 
 namespace N_IMAGE_NT_HEADERS
@@ -97,7 +97,7 @@ namespace N_IMAGE_NT_HEADERS
         __data_size
     };
 
-    extern const DialogFormat::HEADER_RECORD records[__data_size];
+    extern const FormatWidget::HEADER_RECORD records[__data_size];
 }
 
 namespace N_IMAGE_FILE_HEADER
@@ -114,7 +114,7 @@ namespace N_IMAGE_FILE_HEADER
         __data_size
     };
 
-    extern const DialogFormat::HEADER_RECORD records[__data_size];
+    extern const FormatWidget::HEADER_RECORD records[__data_size];
 }
 
 namespace N_IMAGE_OPTIONAL_HEADER
@@ -154,8 +154,8 @@ namespace N_IMAGE_OPTIONAL_HEADER
         __data_size
     };
 
-    extern const DialogFormat::HEADER_RECORD records32[__data_size];
-    extern const DialogFormat::HEADER_RECORD records64[__data_size];
+    extern const FormatWidget::HEADER_RECORD records32[__data_size];
+    extern const FormatWidget::HEADER_RECORD records64[__data_size];
 }
 
 namespace N_IMAGE_DIRECORIES
@@ -181,7 +181,7 @@ namespace N_IMAGE_DIRECORIES
         __data_size
     };
 
-    extern const DialogFormat::DIRECTORY_ENTRY_RECORD records[__data_size];
+    extern const FormatWidget::DIRECTORY_ENTRY_RECORD records[__data_size];
 }
 
 namespace N_IMAGE_SECTION_HEADER
@@ -201,7 +201,7 @@ namespace N_IMAGE_SECTION_HEADER
         __data_size
     };
 
-    extern const DialogFormat::HEADER_RECORD records[__data_size+1];
+    extern const FormatWidget::HEADER_RECORD records[__data_size+1];
 }
 
 namespace N_IMAGE_EXPORT
@@ -222,7 +222,7 @@ namespace N_IMAGE_EXPORT
         __data_size
     };
 
-    extern const DialogFormat::HEADER_RECORD records[__data_size];
+    extern const FormatWidget::HEADER_RECORD records[__data_size];
 }
 
 namespace N_IMAGE_EXPORT_FUNCTION
@@ -235,7 +235,7 @@ namespace N_IMAGE_EXPORT_FUNCTION
         __data_size
     };
 
-    extern const DialogFormat::HEADER_RECORD records[__data_size];
+    extern const FormatWidget::HEADER_RECORD records[__data_size];
 }
 
 namespace N_IMAGE_IMPORT
@@ -250,7 +250,7 @@ namespace N_IMAGE_IMPORT
         __data_size
     };
 
-    extern const DialogFormat::HEADER_RECORD records[__data_size];
+    extern const FormatWidget::HEADER_RECORD records[__data_size];
 }
 
 namespace N_IMAGE_IMPORT_FUNCTION
@@ -263,7 +263,7 @@ namespace N_IMAGE_IMPORT_FUNCTION
         __data_size
     };
 
-    extern const DialogFormat::HEADER_RECORD records32[__data_size];
+    extern const FormatWidget::HEADER_RECORD records32[__data_size];
 }
 
 namespace N_IMAGE_RELOCS
@@ -275,7 +275,7 @@ namespace N_IMAGE_RELOCS
         __data_size
     };
 
-    extern const DialogFormat::HEADER_RECORD records[__data_size];
+    extern const FormatWidget::HEADER_RECORD records[__data_size];
 }
 
 namespace N_IMAGE_RELOCS_POSITION
@@ -286,7 +286,7 @@ enum DATA
     __data_size
 };
 
-extern const DialogFormat::HEADER_RECORD records[__data_size];
+extern const FormatWidget::HEADER_RECORD records[__data_size];
 }
 
 #endif

@@ -1,7 +1,7 @@
 #ifndef ELF_DEFS_H
 #define ELF_DEFS_H
 
-#include "../dialogformat.h"
+#include "../formatwidget.h"
 #include "qelf.h"
 
 namespace SELF
@@ -51,8 +51,8 @@ namespace N_Elf_Ehdr
         __data_size
     };
 
-    extern const DialogFormat::HEADER_RECORD records32[__data_size];
-    extern const DialogFormat::HEADER_RECORD records64[__data_size];
+    extern const FormatWidget::HEADER_RECORD records32[__data_size];
+    extern const FormatWidget::HEADER_RECORD records64[__data_size];
 }
 
 #endif // ELF_DEFS_H
