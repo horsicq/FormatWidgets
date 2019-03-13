@@ -26,6 +26,9 @@
 #include <QStandardItemModel>
 #include <QSortFilterProxyModel>
 #include <QFileDialog>
+#include <QMenu>
+#include <QApplication>
+#include <QClipboard>
 #include "dialogsearchstrings.h"
 
 namespace Ui {
@@ -37,16 +40,20 @@ class SearchStringsWidget : public QWidget
     Q_OBJECT
 
 public:
-
     explicit SearchStringsWidget(QWidget *parent = nullptr);
     ~SearchStringsWidget();
-    void setData(QIODevice *pDevice,SearchStrings::OPTIONS *pOptions=nullptr);
+    void setData(QIODevice *pDevice, SearchStrings::OPTIONS *pOptions=nullptr, bool bAuto=false);
 
 private slots:
     void on_pushButtonSave_clicked();
     void on_pushButtonSearch_clicked();
     void on_lineEditFilter_textChanged(const QString &arg1);
     void filter(QString sString);
+    void on_tableViewResult_customContextMenuRequested(const QPoint &pos);
+    void _copyString();
+    void _copyAddress();
+    void _copySize();
+    void search();
 private:
     Ui::SearchStringsWidget *ui;
     QIODevice *pDevice;

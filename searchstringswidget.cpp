@@ -40,7 +40,7 @@ SearchStringsWidget::~SearchStringsWidget()
     delete ui;
 }
 
-void SearchStringsWidget::setData(QIODevice *pDevice, SearchStrings::OPTIONS *pOptions)
+void SearchStringsWidget::setData(QIODevice *pDevice, SearchStrings::OPTIONS *pOptions, bool bAuto)
 {
     this->pDevice=pDevice;
     this->pOptions=pOptions;
@@ -70,6 +70,11 @@ void SearchStringsWidget::setData(QIODevice *pDevice, SearchStrings::OPTIONS *pO
                                         .arg(nSize,8,16,QChar('0'));
 
     ui->labelInfo->setText(sInfo);
+
+    if(bAuto)
+    {
+        search();
+    }
 }
 
 void SearchStringsWidget::on_pushButtonSave_clicked()
@@ -107,6 +112,75 @@ void SearchStringsWidget::on_pushButtonSave_clicked()
 }
 
 void SearchStringsWidget::on_pushButtonSearch_clicked()
+{
+    search();
+}
+
+void SearchStringsWidget::on_lineEditFilter_textChanged(const QString &arg1)
+{
+    filter(arg1);
+}
+
+void SearchStringsWidget::filter(QString sString)
+{
+    if(sString!="")
+    {
+        pFilter->setFilterRegExp(sString);
+        pFilter->setFilterCaseSensitivity(Qt::CaseInsensitive);
+        pFilter->setFilterKeyColumn(3);
+    }
+}
+
+void SearchStringsWidget::on_tableViewResult_customContextMenuRequested(const QPoint &pos)
+{
+    QMenu contextMenu(this);
+
+    QAction actionCopyString(tr("Copy string"),this);
+    connect(&actionCopyString,SIGNAL(triggered()),this,SLOT(_copyString()));
+    contextMenu.addAction(&actionCopyString);
+
+    QAction actionCopyAddress(tr("Copy ")+(nBaseAddress?(tr("address")):(tr("offset"))),this);
+    connect(&actionCopyAddress,SIGNAL(triggered()),this,SLOT(_copyAddress()));
+    contextMenu.addAction(&actionCopyAddress);
+
+    QAction actionCopySize(tr("Copy size"),this);
+    connect(&actionCopySize,SIGNAL(triggered()),this,SLOT(_copySize()));
+    contextMenu.addAction(&actionCopySize);
+
+    contextMenu.exec(ui->tableViewResult->viewport()->mapToGlobal(pos));
+}
+
+void SearchStringsWidget::_copyString()
+{
+    int nRow=ui->tableViewResult->currentIndex().row();
+
+    if((nRow!=-1)&&(pModel))
+    {
+        QApplication::clipboard()->setText(pModel->item(nRow,3)->text());
+    }
+}
+
+void SearchStringsWidget::_copyAddress()
+{
+    int nRow=ui->tableViewResult->currentIndex().row();
+
+    if((nRow!=-1)&&(pModel))
+    {
+        QApplication::clipboard()->setText(pModel->item(nRow,0)->text());
+    }
+}
+
+void SearchStringsWidget::_copySize()
+{
+    int nRow=ui->tableViewResult->currentIndex().row();
+
+    if((nRow!=-1)&&(pModel))
+    {
+        QApplication::clipboard()->setText(pModel->item(nRow,1)->text());
+    }
+}
+
+void SearchStringsWidget::search()
 {
     if(pDevice)
     {
@@ -158,20 +232,5 @@ void SearchStringsWidget::on_pushButtonSearch_clicked()
         ui->tableViewResult->setColumnWidth(0,120);
         ui->tableViewResult->setColumnWidth(1,60);
         ui->tableViewResult->setColumnWidth(2,30);
-    }
-}
-
-void SearchStringsWidget::on_lineEditFilter_textChanged(const QString &arg1)
-{
-    filter(arg1);
-}
-
-void SearchStringsWidget::filter(QString sString)
-{
-    if(sString!="")
-    {
-        pFilter->setFilterRegExp(sString);
-        pFilter->setFilterCaseSensitivity(Qt::CaseInsensitive);
-        pFilter->setFilterKeyColumn(3);
     }
 }
