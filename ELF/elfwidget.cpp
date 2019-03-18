@@ -58,6 +58,9 @@ void ELFWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
     {
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_Elf_Ehdr,"Elf_Ehdr"));
 
+        // TODO Sections
+        // TODO Programs
+
         ui->treeWidgetNavi->expandAll();
 
         ui->treeWidgetNavi->setCurrentItem(ui->treeWidgetNavi->topLevelItem(0));

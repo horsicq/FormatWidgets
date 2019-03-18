@@ -81,7 +81,7 @@ void SearchStringsWidget::on_pushButtonSave_clicked()
 {
     if(pModel)
     {
-        QString sFileName=QFileDialog::getSaveFileName(this, tr("Save file..."),"Strings.txt", tr("Text files (*.txt);;All files (*)"));
+        QString sFileName=QFileDialog::getSaveFileName(this, tr("Save file"),QString("%1.txt").arg(tr("Strings")), QString("%1 (*.txt);;%2 (*)").arg(tr("Text files")).arg(tr("All files")));
 
         if(!sFileName.isEmpty())
         {
