@@ -54,6 +54,7 @@ private slots:
     void _copyAddress();
     void _copySize();
     void search();
+
 private:
     Ui::SearchStringsWidget *ui;
     QIODevice *pDevice;

@@ -95,6 +95,7 @@ public:
         SECTION_DATA_OFFSET=0,
         SECTION_DATA_SIZE,
         SECTION_DATA_ADDRESS,
+        SECTION_DATA_RELADDRESS,
         SECTION_DATA_VSIZE
     };
 
