@@ -1275,9 +1275,9 @@ void PEWidget::on_tableWidget_Sections_currentCellChanged(int currentRow, int cu
 
 void PEWidget::on_treeWidgetResource_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
 {
-    // pRecord->setData(0,Qt::UserRole+SECTION_DATA_SIZE,record.data_entry.Size);
     if(current)
     {
+        // TODO more info in side widget
         if(current->data(0,Qt::UserRole+SECTION_DATA_SIZE).toLongLong())
         {
             qint64 nOffset=current->data(0,Qt::UserRole+SECTION_DATA_OFFSET).toLongLong();
