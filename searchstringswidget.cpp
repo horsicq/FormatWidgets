@@ -28,7 +28,6 @@ SearchStringsWidget::SearchStringsWidget(QWidget *parent) :
     ui->setupUi(this);
     pDevice=nullptr;
     pOptions=nullptr;
-
     pFilter=new QSortFilterProxyModel(this);
     nAddressWidth=8;
     nBaseAddress=0;
