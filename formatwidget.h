@@ -125,13 +125,17 @@ public:
     virtual void setReadonly(bool bState)=0;
     virtual void blockSignals(bool bState)=0;
     virtual void adjustHeaderTable(int type,QTableWidget *pTableWidget);
+
 public slots:
     void hexValueChanged(quint64 nValue);
     void textValueChanged(QString sText);
+
 private slots:
     virtual void reloadData()=0;
+
 private:
     void saveBackup();
+
 private:
     QIODevice *pDevice;
     OPTIONS *pOptions;
