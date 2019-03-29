@@ -138,7 +138,7 @@ void SearchStringsWidget::on_tableViewResult_customContextMenuRequested(const QP
     connect(&actionCopyString,SIGNAL(triggered()),this,SLOT(_copyString()));
     contextMenu.addAction(&actionCopyString);
 
-    QAction actionCopyAddress(tr("Copy ")+(nBaseAddress?(tr("Address")):(tr("Offset"))),this);
+    QAction actionCopyAddress(QString("%1 %2").arg(tr("Copy")).arg((nBaseAddress?(tr("Address")):(tr("Offset")))),this);
     connect(&actionCopyAddress,SIGNAL(triggered()),this,SLOT(_copyAddress()));
     contextMenu.addAction(&actionCopyAddress);
 
