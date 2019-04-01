@@ -42,6 +42,20 @@
       </widget>
      </item>
      <item>
+      <widget class="QCheckBox" name="checkBoxAnsi">
+       <property name="text">
+        <string>ANSI</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBoxUnicode">
+       <property name="text">
+        <string>Unicode</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="pushButtonSearch">
        <property name="text">
         <string>Search</string>

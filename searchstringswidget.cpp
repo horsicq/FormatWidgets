@@ -32,6 +32,9 @@ SearchStringsWidget::SearchStringsWidget(QWidget *parent) :
     nAddressWidth=8;
     nBaseAddress=0;
     pModel=nullptr;
+
+    ui->checkBoxAnsi->setChecked(true);
+    ui->checkBoxUnicode->setChecked(true);
 }
 
 SearchStringsWidget::~SearchStringsWidget()
@@ -185,50 +188,56 @@ void SearchStringsWidget::search()
     {
         ui->lineEditFilter->clear();
 
-        QList<SearchStrings::RECORD> listRecords;
-        DialogSearchStrings ds(this);
-        ds.process(pDevice,&listRecords,pOptions);
-        ds.exec();
+        pOptions->bSearchAnsi=ui->checkBoxAnsi->isChecked();
+        pOptions->bSearchUnicode=ui->checkBoxUnicode->isChecked();
 
-        int nCount=listRecords.count();
-
-        pModel=new QStandardItemModel(nCount,4);
-
-        pModel->setHeaderData(0,Qt::Horizontal,nBaseAddress?(tr("Address")):(tr("Offset")));
-        pModel->setHeaderData(1,Qt::Horizontal,tr("Size"));
-        pModel->setHeaderData(2,Qt::Horizontal,tr("Type"));
-        pModel->setHeaderData(3,Qt::Horizontal,tr("String"));
-
-        for(int i=0;i<nCount;i++)
+        if(pOptions->bSearchAnsi||pOptions->bSearchUnicode)
         {
-            SearchStrings::RECORD record=listRecords.at(i);
+            QList<SearchStrings::RECORD> listRecords;
+            DialogSearchStrings ds(this);
+            ds.process(pDevice,&listRecords,pOptions);
+            ds.exec();
 
-            QStandardItem *pTypeAddress=new QStandardItem;
-            pTypeAddress->setText(QString("%1").arg(record.nOffset,nAddressWidth,16,QChar('0')));
-            pTypeAddress->setTextAlignment(Qt::AlignRight);
-            pModel->setItem(i,0,pTypeAddress);
+            int nCount=listRecords.count();
 
-            QStandardItem *pTypeSize=new QStandardItem;
-            pTypeSize->setText(QString("%1").arg(record.nSize,8,16,QChar('0')));
-            pTypeSize->setTextAlignment(Qt::AlignRight);
-            pModel->setItem(i,1,pTypeSize);
+            pModel=new QStandardItemModel(nCount,4);
 
-            QStandardItem *pTypeItem=new QStandardItem;
-            if(record.recordType==SearchStrings::RECORD_TYPE_ANSI)
+            pModel->setHeaderData(0,Qt::Horizontal,nBaseAddress?(tr("Address")):(tr("Offset")));
+            pModel->setHeaderData(1,Qt::Horizontal,tr("Size"));
+            pModel->setHeaderData(2,Qt::Horizontal,tr("Type"));
+            pModel->setHeaderData(3,Qt::Horizontal,tr("String"));
+
+            for(int i=0;i<nCount;i++)
             {
-                pTypeItem->setText("A");
+                SearchStrings::RECORD record=listRecords.at(i);
+
+                QStandardItem *pTypeAddress=new QStandardItem;
+                pTypeAddress->setText(QString("%1").arg(record.nOffset,nAddressWidth,16,QChar('0')));
+                pTypeAddress->setTextAlignment(Qt::AlignRight);
+                pModel->setItem(i,0,pTypeAddress);
+
+                QStandardItem *pTypeSize=new QStandardItem;
+                pTypeSize->setText(QString("%1").arg(record.nSize,8,16,QChar('0')));
+                pTypeSize->setTextAlignment(Qt::AlignRight);
+                pModel->setItem(i,1,pTypeSize);
+
+                QStandardItem *pTypeItem=new QStandardItem;
+                if(record.recordType==SearchStrings::RECORD_TYPE_ANSI)
+                {
+                    pTypeItem->setText("A");
+                }
+                else if(record.recordType==SearchStrings::RECORD_TYPE_UNICODE)
+                {
+                    pTypeItem->setText("U");
+                }
+                pModel->setItem(i,2,pTypeItem);
+                pModel->setItem(i,3,new QStandardItem(record.sString));
             }
-            else if(record.recordType==SearchStrings::RECORD_TYPE_UNICODE)
-            {
-                pTypeItem->setText("U");
-            }
-            pModel->setItem(i,2,pTypeItem);
-            pModel->setItem(i,3,new QStandardItem(record.sString));
+            pFilter->setSourceModel(pModel);
+            ui->tableViewResult->setModel(pFilter);
+            ui->tableViewResult->setColumnWidth(0,120);
+            ui->tableViewResult->setColumnWidth(1,60);
+            ui->tableViewResult->setColumnWidth(2,30);
         }
-        pFilter->setSourceModel(pModel);
-        ui->tableViewResult->setModel(pFilter);
-        ui->tableViewResult->setColumnWidth(0,120);
-        ui->tableViewResult->setColumnWidth(1,60);
-        ui->tableViewResult->setColumnWidth(2,30);
     }
 }
