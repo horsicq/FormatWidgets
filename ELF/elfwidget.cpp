@@ -239,6 +239,7 @@ void ELFWidget::reloadData()
                 comboBox[CB_Elf_Ehdr_iclass]=createComboBox(ui->tableWidget_Elf_Ehdr,QELF::getIndentClassesS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::ei_class,QComboBoxEx::CBTYPE_NORMAL);
                 comboBox[CB_Elf_Ehdr_idata]=createComboBox(ui->tableWidget_Elf_Ehdr,QELF::getIndentDatasS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::ei_data,QComboBoxEx::CBTYPE_NORMAL);
                 comboBox[CB_Elf_Ehdr_iversion]=createComboBox(ui->tableWidget_Elf_Ehdr,QELF::getIndentVersionsS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::ei_version,QComboBoxEx::CBTYPE_NORMAL);
+                comboBox[CB_Elf_Ehdr_iosabi]=createComboBox(ui->tableWidget_Elf_Ehdr,QELF::getIndentOsabisS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::ei_osabi,QComboBoxEx::CBTYPE_NORMAL);
             }
 
             blockSignals(true);
@@ -298,6 +299,7 @@ void ELFWidget::reloadData()
             comboBox[CB_Elf_Ehdr_iclass]->setValue(elf.getIdent_class());
             comboBox[CB_Elf_Ehdr_idata]->setValue(elf.getIdent_data());
             comboBox[CB_Elf_Ehdr_iversion]->setValue(elf.getIdent_version());
+            comboBox[CB_Elf_Ehdr_iosabi]->setValue(elf.getIdent_osabi());
 
             blockSignals(false);
         }
@@ -325,6 +327,9 @@ void ELFWidget::widgetValueChanged(quint64 nValue)
             break;
         case N_Elf_Ehdr::ei_version:
             lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_version]->setValue((quint8)nValue);
+            break;
+        case N_Elf_Ehdr::ei_osabi:
+            lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_osabi]->setValue((quint8)nValue);
             break;
         }
         break;

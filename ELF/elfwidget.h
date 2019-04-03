@@ -53,6 +53,7 @@ private:
         CB_Elf_Ehdr_iclass=0,
         CB_Elf_Ehdr_idata,
         CB_Elf_Ehdr_iversion,
+        CB_Elf_Ehdr_iosabi,
         __CB_size
     };
 
