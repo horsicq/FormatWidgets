@@ -240,6 +240,7 @@ void ELFWidget::reloadData()
                 comboBox[CB_Elf_Ehdr_idata]=createComboBox(ui->tableWidget_Elf_Ehdr,QELF::getIndentDatasS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::ei_data,QComboBoxEx::CBTYPE_NORMAL);
                 comboBox[CB_Elf_Ehdr_iversion]=createComboBox(ui->tableWidget_Elf_Ehdr,QELF::getIndentVersionsS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::ei_version,QComboBoxEx::CBTYPE_NORMAL);
                 comboBox[CB_Elf_Ehdr_iosabi]=createComboBox(ui->tableWidget_Elf_Ehdr,QELF::getIndentOsabisS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::ei_osabi,QComboBoxEx::CBTYPE_NORMAL);
+                comboBox[CB_Elf_Ehdr_type]=createComboBox(ui->tableWidget_Elf_Ehdr,QELF::getTypesS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::e_type,QComboBoxEx::CBTYPE_NORMAL);
             }
 
             blockSignals(true);
@@ -278,6 +279,8 @@ void ELFWidget::reloadData()
                 lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shentsize]->setValue(elf.getHdr64_shentsize());
                 lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shnum]->setValue(elf.getHdr64_shnum());
                 lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shstrndx]->setValue(elf.getHdr64_shstrndx());
+
+                comboBox[CB_Elf_Ehdr_type]->setValue(elf.getHdr64_type());
             }
             else
             {
@@ -294,6 +297,8 @@ void ELFWidget::reloadData()
                 lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shentsize]->setValue(elf.getHdr32_shentsize());
                 lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shnum]->setValue(elf.getHdr32_shnum());
                 lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shstrndx]->setValue(elf.getHdr32_shstrndx());
+
+                comboBox[CB_Elf_Ehdr_type]->setValue(elf.getHdr32_type());
             }
 
             comboBox[CB_Elf_Ehdr_iclass]->setValue(elf.getIdent_class());
@@ -330,6 +335,9 @@ void ELFWidget::widgetValueChanged(quint64 nValue)
             break;
         case N_Elf_Ehdr::ei_osabi:
             lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_osabi]->setValue((quint8)nValue);
+            break;
+        case N_Elf_Ehdr::e_type:
+            lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_type]->setValue((quint16)nValue);
             break;
         }
         break;

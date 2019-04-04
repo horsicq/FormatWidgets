@@ -54,6 +54,7 @@ private:
         CB_Elf_Ehdr_idata,
         CB_Elf_Ehdr_iversion,
         CB_Elf_Ehdr_iosabi,
+        CB_Elf_Ehdr_type,
         __CB_size
     };
 
