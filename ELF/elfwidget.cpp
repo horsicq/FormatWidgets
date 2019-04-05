@@ -241,6 +241,7 @@ void ELFWidget::reloadData()
                 comboBox[CB_Elf_Ehdr_iversion]=createComboBox(ui->tableWidget_Elf_Ehdr,QELF::getIndentVersionsS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::ei_version,QComboBoxEx::CBTYPE_NORMAL);
                 comboBox[CB_Elf_Ehdr_iosabi]=createComboBox(ui->tableWidget_Elf_Ehdr,QELF::getIndentOsabisS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::ei_osabi,QComboBoxEx::CBTYPE_NORMAL);
                 comboBox[CB_Elf_Ehdr_type]=createComboBox(ui->tableWidget_Elf_Ehdr,QELF::getTypesS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::e_type,QComboBoxEx::CBTYPE_NORMAL);
+                comboBox[CB_Elf_Ehdr_machine]=createComboBox(ui->tableWidget_Elf_Ehdr,QELF::getMachinesS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::e_machine,QComboBoxEx::CBTYPE_NORMAL);
             }
 
             blockSignals(true);
@@ -281,6 +282,7 @@ void ELFWidget::reloadData()
                 lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shstrndx]->setValue(elf.getHdr64_shstrndx());
 
                 comboBox[CB_Elf_Ehdr_type]->setValue(elf.getHdr64_type());
+                comboBox[CB_Elf_Ehdr_machine]->setValue(elf.getHdr64_machine());
             }
             else
             {
@@ -299,6 +301,7 @@ void ELFWidget::reloadData()
                 lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shstrndx]->setValue(elf.getHdr32_shstrndx());
 
                 comboBox[CB_Elf_Ehdr_type]->setValue(elf.getHdr32_type());
+                comboBox[CB_Elf_Ehdr_machine]->setValue(elf.getHdr32_machine());
             }
 
             comboBox[CB_Elf_Ehdr_iclass]->setValue(elf.getIdent_class());
@@ -338,6 +341,9 @@ void ELFWidget::widgetValueChanged(quint64 nValue)
             break;
         case N_Elf_Ehdr::e_type:
             lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_type]->setValue((quint16)nValue);
+            break;
+        case N_Elf_Ehdr::e_machine:
+            lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_machine]->setValue((quint16)nValue);
             break;
         }
         break;
