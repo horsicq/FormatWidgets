@@ -1,9 +1,9 @@
 INCLUDEPATH += $$PWD/PE
 DEPENDPATH += $$PWD/PE
 
-!contains(XCONFIG, qpe) {
-    XCONFIG += qpe
-    include(../Formats/qpe.pri)
+!contains(XCONFIG, xpe) {
+    XCONFIG += xpe
+    include(../Formats/xpe.pri)
 }
 
 !contains(XCONFIG, formatwidget) {

@@ -22,7 +22,7 @@
 #define MSDOS_DEFS_H
 
 #include "../formatwidget.h"
-#include "qmsdos.h"
+#include "xmsdos.h"
 
 namespace SMSDOS
 {

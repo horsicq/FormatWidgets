@@ -22,7 +22,7 @@
 #define ELF_DEFS_H
 
 #include "../formatwidget.h"
-#include "qelf.h"
+#include "xelf.h"
 
 namespace SELF
 {

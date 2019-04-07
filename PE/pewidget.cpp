@@ -63,7 +63,7 @@ void PEWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
 
     ui->checkBoxReadonly->setChecked(true);
 
-    QPE pe(pDevice,getOptions()->bIsImage,getOptions()->nImageAddress);
+    XPE pe(pDevice,getOptions()->bIsImage,getOptions()->nImageAddress);
 
     if(pe.isValid())
     {
@@ -113,7 +113,7 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
 
     if(getDevice()->isWritable())
     {
-        QPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageAddress);
+        XPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageAddress);
         if(pe.isValid())
         {
             switch(nStype)
@@ -513,7 +513,7 @@ void PEWidget::widgetAction()
         switch(nNdata)
         {
         case N_IMAGE_OPTIONAL_HEADER::CheckSum:
-            QPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageAddress);
+            XPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageAddress);
             if(pe.isValid())
             {
                 quint32 nCheckSum=pe.calculateCheckSum();
@@ -549,7 +549,7 @@ void PEWidget::reloadData()
     int nData=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole).toInt();
     ui->stackedWidgetInfo->setCurrentIndex(nData);
 
-    QPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageAddress);
+    XPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageAddress);
     if(pe.isValid())
     {
         if(nData==SPE::TYPE_IMAGE_DOS_HEADER)
@@ -557,7 +557,7 @@ void PEWidget::reloadData()
             if(!bInit[nData])
             {
                 bInit[nData]=createHeaderTable(SPE::TYPE_IMAGE_DOS_HEADER,ui->tableWidget_IMAGE_DOS_HEADER,N_IMAGE_DOS_HEADER::records,lineEdit_IMAGE_DOS_HEADER,N_IMAGE_DOS_HEADER::__data_size,0);
-                comboBox[CB_IMAGE_DOS_HEADER_e_magic]=createComboBox(ui->tableWidget_IMAGE_DOS_HEADER,QPE::getImageMagicsS(),SPE::TYPE_IMAGE_DOS_HEADER,N_IMAGE_DOS_HEADER::e_magic,QComboBoxEx::CBTYPE_NORMAL);
+                comboBox[CB_IMAGE_DOS_HEADER_e_magic]=createComboBox(ui->tableWidget_IMAGE_DOS_HEADER,XPE::getImageMagicsS(),SPE::TYPE_IMAGE_DOS_HEADER,N_IMAGE_DOS_HEADER::e_magic,QComboBoxEx::CBTYPE_NORMAL);
             }
 
             blockSignals(true);
@@ -605,7 +605,7 @@ void PEWidget::reloadData()
             if(!bInit[nData])
             {
                 bInit[nData]=createHeaderTable(SPE::TYPE_IMAGE_NT_HEADERS,ui->tableWidget_IMAGE_NT_HEADERS,N_IMAGE_NT_HEADERS::records,lineEdit_IMAGE_NT_HEADERS,N_IMAGE_NT_HEADERS::__data_size,0);
-                comboBox[CB_IMAGE_NT_HEADERS_Signature]=createComboBox(ui->tableWidget_IMAGE_NT_HEADERS,QPE::getImageNtHeadersSignaturesS(),SPE::TYPE_IMAGE_NT_HEADERS,N_IMAGE_NT_HEADERS::Signature,QComboBoxEx::CBTYPE_NORMAL);
+                comboBox[CB_IMAGE_NT_HEADERS_Signature]=createComboBox(ui->tableWidget_IMAGE_NT_HEADERS,XPE::getImageNtHeadersSignaturesS(),SPE::TYPE_IMAGE_NT_HEADERS,N_IMAGE_NT_HEADERS::Signature,QComboBoxEx::CBTYPE_NORMAL);
             }
 
             blockSignals(true);
@@ -622,8 +622,8 @@ void PEWidget::reloadData()
             if(!bInit[nData])
             {
                 bInit[nData]=createHeaderTable(SPE::TYPE_IMAGE_FILE_HEADER,ui->tableWidget_IMAGE_FILE_HEADER,N_IMAGE_FILE_HEADER::records,lineEdit_IMAGE_FILE_HEADER,N_IMAGE_FILE_HEADER::__data_size,0);
-                comboBox[CB_IMAGE_FILE_HEADER_Machine]=createComboBox(ui->tableWidget_IMAGE_FILE_HEADER,QPE::getImageFileHeaderMachinesS(),SPE::TYPE_IMAGE_FILE_HEADER,N_IMAGE_FILE_HEADER::Machine,QComboBoxEx::CBTYPE_NORMAL);
-                comboBox[CB_IMAGE_FILE_HEADER_Characteristics]=createComboBox(ui->tableWidget_IMAGE_FILE_HEADER,QPE::getImageFileHeaderCharacteristicsS(),SPE::TYPE_IMAGE_FILE_HEADER,N_IMAGE_FILE_HEADER::Characteristics,QComboBoxEx::CBTYPE_FLAGS);
+                comboBox[CB_IMAGE_FILE_HEADER_Machine]=createComboBox(ui->tableWidget_IMAGE_FILE_HEADER,XPE::getImageFileHeaderMachinesS(),SPE::TYPE_IMAGE_FILE_HEADER,N_IMAGE_FILE_HEADER::Machine,QComboBoxEx::CBTYPE_NORMAL);
+                comboBox[CB_IMAGE_FILE_HEADER_Characteristics]=createComboBox(ui->tableWidget_IMAGE_FILE_HEADER,XPE::getImageFileHeaderCharacteristicsS(),SPE::TYPE_IMAGE_FILE_HEADER,N_IMAGE_FILE_HEADER::Characteristics,QComboBoxEx::CBTYPE_FLAGS);
 
                 dateTimeEdit[DT_DateTimeStamp]=createDateTimeEdit(ui->tableWidget_IMAGE_FILE_HEADER,SPE::TYPE_IMAGE_FILE_HEADER,N_IMAGE_FILE_HEADER::TimeDateStamp,QDateTimeEditX::DT_TYPE_POSIX);
             }
@@ -651,9 +651,9 @@ void PEWidget::reloadData()
             if(!bInit[nData])
             {
                 bInit[nData]=createHeaderTable(SPE::TYPE_IMAGE_OPTIONAL_HEADER,ui->tableWidget_IMAGE_OPTIONAL_HEADER,pe.is64()?(N_IMAGE_OPTIONAL_HEADER::records64):(N_IMAGE_OPTIONAL_HEADER::records32),lineEdit_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::__data_size,0);
-                comboBox[CB_IMAGE_OPTIONAL_HEADER_Magic]=createComboBox(ui->tableWidget_IMAGE_OPTIONAL_HEADER,QPE::getImageOptionalHeaderMagicS(),SPE::TYPE_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::Magic,QComboBoxEx::CBTYPE_NORMAL);
-                comboBox[CB_IMAGE_OPTIONAL_HEADER_Subsystem]=createComboBox(ui->tableWidget_IMAGE_OPTIONAL_HEADER,QPE::getImageOptionalHeaderSubsystemS(),SPE::TYPE_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::Subsystem,QComboBoxEx::CBTYPE_NORMAL);
-                comboBox[CB_IMAGE_OPTIONAL_HEADER_DllCharacteristics]=createComboBox(ui->tableWidget_IMAGE_OPTIONAL_HEADER,QPE::getImageOptionalHeaderDllCharacteristicsS(),SPE::TYPE_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::DllCharacteristics,QComboBoxEx::CBTYPE_FLAGS);
+                comboBox[CB_IMAGE_OPTIONAL_HEADER_Magic]=createComboBox(ui->tableWidget_IMAGE_OPTIONAL_HEADER,XPE::getImageOptionalHeaderMagicS(),SPE::TYPE_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::Magic,QComboBoxEx::CBTYPE_NORMAL);
+                comboBox[CB_IMAGE_OPTIONAL_HEADER_Subsystem]=createComboBox(ui->tableWidget_IMAGE_OPTIONAL_HEADER,XPE::getImageOptionalHeaderSubsystemS(),SPE::TYPE_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::Subsystem,QComboBoxEx::CBTYPE_NORMAL);
+                comboBox[CB_IMAGE_OPTIONAL_HEADER_DllCharacteristics]=createComboBox(ui->tableWidget_IMAGE_OPTIONAL_HEADER,XPE::getImageOptionalHeaderDllCharacteristicsS(),SPE::TYPE_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::DllCharacteristics,QComboBoxEx::CBTYPE_FLAGS);
 
                 pushButton[PB_CalculateChecksum]=createPushButton(ui->tableWidget_IMAGE_OPTIONAL_HEADER,SPE::TYPE_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::CheckSum,tr("Calculate"));
             }
@@ -803,15 +803,15 @@ void PEWidget::reloadData()
                 itemName->setText(sName);
                 ui->tableWidget_Sections->setItem(i,N_IMAGE_SECTION_HEADER::Name+1,itemName);
 
-                ui->tableWidget_Sections->setItem(i,N_IMAGE_SECTION_HEADER::VirtualSize+1,          new QTableWidgetItem(QBinary::valueToHex(listSections.at(i).Misc.VirtualSize)));
-                ui->tableWidget_Sections->setItem(i,N_IMAGE_SECTION_HEADER::VirtualAddress+1,       new QTableWidgetItem(QBinary::valueToHex(listSections.at(i).VirtualAddress)));
-                ui->tableWidget_Sections->setItem(i,N_IMAGE_SECTION_HEADER::SizeOfRawData+1,        new QTableWidgetItem(QBinary::valueToHex(listSections.at(i).SizeOfRawData)));
-                ui->tableWidget_Sections->setItem(i,N_IMAGE_SECTION_HEADER::PointerToRawData+1,     new QTableWidgetItem(QBinary::valueToHex(listSections.at(i).PointerToRawData)));
-                ui->tableWidget_Sections->setItem(i,N_IMAGE_SECTION_HEADER::PointerToRelocations+1, new QTableWidgetItem(QBinary::valueToHex(listSections.at(i).PointerToRelocations)));
-                ui->tableWidget_Sections->setItem(i,N_IMAGE_SECTION_HEADER::PointerToLinenumbers+1, new QTableWidgetItem(QBinary::valueToHex(listSections.at(i).PointerToLinenumbers)));
-                ui->tableWidget_Sections->setItem(i,N_IMAGE_SECTION_HEADER::NumberOfRelocations+1,  new QTableWidgetItem(QBinary::valueToHex(listSections.at(i).NumberOfRelocations)));
-                ui->tableWidget_Sections->setItem(i,N_IMAGE_SECTION_HEADER::NumberOfLinenumbers+1,  new QTableWidgetItem(QBinary::valueToHex(listSections.at(i).NumberOfLinenumbers)));
-                ui->tableWidget_Sections->setItem(i,N_IMAGE_SECTION_HEADER::Characteristics+1,      new QTableWidgetItem(QBinary::valueToHex(listSections.at(i).Characteristics)));
+                ui->tableWidget_Sections->setItem(i,N_IMAGE_SECTION_HEADER::VirtualSize+1,          new QTableWidgetItem(XBinary::valueToHex(listSections.at(i).Misc.VirtualSize)));
+                ui->tableWidget_Sections->setItem(i,N_IMAGE_SECTION_HEADER::VirtualAddress+1,       new QTableWidgetItem(XBinary::valueToHex(listSections.at(i).VirtualAddress)));
+                ui->tableWidget_Sections->setItem(i,N_IMAGE_SECTION_HEADER::SizeOfRawData+1,        new QTableWidgetItem(XBinary::valueToHex(listSections.at(i).SizeOfRawData)));
+                ui->tableWidget_Sections->setItem(i,N_IMAGE_SECTION_HEADER::PointerToRawData+1,     new QTableWidgetItem(XBinary::valueToHex(listSections.at(i).PointerToRawData)));
+                ui->tableWidget_Sections->setItem(i,N_IMAGE_SECTION_HEADER::PointerToRelocations+1, new QTableWidgetItem(XBinary::valueToHex(listSections.at(i).PointerToRelocations)));
+                ui->tableWidget_Sections->setItem(i,N_IMAGE_SECTION_HEADER::PointerToLinenumbers+1, new QTableWidgetItem(XBinary::valueToHex(listSections.at(i).PointerToLinenumbers)));
+                ui->tableWidget_Sections->setItem(i,N_IMAGE_SECTION_HEADER::NumberOfRelocations+1,  new QTableWidgetItem(XBinary::valueToHex(listSections.at(i).NumberOfRelocations)));
+                ui->tableWidget_Sections->setItem(i,N_IMAGE_SECTION_HEADER::NumberOfLinenumbers+1,  new QTableWidgetItem(XBinary::valueToHex(listSections.at(i).NumberOfLinenumbers)));
+                ui->tableWidget_Sections->setItem(i,N_IMAGE_SECTION_HEADER::Characteristics+1,      new QTableWidgetItem(XBinary::valueToHex(listSections.at(i).Characteristics)));
             }
 
             if(nCount)
@@ -829,7 +829,7 @@ void PEWidget::reloadData()
 
             blockSignals(true);
 
-            QPE::EXPORT_HEADER eh=pe.getExport();
+            XPE::EXPORT_HEADER eh=pe.getExport();
 
             lineEdit_EXPORT[N_IMAGE_EXPORT::Characteristics]->setValue(eh.directory.Characteristics);
             lineEdit_EXPORT[N_IMAGE_EXPORT::TimeDateStamp]->setValue(eh.directory.TimeDateStamp);
@@ -848,9 +848,9 @@ void PEWidget::reloadData()
 
             for(int i=0;i<nCount;i++)
             {
-                ui->tableWidget_ExportFunctions->setItem(i,N_IMAGE_EXPORT_FUNCTION::Ordinal,                new QTableWidgetItem(QBinary::valueToHex(eh.listPositions.at(i).nOrdinal)));
-                ui->tableWidget_ExportFunctions->setItem(i,N_IMAGE_EXPORT_FUNCTION::RVA,                    new QTableWidgetItem(QBinary::valueToHex(eh.listPositions.at(i).nRVA)));
-                ui->tableWidget_ExportFunctions->setItem(i,N_IMAGE_EXPORT_FUNCTION::Name,                   new QTableWidgetItem(QBinary::valueToHex(eh.listPositions.at(i).nNameRVA)));
+                ui->tableWidget_ExportFunctions->setItem(i,N_IMAGE_EXPORT_FUNCTION::Ordinal,                new QTableWidgetItem(XBinary::valueToHex(eh.listPositions.at(i).nOrdinal)));
+                ui->tableWidget_ExportFunctions->setItem(i,N_IMAGE_EXPORT_FUNCTION::RVA,                    new QTableWidgetItem(XBinary::valueToHex(eh.listPositions.at(i).nRVA)));
+                ui->tableWidget_ExportFunctions->setItem(i,N_IMAGE_EXPORT_FUNCTION::Name,                   new QTableWidgetItem(XBinary::valueToHex(eh.listPositions.at(i).nNameRVA)));
                 ui->tableWidget_ExportFunctions->setItem(i,N_IMAGE_EXPORT_FUNCTION::Name+1,                 new QTableWidgetItem(eh.listPositions.at(i).sFunctionName));
             }
 
@@ -870,11 +870,11 @@ void PEWidget::reloadData()
 
             for(int i=0;i<nCount;i++)
             {
-                ui->tableWidget_ImportLibraries->setItem(i,N_IMAGE_IMPORT::OriginalFirstThunk,              new QTableWidgetItem(QBinary::valueToHex(listID.at(i).OriginalFirstThunk)));
-                ui->tableWidget_ImportLibraries->setItem(i,N_IMAGE_IMPORT::TimeDateStamp,                   new QTableWidgetItem(QBinary::valueToHex(listID.at(i).TimeDateStamp)));
-                ui->tableWidget_ImportLibraries->setItem(i,N_IMAGE_IMPORT::ForwarderChain,                  new QTableWidgetItem(QBinary::valueToHex(listID.at(i).ForwarderChain)));
-                ui->tableWidget_ImportLibraries->setItem(i,N_IMAGE_IMPORT::Name,                            new QTableWidgetItem(QBinary::valueToHex(listID.at(i).Name)));
-                ui->tableWidget_ImportLibraries->setItem(i,N_IMAGE_IMPORT::FirstThunk,                      new QTableWidgetItem(QBinary::valueToHex(listID.at(i).FirstThunk)));
+                ui->tableWidget_ImportLibraries->setItem(i,N_IMAGE_IMPORT::OriginalFirstThunk,              new QTableWidgetItem(XBinary::valueToHex(listID.at(i).OriginalFirstThunk)));
+                ui->tableWidget_ImportLibraries->setItem(i,N_IMAGE_IMPORT::TimeDateStamp,                   new QTableWidgetItem(XBinary::valueToHex(listID.at(i).TimeDateStamp)));
+                ui->tableWidget_ImportLibraries->setItem(i,N_IMAGE_IMPORT::ForwarderChain,                  new QTableWidgetItem(XBinary::valueToHex(listID.at(i).ForwarderChain)));
+                ui->tableWidget_ImportLibraries->setItem(i,N_IMAGE_IMPORT::Name,                            new QTableWidgetItem(XBinary::valueToHex(listID.at(i).Name)));
+                ui->tableWidget_ImportLibraries->setItem(i,N_IMAGE_IMPORT::FirstThunk,                      new QTableWidgetItem(XBinary::valueToHex(listID.at(i).FirstThunk)));
                 ui->tableWidget_ImportLibraries->setItem(i,N_IMAGE_IMPORT::FirstThunk+1,                    new QTableWidgetItem(listID.at(i).sLibrary));
             }
 
@@ -895,7 +895,7 @@ void PEWidget::reloadData()
 
             ui->treeWidgetResource->clear();
 
-            QPE::RESOURCE_HEADER rh=pe.getResourceHeader();
+            XPE::RESOURCE_HEADER rh=pe.getResourceHeader();
 
             int nHeaderCount=rh.listPositions.count();
 
@@ -907,7 +907,7 @@ void PEWidget::reloadData()
 
                 for(int i=0;i<nHeaderCount;i++)
                 {
-                    QPE::RESOURCE_POSITION pos=rh.listPositions.at(i);
+                    XPE::RESOURCE_POSITION pos=rh.listPositions.at(i);
                     QTreeWidgetItem *pPos=new QTreeWidgetItem(pRoot);
                     QString sPosText;
 
@@ -917,7 +917,7 @@ void PEWidget::reloadData()
                     }
                     else
                     {
-                        QMap<quint64, QString> mapRT=QPE::getResourceTypes();
+                        QMap<quint64, QString> mapRT=XPE::getResourceTypes();
                         QString sType=mapRT.value(pos.rin.nID);
 
                         if(sType!="")
@@ -935,7 +935,7 @@ void PEWidget::reloadData()
 
                     for(int j=0;j<nPosCount;j++)
                     {
-                        QPE::RESOURCE_POSITION subpos=rh.listPositions.at(i).listPositions.at(j);
+                        XPE::RESOURCE_POSITION subpos=rh.listPositions.at(i).listPositions.at(j);
                         QTreeWidgetItem *pSubPos=new QTreeWidgetItem(pPos);
                         QString sSubPosText;
                         if(subpos.rin.bIsName)
@@ -952,7 +952,7 @@ void PEWidget::reloadData()
 
                         for(int k=0;k<nSubPosCount;k++)
                         {
-                            QPE::RESOURCE_POSITION record=rh.listPositions.at(i).listPositions.at(j).listPositions.at(k);
+                            XPE::RESOURCE_POSITION record=rh.listPositions.at(i).listPositions.at(j).listPositions.at(k);
                             QTreeWidgetItem *pRecord=new QTreeWidgetItem(pSubPos);
                             QString sRecordText;
                             if(record.rin.bIsName)
@@ -990,16 +990,16 @@ void PEWidget::reloadData()
                 createSectionTable(SPE::TYPE_RELOCS_POSITION,ui->tableWidget_RelocsPositions,N_IMAGE_RELOCS_POSITION::records,N_IMAGE_RELOCS_POSITION::__data_size);
             }
 
-            QList<QPE::RELOCS_HEADER> listRH=pe.getRelocsHeaders();
+            QList<XPE::RELOCS_HEADER> listRH=pe.getRelocsHeaders();
             int nCount=listRH.count();
             ui->tableWidget_Relocs->setRowCount(nCount);
 
             for(int i=0;i<nCount;i++)
             {
-                QTableWidgetItem *pItem=new QTableWidgetItem(QBinary::valueToHex(listRH.at(i).ibr.VirtualAddress));
+                QTableWidgetItem *pItem=new QTableWidgetItem(XBinary::valueToHex(listRH.at(i).ibr.VirtualAddress));
                 pItem->setData(Qt::UserRole,listRH.at(i).nOffset);
                 ui->tableWidget_Relocs->setItem(i,N_IMAGE_RELOCS::VirtualAddress,               pItem);
-                ui->tableWidget_Relocs->setItem(i,N_IMAGE_RELOCS::SizeOfBlock,                  new QTableWidgetItem(QBinary::valueToHex(listRH.at(i).ibr.SizeOfBlock)));
+                ui->tableWidget_Relocs->setItem(i,N_IMAGE_RELOCS::SizeOfBlock,                  new QTableWidgetItem(XBinary::valueToHex(listRH.at(i).ibr.SizeOfBlock)));
                 ui->tableWidget_Relocs->setItem(i,N_IMAGE_RELOCS::SizeOfBlock+1,                new QTableWidgetItem(QString::number(listRH.at(i).nCount)));
             }
 
@@ -1056,11 +1056,11 @@ void PEWidget::loadImportLibrary(int nNumber)
 {
     ui->tableWidget_ImportFunctions->setRowCount(0);
 
-    QPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageAddress);
+    XPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageAddress);
     if(pe.isValid())
     {
         bool bIs64=pe.is64();
-        QList<QPE::IMPORT_POSITION> listIP=pe.getImportPositions(nNumber);
+        QList<XPE::IMPORT_POSITION> listIP=pe.getImportPositions(nNumber);
 
         int nCount=listIP.count();
         ui->tableWidget_ImportFunctions->setRowCount(nCount);
@@ -1072,11 +1072,11 @@ void PEWidget::loadImportLibrary(int nNumber)
                 QString sOrdinal;
                 if(bIs64)
                 {
-                    sOrdinal=QBinary::valueToHex((quint64)listIP.at(i).nOrdinal);
+                    sOrdinal=XBinary::valueToHex((quint64)listIP.at(i).nOrdinal);
                 }
                 else
                 {
-                    sOrdinal=QBinary::valueToHex((quint32)listIP.at(i).nOrdinal);
+                    sOrdinal=XBinary::valueToHex((quint32)listIP.at(i).nOrdinal);
                 }
                 ui->tableWidget_ImportFunctions->setItem(i,N_IMAGE_IMPORT_FUNCTION::Ordinal,    new QTableWidgetItem(sOrdinal));
             }
@@ -1085,14 +1085,14 @@ void PEWidget::loadImportLibrary(int nNumber)
                 QString sThunk;
                 if(bIs64)
                 {
-                    sThunk=QBinary::valueToHex((quint64)listIP.at(i).nThunkValue);
+                    sThunk=XBinary::valueToHex((quint64)listIP.at(i).nThunkValue);
                 }
                 else
                 {
-                    sThunk=QBinary::valueToHex((quint32)listIP.at(i).nThunkValue);
+                    sThunk=XBinary::valueToHex((quint32)listIP.at(i).nThunkValue);
                 }
                 ui->tableWidget_ImportFunctions->setItem(i,N_IMAGE_IMPORT_FUNCTION::Thunk,      new QTableWidgetItem(sThunk));
-                ui->tableWidget_ImportFunctions->setItem(i,N_IMAGE_IMPORT_FUNCTION::Hint,       new QTableWidgetItem(QBinary::valueToHex(listIP.at(i).nHint)));
+                ui->tableWidget_ImportFunctions->setItem(i,N_IMAGE_IMPORT_FUNCTION::Hint,       new QTableWidgetItem(XBinary::valueToHex(listIP.at(i).nHint)));
                 ui->tableWidget_ImportFunctions->setItem(i,N_IMAGE_IMPORT_FUNCTION::Hint+1,     new QTableWidgetItem(listIP.at(i).sName));
             }
         }
@@ -1103,10 +1103,10 @@ void PEWidget::loadRelocs(qint64 nOffset)
 {
     ui->tableWidget_RelocsPositions->setRowCount(0);
 
-    QPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageAddress);
+    XPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageAddress);
     if(pe.isValid())
     {
-        QList<QPE::RELOCS_POSITION> listRelocsPositions=pe.getRelocsPositions(nOffset);
+        QList<XPE::RELOCS_POSITION> listRelocsPositions=pe.getRelocsPositions(nOffset);
 
         int nCount=listRelocsPositions.count();
 
@@ -1116,9 +1116,9 @@ void PEWidget::loadRelocs(qint64 nOffset)
 
         for(int i=0;i<nCount;i++)
         {
-            ui->tableWidget_RelocsPositions->setItem(i,N_IMAGE_RELOCS_POSITION::TypeOffset,       new QTableWidgetItem(QBinary::valueToHex(listRelocsPositions.at(i).nTypeOffset)));
+            ui->tableWidget_RelocsPositions->setItem(i,N_IMAGE_RELOCS_POSITION::TypeOffset,       new QTableWidgetItem(XBinary::valueToHex(listRelocsPositions.at(i).nTypeOffset)));
             ui->tableWidget_RelocsPositions->setItem(i,N_IMAGE_RELOCS_POSITION::TypeOffset+1,     new QTableWidgetItem(mapTypes.value(listRelocsPositions.at(i).nType)));
-            ui->tableWidget_RelocsPositions->setItem(i,N_IMAGE_RELOCS_POSITION::TypeOffset+2,     new QTableWidgetItem(QBinary::valueToHex((quint32)listRelocsPositions.at(i).nAddress)));
+            ui->tableWidget_RelocsPositions->setItem(i,N_IMAGE_RELOCS_POSITION::TypeOffset+2,     new QTableWidgetItem(XBinary::valueToHex((quint32)listRelocsPositions.at(i).nAddress)));
         }
     }
 }

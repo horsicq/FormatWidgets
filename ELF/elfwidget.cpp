@@ -52,7 +52,7 @@ void ELFWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
 
     ui->checkBoxReadonly->setChecked(true);
 
-    QELF elf(pDevice,getOptions()->bIsImage,getOptions()->nImageAddress);
+    XELF elf(pDevice,getOptions()->bIsImage,getOptions()->nImageAddress);
 
     if(elf.isValid())
     {
@@ -77,7 +77,7 @@ bool ELFWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, i
 
     if(getDevice()->isWritable())
     {
-        QELF elf(getDevice(),getOptions()->bIsImage,getOptions()->nImageAddress);
+        XELF elf(getDevice(),getOptions()->bIsImage,getOptions()->nImageAddress);
         if(elf.isValid())
         {
             switch(nStype)
@@ -228,7 +228,7 @@ void ELFWidget::reloadData()
     int nData=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole).toInt();
     ui->stackedWidgetInfo->setCurrentIndex(nData);
 
-    QELF elf(getDevice(),getOptions()->bIsImage,getOptions()->nImageAddress);
+    XELF elf(getDevice(),getOptions()->bIsImage,getOptions()->nImageAddress);
     if(elf.isValid())
     {
         if(nData==SELF::TYPE_Elf_Ehdr)
@@ -236,12 +236,12 @@ void ELFWidget::reloadData()
             if(!bInit[nData])
             {
                 bInit[nData]=createHeaderTable(SELF::TYPE_Elf_Ehdr,ui->tableWidget_Elf_Ehdr,N_Elf_Ehdr::records32,lineEdit_Elf_Ehdr,N_Elf_Ehdr::__data_size,0);
-                comboBox[CB_Elf_Ehdr_iclass]=createComboBox(ui->tableWidget_Elf_Ehdr,QELF::getIndentClassesS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::ei_class,QComboBoxEx::CBTYPE_NORMAL);
-                comboBox[CB_Elf_Ehdr_idata]=createComboBox(ui->tableWidget_Elf_Ehdr,QELF::getIndentDatasS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::ei_data,QComboBoxEx::CBTYPE_NORMAL);
-                comboBox[CB_Elf_Ehdr_iversion]=createComboBox(ui->tableWidget_Elf_Ehdr,QELF::getIndentVersionsS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::ei_version,QComboBoxEx::CBTYPE_NORMAL);
-                comboBox[CB_Elf_Ehdr_iosabi]=createComboBox(ui->tableWidget_Elf_Ehdr,QELF::getIndentOsabisS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::ei_osabi,QComboBoxEx::CBTYPE_NORMAL);
-                comboBox[CB_Elf_Ehdr_type]=createComboBox(ui->tableWidget_Elf_Ehdr,QELF::getTypesS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::e_type,QComboBoxEx::CBTYPE_NORMAL);
-                comboBox[CB_Elf_Ehdr_machine]=createComboBox(ui->tableWidget_Elf_Ehdr,QELF::getMachinesS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::e_machine,QComboBoxEx::CBTYPE_NORMAL);
+                comboBox[CB_Elf_Ehdr_iclass]=createComboBox(ui->tableWidget_Elf_Ehdr,XELF::getIndentClassesS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::ei_class,QComboBoxEx::CBTYPE_NORMAL);
+                comboBox[CB_Elf_Ehdr_idata]=createComboBox(ui->tableWidget_Elf_Ehdr,XELF::getIndentDatasS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::ei_data,QComboBoxEx::CBTYPE_NORMAL);
+                comboBox[CB_Elf_Ehdr_iversion]=createComboBox(ui->tableWidget_Elf_Ehdr,XELF::getIndentVersionsS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::ei_version,QComboBoxEx::CBTYPE_NORMAL);
+                comboBox[CB_Elf_Ehdr_iosabi]=createComboBox(ui->tableWidget_Elf_Ehdr,XELF::getIndentOsabisS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::ei_osabi,QComboBoxEx::CBTYPE_NORMAL);
+                comboBox[CB_Elf_Ehdr_type]=createComboBox(ui->tableWidget_Elf_Ehdr,XELF::getTypesS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::e_type,QComboBoxEx::CBTYPE_NORMAL);
+                comboBox[CB_Elf_Ehdr_machine]=createComboBox(ui->tableWidget_Elf_Ehdr,XELF::getMachinesS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::e_machine,QComboBoxEx::CBTYPE_NORMAL);
             }
 
             blockSignals(true);

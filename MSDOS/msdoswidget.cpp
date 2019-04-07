@@ -52,7 +52,7 @@ void MSDOSWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
 
     ui->checkBoxReadonly->setChecked(true);
 
-    QMSDOS msdos(pDevice,getOptions()->bIsImage,getOptions()->nImageAddress);
+    XMSDOS msdos(pDevice,getOptions()->bIsImage,getOptions()->nImageAddress);
 
     if(msdos.isValid())
     {
@@ -77,7 +77,7 @@ bool MSDOSWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,
 
     if(getDevice()->isWritable())
     {
-        QMSDOS msdos(getDevice(),getOptions()->bIsImage,getOptions()->nImageAddress);
+        XMSDOS msdos(getDevice(),getOptions()->bIsImage,getOptions()->nImageAddress);
         if(msdos.isValid())
         {
             switch(nStype)
@@ -226,7 +226,7 @@ void MSDOSWidget::reloadData()
     int nData=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole).toInt();
     ui->stackedWidgetInfo->setCurrentIndex(nData);
 
-    QMSDOS msdos(getDevice(),getOptions()->bIsImage,getOptions()->nImageAddress);
+    XMSDOS msdos(getDevice(),getOptions()->bIsImage,getOptions()->nImageAddress);
     if(msdos.isValid())
     {
         if(nData==SMSDOS::TYPE_DOS_HEADER)
@@ -234,7 +234,7 @@ void MSDOSWidget::reloadData()
             if(!bInit[nData])
             {
                 bInit[nData]=createHeaderTable(SMSDOS::TYPE_DOS_HEADER,ui->tableWidget_DOS_HEADER,N_DOS_HEADER::records,lineEdit_DOS_HEADER,N_DOS_HEADER::__data_size,0);
-                comboBox[CB_DOS_HEADER_e_magic]=createComboBox(ui->tableWidget_DOS_HEADER,QMSDOS::getImageMagicsS(),SMSDOS::TYPE_DOS_HEADER,N_DOS_HEADER::e_magic,QComboBoxEx::CBTYPE_NORMAL);
+                comboBox[CB_DOS_HEADER_e_magic]=createComboBox(ui->tableWidget_DOS_HEADER,XMSDOS::getImageMagicsS(),SMSDOS::TYPE_DOS_HEADER,N_DOS_HEADER::e_magic,QComboBoxEx::CBTYPE_NORMAL);
             }
 
             blockSignals(true);

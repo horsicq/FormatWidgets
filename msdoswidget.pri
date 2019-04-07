@@ -1,9 +1,9 @@
 INCLUDEPATH += $$PWD/MSDOS
 DEPENDPATH += $$PWD/MSDOS
 
-!contains(XCONFIG, qmsdos) {
-    XCONFIG += qmsdos
-    include(../Formats/qmsdos.pri)
+!contains(XCONFIG, xmsdos) {
+    XCONFIG += xmsdos
+    include(../Formats/xmsdos.pri)
 }
 
 !contains(XCONFIG, formatwidget) {

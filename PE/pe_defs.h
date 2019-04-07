@@ -22,7 +22,7 @@
 #define PE_DEFS_H
 
 #include "../formatwidget.h"
-#include "qpe.h"
+#include "xpe.h"
 
 namespace SPE
 {
