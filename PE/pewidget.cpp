@@ -864,7 +864,7 @@ void PEWidget::reloadData()
                 createSectionTable(SPE::TYPE_IMPORT_FUNCTION,ui->tableWidget_ImportFunctions,N_IMAGE_IMPORT_FUNCTION::records32,N_IMAGE_IMPORT_FUNCTION::__data_size);
             }
 
-            QList<S_IMAGE_IMPORT_DESCRIPTOR_EX> listID=pe.getImportDescriptorsEx();
+            QList<XPE::S_IMAGE_IMPORT_DESCRIPTOR_EX> listID=pe.getImportDescriptorsEx();
             int nCount=listID.count();
             ui->tableWidget_ImportLibraries->setRowCount(nCount);
 
