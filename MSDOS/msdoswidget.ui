@@ -81,6 +81,28 @@
       </column>
      </widget>
      <widget class="QStackedWidget" name="stackedWidgetInfo">
+      <widget class="QWidget" name="page_HEX">
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QHexViewWidget" name="widgetHex" native="true"/>
+        </item>
+       </layout>
+      </widget>
       <widget class="QWidget" name="page_DOS_HEADER">
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <property name="spacing">
@@ -127,6 +149,14 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QHexViewWidget</class>
+   <extends>QWidget</extends>
+   <header>qhexviewwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

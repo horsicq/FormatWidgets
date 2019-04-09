@@ -52,10 +52,14 @@ void MSDOSWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
 
     ui->checkBoxReadonly->setChecked(true);
 
+    ui->widgetHex->enableHeader(true);
+    ui->widgetHex->enableReadOnly(false);
+
     XMSDOS msdos(pDevice,getOptions()->bIsImage,getOptions()->nImageAddress);
 
     if(msdos.isValid())
     {
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_HEX,"HEX"));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_DOS_HEADER,"DOS_HEADER"));
 
         // TODO Sections
@@ -63,7 +67,7 @@ void MSDOSWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
 
         ui->treeWidgetNavi->expandAll();
 
-        ui->treeWidgetNavi->setCurrentItem(ui->treeWidgetNavi->topLevelItem(0));
+        ui->treeWidgetNavi->setCurrentItem(ui->treeWidgetNavi->topLevelItem(1));
     }
 }
 
@@ -197,6 +201,8 @@ void MSDOSWidget::setReadonly(bool bState)
     setLineEditsReadOnly(lineEdit_DOS_HEADER,N_DOS_HEADER::__data_size,bState);
 
     setComboBoxesReadOnly(comboBox,__CB_size,bState);
+
+    ui->widgetHex->setReadonly(bState);
 }
 
 void MSDOSWidget::blockSignals(bool bState)
@@ -229,7 +235,21 @@ void MSDOSWidget::reloadData()
     XMSDOS msdos(getDevice(),getOptions()->bIsImage,getOptions()->nImageAddress);
     if(msdos.isValid())
     {
-        if(nData==SMSDOS::TYPE_DOS_HEADER)
+        if(nData==SMSDOS::TYPE_HEX)
+        {
+            if(!bInit[nData])
+            {
+                QHexView::OPTIONS options={0};
+
+                options.nBaseAddress=getOptions()->nImageAddress;
+                options.sBackupFileName=getOptions()->sBackupFileName;
+
+                ui->widgetHex->setData(getDevice(),&options);
+
+                bInit[nData]=true;
+            }
+        }
+        else if(nData==SMSDOS::TYPE_DOS_HEADER)
         {
             if(!bInit[nData])
             {

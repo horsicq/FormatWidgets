@@ -28,7 +28,8 @@ namespace SMSDOS
 {
     enum TYPE
     {
-        TYPE_DOS_HEADER=0,
+        TYPE_HEX=0,
+        TYPE_DOS_HEADER,
         __TYPE_size
     };
 }

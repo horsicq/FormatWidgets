@@ -63,10 +63,17 @@ void PEWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
 
     ui->checkBoxReadonly->setChecked(true);
 
+    ui->widgetSectionHex->enableHeader(false);
+    ui->widgetOverlayHex->enableHeader(false);
+    ui->widgetResourceHex->enableHeader(false);
+    ui->widgetHex->enableHeader(true);
+    ui->widgetHex->enableReadOnly(false);
+
     XPE pe(pDevice,getOptions()->bIsImage,getOptions()->nImageAddress);
 
     if(pe.isValid())
     {
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_HEX,"HEX"));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_IMAGE_DOS_HEADER,"IMAGE_DOS_HEADER"));
         QTreeWidgetItem *pNtHeaders=createNewItem(SPE::TYPE_IMAGE_NT_HEADERS,"IMAGE_NT_HEADERS");
         ui->treeWidgetNavi->addTopLevelItem(pNtHeaders);
@@ -99,7 +106,7 @@ void PEWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
         }
 
         ui->treeWidgetNavi->expandAll();
-        ui->treeWidgetNavi->setCurrentItem(ui->treeWidgetNavi->topLevelItem(0));
+        ui->treeWidgetNavi->setCurrentItem(ui->treeWidgetNavi->topLevelItem(1));
     }
 }
 
@@ -424,7 +431,10 @@ void PEWidget::setReadonly(bool bState)
     setPushButtonReadOnly(pushButton,__PB_size,bState);
     setDateTimeEditReadOnly(dateTimeEdit,__DT_size,bState);
 
+    ui->widgetHex->setReadonly(bState);
     ui->widgetSectionHex->setReadonly(bState);
+    ui->widgetOverlayHex->setReadonly(bState);
+    ui->widgetResourceHex->setReadonly(bState);
 }
 
 void PEWidget::blockSignals(bool bState)
@@ -552,7 +562,21 @@ void PEWidget::reloadData()
     XPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageAddress);
     if(pe.isValid())
     {
-        if(nData==SPE::TYPE_IMAGE_DOS_HEADER)
+        if(nData==SPE::TYPE_HEX)
+        {
+            if(!bInit[nData])
+            {
+                QHexView::OPTIONS options={0};
+
+                options.nBaseAddress=getOptions()->nImageAddress;
+                options.sBackupFileName=getOptions()->sBackupFileName;
+
+                ui->widgetHex->setData(getDevice(),&options);
+
+                bInit[nData]=true;
+            }
+        }
+        else if(nData==SPE::TYPE_IMAGE_DOS_HEADER)
         {
             if(!bInit[nData])
             {

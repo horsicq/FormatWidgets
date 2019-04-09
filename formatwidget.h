@@ -32,6 +32,7 @@
 #include "qlineedithex.h"
 #include "qcomboboxex.h"
 #include "qdatetimeeditx.h"
+#include "qhexview.h"
 
 class FormatWidget : public QWidget
 {

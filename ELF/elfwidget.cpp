@@ -52,10 +52,14 @@ void ELFWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
 
     ui->checkBoxReadonly->setChecked(true);
 
+    ui->widgetHex->enableHeader(true);
+    ui->widgetHex->enableReadOnly(false);
+
     XELF elf(pDevice,getOptions()->bIsImage,getOptions()->nImageAddress);
 
     if(elf.isValid())
     {
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_HEX,"HEX"));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_Elf_Ehdr,"Elf_Ehdr"));
 
         // TODO Sections
@@ -63,7 +67,7 @@ void ELFWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
 
         ui->treeWidgetNavi->expandAll();
 
-        ui->treeWidgetNavi->setCurrentItem(ui->treeWidgetNavi->topLevelItem(0));
+        ui->treeWidgetNavi->setCurrentItem(ui->treeWidgetNavi->topLevelItem(1));
     }
 }
 
@@ -199,6 +203,8 @@ void ELFWidget::setReadonly(bool bState)
     setLineEditsReadOnly(lineEdit_Elf_Ehdr,N_Elf_Ehdr::__data_size,bState);
 
     setComboBoxesReadOnly(comboBox,__CB_size,bState);
+
+    ui->widgetHex->setReadonly(bState);
 }
 
 void ELFWidget::blockSignals(bool bState)
@@ -231,7 +237,21 @@ void ELFWidget::reloadData()
     XELF elf(getDevice(),getOptions()->bIsImage,getOptions()->nImageAddress);
     if(elf.isValid())
     {
-        if(nData==SELF::TYPE_Elf_Ehdr)
+        if(nData==SELF::TYPE_HEX)
+        {
+            if(!bInit[nData])
+            {
+                QHexView::OPTIONS options={0};
+
+                options.nBaseAddress=getOptions()->nImageAddress;
+                options.sBackupFileName=getOptions()->sBackupFileName;
+
+                ui->widgetHex->setData(getDevice(),&options);
+
+                bInit[nData]=true;
+            }
+        }
+        else if(nData==SELF::TYPE_Elf_Ehdr)
         {
             if(!bInit[nData])
             {

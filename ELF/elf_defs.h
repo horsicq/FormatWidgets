@@ -28,7 +28,8 @@ namespace SELF
 {
     enum TYPE
     {
-        TYPE_Elf_Ehdr=0,
+        TYPE_HEX=0,
+        TYPE_Elf_Ehdr,
         __TYPE_size
     };
 }
