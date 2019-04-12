@@ -85,7 +85,7 @@ void FormatWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
 
 void FormatWidget::hexValueChanged(quint64 nValue)
 {
-    QLineEditHEX *lineEdit=qobject_cast<QLineEditHEX *>(sender());
+    XLineEditHEX *lineEdit=qobject_cast<XLineEditHEX *>(sender());
     int nStype=lineEdit->property("STYPE").toInt();
     int nNdata=lineEdit->property("NDATA").toInt();
     int nVtype=lineEdit->property("VTYPE").toInt();
@@ -96,7 +96,7 @@ void FormatWidget::hexValueChanged(quint64 nValue)
 
 void FormatWidget::textValueChanged(QString sText)
 {
-    QLineEditHEX *lineEdit=qobject_cast<QLineEditHEX *>(sender());
+    XLineEditHEX *lineEdit=qobject_cast<XLineEditHEX *>(sender());
     int nStype=lineEdit->property("STYPE").toInt();
     int nNdata=lineEdit->property("NDATA").toInt();
     int nVtype=lineEdit->property("VTYPE").toInt();
@@ -127,7 +127,7 @@ void FormatWidget::saveBackup()
     }
 }
 
-bool FormatWidget::createHeaderTable(int type, QTableWidget *pTableWidget, const HEADER_RECORD *pRecords, QLineEditHEX **ppLineEdits, int nRecordCount, int nPosition)
+bool FormatWidget::createHeaderTable(int type, QTableWidget *pTableWidget, const HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nRecordCount, int nPosition)
 {
     pTableWidget->setColumnCount(4);
     pTableWidget->setRowCount(nRecordCount);
@@ -153,7 +153,7 @@ bool FormatWidget::createHeaderTable(int type, QTableWidget *pTableWidget, const
         newItemType->setText(pRecords[i].pszType);
         pTableWidget->setItem(i,HEADER_COLUMN_TYPE,newItemType);
 
-        ppLineEdits[i]=new QLineEditHEX(this);
+        ppLineEdits[i]=new XLineEditHEX(this);
         ppLineEdits[i]->setProperty("STYPE",type);
         ppLineEdits[i]->setProperty("NDATA",pRecords[i].nData);
         ppLineEdits[i]->setProperty("POSITION",nPosition);
@@ -178,7 +178,7 @@ bool FormatWidget::createHeaderTable(int type, QTableWidget *pTableWidget, const
     return true;
 }
 
-bool FormatWidget::createDirectoryTable(int type, QTableWidget *pTableWidget, const FormatWidget::DIRECTORY_ENTRY_RECORD *pRecords, QLineEditHEX **ppLineEdits1, QLineEditHEX **ppLineEdits2, int nRecordCount)
+bool FormatWidget::createDirectoryTable(int type, QTableWidget *pTableWidget, const FormatWidget::DIRECTORY_ENTRY_RECORD *pRecords, XLineEditHEX **ppLineEdits1, XLineEditHEX **ppLineEdits2, int nRecordCount)
 {
     pTableWidget->setColumnCount(4);
     pTableWidget->setRowCount(nRecordCount);
@@ -209,7 +209,7 @@ bool FormatWidget::createDirectoryTable(int type, QTableWidget *pTableWidget, co
         newItemName->setText(pRecords[i].pszName);
         pTableWidget->setItem(i,DIRECTORY_COLUMN_NAME,newItemName);
 
-        ppLineEdits1[i]=new QLineEditHEX(this);
+        ppLineEdits1[i]=new XLineEditHEX(this);
         ppLineEdits1[i]->setProperty("STYPE",type);
         ppLineEdits1[i]->setProperty("NDATA",pRecords[i].nData);
         ppLineEdits1[i]->setProperty("VTYPE",pRecords[i].vtype[0]);
@@ -218,7 +218,7 @@ bool FormatWidget::createDirectoryTable(int type, QTableWidget *pTableWidget, co
 
         pTableWidget->setCellWidget(i,DIRECTORY_COLUMN_ADDRESS,ppLineEdits1[i]);
 
-        ppLineEdits2[i]=new QLineEditHEX(this);
+        ppLineEdits2[i]=new XLineEditHEX(this);
         ppLineEdits2[i]->setProperty("STYPE",type);
         ppLineEdits2[i]->setProperty("NDATA",pRecords[i].nData);
         ppLineEdits2[i]->setProperty("VTYPE",pRecords[i].vtype[1]);
@@ -236,7 +236,7 @@ bool FormatWidget::createSectionTable(int type, QTableWidget *pTableWidget, cons
     return false;
 }
 
-void FormatWidget::setLineEditsReadOnly(QLineEditHEX **ppLineEdits, int nCount, bool bState)
+void FormatWidget::setLineEditsReadOnly(XLineEditHEX **ppLineEdits, int nCount, bool bState)
 {
     for(int i=0;i<nCount;i++)
     {
@@ -247,7 +247,7 @@ void FormatWidget::setLineEditsReadOnly(QLineEditHEX **ppLineEdits, int nCount, 
     }
 }
 
-void FormatWidget::setComboBoxesReadOnly(QComboBoxEx **ppComboBoxes, int nCount, bool bState)
+void FormatWidget::setComboBoxesReadOnly(XComboBoxEx **ppComboBoxes, int nCount, bool bState)
 {
     for(int i=0;i<nCount;i++)
     {
@@ -269,7 +269,7 @@ void FormatWidget::setPushButtonReadOnly(QPushButton **ppPushButtons, int nCount
     }
 }
 
-void FormatWidget::setDateTimeEditReadOnly(QDateTimeEditX **ppDateTimeEdits, int nCount, bool bState)
+void FormatWidget::setDateTimeEditReadOnly(XDateTimeEditX **ppDateTimeEdits, int nCount, bool bState)
 {
     for(int i=0;i<nCount;i++)
     {
@@ -291,9 +291,9 @@ void FormatWidget::_blockSignals(QObject **ppObjects, int nCount, bool bState)
     }
 }
 
-QComboBoxEx *FormatWidget::createComboBox(QTableWidget *pTableWidget, QMap<quint64, QString> mapData, int type, int nData, QComboBoxEx::CBTYPE cbtype, quint64 nMask)
+XComboBoxEx *FormatWidget::createComboBox(QTableWidget *pTableWidget, QMap<quint64, QString> mapData, int type, int nData, XComboBoxEx::CBTYPE cbtype, quint64 nMask)
 {
-    QComboBoxEx *result=new QComboBoxEx(this);
+    XComboBoxEx *result=new XComboBoxEx(this);
     result->setData(mapData,cbtype,nMask);
 
     result->setProperty("STYPE",type);
@@ -306,9 +306,9 @@ QComboBoxEx *FormatWidget::createComboBox(QTableWidget *pTableWidget, QMap<quint
     return result;
 }
 
-QDateTimeEditX *FormatWidget::createDateTimeEdit(QTableWidget *pTableWidget, int type, int nData, QDateTimeEditX::DT_TYPE dtType)
+XDateTimeEditX *FormatWidget::createDateTimeEdit(QTableWidget *pTableWidget, int type, int nData, XDateTimeEditX::DT_TYPE dtType)
 {
-    QDateTimeEditX *result=new QDateTimeEditX(this);
+    XDateTimeEditX *result=new XDateTimeEditX(this);
     result->setType(dtType);
 
     result->setProperty("STYPE",type);

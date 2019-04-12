@@ -91,16 +91,16 @@ private:
 private:
     Ui::PEWidget *ui;
 
-    QLineEditHEX *lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::__data_size];
-    QLineEditHEX *lineEdit_IMAGE_NT_HEADERS[N_IMAGE_NT_HEADERS::__data_size];
-    QLineEditHEX *lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::__data_size];
-    QLineEditHEX *lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::__data_size];
-    QLineEditHEX *lineEdit_IMAGE_DIRECTORY_ADDRESS[N_IMAGE_DIRECORIES::__data_size];
-    QLineEditHEX *lineEdit_IMAGE_DIRECTORY_SIZE[N_IMAGE_DIRECORIES::__data_size];
-    QLineEditHEX *lineEdit_EXPORT[N_IMAGE_EXPORT::__data_size];
-    QComboBoxEx *comboBox[__CB_size];
+    XLineEditHEX *lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::__data_size];
+    XLineEditHEX *lineEdit_IMAGE_NT_HEADERS[N_IMAGE_NT_HEADERS::__data_size];
+    XLineEditHEX *lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::__data_size];
+    XLineEditHEX *lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::__data_size];
+    XLineEditHEX *lineEdit_IMAGE_DIRECTORY_ADDRESS[N_IMAGE_DIRECORIES::__data_size];
+    XLineEditHEX *lineEdit_IMAGE_DIRECTORY_SIZE[N_IMAGE_DIRECORIES::__data_size];
+    XLineEditHEX *lineEdit_EXPORT[N_IMAGE_EXPORT::__data_size];
+    XComboBoxEx *comboBox[__CB_size];
     QPushButton *pushButton[__PB_size];
-    QDateTimeEditX *dateTimeEdit[__DT_size];
+    XDateTimeEditX *dateTimeEdit[__DT_size];
 
     bool bInit[SPE::__TYPE_size];
 

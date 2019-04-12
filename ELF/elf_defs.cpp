@@ -90,5 +90,4 @@ namespace N_Elf_Ehdr
         {e_shnum,               "e_shnum",              2,      "Elf64_Half",           FormatWidget::VAL_TYPE_DATA},
         {e_shstrndx,            "e_shstrndx",           2,      "Elf64_Half",           FormatWidget::VAL_TYPE_DATA},
     };
-
 }

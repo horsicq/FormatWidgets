@@ -54,8 +54,8 @@ private slots:
     void widgetValueChanged(quint64 nValue);
 private:
     Ui::SectionHeaderWidget *ui;
-    QLineEditHEX *lineEdit_IMAGE_SECTION_HEADER[N_IMAGE_SECTION_HEADER::__data_size+1];
-    QComboBoxEx *comboBox[__CB_size];
+    XLineEditHEX *lineEdit_IMAGE_SECTION_HEADER[N_IMAGE_SECTION_HEADER::__data_size+1];
+    XComboBoxEx *comboBox[__CB_size];
     quint32 nNumber;
     bool bInit;
 };

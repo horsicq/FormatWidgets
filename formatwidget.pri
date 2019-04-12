@@ -1,19 +1,19 @@
 INCLUDEPATH += $$PWD/PE
 DEPENDPATH += $$PWD/PE
 
-!contains(XCONFIG, qlineedithex) {
-    XCONFIG += qlineedithex
-    include(../Controls/qlineedithex.pri)
+!contains(XCONFIG, xlineedithex) {
+    XCONFIG += xlineedithex
+    include(../Controls/xlineedithex.pri)
 }
 
-!contains(XCONFIG, qcomboboxex) {
-    XCONFIG += qcomboboxex
-    include(../Controls/qcomboboxex.pri)
+!contains(XCONFIG, xcomboboxex) {
+    XCONFIG += xcomboboxex
+    include(../Controls/xcomboboxex.pri)
 }
 
-!contains(XCONFIG, qdatetimeeditx) {
-    XCONFIG += qdatetimeeditx
-    include(../Controls/qdatetimeeditx.pri)
+!contains(XCONFIG, xdatetimeeditx) {
+    XCONFIG += xdatetimeeditx
+    include(../Controls/xdatetimeeditx.pri)
 }
 
 !contains(XCONFIG, qhexview) {

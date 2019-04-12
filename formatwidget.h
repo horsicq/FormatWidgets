@@ -29,9 +29,9 @@
 #include <QHeaderView>
 #include <QMessageBox>
 #include <QPushButton>
-#include "qlineedithex.h"
-#include "qcomboboxex.h"
-#include "qdatetimeeditx.h"
+#include "xlineedithex.h"
+#include "xcomboboxex.h"
+#include "xdatetimeeditx.h"
 #include "qhexview.h"
 
 class FormatWidget : public QWidget
@@ -107,18 +107,18 @@ public:
     QIODevice *getDevice();
     OPTIONS *getOptions();
     QTreeWidgetItem *createNewItem(int nUserData, QString sTitle);
-    bool createHeaderTable(int type,QTableWidget *pTableWidget, const HEADER_RECORD *pRecords, QLineEditHEX **ppLineEdits, int nRecordCount,int nPosition=0);
+    bool createHeaderTable(int type,QTableWidget *pTableWidget, const HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nRecordCount,int nPosition=0);
 
-    bool createDirectoryTable(int type,QTableWidget *pTableWidget, const DIRECTORY_ENTRY_RECORD *pRecords, QLineEditHEX **ppLineEdits1,QLineEditHEX **ppLineEdits2, int nRecordCount);
+    bool createDirectoryTable(int type,QTableWidget *pTableWidget, const DIRECTORY_ENTRY_RECORD *pRecords, XLineEditHEX **ppLineEdits1,XLineEditHEX **ppLineEdits2, int nRecordCount);
     bool createSectionTable(int type,QTableWidget *pTableWidget, const HEADER_RECORD *pRecords,int nRecordCount);
-    void setLineEditsReadOnly(QLineEditHEX **ppLineEdits,int nCount,bool bState);
-    void setComboBoxesReadOnly(QComboBoxEx **ppComboBoxes,int nCount,bool bState);
+    void setLineEditsReadOnly(XLineEditHEX **ppLineEdits,int nCount,bool bState);
+    void setComboBoxesReadOnly(XComboBoxEx **ppComboBoxes,int nCount,bool bState);
     void setPushButtonReadOnly(QPushButton **ppPushButtons,int nCount,bool bState);
-    void setDateTimeEditReadOnly(QDateTimeEditX **ppDateTimeEdits,int nCount,bool bState);
+    void setDateTimeEditReadOnly(XDateTimeEditX **ppDateTimeEdits,int nCount,bool bState);
 
     void _blockSignals(QObject **ppObjects,int nCount,bool bState);
-    QComboBoxEx *createComboBox(QTableWidget *pTableWidget, QMap<quint64,QString> mapData, int type, int nData, QComboBoxEx::CBTYPE cbtype,quint64 nMask=0);
-    QDateTimeEditX *createDateTimeEdit(QTableWidget *pTableWidget,int type, int nData,QDateTimeEditX::DT_TYPE dtType);
+    XComboBoxEx *createComboBox(QTableWidget *pTableWidget, QMap<quint64,QString> mapData, int type, int nData, XComboBoxEx::CBTYPE cbtype,quint64 nMask=0);
+    XDateTimeEditX *createDateTimeEdit(QTableWidget *pTableWidget,int type, int nData,XDateTimeEditX::DT_TYPE dtType);
     QPushButton *createPushButton(QTableWidget *pTableWidget,int type, int nData,QString sText);
     int getSymbolWidth();
     void setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition);

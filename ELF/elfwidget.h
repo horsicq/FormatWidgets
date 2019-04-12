@@ -61,8 +61,8 @@ private:
 
     Ui::ELFWidget *ui;
 
-    QLineEditHEX *lineEdit_Elf_Ehdr[N_Elf_Ehdr::__data_size];
-    QComboBoxEx *comboBox[__CB_size];
+    XLineEditHEX *lineEdit_Elf_Ehdr[N_Elf_Ehdr::__data_size];
+    XComboBoxEx *comboBox[__CB_size];
 
     bool bInit[SELF::__TYPE_size];
 };

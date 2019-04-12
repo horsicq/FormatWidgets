@@ -56,8 +56,8 @@ private:
 
     Ui::MSDOSWidget *ui;
 
-    QLineEditHEX *lineEdit_DOS_HEADER[N_DOS_HEADER::__data_size];
-    QComboBoxEx *comboBox[__CB_size];
+    XLineEditHEX *lineEdit_DOS_HEADER[N_DOS_HEADER::__data_size];
+    XComboBoxEx *comboBox[__CB_size];
 
     bool bInit[SMSDOS::__TYPE_size];
 };
