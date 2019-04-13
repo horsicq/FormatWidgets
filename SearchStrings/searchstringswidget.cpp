@@ -137,7 +137,7 @@ void SearchStringsWidget::on_tableViewResult_customContextMenuRequested(const QP
 {
     QMenu contextMenu(this);
 
-    QAction actionCopyString(tr("Copy String"),this);
+    QAction actionCopyString(QString("%1 %2").arg(tr("Copy")).arg(tr("String")),this);
     connect(&actionCopyString,SIGNAL(triggered()),this,SLOT(_copyString()));
     contextMenu.addAction(&actionCopyString);
 
@@ -145,7 +145,7 @@ void SearchStringsWidget::on_tableViewResult_customContextMenuRequested(const QP
     connect(&actionCopyAddress,SIGNAL(triggered()),this,SLOT(_copyAddress()));
     contextMenu.addAction(&actionCopyAddress);
 
-    QAction actionCopySize(tr("Copy Size"),this);
+    QAction actionCopySize(QString("%1 %2").arg(tr("Copy")).arg(tr("Size")),this);
     connect(&actionCopySize,SIGNAL(triggered()),this,SLOT(_copySize()));
     contextMenu.addAction(&actionCopySize);
 
