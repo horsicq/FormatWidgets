@@ -805,7 +805,6 @@ void PEWidget::reloadData()
                 QTableWidgetItem *itemNumber=new QTableWidgetItem();
                 itemNumber->setText(QString::number(i));
 
-
                 itemNumber->setData(Qt::UserRole+SECTION_DATA_ADDRESS,listSections.at(i).VirtualAddress);
 
                 if(getOptions()->bIsImage)
