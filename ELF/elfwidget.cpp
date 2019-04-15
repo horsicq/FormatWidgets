@@ -114,6 +114,7 @@ bool ELFWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, i
                     elf.setIdent_version((quint8)nValue);
                     break;
                 case N_Elf_Ehdr::ei_osabi:
+                    comboBox[CB_Elf_Ehdr_iosabi]->setValue(nValue);
                     elf.setIdent_osabi((quint8)nValue);
                     break;
                 case N_Elf_Ehdr::ei_abiversion:
@@ -147,9 +148,11 @@ bool ELFWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, i
                     elf.setIdent_pad((quint8)nValue,8);
                     break;
                 case N_Elf_Ehdr::e_type:
+                    comboBox[CB_Elf_Ehdr_type]->setValue(nValue);
                     (elf.is64()?(elf.setHdr64_type((quint16)nValue)):(elf.setHdr32_type((quint16)nValue)));
                     break;
                 case N_Elf_Ehdr::e_machine:
+                    comboBox[CB_Elf_Ehdr_machine]->setValue(nValue);
                     (elf.is64()?(elf.setHdr64_machine((quint16)nValue)):(elf.setHdr32_machine((quint16)nValue)));
                     break;
                 case N_Elf_Ehdr::e_version:

@@ -82,14 +82,43 @@ bool MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, 
 
     if(getDevice()->isWritable())
     {
-        XMACH msdos(getDevice(),getOptions()->bIsImage,getOptions()->nImageAddress);
-        if(msdos.isValid())
+        XMACH mach(getDevice(),getOptions()->bIsImage,getOptions()->nImageAddress);
+        if(mach.isValid())
         {
             switch(nStype)
             {
-
+            case SMACH::TYPE_mach_header:
+                switch(nNdata)
+                {
+                case N_mach_header::magic:
+                    // TODO reload all data
+                    comboBox[CB_mach_header_magic]->setValue(nValue);
+                    mach.setHeader_magic((quint32)nValue);
+                    break;
+                case N_mach_header::cputype:
+                    mach.setHeader_cputype((qint32)nValue);
+                    break;
+                case N_mach_header::cpusubtype:
+                    mach.setHeader_cpusubtype((qint32)nValue);
+                    break;
+                case N_mach_header::filetype:
+                    mach.setHeader_filetype((quint32)nValue);
+                    break;
+                case N_mach_header::ncmds:
+                    mach.setHeader_ncmds((quint32)nValue);
+                    break;
+                case N_mach_header::sizeofcmds:
+                    mach.setHeader_sizeofcmds((quint32)nValue);
+                    break;
+                case N_mach_header::flags:
+                    mach.setHeader_flags((quint32)nValue);
+                    break;
+                case N_mach_header::reserved:
+                    mach.setHeader_reserved((quint32)nValue);
+                    break;
+                }
+                break;
             }
-
             bResult=true;
         }
     }
@@ -165,12 +194,25 @@ void MACHWidget::reloadData()
                     bInit[nData]=createHeaderTable(SMACH::TYPE_mach_header,ui->tableWidget_mach_header,N_mach_header::records64,lineEdit_mach_header,N_mach_header::__data_size,0);
                 }
 
-//                comboBox[CB_DOS_HEADER_e_magic]=createComboBox(ui->tableWidget_DOS_HEADER,XMACH::getImageMagicsS(),SMACH::TYPE_DOS_HEADER,N_DOS_HEADER::e_magic,QComboBoxEx::CBTYPE_NORMAL);
+                comboBox[CB_mach_header_magic]=createComboBox(ui->tableWidget_mach_header,XMACH::getHeaderMagicsS(),SMACH::TYPE_mach_header,N_mach_header::magic,XComboBoxEx::CBTYPE_NORMAL);
             }
 
             blockSignals(true);
 
-            // TODO
+            lineEdit_mach_header[N_mach_header::magic]->setValue(mach.getHeader_magic());
+            lineEdit_mach_header[N_mach_header::cputype]->setValue(mach.getHeader_cputype());
+            lineEdit_mach_header[N_mach_header::cpusubtype]->setValue(mach.getHeader_cpusubtype());
+            lineEdit_mach_header[N_mach_header::filetype]->setValue(mach.getHeader_filetype());
+            lineEdit_mach_header[N_mach_header::ncmds]->setValue(mach.getHeader_ncmds());
+            lineEdit_mach_header[N_mach_header::sizeofcmds]->setValue(mach.getHeader_sizeofcmds());
+            lineEdit_mach_header[N_mach_header::flags]->setValue(mach.getHeader_flags());
+
+            if(mach.is64())
+            {
+                lineEdit_mach_header[N_mach_header::reserved]->setValue(mach.getHeader_reserved());
+            }
+
+            comboBox[CB_mach_header_magic]->setValue(mach.getHeader_magic());
 
             blockSignals(false);
         }
@@ -185,17 +227,17 @@ void MACHWidget::widgetValueChanged(quint64 nValue)
     int nStype=pWidget->property("STYPE").toInt();
     int nNdata=pWidget->property("NDATA").toInt();
 
-//    switch(nStype)
-//    {
-//    case SMACH::TYPE_DOS_HEADER:
-//        switch(nNdata)
-//        {
-//        case N_DOS_HEADER::e_magic:
-//            lineEdit_DOS_HEADER[N_DOS_HEADER::e_magic]->setValue((quint8)nValue);
-//            break;
-//        }
-//        break;
-//    }
+    switch(nStype)
+    {
+    case SMACH::TYPE_mach_header:
+        switch(nNdata)
+        {
+        case N_mach_header::magic:
+            lineEdit_mach_header[N_mach_header::magic]->setValue((quint32)nValue);
+            break;
+        }
+        break;
+    }
 }
 
 void MACHWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)

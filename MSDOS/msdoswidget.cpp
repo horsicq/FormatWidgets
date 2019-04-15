@@ -314,7 +314,7 @@ void MSDOSWidget::widgetValueChanged(quint64 nValue)
         switch(nNdata)
         {
         case N_DOS_HEADER::e_magic:
-            lineEdit_DOS_HEADER[N_DOS_HEADER::e_magic]->setValue((quint8)nValue);
+            lineEdit_DOS_HEADER[N_DOS_HEADER::e_magic]->setValue((quint16)nValue);
             break;
         }
         break;
