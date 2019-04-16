@@ -96,12 +96,14 @@ bool MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, 
                     mach.setHeader_magic((quint32)nValue);
                     break;
                 case N_mach_header::cputype:
+                    comboBox[CB_mach_header_cputype]->setValue(nValue);
                     mach.setHeader_cputype((qint32)nValue);
                     break;
                 case N_mach_header::cpusubtype:
                     mach.setHeader_cpusubtype((qint32)nValue);
                     break;
                 case N_mach_header::filetype:
+                    comboBox[CB_mach_header_filetype]->setValue(nValue);
                     mach.setHeader_filetype((quint32)nValue);
                     break;
                 case N_mach_header::ncmds:
@@ -195,6 +197,8 @@ void MACHWidget::reloadData()
                 }
 
                 comboBox[CB_mach_header_magic]=createComboBox(ui->tableWidget_mach_header,XMACH::getHeaderMagicsS(),SMACH::TYPE_mach_header,N_mach_header::magic,XComboBoxEx::CBTYPE_NORMAL);
+                comboBox[CB_mach_header_cputype]=createComboBox(ui->tableWidget_mach_header,XMACH::getHeaderCpuTypesS(),SMACH::TYPE_mach_header,N_mach_header::cputype,XComboBoxEx::CBTYPE_NORMAL);
+                comboBox[CB_mach_header_filetype]=createComboBox(ui->tableWidget_mach_header,XMACH::getHeaderFileTypesS(),SMACH::TYPE_mach_header,N_mach_header::filetype,XComboBoxEx::CBTYPE_NORMAL);
             }
 
             blockSignals(true);
@@ -213,6 +217,8 @@ void MACHWidget::reloadData()
             }
 
             comboBox[CB_mach_header_magic]->setValue(mach.getHeader_magic());
+            comboBox[CB_mach_header_cputype]->setValue((quint32)mach.getHeader_cputype());
+            comboBox[CB_mach_header_filetype]->setValue((quint32)mach.getHeader_filetype());
 
             blockSignals(false);
         }
@@ -234,6 +240,12 @@ void MACHWidget::widgetValueChanged(quint64 nValue)
         {
         case N_mach_header::magic:
             lineEdit_mach_header[N_mach_header::magic]->setValue((quint32)nValue);
+            break;
+        case N_mach_header::cputype:
+            lineEdit_mach_header[N_mach_header::cputype]->setValue((quint32)nValue);
+            break;
+        case N_mach_header::filetype:
+            lineEdit_mach_header[N_mach_header::filetype]->setValue((quint32)nValue);
             break;
         }
         break;

@@ -51,6 +51,8 @@ private:
     enum CB
     {
         CB_mach_header_magic=0,
+        CB_mach_header_cputype,
+        CB_mach_header_filetype,
         __CB_size
     };
 
