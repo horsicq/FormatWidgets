@@ -63,8 +63,7 @@ void MACHWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_HEX,"HEX"));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_mach_header,"mach_header"));
 
-        // TODO Sections
-        // TODO Programs
+        // TODO Commands
 
         ui->treeWidgetNavi->expandAll();
 
