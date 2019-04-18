@@ -42,17 +42,20 @@ SectionHeaderWidget::~SectionHeaderWidget()
     delete ui;
 }
 
-void SectionHeaderWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions, quint32 nNumber)
+void SectionHeaderWidget::clear()
 {
-    this->nNumber=nNumber;
-    FormatWidget::setData(pDevice,pOptions);
-
     bInit=false;
 
     memset(lineEdit_IMAGE_SECTION_HEADER,0,sizeof lineEdit_IMAGE_SECTION_HEADER);
     memset(comboBox,0,sizeof comboBox);
 
     ui->checkBoxReadonly->setChecked(true);
+}
+
+void SectionHeaderWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions, quint32 nNumber)
+{
+    this->nNumber=nNumber;
+    FormatWidget::setData(pDevice,pOptions);
 
     reloadData();
 }

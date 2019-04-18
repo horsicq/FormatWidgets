@@ -42,10 +42,8 @@ MACHWidget::~MACHWidget()
     delete ui;
 }
 
-void MACHWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
+void MACHWidget::clear()
 {
-    FormatWidget::setData(pDevice,pOptions);
-
     memset(bInit,0,sizeof bInit);
     memset(lineEdit_mach_header,0,sizeof lineEdit_mach_header);
     memset(comboBox,0,sizeof comboBox);
@@ -54,6 +52,13 @@ void MACHWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
 
     ui->widgetHex->enableHeader(true);
     ui->widgetHex->enableReadOnly(false);
+
+    ui->treeWidgetNavi->clear();
+}
+
+void MACHWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
+{
+    FormatWidget::setData(pDevice,pOptions);
 
     XMACH mach(pDevice,getOptions()->bIsImage,getOptions()->nImageAddress);
 
@@ -112,6 +117,7 @@ bool MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, 
                     mach.setHeader_sizeofcmds((quint32)nValue);
                     break;
                 case N_mach_header::flags:
+                    comboBox[CB_mach_header_flags]->setValue(nValue);
                     mach.setHeader_flags((quint32)nValue);
                     break;
                 case N_mach_header::reserved:
@@ -152,10 +158,10 @@ void MACHWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
     switch(type)
     {
     case SMACH::TYPE_mach_header:
-        pTableWidget->setColumnWidth(0,nSymbolWidth*10);
-        pTableWidget->setColumnWidth(1,nSymbolWidth*13);
-        pTableWidget->setColumnWidth(2,nSymbolWidth*13);
-        pTableWidget->setColumnWidth(3,nSymbolWidth*13);
+        pTableWidget->setColumnWidth(0,nSymbolWidth*8);
+        pTableWidget->setColumnWidth(1,nSymbolWidth*10);
+        pTableWidget->setColumnWidth(2,nSymbolWidth*10);
+        pTableWidget->setColumnWidth(3,nSymbolWidth*26);
         break;
     }
 }
@@ -198,6 +204,7 @@ void MACHWidget::reloadData()
                 comboBox[CB_mach_header_magic]=createComboBox(ui->tableWidget_mach_header,XMACH::getHeaderMagicsS(),SMACH::TYPE_mach_header,N_mach_header::magic,XComboBoxEx::CBTYPE_NORMAL);
                 comboBox[CB_mach_header_cputype]=createComboBox(ui->tableWidget_mach_header,XMACH::getHeaderCpuTypesS(),SMACH::TYPE_mach_header,N_mach_header::cputype,XComboBoxEx::CBTYPE_NORMAL);
                 comboBox[CB_mach_header_filetype]=createComboBox(ui->tableWidget_mach_header,XMACH::getHeaderFileTypesS(),SMACH::TYPE_mach_header,N_mach_header::filetype,XComboBoxEx::CBTYPE_NORMAL);
+                comboBox[CB_mach_header_flags]=createComboBox(ui->tableWidget_mach_header,XMACH::getHeaderFlagsS(),SMACH::TYPE_mach_header,N_mach_header::flags,XComboBoxEx::CBTYPE_FLAGS);
             }
 
             blockSignals(true);
@@ -218,6 +225,7 @@ void MACHWidget::reloadData()
             comboBox[CB_mach_header_magic]->setValue(mach.getHeader_magic());
             comboBox[CB_mach_header_cputype]->setValue((quint32)mach.getHeader_cputype());
             comboBox[CB_mach_header_filetype]->setValue((quint32)mach.getHeader_filetype());
+            comboBox[CB_mach_header_flags]->setValue((quint32)mach.getHeader_flags());
 
             blockSignals(false);
         }
@@ -246,6 +254,9 @@ void MACHWidget::widgetValueChanged(quint64 nValue)
         case N_mach_header::filetype:
             lineEdit_mach_header[N_mach_header::filetype]->setValue((quint32)nValue);
             break;
+        case N_mach_header::flags:
+            lineEdit_mach_header[N_mach_header::flags]->setValue((quint32)nValue);
+            break;
         }
         break;
     }
@@ -253,7 +264,10 @@ void MACHWidget::widgetValueChanged(quint64 nValue)
 
 void MACHWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
 {
-    reloadData();
+    if(current)
+    {
+        reloadData();
+    }
 }
 
 void MACHWidget::on_checkBoxReadonly_toggled(bool checked)

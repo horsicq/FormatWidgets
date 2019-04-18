@@ -42,10 +42,8 @@ MSDOSWidget::~MSDOSWidget()
     delete ui;
 }
 
-void MSDOSWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
+void MSDOSWidget::clear()
 {
-    FormatWidget::setData(pDevice,pOptions);
-
     memset(bInit,0,sizeof bInit);
     memset(lineEdit_DOS_HEADER,0,sizeof lineEdit_DOS_HEADER);
     memset(comboBox,0,sizeof comboBox);
@@ -54,6 +52,13 @@ void MSDOSWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
 
     ui->widgetHex->enableHeader(true);
     ui->widgetHex->enableReadOnly(false);
+
+    ui->treeWidgetNavi->clear();
+}
+
+void MSDOSWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
+{
+    FormatWidget::setData(pDevice,pOptions);
 
     XMSDOS msdos(pDevice,getOptions()->bIsImage,getOptions()->nImageAddress);
 
@@ -323,7 +328,10 @@ void MSDOSWidget::widgetValueChanged(quint64 nValue)
 
 void MSDOSWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
 {
-    reloadData();
+    if(current)
+    {
+        reloadData();
+    }
 }
 
 void MSDOSWidget::on_checkBoxReadonly_toggled(bool checked)

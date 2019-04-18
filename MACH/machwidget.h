@@ -36,6 +36,7 @@ public:
     MACHWidget(QWidget *parent = nullptr);
     MACHWidget(QIODevice *pDevice, OPTIONS *pOptions, QWidget *parent = nullptr);
     ~MACHWidget();
+    virtual void clear();
     virtual void setData(QIODevice *pDevice,OPTIONS *pOptions);
 protected:
     virtual bool _setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition);
@@ -53,6 +54,7 @@ private:
         CB_mach_header_magic=0,
         CB_mach_header_cputype,
         CB_mach_header_filetype,
+        CB_mach_header_flags,
         __CB_size
     };
 

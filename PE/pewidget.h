@@ -38,6 +38,7 @@ public:
     PEWidget(QWidget *parent=nullptr);
     PEWidget(QIODevice *pDevice, OPTIONS *pOptions, QWidget *parent = nullptr);
     ~PEWidget();
+    virtual void clear();
     virtual void setData(QIODevice *pDevice,OPTIONS *pOptions);
 protected:
     virtual bool _setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition);

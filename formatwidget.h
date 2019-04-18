@@ -103,6 +103,7 @@ public:
     FormatWidget(QWidget *parent = nullptr);
     FormatWidget(QIODevice *pDevice,OPTIONS *pOptions,QWidget *parent = nullptr);
     ~FormatWidget();
+    virtual void clear()=0;
     virtual void setData(QIODevice *pDevice,OPTIONS *pOptions);
     QIODevice *getDevice();
     OPTIONS *getOptions();

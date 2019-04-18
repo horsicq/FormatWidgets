@@ -42,10 +42,8 @@ ELFWidget::~ELFWidget()
     delete ui;
 }
 
-void ELFWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
+void ELFWidget::clear()
 {
-    FormatWidget::setData(pDevice,pOptions);
-
     memset(bInit,0,sizeof bInit);
     memset(lineEdit_Elf_Ehdr,0,sizeof lineEdit_Elf_Ehdr);
     memset(comboBox,0,sizeof comboBox);
@@ -54,6 +52,13 @@ void ELFWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
 
     ui->widgetHex->enableHeader(true);
     ui->widgetHex->enableReadOnly(false);
+
+    ui->treeWidgetNavi->clear();
+}
+
+void ELFWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
+{
+    FormatWidget::setData(pDevice,pOptions);
 
     XELF elf(pDevice,getOptions()->bIsImage,getOptions()->nImageAddress);
 
@@ -375,7 +380,10 @@ void ELFWidget::widgetValueChanged(quint64 nValue)
 
 void ELFWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
 {
-    reloadData();
+    if(current)
+    {
+        reloadData();
+    }
 }
 
 void ELFWidget::on_checkBoxReadonly_toggled(bool checked)

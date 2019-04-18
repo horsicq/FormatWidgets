@@ -36,6 +36,7 @@ public:
     ELFWidget(QWidget *parent = nullptr);
     ELFWidget(QIODevice *pDevice, OPTIONS *pOptions, QWidget *parent = nullptr);
     ~ELFWidget();
+    virtual void clear();
     virtual void setData(QIODevice *pDevice,OPTIONS *pOptions);
 protected:
     virtual bool _setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition);

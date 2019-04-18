@@ -42,6 +42,7 @@ public:
     SectionHeaderWidget(QWidget *parent = nullptr);
     SectionHeaderWidget(QIODevice *pDevice, OPTIONS *pOptions, quint32 nNumber, QWidget *parent = nullptr);
     ~SectionHeaderWidget();
+    virtual void clear();
     virtual void setData(QIODevice *pDevice, OPTIONS *pOptions, quint32 nNumber);
 protected:
     virtual bool _setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition);

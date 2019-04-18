@@ -36,6 +36,7 @@ public:
     MSDOSWidget(QWidget *parent = nullptr);
     MSDOSWidget(QIODevice *pDevice, OPTIONS *pOptions, QWidget *parent = nullptr);
     ~MSDOSWidget();
+    virtual void clear();
     virtual void setData(QIODevice *pDevice,OPTIONS *pOptions);
 protected:
     virtual bool _setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition);

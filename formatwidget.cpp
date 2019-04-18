@@ -39,6 +39,8 @@ FormatWidget::~FormatWidget()
 
 void FormatWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
 {
+    clear();
+
     this->pDevice=pDevice;
     this->pOptions=pOptions;
 }

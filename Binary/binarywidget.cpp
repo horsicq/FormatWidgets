@@ -42,16 +42,21 @@ BinaryWidget::~BinaryWidget()
     delete ui;
 }
 
-void BinaryWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
+void BinaryWidget::clear()
 {
-    FormatWidget::setData(pDevice,pOptions);
-
     memset(bInit,0,sizeof bInit);
 
     ui->checkBoxReadonly->setChecked(true);
 
     ui->widgetHex->enableHeader(true);
     ui->widgetHex->enableReadOnly(false);
+
+    ui->treeWidgetNavi->clear();
+}
+
+void BinaryWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
+{
+    FormatWidget::setData(pDevice,pOptions);
 
     XBinary binary(pDevice,getOptions()->bIsImage,getOptions()->nImageAddress);
 

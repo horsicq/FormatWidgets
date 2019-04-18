@@ -42,10 +42,8 @@ PEWidget::~PEWidget()
     delete ui;
 }
 
-void PEWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
+void PEWidget::clear()
 {
-    FormatWidget::setData(pDevice,pOptions);
-
     memset(bInit,0,sizeof bInit);
     memset(lineEdit_IMAGE_DOS_HEADER,0,sizeof lineEdit_IMAGE_DOS_HEADER);
     memset(lineEdit_IMAGE_NT_HEADERS,0,sizeof lineEdit_IMAGE_NT_HEADERS);
@@ -68,6 +66,13 @@ void PEWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
     ui->widgetResourceHex->enableHeader(false);
     ui->widgetHex->enableHeader(true);
     ui->widgetHex->enableReadOnly(false);
+
+    ui->treeWidgetNavi->clear();
+}
+
+void PEWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
+{
+    FormatWidget::setData(pDevice,pOptions);
 
     XPE pe(pDevice,getOptions()->bIsImage,getOptions()->nImageAddress);
 
@@ -453,7 +458,10 @@ void PEWidget::blockSignals(bool bState)
 
 void PEWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
 {
-    reloadData();
+    if(current)
+    {
+        reloadData();
+    }
 }
 
 void PEWidget::widgetValueChanged(quint64 nValue)
