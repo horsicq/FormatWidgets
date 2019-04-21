@@ -374,6 +374,7 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                     pe.setOptionalHeader_DataDirectory_Size((quint32)nNdata,(quint32)nValue);
                     break;
                 }
+                break;
             case SPE::TYPE_EXPORT:
                 switch(nNdata)
                 {
