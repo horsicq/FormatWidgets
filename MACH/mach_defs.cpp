@@ -45,3 +45,13 @@ namespace N_mach_header
         {reserved,              "reserved",          4,      "uint32_t",            FormatWidget::VAL_TYPE_DATA},
     };
 }
+
+namespace N_commands
+{
+    const FormatWidget::HEADER_RECORD records[]=
+    {
+        {type,                  "type",             2,      "uint32_t",             FormatWidget::VAL_TYPE_DATA},
+        {size,                  "size",             4,      "uint32_t",             FormatWidget::VAL_TYPE_SIZE},
+        {offset,                "offset",           8,      "",                     FormatWidget::VAL_TYPE_OFFSET}
+    };
+}

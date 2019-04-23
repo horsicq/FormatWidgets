@@ -70,6 +70,10 @@ void MACHWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
 
         // TODO Commands
 
+        QList<XMACH::COMMAND_RECORD> listCommandRecords=mach.getCommandRecords();
+
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_commands,tr("commands")));
+
         ui->treeWidgetNavi->expandAll();
 
         ui->treeWidgetNavi->setCurrentItem(ui->treeWidgetNavi->topLevelItem(1));
@@ -229,9 +233,21 @@ void MACHWidget::reloadData()
 
             blockSignals(false);
         }
+        else if(nData==SMACH::TYPE_commands)
+        {
+            if(!bInit[nData])
+            {
+
+            }
+
+            blockSignals(true);
+
+            blockSignals(false);
+        }
 
         setReadonly(ui->checkBoxReadonly->isChecked());
     }
+
 }
 
 void MACHWidget::widgetValueChanged(quint64 nValue)

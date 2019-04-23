@@ -171,7 +171,7 @@ void SectionHeaderWidget::reloadData()
         QString sName=QString((char *)ish.Name);
         sName.resize(qMin(sName.length(),S_IMAGE_SIZEOF_SHORT_NAME));
 
-        lineEdit_IMAGE_SECTION_HEADER[N_IMAGE_SECTION_HEADER::Name]->setStringValue(sName,S_IMAGE_SIZEOF_SHORT_NAME);
+        lineEdit_IMAGE_SECTION_HEADER[N_IMAGE_SECTION_HEADER::Name]->setStringValue(sName,S_IMAGE_SIZEOF_SHORT_NAME); // TODO Check
         lineEdit_IMAGE_SECTION_HEADER[N_IMAGE_SECTION_HEADER::VirtualSize]->setValue(ish.Misc.VirtualSize);
         lineEdit_IMAGE_SECTION_HEADER[N_IMAGE_SECTION_HEADER::VirtualAddress]->setValue(ish.VirtualAddress);
         lineEdit_IMAGE_SECTION_HEADER[N_IMAGE_SECTION_HEADER::SizeOfRawData]->setValue(ish.SizeOfRawData);

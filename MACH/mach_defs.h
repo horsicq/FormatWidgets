@@ -30,6 +30,7 @@ namespace SMACH
     {
         TYPE_HEX=0,
         TYPE_mach_header,
+        TYPE_commands,
         __TYPE_size
     };
 }
@@ -51,6 +52,19 @@ namespace N_mach_header
 
     extern const FormatWidget::HEADER_RECORD records32[__data_size-1];
     extern const FormatWidget::HEADER_RECORD records64[__data_size];
+}
+
+namespace N_commands
+{
+    enum DATA
+    {
+        type=0,
+        size,
+        offset,
+        __data_size
+    };
+
+    extern const FormatWidget::HEADER_RECORD records[__data_size];
 }
 
 #endif // MACH_DEFS_H
