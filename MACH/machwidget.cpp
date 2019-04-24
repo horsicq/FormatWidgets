@@ -237,10 +237,30 @@ void MACHWidget::reloadData()
         {
             if(!bInit[nData])
             {
-
+                bInit[nData]=createSectionTable(SMACH::TYPE_commands,ui->tableWidget_commands,N_commands::records,N_commands::__data_size);
             }
 
             blockSignals(true);
+
+            QList<XMACH::COMMAND_RECORD> listCommandRecords=mach.getCommandRecords();
+
+            int nCount=listCommandRecords.count();
+
+            ui->tableWidget_commands->setRowCount(nCount);
+
+            QMap<quint64,QString> mapLC=mach.getLoadCommandTypesS();
+
+            for(int i=0;i<nCount;i++)
+            {
+                ui->tableWidget_commands->setItem(i,N_commands::cmd,            new QTableWidgetItem(XBinary::valueToHex((quint32)listCommandRecords.at(i).nType)));
+                ui->tableWidget_commands->setItem(i,N_commands::cmdsize,        new QTableWidgetItem(XBinary::valueToHex((quint32)listCommandRecords.at(i).nSize)));
+                ui->tableWidget_commands->setItem(i,N_commands::cmdsize+1,      new QTableWidgetItem(mapLC.value(listCommandRecords.at(i).nType)));
+            }
+
+            if(nCount)
+            {
+                ui->tableWidget_commands->setCurrentCell(0,0);
+            }
 
             blockSignals(false);
         }
@@ -289,4 +309,38 @@ void MACHWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *current, 
 void MACHWidget::on_checkBoxReadonly_toggled(bool checked)
 {
     setReadonly(checked);
+}
+
+bool MACHWidget::createSectionTable(int type, QTableWidget *pTableWidget, const FormatWidget::HEADER_RECORD *pRecords, int nRecordCount)
+{
+    QStringList slHeader;
+
+    switch(type)
+    {
+    case SMACH::TYPE_commands:
+        pTableWidget->setColumnCount(nRecordCount+1);
+        pTableWidget->setColumnWidth(2,200);
+        break;
+    default:
+        pTableWidget->setColumnCount(nRecordCount);
+    }
+
+    pTableWidget->setRowCount(0);
+
+    for(int i=0;i<nRecordCount;i++)
+    {
+        slHeader.append(pRecords[i].pszName);
+    }
+
+    switch(type)
+    {
+    case SMACH::TYPE_commands:
+        slHeader.append(tr("Type"));
+        break;
+    }
+
+    pTableWidget->setHorizontalHeaderLabels(slHeader);
+    pTableWidget->horizontalHeader()->setVisible(true);
+
+    return true;
 }

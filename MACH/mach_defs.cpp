@@ -50,8 +50,7 @@ namespace N_commands
 {
     const FormatWidget::HEADER_RECORD records[]=
     {
-        {type,                  "type",             2,      "uint32_t",             FormatWidget::VAL_TYPE_DATA},
-        {size,                  "size",             4,      "uint32_t",             FormatWidget::VAL_TYPE_SIZE},
-        {offset,                "offset",           8,      "",                     FormatWidget::VAL_TYPE_OFFSET}
+        {cmd,                  "cmd",               2,      "uint32_t",             FormatWidget::VAL_TYPE_DATA},
+        {cmdsize,              "cmdsize",           4,      "uint32_t",             FormatWidget::VAL_TYPE_SIZE},
     };
 }

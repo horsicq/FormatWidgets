@@ -67,6 +67,23 @@ void ELFWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_HEX,"HEX"));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_Elf_Ehdr,"Elf_Ehdr"));
 
+        if(elf.is64())
+        {
+            QList<S_Elf64_Shdr> listSections=elf.getElf64_ShdrList();
+            if(listSections.count())
+            {
+
+            }
+        }
+        else
+        {
+            QList<S_Elf32_Shdr> listSections=elf.getElf32_ShdrList();
+            if(listSections.count())
+            {
+
+            }
+        }
+
         // TODO Sections
         // TODO Programs
 

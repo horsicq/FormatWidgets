@@ -30,6 +30,8 @@ namespace SELF
     {
         TYPE_HEX=0,
         TYPE_Elf_Ehdr,
+        TYPE_Sections,
+        TYPE_Programs,
         __TYPE_size
     };
 }

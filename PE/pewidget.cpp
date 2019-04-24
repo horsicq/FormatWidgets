@@ -801,6 +801,8 @@ void PEWidget::reloadData()
                 bInit[nData]=createSectionTable(SPE::TYPE_SECTIONS,ui->tableWidget_Sections,N_IMAGE_SECTION_HEADER::records,N_IMAGE_SECTION_HEADER::__data_size);
             }
 
+            blockSignals(true);
+
             QList<S_IMAGE_SECTION_HEADER> listSections=pe.getSectionHeaders();
             int nCount=listSections.count();
 
@@ -850,6 +852,8 @@ void PEWidget::reloadData()
             {
                 ui->tableWidget_Sections->setCurrentCell(0,0);
             }
+
+            blockSignals(false);
         }
         else if(nData==SPE::TYPE_EXPORT)
         {

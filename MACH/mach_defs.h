@@ -58,9 +58,8 @@ namespace N_commands
 {
     enum DATA
     {
-        type=0,
-        size,
-        offset,
+        cmd=0,
+        cmdsize,
         __data_size
     };
 
