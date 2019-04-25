@@ -72,7 +72,12 @@ void ELFWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
             QList<S_Elf64_Shdr> listSections=elf.getElf64_ShdrList();
             if(listSections.count())
             {
-
+                ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_Sections,"Sections"));
+            }
+            QList<S_Elf64_Phdr> listPrograms=elf.getElf64_PhdrList();
+            if(listPrograms.count())
+            {
+                ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_Programs,"Programs"));
             }
         }
         else
@@ -80,12 +85,14 @@ void ELFWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
             QList<S_Elf32_Shdr> listSections=elf.getElf32_ShdrList();
             if(listSections.count())
             {
-
+                ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_Sections,"Sections"));
+            }
+            QList<S_Elf32_Phdr> listPrograms=elf.getElf32_PhdrList();
+            if(listPrograms.count())
+            {
+                ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_Programs,"Programs"));
             }
         }
-
-        // TODO Sections
-        // TODO Programs
 
         ui->treeWidgetNavi->expandAll();
 
