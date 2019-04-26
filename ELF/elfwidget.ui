@@ -156,7 +156,7 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QTableWidget" name="tableWidget_sections">
+         <widget class="QTableWidget" name="tableWidget_Elf_Shdr">
           <property name="editTriggers">
            <set>QAbstractItemView::NoEditTriggers</set>
           </property>
@@ -194,7 +194,7 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QTableWidget" name="tableWidget_programs">
+         <widget class="QTableWidget" name="tableWidget_Elf_Phdr">
           <property name="editTriggers">
            <set>QAbstractItemView::NoEditTriggers</set>
           </property>

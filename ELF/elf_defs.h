@@ -30,8 +30,8 @@ namespace SELF
     {
         TYPE_HEX=0,
         TYPE_Elf_Ehdr,
-        TYPE_Sections,
-        TYPE_Programs,
+        TYPE_Elf_Shdr,
+        TYPE_Elf_Phdr,
         __TYPE_size
     };
 }
@@ -71,6 +71,27 @@ namespace N_Elf_Ehdr
         e_shentsize,
         e_shnum,
         e_shstrndx,
+        __data_size
+    };
+
+    extern const FormatWidget::HEADER_RECORD records32[__data_size];
+    extern const FormatWidget::HEADER_RECORD records64[__data_size];
+}
+
+namespace N_Elf_Shdr
+{
+    enum DATA
+    {
+        sh_name=0,
+        sh_type,
+        sh_flags,
+        sh_addr,
+        sh_offset,
+        sh_size,
+        sh_link,
+        sh_info,
+        sh_addralign,
+        sh_entsize,
         __data_size
     };
 

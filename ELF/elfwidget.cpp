@@ -72,12 +72,12 @@ void ELFWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
             QList<S_Elf64_Shdr> listSections=elf.getElf64_ShdrList();
             if(listSections.count())
             {
-                ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_Sections,"Sections"));
+                ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_Elf_Shdr,"Sections"));
             }
             QList<S_Elf64_Phdr> listPrograms=elf.getElf64_PhdrList();
             if(listPrograms.count())
             {
-                ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_Programs,"Programs"));
+                ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_Elf_Phdr,"Programs"));
             }
         }
         else
@@ -85,12 +85,12 @@ void ELFWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
             QList<S_Elf32_Shdr> listSections=elf.getElf32_ShdrList();
             if(listSections.count())
             {
-                ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_Sections,"Sections"));
+                ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_Elf_Shdr,"Sections"));
             }
             QList<S_Elf32_Phdr> listPrograms=elf.getElf32_PhdrList();
             if(listPrograms.count())
             {
-                ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_Programs,"Programs"));
+                ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_Elf_Phdr,"Programs"));
             }
         }
 
@@ -360,6 +360,75 @@ void ELFWidget::reloadData()
             comboBox[CB_Elf_Ehdr_idata]->setValue(elf.getIdent_data());
             comboBox[CB_Elf_Ehdr_iversion]->setValue(elf.getIdent_version());
             comboBox[CB_Elf_Ehdr_iosabi]->setValue(elf.getIdent_osabi());
+
+            blockSignals(false);
+        }
+        else if(nData==SELF::TYPE_Elf_Shdr)
+        {
+            bool bIs64=elf.is64();
+
+            if(!bInit[nData])
+            {
+                bInit[nData]=createSectionTable(SELF::TYPE_Elf_Shdr,ui->tableWidget_Elf_Shdr,bIs64?(N_Elf_Shdr::records64):(N_Elf_Shdr::records32),N_Elf_Shdr::__data_size);
+            }
+
+            blockSignals(true);
+
+            QList<S_Elf64_Shdr> listSections64;
+            QList<S_Elf32_Shdr> listSections32;
+
+            int nCount=0;
+
+            if(bIs64)
+            {
+                listSections64=elf.getElf64_ShdrList();
+                nCount=listSections64.count();
+            }
+            else
+            {
+                listSections32=elf.getElf32_ShdrList();
+                nCount=listSections32.count();
+            }
+
+            ui->tableWidget_Elf_Shdr->setRowCount(nCount);
+
+
+//            QMap<quint64,QString> mapLC=mach.getLoadCommandTypesS();
+
+            for(int i=0;i<nCount;i++)
+            {
+                if(bIs64)
+                {
+                    ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_name,            new QTableWidgetItem(XBinary::valueToHex(listSections64.at(i).sh_name)));
+                    ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_type,            new QTableWidgetItem(XBinary::valueToHex(listSections64.at(i).sh_type)));
+                    ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_flags,           new QTableWidgetItem(XBinary::valueToHex(listSections64.at(i).sh_flags)));
+                    ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_addr,            new QTableWidgetItem(XBinary::valueToHex(listSections64.at(i).sh_addr)));
+                    ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_offset,          new QTableWidgetItem(XBinary::valueToHex(listSections64.at(i).sh_offset)));
+                    ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_size,            new QTableWidgetItem(XBinary::valueToHex(listSections64.at(i).sh_size)));
+                    ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_link,            new QTableWidgetItem(XBinary::valueToHex(listSections64.at(i).sh_link)));
+                    ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_info,            new QTableWidgetItem(XBinary::valueToHex(listSections64.at(i).sh_info)));
+                    ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_addralign,       new QTableWidgetItem(XBinary::valueToHex(listSections64.at(i).sh_addralign)));
+                    ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_entsize,         new QTableWidgetItem(XBinary::valueToHex(listSections64.at(i).sh_entsize)));
+                }
+                else
+                {
+                    ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_name,            new QTableWidgetItem(XBinary::valueToHex(listSections32.at(i).sh_name)));
+                    ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_type,            new QTableWidgetItem(XBinary::valueToHex(listSections32.at(i).sh_type)));
+                    ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_flags,           new QTableWidgetItem(XBinary::valueToHex(listSections32.at(i).sh_flags)));
+                    ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_addr,            new QTableWidgetItem(XBinary::valueToHex(listSections32.at(i).sh_addr)));
+                    ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_offset,          new QTableWidgetItem(XBinary::valueToHex(listSections32.at(i).sh_offset)));
+                    ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_size,            new QTableWidgetItem(XBinary::valueToHex(listSections32.at(i).sh_size)));
+                    ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_link,            new QTableWidgetItem(XBinary::valueToHex(listSections32.at(i).sh_link)));
+                    ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_info,            new QTableWidgetItem(XBinary::valueToHex(listSections32.at(i).sh_info)));
+                    ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_addralign,       new QTableWidgetItem(XBinary::valueToHex(listSections32.at(i).sh_addralign)));
+                    ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_entsize,         new QTableWidgetItem(XBinary::valueToHex(listSections32.at(i).sh_entsize)));
+                }
+            }
+
+            if(true)
+            {
+                ui->tableWidget_Elf_Shdr->setCurrentCell(0,0);
+            }
 
             blockSignals(false);
         }

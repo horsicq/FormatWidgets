@@ -235,7 +235,20 @@ bool FormatWidget::createDirectoryTable(int type, QTableWidget *pTableWidget, co
 
 bool FormatWidget::createSectionTable(int type, QTableWidget *pTableWidget, const FormatWidget::HEADER_RECORD *pRecords, int nRecordCount)
 {
-    return false;
+    QStringList slHeader;
+
+    pTableWidget->setRowCount(0);
+
+    for(int i=0;i<nRecordCount;i++)
+    {
+        slHeader.append(pRecords[i].pszName);
+    }
+
+    pTableWidget->setColumnCount(nRecordCount);
+    pTableWidget->setHorizontalHeaderLabels(slHeader);
+    pTableWidget->horizontalHeader()->setVisible(true);
+
+    return true;
 }
 
 void FormatWidget::setLineEditsReadOnly(XLineEditHEX **ppLineEdits, int nCount, bool bState)
