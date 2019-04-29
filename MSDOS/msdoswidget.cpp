@@ -50,9 +50,6 @@ void MSDOSWidget::clear()
 
     ui->checkBoxReadonly->setChecked(true);
 
-    ui->widgetHex->enableHeader(true);
-    ui->widgetHex->enableReadOnly(false);
-
     ui->treeWidgetNavi->clear();
 }
 
@@ -60,11 +57,11 @@ void MSDOSWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
 {
     FormatWidget::setData(pDevice,pOptions);
 
-    XMSDOS msdos(pDevice,getOptions()->bIsImage,getOptions()->nImageAddress);
+    XMSDOS msdos(pDevice,getOptions()->bIsImage,getOptions()->nImageBase);
 
     if(msdos.isValid())
     {
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_HEX,"HEX"));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_TOOLS,"Tools"));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_DOS_HEADER,"DOS_HEADER"));
 
         // TODO Sections
@@ -86,7 +83,7 @@ bool MSDOSWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,
 
     if(getDevice()->isWritable())
     {
-        XMSDOS msdos(getDevice(),getOptions()->bIsImage,getOptions()->nImageAddress);
+        XMSDOS msdos(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
         if(msdos.isValid())
         {
             switch(nStype)
@@ -237,19 +234,14 @@ void MSDOSWidget::reloadData()
     int nData=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole).toInt();
     ui->stackedWidgetInfo->setCurrentIndex(nData);
 
-    XMSDOS msdos(getDevice(),getOptions()->bIsImage,getOptions()->nImageAddress);
+    XMSDOS msdos(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
     if(msdos.isValid())
     {
-        if(nData==SMSDOS::TYPE_HEX)
+        if(nData==SMSDOS::TYPE_TOOLS)
         {
             if(!bInit[nData])
             {
-                QHexView::OPTIONS options={0};
-
-                options.nBaseAddress=getOptions()->nImageAddress;
-                options.sBackupFileName=getOptions()->sBackupFileName;
-
-                ui->widgetHex->setData(getDevice(),&options);
+                ui->widgetHex->setData(getDevice(),getOptions());
 
                 bInit[nData]=true;
             }

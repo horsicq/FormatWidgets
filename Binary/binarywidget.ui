@@ -58,28 +58,6 @@
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
-     <widget class="QTreeWidget" name="treeWidgetNavi">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>250</width>
-        <height>16777215</height>
-       </size>
-      </property>
-      <attribute name="headerVisible">
-       <bool>false</bool>
-      </attribute>
-      <column>
-       <property name="text">
-        <string notr="true">1</string>
-       </property>
-      </column>
-     </widget>
      <widget class="QStackedWidget" name="stackedWidgetInfo">
       <widget class="QWidget" name="page_HEX">
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -99,7 +77,7 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QHexViewWidget" name="widgetHex" native="true"/>
+         <widget class="ToolsWidget" name="widgetHex" native="true"/>
         </item>
        </layout>
       </widget>
@@ -110,9 +88,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>QHexViewWidget</class>
+   <class>ToolsWidget</class>
    <extends>QWidget</extends>
-   <header>qhexviewwidget.h</header>
+   <header>toolswidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

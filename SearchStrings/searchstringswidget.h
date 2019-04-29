@@ -42,7 +42,7 @@ class SearchStringsWidget : public QWidget
 public:
     explicit SearchStringsWidget(QWidget *parent=nullptr);
     ~SearchStringsWidget();
-    void setData(QIODevice *pDevice, SearchStrings::OPTIONS *pOptions=nullptr, bool bAuto=false);
+    void setData(QIODevice *pDevice, SearchStrings::OPTIONS *pOptions, bool bAuto=false);
 
 private slots:
     void on_pushButtonSave_clicked();

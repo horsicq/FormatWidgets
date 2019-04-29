@@ -28,7 +28,7 @@ namespace SMACH
 {
     enum TYPE
     {
-        TYPE_HEX=0,
+        TYPE_TOOLS=0,
         TYPE_mach_header,
         TYPE_commands,
         __TYPE_size

@@ -61,12 +61,6 @@ void PEWidget::clear()
 
     ui->checkBoxReadonly->setChecked(true);
 
-    ui->widgetSectionHex->enableHeader(false);
-    ui->widgetOverlayHex->enableHeader(false);
-    ui->widgetResourceHex->enableHeader(false);
-    ui->widgetHex->enableHeader(true);
-    ui->widgetHex->enableReadOnly(false);
-
     ui->treeWidgetNavi->clear();
 }
 
@@ -74,11 +68,11 @@ void PEWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
 {
     FormatWidget::setData(pDevice,pOptions);
 
-    XPE pe(pDevice,getOptions()->bIsImage,getOptions()->nImageAddress);
+    XPE pe(pDevice,getOptions()->bIsImage,getOptions()->nImageBase);
 
     if(pe.isValid())
     {
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_HEX,"HEX"));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_TOOLS,"Tools"));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_IMAGE_DOS_HEADER,"IMAGE_DOS_HEADER"));
         QTreeWidgetItem *pNtHeaders=createNewItem(SPE::TYPE_IMAGE_NT_HEADERS,"IMAGE_NT_HEADERS");
         ui->treeWidgetNavi->addTopLevelItem(pNtHeaders);
@@ -125,7 +119,7 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
 
     if(getDevice()->isWritable())
     {
-        XPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageAddress);
+        XPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
         if(pe.isValid())
         {
             switch(nStype)
@@ -532,7 +526,7 @@ void PEWidget::widgetAction()
         switch(nNdata)
         {
         case N_IMAGE_OPTIONAL_HEADER::CheckSum:
-            XPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageAddress);
+            XPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
             if(pe.isValid())
             {
                 quint32 nCheckSum=pe.calculateCheckSum();
@@ -568,19 +562,14 @@ void PEWidget::reloadData()
     int nData=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole).toInt();
     ui->stackedWidgetInfo->setCurrentIndex(nData);
 
-    XPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageAddress);
+    XPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
     if(pe.isValid())
     {
-        if(nData==SPE::TYPE_HEX)
+        if(nData==SPE::TYPE_TOOLS)
         {
             if(!bInit[nData])
             {
-                QHexView::OPTIONS options={0};
-
-                options.nBaseAddress=getOptions()->nImageAddress;
-                options.sBackupFileName=getOptions()->sBackupFileName;
-
-                ui->widgetHex->setData(getDevice(),&options);
+                ui->widgetHex->setData(getDevice(),getOptions());
 
                 bInit[nData]=true;
             }
@@ -1060,12 +1049,7 @@ void PEWidget::reloadData()
             pSubDeviceOverlay=new SubDevice(getDevice(),nOverLayOffset,nOverlaySize,this);
             pSubDeviceOverlay->open(getDevice()->openMode());
 
-            QHexView::OPTIONS options={0};
-
-            options.nBaseAddress=nOverLayOffset;
-            options.sBackupFileName=getOptions()->sBackupFileName;
-
-            ui->widgetOverlayHex->setData(pSubDeviceOverlay,&options);
+            ui->widgetOverlayHex->setData(pSubDeviceOverlay,getOptions());
         }
 
         setReadonly(ui->checkBoxReadonly->isChecked());
@@ -1092,7 +1076,7 @@ void PEWidget::loadImportLibrary(int nNumber)
 {
     ui->tableWidget_ImportFunctions->setRowCount(0);
 
-    XPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageAddress);
+    XPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
     if(pe.isValid())
     {
         bool bIs64=pe.is64();
@@ -1139,7 +1123,7 @@ void PEWidget::loadRelocs(qint64 nOffset)
 {
     ui->tableWidget_RelocsPositions->setRowCount(0);
 
-    XPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageAddress);
+    XPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
     if(pe.isValid())
     {
         QList<XPE::RELOCS_POSITION> listRelocsPositions=pe.getRelocsPositions(nOffset);
@@ -1300,12 +1284,7 @@ void PEWidget::on_tableWidget_Sections_currentCellChanged(int currentRow, int cu
 
         pSubDeviceSection->open(getDevice()->openMode());
 
-        QHexView::OPTIONS options={0};
-
-        options.nBaseAddress=nAddress;
-        options.sBackupFileName=getOptions()->sBackupFileName;
-
-        ui->widgetSectionHex->setData(pSubDeviceSection,&options);
+        ui->widgetSectionHex->setData(pSubDeviceSection,getOptions());
     }
 }
 
@@ -1330,12 +1309,7 @@ void PEWidget::on_treeWidgetResource_currentItemChanged(QTreeWidgetItem *current
 
             pSubDeviceResource->open(getDevice()->openMode());
 
-            QHexView::OPTIONS options={0};
-
-            options.nBaseAddress=nAddress;
-            options.sBackupFileName=getOptions()->sBackupFileName;
-
-            ui->widgetResourceHex->setData(pSubDeviceResource,&options);
+            ui->widgetResourceHex->setData(pSubDeviceResource,getOptions());
         }
     }
 }

@@ -99,7 +99,7 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QHexViewWidget" name="widgetHex" native="true"/>
+         <widget class="ToolsWidget" name="widgetHex" native="true"/>
         </item>
        </layout>
       </widget>
@@ -151,9 +151,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>QHexViewWidget</class>
+   <class>ToolsWidget</class>
    <extends>QWidget</extends>
-   <header>qhexviewwidget.h</header>
+   <header>toolswidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

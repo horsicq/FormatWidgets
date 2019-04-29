@@ -24,13 +24,4 @@
 #include "../formatwidget.h"
 #include "xbinary.h"
 
-namespace SBinary
-{
-    enum TYPE
-    {
-        TYPE_HEX=0,
-        __TYPE_size
-    };
-}
-
 #endif // MBINARY_DEFS_H

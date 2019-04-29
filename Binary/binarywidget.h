@@ -46,13 +46,12 @@ protected:
 private slots:
     virtual void reloadData();
     void widgetValueChanged(quint64 nValue);
-    void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
     void on_checkBoxReadonly_toggled(bool checked);
 private:
 
     Ui::BinaryWidget *ui;
 
-    bool bInit[SBinary::__TYPE_size];
+    bool bInit;
 };
 
 #endif // BINARYWIDGET_H

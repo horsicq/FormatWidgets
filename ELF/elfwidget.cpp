@@ -50,9 +50,6 @@ void ELFWidget::clear()
 
     ui->checkBoxReadonly->setChecked(true);
 
-    ui->widgetHex->enableHeader(true);
-    ui->widgetHex->enableReadOnly(false);
-
     ui->treeWidgetNavi->clear();
 }
 
@@ -60,11 +57,11 @@ void ELFWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
 {
     FormatWidget::setData(pDevice,pOptions);
 
-    XELF elf(pDevice,getOptions()->bIsImage,getOptions()->nImageAddress);
+    XELF elf(pDevice,getOptions()->bIsImage,getOptions()->nImageBase);
 
     if(elf.isValid())
     {
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_HEX,"HEX"));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_TOOLS,"Tools"));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_Elf_Ehdr,"Elf_Ehdr"));
 
         if(elf.is64())
@@ -110,7 +107,7 @@ bool ELFWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, i
 
     if(getDevice()->isWritable())
     {
-        XELF elf(getDevice(),getOptions()->bIsImage,getOptions()->nImageAddress);
+        XELF elf(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
         if(elf.isValid())
         {
             switch(nStype)
@@ -266,19 +263,14 @@ void ELFWidget::reloadData()
     int nData=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole).toInt();
     ui->stackedWidgetInfo->setCurrentIndex(nData);
 
-    XELF elf(getDevice(),getOptions()->bIsImage,getOptions()->nImageAddress);
+    XELF elf(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
     if(elf.isValid())
     {
-        if(nData==SELF::TYPE_HEX)
+        if(nData==SELF::TYPE_TOOLS)
         {
             if(!bInit[nData])
             {
-                QHexView::OPTIONS options={0};
-
-                options.nBaseAddress=getOptions()->nImageAddress;
-                options.sBackupFileName=getOptions()->sBackupFileName;
-
-                ui->widgetHex->setData(getDevice(),&options);
+                ui->widgetHex->setData(getDevice(),getOptions()); // TODO rename widget
 
                 bInit[nData]=true;
             }

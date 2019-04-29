@@ -44,29 +44,20 @@ BinaryWidget::~BinaryWidget()
 
 void BinaryWidget::clear()
 {
-    memset(bInit,0,sizeof bInit);
+    bInit=false;
 
     ui->checkBoxReadonly->setChecked(true);
-
-    ui->widgetHex->enableHeader(true);
-    ui->widgetHex->enableReadOnly(false);
-
-    ui->treeWidgetNavi->clear();
 }
 
 void BinaryWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
 {
     FormatWidget::setData(pDevice,pOptions);
 
-    XBinary binary(pDevice,getOptions()->bIsImage,getOptions()->nImageAddress);
+    XBinary binary(pDevice,getOptions()->bIsImage,getOptions()->nImageBase);
 
     if(binary.isValid())
     {
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBinary::TYPE_HEX,"HEX"));
-
-        ui->treeWidgetNavi->expandAll();
-
-        ui->treeWidgetNavi->setCurrentItem(ui->treeWidgetNavi->topLevelItem(0));
+        reloadData();
     }
 }
 
@@ -105,25 +96,14 @@ void BinaryWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
 
 void BinaryWidget::reloadData()
 {
-    int nData=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole).toInt();
-    ui->stackedWidgetInfo->setCurrentIndex(nData);
-
-    XBinary binary(getDevice(),getOptions()->bIsImage,getOptions()->nImageAddress);
+    XBinary binary(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
     if(binary.isValid())
     {
-        if(nData==SBinary::TYPE_HEX)
+        if(!bInit)
         {
-            if(!bInit[nData])
-            {
-                QHexView::OPTIONS options={0};
+            ui->widgetHex->setData(getDevice(),getOptions());
 
-                options.nBaseAddress=getOptions()->nImageAddress;
-                options.sBackupFileName=getOptions()->sBackupFileName;
-
-                ui->widgetHex->setData(getDevice(),&options);
-
-                bInit[nData]=true;
-            }
+            bInit=true;
         }
 
         setReadonly(ui->checkBoxReadonly->isChecked());
@@ -135,11 +115,6 @@ void BinaryWidget::widgetValueChanged(quint64 nValue)
     QWidget *pWidget=qobject_cast<QWidget *>(sender());
     int nStype=pWidget->property("STYPE").toInt();
     int nNdata=pWidget->property("NDATA").toInt();
-}
-
-void BinaryWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
-{
-    reloadData();
 }
 
 void BinaryWidget::on_checkBoxReadonly_toggled(bool checked)

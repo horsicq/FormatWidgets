@@ -28,7 +28,7 @@ namespace SPE
 {
     enum TYPE
     {
-        TYPE_HEX=0,
+        TYPE_TOOLS=0,
         TYPE_IMAGE_DOS_HEADER,
         TYPE_IMAGE_NT_HEADERS,
         TYPE_IMAGE_FILE_HEADER,

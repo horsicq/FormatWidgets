@@ -49,6 +49,8 @@ void SearchStringsWidget::setData(QIODevice *pDevice, SearchStrings::OPTIONS *pO
 
     qint64 nSize=pDevice->size();
 
+    ui->tableViewResult->setModel(nullptr);
+
     if(pOptions)
     {
         nBaseAddress=pOptions->nBaseAddress;

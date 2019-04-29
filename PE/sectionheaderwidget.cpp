@@ -69,7 +69,7 @@ bool SectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int
 
     if(getDevice()->isWritable())
     {
-        XPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageAddress);
+        XPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
         if(pe.isValid())
         {
             switch(nStype)
@@ -152,7 +152,7 @@ void SectionHeaderWidget::on_checkBoxReadonly_toggled(bool checked)
 
 void SectionHeaderWidget::reloadData()
 {
-    XPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageAddress);
+    XPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
     if(pe.isValid())
     {
         if(!bInit)

@@ -48,10 +48,9 @@ void MACHWidget::clear()
     memset(lineEdit_mach_header,0,sizeof lineEdit_mach_header);
     memset(comboBox,0,sizeof comboBox);
 
-    ui->checkBoxReadonly->setChecked(true);
+    pSubDeviceCommand=nullptr;
 
-    ui->widgetHex->enableHeader(true);
-    ui->widgetHex->enableReadOnly(false);
+    ui->checkBoxReadonly->setChecked(true);
 
     ui->treeWidgetNavi->clear();
 }
@@ -60,12 +59,12 @@ void MACHWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
 {
     FormatWidget::setData(pDevice,pOptions);
 
-    XMACH mach(pDevice,getOptions()->bIsImage,getOptions()->nImageAddress);
+    XMACH mach(pDevice,getOptions()->bIsImage,getOptions()->nImageBase);
 
     if(mach.isValid())
     {
         // mb TODO 32/64
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_HEX,"HEX"));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_TOOLS,"Tools"));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_mach_header,"mach_header"));
 
         // TODO Commands
@@ -90,7 +89,7 @@ bool MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, 
 
     if(getDevice()->isWritable())
     {
-        XMACH mach(getDevice(),getOptions()->bIsImage,getOptions()->nImageAddress);
+        XMACH mach(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
         if(mach.isValid())
         {
             switch(nStype)
@@ -175,19 +174,14 @@ void MACHWidget::reloadData()
     int nData=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole).toInt();
     ui->stackedWidgetInfo->setCurrentIndex(nData);
 
-    XMACH mach(getDevice(),getOptions()->bIsImage,getOptions()->nImageAddress);
+    XMACH mach(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
     if(mach.isValid())
     {
-        if(nData==SMACH::TYPE_HEX)
+        if(nData==SMACH::TYPE_TOOLS)
         {
             if(!bInit[nData])
             {
-                QHexView::OPTIONS options={0};
-
-                options.nBaseAddress=getOptions()->nImageAddress;
-                options.sBackupFileName=getOptions()->sBackupFileName;
-
-                ui->widgetHex->setData(getDevice(),&options);
+                ui->widgetHex->setData(getDevice(),getOptions());
 
                 bInit[nData]=true;
             }
@@ -252,7 +246,12 @@ void MACHWidget::reloadData()
 
             for(int i=0;i<nCount;i++)
             {
-                ui->tableWidget_commands->setItem(i,N_commands::cmd,            new QTableWidgetItem(XBinary::valueToHex((quint32)listCommandRecords.at(i).nType)));
+                QTableWidgetItem *pItem=new QTableWidgetItem(XBinary::valueToHex((quint32)listCommandRecords.at(i).nType));
+                pItem->setData(Qt::UserRole+SECTION_DATA_OFFSET,listCommandRecords.at(i).nOffset);
+                pItem->setData(Qt::UserRole+SECTION_DATA_SIZE,listCommandRecords.at(i).nSize);
+                pItem->setData(Qt::UserRole+SECTION_DATA_ADDRESS,listCommandRecords.at(i).nOffset);
+
+                ui->tableWidget_commands->setItem(i,N_commands::cmd,            pItem);
                 ui->tableWidget_commands->setItem(i,N_commands::cmdsize,        new QTableWidgetItem(XBinary::valueToHex((quint32)listCommandRecords.at(i).nSize)));
                 ui->tableWidget_commands->setItem(i,N_commands::cmdsize+1,      new QTableWidgetItem(mapLC.value(listCommandRecords.at(i).nType)));
             }
@@ -343,4 +342,27 @@ bool MACHWidget::createSectionTable(int type, QTableWidget *pTableWidget, const 
     pTableWidget->horizontalHeader()->setVisible(true);
 
     return true;
+}
+
+void MACHWidget::on_tableWidget_commands_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
+{
+    if(currentRow!=-1)
+    {
+        qint64 nOffset=ui->tableWidget_commands->item(currentRow,0)->data(Qt::UserRole+SECTION_DATA_OFFSET).toLongLong();
+        qint64 nSize=ui->tableWidget_commands->item(currentRow,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
+        qint64 nAddress=ui->tableWidget_commands->item(currentRow,0)->data(Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
+
+        if(pSubDeviceCommand)
+        {
+            pSubDeviceCommand->close();
+            delete pSubDeviceCommand;
+        }
+
+        pSubDeviceCommand=new SubDevice(getDevice(),nOffset,nSize,this);
+
+        pSubDeviceCommand->open(getDevice()->openMode());
+
+
+        ui->widgetCommandHex->setData(pSubDeviceCommand,getOptions());
+    }
 }

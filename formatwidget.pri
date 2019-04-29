@@ -1,5 +1,5 @@
-INCLUDEPATH += $$PWD/PE
-DEPENDPATH += $$PWD/PE
+INCLUDEPATH += $$PWD
+DEPENDPATH += $$PWD
 
 !contains(XCONFIG, xlineedithex) {
     XCONFIG += xlineedithex
@@ -21,9 +21,19 @@ DEPENDPATH += $$PWD/PE
     include(../QHexView/qhexview.pri)
 }
 
+!contains(XCONFIG, searchstringswidget) {
+    XCONFIG += searchstringswidget
+    include(SearchStrings/searchstringswidget.pri)
+}
+
 HEADERS += \
-    $$PWD/formatwidget.h
+    $$PWD/formatwidget.h \
+    $$PWD/toolswidget.h
 
 SOURCES += \
-    $$PWD/formatwidget.cpp
+    $$PWD/formatwidget.cpp \
+    $$PWD/toolswidget.cpp
+
+FORMS += \
+    $$PWD/toolswidget.ui
 

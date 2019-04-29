@@ -49,6 +49,8 @@ private slots:
     void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
     void on_checkBoxReadonly_toggled(bool checked);
     bool createSectionTable(int type, QTableWidget *pTableWidget, const FormatWidget::HEADER_RECORD *pRecords, int nRecordCount);
+    void on_tableWidget_commands_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
+
 private:
     enum CB
     {
@@ -65,6 +67,8 @@ private:
     XComboBoxEx *comboBox[__CB_size];
 
     bool bInit[SMACH::__TYPE_size];
+
+    SubDevice *pSubDeviceCommand;
 };
 
 #endif // MACHWIDGET_H
