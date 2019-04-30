@@ -48,6 +48,9 @@ void ELFWidget::clear()
     memset(lineEdit_Elf_Ehdr,0,sizeof lineEdit_Elf_Ehdr);
     memset(comboBox,0,sizeof comboBox);
 
+    pSubDeviceSection=nullptr;
+    pSubDeviceProgram=nullptr;
+
     ui->checkBoxReadonly->setChecked(true);
 
     ui->treeWidgetNavi->clear();
@@ -391,7 +394,12 @@ void ELFWidget::reloadData()
             {
                 if(bIs64)
                 {
-                    ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_name,            new QTableWidgetItem(XBinary::valueToHex(listSections64.at(i).sh_name)));
+                    QTableWidgetItem *pItem=new QTableWidgetItem(XBinary::valueToHex(listSections64.at(i).sh_name));
+                    pItem->setData(Qt::UserRole+SECTION_DATA_OFFSET,listSections64.at(i).sh_offset);
+                    pItem->setData(Qt::UserRole+SECTION_DATA_SIZE,listSections64.at(i).sh_size);
+                    pItem->setData(Qt::UserRole+SECTION_DATA_ADDRESS,listSections64.at(i).sh_addr);
+
+                    ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_name,            pItem);
                     ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_type,            new QTableWidgetItem(XBinary::valueToHex(listSections64.at(i).sh_type)));
                     ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_flags,           new QTableWidgetItem(XBinary::valueToHex(listSections64.at(i).sh_flags)));
                     ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_addr,            new QTableWidgetItem(XBinary::valueToHex(listSections64.at(i).sh_addr)));
@@ -404,7 +412,12 @@ void ELFWidget::reloadData()
                 }
                 else
                 {
-                    ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_name,            new QTableWidgetItem(XBinary::valueToHex(listSections32.at(i).sh_name)));
+                    QTableWidgetItem *pItem=new QTableWidgetItem(XBinary::valueToHex(listSections32.at(i).sh_name));
+                    pItem->setData(Qt::UserRole+SECTION_DATA_OFFSET,listSections32.at(i).sh_offset);
+                    pItem->setData(Qt::UserRole+SECTION_DATA_SIZE,listSections32.at(i).sh_size);
+                    pItem->setData(Qt::UserRole+SECTION_DATA_ADDRESS,listSections32.at(i).sh_addr);
+
+                    ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_name,            pItem);
                     ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_type,            new QTableWidgetItem(XBinary::valueToHex(listSections32.at(i).sh_type)));
                     ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_flags,           new QTableWidgetItem(XBinary::valueToHex(listSections32.at(i).sh_flags)));
                     ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_addr,            new QTableWidgetItem(XBinary::valueToHex(listSections32.at(i).sh_addr)));
@@ -474,4 +487,29 @@ void ELFWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *current, Q
 void ELFWidget::on_checkBoxReadonly_toggled(bool checked)
 {
     setReadonly(checked);
+}
+
+void ELFWidget::on_tableWidget_Elf_Shdr_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
+{
+    if(currentRow!=-1)
+    {
+        qint64 nOffset=ui->tableWidget_Elf_Shdr->item(currentRow,0)->data(Qt::UserRole+SECTION_DATA_OFFSET).toLongLong();
+        qint64 nSize=ui->tableWidget_Elf_Shdr->item(currentRow,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
+        qint64 nAddress=ui->tableWidget_Elf_Shdr->item(currentRow,0)->data(Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
+
+        if(pSubDeviceSection)
+        {
+            pSubDeviceSection->close();
+            delete pSubDeviceSection;
+        }
+
+        pSubDeviceSection=new SubDevice(getDevice(),nOffset,nSize,this);
+
+        pSubDeviceSection->open(getDevice()->openMode());
+
+        FormatWidget::OPTIONS hexOptions=*getOptions();
+        hexOptions.nImageBase=nAddress;
+
+        ui->widgetSectionHex->setData(pSubDeviceSection,&hexOptions);
+    }
 }

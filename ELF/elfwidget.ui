@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>646</width>
-    <height>207</height>
+    <width>756</width>
+    <height>345</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -175,6 +175,16 @@
           <attribute name="verticalHeaderDefaultSectionSize">
            <number>21</number>
           </attribute>
+         </widget>
+        </item>
+        <item>
+         <widget class="ToolsWidget" name="widgetSectionHex" native="true">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
          </widget>
         </item>
        </layout>

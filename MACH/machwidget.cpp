@@ -362,7 +362,9 @@ void MACHWidget::on_tableWidget_commands_currentCellChanged(int currentRow, int 
 
         pSubDeviceCommand->open(getDevice()->openMode());
 
+        FormatWidget::OPTIONS hexOptions=*getOptions();
+        hexOptions.nImageBase=nAddress;
 
-        ui->widgetCommandHex->setData(pSubDeviceCommand,getOptions());
+        ui->widgetCommandHex->setData(pSubDeviceCommand,&hexOptions);
     }
 }

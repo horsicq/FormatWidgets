@@ -1049,7 +1049,9 @@ void PEWidget::reloadData()
             pSubDeviceOverlay=new SubDevice(getDevice(),nOverLayOffset,nOverlaySize,this);
             pSubDeviceOverlay->open(getDevice()->openMode());
 
-            ui->widgetOverlayHex->setData(pSubDeviceOverlay,getOptions());
+            FormatWidget::OPTIONS hexOptions=*getOptions();
+            hexOptions.nImageBase=nOverLayOffset;
+            ui->widgetOverlayHex->setData(pSubDeviceOverlay,&hexOptions);
         }
 
         setReadonly(ui->checkBoxReadonly->isChecked());
@@ -1284,7 +1286,10 @@ void PEWidget::on_tableWidget_Sections_currentCellChanged(int currentRow, int cu
 
         pSubDeviceSection->open(getDevice()->openMode());
 
-        ui->widgetSectionHex->setData(pSubDeviceSection,getOptions());
+        FormatWidget::OPTIONS hexOptions=*getOptions();
+        hexOptions.nImageBase=nAddress;
+
+        ui->widgetSectionHex->setData(pSubDeviceSection,&hexOptions);
     }
 }
 
@@ -1309,7 +1314,10 @@ void PEWidget::on_treeWidgetResource_currentItemChanged(QTreeWidgetItem *current
 
             pSubDeviceResource->open(getDevice()->openMode());
 
-            ui->widgetResourceHex->setData(pSubDeviceResource,getOptions());
+            FormatWidget::OPTIONS hexOptions=*getOptions();
+            hexOptions.nImageBase=nAddress;
+
+            ui->widgetResourceHex->setData(pSubDeviceResource,&hexOptions);
         }
     }
 }

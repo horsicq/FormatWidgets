@@ -48,6 +48,8 @@ private slots:
     void widgetValueChanged(quint64 nValue);
     void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
     void on_checkBoxReadonly_toggled(bool checked);
+    void on_tableWidget_Elf_Shdr_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
+
 private:
     enum CB
     {
@@ -66,6 +68,9 @@ private:
     XComboBoxEx *comboBox[__CB_size];
 
     bool bInit[SELF::__TYPE_size];
+
+    SubDevice *pSubDeviceSection;
+    SubDevice *pSubDeviceProgram;
 };
 
 #endif // ELFWIDGET_H
