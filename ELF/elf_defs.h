@@ -99,4 +99,40 @@ namespace N_Elf_Shdr
     extern const FormatWidget::HEADER_RECORD records64[__data_size];
 }
 
+namespace N_Elf_Phdr32
+{
+    enum DATA
+    {
+        p_type=0,
+        p_offset,
+        p_vaddr,
+        p_paddr,
+        p_filesz,
+        p_memsz,
+        p_flags,
+        p_align,
+        __data_size
+    };
+
+    extern const FormatWidget::HEADER_RECORD records[__data_size];
+}
+
+namespace N_Elf_Phdr64
+{
+    enum DATA
+    {
+        p_type=0,
+        p_flags,
+        p_offset,
+        p_vaddr,
+        p_paddr,
+        p_filesz,
+        p_memsz,
+        p_align,
+        __data_size
+    };
+
+    extern const FormatWidget::HEADER_RECORD records[__data_size];
+}
+
 #endif // ELF_DEFS_H

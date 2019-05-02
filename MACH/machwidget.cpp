@@ -246,14 +246,16 @@ void MACHWidget::reloadData()
 
             for(int i=0;i<nCount;i++)
             {
-                QTableWidgetItem *pItem=new QTableWidgetItem(XBinary::valueToHex((quint32)listCommandRecords.at(i).nType));
+                QTableWidgetItem *pItem=new QTableWidgetItem(QString::number(i));
+
                 pItem->setData(Qt::UserRole+SECTION_DATA_OFFSET,listCommandRecords.at(i).nOffset);
                 pItem->setData(Qt::UserRole+SECTION_DATA_SIZE,listCommandRecords.at(i).nSize);
                 pItem->setData(Qt::UserRole+SECTION_DATA_ADDRESS,listCommandRecords.at(i).nOffset);
 
-                ui->tableWidget_commands->setItem(i,N_commands::cmd,            pItem);
-                ui->tableWidget_commands->setItem(i,N_commands::cmdsize,        new QTableWidgetItem(XBinary::valueToHex((quint32)listCommandRecords.at(i).nSize)));
-                ui->tableWidget_commands->setItem(i,N_commands::cmdsize+1,      new QTableWidgetItem(mapLC.value(listCommandRecords.at(i).nType)));
+                ui->tableWidget_commands->setItem(i,0,                      pItem);
+                ui->tableWidget_commands->setItem(i,N_commands::cmd+1,      new QTableWidgetItem(XBinary::valueToHex((quint32)listCommandRecords.at(i).nType)));
+                ui->tableWidget_commands->setItem(i,N_commands::cmdsize+1,  new QTableWidgetItem(XBinary::valueToHex((quint32)listCommandRecords.at(i).nSize)));
+                ui->tableWidget_commands->setItem(i,N_commands::cmdsize+2,  new QTableWidgetItem(mapLC.value(listCommandRecords.at(i).nType)));
             }
 
             if(nCount)
@@ -312,13 +314,18 @@ void MACHWidget::on_checkBoxReadonly_toggled(bool checked)
 
 bool MACHWidget::createSectionTable(int type, QTableWidget *pTableWidget, const FormatWidget::HEADER_RECORD *pRecords, int nRecordCount)
 {
+    int nSymbolWidth=getSymbolWidth();
     QStringList slHeader;
 
     switch(type)
     {
     case SMACH::TYPE_commands:
-        pTableWidget->setColumnCount(nRecordCount+1);
-        pTableWidget->setColumnWidth(2,200);
+        slHeader.append(tr(""));
+        pTableWidget->setColumnCount(nRecordCount+2);
+        pTableWidget->setColumnWidth(0,nSymbolWidth*4);
+        pTableWidget->setColumnWidth(1,nSymbolWidth*10);
+        pTableWidget->setColumnWidth(2,nSymbolWidth*10);
+        pTableWidget->setColumnWidth(3,nSymbolWidth*20);
         break;
     default:
         pTableWidget->setColumnCount(nRecordCount);

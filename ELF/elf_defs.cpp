@@ -121,3 +121,34 @@ namespace N_Elf_Shdr
         {sh_entsize,            "sh_entsize",           8,      "Elf64_Xword",          FormatWidget::VAL_TYPE_SIZE},
     };
 }
+
+namespace N_Elf_Phdr32
+{
+    const FormatWidget::HEADER_RECORD records[]=
+    {
+        {p_type,                "p_type",               4,      "Elf32_Word",           FormatWidget::VAL_TYPE_DATA},
+        {p_offset,              "p_offset",             4,      "Elf32_Off",            FormatWidget::VAL_TYPE_OFFSET},
+        {p_vaddr,               "p_vaddr",              4,      "Elf32_Addr",           FormatWidget::VAL_TYPE_ADDRESS},
+        {p_paddr,               "p_paddr",              4,      "Elf32_Addr",           FormatWidget::VAL_TYPE_ADDRESS},
+        {p_filesz,              "p_filesz",             4,      "Elf32_Word",           FormatWidget::VAL_TYPE_SIZE},
+        {p_memsz,               "p_memsz",              4,      "Elf32_Word",           FormatWidget::VAL_TYPE_SIZE},
+        {p_flags,               "p_flags",              4,      "Elf32_Word",           FormatWidget::VAL_TYPE_DATA},
+        {p_align,               "p_align",              4,      "Elf32_Word",           FormatWidget::VAL_TYPE_DATA},
+    };
+}
+
+namespace N_Elf_Phdr64
+{
+    const FormatWidget::HEADER_RECORD records[]=
+    {
+        {p_type,                "p_type",               4,      "Elf32_Word",           FormatWidget::VAL_TYPE_DATA},
+        {p_flags,               "p_flags",              4,      "Elf32_Word",           FormatWidget::VAL_TYPE_DATA},
+        {p_offset,              "p_offset",             8,      "Elf64_Off",            FormatWidget::VAL_TYPE_OFFSET},
+        {p_vaddr,               "p_vaddr",              8,      "Elf64_Addr",           FormatWidget::VAL_TYPE_ADDRESS},
+        {p_paddr,               "p_paddr",              8,      "Elf64_Addr",           FormatWidget::VAL_TYPE_ADDRESS},
+        {p_filesz,              "p_filesz",             8,      "Elf64_Xword",          FormatWidget::VAL_TYPE_SIZE},
+        {p_memsz,               "p_memsz",              8,      "Elf64_Xword",          FormatWidget::VAL_TYPE_SIZE},
+        {p_align,               "p_align",              8,      "Elf64_Xword",          FormatWidget::VAL_TYPE_DATA},
+    };
+}
+

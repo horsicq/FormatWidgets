@@ -802,15 +802,14 @@ void PEWidget::reloadData()
 
             for(int i=0;i<nCount;i++)
             {
-                QTableWidgetItem *itemNumber=new QTableWidgetItem();
-                itemNumber->setText(QString::number(i));
+                QTableWidgetItem *itemNumber=new QTableWidgetItem(QString::number(i));
 
                 itemNumber->setData(Qt::UserRole+SECTION_DATA_ADDRESS,listSections.at(i).VirtualAddress);
 
                 if(getOptions()->bIsImage)
                 {
-                    itemNumber->setData(Qt::UserRole+SECTION_DATA_SIZE,listSections.at(i).VirtualAddress);
-                    itemNumber->setData(Qt::UserRole+SECTION_DATA_OFFSET,listSections.at(i).Misc.VirtualSize);
+                    itemNumber->setData(Qt::UserRole+SECTION_DATA_SIZE,listSections.at(i).Misc.VirtualSize);
+                    itemNumber->setData(Qt::UserRole+SECTION_DATA_OFFSET,listSections.at(i).VirtualAddress);
                 }
                 else
                 {
@@ -1204,13 +1203,15 @@ void PEWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
 
 bool PEWidget::createSectionTable(int type, QTableWidget *pTableWidget, const FormatWidget::HEADER_RECORD *pRecords, int nRecordCount)
 {
+    int nSymbolWidth=getSymbolWidth();
+
     QStringList slHeader;
 
     switch(type)
     {
     case SPE::TYPE_SECTIONS:
         pTableWidget->setColumnCount(nRecordCount+1);
-        pTableWidget->setColumnWidth(0,20);
+        pTableWidget->setColumnWidth(0,nSymbolWidth*4);
         slHeader.append("");
         break;
     case SPE::TYPE_EXPORT_FUNCTION:
