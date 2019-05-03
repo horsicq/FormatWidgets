@@ -58,6 +58,7 @@ void ELFWidget::clear()
 
 void ELFWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
 {
+    clear();
     FormatWidget::setData(pDevice,pOptions);
 
     XELF elf(pDevice,getOptions()->bIsImage,getOptions()->nImageBase);

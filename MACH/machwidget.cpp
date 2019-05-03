@@ -57,6 +57,7 @@ void MACHWidget::clear()
 
 void MACHWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
 {
+    clear();
     FormatWidget::setData(pDevice,pOptions);
 
     XMACH mach(pDevice,getOptions()->bIsImage,getOptions()->nImageBase);

@@ -55,6 +55,7 @@ void MSDOSWidget::clear()
 
 void MSDOSWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
 {
+    clear();
     FormatWidget::setData(pDevice,pOptions);
 
     XMSDOS msdos(pDevice,getOptions()->bIsImage,getOptions()->nImageBase);

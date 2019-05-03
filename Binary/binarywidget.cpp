@@ -51,6 +51,7 @@ void BinaryWidget::clear()
 
 void BinaryWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
 {
+    clear();
     FormatWidget::setData(pDevice,pOptions);
 
     XBinary binary(pDevice,getOptions()->bIsImage,getOptions()->nImageBase);

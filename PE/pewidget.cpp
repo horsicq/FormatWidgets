@@ -66,6 +66,7 @@ void PEWidget::clear()
 
 void PEWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
 {
+    clear();
     FormatWidget::setData(pDevice,pOptions);
 
     XPE pe(pDevice,getOptions()->bIsImage,getOptions()->nImageBase);
