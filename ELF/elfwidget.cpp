@@ -60,6 +60,7 @@ void ELFWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
 {
     clear();
     FormatWidget::setData(pDevice,pOptions);
+	ui->checkBoxReadonly->setEnabled(!isReadonly());
 
     XELF elf(pDevice,getOptions()->bIsImage,getOptions()->nImageBase);
 

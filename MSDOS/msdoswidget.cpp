@@ -57,6 +57,7 @@ void MSDOSWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
 {
     clear();
     FormatWidget::setData(pDevice,pOptions);
+	ui->checkBoxReadonly->setEnabled(!isReadonly());
 
     XMSDOS msdos(pDevice,getOptions()->bIsImage,getOptions()->nImageBase);
 

@@ -68,6 +68,7 @@ void PEWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
 {
     clear();
     FormatWidget::setData(pDevice,pOptions);
+    ui->checkBoxReadonly->setEnabled(!isReadonly());
 
     XPE pe(pDevice,getOptions()->bIsImage,getOptions()->nImageBase);
 

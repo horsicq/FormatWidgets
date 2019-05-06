@@ -59,6 +59,7 @@ void MACHWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
 {
     clear();
     FormatWidget::setData(pDevice,pOptions);
+	ui->checkBoxReadonly->setEnabled(!isReadonly());
 
     XMACH mach(pDevice,getOptions()->bIsImage,getOptions()->nImageBase);
 

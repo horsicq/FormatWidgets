@@ -53,6 +53,7 @@ void BinaryWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
 {
     clear();
     FormatWidget::setData(pDevice,pOptions);
+	ui->checkBoxReadonly->setEnabled(!isReadonly());
 
     XBinary binary(pDevice,getOptions()->bIsImage,getOptions()->nImageBase);
 

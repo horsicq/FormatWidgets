@@ -107,6 +107,7 @@ public:
     virtual void setData(QIODevice *pDevice,OPTIONS *pOptions);
     QIODevice *getDevice();
     OPTIONS *getOptions();
+    bool isReadonly();
     QTreeWidgetItem *createNewItem(int nUserData, QString sTitle);
     bool createHeaderTable(int type,QTableWidget *pTableWidget, const HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nRecordCount,int nPosition=0);
 
@@ -141,6 +142,7 @@ private:
 private:
     QIODevice *pDevice;
     OPTIONS *pOptions;
+    bool bIsReadonly;
 };
 
 #endif // FORMATWIDGET_H

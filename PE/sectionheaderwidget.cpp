@@ -57,6 +57,7 @@ void SectionHeaderWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOp
     this->nNumber=nNumber;
     clear();
     FormatWidget::setData(pDevice,pOptions);
+    ui->checkBoxReadonly->setEnabled(!isReadonly());
 
     reloadData();
 }

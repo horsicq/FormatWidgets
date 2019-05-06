@@ -23,7 +23,7 @@
 FormatWidget::FormatWidget(QWidget *parent):
     QWidget(parent)
 {
-
+    bIsReadonly=false;
 }
 
 FormatWidget::FormatWidget(QIODevice *pDevice, OPTIONS *pOptions, QWidget *parent):
@@ -41,6 +41,8 @@ void FormatWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
 {
     this->pDevice=pDevice;
     this->pOptions=pOptions;
+
+    bIsReadonly=!(pDevice->isWritable());
 }
 
 QIODevice *FormatWidget::getDevice()
@@ -51,6 +53,11 @@ QIODevice *FormatWidget::getDevice()
 FormatWidget::OPTIONS *FormatWidget::getOptions()
 {
     return this->pOptions;
+}
+
+bool FormatWidget::isReadonly()
+{
+    return bIsReadonly;
 }
 
 QTreeWidgetItem *FormatWidget::createNewItem(int nUserData,QString sTitle)
