@@ -27,10 +27,9 @@ SearchStringsWidget::SearchStringsWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     pDevice=nullptr;
-    pOptions=nullptr;
     pFilter=new QSortFilterProxyModel(this);
-    nAddressWidth=8;
-    nBaseAddress=0;
+    options.nAddressWidth=8;
+    options.nBaseAddress=0;
     pModel=nullptr;
 
     ui->checkBoxAnsi->setChecked(true);
@@ -45,7 +44,6 @@ SearchStringsWidget::~SearchStringsWidget()
 void SearchStringsWidget::setData(QIODevice *pDevice, SearchStrings::OPTIONS *pOptions, bool bAuto)
 {
     this->pDevice=pDevice;
-    this->pOptions=pOptions;
 
     qint64 nSize=pDevice->size();
 
@@ -53,29 +51,30 @@ void SearchStringsWidget::setData(QIODevice *pDevice, SearchStrings::OPTIONS *pO
 
     if(pOptions)
     {
-        nBaseAddress=pOptions->nBaseAddress;
+        options=*pOptions;
     }
     else
     {
-        nBaseAddress=0;
+        options.nBaseAddress=0;
     }
 
-    if(nBaseAddress==-1)
+    if(options.nBaseAddress==-1)
     {
-        nBaseAddress=0;
+        options.nBaseAddress=0;
     }
 
-    if(nSize+nBaseAddress>0xFFFFFFFF)
+
+    if(nSize+options.nBaseAddress>0xFFFFFFFF)
     {
-        nAddressWidth=16;
+        options.nAddressWidth=16;
     }
     else
     {
-        nAddressWidth=8;
+        options.nAddressWidth=8;
     }
 
-    QString sInfo=QString("0x%1 - 0x%2 ( 0x%3 )").arg(nBaseAddress,nAddressWidth,16,QChar('0'))
-                                        .arg(nBaseAddress+nSize-1,nAddressWidth,16,QChar('0'))
+    QString sInfo=QString("0x%1 - 0x%2 ( 0x%3 )").arg(options.nBaseAddress,options.nAddressWidth,16,QChar('0'))
+                                        .arg(options.nBaseAddress+nSize-1,options.nAddressWidth,16,QChar('0'))
                                         .arg(nSize,8,16,QChar('0'));
     ui->labelInfo->setText(sInfo);
 
@@ -147,7 +146,7 @@ void SearchStringsWidget::on_tableViewResult_customContextMenuRequested(const QP
     connect(&actionCopyString,SIGNAL(triggered()),this,SLOT(_copyString()));
     contextMenu.addAction(&actionCopyString);
 
-    QAction actionCopyAddress(QString("%1 %2").arg(tr("Copy")).arg((nBaseAddress?(tr("Address")):(tr("Offset")))),this);
+    QAction actionCopyAddress(QString("%1 %2").arg(tr("Copy")).arg((options.nBaseAddress?(tr("Address")):(tr("Offset")))),this);
     connect(&actionCopyAddress,SIGNAL(triggered()),this,SLOT(_copyAddress()));
     contextMenu.addAction(&actionCopyAddress);
 
@@ -164,7 +163,11 @@ void SearchStringsWidget::_copyString()
 
     if((nRow!=-1)&&(pModel))
     {
-        QApplication::clipboard()->setText(pModel->item(nRow,3)->text());
+        QModelIndex index=ui->tableViewResult->selectionModel()->selectedIndexes().at(3);
+
+        QString sString=ui->tableViewResult->model()->data(index).toString();
+
+        QApplication::clipboard()->setText(sString);
     }
 }
 
@@ -174,7 +177,11 @@ void SearchStringsWidget::_copyAddress()
 
     if((nRow!=-1)&&(pModel))
     {
-        QApplication::clipboard()->setText(pModel->item(nRow,0)->text());
+        QModelIndex index=ui->tableViewResult->selectionModel()->selectedIndexes().at(0);
+
+        QString sString=ui->tableViewResult->model()->data(index).toString();
+
+        QApplication::clipboard()->setText(sString);
     }
 }
 
@@ -184,7 +191,11 @@ void SearchStringsWidget::_copySize()
 
     if((nRow!=-1)&&(pModel))
     {
-        QApplication::clipboard()->setText(pModel->item(nRow,1)->text());
+        QModelIndex index=ui->tableViewResult->selectionModel()->selectedIndexes().at(1);
+
+        QString sString=ui->tableViewResult->model()->data(index).toString();
+
+        QApplication::clipboard()->setText(sString);
     }
 }
 
@@ -194,52 +205,25 @@ void SearchStringsWidget::search()
     {
         ui->lineEditFilter->clear();
 
-        pOptions->bSearchAnsi=ui->checkBoxAnsi->isChecked();
-        pOptions->bSearchUnicode=ui->checkBoxUnicode->isChecked();
+        options.bSearchAnsi=ui->checkBoxAnsi->isChecked();
+        options.bSearchUnicode=ui->checkBoxUnicode->isChecked();
 
-        if(pOptions->bSearchAnsi||pOptions->bSearchUnicode)
+        if(options.bSearchAnsi||options.bSearchUnicode)
         {
             QList<SearchStrings::RECORD> listRecords;
             DialogSearchStrings ds(this);
-            ds.process(pDevice,&listRecords,pOptions);
+            ds.processSearch(pDevice,&listRecords,&options);
             ds.exec();
 
-            int nCount=listRecords.count();
+            pFilter->setSourceModel(0);
+            ui->tableViewResult->setModel(0);
 
-            pModel=new QStandardItemModel(nCount,4);
+            DialogSearchStrings dm(this);
+            dm.processModel(&listRecords,&pModel,&options);
+            dm.exec();
 
-            pModel->setHeaderData(0,Qt::Horizontal,nBaseAddress?(tr("Address")):(tr("Offset")));
-            pModel->setHeaderData(1,Qt::Horizontal,tr("Size"));
-            pModel->setHeaderData(2,Qt::Horizontal,tr("Type"));
-            pModel->setHeaderData(3,Qt::Horizontal,tr("String"));
-
-            for(int i=0;i<nCount;i++)
-            {
-                SearchStrings::RECORD record=listRecords.at(i);
-
-                QStandardItem *pTypeAddress=new QStandardItem;
-                pTypeAddress->setText(QString("%1").arg(record.nOffset,nAddressWidth,16,QChar('0')));
-                pTypeAddress->setTextAlignment(Qt::AlignRight);
-                pModel->setItem(i,0,pTypeAddress);
-
-                QStandardItem *pTypeSize=new QStandardItem;
-                pTypeSize->setText(QString("%1").arg(record.nSize,8,16,QChar('0')));
-                pTypeSize->setTextAlignment(Qt::AlignRight);
-                pModel->setItem(i,1,pTypeSize);
-
-                QStandardItem *pTypeItem=new QStandardItem;
-                if(record.recordType==SearchStrings::RECORD_TYPE_ANSI)
-                {
-                    pTypeItem->setText("A");
-                }
-                else if(record.recordType==SearchStrings::RECORD_TYPE_UNICODE)
-                {
-                    pTypeItem->setText("U");
-                }
-                pModel->setItem(i,2,pTypeItem);
-                pModel->setItem(i,3,new QStandardItem(record.sString));
-            }
             pFilter->setSourceModel(pModel);
+
             ui->tableViewResult->setModel(pFilter);
             ui->tableViewResult->setColumnWidth(0,120);
             ui->tableViewResult->setColumnWidth(1,60);

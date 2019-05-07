@@ -58,10 +58,8 @@ private slots:
 private:
     Ui::SearchStringsWidget *ui;
     QIODevice *pDevice;
-    SearchStrings::OPTIONS *pOptions;
     QSortFilterProxyModel *pFilter;
-    int nAddressWidth;
-    qint64 nBaseAddress;
+    SearchStrings::OPTIONS options;
     QStandardItemModel *pModel;
 };
 
