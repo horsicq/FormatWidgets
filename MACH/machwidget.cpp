@@ -67,13 +67,18 @@ void MACHWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
     {
         // mb TODO 32/64
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_TOOLS,"Tools"));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_mach_header,"mach_header"));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_mach_header,mach.is64()?("mach_header_64"):("mach_header")));
 
         // TODO Commands
 
         QList<XMACH::COMMAND_RECORD> listCommandRecords=mach.getCommandRecords();
 
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_commands,tr("commands")));
+        if(listCommandRecords.count())
+        {
+            QTreeWidgetItem *pItemCommands=createNewItem(SMACH::TYPE_commands,tr("commands"));
+
+            ui->treeWidgetNavi->addTopLevelItem(pItemCommands);
+        }
 
         ui->treeWidgetNavi->expandAll();
 
