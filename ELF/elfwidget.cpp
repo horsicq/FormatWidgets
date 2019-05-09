@@ -563,6 +563,16 @@ bool ELFWidget::createSectionTable(int type, QTableWidget *pTableWidget, const F
         slHeader.append(tr(""));
         pTableWidget->setColumnCount(nRecordCount+1);
         pTableWidget->setColumnWidth(0,nSymbolWidth*4);
+        pTableWidget->setColumnWidth(1,nSymbolWidth*8);
+        pTableWidget->setColumnWidth(2,nSymbolWidth*8);
+        pTableWidget->setColumnWidth(3,nSymbolWidth*12);
+        pTableWidget->setColumnWidth(4,nSymbolWidth*12);
+        pTableWidget->setColumnWidth(5,nSymbolWidth*12);
+        pTableWidget->setColumnWidth(6,nSymbolWidth*12);
+        pTableWidget->setColumnWidth(7,nSymbolWidth*8);
+        pTableWidget->setColumnWidth(8,nSymbolWidth*8);
+        pTableWidget->setColumnWidth(9,nSymbolWidth*12);
+        pTableWidget->setColumnWidth(10,nSymbolWidth*12);
         break;
     case SELF::TYPE_Elf_Phdr:
         slHeader.append(tr(""));
