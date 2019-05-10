@@ -24,7 +24,8 @@
 #include <QDialog>
 #include "elfwidget.h"
 
-namespace Ui {
+namespace Ui
+{
 class DialogELF;
 }
 
@@ -36,7 +37,7 @@ public:
     explicit DialogELF(QWidget *parent = nullptr);
     ~DialogELF();
 
-     void setData(QIODevice *pDevice,FormatWidget::OPTIONS *pOptions);
+    void setData(QIODevice *pDevice,FormatWidget::OPTIONS *pOptions);
 private:
     Ui::DialogELF *ui;
 };

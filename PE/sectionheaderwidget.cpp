@@ -72,44 +72,54 @@ bool SectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int
     if(getDevice()->isWritable())
     {
         XPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
+
         if(pe.isValid())
         {
             switch(nStype)
             {
-            case SPE::TYPE_IMAGE_SECTION_HEADER:
-                switch(nNdata)
-                {
-                case N_IMAGE_SECTION_HEADER::Name:
-                    pe.setSection_NameAsString((quint32)nPosition,sValue);
-                    break;
-                case N_IMAGE_SECTION_HEADER::VirtualSize:
-                    pe.setSection_VirtualSize((quint32)nPosition,(quint32)nValue);
-                    break;
-                case N_IMAGE_SECTION_HEADER::VirtualAddress:
-                    pe.setSection_VirtualAddress((quint32)nPosition,(quint32)nValue);
-                    break;
-                case N_IMAGE_SECTION_HEADER::SizeOfRawData:
-                    pe.setSection_SizeOfRawData((quint32)nPosition,(quint32)nValue);
-                    break;
-                case N_IMAGE_SECTION_HEADER::PointerToRawData:
-                    pe.setSection_PointerToRawData((quint32)nPosition,(quint32)nValue);
-                    break;
-                case N_IMAGE_SECTION_HEADER::PointerToRelocations:
-                    pe.setSection_PointerToRelocations((quint32)nPosition,(quint32)nValue);
-                    break;
-                case N_IMAGE_SECTION_HEADER::PointerToLinenumbers:
-                    pe.setSection_PointerToLinenumbers((quint32)nPosition,(quint32)nValue);
-                    break;
-                case N_IMAGE_SECTION_HEADER::NumberOfRelocations:
-                    pe.setSection_NumberOfRelocations((quint32)nPosition,(quint16)nValue);
-                    break;
-                case N_IMAGE_SECTION_HEADER::NumberOfLinenumbers:
-                    pe.setSection_NumberOfLinenumbers((quint32)nPosition,(quint16)nValue);
-                    break;
-                case N_IMAGE_SECTION_HEADER::Characteristics:
-                    pe.setSection_Characteristics((quint32)nPosition,(quint32)nValue);
-                    break;
-                }
+                case SPE::TYPE_IMAGE_SECTION_HEADER:
+                    switch(nNdata)
+                    {
+                        case N_IMAGE_SECTION_HEADER::Name:
+                            pe.setSection_NameAsString((quint32)nPosition,sValue);
+                            break;
+
+                        case N_IMAGE_SECTION_HEADER::VirtualSize:
+                            pe.setSection_VirtualSize((quint32)nPosition,(quint32)nValue);
+                            break;
+
+                        case N_IMAGE_SECTION_HEADER::VirtualAddress:
+                            pe.setSection_VirtualAddress((quint32)nPosition,(quint32)nValue);
+                            break;
+
+                        case N_IMAGE_SECTION_HEADER::SizeOfRawData:
+                            pe.setSection_SizeOfRawData((quint32)nPosition,(quint32)nValue);
+                            break;
+
+                        case N_IMAGE_SECTION_HEADER::PointerToRawData:
+                            pe.setSection_PointerToRawData((quint32)nPosition,(quint32)nValue);
+                            break;
+
+                        case N_IMAGE_SECTION_HEADER::PointerToRelocations:
+                            pe.setSection_PointerToRelocations((quint32)nPosition,(quint32)nValue);
+                            break;
+
+                        case N_IMAGE_SECTION_HEADER::PointerToLinenumbers:
+                            pe.setSection_PointerToLinenumbers((quint32)nPosition,(quint32)nValue);
+                            break;
+
+                        case N_IMAGE_SECTION_HEADER::NumberOfRelocations:
+                            pe.setSection_NumberOfRelocations((quint32)nPosition,(quint16)nValue);
+                            break;
+
+                        case N_IMAGE_SECTION_HEADER::NumberOfLinenumbers:
+                            pe.setSection_NumberOfLinenumbers((quint32)nPosition,(quint16)nValue);
+                            break;
+
+                        case N_IMAGE_SECTION_HEADER::Characteristics:
+                            pe.setSection_Characteristics((quint32)nPosition,(quint32)nValue);
+                            break;
+                    }
             }
 
             bResult=true;
@@ -138,12 +148,12 @@ void SectionHeaderWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget
 
     switch(type)
     {
-    case SPE::TYPE_IMAGE_SECTION_HEADER:
-        pTableWidget->setColumnWidth(0,nSymbolWidth*18);
-        pTableWidget->setColumnWidth(1,nSymbolWidth*6);
-        pTableWidget->setColumnWidth(2,nSymbolWidth*14);
-        pTableWidget->setColumnWidth(3,nSymbolWidth*22);
-        break;
+        case SPE::TYPE_IMAGE_SECTION_HEADER:
+            pTableWidget->setColumnWidth(0,nSymbolWidth*18);
+            pTableWidget->setColumnWidth(1,nSymbolWidth*6);
+            pTableWidget->setColumnWidth(2,nSymbolWidth*14);
+            pTableWidget->setColumnWidth(3,nSymbolWidth*22);
+            break;
     }
 }
 
@@ -155,6 +165,7 @@ void SectionHeaderWidget::on_checkBoxReadonly_toggled(bool checked)
 void SectionHeaderWidget::reloadData()
 {
     XPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
+
     if(pe.isValid())
     {
         if(!bInit)
@@ -168,7 +179,7 @@ void SectionHeaderWidget::reloadData()
 
         S_IMAGE_SECTION_HEADER ish=pe.getSectionHeader(nNumber);
 
-//        lineEdit_IMAGE_SECTION_HEADER[N_IMAGE_SECTION_HEADER::e_magic]->setValue(ish.);
+        //        lineEdit_IMAGE_SECTION_HEADER[N_IMAGE_SECTION_HEADER::e_magic]->setValue(ish.);
 
         QString sName=QString((char *)ish.Name);
         sName.resize(qMin(sName.length(),S_IMAGE_SIZEOF_SHORT_NAME));
@@ -201,18 +212,20 @@ void SectionHeaderWidget::widgetValueChanged(quint64 nValue)
 
     switch(nStype)
     {
-    case SPE::TYPE_IMAGE_SECTION_HEADER:
-        switch(nNdata)
-        {
-        case N_IMAGE_SECTION_HEADER::Characteristics:
-            lineEdit_IMAGE_SECTION_HEADER[N_IMAGE_SECTION_HEADER::Characteristics]->setValue((quint32)nValue);
-            this->comboBox[CB_CHARACTERISTICS]->setValue(nValue);
+        case SPE::TYPE_IMAGE_SECTION_HEADER:
+            switch(nNdata)
+            {
+                case N_IMAGE_SECTION_HEADER::Characteristics:
+                    lineEdit_IMAGE_SECTION_HEADER[N_IMAGE_SECTION_HEADER::Characteristics]->setValue((quint32)nValue);
+                    this->comboBox[CB_CHARACTERISTICS]->setValue(nValue);
+                    break;
+
+                case N_IMAGE_SECTION_HEADER::Characteristics+1:
+                    lineEdit_IMAGE_SECTION_HEADER[N_IMAGE_SECTION_HEADER::Characteristics]->setValue((quint32)nValue);
+                    this->comboBox[CB_ALIGH]->setValue(nValue);
+                    break;
+            }
+
             break;
-        case N_IMAGE_SECTION_HEADER::Characteristics+1:
-            lineEdit_IMAGE_SECTION_HEADER[N_IMAGE_SECTION_HEADER::Characteristics]->setValue((quint32)nValue);
-            this->comboBox[CB_ALIGH]->setValue(nValue);
-            break;
-        }
-        break;
     }
 }

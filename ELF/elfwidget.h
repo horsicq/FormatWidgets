@@ -24,7 +24,8 @@
 #include "../formatwidget.h"
 #include "elf_defs.h"
 
-namespace Ui {
+namespace Ui
+{
 class ELFWidget;
 }
 

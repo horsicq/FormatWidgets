@@ -57,7 +57,7 @@ void MSDOSWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
 {
     clear();
     FormatWidget::setData(pDevice,pOptions);
-	ui->checkBoxReadonly->setEnabled(!isReadonly());
+    ui->checkBoxReadonly->setEnabled(!isReadonly());
 
     XMSDOS msdos(pDevice,getOptions()->bIsImage,getOptions()->nImageBase);
 
@@ -86,109 +86,141 @@ bool MSDOSWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,
     if(getDevice()->isWritable())
     {
         XMSDOS msdos(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
+
         if(msdos.isValid())
         {
             switch(nStype)
             {
-            case SMSDOS::TYPE_DOS_HEADER:
-                switch(nNdata)
-                {
-                case N_DOS_HEADER::e_magic:
-                    comboBox[CB_DOS_HEADER_e_magic]->setValue(nValue);
-                    msdos.set_e_magic((quint16)nValue);
+                case SMSDOS::TYPE_DOS_HEADER:
+                    switch(nNdata)
+                    {
+                        case N_DOS_HEADER::e_magic:
+                            comboBox[CB_DOS_HEADER_e_magic]->setValue(nValue);
+                            msdos.set_e_magic((quint16)nValue);
+                            break;
+
+                        case N_DOS_HEADER::e_cblp:
+                            msdos.set_e_cblp((quint16)nValue);
+                            break;
+
+                        case N_DOS_HEADER::e_cp:
+                            msdos.set_e_cp((quint16)nValue);
+                            break;
+
+                        case N_DOS_HEADER::e_crlc:
+                            msdos.set_e_crlc((quint16)nValue);
+                            break;
+
+                        case N_DOS_HEADER::e_cparhdr:
+                            msdos.set_e_cparhdr((quint16)nValue);
+                            break;
+
+                        case N_DOS_HEADER::e_minalloc:
+                            msdos.set_e_minalloc((quint16)nValue);
+                            break;
+
+                        case N_DOS_HEADER::e_maxalloc:
+                            msdos.set_e_maxalloc((quint16)nValue);
+                            break;
+
+                        case N_DOS_HEADER::e_ss:
+                            msdos.set_e_ss((quint16)nValue);
+                            break;
+
+                        case N_DOS_HEADER::e_sp:
+                            msdos.set_e_sp((quint16)nValue);
+                            break;
+
+                        case N_DOS_HEADER::e_csum:
+                            msdos.set_e_csum((quint16)nValue);
+                            break;
+
+                        case N_DOS_HEADER::e_ip:
+                            msdos.set_e_ip((quint16)nValue);
+                            break;
+
+                        case N_DOS_HEADER::e_cs:
+                            msdos.set_e_cs((quint16)nValue);
+                            break;
+
+                        case N_DOS_HEADER::e_lfarlc:
+                            msdos.set_e_lfarlc((quint16)nValue);
+                            break;
+
+                        case N_DOS_HEADER::e_ovno:
+                            msdos.set_e_ovno((quint16)nValue);
+                            break;
+
+                        case N_DOS_HEADER::e_res_0:
+                            msdos.set_e_res(0,(quint16)nValue);
+                            break;
+
+                        case N_DOS_HEADER::e_res_1:
+                            msdos.set_e_res(1,(quint16)nValue);
+                            break;
+
+                        case N_DOS_HEADER::e_res_2:
+                            msdos.set_e_res(2,(quint16)nValue);
+                            break;
+
+                        case N_DOS_HEADER::e_res_3:
+                            msdos.set_e_res(3,(quint16)nValue);
+                            break;
+
+                        case N_DOS_HEADER::e_oemid:
+                            msdos.set_e_oemid((quint16)nValue);
+                            break;
+
+                        case N_DOS_HEADER::e_oeminfo:
+                            msdos.set_e_oeminfo((quint16)nValue);
+                            break;
+
+                        case N_DOS_HEADER::e_res2_0:
+                            msdos.set_e_res2(0,(quint16)nValue);
+                            break;
+
+                        case N_DOS_HEADER::e_res2_1:
+                            msdos.set_e_res2(1,(quint16)nValue);
+                            break;
+
+                        case N_DOS_HEADER::e_res2_2:
+                            msdos.set_e_res2(2,(quint16)nValue);
+                            break;
+
+                        case N_DOS_HEADER::e_res2_3:
+                            msdos.set_e_res2(3,(quint16)nValue);
+                            break;
+
+                        case N_DOS_HEADER::e_res2_4:
+                            msdos.set_e_res2(4,(quint16)nValue);
+                            break;
+
+                        case N_DOS_HEADER::e_res2_5:
+                            msdos.set_e_res2(5,(quint16)nValue);
+                            break;
+
+                        case N_DOS_HEADER::e_res2_6:
+                            msdos.set_e_res2(6,(quint16)nValue);
+                            break;
+
+                        case N_DOS_HEADER::e_res2_7:
+                            msdos.set_e_res2(7,(quint16)nValue);
+                            break;
+
+                        case N_DOS_HEADER::e_res2_8:
+                            msdos.set_e_res2(8,(quint16)nValue);
+                            break;
+
+                        case N_DOS_HEADER::e_res2_9:
+                            msdos.set_e_res2(9,(quint16)nValue);
+                            break;
+
+                        case N_DOS_HEADER::e_lfanew:
+                            msdos.set_e_lfanew((quint32)nValue);
+                            break;
+                    }
+
                     break;
-                case N_DOS_HEADER::e_cblp:
-                    msdos.set_e_cblp((quint16)nValue);
-                    break;
-                case N_DOS_HEADER::e_cp:
-                    msdos.set_e_cp((quint16)nValue);
-                    break;
-                case N_DOS_HEADER::e_crlc:
-                    msdos.set_e_crlc((quint16)nValue);
-                    break;
-                case N_DOS_HEADER::e_cparhdr:
-                    msdos.set_e_cparhdr((quint16)nValue);
-                    break;
-                case N_DOS_HEADER::e_minalloc:
-                    msdos.set_e_minalloc((quint16)nValue);
-                    break;
-                case N_DOS_HEADER::e_maxalloc:
-                    msdos.set_e_maxalloc((quint16)nValue);
-                    break;
-                case N_DOS_HEADER::e_ss:
-                    msdos.set_e_ss((quint16)nValue);
-                    break;
-                case N_DOS_HEADER::e_sp:
-                    msdos.set_e_sp((quint16)nValue);
-                    break;
-                case N_DOS_HEADER::e_csum:
-                    msdos.set_e_csum((quint16)nValue);
-                    break;
-                case N_DOS_HEADER::e_ip:
-                    msdos.set_e_ip((quint16)nValue);
-                    break;
-                case N_DOS_HEADER::e_cs:
-                    msdos.set_e_cs((quint16)nValue);
-                    break;
-                case N_DOS_HEADER::e_lfarlc:
-                    msdos.set_e_lfarlc((quint16)nValue);
-                    break;
-                case N_DOS_HEADER::e_ovno:
-                    msdos.set_e_ovno((quint16)nValue);
-                    break;
-                case N_DOS_HEADER::e_res_0:
-                    msdos.set_e_res(0,(quint16)nValue);
-                    break;
-                case N_DOS_HEADER::e_res_1:
-                    msdos.set_e_res(1,(quint16)nValue);
-                    break;
-                case N_DOS_HEADER::e_res_2:
-                    msdos.set_e_res(2,(quint16)nValue);
-                    break;
-                case N_DOS_HEADER::e_res_3:
-                    msdos.set_e_res(3,(quint16)nValue);
-                    break;
-                case N_DOS_HEADER::e_oemid:
-                    msdos.set_e_oemid((quint16)nValue);
-                    break;
-                case N_DOS_HEADER::e_oeminfo:
-                    msdos.set_e_oeminfo((quint16)nValue);
-                    break;
-                case N_DOS_HEADER::e_res2_0:
-                    msdos.set_e_res2(0,(quint16)nValue);
-                    break;
-                case N_DOS_HEADER::e_res2_1:
-                    msdos.set_e_res2(1,(quint16)nValue);
-                    break;
-                case N_DOS_HEADER::e_res2_2:
-                    msdos.set_e_res2(2,(quint16)nValue);
-                    break;
-                case N_DOS_HEADER::e_res2_3:
-                    msdos.set_e_res2(3,(quint16)nValue);
-                    break;
-                case N_DOS_HEADER::e_res2_4:
-                    msdos.set_e_res2(4,(quint16)nValue);
-                    break;
-                case N_DOS_HEADER::e_res2_5:
-                    msdos.set_e_res2(5,(quint16)nValue);
-                    break;
-                case N_DOS_HEADER::e_res2_6:
-                    msdos.set_e_res2(6,(quint16)nValue);
-                    break;
-                case N_DOS_HEADER::e_res2_7:
-                    msdos.set_e_res2(7,(quint16)nValue);
-                    break;
-                case N_DOS_HEADER::e_res2_8:
-                    msdos.set_e_res2(8,(quint16)nValue);
-                    break;
-                case N_DOS_HEADER::e_res2_9:
-                    msdos.set_e_res2(9,(quint16)nValue);
-                    break;
-                case N_DOS_HEADER::e_lfanew:
-                    msdos.set_e_lfanew((quint32)nValue);
-                    break;
-                }
-                break;
             }
 
             bResult=true;
@@ -222,12 +254,12 @@ void MSDOSWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
 
     switch(type)
     {
-    case SMSDOS::TYPE_DOS_HEADER:
-        pTableWidget->setColumnWidth(0,nSymbolWidth*10);
-        pTableWidget->setColumnWidth(1,nSymbolWidth*13);
-        pTableWidget->setColumnWidth(2,nSymbolWidth*13);
-        pTableWidget->setColumnWidth(3,nSymbolWidth*13);
-        break;
+        case SMSDOS::TYPE_DOS_HEADER:
+            pTableWidget->setColumnWidth(0,nSymbolWidth*10);
+            pTableWidget->setColumnWidth(1,nSymbolWidth*13);
+            pTableWidget->setColumnWidth(2,nSymbolWidth*13);
+            pTableWidget->setColumnWidth(3,nSymbolWidth*13);
+            break;
     }
 }
 
@@ -237,6 +269,7 @@ void MSDOSWidget::reloadData()
     ui->stackedWidgetInfo->setCurrentIndex(nData);
 
     XMSDOS msdos(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
+
     if(msdos.isValid())
     {
         if(nData==SMSDOS::TYPE_TOOLS)
@@ -309,14 +342,15 @@ void MSDOSWidget::widgetValueChanged(quint64 nValue)
 
     switch(nStype)
     {
-    case SMSDOS::TYPE_DOS_HEADER:
-        switch(nNdata)
-        {
-        case N_DOS_HEADER::e_magic:
-            lineEdit_DOS_HEADER[N_DOS_HEADER::e_magic]->setValue((quint16)nValue);
+        case SMSDOS::TYPE_DOS_HEADER:
+            switch(nNdata)
+            {
+                case N_DOS_HEADER::e_magic:
+                    lineEdit_DOS_HEADER[N_DOS_HEADER::e_magic]->setValue((quint16)nValue);
+                    break;
+            }
+
             break;
-        }
-        break;
     }
 }
 

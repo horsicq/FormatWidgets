@@ -24,7 +24,8 @@
 #include <QDialog>
 #include "machwidget.h"
 
-namespace Ui {
+namespace Ui
+{
 class DialogMACH;
 }
 
@@ -36,7 +37,7 @@ public:
     explicit DialogMACH(QWidget *parent = nullptr);
     ~DialogMACH();
 
-     void setData(QIODevice *pDevice,FormatWidget::OPTIONS *pOptions);
+    void setData(QIODevice *pDevice,FormatWidget::OPTIONS *pOptions);
 private:
     Ui::DialogMACH *ui;
 };

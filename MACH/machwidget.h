@@ -24,7 +24,8 @@
 #include "../formatwidget.h"
 #include "mach_defs.h"
 
-namespace Ui {
+namespace Ui
+{
 class MACHWidget;
 }
 

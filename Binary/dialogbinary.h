@@ -24,7 +24,8 @@
 #include <QDialog>
 #include "binarywidget.h"
 
-namespace Ui {
+namespace Ui
+{
 class DialogBinary;
 }
 
@@ -36,7 +37,7 @@ public:
     explicit DialogBinary(QWidget *parent = nullptr);
     ~DialogBinary();
 
-     void setData(QIODevice *pDevice,FormatWidget::OPTIONS *pOptions);
+    void setData(QIODevice *pDevice,FormatWidget::OPTIONS *pOptions);
 private:
     Ui::DialogBinary *ui;
 };

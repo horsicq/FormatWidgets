@@ -60,7 +60,7 @@ void ELFWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
 {
     clear();
     FormatWidget::setData(pDevice,pOptions);
-	ui->checkBoxReadonly->setEnabled(!isReadonly());
+    ui->checkBoxReadonly->setEnabled(!isReadonly());
 
     XELF elf(pDevice,getOptions()->bIsImage,getOptions()->nImageBase);
 
@@ -72,11 +72,14 @@ void ELFWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
         if(elf.is64())
         {
             QList<S_Elf64_Shdr> listSections=elf.getElf64_ShdrList();
+
             if(listSections.count())
             {
                 ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_Elf_Shdr,"Sections"));
             }
+
             QList<S_Elf64_Phdr> listPrograms=elf.getElf64_PhdrList();
+
             if(listPrograms.count())
             {
                 ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_Elf_Phdr,"Programs"));
@@ -85,11 +88,14 @@ void ELFWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
         else
         {
             QList<S_Elf32_Shdr> listSections=elf.getElf32_ShdrList();
+
             if(listSections.count())
             {
                 ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_Elf_Shdr,"Sections"));
             }
+
             QList<S_Elf32_Phdr> listPrograms=elf.getElf32_PhdrList();
+
             if(listPrograms.count())
             {
                 ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_Elf_Phdr,"Programs"));
@@ -113,114 +119,146 @@ bool ELFWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, i
     if(getDevice()->isWritable())
     {
         XELF elf(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
+
         if(elf.isValid())
         {
             switch(nStype)
             {
-            case SELF::TYPE_Elf_Ehdr:
-                switch(nNdata)
-                {
-                case N_Elf_Ehdr::ei_mag_0:
-                    elf.setIdent_mag((quint8)nValue,0);
+                case SELF::TYPE_Elf_Ehdr:
+                    switch(nNdata)
+                    {
+                        case N_Elf_Ehdr::ei_mag_0:
+                            elf.setIdent_mag((quint8)nValue,0);
+                            break;
+
+                        case N_Elf_Ehdr::ei_mag_1:
+                            elf.setIdent_mag((quint8)nValue,1);
+                            break;
+
+                        case N_Elf_Ehdr::ei_mag_2:
+                            elf.setIdent_mag((quint8)nValue,2);
+                            break;
+
+                        case N_Elf_Ehdr::ei_mag_3:
+                            elf.setIdent_mag((quint8)nValue,3);
+                            break;
+
+                        case N_Elf_Ehdr::ei_class:
+                            comboBox[CB_Elf_Ehdr_iclass]->setValue(nValue);
+                            elf.setIdent_class((quint8)nValue);
+                            break;
+
+                        case N_Elf_Ehdr::ei_data:
+                            comboBox[CB_Elf_Ehdr_idata]->setValue(nValue);
+                            elf.setIdent_data((quint8)nValue);
+                            break;
+
+                        case N_Elf_Ehdr::ei_version:
+                            comboBox[CB_Elf_Ehdr_iversion]->setValue(nValue);
+                            elf.setIdent_version((quint8)nValue);
+                            break;
+
+                        case N_Elf_Ehdr::ei_osabi:
+                            comboBox[CB_Elf_Ehdr_iosabi]->setValue(nValue);
+                            elf.setIdent_osabi((quint8)nValue);
+                            break;
+
+                        case N_Elf_Ehdr::ei_abiversion:
+                            elf.setIdent_abiversion((quint8)nValue);
+                            break;
+
+                        case N_Elf_Ehdr::ei_pad_0:
+                            elf.setIdent_pad((quint8)nValue,0);
+                            break;
+
+                        case N_Elf_Ehdr::ei_pad_1:
+                            elf.setIdent_pad((quint8)nValue,1);
+                            break;
+
+                        case N_Elf_Ehdr::ei_pad_2:
+                            elf.setIdent_pad((quint8)nValue,2);
+                            break;
+
+                        case N_Elf_Ehdr::ei_pad_3:
+                            elf.setIdent_pad((quint8)nValue,3);
+                            break;
+
+                        case N_Elf_Ehdr::ei_pad_4:
+                            elf.setIdent_pad((quint8)nValue,4);
+                            break;
+
+                        case N_Elf_Ehdr::ei_pad_5:
+                            elf.setIdent_pad((quint8)nValue,5);
+                            break;
+
+                        case N_Elf_Ehdr::ei_pad_6:
+                            elf.setIdent_pad((quint8)nValue,6);
+                            break;
+
+                        case N_Elf_Ehdr::ei_pad_7:
+                            elf.setIdent_pad((quint8)nValue,7);
+                            break;
+
+                        case N_Elf_Ehdr::ei_pad_8:
+                            elf.setIdent_pad((quint8)nValue,8);
+                            break;
+
+                        case N_Elf_Ehdr::e_type:
+                            comboBox[CB_Elf_Ehdr_type]->setValue(nValue);
+                            (elf.is64()?(elf.setHdr64_type((quint16)nValue)):(elf.setHdr32_type((quint16)nValue)));
+                            break;
+
+                        case N_Elf_Ehdr::e_machine:
+                            comboBox[CB_Elf_Ehdr_machine]->setValue(nValue);
+                            (elf.is64()?(elf.setHdr64_machine((quint16)nValue)):(elf.setHdr32_machine((quint16)nValue)));
+                            break;
+
+                        case N_Elf_Ehdr::e_version:
+                            (elf.is64()?(elf.setHdr64_version((quint32)nValue)):(elf.setHdr32_version((quint32)nValue)));
+                            break;
+
+                        case N_Elf_Ehdr::e_entry:
+                            (elf.is64()?(elf.setHdr64_entry((quint64)nValue)):(elf.setHdr32_entry((quint32)nValue)));
+                            break;
+
+                        case N_Elf_Ehdr::e_phoff:
+                            (elf.is64()?(elf.setHdr64_phoff((quint64)nValue)):(elf.setHdr32_phoff((quint32)nValue)));
+                            break;
+
+                        case N_Elf_Ehdr::e_shoff:
+                            (elf.is64()?(elf.setHdr64_shoff((quint64)nValue)):(elf.setHdr32_shoff((quint32)nValue)));
+                            break;
+
+                        case N_Elf_Ehdr::e_flags:
+                            (elf.is64()?(elf.setHdr64_flags((quint32)nValue)):(elf.setHdr32_flags((quint32)nValue)));
+                            break;
+
+                        case N_Elf_Ehdr::e_ehsize:
+                            (elf.is64()?(elf.setHdr64_ehsize((quint16)nValue)):(elf.setHdr32_ehsize((quint16)nValue)));
+                            break;
+
+                        case N_Elf_Ehdr::e_phentsize:
+                            (elf.is64()?(elf.setHdr64_phentsize((quint16)nValue)):(elf.setHdr32_phentsize((quint16)nValue)));
+                            break;
+
+                        case N_Elf_Ehdr::e_phnum:
+                            (elf.is64()?(elf.setHdr64_phnum((quint16)nValue)):(elf.setHdr32_phnum((quint16)nValue)));
+                            break;
+
+                        case N_Elf_Ehdr::e_shentsize:
+                            (elf.is64()?(elf.setHdr64_shentsize((quint16)nValue)):(elf.setHdr32_shentsize((quint16)nValue)));
+                            break;
+
+                        case N_Elf_Ehdr::e_shnum:
+                            (elf.is64()?(elf.setHdr64_shnum((quint16)nValue)):(elf.setHdr32_shnum((quint16)nValue)));
+                            break;
+
+                        case N_Elf_Ehdr::e_shstrndx:
+                            (elf.is64()?(elf.setHdr64_shstrndx((quint16)nValue)):(elf.setHdr32_shstrndx((quint16)nValue)));
+                            break;
+                    }
+
                     break;
-                case N_Elf_Ehdr::ei_mag_1:
-                    elf.setIdent_mag((quint8)nValue,1);
-                    break;
-                case N_Elf_Ehdr::ei_mag_2:
-                    elf.setIdent_mag((quint8)nValue,2);
-                    break;
-                case N_Elf_Ehdr::ei_mag_3:
-                    elf.setIdent_mag((quint8)nValue,3);
-                    break;
-                case N_Elf_Ehdr::ei_class:
-                    comboBox[CB_Elf_Ehdr_iclass]->setValue(nValue);
-                    elf.setIdent_class((quint8)nValue);
-                    break;
-                case N_Elf_Ehdr::ei_data:
-                    comboBox[CB_Elf_Ehdr_idata]->setValue(nValue);
-                    elf.setIdent_data((quint8)nValue);
-                    break;
-                case N_Elf_Ehdr::ei_version:
-                    comboBox[CB_Elf_Ehdr_iversion]->setValue(nValue);
-                    elf.setIdent_version((quint8)nValue);
-                    break;
-                case N_Elf_Ehdr::ei_osabi:
-                    comboBox[CB_Elf_Ehdr_iosabi]->setValue(nValue);
-                    elf.setIdent_osabi((quint8)nValue);
-                    break;
-                case N_Elf_Ehdr::ei_abiversion:
-                    elf.setIdent_abiversion((quint8)nValue);
-                    break;
-                case N_Elf_Ehdr::ei_pad_0:
-                    elf.setIdent_pad((quint8)nValue,0);
-                    break;
-                case N_Elf_Ehdr::ei_pad_1:
-                    elf.setIdent_pad((quint8)nValue,1);
-                    break;
-                case N_Elf_Ehdr::ei_pad_2:
-                    elf.setIdent_pad((quint8)nValue,2);
-                    break;
-                case N_Elf_Ehdr::ei_pad_3:
-                    elf.setIdent_pad((quint8)nValue,3);
-                    break;
-                case N_Elf_Ehdr::ei_pad_4:
-                    elf.setIdent_pad((quint8)nValue,4);
-                    break;
-                case N_Elf_Ehdr::ei_pad_5:
-                    elf.setIdent_pad((quint8)nValue,5);
-                    break;
-                case N_Elf_Ehdr::ei_pad_6:
-                    elf.setIdent_pad((quint8)nValue,6);
-                    break;
-                case N_Elf_Ehdr::ei_pad_7:
-                    elf.setIdent_pad((quint8)nValue,7);
-                    break;
-                case N_Elf_Ehdr::ei_pad_8:
-                    elf.setIdent_pad((quint8)nValue,8);
-                    break;
-                case N_Elf_Ehdr::e_type:
-                    comboBox[CB_Elf_Ehdr_type]->setValue(nValue);
-                    (elf.is64()?(elf.setHdr64_type((quint16)nValue)):(elf.setHdr32_type((quint16)nValue)));
-                    break;
-                case N_Elf_Ehdr::e_machine:
-                    comboBox[CB_Elf_Ehdr_machine]->setValue(nValue);
-                    (elf.is64()?(elf.setHdr64_machine((quint16)nValue)):(elf.setHdr32_machine((quint16)nValue)));
-                    break;
-                case N_Elf_Ehdr::e_version:
-                    (elf.is64()?(elf.setHdr64_version((quint32)nValue)):(elf.setHdr32_version((quint32)nValue)));
-                    break;
-                case N_Elf_Ehdr::e_entry:
-                    (elf.is64()?(elf.setHdr64_entry((quint64)nValue)):(elf.setHdr32_entry((quint32)nValue)));
-                    break;
-                case N_Elf_Ehdr::e_phoff:
-                    (elf.is64()?(elf.setHdr64_phoff((quint64)nValue)):(elf.setHdr32_phoff((quint32)nValue)));
-                    break;
-                case N_Elf_Ehdr::e_shoff:
-                    (elf.is64()?(elf.setHdr64_shoff((quint64)nValue)):(elf.setHdr32_shoff((quint32)nValue)));
-                    break;
-                case N_Elf_Ehdr::e_flags:
-                    (elf.is64()?(elf.setHdr64_flags((quint32)nValue)):(elf.setHdr32_flags((quint32)nValue)));
-                    break;
-                case N_Elf_Ehdr::e_ehsize:
-                    (elf.is64()?(elf.setHdr64_ehsize((quint16)nValue)):(elf.setHdr32_ehsize((quint16)nValue)));
-                    break;
-                case N_Elf_Ehdr::e_phentsize:
-                    (elf.is64()?(elf.setHdr64_phentsize((quint16)nValue)):(elf.setHdr32_phentsize((quint16)nValue)));
-                    break;
-                case N_Elf_Ehdr::e_phnum:
-                    (elf.is64()?(elf.setHdr64_phnum((quint16)nValue)):(elf.setHdr32_phnum((quint16)nValue)));
-                    break;
-                case N_Elf_Ehdr::e_shentsize:
-                    (elf.is64()?(elf.setHdr64_shentsize((quint16)nValue)):(elf.setHdr32_shentsize((quint16)nValue)));
-                    break;
-                case N_Elf_Ehdr::e_shnum:
-                    (elf.is64()?(elf.setHdr64_shnum((quint16)nValue)):(elf.setHdr32_shnum((quint16)nValue)));
-                    break;
-                case N_Elf_Ehdr::e_shstrndx:
-                    (elf.is64()?(elf.setHdr64_shstrndx((quint16)nValue)):(elf.setHdr32_shstrndx((quint16)nValue)));
-                    break;
-                }
-                break;
             }
 
             bResult=true;
@@ -254,12 +292,12 @@ void ELFWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
 
     switch(type)
     {
-    case SELF::TYPE_Elf_Ehdr:
-        pTableWidget->setColumnWidth(0,nSymbolWidth*10);
-        pTableWidget->setColumnWidth(1,nSymbolWidth*13);
-        pTableWidget->setColumnWidth(2,nSymbolWidth*13);
-        pTableWidget->setColumnWidth(3,nSymbolWidth*13);
-        break;
+        case SELF::TYPE_Elf_Ehdr:
+            pTableWidget->setColumnWidth(0,nSymbolWidth*10);
+            pTableWidget->setColumnWidth(1,nSymbolWidth*13);
+            pTableWidget->setColumnWidth(2,nSymbolWidth*13);
+            pTableWidget->setColumnWidth(3,nSymbolWidth*13);
+            break;
     }
 }
 
@@ -269,6 +307,7 @@ void ELFWidget::reloadData()
     ui->stackedWidgetInfo->setCurrentIndex(nData);
 
     XELF elf(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
+
     if(elf.isValid())
     {
         if(nData==SELF::TYPE_TOOLS)
@@ -389,7 +428,7 @@ void ELFWidget::reloadData()
 
             ui->tableWidget_Elf_Shdr->setRowCount(nCount);
 
-            for(int i=0;i<nCount;i++)
+            for(int i=0; i<nCount; i++)
             {
                 if(bIs64)
                 {
@@ -403,6 +442,7 @@ void ELFWidget::reloadData()
                     {
                         pItem->setData(Qt::UserRole+SECTION_DATA_OFFSET,listSections64.at(i).sh_offset);
                     }
+
                     pItem->setData(Qt::UserRole+SECTION_DATA_SIZE,listSections64.at(i).sh_size);
                     pItem->setData(Qt::UserRole+SECTION_DATA_ADDRESS,listSections64.at(i).sh_addr);
 
@@ -421,6 +461,7 @@ void ELFWidget::reloadData()
                 else
                 {
                     QTableWidgetItem *pItem=new QTableWidgetItem(QString::number(i));
+
                     if(getOptions()->bIsImage)
                     {
                         pItem->setData(Qt::UserRole+SECTION_DATA_OFFSET,listSections32.at(i).sh_addr);
@@ -429,6 +470,7 @@ void ELFWidget::reloadData()
                     {
                         pItem->setData(Qt::UserRole+SECTION_DATA_OFFSET,listSections32.at(i).sh_offset);
                     }
+
                     pItem->setData(Qt::UserRole+SECTION_DATA_SIZE,listSections32.at(i).sh_size);
                     pItem->setData(Qt::UserRole+SECTION_DATA_ADDRESS,listSections32.at(i).sh_addr);
 
@@ -482,7 +524,7 @@ void ELFWidget::reloadData()
 
             ui->tableWidget_Elf_Phdr->setRowCount(nCount);
 
-            for(int i=0;i<nCount;i++)
+            for(int i=0; i<nCount; i++)
             {
                 if(bIs64)
                 {
@@ -559,33 +601,35 @@ bool ELFWidget::createSectionTable(int type, QTableWidget *pTableWidget, const F
 
     switch(type)
     {
-    case SELF::TYPE_Elf_Shdr:
-        slHeader.append(tr(""));
-        pTableWidget->setColumnCount(nRecordCount+1);
-        pTableWidget->setColumnWidth(0,nSymbolWidth*4);
-        pTableWidget->setColumnWidth(1,nSymbolWidth*8);
-        pTableWidget->setColumnWidth(2,nSymbolWidth*8);
-        pTableWidget->setColumnWidth(3,nSymbolWidth*12);
-        pTableWidget->setColumnWidth(4,nSymbolWidth*12);
-        pTableWidget->setColumnWidth(5,nSymbolWidth*12);
-        pTableWidget->setColumnWidth(6,nSymbolWidth*12);
-        pTableWidget->setColumnWidth(7,nSymbolWidth*8);
-        pTableWidget->setColumnWidth(8,nSymbolWidth*8);
-        pTableWidget->setColumnWidth(9,nSymbolWidth*12);
-        pTableWidget->setColumnWidth(10,nSymbolWidth*12);
-        break;
-    case SELF::TYPE_Elf_Phdr:
-        slHeader.append(tr(""));
-        pTableWidget->setColumnCount(nRecordCount+1);
-        pTableWidget->setColumnWidth(0,nSymbolWidth*4);
-        break;
-    default:
-        pTableWidget->setColumnCount(nRecordCount);
+        case SELF::TYPE_Elf_Shdr:
+            slHeader.append(tr(""));
+            pTableWidget->setColumnCount(nRecordCount+1);
+            pTableWidget->setColumnWidth(0,nSymbolWidth*4);
+            pTableWidget->setColumnWidth(1,nSymbolWidth*8);
+            pTableWidget->setColumnWidth(2,nSymbolWidth*8);
+            pTableWidget->setColumnWidth(3,nSymbolWidth*12);
+            pTableWidget->setColumnWidth(4,nSymbolWidth*12);
+            pTableWidget->setColumnWidth(5,nSymbolWidth*12);
+            pTableWidget->setColumnWidth(6,nSymbolWidth*12);
+            pTableWidget->setColumnWidth(7,nSymbolWidth*8);
+            pTableWidget->setColumnWidth(8,nSymbolWidth*8);
+            pTableWidget->setColumnWidth(9,nSymbolWidth*12);
+            pTableWidget->setColumnWidth(10,nSymbolWidth*12);
+            break;
+
+        case SELF::TYPE_Elf_Phdr:
+            slHeader.append(tr(""));
+            pTableWidget->setColumnCount(nRecordCount+1);
+            pTableWidget->setColumnWidth(0,nSymbolWidth*4);
+            break;
+
+        default:
+            pTableWidget->setColumnCount(nRecordCount);
     }
 
     pTableWidget->setRowCount(0);
 
-    for(int i=0;i<nRecordCount;i++)
+    for(int i=0; i<nRecordCount; i++)
     {
         slHeader.append(pRecords[i].pszName);
     }
@@ -604,29 +648,35 @@ void ELFWidget::widgetValueChanged(quint64 nValue)
 
     switch(nStype)
     {
-    case SELF::TYPE_Elf_Ehdr:
-        switch(nNdata)
-        {
-        case N_Elf_Ehdr::ei_class:
-            lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_class]->setValue((quint8)nValue);
+        case SELF::TYPE_Elf_Ehdr:
+            switch(nNdata)
+            {
+                case N_Elf_Ehdr::ei_class:
+                    lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_class]->setValue((quint8)nValue);
+                    break;
+
+                case N_Elf_Ehdr::ei_data:
+                    lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_data]->setValue((quint8)nValue);
+                    break;
+
+                case N_Elf_Ehdr::ei_version:
+                    lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_version]->setValue((quint8)nValue);
+                    break;
+
+                case N_Elf_Ehdr::ei_osabi:
+                    lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_osabi]->setValue((quint8)nValue);
+                    break;
+
+                case N_Elf_Ehdr::e_type:
+                    lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_type]->setValue((quint16)nValue);
+                    break;
+
+                case N_Elf_Ehdr::e_machine:
+                    lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_machine]->setValue((quint16)nValue);
+                    break;
+            }
+
             break;
-        case N_Elf_Ehdr::ei_data:
-            lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_data]->setValue((quint8)nValue);
-            break;
-        case N_Elf_Ehdr::ei_version:
-            lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_version]->setValue((quint8)nValue);
-            break;
-        case N_Elf_Ehdr::ei_osabi:
-            lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_osabi]->setValue((quint8)nValue);
-            break;
-        case N_Elf_Ehdr::e_type:
-            lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_type]->setValue((quint16)nValue);
-            break;
-        case N_Elf_Ehdr::e_machine:
-            lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_machine]->setValue((quint16)nValue);
-            break;
-        }
-        break;
     }
 }
 

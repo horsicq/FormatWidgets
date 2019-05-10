@@ -74,8 +74,8 @@ void SearchStringsWidget::setData(QIODevice *pDevice, SearchStrings::OPTIONS *pO
     }
 
     QString sInfo=QString("0x%1 - 0x%2 ( 0x%3 )").arg(options.nBaseAddress,options.nAddressWidth,16,QChar('0'))
-                                        .arg(options.nBaseAddress+nSize-1,options.nAddressWidth,16,QChar('0'))
-                                        .arg(nSize,8,16,QChar('0'));
+                  .arg(options.nBaseAddress+nSize-1,options.nAddressWidth,16,QChar('0'))
+                  .arg(nSize,8,16,QChar('0'));
     ui->labelInfo->setText(sInfo);
 
     if(bAuto)
@@ -100,13 +100,14 @@ void SearchStringsWidget::on_pushButtonSave_clicked()
                 int nCount=pModel->rowCount();
 
                 QString sResult;
-                for(int i=0;i<nCount;i++)
+
+                for(int i=0; i<nCount; i++)
                 {
                     sResult+=QString("%1\t%2\t%3\t%4\r\n")
-                            .arg(pModel->item(i,0)->text())
-                            .arg(pModel->item(i,1)->text())
-                            .arg(pModel->item(i,2)->text())
-                            .arg(pModel->item(i,3)->text());
+                             .arg(pModel->item(i,0)->text())
+                             .arg(pModel->item(i,1)->text())
+                             .arg(pModel->item(i,2)->text())
+                             .arg(pModel->item(i,3)->text());
                 }
 
                 file.resize(0);

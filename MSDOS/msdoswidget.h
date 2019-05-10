@@ -24,7 +24,8 @@
 #include "../formatwidget.h"
 #include "msdos_defs.h"
 
-namespace Ui {
+namespace Ui
+{
 class MSDOSWidget;
 }
 

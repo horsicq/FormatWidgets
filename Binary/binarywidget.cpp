@@ -53,7 +53,7 @@ void BinaryWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
 {
     clear();
     FormatWidget::setData(pDevice,pOptions);
-	ui->checkBoxReadonly->setEnabled(!isReadonly());
+    ui->checkBoxReadonly->setEnabled(!isReadonly());
 
     XBinary binary(pDevice,getOptions()->bIsImage,getOptions()->nImageBase);
 
@@ -99,6 +99,7 @@ void BinaryWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
 void BinaryWidget::reloadData()
 {
     XBinary binary(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
+
     if(binary.isValid())
     {
         if(!bInit)

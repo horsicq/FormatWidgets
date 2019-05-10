@@ -26,44 +26,44 @@
 
 namespace SMACH
 {
-    enum TYPE
-    {
-        TYPE_TOOLS=0,
-        TYPE_mach_header,
-        TYPE_commands,
-        __TYPE_size
-    };
+enum TYPE
+{
+    TYPE_TOOLS=0,
+    TYPE_mach_header,
+    TYPE_commands,
+    __TYPE_size
+};
 }
 
 namespace N_mach_header
 {
-    enum DATA
-    {
-        magic=0,
-        cputype,
-        cpusubtype,
-        filetype,
-        ncmds,
-        sizeofcmds,
-        flags,
-        reserved,
-        __data_size
-    };
+enum DATA
+{
+    magic=0,
+    cputype,
+    cpusubtype,
+    filetype,
+    ncmds,
+    sizeofcmds,
+    flags,
+    reserved,
+    __data_size
+};
 
-    extern const FormatWidget::HEADER_RECORD records32[__data_size-1];
-    extern const FormatWidget::HEADER_RECORD records64[__data_size];
+extern const FormatWidget::HEADER_RECORD records32[__data_size-1];
+extern const FormatWidget::HEADER_RECORD records64[__data_size];
 }
 
 namespace N_commands
 {
-    enum DATA
-    {
-        cmd=0,
-        cmdsize,
-        __data_size
-    };
+enum DATA
+{
+    cmd=0,
+    cmdsize,
+    __data_size
+};
 
-    extern const FormatWidget::HEADER_RECORD records[__data_size];
+extern const FormatWidget::HEADER_RECORD records[__data_size];
 }
 
 #endif // MACH_DEFS_H

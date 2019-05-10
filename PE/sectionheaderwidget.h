@@ -24,7 +24,8 @@
 #include "../formatwidget.h"
 #include "pe_defs.h"
 
-namespace Ui {
+namespace Ui
+{
 class SectionHeaderWidget;
 }
 

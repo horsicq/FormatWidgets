@@ -89,18 +89,22 @@ void PEWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
         {
             ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_EXPORT,tr("Export")));
         }
+
         if(pe.isImportPresent())
         {
             ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_IMPORT,tr("Import")));
         }
+
         if(pe.isResourcesPresent())
         {
             ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_RESOURCE,tr("Resource")));
         }
+
         if(pe.isRelocsPresent())
         {
             ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_RELOCS,tr("Relocs")));
         }
+
         if(pe.isOverlayPresent())
         {
             ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_OVERLAY,tr("Overlay")));
@@ -122,293 +126,381 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
     if(getDevice()->isWritable())
     {
         XPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
+
         if(pe.isValid())
         {
             switch(nStype)
             {
-            case SPE::TYPE_IMAGE_DOS_HEADER:
-                switch(nNdata)
-                {
-                case N_IMAGE_DOS_HEADER::e_magic:
-                    comboBox[CB_IMAGE_DOS_HEADER_e_magic]->setValue(nValue);
-                    pe.set_e_magic((quint16)nValue);
+                case SPE::TYPE_IMAGE_DOS_HEADER:
+                    switch(nNdata)
+                    {
+                        case N_IMAGE_DOS_HEADER::e_magic:
+                            comboBox[CB_IMAGE_DOS_HEADER_e_magic]->setValue(nValue);
+                            pe.set_e_magic((quint16)nValue);
+                            break;
+
+                        case N_IMAGE_DOS_HEADER::e_cblp:
+                            pe.set_e_cblp((quint16)nValue);
+                            break;
+
+                        case N_IMAGE_DOS_HEADER::e_cp:
+                            pe.set_e_cp((quint16)nValue);
+                            break;
+
+                        case N_IMAGE_DOS_HEADER::e_crlc:
+                            pe.set_e_crlc((quint16)nValue);
+                            break;
+
+                        case N_IMAGE_DOS_HEADER::e_cparhdr:
+                            pe.set_e_cparhdr((quint16)nValue);
+                            break;
+
+                        case N_IMAGE_DOS_HEADER::e_minalloc:
+                            pe.set_e_minalloc((quint16)nValue);
+                            break;
+
+                        case N_IMAGE_DOS_HEADER::e_maxalloc:
+                            pe.set_e_maxalloc((quint16)nValue);
+                            break;
+
+                        case N_IMAGE_DOS_HEADER::e_ss:
+                            pe.set_e_ss((quint16)nValue);
+                            break;
+
+                        case N_IMAGE_DOS_HEADER::e_sp:
+                            pe.set_e_sp((quint16)nValue);
+                            break;
+
+                        case N_IMAGE_DOS_HEADER::e_csum:
+                            pe.set_e_csum((quint16)nValue);
+                            break;
+
+                        case N_IMAGE_DOS_HEADER::e_ip:
+                            pe.set_e_ip((quint16)nValue);
+                            break;
+
+                        case N_IMAGE_DOS_HEADER::e_cs:
+                            pe.set_e_cs((quint16)nValue);
+                            break;
+
+                        case N_IMAGE_DOS_HEADER::e_lfarlc:
+                            pe.set_e_lfarlc((quint16)nValue);
+                            break;
+
+                        case N_IMAGE_DOS_HEADER::e_ovno:
+                            pe.set_e_ovno((quint16)nValue);
+                            break;
+
+                        case N_IMAGE_DOS_HEADER::e_res_0:
+                            pe.set_e_res(0,(quint16)nValue);
+                            break;
+
+                        case N_IMAGE_DOS_HEADER::e_res_1:
+                            pe.set_e_res(1,(quint16)nValue);
+                            break;
+
+                        case N_IMAGE_DOS_HEADER::e_res_2:
+                            pe.set_e_res(2,(quint16)nValue);
+                            break;
+
+                        case N_IMAGE_DOS_HEADER::e_res_3:
+                            pe.set_e_res(3,(quint16)nValue);
+                            break;
+
+                        case N_IMAGE_DOS_HEADER::e_oemid:
+                            pe.set_e_oemid((quint16)nValue);
+                            break;
+
+                        case N_IMAGE_DOS_HEADER::e_oeminfo:
+                            pe.set_e_oeminfo((quint16)nValue);
+                            break;
+
+                        case N_IMAGE_DOS_HEADER::e_res2_0:
+                            pe.set_e_res2(0,(quint16)nValue);
+                            break;
+
+                        case N_IMAGE_DOS_HEADER::e_res2_1:
+                            pe.set_e_res2(1,(quint16)nValue);
+                            break;
+
+                        case N_IMAGE_DOS_HEADER::e_res2_2:
+                            pe.set_e_res2(2,(quint16)nValue);
+                            break;
+
+                        case N_IMAGE_DOS_HEADER::e_res2_3:
+                            pe.set_e_res2(3,(quint16)nValue);
+                            break;
+
+                        case N_IMAGE_DOS_HEADER::e_res2_4:
+                            pe.set_e_res2(4,(quint16)nValue);
+                            break;
+
+                        case N_IMAGE_DOS_HEADER::e_res2_5:
+                            pe.set_e_res2(5,(quint16)nValue);
+                            break;
+
+                        case N_IMAGE_DOS_HEADER::e_res2_6:
+                            pe.set_e_res2(6,(quint16)nValue);
+                            break;
+
+                        case N_IMAGE_DOS_HEADER::e_res2_7:
+                            pe.set_e_res2(7,(quint16)nValue);
+                            break;
+
+                        case N_IMAGE_DOS_HEADER::e_res2_8:
+                            pe.set_e_res2(8,(quint16)nValue);
+                            break;
+
+                        case N_IMAGE_DOS_HEADER::e_res2_9:
+                            pe.set_e_res2(9,(quint16)nValue);
+                            break;
+
+                        case N_IMAGE_DOS_HEADER::e_lfanew:
+                            pe.set_e_lfanew((quint32)nValue);
+                            break;
+                    }
+
+                    break;
+
+                case SPE::TYPE_IMAGE_NT_HEADERS:
+                    switch(nNdata)
+                    {
+                        case N_IMAGE_NT_HEADERS::Signature:
+                            pe.setNtHeaders_Signature((quint32)nValue);
+                            break;
+                    }
+
+                    break;
+
+                case SPE::TYPE_IMAGE_FILE_HEADER:
+                    switch(nNdata)
+                    {
+                        case N_IMAGE_FILE_HEADER::Machine:
+                            comboBox[CB_IMAGE_FILE_HEADER_Machine]->setValue(nValue);
+                            pe.setFileHeader_Machine((quint16)nValue);
+                            break;
+
+                        case N_IMAGE_FILE_HEADER::NumberOfSections:
+                            pe.setFileHeader_NumberOfSections((quint16)nValue);
+                            break;
+
+                        case N_IMAGE_FILE_HEADER::TimeDateStamp:
+                            pe.setFileHeader_TimeDateStamp((quint32)nValue);
+                            dateTimeEdit[DT_DateTimeStamp]->setValue(nValue);
+                            break;
+
+                        case N_IMAGE_FILE_HEADER::PointerToSymbolTable:
+                            pe.setFileHeader_PointerToSymbolTable((quint32)nValue);
+                            break;
+
+                        case N_IMAGE_FILE_HEADER::NumberOfSymbols:
+                            pe.setFileHeader_NumberOfSymbols((quint32)nValue);
+                            break;
+
+                        case N_IMAGE_FILE_HEADER::SizeOfOptionalHeader:
+                            pe.setFileHeader_SizeOfOptionalHeader((quint16)nValue);
+                            break;
+
+                        case N_IMAGE_FILE_HEADER::Characteristics:
+                            comboBox[CB_IMAGE_FILE_HEADER_Characteristics]->setValue(nValue);
+                            pe.setFileHeader_Characteristics((quint16)nValue);
+                            break;
+                    }
+
+                    break;
+
+                case SPE::TYPE_IMAGE_OPTIONAL_HEADER:
+                    switch(nNdata)
+                    {
+                        case N_IMAGE_OPTIONAL_HEADER::Magic:
+                            comboBox[CB_IMAGE_OPTIONAL_HEADER_Magic]->setValue(nValue);
+                            pe.setOptionalHeader_Magic((quint16)nValue);
+                            break;
+
+                        case N_IMAGE_OPTIONAL_HEADER::MajorLinkerVersion:
+                            pe.setOptionalHeader_MajorLinkerVersion((quint8)nValue);
+                            break;
+
+                        case N_IMAGE_OPTIONAL_HEADER::MinorLinkerVersion:
+                            pe.setOptionalHeader_MinorLinkerVersion((quint8)nValue);
+                            break;
+
+                        case N_IMAGE_OPTIONAL_HEADER::SizeOfCode:
+                            pe.setOptionalHeader_SizeOfCode((quint32)nValue);
+                            break;
+
+                        case N_IMAGE_OPTIONAL_HEADER::SizeOfInitializedData:
+                            pe.setOptionalHeader_SizeOfInitializedData((quint32)nValue);
+                            break;
+
+                        case N_IMAGE_OPTIONAL_HEADER::SizeOfUninitializedData:
+                            pe.setOptionalHeader_SizeOfUninitializedData((quint32)nValue);
+                            break;
+
+                        case N_IMAGE_OPTIONAL_HEADER::AddressOfEntryPoint:
+                            pe.setOptionalHeader_AddressOfEntryPoint((quint32)nValue);
+                            break;
+
+                        case N_IMAGE_OPTIONAL_HEADER::BaseOfCode:
+                            pe.setOptionalHeader_BaseOfCode((quint32)nValue);
+                            break;
+
+                        case N_IMAGE_OPTIONAL_HEADER::BaseOfData:
+                            pe.setOptionalHeader_BaseOfData((quint32)nValue);
+                            break;
+
+                        case N_IMAGE_OPTIONAL_HEADER::ImageBase:
+                            pe.setOptionalHeader_ImageBase((quint64)nValue);
+                            break;
+
+                        case N_IMAGE_OPTIONAL_HEADER::SectionAlignment:
+                            pe.setOptionalHeader_SectionAlignment((quint32)nValue);
+                            break;
+
+                        case N_IMAGE_OPTIONAL_HEADER::FileAlignment:
+                            pe.setOptionalHeader_FileAlignment((quint32)nValue);
+                            break;
+
+                        case N_IMAGE_OPTIONAL_HEADER::MajorOperatingSystemVersion:
+                            pe.setOptionalHeader_MajorOperatingSystemVersion((quint16)nValue);
+                            break;
+
+                        case N_IMAGE_OPTIONAL_HEADER::MinorOperatingSystemVersion:
+                            pe.setOptionalHeader_MinorOperatingSystemVersion((quint16)nValue);
+                            break;
+
+                        case N_IMAGE_OPTIONAL_HEADER::MajorImageVersion:
+                            pe.setOptionalHeader_MajorImageVersion((quint16)nValue);
+                            break;
+
+                        case N_IMAGE_OPTIONAL_HEADER::MinorImageVersion:
+                            pe.setOptionalHeader_MinorImageVersion((quint16)nValue);
+                            break;
+
+                        case N_IMAGE_OPTIONAL_HEADER::MajorSubsystemVersion:
+                            pe.setOptionalHeader_MajorSubsystemVersion((quint16)nValue);
+                            break;
+
+                        case N_IMAGE_OPTIONAL_HEADER::MinorSubsystemVersion:
+                            pe.setOptionalHeader_MinorSubsystemVersion((quint16)nValue);
+                            break;
+
+                        case N_IMAGE_OPTIONAL_HEADER::Win32VersionValue:
+                            pe.setOptionalHeader_Win32VersionValue((quint16)nValue);
+                            break;
+
+                        case N_IMAGE_OPTIONAL_HEADER::SizeOfImage:
+                            pe.setOptionalHeader_SizeOfImage((quint32)nValue);
+                            break;
+
+                        case N_IMAGE_OPTIONAL_HEADER::SizeOfHeaders:
+                            pe.setOptionalHeader_SizeOfHeaders((quint32)nValue);
+                            break;
+
+                        case N_IMAGE_OPTIONAL_HEADER::CheckSum:
+                            pe.setOptionalHeader_CheckSum((quint32)nValue);
+                            break;
+
+                        case N_IMAGE_OPTIONAL_HEADER::Subsystem:
+                            comboBox[CB_IMAGE_OPTIONAL_HEADER_Subsystem]->setValue(nValue);
+                            pe.setOptionalHeader_Subsystem((quint16)nValue);
+                            break;
+
+                        case N_IMAGE_OPTIONAL_HEADER::DllCharacteristics:
+                            comboBox[CB_IMAGE_OPTIONAL_HEADER_DllCharacteristics]->setValue(nValue);
+                            pe.setOptionalHeader_DllCharacteristics((quint16)nValue);
+                            break;
+
+                        case N_IMAGE_OPTIONAL_HEADER::SizeOfStackReserve:
+                            pe.setOptionalHeader_SizeOfStackReserve((quint64)nValue);
+                            break;
+
+                        case N_IMAGE_OPTIONAL_HEADER::SizeOfStackCommit:
+                            pe.setOptionalHeader_SizeOfStackCommit((quint64)nValue);
+                            break;
+
+                        case N_IMAGE_OPTIONAL_HEADER::SizeOfHeapReserve:
+                            pe.setOptionalHeader_SizeOfHeapReserve((quint64)nValue);
+                            break;
+
+                        case N_IMAGE_OPTIONAL_HEADER::SizeOfHeapCommit:
+                            pe.setOptionalHeader_SizeOfHeapCommit((quint64)nValue);
+                            break;
+
+                        case N_IMAGE_OPTIONAL_HEADER::LoaderFlags:
+                            pe.setOptionalHeader_LoaderFlags((quint32)nValue);
+                            break;
+
+                        case N_IMAGE_OPTIONAL_HEADER::NumberOfRvaAndSizes:
+                            pe.setOptionalHeader_NumberOfRvaAndSizes((quint32)nValue);
+                            break;
+                    }
+
+                    break;
+
+                case SPE::TYPE_IMAGE_DIRECTORY_ENTRIES:
+                    switch(nVtype)
+                    {
+                        case VAL_TYPE_RELADDRESS:
+                            pe.setOptionalHeader_DataDirectory_VirtualAddress((quint32)nNdata,(quint32)nValue);
+                            break;
+
+                        case VAL_TYPE_SIZE:
+                            pe.setOptionalHeader_DataDirectory_Size((quint32)nNdata,(quint32)nValue);
+                            break;
+                    }
+
+                    break;
+
+                case SPE::TYPE_EXPORT:
+                    switch(nNdata)
+                    {
+                        case N_IMAGE_EXPORT::Characteristics:
+                            pe.setExportDirectory_Characteristics((quint32)nValue);
+                            break;
+
+                        case N_IMAGE_EXPORT::TimeDateStamp:
+                            pe.setExportDirectory_TimeDateStamp((quint32)nValue);
+                            break;
+
+                        case N_IMAGE_EXPORT::MajorVersion:
+                            pe.setExportDirectory_MajorVersion((quint16)nValue);
+                            break;
+
+                        case N_IMAGE_EXPORT::MinorVersion:
+                            pe.setExportDirectory_MinorVersion((quint16)nValue);
+                            break;
+
+                        case N_IMAGE_EXPORT::Name:
+                            pe.setExportDirectory_Name((quint32)nValue);
+                            break;
+
+                        case N_IMAGE_EXPORT::Base:
+                            pe.setExportDirectory_Base((quint32)nValue);
+                            break;
+
+                        case N_IMAGE_EXPORT::NumberOfFunctions:
+                            pe.setExportDirectory_NumberOfFunctions((quint32)nValue);
+                            break;
+
+                        case N_IMAGE_EXPORT::NumberOfNames:
+                            pe.setExportDirectory_NumberOfNames((quint32)nValue);
+                            break;
+
+                        case N_IMAGE_EXPORT::AddressOfFunctions:
+                            pe.setExportDirectory_AddressOfFunctions((quint32)nValue);
+                            break;
+
+                        case N_IMAGE_EXPORT::AddressOfNames:
+                            pe.setExportDirectory_AddressOfNames((quint32)nValue);
+                            break;
+
+                        case N_IMAGE_EXPORT::AddressOfNameOrdinals:
+                            pe.setExportDirectory_AddressOfNameOrdinals((quint32)nValue);
+                            break;
+                    }
+
                     break;
-                case N_IMAGE_DOS_HEADER::e_cblp:
-                    pe.set_e_cblp((quint16)nValue);
-                    break;
-                case N_IMAGE_DOS_HEADER::e_cp:
-                    pe.set_e_cp((quint16)nValue);
-                    break;
-                case N_IMAGE_DOS_HEADER::e_crlc:
-                    pe.set_e_crlc((quint16)nValue);
-                    break;
-                case N_IMAGE_DOS_HEADER::e_cparhdr:
-                    pe.set_e_cparhdr((quint16)nValue);
-                    break;
-                case N_IMAGE_DOS_HEADER::e_minalloc:
-                    pe.set_e_minalloc((quint16)nValue);
-                    break;
-                case N_IMAGE_DOS_HEADER::e_maxalloc:
-                    pe.set_e_maxalloc((quint16)nValue);
-                    break;
-                case N_IMAGE_DOS_HEADER::e_ss:
-                    pe.set_e_ss((quint16)nValue);
-                    break;
-                case N_IMAGE_DOS_HEADER::e_sp:
-                    pe.set_e_sp((quint16)nValue);
-                    break;
-                case N_IMAGE_DOS_HEADER::e_csum:
-                    pe.set_e_csum((quint16)nValue);
-                    break;
-                case N_IMAGE_DOS_HEADER::e_ip:
-                    pe.set_e_ip((quint16)nValue);
-                    break;
-                case N_IMAGE_DOS_HEADER::e_cs:
-                    pe.set_e_cs((quint16)nValue);
-                    break;
-                case N_IMAGE_DOS_HEADER::e_lfarlc:
-                    pe.set_e_lfarlc((quint16)nValue);
-                    break;
-                case N_IMAGE_DOS_HEADER::e_ovno:
-                    pe.set_e_ovno((quint16)nValue);
-                    break;
-                case N_IMAGE_DOS_HEADER::e_res_0:
-                    pe.set_e_res(0,(quint16)nValue);
-                    break;
-                case N_IMAGE_DOS_HEADER::e_res_1:
-                    pe.set_e_res(1,(quint16)nValue);
-                    break;
-                case N_IMAGE_DOS_HEADER::e_res_2:
-                    pe.set_e_res(2,(quint16)nValue);
-                    break;
-                case N_IMAGE_DOS_HEADER::e_res_3:
-                    pe.set_e_res(3,(quint16)nValue);
-                    break;
-                case N_IMAGE_DOS_HEADER::e_oemid:
-                    pe.set_e_oemid((quint16)nValue);
-                    break;
-                case N_IMAGE_DOS_HEADER::e_oeminfo:
-                    pe.set_e_oeminfo((quint16)nValue);
-                    break;
-                case N_IMAGE_DOS_HEADER::e_res2_0:
-                    pe.set_e_res2(0,(quint16)nValue);
-                    break;
-                case N_IMAGE_DOS_HEADER::e_res2_1:
-                    pe.set_e_res2(1,(quint16)nValue);
-                    break;
-                case N_IMAGE_DOS_HEADER::e_res2_2:
-                    pe.set_e_res2(2,(quint16)nValue);
-                    break;
-                case N_IMAGE_DOS_HEADER::e_res2_3:
-                    pe.set_e_res2(3,(quint16)nValue);
-                    break;
-                case N_IMAGE_DOS_HEADER::e_res2_4:
-                    pe.set_e_res2(4,(quint16)nValue);
-                    break;
-                case N_IMAGE_DOS_HEADER::e_res2_5:
-                    pe.set_e_res2(5,(quint16)nValue);
-                    break;
-                case N_IMAGE_DOS_HEADER::e_res2_6:
-                    pe.set_e_res2(6,(quint16)nValue);
-                    break;
-                case N_IMAGE_DOS_HEADER::e_res2_7:
-                    pe.set_e_res2(7,(quint16)nValue);
-                    break;
-                case N_IMAGE_DOS_HEADER::e_res2_8:
-                    pe.set_e_res2(8,(quint16)nValue);
-                    break;
-                case N_IMAGE_DOS_HEADER::e_res2_9:
-                    pe.set_e_res2(9,(quint16)nValue);
-                    break;
-                case N_IMAGE_DOS_HEADER::e_lfanew:
-                    pe.set_e_lfanew((quint32)nValue);
-                    break;
-                }
-                break;
-            case SPE::TYPE_IMAGE_NT_HEADERS:
-                switch(nNdata)
-                {
-                case N_IMAGE_NT_HEADERS::Signature:
-                    pe.setNtHeaders_Signature((quint32)nValue);
-                    break;
-                }
-                break;
-            case SPE::TYPE_IMAGE_FILE_HEADER:
-                switch(nNdata)
-                {
-                case N_IMAGE_FILE_HEADER::Machine:
-                    comboBox[CB_IMAGE_FILE_HEADER_Machine]->setValue(nValue);
-                    pe.setFileHeader_Machine((quint16)nValue);
-                    break;
-                case N_IMAGE_FILE_HEADER::NumberOfSections:
-                    pe.setFileHeader_NumberOfSections((quint16)nValue);
-                    break;
-                case N_IMAGE_FILE_HEADER::TimeDateStamp:
-                    pe.setFileHeader_TimeDateStamp((quint32)nValue);
-                    dateTimeEdit[DT_DateTimeStamp]->setValue(nValue);
-                    break;
-                case N_IMAGE_FILE_HEADER::PointerToSymbolTable:
-                    pe.setFileHeader_PointerToSymbolTable((quint32)nValue);
-                    break;
-                case N_IMAGE_FILE_HEADER::NumberOfSymbols:
-                    pe.setFileHeader_NumberOfSymbols((quint32)nValue);
-                    break;
-                case N_IMAGE_FILE_HEADER::SizeOfOptionalHeader:
-                    pe.setFileHeader_SizeOfOptionalHeader((quint16)nValue);
-                    break;
-                case N_IMAGE_FILE_HEADER::Characteristics:
-                    comboBox[CB_IMAGE_FILE_HEADER_Characteristics]->setValue(nValue);
-                    pe.setFileHeader_Characteristics((quint16)nValue);
-                    break;
-                }
-                break;
-            case SPE::TYPE_IMAGE_OPTIONAL_HEADER:
-                switch(nNdata)
-                {
-                case N_IMAGE_OPTIONAL_HEADER::Magic:
-                    comboBox[CB_IMAGE_OPTIONAL_HEADER_Magic]->setValue(nValue);
-                    pe.setOptionalHeader_Magic((quint16)nValue);
-                    break;
-                case N_IMAGE_OPTIONAL_HEADER::MajorLinkerVersion:
-                    pe.setOptionalHeader_MajorLinkerVersion((quint8)nValue);
-                    break;
-                case N_IMAGE_OPTIONAL_HEADER::MinorLinkerVersion:
-                    pe.setOptionalHeader_MinorLinkerVersion((quint8)nValue);
-                    break;
-                case N_IMAGE_OPTIONAL_HEADER::SizeOfCode:
-                    pe.setOptionalHeader_SizeOfCode((quint32)nValue);
-                    break;
-                case N_IMAGE_OPTIONAL_HEADER::SizeOfInitializedData:
-                    pe.setOptionalHeader_SizeOfInitializedData((quint32)nValue);
-                    break;
-                case N_IMAGE_OPTIONAL_HEADER::SizeOfUninitializedData:
-                    pe.setOptionalHeader_SizeOfUninitializedData((quint32)nValue);
-                    break;
-                case N_IMAGE_OPTIONAL_HEADER::AddressOfEntryPoint:
-                    pe.setOptionalHeader_AddressOfEntryPoint((quint32)nValue);
-                    break;
-                case N_IMAGE_OPTIONAL_HEADER::BaseOfCode:
-                    pe.setOptionalHeader_BaseOfCode((quint32)nValue);
-                    break;
-                case N_IMAGE_OPTIONAL_HEADER::BaseOfData:
-                    pe.setOptionalHeader_BaseOfData((quint32)nValue);
-                    break;
-                case N_IMAGE_OPTIONAL_HEADER::ImageBase:
-                    pe.setOptionalHeader_ImageBase((quint64)nValue);
-                    break;
-                case N_IMAGE_OPTIONAL_HEADER::SectionAlignment:
-                    pe.setOptionalHeader_SectionAlignment((quint32)nValue);
-                    break;
-                case N_IMAGE_OPTIONAL_HEADER::FileAlignment:
-                    pe.setOptionalHeader_FileAlignment((quint32)nValue);
-                    break;
-                case N_IMAGE_OPTIONAL_HEADER::MajorOperatingSystemVersion:
-                    pe.setOptionalHeader_MajorOperatingSystemVersion((quint16)nValue);
-                    break;
-                case N_IMAGE_OPTIONAL_HEADER::MinorOperatingSystemVersion:
-                    pe.setOptionalHeader_MinorOperatingSystemVersion((quint16)nValue);
-                    break;
-                case N_IMAGE_OPTIONAL_HEADER::MajorImageVersion:
-                    pe.setOptionalHeader_MajorImageVersion((quint16)nValue);
-                    break;
-                case N_IMAGE_OPTIONAL_HEADER::MinorImageVersion:
-                    pe.setOptionalHeader_MinorImageVersion((quint16)nValue);
-                    break;
-                case N_IMAGE_OPTIONAL_HEADER::MajorSubsystemVersion:
-                    pe.setOptionalHeader_MajorSubsystemVersion((quint16)nValue);
-                    break;
-                case N_IMAGE_OPTIONAL_HEADER::MinorSubsystemVersion:
-                    pe.setOptionalHeader_MinorSubsystemVersion((quint16)nValue);
-                    break;
-                case N_IMAGE_OPTIONAL_HEADER::Win32VersionValue:
-                    pe.setOptionalHeader_Win32VersionValue((quint16)nValue);
-                    break;
-                case N_IMAGE_OPTIONAL_HEADER::SizeOfImage:
-                    pe.setOptionalHeader_SizeOfImage((quint32)nValue);
-                    break;
-                case N_IMAGE_OPTIONAL_HEADER::SizeOfHeaders:
-                    pe.setOptionalHeader_SizeOfHeaders((quint32)nValue);
-                    break;
-                case N_IMAGE_OPTIONAL_HEADER::CheckSum:
-                    pe.setOptionalHeader_CheckSum((quint32)nValue);
-                    break;
-                case N_IMAGE_OPTIONAL_HEADER::Subsystem:
-                    comboBox[CB_IMAGE_OPTIONAL_HEADER_Subsystem]->setValue(nValue);
-                    pe.setOptionalHeader_Subsystem((quint16)nValue);
-                    break;
-                case N_IMAGE_OPTIONAL_HEADER::DllCharacteristics:
-                    comboBox[CB_IMAGE_OPTIONAL_HEADER_DllCharacteristics]->setValue(nValue);
-                    pe.setOptionalHeader_DllCharacteristics((quint16)nValue);
-                    break;
-                case N_IMAGE_OPTIONAL_HEADER::SizeOfStackReserve:
-                    pe.setOptionalHeader_SizeOfStackReserve((quint64)nValue);
-                    break;
-                case N_IMAGE_OPTIONAL_HEADER::SizeOfStackCommit:
-                    pe.setOptionalHeader_SizeOfStackCommit((quint64)nValue);
-                    break;
-                case N_IMAGE_OPTIONAL_HEADER::SizeOfHeapReserve:
-                    pe.setOptionalHeader_SizeOfHeapReserve((quint64)nValue);
-                    break;
-                case N_IMAGE_OPTIONAL_HEADER::SizeOfHeapCommit:
-                    pe.setOptionalHeader_SizeOfHeapCommit((quint64)nValue);
-                    break;
-                case N_IMAGE_OPTIONAL_HEADER::LoaderFlags:
-                    pe.setOptionalHeader_LoaderFlags((quint32)nValue);
-                    break;
-                case N_IMAGE_OPTIONAL_HEADER::NumberOfRvaAndSizes:
-                    pe.setOptionalHeader_NumberOfRvaAndSizes((quint32)nValue);
-                    break;
-                }
-                break;
-            case SPE::TYPE_IMAGE_DIRECTORY_ENTRIES:
-                switch(nVtype)
-                {
-                case VAL_TYPE_RELADDRESS:
-                    pe.setOptionalHeader_DataDirectory_VirtualAddress((quint32)nNdata,(quint32)nValue);
-                    break;
-                case VAL_TYPE_SIZE:
-                    pe.setOptionalHeader_DataDirectory_Size((quint32)nNdata,(quint32)nValue);
-                    break;
-                }
-                break;
-            case SPE::TYPE_EXPORT:
-                switch(nNdata)
-                {
-                case N_IMAGE_EXPORT::Characteristics:
-                    pe.setExportDirectory_Characteristics((quint32)nValue);
-                    break;
-                case N_IMAGE_EXPORT::TimeDateStamp:
-                    pe.setExportDirectory_TimeDateStamp((quint32)nValue);
-                    break;
-                case N_IMAGE_EXPORT::MajorVersion:
-                    pe.setExportDirectory_MajorVersion((quint16)nValue);
-                    break;
-                case N_IMAGE_EXPORT::MinorVersion:
-                    pe.setExportDirectory_MinorVersion((quint16)nValue);
-                    break;
-                case N_IMAGE_EXPORT::Name:
-                    pe.setExportDirectory_Name((quint32)nValue);
-                    break;
-                case N_IMAGE_EXPORT::Base:
-                    pe.setExportDirectory_Base((quint32)nValue);
-                    break;
-                case N_IMAGE_EXPORT::NumberOfFunctions:
-                    pe.setExportDirectory_NumberOfFunctions((quint32)nValue);
-                    break;
-                case N_IMAGE_EXPORT::NumberOfNames:
-                    pe.setExportDirectory_NumberOfNames((quint32)nValue);
-                    break;
-                case N_IMAGE_EXPORT::AddressOfFunctions:
-                    pe.setExportDirectory_AddressOfFunctions((quint32)nValue);
-                    break;
-                case N_IMAGE_EXPORT::AddressOfNames:
-                    pe.setExportDirectory_AddressOfNames((quint32)nValue);
-                    break;
-                case N_IMAGE_EXPORT::AddressOfNameOrdinals:
-                    pe.setExportDirectory_AddressOfNameOrdinals((quint32)nValue);
-                    break;
-                }
-                break;
             }
 
             bResult=true;
@@ -469,50 +561,61 @@ void PEWidget::widgetValueChanged(quint64 nValue)
 
     switch(nStype)
     {
-    case SPE::TYPE_IMAGE_DOS_HEADER:
-        switch(nNdata)
-        {
-        case N_IMAGE_DOS_HEADER::e_magic:
-            lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_magic]->setValue((quint16)nValue);
+        case SPE::TYPE_IMAGE_DOS_HEADER:
+            switch(nNdata)
+            {
+                case N_IMAGE_DOS_HEADER::e_magic:
+                    lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_magic]->setValue((quint16)nValue);
+                    break;
+            }
+
             break;
-        }
-        break;
-    case SPE::TYPE_IMAGE_NT_HEADERS:
-        switch(nNdata)
-        {
-        case N_IMAGE_NT_HEADERS::Signature:
-            lineEdit_IMAGE_NT_HEADERS[N_IMAGE_NT_HEADERS::Signature]->setValue((quint32)nValue);
+
+        case SPE::TYPE_IMAGE_NT_HEADERS:
+            switch(nNdata)
+            {
+                case N_IMAGE_NT_HEADERS::Signature:
+                    lineEdit_IMAGE_NT_HEADERS[N_IMAGE_NT_HEADERS::Signature]->setValue((quint32)nValue);
+                    break;
+            }
+
             break;
-        }
-        break;
-    case SPE::TYPE_IMAGE_FILE_HEADER:
-        switch(nNdata)
-        {
-        case N_IMAGE_FILE_HEADER::Machine:
-            lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::Machine]->setValue((quint16)nValue);
+
+        case SPE::TYPE_IMAGE_FILE_HEADER:
+            switch(nNdata)
+            {
+                case N_IMAGE_FILE_HEADER::Machine:
+                    lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::Machine]->setValue((quint16)nValue);
+                    break;
+
+                case N_IMAGE_FILE_HEADER::TimeDateStamp:
+                    lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::TimeDateStamp]->setValue((quint32)nValue);
+                    break;
+
+                case N_IMAGE_FILE_HEADER::Characteristics:
+                    lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::Characteristics]->setValue((quint16)nValue);
+                    break;
+            }
+
             break;
-        case N_IMAGE_FILE_HEADER::TimeDateStamp:
-            lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::TimeDateStamp]->setValue((quint32)nValue);
+
+        case SPE::TYPE_IMAGE_OPTIONAL_HEADER:
+            switch(nNdata)
+            {
+                case N_IMAGE_OPTIONAL_HEADER::Magic:
+                    lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::Magic]->setValue((quint16)nValue);
+                    break;
+
+                case N_IMAGE_OPTIONAL_HEADER::Subsystem:
+                    lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::Subsystem]->setValue((quint16)nValue);
+                    break;
+
+                case N_IMAGE_OPTIONAL_HEADER::DllCharacteristics:
+                    lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::DllCharacteristics]->setValue((quint16)nValue);
+                    break;
+            }
+
             break;
-        case N_IMAGE_FILE_HEADER::Characteristics:
-            lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::Characteristics]->setValue((quint16)nValue);
-            break;
-        }
-        break;
-    case SPE::TYPE_IMAGE_OPTIONAL_HEADER:
-        switch(nNdata)
-        {
-        case N_IMAGE_OPTIONAL_HEADER::Magic:
-            lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::Magic]->setValue((quint16)nValue);
-            break;
-        case N_IMAGE_OPTIONAL_HEADER::Subsystem:
-            lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::Subsystem]->setValue((quint16)nValue);
-            break;
-        case N_IMAGE_OPTIONAL_HEADER::DllCharacteristics:
-            lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::DllCharacteristics]->setValue((quint16)nValue);
-            break;
-        }
-        break;
     }
 }
 
@@ -524,19 +627,22 @@ void PEWidget::widgetAction()
 
     switch(nStype)
     {
-    case SPE::TYPE_IMAGE_OPTIONAL_HEADER:
-        switch(nNdata)
-        {
-        case N_IMAGE_OPTIONAL_HEADER::CheckSum:
-            XPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
-            if(pe.isValid())
+        case SPE::TYPE_IMAGE_OPTIONAL_HEADER:
+            switch(nNdata)
             {
-                quint32 nCheckSum=pe.calculateCheckSum();
-                lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::CheckSum]->setValue(nCheckSum);
+                case N_IMAGE_OPTIONAL_HEADER::CheckSum:
+                    XPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
+
+                    if(pe.isValid())
+                    {
+                        quint32 nCheckSum=pe.calculateCheckSum();
+                        lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::CheckSum]->setValue(nCheckSum);
+                    }
+
+                    break;
             }
+
             break;
-        }
-        break;
     }
 }
 
@@ -565,6 +671,7 @@ void PEWidget::reloadData()
     ui->stackedWidgetInfo->setCurrentIndex(nData);
 
     XPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
+
     if(pe.isValid())
     {
         if(nData==SPE::TYPE_TOOLS)
@@ -773,7 +880,7 @@ void PEWidget::reloadData()
 
             quint32 nNumberOfRvaAndSizes=pe.getOptionalHeader_NumberOfRvaAndSizes();
 
-            for(int i=0;i<16;i++)
+            for(int i=0; i<16; i++)
             {
                 S_IMAGE_DATA_DIRECTORY dd=pe.getOptionalHeader_DataDirectory((quint32)i);
                 lineEdit_IMAGE_DIRECTORY_ADDRESS[i]->setValue(dd.VirtualAddress);
@@ -799,10 +906,10 @@ void PEWidget::reloadData()
 
             ui->tableWidget_Sections->setRowCount(nCount);
 
-//            record.sName=QString((char *)pList->at(i).Name);
-//            record.sName.resize(qMin(record.sName.length(),S_IMAGE_SIZEOF_SHORT_NAME));
+            //            record.sName=QString((char *)pList->at(i).Name);
+            //            record.sName.resize(qMin(record.sName.length(),S_IMAGE_SIZEOF_SHORT_NAME));
 
-            for(int i=0;i<nCount;i++)
+            for(int i=0; i<nCount; i++)
             {
                 QTableWidgetItem *itemNumber=new QTableWidgetItem(QString::number(i));
 
@@ -872,7 +979,7 @@ void PEWidget::reloadData()
             int nCount=eh.listPositions.count();
             ui->tableWidget_ExportFunctions->setRowCount(nCount);
 
-            for(int i=0;i<nCount;i++)
+            for(int i=0; i<nCount; i++)
             {
                 ui->tableWidget_ExportFunctions->setItem(i,N_IMAGE_EXPORT_FUNCTION::Ordinal,                new QTableWidgetItem(XBinary::valueToHex(eh.listPositions.at(i).nOrdinal)));
                 ui->tableWidget_ExportFunctions->setItem(i,N_IMAGE_EXPORT_FUNCTION::RVA,                    new QTableWidgetItem(XBinary::valueToHex(eh.listPositions.at(i).nRVA)));
@@ -894,7 +1001,7 @@ void PEWidget::reloadData()
             int nCount=listID.count();
             ui->tableWidget_ImportLibraries->setRowCount(nCount);
 
-            for(int i=0;i<nCount;i++)
+            for(int i=0; i<nCount; i++)
             {
                 ui->tableWidget_ImportLibraries->setItem(i,N_IMAGE_IMPORT::OriginalFirstThunk,              new QTableWidgetItem(XBinary::valueToHex(listID.at(i).OriginalFirstThunk)));
                 ui->tableWidget_ImportLibraries->setItem(i,N_IMAGE_IMPORT::TimeDateStamp,                   new QTableWidgetItem(XBinary::valueToHex(listID.at(i).TimeDateStamp)));
@@ -929,9 +1036,9 @@ void PEWidget::reloadData()
             {
                 QTreeWidgetItem *pRoot=new QTreeWidgetItem(ui->treeWidgetResource);
                 pRoot->setText(0,tr("Resource"));
-//                ui->treeWidgetResource->insertTopLevelItem(0,);
+                //                ui->treeWidgetResource->insertTopLevelItem(0,);
 
-                for(int i=0;i<nHeaderCount;i++)
+                for(int i=0; i<nHeaderCount; i++)
                 {
                     XPE::RESOURCE_POSITION pos=rh.listPositions.at(i);
                     QTreeWidgetItem *pPos=new QTreeWidgetItem(pRoot);
@@ -955,15 +1062,17 @@ void PEWidget::reloadData()
                             sPosText=QString("%1").arg(pos.rin.nID);
                         }
                     }
+
                     pPos->setText(0,sPosText);
 
                     int nPosCount=pos.listPositions.count();
 
-                    for(int j=0;j<nPosCount;j++)
+                    for(int j=0; j<nPosCount; j++)
                     {
                         XPE::RESOURCE_POSITION subpos=rh.listPositions.at(i).listPositions.at(j);
                         QTreeWidgetItem *pSubPos=new QTreeWidgetItem(pPos);
                         QString sSubPosText;
+
                         if(subpos.rin.bIsName)
                         {
                             sSubPosText=QString("\"%1\"").arg(subpos.rin.sName);
@@ -972,15 +1081,17 @@ void PEWidget::reloadData()
                         {
                             sSubPosText=QString("%1").arg(subpos.rin.nID);
                         }
+
                         pSubPos->setText(0,sSubPosText);
 
                         int nSubPosCount=subpos.listPositions.count();
 
-                        for(int k=0;k<nSubPosCount;k++)
+                        for(int k=0; k<nSubPosCount; k++)
                         {
                             XPE::RESOURCE_POSITION record=rh.listPositions.at(i).listPositions.at(j).listPositions.at(k);
                             QTreeWidgetItem *pRecord=new QTreeWidgetItem(pSubPos);
                             QString sRecordText;
+
                             if(record.rin.bIsName)
                             {
                                 sRecordText=QString("\"%1\"").arg(record.rin.sName);
@@ -989,10 +1100,12 @@ void PEWidget::reloadData()
                             {
                                 sRecordText=QString("%1").arg(record.rin.nID);
                             }
+
                             pRecord->setText(0,sRecordText);
 
                             pRecord->setData(0,Qt::UserRole+SECTION_DATA_SIZE,record.data_entry.Size);
                             pRecord->setData(0,Qt::UserRole+SECTION_DATA_ADDRESS,record.data_entry.OffsetToData);
+
                             if(getOptions()->bIsImage)
                             {
                                 pRecord->setData(0,Qt::UserRole+SECTION_DATA_OFFSET,record.data_entry.OffsetToData);
@@ -1020,7 +1133,7 @@ void PEWidget::reloadData()
             int nCount=listRH.count();
             ui->tableWidget_Relocs->setRowCount(nCount);
 
-            for(int i=0;i<nCount;i++)
+            for(int i=0; i<nCount; i++)
             {
                 QTableWidgetItem *pItem=new QTableWidgetItem(XBinary::valueToHex(listRH.at(i).ibr.VirtualAddress));
                 pItem->setData(Qt::UserRole,listRH.at(i).nOffset);
@@ -1080,6 +1193,7 @@ void PEWidget::loadImportLibrary(int nNumber)
     ui->tableWidget_ImportFunctions->setRowCount(0);
 
     XPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
+
     if(pe.isValid())
     {
         bool bIs64=pe.is64();
@@ -1088,11 +1202,12 @@ void PEWidget::loadImportLibrary(int nNumber)
         int nCount=listIP.count();
         ui->tableWidget_ImportFunctions->setRowCount(nCount);
 
-        for(int i=0;i<nCount;i++)
+        for(int i=0; i<nCount; i++)
         {
             if(listIP.at(i).nOrdinal)
             {
                 QString sOrdinal;
+
                 if(bIs64)
                 {
                     sOrdinal=XBinary::valueToHex((quint64)listIP.at(i).nOrdinal);
@@ -1101,11 +1216,13 @@ void PEWidget::loadImportLibrary(int nNumber)
                 {
                     sOrdinal=XBinary::valueToHex((quint32)listIP.at(i).nOrdinal);
                 }
+
                 ui->tableWidget_ImportFunctions->setItem(i,N_IMAGE_IMPORT_FUNCTION::Ordinal,    new QTableWidgetItem(sOrdinal));
             }
             else
             {
                 QString sThunk;
+
                 if(bIs64)
                 {
                     sThunk=XBinary::valueToHex((quint64)listIP.at(i).nThunkValue);
@@ -1114,6 +1231,7 @@ void PEWidget::loadImportLibrary(int nNumber)
                 {
                     sThunk=XBinary::valueToHex((quint32)listIP.at(i).nThunkValue);
                 }
+
                 ui->tableWidget_ImportFunctions->setItem(i,N_IMAGE_IMPORT_FUNCTION::Thunk,      new QTableWidgetItem(sThunk));
                 ui->tableWidget_ImportFunctions->setItem(i,N_IMAGE_IMPORT_FUNCTION::Hint,       new QTableWidgetItem(XBinary::valueToHex(listIP.at(i).nHint)));
                 ui->tableWidget_ImportFunctions->setItem(i,N_IMAGE_IMPORT_FUNCTION::Hint+1,     new QTableWidgetItem(listIP.at(i).sName));
@@ -1127,6 +1245,7 @@ void PEWidget::loadRelocs(qint64 nOffset)
     ui->tableWidget_RelocsPositions->setRowCount(0);
 
     XPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
+
     if(pe.isValid())
     {
         QList<XPE::RELOCS_POSITION> listRelocsPositions=pe.getRelocsPositions(nOffset);
@@ -1137,7 +1256,7 @@ void PEWidget::loadRelocs(qint64 nOffset)
 
         QMap<quint64,QString> mapTypes=pe.getImageRelBasedS();
 
-        for(int i=0;i<nCount;i++)
+        for(int i=0; i<nCount; i++)
         {
             ui->tableWidget_RelocsPositions->setItem(i,N_IMAGE_RELOCS_POSITION::TypeOffset,       new QTableWidgetItem(XBinary::valueToHex(listRelocsPositions.at(i).nTypeOffset)));
             ui->tableWidget_RelocsPositions->setItem(i,N_IMAGE_RELOCS_POSITION::TypeOffset+1,     new QTableWidgetItem(mapTypes.value(listRelocsPositions.at(i).nType)));
@@ -1170,36 +1289,40 @@ void PEWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
 
     switch(type)
     {
-    case SPE::TYPE_IMAGE_DOS_HEADER:
-        pTableWidget->setColumnWidth(0,nSymbolWidth*10);
-        pTableWidget->setColumnWidth(1,nSymbolWidth*6);
-        pTableWidget->setColumnWidth(2,nSymbolWidth*8);
-        pTableWidget->setColumnWidth(3,nSymbolWidth*13);
-        break;
-    case SPE::TYPE_IMAGE_NT_HEADERS:
-        pTableWidget->setColumnWidth(0,nSymbolWidth*10);
-        pTableWidget->setColumnWidth(1,nSymbolWidth*6);
-        pTableWidget->setColumnWidth(2,nSymbolWidth*8);
-        pTableWidget->setColumnWidth(3,nSymbolWidth*13);
-        break;
-    case SPE::TYPE_IMAGE_FILE_HEADER:
-        pTableWidget->setColumnWidth(0,nSymbolWidth*15);
-        pTableWidget->setColumnWidth(1,nSymbolWidth*6);
-        pTableWidget->setColumnWidth(2,nSymbolWidth*8);
-        pTableWidget->setColumnWidth(3,nSymbolWidth*24);
-        break;
-    case SPE::TYPE_IMAGE_OPTIONAL_HEADER:
-        pTableWidget->setColumnWidth(0,nSymbolWidth*18);
-        pTableWidget->setColumnWidth(1,nSymbolWidth*9);
-        pTableWidget->setColumnWidth(2,nSymbolWidth*14);
-        pTableWidget->setColumnWidth(3,nSymbolWidth*22);
-        break;
-    case SPE::TYPE_EXPORT:
-        pTableWidget->setColumnWidth(0,nSymbolWidth*18);
-        pTableWidget->setColumnWidth(1,nSymbolWidth*6);
-        pTableWidget->setColumnWidth(2,nSymbolWidth*14);
-        pTableWidget->setColumnWidth(3,nSymbolWidth*22);
-        break;
+        case SPE::TYPE_IMAGE_DOS_HEADER:
+            pTableWidget->setColumnWidth(0,nSymbolWidth*10);
+            pTableWidget->setColumnWidth(1,nSymbolWidth*6);
+            pTableWidget->setColumnWidth(2,nSymbolWidth*8);
+            pTableWidget->setColumnWidth(3,nSymbolWidth*13);
+            break;
+
+        case SPE::TYPE_IMAGE_NT_HEADERS:
+            pTableWidget->setColumnWidth(0,nSymbolWidth*10);
+            pTableWidget->setColumnWidth(1,nSymbolWidth*6);
+            pTableWidget->setColumnWidth(2,nSymbolWidth*8);
+            pTableWidget->setColumnWidth(3,nSymbolWidth*13);
+            break;
+
+        case SPE::TYPE_IMAGE_FILE_HEADER:
+            pTableWidget->setColumnWidth(0,nSymbolWidth*15);
+            pTableWidget->setColumnWidth(1,nSymbolWidth*6);
+            pTableWidget->setColumnWidth(2,nSymbolWidth*8);
+            pTableWidget->setColumnWidth(3,nSymbolWidth*24);
+            break;
+
+        case SPE::TYPE_IMAGE_OPTIONAL_HEADER:
+            pTableWidget->setColumnWidth(0,nSymbolWidth*18);
+            pTableWidget->setColumnWidth(1,nSymbolWidth*9);
+            pTableWidget->setColumnWidth(2,nSymbolWidth*14);
+            pTableWidget->setColumnWidth(3,nSymbolWidth*22);
+            break;
+
+        case SPE::TYPE_EXPORT:
+            pTableWidget->setColumnWidth(0,nSymbolWidth*18);
+            pTableWidget->setColumnWidth(1,nSymbolWidth*6);
+            pTableWidget->setColumnWidth(2,nSymbolWidth*14);
+            pTableWidget->setColumnWidth(3,nSymbolWidth*22);
+            break;
     }
 }
 
@@ -1211,57 +1334,65 @@ bool PEWidget::createSectionTable(int type, QTableWidget *pTableWidget, const Fo
 
     switch(type)
     {
-    case SPE::TYPE_SECTIONS:
-        pTableWidget->setColumnCount(nRecordCount+1);
-        pTableWidget->setColumnWidth(0,nSymbolWidth*4);
-        slHeader.append("");
-        break;
-    case SPE::TYPE_EXPORT_FUNCTION:
-        pTableWidget->setColumnCount(nRecordCount+1);
-        pTableWidget->setColumnWidth(nRecordCount,400);
-        break;
-    case SPE::TYPE_IMPORT_FUNCTION:
-        pTableWidget->setColumnCount(nRecordCount+1);
-        pTableWidget->setColumnWidth(0,120);
-        pTableWidget->setColumnWidth(1,120);
-        pTableWidget->setColumnWidth(2,50);
-        pTableWidget->setColumnWidth(nRecordCount,400);
-        break;
-    case SPE::TYPE_IMPORT:
-        pTableWidget->setColumnCount(nRecordCount+1);
-        pTableWidget->setColumnWidth(nRecordCount,400);
-        break;
-    case SPE::TYPE_RELOCS:
-        pTableWidget->setColumnCount(nRecordCount+1);
-        break;
-    case SPE::TYPE_RELOCS_POSITION:
-        pTableWidget->setColumnCount(nRecordCount+2);
-        break;
-    default:
-        pTableWidget->setColumnCount(nRecordCount);
+        case SPE::TYPE_SECTIONS:
+            pTableWidget->setColumnCount(nRecordCount+1);
+            pTableWidget->setColumnWidth(0,nSymbolWidth*4);
+            slHeader.append("");
+            break;
+
+        case SPE::TYPE_EXPORT_FUNCTION:
+            pTableWidget->setColumnCount(nRecordCount+1);
+            pTableWidget->setColumnWidth(nRecordCount,400);
+            break;
+
+        case SPE::TYPE_IMPORT_FUNCTION:
+            pTableWidget->setColumnCount(nRecordCount+1);
+            pTableWidget->setColumnWidth(0,120);
+            pTableWidget->setColumnWidth(1,120);
+            pTableWidget->setColumnWidth(2,50);
+            pTableWidget->setColumnWidth(nRecordCount,400);
+            break;
+
+        case SPE::TYPE_IMPORT:
+            pTableWidget->setColumnCount(nRecordCount+1);
+            pTableWidget->setColumnWidth(nRecordCount,400);
+            break;
+
+        case SPE::TYPE_RELOCS:
+            pTableWidget->setColumnCount(nRecordCount+1);
+            break;
+
+        case SPE::TYPE_RELOCS_POSITION:
+            pTableWidget->setColumnCount(nRecordCount+2);
+            break;
+
+        default:
+            pTableWidget->setColumnCount(nRecordCount);
     }
 
     pTableWidget->setRowCount(0);
 
-    for(int i=0;i<nRecordCount;i++)
+    for(int i=0; i<nRecordCount; i++)
     {
         slHeader.append(pRecords[i].pszName);
     }
 
     switch(type)
     {
-    case SPE::TYPE_EXPORT_FUNCTION:
-    case SPE::TYPE_IMPORT_FUNCTION:
-    case SPE::TYPE_IMPORT:
-        slHeader.append("");
-        break;
-    case SPE::TYPE_RELOCS:
-        slHeader.append(tr("Count"));
-        break;
-    case SPE::TYPE_RELOCS_POSITION:
-        slHeader.append(tr("Type"));
-        slHeader.append(tr("Address"));
-        break;
+        case SPE::TYPE_EXPORT_FUNCTION:
+        case SPE::TYPE_IMPORT_FUNCTION:
+        case SPE::TYPE_IMPORT:
+            slHeader.append("");
+            break;
+
+        case SPE::TYPE_RELOCS:
+            slHeader.append(tr("Count"));
+            break;
+
+        case SPE::TYPE_RELOCS_POSITION:
+            slHeader.append(tr("Type"));
+            slHeader.append(tr("Address"));
+            break;
     }
 
     pTableWidget->setHorizontalHeaderLabels(slHeader);
@@ -1277,7 +1408,7 @@ void PEWidget::on_tableWidget_Sections_currentCellChanged(int currentRow, int cu
         qint64 nOffset=ui->tableWidget_Sections->item(currentRow,0)->data(Qt::UserRole+SECTION_DATA_OFFSET).toLongLong();
         qint64 nSize=ui->tableWidget_Sections->item(currentRow,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
         qint64 nAddress=ui->tableWidget_Sections->item(currentRow,0)->data(Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
-//        qint64 nVSize=ui->tableWidget_Sections->item(currentRow,0)->data(Qt::UserRole+SECTION_DATA_VSIZE).toLongLong();
+        //        qint64 nVSize=ui->tableWidget_Sections->item(currentRow,0)->data(Qt::UserRole+SECTION_DATA_VSIZE).toLongLong();
 
         if(pSubDeviceSection)
         {

@@ -31,7 +31,8 @@
 #include <QClipboard>
 #include "dialogsearchstrings.h"
 
-namespace Ui {
+namespace Ui
+{
 class SearchStringsWidget;
 }
 

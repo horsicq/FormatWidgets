@@ -25,7 +25,8 @@
 #include "formatwidget.h"
 #include "searchstringswidget.h"
 
-namespace Ui {
+namespace Ui
+{
 class ToolsWidget;
 }
 

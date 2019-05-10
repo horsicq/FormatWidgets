@@ -124,6 +124,7 @@ void FormatWidget::saveBackup()
                 if(pDevice->metaObject()->className()==QString("QFile"))
                 {
                     QString sFileName=((QFile *)pDevice)->fileName();
+
                     if(!QFile::copy(sFileName,pOptions->sBackupFileName))
                     {
                         QMessageBox::critical(this,tr("Error"),tr("Cannot save file")+QString(": %1").arg(pOptions->sBackupFileName));
@@ -150,7 +151,7 @@ bool FormatWidget::createHeaderTable(int type, QTableWidget *pTableWidget, const
     pTableWidget->setHorizontalHeaderLabels(slHeader);
     pTableWidget->horizontalHeader()->setVisible(true);
 
-    for(int i=0;i<nRecordCount;i++)
+    for(int i=0; i<nRecordCount; i++)
     {
         QTableWidgetItem *newItemName = new QTableWidgetItem;
         newItemName->setText(pRecords[i].pszName);
@@ -206,7 +207,7 @@ bool FormatWidget::createDirectoryTable(int type, QTableWidget *pTableWidget, co
     pTableWidget->setHorizontalHeaderLabels(slHeader);
     pTableWidget->horizontalHeader()->setVisible(true);
 
-    for(int i=0;i<nRecordCount;i++)
+    for(int i=0; i<nRecordCount; i++)
     {
         QTableWidgetItem *newItemNumber = new QTableWidgetItem;
         newItemNumber->setText(QString("%1").arg(i));
@@ -244,7 +245,7 @@ bool FormatWidget::createSectionTable(int type, QTableWidget *pTableWidget, cons
 
     pTableWidget->setRowCount(0);
 
-    for(int i=0;i<nRecordCount;i++)
+    for(int i=0; i<nRecordCount; i++)
     {
         slHeader.append(pRecords[i].pszName);
     }
@@ -258,7 +259,7 @@ bool FormatWidget::createSectionTable(int type, QTableWidget *pTableWidget, cons
 
 void FormatWidget::setLineEditsReadOnly(XLineEditHEX **ppLineEdits, int nCount, bool bState)
 {
-    for(int i=0;i<nCount;i++)
+    for(int i=0; i<nCount; i++)
     {
         if(ppLineEdits[i])
         {
@@ -269,7 +270,7 @@ void FormatWidget::setLineEditsReadOnly(XLineEditHEX **ppLineEdits, int nCount, 
 
 void FormatWidget::setComboBoxesReadOnly(XComboBoxEx **ppComboBoxes, int nCount, bool bState)
 {
-    for(int i=0;i<nCount;i++)
+    for(int i=0; i<nCount; i++)
     {
         if(ppComboBoxes[i])
         {
@@ -280,7 +281,7 @@ void FormatWidget::setComboBoxesReadOnly(XComboBoxEx **ppComboBoxes, int nCount,
 
 void FormatWidget::setPushButtonReadOnly(QPushButton **ppPushButtons, int nCount, bool bState)
 {
-    for(int i=0;i<nCount;i++)
+    for(int i=0; i<nCount; i++)
     {
         if(ppPushButtons[i])
         {
@@ -291,7 +292,7 @@ void FormatWidget::setPushButtonReadOnly(QPushButton **ppPushButtons, int nCount
 
 void FormatWidget::setDateTimeEditReadOnly(XDateTimeEditX **ppDateTimeEdits, int nCount, bool bState)
 {
-    for(int i=0;i<nCount;i++)
+    for(int i=0; i<nCount; i++)
     {
         if(ppDateTimeEdits[i])
         {
@@ -302,7 +303,7 @@ void FormatWidget::setDateTimeEditReadOnly(XDateTimeEditX **ppDateTimeEdits, int
 
 void FormatWidget::_blockSignals(QObject **ppObjects, int nCount, bool bState)
 {
-    for(int i=0;i<nCount;i++)
+    for(int i=0; i<nCount; i++)
     {
         if(ppObjects[i])
         {

@@ -4,7 +4,8 @@
 #include <QDialog>
 #include "sectionheaderwidget.h"
 
-namespace Ui {
+namespace Ui
+{
 class DialogSectionHeader;
 }
 

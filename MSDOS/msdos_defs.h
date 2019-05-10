@@ -26,53 +26,53 @@
 
 namespace SMSDOS
 {
-    enum TYPE
-    {
-        TYPE_TOOLS=0,
-        TYPE_DOS_HEADER,
-        __TYPE_size
-    };
+enum TYPE
+{
+    TYPE_TOOLS=0,
+    TYPE_DOS_HEADER,
+    __TYPE_size
+};
 }
 
 namespace N_DOS_HEADER
 {
-    enum DATA
-    {
-        e_magic=0,
-        e_cblp,
-        e_cp,
-        e_crlc,
-        e_cparhdr,
-        e_minalloc,
-        e_maxalloc,
-        e_ss,
-        e_sp,
-        e_csum,
-        e_ip,
-        e_cs,
-        e_lfarlc,
-        e_ovno,
-        e_res_0,
-        e_res_1,
-        e_res_2,
-        e_res_3,
-        e_oemid,
-        e_oeminfo,
-        e_res2_0,
-        e_res2_1,
-        e_res2_2,
-        e_res2_3,
-        e_res2_4,
-        e_res2_5,
-        e_res2_6,
-        e_res2_7,
-        e_res2_8,
-        e_res2_9,
-        e_lfanew,
-        __data_size
-    };
+enum DATA
+{
+    e_magic=0,
+    e_cblp,
+    e_cp,
+    e_crlc,
+    e_cparhdr,
+    e_minalloc,
+    e_maxalloc,
+    e_ss,
+    e_sp,
+    e_csum,
+    e_ip,
+    e_cs,
+    e_lfarlc,
+    e_ovno,
+    e_res_0,
+    e_res_1,
+    e_res_2,
+    e_res_3,
+    e_oemid,
+    e_oeminfo,
+    e_res2_0,
+    e_res2_1,
+    e_res2_2,
+    e_res2_3,
+    e_res2_4,
+    e_res2_5,
+    e_res2_6,
+    e_res2_7,
+    e_res2_8,
+    e_res2_9,
+    e_lfanew,
+    __data_size
+};
 
-    extern const FormatWidget::HEADER_RECORD records[__data_size];
+extern const FormatWidget::HEADER_RECORD records[__data_size];
 }
 
 #endif // MSDOS_DEFS_H

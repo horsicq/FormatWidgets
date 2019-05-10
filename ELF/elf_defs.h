@@ -26,113 +26,113 @@
 
 namespace SELF
 {
-    enum TYPE
-    {
-        TYPE_TOOLS=0,
-        TYPE_Elf_Ehdr,
-        TYPE_Elf_Shdr,
-        TYPE_Elf_Phdr,
-        __TYPE_size
-    };
+enum TYPE
+{
+    TYPE_TOOLS=0,
+    TYPE_Elf_Ehdr,
+    TYPE_Elf_Shdr,
+    TYPE_Elf_Phdr,
+    __TYPE_size
+};
 }
 
 namespace N_Elf_Ehdr
 {
-    enum DATA
-    {
-        ei_mag_0=0,
-        ei_mag_1,
-        ei_mag_2,
-        ei_mag_3,
-        ei_class,
-        ei_data,
-        ei_version,
-        ei_osabi,
-        ei_abiversion,
-        ei_pad_0,
-        ei_pad_1,
-        ei_pad_2,
-        ei_pad_3,
-        ei_pad_4,
-        ei_pad_5,
-        ei_pad_6,
-        ei_pad_7,
-        ei_pad_8,
-        e_type,
-        e_machine,
-        e_version,
-        e_entry,
-        e_phoff,
-        e_shoff,
-        e_flags,
-        e_ehsize,
-        e_phentsize,
-        e_phnum,
-        e_shentsize,
-        e_shnum,
-        e_shstrndx,
-        __data_size
-    };
+enum DATA
+{
+    ei_mag_0=0,
+    ei_mag_1,
+    ei_mag_2,
+    ei_mag_3,
+    ei_class,
+    ei_data,
+    ei_version,
+    ei_osabi,
+    ei_abiversion,
+    ei_pad_0,
+    ei_pad_1,
+    ei_pad_2,
+    ei_pad_3,
+    ei_pad_4,
+    ei_pad_5,
+    ei_pad_6,
+    ei_pad_7,
+    ei_pad_8,
+    e_type,
+    e_machine,
+    e_version,
+    e_entry,
+    e_phoff,
+    e_shoff,
+    e_flags,
+    e_ehsize,
+    e_phentsize,
+    e_phnum,
+    e_shentsize,
+    e_shnum,
+    e_shstrndx,
+    __data_size
+};
 
-    extern const FormatWidget::HEADER_RECORD records32[__data_size];
-    extern const FormatWidget::HEADER_RECORD records64[__data_size];
+extern const FormatWidget::HEADER_RECORD records32[__data_size];
+extern const FormatWidget::HEADER_RECORD records64[__data_size];
 }
 
 namespace N_Elf_Shdr
 {
-    enum DATA
-    {
-        sh_name=0,
-        sh_type,
-        sh_flags,
-        sh_addr,
-        sh_offset,
-        sh_size,
-        sh_link,
-        sh_info,
-        sh_addralign,
-        sh_entsize,
-        __data_size
-    };
+enum DATA
+{
+    sh_name=0,
+    sh_type,
+    sh_flags,
+    sh_addr,
+    sh_offset,
+    sh_size,
+    sh_link,
+    sh_info,
+    sh_addralign,
+    sh_entsize,
+    __data_size
+};
 
-    extern const FormatWidget::HEADER_RECORD records32[__data_size];
-    extern const FormatWidget::HEADER_RECORD records64[__data_size];
+extern const FormatWidget::HEADER_RECORD records32[__data_size];
+extern const FormatWidget::HEADER_RECORD records64[__data_size];
 }
 
 namespace N_Elf_Phdr32
 {
-    enum DATA
-    {
-        p_type=0,
-        p_offset,
-        p_vaddr,
-        p_paddr,
-        p_filesz,
-        p_memsz,
-        p_flags,
-        p_align,
-        __data_size
-    };
+enum DATA
+{
+    p_type=0,
+    p_offset,
+    p_vaddr,
+    p_paddr,
+    p_filesz,
+    p_memsz,
+    p_flags,
+    p_align,
+    __data_size
+};
 
-    extern const FormatWidget::HEADER_RECORD records[__data_size];
+extern const FormatWidget::HEADER_RECORD records[__data_size];
 }
 
 namespace N_Elf_Phdr64
 {
-    enum DATA
-    {
-        p_type=0,
-        p_flags,
-        p_offset,
-        p_vaddr,
-        p_paddr,
-        p_filesz,
-        p_memsz,
-        p_align,
-        __data_size
-    };
+enum DATA
+{
+    p_type=0,
+    p_flags,
+    p_offset,
+    p_vaddr,
+    p_paddr,
+    p_filesz,
+    p_memsz,
+    p_align,
+    __data_size
+};
 
-    extern const FormatWidget::HEADER_RECORD records[__data_size];
+extern const FormatWidget::HEADER_RECORD records[__data_size];
 }
 
 #endif // ELF_DEFS_H

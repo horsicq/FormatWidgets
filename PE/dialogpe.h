@@ -24,7 +24,8 @@
 #include <QDialog>
 #include "pewidget.h"
 
-namespace Ui {
+namespace Ui
+{
 class DialogPE;
 }
 

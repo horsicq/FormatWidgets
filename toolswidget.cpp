@@ -30,7 +30,7 @@ ToolsWidget::ToolsWidget(QWidget *parent) :
 
 void ToolsWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
 {
-    hexOptions={};
+    hexOptions= {};
     hexOptions.nBaseAddress=pOptions->nImageBase;
     hexOptions.sBackupFileName=pOptions->sBackupFileName;
 
@@ -39,7 +39,7 @@ void ToolsWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
 
     ui->widgetHex->setData(pDevice,&hexOptions);
 
-    stringsOptions={};
+    stringsOptions= {};
     stringsOptions.nBaseAddress=pOptions->nImageBase;
 
     ui->widgetStrings->setData(pDevice,&stringsOptions);

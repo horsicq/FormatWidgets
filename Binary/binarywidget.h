@@ -24,7 +24,8 @@
 #include "../formatwidget.h"
 #include "binary_defs.h"
 
-namespace Ui {
+namespace Ui
+{
 class BinaryWidget;
 }
 

@@ -26,7 +26,8 @@
 
 #include "pe_defs.h"
 
-namespace Ui {
+namespace Ui
+{
 class PEWidget;
 }
 

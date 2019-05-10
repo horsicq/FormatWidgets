@@ -24,7 +24,8 @@
 #include <QDialog>
 #include "msdoswidget.h"
 
-namespace Ui {
+namespace Ui
+{
 class DialogMSDOS;
 }
 
@@ -36,7 +37,7 @@ public:
     explicit DialogMSDOS(QWidget *parent = nullptr);
     ~DialogMSDOS();
 
-     void setData(QIODevice *pDevice,FormatWidget::OPTIONS *pOptions);
+    void setData(QIODevice *pDevice,FormatWidget::OPTIONS *pOptions);
 private:
     Ui::DialogMSDOS *ui;
 };
