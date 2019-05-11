@@ -34,21 +34,24 @@ class MSDOSWidget : public FormatWidget
     Q_OBJECT
 
 public:
-    MSDOSWidget(QWidget *parent = nullptr);
-    MSDOSWidget(QIODevice *pDevice, OPTIONS *pOptions, QWidget *parent = nullptr);
+    MSDOSWidget(QWidget *parent=nullptr);
+    MSDOSWidget(QIODevice *pDevice, OPTIONS *pOptions, QWidget *parent=nullptr);
     ~MSDOSWidget();
     virtual void clear();
     virtual void setData(QIODevice *pDevice,OPTIONS *pOptions);
+
 protected:
     virtual bool _setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition);
     virtual void setReadonly(bool bState);
     virtual void blockSignals(bool bState);
     virtual void adjustHeaderTable(int type,QTableWidget *pTableWidget);
+
 private slots:
     virtual void reloadData();
     void widgetValueChanged(quint64 nValue);
     void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
     void on_checkBoxReadonly_toggled(bool checked);
+
 private:
     enum CB
     {

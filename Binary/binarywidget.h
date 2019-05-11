@@ -34,8 +34,8 @@ class BinaryWidget : public FormatWidget
     Q_OBJECT
 
 public:
-    BinaryWidget(QWidget *parent = nullptr);
-    BinaryWidget(QIODevice *pDevice, OPTIONS *pOptions, QWidget *parent = nullptr);
+    BinaryWidget(QWidget *parent =nullptr);
+    BinaryWidget(QIODevice *pDevice, OPTIONS *pOptions, QWidget *parent =nullptr);
     ~BinaryWidget();
     virtual void clear();
     virtual void setData(QIODevice *pDevice,OPTIONS *pOptions);

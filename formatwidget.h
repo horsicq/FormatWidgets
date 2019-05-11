@@ -100,8 +100,8 @@ public:
         SECTION_DATA_VSIZE
     };
 
-    FormatWidget(QWidget *parent = nullptr);
-    FormatWidget(QIODevice *pDevice,OPTIONS *pOptions,QWidget *parent = nullptr);
+    FormatWidget(QWidget *parent =nullptr);
+    FormatWidget(QIODevice *pDevice,OPTIONS *pOptions,QWidget *parent =nullptr);
     ~FormatWidget();
     virtual void clear()=0;
     virtual void setData(QIODevice *pDevice,OPTIONS *pOptions);

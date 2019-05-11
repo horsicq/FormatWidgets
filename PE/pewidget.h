@@ -37,7 +37,7 @@ class PEWidget : public FormatWidget
 
 public:
     PEWidget(QWidget *parent=nullptr);
-    PEWidget(QIODevice *pDevice, OPTIONS *pOptions, QWidget *parent = nullptr);
+    PEWidget(QIODevice *pDevice, OPTIONS *pOptions, QWidget *parent =nullptr);
     ~PEWidget();
     virtual void clear();
     virtual void setData(QIODevice *pDevice,OPTIONS *pOptions);
