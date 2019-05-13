@@ -291,7 +291,7 @@ void MSDOSWidget::reloadData()
 
             blockSignals(true);
 
-            S_IMAGE_DOS_HEADEREX msdosheaderex=msdos.getDosHeaderEx();
+            XMSDOS_DEF::IMAGE_DOS_HEADEREX msdosheaderex=msdos.getDosHeaderEx();
 
             lineEdit_DOS_HEADER[N_DOS_HEADER::e_magic]->setValue(msdosheaderex.e_magic);
             lineEdit_DOS_HEADER[N_DOS_HEADER::e_cblp]->setValue(msdosheaderex.e_cblp);

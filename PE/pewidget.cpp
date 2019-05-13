@@ -693,7 +693,7 @@ void PEWidget::reloadData()
 
             blockSignals(true);
 
-            S_IMAGE_DOS_HEADEREX msdosheaderex=pe.getDosHeaderEx();
+            XMSDOS_DEF::IMAGE_DOS_HEADEREX msdosheaderex=pe.getDosHeaderEx();
 
             lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_magic]->setValue(msdosheaderex.e_magic);
             lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_cblp]->setValue(msdosheaderex.e_cblp);
@@ -761,7 +761,7 @@ void PEWidget::reloadData()
 
             blockSignals(true);
 
-            S_IMAGE_FILE_HEADER fileheader=pe.getFileHeader();
+            XPE_DEF::IMAGE_FILE_HEADER fileheader=pe.getFileHeader();
 
             lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::Machine]->setValue(fileheader.Machine);
             lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::NumberOfSections]->setValue(fileheader.NumberOfSections);
@@ -793,7 +793,7 @@ void PEWidget::reloadData()
 
             if(pe.is64())
             {
-                S_IMAGE_OPTIONAL_HEADER64S oh64=pe.getOptionalHeader64S();
+                XPE_DEF::IMAGE_OPTIONAL_HEADER64S oh64=pe.getOptionalHeader64S();
                 lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::Magic]->setValue(oh64.Magic);
                 lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MajorLinkerVersion]->setValue(oh64.MajorLinkerVersion);
                 lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MinorLinkerVersion]->setValue(oh64.MinorLinkerVersion);
@@ -830,7 +830,7 @@ void PEWidget::reloadData()
             }
             else
             {
-                S_IMAGE_OPTIONAL_HEADER32S oh32=pe.getOptionalHeader32S();
+                XPE_DEF::IMAGE_OPTIONAL_HEADER32S oh32=pe.getOptionalHeader32S();
                 lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::Magic]->setValue(oh32.Magic);
                 lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MajorLinkerVersion]->setValue(oh32.MajorLinkerVersion);
                 lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MinorLinkerVersion]->setValue(oh32.MinorLinkerVersion);
@@ -882,7 +882,7 @@ void PEWidget::reloadData()
 
             for(int i=0; i<16; i++)
             {
-                S_IMAGE_DATA_DIRECTORY dd=pe.getOptionalHeader_DataDirectory((quint32)i);
+                XPE_DEF::IMAGE_DATA_DIRECTORY dd=pe.getOptionalHeader_DataDirectory((quint32)i);
                 lineEdit_IMAGE_DIRECTORY_ADDRESS[i]->setValue(dd.VirtualAddress);
                 lineEdit_IMAGE_DIRECTORY_SIZE[i]->setValue(dd.Size);
 
@@ -901,13 +901,13 @@ void PEWidget::reloadData()
 
             blockSignals(true);
 
-            QList<S_IMAGE_SECTION_HEADER> listSections=pe.getSectionHeaders();
+            QList<XPE_DEF::IMAGE_SECTION_HEADER> listSections=pe.getSectionHeaders();
             int nCount=listSections.count();
 
             ui->tableWidget_Sections->setRowCount(nCount);
 
             //            record.sName=QString((char *)pList->at(i).Name);
-            //            record.sName.resize(qMin(record.sName.length(),S_IMAGE_SIZEOF_SHORT_NAME));
+            //            record.sName.resize(qMin(record.sName.length(),XPE_DEF::IMAGE_SIZEOF_SHORT_NAME));
 
             for(int i=0; i<nCount; i++)
             {
@@ -930,7 +930,7 @@ void PEWidget::reloadData()
 
                 QTableWidgetItem *itemName=new QTableWidgetItem();
                 QString sName=QString((char *)listSections.at(i).Name);
-                sName.resize(qMin(sName.length(),S_IMAGE_SIZEOF_SHORT_NAME));
+                sName.resize(qMin(sName.length(),XPE_DEF::IMAGE_SIZEOF_SHORT_NAME));
                 itemName->setText(sName);
                 ui->tableWidget_Sections->setItem(i,N_IMAGE_SECTION_HEADER::Name+1,itemName);
 
@@ -997,7 +997,7 @@ void PEWidget::reloadData()
                 createSectionTable(SPE::TYPE_IMPORT_FUNCTION,ui->tableWidget_ImportFunctions,N_IMAGE_IMPORT_FUNCTION::records32,N_IMAGE_IMPORT_FUNCTION::__data_size);
             }
 
-            QList<XPE::S_IMAGE_IMPORT_DESCRIPTOR_EX> listID=pe.getImportDescriptorsEx();
+            QList<XPE::IMAGE_IMPORT_DESCRIPTOR_EX> listID=pe.getImportDescriptorsEx();
             int nCount=listID.count();
             ui->tableWidget_ImportLibraries->setRowCount(nCount);
 

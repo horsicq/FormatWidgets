@@ -286,7 +286,6 @@ void MACHWidget::reloadData()
 
         setReadonly(ui->checkBoxReadonly->isChecked());
     }
-
 }
 
 void MACHWidget::widgetValueChanged(quint64 nValue)

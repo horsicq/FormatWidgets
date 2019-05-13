@@ -172,19 +172,19 @@ void SectionHeaderWidget::reloadData()
         {
             bInit=createHeaderTable(SPE::TYPE_IMAGE_SECTION_HEADER,ui->tableWidget_IMAGE_SECTION_HEADER,N_IMAGE_SECTION_HEADER::records,lineEdit_IMAGE_SECTION_HEADER,N_IMAGE_SECTION_HEADER::__data_size+1,nNumber);
             comboBox[CB_CHARACTERISTICS]=createComboBox(ui->tableWidget_IMAGE_SECTION_HEADER,XPE::getImageSectionHeaderFlagsS(),SPE::TYPE_IMAGE_SECTION_HEADER,N_IMAGE_SECTION_HEADER::Characteristics,XComboBoxEx::CBTYPE_FLAGS);
-            comboBox[CB_ALIGH]=createComboBox(ui->tableWidget_IMAGE_SECTION_HEADER,XPE::getImageSectionHeaderAlignsS(),SPE::TYPE_IMAGE_SECTION_HEADER,N_IMAGE_SECTION_HEADER::Characteristics+1,XComboBoxEx::CBTYPE_EFLAGS,S_IMAGE_SCN_ALIGN_MASK);
+            comboBox[CB_ALIGH]=createComboBox(ui->tableWidget_IMAGE_SECTION_HEADER,XPE::getImageSectionHeaderAlignsS(),SPE::TYPE_IMAGE_SECTION_HEADER,N_IMAGE_SECTION_HEADER::Characteristics+1,XComboBoxEx::CBTYPE_EFLAGS,XPE_DEF::IMAGE_SCN_ALIGN_MASK);
         }
 
         blockSignals(true);
 
-        S_IMAGE_SECTION_HEADER ish=pe.getSectionHeader(nNumber);
+        XPE_DEF::IMAGE_SECTION_HEADER ish=pe.getSectionHeader(nNumber);
 
         //        lineEdit_IMAGE_SECTION_HEADER[N_IMAGE_SECTION_HEADER::e_magic]->setValue(ish.);
 
         QString sName=QString((char *)ish.Name);
-        sName.resize(qMin(sName.length(),S_IMAGE_SIZEOF_SHORT_NAME));
+        sName.resize(qMin(sName.length(),XPE_DEF::IMAGE_SIZEOF_SHORT_NAME));
 
-        lineEdit_IMAGE_SECTION_HEADER[N_IMAGE_SECTION_HEADER::Name]->setStringValue(sName,S_IMAGE_SIZEOF_SHORT_NAME); // TODO Check
+        lineEdit_IMAGE_SECTION_HEADER[N_IMAGE_SECTION_HEADER::Name]->setStringValue(sName,XPE_DEF::IMAGE_SIZEOF_SHORT_NAME); // TODO Check
         lineEdit_IMAGE_SECTION_HEADER[N_IMAGE_SECTION_HEADER::VirtualSize]->setValue(ish.Misc.VirtualSize);
         lineEdit_IMAGE_SECTION_HEADER[N_IMAGE_SECTION_HEADER::VirtualAddress]->setValue(ish.VirtualAddress);
         lineEdit_IMAGE_SECTION_HEADER[N_IMAGE_SECTION_HEADER::SizeOfRawData]->setValue(ish.SizeOfRawData);

@@ -71,14 +71,14 @@ void ELFWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
 
         if(elf.is64())
         {
-            QList<S_Elf64_Shdr> listSections=elf.getElf64_ShdrList();
+            QList<XELF_DEF::Elf64_Shdr> listSections=elf.getElf64_ShdrList();
 
             if(listSections.count())
             {
                 ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_Elf_Shdr,"Sections"));
             }
 
-            QList<S_Elf64_Phdr> listPrograms=elf.getElf64_PhdrList();
+            QList<XELF_DEF::Elf64_Phdr> listPrograms=elf.getElf64_PhdrList();
 
             if(listPrograms.count())
             {
@@ -87,14 +87,14 @@ void ELFWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
         }
         else
         {
-            QList<S_Elf32_Shdr> listSections=elf.getElf32_ShdrList();
+            QList<XELF_DEF::Elf32_Shdr> listSections=elf.getElf32_ShdrList();
 
             if(listSections.count())
             {
                 ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_Elf_Shdr,"Sections"));
             }
 
-            QList<S_Elf32_Phdr> listPrograms=elf.getElf32_PhdrList();
+            QList<XELF_DEF::Elf32_Phdr> listPrograms=elf.getElf32_PhdrList();
 
             if(listPrograms.count())
             {
@@ -410,8 +410,8 @@ void ELFWidget::reloadData()
 
             blockSignals(true);
 
-            QList<S_Elf64_Shdr> listSections64;
-            QList<S_Elf32_Shdr> listSections32;
+            QList<XELF_DEF::Elf64_Shdr> listSections64;
+            QList<XELF_DEF::Elf32_Shdr> listSections32;
 
             int nCount=0;
 
@@ -506,8 +506,8 @@ void ELFWidget::reloadData()
 
             blockSignals(true);
 
-            QList<S_Elf64_Phdr> listPrograms64;
-            QList<S_Elf32_Phdr> listPrograms32;
+            QList<XELF_DEF::Elf64_Phdr> listPrograms64;
+            QList<XELF_DEF::Elf32_Phdr> listPrograms32;
 
             int nCount=0;
 
