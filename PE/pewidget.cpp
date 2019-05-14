@@ -930,7 +930,7 @@ void PEWidget::reloadData()
 
                 QTableWidgetItem *itemName=new QTableWidgetItem();
                 QString sName=QString((char *)listSections.at(i).Name);
-                sName.resize(qMin(sName.length(),XPE_DEF::IMAGE_SIZEOF_SHORT_NAME));
+                sName.resize(qMin(sName.length(),XPE_DEF::S_IMAGE_SIZEOF_SHORT_NAME));
                 itemName->setText(sName);
                 ui->tableWidget_Sections->setItem(i,N_IMAGE_SECTION_HEADER::Name+1,itemName);
 
