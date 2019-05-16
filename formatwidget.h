@@ -104,7 +104,8 @@ public:
     FormatWidget(QIODevice *pDevice,OPTIONS *pOptions,QWidget *parent =nullptr);
     ~FormatWidget();
     virtual void clear()=0;
-    virtual void setData(QIODevice *pDevice,OPTIONS *pOptions);
+    void setData(QIODevice *pDevice,OPTIONS *pOptions);
+    virtual void reload()=0;
     QIODevice *getDevice();
     OPTIONS *getOptions();
     bool isReadonly();

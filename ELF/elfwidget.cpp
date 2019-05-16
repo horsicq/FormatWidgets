@@ -35,6 +35,7 @@ ELFWidget::ELFWidget(QIODevice *pDevice, OPTIONS *pOptions, QWidget *parent) :
     ui->setupUi(this);
 
     setData(pDevice,pOptions);
+    reload();
 }
 
 ELFWidget::~ELFWidget()
@@ -56,13 +57,13 @@ void ELFWidget::clear()
     ui->treeWidgetNavi->clear();
 }
 
-void ELFWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
+void ELFWidget::reload()
 {
     clear();
-    FormatWidget::setData(pDevice,pOptions);
+
     ui->checkBoxReadonly->setEnabled(!isReadonly());
 
-    XELF elf(pDevice,getOptions()->bIsImage,getOptions()->nImageBase);
+    XELF elf(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
 
     if(elf.isValid())
     {
@@ -741,4 +742,9 @@ void ELFWidget::on_tableWidget_Elf_Phdr_currentCellChanged(int currentRow, int c
 
         ui->widgetProgramHex->setData(pSubDeviceProgram,&hexOptions);
     }
+}
+
+void ELFWidget::on_pushButtonReload_clicked()
+{
+    reload();
 }

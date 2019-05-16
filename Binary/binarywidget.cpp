@@ -35,6 +35,7 @@ BinaryWidget::BinaryWidget(QIODevice *pDevice, OPTIONS *pOptions, QWidget *paren
     ui->setupUi(this);
 
     setData(pDevice,pOptions);
+    reload();
 }
 
 BinaryWidget::~BinaryWidget()
@@ -49,13 +50,13 @@ void BinaryWidget::clear()
     ui->checkBoxReadonly->setChecked(true);
 }
 
-void BinaryWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
+void BinaryWidget::reload()
 {
     clear();
-    FormatWidget::setData(pDevice,pOptions);
+
     ui->checkBoxReadonly->setEnabled(!isReadonly());
 
-    XBinary binary(pDevice,getOptions()->bIsImage,getOptions()->nImageBase);
+    XBinary binary(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
 
     if(binary.isValid())
     {

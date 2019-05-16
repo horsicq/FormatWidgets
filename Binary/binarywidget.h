@@ -38,7 +38,7 @@ public:
     BinaryWidget(QIODevice *pDevice, OPTIONS *pOptions, QWidget *parent =nullptr);
     ~BinaryWidget();
     virtual void clear();
-    virtual void setData(QIODevice *pDevice,OPTIONS *pOptions);
+    virtual void reload();
 protected:
     virtual bool _setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition);
     virtual void setReadonly(bool bState);

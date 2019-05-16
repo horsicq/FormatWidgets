@@ -38,4 +38,5 @@ DialogMSDOS::~DialogMSDOS()
 void DialogMSDOS::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
 {
     ui->widget->setData(pDevice,pOptions);
+    ui->widget->reload();
 }

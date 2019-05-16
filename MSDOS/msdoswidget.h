@@ -39,6 +39,7 @@ public:
     ~MSDOSWidget();
     virtual void clear();
     virtual void setData(QIODevice *pDevice,OPTIONS *pOptions);
+    virtual void reload();
 
 protected:
     virtual bool _setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition);
@@ -51,6 +52,8 @@ private slots:
     void widgetValueChanged(quint64 nValue);
     void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
     void on_checkBoxReadonly_toggled(bool checked);
+
+    void on_pushButtonReload_clicked();
 
 private:
     enum CB

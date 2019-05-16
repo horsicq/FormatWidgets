@@ -38,7 +38,7 @@ public:
     ELFWidget(QIODevice *pDevice, OPTIONS *pOptions, QWidget *parent = nullptr);
     ~ELFWidget();
     virtual void clear();
-    virtual void setData(QIODevice *pDevice,OPTIONS *pOptions);
+    virtual void reload();
 protected:
     virtual bool _setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition);
     virtual void setReadonly(bool bState);
@@ -52,6 +52,8 @@ private slots:
     bool createSectionTable(int type, QTableWidget *pTableWidget, const FormatWidget::HEADER_RECORD *pRecords, int nRecordCount);
     void on_tableWidget_Elf_Shdr_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     void on_tableWidget_Elf_Phdr_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
+
+    void on_pushButtonReload_clicked();
 
 private:
     enum CB

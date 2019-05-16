@@ -35,6 +35,7 @@ MSDOSWidget::MSDOSWidget(QIODevice *pDevice, OPTIONS *pOptions, QWidget *parent)
     ui->setupUi(this);
 
     setData(pDevice,pOptions);
+    reload();
 }
 
 MSDOSWidget::~MSDOSWidget()
@@ -55,11 +56,16 @@ void MSDOSWidget::clear()
 
 void MSDOSWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
 {
-    clear();
     FormatWidget::setData(pDevice,pOptions);
+}
+
+void MSDOSWidget::reload()
+{
+    clear();
+
     ui->checkBoxReadonly->setEnabled(!isReadonly());
 
-    XMSDOS msdos(pDevice,getOptions()->bIsImage,getOptions()->nImageBase);
+    XMSDOS msdos(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
 
     if(msdos.isValid())
     {
@@ -365,4 +371,9 @@ void MSDOSWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *current,
 void MSDOSWidget::on_checkBoxReadonly_toggled(bool checked)
 {
     setReadonly(checked);
+}
+
+void MSDOSWidget::on_pushButtonReload_clicked()
+{
+    reload();
 }

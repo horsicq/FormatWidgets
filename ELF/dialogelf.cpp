@@ -38,4 +38,5 @@ DialogELF::~DialogELF()
 void DialogELF::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
 {
     ui->widget->setData(pDevice,pOptions);
+    ui->widget->reload();
 }

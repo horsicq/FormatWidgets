@@ -35,6 +35,7 @@ MACHWidget::MACHWidget(QIODevice *pDevice, OPTIONS *pOptions, QWidget *parent) :
     ui->setupUi(this);
 
     setData(pDevice,pOptions);
+    reload();
 }
 
 MACHWidget::~MACHWidget()
@@ -55,13 +56,13 @@ void MACHWidget::clear()
     ui->treeWidgetNavi->clear();
 }
 
-void MACHWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
+void MACHWidget::reload()
 {
     clear();
-    FormatWidget::setData(pDevice,pOptions);
+
     ui->checkBoxReadonly->setEnabled(!isReadonly());
 
-    XMACH mach(pDevice,getOptions()->bIsImage,getOptions()->nImageBase);
+    XMACH mach(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
 
     if(mach.isValid())
     {
@@ -396,4 +397,9 @@ void MACHWidget::on_tableWidget_commands_currentCellChanged(int currentRow, int 
 
         ui->widgetCommandHex->setData(pSubDeviceCommand,&hexOptions);
     }
+}
+
+void MACHWidget::on_pushButtonReload_clicked()
+{
+    reload();
 }

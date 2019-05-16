@@ -38,4 +38,5 @@ DialogSectionHeader::~DialogSectionHeader()
 void DialogSectionHeader::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions, quint32 nNumber)
 {
     ui->widget->setData(pDevice,pOptions,nNumber);
+    ui->widget->reload();
 }

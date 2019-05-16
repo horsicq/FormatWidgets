@@ -40,7 +40,7 @@ public:
     PEWidget(QIODevice *pDevice, OPTIONS *pOptions, QWidget *parent =nullptr);
     ~PEWidget();
     virtual void clear();
-    virtual void setData(QIODevice *pDevice,OPTIONS *pOptions);
+    virtual void reload();
 protected:
     virtual bool _setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition);
     virtual void setReadonly(bool bState);
@@ -65,6 +65,8 @@ private slots:
     void on_tableWidget_Sections_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
 
     void on_treeWidgetResource_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
+
+    void on_pushButtonReload_clicked();
 
 private:
     enum CB

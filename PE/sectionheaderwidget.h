@@ -45,6 +45,7 @@ public:
     ~SectionHeaderWidget();
     virtual void clear();
     virtual void setData(QIODevice *pDevice, OPTIONS *pOptions, quint32 nNumber);
+    virtual void reload();
 protected:
     virtual bool _setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition);
     virtual void setReadonly(bool bState);

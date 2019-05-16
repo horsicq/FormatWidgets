@@ -35,6 +35,7 @@ PEWidget::PEWidget(QIODevice *pDevice,OPTIONS *pOptions, QWidget *parent) :
     ui->setupUi(this);
 
     setData(pDevice,pOptions);
+    reload();
 }
 
 PEWidget::~PEWidget()
@@ -64,13 +65,13 @@ void PEWidget::clear()
     ui->treeWidgetNavi->clear();
 }
 
-void PEWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
+void PEWidget::reload()
 {
     clear();
-    FormatWidget::setData(pDevice,pOptions);
+
     ui->checkBoxReadonly->setEnabled(!isReadonly());
 
-    XPE pe(pDevice,getOptions()->bIsImage,getOptions()->nImageBase);
+    XPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
 
     if(pe.isValid())
     {
@@ -1454,4 +1455,9 @@ void PEWidget::on_treeWidgetResource_currentItemChanged(QTreeWidgetItem *current
             ui->widgetResourceHex->setData(pSubDeviceResource,&hexOptions);
         }
     }
+}
+
+void PEWidget::on_pushButtonReload_clicked()
+{
+    reload();
 }
