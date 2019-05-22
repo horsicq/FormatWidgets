@@ -75,7 +75,7 @@ void PEWidget::reload()
 
     if(pe.isValid())
     {
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_TOOLS,"Tools"));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_TOOLS,tr("Tools")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_IMAGE_DOS_HEADER,"IMAGE_DOS_HEADER"));
         QTreeWidgetItem *pNtHeaders=createNewItem(SPE::TYPE_IMAGE_NT_HEADERS,"IMAGE_NT_HEADERS");
         ui->treeWidgetNavi->addTopLevelItem(pNtHeaders);

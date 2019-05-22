@@ -14,7 +14,7 @@ class DialogSectionHeader : public QDialog
     Q_OBJECT
 
 public:
-    explicit DialogSectionHeader(QWidget *parent =nullptr);
+    explicit DialogSectionHeader(QWidget *parent=nullptr);
     ~DialogSectionHeader();
     void setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions, quint32 nNumber);
 private:

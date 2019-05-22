@@ -67,41 +67,24 @@ void ELFWidget::reload()
 
     if(elf.isValid())
     {
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_TOOLS,"Tools"));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_TOOLS,tr("Tools")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_Elf_Ehdr,"Elf_Ehdr"));
 
-        if(elf.is64())
+        QList<XELF_DEF::Elf_Shdr> listSections=elf.getElf_ShdrList();
+
+        if(listSections.count())
         {
-            QList<XELF_DEF::Elf64_Shdr> listSections=elf.getElf64_ShdrList();
-
-            if(listSections.count())
-            {
-                ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_Elf_Shdr,"Sections"));
-            }
-
-            QList<XELF_DEF::Elf64_Phdr> listPrograms=elf.getElf64_PhdrList();
-
-            if(listPrograms.count())
-            {
-                ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_Elf_Phdr,"Programs"));
-            }
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_Elf_Shdr,"Sections"));
         }
-        else
+
+        QList<XELF_DEF::Elf_Phdr> listPrograms=elf.getElf_PhdrList();
+
+        if(listPrograms.count())
         {
-            QList<XELF_DEF::Elf32_Shdr> listSections=elf.getElf32_ShdrList();
-
-            if(listSections.count())
-            {
-                ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_Elf_Shdr,"Sections"));
-            }
-
-            QList<XELF_DEF::Elf32_Phdr> listPrograms=elf.getElf32_PhdrList();
-
-            if(listPrograms.count())
-            {
-                ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_Elf_Phdr,"Programs"));
-            }
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_Elf_Phdr,"Programs"));
         }
+
+        QList<XELF::TAG_STRUCT> listTags=elf.getTagStructs();
 
         ui->treeWidgetNavi->expandAll();
 
@@ -411,6 +394,8 @@ void ELFWidget::reloadData()
 
             blockSignals(true);
 
+            QMap<quint64,QString> mapTypes=XELF::getSectionTypesS();
+
             QList<XELF_DEF::Elf64_Shdr> listSections64;
             QList<XELF_DEF::Elf32_Shdr> listSections32;
 
@@ -458,6 +443,8 @@ void ELFWidget::reloadData()
                     ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_info+1,          new QTableWidgetItem(XBinary::valueToHex(listSections64.at(i).sh_info)));
                     ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_addralign+1,     new QTableWidgetItem(XBinary::valueToHex(listSections64.at(i).sh_addralign)));
                     ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_entsize+1,       new QTableWidgetItem(XBinary::valueToHex(listSections64.at(i).sh_entsize)));
+                    ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_entsize+2,       new QTableWidgetItem(elf.getStringFromMainSection(listSections64.at(i).sh_name)));
+                    ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_entsize+3,       new QTableWidgetItem(mapTypes.value(listSections64.at(i).sh_type)));
                 }
                 else
                 {
@@ -486,6 +473,8 @@ void ELFWidget::reloadData()
                     ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_info+1,          new QTableWidgetItem(XBinary::valueToHex(listSections32.at(i).sh_info)));
                     ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_addralign+1,     new QTableWidgetItem(XBinary::valueToHex(listSections32.at(i).sh_addralign)));
                     ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_entsize+1,       new QTableWidgetItem(XBinary::valueToHex(listSections32.at(i).sh_entsize)));
+                    ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_entsize+2,       new QTableWidgetItem(elf.getStringFromMainSection(listSections32.at(i).sh_name)));
+                    ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_entsize+3,       new QTableWidgetItem(mapTypes.value(listSections32.at(i).sh_type)));
                 }
             }
 
@@ -502,10 +491,12 @@ void ELFWidget::reloadData()
 
             if(!bInit[nData])
             {
-                bInit[nData]=createSectionTable(SELF::TYPE_Elf_Phdr,ui->tableWidget_Elf_Phdr,bIs64?(N_Elf_Phdr64::records):(N_Elf_Phdr64::records),bIs64?(N_Elf_Phdr64::__data_size):(N_Elf_Phdr64::__data_size));
+                bInit[nData]=createSectionTable(SELF::TYPE_Elf_Phdr,ui->tableWidget_Elf_Phdr,bIs64?(N_Elf_Phdr64::records):(N_Elf_Phdr32::records),bIs64?(N_Elf_Phdr64::__data_size):(N_Elf_Phdr32::__data_size));
             }
 
             blockSignals(true);
+
+            QMap<quint64,QString> mapTypes=XELF::getProgramTypesS();
 
             QList<XELF_DEF::Elf64_Phdr> listPrograms64;
             QList<XELF_DEF::Elf32_Phdr> listPrograms32;
@@ -553,6 +544,7 @@ void ELFWidget::reloadData()
                     ui->tableWidget_Elf_Phdr->setItem(i,N_Elf_Phdr64::p_filesz+1,       new QTableWidgetItem(XBinary::valueToHex(listPrograms64.at(i).p_filesz)));
                     ui->tableWidget_Elf_Phdr->setItem(i,N_Elf_Phdr64::p_memsz+1,        new QTableWidgetItem(XBinary::valueToHex(listPrograms64.at(i).p_memsz)));
                     ui->tableWidget_Elf_Phdr->setItem(i,N_Elf_Phdr64::p_align+1,        new QTableWidgetItem(XBinary::valueToHex(listPrograms64.at(i).p_align)));
+                    ui->tableWidget_Elf_Phdr->setItem(i,N_Elf_Phdr64::p_align+2,        new QTableWidgetItem(mapTypes.value(listPrograms64.at(i).p_type)));
                 }
                 else
                 {
@@ -569,7 +561,7 @@ void ELFWidget::reloadData()
                         pItem->setData(Qt::UserRole+SECTION_DATA_OFFSET,listPrograms32.at(i).p_offset);
                     }
 
-                    pItem->setData(Qt::UserRole+SECTION_DATA_ADDRESS,listPrograms64.at(i).p_vaddr);
+                    pItem->setData(Qt::UserRole+SECTION_DATA_ADDRESS,listPrograms32.at(i).p_vaddr);
 
                     ui->tableWidget_Elf_Phdr->setItem(i,0,                              pItem);
                     ui->tableWidget_Elf_Phdr->setItem(i,N_Elf_Phdr32::p_type+1,         new QTableWidgetItem(XBinary::valueToHex(listPrograms32.at(i).p_type)));
@@ -579,7 +571,8 @@ void ELFWidget::reloadData()
                     ui->tableWidget_Elf_Phdr->setItem(i,N_Elf_Phdr32::p_filesz+1,       new QTableWidgetItem(XBinary::valueToHex(listPrograms32.at(i).p_filesz)));
                     ui->tableWidget_Elf_Phdr->setItem(i,N_Elf_Phdr32::p_memsz+1,        new QTableWidgetItem(XBinary::valueToHex(listPrograms32.at(i).p_memsz)));
                     ui->tableWidget_Elf_Phdr->setItem(i,N_Elf_Phdr32::p_flags+1,        new QTableWidgetItem(XBinary::valueToHex(listPrograms32.at(i).p_flags)));
-                    ui->tableWidget_Elf_Phdr->setItem(i,N_Elf_Phdr32::p_align+1,        new QTableWidgetItem(XBinary::valueToHex(listPrograms64.at(i).p_align)));
+                    ui->tableWidget_Elf_Phdr->setItem(i,N_Elf_Phdr32::p_align+1,        new QTableWidgetItem(XBinary::valueToHex(listPrograms32.at(i).p_align)));
+                    ui->tableWidget_Elf_Phdr->setItem(i,N_Elf_Phdr32::p_align+2,        new QTableWidgetItem(mapTypes.value(listPrograms32.at(i).p_type)));
                 }
             }
 
@@ -604,7 +597,7 @@ bool ELFWidget::createSectionTable(int type, QTableWidget *pTableWidget, const F
     {
         case SELF::TYPE_Elf_Shdr:
             slHeader.append(tr(""));
-            pTableWidget->setColumnCount(nRecordCount+1);
+            pTableWidget->setColumnCount(nRecordCount+3);
             pTableWidget->setColumnWidth(0,nSymbolWidth*4);
             pTableWidget->setColumnWidth(1,nSymbolWidth*8);
             pTableWidget->setColumnWidth(2,nSymbolWidth*8);
@@ -620,7 +613,7 @@ bool ELFWidget::createSectionTable(int type, QTableWidget *pTableWidget, const F
 
         case SELF::TYPE_Elf_Phdr:
             slHeader.append(tr(""));
-            pTableWidget->setColumnCount(nRecordCount+1);
+            pTableWidget->setColumnCount(nRecordCount+2);
             pTableWidget->setColumnWidth(0,nSymbolWidth*4);
             pTableWidget->setColumnWidth(1,nSymbolWidth*8);
             pTableWidget->setColumnWidth(2,nSymbolWidth*8);
@@ -641,6 +634,17 @@ bool ELFWidget::createSectionTable(int type, QTableWidget *pTableWidget, const F
     for(int i=0; i<nRecordCount; i++)
     {
         slHeader.append(pRecords[i].pszName);
+    }
+
+    switch(type)
+    {
+        case SELF::TYPE_Elf_Shdr:
+            slHeader.append(tr("Name"));
+            slHeader.append(tr("Type"));
+            break;
+        case SELF::TYPE_Elf_Phdr:
+            slHeader.append(tr("Type"));
+            break;
     }
 
     pTableWidget->setHorizontalHeaderLabels(slHeader);

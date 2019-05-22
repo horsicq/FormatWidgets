@@ -67,7 +67,7 @@ void MACHWidget::reload()
     if(mach.isValid())
     {
         // mb TODO 32/64
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_TOOLS,"Tools"));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_TOOLS,tr("Tools")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_mach_header,mach.is64()?("mach_header_64"):("mach_header")));
 
         // TODO Commands

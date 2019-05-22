@@ -69,7 +69,7 @@ void MSDOSWidget::reload()
 
     if(msdos.isValid())
     {
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_TOOLS,"Tools"));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_TOOLS,tr("Tools")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_DOS_HEADER,"DOS_HEADER"));
 
         // TODO Sections
