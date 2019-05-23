@@ -71,12 +71,11 @@ void MACHWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_mach_header,mach.is64()?("mach_header_64"):("mach_header")));
 
         // TODO Commands
-
         QList<XMACH::COMMAND_RECORD> listCommandRecords=mach.getCommandRecords();
 
         if(listCommandRecords.count())
         {
-            QTreeWidgetItem *pItemCommands=createNewItem(SMACH::TYPE_commands,tr("commands"));
+            QTreeWidgetItem *pItemCommands=createNewItem(SMACH::TYPE_mach_commands,tr("commands"));
 
             ui->treeWidgetNavi->addTopLevelItem(pItemCommands);
         }
@@ -246,11 +245,11 @@ void MACHWidget::reloadData()
 
             blockSignals(false);
         }
-        else if(nData==SMACH::TYPE_commands)
+        else if(nData==SMACH::TYPE_mach_commands)
         {
             if(!bInit[nData])
             {
-                bInit[nData]=createSectionTable(SMACH::TYPE_commands,ui->tableWidget_commands,N_commands::records,N_commands::__data_size);
+                bInit[nData]=createSectionTable(SMACH::TYPE_mach_commands,ui->tableWidget_commands,N_mach_commands::records,N_mach_commands::__data_size);
             }
 
             blockSignals(true);
@@ -272,9 +271,9 @@ void MACHWidget::reloadData()
                 pItem->setData(Qt::UserRole+SECTION_DATA_ADDRESS,listCommandRecords.at(i).nOffset);
 
                 ui->tableWidget_commands->setItem(i,0,                      pItem);
-                ui->tableWidget_commands->setItem(i,N_commands::cmd+1,      new QTableWidgetItem(XBinary::valueToHex((quint32)listCommandRecords.at(i).nType)));
-                ui->tableWidget_commands->setItem(i,N_commands::cmdsize+1,  new QTableWidgetItem(XBinary::valueToHex((quint32)listCommandRecords.at(i).nSize)));
-                ui->tableWidget_commands->setItem(i,N_commands::cmdsize+2,  new QTableWidgetItem(mapLC.value(listCommandRecords.at(i).nType)));
+                ui->tableWidget_commands->setItem(i,N_mach_commands::cmd+1,      new QTableWidgetItem(XBinary::valueToHex((quint32)listCommandRecords.at(i).nType)));
+                ui->tableWidget_commands->setItem(i,N_mach_commands::cmdsize+1,  new QTableWidgetItem(XBinary::valueToHex((quint32)listCommandRecords.at(i).nSize)));
+                ui->tableWidget_commands->setItem(i,N_mach_commands::cmdsize+2,  new QTableWidgetItem(mapLC.value(listCommandRecords.at(i).nType)));
             }
 
             if(nCount)
@@ -341,7 +340,7 @@ bool MACHWidget::createSectionTable(int type, QTableWidget *pTableWidget, const 
 
     switch(type)
     {
-        case SMACH::TYPE_commands:
+        case SMACH::TYPE_mach_commands:
             slHeader.append(tr(""));
             pTableWidget->setColumnCount(nRecordCount+2);
             pTableWidget->setColumnWidth(0,nSymbolWidth*4);
@@ -363,7 +362,7 @@ bool MACHWidget::createSectionTable(int type, QTableWidget *pTableWidget, const 
 
     switch(type)
     {
-        case SMACH::TYPE_commands:
+        case SMACH::TYPE_mach_commands:
             slHeader.append(tr("Type"));
             break;
     }

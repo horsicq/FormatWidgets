@@ -30,7 +30,7 @@ enum TYPE
 {
     TYPE_TOOLS=0,
     TYPE_mach_header,
-    TYPE_commands,
+    TYPE_mach_commands,
     __TYPE_size
 };
 }
@@ -54,7 +54,7 @@ extern const FormatWidget::HEADER_RECORD records32[__data_size-1];
 extern const FormatWidget::HEADER_RECORD records64[__data_size];
 }
 
-namespace N_commands
+namespace N_mach_commands
 {
 enum DATA
 {

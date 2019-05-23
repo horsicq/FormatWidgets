@@ -86,6 +86,13 @@ void ELFWidget::reload()
 
         QList<XELF::TAG_STRUCT> listTags=elf.getTagStructs();
 
+        if(listTags.count())
+        {
+            QTreeWidgetItem *pItemDynamicArrayTags=createNewItem(SELF::TYPE_Elf_DynamicArrayTags,"Dynamic Array Tags");
+
+            ui->treeWidgetNavi->addTopLevelItem(pItemDynamicArrayTags);
+        }
+
         ui->treeWidgetNavi->expandAll();
 
         ui->treeWidgetNavi->setCurrentItem(ui->treeWidgetNavi->topLevelItem(1));
@@ -583,6 +590,45 @@ void ELFWidget::reloadData()
 
             blockSignals(false);
         }
+        else if(nData==SELF::TYPE_Elf_DynamicArrayTags)
+        {
+            bool bIs64=elf.is64();
+            if(!bInit[nData])
+            {
+                bInit[nData]=createSectionTable(SELF::TYPE_Elf_DynamicArrayTags,ui->tableWidget_DynamicArrayTags,bIs64?(N_Elf_DynamicArrayTags::records64):(N_Elf_DynamicArrayTags::records32),N_Elf_DynamicArrayTags::__data_size);
+            }
+
+            blockSignals(true);
+
+            QList<XELF::TAG_STRUCT> listTagStructs=elf.getTagStructs();
+
+            int nCount=listTagStructs.count();
+
+            ui->tableWidget_DynamicArrayTags->setRowCount(nCount);
+
+            QMap<quint64,QString> mapTags=elf.getDynamicTagsS();
+
+            for(int i=0; i<nCount; i++)
+            {
+                QTableWidgetItem *pItem=new QTableWidgetItem(QString::number(i));
+
+//                pItem->setData(Qt::UserRole+SECTION_DATA_OFFSET,listCommandRecords.at(i).nOffset);
+//                pItem->setData(Qt::UserRole+SECTION_DATA_SIZE,listCommandRecords.at(i).nSize);
+//                pItem->setData(Qt::UserRole+SECTION_DATA_ADDRESS,listCommandRecords.at(i).nOffset);
+
+                ui->tableWidget_DynamicArrayTags->setItem(i,0,                                      pItem);
+                ui->tableWidget_DynamicArrayTags->setItem(i,N_Elf_DynamicArrayTags::d_tag+1,        new QTableWidgetItem(XBinary::valueToHex(bIs64?((quint64)listTagStructs.at(i).nTag):((quint32)listTagStructs.at(i).nTag))));
+                ui->tableWidget_DynamicArrayTags->setItem(i,N_Elf_DynamicArrayTags::d_value+1,      new QTableWidgetItem(XBinary::valueToHex(bIs64?((quint64)listTagStructs.at(i).nValue):((quint32)listTagStructs.at(i).nValue))));
+                ui->tableWidget_DynamicArrayTags->setItem(i,N_Elf_DynamicArrayTags::d_value+2,      new QTableWidgetItem(mapTags.value(listTagStructs.at(i).nTag)));
+            }
+
+            if(nCount)
+            {
+                ui->tableWidget_DynamicArrayTags->setCurrentCell(0,0);
+            }
+
+            blockSignals(false);
+        }
 
         setReadonly(ui->checkBoxReadonly->isChecked());
     }
@@ -625,6 +671,15 @@ bool ELFWidget::createSectionTable(int type, QTableWidget *pTableWidget, const F
             pTableWidget->setColumnWidth(8,nSymbolWidth*12);
             break;
 
+        case SELF::TYPE_Elf_DynamicArrayTags:
+            slHeader.append(tr(""));
+            pTableWidget->setColumnCount(nRecordCount+2);
+            pTableWidget->setColumnWidth(0,nSymbolWidth*4);
+            pTableWidget->setColumnWidth(1,nSymbolWidth*12);
+            pTableWidget->setColumnWidth(2,nSymbolWidth*12);
+            pTableWidget->setColumnWidth(3,nSymbolWidth*20);
+            break;
+
         default:
             pTableWidget->setColumnCount(nRecordCount);
     }
@@ -643,6 +698,9 @@ bool ELFWidget::createSectionTable(int type, QTableWidget *pTableWidget, const F
             slHeader.append(tr("Type"));
             break;
         case SELF::TYPE_Elf_Phdr:
+            slHeader.append(tr("Type"));
+            break;
+        case SELF::TYPE_Elf_DynamicArrayTags:
             slHeader.append(tr("Type"));
             break;
     }

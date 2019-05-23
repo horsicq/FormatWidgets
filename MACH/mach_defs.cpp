@@ -46,7 +46,7 @@ const FormatWidget::HEADER_RECORD records64[]=
 };
 }
 
-namespace N_commands
+namespace N_mach_commands
 {
 const FormatWidget::HEADER_RECORD records[]=
 {

@@ -152,3 +152,17 @@ const FormatWidget::HEADER_RECORD records[]=
 };
 }
 
+namespace N_Elf_DynamicArrayTags
+{
+const FormatWidget::HEADER_RECORD records32[]=
+{
+    {d_tag,                 "d_tag",                4,      "Elf32_SWord",          FormatWidget::VAL_TYPE_DATA},
+    {d_value,               "d_value",              4,      "Elf32_Addr",           FormatWidget::VAL_TYPE_ADDRESS},
+};
+const FormatWidget::HEADER_RECORD records64[]=
+{
+    {d_tag,                 "d_tag",                8,      "Elf64_Xword",          FormatWidget::VAL_TYPE_DATA},
+    {d_value,               "d_value",              8,      "Elf64_Addr",           FormatWidget::VAL_TYPE_ADDRESS},
+};
+}
+
