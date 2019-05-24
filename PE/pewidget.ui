@@ -92,7 +92,7 @@
      </widget>
      <widget class="QStackedWidget" name="stackedWidgetInfo">
       <property name="currentIndex">
-       <number>11</number>
+       <number>12</number>
       </property>
       <widget class="QWidget" name="page_HEX">
        <layout class="QVBoxLayout" name="verticalLayout_13">
@@ -548,6 +548,7 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="pageException"/>
       <widget class="QWidget" name="page_Relocs">
        <layout class="QVBoxLayout" name="verticalLayout_10">
         <property name="leftMargin">

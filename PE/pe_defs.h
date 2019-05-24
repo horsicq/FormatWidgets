@@ -38,6 +38,7 @@ enum TYPE
     TYPE_EXPORT,
     TYPE_IMPORT,
     TYPE_RESOURCE,
+    TYPE_EXCEPTION,
     TYPE_RELOCS,
     TYPE_OVERLAY,
     __TYPE_size,

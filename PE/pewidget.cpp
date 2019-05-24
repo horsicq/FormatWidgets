@@ -50,8 +50,8 @@ void PEWidget::clear()
     memset(lineEdit_IMAGE_NT_HEADERS,0,sizeof lineEdit_IMAGE_NT_HEADERS);
     memset(lineEdit_IMAGE_FILE_HEADER,0,sizeof lineEdit_IMAGE_FILE_HEADER);
     memset(lineEdit_IMAGE_OPTIONAL_HEADER,0,sizeof lineEdit_IMAGE_OPTIONAL_HEADER);
-    memset(lineEdit_IMAGE_DIRECTORY_ADDRESS,0,sizeof lineEdit_IMAGE_DIRECTORY_ADDRESS);
-    memset(lineEdit_IMAGE_DIRECTORY_SIZE,0,sizeof lineEdit_IMAGE_DIRECTORY_SIZE);
+//    memset(lineEdit_IMAGE_DIRECTORY_ADDRESS,0,sizeof lineEdit_IMAGE_DIRECTORY_ADDRESS);
+//    memset(lineEdit_IMAGE_DIRECTORY_SIZE,0,sizeof lineEdit_IMAGE_DIRECTORY_SIZE);
     memset(comboBox,0,sizeof comboBox);
     memset(pushButton,0,sizeof pushButton);
     memset(dateTimeEdit,0,sizeof dateTimeEdit);
@@ -99,6 +99,11 @@ void PEWidget::reload()
         if(pe.isResourcesPresent())
         {
             ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_RESOURCE,tr("Resource")));
+        }
+
+        if(pe.isExceptionPresent())
+        {
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_EXCEPTION,tr("Exception")));
         }
 
         if(pe.isRelocsPresent())
@@ -439,19 +444,19 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
 
                     break;
 
-                case SPE::TYPE_IMAGE_DIRECTORY_ENTRIES:
-                    switch(nVtype)
-                    {
-                        case VAL_TYPE_RELADDRESS:
-                            pe.setOptionalHeader_DataDirectory_VirtualAddress((quint32)nNdata,(quint32)nValue);
-                            break;
+//                case SPE::TYPE_IMAGE_DIRECTORY_ENTRIES:
+//                    switch(nVtype)
+//                    {
+//                        case VAL_TYPE_RELADDRESS:
+//                            pe.setOptionalHeader_DataDirectory_VirtualAddress((quint32)nNdata,(quint32)nValue);
+//                            break;
 
-                        case VAL_TYPE_SIZE:
-                            pe.setOptionalHeader_DataDirectory_Size((quint32)nNdata,(quint32)nValue);
-                            break;
-                    }
+//                        case VAL_TYPE_SIZE:
+//                            pe.setOptionalHeader_DataDirectory_Size((quint32)nNdata,(quint32)nValue);
+//                            break;
+//                    }
 
-                    break;
+//                    break;
 
                 case SPE::TYPE_EXPORT:
                     switch(nNdata)
@@ -519,8 +524,8 @@ void PEWidget::setReadonly(bool bState)
     setLineEditsReadOnly(lineEdit_IMAGE_NT_HEADERS,N_IMAGE_NT_HEADERS::__data_size,bState);
     setLineEditsReadOnly(lineEdit_IMAGE_FILE_HEADER,N_IMAGE_FILE_HEADER::__data_size,bState);
     setLineEditsReadOnly(lineEdit_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::__data_size,bState);
-    setLineEditsReadOnly(lineEdit_IMAGE_DIRECTORY_ADDRESS,N_IMAGE_DIRECORIES::__data_size,bState);
-    setLineEditsReadOnly(lineEdit_IMAGE_DIRECTORY_SIZE,N_IMAGE_DIRECORIES::__data_size,bState);
+//    setLineEditsReadOnly(lineEdit_IMAGE_DIRECTORY_ADDRESS,N_IMAGE_DIRECORIES::__data_size,bState);
+//    setLineEditsReadOnly(lineEdit_IMAGE_DIRECTORY_SIZE,N_IMAGE_DIRECORIES::__data_size,bState);
 
     setComboBoxesReadOnly(comboBox,__CB_size,bState);
     setPushButtonReadOnly(pushButton,__PB_size,bState);
@@ -538,8 +543,8 @@ void PEWidget::blockSignals(bool bState)
     _blockSignals((QObject **)lineEdit_IMAGE_NT_HEADERS,N_IMAGE_NT_HEADERS::__data_size,bState);
     _blockSignals((QObject **)lineEdit_IMAGE_FILE_HEADER,N_IMAGE_FILE_HEADER::__data_size,bState);
     _blockSignals((QObject **)lineEdit_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::__data_size,bState);
-    _blockSignals((QObject **)lineEdit_IMAGE_DIRECTORY_ADDRESS,N_IMAGE_DIRECORIES::__data_size,bState);
-    _blockSignals((QObject **)lineEdit_IMAGE_DIRECTORY_SIZE,N_IMAGE_DIRECORIES::__data_size,bState);
+//    _blockSignals((QObject **)lineEdit_IMAGE_DIRECTORY_ADDRESS,N_IMAGE_DIRECORIES::__data_size,bState);
+//    _blockSignals((QObject **)lineEdit_IMAGE_DIRECTORY_SIZE,N_IMAGE_DIRECORIES::__data_size,bState);
 
     _blockSignals((QObject **)comboBox,__CB_size,bState);
     _blockSignals((QObject **)pushButton,__PB_size,bState);
@@ -874,7 +879,7 @@ void PEWidget::reloadData()
         {
             if(!bInit[nData])
             {
-                bInit[nData]=createDirectoryTable(SPE::TYPE_IMAGE_DIRECTORY_ENTRIES,ui->tableWidget_IMAGE_DIRECTORY_ENTRIES,N_IMAGE_DIRECORIES::records,lineEdit_IMAGE_DIRECTORY_ADDRESS,lineEdit_IMAGE_DIRECTORY_SIZE,N_IMAGE_DIRECORIES::__data_size);
+                bInit[nData]=createDirectoryTable(SPE::TYPE_IMAGE_DIRECTORY_ENTRIES,ui->tableWidget_IMAGE_DIRECTORY_ENTRIES,N_IMAGE_DIRECORIES::records,N_IMAGE_DIRECORIES::__data_size);
             }
 
             blockSignals(true);
@@ -884,11 +889,19 @@ void PEWidget::reloadData()
             for(int i=0; i<16; i++)
             {
                 XPE_DEF::IMAGE_DATA_DIRECTORY dd=pe.getOptionalHeader_DataDirectory((quint32)i);
-                lineEdit_IMAGE_DIRECTORY_ADDRESS[i]->setValue(dd.VirtualAddress);
-                lineEdit_IMAGE_DIRECTORY_SIZE[i]->setValue(dd.Size);
+                ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->setItem(i,2,new QTableWidgetItem(XBinary::valueToHex(dd.VirtualAddress)));
 
-                lineEdit_IMAGE_DIRECTORY_ADDRESS[i]->setEnabled(i<(int)nNumberOfRvaAndSizes);
-                lineEdit_IMAGE_DIRECTORY_SIZE[i]->setEnabled(i<(int)nNumberOfRvaAndSizes);
+                QTableWidgetItem *pItem=new QTableWidgetItem(XBinary::valueToHex(dd.Size));
+                ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->setItem(i,3,pItem);
+
+                // TODO !!!
+//                ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->setItem(i,3,new QTableWidgetItem(XBinary::valueToHex(dd.Size)));
+//
+//                lineEdit_IMAGE_DIRECTORY_ADDRESS[i]->setValue(dd.VirtualAddress);
+//                lineEdit_IMAGE_DIRECTORY_SIZE[i]->setValue(dd.Size);
+
+//                lineEdit_IMAGE_DIRECTORY_ADDRESS[i]->setEnabled(i<(int)nNumberOfRvaAndSizes);
+//                lineEdit_IMAGE_DIRECTORY_SIZE[i]->setEnabled(i<(int)nNumberOfRvaAndSizes);
             }
 
             blockSignals(false);
@@ -1121,6 +1134,10 @@ void PEWidget::reloadData()
 
                 ui->treeWidgetResource->expandItem(pRoot);
             }
+        }
+        else if(nData==SPE::TYPE_EXCEPTION)
+        {
+            // TODO !!!
         }
         else if(nData==SPE::TYPE_RELOCS)
         {

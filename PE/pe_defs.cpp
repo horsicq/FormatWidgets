@@ -158,7 +158,7 @@ const FormatWidget::DIRECTORY_ENTRY_RECORD records[]=
     {IMPORT,            "IMPORT",                   {4,4},    {"DWORD","DWORD"},        {FormatWidget::VAL_TYPE_RELADDRESS,FormatWidget::VAL_TYPE_SIZE}},
     {RESOURCE,          "RESOURCE",                 {4,4},    {"DWORD","DWORD"},        {FormatWidget::VAL_TYPE_RELADDRESS,FormatWidget::VAL_TYPE_SIZE}},
     {EXCEPTION,         "EXCEPTION",                {4,4},    {"DWORD","DWORD"},        {FormatWidget::VAL_TYPE_RELADDRESS,FormatWidget::VAL_TYPE_SIZE}},
-    {SECURITY,          "SECURITY",                 {4,4},    {"DWORD","DWORD"},        {FormatWidget::VAL_TYPE_RELADDRESS,FormatWidget::VAL_TYPE_SIZE}},
+    {SECURITY,          "SECURITY",                 {4,4},    {"DWORD","DWORD"},        {FormatWidget::VAL_TYPE_RELADDRESS,FormatWidget::VAL_TYPE_SIZE}}, // TODO Check
     {BASERELOC,         "BASERELOC",                {4,4},    {"DWORD","DWORD"},        {FormatWidget::VAL_TYPE_RELADDRESS,FormatWidget::VAL_TYPE_SIZE}},
     {DEBUG,             "DEBUG",                    {4,4},    {"DWORD","DWORD"},        {FormatWidget::VAL_TYPE_RELADDRESS,FormatWidget::VAL_TYPE_SIZE}},
     {ARCHITECTURE,      "ARCHITECTURE",             {4,4},    {"DWORD","DWORD"},        {FormatWidget::VAL_TYPE_RELADDRESS,FormatWidget::VAL_TYPE_SIZE}},

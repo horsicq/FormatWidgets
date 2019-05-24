@@ -186,7 +186,7 @@ bool FormatWidget::createHeaderTable(int type, QTableWidget *pTableWidget, const
     return true;
 }
 
-bool FormatWidget::createDirectoryTable(int type, QTableWidget *pTableWidget, const FormatWidget::DIRECTORY_ENTRY_RECORD *pRecords, XLineEditHEX **ppLineEdits1, XLineEditHEX **ppLineEdits2, int nRecordCount)
+bool FormatWidget::createDirectoryTable(int type, QTableWidget *pTableWidget, const DIRECTORY_ENTRY_RECORD *pRecords, int nRecordCount)
 {
     pTableWidget->setColumnCount(4);
     pTableWidget->setRowCount(nRecordCount);
@@ -217,23 +217,23 @@ bool FormatWidget::createDirectoryTable(int type, QTableWidget *pTableWidget, co
         newItemName->setText(pRecords[i].pszName);
         pTableWidget->setItem(i,DIRECTORY_COLUMN_NAME,newItemName);
 
-        ppLineEdits1[i]=new XLineEditHEX(this);
-        ppLineEdits1[i]->setProperty("STYPE",type);
-        ppLineEdits1[i]->setProperty("NDATA",pRecords[i].nData);
-        ppLineEdits1[i]->setProperty("VTYPE",pRecords[i].vtype[0]);
+//        ppLineEdits1[i]=new XLineEditHEX(this);
+//        ppLineEdits1[i]->setProperty("STYPE",type);
+//        ppLineEdits1[i]->setProperty("NDATA",pRecords[i].nData);
+//        ppLineEdits1[i]->setProperty("VTYPE",pRecords[i].vtype[0]);
 
-        connect(ppLineEdits1[i],SIGNAL(valueChanged(quint64)),this,SLOT(hexValueChanged(quint64)));
+//        connect(ppLineEdits1[i],SIGNAL(valueChanged(quint64)),this,SLOT(hexValueChanged(quint64)));
 
-        pTableWidget->setCellWidget(i,DIRECTORY_COLUMN_ADDRESS,ppLineEdits1[i]);
+//        pTableWidget->setCellWidget(i,DIRECTORY_COLUMN_ADDRESS,ppLineEdits1[i]);
 
-        ppLineEdits2[i]=new XLineEditHEX(this);
-        ppLineEdits2[i]->setProperty("STYPE",type);
-        ppLineEdits2[i]->setProperty("NDATA",pRecords[i].nData);
-        ppLineEdits2[i]->setProperty("VTYPE",pRecords[i].vtype[1]);
+//        ppLineEdits2[i]=new XLineEditHEX(this);
+//        ppLineEdits2[i]->setProperty("STYPE",type);
+//        ppLineEdits2[i]->setProperty("NDATA",pRecords[i].nData);
+//        ppLineEdits2[i]->setProperty("VTYPE",pRecords[i].vtype[1]);
 
-        connect(ppLineEdits2[i],SIGNAL(valueChanged(quint64)),this,SLOT(hexValueChanged(quint64)));
+//        connect(ppLineEdits2[i],SIGNAL(valueChanged(quint64)),this,SLOT(hexValueChanged(quint64)));
 
-        pTableWidget->setCellWidget(i,DIRECTORY_COLUMN_SIZE,ppLineEdits2[i]);
+//        pTableWidget->setCellWidget(i,DIRECTORY_COLUMN_SIZE,ppLineEdits2[i]);
     }
 
     return true;

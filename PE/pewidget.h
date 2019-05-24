@@ -41,11 +41,13 @@ public:
     ~PEWidget();
     virtual void clear();
     virtual void reload();
+
 protected:
     virtual bool _setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition);
     virtual void setReadonly(bool bState);
     virtual void blockSignals(bool bState);
     virtual void adjustHeaderTable(int type,QTableWidget *pTableWidget);
+
 private slots:
     void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
     void widgetValueChanged(quint64 nValue);
@@ -65,7 +67,6 @@ private slots:
     void on_tableWidget_Sections_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
 
     void on_treeWidgetResource_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
-
     void on_pushButtonReload_clicked();
 
 private:
@@ -99,8 +100,8 @@ private:
     XLineEditHEX *lineEdit_IMAGE_NT_HEADERS[N_IMAGE_NT_HEADERS::__data_size];
     XLineEditHEX *lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::__data_size];
     XLineEditHEX *lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::__data_size];
-    XLineEditHEX *lineEdit_IMAGE_DIRECTORY_ADDRESS[N_IMAGE_DIRECORIES::__data_size];
-    XLineEditHEX *lineEdit_IMAGE_DIRECTORY_SIZE[N_IMAGE_DIRECORIES::__data_size];
+//    XLineEditHEX *lineEdit_IMAGE_DIRECTORY_ADDRESS[N_IMAGE_DIRECORIES::__data_size];
+//    XLineEditHEX *lineEdit_IMAGE_DIRECTORY_SIZE[N_IMAGE_DIRECORIES::__data_size];
     XLineEditHEX *lineEdit_EXPORT[N_IMAGE_EXPORT::__data_size];
     XComboBoxEx *comboBox[__CB_size];
     QPushButton *pushButton[__PB_size];

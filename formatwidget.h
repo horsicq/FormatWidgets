@@ -112,7 +112,7 @@ public:
     QTreeWidgetItem *createNewItem(int nUserData, QString sTitle);
     bool createHeaderTable(int type,QTableWidget *pTableWidget, const HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nRecordCount,int nPosition=0);
 
-    bool createDirectoryTable(int type,QTableWidget *pTableWidget, const DIRECTORY_ENTRY_RECORD *pRecords, XLineEditHEX **ppLineEdits1,XLineEditHEX **ppLineEdits2, int nRecordCount);
+    bool createDirectoryTable(int type,QTableWidget *pTableWidget, const DIRECTORY_ENTRY_RECORD *pRecords,int nRecordCount);
     bool createSectionTable(int type,QTableWidget *pTableWidget, const HEADER_RECORD *pRecords,int nRecordCount);
     void setLineEditsReadOnly(XLineEditHEX **ppLineEdits,int nCount,bool bState);
     void setComboBoxesReadOnly(XComboBoxEx **ppComboBoxes,int nCount,bool bState);
