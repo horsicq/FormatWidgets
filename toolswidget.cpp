@@ -45,6 +45,11 @@ void ToolsWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
     ui->widgetStrings->setData(pDevice,&stringsOptions);
 }
 
+void ToolsWidget::setEdited(bool bState)
+{
+    ui->widgetHex->setEdited(bState);
+}
+
 void ToolsWidget::setReadonly(bool bState)
 {
     ui->widgetHex->setReadonly(bState);

@@ -283,6 +283,8 @@ void MSDOSWidget::reloadData()
             if(!bInit[nData])
             {
                 ui->widgetHex->setData(getDevice(),getOptions());
+                ui->widgetHex->setEdited(isEdited());
+                connect(ui->widgetHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
 
                 bInit[nData]=true;
             }

@@ -200,6 +200,8 @@ void MACHWidget::reloadData()
             if(!bInit[nData])
             {
                 ui->widgetHex->setData(getDevice(),getOptions());
+                ui->widgetHex->setEdited(isEdited());
+                connect(ui->widgetHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
 
                 bInit[nData]=true;
             }
@@ -395,6 +397,8 @@ void MACHWidget::on_tableWidget_commands_currentCellChanged(int currentRow, int 
         hexOptions.nImageBase=nAddress;
 
         ui->widgetCommandHex->setData(pSubDeviceCommand,&hexOptions);
+        ui->widgetCommandHex->setEdited(isEdited());
+        connect(ui->widgetCommandHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
     }
 }
 

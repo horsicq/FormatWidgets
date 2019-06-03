@@ -41,7 +41,6 @@ public:
     struct OPTIONS
     {
         QString sBackupFileName;
-        bool bEdited;
         bool bIsImage;
         qint64 nImageBase; // TODO default_const
     };
@@ -129,21 +128,26 @@ public:
     virtual void setReadonly(bool bState)=0;
     virtual void blockSignals(bool bState)=0;
     virtual void adjustHeaderTable(int type,QTableWidget *pTableWidget);
+    bool isEdited();
+signals:
+    void editState(bool bState);
 
 public slots:
     void hexValueChanged(quint64 nValue);
     void textValueChanged(QString sText);
+    void setEdited(bool bState);
 
 private slots:
     virtual void reloadData()=0;
 
 private:
-    void saveBackup();
+    bool saveBackup();
 
 private:
     QIODevice *pDevice;
-    OPTIONS *pOptions;
+    OPTIONS options;
     bool bIsReadonly;
+    bool bIsEdited;
 };
 
 #endif // FORMATWIDGET_H

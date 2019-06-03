@@ -17,6 +17,11 @@ public:
     explicit DialogSectionHeader(QWidget *parent=nullptr);
     ~DialogSectionHeader();
     void setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions, quint32 nNumber);
+    void setEdited(bool bState);
+
+signals:
+    void editState(bool bState);
+
 private:
     Ui::DialogSectionHeader *ui;
 };

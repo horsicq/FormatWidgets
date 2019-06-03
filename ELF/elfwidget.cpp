@@ -306,6 +306,8 @@ void ELFWidget::reloadData()
             if(!bInit[nData])
             {
                 ui->widgetHex->setData(getDevice(),getOptions()); // TODO rename widget
+                ui->widgetHex->setEdited(isEdited());
+                connect(ui->widgetHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
 
                 bInit[nData]=true;
             }
@@ -786,6 +788,8 @@ void ELFWidget::on_tableWidget_Elf_Shdr_currentCellChanged(int currentRow, int c
         hexOptions.nImageBase=nAddress;
 
         ui->widgetSectionHex->setData(pSubDeviceSection,&hexOptions);
+        ui->widgetSectionHex->setEdited(isEdited());
+        connect(ui->widgetSectionHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
     }
 }
 
@@ -811,6 +815,8 @@ void ELFWidget::on_tableWidget_Elf_Phdr_currentCellChanged(int currentRow, int c
         hexOptions.nImageBase=nAddress;
 
         ui->widgetProgramHex->setData(pSubDeviceProgram,&hexOptions);
+        ui->widgetProgramHex->setEdited(isEdited());
+        connect(ui->widgetProgramHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
     }
 }
 

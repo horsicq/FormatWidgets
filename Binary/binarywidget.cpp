@@ -106,6 +106,8 @@ void BinaryWidget::reloadData()
         if(!bInit)
         {
             ui->widgetHex->setData(getDevice(),getOptions());
+            ui->widgetHex->setEdited(isEdited());
+            connect(ui->widgetHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
 
             bInit=true;
         }

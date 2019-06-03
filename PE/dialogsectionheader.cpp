@@ -27,6 +27,8 @@ DialogSectionHeader::DialogSectionHeader(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    connect(ui->widget,SIGNAL(editState(bool)),this,SIGNAL(editState(bool)));
+
     setWindowFlags(Qt::Window);
 }
 
@@ -39,4 +41,9 @@ void DialogSectionHeader::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOp
 {
     ui->widget->setData(pDevice,pOptions,nNumber);
     ui->widget->reload();
+}
+
+void DialogSectionHeader::setEdited(bool bState)
+{
+    ui->widget->setEdited(bState);
 }

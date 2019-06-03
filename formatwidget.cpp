@@ -24,11 +24,15 @@ FormatWidget::FormatWidget(QWidget *parent):
     QWidget(parent)
 {
     bIsReadonly=false;
+    options={};
+    bIsEdited=false;
 }
 
 FormatWidget::FormatWidget(QIODevice *pDevice, OPTIONS *pOptions, QWidget *parent):
     QWidget(parent)
 {
+    options={};
+    bIsEdited=false;
     setData(pDevice,pOptions);
 }
 
@@ -40,7 +44,10 @@ FormatWidget::~FormatWidget()
 void FormatWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
 {
     this->pDevice=pDevice;
-    this->pOptions=pOptions;
+    if(pOptions)
+    {
+        options=*pOptions;
+    }
 
     bIsReadonly=!(pDevice->isWritable());
 }
@@ -52,7 +59,7 @@ QIODevice *FormatWidget::getDevice()
 
 FormatWidget::OPTIONS *FormatWidget::getOptions()
 {
-    return this->pOptions;
+    return &options;
 }
 
 bool FormatWidget::isReadonly()
@@ -77,17 +84,28 @@ int FormatWidget::getSymbolWidth()
 
 void FormatWidget::setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int nPosition)
 {
-    saveBackup();
-
-    if(_setValue(vValue,nStype,nNdata,nVtype,nPosition))
+    if(saveBackup())
     {
-        pOptions->bEdited=true;
+        if(_setValue(vValue,nStype,nNdata,nVtype,nPosition))
+        {
+            bIsEdited=true;
+            emit editState(bIsEdited);
+        }
+    }
+    else
+    {
+        QMessageBox::critical(this,tr("Error"),tr("Cannot save file")+QString(": %1").arg(options.sBackupFileName));
     }
 }
 
 void FormatWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
 {
 
+}
+
+bool FormatWidget::isEdited()
+{
+    return bIsEdited;
 }
 
 void FormatWidget::hexValueChanged(quint64 nValue)
@@ -112,27 +130,33 @@ void FormatWidget::textValueChanged(QString sText)
     setValue(sText,nStype,nNdata,nVtype,nPosition);
 }
 
-void FormatWidget::saveBackup()
+void FormatWidget::setEdited(bool bState)
 {
-    if(!pOptions->bEdited)
+    bIsEdited=bState;
+}
+
+bool FormatWidget::saveBackup()
+{
+    bool bResult=true;
+    // TODO Check
+    if(!bIsEdited)
     {
         // Save backup
-        if(pOptions->sBackupFileName!="")
+        if(options.sBackupFileName!="")
         {
-            if(!QFile::exists(pOptions->sBackupFileName))
+            if(!QFile::exists(options.sBackupFileName))
             {
                 if(pDevice->metaObject()->className()==QString("QFile"))
                 {
                     QString sFileName=((QFile *)pDevice)->fileName();
 
-                    if(!QFile::copy(sFileName,pOptions->sBackupFileName))
-                    {
-                        QMessageBox::critical(this,tr("Error"),tr("Cannot save file")+QString(": %1").arg(pOptions->sBackupFileName));
-                    }
+                    bResult=QFile::copy(sFileName,options.sBackupFileName);
                 }
             }
         }
     }
+
+    return bResult;
 }
 
 bool FormatWidget::createHeaderTable(int type, QTableWidget *pTableWidget, const HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nRecordCount, int nPosition)

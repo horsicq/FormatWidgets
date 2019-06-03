@@ -665,6 +665,9 @@ void PEWidget::editSectionHeader()
     {
         DialogSectionHeader dsh(this);
         dsh.setData(getDevice(),getOptions(),(quint32)nRow);
+        dsh.setEdited(isEdited());
+
+        connect(&dsh,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
 
         dsh.exec();
         reloadData();
@@ -685,6 +688,8 @@ void PEWidget::reloadData()
             if(!bInit[nData])
             {
                 ui->widgetHex->setData(getDevice(),getOptions());
+                ui->widgetHex->setEdited(isEdited());
+                connect(ui->widgetHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
 
                 bInit[nData]=true;
             }
@@ -1184,6 +1189,8 @@ void PEWidget::reloadData()
             FormatWidget::OPTIONS hexOptions=*getOptions();
             hexOptions.nImageBase=nOverLayOffset;
             ui->widgetOverlayHex->setData(pSubDeviceOverlay,&hexOptions);
+            ui->widgetOverlayHex->setEdited(isEdited());
+            connect(ui->widgetOverlayHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
         }
 
         setReadonly(ui->checkBoxReadonly->isChecked());
@@ -1442,6 +1449,8 @@ void PEWidget::on_tableWidget_Sections_currentCellChanged(int currentRow, int cu
         hexOptions.nImageBase=nAddress;
 
         ui->widgetSectionHex->setData(pSubDeviceSection,&hexOptions);
+        ui->widgetSectionHex->setEdited(isEdited());
+        connect(ui->widgetSectionHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
     }
 }
 
@@ -1470,6 +1479,8 @@ void PEWidget::on_treeWidgetResource_currentItemChanged(QTreeWidgetItem *current
             hexOptions.nImageBase=nAddress;
 
             ui->widgetResourceHex->setData(pSubDeviceResource,&hexOptions);
+            ui->widgetResourceHex->setEdited(isEdited());
+            connect(ui->widgetResourceHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
         }
     }
 }
