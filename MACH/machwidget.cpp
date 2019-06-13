@@ -80,6 +80,15 @@ void MACHWidget::reload()
             ui->treeWidgetNavi->addTopLevelItem(pItemCommands);
         }
 
+        QList<XMACH::SEGMENT_RECORD> listSegmentRecords=mach.getSegmentRecords(&listCommandRecords);
+
+        if(listSegmentRecords.count())
+        {
+            QTreeWidgetItem *pItemSegments=createNewItem(SMACH::TYPE_mach_segments,tr("segments"));
+
+            ui->treeWidgetNavi->addTopLevelItem(pItemSegments);
+        }
+
         ui->treeWidgetNavi->expandAll();
 
         ui->treeWidgetNavi->setCurrentItem(ui->treeWidgetNavi->topLevelItem(1));

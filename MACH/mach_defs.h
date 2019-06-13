@@ -31,6 +31,9 @@ enum TYPE
     TYPE_TOOLS=0,
     TYPE_mach_header,
     TYPE_mach_commands,
+    TYPE_mach_segments,
+    TYPE_mach_sections,
+    TYPE_mach_libraries,
     __TYPE_size
 };
 }
