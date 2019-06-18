@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>833</width>
-    <height>252</height>
+    <width>748</width>
+    <height>238</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -106,9 +106,7 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="ToolsWidget" name="widgetHex" native="true">
-          <layout class="QVBoxLayout" name="verticalLayout_4"/>
-         </widget>
+         <widget class="ToolsWidget" name="widgetHex" native="true"/>
         </item>
        </layout>
       </widget>
@@ -154,19 +152,7 @@
        </layout>
       </widget>
       <widget class="QWidget" name="page_commands">
-       <layout class="QVBoxLayout" name="verticalLayout_5">
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <property name="topMargin">
-         <number>0</number>
-        </property>
-        <property name="rightMargin">
-         <number>0</number>
-        </property>
-        <property name="bottomMargin">
-         <number>0</number>
-        </property>
+       <layout class="QVBoxLayout" name="verticalLayout_8">
         <item>
          <widget class="QTableWidget" name="tableWidget_commands">
           <property name="sizePolicy">
@@ -203,11 +189,51 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
          </widget>
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="page_segments"/>
+      <widget class="QWidget" name="page_segments">
+       <layout class="QVBoxLayout" name="verticalLayout_7">
+        <item>
+         <widget class="QTableWidget" name="tableWidget_segments">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="editTriggers">
+           <set>QAbstractItemView::NoEditTriggers</set>
+          </property>
+          <property name="selectionMode">
+           <enum>QAbstractItemView::SingleSelection</enum>
+          </property>
+          <property name="selectionBehavior">
+           <enum>QAbstractItemView::SelectRows</enum>
+          </property>
+          <attribute name="verticalHeaderVisible">
+           <bool>false</bool>
+          </attribute>
+          <attribute name="verticalHeaderDefaultSectionSize">
+           <number>20</number>
+          </attribute>
+          <attribute name="verticalHeaderMinimumSectionSize">
+           <number>20</number>
+          </attribute>
+         </widget>
+        </item>
+        <item>
+         <widget class="ToolsWidget" name="widgetSegmentHex" native="true"/>
+        </item>
+       </layout>
+      </widget>
       <widget class="QWidget" name="page_sections"/>
       <widget class="QWidget" name="page_libraries"/>
      </widget>
