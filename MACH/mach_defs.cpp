@@ -24,25 +24,25 @@ namespace N_mach_header
 {
 const FormatWidget::HEADER_RECORD records32[]=
 {
-    {magic,                 "magic",             4,      "uint32_t",            FormatWidget::VAL_TYPE_DATA},
-    {cputype,               "cputype",           4,      "cpu_type_t",          FormatWidget::VAL_TYPE_DATA},
-    {cpusubtype,            "cpusubtype",        4,      "cpu_subtype_t",       FormatWidget::VAL_TYPE_DATA},
-    {filetype,              "filetype",          4,      "uint32_t",            FormatWidget::VAL_TYPE_DATA},
-    {ncmds,                 "ncmds",             4,      "uint32_t",            FormatWidget::VAL_TYPE_DATA},
-    {sizeofcmds,            "sizeofcmds",        4,      "uint32_t",            FormatWidget::VAL_TYPE_DATA},
-    {flags,                 "flags",             4,      "uint32_t",            FormatWidget::VAL_TYPE_DATA},
+    {magic,                 "magic",            4,      "uint32_t",             FormatWidget::VAL_TYPE_DATA},
+    {cputype,               "cputype",          4,      "cpu_type_t",           FormatWidget::VAL_TYPE_DATA},
+    {cpusubtype,            "cpusubtype",       4,      "cpu_subtype_t",        FormatWidget::VAL_TYPE_DATA},
+    {filetype,              "filetype",         4,      "uint32_t",             FormatWidget::VAL_TYPE_DATA},
+    {ncmds,                 "ncmds",            4,      "uint32_t",             FormatWidget::VAL_TYPE_DATA},
+    {sizeofcmds,            "sizeofcmds",       4,      "uint32_t",             FormatWidget::VAL_TYPE_DATA},
+    {flags,                 "flags",            4,      "uint32_t",             FormatWidget::VAL_TYPE_DATA},
 };
 
 const FormatWidget::HEADER_RECORD records64[]=
 {
-    {magic,                 "magic",             4,      "uint32_t",            FormatWidget::VAL_TYPE_DATA},
-    {cputype,               "cputype",           4,      "cpu_type_t",          FormatWidget::VAL_TYPE_DATA},
-    {cpusubtype,            "cpusubtype",        4,      "cpu_subtype_t",       FormatWidget::VAL_TYPE_DATA},
-    {filetype,              "filetype",          4,      "uint32_t",            FormatWidget::VAL_TYPE_DATA},
-    {ncmds,                 "ncmds",             4,      "uint32_t",            FormatWidget::VAL_TYPE_DATA},
-    {sizeofcmds,            "sizeofcmds",        4,      "uint32_t",            FormatWidget::VAL_TYPE_DATA},
-    {flags,                 "flags",             4,      "uint32_t",            FormatWidget::VAL_TYPE_DATA},
-    {reserved,              "reserved",          4,      "uint32_t",            FormatWidget::VAL_TYPE_DATA},
+    {magic,                 "magic",            4,      "uint32_t",             FormatWidget::VAL_TYPE_DATA},
+    {cputype,               "cputype",          4,      "cpu_type_t",           FormatWidget::VAL_TYPE_DATA},
+    {cpusubtype,            "cpusubtype",       4,      "cpu_subtype_t",        FormatWidget::VAL_TYPE_DATA},
+    {filetype,              "filetype",         4,      "uint32_t",             FormatWidget::VAL_TYPE_DATA},
+    {ncmds,                 "ncmds",            4,      "uint32_t",             FormatWidget::VAL_TYPE_DATA},
+    {sizeofcmds,            "sizeofcmds",       4,      "uint32_t",             FormatWidget::VAL_TYPE_DATA},
+    {flags,                 "flags",            4,      "uint32_t",             FormatWidget::VAL_TYPE_DATA},
+    {reserved,              "reserved",         4,      "uint32_t",             FormatWidget::VAL_TYPE_DATA},
 };
 }
 
@@ -52,5 +52,34 @@ const FormatWidget::HEADER_RECORD records[]=
 {
     {cmd,                  "cmd",               2,      "uint32_t",             FormatWidget::VAL_TYPE_DATA},
     {cmdsize,              "cmdsize",           4,      "uint32_t",             FormatWidget::VAL_TYPE_SIZE},
+};
+}
+
+namespace N_mach_segments
+{
+const FormatWidget::HEADER_RECORD records32[]=
+{
+    {segname,               "segname",          16,     "char[16]",             FormatWidget::VAL_TYPE_TEXT},
+    {vmaddr,                "vmaddr",           4,      "quint32",              FormatWidget::VAL_TYPE_ADDRESS},
+    {vmsize,                "vmsize",           4,      "quint32",              FormatWidget::VAL_TYPE_SIZE},
+    {fileoff,               "fileoff",          4,      "quint32",              FormatWidget::VAL_TYPE_OFFSET},
+    {filesize,              "filesize",         4,      "quint32",              FormatWidget::VAL_TYPE_SIZE},
+    {maxprot,               "maxprot",          4,      "qint32",               FormatWidget::VAL_TYPE_DATA},
+    {initprot,              "initprot",         4,      "qint32",               FormatWidget::VAL_TYPE_DATA},
+    {nsects,                "nsects",           4,      "quint32",              FormatWidget::VAL_TYPE_DATA},
+    {flags,                 "flags",            4,      "quint32",              FormatWidget::VAL_TYPE_DATA},
+};
+
+const FormatWidget::HEADER_RECORD records64[]=
+{
+    {segname,               "segname",          16,     "char[16]",             FormatWidget::VAL_TYPE_TEXT},
+    {vmaddr,                "vmaddr",           8,      "quint64",              FormatWidget::VAL_TYPE_ADDRESS},
+    {vmsize,                "vmsize",           8,      "quint64",              FormatWidget::VAL_TYPE_SIZE},
+    {fileoff,               "fileoff",          8,      "quint64",              FormatWidget::VAL_TYPE_OFFSET},
+    {filesize,              "filesize",         8,      "quint64",              FormatWidget::VAL_TYPE_SIZE},
+    {maxprot,               "maxprot",          4,      "qint32",               FormatWidget::VAL_TYPE_DATA},
+    {initprot,              "initprot",         4,      "qint32",               FormatWidget::VAL_TYPE_DATA},
+    {nsects,                "nsects",           4,      "quint32",              FormatWidget::VAL_TYPE_DATA},
+    {flags,                 "flags",            4,      "quint32",              FormatWidget::VAL_TYPE_DATA},
 };
 }

@@ -50,6 +50,7 @@ void MACHWidget::clear()
     memset(comboBox,0,sizeof comboBox);
 
     pSubDeviceCommand=nullptr;
+    pSubDeviceSegment=nullptr;
 
     ui->checkBoxReadonly->setChecked(true);
 
@@ -281,15 +282,72 @@ void MACHWidget::reloadData()
                 pItem->setData(Qt::UserRole+SECTION_DATA_SIZE,listCommandRecords.at(i).nSize);
                 pItem->setData(Qt::UserRole+SECTION_DATA_ADDRESS,listCommandRecords.at(i).nOffset);
 
-                ui->tableWidget_commands->setItem(i,0,                      pItem);
-                ui->tableWidget_commands->setItem(i,N_mach_commands::cmd+1,      new QTableWidgetItem(XBinary::valueToHex((quint32)listCommandRecords.at(i).nType)));
-                ui->tableWidget_commands->setItem(i,N_mach_commands::cmdsize+1,  new QTableWidgetItem(XBinary::valueToHex((quint32)listCommandRecords.at(i).nSize)));
-                ui->tableWidget_commands->setItem(i,N_mach_commands::cmdsize+2,  new QTableWidgetItem(mapLC.value(listCommandRecords.at(i).nType)));
+                ui->tableWidget_commands->setItem(i,0,                              pItem);
+                ui->tableWidget_commands->setItem(i,N_mach_commands::cmd+1,         new QTableWidgetItem(XBinary::valueToHex((quint32)listCommandRecords.at(i).nType)));
+                ui->tableWidget_commands->setItem(i,N_mach_commands::cmdsize+1,     new QTableWidgetItem(XBinary::valueToHex((quint32)listCommandRecords.at(i).nSize)));
+                ui->tableWidget_commands->setItem(i,N_mach_commands::cmdsize+2,     new QTableWidgetItem(mapLC.value(listCommandRecords.at(i).nType)));
             }
 
             if(nCount)
             {
                 ui->tableWidget_commands->setCurrentCell(0,0);
+            }
+
+            blockSignals(false);
+        }
+        else if(nData==SMACH::TYPE_mach_segments)
+        {
+            bool bIs64=mach.is64();
+
+            if(!bInit[nData])
+            {
+                bInit[nData]=createSectionTable(SMACH::TYPE_mach_segments,ui->tableWidget_segments,bIs64?(N_mach_segments::records64):(N_mach_segments::records32),N_mach_segments::__data_size);
+            }
+
+            blockSignals(true);
+
+            QList<XMACH::SEGMENT_RECORD> listSegmentRecords=mach.getSegmentRecords();
+
+            int nCount=listSegmentRecords.count();
+
+            ui->tableWidget_segments->setRowCount(nCount);
+
+
+            for(int i=0; i<nCount; i++)
+            {
+                QTableWidgetItem *pItem=new QTableWidgetItem(QString::number(i));
+
+                if(getOptions()->bIsImage)
+                {
+                    pItem->setData(Qt::UserRole+SECTION_DATA_OFFSET,listSegmentRecords.at(i).vmaddr);
+                    pItem->setData(Qt::UserRole+SECTION_DATA_SIZE,listSegmentRecords.at(i).vmsize);
+                }
+                else
+                {
+                    pItem->setData(Qt::UserRole+SECTION_DATA_OFFSET,listSegmentRecords.at(i).fileoff);
+                    pItem->setData(Qt::UserRole+SECTION_DATA_SIZE,listSegmentRecords.at(i).filesize);
+                }
+
+                pItem->setData(Qt::UserRole+SECTION_DATA_ADDRESS,listSegmentRecords.at(i).vmaddr);
+
+                ui->tableWidget_segments->setItem(i,0,                              pItem);
+                ui->tableWidget_segments->setItem(i,N_mach_segments::segname+1,     new QTableWidgetItem(listSegmentRecords.at(i).segname));
+
+//                segname=0,
+//                vmaddr,
+//                vmsize,
+//                fileoff,
+//                filesize,
+//                maxprot,
+//                initprot,
+//                nsects,
+//                flags,
+//                __data_size
+            }
+
+            if(nCount)
+            {
+                ui->tableWidget_segments->setCurrentCell(0,0);
             }
 
             blockSignals(false);
@@ -360,6 +418,11 @@ bool MACHWidget::createSectionTable(int type, QTableWidget *pTableWidget, const 
             pTableWidget->setColumnWidth(3,nSymbolWidth*20);
             break;
 
+        case SMACH::TYPE_mach_segments:
+            slHeader.append(tr(""));
+            pTableWidget->setColumnCount(nRecordCount+1);
+            break;
+
         default:
             pTableWidget->setColumnCount(nRecordCount);
     }
@@ -399,7 +462,6 @@ void MACHWidget::on_tableWidget_commands_currentCellChanged(int currentRow, int 
         }
 
         pSubDeviceCommand=new SubDevice(getDevice(),nOffset,nSize,this);
-
         pSubDeviceCommand->open(getDevice()->openMode());
 
         FormatWidget::OPTIONS hexOptions=*getOptions();
@@ -414,4 +476,30 @@ void MACHWidget::on_tableWidget_commands_currentCellChanged(int currentRow, int 
 void MACHWidget::on_pushButtonReload_clicked()
 {
     reload();
+}
+
+void MACHWidget::on_tableWidget_segments_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
+{
+    if(currentRow!=-1)
+    {
+        qint64 nOffset=ui->tableWidget_segments->item(currentRow,0)->data(Qt::UserRole+SECTION_DATA_OFFSET).toLongLong();
+        qint64 nSize=ui->tableWidget_segments->item(currentRow,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
+        qint64 nAddress=ui->tableWidget_segments->item(currentRow,0)->data(Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
+
+        if(pSubDeviceSegment)
+        {
+            pSubDeviceSegment->close();
+            delete pSubDeviceSegment;
+        }
+
+        pSubDeviceSegment=new SubDevice(getDevice(),nOffset,nSize,this);
+        pSubDeviceSegment->open(getDevice()->openMode());
+
+        FormatWidget::OPTIONS hexOptions=*getOptions();
+        hexOptions.nImageBase=nAddress;
+
+        ui->widgetSegmentHex->setData(pSubDeviceSegment,&hexOptions);
+        ui->widgetSegmentHex->setEdited(isEdited());
+        connect(ui->widgetSegmentHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+    }
 }

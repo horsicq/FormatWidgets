@@ -41,6 +41,9 @@ public:
     void setReadonly(bool bState);
     ~ToolsWidget();
 
+signals:
+    void editState(bool bState);
+
 private:
     Ui::ToolsWidget *ui;
     QHexView::OPTIONS hexOptions;

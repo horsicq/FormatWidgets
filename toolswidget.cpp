@@ -26,6 +26,8 @@ ToolsWidget::ToolsWidget(QWidget *parent) :
     ui(new Ui::ToolsWidget)
 {
     ui->setupUi(this);
+
+    connect(ui->widgetHex,SIGNAL(editState(bool)),this,SIGNAL(editState(bool)));
 }
 
 void ToolsWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)

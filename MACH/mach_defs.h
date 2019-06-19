@@ -69,4 +69,24 @@ enum DATA
 extern const FormatWidget::HEADER_RECORD records[__data_size];
 }
 
+namespace N_mach_segments
+{
+enum DATA
+{
+    segname=0,
+    vmaddr,
+    vmsize,
+    fileoff,
+    filesize,
+    maxprot,
+    initprot,
+    nsects,
+    flags,
+    __data_size
+};
+
+extern const FormatWidget::HEADER_RECORD records32[__data_size];
+extern const FormatWidget::HEADER_RECORD records64[__data_size];
+}
+
 #endif // MACH_DEFS_H
