@@ -333,16 +333,26 @@ void MACHWidget::reloadData()
                 ui->tableWidget_segments->setItem(i,0,                              pItem);
                 ui->tableWidget_segments->setItem(i,N_mach_segments::segname+1,     new QTableWidgetItem(listSegmentRecords.at(i).segname));
 
-//                segname=0,
-//                vmaddr,
-//                vmsize,
-//                fileoff,
-//                filesize,
-//                maxprot,
-//                initprot,
-//                nsects,
-//                flags,
-//                __data_size
+                if(bIs64)
+                {
+                    ui->tableWidget_segments->setItem(i,N_mach_segments::vmaddr+1,     new QTableWidgetItem(XBinary::valueToHex((quint64)listSegmentRecords.at(i).vmaddr)));
+                    ui->tableWidget_segments->setItem(i,N_mach_segments::vmsize+1,     new QTableWidgetItem(XBinary::valueToHex((quint64)listSegmentRecords.at(i).vmsize)));
+                    ui->tableWidget_segments->setItem(i,N_mach_segments::fileoff+1,     new QTableWidgetItem(XBinary::valueToHex((quint64)listSegmentRecords.at(i).fileoff)));
+                    ui->tableWidget_segments->setItem(i,N_mach_segments::filesize+1,     new QTableWidgetItem(XBinary::valueToHex((quint64)listSegmentRecords.at(i).filesize)));
+                }
+                else
+                {
+                    ui->tableWidget_segments->setItem(i,N_mach_segments::vmaddr+1,     new QTableWidgetItem(XBinary::valueToHex((quint32)listSegmentRecords.at(i).vmaddr)));
+                    ui->tableWidget_segments->setItem(i,N_mach_segments::vmsize+1,     new QTableWidgetItem(XBinary::valueToHex((quint32)listSegmentRecords.at(i).vmsize)));
+                    ui->tableWidget_segments->setItem(i,N_mach_segments::fileoff+1,     new QTableWidgetItem(XBinary::valueToHex((quint32)listSegmentRecords.at(i).fileoff)));
+                    ui->tableWidget_segments->setItem(i,N_mach_segments::filesize+1,     new QTableWidgetItem(XBinary::valueToHex((quint32)listSegmentRecords.at(i).filesize)));
+                }
+
+                ui->tableWidget_segments->setItem(i,N_mach_segments::maxprot+1,     new QTableWidgetItem(XBinary::valueToHex((quint32)listSegmentRecords.at(i).maxprot)));
+                ui->tableWidget_segments->setItem(i,N_mach_segments::initprot+1,     new QTableWidgetItem(XBinary::valueToHex((quint32)listSegmentRecords.at(i).initprot)));
+                ui->tableWidget_segments->setItem(i,N_mach_segments::nsects+1,     new QTableWidgetItem(XBinary::valueToHex((quint32)listSegmentRecords.at(i).nsects)));
+                ui->tableWidget_segments->setItem(i,N_mach_segments::flags+1,     new QTableWidgetItem(XBinary::valueToHex((quint32)listSegmentRecords.at(i).flags)));
+
             }
 
             if(nCount)
