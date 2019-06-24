@@ -90,6 +90,15 @@ void MACHWidget::reload()
             ui->treeWidgetNavi->addTopLevelItem(pItemSegments);
         }
 
+        QList<XMACH::LIBRARY_RECORD> listLibraryRecords=mach.getLibraryRecords(&listCommandRecords);
+
+        if(listLibraryRecords.count())
+        {
+            QTreeWidgetItem *pItemLibraries=createNewItem(SMACH::TYPE_mach_libraries,tr("libraries"));
+
+            ui->treeWidgetNavi->addTopLevelItem(pItemLibraries);
+        }
+
         ui->treeWidgetNavi->expandAll();
 
         ui->treeWidgetNavi->setCurrentItem(ui->treeWidgetNavi->topLevelItem(1));
@@ -311,7 +320,6 @@ void MACHWidget::reloadData()
             int nCount=listSegmentRecords.count();
 
             ui->tableWidget_segments->setRowCount(nCount);
-
 
             for(int i=0; i<nCount; i++)
             {
