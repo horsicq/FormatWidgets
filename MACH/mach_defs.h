@@ -89,4 +89,17 @@ extern const FormatWidget::HEADER_RECORD records32[__data_size];
 extern const FormatWidget::HEADER_RECORD records64[__data_size];
 }
 
+namespace N_mach_libraries
+{
+enum DATA
+{
+    timestamp,
+    current_version,
+    compatibility_version,
+    __data_size
+};
+
+extern const FormatWidget::HEADER_RECORD records[__data_size];
+}
+
 #endif // MACH_DEFS_H

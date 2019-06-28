@@ -370,6 +370,18 @@ void MACHWidget::reloadData()
 
             blockSignals(false);
         }
+        else if(nData==SMACH::TYPE_mach_libraries)
+        {
+            bool bIs64=mach.is64();
+
+            if(!bInit[nData])
+            {
+                bInit[nData]=createSectionTable(SMACH::TYPE_mach_libraries,ui->tableWidget_libraries,N_mach_libraries::records,N_mach_libraries::__data_size);
+            }
+
+            blockSignals(true);
+            blockSignals(false);
+        }
 
         setReadonly(ui->checkBoxReadonly->isChecked());
     }
@@ -441,6 +453,10 @@ bool MACHWidget::createSectionTable(int type, QTableWidget *pTableWidget, const 
             pTableWidget->setColumnCount(nRecordCount+1);
             break;
 
+        case SMACH::TYPE_mach_libraries:
+            pTableWidget->setColumnCount(nRecordCount+1);
+            break;
+
         default:
             pTableWidget->setColumnCount(nRecordCount);
     }
@@ -456,6 +472,9 @@ bool MACHWidget::createSectionTable(int type, QTableWidget *pTableWidget, const 
     {
         case SMACH::TYPE_mach_commands:
             slHeader.append(tr("Type"));
+            break;
+        case SMACH::TYPE_mach_libraries:
+            slHeader.append(tr("Library"));
             break;
     }
 
