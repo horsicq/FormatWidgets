@@ -372,14 +372,24 @@ void MACHWidget::reloadData()
         }
         else if(nData==SMACH::TYPE_mach_libraries)
         {
-            bool bIs64=mach.is64();
-
             if(!bInit[nData])
             {
                 bInit[nData]=createSectionTable(SMACH::TYPE_mach_libraries,ui->tableWidget_libraries,N_mach_libraries::records,N_mach_libraries::__data_size);
             }
 
             blockSignals(true);
+
+            QList<XMACH::LIBRARY_RECORD> listLibraries=mach.getLibraryRecords();
+
+            int nCount=listLibraries.count();
+
+            ui->tableWidget_libraries->setRowCount(nCount);
+
+            for(int i=0; i<nCount; i++)
+            {
+                // TODO
+            }
+
             blockSignals(false);
         }
 
