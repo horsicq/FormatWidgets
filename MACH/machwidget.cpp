@@ -388,6 +388,9 @@ void MACHWidget::reloadData()
             for(int i=0; i<nCount; i++)
             {
                 // TODO
+                ui->tableWidget_libraries->setItem(i,N_mach_libraries::timestamp,     new QTableWidgetItem(XBinary::valueToHex(listLibraries.at(i).timestamp)));
+                ui->tableWidget_libraries->setItem(i,N_mach_libraries::current_version,     new QTableWidgetItem(XBinary::valueToHex(listLibraries.at(i).current_version)));
+                ui->tableWidget_libraries->setItem(i,N_mach_libraries::compatibility_version,     new QTableWidgetItem(XBinary::valueToHex(listLibraries.at(i).compatibility_version)));
             }
 
             blockSignals(false);
