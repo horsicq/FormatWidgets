@@ -388,9 +388,10 @@ void MACHWidget::reloadData()
             for(int i=0; i<nCount; i++)
             {
                 // TODO
-                ui->tableWidget_libraries->setItem(i,N_mach_libraries::timestamp,     new QTableWidgetItem(XBinary::valueToHex(listLibraries.at(i).timestamp)));
-                ui->tableWidget_libraries->setItem(i,N_mach_libraries::current_version,     new QTableWidgetItem(XBinary::valueToHex(listLibraries.at(i).current_version)));
-                ui->tableWidget_libraries->setItem(i,N_mach_libraries::compatibility_version,     new QTableWidgetItem(XBinary::valueToHex(listLibraries.at(i).compatibility_version)));
+                ui->tableWidget_libraries->setItem(i,N_mach_libraries::timestamp,                   new QTableWidgetItem(XBinary::valueToHex(listLibraries.at(i).timestamp)));
+                ui->tableWidget_libraries->setItem(i,N_mach_libraries::current_version,             new QTableWidgetItem(XBinary::valueToHex(listLibraries.at(i).current_version)));
+                ui->tableWidget_libraries->setItem(i,N_mach_libraries::compatibility_version,       new QTableWidgetItem(XBinary::valueToHex(listLibraries.at(i).compatibility_version)));
+                ui->tableWidget_libraries->setItem(i,N_mach_libraries::compatibility_version+1,     new QTableWidgetItem(listLibraries.at(i).sFullName));
             }
 
             blockSignals(false);
@@ -468,6 +469,10 @@ bool MACHWidget::createSectionTable(int type, QTableWidget *pTableWidget, const 
 
         case SMACH::TYPE_mach_libraries:
             pTableWidget->setColumnCount(nRecordCount+1);
+            pTableWidget->setColumnWidth(0,nSymbolWidth*10);
+            pTableWidget->setColumnWidth(1,nSymbolWidth*10);
+            pTableWidget->setColumnWidth(2,nSymbolWidth*10);
+            pTableWidget->setColumnWidth(3,nSymbolWidth*45);
             break;
 
         default:

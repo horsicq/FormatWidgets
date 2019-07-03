@@ -39,11 +39,13 @@ public:
     ~MACHWidget();
     virtual void clear();
     virtual void reload();
+
 protected:
     virtual bool _setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition);
     virtual void setReadonly(bool bState);
     virtual void blockSignals(bool bState);
     virtual void adjustHeaderTable(int type,QTableWidget *pTableWidget);
+
 private slots:
     virtual void reloadData();
     void widgetValueChanged(quint64 nValue);
@@ -51,9 +53,7 @@ private slots:
     void on_checkBoxReadonly_toggled(bool checked);
     bool createSectionTable(int type, QTableWidget *pTableWidget, const FormatWidget::HEADER_RECORD *pRecords, int nRecordCount);
     void on_tableWidget_commands_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
-
     void on_pushButtonReload_clicked();
-
     void on_tableWidget_segments_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
 
 private:
