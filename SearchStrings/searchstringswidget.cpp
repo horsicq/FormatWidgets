@@ -131,12 +131,9 @@ void SearchStringsWidget::on_lineEditFilter_textChanged(const QString &arg1)
 
 void SearchStringsWidget::filter(QString sString)
 {
-    if(sString!="")
-    {
-        pFilter->setFilterRegExp(sString);
-        pFilter->setFilterCaseSensitivity(Qt::CaseInsensitive);
-        pFilter->setFilterKeyColumn(3);
-    }
+    pFilter->setFilterRegExp(sString);
+    pFilter->setFilterCaseSensitivity(Qt::CaseInsensitive);
+    pFilter->setFilterKeyColumn(3);
 }
 
 void SearchStringsWidget::on_tableViewResult_customContextMenuRequested(const QPoint &pos)
