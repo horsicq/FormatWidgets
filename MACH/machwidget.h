@@ -56,6 +56,8 @@ private slots:
     void on_pushButtonReload_clicked();
     void on_tableWidget_segments_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
 
+    void on_tableWidget_sections_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
+
 private:
     enum CB
     {
@@ -75,6 +77,7 @@ private:
 
     SubDevice *pSubDeviceCommand;
     SubDevice *pSubDeviceSegment;
+    SubDevice *pSubDeviceSection;
 };
 
 #endif // MACHWIDGET_H
