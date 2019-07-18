@@ -91,6 +91,15 @@ void MACHWidget::reload()
             ui->treeWidgetNavi->addTopLevelItem(pItemSegments);
         }
 
+        QList<XMACH::SECTION_RECORD> listSectionRecords=mach.getSectionRecords(&listCommandRecords);
+
+        if(listSectionRecords.count())
+        {
+            QTreeWidgetItem *pItemSections=createNewItem(SMACH::TYPE_mach_sections,tr("sections"));
+
+            ui->treeWidgetNavi->addTopLevelItem(pItemSections);
+        }
+
         QList<XMACH::LIBRARY_RECORD> listLibraryRecords=mach.getLibraryRecords(&listCommandRecords);
 
         if(listLibraryRecords.count())
