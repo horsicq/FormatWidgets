@@ -84,6 +84,35 @@ const FormatWidget::HEADER_RECORD records64[]=
 };
 }
 
+namespace N_mach_sections
+{
+const FormatWidget::HEADER_RECORD records32[]=
+{
+    {sectname,              "sectname",         16,     "char[16]",             FormatWidget::VAL_TYPE_TEXT},
+    {segname,               "segname",          16,     "char[16]",             FormatWidget::VAL_TYPE_TEXT},
+    {addr,                  "addr",             4,      "uint32",               FormatWidget::VAL_TYPE_ADDRESS},
+    {size,                  "size",             4,      "uint32",               FormatWidget::VAL_TYPE_SIZE},
+    {offset,                "offset",           4,      "uint32",               FormatWidget::VAL_TYPE_OFFSET},
+    {align,                 "align",            4,      "uint32",               FormatWidget::VAL_TYPE_DATA},
+    {reloff,                "reloff",           4,      "uint32",               FormatWidget::VAL_TYPE_DATA},
+    {nreloc,                "nreloc",           4,      "uint32",               FormatWidget::VAL_TYPE_DATA},
+    {flags,                 "flags",            4,      "uint32",               FormatWidget::VAL_TYPE_DATA},
+};
+
+const FormatWidget::HEADER_RECORD records64[]=
+{
+    {sectname,              "sectname",         16,     "char[16]",             FormatWidget::VAL_TYPE_TEXT},
+    {segname,               "segname",          16,     "char[16]",             FormatWidget::VAL_TYPE_TEXT},
+    {addr,                  "addr",             8,      "uint64",               FormatWidget::VAL_TYPE_ADDRESS},
+    {size,                  "size",             8,      "uint64",               FormatWidget::VAL_TYPE_SIZE},
+    {offset,                "offset",           4,      "uint32",               FormatWidget::VAL_TYPE_OFFSET},
+    {align,                 "align",            4,      "uint32",               FormatWidget::VAL_TYPE_DATA},
+    {reloff,                "reloff",           4,      "uint32",               FormatWidget::VAL_TYPE_DATA},
+    {nreloc,                "nreloc",           4,      "uint32",               FormatWidget::VAL_TYPE_DATA},
+    {flags,                 "flags",            4,      "uint32",               FormatWidget::VAL_TYPE_DATA},
+};
+}
+
 namespace N_mach_libraries
 {
 const FormatWidget::HEADER_RECORD records[]=
@@ -91,6 +120,5 @@ const FormatWidget::HEADER_RECORD records[]=
     {timestamp,             "timestamp",                4,      "uint32",               FormatWidget::VAL_TYPE_DATA},
     {current_version,       "current_version",          4,      "uint32",               FormatWidget::VAL_TYPE_DATA},
     {compatibility_version, "compatibility_version",    4,      "uint32",               FormatWidget::VAL_TYPE_DATA},
-
 };
 }

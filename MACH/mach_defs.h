@@ -89,6 +89,26 @@ extern const FormatWidget::HEADER_RECORD records32[__data_size];
 extern const FormatWidget::HEADER_RECORD records64[__data_size];
 }
 
+namespace N_mach_sections
+{
+enum DATA
+{
+    sectname=0,
+    segname,
+    addr,
+    size,
+    offset,
+    align,
+    reloff,
+    nreloc,
+    flags,
+    __data_size
+};
+
+extern const FormatWidget::HEADER_RECORD records32[__data_size];
+extern const FormatWidget::HEADER_RECORD records64[__data_size];
+}
+
 namespace N_mach_libraries
 {
 enum DATA
