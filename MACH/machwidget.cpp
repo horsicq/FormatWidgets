@@ -380,6 +380,51 @@ void MACHWidget::reloadData()
 
             blockSignals(false);
         }
+        else if(nData==SMACH::TYPE_mach_sections)
+        {
+            bool bIs64=mach.is64();
+
+            if(!bInit[nData])
+            {
+                bInit[nData]=createSectionTable(SMACH::TYPE_mach_sections,ui->tableWidget_sections,bIs64?(N_mach_sections::records64):(N_mach_sections::records32),N_mach_sections::__data_size);
+            }
+
+            blockSignals(true);
+
+            QList<XMACH::SECTION_RECORD> listSectionRecords=mach.getSectionRecords();
+
+            int nCount=listSectionRecords.count();
+
+            ui->tableWidget_sections->setRowCount(nCount);
+
+            for(int i=0; i<nCount; i++)
+            {
+                QTableWidgetItem *pItem=new QTableWidgetItem(QString::number(i));
+
+                if(getOptions()->bIsImage)
+                {
+                    pItem->setData(Qt::UserRole+SECTION_DATA_OFFSET,listSectionRecords.at(i).addr);
+                }
+                else
+                {
+                    pItem->setData(Qt::UserRole+SECTION_DATA_OFFSET,listSectionRecords.at(i).offset);
+                }
+
+                pItem->setData(Qt::UserRole+SECTION_DATA_SIZE,listSectionRecords.at(i).size);
+                pItem->setData(Qt::UserRole+SECTION_DATA_ADDRESS,listSectionRecords.at(i).addr);
+
+                ui->tableWidget_sections->setItem(i,0,                              pItem);
+                ui->tableWidget_sections->setItem(i,N_mach_sections::segname+1,     new QTableWidgetItem(listSectionRecords.at(i).segname));
+                ui->tableWidget_sections->setItem(i,N_mach_sections::sectname+1,    new QTableWidgetItem(listSectionRecords.at(i).sectname));
+            }
+
+            if(nCount)
+            {
+                ui->tableWidget_sections->setCurrentCell(0,0);
+            }
+
+            blockSignals(false);
+        }
         else if(nData==SMACH::TYPE_mach_libraries)
         {
             if(!bInit[nData])
@@ -473,6 +518,11 @@ bool MACHWidget::createSectionTable(int type, QTableWidget *pTableWidget, const 
             break;
 
         case SMACH::TYPE_mach_segments:
+            slHeader.append(tr(""));
+            pTableWidget->setColumnCount(nRecordCount+1);
+            break;
+
+        case SMACH::TYPE_mach_sections:
             slHeader.append(tr(""));
             pTableWidget->setColumnCount(nRecordCount+1);
             break;
