@@ -552,6 +552,16 @@ bool MACHWidget::createSectionTable(int type, QTableWidget *pTableWidget, const 
         case SMACH::TYPE_mach_sections:
             slHeader.append(tr(""));
             pTableWidget->setColumnCount(nRecordCount+1);
+            pTableWidget->setColumnWidth(0,nSymbolWidth*4);
+            pTableWidget->setColumnWidth(1,nSymbolWidth*8);
+            pTableWidget->setColumnWidth(2,nSymbolWidth*8);
+            pTableWidget->setColumnWidth(3,nSymbolWidth*12);
+            pTableWidget->setColumnWidth(4,nSymbolWidth*12);
+            pTableWidget->setColumnWidth(5,nSymbolWidth*8);
+            pTableWidget->setColumnWidth(6,nSymbolWidth*8);
+            pTableWidget->setColumnWidth(7,nSymbolWidth*8);
+            pTableWidget->setColumnWidth(8,nSymbolWidth*8);
+            pTableWidget->setColumnWidth(9,nSymbolWidth*8);
             break;
 
         case SMACH::TYPE_mach_libraries:
