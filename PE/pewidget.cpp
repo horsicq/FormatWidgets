@@ -111,6 +111,11 @@ void PEWidget::reload()
             ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_RELOCS,tr("Relocs")));
         }
 
+        if(pe.isTLSPresent())
+        {
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_TLS,tr("TLS")));
+        }
+
         if(pe.isOverlayPresent())
         {
             ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_OVERLAY,tr("Overlay")));
@@ -1171,6 +1176,10 @@ void PEWidget::reloadData()
             {
                 ui->tableWidget_Relocs->selectRow(0);
             }
+        }
+        else if(nData==SPE::TYPE_TLS)
+        {
+            // TODO !!!
         }
         else if(nData==SPE::TYPE_OVERLAY)
         {
