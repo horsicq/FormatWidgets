@@ -150,6 +150,28 @@ const FormatWidget::HEADER_RECORD records64[]=
 };
 }
 
+namespace N_IMAGE_TLS
+{
+const FormatWidget::HEADER_RECORD records32[]=
+{
+    {StartAddressOfRawData,         "StartAddressOfRawData",        4,      "DWORD",        FormatWidget::VAL_TYPE_ADDRESS},
+    {EndAddressOfRawData,           "EndAddressOfRawData",          4,      "DWORD",        FormatWidget::VAL_TYPE_ADDRESS},
+    {AddressOfIndex,                "AddressOfIndex",               4,      "DWORD",        FormatWidget::VAL_TYPE_ADDRESS},
+    {AddressOfCallBacks,            "AddressOfCallBacks",           4,      "DWORD",        FormatWidget::VAL_TYPE_ADDRESS},
+    {SizeOfZeroFill,                "SizeOfZeroFill",               4,      "DWORD",        FormatWidget::VAL_TYPE_SIZE},
+    {Characteristics,               "Characteristics",              4,      "DWORD",        FormatWidget::VAL_TYPE_FLAGS}
+};
+const FormatWidget::HEADER_RECORD records64[]=
+{
+    {StartAddressOfRawData,         "StartAddressOfRawData",        8,      "ULONGLONG",    FormatWidget::VAL_TYPE_ADDRESS},
+    {EndAddressOfRawData,           "EndAddressOfRawData",          8,      "ULONGLONG",    FormatWidget::VAL_TYPE_ADDRESS},
+    {AddressOfIndex,                "AddressOfIndex",               8,      "ULONGLONG",    FormatWidget::VAL_TYPE_ADDRESS},
+    {AddressOfCallBacks,            "AddressOfCallBacks",           8,      "ULONGLONG",    FormatWidget::VAL_TYPE_ADDRESS},
+    {SizeOfZeroFill,                "SizeOfZeroFill",               4,      "DWORD",        FormatWidget::VAL_TYPE_SIZE},
+    {Characteristics,               "Characteristics",              4,      "DWORD",        FormatWidget::VAL_TYPE_FLAGS}
+};
+}
+
 namespace N_IMAGE_DIRECORIES
 {
 const FormatWidget::DIRECTORY_ENTRY_RECORD records[]=
