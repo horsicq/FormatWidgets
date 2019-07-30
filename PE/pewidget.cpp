@@ -88,32 +88,32 @@ void PEWidget::reload()
 
         if(pe.isExportPresent())
         {
-            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_EXPORT,tr("Export")));
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_EXPORT,"Export"));
         }
 
         if(pe.isImportPresent())
         {
-            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_IMPORT,tr("Import")));
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_IMPORT,"Import"));
         }
 
         if(pe.isResourcesPresent())
         {
-            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_RESOURCE,tr("Resource")));
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_RESOURCE,"Resource"));
         }
 
         if(pe.isExceptionPresent())
         {
-            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_EXCEPTION,tr("Exception")));
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_EXCEPTION,"Exception"));
         }
 
         if(pe.isRelocsPresent())
         {
-            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_RELOCS,tr("Relocs")));
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_RELOCS,"Relocs"));
         }
 
         if(pe.isTLSPresent())
         {
-            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_TLS,tr("TLS")));
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_TLS,"TLS"));
         }
 
         if(pe.isOverlayPresent())
