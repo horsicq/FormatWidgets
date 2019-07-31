@@ -50,6 +50,7 @@ void PEWidget::clear()
     memset(lineEdit_IMAGE_NT_HEADERS,0,sizeof lineEdit_IMAGE_NT_HEADERS);
     memset(lineEdit_IMAGE_FILE_HEADER,0,sizeof lineEdit_IMAGE_FILE_HEADER);
     memset(lineEdit_IMAGE_OPTIONAL_HEADER,0,sizeof lineEdit_IMAGE_OPTIONAL_HEADER);
+    memset(lineEdit_TLS,0,sizeof lineEdit_TLS);
 //    memset(lineEdit_IMAGE_DIRECTORY_ADDRESS,0,sizeof lineEdit_IMAGE_DIRECTORY_ADDRESS);
 //    memset(lineEdit_IMAGE_DIRECTORY_SIZE,0,sizeof lineEdit_IMAGE_DIRECTORY_SIZE);
     memset(comboBox,0,sizeof comboBox);
@@ -270,7 +271,6 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                             pe.set_e_lfanew((quint32)nValue);
                             break;
                     }
-
                     break;
 
                 case SPE::TYPE_IMAGE_NT_HEADERS:
@@ -280,7 +280,6 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                             pe.setNtHeaders_Signature((quint32)nValue);
                             break;
                     }
-
                     break;
 
                 case SPE::TYPE_IMAGE_FILE_HEADER:
@@ -317,7 +316,6 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                             pe.setFileHeader_Characteristics((quint16)nValue);
                             break;
                     }
-
                     break;
 
                 case SPE::TYPE_IMAGE_OPTIONAL_HEADER:
@@ -446,7 +444,6 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                             pe.setOptionalHeader_NumberOfRvaAndSizes((quint32)nValue);
                             break;
                     }
-
                     break;
 
 //                case SPE::TYPE_IMAGE_DIRECTORY_ENTRIES:
@@ -510,7 +507,35 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                             pe.setExportDirectory_AddressOfNameOrdinals((quint32)nValue);
                             break;
                     }
+                    break;
 
+                case SPE::TYPE_TLS:
+                    switch(nNdata)
+                    {
+                        case N_IMAGE_TLS::StartAddressOfRawData:
+                            pe.setTLS_StartAddressOfRawData((quint64)nValue);
+                            break;
+
+                        case N_IMAGE_TLS::EndAddressOfRawData:
+                            pe.setTLS_EndAddressOfRawData((quint64)nValue);
+                            break;
+
+                        case N_IMAGE_TLS::AddressOfIndex:
+                            pe.setTLS_AddressOfIndex((quint64)nValue);
+                            break;
+
+                        case N_IMAGE_TLS::AddressOfCallBacks:
+                            pe.setTLS_AddressOfCallBacks((quint64)nValue);
+                            break;
+
+                        case N_IMAGE_TLS::SizeOfZeroFill:
+                            pe.setTLS_SizeOfZeroFill((quint32)nValue);
+                            break;
+
+                        case N_IMAGE_TLS::Characteristics:
+                            pe.setTLS_Characteristics((quint32)nValue);
+                            break;
+                    }
                     break;
             }
 
@@ -529,6 +554,7 @@ void PEWidget::setReadonly(bool bState)
     setLineEditsReadOnly(lineEdit_IMAGE_NT_HEADERS,N_IMAGE_NT_HEADERS::__data_size,bState);
     setLineEditsReadOnly(lineEdit_IMAGE_FILE_HEADER,N_IMAGE_FILE_HEADER::__data_size,bState);
     setLineEditsReadOnly(lineEdit_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::__data_size,bState);
+    setLineEditsReadOnly(lineEdit_TLS,N_IMAGE_TLS::__data_size,bState);
 //    setLineEditsReadOnly(lineEdit_IMAGE_DIRECTORY_ADDRESS,N_IMAGE_DIRECORIES::__data_size,bState);
 //    setLineEditsReadOnly(lineEdit_IMAGE_DIRECTORY_SIZE,N_IMAGE_DIRECORIES::__data_size,bState);
 
@@ -548,6 +574,7 @@ void PEWidget::blockSignals(bool bState)
     _blockSignals((QObject **)lineEdit_IMAGE_NT_HEADERS,N_IMAGE_NT_HEADERS::__data_size,bState);
     _blockSignals((QObject **)lineEdit_IMAGE_FILE_HEADER,N_IMAGE_FILE_HEADER::__data_size,bState);
     _blockSignals((QObject **)lineEdit_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::__data_size,bState);
+    _blockSignals((QObject **)lineEdit_TLS,N_IMAGE_TLS::__data_size,bState);
 //    _blockSignals((QObject **)lineEdit_IMAGE_DIRECTORY_ADDRESS,N_IMAGE_DIRECORIES::__data_size,bState);
 //    _blockSignals((QObject **)lineEdit_IMAGE_DIRECTORY_SIZE,N_IMAGE_DIRECORIES::__data_size,bState);
 
@@ -579,7 +606,6 @@ void PEWidget::widgetValueChanged(quint64 nValue)
                     lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_magic]->setValue((quint16)nValue);
                     break;
             }
-
             break;
 
         case SPE::TYPE_IMAGE_NT_HEADERS:
@@ -589,7 +615,6 @@ void PEWidget::widgetValueChanged(quint64 nValue)
                     lineEdit_IMAGE_NT_HEADERS[N_IMAGE_NT_HEADERS::Signature]->setValue((quint32)nValue);
                     break;
             }
-
             break;
 
         case SPE::TYPE_IMAGE_FILE_HEADER:
@@ -607,7 +632,6 @@ void PEWidget::widgetValueChanged(quint64 nValue)
                     lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::Characteristics]->setValue((quint16)nValue);
                     break;
             }
-
             break;
 
         case SPE::TYPE_IMAGE_OPTIONAL_HEADER:
@@ -625,7 +649,6 @@ void PEWidget::widgetValueChanged(quint64 nValue)
                     lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::DllCharacteristics]->setValue((quint16)nValue);
                     break;
             }
-
             break;
     }
 }
@@ -649,10 +672,8 @@ void PEWidget::widgetAction()
                         quint32 nCheckSum=pe.calculateCheckSum();
                         lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::CheckSum]->setValue(nCheckSum);
                     }
-
                     break;
             }
-
             break;
     }
 }
@@ -1039,7 +1060,15 @@ void PEWidget::reloadData()
 
             if(nCount)
             {
-                ui->tableWidget_ImportLibraries->selectRow(0);
+                // TODO the same
+                if(ui->tableWidget_ImportLibraries->currentRow()==0)
+                {
+                    loadImportLibrary(0);
+                }
+                else
+                {
+                    ui->tableWidget_ImportLibraries->selectRow(0);
+                }
             }
         }
         else if(nData==SPE::TYPE_RESOURCE)
@@ -1179,7 +1208,35 @@ void PEWidget::reloadData()
         }
         else if(nData==SPE::TYPE_TLS)
         {
-            // TODO !!!
+            if(!bInit[nData])
+            {
+                bInit[nData]=createHeaderTable(SPE::TYPE_TLS,ui->tableWidget_TLS,pe.is64()?(N_IMAGE_TLS::records64):(N_IMAGE_TLS::records32),lineEdit_TLS,N_IMAGE_TLS::__data_size,0);
+            }
+
+            blockSignals(true);
+
+            if(pe.is64())
+            {
+                XPE_DEF::S_IMAGE_TLS_DIRECTORY64 tls64=pe.getTLSDirectory64();
+                lineEdit_TLS[N_IMAGE_TLS::StartAddressOfRawData]->setValue(tls64.StartAddressOfRawData);
+                lineEdit_TLS[N_IMAGE_TLS::EndAddressOfRawData]->setValue(tls64.EndAddressOfRawData);
+                lineEdit_TLS[N_IMAGE_TLS::AddressOfIndex]->setValue(tls64.AddressOfIndex);
+                lineEdit_TLS[N_IMAGE_TLS::AddressOfCallBacks]->setValue(tls64.AddressOfCallBacks);
+                lineEdit_TLS[N_IMAGE_TLS::SizeOfZeroFill]->setValue(tls64.SizeOfZeroFill);
+                lineEdit_TLS[N_IMAGE_TLS::Characteristics]->setValue(tls64.Characteristics);
+            }
+            else
+            {
+                XPE_DEF::S_IMAGE_TLS_DIRECTORY32 tls32=pe.getTLSDirectory32();
+                lineEdit_TLS[N_IMAGE_TLS::StartAddressOfRawData]->setValue(tls32.StartAddressOfRawData);
+                lineEdit_TLS[N_IMAGE_TLS::EndAddressOfRawData]->setValue(tls32.EndAddressOfRawData);
+                lineEdit_TLS[N_IMAGE_TLS::AddressOfIndex]->setValue(tls32.AddressOfIndex);
+                lineEdit_TLS[N_IMAGE_TLS::AddressOfCallBacks]->setValue(tls32.AddressOfCallBacks);
+                lineEdit_TLS[N_IMAGE_TLS::SizeOfZeroFill]->setValue(tls32.SizeOfZeroFill);
+                lineEdit_TLS[N_IMAGE_TLS::Characteristics]->setValue(tls32.Characteristics);
+            }
+
+            blockSignals(false);
         }
         else if(nData==SPE::TYPE_OVERLAY)
         {
@@ -1356,6 +1413,13 @@ void PEWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
             pTableWidget->setColumnWidth(1,nSymbolWidth*6);
             pTableWidget->setColumnWidth(2,nSymbolWidth*14);
             pTableWidget->setColumnWidth(3,nSymbolWidth*22);
+            break;
+
+        case SPE::TYPE_TLS:
+            pTableWidget->setColumnWidth(0,nSymbolWidth*15);
+            pTableWidget->setColumnWidth(1,nSymbolWidth*9);
+            pTableWidget->setColumnWidth(2,nSymbolWidth*14);
+            pTableWidget->setColumnWidth(3,nSymbolWidth*13);
             break;
     }
 }

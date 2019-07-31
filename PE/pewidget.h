@@ -100,6 +100,7 @@ private:
     XLineEditHEX *lineEdit_IMAGE_NT_HEADERS[N_IMAGE_NT_HEADERS::__data_size];
     XLineEditHEX *lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::__data_size];
     XLineEditHEX *lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::__data_size];
+    XLineEditHEX *lineEdit_TLS[N_IMAGE_TLS::__data_size];
 //    XLineEditHEX *lineEdit_IMAGE_DIRECTORY_ADDRESS[N_IMAGE_DIRECORIES::__data_size];
 //    XLineEditHEX *lineEdit_IMAGE_DIRECTORY_SIZE[N_IMAGE_DIRECORIES::__data_size];
     XLineEditHEX *lineEdit_EXPORT[N_IMAGE_EXPORT::__data_size];
