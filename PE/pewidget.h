@@ -58,7 +58,7 @@ private slots:
     void reloadData();
     void on_tableWidget_Sections_customContextMenuRequested(const QPoint &pos);
     void loadImportLibrary(int nNumber);
-    void loadRelocs(qint64 nOffset);
+    void loadRelocs(int nNumber);
 
     void on_tableWidget_ImportLibraries_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     void on_tableWidget_Relocs_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);

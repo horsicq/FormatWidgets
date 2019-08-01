@@ -1203,8 +1203,15 @@ void PEWidget::reloadData()
 
             if(nCount)
             {
-                ui->tableWidget_Relocs->selectRow(0);
-            }
+                if(ui->tableWidget_Relocs->currentRow()==0)
+                {
+                    loadRelocs(0);
+                }
+                else
+                {
+                    ui->tableWidget_Relocs->selectRow(0);
+                }
+            }            
         }
         else if(nData==SPE::TYPE_TLS)
         {
@@ -1331,8 +1338,10 @@ void PEWidget::loadImportLibrary(int nNumber)
     }
 }
 
-void PEWidget::loadRelocs(qint64 nOffset)
+void PEWidget::loadRelocs(int nNumber)
 {
+    qint64 nOffset=ui->tableWidget_Relocs->item(nNumber,0)->data(Qt::UserRole).toLongLong();
+
     ui->tableWidget_RelocsPositions->setRowCount(0);
 
     XPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
@@ -1368,9 +1377,7 @@ void PEWidget::on_tableWidget_Relocs_currentCellChanged(int currentRow, int curr
 {
     if(currentRow!=-1)
     {
-        qint64 nOffset=ui->tableWidget_Relocs->item(currentRow,0)->data(Qt::UserRole).toLongLong();
-
-        loadRelocs(nOffset);
+        loadRelocs(currentRow);
     }
 }
 
