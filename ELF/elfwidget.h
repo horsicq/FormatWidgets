@@ -39,11 +39,13 @@ public:
     ~ELFWidget();
     virtual void clear();
     virtual void reload();
+
 protected:
     virtual bool _setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition);
     virtual void setReadonly(bool bState);
     virtual void blockSignals(bool bState);
     virtual void adjustHeaderTable(int type,QTableWidget *pTableWidget);
+
 private slots:
     virtual void reloadData();
     void widgetValueChanged(quint64 nValue);

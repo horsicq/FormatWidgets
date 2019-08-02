@@ -768,6 +768,7 @@ void ELFWidget::on_checkBoxReadonly_toggled(bool checked)
 
 void ELFWidget::on_tableWidget_Elf_Shdr_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
 {
+    // TODO
     if(currentRow!=-1)
     {
         qint64 nOffset=ui->tableWidget_Elf_Shdr->item(currentRow,0)->data(Qt::UserRole+SECTION_DATA_OFFSET).toLongLong();
