@@ -1073,11 +1073,11 @@ void PEWidget::reloadData()
         }
         else if(nData==SPE::TYPE_RESOURCE)
         {
-            if(pSubDeviceResource)
-            {
-                pSubDeviceResource->close();
-                delete pSubDeviceResource;
-            }
+//            if(pSubDeviceResource)
+//            {
+//                pSubDeviceResource->close();
+//                delete pSubDeviceResource;
+//            }
 
             ui->treeWidgetResource->clear();
 
