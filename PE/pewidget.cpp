@@ -51,8 +51,6 @@ void PEWidget::clear()
     memset(lineEdit_IMAGE_FILE_HEADER,0,sizeof lineEdit_IMAGE_FILE_HEADER);
     memset(lineEdit_IMAGE_OPTIONAL_HEADER,0,sizeof lineEdit_IMAGE_OPTIONAL_HEADER);
     memset(lineEdit_TLS,0,sizeof lineEdit_TLS);
-//    memset(lineEdit_IMAGE_DIRECTORY_ADDRESS,0,sizeof lineEdit_IMAGE_DIRECTORY_ADDRESS);
-//    memset(lineEdit_IMAGE_DIRECTORY_SIZE,0,sizeof lineEdit_IMAGE_DIRECTORY_SIZE);
     memset(comboBox,0,sizeof comboBox);
     memset(pushButton,0,sizeof pushButton);
     memset(dateTimeEdit,0,sizeof dateTimeEdit);
