@@ -46,15 +46,18 @@ public:
     virtual void clear();
     virtual void setData(QIODevice *pDevice, OPTIONS *pOptions, quint32 nNumber);
     virtual void reload();
+
 protected:
     virtual bool _setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition);
     virtual void setReadonly(bool bState);
     virtual void blockSignals(bool bState);
     virtual void adjustHeaderTable(int type,QTableWidget *pTableWidget);
+
 private slots:
     void on_checkBoxReadonly_toggled(bool checked);
     void reloadData();
     void widgetValueChanged(quint64 nValue);
+
 private:
     Ui::SectionHeaderWidget *ui;
     XLineEditHEX *lineEdit_IMAGE_SECTION_HEADER[N_IMAGE_SECTION_HEADER::__data_size+1];

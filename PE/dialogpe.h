@@ -37,6 +37,7 @@ public:
     explicit DialogPE(QWidget *parent=nullptr);
     ~DialogPE();
     void setData(QIODevice *pDevice,FormatWidget::OPTIONS *pOptions);
+
 private:
     Ui::DialogPE *ui;
 };
