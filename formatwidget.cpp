@@ -79,6 +79,7 @@ QTreeWidgetItem *FormatWidget::createNewItem(int nUserData,QString sTitle)
 int FormatWidget::getSymbolWidth()
 {
     QFontMetrics fm(font());
+
     return fm.width("W");
 }
 

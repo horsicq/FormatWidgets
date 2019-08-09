@@ -99,8 +99,8 @@ public:
         SECTION_DATA_VSIZE
     };
 
-    FormatWidget(QWidget *parent =nullptr);
-    FormatWidget(QIODevice *pDevice,OPTIONS *pOptions,QWidget *parent =nullptr);
+    FormatWidget(QWidget *parent=nullptr);
+    FormatWidget(QIODevice *pDevice,OPTIONS *pOptions,QWidget *parent=nullptr);
     ~FormatWidget();
     virtual void clear()=0;
     void setData(QIODevice *pDevice,OPTIONS *pOptions);
@@ -129,6 +129,7 @@ public:
     virtual void blockSignals(bool bState)=0;
     virtual void adjustHeaderTable(int type,QTableWidget *pTableWidget);
     bool isEdited();
+
 signals:
     void editState(bool bState);
 
