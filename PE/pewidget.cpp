@@ -990,7 +990,14 @@ void PEWidget::reloadData()
 
             if(nCount)
             {
-                ui->tableWidget_Sections->setCurrentCell(0,0);
+                if(ui->tableWidget_Sections->currentRow()==0)
+                {
+                    loadSection(0);
+                }
+                else
+                {
+                    ui->tableWidget_Sections->setCurrentCell(0,0);
+                }
             }
 
             blockSignals(false);
@@ -1363,6 +1370,31 @@ void PEWidget::loadRelocs(int nNumber)
     }
 }
 
+void PEWidget::loadSection(int nNumber)
+{
+    qint64 nOffset=ui->tableWidget_Sections->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_OFFSET).toLongLong();
+    qint64 nSize=ui->tableWidget_Sections->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
+    qint64 nAddress=ui->tableWidget_Sections->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
+    //        qint64 nVSize=ui->tableWidget_Sections->item(currentRow,0)->data(Qt::UserRole+SECTION_DATA_VSIZE).toLongLong();
+
+    if(pSubDeviceSection)
+    {
+        pSubDeviceSection->close();
+        delete pSubDeviceSection;
+    }
+
+    pSubDeviceSection=new SubDevice(getDevice(),nOffset,nSize,this);
+
+    pSubDeviceSection->open(getDevice()->openMode());
+
+    FormatWidget::OPTIONS hexOptions=*getOptions();
+    hexOptions.nImageBase=nAddress;
+
+    ui->widgetSectionHex->setData(pSubDeviceSection,&hexOptions);
+    ui->widgetSectionHex->setEdited(isEdited());
+    connect(ui->widgetSectionHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+}
+
 void PEWidget::on_tableWidget_ImportLibraries_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
 {
     if(currentRow!=-1)
@@ -1508,27 +1540,7 @@ void PEWidget::on_tableWidget_Sections_currentCellChanged(int currentRow, int cu
 {
     if(currentRow!=-1)
     {
-        qint64 nOffset=ui->tableWidget_Sections->item(currentRow,0)->data(Qt::UserRole+SECTION_DATA_OFFSET).toLongLong();
-        qint64 nSize=ui->tableWidget_Sections->item(currentRow,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
-        qint64 nAddress=ui->tableWidget_Sections->item(currentRow,0)->data(Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
-        //        qint64 nVSize=ui->tableWidget_Sections->item(currentRow,0)->data(Qt::UserRole+SECTION_DATA_VSIZE).toLongLong();
-
-        if(pSubDeviceSection)
-        {
-            pSubDeviceSection->close();
-            delete pSubDeviceSection;
-        }
-
-        pSubDeviceSection=new SubDevice(getDevice(),nOffset,nSize,this);
-
-        pSubDeviceSection->open(getDevice()->openMode());
-
-        FormatWidget::OPTIONS hexOptions=*getOptions();
-        hexOptions.nImageBase=nAddress;
-
-        ui->widgetSectionHex->setData(pSubDeviceSection,&hexOptions);
-        ui->widgetSectionHex->setEdited(isEdited());
-        connect(ui->widgetSectionHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+        loadSection(currentRow);
     }
 }
 
