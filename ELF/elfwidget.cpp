@@ -487,7 +487,11 @@ void ELFWidget::reloadData()
                 }
             }
 
-            if(true)
+            if(ui->tableWidget_Elf_Shdr->currentRow()==0)
+            {
+                loadShdr(0);
+            }
+            else
             {
                 ui->tableWidget_Elf_Shdr->setCurrentCell(0,0);
             }
@@ -587,7 +591,14 @@ void ELFWidget::reloadData()
 
             if(true)
             {
-                ui->tableWidget_Elf_Phdr->setCurrentCell(0,0);
+                if(ui->tableWidget_Elf_Phdr->currentRow()==0)
+                {
+                    loadPhdr(0);
+                }
+                else
+                {
+                    ui->tableWidget_Elf_Phdr->setCurrentCell(0,0);
+                }
             }
 
             blockSignals(false);
@@ -771,26 +782,7 @@ void ELFWidget::on_tableWidget_Elf_Shdr_currentCellChanged(int currentRow, int c
     // TODO
     if(currentRow!=-1)
     {
-        qint64 nOffset=ui->tableWidget_Elf_Shdr->item(currentRow,0)->data(Qt::UserRole+SECTION_DATA_OFFSET).toLongLong();
-        qint64 nSize=ui->tableWidget_Elf_Shdr->item(currentRow,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
-        qint64 nAddress=ui->tableWidget_Elf_Shdr->item(currentRow,0)->data(Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
-
-        if(pSubDeviceSection)
-        {
-            pSubDeviceSection->close();
-            delete pSubDeviceSection;
-        }
-
-        pSubDeviceSection=new SubDevice(getDevice(),nOffset,nSize,this);
-
-        pSubDeviceSection->open(getDevice()->openMode());
-
-        FormatWidget::OPTIONS hexOptions=*getOptions();
-        hexOptions.nImageBase=nAddress;
-
-        ui->widgetSectionHex->setData(pSubDeviceSection,&hexOptions);
-        ui->widgetSectionHex->setEdited(isEdited());
-        connect(ui->widgetSectionHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+        loadShdr(currentRow);
     }
 }
 
@@ -798,30 +790,59 @@ void ELFWidget::on_tableWidget_Elf_Phdr_currentCellChanged(int currentRow, int c
 {
     if(currentRow!=-1)
     {
-        qint64 nOffset=ui->tableWidget_Elf_Phdr->item(currentRow,0)->data(Qt::UserRole+SECTION_DATA_OFFSET).toLongLong();
-        qint64 nSize=ui->tableWidget_Elf_Phdr->item(currentRow,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
-        qint64 nAddress=ui->tableWidget_Elf_Phdr->item(currentRow,0)->data(Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
-
-        if(pSubDeviceProgram)
-        {
-            pSubDeviceProgram->close();
-            delete pSubDeviceProgram;
-        }
-
-        pSubDeviceProgram=new SubDevice(getDevice(),nOffset,nSize,this);
-
-        pSubDeviceProgram->open(getDevice()->openMode());
-
-        FormatWidget::OPTIONS hexOptions=*getOptions();
-        hexOptions.nImageBase=nAddress;
-
-        ui->widgetProgramHex->setData(pSubDeviceProgram,&hexOptions);
-        ui->widgetProgramHex->setEdited(isEdited());
-        connect(ui->widgetProgramHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+        loadPhdr(currentRow);
     }
 }
 
 void ELFWidget::on_pushButtonReload_clicked()
 {
     reload();
+}
+
+void ELFWidget::loadShdr(int nNumber)
+{
+    qint64 nOffset=ui->tableWidget_Elf_Shdr->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_OFFSET).toLongLong();
+    qint64 nSize=ui->tableWidget_Elf_Shdr->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
+    qint64 nAddress=ui->tableWidget_Elf_Shdr->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
+
+    if(pSubDeviceSection)
+    {
+        pSubDeviceSection->close();
+        delete pSubDeviceSection;
+    }
+
+    pSubDeviceSection=new SubDevice(getDevice(),nOffset,nSize,this);
+
+    pSubDeviceSection->open(getDevice()->openMode());
+
+    FormatWidget::OPTIONS hexOptions=*getOptions();
+    hexOptions.nImageBase=nAddress;
+
+    ui->widgetSectionHex->setData(pSubDeviceSection,&hexOptions);
+    ui->widgetSectionHex->setEdited(isEdited());
+    connect(ui->widgetSectionHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+}
+
+void ELFWidget::loadPhdr(int nNumber)
+{
+    qint64 nOffset=ui->tableWidget_Elf_Phdr->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_OFFSET).toLongLong();
+    qint64 nSize=ui->tableWidget_Elf_Phdr->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
+    qint64 nAddress=ui->tableWidget_Elf_Phdr->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
+
+    if(pSubDeviceProgram)
+    {
+        pSubDeviceProgram->close();
+        delete pSubDeviceProgram;
+    }
+
+    pSubDeviceProgram=new SubDevice(getDevice(),nOffset,nSize,this);
+
+    pSubDeviceProgram->open(getDevice()->openMode());
+
+    FormatWidget::OPTIONS hexOptions=*getOptions();
+    hexOptions.nImageBase=nAddress;
+
+    ui->widgetProgramHex->setData(pSubDeviceProgram,&hexOptions);
+    ui->widgetProgramHex->setEdited(isEdited());
+    connect(ui->widgetProgramHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
 }

@@ -913,7 +913,7 @@ void PEWidget::reloadData()
 
             blockSignals(true);
 
-            quint32 nNumberOfRvaAndSizes=pe.getOptionalHeader_NumberOfRvaAndSizes();
+//            quint32 nNumberOfRvaAndSizes=pe.getOptionalHeader_NumberOfRvaAndSizes();
 
             for(int i=0; i<16; i++)
             {
@@ -1065,7 +1065,6 @@ void PEWidget::reloadData()
 
             if(nCount)
             {
-                // TODO the same
                 if(ui->tableWidget_ImportLibraries->currentRow()==0)
                 {
                     loadImportLibrary(0);

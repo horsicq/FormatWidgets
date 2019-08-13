@@ -34,7 +34,7 @@ class ELFWidget : public FormatWidget
     Q_OBJECT
 
 public:
-    ELFWidget(QWidget *parent = nullptr);
+    ELFWidget(QWidget *parent=nullptr);
     ELFWidget(QIODevice *pDevice, OPTIONS *pOptions, QWidget *parent = nullptr);
     ~ELFWidget();
     virtual void clear();
@@ -56,6 +56,9 @@ private slots:
     void on_tableWidget_Elf_Phdr_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
 
     void on_pushButtonReload_clicked();
+
+    void loadShdr(int nNumber);
+    void loadPhdr(int nNumber);
 
 private:
     enum CB
