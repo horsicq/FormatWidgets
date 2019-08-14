@@ -38,6 +38,7 @@ public:
     ~DialogBinary();
 
     void setData(QIODevice *pDevice,FormatWidget::OPTIONS *pOptions);
+
 private:
     Ui::DialogBinary *ui;
 };

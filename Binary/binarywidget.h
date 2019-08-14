@@ -34,24 +34,25 @@ class BinaryWidget : public FormatWidget
     Q_OBJECT
 
 public:
-    BinaryWidget(QWidget *parent =nullptr);
-    BinaryWidget(QIODevice *pDevice, OPTIONS *pOptions, QWidget *parent =nullptr);
+    BinaryWidget(QWidget *parent=nullptr);
+    BinaryWidget(QIODevice *pDevice, OPTIONS *pOptions, QWidget *parent=nullptr);
     ~BinaryWidget();
     virtual void clear();
     virtual void reload();
+
 protected:
     virtual bool _setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition);
     virtual void setReadonly(bool bState);
     virtual void blockSignals(bool bState);
     virtual void adjustHeaderTable(int type,QTableWidget *pTableWidget);
+
 private slots:
     virtual void reloadData();
     void widgetValueChanged(quint64 nValue);
     void on_checkBoxReadonly_toggled(bool checked);
+
 private:
-
     Ui::BinaryWidget *ui;
-
     bool bInit;
 };
 

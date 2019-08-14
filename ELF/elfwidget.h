@@ -35,7 +35,7 @@ class ELFWidget : public FormatWidget
 
 public:
     ELFWidget(QWidget *parent=nullptr);
-    ELFWidget(QIODevice *pDevice, OPTIONS *pOptions, QWidget *parent = nullptr);
+    ELFWidget(QIODevice *pDevice, OPTIONS *pOptions, QWidget *parent=nullptr);
     ~ELFWidget();
     virtual void clear();
     virtual void reload();

@@ -38,6 +38,7 @@ public:
     ~DialogMACH();
 
     void setData(QIODevice *pDevice,FormatWidget::OPTIONS *pOptions);
+
 private:
     Ui::DialogMACH *ui;
 };

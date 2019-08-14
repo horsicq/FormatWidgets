@@ -38,6 +38,7 @@ public:
     ~DialogELF();
 
     void setData(QIODevice *pDevice,FormatWidget::OPTIONS *pOptions);
+
 private:
     Ui::DialogELF *ui;
 };

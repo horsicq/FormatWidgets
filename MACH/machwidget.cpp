@@ -419,24 +419,25 @@ void MACHWidget::reloadData()
 
                 if(bIs64)
                 {
-                    ui->tableWidget_sections->setItem(i,N_mach_sections::addr+1,     new QTableWidgetItem(XBinary::valueToHex((quint64)listSectionRecords.at(i).addr)));
-                    ui->tableWidget_sections->setItem(i,N_mach_sections::size+1,     new QTableWidgetItem(XBinary::valueToHex((quint64)listSectionRecords.at(i).size)));
+                    ui->tableWidget_sections->setItem(i,N_mach_sections::addr+1,    new QTableWidgetItem(XBinary::valueToHex((quint64)listSectionRecords.at(i).addr)));
+                    ui->tableWidget_sections->setItem(i,N_mach_sections::size+1,    new QTableWidgetItem(XBinary::valueToHex((quint64)listSectionRecords.at(i).size)));
                 }
                 else
                 {
-                    ui->tableWidget_sections->setItem(i,N_mach_sections::addr+1,     new QTableWidgetItem(XBinary::valueToHex((quint32)listSectionRecords.at(i).addr)));
-                    ui->tableWidget_sections->setItem(i,N_mach_sections::size+1,     new QTableWidgetItem(XBinary::valueToHex((quint32)listSectionRecords.at(i).size)));
+                    ui->tableWidget_sections->setItem(i,N_mach_sections::addr+1,    new QTableWidgetItem(XBinary::valueToHex((quint32)listSectionRecords.at(i).addr)));
+                    ui->tableWidget_sections->setItem(i,N_mach_sections::size+1,    new QTableWidgetItem(XBinary::valueToHex((quint32)listSectionRecords.at(i).size)));
                 }
 
-                ui->tableWidget_sections->setItem(i,N_mach_sections::offset+1,     new QTableWidgetItem(XBinary::valueToHex((quint32)listSectionRecords.at(i).offset)));
-                ui->tableWidget_sections->setItem(i,N_mach_sections::align+1,     new QTableWidgetItem(XBinary::valueToHex((quint32)listSectionRecords.at(i).align)));
-                ui->tableWidget_sections->setItem(i,N_mach_sections::reloff+1,     new QTableWidgetItem(XBinary::valueToHex((quint32)listSectionRecords.at(i).reloff)));
-                ui->tableWidget_sections->setItem(i,N_mach_sections::nreloc+1,     new QTableWidgetItem(XBinary::valueToHex((quint32)listSectionRecords.at(i).nreloc)));
-                ui->tableWidget_sections->setItem(i,N_mach_sections::flags+1,     new QTableWidgetItem(XBinary::valueToHex((quint32)listSectionRecords.at(i).flags)));
+                ui->tableWidget_sections->setItem(i,N_mach_sections::offset+1,      new QTableWidgetItem(XBinary::valueToHex((quint32)listSectionRecords.at(i).offset)));
+                ui->tableWidget_sections->setItem(i,N_mach_sections::align+1,       new QTableWidgetItem(XBinary::valueToHex((quint32)listSectionRecords.at(i).align)));
+                ui->tableWidget_sections->setItem(i,N_mach_sections::reloff+1,      new QTableWidgetItem(XBinary::valueToHex((quint32)listSectionRecords.at(i).reloff)));
+                ui->tableWidget_sections->setItem(i,N_mach_sections::nreloc+1,      new QTableWidgetItem(XBinary::valueToHex((quint32)listSectionRecords.at(i).nreloc)));
+                ui->tableWidget_sections->setItem(i,N_mach_sections::flags+1,       new QTableWidgetItem(XBinary::valueToHex((quint32)listSectionRecords.at(i).flags)));
             }
 
             if(nCount)
             {
+                // TODO
                 ui->tableWidget_sections->setCurrentCell(0,0);
             }
 
