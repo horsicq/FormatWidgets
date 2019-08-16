@@ -38,6 +38,7 @@ public:
     ~DialogMSDOS();
 
     void setData(QIODevice *pDevice,FormatWidget::OPTIONS *pOptions);
+
 private:
     Ui::DialogMSDOS *ui;
 };

@@ -55,8 +55,10 @@ private slots:
     void on_tableWidget_commands_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     void on_pushButtonReload_clicked();
     void on_tableWidget_segments_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
-
     void on_tableWidget_sections_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
+    void loadCommand(int nNumber);
+    void loadSegment(int nNumber);
+    void loadSection(int nNumber);
 
 private:
     enum CB

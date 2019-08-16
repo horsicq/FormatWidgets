@@ -37,6 +37,7 @@
 class FormatWidget : public QWidget
 {
     Q_OBJECT
+
 public:
     struct OPTIONS
     {

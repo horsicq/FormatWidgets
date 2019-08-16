@@ -309,7 +309,14 @@ void MACHWidget::reloadData()
 
             if(nCount)
             {
-                ui->tableWidget_commands->setCurrentCell(0,0);
+                if(ui->tableWidget_commands->currentRow()==0)
+                {
+                    loadCommand(0);
+                }
+                else
+                {
+                    ui->tableWidget_commands->setCurrentCell(0,0);
+                }
             }
 
             blockSignals(false);
@@ -348,34 +355,40 @@ void MACHWidget::reloadData()
 
                 pItem->setData(Qt::UserRole+SECTION_DATA_ADDRESS,listSegmentRecords.at(i).vmaddr);
 
-                ui->tableWidget_segments->setItem(i,0,                              pItem);
-                ui->tableWidget_segments->setItem(i,N_mach_segments::segname+1,     new QTableWidgetItem(listSegmentRecords.at(i).segname));
+                ui->tableWidget_segments->setItem(i,0,                                  pItem);
+                ui->tableWidget_segments->setItem(i,N_mach_segments::segname+1,         new QTableWidgetItem(listSegmentRecords.at(i).segname));
 
                 if(bIs64)
                 {
-                    ui->tableWidget_segments->setItem(i,N_mach_segments::vmaddr+1,     new QTableWidgetItem(XBinary::valueToHex((quint64)listSegmentRecords.at(i).vmaddr)));
-                    ui->tableWidget_segments->setItem(i,N_mach_segments::vmsize+1,     new QTableWidgetItem(XBinary::valueToHex((quint64)listSegmentRecords.at(i).vmsize)));
+                    ui->tableWidget_segments->setItem(i,N_mach_segments::vmaddr+1,      new QTableWidgetItem(XBinary::valueToHex((quint64)listSegmentRecords.at(i).vmaddr)));
+                    ui->tableWidget_segments->setItem(i,N_mach_segments::vmsize+1,      new QTableWidgetItem(XBinary::valueToHex((quint64)listSegmentRecords.at(i).vmsize)));
                     ui->tableWidget_segments->setItem(i,N_mach_segments::fileoff+1,     new QTableWidgetItem(XBinary::valueToHex((quint64)listSegmentRecords.at(i).fileoff)));
-                    ui->tableWidget_segments->setItem(i,N_mach_segments::filesize+1,     new QTableWidgetItem(XBinary::valueToHex((quint64)listSegmentRecords.at(i).filesize)));
+                    ui->tableWidget_segments->setItem(i,N_mach_segments::filesize+1,    new QTableWidgetItem(XBinary::valueToHex((quint64)listSegmentRecords.at(i).filesize)));
                 }
                 else
                 {
-                    ui->tableWidget_segments->setItem(i,N_mach_segments::vmaddr+1,     new QTableWidgetItem(XBinary::valueToHex((quint32)listSegmentRecords.at(i).vmaddr)));
-                    ui->tableWidget_segments->setItem(i,N_mach_segments::vmsize+1,     new QTableWidgetItem(XBinary::valueToHex((quint32)listSegmentRecords.at(i).vmsize)));
+                    ui->tableWidget_segments->setItem(i,N_mach_segments::vmaddr+1,      new QTableWidgetItem(XBinary::valueToHex((quint32)listSegmentRecords.at(i).vmaddr)));
+                    ui->tableWidget_segments->setItem(i,N_mach_segments::vmsize+1,      new QTableWidgetItem(XBinary::valueToHex((quint32)listSegmentRecords.at(i).vmsize)));
                     ui->tableWidget_segments->setItem(i,N_mach_segments::fileoff+1,     new QTableWidgetItem(XBinary::valueToHex((quint32)listSegmentRecords.at(i).fileoff)));
-                    ui->tableWidget_segments->setItem(i,N_mach_segments::filesize+1,     new QTableWidgetItem(XBinary::valueToHex((quint32)listSegmentRecords.at(i).filesize)));
+                    ui->tableWidget_segments->setItem(i,N_mach_segments::filesize+1,    new QTableWidgetItem(XBinary::valueToHex((quint32)listSegmentRecords.at(i).filesize)));
                 }
 
-                ui->tableWidget_segments->setItem(i,N_mach_segments::maxprot+1,     new QTableWidgetItem(XBinary::valueToHex((quint32)listSegmentRecords.at(i).maxprot)));
-                ui->tableWidget_segments->setItem(i,N_mach_segments::initprot+1,     new QTableWidgetItem(XBinary::valueToHex((quint32)listSegmentRecords.at(i).initprot)));
-                ui->tableWidget_segments->setItem(i,N_mach_segments::nsects+1,     new QTableWidgetItem(XBinary::valueToHex((quint32)listSegmentRecords.at(i).nsects)));
-                ui->tableWidget_segments->setItem(i,N_mach_segments::flags+1,     new QTableWidgetItem(XBinary::valueToHex((quint32)listSegmentRecords.at(i).flags)));
-
+                ui->tableWidget_segments->setItem(i,N_mach_segments::maxprot+1,         new QTableWidgetItem(XBinary::valueToHex((quint32)listSegmentRecords.at(i).maxprot)));
+                ui->tableWidget_segments->setItem(i,N_mach_segments::initprot+1,        new QTableWidgetItem(XBinary::valueToHex((quint32)listSegmentRecords.at(i).initprot)));
+                ui->tableWidget_segments->setItem(i,N_mach_segments::nsects+1,          new QTableWidgetItem(XBinary::valueToHex((quint32)listSegmentRecords.at(i).nsects)));
+                ui->tableWidget_segments->setItem(i,N_mach_segments::flags+1,           new QTableWidgetItem(XBinary::valueToHex((quint32)listSegmentRecords.at(i).flags)));
             }
 
             if(nCount)
             {
-                ui->tableWidget_segments->setCurrentCell(0,0);
+                if(ui->tableWidget_segments->currentRow()==0)
+                {
+                    loadSegment(0);
+                }
+                else
+                {
+                    ui->tableWidget_segments->setCurrentCell(0,0);
+                }
             }
 
             blockSignals(false);
@@ -437,8 +450,14 @@ void MACHWidget::reloadData()
 
             if(nCount)
             {
-                // TODO
-                ui->tableWidget_sections->setCurrentCell(0,0);
+                if(ui->tableWidget_sections->currentRow()==0)
+                {
+                    loadSection(0);
+                }
+                else
+                {
+                    ui->tableWidget_sections->setCurrentCell(0,0);
+                }
             }
 
             blockSignals(false);
@@ -604,25 +623,7 @@ void MACHWidget::on_tableWidget_commands_currentCellChanged(int currentRow, int 
 {
     if(currentRow!=-1)
     {
-        qint64 nOffset=ui->tableWidget_commands->item(currentRow,0)->data(Qt::UserRole+SECTION_DATA_OFFSET).toLongLong();
-        qint64 nSize=ui->tableWidget_commands->item(currentRow,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
-        qint64 nAddress=ui->tableWidget_commands->item(currentRow,0)->data(Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
-
-        if(pSubDeviceCommand)
-        {
-            pSubDeviceCommand->close();
-            delete pSubDeviceCommand;
-        }
-
-        pSubDeviceCommand=new SubDevice(getDevice(),nOffset,nSize,this);
-        pSubDeviceCommand->open(getDevice()->openMode());
-
-        FormatWidget::OPTIONS hexOptions=*getOptions();
-        hexOptions.nImageBase=nAddress;
-
-        ui->widgetCommandHex->setData(pSubDeviceCommand,&hexOptions);
-        ui->widgetCommandHex->setEdited(isEdited());
-        connect(ui->widgetCommandHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+        loadCommand(currentRow);
     }
 }
 
@@ -635,25 +636,7 @@ void MACHWidget::on_tableWidget_segments_currentCellChanged(int currentRow, int 
 {
     if(currentRow!=-1)
     {
-        qint64 nOffset=ui->tableWidget_segments->item(currentRow,0)->data(Qt::UserRole+SECTION_DATA_OFFSET).toLongLong();
-        qint64 nSize=ui->tableWidget_segments->item(currentRow,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
-        qint64 nAddress=ui->tableWidget_segments->item(currentRow,0)->data(Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
-
-        if(pSubDeviceSegment)
-        {
-            pSubDeviceSegment->close();
-            delete pSubDeviceSegment;
-        }
-
-        pSubDeviceSegment=new SubDevice(getDevice(),nOffset,nSize,this);
-        pSubDeviceSegment->open(getDevice()->openMode());
-
-        FormatWidget::OPTIONS hexOptions=*getOptions();
-        hexOptions.nImageBase=nAddress;
-
-        ui->widgetSegmentHex->setData(pSubDeviceSegment,&hexOptions);
-        ui->widgetSegmentHex->setEdited(isEdited());
-        connect(ui->widgetSegmentHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+        loadSegment(currentRow);
     }
 }
 
@@ -661,24 +644,75 @@ void MACHWidget::on_tableWidget_sections_currentCellChanged(int currentRow, int 
 {
     if(currentRow!=-1)
     {
-        qint64 nOffset=ui->tableWidget_sections->item(currentRow,0)->data(Qt::UserRole+SECTION_DATA_OFFSET).toLongLong();
-        qint64 nSize=ui->tableWidget_sections->item(currentRow,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
-        qint64 nAddress=ui->tableWidget_sections->item(currentRow,0)->data(Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
-
-        if(pSubDeviceSection)
-        {
-            pSubDeviceSection->close();
-            delete pSubDeviceSection;
-        }
-
-        pSubDeviceSection=new SubDevice(getDevice(),nOffset,nSize,this);
-        pSubDeviceSection->open(getDevice()->openMode());
-
-        FormatWidget::OPTIONS hexOptions=*getOptions();
-        hexOptions.nImageBase=nAddress;
-
-        ui->widgetSectionHex->setData(pSubDeviceSection,&hexOptions);
-        ui->widgetSectionHex->setEdited(isEdited());
-        connect(ui->widgetSectionHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+        loadSection(currentRow);
     }
+}
+
+void MACHWidget::loadCommand(int nNumber)
+{
+    qint64 nOffset=ui->tableWidget_commands->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_OFFSET).toLongLong();
+    qint64 nSize=ui->tableWidget_commands->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
+    qint64 nAddress=ui->tableWidget_commands->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
+
+    if(pSubDeviceCommand)
+    {
+        pSubDeviceCommand->close();
+        delete pSubDeviceCommand;
+    }
+
+    pSubDeviceCommand=new SubDevice(getDevice(),nOffset,nSize,this);
+    pSubDeviceCommand->open(getDevice()->openMode());
+
+    FormatWidget::OPTIONS hexOptions=*getOptions();
+    hexOptions.nImageBase=nAddress;
+
+    ui->widgetCommandHex->setData(pSubDeviceCommand,&hexOptions);
+    ui->widgetCommandHex->setEdited(isEdited());
+    connect(ui->widgetCommandHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+}
+
+void MACHWidget::loadSegment(int nNumber)
+{
+    qint64 nOffset=ui->tableWidget_segments->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_OFFSET).toLongLong();
+    qint64 nSize=ui->tableWidget_segments->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
+    qint64 nAddress=ui->tableWidget_segments->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
+
+    if(pSubDeviceSegment)
+    {
+        pSubDeviceSegment->close();
+        delete pSubDeviceSegment;
+    }
+
+    pSubDeviceSegment=new SubDevice(getDevice(),nOffset,nSize,this);
+    pSubDeviceSegment->open(getDevice()->openMode());
+
+    FormatWidget::OPTIONS hexOptions=*getOptions();
+    hexOptions.nImageBase=nAddress;
+
+    ui->widgetSegmentHex->setData(pSubDeviceSegment,&hexOptions);
+    ui->widgetSegmentHex->setEdited(isEdited());
+    connect(ui->widgetSegmentHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+}
+
+void MACHWidget::loadSection(int nNumber)
+{
+    qint64 nOffset=ui->tableWidget_sections->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_OFFSET).toLongLong();
+    qint64 nSize=ui->tableWidget_sections->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
+    qint64 nAddress=ui->tableWidget_sections->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
+
+    if(pSubDeviceSection)
+    {
+        pSubDeviceSection->close();
+        delete pSubDeviceSection;
+    }
+
+    pSubDeviceSection=new SubDevice(getDevice(),nOffset,nSize,this);
+    pSubDeviceSection->open(getDevice()->openMode());
+
+    FormatWidget::OPTIONS hexOptions=*getOptions();
+    hexOptions.nImageBase=nAddress;
+
+    ui->widgetSectionHex->setData(pSubDeviceSection,&hexOptions);
+    ui->widgetSectionHex->setEdited(isEdited());
+    connect(ui->widgetSectionHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
 }

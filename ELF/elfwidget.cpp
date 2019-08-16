@@ -487,13 +487,16 @@ void ELFWidget::reloadData()
                 }
             }
 
-            if(ui->tableWidget_Elf_Shdr->currentRow()==0)
+            if(nCount)
             {
-                loadShdr(0);
-            }
-            else
-            {
-                ui->tableWidget_Elf_Shdr->setCurrentCell(0,0);
+                if(ui->tableWidget_Elf_Shdr->currentRow()==0)
+                {
+                    loadShdr(0);
+                }
+                else
+                {
+                    ui->tableWidget_Elf_Shdr->setCurrentCell(0,0);
+                }
             }
 
             blockSignals(false);
@@ -589,7 +592,7 @@ void ELFWidget::reloadData()
                 }
             }
 
-            if(true)
+            if(nCount)
             {
                 if(ui->tableWidget_Elf_Phdr->currentRow()==0)
                 {
@@ -637,6 +640,7 @@ void ELFWidget::reloadData()
 
             if(nCount)
             {
+                // TODO
                 ui->tableWidget_DynamicArrayTags->setCurrentCell(0,0);
             }
 
