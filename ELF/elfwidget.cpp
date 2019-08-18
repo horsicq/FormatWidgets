@@ -783,7 +783,6 @@ void ELFWidget::on_checkBoxReadonly_toggled(bool checked)
 
 void ELFWidget::on_tableWidget_Elf_Shdr_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
 {
-    // TODO
     if(currentRow!=-1)
     {
         loadShdr(currentRow);

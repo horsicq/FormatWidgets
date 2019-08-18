@@ -72,9 +72,6 @@ void MSDOSWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_TOOLS,tr("Tools")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_DOS_HEADER,"DOS_HEADER"));
 
-        // TODO Sections
-        // TODO Programs
-
         ui->treeWidgetNavi->expandAll();
 
         ui->treeWidgetNavi->setCurrentItem(ui->treeWidgetNavi->topLevelItem(1));

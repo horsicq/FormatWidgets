@@ -68,11 +68,9 @@ void MACHWidget::reload()
 
     if(mach.isValid())
     {
-        // mb TODO 32/64
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_TOOLS,tr("Tools")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_mach_header,mach.is64()?("mach_header_64"):("mach_header")));
 
-        // TODO Commands
         QList<XMACH::COMMAND_RECORD> listCommandRecords=mach.getCommandRecords();
 
         if(listCommandRecords.count())
@@ -479,7 +477,6 @@ void MACHWidget::reloadData()
 
             for(int i=0; i<nCount; i++)
             {
-                // TODO
                 ui->tableWidget_libraries->setItem(i,N_mach_libraries::timestamp,                   new QTableWidgetItem(XBinary::valueToHex(listLibraries.at(i).timestamp)));
                 ui->tableWidget_libraries->setItem(i,N_mach_libraries::current_version,             new QTableWidgetItem(XBinary::valueToHex(listLibraries.at(i).current_version)));
                 ui->tableWidget_libraries->setItem(i,N_mach_libraries::compatibility_version,       new QTableWidgetItem(XBinary::valueToHex(listLibraries.at(i).compatibility_version)));
@@ -573,7 +570,7 @@ bool MACHWidget::createSectionTable(int type, QTableWidget *pTableWidget, const 
             slHeader.append(tr(""));
             pTableWidget->setColumnCount(nRecordCount+1);
             pTableWidget->setColumnWidth(0,nSymbolWidth*4);
-            pTableWidget->setColumnWidth(1,nSymbolWidth*8);
+            pTableWidget->setColumnWidth(1,nSymbolWidth*10);
             pTableWidget->setColumnWidth(2,nSymbolWidth*8);
             pTableWidget->setColumnWidth(3,nSymbolWidth*12);
             pTableWidget->setColumnWidth(4,nSymbolWidth*12);
