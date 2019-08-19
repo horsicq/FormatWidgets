@@ -40,7 +40,7 @@ public:
         CB_ALIGH,
         __CB_size
     };
-    SectionHeaderWidget(QWidget *parent =nullptr);
+    SectionHeaderWidget(QWidget *parent=nullptr);
     SectionHeaderWidget(QIODevice *pDevice, OPTIONS *pOptions, quint32 nNumber, QWidget *parent =nullptr);
     ~SectionHeaderWidget();
     virtual void clear();

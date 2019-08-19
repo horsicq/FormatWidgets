@@ -37,7 +37,7 @@ class PEWidget : public FormatWidget
 
 public:
     PEWidget(QWidget *parent=nullptr);
-    PEWidget(QIODevice *pDevice, OPTIONS *pOptions, QWidget *parent =nullptr);
+    PEWidget(QIODevice *pDevice, OPTIONS *pOptions, QWidget *parent=nullptr);
     ~PEWidget();
     virtual void clear();
     virtual void reload();
@@ -94,7 +94,6 @@ private:
         __DT_size
     };
 
-private:
     Ui::PEWidget *ui;
 
     XLineEditHEX *lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::__data_size];

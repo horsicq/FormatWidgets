@@ -50,7 +50,6 @@ enum TYPE
 };
 }
 
-
 namespace N_IMAGE_DOS_HEADER
 {
 enum DATA
