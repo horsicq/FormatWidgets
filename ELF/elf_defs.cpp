@@ -165,4 +165,3 @@ const FormatWidget::HEADER_RECORD records64[]=
     {d_value,               "d_value",              8,      "Elf64_Addr",           FormatWidget::VAL_TYPE_ADDRESS},
 };
 }
-
