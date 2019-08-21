@@ -66,11 +66,17 @@ void BinaryWidget::reload()
 
 bool BinaryWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition)
 {
+    Q_UNUSED(vValue)
+    Q_UNUSED(nStype)
+    Q_UNUSED(nNdata)
+    Q_UNUSED(nVtype)
+    Q_UNUSED(nPosition)
+
     bool bResult=false;
 
     blockSignals(true);
 
-    quint64 nValue=vValue.toULongLong();
+//    quint64 nValue=vValue.toULongLong();
 
     if(getDevice()->isWritable())
     {
@@ -89,12 +95,14 @@ void BinaryWidget::setReadonly(bool bState)
 
 void BinaryWidget::blockSignals(bool bState)
 {
-
+    Q_UNUSED(bState)
 }
 
 void BinaryWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
 {
-    int nSymbolWidth=getSymbolWidth();
+    Q_UNUSED(type)
+    Q_UNUSED(pTableWidget)
+//    int nSymbolWidth=getSymbolWidth();
 }
 
 void BinaryWidget::reloadData()
@@ -118,9 +126,10 @@ void BinaryWidget::reloadData()
 
 void BinaryWidget::widgetValueChanged(quint64 nValue)
 {
-    QWidget *pWidget=qobject_cast<QWidget *>(sender());
-    int nStype=pWidget->property("STYPE").toInt();
-    int nNdata=pWidget->property("NDATA").toInt();
+    Q_UNUSED(nValue)
+//    QWidget *pWidget=qobject_cast<QWidget *>(sender());
+//    int nStype=pWidget->property("STYPE").toInt();
+//    int nNdata=pWidget->property("NDATA").toInt();
 }
 
 void BinaryWidget::on_checkBoxReadonly_toggled(bool checked)
