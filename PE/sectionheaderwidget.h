@@ -41,7 +41,7 @@ public:
         __CB_size
     };
     SectionHeaderWidget(QWidget *parent=nullptr);
-    SectionHeaderWidget(QIODevice *pDevice, OPTIONS *pOptions, quint32 nNumber, QWidget *parent =nullptr);
+    SectionHeaderWidget(QIODevice *pDevice, OPTIONS *pOptions, quint32 nNumber, QWidget *parent=nullptr);
     ~SectionHeaderWidget();
     virtual void clear();
     virtual void setData(QIODevice *pDevice, OPTIONS *pOptions, quint32 nNumber);

@@ -115,6 +115,11 @@ void PEWidget::reload()
             ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_TLS,"TLS"));
         }
 
+        if(pe.isLoadConfigPresent())
+        {
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_LOADCONFIG,"Load Config"));
+        }
+
         if(pe.isOverlayPresent())
         {
             ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_OVERLAY,tr("Overlay")));
@@ -1181,6 +1186,8 @@ void PEWidget::reloadData()
         else if(nData==SPE::TYPE_EXCEPTION)
         {
             // TODO !!!
+            blockSignals(true);
+            blockSignals(false);
         }
         else if(nData==SPE::TYPE_RELOCS)
         {
@@ -1247,6 +1254,12 @@ void PEWidget::reloadData()
                 lineEdit_TLS[N_IMAGE_TLS::Characteristics]->setValue(tls32.Characteristics);
             }
 
+            blockSignals(false);
+        }
+        else if(nData==SPE::TYPE_TLS)
+        {
+            // TODO
+            blockSignals(true);
             blockSignals(false);
         }
         else if(nData==SPE::TYPE_OVERLAY)

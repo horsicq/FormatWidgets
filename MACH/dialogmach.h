@@ -34,7 +34,7 @@ class DialogMACH : public QDialog
     Q_OBJECT
 
 public:
-    explicit DialogMACH(QWidget *parent =nullptr);
+    explicit DialogMACH(QWidget *parent=nullptr);
     ~DialogMACH();
 
     void setData(QIODevice *pDevice,FormatWidget::OPTIONS *pOptions);
