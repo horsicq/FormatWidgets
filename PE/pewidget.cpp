@@ -1256,7 +1256,7 @@ void PEWidget::reloadData()
 
             blockSignals(false);
         }
-        else if(nData==SPE::TYPE_TLS)
+        else if(nData==SPE::TYPE_LOADCONFIG)
         {
             // TODO
             blockSignals(true);
