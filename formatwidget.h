@@ -46,7 +46,7 @@ public:
         qint64 nImageBase; // TODO default_const
     };
 
-    enum VAL_TYPE
+    enum VAL_TYPE // TODO TIME
     {
         VAL_TYPE_UNKNOWN=0,
         VAL_TYPE_DATA,

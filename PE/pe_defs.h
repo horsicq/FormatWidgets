@@ -178,6 +178,22 @@ extern const FormatWidget::HEADER_RECORD records32[__data_size];
 extern const FormatWidget::HEADER_RECORD records64[__data_size];
 }
 
+namespace N_IMAGE_LOADCONFIG
+{
+enum DATA
+{
+    Size=0,
+    TimeDateStamp,
+    MajorVersion,
+    MinorVersion,
+    // TODO
+    __data_size
+};
+
+extern const FormatWidget::HEADER_RECORD records32[__data_size];
+extern const FormatWidget::HEADER_RECORD records64[__data_size];
+}
+
 namespace N_IMAGE_DIRECORIES
 {
 enum DATA

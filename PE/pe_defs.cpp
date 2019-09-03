@@ -172,6 +172,24 @@ const FormatWidget::HEADER_RECORD records64[]=
 };
 }
 
+namespace N_IMAGE_LOADCONFIG
+{
+const FormatWidget::HEADER_RECORD records32[]=
+{
+    {Size,                          "Size",                         4,      "DWORD",        FormatWidget::VAL_TYPE_SIZE},
+    {TimeDateStamp,                 "TimeDateStamp",                4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {MajorVersion,                  "MajorVersion",                 2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
+    {MinorVersion,                  "MinorVersion",                 2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
+};
+const FormatWidget::HEADER_RECORD records64[]=
+{
+    {Size,                          "Size",                         4,      "DWORD",        FormatWidget::VAL_TYPE_SIZE},
+    {TimeDateStamp,                 "TimeDateStamp",                4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {MajorVersion,                  "MajorVersion",                 2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
+    {MinorVersion,                  "MinorVersion",                 2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
+};
+}
+
 namespace N_IMAGE_DIRECORIES
 {
 const FormatWidget::DIRECTORY_ENTRY_RECORD records[]=
