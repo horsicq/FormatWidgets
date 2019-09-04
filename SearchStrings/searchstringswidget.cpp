@@ -63,7 +63,6 @@ void SearchStringsWidget::setData(QIODevice *pDevice, SearchStrings::OPTIONS *pO
         options.nBaseAddress=0;
     }
 
-
     if(nSize+options.nBaseAddress>0xFFFFFFFF)
     {
         options.nAddressWidth=16;

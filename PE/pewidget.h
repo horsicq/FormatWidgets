@@ -101,6 +101,7 @@ private:
     XLineEditHEX *lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::__data_size];
     XLineEditHEX *lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::__data_size];
     XLineEditHEX *lineEdit_TLS[N_IMAGE_TLS::__data_size];
+    XLineEditHEX *lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::__data_size];
     XLineEditHEX *lineEdit_EXPORT[N_IMAGE_EXPORT::__data_size];
     XComboBoxEx *comboBox[__CB_size];
     QPushButton *pushButton[__PB_size];
