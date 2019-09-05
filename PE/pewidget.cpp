@@ -541,6 +541,26 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                             break;
                     }
                     break;
+                case SPE::TYPE_LOADCONFIG:
+                    switch(nNdata)
+                    {
+                        case N_IMAGE_LOADCONFIG::Size:
+                            pe.setLoadConfig_Size((quint32)nValue);
+                            break;
+
+                        case N_IMAGE_LOADCONFIG::TimeDateStamp:
+                            pe.setLoadConfig_TimeDateStamp((quint32)nValue);
+                            break;
+
+                        case N_IMAGE_LOADCONFIG::MinorVersion:
+                            pe.setLoadConfig_MinorVersion((quint16)nValue);
+                            break;
+
+                        case N_IMAGE_LOADCONFIG::MajorVersion:
+                            pe.setLoadConfig_MajorVersion((quint16)nValue);
+                            break;
+                    }
+                    break;
             }
 
             bResult=true;
@@ -1267,6 +1287,24 @@ void PEWidget::reloadData()
             }
 
             blockSignals(true);
+
+            if(pe.is64())
+            {
+                XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64 lc64=pe.getLoadConfigDirectory64();
+                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::Size]->setValue(lc64.Size);
+                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::TimeDateStamp]->setValue(lc64.TimeDateStamp);
+                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::MinorVersion]->setValue(lc64.MinorVersion);
+                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::MajorVersion]->setValue(lc64.MajorVersion);
+            }
+            else
+            {
+                XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32 lc32=pe.getLoadConfigDirectory32();
+                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::Size]->setValue(lc32.Size);
+                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::TimeDateStamp]->setValue(lc32.TimeDateStamp);
+                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::MinorVersion]->setValue(lc32.MinorVersion);
+                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::MajorVersion]->setValue(lc32.MajorVersion);
+            }
+
             blockSignals(false);
         }
         else if(nData==SPE::TYPE_OVERLAY)
