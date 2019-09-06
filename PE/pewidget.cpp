@@ -559,6 +559,18 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                         case N_IMAGE_LOADCONFIG::MajorVersion:
                             pe.setLoadConfig_MajorVersion((quint16)nValue);
                             break;
+
+                        case N_IMAGE_LOADCONFIG::GlobalFlagsClear:
+                            pe.setLoadConfig_GlobalFlagsClear((quint32)nValue);
+                            break;
+
+                        case N_IMAGE_LOADCONFIG::GlobalFlagsSet:
+                            pe.setLoadConfig_GlobalFlagsSet((quint32)nValue);
+                            break;
+
+                        case N_IMAGE_LOADCONFIG::CriticalSectionDefaultTimeout:
+                            pe.setLoadConfig_CriticalSectionDefaultTimeout((quint32)nValue);
+                            break;
                     }
                     break;
             }
@@ -1295,6 +1307,9 @@ void PEWidget::reloadData()
                 lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::TimeDateStamp]->setValue(lc64.TimeDateStamp);
                 lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::MinorVersion]->setValue(lc64.MinorVersion);
                 lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::MajorVersion]->setValue(lc64.MajorVersion);
+                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GlobalFlagsClear]->setValue(lc64.GlobalFlagsClear);
+                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GlobalFlagsSet]->setValue(lc64.GlobalFlagsSet);
+                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CriticalSectionDefaultTimeout]->setValue(lc64.CriticalSectionDefaultTimeout);
             }
             else
             {
@@ -1303,6 +1318,9 @@ void PEWidget::reloadData()
                 lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::TimeDateStamp]->setValue(lc32.TimeDateStamp);
                 lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::MinorVersion]->setValue(lc32.MinorVersion);
                 lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::MajorVersion]->setValue(lc32.MajorVersion);
+                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GlobalFlagsClear]->setValue(lc32.GlobalFlagsClear);
+                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GlobalFlagsSet]->setValue(lc32.GlobalFlagsSet);
+                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CriticalSectionDefaultTimeout]->setValue(lc32.CriticalSectionDefaultTimeout);
             }
 
             blockSignals(false);

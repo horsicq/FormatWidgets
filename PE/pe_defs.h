@@ -186,6 +186,9 @@ enum DATA
     TimeDateStamp,
     MajorVersion,
     MinorVersion,
+    GlobalFlagsClear,
+    GlobalFlagsSet,
+    CriticalSectionDefaultTimeout,
     // TODO
     __data_size
 };

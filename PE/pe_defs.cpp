@@ -180,6 +180,9 @@ const FormatWidget::HEADER_RECORD records32[]=
     {TimeDateStamp,                 "TimeDateStamp",                4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
     {MajorVersion,                  "MajorVersion",                 2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
     {MinorVersion,                  "MinorVersion",                 2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
+    {GlobalFlagsClear,              "GlobalFlagsClear",             4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {GlobalFlagsSet,                "GlobalFlagsSet",               4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {CriticalSectionDefaultTimeout, "CriticalSectionDefaultTimeout",4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
 };
 const FormatWidget::HEADER_RECORD records64[]=
 {
@@ -187,6 +190,9 @@ const FormatWidget::HEADER_RECORD records64[]=
     {TimeDateStamp,                 "TimeDateStamp",                4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
     {MajorVersion,                  "MajorVersion",                 2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
     {MinorVersion,                  "MinorVersion",                 2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
+    {GlobalFlagsClear,              "GlobalFlagsClear",             4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {GlobalFlagsSet,                "GlobalFlagsSet",               4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {CriticalSectionDefaultTimeout, "CriticalSectionDefaultTimeout",4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
 };
 }
 
