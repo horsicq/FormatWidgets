@@ -189,6 +189,12 @@ enum DATA
     GlobalFlagsClear,
     GlobalFlagsSet,
     CriticalSectionDefaultTimeout,
+    DeCommitFreeBlockThreshold,
+    DeCommitTotalFreeThreshold,
+    LockPrefixTable,
+    MaximumAllocationSize,
+    VirtualMemoryThreshold,
+    ProcessAffinityMask,
     // TODO
     __data_size
 };

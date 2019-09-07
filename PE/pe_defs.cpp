@@ -183,6 +183,12 @@ const FormatWidget::HEADER_RECORD records32[]=
     {GlobalFlagsClear,              "GlobalFlagsClear",             4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
     {GlobalFlagsSet,                "GlobalFlagsSet",               4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
     {CriticalSectionDefaultTimeout, "CriticalSectionDefaultTimeout",4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {DeCommitFreeBlockThreshold,    "DeCommitFreeBlockThreshold",   4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {DeCommitTotalFreeThreshold,    "DeCommitTotalFreeThreshold",   4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {LockPrefixTable,               "LockPrefixTable",              4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {MaximumAllocationSize,         "MaximumAllocationSize",        4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {VirtualMemoryThreshold,        "VirtualMemoryThreshold",       4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {ProcessAffinityMask,           "ProcessAffinityMask",          4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
 };
 const FormatWidget::HEADER_RECORD records64[]=
 {
@@ -193,6 +199,12 @@ const FormatWidget::HEADER_RECORD records64[]=
     {GlobalFlagsClear,              "GlobalFlagsClear",             4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
     {GlobalFlagsSet,                "GlobalFlagsSet",               4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
     {CriticalSectionDefaultTimeout, "CriticalSectionDefaultTimeout",4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {DeCommitFreeBlockThreshold,    "DeCommitFreeBlockThreshold",   8,      "ULONGLONG",    FormatWidget::VAL_TYPE_DATA},
+    {DeCommitTotalFreeThreshold,    "DeCommitTotalFreeThreshold",   8,      "ULONGLONG",    FormatWidget::VAL_TYPE_DATA},
+    {LockPrefixTable,               "LockPrefixTable",              8,      "ULONGLONG",    FormatWidget::VAL_TYPE_DATA},
+    {MaximumAllocationSize,         "MaximumAllocationSize",        8,      "ULONGLONG",    FormatWidget::VAL_TYPE_DATA},
+    {VirtualMemoryThreshold,        "VirtualMemoryThreshold",       8,      "ULONGLONG",    FormatWidget::VAL_TYPE_DATA},
+    {ProcessAffinityMask,           "ProcessAffinityMask",          8,      "ULONGLONG",    FormatWidget::VAL_TYPE_DATA},
 };
 }
 
