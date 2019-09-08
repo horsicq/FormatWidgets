@@ -571,6 +571,30 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                         case N_IMAGE_LOADCONFIG::CriticalSectionDefaultTimeout:
                             pe.setLoadConfig_CriticalSectionDefaultTimeout((quint32)nValue);
                             break;
+
+                        case N_IMAGE_LOADCONFIG::DeCommitFreeBlockThreshold:
+                            pe.setLoadConfig_DeCommitFreeBlockThreshold((quint64)nValue);
+                            break;
+
+                        case N_IMAGE_LOADCONFIG::DeCommitTotalFreeThreshold:
+                            pe.setLoadConfig_DeCommitTotalFreeThreshold((quint64)nValue);
+                            break;
+
+                        case N_IMAGE_LOADCONFIG::LockPrefixTable:
+                            pe.setLoadConfig_LockPrefixTable((quint64)nValue);
+                            break;
+
+                        case N_IMAGE_LOADCONFIG::MaximumAllocationSize:
+                            pe.setLoadConfig_MaximumAllocationSize((quint64)nValue);
+                            break;
+
+                        case N_IMAGE_LOADCONFIG::VirtualMemoryThreshold:
+                            pe.setLoadConfig_VirtualMemoryThreshold((quint64)nValue);
+                            break;
+
+                        case N_IMAGE_LOADCONFIG::ProcessAffinityMask:
+                            pe.setLoadConfig_ProcessAffinityMask((quint64)nValue);
+                            break;
                     }
                     break;
             }
@@ -1310,6 +1334,12 @@ void PEWidget::reloadData()
                 lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GlobalFlagsClear]->setValue(lc64.GlobalFlagsClear);
                 lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GlobalFlagsSet]->setValue(lc64.GlobalFlagsSet);
                 lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CriticalSectionDefaultTimeout]->setValue(lc64.CriticalSectionDefaultTimeout);
+                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DeCommitFreeBlockThreshold]->setValue(lc64.DeCommitFreeBlockThreshold);
+                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DeCommitTotalFreeThreshold]->setValue(lc64.DeCommitTotalFreeThreshold);
+                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::LockPrefixTable]->setValue(lc64.LockPrefixTable);
+                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::MaximumAllocationSize]->setValue(lc64.MaximumAllocationSize);
+                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::VirtualMemoryThreshold]->setValue(lc64.VirtualMemoryThreshold);
+                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::ProcessAffinityMask]->setValue(lc64.ProcessAffinityMask);
             }
             else
             {
@@ -1321,6 +1351,12 @@ void PEWidget::reloadData()
                 lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GlobalFlagsClear]->setValue(lc32.GlobalFlagsClear);
                 lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GlobalFlagsSet]->setValue(lc32.GlobalFlagsSet);
                 lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CriticalSectionDefaultTimeout]->setValue(lc32.CriticalSectionDefaultTimeout);
+                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DeCommitFreeBlockThreshold]->setValue(lc32.DeCommitFreeBlockThreshold);
+                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DeCommitTotalFreeThreshold]->setValue(lc32.DeCommitTotalFreeThreshold);
+                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::LockPrefixTable]->setValue(lc32.LockPrefixTable);
+                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::MaximumAllocationSize]->setValue(lc32.MaximumAllocationSize);
+                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::VirtualMemoryThreshold]->setValue(lc32.VirtualMemoryThreshold);
+                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::ProcessAffinityMask]->setValue(lc32.ProcessAffinityMask);
             }
 
             blockSignals(false);
