@@ -595,6 +595,14 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                         case N_IMAGE_LOADCONFIG::ProcessAffinityMask:
                             pe.setLoadConfig_ProcessAffinityMask((quint64)nValue);
                             break;
+
+                        case N_IMAGE_LOADCONFIG::CSDVersion:
+                            pe.setLoadConfig_CSDVersion((quint16)nValue);
+                            break;
+
+                        case N_IMAGE_LOADCONFIG::DependentLoadFlags:
+                            pe.setLoadConfig_DependentLoadFlags((quint16)nValue);
+                            break;
                     }
                     break;
             }
@@ -1340,6 +1348,8 @@ void PEWidget::reloadData()
                 lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::MaximumAllocationSize]->setValue(lc64.MaximumAllocationSize);
                 lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::VirtualMemoryThreshold]->setValue(lc64.VirtualMemoryThreshold);
                 lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::ProcessAffinityMask]->setValue(lc64.ProcessAffinityMask);
+                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CSDVersion]->setValue(lc64.CSDVersion);
+                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DependentLoadFlags]->setValue(lc64.DependentLoadFlags);
             }
             else
             {
@@ -1357,6 +1367,8 @@ void PEWidget::reloadData()
                 lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::MaximumAllocationSize]->setValue(lc32.MaximumAllocationSize);
                 lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::VirtualMemoryThreshold]->setValue(lc32.VirtualMemoryThreshold);
                 lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::ProcessAffinityMask]->setValue(lc32.ProcessAffinityMask);
+                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CSDVersion]->setValue(lc32.CSDVersion);
+                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DependentLoadFlags]->setValue(lc32.DependentLoadFlags);
             }
 
             blockSignals(false);

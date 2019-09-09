@@ -189,6 +189,8 @@ const FormatWidget::HEADER_RECORD records32[]=
     {MaximumAllocationSize,         "MaximumAllocationSize",        4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
     {VirtualMemoryThreshold,        "VirtualMemoryThreshold",       4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
     {ProcessAffinityMask,           "ProcessAffinityMask",          4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {CSDVersion,                    "CSDVersion",                   2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
+    {DependentLoadFlags,            "DependentLoadFlags",           2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
 };
 const FormatWidget::HEADER_RECORD records64[]=
 {
@@ -205,6 +207,8 @@ const FormatWidget::HEADER_RECORD records64[]=
     {MaximumAllocationSize,         "MaximumAllocationSize",        8,      "ULONGLONG",    FormatWidget::VAL_TYPE_DATA},
     {VirtualMemoryThreshold,        "VirtualMemoryThreshold",       8,      "ULONGLONG",    FormatWidget::VAL_TYPE_DATA},
     {ProcessAffinityMask,           "ProcessAffinityMask",          8,      "ULONGLONG",    FormatWidget::VAL_TYPE_DATA},
+    {CSDVersion,                    "CSDVersion",                   2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
+    {DependentLoadFlags,            "DependentLoadFlags",           2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
 };
 }
 

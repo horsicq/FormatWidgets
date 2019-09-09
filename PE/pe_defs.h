@@ -195,6 +195,8 @@ enum DATA
     MaximumAllocationSize,
     VirtualMemoryThreshold,
     ProcessAffinityMask,
+    CSDVersion,
+    DependentLoadFlags,
     // TODO
     __data_size
 };
