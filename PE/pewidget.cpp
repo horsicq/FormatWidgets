@@ -603,6 +603,22 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                         case N_IMAGE_LOADCONFIG::DependentLoadFlags:
                             pe.setLoadConfig_DependentLoadFlags((quint16)nValue);
                             break;
+
+                        case N_IMAGE_LOADCONFIG::EditList:
+                            pe.setLoadConfig_EditList((quint64)nValue);
+                            break;
+
+                        case N_IMAGE_LOADCONFIG::SecurityCookie:
+                            pe.setLoadConfig_SecurityCookie((quint64)nValue);
+                            break;
+
+                        case N_IMAGE_LOADCONFIG::SEHandlerTable:
+                            pe.setLoadConfig_SEHandlerTable((quint64)nValue);
+                            break;
+
+                        case N_IMAGE_LOADCONFIG::SEHandlerCount:
+                            pe.setLoadConfig_SEHandlerCount((quint64)nValue);
+                            break;
                     }
                     break;
             }
@@ -1350,6 +1366,10 @@ void PEWidget::reloadData()
                 lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::ProcessAffinityMask]->setValue(lc64.ProcessAffinityMask);
                 lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CSDVersion]->setValue(lc64.CSDVersion);
                 lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DependentLoadFlags]->setValue(lc64.DependentLoadFlags);
+                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::EditList]->setValue(lc64.EditList);
+                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SecurityCookie]->setValue(lc64.SecurityCookie);
+                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SEHandlerTable]->setValue(lc64.SEHandlerTable);
+                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SEHandlerCount]->setValue(lc64.SEHandlerCount);
             }
             else
             {
@@ -1369,6 +1389,10 @@ void PEWidget::reloadData()
                 lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::ProcessAffinityMask]->setValue(lc32.ProcessAffinityMask);
                 lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CSDVersion]->setValue(lc32.CSDVersion);
                 lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DependentLoadFlags]->setValue(lc32.DependentLoadFlags);
+                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::EditList]->setValue(lc32.EditList);
+                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SecurityCookie]->setValue(lc32.SecurityCookie);
+                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SEHandlerTable]->setValue(lc32.SEHandlerTable);
+                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SEHandlerCount]->setValue(lc32.SEHandlerCount);
             }
 
             blockSignals(false);

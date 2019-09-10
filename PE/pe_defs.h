@@ -197,6 +197,10 @@ enum DATA
     ProcessAffinityMask,
     CSDVersion,
     DependentLoadFlags,
+    EditList,
+    SecurityCookie,
+    SEHandlerTable,
+    SEHandlerCount,
     // TODO
     __data_size
 };

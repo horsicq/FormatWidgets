@@ -191,6 +191,10 @@ const FormatWidget::HEADER_RECORD records32[]=
     {ProcessAffinityMask,           "ProcessAffinityMask",          4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
     {CSDVersion,                    "CSDVersion",                   2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
     {DependentLoadFlags,            "DependentLoadFlags",           2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
+    {VirtualMemoryThreshold,        "EditList",                     4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {VirtualMemoryThreshold,        "SecurityCookie",               4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {VirtualMemoryThreshold,        "SEHandlerTable",               4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {VirtualMemoryThreshold,        "SEHandlerCount",               4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
 };
 const FormatWidget::HEADER_RECORD records64[]=
 {
@@ -209,6 +213,10 @@ const FormatWidget::HEADER_RECORD records64[]=
     {ProcessAffinityMask,           "ProcessAffinityMask",          8,      "ULONGLONG",    FormatWidget::VAL_TYPE_DATA},
     {CSDVersion,                    "CSDVersion",                   2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
     {DependentLoadFlags,            "DependentLoadFlags",           2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
+    {VirtualMemoryThreshold,        "EditList",                     8,      "ULONGLONG",    FormatWidget::VAL_TYPE_DATA},
+    {VirtualMemoryThreshold,        "SecurityCookie",               8,      "ULONGLONG",    FormatWidget::VAL_TYPE_DATA},
+    {VirtualMemoryThreshold,        "SEHandlerTable",               8,      "ULONGLONG",    FormatWidget::VAL_TYPE_DATA},
+    {VirtualMemoryThreshold,        "SEHandlerCount",               8,      "ULONGLONG",    FormatWidget::VAL_TYPE_DATA},
 };
 }
 
