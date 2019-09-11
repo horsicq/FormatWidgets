@@ -1605,6 +1605,13 @@ void PEWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
             pTableWidget->setColumnWidth(2,nSymbolWidth*14);
             pTableWidget->setColumnWidth(3,nSymbolWidth*13);
             break;
+
+        case SPE::TYPE_LOADCONFIG:
+            pTableWidget->setColumnWidth(0,nSymbolWidth*18);
+            pTableWidget->setColumnWidth(1,nSymbolWidth*9);
+            pTableWidget->setColumnWidth(2,nSymbolWidth*14);
+            pTableWidget->setColumnWidth(3,nSymbolWidth*13);
+            break;
     }
 }
 
