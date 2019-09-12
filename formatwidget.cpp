@@ -101,7 +101,8 @@ void FormatWidget::setValue(QVariant vValue, int nStype, int nNdata, int nVtype,
 
 void FormatWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
 {
-
+    Q_UNUSED(type)
+    Q_UNUSED(pTableWidget)
 }
 
 bool FormatWidget::isEdited()
@@ -213,6 +214,8 @@ bool FormatWidget::createHeaderTable(int type, QTableWidget *pTableWidget, const
 
 bool FormatWidget::createDirectoryTable(int type, QTableWidget *pTableWidget, const DIRECTORY_ENTRY_RECORD *pRecords, int nRecordCount)
 {
+    Q_UNUSED(type)
+
     pTableWidget->setColumnCount(4);
     pTableWidget->setRowCount(nRecordCount);
 
