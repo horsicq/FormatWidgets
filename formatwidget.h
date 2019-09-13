@@ -46,7 +46,7 @@ public:
         qint64 nImageBase; // TODO default_const
     };
 
-    enum VAL_TYPE // TODO TIME
+    enum VAL_TYPE
     {
         VAL_TYPE_UNKNOWN=0,
         VAL_TYPE_DATA,
@@ -55,7 +55,8 @@ public:
         VAL_TYPE_ADDRESS,
         VAL_TYPE_OFFSET,
         VAL_TYPE_SIZE,
-        VAL_TYPE_TEXT
+        VAL_TYPE_TEXT,
+        VAL_TYPE_UNIXTIME // TODO
     };
 
     struct HEADER_RECORD
