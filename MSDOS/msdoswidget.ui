@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>591</width>
-    <height>219</height>
+    <width>619</width>
+    <height>254</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -148,6 +148,28 @@
            <number>21</number>
           </attribute>
          </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="page_OVERLAY">
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <property name="spacing">
+         <number>1</number>
+        </property>
+        <property name="leftMargin">
+         <number>1</number>
+        </property>
+        <property name="topMargin">
+         <number>1</number>
+        </property>
+        <property name="rightMargin">
+         <number>1</number>
+        </property>
+        <property name="bottomMargin">
+         <number>1</number>
+        </property>
+        <item>
+         <widget class="ToolsWidget" name="widgetOverlayHex" native="true"/>
         </item>
        </layout>
       </widget>

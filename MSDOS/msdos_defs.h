@@ -30,6 +30,7 @@ enum TYPE
 {
     TYPE_TOOLS=0,
     TYPE_DOS_HEADER,
+    TYPE_OVERLAY,
     __TYPE_size
 };
 }

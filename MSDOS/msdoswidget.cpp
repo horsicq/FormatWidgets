@@ -49,6 +49,8 @@ void MSDOSWidget::clear()
     memset(lineEdit_DOS_HEADER,0,sizeof lineEdit_DOS_HEADER);
     memset(comboBox,0,sizeof comboBox);
 
+    pSubDeviceOverlay=nullptr;
+
     ui->checkBoxReadonly->setChecked(true);
 
     ui->treeWidgetNavi->clear();
@@ -71,6 +73,11 @@ void MSDOSWidget::reload()
     {
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_TOOLS,tr("Tools")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_DOS_HEADER,"DOS_HEADER"));
+
+        if(msdos.isOverlayPresent())
+        {
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_OVERLAY,tr("Overlay")));
+        }
 
         ui->treeWidgetNavi->expandAll();
 
@@ -333,6 +340,26 @@ void MSDOSWidget::reloadData()
             comboBox[CB_DOS_HEADER_e_magic]->setValue(msdosheaderex.e_magic);
 
             blockSignals(false);
+        }
+        else if(nData==SMSDOS::TYPE_OVERLAY)
+        {
+            if(pSubDeviceOverlay)
+            {
+                pSubDeviceOverlay->close();
+                delete pSubDeviceOverlay;
+            }
+
+            qint64 nOverLayOffset=msdos.getOverlayOffset();
+            qint64 nOverlaySize=msdos.getOverlaySize();
+
+            pSubDeviceOverlay=new SubDevice(getDevice(),nOverLayOffset,nOverlaySize,this);
+            pSubDeviceOverlay->open(getDevice()->openMode());
+
+            FormatWidget::OPTIONS hexOptions=*getOptions();
+            hexOptions.nImageBase=nOverLayOffset;
+            ui->widgetOverlayHex->setData(pSubDeviceOverlay,&hexOptions);
+            ui->widgetOverlayHex->setEdited(isEdited());
+            connect(ui->widgetOverlayHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
         }
 
         setReadonly(ui->checkBoxReadonly->isChecked());

@@ -68,6 +68,7 @@ private:
     XComboBoxEx *comboBox[__CB_size];
 
     bool bInit[SMSDOS::__TYPE_size];
+    SubDevice *pSubDeviceOverlay;
 };
 
 #endif // MSDOSWIDGET_H
