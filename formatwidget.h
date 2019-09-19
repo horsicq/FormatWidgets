@@ -122,7 +122,7 @@ public:
 
     void _blockSignals(QObject **ppObjects,int nCount,bool bState);
     XComboBoxEx *createComboBox(QTableWidget *pTableWidget, QMap<quint64,QString> mapData, int type, int nData, XComboBoxEx::CBTYPE cbtype,quint64 nMask=0);
-    XDateTimeEditX *createDateTimeEdit(QTableWidget *pTableWidget,int type, int nData,XDateTimeEditX::DT_TYPE dtType);
+    XDateTimeEditX *createTimeDateEdit(QTableWidget *pTableWidget,int type, int nData,XDateTimeEditX::DT_TYPE dtType);
     QPushButton *createPushButton(QTableWidget *pTableWidget,int type, int nData,QString sText);
     int getSymbolWidth();
     void setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition);

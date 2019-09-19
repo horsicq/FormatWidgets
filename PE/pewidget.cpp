@@ -300,7 +300,7 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
 
                         case N_IMAGE_FILE_HEADER::TimeDateStamp:
                             pe.setFileHeader_TimeDateStamp((quint32)nValue);
-                            dateTimeEdit[DT_DateTimeStamp]->setValue(nValue);
+                            dateTimeEdit[TD_FileHeader_TimeDateStamp]->setValue(nValue);
                             break;
 
                         case N_IMAGE_FILE_HEADER::PointerToSymbolTable:
@@ -645,7 +645,7 @@ void PEWidget::setReadonly(bool bState)
 
     setComboBoxesReadOnly(comboBox,__CB_size,bState);
     setPushButtonReadOnly(pushButton,__PB_size,bState);
-    setDateTimeEditReadOnly(dateTimeEdit,__DT_size,bState);
+    setDateTimeEditReadOnly(dateTimeEdit,__TD_size,bState);
 
     ui->widgetHex->setReadonly(bState);
     ui->widgetSectionHex->setReadonly(bState);
@@ -666,7 +666,7 @@ void PEWidget::blockSignals(bool bState)
 
     _blockSignals((QObject **)comboBox,__CB_size,bState);
     _blockSignals((QObject **)pushButton,__PB_size,bState);
-    _blockSignals((QObject **)dateTimeEdit,__DT_size,bState);
+    _blockSignals((QObject **)dateTimeEdit,__TD_size,bState);
 }
 
 void PEWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
@@ -879,7 +879,7 @@ void PEWidget::reloadData()
                 comboBox[CB_IMAGE_FILE_HEADER_Machine]=createComboBox(ui->tableWidget_IMAGE_FILE_HEADER,XPE::getImageFileHeaderMachinesS(),SPE::TYPE_IMAGE_FILE_HEADER,N_IMAGE_FILE_HEADER::Machine,XComboBoxEx::CBTYPE_NORMAL);
                 comboBox[CB_IMAGE_FILE_HEADER_Characteristics]=createComboBox(ui->tableWidget_IMAGE_FILE_HEADER,XPE::getImageFileHeaderCharacteristicsS(),SPE::TYPE_IMAGE_FILE_HEADER,N_IMAGE_FILE_HEADER::Characteristics,XComboBoxEx::CBTYPE_FLAGS);
 
-                dateTimeEdit[DT_DateTimeStamp]=createDateTimeEdit(ui->tableWidget_IMAGE_FILE_HEADER,SPE::TYPE_IMAGE_FILE_HEADER,N_IMAGE_FILE_HEADER::TimeDateStamp,XDateTimeEditX::DT_TYPE_POSIX);
+                dateTimeEdit[TD_FileHeader_TimeDateStamp]=createTimeDateEdit(ui->tableWidget_IMAGE_FILE_HEADER,SPE::TYPE_IMAGE_FILE_HEADER,N_IMAGE_FILE_HEADER::TimeDateStamp,XDateTimeEditX::DT_TYPE_POSIX);
             }
 
             blockSignals(true);
@@ -896,7 +896,7 @@ void PEWidget::reloadData()
 
             comboBox[CB_IMAGE_FILE_HEADER_Machine]->setValue(fileheader.Machine);
             comboBox[CB_IMAGE_FILE_HEADER_Characteristics]->setValue(fileheader.Characteristics);
-            dateTimeEdit[DT_DateTimeStamp]->setValue(fileheader.TimeDateStamp);
+            dateTimeEdit[TD_FileHeader_TimeDateStamp]->setValue(fileheader.TimeDateStamp);
 
             blockSignals(false);
         }
@@ -1096,6 +1096,8 @@ void PEWidget::reloadData()
             {
                 bInit[nData]=createHeaderTable(SPE::TYPE_EXPORT,ui->tableWidget_ExportHeader,N_IMAGE_EXPORT::records,lineEdit_EXPORT,N_IMAGE_EXPORT::__data_size,0);
                 createSectionTable(SPE::TYPE_EXPORT_FUNCTION,ui->tableWidget_ExportFunctions,N_IMAGE_EXPORT_FUNCTION::records,N_IMAGE_EXPORT_FUNCTION::__data_size);
+
+                dateTimeEdit[TD_Export_TimeDateStamp]=createTimeDateEdit(ui->tableWidget_ExportHeader,SPE::TYPE_EXPORT,N_IMAGE_EXPORT::TimeDateStamp,XDateTimeEditX::DT_TYPE_POSIX);
             }
 
             blockSignals(true);
@@ -1113,6 +1115,8 @@ void PEWidget::reloadData()
             lineEdit_EXPORT[N_IMAGE_EXPORT::AddressOfFunctions]->setValue(eh.directory.AddressOfFunctions);
             lineEdit_EXPORT[N_IMAGE_EXPORT::AddressOfNames]->setValue(eh.directory.AddressOfNames);
             lineEdit_EXPORT[N_IMAGE_EXPORT::AddressOfNameOrdinals]->setValue(eh.directory.AddressOfNameOrdinals);
+
+            dateTimeEdit[TD_Export_TimeDateStamp]->setValue(eh.directory.TimeDateStamp);
 
             int nCount=eh.listPositions.count();
             ui->tableWidget_ExportFunctions->setRowCount(nCount);

@@ -88,10 +88,11 @@ private:
         __PB_size
     };
 
-    enum DT
+    enum TD
     {
-        DT_DateTimeStamp,
-        __DT_size
+        TD_FileHeader_TimeDateStamp,
+        TD_Export_TimeDateStamp,
+        __TD_size
     };
 
     Ui::PEWidget *ui;
@@ -105,7 +106,7 @@ private:
     XLineEditHEX *lineEdit_EXPORT[N_IMAGE_EXPORT::__data_size];
     XComboBoxEx *comboBox[__CB_size];
     QPushButton *pushButton[__PB_size];
-    XDateTimeEditX *dateTimeEdit[__DT_size];
+    XDateTimeEditX *dateTimeEdit[__TD_size];
 
     bool bInit[SPE::__TYPE_size];
 

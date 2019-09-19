@@ -355,7 +355,7 @@ XComboBoxEx *FormatWidget::createComboBox(QTableWidget *pTableWidget, QMap<quint
     return result;
 }
 
-XDateTimeEditX *FormatWidget::createDateTimeEdit(QTableWidget *pTableWidget, int type, int nData, XDateTimeEditX::DT_TYPE dtType)
+XDateTimeEditX *FormatWidget::createTimeDateEdit(QTableWidget *pTableWidget, int type, int nData, XDateTimeEditX::DT_TYPE dtType)
 {
     XDateTimeEditX *result=new XDateTimeEditX(this);
     result->setType(dtType);
