@@ -110,9 +110,22 @@ bool FormatWidget::isEdited()
     return bIsEdited;
 }
 
+QPushButton *FormatWidget::createHexButton(QTableWidget *pTableWidget, int type, int nData)
+{
+    QPushButton *result=new QPushButton(pTableWidget);
+
+    result->setProperty("STYPE",type);
+    result->setProperty("NDATA",nData);
+
+    connect(result,SIGNAL(clicked()),this,SLOT(dialogHex()));
+
+    return result;
+}
+
 void FormatWidget::hexValueChanged(quint64 nValue)
 {
     XLineEditHEX *lineEdit=qobject_cast<XLineEditHEX *>(sender());
+
     int nStype=lineEdit->property("STYPE").toInt();
     int nNdata=lineEdit->property("NDATA").toInt();
     int nVtype=lineEdit->property("VTYPE").toInt();
@@ -124,6 +137,7 @@ void FormatWidget::hexValueChanged(quint64 nValue)
 void FormatWidget::textValueChanged(QString sText)
 {
     XLineEditHEX *lineEdit=qobject_cast<XLineEditHEX *>(sender());
+
     int nStype=lineEdit->property("STYPE").toInt();
     int nNdata=lineEdit->property("NDATA").toInt();
     int nVtype=lineEdit->property("VTYPE").toInt();
@@ -135,6 +149,11 @@ void FormatWidget::textValueChanged(QString sText)
 void FormatWidget::setEdited(bool bState)
 {
     bIsEdited=bState;
+}
+
+void FormatWidget::dialogHex()
+{
+    qDebug("dialogHex");
 }
 
 bool FormatWidget::saveBackup()

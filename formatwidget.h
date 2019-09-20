@@ -132,6 +132,8 @@ public:
     virtual void adjustHeaderTable(int type,QTableWidget *pTableWidget);
     bool isEdited();
 
+    QPushButton *createHexButton(QTableWidget *pTableWidget,int type, int nData);
+
 signals:
     void editState(bool bState);
 
@@ -139,6 +141,7 @@ public slots:
     void hexValueChanged(quint64 nValue);
     void textValueChanged(QString sText);
     void setEdited(bool bState);
+    void dialogHex();
 
 private slots:
     virtual void reloadData()=0;
