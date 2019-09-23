@@ -80,7 +80,7 @@ int FormatWidget::getSymbolWidth()
 {
     QFontMetrics fm(font());
 
-    return fm.width("W");
+    return fm.width("W"); // TODO Check
 }
 
 void FormatWidget::setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int nPosition)
@@ -288,6 +288,8 @@ bool FormatWidget::createDirectoryTable(int type, QTableWidget *pTableWidget, co
 
 bool FormatWidget::createSectionTable(int type, QTableWidget *pTableWidget, const FormatWidget::HEADER_RECORD *pRecords, int nRecordCount)
 {
+    Q_UNUSED(type)
+
     QStringList slHeader;
 
     pTableWidget->setRowCount(0);
