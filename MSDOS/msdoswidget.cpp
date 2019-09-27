@@ -87,6 +87,9 @@ void MSDOSWidget::reload()
 
 bool MSDOSWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition)
 {
+    Q_UNUSED(nVtype)
+    Q_UNUSED(nPosition)
+
     bool bResult=false;
 
     blockSignals(true);
@@ -388,6 +391,8 @@ void MSDOSWidget::widgetValueChanged(quint64 nValue)
 
 void MSDOSWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
 {
+    Q_UNUSED(previous)
+
     if(current)
     {
         reloadData();
