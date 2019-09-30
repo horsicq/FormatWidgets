@@ -788,6 +788,10 @@ void ELFWidget::on_checkBoxReadonly_toggled(bool checked)
 
 void ELFWidget::on_tableWidget_Elf_Shdr_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
 {
+    Q_UNUSED(currentColumn)
+    Q_UNUSED(previousRow)
+    Q_UNUSED(previousColumn)
+
     if(currentRow!=-1)
     {
         loadShdr(currentRow);
@@ -796,6 +800,10 @@ void ELFWidget::on_tableWidget_Elf_Shdr_currentCellChanged(int currentRow, int c
 
 void ELFWidget::on_tableWidget_Elf_Phdr_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
 {
+    Q_UNUSED(currentColumn)
+    Q_UNUSED(previousRow)
+    Q_UNUSED(previousColumn)
+
     if(currentRow!=-1)
     {
         loadPhdr(currentRow);

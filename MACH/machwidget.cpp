@@ -115,6 +115,9 @@ void MACHWidget::reload()
 
 bool MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition)
 {
+    Q_UNUSED(nVtype)
+    Q_UNUSED(nPosition)
+
     bool bResult=false;
 
     blockSignals(true);
@@ -524,6 +527,8 @@ void MACHWidget::widgetValueChanged(quint64 nValue)
 
 void MACHWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
 {
+    Q_UNUSED(previous)
+
     if(current)
     {
         reloadData();
@@ -618,6 +623,10 @@ bool MACHWidget::createSectionTable(int type, QTableWidget *pTableWidget, const 
 
 void MACHWidget::on_tableWidget_commands_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
 {
+    Q_UNUSED(currentColumn)
+    Q_UNUSED(previousRow)
+    Q_UNUSED(previousColumn)
+
     if(currentRow!=-1)
     {
         loadCommand(currentRow);
@@ -631,6 +640,10 @@ void MACHWidget::on_pushButtonReload_clicked()
 
 void MACHWidget::on_tableWidget_segments_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
 {
+    Q_UNUSED(currentColumn)
+    Q_UNUSED(previousRow)
+    Q_UNUSED(previousColumn)
+
     if(currentRow!=-1)
     {
         loadSegment(currentRow);
@@ -639,6 +652,10 @@ void MACHWidget::on_tableWidget_segments_currentCellChanged(int currentRow, int 
 
 void MACHWidget::on_tableWidget_sections_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
 {
+    Q_UNUSED(currentColumn)
+    Q_UNUSED(previousRow)
+    Q_UNUSED(previousColumn)
+
     if(currentRow!=-1)
     {
         loadSection(currentRow);
