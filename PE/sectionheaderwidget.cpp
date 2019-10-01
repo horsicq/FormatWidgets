@@ -69,6 +69,8 @@ void SectionHeaderWidget::reload()
 
 bool SectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int nPosition)
 {
+    Q_UNUSED(nVtype);
+
     bool bResult=false;
 
     quint64 nValue=vValue.toULongLong();

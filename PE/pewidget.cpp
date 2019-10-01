@@ -133,6 +133,9 @@ void PEWidget::reload()
 
 bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int nPosition)
 {
+    Q_UNUSED(nVtype)
+    Q_UNUSED(nPosition)
+
     bool bResult=false;
 
     blockSignals(true);
@@ -671,6 +674,8 @@ void PEWidget::blockSignals(bool bState)
 
 void PEWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
 {
+    Q_UNUSED(previous)
+
     if(current)
     {
         reloadData();
@@ -1548,6 +1553,10 @@ void PEWidget::loadSection(int nNumber)
 
 void PEWidget::on_tableWidget_ImportLibraries_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
 {
+    Q_UNUSED(currentColumn)
+    Q_UNUSED(previousRow)
+    Q_UNUSED(previousColumn)
+
     if(currentRow!=-1)
     {
         loadImportLibrary(currentRow);
@@ -1556,6 +1565,10 @@ void PEWidget::on_tableWidget_ImportLibraries_currentCellChanged(int currentRow,
 
 void PEWidget::on_tableWidget_Relocs_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
 {
+    Q_UNUSED(currentColumn)
+    Q_UNUSED(previousRow)
+    Q_UNUSED(previousColumn)
+
     if(currentRow!=-1)
     {
         loadRelocs(currentRow);
@@ -1696,6 +1709,10 @@ bool PEWidget::createSectionTable(int type, QTableWidget *pTableWidget, const Fo
 
 void PEWidget::on_tableWidget_Sections_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
 {
+    Q_UNUSED(currentColumn)
+    Q_UNUSED(previousRow)
+    Q_UNUSED(previousColumn)
+
     if(currentRow!=-1)
     {
         loadSection(currentRow);
@@ -1704,6 +1721,8 @@ void PEWidget::on_tableWidget_Sections_currentCellChanged(int currentRow, int cu
 
 void PEWidget::on_treeWidgetResource_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
 {
+    Q_UNUSED(previous)
+
     if(current)
     {
         // TODO more info in side widget
