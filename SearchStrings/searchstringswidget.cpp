@@ -222,9 +222,9 @@ void SearchStringsWidget::search()
             pFilter->setSourceModel(pModel);
 
             ui->tableViewResult->setModel(pFilter);
-            ui->tableViewResult->setColumnWidth(0,120);
-            ui->tableViewResult->setColumnWidth(1,60);
-            ui->tableViewResult->setColumnWidth(2,30);
+            ui->tableViewResult->setColumnWidth(0,120);  // TODO
+            ui->tableViewResult->setColumnWidth(1,60); // TODO
+            ui->tableViewResult->setColumnWidth(2,30); // TODO
         }
     }
 }

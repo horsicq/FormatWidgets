@@ -1647,21 +1647,21 @@ bool PEWidget::createSectionTable(int type, QTableWidget *pTableWidget, const Fo
             break;
 
         case SPE::TYPE_EXPORT_FUNCTION:
-            pTableWidget->setColumnCount(nRecordCount+1);
-            pTableWidget->setColumnWidth(nRecordCount,400);
+            pTableWidget->setColumnCount(nRecordCount+1); // TODO
+            pTableWidget->setColumnWidth(nRecordCount,nSymbolWidth*40);
             break;
 
         case SPE::TYPE_IMPORT_FUNCTION:
             pTableWidget->setColumnCount(nRecordCount+1);
-            pTableWidget->setColumnWidth(0,120);
-            pTableWidget->setColumnWidth(1,120);
-            pTableWidget->setColumnWidth(2,50);
-            pTableWidget->setColumnWidth(nRecordCount,400);
+            pTableWidget->setColumnWidth(0,120); // TODO
+            pTableWidget->setColumnWidth(1,120); // TODO
+            pTableWidget->setColumnWidth(2,50); // TODO
+            pTableWidget->setColumnWidth(nRecordCount,400); // TODO
             break;
 
         case SPE::TYPE_IMPORT:
             pTableWidget->setColumnCount(nRecordCount+1);
-            pTableWidget->setColumnWidth(nRecordCount,400);
+            pTableWidget->setColumnWidth(nRecordCount,400); // TODO
             break;
 
         case SPE::TYPE_RELOCS:
