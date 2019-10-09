@@ -28,11 +28,13 @@ DEPENDPATH += $$PWD
 
 HEADERS += \
     $$PWD/formatwidget.h \
-    $$PWD/toolswidget.h
+    $$PWD/toolswidget.h \
+    $$PWD/invwidget.h
 
 SOURCES += \
     $$PWD/formatwidget.cpp \
-    $$PWD/toolswidget.cpp
+    $$PWD/toolswidget.cpp \
+    $$PWD/invwidget.cpp
 
 FORMS += \
     $$PWD/toolswidget.ui

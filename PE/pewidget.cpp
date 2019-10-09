@@ -55,6 +55,7 @@ void PEWidget::clear()
     memset(comboBox,0,sizeof comboBox);
     memset(pushButton,0,sizeof pushButton);
     memset(dateTimeEdit,0,sizeof dateTimeEdit);
+    memset(invWidget,0,sizeof invWidget);
 
     pSubDeviceSection=nullptr;
     pSubDeviceOverlay=nullptr;
@@ -817,6 +818,7 @@ void PEWidget::reloadData()
             {
                 bInit[nData]=createHeaderTable(SPE::TYPE_IMAGE_DOS_HEADER,ui->tableWidget_IMAGE_DOS_HEADER,N_IMAGE_DOS_HEADER::records,lineEdit_IMAGE_DOS_HEADER,N_IMAGE_DOS_HEADER::__data_size,0);
                 comboBox[CB_IMAGE_DOS_HEADER_e_magic]=createComboBox(ui->tableWidget_IMAGE_DOS_HEADER,XPE::getImageMagicsS(),SPE::TYPE_IMAGE_DOS_HEADER,N_IMAGE_DOS_HEADER::e_magic,XComboBoxEx::CBTYPE_NORMAL);
+                invWidget[INV_IMAGE_DOS_HEADER_e_lfanew]=createInvWidget(ui->tableWidget_IMAGE_DOS_HEADER,SPE::TYPE_IMAGE_DOS_HEADER,N_IMAGE_DOS_HEADER::e_magic);
             }
 
             blockSignals(true);

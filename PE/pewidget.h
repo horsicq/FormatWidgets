@@ -95,6 +95,12 @@ private:
         __TD_size
     };
 
+    enum INV
+    {
+        INV_IMAGE_DOS_HEADER_e_lfanew,
+        __INV_size
+    };
+
     Ui::PEWidget *ui;
 
     XLineEditHEX *lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::__data_size];
@@ -107,6 +113,8 @@ private:
     XComboBoxEx *comboBox[__CB_size];
     QPushButton *pushButton[__PB_size];
     XDateTimeEditX *dateTimeEdit[__TD_size];
+
+    InvWidget *invWidget[__INV_size];
 
     bool bInit[SPE::__TYPE_size];
 

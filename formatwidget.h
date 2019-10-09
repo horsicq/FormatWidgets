@@ -33,6 +33,7 @@
 #include "xcomboboxex.h"
 #include "xdatetimeeditx.h"
 #include "qhexview.h"
+#include "invwidget.h"
 
 class FormatWidget : public QWidget
 {
@@ -122,6 +123,7 @@ public:
 
     void _blockSignals(QObject **ppObjects,int nCount,bool bState);
     XComboBoxEx *createComboBox(QTableWidget *pTableWidget, QMap<quint64,QString> mapData, int type, int nData, XComboBoxEx::CBTYPE cbtype,quint64 nMask=0);
+    InvWidget *createInvWidget(QTableWidget *pTableWidget, int type, int nData);
     XDateTimeEditX *createTimeDateEdit(QTableWidget *pTableWidget,int type, int nData,XDateTimeEditX::DT_TYPE dtType);
     QPushButton *createPushButton(QTableWidget *pTableWidget,int type, int nData,QString sText);
     int getSymbolWidth();
