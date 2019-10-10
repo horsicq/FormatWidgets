@@ -235,6 +235,7 @@ void MACHWidget::reloadData()
 
                 bInit[nData]=true;
             }
+            ui->widgetHex->reload();
         }
         else if(nData==SMACH::TYPE_mach_header)
         {

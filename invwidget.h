@@ -24,17 +24,32 @@
 #include <QWidget>
 #include <QHBoxLayout>
 #include <QPushButton>
+#include "xbinary.h"
 
 class InvWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit InvWidget(QWidget *parent = 0);
+    enum TYPE
+    {
+        TYPE_HEX
+    };
+
+    explicit InvWidget(QWidget *parent,TYPE type);
     ~InvWidget();
 
-private:
+    void setData(XBinary *pBinary,qint64 nOffset,qint64 nSize);
 
+private slots:
+    void showHexSlot();
+
+signals:
+    void showHex(qint64 nOffset,qint64 nSize);
+
+private:
+    qint64 nOffset;
+    qint64 nSize;
 };
 
 #endif // INVWIDGET_H

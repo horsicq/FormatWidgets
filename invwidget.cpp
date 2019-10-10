@@ -21,19 +21,42 @@
 #include "invwidget.h"
 #include "ui_invwidget.h"
 
-InvWidget::InvWidget(QWidget *parent) :
+InvWidget::InvWidget(QWidget *parent, TYPE type) :
     QWidget(parent)
 {
     QHBoxLayout *pLayot=new QHBoxLayout(this);
+    pLayot->setContentsMargins(0,0,0,0);
 
-    QPushButton *pHexPushButton=new QPushButton(tr("HEX"),this);
+    if(type==TYPE_HEX)
+    {
+        QPushButton *pHexPushButton=new QPushButton(tr("HEX"),this);
 
-    pLayot->addWidget(pHexPushButton);
+        connect(pHexPushButton,SIGNAL(clicked()),this,SLOT(showHexSlot()));
+
+        pLayot->addWidget(pHexPushButton);
+    }
 
     setLayout(pLayot);
+
+    nOffset=0;
+    nSize=0;
 }
 
 InvWidget::~InvWidget()
 {
 
+}
+
+void InvWidget::setData(XBinary *pBinary, qint64 nOffset, qint64 nSize)
+{
+    // TODO Check
+    setEnabled(pBinary->isOffsetValid(nOffset));
+
+    this->nOffset=nOffset;
+    this->nSize=nSize;
+}
+
+void InvWidget::showHexSlot()
+{
+    emit showHex(nOffset,nSize);
 }

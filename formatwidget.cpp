@@ -110,18 +110,6 @@ bool FormatWidget::isEdited()
     return bIsEdited;
 }
 
-QPushButton *FormatWidget::createHexButton(QTableWidget *pTableWidget, int type, int nData)
-{
-    QPushButton *result=new QPushButton(pTableWidget);
-
-    result->setProperty("STYPE",type);
-    result->setProperty("NDATA",nData);
-
-    connect(result,SIGNAL(clicked()),this,SLOT(dialogHex()));
-
-    return result;
-}
-
 void FormatWidget::hexValueChanged(quint64 nValue)
 {
     XLineEditHEX *lineEdit=qobject_cast<XLineEditHEX *>(sender());
@@ -151,9 +139,19 @@ void FormatWidget::setEdited(bool bState)
     bIsEdited=bState;
 }
 
-void FormatWidget::dialogHex()
+void FormatWidget::showHex(qint64 nOffset, qint64 nSize)
 {
-    qDebug("dialogHex");
+    QHexView::OPTIONS hexOptions={};
+
+    hexOptions.nBaseAddress=options.nImageBase;
+    hexOptions.sBackupFileName=options.sBackupFileName;
+    hexOptions.nStartAddress=nOffset;
+    hexOptions.nStartSelectionAddress=nOffset;
+    hexOptions.nSizeOfSelection=nSize;
+
+    DialogHex dialogHex(this,pDevice,&hexOptions);
+
+    dialogHex.exec();
 }
 
 bool FormatWidget::saveBackup()
@@ -376,12 +374,14 @@ XComboBoxEx *FormatWidget::createComboBox(QTableWidget *pTableWidget, QMap<quint
     return result;
 }
 
-InvWidget *FormatWidget::createInvWidget(QTableWidget *pTableWidget, int type, int nData)
+InvWidget *FormatWidget::createInvWidget(QTableWidget *pTableWidget, int type, int nData, InvWidget::TYPE widgetType)
 {
-    InvWidget *result=new InvWidget(this);
+    InvWidget *result=new InvWidget(this,widgetType);
 
     result->setProperty("STYPE",type);
     result->setProperty("NDATA",nData);
+
+    connect(result,SIGNAL(showHex(qint64,qint64)),this,SLOT(showHex(qint64,qint64)));
 
     pTableWidget->setCellWidget(nData,HEADER_COLUMN_INFO,result);
 

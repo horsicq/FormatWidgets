@@ -29,13 +29,16 @@ DEPENDPATH += $$PWD
 HEADERS += \
     $$PWD/formatwidget.h \
     $$PWD/toolswidget.h \
-    $$PWD/invwidget.h
+    $$PWD/invwidget.h \
+    $$PWD/dialoghex.h
 
 SOURCES += \
     $$PWD/formatwidget.cpp \
     $$PWD/toolswidget.cpp \
-    $$PWD/invwidget.cpp
+    $$PWD/invwidget.cpp \
+    $$PWD/dialoghex.cpp
 
 FORMS += \
-    $$PWD/toolswidget.ui
+    $$PWD/toolswidget.ui \
+    $$PWD/dialoghex.ui
 

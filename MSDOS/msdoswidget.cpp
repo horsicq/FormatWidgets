@@ -295,6 +295,7 @@ void MSDOSWidget::reloadData()
 
                 bInit[nData]=true;
             }
+            ui->widgetHex->reload();
         }
         else if(nData==SMSDOS::TYPE_DOS_HEADER)
         {

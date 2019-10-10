@@ -119,6 +119,7 @@ void BinaryWidget::reloadData()
 
             bInit=true;
         }
+        ui->widgetHex->reload();
 
         setReadonly(ui->checkBoxReadonly->isChecked());
     }

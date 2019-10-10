@@ -276,6 +276,7 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                             break;
 
                         case N_IMAGE_DOS_HEADER::e_lfanew:
+                            invWidget[INV_IMAGE_DOS_HEADER_e_lfanew]->setData(&pe,(quint32)nValue,0);
                             pe.set_e_lfanew((quint32)nValue);
                             break;
                     }
@@ -770,6 +771,8 @@ void PEWidget::widgetAction()
     }
 }
 
+
+
 void PEWidget::on_checkBoxReadonly_toggled(bool checked)
 {
     setReadonly(checked);
@@ -811,6 +814,7 @@ void PEWidget::reloadData()
 
                 bInit[nData]=true;
             }
+            ui->widgetHex->reload();
         }
         else if(nData==SPE::TYPE_IMAGE_DOS_HEADER)
         {
@@ -818,7 +822,7 @@ void PEWidget::reloadData()
             {
                 bInit[nData]=createHeaderTable(SPE::TYPE_IMAGE_DOS_HEADER,ui->tableWidget_IMAGE_DOS_HEADER,N_IMAGE_DOS_HEADER::records,lineEdit_IMAGE_DOS_HEADER,N_IMAGE_DOS_HEADER::__data_size,0);
                 comboBox[CB_IMAGE_DOS_HEADER_e_magic]=createComboBox(ui->tableWidget_IMAGE_DOS_HEADER,XPE::getImageMagicsS(),SPE::TYPE_IMAGE_DOS_HEADER,N_IMAGE_DOS_HEADER::e_magic,XComboBoxEx::CBTYPE_NORMAL);
-                invWidget[INV_IMAGE_DOS_HEADER_e_lfanew]=createInvWidget(ui->tableWidget_IMAGE_DOS_HEADER,SPE::TYPE_IMAGE_DOS_HEADER,N_IMAGE_DOS_HEADER::e_magic);
+                invWidget[INV_IMAGE_DOS_HEADER_e_lfanew]=createInvWidget(ui->tableWidget_IMAGE_DOS_HEADER,SPE::TYPE_IMAGE_DOS_HEADER,N_IMAGE_DOS_HEADER::e_lfanew,InvWidget::TYPE_HEX);
             }
 
             blockSignals(true);
@@ -858,6 +862,8 @@ void PEWidget::reloadData()
             lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_lfanew]->setValue(msdosheaderex.e_lfanew);
 
             comboBox[CB_IMAGE_DOS_HEADER_e_magic]->setValue(msdosheaderex.e_magic);
+
+            invWidget[INV_IMAGE_DOS_HEADER_e_lfanew]->setData(&pe,msdosheaderex.e_lfanew,0);
 
             blockSignals(false);
         }

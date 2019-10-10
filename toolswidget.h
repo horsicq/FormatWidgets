@@ -36,10 +36,13 @@ class ToolsWidget : public QWidget
 
 public:
     explicit ToolsWidget(QWidget *parent=nullptr);
+    ~ToolsWidget();
+
     void setData(QIODevice *pDevice,FormatWidget::OPTIONS *pOptions);
     void setEdited(bool bState);
     void setReadonly(bool bState);
-    ~ToolsWidget();
+    void reload();
+
 
 signals:
     void editState(bool bState);

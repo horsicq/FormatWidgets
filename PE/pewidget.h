@@ -52,6 +52,7 @@ private slots:
     void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
     void widgetValueChanged(quint64 nValue);
     void widgetAction();
+
     void on_checkBoxReadonly_toggled(bool checked);
 
     void editSectionHeader();

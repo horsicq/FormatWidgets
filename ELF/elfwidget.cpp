@@ -314,6 +314,7 @@ void ELFWidget::reloadData()
 
                 bInit[nData]=true;
             }
+            ui->widgetHex->reload();
         }
         else if(nData==SELF::TYPE_Elf_Ehdr)
         {

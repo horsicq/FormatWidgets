@@ -34,6 +34,7 @@
 #include "xdatetimeeditx.h"
 #include "qhexview.h"
 #include "invwidget.h"
+#include "dialoghex.h"
 
 class FormatWidget : public QWidget
 {
@@ -123,7 +124,7 @@ public:
 
     void _blockSignals(QObject **ppObjects,int nCount,bool bState);
     XComboBoxEx *createComboBox(QTableWidget *pTableWidget, QMap<quint64,QString> mapData, int type, int nData, XComboBoxEx::CBTYPE cbtype,quint64 nMask=0);
-    InvWidget *createInvWidget(QTableWidget *pTableWidget, int type, int nData);
+    InvWidget *createInvWidget(QTableWidget *pTableWidget, int type, int nData,InvWidget::TYPE widgetType);
     XDateTimeEditX *createTimeDateEdit(QTableWidget *pTableWidget,int type, int nData,XDateTimeEditX::DT_TYPE dtType);
     QPushButton *createPushButton(QTableWidget *pTableWidget,int type, int nData,QString sText);
     int getSymbolWidth();
@@ -143,10 +144,10 @@ public slots:
     void hexValueChanged(quint64 nValue);
     void textValueChanged(QString sText);
     void setEdited(bool bState);
-    void dialogHex();
 
 private slots:
     virtual void reloadData()=0;
+    void showHex(qint64 nOffset,qint64 nSize);
 
 private:
     bool saveBackup();
