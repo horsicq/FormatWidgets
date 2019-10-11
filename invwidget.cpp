@@ -19,17 +19,18 @@
 // SOFTWARE.
 //
 #include "invwidget.h"
-#include "ui_invwidget.h"
 
 InvWidget::InvWidget(QWidget *parent, TYPE type) :
     QWidget(parent)
 {
+    pHexPushButton=0;
+
     QHBoxLayout *pLayot=new QHBoxLayout(this);
     pLayot->setContentsMargins(0,0,0,0);
 
     if(type==TYPE_HEX)
     {
-        QPushButton *pHexPushButton=new QPushButton(tr("HEX"),this);
+        pHexPushButton=new QPushButton(tr("HEX"),this);
 
         connect(pHexPushButton,SIGNAL(clicked()),this,SLOT(showHexSlot()));
 
@@ -47,13 +48,48 @@ InvWidget::~InvWidget()
 
 }
 
-void InvWidget::setData(XBinary *pBinary, qint64 nOffset, qint64 nSize)
+void InvWidget::setOffsetAndSize(XBinary *pBinary, qint64 nOffset, qint64 nSize)
 {
-    // TODO Check
-    setEnabled(pBinary->isOffsetValid(nOffset));
+    if(pBinary->isOffsetValid(nOffset))
+    {
+        _setEnabled(true);
 
-    this->nOffset=nOffset;
-    this->nSize=nSize;
+        this->nOffset=nOffset;
+        this->nSize=nSize;
+    }
+    else
+    {
+        _setEnabled(false);
+
+        this->nOffset=0;
+        this->nSize=0;
+    }
+}
+
+void InvWidget::setAddressAndSize(XBinary *pBinary, qint64 nAddress, qint64 nSize)
+{
+    if(pBinary->isAddressValid(nAddress))
+    {
+        _setEnabled(true);
+
+        this->nOffset=pBinary->addressToOffset(nAddress);
+        this->nSize=nSize;
+    }
+    else
+    {
+        _setEnabled(false);
+
+        this->nOffset=0;
+        this->nSize=0;
+    }
+}
+
+void InvWidget::_setEnabled(bool bState)
+{
+    if(pHexPushButton)
+    {
+        pHexPushButton->setEnabled(bState);
+    }
 }
 
 void InvWidget::showHexSlot()

@@ -276,7 +276,7 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                             break;
 
                         case N_IMAGE_DOS_HEADER::e_lfanew:
-                            invWidget[INV_IMAGE_DOS_HEADER_e_lfanew]->setData(&pe,(quint32)nValue,0);
+                            invWidget[INV_IMAGE_DOS_HEADER_e_lfanew]->setOffsetAndSize(&pe,(quint32)nValue,0);
                             pe.set_e_lfanew((quint32)nValue);
                             break;
                     }
@@ -305,10 +305,11 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
 
                         case N_IMAGE_FILE_HEADER::TimeDateStamp:
                             pe.setFileHeader_TimeDateStamp((quint32)nValue);
-                            dateTimeEdit[TD_FileHeader_TimeDateStamp]->setValue(nValue);
+                            dateTimeEdit[TD_IMAGE_FILE_HEADER_TimeDateStamp]->setValue(nValue);
                             break;
 
                         case N_IMAGE_FILE_HEADER::PointerToSymbolTable:
+                            invWidget[INV_IMAGE_FILE_HEADER_PointerToSymbolTable]->setAddressAndSize(&pe,pe.getBaseAddress()+(quint32)nValue,0);
                             pe.setFileHeader_PointerToSymbolTable((quint32)nValue);
                             break;
 
@@ -791,6 +792,7 @@ void PEWidget::editSectionHeader()
         connect(&dsh,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
 
         dsh.exec();
+
         reloadData();
     }
 }
@@ -863,7 +865,7 @@ void PEWidget::reloadData()
 
             comboBox[CB_IMAGE_DOS_HEADER_e_magic]->setValue(msdosheaderex.e_magic);
 
-            invWidget[INV_IMAGE_DOS_HEADER_e_lfanew]->setData(&pe,msdosheaderex.e_lfanew,0);
+            invWidget[INV_IMAGE_DOS_HEADER_e_lfanew]->setOffsetAndSize(&pe,msdosheaderex.e_lfanew,0);
 
             blockSignals(false);
         }
@@ -892,7 +894,8 @@ void PEWidget::reloadData()
                 comboBox[CB_IMAGE_FILE_HEADER_Machine]=createComboBox(ui->tableWidget_IMAGE_FILE_HEADER,XPE::getImageFileHeaderMachinesS(),SPE::TYPE_IMAGE_FILE_HEADER,N_IMAGE_FILE_HEADER::Machine,XComboBoxEx::CBTYPE_NORMAL);
                 comboBox[CB_IMAGE_FILE_HEADER_Characteristics]=createComboBox(ui->tableWidget_IMAGE_FILE_HEADER,XPE::getImageFileHeaderCharacteristicsS(),SPE::TYPE_IMAGE_FILE_HEADER,N_IMAGE_FILE_HEADER::Characteristics,XComboBoxEx::CBTYPE_FLAGS);
 
-                dateTimeEdit[TD_FileHeader_TimeDateStamp]=createTimeDateEdit(ui->tableWidget_IMAGE_FILE_HEADER,SPE::TYPE_IMAGE_FILE_HEADER,N_IMAGE_FILE_HEADER::TimeDateStamp,XDateTimeEditX::DT_TYPE_POSIX);
+                dateTimeEdit[TD_IMAGE_FILE_HEADER_TimeDateStamp]=createTimeDateEdit(ui->tableWidget_IMAGE_FILE_HEADER,SPE::TYPE_IMAGE_FILE_HEADER,N_IMAGE_FILE_HEADER::TimeDateStamp,XDateTimeEditX::DT_TYPE_POSIX);
+                invWidget[INV_IMAGE_FILE_HEADER_PointerToSymbolTable]=createInvWidget(ui->tableWidget_IMAGE_FILE_HEADER,SPE::TYPE_IMAGE_FILE_HEADER,N_IMAGE_FILE_HEADER::PointerToSymbolTable,InvWidget::TYPE_HEX);
             }
 
             blockSignals(true);
@@ -909,7 +912,9 @@ void PEWidget::reloadData()
 
             comboBox[CB_IMAGE_FILE_HEADER_Machine]->setValue(fileheader.Machine);
             comboBox[CB_IMAGE_FILE_HEADER_Characteristics]->setValue(fileheader.Characteristics);
-            dateTimeEdit[TD_FileHeader_TimeDateStamp]->setValue(fileheader.TimeDateStamp);
+            dateTimeEdit[TD_IMAGE_FILE_HEADER_TimeDateStamp]->setValue(fileheader.TimeDateStamp);
+
+            invWidget[INV_IMAGE_FILE_HEADER_PointerToSymbolTable]->setAddressAndSize(&pe,pe.getBaseAddress()+fileheader.PointerToSymbolTable,0);
 
             blockSignals(false);
         }

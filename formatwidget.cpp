@@ -152,6 +152,8 @@ void FormatWidget::showHex(qint64 nOffset, qint64 nSize)
     DialogHex dialogHex(this,pDevice,&hexOptions);
 
     dialogHex.exec();
+
+    reloadData();
 }
 
 bool FormatWidget::saveBackup()

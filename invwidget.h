@@ -39,7 +39,9 @@ public:
     explicit InvWidget(QWidget *parent,TYPE type);
     ~InvWidget();
 
-    void setData(XBinary *pBinary,qint64 nOffset,qint64 nSize);
+    void setOffsetAndSize(XBinary *pBinary,qint64 nOffset,qint64 nSize);
+    void setAddressAndSize(XBinary *pBinary, qint64 nAddress, qint64 nSize);
+    void _setEnabled(bool bState);
 
 private slots:
     void showHexSlot();
@@ -50,6 +52,7 @@ signals:
 private:
     qint64 nOffset;
     qint64 nSize;
+    QPushButton *pHexPushButton;
 };
 
 #endif // INVWIDGET_H

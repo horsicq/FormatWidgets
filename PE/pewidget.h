@@ -91,7 +91,7 @@ private:
 
     enum TD
     {
-        TD_FileHeader_TimeDateStamp,
+        TD_IMAGE_FILE_HEADER_TimeDateStamp,
         TD_Export_TimeDateStamp,
         __TD_size
     };
@@ -99,6 +99,7 @@ private:
     enum INV
     {
         INV_IMAGE_DOS_HEADER_e_lfanew,
+        INV_IMAGE_FILE_HEADER_PointerToSymbolTable,
         __INV_size
     };
 
