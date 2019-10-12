@@ -61,6 +61,7 @@ private slots:
     void loadPhdr(int nNumber);
 
 private:
+    // TODO rename
     enum CB
     {
         CB_Elf_Ehdr_iclass=0,
@@ -72,10 +73,17 @@ private:
         __CB_size
     };
 
+    enum INV
+    {
+        INV_CB_Elf_e_entry,
+        __INV_size
+    };
+
     Ui::ELFWidget *ui;
 
     XLineEditHEX *lineEdit_Elf_Ehdr[N_Elf_Ehdr::__data_size];
     XComboBoxEx *comboBox[__CB_size];
+    InvWidget *invWidget[__INV_size];
 
     bool bInit[SELF::__TYPE_size];
 

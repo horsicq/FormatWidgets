@@ -48,6 +48,7 @@ void ELFWidget::clear()
     memset(bInit,0,sizeof bInit);
     memset(lineEdit_Elf_Ehdr,0,sizeof lineEdit_Elf_Ehdr);
     memset(comboBox,0,sizeof comboBox);
+    memset(invWidget,0,sizeof invWidget);
 
     pSubDeviceSection=nullptr;
     pSubDeviceProgram=nullptr;
@@ -212,6 +213,7 @@ bool ELFWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, i
                             break;
 
                         case N_Elf_Ehdr::e_entry:
+                            invWidget[INV_CB_Elf_e_entry]->setAddressAndSize(&elf,elf.is64()?((quint64)nValue):((quint32)nValue),0);
                             (elf.is64()?(elf.setHdr64_entry((quint64)nValue)):(elf.setHdr32_entry((quint32)nValue)));
                             break;
 
@@ -327,6 +329,8 @@ void ELFWidget::reloadData()
                 comboBox[CB_Elf_Ehdr_iosabi]=createComboBox(ui->tableWidget_Elf_Ehdr,XELF::getIndentOsabisS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::ei_osabi,XComboBoxEx::CBTYPE_NORMAL);
                 comboBox[CB_Elf_Ehdr_type]=createComboBox(ui->tableWidget_Elf_Ehdr,XELF::getTypesS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::e_type,XComboBoxEx::CBTYPE_NORMAL);
                 comboBox[CB_Elf_Ehdr_machine]=createComboBox(ui->tableWidget_Elf_Ehdr,XELF::getMachinesS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::e_machine,XComboBoxEx::CBTYPE_NORMAL);
+
+                invWidget[INV_CB_Elf_e_entry]=createInvWidget(ui->tableWidget_Elf_Ehdr,SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::e_entry,InvWidget::TYPE_HEX);
             }
 
             blockSignals(true);
@@ -368,6 +372,8 @@ void ELFWidget::reloadData()
 
                 comboBox[CB_Elf_Ehdr_type]->setValue(elf.getHdr64_type());
                 comboBox[CB_Elf_Ehdr_machine]->setValue(elf.getHdr64_machine());
+
+                invWidget[INV_CB_Elf_e_entry]->setAddressAndSize(&elf,elf.getHdr64_entry(),0);
             }
             else
             {
@@ -387,6 +393,8 @@ void ELFWidget::reloadData()
 
                 comboBox[CB_Elf_Ehdr_type]->setValue(elf.getHdr32_type());
                 comboBox[CB_Elf_Ehdr_machine]->setValue(elf.getHdr32_machine());
+
+                invWidget[INV_CB_Elf_e_entry]->setAddressAndSize(&elf,elf.getHdr32_entry(),0);
             }
 
             comboBox[CB_Elf_Ehdr_iclass]->setValue(elf.getIdent_class());
