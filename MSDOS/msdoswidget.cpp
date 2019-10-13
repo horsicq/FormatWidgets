@@ -163,74 +163,6 @@ bool MSDOSWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,
                         case N_DOS_HEADER::e_ovno:
                             msdos.set_e_ovno((quint16)nValue);
                             break;
-
-                        case N_DOS_HEADER::e_res_0:
-                            msdos.set_e_res(0,(quint16)nValue);
-                            break;
-
-                        case N_DOS_HEADER::e_res_1:
-                            msdos.set_e_res(1,(quint16)nValue);
-                            break;
-
-                        case N_DOS_HEADER::e_res_2:
-                            msdos.set_e_res(2,(quint16)nValue);
-                            break;
-
-                        case N_DOS_HEADER::e_res_3:
-                            msdos.set_e_res(3,(quint16)nValue);
-                            break;
-
-                        case N_DOS_HEADER::e_oemid:
-                            msdos.set_e_oemid((quint16)nValue);
-                            break;
-
-                        case N_DOS_HEADER::e_oeminfo:
-                            msdos.set_e_oeminfo((quint16)nValue);
-                            break;
-
-                        case N_DOS_HEADER::e_res2_0:
-                            msdos.set_e_res2(0,(quint16)nValue);
-                            break;
-
-                        case N_DOS_HEADER::e_res2_1:
-                            msdos.set_e_res2(1,(quint16)nValue);
-                            break;
-
-                        case N_DOS_HEADER::e_res2_2:
-                            msdos.set_e_res2(2,(quint16)nValue);
-                            break;
-
-                        case N_DOS_HEADER::e_res2_3:
-                            msdos.set_e_res2(3,(quint16)nValue);
-                            break;
-
-                        case N_DOS_HEADER::e_res2_4:
-                            msdos.set_e_res2(4,(quint16)nValue);
-                            break;
-
-                        case N_DOS_HEADER::e_res2_5:
-                            msdos.set_e_res2(5,(quint16)nValue);
-                            break;
-
-                        case N_DOS_HEADER::e_res2_6:
-                            msdos.set_e_res2(6,(quint16)nValue);
-                            break;
-
-                        case N_DOS_HEADER::e_res2_7:
-                            msdos.set_e_res2(7,(quint16)nValue);
-                            break;
-
-                        case N_DOS_HEADER::e_res2_8:
-                            msdos.set_e_res2(8,(quint16)nValue);
-                            break;
-
-                        case N_DOS_HEADER::e_res2_9:
-                            msdos.set_e_res2(9,(quint16)nValue);
-                            break;
-
-                        case N_DOS_HEADER::e_lfanew:
-                            msdos.set_e_lfanew((quint32)nValue);
-                            break;
                     }
 
                     break;
@@ -323,23 +255,6 @@ void MSDOSWidget::reloadData()
             lineEdit_DOS_HEADER[N_DOS_HEADER::e_cs]->setValue(msdosheaderex.e_cs);
             lineEdit_DOS_HEADER[N_DOS_HEADER::e_lfarlc]->setValue(msdosheaderex.e_lfarlc);
             lineEdit_DOS_HEADER[N_DOS_HEADER::e_ovno]->setValue(msdosheaderex.e_ovno);
-            lineEdit_DOS_HEADER[N_DOS_HEADER::e_res_0]->setValue(msdosheaderex.e_res[0]);
-            lineEdit_DOS_HEADER[N_DOS_HEADER::e_res_1]->setValue(msdosheaderex.e_res[1]);
-            lineEdit_DOS_HEADER[N_DOS_HEADER::e_res_2]->setValue(msdosheaderex.e_res[2]);
-            lineEdit_DOS_HEADER[N_DOS_HEADER::e_res_3]->setValue(msdosheaderex.e_res[3]);
-            lineEdit_DOS_HEADER[N_DOS_HEADER::e_oemid]->setValue(msdosheaderex.e_oemid);
-            lineEdit_DOS_HEADER[N_DOS_HEADER::e_oeminfo]->setValue(msdosheaderex.e_oeminfo);
-            lineEdit_DOS_HEADER[N_DOS_HEADER::e_res2_0]->setValue(msdosheaderex.e_res2[0]);
-            lineEdit_DOS_HEADER[N_DOS_HEADER::e_res2_1]->setValue(msdosheaderex.e_res2[1]);
-            lineEdit_DOS_HEADER[N_DOS_HEADER::e_res2_2]->setValue(msdosheaderex.e_res2[2]);
-            lineEdit_DOS_HEADER[N_DOS_HEADER::e_res2_3]->setValue(msdosheaderex.e_res2[3]);
-            lineEdit_DOS_HEADER[N_DOS_HEADER::e_res2_4]->setValue(msdosheaderex.e_res2[4]);
-            lineEdit_DOS_HEADER[N_DOS_HEADER::e_res2_5]->setValue(msdosheaderex.e_res2[5]);
-            lineEdit_DOS_HEADER[N_DOS_HEADER::e_res2_6]->setValue(msdosheaderex.e_res2[6]);
-            lineEdit_DOS_HEADER[N_DOS_HEADER::e_res2_7]->setValue(msdosheaderex.e_res2[7]);
-            lineEdit_DOS_HEADER[N_DOS_HEADER::e_res2_8]->setValue(msdosheaderex.e_res2[8]);
-            lineEdit_DOS_HEADER[N_DOS_HEADER::e_res2_9]->setValue(msdosheaderex.e_res2[9]);
-            lineEdit_DOS_HEADER[N_DOS_HEADER::e_lfanew]->setValue(msdosheaderex.e_lfanew);
 
             comboBox[CB_DOS_HEADER_e_magic]->setValue(msdosheaderex.e_magic);
 

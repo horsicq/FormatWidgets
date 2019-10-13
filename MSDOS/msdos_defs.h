@@ -53,23 +53,6 @@ enum DATA
     e_cs,
     e_lfarlc,
     e_ovno,
-    e_res_0,
-    e_res_1,
-    e_res_2,
-    e_res_3,
-    e_oemid,
-    e_oeminfo,
-    e_res2_0,
-    e_res2_1,
-    e_res2_2,
-    e_res2_3,
-    e_res2_4,
-    e_res2_5,
-    e_res2_6,
-    e_res2_7,
-    e_res2_8,
-    e_res2_9,
-    e_lfanew,
     __data_size
 };
 

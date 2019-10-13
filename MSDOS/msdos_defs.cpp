@@ -38,22 +38,5 @@ const FormatWidget::HEADER_RECORD records[]=
     {e_cs,          "e_cs",         2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
     {e_lfarlc,      "e_lfarlc",     2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
     {e_ovno,        "e_ovno",       2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
-    {e_res_0,       "e_res_0",      2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
-    {e_res_1,       "e_res_1",      2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
-    {e_res_2,       "e_res_2",      2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
-    {e_res_3,       "e_res_3",      2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
-    {e_oemid,       "e_oemid",      2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
-    {e_oeminfo,     "e_oeminfo",    2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
-    {e_res2_0,      "e_res2_0",     2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
-    {e_res2_1,      "e_res2_1",     2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
-    {e_res2_2,      "e_res2_2",     2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
-    {e_res2_3,      "e_res2_3",     2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
-    {e_res2_4,      "e_res2_4",     2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
-    {e_res2_5,      "e_res2_5",     2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
-    {e_res2_6,      "e_res2_6",     2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
-    {e_res2_7,      "e_res2_7",     2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
-    {e_res2_8,      "e_res2_8",     2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
-    {e_res2_9,      "e_res2_9",     2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
-    {e_lfanew,      "e_lfanew",     4,      "LONG",         FormatWidget::VAL_TYPE_OFFSET}
 };
 }
