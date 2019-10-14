@@ -100,6 +100,7 @@ private:
     {
         INV_IMAGE_DOS_HEADER_e_lfanew,
         INV_IMAGE_FILE_HEADER_PointerToSymbolTable,
+        INV_IMAGE_OPTIONAL_HEADER_AddressOfEntryPoint,
         __INV_size
     };
 
