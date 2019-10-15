@@ -524,18 +524,22 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                     switch(nNdata)
                     {
                         case N_IMAGE_TLS::StartAddressOfRawData:
+                            invWidget[INV_IMAGE_TLS_StartAddressOfRawData]->setAddressAndSize(&pe,(quint64)nValue,0);
                             pe.setTLS_StartAddressOfRawData((quint64)nValue);
                             break;
 
                         case N_IMAGE_TLS::EndAddressOfRawData:
+                            invWidget[INV_IMAGE_TLS_EndAddressOfRawData]->setAddressAndSize(&pe,(quint64)nValue,0);
                             pe.setTLS_EndAddressOfRawData((quint64)nValue);
                             break;
 
                         case N_IMAGE_TLS::AddressOfIndex:
+                            invWidget[INV_IMAGE_TLS_AddressOfIndex]->setAddressAndSize(&pe,(quint64)nValue,0);
                             pe.setTLS_AddressOfIndex((quint64)nValue);
                             break;
 
                         case N_IMAGE_TLS::AddressOfCallBacks:
+                            invWidget[INV_IMAGE_TLS_AddressOfCallBacks]->setAddressAndSize(&pe,(quint64)nValue,0);
                             pe.setTLS_AddressOfCallBacks((quint64)nValue);
                             break;
 
@@ -1341,6 +1345,11 @@ void PEWidget::reloadData()
             if(!bInit[nData])
             {
                 bInit[nData]=createHeaderTable(SPE::TYPE_TLS,ui->tableWidget_TLS,pe.is64()?(N_IMAGE_TLS::records64):(N_IMAGE_TLS::records32),lineEdit_TLS,N_IMAGE_TLS::__data_size,0);
+
+                invWidget[INV_IMAGE_TLS_AddressOfCallBacks]=createInvWidget(ui->tableWidget_TLS,SPE::TYPE_TLS,N_IMAGE_TLS::AddressOfCallBacks,InvWidget::TYPE_HEX);
+                invWidget[INV_IMAGE_TLS_AddressOfIndex]=createInvWidget(ui->tableWidget_TLS,SPE::TYPE_TLS,N_IMAGE_TLS::AddressOfIndex,InvWidget::TYPE_HEX);
+                invWidget[INV_IMAGE_TLS_EndAddressOfRawData]=createInvWidget(ui->tableWidget_TLS,SPE::TYPE_TLS,N_IMAGE_TLS::EndAddressOfRawData,InvWidget::TYPE_HEX);
+                invWidget[INV_IMAGE_TLS_StartAddressOfRawData]=createInvWidget(ui->tableWidget_TLS,SPE::TYPE_TLS,N_IMAGE_TLS::StartAddressOfRawData,InvWidget::TYPE_HEX);
             }
 
             blockSignals(true);
@@ -1354,6 +1363,11 @@ void PEWidget::reloadData()
                 lineEdit_TLS[N_IMAGE_TLS::AddressOfCallBacks]->setValue(tls64.AddressOfCallBacks);
                 lineEdit_TLS[N_IMAGE_TLS::SizeOfZeroFill]->setValue(tls64.SizeOfZeroFill);
                 lineEdit_TLS[N_IMAGE_TLS::Characteristics]->setValue(tls64.Characteristics);
+
+                invWidget[INV_IMAGE_TLS_AddressOfCallBacks]->setAddressAndSize(&pe,tls64.AddressOfCallBacks,0);
+                invWidget[INV_IMAGE_TLS_AddressOfIndex]->setAddressAndSize(&pe,tls64.AddressOfIndex,0);
+                invWidget[INV_IMAGE_TLS_EndAddressOfRawData]->setAddressAndSize(&pe,tls64.EndAddressOfRawData,0);
+                invWidget[INV_IMAGE_TLS_StartAddressOfRawData]->setAddressAndSize(&pe,tls64.StartAddressOfRawData,0);
             }
             else
             {
@@ -1364,6 +1378,11 @@ void PEWidget::reloadData()
                 lineEdit_TLS[N_IMAGE_TLS::AddressOfCallBacks]->setValue(tls32.AddressOfCallBacks);
                 lineEdit_TLS[N_IMAGE_TLS::SizeOfZeroFill]->setValue(tls32.SizeOfZeroFill);
                 lineEdit_TLS[N_IMAGE_TLS::Characteristics]->setValue(tls32.Characteristics);
+
+                invWidget[INV_IMAGE_TLS_AddressOfCallBacks]->setAddressAndSize(&pe,tls32.AddressOfCallBacks,0);
+                invWidget[INV_IMAGE_TLS_AddressOfIndex]->setAddressAndSize(&pe,tls32.AddressOfIndex,0);
+                invWidget[INV_IMAGE_TLS_EndAddressOfRawData]->setAddressAndSize(&pe,tls32.EndAddressOfRawData,0);
+                invWidget[INV_IMAGE_TLS_StartAddressOfRawData]->setAddressAndSize(&pe,tls32.StartAddressOfRawData,0);
             }
 
             blockSignals(false);
