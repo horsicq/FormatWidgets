@@ -491,6 +491,7 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                             break;
 
                         case N_IMAGE_EXPORT::Name:
+                            invWidget[INV_IMAGE_EXPORT_Name]->setAddressAndSize(&pe,pe.getBaseAddress()+(quint32)nValue,0);
                             pe.setExportDirectory_Name((quint32)nValue);
                             break;
 
@@ -507,14 +508,17 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                             break;
 
                         case N_IMAGE_EXPORT::AddressOfFunctions:
+                            invWidget[INV_IMAGE_EXPORT_AddressOfFunctions]->setAddressAndSize(&pe,pe.getBaseAddress()+(quint32)nValue,0);
                             pe.setExportDirectory_AddressOfFunctions((quint32)nValue);
                             break;
 
                         case N_IMAGE_EXPORT::AddressOfNames:
+                            invWidget[INV_IMAGE_EXPORT_AddressOfNames]->setAddressAndSize(&pe,pe.getBaseAddress()+(quint32)nValue,0);
                             pe.setExportDirectory_AddressOfNames((quint32)nValue);
                             break;
 
                         case N_IMAGE_EXPORT::AddressOfNameOrdinals:
+                            invWidget[INV_IMAGE_EXPORT_AddressOfNameOrdinals]->setAddressAndSize(&pe,pe.getBaseAddress()+(quint32)nValue,0);
                             pe.setExportDirectory_AddressOfNameOrdinals((quint32)nValue);
                             break;
                     }
@@ -1126,6 +1130,11 @@ void PEWidget::reloadData()
                 bInit[nData]=createHeaderTable(SPE::TYPE_EXPORT,ui->tableWidget_ExportHeader,N_IMAGE_EXPORT::records,lineEdit_EXPORT,N_IMAGE_EXPORT::__data_size,0);
                 createSectionTable(SPE::TYPE_EXPORT_FUNCTION,ui->tableWidget_ExportFunctions,N_IMAGE_EXPORT_FUNCTION::records,N_IMAGE_EXPORT_FUNCTION::__data_size);
 
+                invWidget[INV_IMAGE_EXPORT_Name]=createInvWidget(ui->tableWidget_ExportHeader,SPE::TYPE_EXPORT,N_IMAGE_EXPORT::Name,InvWidget::TYPE_HEX);
+                invWidget[INV_IMAGE_EXPORT_AddressOfFunctions]=createInvWidget(ui->tableWidget_ExportHeader,SPE::TYPE_EXPORT,N_IMAGE_EXPORT::AddressOfFunctions,InvWidget::TYPE_HEX);
+                invWidget[INV_IMAGE_EXPORT_AddressOfNameOrdinals]=createInvWidget(ui->tableWidget_ExportHeader,SPE::TYPE_EXPORT,N_IMAGE_EXPORT::AddressOfNameOrdinals,InvWidget::TYPE_HEX);
+                invWidget[INV_IMAGE_EXPORT_AddressOfNames]=createInvWidget(ui->tableWidget_ExportHeader,SPE::TYPE_EXPORT,N_IMAGE_EXPORT::AddressOfNames,InvWidget::TYPE_HEX);
+
                 dateTimeEdit[TD_Export_TimeDateStamp]=createTimeDateEdit(ui->tableWidget_ExportHeader,SPE::TYPE_EXPORT,N_IMAGE_EXPORT::TimeDateStamp,XDateTimeEditX::DT_TYPE_POSIX);
             }
 
@@ -1146,6 +1155,11 @@ void PEWidget::reloadData()
             lineEdit_EXPORT[N_IMAGE_EXPORT::AddressOfNameOrdinals]->setValue(eh.directory.AddressOfNameOrdinals);
 
             dateTimeEdit[TD_Export_TimeDateStamp]->setValue(eh.directory.TimeDateStamp);
+
+            invWidget[INV_IMAGE_EXPORT_Name]->setAddressAndSize(&pe,pe.getBaseAddress()+eh.directory.Name,0);
+            invWidget[INV_IMAGE_EXPORT_AddressOfFunctions]->setAddressAndSize(&pe,pe.getBaseAddress()+eh.directory.AddressOfFunctions,0);
+            invWidget[INV_IMAGE_EXPORT_AddressOfNameOrdinals]->setAddressAndSize(&pe,pe.getBaseAddress()+eh.directory.AddressOfNameOrdinals,0);
+            invWidget[INV_IMAGE_EXPORT_AddressOfNames]->setAddressAndSize(&pe,pe.getBaseAddress()+eh.directory.AddressOfNames,0);
 
             int nCount=eh.listPositions.count();
             ui->tableWidget_ExportFunctions->setRowCount(nCount);

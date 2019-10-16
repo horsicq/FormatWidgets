@@ -105,6 +105,10 @@ private:
         INV_IMAGE_TLS_EndAddressOfRawData,
         INV_IMAGE_TLS_AddressOfIndex,
         INV_IMAGE_TLS_AddressOfCallBacks,
+        INV_IMAGE_EXPORT_Name,
+        INV_IMAGE_EXPORT_AddressOfFunctions,
+        INV_IMAGE_EXPORT_AddressOfNames,
+        INV_IMAGE_EXPORT_AddressOfNameOrdinals,
         __INV_size
     };
 
