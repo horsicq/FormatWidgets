@@ -109,6 +109,7 @@ private:
         INV_IMAGE_EXPORT_AddressOfFunctions,
         INV_IMAGE_EXPORT_AddressOfNames,
         INV_IMAGE_EXPORT_AddressOfNameOrdinals,
+        INV_IMAGE_LOADCONFIG_SecurityCookie,
         __INV_size
     };
 
