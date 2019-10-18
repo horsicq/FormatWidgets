@@ -198,11 +198,11 @@ bool FormatWidget::createHeaderTable(int type, QTableWidget *pTableWidget, const
 
     for(int i=0; i<nRecordCount; i++)
     {
-        QTableWidgetItem *newItemName = new QTableWidgetItem;
+        QTableWidgetItem *newItemName=new QTableWidgetItem;
         newItemName->setText(pRecords[i].pszName);
         pTableWidget->setItem(i,HEADER_COLUMN_NAME,newItemName);
 
-        QTableWidgetItem *newItemType = new QTableWidgetItem;
+        QTableWidgetItem *newItemType=new QTableWidgetItem;
         newItemType->setText(pRecords[i].pszType);
         pTableWidget->setItem(i,HEADER_COLUMN_TYPE,newItemType);
 
@@ -256,11 +256,11 @@ bool FormatWidget::createDirectoryTable(int type, QTableWidget *pTableWidget, co
 
     for(int i=0; i<nRecordCount; i++)
     {
-        QTableWidgetItem *newItemNumber = new QTableWidgetItem;
+        QTableWidgetItem *newItemNumber=new QTableWidgetItem;
         newItemNumber->setText(QString("%1").arg(i));
         pTableWidget->setItem(i,DIRECTORY_COLUMN_NUMBER,newItemNumber);
 
-        QTableWidgetItem *newItemName = new QTableWidgetItem;
+        QTableWidgetItem *newItemName=new QTableWidgetItem;
         newItemName->setText(pRecords[i].pszName);
         pTableWidget->setItem(i,DIRECTORY_COLUMN_NAME,newItemName);
 
