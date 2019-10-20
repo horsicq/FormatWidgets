@@ -43,7 +43,6 @@ public:
     void setReadonly(bool bState);
     void reload();
 
-
 signals:
     void editState(bool bState);
 

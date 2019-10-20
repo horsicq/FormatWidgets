@@ -10,7 +10,7 @@ HEADERS += \
 SOURCES += \
     $$PWD/searchstringswidget.cpp
 
-!contains(XCONFIG, dialogsearch) {
-    XCONFIG += dialogsearch
+!contains(XCONFIG, dialogsearchstrings) {
+    XCONFIG += dialogsearchstrings
     include(../../FormatDialogs/dialogsearchstrings.pri)
 }
