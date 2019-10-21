@@ -329,6 +329,19 @@ enum DATA
 extern const FormatWidget::HEADER_RECORD records[__data_size];
 }
 
+namespace N_IMAGE_EXCEPTIONS
+{
+enum DATA
+{
+    BeginAddress=0,
+    EndAddress,
+    UnwindInfoAddress,
+    __data_size
+};
+
+extern const FormatWidget::HEADER_RECORD records[__data_size];
+}
+
 namespace N_IMAGE_RELOCS_POSITION
 {
 enum DATA

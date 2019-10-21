@@ -320,6 +320,16 @@ const FormatWidget::HEADER_RECORD records[]=
 };
 }
 
+namespace N_IMAGE_EXCEPTIONS
+{
+const FormatWidget::HEADER_RECORD records[]=
+{
+    {BeginAddress,              "BeginAddress",                 4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
+    {EndAddress,                "EndAddress",                   4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
+    {UnwindInfoAddress,         "UnwindInfoAddress",            4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
+};
+}
+
 namespace N_IMAGE_RELOCS_POSITION
 {
 const FormatWidget::HEADER_RECORD records[]=

@@ -52,6 +52,7 @@ void PEWidget::clear()
     memset(lineEdit_IMAGE_OPTIONAL_HEADER,0,sizeof lineEdit_IMAGE_OPTIONAL_HEADER);
     memset(lineEdit_TLS,0,sizeof lineEdit_TLS);
     memset(lineEdit_LoadConfig,0,sizeof lineEdit_LoadConfig);
+    memset(lineEdit_EXPORT,0,sizeof lineEdit_EXPORT);
     memset(comboBox,0,sizeof comboBox);
     memset(pushButton,0,sizeof pushButton);
     memset(dateTimeEdit,0,sizeof dateTimeEdit);
@@ -656,6 +657,7 @@ void PEWidget::setReadonly(bool bState)
     setLineEditsReadOnly(lineEdit_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::__data_size,bState);
     setLineEditsReadOnly(lineEdit_TLS,N_IMAGE_TLS::__data_size,bState);
     setLineEditsReadOnly(lineEdit_LoadConfig,N_IMAGE_LOADCONFIG::__data_size,bState);
+    setLineEditsReadOnly(lineEdit_EXPORT,N_IMAGE_EXPORT::__data_size,bState);
 //    setLineEditsReadOnly(lineEdit_IMAGE_DIRECTORY_ADDRESS,N_IMAGE_DIRECORIES::__data_size,bState);
 //    setLineEditsReadOnly(lineEdit_IMAGE_DIRECTORY_SIZE,N_IMAGE_DIRECORIES::__data_size,bState);
 
@@ -677,6 +679,7 @@ void PEWidget::blockSignals(bool bState)
     _blockSignals((QObject **)lineEdit_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::__data_size,bState);
     _blockSignals((QObject **)lineEdit_TLS,N_IMAGE_TLS::__data_size,bState);
     _blockSignals((QObject **)lineEdit_LoadConfig,N_IMAGE_LOADCONFIG::__data_size,bState);
+    _blockSignals((QObject **)lineEdit_EXPORT,N_IMAGE_EXPORT::__data_size,bState);
 //    _blockSignals((QObject **)lineEdit_IMAGE_DIRECTORY_ADDRESS,N_IMAGE_DIRECORIES::__data_size,bState);
 //    _blockSignals((QObject **)lineEdit_IMAGE_DIRECTORY_SIZE,N_IMAGE_DIRECORIES::__data_size,bState);
 
@@ -1316,9 +1319,23 @@ void PEWidget::reloadData()
         }
         else if(nData==SPE::TYPE_EXCEPTION)
         {
-            // TODO !!!
-            blockSignals(true);
-            blockSignals(false);
+            if(!bInit[nData])
+            {
+                bInit[nData]=createSectionTable(SPE::TYPE_EXCEPTION,ui->tableWidget_Exceptions,N_IMAGE_EXCEPTIONS::records,N_IMAGE_EXCEPTIONS::__data_size);
+            }
+
+            QList<XPE_DEF::S_IMAGE_RUNTIME_FUNCTION_ENTRY> listRFE=pe.getExceptionsList();
+            int nCount=listRFE.count();
+            ui->tableWidget_Exceptions->setRowCount(nCount);
+
+            for(int i=0; i<nCount; i++)
+            {
+                QTableWidgetItem *pItem=new QTableWidgetItem(XBinary::valueToHex(listRFE.at(i).BeginAddress));
+//                pItem->setData(Qt::UserRole,listRH.at(i).nOffset);
+                ui->tableWidget_Exceptions->setItem(i,N_IMAGE_EXCEPTIONS::BeginAddress,         pItem);
+                ui->tableWidget_Exceptions->setItem(i,N_IMAGE_EXCEPTIONS::EndAddress,           new QTableWidgetItem(XBinary::valueToHex(listRFE.at(i).EndAddress)));
+                ui->tableWidget_Exceptions->setItem(i,N_IMAGE_EXCEPTIONS::UnwindInfoAddress,    new QTableWidgetItem(XBinary::valueToHex(listRFE.at(i).DUMMYUNIONNAME.UnwindInfoAddress)));
+            }
         }
         else if(nData==SPE::TYPE_RELOCS)
         {
