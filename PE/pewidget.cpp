@@ -61,6 +61,7 @@ void PEWidget::clear()
     pSubDeviceSection=nullptr;
     pSubDeviceOverlay=nullptr;
     pSubDeviceResource=nullptr;
+    pSubDeviceException=nullptr;
 
     ui->checkBoxReadonly->setChecked(true);
 
@@ -1328,13 +1329,33 @@ void PEWidget::reloadData()
             int nCount=listRFE.count();
             ui->tableWidget_Exceptions->setRowCount(nCount);
 
+            qint64 nBaseAddress=pe.getBaseAddress();
+            QList<XBinary::MEMORY_MAP> listMM=pe.getMemoryMapList();
+
             for(int i=0; i<nCount; i++)
             {
                 QTableWidgetItem *pItem=new QTableWidgetItem(XBinary::valueToHex(listRFE.at(i).BeginAddress));
 //                pItem->setData(Qt::UserRole,listRH.at(i).nOffset);
+
+                pItem->setData(Qt::UserRole+SECTION_DATA_ADDRESS,listRFE.at(i).BeginAddress);
+                pItem->setData(Qt::UserRole+SECTION_DATA_SIZE,listRFE.at(i).EndAddress-listRFE.at(i).BeginAddress);
+                pItem->setData(Qt::UserRole+SECTION_DATA_OFFSET,pe.addressToOffset(&listMM,nBaseAddress+listRFE.at(i).BeginAddress));
+
                 ui->tableWidget_Exceptions->setItem(i,N_IMAGE_EXCEPTIONS::BeginAddress,         pItem);
                 ui->tableWidget_Exceptions->setItem(i,N_IMAGE_EXCEPTIONS::EndAddress,           new QTableWidgetItem(XBinary::valueToHex(listRFE.at(i).EndAddress)));
                 ui->tableWidget_Exceptions->setItem(i,N_IMAGE_EXCEPTIONS::UnwindInfoAddress,    new QTableWidgetItem(XBinary::valueToHex(listRFE.at(i).DUMMYUNIONNAME.UnwindInfoAddress)));
+            }
+
+            if(nCount)
+            {
+                if(ui->tableWidget_Exceptions->currentRow()==0)
+                {
+                    loadException(0);
+                }
+                else
+                {
+                    ui->tableWidget_Exceptions->setCurrentCell(0,0);
+                }
             }
         }
         else if(nData==SPE::TYPE_RELOCS)
@@ -1627,6 +1648,31 @@ void PEWidget::loadSection(int nNumber)
     connect(ui->widgetSectionHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
 }
 
+void PEWidget::loadException(int nNumber)
+{
+    qint64 nOffset=ui->tableWidget_Exceptions->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_OFFSET).toLongLong();
+    qint64 nSize=ui->tableWidget_Exceptions->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
+    qint64 nAddress=ui->tableWidget_Exceptions->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
+    //        qint64 nVSize=ui->tableWidget_Sections->item(currentRow,0)->data(Qt::UserRole+SECTION_DATA_VSIZE).toLongLong();
+
+    if(pSubDeviceException)
+    {
+        pSubDeviceException->close();
+        delete pSubDeviceException;
+    }
+
+    pSubDeviceException=new SubDevice(getDevice(),nOffset,nSize,this);
+
+    pSubDeviceException->open(getDevice()->openMode());
+
+    FormatWidget::OPTIONS hexOptions=*getOptions();
+    hexOptions.nImageBase=nAddress;
+
+    ui->widgetExceptionHex->setData(pSubDeviceException,&hexOptions);
+    ui->widgetExceptionHex->setEdited(isEdited());
+    connect(ui->widgetExceptionHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+}
+
 void PEWidget::on_tableWidget_ImportLibraries_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
 {
     Q_UNUSED(currentColumn)
@@ -1831,4 +1877,16 @@ void PEWidget::on_treeWidgetResource_currentItemChanged(QTreeWidgetItem *current
 void PEWidget::on_pushButtonReload_clicked()
 {
     reload();
+}
+
+void PEWidget::on_tableWidget_Exceptions_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
+{
+    Q_UNUSED(currentColumn)
+    Q_UNUSED(previousRow)
+    Q_UNUSED(previousColumn)
+
+    if(currentRow!=-1)
+    {
+        loadException(currentRow);
+    }
 }

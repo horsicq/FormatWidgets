@@ -61,6 +61,7 @@ private slots:
     void loadImportLibrary(int nNumber);
     void loadRelocs(int nNumber);
     void loadSection(int nNumber);
+    void loadException(int nNumber);
 
     void on_tableWidget_ImportLibraries_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     void on_tableWidget_Relocs_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
@@ -70,6 +71,8 @@ private slots:
 
     void on_treeWidgetResource_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
     void on_pushButtonReload_clicked();
+
+    void on_tableWidget_Exceptions_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
 
 private:
     enum CB
@@ -133,6 +136,7 @@ private:
     SubDevice *pSubDeviceSection;
     SubDevice *pSubDeviceOverlay;
     SubDevice *pSubDeviceResource;
+    SubDevice *pSubDeviceException;
 };
 
 #endif // PEWIDGET_H

@@ -587,6 +587,16 @@
           </attribute>
          </widget>
         </item>
+        <item>
+         <widget class="ToolsWidget" name="widgetExceptionHex" native="true">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
       <widget class="QWidget" name="page_Relocs">
