@@ -35,7 +35,7 @@ class MACHWidget : public FormatWidget
 
 public:
     MACHWidget(QWidget *parent=nullptr);
-    MACHWidget(QIODevice *pDevice, OPTIONS *pOptions, QWidget *parent=nullptr);
+    MACHWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *parent=nullptr);
     ~MACHWidget();
     virtual void clear();
     virtual void reload();
@@ -70,16 +70,22 @@ private:
         __CB_size
     };
 
+    enum SD
+    {
+        SD_SECTION=0,
+        SD_SEGMENT,
+        SD_COMMAND,
+        __SD_size
+    };
+
     Ui::MACHWidget *ui;
 
     XLineEditHEX *lineEdit_mach_header[N_mach_header::__data_size];
     XComboBoxEx *comboBox[__CB_size];
 
-    bool bInit[SMACH::__TYPE_size];
+    SubDevice *subDevice[__SD_size];
 
-    SubDevice *pSubDeviceCommand;
-    SubDevice *pSubDeviceSegment;
-    SubDevice *pSubDeviceSection;
+    bool bInit[SMACH::__TYPE_size];
 };
 
 #endif // MACHWIDGET_H

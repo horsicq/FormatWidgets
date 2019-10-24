@@ -30,7 +30,8 @@ HEADERS += \
     $$PWD/formatwidget.h \
     $$PWD/toolswidget.h \
     $$PWD/invwidget.h \
-    $$PWD/dialoghex.h
+    $$PWD/dialoghex.h \
+    $$PWD/formatwidget_def.h
 
 SOURCES += \
     $$PWD/formatwidget.cpp \

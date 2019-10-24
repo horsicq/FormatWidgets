@@ -222,25 +222,32 @@ const FormatWidget::HEADER_RECORD records64[]=
 
 namespace N_IMAGE_DIRECORIES
 {
-const FormatWidget::DIRECTORY_ENTRY_RECORD records[]=
+const FormatWidget::HEADER_RECORD records[]=
 {
-    {EXPORT,            "EXPORT",                   {4,4},    {"DWORD","DWORD"},        {FormatWidget::VAL_TYPE_RELADDRESS,FormatWidget::VAL_TYPE_SIZE}},
-    {IMPORT,            "IMPORT",                   {4,4},    {"DWORD","DWORD"},        {FormatWidget::VAL_TYPE_RELADDRESS,FormatWidget::VAL_TYPE_SIZE}},
-    {RESOURCE,          "RESOURCE",                 {4,4},    {"DWORD","DWORD"},        {FormatWidget::VAL_TYPE_RELADDRESS,FormatWidget::VAL_TYPE_SIZE}},
-    {EXCEPTION,         "EXCEPTION",                {4,4},    {"DWORD","DWORD"},        {FormatWidget::VAL_TYPE_RELADDRESS,FormatWidget::VAL_TYPE_SIZE}},
-    {SECURITY,          "SECURITY",                 {4,4},    {"DWORD","DWORD"},        {FormatWidget::VAL_TYPE_RELADDRESS,FormatWidget::VAL_TYPE_SIZE}}, // TODO Check
-    {BASERELOC,         "BASERELOC",                {4,4},    {"DWORD","DWORD"},        {FormatWidget::VAL_TYPE_RELADDRESS,FormatWidget::VAL_TYPE_SIZE}},
-    {DEBUG,             "DEBUG",                    {4,4},    {"DWORD","DWORD"},        {FormatWidget::VAL_TYPE_RELADDRESS,FormatWidget::VAL_TYPE_SIZE}},
-    {ARCHITECTURE,      "ARCHITECTURE",             {4,4},    {"DWORD","DWORD"},        {FormatWidget::VAL_TYPE_RELADDRESS,FormatWidget::VAL_TYPE_SIZE}},
-    {GLOBALPTR,         "GLOBALPTR",                {4,4},    {"DWORD","DWORD"},        {FormatWidget::VAL_TYPE_RELADDRESS,FormatWidget::VAL_TYPE_SIZE}},
-    {TLS,               "TLS",                      {4,4},    {"DWORD","DWORD"},        {FormatWidget::VAL_TYPE_RELADDRESS,FormatWidget::VAL_TYPE_SIZE}},
-    {LOAD_CONFIG,       "LOAD_CONFIG",              {4,4},    {"DWORD","DWORD"},        {FormatWidget::VAL_TYPE_RELADDRESS,FormatWidget::VAL_TYPE_SIZE}},
-    {BOUND_IMPORT,      "BOUND_IMPORT",             {4,4},    {"DWORD","DWORD"},        {FormatWidget::VAL_TYPE_RELADDRESS,FormatWidget::VAL_TYPE_SIZE}},
-    {IAT,               "IAT",                      {4,4},    {"DWORD","DWORD"},        {FormatWidget::VAL_TYPE_RELADDRESS,FormatWidget::VAL_TYPE_SIZE}},
-    {DELAY_IMPORT,      "DELAY_IMPORT",             {4,4},    {"DWORD","DWORD"},        {FormatWidget::VAL_TYPE_RELADDRESS,FormatWidget::VAL_TYPE_SIZE}},
-    {COM_DESCRIPTOR,    "COM_DESCRIPTOR",           {4,4},    {"DWORD","DWORD"},        {FormatWidget::VAL_TYPE_RELADDRESS,FormatWidget::VAL_TYPE_SIZE}},
-    {reserved,          "reserved",                 {4,4},    {"DWORD","DWORD"},        {FormatWidget::VAL_TYPE_RELADDRESS,FormatWidget::VAL_TYPE_SIZE}}
+    {Name,                  "Name",                     0,      "",             FormatWidget::VAL_TYPE_LABEL},
+    {Address,               "Address",                  4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
+    {Size,                  "Size",                     4,      "DWORD",        FormatWidget::VAL_TYPE_SIZE},
 };
+
+//const FormatWidget::DIRECTORY_ENTRY_RECORD records[]=
+//{
+//    {EXPORT,            "EXPORT",                   {4,4},    {"DWORD","DWORD"},        {FormatWidget::VAL_TYPE_RELADDRESS,FormatWidget::VAL_TYPE_SIZE}},
+//    {IMPORT,            "IMPORT",                   {4,4},    {"DWORD","DWORD"},        {FormatWidget::VAL_TYPE_RELADDRESS,FormatWidget::VAL_TYPE_SIZE}},
+//    {RESOURCE,          "RESOURCE",                 {4,4},    {"DWORD","DWORD"},        {FormatWidget::VAL_TYPE_RELADDRESS,FormatWidget::VAL_TYPE_SIZE}},
+//    {EXCEPTION,         "EXCEPTION",                {4,4},    {"DWORD","DWORD"},        {FormatWidget::VAL_TYPE_RELADDRESS,FormatWidget::VAL_TYPE_SIZE}},
+//    {SECURITY,          "SECURITY",                 {4,4},    {"DWORD","DWORD"},        {FormatWidget::VAL_TYPE_RELADDRESS,FormatWidget::VAL_TYPE_SIZE}}, // TODO Check
+//    {BASERELOC,         "BASERELOC",                {4,4},    {"DWORD","DWORD"},        {FormatWidget::VAL_TYPE_RELADDRESS,FormatWidget::VAL_TYPE_SIZE}},
+//    {DEBUG,             "DEBUG",                    {4,4},    {"DWORD","DWORD"},        {FormatWidget::VAL_TYPE_RELADDRESS,FormatWidget::VAL_TYPE_SIZE}},
+//    {ARCHITECTURE,      "ARCHITECTURE",             {4,4},    {"DWORD","DWORD"},        {FormatWidget::VAL_TYPE_RELADDRESS,FormatWidget::VAL_TYPE_SIZE}},
+//    {GLOBALPTR,         "GLOBALPTR",                {4,4},    {"DWORD","DWORD"},        {FormatWidget::VAL_TYPE_RELADDRESS,FormatWidget::VAL_TYPE_SIZE}},
+//    {TLS,               "TLS",                      {4,4},    {"DWORD","DWORD"},        {FormatWidget::VAL_TYPE_RELADDRESS,FormatWidget::VAL_TYPE_SIZE}},
+//    {LOAD_CONFIG,       "LOAD_CONFIG",              {4,4},    {"DWORD","DWORD"},        {FormatWidget::VAL_TYPE_RELADDRESS,FormatWidget::VAL_TYPE_SIZE}},
+//    {BOUND_IMPORT,      "BOUND_IMPORT",             {4,4},    {"DWORD","DWORD"},        {FormatWidget::VAL_TYPE_RELADDRESS,FormatWidget::VAL_TYPE_SIZE}},
+//    {IAT,               "IAT",                      {4,4},    {"DWORD","DWORD"},        {FormatWidget::VAL_TYPE_RELADDRESS,FormatWidget::VAL_TYPE_SIZE}},
+//    {DELAY_IMPORT,      "DELAY_IMPORT",             {4,4},    {"DWORD","DWORD"},        {FormatWidget::VAL_TYPE_RELADDRESS,FormatWidget::VAL_TYPE_SIZE}},
+//    {COM_DESCRIPTOR,    "COM_DESCRIPTOR",           {4,4},    {"DWORD","DWORD"},        {FormatWidget::VAL_TYPE_RELADDRESS,FormatWidget::VAL_TYPE_SIZE}},
+//    {reserved,          "reserved",                 {4,4},    {"DWORD","DWORD"},        {FormatWidget::VAL_TYPE_RELADDRESS,FormatWidget::VAL_TYPE_SIZE}}
+//};
 }
 
 namespace N_IMAGE_SECTION_HEADER

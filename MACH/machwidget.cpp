@@ -28,7 +28,7 @@ MACHWidget::MACHWidget(QWidget *parent) :
     ui->setupUi(this);
 }
 
-MACHWidget::MACHWidget(QIODevice *pDevice, OPTIONS *pOptions, QWidget *parent) :
+MACHWidget::MACHWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *parent) :
     FormatWidget(pDevice,pOptions,parent),
     ui(new Ui::MACHWidget)
 {
@@ -48,10 +48,7 @@ void MACHWidget::clear()
     memset(bInit,0,sizeof bInit);
     memset(lineEdit_mach_header,0,sizeof lineEdit_mach_header);
     memset(comboBox,0,sizeof comboBox);
-
-    pSubDeviceCommand=nullptr;
-    pSubDeviceSegment=nullptr;
-    pSubDeviceSection=nullptr;
+    memset(subDevice,0,sizeof subDevice);
 
     ui->checkBoxReadonly->setChecked(true);
 
@@ -669,21 +666,7 @@ void MACHWidget::loadCommand(int nNumber)
     qint64 nSize=ui->tableWidget_commands->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
     qint64 nAddress=ui->tableWidget_commands->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
 
-    if(pSubDeviceCommand)
-    {
-        pSubDeviceCommand->close();
-        delete pSubDeviceCommand;
-    }
-
-    pSubDeviceCommand=new SubDevice(getDevice(),nOffset,nSize,this);
-    pSubDeviceCommand->open(getDevice()->openMode());
-
-    FormatWidget::OPTIONS hexOptions=*getOptions();
-    hexOptions.nImageBase=nAddress;
-
-    ui->widgetCommandHex->setData(pSubDeviceCommand,&hexOptions);
-    ui->widgetCommandHex->setEdited(isEdited());
-    connect(ui->widgetCommandHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+    loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SD_COMMAND],ui->widgetCommandHex);
 }
 
 void MACHWidget::loadSegment(int nNumber)
@@ -692,21 +675,7 @@ void MACHWidget::loadSegment(int nNumber)
     qint64 nSize=ui->tableWidget_segments->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
     qint64 nAddress=ui->tableWidget_segments->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
 
-    if(pSubDeviceSegment)
-    {
-        pSubDeviceSegment->close();
-        delete pSubDeviceSegment;
-    }
-
-    pSubDeviceSegment=new SubDevice(getDevice(),nOffset,nSize,this);
-    pSubDeviceSegment->open(getDevice()->openMode());
-
-    FormatWidget::OPTIONS hexOptions=*getOptions();
-    hexOptions.nImageBase=nAddress;
-
-    ui->widgetSegmentHex->setData(pSubDeviceSegment,&hexOptions);
-    ui->widgetSegmentHex->setEdited(isEdited());
-    connect(ui->widgetSegmentHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+    loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SD_SEGMENT],ui->widgetSegmentHex);
 }
 
 void MACHWidget::loadSection(int nNumber)
@@ -715,19 +684,5 @@ void MACHWidget::loadSection(int nNumber)
     qint64 nSize=ui->tableWidget_sections->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
     qint64 nAddress=ui->tableWidget_sections->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
 
-    if(pSubDeviceSection)
-    {
-        pSubDeviceSection->close();
-        delete pSubDeviceSection;
-    }
-
-    pSubDeviceSection=new SubDevice(getDevice(),nOffset,nSize,this);
-    pSubDeviceSection->open(getDevice()->openMode());
-
-    FormatWidget::OPTIONS hexOptions=*getOptions();
-    hexOptions.nImageBase=nAddress;
-
-    ui->widgetSectionHex->setData(pSubDeviceSection,&hexOptions);
-    ui->widgetSectionHex->setEdited(isEdited());
-    connect(ui->widgetSectionHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+    loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SD_SECTION],ui->widgetSectionHex);
 }

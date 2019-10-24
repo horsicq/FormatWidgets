@@ -22,8 +22,9 @@
 #define TOOLSWIDGET_H
 
 #include <QWidget>
-#include "formatwidget.h"
 #include "searchstringswidget.h"
+#include "qhexview.h"
+#include "formatwidget_def.h"
 
 namespace Ui
 {
@@ -38,7 +39,7 @@ public:
     explicit ToolsWidget(QWidget *parent=nullptr);
     ~ToolsWidget();
 
-    void setData(QIODevice *pDevice,FormatWidget::OPTIONS *pOptions);
+    void setData(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions);
     void setEdited(bool bState);
     void setReadonly(bool bState);
     void reload();

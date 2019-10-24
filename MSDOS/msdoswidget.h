@@ -35,10 +35,10 @@ class MSDOSWidget : public FormatWidget
 
 public:
     MSDOSWidget(QWidget *parent=nullptr);
-    MSDOSWidget(QIODevice *pDevice, OPTIONS *pOptions, QWidget *parent=nullptr);
+    MSDOSWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *parent=nullptr);
     ~MSDOSWidget();
     virtual void clear();
-    virtual void setData(QIODevice *pDevice,OPTIONS *pOptions);
+    virtual void setData(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions);
     virtual void reload();
 
 protected:

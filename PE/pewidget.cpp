@@ -28,7 +28,7 @@ PEWidget::PEWidget(QWidget *parent) :
     ui->setupUi(this);
 }
 
-PEWidget::PEWidget(QIODevice *pDevice,OPTIONS *pOptions, QWidget *parent) :
+PEWidget::PEWidget(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions, QWidget *parent) :
     FormatWidget(pDevice,pOptions,parent),
     ui(new Ui::PEWidget)
 {
@@ -57,11 +57,7 @@ void PEWidget::clear()
     memset(pushButton,0,sizeof pushButton);
     memset(dateTimeEdit,0,sizeof dateTimeEdit);
     memset(invWidget,0,sizeof invWidget);
-
-    pSubDeviceSection=nullptr;
-    pSubDeviceOverlay=nullptr;
-    pSubDeviceResource=nullptr;
-    pSubDeviceException=nullptr;
+    memset(subDevice,0,sizeof subDevice);
 
     ui->checkBoxReadonly->setChecked(true);
 
@@ -1034,16 +1030,43 @@ void PEWidget::reloadData()
         {
             if(!bInit[nData])
             {
-                bInit[nData]=createDirectoryTable(SPE::TYPE_IMAGE_DIRECTORY_ENTRIES,ui->tableWidget_IMAGE_DIRECTORY_ENTRIES,N_IMAGE_DIRECORIES::records,N_IMAGE_DIRECORIES::__data_size);
+//                bInit[nData]=createDirectoryTable(SPE::TYPE_IMAGE_DIRECTORY_ENTRIES,ui->tableWidget_IMAGE_DIRECTORY_ENTRIES,N_IMAGE_DIRECORIES::records,N_IMAGE_DIRECORIES::__data_size);
+
+                bInit[nData]=createSectionTable(SPE::TYPE_IMAGE_DIRECTORY_ENTRIES,ui->tableWidget_IMAGE_DIRECTORY_ENTRIES,N_IMAGE_DIRECORIES::records,N_IMAGE_DIRECORIES::__data_size);
             }
 
             blockSignals(true);
 
 //            quint32 nNumberOfRvaAndSizes=pe.getOptionalHeader_NumberOfRvaAndSizes();
 
+            ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->setRowCount(16);
+
+            qint64 nBaseAddress=pe.getBaseAddress();
+            QList<XBinary::MEMORY_MAP> listMM=pe.getMemoryMapList();
+            QMap<quint64,QString> mapDD=XPE::getImageOptionalHeaderDataDirectoryS();
+
             for(int i=0; i<16; i++)
             {
                 XPE_DEF::IMAGE_DATA_DIRECTORY dd=pe.getOptionalHeader_DataDirectory((quint32)i);
+
+                QTableWidgetItem *itemNumber=new QTableWidgetItem(QString::number(i));
+
+                itemNumber->setData(Qt::UserRole+SECTION_DATA_SIZE,dd.Size);
+
+                if(i!=XPE_DEF::S_IMAGE_DIRECTORY_ENTRY_SECURITY)
+                {
+                    itemNumber->setData(Qt::UserRole+SECTION_DATA_ADDRESS,dd.VirtualAddress);
+                    itemNumber->setData(Qt::UserRole+SECTION_DATA_OFFSET,pe.addressToOffset(&listMM,nBaseAddress+dd.VirtualAddress));
+                }
+                else
+                {
+                    itemNumber->setData(Qt::UserRole+SECTION_DATA_ADDRESS,dd.VirtualAddress);
+                    itemNumber->setData(Qt::UserRole+SECTION_DATA_OFFSET,dd.VirtualAddress);
+                }
+
+                ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->setItem(i,0,itemNumber);
+
+                ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->setItem(i,1,new QTableWidgetItem(mapDD.value(i)));
                 ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->setItem(i,2,new QTableWidgetItem(XBinary::valueToHex(dd.VirtualAddress)));
 
                 QTableWidgetItem *pItem=new QTableWidgetItem(XBinary::valueToHex(dd.Size));
@@ -1505,23 +1528,10 @@ void PEWidget::reloadData()
         }
         else if(nData==SPE::TYPE_OVERLAY)
         {
-            if(pSubDeviceOverlay)
-            {
-                pSubDeviceOverlay->close();
-                delete pSubDeviceOverlay;
-            }
-
             qint64 nOverLayOffset=pe.getOverlayOffset();
             qint64 nOverlaySize=pe.getOverlaySize();
 
-            pSubDeviceOverlay=new SubDevice(getDevice(),nOverLayOffset,nOverlaySize,this);
-            pSubDeviceOverlay->open(getDevice()->openMode());
-
-            FormatWidget::OPTIONS hexOptions=*getOptions();
-            hexOptions.nImageBase=nOverLayOffset;
-            ui->widgetOverlayHex->setData(pSubDeviceOverlay,&hexOptions);
-            ui->widgetOverlayHex->setEdited(isEdited());
-            connect(ui->widgetOverlayHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+            loadHexSubdevice(nOverLayOffset,nOverlaySize,nOverLayOffset,&subDevice[SD_OVERLAY],ui->widgetOverlayHex);
         }
 
         setReadonly(ui->checkBoxReadonly->isChecked());
@@ -1630,22 +1640,7 @@ void PEWidget::loadSection(int nNumber)
     qint64 nAddress=ui->tableWidget_Sections->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
     //        qint64 nVSize=ui->tableWidget_Sections->item(currentRow,0)->data(Qt::UserRole+SECTION_DATA_VSIZE).toLongLong();
 
-    if(pSubDeviceSection)
-    {
-        pSubDeviceSection->close();
-        delete pSubDeviceSection;
-    }
-
-    pSubDeviceSection=new SubDevice(getDevice(),nOffset,nSize,this);
-
-    pSubDeviceSection->open(getDevice()->openMode());
-
-    FormatWidget::OPTIONS hexOptions=*getOptions();
-    hexOptions.nImageBase=nAddress;
-
-    ui->widgetSectionHex->setData(pSubDeviceSection,&hexOptions);
-    ui->widgetSectionHex->setEdited(isEdited());
-    connect(ui->widgetSectionHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+    loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SD_SECTION],ui->widgetSectionHex);
 }
 
 void PEWidget::loadException(int nNumber)
@@ -1655,22 +1650,17 @@ void PEWidget::loadException(int nNumber)
     qint64 nAddress=ui->tableWidget_Exceptions->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
     //        qint64 nVSize=ui->tableWidget_Sections->item(currentRow,0)->data(Qt::UserRole+SECTION_DATA_VSIZE).toLongLong();
 
-    if(pSubDeviceException)
-    {
-        pSubDeviceException->close();
-        delete pSubDeviceException;
-    }
+    loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SD_EXCEPTION],ui->widgetExceptionHex);
+}
 
-    pSubDeviceException=new SubDevice(getDevice(),nOffset,nSize,this);
+void PEWidget::loadDirectory(int nNumber)
+{
+    qint64 nOffset=ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_OFFSET).toLongLong();
+    qint64 nSize=ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
+    qint64 nAddress=ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
+    //        qint64 nVSize=ui->tableWidget_Sections->item(currentRow,0)->data(Qt::UserRole+SECTION_DATA_VSIZE).toLongLong();
 
-    pSubDeviceException->open(getDevice()->openMode());
-
-    FormatWidget::OPTIONS hexOptions=*getOptions();
-    hexOptions.nImageBase=nAddress;
-
-    ui->widgetExceptionHex->setData(pSubDeviceException,&hexOptions);
-    ui->widgetExceptionHex->setEdited(isEdited());
-    connect(ui->widgetExceptionHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+    loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SD_DIRECTORY],ui->widgetDirectoryHex);
 }
 
 void PEWidget::on_tableWidget_ImportLibraries_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
@@ -1794,6 +1784,15 @@ bool PEWidget::createSectionTable(int type, QTableWidget *pTableWidget, const Fo
             pTableWidget->setColumnCount(nRecordCount+2);
             break;
 
+        case SPE::TYPE_IMAGE_DIRECTORY_ENTRIES:
+            pTableWidget->setColumnCount(nRecordCount+1);
+            pTableWidget->setColumnWidth(0,nSymbolWidth*3);
+            pTableWidget->setColumnWidth(1,nSymbolWidth*12);
+            pTableWidget->setColumnWidth(2,nSymbolWidth*8);
+            pTableWidget->setColumnWidth(3,nSymbolWidth*8);
+            slHeader.append("");
+            break;
+
         default:
             pTableWidget->setColumnCount(nRecordCount);
     }
@@ -1854,22 +1853,7 @@ void PEWidget::on_treeWidgetResource_currentItemChanged(QTreeWidgetItem *current
             qint64 nSize=current->data(0,Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
             qint64 nAddress=current->data(0,Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
 
-            if(pSubDeviceResource)
-            {
-                pSubDeviceResource->close();
-                delete pSubDeviceResource;
-            }
-
-            pSubDeviceResource=new SubDevice(getDevice(),nOffset,nSize,this);
-
-            pSubDeviceResource->open(getDevice()->openMode());
-
-            FormatWidget::OPTIONS hexOptions=*getOptions();
-            hexOptions.nImageBase=nAddress;
-
-            ui->widgetResourceHex->setData(pSubDeviceResource,&hexOptions);
-            ui->widgetResourceHex->setEdited(isEdited());
-            connect(ui->widgetResourceHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+            loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SD_RESOURCE],ui->widgetResourceHex);
         }
     }
 }
@@ -1888,5 +1872,17 @@ void PEWidget::on_tableWidget_Exceptions_currentCellChanged(int currentRow, int 
     if(currentRow!=-1)
     {
         loadException(currentRow);
+    }
+}
+
+void PEWidget::on_tableWidget_IMAGE_DIRECTORY_ENTRIES_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
+{
+    Q_UNUSED(currentColumn)
+    Q_UNUSED(previousRow)
+    Q_UNUSED(previousColumn)
+
+    if(currentRow!=-1)
+    {
+        loadDirectory(currentRow);
     }
 }

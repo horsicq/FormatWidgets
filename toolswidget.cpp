@@ -30,7 +30,7 @@ ToolsWidget::ToolsWidget(QWidget *parent) :
     connect(ui->widgetHex,SIGNAL(editState(bool)),this,SIGNAL(editState(bool)));
 }
 
-void ToolsWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
+void ToolsWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions)
 {
     hexOptions={};
     hexOptions.nBaseAddress=pOptions->nImageBase;

@@ -28,7 +28,7 @@ FormatWidget::FormatWidget(QWidget *parent):
     bIsEdited=false;
 }
 
-FormatWidget::FormatWidget(QIODevice *pDevice, OPTIONS *pOptions, QWidget *parent):
+FormatWidget::FormatWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *parent):
     QWidget(parent)
 {
     options={};
@@ -41,7 +41,7 @@ FormatWidget::~FormatWidget()
 
 }
 
-void FormatWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
+void FormatWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions)
 {
     this->pDevice=pDevice;
     if(pOptions)
@@ -57,7 +57,7 @@ QIODevice *FormatWidget::getDevice()
     return this->pDevice;
 }
 
-FormatWidget::OPTIONS *FormatWidget::getOptions()
+FW_DEF::OPTIONS *FormatWidget::getOptions()
 {
     return &options;
 }
@@ -108,6 +108,26 @@ void FormatWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
 bool FormatWidget::isEdited()
 {
     return bIsEdited;
+}
+
+void FormatWidget::loadHexSubdevice(qint64 nOffset, qint64 nSize, qint64 nAddress,SubDevice **ppSubDevice,ToolsWidget *pToolsWidget)
+{
+    if(*ppSubDevice)
+    {
+        (*ppSubDevice)->close();
+        delete (*ppSubDevice);
+    }
+
+    (*ppSubDevice)=new SubDevice(getDevice(),nOffset,nSize,this);
+
+    (*ppSubDevice)->open(getDevice()->openMode());
+
+    FW_DEF::OPTIONS hexOptions=*getOptions();
+    hexOptions.nImageBase=nAddress;
+
+    pToolsWidget->setData((*ppSubDevice),&hexOptions);
+    pToolsWidget->setEdited(isEdited());
+    connect(pToolsWidget,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
 }
 
 void FormatWidget::hexValueChanged(quint64 nValue)
@@ -231,60 +251,60 @@ bool FormatWidget::createHeaderTable(int type, QTableWidget *pTableWidget, const
     return true;
 }
 
-bool FormatWidget::createDirectoryTable(int type, QTableWidget *pTableWidget, const DIRECTORY_ENTRY_RECORD *pRecords, int nRecordCount)
-{
-    Q_UNUSED(type)
+//bool FormatWidget::createDirectoryTable(int type, QTableWidget *pTableWidget, const DIRECTORY_ENTRY_RECORD *pRecords, int nRecordCount)
+//{
+//    Q_UNUSED(type)
 
-    pTableWidget->setColumnCount(4);
-    pTableWidget->setRowCount(nRecordCount);
+//    pTableWidget->setColumnCount(4);
+//    pTableWidget->setRowCount(nRecordCount);
 
-    int nSymbolWidth=getSymbolWidth();
+//    int nSymbolWidth=getSymbolWidth();
 
-    pTableWidget->setColumnWidth(0,nSymbolWidth*3);
-    pTableWidget->setColumnWidth(1,nSymbolWidth*12);
-    pTableWidget->setColumnWidth(2,nSymbolWidth*8);
-    pTableWidget->setColumnWidth(3,nSymbolWidth*8);
+//    pTableWidget->setColumnWidth(0,nSymbolWidth*3);
+//    pTableWidget->setColumnWidth(1,nSymbolWidth*12);
+//    pTableWidget->setColumnWidth(2,nSymbolWidth*8);
+//    pTableWidget->setColumnWidth(3,nSymbolWidth*8);
 
-    QStringList slHeader;
-    slHeader.append(tr(""));
-    slHeader.append(tr("Name"));
-    slHeader.append(tr("Address"));
-    slHeader.append(tr("Size"));
+//    QStringList slHeader;
+//    slHeader.append(tr(""));
+//    slHeader.append(tr("Name"));
+//    slHeader.append(tr("Address"));
+//    slHeader.append(tr("Size"));
 
-    pTableWidget->setHorizontalHeaderLabels(slHeader);
-    pTableWidget->horizontalHeader()->setVisible(true);
+//    pTableWidget->setHorizontalHeaderLabels(slHeader);
+//    pTableWidget->horizontalHeader()->setVisible(true);
 
-    for(int i=0; i<nRecordCount; i++)
-    {
-        QTableWidgetItem *newItemNumber=new QTableWidgetItem;
-        newItemNumber->setText(QString("%1").arg(i));
-        pTableWidget->setItem(i,DIRECTORY_COLUMN_NUMBER,newItemNumber);
+//    for(int i=0; i<nRecordCount; i++)
+//    {
+//        QTableWidgetItem *newItemNumber=new QTableWidgetItem;
+//        newItemNumber->setText(QString("%1").arg(i));
+//        pTableWidget->setItem(i,DIRECTORY_COLUMN_NUMBER,newItemNumber);
 
-        QTableWidgetItem *newItemName=new QTableWidgetItem;
-        newItemName->setText(pRecords[i].pszName);
-        pTableWidget->setItem(i,DIRECTORY_COLUMN_NAME,newItemName);
+//        QTableWidgetItem *newItemName=new QTableWidgetItem;
+//        newItemName->setText(pRecords[i].pszName);
+//        pTableWidget->setItem(i,DIRECTORY_COLUMN_NAME,newItemName);
 
-//        ppLineEdits1[i]=new XLineEditHEX(this);
-//        ppLineEdits1[i]->setProperty("STYPE",type);
-//        ppLineEdits1[i]->setProperty("NDATA",pRecords[i].nData);
-//        ppLineEdits1[i]->setProperty("VTYPE",pRecords[i].vtype[0]);
+////        ppLineEdits1[i]=new XLineEditHEX(this);
+////        ppLineEdits1[i]->setProperty("STYPE",type);
+////        ppLineEdits1[i]->setProperty("NDATA",pRecords[i].nData);
+////        ppLineEdits1[i]->setProperty("VTYPE",pRecords[i].vtype[0]);
 
-//        connect(ppLineEdits1[i],SIGNAL(valueChanged(quint64)),this,SLOT(hexValueChanged(quint64)));
+////        connect(ppLineEdits1[i],SIGNAL(valueChanged(quint64)),this,SLOT(hexValueChanged(quint64)));
 
-//        pTableWidget->setCellWidget(i,DIRECTORY_COLUMN_ADDRESS,ppLineEdits1[i]);
+////        pTableWidget->setCellWidget(i,DIRECTORY_COLUMN_ADDRESS,ppLineEdits1[i]);
 
-//        ppLineEdits2[i]=new XLineEditHEX(this);
-//        ppLineEdits2[i]->setProperty("STYPE",type);
-//        ppLineEdits2[i]->setProperty("NDATA",pRecords[i].nData);
-//        ppLineEdits2[i]->setProperty("VTYPE",pRecords[i].vtype[1]);
+////        ppLineEdits2[i]=new XLineEditHEX(this);
+////        ppLineEdits2[i]->setProperty("STYPE",type);
+////        ppLineEdits2[i]->setProperty("NDATA",pRecords[i].nData);
+////        ppLineEdits2[i]->setProperty("VTYPE",pRecords[i].vtype[1]);
 
-//        connect(ppLineEdits2[i],SIGNAL(valueChanged(quint64)),this,SLOT(hexValueChanged(quint64)));
+////        connect(ppLineEdits2[i],SIGNAL(valueChanged(quint64)),this,SLOT(hexValueChanged(quint64)));
 
-//        pTableWidget->setCellWidget(i,DIRECTORY_COLUMN_SIZE,ppLineEdits2[i]);
-    }
+////        pTableWidget->setCellWidget(i,DIRECTORY_COLUMN_SIZE,ppLineEdits2[i]);
+//    }
 
-    return true;
-}
+//    return true;
+//}
 
 bool FormatWidget::createSectionTable(int type, QTableWidget *pTableWidget, const FormatWidget::HEADER_RECORD *pRecords, int nRecordCount)
 {

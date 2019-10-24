@@ -37,7 +37,7 @@ public:
     explicit DialogELF(QWidget *parent=nullptr);
     ~DialogELF();
 
-    void setData(QIODevice *pDevice,FormatWidget::OPTIONS *pOptions);
+    void setData(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions);
 
 private:
     Ui::DialogELF *ui;

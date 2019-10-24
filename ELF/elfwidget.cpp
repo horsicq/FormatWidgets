@@ -28,7 +28,7 @@ ELFWidget::ELFWidget(QWidget *parent) :
     ui->setupUi(this);
 }
 
-ELFWidget::ELFWidget(QIODevice *pDevice, OPTIONS *pOptions, QWidget *parent) :
+ELFWidget::ELFWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *parent) :
     FormatWidget(pDevice,pOptions,parent),
     ui(new Ui::ELFWidget)
 {
@@ -49,9 +49,7 @@ void ELFWidget::clear()
     memset(lineEdit_Elf_Ehdr,0,sizeof lineEdit_Elf_Ehdr);
     memset(comboBox,0,sizeof comboBox);
     memset(invWidget,0,sizeof invWidget);
-
-    pSubDeviceSection=nullptr;
-    pSubDeviceProgram=nullptr;
+    memset(subDevice,0,sizeof subDevice);
 
     ui->checkBoxReadonly->setChecked(true);
 
@@ -830,22 +828,7 @@ void ELFWidget::loadShdr(int nNumber)
     qint64 nSize=ui->tableWidget_Elf_Shdr->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
     qint64 nAddress=ui->tableWidget_Elf_Shdr->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
 
-    if(pSubDeviceSection)
-    {
-        pSubDeviceSection->close();
-        delete pSubDeviceSection;
-    }
-
-    pSubDeviceSection=new SubDevice(getDevice(),nOffset,nSize,this);
-
-    pSubDeviceSection->open(getDevice()->openMode());
-
-    FormatWidget::OPTIONS hexOptions=*getOptions();
-    hexOptions.nImageBase=nAddress;
-
-    ui->widgetSectionHex->setData(pSubDeviceSection,&hexOptions);
-    ui->widgetSectionHex->setEdited(isEdited());
-    connect(ui->widgetSectionHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+    loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SD_SECTION],ui->widgetSectionHex);
 }
 
 void ELFWidget::loadPhdr(int nNumber)
@@ -854,20 +837,5 @@ void ELFWidget::loadPhdr(int nNumber)
     qint64 nSize=ui->tableWidget_Elf_Phdr->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
     qint64 nAddress=ui->tableWidget_Elf_Phdr->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
 
-    if(pSubDeviceProgram)
-    {
-        pSubDeviceProgram->close();
-        delete pSubDeviceProgram;
-    }
-
-    pSubDeviceProgram=new SubDevice(getDevice(),nOffset,nSize,this);
-
-    pSubDeviceProgram->open(getDevice()->openMode());
-
-    FormatWidget::OPTIONS hexOptions=*getOptions();
-    hexOptions.nImageBase=nAddress;
-
-    ui->widgetProgramHex->setData(pSubDeviceProgram,&hexOptions);
-    ui->widgetProgramHex->setEdited(isEdited());
-    connect(ui->widgetProgramHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+    loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SD_PROGRAM],ui->widgetProgramHex);
 }

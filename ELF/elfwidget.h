@@ -35,7 +35,7 @@ class ELFWidget : public FormatWidget
 
 public:
     ELFWidget(QWidget *parent=nullptr);
-    ELFWidget(QIODevice *pDevice, OPTIONS *pOptions, QWidget *parent=nullptr);
+    ELFWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *parent=nullptr);
     ~ELFWidget();
     virtual void clear();
     virtual void reload();
@@ -79,16 +79,22 @@ private:
         __INV_size
     };
 
+    enum SD
+    {
+        SD_SECTION=0,
+        SD_PROGRAM,
+        __SD_size
+    };
+
     Ui::ELFWidget *ui;
 
     XLineEditHEX *lineEdit_Elf_Ehdr[N_Elf_Ehdr::__data_size];
     XComboBoxEx *comboBox[__CB_size];
     InvWidget *invWidget[__INV_size];
 
-    bool bInit[SELF::__TYPE_size];
+    SubDevice *subDevice[__SD_size];
 
-    SubDevice *pSubDeviceSection;
-    SubDevice *pSubDeviceProgram;
+    bool bInit[SELF::__TYPE_size];
 };
 
 #endif // ELFWIDGET_H

@@ -35,19 +35,14 @@
 #include "qhexview.h"
 #include "invwidget.h"
 #include "dialoghex.h"
+#include "toolswidget.h"
+#include "formatwidget_def.h"
 
 class FormatWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    struct OPTIONS
-    {
-        QString sBackupFileName;
-        bool bIsImage;
-        qint64 nImageBase; // TODO default_const
-    };
-
     enum VAL_TYPE
     {
         VAL_TYPE_UNKNOWN=0,
@@ -58,6 +53,7 @@ public:
         VAL_TYPE_OFFSET,
         VAL_TYPE_SIZE,
         VAL_TYPE_TEXT,
+        VAL_TYPE_LABEL,
         VAL_TYPE_UNIXTIME // TODO
     };
 
@@ -69,14 +65,14 @@ public:
         const char *pszType;
         VAL_TYPE vtype;
     };
-    struct DIRECTORY_ENTRY_RECORD
-    {
-        int nData;
-        const char *pszName;
-        int nSize[2];
-        const char *pszType[2];
-        VAL_TYPE vtype[2];
-    };
+//    struct DIRECTORY_ENTRY_RECORD
+//    {
+//        int nData;
+//        const char *pszName;
+//        int nSize[2];
+//        const char *pszType[2];
+//        VAL_TYPE vtype[2];
+//    };
 
     enum HEADER_COLUMN
     {
@@ -104,18 +100,18 @@ public:
     };
 
     FormatWidget(QWidget *parent=nullptr);
-    FormatWidget(QIODevice *pDevice,OPTIONS *pOptions,QWidget *parent=nullptr);
+    FormatWidget(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions,QWidget *parent=nullptr);
     ~FormatWidget();
     virtual void clear()=0;
-    void setData(QIODevice *pDevice,OPTIONS *pOptions);
+    void setData(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions);
     virtual void reload()=0;
     QIODevice *getDevice();
-    OPTIONS *getOptions();
+    FW_DEF::OPTIONS *getOptions();
     bool isReadonly();
     QTreeWidgetItem *createNewItem(int nUserData, QString sTitle);
     bool createHeaderTable(int type,QTableWidget *pTableWidget, const HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nRecordCount,int nPosition=0);
 
-    bool createDirectoryTable(int type,QTableWidget *pTableWidget, const DIRECTORY_ENTRY_RECORD *pRecords,int nRecordCount);
+//    bool createDirectoryTable(int type,QTableWidget *pTableWidget, const DIRECTORY_ENTRY_RECORD *pRecords,int nRecordCount);
     bool createSectionTable(int type,QTableWidget *pTableWidget, const HEADER_RECORD *pRecords,int nRecordCount);
     void setLineEditsReadOnly(XLineEditHEX **ppLineEdits,int nCount,bool bState);
     void setComboBoxesReadOnly(XComboBoxEx **ppComboBoxes,int nCount,bool bState);
@@ -137,6 +133,8 @@ public:
 
     QPushButton *createHexButton(QTableWidget *pTableWidget,int type, int nData);
 
+    void loadHexSubdevice(qint64 nOffset, qint64 nSize, qint64 nAddress, SubDevice **ppSubDevice, ToolsWidget *pToolsWidget);
+
 signals:
     void editState(bool bState);
 
@@ -154,7 +152,7 @@ private:
 
 private:
     QIODevice *pDevice;
-    OPTIONS options;
+    FW_DEF::OPTIONS options;
     bool bIsReadonly;
     bool bIsEdited;
 };

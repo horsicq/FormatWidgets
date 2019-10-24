@@ -37,7 +37,7 @@ public:
     explicit DialogMSDOS(QWidget *parent=nullptr);
     ~DialogMSDOS();
 
-    void setData(QIODevice *pDevice,FormatWidget::OPTIONS *pOptions);
+    void setData(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions);
 
 private:
     Ui::DialogMSDOS *ui;

@@ -37,7 +37,7 @@ public:
     explicit DialogMACH(QWidget *parent=nullptr);
     ~DialogMACH();
 
-    void setData(QIODevice *pDevice,FormatWidget::OPTIONS *pOptions);
+    void setData(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions);
 
 private:
     Ui::DialogMACH *ui;

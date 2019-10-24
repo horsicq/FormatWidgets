@@ -37,7 +37,7 @@ public:
     explicit DialogBinary(QWidget *parent=nullptr);
     ~DialogBinary();
 
-    void setData(QIODevice *pDevice,FormatWidget::OPTIONS *pOptions);
+    void setData(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions);
 
 private:
     Ui::DialogBinary *ui;

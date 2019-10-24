@@ -37,7 +37,7 @@ DialogSectionHeader::~DialogSectionHeader()
     delete ui;
 }
 
-void DialogSectionHeader::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions, quint32 nNumber)
+void DialogSectionHeader::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber)
 {
     ui->widget->setData(pDevice,pOptions,nNumber);
     ui->widget->reload();

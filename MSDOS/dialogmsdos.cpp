@@ -35,7 +35,7 @@ DialogMSDOS::~DialogMSDOS()
     delete ui;
 }
 
-void DialogMSDOS::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
+void DialogMSDOS::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions)
 {
     ui->widget->setData(pDevice,pOptions);
     ui->widget->reload();

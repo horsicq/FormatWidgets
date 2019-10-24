@@ -37,7 +37,7 @@ class PEWidget : public FormatWidget
 
 public:
     PEWidget(QWidget *parent=nullptr);
-    PEWidget(QIODevice *pDevice, OPTIONS *pOptions, QWidget *parent=nullptr);
+    PEWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *parent=nullptr);
     ~PEWidget();
     virtual void clear();
     virtual void reload();
@@ -62,6 +62,7 @@ private slots:
     void loadRelocs(int nNumber);
     void loadSection(int nNumber);
     void loadException(int nNumber);
+    void loadDirectory(int nNumber);
 
     void on_tableWidget_ImportLibraries_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     void on_tableWidget_Relocs_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
@@ -73,6 +74,7 @@ private slots:
     void on_pushButtonReload_clicked();
 
     void on_tableWidget_Exceptions_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
+    void on_tableWidget_IMAGE_DIRECTORY_ENTRIES_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
 
 private:
     enum CB
@@ -116,6 +118,16 @@ private:
         __INV_size
     };
 
+    enum SD
+    {
+        SD_SECTION=0,
+        SD_OVERLAY,
+        SD_RESOURCE,
+        SD_EXCEPTION,
+        SD_DIRECTORY,
+        __SD_size
+    };
+
     Ui::PEWidget *ui;
 
     XLineEditHEX *lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::__data_size];
@@ -130,13 +142,11 @@ private:
     XDateTimeEditX *dateTimeEdit[__TD_size];
 
     InvWidget *invWidget[__INV_size];
+    SubDevice *subDevice[__SD_size];
 
     bool bInit[SPE::__TYPE_size];
 
-    SubDevice *pSubDeviceSection;
-    SubDevice *pSubDeviceOverlay;
-    SubDevice *pSubDeviceResource;
-    SubDevice *pSubDeviceException;
+
 };
 
 #endif // PEWIDGET_H

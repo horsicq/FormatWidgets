@@ -16,7 +16,7 @@ class DialogSectionHeader : public QDialog
 public:
     explicit DialogSectionHeader(QWidget *parent=nullptr);
     ~DialogSectionHeader();
-    void setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions, quint32 nNumber);
+    void setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber);
     void setEdited(bool bState);
 
 signals:

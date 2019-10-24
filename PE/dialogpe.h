@@ -36,7 +36,7 @@ class DialogPE : public QDialog
 public:
     explicit DialogPE(QWidget *parent=nullptr);
     ~DialogPE();
-    void setData(QIODevice *pDevice,FormatWidget::OPTIONS *pOptions);
+    void setData(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions);
 
 private:
     Ui::DialogPE *ui;

@@ -28,7 +28,7 @@ MSDOSWidget::MSDOSWidget(QWidget *parent) :
     ui->setupUi(this);
 }
 
-MSDOSWidget::MSDOSWidget(QIODevice *pDevice, OPTIONS *pOptions, QWidget *parent) :
+MSDOSWidget::MSDOSWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *parent) :
     FormatWidget(pDevice,pOptions,parent),
     ui(new Ui::MSDOSWidget)
 {
@@ -56,7 +56,7 @@ void MSDOSWidget::clear()
     ui->treeWidgetNavi->clear();
 }
 
-void MSDOSWidget::setData(QIODevice *pDevice, FormatWidget::OPTIONS *pOptions)
+void MSDOSWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions)
 {
     FormatWidget::setData(pDevice,pOptions);
 }
@@ -274,7 +274,7 @@ void MSDOSWidget::reloadData()
             pSubDeviceOverlay=new SubDevice(getDevice(),nOverLayOffset,nOverlaySize,this);
             pSubDeviceOverlay->open(getDevice()->openMode());
 
-            FormatWidget::OPTIONS hexOptions=*getOptions();
+            FW_DEF::OPTIONS hexOptions=*getOptions();
             hexOptions.nImageBase=nOverLayOffset;
             ui->widgetOverlayHex->setData(pSubDeviceOverlay,&hexOptions);
             ui->widgetOverlayHex->setEdited(isEdited());
