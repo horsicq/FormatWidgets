@@ -48,8 +48,7 @@ void MSDOSWidget::clear()
     memset(bInit,0,sizeof bInit);
     memset(lineEdit_DOS_HEADER,0,sizeof lineEdit_DOS_HEADER);
     memset(comboBox,0,sizeof comboBox);
-
-    pSubDeviceOverlay=nullptr;
+    memset(subDevice,0,sizeof subDevice);
 
     ui->checkBoxReadonly->setChecked(true);
 
@@ -262,23 +261,10 @@ void MSDOSWidget::reloadData()
         }
         else if(nData==SMSDOS::TYPE_OVERLAY)
         {
-            if(pSubDeviceOverlay)
-            {
-                pSubDeviceOverlay->close();
-                delete pSubDeviceOverlay;
-            }
-
             qint64 nOverLayOffset=msdos.getOverlayOffset();
             qint64 nOverlaySize=msdos.getOverlaySize();
 
-            pSubDeviceOverlay=new SubDevice(getDevice(),nOverLayOffset,nOverlaySize,this);
-            pSubDeviceOverlay->open(getDevice()->openMode());
-
-            FW_DEF::OPTIONS hexOptions=*getOptions();
-            hexOptions.nImageBase=nOverLayOffset;
-            ui->widgetOverlayHex->setData(pSubDeviceOverlay,&hexOptions);
-            ui->widgetOverlayHex->setEdited(isEdited());
-            connect(ui->widgetOverlayHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+            loadHexSubdevice(nOverLayOffset,nOverlaySize,nOverLayOffset,&subDevice[SD_OVERLAY],ui->widgetOverlayHex);
         }
 
         setReadonly(ui->checkBoxReadonly->isChecked());

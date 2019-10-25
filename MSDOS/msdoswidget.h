@@ -62,13 +62,20 @@ private:
         __CB_size
     };
 
+    enum SD
+    {
+        SD_OVERLAY=0,
+        __SD_size
+    };
+
     Ui::MSDOSWidget *ui;
 
     XLineEditHEX *lineEdit_DOS_HEADER[N_DOS_HEADER::__data_size];
     XComboBoxEx *comboBox[__CB_size];
 
     bool bInit[SMSDOS::__TYPE_size];
-    SubDevice *pSubDeviceOverlay;
+
+    SubDevice *subDevice[__SD_size];
 };
 
 #endif // MSDOSWIDGET_H
