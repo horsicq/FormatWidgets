@@ -1082,6 +1082,15 @@ void PEWidget::reloadData()
 //                lineEdit_IMAGE_DIRECTORY_SIZE[i]->setEnabled(i<(int)nNumberOfRvaAndSizes);
             }
 
+            if(ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->currentRow()==0)
+            {
+                loadDirectory(0);
+            }
+            else
+            {
+                ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->selectRow(0);
+            }
+
             blockSignals(false);
         }
         else if(nData==SPE::TYPE_SECTIONS)
