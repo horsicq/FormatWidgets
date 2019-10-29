@@ -1030,14 +1030,12 @@ void PEWidget::reloadData()
         {
             if(!bInit[nData])
             {
-//                bInit[nData]=createDirectoryTable(SPE::TYPE_IMAGE_DIRECTORY_ENTRIES,ui->tableWidget_IMAGE_DIRECTORY_ENTRIES,N_IMAGE_DIRECORIES::records,N_IMAGE_DIRECORIES::__data_size);
-
                 bInit[nData]=createSectionTable(SPE::TYPE_IMAGE_DIRECTORY_ENTRIES,ui->tableWidget_IMAGE_DIRECTORY_ENTRIES,N_IMAGE_DIRECORIES::records,N_IMAGE_DIRECORIES::__data_size);
             }
 
             blockSignals(true);
 
-//            quint32 nNumberOfRvaAndSizes=pe.getOptionalHeader_NumberOfRvaAndSizes();
+//            quint32 nNumberOfRvaAndSizes=pe.getOptionalHeader_NumberOfRvaAndSizes(); // TODO !!!
 
             ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->setRowCount(16);
 
@@ -1249,12 +1247,6 @@ void PEWidget::reloadData()
         }
         else if(nData==SPE::TYPE_RESOURCE)
         {
-//            if(pSubDeviceResource)
-//            {
-//                pSubDeviceResource->close();
-//                delete pSubDeviceResource;
-//            }
-
             ui->treeWidgetResource->clear();
 
             XPE::RESOURCE_HEADER rh=pe.getResourceHeader();
