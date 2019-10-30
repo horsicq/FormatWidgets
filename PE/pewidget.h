@@ -115,6 +115,7 @@ private:
         INV_IMAGE_EXPORT_AddressOfNames,
         INV_IMAGE_EXPORT_AddressOfNameOrdinals,
         INV_IMAGE_LOADCONFIG_SecurityCookie,
+        INV_IMAGE_LOADCONFIG_SEHandlerTable,
         __INV_size
     };
 
@@ -145,8 +146,6 @@ private:
     SubDevice *subDevice[__SD_size];
 
     bool bInit[SPE::__TYPE_size];
-
-
 };
 
 #endif // PEWIDGET_H
