@@ -110,6 +110,11 @@ void PEWidget::reload()
             ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_RELOCS,"Relocs"));
         }
 
+        if(pe.isDebugPresent())
+        {
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_DEBUG,"Debug"));
+        }
+
         if(pe.isTLSPresent())
         {
             ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_TLS,"TLS"));
@@ -1418,6 +1423,10 @@ void PEWidget::reloadData()
                 }
             }            
         }
+        else if(nData==SPE::TYPE_RELOCS)
+        {
+            // TODO
+        }
         else if(nData==SPE::TYPE_TLS)
         {
             if(!bInit[nData])
@@ -1783,6 +1792,10 @@ bool PEWidget::createSectionTable(int type, QTableWidget *pTableWidget, const Fo
 
         case SPE::TYPE_RELOCS:
             pTableWidget->setColumnCount(nRecordCount+1);
+            break;
+
+        case SPE::TYPE_DEBUG:
+            // TODO
             break;
 
         case SPE::TYPE_RELOCS_POSITION:
