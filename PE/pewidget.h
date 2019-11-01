@@ -126,6 +126,7 @@ private:
         SD_RESOURCE,
         SD_EXCEPTION,
         SD_DIRECTORY,
+        SD_DEBUG,
         __SD_size
     };
 
