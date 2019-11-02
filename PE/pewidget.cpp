@@ -1423,8 +1423,12 @@ void PEWidget::reloadData()
                 }
             }            
         }
-        else if(nData==SPE::TYPE_RELOCS)
+        else if(nData==SPE::TYPE_DEBUG)
         {
+            if(!bInit[nData])
+            {
+
+            }
             // TODO
         }
         else if(nData==SPE::TYPE_TLS)
