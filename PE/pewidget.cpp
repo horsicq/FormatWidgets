@@ -1220,7 +1220,7 @@ void PEWidget::reloadData()
             if(!bInit[nData])
             {
                 bInit[nData]=createSectionTable(SPE::TYPE_IMPORT,ui->tableWidget_ImportLibraries,N_IMAGE_IMPORT::records,N_IMAGE_IMPORT::__data_size);
-                createSectionTable(SPE::TYPE_IMPORT_FUNCTION,ui->tableWidget_ImportFunctions,N_IMAGE_IMPORT_FUNCTION::records32,N_IMAGE_IMPORT_FUNCTION::__data_size);
+                createSectionTable(SPE::TYPE_IMPORT_FUNCTION,ui->tableWidget_ImportFunctions,pe.is64()?(N_IMAGE_IMPORT_FUNCTION::records64):(N_IMAGE_IMPORT_FUNCTION::records32),N_IMAGE_IMPORT_FUNCTION::__data_size);
             }
 
             QList<XPE::IMAGE_IMPORT_DESCRIPTOR_EX> listID=pe.getImportDescriptorsEx();
@@ -1783,7 +1783,7 @@ bool PEWidget::createSectionTable(int type, QTableWidget *pTableWidget, const Fo
 
         case SPE::TYPE_IMPORT_FUNCTION:
             pTableWidget->setColumnCount(nRecordCount+1);
-            pTableWidget->setColumnWidth(0,nSymbolWidth*8);
+            pTableWidget->setColumnWidth(0,nSymbolWidth*12);
             pTableWidget->setColumnWidth(1,nSymbolWidth*8);
             pTableWidget->setColumnWidth(2,nSymbolWidth*6);
             pTableWidget->setColumnWidth(nRecordCount,nSymbolWidth*22);

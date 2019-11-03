@@ -212,27 +212,6 @@ extern const FormatWidget::HEADER_RECORD records64[__data_size];
 
 namespace N_IMAGE_DIRECORIES
 {
-//enum DATA
-//{
-//    EXPORT=0,
-//    IMPORT,
-//    RESOURCE,
-//    EXCEPTION,
-//    SECURITY,
-//    BASERELOC,
-//    DEBUG,
-//    ARCHITECTURE,
-//    GLOBALPTR,
-//    TLS,
-//    LOAD_CONFIG,
-//    BOUND_IMPORT,
-//    IAT,
-//    DELAY_IMPORT,
-//    COM_DESCRIPTOR,
-//    reserved,
-//    __data_size
-//};
-
 enum DATA
 {
     Name=0,
@@ -324,6 +303,7 @@ enum DATA
 };
 
 extern const FormatWidget::HEADER_RECORD records32[__data_size];
+extern const FormatWidget::HEADER_RECORD records64[__data_size];
 }
 
 namespace N_IMAGE_RELOCS
