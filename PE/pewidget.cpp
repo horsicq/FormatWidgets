@@ -1427,7 +1427,7 @@ void PEWidget::reloadData()
         {
             if(!bInit[nData])
             {
-
+                bInit[nData]=createSectionTable(SPE::TYPE_DEBUG,ui->tableWidget_Debug,N_IMAGE_DEBUG::records,N_IMAGE_DEBUG::__data_size);
             }
             // TODO
         }

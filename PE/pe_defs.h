@@ -264,6 +264,24 @@ enum DATA
 extern const FormatWidget::HEADER_RECORD records[__data_size];
 }
 
+namespace N_IMAGE_DEBUG
+{
+enum DATA
+{
+    Characteristics,
+    TimeDateStamp,
+    MajorVersion,
+    MinorVersion,
+    Type,
+    SizeOfData,
+    AddressOfRawData,
+    PointerToRawData,
+    __data_size
+};
+
+extern const FormatWidget::HEADER_RECORD records[__data_size];
+}
+
 namespace N_IMAGE_EXPORT_FUNCTION
 {
 enum DATA

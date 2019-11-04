@@ -313,6 +313,21 @@ const FormatWidget::HEADER_RECORD records[]=
 };
 }
 
+namespace N_IMAGE_DEBUG
+{
+const FormatWidget::HEADER_RECORD records[]=
+{
+    {Characteristics,           "Characteristics",              4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {TimeDateStamp,             "TimeDateStamp",                4,      "DWORD",        FormatWidget::VAL_TYPE_UNIXTIME},
+    {MajorVersion,              "MajorVersion",                 2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
+    {MinorVersion,              "MinorVersion",                 2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
+    {Type,                      "Type",                         4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {SizeOfData,                "SizeOfData",                   4,      "DWORD",        FormatWidget::VAL_TYPE_SIZE},
+    {AddressOfRawData,          "AddressOfRawData",             4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
+    {PointerToRawData,          "PointerToRawData",             4,      "DWORD",        FormatWidget::VAL_TYPE_OFFSET},
+};
+}
+
 namespace N_IMAGE_EXCEPTIONS
 {
 const FormatWidget::HEADER_RECORD records[]=
