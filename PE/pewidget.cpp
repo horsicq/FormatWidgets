@@ -1429,6 +1429,28 @@ void PEWidget::reloadData()
             {
                 bInit[nData]=createSectionTable(SPE::TYPE_DEBUG,ui->tableWidget_Debug,N_IMAGE_DEBUG::records,N_IMAGE_DEBUG::__data_size);
             }
+
+            QList<XPE_DEF::S_IMAGE_DEBUG_DIRECTORY> listDebug=pe.getDebugList();
+
+            int nCount=listDebug.count();
+            ui->tableWidget_Debug->setRowCount(nCount);
+
+//            quint32 Characteristics;
+//            quint32 TimeDateStamp;
+//            quint16 MajorVersion;
+//            quint16 MinorVersion;
+//            quint32 Type;
+//            quint32 SizeOfData;
+//            quint32 AddressOfRawData;
+//            quint32 PointerToRawData;
+
+            for(int i=0; i<nCount; i++)
+            {
+                QTableWidgetItem *pItem=new QTableWidgetItem(XBinary::valueToHex(listDebug.at(i).Characteristics));
+//                pItem->setData(Qt::UserRole,listRH.at(i).nOffset);
+                ui->tableWidget_Debug->setItem(i,N_IMAGE_DEBUG::Characteristics,               pItem);
+            }
+
             // TODO
         }
         else if(nData==SPE::TYPE_TLS)
@@ -1799,7 +1821,7 @@ bool PEWidget::createSectionTable(int type, QTableWidget *pTableWidget, const Fo
             break;
 
         case SPE::TYPE_DEBUG:
-            // TODO
+            pTableWidget->setColumnCount(nRecordCount); // TODO
             break;
 
         case SPE::TYPE_RELOCS_POSITION:
