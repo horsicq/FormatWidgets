@@ -1435,23 +1435,19 @@ void PEWidget::reloadData()
             int nCount=listDebug.count();
             ui->tableWidget_Debug->setRowCount(nCount);
 
-//            quint32 Characteristics;
-//            quint32 TimeDateStamp;
-//            quint16 MajorVersion;
-//            quint16 MinorVersion;
-//            quint32 Type;
-//            quint32 SizeOfData;
-//            quint32 AddressOfRawData;
-//            quint32 PointerToRawData;
-
             for(int i=0; i<nCount; i++)
             {
                 QTableWidgetItem *pItem=new QTableWidgetItem(XBinary::valueToHex(listDebug.at(i).Characteristics));
 //                pItem->setData(Qt::UserRole,listRH.at(i).nOffset);
-                ui->tableWidget_Debug->setItem(i,N_IMAGE_DEBUG::Characteristics,               pItem);
+                ui->tableWidget_Debug->setItem(i,N_IMAGE_DEBUG::Characteristics,                pItem);
+                ui->tableWidget_Debug->setItem(i,N_IMAGE_DEBUG::TimeDateStamp,                  new QTableWidgetItem(XBinary::valueToHex(listDebug.at(i).TimeDateStamp)));
+                ui->tableWidget_Debug->setItem(i,N_IMAGE_DEBUG::MajorVersion,                   new QTableWidgetItem(XBinary::valueToHex(listDebug.at(i).MajorVersion)));
+                ui->tableWidget_Debug->setItem(i,N_IMAGE_DEBUG::MinorVersion,                   new QTableWidgetItem(XBinary::valueToHex(listDebug.at(i).MinorVersion)));
+                ui->tableWidget_Debug->setItem(i,N_IMAGE_DEBUG::Type,                           new QTableWidgetItem(XBinary::valueToHex(listDebug.at(i).Type)));
+                ui->tableWidget_Debug->setItem(i,N_IMAGE_DEBUG::SizeOfData,                     new QTableWidgetItem(XBinary::valueToHex(listDebug.at(i).SizeOfData)));
+                ui->tableWidget_Debug->setItem(i,N_IMAGE_DEBUG::AddressOfRawData,               new QTableWidgetItem(XBinary::valueToHex(listDebug.at(i).AddressOfRawData)));
+                ui->tableWidget_Debug->setItem(i,N_IMAGE_DEBUG::PointerToRawData,               new QTableWidgetItem(XBinary::valueToHex(listDebug.at(i).PointerToRawData)));
             }
-
-            // TODO
         }
         else if(nData==SPE::TYPE_TLS)
         {
