@@ -63,6 +63,7 @@ private slots:
     void loadSection(int nNumber);
     void loadException(int nNumber);
     void loadDirectory(int nNumber);
+    void loadDebug(int nNumber);
 
     void on_tableWidget_ImportLibraries_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     void on_tableWidget_Relocs_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
@@ -75,6 +76,8 @@ private slots:
 
     void on_tableWidget_Exceptions_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     void on_tableWidget_IMAGE_DIRECTORY_ENTRIES_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
+
+    void on_tableWidget_Debug_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
 
 private:
     enum CB

@@ -1438,7 +1438,9 @@ void PEWidget::reloadData()
             for(int i=0; i<nCount; i++)
             {
                 QTableWidgetItem *pItem=new QTableWidgetItem(XBinary::valueToHex(listDebug.at(i).Characteristics));
-//                pItem->setData(Qt::UserRole,listRH.at(i).nOffset);
+                pItem->setData(Qt::UserRole+SECTION_DATA_ADDRESS,listDebug.at(i).AddressOfRawData);
+                pItem->setData(Qt::UserRole+SECTION_DATA_SIZE,listDebug.at(i).SizeOfData);
+                pItem->setData(Qt::UserRole+SECTION_DATA_OFFSET,listDebug.at(i).PointerToRawData);
                 ui->tableWidget_Debug->setItem(i,N_IMAGE_DEBUG::Characteristics,                pItem);
                 ui->tableWidget_Debug->setItem(i,N_IMAGE_DEBUG::TimeDateStamp,                  new QTableWidgetItem(XBinary::valueToHex(listDebug.at(i).TimeDateStamp)));
                 ui->tableWidget_Debug->setItem(i,N_IMAGE_DEBUG::MajorVersion,                   new QTableWidgetItem(XBinary::valueToHex(listDebug.at(i).MajorVersion)));
@@ -1447,6 +1449,18 @@ void PEWidget::reloadData()
                 ui->tableWidget_Debug->setItem(i,N_IMAGE_DEBUG::SizeOfData,                     new QTableWidgetItem(XBinary::valueToHex(listDebug.at(i).SizeOfData)));
                 ui->tableWidget_Debug->setItem(i,N_IMAGE_DEBUG::AddressOfRawData,               new QTableWidgetItem(XBinary::valueToHex(listDebug.at(i).AddressOfRawData)));
                 ui->tableWidget_Debug->setItem(i,N_IMAGE_DEBUG::PointerToRawData,               new QTableWidgetItem(XBinary::valueToHex(listDebug.at(i).PointerToRawData)));
+            }
+
+            if(nCount)
+            {
+                if(ui->tableWidget_Debug->currentRow()==0)
+                {
+                    loadDebug(0);
+                }
+                else
+                {
+                    ui->tableWidget_Debug->setCurrentCell(0,0);
+                }
             }
         }
         else if(nData==SPE::TYPE_TLS)
@@ -1674,7 +1688,6 @@ void PEWidget::loadSection(int nNumber)
     qint64 nOffset=ui->tableWidget_Sections->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_OFFSET).toLongLong();
     qint64 nSize=ui->tableWidget_Sections->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
     qint64 nAddress=ui->tableWidget_Sections->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
-    //        qint64 nVSize=ui->tableWidget_Sections->item(currentRow,0)->data(Qt::UserRole+SECTION_DATA_VSIZE).toLongLong();
 
     loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SD_SECTION],ui->widgetSectionHex);
 }
@@ -1684,7 +1697,6 @@ void PEWidget::loadException(int nNumber)
     qint64 nOffset=ui->tableWidget_Exceptions->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_OFFSET).toLongLong();
     qint64 nSize=ui->tableWidget_Exceptions->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
     qint64 nAddress=ui->tableWidget_Exceptions->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
-    //        qint64 nVSize=ui->tableWidget_Sections->item(currentRow,0)->data(Qt::UserRole+SECTION_DATA_VSIZE).toLongLong();
 
     loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SD_EXCEPTION],ui->widgetExceptionHex);
 }
@@ -1694,9 +1706,17 @@ void PEWidget::loadDirectory(int nNumber)
     qint64 nOffset=ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_OFFSET).toLongLong();
     qint64 nSize=ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
     qint64 nAddress=ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
-    //        qint64 nVSize=ui->tableWidget_Sections->item(currentRow,0)->data(Qt::UserRole+SECTION_DATA_VSIZE).toLongLong();
 
     loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SD_DIRECTORY],ui->widgetDirectoryHex);
+}
+
+void PEWidget::loadDebug(int nNumber)
+{
+    qint64 nOffset=ui->tableWidget_Debug->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_OFFSET).toLongLong();
+    qint64 nSize=ui->tableWidget_Debug->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
+    qint64 nAddress=ui->tableWidget_Debug->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
+
+    loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SD_DEBUG],ui->widgetDebugHex);
 }
 
 void PEWidget::on_tableWidget_ImportLibraries_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
@@ -1924,5 +1944,17 @@ void PEWidget::on_tableWidget_IMAGE_DIRECTORY_ENTRIES_currentCellChanged(int cur
     if(currentRow!=-1)
     {
         loadDirectory(currentRow);
+    }
+}
+
+void PEWidget::on_tableWidget_Debug_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
+{
+    Q_UNUSED(currentColumn)
+    Q_UNUSED(previousRow)
+    Q_UNUSED(previousColumn)
+
+    if(currentRow!=-1)
+    {
+        loadDebug(currentRow);
     }
 }
