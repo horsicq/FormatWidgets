@@ -1599,9 +1599,9 @@ void PEWidget::on_tableWidget_Sections_customContextMenuRequested(const QPoint &
     {
         QMenu contextMenu(this);
 
-        QAction actionEditHeader(tr("Edit header"),this);
-        connect(&actionEditHeader, SIGNAL(triggered()), this, SLOT(editSectionHeader()));
-        contextMenu.addAction(&actionEditHeader);
+        QAction actionEdit(tr("Edit"),this);
+        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editSectionHeader()));
+        contextMenu.addAction(&actionEdit);
 
         contextMenu.exec(ui->tableWidget_Sections->viewport()->mapToGlobal(pos));
     }
