@@ -52,9 +52,7 @@ private slots:
     void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
     void widgetValueChanged(quint64 nValue);
     void widgetAction();
-
     void on_checkBoxReadonly_toggled(bool checked);
-
     void editSectionHeader();
     void reloadData();
     void on_tableWidget_Sections_customContextMenuRequested(const QPoint &pos);
@@ -64,19 +62,14 @@ private slots:
     void loadException(int nNumber);
     void loadDirectory(int nNumber);
     void loadDebug(int nNumber);
-
     void on_tableWidget_ImportLibraries_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     void on_tableWidget_Relocs_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
-
     bool createSectionTable(int type, QTableWidget *pTableWidget, const FormatWidget::HEADER_RECORD *pRecords, int nRecordCount);
     void on_tableWidget_Sections_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
-
     void on_treeWidgetResource_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
     void on_pushButtonReload_clicked();
-
     void on_tableWidget_Exceptions_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     void on_tableWidget_IMAGE_DIRECTORY_ENTRIES_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
-
     void on_tableWidget_Debug_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
 
 private:
@@ -134,7 +127,6 @@ private:
     };
 
     Ui::PEWidget *ui;
-
     XLineEditHEX *lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::__data_size];
     XLineEditHEX *lineEdit_IMAGE_NT_HEADERS[N_IMAGE_NT_HEADERS::__data_size];
     XLineEditHEX *lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::__data_size];
@@ -145,10 +137,8 @@ private:
     XComboBoxEx *comboBox[__CB_size];
     QPushButton *pushButton[__PB_size];
     XDateTimeEditX *dateTimeEdit[__TD_size];
-
     InvWidget *invWidget[__INV_size];
     SubDevice *subDevice[__SD_size];
-
     bool bInit[SPE::__TYPE_size];
 };
 
