@@ -120,12 +120,16 @@ void PEWidget::reload()
             ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_TLS,"TLS"));
         }
 
-        // TODO Delay import
         // TODO Bound import
 
         if(pe.isLoadConfigPresent())
         {
             ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_LOADCONFIG,"Load Config"));
+        }
+
+        if(pe.isDelayImportPresent())
+        {
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_DELAYIMPORT,"Delay import"));
         }
 
         if(pe.isOverlayPresent())
