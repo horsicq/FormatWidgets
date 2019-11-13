@@ -1380,7 +1380,7 @@ void PEWidget::reloadData()
 
                 ui->tableWidget_Exceptions->setItem(i,N_IMAGE_EXCEPTIONS::BeginAddress,         pItem);
                 ui->tableWidget_Exceptions->setItem(i,N_IMAGE_EXCEPTIONS::EndAddress,           new QTableWidgetItem(XBinary::valueToHex(listRFE.at(i).EndAddress)));
-                ui->tableWidget_Exceptions->setItem(i,N_IMAGE_EXCEPTIONS::UnwindInfoAddress,    new QTableWidgetItem(XBinary::valueToHex(listRFE.at(i).DUMMYUNIONNAME.UnwindInfoAddress)));
+                ui->tableWidget_Exceptions->setItem(i,N_IMAGE_EXCEPTIONS::UnwindInfoAddress,    new QTableWidgetItem(XBinary::valueToHex(listRFE.at(i).UnwindInfoAddress)));
             }
 
             if(nCount)
