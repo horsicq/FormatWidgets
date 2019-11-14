@@ -805,6 +805,7 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="page_BoundImport"/>
       <widget class="QWidget" name="page_DelayImport"/>
       <widget class="QWidget" name="page_Overlay">
        <layout class="QVBoxLayout" name="verticalLayout_11">

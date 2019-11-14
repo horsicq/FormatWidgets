@@ -120,11 +120,14 @@ void PEWidget::reload()
             ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_TLS,"TLS"));
         }
 
-        // TODO Bound import
-
         if(pe.isLoadConfigPresent())
         {
             ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_LOADCONFIG,"Load Config"));
+        }
+
+        if(pe.isBoundImportPresent())
+        {
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_BOUNDIMPORT,"Bound import"));
         }
 
         if(pe.isDelayImportPresent())
