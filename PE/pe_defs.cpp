@@ -328,6 +328,21 @@ const FormatWidget::HEADER_RECORD records[]=
 };
 }
 
+namespace N_IMAGE_DELAYLOAD_DESCRIPTOR
+{
+const FormatWidget::HEADER_RECORD records[]=
+{
+    {AllAttributes,             "AllAttributes",                4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {DllNameRVA,                "DllNameRVA",                   4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
+    {ModuleHandleRVA,           "ModuleHandleRVA",              4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
+    {ImportAddressTableRVA,     "ImportAddressTableRVA",        4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
+    {ImportNameTableRVA,        "ImportNameTableRVA",           4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
+    {BoundImportAddressTableRVA,"BoundImportAddressTableRVA",   4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
+    {UnloadInformationTableRVA, "UnloadInformationTableRVA",    4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
+    {TimeDateStamp,             "TimeDateStamp",                4,      "DWORD",        FormatWidget::VAL_TYPE_UNIXTIME},
+};
+}
+
 namespace N_IMAGE_EXCEPTIONS
 {
 const FormatWidget::HEADER_RECORD records[]=

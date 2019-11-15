@@ -312,6 +312,24 @@ enum DATA
 extern const FormatWidget::HEADER_RECORD records[__data_size];
 }
 
+namespace N_IMAGE_DELAYLOAD_DESCRIPTOR
+{
+enum DATA
+{
+    AllAttributes,
+    DllNameRVA,
+    ModuleHandleRVA,
+    ImportAddressTableRVA,
+    ImportNameTableRVA,
+    BoundImportAddressTableRVA,
+    UnloadInformationTableRVA,
+    TimeDateStamp,
+    __data_size
+};
+
+extern const FormatWidget::HEADER_RECORD records[__data_size];
+}
+
 namespace N_IMAGE_IMPORT_FUNCTION
 {
 enum DATA
