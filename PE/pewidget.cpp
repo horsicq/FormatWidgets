@@ -1586,6 +1586,14 @@ void PEWidget::reloadData()
 
             blockSignals(false);
         }
+        else if(nData==SPE::TYPE_BOUNDIMPORT)
+        {
+
+        }
+        else if(nData==SPE::TYPE_DELAYIMPORT)
+        {
+
+        }
         else if(nData==SPE::TYPE_OVERLAY)
         {
             qint64 nOverLayOffset=pe.getOverlayOffset();
