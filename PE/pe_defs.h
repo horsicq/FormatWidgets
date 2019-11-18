@@ -312,7 +312,7 @@ enum DATA
 extern const FormatWidget::HEADER_RECORD records[__data_size];
 }
 
-namespace N_IMAGE_DELAYLOAD_DESCRIPTOR
+namespace N_IMAGE_DELAYIMPORT
 {
 enum DATA
 {

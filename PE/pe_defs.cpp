@@ -328,7 +328,7 @@ const FormatWidget::HEADER_RECORD records[]=
 };
 }
 
-namespace N_IMAGE_DELAYLOAD_DESCRIPTOR
+namespace N_IMAGE_DELAYIMPORT
 {
 const FormatWidget::HEADER_RECORD records[]=
 {
