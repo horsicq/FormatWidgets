@@ -97,7 +97,14 @@ void PEWidget::reload()
 
         if(pe.isResourcesPresent())
         {
-            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_RESOURCE,"Resource"));
+            QTreeWidgetItem *pResources=createNewItem(SPE::TYPE_RESOURCE,"Resource");
+
+            ui->treeWidgetNavi->addTopLevelItem(pResources);
+
+            if(pe.isResourceManifestPresent())
+            {
+                pResources->addChild(createNewItem(SPE::TYPE_RESOURCE_MANIFEST,"Manifest"));
+            }
         }
 
         if(pe.isExceptionPresent())
@@ -681,7 +688,7 @@ void PEWidget::setReadonly(bool bState)
     ui->widgetHex->setReadonly(bState);
     ui->widgetSectionHex->setReadonly(bState);
     ui->widgetOverlayHex->setReadonly(bState);
-    ui->widgetResourceHex->setReadonly(bState);
+    ui->widgetResourcesHex->setReadonly(bState);
 }
 
 void PEWidget::blockSignals(bool bState)
@@ -1263,7 +1270,7 @@ void PEWidget::reloadData()
         }
         else if(nData==SPE::TYPE_RESOURCE)
         {
-            ui->treeWidgetResource->clear();
+            ui->treeWidgetResources->clear();
 
             XPE::RESOURCE_HEADER rh=pe.getResourceHeader();
 
@@ -1271,7 +1278,7 @@ void PEWidget::reloadData()
 
             if(nHeaderCount)
             {
-                QTreeWidgetItem *pRoot=new QTreeWidgetItem(ui->treeWidgetResource);
+                QTreeWidgetItem *pRoot=new QTreeWidgetItem(ui->treeWidgetResources);
                 pRoot->setText(0,tr("Resource"));
                 //                ui->treeWidgetResource->insertTopLevelItem(0,);
 
@@ -1355,8 +1362,16 @@ void PEWidget::reloadData()
                     }
                 }
 
-                ui->treeWidgetResource->expandItem(pRoot);
+                ui->treeWidgetResources->expandItem(pRoot);
             }
+        }
+        else if(nData==SPE::TYPE_RESOURCE_MANIFEST)
+        {
+            ui->textEditManifest->clear();
+
+            QString sManifest=pe.getResourceManifest();
+
+            ui->textEditManifest->setText(sManifest);
         }
         else if(nData==SPE::TYPE_EXCEPTION)
         {
@@ -1939,7 +1954,7 @@ void PEWidget::on_tableWidget_Sections_currentCellChanged(int currentRow, int cu
     }
 }
 
-void PEWidget::on_treeWidgetResource_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
+void PEWidget::on_treeWidgetResources_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
 {
     Q_UNUSED(previous)
 
@@ -1952,7 +1967,7 @@ void PEWidget::on_treeWidgetResource_currentItemChanged(QTreeWidgetItem *current
             qint64 nSize=current->data(0,Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
             qint64 nAddress=current->data(0,Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
 
-            loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SD_RESOURCE],ui->widgetResourceHex);
+            loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SD_RESOURCE],ui->widgetResourcesHex);
         }
     }
 }
