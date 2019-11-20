@@ -142,6 +142,11 @@ void PEWidget::reload()
             ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_DELAYIMPORT,"Delay import"));
         }
 
+        if(pe.isNETPresent())
+        {
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_NET,".NET"));
+        }
+
         if(pe.isOverlayPresent())
         {
             ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_OVERLAY,tr("Overlay")));
@@ -1603,7 +1608,7 @@ void PEWidget::reloadData()
         }
         else if(nData==SPE::TYPE_BOUNDIMPORT)
         {
-
+            // TODO
         }
         else if(nData==SPE::TYPE_DELAYIMPORT)
         {
@@ -1629,6 +1634,10 @@ void PEWidget::reloadData()
                 ui->tableWidget_DelayImport->setItem(i,N_IMAGE_DELAYIMPORT::UnloadInformationTableRVA,      new QTableWidgetItem(XBinary::valueToHex(listDelayImport.at(i).UnloadInformationTableRVA)));
                 ui->tableWidget_DelayImport->setItem(i,N_IMAGE_DELAYIMPORT::TimeDateStamp,                  new QTableWidgetItem(XBinary::valueToHex(listDelayImport.at(i).TimeDateStamp)));
             }
+        }
+        else if(nData==SPE::TYPE_NET)
+        {
+            // TODO
         }
         else if(nData==SPE::TYPE_OVERLAY)
         {
