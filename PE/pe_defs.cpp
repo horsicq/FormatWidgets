@@ -353,6 +353,18 @@ const FormatWidget::HEADER_RECORD records[]=
 };
 }
 
+namespace N_IMAGE_NETHEADER
+{
+const FormatWidget::HEADER_RECORD records[]=
+{
+    {cb,                        "cb",                           4,      "DWORD",        FormatWidget::VAL_TYPE_SIZE},
+    {MajorRuntimeVersion,       "MajorRuntimeVersion",          2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
+    {MinorRuntimeVersion,       "MinorRuntimeVersion",          2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
+    {Flags,                     "Flags",                        4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {EntryPoint,                "EntryPoint",                   4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+};
+}
+
 namespace N_IMAGE_RELOCS_POSITION
 {
 const FormatWidget::HEADER_RECORD records[]=

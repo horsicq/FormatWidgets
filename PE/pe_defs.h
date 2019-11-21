@@ -358,6 +358,21 @@ enum DATA
 extern const FormatWidget::HEADER_RECORD records[__data_size];
 }
 
+namespace N_IMAGE_NETHEADER
+{
+enum DATA
+{
+    cb=0,
+    MajorRuntimeVersion,
+    MinorRuntimeVersion,
+    Flags,
+    EntryPoint,
+    __data_size
+};
+
+extern const FormatWidget::HEADER_RECORD records[__data_size];
+}
+
 namespace N_IMAGE_EXCEPTIONS
 {
 enum DATA
