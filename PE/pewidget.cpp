@@ -52,6 +52,7 @@ void PEWidget::clear()
     memset(lineEdit_IMAGE_OPTIONAL_HEADER,0,sizeof lineEdit_IMAGE_OPTIONAL_HEADER);
     memset(lineEdit_TLS,0,sizeof lineEdit_TLS);
     memset(lineEdit_LoadConfig,0,sizeof lineEdit_LoadConfig);
+    memset(lineEdit_NetHeader,0,sizeof lineEdit_NetHeader);
     memset(lineEdit_EXPORT,0,sizeof lineEdit_EXPORT);
     memset(comboBox,0,sizeof comboBox);
     memset(pushButton,0,sizeof pushButton);
@@ -144,7 +145,7 @@ void PEWidget::reload()
 
         if(pe.isNETPresent())
         {
-            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_NET,".NET"));
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_NETHEADER,".NET"));
         }
 
         if(pe.isOverlayPresent())
@@ -581,6 +582,30 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                             break;
                     }
                     break;
+                case SPE::TYPE_NETHEADER:
+                    switch(nNdata)
+                    {
+                        case N_IMAGE_NETHEADER::cb:
+                            pe.setNetHeader_cb((quint32)nValue);
+                            break;
+
+                        case N_IMAGE_NETHEADER::MinorRuntimeVersion:
+                            pe.setNetHeader_MinorRuntimeVersion((quint16)nValue);
+                            break;
+
+                        case N_IMAGE_NETHEADER::MajorRuntimeVersion:
+                            pe.setNetHeader_MajorRuntimeVersion((quint16)nValue);
+                            break;
+
+                        case N_IMAGE_NETHEADER::Flags:
+                            pe.setNetHeader_Flags((quint32)nValue);
+                            break;
+
+                        case N_IMAGE_NETHEADER::EntryPoint:
+                            pe.setNetHeader_EntryPoint((quint32)nValue);
+                            break;
+                    }
+                    break;
                 case SPE::TYPE_LOADCONFIG:
                     switch(nNdata)
                     {
@@ -683,6 +708,7 @@ void PEWidget::setReadonly(bool bState)
     setLineEditsReadOnly(lineEdit_TLS,N_IMAGE_TLS::__data_size,bState);
     setLineEditsReadOnly(lineEdit_LoadConfig,N_IMAGE_LOADCONFIG::__data_size,bState);
     setLineEditsReadOnly(lineEdit_EXPORT,N_IMAGE_EXPORT::__data_size,bState);
+    setLineEditsReadOnly(lineEdit_NetHeader,N_IMAGE_NETHEADER::__data_size,bState);
 //    setLineEditsReadOnly(lineEdit_IMAGE_DIRECTORY_ADDRESS,N_IMAGE_DIRECORIES::__data_size,bState);
 //    setLineEditsReadOnly(lineEdit_IMAGE_DIRECTORY_SIZE,N_IMAGE_DIRECORIES::__data_size,bState);
 
@@ -705,6 +731,7 @@ void PEWidget::blockSignals(bool bState)
     _blockSignals((QObject **)lineEdit_TLS,N_IMAGE_TLS::__data_size,bState);
     _blockSignals((QObject **)lineEdit_LoadConfig,N_IMAGE_LOADCONFIG::__data_size,bState);
     _blockSignals((QObject **)lineEdit_EXPORT,N_IMAGE_EXPORT::__data_size,bState);
+    _blockSignals((QObject **)lineEdit_NetHeader,N_IMAGE_NETHEADER::__data_size,bState);
 //    _blockSignals((QObject **)lineEdit_IMAGE_DIRECTORY_ADDRESS,N_IMAGE_DIRECORIES::__data_size,bState);
 //    _blockSignals((QObject **)lineEdit_IMAGE_DIRECTORY_SIZE,N_IMAGE_DIRECORIES::__data_size,bState);
 
@@ -1635,9 +1662,24 @@ void PEWidget::reloadData()
                 ui->tableWidget_DelayImport->setItem(i,N_IMAGE_DELAYIMPORT::TimeDateStamp,                  new QTableWidgetItem(XBinary::valueToHex(listDelayImport.at(i).TimeDateStamp)));
             }
         }
-        else if(nData==SPE::TYPE_NET)
+        else if(nData==SPE::TYPE_NETHEADER)
         {
-            // TODO
+            if(!bInit[nData])
+            {
+                bInit[nData]=createHeaderTable(SPE::TYPE_NETHEADER,ui->tableWidget_NetHeader,N_IMAGE_NETHEADER::records,lineEdit_NetHeader,N_IMAGE_NETHEADER::__data_size,0);
+            }
+
+            blockSignals(true);
+
+            XPE::NET_HEADER netHeader=pe.getNetHeader();
+
+            lineEdit_NetHeader[N_IMAGE_NETHEADER::cb]->setValue(netHeader.cb);
+            lineEdit_NetHeader[N_IMAGE_NETHEADER::MajorRuntimeVersion]->setValue(netHeader.MajorRuntimeVersion);
+            lineEdit_NetHeader[N_IMAGE_NETHEADER::MinorRuntimeVersion]->setValue(netHeader.MinorRuntimeVersion);
+            lineEdit_NetHeader[N_IMAGE_NETHEADER::Flags]->setValue(netHeader.Flags);
+            lineEdit_NetHeader[N_IMAGE_NETHEADER::EntryPoint]->setValue(netHeader.EntryPoint);
+
+            blockSignals(false);
         }
         else if(nData==SPE::TYPE_OVERLAY)
         {
