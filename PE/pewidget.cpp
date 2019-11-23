@@ -102,6 +102,11 @@ void PEWidget::reload()
 
             ui->treeWidgetNavi->addTopLevelItem(pResources);
 
+            if(pe.isResourceVersionPresent())
+            {
+                pResources->addChild(createNewItem(SPE::TYPE_RESOURCE_VERSION,"Version"));
+            }
+
             if(pe.isResourceManifestPresent())
             {
                 pResources->addChild(createNewItem(SPE::TYPE_RESOURCE_MANIFEST,"Manifest"));
