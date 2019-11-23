@@ -82,6 +82,7 @@ private:
         CB_IMAGE_OPTIONAL_HEADER_Magic,
         CB_IMAGE_OPTIONAL_HEADER_Subsystem,
         CB_IMAGE_OPTIONAL_HEADER_DllCharacteristics,
+        CB_IMAGE_NETHEADER_FLAGS,
         __CB_size
     };
     enum PB

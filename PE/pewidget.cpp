@@ -598,6 +598,7 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                             break;
 
                         case N_IMAGE_NETHEADER::Flags:
+                            comboBox[CB_IMAGE_NETHEADER_FLAGS]->setValue((quint32)nValue);
                             pe.setNetHeader_Flags((quint32)nValue);
                             break;
 
@@ -806,6 +807,15 @@ void PEWidget::widgetValueChanged(quint64 nValue)
 
                 case N_IMAGE_OPTIONAL_HEADER::DllCharacteristics:
                     lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::DllCharacteristics]->setValue((quint16)nValue);
+                    break;
+            }
+            break;
+
+        case SPE::TYPE_NETHEADER:
+            switch(nNdata)
+            {
+                case N_IMAGE_NETHEADER::Flags:
+                    lineEdit_NetHeader[N_IMAGE_NETHEADER::Flags]->setValue((quint32)nValue);
                     break;
             }
             break;
@@ -1667,6 +1677,8 @@ void PEWidget::reloadData()
             if(!bInit[nData])
             {
                 bInit[nData]=createHeaderTable(SPE::TYPE_NETHEADER,ui->tableWidget_NetHeader,N_IMAGE_NETHEADER::records,lineEdit_NetHeader,N_IMAGE_NETHEADER::__data_size,0);
+
+                comboBox[CB_IMAGE_NETHEADER_FLAGS]=createComboBox(ui->tableWidget_NetHeader,XPE::getComImageFlagsS(),SPE::TYPE_NETHEADER,N_IMAGE_NETHEADER::Flags,XComboBoxEx::CBTYPE_FLAGS);
             }
 
             blockSignals(true);
@@ -1678,6 +1690,8 @@ void PEWidget::reloadData()
             lineEdit_NetHeader[N_IMAGE_NETHEADER::MinorRuntimeVersion]->setValue(netHeader.MinorRuntimeVersion);
             lineEdit_NetHeader[N_IMAGE_NETHEADER::Flags]->setValue(netHeader.Flags);
             lineEdit_NetHeader[N_IMAGE_NETHEADER::EntryPoint]->setValue(netHeader.EntryPoint);
+
+            comboBox[CB_IMAGE_NETHEADER_FLAGS]->setValue(netHeader.Flags);
 
             blockSignals(false);
         }
@@ -1901,6 +1915,13 @@ void PEWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
             pTableWidget->setColumnWidth(1,nSymbolWidth*9);
             pTableWidget->setColumnWidth(2,nSymbolWidth*14);
             pTableWidget->setColumnWidth(3,nSymbolWidth*13);
+            break;
+
+        case SPE::TYPE_NETHEADER:
+            pTableWidget->setColumnWidth(0,nSymbolWidth*18);
+            pTableWidget->setColumnWidth(1,nSymbolWidth*6);
+            pTableWidget->setColumnWidth(2,nSymbolWidth*8);
+            pTableWidget->setColumnWidth(3,nSymbolWidth*18);
             break;
     }
 }
