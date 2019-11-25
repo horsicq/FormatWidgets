@@ -1412,6 +1412,10 @@ void PEWidget::reloadData()
                 ui->treeWidgetResources->expandItem(pRoot);
             }
         }
+        else if(nData==SPE::TYPE_RESOURCE_VERSION)
+        {
+            // TODO
+        }
         else if(nData==SPE::TYPE_RESOURCE_MANIFEST)
         {
             ui->textEditManifest->clear();
