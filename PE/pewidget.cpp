@@ -1415,6 +1415,10 @@ void PEWidget::reloadData()
         else if(nData==SPE::TYPE_RESOURCE_VERSION)
         {
             // TODO
+            XPE::RESOURCE_VERSION resourceVersion=pe.getResourceVersion();
+
+            int z=0;
+            z++;
         }
         else if(nData==SPE::TYPE_RESOURCE_MANIFEST)
         {
