@@ -398,4 +398,27 @@ enum DATA
 extern const FormatWidget::HEADER_RECORD records[__data_size];
 }
 
+namespace N_IMAGE_RESOURCE_FIXEDFILEINFO
+{
+enum DATA
+{
+    dwSignature=0,
+    dwStrucVersion,
+    dwFileVersionMS,
+    dwFileVersionLS,
+    dwProductVersionMS,
+    dwProductVersionLS,
+    dwFileFlagsMask,
+    dwFileFlags,
+    dwFileOS,
+    dwFileType,
+    dwFileSubtype,
+    dwFileDateMS,
+    dwFileDateLS,
+    __data_size
+};
+
+extern const FormatWidget::HEADER_RECORD records[__data_size];
+}
+
 #endif

@@ -365,6 +365,26 @@ const FormatWidget::HEADER_RECORD records[]=
 };
 }
 
+namespace N_IMAGE_RESOURCE_FIXEDFILEINFO
+{
+const FormatWidget::HEADER_RECORD records[]=
+{
+    {dwSignature,               "dwSignature",                  4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {dwStrucVersion,            "dwStrucVersion",               4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {dwFileVersionMS,           "dwFileVersionMS",              4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {dwFileVersionLS,           "dwFileVersionLS",              4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {dwProductVersionMS,        "dwProductVersionMS",           4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {dwProductVersionLS,        "dwProductVersionLS",           4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {dwFileFlagsMask,           "dwFileFlagsMask",              4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {dwFileFlags,               "dwFileFlags",                  4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {dwFileOS,                  "dwFileOS",                     4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {dwFileType,                "dwFileType",                   4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {dwFileSubtype,             "dwFileSubtype",                4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {dwFileDateMS,              "dwFileDateMS",                 4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {dwFileDateLS,              "dwFileDateLS",                 4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+};
+}
+
 namespace N_IMAGE_RELOCS_POSITION
 {
 const FormatWidget::HEADER_RECORD records[]=
