@@ -52,6 +52,7 @@ void PEWidget::clear()
     memset(lineEdit_IMAGE_OPTIONAL_HEADER,0,sizeof lineEdit_IMAGE_OPTIONAL_HEADER);
     memset(lineEdit_TLS,0,sizeof lineEdit_TLS);
     memset(lineEdit_LoadConfig,0,sizeof lineEdit_LoadConfig);
+    memset(lineEdit_Version_FixedFileInfo,0,sizeof lineEdit_Version_FixedFileInfo);
     memset(lineEdit_NetHeader,0,sizeof lineEdit_NetHeader);
     memset(lineEdit_EXPORT,0,sizeof lineEdit_EXPORT);
     memset(comboBox,0,sizeof comboBox);
@@ -587,6 +588,61 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                             break;
                     }
                     break;
+                case SPE::TYPE_RESOURCE_VERSION:
+                    switch(nNdata)
+                    {
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwSignature:
+                            pe.setFixedFileInfo_dwSignature((quint32)nValue);
+                            break;
+
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwStrucVersion:
+                            pe.setFixedFileInfo_dwStrucVersion((quint32)nValue);
+                            break;
+
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileVersionMS:
+                            pe.setFixedFileInfo_dwFileVersionMS((quint32)nValue);
+                            break;
+
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileVersionLS:
+                            pe.setFixedFileInfo_dwFileVersionLS((quint32)nValue);
+                            break;
+
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwProductVersionMS:
+                            pe.setFixedFileInfo_dwProductVersionMS((quint32)nValue);
+                            break;
+
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwProductVersionLS:
+                            pe.setFixedFileInfo_dwProductVersionLS((quint32)nValue);
+                            break;
+
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileFlagsMask:
+                            pe.setFixedFileInfo_dwFileFlagsMask((quint32)nValue);
+                            break;
+
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileFlags:
+                            pe.setFixedFileInfo_dwFileFlags((quint32)nValue);
+                            break;
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileOS:
+                            pe.setFixedFileInfo_dwFileOS((quint32)nValue);
+                            break;
+
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileType:
+                            pe.setFixedFileInfo_dwFileType((quint32)nValue);
+                            break;
+
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileSubtype:
+                            pe.setFixedFileInfo_dwFileSubtype((quint32)nValue);
+                            break;
+
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileDateMS:
+                            pe.setFixedFileInfo_dwFileDateMS((quint32)nValue);
+                            break;
+
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileDateLS:
+                            pe.setFixedFileInfo_dwFileDateLS((quint32)nValue);
+                            break;
+                    }
+                    break;
                 case SPE::TYPE_NETHEADER:
                     switch(nNdata)
                     {
@@ -712,6 +768,7 @@ void PEWidget::setReadonly(bool bState)
     setLineEditsReadOnly(lineEdit_IMAGE_FILE_HEADER,N_IMAGE_FILE_HEADER::__data_size,bState);
     setLineEditsReadOnly(lineEdit_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::__data_size,bState);
     setLineEditsReadOnly(lineEdit_TLS,N_IMAGE_TLS::__data_size,bState);
+    setLineEditsReadOnly(lineEdit_Version_FixedFileInfo,N_IMAGE_RESOURCE_FIXEDFILEINFO::__data_size,bState);
     setLineEditsReadOnly(lineEdit_LoadConfig,N_IMAGE_LOADCONFIG::__data_size,bState);
     setLineEditsReadOnly(lineEdit_EXPORT,N_IMAGE_EXPORT::__data_size,bState);
     setLineEditsReadOnly(lineEdit_NetHeader,N_IMAGE_NETHEADER::__data_size,bState);
@@ -735,6 +792,7 @@ void PEWidget::blockSignals(bool bState)
     _blockSignals((QObject **)lineEdit_IMAGE_FILE_HEADER,N_IMAGE_FILE_HEADER::__data_size,bState);
     _blockSignals((QObject **)lineEdit_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::__data_size,bState);
     _blockSignals((QObject **)lineEdit_TLS,N_IMAGE_TLS::__data_size,bState);
+    _blockSignals((QObject **)lineEdit_Version_FixedFileInfo,N_IMAGE_RESOURCE_FIXEDFILEINFO::__data_size,bState);
     _blockSignals((QObject **)lineEdit_LoadConfig,N_IMAGE_LOADCONFIG::__data_size,bState);
     _blockSignals((QObject **)lineEdit_EXPORT,N_IMAGE_EXPORT::__data_size,bState);
     _blockSignals((QObject **)lineEdit_NetHeader,N_IMAGE_NETHEADER::__data_size,bState);
@@ -1414,19 +1472,38 @@ void PEWidget::reloadData()
         }
         else if(nData==SPE::TYPE_RESOURCE_VERSION)
         {
-            // TODO
+            if(!bInit[nData])
+            {
+                bInit[nData]=createHeaderTable(SPE::TYPE_RESOURCE_VERSION,ui->tableWidget_Resources_Version,N_IMAGE_RESOURCE_FIXEDFILEINFO::records,lineEdit_Version_FixedFileInfo,N_IMAGE_RESOURCE_FIXEDFILEINFO::__data_size,0);
+            }
+
+            blockSignals(true);
+
             XPE::RESOURCE_VERSION resourceVersion=pe.getResourceVersion();
 
-            int z=0;
-            z++;
+            lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwSignature]->setValue(resourceVersion.fileInfo.dwSignature);
+            lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwStrucVersion]->setValue(resourceVersion.fileInfo.dwStrucVersion);
+            lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileVersionMS]->setValue(resourceVersion.fileInfo.dwFileVersionMS);
+            lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileVersionLS]->setValue(resourceVersion.fileInfo.dwFileVersionLS);
+            lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwProductVersionMS]->setValue(resourceVersion.fileInfo.dwProductVersionMS);
+            lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwProductVersionLS]->setValue(resourceVersion.fileInfo.dwProductVersionLS);
+            lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileFlagsMask]->setValue(resourceVersion.fileInfo.dwFileFlagsMask);
+            lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileFlags]->setValue(resourceVersion.fileInfo.dwFileFlags);
+            lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileOS]->setValue(resourceVersion.fileInfo.dwFileOS);
+            lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileType]->setValue(resourceVersion.fileInfo.dwFileType);
+            lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileSubtype]->setValue(resourceVersion.fileInfo.dwFileSubtype);
+            lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileDateMS]->setValue(resourceVersion.fileInfo.dwFileDateMS);
+            lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileDateLS]->setValue(resourceVersion.fileInfo.dwFileDateLS);
+
+            blockSignals(false);
         }
         else if(nData==SPE::TYPE_RESOURCE_MANIFEST)
         {
-            ui->textEditManifest->clear();
+            ui->textEditResources_Manifest->clear();
 
             QString sManifest=pe.getResourceManifest();
 
-            ui->textEditManifest->setText(sManifest);
+            ui->textEditResources_Manifest->setText(sManifest);
         }
         else if(nData==SPE::TYPE_EXCEPTION)
         {

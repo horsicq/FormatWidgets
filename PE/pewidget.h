@@ -136,6 +136,7 @@ private:
     XLineEditHEX *lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::__data_size];
     XLineEditHEX *lineEdit_NetHeader[N_IMAGE_NETHEADER::__data_size];
     XLineEditHEX *lineEdit_EXPORT[N_IMAGE_EXPORT::__data_size];
+    XLineEditHEX *lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::__data_size];
     XComboBoxEx *comboBox[__CB_size];
     QPushButton *pushButton[__PB_size];
     XDateTimeEditX *dateTimeEdit[__TD_size];
