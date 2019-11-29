@@ -1495,6 +1495,19 @@ void PEWidget::reloadData()
             lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileDateMS]->setValue(resourceVersion.fileInfo.dwFileDateMS);
             lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileDateLS]->setValue(resourceVersion.fileInfo.dwFileDateLS);
 
+            ui->textEditResources_Version->clear();
+
+            int nCount=resourceVersion.listRecords.count();
+
+            QString sVersion;
+
+            for(int i=0;i<nCount;i++)
+            {
+                sVersion+=resourceVersion.listRecords.at(i)+QString("\r\n");
+            }
+
+            ui->textEditResources_Version->setText(sVersion);
+
             blockSignals(false);
         }
         else if(nData==SPE::TYPE_RESOURCE_MANIFEST)
