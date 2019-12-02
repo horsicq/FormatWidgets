@@ -37,6 +37,6 @@ DialogBinary::~DialogBinary()
 
 void DialogBinary::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions)
 {
-    ui->widget->setData(pDevice,pOptions);
+    ui->widget->setData(pDevice,pOptions,0);
     ui->widget->reload();
 }

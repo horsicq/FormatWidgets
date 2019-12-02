@@ -28,12 +28,12 @@ FormatWidget::FormatWidget(QWidget *parent):
     bIsEdited=false;
 }
 
-FormatWidget::FormatWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *parent):
+FormatWidget::FormatWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, QWidget *parent):
     QWidget(parent)
 {
     options={};
     bIsEdited=false;
-    setData(pDevice,pOptions);
+    setData(pDevice,pOptions,nNumber);
 }
 
 FormatWidget::~FormatWidget()
@@ -41,9 +41,10 @@ FormatWidget::~FormatWidget()
 
 }
 
-void FormatWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions)
+void FormatWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions,quint32 nNumber)
 {
     this->pDevice=pDevice;
+    this->nNumber=nNumber;
     if(pOptions)
     {
         options=*pOptions;
@@ -60,6 +61,11 @@ QIODevice *FormatWidget::getDevice()
 FW_DEF::OPTIONS *FormatWidget::getOptions()
 {
     return &options;
+}
+
+quint32 FormatWidget::getNumber()
+{
+    return nNumber;
 }
 
 bool FormatWidget::isReadonly()

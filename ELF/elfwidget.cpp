@@ -29,12 +29,12 @@ ELFWidget::ELFWidget(QWidget *parent) :
 }
 
 ELFWidget::ELFWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *parent) :
-    FormatWidget(pDevice,pOptions,parent),
+    FormatWidget(pDevice,pOptions,0,parent),
     ui(new Ui::ELFWidget)
 {
     ui->setupUi(this);
 
-    setData(pDevice,pOptions);
+    setData(pDevice,pOptions,0);
     reload();
 }
 

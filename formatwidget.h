@@ -100,13 +100,14 @@ public:
     };
 
     FormatWidget(QWidget *parent=nullptr);
-    FormatWidget(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions,QWidget *parent=nullptr);
+    FormatWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, QWidget *parent);
     ~FormatWidget();
     virtual void clear()=0;
-    void setData(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions);
+    void setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber);
     virtual void reload()=0;
     QIODevice *getDevice();
     FW_DEF::OPTIONS *getOptions();
+    quint32 getNumber();
     bool isReadonly();
     QTreeWidgetItem *createNewItem(int nUserData, QString sTitle);
     bool createHeaderTable(int type,QTableWidget *pTableWidget, const HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nRecordCount,int nPosition=0);
@@ -153,6 +154,7 @@ private:
 private:
     QIODevice *pDevice;
     FW_DEF::OPTIONS options;
+    quint32 nNumber;
     bool bIsReadonly;
     bool bIsEdited;
 };

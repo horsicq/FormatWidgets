@@ -14,19 +14,16 @@ DEPENDPATH += $$PWD
 FORMS += \
     $$PWD/pewidget.ui \
     $$PWD/sectionheaderwidget.ui \
-    $$PWD/dialogsectionheader.ui \
     $$PWD/dialogpe.ui
 
 HEADERS += \
     $$PWD/pewidget.h \
     $$PWD/pe_defs.h \
     $$PWD/sectionheaderwidget.h \
-    $$PWD/dialogsectionheader.h \
     $$PWD/dialogpe.h
 
 SOURCES += \
     $$PWD/pewidget.cpp \
     $$PWD/pe_defs.cpp \
     $$PWD/sectionheaderwidget.cpp \
-    $$PWD/dialogsectionheader.cpp\
     $$PWD/dialogpe.cpp

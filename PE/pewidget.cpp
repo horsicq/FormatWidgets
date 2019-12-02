@@ -29,12 +29,12 @@ PEWidget::PEWidget(QWidget *parent) :
 }
 
 PEWidget::PEWidget(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions, QWidget *parent) :
-    FormatWidget(pDevice,pOptions,parent),
+    FormatWidget(pDevice,pOptions,0,parent),
     ui(new Ui::PEWidget)
 {
     ui->setupUi(this);
 
-    setData(pDevice,pOptions);
+    setData(pDevice,pOptions,0);
     reload();
 }
 
@@ -923,13 +923,16 @@ void PEWidget::editSectionHeader()
 
     if(nRow!=-1)
     {
-        DialogSectionHeader dsh(this);
-        dsh.setData(getDevice(),getOptions(),(quint32)nRow);
+        SectionHeaderWidget *pSectionHeaderWidget=new SectionHeaderWidget(this);
+        DialogSectionHeader dsh(pSectionHeaderWidget,this);
+        dsh.setData(getDevice(),getOptions(),(quint32)nRow,"Section");
         dsh.setEdited(isEdited());
 
         connect(&dsh,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
 
         dsh.exec();
+
+        delete pSectionHeaderWidget;
 
         reloadData();
     }

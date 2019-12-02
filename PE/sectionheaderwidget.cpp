@@ -29,7 +29,7 @@ SectionHeaderWidget::SectionHeaderWidget(QWidget *parent):
 }
 
 SectionHeaderWidget::SectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, QWidget *parent):
-    FormatWidget(pDevice,pOptions,parent),
+    FormatWidget(pDevice,pOptions,nNumber,parent),
     ui(new Ui::SectionHeaderWidget)
 {
     ui->setupUi(this);
@@ -54,8 +54,7 @@ void SectionHeaderWidget::clear()
 
 void SectionHeaderWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber)
 {
-    FormatWidget::setData(pDevice,pOptions);
-    this->nNumber=nNumber;
+    FormatWidget::setData(pDevice,pOptions,nNumber);
 }
 
 void SectionHeaderWidget::reload()
@@ -177,14 +176,14 @@ void SectionHeaderWidget::reloadData()
     {
         if(!bInit)
         {
-            bInit=createHeaderTable(SPE::TYPE_IMAGE_SECTION_HEADER,ui->tableWidget_IMAGE_SECTION_HEADER,N_IMAGE_SECTION_HEADER::records,lineEdit_IMAGE_SECTION_HEADER,N_IMAGE_SECTION_HEADER::__data_size+1,nNumber);
+            bInit=createHeaderTable(SPE::TYPE_IMAGE_SECTION_HEADER,ui->tableWidget_IMAGE_SECTION_HEADER,N_IMAGE_SECTION_HEADER::records,lineEdit_IMAGE_SECTION_HEADER,N_IMAGE_SECTION_HEADER::__data_size+1,getNumber());
             comboBox[CB_CHARACTERISTICS]=createComboBox(ui->tableWidget_IMAGE_SECTION_HEADER,XPE::getImageSectionHeaderFlagsS(),SPE::TYPE_IMAGE_SECTION_HEADER,N_IMAGE_SECTION_HEADER::Characteristics,XComboBoxEx::CBTYPE_FLAGS);
             comboBox[CB_ALIGH]=createComboBox(ui->tableWidget_IMAGE_SECTION_HEADER,XPE::getImageSectionHeaderAlignsS(),SPE::TYPE_IMAGE_SECTION_HEADER,N_IMAGE_SECTION_HEADER::Characteristics+1,XComboBoxEx::CBTYPE_EFLAGS,XPE_DEF::S_IMAGE_SCN_ALIGN_MASK);
         }
 
         blockSignals(true);
 
-        XPE_DEF::IMAGE_SECTION_HEADER ish=pe.getSectionHeader(nNumber);
+        XPE_DEF::IMAGE_SECTION_HEADER ish=pe.getSectionHeader(getNumber());
 
         //        lineEdit_IMAGE_SECTION_HEADER[N_IMAGE_SECTION_HEADER::e_magic]->setValue(ish.);
 
