@@ -573,7 +573,7 @@ bool MACHWidget::createSectionTable(int type, QTableWidget *pTableWidget, const 
             slHeader.append(tr(""));
             pTableWidget->setColumnCount(nRecordCount+1);
             pTableWidget->setColumnWidth(0,nSymbolWidth*4);
-            pTableWidget->setColumnWidth(1,nSymbolWidth*10);
+            pTableWidget->setColumnWidth(1,nSymbolWidth*12);
             pTableWidget->setColumnWidth(2,nSymbolWidth*8);
             pTableWidget->setColumnWidth(3,nSymbolWidth*12);
             pTableWidget->setColumnWidth(4,nSymbolWidth*12);
