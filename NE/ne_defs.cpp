@@ -57,3 +57,11 @@ const FormatWidget::HEADER_RECORD records[]=
     {e_lfanew,      "e_lfanew",     4,      "LONG",         FormatWidget::VAL_TYPE_OFFSET}
 };
 }
+
+namespace N_OS2_HEADER
+{
+const FormatWidget::HEADER_RECORD records[]=
+{
+    {ne_magic,      "ne_magic",      2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
+};
+}

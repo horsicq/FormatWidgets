@@ -59,6 +59,7 @@ private:
     enum CB
     {
         CB_DOS_HEADER_e_magic=0,
+        CB_OS2_HEADER_ne_magic,
         __CB_size
     };
 
@@ -71,6 +72,7 @@ private:
     Ui::NEWidget *ui;
 
     XLineEditHEX *lineEdit_DOS_HEADER[N_DOS_HEADER::__data_size];
+    XLineEditHEX *lineEdit_OS2_HEADER[N_DOS_HEADER::__data_size];
     XComboBoxEx *comboBox[__CB_size];
 
     bool bInit[SNE::__TYPE_size];

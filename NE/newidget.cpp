@@ -72,6 +72,7 @@ void NEWidget::reload()
     {
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_TOOLS,tr("Tools")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_DOS_HEADER,"DOS_HEADER"));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_OS2_HEADER,"OS2_HEADER"));
 
         if(ne.isOverlayPresent())
         {
@@ -233,6 +234,15 @@ bool NEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, in
                     }
 
                     break;
+
+            case SNE::TYPE_OS2_HEADER:
+                switch(nNdata)
+                {
+                case N_OS2_HEADER::ne_magic:
+                    comboBox[CB_OS2_HEADER_ne_magic]->setValue(nValue);
+                    ne.setImageOS2Header_magic((quint16)nValue);
+                    break;
+                }
             }
 
             bResult=true;
@@ -256,6 +266,7 @@ void NEWidget::setReadonly(bool bState)
 void NEWidget::blockSignals(bool bState)
 {
     _blockSignals((QObject **)lineEdit_DOS_HEADER,N_DOS_HEADER::__data_size,bState);
+    _blockSignals((QObject **)lineEdit_OS2_HEADER,N_OS2_HEADER::__data_size,bState);
 
     _blockSignals((QObject **)comboBox,__CB_size,bState);
 }
@@ -267,6 +278,13 @@ void NEWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
     switch(type)
     {
         case SNE::TYPE_DOS_HEADER:
+            pTableWidget->setColumnWidth(0,nSymbolWidth*10);
+            pTableWidget->setColumnWidth(1,nSymbolWidth*13);
+            pTableWidget->setColumnWidth(2,nSymbolWidth*13);
+            pTableWidget->setColumnWidth(3,nSymbolWidth*16);
+            break;
+
+        case SNE::TYPE_OS2_HEADER:
             pTableWidget->setColumnWidth(0,nSymbolWidth*10);
             pTableWidget->setColumnWidth(1,nSymbolWidth*13);
             pTableWidget->setColumnWidth(2,nSymbolWidth*13);
@@ -341,6 +359,24 @@ void NEWidget::reloadData()
             lineEdit_DOS_HEADER[N_DOS_HEADER::e_lfanew]->setValue(msdosheaderex.e_lfanew);
 
             comboBox[CB_DOS_HEADER_e_magic]->setValue(msdosheaderex.e_magic);
+
+            blockSignals(false);
+        }
+        else if(nData==SNE::TYPE_OS2_HEADER)
+        {
+            if(!bInit[nData])
+            {
+                bInit[nData]=createHeaderTable(SNE::TYPE_OS2_HEADER,ui->tableWidget_OS2_HEADER,N_OS2_HEADER::records,lineEdit_OS2_HEADER,N_OS2_HEADER::__data_size,0);
+                comboBox[CB_OS2_HEADER_ne_magic]=createComboBox(ui->tableWidget_OS2_HEADER,XNE::getImageNEMagicsS(),SNE::TYPE_OS2_HEADER,N_OS2_HEADER::ne_magic,XComboBoxEx::CBTYPE_NORMAL);
+            }
+
+            blockSignals(true);
+
+            XNE_DEF::IMAGE_OS2_HEADER os2header=ne.getImageOS2Header();
+
+            lineEdit_OS2_HEADER[N_OS2_HEADER::ne_magic]->setValue(os2header.ne_magic);
+
+            comboBox[CB_OS2_HEADER_ne_magic]->setValue(os2header.ne_magic);
 
             blockSignals(false);
         }

@@ -30,6 +30,7 @@ enum TYPE
 {
     TYPE_TOOLS=0,
     TYPE_DOS_HEADER,
+    TYPE_OS2_HEADER,
     TYPE_OVERLAY,
     __TYPE_size
 };
@@ -70,6 +71,17 @@ enum DATA
     e_res2_8,
     e_res2_9,
     e_lfanew,
+    __data_size
+};
+
+extern const FormatWidget::HEADER_RECORD records[__data_size];
+}
+
+namespace N_OS2_HEADER
+{
+enum DATA
+{
+    ne_magic=0,
     __data_size
 };
 
