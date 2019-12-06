@@ -251,6 +251,14 @@ bool NEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, in
                 case N_OS2_HEADER::ne_rev:
                     ne.setImageOS2Header_rev((quint8)nValue);
                     break;
+
+                case N_OS2_HEADER::ne_enttab:
+                    ne.setImageOS2Header_enttab((quint16)nValue);
+                    break;
+
+                case N_OS2_HEADER::ne_cbenttab:
+                    ne.setImageOS2Header_cbenttab((quint16)nValue);
+                    break;
                 }
             }
 
@@ -387,6 +395,8 @@ void NEWidget::reloadData()
             lineEdit_OS2_HEADER[N_OS2_HEADER::ne_magic]->setValue(os2header.ne_magic);
             lineEdit_OS2_HEADER[N_OS2_HEADER::ne_ver]->setValue(os2header.ne_ver);
             lineEdit_OS2_HEADER[N_OS2_HEADER::ne_rev]->setValue(os2header.ne_rev);
+            lineEdit_OS2_HEADER[N_OS2_HEADER::ne_enttab]->setValue(os2header.ne_enttab);
+            lineEdit_OS2_HEADER[N_OS2_HEADER::ne_cbenttab]->setValue(os2header.ne_cbenttab);
 
             comboBox[CB_OS2_HEADER_ne_magic]->setValue(os2header.ne_magic);
 
