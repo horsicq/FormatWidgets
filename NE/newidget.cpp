@@ -47,6 +47,7 @@ void NEWidget::clear()
 {
     memset(bInit,0,sizeof bInit);
     memset(lineEdit_DOS_HEADER,0,sizeof lineEdit_DOS_HEADER);
+    memset(lineEdit_OS2_HEADER,0,sizeof lineEdit_OS2_HEADER);
     memset(comboBox,0,sizeof comboBox);
     memset(subDevice,0,sizeof subDevice);
 
@@ -242,6 +243,14 @@ bool NEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, in
                     comboBox[CB_OS2_HEADER_ne_magic]->setValue(nValue);
                     ne.setImageOS2Header_magic((quint16)nValue);
                     break;
+
+                case N_OS2_HEADER::ne_ver:
+                    ne.setImageOS2Header_ver((quint8)nValue);
+                    break;
+
+                case N_OS2_HEADER::ne_rev:
+                    ne.setImageOS2Header_rev((quint8)nValue);
+                    break;
                 }
             }
 
@@ -257,6 +266,7 @@ bool NEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, in
 void NEWidget::setReadonly(bool bState)
 {
     setLineEditsReadOnly(lineEdit_DOS_HEADER,N_DOS_HEADER::__data_size,bState);
+    setLineEditsReadOnly(lineEdit_OS2_HEADER,N_OS2_HEADER::__data_size,bState);
 
     setComboBoxesReadOnly(comboBox,__CB_size,bState);
 
@@ -375,6 +385,8 @@ void NEWidget::reloadData()
             XNE_DEF::IMAGE_OS2_HEADER os2header=ne.getImageOS2Header();
 
             lineEdit_OS2_HEADER[N_OS2_HEADER::ne_magic]->setValue(os2header.ne_magic);
+            lineEdit_OS2_HEADER[N_OS2_HEADER::ne_ver]->setValue(os2header.ne_ver);
+            lineEdit_OS2_HEADER[N_OS2_HEADER::ne_rev]->setValue(os2header.ne_rev);
 
             comboBox[CB_OS2_HEADER_ne_magic]->setValue(os2header.ne_magic);
 
@@ -405,6 +417,15 @@ void NEWidget::widgetValueChanged(quint64 nValue)
             {
                 case N_DOS_HEADER::e_magic:
                     lineEdit_DOS_HEADER[N_DOS_HEADER::e_magic]->setValue((quint16)nValue);
+                    break;
+            }
+
+            break;
+        case SNE::TYPE_OS2_HEADER:
+            switch(nNdata)
+            {
+                case N_OS2_HEADER::ne_magic:
+                    lineEdit_OS2_HEADER[N_OS2_HEADER::ne_magic]->setValue((quint16)nValue);
                     break;
             }
 
