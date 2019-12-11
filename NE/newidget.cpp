@@ -287,6 +287,38 @@ bool NEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, in
                 case N_OS2_HEADER::ne_sssp:
                     ne.setImageOS2Header_sssp((quint32)nValue);
                     break;
+
+                case N_OS2_HEADER::ne_cseg:
+                    ne.setImageOS2Header_cseg((quint16)nValue);
+                    break;
+
+                case N_OS2_HEADER::ne_cmod:
+                    ne.setImageOS2Header_cmod((quint16)nValue);
+                    break;
+
+                case N_OS2_HEADER::ne_cbnrestab:
+                    ne.setImageOS2Header_cbnrestab((quint16)nValue);
+                    break;
+
+                case N_OS2_HEADER::ne_segtab:
+                    ne.setImageOS2Header_segtab((quint16)nValue);
+                    break;
+
+                case N_OS2_HEADER::ne_rsrctab:
+                    ne.setImageOS2Header_rsrctab((quint16)nValue);
+                    break;
+
+                case N_OS2_HEADER::ne_restab:
+                    ne.setImageOS2Header_restab((quint16)nValue);
+                    break;
+
+                case N_OS2_HEADER::ne_modtab:
+                    ne.setImageOS2Header_modtab((quint16)nValue);
+                    break;
+
+                case N_OS2_HEADER::ne_imptab:
+                    ne.setImageOS2Header_imptab((quint16)nValue);
+                    break;
                 }
             }
 
@@ -432,6 +464,15 @@ void NEWidget::reloadData()
             lineEdit_OS2_HEADER[N_OS2_HEADER::ne_stack]->setValue(os2header.ne_stack);
             lineEdit_OS2_HEADER[N_OS2_HEADER::ne_csip]->setValue(os2header.ne_csip);
             lineEdit_OS2_HEADER[N_OS2_HEADER::ne_sssp]->setValue(os2header.ne_sssp);
+            lineEdit_OS2_HEADER[N_OS2_HEADER::ne_cseg]->setValue(os2header.ne_cseg);
+            lineEdit_OS2_HEADER[N_OS2_HEADER::ne_cmod]->setValue(os2header.ne_cmod);
+            lineEdit_OS2_HEADER[N_OS2_HEADER::ne_cbnrestab]->setValue(os2header.ne_cbnrestab);
+            lineEdit_OS2_HEADER[N_OS2_HEADER::ne_segtab]->setValue(os2header.ne_segtab);
+            lineEdit_OS2_HEADER[N_OS2_HEADER::ne_rsrctab]->setValue(os2header.ne_rsrctab);
+            lineEdit_OS2_HEADER[N_OS2_HEADER::ne_restab]->setValue(os2header.ne_restab);
+            lineEdit_OS2_HEADER[N_OS2_HEADER::ne_modtab]->setValue(os2header.ne_modtab);
+            lineEdit_OS2_HEADER[N_OS2_HEADER::ne_imptab]->setValue(os2header.ne_imptab);
+
 
             comboBox[CB_OS2_HEADER_ne_magic]->setValue(os2header.ne_magic);
 
