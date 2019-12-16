@@ -18,8 +18,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-#ifndef DIALOGMSDOS_H
-#define DIALOGMSDOS_H
+#ifndef DIALOGLE_H
+#define DIALOGLE_H
 
 #include <QDialog>
 #include "newidget.h"
@@ -43,4 +43,4 @@ private:
     Ui::DialogNE *ui;
 };
 
-#endif // DIALOGMSDOS_H
+#endif // DIALOGLE_H

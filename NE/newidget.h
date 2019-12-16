@@ -18,8 +18,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-#ifndef MSDOSWIDGET_H
-#define MSDOSWIDGET_H
+#ifndef NEWIDGET_H
+#define NEWIDGET_H
 
 #include "../formatwidget.h"
 #include "ne_defs.h"
@@ -80,4 +80,4 @@ private:
     SubDevice *subDevice[__SD_size];
 };
 
-#endif // MSDOSWIDGET_H
+#endif // NEWIDGET_H
