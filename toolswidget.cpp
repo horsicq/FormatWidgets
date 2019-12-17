@@ -33,7 +33,11 @@ ToolsWidget::ToolsWidget(QWidget *parent) :
 void ToolsWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions)
 {
     hexOptions={};
-    hexOptions.nBaseAddress=pOptions->nImageBase;
+
+    XBinary binary(pDevice,true,pOptions->nImageBase);
+
+    hexOptions.listMM=binary.getMemoryMapList();
+
     hexOptions.sBackupFileName=pOptions->sBackupFileName;
 
     ui->widgetHex->enableHeader(true);

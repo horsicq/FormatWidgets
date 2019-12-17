@@ -169,7 +169,9 @@ void FormatWidget::showHex(qint64 nOffset, qint64 nSize)
 {
     QHexView::OPTIONS hexOptions={};
 
-    hexOptions.nBaseAddress=options.nImageBase;
+    XBinary binary(pDevice,true,options.nImageBase);
+
+    hexOptions.listMM=binary.getMemoryMapList();
     hexOptions.sBackupFileName=options.sBackupFileName;
     hexOptions.nStartAddress=nOffset;
     hexOptions.nStartSelectionAddress=nOffset;
