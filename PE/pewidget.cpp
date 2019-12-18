@@ -1170,8 +1170,7 @@ void PEWidget::reloadData()
 
             ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->setRowCount(16);
 
-            qint64 nBaseAddress=pe.getBaseAddress();
-            QList<XBinary::MEMORY_MAP> listMM=pe.getMemoryMapList();
+            XBinary::_MEMORY_MAP memoryMap=pe.getMemoryMap();
             QMap<quint64,QString> mapDD=XPE::getImageOptionalHeaderDataDirectoryS();
 
             for(int i=0; i<16; i++)
@@ -1185,7 +1184,7 @@ void PEWidget::reloadData()
                 if(i!=XPE_DEF::S_IMAGE_DIRECTORY_ENTRY_SECURITY)
                 {
                     itemNumber->setData(Qt::UserRole+SECTION_DATA_ADDRESS,dd.VirtualAddress);
-                    itemNumber->setData(Qt::UserRole+SECTION_DATA_OFFSET,pe.addressToOffset(&listMM,nBaseAddress+dd.VirtualAddress));
+                    itemNumber->setData(Qt::UserRole+SECTION_DATA_OFFSET,pe.addressToOffset(&memoryMap,memoryMap.nBaseAddress+dd.VirtualAddress));
                 }
                 else
                 {
@@ -1532,8 +1531,7 @@ void PEWidget::reloadData()
             int nCount=listRFE.count();
             ui->tableWidget_Exceptions->setRowCount(nCount);
 
-            qint64 nBaseAddress=pe.getBaseAddress();
-            QList<XBinary::MEMORY_MAP> listMM=pe.getMemoryMapList();
+            XBinary::_MEMORY_MAP memoryMap=pe.getMemoryMap();
 
             for(int i=0; i<nCount; i++)
             {
@@ -1542,7 +1540,7 @@ void PEWidget::reloadData()
 
                 pItem->setData(Qt::UserRole+SECTION_DATA_ADDRESS,listRFE.at(i).BeginAddress);
                 pItem->setData(Qt::UserRole+SECTION_DATA_SIZE,listRFE.at(i).EndAddress-listRFE.at(i).BeginAddress);
-                pItem->setData(Qt::UserRole+SECTION_DATA_OFFSET,pe.addressToOffset(&listMM,nBaseAddress+listRFE.at(i).BeginAddress));
+                pItem->setData(Qt::UserRole+SECTION_DATA_OFFSET,pe.addressToOffset(&memoryMap,memoryMap.nBaseAddress+listRFE.at(i).BeginAddress));
 
                 ui->tableWidget_Exceptions->setItem(i,N_IMAGE_EXCEPTIONS::BeginAddress,         pItem);
                 ui->tableWidget_Exceptions->setItem(i,N_IMAGE_EXCEPTIONS::EndAddress,           new QTableWidgetItem(XBinary::valueToHex(listRFE.at(i).EndAddress)));

@@ -36,7 +36,7 @@ void ToolsWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions)
 
     XBinary binary(pDevice,true,pOptions->nImageBase);
 
-    hexOptions.listMM=binary.getMemoryMapList();
+    hexOptions.memoryMap=binary.getMemoryMap();
 
     hexOptions.sBackupFileName=pOptions->sBackupFileName;
 
