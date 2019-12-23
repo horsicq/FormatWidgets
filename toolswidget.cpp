@@ -66,6 +66,16 @@ void ToolsWidget::reload()
     ui->widgetHex->reload();
 }
 
+qint64 ToolsWidget::getBaseAddress()
+{
+    return ui->widgetHex->getBaseAddress();
+}
+
+void ToolsWidget::setSelection(qint64 nAddress, qint64 nSize)
+{
+    ui->widgetHex->setSelection(nAddress,nSize);
+}
+
 ToolsWidget::~ToolsWidget()
 {
     delete ui;

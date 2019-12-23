@@ -136,13 +136,26 @@ void FormatWidget::loadHexSubdevice(qint64 nOffset, qint64 nSize, qint64 nAddres
     connect(pToolsWidget,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
 }
 
-void FormatWidget::resizeToolsWidget(QWidget *pParent, ToolsWidget *pToolWidget)
+void FormatWidget::setHeaderTableSelection(ToolsWidget *pToolWidget, QTableWidget *pTableWidget)
 {
-    qint32 nHeight=pParent->height();
-    qint32 _nMaxHeight=pToolWidget->maximumHeight();
-    pToolWidget->setMaximumHeight(nHeight/4);
-    pToolWidget->setMaximumHeight(_nMaxHeight);
+    qint32 nCurrentRow=pTableWidget->currentRow();
+
+    if(nCurrentRow!=-1)
+    {
+        qint64 nAddress=pToolWidget->getBaseAddress()+pTableWidget->item(nCurrentRow,0)->data(Qt::UserRole+HEADER_DATA_OFFSET).toInt();
+        qint64 nSize=pTableWidget->item(nCurrentRow,0)->data(Qt::UserRole+HEADER_DATA_SIZE).toInt();
+
+        pToolWidget->setSelection(nAddress,nSize);
+    }
 }
+
+//void FormatWidget::resizeToolsWidget(QWidget *pParent, ToolsWidget *pToolWidget)
+//{
+//    qint32 nHeight=pParent->height();
+//    qint32 _nMaxHeight=pToolWidget->maximumHeight();
+//    pToolWidget->setMaximumHeight(nHeight/4);
+//    pToolWidget->setMaximumHeight(_nMaxHeight);
+//}
 
 void FormatWidget::hexValueChanged(quint64 nValue)
 {
@@ -218,13 +231,14 @@ bool FormatWidget::saveBackup()
 
 bool FormatWidget::createHeaderTable(int type, QTableWidget *pTableWidget, const HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nRecordCount, int nPosition)
 {
-    pTableWidget->setColumnCount(4);
+    pTableWidget->setColumnCount(5);
     pTableWidget->setRowCount(nRecordCount);
 
     adjustHeaderTable(type,pTableWidget);
 
     QStringList slHeader;
     slHeader.append(tr("Name"));
+    slHeader.append(tr("Offset"));
     slHeader.append(tr("Type"));
     slHeader.append(tr("Value"));
     slHeader.append(tr(""));
@@ -236,7 +250,13 @@ bool FormatWidget::createHeaderTable(int type, QTableWidget *pTableWidget, const
     {
         QTableWidgetItem *newItemName=new QTableWidgetItem;
         newItemName->setText(pRecords[i].pszName);
+        newItemName->setData(Qt::UserRole+HEADER_DATA_OFFSET,pRecords[i].nOffset);
+        newItemName->setData(Qt::UserRole+HEADER_DATA_SIZE,pRecords[i].nSize);
         pTableWidget->setItem(i,HEADER_COLUMN_NAME,newItemName);
+
+        QTableWidgetItem *newItemOffset=new QTableWidgetItem;
+        newItemOffset->setText(XBinary::valueToHex((quint16)pRecords[i].nOffset));
+        pTableWidget->setItem(i,HEADER_COLUMN_OFFSET,newItemOffset);
 
         QTableWidgetItem *newItemType=new QTableWidgetItem;
         newItemType->setText(pRecords[i].pszType);

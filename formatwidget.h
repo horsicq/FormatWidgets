@@ -78,9 +78,16 @@ public:
     enum HEADER_COLUMN
     {
         HEADER_COLUMN_NAME=0,
+        HEADER_COLUMN_OFFSET,
         HEADER_COLUMN_TYPE,
         HEADER_COLUMN_VALUE,
         HEADER_COLUMN_INFO
+    };
+
+    enum HEADER_DATA
+    {
+        HEADER_DATA_OFFSET=0,
+        HEADER_DATA_SIZE
     };
 
     enum DIRECTORY_COLUMN
@@ -137,7 +144,8 @@ public:
 
     void loadHexSubdevice(qint64 nOffset, qint64 nSize, qint64 nAddress, SubDevice **ppSubDevice, ToolsWidget *pToolsWidget);
 
-    void resizeToolsWidget(QWidget *pParent,ToolsWidget *pToolWidget);
+//    void resizeToolsWidget(QWidget *pParent,ToolsWidget *pToolWidget);
+    void setHeaderTableSelection(ToolsWidget *pToolWidget,QTableWidget *pTableWidget);
 
 signals:
     void editState(bool bState);
