@@ -61,6 +61,7 @@ public:
     {
         int nData;
         const char *pszName;
+        int nOffset;
         int nSize;
         const char *pszType;
         VAL_TYPE vtype;
@@ -135,6 +136,8 @@ public:
     QPushButton *createHexButton(QTableWidget *pTableWidget,int type, int nData);
 
     void loadHexSubdevice(qint64 nOffset, qint64 nSize, qint64 nAddress, SubDevice **ppSubDevice, ToolsWidget *pToolsWidget);
+
+    void resizeToolsWidget(QWidget *pParent,ToolsWidget *pToolWidget);
 
 signals:
     void editState(bool bState);

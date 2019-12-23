@@ -136,6 +136,14 @@ void FormatWidget::loadHexSubdevice(qint64 nOffset, qint64 nSize, qint64 nAddres
     connect(pToolsWidget,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
 }
 
+void FormatWidget::resizeToolsWidget(QWidget *pParent, ToolsWidget *pToolWidget)
+{
+    qint32 nHeight=pParent->height();
+    qint32 _nMaxHeight=pToolWidget->maximumHeight();
+    pToolWidget->setMaximumHeight(nHeight/4);
+    pToolWidget->setMaximumHeight(_nMaxHeight);
+}
+
 void FormatWidget::hexValueChanged(quint64 nValue)
 {
     XLineEditHEX *lineEdit=qobject_cast<XLineEditHEX *>(sender());
