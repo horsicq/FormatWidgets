@@ -112,9 +112,6 @@
       </widget>
       <widget class="QWidget" name="page_DOS_HEADER">
        <layout class="QVBoxLayout" name="verticalLayout_3">
-        <property name="spacing">
-         <number>0</number>
-        </property>
         <property name="leftMargin">
          <number>0</number>
         </property>
@@ -149,6 +146,16 @@
           </attribute>
          </widget>
         </item>
+        <item>
+         <widget class="ToolsWidget" name="widgetHex_DOS_HEADER" native="true">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>200</height>
+           </size>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
       <widget class="QWidget" name="page_OVERLAY">
@@ -169,7 +176,7 @@
          <number>1</number>
         </property>
         <item>
-         <widget class="ToolsWidget" name="widgetOverlayHex" native="true"/>
+         <widget class="ToolsWidget" name="widgetHex_OVERLAY" native="true"/>
         </item>
        </layout>
       </widget>

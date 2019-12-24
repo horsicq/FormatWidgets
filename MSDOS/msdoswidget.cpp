@@ -106,65 +106,34 @@ bool MSDOSWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,
                 case SMSDOS::TYPE_DOS_HEADER:
                     switch(nNdata)
                     {
-                        case N_DOS_HEADER::e_magic:
-                            comboBox[CB_DOS_HEADER_e_magic]->setValue(nValue);
-                            msdos.set_e_magic((quint16)nValue);
-                            break;
-
-                        case N_DOS_HEADER::e_cblp:
-                            msdos.set_e_cblp((quint16)nValue);
-                            break;
-
-                        case N_DOS_HEADER::e_cp:
-                            msdos.set_e_cp((quint16)nValue);
-                            break;
-
-                        case N_DOS_HEADER::e_crlc:
-                            msdos.set_e_crlc((quint16)nValue);
-                            break;
-
-                        case N_DOS_HEADER::e_cparhdr:
-                            msdos.set_e_cparhdr((quint16)nValue);
-                            break;
-
-                        case N_DOS_HEADER::e_minalloc:
-                            msdos.set_e_minalloc((quint16)nValue);
-                            break;
-
-                        case N_DOS_HEADER::e_maxalloc:
-                            msdos.set_e_maxalloc((quint16)nValue);
-                            break;
-
-                        case N_DOS_HEADER::e_ss:
-                            msdos.set_e_ss((quint16)nValue);
-                            break;
-
-                        case N_DOS_HEADER::e_sp:
-                            msdos.set_e_sp((quint16)nValue);
-                            break;
-
-                        case N_DOS_HEADER::e_csum:
-                            msdos.set_e_csum((quint16)nValue);
-                            break;
-
-                        case N_DOS_HEADER::e_ip:
-                            msdos.set_e_ip((quint16)nValue);
-                            break;
-
-                        case N_DOS_HEADER::e_cs:
-                            msdos.set_e_cs((quint16)nValue);
-                            break;
-
-                        case N_DOS_HEADER::e_lfarlc:
-                            msdos.set_e_lfarlc((quint16)nValue);
-                            break;
-
-                        case N_DOS_HEADER::e_ovno:
-                            msdos.set_e_ovno((quint16)nValue);
-                            break;
+                        case N_DOS_HEADER::e_magic:     comboBox[CB_DOS_HEADER_e_magic]->setValue(nValue);      break;
                     }
-
                     break;
+            }
+
+            switch(nStype)
+            {
+                switch(nNdata)
+                {
+                    case N_DOS_HEADER::e_magic:         msdos.set_e_magic((quint16)nValue);     break;
+                    case N_DOS_HEADER::e_cblp:          msdos.set_e_cblp((quint16)nValue);      break;
+                    case N_DOS_HEADER::e_cp:            msdos.set_e_cp((quint16)nValue);        break;
+                    case N_DOS_HEADER::e_crlc:          msdos.set_e_crlc((quint16)nValue);      break;
+                    case N_DOS_HEADER::e_cparhdr:       msdos.set_e_cparhdr((quint16)nValue);   break;
+                    case N_DOS_HEADER::e_minalloc:      msdos.set_e_minalloc((quint16)nValue);  break;
+                    case N_DOS_HEADER::e_maxalloc:      msdos.set_e_maxalloc((quint16)nValue);  break;
+                    case N_DOS_HEADER::e_ss:            msdos.set_e_ss((quint16)nValue);        break;
+                    case N_DOS_HEADER::e_sp:            msdos.set_e_sp((quint16)nValue);        break;
+                    case N_DOS_HEADER::e_csum:          msdos.set_e_csum((quint16)nValue);      break;
+                    case N_DOS_HEADER::e_ip:            msdos.set_e_ip((quint16)nValue);        break;
+                    case N_DOS_HEADER::e_cs:            msdos.set_e_cs((quint16)nValue);        break;
+                    case N_DOS_HEADER::e_lfarlc:        msdos.set_e_lfarlc((quint16)nValue);    break;
+                    case N_DOS_HEADER::e_ovno:          msdos.set_e_ovno((quint16)nValue);      break;
+                }
+
+                ui->widgetHex_DOS_HEADER->reload();
+
+                break;
             }
 
             bResult=true;
@@ -257,6 +226,11 @@ void MSDOSWidget::reloadData()
 
             comboBox[CB_DOS_HEADER_e_magic]->setValue(msdosheaderex.e_magic);
 
+            qint64 nOffset=msdos.getDosHeaderExOffset(); // Ex!
+            qint64 nSize=msdos.getDosHeaderExSize();
+
+            loadHexSubdevice(nOffset,nSize,nOffset,&subDevice[SMSDOS::TYPE_DOS_HEADER],ui->widgetHex_DOS_HEADER);
+
             blockSignals(false);
         }
         else if(nData==SMSDOS::TYPE_OVERLAY)
@@ -264,7 +238,7 @@ void MSDOSWidget::reloadData()
             qint64 nOverLayOffset=msdos.getOverlayOffset();
             qint64 nOverlaySize=msdos.getOverlaySize();
 
-            loadHexSubdevice(nOverLayOffset,nOverlaySize,nOverLayOffset,&subDevice[SD_OVERLAY],ui->widgetOverlayHex);
+            loadHexSubdevice(nOverLayOffset,nOverlaySize,nOverLayOffset,&subDevice[SMSDOS::TYPE_OVERLAY],ui->widgetHex_OVERLAY);
         }
 
         setReadonly(ui->checkBoxReadonly->isChecked());
@@ -309,4 +283,14 @@ void MSDOSWidget::on_checkBoxReadonly_toggled(bool checked)
 void MSDOSWidget::on_pushButtonReload_clicked()
 {
     reload();
+}
+
+void MSDOSWidget::on_tableWidget_DOS_HEADER_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
+{
+    Q_UNUSED(currentRow);
+    Q_UNUSED(currentColumn);
+    Q_UNUSED(previousRow);
+    Q_UNUSED(previousColumn);
+
+    setHeaderTableSelection(ui->widgetHex_DOS_HEADER,ui->tableWidget_DOS_HEADER);
 }

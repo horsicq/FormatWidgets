@@ -52,20 +52,14 @@ private slots:
     void widgetValueChanged(quint64 nValue);
     void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
     void on_checkBoxReadonly_toggled(bool checked);
-
     void on_pushButtonReload_clicked();
+    void on_tableWidget_DOS_HEADER_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
 
 private:
     enum CB
     {
         CB_DOS_HEADER_e_magic=0,
         __CB_size
-    };
-
-    enum SD
-    {
-        SD_OVERLAY=0,
-        __SD_size
     };
 
     Ui::MSDOSWidget *ui;
@@ -75,7 +69,7 @@ private:
 
     bool bInit[SMSDOS::__TYPE_size];
 
-    SubDevice *subDevice[__SD_size];
+    SubDevice *subDevice[SMSDOS::__TYPE_size];
 };
 
 #endif // MSDOSWIDGET_H

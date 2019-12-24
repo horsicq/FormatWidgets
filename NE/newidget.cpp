@@ -108,258 +108,97 @@ bool NEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, in
                 case SNE::TYPE_DOS_HEADER:
                     switch(nNdata)
                     {
-                    case N_DOS_HEADER::e_magic:
-                        comboBox[CB_DOS_HEADER_e_magic]->setValue(nValue);
-                        ne.set_e_magic((quint16)nValue);
-                        break;
-
-                    case N_DOS_HEADER::e_cblp:
-                        ne.set_e_cblp((quint16)nValue);
-                        break;
-
-                    case N_DOS_HEADER::e_cp:
-                        ne.set_e_cp((quint16)nValue);
-                        break;
-
-                    case N_DOS_HEADER::e_crlc:
-                        ne.set_e_crlc((quint16)nValue);
-                        break;
-
-                    case N_DOS_HEADER::e_cparhdr:
-                        ne.set_e_cparhdr((quint16)nValue);
-                        break;
-
-                    case N_DOS_HEADER::e_minalloc:
-                        ne.set_e_minalloc((quint16)nValue);
-                        break;
-
-                    case N_DOS_HEADER::e_maxalloc:
-                        ne.set_e_maxalloc((quint16)nValue);
-                        break;
-
-                    case N_DOS_HEADER::e_ss:
-                        ne.set_e_ss((quint16)nValue);
-                        break;
-
-                    case N_DOS_HEADER::e_sp:
-                        ne.set_e_sp((quint16)nValue);
-                        break;
-
-                    case N_DOS_HEADER::e_csum:
-                        ne.set_e_csum((quint16)nValue);
-                        break;
-
-                    case N_DOS_HEADER::e_ip:
-                        ne.set_e_ip((quint16)nValue);
-                        break;
-
-                    case N_DOS_HEADER::e_cs:
-                        ne.set_e_cs((quint16)nValue);
-                        break;
-
-                    case N_DOS_HEADER::e_lfarlc:
-                        ne.set_e_lfarlc((quint16)nValue);
-                        break;
-
-                    case N_DOS_HEADER::e_ovno:
-                        ne.set_e_ovno((quint16)nValue);
-                        break;
-
-                    case N_DOS_HEADER::e_res_0:
-                        ne.set_e_res(0,(quint16)nValue);
-                        break;
-
-                    case N_DOS_HEADER::e_res_1:
-                        ne.set_e_res(1,(quint16)nValue);
-                        break;
-
-                    case N_DOS_HEADER::e_res_2:
-                        ne.set_e_res(2,(quint16)nValue);
-                        break;
-
-                    case N_DOS_HEADER::e_res_3:
-                        ne.set_e_res(3,(quint16)nValue);
-                        break;
-
-                    case N_DOS_HEADER::e_oemid:
-                        ne.set_e_oemid((quint16)nValue);
-                        break;
-
-                    case N_DOS_HEADER::e_oeminfo:
-                        ne.set_e_oeminfo((quint16)nValue);
-                        break;
-
-                    case N_DOS_HEADER::e_res2_0:
-                        ne.set_e_res2(0,(quint16)nValue);
-                        break;
-
-                    case N_DOS_HEADER::e_res2_1:
-                        ne.set_e_res2(1,(quint16)nValue);
-                        break;
-
-                    case N_DOS_HEADER::e_res2_2:
-                        ne.set_e_res2(2,(quint16)nValue);
-                        break;
-
-                    case N_DOS_HEADER::e_res2_3:
-                        ne.set_e_res2(3,(quint16)nValue);
-                        break;
-
-                    case N_DOS_HEADER::e_res2_4:
-                        ne.set_e_res2(4,(quint16)nValue);
-                        break;
-
-                    case N_DOS_HEADER::e_res2_5:
-                        ne.set_e_res2(5,(quint16)nValue);
-                        break;
-
-                    case N_DOS_HEADER::e_res2_6:
-                        ne.set_e_res2(6,(quint16)nValue);
-                        break;
-
-                    case N_DOS_HEADER::e_res2_7:
-                        ne.set_e_res2(7,(quint16)nValue);
-                        break;
-
-                    case N_DOS_HEADER::e_res2_8:
-                        ne.set_e_res2(8,(quint16)nValue);
-                        break;
-
-                    case N_DOS_HEADER::e_res2_9:
-                        ne.set_e_res2(9,(quint16)nValue);
-                        break;
-
-                    case N_DOS_HEADER::e_lfanew:
-                        ne.set_e_lfanew((quint32)nValue);
-                        break;
+                        case N_DOS_HEADER::e_magic:     comboBox[CB_DOS_HEADER_e_magic]->setValue(nValue);      break;
                     }
-
                     break;
+                case SNE::TYPE_OS2_HEADER:
+                    switch(nNdata)
+                    {
+                        case N_OS2_HEADER::ne_magic:    comboBox[CB_OS2_HEADER_ne_magic]->setValue(nValue);     break;
+                    }
+                    break;
+            }
+
+            switch(nStype)
+            {
+            case SNE::TYPE_DOS_HEADER:
+                switch(nNdata)
+                {
+                    case N_DOS_HEADER::e_magic:         ne.set_e_magic((quint16)nValue);        break;
+                    case N_DOS_HEADER::e_cblp:          ne.set_e_cblp((quint16)nValue);         break;
+                    case N_DOS_HEADER::e_cp:            ne.set_e_cp((quint16)nValue);           break;
+                    case N_DOS_HEADER::e_crlc:          ne.set_e_crlc((quint16)nValue);         break;
+                    case N_DOS_HEADER::e_cparhdr:       ne.set_e_cparhdr((quint16)nValue);      break;
+                    case N_DOS_HEADER::e_minalloc:      ne.set_e_minalloc((quint16)nValue);     break;
+                    case N_DOS_HEADER::e_maxalloc:      ne.set_e_maxalloc((quint16)nValue);     break;
+                    case N_DOS_HEADER::e_ss:            ne.set_e_ss((quint16)nValue);           break;
+                    case N_DOS_HEADER::e_sp:            ne.set_e_sp((quint16)nValue);           break;
+                    case N_DOS_HEADER::e_csum:          ne.set_e_csum((quint16)nValue);         break;
+                    case N_DOS_HEADER::e_ip:            ne.set_e_ip((quint16)nValue);           break;
+                    case N_DOS_HEADER::e_cs:            ne.set_e_cs((quint16)nValue);           break;
+                    case N_DOS_HEADER::e_lfarlc:        ne.set_e_lfarlc((quint16)nValue);       break;
+                    case N_DOS_HEADER::e_ovno:          ne.set_e_ovno((quint16)nValue);         break;
+                    case N_DOS_HEADER::e_res_0:         ne.set_e_res(0,(quint16)nValue);        break;
+                    case N_DOS_HEADER::e_res_1:         ne.set_e_res(1,(quint16)nValue);        break;
+                    case N_DOS_HEADER::e_res_2:         ne.set_e_res(2,(quint16)nValue);        break;
+                    case N_DOS_HEADER::e_res_3:         ne.set_e_res(3,(quint16)nValue);        break;
+                    case N_DOS_HEADER::e_oemid:         ne.set_e_oemid((quint16)nValue);        break;
+                    case N_DOS_HEADER::e_oeminfo:       ne.set_e_oeminfo((quint16)nValue);      break;
+                    case N_DOS_HEADER::e_res2_0:        ne.set_e_res2(0,(quint16)nValue);       break;
+                    case N_DOS_HEADER::e_res2_1:        ne.set_e_res2(1,(quint16)nValue);       break;
+                    case N_DOS_HEADER::e_res2_2:        ne.set_e_res2(2,(quint16)nValue);       break;
+                    case N_DOS_HEADER::e_res2_3:        ne.set_e_res2(3,(quint16)nValue);       break;
+                    case N_DOS_HEADER::e_res2_4:        ne.set_e_res2(4,(quint16)nValue);       break;
+                    case N_DOS_HEADER::e_res2_5:        ne.set_e_res2(5,(quint16)nValue);       break;
+                    case N_DOS_HEADER::e_res2_6:        ne.set_e_res2(6,(quint16)nValue);       break;
+                    case N_DOS_HEADER::e_res2_7:        ne.set_e_res2(7,(quint16)nValue);       break;
+                    case N_DOS_HEADER::e_res2_8:        ne.set_e_res2(8,(quint16)nValue);       break;
+                    case N_DOS_HEADER::e_res2_9:        ne.set_e_res2(9,(quint16)nValue);       break;
+                    case N_DOS_HEADER::e_lfanew:        ne.set_e_lfanew((quint32)nValue);       break;
+                }
+
+                ui->widgetHex_DOS_HEADER->reload();
+
+                break;
 
             case SNE::TYPE_OS2_HEADER:
                 switch(nNdata)
                 {
-                case N_OS2_HEADER::ne_magic:
-                    comboBox[CB_OS2_HEADER_ne_magic]->setValue(nValue);
-                    ne.setImageOS2Header_magic((quint16)nValue);
-                    break;
-
-                case N_OS2_HEADER::ne_ver:
-                    ne.setImageOS2Header_ver((quint8)nValue);
-                    break;
-
-                case N_OS2_HEADER::ne_rev:
-                    ne.setImageOS2Header_rev((quint8)nValue);
-                    break;
-
-                case N_OS2_HEADER::ne_enttab:
-                    ne.setImageOS2Header_enttab((quint16)nValue);
-                    break;
-
-                case N_OS2_HEADER::ne_cbenttab:
-                    ne.setImageOS2Header_cbenttab((quint16)nValue);
-                    break;
-
-                case N_OS2_HEADER::ne_crc:
-                    ne.setImageOS2Header_crc((quint32)nValue);
-                    break;
-
-                case N_OS2_HEADER::ne_flags:
-                    ne.setImageOS2Header_flags((quint16)nValue);
-                    break;
-
-                case N_OS2_HEADER::ne_autodata:
-                    ne.setImageOS2Header_autodata((quint16)nValue);
-                    break;
-
-                case N_OS2_HEADER::ne_heap:
-                    ne.setImageOS2Header_heap((quint16)nValue);
-                    break;
-
-                case N_OS2_HEADER::ne_stack:
-                    ne.setImageOS2Header_stack((quint16)nValue);
-                    break;
-
-                case N_OS2_HEADER::ne_csip:
-                    ne.setImageOS2Header_csip((quint32)nValue);
-                    break;
-
-                case N_OS2_HEADER::ne_sssp:
-                    ne.setImageOS2Header_sssp((quint32)nValue);
-                    break;
-
-                case N_OS2_HEADER::ne_cseg:
-                    ne.setImageOS2Header_cseg((quint16)nValue);
-                    break;
-
-                case N_OS2_HEADER::ne_cmod:
-                    ne.setImageOS2Header_cmod((quint16)nValue);
-                    break;
-
-                case N_OS2_HEADER::ne_cbnrestab:
-                    ne.setImageOS2Header_cbnrestab((quint16)nValue);
-                    break;
-
-                case N_OS2_HEADER::ne_segtab:
-                    ne.setImageOS2Header_segtab((quint16)nValue);
-                    break;
-
-                case N_OS2_HEADER::ne_rsrctab:
-                    ne.setImageOS2Header_rsrctab((quint16)nValue);
-                    break;
-
-                case N_OS2_HEADER::ne_restab:
-                    ne.setImageOS2Header_restab((quint16)nValue);
-                    break;
-
-                case N_OS2_HEADER::ne_modtab:
-                    ne.setImageOS2Header_modtab((quint16)nValue);
-                    break;
-
-                case N_OS2_HEADER::ne_imptab:
-                    ne.setImageOS2Header_imptab((quint16)nValue);
-                    break;
-
-                case N_OS2_HEADER::ne_nrestab:
-                    ne.setImageOS2Header_nrestab((quint32)nValue);
-                    break;
-
-                case N_OS2_HEADER::ne_cmovent:
-                    ne.setImageOS2Header_cmovent((quint16)nValue);
-                    break;
-
-                case N_OS2_HEADER::ne_align:
-                    ne.setImageOS2Header_align((quint16)nValue);
-                    break;
-
-                case N_OS2_HEADER::ne_cres:
-                    ne.setImageOS2Header_cres((quint16)nValue);
-                    break;
-
-                case N_OS2_HEADER::ne_exetyp:
-                    ne.setImageOS2Header_exetyp((quint8)nValue);
-                    break;
-
-                case N_OS2_HEADER::ne_flagsothers:
-                    ne.setImageOS2Header_flagsothers((quint8)nValue);
-                    break;
-
-                case N_OS2_HEADER::ne_pretthunks:
-                    ne.setImageOS2Header_pretthunks((quint16)nValue);
-                    break;
-
-                case N_OS2_HEADER::ne_psegrefbytes:
-                    ne.setImageOS2Header_psegrefbytes((quint16)nValue);
-                    break;
-
-                case N_OS2_HEADER::ne_swaparea:
-                    ne.setImageOS2Header_swaparea((quint16)nValue);
-                    break;
-
-                case N_OS2_HEADER::ne_expver:
-                    ne.setImageOS2Header_expver((quint16)nValue);
-                    break;
+                    case N_OS2_HEADER::ne_magic:        ne.setImageOS2Header_magic((quint16)nValue);        break;
+                    case N_OS2_HEADER::ne_ver:          ne.setImageOS2Header_ver((quint8)nValue);           break;
+                    case N_OS2_HEADER::ne_rev:          ne.setImageOS2Header_rev((quint8)nValue);           break;
+                    case N_OS2_HEADER::ne_enttab:       ne.setImageOS2Header_enttab((quint16)nValue);       break;
+                    case N_OS2_HEADER::ne_cbenttab:     ne.setImageOS2Header_cbenttab((quint16)nValue);     break;
+                    case N_OS2_HEADER::ne_crc:          ne.setImageOS2Header_crc((quint32)nValue);          break;
+                    case N_OS2_HEADER::ne_flags:        ne.setImageOS2Header_flags((quint16)nValue);        break;
+                    case N_OS2_HEADER::ne_autodata:     ne.setImageOS2Header_autodata((quint16)nValue);     break;
+                    case N_OS2_HEADER::ne_heap:         ne.setImageOS2Header_heap((quint16)nValue);         break;
+                    case N_OS2_HEADER::ne_stack:        ne.setImageOS2Header_stack((quint16)nValue);        break;
+                    case N_OS2_HEADER::ne_csip:         ne.setImageOS2Header_csip((quint32)nValue);         break;
+                    case N_OS2_HEADER::ne_sssp:         ne.setImageOS2Header_sssp((quint32)nValue);         break;
+                    case N_OS2_HEADER::ne_cseg:         ne.setImageOS2Header_cseg((quint16)nValue);         break;
+                    case N_OS2_HEADER::ne_cmod:         ne.setImageOS2Header_cmod((quint16)nValue);         break;
+                    case N_OS2_HEADER::ne_cbnrestab:    ne.setImageOS2Header_cbnrestab((quint16)nValue);    break;
+                    case N_OS2_HEADER::ne_segtab:       ne.setImageOS2Header_segtab((quint16)nValue);       break;
+                    case N_OS2_HEADER::ne_rsrctab:      ne.setImageOS2Header_rsrctab((quint16)nValue);      break;
+                    case N_OS2_HEADER::ne_restab:       ne.setImageOS2Header_restab((quint16)nValue);       break;
+                    case N_OS2_HEADER::ne_modtab:       ne.setImageOS2Header_modtab((quint16)nValue);       break;
+                    case N_OS2_HEADER::ne_imptab:       ne.setImageOS2Header_imptab((quint16)nValue);       break;
+                    case N_OS2_HEADER::ne_nrestab:      ne.setImageOS2Header_nrestab((quint32)nValue);      break;
+                    case N_OS2_HEADER::ne_cmovent:      ne.setImageOS2Header_cmovent((quint16)nValue);      break;
+                    case N_OS2_HEADER::ne_align:        ne.setImageOS2Header_align((quint16)nValue);        break;
+                    case N_OS2_HEADER::ne_cres:         ne.setImageOS2Header_cres((quint16)nValue);         break;
+                    case N_OS2_HEADER::ne_exetyp:       ne.setImageOS2Header_exetyp((quint8)nValue);        break;
+                    case N_OS2_HEADER::ne_flagsothers:  ne.setImageOS2Header_flagsothers((quint8)nValue);   break;
+                    case N_OS2_HEADER::ne_pretthunks:   ne.setImageOS2Header_pretthunks((quint16)nValue);   break;
+                    case N_OS2_HEADER::ne_psegrefbytes: ne.setImageOS2Header_psegrefbytes((quint16)nValue); break;
+                    case N_OS2_HEADER::ne_swaparea:     ne.setImageOS2Header_swaparea((quint16)nValue);     break;
+                    case N_OS2_HEADER::ne_expver:       ne.setImageOS2Header_expver((quint16)nValue);       break;
                 }
+
+                ui->widgetHex_OS2_HEADER->reload();
+
+                break;
             }
 
             bResult=true;
@@ -391,24 +230,15 @@ void NEWidget::blockSignals(bool bState)
 
 void NEWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
 {
+    Q_UNUSED(type);
+
     int nSymbolWidth=getSymbolWidth();
 
-    switch(type)
-    {
-        case SNE::TYPE_DOS_HEADER:
-            pTableWidget->setColumnWidth(0,nSymbolWidth*10);
-            pTableWidget->setColumnWidth(1,nSymbolWidth*13);
-            pTableWidget->setColumnWidth(2,nSymbolWidth*13);
-            pTableWidget->setColumnWidth(3,nSymbolWidth*16);
-            break;
-
-        case SNE::TYPE_OS2_HEADER:
-            pTableWidget->setColumnWidth(0,nSymbolWidth*10);
-            pTableWidget->setColumnWidth(1,nSymbolWidth*13);
-            pTableWidget->setColumnWidth(2,nSymbolWidth*13);
-            pTableWidget->setColumnWidth(3,nSymbolWidth*13);
-            break;
-    }
+    pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*12);
+    pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
+    pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*6);
+    pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*8);
+    pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
 }
 
 void NEWidget::reloadData()
@@ -478,6 +308,11 @@ void NEWidget::reloadData()
 
             comboBox[CB_DOS_HEADER_e_magic]->setValue(msdosheaderex.e_magic);
 
+            qint64 nOffset=ne.getDosHeaderExOffset();
+            qint64 nSize=ne.getDosHeaderExSize();
+
+            loadHexSubdevice(nOffset,nSize,nOffset,&subDevice[SNE::TYPE_DOS_HEADER],ui->widgetHex_DOS_HEADER);
+
             blockSignals(false);
         }
         else if(nData==SNE::TYPE_OS2_HEADER)
@@ -525,6 +360,11 @@ void NEWidget::reloadData()
 
             comboBox[CB_OS2_HEADER_ne_magic]->setValue(os2header.ne_magic);
 
+            qint64 nOffset=ne.getImageOS2HeaderOffset();
+            qint64 nSize=ne.getImageOS2HeaderSize();
+
+            loadHexSubdevice(nOffset,nSize,nOffset,&subDevice[SNE::TYPE_OS2_HEADER],ui->widgetHex_OS2_HEADER);
+
             blockSignals(false);
         }
         else if(nData==SNE::TYPE_OVERLAY)
@@ -532,7 +372,7 @@ void NEWidget::reloadData()
             qint64 nOverLayOffset=ne.getOverlayOffset();
             qint64 nOverlaySize=ne.getOverlaySize();
 
-            loadHexSubdevice(nOverLayOffset,nOverlaySize,nOverLayOffset,&subDevice[SD_OVERLAY],ui->widgetOverlayHex);
+            loadHexSubdevice(nOverLayOffset,nOverlaySize,nOverLayOffset,&subDevice[SNE::TYPE_OVERLAY],ui->widgetHex_OVERLAY);
         }
 
         setReadonly(ui->checkBoxReadonly->isChecked());
@@ -547,25 +387,21 @@ void NEWidget::widgetValueChanged(quint64 nValue)
 
     switch(nStype)
     {
-        case SNE::TYPE_DOS_HEADER:
-            switch(nNdata)
-            {
-                case N_DOS_HEADER::e_magic:
-                    lineEdit_DOS_HEADER[N_DOS_HEADER::e_magic]->setValue((quint16)nValue);
-                    break;
-            }
+    case SNE::TYPE_DOS_HEADER:
+        switch(nNdata)
+        {
+            case N_DOS_HEADER::e_magic:     lineEdit_DOS_HEADER[N_DOS_HEADER::e_magic]->setValue((quint16)nValue);      break;
+        }
 
-            break;
-        case SNE::TYPE_OS2_HEADER:
-            switch(nNdata)
-            {
-                case N_OS2_HEADER::ne_magic:
-                    lineEdit_OS2_HEADER[N_OS2_HEADER::ne_magic]->setValue((quint16)nValue);
-                    break;
-            }
+        break;
+    case SNE::TYPE_OS2_HEADER:
+        switch(nNdata)
+        {
+            case N_OS2_HEADER::ne_magic:    lineEdit_OS2_HEADER[N_OS2_HEADER::ne_magic]->setValue((quint16)nValue);     break;
+        }
 
-            break;
-    }
+        break;
+}
 }
 
 void NEWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
@@ -586,4 +422,24 @@ void NEWidget::on_checkBoxReadonly_toggled(bool checked)
 void NEWidget::on_pushButtonReload_clicked()
 {
     reload();
+}
+
+void NEWidget::on_tableWidget_DOS_HEADER_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
+{
+    Q_UNUSED(currentRow);
+    Q_UNUSED(currentColumn);
+    Q_UNUSED(previousRow);
+    Q_UNUSED(previousColumn);
+
+    setHeaderTableSelection(ui->widgetHex_DOS_HEADER,ui->tableWidget_DOS_HEADER);
+}
+
+void NEWidget::on_tableWidget_OS2_HEADER_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
+{
+    Q_UNUSED(currentRow);
+    Q_UNUSED(currentColumn);
+    Q_UNUSED(previousRow);
+    Q_UNUSED(previousColumn);
+
+    setHeaderTableSelection(ui->widgetHex_OS2_HEADER,ui->tableWidget_OS2_HEADER);
 }
