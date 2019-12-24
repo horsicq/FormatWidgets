@@ -163,17 +163,15 @@ void MSDOSWidget::blockSignals(bool bState)
 
 void MSDOSWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
 {
+    Q_UNUSED(type);
+
     int nSymbolWidth=getSymbolWidth();
 
-    switch(type)
-    {
-        case SMSDOS::TYPE_DOS_HEADER:
-            pTableWidget->setColumnWidth(0,nSymbolWidth*10);
-            pTableWidget->setColumnWidth(1,nSymbolWidth*13);
-            pTableWidget->setColumnWidth(2,nSymbolWidth*13);
-            pTableWidget->setColumnWidth(3,nSymbolWidth*13);
-            break;
-    }
+    pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*12);
+    pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
+    pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*6);
+    pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*8);
+    pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
 }
 
 void MSDOSWidget::reloadData()
