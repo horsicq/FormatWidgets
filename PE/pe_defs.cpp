@@ -117,36 +117,36 @@ const FormatWidget::HEADER_RECORD records32[]=
 };
 const FormatWidget::HEADER_RECORD records64[]=
 {
-    {Magic,                         "Magic",                        offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,Characteristics),   2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
-    {MajorLinkerVersion,            "MajorLinkerVersion",           offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,Characteristics),  1,      "BYTE",         FormatWidget::VAL_TYPE_DATA},
-    {MinorLinkerVersion,            "MinorLinkerVersion",           offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,Characteristics),  1,      "BYTE",         FormatWidget::VAL_TYPE_DATA},
-    {SizeOfCode,                    "SizeOfCode",                   offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,Characteristics),  4,      "DWORD",        FormatWidget::VAL_TYPE_SIZE},
-    {SizeOfInitializedData,         "SizeOfInitializedData",        offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,Characteristics),  4,      "DWORD",        FormatWidget::VAL_TYPE_SIZE},
-    {SizeOfUninitializedData,       "SizeOfUninitializedData",      offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,Characteristics),  4,      "DWORD",        FormatWidget::VAL_TYPE_SIZE},
-    {AddressOfEntryPoint,           "AddressOfEntryPoint",          offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,Characteristics),  4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
-    {BaseOfCode,                    "BaseOfCode",                   offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,Characteristics),  4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
-    {BaseOfData,                    "",                             offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,Characteristics),  0,      "",             FormatWidget::VAL_TYPE_UNKNOWN},
-    {ImageBase,                     "ImageBase",                    offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,Characteristics),  8,      "ULONGLONG",    FormatWidget::VAL_TYPE_ADDRESS},
-    {SectionAlignment,              "SectionAlignment",             offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,Characteristics),  4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
-    {FileAlignment,                 "FileAlignment",                offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,Characteristics),  4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
-    {MajorOperatingSystemVersion,   "MajorOperatingSystemVersion",  offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,Characteristics),  2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
-    {MinorOperatingSystemVersion,   "MinorOperatingSystemVersion",  offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,Characteristics),  2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
-    {MajorImageVersion,             "MajorImageVersion",            offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,Characteristics),  2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
-    {MinorImageVersion,             "MinorImageVersion",            offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,Characteristics),  2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
-    {MajorSubsystemVersion,         "MajorSubsystemVersion",        offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,Characteristics),  2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
-    {MinorSubsystemVersion,         "MinorSubsystemVersion",        offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,Characteristics),  2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
-    {Win32VersionValue,             "Win32VersionValue",            offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,Characteristics),  4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
-    {SizeOfImage,                   "SizeOfImage",                  offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,Characteristics),  4,      "DWORD",        FormatWidget::VAL_TYPE_SIZE},
-    {SizeOfHeaders,                 "SizeOfHeaders",                offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,Characteristics),  4,      "DWORD",        FormatWidget::VAL_TYPE_SIZE},
-    {CheckSum,                      "CheckSum",                     offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,Characteristics),  4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
-    {Subsystem,                     "Subsystem",                    offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,Characteristics),  2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
-    {DllCharacteristics,            "DllCharacteristics",           offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,Characteristics),   2,      "WORD",         FormatWidget::VAL_TYPE_FLAGS},
-    {SizeOfStackReserve,            "SizeOfStackReserve",           offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,Characteristics),  8,      "ULONGLONG",    FormatWidget::VAL_TYPE_SIZE},
-    {SizeOfStackCommit,             "SizeOfStackCommit",            offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,Characteristics),  8,      "ULONGLONG",    FormatWidget::VAL_TYPE_SIZE},
-    {SizeOfHeapReserve,             "SizeOfHeapReserve",            offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,Characteristics),  8,      "ULONGLONG",    FormatWidget::VAL_TYPE_SIZE},
-    {SizeOfHeapCommit,              "SizeOfHeapCommit",             offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,Characteristics),  8,      "ULONGLONG",    FormatWidget::VAL_TYPE_SIZE},
-    {LoaderFlags,                   "LoaderFlags",                  offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,Characteristics),  4,      "DWORD",        FormatWidget::VAL_TYPE_FLAGS},
-    {NumberOfRvaAndSizes,           "NumberOfRvaAndSizes",          offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,Characteristics),  4,      "DWORD",        FormatWidget::VAL_TYPE_DATA}
+    {Magic,                         "Magic",                        offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,Magic),                       2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
+    {MajorLinkerVersion,            "MajorLinkerVersion",           offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,MajorLinkerVersion),          1,      "BYTE",         FormatWidget::VAL_TYPE_DATA},
+    {MinorLinkerVersion,            "MinorLinkerVersion",           offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,MinorLinkerVersion),          1,      "BYTE",         FormatWidget::VAL_TYPE_DATA},
+    {SizeOfCode,                    "SizeOfCode",                   offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,SizeOfCode),                  4,      "DWORD",        FormatWidget::VAL_TYPE_SIZE},
+    {SizeOfInitializedData,         "SizeOfInitializedData",        offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,SizeOfInitializedData),       4,      "DWORD",        FormatWidget::VAL_TYPE_SIZE},
+    {SizeOfUninitializedData,       "SizeOfUninitializedData",      offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,SizeOfUninitializedData),     4,      "DWORD",        FormatWidget::VAL_TYPE_SIZE},
+    {AddressOfEntryPoint,           "AddressOfEntryPoint",          offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,AddressOfEntryPoint),         4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
+    {BaseOfCode,                    "BaseOfCode",                   offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,BaseOfCode),                  4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
+    {BaseOfData,                    "",                             0,                                                                      0,      "",             FormatWidget::VAL_TYPE_UNKNOWN},
+    {ImageBase,                     "ImageBase",                    offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,ImageBase),                   8,      "ULONGLONG",    FormatWidget::VAL_TYPE_ADDRESS},
+    {SectionAlignment,              "SectionAlignment",             offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,SectionAlignment),            4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {FileAlignment,                 "FileAlignment",                offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,FileAlignment),               4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {MajorOperatingSystemVersion,   "MajorOperatingSystemVersion",  offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,MajorOperatingSystemVersion), 2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
+    {MinorOperatingSystemVersion,   "MinorOperatingSystemVersion",  offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,MinorOperatingSystemVersion), 2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
+    {MajorImageVersion,             "MajorImageVersion",            offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,MajorImageVersion),           2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
+    {MinorImageVersion,             "MinorImageVersion",            offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,MinorImageVersion),           2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
+    {MajorSubsystemVersion,         "MajorSubsystemVersion",        offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,MajorSubsystemVersion),       2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
+    {MinorSubsystemVersion,         "MinorSubsystemVersion",        offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,MinorSubsystemVersion),       2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
+    {Win32VersionValue,             "Win32VersionValue",            offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,Win32VersionValue),           4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {SizeOfImage,                   "SizeOfImage",                  offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,SizeOfImage),                 4,      "DWORD",        FormatWidget::VAL_TYPE_SIZE},
+    {SizeOfHeaders,                 "SizeOfHeaders",                offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,SizeOfHeaders),               4,      "DWORD",        FormatWidget::VAL_TYPE_SIZE},
+    {CheckSum,                      "CheckSum",                     offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,CheckSum),                    4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {Subsystem,                     "Subsystem",                    offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,Subsystem),                   2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
+    {DllCharacteristics,            "DllCharacteristics",           offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,DllCharacteristics),          2,      "WORD",         FormatWidget::VAL_TYPE_FLAGS},
+    {SizeOfStackReserve,            "SizeOfStackReserve",           offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,SizeOfStackReserve),          8,      "ULONGLONG",    FormatWidget::VAL_TYPE_SIZE},
+    {SizeOfStackCommit,             "SizeOfStackCommit",            offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,SizeOfStackCommit),           8,      "ULONGLONG",    FormatWidget::VAL_TYPE_SIZE},
+    {SizeOfHeapReserve,             "SizeOfHeapReserve",            offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,SizeOfHeapReserve),           8,      "ULONGLONG",    FormatWidget::VAL_TYPE_SIZE},
+    {SizeOfHeapCommit,              "SizeOfHeapCommit",             offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,SizeOfHeapCommit),            8,      "ULONGLONG",    FormatWidget::VAL_TYPE_SIZE},
+    {LoaderFlags,                   "LoaderFlags",                  offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,LoaderFlags),                 4,      "DWORD",        FormatWidget::VAL_TYPE_FLAGS},
+    {NumberOfRvaAndSizes,           "NumberOfRvaAndSizes",          offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64,NumberOfRvaAndSizes),         4,      "DWORD",        FormatWidget::VAL_TYPE_DATA}
 };
 }
 
@@ -154,21 +154,21 @@ namespace N_IMAGE_TLS
 {
 const FormatWidget::HEADER_RECORD records32[]=
 {
-    {StartAddressOfRawData,         "StartAddressOfRawData",        4,      "DWORD",        FormatWidget::VAL_TYPE_ADDRESS},
-    {EndAddressOfRawData,           "EndAddressOfRawData",          4,      "DWORD",        FormatWidget::VAL_TYPE_ADDRESS},
-    {AddressOfIndex,                "AddressOfIndex",               4,      "DWORD",        FormatWidget::VAL_TYPE_ADDRESS},
-    {AddressOfCallBacks,            "AddressOfCallBacks",           4,      "DWORD",        FormatWidget::VAL_TYPE_ADDRESS},
-    {SizeOfZeroFill,                "SizeOfZeroFill",               4,      "DWORD",        FormatWidget::VAL_TYPE_SIZE},
-    {Characteristics,               "Characteristics",              4,      "DWORD",        FormatWidget::VAL_TYPE_FLAGS}
+    {StartAddressOfRawData,         "StartAddressOfRawData",        offsetof(XPE_DEF::S_IMAGE_TLS_DIRECTORY32,StartAddressOfRawData),   4,      "DWORD",        FormatWidget::VAL_TYPE_ADDRESS},
+    {EndAddressOfRawData,           "EndAddressOfRawData",          offsetof(XPE_DEF::S_IMAGE_TLS_DIRECTORY32,EndAddressOfRawData),     4,      "DWORD",        FormatWidget::VAL_TYPE_ADDRESS},
+    {AddressOfIndex,                "AddressOfIndex",               offsetof(XPE_DEF::S_IMAGE_TLS_DIRECTORY32,AddressOfIndex),          4,      "DWORD",        FormatWidget::VAL_TYPE_ADDRESS},
+    {AddressOfCallBacks,            "AddressOfCallBacks",           offsetof(XPE_DEF::S_IMAGE_TLS_DIRECTORY32,AddressOfCallBacks),      4,      "DWORD",        FormatWidget::VAL_TYPE_ADDRESS},
+    {SizeOfZeroFill,                "SizeOfZeroFill",               offsetof(XPE_DEF::S_IMAGE_TLS_DIRECTORY32,SizeOfZeroFill),          4,      "DWORD",        FormatWidget::VAL_TYPE_SIZE},
+    {Characteristics,               "Characteristics",              offsetof(XPE_DEF::S_IMAGE_TLS_DIRECTORY32,Characteristics),         4,      "DWORD",        FormatWidget::VAL_TYPE_FLAGS}
 };
 const FormatWidget::HEADER_RECORD records64[]=
 {
-    {StartAddressOfRawData,         "StartAddressOfRawData",        8,      "ULONGLONG",    FormatWidget::VAL_TYPE_ADDRESS},
-    {EndAddressOfRawData,           "EndAddressOfRawData",          8,      "ULONGLONG",    FormatWidget::VAL_TYPE_ADDRESS},
-    {AddressOfIndex,                "AddressOfIndex",               8,      "ULONGLONG",    FormatWidget::VAL_TYPE_ADDRESS},
-    {AddressOfCallBacks,            "AddressOfCallBacks",           8,      "ULONGLONG",    FormatWidget::VAL_TYPE_ADDRESS},
-    {SizeOfZeroFill,                "SizeOfZeroFill",               4,      "DWORD",        FormatWidget::VAL_TYPE_SIZE},
-    {Characteristics,               "Characteristics",              4,      "DWORD",        FormatWidget::VAL_TYPE_FLAGS}
+    {StartAddressOfRawData,         "StartAddressOfRawData",        offsetof(XPE_DEF::S_IMAGE_TLS_DIRECTORY64,StartAddressOfRawData),   8,      "ULONGLONG",    FormatWidget::VAL_TYPE_ADDRESS},
+    {EndAddressOfRawData,           "EndAddressOfRawData",          offsetof(XPE_DEF::S_IMAGE_TLS_DIRECTORY64,EndAddressOfRawData),     8,      "ULONGLONG",    FormatWidget::VAL_TYPE_ADDRESS},
+    {AddressOfIndex,                "AddressOfIndex",               offsetof(XPE_DEF::S_IMAGE_TLS_DIRECTORY64,AddressOfIndex),          8,      "ULONGLONG",    FormatWidget::VAL_TYPE_ADDRESS},
+    {AddressOfCallBacks,            "AddressOfCallBacks",           offsetof(XPE_DEF::S_IMAGE_TLS_DIRECTORY64,AddressOfCallBacks),      8,      "ULONGLONG",    FormatWidget::VAL_TYPE_ADDRESS},
+    {SizeOfZeroFill,                "SizeOfZeroFill",               offsetof(XPE_DEF::S_IMAGE_TLS_DIRECTORY64,SizeOfZeroFill),          4,      "DWORD",        FormatWidget::VAL_TYPE_SIZE},
+    {Characteristics,               "Characteristics",              offsetof(XPE_DEF::S_IMAGE_TLS_DIRECTORY64,Characteristics),         4,      "DWORD",        FormatWidget::VAL_TYPE_FLAGS}
 };
 }
 
