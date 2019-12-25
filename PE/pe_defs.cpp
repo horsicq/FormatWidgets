@@ -176,47 +176,47 @@ namespace N_IMAGE_LOADCONFIG
 {
 const FormatWidget::HEADER_RECORD records32[]=
 {
-    {Size,                          "Size",                         4,      "DWORD",        FormatWidget::VAL_TYPE_SIZE},
-    {TimeDateStamp,                 "TimeDateStamp",                4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
-    {MajorVersion,                  "MajorVersion",                 2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
-    {MinorVersion,                  "MinorVersion",                 2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
-    {GlobalFlagsClear,              "GlobalFlagsClear",             4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
-    {GlobalFlagsSet,                "GlobalFlagsSet",               4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
-    {CriticalSectionDefaultTimeout, "CriticalSectionDefaultTimeout",4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
-    {DeCommitFreeBlockThreshold,    "DeCommitFreeBlockThreshold",   4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
-    {DeCommitTotalFreeThreshold,    "DeCommitTotalFreeThreshold",   4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
-    {LockPrefixTable,               "LockPrefixTable",              4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
-    {MaximumAllocationSize,         "MaximumAllocationSize",        4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
-    {VirtualMemoryThreshold,        "VirtualMemoryThreshold",       4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
-    {ProcessAffinityMask,           "ProcessAffinityMask",          4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
-    {CSDVersion,                    "CSDVersion",                   2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
-    {DependentLoadFlags,            "DependentLoadFlags",           2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
-    {VirtualMemoryThreshold,        "EditList",                     4,      "DWORD",        FormatWidget::VAL_TYPE_ADDRESS},
-    {VirtualMemoryThreshold,        "SecurityCookie",               4,      "DWORD",        FormatWidget::VAL_TYPE_ADDRESS},
-    {VirtualMemoryThreshold,        "SEHandlerTable",               4,      "DWORD",        FormatWidget::VAL_TYPE_ADDRESS},
-    {VirtualMemoryThreshold,        "SEHandlerCount",               4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {Size,                          "Size",                         offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32,Size),                            4,      "DWORD",        FormatWidget::VAL_TYPE_SIZE},
+    {TimeDateStamp,                 "TimeDateStamp",                offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32,TimeDateStamp),                   4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {MajorVersion,                  "MajorVersion",                 offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32,MajorVersion),                    2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
+    {MinorVersion,                  "MinorVersion",                 offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32,MinorVersion),                    2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
+    {GlobalFlagsClear,              "GlobalFlagsClear",             offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32,GlobalFlagsClear),                4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {GlobalFlagsSet,                "GlobalFlagsSet",               offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32,GlobalFlagsSet),                  4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {CriticalSectionDefaultTimeout, "CriticalSectionDefaultTimeout",offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32,CriticalSectionDefaultTimeout),   4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {DeCommitFreeBlockThreshold,    "DeCommitFreeBlockThreshold",   offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32,DeCommitFreeBlockThreshold),      4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {DeCommitTotalFreeThreshold,    "DeCommitTotalFreeThreshold",   offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32,DeCommitTotalFreeThreshold),      4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {LockPrefixTable,               "LockPrefixTable",              offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32,LockPrefixTable),                 4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {MaximumAllocationSize,         "MaximumAllocationSize",        offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32,MaximumAllocationSize),           4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {VirtualMemoryThreshold,        "VirtualMemoryThreshold",       offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32,VirtualMemoryThreshold),          4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {ProcessAffinityMask,           "ProcessAffinityMask",          offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32,ProcessAffinityMask),             4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {CSDVersion,                    "CSDVersion",                   offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32,CSDVersion),                      2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
+    {DependentLoadFlags,            "DependentLoadFlags",           offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32,DependentLoadFlags),              2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
+    {VirtualMemoryThreshold,        "EditList",                     offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32,EditList),                        4,      "DWORD",        FormatWidget::VAL_TYPE_ADDRESS},
+    {VirtualMemoryThreshold,        "SecurityCookie",               offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32,SecurityCookie),                  4,      "DWORD",        FormatWidget::VAL_TYPE_ADDRESS},
+    {VirtualMemoryThreshold,        "SEHandlerTable",               offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32,SEHandlerTable),                  4,      "DWORD",        FormatWidget::VAL_TYPE_ADDRESS},
+    {VirtualMemoryThreshold,        "SEHandlerCount",               offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32,SEHandlerCount),                  4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
 };
 const FormatWidget::HEADER_RECORD records64[]=
 {
-    {Size,                          "Size",                         4,      "DWORD",        FormatWidget::VAL_TYPE_SIZE},
-    {TimeDateStamp,                 "TimeDateStamp",                4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
-    {MajorVersion,                  "MajorVersion",                 2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
-    {MinorVersion,                  "MinorVersion",                 2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
-    {GlobalFlagsClear,              "GlobalFlagsClear",             4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
-    {GlobalFlagsSet,                "GlobalFlagsSet",               4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
-    {CriticalSectionDefaultTimeout, "CriticalSectionDefaultTimeout",4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
-    {DeCommitFreeBlockThreshold,    "DeCommitFreeBlockThreshold",   8,      "ULONGLONG",    FormatWidget::VAL_TYPE_DATA},
-    {DeCommitTotalFreeThreshold,    "DeCommitTotalFreeThreshold",   8,      "ULONGLONG",    FormatWidget::VAL_TYPE_DATA},
-    {LockPrefixTable,               "LockPrefixTable",              8,      "ULONGLONG",    FormatWidget::VAL_TYPE_DATA},
-    {MaximumAllocationSize,         "MaximumAllocationSize",        8,      "ULONGLONG",    FormatWidget::VAL_TYPE_DATA},
-    {VirtualMemoryThreshold,        "VirtualMemoryThreshold",       8,      "ULONGLONG",    FormatWidget::VAL_TYPE_DATA},
-    {ProcessAffinityMask,           "ProcessAffinityMask",          8,      "ULONGLONG",    FormatWidget::VAL_TYPE_DATA},
-    {CSDVersion,                    "CSDVersion",                   2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
-    {DependentLoadFlags,            "DependentLoadFlags",           2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
-    {VirtualMemoryThreshold,        "EditList",                     8,      "ULONGLONG",    FormatWidget::VAL_TYPE_ADDRESS},
-    {VirtualMemoryThreshold,        "SecurityCookie",               8,      "ULONGLONG",    FormatWidget::VAL_TYPE_ADDRESS},
-    {VirtualMemoryThreshold,        "SEHandlerTable",               8,      "ULONGLONG",    FormatWidget::VAL_TYPE_ADDRESS},
-    {VirtualMemoryThreshold,        "SEHandlerCount",               8,      "ULONGLONG",    FormatWidget::VAL_TYPE_DATA},
+    {Size,                          "Size",                         offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64,Size),                            4,      "DWORD",        FormatWidget::VAL_TYPE_SIZE},
+    {TimeDateStamp,                 "TimeDateStamp",                offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64,TimeDateStamp),                   4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {MajorVersion,                  "MajorVersion",                 offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64,MajorVersion),                    2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
+    {MinorVersion,                  "MinorVersion",                 offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64,MinorVersion),                    2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
+    {GlobalFlagsClear,              "GlobalFlagsClear",             offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64,GlobalFlagsClear),                4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {GlobalFlagsSet,                "GlobalFlagsSet",               offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64,GlobalFlagsSet),                  4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {CriticalSectionDefaultTimeout, "CriticalSectionDefaultTimeout",offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64,CriticalSectionDefaultTimeout),   4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {DeCommitFreeBlockThreshold,    "DeCommitFreeBlockThreshold",   offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64,DeCommitFreeBlockThreshold),      8,      "ULONGLONG",    FormatWidget::VAL_TYPE_DATA},
+    {DeCommitTotalFreeThreshold,    "DeCommitTotalFreeThreshold",   offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64,DeCommitTotalFreeThreshold),      8,      "ULONGLONG",    FormatWidget::VAL_TYPE_DATA},
+    {LockPrefixTable,               "LockPrefixTable",              offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64,LockPrefixTable),                 8,      "ULONGLONG",    FormatWidget::VAL_TYPE_DATA},
+    {MaximumAllocationSize,         "MaximumAllocationSize",        offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64,MaximumAllocationSize),           8,      "ULONGLONG",    FormatWidget::VAL_TYPE_DATA},
+    {VirtualMemoryThreshold,        "VirtualMemoryThreshold",       offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64,VirtualMemoryThreshold),          8,      "ULONGLONG",    FormatWidget::VAL_TYPE_DATA},
+    {ProcessAffinityMask,           "ProcessAffinityMask",          offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64,ProcessAffinityMask),             8,      "ULONGLONG",    FormatWidget::VAL_TYPE_DATA},
+    {CSDVersion,                    "CSDVersion",                   offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64,CSDVersion),                      2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
+    {DependentLoadFlags,            "DependentLoadFlags",           offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64,DependentLoadFlags),              2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
+    {VirtualMemoryThreshold,        "EditList",                     offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64,EditList),                        8,      "ULONGLONG",    FormatWidget::VAL_TYPE_ADDRESS},
+    {VirtualMemoryThreshold,        "SecurityCookie",               offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64,SecurityCookie),                  8,      "ULONGLONG",    FormatWidget::VAL_TYPE_ADDRESS},
+    {VirtualMemoryThreshold,        "SEHandlerTable",               offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64,SEHandlerTable),                  8,      "ULONGLONG",    FormatWidget::VAL_TYPE_ADDRESS},
+    {VirtualMemoryThreshold,        "SEHandlerCount",               offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64,SEHandlerCount),                  8,      "ULONGLONG",    FormatWidget::VAL_TYPE_DATA},
 };
 }
 
@@ -224,9 +224,9 @@ namespace N_IMAGE_DIRECORIES
 {
 const FormatWidget::HEADER_RECORD records[]=
 {
-    {Name,                  "Name",                     0,      "",             FormatWidget::VAL_TYPE_LABEL},
-    {Address,               "Address",                  4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
-    {Size,                  "Size",                     4,      "DWORD",        FormatWidget::VAL_TYPE_SIZE},
+    {Name,                  "Name",                     0,  0,      "",             FormatWidget::VAL_TYPE_LABEL},
+    {Address,               "Address",                  4,  4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
+    {Size,                  "Size",                     8,  4,      "DWORD",        FormatWidget::VAL_TYPE_SIZE},
 };
 }
 
@@ -389,6 +389,6 @@ namespace N_IMAGE_RELOCS_POSITION
 {
 const FormatWidget::HEADER_RECORD records[]=
 {
-    {TypeOffset,                "TypeOffset",                   2,      "WORD",        FormatWidget::VAL_TYPE_DATA},
+    {TypeOffset,                "TypeOffset",                   0,  2,      "WORD",        FormatWidget::VAL_TYPE_DATA},
 };
 }
