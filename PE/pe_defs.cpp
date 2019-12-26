@@ -234,17 +234,17 @@ namespace N_IMAGE_SECTION_HEADER
 {
 const FormatWidget::HEADER_RECORD records[]=
 {
-    {Name,                  "Name",                     8,      "BYTE[8]",      FormatWidget::VAL_TYPE_TEXT},
-    {VirtualSize,           "VirtualSize",              4,      "DWORD",        FormatWidget::VAL_TYPE_SIZE},
-    {VirtualAddress,        "VirtualAddress",           4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
-    {SizeOfRawData,         "SizeOfRawData",            4,      "DWORD",        FormatWidget::VAL_TYPE_SIZE},
-    {PointerToRawData,      "PointerToRawData",         4,      "DWORD",        FormatWidget::VAL_TYPE_OFFSET},
-    {PointerToRelocations,  "PointerToRelocations",     4,      "DWORD",        FormatWidget::VAL_TYPE_OFFSET},
-    {PointerToLinenumbers,  "PointerToLinenumbers",     4,      "DWORD",        FormatWidget::VAL_TYPE_OFFSET},
-    {NumberOfRelocations,   "NumberOfRelocations",      2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
-    {NumberOfLinenumbers,   "NumberOfLinenumbers",      2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
-    {Characteristics,       "Characteristics",          4,      "DWORD",        FormatWidget::VAL_TYPE_FLAGS},
-    {Characteristics,       "",                         0,      "",             FormatWidget::VAL_TYPE_UNKNOWN}
+    {Name,                  "Name",                     offsetof(XPE_DEF::IMAGE_SECTION_HEADER,Name),                   8,      "BYTE[8]",      FormatWidget::VAL_TYPE_TEXT},
+    {VirtualSize,           "VirtualSize",              offsetof(XPE_DEF::IMAGE_SECTION_HEADER,Misc.VirtualSize),       4,      "DWORD",        FormatWidget::VAL_TYPE_SIZE},
+    {VirtualAddress,        "VirtualAddress",           offsetof(XPE_DEF::IMAGE_SECTION_HEADER,VirtualAddress),         4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
+    {SizeOfRawData,         "SizeOfRawData",            offsetof(XPE_DEF::IMAGE_SECTION_HEADER,SizeOfRawData),          4,      "DWORD",        FormatWidget::VAL_TYPE_SIZE},
+    {PointerToRawData,      "PointerToRawData",         offsetof(XPE_DEF::IMAGE_SECTION_HEADER,PointerToRawData),       4,      "DWORD",        FormatWidget::VAL_TYPE_OFFSET},
+    {PointerToRelocations,  "PointerToRelocations",     offsetof(XPE_DEF::IMAGE_SECTION_HEADER,PointerToRelocations),   4,      "DWORD",        FormatWidget::VAL_TYPE_OFFSET},
+    {PointerToLinenumbers,  "PointerToLinenumbers",     offsetof(XPE_DEF::IMAGE_SECTION_HEADER,PointerToLinenumbers),   4,      "DWORD",        FormatWidget::VAL_TYPE_OFFSET},
+    {NumberOfRelocations,   "NumberOfRelocations",      offsetof(XPE_DEF::IMAGE_SECTION_HEADER,NumberOfRelocations),    2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
+    {NumberOfLinenumbers,   "NumberOfLinenumbers",      offsetof(XPE_DEF::IMAGE_SECTION_HEADER,NumberOfLinenumbers),    2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
+    {Characteristics,       "Characteristics",          offsetof(XPE_DEF::IMAGE_SECTION_HEADER,Characteristics),        4,      "DWORD",        FormatWidget::VAL_TYPE_FLAGS},
+    {Characteristics,       "",                         offsetof(XPE_DEF::IMAGE_SECTION_HEADER,Characteristics),        0,      "",             FormatWidget::VAL_TYPE_UNKNOWN}
 };
 }
 
@@ -252,17 +252,17 @@ namespace N_IMAGE_EXPORT
 {
 const FormatWidget::HEADER_RECORD records[]=
 {
-    {Characteristics,           "Characteristics",              4,      "DWORD",        FormatWidget::VAL_TYPE_FLAGS},
-    {TimeDateStamp,             "TimeDateStamp",                4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
-    {MajorVersion,              "MajorVersion",                 2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
-    {MinorVersion,              "MinorVersion",                 2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
-    {Name,                      "Name",                         4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
-    {Base,                      "Base",                         4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
-    {NumberOfFunctions,         "NumberOfFunctions",            4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
-    {NumberOfNames,             "NumberOfNames",                4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
-    {AddressOfFunctions,        "AddressOfFunctions",           4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
-    {AddressOfNames,            "AddressOfNames",               4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
-    {AddressOfNameOrdinals,     "AddressOfNameOrdinals",        4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS}
+    {Characteristics,           "Characteristics",          offsetof(XPE_DEF::IMAGE_EXPORT_DIRECTORY,Characteristics),          4,      "DWORD",        FormatWidget::VAL_TYPE_FLAGS},
+    {TimeDateStamp,             "TimeDateStamp",            offsetof(XPE_DEF::IMAGE_EXPORT_DIRECTORY,TimeDateStamp),            4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {MajorVersion,              "MajorVersion",             offsetof(XPE_DEF::IMAGE_EXPORT_DIRECTORY,MajorVersion),             2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
+    {MinorVersion,              "MinorVersion",             offsetof(XPE_DEF::IMAGE_EXPORT_DIRECTORY,MinorVersion),             2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
+    {Name,                      "Name",                     offsetof(XPE_DEF::IMAGE_EXPORT_DIRECTORY,Name),                     4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
+    {Base,                      "Base",                     offsetof(XPE_DEF::IMAGE_EXPORT_DIRECTORY,Base),                     4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {NumberOfFunctions,         "NumberOfFunctions",        offsetof(XPE_DEF::IMAGE_EXPORT_DIRECTORY,NumberOfFunctions),        4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {NumberOfNames,             "NumberOfNames",            offsetof(XPE_DEF::IMAGE_EXPORT_DIRECTORY,NumberOfNames),            4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {AddressOfFunctions,        "AddressOfFunctions",       offsetof(XPE_DEF::IMAGE_EXPORT_DIRECTORY,AddressOfFunctions),       4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
+    {AddressOfNames,            "AddressOfNames",           offsetof(XPE_DEF::IMAGE_EXPORT_DIRECTORY,AddressOfNames),           4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
+    {AddressOfNameOrdinals,     "AddressOfNameOrdinals",    offsetof(XPE_DEF::IMAGE_EXPORT_DIRECTORY,AddressOfNameOrdinals),    4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS}
 };
 }
 
@@ -270,9 +270,9 @@ namespace N_IMAGE_EXPORT_FUNCTION
 {
 const FormatWidget::HEADER_RECORD records[]=
 {
-    {Ordinal,                   "Ordinal",                      2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
-    {RVA,                       "RVA",                          4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
-    {Name,                      "Name",                         4,      "SZCHAR",       FormatWidget::VAL_TYPE_RELADDRESS}
+    {Ordinal,                   "Ordinal",      0,  2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
+    {RVA,                       "RVA",          0,  4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
+    {Name,                      "Name",         0,  4,      "SZCHAR",       FormatWidget::VAL_TYPE_RELADDRESS}
 };
 }
 
@@ -280,11 +280,11 @@ namespace N_IMAGE_IMPORT
 {
 const FormatWidget::HEADER_RECORD records[]=
 {
-    {OriginalFirstThunk,        "OriginalFirstThunk",           4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
-    {TimeDateStamp,             "TimeDateStamp",                4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
-    {ForwarderChain,            "ForwarderChain",               4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
-    {Name,                      "Name",                         4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
-    {FirstThunk,                "FirstThunk",                   4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS}
+    {OriginalFirstThunk,        "OriginalFirstThunk",   offsetof(XPE_DEF::IMAGE_IMPORT_DESCRIPTOR,OriginalFirstThunk),  4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
+    {TimeDateStamp,             "TimeDateStamp",        offsetof(XPE_DEF::IMAGE_IMPORT_DESCRIPTOR,TimeDateStamp),       4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {ForwarderChain,            "ForwarderChain",       offsetof(XPE_DEF::IMAGE_IMPORT_DESCRIPTOR,ForwarderChain),      4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
+    {Name,                      "Name",                 offsetof(XPE_DEF::IMAGE_IMPORT_DESCRIPTOR,Name),                4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
+    {FirstThunk,                "FirstThunk",           offsetof(XPE_DEF::IMAGE_IMPORT_DESCRIPTOR,FirstThunk),          4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS}
 };
 }
 
@@ -292,15 +292,15 @@ namespace N_IMAGE_IMPORT_FUNCTION
 {
 const FormatWidget::HEADER_RECORD records32[]=
 {
-    {Thunk,                     "Thunk",                        4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
-    {Ordinal,                   "Ordinal",                      4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
-    {Hint,                      "Hint",                         2,      "WORD",         FormatWidget::VAL_TYPE_DATA}
+    {Thunk,                     "Thunk",    0,  4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
+    {Ordinal,                   "Ordinal",  0,  4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {Hint,                      "Hint",     0,  2,      "WORD",         FormatWidget::VAL_TYPE_DATA}
 };
 const FormatWidget::HEADER_RECORD records64[]=
 {
-    {Thunk,                     "Thunk",                        8,      "QWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
-    {Ordinal,                   "Ordinal",                      8,      "QWORD",        FormatWidget::VAL_TYPE_DATA},
-    {Hint,                      "Hint",                         2,      "WORD",         FormatWidget::VAL_TYPE_DATA}
+    {Thunk,                     "Thunk",    0,  8,      "QWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
+    {Ordinal,                   "Ordinal",  0,  8,      "QWORD",        FormatWidget::VAL_TYPE_DATA},
+    {Hint,                      "Hint",     0,  2,      "WORD",         FormatWidget::VAL_TYPE_DATA}
 };
 }
 
@@ -308,8 +308,8 @@ namespace N_IMAGE_RELOCS
 {
 const FormatWidget::HEADER_RECORD records[]=
 {
-    {VirtualAddress,            "VirtualAddress",               4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
-    {SizeOfBlock,               "SizeOfBlock",                  4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {VirtualAddress,            "VirtualAddress",   0,  4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
+    {SizeOfBlock,               "SizeOfBlock",      0,  4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
 };
 }
 
