@@ -369,19 +369,19 @@ namespace N_IMAGE_RESOURCE_FIXEDFILEINFO
 {
 const FormatWidget::HEADER_RECORD records[]=
 {
-    {dwSignature,               "dwSignature",                  4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
-    {dwStrucVersion,            "dwStrucVersion",               4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
-    {dwFileVersionMS,           "dwFileVersionMS",              4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
-    {dwFileVersionLS,           "dwFileVersionLS",              4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
-    {dwProductVersionMS,        "dwProductVersionMS",           4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
-    {dwProductVersionLS,        "dwProductVersionLS",           4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
-    {dwFileFlagsMask,           "dwFileFlagsMask",              4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
-    {dwFileFlags,               "dwFileFlags",                  4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
-    {dwFileOS,                  "dwFileOS",                     4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
-    {dwFileType,                "dwFileType",                   4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
-    {dwFileSubtype,             "dwFileSubtype",                4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
-    {dwFileDateMS,              "dwFileDateMS",                 4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
-    {dwFileDateLS,              "dwFileDateLS",                 4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {dwSignature,               "dwSignature",          offsetof(XPE_DEF::S_tagVS_FIXEDFILEINFO,dwSignature),           4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {dwStrucVersion,            "dwStrucVersion",       offsetof(XPE_DEF::S_tagVS_FIXEDFILEINFO,dwStrucVersion),        4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {dwFileVersionMS,           "dwFileVersionMS",      offsetof(XPE_DEF::S_tagVS_FIXEDFILEINFO,dwFileVersionMS),       4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {dwFileVersionLS,           "dwFileVersionLS",      offsetof(XPE_DEF::S_tagVS_FIXEDFILEINFO,dwFileVersionLS),       4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {dwProductVersionMS,        "dwProductVersionMS",   offsetof(XPE_DEF::S_tagVS_FIXEDFILEINFO,dwProductVersionMS),    4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {dwProductVersionLS,        "dwProductVersionLS",   offsetof(XPE_DEF::S_tagVS_FIXEDFILEINFO,dwProductVersionLS),    4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {dwFileFlagsMask,           "dwFileFlagsMask",      offsetof(XPE_DEF::S_tagVS_FIXEDFILEINFO,dwFileFlagsMask),       4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {dwFileFlags,               "dwFileFlags",          offsetof(XPE_DEF::S_tagVS_FIXEDFILEINFO,dwFileFlags),           4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {dwFileOS,                  "dwFileOS",             offsetof(XPE_DEF::S_tagVS_FIXEDFILEINFO,dwFileOS),              4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {dwFileType,                "dwFileType",           offsetof(XPE_DEF::S_tagVS_FIXEDFILEINFO,dwFileType),            4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {dwFileSubtype,             "dwFileSubtype",        offsetof(XPE_DEF::S_tagVS_FIXEDFILEINFO,dwFileSubtype),         4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {dwFileDateMS,              "dwFileDateMS",         offsetof(XPE_DEF::S_tagVS_FIXEDFILEINFO,dwFileDateMS),          4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {dwFileDateLS,              "dwFileDateLS",         offsetof(XPE_DEF::S_tagVS_FIXEDFILEINFO,dwFileDateLS),          4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
 };
 }
 
