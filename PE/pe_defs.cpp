@@ -317,14 +317,14 @@ namespace N_IMAGE_DEBUG
 {
 const FormatWidget::HEADER_RECORD records[]=
 {
-    {Characteristics,           "Characteristics",              4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
-    {TimeDateStamp,             "TimeDateStamp",                4,      "DWORD",        FormatWidget::VAL_TYPE_UNIXTIME},
-    {MajorVersion,              "MajorVersion",                 2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
-    {MinorVersion,              "MinorVersion",                 2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
-    {Type,                      "Type",                         4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
-    {SizeOfData,                "SizeOfData",                   4,      "DWORD",        FormatWidget::VAL_TYPE_SIZE},
-    {AddressOfRawData,          "AddressOfRawData",             4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
-    {PointerToRawData,          "PointerToRawData",             4,      "DWORD",        FormatWidget::VAL_TYPE_OFFSET},
+    {Characteristics,           "Characteristics",  offsetof(XPE_DEF::S_IMAGE_DEBUG_DIRECTORY,Characteristics),     4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {TimeDateStamp,             "TimeDateStamp",    offsetof(XPE_DEF::S_IMAGE_DEBUG_DIRECTORY,TimeDateStamp),       4,      "DWORD",        FormatWidget::VAL_TYPE_UNIXTIME},
+    {MajorVersion,              "MajorVersion",     offsetof(XPE_DEF::S_IMAGE_DEBUG_DIRECTORY,MajorVersion),        2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
+    {MinorVersion,              "MinorVersion",     offsetof(XPE_DEF::S_IMAGE_DEBUG_DIRECTORY,MinorVersion),        2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
+    {Type,                      "Type",             offsetof(XPE_DEF::S_IMAGE_DEBUG_DIRECTORY,Type),                4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {SizeOfData,                "SizeOfData",       offsetof(XPE_DEF::S_IMAGE_DEBUG_DIRECTORY,SizeOfData),          4,      "DWORD",        FormatWidget::VAL_TYPE_SIZE},
+    {AddressOfRawData,          "AddressOfRawData", offsetof(XPE_DEF::S_IMAGE_DEBUG_DIRECTORY,AddressOfRawData),    4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
+    {PointerToRawData,          "PointerToRawData", offsetof(XPE_DEF::S_IMAGE_DEBUG_DIRECTORY,PointerToRawData),    4,      "DWORD",        FormatWidget::VAL_TYPE_OFFSET},
 };
 }
 
