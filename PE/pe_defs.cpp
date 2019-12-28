@@ -332,14 +332,14 @@ namespace N_IMAGE_DELAYIMPORT
 {
 const FormatWidget::HEADER_RECORD records[]=
 {
-    {AllAttributes,             "AllAttributes",                4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
-    {DllNameRVA,                "DllNameRVA",                   4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
-    {ModuleHandleRVA,           "ModuleHandleRVA",              4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
-    {ImportAddressTableRVA,     "ImportAddressTableRVA",        4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
-    {ImportNameTableRVA,        "ImportNameTableRVA",           4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
-    {BoundImportAddressTableRVA,"BoundImportAddressTableRVA",   4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
-    {UnloadInformationTableRVA, "UnloadInformationTableRVA",    4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
-    {TimeDateStamp,             "TimeDateStamp",                4,      "DWORD",        FormatWidget::VAL_TYPE_UNIXTIME},
+    {AllAttributes,             "AllAttributes",                offsetof(XPE_DEF::S_IMAGE_DELAYLOAD_DESCRIPTOR,AllAttributes),              4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {DllNameRVA,                "DllNameRVA",                   offsetof(XPE_DEF::S_IMAGE_DELAYLOAD_DESCRIPTOR,DllNameRVA),                 4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
+    {ModuleHandleRVA,           "ModuleHandleRVA",              offsetof(XPE_DEF::S_IMAGE_DELAYLOAD_DESCRIPTOR,ModuleHandleRVA),            4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
+    {ImportAddressTableRVA,     "ImportAddressTableRVA",        offsetof(XPE_DEF::S_IMAGE_DELAYLOAD_DESCRIPTOR,ImportAddressTableRVA),      4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
+    {ImportNameTableRVA,        "ImportNameTableRVA",           offsetof(XPE_DEF::S_IMAGE_DELAYLOAD_DESCRIPTOR,ImportNameTableRVA),         4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
+    {BoundImportAddressTableRVA,"BoundImportAddressTableRVA",   offsetof(XPE_DEF::S_IMAGE_DELAYLOAD_DESCRIPTOR,BoundImportAddressTableRVA), 4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
+    {UnloadInformationTableRVA, "UnloadInformationTableRVA",    offsetof(XPE_DEF::S_IMAGE_DELAYLOAD_DESCRIPTOR,UnloadInformationTableRVA),  4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
+    {TimeDateStamp,             "TimeDateStamp",                offsetof(XPE_DEF::S_IMAGE_DELAYLOAD_DESCRIPTOR,TimeDateStamp),              4,      "DWORD",        FormatWidget::VAL_TYPE_UNIXTIME},
 };
 }
 
@@ -347,9 +347,9 @@ namespace N_IMAGE_EXCEPTIONS
 {
 const FormatWidget::HEADER_RECORD records[]=
 {
-    {BeginAddress,              "BeginAddress",                 4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
-    {EndAddress,                "EndAddress",                   4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
-    {UnwindInfoAddress,         "UnwindInfoAddress",            4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
+    {BeginAddress,              "BeginAddress",         offsetof(XPE_DEF::S_IMAGE_RUNTIME_FUNCTION_ENTRY,BeginAddress),         4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
+    {EndAddress,                "EndAddress",           offsetof(XPE_DEF::S_IMAGE_RUNTIME_FUNCTION_ENTRY,EndAddress),           4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
+    {UnwindInfoAddress,         "UnwindInfoAddress",    offsetof(XPE_DEF::S_IMAGE_RUNTIME_FUNCTION_ENTRY,UnwindInfoAddress),    4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
 };
 }
 
@@ -357,11 +357,11 @@ namespace N_IMAGE_NETHEADER
 {
 const FormatWidget::HEADER_RECORD records[]=
 {
-    {cb,                        "cb",                           4,      "DWORD",        FormatWidget::VAL_TYPE_SIZE},
-    {MajorRuntimeVersion,       "MajorRuntimeVersion",          2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
-    {MinorRuntimeVersion,       "MinorRuntimeVersion",          2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
-    {Flags,                     "Flags",                        4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
-    {EntryPoint,                "EntryPoint",                   4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {cb,                        "cb",                   offsetof(XPE_DEF::IMAGE_COR20_HEADER,cb),                       4,      "DWORD",        FormatWidget::VAL_TYPE_SIZE},
+    {MajorRuntimeVersion,       "MajorRuntimeVersion",  offsetof(XPE_DEF::IMAGE_COR20_HEADER,MajorRuntimeVersion),      2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
+    {MinorRuntimeVersion,       "MinorRuntimeVersion",  offsetof(XPE_DEF::IMAGE_COR20_HEADER,MinorRuntimeVersion),      2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
+    {Flags,                     "Flags",                offsetof(XPE_DEF::IMAGE_COR20_HEADER,Flags),                    4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {EntryPoint,                "EntryPoint",           offsetof(XPE_DEF::IMAGE_COR20_HEADER,EntryPointRVA),            4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
 };
 }
 
