@@ -825,61 +825,39 @@ void PEWidget::widgetValueChanged(quint64 nValue)
         case SPE::TYPE_IMAGE_DOS_HEADER:
             switch(nNdata)
             {
-                case N_IMAGE_DOS_HEADER::e_magic:
-                    lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_magic]->setValue((quint16)nValue);
-                    break;
+                case N_IMAGE_DOS_HEADER::e_magic:   lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_magic]->setValue((quint16)nValue);      break;
             }
             break;
 
         case SPE::TYPE_IMAGE_NT_HEADERS:
             switch(nNdata)
             {
-                case N_IMAGE_NT_HEADERS::Signature:
-                    lineEdit_IMAGE_NT_HEADERS[N_IMAGE_NT_HEADERS::Signature]->setValue((quint32)nValue);
-                    break;
+                case N_IMAGE_NT_HEADERS::Signature: lineEdit_IMAGE_NT_HEADERS[N_IMAGE_NT_HEADERS::Signature]->setValue((quint32)nValue);    break;
             }
             break;
 
         case SPE::TYPE_IMAGE_FILE_HEADER:
             switch(nNdata)
             {
-                case N_IMAGE_FILE_HEADER::Machine:
-                    lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::Machine]->setValue((quint16)nValue);
-                    break;
-
-                case N_IMAGE_FILE_HEADER::TimeDateStamp:
-                    lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::TimeDateStamp]->setValue((quint32)nValue);
-                    break;
-
-                case N_IMAGE_FILE_HEADER::Characteristics:
-                    lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::Characteristics]->setValue((quint16)nValue);
-                    break;
+                case N_IMAGE_FILE_HEADER::Machine:          lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::Machine]->setValue((quint16)nValue);            break;
+                case N_IMAGE_FILE_HEADER::TimeDateStamp:    lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::TimeDateStamp]->setValue((quint32)nValue);      break;
+                case N_IMAGE_FILE_HEADER::Characteristics:  lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::Characteristics]->setValue((quint16)nValue);    break;
             }
             break;
 
         case SPE::TYPE_IMAGE_OPTIONAL_HEADER:
             switch(nNdata)
             {
-                case N_IMAGE_OPTIONAL_HEADER::Magic:
-                    lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::Magic]->setValue((quint16)nValue);
-                    break;
-
-                case N_IMAGE_OPTIONAL_HEADER::Subsystem:
-                    lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::Subsystem]->setValue((quint16)nValue);
-                    break;
-
-                case N_IMAGE_OPTIONAL_HEADER::DllCharacteristics:
-                    lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::DllCharacteristics]->setValue((quint16)nValue);
-                    break;
+                case N_IMAGE_OPTIONAL_HEADER::Magic:                lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::Magic]->setValue((quint16)nValue);              break;
+                case N_IMAGE_OPTIONAL_HEADER::Subsystem:            lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::Subsystem]->setValue((quint16)nValue);          break;
+                case N_IMAGE_OPTIONAL_HEADER::DllCharacteristics:   lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::DllCharacteristics]->setValue((quint16)nValue); break;
             }
             break;
 
         case SPE::TYPE_NETHEADER:
             switch(nNdata)
             {
-                case N_IMAGE_NETHEADER::Flags:
-                    lineEdit_NetHeader[N_IMAGE_NETHEADER::Flags]->setValue((quint32)nValue);
-                    break;
+                case N_IMAGE_NETHEADER::Flags:  lineEdit_NetHeader[N_IMAGE_NETHEADER::Flags]->setValue((quint32)nValue);    break;
             }
             break;
     }
@@ -1970,69 +1948,63 @@ void PEWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
 {
     int nSymbolWidth=getSymbolWidth();
 
+    pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
+    pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*6);
+
     switch(type)
     {
         case SPE::TYPE_IMAGE_DOS_HEADER:
-            pTableWidget->setColumnWidth(0,nSymbolWidth*10);
-            pTableWidget->setColumnWidth(1,nSymbolWidth*6);
-            pTableWidget->setColumnWidth(2,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(3,nSymbolWidth*13);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*12);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*8);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
             break;
 
         case SPE::TYPE_IMAGE_NT_HEADERS:
-            pTableWidget->setColumnWidth(0,nSymbolWidth*10);
-            pTableWidget->setColumnWidth(1,nSymbolWidth*6);
-            pTableWidget->setColumnWidth(2,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(3,nSymbolWidth*13);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*12);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*8);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
             break;
 
         case SPE::TYPE_IMAGE_FILE_HEADER:
-            pTableWidget->setColumnWidth(0,nSymbolWidth*15);
-            pTableWidget->setColumnWidth(1,nSymbolWidth*6);
-            pTableWidget->setColumnWidth(2,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(3,nSymbolWidth*24);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*15);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*8);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*24);
             break;
 
         case SPE::TYPE_IMAGE_OPTIONAL_HEADER:
-            pTableWidget->setColumnWidth(0,nSymbolWidth*18);
-            pTableWidget->setColumnWidth(1,nSymbolWidth*9);
-            pTableWidget->setColumnWidth(2,nSymbolWidth*14);
-            pTableWidget->setColumnWidth(3,nSymbolWidth*22);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*18);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*14);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*24);
             break;
 
         case SPE::TYPE_EXPORT:
-            pTableWidget->setColumnWidth(0,nSymbolWidth*18);
-            pTableWidget->setColumnWidth(1,nSymbolWidth*6);
-            pTableWidget->setColumnWidth(2,nSymbolWidth*14);
-            pTableWidget->setColumnWidth(3,nSymbolWidth*22);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*18);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*14);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*22);
             break;
 
         case SPE::TYPE_TLS:
-            pTableWidget->setColumnWidth(0,nSymbolWidth*15);
-            pTableWidget->setColumnWidth(1,nSymbolWidth*9);
-            pTableWidget->setColumnWidth(2,nSymbolWidth*14);
-            pTableWidget->setColumnWidth(3,nSymbolWidth*13);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*15);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*14);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*13);
             break;
 
         case SPE::TYPE_LOADCONFIG:
-            pTableWidget->setColumnWidth(0,nSymbolWidth*18);
-            pTableWidget->setColumnWidth(1,nSymbolWidth*9);
-            pTableWidget->setColumnWidth(2,nSymbolWidth*14);
-            pTableWidget->setColumnWidth(3,nSymbolWidth*13);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*18);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*14);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*13);
             break;
 
         case SPE::TYPE_NETHEADER:
-            pTableWidget->setColumnWidth(0,nSymbolWidth*18);
-            pTableWidget->setColumnWidth(1,nSymbolWidth*6);
-            pTableWidget->setColumnWidth(2,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(3,nSymbolWidth*18);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*18);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*8);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*18);
             break;
 
         case SPE::TYPE_RESOURCE_VERSION:
-            pTableWidget->setColumnWidth(0,nSymbolWidth*16);
-            pTableWidget->setColumnWidth(1,nSymbolWidth*6);
-            pTableWidget->setColumnWidth(2,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(3,nSymbolWidth*18);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*16);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*8);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*18);
             break;
     }
 }
