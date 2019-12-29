@@ -350,7 +350,7 @@ void ELFWidget::reloadData()
             lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_5]->setValue(elf.getIdent_pad(5));
             lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_6]->setValue(elf.getIdent_pad(6));
             lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_7]->setValue(elf.getIdent_pad(7));
-            lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_8]->setValue(elf.getIdent_pad(8));
+            lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_8]->setValue(elf.getIdent_pad(8)); // TODO Check!
 
             if(elf.is64())
             {
