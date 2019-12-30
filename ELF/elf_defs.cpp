@@ -126,14 +126,14 @@ namespace N_Elf_Phdr32
 {
 const FormatWidget::HEADER_RECORD records[]=
 {
-    {p_type,                "p_type",               4,      "Elf32_Word",           FormatWidget::VAL_TYPE_DATA},
-    {p_offset,              "p_offset",             4,      "Elf32_Off",            FormatWidget::VAL_TYPE_OFFSET},
-    {p_vaddr,               "p_vaddr",              4,      "Elf32_Addr",           FormatWidget::VAL_TYPE_ADDRESS},
-    {p_paddr,               "p_paddr",              4,      "Elf32_Addr",           FormatWidget::VAL_TYPE_ADDRESS},
-    {p_filesz,              "p_filesz",             4,      "Elf32_Word",           FormatWidget::VAL_TYPE_SIZE},
-    {p_memsz,               "p_memsz",              4,      "Elf32_Word",           FormatWidget::VAL_TYPE_SIZE},
-    {p_flags,               "p_flags",              4,      "Elf32_Word",           FormatWidget::VAL_TYPE_DATA},
-    {p_align,               "p_align",              4,      "Elf32_Word",           FormatWidget::VAL_TYPE_DATA},
+    {p_type,                "p_type",               offsetof(XELF_DEF::Elf32_Phdr,p_type),          4,      "Elf32_Word",           FormatWidget::VAL_TYPE_DATA},
+    {p_offset,              "p_offset",             offsetof(XELF_DEF::Elf32_Phdr,p_offset),        4,      "Elf32_Off",            FormatWidget::VAL_TYPE_OFFSET},
+    {p_vaddr,               "p_vaddr",              offsetof(XELF_DEF::Elf32_Phdr,p_vaddr),         4,      "Elf32_Addr",           FormatWidget::VAL_TYPE_ADDRESS},
+    {p_paddr,               "p_paddr",              offsetof(XELF_DEF::Elf32_Phdr,p_paddr),         4,      "Elf32_Addr",           FormatWidget::VAL_TYPE_ADDRESS},
+    {p_filesz,              "p_filesz",             offsetof(XELF_DEF::Elf32_Phdr,p_filesz),        4,      "Elf32_Word",           FormatWidget::VAL_TYPE_SIZE},
+    {p_memsz,               "p_memsz",              offsetof(XELF_DEF::Elf32_Phdr,p_memsz),         4,      "Elf32_Word",           FormatWidget::VAL_TYPE_SIZE},
+    {p_flags,               "p_flags",              offsetof(XELF_DEF::Elf32_Phdr,p_flags),         4,      "Elf32_Word",           FormatWidget::VAL_TYPE_DATA},
+    {p_align,               "p_align",              offsetof(XELF_DEF::Elf32_Phdr,p_align),         4,      "Elf32_Word",           FormatWidget::VAL_TYPE_DATA},
 };
 }
 
@@ -141,14 +141,14 @@ namespace N_Elf_Phdr64
 {
 const FormatWidget::HEADER_RECORD records[]=
 {
-    {p_type,                "p_type",               4,      "Elf32_Word",           FormatWidget::VAL_TYPE_DATA},
-    {p_flags,               "p_flags",              4,      "Elf32_Word",           FormatWidget::VAL_TYPE_DATA},
-    {p_offset,              "p_offset",             8,      "Elf64_Off",            FormatWidget::VAL_TYPE_OFFSET},
-    {p_vaddr,               "p_vaddr",              8,      "Elf64_Addr",           FormatWidget::VAL_TYPE_ADDRESS},
-    {p_paddr,               "p_paddr",              8,      "Elf64_Addr",           FormatWidget::VAL_TYPE_ADDRESS},
-    {p_filesz,              "p_filesz",             8,      "Elf64_Xword",          FormatWidget::VAL_TYPE_SIZE},
-    {p_memsz,               "p_memsz",              8,      "Elf64_Xword",          FormatWidget::VAL_TYPE_SIZE},
-    {p_align,               "p_align",              8,      "Elf64_Xword",          FormatWidget::VAL_TYPE_DATA},
+    {p_type,                "p_type",               offsetof(XELF_DEF::Elf64_Phdr,p_type),          4,      "Elf32_Word",           FormatWidget::VAL_TYPE_DATA},
+    {p_flags,               "p_flags",              offsetof(XELF_DEF::Elf64_Phdr,p_flags),         4,      "Elf32_Word",           FormatWidget::VAL_TYPE_DATA},
+    {p_offset,              "p_offset",             offsetof(XELF_DEF::Elf64_Phdr,p_offset),        8,      "Elf64_Off",            FormatWidget::VAL_TYPE_OFFSET},
+    {p_vaddr,               "p_vaddr",              offsetof(XELF_DEF::Elf64_Phdr,p_vaddr),         8,      "Elf64_Addr",           FormatWidget::VAL_TYPE_ADDRESS},
+    {p_paddr,               "p_paddr",              offsetof(XELF_DEF::Elf64_Phdr,p_paddr),         8,      "Elf64_Addr",           FormatWidget::VAL_TYPE_ADDRESS},
+    {p_filesz,              "p_filesz",             offsetof(XELF_DEF::Elf64_Phdr,p_filesz),        8,      "Elf64_Xword",          FormatWidget::VAL_TYPE_SIZE},
+    {p_memsz,               "p_memsz",              offsetof(XELF_DEF::Elf64_Phdr,p_memsz),         8,      "Elf64_Xword",          FormatWidget::VAL_TYPE_SIZE},
+    {p_align,               "p_align",              offsetof(XELF_DEF::Elf64_Phdr,p_align),         8,      "Elf64_Xword",          FormatWidget::VAL_TYPE_DATA},
 };
 }
 
@@ -156,12 +156,12 @@ namespace N_Elf_DynamicArrayTags
 {
 const FormatWidget::HEADER_RECORD records32[]=
 {
-    {d_tag,                 "d_tag",                4,      "Elf32_SWord",          FormatWidget::VAL_TYPE_DATA},
-    {d_value,               "d_value",              4,      "Elf32_Addr",           FormatWidget::VAL_TYPE_ADDRESS},
+    {d_tag,                 "d_tag",                0,  4,      "Elf32_SWord",          FormatWidget::VAL_TYPE_DATA},
+    {d_value,               "d_value",              4,  4,      "Elf32_Addr",           FormatWidget::VAL_TYPE_ADDRESS},
 };
 const FormatWidget::HEADER_RECORD records64[]=
 {
-    {d_tag,                 "d_tag",                8,      "Elf64_Xword",          FormatWidget::VAL_TYPE_DATA},
-    {d_value,               "d_value",              8,      "Elf64_Addr",           FormatWidget::VAL_TYPE_ADDRESS},
+    {d_tag,                 "d_tag",                0,  8,      "Elf64_Xword",          FormatWidget::VAL_TYPE_DATA},
+    {d_value,               "d_value",              8,  8,      "Elf64_Addr",           FormatWidget::VAL_TYPE_ADDRESS},
 };
 }
