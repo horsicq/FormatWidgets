@@ -96,29 +96,29 @@ namespace N_Elf_Shdr
 {
 const FormatWidget::HEADER_RECORD records32[]=
 {
-    {sh_name,               "sh_name",              4,      "Elf32_Word",           FormatWidget::VAL_TYPE_DATA},
-    {sh_type,               "sh_type",              4,      "Elf32_Word",           FormatWidget::VAL_TYPE_DATA},
-    {sh_flags,              "sh_flags",             4,      "Elf32_Word",           FormatWidget::VAL_TYPE_DATA},
-    {sh_addr,               "sh_addr",              4,      "Elf32_Addr",           FormatWidget::VAL_TYPE_ADDRESS},
-    {sh_offset,             "sh_offset",            4,      "Elf32_Off",            FormatWidget::VAL_TYPE_OFFSET},
-    {sh_size,               "sh_size",              4,      "Elf32_Word",           FormatWidget::VAL_TYPE_SIZE},
-    {sh_link,               "sh_link",              4,      "Elf32_Word",           FormatWidget::VAL_TYPE_DATA},
-    {sh_info,               "sh_info",              4,      "Elf32_Word",           FormatWidget::VAL_TYPE_DATA},
-    {sh_addralign,          "sh_addralign",         4,      "Elf32_Word",           FormatWidget::VAL_TYPE_DATA},
-    {sh_entsize,            "sh_entsize",           4,      "Elf32_Word",           FormatWidget::VAL_TYPE_SIZE},
+    {sh_name,               "sh_name",              offsetof(XELF_DEF::Elf32_Shdr,sh_name),         4,      "Elf32_Word",           FormatWidget::VAL_TYPE_DATA},
+    {sh_type,               "sh_type",              offsetof(XELF_DEF::Elf32_Shdr,sh_type),         4,      "Elf32_Word",           FormatWidget::VAL_TYPE_DATA},
+    {sh_flags,              "sh_flags",             offsetof(XELF_DEF::Elf32_Shdr,sh_flags),        4,      "Elf32_Word",           FormatWidget::VAL_TYPE_DATA},
+    {sh_addr,               "sh_addr",              offsetof(XELF_DEF::Elf32_Shdr,sh_addr),         4,      "Elf32_Addr",           FormatWidget::VAL_TYPE_ADDRESS},
+    {sh_offset,             "sh_offset",            offsetof(XELF_DEF::Elf32_Shdr,sh_offset),       4,      "Elf32_Off",            FormatWidget::VAL_TYPE_OFFSET},
+    {sh_size,               "sh_size",              offsetof(XELF_DEF::Elf32_Shdr,sh_size),         4,      "Elf32_Word",           FormatWidget::VAL_TYPE_SIZE},
+    {sh_link,               "sh_link",              offsetof(XELF_DEF::Elf32_Shdr,sh_link),         4,      "Elf32_Word",           FormatWidget::VAL_TYPE_DATA},
+    {sh_info,               "sh_info",              offsetof(XELF_DEF::Elf32_Shdr,sh_info),         4,      "Elf32_Word",           FormatWidget::VAL_TYPE_DATA},
+    {sh_addralign,          "sh_addralign",         offsetof(XELF_DEF::Elf32_Shdr,sh_addralign),    4,      "Elf32_Word",           FormatWidget::VAL_TYPE_DATA},
+    {sh_entsize,            "sh_entsize",           offsetof(XELF_DEF::Elf32_Shdr,sh_entsize),      4,      "Elf32_Word",           FormatWidget::VAL_TYPE_SIZE},
 };
 const FormatWidget::HEADER_RECORD records64[]=
 {
-    {sh_name,               "sh_name",              4,      "Elf64_Word",           FormatWidget::VAL_TYPE_DATA},
-    {sh_type,               "sh_type",              4,      "Elf64_Word",           FormatWidget::VAL_TYPE_DATA},
-    {sh_flags,              "sh_flags",             8,      "Elf64_Xword",          FormatWidget::VAL_TYPE_DATA},
-    {sh_addr,               "sh_addr",              8,      "Elf64_Addr",           FormatWidget::VAL_TYPE_ADDRESS},
-    {sh_offset,             "sh_offset",            8,      "Elf64_Off",            FormatWidget::VAL_TYPE_OFFSET},
-    {sh_size,               "sh_size",              8,      "Elf64_Xword",          FormatWidget::VAL_TYPE_SIZE},
-    {sh_link,               "sh_link",              4,      "Elf64_Word",           FormatWidget::VAL_TYPE_DATA},
-    {sh_info,               "sh_info",              4,      "Elf64_Word",           FormatWidget::VAL_TYPE_DATA},
-    {sh_addralign,          "sh_addralign",         8,      "Elf64_Xword",          FormatWidget::VAL_TYPE_DATA},
-    {sh_entsize,            "sh_entsize",           8,      "Elf64_Xword",          FormatWidget::VAL_TYPE_SIZE},
+    {sh_name,               "sh_name",              offsetof(XELF_DEF::Elf64_Shdr,sh_name),         4,      "Elf64_Word",           FormatWidget::VAL_TYPE_DATA},
+    {sh_type,               "sh_type",              offsetof(XELF_DEF::Elf64_Shdr,sh_type),         4,      "Elf64_Word",           FormatWidget::VAL_TYPE_DATA},
+    {sh_flags,              "sh_flags",             offsetof(XELF_DEF::Elf64_Shdr,sh_flags),        8,      "Elf64_Xword",          FormatWidget::VAL_TYPE_DATA},
+    {sh_addr,               "sh_addr",              offsetof(XELF_DEF::Elf64_Shdr,sh_addr),         8,      "Elf64_Addr",           FormatWidget::VAL_TYPE_ADDRESS},
+    {sh_offset,             "sh_offset",            offsetof(XELF_DEF::Elf64_Shdr,sh_offset),       8,      "Elf64_Off",            FormatWidget::VAL_TYPE_OFFSET},
+    {sh_size,               "sh_size",              offsetof(XELF_DEF::Elf64_Shdr,sh_size),         8,      "Elf64_Xword",          FormatWidget::VAL_TYPE_SIZE},
+    {sh_link,               "sh_link",              offsetof(XELF_DEF::Elf64_Shdr,sh_link),         4,      "Elf64_Word",           FormatWidget::VAL_TYPE_DATA},
+    {sh_info,               "sh_info",              offsetof(XELF_DEF::Elf64_Shdr,sh_info),         4,      "Elf64_Word",           FormatWidget::VAL_TYPE_DATA},
+    {sh_addralign,          "sh_addralign",         offsetof(XELF_DEF::Elf64_Shdr,sh_addralign),    8,      "Elf64_Xword",          FormatWidget::VAL_TYPE_DATA},
+    {sh_entsize,            "sh_entsize",           offsetof(XELF_DEF::Elf64_Shdr,sh_entsize),      8,      "Elf64_Xword",          FormatWidget::VAL_TYPE_SIZE},
 };
 }
 
