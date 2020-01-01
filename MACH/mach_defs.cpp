@@ -35,14 +35,14 @@ const FormatWidget::HEADER_RECORD records32[]=
 
 const FormatWidget::HEADER_RECORD records64[]=
 {
-    {magic,                 "magic",            4,      "uint32_t",             FormatWidget::VAL_TYPE_DATA},
-    {cputype,               "cputype",          4,      "cpu_type_t",           FormatWidget::VAL_TYPE_DATA},
-    {cpusubtype,            "cpusubtype",       4,      "cpu_subtype_t",        FormatWidget::VAL_TYPE_DATA},
-    {filetype,              "filetype",         4,      "uint32_t",             FormatWidget::VAL_TYPE_DATA},
-    {ncmds,                 "ncmds",            4,      "uint32_t",             FormatWidget::VAL_TYPE_DATA},
-    {sizeofcmds,            "sizeofcmds",       4,      "uint32_t",             FormatWidget::VAL_TYPE_DATA},
-    {flags,                 "flags",            4,      "uint32_t",             FormatWidget::VAL_TYPE_DATA},
-    {reserved,              "reserved",         4,      "uint32_t",             FormatWidget::VAL_TYPE_DATA},
+    {magic,                 "magic",            offsetof(XMACH_DEF::mach_header_64,magic),      4,      "uint32_t",             FormatWidget::VAL_TYPE_DATA},
+    {cputype,               "cputype",          offsetof(XMACH_DEF::mach_header_64,cputype),    4,      "cpu_type_t",           FormatWidget::VAL_TYPE_DATA},
+    {cpusubtype,            "cpusubtype",       offsetof(XMACH_DEF::mach_header_64,cpusubtype), 4,      "cpu_subtype_t",        FormatWidget::VAL_TYPE_DATA},
+    {filetype,              "filetype",         offsetof(XMACH_DEF::mach_header_64,filetype),   4,      "uint32_t",             FormatWidget::VAL_TYPE_DATA},
+    {ncmds,                 "ncmds",            offsetof(XMACH_DEF::mach_header_64,ncmds),      4,      "uint32_t",             FormatWidget::VAL_TYPE_DATA},
+    {sizeofcmds,            "sizeofcmds",       offsetof(XMACH_DEF::mach_header_64,sizeofcmds), 4,      "uint32_t",             FormatWidget::VAL_TYPE_DATA},
+    {flags,                 "flags",            offsetof(XMACH_DEF::mach_header_64,flags),      4,      "uint32_t",             FormatWidget::VAL_TYPE_DATA},
+    {reserved,              "reserved",         offsetof(XMACH_DEF::mach_header_64,reserved),   4,      "uint32_t",             FormatWidget::VAL_TYPE_DATA},
 };
 }
 
