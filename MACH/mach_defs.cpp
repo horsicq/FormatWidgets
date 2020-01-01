@@ -24,13 +24,13 @@ namespace N_mach_header
 {
 const FormatWidget::HEADER_RECORD records32[]=
 {
-    {magic,                 "magic",            4,      "uint32_t",             FormatWidget::VAL_TYPE_DATA},
-    {cputype,               "cputype",          4,      "cpu_type_t",           FormatWidget::VAL_TYPE_DATA},
-    {cpusubtype,            "cpusubtype",       4,      "cpu_subtype_t",        FormatWidget::VAL_TYPE_DATA},
-    {filetype,              "filetype",         4,      "uint32_t",             FormatWidget::VAL_TYPE_DATA},
-    {ncmds,                 "ncmds",            4,      "uint32_t",             FormatWidget::VAL_TYPE_DATA},
-    {sizeofcmds,            "sizeofcmds",       4,      "uint32_t",             FormatWidget::VAL_TYPE_DATA},
-    {flags,                 "flags",            4,      "uint32_t",             FormatWidget::VAL_TYPE_DATA},
+    {magic,                 "magic",            offsetof(XMACH_DEF::mach_header,magic),         4,      "uint32_t",             FormatWidget::VAL_TYPE_DATA},
+    {cputype,               "cputype",          offsetof(XMACH_DEF::mach_header,cputype),       4,      "cpu_type_t",           FormatWidget::VAL_TYPE_DATA},
+    {cpusubtype,            "cpusubtype",       offsetof(XMACH_DEF::mach_header,cpusubtype),    4,      "cpu_subtype_t",        FormatWidget::VAL_TYPE_DATA},
+    {filetype,              "filetype",         offsetof(XMACH_DEF::mach_header,filetype),      4,      "uint32_t",             FormatWidget::VAL_TYPE_DATA},
+    {ncmds,                 "ncmds",            offsetof(XMACH_DEF::mach_header,ncmds),         4,      "uint32_t",             FormatWidget::VAL_TYPE_DATA},
+    {sizeofcmds,            "sizeofcmds",       offsetof(XMACH_DEF::mach_header,sizeofcmds),    4,      "uint32_t",             FormatWidget::VAL_TYPE_DATA},
+    {flags,                 "flags",            offsetof(XMACH_DEF::mach_header,flags),         4,      "uint32_t",             FormatWidget::VAL_TYPE_DATA},
 };
 
 const FormatWidget::HEADER_RECORD records64[]=
