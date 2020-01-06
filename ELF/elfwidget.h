@@ -92,7 +92,7 @@ private:
     XComboBoxEx *comboBox[__CB_size];
     InvWidget *invWidget[__INV_size];
 
-    SubDevice *subDevice[__SD_size];
+    SubDevice *subDevice[SELF::__TYPE_size];
 
     bool bInit[SELF::__TYPE_size];
 };

@@ -120,6 +120,19 @@ bool ELFWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, i
                 case SELF::TYPE_Elf_Ehdr:
                     switch(nNdata)
                     {
+                        case N_Elf_Ehdr::ei_class:      comboBox[CB_Elf_Ehdr_iclass]->setValue(nValue);     break;
+                        case N_Elf_Ehdr::ei_data:       comboBox[CB_Elf_Ehdr_idata]->setValue(nValue);      break;
+                        case N_Elf_Ehdr::ei_version:    comboBox[CB_Elf_Ehdr_iversion]->setValue(nValue);   break;
+                        case N_Elf_Ehdr::ei_osabi:      comboBox[CB_Elf_Ehdr_iosabi]->setValue(nValue);     break;
+                    }
+                    break;
+            }
+
+            switch(nStype)
+            {
+                case SELF::TYPE_Elf_Ehdr:
+                    switch(nNdata)
+                    {
                         case N_Elf_Ehdr::ei_mag_0:
                             elf.setIdent_mag((quint8)nValue,0);
                             break;
@@ -137,22 +150,18 @@ bool ELFWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, i
                             break;
 
                         case N_Elf_Ehdr::ei_class:
-                            comboBox[CB_Elf_Ehdr_iclass]->setValue(nValue);
                             elf.setIdent_class((quint8)nValue);
                             break;
 
                         case N_Elf_Ehdr::ei_data:
-                            comboBox[CB_Elf_Ehdr_idata]->setValue(nValue);
                             elf.setIdent_data((quint8)nValue);
                             break;
 
                         case N_Elf_Ehdr::ei_version:
-                            comboBox[CB_Elf_Ehdr_iversion]->setValue(nValue);
                             elf.setIdent_version((quint8)nValue);
                             break;
 
                         case N_Elf_Ehdr::ei_osabi:
-                            comboBox[CB_Elf_Ehdr_iosabi]->setValue(nValue);
                             elf.setIdent_osabi((quint8)nValue);
                             break;
 
@@ -282,17 +291,15 @@ void ELFWidget::blockSignals(bool bState)
 
 void ELFWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
 {
+    Q_UNUSED(type);
+
     int nSymbolWidth=getSymbolWidth();
 
-    switch(type)
-    {
-        case SELF::TYPE_Elf_Ehdr:
-            pTableWidget->setColumnWidth(0,nSymbolWidth*10);
-            pTableWidget->setColumnWidth(1,nSymbolWidth*13);
-            pTableWidget->setColumnWidth(2,nSymbolWidth*13);
-            pTableWidget->setColumnWidth(3,nSymbolWidth*13);
-            break;
-    }
+    pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_NAME,QHeaderView::ResizeToContents);
+    pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_OFFSET,QHeaderView::ResizeToContents);
+    pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_TYPE,QHeaderView::ResizeToContents);
+    pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_VALUE,QHeaderView::ResizeToContents);
+    pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_INFO,QHeaderView::ResizeToContents);
 }
 
 void ELFWidget::reloadData()
