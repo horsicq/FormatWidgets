@@ -133,77 +133,24 @@ bool ELFWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, i
                 case SELF::TYPE_Elf_Ehdr:
                     switch(nNdata)
                     {
-                        case N_Elf_Ehdr::ei_mag_0:
-                            elf.setIdent_mag((quint8)nValue,0);
-                            break;
-
-                        case N_Elf_Ehdr::ei_mag_1:
-                            elf.setIdent_mag((quint8)nValue,1);
-                            break;
-
-                        case N_Elf_Ehdr::ei_mag_2:
-                            elf.setIdent_mag((quint8)nValue,2);
-                            break;
-
-                        case N_Elf_Ehdr::ei_mag_3:
-                            elf.setIdent_mag((quint8)nValue,3);
-                            break;
-
-                        case N_Elf_Ehdr::ei_class:
-                            elf.setIdent_class((quint8)nValue);
-                            break;
-
-                        case N_Elf_Ehdr::ei_data:
-                            elf.setIdent_data((quint8)nValue);
-                            break;
-
-                        case N_Elf_Ehdr::ei_version:
-                            elf.setIdent_version((quint8)nValue);
-                            break;
-
-                        case N_Elf_Ehdr::ei_osabi:
-                            elf.setIdent_osabi((quint8)nValue);
-                            break;
-
-                        case N_Elf_Ehdr::ei_abiversion:
-                            elf.setIdent_abiversion((quint8)nValue);
-                            break;
-
-                        case N_Elf_Ehdr::ei_pad_0:
-                            elf.setIdent_pad((quint8)nValue,0);
-                            break;
-
-                        case N_Elf_Ehdr::ei_pad_1:
-                            elf.setIdent_pad((quint8)nValue,1);
-                            break;
-
-                        case N_Elf_Ehdr::ei_pad_2:
-                            elf.setIdent_pad((quint8)nValue,2);
-                            break;
-
-                        case N_Elf_Ehdr::ei_pad_3:
-                            elf.setIdent_pad((quint8)nValue,3);
-                            break;
-
-                        case N_Elf_Ehdr::ei_pad_4:
-                            elf.setIdent_pad((quint8)nValue,4);
-                            break;
-
-                        case N_Elf_Ehdr::ei_pad_5:
-                            elf.setIdent_pad((quint8)nValue,5);
-                            break;
-
-                        case N_Elf_Ehdr::ei_pad_6:
-                            elf.setIdent_pad((quint8)nValue,6);
-                            break;
-
-                        case N_Elf_Ehdr::ei_pad_7:
-                            elf.setIdent_pad((quint8)nValue,7);
-                            break;
-
-                        case N_Elf_Ehdr::ei_pad_8:
-                            elf.setIdent_pad((quint8)nValue,8);
-                            break;
+                        case N_Elf_Ehdr::ei_mag_0:      elf.setIdent_mag((quint8)nValue,0);         break;
+                        case N_Elf_Ehdr::ei_mag_1:      elf.setIdent_mag((quint8)nValue,1);         break;
+                        case N_Elf_Ehdr::ei_mag_2:      elf.setIdent_mag((quint8)nValue,2);         break;
+                        case N_Elf_Ehdr::ei_mag_3:      elf.setIdent_mag((quint8)nValue,3);         break;
+                        case N_Elf_Ehdr::ei_class:      elf.setIdent_class((quint8)nValue);         break;
+                        case N_Elf_Ehdr::ei_data:       elf.setIdent_data((quint8)nValue);          break;
+                        case N_Elf_Ehdr::ei_version:    elf.setIdent_version((quint8)nValue);       break;
+                        case N_Elf_Ehdr::ei_osabi:      elf.setIdent_osabi((quint8)nValue);         break;
+                        case N_Elf_Ehdr::ei_abiversion: elf.setIdent_abiversion((quint8)nValue);    break;
+                        case N_Elf_Ehdr::ei_pad_0:      elf.setIdent_pad((quint8)nValue,0);         break;
+                        case N_Elf_Ehdr::ei_pad_1:      elf.setIdent_pad((quint8)nValue,1);         break;
+                        case N_Elf_Ehdr::ei_pad_2:      elf.setIdent_pad((quint8)nValue,2);         break;
+                        case N_Elf_Ehdr::ei_pad_3:      elf.setIdent_pad((quint8)nValue,3);         break;
+                        case N_Elf_Ehdr::ei_pad_4:      elf.setIdent_pad((quint8)nValue,4);         break;
+                        case N_Elf_Ehdr::ei_pad_5:      elf.setIdent_pad((quint8)nValue,5);         break;
+                        case N_Elf_Ehdr::ei_pad_6:      elf.setIdent_pad((quint8)nValue,6);         break;
+                        case N_Elf_Ehdr::ei_pad_7:      elf.setIdent_pad((quint8)nValue,7);         break;
+                        case N_Elf_Ehdr::ei_pad_8:      elf.setIdent_pad((quint8)nValue,8);         break;
 
                         case N_Elf_Ehdr::e_type:
                             comboBox[CB_Elf_Ehdr_type]->setValue(nValue);
