@@ -50,8 +50,8 @@ namespace N_mach_commands
 {
 const FormatWidget::HEADER_RECORD records[]=
 {
-    {cmd,                  "cmd",               2,      "uint32_t",             FormatWidget::VAL_TYPE_DATA},
-    {cmdsize,              "cmdsize",           4,      "uint32_t",             FormatWidget::VAL_TYPE_SIZE},
+    {cmd,                  "cmd",               offsetof(XMACH_DEF::load_command,cmd),      2,      "uint32_t",             FormatWidget::VAL_TYPE_DATA},
+    {cmdsize,              "cmdsize",           offsetof(XMACH_DEF::load_command,cmdsize),  4,      "uint32_t",             FormatWidget::VAL_TYPE_SIZE},
 };
 }
 
@@ -59,28 +59,28 @@ namespace N_mach_segments
 {
 const FormatWidget::HEADER_RECORD records32[]=
 {
-    {segname,               "segname",          16,     "char[16]",             FormatWidget::VAL_TYPE_TEXT},
-    {vmaddr,                "vmaddr",           4,      "uint32",               FormatWidget::VAL_TYPE_ADDRESS},
-    {vmsize,                "vmsize",           4,      "uint32",               FormatWidget::VAL_TYPE_SIZE},
-    {fileoff,               "fileoff",          4,      "uint32",               FormatWidget::VAL_TYPE_OFFSET},
-    {filesize,              "filesize",         4,      "uint32",               FormatWidget::VAL_TYPE_SIZE},
-    {maxprot,               "maxprot",          4,      "int32",                FormatWidget::VAL_TYPE_DATA},
-    {initprot,              "initprot",         4,      "int32",                FormatWidget::VAL_TYPE_DATA},
-    {nsects,                "nsects",           4,      "uint32",               FormatWidget::VAL_TYPE_DATA},
-    {flags,                 "flags",            4,      "uint32",               FormatWidget::VAL_TYPE_DATA},
+    {segname,               "segname",          offsetof(XMACH_DEF::segment_command,segname),       16,     "char[16]",             FormatWidget::VAL_TYPE_TEXT},
+    {vmaddr,                "vmaddr",           offsetof(XMACH_DEF::segment_command,vmaddr),        4,      "uint32",               FormatWidget::VAL_TYPE_ADDRESS},
+    {vmsize,                "vmsize",           offsetof(XMACH_DEF::segment_command,vmsize),        4,      "uint32",               FormatWidget::VAL_TYPE_SIZE},
+    {fileoff,               "fileoff",          offsetof(XMACH_DEF::segment_command,fileoff),       4,      "uint32",               FormatWidget::VAL_TYPE_OFFSET},
+    {filesize,              "filesize",         offsetof(XMACH_DEF::segment_command,filesize),      4,      "uint32",               FormatWidget::VAL_TYPE_SIZE},
+    {maxprot,               "maxprot",          offsetof(XMACH_DEF::segment_command,maxprot),       4,      "int32",                FormatWidget::VAL_TYPE_DATA},
+    {initprot,              "initprot",         offsetof(XMACH_DEF::segment_command,initprot),      4,      "int32",                FormatWidget::VAL_TYPE_DATA},
+    {nsects,                "nsects",           offsetof(XMACH_DEF::segment_command,nsects),        4,      "uint32",               FormatWidget::VAL_TYPE_DATA},
+    {flags,                 "flags",            offsetof(XMACH_DEF::segment_command,flags),         4,      "uint32",               FormatWidget::VAL_TYPE_DATA},
 };
 
 const FormatWidget::HEADER_RECORD records64[]=
 {
-    {segname,               "segname",          16,     "char[16]",             FormatWidget::VAL_TYPE_TEXT},
-    {vmaddr,                "vmaddr",           8,      "uint64",               FormatWidget::VAL_TYPE_ADDRESS},
-    {vmsize,                "vmsize",           8,      "uint64",               FormatWidget::VAL_TYPE_SIZE},
-    {fileoff,               "fileoff",          8,      "uint64",               FormatWidget::VAL_TYPE_OFFSET},
-    {filesize,              "filesize",         8,      "uint64",               FormatWidget::VAL_TYPE_SIZE},
-    {maxprot,               "maxprot",          4,      "int32",                FormatWidget::VAL_TYPE_DATA},
-    {initprot,              "initprot",         4,      "int32",                FormatWidget::VAL_TYPE_DATA},
-    {nsects,                "nsects",           4,      "uint32",               FormatWidget::VAL_TYPE_DATA},
-    {flags,                 "flags",            4,      "uint32",               FormatWidget::VAL_TYPE_DATA},
+    {segname,               "segname",          offsetof(XMACH_DEF::segment_command_64,segname),    16,     "char[16]",             FormatWidget::VAL_TYPE_TEXT},
+    {vmaddr,                "vmaddr",           offsetof(XMACH_DEF::segment_command_64,vmaddr),     8,      "uint64",               FormatWidget::VAL_TYPE_ADDRESS},
+    {vmsize,                "vmsize",           offsetof(XMACH_DEF::segment_command_64,vmsize),     8,      "uint64",               FormatWidget::VAL_TYPE_SIZE},
+    {fileoff,               "fileoff",          offsetof(XMACH_DEF::segment_command_64,fileoff),    8,      "uint64",               FormatWidget::VAL_TYPE_OFFSET},
+    {filesize,              "filesize",         offsetof(XMACH_DEF::segment_command_64,filesize),   8,      "uint64",               FormatWidget::VAL_TYPE_SIZE},
+    {maxprot,               "maxprot",          offsetof(XMACH_DEF::segment_command_64,maxprot),    4,      "int32",                FormatWidget::VAL_TYPE_DATA},
+    {initprot,              "initprot",         offsetof(XMACH_DEF::segment_command_64,initprot),   4,      "int32",                FormatWidget::VAL_TYPE_DATA},
+    {nsects,                "nsects",           offsetof(XMACH_DEF::segment_command_64,nsects),     4,      "uint32",               FormatWidget::VAL_TYPE_DATA},
+    {flags,                 "flags",            offsetof(XMACH_DEF::segment_command_64,flags),      4,      "uint32",               FormatWidget::VAL_TYPE_DATA},
 };
 }
 
