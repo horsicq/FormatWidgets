@@ -199,17 +199,19 @@ void ELFWidget::blockSignals(bool bState)
 
 void ELFWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
 {
-    Q_UNUSED(type);
-
     int nSymbolWidth=getSymbolWidth();
 
     pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_NAME,QHeaderView::ResizeToContents);
     pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_OFFSET,QHeaderView::ResizeToContents);
     pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_TYPE,QHeaderView::ResizeToContents);
-//    pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_VALUE,QHeaderView::ResizeToContents);
-//    pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_INFO,QHeaderView::ResizeToContents);
-    pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*12);
-    pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*15);
+
+    switch(type)
+    {
+        case SELF::TYPE_Elf_Ehdr:
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*12);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*15);
+            break;
+    }
 }
 
 void ELFWidget::reloadData()
@@ -666,29 +668,12 @@ void ELFWidget::widgetValueChanged(quint64 nValue)
         case SELF::TYPE_Elf_Ehdr:
             switch(nNdata)
             {
-                case N_Elf_Ehdr::ei_class:
-                    lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_class]->setValue((quint8)nValue);
-                    break;
-
-                case N_Elf_Ehdr::ei_data:
-                    lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_data]->setValue((quint8)nValue);
-                    break;
-
-                case N_Elf_Ehdr::ei_version:
-                    lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_version]->setValue((quint8)nValue);
-                    break;
-
-                case N_Elf_Ehdr::ei_osabi:
-                    lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_osabi]->setValue((quint8)nValue);
-                    break;
-
-                case N_Elf_Ehdr::e_type:
-                    lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_type]->setValue((quint16)nValue);
-                    break;
-
-                case N_Elf_Ehdr::e_machine:
-                    lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_machine]->setValue((quint16)nValue);
-                    break;
+                case N_Elf_Ehdr::ei_class:      lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_class]->setValue((quint8)nValue);      break;
+                case N_Elf_Ehdr::ei_data:       lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_data]->setValue((quint8)nValue);       break;
+                case N_Elf_Ehdr::ei_version:    lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_version]->setValue((quint8)nValue);    break;
+                case N_Elf_Ehdr::ei_osabi:      lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_osabi]->setValue((quint8)nValue);      break;
+                case N_Elf_Ehdr::e_type:        lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_type]->setValue((quint16)nValue);       break;
+                case N_Elf_Ehdr::e_machine:     lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_machine]->setValue((quint16)nValue);    break;
             }
 
             break;
