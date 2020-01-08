@@ -88,28 +88,28 @@ namespace N_mach_sections
 {
 const FormatWidget::HEADER_RECORD records32[]=
 {
-    {sectname,              "sectname",         16,     "char[16]",             FormatWidget::VAL_TYPE_TEXT},
-    {segname,               "segname",          16,     "char[16]",             FormatWidget::VAL_TYPE_TEXT},
-    {addr,                  "addr",             4,      "uint32",               FormatWidget::VAL_TYPE_ADDRESS},
-    {size,                  "size",             4,      "uint32",               FormatWidget::VAL_TYPE_SIZE},
-    {offset,                "offset",           4,      "uint32",               FormatWidget::VAL_TYPE_OFFSET},
-    {align,                 "align",            4,      "uint32",               FormatWidget::VAL_TYPE_DATA},
-    {reloff,                "reloff",           4,      "uint32",               FormatWidget::VAL_TYPE_DATA},
-    {nreloc,                "nreloc",           4,      "uint32",               FormatWidget::VAL_TYPE_DATA},
-    {flags,                 "flags",            4,      "uint32",               FormatWidget::VAL_TYPE_DATA},
+    {sectname,              "sectname",         offsetof(XMACH_DEF::section,sectname),      16,     "char[16]",             FormatWidget::VAL_TYPE_TEXT},
+    {segname,               "segname",          offsetof(XMACH_DEF::section,segname),       16,     "char[16]",             FormatWidget::VAL_TYPE_TEXT},
+    {addr,                  "addr",             offsetof(XMACH_DEF::section,addr),          4,      "uint32",               FormatWidget::VAL_TYPE_ADDRESS},
+    {size,                  "size",             offsetof(XMACH_DEF::section,size),          4,      "uint32",               FormatWidget::VAL_TYPE_SIZE},
+    {offset,                "offset",           offsetof(XMACH_DEF::section,offset),        4,      "uint32",               FormatWidget::VAL_TYPE_OFFSET},
+    {align,                 "align",            offsetof(XMACH_DEF::section,align),         4,      "uint32",               FormatWidget::VAL_TYPE_DATA},
+    {reloff,                "reloff",           offsetof(XMACH_DEF::section,reloff),        4,      "uint32",               FormatWidget::VAL_TYPE_DATA},
+    {nreloc,                "nreloc",           offsetof(XMACH_DEF::section,nreloc),        4,      "uint32",               FormatWidget::VAL_TYPE_DATA},
+    {flags,                 "flags",            offsetof(XMACH_DEF::section,flags),         4,      "uint32",               FormatWidget::VAL_TYPE_DATA},
 };
 
 const FormatWidget::HEADER_RECORD records64[]=
 {
-    {sectname,              "sectname",         16,     "char[16]",             FormatWidget::VAL_TYPE_TEXT},
-    {segname,               "segname",          16,     "char[16]",             FormatWidget::VAL_TYPE_TEXT},
-    {addr,                  "addr",             8,      "uint64",               FormatWidget::VAL_TYPE_ADDRESS},
-    {size,                  "size",             8,      "uint64",               FormatWidget::VAL_TYPE_SIZE},
-    {offset,                "offset",           4,      "uint32",               FormatWidget::VAL_TYPE_OFFSET},
-    {align,                 "align",            4,      "uint32",               FormatWidget::VAL_TYPE_DATA},
-    {reloff,                "reloff",           4,      "uint32",               FormatWidget::VAL_TYPE_DATA},
-    {nreloc,                "nreloc",           4,      "uint32",               FormatWidget::VAL_TYPE_DATA},
-    {flags,                 "flags",            4,      "uint32",               FormatWidget::VAL_TYPE_DATA},
+    {sectname,              "sectname",         offsetof(XMACH_DEF::section_64,sectname),   16,     "char[16]",             FormatWidget::VAL_TYPE_TEXT},
+    {segname,               "segname",          offsetof(XMACH_DEF::section_64,segname),    16,     "char[16]",             FormatWidget::VAL_TYPE_TEXT},
+    {addr,                  "addr",             offsetof(XMACH_DEF::section_64,addr),       8,      "uint64",               FormatWidget::VAL_TYPE_ADDRESS},
+    {size,                  "size",             offsetof(XMACH_DEF::section_64,size),       8,      "uint64",               FormatWidget::VAL_TYPE_SIZE},
+    {offset,                "offset",           offsetof(XMACH_DEF::section_64,offset),     4,      "uint32",               FormatWidget::VAL_TYPE_OFFSET},
+    {align,                 "align",            offsetof(XMACH_DEF::section_64,align),      4,      "uint32",               FormatWidget::VAL_TYPE_DATA},
+    {reloff,                "reloff",           offsetof(XMACH_DEF::section_64,reloff),     4,      "uint32",               FormatWidget::VAL_TYPE_DATA},
+    {nreloc,                "nreloc",           offsetof(XMACH_DEF::section_64,nreloc),     4,      "uint32",               FormatWidget::VAL_TYPE_DATA},
+    {flags,                 "flags",            offsetof(XMACH_DEF::section_64,flags),      4,      "uint32",               FormatWidget::VAL_TYPE_DATA},
 };
 }
 
@@ -117,8 +117,8 @@ namespace N_mach_libraries
 {
 const FormatWidget::HEADER_RECORD records[]=
 {
-    {timestamp,             "timestamp",                4,      "uint32",               FormatWidget::VAL_TYPE_DATA},
-    {current_version,       "current_version",          4,      "uint32",               FormatWidget::VAL_TYPE_DATA},
-    {compatibility_version, "compatibility_version",    4,      "uint32",               FormatWidget::VAL_TYPE_DATA},
+    {timestamp,             "timestamp",                0,  4,      "uint32",               FormatWidget::VAL_TYPE_DATA},
+    {current_version,       "current_version",          0,  4,      "uint32",               FormatWidget::VAL_TYPE_DATA},
+    {compatibility_version, "compatibility_version",    0,  4,      "uint32",               FormatWidget::VAL_TYPE_DATA},
 };
 }
