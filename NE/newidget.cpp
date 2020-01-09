@@ -234,11 +234,11 @@ void NEWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
 
     int nSymbolWidth=getSymbolWidth();
 
-    pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*12);
-    pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
-    pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*6);
-    pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*8);
-    pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
+    pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_NAME,QHeaderView::ResizeToContents);
+    pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_OFFSET,QHeaderView::ResizeToContents);
+    pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_TYPE,QHeaderView::ResizeToContents);
+    pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*12);
+    pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*15);
 }
 
 void NEWidget::reloadData()

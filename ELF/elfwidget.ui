@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>756</width>
-    <height>345</height>
+    <width>657</width>
+    <height>205</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -109,9 +109,6 @@
       </widget>
       <widget class="QWidget" name="page_Elf_Ehdr">
        <layout class="QVBoxLayout" name="verticalLayout_3">
-        <property name="spacing">
-         <number>0</number>
-        </property>
         <property name="leftMargin">
          <number>0</number>
         </property>
@@ -144,6 +141,16 @@
           <attribute name="verticalHeaderDefaultSectionSize">
            <number>21</number>
           </attribute>
+         </widget>
+        </item>
+        <item>
+         <widget class="ToolsWidget" name="widgetHex_Elf_Ehdr" native="true">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>200</height>
+           </size>
+          </property>
          </widget>
         </item>
        </layout>
@@ -185,7 +192,7 @@
          </widget>
         </item>
         <item>
-         <widget class="ToolsWidget" name="widgetSectionHex" native="true">
+         <widget class="ToolsWidget" name="widgetHex_Elf_Shdr" native="true">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
             <horstretch>0</horstretch>
@@ -233,7 +240,7 @@
          </widget>
         </item>
         <item>
-         <widget class="ToolsWidget" name="widgetProgramHex" native="true">
+         <widget class="ToolsWidget" name="widgetHex_Elf_Phdr" native="true">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
             <horstretch>0</horstretch>
@@ -281,10 +288,10 @@
           <attribute name="verticalHeaderVisible">
            <bool>false</bool>
           </attribute>
-          <attribute name="verticalHeaderDefaultSectionSize">
+          <attribute name="verticalHeaderMinimumSectionSize">
            <number>20</number>
           </attribute>
-          <attribute name="verticalHeaderMinimumSectionSize">
+          <attribute name="verticalHeaderDefaultSectionSize">
            <number>20</number>
           </attribute>
          </widget>

@@ -152,8 +152,6 @@ bool ELFWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, i
                         case N_Elf_Ehdr::ei_pad_4:      elf.setIdent_pad((quint8)nValue,4);                                                                 break;
                         case N_Elf_Ehdr::ei_pad_5:      elf.setIdent_pad((quint8)nValue,5);                                                                 break;
                         case N_Elf_Ehdr::ei_pad_6:      elf.setIdent_pad((quint8)nValue,6);                                                                 break;
-                        case N_Elf_Ehdr::ei_pad_7:      elf.setIdent_pad((quint8)nValue,7);                                                                 break;
-                        case N_Elf_Ehdr::ei_pad_8:      elf.setIdent_pad((quint8)nValue,8);                                                                 break;
                         case N_Elf_Ehdr::e_type:        (elf.is64()?(elf.setHdr64_type((quint16)nValue)):(elf.setHdr32_type((quint16)nValue)));             break;
                         case N_Elf_Ehdr::e_machine:     (elf.is64()?(elf.setHdr64_machine((quint16)nValue)):(elf.setHdr32_machine((quint16)nValue)));       break;
                         case N_Elf_Ehdr::e_version:     (elf.is64()?(elf.setHdr64_version((quint32)nValue)):(elf.setHdr32_version((quint32)nValue)));       break;
@@ -268,8 +266,6 @@ void ELFWidget::reloadData()
             lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_4]->setValue(elf.getIdent_pad(4));
             lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_5]->setValue(elf.getIdent_pad(5));
             lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_6]->setValue(elf.getIdent_pad(6));
-            lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_7]->setValue(elf.getIdent_pad(7));
-            lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_8]->setValue(elf.getIdent_pad(8)); // TODO Check!
 
             if(elf.is64())
             {
@@ -318,6 +314,20 @@ void ELFWidget::reloadData()
             comboBox[CB_Elf_Ehdr_idata]->setValue(elf.getIdent_data());
             comboBox[CB_Elf_Ehdr_iversion]->setValue(elf.getIdent_version());
             comboBox[CB_Elf_Ehdr_iosabi]->setValue(elf.getIdent_osabi());
+
+            qint64 nOffset=elf.getEhdrOffset();
+            qint64 nSize=0;
+
+            if(elf.is64())
+            {
+                nSize=elf.getEhdr64Size();
+            }
+            else
+            {
+                nSize=elf.getEhdr32Size();
+            }
+
+            loadHexSubdevice(nOffset,nSize,nOffset,&subDevice[SELF::TYPE_Elf_Ehdr],ui->widgetHex_Elf_Ehdr);
 
             blockSignals(false);
         }
@@ -730,7 +740,7 @@ void ELFWidget::loadShdr(int nNumber)
     qint64 nSize=ui->tableWidget_Elf_Shdr->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
     qint64 nAddress=ui->tableWidget_Elf_Shdr->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
 
-    loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SD_SECTION],ui->widgetSectionHex);
+    loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SD_SECTION],ui->widgetHex_Elf_Shdr);
 }
 
 void ELFWidget::loadPhdr(int nNumber)
@@ -739,5 +749,15 @@ void ELFWidget::loadPhdr(int nNumber)
     qint64 nSize=ui->tableWidget_Elf_Phdr->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
     qint64 nAddress=ui->tableWidget_Elf_Phdr->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
 
-    loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SD_PROGRAM],ui->widgetProgramHex);
+    loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SD_PROGRAM],ui->widgetHex_Elf_Phdr);
+}
+
+void ELFWidget::on_tableWidget_Elf_Ehdr_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
+{
+    Q_UNUSED(currentRow);
+    Q_UNUSED(currentColumn);
+    Q_UNUSED(previousRow);
+    Q_UNUSED(previousColumn);
+
+    setHeaderTableSelection(ui->widgetHex_Elf_Ehdr,ui->tableWidget_Elf_Ehdr);
 }

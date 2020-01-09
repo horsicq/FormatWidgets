@@ -57,8 +57,6 @@ enum DATA
     ei_pad_4,
     ei_pad_5,
     ei_pad_6,
-    ei_pad_7,
-    ei_pad_8,
     e_type,
     e_machine,
     e_version,

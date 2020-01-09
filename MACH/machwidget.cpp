@@ -132,42 +132,27 @@ bool MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, 
                 case SMACH::TYPE_mach_header:
                     switch(nNdata)
                     {
-                        case N_mach_header::magic:
-                            // TODO reload all data
-                            comboBox[CB_mach_header_magic]->setValue(nValue);
-                            mach.setHeader_magic((quint32)nValue);
-                            break;
+                        case N_mach_header::magic:      comboBox[CB_mach_header_magic]->setValue(nValue);       break; // TODO reload all data
+                        case N_mach_header::cputype:    comboBox[CB_mach_header_cputype]->setValue(nValue);     break;
+                        case N_mach_header::filetype:   comboBox[CB_mach_header_filetype]->setValue(nValue);    break;
+                        case N_mach_header::flags:      comboBox[CB_mach_header_flags]->setValue(nValue);       break;
+                    }
+                    break;
+            }
 
-                        case N_mach_header::cputype:
-                            comboBox[CB_mach_header_cputype]->setValue(nValue);
-                            mach.setHeader_cputype((qint32)nValue);
-                            break;
-
-                        case N_mach_header::cpusubtype:
-                            mach.setHeader_cpusubtype((qint32)nValue);
-                            break;
-
-                        case N_mach_header::filetype:
-                            comboBox[CB_mach_header_filetype]->setValue(nValue);
-                            mach.setHeader_filetype((quint32)nValue);
-                            break;
-
-                        case N_mach_header::ncmds:
-                            mach.setHeader_ncmds((quint32)nValue);
-                            break;
-
-                        case N_mach_header::sizeofcmds:
-                            mach.setHeader_sizeofcmds((quint32)nValue);
-                            break;
-
-                        case N_mach_header::flags:
-                            comboBox[CB_mach_header_flags]->setValue(nValue);
-                            mach.setHeader_flags((quint32)nValue);
-                            break;
-
-                        case N_mach_header::reserved:
-                            mach.setHeader_reserved((quint32)nValue);
-                            break;
+            switch(nStype)
+            {
+                case SMACH::TYPE_mach_header:
+                    switch(nNdata)
+                    {
+                        case N_mach_header::magic:      mach.setHeader_magic((quint32)nValue);          break;
+                        case N_mach_header::cputype:    mach.setHeader_cputype((qint32)nValue);         break;
+                        case N_mach_header::cpusubtype: mach.setHeader_cpusubtype((qint32)nValue);      break;
+                        case N_mach_header::filetype:   mach.setHeader_filetype((quint32)nValue);       break;
+                        case N_mach_header::ncmds:      mach.setHeader_ncmds((quint32)nValue);          break;
+                        case N_mach_header::sizeofcmds: mach.setHeader_sizeofcmds((quint32)nValue);     break;
+                        case N_mach_header::flags:      mach.setHeader_flags((quint32)nValue);          break;
+                        case N_mach_header::reserved:   mach.setHeader_reserved((quint32)nValue);       break;
                     }
 
                     break;
@@ -202,13 +187,15 @@ void MACHWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
 {
     int nSymbolWidth=getSymbolWidth();
 
+    pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_NAME,QHeaderView::ResizeToContents);
+    pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_OFFSET,QHeaderView::ResizeToContents);
+    pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_TYPE,QHeaderView::ResizeToContents);
+
     switch(type)
     {
         case SMACH::TYPE_mach_header:
-            pTableWidget->setColumnWidth(0,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(1,nSymbolWidth*10);
-            pTableWidget->setColumnWidth(2,nSymbolWidth*10);
-            pTableWidget->setColumnWidth(3,nSymbolWidth*26);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*12);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*26);
             break;
     }
 }
@@ -502,21 +489,10 @@ void MACHWidget::widgetValueChanged(quint64 nValue)
         case SMACH::TYPE_mach_header:
             switch(nNdata)
             {
-                case N_mach_header::magic:
-                    lineEdit_mach_header[N_mach_header::magic]->setValue((quint32)nValue);
-                    break;
-
-                case N_mach_header::cputype:
-                    lineEdit_mach_header[N_mach_header::cputype]->setValue((quint32)nValue);
-                    break;
-
-                case N_mach_header::filetype:
-                    lineEdit_mach_header[N_mach_header::filetype]->setValue((quint32)nValue);
-                    break;
-
-                case N_mach_header::flags:
-                    lineEdit_mach_header[N_mach_header::flags]->setValue((quint32)nValue);
-                    break;
+                case N_mach_header::magic:      lineEdit_mach_header[N_mach_header::magic]->setValue((quint32)nValue);      break;
+                case N_mach_header::cputype:    lineEdit_mach_header[N_mach_header::cputype]->setValue((quint32)nValue);    break;
+                case N_mach_header::filetype:   lineEdit_mach_header[N_mach_header::filetype]->setValue((quint32)nValue);   break;
+                case N_mach_header::flags:      lineEdit_mach_header[N_mach_header::flags]->setValue((quint32)nValue);      break;
             }
 
             break;

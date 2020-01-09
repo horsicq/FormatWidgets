@@ -234,8 +234,6 @@ bool FormatWidget::createHeaderTable(int type, QTableWidget *pTableWidget, const
     pTableWidget->setColumnCount(5);
     pTableWidget->setRowCount(nRecordCount);
 
-    adjustHeaderTable(type,pTableWidget);
-
     QStringList slHeader;
     slHeader.append(tr("Name"));
     slHeader.append(tr("Offset"));
@@ -283,6 +281,8 @@ bool FormatWidget::createHeaderTable(int type, QTableWidget *pTableWidget, const
             ppLineEdits[i]->setEnabled(false);
         }
     }
+
+    adjustHeaderTable(type,pTableWidget);
 
     return true;
 }

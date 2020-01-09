@@ -60,6 +60,8 @@ private slots:
     void loadShdr(int nNumber);
     void loadPhdr(int nNumber);
 
+    void on_tableWidget_Elf_Ehdr_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
+
 private:
     // TODO rename
     enum CB
