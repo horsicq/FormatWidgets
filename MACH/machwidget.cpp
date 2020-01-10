@@ -260,6 +260,11 @@ void MACHWidget::reloadData()
             comboBox[CB_mach_header_filetype]->setValue((quint32)mach.getHeader_filetype());
             comboBox[CB_mach_header_flags]->setValue((quint32)mach.getHeader_flags());
 
+            qint64 nOffset=mach.getHeaderOffset();
+            qint64 nSize=mach.getHeaderSize();
+
+            loadHexSubdevice(nOffset,nSize,nOffset,&subDevice[SMACH::TYPE_mach_header],ui->widgetHex_mach_header);
+
             blockSignals(false);
         }
         else if(nData==SMACH::TYPE_mach_commands)
@@ -642,7 +647,7 @@ void MACHWidget::loadCommand(int nNumber)
     qint64 nSize=ui->tableWidget_commands->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
     qint64 nAddress=ui->tableWidget_commands->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
 
-    loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SD_COMMAND],ui->widgetCommandHex);
+    loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SMACH::TYPE_mach_commands],ui->widgetHex_commands);
 }
 
 void MACHWidget::loadSegment(int nNumber)
@@ -651,7 +656,7 @@ void MACHWidget::loadSegment(int nNumber)
     qint64 nSize=ui->tableWidget_segments->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
     qint64 nAddress=ui->tableWidget_segments->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
 
-    loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SD_SEGMENT],ui->widgetSegmentHex);
+    loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SMACH::TYPE_mach_segments],ui->widgetHex_segments);
 }
 
 void MACHWidget::loadSection(int nNumber)
@@ -660,5 +665,15 @@ void MACHWidget::loadSection(int nNumber)
     qint64 nSize=ui->tableWidget_sections->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
     qint64 nAddress=ui->tableWidget_sections->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
 
-    loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SD_SECTION],ui->widgetSectionHex);
+    loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SMACH::TYPE_mach_sections],ui->widgetHex_sections);
+}
+
+void MACHWidget::on_tableWidget_mach_header_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
+{
+    Q_UNUSED(currentRow);
+    Q_UNUSED(currentColumn);
+    Q_UNUSED(previousRow);
+    Q_UNUSED(previousColumn);
+
+    setHeaderTableSelection(ui->widgetHex_mach_header,ui->tableWidget_mach_header);
 }

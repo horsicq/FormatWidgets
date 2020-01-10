@@ -81,13 +81,6 @@ private:
         __INV_size
     };
 
-    enum SD
-    {
-        SD_SECTION=0,
-        SD_PROGRAM,
-        __SD_size
-    };
-
     Ui::ELFWidget *ui;
 
     XLineEditHEX *lineEdit_Elf_Ehdr[N_Elf_Ehdr::__data_size];

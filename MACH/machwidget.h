@@ -60,6 +60,8 @@ private slots:
     void loadSegment(int nNumber);
     void loadSection(int nNumber);
 
+    void on_tableWidget_mach_header_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
+
 private:
     enum CB
     {
@@ -70,20 +72,12 @@ private:
         __CB_size
     };
 
-    enum SD
-    {
-        SD_SECTION=0,
-        SD_SEGMENT,
-        SD_COMMAND,
-        __SD_size
-    };
-
     Ui::MACHWidget *ui;
 
     XLineEditHEX *lineEdit_mach_header[N_mach_header::__data_size];
     XComboBoxEx *comboBox[__CB_size];
 
-    SubDevice *subDevice[__SD_size];
+    SubDevice *subDevice[SMACH::__TYPE_size];
 
     bool bInit[SMACH::__TYPE_size];
 };
