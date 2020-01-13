@@ -61,6 +61,7 @@ private:
     {
         CB_DOS_HEADER_e_magic=0,
         CB_OS2_HEADER_ne_magic,
+        CB_OS2_HEADER_ne_flags,
         __CB_size
     };
 
