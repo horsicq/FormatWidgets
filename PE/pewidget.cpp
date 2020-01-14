@@ -186,51 +186,26 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                 case SPE::TYPE_IMAGE_DOS_HEADER:
                     switch(nNdata)
                     {
-                        case N_IMAGE_DOS_HEADER::e_magic:
-                            comboBox[CB_IMAGE_DOS_HEADER_e_magic]->setValue(nValue);
-                            pe.set_e_magic((quint16)nValue);
-                            break;
+                        case N_IMAGE_DOS_HEADER::e_magic:   comboBox[CB_IMAGE_DOS_HEADER_e_magic]->setValue(nValue);    break;
+                    }
+            }
 
-                        case N_IMAGE_DOS_HEADER::e_cblp:
-                            pe.set_e_cblp((quint16)nValue);
-                            break;
-
-                        case N_IMAGE_DOS_HEADER::e_cp:
-                            pe.set_e_cp((quint16)nValue);
-                            break;
-
-                        case N_IMAGE_DOS_HEADER::e_crlc:
-                            pe.set_e_crlc((quint16)nValue);
-                            break;
-
-                        case N_IMAGE_DOS_HEADER::e_cparhdr:
-                            pe.set_e_cparhdr((quint16)nValue);
-                            break;
-
-                        case N_IMAGE_DOS_HEADER::e_minalloc:
-                            pe.set_e_minalloc((quint16)nValue);
-                            break;
-
-                        case N_IMAGE_DOS_HEADER::e_maxalloc:
-                            pe.set_e_maxalloc((quint16)nValue);
-                            break;
-
-                        case N_IMAGE_DOS_HEADER::e_ss:
-                            pe.set_e_ss((quint16)nValue);
-                            break;
-
-                        case N_IMAGE_DOS_HEADER::e_sp:
-                            pe.set_e_sp((quint16)nValue);
-                            break;
-
-                        case N_IMAGE_DOS_HEADER::e_csum:
-                            pe.set_e_csum((quint16)nValue);
-                            break;
-
-                        case N_IMAGE_DOS_HEADER::e_ip:
-                            pe.set_e_ip((quint16)nValue);
-                            break;
-
+            switch(nStype)
+            {
+                case SPE::TYPE_IMAGE_DOS_HEADER:
+                    switch(nNdata)
+                    {
+                        case N_IMAGE_DOS_HEADER::e_magic:               pe.set_e_magic((quint16)nValue);            break;
+                        case N_IMAGE_DOS_HEADER::e_cblp:                pe.set_e_cblp((quint16)nValue);             break;
+                        case N_IMAGE_DOS_HEADER::e_cp:                  pe.set_e_cp((quint16)nValue);               break;
+                        case N_IMAGE_DOS_HEADER::e_crlc:                pe.set_e_crlc((quint16)nValue);             break;
+                        case N_IMAGE_DOS_HEADER::e_cparhdr:             pe.set_e_cparhdr((quint16)nValue);          break;
+                        case N_IMAGE_DOS_HEADER::e_minalloc:            pe.set_e_minalloc((quint16)nValue);         break;
+                        case N_IMAGE_DOS_HEADER::e_maxalloc:            pe.set_e_maxalloc((quint16)nValue);         break;
+                        case N_IMAGE_DOS_HEADER::e_ss:                  pe.set_e_ss((quint16)nValue);               break;
+                        case N_IMAGE_DOS_HEADER::e_sp:                  pe.set_e_sp((quint16)nValue);               break;
+                        case N_IMAGE_DOS_HEADER::e_csum:                pe.set_e_csum((quint16)nValue);             break;
+                        case N_IMAGE_DOS_HEADER::e_ip:                  pe.set_e_ip((quint16)nValue);               break;
                         case N_IMAGE_DOS_HEADER::e_cs:
                             pe.set_e_cs((quint16)nValue);
                             break;

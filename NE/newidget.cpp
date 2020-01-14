@@ -116,6 +116,7 @@ bool NEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, in
                     {
                         case N_OS2_HEADER::ne_magic:    comboBox[CB_OS2_HEADER_ne_magic]->setValue(nValue);     break;
                         case N_OS2_HEADER::ne_flags:    comboBox[CB_OS2_HEADER_ne_flags]->setValue(nValue);     break;
+                        case N_OS2_HEADER::ne_exetyp:   comboBox[CB_OS2_HEADER_ne_exetype]->setValue(nValue);   break;
                     }
                     break;
             }
@@ -247,7 +248,7 @@ void NEWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
             break;
 
         case SNE::TYPE_OS2_HEADER:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*22);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*27);
             break;
     }
 }
@@ -333,6 +334,7 @@ void NEWidget::reloadData()
                 bInit[nData]=createHeaderTable(SNE::TYPE_OS2_HEADER,ui->tableWidget_OS2_HEADER,N_OS2_HEADER::records,lineEdit_OS2_HEADER,N_OS2_HEADER::__data_size,0);
                 comboBox[CB_OS2_HEADER_ne_magic]=createComboBox(ui->tableWidget_OS2_HEADER,XNE::getImageNEMagicsS(),SNE::TYPE_OS2_HEADER,N_OS2_HEADER::ne_magic,XComboBoxEx::CBTYPE_NORMAL);
                 comboBox[CB_OS2_HEADER_ne_flags]=createComboBox(ui->tableWidget_OS2_HEADER,XNE::getImageNEFlagsS(),SNE::TYPE_OS2_HEADER,N_OS2_HEADER::ne_flags,XComboBoxEx::CBTYPE_FLAGS);
+                comboBox[CB_OS2_HEADER_ne_exetype]=createComboBox(ui->tableWidget_OS2_HEADER,XNE::getImageNEExeTypesS(),SNE::TYPE_OS2_HEADER,N_OS2_HEADER::ne_exetyp,XComboBoxEx::CBTYPE_NORMAL);
             }
 
             blockSignals(true);
@@ -372,6 +374,8 @@ void NEWidget::reloadData()
 
             comboBox[CB_OS2_HEADER_ne_magic]->setValue(os2header.ne_magic);
             comboBox[CB_OS2_HEADER_ne_flags]->setValue(os2header.ne_flags);
+            comboBox[CB_OS2_HEADER_ne_exetype]->setValue(os2header.ne_exetyp);
+
 
             qint64 nOffset=ne.getImageOS2HeaderOffset();
             qint64 nSize=ne.getImageOS2HeaderSize();
@@ -411,6 +415,8 @@ void NEWidget::widgetValueChanged(quint64 nValue)
         switch(nNdata)
         {
             case N_OS2_HEADER::ne_magic:    lineEdit_OS2_HEADER[N_OS2_HEADER::ne_magic]->setValue((quint16)nValue);     break;
+            case N_OS2_HEADER::ne_flags:    lineEdit_OS2_HEADER[N_OS2_HEADER::ne_flags]->setValue((quint16)nValue);     break;
+            case N_OS2_HEADER::ne_exetyp:   lineEdit_OS2_HEADER[N_OS2_HEADER::ne_exetyp]->setValue((quint16)nValue);    break;
         }
 
         break;
