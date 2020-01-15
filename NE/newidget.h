@@ -63,6 +63,7 @@ private:
         CB_OS2_HEADER_ne_magic,
         CB_OS2_HEADER_ne_flags,
         CB_OS2_HEADER_ne_exetype,
+        CB_OS2_HEADER_ne_flagsothers,
         __CB_size
     };
 

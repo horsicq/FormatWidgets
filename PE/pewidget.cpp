@@ -186,7 +186,8 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                 case SPE::TYPE_IMAGE_DOS_HEADER:
                     switch(nNdata)
                     {
-                        case N_IMAGE_DOS_HEADER::e_magic:   comboBox[CB_IMAGE_DOS_HEADER_e_magic]->setValue(nValue);    break;
+                        case N_IMAGE_DOS_HEADER::e_magic:   comboBox[CB_IMAGE_DOS_HEADER_e_magic]->setValue(nValue);                            break;
+                        case N_IMAGE_DOS_HEADER::e_lfanew:  invWidget[INV_IMAGE_DOS_HEADER_e_lfanew]->setOffsetAndSize(&pe,(quint32)nValue,0);  break;
                     }
             }
 
@@ -206,49 +207,17 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                         case N_IMAGE_DOS_HEADER::e_sp:                  pe.set_e_sp((quint16)nValue);               break;
                         case N_IMAGE_DOS_HEADER::e_csum:                pe.set_e_csum((quint16)nValue);             break;
                         case N_IMAGE_DOS_HEADER::e_ip:                  pe.set_e_ip((quint16)nValue);               break;
-                        case N_IMAGE_DOS_HEADER::e_cs:
-                            pe.set_e_cs((quint16)nValue);
-                            break;
-
-                        case N_IMAGE_DOS_HEADER::e_lfarlc:
-                            pe.set_e_lfarlc((quint16)nValue);
-                            break;
-
-                        case N_IMAGE_DOS_HEADER::e_ovno:
-                            pe.set_e_ovno((quint16)nValue);
-                            break;
-
-                        case N_IMAGE_DOS_HEADER::e_res_0:
-                            pe.set_e_res(0,(quint16)nValue);
-                            break;
-
-                        case N_IMAGE_DOS_HEADER::e_res_1:
-                            pe.set_e_res(1,(quint16)nValue);
-                            break;
-
-                        case N_IMAGE_DOS_HEADER::e_res_2:
-                            pe.set_e_res(2,(quint16)nValue);
-                            break;
-
-                        case N_IMAGE_DOS_HEADER::e_res_3:
-                            pe.set_e_res(3,(quint16)nValue);
-                            break;
-
-                        case N_IMAGE_DOS_HEADER::e_oemid:
-                            pe.set_e_oemid((quint16)nValue);
-                            break;
-
-                        case N_IMAGE_DOS_HEADER::e_oeminfo:
-                            pe.set_e_oeminfo((quint16)nValue);
-                            break;
-
-                        case N_IMAGE_DOS_HEADER::e_res2_0:
-                            pe.set_e_res2(0,(quint16)nValue);
-                            break;
-
-                        case N_IMAGE_DOS_HEADER::e_res2_1:
-                            pe.set_e_res2(1,(quint16)nValue);
-                            break;
+                        case N_IMAGE_DOS_HEADER::e_cs:                  pe.set_e_cs((quint16)nValue);               break;
+                        case N_IMAGE_DOS_HEADER::e_lfarlc:              pe.set_e_lfarlc((quint16)nValue);           break;
+                        case N_IMAGE_DOS_HEADER::e_ovno:                pe.set_e_ovno((quint16)nValue);             break;
+                        case N_IMAGE_DOS_HEADER::e_res_0:               pe.set_e_res(0,(quint16)nValue);            break;
+                        case N_IMAGE_DOS_HEADER::e_res_1:               pe.set_e_res(1,(quint16)nValue);            break;
+                        case N_IMAGE_DOS_HEADER::e_res_2:               pe.set_e_res(2,(quint16)nValue);            break;
+                        case N_IMAGE_DOS_HEADER::e_res_3:               pe.set_e_res(3,(quint16)nValue);            break;
+                        case N_IMAGE_DOS_HEADER::e_oemid:               pe.set_e_oemid((quint16)nValue);            break;
+                        case N_IMAGE_DOS_HEADER::e_oeminfo:             pe.set_e_oeminfo((quint16)nValue);          break;
+                        case N_IMAGE_DOS_HEADER::e_res2_0:              pe.set_e_res2(0,(quint16)nValue);           break;
+                        case N_IMAGE_DOS_HEADER::e_res2_1:              pe.set_e_res2(1,(quint16)nValue);           break;
 
                         case N_IMAGE_DOS_HEADER::e_res2_2:
                             pe.set_e_res2(2,(quint16)nValue);
@@ -283,7 +252,6 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                             break;
 
                         case N_IMAGE_DOS_HEADER::e_lfanew:
-                            invWidget[INV_IMAGE_DOS_HEADER_e_lfanew]->setOffsetAndSize(&pe,(quint32)nValue,0);
                             pe.set_e_lfanew((quint32)nValue);
                             break;
                     }

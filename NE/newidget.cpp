@@ -108,15 +108,16 @@ bool NEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, in
                 case SNE::TYPE_DOS_HEADER:
                     switch(nNdata)
                     {
-                        case N_DOS_HEADER::e_magic:     comboBox[CB_DOS_HEADER_e_magic]->setValue(nValue);      break;
+                        case N_DOS_HEADER::e_magic:         comboBox[CB_DOS_HEADER_e_magic]->setValue(nValue);          break;
                     }
                     break;
                 case SNE::TYPE_OS2_HEADER:
                     switch(nNdata)
                     {
-                        case N_OS2_HEADER::ne_magic:    comboBox[CB_OS2_HEADER_ne_magic]->setValue(nValue);     break;
-                        case N_OS2_HEADER::ne_flags:    comboBox[CB_OS2_HEADER_ne_flags]->setValue(nValue);     break;
-                        case N_OS2_HEADER::ne_exetyp:   comboBox[CB_OS2_HEADER_ne_exetype]->setValue(nValue);   break;
+                        case N_OS2_HEADER::ne_magic:        comboBox[CB_OS2_HEADER_ne_magic]->setValue(nValue);         break;
+                        case N_OS2_HEADER::ne_flags:        comboBox[CB_OS2_HEADER_ne_flags]->setValue(nValue);         break;
+                        case N_OS2_HEADER::ne_exetyp:       comboBox[CB_OS2_HEADER_ne_exetype]->setValue(nValue);       break;
+                        case N_OS2_HEADER::ne_flagsothers:  comboBox[CB_OS2_HEADER_ne_flagsothers]->setValue(nValue);   break;
                     }
                     break;
             }
@@ -334,7 +335,8 @@ void NEWidget::reloadData()
                 bInit[nData]=createHeaderTable(SNE::TYPE_OS2_HEADER,ui->tableWidget_OS2_HEADER,N_OS2_HEADER::records,lineEdit_OS2_HEADER,N_OS2_HEADER::__data_size,0);
                 comboBox[CB_OS2_HEADER_ne_magic]=createComboBox(ui->tableWidget_OS2_HEADER,XNE::getImageNEMagicsS(),SNE::TYPE_OS2_HEADER,N_OS2_HEADER::ne_magic,XComboBoxEx::CBTYPE_NORMAL);
                 comboBox[CB_OS2_HEADER_ne_flags]=createComboBox(ui->tableWidget_OS2_HEADER,XNE::getImageNEFlagsS(),SNE::TYPE_OS2_HEADER,N_OS2_HEADER::ne_flags,XComboBoxEx::CBTYPE_FLAGS);
-                comboBox[CB_OS2_HEADER_ne_exetype]=createComboBox(ui->tableWidget_OS2_HEADER,XNE::getImageNEExeTypesS(),SNE::TYPE_OS2_HEADER,N_OS2_HEADER::ne_exetyp,XComboBoxEx::CBTYPE_NORMAL);
+                comboBox[CB_OS2_HEADER_ne_exetype]=createComboBox(ui->tableWidget_OS2_HEADER,XNE::getImageNEExetypesS(),SNE::TYPE_OS2_HEADER,N_OS2_HEADER::ne_exetyp,XComboBoxEx::CBTYPE_NORMAL);
+                comboBox[CB_OS2_HEADER_ne_flagsothers]=createComboBox(ui->tableWidget_OS2_HEADER,XNE::getImageNEFlagsothersS(),SNE::TYPE_OS2_HEADER,N_OS2_HEADER::ne_flagsothers,XComboBoxEx::CBTYPE_FLAGS);
             }
 
             blockSignals(true);
@@ -375,7 +377,7 @@ void NEWidget::reloadData()
             comboBox[CB_OS2_HEADER_ne_magic]->setValue(os2header.ne_magic);
             comboBox[CB_OS2_HEADER_ne_flags]->setValue(os2header.ne_flags);
             comboBox[CB_OS2_HEADER_ne_exetype]->setValue(os2header.ne_exetyp);
-
+            comboBox[CB_OS2_HEADER_ne_flagsothers]->setValue(os2header.ne_flagsothers);
 
             qint64 nOffset=ne.getImageOS2HeaderOffset();
             qint64 nSize=ne.getImageOS2HeaderSize();
