@@ -186,9 +186,17 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                 case SPE::TYPE_IMAGE_DOS_HEADER:
                     switch(nNdata)
                     {
-                        case N_IMAGE_DOS_HEADER::e_magic:   comboBox[CB_IMAGE_DOS_HEADER_e_magic]->setValue(nValue);                            break;
-                        case N_IMAGE_DOS_HEADER::e_lfanew:  invWidget[INV_IMAGE_DOS_HEADER_e_lfanew]->setOffsetAndSize(&pe,(quint32)nValue,0);  break;
+                        case N_IMAGE_DOS_HEADER::e_magic:       comboBox[CB_IMAGE_DOS_HEADER_e_magic]->setValue(nValue);                            break;
+                        case N_IMAGE_DOS_HEADER::e_lfanew:      invWidget[INV_IMAGE_DOS_HEADER_e_lfanew]->setOffsetAndSize(&pe,(quint32)nValue,0);  break;
                     }
+                    break;
+
+                case SPE::TYPE_IMAGE_NT_HEADERS:
+                    switch(nNdata)
+                    {
+                        case N_IMAGE_NT_HEADERS::Signature:     comboBox[CB_IMAGE_NT_HEADERS_Signature]->setValue(nValue);                          break;
+                    }
+                    break;
             }
 
             switch(nStype)
@@ -218,51 +226,22 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                         case N_IMAGE_DOS_HEADER::e_oeminfo:             pe.set_e_oeminfo((quint16)nValue);          break;
                         case N_IMAGE_DOS_HEADER::e_res2_0:              pe.set_e_res2(0,(quint16)nValue);           break;
                         case N_IMAGE_DOS_HEADER::e_res2_1:              pe.set_e_res2(1,(quint16)nValue);           break;
-
-                        case N_IMAGE_DOS_HEADER::e_res2_2:
-                            pe.set_e_res2(2,(quint16)nValue);
-                            break;
-
-                        case N_IMAGE_DOS_HEADER::e_res2_3:
-                            pe.set_e_res2(3,(quint16)nValue);
-                            break;
-
-                        case N_IMAGE_DOS_HEADER::e_res2_4:
-                            pe.set_e_res2(4,(quint16)nValue);
-                            break;
-
-                        case N_IMAGE_DOS_HEADER::e_res2_5:
-                            pe.set_e_res2(5,(quint16)nValue);
-                            break;
-
-                        case N_IMAGE_DOS_HEADER::e_res2_6:
-                            pe.set_e_res2(6,(quint16)nValue);
-                            break;
-
-                        case N_IMAGE_DOS_HEADER::e_res2_7:
-                            pe.set_e_res2(7,(quint16)nValue);
-                            break;
-
-                        case N_IMAGE_DOS_HEADER::e_res2_8:
-                            pe.set_e_res2(8,(quint16)nValue);
-                            break;
-
-                        case N_IMAGE_DOS_HEADER::e_res2_9:
-                            pe.set_e_res2(9,(quint16)nValue);
-                            break;
-
-                        case N_IMAGE_DOS_HEADER::e_lfanew:
-                            pe.set_e_lfanew((quint32)nValue);
-                            break;
+                        case N_IMAGE_DOS_HEADER::e_res2_2:              pe.set_e_res2(2,(quint16)nValue);           break;
+                        case N_IMAGE_DOS_HEADER::e_res2_3:              pe.set_e_res2(3,(quint16)nValue);           break;
+                        case N_IMAGE_DOS_HEADER::e_res2_4:              pe.set_e_res2(4,(quint16)nValue);           break;
+                        case N_IMAGE_DOS_HEADER::e_res2_5:              pe.set_e_res2(5,(quint16)nValue);           break;
+                        case N_IMAGE_DOS_HEADER::e_res2_6:              pe.set_e_res2(6,(quint16)nValue);           break;
+                        case N_IMAGE_DOS_HEADER::e_res2_7:              pe.set_e_res2(7,(quint16)nValue);           break;
+                        case N_IMAGE_DOS_HEADER::e_res2_8:              pe.set_e_res2(8,(quint16)nValue);           break;
+                        case N_IMAGE_DOS_HEADER::e_res2_9:              pe.set_e_res2(9,(quint16)nValue);           break;
+                        case N_IMAGE_DOS_HEADER::e_lfanew:              pe.set_e_lfanew((quint32)nValue);           break;
                     }
                     break;
 
                 case SPE::TYPE_IMAGE_NT_HEADERS:
                     switch(nNdata)
                     {
-                        case N_IMAGE_NT_HEADERS::Signature:
-                            pe.setNtHeaders_Signature((quint32)nValue);
-                            break;
+                        case N_IMAGE_NT_HEADERS::Signature:             pe.setNtHeaders_Signature((quint32)nValue);     break;
                     }
                     break;
 
