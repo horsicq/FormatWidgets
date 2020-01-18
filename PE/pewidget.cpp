@@ -196,6 +196,15 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                     {
                         case N_IMAGE_NT_HEADERS::Signature:     comboBox[CB_IMAGE_NT_HEADERS_Signature]->setValue(nValue);                          break;
                     }
+                    break;    
+                case SPE::TYPE_IMAGE_FILE_HEADER:
+                    switch(nNdata)
+                    {
+                        case N_IMAGE_FILE_HEADER::Machine:              comboBox[CB_IMAGE_FILE_HEADER_Machine]->setValue(nValue);                   break;
+                        case N_IMAGE_FILE_HEADER::TimeDateStamp:        dateTimeEdit[TD_IMAGE_FILE_HEADER_TimeDateStamp]->setValue(nValue);         break;
+                        case N_IMAGE_FILE_HEADER::PointerToSymbolTable: invWidget[INV_IMAGE_FILE_HEADER_PointerToSymbolTable]->setAddressAndSize(&pe,pe.getBaseAddress()+(quint32)nValue,0);   break;
+                        case N_IMAGE_FILE_HEADER::Characteristics:      comboBox[CB_IMAGE_FILE_HEADER_Characteristics]->setValue(nValue);           break;
+                    }
                     break;
             }
 
@@ -248,37 +257,13 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                 case SPE::TYPE_IMAGE_FILE_HEADER:
                     switch(nNdata)
                     {
-                        case N_IMAGE_FILE_HEADER::Machine:
-                            comboBox[CB_IMAGE_FILE_HEADER_Machine]->setValue(nValue);
-                            pe.setFileHeader_Machine((quint16)nValue);
-                            break;
-
-                        case N_IMAGE_FILE_HEADER::NumberOfSections:
-                            pe.setFileHeader_NumberOfSections((quint16)nValue);
-                            break;
-
-                        case N_IMAGE_FILE_HEADER::TimeDateStamp:
-                            pe.setFileHeader_TimeDateStamp((quint32)nValue);
-                            dateTimeEdit[TD_IMAGE_FILE_HEADER_TimeDateStamp]->setValue(nValue);
-                            break;
-
-                        case N_IMAGE_FILE_HEADER::PointerToSymbolTable:
-                            invWidget[INV_IMAGE_FILE_HEADER_PointerToSymbolTable]->setAddressAndSize(&pe,pe.getBaseAddress()+(quint32)nValue,0);
-                            pe.setFileHeader_PointerToSymbolTable((quint32)nValue);
-                            break;
-
-                        case N_IMAGE_FILE_HEADER::NumberOfSymbols:
-                            pe.setFileHeader_NumberOfSymbols((quint32)nValue);
-                            break;
-
-                        case N_IMAGE_FILE_HEADER::SizeOfOptionalHeader:
-                            pe.setFileHeader_SizeOfOptionalHeader((quint16)nValue);
-                            break;
-
-                        case N_IMAGE_FILE_HEADER::Characteristics:
-                            comboBox[CB_IMAGE_FILE_HEADER_Characteristics]->setValue(nValue);
-                            pe.setFileHeader_Characteristics((quint16)nValue);
-                            break;
+                        case N_IMAGE_FILE_HEADER::Machine:              pe.setFileHeader_Machine((quint16)nValue);              break;
+                        case N_IMAGE_FILE_HEADER::NumberOfSections:     pe.setFileHeader_NumberOfSections((quint16)nValue);     break;
+                        case N_IMAGE_FILE_HEADER::TimeDateStamp:        pe.setFileHeader_TimeDateStamp((quint32)nValue);        break;
+                        case N_IMAGE_FILE_HEADER::PointerToSymbolTable: pe.setFileHeader_PointerToSymbolTable((quint32)nValue); break;
+                        case N_IMAGE_FILE_HEADER::NumberOfSymbols:      pe.setFileHeader_NumberOfSymbols((quint32)nValue);      break;
+                        case N_IMAGE_FILE_HEADER::SizeOfOptionalHeader: pe.setFileHeader_SizeOfOptionalHeader((quint16)nValue); break;
+                        case N_IMAGE_FILE_HEADER::Characteristics:      pe.setFileHeader_Characteristics((quint16)nValue);      break;
                     }
                     break;
 
@@ -513,56 +498,19 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                 case SPE::TYPE_RESOURCE_VERSION:
                     switch(nNdata)
                     {
-                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwSignature:
-                            pe.setFixedFileInfo_dwSignature((quint32)nValue);
-                            break;
-
-                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwStrucVersion:
-                            pe.setFixedFileInfo_dwStrucVersion((quint32)nValue);
-                            break;
-
-                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileVersionMS:
-                            pe.setFixedFileInfo_dwFileVersionMS((quint32)nValue);
-                            break;
-
-                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileVersionLS:
-                            pe.setFixedFileInfo_dwFileVersionLS((quint32)nValue);
-                            break;
-
-                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwProductVersionMS:
-                            pe.setFixedFileInfo_dwProductVersionMS((quint32)nValue);
-                            break;
-
-                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwProductVersionLS:
-                            pe.setFixedFileInfo_dwProductVersionLS((quint32)nValue);
-                            break;
-
-                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileFlagsMask:
-                            pe.setFixedFileInfo_dwFileFlagsMask((quint32)nValue);
-                            break;
-
-                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileFlags:
-                            pe.setFixedFileInfo_dwFileFlags((quint32)nValue);
-                            break;
-                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileOS:
-                            pe.setFixedFileInfo_dwFileOS((quint32)nValue);
-                            break;
-
-                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileType:
-                            pe.setFixedFileInfo_dwFileType((quint32)nValue);
-                            break;
-
-                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileSubtype:
-                            pe.setFixedFileInfo_dwFileSubtype((quint32)nValue);
-                            break;
-
-                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileDateMS:
-                            pe.setFixedFileInfo_dwFileDateMS((quint32)nValue);
-                            break;
-
-                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileDateLS:
-                            pe.setFixedFileInfo_dwFileDateLS((quint32)nValue);
-                            break;
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwSignature:           pe.setFixedFileInfo_dwSignature((quint32)nValue);               break;
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwStrucVersion:        pe.setFixedFileInfo_dwStrucVersion((quint32)nValue);            break;
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileVersionMS:       pe.setFixedFileInfo_dwFileVersionMS((quint32)nValue);           break;
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileVersionLS:       pe.setFixedFileInfo_dwFileVersionLS((quint32)nValue);           break;
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwProductVersionMS:    pe.setFixedFileInfo_dwProductVersionMS((quint32)nValue);        break;
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwProductVersionLS:    pe.setFixedFileInfo_dwProductVersionLS((quint32)nValue);        break;
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileFlagsMask:       pe.setFixedFileInfo_dwFileFlagsMask((quint32)nValue);           break;
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileFlags:           pe.setFixedFileInfo_dwFileFlags((quint32)nValue);               break;
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileOS:              pe.setFixedFileInfo_dwFileOS((quint32)nValue);                  break;
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileType:            pe.setFixedFileInfo_dwFileType((quint32)nValue);                break;
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileSubtype:         pe.setFixedFileInfo_dwFileSubtype((quint32)nValue);             break;
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileDateMS:          pe.setFixedFileInfo_dwFileDateMS((quint32)nValue);              break;
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileDateLS:          pe.setFixedFileInfo_dwFileDateLS((quint32)nValue);              break;
                     }
                     break;
                 case SPE::TYPE_NETHEADER:
