@@ -416,9 +416,10 @@ void NEWidget::widgetValueChanged(quint64 nValue)
     case SNE::TYPE_OS2_HEADER:
         switch(nNdata)
         {
-            case N_OS2_HEADER::ne_magic:    lineEdit_OS2_HEADER[N_OS2_HEADER::ne_magic]->setValue((quint16)nValue);     break;
-            case N_OS2_HEADER::ne_flags:    lineEdit_OS2_HEADER[N_OS2_HEADER::ne_flags]->setValue((quint16)nValue);     break;
-            case N_OS2_HEADER::ne_exetyp:   lineEdit_OS2_HEADER[N_OS2_HEADER::ne_exetyp]->setValue((quint16)nValue);    break;
+            case N_OS2_HEADER::ne_magic:        lineEdit_OS2_HEADER[N_OS2_HEADER::ne_magic]->setValue((quint16)nValue);         break;
+            case N_OS2_HEADER::ne_flags:        lineEdit_OS2_HEADER[N_OS2_HEADER::ne_flags]->setValue((quint16)nValue);         break;
+            case N_OS2_HEADER::ne_exetyp:       lineEdit_OS2_HEADER[N_OS2_HEADER::ne_exetyp]->setValue((quint16)nValue);        break;
+            case N_OS2_HEADER::ne_flagsothers:  lineEdit_OS2_HEADER[N_OS2_HEADER::ne_flagsothers]->setValue((quint16)nValue);   break;
         }
 
         break;
