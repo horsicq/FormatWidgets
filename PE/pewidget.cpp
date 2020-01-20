@@ -190,7 +190,6 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                         case N_IMAGE_DOS_HEADER::e_lfanew:      invWidget[INV_IMAGE_DOS_HEADER_e_lfanew]->setOffsetAndSize(&pe,(quint32)nValue,0);  break;
                     }
                     break;
-
                 case SPE::TYPE_IMAGE_NT_HEADERS:
                     switch(nNdata)
                     {
@@ -204,6 +203,12 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                         case N_IMAGE_FILE_HEADER::TimeDateStamp:        dateTimeEdit[TD_IMAGE_FILE_HEADER_TimeDateStamp]->setValue(nValue);         break;
                         case N_IMAGE_FILE_HEADER::PointerToSymbolTable: invWidget[INV_IMAGE_FILE_HEADER_PointerToSymbolTable]->setAddressAndSize(&pe,pe.getBaseAddress()+(quint32)nValue,0);   break;
                         case N_IMAGE_FILE_HEADER::Characteristics:      comboBox[CB_IMAGE_FILE_HEADER_Characteristics]->setValue(nValue);           break;
+                    }
+                    break;
+                case SPE::TYPE_IMAGE_OPTIONAL_HEADER:
+                    switch(nNdata)
+                    {
+                        case N_IMAGE_OPTIONAL_HEADER::Magic:            pe.setOptionalHeader_Magic((quint16)nValue);                                break;
                     }
                     break;
             }
@@ -270,30 +275,12 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                 case SPE::TYPE_IMAGE_OPTIONAL_HEADER:
                     switch(nNdata)
                     {
-                        case N_IMAGE_OPTIONAL_HEADER::Magic:
-                            comboBox[CB_IMAGE_OPTIONAL_HEADER_Magic]->setValue(nValue);
-                            pe.setOptionalHeader_Magic((quint16)nValue);
-                            break;
-
-                        case N_IMAGE_OPTIONAL_HEADER::MajorLinkerVersion:
-                            pe.setOptionalHeader_MajorLinkerVersion((quint8)nValue);
-                            break;
-
-                        case N_IMAGE_OPTIONAL_HEADER::MinorLinkerVersion:
-                            pe.setOptionalHeader_MinorLinkerVersion((quint8)nValue);
-                            break;
-
-                        case N_IMAGE_OPTIONAL_HEADER::SizeOfCode:
-                            pe.setOptionalHeader_SizeOfCode((quint32)nValue);
-                            break;
-
-                        case N_IMAGE_OPTIONAL_HEADER::SizeOfInitializedData:
-                            pe.setOptionalHeader_SizeOfInitializedData((quint32)nValue);
-                            break;
-
-                        case N_IMAGE_OPTIONAL_HEADER::SizeOfUninitializedData:
-                            pe.setOptionalHeader_SizeOfUninitializedData((quint32)nValue);
-                            break;
+                        case N_IMAGE_OPTIONAL_HEADER::Magic:                    pe.setOptionalHeader_Magic((quint16)nValue);                    break;
+                        case N_IMAGE_OPTIONAL_HEADER::MajorLinkerVersion:       pe.setOptionalHeader_MajorLinkerVersion((quint8)nValue);        break;
+                        case N_IMAGE_OPTIONAL_HEADER::MinorLinkerVersion:       pe.setOptionalHeader_MinorLinkerVersion((quint8)nValue);        break;
+                        case N_IMAGE_OPTIONAL_HEADER::SizeOfCode:               pe.setOptionalHeader_SizeOfCode((quint32)nValue);               break;
+                        case N_IMAGE_OPTIONAL_HEADER::SizeOfInitializedData:    pe.setOptionalHeader_SizeOfInitializedData((quint32)nValue);    break;
+                        case N_IMAGE_OPTIONAL_HEADER::SizeOfUninitializedData:  pe.setOptionalHeader_SizeOfUninitializedData((quint32)nValue);  break;
 
                         case N_IMAGE_OPTIONAL_HEADER::AddressOfEntryPoint:
                             invWidget[INV_IMAGE_OPTIONAL_HEADER_AddressOfEntryPoint]->setAddressAndSize(&pe,pe.getBaseAddress()+(quint32)nValue,0);
