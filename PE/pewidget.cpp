@@ -208,7 +208,10 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                 case SPE::TYPE_IMAGE_OPTIONAL_HEADER:
                     switch(nNdata)
                     {
-                        case N_IMAGE_OPTIONAL_HEADER::Magic:            pe.setOptionalHeader_Magic((quint16)nValue);                                break;
+                        case N_IMAGE_OPTIONAL_HEADER::Magic:                comboBox[CB_IMAGE_OPTIONAL_HEADER_Magic]->setValue(nValue);                 break;
+                        case N_IMAGE_OPTIONAL_HEADER::AddressOfEntryPoint:  invWidget[INV_IMAGE_OPTIONAL_HEADER_AddressOfEntryPoint]->setAddressAndSize(&pe,pe.getBaseAddress()+(quint32)nValue,0); break;
+                        case N_IMAGE_OPTIONAL_HEADER::Subsystem:            comboBox[CB_IMAGE_OPTIONAL_HEADER_Subsystem]->setValue(nValue);             break;
+                        case N_IMAGE_OPTIONAL_HEADER::DllCharacteristics:   comboBox[CB_IMAGE_OPTIONAL_HEADER_DllCharacteristics]->setValue(nValue);    break;
                     }
                     break;
             }
@@ -281,105 +284,30 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                         case N_IMAGE_OPTIONAL_HEADER::SizeOfCode:               pe.setOptionalHeader_SizeOfCode((quint32)nValue);               break;
                         case N_IMAGE_OPTIONAL_HEADER::SizeOfInitializedData:    pe.setOptionalHeader_SizeOfInitializedData((quint32)nValue);    break;
                         case N_IMAGE_OPTIONAL_HEADER::SizeOfUninitializedData:  pe.setOptionalHeader_SizeOfUninitializedData((quint32)nValue);  break;
-
-                        case N_IMAGE_OPTIONAL_HEADER::AddressOfEntryPoint:
-                            invWidget[INV_IMAGE_OPTIONAL_HEADER_AddressOfEntryPoint]->setAddressAndSize(&pe,pe.getBaseAddress()+(quint32)nValue,0);
-                            pe.setOptionalHeader_AddressOfEntryPoint((quint32)nValue);
-                            break;
-
-                        case N_IMAGE_OPTIONAL_HEADER::BaseOfCode:
-                            pe.setOptionalHeader_BaseOfCode((quint32)nValue);
-                            break;
-
-                        case N_IMAGE_OPTIONAL_HEADER::BaseOfData:
-                            pe.setOptionalHeader_BaseOfData((quint32)nValue);
-                            break;
-
-                        case N_IMAGE_OPTIONAL_HEADER::ImageBase:
-                            pe.setOptionalHeader_ImageBase((quint64)nValue);
-                            break;
-
-                        case N_IMAGE_OPTIONAL_HEADER::SectionAlignment:
-                            pe.setOptionalHeader_SectionAlignment((quint32)nValue);
-                            break;
-
-                        case N_IMAGE_OPTIONAL_HEADER::FileAlignment:
-                            pe.setOptionalHeader_FileAlignment((quint32)nValue);
-                            break;
-
-                        case N_IMAGE_OPTIONAL_HEADER::MajorOperatingSystemVersion:
-                            pe.setOptionalHeader_MajorOperatingSystemVersion((quint16)nValue);
-                            break;
-
-                        case N_IMAGE_OPTIONAL_HEADER::MinorOperatingSystemVersion:
-                            pe.setOptionalHeader_MinorOperatingSystemVersion((quint16)nValue);
-                            break;
-
-                        case N_IMAGE_OPTIONAL_HEADER::MajorImageVersion:
-                            pe.setOptionalHeader_MajorImageVersion((quint16)nValue);
-                            break;
-
-                        case N_IMAGE_OPTIONAL_HEADER::MinorImageVersion:
-                            pe.setOptionalHeader_MinorImageVersion((quint16)nValue);
-                            break;
-
-                        case N_IMAGE_OPTIONAL_HEADER::MajorSubsystemVersion:
-                            pe.setOptionalHeader_MajorSubsystemVersion((quint16)nValue);
-                            break;
-
-                        case N_IMAGE_OPTIONAL_HEADER::MinorSubsystemVersion:
-                            pe.setOptionalHeader_MinorSubsystemVersion((quint16)nValue);
-                            break;
-
-                        case N_IMAGE_OPTIONAL_HEADER::Win32VersionValue:
-                            pe.setOptionalHeader_Win32VersionValue((quint16)nValue);
-                            break;
-
-                        case N_IMAGE_OPTIONAL_HEADER::SizeOfImage:
-                            pe.setOptionalHeader_SizeOfImage((quint32)nValue);
-                            break;
-
-                        case N_IMAGE_OPTIONAL_HEADER::SizeOfHeaders:
-                            pe.setOptionalHeader_SizeOfHeaders((quint32)nValue);
-                            break;
-
-                        case N_IMAGE_OPTIONAL_HEADER::CheckSum:
-                            pe.setOptionalHeader_CheckSum((quint32)nValue);
-                            break;
-
-                        case N_IMAGE_OPTIONAL_HEADER::Subsystem:
-                            comboBox[CB_IMAGE_OPTIONAL_HEADER_Subsystem]->setValue(nValue);
-                            pe.setOptionalHeader_Subsystem((quint16)nValue);
-                            break;
-
-                        case N_IMAGE_OPTIONAL_HEADER::DllCharacteristics:
-                            comboBox[CB_IMAGE_OPTIONAL_HEADER_DllCharacteristics]->setValue(nValue);
-                            pe.setOptionalHeader_DllCharacteristics((quint16)nValue);
-                            break;
-
-                        case N_IMAGE_OPTIONAL_HEADER::SizeOfStackReserve:
-                            pe.setOptionalHeader_SizeOfStackReserve((quint64)nValue);
-                            break;
-
-                        case N_IMAGE_OPTIONAL_HEADER::SizeOfStackCommit:
-                            pe.setOptionalHeader_SizeOfStackCommit((quint64)nValue);
-                            break;
-
-                        case N_IMAGE_OPTIONAL_HEADER::SizeOfHeapReserve:
-                            pe.setOptionalHeader_SizeOfHeapReserve((quint64)nValue);
-                            break;
-
-                        case N_IMAGE_OPTIONAL_HEADER::SizeOfHeapCommit:
-                            pe.setOptionalHeader_SizeOfHeapCommit((quint64)nValue);
-                            break;
-
-                        case N_IMAGE_OPTIONAL_HEADER::LoaderFlags:
-                            pe.setOptionalHeader_LoaderFlags((quint32)nValue);
-                            break;
-
-                        case N_IMAGE_OPTIONAL_HEADER::NumberOfRvaAndSizes:
-                            pe.setOptionalHeader_NumberOfRvaAndSizes((quint32)nValue);
-                            break;
+                        case N_IMAGE_OPTIONAL_HEADER::AddressOfEntryPoint:      pe.setOptionalHeader_AddressOfEntryPoint((quint32)nValue);      break;
+                        case N_IMAGE_OPTIONAL_HEADER::BaseOfCode:               pe.setOptionalHeader_BaseOfCode((quint32)nValue);               break;
+                        case N_IMAGE_OPTIONAL_HEADER::BaseOfData:               pe.setOptionalHeader_BaseOfData((quint32)nValue);               break;
+                        case N_IMAGE_OPTIONAL_HEADER::ImageBase:                pe.setOptionalHeader_ImageBase((quint64)nValue);                break;
+                        case N_IMAGE_OPTIONAL_HEADER::SectionAlignment:         pe.setOptionalHeader_SectionAlignment((quint32)nValue);         break;
+                        case N_IMAGE_OPTIONAL_HEADER::FileAlignment:            pe.setOptionalHeader_FileAlignment((quint32)nValue);            break;
+                        case N_IMAGE_OPTIONAL_HEADER::MajorOperatingSystemVersion:  pe.setOptionalHeader_MajorOperatingSystemVersion((quint16)nValue);  break;
+                        case N_IMAGE_OPTIONAL_HEADER::MinorOperatingSystemVersion:  pe.setOptionalHeader_MinorOperatingSystemVersion((quint16)nValue);  break;
+                        case N_IMAGE_OPTIONAL_HEADER::MajorImageVersion:        pe.setOptionalHeader_MajorImageVersion((quint16)nValue);        break;
+                        case N_IMAGE_OPTIONAL_HEADER::MinorImageVersion:        pe.setOptionalHeader_MinorImageVersion((quint16)nValue);        break;
+                        case N_IMAGE_OPTIONAL_HEADER::MajorSubsystemVersion:    pe.setOptionalHeader_MajorSubsystemVersion((quint16)nValue);    break;
+                        case N_IMAGE_OPTIONAL_HEADER::MinorSubsystemVersion:    pe.setOptionalHeader_MinorSubsystemVersion((quint16)nValue);    break;
+                        case N_IMAGE_OPTIONAL_HEADER::Win32VersionValue:        pe.setOptionalHeader_Win32VersionValue((quint16)nValue);        break;
+                        case N_IMAGE_OPTIONAL_HEADER::SizeOfImage:              pe.setOptionalHeader_SizeOfImage((quint32)nValue);              break;
+                        case N_IMAGE_OPTIONAL_HEADER::SizeOfHeaders:            pe.setOptionalHeader_SizeOfHeaders((quint32)nValue);            break;
+                        case N_IMAGE_OPTIONAL_HEADER::CheckSum:                 pe.setOptionalHeader_CheckSum((quint32)nValue);                 break;
+                        case N_IMAGE_OPTIONAL_HEADER::Subsystem:                pe.setOptionalHeader_Subsystem((quint16)nValue);                break;
+                        case N_IMAGE_OPTIONAL_HEADER::DllCharacteristics:       pe.setOptionalHeader_DllCharacteristics((quint16)nValue);       break;
+                        case N_IMAGE_OPTIONAL_HEADER::SizeOfStackReserve:       pe.setOptionalHeader_SizeOfStackReserve((quint64)nValue);       break;
+                        case N_IMAGE_OPTIONAL_HEADER::SizeOfStackCommit:        pe.setOptionalHeader_SizeOfStackCommit((quint64)nValue);        break;
+                        case N_IMAGE_OPTIONAL_HEADER::SizeOfHeapReserve:        pe.setOptionalHeader_SizeOfHeapReserve((quint64)nValue);        break;
+                        case N_IMAGE_OPTIONAL_HEADER::SizeOfHeapCommit:         pe.setOptionalHeader_SizeOfHeapCommit((quint64)nValue);         break;
+                        case N_IMAGE_OPTIONAL_HEADER::LoaderFlags:              pe.setOptionalHeader_LoaderFlags((quint32)nValue);              break;
+                        case N_IMAGE_OPTIONAL_HEADER::NumberOfRvaAndSizes:      pe.setOptionalHeader_NumberOfRvaAndSizes((quint32)nValue);      break;
                     }
                     break;
 
