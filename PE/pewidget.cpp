@@ -214,6 +214,15 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                         case N_IMAGE_OPTIONAL_HEADER::DllCharacteristics:   comboBox[CB_IMAGE_OPTIONAL_HEADER_DllCharacteristics]->setValue(nValue);    break;
                     }
                     break;
+                case SPE::TYPE_EXPORT:
+                    switch(nNdata)
+                    {
+                        case N_IMAGE_EXPORT::Name:                  invWidget[INV_IMAGE_EXPORT_Name]->setAddressAndSize(&pe,pe.getBaseAddress()+(quint32)nValue,0);                         break;
+                        case N_IMAGE_EXPORT::AddressOfFunctions:    invWidget[INV_IMAGE_EXPORT_AddressOfFunctions]->setAddressAndSize(&pe,pe.getBaseAddress()+(quint32)nValue,0);           break;
+                        case N_IMAGE_EXPORT::AddressOfNames:        invWidget[INV_IMAGE_EXPORT_AddressOfNames]->setAddressAndSize(&pe,pe.getBaseAddress()+(quint32)nValue,0);               break;
+                        case N_IMAGE_EXPORT::AddressOfNameOrdinals: invWidget[INV_IMAGE_EXPORT_AddressOfNameOrdinals]->setAddressAndSize(&pe,pe.getBaseAddress()+(quint32)nValue,0);        break;
+                    }
+                    break;
             }
 
             switch(nStype)
@@ -328,53 +337,17 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                 case SPE::TYPE_EXPORT:
                     switch(nNdata)
                     {
-                        case N_IMAGE_EXPORT::Characteristics:
-                            pe.setExportDirectory_Characteristics((quint32)nValue);
-                            break;
-
-                        case N_IMAGE_EXPORT::TimeDateStamp:
-                            pe.setExportDirectory_TimeDateStamp((quint32)nValue);
-                            break;
-
-                        case N_IMAGE_EXPORT::MajorVersion:
-                            pe.setExportDirectory_MajorVersion((quint16)nValue);
-                            break;
-
-                        case N_IMAGE_EXPORT::MinorVersion:
-                            pe.setExportDirectory_MinorVersion((quint16)nValue);
-                            break;
-
-                        case N_IMAGE_EXPORT::Name:
-                            invWidget[INV_IMAGE_EXPORT_Name]->setAddressAndSize(&pe,pe.getBaseAddress()+(quint32)nValue,0);
-                            pe.setExportDirectory_Name((quint32)nValue);
-                            break;
-
-                        case N_IMAGE_EXPORT::Base:
-                            pe.setExportDirectory_Base((quint32)nValue);
-                            break;
-
-                        case N_IMAGE_EXPORT::NumberOfFunctions:
-                            pe.setExportDirectory_NumberOfFunctions((quint32)nValue);
-                            break;
-
-                        case N_IMAGE_EXPORT::NumberOfNames:
-                            pe.setExportDirectory_NumberOfNames((quint32)nValue);
-                            break;
-
-                        case N_IMAGE_EXPORT::AddressOfFunctions:
-                            invWidget[INV_IMAGE_EXPORT_AddressOfFunctions]->setAddressAndSize(&pe,pe.getBaseAddress()+(quint32)nValue,0);
-                            pe.setExportDirectory_AddressOfFunctions((quint32)nValue);
-                            break;
-
-                        case N_IMAGE_EXPORT::AddressOfNames:
-                            invWidget[INV_IMAGE_EXPORT_AddressOfNames]->setAddressAndSize(&pe,pe.getBaseAddress()+(quint32)nValue,0);
-                            pe.setExportDirectory_AddressOfNames((quint32)nValue);
-                            break;
-
-                        case N_IMAGE_EXPORT::AddressOfNameOrdinals:
-                            invWidget[INV_IMAGE_EXPORT_AddressOfNameOrdinals]->setAddressAndSize(&pe,pe.getBaseAddress()+(quint32)nValue,0);
-                            pe.setExportDirectory_AddressOfNameOrdinals((quint32)nValue);
-                            break;
+                        case N_IMAGE_EXPORT::Characteristics:       pe.setExportDirectory_Characteristics((quint32)nValue);         break;
+                        case N_IMAGE_EXPORT::TimeDateStamp:         pe.setExportDirectory_TimeDateStamp((quint32)nValue);           break;
+                        case N_IMAGE_EXPORT::MajorVersion:          pe.setExportDirectory_MajorVersion((quint16)nValue);            break;
+                        case N_IMAGE_EXPORT::MinorVersion:          pe.setExportDirectory_MinorVersion((quint16)nValue);            break;
+                        case N_IMAGE_EXPORT::Name:                  pe.setExportDirectory_Name((quint32)nValue);                    break;
+                        case N_IMAGE_EXPORT::Base:                  pe.setExportDirectory_Base((quint32)nValue);                    break;
+                        case N_IMAGE_EXPORT::NumberOfFunctions:     pe.setExportDirectory_NumberOfFunctions((quint32)nValue);       break;
+                        case N_IMAGE_EXPORT::NumberOfNames:         pe.setExportDirectory_NumberOfNames((quint32)nValue);           break;
+                        case N_IMAGE_EXPORT::AddressOfFunctions:    pe.setExportDirectory_AddressOfFunctions((quint32)nValue);      break;
+                        case N_IMAGE_EXPORT::AddressOfNames:        pe.setExportDirectory_AddressOfNames((quint32)nValue);          break;
+                        case N_IMAGE_EXPORT::AddressOfNameOrdinals: pe.setExportDirectory_AddressOfNameOrdinals((quint32)nValue);   break;
                     }
                     break;
 
