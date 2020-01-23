@@ -223,6 +223,16 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                         case N_IMAGE_EXPORT::AddressOfNameOrdinals: invWidget[INV_IMAGE_EXPORT_AddressOfNameOrdinals]->setAddressAndSize(&pe,pe.getBaseAddress()+(quint32)nValue,0);        break;
                     }
                     break;
+
+                case SPE::TYPE_TLS:
+                    switch(nNdata)
+                    {
+                        case N_IMAGE_TLS::StartAddressOfRawData:    invWidget[INV_IMAGE_TLS_StartAddressOfRawData]->setAddressAndSize(&pe,(quint64)nValue,0);       break;
+                        case N_IMAGE_TLS::EndAddressOfRawData:      invWidget[INV_IMAGE_TLS_EndAddressOfRawData]->setAddressAndSize(&pe,(quint64)nValue,0);         break;
+                        case N_IMAGE_TLS::AddressOfIndex:           invWidget[INV_IMAGE_TLS_AddressOfIndex]->setAddressAndSize(&pe,(quint64)nValue,0);              break;
+                        case N_IMAGE_TLS::AddressOfCallBacks:       invWidget[INV_IMAGE_TLS_AddressOfCallBacks]->setAddressAndSize(&pe,(quint64)nValue,0);          break;
+                    }
+                    break;
             }
 
             switch(nStype)
@@ -354,33 +364,12 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                 case SPE::TYPE_TLS:
                     switch(nNdata)
                     {
-                        case N_IMAGE_TLS::StartAddressOfRawData:
-                            invWidget[INV_IMAGE_TLS_StartAddressOfRawData]->setAddressAndSize(&pe,(quint64)nValue,0);
-                            pe.setTLS_StartAddressOfRawData((quint64)nValue);
-                            break;
-
-                        case N_IMAGE_TLS::EndAddressOfRawData:
-                            invWidget[INV_IMAGE_TLS_EndAddressOfRawData]->setAddressAndSize(&pe,(quint64)nValue,0);
-                            pe.setTLS_EndAddressOfRawData((quint64)nValue);
-                            break;
-
-                        case N_IMAGE_TLS::AddressOfIndex:
-                            invWidget[INV_IMAGE_TLS_AddressOfIndex]->setAddressAndSize(&pe,(quint64)nValue,0);
-                            pe.setTLS_AddressOfIndex((quint64)nValue);
-                            break;
-
-                        case N_IMAGE_TLS::AddressOfCallBacks:
-                            invWidget[INV_IMAGE_TLS_AddressOfCallBacks]->setAddressAndSize(&pe,(quint64)nValue,0);
-                            pe.setTLS_AddressOfCallBacks((quint64)nValue);
-                            break;
-
-                        case N_IMAGE_TLS::SizeOfZeroFill:
-                            pe.setTLS_SizeOfZeroFill((quint32)nValue);
-                            break;
-
-                        case N_IMAGE_TLS::Characteristics:
-                            pe.setTLS_Characteristics((quint32)nValue);
-                            break;
+                        case N_IMAGE_TLS::StartAddressOfRawData:    pe.setTLS_StartAddressOfRawData((quint64)nValue);           break;
+                        case N_IMAGE_TLS::EndAddressOfRawData:      pe.setTLS_EndAddressOfRawData((quint64)nValue);             break;
+                        case N_IMAGE_TLS::AddressOfIndex:           pe.setTLS_AddressOfIndex((quint64)nValue);                  break;
+                        case N_IMAGE_TLS::AddressOfCallBacks:       pe.setTLS_AddressOfCallBacks((quint64)nValue);              break;
+                        case N_IMAGE_TLS::SizeOfZeroFill:           pe.setTLS_SizeOfZeroFill((quint32)nValue);                  break;
+                        case N_IMAGE_TLS::Characteristics:          pe.setTLS_Characteristics((quint32)nValue);                 break;
                     }
                     break;
                 case SPE::TYPE_RESOURCE_VERSION:
