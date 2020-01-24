@@ -233,6 +233,13 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                         case N_IMAGE_TLS::AddressOfCallBacks:       invWidget[INV_IMAGE_TLS_AddressOfCallBacks]->setAddressAndSize(&pe,(quint64)nValue,0);          break;
                     }
                     break;
+
+                case SPE::TYPE_NETHEADER:
+                    switch(nNdata)
+                    {
+                        case N_IMAGE_NETHEADER::Flags:      comboBox[CB_IMAGE_NETHEADER_FLAGS]->setValue((quint32)nValue);      break;
+                    }
+                    break;
             }
 
             switch(nStype)
@@ -393,26 +400,11 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                 case SPE::TYPE_NETHEADER:
                     switch(nNdata)
                     {
-                        case N_IMAGE_NETHEADER::cb:
-                            pe.setNetHeader_cb((quint32)nValue);
-                            break;
-
-                        case N_IMAGE_NETHEADER::MinorRuntimeVersion:
-                            pe.setNetHeader_MinorRuntimeVersion((quint16)nValue);
-                            break;
-
-                        case N_IMAGE_NETHEADER::MajorRuntimeVersion:
-                            pe.setNetHeader_MajorRuntimeVersion((quint16)nValue);
-                            break;
-
-                        case N_IMAGE_NETHEADER::Flags:
-                            comboBox[CB_IMAGE_NETHEADER_FLAGS]->setValue((quint32)nValue);
-                            pe.setNetHeader_Flags((quint32)nValue);
-                            break;
-
-                        case N_IMAGE_NETHEADER::EntryPoint:
-                            pe.setNetHeader_EntryPoint((quint32)nValue);
-                            break;
+                        case N_IMAGE_NETHEADER::cb:                     pe.setNetHeader_cb((quint32)nValue);                        break;
+                        case N_IMAGE_NETHEADER::MinorRuntimeVersion:    pe.setNetHeader_MinorRuntimeVersion((quint16)nValue);       break;
+                        case N_IMAGE_NETHEADER::MajorRuntimeVersion:    pe.setNetHeader_MajorRuntimeVersion((quint16)nValue);       break;
+                        case N_IMAGE_NETHEADER::Flags:                  pe.setNetHeader_Flags((quint32)nValue);                     break;
+                        case N_IMAGE_NETHEADER::EntryPoint:             pe.setNetHeader_EntryPoint((quint32)nValue);                break;
                     }
                     break;
                 case SPE::TYPE_LOADCONFIG:
