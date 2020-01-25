@@ -240,6 +240,14 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                         case N_IMAGE_NETHEADER::Flags:      comboBox[CB_IMAGE_NETHEADER_FLAGS]->setValue((quint32)nValue);      break;
                     }
                     break;
+
+                case SPE::TYPE_LOADCONFIG:
+                    switch(nNdata)
+                    {
+                        case N_IMAGE_LOADCONFIG::SecurityCookie:    invWidget[INV_IMAGE_LOADCONFIG_SecurityCookie]->setAddressAndSize(&pe,(quint64)nValue,0);   break;
+                        case N_IMAGE_LOADCONFIG::SEHandlerTable:    invWidget[INV_IMAGE_LOADCONFIG_SEHandlerTable]->setAddressAndSize(&pe,(quint64)nValue,0);   break;
+                    }
+                    break;
             }
 
             switch(nStype)
@@ -410,26 +418,11 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                 case SPE::TYPE_LOADCONFIG:
                     switch(nNdata)
                     {
-                        case N_IMAGE_LOADCONFIG::Size:
-                            pe.setLoadConfig_Size((quint32)nValue);
-                            break;
-
-                        case N_IMAGE_LOADCONFIG::TimeDateStamp:
-                            pe.setLoadConfig_TimeDateStamp((quint32)nValue);
-                            break;
-
-                        case N_IMAGE_LOADCONFIG::MinorVersion:
-                            pe.setLoadConfig_MinorVersion((quint16)nValue);
-                            break;
-
-                        case N_IMAGE_LOADCONFIG::MajorVersion:
-                            pe.setLoadConfig_MajorVersion((quint16)nValue);
-                            break;
-
-                        case N_IMAGE_LOADCONFIG::GlobalFlagsClear:
-                            pe.setLoadConfig_GlobalFlagsClear((quint32)nValue);
-                            break;
-
+                        case N_IMAGE_LOADCONFIG::Size:                  pe.setLoadConfig_Size((quint32)nValue);                     break;
+                        case N_IMAGE_LOADCONFIG::TimeDateStamp:         pe.setLoadConfig_TimeDateStamp((quint32)nValue);            break;
+                        case N_IMAGE_LOADCONFIG::MinorVersion:          pe.setLoadConfig_MinorVersion((quint16)nValue);             break;
+                        case N_IMAGE_LOADCONFIG::MajorVersion:          pe.setLoadConfig_MajorVersion((quint16)nValue);             break;
+                        case N_IMAGE_LOADCONFIG::GlobalFlagsClear:      pe.setLoadConfig_GlobalFlagsClear((quint32)nValue);         break;
                         case N_IMAGE_LOADCONFIG::GlobalFlagsSet:
                             pe.setLoadConfig_GlobalFlagsSet((quint32)nValue);
                             break;
@@ -475,12 +468,10 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                             break;
 
                         case N_IMAGE_LOADCONFIG::SecurityCookie:
-                            invWidget[INV_IMAGE_LOADCONFIG_SecurityCookie]->setAddressAndSize(&pe,(quint64)nValue,0);
                             pe.setLoadConfig_SecurityCookie((quint64)nValue);
                             break;
 
                         case N_IMAGE_LOADCONFIG::SEHandlerTable:
-                            invWidget[INV_IMAGE_LOADCONFIG_SEHandlerTable]->setAddressAndSize(&pe,(quint64)nValue,0);
                             pe.setLoadConfig_SEHandlerTable((quint64)nValue);
                             break;
 
