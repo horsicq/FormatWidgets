@@ -418,66 +418,25 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                 case SPE::TYPE_LOADCONFIG:
                     switch(nNdata)
                     {
-                        case N_IMAGE_LOADCONFIG::Size:                  pe.setLoadConfig_Size((quint32)nValue);                     break;
-                        case N_IMAGE_LOADCONFIG::TimeDateStamp:         pe.setLoadConfig_TimeDateStamp((quint32)nValue);            break;
-                        case N_IMAGE_LOADCONFIG::MinorVersion:          pe.setLoadConfig_MinorVersion((quint16)nValue);             break;
-                        case N_IMAGE_LOADCONFIG::MajorVersion:          pe.setLoadConfig_MajorVersion((quint16)nValue);             break;
-                        case N_IMAGE_LOADCONFIG::GlobalFlagsClear:      pe.setLoadConfig_GlobalFlagsClear((quint32)nValue);         break;
-                        case N_IMAGE_LOADCONFIG::GlobalFlagsSet:
-                            pe.setLoadConfig_GlobalFlagsSet((quint32)nValue);
-                            break;
-
-                        case N_IMAGE_LOADCONFIG::CriticalSectionDefaultTimeout:
-                            pe.setLoadConfig_CriticalSectionDefaultTimeout((quint32)nValue);
-                            break;
-
-                        case N_IMAGE_LOADCONFIG::DeCommitFreeBlockThreshold:
-                            pe.setLoadConfig_DeCommitFreeBlockThreshold((quint64)nValue);
-                            break;
-
-                        case N_IMAGE_LOADCONFIG::DeCommitTotalFreeThreshold:
-                            pe.setLoadConfig_DeCommitTotalFreeThreshold((quint64)nValue);
-                            break;
-
-                        case N_IMAGE_LOADCONFIG::LockPrefixTable:
-                            pe.setLoadConfig_LockPrefixTable((quint64)nValue);
-                            break;
-
-                        case N_IMAGE_LOADCONFIG::MaximumAllocationSize:
-                            pe.setLoadConfig_MaximumAllocationSize((quint64)nValue);
-                            break;
-
-                        case N_IMAGE_LOADCONFIG::VirtualMemoryThreshold:
-                            pe.setLoadConfig_VirtualMemoryThreshold((quint64)nValue);
-                            break;
-
-                        case N_IMAGE_LOADCONFIG::ProcessAffinityMask:
-                            pe.setLoadConfig_ProcessAffinityMask((quint64)nValue);
-                            break;
-
-                        case N_IMAGE_LOADCONFIG::CSDVersion:
-                            pe.setLoadConfig_CSDVersion((quint16)nValue);
-                            break;
-
-                        case N_IMAGE_LOADCONFIG::DependentLoadFlags:
-                            pe.setLoadConfig_DependentLoadFlags((quint16)nValue);
-                            break;
-
-                        case N_IMAGE_LOADCONFIG::EditList:
-                            pe.setLoadConfig_EditList((quint64)nValue);
-                            break;
-
-                        case N_IMAGE_LOADCONFIG::SecurityCookie:
-                            pe.setLoadConfig_SecurityCookie((quint64)nValue);
-                            break;
-
-                        case N_IMAGE_LOADCONFIG::SEHandlerTable:
-                            pe.setLoadConfig_SEHandlerTable((quint64)nValue);
-                            break;
-
-                        case N_IMAGE_LOADCONFIG::SEHandlerCount:
-                            pe.setLoadConfig_SEHandlerCount((quint64)nValue);
-                            break;
+                        case N_IMAGE_LOADCONFIG::Size:                          pe.setLoadConfig_Size((quint32)nValue);                             break;
+                        case N_IMAGE_LOADCONFIG::TimeDateStamp:                 pe.setLoadConfig_TimeDateStamp((quint32)nValue);                    break;
+                        case N_IMAGE_LOADCONFIG::MinorVersion:                  pe.setLoadConfig_MinorVersion((quint16)nValue);                     break;
+                        case N_IMAGE_LOADCONFIG::MajorVersion:                  pe.setLoadConfig_MajorVersion((quint16)nValue);                     break;
+                        case N_IMAGE_LOADCONFIG::GlobalFlagsClear:              pe.setLoadConfig_GlobalFlagsClear((quint32)nValue);                 break;
+                        case N_IMAGE_LOADCONFIG::GlobalFlagsSet:                pe.setLoadConfig_GlobalFlagsSet((quint32)nValue);                   break;
+                        case N_IMAGE_LOADCONFIG::CriticalSectionDefaultTimeout: pe.setLoadConfig_CriticalSectionDefaultTimeout((quint32)nValue);    break;
+                        case N_IMAGE_LOADCONFIG::DeCommitFreeBlockThreshold:    pe.setLoadConfig_DeCommitFreeBlockThreshold((quint64)nValue);       break;
+                        case N_IMAGE_LOADCONFIG::DeCommitTotalFreeThreshold:    pe.setLoadConfig_DeCommitTotalFreeThreshold((quint64)nValue);       break;
+                        case N_IMAGE_LOADCONFIG::LockPrefixTable:               pe.setLoadConfig_LockPrefixTable((quint64)nValue);                  break;
+                        case N_IMAGE_LOADCONFIG::MaximumAllocationSize:         pe.setLoadConfig_MaximumAllocationSize((quint64)nValue);            break;
+                        case N_IMAGE_LOADCONFIG::VirtualMemoryThreshold:        pe.setLoadConfig_VirtualMemoryThreshold((quint64)nValue);           break;
+                        case N_IMAGE_LOADCONFIG::ProcessAffinityMask:           pe.setLoadConfig_ProcessAffinityMask((quint64)nValue);              break;
+                        case N_IMAGE_LOADCONFIG::CSDVersion:                    pe.setLoadConfig_CSDVersion((quint16)nValue);                       break;
+                        case N_IMAGE_LOADCONFIG::DependentLoadFlags:            pe.setLoadConfig_DependentLoadFlags((quint16)nValue);               break;
+                        case N_IMAGE_LOADCONFIG::EditList:                      pe.setLoadConfig_EditList((quint64)nValue);                         break;
+                        case N_IMAGE_LOADCONFIG::SecurityCookie:                pe.setLoadConfig_SecurityCookie((quint64)nValue);                   break;
+                        case N_IMAGE_LOADCONFIG::SEHandlerTable:                pe.setLoadConfig_SEHandlerTable((quint64)nValue);                   break;
+                        case N_IMAGE_LOADCONFIG::SEHandlerCount:                pe.setLoadConfig_SEHandlerCount((quint64)nValue);                   break;
                     }
                     break;
             }
