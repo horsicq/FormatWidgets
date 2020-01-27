@@ -94,7 +94,7 @@ private:
     enum TD
     {
         TD_IMAGE_FILE_HEADER_TimeDateStamp,
-        TD_Export_TimeDateStamp,
+        TD_IMAGE_EXPORT_TimeDateStamp,
         __TD_size
     };
 

@@ -217,6 +217,7 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                 case SPE::TYPE_EXPORT:
                     switch(nNdata)
                     {
+                        case N_IMAGE_EXPORT::TimeDateStamp:         dateTimeEdit[TD_IMAGE_EXPORT_TimeDateStamp]->setValue(nValue);                                                          break;
                         case N_IMAGE_EXPORT::Name:                  invWidget[INV_IMAGE_EXPORT_Name]->setAddressAndSize(&pe,pe.getBaseAddress()+(quint32)nValue,0);                         break;
                         case N_IMAGE_EXPORT::AddressOfFunctions:    invWidget[INV_IMAGE_EXPORT_AddressOfFunctions]->setAddressAndSize(&pe,pe.getBaseAddress()+(quint32)nValue,0);           break;
                         case N_IMAGE_EXPORT::AddressOfNames:        invWidget[INV_IMAGE_EXPORT_AddressOfNames]->setAddressAndSize(&pe,pe.getBaseAddress()+(quint32)nValue,0);               break;
@@ -517,14 +518,12 @@ void PEWidget::widgetValueChanged(quint64 nValue)
                 case N_IMAGE_DOS_HEADER::e_magic:   lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_magic]->setValue((quint16)nValue);      break;
             }
             break;
-
         case SPE::TYPE_IMAGE_NT_HEADERS:
             switch(nNdata)
             {
                 case N_IMAGE_NT_HEADERS::Signature: lineEdit_IMAGE_NT_HEADERS[N_IMAGE_NT_HEADERS::Signature]->setValue((quint32)nValue);    break;
             }
             break;
-
         case SPE::TYPE_IMAGE_FILE_HEADER:
             switch(nNdata)
             {
@@ -533,7 +532,6 @@ void PEWidget::widgetValueChanged(quint64 nValue)
                 case N_IMAGE_FILE_HEADER::Characteristics:  lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::Characteristics]->setValue((quint16)nValue);    break;
             }
             break;
-
         case SPE::TYPE_IMAGE_OPTIONAL_HEADER:
             switch(nNdata)
             {
@@ -542,11 +540,16 @@ void PEWidget::widgetValueChanged(quint64 nValue)
                 case N_IMAGE_OPTIONAL_HEADER::DllCharacteristics:   lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::DllCharacteristics]->setValue((quint16)nValue); break;
             }
             break;
-
+        case SPE::TYPE_EXPORT:
+            switch(nNdata)
+            {
+                case N_IMAGE_EXPORT::TimeDateStamp:         dateTimeEdit[TD_IMAGE_EXPORT_TimeDateStamp]->setValue(nValue);      break;
+            }
+            break;
         case SPE::TYPE_NETHEADER:
             switch(nNdata)
             {
-                case N_IMAGE_NETHEADER::Flags:  lineEdit_NetHeader[N_IMAGE_NETHEADER::Flags]->setValue((quint32)nValue);    break;
+                case N_IMAGE_NETHEADER::Flags:          lineEdit_NetHeader[N_IMAGE_NETHEADER::Flags]->setValue((quint32)nValue);    break;
             }
             break;
     }
@@ -967,7 +970,7 @@ void PEWidget::reloadData()
                 invWidget[INV_IMAGE_EXPORT_AddressOfNameOrdinals]=createInvWidget(ui->tableWidget_ExportHeader,SPE::TYPE_EXPORT,N_IMAGE_EXPORT::AddressOfNameOrdinals,InvWidget::TYPE_HEX);
                 invWidget[INV_IMAGE_EXPORT_AddressOfNames]=createInvWidget(ui->tableWidget_ExportHeader,SPE::TYPE_EXPORT,N_IMAGE_EXPORT::AddressOfNames,InvWidget::TYPE_HEX);
 
-                dateTimeEdit[TD_Export_TimeDateStamp]=createTimeDateEdit(ui->tableWidget_ExportHeader,SPE::TYPE_EXPORT,N_IMAGE_EXPORT::TimeDateStamp,XDateTimeEditX::DT_TYPE_POSIX);
+                dateTimeEdit[TD_IMAGE_EXPORT_TimeDateStamp]=createTimeDateEdit(ui->tableWidget_ExportHeader,SPE::TYPE_EXPORT,N_IMAGE_EXPORT::TimeDateStamp,XDateTimeEditX::DT_TYPE_POSIX);
             }
 
             blockSignals(true);
@@ -986,7 +989,7 @@ void PEWidget::reloadData()
             lineEdit_EXPORT[N_IMAGE_EXPORT::AddressOfNames]->setValue(eh.directory.AddressOfNames);
             lineEdit_EXPORT[N_IMAGE_EXPORT::AddressOfNameOrdinals]->setValue(eh.directory.AddressOfNameOrdinals);
 
-            dateTimeEdit[TD_Export_TimeDateStamp]->setValue(eh.directory.TimeDateStamp);
+            dateTimeEdit[TD_IMAGE_EXPORT_TimeDateStamp]->setValue(eh.directory.TimeDateStamp);
 
             invWidget[INV_IMAGE_EXPORT_Name]->setAddressAndSize(&pe,pe.getBaseAddress()+eh.directory.Name,0);
             invWidget[INV_IMAGE_EXPORT_AddressOfFunctions]->setAddressAndSize(&pe,pe.getBaseAddress()+eh.directory.AddressOfFunctions,0);
