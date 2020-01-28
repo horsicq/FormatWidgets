@@ -72,6 +72,9 @@ private slots:
     void on_tableWidget_IMAGE_DIRECTORY_ENTRIES_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     void on_tableWidget_Debug_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
 
+    void on_tableWidget_IMAGE_DOS_HEADER_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
+    void on_tableWidget_IMAGE_NT_HEADERS_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
+
 private:
     enum CB
     {
@@ -116,17 +119,6 @@ private:
         __INV_size
     };
 
-    enum SD
-    {
-        SD_SECTION=0,
-        SD_OVERLAY,
-        SD_RESOURCE,
-        SD_EXCEPTION,
-        SD_DIRECTORY,
-        SD_DEBUG,
-        __SD_size
-    };
-
     Ui::PEWidget *ui;
     XLineEditHEX *lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::__data_size];
     XLineEditHEX *lineEdit_IMAGE_NT_HEADERS[N_IMAGE_NT_HEADERS::__data_size];
@@ -141,7 +133,7 @@ private:
     QPushButton *pushButton[__PB_size];
     XDateTimeEditX *dateTimeEdit[__TD_size];
     InvWidget *invWidget[__INV_size];
-    SubDevice *subDevice[__SD_size];
+    SubDevice *subDevice[SPE::__TYPE_size];
     bool bInit[SPE::__TYPE_size];
 };
 

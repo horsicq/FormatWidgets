@@ -678,6 +678,11 @@ void PEWidget::reloadData()
 
             invWidget[INV_IMAGE_DOS_HEADER_e_lfanew]->setOffsetAndSize(&pe,msdosheaderex.e_lfanew,0);
 
+            qint64 nOffset=pe.getDosHeaderExOffset();
+            qint64 nSize=pe.getDosHeaderExSize();
+
+            loadHexSubdevice(nOffset,nSize,nOffset,&subDevice[SPE::TYPE_IMAGE_DOS_HEADER],ui->widgetHex_IMAGE_DOS_HEADER);
+
             blockSignals(false);
         }
         else if(nData==SPE::TYPE_IMAGE_NT_HEADERS)
@@ -694,6 +699,11 @@ void PEWidget::reloadData()
 
             lineEdit_IMAGE_NT_HEADERS[N_IMAGE_NT_HEADERS::Signature]->setValue(nSignature);
             comboBox[CB_IMAGE_NT_HEADERS_Signature]->setValue(nSignature);
+
+            qint64 nOffset=pe.getNtHeadersOffset();
+            qint64 nSize=4;
+
+            loadHexSubdevice(nOffset,nSize,nOffset,&subDevice[SPE::TYPE_IMAGE_NT_HEADERS],ui->widgetHex_IMAGE_NT_HEADERS);
 
             blockSignals(false);
         }
@@ -1474,7 +1484,7 @@ void PEWidget::reloadData()
             qint64 nOverLayOffset=pe.getOverlayOffset();
             qint64 nOverlaySize=pe.getOverlaySize();
 
-            loadHexSubdevice(nOverLayOffset,nOverlaySize,nOverLayOffset,&subDevice[SD_OVERLAY],ui->widgetOverlayHex);
+            loadHexSubdevice(nOverLayOffset,nOverlaySize,nOverLayOffset,&subDevice[SPE::TYPE_OVERLAY],ui->widgetOverlayHex);
         }
 
         setReadonly(ui->checkBoxReadonly->isChecked());
@@ -1582,7 +1592,7 @@ void PEWidget::loadSection(int nNumber)
     qint64 nSize=ui->tableWidget_Sections->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
     qint64 nAddress=ui->tableWidget_Sections->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
 
-    loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SD_SECTION],ui->widgetSectionHex);
+    loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_SECTIONS],ui->widgetSectionHex);
 }
 
 void PEWidget::loadException(int nNumber)
@@ -1591,7 +1601,7 @@ void PEWidget::loadException(int nNumber)
     qint64 nSize=ui->tableWidget_Exceptions->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
     qint64 nAddress=ui->tableWidget_Exceptions->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
 
-    loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SD_EXCEPTION],ui->widgetExceptionHex);
+    loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_EXCEPTION],ui->widgetExceptionHex);
 }
 
 void PEWidget::loadDirectory(int nNumber)
@@ -1600,7 +1610,7 @@ void PEWidget::loadDirectory(int nNumber)
     qint64 nSize=ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
     qint64 nAddress=ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
 
-    loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SD_DIRECTORY],ui->widgetDirectoryHex);
+    loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_IMAGE_DIRECTORY_ENTRIES],ui->widgetDirectoryHex);
 }
 
 void PEWidget::loadDebug(int nNumber)
@@ -1609,7 +1619,7 @@ void PEWidget::loadDebug(int nNumber)
     qint64 nSize=ui->tableWidget_Debug->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
     qint64 nAddress=ui->tableWidget_Debug->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
 
-    loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SD_DEBUG],ui->widgetDebugHex);
+    loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_DEBUG],ui->widgetDebugHex);
 }
 
 void PEWidget::on_tableWidget_ImportLibraries_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
@@ -1814,7 +1824,7 @@ void PEWidget::on_treeWidgetResources_currentItemChanged(QTreeWidgetItem *curren
             qint64 nSize=current->data(0,Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
             qint64 nAddress=current->data(0,Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
 
-            loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SD_RESOURCE],ui->widgetResourcesHex);
+            loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_RESOURCE],ui->widgetResourcesHex);
         }
     }
 }
@@ -1858,4 +1868,24 @@ void PEWidget::on_tableWidget_Debug_currentCellChanged(int currentRow, int curre
     {
         loadDebug(currentRow);
     }
+}
+
+void PEWidget::on_tableWidget_IMAGE_DOS_HEADER_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
+{
+    Q_UNUSED(currentRow)
+    Q_UNUSED(currentColumn)
+    Q_UNUSED(previousRow)
+    Q_UNUSED(previousColumn)
+
+    setHeaderTableSelection(ui->widgetHex_IMAGE_DOS_HEADER,ui->tableWidget_IMAGE_DOS_HEADER);
+}
+
+void PEWidget::on_tableWidget_IMAGE_NT_HEADERS_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
+{
+    Q_UNUSED(currentRow)
+    Q_UNUSED(currentColumn)
+    Q_UNUSED(previousRow)
+    Q_UNUSED(previousColumn)
+
+    setHeaderTableSelection(ui->widgetHex_IMAGE_NT_HEADERS,ui->tableWidget_IMAGE_NT_HEADERS);
 }
