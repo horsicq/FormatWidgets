@@ -74,6 +74,7 @@ private slots:
 
     void on_tableWidget_IMAGE_DOS_HEADER_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     void on_tableWidget_IMAGE_NT_HEADERS_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
+    void on_tableWidget_IMAGE_FILE_HEADER_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
 
 private:
     enum CB

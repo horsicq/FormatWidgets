@@ -737,6 +737,11 @@ void PEWidget::reloadData()
 
             invWidget[INV_IMAGE_FILE_HEADER_PointerToSymbolTable]->setAddressAndSize(&pe,pe.getBaseAddress()+fileheader.PointerToSymbolTable,0);
 
+            qint64 nOffset=pe.getFileHeaderOffset();
+            qint64 nSize=pe.getFileHeaderSize();
+
+            loadHexSubdevice(nOffset,nSize,nOffset,&subDevice[SPE::TYPE_IMAGE_FILE_HEADER],ui->widgetHex_IMAGE_FILE_HEADER);
+
             blockSignals(false);
         }
         else if(nData==SPE::TYPE_IMAGE_OPTIONAL_HEADER)
@@ -1888,4 +1893,14 @@ void PEWidget::on_tableWidget_IMAGE_NT_HEADERS_currentCellChanged(int currentRow
     Q_UNUSED(previousColumn)
 
     setHeaderTableSelection(ui->widgetHex_IMAGE_NT_HEADERS,ui->tableWidget_IMAGE_NT_HEADERS);
+}
+
+void PEWidget::on_tableWidget_IMAGE_FILE_HEADER_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
+{
+    Q_UNUSED(currentRow)
+    Q_UNUSED(currentColumn)
+    Q_UNUSED(previousRow)
+    Q_UNUSED(previousColumn)
+
+    setHeaderTableSelection(ui->widgetHex_IMAGE_FILE_HEADER,ui->tableWidget_IMAGE_FILE_HEADER);
 }

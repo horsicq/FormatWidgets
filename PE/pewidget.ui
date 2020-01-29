@@ -92,7 +92,7 @@
      </widget>
      <widget class="QStackedWidget" name="stackedWidgetInfo">
       <property name="currentIndex">
-       <number>2</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="page_HEX">
        <layout class="QVBoxLayout" name="verticalLayout_13">
@@ -214,9 +214,6 @@
       </widget>
       <widget class="QWidget" name="page_IMAGE_FILE_HEADER">
        <layout class="QVBoxLayout" name="verticalLayout_2">
-        <property name="spacing">
-         <number>0</number>
-        </property>
         <property name="leftMargin">
          <number>0</number>
         </property>
@@ -249,6 +246,16 @@
           <attribute name="verticalHeaderDefaultSectionSize">
            <number>21</number>
           </attribute>
+         </widget>
+        </item>
+        <item>
+         <widget class="ToolsWidget" name="widgetHex_IMAGE_FILE_HEADER" native="true">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>200</height>
+           </size>
+          </property>
          </widget>
         </item>
        </layout>
