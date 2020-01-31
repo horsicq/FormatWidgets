@@ -1,4 +1,4 @@
-// copyright (c) 2017-2019 hors<horsicq@gmail.com>
+// copyright (c) 2017-2020 hors<horsicq@gmail.com>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -75,6 +75,7 @@ private slots:
     void on_tableWidget_IMAGE_DOS_HEADER_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     void on_tableWidget_IMAGE_NT_HEADERS_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     void on_tableWidget_IMAGE_FILE_HEADER_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
+    void on_tableWidget_IMAGE_OPTIONAL_HEADER_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
 
 private:
     enum CB

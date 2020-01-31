@@ -1,4 +1,4 @@
-// copyright (c) 2017-2019 hors<horsicq@gmail.com>
+// copyright (c) 2017-2020 hors<horsicq@gmail.com>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -839,6 +839,11 @@ void PEWidget::reloadData()
 
                 invWidget[INV_IMAGE_OPTIONAL_HEADER_AddressOfEntryPoint]->setAddressAndSize(&pe,pe.getBaseAddress()+oh32.AddressOfEntryPoint,0);
             }
+
+            qint64 nOffset=pe.getOptionalHeaderOffset();
+            qint64 nSize=pe.getOptionalHeaderSize();
+
+            loadHexSubdevice(nOffset,nSize,nOffset,&subDevice[SPE::TYPE_IMAGE_OPTIONAL_HEADER],ui->widgetHex_IMAGE_OPTIONAL_HEADER);
 
             blockSignals(false);
         }
@@ -1903,4 +1908,14 @@ void PEWidget::on_tableWidget_IMAGE_FILE_HEADER_currentCellChanged(int currentRo
     Q_UNUSED(previousColumn)
 
     setHeaderTableSelection(ui->widgetHex_IMAGE_FILE_HEADER,ui->tableWidget_IMAGE_FILE_HEADER);
+}
+
+void PEWidget::on_tableWidget_IMAGE_OPTIONAL_HEADER_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
+{
+    Q_UNUSED(currentRow)
+    Q_UNUSED(currentColumn)
+    Q_UNUSED(previousRow)
+    Q_UNUSED(previousColumn)
+
+    setHeaderTableSelection(ui->widgetHex_IMAGE_OPTIONAL_HEADER,ui->tableWidget_IMAGE_OPTIONAL_HEADER);
 }
