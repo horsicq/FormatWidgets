@@ -680,8 +680,9 @@ void PEWidget::reloadData()
 
             qint64 nOffset=pe.getDosHeaderExOffset();
             qint64 nSize=pe.getDosHeaderExSize();
+            qint64 nAddress=pe.offsetToRelAddress(nOffset);
 
-            loadHexSubdevice(nOffset,nSize,nOffset,&subDevice[SPE::TYPE_IMAGE_DOS_HEADER],ui->widgetHex_IMAGE_DOS_HEADER);
+            loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_IMAGE_DOS_HEADER],ui->widgetHex_IMAGE_DOS_HEADER);
 
             blockSignals(false);
         }
@@ -702,8 +703,9 @@ void PEWidget::reloadData()
 
             qint64 nOffset=pe.getNtHeadersOffset();
             qint64 nSize=4;
+            qint64 nAddress=pe.offsetToRelAddress(nOffset);
 
-            loadHexSubdevice(nOffset,nSize,nOffset,&subDevice[SPE::TYPE_IMAGE_NT_HEADERS],ui->widgetHex_IMAGE_NT_HEADERS);
+            loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_IMAGE_NT_HEADERS],ui->widgetHex_IMAGE_NT_HEADERS);
 
             blockSignals(false);
         }
@@ -739,8 +741,9 @@ void PEWidget::reloadData()
 
             qint64 nOffset=pe.getFileHeaderOffset();
             qint64 nSize=pe.getFileHeaderSize();
+            qint64 nAddress=pe.offsetToRelAddress(nOffset);
 
-            loadHexSubdevice(nOffset,nSize,nOffset,&subDevice[SPE::TYPE_IMAGE_FILE_HEADER],ui->widgetHex_IMAGE_FILE_HEADER);
+            loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_IMAGE_FILE_HEADER],ui->widgetHex_IMAGE_FILE_HEADER);
 
             blockSignals(false);
         }
@@ -842,8 +845,9 @@ void PEWidget::reloadData()
 
             qint64 nOffset=pe.getOptionalHeaderOffset();
             qint64 nSize=pe.getOptionalHeaderSize();
+            qint64 nAddress=pe.offsetToRelAddress(nOffset);
 
-            loadHexSubdevice(nOffset,nSize,nOffset,&subDevice[SPE::TYPE_IMAGE_OPTIONAL_HEADER],ui->widgetHex_IMAGE_OPTIONAL_HEADER);
+            loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_IMAGE_OPTIONAL_HEADER],ui->widgetHex_IMAGE_OPTIONAL_HEADER);
 
             blockSignals(false);
         }
@@ -1435,6 +1439,12 @@ void PEWidget::reloadData()
                 invWidget[INV_IMAGE_LOADCONFIG_SEHandlerTable]->setAddressAndSize(&pe,lc32.SEHandlerTable,0);
             }
 
+            qint64 nOffset=pe.getLoadConfigDirectoryOffset();
+            qint64 nSize=pe.getLoadConfigDirectorySize();
+            qint64 nAddress=pe.offsetToRelAddress(nOffset);
+
+            loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_LOADCONFIG],ui->widgetHex_LoadConfig);
+
             blockSignals(false);
         }
         else if(nData==SPE::TYPE_BOUNDIMPORT)
@@ -1918,4 +1928,14 @@ void PEWidget::on_tableWidget_IMAGE_OPTIONAL_HEADER_currentCellChanged(int curre
     Q_UNUSED(previousColumn)
 
     setHeaderTableSelection(ui->widgetHex_IMAGE_OPTIONAL_HEADER,ui->tableWidget_IMAGE_OPTIONAL_HEADER);
+}
+
+void PEWidget::on_tableWidget_LoadConfig_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
+{
+    Q_UNUSED(currentRow)
+    Q_UNUSED(currentColumn)
+    Q_UNUSED(previousRow)
+    Q_UNUSED(previousColumn)
+
+    setHeaderTableSelection(ui->widgetHex_LoadConfig,ui->tableWidget_LoadConfig);
 }
