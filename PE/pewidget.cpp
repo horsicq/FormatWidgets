@@ -860,7 +860,7 @@ void PEWidget::reloadData()
 
             blockSignals(true);
 
-//            quint32 nNumberOfRvaAndSizes=pe.getOptionalHeader_NumberOfRvaAndSizes(); // TODO !!!
+            quint32 nNumberOfRvaAndSizes=pe.getOptionalHeader_NumberOfRvaAndSizes();
 
             ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->setRowCount(16);
 
@@ -893,6 +893,12 @@ void PEWidget::reloadData()
 
                 QTableWidgetItem *pItem=new QTableWidgetItem(XBinary::valueToHex(dd.Size));
                 ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->setItem(i,3,pItem);
+
+
+//                if(i<nNumberOfRvaAndSizes) // TODO !!!
+//                {
+//                    ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->item(i,3)->setBackgroundColor();
+//                }
 
                 // TODO !!!
 //                ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->setItem(i,3,new QTableWidgetItem(XBinary::valueToHex(dd.Size)));
