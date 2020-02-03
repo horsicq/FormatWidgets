@@ -288,6 +288,9 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                         case N_IMAGE_DOS_HEADER::e_res2_9:              pe.set_e_res2(9,(quint16)nValue);           break;
                         case N_IMAGE_DOS_HEADER::e_lfanew:              pe.set_e_lfanew((quint32)nValue);           break;
                     }
+
+                    ui->widgetHex_IMAGE_DOS_HEADER->reload();
+
                     break;
 
                 case SPE::TYPE_IMAGE_NT_HEADERS:
@@ -295,6 +298,9 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                     {
                         case N_IMAGE_NT_HEADERS::Signature:             pe.setNtHeaders_Signature((quint32)nValue);     break;
                     }
+
+                    ui->widgetHex_IMAGE_NT_HEADERS->reload();
+
                     break;
 
                 case SPE::TYPE_IMAGE_FILE_HEADER:
@@ -308,6 +314,9 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                         case N_IMAGE_FILE_HEADER::SizeOfOptionalHeader: pe.setFileHeader_SizeOfOptionalHeader((quint16)nValue); break;
                         case N_IMAGE_FILE_HEADER::Characteristics:      pe.setFileHeader_Characteristics((quint16)nValue);      break;
                     }
+
+                    ui->widgetHex_IMAGE_FILE_HEADER->reload();
+
                     break;
 
                 case SPE::TYPE_IMAGE_OPTIONAL_HEADER:
@@ -344,6 +353,9 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                         case N_IMAGE_OPTIONAL_HEADER::LoaderFlags:              pe.setOptionalHeader_LoaderFlags((quint32)nValue);              break;
                         case N_IMAGE_OPTIONAL_HEADER::NumberOfRvaAndSizes:      pe.setOptionalHeader_NumberOfRvaAndSizes((quint32)nValue);      break;
                     }
+
+                    ui->widgetHex_IMAGE_OPTIONAL_HEADER->reload();
+
                     break;
 
 //                case SPE::TYPE_IMAGE_DIRECTORY_ENTRIES:
@@ -439,6 +451,9 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                         case N_IMAGE_LOADCONFIG::SEHandlerTable:                pe.setLoadConfig_SEHandlerTable((quint64)nValue);                   break;
                         case N_IMAGE_LOADCONFIG::SEHandlerCount:                pe.setLoadConfig_SEHandlerCount((quint64)nValue);                   break;
                     }
+
+                    ui->widgetHex_LoadConfig->reload();
+
                     break;
             }
 
