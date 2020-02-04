@@ -427,6 +427,9 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                         case N_IMAGE_NETHEADER::Flags:                  pe.setNetHeader_Flags((quint32)nValue);                     break;
                         case N_IMAGE_NETHEADER::EntryPoint:             pe.setNetHeader_EntryPoint((quint32)nValue);                break;
                     }
+
+                    ui->widgetHex_NetHeader->reload();
+
                     break;
                 case SPE::TYPE_LOADCONFIG:
                     switch(nNdata)
@@ -1518,6 +1521,12 @@ void PEWidget::reloadData()
 
             comboBox[CB_IMAGE_NETHEADER_FLAGS]->setValue(netHeader.Flags);
 
+            qint64 nOffset=pe.getNetHeaderOffset();
+            qint64 nSize=pe.getNetHeaderSize();
+            qint64 nAddress=pe.offsetToRelAddress(nOffset);
+
+            loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_NETHEADER],ui->widgetHex_NetHeader);
+
             blockSignals(false);
         }
         else if(nData==SPE::TYPE_OVERLAY)
@@ -1959,4 +1968,14 @@ void PEWidget::on_tableWidget_LoadConfig_currentCellChanged(int currentRow, int 
     Q_UNUSED(previousColumn)
 
     setHeaderTableSelection(ui->widgetHex_LoadConfig,ui->tableWidget_LoadConfig);
+}
+
+void PEWidget::on_tableWidget_NetHeader_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
+{
+    Q_UNUSED(currentRow)
+    Q_UNUSED(currentColumn)
+    Q_UNUSED(previousRow)
+    Q_UNUSED(previousColumn)
+
+    setHeaderTableSelection(ui->widgetHex_NetHeader,ui->tableWidget_NetHeader);
 }

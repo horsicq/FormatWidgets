@@ -92,7 +92,7 @@
      </widget>
      <widget class="QStackedWidget" name="stackedWidgetInfo">
       <property name="currentIndex">
-       <number>16</number>
+       <number>19</number>
       </property>
       <widget class="QWidget" name="page_HEX">
        <layout class="QVBoxLayout" name="verticalLayout_13">
@@ -952,6 +952,18 @@
       </widget>
       <widget class="QWidget" name="page_NetHeader">
        <layout class="QVBoxLayout" name="verticalLayout_20">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
         <item>
          <widget class="QTableWidget" name="tableWidget_NetHeader">
           <property name="contextMenuPolicy">
@@ -975,6 +987,16 @@
           <attribute name="verticalHeaderDefaultSectionSize">
            <number>21</number>
           </attribute>
+         </widget>
+        </item>
+        <item>
+         <widget class="ToolsWidget" name="widgetHex_NetHeader" native="true">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>200</height>
+           </size>
+          </property>
          </widget>
         </item>
        </layout>
