@@ -210,6 +210,8 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                     {
                         case N_IMAGE_OPTIONAL_HEADER::Magic:                comboBox[CB_IMAGE_OPTIONAL_HEADER_Magic]->setValue(nValue);                 break;
                         case N_IMAGE_OPTIONAL_HEADER::AddressOfEntryPoint:  invWidget[INV_IMAGE_OPTIONAL_HEADER_AddressOfEntryPoint]->setAddressAndSize(&pe,pe.getBaseAddress()+(quint32)nValue,0); break;
+                        case N_IMAGE_OPTIONAL_HEADER::BaseOfCode:           invWidget[INV_IMAGE_OPTIONAL_HEADER_BaseOfCode]->setAddressAndSize(&pe,pe.getBaseAddress()+(quint32)nValue,0);          break;
+                        case N_IMAGE_OPTIONAL_HEADER::BaseOfData:           invWidget[INV_IMAGE_OPTIONAL_HEADER_BaseOfData]->setAddressAndSize(&pe,pe.getBaseAddress()+(quint32)nValue,0);          break;
                         case N_IMAGE_OPTIONAL_HEADER::Subsystem:            comboBox[CB_IMAGE_OPTIONAL_HEADER_Subsystem]->setValue(nValue);             break;
                         case N_IMAGE_OPTIONAL_HEADER::DllCharacteristics:   comboBox[CB_IMAGE_OPTIONAL_HEADER_DllCharacteristics]->setValue(nValue);    break;
                     }
@@ -775,6 +777,12 @@ void PEWidget::reloadData()
                 comboBox[CB_IMAGE_OPTIONAL_HEADER_DllCharacteristics]=createComboBox(ui->tableWidget_IMAGE_OPTIONAL_HEADER,XPE::getImageOptionalHeaderDllCharacteristicsS(),SPE::TYPE_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::DllCharacteristics,XComboBoxEx::CBTYPE_FLAGS);
 
                 invWidget[INV_IMAGE_OPTIONAL_HEADER_AddressOfEntryPoint]=createInvWidget(ui->tableWidget_IMAGE_OPTIONAL_HEADER,SPE::TYPE_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::AddressOfEntryPoint,InvWidget::TYPE_HEX);
+                invWidget[INV_IMAGE_OPTIONAL_HEADER_BaseOfCode]=createInvWidget(ui->tableWidget_IMAGE_OPTIONAL_HEADER,SPE::TYPE_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::BaseOfCode,InvWidget::TYPE_HEX);
+
+                if(!pe.is64())
+                {
+                    invWidget[INV_IMAGE_OPTIONAL_HEADER_BaseOfData]=createInvWidget(ui->tableWidget_IMAGE_OPTIONAL_HEADER,SPE::TYPE_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::BaseOfData,InvWidget::TYPE_HEX);
+                }
 
                 pushButton[PB_CalculateChecksum]=createPushButton(ui->tableWidget_IMAGE_OPTIONAL_HEADER,SPE::TYPE_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::CheckSum,tr("Calculate"));
             }
@@ -819,6 +827,7 @@ void PEWidget::reloadData()
                 comboBox[CB_IMAGE_OPTIONAL_HEADER_DllCharacteristics]->setValue(oh64.DllCharacteristics);
 
                 invWidget[INV_IMAGE_OPTIONAL_HEADER_AddressOfEntryPoint]->setAddressAndSize(&pe,pe.getBaseAddress()+oh64.AddressOfEntryPoint,0);
+                invWidget[INV_IMAGE_OPTIONAL_HEADER_BaseOfCode]->setAddressAndSize(&pe,pe.getBaseAddress()+oh64.BaseOfCode,0);
             }
             else
             {
@@ -859,6 +868,8 @@ void PEWidget::reloadData()
                 comboBox[CB_IMAGE_OPTIONAL_HEADER_DllCharacteristics]->setValue(oh32.DllCharacteristics);
 
                 invWidget[INV_IMAGE_OPTIONAL_HEADER_AddressOfEntryPoint]->setAddressAndSize(&pe,pe.getBaseAddress()+oh32.AddressOfEntryPoint,0);
+                invWidget[INV_IMAGE_OPTIONAL_HEADER_BaseOfCode]->setAddressAndSize(&pe,pe.getBaseAddress()+oh32.BaseOfCode,0);
+                invWidget[INV_IMAGE_OPTIONAL_HEADER_BaseOfData]->setAddressAndSize(&pe,pe.getBaseAddress()+oh32.BaseOfData,0);
             }
 
             qint64 nOffset=pe.getOptionalHeaderOffset();

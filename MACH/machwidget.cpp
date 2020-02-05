@@ -155,6 +155,8 @@ bool MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, 
                         case N_mach_header::reserved:   mach.setHeader_reserved((quint32)nValue);       break;
                     }
 
+                    ui->widgetHex_mach_header->reload();
+
                     break;
             }
 

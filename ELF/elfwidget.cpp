@@ -167,6 +167,8 @@ bool ELFWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, i
                         case N_Elf_Ehdr::e_shstrndx:    (elf.is64()?(elf.setHdr64_shstrndx((quint16)nValue)):(elf.setHdr32_shstrndx((quint16)nValue)));     break;
                     }
 
+                    ui->widgetHex_Elf_Ehdr->reload();
+
                     break;
             }
 

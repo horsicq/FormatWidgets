@@ -111,6 +111,8 @@ private:
         INV_IMAGE_DOS_HEADER_e_lfanew,
         INV_IMAGE_FILE_HEADER_PointerToSymbolTable,
         INV_IMAGE_OPTIONAL_HEADER_AddressOfEntryPoint,
+        INV_IMAGE_OPTIONAL_HEADER_BaseOfCode,
+        INV_IMAGE_OPTIONAL_HEADER_BaseOfData,
         INV_IMAGE_TLS_StartAddressOfRawData,
         INV_IMAGE_TLS_EndAddressOfRawData,
         INV_IMAGE_TLS_AddressOfIndex,
