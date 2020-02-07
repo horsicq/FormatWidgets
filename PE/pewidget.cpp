@@ -614,7 +614,8 @@ void PEWidget::editSectionHeader()
     if(nRow!=-1)
     {
         SectionHeaderWidget *pSectionHeaderWidget=new SectionHeaderWidget(this);
-        DialogSectionHeader dsh(pSectionHeaderWidget,this);
+        DialogSectionHeader dsh(this);
+        dsh.setWidget(pSectionHeaderWidget);
         dsh.setData(getDevice(),getOptions(),(quint32)nRow,"Section");
         dsh.setEdited(isEdited());
 

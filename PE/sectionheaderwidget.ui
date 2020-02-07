@@ -81,8 +81,26 @@
      </attribute>
     </widget>
    </item>
+   <item>
+    <widget class="ToolsWidget" name="widgetHex_IMAGE_SECTION_HEADER" native="true">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>200</height>
+      </size>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ToolsWidget</class>
+   <extends>QWidget</extends>
+   <header>toolswidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

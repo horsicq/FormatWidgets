@@ -21,17 +21,11 @@
 #include "dialogsectionheader.h"
 #include "ui_dialogsectionheader.h"
 
-DialogSectionHeader::DialogSectionHeader(FormatWidget *pWidget,QWidget *parent) :
+DialogSectionHeader::DialogSectionHeader(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::DialogSectionHeader)
 {
     ui->setupUi(this);
-
-    this->pWidget=pWidget;
-
-    ui->WidgetLayout->addWidget(pWidget);
-
-    connect(pWidget,SIGNAL(editState(bool)),this,SIGNAL(editState(bool)));
 
     setWindowFlags(Qt::Window);
 }
@@ -39,6 +33,15 @@ DialogSectionHeader::DialogSectionHeader(FormatWidget *pWidget,QWidget *parent) 
 DialogSectionHeader::~DialogSectionHeader()
 {
     delete ui;
+}
+
+void DialogSectionHeader::setWidget(FormatWidget *pWidget)
+{
+    this->pWidget=pWidget;
+
+    ui->WidgetLayout->addWidget(pWidget);
+
+    connect(pWidget,SIGNAL(editState(bool)),this,SIGNAL(editState(bool)));
 }
 
 void DialogSectionHeader::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, QString sTitle)

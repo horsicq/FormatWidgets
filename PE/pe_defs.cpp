@@ -244,7 +244,7 @@ const FormatWidget::HEADER_RECORD records[]=
     {NumberOfRelocations,   "NumberOfRelocations",      offsetof(XPE_DEF::IMAGE_SECTION_HEADER,NumberOfRelocations),    2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
     {NumberOfLinenumbers,   "NumberOfLinenumbers",      offsetof(XPE_DEF::IMAGE_SECTION_HEADER,NumberOfLinenumbers),    2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
     {Characteristics,       "Characteristics",          offsetof(XPE_DEF::IMAGE_SECTION_HEADER,Characteristics),        4,      "DWORD",        FormatWidget::VAL_TYPE_FLAGS},
-    {Characteristics,       "",                         offsetof(XPE_DEF::IMAGE_SECTION_HEADER,Characteristics),        0,      "",             FormatWidget::VAL_TYPE_UNKNOWN}
+    {Characteristics,       "",                         -1,                                                             0,      "",             FormatWidget::VAL_TYPE_UNKNOWN}
 };
 }
 

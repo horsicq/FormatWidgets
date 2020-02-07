@@ -34,8 +34,9 @@ class DialogSectionHeader : public QDialog
     Q_OBJECT
 
 public:
-    explicit DialogSectionHeader(FormatWidget *pWidget,QWidget *parent);
+    explicit DialogSectionHeader(QWidget *parent);
     ~DialogSectionHeader();
+    void setWidget(FormatWidget *pWidget);
     void setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber,QString sTitle);
     void setEdited(bool bState);
 

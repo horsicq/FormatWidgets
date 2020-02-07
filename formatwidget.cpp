@@ -142,10 +142,15 @@ void FormatWidget::setHeaderTableSelection(ToolsWidget *pToolWidget, QTableWidge
 
     if(nCurrentRow!=-1)
     {
-        qint64 nAddress=pToolWidget->getBaseAddress()+pTableWidget->item(nCurrentRow,0)->data(Qt::UserRole+HEADER_DATA_OFFSET).toInt();
+        qint32 nOffset=pTableWidget->item(nCurrentRow,0)->data(Qt::UserRole+HEADER_DATA_OFFSET).toInt();
         qint64 nSize=pTableWidget->item(nCurrentRow,0)->data(Qt::UserRole+HEADER_DATA_SIZE).toInt();
 
-        pToolWidget->setSelection(nAddress,nSize);
+        if(nOffset!=-1)
+        {
+            qint64 nAddress=pToolWidget->getBaseAddress()+nOffset;
+
+            pToolWidget->setSelection(nAddress,nSize);
+        }
     }
 }
 
@@ -253,7 +258,12 @@ bool FormatWidget::createHeaderTable(int type, QTableWidget *pTableWidget, const
         pTableWidget->setItem(i,HEADER_COLUMN_NAME,newItemName);
 
         QTableWidgetItem *newItemOffset=new QTableWidgetItem;
-        newItemOffset->setText(XBinary::valueToHex((quint16)pRecords[i].nOffset));
+
+        if(pRecords[i].nOffset!=-1)
+        {
+            newItemOffset->setText(XBinary::valueToHex((quint16)pRecords[i].nOffset));
+        }
+
         pTableWidget->setItem(i,HEADER_COLUMN_OFFSET,newItemOffset);
 
         QTableWidgetItem *newItemType=new QTableWidgetItem;

@@ -49,6 +49,8 @@ void SectionHeaderWidget::clear()
     memset(lineEdit_IMAGE_SECTION_HEADER,0,sizeof lineEdit_IMAGE_SECTION_HEADER);
     memset(comboBox,0,sizeof comboBox);
 
+    pSubDevice=nullptr;
+
     ui->checkBoxReadonly->setChecked(true);
 }
 
@@ -98,7 +100,9 @@ bool SectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int
                         case N_IMAGE_SECTION_HEADER::Characteristics:       pe.setSection_Characteristics((quint32)nPosition,(quint32)nValue);      break;
                     }
 
-                break;
+                    ui->widgetHex_IMAGE_SECTION_HEADER->reload();
+
+                    break;
             }
 
             bResult=true;
@@ -131,7 +135,7 @@ void SectionHeaderWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget
     switch(type)
     {
         case SPE::TYPE_IMAGE_SECTION_HEADER:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*12);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*16);
             pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*8);
             pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
             break;
@@ -179,6 +183,12 @@ void SectionHeaderWidget::reloadData()
         comboBox[CB_CHARACTERISTICS]->setValue(ish.Characteristics);
         comboBox[CB_ALIGH]->setValue(ish.Characteristics);
 
+        qint64 nOffset=pe.getSectionHeaderOffset(getNumber());
+        qint64 nSize=pe.getSectionHeaderSize();
+        qint64 nAddress=pe.offsetToRelAddress(nOffset);
+
+        loadHexSubdevice(nOffset,nSize,nAddress,&pSubDevice,ui->widgetHex_IMAGE_SECTION_HEADER);
+
         blockSignals(false);
 
         setReadonly(ui->checkBoxReadonly->isChecked());
@@ -209,4 +219,14 @@ void SectionHeaderWidget::widgetValueChanged(quint64 nValue)
 
             break;
     }
+}
+
+void SectionHeaderWidget::on_tableWidget_IMAGE_SECTION_HEADER_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
+{
+    Q_UNUSED(currentRow)
+    Q_UNUSED(currentColumn)
+    Q_UNUSED(previousRow)
+    Q_UNUSED(previousColumn)
+
+    setHeaderTableSelection(ui->widgetHex_IMAGE_SECTION_HEADER,ui->tableWidget_IMAGE_SECTION_HEADER);
 }
