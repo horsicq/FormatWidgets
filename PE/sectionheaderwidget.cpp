@@ -48,6 +48,7 @@ void SectionHeaderWidget::clear()
 
     memset(lineEdit_IMAGE_SECTION_HEADER,0,sizeof lineEdit_IMAGE_SECTION_HEADER);
     memset(comboBox,0,sizeof comboBox);
+    memset(invWidget,0,sizeof invWidget);
 
     pSubDevice=nullptr;
 
@@ -83,6 +84,18 @@ bool SectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int
 
         if(pe.isValid())
         {
+            switch(nStype)
+            {
+                case SPE::TYPE_IMAGE_SECTION_HEADER:
+                    switch(nNdata)
+                    {
+                        case N_IMAGE_SECTION_HEADER::VirtualAddress:        invWidget[INV_VirtualAddress]->setOffsetAndSize(&pe,pe.getBaseAddress()+(quint32)nValue,0);     break;
+                        case N_IMAGE_SECTION_HEADER::PointerToRawData:      invWidget[INV_PointerToRawData]->setOffsetAndSize(&pe,(quint32)nValue,0);                       break;
+                    }
+
+                    break;
+            }
+
             switch(nStype)
             {
                 case SPE::TYPE_IMAGE_SECTION_HEADER:
@@ -158,6 +171,9 @@ void SectionHeaderWidget::reloadData()
             bInit=createHeaderTable(SPE::TYPE_IMAGE_SECTION_HEADER,ui->tableWidget_IMAGE_SECTION_HEADER,N_IMAGE_SECTION_HEADER::records,lineEdit_IMAGE_SECTION_HEADER,N_IMAGE_SECTION_HEADER::__data_size+1,getNumber());
             comboBox[CB_CHARACTERISTICS]=createComboBox(ui->tableWidget_IMAGE_SECTION_HEADER,XPE::getImageSectionHeaderFlagsS(),SPE::TYPE_IMAGE_SECTION_HEADER,N_IMAGE_SECTION_HEADER::Characteristics,XComboBoxEx::CBTYPE_FLAGS);
             comboBox[CB_ALIGH]=createComboBox(ui->tableWidget_IMAGE_SECTION_HEADER,XPE::getImageSectionHeaderAlignsS(),SPE::TYPE_IMAGE_SECTION_HEADER,N_IMAGE_SECTION_HEADER::Characteristics+1,XComboBoxEx::CBTYPE_EFLAGS,XPE_DEF::S_IMAGE_SCN_ALIGN_MASK);
+
+            invWidget[INV_VirtualAddress]=createInvWidget(ui->tableWidget_IMAGE_SECTION_HEADER,SPE::TYPE_IMAGE_SECTION_HEADER,N_IMAGE_SECTION_HEADER::VirtualAddress,InvWidget::TYPE_HEX);
+            invWidget[INV_PointerToRawData]=createInvWidget(ui->tableWidget_IMAGE_SECTION_HEADER,SPE::TYPE_IMAGE_SECTION_HEADER,N_IMAGE_SECTION_HEADER::PointerToRawData,InvWidget::TYPE_HEX);
         }
 
         blockSignals(true);
@@ -182,6 +198,9 @@ void SectionHeaderWidget::reloadData()
 
         comboBox[CB_CHARACTERISTICS]->setValue(ish.Characteristics);
         comboBox[CB_ALIGH]->setValue(ish.Characteristics);
+
+        invWidget[INV_VirtualAddress]->setAddressAndSize(&pe,pe.getBaseAddress()+ish.VirtualAddress,0);
+        invWidget[INV_PointerToRawData]->setAddressAndSize(&pe,pe.offsetToAddress(ish.PointerToRawData),0);
 
         qint64 nOffset=pe.getSectionHeaderOffset(getNumber());
         qint64 nSize=pe.getSectionHeaderSize();

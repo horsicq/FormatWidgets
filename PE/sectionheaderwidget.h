@@ -61,10 +61,18 @@ private slots:
     void on_tableWidget_IMAGE_SECTION_HEADER_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
 
 private:
+    enum INV
+    {
+        INV_VirtualAddress,
+        INV_PointerToRawData,
+        __INV_size
+    };
+
     Ui::SectionHeaderWidget *ui;
     XLineEditHEX *lineEdit_IMAGE_SECTION_HEADER[N_IMAGE_SECTION_HEADER::__data_size+1];
     XComboBoxEx *comboBox[__CB_size];
     bool bInit;
+    InvWidget *invWidget[__INV_size];
     SubDevice *pSubDevice;
 };
 
