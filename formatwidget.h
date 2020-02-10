@@ -81,7 +81,8 @@ public:
         HEADER_COLUMN_OFFSET,
         HEADER_COLUMN_TYPE,
         HEADER_COLUMN_VALUE,
-        HEADER_COLUMN_INFO
+        HEADER_COLUMN_INFO,
+        HEADER_COLUMN_COMMENT
     };
 
     enum HEADER_DATA
@@ -119,6 +120,7 @@ public:
     bool isReadonly();
     QTreeWidgetItem *createNewItem(int nUserData, QString sTitle);
     bool createHeaderTable(int type,QTableWidget *pTableWidget, const HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nRecordCount,int nPosition=0);
+    void addComment(QTableWidget *pTableWidget,int nRow,QString sComment);
 
 //    bool createDirectoryTable(int type,QTableWidget *pTableWidget, const DIRECTORY_ENTRY_RECORD *pRecords,int nRecordCount);
     bool createSectionTable(int type,QTableWidget *pTableWidget, const HEADER_RECORD *pRecords,int nRecordCount);

@@ -236,7 +236,7 @@ bool FormatWidget::saveBackup()
 
 bool FormatWidget::createHeaderTable(int type, QTableWidget *pTableWidget, const HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nRecordCount, int nPosition)
 {
-    pTableWidget->setColumnCount(5);
+    pTableWidget->setColumnCount(6);
     pTableWidget->setRowCount(nRecordCount);
 
     QStringList slHeader;
@@ -244,6 +244,7 @@ bool FormatWidget::createHeaderTable(int type, QTableWidget *pTableWidget, const
     slHeader.append(tr("Offset"));
     slHeader.append(tr("Type"));
     slHeader.append(tr("Value"));
+    slHeader.append(tr(""));
     slHeader.append(tr(""));
 
     pTableWidget->setHorizontalHeaderLabels(slHeader);
@@ -292,9 +293,16 @@ bool FormatWidget::createHeaderTable(int type, QTableWidget *pTableWidget, const
         }
     }
 
+    pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_COMMENT,QHeaderView::Stretch);
+
     adjustHeaderTable(type,pTableWidget);
 
     return true;
+}
+
+void FormatWidget::addComment(QTableWidget *pTableWidget, int nRow, QString sComment)
+{
+    // TODO
 }
 
 //bool FormatWidget::createDirectoryTable(int type, QTableWidget *pTableWidget, const DIRECTORY_ENTRY_RECORD *pRecords, int nRecordCount)
