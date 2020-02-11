@@ -300,9 +300,11 @@ bool FormatWidget::createHeaderTable(int type, QTableWidget *pTableWidget, const
     return true;
 }
 
-void FormatWidget::addComment(QTableWidget *pTableWidget, int nRow, QString sComment)
+void FormatWidget::addComment(QTableWidget *pTableWidget, int nRow, int nColumn, QString sComment)
 {
-    // TODO
+    QTableWidgetItem *item=new QTableWidgetItem;
+    item->setText(sComment);
+    pTableWidget->setItem(nRow,nColumn,item);
 }
 
 //bool FormatWidget::createDirectoryTable(int type, QTableWidget *pTableWidget, const DIRECTORY_ENTRY_RECORD *pRecords, int nRecordCount)
