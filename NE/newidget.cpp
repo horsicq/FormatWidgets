@@ -49,6 +49,7 @@ void NEWidget::clear()
     memset(lineEdit_DOS_HEADER,0,sizeof lineEdit_DOS_HEADER);
     memset(lineEdit_OS2_HEADER,0,sizeof lineEdit_OS2_HEADER);
     memset(comboBox,0,sizeof comboBox);
+    memset(invWidget,0,sizeof invWidget);
     memset(subDevice,0,sizeof subDevice);
 
     ui->checkBoxReadonly->setChecked(true);
@@ -108,7 +109,8 @@ bool NEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, in
                 case SNE::TYPE_DOS_HEADER:
                     switch(nNdata)
                     {
-                        case N_DOS_HEADER::e_magic:         comboBox[CB_DOS_HEADER_e_magic]->setValue(nValue);          break;
+                        case N_DOS_HEADER::e_magic:         comboBox[CB_DOS_HEADER_e_magic]->setValue(nValue);                                  break;
+                        case N_DOS_HEADER::e_lfanew:        invWidget[INV_IMAGE_DOS_HEADER_e_lfanew]->setOffsetAndSize(&ne,(quint32)nValue,0);  break;
                     }
                     break;
                 case SNE::TYPE_OS2_HEADER:
@@ -281,6 +283,7 @@ void NEWidget::reloadData()
             {
                 bInit[nData]=createHeaderTable(SNE::TYPE_DOS_HEADER,ui->tableWidget_DOS_HEADER,N_DOS_HEADER::records,lineEdit_DOS_HEADER,N_DOS_HEADER::__data_size,0);
                 comboBox[CB_DOS_HEADER_e_magic]=createComboBox(ui->tableWidget_DOS_HEADER,XMSDOS::getImageMagicsS(),SNE::TYPE_DOS_HEADER,N_DOS_HEADER::e_magic,XComboBoxEx::CBTYPE_NORMAL);
+                invWidget[INV_IMAGE_DOS_HEADER_e_lfanew]=createInvWidget(ui->tableWidget_DOS_HEADER,SNE::TYPE_DOS_HEADER,N_DOS_HEADER::e_lfanew,InvWidget::TYPE_HEX);
             }
 
             blockSignals(true);
@@ -320,6 +323,8 @@ void NEWidget::reloadData()
             lineEdit_DOS_HEADER[N_DOS_HEADER::e_lfanew]->setValue(msdosheaderex.e_lfanew);
 
             comboBox[CB_DOS_HEADER_e_magic]->setValue(msdosheaderex.e_magic);
+
+            invWidget[INV_IMAGE_DOS_HEADER_e_lfanew]->setOffsetAndSize(&ne,msdosheaderex.e_lfanew,0);
 
             qint64 nOffset=ne.getDosHeaderExOffset();
             qint64 nSize=ne.getDosHeaderExSize();

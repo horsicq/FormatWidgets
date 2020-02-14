@@ -67,6 +67,12 @@ private:
         __CB_size
     };
 
+    enum INV
+    {
+        INV_IMAGE_DOS_HEADER_e_lfanew,
+        __INV_size
+    };
+
     Ui::NEWidget *ui;
 
     XLineEditHEX *lineEdit_DOS_HEADER[N_DOS_HEADER::__data_size];
@@ -74,7 +80,7 @@ private:
     XComboBoxEx *comboBox[__CB_size];
 
     bool bInit[SNE::__TYPE_size];
-
+    InvWidget *invWidget[__INV_size];
     SubDevice *subDevice[SNE::__TYPE_size];
 };
 
