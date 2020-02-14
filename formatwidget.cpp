@@ -26,6 +26,9 @@ FormatWidget::FormatWidget(QWidget *parent):
     bIsReadonly=false;
     options={};
     bIsEdited=false;
+
+    colDisabled=QWidget::palette().color(QPalette::Window);
+    colEnabled=QWidget::palette().color(QPalette::BrightText);
 }
 
 FormatWidget::FormatWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, QWidget *parent):
@@ -152,6 +155,16 @@ void FormatWidget::setHeaderTableSelection(ToolsWidget *pToolWidget, QTableWidge
             pToolWidget->setSelection(nAddress,nSize);
         }
     }
+}
+
+QColor FormatWidget::getEnabledColor()
+{
+    return colEnabled;
+}
+
+QColor FormatWidget::getDisabledColor()
+{
+    return colDisabled;
 }
 
 //void FormatWidget::resizeToolsWidget(QWidget *pParent, ToolsWidget *pToolWidget)

@@ -149,6 +149,9 @@ public:
 //    void resizeToolsWidget(QWidget *pParent,ToolsWidget *pToolWidget);
     void setHeaderTableSelection(ToolsWidget *pToolWidget,QTableWidget *pTableWidget);
 
+    QColor getEnabledColor();
+    QColor getDisabledColor();
+
 signals:
     void editState(bool bState);
 
@@ -170,6 +173,9 @@ private:
     quint32 nNumber;
     bool bIsReadonly;
     bool bIsEdited;
+
+    QColor colEnabled;
+    QColor colDisabled;
 };
 
 #endif // FORMATWIDGET_H
