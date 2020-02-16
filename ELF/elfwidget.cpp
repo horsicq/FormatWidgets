@@ -127,6 +127,8 @@ bool ELFWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, i
                         case N_Elf_Ehdr::e_type:        comboBox[CB_Elf_Ehdr_type]->setValue(nValue);                                                               break;
                         case N_Elf_Ehdr::e_machine:     comboBox[CB_Elf_Ehdr_machine]->setValue(nValue);                                                            break;
                         case N_Elf_Ehdr::e_entry:       invWidget[INV_CB_Elf_e_entry]->setAddressAndSize(&elf,elf.is64()?((quint64)nValue):((quint32)nValue),0);    break;
+                        case N_Elf_Ehdr::e_phoff:       invWidget[INV_CB_Elf_e_phoff]->setAddressAndSize(&elf,elf.is64()?((quint64)nValue):((quint32)nValue),0);    break;  // TODO getBaseAddress
+                        case N_Elf_Ehdr::e_shoff:       invWidget[INV_CB_Elf_e_shoff]->setAddressAndSize(&elf,elf.is64()?((quint64)nValue):((quint32)nValue),0);    break;  // TODO getBaseAddress
                     }
                     break;
             }
@@ -256,6 +258,8 @@ void ELFWidget::reloadData()
                 comboBox[CB_Elf_Ehdr_machine]=createComboBox(ui->tableWidget_Elf_Ehdr,XELF::getMachinesS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::e_machine,XComboBoxEx::CBTYPE_NORMAL);
 
                 invWidget[INV_CB_Elf_e_entry]=createInvWidget(ui->tableWidget_Elf_Ehdr,SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::e_entry,InvWidget::TYPE_HEX);
+                invWidget[INV_CB_Elf_e_phoff]=createInvWidget(ui->tableWidget_Elf_Ehdr,SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::e_phoff,InvWidget::TYPE_HEX);
+                invWidget[INV_CB_Elf_e_shoff]=createInvWidget(ui->tableWidget_Elf_Ehdr,SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::e_shoff,InvWidget::TYPE_HEX);
             }
 
             blockSignals(true);
@@ -297,6 +301,8 @@ void ELFWidget::reloadData()
                 comboBox[CB_Elf_Ehdr_machine]->setValue(elf.getHdr64_machine());
 
                 invWidget[INV_CB_Elf_e_entry]->setAddressAndSize(&elf,elf.getHdr64_entry(),0);
+                invWidget[INV_CB_Elf_e_phoff]->setAddressAndSize(&elf,elf.getHdr64_phoff(),0); // TODO getBaseAddress
+                invWidget[INV_CB_Elf_e_shoff]->setAddressAndSize(&elf,elf.getHdr64_shoff(),0); // TODO getBaseAddress
             }
             else
             {
@@ -318,6 +324,8 @@ void ELFWidget::reloadData()
                 comboBox[CB_Elf_Ehdr_machine]->setValue(elf.getHdr32_machine());
 
                 invWidget[INV_CB_Elf_e_entry]->setAddressAndSize(&elf,elf.getHdr32_entry(),0);
+                invWidget[INV_CB_Elf_e_phoff]->setAddressAndSize(&elf,elf.getHdr32_phoff(),0); // TODO getBaseAddress
+                invWidget[INV_CB_Elf_e_shoff]->setAddressAndSize(&elf,elf.getHdr32_shoff(),0); // TODO getBaseAddress
             }
 
             comboBox[CB_Elf_Ehdr_iclass]->setValue(elf.getIdent_class());
