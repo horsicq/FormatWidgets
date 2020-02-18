@@ -90,6 +90,7 @@ void ELFWidget::reload()
             QTreeWidgetItem *pItemDynamicArrayTags=createNewItem(SELF::TYPE_Elf_DynamicArrayTags,"Dynamic Array Tags");
 
             ui->treeWidgetNavi->addTopLevelItem(pItemDynamicArrayTags);
+            // TODO Libraries
         }
 
         ui->treeWidgetNavi->expandAll();
