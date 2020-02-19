@@ -462,6 +462,17 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                     break;
             }
 
+
+            switch(nStype)
+            {
+                case SPE::TYPE_EXPORT:
+                    switch(nNdata)
+                    {
+                        case N_IMAGE_EXPORT::Name:      addComment(ui->tableWidget_ExportHeader,N_IMAGE_EXPORT::Name,HEADER_COLUMN_COMMENT,pe.read_ansiString(pe.relAddressToOffset((quint32)nValue))); break;
+                    }
+                    break;
+            }
+
             bResult=true;
         }
     }
@@ -616,7 +627,7 @@ void PEWidget::editSectionHeader()
         SectionHeaderWidget *pSectionHeaderWidget=new SectionHeaderWidget(this);
         DialogSectionHeader dsh(this);
         dsh.setWidget(pSectionHeaderWidget);
-        dsh.setData(getDevice(),getOptions(),(quint32)nRow,"Section");
+        dsh.setData(getDevice(),getOptions(),(quint32)nRow,tr("Section"));
         dsh.setEdited(isEdited());
 
         connect(&dsh,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
@@ -1058,9 +1069,14 @@ void PEWidget::reloadData()
             invWidget[INV_IMAGE_EXPORT_AddressOfNameOrdinals]->setAddressAndSize(&pe,pe.getBaseAddress()+eh.directory.AddressOfNameOrdinals,0);
             invWidget[INV_IMAGE_EXPORT_AddressOfNames]->setAddressAndSize(&pe,pe.getBaseAddress()+eh.directory.AddressOfNames,0);
 
+            XBinary::_MEMORY_MAP memoryMap=pe.getMemoryMap();
+
+            addComment(ui->tableWidget_ExportHeader,N_IMAGE_EXPORT::Name,HEADER_COLUMN_COMMENT,pe.read_ansiString(pe.relAddressToOffset(&memoryMap,eh.directory.Name)));
+
             int nCount=eh.listPositions.count();
             ui->tableWidget_ExportFunctions->setRowCount(nCount);
 
+            // TODO Sort
             for(int i=0; i<nCount; i++)
             {
                 ui->tableWidget_ExportFunctions->setItem(i,N_IMAGE_EXPORT_FUNCTION::Ordinal,                new QTableWidgetItem(XBinary::valueToHex(eh.listPositions.at(i).nOrdinal)));

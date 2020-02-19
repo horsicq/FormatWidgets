@@ -26,6 +26,7 @@
 #include <QPushButton>
 #include "xbinary.h"
 
+// TODO changed signal
 class InvWidget : public QWidget
 {
     Q_OBJECT

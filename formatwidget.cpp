@@ -304,6 +304,8 @@ bool FormatWidget::createHeaderTable(int type, QTableWidget *pTableWidget, const
         {
             ppLineEdits[i]->setEnabled(false);
         }
+
+        pTableWidget->setItem(i,HEADER_COLUMN_COMMENT,new QTableWidgetItem);
     }
 
     pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_COMMENT,QHeaderView::Stretch);
@@ -315,7 +317,7 @@ bool FormatWidget::createHeaderTable(int type, QTableWidget *pTableWidget, const
 
 void FormatWidget::addComment(QTableWidget *pTableWidget, int nRow, int nColumn, QString sComment)
 {
-    QTableWidgetItem *item=new QTableWidgetItem;
+    QTableWidgetItem *item=pTableWidget->item(nRow,nColumn);
     item->setText(sComment);
     pTableWidget->setItem(nRow,nColumn,item);
 }
