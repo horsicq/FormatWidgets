@@ -366,6 +366,8 @@ enum DATA
     cb=0,
     MajorRuntimeVersion,
     MinorRuntimeVersion,
+    MetaData_Address,
+    MetaData_Size,
     Flags,
     EntryPoint,
     __data_size

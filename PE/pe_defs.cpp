@@ -360,6 +360,8 @@ const FormatWidget::HEADER_RECORD records[]=
     {cb,                        "cb",                   offsetof(XPE_DEF::IMAGE_COR20_HEADER,cb),                       4,      "DWORD",        FormatWidget::VAL_TYPE_SIZE},
     {MajorRuntimeVersion,       "MajorRuntimeVersion",  offsetof(XPE_DEF::IMAGE_COR20_HEADER,MajorRuntimeVersion),      2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
     {MinorRuntimeVersion,       "MinorRuntimeVersion",  offsetof(XPE_DEF::IMAGE_COR20_HEADER,MinorRuntimeVersion),      2,      "WORD",         FormatWidget::VAL_TYPE_DATA},
+    {MetaData_Address,          "MetaData_Address",     offsetof(XPE_DEF::IMAGE_COR20_HEADER,MetaData.VirtualAddress),  4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
+    {MetaData_Size,             "MetaData_Size",        offsetof(XPE_DEF::IMAGE_COR20_HEADER,MetaData.Size),            4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
     {Flags,                     "Flags",                offsetof(XPE_DEF::IMAGE_COR20_HEADER,Flags),                    4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
     {EntryPoint,                "EntryPoint",           offsetof(XPE_DEF::IMAGE_COR20_HEADER,EntryPointRVA),            4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
 };

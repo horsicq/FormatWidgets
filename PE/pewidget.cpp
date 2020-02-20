@@ -426,6 +426,8 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                         case N_IMAGE_NETHEADER::cb:                     pe.setNetHeader_cb((quint32)nValue);                        break;
                         case N_IMAGE_NETHEADER::MinorRuntimeVersion:    pe.setNetHeader_MinorRuntimeVersion((quint16)nValue);       break;
                         case N_IMAGE_NETHEADER::MajorRuntimeVersion:    pe.setNetHeader_MajorRuntimeVersion((quint16)nValue);       break;
+                        case N_IMAGE_NETHEADER::MetaData_Address:       pe.setNetHeader_MetaData_Address((quint32)nValue);          break;
+                        case N_IMAGE_NETHEADER::MetaData_Size:          pe.setNetHeader_MetaData_Size((quint32)nValue);             break;
                         case N_IMAGE_NETHEADER::Flags:                  pe.setNetHeader_Flags((quint32)nValue);                     break;
                         case N_IMAGE_NETHEADER::EntryPoint:             pe.setNetHeader_EntryPoint((quint32)nValue);                break;
                     }
@@ -1547,6 +1549,8 @@ void PEWidget::reloadData()
             lineEdit_NetHeader[N_IMAGE_NETHEADER::cb]->setValue(netHeader.cb);
             lineEdit_NetHeader[N_IMAGE_NETHEADER::MajorRuntimeVersion]->setValue(netHeader.MajorRuntimeVersion);
             lineEdit_NetHeader[N_IMAGE_NETHEADER::MinorRuntimeVersion]->setValue(netHeader.MinorRuntimeVersion);
+            lineEdit_NetHeader[N_IMAGE_NETHEADER::MetaData_Address]->setValue(netHeader.MetaData_Address);
+            lineEdit_NetHeader[N_IMAGE_NETHEADER::MetaData_Size]->setValue(netHeader.MetaData_Size);
             lineEdit_NetHeader[N_IMAGE_NETHEADER::Flags]->setValue(netHeader.Flags);
             lineEdit_NetHeader[N_IMAGE_NETHEADER::EntryPoint]->setValue(netHeader.EntryPoint);
 
