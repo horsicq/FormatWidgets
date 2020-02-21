@@ -1554,6 +1554,8 @@ void PEWidget::reloadData()
             lineEdit_NetHeader[N_IMAGE_NETHEADER::Flags]->setValue(netHeader.Flags);
             lineEdit_NetHeader[N_IMAGE_NETHEADER::EntryPoint]->setValue(netHeader.EntryPoint);
 
+            // TODO more
+
             comboBox[CB_IMAGE_NETHEADER_FLAGS]->setValue(netHeader.Flags);
 
             qint64 nOffset=pe.getNetHeaderOffset();
