@@ -99,7 +99,7 @@ void PEWidget::reload()
 
         if(pe.isResourcesPresent())
         {
-            QTreeWidgetItem *pResources=createNewItem(SPE::TYPE_RESOURCE,"Resource");
+            QTreeWidgetItem *pResources=createNewItem(SPE::TYPE_RESOURCE,"Resources");
 
             ui->treeWidgetNavi->addTopLevelItem(pResources);
 
@@ -199,21 +199,21 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                 case SPE::TYPE_IMAGE_FILE_HEADER:
                     switch(nNdata)
                     {
-                        case N_IMAGE_FILE_HEADER::Machine:              comboBox[CB_IMAGE_FILE_HEADER_Machine]->setValue(nValue);                   break;
-                        case N_IMAGE_FILE_HEADER::TimeDateStamp:        dateTimeEdit[TD_IMAGE_FILE_HEADER_TimeDateStamp]->setValue(nValue);         break;
-                        case N_IMAGE_FILE_HEADER::PointerToSymbolTable: invWidget[INV_IMAGE_FILE_HEADER_PointerToSymbolTable]->setAddressAndSize(&pe,pe.getBaseAddress()+(quint32)nValue,0);   break;
-                        case N_IMAGE_FILE_HEADER::Characteristics:      comboBox[CB_IMAGE_FILE_HEADER_Characteristics]->setValue(nValue);           break;
+                        case N_IMAGE_FILE_HEADER::Machine:              comboBox[CB_IMAGE_FILE_HEADER_Machine]->setValue(nValue);                                                               break;
+                        case N_IMAGE_FILE_HEADER::TimeDateStamp:        dateTimeEdit[TD_IMAGE_FILE_HEADER_TimeDateStamp]->setValue(nValue);                                                     break;
+                        case N_IMAGE_FILE_HEADER::PointerToSymbolTable: invWidget[INV_IMAGE_FILE_HEADER_PointerToSymbolTable]->setAddressAndSize(&pe,pe.getBaseAddress()+(quint32)nValue,0);    break;
+                        case N_IMAGE_FILE_HEADER::Characteristics:      comboBox[CB_IMAGE_FILE_HEADER_Characteristics]->setValue(nValue);                                                       break;
                     }
                     break;
                 case SPE::TYPE_IMAGE_OPTIONAL_HEADER:
                     switch(nNdata)
                     {
-                        case N_IMAGE_OPTIONAL_HEADER::Magic:                comboBox[CB_IMAGE_OPTIONAL_HEADER_Magic]->setValue(nValue);                 break;
+                        case N_IMAGE_OPTIONAL_HEADER::Magic:                comboBox[CB_IMAGE_OPTIONAL_HEADER_Magic]->setValue(nValue);                                                             break;
                         case N_IMAGE_OPTIONAL_HEADER::AddressOfEntryPoint:  invWidget[INV_IMAGE_OPTIONAL_HEADER_AddressOfEntryPoint]->setAddressAndSize(&pe,pe.getBaseAddress()+(quint32)nValue,0); break;
                         case N_IMAGE_OPTIONAL_HEADER::BaseOfCode:           invWidget[INV_IMAGE_OPTIONAL_HEADER_BaseOfCode]->setAddressAndSize(&pe,pe.getBaseAddress()+(quint32)nValue,0);          break;
                         case N_IMAGE_OPTIONAL_HEADER::BaseOfData:           invWidget[INV_IMAGE_OPTIONAL_HEADER_BaseOfData]->setAddressAndSize(&pe,pe.getBaseAddress()+(quint32)nValue,0);          break;
-                        case N_IMAGE_OPTIONAL_HEADER::Subsystem:            comboBox[CB_IMAGE_OPTIONAL_HEADER_Subsystem]->setValue(nValue);             break;
-                        case N_IMAGE_OPTIONAL_HEADER::DllCharacteristics:   comboBox[CB_IMAGE_OPTIONAL_HEADER_DllCharacteristics]->setValue(nValue);    break;
+                        case N_IMAGE_OPTIONAL_HEADER::Subsystem:            comboBox[CB_IMAGE_OPTIONAL_HEADER_Subsystem]->setValue(nValue);                                                         break;
+                        case N_IMAGE_OPTIONAL_HEADER::DllCharacteristics:   comboBox[CB_IMAGE_OPTIONAL_HEADER_DllCharacteristics]->setValue(nValue);                                                break;
                     }
                     break;
                 case SPE::TYPE_EXPORT:
@@ -1589,6 +1589,8 @@ void PEWidget::on_tableWidget_Sections_customContextMenuRequested(const QPoint &
         QAction actionEdit(tr("Edit"),this);
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editSectionHeader()));
         contextMenu.addAction(&actionEdit);
+
+        // TODO HEX
 
         contextMenu.exec(ui->tableWidget_Sections->viewport()->mapToGlobal(pos));
     }
