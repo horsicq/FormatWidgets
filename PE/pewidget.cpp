@@ -1591,6 +1591,7 @@ void PEWidget::on_tableWidget_Sections_customContextMenuRequested(const QPoint &
         contextMenu.addAction(&actionEdit);
 
         // TODO HEX
+        // if valid Size and offset
 
         contextMenu.exec(ui->tableWidget_Sections->viewport()->mapToGlobal(pos));
     }

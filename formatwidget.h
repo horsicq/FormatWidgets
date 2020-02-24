@@ -159,10 +159,10 @@ public slots:
     void hexValueChanged(quint64 nValue);
     void textValueChanged(QString sText);
     void setEdited(bool bState);
+    void showHex(qint64 nOffset,qint64 nSize);
 
 private slots:
     virtual void reloadData()=0;
-    void showHex(qint64 nOffset,qint64 nSize);
 
 private:
     bool saveBackup();
