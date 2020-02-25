@@ -642,6 +642,16 @@ void PEWidget::editSectionHeader()
     }
 }
 
+void PEWidget::sectionHex()
+{
+    int nRow=ui->tableWidget_Sections->currentRow();
+
+    if(nRow!=-1)
+    {
+        // TODO
+    }
+}
+
 void PEWidget::reloadData()
 {
     int nData=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole).toInt();
@@ -1590,8 +1600,12 @@ void PEWidget::on_tableWidget_Sections_customContextMenuRequested(const QPoint &
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editSectionHeader()));
         contextMenu.addAction(&actionEdit);
 
+//        QAction actionHex(tr("Hex"),this);
+//        connect(&actionHex, SIGNAL(triggered()), this, SLOT(sectionHex()));
+//        contextMenu.addAction(&actionHex);
+
         // TODO HEX
-        // if valid Size and offset
+        // if valid Size and offset if invalid grey
 
         contextMenu.exec(ui->tableWidget_Sections->viewport()->mapToGlobal(pos));
     }

@@ -54,6 +54,7 @@ private slots:
     void widgetAction();
     void on_checkBoxReadonly_toggled(bool checked);
     void editSectionHeader();
+    void sectionHex();
     void reloadData();
     void on_tableWidget_Sections_customContextMenuRequested(const QPoint &pos);
     void loadImportLibrary(int nNumber);
