@@ -1,4 +1,4 @@
-// copyright (c) 2017-2019 hors<horsicq@gmail.com>
+// copyright (c) 2017-2020 hors<horsicq@gmail.com>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -526,6 +526,7 @@ bool MACHWidget::createSectionTable(int type, QTableWidget *pTableWidget, const 
     int nSymbolWidth=getSymbolWidth();
     QStringList slHeader;
 
+    // TODO
     switch(type)
     {
         case SMACH::TYPE_mach_commands:
@@ -591,6 +592,7 @@ bool MACHWidget::createSectionTable(int type, QTableWidget *pTableWidget, const 
         case SMACH::TYPE_mach_commands:
             slHeader.append(tr("Type"));
             break;
+
         case SMACH::TYPE_mach_libraries:
             slHeader.append(tr("Library"));
             break;
