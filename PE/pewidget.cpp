@@ -648,7 +648,10 @@ void PEWidget::sectionHex()
 
     if(nRow!=-1)
     {
+        qint64 nOffset=ui->tableWidget_Sections->item(nRow,0)->data(Qt::UserRole+SECTION_DATA_OFFSET).toLongLong();
+        qint64 nSize=ui->tableWidget_Sections->item(nRow,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
         // TODO
+        showHex(nOffset,nSize);
     }
 }
 
@@ -1600,12 +1603,14 @@ void PEWidget::on_tableWidget_Sections_customContextMenuRequested(const QPoint &
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editSectionHeader()));
         contextMenu.addAction(&actionEdit);
 
-//        QAction actionHex(tr("Hex"),this);
-//        connect(&actionHex, SIGNAL(triggered()), this, SLOT(sectionHex()));
-//        contextMenu.addAction(&actionHex);
+        QAction actionHex(tr("Hex"),this);
+        connect(&actionHex, SIGNAL(triggered()), this, SLOT(sectionHex()));
+        actionHex.setEnabled(ui->tableWidget_Sections->item(nRow,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong());
+        contextMenu.addAction(&actionHex);
 
         // TODO HEX
         // if valid Size and offset if invalid grey
+        // TODO Entropy
 
         contextMenu.exec(ui->tableWidget_Sections->viewport()->mapToGlobal(pos));
     }
