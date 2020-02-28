@@ -401,7 +401,11 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                         case N_IMAGE_TLS::SizeOfZeroFill:           pe.setTLS_SizeOfZeroFill((quint32)nValue);                  break;
                         case N_IMAGE_TLS::Characteristics:          pe.setTLS_Characteristics((quint32)nValue);                 break;
                     }
+
+                    ui->widgetHex_TLS->reload();
+
                     break;
+
                 case SPE::TYPE_RESOURCE_VERSION:
                     switch(nNdata)
                     {
@@ -420,6 +424,7 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                         case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileDateLS:          pe.setFixedFileInfo_dwFileDateLS((quint32)nValue);              break;
                     }
                     break;
+
                 case SPE::TYPE_NETHEADER:
                     switch(nNdata)
                     {
@@ -1442,6 +1447,12 @@ void PEWidget::reloadData()
                 invWidget[INV_IMAGE_TLS_StartAddressOfRawData]->setAddressAndSize(&pe,tls32.StartAddressOfRawData,0);
             }
 
+            qint64 nOffset=pe.getTLSHeaderOffset();
+            qint64 nSize=pe.getTLSHeaderSize();
+            qint64 nAddress=pe.offsetToRelAddress(nOffset);
+
+            loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_TLS],ui->widgetHex_TLS);
+
             blockSignals(false);
         }
         else if(nData==SPE::TYPE_LOADCONFIG)
@@ -2037,4 +2048,14 @@ void PEWidget::on_tableWidget_NetHeader_currentCellChanged(int currentRow, int c
     Q_UNUSED(previousColumn)
 
     setHeaderTableSelection(ui->widgetHex_NetHeader,ui->tableWidget_NetHeader);
+}
+
+void PEWidget::on_tableWidget_TLS_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
+{
+    Q_UNUSED(currentRow)
+    Q_UNUSED(currentColumn)
+    Q_UNUSED(previousRow)
+    Q_UNUSED(previousColumn)
+
+    setHeaderTableSelection(ui->widgetHex_TLS,ui->tableWidget_TLS);
 }
