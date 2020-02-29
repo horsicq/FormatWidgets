@@ -190,12 +190,14 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                         case N_IMAGE_DOS_HEADER::e_lfanew:      invWidget[INV_IMAGE_DOS_HEADER_e_lfanew]->setOffsetAndSize(&pe,(quint32)nValue,0);  break;
                     }
                     break;
+
                 case SPE::TYPE_IMAGE_NT_HEADERS:
                     switch(nNdata)
                     {
                         case N_IMAGE_NT_HEADERS::Signature:     comboBox[CB_IMAGE_NT_HEADERS_Signature]->setValue(nValue);                          break;
                     }
-                    break;    
+                    break;
+
                 case SPE::TYPE_IMAGE_FILE_HEADER:
                     switch(nNdata)
                     {
@@ -205,6 +207,7 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                         case N_IMAGE_FILE_HEADER::Characteristics:      comboBox[CB_IMAGE_FILE_HEADER_Characteristics]->setValue(nValue);                                                       break;
                     }
                     break;
+
                 case SPE::TYPE_IMAGE_OPTIONAL_HEADER:
                     switch(nNdata)
                     {
@@ -216,6 +219,7 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                         case N_IMAGE_OPTIONAL_HEADER::DllCharacteristics:   comboBox[CB_IMAGE_OPTIONAL_HEADER_DllCharacteristics]->setValue(nValue);                                                break;
                     }
                     break;
+
                 case SPE::TYPE_EXPORT:
                     switch(nNdata)
                     {
@@ -440,6 +444,7 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                     ui->widgetHex_NetHeader->reload();
 
                     break;
+
                 case SPE::TYPE_LOADCONFIG:
                     switch(nNdata)
                     {
@@ -556,12 +561,14 @@ void PEWidget::widgetValueChanged(quint64 nValue)
                 case N_IMAGE_DOS_HEADER::e_magic:   lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_magic]->setValue((quint16)nValue);      break;
             }
             break;
+
         case SPE::TYPE_IMAGE_NT_HEADERS:
             switch(nNdata)
             {
                 case N_IMAGE_NT_HEADERS::Signature: lineEdit_IMAGE_NT_HEADERS[N_IMAGE_NT_HEADERS::Signature]->setValue((quint32)nValue);    break;
             }
             break;
+
         case SPE::TYPE_IMAGE_FILE_HEADER:
             switch(nNdata)
             {
@@ -570,6 +577,7 @@ void PEWidget::widgetValueChanged(quint64 nValue)
                 case N_IMAGE_FILE_HEADER::Characteristics:  lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::Characteristics]->setValue((quint16)nValue);    break;
             }
             break;
+
         case SPE::TYPE_IMAGE_OPTIONAL_HEADER:
             switch(nNdata)
             {
@@ -578,12 +586,14 @@ void PEWidget::widgetValueChanged(quint64 nValue)
                 case N_IMAGE_OPTIONAL_HEADER::DllCharacteristics:   lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::DllCharacteristics]->setValue((quint16)nValue); break;
             }
             break;
+
         case SPE::TYPE_EXPORT:
             switch(nNdata)
             {
                 case N_IMAGE_EXPORT::TimeDateStamp:         dateTimeEdit[TD_IMAGE_EXPORT_TimeDateStamp]->setValue(nValue);      break;
             }
             break;
+
         case SPE::TYPE_NETHEADER:
             switch(nNdata)
             {
