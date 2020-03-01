@@ -81,6 +81,8 @@ private slots:
     void on_tableWidget_NetHeader_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     void on_tableWidget_TLS_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
 
+    void on_tableWidget_ExportHeader_customContextMenuRequested(const QPoint &pos);
+
 private:
     enum CB
     {

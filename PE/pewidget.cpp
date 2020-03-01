@@ -2069,3 +2069,8 @@ void PEWidget::on_tableWidget_TLS_currentCellChanged(int currentRow, int current
 
     setHeaderTableSelection(ui->widgetHex_TLS,ui->tableWidget_TLS);
 }
+
+void PEWidget::on_tableWidget_ExportHeader_customContextMenuRequested(const QPoint &pos)
+{
+    // TODO
+}
