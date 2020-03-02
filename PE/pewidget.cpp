@@ -477,11 +477,22 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
 
             switch(nStype)
             {
+                case SPE::TYPE_IMAGE_OPTIONAL_HEADER:
+                    switch(nNdata)
+                    {
+                        case N_IMAGE_OPTIONAL_HEADER::AddressOfEntryPoint:          addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::AddressOfEntryPoint,HEADER_COLUMN_COMMENT,"XXX");     break;
+                        case N_IMAGE_OPTIONAL_HEADER::BaseOfCode:                   addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::BaseOfCode,HEADER_COLUMN_COMMENT,"XXX");              break;
+                        case N_IMAGE_OPTIONAL_HEADER::BaseOfData:                   addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::BaseOfData,HEADER_COLUMN_COMMENT,"XXX");              break;
+                    }
+
+                    break;
+
                 case SPE::TYPE_EXPORT:
                     switch(nNdata)
                     {
                         case N_IMAGE_EXPORT::Name:      addComment(ui->tableWidget_ExportHeader,N_IMAGE_EXPORT::Name,HEADER_COLUMN_COMMENT,pe.read_ansiString(pe.relAddressToOffset((quint32)nValue))); break;
                     }
+
                     break;
             }
 
@@ -868,6 +879,11 @@ void PEWidget::reloadData()
                 comboBox[CB_IMAGE_OPTIONAL_HEADER_Subsystem]->setValue(oh64.Subsystem);
                 comboBox[CB_IMAGE_OPTIONAL_HEADER_DllCharacteristics]->setValue(oh64.DllCharacteristics);
 
+                XBinary::_MEMORY_MAP memoryMap=pe.getMemoryMap();
+
+                addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::AddressOfEntryPoint,HEADER_COLUMN_COMMENT,"XXX");
+                addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::BaseOfCode,HEADER_COLUMN_COMMENT,"XXX");
+
                 invWidget[INV_IMAGE_OPTIONAL_HEADER_AddressOfEntryPoint]->setAddressAndSize(&pe,pe.getBaseAddress()+oh64.AddressOfEntryPoint,0);
                 invWidget[INV_IMAGE_OPTIONAL_HEADER_BaseOfCode]->setAddressAndSize(&pe,pe.getBaseAddress()+oh64.BaseOfCode,0);
             }
@@ -908,6 +924,12 @@ void PEWidget::reloadData()
                 comboBox[CB_IMAGE_OPTIONAL_HEADER_Magic]->setValue(oh32.Magic);
                 comboBox[CB_IMAGE_OPTIONAL_HEADER_Subsystem]->setValue(oh32.Subsystem);
                 comboBox[CB_IMAGE_OPTIONAL_HEADER_DllCharacteristics]->setValue(oh32.DllCharacteristics);
+
+                XBinary::_MEMORY_MAP memoryMap=pe.getMemoryMap();
+
+                addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::AddressOfEntryPoint,HEADER_COLUMN_COMMENT,"XXX");
+                addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::BaseOfCode,HEADER_COLUMN_COMMENT,"XXX");
+                addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::BaseOfData,HEADER_COLUMN_COMMENT,"XXX");
 
                 invWidget[INV_IMAGE_OPTIONAL_HEADER_AddressOfEntryPoint]->setAddressAndSize(&pe,pe.getBaseAddress()+oh32.AddressOfEntryPoint,0);
                 invWidget[INV_IMAGE_OPTIONAL_HEADER_BaseOfCode]->setAddressAndSize(&pe,pe.getBaseAddress()+oh32.BaseOfCode,0);
