@@ -965,6 +965,8 @@ void PEWidget::reloadData()
 
             for(int i=0; i<16; i++)
             {
+                ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->setItem(i,4,new QTableWidgetItem()); // Comment
+
                 XPE_DEF::IMAGE_DATA_DIRECTORY dd=pe.getOptionalHeader_DataDirectory((quint32)i);
 
                 QTableWidgetItem *itemNumber=new QTableWidgetItem(QString::number(i));
@@ -975,11 +977,21 @@ void PEWidget::reloadData()
                 {
                     itemNumber->setData(Qt::UserRole+SECTION_DATA_ADDRESS,dd.VirtualAddress);
                     itemNumber->setData(Qt::UserRole+SECTION_DATA_OFFSET,pe.addressToOffset(&memoryMap,memoryMap.nBaseAddress+dd.VirtualAddress));
+
+                    if((dd.VirtualAddress)&&(pe.isRelAddressValid(&memoryMap,dd.VirtualAddress)))
+                    {
+                        addComment(ui->tableWidget_IMAGE_DIRECTORY_ENTRIES,i,4,pe.getMemoryRecordInfoByRelAddress(&memoryMap,dd.VirtualAddress));
+                    }
                 }
                 else
                 {
                     itemNumber->setData(Qt::UserRole+SECTION_DATA_ADDRESS,dd.VirtualAddress);
                     itemNumber->setData(Qt::UserRole+SECTION_DATA_OFFSET,dd.VirtualAddress);
+
+                    if((dd.VirtualAddress)&&(pe.isOffsetValid(&memoryMap,dd.VirtualAddress)))
+                    {
+                        addComment(ui->tableWidget_IMAGE_DIRECTORY_ENTRIES,i,4,pe.getMemoryRecordInfoByOffset(&memoryMap,dd.VirtualAddress));
+                    }
                 }
 
                 ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->setItem(i,0,itemNumber);
@@ -1908,7 +1920,7 @@ bool PEWidget::createSectionTable(int type, QTableWidget *pTableWidget, const Fo
             break;
 
         case SPE::TYPE_IMAGE_DIRECTORY_ENTRIES:
-            pTableWidget->setColumnCount(nRecordCount+1);
+            pTableWidget->setColumnCount(nRecordCount+2);
             pTableWidget->setColumnWidth(0,nSymbolWidth*3);
             pTableWidget->setColumnWidth(1,nSymbolWidth*12);
             pTableWidget->setColumnWidth(2,nSymbolWidth*8);
@@ -1942,6 +1954,11 @@ bool PEWidget::createSectionTable(int type, QTableWidget *pTableWidget, const Fo
         case SPE::TYPE_RELOCS_POSITION:
             slHeader.append(tr("Type"));
             slHeader.append(tr("Address"));
+            break;
+
+        case SPE::TYPE_IMAGE_DIRECTORY_ENTRIES:
+            pTableWidget->horizontalHeader()->setSectionResizeMode(4,QHeaderView::Stretch);
+            slHeader.append("");
             break;
     }
 
