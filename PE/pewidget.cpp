@@ -432,13 +432,13 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                 case SPE::TYPE_NETHEADER:
                     switch(nNdata)
                     {
-                        case N_IMAGE_NETHEADER::cb:                     pe.setNetHeader_cb((quint32)nValue);                        break;
-                        case N_IMAGE_NETHEADER::MinorRuntimeVersion:    pe.setNetHeader_MinorRuntimeVersion((quint16)nValue);       break;
-                        case N_IMAGE_NETHEADER::MajorRuntimeVersion:    pe.setNetHeader_MajorRuntimeVersion((quint16)nValue);       break;
-                        case N_IMAGE_NETHEADER::MetaData_Address:       pe.setNetHeader_MetaData_Address((quint32)nValue);          break;
-                        case N_IMAGE_NETHEADER::MetaData_Size:          pe.setNetHeader_MetaData_Size((quint32)nValue);             break;
-                        case N_IMAGE_NETHEADER::Flags:                  pe.setNetHeader_Flags((quint32)nValue);                     break;
-                        case N_IMAGE_NETHEADER::EntryPoint:             pe.setNetHeader_EntryPoint((quint32)nValue);                break;
+                        case N_IMAGE_NETHEADER::cb:                                 pe.setNetHeader_cb((quint32)nValue);                            break;
+                        case N_IMAGE_NETHEADER::MinorRuntimeVersion:                pe.setNetHeader_MinorRuntimeVersion((quint16)nValue);           break;
+                        case N_IMAGE_NETHEADER::MajorRuntimeVersion:                pe.setNetHeader_MajorRuntimeVersion((quint16)nValue);           break;
+                        case N_IMAGE_NETHEADER::MetaData_Address:                   pe.setNetHeader_MetaData_Address((quint32)nValue);              break;
+                        case N_IMAGE_NETHEADER::MetaData_Size:                      pe.setNetHeader_MetaData_Size((quint32)nValue);                 break;
+                        case N_IMAGE_NETHEADER::Flags:                              pe.setNetHeader_Flags((quint32)nValue);                         break;
+                        case N_IMAGE_NETHEADER::EntryPoint:                         pe.setNetHeader_EntryPoint((quint32)nValue);                    break;
                     }
 
                     ui->widgetHex_NetHeader->reload();
@@ -490,7 +490,10 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                 case SPE::TYPE_EXPORT:
                     switch(nNdata)
                     {
-                        case N_IMAGE_EXPORT::Name:      addComment(ui->tableWidget_ExportHeader,N_IMAGE_EXPORT::Name,HEADER_COLUMN_COMMENT,pe.read_ansiString(pe.relAddressToOffset((quint32)nValue))); break;
+                        case N_IMAGE_EXPORT::Name:                  addComment(ui->tableWidget_ExportHeader,N_IMAGE_EXPORT::Name,HEADER_COLUMN_COMMENT,pe.read_ansiString(pe.relAddressToOffset((quint32)nValue))); break;
+                        case N_IMAGE_EXPORT::AddressOfFunctions:    addComment(ui->tableWidget_ExportHeader,N_IMAGE_EXPORT::AddressOfFunctions,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress((quint32)nValue));
+                        case N_IMAGE_EXPORT::AddressOfNames:        addComment(ui->tableWidget_ExportHeader,N_IMAGE_EXPORT::AddressOfNames,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress((quint32)nValue));
+                        case N_IMAGE_EXPORT::AddressOfNameOrdinals: addComment(ui->tableWidget_ExportHeader,N_IMAGE_EXPORT::AddressOfNameOrdinals,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress((quint32)nValue));
                     }
 
                     break;
@@ -925,8 +928,6 @@ void PEWidget::reloadData()
                 comboBox[CB_IMAGE_OPTIONAL_HEADER_Subsystem]->setValue(oh32.Subsystem);
                 comboBox[CB_IMAGE_OPTIONAL_HEADER_DllCharacteristics]->setValue(oh32.DllCharacteristics);
 
-
-
                 addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::AddressOfEntryPoint,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress(&memoryMap,oh32.AddressOfEntryPoint));
                 addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::BaseOfCode,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress(&memoryMap,oh32.BaseOfCode));
                 addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::BaseOfData,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress(&memoryMap,oh32.BaseOfData));
@@ -1136,6 +1137,10 @@ void PEWidget::reloadData()
             XBinary::_MEMORY_MAP memoryMap=pe.getMemoryMap();
 
             addComment(ui->tableWidget_ExportHeader,N_IMAGE_EXPORT::Name,HEADER_COLUMN_COMMENT,pe.read_ansiString(pe.relAddressToOffset(&memoryMap,eh.directory.Name)));
+
+            addComment(ui->tableWidget_ExportHeader,N_IMAGE_EXPORT::AddressOfFunctions,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress(&memoryMap,eh.directory.AddressOfFunctions));
+            addComment(ui->tableWidget_ExportHeader,N_IMAGE_EXPORT::AddressOfNames,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress(&memoryMap,eh.directory.AddressOfNames));
+            addComment(ui->tableWidget_ExportHeader,N_IMAGE_EXPORT::AddressOfNameOrdinals,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress(&memoryMap,eh.directory.AddressOfNameOrdinals));
 
             int nCount=eh.listPositions.count();
             ui->tableWidget_ExportFunctions->setRowCount(nCount);
