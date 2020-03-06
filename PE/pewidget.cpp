@@ -490,12 +490,22 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                 case SPE::TYPE_EXPORT:
                     switch(nNdata)
                     {
-                        case N_IMAGE_EXPORT::Name:                  addComment(ui->tableWidget_ExportHeader,N_IMAGE_EXPORT::Name,HEADER_COLUMN_COMMENT,pe.read_ansiString(pe.relAddressToOffset((quint32)nValue))); break;
-                        case N_IMAGE_EXPORT::AddressOfFunctions:    addComment(ui->tableWidget_ExportHeader,N_IMAGE_EXPORT::AddressOfFunctions,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress((quint32)nValue));
-                        case N_IMAGE_EXPORT::AddressOfNames:        addComment(ui->tableWidget_ExportHeader,N_IMAGE_EXPORT::AddressOfNames,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress((quint32)nValue));
-                        case N_IMAGE_EXPORT::AddressOfNameOrdinals: addComment(ui->tableWidget_ExportHeader,N_IMAGE_EXPORT::AddressOfNameOrdinals,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress((quint32)nValue));
+                        case N_IMAGE_EXPORT::Name:                  addComment(ui->tableWidget_ExportHeader,N_IMAGE_EXPORT::Name,HEADER_COLUMN_COMMENT,pe.read_ansiString(pe.relAddressToOffset((quint32)nValue)));             break;
+                        case N_IMAGE_EXPORT::AddressOfFunctions:    addComment(ui->tableWidget_ExportHeader,N_IMAGE_EXPORT::AddressOfFunctions,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress((quint32)nValue));      break;
+                        case N_IMAGE_EXPORT::AddressOfNames:        addComment(ui->tableWidget_ExportHeader,N_IMAGE_EXPORT::AddressOfNames,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress((quint32)nValue));          break;
+                        case N_IMAGE_EXPORT::AddressOfNameOrdinals: addComment(ui->tableWidget_ExportHeader,N_IMAGE_EXPORT::AddressOfNameOrdinals,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress((quint32)nValue));   break;
                     }
 
+                    break;
+
+                case SPE::TYPE_TLS:
+                    switch(nNdata)
+                    {
+                        case N_IMAGE_TLS::StartAddressOfRawData:    addComment(ui->tableWidget_TLS,N_IMAGE_TLS::StartAddressOfRawData,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByAddress((quint64)nValue));                  break;
+                        case N_IMAGE_TLS::EndAddressOfRawData:      addComment(ui->tableWidget_TLS,N_IMAGE_TLS::EndAddressOfRawData,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByAddress((quint64)nValue));                    break;
+                        case N_IMAGE_TLS::AddressOfIndex:           addComment(ui->tableWidget_TLS,N_IMAGE_TLS::AddressOfIndex,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByAddress((quint64)nValue));                         break;
+                        case N_IMAGE_TLS::AddressOfCallBacks:       addComment(ui->tableWidget_TLS,N_IMAGE_TLS::AddressOfCallBacks,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByAddress((quint64)nValue));                     break;
+                    }
                     break;
             }
 
@@ -1465,6 +1475,8 @@ void PEWidget::reloadData()
 
             blockSignals(true);
 
+            XBinary::_MEMORY_MAP memoryMap=pe.getMemoryMap();
+
             if(pe.is64())
             {
                 XPE_DEF::S_IMAGE_TLS_DIRECTORY64 tls64=pe.getTLSDirectory64();
@@ -1479,6 +1491,11 @@ void PEWidget::reloadData()
                 invWidget[INV_IMAGE_TLS_AddressOfIndex]->setAddressAndSize(&pe,tls64.AddressOfIndex,0);
                 invWidget[INV_IMAGE_TLS_EndAddressOfRawData]->setAddressAndSize(&pe,tls64.EndAddressOfRawData,0);
                 invWidget[INV_IMAGE_TLS_StartAddressOfRawData]->setAddressAndSize(&pe,tls64.StartAddressOfRawData,0);
+
+                addComment(ui->tableWidget_TLS,N_IMAGE_TLS::AddressOfCallBacks,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByAddress(&memoryMap,tls64.AddressOfCallBacks));
+                addComment(ui->tableWidget_TLS,N_IMAGE_TLS::AddressOfIndex,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByAddress(&memoryMap,tls64.AddressOfIndex));
+                addComment(ui->tableWidget_TLS,N_IMAGE_TLS::EndAddressOfRawData,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByAddress(&memoryMap,tls64.EndAddressOfRawData));
+                addComment(ui->tableWidget_TLS,N_IMAGE_TLS::StartAddressOfRawData,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByAddress(&memoryMap,tls64.StartAddressOfRawData));
             }
             else
             {
@@ -1494,6 +1511,11 @@ void PEWidget::reloadData()
                 invWidget[INV_IMAGE_TLS_AddressOfIndex]->setAddressAndSize(&pe,tls32.AddressOfIndex,0);
                 invWidget[INV_IMAGE_TLS_EndAddressOfRawData]->setAddressAndSize(&pe,tls32.EndAddressOfRawData,0);
                 invWidget[INV_IMAGE_TLS_StartAddressOfRawData]->setAddressAndSize(&pe,tls32.StartAddressOfRawData,0);
+
+                addComment(ui->tableWidget_TLS,N_IMAGE_TLS::AddressOfCallBacks,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByAddress(&memoryMap,tls32.AddressOfCallBacks));
+                addComment(ui->tableWidget_TLS,N_IMAGE_TLS::AddressOfIndex,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByAddress(&memoryMap,tls32.AddressOfIndex));
+                addComment(ui->tableWidget_TLS,N_IMAGE_TLS::EndAddressOfRawData,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByAddress(&memoryMap,tls32.EndAddressOfRawData));
+                addComment(ui->tableWidget_TLS,N_IMAGE_TLS::StartAddressOfRawData,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByAddress(&memoryMap,tls32.StartAddressOfRawData));
             }
 
             qint64 nOffset=pe.getTLSHeaderOffset();
