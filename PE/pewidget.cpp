@@ -668,7 +668,7 @@ void PEWidget::editSectionHeader()
         SectionHeaderWidget *pSectionHeaderWidget=new SectionHeaderWidget(this);
         DialogSectionHeader dsh(this);
         dsh.setWidget(pSectionHeaderWidget);
-        dsh.setData(getDevice(),getOptions(),(quint32)nRow,tr("Section"));
+        dsh.setData(getDevice(),getOptions(),(quint32)nRow,tr("Section header"));
         dsh.setEdited(isEdited());
 
         connect(&dsh,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
@@ -1690,8 +1690,6 @@ void PEWidget::on_tableWidget_Sections_customContextMenuRequested(const QPoint &
         actionHex.setEnabled(ui->tableWidget_Sections->item(nRow,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong());
         contextMenu.addAction(&actionHex);
 
-        // TODO HEX
-        // if valid Size and offset if invalid grey
         // TODO Entropy
 
         contextMenu.exec(ui->tableWidget_Sections->viewport()->mapToGlobal(pos));
@@ -2136,7 +2134,45 @@ void PEWidget::on_tableWidget_TLS_currentCellChanged(int currentRow, int current
     setHeaderTableSelection(ui->widgetHex_TLS,ui->tableWidget_TLS);
 }
 
-void PEWidget::on_tableWidget_ExportHeader_customContextMenuRequested(const QPoint &pos)
+void PEWidget::on_tableWidget_ImportLibraries_customContextMenuRequested(const QPoint &pos)
+{
+    int nRow=ui->tableWidget_ImportLibraries->currentRow();
+
+    if(nRow!=-1)
+    {
+        QMenu contextMenu(this);
+
+        QAction actionEdit(tr("Edit"),this);
+        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editImportHeader()));
+        contextMenu.addAction(&actionEdit);
+
+        contextMenu.exec(ui->tableWidget_ImportLibraries->viewport()->mapToGlobal(pos));
+    }
+}
+
+void PEWidget::on_tableWidget_ImportFunctions_customContextMenuRequested(const QPoint &pos)
 {
     // TODO
+}
+
+void PEWidget::editImportHeader()
+{
+    int nRow=ui->tableWidget_ImportLibraries->currentRow();
+
+    if(nRow!=-1)
+    {
+        ImportHeaderWidget *pImportHeaderWidget=new ImportHeaderWidget(this);
+        DialogSectionHeader dsh(this);
+        dsh.setWidget(pImportHeaderWidget);
+        dsh.setData(getDevice(),getOptions(),(quint32)nRow,tr("Import Header"));
+        dsh.setEdited(isEdited());
+
+        connect(&dsh,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+
+        dsh.exec();
+
+        delete pImportHeaderWidget;
+
+        reloadData();
+    }
 }

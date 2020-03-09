@@ -89,7 +89,7 @@ bool SectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int
                 case SPE::TYPE_IMAGE_SECTION_HEADER:
                     switch(nNdata)
                     {
-                        case N_IMAGE_SECTION_HEADER::VirtualAddress:        invWidget[INV_VirtualAddress]->setOffsetAndSize(&pe,pe.getBaseAddress()+(quint32)nValue,0);     break;
+                        case N_IMAGE_SECTION_HEADER::VirtualAddress:        invWidget[INV_VirtualAddress]->setAddressAndSize(&pe,pe.getBaseAddress()+(quint32)nValue,0);     break;
                         case N_IMAGE_SECTION_HEADER::PointerToRawData:      invWidget[INV_PointerToRawData]->setOffsetAndSize(&pe,(quint32)nValue,0);                       break;
                     }
 
@@ -200,7 +200,7 @@ void SectionHeaderWidget::reloadData()
         comboBox[CB_ALIGH]->setValue(ish.Characteristics);
 
         invWidget[INV_VirtualAddress]->setAddressAndSize(&pe,pe.getBaseAddress()+ish.VirtualAddress,0);
-        invWidget[INV_PointerToRawData]->setAddressAndSize(&pe,pe.offsetToAddress(ish.PointerToRawData),0);
+        invWidget[INV_PointerToRawData]->setOffsetAndSize(&pe,pe.offsetToAddress(ish.PointerToRawData),0);
 
         qint64 nOffset=pe.getSectionHeaderOffset(getNumber());
         qint64 nSize=pe.getSectionHeaderSize();

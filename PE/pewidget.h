@@ -24,6 +24,7 @@
 #include "../formatwidget.h"
 #include "dialogsectionheader.h"
 #include "sectionheaderwidget.h"
+#include "importheaderwidget.h"
 #include "pe_defs.h"
 
 namespace Ui
@@ -80,8 +81,10 @@ private slots:
     void on_tableWidget_LoadConfig_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     void on_tableWidget_NetHeader_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     void on_tableWidget_TLS_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
+    void on_tableWidget_ImportLibraries_customContextMenuRequested(const QPoint &pos);
+    void on_tableWidget_ImportFunctions_customContextMenuRequested(const QPoint &pos);
 
-    void on_tableWidget_ExportHeader_customContextMenuRequested(const QPoint &pos);
+    void editImportHeader();
 
 private:
     enum CB
