@@ -185,8 +185,8 @@ void ImportHeaderWidget::reloadData()
         invWidget[INV_Name]->setAddressAndSize(&pe,pe.getBaseAddress()+idh.Name,0);
         invWidget[INV_FirstThunk]->setAddressAndSize(&pe,pe.getBaseAddress()+idh.FirstThunk,0);
 
-        qint64 nOffset=pe.getSectionHeaderOffset(getNumber());
-        qint64 nSize=pe.getSectionHeaderSize();
+        qint64 nOffset=pe.getImportDescriptorOffset(getNumber());
+        qint64 nSize=pe.getImportDescriptorSize();
         qint64 nAddress=pe.offsetToRelAddress(nOffset);
 
         loadHexSubdevice(nOffset,nSize,nAddress,&pSubDevice,ui->widgetHex_IMPORT_HEADER);
