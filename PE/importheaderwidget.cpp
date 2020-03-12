@@ -75,7 +75,6 @@ bool ImportHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int 
     bool bResult=false;
 
     quint64 nValue=vValue.toULongLong();
-    QString sValue=vValue.toString();
 
     if(getDevice()->isWritable())
     {
@@ -102,11 +101,11 @@ bool ImportHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int 
                     switch(nNdata)
                     {
                         // TODO
-                        case N_IMAGE_IMPORT::OriginalFirstThunk:        break;
-                        case N_IMAGE_IMPORT::TimeDateStamp:             break;
-                        case N_IMAGE_IMPORT::ForwarderChain:            break;
-                        case N_IMAGE_IMPORT::Name:                      break;
-                        case N_IMAGE_IMPORT::FirstThunk:                break;
+                        case N_IMAGE_IMPORT::OriginalFirstThunk:            pe.setImportDescriptor_OriginalFirstThunk(nPosition,(quint32)nValue);   break;
+                        case N_IMAGE_IMPORT::TimeDateStamp:                 pe.setImportDescriptor_TimeDateStamp(nPosition,(quint32)nValue);        break;
+                        case N_IMAGE_IMPORT::ForwarderChain:                pe.setImportDescriptor_ForwarderChain(nPosition,(quint32)nValue);       break;
+                        case N_IMAGE_IMPORT::Name:                          pe.setImportDescriptor_Name(nPosition,(quint32)nValue);                 break;
+                        case N_IMAGE_IMPORT::FirstThunk:                    pe.setImportDescriptor_FirstThunk(nPosition,(quint32)nValue);           break;
                     }
 
                     ui->widgetHex_IMPORT_HEADER->reload();
