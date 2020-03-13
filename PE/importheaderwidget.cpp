@@ -113,6 +113,19 @@ bool ImportHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int 
                     break;
             }
 
+            switch(nStype)
+            {
+                case SPE::TYPE_IMAGE_SECTION_HEADER:
+                    switch(nNdata)
+                    {
+                        case N_IMAGE_IMPORT::OriginalFirstThunk:            addComment(ui->tableWidget_IMPORT_HEADER,N_IMAGE_IMPORT::OriginalFirstThunk,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress((quint32)nValue));         break;
+                        case N_IMAGE_IMPORT::Name:                          addComment(ui->tableWidget_IMPORT_HEADER,N_IMAGE_IMPORT::Name,HEADER_COLUMN_COMMENT,pe.read_ansiString(pe.relAddressToOffset((quint32)nValue)));                break;                                                                                              break;
+                        case N_IMAGE_IMPORT::FirstThunk:                    addComment(ui->tableWidget_IMPORT_HEADER,N_IMAGE_IMPORT::FirstThunk,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress((quint32)nValue));                 break;
+                    }
+
+                    break;
+            }
+
             bResult=true;
         }
     }
@@ -139,7 +152,7 @@ void ImportHeaderWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
     switch(type)
     {
         case SPE::TYPE_IMAGE_SECTION_HEADER:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*16);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*20);
             pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*8);
             pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
             break;
@@ -168,6 +181,8 @@ void ImportHeaderWidget::reloadData()
 
         blockSignals(true);
 
+        XBinary::_MEMORY_MAP memoryMap=pe.getMemoryMap();
+
         XPE_DEF::IMAGE_IMPORT_DESCRIPTOR idh=pe.getImportDescriptor(getNumber());
 
         lineEdit_IMPORT_HEADER[N_IMAGE_IMPORT::OriginalFirstThunk]->setValue(idh.OriginalFirstThunk);
@@ -179,6 +194,10 @@ void ImportHeaderWidget::reloadData()
         invWidget[INV_OriginalFirstThunk]->setAddressAndSize(&pe,pe.getBaseAddress()+idh.OriginalFirstThunk,0);
         invWidget[INV_Name]->setAddressAndSize(&pe,pe.getBaseAddress()+idh.Name,0);
         invWidget[INV_FirstThunk]->setAddressAndSize(&pe,pe.getBaseAddress()+idh.FirstThunk,0);
+
+        addComment(ui->tableWidget_IMPORT_HEADER,N_IMAGE_IMPORT::OriginalFirstThunk,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress(&memoryMap,idh.OriginalFirstThunk));
+        addComment(ui->tableWidget_IMPORT_HEADER,N_IMAGE_IMPORT::Name,HEADER_COLUMN_COMMENT,pe.read_ansiString(pe.relAddressToOffset(&memoryMap,idh.Name)));
+        addComment(ui->tableWidget_IMPORT_HEADER,N_IMAGE_IMPORT::FirstThunk,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress(&memoryMap,idh.FirstThunk));
 
         qint64 nOffset=pe.getImportDescriptorOffset(getNumber());
         qint64 nSize=pe.getImportDescriptorSize();
