@@ -31,6 +31,7 @@ SearchStringsWidget::SearchStringsWidget(QWidget *parent) :
     options.nAddressWidth=8;
     options.nBaseAddress=0;
     pModel=nullptr;
+    bInit=false;
 
     ui->checkBoxAnsi->setChecked(true);
     ui->checkBoxUnicode->setChecked(true);
@@ -44,6 +45,7 @@ SearchStringsWidget::~SearchStringsWidget()
 void SearchStringsWidget::setData(QIODevice *pDevice, SearchStrings::OPTIONS *pOptions, bool bAuto)
 {
     this->pDevice=pDevice;
+    bInit=false;
 
     qint64 nSize=pDevice->size();
 
@@ -81,6 +83,16 @@ void SearchStringsWidget::setData(QIODevice *pDevice, SearchStrings::OPTIONS *pO
     {
         search();
     }
+}
+
+void SearchStringsWidget::reload()
+{
+    search();
+}
+
+bool SearchStringsWidget::getInitStatus()
+{
+    return bInit;
 }
 
 void SearchStringsWidget::on_pushButtonSave_clicked()
@@ -226,5 +238,7 @@ void SearchStringsWidget::search()
             ui->tableViewResult->setColumnWidth(1,60); // TODO
             ui->tableViewResult->setColumnWidth(2,30); // TODO
         }
+
+        bInit=true;
     }
 }

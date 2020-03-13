@@ -49,6 +49,9 @@ public:
 signals:
     void editState(bool bState);
 
+private slots:
+    void on_tabWidgetMain_currentChanged(int index);
+
 private:
     Ui::ToolsWidget *ui;
     QHexView::OPTIONS hexOptions;

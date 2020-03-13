@@ -49,6 +49,8 @@ void ToolsWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions)
     stringsOptions.nBaseAddress=pOptions->nImageBase;
 
     ui->widgetStrings->setData(pDevice,&stringsOptions);
+
+    reload();
 }
 
 void ToolsWidget::setEdited(bool bState)
@@ -63,7 +65,19 @@ void ToolsWidget::setReadonly(bool bState)
 
 void ToolsWidget::reload()
 {
-    ui->widgetHex->reload();
+    int nIndex=ui->tabWidgetMain->currentIndex();
+
+    if(nIndex==0) // Hex
+    {
+        ui->widgetHex->reload();
+    }
+    else if(nIndex==1) // Strings
+    {
+        if(!ui->widgetStrings->getInitStatus())
+        {
+            ui->widgetStrings->reload();
+        }
+    }
 }
 
 qint64 ToolsWidget::getBaseAddress()
@@ -79,4 +93,10 @@ void ToolsWidget::setSelection(qint64 nAddress, qint64 nSize)
 ToolsWidget::~ToolsWidget()
 {
     delete ui;
+}
+
+void ToolsWidget::on_tabWidgetMain_currentChanged(int index)
+{
+    Q_UNUSED(index)
+    reload();
 }
