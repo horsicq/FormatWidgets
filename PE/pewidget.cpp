@@ -2176,3 +2176,18 @@ void PEWidget::editImportHeader()
         reloadData();
     }
 }
+
+void PEWidget::on_tableWidget_ExportFunctions_customContextMenuRequested(const QPoint &pos)
+{
+    // TODO
+}
+
+void PEWidget::on_tableWidget_Exceptions_customContextMenuRequested(const QPoint &pos)
+{
+    // TODO
+}
+
+void PEWidget::on_tableWidget_Debug_customContextMenuRequested(const QPoint &pos)
+{
+    // TODO
+}

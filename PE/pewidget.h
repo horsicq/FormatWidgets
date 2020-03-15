@@ -86,6 +86,10 @@ private slots:
 
     void editImportHeader();
 
+    void on_tableWidget_ExportFunctions_customContextMenuRequested(const QPoint &pos);
+    void on_tableWidget_Exceptions_customContextMenuRequested(const QPoint &pos);
+    void on_tableWidget_Debug_customContextMenuRequested(const QPoint &pos);
+
 private:
     enum CB
     {
