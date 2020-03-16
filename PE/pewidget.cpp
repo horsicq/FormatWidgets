@@ -677,9 +677,9 @@ void PEWidget::editSectionHeader()
 
         delete pSectionHeaderWidget;
 
-        ui->tableWidget_Sections->setCurrentCell(nRow,0);
-
         reloadData();
+
+        ui->tableWidget_Sections->setCurrentCell(nRow,0);
     }
 }
 
@@ -693,9 +693,9 @@ void PEWidget::sectionHex()
         qint64 nSize=ui->tableWidget_Sections->item(nRow,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
         showHex(nOffset,nSize);
 
-        ui->tableWidget_Sections->setCurrentCell(nRow,0);
-
         reloadData();
+
+        ui->tableWidget_Sections->setCurrentCell(nRow,0);
     }
 }
 
@@ -2178,9 +2178,9 @@ void PEWidget::editImportHeader()
 
         delete pImportHeaderWidget;
 
-        ui->tableWidget_ImportLibraries->setCurrentCell(nRow,0);
-
         reloadData();
+
+        ui->tableWidget_ImportLibraries->setCurrentCell(nRow,0);
     }
 }
 
