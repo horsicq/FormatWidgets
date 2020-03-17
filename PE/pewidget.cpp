@@ -474,7 +474,6 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int
                     break;
             }
 
-
             switch(nStype)
             {
                 case SPE::TYPE_IMAGE_OPTIONAL_HEADER:
@@ -976,9 +975,6 @@ void PEWidget::reloadData()
             XBinary::_MEMORY_MAP memoryMap=pe.getMemoryMap();
             QMap<quint64,QString> mapDD=XPE::getImageOptionalHeaderDataDirectoryS();
 
-            QColor colEnabled=getEnabledColor();
-            QColor colDisabled=getDisabledColor();
-
             for(int i=0; i<16; i++)
             {
                 ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->setItem(i,4,new QTableWidgetItem()); // Comment
@@ -1018,10 +1014,10 @@ void PEWidget::reloadData()
                 QTableWidgetItem *pItem=new QTableWidgetItem(XBinary::valueToHex(dd.Size));
                 ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->setItem(i,3,pItem);
 
-                ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->item(i,0)->setBackgroundColor((i<nNumberOfRvaAndSizes)?(colEnabled):(colDisabled));
-                ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->item(i,1)->setBackgroundColor((i<nNumberOfRvaAndSizes)?(colEnabled):(colDisabled));
-                ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->item(i,2)->setBackgroundColor((i<nNumberOfRvaAndSizes)?(colEnabled):(colDisabled));
-                ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->item(i,3)->setBackgroundColor((i<nNumberOfRvaAndSizes)?(colEnabled):(colDisabled));
+                setItemEnable(ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->item(i,0),i<nNumberOfRvaAndSizes);
+                setItemEnable(ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->item(i,1),i<nNumberOfRvaAndSizes);
+                setItemEnable(ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->item(i,2),i<nNumberOfRvaAndSizes);
+                setItemEnable(ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->item(i,3),i<nNumberOfRvaAndSizes);
 
                 // TODO !!!
 //                ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->setItem(i,3,new QTableWidgetItem(XBinary::valueToHex(dd.Size)));
@@ -1541,6 +1537,8 @@ void PEWidget::reloadData()
             }
 
             blockSignals(true);
+
+            // TODO
 
             if(pe.is64())
             {

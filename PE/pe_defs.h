@@ -207,7 +207,7 @@ enum DATA
     SecurityCookie,
     SEHandlerTable,
     SEHandlerCount,
-    // TODO
+    // Standard
     __data_size
 };
 

@@ -152,6 +152,8 @@ public:
     QColor getEnabledColor();
     QColor getDisabledColor();
 
+    void setItemEnable(QTableWidgetItem *pItem,bool bState);
+
 signals:
     void editState(bool bState);
 

@@ -167,6 +167,11 @@ QColor FormatWidget::getDisabledColor()
     return colDisabled;
 }
 
+void FormatWidget::setItemEnable(QTableWidgetItem *pItem, bool bState)
+{
+    pItem->setBackgroundColor(bState?(colEnabled):(colDisabled));
+}
+
 //void FormatWidget::resizeToolsWidget(QWidget *pParent, ToolsWidget *pToolWidget)
 //{
 //    qint32 nHeight=pParent->height();
