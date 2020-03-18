@@ -12,5 +12,5 @@ SOURCES += \
 
 !contains(XCONFIG, dialogsearchstrings) {
     XCONFIG += dialogsearchstrings
-    include(../../FormatDialogs/dialogsearchstrings.pri)
+    include($$PWD/../../FormatDialogs/dialogsearchstrings.pri)
 }

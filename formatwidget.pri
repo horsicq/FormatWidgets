@@ -3,27 +3,27 @@ DEPENDPATH += $$PWD
 
 !contains(XCONFIG, xlineedithex) {
     XCONFIG += xlineedithex
-    include(../Controls/xlineedithex.pri)
+    include($$PWD/../Controls/xlineedithex.pri)
 }
 
 !contains(XCONFIG, xcomboboxex) {
     XCONFIG += xcomboboxex
-    include(../Controls/xcomboboxex.pri)
+    include($$PWD/../Controls/xcomboboxex.pri)
 }
 
 !contains(XCONFIG, xdatetimeeditx) {
     XCONFIG += xdatetimeeditx
-    include(../Controls/xdatetimeeditx.pri)
+    include($$PWD/../Controls/xdatetimeeditx.pri)
 }
 
 !contains(XCONFIG, qhexview) {
     XCONFIG += qhexview
-    include(../QHexView/qhexview.pri)
+    include($$PWD/../QHexView/qhexview.pri)
 }
 
 !contains(XCONFIG, searchstringswidget) {
     XCONFIG += searchstringswidget
-    include(SearchStrings/searchstringswidget.pri)
+    include($$PWD/SearchStrings/searchstringswidget.pri)
 }
 
 HEADERS += \
