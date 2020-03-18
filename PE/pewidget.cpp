@@ -1406,6 +1406,8 @@ void PEWidget::reloadData()
                 ui->tableWidget_Relocs->setItem(i,N_IMAGE_RELOCS::VirtualAddress,               pItem);
                 ui->tableWidget_Relocs->setItem(i,N_IMAGE_RELOCS::SizeOfBlock,                  new QTableWidgetItem(XBinary::valueToHex(listRH.at(i).ibr.SizeOfBlock)));
                 ui->tableWidget_Relocs->setItem(i,N_IMAGE_RELOCS::SizeOfBlock+1,                new QTableWidgetItem(QString::number(listRH.at(i).nCount)));
+                ui->tableWidget_Relocs->setItem(i,3,new QTableWidgetItem()); // Comment
+                addComment(ui->tableWidget_Relocs,i,3,pe.getMemoryRecordInfoByRelAddress(listRH.at(i).nOffset));
             }
 
             ui->tableWidget_RelocsPositions->setRowCount(0);
@@ -1936,7 +1938,7 @@ bool PEWidget::createSectionTable(int type, QTableWidget *pTableWidget, const Fo
             break;
 
         case SPE::TYPE_RELOCS:
-            pTableWidget->setColumnCount(nRecordCount+1);
+            pTableWidget->setColumnCount(nRecordCount+2);
             break;
 
         case SPE::TYPE_DEBUG:
@@ -1976,7 +1978,9 @@ bool PEWidget::createSectionTable(int type, QTableWidget *pTableWidget, const Fo
             break;
 
         case SPE::TYPE_RELOCS:
+            pTableWidget->horizontalHeader()->setSectionResizeMode(3,QHeaderView::Stretch);
             slHeader.append(tr("Count"));
+            slHeader.append("");
             break;
 
         case SPE::TYPE_RELOCS_POSITION:
