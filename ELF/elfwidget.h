@@ -62,6 +62,9 @@ private slots:
 
     void on_tableWidget_Elf_Ehdr_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
 
+    void on_tableWidget_Elf_Shdr_customContextMenuRequested(const QPoint &pos);
+    void on_tableWidget_Elf_Phdr_customContextMenuRequested(const QPoint &pos);
+
 private:
     // TODO rename
     enum CB

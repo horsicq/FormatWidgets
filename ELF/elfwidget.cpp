@@ -781,3 +781,13 @@ void ELFWidget::on_tableWidget_Elf_Ehdr_currentCellChanged(int currentRow, int c
 
     setHeaderTableSelection(ui->widgetHex_Elf_Ehdr,ui->tableWidget_Elf_Ehdr);
 }
+
+void ELFWidget::on_tableWidget_Elf_Shdr_customContextMenuRequested(const QPoint &pos)
+{
+    // TODO
+}
+
+void ELFWidget::on_tableWidget_Elf_Phdr_customContextMenuRequested(const QPoint &pos)
+{
+    // TODO
+}
