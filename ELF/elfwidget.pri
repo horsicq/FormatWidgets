@@ -1,16 +1,6 @@
 INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
 
-!contains(XCONFIG, xelf) {
-    XCONFIG += xelf
-    include(../../Formats/xelf.pri)
-}
-
-!contains(XCONFIG, formatwidget) {
-    XCONFIG += formatwidget
-    include(../formatwidget.pri)
-}
-
 FORMS += \
     $$PWD/elfwidget.ui \
     $$PWD/dialogelf.ui
@@ -24,3 +14,13 @@ SOURCES += \
     $$PWD/elfwidget.cpp \
     $$PWD/elf_defs.cpp \
     $$PWD/dialogelf.cpp
+
+!contains(XCONFIG, xelf) {
+    XCONFIG += xelf
+    include($$PWD/../../Formats/xelf.pri)
+}
+
+!contains(XCONFIG, formatwidget) {
+    XCONFIG += formatwidget
+    include($$PWD/../formatwidget.pri)
+}

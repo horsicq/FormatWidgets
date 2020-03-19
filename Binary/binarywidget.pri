@@ -1,16 +1,6 @@
 INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
 
-!contains(XCONFIG, xbinary) {
-    XCONFIG += xbinary
-    include(../Formats/xbinary.pri)
-}
-
-!contains(XCONFIG, formatwidget) {
-    XCONFIG += formatwidget
-    include(../formatwidget.pri)
-}
-
 FORMS += \
     $$PWD/binarywidget.ui \
     $$PWD/dialogbinary.ui
@@ -24,3 +14,13 @@ SOURCES += \
     $$PWD/binarywidget.cpp \
     $$PWD/binary_defs.cpp \
     $$PWD/dialogbinary.cpp
+
+!contains(XCONFIG, xbinary) {
+    XCONFIG += xbinary
+    include($$PWD/../../Formats/xbinary.pri)
+}
+
+!contains(XCONFIG, formatwidget) {
+    XCONFIG += formatwidget
+    include($$PWD/../formatwidget.pri)
+}

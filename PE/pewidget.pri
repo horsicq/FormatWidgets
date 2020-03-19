@@ -1,16 +1,6 @@
 INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
 
-!contains(XCONFIG, xpe) {
-    XCONFIG += xpe
-    include($$PWD/../../Formats/xpe.pri)
-}
-
-!contains(XCONFIG, formatwidget) {
-    XCONFIG += formatwidget
-    include($$PWD/../formatwidget.pri)
-}
-
 FORMS += \
     $$PWD/pewidget.ui \
     $$PWD/sectionheaderwidget.ui \
@@ -30,3 +20,13 @@ SOURCES += \
     $$PWD/sectionheaderwidget.cpp \
     $$PWD/importheaderwidget.cpp \
     $$PWD/dialogpe.cpp
+
+!contains(XCONFIG, xpe) {
+    XCONFIG += xpe
+    include($$PWD/../../Formats/xpe.pri)
+}
+
+!contains(XCONFIG, formatwidget) {
+    XCONFIG += formatwidget
+    include($$PWD/../formatwidget.pri)
+}
