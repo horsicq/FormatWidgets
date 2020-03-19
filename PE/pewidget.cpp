@@ -1407,7 +1407,7 @@ void PEWidget::reloadData()
                 ui->tableWidget_Relocs->setItem(i,N_IMAGE_RELOCS::SizeOfBlock,                  new QTableWidgetItem(XBinary::valueToHex(listRH.at(i).ibr.SizeOfBlock)));
                 ui->tableWidget_Relocs->setItem(i,N_IMAGE_RELOCS::SizeOfBlock+1,                new QTableWidgetItem(QString::number(listRH.at(i).nCount)));
                 ui->tableWidget_Relocs->setItem(i,3,new QTableWidgetItem()); // Comment
-                addComment(ui->tableWidget_Relocs,i,3,pe.getMemoryRecordInfoByRelAddress(listRH.at(i).nOffset));
+                addComment(ui->tableWidget_Relocs,i,3,pe.getMemoryRecordInfoByRelAddress(listRH.at(i).ibr.VirtualAddress));
             }
 
             ui->tableWidget_RelocsPositions->setRowCount(0);

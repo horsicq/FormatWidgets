@@ -100,7 +100,6 @@ bool ImportHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int 
                 case SPE::TYPE_IMAGE_SECTION_HEADER:
                     switch(nNdata)
                     {
-                        // TODO
                         case N_IMAGE_IMPORT::OriginalFirstThunk:            pe.setImportDescriptor_OriginalFirstThunk(nPosition,(quint32)nValue);   break;
                         case N_IMAGE_IMPORT::TimeDateStamp:                 pe.setImportDescriptor_TimeDateStamp(nPosition,(quint32)nValue);        break;
                         case N_IMAGE_IMPORT::ForwarderChain:                pe.setImportDescriptor_ForwarderChain(nPosition,(quint32)nValue);       break;
