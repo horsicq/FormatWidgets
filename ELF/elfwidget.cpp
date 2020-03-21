@@ -813,10 +813,40 @@ void ELFWidget::on_tableWidget_Elf_Phdr_customContextMenuRequested(const QPoint 
 
 void ELFWidget::editSectionHeader()
 {
-    // TODO
+    int nRow=ui->tableWidget_Elf_Shdr->currentRow();
+
+    if(nRow!=-1)
+    {
+        SectionHeaderWidget *pSectionHeaderWidget=new SectionHeaderWidget(this);
+        DialogSectionHeader dsh(this);
+        dsh.setWidget(pSectionHeaderWidget);
+        dsh.setData(getDevice(),getOptions(),(quint32)nRow,tr("Section Header"));
+        dsh.setEdited(isEdited());
+
+        connect(&dsh,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+
+        dsh.exec();
+
+        delete pSectionHeaderWidget;
+
+        reloadData();
+
+        ui->tableWidget_Elf_Shdr->setCurrentCell(nRow,0);
+    }
 }
 
 void ELFWidget::sectionHex()
 {
-    // TODO
+    int nRow=ui->tableWidget_Elf_Shdr->currentRow();
+
+    if(nRow!=-1)
+    {
+        qint64 nOffset=ui->tableWidget_Elf_Shdr->item(nRow,0)->data(Qt::UserRole+SECTION_DATA_OFFSET).toLongLong();
+        qint64 nSize=ui->tableWidget_Elf_Shdr->item(nRow,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
+        showHex(nOffset,nSize);
+
+        reloadData();
+
+        ui->tableWidget_Elf_Shdr->setCurrentCell(nRow,0);
+    }
 }
