@@ -24,6 +24,7 @@
 #include "../formatwidget.h"
 #include "dialogsectionheader.h"
 #include "sectionheaderwidget.h"
+#include "programheaderwidget.h"
 #include "elf_defs.h"
 
 namespace Ui
