@@ -171,6 +171,9 @@
         </property>
         <item>
          <widget class="QTableWidget" name="tableWidget_Elf_Shdr">
+          <property name="contextMenuPolicy">
+           <enum>Qt::CustomContextMenu</enum>
+          </property>
           <property name="editTriggers">
            <set>QAbstractItemView::NoEditTriggers</set>
           </property>
@@ -219,6 +222,9 @@
         </property>
         <item>
          <widget class="QTableWidget" name="tableWidget_Elf_Phdr">
+          <property name="contextMenuPolicy">
+           <enum>Qt::CustomContextMenu</enum>
+          </property>
           <property name="editTriggers">
            <set>QAbstractItemView::NoEditTriggers</set>
           </property>

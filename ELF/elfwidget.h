@@ -22,6 +22,8 @@
 #define ELFWIDGET_H
 
 #include "../formatwidget.h"
+#include "dialogsectionheader.h"
+#include "sectionheaderwidget.h"
 #include "elf_defs.h"
 
 namespace Ui
@@ -64,6 +66,9 @@ private slots:
 
     void on_tableWidget_Elf_Shdr_customContextMenuRequested(const QPoint &pos);
     void on_tableWidget_Elf_Phdr_customContextMenuRequested(const QPoint &pos);
+
+    void editSectionHeader();
+    void sectionHex();
 
 private:
     // TODO rename

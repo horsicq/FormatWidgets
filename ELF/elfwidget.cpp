@@ -784,10 +784,39 @@ void ELFWidget::on_tableWidget_Elf_Ehdr_currentCellChanged(int currentRow, int c
 
 void ELFWidget::on_tableWidget_Elf_Shdr_customContextMenuRequested(const QPoint &pos)
 {
+    int nRow=ui->tableWidget_Elf_Shdr->currentRow();
+
+    if(nRow!=-1)
+    {
+        QMenu contextMenu(this);
+
+        QAction actionEdit(tr("Edit"),this);
+        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editSectionHeader()));
+        contextMenu.addAction(&actionEdit);
+
+        QAction actionHex(tr("Hex"),this);
+        connect(&actionHex, SIGNAL(triggered()), this, SLOT(sectionHex()));
+        actionHex.setEnabled(ui->tableWidget_Elf_Shdr->item(nRow,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong());
+        contextMenu.addAction(&actionHex);
+
+        // TODO Entropy
+
+        contextMenu.exec(ui->tableWidget_Elf_Shdr->viewport()->mapToGlobal(pos));
+    }
     // TODO
 }
 
 void ELFWidget::on_tableWidget_Elf_Phdr_customContextMenuRequested(const QPoint &pos)
+{
+    // TODO
+}
+
+void ELFWidget::editSectionHeader()
+{
+    // TODO
+}
+
+void ELFWidget::sectionHex()
 {
     // TODO
 }
