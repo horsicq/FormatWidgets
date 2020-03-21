@@ -21,19 +21,33 @@
 #ifndef PROGRAMHEADERWIDGET_H
 #define PROGRAMHEADERWIDGET_H
 
-#include <QWidget>
+#include "../formatwidget.h"
+#include "elf_defs.h"
 
 namespace Ui {
 class ProgramHeaderWidget;
 }
 
-class ProgramHeaderWidget : public QWidget
+class ProgramHeaderWidget : public FormatWidget
 {
     Q_OBJECT
 
 public:
     explicit ProgramHeaderWidget(QWidget *parent = nullptr);
     ~ProgramHeaderWidget();
+    virtual void clear();
+    virtual void setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber);
+    virtual void reload();
+
+protected:
+    virtual bool _setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition);
+    virtual void setReadonly(bool bState);
+    virtual void blockSignals(bool bState);
+    virtual void adjustHeaderTable(int type,QTableWidget *pTableWidget);
+
+private slots:
+    void on_checkBoxReadonly_toggled(bool checked);
+    void reloadData();
 
 private:
     Ui::ProgramHeaderWidget *ui;

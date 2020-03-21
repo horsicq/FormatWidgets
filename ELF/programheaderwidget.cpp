@@ -22,7 +22,7 @@
 #include "ui_programheaderwidget.h"
 
 ProgramHeaderWidget::ProgramHeaderWidget(QWidget *parent) :
-    QWidget(parent),
+    FormatWidget(parent),
     ui(new Ui::ProgramHeaderWidget)
 {
     ui->setupUi(this);
@@ -31,4 +31,49 @@ ProgramHeaderWidget::ProgramHeaderWidget(QWidget *parent) :
 ProgramHeaderWidget::~ProgramHeaderWidget()
 {
     delete ui;
+}
+
+void ProgramHeaderWidget::clear()
+{
+
+}
+
+void ProgramHeaderWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber)
+{
+
+}
+
+void ProgramHeaderWidget::reload()
+{
+
+}
+
+bool ProgramHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition)
+{
+    return false;
+}
+
+void ProgramHeaderWidget::setReadonly(bool bState)
+{
+
+}
+
+void ProgramHeaderWidget::blockSignals(bool bState)
+{
+
+}
+
+void ProgramHeaderWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
+{
+
+}
+
+void ProgramHeaderWidget::on_checkBoxReadonly_toggled(bool checked)
+{
+
+}
+
+void ProgramHeaderWidget::reloadData()
+{
+
 }

@@ -70,6 +70,8 @@ private slots:
 
     void editSectionHeader();
     void sectionHex();
+    void editProgramHeader();
+    void programHex();
 
 private:
     // TODO rename

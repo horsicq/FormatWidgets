@@ -803,12 +803,29 @@ void ELFWidget::on_tableWidget_Elf_Shdr_customContextMenuRequested(const QPoint 
 
         contextMenu.exec(ui->tableWidget_Elf_Shdr->viewport()->mapToGlobal(pos));
     }
-    // TODO
 }
 
 void ELFWidget::on_tableWidget_Elf_Phdr_customContextMenuRequested(const QPoint &pos)
 {
-    // TODO
+    int nRow=ui->tableWidget_Elf_Phdr->currentRow();
+
+    if(nRow!=-1)
+    {
+        QMenu contextMenu(this);
+
+        QAction actionEdit(tr("Edit"),this);
+        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editProgramHeader()));
+        contextMenu.addAction(&actionEdit);
+
+        QAction actionHex(tr("Hex"),this);
+        connect(&actionHex, SIGNAL(triggered()), this, SLOT(programHex()));
+        actionHex.setEnabled(ui->tableWidget_Elf_Phdr->item(nRow,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong());
+        contextMenu.addAction(&actionHex);
+
+        // TODO Entropy
+
+        contextMenu.exec(ui->tableWidget_Elf_Phdr->viewport()->mapToGlobal(pos));
+    }
 }
 
 void ELFWidget::editSectionHeader()
@@ -848,5 +865,45 @@ void ELFWidget::sectionHex()
         reloadData();
 
         ui->tableWidget_Elf_Shdr->setCurrentCell(nRow,0);
+    }
+}
+
+void ELFWidget::editProgramHeader()
+{
+    int nRow=ui->tableWidget_Elf_Phdr->currentRow();
+
+    if(nRow!=-1)
+    {
+        ProgramHeaderWidget *pProgramHeaderWidget=new ProgramHeaderWidget(this);
+        DialogSectionHeader dsh(this);
+        dsh.setWidget(pProgramHeaderWidget);
+        dsh.setData(getDevice(),getOptions(),(quint32)nRow,tr("Program Header")); // TODO tr
+        dsh.setEdited(isEdited());
+
+        connect(&dsh,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+
+        dsh.exec();
+
+        delete pProgramHeaderWidget;
+
+        reloadData();
+
+        ui->tableWidget_Elf_Phdr->setCurrentCell(nRow,0);
+    }
+}
+
+void ELFWidget::programHex()
+{
+    int nRow=ui->tableWidget_Elf_Phdr->currentRow();
+
+    if(nRow!=-1)
+    {
+        qint64 nOffset=ui->tableWidget_Elf_Phdr->item(nRow,0)->data(Qt::UserRole+SECTION_DATA_OFFSET).toLongLong();
+        qint64 nSize=ui->tableWidget_Elf_Phdr->item(nRow,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
+        showHex(nOffset,nSize);
+
+        reloadData();
+
+        ui->tableWidget_Elf_Phdr->setCurrentCell(nRow,0);
     }
 }
