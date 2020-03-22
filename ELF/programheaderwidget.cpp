@@ -65,7 +65,19 @@ void ProgramHeaderWidget::blockSignals(bool bState)
 
 void ProgramHeaderWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
 {
+    int nSymbolWidth=getSymbolWidth();
 
+    pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
+    pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*6);
+
+    switch(type)
+    {
+        case SELF::TYPE_Elf_Phdr:
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*16);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*8);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
+            break;
+    }
 }
 
 void ProgramHeaderWidget::on_checkBoxReadonly_toggled(bool checked)
