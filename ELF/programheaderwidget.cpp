@@ -40,12 +40,16 @@ void ProgramHeaderWidget::clear()
 
 void ProgramHeaderWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber)
 {
-
+    FormatWidget::setData(pDevice,pOptions,nNumber);
 }
 
 void ProgramHeaderWidget::reload()
 {
+    clear();
 
+    ui->checkBoxReadonly->setEnabled(!isReadonly());
+
+    reloadData();
 }
 
 bool ProgramHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition)
