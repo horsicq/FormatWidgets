@@ -128,6 +128,29 @@ void SectionHeaderWidget::on_checkBoxReadonly_toggled(bool checked)
 
 void SectionHeaderWidget::reloadData()
 {
+    XELF elf(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
+
+    if(elf.isValid())
+    {
+        bool bIs64=elf.is64();
+
+        if(!bInit)
+        {
+            bInit=createHeaderTable(SELF::TYPE_Elf_Shdr,ui->tableWidget_Elf_Shdr,bIs64?(N_Elf_Shdr::records64):(N_Elf_Shdr::records32),lineEdit_Elf_Shdr,N_Elf_Shdr::__data_size,getNumber());
+        }
+
+        blockSignals(true);
+
+        qint64 nOffset=elf.getShdrOffset(getNumber());
+        qint64 nSize=elf.getShdrSize();
+        qint64 nAddress=elf.offsetToRelAddress(nOffset);
+
+        loadHexSubdevice(nOffset,nSize,nAddress,&pSubDevice,ui->widgetHex_Elf_Shdr);
+
+        blockSignals(false);
+
+        setReadonly(ui->checkBoxReadonly->isChecked());
+    }
 }
 
 void SectionHeaderWidget::widgetValueChanged(quint64 nValue)

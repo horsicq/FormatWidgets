@@ -144,15 +144,9 @@ void SectionHeaderWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget
 
     pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
     pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*6);
-
-    switch(type)
-    {
-        case SPE::TYPE_IMAGE_SECTION_HEADER:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*16);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
-            break;
-    }
+    pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*16);
+    pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*8);
+    pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
 }
 
 void SectionHeaderWidget::on_checkBoxReadonly_toggled(bool checked)
