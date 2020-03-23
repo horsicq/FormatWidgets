@@ -33,6 +33,12 @@ class ProgramHeaderWidget : public FormatWidget
     Q_OBJECT
 
 public:
+    enum CB
+    {
+        CB_CHARACTERISTICS=0,
+        CB_ALIGH,
+        __CB_size
+    };
     explicit ProgramHeaderWidget(QWidget *parent = nullptr);
     ~ProgramHeaderWidget();
     virtual void clear();
@@ -50,7 +56,19 @@ private slots:
     void reloadData();
 
 private:
+    enum INV
+    {
+        INV_VirtualAddress,
+        INV_PointerToRawData,
+        __INV_size
+    };
+
     Ui::ProgramHeaderWidget *ui;
+    XLineEditHEX *lineEdit_Elf_Shdr[N_Elf_Shdr::__data_size];
+    XComboBoxEx *comboBox[__CB_size];
+    bool bInit;
+    InvWidget *invWidget[__INV_size];
+    SubDevice *pSubDevice;
 };
 
 #endif // PROGRAMHEADERWIDGET_H
