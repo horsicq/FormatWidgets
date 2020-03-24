@@ -86,13 +86,13 @@ void ProgramHeaderWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget
     pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
     pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*8);
     pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*8);
-    pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*8);
+    pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*12);
     pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
 }
 
 void ProgramHeaderWidget::on_checkBoxReadonly_toggled(bool checked)
 {
-
+    setReadonly(checked);
 }
 
 void ProgramHeaderWidget::reloadData()
@@ -109,6 +109,33 @@ void ProgramHeaderWidget::reloadData()
         }
 
         blockSignals(true);
+
+        if(bIs64)
+        {
+            XELF_DEF::Elf64_Phdr phdr64=elf.getElf64_Phdr(getNumber());
+
+            lineEdit_Elf_Phdr[N_Elf_Phdr64::p_type]->setValue(phdr64.p_type);
+            lineEdit_Elf_Phdr[N_Elf_Phdr64::p_flags]->setValue(phdr64.p_flags);
+            lineEdit_Elf_Phdr[N_Elf_Phdr64::p_offset]->setValue(phdr64.p_offset);
+            lineEdit_Elf_Phdr[N_Elf_Phdr64::p_vaddr]->setValue(phdr64.p_vaddr);
+            lineEdit_Elf_Phdr[N_Elf_Phdr64::p_paddr]->setValue(phdr64.p_paddr);
+            lineEdit_Elf_Phdr[N_Elf_Phdr64::p_filesz]->setValue(phdr64.p_filesz);
+            lineEdit_Elf_Phdr[N_Elf_Phdr64::p_memsz]->setValue(phdr64.p_memsz);
+            lineEdit_Elf_Phdr[N_Elf_Phdr64::p_align]->setValue(phdr64.p_align);
+        }
+        else
+        {
+            XELF_DEF::Elf32_Phdr phdr32=elf.getElf32_Phdr(getNumber());
+
+            lineEdit_Elf_Phdr[N_Elf_Phdr32::p_type]->setValue(phdr32.p_type);
+            lineEdit_Elf_Phdr[N_Elf_Phdr32::p_offset]->setValue(phdr32.p_offset);
+            lineEdit_Elf_Phdr[N_Elf_Phdr32::p_vaddr]->setValue(phdr32.p_vaddr);
+            lineEdit_Elf_Phdr[N_Elf_Phdr32::p_paddr]->setValue(phdr32.p_paddr);
+            lineEdit_Elf_Phdr[N_Elf_Phdr32::p_filesz]->setValue(phdr32.p_filesz);
+            lineEdit_Elf_Phdr[N_Elf_Phdr32::p_memsz]->setValue(phdr32.p_memsz);
+            lineEdit_Elf_Phdr[N_Elf_Phdr32::p_flags]->setValue(phdr32.p_flags);
+            lineEdit_Elf_Phdr[N_Elf_Phdr32::p_align]->setValue(phdr32.p_align);
+        }
 
         qint64 nOffset=elf.getPhdrOffset(getNumber());
         qint64 nSize=elf.getPhdrSize();

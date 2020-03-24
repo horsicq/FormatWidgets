@@ -111,7 +111,7 @@ void SectionHeaderWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget
     pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
     pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*8);
     pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*8);
-    pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*8);
+    pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*12);
     pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
 }
 
