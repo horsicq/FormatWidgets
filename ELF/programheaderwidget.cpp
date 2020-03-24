@@ -35,7 +35,15 @@ ProgramHeaderWidget::~ProgramHeaderWidget()
 
 void ProgramHeaderWidget::clear()
 {
+    bInit=false;
 
+    memset(lineEdit_Elf_Phdr,0,sizeof lineEdit_Elf_Phdr);
+    memset(comboBox,0,sizeof comboBox);
+    memset(invWidget,0,sizeof invWidget);
+
+    pSubDevice=nullptr;
+
+    ui->checkBoxReadonly->setChecked(true);
 }
 
 void ProgramHeaderWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber)
@@ -76,16 +84,10 @@ void ProgramHeaderWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget
     int nSymbolWidth=getSymbolWidth();
 
     pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
-    pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*6);
-
-    switch(type)
-    {
-        case SELF::TYPE_Elf_Phdr:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*16);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
-            break;
-    }
+    pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*8);
+    pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*8);
+    pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*8);
+    pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
 }
 
 void ProgramHeaderWidget::on_checkBoxReadonly_toggled(bool checked)
@@ -95,7 +97,29 @@ void ProgramHeaderWidget::on_checkBoxReadonly_toggled(bool checked)
 
 void ProgramHeaderWidget::reloadData()
 {
+    XELF elf(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
 
+    if(elf.isValid())
+    {
+        bool bIs64=elf.is64();
+
+        if(!bInit)
+        {
+            bInit=createHeaderTable(SELF::TYPE_Elf_Phdr,ui->tableWidget_Elf_Phdr,bIs64?(N_Elf_Phdr64::records):(N_Elf_Phdr32::records),lineEdit_Elf_Phdr,bIs64?(N_Elf_Phdr64::__data_size):(N_Elf_Phdr32::__data_size),getNumber());
+        }
+
+        blockSignals(true);
+
+        qint64 nOffset=elf.getPhdrOffset(getNumber());
+        qint64 nSize=elf.getPhdrSize();
+        qint64 nAddress=elf.offsetToRelAddress(nOffset);
+
+        loadHexSubdevice(nOffset,nSize,nAddress,&pSubDevice,ui->widgetHex_Elf_Phdr);
+
+        blockSignals(false);
+
+        setReadonly(ui->checkBoxReadonly->isChecked());
+    }
 }
 
 void ProgramHeaderWidget::on_tableWidget_Elf_Phdr_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
