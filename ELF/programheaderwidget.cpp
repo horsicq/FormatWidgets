@@ -59,12 +59,16 @@ bool ProgramHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int
 
 void ProgramHeaderWidget::setReadonly(bool bState)
 {
+    setLineEditsReadOnly(lineEdit_Elf_Phdr,N_Elf_Phdr32::__data_size,bState);
 
+    setComboBoxesReadOnly(comboBox,__CB_size,bState);
 }
 
 void ProgramHeaderWidget::blockSignals(bool bState)
 {
+    _blockSignals((QObject **)lineEdit_Elf_Phdr,N_Elf_Phdr32::__data_size,bState);
 
+    _blockSignals((QObject **)comboBox,__CB_size,bState);
 }
 
 void ProgramHeaderWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
@@ -92,4 +96,14 @@ void ProgramHeaderWidget::on_checkBoxReadonly_toggled(bool checked)
 void ProgramHeaderWidget::reloadData()
 {
 
+}
+
+void ProgramHeaderWidget::on_tableWidget_Elf_Phdr_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
+{
+    Q_UNUSED(currentRow)
+    Q_UNUSED(currentColumn)
+    Q_UNUSED(previousRow)
+    Q_UNUSED(previousColumn)
+
+    setHeaderTableSelection(ui->widgetHex_Elf_Phdr,ui->tableWidget_Elf_Phdr);
 }

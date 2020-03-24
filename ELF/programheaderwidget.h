@@ -55,6 +55,8 @@ private slots:
     void on_checkBoxReadonly_toggled(bool checked);
     void reloadData();
 
+    void on_tableWidget_Elf_Phdr_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
+
 private:
     enum INV
     {
@@ -64,7 +66,7 @@ private:
     };
 
     Ui::ProgramHeaderWidget *ui;
-    XLineEditHEX *lineEdit_Elf_Shdr[N_Elf_Shdr::__data_size];
+    XLineEditHEX *lineEdit_Elf_Phdr[N_Elf_Shdr::__data_size];
     XComboBoxEx *comboBox[__CB_size];
     bool bInit;
     InvWidget *invWidget[__INV_size];
