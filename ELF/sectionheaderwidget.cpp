@@ -135,6 +135,38 @@ void SectionHeaderWidget::reloadData()
 
         blockSignals(true);
 
+        if(bIs64)
+        {
+            XELF_DEF::Elf64_Shdr shdr64=elf.getElf64_Shdr(getNumber());
+
+            lineEdit_Elf_Shdr[N_Elf_Shdr::sh_name]->setValue(shdr64.sh_name);
+            lineEdit_Elf_Shdr[N_Elf_Shdr::sh_type]->setValue(shdr64.sh_type);
+            lineEdit_Elf_Shdr[N_Elf_Shdr::sh_flags]->setValue(shdr64.sh_flags);
+            lineEdit_Elf_Shdr[N_Elf_Shdr::sh_addr]->setValue(shdr64.sh_addr);
+            lineEdit_Elf_Shdr[N_Elf_Shdr::sh_offset]->setValue(shdr64.sh_offset);
+            lineEdit_Elf_Shdr[N_Elf_Shdr::sh_size]->setValue(shdr64.sh_size);
+            lineEdit_Elf_Shdr[N_Elf_Shdr::sh_link]->setValue(shdr64.sh_link);
+            lineEdit_Elf_Shdr[N_Elf_Shdr::sh_info]->setValue(shdr64.sh_info);
+            lineEdit_Elf_Shdr[N_Elf_Shdr::sh_addralign]->setValue(shdr64.sh_addralign);
+            lineEdit_Elf_Shdr[N_Elf_Shdr::sh_entsize]->setValue(shdr64.sh_entsize);
+        }
+        else
+        {
+            XELF_DEF::Elf32_Shdr shdr32=elf.getElf32_Shdr(getNumber());
+
+            lineEdit_Elf_Shdr[N_Elf_Shdr::sh_name]->setValue(shdr32.sh_name);
+            lineEdit_Elf_Shdr[N_Elf_Shdr::sh_type]->setValue(shdr32.sh_type);
+            lineEdit_Elf_Shdr[N_Elf_Shdr::sh_flags]->setValue(shdr32.sh_flags);
+            lineEdit_Elf_Shdr[N_Elf_Shdr::sh_addr]->setValue(shdr32.sh_addr);
+            lineEdit_Elf_Shdr[N_Elf_Shdr::sh_offset]->setValue(shdr32.sh_offset);
+            lineEdit_Elf_Shdr[N_Elf_Shdr::sh_size]->setValue(shdr32.sh_size);
+            lineEdit_Elf_Shdr[N_Elf_Shdr::sh_link]->setValue(shdr32.sh_link);
+            lineEdit_Elf_Shdr[N_Elf_Shdr::sh_info]->setValue(shdr32.sh_info);
+            lineEdit_Elf_Shdr[N_Elf_Shdr::sh_addralign]->setValue(shdr32.sh_addralign);
+            lineEdit_Elf_Shdr[N_Elf_Shdr::sh_entsize]->setValue(shdr32.sh_entsize);
+        }
+
+
         qint64 nOffset=elf.getShdrOffset(getNumber());
         qint64 nSize=elf.getShdrSize();
         qint64 nAddress=elf.offsetToRelAddress(nOffset);
