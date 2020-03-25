@@ -84,6 +84,47 @@ bool SectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int
 
         if(elf.isValid())
         {
+            switch(nStype)
+            {
+                case SELF::TYPE_Elf_Shdr:
+                    if(elf.is64())
+                    {
+                        switch(nNdata)
+                        {
+                            case N_Elf_Shdr::sh_name:       elf.setElf64_Shdr_name((quint32)nPosition,(quint32)nValue);         break;
+                            case N_Elf_Shdr::sh_type:       elf.setElf64_Shdr_type((quint32)nPosition,(quint32)nValue);         break;
+                            case N_Elf_Shdr::sh_flags:      elf.setElf64_Shdr_flags((quint64)nPosition,(quint32)nValue);        break;
+                            case N_Elf_Shdr::sh_addr:       elf.setElf64_Shdr_addr((quint64)nPosition,(quint32)nValue);         break;
+                            case N_Elf_Shdr::sh_offset:     elf.setElf64_Shdr_offset((quint64)nPosition,(quint32)nValue);       break;
+                            case N_Elf_Shdr::sh_size:       elf.setElf64_Shdr_size((quint64)nPosition,(quint32)nValue);         break;
+                            case N_Elf_Shdr::sh_link:       elf.setElf64_Shdr_link((quint32)nPosition,(quint32)nValue);         break;
+                            case N_Elf_Shdr::sh_info:       elf.setElf64_Shdr_info((quint32)nPosition,(quint32)nValue);         break;
+                            case N_Elf_Shdr::sh_addralign:  elf.setElf64_Shdr_addralign((quint64)nPosition,(quint32)nValue);    break;
+                            case N_Elf_Shdr::sh_entsize:    elf.setElf64_Shdr_entsize((quint64)nPosition,(quint32)nValue);      break;
+                        }
+                    }
+                    else
+                    {
+                        switch(nNdata)
+                        {
+                            case N_Elf_Shdr::sh_name:       elf.setElf32_Shdr_name((quint32)nPosition,(quint32)nValue);         break;
+                            case N_Elf_Shdr::sh_type:       elf.setElf32_Shdr_type((quint32)nPosition,(quint32)nValue);         break;
+                            case N_Elf_Shdr::sh_flags:      elf.setElf32_Shdr_flags((quint32)nPosition,(quint32)nValue);        break;
+                            case N_Elf_Shdr::sh_addr:       elf.setElf32_Shdr_addr((quint32)nPosition,(quint32)nValue);         break;
+                            case N_Elf_Shdr::sh_offset:     elf.setElf32_Shdr_offset((quint32)nPosition,(quint32)nValue);       break;
+                            case N_Elf_Shdr::sh_size:       elf.setElf32_Shdr_size((quint32)nPosition,(quint32)nValue);         break;
+                            case N_Elf_Shdr::sh_link:       elf.setElf32_Shdr_link((quint32)nPosition,(quint32)nValue);         break;
+                            case N_Elf_Shdr::sh_info:       elf.setElf32_Shdr_info((quint32)nPosition,(quint32)nValue);         break;
+                            case N_Elf_Shdr::sh_addralign:  elf.setElf32_Shdr_addralign((quint32)nPosition,(quint32)nValue);    break;
+                            case N_Elf_Shdr::sh_entsize:    elf.setElf32_Shdr_entsize((quint32)nPosition,(quint32)nValue);      break;
+                        }
+                    }
+
+                    ui->widgetHex_Elf_Shdr->reload();
+
+                    break;
+            }
+
             bResult=true;
         }
     }
