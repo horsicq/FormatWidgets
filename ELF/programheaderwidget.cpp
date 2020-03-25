@@ -62,7 +62,25 @@ void ProgramHeaderWidget::reload()
 
 bool ProgramHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition)
 {
-    return false;
+    Q_UNUSED(nVtype)
+
+    bool bResult=false;
+
+    quint64 nValue=vValue.toULongLong();
+    QString sValue=vValue.toString();
+
+    if(getDevice()->isWritable())
+    {
+        XELF elf(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
+
+        if(elf.isValid())
+        {
+
+            bResult=true;
+        }
+    }
+
+    return bResult;
 }
 
 void ProgramHeaderWidget::setReadonly(bool bState)
