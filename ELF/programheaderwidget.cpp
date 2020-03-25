@@ -75,6 +75,42 @@ bool ProgramHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int
 
         if(elf.isValid())
         {
+            switch(nStype)
+            {
+                case SELF::TYPE_Elf_Phdr:
+                    if(elf.is64())
+                    {
+                        switch(nNdata)
+                        {
+                            case N_Elf_Phdr64::p_type:      elf.setElf64_Phdr_type((quint32)nPosition,(quint32)nValue);         break;
+                            case N_Elf_Phdr64::p_flags:     elf.setElf64_Phdr_flags((quint32)nPosition,(quint32)nValue);        break;
+                            case N_Elf_Phdr64::p_offset:    elf.setElf64_Phdr_offset((quint64)nPosition,(quint32)nValue);       break;
+                            case N_Elf_Phdr64::p_vaddr:     elf.setElf64_Phdr_vaddr((quint64)nPosition,(quint32)nValue);        break;
+                            case N_Elf_Phdr64::p_paddr:     elf.setElf64_Phdr_paddr((quint64)nPosition,(quint32)nValue);        break;
+                            case N_Elf_Phdr64::p_filesz:    elf.setElf64_Phdr_filesz((quint64)nPosition,(quint32)nValue);       break;
+                            case N_Elf_Phdr64::p_memsz:     elf.setElf64_Phdr_memsz((quint64)nPosition,(quint32)nValue);        break;
+                            case N_Elf_Phdr64::p_align:     elf.setElf64_Phdr_align((quint64)nPosition,(quint32)nValue);        break;
+                        }
+                    }
+                    else
+                    {
+                        switch(nNdata)
+                        {
+                            case N_Elf_Phdr32::p_type:      elf.setElf32_Phdr_type((quint32)nPosition,(quint32)nValue);         break;
+                            case N_Elf_Phdr32::p_offset:    elf.setElf32_Phdr_offset((quint32)nPosition,(quint32)nValue);       break;
+                            case N_Elf_Phdr32::p_vaddr:     elf.setElf32_Phdr_vaddr((quint32)nPosition,(quint32)nValue);        break;
+                            case N_Elf_Phdr32::p_paddr:     elf.setElf32_Phdr_paddr((quint32)nPosition,(quint32)nValue);        break;
+                            case N_Elf_Phdr32::p_filesz:    elf.setElf32_Phdr_filesz((quint32)nPosition,(quint32)nValue);       break;
+                            case N_Elf_Phdr32::p_memsz:     elf.setElf32_Phdr_memsz((quint32)nPosition,(quint32)nValue);        break;
+                            case N_Elf_Phdr32::p_flags:     elf.setElf32_Phdr_flags((quint32)nPosition,(quint32)nValue);        break;
+                            case N_Elf_Phdr32::p_align:     elf.setElf32_Phdr_align((quint32)nPosition,(quint32)nValue);        break;
+                        }
+                    }
+
+                    ui->widgetHex_Elf_Phdr->reload();
+
+                    break;
+            }
 
             bResult=true;
         }
