@@ -160,6 +160,8 @@ void ProgramHeaderWidget::reloadData()
         if(!bInit)
         {
             bInit=createHeaderTable(SELF::TYPE_Elf_Phdr,ui->tableWidget_Elf_Phdr,bIs64?(N_Elf_Phdr64::records):(N_Elf_Phdr32::records),lineEdit_Elf_Phdr,bIs64?(N_Elf_Phdr64::__data_size):(N_Elf_Phdr32::__data_size),getNumber());
+            comboBox[CB_TYPE]=createComboBox(ui->tableWidget_Elf_Phdr,XELF::getProgramTypesS(),SELF::TYPE_Elf_Phdr,bIs64?(N_Elf_Phdr64::p_type):(N_Elf_Phdr32::p_type),XComboBoxEx::CBTYPE_NORMAL);
+            comboBox[CB_FLAGS]=createComboBox(ui->tableWidget_Elf_Phdr,XELF::getProgramFlagsS(),SELF::TYPE_Elf_Phdr,bIs64?(N_Elf_Phdr64::p_flags):(N_Elf_Phdr32::p_flags),XComboBoxEx::CBTYPE_FLAGS);
         }
 
         blockSignals(true);
@@ -176,6 +178,9 @@ void ProgramHeaderWidget::reloadData()
             lineEdit_Elf_Phdr[N_Elf_Phdr64::p_filesz]->setValue(phdr64.p_filesz);
             lineEdit_Elf_Phdr[N_Elf_Phdr64::p_memsz]->setValue(phdr64.p_memsz);
             lineEdit_Elf_Phdr[N_Elf_Phdr64::p_align]->setValue(phdr64.p_align);
+
+            comboBox[CB_TYPE]->setValue(phdr64.p_type);
+            comboBox[CB_FLAGS]->setValue(phdr64.p_flags);
         }
         else
         {
@@ -189,6 +194,9 @@ void ProgramHeaderWidget::reloadData()
             lineEdit_Elf_Phdr[N_Elf_Phdr32::p_memsz]->setValue(phdr32.p_memsz);
             lineEdit_Elf_Phdr[N_Elf_Phdr32::p_flags]->setValue(phdr32.p_flags);
             lineEdit_Elf_Phdr[N_Elf_Phdr32::p_align]->setValue(phdr32.p_align);
+
+            comboBox[CB_TYPE]->setValue(phdr32.p_type);
+            comboBox[CB_FLAGS]->setValue(phdr32.p_flags);
         }
 
         qint64 nOffset=elf.getPhdrOffset(getNumber());
@@ -200,6 +208,58 @@ void ProgramHeaderWidget::reloadData()
         blockSignals(false);
 
         setReadonly(ui->checkBoxReadonly->isChecked());
+    }
+}
+
+void ProgramHeaderWidget::widgetValueChanged(quint64 nValue)
+{
+    QWidget *pWidget=qobject_cast<QWidget *>(sender());
+    int nStype=pWidget->property("STYPE").toInt();
+    int nNdata=pWidget->property("NDATA").toInt();
+
+    XELF elf(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
+
+    if(elf.isValid())
+    {
+        bool bIs64=elf.is64();
+
+        switch(nStype)
+        {
+            case SELF::TYPE_Elf_Phdr:
+
+                if(bIs64)
+                {
+                    switch(nNdata)
+                    {
+                        case N_Elf_Phdr64::p_type:
+                            lineEdit_Elf_Phdr[N_Elf_Phdr64::p_type]->setValue((quint32)nValue);
+                            this->comboBox[CB_TYPE]->setValue(nValue);
+                            break;
+
+                        case N_Elf_Phdr64::p_flags:
+                            lineEdit_Elf_Phdr[N_Elf_Phdr64::p_flags]->setValue((quint32)nValue);
+                            this->comboBox[CB_FLAGS]->setValue(nValue);
+                            break;
+                    }
+                }
+                else
+                {
+                    switch(nNdata)
+                    {
+                        case N_Elf_Phdr32::p_type:
+                            lineEdit_Elf_Phdr[N_Elf_Phdr32::p_type]->setValue((quint32)nValue);
+                            this->comboBox[CB_TYPE]->setValue(nValue);
+                            break;
+
+                        case N_Elf_Phdr32::p_flags:
+                            lineEdit_Elf_Phdr[N_Elf_Phdr32::p_flags]->setValue((quint32)nValue);
+                            this->comboBox[CB_FLAGS]->setValue(nValue);
+                            break;
+                    }
+                }
+
+                break;
+        }
     }
 }
 
