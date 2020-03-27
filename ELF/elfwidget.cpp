@@ -907,3 +907,24 @@ void ELFWidget::programHex()
         ui->tableWidget_Elf_Phdr->setCurrentCell(nRow,0);
     }
 }
+
+void ELFWidget::on_tableWidget_DynamicArrayTags_customContextMenuRequested(const QPoint &pos)
+{
+    int nRow=ui->tableWidget_DynamicArrayTags->currentRow();
+
+    if(nRow!=-1)
+    {
+        QMenu contextMenu(this);
+
+        QAction actionEdit(tr("Edit"),this);
+        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editDynamicArrayTag()));
+        contextMenu.addAction(&actionEdit);
+
+        contextMenu.exec(ui->tableWidget_DynamicArrayTags->viewport()->mapToGlobal(pos));
+    }
+}
+
+void ELFWidget::editDynamicArrayTag()
+{
+    // TODO
+}

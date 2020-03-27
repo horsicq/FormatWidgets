@@ -2,12 +2,14 @@ INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
 
 FORMS += \
+    $$PWD/dynamicarraytagwidget.ui \
     $$PWD/elfwidget.ui \
     $$PWD/dialogelf.ui \
     $$PWD/programheaderwidget.ui \
     $$PWD/sectionheaderwidget.ui
 
 HEADERS += \
+    $$PWD/dynamicarraytagwidget.h \
     $$PWD/elfwidget.h \
     $$PWD/elf_defs.h \
     $$PWD/dialogelf.h \
@@ -15,6 +17,7 @@ HEADERS += \
     $$PWD/sectionheaderwidget.h
 
 SOURCES += \
+    $$PWD/dynamicarraytagwidget.cpp \
     $$PWD/elfwidget.cpp \
     $$PWD/elf_defs.cpp \
     $$PWD/dialogelf.cpp \

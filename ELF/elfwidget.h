@@ -25,6 +25,7 @@
 #include "dialogsectionheader.h"
 #include "sectionheaderwidget.h"
 #include "programheaderwidget.h"
+#include "dynamicarraytagwidget.h"
 #include "elf_defs.h"
 
 namespace Ui
@@ -72,6 +73,10 @@ private slots:
     void sectionHex();
     void editProgramHeader();
     void programHex();
+
+    void on_tableWidget_DynamicArrayTags_customContextMenuRequested(const QPoint &pos);
+
+    void editDynamicArrayTag();
 
 private:
     // TODO rename
