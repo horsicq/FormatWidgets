@@ -172,6 +172,8 @@ void SectionHeaderWidget::reloadData()
         if(!bInit)
         {
             bInit=createHeaderTable(SELF::TYPE_Elf_Shdr,ui->tableWidget_Elf_Shdr,bIs64?(N_Elf_Shdr::records64):(N_Elf_Shdr::records32),lineEdit_Elf_Shdr,N_Elf_Shdr::__data_size,getNumber());
+            comboBox[CB_TYPE]=createComboBox(ui->tableWidget_Elf_Shdr,XELF::getSectionTypesS(),SELF::TYPE_Elf_Shdr,N_Elf_Shdr::sh_type,XComboBoxEx::CBTYPE_NORMAL);
+            comboBox[CB_FLAGS]=createComboBox(ui->tableWidget_Elf_Shdr,XELF::getSectionFlagsS(),SELF::TYPE_Elf_Shdr,N_Elf_Shdr::sh_flags,XComboBoxEx::CBTYPE_FLAGS);
         }
 
         blockSignals(true);
@@ -190,6 +192,9 @@ void SectionHeaderWidget::reloadData()
             lineEdit_Elf_Shdr[N_Elf_Shdr::sh_info]->setValue(shdr64.sh_info);
             lineEdit_Elf_Shdr[N_Elf_Shdr::sh_addralign]->setValue(shdr64.sh_addralign);
             lineEdit_Elf_Shdr[N_Elf_Shdr::sh_entsize]->setValue(shdr64.sh_entsize);
+
+            comboBox[CB_TYPE]->setValue(shdr64.sh_type);
+            comboBox[CB_FLAGS]->setValue(shdr64.sh_flags);
         }
         else
         {
@@ -205,8 +210,10 @@ void SectionHeaderWidget::reloadData()
             lineEdit_Elf_Shdr[N_Elf_Shdr::sh_info]->setValue(shdr32.sh_info);
             lineEdit_Elf_Shdr[N_Elf_Shdr::sh_addralign]->setValue(shdr32.sh_addralign);
             lineEdit_Elf_Shdr[N_Elf_Shdr::sh_entsize]->setValue(shdr32.sh_entsize);
-        }
 
+            comboBox[CB_TYPE]->setValue(shdr32.sh_type);
+            comboBox[CB_FLAGS]->setValue(shdr32.sh_flags);
+        }
 
         qint64 nOffset=elf.getShdrOffset(getNumber());
         qint64 nSize=elf.getShdrSize();
@@ -225,6 +232,33 @@ void SectionHeaderWidget::widgetValueChanged(quint64 nValue)
     QWidget *pWidget=qobject_cast<QWidget *>(sender());
     int nStype=pWidget->property("STYPE").toInt();
     int nNdata=pWidget->property("NDATA").toInt();
+
+    XELF elf(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
+
+    if(elf.isValid())
+    {
+        bool bIs64=elf.is64();
+
+        switch(nStype)
+        {
+            case SELF::TYPE_Elf_Shdr:
+
+                switch(nNdata)
+                {
+                    case N_Elf_Shdr::sh_type:
+                        lineEdit_Elf_Shdr[N_Elf_Shdr::sh_type]->setValue((quint32)nValue);
+                        this->comboBox[CB_TYPE]->setValue(nValue);
+                        break;
+
+                    case N_Elf_Shdr::sh_flags:
+                        lineEdit_Elf_Shdr[N_Elf_Shdr::sh_flags]->setValue(bIs64?((quint64)nValue):((quint32)nValue));
+                        this->comboBox[CB_FLAGS]->setValue(nValue);
+                        break;
+                }
+
+                break;
+        }
+    }
 }
 
 void SectionHeaderWidget::on_tableWidget_Elf_Shdr_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)

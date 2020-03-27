@@ -36,8 +36,8 @@ class SectionHeaderWidget : public FormatWidget
 public:
     enum CB
     {
-        CB_CHARACTERISTICS=0,
-        CB_ALIGH,
+        CB_TYPE=0,
+        CB_FLAGS,
         __CB_size
     };
     SectionHeaderWidget(QWidget *parent=nullptr);
