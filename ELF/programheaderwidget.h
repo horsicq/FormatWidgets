@@ -39,7 +39,7 @@ public:
         CB_FLAGS,
         __CB_size
     };
-    explicit ProgramHeaderWidget(QWidget *parent = nullptr);
+    explicit ProgramHeaderWidget(QWidget *parent=nullptr);
     ~ProgramHeaderWidget();
     virtual void clear();
     virtual void setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber);

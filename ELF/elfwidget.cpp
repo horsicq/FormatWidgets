@@ -926,5 +926,24 @@ void ELFWidget::on_tableWidget_DynamicArrayTags_customContextMenuRequested(const
 
 void ELFWidget::editDynamicArrayTag()
 {
-    // TODO
+    int nRow=ui->tableWidget_DynamicArrayTags->currentRow();
+
+    if(nRow!=-1)
+    {
+        DynamicArrayTagWidget *pDynamicArrayTagWidget=new DynamicArrayTagWidget(this);
+        DialogSectionHeader dsh(this);
+        dsh.setWidget(pDynamicArrayTagWidget);
+        dsh.setData(getDevice(),getOptions(),(quint32)nRow,tr("Dynamic Array Tag")); // TODO tr
+        dsh.setEdited(isEdited());
+
+        connect(&dsh,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+
+        dsh.exec();
+
+        delete pDynamicArrayTagWidget;
+
+        reloadData();
+
+        ui->tableWidget_DynamicArrayTags->setCurrentCell(nRow,0);
+    }
 }
