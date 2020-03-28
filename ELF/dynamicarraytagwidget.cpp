@@ -81,17 +81,28 @@ void DynamicArrayTagWidget::blockSignals(bool bState)
 
 void DynamicArrayTagWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
 {
+    int nSymbolWidth=getSymbolWidth();
 
+    pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
+    pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*8);
+    pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*8);
+    pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*12);
+    pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
 }
 
 void DynamicArrayTagWidget::on_checkBoxReadonly_toggled(bool checked)
 {
-
+    setReadonly(checked);
 }
 
 void DynamicArrayTagWidget::reloadData()
 {
+    XELF elf(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
 
+    if(elf.isValid())
+    {
+        bool bIs64=elf.is64();
+    }
 }
 
 void DynamicArrayTagWidget::widgetValueChanged(quint64 nValue)
@@ -101,5 +112,10 @@ void DynamicArrayTagWidget::widgetValueChanged(quint64 nValue)
 
 void DynamicArrayTagWidget::on_tableWidget_DynamicArrayTag_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
 {
+    Q_UNUSED(currentRow)
+    Q_UNUSED(currentColumn)
+    Q_UNUSED(previousRow)
+    Q_UNUSED(previousColumn)
 
+    setHeaderTableSelection(ui->widgetHex_DynamicArrayTag,ui->tableWidget_DynamicArrayTag);
 }
