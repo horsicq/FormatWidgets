@@ -44,11 +44,11 @@ void DialogSectionHeader::setWidget(FormatWidget *pWidget)
     connect(pWidget,SIGNAL(editState(bool)),this,SIGNAL(editState(bool)));
 }
 
-void DialogSectionHeader::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, QString sTitle)
+void DialogSectionHeader::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset,QString sTitle)
 {
     setWindowTitle(sTitle);
 
-    pWidget->setData(pDevice,pOptions,nNumber);
+    pWidget->setData(pDevice,pOptions,nNumber,nOffset);
     pWidget->reload();
 }
 

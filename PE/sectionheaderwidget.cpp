@@ -28,13 +28,13 @@ SectionHeaderWidget::SectionHeaderWidget(QWidget *parent):
     ui->setupUi(this);
 }
 
-SectionHeaderWidget::SectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, QWidget *parent):
-    FormatWidget(pDevice,pOptions,nNumber,parent),
+SectionHeaderWidget::SectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset,QWidget *parent):
+    FormatWidget(pDevice,pOptions,nNumber,nOffset,parent),
     ui(new Ui::SectionHeaderWidget)
 {
     ui->setupUi(this);
 
-    setData(pDevice,pOptions,nNumber);
+    setData(pDevice,pOptions,nNumber,nOffset);
 }
 
 SectionHeaderWidget::~SectionHeaderWidget()
@@ -55,9 +55,9 @@ void SectionHeaderWidget::clear()
     ui->checkBoxReadonly->setChecked(true);
 }
 
-void SectionHeaderWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber)
+void SectionHeaderWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset)
 {
-    FormatWidget::setData(pDevice,pOptions,nNumber);
+    FormatWidget::setData(pDevice,pOptions,nNumber,nOffset);
 }
 
 void SectionHeaderWidget::reload()

@@ -29,7 +29,7 @@ MSDOSWidget::MSDOSWidget(QWidget *parent) :
 }
 
 MSDOSWidget::MSDOSWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *parent) :
-    FormatWidget(pDevice,pOptions,0,parent),
+    FormatWidget(pDevice,pOptions,0,0,parent),
     ui(new Ui::MSDOSWidget)
 {
     ui->setupUi(this);
@@ -57,7 +57,7 @@ void MSDOSWidget::clear()
 
 void MSDOSWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions)
 {
-    FormatWidget::setData(pDevice,pOptions,0);
+    FormatWidget::setData(pDevice,pOptions,0,0);
 }
 
 void MSDOSWidget::reload()

@@ -46,9 +46,9 @@ void ProgramHeaderWidget::clear()
     ui->checkBoxReadonly->setChecked(true);
 }
 
-void ProgramHeaderWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber)
+void ProgramHeaderWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber,qint64 nOffset)
 {
-    FormatWidget::setData(pDevice,pOptions,nNumber);
+    FormatWidget::setData(pDevice,pOptions,nNumber,nOffset);
 }
 
 void ProgramHeaderWidget::reload()

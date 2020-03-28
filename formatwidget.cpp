@@ -31,12 +31,12 @@ FormatWidget::FormatWidget(QWidget *parent):
     colEnabled=QWidget::palette().color(QPalette::BrightText);
 }
 
-FormatWidget::FormatWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, QWidget *parent):
+FormatWidget::FormatWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset,QWidget *parent):
     QWidget(parent)
 {
     options={};
     bIsEdited=false;
-    setData(pDevice,pOptions,nNumber);
+    setData(pDevice,pOptions,nNumber,nOffset);
 }
 
 FormatWidget::~FormatWidget()
@@ -44,10 +44,12 @@ FormatWidget::~FormatWidget()
 
 }
 
-void FormatWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions,quint32 nNumber)
+void FormatWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset)
 {
     this->pDevice=pDevice;
     this->nNumber=nNumber;
+    this->nOffset=nOffset;
+
     if(pOptions)
     {
         options=*pOptions;

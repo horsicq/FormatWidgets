@@ -28,13 +28,13 @@ ImportHeaderWidget::ImportHeaderWidget(QWidget *parent):
     ui->setupUi(this);
 }
 
-ImportHeaderWidget::ImportHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, QWidget *parent):
-    FormatWidget(pDevice,pOptions,nNumber,parent),
+ImportHeaderWidget::ImportHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset, QWidget *parent):
+    FormatWidget(pDevice,pOptions,nNumber,nOffset,parent),
     ui(new Ui::ImportHeaderWidget)
 {
     ui->setupUi(this);
 
-    setData(pDevice,pOptions,nNumber);
+    setData(pDevice,pOptions,nNumber,nOffset);
 }
 
 ImportHeaderWidget::~ImportHeaderWidget()
@@ -54,9 +54,9 @@ void ImportHeaderWidget::clear()
     ui->checkBoxReadonly->setChecked(true);
 }
 
-void ImportHeaderWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber)
+void ImportHeaderWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber,qint64 nOffset)
 {
-    FormatWidget::setData(pDevice,pOptions,nNumber);
+    FormatWidget::setData(pDevice,pOptions,nNumber,nOffset);
 }
 
 void ImportHeaderWidget::reload()

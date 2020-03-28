@@ -29,12 +29,12 @@ PEWidget::PEWidget(QWidget *parent) :
 }
 
 PEWidget::PEWidget(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions, QWidget *parent) :
-    FormatWidget(pDevice,pOptions,0,parent),
+    FormatWidget(pDevice,pOptions,0,0,parent),
     ui(new Ui::PEWidget)
 {
     ui->setupUi(this);
 
-    setData(pDevice,pOptions,0);
+    setData(pDevice,pOptions,0,0);
     reload();
 }
 
@@ -667,7 +667,7 @@ void PEWidget::editSectionHeader()
         SectionHeaderWidget *pSectionHeaderWidget=new SectionHeaderWidget(this);
         DialogSectionHeader dsh(this);
         dsh.setWidget(pSectionHeaderWidget);
-        dsh.setData(getDevice(),getOptions(),(quint32)nRow,tr("Section header"));
+        dsh.setData(getDevice(),getOptions(),(quint32)nRow,0,tr("Section header"));
         dsh.setEdited(isEdited());
 
         connect(&dsh,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
@@ -2171,7 +2171,7 @@ void PEWidget::editImportHeader()
         ImportHeaderWidget *pImportHeaderWidget=new ImportHeaderWidget(this);
         DialogSectionHeader dsh(this);
         dsh.setWidget(pImportHeaderWidget);
-        dsh.setData(getDevice(),getOptions(),(quint32)nRow,tr("Import Header"));
+        dsh.setData(getDevice(),getOptions(),(quint32)nRow,0,tr("Import Header"));
         dsh.setEdited(isEdited());
 
         connect(&dsh,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));

@@ -109,10 +109,10 @@ public:
     };
 
     FormatWidget(QWidget *parent=nullptr);
-    FormatWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, QWidget *parent);
+    FormatWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset, QWidget *parent);
     ~FormatWidget();
     virtual void clear()=0;
-    void setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber);
+    void setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber,qint64 nOffset);
     virtual void reload()=0;
     QIODevice *getDevice();
     FW_DEF::OPTIONS *getOptions();
@@ -173,6 +173,7 @@ private:
     QIODevice *pDevice;
     FW_DEF::OPTIONS options;
     quint32 nNumber;
+    qint64 nOffset;
     bool bIsReadonly;
     bool bIsEdited;
 
