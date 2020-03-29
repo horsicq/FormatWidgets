@@ -111,9 +111,16 @@ void DynamicArrayTagWidget::reloadData()
 
         blockSignals(true);
 
-        // TODO
-
         qint64 nOffset=getOffset();
+
+        qint64 nTag=elf.getDynamicArrayTag(nOffset);
+        qint64 nValue=elf.getDynamicArrayValue(nOffset);
+
+        lineEdit_DynamicArrayTag[N_Elf_DynamicArrayTags::d_tag]->setValue(bIs64?((qint64)nTag):((qint32)nTag));
+        lineEdit_DynamicArrayTag[N_Elf_DynamicArrayTags::d_value]->setValue(bIs64?((qint64)nValue):((qint32)nValue));
+
+        comboBox[CB_TAG]->setValue(nTag);
+
         qint64 nSize=elf.getDynamicArraySize();
         qint64 nAddress=elf.offsetToRelAddress(nOffset);
 
