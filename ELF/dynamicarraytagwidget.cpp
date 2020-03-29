@@ -67,14 +67,14 @@ bool DynamicArrayTagWidget::_setValue(QVariant vValue, int nStype, int nNdata, i
 
 void DynamicArrayTagWidget::setReadonly(bool bState)
 {
-    setLineEditsReadOnly(lineEdit_DynamicArrayTag,N_Elf_Phdr32::__data_size,bState);
+    setLineEditsReadOnly(lineEdit_DynamicArrayTag,N_Elf_DynamicArrayTags::__data_size,bState);
 
     setComboBoxesReadOnly(comboBox,__CB_size,bState);
 }
 
 void DynamicArrayTagWidget::blockSignals(bool bState)
 {
-    _blockSignals((QObject **)lineEdit_DynamicArrayTag,N_Elf_Phdr32::__data_size,bState);
+    _blockSignals((QObject **)lineEdit_DynamicArrayTag,N_Elf_DynamicArrayTags::__data_size,bState);
 
     _blockSignals((QObject **)comboBox,__CB_size,bState);
 }
@@ -102,6 +102,23 @@ void DynamicArrayTagWidget::reloadData()
     if(elf.isValid())
     {
         bool bIs64=elf.is64();
+
+        if(!bInit)
+        {
+            bInit=createHeaderTable(SELF::TYPE_Elf_DynamicArrayTags,ui->tableWidget_DynamicArrayTag,bIs64?(N_Elf_DynamicArrayTags::records64):(N_Elf_DynamicArrayTags::records32),lineEdit_DynamicArrayTag,N_Elf_DynamicArrayTags::__data_size,getNumber(),getOffset());
+        }
+
+        blockSignals(true);
+
+        qint64 nOffset=getOffset();
+        qint64 nSize=elf.getDynamicArraySize();
+        qint64 nAddress=elf.offsetToRelAddress(nOffset);
+
+        loadHexSubdevice(nOffset,nSize,nAddress,&pSubDevice,ui->widgetHex_DynamicArrayTag);
+
+        blockSignals(false);
+
+        setReadonly(ui->checkBoxReadonly->isChecked());
     }
 }
 

@@ -587,9 +587,7 @@ void ELFWidget::reloadData()
             {
                 QTableWidgetItem *pItem=new QTableWidgetItem(QString::number(i));
 
-//                pItem->setData(Qt::UserRole+SECTION_DATA_OFFSET,listCommandRecords.at(i).nOffset);
-//                pItem->setData(Qt::UserRole+SECTION_DATA_SIZE,listCommandRecords.at(i).nSize);
-//                pItem->setData(Qt::UserRole+SECTION_DATA_ADDRESS,listCommandRecords.at(i).nOffset);
+                pItem->setData(Qt::UserRole+SECTION_DATA_OFFSET,listTagStructs.at(i).nOffset);
 
                 ui->tableWidget_DynamicArrayTags->setItem(i,0,                                      pItem);
                 ui->tableWidget_DynamicArrayTags->setItem(i,N_Elf_DynamicArrayTags::d_tag+1,        new QTableWidgetItem(XBinary::valueToHex(bIs64?((quint64)listTagStructs.at(i).nTag):((quint32)listTagStructs.at(i).nTag))));
@@ -930,10 +928,12 @@ void ELFWidget::editDynamicArrayTag()
 
     if(nRow!=-1)
     {
+        qint64 nOffset=ui->tableWidget_DynamicArrayTags->item(nRow,0)->data(Qt::UserRole+SECTION_DATA_OFFSET).toLongLong();
+
         DynamicArrayTagWidget *pDynamicArrayTagWidget=new DynamicArrayTagWidget(this);
         DialogSectionHeader dsh(this);
         dsh.setWidget(pDynamicArrayTagWidget);
-        dsh.setData(getDevice(),getOptions(),(quint32)nRow,0,tr("Dynamic Array Tag")); // TODO tr
+        dsh.setData(getDevice(),getOptions(),(quint32)nRow,nOffset,tr("Dynamic Array Tag")); // TODO tr
         dsh.setEdited(isEdited());
 
         connect(&dsh,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));

@@ -47,8 +47,8 @@ FormatWidget::~FormatWidget()
 void FormatWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset)
 {
     this->pDevice=pDevice;
-    this->nNumber=nNumber;
-    this->nOffset=nOffset;
+    this->__nNumber=nNumber;
+    this->__nOffset=nOffset;
 
     if(pOptions)
     {
@@ -70,7 +70,12 @@ FW_DEF::OPTIONS *FormatWidget::getOptions()
 
 quint32 FormatWidget::getNumber()
 {
-    return nNumber;
+    return __nNumber;
+}
+
+qint64 FormatWidget::getOffset()
+{
+    return __nOffset;
 }
 
 bool FormatWidget::isReadonly()
@@ -255,7 +260,7 @@ bool FormatWidget::saveBackup()
     return bResult;
 }
 
-bool FormatWidget::createHeaderTable(int type, QTableWidget *pTableWidget, const HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nRecordCount, int nPosition)
+bool FormatWidget::createHeaderTable(int type, QTableWidget *pTableWidget, const HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nRecordCount, int nPosition, qint64 nOffset)
 {
     pTableWidget->setColumnCount(6);
     pTableWidget->setRowCount(nRecordCount);
@@ -296,6 +301,7 @@ bool FormatWidget::createHeaderTable(int type, QTableWidget *pTableWidget, const
         ppLineEdits[i]->setProperty("STYPE",type);
         ppLineEdits[i]->setProperty("NDATA",pRecords[i].nData);
         ppLineEdits[i]->setProperty("POSITION",nPosition);
+        ppLineEdits[i]->setProperty("OFFSET",nOffset);
 
         if(pRecords[i].vtype==VAL_TYPE_TEXT)
         {

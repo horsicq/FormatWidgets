@@ -61,8 +61,8 @@ private slots:
 
     void on_pushButtonReload_clicked();
 
-    void loadShdr(int nNumber);
-    void loadPhdr(int nNumber);
+    void loadShdr(int __nNumber);
+    void loadPhdr(int __nNumber);
 
     void on_tableWidget_Elf_Ehdr_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
 

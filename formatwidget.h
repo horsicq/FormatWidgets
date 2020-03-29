@@ -109,17 +109,18 @@ public:
     };
 
     FormatWidget(QWidget *parent=nullptr);
-    FormatWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset, QWidget *parent);
+    FormatWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 __nNumber, qint64 nOffset, QWidget *parent);
     ~FormatWidget();
     virtual void clear()=0;
-    void setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber,qint64 nOffset);
+    void setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 __nNumber,qint64 nOffset);
     virtual void reload()=0;
     QIODevice *getDevice();
     FW_DEF::OPTIONS *getOptions();
     quint32 getNumber();
+    qint64 getOffset();
     bool isReadonly();
     QTreeWidgetItem *createNewItem(int nUserData, QString sTitle);
-    bool createHeaderTable(int type,QTableWidget *pTableWidget, const HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nRecordCount,int nPosition=0);
+    bool createHeaderTable(int type,QTableWidget *pTableWidget, const HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nRecordCount,int nPosition=0,qint64 nOffset=0);
     void addComment(QTableWidget *pTableWidget,int nRow,int nColumn,QString sComment);
 
 //    bool createDirectoryTable(int type,QTableWidget *pTableWidget, const DIRECTORY_ENTRY_RECORD *pRecords,int nRecordCount);
@@ -172,8 +173,8 @@ private:
 private:
     QIODevice *pDevice;
     FW_DEF::OPTIONS options;
-    quint32 nNumber;
-    qint64 nOffset;
+    quint32 __nNumber;
+    qint64 __nOffset;
     bool bIsReadonly;
     bool bIsEdited;
 
