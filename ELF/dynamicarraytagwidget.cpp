@@ -62,7 +62,39 @@ void DynamicArrayTagWidget::reload()
 
 bool DynamicArrayTagWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
 {
-    return false;
+    Q_UNUSED(nVtype)
+    Q_UNUSED(nOffset)
+
+    bool bResult=false;
+
+    quint64 nValue=vValue.toULongLong();
+    QString sValue=vValue.toString();
+
+    if(getDevice()->isWritable())
+    {
+        XELF elf(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
+
+        if(elf.isValid())
+        {
+            switch(nStype)
+            {
+                case SELF::TYPE_Elf_DynamicArrayTags:
+                    switch(nNdata)
+                    {
+                        case N_Elf_DynamicArrayTags::d_tag:         elf.setDynamicArrayTag(nOffset,nValue);         break;
+                        case N_Elf_DynamicArrayTags::d_value:       elf.setDynamicArrayValue(nOffset,nValue);       break;
+                    }
+
+                    ui->widgetHex_DynamicArrayTag->reload();
+
+                    break;
+            }
+
+            bResult=true;
+        }
+    }
+
+    return bResult;
 }
 
 void DynamicArrayTagWidget::setReadonly(bool bState)
@@ -134,7 +166,31 @@ void DynamicArrayTagWidget::reloadData()
 
 void DynamicArrayTagWidget::widgetValueChanged(quint64 nValue)
 {
+    QWidget *pWidget=qobject_cast<QWidget *>(sender());
+    int nStype=pWidget->property("STYPE").toInt();
+    int nNdata=pWidget->property("NDATA").toInt();
 
+    XELF elf(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
+
+    if(elf.isValid())
+    {
+        bool bIs64=elf.is64();
+
+        switch(nStype)
+        {
+            case SELF::TYPE_Elf_DynamicArrayTags:
+
+                switch(nNdata)
+                {
+                    case N_Elf_DynamicArrayTags::d_tag:
+                        lineEdit_DynamicArrayTag[N_Elf_DynamicArrayTags::d_tag]->setValue(bIs64?((qint64)nValue):((qint32)nValue));
+                        this->comboBox[CB_TAG]->setValue(nValue);
+                        break;
+                }
+
+                break;
+        }
+    }
 }
 
 void DynamicArrayTagWidget::on_tableWidget_DynamicArrayTag_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
