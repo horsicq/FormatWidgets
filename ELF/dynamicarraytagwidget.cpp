@@ -106,9 +106,12 @@ void DynamicArrayTagWidget::reloadData()
         if(!bInit)
         {
             bInit=createHeaderTable(SELF::TYPE_Elf_DynamicArrayTags,ui->tableWidget_DynamicArrayTag,bIs64?(N_Elf_DynamicArrayTags::records64):(N_Elf_DynamicArrayTags::records32),lineEdit_DynamicArrayTag,N_Elf_DynamicArrayTags::__data_size,getNumber(),getOffset());
+            comboBox[CB_TAG]=createComboBox(ui->tableWidget_DynamicArrayTag,XELF::getDynamicTagsS(),SELF::TYPE_Elf_DynamicArrayTags,N_Elf_DynamicArrayTags::d_tag,XComboBoxEx::CBTYPE_NORMAL);
         }
 
         blockSignals(true);
+
+        // TODO
 
         qint64 nOffset=getOffset();
         qint64 nSize=elf.getDynamicArraySize();

@@ -35,8 +35,7 @@ class DynamicArrayTagWidget : public FormatWidget
 public:
     enum CB
     {
-        CB_TYPE=0,
-        CB_FLAGS,
+        CB_TAG=0,
         __CB_size
     };
     explicit DynamicArrayTagWidget(QWidget *parent=nullptr);
