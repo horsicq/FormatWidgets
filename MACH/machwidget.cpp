@@ -110,10 +110,11 @@ void MACHWidget::reload()
     }
 }
 
-bool MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition)
+bool MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
 {
     Q_UNUSED(nVtype)
     Q_UNUSED(nPosition)
+    Q_UNUSED(nOffset)
 
     bool bResult=false;
 

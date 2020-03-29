@@ -69,9 +69,10 @@ void SectionHeaderWidget::reload()
     reloadData();
 }
 
-bool SectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int nPosition)
+bool SectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int nPosition,qint64 nOffset)
 {
     Q_UNUSED(nVtype)
+    Q_UNUSED(nOffset)
 
     bool bResult=false;
 

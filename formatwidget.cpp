@@ -99,11 +99,11 @@ int FormatWidget::getSymbolWidth()
     return fm.width("W"); // TODO Check
 }
 
-void FormatWidget::setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int nPosition)
+void FormatWidget::setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
 {
     if(saveBackup())
     {
-        if(_setValue(vValue,nStype,nNdata,nVtype,nPosition))
+        if(_setValue(vValue,nStype,nNdata,nVtype,nPosition,nOffset))
         {
             bIsEdited=true;
             emit editState(bIsEdited);
@@ -195,8 +195,9 @@ void FormatWidget::hexValueChanged(quint64 nValue)
     int nNdata=lineEdit->property("NDATA").toInt();
     int nVtype=lineEdit->property("VTYPE").toInt();
     int nPosition=lineEdit->property("POSITION").toInt();
+    qint64 nOffset=lineEdit->property("OFFSET").toLongLong();
 
-    setValue(nValue,nStype,nNdata,nVtype,nPosition);
+    setValue(nValue,nStype,nNdata,nVtype,nPosition,nOffset);
 }
 
 void FormatWidget::textValueChanged(QString sText)
@@ -207,8 +208,9 @@ void FormatWidget::textValueChanged(QString sText)
     int nNdata=lineEdit->property("NDATA").toInt();
     int nVtype=lineEdit->property("VTYPE").toInt();
     int nPosition=lineEdit->property("POSITION").toInt();
+    qint64 nOffset=lineEdit->property("OFFSET").toLongLong();
 
-    setValue(sText,nStype,nNdata,nVtype,nPosition);
+    setValue(sText,nStype,nNdata,nVtype,nPosition,nOffset);
 }
 
 void FormatWidget::setEdited(bool bState)

@@ -68,9 +68,10 @@ void ImportHeaderWidget::reload()
     reloadData();
 }
 
-bool ImportHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int nPosition)
+bool ImportHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
 {
     Q_UNUSED(nVtype)
+    Q_UNUSED(nOffset)
 
     bool bResult=false;
 

@@ -29,12 +29,12 @@ BinaryWidget::BinaryWidget(QWidget *parent) :
 }
 
 BinaryWidget::BinaryWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *parent) :
-    FormatWidget(pDevice,pOptions,0,parent),
+    FormatWidget(pDevice,pOptions,0,0,parent),
     ui(new Ui::BinaryWidget)
 {
     ui->setupUi(this);
 
-    setData(pDevice,pOptions,0);
+    setData(pDevice,pOptions,0,0);
     reload();
 }
 
@@ -64,13 +64,14 @@ void BinaryWidget::reload()
     }
 }
 
-bool BinaryWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition)
+bool BinaryWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
 {
     Q_UNUSED(vValue)
     Q_UNUSED(nStype)
     Q_UNUSED(nNdata)
     Q_UNUSED(nVtype)
     Q_UNUSED(nPosition)
+    Q_UNUSED(nOffset)
 
     bool bResult=false;
 

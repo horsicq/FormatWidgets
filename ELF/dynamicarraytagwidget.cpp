@@ -60,7 +60,7 @@ void DynamicArrayTagWidget::reload()
     reloadData();
 }
 
-bool DynamicArrayTagWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition)
+bool DynamicArrayTagWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
 {
     return false;
 }
