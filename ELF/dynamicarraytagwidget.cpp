@@ -63,12 +63,11 @@ void DynamicArrayTagWidget::reload()
 bool DynamicArrayTagWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
 {
     Q_UNUSED(nVtype)
-    Q_UNUSED(nOffset)
+    Q_UNUSED(nPosition)
 
     bool bResult=false;
 
     quint64 nValue=vValue.toULongLong();
-    QString sValue=vValue.toString();
 
     if(getDevice()->isWritable())
     {
@@ -113,6 +112,8 @@ void DynamicArrayTagWidget::blockSignals(bool bState)
 
 void DynamicArrayTagWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
 {
+    Q_UNUSED(type)
+
     int nSymbolWidth=getSymbolWidth();
 
     pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);

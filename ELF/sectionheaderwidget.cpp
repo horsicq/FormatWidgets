@@ -77,7 +77,6 @@ bool SectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int
     bool bResult=false;
 
     quint64 nValue=vValue.toULongLong();
-    QString sValue=vValue.toString();
 
     if(getDevice()->isWritable())
     {
@@ -148,6 +147,8 @@ void SectionHeaderWidget::blockSignals(bool bState)
 
 void SectionHeaderWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
 {
+    Q_UNUSED(type)
+
     int nSymbolWidth=getSymbolWidth();
 
     pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
