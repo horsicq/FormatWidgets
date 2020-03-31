@@ -2199,5 +2199,40 @@ void PEWidget::on_tableWidget_Exceptions_customContextMenuRequested(const QPoint
 
 void PEWidget::on_tableWidget_Debug_customContextMenuRequested(const QPoint &pos)
 {
-    // TODO
+    int nRow=ui->tableWidget_Debug->currentRow();
+
+    if(nRow!=-1)
+    {
+        QMenu contextMenu(this);
+
+        QAction actionEdit(tr("Edit"),this);
+        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editDebugHeader()));
+        contextMenu.addAction(&actionEdit);
+
+        contextMenu.exec(ui->tableWidget_Debug->viewport()->mapToGlobal(pos));
+    }
+}
+
+void PEWidget::editDebugHeader()
+{
+    int nRow=ui->tableWidget_Debug->currentRow();
+
+    if(nRow!=-1)
+    {
+        DebugHeaderWidget *pDebugHeaderWidget=new DebugHeaderWidget(this);
+        DialogSectionHeader dsh(this);
+        dsh.setWidget(pDebugHeaderWidget);
+        dsh.setData(getDevice(),getOptions(),(quint32)nRow,0,tr("Debug Header"));
+        dsh.setEdited(isEdited());
+
+        connect(&dsh,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+
+        dsh.exec();
+
+        delete pDebugHeaderWidget;
+
+        reloadData();
+
+        ui->tableWidget_Debug->setCurrentCell(nRow,0);
+    }
 }

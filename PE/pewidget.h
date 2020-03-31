@@ -25,6 +25,7 @@
 #include "dialogsectionheader.h"
 #include "sectionheaderwidget.h"
 #include "importheaderwidget.h"
+#include "debugheaderwidget.h"
 #include "pe_defs.h"
 
 namespace Ui
@@ -89,6 +90,8 @@ private slots:
     void on_tableWidget_ExportFunctions_customContextMenuRequested(const QPoint &pos);
     void on_tableWidget_Exceptions_customContextMenuRequested(const QPoint &pos);
     void on_tableWidget_Debug_customContextMenuRequested(const QPoint &pos);
+
+    void editDebugHeader();
 
 private:
     enum CB
