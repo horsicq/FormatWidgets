@@ -125,14 +125,13 @@ void DebugHeaderWidget::reloadData()
     {
         if(!bInit)
         {
-            bInit=createHeaderTable(SPE::TYPE_DEBUG,ui->tableWidget_DEBUG,N_IMAGE_DEBUG::records,lineEdit_DEBUG,N_IMAGE_IMPORT::__data_size,getNumber());
+            bInit=createHeaderTable(SPE::TYPE_DEBUG,ui->tableWidget_DEBUG,N_IMAGE_DEBUG::records,lineEdit_DEBUG,N_IMAGE_DEBUG::__data_size,getNumber());
         }
 
         blockSignals(true);
 
-
-        qint64 nOffset=pe.getImportDescriptorOffset(getNumber());
-        qint64 nSize=pe.getImportDescriptorSize();
+        qint64 nOffset=pe.getDebugHeaderOffset(getNumber());
+        qint64 nSize=pe.getDebugHeaderSize();
         qint64 nAddress=pe.offsetToRelAddress(nOffset);
 
         loadHexSubdevice(nOffset,nSize,nAddress,&pSubDevice,ui->widgetHex_DEBUG);
