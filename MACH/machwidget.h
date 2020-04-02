@@ -62,6 +62,10 @@ private slots:
 
     void on_tableWidget_mach_header_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
 
+    void on_tableWidget_commands_customContextMenuRequested(const QPoint &pos);
+    void on_tableWidget_segments_customContextMenuRequested(const QPoint &pos);
+    void on_tableWidget_sections_customContextMenuRequested(const QPoint &pos);
+
 private:
     enum CB
     {

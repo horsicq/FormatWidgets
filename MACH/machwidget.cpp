@@ -682,3 +682,18 @@ void MACHWidget::on_tableWidget_mach_header_currentCellChanged(int currentRow, i
 
     setHeaderTableSelection(ui->widgetHex_mach_header,ui->tableWidget_mach_header);
 }
+
+void MACHWidget::on_tableWidget_commands_customContextMenuRequested(const QPoint &pos)
+{
+    // TODO
+}
+
+void MACHWidget::on_tableWidget_segments_customContextMenuRequested(const QPoint &pos)
+{
+    // TODO
+}
+
+void MACHWidget::on_tableWidget_sections_customContextMenuRequested(const QPoint &pos)
+{
+    // TODO
+}
