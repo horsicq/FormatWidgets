@@ -81,6 +81,25 @@ bool DebugHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int n
 
         if(pe.isValid())
         {
+            switch(nStype)
+            {
+                case SPE::TYPE_DEBUG:
+                    switch(nNdata)
+                    {
+                        case N_IMAGE_DEBUG::Characteristics:        pe.setDebugHeader_Characteristics(nPosition,(quint32)nValue);       break;
+                        case N_IMAGE_DEBUG::TimeDateStamp:          pe.setDebugHeader_TimeDateStamp(nPosition,(quint32)nValue);         break;
+                        case N_IMAGE_DEBUG::MajorVersion:           pe.setDebugHeader_MajorVersion(nPosition,(quint16)nValue);          break;
+                        case N_IMAGE_DEBUG::MinorVersion:           pe.setDebugHeader_MinorVersion(nPosition,(quint16)nValue);          break;
+                        case N_IMAGE_DEBUG::Type:                   pe.setDebugHeader_Type(nPosition,(quint32)nValue);                  break;
+                        case N_IMAGE_DEBUG::SizeOfData:             pe.setDebugHeader_SizeOfData(nPosition,(quint32)nValue);            break;
+                        case N_IMAGE_DEBUG::AddressOfRawData:       pe.setDebugHeader_AddressOfRawData(nPosition,(quint32)nValue);      break;
+                        case N_IMAGE_DEBUG::PointerToRawData:       pe.setDebugHeader_PointerToRawData(nPosition,(quint32)nValue);      break;
+                    }
+
+                    ui->widgetHex_DEBUG->reload();
+
+                    break;
+            }
 
             bResult=true;
         }
@@ -130,9 +149,20 @@ void DebugHeaderWidget::reloadData()
 
         blockSignals(true);
 
+        XPE_DEF::S_IMAGE_DEBUG_DIRECTORY idd=pe.getDebugHeader(getNumber());
+
+        lineEdit_DEBUG[N_IMAGE_DEBUG::Characteristics]->setValue(idd.Characteristics);
+        lineEdit_DEBUG[N_IMAGE_DEBUG::TimeDateStamp]->setValue(idd.TimeDateStamp);
+        lineEdit_DEBUG[N_IMAGE_DEBUG::MajorVersion]->setValue(idd.MajorVersion);
+        lineEdit_DEBUG[N_IMAGE_DEBUG::MinorVersion]->setValue(idd.MinorVersion);
+        lineEdit_DEBUG[N_IMAGE_DEBUG::Type]->setValue(idd.Type);
+        lineEdit_DEBUG[N_IMAGE_DEBUG::SizeOfData]->setValue(idd.SizeOfData);
+        lineEdit_DEBUG[N_IMAGE_DEBUG::AddressOfRawData]->setValue(idd.AddressOfRawData);
+        lineEdit_DEBUG[N_IMAGE_DEBUG::PointerToRawData]->setValue(idd.PointerToRawData);
+
         qint64 nOffset=pe.getDebugHeaderOffset(getNumber());
         qint64 nSize=pe.getDebugHeaderSize();
-        qint64 nAddress=pe.offsetToRelAddress(nOffset);
+        qint64 nAddress=pe.offsetToRelAddress(nOffset); // TODO memoryMap !!!
 
         loadHexSubdevice(nOffset,nSize,nAddress,&pSubDevice,ui->widgetHex_DEBUG);
 
