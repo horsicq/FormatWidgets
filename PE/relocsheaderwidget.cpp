@@ -30,7 +30,9 @@ RelocsHeaderWidget::RelocsHeaderWidget(QWidget *parent):
 
 RelocsHeaderWidget::RelocsHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset, QWidget *parent)
 {
+    ui->setupUi(this);
 
+    setData(pDevice,pOptions,nNumber,nOffset);
 }
 
 RelocsHeaderWidget::~RelocsHeaderWidget()
@@ -40,7 +42,15 @@ RelocsHeaderWidget::~RelocsHeaderWidget()
 
 void RelocsHeaderWidget::clear()
 {
+    bInit=false;
 
+    memset(lineEdit_RELOCS,0,sizeof lineEdit_RELOCS);
+    memset(comboBox,0,sizeof comboBox);
+    memset(invWidget,0,sizeof invWidget);
+
+    pSubDevice=nullptr;
+
+    ui->checkBoxReadonly->setChecked(true);
 }
 
 void RelocsHeaderWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset)
@@ -50,7 +60,11 @@ void RelocsHeaderWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, 
 
 void RelocsHeaderWidget::reload()
 {
+    clear();
 
+    ui->checkBoxReadonly->setEnabled(!isReadonly());
+
+    reloadData();
 }
 
 bool RelocsHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
@@ -78,27 +92,42 @@ bool RelocsHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int 
 
 void RelocsHeaderWidget::setReadonly(bool bState)
 {
+    setLineEditsReadOnly(lineEdit_RELOCS,N_IMAGE_RELOCS::__data_size,bState);
 
+    setComboBoxesReadOnly(comboBox,__CB_size,bState);
 }
 
 void RelocsHeaderWidget::blockSignals(bool bState)
 {
+    _blockSignals((QObject **)lineEdit_RELOCS,N_IMAGE_RELOCS::__data_size,bState);
 
+    _blockSignals((QObject **)comboBox,__CB_size,bState);
 }
 
 void RelocsHeaderWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
 {
+    int nSymbolWidth=getSymbolWidth();
 
+    pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
+    pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*6);
+    pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*16);
+    pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*8);
+    pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
 }
 
 void RelocsHeaderWidget::on_checkBoxReadonly_toggled(bool checked)
 {
-
+    setReadonly(checked);
 }
 
 void RelocsHeaderWidget::reloadData()
 {
+    XPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
 
+    if(pe.isValid())
+    {
+
+    }
 }
 
 void RelocsHeaderWidget::widgetValueChanged(quint64 nValue)
@@ -108,5 +137,10 @@ void RelocsHeaderWidget::widgetValueChanged(quint64 nValue)
 
 void RelocsHeaderWidget::on_tableWidget_RELOCS_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
 {
+    Q_UNUSED(currentRow)
+    Q_UNUSED(currentColumn)
+    Q_UNUSED(previousRow)
+    Q_UNUSED(previousColumn)
 
+    setHeaderTableSelection(ui->widgetHex_RELOCS,ui->tableWidget_RELOCS);
 }
