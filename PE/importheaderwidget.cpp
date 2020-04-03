@@ -134,12 +134,12 @@ bool ImportHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int 
 }
 void ImportHeaderWidget::setReadonly(bool bState)
 {
-    setLineEditsReadOnly(lineEdit_IMPORT_HEADER,N_IMAGE_SECTION_HEADER::__data_size,bState);
+    setLineEditsReadOnly(lineEdit_IMPORT_HEADER,N_IMAGE_IMPORT::__data_size,bState);
 }
 
 void ImportHeaderWidget::blockSignals(bool bState)
 {
-    _blockSignals((QObject **)lineEdit_IMPORT_HEADER,N_IMAGE_SECTION_HEADER::__data_size,bState);
+    _blockSignals((QObject **)lineEdit_IMPORT_HEADER,N_IMAGE_IMPORT::__data_size,bState);
 
 }
 

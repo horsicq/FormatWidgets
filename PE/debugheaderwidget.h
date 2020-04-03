@@ -68,7 +68,7 @@ private:
     };
 
     Ui::DebugHeaderWidget *ui;
-    XLineEditHEX *lineEdit_DEBUG[N_IMAGE_SECTION_HEADER::__data_size+1];
+    XLineEditHEX *lineEdit_DEBUG[N_IMAGE_DEBUG::__data_size];
     bool bInit;
     InvWidget *invWidget[__INV_size];
     SubDevice *pSubDevice;

@@ -110,12 +110,12 @@ bool DebugHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int n
 
 void DebugHeaderWidget::setReadonly(bool bState)
 {
-    setLineEditsReadOnly(lineEdit_DEBUG,N_IMAGE_SECTION_HEADER::__data_size,bState);
+    setLineEditsReadOnly(lineEdit_DEBUG,N_IMAGE_DEBUG::__data_size,bState);
 }
 
 void DebugHeaderWidget::blockSignals(bool bState)
 {
-    _blockSignals((QObject **)lineEdit_DEBUG,N_IMAGE_SECTION_HEADER::__data_size,bState);
+    _blockSignals((QObject **)lineEdit_DEBUG,N_IMAGE_DEBUG::__data_size,bState);
 
 //    _blockSignals((QObject **)comboBox,__CB_size,bState);
 }

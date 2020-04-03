@@ -2236,3 +2236,43 @@ void PEWidget::editDebugHeader()
         ui->tableWidget_Debug->setCurrentCell(nRow,0);
     }
 }
+
+void PEWidget::on_tableWidget_Relocs_customContextMenuRequested(const QPoint &pos)
+{
+    int nRow=ui->tableWidget_Relocs->currentRow();
+
+    if(nRow!=-1)
+    {
+        QMenu contextMenu(this);
+
+        QAction actionEdit(tr("Edit"),this);
+        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editRelocsHeader()));
+        contextMenu.addAction(&actionEdit);
+
+        contextMenu.exec(ui->tableWidget_Relocs->viewport()->mapToGlobal(pos));
+    }
+}
+
+void PEWidget::editRelocsHeader()
+{
+    int nRow=ui->tableWidget_Relocs->currentRow();
+
+    if(nRow!=-1)
+    {
+        RelocsHeaderWidget *pRelocsHeaderWidget=new RelocsHeaderWidget(this);
+        DialogSectionHeader dsh(this);
+        dsh.setWidget(pRelocsHeaderWidget);
+        dsh.setData(getDevice(),getOptions(),(quint32)nRow,0,tr("Relocs Header"));
+        dsh.setEdited(isEdited());
+
+        connect(&dsh,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+
+        dsh.exec();
+
+        delete pRelocsHeaderWidget;
+
+        reloadData();
+
+        ui->tableWidget_Relocs->setCurrentCell(nRow,0);
+    }
+}
