@@ -126,7 +126,22 @@ void RelocsHeaderWidget::reloadData()
 
     if(pe.isValid())
     {
+        if(!bInit)
+        {
+            bInit=createHeaderTable(SPE::TYPE_IMAGE_SECTION_HEADER,ui->tableWidget_RELOCS,N_IMAGE_RELOCS::records,lineEdit_RELOCS,N_IMAGE_RELOCS::__data_size,getNumber());
+        }
 
+        blockSignals(true);
+
+//        qint64 nOffset=pe.getRelocsHeaderOffset(getNumber());
+//        qint64 nSize=pe.getRelocsHeaderSize();
+//        qint64 nAddress=pe.offsetToRelAddress(nOffset);
+
+//        loadHexSubdevice(nOffset,nSize,nAddress,&pSubDevice,ui->widgetHex_RELOCS);
+
+        blockSignals(false);
+
+        setReadonly(ui->checkBoxReadonly->isChecked());
     }
 }
 
