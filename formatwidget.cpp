@@ -333,9 +333,7 @@ bool FormatWidget::createHeaderTable(int type, QTableWidget *pTableWidget, const
 
 void FormatWidget::addComment(QTableWidget *pTableWidget, int nRow, int nColumn, QString sComment)
 {
-    QTableWidgetItem *item=pTableWidget->item(nRow,nColumn);
-    item->setText(sComment);
-    pTableWidget->setItem(nRow,nColumn,item);
+    pTableWidget->item(nRow,nColumn)->setText(sComment);
 }
 
 //bool FormatWidget::createDirectoryTable(int type, QTableWidget *pTableWidget, const DIRECTORY_ENTRY_RECORD *pRecords, int nRecordCount)
