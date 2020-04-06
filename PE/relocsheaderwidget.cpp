@@ -133,11 +133,18 @@ void RelocsHeaderWidget::reloadData()
 
         blockSignals(true);
 
-//        qint64 nOffset=pe.getRelocsHeaderOffset(getNumber());
-//        qint64 nSize=pe.getRelocsHeaderSize();
-//        qint64 nAddress=pe.offsetToRelAddress(nOffset);
+        qint64 nOffset=getOffset();
 
-//        loadHexSubdevice(nOffset,nSize,nAddress,&pSubDevice,ui->widgetHex_RELOCS);
+        quint32 nVirtualAddress=pe.getRelocsVirtualAddress(nOffset);
+        quint32 nSizeOfBlock=pe.getRelocsSizeOfBlock(nOffset);
+
+        lineEdit_RELOCS[N_IMAGE_RELOCS::VirtualAddress]->setValue(nVirtualAddress);
+        lineEdit_RELOCS[N_IMAGE_RELOCS::SizeOfBlock]->setValue(nSizeOfBlock);
+
+        qint64 nSize=nSizeOfBlock;
+        qint64 nAddress=pe.offsetToRelAddress(nOffset);
+
+        loadHexSubdevice(nOffset,nSize,nAddress,&pSubDevice,ui->widgetHex_RELOCS);
 
         blockSignals(false);
 

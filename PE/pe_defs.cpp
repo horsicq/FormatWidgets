@@ -309,7 +309,7 @@ namespace N_IMAGE_RELOCS
 const FormatWidget::HEADER_RECORD records[]=
 {
     {VirtualAddress,            "VirtualAddress",   0,  4,      "DWORD",        FormatWidget::VAL_TYPE_RELADDRESS},
-    {SizeOfBlock,               "SizeOfBlock",      0,  4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
+    {SizeOfBlock,               "SizeOfBlock",      4,  4,      "DWORD",        FormatWidget::VAL_TYPE_DATA},
 };
 }
 

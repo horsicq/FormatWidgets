@@ -1403,7 +1403,7 @@ void PEWidget::reloadData()
             for(int i=0; i<nCount; i++)
             {
                 QTableWidgetItem *pItem=new QTableWidgetItem(XBinary::valueToHex(listRH.at(i).ibr.VirtualAddress));
-                pItem->setData(Qt::UserRole,listRH.at(i).nOffset);
+                pItem->setData(Qt::UserRole+SECTION_DATA_OFFSET,listRH.at(i).nOffset);
                 ui->tableWidget_Relocs->setItem(i,N_IMAGE_RELOCS::VirtualAddress,               pItem);
                 ui->tableWidget_Relocs->setItem(i,N_IMAGE_RELOCS::SizeOfBlock,                  new QTableWidgetItem(XBinary::valueToHex(listRH.at(i).ibr.SizeOfBlock)));
                 ui->tableWidget_Relocs->setItem(i,N_IMAGE_RELOCS::SizeOfBlock+1,                new QTableWidgetItem(QString::number(listRH.at(i).nCount)));
@@ -2259,10 +2259,12 @@ void PEWidget::editRelocsHeader()
 
     if(nRow!=-1)
     {
+        qint64 nOffset=ui->tableWidget_Relocs->item(nRow,0)->data(Qt::UserRole+SECTION_DATA_OFFSET).toLongLong();
+
         RelocsHeaderWidget *pRelocsHeaderWidget=new RelocsHeaderWidget(this);
         DialogSectionHeader dsh(this);
         dsh.setWidget(pRelocsHeaderWidget);
-        dsh.setData(getDevice(),getOptions(),(quint32)nRow,0,tr("Relocs Header"));
+        dsh.setData(getDevice(),getOptions(),(quint32)nRow,nOffset,tr("Relocs Header"));
         dsh.setEdited(isEdited());
 
         connect(&dsh,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
