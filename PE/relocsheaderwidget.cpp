@@ -83,6 +83,20 @@ bool RelocsHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int 
 
         if(pe.isValid())
         {
+            switch(nStype)
+            {
+                case SPE::TYPE_RELOCS:
+                    switch(nNdata)
+                    {
+                        case N_IMAGE_RELOCS::VirtualAddress:        pe.setRelocsVirtualAddress(nPosition,(quint32)nValue);      break;
+                        case N_IMAGE_RELOCS::SizeOfBlock:           pe.setRelocsSizeOfBlock(nPosition,(quint32)nValue);         break;
+                    }
+
+                    ui->widgetHex_RELOCS->reload();
+
+                    break;
+            }
+
             bResult=true;
         }
     }
