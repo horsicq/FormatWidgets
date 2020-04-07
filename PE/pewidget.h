@@ -27,6 +27,7 @@
 #include "importheaderwidget.h"
 #include "debugheaderwidget.h"
 #include "relocsheaderwidget.h"
+#include "exceptionheaderwidget.h"
 #include "pe_defs.h"
 
 namespace Ui

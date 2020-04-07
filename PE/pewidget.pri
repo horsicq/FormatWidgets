@@ -3,6 +3,7 @@ DEPENDPATH += $$PWD
 
 FORMS += \
     $$PWD/debugheaderwidget.ui \
+    $$PWD/exceptionheaderwidget.ui \
     $$PWD/pewidget.ui \
     $$PWD/relocsheaderwidget.ui \
     $$PWD/sectionheaderwidget.ui \
@@ -11,6 +12,7 @@ FORMS += \
 
 HEADERS += \
     $$PWD/debugheaderwidget.h \
+    $$PWD/exceptionheaderwidget.h \
     $$PWD/pewidget.h \
     $$PWD/pe_defs.h \
     $$PWD/relocsheaderwidget.h \
@@ -20,6 +22,7 @@ HEADERS += \
 
 SOURCES += \
     $$PWD/debugheaderwidget.cpp \
+    $$PWD/exceptionheaderwidget.cpp \
     $$PWD/pewidget.cpp \
     $$PWD/pe_defs.cpp \
     $$PWD/relocsheaderwidget.cpp \
