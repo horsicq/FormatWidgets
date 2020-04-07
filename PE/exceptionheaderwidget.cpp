@@ -28,11 +28,14 @@ ExceptionHeaderWidget::ExceptionHeaderWidget(QWidget *parent):
     ui->setupUi(this);
 }
 
-ExceptionHeaderWidget::ExceptionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset, QWidget *parent)
+ExceptionHeaderWidget::ExceptionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset, QWidget *parent):
+    FormatWidget(pDevice,pOptions,nNumber,nOffset,parent),
+    ui(new Ui::ExceptionHeaderWidget)
 {
+    ui->setupUi(this);
 
+    setData(pDevice,pOptions,nNumber,nOffset);
 }
-
 
 ExceptionHeaderWidget::~ExceptionHeaderWidget()
 {
@@ -41,12 +44,19 @@ ExceptionHeaderWidget::~ExceptionHeaderWidget()
 
 void ExceptionHeaderWidget::clear()
 {
+    bInit=false;
 
+    memset(lineEdit_Exception,0,sizeof lineEdit_Exception);
+    memset(invWidget,0,sizeof invWidget);
+
+    pSubDevice=nullptr;
+
+    ui->checkBoxReadonly->setChecked(true);
 }
 
 void ExceptionHeaderWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset)
 {
-
+    FormatWidget::setData(pDevice,pOptions,nNumber,nOffset);
 }
 
 void ExceptionHeaderWidget::reload()

@@ -69,7 +69,7 @@ private:
     };
 
     Ui::ExceptionHeaderWidget *ui;
-    XLineEditHEX *lineEdit_IMPORT_HEADER[N_IMAGE_IMPORT::__data_size];
+    XLineEditHEX *lineEdit_Exception[N_IMAGE_IMPORT::__data_size];
     bool bInit;
     InvWidget *invWidget[__INV_size];
     SubDevice *pSubDevice;
