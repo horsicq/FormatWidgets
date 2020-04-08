@@ -93,6 +93,7 @@ private slots:
     void editDebugHeader();
     void on_tableWidget_Relocs_customContextMenuRequested(const QPoint &pos);
     void editRelocsHeader();
+    void editExceptionHeader();
 
 private:
     enum CB

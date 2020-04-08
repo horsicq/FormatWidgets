@@ -2194,7 +2194,18 @@ void PEWidget::on_tableWidget_ExportFunctions_customContextMenuRequested(const Q
 
 void PEWidget::on_tableWidget_Exceptions_customContextMenuRequested(const QPoint &pos)
 {
-    // TODO
+    int nRow=ui->tableWidget_Exceptions->currentRow();
+
+    if(nRow!=-1)
+    {
+        QMenu contextMenu(this);
+
+        QAction actionEdit(tr("Edit"),this);
+        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editExceptionHeader()));
+        contextMenu.addAction(&actionEdit);
+
+        contextMenu.exec(ui->tableWidget_Exceptions->viewport()->mapToGlobal(pos));
+    }
 }
 
 void PEWidget::on_tableWidget_Debug_customContextMenuRequested(const QPoint &pos)
@@ -2277,4 +2288,10 @@ void PEWidget::editRelocsHeader()
 
         ui->tableWidget_Relocs->setCurrentCell(nRow,0);
     }
+}
+
+void PEWidget::editExceptionHeader()
+{
+    // TODO
+    qDebug("void PEWidget::editExceptionHeader()");
 }
