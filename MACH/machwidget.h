@@ -23,6 +23,7 @@
 
 #include "../formatwidget.h"
 #include "mach_defs.h"
+#include "sectionheaderwidget.h"
 
 namespace Ui
 {

@@ -3,17 +3,20 @@ DEPENDPATH += $$PWD
 
 FORMS += \
     $$PWD/machwidget.ui \
-    $$PWD/dialogmach.ui
+    $$PWD/dialogmach.ui \
+    $$PWD/sectionheaderwidget.ui
 
 HEADERS += \
     $$PWD/machwidget.h \
     $$PWD/mach_defs.h \
-    $$PWD/dialogmach.h
+    $$PWD/dialogmach.h \
+    $$PWD/sectionheaderwidget.h
 
 SOURCES += \
     $$PWD/machwidget.cpp \
     $$PWD/mach_defs.cpp \
-    $$PWD/dialogmach.cpp
+    $$PWD/dialogmach.cpp \
+    $$PWD/sectionheaderwidget.cpp
 
 !contains(XCONFIG, xmach) {
     XCONFIG += xmach
