@@ -20,7 +20,7 @@
 //
 #include "ne_defs.h"
 
-namespace N_DOS_HEADER
+namespace N_NE_DOS_HEADER
 {
 const FormatWidget::HEADER_RECORD records[]=
 {

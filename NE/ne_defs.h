@@ -36,7 +36,7 @@ enum TYPE
 };
 }
 
-namespace N_DOS_HEADER
+namespace N_NE_DOS_HEADER
 {
 enum DATA
 {

@@ -75,7 +75,7 @@ private:
 
     Ui::NEWidget *ui;
 
-    XLineEditHEX *lineEdit_DOS_HEADER[N_DOS_HEADER::__data_size];
+    XLineEditHEX *lineEdit_DOS_HEADER[N_NE_DOS_HEADER::__data_size];
     XLineEditHEX *lineEdit_OS2_HEADER[N_OS2_HEADER::__data_size];
     XComboBoxEx *comboBox[__CB_size];
 
