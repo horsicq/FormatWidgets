@@ -66,7 +66,9 @@ void ELFWidget::reload()
 
     if(elf.isValid())
     {
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_TOOLS,tr("Tools")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_HEX,tr("Hex")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_STRINGS,tr("Strings")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_MEMORYMAP,tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_Elf_Ehdr,"Elf_Ehdr"));
 
         QList<XELF_DEF::Elf_Shdr> listSections=elf.getElf_ShdrList();
@@ -95,7 +97,7 @@ void ELFWidget::reload()
 
         ui->treeWidgetNavi->expandAll();
 
-        ui->treeWidgetNavi->setCurrentItem(ui->treeWidgetNavi->topLevelItem(1));
+        ui->treeWidgetNavi->setCurrentItem(ui->treeWidgetNavi->topLevelItem(SELF::TYPE_Elf_Ehdr));
     }
 }
 
@@ -228,13 +230,34 @@ void ELFWidget::reloadData()
 
     if(elf.isValid())
     {
-        if(nData==SELF::TYPE_TOOLS)
+        if(nData==SELF::TYPE_HEX)
         {
             if(!bInit[nData])
             {
-                ui->widgetHex->setData(getDevice(),getOptions()); // TODO rename widget
-                ui->widgetHex->setEdited(isEdited());
+                ui->widgetHex->setData(getDevice());
+                ui->widgetHex->setBackupFileName(getOptions()->sBackupFileName);
+                ui->widgetHex->enableReadOnly(false);
                 connect(ui->widgetHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+
+                bInit[nData]=true;
+            }
+            ui->widgetHex->reload();
+        }
+        else if(nData==SELF::TYPE_STRINGS)
+        {
+            if(!bInit[nData])
+            {
+                ui->widgetStrings->setData(getDevice(),0,true);
+
+                bInit[nData]=true;
+            }
+            ui->widgetHex->reload();
+        }
+        else if(nData==SELF::TYPE_MEMORYMAP)
+        {
+            if(!bInit[nData])
+            {
+                ui->widgetMemoryMap->setData(getDevice());
 
                 bInit[nData]=true;
             }

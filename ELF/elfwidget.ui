@@ -103,7 +103,45 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="ToolsWidget" name="widgetHex" native="true"/>
+         <widget class="QHexViewWidget" name="widgetHex" native="true"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="page_Strings">
+       <layout class="QVBoxLayout" name="verticalLayout_8">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="SearchStringsWidget" name="widgetStrings" native="true"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="page_MemoryMap">
+       <layout class="QVBoxLayout" name="verticalLayout_7">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="XMemoryMapWidget" name="widgetMemoryMap" native="true"/>
         </item>
        </layout>
       </widget>
@@ -317,6 +355,24 @@
    <class>ToolsWidget</class>
    <extends>QWidget</extends>
    <header>toolswidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QHexViewWidget</class>
+   <extends>QWidget</extends>
+   <header>qhexviewwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>XMemoryMapWidget</class>
+   <extends>QWidget</extends>
+   <header>xmemorymapwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SearchStringsWidget</class>
+   <extends>QWidget</extends>
+   <header>searchstringswidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
