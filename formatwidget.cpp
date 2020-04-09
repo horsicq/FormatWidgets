@@ -24,7 +24,7 @@ FormatWidget::FormatWidget(QWidget *parent):
     QWidget(parent)
 {
     bIsReadonly=false;
-    options={};
+    fwOptions={};
     bIsEdited=false;
 
     colDisabled=QWidget::palette().color(QPalette::Window);
@@ -34,7 +34,7 @@ FormatWidget::FormatWidget(QWidget *parent):
 FormatWidget::FormatWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset,QWidget *parent):
     QWidget(parent)
 {
-    options={};
+    fwOptions={};
     bIsEdited=false;
     setData(pDevice,pOptions,nNumber,nOffset);
 }
@@ -52,7 +52,7 @@ void FormatWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint3
 
     if(pOptions)
     {
-        options=*pOptions;
+        fwOptions=*pOptions;
     }
 
     bIsReadonly=!(pDevice->isWritable());
@@ -65,7 +65,7 @@ QIODevice *FormatWidget::getDevice()
 
 FW_DEF::OPTIONS *FormatWidget::getOptions()
 {
-    return &options;
+    return &fwOptions;
 }
 
 quint32 FormatWidget::getNumber()
@@ -111,7 +111,7 @@ void FormatWidget::setValue(QVariant vValue, int nStype, int nNdata, int nVtype,
     }
     else
     {
-        QMessageBox::critical(this,tr("Error"),tr("Cannot save file")+QString(": %1").arg(options.sBackupFileName));
+        QMessageBox::critical(this,tr("Error"),tr("Cannot save file")+QString(": %1").arg(fwOptions.sBackupFileName));
     }
 }
 
@@ -223,10 +223,10 @@ void FormatWidget::showHex(qint64 nOffset, qint64 nSize)
     // mb TODO StartAddress
     QHexView::OPTIONS hexOptions={};
 
-    XBinary binary(pDevice,true,options.nImageBase);
+    XBinary binary(pDevice,true,fwOptions.nImageBase);
 
     hexOptions.memoryMap=binary.getMemoryMap();
-    hexOptions.sBackupFileName=options.sBackupFileName;
+    hexOptions.sBackupFileName=fwOptions.sBackupFileName;
     hexOptions.nStartAddress=nOffset;
     hexOptions.nStartSelectionAddress=nOffset;
     hexOptions.nSizeOfSelection=nSize;
@@ -245,15 +245,15 @@ bool FormatWidget::saveBackup()
     if(!bIsEdited)
     {
         // Save backup
-        if(options.sBackupFileName!="")
+        if(fwOptions.sBackupFileName!="")
         {
-            if(!QFile::exists(options.sBackupFileName))
+            if(!QFile::exists(fwOptions.sBackupFileName))
             {
                 if(pDevice->metaObject()->className()==QString("QFile"))
                 {
                     QString sFileName=((QFile *)pDevice)->fileName();
 
-                    bResult=QFile::copy(sFileName,options.sBackupFileName);
+                    bResult=QFile::copy(sFileName,fwOptions.sBackupFileName);
                 }
             }
         }

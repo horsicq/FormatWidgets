@@ -76,7 +76,9 @@ void PEWidget::reload()
 
     if(pe.isValid())
     {
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_TOOLS,tr("Tools")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_HEX,tr("Hex")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_STRINGS,tr("Strings")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_MEMORYMAP,tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_IMAGE_DOS_HEADER,"IMAGE_DOS_HEADER"));
         QTreeWidgetItem *pNtHeaders=createNewItem(SPE::TYPE_IMAGE_NT_HEADERS,"IMAGE_NT_HEADERS");
         ui->treeWidgetNavi->addTopLevelItem(pNtHeaders);
@@ -160,7 +162,7 @@ void PEWidget::reload()
         }
 
         ui->treeWidgetNavi->expandAll();
-        ui->treeWidgetNavi->setCurrentItem(ui->treeWidgetNavi->topLevelItem(1));
+        ui->treeWidgetNavi->setCurrentItem(ui->treeWidgetNavi->topLevelItem(SPE::TYPE_IMAGE_DOS_HEADER));
     }
 }
 
@@ -708,13 +710,34 @@ void PEWidget::reloadData()
 
     if(pe.isValid())
     {
-        if(nData==SPE::TYPE_TOOLS)
+        if(nData==SPE::TYPE_HEX)
         {
             if(!bInit[nData])
             {
-                ui->widgetHex->setData(getDevice(),getOptions());
-                ui->widgetHex->setEdited(isEdited());
+                ui->widgetHex->setData(getDevice());
+                ui->widgetHex->setBackupFileName(getOptions()->sBackupFileName);
+                ui->widgetHex->enableReadOnly(false);
                 connect(ui->widgetHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+
+                bInit[nData]=true;
+            }
+            ui->widgetHex->reload();
+        }
+        else if(nData==SPE::TYPE_STRINGS)
+        {
+            if(!bInit[nData])
+            {
+                ui->widgetStrings->setData(getDevice(),0,true);
+
+                bInit[nData]=true;
+            }
+            ui->widgetHex->reload();
+        }
+        else if(nData==SPE::TYPE_MEMORYMAP)
+        {
+            if(!bInit[nData])
+            {
+                ui->widgetMemoryMap->setData(getDevice());
 
                 bInit[nData]=true;
             }

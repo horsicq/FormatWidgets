@@ -26,6 +26,11 @@ DEPENDPATH += $$PWD
     include($$PWD/SearchStrings/searchstringswidget.pri)
 }
 
+!contains(XCONFIG, xmemorymapwidget) {
+    XCONFIG += xmemorymapwidget
+    include($$PWD/../XMemoryMapWidget/xmemorymapwidget.pri)
+}
+
 HEADERS += \
     $$PWD/formatwidget.h \
     $$PWD/toolswidget.h \
