@@ -72,7 +72,9 @@ void NEWidget::reload()
 
     if(ne.isValid())
     {
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_TOOLS,tr("Tools")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_HEX,tr("Tools")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_STRINGS,tr("Strings")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_MEMORYMAP,tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_DOS_HEADER,"DOS_HEADER"));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_OS2_HEADER,"OS2_HEADER"));
 
@@ -266,13 +268,34 @@ void NEWidget::reloadData()
 
     if(ne.isValid())
     {
-        if(nData==SNE::TYPE_TOOLS)
+        if(nData==SNE::TYPE_HEX)
         {
             if(!bInit[nData])
             {
-                ui->widgetHex->setData(getDevice(),getOptions());
-                ui->widgetHex->setEdited(isEdited());
+                ui->widgetHex->setData(getDevice());
+                ui->widgetHex->setBackupFileName(getOptions()->sBackupFileName);
+                ui->widgetHex->enableReadOnly(false);
                 connect(ui->widgetHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+
+                bInit[nData]=true;
+            }
+            ui->widgetHex->reload();
+        }
+        else if(nData==SNE::TYPE_STRINGS)
+        {
+            if(!bInit[nData])
+            {
+                ui->widgetStrings->setData(getDevice(),0,true);
+
+                bInit[nData]=true;
+            }
+            ui->widgetHex->reload();
+        }
+        else if(nData==SNE::TYPE_MEMORYMAP)
+        {
+            if(!bInit[nData])
+            {
+                ui->widgetMemoryMap->setData(getDevice());
 
                 bInit[nData]=true;
             }
