@@ -117,7 +117,6 @@ bool ELFWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, i
     {
         XELF elf(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
 
-
         if(elf.isValid())
         {
             switch(nStype)
