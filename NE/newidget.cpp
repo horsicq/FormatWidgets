@@ -366,6 +366,14 @@ void NEWidget::reloadData()
                 comboBox[CB_OS2_HEADER_ne_flags]=createComboBox(ui->tableWidget_OS2_HEADER,XNE::getImageNEFlagsS(),SNE::TYPE_OS2_HEADER,N_OS2_HEADER::ne_flags,XComboBoxEx::CBTYPE_FLAGS);
                 comboBox[CB_OS2_HEADER_ne_exetype]=createComboBox(ui->tableWidget_OS2_HEADER,XNE::getImageNEExetypesS(),SNE::TYPE_OS2_HEADER,N_OS2_HEADER::ne_exetyp,XComboBoxEx::CBTYPE_NORMAL);
                 comboBox[CB_OS2_HEADER_ne_flagsothers]=createComboBox(ui->tableWidget_OS2_HEADER,XNE::getImageNEFlagsothersS(),SNE::TYPE_OS2_HEADER,N_OS2_HEADER::ne_flagsothers,XComboBoxEx::CBTYPE_FLAGS);
+
+                invWidget[CB_OS2_HEADER_ne_enttab]=createInvWidget(ui->tableWidget_OS2_HEADER,SNE::TYPE_OS2_HEADER,N_OS2_HEADER::ne_enttab,InvWidget::TYPE_HEX);
+                invWidget[CB_OS2_HEADER_ne_segtab]=createInvWidget(ui->tableWidget_OS2_HEADER,SNE::TYPE_OS2_HEADER,N_OS2_HEADER::ne_segtab,InvWidget::TYPE_HEX);
+                invWidget[CB_OS2_HEADER_ne_rsrctab]=createInvWidget(ui->tableWidget_OS2_HEADER,SNE::TYPE_OS2_HEADER,N_OS2_HEADER::ne_rsrctab,InvWidget::TYPE_HEX);
+                invWidget[CB_OS2_HEADER_ne_restab]=createInvWidget(ui->tableWidget_OS2_HEADER,SNE::TYPE_OS2_HEADER,N_OS2_HEADER::ne_restab,InvWidget::TYPE_HEX);
+                invWidget[CB_OS2_HEADER_ne_modtab]=createInvWidget(ui->tableWidget_OS2_HEADER,SNE::TYPE_OS2_HEADER,N_OS2_HEADER::ne_modtab,InvWidget::TYPE_HEX);
+                invWidget[CB_OS2_HEADER_ne_imptab]=createInvWidget(ui->tableWidget_OS2_HEADER,SNE::TYPE_OS2_HEADER,N_OS2_HEADER::ne_imptab,InvWidget::TYPE_HEX);
+                invWidget[CB_OS2_HEADER_ne_nrestab]=createInvWidget(ui->tableWidget_OS2_HEADER,SNE::TYPE_OS2_HEADER,N_OS2_HEADER::ne_nrestab,InvWidget::TYPE_HEX);
             }
 
             blockSignals(true);
