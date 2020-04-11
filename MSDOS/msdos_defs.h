@@ -28,7 +28,9 @@ namespace SMSDOS
 {
 enum TYPE
 {
-    TYPE_TOOLS=0,
+    TYPE_HEX=0,
+    TYPE_STRINGS,
+    TYPE_MEMORYMAP,
     TYPE_DOS_HEADER,
     TYPE_OVERLAY,
     __TYPE_size
