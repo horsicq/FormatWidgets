@@ -417,6 +417,15 @@ void NEWidget::reloadData()
             comboBox[CB_OS2_HEADER_ne_flagsothers]->setValue(os2header.ne_flagsothers);
 
             qint64 nOffset=ne.getImageOS2HeaderOffset();
+
+            invWidget[CB_OS2_HEADER_ne_enttab]->setOffsetAndSize(&ne,nOffset+os2header.ne_enttab,0);
+            invWidget[CB_OS2_HEADER_ne_segtab]->setOffsetAndSize(&ne,nOffset+os2header.ne_segtab,0);
+            invWidget[CB_OS2_HEADER_ne_rsrctab]->setOffsetAndSize(&ne,nOffset+os2header.ne_rsrctab,0);
+            invWidget[CB_OS2_HEADER_ne_restab]->setOffsetAndSize(&ne,nOffset+os2header.ne_restab,0);
+            invWidget[CB_OS2_HEADER_ne_modtab]->setOffsetAndSize(&ne,nOffset+os2header.ne_modtab,0);
+            invWidget[CB_OS2_HEADER_ne_imptab]->setOffsetAndSize(&ne,nOffset+os2header.ne_imptab,0);
+            invWidget[CB_OS2_HEADER_ne_nrestab]->setOffsetAndSize(&ne,os2header.ne_nrestab,0);
+
             qint64 nSize=ne.getImageOS2HeaderSize();
 
             loadHexSubdevice(nOffset,nSize,nOffset,&subDevice[SNE::TYPE_OS2_HEADER],ui->widgetHex_OS2_HEADER);
