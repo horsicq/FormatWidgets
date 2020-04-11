@@ -119,10 +119,17 @@ bool NEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, in
                 case SNE::TYPE_OS2_HEADER:
                     switch(nNdata)
                     {
-                        case N_OS2_HEADER::ne_magic:        comboBox[CB_OS2_HEADER_ne_magic]->setValue(nValue);         break;
-                        case N_OS2_HEADER::ne_flags:        comboBox[CB_OS2_HEADER_ne_flags]->setValue(nValue);         break;
-                        case N_OS2_HEADER::ne_exetyp:       comboBox[CB_OS2_HEADER_ne_exetype]->setValue(nValue);       break;
-                        case N_OS2_HEADER::ne_flagsothers:  comboBox[CB_OS2_HEADER_ne_flagsothers]->setValue(nValue);   break;
+                        case N_OS2_HEADER::ne_magic:        comboBox[CB_OS2_HEADER_ne_magic]->setValue(nValue);                                                 break;
+                        case N_OS2_HEADER::ne_flags:        comboBox[CB_OS2_HEADER_ne_flags]->setValue(nValue);                                                 break;
+                        case N_OS2_HEADER::ne_exetyp:       comboBox[CB_OS2_HEADER_ne_exetype]->setValue(nValue);                                               break;
+                        case N_OS2_HEADER::ne_flagsothers:  comboBox[CB_OS2_HEADER_ne_flagsothers]->setValue(nValue);                                           break;
+                        case N_OS2_HEADER::ne_enttab:       invWidget[CB_OS2_HEADER_ne_enttab]->setOffsetAndSize(&ne,ne.getImageOS2HeaderOffset()+nValue,0);    break;
+                        case N_OS2_HEADER::ne_segtab:       invWidget[CB_OS2_HEADER_ne_segtab]->setOffsetAndSize(&ne,ne.getImageOS2HeaderOffset()+nValue,0);    break;
+                        case N_OS2_HEADER::ne_rsrctab:      invWidget[CB_OS2_HEADER_ne_rsrctab]->setOffsetAndSize(&ne,ne.getImageOS2HeaderOffset()+nValue,0);   break;
+                        case N_OS2_HEADER::ne_restab:       invWidget[CB_OS2_HEADER_ne_restab]->setOffsetAndSize(&ne,ne.getImageOS2HeaderOffset()+nValue,0);    break;
+                        case N_OS2_HEADER::ne_modtab:       invWidget[CB_OS2_HEADER_ne_modtab]->setOffsetAndSize(&ne,ne.getImageOS2HeaderOffset()+nValue,0);    break;
+                        case N_OS2_HEADER::ne_imptab:       invWidget[CB_OS2_HEADER_ne_imptab]->setOffsetAndSize(&ne,ne.getImageOS2HeaderOffset()+nValue,0);    break;
+                        case N_OS2_HEADER::ne_nrestab:      invWidget[CB_OS2_HEADER_ne_nrestab]->setOffsetAndSize(&ne,nValue,0);                                break;
                     }
                     break;
             }
