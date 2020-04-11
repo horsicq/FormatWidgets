@@ -70,6 +70,13 @@ private:
     enum INV
     {
         INV_IMAGE_DOS_HEADER_e_lfanew,
+        CB_OS2_HEADER_ne_enttab,
+        CB_OS2_HEADER_ne_segtab,
+        CB_OS2_HEADER_ne_rsrctab,
+        CB_OS2_HEADER_ne_restab,
+        CB_OS2_HEADER_ne_modtab,
+        CB_OS2_HEADER_ne_imptab,
+        CB_OS2_HEADER_ne_nrestab,
         __INV_size
     };
 
