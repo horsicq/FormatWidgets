@@ -35,6 +35,7 @@ enum TYPE
     TYPE_Elf_Shdr,
     TYPE_Elf_Phdr,
     TYPE_Elf_DynamicArrayTags,
+    TYPE_LIBRARIES,
     __TYPE_size
 };
 }
@@ -147,6 +148,17 @@ enum DATA
 
 extern const FormatWidget::HEADER_RECORD records32[__data_size];
 extern const FormatWidget::HEADER_RECORD records64[__data_size];
+}
+
+namespace N_ELF_LIBRARIES
+{
+enum DATA
+{
+    library_name=0,
+    __data_size
+};
+
+extern const FormatWidget::HEADER_RECORD records[__data_size];
 }
 
 #endif // ELF_DEFS_H

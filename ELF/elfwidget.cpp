@@ -71,6 +71,8 @@ void ELFWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_MEMORYMAP,tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_Elf_Ehdr,"Elf_Ehdr"));
 
+        XBinary::_MEMORY_MAP memoryMap=elf.getMemoryMap();
+
         QList<XELF_DEF::Elf_Shdr> listSections=elf.getElf_ShdrList();
 
         if(listSections.count())
@@ -92,7 +94,15 @@ void ELFWidget::reload()
             QTreeWidgetItem *pItemDynamicArrayTags=createNewItem(SELF::TYPE_Elf_DynamicArrayTags,"Dynamic Array Tags");
 
             ui->treeWidgetNavi->addTopLevelItem(pItemDynamicArrayTags);
-            // TODO Libraries
+
+            QList<QString> listLibraries=elf.getLibraries(&memoryMap,&listTags);
+
+            if(listLibraries.count())
+            {
+                QTreeWidgetItem *pItemLibraries=createNewItem(SELF::TYPE_LIBRARIES,"Libraries");
+
+                pItemDynamicArrayTags->addChild(pItemLibraries);
+            }
         }
 
         ui->treeWidgetNavi->expandAll();
@@ -626,6 +636,31 @@ void ELFWidget::reloadData()
 
             blockSignals(false);
         }
+        else if(nData==SELF::TYPE_LIBRARIES)
+        {
+            if(!bInit[nData])
+            {
+                bInit[nData]=createSectionTable(SELF::TYPE_LIBRARIES,ui->tableWidget_Libraries,N_ELF_LIBRARIES::records,N_ELF_LIBRARIES::__data_size);
+            }
+
+            blockSignals(true);
+
+            QList<QString> listLibraries=elf.getLibraries();
+
+            int nCount=listLibraries.count();
+
+            ui->tableWidget_Libraries->setRowCount(nCount);
+
+            for(int i=0; i<nCount; i++)
+            {
+                QTableWidgetItem *pItem=new QTableWidgetItem(QString::number(i));
+
+                ui->tableWidget_Libraries->setItem(i,0,                                      pItem);
+                ui->tableWidget_Libraries->setItem(i,N_ELF_LIBRARIES::library_name+1,        new QTableWidgetItem(listLibraries.at(i)));
+            }
+
+            blockSignals(false);
+        }
 
         setReadonly(ui->checkBoxReadonly->isChecked());
     }
@@ -675,6 +710,13 @@ bool ELFWidget::createSectionTable(int type, QTableWidget *pTableWidget, const F
             pTableWidget->setColumnWidth(1,nSymbolWidth*12);
             pTableWidget->setColumnWidth(2,nSymbolWidth*12);
             pTableWidget->setColumnWidth(3,nSymbolWidth*20);
+            break;
+
+        case SELF::TYPE_LIBRARIES:
+            slHeader.append(tr(""));
+            pTableWidget->setColumnCount(nRecordCount+1);
+            pTableWidget->setColumnWidth(0,nSymbolWidth*4);
+            pTableWidget->setColumnWidth(1,nSymbolWidth*30);
             break;
 
         default:

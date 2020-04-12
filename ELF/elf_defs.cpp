@@ -161,3 +161,11 @@ const FormatWidget::HEADER_RECORD records64[]=
     {d_value,               "d_value",              8,  8,      "Elf64_Addr",           FormatWidget::VAL_TYPE_ADDRESS},
 };
 }
+
+namespace N_ELF_LIBRARIES
+{
+const FormatWidget::HEADER_RECORD records[]=
+{
+    {library_name,          "library name",         0,  0,      "",                     FormatWidget::VAL_TYPE_DATA},
+};
+}
