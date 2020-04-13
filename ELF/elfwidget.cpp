@@ -84,24 +84,26 @@ void ELFWidget::reload()
 
         if(listPrograms.count())
         {
-            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_Elf_Phdr,"Programs"));
-        }
+            QTreeWidgetItem *pItemPrograms=createNewItem(SELF::TYPE_Elf_Phdr,"Programs");
 
-        QList<XELF::TAG_STRUCT> listTags=elf.getTagStructs();
+            ui->treeWidgetNavi->addTopLevelItem(pItemPrograms);
 
-        if(listTags.count())
-        {
-            QTreeWidgetItem *pItemDynamicArrayTags=createNewItem(SELF::TYPE_Elf_DynamicArrayTags,"Dynamic Array Tags");
+            QList<XELF::TAG_STRUCT> listTags=elf.getTagStructs();
 
-            ui->treeWidgetNavi->addTopLevelItem(pItemDynamicArrayTags);
-
-            QList<QString> listLibraries=elf.getLibraries(&memoryMap,&listTags);
-
-            if(listLibraries.count())
+            if(listTags.count())
             {
-                QTreeWidgetItem *pItemLibraries=createNewItem(SELF::TYPE_LIBRARIES,"Libraries");
+                QTreeWidgetItem *pItemDynamicArrayTags=createNewItem(SELF::TYPE_Elf_DynamicArrayTags,"Dynamic Array Tags");
 
-                pItemDynamicArrayTags->addChild(pItemLibraries);
+                pItemPrograms->addChild(pItemDynamicArrayTags);
+
+                QList<QString> listLibraries=elf.getLibraries(&memoryMap,&listTags);
+
+                if(listLibraries.count())
+                {
+                    QTreeWidgetItem *pItemLibraries=createNewItem(SELF::TYPE_LIBRARIES,"Libraries");
+
+                    pItemDynamicArrayTags->addChild(pItemLibraries);
+                }
             }
         }
 
