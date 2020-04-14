@@ -90,7 +90,7 @@ void ELFWidget::reload()
 
             ui->treeWidgetNavi->addTopLevelItem(pItemPrograms);
 
-            XBinary::OS_ANSISTRING osInterpreter=elf.getProgramInterpreterName();
+            XBinary::OS_ANSISTRING osInterpreter=elf.getProgramInterpreterName(&listPrograms);
 
             if(osInterpreter.nOffset)
             {
@@ -99,7 +99,9 @@ void ELFWidget::reload()
                 pItemPrograms->addChild(pItemInterpeter);
             }
 
-            QList<XELF::TAG_STRUCT> listTags=elf.getTagStructs();
+            QList<XELF::NOTE> listNotes=elf.getNotes(&listPrograms);
+
+            QList<XELF::TAG_STRUCT> listTags=elf.getTagStructs(&listPrograms,&memoryMap);
 
             if(listTags.count())
             {
