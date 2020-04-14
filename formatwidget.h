@@ -85,6 +85,12 @@ public:
         HEADER_COLUMN_COMMENT
     };
 
+    enum LIST_COLUMN
+    {
+        LIST_COLUMN_NAME=0,
+        LIST_COLUMN_VALUE
+    };
+
     enum HEADER_DATA
     {
         HEADER_DATA_OFFSET=0,
@@ -121,6 +127,7 @@ public:
     bool isReadonly();
     QTreeWidgetItem *createNewItem(int nUserData, QString sTitle);
     bool createHeaderTable(int type,QTableWidget *pTableWidget, const HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nRecordCount,int nPosition=0,qint64 nOffset=0);
+    bool createListTable(int type,QTableWidget *pTableWidget, const HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nRecordCount);
     void addComment(QTableWidget *pTableWidget,int nRow,int nColumn,QString sComment);
 
 //    bool createDirectoryTable(int type,QTableWidget *pTableWidget, const DIRECTORY_ENTRY_RECORD *pRecords,int nRecordCount);
@@ -141,6 +148,7 @@ public:
     virtual void setReadonly(bool bState)=0;
     virtual void blockSignals(bool bState)=0;
     virtual void adjustHeaderTable(int type,QTableWidget *pTableWidget);
+    virtual void adjustListTable(int type,QTableWidget *pTableWidget);
     bool isEdited();
 
     QPushButton *createHexButton(QTableWidget *pTableWidget,int type, int nData);

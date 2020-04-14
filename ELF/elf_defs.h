@@ -163,4 +163,15 @@ enum DATA
 extern const FormatWidget::HEADER_RECORD records[__data_size];
 }
 
+namespace N_ELF_INTERPRETER
+{
+enum DATA
+{
+    interpreter=0,
+    __data_size
+};
+
+extern const FormatWidget::HEADER_RECORD records[__data_size];
+}
+
 #endif // ELF_DEFS_H

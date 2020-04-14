@@ -169,3 +169,11 @@ const FormatWidget::HEADER_RECORD records[]=
     {library_name,          "library name",         0,  0,      "",                     FormatWidget::VAL_TYPE_DATA},
 };
 }
+
+namespace N_ELF_INTERPRETER
+{
+const FormatWidget::HEADER_RECORD records[]=
+{
+    {interpreter,           "interpreter",          0,  -1,     "Ansi string",          FormatWidget::VAL_TYPE_TEXT},
+};
+}

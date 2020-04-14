@@ -102,6 +102,7 @@ private:
     Ui::ELFWidget *ui;
 
     XLineEditHEX *lineEdit_Elf_Ehdr[N_Elf_Ehdr::__data_size];
+    XLineEditHEX *lineEdit_Elf_Interpreter[N_ELF_INTERPRETER::__data_size];
     XComboBoxEx *comboBox[__CB_size];
     InvWidget *invWidget[__INV_size];
 

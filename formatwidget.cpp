@@ -121,6 +121,12 @@ void FormatWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
     Q_UNUSED(pTableWidget)
 }
 
+void FormatWidget::adjustListTable(int type, QTableWidget *pTableWidget)
+{
+    Q_UNUSED(type)
+    Q_UNUSED(pTableWidget)
+}
+
 bool FormatWidget::isEdited()
 {
     return bIsEdited;
@@ -327,6 +333,48 @@ bool FormatWidget::createHeaderTable(int type, QTableWidget *pTableWidget, const
     pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_COMMENT,QHeaderView::Stretch);
 
     adjustHeaderTable(type,pTableWidget);
+
+    return true;
+}
+
+bool FormatWidget::createListTable(int type, QTableWidget *pTableWidget, const FormatWidget::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nRecordCount)
+{
+    pTableWidget->setColumnCount(2);
+    pTableWidget->setRowCount(nRecordCount);
+
+    QStringList slHeader;
+    slHeader.append(tr("Name"));
+    slHeader.append(tr("Value"));
+
+    pTableWidget->setHorizontalHeaderLabels(slHeader);
+    pTableWidget->horizontalHeader()->setVisible(true);
+
+    for(int i=0; i<nRecordCount; i++)
+    {
+        QTableWidgetItem *newItemName=new QTableWidgetItem;
+        newItemName->setText(pRecords[i].pszName);
+        pTableWidget->setItem(i,LIST_COLUMN_NAME,newItemName);
+
+
+        ppLineEdits[i]=new XLineEditHEX(this);
+        ppLineEdits[i]->setProperty("STYPE",type);
+        ppLineEdits[i]->setProperty("NDATA",pRecords[i].nData);
+
+        if(pRecords[i].vtype==VAL_TYPE_TEXT)
+        {
+            connect(ppLineEdits[i],SIGNAL(textChanged(QString)),this,SLOT(textValueChanged(QString)));
+        }
+        else
+        {
+            connect(ppLineEdits[i],SIGNAL(valueChanged(quint64)),this,SLOT(hexValueChanged(quint64)));
+        }
+
+        pTableWidget->setCellWidget(i,LIST_COLUMN_VALUE,ppLineEdits[i]);
+    }
+
+    pTableWidget->horizontalHeader()->setSectionResizeMode(LIST_COLUMN_VALUE,QHeaderView::Stretch);
+
+    adjustListTable(type,pTableWidget);
 
     return true;
 }

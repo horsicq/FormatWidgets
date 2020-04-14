@@ -47,6 +47,7 @@ void ELFWidget::clear()
 {
     memset(bInit,0,sizeof bInit);
     memset(lineEdit_Elf_Ehdr,0,sizeof lineEdit_Elf_Ehdr);
+    memset(lineEdit_Elf_Interpreter,0,sizeof lineEdit_Elf_Interpreter);
     memset(comboBox,0,sizeof comboBox);
     memset(invWidget,0,sizeof invWidget);
     memset(subDevice,0,sizeof subDevice);
@@ -104,6 +105,15 @@ void ELFWidget::reload()
 
                     pItemDynamicArrayTags->addChild(pItemLibraries);
                 }
+            }
+
+            XBinary::OS_ANSISTRING osAnsiString=elf.getProgramInterpreterName();
+
+            if(osAnsiString.nOffset)
+            {
+                QTreeWidgetItem *pItemInterpeter=createNewItem(SELF::TYPE_INTERPRETER,"Interpeter");
+
+                pItemPrograms->addChild(pItemInterpeter);
             }
         }
 
@@ -202,6 +212,7 @@ bool ELFWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, i
 void ELFWidget::setReadonly(bool bState)
 {
     setLineEditsReadOnly(lineEdit_Elf_Ehdr,N_Elf_Ehdr::__data_size,bState);
+    setLineEditsReadOnly(lineEdit_Elf_Interpreter,N_ELF_INTERPRETER::__data_size,bState);
 
     setComboBoxesReadOnly(comboBox,__CB_size,bState);
 
@@ -211,6 +222,7 @@ void ELFWidget::setReadonly(bool bState)
 void ELFWidget::blockSignals(bool bState)
 {
     _blockSignals((QObject **)lineEdit_Elf_Ehdr,N_Elf_Ehdr::__data_size,bState);
+    _blockSignals((QObject **)lineEdit_Elf_Interpreter,N_ELF_INTERPRETER::__data_size,bState);
 
     _blockSignals((QObject **)comboBox,__CB_size,bState);
 }
@@ -663,6 +675,18 @@ void ELFWidget::reloadData()
 
             blockSignals(false);
         }
+        else if(nData==SELF::TYPE_INTERPRETER)
+        {
+            if(!bInit[nData])
+            {
+                bInit[nData]=createListTable(SELF::TYPE_INTERPRETER,ui->tableWidget_Interpreter,N_ELF_INTERPRETER::records,lineEdit_Elf_Interpreter,N_ELF_INTERPRETER::__data_size);
+            }
+
+            blockSignals(true);
+
+            blockSignals(false);
+        }
+
 
         setReadonly(ui->checkBoxReadonly->isChecked());
     }
