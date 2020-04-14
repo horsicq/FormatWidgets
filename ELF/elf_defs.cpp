@@ -177,3 +177,11 @@ const FormatWidget::HEADER_RECORD records[]=
     {interpreter,           "interpreter",          0,  -1,     "Ansi string",          FormatWidget::VAL_TYPE_TEXT},
 };
 }
+
+namespace N_ELF_RUNPATH
+{
+const FormatWidget::HEADER_RECORD records[]=
+{
+    {runpath,               "runpath",              0,  -1,     "Ansi string",          FormatWidget::VAL_TYPE_TEXT},
+};
+}

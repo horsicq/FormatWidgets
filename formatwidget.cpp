@@ -362,7 +362,6 @@ bool FormatWidget::createListTable(int type, QTableWidget *pTableWidget, const F
         newItemName->setText(pRecords[i].pszName);
         pTableWidget->setItem(i,LIST_COLUMN_NAME,newItemName);
 
-
         ppLineEdits[i]=new XLineEditHEX(this);
 
         ppLineEdits[i]->setProperty("STYPE",type);

@@ -48,6 +48,7 @@ void ELFWidget::clear()
     memset(bInit,0,sizeof bInit);
     memset(lineEdit_Elf_Ehdr,0,sizeof lineEdit_Elf_Ehdr);
     memset(lineEdit_Elf_Interpreter,0,sizeof lineEdit_Elf_Interpreter);
+    memset(lineEdit_Elf_RunPath,0,sizeof lineEdit_Elf_RunPath);
     memset(comboBox,0,sizeof comboBox);
     memset(invWidget,0,sizeof invWidget);
     memset(subDevice,0,sizeof subDevice);
@@ -89,10 +90,9 @@ void ELFWidget::reload()
 
             ui->treeWidgetNavi->addTopLevelItem(pItemPrograms);
 
+            XBinary::OS_ANSISTRING osInterpreter=elf.getProgramInterpreterName();
 
-            XBinary::OS_ANSISTRING osAnsiString=elf.getProgramInterpreterName();
-
-            if(osAnsiString.nOffset)
+            if(osInterpreter.nOffset)
             {
                 QTreeWidgetItem *pItemInterpeter=createNewItem(SELF::TYPE_INTERPRETER,"Interpeter");
 
@@ -114,6 +114,15 @@ void ELFWidget::reload()
                     QTreeWidgetItem *pItemLibraries=createNewItem(SELF::TYPE_LIBRARIES,"Libraries");
 
                     pItemDynamicArrayTags->addChild(pItemLibraries);
+                }
+
+                XBinary::OS_ANSISTRING osRunPath=elf.getRunPath(&memoryMap,&listTags);
+
+                if(osRunPath.nOffset)
+                {
+                    QTreeWidgetItem *pItemRunPath=createNewItem(SELF::TYPE_RUNPATH,"Run path");
+
+                    pItemPrograms->addChild(pItemRunPath);
                 }
             }
         }
@@ -203,7 +212,15 @@ bool ELFWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, i
                 case SELF::TYPE_INTERPRETER:
                     switch(nNdata)
                     {
-                        case N_ELF_INTERPRETER::interpreter:      elf.write_ansiString(nOffset,sValue);                                                     break;
+                        case N_ELF_INTERPRETER::interpreter:        elf.write_ansiString(nOffset,sValue);                                                     break;
+                    }
+
+                    break;
+
+                case SELF::TYPE_RUNPATH:
+                    switch(nNdata)
+                    {
+                        case N_ELF_RUNPATH::runpath:                elf.write_ansiString(nOffset,sValue);                                                     break;
                     }
 
                     break;
@@ -222,6 +239,7 @@ void ELFWidget::setReadonly(bool bState)
 {
     setLineEditsReadOnly(lineEdit_Elf_Ehdr,N_Elf_Ehdr::__data_size,bState);
     setLineEditsReadOnly(lineEdit_Elf_Interpreter,N_ELF_INTERPRETER::__data_size,bState);
+    setLineEditsReadOnly(lineEdit_Elf_RunPath,N_ELF_RUNPATH::__data_size,bState);
 
     setComboBoxesReadOnly(comboBox,__CB_size,bState);
 
@@ -232,6 +250,7 @@ void ELFWidget::blockSignals(bool bState)
 {
     _blockSignals((QObject **)lineEdit_Elf_Ehdr,N_Elf_Ehdr::__data_size,bState);
     _blockSignals((QObject **)lineEdit_Elf_Interpreter,N_ELF_INTERPRETER::__data_size,bState);
+    _blockSignals((QObject **)lineEdit_Elf_RunPath,N_ELF_RUNPATH::__data_size,bState);
 
     _blockSignals((QObject **)comboBox,__CB_size,bState);
 }
@@ -699,7 +718,21 @@ void ELFWidget::reloadData()
 
             blockSignals(false);
         }
+        else if(nData==SELF::TYPE_RUNPATH)
+        {
+            if(!bInit[nData])
+            {
+                bInit[nData]=createListTable(SELF::TYPE_RUNPATH,ui->tableWidget_RunPath,N_ELF_RUNPATH::records,lineEdit_Elf_RunPath,N_ELF_RUNPATH::__data_size);
+            }
 
+            blockSignals(true);
+
+            XBinary::OS_ANSISTRING osAnsiString=elf.getRunPath();
+
+            setLineEdit(lineEdit_Elf_RunPath[N_ELF_RUNPATH::runpath],osAnsiString.nSize,osAnsiString.sAnsiString,osAnsiString.nOffset);
+
+            blockSignals(false);
+        }
 
         setReadonly(ui->checkBoxReadonly->isChecked());
     }
