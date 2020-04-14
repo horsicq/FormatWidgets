@@ -364,11 +364,13 @@ bool FormatWidget::createListTable(int type, QTableWidget *pTableWidget, const F
 
 
         ppLineEdits[i]=new XLineEditHEX(this);
+
         ppLineEdits[i]->setProperty("STYPE",type);
         ppLineEdits[i]->setProperty("NDATA",pRecords[i].nData);
 
         if(pRecords[i].vtype==VAL_TYPE_TEXT)
         {
+            ppLineEdits[i]->setAlignment(Qt::AlignLeft);
             connect(ppLineEdits[i],SIGNAL(textChanged(QString)),this,SLOT(textValueChanged(QString)));
         }
         else
