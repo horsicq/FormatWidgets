@@ -185,6 +185,13 @@ void FormatWidget::setItemEnable(QTableWidgetItem *pItem, bool bState)
     pItem->setBackgroundColor(bState?(colEnabled):(colDisabled));
 }
 
+void FormatWidget::setLineEdit(XLineEditHEX *pLineEdit, qint32 nMaxLength, QString sText, qint64 nOffset)
+{
+    pLineEdit->setMaxLength(nMaxLength);
+    pLineEdit->setText(sText);
+    pLineEdit->setProperty("OFFSET",nOffset);
+}
+
 //void FormatWidget::resizeToolsWidget(QWidget *pParent, ToolsWidget *pToolWidget)
 //{
 //    qint32 nHeight=pParent->height();

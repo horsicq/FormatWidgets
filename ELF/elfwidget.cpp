@@ -89,6 +89,16 @@ void ELFWidget::reload()
 
             ui->treeWidgetNavi->addTopLevelItem(pItemPrograms);
 
+
+            XBinary::OS_ANSISTRING osAnsiString=elf.getProgramInterpreterName();
+
+            if(osAnsiString.nOffset)
+            {
+                QTreeWidgetItem *pItemInterpeter=createNewItem(SELF::TYPE_INTERPRETER,"Interpeter");
+
+                pItemPrograms->addChild(pItemInterpeter);
+            }
+
             QList<XELF::TAG_STRUCT> listTags=elf.getTagStructs();
 
             if(listTags.count())
@@ -106,15 +116,6 @@ void ELFWidget::reload()
                     pItemDynamicArrayTags->addChild(pItemLibraries);
                 }
             }
-
-            XBinary::OS_ANSISTRING osAnsiString=elf.getProgramInterpreterName();
-
-            if(osAnsiString.nOffset)
-            {
-                QTreeWidgetItem *pItemInterpeter=createNewItem(SELF::TYPE_INTERPRETER,"Interpeter");
-
-                pItemPrograms->addChild(pItemInterpeter);
-            }
         }
 
         ui->treeWidgetNavi->expandAll();
@@ -127,13 +128,13 @@ bool ELFWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, i
 {
     Q_UNUSED(nVtype)
     Q_UNUSED(nPosition)
-    Q_UNUSED(nOffset)
 
     bool bResult=false;
 
     blockSignals(true);
 
     quint64 nValue=vValue.toULongLong();
+    QString sValue=vValue.toString();
 
     if(getDevice()->isWritable())
     {
@@ -196,6 +197,14 @@ bool ELFWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, i
                     }
 
                     ui->widgetHex_Elf_Ehdr->reload();
+
+                    break;
+
+                case SELF::TYPE_INTERPRETER:
+                    switch(nNdata)
+                    {
+                        case N_ELF_INTERPRETER::interpreter:      elf.write_ansiString(nOffset,sValue);                                                     break;
+                    }
 
                     break;
             }
@@ -683,6 +692,10 @@ void ELFWidget::reloadData()
             }
 
             blockSignals(true);
+
+            XBinary::OS_ANSISTRING osAnsiString=elf.getProgramInterpreterName();
+
+            setLineEdit(lineEdit_Elf_Interpreter[N_ELF_INTERPRETER::interpreter],osAnsiString.nSize,osAnsiString.sAnsiString,osAnsiString.nOffset);
 
             blockSignals(false);
         }

@@ -163,6 +163,8 @@ public:
 
     void setItemEnable(QTableWidgetItem *pItem,bool bState);
 
+    void setLineEdit(XLineEditHEX *pLineEdit,qint32 nMaxLength,QString sText,qint64 nOffset);
+
 signals:
     void editState(bool bState);
 
