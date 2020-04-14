@@ -178,6 +178,15 @@ const FormatWidget::HEADER_RECORD records[]=
 };
 }
 
+namespace N_ELF_NOTES
+{
+const FormatWidget::HEADER_RECORD records[]=
+{
+    {type,              "type",                     0,  -1,     "",                     FormatWidget::VAL_TYPE_DATA},
+    {name,              "name",                     0,  -1,     "",                     FormatWidget::VAL_TYPE_DATA},
+};
+}
+
 namespace N_ELF_RUNPATH
 {
 const FormatWidget::HEADER_RECORD records[]=

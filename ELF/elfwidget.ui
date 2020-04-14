@@ -484,6 +484,16 @@
           </attribute>
          </widget>
         </item>
+        <item>
+         <widget class="ToolsWidget" name="widgetHex_Notes" native="true">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
       <widget class="QWidget" name="page_RunPath">

@@ -61,8 +61,9 @@ private slots:
 
     void on_pushButtonReload_clicked();
 
-    void loadShdr(int __nNumber);
-    void loadPhdr(int __nNumber);
+    void loadShdr(int nNumber);
+    void loadPhdr(int nNumber);
+    void loadNote(int nNumber);
 
     void on_tableWidget_Elf_Ehdr_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
 
@@ -77,6 +78,8 @@ private slots:
     void on_tableWidget_DynamicArrayTags_customContextMenuRequested(const QPoint &pos);
 
     void editDynamicArrayTag();
+
+    void on_tableWidget_Notes_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
 
 private:
     // TODO rename

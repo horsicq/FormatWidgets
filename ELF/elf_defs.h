@@ -175,6 +175,19 @@ enum DATA
 extern const FormatWidget::HEADER_RECORD records[__data_size];
 }
 
+namespace N_ELF_NOTES
+{
+enum DATA
+{
+    type=0,
+    name,
+    __data_size
+};
+
+extern const FormatWidget::HEADER_RECORD records[__data_size];
+}
+
+
 namespace N_ELF_RUNPATH
 {
 enum DATA

@@ -101,6 +101,13 @@ void ELFWidget::reload()
 
             QList<XELF::NOTE> listNotes=elf.getNotes(&listPrograms);
 
+            if(listNotes.count())
+            {
+                QTreeWidgetItem *pItemNotes=createNewItem(SELF::TYPE_NOTES,"Notes");
+
+                pItemPrograms->addChild(pItemNotes);
+            }
+
             QList<XELF::TAG_STRUCT> listTags=elf.getTagStructs(&listPrograms,&memoryMap);
 
             if(listTags.count())
@@ -720,6 +727,48 @@ void ELFWidget::reloadData()
 
             blockSignals(false);
         }
+        else if(nData==SELF::TYPE_NOTES)
+        {
+            if(!bInit[nData])
+            {
+                bInit[nData]=createSectionTable(SELF::TYPE_NOTES,ui->tableWidget_Notes,N_ELF_NOTES::records,N_ELF_NOTES::__data_size);
+            }
+
+            blockSignals(true);
+
+            QList<XELF::NOTE> listNotes=elf.getNotes();
+
+            int nCount=listNotes.count();
+
+            ui->tableWidget_Notes->setRowCount(nCount);
+
+            for(int i=0; i<nCount; i++)
+            {
+                QTableWidgetItem *pItem=new QTableWidgetItem(QString::number(i));
+
+                pItem->setData(Qt::UserRole+SECTION_DATA_OFFSET,listNotes.at(i).nOffset);
+                pItem->setData(Qt::UserRole+SECTION_DATA_ADDRESS,listNotes.at(i).nOffset);
+                pItem->setData(Qt::UserRole+SECTION_DATA_SIZE,listNotes.at(i).nSize);
+
+                ui->tableWidget_Notes->setItem(i,0,                                     pItem);
+                ui->tableWidget_Notes->setItem(i,N_ELF_NOTES::type+1,                   new QTableWidgetItem(XBinary::valueToHex((quint32)listNotes.at(i).nType)));
+                ui->tableWidget_Notes->setItem(i,N_ELF_NOTES::name+1,                   new QTableWidgetItem(listNotes.at(i).sName));
+            }
+
+            if(nCount)
+            {
+                if(ui->tableWidget_Notes->currentRow()==0)
+                {
+                    loadNote(0);
+                }
+                else
+                {
+                    ui->tableWidget_Notes->setCurrentCell(0,0);
+                }
+            }
+
+            blockSignals(false);
+        }
         else if(nData==SELF::TYPE_RUNPATH)
         {
             if(!bInit[nData])
@@ -791,6 +840,14 @@ bool ELFWidget::createSectionTable(int type, QTableWidget *pTableWidget, const F
             pTableWidget->setColumnCount(nRecordCount+1);
             pTableWidget->setColumnWidth(0,nSymbolWidth*4);
             pTableWidget->setColumnWidth(1,nSymbolWidth*30);
+            break;
+
+        case SELF::TYPE_NOTES:
+            slHeader.append(tr(""));
+            pTableWidget->setColumnCount(nRecordCount+1);
+            pTableWidget->setColumnWidth(0,nSymbolWidth*4);
+            pTableWidget->setColumnWidth(1,nSymbolWidth*8);
+            pTableWidget->setColumnWidth(2,nSymbolWidth*30);
             break;
 
         default:
@@ -907,6 +964,15 @@ void ELFWidget::loadPhdr(int nNumber)
     qint64 nAddress=ui->tableWidget_Elf_Phdr->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
 
     loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SELF::TYPE_Elf_Phdr],ui->widgetHex_Elf_Phdr);
+}
+
+void ELFWidget::loadNote(int nNumber)
+{
+    qint64 nOffset=ui->tableWidget_Notes->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_OFFSET).toLongLong();
+    qint64 nSize=ui->tableWidget_Notes->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
+    qint64 nAddress=ui->tableWidget_Notes->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
+
+    loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SELF::TYPE_NOTES],ui->widgetHex_Notes);
 }
 
 void ELFWidget::on_tableWidget_Elf_Ehdr_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
@@ -1084,5 +1150,17 @@ void ELFWidget::editDynamicArrayTag()
         reloadData();
 
         ui->tableWidget_DynamicArrayTags->setCurrentCell(nRow,0);
+    }
+}
+
+void ELFWidget::on_tableWidget_Notes_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
+{
+    Q_UNUSED(currentColumn)
+    Q_UNUSED(previousRow)
+    Q_UNUSED(previousColumn)
+
+    if(currentRow!=-1)
+    {
+        loadNote(currentRow);
     }
 }
