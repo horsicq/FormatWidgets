@@ -36,6 +36,8 @@ enum TYPE
     TYPE_Elf_Phdr,
     TYPE_Elf_DynamicArrayTags,
     TYPE_LIBRARIES,
+    TYPE_INTERPRETER,
+    TYPE_NOTES,
     __TYPE_size
 };
 }
