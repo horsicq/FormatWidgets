@@ -39,6 +39,7 @@ enum TYPE
     TYPE_INTERPRETER,
     TYPE_NOTES,
     TYPE_RUNPATH,
+    TYPE_STRINGTABLE,
     __TYPE_size
 };
 }

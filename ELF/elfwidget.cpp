@@ -116,6 +116,15 @@ void ELFWidget::reload()
 
                 pItemPrograms->addChild(pItemDynamicArrayTags);
 
+                XBinary::OFFSETSIZE osStringTable=elf.getStringTable(&memoryMap,&listTags);
+
+                if(osStringTable.nSize)
+                {
+                    QTreeWidgetItem *pItemStringTable=createNewItem(SELF::TYPE_STRINGTABLE,"String table");
+
+                    pItemDynamicArrayTags->addChild(pItemStringTable);
+                }
+
                 QList<QString> listLibraries=elf.getLibraries(&memoryMap,&listTags);
 
                 if(listLibraries.count())
@@ -783,6 +792,12 @@ void ELFWidget::reloadData()
             setLineEdit(lineEdit_Elf_RunPath[N_ELF_RUNPATH::runpath],osAnsiString.nSize,osAnsiString.sAnsiString,osAnsiString.nOffset);
 
             blockSignals(false);
+        }
+        else if(nData==SELF::TYPE_STRINGTABLE)
+        {
+            XBinary::OFFSETSIZE os=elf.getStringTable();
+
+            loadHexSubdevice(os.nOffset,os.nSize,0,&subDevice[SELF::TYPE_STRINGTABLE],ui->widgetHex_StringTable);
         }
 
         setReadonly(ui->checkBoxReadonly->isChecked());
