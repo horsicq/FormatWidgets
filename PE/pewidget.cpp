@@ -2318,3 +2318,38 @@ void PEWidget::editExceptionHeader()
     // TODO
     qDebug("void PEWidget::editExceptionHeader()");
 }
+
+void PEWidget::on_tableWidget_Sections_doubleClicked(const QModelIndex &index)
+{
+    Q_UNUSED(index)
+
+    editSectionHeader();
+}
+
+void PEWidget::on_tableWidget_ImportLibraries_doubleClicked(const QModelIndex &index)
+{
+    Q_UNUSED(index)
+
+    editImportHeader();
+}
+
+void PEWidget::on_tableWidget_Debug_doubleClicked(const QModelIndex &index)
+{
+    Q_UNUSED(index)
+
+    editDebugHeader();
+}
+
+void PEWidget::on_tableWidget_Relocs_doubleClicked(const QModelIndex &index)
+{
+    Q_UNUSED(index)
+
+    editRelocsHeader();
+}
+
+void PEWidget::on_tableWidget_Exceptions_doubleClicked(const QModelIndex &index)
+{
+    Q_UNUSED(index)
+
+    editExceptionHeader();
+}

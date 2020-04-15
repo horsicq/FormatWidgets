@@ -94,6 +94,11 @@ private slots:
     void on_tableWidget_Relocs_customContextMenuRequested(const QPoint &pos);
     void editRelocsHeader();
     void editExceptionHeader();
+    void on_tableWidget_Sections_doubleClicked(const QModelIndex &index);
+    void on_tableWidget_ImportLibraries_doubleClicked(const QModelIndex &index);
+    void on_tableWidget_Debug_doubleClicked(const QModelIndex &index);
+    void on_tableWidget_Relocs_doubleClicked(const QModelIndex &index);
+    void on_tableWidget_Exceptions_doubleClicked(const QModelIndex &index);
 
 private:
     enum CB

@@ -1179,3 +1179,24 @@ void ELFWidget::on_tableWidget_Notes_currentCellChanged(int currentRow, int curr
         loadNote(currentRow);
     }
 }
+
+void ELFWidget::on_tableWidget_Elf_Shdr_doubleClicked(const QModelIndex &index)
+{
+    Q_UNUSED(index)
+
+    editSectionHeader();
+}
+
+void ELFWidget::on_tableWidget_Elf_Phdr_doubleClicked(const QModelIndex &index)
+{
+    Q_UNUSED(index)
+
+    editProgramHeader();
+}
+
+void ELFWidget::on_tableWidget_DynamicArrayTags_doubleClicked(const QModelIndex &index)
+{
+    Q_UNUSED(index)
+
+    editDynamicArrayTag();
+}
