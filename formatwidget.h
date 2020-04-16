@@ -107,7 +107,8 @@ public:
 
     enum SECTION_DATA
     {
-        SECTION_DATA_OFFSET=0,
+        SECTION_DATA_TYPE=0,
+        SECTION_DATA_OFFSET,
         SECTION_DATA_SIZE,
         SECTION_DATA_ADDRESS,
 //        SECTION_DATA_RELADDRESS,
@@ -125,7 +126,7 @@ public:
     quint32 getNumber();
     qint64 getOffset();
     bool isReadonly();
-    QTreeWidgetItem *createNewItem(int nUserData, QString sTitle);
+    QTreeWidgetItem *createNewItem(int nType, QString sTitle, qint64 nOffset=0, qint64 nSize=0);
     bool createHeaderTable(int type,QTableWidget *pTableWidget, const HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nRecordCount,int nPosition=0,qint64 nOffset=0);
     bool createListTable(int type,QTableWidget *pTableWidget, const HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nRecordCount);
     void addComment(QTableWidget *pTableWidget,int nRow,int nColumn,QString sComment);

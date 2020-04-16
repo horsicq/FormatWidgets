@@ -116,13 +116,17 @@ void ELFWidget::reload()
 
                 pItemPrograms->addChild(pItemDynamicArrayTags);
 
-                XBinary::OFFSETSIZE osStringTable=elf.getStringTable(&memoryMap,&listTags);
 
-                if(osStringTable.nSize)
+                QList<XBinary::DATASET> listDS=elf.getDatasetsFromTagStructs(&memoryMap,&listTags);
+
+                int nCount=listDS.count();
+
+                for(int i=0;i<nCount;i++)
                 {
-                    QTreeWidgetItem *pItemStringTable=createNewItem(SELF::TYPE_STRINGTABLE,"String table");
-
-                    pItemDynamicArrayTags->addChild(pItemStringTable);
+                    if(listDS.at(i).nType==XELF::DS_STRINGTABLE)
+                    {
+                        pItemDynamicArrayTags->addChild(createNewItem(SELF::TYPE_STRINGTABLE,listDS.at(i).sName,listDS.at(i).nOffset,listDS.at(i).nSize));
+                    }
                 }
 
                 QList<QString> listLibraries=elf.getLibraries(&memoryMap,&listTags);
@@ -292,7 +296,10 @@ void ELFWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
 
 void ELFWidget::reloadData()
 {
-    int nData=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole).toInt();
+    int nData=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+SECTION_DATA_TYPE).toInt();
+    qint64 nDataOffset=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+SECTION_DATA_OFFSET).toLongLong();
+    qint64 nDataSize=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
+
     ui->stackedWidgetInfo->setCurrentIndex(nData);
 
     XELF elf(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
@@ -795,9 +802,7 @@ void ELFWidget::reloadData()
         }
         else if(nData==SELF::TYPE_STRINGTABLE)
         {
-            XBinary::OFFSETSIZE os=elf.getStringTable();
-
-            loadHexSubdevice(os.nOffset,os.nSize,0,&subDevice[SELF::TYPE_STRINGTABLE],ui->widgetHex_StringTable);
+            loadHexSubdevice(nDataOffset,nDataSize,0,&subDevice[SELF::TYPE_STRINGTABLE],ui->widgetHex_StringTable);
         }
 
         setReadonly(ui->checkBoxReadonly->isChecked());
