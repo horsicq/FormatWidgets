@@ -495,6 +495,10 @@ void ELFWidget::reloadData()
 
             ui->tableWidget_Elf_Shdr->setRowCount(nCount);
 
+            quint32 nMainStringSection=elf.getSectionStringTable();
+
+            XBinary::OFFSETSIZE osStringTable=elf.getSectionOffsetSize(nMainStringSection);
+
             for(int i=0; i<nCount; i++)
             {
                 if(bIs64)
@@ -524,7 +528,7 @@ void ELFWidget::reloadData()
                     ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_info+1,          new QTableWidgetItem(XBinary::valueToHex(listSections64.at(i).sh_info)));
                     ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_addralign+1,     new QTableWidgetItem(XBinary::valueToHex(listSections64.at(i).sh_addralign)));
                     ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_entsize+1,       new QTableWidgetItem(XBinary::valueToHex(listSections64.at(i).sh_entsize)));
-                    ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_entsize+2,       new QTableWidgetItem(elf.getStringFromMainSection(listSections64.at(i).sh_name))); // TODO optimize!
+                    ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_entsize+2,       new QTableWidgetItem(elf.getStringFromIndex(osStringTable.nOffset,osStringTable.nSize,listSections64.at(i).sh_name)));
                     ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_entsize+3,       new QTableWidgetItem(mapTypes.value(listSections64.at(i).sh_type)));
                 }
                 else
@@ -554,7 +558,7 @@ void ELFWidget::reloadData()
                     ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_info+1,          new QTableWidgetItem(XBinary::valueToHex(listSections32.at(i).sh_info)));
                     ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_addralign+1,     new QTableWidgetItem(XBinary::valueToHex(listSections32.at(i).sh_addralign)));
                     ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_entsize+1,       new QTableWidgetItem(XBinary::valueToHex(listSections32.at(i).sh_entsize)));
-                    ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_entsize+2,       new QTableWidgetItem(elf.getStringFromMainSection(listSections32.at(i).sh_name))); // TODO optimize!
+                    ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_entsize+2,       new QTableWidgetItem(elf.getStringFromIndex(osStringTable.nOffset,osStringTable.nSize,listSections32.at(i).sh_name)));
                     ui->tableWidget_Elf_Shdr->setItem(i,N_Elf_Shdr::sh_entsize+3,       new QTableWidgetItem(mapTypes.value(listSections32.at(i).sh_type)));
                 }
             }
