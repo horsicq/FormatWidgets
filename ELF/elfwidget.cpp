@@ -120,15 +120,6 @@ void ELFWidget::reload()
                 QList<XBinary::DATASET> listDS=elf.getDatasetsFromTagStructs(&memoryMap,&listTags);
 
                 addDatasets(pItemDynamicArrayTags,&listDS);
-
-                XBinary::OS_ANSISTRING osRunPath=elf.getRunPath(&memoryMap,&listTags);
-
-                if(osRunPath.nOffset)
-                {
-                    QTreeWidgetItem *pItemRunPath=createNewItem(SELF::TYPE_RUNPATH,"Run path");
-
-                    pItemPrograms->addChild(pItemRunPath);
-                }
             }
         }
 
@@ -781,7 +772,7 @@ void ELFWidget::reloadData()
 
             blockSignals(true);
 
-            XBinary::OS_ANSISTRING osAnsiString=elf.getRunPath();
+            XBinary::OS_ANSISTRING osAnsiString=elf.getOsAnsiString(nDataOffset,nDataSize);
 
             setLineEdit(lineEdit_Elf_RunPath[N_ELF_RUNPATH::runpath],osAnsiString.nSize,osAnsiString.sAnsiString,osAnsiString.nOffset);
 
@@ -813,6 +804,10 @@ void ELFWidget::addDatasets(QTreeWidgetItem *pParent, QList<XBinary::DATASET> *p
         else if(pList->at(i).nType==XELF::DS_STRINGTABLE)
         {
             pParent->addChild(createNewItem(SELF::TYPE_STRINGTABLE,pList->at(i).sName,pList->at(i).nOffset,pList->at(i).nSize));
+        }
+        else if(pList->at(i).nType==XELF::DS_RUNPATH)
+        {
+            pParent->addChild(createNewItem(SELF::TYPE_RUNPATH,pList->at(i).sName,pList->at(i).nOffset,pList->at(i).nSize));
         }
     }
 }
