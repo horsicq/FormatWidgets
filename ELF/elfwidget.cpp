@@ -73,8 +73,6 @@ void ELFWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_MEMORYMAP,tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_Elf_Ehdr,"Elf_Ehdr"));
 
-        XBinary::_MEMORY_MAP memoryMap=elf.getMemoryMap();
-
         QList<XELF_DEF::Elf_Shdr> listSections=elf.getElf_ShdrList();
 
         if(listSections.count())
@@ -83,9 +81,9 @@ void ELFWidget::reload()
 
             ui->treeWidgetNavi->addTopLevelItem(pItemSections);
 
-            QList<XBinary::DATASET> listDS=elf.getDatasetsFromTagSections(&listSections);
+            QList<XBinary::DATASET> listDS=elf.getDatasetsFromSections(&listSections);
 
-            addDatasets(pItemSections,&listDS);
+            addDatasets(&elf,pItemSections,&listDS);
         }
 
         QList<XELF_DEF::Elf_Phdr> listPrograms=elf.getElf_PhdrList();
@@ -96,22 +94,9 @@ void ELFWidget::reload()
 
             ui->treeWidgetNavi->addTopLevelItem(pItemPrograms);
 
-            QList<XBinary::DATASET> listDS=elf.getDatasetsFromTagPrograms(&listPrograms);
+            QList<XBinary::DATASET> listDS=elf.getDatasetsFromPrograms(&listPrograms);
 
-            addDatasets(pItemPrograms,&listDS);
-
-            QList<XELF::TAG_STRUCT> listTags=elf.getTagStructs(&listPrograms,&memoryMap);
-
-            if(listTags.count())
-            {
-                QTreeWidgetItem *pItemDynamicArrayTags=createNewItem(SELF::TYPE_Elf_DynamicArrayTags,"Dynamic Array Tags");
-
-                pItemPrograms->addChild(pItemDynamicArrayTags);
-
-                QList<XBinary::DATASET> listDS=elf.getDatasetsFromTagStructs(&memoryMap,&listTags);
-
-                addDatasets(pItemDynamicArrayTags,&listDS);
-            }
+            addDatasets(&elf,pItemPrograms,&listDS);
         }
 
         ui->treeWidgetNavi->expandAll();
@@ -644,7 +629,7 @@ void ELFWidget::reloadData()
 
             blockSignals(true);
 
-            QList<XELF::TAG_STRUCT> listTagStructs=elf.getTagStructs();
+            QList<XELF::TAG_STRUCT> listTagStructs=elf._getTagStructs(nDataOffset,nDataSize,bIs64,elf.isBigEndian());
 
             int nCount=listTagStructs.count();
 
@@ -778,7 +763,7 @@ void ELFWidget::reloadData()
     }
 }
 
-void ELFWidget::addDatasets(QTreeWidgetItem *pParent, QList<XBinary::DATASET> *pList)
+void ELFWidget::addDatasets(XELF *pElf, QTreeWidgetItem *pParent, QList<XBinary::DATASET> *pList)
 {
     int nCount=pList->count();
 
@@ -803,6 +788,20 @@ void ELFWidget::addDatasets(QTreeWidgetItem *pParent, QList<XBinary::DATASET> *p
         else if(pList->at(i).nType==XELF::DS_NOTES)
         {
             pParent->addChild(createNewItem(SELF::TYPE_NOTES,pList->at(i).sName,pList->at(i).nOffset,pList->at(i).nSize));
+        }
+        else if(pList->at(i).nType==XELF::DS_DYNAMICTAGS)
+        {
+            QTreeWidgetItem *pDynamicTags=createNewItem(SELF::TYPE_Elf_DynamicArrayTags,pList->at(i).sName,pList->at(i).nOffset,pList->at(i).nSize);
+
+            pParent->addChild(pDynamicTags);
+
+            QList<XELF::TAG_STRUCT> listTagStructs=pElf->_getTagStructs(pList->at(i).nOffset,pList->at(i).nSize,pElf->is64(),pElf->isBigEndian());
+
+            XBinary::_MEMORY_MAP memoryMap=pElf->getMemoryMap();
+
+            QList<XBinary::DATASET> listDS=pElf->getDatasetsFromTagStructs(&memoryMap,&listTagStructs);
+
+            addDatasets(pElf,pDynamicTags,&listDS);
         }
     }
 }
