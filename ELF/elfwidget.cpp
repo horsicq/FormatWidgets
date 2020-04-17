@@ -100,15 +100,6 @@ void ELFWidget::reload()
 
             addDatasets(pItemPrograms,&listDS);
 
-            QList<XELF::NOTE> listNotes=elf.getNotes(&listPrograms);
-
-            if(listNotes.count())
-            {
-                QTreeWidgetItem *pItemNotes=createNewItem(SELF::TYPE_NOTES,"Notes");
-
-                pItemPrograms->addChild(pItemNotes);
-            }
-
             QList<XELF::TAG_STRUCT> listTags=elf.getTagStructs(&listPrograms,&memoryMap);
 
             if(listTags.count())
@@ -730,7 +721,7 @@ void ELFWidget::reloadData()
 
             blockSignals(true);
 
-            QList<XELF::NOTE> listNotes=elf.getNotes();
+            QList<XELF::NOTE> listNotes=elf._getNotes(nDataOffset,nDataSize,elf.isBigEndian());
 
             int nCount=listNotes.count();
 
@@ -808,6 +799,10 @@ void ELFWidget::addDatasets(QTreeWidgetItem *pParent, QList<XBinary::DATASET> *p
         else if(pList->at(i).nType==XELF::DS_RUNPATH)
         {
             pParent->addChild(createNewItem(SELF::TYPE_RUNPATH,pList->at(i).sName,pList->at(i).nOffset,pList->at(i).nSize));
+        }
+        else if(pList->at(i).nType==XELF::DS_NOTES)
+        {
+            pParent->addChild(createNewItem(SELF::TYPE_NOTES,pList->at(i).sName,pList->at(i).nOffset,pList->at(i).nSize));
         }
     }
 }
