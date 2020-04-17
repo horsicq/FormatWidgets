@@ -85,15 +85,7 @@ void ELFWidget::reload()
 
             QList<XBinary::DATASET> listDS=elf.getDatasetsFromTagSections(&listSections);
 
-            int nCount=listDS.count();
-
-            for(int i=0;i<nCount;i++)
-            {
-                if(listDS.at(i).nType==XELF::DS_STRINGTABLE)
-                {
-                    pItemSections->addChild(createNewItem(SELF::TYPE_STRINGTABLE,listDS.at(i).sName,listDS.at(i).nOffset,listDS.at(i).nSize));
-                }
-            }
+            addDatasets(pItemSections,&listDS);
         }
 
         QList<XELF_DEF::Elf_Phdr> listPrograms=elf.getElf_PhdrList();
@@ -104,14 +96,9 @@ void ELFWidget::reload()
 
             ui->treeWidgetNavi->addTopLevelItem(pItemPrograms);
 
-            XBinary::OS_ANSISTRING osInterpreter=elf.getProgramInterpreterName(&listPrograms);
+            QList<XBinary::DATASET> listDS=elf.getDatasetsFromTagPrograms(&listPrograms);
 
-            if(osInterpreter.nOffset)
-            {
-                QTreeWidgetItem *pItemInterpeter=createNewItem(SELF::TYPE_INTERPRETER,"Interpeter");
-
-                pItemPrograms->addChild(pItemInterpeter);
-            }
+            addDatasets(pItemPrograms,&listDS);
 
             QList<XELF::NOTE> listNotes=elf.getNotes(&listPrograms);
 
@@ -132,24 +119,7 @@ void ELFWidget::reload()
 
                 QList<XBinary::DATASET> listDS=elf.getDatasetsFromTagStructs(&memoryMap,&listTags);
 
-                int nCount=listDS.count();
-
-                for(int i=0;i<nCount;i++)
-                {
-                    if(listDS.at(i).nType==XELF::DS_STRINGTABLE)
-                    {
-                        pItemDynamicArrayTags->addChild(createNewItem(SELF::TYPE_STRINGTABLE,listDS.at(i).sName,listDS.at(i).nOffset,listDS.at(i).nSize));
-                    }
-                }
-
-                QList<QString> listLibraries=elf.getLibraries(&memoryMap,&listTags);
-
-                if(listLibraries.count())
-                {
-                    QTreeWidgetItem *pItemLibraries=createNewItem(SELF::TYPE_LIBRARIES,"Libraries");
-
-                    pItemDynamicArrayTags->addChild(pItemLibraries);
-                }
+                addDatasets(pItemDynamicArrayTags,&listDS);
 
                 XBinary::OS_ANSISTRING osRunPath=elf.getRunPath(&memoryMap,&listTags);
 
@@ -754,7 +724,7 @@ void ELFWidget::reloadData()
 
             blockSignals(true);
 
-            XBinary::OS_ANSISTRING osAnsiString=elf.getProgramInterpreterName();
+            XBinary::OS_ANSISTRING osAnsiString=elf.getOsAnsiString(nDataOffset,nDataSize);
 
             setLineEdit(lineEdit_Elf_Interpreter[N_ELF_INTERPRETER::interpreter],osAnsiString.nSize,osAnsiString.sAnsiString,osAnsiString.nOffset);
 
@@ -823,6 +793,27 @@ void ELFWidget::reloadData()
         }
 
         setReadonly(ui->checkBoxReadonly->isChecked());
+    }
+}
+
+void ELFWidget::addDatasets(QTreeWidgetItem *pParent, QList<XBinary::DATASET> *pList)
+{
+    int nCount=pList->count();
+
+    for(int i=0;i<nCount;i++)
+    {
+        if(pList->at(i).nType==XELF::DS_INTERPRETER)
+        {
+            pParent->addChild(createNewItem(SELF::TYPE_INTERPRETER,pList->at(i).sName,pList->at(i).nOffset,pList->at(i).nSize));
+        }
+        else if(pList->at(i).nType==XELF::DS_LIBRARIES)
+        {
+            pParent->addChild(createNewItem(SELF::TYPE_LIBRARIES,pList->at(i).sName,pList->at(i).nOffset,pList->at(i).nSize));
+        }
+        else if(pList->at(i).nType==XELF::DS_STRINGTABLE)
+        {
+            pParent->addChild(createNewItem(SELF::TYPE_STRINGTABLE,pList->at(i).sName,pList->at(i).nOffset,pList->at(i).nSize));
+        }
     }
 }
 

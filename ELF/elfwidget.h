@@ -52,6 +52,7 @@ protected:
 
 private slots:
     virtual void reloadData();
+    void addDatasets(QTreeWidgetItem *pParent, QList<XBinary::DATASET> *pList);
     void widgetValueChanged(quint64 nValue);
     void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
     void on_checkBoxReadonly_toggled(bool checked);
