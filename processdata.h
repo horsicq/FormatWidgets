@@ -30,6 +30,10 @@ class ProcessData : public QObject
 public:
     explicit ProcessData(QObject *parent=nullptr);
     void stop();
+    void setMaximum(quint64 nMaximum);
+    void increment();
+    bool isRun();
+    virtual void _process()=0;
 
 public slots:
     void process();
@@ -43,6 +47,10 @@ signals:
 
 private:
     bool bIsStop;
+    quint64 _nMaximum;
+    quint64 _nValue;
+    quint64 _nProcent;
+    qint32 _nCurrentProcent;
 };
 
 #endif // PROCESSDATA_H

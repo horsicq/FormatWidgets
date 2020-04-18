@@ -27,7 +27,31 @@ ProcessData::ProcessData(QObject *parent) : QObject(parent)
 
 void ProcessData::stop()
 {
-    // TODO
+    bIsStop=true;
+}
+
+void ProcessData::setMaximum(quint64 nMaximum)
+{
+    this->_nMaximum=nMaximum;
+    _nProcent=nMaximum/100;
+    _nCurrentProcent=0;
+    _nValue=0;
+}
+
+void ProcessData::increment()
+{
+    _nValue++;
+
+    if(_nValue>((_nCurrentProcent+1)*_nProcent))
+    {
+        _nCurrentProcent++;
+        emit progressValue(_nCurrentProcent);
+    }
+}
+
+bool ProcessData::isRun()
+{
+    return !(bIsStop);
 }
 
 void ProcessData::process()
@@ -38,7 +62,11 @@ void ProcessData::process()
     emit progressMinimum(0);
     emit progressMinimum(100);
 
+    _process();
+
     bIsStop=false;
+
+    emit progressValue(100);
 
     emit completed(scanTimer.elapsed());
 }
