@@ -768,7 +768,33 @@ void ELFWidget::reloadData()
 
             blockSignals(true);
 
-            // TODO
+            if(bIs64)
+            {
+                QList<XELF_DEF::Elf64_Sym> listSymlist=elf.getElf64_SymList(nDataOffset,nDataSize);
+
+                int nCount=listSymlist.count();
+
+                ui->tableWidget_SymbolTable->setRowCount(nCount);
+
+                for(int i=0; i<nCount; i++)
+                {
+                    QTableWidgetItem *pItem=new QTableWidgetItem(QString::number(i));
+
+                    pItem->setData(Qt::UserRole+SECTION_DATA_OFFSET,nDataOffset+i*sizeof(XELF_DEF::Elf32_Sym));
+
+                    ui->tableWidget_SymbolTable->setItem(i,0,                               pItem);
+                    ui->tableWidget_SymbolTable->setItem(i,N_Elf64_Sym::st_name+1,          new QTableWidgetItem(XBinary::valueToHex(listSymlist.at(i).st_name)));
+                    ui->tableWidget_SymbolTable->setItem(i,N_Elf64_Sym::st_info+1,          new QTableWidgetItem(XBinary::valueToHex(listSymlist.at(i).st_info)));
+                    ui->tableWidget_SymbolTable->setItem(i,N_Elf64_Sym::st_other+1,         new QTableWidgetItem(XBinary::valueToHex(listSymlist.at(i).st_other)));
+                    ui->tableWidget_SymbolTable->setItem(i,N_Elf64_Sym::st_shndx+1,         new QTableWidgetItem(XBinary::valueToHex(listSymlist.at(i).st_shndx)));
+                    ui->tableWidget_SymbolTable->setItem(i,N_Elf64_Sym::st_value+1,         new QTableWidgetItem(XBinary::valueToHex(listSymlist.at(i).st_value)));
+                    ui->tableWidget_SymbolTable->setItem(i,N_Elf64_Sym::st_size+1,          new QTableWidgetItem(XBinary::valueToHex(listSymlist.at(i).st_size)));
+                }
+            }
+            else
+            {
+
+            }
 
             blockSignals(false);
         }
@@ -878,6 +904,14 @@ bool ELFWidget::createSectionTable(int type, QTableWidget *pTableWidget, const F
             break;
 
         case SELF::TYPE_NOTES:
+            slHeader.append(tr(""));
+            pTableWidget->setColumnCount(nRecordCount+1);
+            pTableWidget->setColumnWidth(0,nSymbolWidth*4);
+            pTableWidget->setColumnWidth(1,nSymbolWidth*8);
+            pTableWidget->setColumnWidth(2,nSymbolWidth*30);
+            break;
+
+        case SELF::TYPE_SYMBOLTABLE:
             slHeader.append(tr(""));
             pTableWidget->setColumnCount(nRecordCount+1);
             pTableWidget->setColumnWidth(0,nSymbolWidth*4);
