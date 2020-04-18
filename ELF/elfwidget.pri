@@ -14,7 +14,8 @@ HEADERS += \
     $$PWD/elf_defs.h \
     $$PWD/dialogelf.h \
     $$PWD/programheaderwidget.h \
-    $$PWD/sectionheaderwidget.h
+    $$PWD/sectionheaderwidget.h \
+    $$PWD/elfprocessdata.h
 
 SOURCES += \
     $$PWD/dynamicarraytagwidget.cpp \
@@ -22,7 +23,8 @@ SOURCES += \
     $$PWD/elf_defs.cpp \
     $$PWD/dialogelf.cpp \
     $$PWD/programheaderwidget.cpp \
-    $$PWD/sectionheaderwidget.cpp
+    $$PWD/sectionheaderwidget.cpp \
+    $$PWD/elfprocessdata.cpp
 
 !contains(XCONFIG, xelf) {
     XCONFIG += xelf
