@@ -45,7 +45,8 @@ MSDOSWidget::~MSDOSWidget()
 
 void MSDOSWidget::clear()
 {
-    memset(bInit,0,sizeof bInit);
+    reset();
+
     memset(lineEdit_DOS_HEADER,0,sizeof lineEdit_DOS_HEADER);
     memset(comboBox,0,sizeof comboBox);
     memset(subDevice,0,sizeof subDevice);
@@ -53,6 +54,11 @@ void MSDOSWidget::clear()
     ui->checkBoxReadonly->setChecked(true);
 
     ui->treeWidgetNavi->clear();
+}
+
+void MSDOSWidget::reset()
+{
+    memset(bInit,0,sizeof bInit);
 }
 
 void MSDOSWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions)

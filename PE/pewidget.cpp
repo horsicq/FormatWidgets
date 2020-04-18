@@ -1935,7 +1935,7 @@ void PEWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
     }
 }
 
-bool PEWidget::createSectionTable(int type, QTableWidget *pTableWidget, const FormatWidget::HEADER_RECORD *pRecords, int nRecordCount)
+bool PEWidget::createSectionTable(int type, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount)
 {
     int nSymbolWidth=getSymbolWidth();
 

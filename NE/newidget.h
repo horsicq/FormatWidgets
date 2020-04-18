@@ -38,6 +38,7 @@ public:
     NEWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *parent=nullptr);
     ~NEWidget();
     virtual void clear();
+    virtual void reset();
     virtual void setData(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions);
     virtual void reload();
 

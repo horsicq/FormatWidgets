@@ -45,7 +45,8 @@ MACHWidget::~MACHWidget()
 
 void MACHWidget::clear()
 {
-    memset(bInit,0,sizeof bInit);
+    reset();
+
     memset(lineEdit_mach_header,0,sizeof lineEdit_mach_header);
     memset(comboBox,0,sizeof comboBox);
     memset(subDevice,0,sizeof subDevice);
@@ -53,6 +54,11 @@ void MACHWidget::clear()
     ui->checkBoxReadonly->setChecked(true);
 
     ui->treeWidgetNavi->clear();
+}
+
+void MACHWidget::reset()
+{
+    memset(bInit,0,sizeof bInit);
 }
 
 void MACHWidget::reload()
@@ -545,7 +551,7 @@ void MACHWidget::on_checkBoxReadonly_toggled(bool checked)
     setReadonly(checked);
 }
 
-bool MACHWidget::createSectionTable(int type, QTableWidget *pTableWidget, const FormatWidget::HEADER_RECORD *pRecords, int nRecordCount)
+bool MACHWidget::createSectionTable(int type, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount)
 {
     int nSymbolWidth=getSymbolWidth();
     QStringList slHeader;

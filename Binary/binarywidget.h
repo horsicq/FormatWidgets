@@ -38,6 +38,7 @@ public:
     BinaryWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *parent=nullptr);
     ~BinaryWidget();
     virtual void clear();
+    virtual void reset();
     virtual void reload();
 
 protected:

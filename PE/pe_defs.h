@@ -97,7 +97,7 @@ enum DATA
     __data_size
 };
 
-extern const FormatWidget::HEADER_RECORD records[__data_size];
+extern const FW_DEF::HEADER_RECORD records[__data_size];
 }
 
 namespace N_IMAGE_NT_HEADERS
@@ -108,7 +108,7 @@ enum DATA
     __data_size
 };
 
-extern const FormatWidget::HEADER_RECORD records[__data_size];
+extern const FW_DEF::HEADER_RECORD records[__data_size];
 }
 
 namespace N_IMAGE_FILE_HEADER
@@ -125,7 +125,7 @@ enum DATA
     __data_size
 };
 
-extern const FormatWidget::HEADER_RECORD records[__data_size];
+extern const FW_DEF::HEADER_RECORD records[__data_size];
 }
 
 namespace N_IMAGE_OPTIONAL_HEADER
@@ -165,8 +165,8 @@ enum DATA
     __data_size
 };
 
-extern const FormatWidget::HEADER_RECORD records32[__data_size];
-extern const FormatWidget::HEADER_RECORD records64[__data_size];
+extern const FW_DEF::HEADER_RECORD records32[__data_size];
+extern const FW_DEF::HEADER_RECORD records64[__data_size];
 }
 
 namespace N_IMAGE_TLS
@@ -182,8 +182,8 @@ enum DATA
     __data_size
 };
 
-extern const FormatWidget::HEADER_RECORD records32[__data_size];
-extern const FormatWidget::HEADER_RECORD records64[__data_size];
+extern const FW_DEF::HEADER_RECORD records32[__data_size];
+extern const FW_DEF::HEADER_RECORD records64[__data_size];
 }
 
 namespace N_IMAGE_LOADCONFIG
@@ -213,8 +213,8 @@ enum DATA
     __data_size
 };
 
-extern const FormatWidget::HEADER_RECORD records32[__data_size];
-extern const FormatWidget::HEADER_RECORD records64[__data_size];
+extern const FW_DEF::HEADER_RECORD records32[__data_size];
+extern const FW_DEF::HEADER_RECORD records64[__data_size];
 }
 
 namespace N_IMAGE_DIRECORIES
@@ -227,7 +227,7 @@ enum DATA
     __data_size
 };
 
-extern const FormatWidget::HEADER_RECORD records[__data_size];
+extern const FW_DEF::HEADER_RECORD records[__data_size];
 }
 
 namespace N_IMAGE_SECTION_HEADER
@@ -247,7 +247,7 @@ enum DATA
     __data_size
 };
 
-extern const FormatWidget::HEADER_RECORD records[__data_size+1];
+extern const FW_DEF::HEADER_RECORD records[__data_size+1];
 }
 
 namespace N_IMAGE_EXPORT
@@ -268,7 +268,7 @@ enum DATA
     __data_size
 };
 
-extern const FormatWidget::HEADER_RECORD records[__data_size];
+extern const FW_DEF::HEADER_RECORD records[__data_size];
 }
 
 namespace N_IMAGE_DEBUG
@@ -286,7 +286,7 @@ enum DATA
     __data_size
 };
 
-extern const FormatWidget::HEADER_RECORD records[__data_size];
+extern const FW_DEF::HEADER_RECORD records[__data_size];
 }
 
 namespace N_IMAGE_EXPORT_FUNCTION
@@ -299,7 +299,7 @@ enum DATA
     __data_size
 };
 
-extern const FormatWidget::HEADER_RECORD records[__data_size];
+extern const FW_DEF::HEADER_RECORD records[__data_size];
 }
 
 namespace N_IMAGE_IMPORT
@@ -314,7 +314,7 @@ enum DATA
     __data_size
 };
 
-extern const FormatWidget::HEADER_RECORD records[__data_size];
+extern const FW_DEF::HEADER_RECORD records[__data_size];
 }
 
 namespace N_IMAGE_DELAYIMPORT
@@ -332,7 +332,7 @@ enum DATA
     __data_size
 };
 
-extern const FormatWidget::HEADER_RECORD records[__data_size];
+extern const FW_DEF::HEADER_RECORD records[__data_size];
 }
 
 namespace N_IMAGE_IMPORT_FUNCTION
@@ -345,8 +345,8 @@ enum DATA
     __data_size
 };
 
-extern const FormatWidget::HEADER_RECORD records32[__data_size];
-extern const FormatWidget::HEADER_RECORD records64[__data_size];
+extern const FW_DEF::HEADER_RECORD records32[__data_size];
+extern const FW_DEF::HEADER_RECORD records64[__data_size];
 }
 
 namespace N_IMAGE_RELOCS
@@ -358,7 +358,7 @@ enum DATA
     __data_size
 };
 
-extern const FormatWidget::HEADER_RECORD records[__data_size];
+extern const FW_DEF::HEADER_RECORD records[__data_size];
 }
 
 namespace N_IMAGE_NETHEADER
@@ -375,7 +375,7 @@ enum DATA
     __data_size
 };
 
-extern const FormatWidget::HEADER_RECORD records[__data_size];
+extern const FW_DEF::HEADER_RECORD records[__data_size];
 }
 
 namespace N_IMAGE_EXCEPTIONS
@@ -388,7 +388,7 @@ enum DATA
     __data_size
 };
 
-extern const FormatWidget::HEADER_RECORD records[__data_size];
+extern const FW_DEF::HEADER_RECORD records[__data_size];
 }
 
 namespace N_IMAGE_RELOCS_POSITION
@@ -399,7 +399,7 @@ enum DATA
     __data_size
 };
 
-extern const FormatWidget::HEADER_RECORD records[__data_size];
+extern const FW_DEF::HEADER_RECORD records[__data_size];
 }
 
 namespace N_IMAGE_RESOURCE_FIXEDFILEINFO
@@ -422,7 +422,7 @@ enum DATA
     __data_size
 };
 
-extern const FormatWidget::HEADER_RECORD records[__data_size];
+extern const FW_DEF::HEADER_RECORD records[__data_size];
 }
 
 #endif

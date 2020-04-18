@@ -39,6 +39,7 @@ public:
     MACHWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *parent=nullptr);
     ~MACHWidget();
     virtual void clear();
+    virtual void reset();
     virtual void reload();
 
 protected:
@@ -52,7 +53,7 @@ private slots:
     void widgetValueChanged(quint64 nValue);
     void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
     void on_checkBoxReadonly_toggled(bool checked);
-    bool createSectionTable(int type, QTableWidget *pTableWidget, const FormatWidget::HEADER_RECORD *pRecords, int nRecordCount);
+    bool createSectionTable(int type, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount);
     void on_tableWidget_commands_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     void on_pushButtonReload_clicked();
     void on_tableWidget_segments_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);

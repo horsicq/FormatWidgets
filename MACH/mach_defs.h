@@ -55,8 +55,8 @@ enum DATA
     __data_size
 };
 
-extern const FormatWidget::HEADER_RECORD records32[__data_size-1];
-extern const FormatWidget::HEADER_RECORD records64[__data_size];
+extern const FW_DEF::HEADER_RECORD records32[__data_size-1];
+extern const FW_DEF::HEADER_RECORD records64[__data_size];
 }
 
 namespace N_mach_commands
@@ -68,7 +68,7 @@ enum DATA
     __data_size
 };
 
-extern const FormatWidget::HEADER_RECORD records[__data_size];
+extern const FW_DEF::HEADER_RECORD records[__data_size];
 }
 
 namespace N_mach_segments
@@ -87,8 +87,8 @@ enum DATA
     __data_size
 };
 
-extern const FormatWidget::HEADER_RECORD records32[__data_size];
-extern const FormatWidget::HEADER_RECORD records64[__data_size];
+extern const FW_DEF::HEADER_RECORD records32[__data_size];
+extern const FW_DEF::HEADER_RECORD records64[__data_size];
 }
 
 namespace N_mach_sections
@@ -107,8 +107,8 @@ enum DATA
     __data_size
 };
 
-extern const FormatWidget::HEADER_RECORD records32[__data_size];
-extern const FormatWidget::HEADER_RECORD records64[__data_size];
+extern const FW_DEF::HEADER_RECORD records32[__data_size];
+extern const FW_DEF::HEADER_RECORD records64[__data_size];
 }
 
 namespace N_mach_libraries
@@ -121,7 +121,7 @@ enum DATA
     __data_size
 };
 
-extern const FormatWidget::HEADER_RECORD records[__data_size];
+extern const FW_DEF::HEADER_RECORD records[__data_size];
 }
 
 #endif // MACH_DEFS_H

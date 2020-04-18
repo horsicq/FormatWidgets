@@ -45,7 +45,8 @@ NEWidget::~NEWidget()
 
 void NEWidget::clear()
 {
-    memset(bInit,0,sizeof bInit);
+    reset();
+
     memset(lineEdit_DOS_HEADER,0,sizeof lineEdit_DOS_HEADER);
     memset(lineEdit_OS2_HEADER,0,sizeof lineEdit_OS2_HEADER);
     memset(comboBox,0,sizeof comboBox);
@@ -55,6 +56,11 @@ void NEWidget::clear()
     ui->checkBoxReadonly->setChecked(true);
 
     ui->treeWidgetNavi->clear();
+}
+
+void NEWidget::reset()
+{
+    memset(bInit,0,sizeof bInit);
 }
 
 void NEWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions)

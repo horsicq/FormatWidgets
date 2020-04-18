@@ -76,7 +76,7 @@ enum DATA
     __data_size
 };
 
-extern const FormatWidget::HEADER_RECORD records[__data_size];
+extern const FW_DEF::HEADER_RECORD records[__data_size];
 }
 
 namespace N_OS2_HEADER
@@ -116,7 +116,7 @@ enum DATA
     __data_size
 };
 
-extern const FormatWidget::HEADER_RECORD records[__data_size];
+extern const FW_DEF::HEADER_RECORD records[__data_size];
 }
 
 #endif // NE_DEFS_H

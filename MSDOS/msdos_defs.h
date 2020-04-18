@@ -58,7 +58,7 @@ enum DATA
     __data_size
 };
 
-extern const FormatWidget::HEADER_RECORD records[__data_size];
+extern const FW_DEF::HEADER_RECORD records[__data_size];
 }
 
 #endif // MSDOS_DEFS_H
