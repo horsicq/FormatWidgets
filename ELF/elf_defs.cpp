@@ -194,3 +194,29 @@ const FormatWidget::HEADER_RECORD records[]=
     {runpath,               "runpath",              0,  -1,     "Ansi string",          FormatWidget::VAL_TYPE_TEXT},
 };
 }
+
+namespace N_Elf32_Sym
+{
+const FormatWidget::HEADER_RECORD records[]=
+{
+    {st_name,               "st_name",              offsetof(XELF_DEF::Elf32_Sym,st_name),          4,      "Elf32_Word",           FormatWidget::VAL_TYPE_DATA},
+    {st_value,              "st_value",             offsetof(XELF_DEF::Elf32_Sym,st_value),         4,      "Elf32_Addr",           FormatWidget::VAL_TYPE_DATA},
+    {st_size,               "st_size",              offsetof(XELF_DEF::Elf32_Sym,st_size),          4,      "Elf32_Word",           FormatWidget::VAL_TYPE_SIZE},
+    {st_info,               "st_info",              offsetof(XELF_DEF::Elf32_Sym,st_info),          1,      "unsigned char",        FormatWidget::VAL_TYPE_DATA},
+    {st_other,              "st_other",             offsetof(XELF_DEF::Elf32_Sym,st_other),         1,      "unsigned char",        FormatWidget::VAL_TYPE_DATA},
+    {st_shndx,              "st_shndx",             offsetof(XELF_DEF::Elf32_Sym,st_shndx),         2,      "Elf32_Half",           FormatWidget::VAL_TYPE_DATA},
+};
+}
+
+namespace N_Elf64_Sym
+{
+const FormatWidget::HEADER_RECORD records[]=
+{
+    {st_name,               "st_name",              offsetof(XELF_DEF::Elf32_Sym,st_name),          4,      "Elf64_Word",           FormatWidget::VAL_TYPE_DATA},
+    {st_info,               "st_info",              offsetof(XELF_DEF::Elf32_Sym,st_info),          1,      "unsigned char",        FormatWidget::VAL_TYPE_DATA},
+    {st_other,              "st_other",             offsetof(XELF_DEF::Elf32_Sym,st_other),         1,      "unsigned char",        FormatWidget::VAL_TYPE_DATA},
+    {st_shndx,              "st_shndx",             offsetof(XELF_DEF::Elf32_Sym,st_shndx),         2,      "Elf64_Half",           FormatWidget::VAL_TYPE_DATA},
+    {st_value,              "st_value",             offsetof(XELF_DEF::Elf32_Sym,st_value),         8,      "Elf64_Addr",           FormatWidget::VAL_TYPE_DATA},
+    {st_size,               "st_size",              offsetof(XELF_DEF::Elf32_Sym,st_size),          8,      "Elf64_Xword",          FormatWidget::VAL_TYPE_SIZE},
+};
+}

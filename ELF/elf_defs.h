@@ -189,12 +189,43 @@ enum DATA
 extern const FormatWidget::HEADER_RECORD records[__data_size];
 }
 
-
 namespace N_ELF_RUNPATH
 {
 enum DATA
 {
     runpath=0,
+    __data_size
+};
+
+extern const FormatWidget::HEADER_RECORD records[__data_size];
+}
+
+namespace N_Elf32_Sym
+{
+enum DATA
+{
+    st_name=0,
+    st_value,
+    st_size,
+    st_info,
+    st_other,
+    st_shndx,
+    __data_size
+};
+
+extern const FormatWidget::HEADER_RECORD records[__data_size];
+}
+
+namespace N_Elf64_Sym
+{
+enum DATA
+{
+    st_name,
+    st_info,
+    st_other,
+    st_shndx,
+    st_value,
+    st_size,
     __data_size
 };
 

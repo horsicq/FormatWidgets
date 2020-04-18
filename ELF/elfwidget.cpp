@@ -760,7 +760,17 @@ void ELFWidget::reloadData()
         }
         else if(nData==SELF::TYPE_SYMBOLTABLE)
         {
+            bool bIs64=elf.is64();
+            if(!bInit[nData])
+            {
+                bInit[nData]=createSectionTable(SELF::TYPE_SYMBOLTABLE,ui->tableWidget_SymbolTable,bIs64?(N_Elf64_Sym::records):(N_Elf32_Sym::records),N_Elf32_Sym::__data_size);
+            }
+
+            blockSignals(true);
+
             // TODO
+
+            blockSignals(false);
         }
 
         setReadonly(ui->checkBoxReadonly->isChecked());
