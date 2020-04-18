@@ -42,6 +42,7 @@ public:
     ELFWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *parent=nullptr);
     ~ELFWidget();
     virtual void clear();
+    virtual void reset();
     virtual void reload();
 
 protected:
@@ -117,7 +118,7 @@ private:
 
     SubDevice *subDevice[SELF::__TYPE_size];
 
-    bool bInit[SELF::__TYPE_size];
+    QSet<QString> stInit;
 };
 
 #endif // ELFWIDGET_H

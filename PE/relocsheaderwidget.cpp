@@ -42,7 +42,7 @@ RelocsHeaderWidget::~RelocsHeaderWidget()
 
 void RelocsHeaderWidget::clear()
 {
-    bInit=false;
+    reset();
 
     memset(lineEdit_RELOCS,0,sizeof lineEdit_RELOCS);
     memset(comboBox,0,sizeof comboBox);
@@ -51,6 +51,11 @@ void RelocsHeaderWidget::clear()
     pSubDevice=nullptr;
 
     ui->checkBoxReadonly->setChecked(true);
+}
+
+void RelocsHeaderWidget::reset()
+{
+    bInit=false;
 }
 
 void RelocsHeaderWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset)

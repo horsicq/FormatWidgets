@@ -44,7 +44,7 @@ SectionHeaderWidget::~SectionHeaderWidget()
 
 void SectionHeaderWidget::clear()
 {
-    bInit=false;
+    reset();
 
     memset(lineEdit_IMAGE_SECTION_HEADER,0,sizeof lineEdit_IMAGE_SECTION_HEADER);
     memset(comboBox,0,sizeof comboBox);
@@ -53,6 +53,11 @@ void SectionHeaderWidget::clear()
     pSubDevice=nullptr;
 
     ui->checkBoxReadonly->setChecked(true);
+}
+
+void SectionHeaderWidget::reset()
+{
+    bInit=false;
 }
 
 void SectionHeaderWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset)

@@ -35,7 +35,7 @@ ProgramHeaderWidget::~ProgramHeaderWidget()
 
 void ProgramHeaderWidget::clear()
 {
-    bInit=false;
+    reset();
 
     memset(lineEdit_Elf_Phdr,0,sizeof lineEdit_Elf_Phdr);
     memset(comboBox,0,sizeof comboBox);
@@ -44,6 +44,11 @@ void ProgramHeaderWidget::clear()
     pSubDevice=nullptr;
 
     ui->checkBoxReadonly->setChecked(true);
+}
+
+void ProgramHeaderWidget::reset()
+{
+    bInit=false;
 }
 
 void ProgramHeaderWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber,qint64 nOffset)

@@ -42,7 +42,7 @@ DebugHeaderWidget::~DebugHeaderWidget()
 
 void DebugHeaderWidget::clear()
 {
-    bInit=false;
+    reset();
 
     memset(lineEdit_DEBUG,0,sizeof lineEdit_DEBUG);
     memset(invWidget,0,sizeof invWidget);
@@ -50,6 +50,11 @@ void DebugHeaderWidget::clear()
     pSubDevice=nullptr;
 
     ui->checkBoxReadonly->setChecked(true);
+}
+
+void DebugHeaderWidget::reset()
+{
+    bInit=false;
 }
 
 void DebugHeaderWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset)

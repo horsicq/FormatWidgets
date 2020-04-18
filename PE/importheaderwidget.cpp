@@ -44,7 +44,7 @@ ImportHeaderWidget::~ImportHeaderWidget()
 
 void ImportHeaderWidget::clear()
 {
-    bInit=false;
+    reset();
 
     memset(lineEdit_IMPORT_HEADER,0,sizeof lineEdit_IMPORT_HEADER);
     memset(invWidget,0,sizeof invWidget);
@@ -52,6 +52,11 @@ void ImportHeaderWidget::clear()
     pSubDevice=nullptr;
 
     ui->checkBoxReadonly->setChecked(true);
+}
+
+void ImportHeaderWidget::reset()
+{
+    bInit=false;
 }
 
 void ImportHeaderWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber,qint64 nOffset)

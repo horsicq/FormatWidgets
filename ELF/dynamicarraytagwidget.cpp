@@ -35,7 +35,7 @@ DynamicArrayTagWidget::~DynamicArrayTagWidget()
 
 void DynamicArrayTagWidget::clear()
 {
-    bInit=false;
+    reset();
 
     memset(lineEdit_DynamicArrayTag,0,sizeof lineEdit_DynamicArrayTag);
     memset(comboBox,0,sizeof comboBox);
@@ -44,6 +44,11 @@ void DynamicArrayTagWidget::clear()
     pSubDevice=nullptr;
 
     ui->checkBoxReadonly->setChecked(true);
+}
+
+void DynamicArrayTagWidget::reset()
+{
+    bInit=false;
 }
 
 void DynamicArrayTagWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset)

@@ -28,6 +28,7 @@ SearchStringsWidget::SearchStringsWidget(QWidget *parent) :
     ui->setupUi(this);
     pDevice=nullptr;
     pFilter=new QSortFilterProxyModel(this);
+
     options.nAddressWidth=8;
     options.nBaseAddress=0;
     pModel=nullptr;
@@ -220,20 +221,22 @@ void SearchStringsWidget::search()
         if(options.bSearchAnsi||options.bSearchUnicode)
         {
             QList<SearchStrings::RECORD> listRecords;
+
             DialogSearchStrings ds(this);
             ds.processSearch(pDevice,&listRecords,&options);
             ds.exec();
 
-            pFilter->setSourceModel(0);
-            ui->tableViewResult->setModel(0);
+            QAbstractItemModel *pOldFilter=pFilter->sourceModel();
 
             DialogSearchStrings dm(this);
             dm.processModel(&listRecords,&pModel,&options);
             dm.exec();
 
             pFilter->setSourceModel(pModel);
-
             ui->tableViewResult->setModel(pFilter);
+
+            delete pOldFilter;
+
             ui->tableViewResult->setColumnWidth(0,120);  // TODO
             ui->tableViewResult->setColumnWidth(1,60); // TODO
             ui->tableViewResult->setColumnWidth(2,30); // TODO

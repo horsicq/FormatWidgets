@@ -32,6 +32,8 @@ DEPENDPATH += $$PWD
 }
 
 HEADERS += \
+    $$PWD/dialogprocessdata.h \
+    $$PWD/processdata.h \
     $$PWD/formatwidget.h \
     $$PWD/toolswidget.h \
     $$PWD/invwidget.h \
@@ -40,6 +42,8 @@ HEADERS += \
     $$PWD/dialogsectionheader.h
 
 SOURCES += \
+    $$PWD/dialogprocessdata.cpp \
+    $$PWD/processdata.cpp \
     $$PWD/formatwidget.cpp \
     $$PWD/toolswidget.cpp \
     $$PWD/invwidget.cpp \
@@ -47,6 +51,7 @@ SOURCES += \
     $$PWD/dialogsectionheader.cpp
 
 FORMS += \
+    $$PWD/dialogprocessdata.ui \
     $$PWD/toolswidget.ui \
     $$PWD/dialoghex.ui \
     $$PWD/dialogsectionheader.ui

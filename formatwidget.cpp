@@ -107,8 +107,7 @@ void FormatWidget::setValue(QVariant vValue, int nStype, int nNdata, int nVtype,
     {
         if(_setValue(vValue,nStype,nNdata,nVtype,nPosition,nOffset))
         {
-            bIsEdited=true;
-            emit editState(bIsEdited);
+            setEdited(true);
         }
     }
     else
@@ -134,7 +133,7 @@ bool FormatWidget::isEdited()
     return bIsEdited;
 }
 
-void FormatWidget::loadHexSubdevice(qint64 nOffset, qint64 nSize, qint64 nAddress,SubDevice **ppSubDevice,ToolsWidget *pToolsWidget)
+bool FormatWidget::loadHexSubdevice(qint64 nOffset, qint64 nSize, qint64 nAddress,SubDevice **ppSubDevice,ToolsWidget *pToolsWidget)
 {
     if(*ppSubDevice)
     {
@@ -152,6 +151,8 @@ void FormatWidget::loadHexSubdevice(qint64 nOffset, qint64 nSize, qint64 nAddres
     pToolsWidget->setData((*ppSubDevice),&hexOptions);
     pToolsWidget->setEdited(isEdited());
     connect(pToolsWidget,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+
+    return true;
 }
 
 void FormatWidget::setHeaderTableSelection(ToolsWidget *pToolWidget, QTableWidget *pTableWidget)
@@ -231,6 +232,10 @@ void FormatWidget::textValueChanged(QString sText)
 void FormatWidget::setEdited(bool bState)
 {
     bIsEdited=bState;
+
+    reset();
+
+    emit editState(bState);
 }
 
 void FormatWidget::showHex(qint64 nOffset, qint64 nSize)

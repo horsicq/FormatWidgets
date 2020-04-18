@@ -41,6 +41,7 @@ public:
     explicit DynamicArrayTagWidget(QWidget *parent=nullptr);
     ~DynamicArrayTagWidget();
     virtual void clear();
+    virtual void reset();
     virtual void setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 __nNumber, qint64 nOffset);
     virtual void reload();
 

@@ -37,6 +37,7 @@
 #include "dialoghex.h"
 #include "toolswidget.h"
 #include "formatwidget_def.h"
+#include "dialogprocessdata.h"
 
 class FormatWidget : public QWidget
 {
@@ -119,6 +120,7 @@ public:
     FormatWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 __nNumber, qint64 nOffset, QWidget *parent);
     ~FormatWidget();
     virtual void clear()=0;
+    virtual void reset()=0;
     void setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 __nNumber,qint64 nOffset);
     virtual void reload()=0;
     QIODevice *getDevice();
@@ -154,7 +156,7 @@ public:
 
     QPushButton *createHexButton(QTableWidget *pTableWidget,int type, int nData);
 
-    void loadHexSubdevice(qint64 nOffset, qint64 nSize, qint64 nAddress, SubDevice **ppSubDevice, ToolsWidget *pToolsWidget);
+    bool loadHexSubdevice(qint64 nOffset, qint64 nSize, qint64 nAddress, SubDevice **ppSubDevice, ToolsWidget *pToolsWidget);
 
 //    void resizeToolsWidget(QWidget *pParent,ToolsWidget *pToolWidget);
     void setHeaderTableSelection(ToolsWidget *pToolWidget,QTableWidget *pTableWidget);

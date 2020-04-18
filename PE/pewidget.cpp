@@ -45,7 +45,8 @@ PEWidget::~PEWidget()
 
 void PEWidget::clear()
 {
-    memset(bInit,0,sizeof bInit);
+    reset();
+
     memset(lineEdit_IMAGE_DOS_HEADER,0,sizeof lineEdit_IMAGE_DOS_HEADER);
     memset(lineEdit_IMAGE_NT_HEADERS,0,sizeof lineEdit_IMAGE_NT_HEADERS);
     memset(lineEdit_IMAGE_FILE_HEADER,0,sizeof lineEdit_IMAGE_FILE_HEADER);
@@ -64,6 +65,11 @@ void PEWidget::clear()
     ui->checkBoxReadonly->setChecked(true);
 
     ui->treeWidgetNavi->clear();
+}
+
+void PEWidget::reset()
+{
+    memset(bInit,0,sizeof bInit);
 }
 
 void PEWidget::reload()

@@ -44,6 +44,7 @@ public:
     PEWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *parent=nullptr);
     ~PEWidget();
     virtual void clear();
+    virtual void reset();
     virtual void reload();
 
 protected:
