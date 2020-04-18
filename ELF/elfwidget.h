@@ -27,6 +27,7 @@
 #include "programheaderwidget.h"
 #include "dynamicarraytagwidget.h"
 #include "elf_defs.h"
+#include "elfprocessdata.h"
 
 namespace Ui
 {
@@ -57,7 +58,7 @@ private slots:
     void widgetValueChanged(quint64 nValue);
     void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
     void on_checkBoxReadonly_toggled(bool checked);
-    bool createSectionTable(int type, QTableWidget *pTableWidget, const FormatWidget::HEADER_RECORD *pRecords, int nRecordCount);
+    bool createSectionTable(int type, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount);
     void on_tableWidget_Elf_Shdr_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     void on_tableWidget_Elf_Phdr_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
 

@@ -282,7 +282,7 @@ bool FormatWidget::saveBackup()
     return bResult;
 }
 
-bool FormatWidget::createHeaderTable(int type, QTableWidget *pTableWidget, const HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nRecordCount, int nPosition, qint64 nOffset)
+bool FormatWidget::createHeaderTable(int type, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nRecordCount, int nPosition, qint64 nOffset)
 {
     pTableWidget->setColumnCount(6);
     pTableWidget->setRowCount(nRecordCount);
@@ -325,7 +325,7 @@ bool FormatWidget::createHeaderTable(int type, QTableWidget *pTableWidget, const
         ppLineEdits[i]->setProperty("POSITION",nPosition);
         ppLineEdits[i]->setProperty("OFFSET",nOffset);
 
-        if(pRecords[i].vtype==VAL_TYPE_TEXT)
+        if(pRecords[i].vtype==FW_DEF::VAL_TYPE_TEXT)
         {
             connect(ppLineEdits[i],SIGNAL(textChanged(QString)),this,SLOT(textValueChanged(QString)));
         }
@@ -351,7 +351,7 @@ bool FormatWidget::createHeaderTable(int type, QTableWidget *pTableWidget, const
     return true;
 }
 
-bool FormatWidget::createListTable(int type, QTableWidget *pTableWidget, const FormatWidget::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nRecordCount)
+bool FormatWidget::createListTable(int type, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nRecordCount)
 {
     pTableWidget->setColumnCount(2);
     pTableWidget->setRowCount(nRecordCount);
@@ -374,7 +374,7 @@ bool FormatWidget::createListTable(int type, QTableWidget *pTableWidget, const F
         ppLineEdits[i]->setProperty("STYPE",type);
         ppLineEdits[i]->setProperty("NDATA",pRecords[i].nData);
 
-        if(pRecords[i].vtype==VAL_TYPE_TEXT)
+        if(pRecords[i].vtype==FW_DEF::VAL_TYPE_TEXT)
         {
             ppLineEdits[i]->setAlignment(Qt::AlignLeft);
             connect(ppLineEdits[i],SIGNAL(textChanged(QString)),this,SLOT(textValueChanged(QString)));
@@ -454,7 +454,7 @@ void FormatWidget::addComment(QTableWidget *pTableWidget, int nRow, int nColumn,
 //    return true;
 //}
 
-bool FormatWidget::createSectionTable(int type, QTableWidget *pTableWidget, const FormatWidget::HEADER_RECORD *pRecords, int nRecordCount)
+bool FormatWidget::createSectionTable(int type, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount)
 {
     Q_UNUSED(type)
 

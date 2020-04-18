@@ -81,8 +81,8 @@ enum DATA
     __data_size
 };
 
-extern const FormatWidget::HEADER_RECORD records32[__data_size];
-extern const FormatWidget::HEADER_RECORD records64[__data_size];
+extern const FW_DEF::HEADER_RECORD records32[__data_size];
+extern const FW_DEF::HEADER_RECORD records64[__data_size];
 }
 
 namespace N_Elf_Shdr
@@ -102,8 +102,8 @@ enum DATA
     __data_size
 };
 
-extern const FormatWidget::HEADER_RECORD records32[__data_size];
-extern const FormatWidget::HEADER_RECORD records64[__data_size];
+extern const FW_DEF::HEADER_RECORD records32[__data_size];
+extern const FW_DEF::HEADER_RECORD records64[__data_size];
 }
 
 namespace N_Elf_Phdr32
@@ -121,7 +121,7 @@ enum DATA
     __data_size
 };
 
-extern const FormatWidget::HEADER_RECORD records[__data_size];
+extern const FW_DEF::HEADER_RECORD records[__data_size];
 }
 
 namespace N_Elf_Phdr64
@@ -139,7 +139,7 @@ enum DATA
     __data_size
 };
 
-extern const FormatWidget::HEADER_RECORD records[__data_size];
+extern const FW_DEF::HEADER_RECORD records[__data_size];
 }
 
 namespace N_Elf_DynamicArrayTags
@@ -151,8 +151,8 @@ enum DATA
     __data_size
 };
 
-extern const FormatWidget::HEADER_RECORD records32[__data_size];
-extern const FormatWidget::HEADER_RECORD records64[__data_size];
+extern const FW_DEF::HEADER_RECORD records32[__data_size];
+extern const FW_DEF::HEADER_RECORD records64[__data_size];
 }
 
 namespace N_ELF_LIBRARIES
@@ -163,7 +163,7 @@ enum DATA
     __data_size
 };
 
-extern const FormatWidget::HEADER_RECORD records[__data_size];
+extern const FW_DEF::HEADER_RECORD records[__data_size];
 }
 
 namespace N_ELF_INTERPRETER
@@ -174,7 +174,7 @@ enum DATA
     __data_size
 };
 
-extern const FormatWidget::HEADER_RECORD records[__data_size];
+extern const FW_DEF::HEADER_RECORD records[__data_size];
 }
 
 namespace N_ELF_NOTES
@@ -186,7 +186,7 @@ enum DATA
     __data_size
 };
 
-extern const FormatWidget::HEADER_RECORD records[__data_size];
+extern const FW_DEF::HEADER_RECORD records[__data_size];
 }
 
 namespace N_ELF_RUNPATH
@@ -197,7 +197,7 @@ enum DATA
     __data_size
 };
 
-extern const FormatWidget::HEADER_RECORD records[__data_size];
+extern const FW_DEF::HEADER_RECORD records[__data_size];
 }
 
 namespace N_Elf32_Sym
@@ -213,7 +213,7 @@ enum DATA
     __data_size
 };
 
-extern const FormatWidget::HEADER_RECORD records[__data_size];
+extern const FW_DEF::HEADER_RECORD records[__data_size];
 }
 
 namespace N_Elf64_Sym
@@ -229,7 +229,7 @@ enum DATA
     __data_size
 };
 
-extern const FormatWidget::HEADER_RECORD records[__data_size];
+extern const FW_DEF::HEADER_RECORD records[__data_size];
 }
 
 #endif // ELF_DEFS_H

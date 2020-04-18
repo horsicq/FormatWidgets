@@ -23,12 +23,13 @@
 
 #include <QObject>
 #include <QElapsedTimer>
+#include "formatwidget_def.h"
 
 class ProcessData : public QObject
 {
     Q_OBJECT
 public:
-    explicit ProcessData(QObject *parent=nullptr);
+    explicit ProcessData(int type,const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount);
     void stop();
     void setMaximum(quint64 nMaximum);
     void increment();

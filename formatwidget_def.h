@@ -31,6 +31,30 @@ namespace FW_DEF
         bool bIsImage;
         qint64 nImageBase; // TODO default_const
     };
+
+    enum VAL_TYPE
+    {
+        VAL_TYPE_UNKNOWN=0,
+        VAL_TYPE_DATA,
+        VAL_TYPE_FLAGS,
+        VAL_TYPE_RELADDRESS,
+        VAL_TYPE_ADDRESS,
+        VAL_TYPE_OFFSET,
+        VAL_TYPE_SIZE,
+        VAL_TYPE_TEXT,
+        VAL_TYPE_LABEL,
+        VAL_TYPE_UNIXTIME // TODO
+    };
+
+    struct HEADER_RECORD
+    {
+        int nData;
+        const char *pszName;
+        int nOffset;
+        int nSize;
+        const char *pszType;
+        VAL_TYPE vtype;
+    };
 }
 
 #endif // FORMATWIDGET_DEF_H

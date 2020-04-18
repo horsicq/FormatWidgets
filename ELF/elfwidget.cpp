@@ -759,60 +759,65 @@ void ELFWidget::reloadData()
         {
             if(!stInit.contains(sInit))
             {
-                bool bIs64=elf.is64();
+                ELFProcessData elfProcessData(0,0,0);
+                DialogProcessData dialogProcessData(this,&elfProcessData);
 
-                createSectionTable(SELF::TYPE_SYMBOLTABLE,ui->tableWidget_SymbolTable,bIs64?(N_Elf64_Sym::records):(N_Elf32_Sym::records),N_Elf32_Sym::__data_size);
+                dialogProcessData.exec();
 
-                blockSignals(true);
+//                bool bIs64=elf.is64();
 
-                if(bIs64)
-                {
-                    QList<XELF_DEF::Elf64_Sym> listSymlist=elf.getElf64_SymList(nDataOffset,nDataSize);
+//                createSectionTable(SELF::TYPE_SYMBOLTABLE,ui->tableWidget_SymbolTable,bIs64?(N_Elf64_Sym::records):(N_Elf32_Sym::records),N_Elf32_Sym::__data_size);
 
-                    int nCount=listSymlist.count();
+//                blockSignals(true);
 
-                    ui->tableWidget_SymbolTable->setRowCount(nCount);
+//                if(bIs64)
+//                {
+//                    QList<XELF_DEF::Elf64_Sym> listSymlist=elf.getElf64_SymList(nDataOffset,nDataSize);
 
-                    for(int i=0; i<nCount; i++)
-                    {
-                        QTableWidgetItem *pItem=new QTableWidgetItem(QString::number(i));
+//                    int nCount=listSymlist.count();
 
-                        pItem->setData(Qt::UserRole+SECTION_DATA_OFFSET,nDataOffset+i*sizeof(XELF_DEF::Elf64_Sym));
+//                    ui->tableWidget_SymbolTable->setRowCount(nCount);
 
-                        ui->tableWidget_SymbolTable->setItem(i,0,                               pItem);
-                        ui->tableWidget_SymbolTable->setItem(i,N_Elf64_Sym::st_name+1,          new QTableWidgetItem(XBinary::valueToHex(listSymlist.at(i).st_name)));
-                        ui->tableWidget_SymbolTable->setItem(i,N_Elf64_Sym::st_info+1,          new QTableWidgetItem(XBinary::valueToHex(listSymlist.at(i).st_info)));
-                        ui->tableWidget_SymbolTable->setItem(i,N_Elf64_Sym::st_other+1,         new QTableWidgetItem(XBinary::valueToHex(listSymlist.at(i).st_other)));
-                        ui->tableWidget_SymbolTable->setItem(i,N_Elf64_Sym::st_shndx+1,         new QTableWidgetItem(XBinary::valueToHex(listSymlist.at(i).st_shndx)));
-                        ui->tableWidget_SymbolTable->setItem(i,N_Elf64_Sym::st_value+1,         new QTableWidgetItem(XBinary::valueToHex(listSymlist.at(i).st_value)));
-                        ui->tableWidget_SymbolTable->setItem(i,N_Elf64_Sym::st_size+1,          new QTableWidgetItem(XBinary::valueToHex(listSymlist.at(i).st_size)));
-                    }
-                }
-                else
-                {
-                    QList<XELF_DEF::Elf32_Sym> listSymlist=elf.getElf32_SymList(nDataOffset,nDataSize);
+//                    for(int i=0; i<nCount; i++)
+//                    {
+//                        QTableWidgetItem *pItem=new QTableWidgetItem(QString::number(i));
 
-                    int nCount=listSymlist.count();
+//                        pItem->setData(Qt::UserRole+SECTION_DATA_OFFSET,nDataOffset+i*sizeof(XELF_DEF::Elf64_Sym));
 
-                    ui->tableWidget_SymbolTable->setRowCount(nCount);
+//                        ui->tableWidget_SymbolTable->setItem(i,0,                               pItem);
+//                        ui->tableWidget_SymbolTable->setItem(i,N_Elf64_Sym::st_name+1,          new QTableWidgetItem(XBinary::valueToHex(listSymlist.at(i).st_name)));
+//                        ui->tableWidget_SymbolTable->setItem(i,N_Elf64_Sym::st_info+1,          new QTableWidgetItem(XBinary::valueToHex(listSymlist.at(i).st_info)));
+//                        ui->tableWidget_SymbolTable->setItem(i,N_Elf64_Sym::st_other+1,         new QTableWidgetItem(XBinary::valueToHex(listSymlist.at(i).st_other)));
+//                        ui->tableWidget_SymbolTable->setItem(i,N_Elf64_Sym::st_shndx+1,         new QTableWidgetItem(XBinary::valueToHex(listSymlist.at(i).st_shndx)));
+//                        ui->tableWidget_SymbolTable->setItem(i,N_Elf64_Sym::st_value+1,         new QTableWidgetItem(XBinary::valueToHex(listSymlist.at(i).st_value)));
+//                        ui->tableWidget_SymbolTable->setItem(i,N_Elf64_Sym::st_size+1,          new QTableWidgetItem(XBinary::valueToHex(listSymlist.at(i).st_size)));
+//                    }
+//                }
+//                else
+//                {
+//                    QList<XELF_DEF::Elf32_Sym> listSymlist=elf.getElf32_SymList(nDataOffset,nDataSize);
 
-                    for(int i=0; i<nCount; i++)
-                    {
-                        QTableWidgetItem *pItem=new QTableWidgetItem(QString::number(i));
+//                    int nCount=listSymlist.count();
 
-                        pItem->setData(Qt::UserRole+SECTION_DATA_OFFSET,nDataOffset+i*sizeof(XELF_DEF::Elf32_Sym));
+//                    ui->tableWidget_SymbolTable->setRowCount(nCount);
 
-                        ui->tableWidget_SymbolTable->setItem(i,0,                               pItem);
-                        ui->tableWidget_SymbolTable->setItem(i,N_Elf32_Sym::st_name+1,          new QTableWidgetItem(XBinary::valueToHex(listSymlist.at(i).st_name)));
-                        ui->tableWidget_SymbolTable->setItem(i,N_Elf32_Sym::st_value+1,         new QTableWidgetItem(XBinary::valueToHex(listSymlist.at(i).st_value)));
-                        ui->tableWidget_SymbolTable->setItem(i,N_Elf32_Sym::st_size+1,          new QTableWidgetItem(XBinary::valueToHex(listSymlist.at(i).st_size)));
-                        ui->tableWidget_SymbolTable->setItem(i,N_Elf32_Sym::st_info+1,          new QTableWidgetItem(XBinary::valueToHex(listSymlist.at(i).st_info)));
-                        ui->tableWidget_SymbolTable->setItem(i,N_Elf32_Sym::st_other+1,         new QTableWidgetItem(XBinary::valueToHex(listSymlist.at(i).st_other)));
-                        ui->tableWidget_SymbolTable->setItem(i,N_Elf32_Sym::st_shndx+1,         new QTableWidgetItem(XBinary::valueToHex(listSymlist.at(i).st_shndx)));
-                    }
-                }
+//                    for(int i=0; i<nCount; i++)
+//                    {
+//                        QTableWidgetItem *pItem=new QTableWidgetItem(QString::number(i));
 
-                blockSignals(false);
+//                        pItem->setData(Qt::UserRole+SECTION_DATA_OFFSET,nDataOffset+i*sizeof(XELF_DEF::Elf32_Sym));
+
+//                        ui->tableWidget_SymbolTable->setItem(i,0,                               pItem);
+//                        ui->tableWidget_SymbolTable->setItem(i,N_Elf32_Sym::st_name+1,          new QTableWidgetItem(XBinary::valueToHex(listSymlist.at(i).st_name)));
+//                        ui->tableWidget_SymbolTable->setItem(i,N_Elf32_Sym::st_value+1,         new QTableWidgetItem(XBinary::valueToHex(listSymlist.at(i).st_value)));
+//                        ui->tableWidget_SymbolTable->setItem(i,N_Elf32_Sym::st_size+1,          new QTableWidgetItem(XBinary::valueToHex(listSymlist.at(i).st_size)));
+//                        ui->tableWidget_SymbolTable->setItem(i,N_Elf32_Sym::st_info+1,          new QTableWidgetItem(XBinary::valueToHex(listSymlist.at(i).st_info)));
+//                        ui->tableWidget_SymbolTable->setItem(i,N_Elf32_Sym::st_other+1,         new QTableWidgetItem(XBinary::valueToHex(listSymlist.at(i).st_other)));
+//                        ui->tableWidget_SymbolTable->setItem(i,N_Elf32_Sym::st_shndx+1,         new QTableWidgetItem(XBinary::valueToHex(listSymlist.at(i).st_shndx)));
+//                    }
+//                }
+
+//                blockSignals(false);
             }
         }
 
@@ -869,7 +874,7 @@ void ELFWidget::addDatasets(XELF *pElf, QTreeWidgetItem *pParent, QList<XBinary:
     }
 }
 
-bool ELFWidget::createSectionTable(int type, QTableWidget *pTableWidget, const FormatWidget::HEADER_RECORD *pRecords, int nRecordCount)
+bool ELFWidget::createSectionTable(int type, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount)
 {
     int nSymbolWidth=getSymbolWidth();
     QStringList slHeader;

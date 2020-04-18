@@ -44,29 +44,7 @@ class FormatWidget : public QWidget
     Q_OBJECT
 
 public:
-    enum VAL_TYPE
-    {
-        VAL_TYPE_UNKNOWN=0,
-        VAL_TYPE_DATA,
-        VAL_TYPE_FLAGS,
-        VAL_TYPE_RELADDRESS,
-        VAL_TYPE_ADDRESS,
-        VAL_TYPE_OFFSET,
-        VAL_TYPE_SIZE,
-        VAL_TYPE_TEXT,
-        VAL_TYPE_LABEL,
-        VAL_TYPE_UNIXTIME // TODO
-    };
 
-    struct HEADER_RECORD
-    {
-        int nData;
-        const char *pszName;
-        int nOffset;
-        int nSize;
-        const char *pszType;
-        VAL_TYPE vtype;
-    };
 //    struct DIRECTORY_ENTRY_RECORD
 //    {
 //        int nData;
@@ -129,12 +107,12 @@ public:
     qint64 getOffset();
     bool isReadonly();
     QTreeWidgetItem *createNewItem(int nType, QString sTitle, qint64 nOffset=0, qint64 nSize=0);
-    bool createHeaderTable(int type,QTableWidget *pTableWidget, const HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nRecordCount,int nPosition=0,qint64 nOffset=0);
-    bool createListTable(int type,QTableWidget *pTableWidget, const HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nRecordCount);
+    bool createHeaderTable(int type,QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nRecordCount,int nPosition=0,qint64 nOffset=0);
+    bool createListTable(int type,QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nRecordCount);
     void addComment(QTableWidget *pTableWidget,int nRow,int nColumn,QString sComment);
 
 //    bool createDirectoryTable(int type,QTableWidget *pTableWidget, const DIRECTORY_ENTRY_RECORD *pRecords,int nRecordCount);
-    bool createSectionTable(int type,QTableWidget *pTableWidget, const HEADER_RECORD *pRecords,int nRecordCount);
+    bool createSectionTable(int type,QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords,int nRecordCount);
     void setLineEditsReadOnly(XLineEditHEX **ppLineEdits,int nCount,bool bState);
     void setComboBoxesReadOnly(XComboBoxEx **ppComboBoxes,int nCount,bool bState);
     void setPushButtonReadOnly(QPushButton **ppPushButtons,int nCount,bool bState);
