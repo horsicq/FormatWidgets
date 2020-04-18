@@ -40,6 +40,7 @@ enum TYPE
     TYPE_NOTES,
     TYPE_RUNPATH,
     TYPE_STRINGTABLE,
+    TYPE_SYMBOLTABLE,
     __TYPE_size
 };
 }

@@ -758,6 +758,10 @@ void ELFWidget::reloadData()
         {
             loadHexSubdevice(nDataOffset,nDataSize,0,&subDevice[SELF::TYPE_STRINGTABLE],ui->widgetHex_StringTable);
         }
+        else if(nData==SELF::TYPE_SYMBOLTABLE)
+        {
+            // TODO
+        }
 
         setReadonly(ui->checkBoxReadonly->isChecked());
     }
@@ -780,6 +784,10 @@ void ELFWidget::addDatasets(XELF *pElf, QTreeWidgetItem *pParent, QList<XBinary:
         else if(pList->at(i).nType==XELF::DS_STRINGTABLE)
         {
             pParent->addChild(createNewItem(SELF::TYPE_STRINGTABLE,pList->at(i).sName,pList->at(i).nOffset,pList->at(i).nSize));
+        }
+        else if(pList->at(i).nType==XELF::DS_SYMBOLTABLE)
+        {
+            pParent->addChild(createNewItem(SELF::TYPE_SYMBOLTABLE,pList->at(i).sName,pList->at(i).nOffset,pList->at(i).nSize));
         }
         else if(pList->at(i).nType==XELF::DS_RUNPATH)
         {
