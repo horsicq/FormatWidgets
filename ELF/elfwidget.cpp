@@ -759,7 +759,8 @@ void ELFWidget::reloadData()
         {
             if(!stInit.contains(sInit))
             {
-                ELFProcessData elfProcessData(0,0,0,0);
+                ELFProcessData elfProcessData(SELF::TYPE_SYMBOLTABLE,0,&elf,nDataOffset,nDataSize);
+
                 DialogProcessData dialogProcessData(this,&elfProcessData);
 
                 dialogProcessData.exec();

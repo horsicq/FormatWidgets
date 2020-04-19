@@ -20,12 +20,13 @@
 //
 #include "elfprocessdata.h"
 
-ELFProcessData::ELFProcessData(int type, const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount, QStandardItemModel **ppModel)
+ELFProcessData::ELFProcessData(int type, QStandardItemModel **ppModel, XELF *pELF, qint64 nOffset, qint64 nSize)
 {
     this->type=type;
-    this->pRecords=pRecords;
-    this->nRecordCount=nRecordCount;
     this->ppModel=ppModel;
+    this->pELF=pELF;
+    this->nOffset=nOffset;
+    this->nSize=nSize;
 }
 
 void ELFProcessData::_process()
