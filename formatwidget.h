@@ -113,7 +113,7 @@ public:
     InvWidget *createInvWidget(QTableWidget *pTableWidget, int type, int nData,InvWidget::TYPE widgetType);
     XDateTimeEditX *createTimeDateEdit(QTableWidget *pTableWidget,int type, int nData,XDateTimeEditX::DT_TYPE dtType);
     QPushButton *createPushButton(QTableWidget *pTableWidget,int type, int nData,QString sText);
-    int getSymbolWidth();
+
     void setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset);
     virtual bool _setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition,qint64 nOffset)=0;
     virtual void setReadonly(bool bState)=0;

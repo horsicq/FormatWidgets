@@ -33,13 +33,6 @@ ELFProcessData::ELFProcessData(int type, QStandardItemModel **ppModel, XELF *pEL
 
 void ELFProcessData::_process()
 {
-    if(*ppModel)
-    {
-        delete (*ppModel);
-    }
-
-    qDebug("start %x",(int)(*ppModel));
-
     if(type==SELF::TYPE_SYMBOLTABLE)
     {
         if(pELF->is64())
@@ -123,6 +116,35 @@ void ELFProcessData::_process()
             }
         }
     }
+}
 
-    qDebug("end %x",(int)(*ppModel));
+void ELFProcessData::ajustTableView(QWidget *pWidget,QTableView *pTableView)
+{
+    int nSymbolWidth=XLineEditHEX::getSymbolWidth(pWidget);
+
+    if(type==SELF::TYPE_SYMBOLTABLE)
+    {
+        if(pELF->is64())
+        {
+            pTableView->setColumnWidth(0,nSymbolWidth*4);
+            pTableView->setColumnWidth(N_Elf64_Sym::st_name+1,nSymbolWidth*8);
+            pTableView->setColumnWidth(N_Elf64_Sym::st_info+1,nSymbolWidth*3);
+            pTableView->setColumnWidth(N_Elf64_Sym::st_other+1,nSymbolWidth*3);
+            pTableView->setColumnWidth(N_Elf64_Sym::st_shndx+1,nSymbolWidth*4);
+            pTableView->setColumnWidth(N_Elf64_Sym::st_value+1,nSymbolWidth*12);
+            pTableView->setColumnWidth(N_Elf64_Sym::st_size+1,nSymbolWidth*12);
+            pTableView->setColumnWidth(N_Elf64_Sym::st_size+2,nSymbolWidth*35);
+        }
+        else
+        {
+            pTableView->setColumnWidth(0,nSymbolWidth*4);
+            pTableView->setColumnWidth(N_Elf32_Sym::st_name+1,nSymbolWidth*8);
+            pTableView->setColumnWidth(N_Elf32_Sym::st_value+1,nSymbolWidth*8);
+            pTableView->setColumnWidth(N_Elf32_Sym::st_size+1,nSymbolWidth*8);
+            pTableView->setColumnWidth(N_Elf32_Sym::st_info+1,nSymbolWidth*3);
+            pTableView->setColumnWidth(N_Elf32_Sym::st_other+1,nSymbolWidth*3);
+            pTableView->setColumnWidth(N_Elf32_Sym::st_shndx+1,nSymbolWidth*4);
+            pTableView->setColumnWidth(N_Elf32_Sym::st_shndx+2,nSymbolWidth*35);
+        }
+    }
 }

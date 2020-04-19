@@ -155,7 +155,7 @@ void SectionHeaderWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget
 {
     Q_UNUSED(type)
 
-    int nSymbolWidth=getSymbolWidth();
+    int nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
 
     pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
     pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*8);

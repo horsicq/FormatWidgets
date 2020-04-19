@@ -67,8 +67,6 @@ void ELFWidget::reset()
 
 void ELFWidget::reload()
 {
-    // TODO load all sections
-
     clear();
 
     ui->checkBoxReadonly->setEnabled(!isReadonly());
@@ -238,7 +236,7 @@ void ELFWidget::blockSignals(bool bState)
 
 void ELFWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
 {
-    int nSymbolWidth=getSymbolWidth();
+    int nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
 
     pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_NAME,QHeaderView::ResizeToContents);
     pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_OFFSET,QHeaderView::ResizeToContents);
@@ -823,7 +821,7 @@ void ELFWidget::addDatasets(XELF *pElf, QTreeWidgetItem *pParent, QList<XBinary:
 
 bool ELFWidget::createSectionTable(int type, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount)
 {
-    int nSymbolWidth=getSymbolWidth();
+    int nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
     QStringList slHeader;
 
     switch(type)

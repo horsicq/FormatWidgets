@@ -96,13 +96,6 @@ QTreeWidgetItem *FormatWidget::createNewItem(int nType, QString sTitle, qint64 n
     return result;
 }
 
-int FormatWidget::getSymbolWidth()
-{
-    QFontMetrics fm(font());
-
-    return fm.width("W"); // TODO Check
-}
-
 void FormatWidget::setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
 {
     if(saveBackup())
@@ -206,6 +199,8 @@ void FormatWidget::ajustTableView(ProcessData *pProcessData, QStandardItemModel 
     dialogProcessData.exec();
 
     pTableView->setModel(*ppModel);
+
+    pProcessData->ajustTableView(this,pTableView);
 
     delete pOldModel; // TODO Thread
 }

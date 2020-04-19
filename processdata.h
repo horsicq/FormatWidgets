@@ -22,9 +22,11 @@
 #define PROCESSDATA_H
 
 #include <QObject>
+#include <QTableView>
 #include <QStandardItemModel>
 #include <QElapsedTimer>
 #include "formatwidget_def.h"
+#include "xlineedithex.h"
 
 class ProcessData : public QObject
 {
@@ -36,6 +38,7 @@ public:
     void incValue();
     bool isRun();
     virtual void _process()=0;
+    virtual void ajustTableView(QWidget *pWidget,QTableView *pTableView)=0;
     static QList<QString> getStructList(const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount);
     static void setHeader(QStandardItemModel *pModel,QList<QString> *pList);
 
