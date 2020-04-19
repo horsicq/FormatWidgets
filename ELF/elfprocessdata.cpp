@@ -31,7 +31,13 @@ ELFProcessData::ELFProcessData(int type, QStandardItemModel **ppModel, XELF *pEL
 
 void ELFProcessData::_process()
 {
-    // TODO
-    int z=0;
-    z++;
+    if(*ppModel)
+    {
+        delete (*ppModel);
+    }
+
+    if(type==SELF::TYPE_SYMBOLTABLE)
+    {
+
+    }
 }

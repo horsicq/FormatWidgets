@@ -584,7 +584,7 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QTableWidget" name="tableWidget_SymbolTable">
+         <widget class="QTableView" name="tableView_SymbolTable">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
             <horstretch>0</horstretch>
@@ -603,14 +603,14 @@
           <property name="selectionBehavior">
            <enum>QAbstractItemView::SelectRows</enum>
           </property>
-          <attribute name="verticalHeaderVisible">
-           <bool>false</bool>
-          </attribute>
           <attribute name="verticalHeaderMinimumSectionSize">
            <number>20</number>
           </attribute>
           <attribute name="verticalHeaderDefaultSectionSize">
-           <number>20</number>
+           <number>21</number>
+          </attribute>
+          <attribute name="verticalHeaderStretchLastSection">
+           <bool>true</bool>
           </attribute>
          </widget>
         </item>

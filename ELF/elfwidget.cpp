@@ -759,11 +759,15 @@ void ELFWidget::reloadData()
         {
             if(!stInit.contains(sInit))
             {
-                ELFProcessData elfProcessData(SELF::TYPE_SYMBOLTABLE,0,&elf,nDataOffset,nDataSize);
+                QStandardItemModel *pModel=0;
+
+                ELFProcessData elfProcessData(SELF::TYPE_SYMBOLTABLE,&pModel,&elf,nDataOffset,nDataSize);
 
                 DialogProcessData dialogProcessData(this,&elfProcessData);
 
                 dialogProcessData.exec();
+
+                ui->tableView_SymbolTable->setModel(pModel);
 
 //                bool bIs64=elf.is64();
 

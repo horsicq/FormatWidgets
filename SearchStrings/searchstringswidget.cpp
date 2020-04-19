@@ -227,10 +227,6 @@ void SearchStringsWidget::search()
             pFilter->setSourceModel(0);
             ui->tableViewResult->setModel(0);
 
-            QFuture<void> future=QtConcurrent::run(this,&SearchStringsWidget::deleteOldModel);
-
-            watcher.setFuture(future);
-
             QList<SearchStrings::RECORD> listRecords;
 
             DialogSearchStrings ds(this);
@@ -247,6 +243,12 @@ void SearchStringsWidget::search()
             ui->tableViewResult->setColumnWidth(0,120);  // TODO
             ui->tableViewResult->setColumnWidth(1,60); // TODO
             ui->tableViewResult->setColumnWidth(2,30); // TODO
+
+            QFuture<void> future=QtConcurrent::run(this,&SearchStringsWidget::deleteOldModel);
+
+            watcher.setFuture(future);
+
+//            watcher.waitForFinished();
         }
 
         bInit=true;

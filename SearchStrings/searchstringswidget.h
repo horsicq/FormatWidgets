@@ -68,7 +68,7 @@ private:
     SearchStrings::OPTIONS options;
     QStandardItemModel *pModel;
     bool bInit;
-    QAbstractItemModel *pOldModel;
+    QStandardItemModel *pOldModel;
     QFutureWatcher<void> watcher;
 };
 
