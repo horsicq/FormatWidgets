@@ -29,6 +29,8 @@
 #include <QMenu>
 #include <QApplication>
 #include <QClipboard>
+#include <QFutureWatcher>
+#include <QtConcurrent>
 #include "dialogsearchstrings.h"
 
 namespace Ui
@@ -57,6 +59,7 @@ private slots:
     void _copyAddress();
     void _copySize();
     void search();
+    void deleteOldModel();
 
 private:
     Ui::SearchStringsWidget *ui;
@@ -65,6 +68,8 @@ private:
     SearchStrings::OPTIONS options;
     QStandardItemModel *pModel;
     bool bInit;
+    QAbstractItemModel *pOldModel;
+    QFutureWatcher<void> watcher;
 };
 
 #endif // SEARCHSTRINGSWIDGET_H

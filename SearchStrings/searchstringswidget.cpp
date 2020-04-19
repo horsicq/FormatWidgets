@@ -40,6 +40,8 @@ SearchStringsWidget::SearchStringsWidget(QWidget *parent) :
 
 SearchStringsWidget::~SearchStringsWidget()
 {
+    watcher.waitForFinished();
+
     delete ui;
 }
 
@@ -220,16 +222,20 @@ void SearchStringsWidget::search()
 
         if(options.bSearchAnsi||options.bSearchUnicode)
         {
+            pOldModel=pModel;
+
+            pFilter->setSourceModel(0);
+            ui->tableViewResult->setModel(0);
+
+            QFuture<void> future=QtConcurrent::run(this,&SearchStringsWidget::deleteOldModel);
+
+            watcher.setFuture(future);
+
             QList<SearchStrings::RECORD> listRecords;
 
             DialogSearchStrings ds(this);
             ds.processSearch(pDevice,&listRecords,&options);
             ds.exec();
-
-        //    QAbstractItemModel *pOldFilter=pModel;
-
-            pFilter->setSourceModel(0);
-            ui->tableViewResult->setModel(0);
 
             DialogSearchStrings dm(this);
             dm.processModel(&listRecords,&pModel,&options);
@@ -238,8 +244,6 @@ void SearchStringsWidget::search()
             pFilter->setSourceModel(pModel);
             ui->tableViewResult->setModel(pFilter);
 
-//            delete pOldFilter; // TODO delete in Thread
-
             ui->tableViewResult->setColumnWidth(0,120);  // TODO
             ui->tableViewResult->setColumnWidth(1,60); // TODO
             ui->tableViewResult->setColumnWidth(2,30); // TODO
@@ -247,4 +251,9 @@ void SearchStringsWidget::search()
 
         bInit=true;
     }
+}
+
+void SearchStringsWidget::deleteOldModel()
+{
+    delete pOldModel;
 }
