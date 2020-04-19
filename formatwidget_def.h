@@ -55,6 +55,16 @@ namespace FW_DEF
         const char *pszType;
         VAL_TYPE vtype;
     };
+
+    enum SECTION_DATA
+    {
+        SECTION_DATA_TYPE=0,
+        SECTION_DATA_OFFSET,
+        SECTION_DATA_SIZE,
+        SECTION_DATA_ADDRESS,
+//        SECTION_DATA_RELADDRESS,
+        SECTION_DATA_VSIZE
+    };
 }
 
 #endif // FORMATWIDGET_DEF_H

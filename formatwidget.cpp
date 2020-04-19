@@ -87,9 +87,9 @@ QTreeWidgetItem *FormatWidget::createNewItem(int nType,QString sTitle,qint64 nOf
 {
     QTreeWidgetItem *result=new QTreeWidgetItem;
     result->setText(0,sTitle);
-    result->setData(0,Qt::UserRole+SECTION_DATA_TYPE,nType);
-    result->setData(0,Qt::UserRole+SECTION_DATA_OFFSET,nOffset);
-    result->setData(0,Qt::UserRole+SECTION_DATA_SIZE,nSize);
+    result->setData(0,Qt::UserRole+FW_DEF::SECTION_DATA_TYPE,nType);
+    result->setData(0,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET,nOffset);
+    result->setData(0,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE,nSize);
 
     return result;
 }

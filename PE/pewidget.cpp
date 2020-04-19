@@ -697,8 +697,8 @@ void PEWidget::sectionHex()
 
     if(nRow!=-1)
     {
-        qint64 nOffset=ui->tableWidget_Sections->item(nRow,0)->data(Qt::UserRole+SECTION_DATA_OFFSET).toLongLong();
-        qint64 nSize=ui->tableWidget_Sections->item(nRow,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
+        qint64 nOffset=ui->tableWidget_Sections->item(nRow,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
+        qint64 nSize=ui->tableWidget_Sections->item(nRow,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
         showHex(nOffset,nSize);
 
         reloadData();
@@ -1013,12 +1013,12 @@ void PEWidget::reloadData()
 
                 QTableWidgetItem *itemNumber=new QTableWidgetItem(QString::number(i));
 
-                itemNumber->setData(Qt::UserRole+SECTION_DATA_SIZE,dd.Size);
+                itemNumber->setData(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE,dd.Size);
 
                 if(i!=XPE_DEF::S_IMAGE_DIRECTORY_ENTRY_SECURITY)
                 {
-                    itemNumber->setData(Qt::UserRole+SECTION_DATA_ADDRESS,dd.VirtualAddress);
-                    itemNumber->setData(Qt::UserRole+SECTION_DATA_OFFSET,pe.addressToOffset(&memoryMap,memoryMap.nBaseAddress+dd.VirtualAddress));
+                    itemNumber->setData(Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS,dd.VirtualAddress);
+                    itemNumber->setData(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET,pe.addressToOffset(&memoryMap,memoryMap.nBaseAddress+dd.VirtualAddress));
 
                     if((dd.VirtualAddress)&&(pe.isRelAddressValid(&memoryMap,dd.VirtualAddress)))
                     {
@@ -1027,8 +1027,8 @@ void PEWidget::reloadData()
                 }
                 else
                 {
-                    itemNumber->setData(Qt::UserRole+SECTION_DATA_ADDRESS,dd.VirtualAddress);
-                    itemNumber->setData(Qt::UserRole+SECTION_DATA_OFFSET,dd.VirtualAddress);
+                    itemNumber->setData(Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS,dd.VirtualAddress);
+                    itemNumber->setData(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET,dd.VirtualAddress);
 
                     if((dd.VirtualAddress)&&(pe.isOffsetValid(&memoryMap,dd.VirtualAddress)))
                     {
@@ -1091,17 +1091,17 @@ void PEWidget::reloadData()
             {
                 QTableWidgetItem *itemNumber=new QTableWidgetItem(QString::number(i));
 
-                itemNumber->setData(Qt::UserRole+SECTION_DATA_ADDRESS,listSections.at(i).VirtualAddress);
+                itemNumber->setData(Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS,listSections.at(i).VirtualAddress);
 
                 if(getOptions()->bIsImage)
                 {
-                    itemNumber->setData(Qt::UserRole+SECTION_DATA_SIZE,listSections.at(i).Misc.VirtualSize);
-                    itemNumber->setData(Qt::UserRole+SECTION_DATA_OFFSET,listSections.at(i).VirtualAddress);
+                    itemNumber->setData(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE,listSections.at(i).Misc.VirtualSize);
+                    itemNumber->setData(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET,listSections.at(i).VirtualAddress);
                 }
                 else
                 {
-                    itemNumber->setData(Qt::UserRole+SECTION_DATA_SIZE,listSections.at(i).SizeOfRawData);
-                    itemNumber->setData(Qt::UserRole+SECTION_DATA_OFFSET,listSections.at(i).PointerToRawData);
+                    itemNumber->setData(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE,listSections.at(i).SizeOfRawData);
+                    itemNumber->setData(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET,listSections.at(i).PointerToRawData);
                 }
 
                 ui->tableWidget_Sections->setItem(i,0,itemNumber);
@@ -1312,16 +1312,16 @@ void PEWidget::reloadData()
 
                             pRecord->setText(0,sRecordText);
 
-                            pRecord->setData(0,Qt::UserRole+SECTION_DATA_SIZE,record.data_entry.Size);
-                            pRecord->setData(0,Qt::UserRole+SECTION_DATA_ADDRESS,record.data_entry.OffsetToData);
+                            pRecord->setData(0,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE,record.data_entry.Size);
+                            pRecord->setData(0,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS,record.data_entry.OffsetToData);
 
                             if(getOptions()->bIsImage)
                             {
-                                pRecord->setData(0,Qt::UserRole+SECTION_DATA_OFFSET,record.data_entry.OffsetToData);
+                                pRecord->setData(0,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET,record.data_entry.OffsetToData);
                             }
                             else
                             {
-                                pRecord->setData(0,Qt::UserRole+SECTION_DATA_OFFSET,record.nDataOffset);
+                                pRecord->setData(0,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET,record.nDataOffset);
                             }
                         }
                     }
@@ -1396,9 +1396,9 @@ void PEWidget::reloadData()
                 QTableWidgetItem *pItem=new QTableWidgetItem(XBinary::valueToHex(listRFE.at(i).BeginAddress));
 //                pItem->setData(Qt::UserRole,listRH.at(i).nOffset);
 
-                pItem->setData(Qt::UserRole+SECTION_DATA_ADDRESS,listRFE.at(i).BeginAddress);
-                pItem->setData(Qt::UserRole+SECTION_DATA_SIZE,listRFE.at(i).EndAddress-listRFE.at(i).BeginAddress);
-                pItem->setData(Qt::UserRole+SECTION_DATA_OFFSET,pe.addressToOffset(&memoryMap,memoryMap.nBaseAddress+listRFE.at(i).BeginAddress));
+                pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS,listRFE.at(i).BeginAddress);
+                pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE,listRFE.at(i).EndAddress-listRFE.at(i).BeginAddress);
+                pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET,pe.addressToOffset(&memoryMap,memoryMap.nBaseAddress+listRFE.at(i).BeginAddress));
 
                 ui->tableWidget_Exceptions->setItem(i,N_IMAGE_EXCEPTIONS::BeginAddress,         pItem);
                 ui->tableWidget_Exceptions->setItem(i,N_IMAGE_EXCEPTIONS::EndAddress,           new QTableWidgetItem(XBinary::valueToHex(listRFE.at(i).EndAddress)));
@@ -1432,7 +1432,7 @@ void PEWidget::reloadData()
             for(int i=0; i<nCount; i++)
             {
                 QTableWidgetItem *pItem=new QTableWidgetItem(XBinary::valueToHex(listRH.at(i).ibr.VirtualAddress));
-                pItem->setData(Qt::UserRole+SECTION_DATA_OFFSET,listRH.at(i).nOffset);
+                pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET,listRH.at(i).nOffset);
                 ui->tableWidget_Relocs->setItem(i,N_IMAGE_RELOCS::VirtualAddress,               pItem);
                 ui->tableWidget_Relocs->setItem(i,N_IMAGE_RELOCS::SizeOfBlock,                  new QTableWidgetItem(XBinary::valueToHex(listRH.at(i).ibr.SizeOfBlock)));
                 ui->tableWidget_Relocs->setItem(i,N_IMAGE_RELOCS::SizeOfBlock+1,                new QTableWidgetItem(QString::number(listRH.at(i).nCount)));
@@ -1469,9 +1469,9 @@ void PEWidget::reloadData()
             for(int i=0; i<nCount; i++)
             {
                 QTableWidgetItem *pItem=new QTableWidgetItem(XBinary::valueToHex(listDebug.at(i).Characteristics));
-                pItem->setData(Qt::UserRole+SECTION_DATA_ADDRESS,listDebug.at(i).AddressOfRawData);
-                pItem->setData(Qt::UserRole+SECTION_DATA_SIZE,listDebug.at(i).SizeOfData);
-                pItem->setData(Qt::UserRole+SECTION_DATA_OFFSET,listDebug.at(i).PointerToRawData);
+                pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS,listDebug.at(i).AddressOfRawData);
+                pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE,listDebug.at(i).SizeOfData);
+                pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET,listDebug.at(i).PointerToRawData);
                 ui->tableWidget_Debug->setItem(i,N_IMAGE_DEBUG::Characteristics,                pItem);
                 ui->tableWidget_Debug->setItem(i,N_IMAGE_DEBUG::TimeDateStamp,                  new QTableWidgetItem(XBinary::valueToHex(listDebug.at(i).TimeDateStamp)));
                 ui->tableWidget_Debug->setItem(i,N_IMAGE_DEBUG::MajorVersion,                   new QTableWidgetItem(XBinary::valueToHex(listDebug.at(i).MajorVersion)));
@@ -1722,7 +1722,7 @@ void PEWidget::on_tableWidget_Sections_customContextMenuRequested(const QPoint &
 
         QAction actionHex(tr("Hex"),this);
         connect(&actionHex, SIGNAL(triggered()), this, SLOT(sectionHex()));
-        actionHex.setEnabled(ui->tableWidget_Sections->item(nRow,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong());
+        actionHex.setEnabled(ui->tableWidget_Sections->item(nRow,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong());
         contextMenu.addAction(&actionHex);
 
         // TODO Entropy
@@ -1812,36 +1812,36 @@ void PEWidget::loadRelocs(int nNumber)
 
 void PEWidget::loadSection(int nNumber)
 {
-    qint64 nOffset=ui->tableWidget_Sections->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_OFFSET).toLongLong();
-    qint64 nSize=ui->tableWidget_Sections->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
-    qint64 nAddress=ui->tableWidget_Sections->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
+    qint64 nOffset=ui->tableWidget_Sections->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
+    qint64 nSize=ui->tableWidget_Sections->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
+    qint64 nAddress=ui->tableWidget_Sections->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
 
     loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_SECTIONS],ui->widgetSectionHex);
 }
 
 void PEWidget::loadException(int nNumber)
 {
-    qint64 nOffset=ui->tableWidget_Exceptions->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_OFFSET).toLongLong();
-    qint64 nSize=ui->tableWidget_Exceptions->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
-    qint64 nAddress=ui->tableWidget_Exceptions->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
+    qint64 nOffset=ui->tableWidget_Exceptions->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
+    qint64 nSize=ui->tableWidget_Exceptions->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
+    qint64 nAddress=ui->tableWidget_Exceptions->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
 
     loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_EXCEPTION],ui->widgetExceptionHex);
 }
 
 void PEWidget::loadDirectory(int nNumber)
 {
-    qint64 nOffset=ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_OFFSET).toLongLong();
-    qint64 nSize=ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
-    qint64 nAddress=ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
+    qint64 nOffset=ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
+    qint64 nSize=ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
+    qint64 nAddress=ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
 
     loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_IMAGE_DIRECTORY_ENTRIES],ui->widgetDirectoryHex);
 }
 
 void PEWidget::loadDebug(int nNumber)
 {
-    qint64 nOffset=ui->tableWidget_Debug->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_OFFSET).toLongLong();
-    qint64 nSize=ui->tableWidget_Debug->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
-    qint64 nAddress=ui->tableWidget_Debug->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
+    qint64 nOffset=ui->tableWidget_Debug->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
+    qint64 nSize=ui->tableWidget_Debug->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
+    qint64 nAddress=ui->tableWidget_Debug->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
 
     loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_DEBUG],ui->widgetDebugHex);
 }
@@ -2049,11 +2049,11 @@ void PEWidget::on_treeWidgetResources_currentItemChanged(QTreeWidgetItem *curren
     if(current)
     {
         // TODO more info in side widget
-        if(current->data(0,Qt::UserRole+SECTION_DATA_SIZE).toLongLong())
+        if(current->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong())
         {
-            qint64 nOffset=current->data(0,Qt::UserRole+SECTION_DATA_OFFSET).toLongLong();
-            qint64 nSize=current->data(0,Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
-            qint64 nAddress=current->data(0,Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
+            qint64 nOffset=current->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
+            qint64 nSize=current->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
+            qint64 nAddress=current->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
 
             loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_RESOURCE],ui->widgetResourcesHex);
         }
@@ -2299,7 +2299,7 @@ void PEWidget::editRelocsHeader()
 
     if(nRow!=-1)
     {
-        qint64 nOffset=ui->tableWidget_Relocs->item(nRow,0)->data(Qt::UserRole+SECTION_DATA_OFFSET).toLongLong();
+        qint64 nOffset=ui->tableWidget_Relocs->item(nRow,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
 
         RelocsHeaderWidget *pRelocsHeaderWidget=new RelocsHeaderWidget(this);
         DialogSectionHeader dsh(this);

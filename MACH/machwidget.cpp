@@ -320,9 +320,9 @@ void MACHWidget::reloadData()
             {
                 QTableWidgetItem *pItem=new QTableWidgetItem(QString::number(i));
 
-                pItem->setData(Qt::UserRole+SECTION_DATA_OFFSET,listCommandRecords.at(i).nOffset);
-                pItem->setData(Qt::UserRole+SECTION_DATA_SIZE,listCommandRecords.at(i).nSize);
-                pItem->setData(Qt::UserRole+SECTION_DATA_ADDRESS,listCommandRecords.at(i).nOffset);
+                pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET,listCommandRecords.at(i).nOffset);
+                pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE,listCommandRecords.at(i).nSize);
+                pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS,listCommandRecords.at(i).nOffset);
 
                 ui->tableWidget_commands->setItem(i,0,                              pItem);
                 ui->tableWidget_commands->setItem(i,N_mach_commands::cmd+1,         new QTableWidgetItem(XBinary::valueToHex((quint32)listCommandRecords.at(i).nType)));
@@ -367,16 +367,16 @@ void MACHWidget::reloadData()
 
                 if(getOptions()->bIsImage)
                 {
-                    pItem->setData(Qt::UserRole+SECTION_DATA_OFFSET,listSegmentRecords.at(i).vmaddr);
-                    pItem->setData(Qt::UserRole+SECTION_DATA_SIZE,listSegmentRecords.at(i).vmsize);
+                    pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET,listSegmentRecords.at(i).vmaddr);
+                    pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE,listSegmentRecords.at(i).vmsize);
                 }
                 else
                 {
-                    pItem->setData(Qt::UserRole+SECTION_DATA_OFFSET,listSegmentRecords.at(i).fileoff);
-                    pItem->setData(Qt::UserRole+SECTION_DATA_SIZE,listSegmentRecords.at(i).filesize);
+                    pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET,listSegmentRecords.at(i).fileoff);
+                    pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE,listSegmentRecords.at(i).filesize);
                 }
 
-                pItem->setData(Qt::UserRole+SECTION_DATA_ADDRESS,listSegmentRecords.at(i).vmaddr);
+                pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS,listSegmentRecords.at(i).vmaddr);
 
                 ui->tableWidget_segments->setItem(i,0,                                  pItem);
                 ui->tableWidget_segments->setItem(i,N_mach_segments::segname+1,         new QTableWidgetItem(listSegmentRecords.at(i).segname));
@@ -439,15 +439,15 @@ void MACHWidget::reloadData()
 
                 if(getOptions()->bIsImage)
                 {
-                    pItem->setData(Qt::UserRole+SECTION_DATA_OFFSET,listSectionRecords.at(i).addr);
+                    pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET,listSectionRecords.at(i).addr);
                 }
                 else
                 {
-                    pItem->setData(Qt::UserRole+SECTION_DATA_OFFSET,listSectionRecords.at(i).offset);
+                    pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET,listSectionRecords.at(i).offset);
                 }
 
-                pItem->setData(Qt::UserRole+SECTION_DATA_SIZE,listSectionRecords.at(i).size);
-                pItem->setData(Qt::UserRole+SECTION_DATA_ADDRESS,listSectionRecords.at(i).addr);
+                pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE,listSectionRecords.at(i).size);
+                pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS,listSectionRecords.at(i).addr);
 
                 ui->tableWidget_sections->setItem(i,0,                              pItem);
                 ui->tableWidget_sections->setItem(i,N_mach_sections::segname+1,     new QTableWidgetItem(listSectionRecords.at(i).segname));
@@ -677,27 +677,27 @@ void MACHWidget::on_tableWidget_sections_currentCellChanged(int currentRow, int 
 
 void MACHWidget::loadCommand(int nNumber)
 {
-    qint64 nOffset=ui->tableWidget_commands->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_OFFSET).toLongLong();
-    qint64 nSize=ui->tableWidget_commands->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
-    qint64 nAddress=ui->tableWidget_commands->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
+    qint64 nOffset=ui->tableWidget_commands->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
+    qint64 nSize=ui->tableWidget_commands->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
+    qint64 nAddress=ui->tableWidget_commands->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
 
     loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SMACH::TYPE_mach_commands],ui->widgetHex_commands);
 }
 
 void MACHWidget::loadSegment(int nNumber)
 {
-    qint64 nOffset=ui->tableWidget_segments->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_OFFSET).toLongLong();
-    qint64 nSize=ui->tableWidget_segments->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
-    qint64 nAddress=ui->tableWidget_segments->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
+    qint64 nOffset=ui->tableWidget_segments->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
+    qint64 nSize=ui->tableWidget_segments->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
+    qint64 nAddress=ui->tableWidget_segments->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
 
     loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SMACH::TYPE_mach_segments],ui->widgetHex_segments);
 }
 
 void MACHWidget::loadSection(int nNumber)
 {
-    qint64 nOffset=ui->tableWidget_sections->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_OFFSET).toLongLong();
-    qint64 nSize=ui->tableWidget_sections->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_SIZE).toLongLong();
-    qint64 nAddress=ui->tableWidget_sections->item(nNumber,0)->data(Qt::UserRole+SECTION_DATA_ADDRESS).toLongLong();
+    qint64 nOffset=ui->tableWidget_sections->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
+    qint64 nSize=ui->tableWidget_sections->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
+    qint64 nAddress=ui->tableWidget_sections->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
 
     loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SMACH::TYPE_mach_sections],ui->widgetHex_sections);
 }

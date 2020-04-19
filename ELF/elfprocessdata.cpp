@@ -38,6 +38,35 @@ void ELFProcessData::_process()
 
     if(type==SELF::TYPE_SYMBOLTABLE)
     {
+        if(pELF->is64())
+        {
+            QList<XELF_DEF::Elf64_Sym> listSymbols=pELF->getElf64_SymList(nOffset,nSize);
 
+            int nCount=listSymbols.count();
+
+            *ppModel=new QStandardItemModel(nCount,N_Elf64_Sym::__data_size+1);
+
+            setMaximum(nCount);
+
+            for(int i=0;(i<nCount)&&(isRun());i++)
+            {
+
+                QStandardItem *pItem=new QStandardItem;
+                pItem->setText(QString::number(i));
+                pItem->setTextAlignment(Qt::AlignRight);
+
+                pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET,nOffset+i*sizeof(XELF_DEF::Elf64_Sym));
+
+                (*ppModel)->setItem(i,0,pItem);
+                (*ppModel)->setItem(i,N_Elf64_Sym::st_name+1,          new QStandardItem(XBinary::valueToHex(listSymbols.at(i).st_name)));
+                (*ppModel)->setItem(i,N_Elf64_Sym::st_info+1,          new QStandardItem(XBinary::valueToHex(listSymbols.at(i).st_info)));
+                (*ppModel)->setItem(i,N_Elf64_Sym::st_other+1,         new QStandardItem(XBinary::valueToHex(listSymbols.at(i).st_other)));
+                (*ppModel)->setItem(i,N_Elf64_Sym::st_shndx+1,         new QStandardItem(XBinary::valueToHex(listSymbols.at(i).st_shndx)));
+                (*ppModel)->setItem(i,N_Elf64_Sym::st_value+1,         new QStandardItem(XBinary::valueToHex(listSymbols.at(i).st_value)));
+                (*ppModel)->setItem(i,N_Elf64_Sym::st_size+1,          new QStandardItem(XBinary::valueToHex(listSymbols.at(i).st_size)));
+
+                increment();
+            }
+        }
     }
 }

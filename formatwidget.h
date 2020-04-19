@@ -84,16 +84,6 @@ public:
         DIRECTORY_COLUMN_SIZE
     };
 
-    enum SECTION_DATA
-    {
-        SECTION_DATA_TYPE=0,
-        SECTION_DATA_OFFSET,
-        SECTION_DATA_SIZE,
-        SECTION_DATA_ADDRESS,
-//        SECTION_DATA_RELADDRESS,
-        SECTION_DATA_VSIZE
-    };
-
     FormatWidget(QWidget *parent=nullptr);
     FormatWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 __nNumber, qint64 nOffset, QWidget *parent);
     ~FormatWidget();
