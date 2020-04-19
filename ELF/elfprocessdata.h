@@ -29,7 +29,7 @@ class ELFProcessData : public ProcessData
 {
     Q_OBJECT
 public:
-    explicit ELFProcessData(int type,QStandardItemModel **ppModel,XELF *pELF,qint64 nOffset,qint64 nSize);
+    explicit ELFProcessData(int type,QStandardItemModel **ppModel,XELF *pELF,qint64 nOffset,qint64 nSize,qint64 nStringTableOffset,qint64 nStringTableSize);
     virtual void _process();
 
 private:
@@ -38,6 +38,8 @@ private:
     QStandardItemModel **ppModel;
     qint64 nOffset;
     qint64 nSize;
+    qint64 nStringTableOffset;
+    qint64 nStringTableSize;
 };
 
 #endif // ELFPROCESSDATA_H

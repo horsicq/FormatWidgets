@@ -20,13 +20,15 @@
 //
 #include "elfprocessdata.h"
 
-ELFProcessData::ELFProcessData(int type, QStandardItemModel **ppModel, XELF *pELF, qint64 nOffset, qint64 nSize)
+ELFProcessData::ELFProcessData(int type, QStandardItemModel **ppModel, XELF *pELF, qint64 nOffset, qint64 nSize, qint64 nStringTableOffset, qint64 nStringTableSize)
 {
     this->type=type;
     this->ppModel=ppModel;
     this->pELF=pELF;
     this->nOffset=nOffset;
     this->nSize=nSize;
+    this->nStringTableOffset=nStringTableOffset;
+    this->nStringTableSize=nStringTableSize;
 }
 
 void ELFProcessData::_process()
@@ -44,13 +46,19 @@ void ELFProcessData::_process()
 
             int nCount=listSymbols.count();
 
-            *ppModel=new QStandardItemModel(nCount,N_Elf64_Sym::__data_size+1);
+            *ppModel=new QStandardItemModel(nCount,N_Elf64_Sym::__data_size+2);
 
             setMaximum(nCount);
 
+            QList<QString> listLabels;
+            listLabels.append("");
+            listLabels.append(getStructList(N_Elf64_Sym::records,N_Elf64_Sym::__data_size));
+            listLabels.append("Name");
+
+            setHeader(*ppModel,&listLabels);
+
             for(int i=0;(i<nCount)&&(isRun());i++)
             {
-
                 QStandardItem *pItem=new QStandardItem;
                 pItem->setText(QString::number(i));
                 pItem->setTextAlignment(Qt::AlignRight);
@@ -65,7 +73,11 @@ void ELFProcessData::_process()
                 (*ppModel)->setItem(i,N_Elf64_Sym::st_value+1,         new QStandardItem(XBinary::valueToHex(listSymbols.at(i).st_value)));
                 (*ppModel)->setItem(i,N_Elf64_Sym::st_size+1,          new QStandardItem(XBinary::valueToHex(listSymbols.at(i).st_size)));
 
-                increment();
+                QString sName=pELF->getStringFromIndex(nStringTableOffset,nStringTableSize,listSymbols.at(i).st_name);
+
+                (*ppModel)->setItem(i,N_Elf64_Sym::st_size+2,          new QStandardItem(sName));
+
+                incValue();
             }
         }
     }

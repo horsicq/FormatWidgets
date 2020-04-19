@@ -257,6 +257,8 @@ void ELFWidget::reloadData()
     int nData=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_TYPE).toInt();
     qint64 nDataOffset=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
     qint64 nDataSize=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
+    qint64 nDataExtraOffset=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_EXTRAOFFSET).toLongLong();
+    qint64 nDataExtraSize=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_EXTRASIZE).toLongLong();
 
     QString sInit=QString("%1-%2-%3").arg(nData).arg(nDataOffset).arg(nDataSize);
 
@@ -761,7 +763,7 @@ void ELFWidget::reloadData()
             {
                 QStandardItemModel *pModel=0;
 
-                ELFProcessData elfProcessData(SELF::TYPE_SYMBOLTABLE,&pModel,&elf,nDataOffset,nDataSize);
+                ELFProcessData elfProcessData(SELF::TYPE_SYMBOLTABLE,&pModel,&elf,nDataOffset,nDataSize,nDataExtraOffset,nDataExtraSize);
 
                 DialogProcessData dialogProcessData(this,&elfProcessData);
 
@@ -840,31 +842,31 @@ void ELFWidget::addDatasets(XELF *pElf, QTreeWidgetItem *pParent, QList<XBinary:
     {
         if(pList->at(i).nType==XELF::DS_INTERPRETER)
         {
-            pParent->addChild(createNewItem(SELF::TYPE_INTERPRETER,pList->at(i).sName,pList->at(i).nOffset,pList->at(i).nSize));
+            pParent->addChild(createNewItem(SELF::TYPE_INTERPRETER,pList->at(i).sName,pList->at(i).nOffset,pList->at(i).nSize,pList->at(i).nStringTableOffset,pList->at(i).nStringTableSize));
         }
         else if(pList->at(i).nType==XELF::DS_LIBRARIES)
         {
-            pParent->addChild(createNewItem(SELF::TYPE_LIBRARIES,pList->at(i).sName,pList->at(i).nOffset,pList->at(i).nSize));
+            pParent->addChild(createNewItem(SELF::TYPE_LIBRARIES,pList->at(i).sName,pList->at(i).nOffset,pList->at(i).nSize,pList->at(i).nStringTableOffset,pList->at(i).nStringTableSize));
         }
         else if(pList->at(i).nType==XELF::DS_STRINGTABLE)
         {
-            pParent->addChild(createNewItem(SELF::TYPE_STRINGTABLE,pList->at(i).sName,pList->at(i).nOffset,pList->at(i).nSize));
+            pParent->addChild(createNewItem(SELF::TYPE_STRINGTABLE,pList->at(i).sName,pList->at(i).nOffset,pList->at(i).nSize,pList->at(i).nStringTableOffset,pList->at(i).nStringTableSize));
         }
         else if(pList->at(i).nType==XELF::DS_SYMBOLTABLE)
         {
-            pParent->addChild(createNewItem(SELF::TYPE_SYMBOLTABLE,pList->at(i).sName,pList->at(i).nOffset,pList->at(i).nSize));
+            pParent->addChild(createNewItem(SELF::TYPE_SYMBOLTABLE,pList->at(i).sName,pList->at(i).nOffset,pList->at(i).nSize,pList->at(i).nStringTableOffset,pList->at(i).nStringTableSize));
         }
         else if(pList->at(i).nType==XELF::DS_RUNPATH)
         {
-            pParent->addChild(createNewItem(SELF::TYPE_RUNPATH,pList->at(i).sName,pList->at(i).nOffset,pList->at(i).nSize));
+            pParent->addChild(createNewItem(SELF::TYPE_RUNPATH,pList->at(i).sName,pList->at(i).nOffset,pList->at(i).nSize,pList->at(i).nStringTableOffset,pList->at(i).nStringTableSize));
         }
         else if(pList->at(i).nType==XELF::DS_NOTES)
         {
-            pParent->addChild(createNewItem(SELF::TYPE_NOTES,pList->at(i).sName,pList->at(i).nOffset,pList->at(i).nSize));
+            pParent->addChild(createNewItem(SELF::TYPE_NOTES,pList->at(i).sName,pList->at(i).nOffset,pList->at(i).nSize,pList->at(i).nStringTableOffset,pList->at(i).nStringTableSize));
         }
         else if(pList->at(i).nType==XELF::DS_DYNAMICTAGS)
         {
-            QTreeWidgetItem *pDynamicTags=createNewItem(SELF::TYPE_Elf_DynamicArrayTags,pList->at(i).sName,pList->at(i).nOffset,pList->at(i).nSize);
+            QTreeWidgetItem *pDynamicTags=createNewItem(SELF::TYPE_Elf_DynamicArrayTags,pList->at(i).sName,pList->at(i).nOffset,pList->at(i).nSize,pList->at(i).nStringTableOffset,pList->at(i).nStringTableSize);
 
             pParent->addChild(pDynamicTags);
 

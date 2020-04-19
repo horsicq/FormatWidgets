@@ -38,7 +38,7 @@ void ProcessData::setMaximum(quint64 nMaximum)
     _nValue=0;
 }
 
-void ProcessData::increment()
+void ProcessData::incValue()
 {
     _nValue++;
 
@@ -52,6 +52,28 @@ void ProcessData::increment()
 bool ProcessData::isRun()
 {
     return !(bIsStop);
+}
+
+QList<QString> ProcessData::getStructList(const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount)
+{
+    QList<QString> listResult;
+
+    for(int i=0; i<nRecordCount; i++)
+    {
+        listResult.append(pRecords[i].pszName);
+    }
+
+    return listResult;
+}
+
+void ProcessData::setHeader(QStandardItemModel *pModel, QList<QString> *pList)
+{
+    int nCount=pList->count();
+
+    for(int i=0;i<nCount;i++)
+    {
+        pModel->setHeaderData(i,Qt::Horizontal,pList->at(i));
+    }
 }
 
 void ProcessData::process()

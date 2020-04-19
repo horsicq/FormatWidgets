@@ -83,13 +83,15 @@ bool FormatWidget::isReadonly()
     return bIsReadonly;
 }
 
-QTreeWidgetItem *FormatWidget::createNewItem(int nType,QString sTitle,qint64 nOffset,qint64 nSize)
+QTreeWidgetItem *FormatWidget::createNewItem(int nType, QString sTitle, qint64 nOffset, qint64 nSize, qint64 nExtraOffset, qint64 nExtraSize)
 {
     QTreeWidgetItem *result=new QTreeWidgetItem;
     result->setText(0,sTitle);
     result->setData(0,Qt::UserRole+FW_DEF::SECTION_DATA_TYPE,nType);
     result->setData(0,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET,nOffset);
     result->setData(0,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE,nSize);
+    result->setData(0,Qt::UserRole+FW_DEF::SECTION_DATA_EXTRAOFFSET,nExtraOffset);
+    result->setData(0,Qt::UserRole+FW_DEF::SECTION_DATA_EXTRASIZE,nExtraSize);
 
     return result;
 }

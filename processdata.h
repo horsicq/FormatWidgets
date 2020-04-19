@@ -22,6 +22,7 @@
 #define PROCESSDATA_H
 
 #include <QObject>
+#include <QStandardItemModel>
 #include <QElapsedTimer>
 #include "formatwidget_def.h"
 
@@ -32,9 +33,11 @@ public:
     explicit ProcessData();
     void stop();
     void setMaximum(quint64 nMaximum);
-    void increment();
+    void incValue();
     bool isRun();
     virtual void _process()=0;
+    static QList<QString> getStructList(const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount);
+    static void setHeader(QStandardItemModel *pModel,QList<QString> *pList);
 
 public slots:
     void process();
