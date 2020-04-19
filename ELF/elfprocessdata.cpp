@@ -38,6 +38,8 @@ void ELFProcessData::_process()
         delete (*ppModel);
     }
 
+    qDebug("start %x",(int)(*ppModel));
+
     if(type==SELF::TYPE_SYMBOLTABLE)
     {
         if(pELF->is64())
@@ -80,5 +82,47 @@ void ELFProcessData::_process()
                 incValue();
             }
         }
+        else
+        {
+            QList<XELF_DEF::Elf32_Sym> listSymbols=pELF->getElf32_SymList(nOffset,nSize);
+
+            int nCount=listSymbols.count();
+
+            *ppModel=new QStandardItemModel(nCount,N_Elf32_Sym::__data_size+2);
+
+            setMaximum(nCount);
+
+            QList<QString> listLabels;
+            listLabels.append("");
+            listLabels.append(getStructList(N_Elf32_Sym::records,N_Elf32_Sym::__data_size));
+            listLabels.append("Name");
+
+            setHeader(*ppModel,&listLabels);
+
+            for(int i=0;(i<nCount)&&(isRun());i++)
+            {
+                QStandardItem *pItem=new QStandardItem;
+                pItem->setText(QString::number(i));
+                pItem->setTextAlignment(Qt::AlignRight);
+
+                pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET,nOffset+i*sizeof(XELF_DEF::Elf32_Sym));
+
+                (*ppModel)->setItem(i,0,pItem);
+                (*ppModel)->setItem(i,N_Elf32_Sym::st_name+1,          new QStandardItem(XBinary::valueToHex(listSymbols.at(i).st_name)));
+                (*ppModel)->setItem(i,N_Elf32_Sym::st_value+1,         new QStandardItem(XBinary::valueToHex(listSymbols.at(i).st_value)));
+                (*ppModel)->setItem(i,N_Elf32_Sym::st_size+1,          new QStandardItem(XBinary::valueToHex(listSymbols.at(i).st_size)));
+                (*ppModel)->setItem(i,N_Elf32_Sym::st_info+1,          new QStandardItem(XBinary::valueToHex(listSymbols.at(i).st_info)));
+                (*ppModel)->setItem(i,N_Elf32_Sym::st_other+1,         new QStandardItem(XBinary::valueToHex(listSymbols.at(i).st_other)));
+                (*ppModel)->setItem(i,N_Elf32_Sym::st_shndx+1,         new QStandardItem(XBinary::valueToHex(listSymbols.at(i).st_shndx)));
+
+                QString sName=pELF->getStringFromIndex(nStringTableOffset,nStringTableSize,listSymbols.at(i).st_name);
+
+                (*ppModel)->setItem(i,N_Elf32_Sym::st_shndx+2,          new QStandardItem(sName));
+
+                incValue();
+            }
+        }
     }
+
+    qDebug("end %x",(int)(*ppModel));
 }

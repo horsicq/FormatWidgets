@@ -136,6 +136,8 @@ public:
 
     void setLineEdit(XLineEditHEX *pLineEdit,qint32 nMaxLength,QString sText,qint64 nOffset);
 
+    void ajustTableView(ProcessData *pProcessData, QStandardItemModel **ppModel, QTableView *pTableView);
+
 signals:
     void editState(bool bState);
 

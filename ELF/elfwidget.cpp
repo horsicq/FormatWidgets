@@ -765,66 +765,15 @@ void ELFWidget::reloadData()
 
                 ELFProcessData elfProcessData(SELF::TYPE_SYMBOLTABLE,&pModel,&elf,nDataOffset,nDataSize,nDataExtraOffset,nDataExtraSize);
 
-                DialogProcessData dialogProcessData(this,&elfProcessData);
+                ajustTableView(&elfProcessData,&pModel,ui->tableView_SymbolTable);
 
-                dialogProcessData.exec();
+//                DialogProcessData dialogProcessData(this,&elfProcessData);
 
-                ui->tableView_SymbolTable->setModel(pModel);
+//                dialogProcessData.exec();
 
-//                bool bIs64=elf.is64();
+//                qDebug("!!! %x",(int)pModel);
 
-//                createSectionTable(SELF::TYPE_SYMBOLTABLE,ui->tableWidget_SymbolTable,bIs64?(N_Elf64_Sym::records):(N_Elf32_Sym::records),N_Elf32_Sym::__data_size);
-
-//                blockSignals(true);
-
-//                if(bIs64)
-//                {
-//                    QList<XELF_DEF::Elf64_Sym> listSymlist=elf.getElf64_SymList(nDataOffset,nDataSize);
-
-//                    int nCount=listSymlist.count();
-
-//                    ui->tableWidget_SymbolTable->setRowCount(nCount);
-
-//                    for(int i=0; i<nCount; i++)
-//                    {
-//                        QTableWidgetItem *pItem=new QTableWidgetItem(QString::number(i));
-
-//                        pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET,nDataOffset+i*sizeof(XELF_DEF::Elf64_Sym));
-
-//                        ui->tableWidget_SymbolTable->setItem(i,0,                               pItem);
-//                        ui->tableWidget_SymbolTable->setItem(i,N_Elf64_Sym::st_name+1,          new QTableWidgetItem(XBinary::valueToHex(listSymlist.at(i).st_name)));
-//                        ui->tableWidget_SymbolTable->setItem(i,N_Elf64_Sym::st_info+1,          new QTableWidgetItem(XBinary::valueToHex(listSymlist.at(i).st_info)));
-//                        ui->tableWidget_SymbolTable->setItem(i,N_Elf64_Sym::st_other+1,         new QTableWidgetItem(XBinary::valueToHex(listSymlist.at(i).st_other)));
-//                        ui->tableWidget_SymbolTable->setItem(i,N_Elf64_Sym::st_shndx+1,         new QTableWidgetItem(XBinary::valueToHex(listSymlist.at(i).st_shndx)));
-//                        ui->tableWidget_SymbolTable->setItem(i,N_Elf64_Sym::st_value+1,         new QTableWidgetItem(XBinary::valueToHex(listSymlist.at(i).st_value)));
-//                        ui->tableWidget_SymbolTable->setItem(i,N_Elf64_Sym::st_size+1,          new QTableWidgetItem(XBinary::valueToHex(listSymlist.at(i).st_size)));
-//                    }
-//                }
-//                else
-//                {
-//                    QList<XELF_DEF::Elf32_Sym> listSymlist=elf.getElf32_SymList(nDataOffset,nDataSize);
-
-//                    int nCount=listSymlist.count();
-
-//                    ui->tableWidget_SymbolTable->setRowCount(nCount);
-
-//                    for(int i=0; i<nCount; i++)
-//                    {
-//                        QTableWidgetItem *pItem=new QTableWidgetItem(QString::number(i));
-
-//                        pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET,nDataOffset+i*sizeof(XELF_DEF::Elf32_Sym));
-
-//                        ui->tableWidget_SymbolTable->setItem(i,0,                               pItem);
-//                        ui->tableWidget_SymbolTable->setItem(i,N_Elf32_Sym::st_name+1,          new QTableWidgetItem(XBinary::valueToHex(listSymlist.at(i).st_name)));
-//                        ui->tableWidget_SymbolTable->setItem(i,N_Elf32_Sym::st_value+1,         new QTableWidgetItem(XBinary::valueToHex(listSymlist.at(i).st_value)));
-//                        ui->tableWidget_SymbolTable->setItem(i,N_Elf32_Sym::st_size+1,          new QTableWidgetItem(XBinary::valueToHex(listSymlist.at(i).st_size)));
-//                        ui->tableWidget_SymbolTable->setItem(i,N_Elf32_Sym::st_info+1,          new QTableWidgetItem(XBinary::valueToHex(listSymlist.at(i).st_info)));
-//                        ui->tableWidget_SymbolTable->setItem(i,N_Elf32_Sym::st_other+1,         new QTableWidgetItem(XBinary::valueToHex(listSymlist.at(i).st_other)));
-//                        ui->tableWidget_SymbolTable->setItem(i,N_Elf32_Sym::st_shndx+1,         new QTableWidgetItem(XBinary::valueToHex(listSymlist.at(i).st_shndx)));
-//                    }
-//                }
-
-//                blockSignals(false);
+//                ui->tableView_SymbolTable->setModel(pModel);
             }
         }
 

@@ -197,6 +197,15 @@ void FormatWidget::setLineEdit(XLineEditHEX *pLineEdit, qint32 nMaxLength, QStri
     pLineEdit->setProperty("OFFSET",nOffset);
 }
 
+void FormatWidget::ajustTableView(ProcessData *pProcessData, QStandardItemModel **ppModel, QTableView *pTableView)
+{
+    DialogProcessData dialogProcessData(this,pProcessData);
+
+    dialogProcessData.exec();
+
+    pTableView->setModel(*ppModel);
+}
+
 //void FormatWidget::resizeToolsWidget(QWidget *pParent, ToolsWidget *pToolWidget)
 //{
 //    qint32 nHeight=pParent->height();
