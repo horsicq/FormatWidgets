@@ -29,7 +29,7 @@ class ProcessData : public QObject
 {
     Q_OBJECT
 public:
-    explicit ProcessData(int type,const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount);
+    explicit ProcessData();
     void stop();
     void setMaximum(quint64 nMaximum);
     void increment();

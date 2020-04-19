@@ -29,10 +29,14 @@ class ELFProcessData : public ProcessData
 {
     Q_OBJECT
 public:
-    explicit ELFProcessData(int type,const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount);
+    explicit ELFProcessData(int type,const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount, QStandardItemModel **ppModel);
     virtual void _process();
-signals:
 
+private:
+    int type;
+    const FW_DEF::HEADER_RECORD *pRecords;
+    int nRecordCount;
+    QStandardItemModel **ppModel;
 };
 
 #endif // ELFPROCESSDATA_H

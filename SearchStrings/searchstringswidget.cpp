@@ -226,7 +226,10 @@ void SearchStringsWidget::search()
             ds.processSearch(pDevice,&listRecords,&options);
             ds.exec();
 
-            QAbstractItemModel *pOldFilter=pFilter->sourceModel();
+        //    QAbstractItemModel *pOldFilter=pModel;
+
+            pFilter->setSourceModel(0);
+            ui->tableViewResult->setModel(0);
 
             DialogSearchStrings dm(this);
             dm.processModel(&listRecords,&pModel,&options);
@@ -235,7 +238,7 @@ void SearchStringsWidget::search()
             pFilter->setSourceModel(pModel);
             ui->tableViewResult->setModel(pFilter);
 
-            delete pOldFilter;
+//            delete pOldFilter; // TODO delete in Thread
 
             ui->tableViewResult->setColumnWidth(0,120);  // TODO
             ui->tableViewResult->setColumnWidth(1,60); // TODO

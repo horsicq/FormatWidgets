@@ -759,7 +759,7 @@ void ELFWidget::reloadData()
         {
             if(!stInit.contains(sInit))
             {
-                ELFProcessData elfProcessData(0,0,0);
+                ELFProcessData elfProcessData(0,0,0,0);
                 DialogProcessData dialogProcessData(this,&elfProcessData);
 
                 dialogProcessData.exec();

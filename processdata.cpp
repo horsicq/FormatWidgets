@@ -20,7 +20,7 @@
 //
 #include "processdata.h"
 
-ProcessData::ProcessData(int type, const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount)
+ProcessData::ProcessData()
 {
     bIsStop=false;
 }
