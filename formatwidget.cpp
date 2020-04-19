@@ -199,11 +199,15 @@ void FormatWidget::setLineEdit(XLineEditHEX *pLineEdit, qint32 nMaxLength, QStri
 
 void FormatWidget::ajustTableView(ProcessData *pProcessData, QStandardItemModel **ppModel, QTableView *pTableView)
 {
+    QAbstractItemModel *pOldModel=pTableView->model();
+
     DialogProcessData dialogProcessData(this,pProcessData);
 
     dialogProcessData.exec();
 
     pTableView->setModel(*ppModel);
+
+    delete pOldModel; // TODO Thread
 }
 
 //void FormatWidget::resizeToolsWidget(QWidget *pParent, ToolsWidget *pToolWidget)

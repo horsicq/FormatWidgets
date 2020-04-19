@@ -57,7 +57,7 @@ private slots:
     void reloadData();
     void widgetValueChanged(quint64 nValue);
 
-    void on_tableWidget_Elf_Phdr_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
+    void on_tableWidget_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
 
 private:
     enum INV
@@ -68,7 +68,7 @@ private:
     };
 
     Ui::ProgramHeaderWidget *ui;
-    XLineEditHEX *lineEdit_Elf_Phdr[N_Elf_Phdr32::__data_size];
+    XLineEditHEX *lineEdit[N_Elf_Phdr32::__data_size];
     XComboBoxEx *comboBox[__CB_size];
     bool bInit;
     InvWidget *invWidget[__INV_size];

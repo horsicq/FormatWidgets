@@ -56,7 +56,7 @@ private slots:
     void reloadData();
     void widgetValueChanged(quint64 nValue);
 
-    void on_tableWidget_DynamicArrayTag_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
+    void on_tableWidget_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
 
 private:
     enum INV
@@ -67,7 +67,7 @@ private:
     };
 
     Ui::DynamicArrayTagWidget *ui;
-    XLineEditHEX *lineEdit_DynamicArrayTag[N_Elf_DynamicArrayTags::__data_size];
+    XLineEditHEX *lineEdit[N_Elf_DynamicArrayTags::__data_size];
     XComboBoxEx *comboBox[__CB_size];
     bool bInit;
     InvWidget *invWidget[__INV_size];

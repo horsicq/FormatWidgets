@@ -37,7 +37,7 @@ void DynamicArrayTagWidget::clear()
 {
     reset();
 
-    memset(lineEdit_DynamicArrayTag,0,sizeof lineEdit_DynamicArrayTag);
+    memset(lineEdit,0,sizeof lineEdit);
     memset(comboBox,0,sizeof comboBox);
     memset(invWidget,0,sizeof invWidget);
 
@@ -89,7 +89,7 @@ bool DynamicArrayTagWidget::_setValue(QVariant vValue, int nStype, int nNdata, i
                         case N_Elf_DynamicArrayTags::d_value:       elf.setDynamicArrayValue(nOffset,nValue);       break;
                     }
 
-                    ui->widgetHex_DynamicArrayTag->reload();
+                    ui->widgetHex->reload();
 
                     break;
             }
@@ -103,14 +103,14 @@ bool DynamicArrayTagWidget::_setValue(QVariant vValue, int nStype, int nNdata, i
 
 void DynamicArrayTagWidget::setReadonly(bool bState)
 {
-    setLineEditsReadOnly(lineEdit_DynamicArrayTag,N_Elf_DynamicArrayTags::__data_size,bState);
+    setLineEditsReadOnly(lineEdit,N_Elf_DynamicArrayTags::__data_size,bState);
 
     setComboBoxesReadOnly(comboBox,__CB_size,bState);
 }
 
 void DynamicArrayTagWidget::blockSignals(bool bState)
 {
-    _blockSignals((QObject **)lineEdit_DynamicArrayTag,N_Elf_DynamicArrayTags::__data_size,bState);
+    _blockSignals((QObject **)lineEdit,N_Elf_DynamicArrayTags::__data_size,bState);
 
     _blockSignals((QObject **)comboBox,__CB_size,bState);
 }
@@ -143,8 +143,8 @@ void DynamicArrayTagWidget::reloadData()
 
         if(!bInit)
         {
-            bInit=createHeaderTable(SELF::TYPE_Elf_DynamicArrayTags,ui->tableWidget_DynamicArrayTag,bIs64?(N_Elf_DynamicArrayTags::records64):(N_Elf_DynamicArrayTags::records32),lineEdit_DynamicArrayTag,N_Elf_DynamicArrayTags::__data_size,getNumber(),getOffset());
-            comboBox[CB_TAG]=createComboBox(ui->tableWidget_DynamicArrayTag,XELF::getDynamicTagsS(),SELF::TYPE_Elf_DynamicArrayTags,N_Elf_DynamicArrayTags::d_tag,XComboBoxEx::CBTYPE_NORMAL);
+            bInit=createHeaderTable(SELF::TYPE_Elf_DynamicArrayTags,ui->tableWidget,bIs64?(N_Elf_DynamicArrayTags::records64):(N_Elf_DynamicArrayTags::records32),lineEdit,N_Elf_DynamicArrayTags::__data_size,getNumber(),getOffset());
+            comboBox[CB_TAG]=createComboBox(ui->tableWidget,XELF::getDynamicTagsS(),SELF::TYPE_Elf_DynamicArrayTags,N_Elf_DynamicArrayTags::d_tag,XComboBoxEx::CBTYPE_NORMAL);
         }
 
         blockSignals(true);
@@ -154,15 +154,15 @@ void DynamicArrayTagWidget::reloadData()
         qint64 nTag=elf.getDynamicArrayTag(nOffset);
         qint64 nValue=elf.getDynamicArrayValue(nOffset);
 
-        lineEdit_DynamicArrayTag[N_Elf_DynamicArrayTags::d_tag]->setValue(bIs64?((qint64)nTag):((qint32)nTag));
-        lineEdit_DynamicArrayTag[N_Elf_DynamicArrayTags::d_value]->setValue(bIs64?((qint64)nValue):((qint32)nValue));
+        lineEdit[N_Elf_DynamicArrayTags::d_tag]->setValue(bIs64?((qint64)nTag):((qint32)nTag));
+        lineEdit[N_Elf_DynamicArrayTags::d_value]->setValue(bIs64?((qint64)nValue):((qint32)nValue));
 
         comboBox[CB_TAG]->setValue(nTag);
 
         qint64 nSize=elf.getDynamicArraySize();
         qint64 nAddress=elf.offsetToRelAddress(nOffset);
 
-        loadHexSubdevice(nOffset,nSize,nAddress,&pSubDevice,ui->widgetHex_DynamicArrayTag);
+        loadHexSubdevice(nOffset,nSize,nAddress,&pSubDevice,ui->widgetHex);
 
         blockSignals(false);
 
@@ -189,7 +189,7 @@ void DynamicArrayTagWidget::widgetValueChanged(quint64 nValue)
                 switch(nNdata)
                 {
                     case N_Elf_DynamicArrayTags::d_tag:
-                        lineEdit_DynamicArrayTag[N_Elf_DynamicArrayTags::d_tag]->setValue(bIs64?((qint64)nValue):((qint32)nValue));
+                        lineEdit[N_Elf_DynamicArrayTags::d_tag]->setValue(bIs64?((qint64)nValue):((qint32)nValue));
                         this->comboBox[CB_TAG]->setValue(nValue);
                         break;
                 }
@@ -199,12 +199,12 @@ void DynamicArrayTagWidget::widgetValueChanged(quint64 nValue)
     }
 }
 
-void DynamicArrayTagWidget::on_tableWidget_DynamicArrayTag_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
+void DynamicArrayTagWidget::on_tableWidget_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
 {
     Q_UNUSED(currentRow)
     Q_UNUSED(currentColumn)
     Q_UNUSED(previousRow)
     Q_UNUSED(previousColumn)
 
-    setHeaderTableSelection(ui->widgetHex_DynamicArrayTag,ui->tableWidget_DynamicArrayTag);
+    setHeaderTableSelection(ui->widgetHex,ui->tableWidget);
 }

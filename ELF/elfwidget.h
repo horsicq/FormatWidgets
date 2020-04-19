@@ -118,6 +118,7 @@ private:
     InvWidget *invWidget[__INV_size];
 
     SubDevice *subDevice[SELF::__TYPE_size];
+    QStandardItemModel *tvModel[SELF::__TYPE_size];
 
     QSet<QString> stInit;
 };

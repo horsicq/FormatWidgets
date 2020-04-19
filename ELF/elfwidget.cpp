@@ -53,6 +53,7 @@ void ELFWidget::clear()
     memset(comboBox,0,sizeof comboBox);
     memset(invWidget,0,sizeof invWidget);
     memset(subDevice,0,sizeof subDevice);
+    memset(tvModel,0,sizeof tvModel);
 
     ui->checkBoxReadonly->setChecked(true);
 
@@ -761,19 +762,9 @@ void ELFWidget::reloadData()
         {
             if(!stInit.contains(sInit))
             {
-                QStandardItemModel *pModel=0;
+                ELFProcessData elfProcessData(SELF::TYPE_SYMBOLTABLE,&tvModel[SELF::TYPE_SYMBOLTABLE],&elf,nDataOffset,nDataSize,nDataExtraOffset,nDataExtraSize);
 
-                ELFProcessData elfProcessData(SELF::TYPE_SYMBOLTABLE,&pModel,&elf,nDataOffset,nDataSize,nDataExtraOffset,nDataExtraSize);
-
-                ajustTableView(&elfProcessData,&pModel,ui->tableView_SymbolTable);
-
-//                DialogProcessData dialogProcessData(this,&elfProcessData);
-
-//                dialogProcessData.exec();
-
-//                qDebug("!!! %x",(int)pModel);
-
-//                ui->tableView_SymbolTable->setModel(pModel);
+                ajustTableView(&elfProcessData,&tvModel[SELF::TYPE_SYMBOLTABLE],ui->tableView_SymbolTable);
             }
         }
 

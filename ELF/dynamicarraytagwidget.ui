@@ -54,7 +54,7 @@
     </layout>
    </item>
    <item>
-    <widget class="QTableWidget" name="tableWidget_DynamicArrayTag">
+    <widget class="QTableWidget" name="tableWidget">
      <property name="contextMenuPolicy">
       <enum>Qt::CustomContextMenu</enum>
      </property>
@@ -79,7 +79,7 @@
     </widget>
    </item>
    <item>
-    <widget class="ToolsWidget" name="widgetHex_DynamicArrayTag" native="true">
+    <widget class="ToolsWidget" name="widgetHex" native="true">
      <property name="maximumSize">
       <size>
        <width>16777215</width>

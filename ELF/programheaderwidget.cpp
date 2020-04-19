@@ -37,7 +37,7 @@ void ProgramHeaderWidget::clear()
 {
     reset();
 
-    memset(lineEdit_Elf_Phdr,0,sizeof lineEdit_Elf_Phdr);
+    memset(lineEdit,0,sizeof lineEdit);
     memset(comboBox,0,sizeof comboBox);
     memset(invWidget,0,sizeof invWidget);
 
@@ -112,7 +112,7 @@ bool ProgramHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int
                         }
                     }
 
-                    ui->widgetHex_Elf_Phdr->reload();
+                    ui->widgetHex->reload();
 
                     break;
             }
@@ -126,14 +126,14 @@ bool ProgramHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int
 
 void ProgramHeaderWidget::setReadonly(bool bState)
 {
-    setLineEditsReadOnly(lineEdit_Elf_Phdr,N_Elf_Phdr32::__data_size,bState);
+    setLineEditsReadOnly(lineEdit,N_Elf_Phdr32::__data_size,bState);
 
     setComboBoxesReadOnly(comboBox,__CB_size,bState);
 }
 
 void ProgramHeaderWidget::blockSignals(bool bState)
 {
-    _blockSignals((QObject **)lineEdit_Elf_Phdr,N_Elf_Phdr32::__data_size,bState);
+    _blockSignals((QObject **)lineEdit,N_Elf_Phdr32::__data_size,bState);
 
     _blockSignals((QObject **)comboBox,__CB_size,bState);
 }
@@ -166,9 +166,9 @@ void ProgramHeaderWidget::reloadData()
 
         if(!bInit)
         {
-            bInit=createHeaderTable(SELF::TYPE_Elf_Phdr,ui->tableWidget_Elf_Phdr,bIs64?(N_Elf_Phdr64::records):(N_Elf_Phdr32::records),lineEdit_Elf_Phdr,bIs64?(N_Elf_Phdr64::__data_size):(N_Elf_Phdr32::__data_size),getNumber());
-            comboBox[CB_TYPE]=createComboBox(ui->tableWidget_Elf_Phdr,XELF::getProgramTypesS(),SELF::TYPE_Elf_Phdr,bIs64?(N_Elf_Phdr64::p_type):(N_Elf_Phdr32::p_type),XComboBoxEx::CBTYPE_NORMAL);
-            comboBox[CB_FLAGS]=createComboBox(ui->tableWidget_Elf_Phdr,XELF::getProgramFlagsS(),SELF::TYPE_Elf_Phdr,bIs64?(N_Elf_Phdr64::p_flags):(N_Elf_Phdr32::p_flags),XComboBoxEx::CBTYPE_FLAGS);
+            bInit=createHeaderTable(SELF::TYPE_Elf_Phdr,ui->tableWidget,bIs64?(N_Elf_Phdr64::records):(N_Elf_Phdr32::records),lineEdit,bIs64?(N_Elf_Phdr64::__data_size):(N_Elf_Phdr32::__data_size),getNumber());
+            comboBox[CB_TYPE]=createComboBox(ui->tableWidget,XELF::getProgramTypesS(),SELF::TYPE_Elf_Phdr,bIs64?(N_Elf_Phdr64::p_type):(N_Elf_Phdr32::p_type),XComboBoxEx::CBTYPE_NORMAL);
+            comboBox[CB_FLAGS]=createComboBox(ui->tableWidget,XELF::getProgramFlagsS(),SELF::TYPE_Elf_Phdr,bIs64?(N_Elf_Phdr64::p_flags):(N_Elf_Phdr32::p_flags),XComboBoxEx::CBTYPE_FLAGS);
         }
 
         blockSignals(true);
@@ -177,14 +177,14 @@ void ProgramHeaderWidget::reloadData()
         {
             XELF_DEF::Elf64_Phdr phdr64=elf.getElf64_Phdr(getNumber());
 
-            lineEdit_Elf_Phdr[N_Elf_Phdr64::p_type]->setValue(phdr64.p_type);
-            lineEdit_Elf_Phdr[N_Elf_Phdr64::p_flags]->setValue(phdr64.p_flags);
-            lineEdit_Elf_Phdr[N_Elf_Phdr64::p_offset]->setValue(phdr64.p_offset);
-            lineEdit_Elf_Phdr[N_Elf_Phdr64::p_vaddr]->setValue(phdr64.p_vaddr);
-            lineEdit_Elf_Phdr[N_Elf_Phdr64::p_paddr]->setValue(phdr64.p_paddr);
-            lineEdit_Elf_Phdr[N_Elf_Phdr64::p_filesz]->setValue(phdr64.p_filesz);
-            lineEdit_Elf_Phdr[N_Elf_Phdr64::p_memsz]->setValue(phdr64.p_memsz);
-            lineEdit_Elf_Phdr[N_Elf_Phdr64::p_align]->setValue(phdr64.p_align);
+            lineEdit[N_Elf_Phdr64::p_type]->setValue(phdr64.p_type);
+            lineEdit[N_Elf_Phdr64::p_flags]->setValue(phdr64.p_flags);
+            lineEdit[N_Elf_Phdr64::p_offset]->setValue(phdr64.p_offset);
+            lineEdit[N_Elf_Phdr64::p_vaddr]->setValue(phdr64.p_vaddr);
+            lineEdit[N_Elf_Phdr64::p_paddr]->setValue(phdr64.p_paddr);
+            lineEdit[N_Elf_Phdr64::p_filesz]->setValue(phdr64.p_filesz);
+            lineEdit[N_Elf_Phdr64::p_memsz]->setValue(phdr64.p_memsz);
+            lineEdit[N_Elf_Phdr64::p_align]->setValue(phdr64.p_align);
 
             comboBox[CB_TYPE]->setValue(phdr64.p_type);
             comboBox[CB_FLAGS]->setValue(phdr64.p_flags);
@@ -193,14 +193,14 @@ void ProgramHeaderWidget::reloadData()
         {
             XELF_DEF::Elf32_Phdr phdr32=elf.getElf32_Phdr(getNumber());
 
-            lineEdit_Elf_Phdr[N_Elf_Phdr32::p_type]->setValue(phdr32.p_type);
-            lineEdit_Elf_Phdr[N_Elf_Phdr32::p_offset]->setValue(phdr32.p_offset);
-            lineEdit_Elf_Phdr[N_Elf_Phdr32::p_vaddr]->setValue(phdr32.p_vaddr);
-            lineEdit_Elf_Phdr[N_Elf_Phdr32::p_paddr]->setValue(phdr32.p_paddr);
-            lineEdit_Elf_Phdr[N_Elf_Phdr32::p_filesz]->setValue(phdr32.p_filesz);
-            lineEdit_Elf_Phdr[N_Elf_Phdr32::p_memsz]->setValue(phdr32.p_memsz);
-            lineEdit_Elf_Phdr[N_Elf_Phdr32::p_flags]->setValue(phdr32.p_flags);
-            lineEdit_Elf_Phdr[N_Elf_Phdr32::p_align]->setValue(phdr32.p_align);
+            lineEdit[N_Elf_Phdr32::p_type]->setValue(phdr32.p_type);
+            lineEdit[N_Elf_Phdr32::p_offset]->setValue(phdr32.p_offset);
+            lineEdit[N_Elf_Phdr32::p_vaddr]->setValue(phdr32.p_vaddr);
+            lineEdit[N_Elf_Phdr32::p_paddr]->setValue(phdr32.p_paddr);
+            lineEdit[N_Elf_Phdr32::p_filesz]->setValue(phdr32.p_filesz);
+            lineEdit[N_Elf_Phdr32::p_memsz]->setValue(phdr32.p_memsz);
+            lineEdit[N_Elf_Phdr32::p_flags]->setValue(phdr32.p_flags);
+            lineEdit[N_Elf_Phdr32::p_align]->setValue(phdr32.p_align);
 
             comboBox[CB_TYPE]->setValue(phdr32.p_type);
             comboBox[CB_FLAGS]->setValue(phdr32.p_flags);
@@ -210,7 +210,7 @@ void ProgramHeaderWidget::reloadData()
         qint64 nSize=elf.getPhdrSize();
         qint64 nAddress=elf.offsetToRelAddress(nOffset);
 
-        loadHexSubdevice(nOffset,nSize,nAddress,&pSubDevice,ui->widgetHex_Elf_Phdr);
+        loadHexSubdevice(nOffset,nSize,nAddress,&pSubDevice,ui->widgetHex);
 
         blockSignals(false);
 
@@ -239,12 +239,12 @@ void ProgramHeaderWidget::widgetValueChanged(quint64 nValue)
                     switch(nNdata)
                     {
                         case N_Elf_Phdr64::p_type:
-                            lineEdit_Elf_Phdr[N_Elf_Phdr64::p_type]->setValue((quint32)nValue);
+                            lineEdit[N_Elf_Phdr64::p_type]->setValue((quint32)nValue);
                             this->comboBox[CB_TYPE]->setValue(nValue);
                             break;
 
                         case N_Elf_Phdr64::p_flags:
-                            lineEdit_Elf_Phdr[N_Elf_Phdr64::p_flags]->setValue((quint32)nValue);
+                            lineEdit[N_Elf_Phdr64::p_flags]->setValue((quint32)nValue);
                             this->comboBox[CB_FLAGS]->setValue(nValue);
                             break;
                     }
@@ -254,12 +254,12 @@ void ProgramHeaderWidget::widgetValueChanged(quint64 nValue)
                     switch(nNdata)
                     {
                         case N_Elf_Phdr32::p_type:
-                            lineEdit_Elf_Phdr[N_Elf_Phdr32::p_type]->setValue((quint32)nValue);
+                            lineEdit[N_Elf_Phdr32::p_type]->setValue((quint32)nValue);
                             this->comboBox[CB_TYPE]->setValue(nValue);
                             break;
 
                         case N_Elf_Phdr32::p_flags:
-                            lineEdit_Elf_Phdr[N_Elf_Phdr32::p_flags]->setValue((quint32)nValue);
+                            lineEdit[N_Elf_Phdr32::p_flags]->setValue((quint32)nValue);
                             this->comboBox[CB_FLAGS]->setValue(nValue);
                             break;
                     }
@@ -270,12 +270,12 @@ void ProgramHeaderWidget::widgetValueChanged(quint64 nValue)
     }
 }
 
-void ProgramHeaderWidget::on_tableWidget_Elf_Phdr_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
+void ProgramHeaderWidget::on_tableWidget_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
 {
     Q_UNUSED(currentRow)
     Q_UNUSED(currentColumn)
     Q_UNUSED(previousRow)
     Q_UNUSED(previousColumn)
 
-    setHeaderTableSelection(ui->widgetHex_Elf_Phdr,ui->tableWidget_Elf_Phdr);
+    setHeaderTableSelection(ui->widgetHex,ui->tableWidget);
 }

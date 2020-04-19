@@ -59,7 +59,7 @@ private slots:
     void reloadData();
     void widgetValueChanged(quint64 nValue);
 
-    void on_tableWidget_Elf_Shdr_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
+    void on_tableWidget_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
 
 private:
     enum INV
@@ -70,7 +70,7 @@ private:
     };
 
     Ui::SectionHeaderWidget *ui;
-    XLineEditHEX *lineEdit_Elf_Shdr[N_Elf_Shdr::__data_size];
+    XLineEditHEX *lineEdit[N_Elf_Shdr::__data_size];
     XComboBoxEx *comboBox[__CB_size];
     bool bInit;
     InvWidget *invWidget[__INV_size];

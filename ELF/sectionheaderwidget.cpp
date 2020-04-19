@@ -46,7 +46,7 @@ void SectionHeaderWidget::clear()
 {
     reset();
 
-    memset(lineEdit_Elf_Shdr,0,sizeof lineEdit_Elf_Shdr);
+    memset(lineEdit,0,sizeof lineEdit);
     memset(comboBox,0,sizeof comboBox);
     memset(invWidget,0,sizeof invWidget);
 
@@ -126,7 +126,7 @@ bool SectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int
                         }
                     }
 
-                    ui->widgetHex_Elf_Shdr->reload();
+                    ui->widgetHex->reload();
 
                     break;
             }
@@ -139,14 +139,14 @@ bool SectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int
 }
 void SectionHeaderWidget::setReadonly(bool bState)
 {
-    setLineEditsReadOnly(lineEdit_Elf_Shdr,N_Elf_Shdr::__data_size,bState);
+    setLineEditsReadOnly(lineEdit,N_Elf_Shdr::__data_size,bState);
 
     setComboBoxesReadOnly(comboBox,__CB_size,bState);
 }
 
 void SectionHeaderWidget::blockSignals(bool bState)
 {
-    _blockSignals((QObject **)lineEdit_Elf_Shdr,N_Elf_Shdr::__data_size,bState);
+    _blockSignals((QObject **)lineEdit,N_Elf_Shdr::__data_size,bState);
 
     _blockSignals((QObject **)comboBox,__CB_size,bState);
 }
@@ -179,9 +179,9 @@ void SectionHeaderWidget::reloadData()
 
         if(!bInit)
         {
-            bInit=createHeaderTable(SELF::TYPE_Elf_Shdr,ui->tableWidget_Elf_Shdr,bIs64?(N_Elf_Shdr::records64):(N_Elf_Shdr::records32),lineEdit_Elf_Shdr,N_Elf_Shdr::__data_size,getNumber());
-            comboBox[CB_TYPE]=createComboBox(ui->tableWidget_Elf_Shdr,XELF::getSectionTypesS(),SELF::TYPE_Elf_Shdr,N_Elf_Shdr::sh_type,XComboBoxEx::CBTYPE_NORMAL);
-            comboBox[CB_FLAGS]=createComboBox(ui->tableWidget_Elf_Shdr,XELF::getSectionFlagsS(),SELF::TYPE_Elf_Shdr,N_Elf_Shdr::sh_flags,XComboBoxEx::CBTYPE_FLAGS);
+            bInit=createHeaderTable(SELF::TYPE_Elf_Shdr,ui->tableWidget,bIs64?(N_Elf_Shdr::records64):(N_Elf_Shdr::records32),lineEdit,N_Elf_Shdr::__data_size,getNumber());
+            comboBox[CB_TYPE]=createComboBox(ui->tableWidget,XELF::getSectionTypesS(),SELF::TYPE_Elf_Shdr,N_Elf_Shdr::sh_type,XComboBoxEx::CBTYPE_NORMAL);
+            comboBox[CB_FLAGS]=createComboBox(ui->tableWidget,XELF::getSectionFlagsS(),SELF::TYPE_Elf_Shdr,N_Elf_Shdr::sh_flags,XComboBoxEx::CBTYPE_FLAGS);
         }
 
         blockSignals(true);
@@ -190,16 +190,16 @@ void SectionHeaderWidget::reloadData()
         {
             XELF_DEF::Elf64_Shdr shdr64=elf.getElf64_Shdr(getNumber());
 
-            lineEdit_Elf_Shdr[N_Elf_Shdr::sh_name]->setValue(shdr64.sh_name);
-            lineEdit_Elf_Shdr[N_Elf_Shdr::sh_type]->setValue(shdr64.sh_type);
-            lineEdit_Elf_Shdr[N_Elf_Shdr::sh_flags]->setValue(shdr64.sh_flags);
-            lineEdit_Elf_Shdr[N_Elf_Shdr::sh_addr]->setValue(shdr64.sh_addr);
-            lineEdit_Elf_Shdr[N_Elf_Shdr::sh_offset]->setValue(shdr64.sh_offset);
-            lineEdit_Elf_Shdr[N_Elf_Shdr::sh_size]->setValue(shdr64.sh_size);
-            lineEdit_Elf_Shdr[N_Elf_Shdr::sh_link]->setValue(shdr64.sh_link);
-            lineEdit_Elf_Shdr[N_Elf_Shdr::sh_info]->setValue(shdr64.sh_info);
-            lineEdit_Elf_Shdr[N_Elf_Shdr::sh_addralign]->setValue(shdr64.sh_addralign);
-            lineEdit_Elf_Shdr[N_Elf_Shdr::sh_entsize]->setValue(shdr64.sh_entsize);
+            lineEdit[N_Elf_Shdr::sh_name]->setValue(shdr64.sh_name);
+            lineEdit[N_Elf_Shdr::sh_type]->setValue(shdr64.sh_type);
+            lineEdit[N_Elf_Shdr::sh_flags]->setValue(shdr64.sh_flags);
+            lineEdit[N_Elf_Shdr::sh_addr]->setValue(shdr64.sh_addr);
+            lineEdit[N_Elf_Shdr::sh_offset]->setValue(shdr64.sh_offset);
+            lineEdit[N_Elf_Shdr::sh_size]->setValue(shdr64.sh_size);
+            lineEdit[N_Elf_Shdr::sh_link]->setValue(shdr64.sh_link);
+            lineEdit[N_Elf_Shdr::sh_info]->setValue(shdr64.sh_info);
+            lineEdit[N_Elf_Shdr::sh_addralign]->setValue(shdr64.sh_addralign);
+            lineEdit[N_Elf_Shdr::sh_entsize]->setValue(shdr64.sh_entsize);
 
             comboBox[CB_TYPE]->setValue(shdr64.sh_type);
             comboBox[CB_FLAGS]->setValue(shdr64.sh_flags);
@@ -208,16 +208,16 @@ void SectionHeaderWidget::reloadData()
         {
             XELF_DEF::Elf32_Shdr shdr32=elf.getElf32_Shdr(getNumber());
 
-            lineEdit_Elf_Shdr[N_Elf_Shdr::sh_name]->setValue(shdr32.sh_name);
-            lineEdit_Elf_Shdr[N_Elf_Shdr::sh_type]->setValue(shdr32.sh_type);
-            lineEdit_Elf_Shdr[N_Elf_Shdr::sh_flags]->setValue(shdr32.sh_flags);
-            lineEdit_Elf_Shdr[N_Elf_Shdr::sh_addr]->setValue(shdr32.sh_addr);
-            lineEdit_Elf_Shdr[N_Elf_Shdr::sh_offset]->setValue(shdr32.sh_offset);
-            lineEdit_Elf_Shdr[N_Elf_Shdr::sh_size]->setValue(shdr32.sh_size);
-            lineEdit_Elf_Shdr[N_Elf_Shdr::sh_link]->setValue(shdr32.sh_link);
-            lineEdit_Elf_Shdr[N_Elf_Shdr::sh_info]->setValue(shdr32.sh_info);
-            lineEdit_Elf_Shdr[N_Elf_Shdr::sh_addralign]->setValue(shdr32.sh_addralign);
-            lineEdit_Elf_Shdr[N_Elf_Shdr::sh_entsize]->setValue(shdr32.sh_entsize);
+            lineEdit[N_Elf_Shdr::sh_name]->setValue(shdr32.sh_name);
+            lineEdit[N_Elf_Shdr::sh_type]->setValue(shdr32.sh_type);
+            lineEdit[N_Elf_Shdr::sh_flags]->setValue(shdr32.sh_flags);
+            lineEdit[N_Elf_Shdr::sh_addr]->setValue(shdr32.sh_addr);
+            lineEdit[N_Elf_Shdr::sh_offset]->setValue(shdr32.sh_offset);
+            lineEdit[N_Elf_Shdr::sh_size]->setValue(shdr32.sh_size);
+            lineEdit[N_Elf_Shdr::sh_link]->setValue(shdr32.sh_link);
+            lineEdit[N_Elf_Shdr::sh_info]->setValue(shdr32.sh_info);
+            lineEdit[N_Elf_Shdr::sh_addralign]->setValue(shdr32.sh_addralign);
+            lineEdit[N_Elf_Shdr::sh_entsize]->setValue(shdr32.sh_entsize);
 
             comboBox[CB_TYPE]->setValue(shdr32.sh_type);
             comboBox[CB_FLAGS]->setValue(shdr32.sh_flags);
@@ -227,7 +227,7 @@ void SectionHeaderWidget::reloadData()
         qint64 nSize=elf.getShdrSize();
         qint64 nAddress=elf.offsetToRelAddress(nOffset);
 
-        loadHexSubdevice(nOffset,nSize,nAddress,&pSubDevice,ui->widgetHex_Elf_Shdr);
+        loadHexSubdevice(nOffset,nSize,nAddress,&pSubDevice,ui->widgetHex);
 
         blockSignals(false);
 
@@ -254,12 +254,12 @@ void SectionHeaderWidget::widgetValueChanged(quint64 nValue)
                 switch(nNdata)
                 {
                     case N_Elf_Shdr::sh_type:
-                        lineEdit_Elf_Shdr[N_Elf_Shdr::sh_type]->setValue((quint32)nValue);
+                        lineEdit[N_Elf_Shdr::sh_type]->setValue((quint32)nValue);
                         this->comboBox[CB_TYPE]->setValue(nValue);
                         break;
 
                     case N_Elf_Shdr::sh_flags:
-                        lineEdit_Elf_Shdr[N_Elf_Shdr::sh_flags]->setValue(bIs64?((quint64)nValue):((quint32)nValue));
+                        lineEdit[N_Elf_Shdr::sh_flags]->setValue(bIs64?((quint64)nValue):((quint32)nValue));
                         this->comboBox[CB_FLAGS]->setValue(nValue);
                         break;
                 }
@@ -269,12 +269,12 @@ void SectionHeaderWidget::widgetValueChanged(quint64 nValue)
     }
 }
 
-void SectionHeaderWidget::on_tableWidget_Elf_Shdr_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
+void SectionHeaderWidget::on_tableWidget_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
 {
     Q_UNUSED(currentRow)
     Q_UNUSED(currentColumn)
     Q_UNUSED(previousRow)
     Q_UNUSED(previousColumn)
 
-    setHeaderTableSelection(ui->widgetHex_Elf_Shdr,ui->tableWidget_Elf_Shdr);
+    setHeaderTableSelection(ui->widgetHex,ui->tableWidget);
 }
