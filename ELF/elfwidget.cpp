@@ -34,7 +34,7 @@ ELFWidget::ELFWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *par
 {
     ui->setupUi(this);
 
-    setData(pDevice,pOptions,0,0);
+    setData(pDevice,pOptions,0,0,0);
     reload();
 }
 
@@ -1087,7 +1087,7 @@ void ELFWidget::editSectionHeader()
         SectionHeaderWidget *pSectionHeaderWidget=new SectionHeaderWidget(this);
         DialogSectionHeader dsh(this);
         dsh.setWidget(pSectionHeaderWidget);
-        dsh.setData(getDevice(),getOptions(),(quint32)nRow,0,tr("Section Header"));
+        dsh.setData(getDevice(),getOptions(),(quint32)nRow,0,tr("Section Header"),SELF::TYPE_Elf_Shdr);
         dsh.setEdited(isEdited());
 
         connect(&dsh,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
@@ -1127,7 +1127,7 @@ void ELFWidget::editProgramHeader()
         ProgramHeaderWidget *pProgramHeaderWidget=new ProgramHeaderWidget(this);
         DialogSectionHeader dsh(this);
         dsh.setWidget(pProgramHeaderWidget);
-        dsh.setData(getDevice(),getOptions(),(quint32)nRow,0,tr("Program Header")); // TODO tr
+        dsh.setData(getDevice(),getOptions(),(quint32)nRow,0,tr("Program Header"),SELF::TYPE_Elf_Phdr); // TODO tr
         dsh.setEdited(isEdited());
 
         connect(&dsh,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
@@ -1185,7 +1185,7 @@ void ELFWidget::editDynamicArrayTag()
         DynamicArrayTagWidget *pDynamicArrayTagWidget=new DynamicArrayTagWidget(this);
         DialogSectionHeader dsh(this);
         dsh.setWidget(pDynamicArrayTagWidget);
-        dsh.setData(getDevice(),getOptions(),(quint32)nRow,nOffset,tr("Dynamic Array Tag")); // TODO tr
+        dsh.setData(getDevice(),getOptions(),(quint32)nRow,nOffset,tr("Dynamic Array Tag"),SELF::TYPE_Elf_DynamicArrayTags); // TODO tr
         dsh.setEdited(isEdited());
 
         connect(&dsh,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));

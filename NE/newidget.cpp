@@ -70,7 +70,7 @@ void NEWidget::reset()
 
 void NEWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions)
 {
-    FormatWidget::setData(pDevice,pOptions,0,0);
+    FormatWidget::setData(pDevice,pOptions,0,0,0);
 }
 
 void NEWidget::reload()

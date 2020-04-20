@@ -46,7 +46,7 @@ public:
     virtual void clear();
     virtual void cleanup();
     virtual void reset();
-    virtual void setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 __nNumber, qint64 nOffset);
+    virtual void setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 __nNumber, qint64 nOffset, qint32 nType);
     virtual void reload();
 
 protected:

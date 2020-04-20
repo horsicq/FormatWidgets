@@ -58,7 +58,7 @@ void ProgramHeaderWidget::reset()
 
 void ProgramHeaderWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber,qint64 nOffset)
 {
-    FormatWidget::setData(pDevice,pOptions,nNumber,nOffset);
+    FormatWidget::setData(pDevice,pOptions,nNumber,nOffset,0);
 }
 
 void ProgramHeaderWidget::reload()

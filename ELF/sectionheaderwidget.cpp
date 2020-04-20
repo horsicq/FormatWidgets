@@ -34,7 +34,7 @@ SectionHeaderWidget::SectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pO
 {
     ui->setupUi(this);
 
-    setData(pDevice,pOptions,nNumber,nOffset);
+    setData(pDevice,pOptions,nNumber,nOffset,0);
 }
 
 SectionHeaderWidget::~SectionHeaderWidget()
@@ -65,9 +65,9 @@ void SectionHeaderWidget::reset()
     bInit=false;
 }
 
-void SectionHeaderWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber,qint64 nOffset)
+void SectionHeaderWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber,qint64 nOffset, qint32 nType)
 {
-    FormatWidget::setData(pDevice,pOptions,nNumber,nOffset);
+    FormatWidget::setData(pDevice,pOptions,nNumber,nOffset,nType);
 }
 
 void SectionHeaderWidget::reload()

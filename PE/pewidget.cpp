@@ -34,7 +34,7 @@ PEWidget::PEWidget(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions, QWidget *parent
 {
     ui->setupUi(this);
 
-    setData(pDevice,pOptions,0,0);
+    setData(pDevice,pOptions,0,0,0);
     reload();
 }
 
@@ -681,7 +681,7 @@ void PEWidget::editSectionHeader()
         SectionHeaderWidget *pSectionHeaderWidget=new SectionHeaderWidget(this);
         DialogSectionHeader dsh(this);
         dsh.setWidget(pSectionHeaderWidget);
-        dsh.setData(getDevice(),getOptions(),(quint32)nRow,0,tr("Section header"));
+        dsh.setData(getDevice(),getOptions(),(quint32)nRow,0,tr("Section header"),0);
         dsh.setEdited(isEdited());
 
         connect(&dsh,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
@@ -2206,7 +2206,7 @@ void PEWidget::editImportHeader()
         ImportHeaderWidget *pImportHeaderWidget=new ImportHeaderWidget(this);
         DialogSectionHeader dsh(this);
         dsh.setWidget(pImportHeaderWidget);
-        dsh.setData(getDevice(),getOptions(),(quint32)nRow,0,tr("Import Header"));
+        dsh.setData(getDevice(),getOptions(),(quint32)nRow,0,tr("Import Header"),0);
         dsh.setEdited(isEdited());
 
         connect(&dsh,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
@@ -2267,7 +2267,7 @@ void PEWidget::editDebugHeader()
         DebugHeaderWidget *pDebugHeaderWidget=new DebugHeaderWidget(this);
         DialogSectionHeader dsh(this);
         dsh.setWidget(pDebugHeaderWidget);
-        dsh.setData(getDevice(),getOptions(),(quint32)nRow,0,tr("Debug Header"));
+        dsh.setData(getDevice(),getOptions(),(quint32)nRow,0,tr("Debug Header"),0);
         dsh.setEdited(isEdited());
 
         connect(&dsh,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
@@ -2309,7 +2309,7 @@ void PEWidget::editRelocsHeader()
         RelocsHeaderWidget *pRelocsHeaderWidget=new RelocsHeaderWidget(this);
         DialogSectionHeader dsh(this);
         dsh.setWidget(pRelocsHeaderWidget);
-        dsh.setData(getDevice(),getOptions(),(quint32)nRow,nOffset,tr("Relocs Header"));
+        dsh.setData(getDevice(),getOptions(),(quint32)nRow,nOffset,tr("Relocs Header"),0);
         dsh.setEdited(isEdited());
 
         connect(&dsh,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));

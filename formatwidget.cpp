@@ -36,7 +36,7 @@ FormatWidget::FormatWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint3
 {
     fwOptions={};
     bIsEdited=false;
-    setData(pDevice,pOptions,nNumber,nOffset);
+    setData(pDevice,pOptions,nNumber,nOffset,0);
 }
 
 FormatWidget::~FormatWidget()
@@ -44,11 +44,12 @@ FormatWidget::~FormatWidget()
 
 }
 
-void FormatWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset)
+void FormatWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset, qint32 nType)
 {
     this->pDevice=pDevice;
     this->__nNumber=nNumber;
     this->__nOffset=nOffset;
+    this->__nType=nType;
 
     if(pOptions)
     {

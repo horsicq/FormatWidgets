@@ -34,7 +34,7 @@ MACHWidget::MACHWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *p
 {
     ui->setupUi(this);
 
-    setData(pDevice,pOptions,0,0);
+    setData(pDevice,pOptions,0,0,0);
     reload();
 }
 

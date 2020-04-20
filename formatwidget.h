@@ -90,7 +90,7 @@ public:
     virtual void clear()=0;
     virtual void reset()=0;
     virtual void cleanup()=0;
-    void setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 __nNumber,qint64 nOffset);
+    void setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 __nNumber, qint64 nOffset, qint32 nType);
     virtual void reload()=0;
     QIODevice *getDevice();
     FW_DEF::OPTIONS *getOptions();
@@ -161,6 +161,7 @@ private:
     FW_DEF::OPTIONS fwOptions;
     quint32 __nNumber;
     qint64 __nOffset;
+    quint32 __nType;
     bool bIsReadonly;
     bool bIsEdited;
 
