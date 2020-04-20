@@ -29,7 +29,7 @@ MACHWidget::MACHWidget(QWidget *parent) :
 }
 
 MACHWidget::MACHWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *parent) :
-    FormatWidget(pDevice,pOptions,0,0,parent),
+    FormatWidget(pDevice,pOptions,0,0,0,parent),
     ui(new Ui::MACHWidget)
 {
     ui->setupUi(this);

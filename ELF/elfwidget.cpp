@@ -29,7 +29,7 @@ ELFWidget::ELFWidget(QWidget *parent) :
 }
 
 ELFWidget::ELFWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *parent) :
-    FormatWidget(pDevice,pOptions,0,0,parent),
+    FormatWidget(pDevice,pOptions,0,0,0,parent),
     ui(new Ui::ELFWidget)
 {
     ui->setupUi(this);
@@ -1084,10 +1084,10 @@ void ELFWidget::editSectionHeader()
 
     if(nRow!=-1)
     {
-        SectionHeaderWidget *pSectionHeaderWidget=new SectionHeaderWidget(this);
+        SectionHeaderWidget *pSectionHeaderWidget=new SectionHeaderWidget(getDevice(),getOptions(),(quint32)nRow,0,SELF::TYPE_Elf_Shdr,this);
         DialogSectionHeader dsh(this);
         dsh.setWidget(pSectionHeaderWidget);
-        dsh.setData(getDevice(),getOptions(),(quint32)nRow,0,tr("Section Header"),SELF::TYPE_Elf_Shdr);
+        dsh.setData(tr("Section Header"));
         dsh.setEdited(isEdited());
 
         connect(&dsh,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));

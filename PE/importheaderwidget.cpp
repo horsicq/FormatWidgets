@@ -29,7 +29,7 @@ ImportHeaderWidget::ImportHeaderWidget(QWidget *parent):
 }
 
 ImportHeaderWidget::ImportHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset, QWidget *parent):
-    FormatWidget(pDevice,pOptions,nNumber,nOffset,parent),
+    FormatWidget(pDevice,pOptions,nNumber,nOffset,0,parent),
     ui(new Ui::ImportHeaderWidget)
 {
     ui->setupUi(this);

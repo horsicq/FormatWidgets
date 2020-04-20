@@ -85,12 +85,12 @@ public:
     };
 
     FormatWidget(QWidget *parent=nullptr);
-    FormatWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 __nNumber, qint64 nOffset, QWidget *parent);
+    FormatWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *parent);
     ~FormatWidget();
     virtual void clear()=0;
     virtual void reset()=0;
     virtual void cleanup()=0;
-    void setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 __nNumber, qint64 nOffset, qint32 nType);
+    void setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset, qint32 nType);
     virtual void reload()=0;
     QIODevice *getDevice();
     FW_DEF::OPTIONS *getOptions();

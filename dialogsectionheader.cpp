@@ -52,6 +52,13 @@ void DialogSectionHeader::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions,
     pWidget->reload();
 }
 
+void DialogSectionHeader::setData(QString sTitle)
+{
+    setWindowTitle(sTitle);
+
+    pWidget->reload();
+}
+
 void DialogSectionHeader::setEdited(bool bState)
 {
     pWidget->setEdited(bState);

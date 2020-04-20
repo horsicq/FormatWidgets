@@ -41,12 +41,12 @@ public:
         __CB_size
     };
     SectionHeaderWidget(QWidget *parent=nullptr);
-    SectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 __nNumber, qint64 nOffset, QWidget *parent=nullptr);
+    SectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *parent=nullptr);
     ~SectionHeaderWidget();
     virtual void clear();
     virtual void cleanup();
     virtual void reset();
-    virtual void setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 __nNumber, qint64 nOffset, qint32 nType);
+    virtual void setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset, qint32 nType);
     virtual void reload();
 
 protected:

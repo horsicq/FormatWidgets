@@ -29,7 +29,7 @@ NEWidget::NEWidget(QWidget *parent) :
 }
 
 NEWidget::NEWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *parent) :
-    FormatWidget(pDevice,pOptions,0,0,parent),
+    FormatWidget(pDevice,pOptions,0,0,0,parent),
     ui(new Ui::NEWidget)
 {
     ui->setupUi(this);
