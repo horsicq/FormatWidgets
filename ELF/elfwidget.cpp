@@ -258,21 +258,21 @@ void ELFWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
 
 void ELFWidget::reloadData()
 {
-    int nData=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_TYPE).toInt();
+    int nType=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_TYPE).toInt();
     qint64 nDataOffset=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
     qint64 nDataSize=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
     qint64 nDataExtraOffset=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_EXTRAOFFSET).toLongLong();
     qint64 nDataExtraSize=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_EXTRASIZE).toLongLong();
 
-    QString sInit=QString("%1-%2-%3").arg(nData).arg(nDataOffset).arg(nDataSize);
+    QString sInit=QString("%1-%2-%3").arg(nType).arg(nDataOffset).arg(nDataSize);
 
-    ui->stackedWidgetInfo->setCurrentIndex(nData);
+    ui->stackedWidgetInfo->setCurrentIndex(nType);
 
     XELF elf(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
 
     if(elf.isValid())
     {
-        if(nData==SELF::TYPE_HEX)
+        if(nType==SELF::TYPE_HEX)
         {
             if(!stInit.contains(sInit))
             {
@@ -284,7 +284,7 @@ void ELFWidget::reloadData()
                 ui->widgetHex->reload();
             }
         }
-        else if(nData==SELF::TYPE_STRINGS)
+        else if(nType==SELF::TYPE_STRINGS)
         {
             if(!stInit.contains(sInit))
             {
@@ -293,7 +293,7 @@ void ELFWidget::reloadData()
                 ui->widgetHex->reload();
             }
         }
-        else if(nData==SELF::TYPE_MEMORYMAP)
+        else if(nType==SELF::TYPE_MEMORYMAP)
         {
             if(!stInit.contains(sInit))
             {
@@ -302,7 +302,7 @@ void ELFWidget::reloadData()
                 ui->widgetHex->reload();
             }
         }
-        else if(nData==SELF::TYPE_Elf_Ehdr)
+        else if(nType==SELF::TYPE_Elf_Ehdr)
         {
             if(!stInit.contains(sInit))
             {
@@ -414,7 +414,7 @@ void ELFWidget::reloadData()
                 blockSignals(false);
             }
         }
-        else if(nData==SELF::TYPE_Elf_Shdr)
+        else if(nType==SELF::TYPE_Elf_Shdr)
         {
             if(!stInit.contains(sInit))
             {
@@ -520,7 +520,7 @@ void ELFWidget::reloadData()
                 blockSignals(false);
             }
         }
-        else if(nData==SELF::TYPE_Elf_Phdr)
+        else if(nType==SELF::TYPE_Elf_Phdr)
         {
             if(!stInit.contains(sInit))
             {
@@ -618,7 +618,7 @@ void ELFWidget::reloadData()
                 blockSignals(false);
             }
         }
-        else if(nData==SELF::TYPE_Elf_DynamicArrayTags)
+        else if(nType==SELF::TYPE_Elf_DynamicArrayTags)
         {
             if(!stInit.contains(sInit))
             {
@@ -657,7 +657,7 @@ void ELFWidget::reloadData()
                 blockSignals(false);
             }
         }
-        else if(nData==SELF::TYPE_LIBRARIES)
+        else if(nType==SELF::TYPE_LIBRARIES)
         {
             if(!stInit.contains(sInit))
             {
@@ -682,7 +682,7 @@ void ELFWidget::reloadData()
                 blockSignals(false);
             }
         }
-        else if(nData==SELF::TYPE_INTERPRETER)
+        else if(nType==SELF::TYPE_INTERPRETER)
         {
             if(!stInit.contains(sInit))
             {
@@ -697,7 +697,7 @@ void ELFWidget::reloadData()
                 blockSignals(false);
             }
         }
-        else if(nData==SELF::TYPE_NOTES)
+        else if(nType==SELF::TYPE_NOTES)
         {
             if(!stInit.contains(sInit))
             {
@@ -739,7 +739,7 @@ void ELFWidget::reloadData()
                 blockSignals(false);
             }
         }
-        else if(nData==SELF::TYPE_RUNPATH)
+        else if(nType==SELF::TYPE_RUNPATH)
         {
             if(!stInit.contains(sInit))
             {
@@ -754,14 +754,14 @@ void ELFWidget::reloadData()
                 blockSignals(false);
             }
         }
-        else if(nData==SELF::TYPE_STRINGTABLE)
+        else if(nType==SELF::TYPE_STRINGTABLE)
         {
             if(!stInit.contains(sInit))
             {
                 loadHexSubdevice(nDataOffset,nDataSize,0,&subDevice[SELF::TYPE_STRINGTABLE],ui->widgetHex_StringTable);
             }
         }
-        else if(nData==SELF::TYPE_SYMBOLTABLE)
+        else if(nType==SELF::TYPE_SYMBOLTABLE)
         {
             if(!stInit.contains(sInit))
             {
@@ -1123,18 +1123,18 @@ void ELFWidget::editProgramHeader()
     int nRow=ui->tableWidget_Elf_Phdr->currentRow();
 
     if(nRow!=-1)
-    {
-        ProgramHeaderWidget *pProgramHeaderWidget=new ProgramHeaderWidget(this);
+    {        
+        SectionHeaderWidget *pSectionHeaderWidget=new SectionHeaderWidget(getDevice(),getOptions(),(quint32)nRow,0,SELF::TYPE_Elf_Phdr,this);
         DialogSectionHeader dsh(this);
-        dsh.setWidget(pProgramHeaderWidget);
-        dsh.setData(getDevice(),getOptions(),(quint32)nRow,0,tr("Program Header"),SELF::TYPE_Elf_Phdr); // TODO tr
+        dsh.setWidget(pSectionHeaderWidget);
+        dsh.setData(tr("Program Header")); // TODO tr
         dsh.setEdited(isEdited());
 
         connect(&dsh,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
 
         dsh.exec();
 
-        delete pProgramHeaderWidget;
+        delete pSectionHeaderWidget;
 
         reloadData();
 

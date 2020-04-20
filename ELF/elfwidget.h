@@ -24,7 +24,6 @@
 #include "../formatwidget.h"
 #include "dialogsectionheader.h"
 #include "sectionheaderwidget.h"
-#include "programheaderwidget.h"
 #include "dynamicarraytagwidget.h"
 #include "elf_defs.h"
 #include "elfprocessdata.h"

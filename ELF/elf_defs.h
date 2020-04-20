@@ -104,6 +104,20 @@ enum DATA
 
 extern const FW_DEF::HEADER_RECORD records32[__data_size];
 extern const FW_DEF::HEADER_RECORD records64[__data_size];
+
+enum CB
+{
+    CB_TYPE=0,
+    CB_FLAGS,
+    __CB_size
+};
+
+enum INV
+{
+    INV_VirtualAddress,
+    INV_PointerToRawData,
+    __INV_size
+};
 }
 
 namespace N_Elf_Phdr32
@@ -122,6 +136,20 @@ enum DATA
 };
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
+
+enum CB
+{
+    CB_TYPE=0,
+    CB_FLAGS,
+    __CB_size
+};
+
+enum INV
+{
+    INV_VirtualAddress,
+    INV_PointerToRawData,
+    __INV_size
+};
 }
 
 namespace N_Elf_Phdr64

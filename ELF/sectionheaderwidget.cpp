@@ -34,11 +34,61 @@ SectionHeaderWidget::SectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pO
 {
     ui->setupUi(this);
 
+    ppLinedEdit=0;
+    nLineEditSize=0;
+    ppComboBox=0;
+    nComboBoxSize=0;
+    ppInvWidget=0;
+    nInvWidgetSize=0;
+
+    if(nType==SELF::TYPE_Elf_Shdr)
+    {
+        nLineEditSize=N_Elf_Shdr::__data_size;
+        nComboBoxSize=N_Elf_Shdr::__CB_size;
+        nInvWidgetSize=N_Elf_Shdr::__INV_size;
+    }
+    else if(nType==SELF::TYPE_Elf_Phdr)
+    {
+        nLineEditSize=N_Elf_Phdr32::__data_size;
+        nComboBoxSize=N_Elf_Phdr32::__CB_size;
+        nInvWidgetSize=N_Elf_Phdr32::__INV_size;
+    }
+
+    if(nLineEditSize)
+    {
+        ppLinedEdit=new PXLineEditHEX[nLineEditSize];
+    }
+
+    if(nComboBoxSize)
+    {
+        ppComboBox=new PXComboBoxEx[nComboBoxSize];
+    }
+
+    if(nInvWidgetSize)
+    {
+        ppInvWidget=new PInvWidget[nInvWidgetSize];
+    }
+
     setData(pDevice,pOptions,nNumber,nOffset,nType);
 }
 
 SectionHeaderWidget::~SectionHeaderWidget()
 {
+    if(ppLinedEdit)
+    {
+        delete[] ppLinedEdit;
+    }
+
+    if(ppComboBox)
+    {
+        delete[] ppComboBox;
+    }
+
+    if(ppInvWidget)
+    {
+        delete[] ppInvWidget;
+    }
+
     delete ui;
 }
 
@@ -46,9 +96,9 @@ void SectionHeaderWidget::clear()
 {
     reset();
 
-    memset(lineEdit,0,sizeof lineEdit);
-    memset(comboBox,0,sizeof comboBox);
-    memset(invWidget,0,sizeof invWidget);
+    memset(ppLinedEdit,0,nLineEditSize*sizeof(XLineEditHEX *));
+    memset(ppComboBox,0,nComboBoxSize*sizeof(XComboBoxEx *));
+    memset(ppInvWidget,0,nInvWidgetSize*sizeof(InvWidget *));
 
     pSubDevice=nullptr;
 
@@ -63,11 +113,6 @@ void SectionHeaderWidget::cleanup()
 void SectionHeaderWidget::reset()
 {
     bInit=false;
-}
-
-void SectionHeaderWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber,qint64 nOffset, qint32 nType)
-{
-    FormatWidget::setData(pDevice,pOptions,nNumber,nOffset,nType);
 }
 
 void SectionHeaderWidget::reload()
@@ -134,6 +179,40 @@ bool SectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int
                     ui->widgetHex->reload();
 
                     break;
+
+                case SELF::TYPE_Elf_Phdr:
+                    if(elf.is64())
+                    {
+                        switch(nNdata)
+                        {
+                            case N_Elf_Phdr64::p_type:      elf.setElf64_Phdr_type((quint32)nPosition,(quint32)nValue);         break;
+                            case N_Elf_Phdr64::p_flags:     elf.setElf64_Phdr_flags((quint32)nPosition,(quint32)nValue);        break;
+                            case N_Elf_Phdr64::p_offset:    elf.setElf64_Phdr_offset((quint64)nPosition,(quint32)nValue);       break;
+                            case N_Elf_Phdr64::p_vaddr:     elf.setElf64_Phdr_vaddr((quint64)nPosition,(quint32)nValue);        break;
+                            case N_Elf_Phdr64::p_paddr:     elf.setElf64_Phdr_paddr((quint64)nPosition,(quint32)nValue);        break;
+                            case N_Elf_Phdr64::p_filesz:    elf.setElf64_Phdr_filesz((quint64)nPosition,(quint32)nValue);       break;
+                            case N_Elf_Phdr64::p_memsz:     elf.setElf64_Phdr_memsz((quint64)nPosition,(quint32)nValue);        break;
+                            case N_Elf_Phdr64::p_align:     elf.setElf64_Phdr_align((quint64)nPosition,(quint32)nValue);        break;
+                        }
+                    }
+                    else
+                    {
+                        switch(nNdata)
+                        {
+                            case N_Elf_Phdr32::p_type:      elf.setElf32_Phdr_type((quint32)nPosition,(quint32)nValue);         break;
+                            case N_Elf_Phdr32::p_offset:    elf.setElf32_Phdr_offset((quint32)nPosition,(quint32)nValue);       break;
+                            case N_Elf_Phdr32::p_vaddr:     elf.setElf32_Phdr_vaddr((quint32)nPosition,(quint32)nValue);        break;
+                            case N_Elf_Phdr32::p_paddr:     elf.setElf32_Phdr_paddr((quint32)nPosition,(quint32)nValue);        break;
+                            case N_Elf_Phdr32::p_filesz:    elf.setElf32_Phdr_filesz((quint32)nPosition,(quint32)nValue);       break;
+                            case N_Elf_Phdr32::p_memsz:     elf.setElf32_Phdr_memsz((quint32)nPosition,(quint32)nValue);        break;
+                            case N_Elf_Phdr32::p_flags:     elf.setElf32_Phdr_flags((quint32)nPosition,(quint32)nValue);        break;
+                            case N_Elf_Phdr32::p_align:     elf.setElf32_Phdr_align((quint32)nPosition,(quint32)nValue);        break;
+                        }
+                    }
+
+                    ui->widgetHex->reload();
+
+                    break;
             }
 
             bResult=true;
@@ -144,29 +223,38 @@ bool SectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int
 }
 void SectionHeaderWidget::setReadonly(bool bState)
 {
-    setLineEditsReadOnly(lineEdit,N_Elf_Shdr::__data_size,bState);
+    setLineEditsReadOnly(ppLinedEdit,nLineEditSize,bState);
 
-    setComboBoxesReadOnly(comboBox,__CB_size,bState);
+    setComboBoxesReadOnly(ppComboBox,nComboBoxSize,bState);
 }
 
 void SectionHeaderWidget::blockSignals(bool bState)
 {
-    _blockSignals((QObject **)lineEdit,N_Elf_Shdr::__data_size,bState);
+    _blockSignals((QObject **)ppLinedEdit,nLineEditSize,bState);
 
-    _blockSignals((QObject **)comboBox,__CB_size,bState);
+    _blockSignals((QObject **)ppComboBox,nComboBoxSize,bState);
 }
 
 void SectionHeaderWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
 {
-    Q_UNUSED(type)
-
     int nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
 
     pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
     pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*8);
     pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*8);
-    pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*12);
-    pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
+
+    switch(type)
+    {
+        case SELF::TYPE_Elf_Shdr:
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*12);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
+            break;
+
+        case SELF::TYPE_Elf_Phdr:
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*12);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
+            break;
+    }
 }
 
 void SectionHeaderWidget::on_checkBoxReadonly_toggled(bool checked)
@@ -176,65 +264,119 @@ void SectionHeaderWidget::on_checkBoxReadonly_toggled(bool checked)
 
 void SectionHeaderWidget::reloadData()
 {
+    int nType=getType();
+
     XELF elf(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
 
     if(elf.isValid())
-    {
+    {       
         bool bIs64=elf.is64();
 
         if(!bInit)
         {
-            bInit=createHeaderTable(SELF::TYPE_Elf_Shdr,ui->tableWidget,bIs64?(N_Elf_Shdr::records64):(N_Elf_Shdr::records32),lineEdit,N_Elf_Shdr::__data_size,getNumber());
-            comboBox[CB_TYPE]=createComboBox(ui->tableWidget,XELF::getSectionTypesS(),SELF::TYPE_Elf_Shdr,N_Elf_Shdr::sh_type,XComboBoxEx::CBTYPE_NORMAL);
-            comboBox[CB_FLAGS]=createComboBox(ui->tableWidget,XELF::getSectionFlagsS(),SELF::TYPE_Elf_Shdr,N_Elf_Shdr::sh_flags,XComboBoxEx::CBTYPE_FLAGS);
+            if(nType==SELF::TYPE_Elf_Shdr)
+            {
+                bInit=createHeaderTable(SELF::TYPE_Elf_Shdr,ui->tableWidget,bIs64?(N_Elf_Shdr::records64):(N_Elf_Shdr::records32),ppLinedEdit,N_Elf_Shdr::__data_size,getNumber());
+                ppComboBox[N_Elf_Shdr::CB_TYPE]=createComboBox(ui->tableWidget,XELF::getSectionTypesS(),SELF::TYPE_Elf_Shdr,N_Elf_Shdr::sh_type,XComboBoxEx::CBTYPE_NORMAL);
+                ppComboBox[N_Elf_Shdr::CB_FLAGS]=createComboBox(ui->tableWidget,XELF::getSectionFlagsS(),SELF::TYPE_Elf_Shdr,N_Elf_Shdr::sh_flags,XComboBoxEx::CBTYPE_FLAGS);
+
+                blockSignals(true);
+
+                if(bIs64)
+                {
+                    XELF_DEF::Elf64_Shdr shdr64=elf.getElf64_Shdr(getNumber());
+
+                    ppLinedEdit[N_Elf_Shdr::sh_name]->setValue(shdr64.sh_name);
+                    ppLinedEdit[N_Elf_Shdr::sh_type]->setValue(shdr64.sh_type);
+                    ppLinedEdit[N_Elf_Shdr::sh_flags]->setValue(shdr64.sh_flags);
+                    ppLinedEdit[N_Elf_Shdr::sh_addr]->setValue(shdr64.sh_addr);
+                    ppLinedEdit[N_Elf_Shdr::sh_offset]->setValue(shdr64.sh_offset);
+                    ppLinedEdit[N_Elf_Shdr::sh_size]->setValue(shdr64.sh_size);
+                    ppLinedEdit[N_Elf_Shdr::sh_link]->setValue(shdr64.sh_link);
+                    ppLinedEdit[N_Elf_Shdr::sh_info]->setValue(shdr64.sh_info);
+                    ppLinedEdit[N_Elf_Shdr::sh_addralign]->setValue(shdr64.sh_addralign);
+                    ppLinedEdit[N_Elf_Shdr::sh_entsize]->setValue(shdr64.sh_entsize);
+
+                    ppComboBox[N_Elf_Shdr::CB_TYPE]->setValue(shdr64.sh_type);
+                    ppComboBox[N_Elf_Shdr::CB_FLAGS]->setValue(shdr64.sh_flags);
+                }
+                else
+                {
+                    XELF_DEF::Elf32_Shdr shdr32=elf.getElf32_Shdr(getNumber());
+
+                    ppLinedEdit[N_Elf_Shdr::sh_name]->setValue(shdr32.sh_name);
+                    ppLinedEdit[N_Elf_Shdr::sh_type]->setValue(shdr32.sh_type);
+                    ppLinedEdit[N_Elf_Shdr::sh_flags]->setValue(shdr32.sh_flags);
+                    ppLinedEdit[N_Elf_Shdr::sh_addr]->setValue(shdr32.sh_addr);
+                    ppLinedEdit[N_Elf_Shdr::sh_offset]->setValue(shdr32.sh_offset);
+                    ppLinedEdit[N_Elf_Shdr::sh_size]->setValue(shdr32.sh_size);
+                    ppLinedEdit[N_Elf_Shdr::sh_link]->setValue(shdr32.sh_link);
+                    ppLinedEdit[N_Elf_Shdr::sh_info]->setValue(shdr32.sh_info);
+                    ppLinedEdit[N_Elf_Shdr::sh_addralign]->setValue(shdr32.sh_addralign);
+                    ppLinedEdit[N_Elf_Shdr::sh_entsize]->setValue(shdr32.sh_entsize);
+
+                    ppComboBox[N_Elf_Shdr::CB_TYPE]->setValue(shdr32.sh_type);
+                    ppComboBox[N_Elf_Shdr::CB_FLAGS]->setValue(shdr32.sh_flags);
+                }
+
+                qint64 nOffset=elf.getShdrOffset(getNumber());
+                qint64 nSize=elf.getShdrSize();
+                qint64 nAddress=elf.offsetToRelAddress(nOffset);
+
+                loadHexSubdevice(nOffset,nSize,nAddress,&pSubDevice,ui->widgetHex);
+
+                blockSignals(false);
+            }
+            else if(nType==SELF::TYPE_Elf_Phdr)
+            {
+                bInit=createHeaderTable(SELF::TYPE_Elf_Phdr,ui->tableWidget,bIs64?(N_Elf_Phdr64::records):(N_Elf_Phdr32::records),ppLinedEdit,bIs64?(N_Elf_Phdr64::__data_size):(N_Elf_Phdr32::__data_size),getNumber());
+                ppComboBox[N_Elf_Phdr32::CB_TYPE]=createComboBox(ui->tableWidget,XELF::getProgramTypesS(),SELF::TYPE_Elf_Phdr,bIs64?(N_Elf_Phdr64::p_type):(N_Elf_Phdr32::p_type),XComboBoxEx::CBTYPE_NORMAL);
+                ppComboBox[N_Elf_Phdr32::CB_FLAGS]=createComboBox(ui->tableWidget,XELF::getProgramFlagsS(),SELF::TYPE_Elf_Phdr,bIs64?(N_Elf_Phdr64::p_flags):(N_Elf_Phdr32::p_flags),XComboBoxEx::CBTYPE_FLAGS);
+
+                blockSignals(true);
+
+                if(bIs64)
+                {
+                    XELF_DEF::Elf64_Phdr phdr64=elf.getElf64_Phdr(getNumber());
+
+                    ppLinedEdit[N_Elf_Phdr64::p_type]->setValue(phdr64.p_type);
+                    ppLinedEdit[N_Elf_Phdr64::p_flags]->setValue(phdr64.p_flags);
+                    ppLinedEdit[N_Elf_Phdr64::p_offset]->setValue(phdr64.p_offset);
+                    ppLinedEdit[N_Elf_Phdr64::p_vaddr]->setValue(phdr64.p_vaddr);
+                    ppLinedEdit[N_Elf_Phdr64::p_paddr]->setValue(phdr64.p_paddr);
+                    ppLinedEdit[N_Elf_Phdr64::p_filesz]->setValue(phdr64.p_filesz);
+                    ppLinedEdit[N_Elf_Phdr64::p_memsz]->setValue(phdr64.p_memsz);
+                    ppLinedEdit[N_Elf_Phdr64::p_align]->setValue(phdr64.p_align);
+
+                    ppComboBox[N_Elf_Phdr32::CB_TYPE]->setValue(phdr64.p_type);
+                    ppComboBox[N_Elf_Phdr32::CB_FLAGS]->setValue(phdr64.p_flags);
+                }
+                else
+                {
+                    XELF_DEF::Elf32_Phdr phdr32=elf.getElf32_Phdr(getNumber());
+
+                    ppLinedEdit[N_Elf_Phdr32::p_type]->setValue(phdr32.p_type);
+                    ppLinedEdit[N_Elf_Phdr32::p_offset]->setValue(phdr32.p_offset);
+                    ppLinedEdit[N_Elf_Phdr32::p_vaddr]->setValue(phdr32.p_vaddr);
+                    ppLinedEdit[N_Elf_Phdr32::p_paddr]->setValue(phdr32.p_paddr);
+                    ppLinedEdit[N_Elf_Phdr32::p_filesz]->setValue(phdr32.p_filesz);
+                    ppLinedEdit[N_Elf_Phdr32::p_memsz]->setValue(phdr32.p_memsz);
+                    ppLinedEdit[N_Elf_Phdr32::p_flags]->setValue(phdr32.p_flags);
+                    ppLinedEdit[N_Elf_Phdr32::p_align]->setValue(phdr32.p_align);
+
+                    ppComboBox[N_Elf_Phdr32::CB_TYPE]->setValue(phdr32.p_type);
+                    ppComboBox[N_Elf_Phdr32::CB_FLAGS]->setValue(phdr32.p_flags);
+                }
+
+                qint64 nOffset=elf.getPhdrOffset(getNumber());
+                qint64 nSize=elf.getPhdrSize();
+                qint64 nAddress=elf.offsetToRelAddress(nOffset);
+
+                loadHexSubdevice(nOffset,nSize,nAddress,&pSubDevice,ui->widgetHex);
+
+                blockSignals(false);
+            }
         }
-
-        blockSignals(true);
-
-        if(bIs64)
-        {
-            XELF_DEF::Elf64_Shdr shdr64=elf.getElf64_Shdr(getNumber());
-
-            lineEdit[N_Elf_Shdr::sh_name]->setValue(shdr64.sh_name);
-            lineEdit[N_Elf_Shdr::sh_type]->setValue(shdr64.sh_type);
-            lineEdit[N_Elf_Shdr::sh_flags]->setValue(shdr64.sh_flags);
-            lineEdit[N_Elf_Shdr::sh_addr]->setValue(shdr64.sh_addr);
-            lineEdit[N_Elf_Shdr::sh_offset]->setValue(shdr64.sh_offset);
-            lineEdit[N_Elf_Shdr::sh_size]->setValue(shdr64.sh_size);
-            lineEdit[N_Elf_Shdr::sh_link]->setValue(shdr64.sh_link);
-            lineEdit[N_Elf_Shdr::sh_info]->setValue(shdr64.sh_info);
-            lineEdit[N_Elf_Shdr::sh_addralign]->setValue(shdr64.sh_addralign);
-            lineEdit[N_Elf_Shdr::sh_entsize]->setValue(shdr64.sh_entsize);
-
-            comboBox[CB_TYPE]->setValue(shdr64.sh_type);
-            comboBox[CB_FLAGS]->setValue(shdr64.sh_flags);
-        }
-        else
-        {
-            XELF_DEF::Elf32_Shdr shdr32=elf.getElf32_Shdr(getNumber());
-
-            lineEdit[N_Elf_Shdr::sh_name]->setValue(shdr32.sh_name);
-            lineEdit[N_Elf_Shdr::sh_type]->setValue(shdr32.sh_type);
-            lineEdit[N_Elf_Shdr::sh_flags]->setValue(shdr32.sh_flags);
-            lineEdit[N_Elf_Shdr::sh_addr]->setValue(shdr32.sh_addr);
-            lineEdit[N_Elf_Shdr::sh_offset]->setValue(shdr32.sh_offset);
-            lineEdit[N_Elf_Shdr::sh_size]->setValue(shdr32.sh_size);
-            lineEdit[N_Elf_Shdr::sh_link]->setValue(shdr32.sh_link);
-            lineEdit[N_Elf_Shdr::sh_info]->setValue(shdr32.sh_info);
-            lineEdit[N_Elf_Shdr::sh_addralign]->setValue(shdr32.sh_addralign);
-            lineEdit[N_Elf_Shdr::sh_entsize]->setValue(shdr32.sh_entsize);
-
-            comboBox[CB_TYPE]->setValue(shdr32.sh_type);
-            comboBox[CB_FLAGS]->setValue(shdr32.sh_flags);
-        }
-
-        qint64 nOffset=elf.getShdrOffset(getNumber());
-        qint64 nSize=elf.getShdrSize();
-        qint64 nAddress=elf.offsetToRelAddress(nOffset);
-
-        loadHexSubdevice(nOffset,nSize,nAddress,&pSubDevice,ui->widgetHex);
-
-        blockSignals(false);
 
         setReadonly(ui->checkBoxReadonly->isChecked());
     }
@@ -255,18 +397,50 @@ void SectionHeaderWidget::widgetValueChanged(quint64 nValue)
         switch(nStype)
         {
             case SELF::TYPE_Elf_Shdr:
-
                 switch(nNdata)
                 {
                     case N_Elf_Shdr::sh_type:
-                        lineEdit[N_Elf_Shdr::sh_type]->setValue((quint32)nValue);
-                        this->comboBox[CB_TYPE]->setValue(nValue);
+                        ppLinedEdit[N_Elf_Shdr::sh_type]->setValue((quint32)nValue);
+                        ppComboBox[N_Elf_Shdr::CB_TYPE]->setValue(nValue);
                         break;
 
                     case N_Elf_Shdr::sh_flags:
-                        lineEdit[N_Elf_Shdr::sh_flags]->setValue(bIs64?((quint64)nValue):((quint32)nValue));
-                        this->comboBox[CB_FLAGS]->setValue(nValue);
+                        ppLinedEdit[N_Elf_Shdr::sh_flags]->setValue(bIs64?((quint64)nValue):((quint32)nValue));
+                        ppComboBox[N_Elf_Shdr::CB_FLAGS]->setValue(nValue);
                         break;
+                }
+                break;
+
+            case SELF::TYPE_Elf_Phdr:
+                if(bIs64)
+                {
+                    switch(nNdata)
+                    {
+                        case N_Elf_Phdr64::p_type:
+                            ppLinedEdit[N_Elf_Phdr64::p_type]->setValue((quint32)nValue);
+                            ppComboBox[N_Elf_Phdr32::CB_TYPE]->setValue(nValue);
+                            break;
+
+                        case N_Elf_Phdr64::p_flags:
+                            ppLinedEdit[N_Elf_Phdr64::p_flags]->setValue((quint32)nValue);
+                            ppComboBox[N_Elf_Phdr32::CB_FLAGS]->setValue(nValue);
+                            break;
+                    }
+                }
+                else
+                {
+                    switch(nNdata)
+                    {
+                        case N_Elf_Phdr32::p_type:
+                            ppLinedEdit[N_Elf_Phdr32::p_type]->setValue((quint32)nValue);
+                            ppComboBox[N_Elf_Phdr32::CB_TYPE]->setValue(nValue);
+                            break;
+
+                        case N_Elf_Phdr32::p_flags:
+                            ppLinedEdit[N_Elf_Phdr32::p_flags]->setValue((quint32)nValue);
+                            ppComboBox[N_Elf_Phdr32::CB_FLAGS]->setValue(nValue);
+                            break;
+                    }
                 }
 
                 break;

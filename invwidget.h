@@ -56,4 +56,6 @@ private:
     QPushButton *pHexPushButton;
 };
 
+#define PInvWidget InvWidget *
+
 #endif // INVWIDGET_H

@@ -34,19 +34,12 @@ class SectionHeaderWidget : public FormatWidget
     Q_OBJECT
 
 public:
-    enum CB
-    {
-        CB_TYPE=0,
-        CB_FLAGS,
-        __CB_size
-    };
     SectionHeaderWidget(QWidget *parent=nullptr);
     SectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *parent=nullptr);
     ~SectionHeaderWidget();
     virtual void clear();
     virtual void cleanup();
     virtual void reset();
-    virtual void setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset, qint32 nType);
     virtual void reload();
 
 protected:
@@ -63,19 +56,15 @@ private slots:
     void on_tableWidget_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
 
 private:
-    enum INV
-    {
-        INV_VirtualAddress,
-        INV_PointerToRawData,
-        __INV_size
-    };
-
     Ui::SectionHeaderWidget *ui;
-    XLineEditHEX *lineEdit[N_Elf_Shdr::__data_size];
-    XComboBoxEx *comboBox[__CB_size];
-    bool bInit;
-    InvWidget *invWidget[__INV_size];
+    XLineEditHEX **ppLinedEdit;
+    int nLineEditSize;
+    XComboBoxEx **ppComboBox;
+    int nComboBoxSize;
+    InvWidget **ppInvWidget;
+    int nInvWidgetSize;
     SubDevice *pSubDevice;
+    bool bInit;
 };
 
 #endif // SECTIONHEADERWIDGET_H

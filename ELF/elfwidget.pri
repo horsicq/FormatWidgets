@@ -5,7 +5,6 @@ FORMS += \
     $$PWD/dynamicarraytagwidget.ui \
     $$PWD/elfwidget.ui \
     $$PWD/dialogelf.ui \
-    $$PWD/programheaderwidget.ui \
     $$PWD/sectionheaderwidget.ui
 
 HEADERS += \
@@ -13,7 +12,6 @@ HEADERS += \
     $$PWD/elfwidget.h \
     $$PWD/elf_defs.h \
     $$PWD/dialogelf.h \
-    $$PWD/programheaderwidget.h \
     $$PWD/sectionheaderwidget.h \
     $$PWD/elfprocessdata.h
 
@@ -22,7 +20,6 @@ SOURCES += \
     $$PWD/elfwidget.cpp \
     $$PWD/elf_defs.cpp \
     $$PWD/dialogelf.cpp \
-    $$PWD/programheaderwidget.cpp \
     $$PWD/sectionheaderwidget.cpp \
     $$PWD/elfprocessdata.cpp
 

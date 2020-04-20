@@ -79,6 +79,11 @@ qint64 FormatWidget::getOffset()
     return __nOffset;
 }
 
+qint32 FormatWidget::getType()
+{
+    return __nType;
+}
+
 bool FormatWidget::isReadonly()
 {
     return bIsReadonly;
