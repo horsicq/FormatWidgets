@@ -181,6 +181,19 @@ enum DATA
 
 extern const FW_DEF::HEADER_RECORD records32[__data_size];
 extern const FW_DEF::HEADER_RECORD records64[__data_size];
+
+enum CB
+{
+    CB_TAG=0,
+    __CB_size
+};
+
+enum INV
+{
+    INV_VirtualAddress,
+    INV_PointerToRawData,
+    __INV_size
+};
 }
 
 namespace N_ELF_LIBRARIES

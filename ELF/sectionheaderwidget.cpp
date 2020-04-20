@@ -53,6 +53,12 @@ SectionHeaderWidget::SectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pO
         nComboBoxSize=N_Elf_Phdr32::__CB_size;
         nInvWidgetSize=N_Elf_Phdr32::__INV_size;
     }
+    else if(nType==SELF::TYPE_Elf_DynamicArrayTags)
+    {
+        nLineEditSize=N_Elf_DynamicArrayTags::__data_size;
+        nComboBoxSize=N_Elf_DynamicArrayTags::__CB_size;
+        nInvWidgetSize=N_Elf_DynamicArrayTags::__INV_size;
+    }
 
     if(nLineEditSize)
     {
@@ -176,8 +182,6 @@ bool SectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int
                         }
                     }
 
-                    ui->widgetHex->reload();
-
                     break;
 
                 case SELF::TYPE_Elf_Phdr:
@@ -210,10 +214,19 @@ bool SectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int
                         }
                     }
 
-                    ui->widgetHex->reload();
+                    break;
+
+                case SELF::TYPE_Elf_DynamicArrayTags:
+                    switch(nNdata)
+                    {
+                        case N_Elf_DynamicArrayTags::d_tag:         elf.setDynamicArrayTag(nOffset,nValue);         break;
+                        case N_Elf_DynamicArrayTags::d_value:       elf.setDynamicArrayValue(nOffset,nValue);       break;
+                    }
 
                     break;
             }
+
+            ui->widgetHex->reload();
 
             bResult=true;
         }
@@ -251,6 +264,11 @@ void SectionHeaderWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget
             break;
 
         case SELF::TYPE_Elf_Phdr:
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*12);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
+            break;
+
+        case SELF::TYPE_Elf_DynamicArrayTags:
             pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*12);
             pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
             break;
@@ -376,6 +394,30 @@ void SectionHeaderWidget::reloadData()
 
                 blockSignals(false);
             }
+            else if(nType==SELF::TYPE_Elf_DynamicArrayTags)
+            {
+                bInit=createHeaderTable(SELF::TYPE_Elf_DynamicArrayTags,ui->tableWidget,bIs64?(N_Elf_DynamicArrayTags::records64):(N_Elf_DynamicArrayTags::records32),ppLinedEdit,N_Elf_DynamicArrayTags::__data_size,getNumber(),getOffset());
+                ppComboBox[N_Elf_DynamicArrayTags::CB_TAG]=createComboBox(ui->tableWidget,XELF::getDynamicTagsS(),SELF::TYPE_Elf_DynamicArrayTags,N_Elf_DynamicArrayTags::d_tag,XComboBoxEx::CBTYPE_NORMAL);
+
+                blockSignals(true);
+
+                qint64 nOffset=getOffset();
+
+                qint64 nTag=elf.getDynamicArrayTag(nOffset);
+                qint64 nValue=elf.getDynamicArrayValue(nOffset);
+
+                ppLinedEdit[N_Elf_DynamicArrayTags::d_tag]->setValue(bIs64?((qint64)nTag):((qint32)nTag));
+                ppLinedEdit[N_Elf_DynamicArrayTags::d_value]->setValue(bIs64?((qint64)nValue):((qint32)nValue));
+
+                ppComboBox[N_Elf_DynamicArrayTags::CB_TAG]->setValue(nTag);
+
+                qint64 nSize=elf.getDynamicArraySize();
+                qint64 nAddress=elf.offsetToRelAddress(nOffset);
+
+                loadHexSubdevice(nOffset,nSize,nAddress,&pSubDevice,ui->widgetHex);
+
+                blockSignals(false);
+            }
         }
 
         setReadonly(ui->checkBoxReadonly->isChecked());
@@ -441,6 +483,18 @@ void SectionHeaderWidget::widgetValueChanged(quint64 nValue)
                             ppComboBox[N_Elf_Phdr32::CB_FLAGS]->setValue(nValue);
                             break;
                     }
+                }
+
+                break;
+
+            case SELF::TYPE_Elf_DynamicArrayTags:
+
+                switch(nNdata)
+                {
+                    case N_Elf_DynamicArrayTags::d_tag:
+                        ppLinedEdit[N_Elf_DynamicArrayTags::d_tag]->setValue(bIs64?((qint64)nValue):((qint32)nValue));
+                        ppComboBox[N_Elf_DynamicArrayTags::CB_TAG]->setValue(nValue);
+                        break;
                 }
 
                 break;
