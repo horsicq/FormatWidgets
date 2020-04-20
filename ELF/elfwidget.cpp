@@ -1230,3 +1230,63 @@ void ELFWidget::on_tableWidget_DynamicArrayTags_doubleClicked(const QModelIndex 
 
     editDynamicArrayTag();
 }
+
+void ELFWidget::on_tableView_SymbolTable_customContextMenuRequested(const QPoint &pos)
+{
+    int nRow=ui->tableView_SymbolTable->currentIndex().row();
+
+    if(nRow!=-1)
+    {
+        QMenu contextMenu(this);
+
+        QAction actionEdit(tr("Edit"),this);
+        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editSymbol()));
+        contextMenu.addAction(&actionEdit);
+
+        contextMenu.exec(ui->tableView_SymbolTable->viewport()->mapToGlobal(pos));
+    }
+}
+
+void ELFWidget::editSymbol()
+{
+    showSectionHeader(SELF::TYPE_SYMBOLTABLE,ui->tableView_SymbolTable);
+}
+
+void ELFWidget::showSectionHeader(int type, QTableView *pTableView)
+{
+    int nRow=pTableView->currentIndex().row();
+
+    if(nRow!=-1)
+    {
+        QModelIndex index=pTableView->selectionModel()->selectedIndexes().at(0);
+
+        qint64 nOffset=pTableView->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
+
+        SectionHeaderWidget *pSectionHeaderWidget=new SectionHeaderWidget(getDevice(),getOptions(),(quint32)nRow,nOffset,type,this);
+
+        DialogSectionHeader dsh(this);
+        dsh.setWidget(pSectionHeaderWidget);
+        dsh.setData(typeIdToString(type));
+        dsh.setEdited(isEdited());
+
+        connect(&dsh,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+
+        dsh.exec();
+
+        reloadData();
+
+        pTableView->setCurrentIndex(index);
+    }
+}
+
+QString ELFWidget::typeIdToString(int type)
+{
+    QString sResult="Unknown";
+
+    switch(type)
+    {
+        case SELF::TYPE_SYMBOLTABLE:    sResult=QString("Symbol table");    break;
+    }
+
+    return sResult;
+}

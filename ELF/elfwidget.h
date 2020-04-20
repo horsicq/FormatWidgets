@@ -87,6 +87,14 @@ private slots:
     void on_tableWidget_Elf_Phdr_doubleClicked(const QModelIndex &index);
     void on_tableWidget_DynamicArrayTags_doubleClicked(const QModelIndex &index);
 
+    void on_tableView_SymbolTable_customContextMenuRequested(const QPoint &pos);
+
+    void editSymbol();
+
+    void showSectionHeader(int type,QTableView *pTableView);
+
+    static QString typeIdToString(int type);
+
 private:
     // TODO rename
     enum CB
