@@ -69,7 +69,6 @@ private slots:
 
     void on_tableWidget_Elf_Ehdr_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
 
-    void on_tableWidget_Elf_Shdr_customContextMenuRequested(const QPoint &pos);
     void on_tableWidget_Elf_Phdr_customContextMenuRequested(const QPoint &pos);
 
     void editSectionHeader();
@@ -94,6 +93,10 @@ private slots:
     void showSectionHeader(int type,QTableView *pTableView);
 
     static QString typeIdToString(int type);
+
+    void on_tableView_Elf_Shdr_doubleClicked(const QModelIndex &index);
+
+    void on_tableView_Elf_Shdr_customContextMenuRequested(const QPoint &pos);
 
 private:
     // TODO rename

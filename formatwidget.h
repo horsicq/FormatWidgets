@@ -142,6 +142,8 @@ public:
 
     void ajustTableView(ProcessData *pProcessData, QStandardItemModel **ppModel, QTableView *pTableView);
 
+    void showSectionHex(QTableView *pTableView);
+
 signals:
     void editState(bool bState);
 

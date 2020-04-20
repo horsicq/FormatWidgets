@@ -211,6 +211,25 @@ void FormatWidget::ajustTableView(ProcessData *pProcessData, QStandardItemModel 
     delete pOldModel; // TODO Thread
 }
 
+void FormatWidget::showSectionHex(QTableView *pTableView)
+{
+    int nRow=pTableView->currentIndex().row();
+
+    if(nRow!=-1)
+    {
+        QModelIndex index=pTableView->selectionModel()->selectedIndexes().at(0);
+
+        qint64 nOffset=pTableView->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
+        qint64 nSize=pTableView->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
+
+        showHex(nOffset,nSize);
+
+        reloadData();
+
+        pTableView->setCurrentIndex(index);
+    }
+}
+
 //void FormatWidget::resizeToolsWidget(QWidget *pParent, ToolsWidget *pToolWidget)
 //{
 //    qint32 nHeight=pParent->height();
@@ -270,6 +289,8 @@ void FormatWidget::showHex(qint64 nOffset, qint64 nSize)
     DialogHex dialogHex(this,pDevice,&hexOptions);
 
     dialogHex.exec();
+
+    // TODO Connect edited !!!
 
     reloadData();
 }

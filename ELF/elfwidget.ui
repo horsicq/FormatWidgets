@@ -208,7 +208,7 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QTableWidget" name="tableWidget_Elf_Shdr">
+         <widget class="QTableView" name="tableView_Elf_Shdr">
           <property name="contextMenuPolicy">
            <enum>Qt::CustomContextMenu</enum>
           </property>
@@ -221,14 +221,17 @@
           <property name="selectionBehavior">
            <enum>QAbstractItemView::SelectRows</enum>
           </property>
-          <attribute name="horizontalHeaderVisible">
-           <bool>false</bool>
+          <attribute name="horizontalHeaderDefaultSectionSize">
+           <number>29</number>
           </attribute>
           <attribute name="verticalHeaderVisible">
            <bool>false</bool>
           </attribute>
+          <attribute name="verticalHeaderMinimumSectionSize">
+           <number>20</number>
+          </attribute>
           <attribute name="verticalHeaderDefaultSectionSize">
-           <number>21</number>
+           <number>20</number>
           </attribute>
          </widget>
         </item>

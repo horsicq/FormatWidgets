@@ -33,22 +33,135 @@ ELFProcessData::ELFProcessData(int type, QStandardItemModel **ppModel, XELF *pEL
 
 void ELFProcessData::_process()
 {
-    if(type==SELF::TYPE_SYMBOLTABLE)
+    if(type==SELF::TYPE_Elf_Shdr)
+    {
+        bool bIs64=pELF->is64();
+
+        QList<QString> listLabels;
+        listLabels.append("");
+
+        if(bIs64)
+        {
+            listLabels.append(getStructList(N_Elf_Shdr::records64,N_Elf_Shdr::__data_size));
+        }
+        else
+        {
+            listLabels.append(getStructList(N_Elf_Shdr::records32,N_Elf_Shdr::__data_size));
+        }
+
+        listLabels.append("Name");
+        listLabels.append("Type");
+
+        QMap<quint64,QString> mapTypes=XELF::getSectionTypesS();
+
+        QList<XELF_DEF::Elf64_Shdr> listSections64;
+        QList<XELF_DEF::Elf32_Shdr> listSections32;
+
+        int nCount=0;
+
+        if(bIs64)
+        {
+            listSections64=pELF->getElf64_ShdrList();
+            nCount=listSections64.count();
+        }
+        else
+        {
+            listSections32=pELF->getElf32_ShdrList();
+            nCount=listSections32.count();
+        }
+
+        *ppModel=new QStandardItemModel(nCount,listLabels.count());
+
+        setMaximum(nCount);
+
+        setHeader(*ppModel,&listLabels);
+
+        quint32 nMainStringSection=pELF->getSectionStringTable();
+
+        XBinary::OFFSETSIZE osStringTable=pELF->getSectionOffsetSize(nMainStringSection);
+
+        for(int i=0; i<nCount; i++)
+        {
+            if(bIs64)
+            {
+                QStandardItem *pItem=new QStandardItem(QString::number(i));
+
+                if(pELF->isImage())
+                {
+                    pItem->setData(listSections64.at(i).sh_addr,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+                }
+                else
+                {
+                    pItem->setData(listSections64.at(i).sh_offset,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+                }
+
+                pItem->setData(listSections64.at(i).sh_size,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
+                pItem->setData(listSections64.at(i).sh_addr,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS);
+
+                (*ppModel)->setItem(i,0,                              pItem);
+                (*ppModel)->setItem(i,N_Elf_Shdr::sh_name+1,          new QStandardItem(XBinary::valueToHex(listSections64.at(i).sh_name)));
+                (*ppModel)->setItem(i,N_Elf_Shdr::sh_type+1,          new QStandardItem(XBinary::valueToHex(listSections64.at(i).sh_type)));
+                (*ppModel)->setItem(i,N_Elf_Shdr::sh_flags+1,         new QStandardItem(XBinary::valueToHex(listSections64.at(i).sh_flags)));
+                (*ppModel)->setItem(i,N_Elf_Shdr::sh_addr+1,          new QStandardItem(XBinary::valueToHex(listSections64.at(i).sh_addr)));
+                (*ppModel)->setItem(i,N_Elf_Shdr::sh_offset+1,        new QStandardItem(XBinary::valueToHex(listSections64.at(i).sh_offset)));
+                (*ppModel)->setItem(i,N_Elf_Shdr::sh_size+1,          new QStandardItem(XBinary::valueToHex(listSections64.at(i).sh_size)));
+                (*ppModel)->setItem(i,N_Elf_Shdr::sh_link+1,          new QStandardItem(XBinary::valueToHex(listSections64.at(i).sh_link)));
+                (*ppModel)->setItem(i,N_Elf_Shdr::sh_info+1,          new QStandardItem(XBinary::valueToHex(listSections64.at(i).sh_info)));
+                (*ppModel)->setItem(i,N_Elf_Shdr::sh_addralign+1,     new QStandardItem(XBinary::valueToHex(listSections64.at(i).sh_addralign)));
+                (*ppModel)->setItem(i,N_Elf_Shdr::sh_entsize+1,       new QStandardItem(XBinary::valueToHex(listSections64.at(i).sh_entsize)));
+                (*ppModel)->setItem(i,N_Elf_Shdr::sh_entsize+2,       new QStandardItem(pELF->getStringFromIndex(osStringTable.nOffset,osStringTable.nSize,listSections64.at(i).sh_name)));
+                (*ppModel)->setItem(i,N_Elf_Shdr::sh_entsize+3,       new QStandardItem(mapTypes.value(listSections64.at(i).sh_type)));
+            }
+            else
+            {
+                QStandardItem *pItem=new QStandardItem(QString::number(i));
+
+                if(pELF->isImage())
+                {
+                    pItem->setData(listSections32.at(i).sh_addr,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+                }
+                else
+                {
+                    pItem->setData(listSections32.at(i).sh_offset,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+                }
+
+                pItem->setData(listSections32.at(i).sh_size,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
+                pItem->setData(listSections32.at(i).sh_addr,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS);
+
+                (*ppModel)->setItem(i,0,                              pItem);
+                (*ppModel)->setItem(i,N_Elf_Shdr::sh_name+1,          new QStandardItem(XBinary::valueToHex(listSections32.at(i).sh_name)));
+                (*ppModel)->setItem(i,N_Elf_Shdr::sh_type+1,          new QStandardItem(XBinary::valueToHex(listSections32.at(i).sh_type)));
+                (*ppModel)->setItem(i,N_Elf_Shdr::sh_flags+1,         new QStandardItem(XBinary::valueToHex(listSections32.at(i).sh_flags)));
+                (*ppModel)->setItem(i,N_Elf_Shdr::sh_addr+1,          new QStandardItem(XBinary::valueToHex(listSections32.at(i).sh_addr)));
+                (*ppModel)->setItem(i,N_Elf_Shdr::sh_offset+1,        new QStandardItem(XBinary::valueToHex(listSections32.at(i).sh_offset)));
+                (*ppModel)->setItem(i,N_Elf_Shdr::sh_size+1,          new QStandardItem(XBinary::valueToHex(listSections32.at(i).sh_size)));
+                (*ppModel)->setItem(i,N_Elf_Shdr::sh_link+1,          new QStandardItem(XBinary::valueToHex(listSections32.at(i).sh_link)));
+                (*ppModel)->setItem(i,N_Elf_Shdr::sh_info+1,          new QStandardItem(XBinary::valueToHex(listSections32.at(i).sh_info)));
+                (*ppModel)->setItem(i,N_Elf_Shdr::sh_addralign+1,     new QStandardItem(XBinary::valueToHex(listSections32.at(i).sh_addralign)));
+                (*ppModel)->setItem(i,N_Elf_Shdr::sh_entsize+1,       new QStandardItem(XBinary::valueToHex(listSections32.at(i).sh_entsize)));
+                (*ppModel)->setItem(i,N_Elf_Shdr::sh_entsize+2,       new QStandardItem(pELF->getStringFromIndex(osStringTable.nOffset,osStringTable.nSize,listSections32.at(i).sh_name)));
+                (*ppModel)->setItem(i,N_Elf_Shdr::sh_entsize+3,       new QStandardItem(mapTypes.value(listSections32.at(i).sh_type)));
+            }
+
+            incValue();
+        }
+    }
+    else if(type==SELF::TYPE_SYMBOLTABLE)
     {
         if(pELF->is64())
         {
-            QList<XELF_DEF::Elf64_Sym> listSymbols=pELF->getElf64_SymList(nOffset,nSize);
-
-            int nCount=listSymbols.count();
-
-            *ppModel=new QStandardItemModel(nCount,N_Elf64_Sym::__data_size+2);
-
-            setMaximum(nCount);
-
             QList<QString> listLabels;
             listLabels.append("");
             listLabels.append(getStructList(N_Elf64_Sym::records,N_Elf64_Sym::__data_size));
             listLabels.append("Name");
+
+            QList<XELF_DEF::Elf64_Sym> listSymbols=pELF->getElf64_SymList(nOffset,nSize);
+
+            int nCount=listSymbols.count();
+
+            *ppModel=new QStandardItemModel(nCount,listLabels.count());
+
+            setMaximum(nCount);
 
             setHeader(*ppModel,&listLabels);
 
@@ -58,37 +171,37 @@ void ELFProcessData::_process()
                 pItem->setText(QString::number(i));
                 pItem->setTextAlignment(Qt::AlignRight);
 
-                pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET,nOffset+i*sizeof(XELF_DEF::Elf64_Sym));
+                pItem->setData(nOffset+i*sizeof(XELF_DEF::Elf64_Sym),Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
 
-                (*ppModel)->setItem(i,0,pItem);
-                (*ppModel)->setItem(i,N_Elf64_Sym::st_name+1,          new QStandardItem(XBinary::valueToHex(listSymbols.at(i).st_name)));
-                (*ppModel)->setItem(i,N_Elf64_Sym::st_info+1,          new QStandardItem(XBinary::valueToHex(listSymbols.at(i).st_info)));
-                (*ppModel)->setItem(i,N_Elf64_Sym::st_other+1,         new QStandardItem(XBinary::valueToHex(listSymbols.at(i).st_other)));
-                (*ppModel)->setItem(i,N_Elf64_Sym::st_shndx+1,         new QStandardItem(XBinary::valueToHex(listSymbols.at(i).st_shndx)));
-                (*ppModel)->setItem(i,N_Elf64_Sym::st_value+1,         new QStandardItem(XBinary::valueToHex(listSymbols.at(i).st_value)));
-                (*ppModel)->setItem(i,N_Elf64_Sym::st_size+1,          new QStandardItem(XBinary::valueToHex(listSymbols.at(i).st_size)));
+                (*ppModel)->setItem(i,0,                                pItem);
+                (*ppModel)->setItem(i,N_Elf64_Sym::st_name+1,           new QStandardItem(XBinary::valueToHex(listSymbols.at(i).st_name)));
+                (*ppModel)->setItem(i,N_Elf64_Sym::st_info+1,           new QStandardItem(XBinary::valueToHex(listSymbols.at(i).st_info)));
+                (*ppModel)->setItem(i,N_Elf64_Sym::st_other+1,          new QStandardItem(XBinary::valueToHex(listSymbols.at(i).st_other)));
+                (*ppModel)->setItem(i,N_Elf64_Sym::st_shndx+1,          new QStandardItem(XBinary::valueToHex(listSymbols.at(i).st_shndx)));
+                (*ppModel)->setItem(i,N_Elf64_Sym::st_value+1,          new QStandardItem(XBinary::valueToHex(listSymbols.at(i).st_value)));
+                (*ppModel)->setItem(i,N_Elf64_Sym::st_size+1,           new QStandardItem(XBinary::valueToHex(listSymbols.at(i).st_size)));
 
                 QString sName=pELF->getStringFromIndex(nStringTableOffset,nStringTableSize,listSymbols.at(i).st_name);
 
-                (*ppModel)->setItem(i,N_Elf64_Sym::st_size+2,          new QStandardItem(sName));
+                (*ppModel)->setItem(i,N_Elf64_Sym::st_size+2,           new QStandardItem(sName));
 
                 incValue();
             }
         }
         else
         {
-            QList<XELF_DEF::Elf32_Sym> listSymbols=pELF->getElf32_SymList(nOffset,nSize);
-
-            int nCount=listSymbols.count();
-
-            *ppModel=new QStandardItemModel(nCount,N_Elf32_Sym::__data_size+2);
-
-            setMaximum(nCount);
-
             QList<QString> listLabels;
             listLabels.append("");
             listLabels.append(getStructList(N_Elf32_Sym::records,N_Elf32_Sym::__data_size));
             listLabels.append("Name");
+
+            QList<XELF_DEF::Elf32_Sym> listSymbols=pELF->getElf32_SymList(nOffset,nSize);
+
+            int nCount=listSymbols.count();
+
+            *ppModel=new QStandardItemModel(nCount,listLabels.count());
+
+            setMaximum(nCount);
 
             setHeader(*ppModel,&listLabels);
 
@@ -98,15 +211,15 @@ void ELFProcessData::_process()
                 pItem->setText(QString::number(i));
                 pItem->setTextAlignment(Qt::AlignRight);
 
-                pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET,nOffset+i*sizeof(XELF_DEF::Elf32_Sym));
+                pItem->setData(nOffset+i*sizeof(XELF_DEF::Elf32_Sym),Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
 
-                (*ppModel)->setItem(i,0,pItem);
-                (*ppModel)->setItem(i,N_Elf32_Sym::st_name+1,          new QStandardItem(XBinary::valueToHex(listSymbols.at(i).st_name)));
-                (*ppModel)->setItem(i,N_Elf32_Sym::st_value+1,         new QStandardItem(XBinary::valueToHex(listSymbols.at(i).st_value)));
-                (*ppModel)->setItem(i,N_Elf32_Sym::st_size+1,          new QStandardItem(XBinary::valueToHex(listSymbols.at(i).st_size)));
-                (*ppModel)->setItem(i,N_Elf32_Sym::st_info+1,          new QStandardItem(XBinary::valueToHex(listSymbols.at(i).st_info)));
-                (*ppModel)->setItem(i,N_Elf32_Sym::st_other+1,         new QStandardItem(XBinary::valueToHex(listSymbols.at(i).st_other)));
-                (*ppModel)->setItem(i,N_Elf32_Sym::st_shndx+1,         new QStandardItem(XBinary::valueToHex(listSymbols.at(i).st_shndx)));
+                (*ppModel)->setItem(i,0,                                pItem);
+                (*ppModel)->setItem(i,N_Elf32_Sym::st_name+1,           new QStandardItem(XBinary::valueToHex(listSymbols.at(i).st_name)));
+                (*ppModel)->setItem(i,N_Elf32_Sym::st_value+1,          new QStandardItem(XBinary::valueToHex(listSymbols.at(i).st_value)));
+                (*ppModel)->setItem(i,N_Elf32_Sym::st_size+1,           new QStandardItem(XBinary::valueToHex(listSymbols.at(i).st_size)));
+                (*ppModel)->setItem(i,N_Elf32_Sym::st_info+1,           new QStandardItem(XBinary::valueToHex(listSymbols.at(i).st_info)));
+                (*ppModel)->setItem(i,N_Elf32_Sym::st_other+1,          new QStandardItem(XBinary::valueToHex(listSymbols.at(i).st_other)));
+                (*ppModel)->setItem(i,N_Elf32_Sym::st_shndx+1,          new QStandardItem(XBinary::valueToHex(listSymbols.at(i).st_shndx)));
 
                 QString sName=pELF->getStringFromIndex(nStringTableOffset,nStringTableSize,listSymbols.at(i).st_name);
 
@@ -145,6 +258,41 @@ void ELFProcessData::ajustTableView(QWidget *pWidget,QTableView *pTableView)
             pTableView->setColumnWidth(N_Elf32_Sym::st_other+1,nSymbolWidth*3);
             pTableView->setColumnWidth(N_Elf32_Sym::st_shndx+1,nSymbolWidth*4);
             pTableView->setColumnWidth(N_Elf32_Sym::st_shndx+2,nSymbolWidth*35);
+        }
+    }
+    else if(type==SELF::TYPE_Elf_Shdr)
+    {
+        if(pELF->is64())
+        {
+            pTableView->setColumnWidth(0,nSymbolWidth*4);
+            pTableView->setColumnWidth(1,nSymbolWidth*8);
+            pTableView->setColumnWidth(2,nSymbolWidth*8);
+            pTableView->setColumnWidth(3,nSymbolWidth*12);
+            pTableView->setColumnWidth(4,nSymbolWidth*12);
+            pTableView->setColumnWidth(5,nSymbolWidth*12);
+            pTableView->setColumnWidth(6,nSymbolWidth*12);
+            pTableView->setColumnWidth(7,nSymbolWidth*8);
+            pTableView->setColumnWidth(8,nSymbolWidth*8);
+            pTableView->setColumnWidth(9,nSymbolWidth*12);
+            pTableView->setColumnWidth(10,nSymbolWidth*12);
+            pTableView->setColumnWidth(11,nSymbolWidth*12);
+            pTableView->setColumnWidth(12,nSymbolWidth*12);
+        }
+        else
+        {
+            pTableView->setColumnWidth(0,nSymbolWidth*4);
+            pTableView->setColumnWidth(1,nSymbolWidth*8);
+            pTableView->setColumnWidth(2,nSymbolWidth*8);
+            pTableView->setColumnWidth(3,nSymbolWidth*12);
+            pTableView->setColumnWidth(4,nSymbolWidth*12);
+            pTableView->setColumnWidth(5,nSymbolWidth*12);
+            pTableView->setColumnWidth(6,nSymbolWidth*12);
+            pTableView->setColumnWidth(7,nSymbolWidth*8);
+            pTableView->setColumnWidth(8,nSymbolWidth*8);
+            pTableView->setColumnWidth(9,nSymbolWidth*12);
+            pTableView->setColumnWidth(10,nSymbolWidth*12);
+            pTableView->setColumnWidth(11,nSymbolWidth*12);
+            pTableView->setColumnWidth(12,nSymbolWidth*12);
         }
     }
 }
