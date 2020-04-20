@@ -50,6 +50,11 @@ void BinaryWidget::clear()
     ui->checkBoxReadonly->setChecked(true);
 }
 
+void BinaryWidget::cleanup()
+{
+
+}
+
 void BinaryWidget::reset()
 {
     bInit=false;

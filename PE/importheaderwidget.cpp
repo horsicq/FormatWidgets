@@ -54,6 +54,11 @@ void ImportHeaderWidget::clear()
     ui->checkBoxReadonly->setChecked(true);
 }
 
+void ImportHeaderWidget::cleanup()
+{
+
+}
+
 void ImportHeaderWidget::reset()
 {
     bInit=false;
@@ -150,7 +155,7 @@ void ImportHeaderWidget::blockSignals(bool bState)
 
 void ImportHeaderWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
 {
-    int nSymbolWidth=getSymbolWidth();
+    int nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
 
     pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
     pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*6);

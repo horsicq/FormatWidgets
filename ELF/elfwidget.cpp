@@ -60,6 +60,11 @@ void ELFWidget::clear()
     ui->treeWidgetNavi->clear();
 }
 
+void ELFWidget::cleanup()
+{
+
+}
+
 void ELFWidget::reset()
 {
     stInit.clear();

@@ -44,6 +44,7 @@ public:
     RelocsHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset, QWidget *parent=nullptr);
     ~RelocsHeaderWidget();
     virtual void clear();
+    virtual void cleanup();
     virtual void reset();
     virtual void setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset);
     virtual void reload();

@@ -528,6 +528,20 @@ void FormatWidget::setDateTimeEditReadOnly(XDateTimeEditX **ppDateTimeEdits, int
     }
 }
 
+void FormatWidget::_deleteObjects(QObject **ppObjects, int nCount)
+{
+    nCount=nCount/(sizeof (QObject *));
+
+    for(int i=0; i<nCount; i++)
+    {
+        if(ppObjects[i])
+        {
+            delete (ppObjects[i]);
+            ppObjects[i]=0;
+        }
+    }
+}
+
 void FormatWidget::_blockSignals(QObject **ppObjects, int nCount, bool bState)
 {
     for(int i=0; i<nCount; i++)

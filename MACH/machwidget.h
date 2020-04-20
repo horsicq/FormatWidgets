@@ -39,6 +39,7 @@ public:
     MACHWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *parent=nullptr);
     ~MACHWidget();
     virtual void clear();
+    virtual void cleanup();
     virtual void reset();
     virtual void reload();
 

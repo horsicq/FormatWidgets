@@ -43,6 +43,7 @@ public:
     ELFWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *parent=nullptr);
     ~ELFWidget();
     virtual void clear();
+    virtual void cleanup();
     virtual void reset();
     virtual void reload();
 

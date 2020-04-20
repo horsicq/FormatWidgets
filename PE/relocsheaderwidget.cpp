@@ -53,6 +53,11 @@ void RelocsHeaderWidget::clear()
     ui->checkBoxReadonly->setChecked(true);
 }
 
+void RelocsHeaderWidget::cleanup()
+{
+
+}
+
 void RelocsHeaderWidget::reset()
 {
     bInit=false;
@@ -125,7 +130,7 @@ void RelocsHeaderWidget::blockSignals(bool bState)
 
 void RelocsHeaderWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
 {
-    int nSymbolWidth=getSymbolWidth();
+    int nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
 
     pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
     pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*6);

@@ -89,6 +89,7 @@ public:
     ~FormatWidget();
     virtual void clear()=0;
     virtual void reset()=0;
+    virtual void cleanup()=0;
     void setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 __nNumber,qint64 nOffset);
     virtual void reload()=0;
     QIODevice *getDevice();
@@ -107,6 +108,8 @@ public:
     void setComboBoxesReadOnly(XComboBoxEx **ppComboBoxes,int nCount,bool bState);
     void setPushButtonReadOnly(QPushButton **ppPushButtons,int nCount,bool bState);
     void setDateTimeEditReadOnly(XDateTimeEditX **ppDateTimeEdits,int nCount,bool bState);
+
+    void _deleteObjects(QObject **ppObjects,int nCount);
 
     void _blockSignals(QObject **ppObjects,int nCount,bool bState);
     XComboBoxEx *createComboBox(QTableWidget *pTableWidget, QMap<quint64,QString> mapData, int type, int nData, XComboBoxEx::CBTYPE cbtype,quint64 nMask=0);

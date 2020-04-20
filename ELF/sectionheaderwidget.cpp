@@ -55,6 +55,11 @@ void SectionHeaderWidget::clear()
     ui->checkBoxReadonly->setChecked(true);
 }
 
+void SectionHeaderWidget::cleanup()
+{
+
+}
+
 void SectionHeaderWidget::reset()
 {
     bInit=false;

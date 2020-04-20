@@ -46,6 +46,11 @@ void ProgramHeaderWidget::clear()
     ui->checkBoxReadonly->setChecked(true);
 }
 
+void ProgramHeaderWidget::cleanup()
+{
+
+}
+
 void ProgramHeaderWidget::reset()
 {
     bInit=false;

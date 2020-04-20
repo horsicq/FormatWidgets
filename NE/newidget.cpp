@@ -58,6 +58,11 @@ void NEWidget::clear()
     ui->treeWidgetNavi->clear();
 }
 
+void NEWidget::cleanup()
+{
+
+}
+
 void NEWidget::reset()
 {
     memset(bInit,0,sizeof bInit);
@@ -253,7 +258,7 @@ void NEWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
 {
     Q_UNUSED(type);
 
-    int nSymbolWidth=getSymbolWidth();
+    int nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
 
     pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_NAME,QHeaderView::ResizeToContents);
     pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_OFFSET,QHeaderView::ResizeToContents);

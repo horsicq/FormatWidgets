@@ -52,6 +52,11 @@ void DebugHeaderWidget::clear()
     ui->checkBoxReadonly->setChecked(true);
 }
 
+void DebugHeaderWidget::cleanup()
+{
+
+}
+
 void DebugHeaderWidget::reset()
 {
     bInit=false;
@@ -127,7 +132,7 @@ void DebugHeaderWidget::blockSignals(bool bState)
 
 void DebugHeaderWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
 {
-    int nSymbolWidth=getSymbolWidth();
+    int nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
 
     pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
     pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*6);

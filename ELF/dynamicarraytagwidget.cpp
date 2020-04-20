@@ -46,6 +46,11 @@ void DynamicArrayTagWidget::clear()
     ui->checkBoxReadonly->setChecked(true);
 }
 
+void DynamicArrayTagWidget::cleanup()
+{
+
+}
+
 void DynamicArrayTagWidget::reset()
 {
     bInit=false;

@@ -56,6 +56,11 @@ void MACHWidget::clear()
     ui->treeWidgetNavi->clear();
 }
 
+void MACHWidget::cleanup()
+{
+
+}
+
 void MACHWidget::reset()
 {
     memset(bInit,0,sizeof bInit);
@@ -196,7 +201,7 @@ void MACHWidget::blockSignals(bool bState)
 
 void MACHWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
 {
-    int nSymbolWidth=getSymbolWidth();
+    int nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
 
     pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_NAME,QHeaderView::ResizeToContents);
     pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_OFFSET,QHeaderView::ResizeToContents);
@@ -553,7 +558,7 @@ void MACHWidget::on_checkBoxReadonly_toggled(bool checked)
 
 bool MACHWidget::createSectionTable(int type, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount)
 {
-    int nSymbolWidth=getSymbolWidth();
+    int nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
     QStringList slHeader;
 
     // TODO

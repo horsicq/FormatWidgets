@@ -56,6 +56,11 @@ void MSDOSWidget::clear()
     ui->treeWidgetNavi->clear();
 }
 
+void MSDOSWidget::cleanup()
+{
+
+}
+
 void MSDOSWidget::reset()
 {
     memset(bInit,0,sizeof bInit);
@@ -174,7 +179,7 @@ void MSDOSWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
 {
     Q_UNUSED(type);
 
-    int nSymbolWidth=getSymbolWidth();
+    int nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
 
     pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*12);
     pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);

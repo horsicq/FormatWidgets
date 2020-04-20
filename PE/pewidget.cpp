@@ -67,6 +67,11 @@ void PEWidget::clear()
     ui->treeWidgetNavi->clear();
 }
 
+void PEWidget::cleanup()
+{
+
+}
+
 void PEWidget::reset()
 {
     memset(bInit,0,sizeof bInit);
@@ -1872,7 +1877,7 @@ void PEWidget::on_tableWidget_Relocs_currentCellChanged(int currentRow, int curr
 
 void PEWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
 {
-    int nSymbolWidth=getSymbolWidth();
+    int nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
 
     pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
     pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*6);
@@ -1937,7 +1942,7 @@ void PEWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
 
 bool PEWidget::createSectionTable(int type, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount)
 {
-    int nSymbolWidth=getSymbolWidth();
+    int nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
 
     QStringList slHeader;
 
