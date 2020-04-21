@@ -122,6 +122,9 @@ private:
     QStandardItemModel *tvModel[SELF::__TYPE_size];
 
     QSet<QString> stInit;
+
+    qint32 nLastType;
+    QString sLastInit;
 };
 
 #endif // ELFWIDGET_H

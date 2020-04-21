@@ -34,6 +34,8 @@ ELFWidget::ELFWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *par
 {
     ui->setupUi(this);
 
+    nLastType=-1;
+
     setData(pDevice,pOptions,0,0,0);
     reload();
 }
@@ -265,6 +267,15 @@ void ELFWidget::reloadData()
     qint64 nDataExtraSize=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_EXTRASIZE).toLongLong();
 
     QString sInit=QString("%1-%2-%3").arg(nType).arg(nDataOffset).arg(nDataSize);
+
+    if((nLastType==nType)&&(sInit!=sLastInit))
+    {
+        stInit.remove(sInit);
+    }
+
+    nLastType=nType;
+    sLastInit=sInit;
+
 
     ui->stackedWidgetInfo->setCurrentIndex(nType);
 
