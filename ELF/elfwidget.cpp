@@ -422,10 +422,12 @@ void ELFWidget::reloadData()
 
                 ajustTableView(&elfProcessData,&tvModel[SELF::TYPE_Elf_Shdr],ui->tableView_Elf_Shdr);
 
-//                if(nCount)
-//                {
-//                    loadShdr(0);
-//                }
+                connect(ui->tableView_Elf_Shdr->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_Elf_Shdr_currentRowChanged(QModelIndex,QModelIndex)));
+
+                if(tvModel[SELF::TYPE_Elf_Shdr]->rowCount())
+                {
+                    ui->tableView_Elf_Shdr->setCurrentIndex(ui->tableView_Elf_Shdr->model()->index(0,0));
+                }
             }
         }
         else if(nType==SELF::TYPE_Elf_Phdr)
@@ -874,18 +876,6 @@ void ELFWidget::on_checkBoxReadonly_toggled(bool checked)
     setReadonly(checked);
 }
 
-void ELFWidget::on_tableWidget_Elf_Shdr_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
-{
-    Q_UNUSED(currentColumn)
-    Q_UNUSED(previousRow)
-    Q_UNUSED(previousColumn)
-
-    if(currentRow!=-1)
-    {
-        loadShdr(currentRow);
-    }
-}
-
 void ELFWidget::on_tableWidget_Elf_Phdr_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
 {
     Q_UNUSED(currentColumn)
@@ -903,13 +893,18 @@ void ELFWidget::on_pushButtonReload_clicked()
     reload();
 }
 
-void ELFWidget::loadShdr(int nNumber)
+void ELFWidget::loadShdr(int nRow)
 {
-//    qint64 nOffset=ui->tableWidget_Elf_Shdr->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
-//    qint64 nSize=ui->tableWidget_Elf_Shdr->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
-//    qint64 nAddress=ui->tableWidget_Elf_Shdr->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
+    if(nRow!=-1)
+    {
+        QModelIndex index=ui->tableView_Elf_Shdr->model()->index(nRow,0);
 
-//    loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SELF::TYPE_Elf_Shdr],ui->widgetHex_Elf_Shdr);
+        qint64 nOffset=ui->tableView_Elf_Shdr->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
+        qint64 nSize=ui->tableView_Elf_Shdr->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
+        qint64 nAddress=ui->tableView_Elf_Shdr->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
+
+        loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SELF::TYPE_Elf_Shdr],ui->widgetHex_Elf_Shdr);
+    }
 }
 
 void ELFWidget::loadPhdr(int nNumber)
@@ -1177,4 +1172,17 @@ void ELFWidget::on_tableView_SymbolTable_doubleClicked(const QModelIndex &index)
     Q_UNUSED(index)
 
     editSymbol();
+}
+
+void ELFWidget::onTableView_Elf_Shdr_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
+    Q_UNUSED(current)
+    Q_UNUSED(previous)
+
+    int currentRow=current.row();
+
+    if(currentRow!=-1)
+    {
+        loadShdr(currentRow);
+    }
 }

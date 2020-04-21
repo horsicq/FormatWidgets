@@ -58,12 +58,12 @@ private slots:
     void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
     void on_checkBoxReadonly_toggled(bool checked);
     bool createSectionTable(int type, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount);
-    void on_tableWidget_Elf_Shdr_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
+
     void on_tableWidget_Elf_Phdr_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
 
     void on_pushButtonReload_clicked();
 
-    void loadShdr(int nNumber);
+    void loadShdr(int nRow);
     void loadPhdr(int nNumber);
     void loadNote(int nNumber);
 
@@ -95,6 +95,8 @@ private slots:
     void on_tableView_Elf_Shdr_doubleClicked(const QModelIndex &index);
     void on_tableView_Elf_Shdr_customContextMenuRequested(const QPoint &pos);
     void on_tableView_SymbolTable_doubleClicked(const QModelIndex &index);
+
+    void onTableView_Elf_Shdr_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
 
 private:
     // TODO rename
