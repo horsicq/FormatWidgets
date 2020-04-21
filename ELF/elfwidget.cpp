@@ -1065,13 +1065,6 @@ void ELFWidget::on_tableWidget_Notes_currentCellChanged(int currentRow, int curr
     }
 }
 
-void ELFWidget::on_tableWidget_Elf_Shdr_doubleClicked(const QModelIndex &index)
-{
-    Q_UNUSED(index)
-
-    editSectionHeader();
-}
-
 void ELFWidget::on_tableWidget_Elf_Phdr_doubleClicked(const QModelIndex &index)
 {
     Q_UNUSED(index)
@@ -1140,7 +1133,9 @@ QString ELFWidget::typeIdToString(int type)
 
     switch(type)
     {
-        case SELF::TYPE_SYMBOLTABLE:    sResult=QString("Symbol table");    break;
+        case SELF::TYPE_Elf_Shdr:       sResult=QString("Section header");    break;
+        case SELF::TYPE_Elf_Phdr:       sResult=QString("Program header");    break;
+        case SELF::TYPE_SYMBOLTABLE:    sResult=QString("Symbol header");    break;
     }
 
     return sResult;
@@ -1167,8 +1162,8 @@ void ELFWidget::on_tableView_Elf_Shdr_customContextMenuRequested(const QPoint &p
 
         QAction actionHex(tr("Hex"),this);
         connect(&actionHex, SIGNAL(triggered()), this, SLOT(sectionHex()));
-        // TODO !!!
-//        actionHex.setEnabled(ui->tableView_Elf_Shdr->item(nRow,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong());
+
+        actionHex.setEnabled(getTableViewItemSize(ui->tableView_Elf_Shdr,nRow));
         contextMenu.addAction(&actionHex);
 
         // TODO Entropy

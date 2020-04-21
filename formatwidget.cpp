@@ -230,6 +230,19 @@ void FormatWidget::showSectionHex(QTableView *pTableView)
     }
 }
 
+qint64 FormatWidget::getTableViewItemSize(QTableView *pTableView, int nRow)
+{
+    qint64 nResult=0;
+
+    if(nRow!=-1)
+    {
+        QModelIndex index=pTableView->selectionModel()->selectedIndexes().at(0);
+        nResult=pTableView->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
+    }
+
+    return nResult;
+}
+
 //void FormatWidget::resizeToolsWidget(QWidget *pParent, ToolsWidget *pToolWidget)
 //{
 //    qint32 nHeight=pParent->height();

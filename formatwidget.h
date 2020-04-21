@@ -143,6 +143,7 @@ public:
     void ajustTableView(ProcessData *pProcessData, QStandardItemModel **ppModel, QTableView *pTableView);
 
     void showSectionHex(QTableView *pTableView);
+    qint64 getTableViewItemSize(QTableView *pTableView,int nRow);
 
 signals:
     void editState(bool bState);

@@ -82,7 +82,6 @@ private slots:
 
     void on_tableWidget_Notes_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
 
-    void on_tableWidget_Elf_Shdr_doubleClicked(const QModelIndex &index);
     void on_tableWidget_Elf_Phdr_doubleClicked(const QModelIndex &index);
     void on_tableWidget_DynamicArrayTags_doubleClicked(const QModelIndex &index);
 
