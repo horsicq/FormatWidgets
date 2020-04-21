@@ -1171,3 +1171,10 @@ void ELFWidget::on_tableView_Elf_Shdr_customContextMenuRequested(const QPoint &p
         contextMenu.exec(ui->tableView_Elf_Shdr->viewport()->mapToGlobal(pos));
     }
 }
+
+void ELFWidget::on_tableView_SymbolTable_doubleClicked(const QModelIndex &index)
+{
+    Q_UNUSED(index)
+
+    editSymbol();
+}

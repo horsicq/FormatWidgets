@@ -97,6 +97,8 @@ private slots:
 
     void on_tableView_Elf_Shdr_customContextMenuRequested(const QPoint &pos);
 
+    void on_tableView_SymbolTable_doubleClicked(const QModelIndex &index);
+
 private:
     // TODO rename
     enum CB

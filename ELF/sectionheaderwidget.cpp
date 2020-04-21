@@ -59,6 +59,12 @@ SectionHeaderWidget::SectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pO
         nComboBoxSize=N_Elf_DynamicArrayTags::__CB_size;
         nInvWidgetSize=N_Elf_DynamicArrayTags::__INV_size;
     }
+    else if(nType==SELF::TYPE_SYMBOLTABLE)
+    {
+        nLineEditSize=N_Elf32_Sym::__data_size;
+        nComboBoxSize=N_Elf32_Sym::__CB_size;
+        nInvWidgetSize=N_Elf32_Sym::__INV_size;
+    }
 
     if(nLineEditSize)
     {
@@ -272,6 +278,11 @@ void SectionHeaderWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget
             pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*12);
             pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
             break;
+
+        case SELF::TYPE_SYMBOLTABLE:
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*12);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
+            break;
     }
 }
 
@@ -412,6 +423,21 @@ void SectionHeaderWidget::reloadData()
                 ppComboBox[N_Elf_DynamicArrayTags::CB_TAG]->setValue(nTag);
 
                 qint64 nSize=elf.getDynamicArraySize();
+                qint64 nAddress=elf.offsetToRelAddress(nOffset);
+
+                loadHexSubdevice(nOffset,nSize,nAddress,&pSubDevice,ui->widgetHex);
+
+                blockSignals(false);
+            }
+            else if(nType==SELF::TYPE_SYMBOLTABLE)
+            {
+                bInit=createHeaderTable(SELF::TYPE_SYMBOLTABLE,ui->tableWidget,bIs64?(N_Elf64_Sym::records):(N_Elf32_Sym::records),ppLinedEdit,N_Elf32_Sym::__data_size,getNumber(),getOffset());
+
+                blockSignals(true);
+
+                qint64 nOffset=getOffset();
+
+                qint64 nSize=elf.getSymSize();
                 qint64 nAddress=elf.offsetToRelAddress(nOffset);
 
                 loadHexSubdevice(nOffset,nSize,nAddress,&pSubDevice,ui->widgetHex);

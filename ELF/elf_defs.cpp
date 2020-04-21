@@ -212,11 +212,11 @@ namespace N_Elf64_Sym
 {
 const FW_DEF::HEADER_RECORD records[]=
 {
-    {st_name,               "st_name",              offsetof(XELF_DEF::Elf32_Sym,st_name),          4,      "Elf64_Word",           FW_DEF::VAL_TYPE_DATA},
-    {st_info,               "st_info",              offsetof(XELF_DEF::Elf32_Sym,st_info),          1,      "unsigned char",        FW_DEF::VAL_TYPE_DATA},
-    {st_other,              "st_other",             offsetof(XELF_DEF::Elf32_Sym,st_other),         1,      "unsigned char",        FW_DEF::VAL_TYPE_DATA},
-    {st_shndx,              "st_shndx",             offsetof(XELF_DEF::Elf32_Sym,st_shndx),         2,      "Elf64_Half",           FW_DEF::VAL_TYPE_DATA},
-    {st_value,              "st_value",             offsetof(XELF_DEF::Elf32_Sym,st_value),         8,      "Elf64_Addr",           FW_DEF::VAL_TYPE_DATA},
-    {st_size,               "st_size",              offsetof(XELF_DEF::Elf32_Sym,st_size),          8,      "Elf64_Xword",          FW_DEF::VAL_TYPE_SIZE},
+    {st_name,               "st_name",              offsetof(XELF_DEF::Elf64_Sym,st_name),          4,      "Elf64_Word",           FW_DEF::VAL_TYPE_DATA},
+    {st_info,               "st_info",              offsetof(XELF_DEF::Elf64_Sym,st_info),          1,      "unsigned char",        FW_DEF::VAL_TYPE_DATA},
+    {st_other,              "st_other",             offsetof(XELF_DEF::Elf64_Sym,st_other),         1,      "unsigned char",        FW_DEF::VAL_TYPE_DATA},
+    {st_shndx,              "st_shndx",             offsetof(XELF_DEF::Elf64_Sym,st_shndx),         2,      "Elf64_Half",           FW_DEF::VAL_TYPE_DATA},
+    {st_value,              "st_value",             offsetof(XELF_DEF::Elf64_Sym,st_value),         8,      "Elf64_Addr",           FW_DEF::VAL_TYPE_DATA},
+    {st_size,               "st_size",              offsetof(XELF_DEF::Elf64_Sym,st_size),          8,      "Elf64_Xword",          FW_DEF::VAL_TYPE_SIZE},
 };
 }
