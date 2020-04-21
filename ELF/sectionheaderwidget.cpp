@@ -239,7 +239,7 @@ bool SectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int
                             case N_Elf64_Sym::st_name:      elf.setElf64_Sym_st_name(nOffset,(quint32)nValue,elf.isBigEndian());    break;
                             case N_Elf64_Sym::st_info:      elf.setElf64_Sym_st_info(nOffset,(quint8)nValue);                       break;
                             case N_Elf64_Sym::st_other:     elf.setElf64_Sym_st_other(nOffset,(quint8)nValue);                      break;
-                            case N_Elf64_Sym::st_shndx:     elf.setElf64_Sym_st_name(nOffset,(quint16)nValue,elf.isBigEndian());    break;
+                            case N_Elf64_Sym::st_shndx:     elf.setElf64_Sym_st_shndx(nOffset,(quint16)nValue,elf.isBigEndian());   break;
                             case N_Elf64_Sym::st_value:     elf.setElf64_Sym_st_value(nOffset,(quint64)nValue,elf.isBigEndian());   break;
                             case N_Elf64_Sym::st_size:      elf.setElf64_Sym_st_size(nOffset,(quint64)nValue,elf.isBigEndian());    break;
                         }
@@ -253,7 +253,7 @@ bool SectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int
                             case N_Elf32_Sym::st_size:      elf.setElf32_Sym_st_size(nOffset,(quint32)nValue,elf.isBigEndian());    break;
                             case N_Elf32_Sym::st_info:      elf.setElf32_Sym_st_info(nOffset,(quint8)nValue);                       break;
                             case N_Elf32_Sym::st_other:     elf.setElf32_Sym_st_other(nOffset,(quint8)nValue);                      break;
-                            case N_Elf32_Sym::st_shndx:     elf.setElf32_Sym_st_name(nOffset,(quint16)nValue,elf.isBigEndian());    break;
+                            case N_Elf32_Sym::st_shndx:     elf.setElf32_Sym_st_shndx(nOffset,(quint16)nValue,elf.isBigEndian());   break;
                         }
                     }
 
@@ -286,28 +286,36 @@ void SectionHeaderWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget
 {
     int nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
 
-    pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
-    pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*8);
-    pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*8);
-
     switch(type)
     {
         case SELF::TYPE_Elf_Shdr:
+            pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*8);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*8);
             pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*12);
             pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
             break;
 
         case SELF::TYPE_Elf_Phdr:
+            pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*8);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*8);
             pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*12);
             pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
             break;
 
         case SELF::TYPE_Elf_DynamicArrayTags:
+            pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*8);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*8);
             pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*12);
             pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
             break;
 
         case SELF::TYPE_SYMBOLTABLE:
+            pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*10);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*8);
             pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*12);
             pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
             break;

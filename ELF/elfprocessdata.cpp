@@ -80,7 +80,7 @@ void ELFProcessData::_process()
 
         XBinary::OFFSETSIZE osStringTable=pELF->getSectionOffsetSize(nMainStringSection);
 
-        for(int i=0; i<nCount; i++)
+        for(int i=0;(i<nCount)&&(isRun());i++)
         {
             if(bIs64)
             {

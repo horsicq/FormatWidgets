@@ -92,11 +92,8 @@ private slots:
     void showSectionHeader(int type,QTableView *pTableView);
 
     static QString typeIdToString(int type);
-
     void on_tableView_Elf_Shdr_doubleClicked(const QModelIndex &index);
-
     void on_tableView_Elf_Shdr_customContextMenuRequested(const QPoint &pos);
-
     void on_tableView_SymbolTable_doubleClicked(const QModelIndex &index);
 
 private:

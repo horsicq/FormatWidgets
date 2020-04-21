@@ -1123,7 +1123,7 @@ void ELFWidget::showSectionHeader(int type, QTableView *pTableView)
 
         reloadData();
 
-        pTableView->setCurrentIndex(index);
+        pTableView->setCurrentIndex(pTableView->model()->index(nRow,0));
     }
 }
 

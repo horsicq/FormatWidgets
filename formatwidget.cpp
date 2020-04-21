@@ -186,7 +186,10 @@ QColor FormatWidget::getDisabledColor()
 
 void FormatWidget::setItemEnable(QTableWidgetItem *pItem, bool bState)
 {
-    pItem->setBackgroundColor(bState?(colEnabled):(colDisabled));
+    if(!bState)
+    {
+        pItem->setBackgroundColor(colDisabled);
+    }
 }
 
 void FormatWidget::setLineEdit(XLineEditHEX *pLineEdit, qint32 nMaxLength, QString sText, qint64 nOffset)
@@ -226,7 +229,7 @@ void FormatWidget::showSectionHex(QTableView *pTableView)
 
         reloadData();
 
-        pTableView->setCurrentIndex(index);
+        pTableView->setCurrentIndex(pTableView->model()->index(nRow,0));
     }
 }
 
