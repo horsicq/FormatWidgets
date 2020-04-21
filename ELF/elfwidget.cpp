@@ -438,7 +438,7 @@ void ELFWidget::reloadData()
 
                 ajustTableView(&elfProcessData,&tvModel[SELF::TYPE_Elf_Phdr],ui->tableView_Elf_Phdr);
 
-//                connect(ui->tableView_Elf_Shdr->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_Elf_Shdr_currentRowChanged(QModelIndex,QModelIndex)));
+                connect(ui->tableView_Elf_Phdr->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_Elf_Phdr_currentRowChanged(QModelIndex,QModelIndex)));
 
                 if(tvModel[SELF::TYPE_Elf_Phdr]->rowCount())
                 {
@@ -659,36 +659,6 @@ bool ELFWidget::createSectionTable(int type, QTableWidget *pTableWidget, const F
 
     switch(type)
     {
-        case SELF::TYPE_Elf_Shdr:
-            slHeader.append(tr(""));
-            pTableWidget->setColumnCount(nRecordCount+3);
-            pTableWidget->setColumnWidth(0,nSymbolWidth*4);
-            pTableWidget->setColumnWidth(1,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(2,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(3,nSymbolWidth*12);
-            pTableWidget->setColumnWidth(4,nSymbolWidth*12);
-            pTableWidget->setColumnWidth(5,nSymbolWidth*12);
-            pTableWidget->setColumnWidth(6,nSymbolWidth*12);
-            pTableWidget->setColumnWidth(7,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(8,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(9,nSymbolWidth*12);
-            pTableWidget->setColumnWidth(10,nSymbolWidth*12);
-            break;
-
-        case SELF::TYPE_Elf_Phdr:
-            slHeader.append(tr(""));
-            pTableWidget->setColumnCount(nRecordCount+2);
-            pTableWidget->setColumnWidth(0,nSymbolWidth*4);
-            pTableWidget->setColumnWidth(1,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(2,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(3,nSymbolWidth*12);
-            pTableWidget->setColumnWidth(4,nSymbolWidth*12);
-            pTableWidget->setColumnWidth(5,nSymbolWidth*12);
-            pTableWidget->setColumnWidth(6,nSymbolWidth*12);
-            pTableWidget->setColumnWidth(7,nSymbolWidth*12);
-            pTableWidget->setColumnWidth(8,nSymbolWidth*12);
-            break;
-
         case SELF::TYPE_Elf_DynamicArrayTags:
             slHeader.append(tr(""));
             pTableWidget->setColumnCount(nRecordCount+2);
@@ -713,18 +683,6 @@ bool ELFWidget::createSectionTable(int type, QTableWidget *pTableWidget, const F
             pTableWidget->setColumnWidth(2,nSymbolWidth*30);
             break;
 
-        case SELF::TYPE_SYMBOLTABLE:
-            slHeader.append(tr(""));
-            pTableWidget->setColumnCount(nRecordCount+1);
-            pTableWidget->setColumnWidth(0,nSymbolWidth*4);
-            pTableWidget->setColumnWidth(1,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(2,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(3,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(4,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(5,nSymbolWidth*12);
-            pTableWidget->setColumnWidth(6,nSymbolWidth*12);
-            break;
-
         default:
             pTableWidget->setColumnCount(nRecordCount);
     }
@@ -738,13 +696,6 @@ bool ELFWidget::createSectionTable(int type, QTableWidget *pTableWidget, const F
 
     switch(type)
     {
-        case SELF::TYPE_Elf_Shdr:
-            slHeader.append(tr("Name"));
-            slHeader.append(tr("Type"));
-            break;
-        case SELF::TYPE_Elf_Phdr:
-            slHeader.append(tr("Type"));
-            break;
         case SELF::TYPE_Elf_DynamicArrayTags:
             slHeader.append(tr("Type"));
             break;
@@ -794,18 +745,6 @@ void ELFWidget::on_checkBoxReadonly_toggled(bool checked)
     setReadonly(checked);
 }
 
-void ELFWidget::on_tableWidget_Elf_Phdr_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
-{
-    Q_UNUSED(currentColumn)
-    Q_UNUSED(previousRow)
-    Q_UNUSED(previousColumn)
-
-    if(currentRow!=-1)
-    {
-        loadPhdr(currentRow);
-    }
-}
-
 void ELFWidget::on_pushButtonReload_clicked()
 {
     reload();
@@ -825,13 +764,18 @@ void ELFWidget::loadShdr(int nRow)
     }
 }
 
-void ELFWidget::loadPhdr(int nNumber)
+void ELFWidget::loadPhdr(int nRow)
 {
-//    qint64 nOffset=ui->tableWidget_Elf_Phdr->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
-//    qint64 nSize=ui->tableWidget_Elf_Phdr->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
-//    qint64 nAddress=ui->tableWidget_Elf_Phdr->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
+    if(nRow!=-1)
+    {
+        QModelIndex index=ui->tableView_Elf_Phdr->model()->index(nRow,0);
 
-//    loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SELF::TYPE_Elf_Phdr],ui->widgetHex_Elf_Phdr);
+        qint64 nOffset=ui->tableView_Elf_Phdr->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
+        qint64 nSize=ui->tableView_Elf_Phdr->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
+        qint64 nAddress=ui->tableView_Elf_Phdr->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
+
+        loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SELF::TYPE_Elf_Phdr],ui->widgetHex_Elf_Phdr);
+    }
 }
 
 void ELFWidget::loadNote(int nNumber)
@@ -853,29 +797,6 @@ void ELFWidget::on_tableWidget_Elf_Ehdr_currentCellChanged(int currentRow, int c
     setHeaderTableSelection(ui->widgetHex_Elf_Ehdr,ui->tableWidget_Elf_Ehdr);
 }
 
-void ELFWidget::on_tableWidget_Elf_Phdr_customContextMenuRequested(const QPoint &pos)
-{
-//    int nRow=ui->tableWidget_Elf_Phdr->currentRow();
-
-//    if(nRow!=-1)
-//    {
-//        QMenu contextMenu(this);
-
-//        QAction actionEdit(tr("Edit"),this);
-//        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editProgramHeader()));
-//        contextMenu.addAction(&actionEdit);
-
-//        QAction actionHex(tr("Hex"),this);
-//        connect(&actionHex, SIGNAL(triggered()), this, SLOT(programHex()));
-//        actionHex.setEnabled(ui->tableWidget_Elf_Phdr->item(nRow,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong());
-//        contextMenu.addAction(&actionHex);
-
-//        // TODO Entropy
-
-//        contextMenu.exec(ui->tableWidget_Elf_Phdr->viewport()->mapToGlobal(pos));
-//    }
-}
-
 void ELFWidget::editSectionHeader()
 {
     showSectionHeader(SELF::TYPE_Elf_Shdr,ui->tableView_Elf_Shdr);
@@ -888,42 +809,12 @@ void ELFWidget::sectionHex()
 
 void ELFWidget::editProgramHeader()
 {
-//    int nRow=ui->tableWidget_Elf_Phdr->currentRow();
-
-//    if(nRow!=-1)
-//    {
-//        SectionHeaderWidget *pSectionHeaderWidget=new SectionHeaderWidget(getDevice(),getOptions(),(quint32)nRow,0,SELF::TYPE_Elf_Phdr,this);
-//        DialogSectionHeader dsh(this);
-//        dsh.setWidget(pSectionHeaderWidget);
-//        dsh.setData(tr("Program Header")); // TODO tr
-//        dsh.setEdited(isEdited());
-
-//        connect(&dsh,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
-
-//        dsh.exec();
-
-//        delete pSectionHeaderWidget;
-
-//        reloadData();
-
-//        ui->tableWidget_Elf_Phdr->setCurrentCell(nRow,0);
-//    }
+    showSectionHeader(SELF::TYPE_Elf_Phdr,ui->tableView_Elf_Phdr);
 }
 
 void ELFWidget::programHex()
 {
-//    int nRow=ui->tableWidget_Elf_Phdr->currentRow();
-
-//    if(nRow!=-1)
-//    {
-//        qint64 nOffset=ui->tableWidget_Elf_Phdr->item(nRow,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
-//        qint64 nSize=ui->tableWidget_Elf_Phdr->item(nRow,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
-//        showHex(nOffset,nSize);
-
-//        reloadData();
-
-//        ui->tableWidget_Elf_Phdr->setCurrentCell(nRow,0);
-//    }
+    showSectionHex(ui->tableView_Elf_Phdr);
 }
 
 void ELFWidget::on_tableWidget_DynamicArrayTags_customContextMenuRequested(const QPoint &pos)
@@ -978,13 +869,6 @@ void ELFWidget::on_tableWidget_Notes_currentCellChanged(int currentRow, int curr
     }
 }
 
-void ELFWidget::on_tableWidget_Elf_Phdr_doubleClicked(const QModelIndex &index)
-{
-    Q_UNUSED(index)
-
-    editProgramHeader();
-}
-
 void ELFWidget::on_tableWidget_DynamicArrayTags_doubleClicked(const QModelIndex &index)
 {
     Q_UNUSED(index)
@@ -1001,14 +885,14 @@ void ELFWidget::on_tableView_SymbolTable_customContextMenuRequested(const QPoint
         QMenu contextMenu(this);
 
         QAction actionEdit(tr("Edit"),this);
-        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editSymbol()));
+        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editSymbolHeader()));
         contextMenu.addAction(&actionEdit);
 
         contextMenu.exec(ui->tableView_SymbolTable->viewport()->mapToGlobal(pos));
     }
 }
 
-void ELFWidget::editSymbol()
+void ELFWidget::editSymbolHeader()
 {
     showSectionHeader(SELF::TYPE_SYMBOLTABLE,ui->tableView_SymbolTable);
 }
@@ -1089,7 +973,7 @@ void ELFWidget::on_tableView_SymbolTable_doubleClicked(const QModelIndex &index)
 {
     Q_UNUSED(index)
 
-    editSymbol();
+    editSymbolHeader();
 }
 
 void ELFWidget::onTableView_Elf_Shdr_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
@@ -1102,5 +986,49 @@ void ELFWidget::onTableView_Elf_Shdr_currentRowChanged(const QModelIndex &curren
     if(currentRow!=-1)
     {
         loadShdr(currentRow);
+    }
+}
+
+void ELFWidget::onTableView_Elf_Phdr_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
+    Q_UNUSED(current)
+    Q_UNUSED(previous)
+
+    int currentRow=current.row();
+
+    if(currentRow!=-1)
+    {
+        loadPhdr(currentRow);
+    }
+}
+
+void ELFWidget::on_tableView_Elf_Phdr_doubleClicked(const QModelIndex &index)
+{
+    Q_UNUSED(index)
+
+    editProgramHeader();
+}
+
+void ELFWidget::on_tableView_Elf_Phdr_customContextMenuRequested(const QPoint &pos)
+{
+    int nRow=ui->tableView_Elf_Phdr->currentIndex().row();
+
+    if(nRow!=-1)
+    {
+        QMenu contextMenu(this);
+
+        QAction actionEdit(tr("Edit"),this);
+        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editProgramHeader()));
+        contextMenu.addAction(&actionEdit);
+
+        QAction actionHex(tr("Hex"),this);
+        connect(&actionHex, SIGNAL(triggered()), this, SLOT(programHex()));
+
+        actionHex.setEnabled(getTableViewItemSize(ui->tableView_Elf_Phdr,nRow));
+        contextMenu.addAction(&actionHex);
+
+        // TODO Entropy
+
+        contextMenu.exec(ui->tableView_Elf_Phdr->viewport()->mapToGlobal(pos));
     }
 }

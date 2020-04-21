@@ -59,17 +59,13 @@ private slots:
     void on_checkBoxReadonly_toggled(bool checked);
     bool createSectionTable(int type, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount);
 
-    void on_tableWidget_Elf_Phdr_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
-
     void on_pushButtonReload_clicked();
 
     void loadShdr(int nRow);
-    void loadPhdr(int nNumber);
+    void loadPhdr(int nRow);
     void loadNote(int nNumber);
 
     void on_tableWidget_Elf_Ehdr_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
-
-    void on_tableWidget_Elf_Phdr_customContextMenuRequested(const QPoint &pos);
 
     void editSectionHeader();
     void sectionHex();
@@ -82,12 +78,11 @@ private slots:
 
     void on_tableWidget_Notes_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
 
-    void on_tableWidget_Elf_Phdr_doubleClicked(const QModelIndex &index);
     void on_tableWidget_DynamicArrayTags_doubleClicked(const QModelIndex &index);
 
     void on_tableView_SymbolTable_customContextMenuRequested(const QPoint &pos);
 
-    void editSymbol();
+    void editSymbolHeader();
 
     void showSectionHeader(int type,QTableView *pTableView);
 
@@ -97,6 +92,10 @@ private slots:
     void on_tableView_SymbolTable_doubleClicked(const QModelIndex &index);
 
     void onTableView_Elf_Shdr_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
+    void onTableView_Elf_Phdr_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
+
+    void on_tableView_Elf_Phdr_doubleClicked(const QModelIndex &index);
+    void on_tableView_Elf_Phdr_customContextMenuRequested(const QPoint &pos);
 
 private:
     // TODO rename
