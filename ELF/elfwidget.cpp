@@ -466,25 +466,16 @@ void ELFWidget::reloadData()
         {
             if(!stInit.contains(sInit))
             {
-                createSectionTable(SELF::TYPE_LIBRARIES,ui->tableWidget_Libraries,N_ELF_LIBRARIES::records,N_ELF_LIBRARIES::__data_size);
+                ELFProcessData elfProcessData(SELF::TYPE_LIBRARIES,&tvModel[SELF::TYPE_LIBRARIES],&elf,nDataOffset,nDataSize,nDataExtraOffset,nDataExtraSize);
 
-                blockSignals(true);
+                ajustTableView(&elfProcessData,&tvModel[SELF::TYPE_LIBRARIES],ui->tableView_Libraries);
 
-                QList<QString> listLibraries=elf.getLibraries();
+                connect(ui->tableView_Libraries->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_Libraries_currentRowChanged(QModelIndex,QModelIndex)));
 
-                int nCount=listLibraries.count();
-
-                ui->tableWidget_Libraries->setRowCount(nCount);
-
-                for(int i=0; i<nCount; i++)
+                if(tvModel[SELF::TYPE_LIBRARIES]->rowCount())
                 {
-                    QTableWidgetItem *pItem=new QTableWidgetItem(QString::number(i));
-
-                    ui->tableWidget_Libraries->setItem(i,0,                                      pItem);
-                    ui->tableWidget_Libraries->setItem(i,N_ELF_LIBRARIES::library_name+1,        new QTableWidgetItem(listLibraries.at(i)));
+                    ui->tableView_Libraries->setCurrentIndex(ui->tableView_Libraries->model()->index(0,0));
                 }
-
-                blockSignals(false);
             }
         }
         else if(nType==SELF::TYPE_INTERPRETER)
@@ -506,42 +497,16 @@ void ELFWidget::reloadData()
         {
             if(!stInit.contains(sInit))
             {
-                createSectionTable(SELF::TYPE_NOTES,ui->tableWidget_Notes,N_ELF_NOTES::records,N_ELF_NOTES::__data_size);
+                ELFProcessData elfProcessData(SELF::TYPE_NOTES,&tvModel[SELF::TYPE_NOTES],&elf,nDataOffset,nDataSize,nDataExtraOffset,nDataExtraSize);
 
-                blockSignals(true);
+                ajustTableView(&elfProcessData,&tvModel[SELF::TYPE_NOTES],ui->tableView_Notes);
 
-                QList<XELF::NOTE> listNotes=elf._getNotes(nDataOffset,nDataSize,elf.isBigEndian());
+                connect(ui->tableView_Notes->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_Notes_currentRowChanged(QModelIndex,QModelIndex)));
 
-                int nCount=listNotes.count();
-
-                ui->tableWidget_Notes->setRowCount(nCount);
-
-                for(int i=0; i<nCount; i++)
+                if(tvModel[SELF::TYPE_NOTES]->rowCount())
                 {
-                    QTableWidgetItem *pItem=new QTableWidgetItem(QString::number(i));
-
-                    pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET,listNotes.at(i).nOffset);
-                    pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS,listNotes.at(i).nOffset);
-                    pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE,listNotes.at(i).nSize);
-
-                    ui->tableWidget_Notes->setItem(i,0,                                     pItem);
-                    ui->tableWidget_Notes->setItem(i,N_ELF_NOTES::type+1,                   new QTableWidgetItem(XBinary::valueToHex((quint32)listNotes.at(i).nType)));
-                    ui->tableWidget_Notes->setItem(i,N_ELF_NOTES::name+1,                   new QTableWidgetItem(listNotes.at(i).sName));
+                    ui->tableView_Notes->setCurrentIndex(ui->tableView_Notes->model()->index(0,0));
                 }
-
-                if(nCount)
-                {
-                    if(ui->tableWidget_Notes->currentRow()==0)
-                    {
-                        loadNote(0);
-                    }
-                    else
-                    {
-                        ui->tableWidget_Notes->setCurrentCell(0,0);
-                    }
-                }
-
-                blockSignals(false);
             }
         }
         else if(nType==SELF::TYPE_RUNPATH)
@@ -573,6 +538,15 @@ void ELFWidget::reloadData()
                 ELFProcessData elfProcessData(SELF::TYPE_SYMBOLTABLE,&tvModel[SELF::TYPE_SYMBOLTABLE],&elf,nDataOffset,nDataSize,nDataExtraOffset,nDataExtraSize);
 
                 ajustTableView(&elfProcessData,&tvModel[SELF::TYPE_SYMBOLTABLE],ui->tableView_SymbolTable);
+            }
+        }
+        else if(nType==SELF::TYPE_Elf_Rela)
+        {
+            if(!stInit.contains(sInit))
+            {
+                ELFProcessData elfProcessData(SELF::TYPE_Elf_Rela,&tvModel[SELF::TYPE_Elf_Rela],&elf,nDataOffset,nDataSize,nDataExtraOffset,nDataExtraSize);
+
+                ajustTableView(&elfProcessData,&tvModel[SELF::TYPE_Elf_Rela],ui->tableView_Rela);
             }
         }
 
@@ -612,6 +586,10 @@ void ELFWidget::addDatasets(XELF *pElf, QTreeWidgetItem *pParent, QList<XBinary:
         {
             pParent->addChild(createNewItem(SELF::TYPE_NOTES,pList->at(i).sName,pList->at(i).nOffset,pList->at(i).nSize,pList->at(i).nStringTableOffset,pList->at(i).nStringTableSize));
         }
+        else if(pList->at(i).nType==XELF::DS_RELA)
+        {
+            pParent->addChild(createNewItem(SELF::TYPE_Elf_Rela,pList->at(i).sName,pList->at(i).nOffset,pList->at(i).nSize,pList->at(i).nStringTableOffset,pList->at(i).nStringTableSize));
+        }
         else if(pList->at(i).nType==XELF::DS_DYNAMICTAGS)
         {
             QTreeWidgetItem *pDynamicTags=createNewItem(SELF::TYPE_Elf_DynamicArrayTags,pList->at(i).sName,pList->at(i).nOffset,pList->at(i).nSize,pList->at(i).nStringTableOffset,pList->at(i).nStringTableSize);
@@ -631,29 +609,7 @@ void ELFWidget::addDatasets(XELF *pElf, QTreeWidgetItem *pParent, QList<XBinary:
 
 bool ELFWidget::createSectionTable(int type, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount)
 {
-    int nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
     QStringList slHeader;
-
-    switch(type)
-    {
-        case SELF::TYPE_LIBRARIES:
-            slHeader.append(tr(""));
-            pTableWidget->setColumnCount(nRecordCount+1);
-            pTableWidget->setColumnWidth(0,nSymbolWidth*4);
-            pTableWidget->setColumnWidth(1,nSymbolWidth*30);
-            break;
-
-        case SELF::TYPE_NOTES:
-            slHeader.append(tr(""));
-            pTableWidget->setColumnCount(nRecordCount+1);
-            pTableWidget->setColumnWidth(0,nSymbolWidth*4);
-            pTableWidget->setColumnWidth(1,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(2,nSymbolWidth*30);
-            break;
-
-        default:
-            pTableWidget->setColumnCount(nRecordCount);
-    }
 
     pTableWidget->setRowCount(0);
 
@@ -739,13 +695,18 @@ void ELFWidget::loadPhdr(int nRow)
     }
 }
 
-void ELFWidget::loadNote(int nNumber)
+void ELFWidget::loadNote(int nRow)
 {
-    qint64 nOffset=ui->tableWidget_Notes->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
-    qint64 nSize=ui->tableWidget_Notes->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
-    qint64 nAddress=ui->tableWidget_Notes->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
+    if(nRow!=-1)
+    {
+        QModelIndex index=ui->tableView_Notes->model()->index(nRow,0);
 
-    loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SELF::TYPE_NOTES],ui->widgetHex_Notes);
+        qint64 nOffset=ui->tableView_Notes->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
+        qint64 nSize=ui->tableView_Notes->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
+        qint64 nAddress=ui->tableView_Notes->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
+
+        loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SELF::TYPE_NOTES],ui->widgetHex_Notes);
+    }
 }
 
 void ELFWidget::on_tableWidget_Elf_Ehdr_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
@@ -781,18 +742,6 @@ void ELFWidget::programHex()
 void ELFWidget::editDynamicArrayTag()
 {
     showSectionHeader(SELF::TYPE_Elf_DynamicArrayTags,ui->tableView_DynamicArrayTags);
-}
-
-void ELFWidget::on_tableWidget_Notes_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
-{
-    Q_UNUSED(currentColumn)
-    Q_UNUSED(previousRow)
-    Q_UNUSED(previousColumn)
-
-    if(currentRow!=-1)
-    {
-        loadNote(currentRow);
-    }
 }
 
 void ELFWidget::on_tableView_SymbolTable_customContextMenuRequested(const QPoint &pos)
@@ -853,6 +802,7 @@ QString ELFWidget::typeIdToString(int type)
         case SELF::TYPE_Elf_Phdr:               sResult=QString("Program header");      break;
         case SELF::TYPE_SYMBOLTABLE:            sResult=QString("Symbol header");       break;
         case SELF::TYPE_Elf_DynamicArrayTags:   sResult=QString("Tag");                 break;
+        case SELF::TYPE_Elf_Rela:               sResult=QString("Relocation");          break;
     }
 
     return sResult;
@@ -930,6 +880,27 @@ void ELFWidget::onTableView_DynamicArrayTags_currentRowChanged(const QModelIndex
     // TODO
 }
 
+void ELFWidget::onTableView_Notes_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
+    Q_UNUSED(current)
+    Q_UNUSED(previous)
+
+    int currentRow=current.row();
+
+    if(currentRow!=-1)
+    {
+        loadNote(currentRow);
+    }
+}
+
+void ELFWidget::onTableView_Libraries_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
+    Q_UNUSED(current)
+    Q_UNUSED(previous)
+
+    // TODO
+}
+
 void ELFWidget::on_tableView_Elf_Phdr_doubleClicked(const QModelIndex &index)
 {
     Q_UNUSED(index)
@@ -982,4 +953,38 @@ void ELFWidget::on_tableView_DynamicArrayTags_customContextMenuRequested(const Q
 
         contextMenu.exec(ui->tableView_DynamicArrayTags->viewport()->mapToGlobal(pos));
     }
+}
+
+void ELFWidget::on_tableView_Notes_doubleClicked(const QModelIndex &index)
+{
+    Q_UNUSED(index)
+    // TODO
+}
+
+void ELFWidget::on_tableView_Rela_doubleClicked(const QModelIndex &index)
+{
+    Q_UNUSED(index)
+
+    editRelaHeaderTag();
+}
+
+void ELFWidget::on_tableView_Rela_customContextMenuRequested(const QPoint &pos)
+{
+    int nRow=ui->tableView_Rela->currentIndex().row();
+
+    if(nRow!=-1)
+    {
+        QMenu contextMenu(this);
+
+        QAction actionEdit(tr("Edit"),this);
+        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editRelaHeaderTag()));
+        contextMenu.addAction(&actionEdit);
+
+        contextMenu.exec(ui->tableView_Rela->viewport()->mapToGlobal(pos));
+    }
+}
+
+void ELFWidget::editRelaHeaderTag()
+{
+    showSectionHeader(SELF::TYPE_Elf_Rela,ui->tableView_Rela);
 }

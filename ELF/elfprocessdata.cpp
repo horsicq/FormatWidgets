@@ -361,7 +361,7 @@ void ELFProcessData::_process()
 
         QMap<quint64,QString> mapTags=pELF->getDynamicTagsS();
 
-        for(int i=0; i<nCount; i++)
+        for(int i=0;(i<nCount)&&(isRun());i++)
         {
             QStandardItem *pItem=new QStandardItem(QString::number(i));
 
@@ -371,6 +371,131 @@ void ELFProcessData::_process()
             (*ppModel)->setItem(i,N_Elf_DynamicArrayTags::d_tag+1,        new QStandardItem(XBinary::valueToHex(bIs64?((quint64)listTagStructs.at(i).nTag):((quint32)listTagStructs.at(i).nTag))));
             (*ppModel)->setItem(i,N_Elf_DynamicArrayTags::d_value+1,      new QStandardItem(XBinary::valueToHex(bIs64?((quint64)listTagStructs.at(i).nValue):((quint32)listTagStructs.at(i).nValue))));
             (*ppModel)->setItem(i,N_Elf_DynamicArrayTags::d_value+2,      new QStandardItem(mapTags.value(listTagStructs.at(i).nTag)));
+
+            incValue();
+        }
+    }
+    else if(type==SELF::TYPE_NOTES)
+    {
+        QList<QString> listLabels;
+        listLabels.append("");
+
+        listLabels.append(getStructList(N_ELF_NOTES::records,N_ELF_NOTES::__data_size));
+
+        QList<XELF::NOTE> listNotes=pELF->_getNotes(nOffset,nSize,pELF->isBigEndian());
+
+        int nCount=listNotes.count();
+
+        *ppModel=new QStandardItemModel(nCount,listLabels.count());
+
+        setMaximum(nCount);
+
+        setHeader(*ppModel,&listLabels);
+
+        for(int i=0;(i<nCount)&&(isRun());i++)
+        {
+            QStandardItem *pItem=new QStandardItem(QString::number(i));
+
+            pItem->setData(listNotes.at(i).nOffset,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+            pItem->setData(listNotes.at(i).nOffset,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS);
+            pItem->setData(listNotes.at(i).nSize,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
+
+            (*ppModel)->setItem(i,0,                                     pItem);
+            (*ppModel)->setItem(i,N_ELF_NOTES::type+1,                   new QStandardItem(XBinary::valueToHex((quint32)listNotes.at(i).nType)));
+            (*ppModel)->setItem(i,N_ELF_NOTES::name+1,                   new QStandardItem(listNotes.at(i).sName));
+
+            incValue();
+        }
+    }
+    else if(type==SELF::TYPE_LIBRARIES)
+    {
+        QList<QString> listLabels;
+        listLabels.append("");
+
+        listLabels.append(getStructList(N_ELF_LIBRARIES::records,N_ELF_LIBRARIES::__data_size));
+
+        QList<QString> listLibraries=pELF->getLibraries();
+
+        int nCount=listLibraries.count();
+
+        *ppModel=new QStandardItemModel(nCount,listLabels.count());
+
+        setMaximum(nCount);
+
+        setHeader(*ppModel,&listLabels);
+
+        for(int i=0;(i<nCount)&&(isRun());i++)
+        {
+            QStandardItem *pItem=new QStandardItem(QString::number(i));
+
+            (*ppModel)->setItem(i,0,                                      pItem);
+            (*ppModel)->setItem(i,N_ELF_LIBRARIES::library_name+1,        new QStandardItem(listLibraries.at(i)));
+
+            incValue();
+        }
+    }
+    else if(type==SELF::TYPE_Elf_Rela)
+    {
+        bool bIs64=pELF->is64();
+
+        QList<QString> listLabels;
+        listLabels.append("");
+
+        if(bIs64)
+        {
+            listLabels.append(getStructList(N_Elf_Rela::records64,N_Elf_Rela::__data_size));
+        }
+        else
+        {
+            listLabels.append(getStructList(N_Elf_Rela::records32,N_Elf_Rela::__data_size));
+        }
+
+        QList<XELF_DEF::Elf64_Rela> listRela64;
+        QList<XELF_DEF::Elf32_Rela> listRela32;
+
+        int nCount=0;
+
+        if(bIs64)
+        {
+            listRela64=pELF->getElf64_RelaList(nOffset,nSize);
+            nCount=listRela64.count();
+        }
+        else
+        {
+            listRela32=pELF->getElf32_RelaList(nOffset,nSize);
+            nCount=listRela32.count();
+        }
+
+        *ppModel=new QStandardItemModel(nCount,listLabels.count());
+
+        setMaximum(nCount);
+
+        setHeader(*ppModel,&listLabels);
+
+        for(int i=0;(i<nCount)&&(isRun());i++)
+        {
+            if(bIs64)
+            {
+                QStandardItem *pItem=new QStandardItem(QString::number(i));
+
+                pItem->setData(nOffset+i*sizeof(XELF_DEF::Elf64_Sym),Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+
+                (*ppModel)->setItem(i,0,                            pItem);
+                (*ppModel)->setItem(i,N_Elf_Rela::r_offset+1,       new QStandardItem(XBinary::valueToHex(listRela64.at(i).r_offset)));
+                (*ppModel)->setItem(i,N_Elf_Rela::r_info+1,         new QStandardItem(XBinary::valueToHex(listRela64.at(i).r_info)));
+                (*ppModel)->setItem(i,N_Elf_Rela::r_addend+1,       new QStandardItem(XBinary::valueToHex(listRela64.at(i).r_addend)));
+            }
+            else
+            {
+                QStandardItem *pItem=new QStandardItem(QString::number(i));
+
+                pItem->setData(nOffset+i*sizeof(XELF_DEF::Elf32_Sym),Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+
+                (*ppModel)->setItem(i,0,                            pItem);
+                (*ppModel)->setItem(i,N_Elf_Rela::r_offset+1,       new QStandardItem(XBinary::valueToHex(listRela32.at(i).r_offset)));
+                (*ppModel)->setItem(i,N_Elf_Rela::r_info+1,         new QStandardItem(XBinary::valueToHex(listRela32.at(i).r_info)));
+                (*ppModel)->setItem(i,N_Elf_Rela::r_addend+1,       new QStandardItem(XBinary::valueToHex(listRela32.at(i).r_addend)));
+            }
         }
     }
 }
@@ -474,5 +599,23 @@ void ELFProcessData::ajustTableView(QWidget *pWidget,QTableView *pTableView)
         pTableView->setColumnWidth(1,nSymbolWidth*12);
         pTableView->setColumnWidth(2,nSymbolWidth*12);
         pTableView->setColumnWidth(3,nSymbolWidth*20);
+    }
+    else if(type==SELF::TYPE_NOTES)
+    {
+        pTableView->setColumnWidth(0,nSymbolWidth*4);
+        pTableView->setColumnWidth(1,nSymbolWidth*8);
+        pTableView->setColumnWidth(2,nSymbolWidth*30);
+    }
+    else if(type==SELF::TYPE_LIBRARIES)
+    {
+        pTableView->setColumnWidth(0,nSymbolWidth*4);
+        pTableView->setColumnWidth(1,nSymbolWidth*30);
+    }
+    else if(type==SELF::TYPE_Elf_Rela)
+    {
+        pTableView->setColumnWidth(0,nSymbolWidth*4);
+        pTableView->setColumnWidth(1,nSymbolWidth*12);
+        pTableView->setColumnWidth(2,nSymbolWidth*12);
+        pTableView->setColumnWidth(3,nSymbolWidth*12);
     }
 }

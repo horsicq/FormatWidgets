@@ -41,6 +41,7 @@ enum TYPE
     TYPE_RUNPATH,
     TYPE_STRINGTABLE,
     TYPE_SYMBOLTABLE,
+    TYPE_Elf_Rela,
     __TYPE_size
 };
 }
@@ -281,6 +282,30 @@ enum DATA
 };
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
+}
+
+namespace N_Elf_Rela
+{
+enum DATA
+{
+    r_offset,
+    r_info,
+    r_addend,
+    __data_size
+};
+
+extern const FW_DEF::HEADER_RECORD records32[__data_size];
+extern const FW_DEF::HEADER_RECORD records64[__data_size];
+
+enum CB
+{
+    __CB_size
+};
+
+enum INV
+{
+    __INV_size
+};
 }
 
 #endif // ELF_DEFS_H

@@ -220,3 +220,20 @@ const FW_DEF::HEADER_RECORD records[]=
     {st_size,               "st_size",              offsetof(XELF_DEF::Elf64_Sym,st_size),          8,      "Elf64_Xword",          FW_DEF::VAL_TYPE_SIZE},
 };
 }
+
+
+namespace N_Elf_Rela
+{
+const FW_DEF::HEADER_RECORD records32[]=
+{
+    {r_offset,              "r_offset",             0,  4,      "Elf32_Addr",           FW_DEF::VAL_TYPE_ADDRESS},
+    {r_info,                "r_info",               4,  4,      "Elf32_Word",           FW_DEF::VAL_TYPE_DATA},
+    {r_addend,              "r_addend",             8,  4,      "Elf32_Sword",          FW_DEF::VAL_TYPE_DATA},
+};
+const FW_DEF::HEADER_RECORD records64[]=
+{
+    {r_offset,              "r_offset",             0,  8,      "Elf64_Addr",           FW_DEF::VAL_TYPE_ADDRESS},
+    {r_info,                "r_info",               8,  8,      "Elf64_Xword",          FW_DEF::VAL_TYPE_DATA},
+    {r_addend,              "r_addend",             16, 8,      "Elf64_Sxword",         FW_DEF::VAL_TYPE_DATA},
+};
+}

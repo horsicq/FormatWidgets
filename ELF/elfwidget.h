@@ -58,45 +58,36 @@ private slots:
     void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
     void on_checkBoxReadonly_toggled(bool checked);
     bool createSectionTable(int type, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount);
-
     void on_pushButtonReload_clicked();
-
     void loadShdr(int nRow);
     void loadPhdr(int nRow);
-    void loadNote(int nNumber);
-
+    void loadNote(int nRow);
     void on_tableWidget_Elf_Ehdr_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
-
     void editSectionHeader();
     void sectionHex();
     void editProgramHeader();
     void programHex();
-
     void editDynamicArrayTag();
-
-    void on_tableWidget_Notes_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
-
     void on_tableView_SymbolTable_customContextMenuRequested(const QPoint &pos);
-
     void editSymbolHeader();
-
     void showSectionHeader(int type,QTableView *pTableView);
-
     static QString typeIdToString(int type);
     void on_tableView_Elf_Shdr_doubleClicked(const QModelIndex &index);
     void on_tableView_Elf_Shdr_customContextMenuRequested(const QPoint &pos);
     void on_tableView_SymbolTable_doubleClicked(const QModelIndex &index);
-
     void onTableView_Elf_Shdr_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
     void onTableView_Elf_Phdr_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
     void onTableView_DynamicArrayTags_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
-
+    void onTableView_Notes_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
+    void onTableView_Libraries_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
     void on_tableView_Elf_Phdr_doubleClicked(const QModelIndex &index);
     void on_tableView_Elf_Phdr_customContextMenuRequested(const QPoint &pos);
-
     void on_tableView_DynamicArrayTags_doubleClicked(const QModelIndex &index);
-
     void on_tableView_DynamicArrayTags_customContextMenuRequested(const QPoint &pos);
+    void on_tableView_Notes_doubleClicked(const QModelIndex &index);
+    void on_tableView_Rela_doubleClicked(const QModelIndex &index);
+    void on_tableView_Rela_customContextMenuRequested(const QPoint &pos);
+    void editRelaHeaderTag();
 
 private:
     // TODO rename

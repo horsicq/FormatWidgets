@@ -65,6 +65,12 @@ SectionHeaderWidget::SectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pO
         nComboBoxSize=N_Elf32_Sym::__CB_size;
         nInvWidgetSize=N_Elf32_Sym::__INV_size;
     }
+    else if(nType==SELF::TYPE_Elf_Rela)
+    {
+        nLineEditSize=N_Elf_Rela::__data_size;
+        nComboBoxSize=N_Elf_Rela::__CB_size;
+        nInvWidgetSize=N_Elf_Rela::__INV_size;
+    }
 
     if(nLineEditSize)
     {
@@ -258,6 +264,28 @@ bool SectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int
                     }
 
                     break;
+
+                case SELF::TYPE_Elf_Rela:
+                    if(elf.is64())
+                    {
+                        switch(nNdata)
+                        {
+                            case N_Elf_Rela::r_offset:      elf.setElf64_Rela_r_offset(nOffset,(quint32)nValue,elf.isBigEndian());    break;
+                            case N_Elf_Rela::r_info:      elf.setElf64_Rela_r_info(nOffset,(quint32)nValue,elf.isBigEndian());                       break;
+                            case N_Elf_Rela::r_addend:     elf.setElf64_Rela_r_addend(nOffset,(quint32)nValue,elf.isBigEndian());                      break;
+                        }
+                    }
+                    else
+                    {
+                        switch(nNdata)
+                        {
+                            case N_Elf_Rela::r_offset:      elf.setElf32_Rela_r_offset(nOffset,(quint64)nValue,elf.isBigEndian());    break;
+                            case N_Elf_Rela::r_info:      elf.setElf32_Rela_r_info(nOffset,(quint64)nValue,elf.isBigEndian());                       break;
+                            case N_Elf_Rela::r_addend:     elf.setElf32_Rela_r_addend(nOffset,(quint64)nValue,elf.isBigEndian());                      break;
+                        }
+                    }
+
+                    break;
             }
 
             ui->widgetHex->reload();
@@ -315,6 +343,14 @@ void SectionHeaderWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget
         case SELF::TYPE_SYMBOLTABLE:
             pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
             pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*10);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*8);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*12);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
+            break;
+
+        case SELF::TYPE_Elf_Rela:
+            pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*8);
             pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*8);
             pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*12);
             pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
@@ -496,6 +532,40 @@ void SectionHeaderWidget::reloadData()
                     ppLinedEdit[N_Elf32_Sym::st_info]->setValue(sym32.st_info);
                     ppLinedEdit[N_Elf32_Sym::st_other]->setValue(sym32.st_other);
                     ppLinedEdit[N_Elf32_Sym::st_shndx]->setValue(sym32.st_shndx);
+                }
+
+                qint64 nSize=elf.getSymSize();
+                qint64 nAddress=elf.offsetToRelAddress(nOffset);
+
+                loadHexSubdevice(nOffset,nSize,nAddress,&pSubDevice,ui->widgetHex);
+
+                blockSignals(false);
+            }
+            else if(nType==SELF::TYPE_Elf_Rela)
+            {
+                bInit=createHeaderTable(SELF::TYPE_Elf_Rela,ui->tableWidget,bIs64?(N_Elf_Rela::records64):(N_Elf_Rela::records32),ppLinedEdit,N_Elf_Rela::__data_size,getNumber(),getOffset());
+
+                blockSignals(true);
+
+                qint64 nOffset=getOffset();
+
+                bool bIsBigEndian=elf.isBigEndian();
+
+                if(bIs64)
+                {
+                    XELF_DEF::Elf64_Rela rela64=elf._readElf64_Rela(nOffset,bIsBigEndian);
+
+                    ppLinedEdit[N_Elf_Rela::r_offset]->setValue(rela64.r_offset);
+                    ppLinedEdit[N_Elf_Rela::r_info]->setValue(rela64.r_info);
+                    ppLinedEdit[N_Elf_Rela::r_addend]->setValue(rela64.r_addend);
+                }
+                else
+                {
+                    XELF_DEF::Elf32_Rela rela32=elf._readElf32_Rela(nOffset,bIsBigEndian);
+
+                    ppLinedEdit[N_Elf_Rela::r_offset]->setValue(rela32.r_offset);
+                    ppLinedEdit[N_Elf_Rela::r_info]->setValue(rela32.r_info);
+                    ppLinedEdit[N_Elf_Rela::r_addend]->setValue(rela32.r_addend);
                 }
 
                 qint64 nSize=elf.getSymSize();
