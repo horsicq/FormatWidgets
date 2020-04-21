@@ -230,6 +230,34 @@ bool SectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int
                     }
 
                     break;
+
+                case SELF::TYPE_SYMBOLTABLE:
+                    if(elf.is64())
+                    {
+                        switch(nNdata)
+                        {
+                            case N_Elf64_Sym::st_name:      elf.setElf64_Sym_st_name(nOffset,(quint32)nValue,elf.isBigEndian());    break;
+                            case N_Elf64_Sym::st_info:      elf.setElf64_Sym_st_info(nOffset,(quint8)nValue);                       break;
+                            case N_Elf64_Sym::st_other:     elf.setElf64_Sym_st_other(nOffset,(quint8)nValue);                      break;
+                            case N_Elf64_Sym::st_shndx:     elf.setElf64_Sym_st_name(nOffset,(quint16)nValue,elf.isBigEndian());    break;
+                            case N_Elf64_Sym::st_value:     elf.setElf64_Sym_st_value(nOffset,(quint64)nValue,elf.isBigEndian());   break;
+                            case N_Elf64_Sym::st_size:      elf.setElf64_Sym_st_size(nOffset,(quint64)nValue,elf.isBigEndian());    break;
+                        }
+                    }
+                    else
+                    {
+                        switch(nNdata)
+                        {
+                            case N_Elf32_Sym::st_name:      elf.setElf32_Sym_st_name(nOffset,(quint32)nValue,elf.isBigEndian());    break;
+                            case N_Elf32_Sym::st_value:     elf.setElf32_Sym_st_value(nOffset,(quint32)nValue,elf.isBigEndian());   break;
+                            case N_Elf32_Sym::st_size:      elf.setElf32_Sym_st_size(nOffset,(quint32)nValue,elf.isBigEndian());    break;
+                            case N_Elf32_Sym::st_info:      elf.setElf32_Sym_st_info(nOffset,(quint8)nValue);                       break;
+                            case N_Elf32_Sym::st_other:     elf.setElf32_Sym_st_other(nOffset,(quint8)nValue);                      break;
+                            case N_Elf32_Sym::st_shndx:     elf.setElf32_Sym_st_name(nOffset,(quint16)nValue,elf.isBigEndian());    break;
+                        }
+                    }
+
+                    break;
             }
 
             ui->widgetHex->reload();
@@ -436,6 +464,31 @@ void SectionHeaderWidget::reloadData()
                 blockSignals(true);
 
                 qint64 nOffset=getOffset();
+
+                bool bIsBigEndian=elf.isBigEndian();
+
+                if(bIs64)
+                {
+                    XELF_DEF::Elf64_Sym sym64=elf._readElf64_Sym(nOffset,bIsBigEndian);
+
+                    ppLinedEdit[N_Elf64_Sym::st_name]->setValue(sym64.st_name);
+                    ppLinedEdit[N_Elf64_Sym::st_info]->setValue(sym64.st_info);
+                    ppLinedEdit[N_Elf64_Sym::st_other]->setValue(sym64.st_other);
+                    ppLinedEdit[N_Elf64_Sym::st_shndx]->setValue(sym64.st_shndx);
+                    ppLinedEdit[N_Elf64_Sym::st_value]->setValue(sym64.st_value);
+                    ppLinedEdit[N_Elf64_Sym::st_size]->setValue(sym64.st_size);
+                }
+                else
+                {
+                    XELF_DEF::Elf32_Sym sym32=elf._readElf32_Sym(nOffset,bIsBigEndian);
+
+                    ppLinedEdit[N_Elf32_Sym::st_name]->setValue(sym32.st_name);
+                    ppLinedEdit[N_Elf32_Sym::st_value]->setValue(sym32.st_value);
+                    ppLinedEdit[N_Elf32_Sym::st_size]->setValue(sym32.st_size);
+                    ppLinedEdit[N_Elf32_Sym::st_info]->setValue(sym32.st_info);
+                    ppLinedEdit[N_Elf32_Sym::st_other]->setValue(sym32.st_other);
+                    ppLinedEdit[N_Elf32_Sym::st_shndx]->setValue(sym32.st_shndx);
+                }
 
                 qint64 nSize=elf.getSymSize();
                 qint64 nAddress=elf.offsetToRelAddress(nOffset);
