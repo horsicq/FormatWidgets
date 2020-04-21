@@ -146,6 +146,108 @@ void ELFProcessData::_process()
             incValue();
         }
     }
+    else if(type==SELF::TYPE_Elf_Phdr)
+    {
+        bool bIs64=pELF->is64();
+
+        QList<QString> listLabels;
+        listLabels.append("");
+
+        if(bIs64)
+        {
+            listLabels.append(getStructList(N_Elf_Phdr64::records,N_Elf_Phdr64::__data_size));
+        }
+        else
+        {
+            listLabels.append(getStructList(N_Elf_Phdr32::records,N_Elf_Phdr32::__data_size));
+        }
+
+        listLabels.append("Type");
+
+        QMap<quint64,QString> mapTypes=XELF::getProgramTypesS();
+
+        QList<XELF_DEF::Elf64_Phdr> listPrograms64;
+        QList<XELF_DEF::Elf32_Phdr> listPrograms32;
+
+        int nCount=0;
+
+        if(bIs64)
+        {
+            listPrograms64=pELF->getElf64_PhdrList();
+            nCount=listPrograms64.count();
+        }
+        else
+        {
+            listPrograms32=pELF->getElf32_PhdrList();
+            nCount=listPrograms32.count();
+        }
+
+        *ppModel=new QStandardItemModel(nCount,listLabels.count());
+
+        setMaximum(nCount);
+
+        setHeader(*ppModel,&listLabels);
+
+        for(int i=0;(i<nCount)&&(isRun());i++)
+        {
+            if(bIs64)
+            {
+                QStandardItem *pItem=new QStandardItem(QString::number(i));
+
+                if(pELF->isImage())
+                {
+                    pItem->setData(listPrograms64.at(i).p_memsz,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
+                    pItem->setData(listPrograms64.at(i).p_vaddr,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+                }
+                else
+                {
+                    pItem->setData(listPrograms64.at(i).p_filesz,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
+                    pItem->setData(listPrograms64.at(i).p_offset,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+                }
+
+                pItem->setData(listPrograms64.at(i).p_vaddr,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS);
+
+                (*ppModel)->setItem(i,0,                              pItem);
+                (*ppModel)->setItem(i,N_Elf_Phdr64::p_type+1,         new QStandardItem(XBinary::valueToHex(listPrograms64.at(i).p_type)));
+                (*ppModel)->setItem(i,N_Elf_Phdr64::p_flags+1,        new QStandardItem(XBinary::valueToHex(listPrograms64.at(i).p_flags)));
+                (*ppModel)->setItem(i,N_Elf_Phdr64::p_offset+1,       new QStandardItem(XBinary::valueToHex(listPrograms64.at(i).p_offset)));
+                (*ppModel)->setItem(i,N_Elf_Phdr64::p_vaddr+1,        new QStandardItem(XBinary::valueToHex(listPrograms64.at(i).p_vaddr)));
+                (*ppModel)->setItem(i,N_Elf_Phdr64::p_paddr+1,        new QStandardItem(XBinary::valueToHex(listPrograms64.at(i).p_paddr)));
+                (*ppModel)->setItem(i,N_Elf_Phdr64::p_filesz+1,       new QStandardItem(XBinary::valueToHex(listPrograms64.at(i).p_filesz)));
+                (*ppModel)->setItem(i,N_Elf_Phdr64::p_memsz+1,        new QStandardItem(XBinary::valueToHex(listPrograms64.at(i).p_memsz)));
+                (*ppModel)->setItem(i,N_Elf_Phdr64::p_align+1,        new QStandardItem(XBinary::valueToHex(listPrograms64.at(i).p_align)));
+                (*ppModel)->setItem(i,N_Elf_Phdr64::p_align+2,        new QStandardItem(mapTypes.value(listPrograms64.at(i).p_type)));
+            }
+            else
+            {
+                QStandardItem *pItem=new QStandardItem(QString::number(i));
+
+                if(pELF->isImage())
+                {
+                    pItem->setData(listPrograms32.at(i).p_memsz,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
+                    pItem->setData(listPrograms32.at(i).p_vaddr,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+                }
+                else
+                {
+                    pItem->setData(listPrograms32.at(i).p_filesz,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
+                    pItem->setData(listPrograms32.at(i).p_offset,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+                }
+
+                pItem->setData(listPrograms32.at(i).p_vaddr,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS);
+
+                (*ppModel)->setItem(i,0,                              pItem);
+                (*ppModel)->setItem(i,N_Elf_Phdr32::p_type+1,         new QStandardItem(XBinary::valueToHex(listPrograms32.at(i).p_type)));
+                (*ppModel)->setItem(i,N_Elf_Phdr32::p_offset+1,       new QStandardItem(XBinary::valueToHex(listPrograms32.at(i).p_offset)));
+                (*ppModel)->setItem(i,N_Elf_Phdr32::p_vaddr+1,        new QStandardItem(XBinary::valueToHex(listPrograms32.at(i).p_vaddr)));
+                (*ppModel)->setItem(i,N_Elf_Phdr32::p_paddr+1,        new QStandardItem(XBinary::valueToHex(listPrograms32.at(i).p_paddr)));
+                (*ppModel)->setItem(i,N_Elf_Phdr32::p_filesz+1,       new QStandardItem(XBinary::valueToHex(listPrograms32.at(i).p_filesz)));
+                (*ppModel)->setItem(i,N_Elf_Phdr32::p_memsz+1,        new QStandardItem(XBinary::valueToHex(listPrograms32.at(i).p_memsz)));
+                (*ppModel)->setItem(i,N_Elf_Phdr32::p_flags+1,        new QStandardItem(XBinary::valueToHex(listPrograms32.at(i).p_flags)));
+                (*ppModel)->setItem(i,N_Elf_Phdr32::p_align+1,        new QStandardItem(XBinary::valueToHex(listPrograms32.at(i).p_align)));
+                (*ppModel)->setItem(i,N_Elf_Phdr32::p_align+2,        new QStandardItem(mapTypes.value(listPrograms32.at(i).p_type)));
+            }
+        }
+    }
     else if(type==SELF::TYPE_SYMBOLTABLE)
     {
         if(pELF->is64())
@@ -293,6 +395,35 @@ void ELFProcessData::ajustTableView(QWidget *pWidget,QTableView *pTableView)
             pTableView->setColumnWidth(10,nSymbolWidth*12);
             pTableView->setColumnWidth(11,nSymbolWidth*12);
             pTableView->setColumnWidth(12,nSymbolWidth*12);
+        }
+    }
+    else if(type==SELF::TYPE_Elf_Phdr)
+    {
+        if(pELF->is64())
+        {
+            pTableView->setColumnWidth(0,nSymbolWidth*4);
+            pTableView->setColumnWidth(1,nSymbolWidth*8);
+            pTableView->setColumnWidth(2,nSymbolWidth*8);
+            pTableView->setColumnWidth(3,nSymbolWidth*12);
+            pTableView->setColumnWidth(4,nSymbolWidth*12);
+            pTableView->setColumnWidth(5,nSymbolWidth*12);
+            pTableView->setColumnWidth(6,nSymbolWidth*12);
+            pTableView->setColumnWidth(7,nSymbolWidth*12);
+            pTableView->setColumnWidth(8,nSymbolWidth*12);
+            pTableView->setColumnWidth(9,nSymbolWidth*12);
+        }
+        else
+        {
+            pTableView->setColumnWidth(0,nSymbolWidth*4);
+            pTableView->setColumnWidth(1,nSymbolWidth*8);
+            pTableView->setColumnWidth(2,nSymbolWidth*8);
+            pTableView->setColumnWidth(3,nSymbolWidth*12);
+            pTableView->setColumnWidth(4,nSymbolWidth*12);
+            pTableView->setColumnWidth(5,nSymbolWidth*12);
+            pTableView->setColumnWidth(6,nSymbolWidth*12);
+            pTableView->setColumnWidth(7,nSymbolWidth*12);
+            pTableView->setColumnWidth(8,nSymbolWidth*12);
+            pTableView->setColumnWidth(9,nSymbolWidth*12);
         }
     }
 }
