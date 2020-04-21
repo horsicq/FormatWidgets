@@ -331,6 +331,48 @@ void ELFProcessData::_process()
             }
         }
     }
+    else if(type==SELF::TYPE_Elf_DynamicArrayTags)
+    {
+        bool bIs64=pELF->is64();
+
+        QList<QString> listLabels;
+        listLabels.append("");
+
+        if(bIs64)
+        {
+            listLabels.append(getStructList(N_Elf_DynamicArrayTags::records64,N_Elf_DynamicArrayTags::__data_size));
+        }
+        else
+        {
+            listLabels.append(getStructList(N_Elf_DynamicArrayTags::records32,N_Elf_DynamicArrayTags::__data_size));
+        }
+
+        listLabels.append("Type");
+
+        QList<XELF::TAG_STRUCT> listTagStructs=pELF->_getTagStructs(nOffset,nSize,bIs64,pELF->isBigEndian());
+
+        int nCount=listTagStructs.count();
+
+        *ppModel=new QStandardItemModel(nCount,listLabels.count());
+
+        setMaximum(nCount);
+
+        setHeader(*ppModel,&listLabels);
+
+        QMap<quint64,QString> mapTags=pELF->getDynamicTagsS();
+
+        for(int i=0; i<nCount; i++)
+        {
+            QStandardItem *pItem=new QStandardItem(QString::number(i));
+
+            pItem->setData(listTagStructs.at(i).nOffset,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+
+            (*ppModel)->setItem(i,0,                                      pItem);
+            (*ppModel)->setItem(i,N_Elf_DynamicArrayTags::d_tag+1,        new QStandardItem(XBinary::valueToHex(bIs64?((quint64)listTagStructs.at(i).nTag):((quint32)listTagStructs.at(i).nTag))));
+            (*ppModel)->setItem(i,N_Elf_DynamicArrayTags::d_value+1,      new QStandardItem(XBinary::valueToHex(bIs64?((quint64)listTagStructs.at(i).nValue):((quint32)listTagStructs.at(i).nValue))));
+            (*ppModel)->setItem(i,N_Elf_DynamicArrayTags::d_value+2,      new QStandardItem(mapTags.value(listTagStructs.at(i).nTag)));
+        }
+    }
 }
 
 void ELFProcessData::ajustTableView(QWidget *pWidget,QTableView *pTableView)
@@ -425,5 +467,12 @@ void ELFProcessData::ajustTableView(QWidget *pWidget,QTableView *pTableView)
             pTableView->setColumnWidth(8,nSymbolWidth*12);
             pTableView->setColumnWidth(9,nSymbolWidth*12);
         }
+    }
+    else if(type==SELF::TYPE_Elf_DynamicArrayTags)
+    {
+        pTableView->setColumnWidth(0,nSymbolWidth*4);
+        pTableView->setColumnWidth(1,nSymbolWidth*12);
+        pTableView->setColumnWidth(2,nSymbolWidth*12);
+        pTableView->setColumnWidth(3,nSymbolWidth*20);
     }
 }

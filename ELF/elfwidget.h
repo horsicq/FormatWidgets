@@ -72,13 +72,9 @@ private slots:
     void editProgramHeader();
     void programHex();
 
-    void on_tableWidget_DynamicArrayTags_customContextMenuRequested(const QPoint &pos);
-
     void editDynamicArrayTag();
 
     void on_tableWidget_Notes_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
-
-    void on_tableWidget_DynamicArrayTags_doubleClicked(const QModelIndex &index);
 
     void on_tableView_SymbolTable_customContextMenuRequested(const QPoint &pos);
 
@@ -93,9 +89,14 @@ private slots:
 
     void onTableView_Elf_Shdr_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
     void onTableView_Elf_Phdr_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
+    void onTableView_DynamicArrayTags_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
 
     void on_tableView_Elf_Phdr_doubleClicked(const QModelIndex &index);
     void on_tableView_Elf_Phdr_customContextMenuRequested(const QPoint &pos);
+
+    void on_tableView_DynamicArrayTags_doubleClicked(const QModelIndex &index);
+
+    void on_tableView_DynamicArrayTags_customContextMenuRequested(const QPoint &pos);
 
 private:
     // TODO rename

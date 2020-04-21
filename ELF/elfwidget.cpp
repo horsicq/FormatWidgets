@@ -450,39 +450,16 @@ void ELFWidget::reloadData()
         {
             if(!stInit.contains(sInit))
             {
-                bool bIs64=elf.is64();
+                ELFProcessData elfProcessData(SELF::TYPE_Elf_DynamicArrayTags,&tvModel[SELF::TYPE_Elf_DynamicArrayTags],&elf,nDataOffset,nDataSize,nDataExtraOffset,nDataExtraSize);
 
-                createSectionTable(SELF::TYPE_Elf_DynamicArrayTags,ui->tableWidget_DynamicArrayTags,bIs64?(N_Elf_DynamicArrayTags::records64):(N_Elf_DynamicArrayTags::records32),N_Elf_DynamicArrayTags::__data_size);
+                ajustTableView(&elfProcessData,&tvModel[SELF::TYPE_Elf_DynamicArrayTags],ui->tableView_DynamicArrayTags);
 
-                blockSignals(true);
+                connect(ui->tableView_DynamicArrayTags->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_DynamicArrayTags_currentRowChanged(QModelIndex,QModelIndex)));
 
-                QList<XELF::TAG_STRUCT> listTagStructs=elf._getTagStructs(nDataOffset,nDataSize,bIs64,elf.isBigEndian());
-
-                int nCount=listTagStructs.count();
-
-                ui->tableWidget_DynamicArrayTags->setRowCount(nCount);
-
-                QMap<quint64,QString> mapTags=elf.getDynamicTagsS();
-
-                for(int i=0; i<nCount; i++)
+                if(tvModel[SELF::TYPE_Elf_DynamicArrayTags]->rowCount())
                 {
-                    QTableWidgetItem *pItem=new QTableWidgetItem(QString::number(i));
-
-                    pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET,listTagStructs.at(i).nOffset);
-
-                    ui->tableWidget_DynamicArrayTags->setItem(i,0,                                      pItem);
-                    ui->tableWidget_DynamicArrayTags->setItem(i,N_Elf_DynamicArrayTags::d_tag+1,        new QTableWidgetItem(XBinary::valueToHex(bIs64?((quint64)listTagStructs.at(i).nTag):((quint32)listTagStructs.at(i).nTag))));
-                    ui->tableWidget_DynamicArrayTags->setItem(i,N_Elf_DynamicArrayTags::d_value+1,      new QTableWidgetItem(XBinary::valueToHex(bIs64?((quint64)listTagStructs.at(i).nValue):((quint32)listTagStructs.at(i).nValue))));
-                    ui->tableWidget_DynamicArrayTags->setItem(i,N_Elf_DynamicArrayTags::d_value+2,      new QTableWidgetItem(mapTags.value(listTagStructs.at(i).nTag)));
+                    ui->tableView_DynamicArrayTags->setCurrentIndex(ui->tableView_DynamicArrayTags->model()->index(0,0));
                 }
-
-                if(nCount)
-                {
-                    // TODO
-                    ui->tableWidget_DynamicArrayTags->setCurrentCell(0,0);
-                }
-
-                blockSignals(false);
             }
         }
         else if(nType==SELF::TYPE_LIBRARIES)
@@ -659,15 +636,6 @@ bool ELFWidget::createSectionTable(int type, QTableWidget *pTableWidget, const F
 
     switch(type)
     {
-        case SELF::TYPE_Elf_DynamicArrayTags:
-            slHeader.append(tr(""));
-            pTableWidget->setColumnCount(nRecordCount+2);
-            pTableWidget->setColumnWidth(0,nSymbolWidth*4);
-            pTableWidget->setColumnWidth(1,nSymbolWidth*12);
-            pTableWidget->setColumnWidth(2,nSymbolWidth*12);
-            pTableWidget->setColumnWidth(3,nSymbolWidth*20);
-            break;
-
         case SELF::TYPE_LIBRARIES:
             slHeader.append(tr(""));
             pTableWidget->setColumnCount(nRecordCount+1);
@@ -692,13 +660,6 @@ bool ELFWidget::createSectionTable(int type, QTableWidget *pTableWidget, const F
     for(int i=0; i<nRecordCount; i++)
     {
         slHeader.append(pRecords[i].pszName);
-    }
-
-    switch(type)
-    {
-        case SELF::TYPE_Elf_DynamicArrayTags:
-            slHeader.append(tr("Type"));
-            break;
     }
 
     pTableWidget->setHorizontalHeaderLabels(slHeader);
@@ -817,44 +778,9 @@ void ELFWidget::programHex()
     showSectionHex(ui->tableView_Elf_Phdr);
 }
 
-void ELFWidget::on_tableWidget_DynamicArrayTags_customContextMenuRequested(const QPoint &pos)
-{
-    int nRow=ui->tableWidget_DynamicArrayTags->currentRow();
-
-    if(nRow!=-1)
-    {
-        QMenu contextMenu(this);
-
-        QAction actionEdit(tr("Edit"),this);
-        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editDynamicArrayTag()));
-        contextMenu.addAction(&actionEdit);
-
-        contextMenu.exec(ui->tableWidget_DynamicArrayTags->viewport()->mapToGlobal(pos));
-    }
-}
-
 void ELFWidget::editDynamicArrayTag()
 {
-    int nRow=ui->tableWidget_DynamicArrayTags->currentRow();
-
-    if(nRow!=-1)
-    {
-        qint64 nOffset=ui->tableWidget_DynamicArrayTags->item(nRow,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
-
-        SectionHeaderWidget *pSectionHeaderWidget=new SectionHeaderWidget(getDevice(),getOptions(),(quint32)nRow,nOffset,SELF::TYPE_Elf_DynamicArrayTags,this);
-        DialogSectionHeader dsh(this);
-        dsh.setWidget(pSectionHeaderWidget);
-        dsh.setData(tr("Dynamic Array Tag")); // TODO tr
-        dsh.setEdited(isEdited());
-
-        connect(&dsh,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
-
-        dsh.exec();
-
-        delete pSectionHeaderWidget;
-
-        reloadData();
-    }
+    showSectionHeader(SELF::TYPE_Elf_DynamicArrayTags,ui->tableView_DynamicArrayTags);
 }
 
 void ELFWidget::on_tableWidget_Notes_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
@@ -867,13 +793,6 @@ void ELFWidget::on_tableWidget_Notes_currentCellChanged(int currentRow, int curr
     {
         loadNote(currentRow);
     }
-}
-
-void ELFWidget::on_tableWidget_DynamicArrayTags_doubleClicked(const QModelIndex &index)
-{
-    Q_UNUSED(index)
-
-    editDynamicArrayTag();
 }
 
 void ELFWidget::on_tableView_SymbolTable_customContextMenuRequested(const QPoint &pos)
@@ -930,9 +849,10 @@ QString ELFWidget::typeIdToString(int type)
 
     switch(type)
     {
-        case SELF::TYPE_Elf_Shdr:       sResult=QString("Section header");    break;
-        case SELF::TYPE_Elf_Phdr:       sResult=QString("Program header");    break;
-        case SELF::TYPE_SYMBOLTABLE:    sResult=QString("Symbol header");    break;
+        case SELF::TYPE_Elf_Shdr:               sResult=QString("Section header");      break;
+        case SELF::TYPE_Elf_Phdr:               sResult=QString("Program header");      break;
+        case SELF::TYPE_SYMBOLTABLE:            sResult=QString("Symbol header");       break;
+        case SELF::TYPE_Elf_DynamicArrayTags:   sResult=QString("Tag");                 break;
     }
 
     return sResult;
@@ -1002,6 +922,14 @@ void ELFWidget::onTableView_Elf_Phdr_currentRowChanged(const QModelIndex &curren
     }
 }
 
+void ELFWidget::onTableView_DynamicArrayTags_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
+    Q_UNUSED(current)
+    Q_UNUSED(previous)
+
+    // TODO
+}
+
 void ELFWidget::on_tableView_Elf_Phdr_doubleClicked(const QModelIndex &index)
 {
     Q_UNUSED(index)
@@ -1030,5 +958,28 @@ void ELFWidget::on_tableView_Elf_Phdr_customContextMenuRequested(const QPoint &p
         // TODO Entropy
 
         contextMenu.exec(ui->tableView_Elf_Phdr->viewport()->mapToGlobal(pos));
+    }
+}
+
+void ELFWidget::on_tableView_DynamicArrayTags_doubleClicked(const QModelIndex &index)
+{
+    Q_UNUSED(index)
+
+    editDynamicArrayTag();
+}
+
+void ELFWidget::on_tableView_DynamicArrayTags_customContextMenuRequested(const QPoint &pos)
+{
+    int nRow=ui->tableView_DynamicArrayTags->currentIndex().row();
+
+    if(nRow!=-1)
+    {
+        QMenu contextMenu(this);
+
+        QAction actionEdit(tr("Edit"),this);
+        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editDynamicArrayTag()));
+        contextMenu.addAction(&actionEdit);
+
+        contextMenu.exec(ui->tableView_DynamicArrayTags->viewport()->mapToGlobal(pos));
     }
 }
