@@ -221,7 +221,6 @@ const FW_DEF::HEADER_RECORD records[]=
 };
 }
 
-
 namespace N_Elf_Rela
 {
 const FW_DEF::HEADER_RECORD records32[]=
@@ -235,5 +234,19 @@ const FW_DEF::HEADER_RECORD records64[]=
     {r_offset,              "r_offset",             0,  8,      "Elf64_Addr",           FW_DEF::VAL_TYPE_ADDRESS},
     {r_info,                "r_info",               8,  8,      "Elf64_Xword",          FW_DEF::VAL_TYPE_DATA},
     {r_addend,              "r_addend",             16, 8,      "Elf64_Sxword",         FW_DEF::VAL_TYPE_DATA},
+};
+}
+
+namespace N_Elf_Rel
+{
+const FW_DEF::HEADER_RECORD records32[]=
+{
+    {r_offset,              "r_offset",             0,  4,      "Elf32_Addr",           FW_DEF::VAL_TYPE_ADDRESS},
+    {r_info,                "r_info",               4,  4,      "Elf32_Word",           FW_DEF::VAL_TYPE_DATA},
+};
+const FW_DEF::HEADER_RECORD records64[]=
+{
+    {r_offset,              "r_offset",             0,  8,      "Elf64_Addr",           FW_DEF::VAL_TYPE_ADDRESS},
+    {r_info,                "r_info",               8,  8,      "Elf64_Xword",          FW_DEF::VAL_TYPE_DATA},
 };
 }

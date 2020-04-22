@@ -559,6 +559,15 @@ void ELFWidget::reloadData()
                 ajustTableView(&elfProcessData,&tvModel[SELF::TYPE_Elf_Rela],ui->tableView_Rela);
             }
         }
+        else if(nType==SELF::TYPE_Elf_Rel)
+        {
+            if(!stInit.contains(sInit))
+            {
+                ELFProcessData elfProcessData(SELF::TYPE_Elf_Rel,&tvModel[SELF::TYPE_Elf_Rel],&elf,nDataOffset,nDataSize,nDataExtraOffset,nDataExtraSize);
+
+                ajustTableView(&elfProcessData,&tvModel[SELF::TYPE_Elf_Rel],ui->tableView_Rela);
+            }
+        }
 
         setReadonly(ui->checkBoxReadonly->isChecked());
     }

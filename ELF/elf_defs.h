@@ -42,6 +42,7 @@ enum TYPE
     TYPE_STRINGTABLE,
     TYPE_SYMBOLTABLE,
     TYPE_Elf_Rela,
+    TYPE_Elf_Rel,
     __TYPE_size
 };
 }
@@ -291,6 +292,29 @@ enum DATA
     r_offset,
     r_info,
     r_addend,
+    __data_size
+};
+
+extern const FW_DEF::HEADER_RECORD records32[__data_size];
+extern const FW_DEF::HEADER_RECORD records64[__data_size];
+
+enum CB
+{
+    __CB_size
+};
+
+enum INV
+{
+    __INV_size
+};
+}
+
+namespace N_Elf_Rel
+{
+enum DATA
+{
+    r_offset,
+    r_info,
     __data_size
 };
 
