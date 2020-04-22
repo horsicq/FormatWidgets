@@ -270,18 +270,18 @@ bool SectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int
                     {
                         switch(nNdata)
                         {
-                            case N_Elf_Rela::r_offset:      elf.setElf64_Rela_r_offset(nOffset,(quint32)nValue,elf.isBigEndian());    break;
-                            case N_Elf_Rela::r_info:      elf.setElf64_Rela_r_info(nOffset,(quint32)nValue,elf.isBigEndian());                       break;
-                            case N_Elf_Rela::r_addend:     elf.setElf64_Rela_r_addend(nOffset,(quint32)nValue,elf.isBigEndian());                      break;
+                            case N_Elf_Rela::r_offset:      elf.setElf64_Rela_r_offset(nOffset,(quint32)nValue,elf.isBigEndian());  break;
+                            case N_Elf_Rela::r_info:        elf.setElf64_Rela_r_info(nOffset,(quint32)nValue,elf.isBigEndian());    break;
+                            case N_Elf_Rela::r_addend:      elf.setElf64_Rela_r_addend(nOffset,(quint32)nValue,elf.isBigEndian());  break;
                         }
                     }
                     else
                     {
                         switch(nNdata)
                         {
-                            case N_Elf_Rela::r_offset:      elf.setElf32_Rela_r_offset(nOffset,(quint64)nValue,elf.isBigEndian());    break;
-                            case N_Elf_Rela::r_info:      elf.setElf32_Rela_r_info(nOffset,(quint64)nValue,elf.isBigEndian());                       break;
-                            case N_Elf_Rela::r_addend:     elf.setElf32_Rela_r_addend(nOffset,(quint64)nValue,elf.isBigEndian());                      break;
+                            case N_Elf_Rela::r_offset:      elf.setElf32_Rela_r_offset(nOffset,(quint64)nValue,elf.isBigEndian());  break;
+                            case N_Elf_Rela::r_info:        elf.setElf32_Rela_r_info(nOffset,(quint64)nValue,elf.isBigEndian());    break;
+                            case N_Elf_Rela::r_addend:      elf.setElf32_Rela_r_addend(nOffset,(quint64)nValue,elf.isBigEndian());  break;
                         }
                     }
 
