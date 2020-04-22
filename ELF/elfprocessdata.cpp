@@ -496,6 +496,8 @@ void ELFProcessData::_process()
                 (*ppModel)->setItem(i,N_Elf_Rela::r_info+1,         new QStandardItem(XBinary::valueToHex(listRela32.at(i).r_info)));
                 (*ppModel)->setItem(i,N_Elf_Rela::r_addend+1,       new QStandardItem(XBinary::valueToHex(listRela32.at(i).r_addend)));
             }
+
+            incValue();
         }
     }
 }

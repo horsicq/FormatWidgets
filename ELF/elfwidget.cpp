@@ -276,7 +276,6 @@ void ELFWidget::reloadData()
     nLastType=nType;
     sLastInit=sInit;
 
-
     ui->stackedWidgetInfo->setCurrentIndex(nType);
 
     XELF elf(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
