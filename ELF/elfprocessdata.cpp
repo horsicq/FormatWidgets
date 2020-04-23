@@ -256,12 +256,17 @@ void ELFProcessData::_process()
     }
     else if(type==SELF::TYPE_SYMBOLTABLE)
     {
+        QMap<quint64, QString> mapBinds=pELF->getStBindsS();
+        QMap<quint64, QString> mapTypes=pELF->getStTypesS();
+
         if(pELF->is64())
         {
             QList<QString> listLabels;
             listLabels.append("");
             listLabels.append(getStructList(N_Elf64_Sym::records,N_Elf64_Sym::__data_size));
             listLabels.append("Name");
+            listLabels.append("Bind");
+            listLabels.append("Type");
 
             QList<XELF_DEF::Elf64_Sym> listSymbols=pELF->getElf64_SymList(nOffset,nSize);
 
@@ -295,6 +300,8 @@ void ELFProcessData::_process()
                 QString sName=pELF->getStringFromIndex(nStringTableOffset,nStringTableSize,listSymbols.at(i).st_name);
 
                 (*ppModel)->setItem(i,N_Elf64_Sym::st_size+2,           new QStandardItem(sName));
+                (*ppModel)->setItem(i,N_Elf64_Sym::st_size+3,           new QStandardItem(mapBinds.value(S_ELF64_ST_BIND(listSymbols.at(i).st_info))));
+                (*ppModel)->setItem(i,N_Elf64_Sym::st_size+4,           new QStandardItem(mapTypes.value(S_ELF64_ST_TYPE(listSymbols.at(i).st_info))));
 
                 incValue();
             }
@@ -305,6 +312,8 @@ void ELFProcessData::_process()
             listLabels.append("");
             listLabels.append(getStructList(N_Elf32_Sym::records,N_Elf32_Sym::__data_size));
             listLabels.append("Name");
+            listLabels.append("Bind");
+            listLabels.append("Type");
 
             QList<XELF_DEF::Elf32_Sym> listSymbols=pELF->getElf32_SymList(nOffset,nSize);
 
@@ -338,6 +347,8 @@ void ELFProcessData::_process()
                 QString sName=pELF->getStringFromIndex(nStringTableOffset,nStringTableSize,listSymbols.at(i).st_name);
 
                 (*ppModel)->setItem(i,N_Elf32_Sym::st_shndx+2,          new QStandardItem(sName));
+                (*ppModel)->setItem(i,N_Elf64_Sym::st_size+3,           new QStandardItem(mapBinds.value(S_ELF32_ST_BIND(listSymbols.at(i).st_info))));
+                (*ppModel)->setItem(i,N_Elf64_Sym::st_size+4,           new QStandardItem(mapTypes.value(S_ELF32_ST_TYPE(listSymbols.at(i).st_info))));
 
                 incValue();
             }
