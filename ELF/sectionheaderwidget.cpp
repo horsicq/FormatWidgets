@@ -439,6 +439,8 @@ void SectionHeaderWidget::reloadData()
 
                     ppComboBox[N_Elf_Shdr::CB_TYPE]->setValue(shdr64.sh_type);
                     ppComboBox[N_Elf_Shdr::CB_FLAGS]->setValue(shdr64.sh_flags);
+
+                    addComment(ui->tableWidget,N_Elf_Shdr::sh_name,HEADER_COLUMN_COMMENT,elf.getStringFromIndex(nStringTableOffset,nStringTableSize,shdr64.sh_name));
                 }
                 else
                 {
@@ -457,6 +459,8 @@ void SectionHeaderWidget::reloadData()
 
                     ppComboBox[N_Elf_Shdr::CB_TYPE]->setValue(shdr32.sh_type);
                     ppComboBox[N_Elf_Shdr::CB_FLAGS]->setValue(shdr32.sh_flags);
+
+                    addComment(ui->tableWidget,N_Elf_Shdr::sh_name,HEADER_COLUMN_COMMENT,elf.getStringFromIndex(nStringTableOffset,nStringTableSize,shdr32.sh_name));
                 }
 
                 qint64 nOffset=elf.getShdrOffset(getNumber());

@@ -98,8 +98,8 @@ void ELFProcessData::_process()
                 pItem->setData(listSections64.at(i).sh_size,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
                 pItem->setData(listSections64.at(i).sh_addr,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS);
 
-                pItem->setData(nStringTableOffset,Qt::UserRole+FW_DEF::SECTION_DATA_STRINGTABLEOFFSET);
-                pItem->setData(nStringTableSize,Qt::UserRole+FW_DEF::SECTION_DATA_STRINGTABLESIZE);
+                pItem->setData(osStringTable.nOffset,Qt::UserRole+FW_DEF::SECTION_DATA_STRINGTABLEOFFSET);
+                pItem->setData(osStringTable.nSize,Qt::UserRole+FW_DEF::SECTION_DATA_STRINGTABLESIZE);
 
                 (*ppModel)->setItem(i,0,                              pItem);
                 (*ppModel)->setItem(i,N_Elf_Shdr::sh_name+1,          new QStandardItem(XBinary::valueToHex(listSections64.at(i).sh_name)));
