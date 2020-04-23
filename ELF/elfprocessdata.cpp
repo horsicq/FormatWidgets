@@ -493,7 +493,16 @@ void ELFProcessData::_process()
 
         setHeader(*ppModel,&listLabels);
 
-        QMap<quint64,QString> mapTypes=pELF->getRelTypesS();
+        QMap<quint64,QString> mapTypes;
+
+        if(bIs64)
+        {
+            mapTypes=pELF->getRelTypesS64();
+        }
+        else
+        {
+            mapTypes=pELF->getRelTypesS32();
+        }
 
         for(int i=0;(i<nCount)&&(isRun());i++)
         {
@@ -568,7 +577,16 @@ void ELFProcessData::_process()
 
         setHeader(*ppModel,&listLabels);
 
-        QMap<quint64,QString> mapTypes=pELF->getRelTypesS();
+        QMap<quint64,QString> mapTypes;
+
+        if(bIs64)
+        {
+            mapTypes=pELF->getRelTypesS64();
+        }
+        else
+        {
+            mapTypes=pELF->getRelTypesS32();
+        }
 
         for(int i=0;(i<nCount)&&(isRun());i++)
         {
