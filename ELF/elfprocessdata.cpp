@@ -493,6 +493,8 @@ void ELFProcessData::_process()
 
         setHeader(*ppModel,&listLabels);
 
+        QMap<quint64,QString> mapTypes=pELF->getRelTypesS();
+
         for(int i=0;(i<nCount)&&(isRun());i++)
         {
             if(bIs64)
@@ -506,6 +508,7 @@ void ELFProcessData::_process()
                 (*ppModel)->setItem(i,N_Elf_Rela::r_info+1,         new QStandardItem(XBinary::valueToHex(listRela64.at(i).r_info)));
                 (*ppModel)->setItem(i,N_Elf_Rela::r_addend+1,       new QStandardItem(XBinary::valueToHex(listRela64.at(i).r_addend)));
                 (*ppModel)->setItem(i,N_Elf_Rela::r_addend+2,       new QStandardItem(XBinary::valueToHex((quint32)S_ELF64_R_SYM(listRela64.at(i).r_info))));
+                (*ppModel)->setItem(i,N_Elf_Rela::r_addend+3,       new QStandardItem(mapTypes.value(S_ELF64_R_TYPE(listRela64.at(i).r_info))));
             }
             else
             {
@@ -518,6 +521,7 @@ void ELFProcessData::_process()
                 (*ppModel)->setItem(i,N_Elf_Rela::r_info+1,         new QStandardItem(XBinary::valueToHex(listRela32.at(i).r_info)));
                 (*ppModel)->setItem(i,N_Elf_Rela::r_addend+1,       new QStandardItem(XBinary::valueToHex(listRela32.at(i).r_addend)));
                 (*ppModel)->setItem(i,N_Elf_Rela::r_addend+2,       new QStandardItem(XBinary::valueToHex((quint32)S_ELF32_R_SYM(listRela32.at(i).r_info))));
+                (*ppModel)->setItem(i,N_Elf_Rela::r_addend+3,       new QStandardItem(mapTypes.value(S_ELF32_R_TYPE(listRela32.at(i).r_info))));
             }
 
             incValue();
@@ -564,6 +568,8 @@ void ELFProcessData::_process()
 
         setHeader(*ppModel,&listLabels);
 
+        QMap<quint64,QString> mapTypes=pELF->getRelTypesS();
+
         for(int i=0;(i<nCount)&&(isRun());i++)
         {
             if(bIs64)
@@ -576,6 +582,7 @@ void ELFProcessData::_process()
                 (*ppModel)->setItem(i,N_Elf_Rel::r_offset+1,        new QStandardItem(XBinary::valueToHex(listRel64.at(i).r_offset)));
                 (*ppModel)->setItem(i,N_Elf_Rel::r_info+1,          new QStandardItem(XBinary::valueToHex(listRel64.at(i).r_info)));
                 (*ppModel)->setItem(i,N_Elf_Rel::r_info+2,          new QStandardItem(XBinary::valueToHex((quint32)S_ELF64_R_SYM(listRel64.at(i).r_info))));
+                (*ppModel)->setItem(i,N_Elf_Rel::r_info+3,          new QStandardItem(mapTypes.value(S_ELF64_R_TYPE(listRel64.at(i).r_info))));
             }
             else
             {
@@ -587,6 +594,7 @@ void ELFProcessData::_process()
                 (*ppModel)->setItem(i,N_Elf_Rel::r_offset+1,        new QStandardItem(XBinary::valueToHex(listRel32.at(i).r_offset)));
                 (*ppModel)->setItem(i,N_Elf_Rel::r_info+1,          new QStandardItem(XBinary::valueToHex(listRel32.at(i).r_info)));
                 (*ppModel)->setItem(i,N_Elf_Rel::r_info+2,          new QStandardItem(XBinary::valueToHex((quint32)S_ELF32_R_SYM(listRel32.at(i).r_info))));
+                (*ppModel)->setItem(i,N_Elf_Rel::r_info+3,          new QStandardItem(mapTypes.value(S_ELF32_R_TYPE(listRel32.at(i).r_info))));
             }
 
             incValue();
