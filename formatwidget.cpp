@@ -304,9 +304,9 @@ void FormatWidget::showHex(qint64 nOffset, qint64 nSize)
 
     DialogHex dialogHex(this,pDevice,&hexOptions);
 
-    dialogHex.exec();
+    connect(&dialogHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
 
-    // TODO Connect edited !!!
+    dialogHex.exec();
 
     reloadData();
 }

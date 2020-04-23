@@ -42,6 +42,8 @@ public:
     virtual void reset();
     virtual void reload();
 
+    void setStringTable(qint64 nStringTableOffset,qint64 nStringTableSize);
+
 protected:
     virtual bool _setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition,qint64 nOffset);
     virtual void setReadonly(bool bState);
@@ -65,6 +67,8 @@ private:
     int nInvWidgetSize;
     SubDevice *pSubDevice;
     bool bInit;
+    qint64 nStringTableOffset;
+    qint64 nStringTableSize;
 };
 
 #endif // SECTIONHEADERWIDGET_H

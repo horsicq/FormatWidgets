@@ -36,6 +36,9 @@ public:
     explicit DialogHex(QWidget *parent, QIODevice *pDevice, QHexView::OPTIONS *pOptions);
     ~DialogHex();
 
+signals:
+    void editState(bool bState);
+
 private slots:
     void on_pushButtonClose_clicked();
 

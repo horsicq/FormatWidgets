@@ -27,6 +27,8 @@ DialogHex::DialogHex(QWidget *parent,QIODevice *pDevice,QHexView::OPTIONS *pOpti
 {
     ui->setupUi(this);
 
+    connect(ui->widgetHex,SIGNAL(editState(bool)),this,SIGNAL(setEdited(bool)));
+
     ui->widgetHex->enableHeader(true);
     ui->widgetHex->enableReadOnly(true);
 

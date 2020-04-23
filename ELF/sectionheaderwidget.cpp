@@ -147,6 +147,12 @@ void SectionHeaderWidget::reload()
     reloadData();
 }
 
+void SectionHeaderWidget::setStringTable(qint64 nStringTableOffset, qint64 nStringTableSize)
+{
+    this->nStringTableOffset=nStringTableOffset;
+    this->nStringTableSize=nStringTableSize;
+}
+
 bool SectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
 {
     Q_UNUSED(nVtype)

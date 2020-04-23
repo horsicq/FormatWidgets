@@ -98,6 +98,9 @@ void ELFProcessData::_process()
                 pItem->setData(listSections64.at(i).sh_size,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
                 pItem->setData(listSections64.at(i).sh_addr,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS);
 
+                pItem->setData(nStringTableOffset,Qt::UserRole+FW_DEF::SECTION_DATA_STRINGTABLEOFFSET);
+                pItem->setData(nStringTableSize,Qt::UserRole+FW_DEF::SECTION_DATA_STRINGTABLESIZE);
+
                 (*ppModel)->setItem(i,0,                              pItem);
                 (*ppModel)->setItem(i,N_Elf_Shdr::sh_name+1,          new QStandardItem(XBinary::valueToHex(listSections64.at(i).sh_name)));
                 (*ppModel)->setItem(i,N_Elf_Shdr::sh_type+1,          new QStandardItem(XBinary::valueToHex(listSections64.at(i).sh_type)));
@@ -127,6 +130,9 @@ void ELFProcessData::_process()
 
                 pItem->setData(listSections32.at(i).sh_size,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
                 pItem->setData(listSections32.at(i).sh_addr,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS);
+
+                pItem->setData(nStringTableOffset,Qt::UserRole+FW_DEF::SECTION_DATA_STRINGTABLEOFFSET);
+                pItem->setData(nStringTableSize,Qt::UserRole+FW_DEF::SECTION_DATA_STRINGTABLESIZE);
 
                 (*ppModel)->setItem(i,0,                              pItem);
                 (*ppModel)->setItem(i,N_Elf_Shdr::sh_name+1,          new QStandardItem(XBinary::valueToHex(listSections32.at(i).sh_name)));
@@ -275,6 +281,9 @@ void ELFProcessData::_process()
 
                 pItem->setData(nOffset+i*sizeof(XELF_DEF::Elf64_Sym),Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
 
+                pItem->setData(nStringTableOffset,Qt::UserRole+FW_DEF::SECTION_DATA_STRINGTABLEOFFSET);
+                pItem->setData(nStringTableSize,Qt::UserRole+FW_DEF::SECTION_DATA_STRINGTABLESIZE);
+
                 (*ppModel)->setItem(i,0,                                pItem);
                 (*ppModel)->setItem(i,N_Elf64_Sym::st_name+1,           new QStandardItem(XBinary::valueToHex(listSymbols.at(i).st_name)));
                 (*ppModel)->setItem(i,N_Elf64_Sym::st_info+1,           new QStandardItem(XBinary::valueToHex(listSymbols.at(i).st_info)));
@@ -314,6 +323,9 @@ void ELFProcessData::_process()
                 pItem->setTextAlignment(Qt::AlignRight);
 
                 pItem->setData(nOffset+i*sizeof(XELF_DEF::Elf32_Sym),Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+
+                pItem->setData(nStringTableOffset,Qt::UserRole+FW_DEF::SECTION_DATA_STRINGTABLEOFFSET);
+                pItem->setData(nStringTableSize,Qt::UserRole+FW_DEF::SECTION_DATA_STRINGTABLESIZE);
 
                 (*ppModel)->setItem(i,0,                                pItem);
                 (*ppModel)->setItem(i,N_Elf32_Sym::st_name+1,           new QStandardItem(XBinary::valueToHex(listSymbols.at(i).st_name)));
@@ -366,6 +378,9 @@ void ELFProcessData::_process()
             QStandardItem *pItem=new QStandardItem(QString::number(i));
 
             pItem->setData(listTagStructs.at(i).nOffset,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+
+            pItem->setData(nStringTableOffset,Qt::UserRole+FW_DEF::SECTION_DATA_STRINGTABLEOFFSET);
+            pItem->setData(nStringTableSize,Qt::UserRole+FW_DEF::SECTION_DATA_STRINGTABLESIZE);
 
             (*ppModel)->setItem(i,0,                                      pItem);
             (*ppModel)->setItem(i,N_Elf_DynamicArrayTags::d_tag+1,        new QStandardItem(XBinary::valueToHex(bIs64?((quint64)listTagStructs.at(i).nTag):((quint32)listTagStructs.at(i).nTag))));
@@ -427,6 +442,9 @@ void ELFProcessData::_process()
         for(int i=0;(i<nCount)&&(isRun());i++)
         {
             QStandardItem *pItem=new QStandardItem(QString::number(i));
+
+            pItem->setData(nStringTableOffset,Qt::UserRole+FW_DEF::SECTION_DATA_STRINGTABLEOFFSET);
+            pItem->setData(nStringTableSize,Qt::UserRole+FW_DEF::SECTION_DATA_STRINGTABLESIZE);
 
             (*ppModel)->setItem(i,0,                                      pItem);
             (*ppModel)->setItem(i,N_ELF_LIBRARIES::library_name+1,        new QStandardItem(listLibraries.at(i)));

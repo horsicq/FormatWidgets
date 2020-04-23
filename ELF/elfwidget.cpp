@@ -794,7 +794,12 @@ void ELFWidget::showSectionHeader(int type, QTableView *pTableView)
 
         qint64 nOffset=pTableView->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
 
+        qint64 nStringTableOffset=pTableView->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_STRINGTABLEOFFSET).toLongLong();
+        qint64 nStringTableSize=pTableView->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_STRINGTABLESIZE).toLongLong();
+
         SectionHeaderWidget *pSectionHeaderWidget=new SectionHeaderWidget(getDevice(),getOptions(),(quint32)nRow,nOffset,type,this);
+
+        pSectionHeaderWidget->setStringTable(nStringTableOffset,nStringTableSize);
 
         DialogSectionHeader dsh(this);
         dsh.setWidget(pSectionHeaderWidget);
