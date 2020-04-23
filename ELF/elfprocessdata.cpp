@@ -495,13 +495,19 @@ void ELFProcessData::_process()
 
         QMap<quint64,QString> mapTypes;
 
-        if(bIs64)
+        QString sArch=pELF->getArch();
+
+        if((sArch=="SPARC")||(sArch=="SPARC32PLUS")||(sArch=="SPARCV9"))
         {
-            mapTypes=pELF->getRelTypesS64();
+            mapTypes=pELF->getRelTypesS_SPARC();
         }
-        else
+        else if(sArch=="386")
         {
-            mapTypes=pELF->getRelTypesS32();
+            mapTypes=pELF->getRelTypesS_x86();
+        }
+        else if((sArch=="AMD64")||(sArch=="X86_64"))
+        {
+            mapTypes=pELF->getRelTypesS_x64();
         }
 
         for(int i=0;(i<nCount)&&(isRun());i++)
@@ -579,13 +585,19 @@ void ELFProcessData::_process()
 
         QMap<quint64,QString> mapTypes;
 
-        if(bIs64)
+        QString sArch=pELF->getArch();
+
+        if((sArch=="SPARC")||(sArch=="SPARC32PLUS")||(sArch=="SPARCV9"))
         {
-            mapTypes=pELF->getRelTypesS64();
+            mapTypes=pELF->getRelTypesS_SPARC();
         }
-        else
+        else if(sArch=="386")
         {
-            mapTypes=pELF->getRelTypesS32();
+            mapTypes=pELF->getRelTypesS_x86();
+        }
+        else if((sArch=="AMD64")||(sArch=="X86_64"))
+        {
+            mapTypes=pELF->getRelTypesS_x64();
         }
 
         for(int i=0;(i<nCount)&&(isRun());i++)
