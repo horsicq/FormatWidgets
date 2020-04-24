@@ -52,6 +52,8 @@ private slots:
     virtual void reloadData();
     void widgetValueChanged(quint64 nValue);
     void on_checkBoxReadonly_toggled(bool checked);
+    void on_pushButtonReload_clicked();
+    void enableButton();
 
 private:
     Ui::BinaryWidget *ui;

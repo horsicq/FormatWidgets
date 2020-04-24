@@ -2067,7 +2067,15 @@ void PEWidget::on_treeWidgetResources_currentItemChanged(QTreeWidgetItem *curren
 
 void PEWidget::on_pushButtonReload_clicked()
 {
+    ui->pushButtonReload->setEnabled(false);
     reload();
+
+    QTimer::singleShot(1000,this,SLOT(enableButton()));
+}
+
+void PEWidget::enableButton()
+{
+    ui->pushButtonReload->setEnabled(true);
 }
 
 void PEWidget::on_tableWidget_Exceptions_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)

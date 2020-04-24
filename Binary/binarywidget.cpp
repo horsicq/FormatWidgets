@@ -148,3 +148,16 @@ void BinaryWidget::on_checkBoxReadonly_toggled(bool checked)
 {
     setReadonly(checked);
 }
+
+void BinaryWidget::on_pushButtonReload_clicked()
+{
+    ui->pushButtonReload->setEnabled(false);
+    reload();
+
+    QTimer::singleShot(1000,this,SLOT(enableButton()));
+}
+
+void BinaryWidget::enableButton()
+{
+    ui->pushButtonReload->setEnabled(true);
+}

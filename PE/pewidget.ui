@@ -1081,6 +1081,12 @@
    <container>1</container>
   </customwidget>
   <customwidget>
+   <class>QHexViewWidget</class>
+   <extends>QWidget</extends>
+   <header>qhexviewwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>SearchStringsWidget</class>
    <extends>QWidget</extends>
    <header>searchstringswidget.h</header>
@@ -1090,12 +1096,6 @@
    <class>XMemoryMapWidget</class>
    <extends>QWidget</extends>
    <header>xmemorymapwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>QHexViewWidget</class>
-   <extends>QWidget</extends>
-   <header>qhexviewwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

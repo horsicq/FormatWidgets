@@ -683,7 +683,15 @@ void ELFWidget::on_checkBoxReadonly_toggled(bool checked)
 
 void ELFWidget::on_pushButtonReload_clicked()
 {
+    ui->pushButtonReload->setEnabled(false);
     reload();
+
+    QTimer::singleShot(1000,this,SLOT(enableButton()));
+}
+
+void ELFWidget::enableButton()
+{
+    ui->pushButtonReload->setEnabled(true);
 }
 
 void ELFWidget::loadShdr(int nRow)

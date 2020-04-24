@@ -55,6 +55,7 @@ private slots:
     void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
     void on_checkBoxReadonly_toggled(bool checked);
     void on_pushButtonReload_clicked();
+    void enableButton();
     void on_tableWidget_DOS_HEADER_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     void on_tableWidget_OS2_HEADER_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
 

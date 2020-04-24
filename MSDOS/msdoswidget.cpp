@@ -315,7 +315,15 @@ void MSDOSWidget::on_checkBoxReadonly_toggled(bool checked)
 
 void MSDOSWidget::on_pushButtonReload_clicked()
 {
+    ui->pushButtonReload->setEnabled(false);
     reload();
+
+    QTimer::singleShot(1000,this,SLOT(enableButton()));
+}
+
+void MSDOSWidget::enableButton()
+{
+    ui->pushButtonReload->setEnabled(true);
 }
 
 void MSDOSWidget::on_tableWidget_DOS_HEADER_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)

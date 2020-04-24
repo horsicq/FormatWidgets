@@ -229,7 +229,6 @@ bool SectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int
 
             switch(nStype)
             {
-                // TODO Comment name
                 case SELF::TYPE_Elf_Shdr:
                     if(elf.is64())
                     {

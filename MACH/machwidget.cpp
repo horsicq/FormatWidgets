@@ -653,7 +653,15 @@ void MACHWidget::on_tableWidget_commands_currentCellChanged(int currentRow, int 
 
 void MACHWidget::on_pushButtonReload_clicked()
 {
+    ui->pushButtonReload->setEnabled(false);
     reload();
+
+    QTimer::singleShot(1000,this,SLOT(enableButton()));
+}
+
+void MACHWidget::enableButton()
+{
+    ui->pushButtonReload->setEnabled(true);
 }
 
 void MACHWidget::on_tableWidget_segments_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)

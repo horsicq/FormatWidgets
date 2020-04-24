@@ -507,7 +507,15 @@ void NEWidget::on_checkBoxReadonly_toggled(bool checked)
 
 void NEWidget::on_pushButtonReload_clicked()
 {
+    ui->pushButtonReload->setEnabled(false);
     reload();
+
+    QTimer::singleShot(1000,this,SLOT(enableButton()));
+}
+
+void NEWidget::enableButton()
+{
+    ui->pushButtonReload->setEnabled(true);
 }
 
 void NEWidget::on_tableWidget_DOS_HEADER_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)

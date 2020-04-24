@@ -59,6 +59,7 @@ private slots:
     void on_checkBoxReadonly_toggled(bool checked);
     bool createSectionTable(int type, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount);
     void on_pushButtonReload_clicked();
+    void enableButton();
     void loadShdr(int nRow);
     void loadPhdr(int nRow);
     void loadNote(int nRow);

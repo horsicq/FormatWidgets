@@ -75,6 +75,7 @@ private slots:
     void on_tableWidget_Sections_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     void on_treeWidgetResources_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
     void on_pushButtonReload_clicked();
+    void enableButton();
     void on_tableWidget_Exceptions_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     void on_tableWidget_IMAGE_DIRECTORY_ENTRIES_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     void on_tableWidget_Debug_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);

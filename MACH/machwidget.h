@@ -57,6 +57,7 @@ private slots:
     bool createSectionTable(int type, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount);
     void on_tableWidget_commands_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     void on_pushButtonReload_clicked();
+    void enableButton();
     void on_tableWidget_segments_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     void on_tableWidget_sections_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     void loadCommand(int nNumber);
