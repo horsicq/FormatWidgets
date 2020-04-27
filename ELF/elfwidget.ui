@@ -145,6 +145,25 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="page_Entropy">
+       <layout class="QVBoxLayout" name="verticalLayout_17">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="XEntropyWidget" name="widgetEntropy" native="true"/>
+        </item>
+       </layout>
+      </widget>
       <widget class="QWidget" name="page_Elf_Ehdr">
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <property name="leftMargin">
@@ -222,7 +241,7 @@
            <enum>QAbstractItemView::SelectRows</enum>
           </property>
           <attribute name="horizontalHeaderDefaultSectionSize">
-           <number>29</number>
+           <number>35</number>
           </attribute>
           <attribute name="verticalHeaderVisible">
            <bool>false</bool>
@@ -276,7 +295,7 @@
            <enum>QAbstractItemView::SelectRows</enum>
           </property>
           <attribute name="horizontalHeaderDefaultSectionSize">
-           <number>29</number>
+           <number>35</number>
           </attribute>
           <attribute name="verticalHeaderVisible">
            <bool>false</bool>
@@ -762,6 +781,12 @@
    <class>SearchStringsWidget</class>
    <extends>QWidget</extends>
    <header>searchstringswidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>XEntropyWidget</class>
+   <extends>QWidget</extends>
+   <header>xentropywidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

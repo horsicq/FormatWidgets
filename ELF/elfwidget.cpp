@@ -85,6 +85,7 @@ void ELFWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_HEX,tr("Hex")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_STRINGS,tr("Strings")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_MEMORYMAP,tr("Memory map")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_ENTROPY,tr("Entropy")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_Elf_Ehdr,"Elf_Ehdr"));
 
         QList<XELF_DEF::Elf_Shdr> listSections=elf.getElf_ShdrList();
@@ -310,6 +311,15 @@ void ELFWidget::reloadData()
                 ui->widgetMemoryMap->setData(getDevice());
 
                 ui->widgetHex->reload();
+            }
+        }
+        else if(nType==SELF::TYPE_ENTROPY)
+        {
+            if(!stInit.contains(sInit))
+            {
+                ui->widgetEntropy->setData(getDevice(),true);
+
+                ui->widgetEntropy->reload();
             }
         }
         else if(nType==SELF::TYPE_Elf_Ehdr)

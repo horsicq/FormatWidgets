@@ -31,6 +31,11 @@ DEPENDPATH += $$PWD
     include($$PWD/../XMemoryMapWidget/xmemorymapwidget.pri)
 }
 
+!contains(XCONFIG, xentropywidget) {
+    XCONFIG += xentropywidget
+    include($$PWD/../XEntropyWidget/xentropywidget.pri)
+}
+
 HEADERS += \
     $$PWD/dialogprocessdata.h \
     $$PWD/processdata.h \

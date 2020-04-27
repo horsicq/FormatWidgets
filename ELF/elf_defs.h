@@ -31,6 +31,7 @@ enum TYPE
     TYPE_HEX=0,
     TYPE_STRINGS,
     TYPE_MEMORYMAP,
+    TYPE_ENTROPY,
     TYPE_Elf_Ehdr,
     TYPE_Elf_Shdr,
     TYPE_Elf_Phdr,
