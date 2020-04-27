@@ -29,7 +29,7 @@ SectionHeaderWidget::SectionHeaderWidget(QWidget *parent):
 }
 
 SectionHeaderWidget::SectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset,QWidget *parent):
-    FormatWidget(pDevice,pOptions,nNumber,nOffset,parent),
+    FormatWidget(pDevice,pOptions,nNumber,nOffset,0,parent),
     ui(new Ui::SectionHeaderWidget)
 {
     ui->setupUi(this);
@@ -55,6 +55,11 @@ void SectionHeaderWidget::clear()
     ui->checkBoxReadonly->setChecked(true);
 }
 
+void SectionHeaderWidget::cleanup()
+{
+
+}
+
 void SectionHeaderWidget::reset()
 {
     bInit=false;
@@ -62,7 +67,7 @@ void SectionHeaderWidget::reset()
 
 void SectionHeaderWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset)
 {
-    FormatWidget::setData(pDevice,pOptions,nNumber,nOffset);
+    FormatWidget::setData(pDevice,pOptions,nNumber,nOffset,0);
 }
 
 void SectionHeaderWidget::reload()
@@ -146,7 +151,7 @@ void SectionHeaderWidget::blockSignals(bool bState)
 
 void SectionHeaderWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
 {
-    int nSymbolWidth=getSymbolWidth();
+    int nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
 
     pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
     pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*6);

@@ -29,6 +29,7 @@
 #include "relocsheaderwidget.h"
 #include "exceptionheaderwidget.h"
 #include "pe_defs.h"
+#include "peprocessdata.h"
 
 namespace Ui
 {

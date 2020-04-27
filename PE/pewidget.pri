@@ -18,7 +18,8 @@ HEADERS += \
     $$PWD/relocsheaderwidget.h \
     $$PWD/sectionheaderwidget.h \
     $$PWD/importheaderwidget.h \
-    $$PWD/dialogpe.h
+    $$PWD/dialogpe.h \
+    $$PWD/peprocessdata.h
 
 SOURCES += \
     $$PWD/debugheaderwidget.cpp \
@@ -28,7 +29,8 @@ SOURCES += \
     $$PWD/relocsheaderwidget.cpp \
     $$PWD/sectionheaderwidget.cpp \
     $$PWD/importheaderwidget.cpp \
-    $$PWD/dialogpe.cpp
+    $$PWD/dialogpe.cpp \
+    $$PWD/peprocessdata.cpp
 
 !contains(XCONFIG, xpe) {
     XCONFIG += xpe
