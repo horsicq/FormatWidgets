@@ -23,6 +23,7 @@
 
 #include "../formatwidget.h"
 #include "ne_defs.h"
+#include "neprocessdata.h"
 
 namespace Ui
 {

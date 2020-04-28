@@ -31,7 +31,10 @@ PEProcessData::PEProcessData(int type, QStandardItemModel **ppModel, XPE *pPE, q
 
 void PEProcessData::_process()
 {
+    if(type==SPE::TYPE_RELOCS_POSITION)
+    {
 
+    }
 }
 
 void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)

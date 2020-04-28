@@ -16,11 +16,13 @@ FORMS += \
     $$PWD/dialogne.ui
 
 HEADERS += \
+    $$PWD/neprocessdata.h \
     $$PWD/newidget.h \
     $$PWD/ne_defs.h \
     $$PWD/dialogne.h
 
 SOURCES += \
+    $$PWD/neprocessdata.cpp \
     $$PWD/newidget.cpp \
     $$PWD/ne_defs.cpp \
     $$PWD/dialogne.cpp
