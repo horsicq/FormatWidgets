@@ -353,24 +353,24 @@ bool FormatWidget::createHeaderTable(int type, QTableWidget *pTableWidget, const
 
     for(int i=0; i<nRecordCount; i++)
     {
-        QTableWidgetItem *newItemName=new QTableWidgetItem;
-        newItemName->setText(pRecords[i].pszName);
-        newItemName->setData(Qt::UserRole+HEADER_DATA_OFFSET,pRecords[i].nOffset);
-        newItemName->setData(Qt::UserRole+HEADER_DATA_SIZE,pRecords[i].nSize);
-        pTableWidget->setItem(i,HEADER_COLUMN_NAME,newItemName);
+        QTableWidgetItem *itemName=new QTableWidgetItem;
+        itemName->setText(pRecords[i].pszName);
+        itemName->setData(Qt::UserRole+HEADER_DATA_OFFSET,pRecords[i].nOffset);
+        itemName->setData(Qt::UserRole+HEADER_DATA_SIZE,pRecords[i].nSize);
+        pTableWidget->setItem(i,HEADER_COLUMN_NAME,itemName);
 
-        QTableWidgetItem *newItemOffset=new QTableWidgetItem;
+        QTableWidgetItem *itemOffset=new QTableWidgetItem;
 
         if(pRecords[i].nOffset!=-1)
         {
-            newItemOffset->setText(XBinary::valueToHex((quint16)pRecords[i].nOffset));
+            itemOffset->setText(XBinary::valueToHex((quint16)pRecords[i].nOffset));
         }
 
-        pTableWidget->setItem(i,HEADER_COLUMN_OFFSET,newItemOffset);
+        pTableWidget->setItem(i,HEADER_COLUMN_OFFSET,itemOffset);
 
-        QTableWidgetItem *newItemType=new QTableWidgetItem;
-        newItemType->setText(pRecords[i].pszType);
-        pTableWidget->setItem(i,HEADER_COLUMN_TYPE,newItemType);
+        QTableWidgetItem *itemType=new QTableWidgetItem;
+        itemType->setText(pRecords[i].pszType);
+        pTableWidget->setItem(i,HEADER_COLUMN_TYPE,itemType);
 
         ppLineEdits[i]=new XLineEditHEX(this);
         ppLineEdits[i]->setProperty("STYPE",type);
