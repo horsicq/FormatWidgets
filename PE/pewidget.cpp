@@ -90,6 +90,7 @@ void PEWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_HEX,tr("Hex")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_STRINGS,tr("Strings")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_MEMORYMAP,tr("Memory map")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_ENTROPY,tr("Entropy")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_IMAGE_DOS_HEADER,"IMAGE_DOS_HEADER"));
         QTreeWidgetItem *pNtHeaders=createNewItem(SPE::TYPE_IMAGE_NT_HEADERS,"IMAGE_NT_HEADERS");
         ui->treeWidgetNavi->addTopLevelItem(pNtHeaders);
@@ -714,51 +715,60 @@ void PEWidget::sectionHex()
 
 void PEWidget::reloadData()
 {
-    int nData=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole).toInt();
-    ui->stackedWidgetInfo->setCurrentIndex(nData);
+    int nType=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_TYPE).toInt();
+    ui->stackedWidgetInfo->setCurrentIndex(nType);
 
     XPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
 
     if(pe.isValid())
     {
-        if(nData==SPE::TYPE_HEX)
+        if(nType==SPE::TYPE_HEX)
         {
-            if(!bInit[nData])
+            if(!bInit[nType])
             {
                 ui->widgetHex->setData(getDevice());
                 ui->widgetHex->setBackupFileName(getOptions()->sBackupFileName);
                 ui->widgetHex->enableReadOnly(false);
                 connect(ui->widgetHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
 
-                bInit[nData]=true;
+                bInit[nType]=true;
             }
             ui->widgetHex->reload();
         }
-        else if(nData==SPE::TYPE_STRINGS)
+        else if(nType==SPE::TYPE_STRINGS)
         {
-            if(!bInit[nData])
+            if(!bInit[nType])
             {
                 ui->widgetStrings->setData(getDevice(),0,true);
 
-                bInit[nData]=true;
+                bInit[nType]=true;
             }
             ui->widgetHex->reload();
         }
-        else if(nData==SPE::TYPE_MEMORYMAP)
+        else if(nType==SPE::TYPE_MEMORYMAP)
         {
-            if(!bInit[nData])
+            if(!bInit[nType])
             {
                 ui->widgetMemoryMap->setData(getDevice());
 
-                bInit[nData]=true;
+                bInit[nType]=true;
             }
             ui->widgetHex->reload();
         }
-        else if(nData==SPE::TYPE_IMAGE_DOS_HEADER)
+        else if(nType==SPE::TYPE_ENTROPY)
         {
-            if(!bInit[nData])
+            if(!bInit[nType])
             {
-                bInit[nData]=createHeaderTable(SPE::TYPE_IMAGE_DOS_HEADER,ui->tableWidget_IMAGE_DOS_HEADER,N_IMAGE_DOS_HEADER::records,lineEdit_IMAGE_DOS_HEADER,N_IMAGE_DOS_HEADER::__data_size,0);
+                ui->widgetEntropy->setData(getDevice(),0,getDevice()->size(),true);
+
+                bInit[nType]=true;
+            }
+        }
+        else if(nType==SPE::TYPE_IMAGE_DOS_HEADER)
+        {
+            if(!bInit[nType])
+            {
+                bInit[nType]=createHeaderTable(SPE::TYPE_IMAGE_DOS_HEADER,ui->tableWidget_IMAGE_DOS_HEADER,N_IMAGE_DOS_HEADER::records,lineEdit_IMAGE_DOS_HEADER,N_IMAGE_DOS_HEADER::__data_size,0);
                 comboBox[CB_IMAGE_DOS_HEADER_e_magic]=createComboBox(ui->tableWidget_IMAGE_DOS_HEADER,XPE::getImageMagicsS(),SPE::TYPE_IMAGE_DOS_HEADER,N_IMAGE_DOS_HEADER::e_magic,XComboBoxEx::CBTYPE_NORMAL);
                 invWidget[INV_IMAGE_DOS_HEADER_e_lfanew]=createInvWidget(ui->tableWidget_IMAGE_DOS_HEADER,SPE::TYPE_IMAGE_DOS_HEADER,N_IMAGE_DOS_HEADER::e_lfanew,InvWidget::TYPE_HEX);
             }
@@ -811,11 +821,11 @@ void PEWidget::reloadData()
 
             blockSignals(false);
         }
-        else if(nData==SPE::TYPE_IMAGE_NT_HEADERS)
+        else if(nType==SPE::TYPE_IMAGE_NT_HEADERS)
         {
-            if(!bInit[nData])
+            if(!bInit[nType])
             {
-                bInit[nData]=createHeaderTable(SPE::TYPE_IMAGE_NT_HEADERS,ui->tableWidget_IMAGE_NT_HEADERS,N_IMAGE_NT_HEADERS::records,lineEdit_IMAGE_NT_HEADERS,N_IMAGE_NT_HEADERS::__data_size,0);
+                bInit[nType]=createHeaderTable(SPE::TYPE_IMAGE_NT_HEADERS,ui->tableWidget_IMAGE_NT_HEADERS,N_IMAGE_NT_HEADERS::records,lineEdit_IMAGE_NT_HEADERS,N_IMAGE_NT_HEADERS::__data_size,0);
                 comboBox[CB_IMAGE_NT_HEADERS_Signature]=createComboBox(ui->tableWidget_IMAGE_NT_HEADERS,XPE::getImageNtHeadersSignaturesS(),SPE::TYPE_IMAGE_NT_HEADERS,N_IMAGE_NT_HEADERS::Signature,XComboBoxEx::CBTYPE_NORMAL);
             }
 
@@ -834,11 +844,11 @@ void PEWidget::reloadData()
 
             blockSignals(false);
         }
-        else if(nData==SPE::TYPE_IMAGE_FILE_HEADER)
+        else if(nType==SPE::TYPE_IMAGE_FILE_HEADER)
         {
-            if(!bInit[nData])
+            if(!bInit[nType])
             {
-                bInit[nData]=createHeaderTable(SPE::TYPE_IMAGE_FILE_HEADER,ui->tableWidget_IMAGE_FILE_HEADER,N_IMAGE_FILE_HEADER::records,lineEdit_IMAGE_FILE_HEADER,N_IMAGE_FILE_HEADER::__data_size,0);
+                bInit[nType]=createHeaderTable(SPE::TYPE_IMAGE_FILE_HEADER,ui->tableWidget_IMAGE_FILE_HEADER,N_IMAGE_FILE_HEADER::records,lineEdit_IMAGE_FILE_HEADER,N_IMAGE_FILE_HEADER::__data_size,0);
                 comboBox[CB_IMAGE_FILE_HEADER_Machine]=createComboBox(ui->tableWidget_IMAGE_FILE_HEADER,XPE::getImageFileHeaderMachinesS(),SPE::TYPE_IMAGE_FILE_HEADER,N_IMAGE_FILE_HEADER::Machine,XComboBoxEx::CBTYPE_NORMAL);
                 comboBox[CB_IMAGE_FILE_HEADER_Characteristics]=createComboBox(ui->tableWidget_IMAGE_FILE_HEADER,XPE::getImageFileHeaderCharacteristicsS(),SPE::TYPE_IMAGE_FILE_HEADER,N_IMAGE_FILE_HEADER::Characteristics,XComboBoxEx::CBTYPE_FLAGS);
 
@@ -872,11 +882,11 @@ void PEWidget::reloadData()
 
             blockSignals(false);
         }
-        else if(nData==SPE::TYPE_IMAGE_OPTIONAL_HEADER)
+        else if(nType==SPE::TYPE_IMAGE_OPTIONAL_HEADER)
         {
-            if(!bInit[nData])
+            if(!bInit[nType])
             {
-                bInit[nData]=createHeaderTable(SPE::TYPE_IMAGE_OPTIONAL_HEADER,ui->tableWidget_IMAGE_OPTIONAL_HEADER,pe.is64()?(N_IMAGE_OPTIONAL_HEADER::records64):(N_IMAGE_OPTIONAL_HEADER::records32),lineEdit_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::__data_size,0);
+                bInit[nType]=createHeaderTable(SPE::TYPE_IMAGE_OPTIONAL_HEADER,ui->tableWidget_IMAGE_OPTIONAL_HEADER,pe.is64()?(N_IMAGE_OPTIONAL_HEADER::records64):(N_IMAGE_OPTIONAL_HEADER::records32),lineEdit_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::__data_size,0);
                 comboBox[CB_IMAGE_OPTIONAL_HEADER_Magic]=createComboBox(ui->tableWidget_IMAGE_OPTIONAL_HEADER,XPE::getImageOptionalHeaderMagicS(),SPE::TYPE_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::Magic,XComboBoxEx::CBTYPE_NORMAL);
                 comboBox[CB_IMAGE_OPTIONAL_HEADER_Subsystem]=createComboBox(ui->tableWidget_IMAGE_OPTIONAL_HEADER,XPE::getImageOptionalHeaderSubsystemS(),SPE::TYPE_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::Subsystem,XComboBoxEx::CBTYPE_NORMAL);
                 comboBox[CB_IMAGE_OPTIONAL_HEADER_DllCharacteristics]=createComboBox(ui->tableWidget_IMAGE_OPTIONAL_HEADER,XPE::getImageOptionalHeaderDllCharacteristicsS(),SPE::TYPE_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::DllCharacteristics,XComboBoxEx::CBTYPE_FLAGS);
@@ -994,11 +1004,11 @@ void PEWidget::reloadData()
 
             blockSignals(false);
         }
-        else if(nData==SPE::TYPE_IMAGE_DIRECTORY_ENTRIES)
+        else if(nType==SPE::TYPE_IMAGE_DIRECTORY_ENTRIES)
         {
-            if(!bInit[nData])
+            if(!bInit[nType])
             {
-                bInit[nData]=createSectionTable(SPE::TYPE_IMAGE_DIRECTORY_ENTRIES,ui->tableWidget_IMAGE_DIRECTORY_ENTRIES,N_IMAGE_DIRECORIES::records,N_IMAGE_DIRECORIES::__data_size);
+                bInit[nType]=createSectionTable(SPE::TYPE_IMAGE_DIRECTORY_ENTRIES,ui->tableWidget_IMAGE_DIRECTORY_ENTRIES,N_IMAGE_DIRECORIES::records,N_IMAGE_DIRECORIES::__data_size);
             }
 
             blockSignals(true);
@@ -1075,11 +1085,11 @@ void PEWidget::reloadData()
 
             blockSignals(false);
         }
-        else if(nData==SPE::TYPE_SECTIONS)
+        else if(nType==SPE::TYPE_SECTIONS)
         {
-            if(!bInit[nData])
+            if(!bInit[nType])
             {
-                bInit[nData]=createSectionTable(SPE::TYPE_SECTIONS,ui->tableWidget_Sections,N_IMAGE_SECTION_HEADER::records,N_IMAGE_SECTION_HEADER::__data_size);
+                bInit[nType]=createSectionTable(SPE::TYPE_SECTIONS,ui->tableWidget_Sections,N_IMAGE_SECTION_HEADER::records,N_IMAGE_SECTION_HEADER::__data_size);
             }
 
             blockSignals(true);
@@ -1142,11 +1152,11 @@ void PEWidget::reloadData()
 
             blockSignals(false);
         }
-        else if(nData==SPE::TYPE_EXPORT)
+        else if(nType==SPE::TYPE_EXPORT)
         {
-            if(!bInit[nData])
+            if(!bInit[nType])
             {
-                bInit[nData]=createHeaderTable(SPE::TYPE_EXPORT,ui->tableWidget_ExportHeader,N_IMAGE_EXPORT::records,lineEdit_EXPORT,N_IMAGE_EXPORT::__data_size,0);
+                bInit[nType]=createHeaderTable(SPE::TYPE_EXPORT,ui->tableWidget_ExportHeader,N_IMAGE_EXPORT::records,lineEdit_EXPORT,N_IMAGE_EXPORT::__data_size,0);
                 createSectionTable(SPE::TYPE_EXPORT_FUNCTION,ui->tableWidget_ExportFunctions,N_IMAGE_EXPORT_FUNCTION::records,N_IMAGE_EXPORT_FUNCTION::__data_size);
 
                 invWidget[INV_IMAGE_EXPORT_Name]=createInvWidget(ui->tableWidget_ExportHeader,SPE::TYPE_EXPORT,N_IMAGE_EXPORT::Name,InvWidget::TYPE_HEX);
@@ -1202,11 +1212,11 @@ void PEWidget::reloadData()
 
             blockSignals(false);
         }
-        else if(nData==SPE::TYPE_IMPORT)
+        else if(nType==SPE::TYPE_IMPORT)
         {
-            if(!bInit[nData])
+            if(!bInit[nType])
             {
-                bInit[nData]=createSectionTable(SPE::TYPE_IMPORT,ui->tableWidget_ImportLibraries,N_IMAGE_IMPORT::records,N_IMAGE_IMPORT::__data_size);
+                bInit[nType]=createSectionTable(SPE::TYPE_IMPORT,ui->tableWidget_ImportLibraries,N_IMAGE_IMPORT::records,N_IMAGE_IMPORT::__data_size);
                 createSectionTable(SPE::TYPE_IMPORT_FUNCTION,ui->tableWidget_ImportFunctions,pe.is64()?(N_IMAGE_IMPORT_FUNCTION::records64):(N_IMAGE_IMPORT_FUNCTION::records32),N_IMAGE_IMPORT_FUNCTION::__data_size);
             }
 
@@ -1238,7 +1248,7 @@ void PEWidget::reloadData()
                 }
             }
         }
-        else if(nData==SPE::TYPE_RESOURCE)
+        else if(nType==SPE::TYPE_RESOURCE)
         {
             ui->treeWidgetResources->clear();
 
@@ -1335,11 +1345,11 @@ void PEWidget::reloadData()
                 ui->treeWidgetResources->expandItem(pRoot);
             }
         }
-        else if(nData==SPE::TYPE_RESOURCE_VERSION)
+        else if(nType==SPE::TYPE_RESOURCE_VERSION)
         {
-            if(!bInit[nData])
+            if(!bInit[nType])
             {
-                bInit[nData]=createHeaderTable(SPE::TYPE_RESOURCE_VERSION,ui->tableWidget_Resources_Version,N_IMAGE_RESOURCE_FIXEDFILEINFO::records,lineEdit_Version_FixedFileInfo,N_IMAGE_RESOURCE_FIXEDFILEINFO::__data_size,0);
+                bInit[nType]=createHeaderTable(SPE::TYPE_RESOURCE_VERSION,ui->tableWidget_Resources_Version,N_IMAGE_RESOURCE_FIXEDFILEINFO::records,lineEdit_Version_FixedFileInfo,N_IMAGE_RESOURCE_FIXEDFILEINFO::__data_size,0);
             }
 
             blockSignals(true);
@@ -1375,7 +1385,7 @@ void PEWidget::reloadData()
 
             blockSignals(false);
         }
-        else if(nData==SPE::TYPE_RESOURCE_MANIFEST)
+        else if(nType==SPE::TYPE_RESOURCE_MANIFEST)
         {
             ui->textEditResources_Manifest->clear();
 
@@ -1383,11 +1393,11 @@ void PEWidget::reloadData()
 
             ui->textEditResources_Manifest->setText(sManifest);
         }
-        else if(nData==SPE::TYPE_EXCEPTION)
+        else if(nType==SPE::TYPE_EXCEPTION)
         {
-            if(!bInit[nData])
+            if(!bInit[nType])
             {
-                bInit[nData]=createSectionTable(SPE::TYPE_EXCEPTION,ui->tableWidget_Exceptions,N_IMAGE_EXCEPTIONS::records,N_IMAGE_EXCEPTIONS::__data_size);
+                bInit[nType]=createSectionTable(SPE::TYPE_EXCEPTION,ui->tableWidget_Exceptions,N_IMAGE_EXCEPTIONS::records,N_IMAGE_EXCEPTIONS::__data_size);
             }
 
             QList<XPE_DEF::S_IMAGE_RUNTIME_FUNCTION_ENTRY> listRFE=pe.getExceptionsList();
@@ -1422,11 +1432,11 @@ void PEWidget::reloadData()
                 }
             }
         }
-        else if(nData==SPE::TYPE_RELOCS)
+        else if(nType==SPE::TYPE_RELOCS)
         {
-            if(!bInit[nData])
+            if(!bInit[nType])
             {
-                bInit[nData]=createSectionTable(SPE::TYPE_RELOCS,ui->tableWidget_Relocs,N_IMAGE_RELOCS::records,N_IMAGE_RELOCS::__data_size);
+                bInit[nType]=createSectionTable(SPE::TYPE_RELOCS,ui->tableWidget_Relocs,N_IMAGE_RELOCS::records,N_IMAGE_RELOCS::__data_size);
                 createSectionTable(SPE::TYPE_RELOCS_POSITION,ui->tableWidget_RelocsPositions,N_IMAGE_RELOCS_POSITION::records,N_IMAGE_RELOCS_POSITION::__data_size);
             }
 
@@ -1459,11 +1469,11 @@ void PEWidget::reloadData()
                 }
             }            
         }
-        else if(nData==SPE::TYPE_DEBUG)
+        else if(nType==SPE::TYPE_DEBUG)
         {
-            if(!bInit[nData])
+            if(!bInit[nType])
             {
-                bInit[nData]=createSectionTable(SPE::TYPE_DEBUG,ui->tableWidget_Debug,N_IMAGE_DEBUG::records,N_IMAGE_DEBUG::__data_size);
+                bInit[nType]=createSectionTable(SPE::TYPE_DEBUG,ui->tableWidget_Debug,N_IMAGE_DEBUG::records,N_IMAGE_DEBUG::__data_size);
             }
 
             QList<XPE_DEF::S_IMAGE_DEBUG_DIRECTORY> listDebug=pe.getDebugList();
@@ -1499,11 +1509,11 @@ void PEWidget::reloadData()
                 }
             }
         }
-        else if(nData==SPE::TYPE_TLS)
+        else if(nType==SPE::TYPE_TLS)
         {
-            if(!bInit[nData])
+            if(!bInit[nType])
             {
-                bInit[nData]=createHeaderTable(SPE::TYPE_TLS,ui->tableWidget_TLS,pe.is64()?(N_IMAGE_TLS::records64):(N_IMAGE_TLS::records32),lineEdit_TLS,N_IMAGE_TLS::__data_size,0);
+                bInit[nType]=createHeaderTable(SPE::TYPE_TLS,ui->tableWidget_TLS,pe.is64()?(N_IMAGE_TLS::records64):(N_IMAGE_TLS::records32),lineEdit_TLS,N_IMAGE_TLS::__data_size,0);
 
                 invWidget[INV_IMAGE_TLS_AddressOfCallBacks]=createInvWidget(ui->tableWidget_TLS,SPE::TYPE_TLS,N_IMAGE_TLS::AddressOfCallBacks,InvWidget::TYPE_HEX);
                 invWidget[INV_IMAGE_TLS_AddressOfIndex]=createInvWidget(ui->tableWidget_TLS,SPE::TYPE_TLS,N_IMAGE_TLS::AddressOfIndex,InvWidget::TYPE_HEX);
@@ -1564,11 +1574,11 @@ void PEWidget::reloadData()
 
             blockSignals(false);
         }
-        else if(nData==SPE::TYPE_LOADCONFIG)
+        else if(nType==SPE::TYPE_LOADCONFIG)
         {
-            if(!bInit[nData])
+            if(!bInit[nType])
             {
-                bInit[nData]=createHeaderTable(SPE::TYPE_LOADCONFIG,ui->tableWidget_LoadConfig,pe.is64()?(N_IMAGE_LOADCONFIG::records64):(N_IMAGE_LOADCONFIG::records32),lineEdit_LoadConfig,N_IMAGE_LOADCONFIG::__data_size,0);
+                bInit[nType]=createHeaderTable(SPE::TYPE_LOADCONFIG,ui->tableWidget_LoadConfig,pe.is64()?(N_IMAGE_LOADCONFIG::records64):(N_IMAGE_LOADCONFIG::records32),lineEdit_LoadConfig,N_IMAGE_LOADCONFIG::__data_size,0);
                 invWidget[INV_IMAGE_LOADCONFIG_SecurityCookie]=createInvWidget(ui->tableWidget_LoadConfig,SPE::TYPE_LOADCONFIG,N_IMAGE_LOADCONFIG::SecurityCookie,InvWidget::TYPE_HEX);
                 invWidget[INV_IMAGE_LOADCONFIG_SEHandlerTable]=createInvWidget(ui->tableWidget_LoadConfig,SPE::TYPE_LOADCONFIG,N_IMAGE_LOADCONFIG::SEHandlerTable,InvWidget::TYPE_HEX);
             }
@@ -1638,16 +1648,16 @@ void PEWidget::reloadData()
 
             blockSignals(false);
         }
-        else if(nData==SPE::TYPE_BOUNDIMPORT)
+        else if(nType==SPE::TYPE_BOUNDIMPORT)
         {
             // TODO
         }
-        else if(nData==SPE::TYPE_DELAYIMPORT)
+        else if(nType==SPE::TYPE_DELAYIMPORT)
         {
             // TODO LIbrary Name!
-            if(!bInit[nData])
+            if(!bInit[nType])
             {
-                bInit[nData]=createSectionTable(SPE::TYPE_DELAYIMPORT,ui->tableWidget_DelayImport,N_IMAGE_DELAYIMPORT::records,N_IMAGE_DELAYIMPORT::__data_size);
+                bInit[nType]=createSectionTable(SPE::TYPE_DELAYIMPORT,ui->tableWidget_DelayImport,N_IMAGE_DELAYIMPORT::records,N_IMAGE_DELAYIMPORT::__data_size);
             }
 
             QList<XPE_DEF::S_IMAGE_DELAYLOAD_DESCRIPTOR> listDelayImport=pe.getDelayImportsList();
@@ -1668,11 +1678,11 @@ void PEWidget::reloadData()
                 ui->tableWidget_DelayImport->setItem(i,N_IMAGE_DELAYIMPORT::TimeDateStamp,                  new QTableWidgetItem(XBinary::valueToHex(listDelayImport.at(i).TimeDateStamp)));
             }
         }
-        else if(nData==SPE::TYPE_NETHEADER)
+        else if(nType==SPE::TYPE_NETHEADER)
         {
-            if(!bInit[nData])
+            if(!bInit[nType])
             {
-                bInit[nData]=createHeaderTable(SPE::TYPE_NETHEADER,ui->tableWidget_NetHeader,N_IMAGE_NETHEADER::records,lineEdit_NetHeader,N_IMAGE_NETHEADER::__data_size,0);
+                bInit[nType]=createHeaderTable(SPE::TYPE_NETHEADER,ui->tableWidget_NetHeader,N_IMAGE_NETHEADER::records,lineEdit_NetHeader,N_IMAGE_NETHEADER::__data_size,0);
 
                 comboBox[CB_IMAGE_NETHEADER_FLAGS]=createComboBox(ui->tableWidget_NetHeader,XPE::getComImageFlagsS(),SPE::TYPE_NETHEADER,N_IMAGE_NETHEADER::Flags,XComboBoxEx::CBTYPE_FLAGS);
             }
@@ -1701,7 +1711,7 @@ void PEWidget::reloadData()
 
             blockSignals(false);
         }
-        else if(nData==SPE::TYPE_OVERLAY)
+        else if(nType==SPE::TYPE_OVERLAY)
         {
             qint64 nOverLayOffset=pe.getOverlayOffset();
             qint64 nOverlaySize=pe.getOverlaySize();

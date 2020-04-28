@@ -37,6 +37,7 @@ DEPENDPATH += $$PWD
 }
 
 HEADERS += \
+    $$PWD/dialogentropy.h \
     $$PWD/dialogprocessdata.h \
     $$PWD/processdata.h \
     $$PWD/formatwidget.h \
@@ -47,6 +48,7 @@ HEADERS += \
     $$PWD/dialogsectionheader.h
 
 SOURCES += \
+    $$PWD/dialogentropy.cpp \
     $$PWD/dialogprocessdata.cpp \
     $$PWD/processdata.cpp \
     $$PWD/formatwidget.cpp \
@@ -56,6 +58,7 @@ SOURCES += \
     $$PWD/dialogsectionheader.cpp
 
 FORMS += \
+    $$PWD/dialogentropy.ui \
     $$PWD/dialogprocessdata.ui \
     $$PWD/toolswidget.ui \
     $$PWD/dialoghex.ui \

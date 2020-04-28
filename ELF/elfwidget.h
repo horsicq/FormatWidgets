@@ -66,8 +66,10 @@ private slots:
     void on_tableWidget_Elf_Ehdr_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     void editSectionHeader();
     void sectionHex();
+    void sectionEntropy();
     void editProgramHeader();
     void programHex();
+    void programEntropy();
     void editDynamicArrayTag();
     void on_tableView_SymbolTable_customContextMenuRequested(const QPoint &pos);
     void editSymbolHeader();

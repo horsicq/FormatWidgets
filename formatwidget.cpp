@@ -233,6 +233,21 @@ void FormatWidget::showSectionHex(QTableView *pTableView)
     }
 }
 
+void FormatWidget::showSectionEntropy(QTableView *pTableView)
+{
+    int nRow=pTableView->currentIndex().row();
+
+    if(nRow!=-1)
+    {
+        QModelIndex index=pTableView->selectionModel()->selectedIndexes().at(0);
+
+        qint64 nOffset=pTableView->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
+        qint64 nSize=pTableView->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
+
+        showEntropy(nOffset,nSize);
+    }
+}
+
 qint64 FormatWidget::getTableViewItemSize(QTableView *pTableView, int nRow)
 {
     qint64 nResult=0;
@@ -309,6 +324,13 @@ void FormatWidget::showHex(qint64 nOffset, qint64 nSize)
     dialogHex.exec();
 
     reloadData();
+}
+
+void FormatWidget::showEntropy(qint64 nOffset, qint64 nSize)
+{
+    DialogEntropy dialogEntropy(this,pDevice,nOffset,nSize);
+
+    dialogEntropy.exec();
 }
 
 bool FormatWidget::saveBackup()

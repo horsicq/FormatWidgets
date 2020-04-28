@@ -300,8 +300,6 @@ void ELFWidget::reloadData()
             if(!stInit.contains(sInit))
             {
                 ui->widgetStrings->setData(getDevice(),0,true);
-
-                ui->widgetHex->reload();
             }
         }
         else if(nType==SELF::TYPE_MEMORYMAP)
@@ -309,17 +307,13 @@ void ELFWidget::reloadData()
             if(!stInit.contains(sInit))
             {
                 ui->widgetMemoryMap->setData(getDevice());
-
-                ui->widgetHex->reload();
             }
         }
         else if(nType==SELF::TYPE_ENTROPY)
         {
             if(!stInit.contains(sInit))
             {
-                ui->widgetEntropy->setData(getDevice(),true);
-
-                ui->widgetEntropy->reload();
+                ui->widgetEntropy->setData(getDevice(),0,getDevice()->size(),true);
             }
         }
         else if(nType==SELF::TYPE_Elf_Ehdr)
@@ -766,6 +760,11 @@ void ELFWidget::sectionHex()
     showSectionHex(ui->tableView_Elf_Shdr);
 }
 
+void ELFWidget::sectionEntropy()
+{
+    showSectionEntropy(ui->tableView_Elf_Shdr);
+}
+
 void ELFWidget::editProgramHeader()
 {
     showSectionHeader(SELF::TYPE_Elf_Phdr,ui->tableView_Elf_Phdr);
@@ -774,6 +773,11 @@ void ELFWidget::editProgramHeader()
 void ELFWidget::programHex()
 {
     showSectionHex(ui->tableView_Elf_Phdr);
+}
+
+void ELFWidget::programEntropy()
+{
+    showSectionEntropy(ui->tableView_Elf_Phdr);
 }
 
 void ELFWidget::editDynamicArrayTag()
@@ -863,6 +867,8 @@ void ELFWidget::on_tableView_Elf_Shdr_customContextMenuRequested(const QPoint &p
 
     if(nRow!=-1)
     {
+        bool bIsEnable=getTableViewItemSize(ui->tableView_Elf_Shdr,nRow);
+
         QMenu contextMenu(this);
 
         QAction actionEdit(tr("Edit"),this);
@@ -871,11 +877,13 @@ void ELFWidget::on_tableView_Elf_Shdr_customContextMenuRequested(const QPoint &p
 
         QAction actionHex(tr("Hex"),this);
         connect(&actionHex, SIGNAL(triggered()), this, SLOT(sectionHex()));
-
-        actionHex.setEnabled(getTableViewItemSize(ui->tableView_Elf_Shdr,nRow));
+        actionHex.setEnabled(bIsEnable);
         contextMenu.addAction(&actionHex);
 
-        // TODO Entropy
+        QAction actionEntropy(tr("Entropy"),this);
+        connect(&actionEntropy, SIGNAL(triggered()), this, SLOT(programEntropy()));
+        actionHex.setEnabled(bIsEnable);
+        contextMenu.addAction(&actionEntropy);
 
         contextMenu.exec(ui->tableView_Elf_Shdr->viewport()->mapToGlobal(pos));
     }
@@ -956,6 +964,8 @@ void ELFWidget::on_tableView_Elf_Phdr_customContextMenuRequested(const QPoint &p
 
     if(nRow!=-1)
     {
+        bool bIsEnable=getTableViewItemSize(ui->tableView_Elf_Phdr,nRow);
+
         QMenu contextMenu(this);
 
         QAction actionEdit(tr("Edit"),this);
@@ -964,11 +974,13 @@ void ELFWidget::on_tableView_Elf_Phdr_customContextMenuRequested(const QPoint &p
 
         QAction actionHex(tr("Hex"),this);
         connect(&actionHex, SIGNAL(triggered()), this, SLOT(programHex()));
-
-        actionHex.setEnabled(getTableViewItemSize(ui->tableView_Elf_Phdr,nRow));
+        actionHex.setEnabled(bIsEnable);
         contextMenu.addAction(&actionHex);
 
-        // TODO Entropy
+        QAction actionEntropy(tr("Entropy"),this);
+        connect(&actionEntropy, SIGNAL(triggered()), this, SLOT(programEntropy()));
+        actionHex.setEnabled(bIsEnable);
+        contextMenu.addAction(&actionEntropy);
 
         contextMenu.exec(ui->tableView_Elf_Phdr->viewport()->mapToGlobal(pos));
     }

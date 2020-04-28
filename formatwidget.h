@@ -35,6 +35,7 @@
 #include "qhexview.h"
 #include "invwidget.h"
 #include "dialoghex.h"
+#include "dialogentropy.h"
 #include "toolswidget.h"
 #include "formatwidget_def.h"
 #include "dialogprocessdata.h"
@@ -137,12 +138,10 @@ public:
     QColor getDisabledColor();
 
     void setItemEnable(QTableWidgetItem *pItem,bool bState);
-
     void setLineEdit(XLineEditHEX *pLineEdit,qint32 nMaxLength,QString sText,qint64 nOffset);
-
     void ajustTableView(ProcessData *pProcessData, QStandardItemModel **ppModel, QTableView *pTableView);
-
     void showSectionHex(QTableView *pTableView);
+    void showSectionEntropy(QTableView *pTableView);
     qint64 getTableViewItemSize(QTableView *pTableView,int nRow);
 
 signals:
@@ -153,6 +152,7 @@ public slots:
     void textValueChanged(QString sText);
     void setEdited(bool bState);
     void showHex(qint64 nOffset,qint64 nSize);
+    void showEntropy(qint64 nOffset,qint64 nSize);
 
 private slots:
     virtual void reloadData()=0;
