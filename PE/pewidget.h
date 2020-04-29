@@ -166,6 +166,7 @@ private:
     InvWidget *invWidget[__INV_size];
     SubDevice *subDevice[SPE::__TYPE_size];
     bool bInit[SPE::__TYPE_size];
+    QStandardItemModel *tvModel[SPE::__TYPE_size_ext];
 };
 
 #endif // PEWIDGET_H

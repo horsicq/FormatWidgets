@@ -1437,7 +1437,7 @@ void PEWidget::reloadData()
             if(!bInit[nType])
             {
                 bInit[nType]=createSectionTable(SPE::TYPE_RELOCS,ui->tableWidget_Relocs,N_IMAGE_RELOCS::records,N_IMAGE_RELOCS::__data_size);
-                createSectionTable(SPE::TYPE_RELOCS_POSITION,ui->tableWidget_RelocsPositions,N_IMAGE_RELOCS_POSITION::records,N_IMAGE_RELOCS_POSITION::__data_size);
+//                createSectionTable(SPE::TYPE_RELOCS_POSITION,ui->tableWidget_RelocsPositions,N_IMAGE_RELOCS_POSITION::records,N_IMAGE_RELOCS_POSITION::__data_size);
             }
 
             QList<XPE::RELOCS_HEADER> listRH=pe.getRelocsHeaders();
@@ -1455,7 +1455,7 @@ void PEWidget::reloadData()
                 addComment(ui->tableWidget_Relocs,i,3,pe.getMemoryRecordInfoByRelAddress(listRH.at(i).ibr.VirtualAddress));
             }
 
-            ui->tableWidget_RelocsPositions->setRowCount(0);
+//            ui->tableWidget_RelocsPositions->setRowCount(0);
 
             if(nCount)
             {
@@ -1800,28 +1800,36 @@ void PEWidget::loadImportLibrary(int nNumber)
 
 void PEWidget::loadRelocs(int nNumber)
 {
-    qint64 nOffset=ui->tableWidget_Relocs->item(nNumber,0)->data(Qt::UserRole).toLongLong();
+    qint64 nOffset=ui->tableWidget_Relocs->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
 
-    ui->tableWidget_RelocsPositions->setRowCount(0);
+//    ui->tableWidget_RelocsPositions->setRowCount(0);
 
     XPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
 
     if(pe.isValid())
     {
-        QList<XPE::RELOCS_POSITION> listRelocsPositions=pe.getRelocsPositions(nOffset);
+        PEProcessData peProcessData(SPE::TYPE_RELOCS_POSITION,&tvModel[SPE::TYPE_RELOCS_POSITION],&pe,nOffset,0);
 
-        int nCount=listRelocsPositions.count();
+        ajustTableView(&peProcessData,&tvModel[SPE::TYPE_RELOCS_POSITION],ui->tableView_RelocsPositions);
 
-        ui->tableWidget_RelocsPositions->setRowCount(nCount);
-
-        QMap<quint64,QString> mapTypes=pe.getImageRelBasedS();
-
-        for(int i=0; i<nCount; i++)
+        if(tvModel[SPE::TYPE_RELOCS_POSITION]->rowCount())
         {
-            ui->tableWidget_RelocsPositions->setItem(i,N_IMAGE_RELOCS_POSITION::TypeOffset,       new QTableWidgetItem(XBinary::valueToHex(listRelocsPositions.at(i).nTypeOffset)));
-            ui->tableWidget_RelocsPositions->setItem(i,N_IMAGE_RELOCS_POSITION::TypeOffset+1,     new QTableWidgetItem(mapTypes.value(listRelocsPositions.at(i).nType)));
-            ui->tableWidget_RelocsPositions->setItem(i,N_IMAGE_RELOCS_POSITION::TypeOffset+2,     new QTableWidgetItem(XBinary::valueToHex((quint32)listRelocsPositions.at(i).nAddress)));
+            ui->tableView_RelocsPositions->setCurrentIndex(ui->tableView_RelocsPositions->model()->index(0,0));
         }
+//        QList<XPE::RELOCS_POSITION> listRelocsPositions=pe.getRelocsPositions(nOffset);
+
+//        int nCount=listRelocsPositions.count();
+
+//        ui->tableWidget_RelocsPositions->setRowCount(nCount);
+
+//        QMap<quint64,QString> mapTypes=pe.getImageRelBasedS();
+
+//        for(int i=0; i<nCount; i++)
+//        {
+//            ui->tableWidget_RelocsPositions->setItem(i,N_IMAGE_RELOCS_POSITION::TypeOffset,       new QTableWidgetItem(XBinary::valueToHex(listRelocsPositions.at(i).nTypeOffset)));
+//            ui->tableWidget_RelocsPositions->setItem(i,N_IMAGE_RELOCS_POSITION::TypeOffset+1,     new QTableWidgetItem(mapTypes.value(listRelocsPositions.at(i).nType)));
+//            ui->tableWidget_RelocsPositions->setItem(i,N_IMAGE_RELOCS_POSITION::TypeOffset+2,     new QTableWidgetItem(XBinary::valueToHex((quint32)listRelocsPositions.at(i).nAddress)));
+//        }
     }
 }
 
