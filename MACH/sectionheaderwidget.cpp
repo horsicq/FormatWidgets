@@ -27,7 +27,7 @@ SectionHeaderWidget::SectionHeaderWidget(QWidget *parent)
 
 }
 
-SectionHeaderWidget::SectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset, QWidget *parent)
+SectionHeaderWidget::SectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset,qint32 nType, QWidget *parent)
 {
 
 }

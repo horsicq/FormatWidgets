@@ -7,12 +7,14 @@ FORMS += \
     $$PWD/sectionheaderwidget.ui
 
 HEADERS += \
+    $$PWD/machprocessdata.h \
     $$PWD/machwidget.h \
     $$PWD/mach_defs.h \
     $$PWD/dialogmach.h \
     $$PWD/sectionheaderwidget.h
 
 SOURCES += \
+    $$PWD/machprocessdata.cpp \
     $$PWD/machwidget.cpp \
     $$PWD/mach_defs.cpp \
     $$PWD/dialogmach.cpp \

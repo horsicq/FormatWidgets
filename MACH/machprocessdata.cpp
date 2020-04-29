@@ -18,29 +18,24 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-#ifndef ELFPROCESSDATA_H
-#define ELFPROCESSDATA_H
+#include "machprocessdata.h"
 
-#include "processdata.h"
-#include "elf_defs.h"
 
-class ELFProcessData : public ProcessData
+MACHProcessData::MACHProcessData(int type, QStandardItemModel **ppModel, XMACH *pXMACH, qint64 nOffset, qint64 nSize)
 {
-    Q_OBJECT
+    this->type=type;
+    this->ppModel=ppModel;
+    this->pXMACH=pXMACH;
+    this->nOffset=nOffset;
+    this->nSize=nSize;
+}
 
-public:
-    explicit ELFProcessData(int type,QStandardItemModel **ppModel,XELF *pELF,qint64 nOffset,qint64 nSize,qint64 nStringTableOffset,qint64 nStringTableSize);
-    virtual void _process();
-    virtual void ajustTableView(QWidget *pWidget, QTableView *pTableView);
+void MACHProcessData::_process()
+{
 
-private:
-    int type;
-    XELF *pELF;
-    QStandardItemModel **ppModel;
-    qint64 nOffset;
-    qint64 nSize;
-    qint64 nStringTableOffset;
-    qint64 nStringTableSize;
-};
+}
 
-#endif // ELFPROCESSDATA_H
+void MACHProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
+{
+
+}

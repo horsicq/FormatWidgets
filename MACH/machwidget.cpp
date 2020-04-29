@@ -79,6 +79,7 @@ void MACHWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_HEX,tr("Tools")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_STRINGS,tr("Strings")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_MEMORYMAP,tr("Memory map")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_ENTROPY,tr("Entropy")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_mach_header,mach.is64()?("mach_header_64"):("mach_header")));
 
         QList<XMACH::COMMAND_RECORD> listCommandRecords=mach.getCommandRecords();
@@ -253,6 +254,16 @@ void MACHWidget::reloadData()
             if(!bInit[nData])
             {
                 ui->widgetMemoryMap->setData(getDevice());
+
+                bInit[nData]=true;
+            }
+            ui->widgetHex->reload();
+        }
+        else if(nData==SMACH::TYPE_ENTROPY)
+        {
+            if(!bInit[nData])
+            {
+                ui->widgetEntropy->setData(getDevice(),0,getDevice()->size(),true);
 
                 bInit[nData]=true;
             }
