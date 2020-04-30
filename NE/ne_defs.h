@@ -34,6 +34,7 @@ enum TYPE
     TYPE_ENTROPY,
     TYPE_DOS_HEADER,
     TYPE_OS2_HEADER,
+    TYPE_SEGMENTS,
     TYPE_OVERLAY,
     __TYPE_size
 };

@@ -90,6 +90,8 @@ void NEWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_DOS_HEADER,"DOS_HEADER"));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_OS2_HEADER,"OS2_HEADER"));
 
+        // TODO Segments
+
         if(ne.isOverlayPresent())
         {
             ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_OVERLAY,tr("Overlay")));

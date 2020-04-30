@@ -263,6 +263,7 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="page_Segments"/>
       <widget class="QWidget" name="page_OVERLAY">
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <property name="spacing">
