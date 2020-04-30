@@ -1198,7 +1198,7 @@ void PEWidget::reloadData()
             if(!bInit[nType])
             {
                 bInit[nType]=createSectionTable(SPE::TYPE_IMPORT,ui->tableWidget_ImportLibraries,N_IMAGE_IMPORT::records,N_IMAGE_IMPORT::__data_size);
-                createSectionTable(SPE::TYPE_IMPORT_FUNCTION,ui->tableWidget_ImportFunctions,pe.is64()?(N_IMAGE_IMPORT_FUNCTION::records64):(N_IMAGE_IMPORT_FUNCTION::records32),N_IMAGE_IMPORT_FUNCTION::__data_size);
+//                createSectionTable(SPE::TYPE_IMPORT_FUNCTION,ui->tableWidget_ImportFunctions,pe.is64()?(N_IMAGE_IMPORT_FUNCTION::records64):(N_IMAGE_IMPORT_FUNCTION::records32),N_IMAGE_IMPORT_FUNCTION::__data_size);
             }
 
             QList<XPE::IMAGE_IMPORT_DESCRIPTOR_EX> listID=pe.getImportDescriptorsEx();
@@ -1215,7 +1215,7 @@ void PEWidget::reloadData()
                 ui->tableWidget_ImportLibraries->setItem(i,N_IMAGE_IMPORT::FirstThunk+1,                    new QTableWidgetItem(listID.at(i).sLibrary));
             }
 
-            ui->tableWidget_ImportFunctions->setRowCount(0);
+//            ui->tableWidget_ImportFunctions->setRowCount(0);
 
             if(nCount)
             {
@@ -1729,52 +1729,17 @@ void PEWidget::on_tableWidget_Sections_customContextMenuRequested(const QPoint &
 
 void PEWidget::loadImportLibrary(int nNumber)
 {
-    ui->tableWidget_ImportFunctions->setRowCount(0);
-
     XPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
 
     if(pe.isValid())
     {
-        bool bIs64=pe.is64();
-        QList<XPE::IMPORT_POSITION> listIP=pe.getImportPositions(nNumber);
+        PEProcessData peProcessData(SPE::TYPE_IMPORT_FUNCTION,&tvModel[SPE::TYPE_IMPORT_FUNCTION],&pe,nNumber,0,0);
 
-        int nCount=listIP.count();
-        ui->tableWidget_ImportFunctions->setRowCount(nCount);
+        ajustTableView(&peProcessData,&tvModel[SPE::TYPE_IMPORT_FUNCTION],ui->tableView_ImportFunctions);
 
-        for(int i=0; i<nCount; i++)
+        if(tvModel[SPE::TYPE_IMPORT_FUNCTION]->rowCount())
         {
-            if(listIP.at(i).nOrdinal)
-            {
-                QString sOrdinal;
-
-                if(bIs64)
-                {
-                    sOrdinal=XBinary::valueToHex((quint64)listIP.at(i).nOrdinal);
-                }
-                else
-                {
-                    sOrdinal=XBinary::valueToHex((quint32)listIP.at(i).nOrdinal);
-                }
-
-                ui->tableWidget_ImportFunctions->setItem(i,N_IMAGE_IMPORT_FUNCTION::Ordinal,    new QTableWidgetItem(sOrdinal));
-            }
-            else
-            {
-                QString sThunk;
-
-                if(bIs64)
-                {
-                    sThunk=XBinary::valueToHex((quint64)listIP.at(i).nThunkValue);
-                }
-                else
-                {
-                    sThunk=XBinary::valueToHex((quint32)listIP.at(i).nThunkValue);
-                }
-
-                ui->tableWidget_ImportFunctions->setItem(i,N_IMAGE_IMPORT_FUNCTION::Thunk,      new QTableWidgetItem(sThunk));
-                ui->tableWidget_ImportFunctions->setItem(i,N_IMAGE_IMPORT_FUNCTION::Hint,       new QTableWidgetItem(XBinary::valueToHex(listIP.at(i).nHint)));
-                ui->tableWidget_ImportFunctions->setItem(i,N_IMAGE_IMPORT_FUNCTION::Hint+1,     new QTableWidgetItem(listIP.at(i).sName));
-            }
+            ui->tableView_ImportFunctions->setCurrentIndex(ui->tableView_ImportFunctions->model()->index(0,0));
         }
     }
 }
@@ -1783,13 +1748,11 @@ void PEWidget::loadRelocs(int nNumber)
 {
     qint64 nOffset=ui->tableWidget_Relocs->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
 
-//    ui->tableWidget_RelocsPositions->setRowCount(0);
-
     XPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
 
     if(pe.isValid())
     {
-        PEProcessData peProcessData(SPE::TYPE_RELOCS_POSITION,&tvModel[SPE::TYPE_RELOCS_POSITION],&pe,nOffset,0);
+        PEProcessData peProcessData(SPE::TYPE_RELOCS_POSITION,&tvModel[SPE::TYPE_RELOCS_POSITION],&pe,0,nOffset,0);
 
         ajustTableView(&peProcessData,&tvModel[SPE::TYPE_RELOCS_POSITION],ui->tableView_RelocsPositions);
 
@@ -1797,20 +1760,6 @@ void PEWidget::loadRelocs(int nNumber)
         {
             ui->tableView_RelocsPositions->setCurrentIndex(ui->tableView_RelocsPositions->model()->index(0,0));
         }
-//        QList<XPE::RELOCS_POSITION> listRelocsPositions=pe.getRelocsPositions(nOffset);
-
-//        int nCount=listRelocsPositions.count();
-
-//        ui->tableWidget_RelocsPositions->setRowCount(nCount);
-
-//        QMap<quint64,QString> mapTypes=pe.getImageRelBasedS();
-
-//        for(int i=0; i<nCount; i++)
-//        {
-//            ui->tableWidget_RelocsPositions->setItem(i,N_IMAGE_RELOCS_POSITION::TypeOffset,       new QTableWidgetItem(XBinary::valueToHex(listRelocsPositions.at(i).nTypeOffset)));
-//            ui->tableWidget_RelocsPositions->setItem(i,N_IMAGE_RELOCS_POSITION::TypeOffset+1,     new QTableWidgetItem(mapTypes.value(listRelocsPositions.at(i).nType)));
-//            ui->tableWidget_RelocsPositions->setItem(i,N_IMAGE_RELOCS_POSITION::TypeOffset+2,     new QTableWidgetItem(XBinary::valueToHex((quint32)listRelocsPositions.at(i).nAddress)));
-//        }
     }
 }
 

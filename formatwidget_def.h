@@ -59,6 +59,7 @@ namespace FW_DEF
     enum SECTION_DATA
     {
         SECTION_DATA_TYPE=0,
+        SECTION_DATA_NUMBER,
         SECTION_DATA_OFFSET,
         SECTION_DATA_SIZE,
         SECTION_DATA_ADDRESS,

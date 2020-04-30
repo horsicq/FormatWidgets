@@ -20,11 +20,12 @@
 //
 #include "peprocessdata.h"
 
-PEProcessData::PEProcessData(int type, QStandardItemModel **ppModel, XPE *pPE, qint64 nOffset, qint64 nSize)
+PEProcessData::PEProcessData(int type, QStandardItemModel **ppModel, XPE *pPE, qint32 nNumber, qint64 nOffset, qint64 nSize)
 {
     this->type=type;
     this->ppModel=ppModel;
     this->pPE=pPE;
+    this->nNumber=nNumber;
     this->nOffset=nOffset;
     this->nSize=nSize;
 }
@@ -59,6 +60,66 @@ void PEProcessData::_process()
             incValue();
         }
     }
+    else if(type==SPE::TYPE_IMPORT_FUNCTION)
+    {
+        QList<QString> listLabels;
+        listLabels.append("");
+        listLabels.append(getStructList(N_IMAGE_IMPORT_FUNCTION::records32,N_IMAGE_IMPORT_FUNCTION::__data_size));
+        listLabels.append("Name");
+
+        bool bIs64=pPE->is64();
+        QList<XPE::IMPORT_POSITION> listIP=pPE->getImportPositions(nNumber);
+
+        int nCount=listIP.count();
+
+        *ppModel=new QStandardItemModel(nCount,listLabels.count());
+
+        setMaximum(nCount);
+
+        setHeader(*ppModel,&listLabels);
+
+        for(int i=0; i<nCount; i++)
+        {
+            QStandardItem *pItem=new QStandardItem(QString::number(i));
+
+            (*ppModel)->setItem(i,0,pItem);
+
+            if(listIP.at(i).nOrdinal)
+            {
+                QString sOrdinal;
+
+                if(bIs64)
+                {
+                    sOrdinal=XBinary::valueToHex((quint64)listIP.at(i).nOrdinal);
+                }
+                else
+                {
+                    sOrdinal=XBinary::valueToHex((quint32)listIP.at(i).nOrdinal);
+                }
+
+                (*ppModel)->setItem(i,N_IMAGE_IMPORT_FUNCTION::Ordinal+1,   new QStandardItem(sOrdinal));
+            }
+            else
+            {
+                QString sThunk;
+
+                if(bIs64)
+                {
+                    sThunk=XBinary::valueToHex((quint64)listIP.at(i).nThunkValue);
+                }
+                else
+                {
+                    sThunk=XBinary::valueToHex((quint32)listIP.at(i).nThunkValue);
+                }
+
+                (*ppModel)->setItem(i,N_IMAGE_IMPORT_FUNCTION::Thunk+1,     new QStandardItem(sThunk));
+                (*ppModel)->setItem(i,N_IMAGE_IMPORT_FUNCTION::Hint+1,      new QStandardItem(XBinary::valueToHex(listIP.at(i).nHint)));
+                (*ppModel)->setItem(i,N_IMAGE_IMPORT_FUNCTION::Hint+2,      new QStandardItem(listIP.at(i).sName));
+            }
+
+            incValue();
+        }
+    }
 }
 
 void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
@@ -70,5 +131,13 @@ void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
         pTableView->setColumnWidth(0,nSymbolWidth*6);
         pTableView->setColumnWidth(1,nSymbolWidth*12);
         pTableView->setColumnWidth(2,nSymbolWidth*8);
+    }
+    else if(type==SPE::TYPE_IMPORT_FUNCTION)
+    {
+        pTableView->setColumnWidth(0,nSymbolWidth*4);
+        pTableView->setColumnWidth(1,nSymbolWidth*12);
+        pTableView->setColumnWidth(2,nSymbolWidth*8);
+        pTableView->setColumnWidth(3,nSymbolWidth*6);
+        pTableView->setColumnWidth(4,nSymbolWidth*22);
     }
 }
