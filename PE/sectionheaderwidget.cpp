@@ -35,10 +35,54 @@ SectionHeaderWidget::SectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pO
     ui->setupUi(this);
 
     setData(pDevice,pOptions,nNumber,nOffset,nType);
+
+    ppLinedEdit=0;
+    nLineEditSize=0;
+    ppComboBox=0;
+    nComboBoxSize=0;
+    ppInvWidget=0;
+    nInvWidgetSize=0;
+
+    if(nType==SPE::TYPE_IMAGE_SECTION_HEADER)
+    {
+        nLineEditSize=N_IMAGE_SECTION_HEADER::__data_size+1;
+        nComboBoxSize=N_IMAGE_SECTION_HEADER::__CB_size;
+        nInvWidgetSize=N_IMAGE_SECTION_HEADER::__INV_size;
+    }
+
+    if(nLineEditSize)
+    {
+        ppLinedEdit=new PXLineEditHEX[nLineEditSize];
+    }
+
+    if(nComboBoxSize)
+    {
+        ppComboBox=new PXComboBoxEx[nComboBoxSize];
+    }
+
+    if(nInvWidgetSize)
+    {
+        ppInvWidget=new PInvWidget[nInvWidgetSize];
+    }
 }
 
 SectionHeaderWidget::~SectionHeaderWidget()
 {
+    if(ppLinedEdit)
+    {
+        delete[] ppLinedEdit;
+    }
+
+    if(ppComboBox)
+    {
+        delete[] ppComboBox;
+    }
+
+    if(ppInvWidget)
+    {
+        delete[] ppInvWidget;
+    }
+
     delete ui;
 }
 
@@ -46,9 +90,9 @@ void SectionHeaderWidget::clear()
 {
     reset();
 
-    memset(lineEdit_IMAGE_SECTION_HEADER,0,sizeof lineEdit_IMAGE_SECTION_HEADER);
-    memset(comboBox,0,sizeof comboBox);
-    memset(invWidget,0,sizeof invWidget);
+    memset(ppLinedEdit,0,nLineEditSize*sizeof(XLineEditHEX *));
+    memset(ppComboBox,0,nComboBoxSize*sizeof(XComboBoxEx *));
+    memset(ppInvWidget,0,nInvWidgetSize*sizeof(InvWidget *));
 
     pSubDevice=nullptr;
 
@@ -95,8 +139,8 @@ bool SectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int
                 case SPE::TYPE_IMAGE_SECTION_HEADER:
                     switch(nNdata)
                     {
-                        case N_IMAGE_SECTION_HEADER::VirtualAddress:        invWidget[INV_VirtualAddress]->setAddressAndSize(&pe,pe.getBaseAddress()+(quint32)nValue,0);        break;
-                        case N_IMAGE_SECTION_HEADER::PointerToRawData:      invWidget[INV_PointerToRawData]->setOffsetAndSize(&pe,(quint32)nValue,0);                           break;
+                        case N_IMAGE_SECTION_HEADER::VirtualAddress:        ppInvWidget[N_IMAGE_SECTION_HEADER::INV_VirtualAddress]->setAddressAndSize(&pe,pe.getBaseAddress()+(quint32)nValue,0);        break;
+                        case N_IMAGE_SECTION_HEADER::PointerToRawData:      ppInvWidget[N_IMAGE_SECTION_HEADER::INV_PointerToRawData]->setOffsetAndSize(&pe,(quint32)nValue,0);                           break;
                     }
 
                     break;
@@ -119,7 +163,7 @@ bool SectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int
                         case N_IMAGE_SECTION_HEADER::Characteristics:       pe.setSection_Characteristics((quint32)nPosition,(quint32)nValue);      break;
                     }
 
-                    ui->widgetHex_IMAGE_SECTION_HEADER->reload();
+                    ui->widgetHex->reload();
 
                     break;
             }
@@ -132,27 +176,32 @@ bool SectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int
 }
 void SectionHeaderWidget::setReadonly(bool bState)
 {
-    setLineEditsReadOnly(lineEdit_IMAGE_SECTION_HEADER,N_IMAGE_SECTION_HEADER::__data_size,bState);
+    setLineEditsReadOnly(ppLinedEdit,nLineEditSize,bState);
 
-    setComboBoxesReadOnly(comboBox,__CB_size,bState);
+    setComboBoxesReadOnly(ppComboBox,nComboBoxSize,bState);
 }
 
 void SectionHeaderWidget::blockSignals(bool bState)
 {
-    _blockSignals((QObject **)lineEdit_IMAGE_SECTION_HEADER,N_IMAGE_SECTION_HEADER::__data_size,bState);
+    _blockSignals((QObject **)ppLinedEdit,nLineEditSize,bState);
 
-    _blockSignals((QObject **)comboBox,__CB_size,bState);
+    _blockSignals((QObject **)ppComboBox,nComboBoxSize,bState);
 }
 
 void SectionHeaderWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
 {
     int nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
 
-    pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
-    pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*6);
-    pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*16);
-    pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*8);
-    pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
+    switch(type)
+    {
+        case SPE::TYPE_IMAGE_SECTION_HEADER:
+            pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*6);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*16);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*8);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
+            break;
+    }
 }
 
 void SectionHeaderWidget::on_checkBoxReadonly_toggled(bool checked)
@@ -162,53 +211,58 @@ void SectionHeaderWidget::on_checkBoxReadonly_toggled(bool checked)
 
 void SectionHeaderWidget::reloadData()
 {
+    int nType=getType();
+
     XPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
 
     if(pe.isValid())
     {
         if(!bInit)
         {
-            bInit=createHeaderTable(SPE::TYPE_IMAGE_SECTION_HEADER,ui->tableWidget_IMAGE_SECTION_HEADER,N_IMAGE_SECTION_HEADER::records,lineEdit_IMAGE_SECTION_HEADER,N_IMAGE_SECTION_HEADER::__data_size+1,getNumber());
-            comboBox[CB_CHARACTERISTICS]=createComboBox(ui->tableWidget_IMAGE_SECTION_HEADER,XPE::getImageSectionHeaderFlagsS(),SPE::TYPE_IMAGE_SECTION_HEADER,N_IMAGE_SECTION_HEADER::Characteristics,XComboBoxEx::CBTYPE_FLAGS);
-            comboBox[CB_ALIGH]=createComboBox(ui->tableWidget_IMAGE_SECTION_HEADER,XPE::getImageSectionHeaderAlignsS(),SPE::TYPE_IMAGE_SECTION_HEADER,N_IMAGE_SECTION_HEADER::Characteristics+1,XComboBoxEx::CBTYPE_EFLAGS,XPE_DEF::S_IMAGE_SCN_ALIGN_MASK);
+            if(nType==SPE::TYPE_IMAGE_SECTION_HEADER)
+            {
+                bInit=createHeaderTable(SPE::TYPE_IMAGE_SECTION_HEADER,ui->tableWidget,N_IMAGE_SECTION_HEADER::records,ppLinedEdit,N_IMAGE_SECTION_HEADER::__data_size+1,getNumber());
+                ppComboBox[N_IMAGE_SECTION_HEADER::CB_CHARACTERISTICS]=createComboBox(ui->tableWidget,XPE::getImageSectionHeaderFlagsS(),SPE::TYPE_IMAGE_SECTION_HEADER,N_IMAGE_SECTION_HEADER::Characteristics,XComboBoxEx::CBTYPE_FLAGS);
+                ppComboBox[N_IMAGE_SECTION_HEADER::CB_ALIGH]=createComboBox(ui->tableWidget,XPE::getImageSectionHeaderAlignsS(),SPE::TYPE_IMAGE_SECTION_HEADER,N_IMAGE_SECTION_HEADER::Characteristics+1,XComboBoxEx::CBTYPE_EFLAGS,XPE_DEF::S_IMAGE_SCN_ALIGN_MASK);
 
-            invWidget[INV_VirtualAddress]=createInvWidget(ui->tableWidget_IMAGE_SECTION_HEADER,SPE::TYPE_IMAGE_SECTION_HEADER,N_IMAGE_SECTION_HEADER::VirtualAddress,InvWidget::TYPE_HEX);
-            invWidget[INV_PointerToRawData]=createInvWidget(ui->tableWidget_IMAGE_SECTION_HEADER,SPE::TYPE_IMAGE_SECTION_HEADER,N_IMAGE_SECTION_HEADER::PointerToRawData,InvWidget::TYPE_HEX);
+                ppInvWidget[N_IMAGE_SECTION_HEADER::INV_VirtualAddress]=createInvWidget(ui->tableWidget,SPE::TYPE_IMAGE_SECTION_HEADER,N_IMAGE_SECTION_HEADER::VirtualAddress,InvWidget::TYPE_HEX);
+                ppInvWidget[N_IMAGE_SECTION_HEADER::INV_PointerToRawData]=createInvWidget(ui->tableWidget,SPE::TYPE_IMAGE_SECTION_HEADER,N_IMAGE_SECTION_HEADER::PointerToRawData,InvWidget::TYPE_HEX);
+
+                blockSignals(true);
+
+                XPE_DEF::IMAGE_SECTION_HEADER ish=pe.getSectionHeader(getNumber());
+
+                //        lineEdit_IMAGE_SECTION_HEADER[N_IMAGE_SECTION_HEADER::e_magic]->setValue(ish.);
+
+                QString sName=QString((char *)ish.Name);
+                sName.resize(qMin(sName.length(),XPE_DEF::S_IMAGE_SIZEOF_SHORT_NAME));
+
+                ppLinedEdit[N_IMAGE_SECTION_HEADER::Name]->setStringValue(sName,XPE_DEF::S_IMAGE_SIZEOF_SHORT_NAME); // TODO Check
+                ppLinedEdit[N_IMAGE_SECTION_HEADER::VirtualSize]->setValue(ish.Misc.VirtualSize);
+                ppLinedEdit[N_IMAGE_SECTION_HEADER::VirtualAddress]->setValue(ish.VirtualAddress);
+                ppLinedEdit[N_IMAGE_SECTION_HEADER::SizeOfRawData]->setValue(ish.SizeOfRawData);
+                ppLinedEdit[N_IMAGE_SECTION_HEADER::PointerToRawData]->setValue(ish.PointerToRawData);
+                ppLinedEdit[N_IMAGE_SECTION_HEADER::PointerToRelocations]->setValue(ish.PointerToRelocations);
+                ppLinedEdit[N_IMAGE_SECTION_HEADER::PointerToLinenumbers]->setValue(ish.PointerToLinenumbers);
+                ppLinedEdit[N_IMAGE_SECTION_HEADER::NumberOfRelocations]->setValue(ish.NumberOfRelocations);
+                ppLinedEdit[N_IMAGE_SECTION_HEADER::NumberOfLinenumbers]->setValue(ish.NumberOfLinenumbers);
+                ppLinedEdit[N_IMAGE_SECTION_HEADER::Characteristics]->setValue(ish.Characteristics);
+
+                ppComboBox[N_IMAGE_SECTION_HEADER::CB_CHARACTERISTICS]->setValue(ish.Characteristics);
+                ppComboBox[N_IMAGE_SECTION_HEADER::CB_ALIGH]->setValue(ish.Characteristics);
+
+                ppInvWidget[N_IMAGE_SECTION_HEADER::INV_VirtualAddress]->setAddressAndSize(&pe,pe.getBaseAddress()+ish.VirtualAddress,0);
+                ppInvWidget[N_IMAGE_SECTION_HEADER::INV_PointerToRawData]->setOffsetAndSize(&pe,ish.PointerToRawData,0);
+
+                qint64 nOffset=pe.getSectionHeaderOffset(getNumber());
+                qint64 nSize=pe.getSectionHeaderSize();
+                qint64 nAddress=pe.offsetToRelAddress(nOffset);
+
+                loadHexSubdevice(nOffset,nSize,nAddress,&pSubDevice,ui->widgetHex);
+
+                blockSignals(false);
+            }
         }
-
-        blockSignals(true);
-
-        XPE_DEF::IMAGE_SECTION_HEADER ish=pe.getSectionHeader(getNumber());
-
-        //        lineEdit_IMAGE_SECTION_HEADER[N_IMAGE_SECTION_HEADER::e_magic]->setValue(ish.);
-
-        QString sName=QString((char *)ish.Name);
-        sName.resize(qMin(sName.length(),XPE_DEF::S_IMAGE_SIZEOF_SHORT_NAME));
-
-        lineEdit_IMAGE_SECTION_HEADER[N_IMAGE_SECTION_HEADER::Name]->setStringValue(sName,XPE_DEF::S_IMAGE_SIZEOF_SHORT_NAME); // TODO Check
-        lineEdit_IMAGE_SECTION_HEADER[N_IMAGE_SECTION_HEADER::VirtualSize]->setValue(ish.Misc.VirtualSize);
-        lineEdit_IMAGE_SECTION_HEADER[N_IMAGE_SECTION_HEADER::VirtualAddress]->setValue(ish.VirtualAddress);
-        lineEdit_IMAGE_SECTION_HEADER[N_IMAGE_SECTION_HEADER::SizeOfRawData]->setValue(ish.SizeOfRawData);
-        lineEdit_IMAGE_SECTION_HEADER[N_IMAGE_SECTION_HEADER::PointerToRawData]->setValue(ish.PointerToRawData);
-        lineEdit_IMAGE_SECTION_HEADER[N_IMAGE_SECTION_HEADER::PointerToRelocations]->setValue(ish.PointerToRelocations);
-        lineEdit_IMAGE_SECTION_HEADER[N_IMAGE_SECTION_HEADER::PointerToLinenumbers]->setValue(ish.PointerToLinenumbers);
-        lineEdit_IMAGE_SECTION_HEADER[N_IMAGE_SECTION_HEADER::NumberOfRelocations]->setValue(ish.NumberOfRelocations);
-        lineEdit_IMAGE_SECTION_HEADER[N_IMAGE_SECTION_HEADER::NumberOfLinenumbers]->setValue(ish.NumberOfLinenumbers);
-        lineEdit_IMAGE_SECTION_HEADER[N_IMAGE_SECTION_HEADER::Characteristics]->setValue(ish.Characteristics);
-
-        comboBox[CB_CHARACTERISTICS]->setValue(ish.Characteristics);
-        comboBox[CB_ALIGH]->setValue(ish.Characteristics);
-
-        invWidget[INV_VirtualAddress]->setAddressAndSize(&pe,pe.getBaseAddress()+ish.VirtualAddress,0);
-        invWidget[INV_PointerToRawData]->setOffsetAndSize(&pe,ish.PointerToRawData,0);
-
-        qint64 nOffset=pe.getSectionHeaderOffset(getNumber());
-        qint64 nSize=pe.getSectionHeaderSize();
-        qint64 nAddress=pe.offsetToRelAddress(nOffset);
-
-        loadHexSubdevice(nOffset,nSize,nAddress,&pSubDevice,ui->widgetHex_IMAGE_SECTION_HEADER);
-
-        blockSignals(false);
 
         setReadonly(ui->checkBoxReadonly->isChecked());
     }
@@ -226,13 +280,13 @@ void SectionHeaderWidget::widgetValueChanged(quint64 nValue)
             switch(nNdata)
             {
                 case N_IMAGE_SECTION_HEADER::Characteristics:
-                    lineEdit_IMAGE_SECTION_HEADER[N_IMAGE_SECTION_HEADER::Characteristics]->setValue((quint32)nValue);
-                    this->comboBox[CB_CHARACTERISTICS]->setValue(nValue);
+                    ppLinedEdit[N_IMAGE_SECTION_HEADER::Characteristics]->setValue((quint32)nValue);
+                    ppComboBox[N_IMAGE_SECTION_HEADER::CB_CHARACTERISTICS]->setValue(nValue);
                     break;
 
                 case N_IMAGE_SECTION_HEADER::Characteristics+1:
-                    lineEdit_IMAGE_SECTION_HEADER[N_IMAGE_SECTION_HEADER::Characteristics]->setValue((quint32)nValue);
-                    this->comboBox[CB_ALIGH]->setValue(nValue);
+                    ppLinedEdit[N_IMAGE_SECTION_HEADER::Characteristics]->setValue((quint32)nValue);
+                    ppComboBox[N_IMAGE_SECTION_HEADER::CB_ALIGH]->setValue(nValue);
                     break;
             }
 
@@ -240,12 +294,12 @@ void SectionHeaderWidget::widgetValueChanged(quint64 nValue)
     }
 }
 
-void SectionHeaderWidget::on_tableWidget_IMAGE_SECTION_HEADER_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
+void SectionHeaderWidget::on_tableWidget_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
 {
     Q_UNUSED(currentRow)
     Q_UNUSED(currentColumn)
     Q_UNUSED(previousRow)
     Q_UNUSED(previousColumn)
 
-    setHeaderTableSelection(ui->widgetHex_IMAGE_SECTION_HEADER,ui->tableWidget_IMAGE_SECTION_HEADER);
+    setHeaderTableSelection(ui->widgetHex,ui->tableWidget);
 }

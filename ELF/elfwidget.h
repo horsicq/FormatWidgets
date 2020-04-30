@@ -50,6 +50,7 @@ protected:
     virtual void setReadonly(bool bState);
     virtual void blockSignals(bool bState);
     virtual void adjustHeaderTable(int type,QTableWidget *pTableWidget);
+    virtual QString typeIdToString(int type);
 
 private slots:
     virtual void reloadData();
@@ -74,7 +75,7 @@ private slots:
     void on_tableView_SymbolTable_customContextMenuRequested(const QPoint &pos);
     void editSymbolHeader();
     void showSectionHeader(int type,QTableView *pTableView);
-    static QString typeIdToString(int type);
+
     void on_tableView_Elf_Shdr_doubleClicked(const QModelIndex &index);
     void on_tableView_Elf_Shdr_customContextMenuRequested(const QPoint &pos);
     void on_tableView_SymbolTable_doubleClicked(const QModelIndex &index);

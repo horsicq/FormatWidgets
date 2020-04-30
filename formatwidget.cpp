@@ -129,6 +129,11 @@ void FormatWidget::adjustListTable(int type, QTableWidget *pTableWidget)
     Q_UNUSED(pTableWidget)
 }
 
+QString FormatWidget::typeIdToString(int type)
+{
+    return "";
+}
+
 bool FormatWidget::isEdited()
 {
     return bIsEdited;

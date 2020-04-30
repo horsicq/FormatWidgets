@@ -250,6 +250,20 @@ enum DATA
 };
 
 extern const FW_DEF::HEADER_RECORD records[__data_size+1];
+
+enum CB
+{
+    CB_CHARACTERISTICS=0,
+    CB_ALIGH,
+    __CB_size
+};
+
+enum INV
+{
+    INV_VirtualAddress,
+    INV_PointerToRawData,
+    __INV_size
+};
 }
 
 namespace N_IMAGE_EXPORT

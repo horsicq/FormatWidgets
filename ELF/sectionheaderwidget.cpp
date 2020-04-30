@@ -34,6 +34,8 @@ SectionHeaderWidget::SectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pO
 {
     ui->setupUi(this);
 
+    setData(pDevice,pOptions,nNumber,nOffset,nType);
+
     ppLinedEdit=0;
     nLineEditSize=0;
     ppComboBox=0;
@@ -91,8 +93,6 @@ SectionHeaderWidget::SectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pO
     {
         ppInvWidget=new PInvWidget[nInvWidgetSize];
     }
-
-    setData(pDevice,pOptions,nNumber,nOffset,nType);
 }
 
 SectionHeaderWidget::~SectionHeaderWidget()

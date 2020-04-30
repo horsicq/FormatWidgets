@@ -675,26 +675,7 @@ void PEWidget::on_checkBoxReadonly_toggled(bool checked)
 
 void PEWidget::editSectionHeader()
 {
-    int nRow=ui->tableWidget_Sections->currentRow();
-
-    if(nRow!=-1)
-    {
-        SectionHeaderWidget *pSectionHeaderWidget=new SectionHeaderWidget(this);
-        DialogSectionHeader dsh(this);
-        dsh.setWidget(pSectionHeaderWidget);
-        dsh.setData(getDevice(),getOptions(),(quint32)nRow,0,tr("Section header"),0);
-        dsh.setEdited(isEdited());
-
-        connect(&dsh,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
-
-        dsh.exec();
-
-        delete pSectionHeaderWidget;
-
-        reloadData();
-
-        ui->tableWidget_Sections->setCurrentCell(nRow,0);
-    }
+    showSectionHeader(SPE::TYPE_IMAGE_SECTION_HEADER,ui->tableWidget_Sections);
 }
 
 void PEWidget::sectionHex()
@@ -1958,6 +1939,18 @@ void PEWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
     }
 }
 
+QString PEWidget::typeIdToString(int type)
+{
+    QString sResult="Unknown";
+
+    switch(type)
+    {
+        case SPE::TYPE_IMAGE_SECTION_HEADER:    sResult=QString("Section header");      break;
+    }
+
+    return sResult;
+}
+
 bool PEWidget::createSectionTable(int type, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount)
 {
     int nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
@@ -2389,4 +2382,31 @@ void PEWidget::on_tableWidget_Exceptions_doubleClicked(const QModelIndex &index)
     Q_UNUSED(index)
 
     editExceptionHeader();
+}
+
+void PEWidget::showSectionHeader(int type, QTableView *pTableView)
+{
+    int nRow=pTableView->currentIndex().row();
+
+    if(nRow!=-1)
+    {
+        QModelIndex index=pTableView->selectionModel()->selectedIndexes().at(0);
+
+        qint64 nOffset=pTableView->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
+
+        SectionHeaderWidget *pSectionHeaderWidget=new SectionHeaderWidget(getDevice(),getOptions(),(quint32)nRow,nOffset,type,this);
+
+        DialogSectionHeader dsh(this);
+        dsh.setWidget(pSectionHeaderWidget);
+        dsh.setData(typeIdToString(type));
+        dsh.setEdited(isEdited());
+
+        connect(&dsh,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+
+        dsh.exec();
+
+        reloadData();
+
+        pTableView->setCurrentIndex(pTableView->model()->index(nRow,0));
+    }
 }

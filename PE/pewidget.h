@@ -54,6 +54,7 @@ protected:
     virtual void setReadonly(bool bState);
     virtual void blockSignals(bool bState);
     virtual void adjustHeaderTable(int type,QTableWidget *pTableWidget);
+    virtual QString typeIdToString(int type);
 
 private slots:
     void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
@@ -103,6 +104,7 @@ private slots:
     void on_tableWidget_Debug_doubleClicked(const QModelIndex &index);
     void on_tableWidget_Relocs_doubleClicked(const QModelIndex &index);
     void on_tableWidget_Exceptions_doubleClicked(const QModelIndex &index);
+    void showSectionHeader(int type,QTableView *pTableView);
 
 private:
     enum CB
