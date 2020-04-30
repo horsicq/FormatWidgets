@@ -901,12 +901,7 @@ void ELFWidget::onTableView_Elf_Shdr_currentRowChanged(const QModelIndex &curren
     Q_UNUSED(current)
     Q_UNUSED(previous)
 
-    int currentRow=current.row();
-
-    if(currentRow!=-1)
-    {
-        loadShdr(currentRow);
-    }
+    loadHexSubdeviceByTableView(current.row(),SELF::TYPE_Elf_Shdr,ui->widgetHex_Elf_Shdr,ui->tableView_Elf_Shdr,&subDevice[SELF::TYPE_Elf_Shdr]);
 }
 
 void ELFWidget::onTableView_Elf_Phdr_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
@@ -914,12 +909,7 @@ void ELFWidget::onTableView_Elf_Phdr_currentRowChanged(const QModelIndex &curren
     Q_UNUSED(current)
     Q_UNUSED(previous)
 
-    int currentRow=current.row();
-
-    if(currentRow!=-1)
-    {
-        loadPhdr(currentRow);
-    }
+    loadHexSubdeviceByTableView(current.row(),SELF::TYPE_Elf_Phdr,ui->widgetHex_Elf_Phdr,ui->tableView_Elf_Phdr,&subDevice[SELF::TYPE_Elf_Phdr]);
 }
 
 void ELFWidget::onTableView_DynamicArrayTags_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
@@ -935,12 +925,7 @@ void ELFWidget::onTableView_Notes_currentRowChanged(const QModelIndex &current, 
     Q_UNUSED(current)
     Q_UNUSED(previous)
 
-    int currentRow=current.row();
-
-    if(currentRow!=-1)
-    {
-        loadNote(currentRow);
-    }
+    loadHexSubdeviceByTableView(current.row(),SELF::TYPE_NOTES,ui->widgetHex_Notes,ui->tableView_Notes,&subDevice[SELF::TYPE_NOTES]);
 }
 
 void ELFWidget::onTableView_Libraries_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
