@@ -7,7 +7,6 @@ FORMS += \
     $$PWD/pewidget.ui \
     $$PWD/relocsheaderwidget.ui \
     $$PWD/sectionheaderwidget.ui \
-    $$PWD/importheaderwidget.ui \
     $$PWD/dialogpe.ui
 
 HEADERS += \
@@ -17,7 +16,6 @@ HEADERS += \
     $$PWD/pe_defs.h \
     $$PWD/relocsheaderwidget.h \
     $$PWD/sectionheaderwidget.h \
-    $$PWD/importheaderwidget.h \
     $$PWD/dialogpe.h \
     $$PWD/peprocessdata.h
 
@@ -28,7 +26,6 @@ SOURCES += \
     $$PWD/pe_defs.cpp \
     $$PWD/relocsheaderwidget.cpp \
     $$PWD/sectionheaderwidget.cpp \
-    $$PWD/importheaderwidget.cpp \
     $$PWD/dialogpe.cpp \
     $$PWD/peprocessdata.cpp
 
