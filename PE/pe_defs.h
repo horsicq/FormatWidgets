@@ -331,6 +331,18 @@ enum DATA
 };
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
+
+enum CB
+{
+    __CB_size
+};
+enum INV
+{
+    INV_OriginalFirstThunk,
+    INV_Name,
+    INV_FirstThunk,
+    __INV_size
+};
 }
 
 namespace N_IMAGE_DELAYIMPORT

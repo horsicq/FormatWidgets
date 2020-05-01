@@ -2167,26 +2167,7 @@ void PEWidget::on_tableWidget_ImportFunctions_customContextMenuRequested(const Q
 
 void PEWidget::editImportHeader()
 {
-    int nRow=ui->tableWidget_ImportLibraries->currentRow();
-
-    if(nRow!=-1)
-    {
-        ImportHeaderWidget *pImportHeaderWidget=new ImportHeaderWidget(this);
-        DialogSectionHeader dsh(this);
-        dsh.setWidget(pImportHeaderWidget);
-        dsh.setData(getDevice(),getOptions(),(quint32)nRow,0,tr("Import Header"),0);
-        dsh.setEdited(isEdited());
-
-        connect(&dsh,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
-
-        dsh.exec();
-
-        delete pImportHeaderWidget;
-
-        reloadData();
-
-        ui->tableWidget_ImportLibraries->setCurrentCell(nRow,0);
-    }
+    showSectionHeader(SPE::TYPE_IMPORT,ui->tableWidget_ImportLibraries);
 }
 
 void PEWidget::on_tableWidget_ExportFunctions_customContextMenuRequested(const QPoint &pos)

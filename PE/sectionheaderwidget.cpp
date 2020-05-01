@@ -49,6 +49,12 @@ SectionHeaderWidget::SectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pO
         nComboBoxSize=N_IMAGE_SECTION_HEADER::__CB_size;
         nInvWidgetSize=N_IMAGE_SECTION_HEADER::__INV_size;
     }
+    else if(nType==SPE::TYPE_IMPORT)
+    {
+        nLineEditSize=N_IMAGE_IMPORT::__data_size;
+        nComboBoxSize=N_IMAGE_IMPORT::__CB_size;
+        nInvWidgetSize=N_IMAGE_IMPORT::__INV_size;
+    }
 
     if(nLineEditSize)
     {
@@ -144,6 +150,16 @@ bool SectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int
                     }
 
                     break;
+
+                case SPE::TYPE_IMPORT:
+                    switch(nNdata)
+                    {
+                        case N_IMAGE_IMPORT::OriginalFirstThunk:            ppInvWidget[N_IMAGE_IMPORT::INV_OriginalFirstThunk]->setAddressAndSize(&pe,pe.getBaseAddress()+(quint32)nValue,0);    break;
+                        case N_IMAGE_IMPORT::Name:                          ppInvWidget[N_IMAGE_IMPORT::INV_Name]->setAddressAndSize(&pe,pe.getBaseAddress()+(quint32)nValue,0);                  break;
+                        case N_IMAGE_IMPORT::FirstThunk:                    ppInvWidget[N_IMAGE_IMPORT::INV_FirstThunk]->setAddressAndSize(&pe,pe.getBaseAddress()+(quint32)nValue,0);            break;
+                    }
+
+                    break;
             }
 
             switch(nStype)
@@ -163,10 +179,35 @@ bool SectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int
                         case N_IMAGE_SECTION_HEADER::Characteristics:       pe.setSection_Characteristics((quint32)nPosition,(quint32)nValue);      break;
                     }
 
-                    ui->widgetHex->reload();
+                    break;
+
+                case SPE::TYPE_IMPORT:
+                    switch(nNdata)
+                    {
+                        case N_IMAGE_IMPORT::OriginalFirstThunk:            pe.setImportDescriptor_OriginalFirstThunk(nPosition,(quint32)nValue);   break;
+                        case N_IMAGE_IMPORT::TimeDateStamp:                 pe.setImportDescriptor_TimeDateStamp(nPosition,(quint32)nValue);        break;
+                        case N_IMAGE_IMPORT::ForwarderChain:                pe.setImportDescriptor_ForwarderChain(nPosition,(quint32)nValue);       break;
+                        case N_IMAGE_IMPORT::Name:                          pe.setImportDescriptor_Name(nPosition,(quint32)nValue);                 break;
+                        case N_IMAGE_IMPORT::FirstThunk:                    pe.setImportDescriptor_FirstThunk(nPosition,(quint32)nValue);           break;
+                    }
 
                     break;
             }
+
+            switch(nStype)
+            {
+                case SPE::TYPE_IMPORT:
+                    switch(nNdata)
+                    {
+                        case N_IMAGE_IMPORT::OriginalFirstThunk:            addComment(ui->tableWidget,N_IMAGE_IMPORT::OriginalFirstThunk,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress((quint32)nValue));         break;
+                        case N_IMAGE_IMPORT::Name:                          addComment(ui->tableWidget,N_IMAGE_IMPORT::Name,HEADER_COLUMN_COMMENT,pe.read_ansiString(pe.relAddressToOffset((quint32)nValue)));                break;                                                                                              break;
+                        case N_IMAGE_IMPORT::FirstThunk:                    addComment(ui->tableWidget,N_IMAGE_IMPORT::FirstThunk,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress((quint32)nValue));                 break;
+                    }
+
+                    break;
+            }
+
+            ui->widgetHex->reload();
 
             bResult=true;
         }
@@ -198,6 +239,14 @@ void SectionHeaderWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget
             pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
             pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*6);
             pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*16);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*8);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
+            break;
+
+        case SPE::TYPE_IMPORT:
+            pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*6);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*20);
             pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*8);
             pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
             break;
@@ -262,6 +311,45 @@ void SectionHeaderWidget::reloadData()
 
                 blockSignals(false);
             }
+            else if(nType==SPE::TYPE_IMPORT)
+            {
+                if(!bInit)
+                {
+                    bInit=createHeaderTable(SPE::TYPE_IMPORT,ui->tableWidget,N_IMAGE_IMPORT::records,ppLinedEdit,N_IMAGE_IMPORT::__data_size,getNumber());
+
+                    ppInvWidget[N_IMAGE_IMPORT::INV_OriginalFirstThunk]=createInvWidget(ui->tableWidget,SPE::TYPE_IMPORT,N_IMAGE_IMPORT::OriginalFirstThunk,InvWidget::TYPE_HEX);
+                    ppInvWidget[N_IMAGE_IMPORT::INV_Name]=createInvWidget(ui->tableWidget,SPE::TYPE_IMPORT,N_IMAGE_IMPORT::Name,InvWidget::TYPE_HEX);
+                    ppInvWidget[N_IMAGE_IMPORT::INV_FirstThunk]=createInvWidget(ui->tableWidget,SPE::TYPE_IMPORT,N_IMAGE_IMPORT::FirstThunk,InvWidget::TYPE_HEX);
+                }
+
+                blockSignals(true);
+
+                XBinary::_MEMORY_MAP memoryMap=pe.getMemoryMap();
+
+                XPE_DEF::IMAGE_IMPORT_DESCRIPTOR idh=pe.getImportDescriptor(getNumber());
+
+                ppLinedEdit[N_IMAGE_IMPORT::OriginalFirstThunk]->setValue(idh.OriginalFirstThunk);
+                ppLinedEdit[N_IMAGE_IMPORT::TimeDateStamp]->setValue(idh.TimeDateStamp);
+                ppLinedEdit[N_IMAGE_IMPORT::ForwarderChain]->setValue(idh.ForwarderChain);
+                ppLinedEdit[N_IMAGE_IMPORT::Name]->setValue(idh.Name);
+                ppLinedEdit[N_IMAGE_IMPORT::FirstThunk]->setValue(idh.FirstThunk);
+
+                ppInvWidget[N_IMAGE_IMPORT::INV_OriginalFirstThunk]->setAddressAndSize(&pe,pe.getBaseAddress()+idh.OriginalFirstThunk,0);
+                ppInvWidget[N_IMAGE_IMPORT::INV_Name]->setAddressAndSize(&pe,pe.getBaseAddress()+idh.Name,0);
+                ppInvWidget[N_IMAGE_IMPORT::INV_FirstThunk]->setAddressAndSize(&pe,pe.getBaseAddress()+idh.FirstThunk,0);
+
+                addComment(ui->tableWidget,N_IMAGE_IMPORT::OriginalFirstThunk,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress(&memoryMap,idh.OriginalFirstThunk));
+                addComment(ui->tableWidget,N_IMAGE_IMPORT::Name,HEADER_COLUMN_COMMENT,pe.read_ansiString(pe.relAddressToOffset(&memoryMap,idh.Name)));
+                addComment(ui->tableWidget,N_IMAGE_IMPORT::FirstThunk,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress(&memoryMap,idh.FirstThunk));
+
+                qint64 nOffset=pe.getImportDescriptorOffset(getNumber());
+                qint64 nSize=pe.getImportDescriptorSize();
+                qint64 nAddress=pe.offsetToRelAddress(nOffset);
+
+                loadHexSubdevice(nOffset,nSize,nAddress,&pSubDevice,ui->widgetHex);
+
+                blockSignals(false);
+            }
         }
 
         setReadonly(ui->checkBoxReadonly->isChecked());
@@ -281,7 +369,7 @@ void SectionHeaderWidget::widgetValueChanged(quint64 nValue)
             {
                 case N_IMAGE_SECTION_HEADER::Characteristics:
                     ppLinedEdit[N_IMAGE_SECTION_HEADER::Characteristics]->setValue((quint32)nValue);
-                    ppComboBox[N_IMAGE_SECTION_HEADER::CB_CHARACTERISTICS]->setValue(nValue);
+                    ppComboBox[N_IMAGE_SECTION_HEADER::CB_CHARACTERISTICS]->setValue(nValue); // TODO check for remove
                     break;
 
                 case N_IMAGE_SECTION_HEADER::Characteristics+1:
