@@ -31,6 +31,7 @@ enum TYPE
     TYPE_HEX=0,
     TYPE_STRINGS,
     TYPE_MEMORYMAP,
+    TYPE_ENTROPY,
     TYPE_DOS_HEADER,
     TYPE_OVERLAY,
     __TYPE_size

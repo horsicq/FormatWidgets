@@ -84,6 +84,7 @@ void MSDOSWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_HEX,tr("Tools")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_STRINGS,tr("Strings")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_MEMORYMAP,tr("Memory map")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_ENTROPY,tr("Entropy")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_DOS_HEADER,"DOS_HEADER"));
 
         if(msdos.isOverlayPresent())
@@ -190,51 +191,60 @@ void MSDOSWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
 
 void MSDOSWidget::reloadData()
 {
-    int nData=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole).toInt();
-    ui->stackedWidgetInfo->setCurrentIndex(nData);
+    int nType=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_TYPE).toInt();
+    ui->stackedWidgetInfo->setCurrentIndex(nType);
 
     XMSDOS msdos(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
 
     if(msdos.isValid())
     {
-        if(nData==SMSDOS::TYPE_HEX)
+        if(nType==SMSDOS::TYPE_HEX)
         {
-            if(!bInit[nData])
+            if(!bInit[nType])
             {
                 ui->widgetHex->setData(getDevice());
                 ui->widgetHex->setBackupFileName(getOptions()->sBackupFileName);
                 ui->widgetHex->enableReadOnly(false);
                 connect(ui->widgetHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
 
-                bInit[nData]=true;
+                bInit[nType]=true;
             }
             ui->widgetHex->reload();
         }
-        else if(nData==SMSDOS::TYPE_STRINGS)
+        else if(nType==SMSDOS::TYPE_STRINGS)
         {
-            if(!bInit[nData])
+            if(!bInit[nType])
             {
                 ui->widgetStrings->setData(getDevice(),0,true);
 
-                bInit[nData]=true;
+                bInit[nType]=true;
             }
             ui->widgetHex->reload();
         }
-        else if(nData==SMSDOS::TYPE_MEMORYMAP)
+        else if(nType==SMSDOS::TYPE_MEMORYMAP)
         {
-            if(!bInit[nData])
+            if(!bInit[nType])
             {
                 ui->widgetMemoryMap->setData(getDevice());
 
-                bInit[nData]=true;
+                bInit[nType]=true;
             }
             ui->widgetHex->reload();
         }
-        else if(nData==SMSDOS::TYPE_DOS_HEADER)
+        else if(nType==SMSDOS::TYPE_ENTROPY)
         {
-            if(!bInit[nData])
+            if(!bInit[nType])
             {
-                bInit[nData]=createHeaderTable(SMSDOS::TYPE_DOS_HEADER,ui->tableWidget_DOS_HEADER,N_DOS_HEADER::records,lineEdit_DOS_HEADER,N_DOS_HEADER::__data_size,0);
+                ui->widgetEntropy->setData(getDevice(),0,getDevice()->size(),true);
+
+                bInit[nType]=true;
+            }
+        }
+        else if(nType==SMSDOS::TYPE_DOS_HEADER)
+        {
+            if(!bInit[nType])
+            {
+                bInit[nType]=createHeaderTable(SMSDOS::TYPE_DOS_HEADER,ui->tableWidget_DOS_HEADER,N_DOS_HEADER::records,lineEdit_DOS_HEADER,N_DOS_HEADER::__data_size,0);
                 comboBox[CB_DOS_HEADER_e_magic]=createComboBox(ui->tableWidget_DOS_HEADER,XMSDOS::getImageMagicsS(),SMSDOS::TYPE_DOS_HEADER,N_DOS_HEADER::e_magic,XComboBoxEx::CBTYPE_NORMAL);
             }
 
@@ -266,7 +276,7 @@ void MSDOSWidget::reloadData()
 
             blockSignals(false);
         }
-        else if(nData==SMSDOS::TYPE_OVERLAY)
+        else if(nType==SMSDOS::TYPE_OVERLAY)
         {
             qint64 nOverLayOffset=msdos.getOverlayOffset();
             qint64 nOverlaySize=msdos.getOverlaySize();
