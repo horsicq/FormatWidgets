@@ -1894,7 +1894,9 @@ QString PEWidget::typeIdToString(int type)
 
     switch(type)
     {
-        case SPE::TYPE_IMAGE_SECTION_HEADER:    sResult=QString("Section header");      break;
+        case SPE::TYPE_IMAGE_SECTION_HEADER:    sResult=QString("Section header");      break; // TODO tr
+        case SPE::TYPE_IMPORT:                  sResult=QString("Import header");       break; // TODO tr
+        case SPE::TYPE_DEBUG:                   sResult=QString("Debug header");        break; // TODO tr
     }
 
     return sResult;
@@ -2209,26 +2211,7 @@ void PEWidget::on_tableWidget_Debug_customContextMenuRequested(const QPoint &pos
 
 void PEWidget::editDebugHeader()
 {
-    int nRow=ui->tableWidget_Debug->currentRow();
-
-    if(nRow!=-1)
-    {
-        DebugHeaderWidget *pDebugHeaderWidget=new DebugHeaderWidget(this);
-        DialogSectionHeader dsh(this);
-        dsh.setWidget(pDebugHeaderWidget);
-        dsh.setData(getDevice(),getOptions(),(quint32)nRow,0,tr("Debug Header"),0);
-        dsh.setEdited(isEdited());
-
-        connect(&dsh,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
-
-        dsh.exec();
-
-        delete pDebugHeaderWidget;
-
-        reloadData();
-
-        ui->tableWidget_Debug->setCurrentCell(nRow,0);
-    }
+    showSectionHeader(SPE::TYPE_DEBUG,ui->tableWidget_Debug);
 }
 
 void PEWidget::on_tableWidget_Relocs_customContextMenuRequested(const QPoint &pos)
