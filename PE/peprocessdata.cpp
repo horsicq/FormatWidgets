@@ -120,6 +120,39 @@ void PEProcessData::_process()
             incValue();
         }
     }
+    else if(type==SPE::TYPE_EXCEPTION)
+    {
+        QList<QString> listLabels;
+        listLabels.append(getStructList(N_IMAGE_EXCEPTIONS::records,N_IMAGE_EXCEPTIONS::__data_size));
+
+        QList<XPE_DEF::S_IMAGE_RUNTIME_FUNCTION_ENTRY> listRFE=pPE->getExceptionsList();
+
+        int nCount=listRFE.count();
+
+        *ppModel=new QStandardItemModel(nCount,listLabels.count());
+
+        setMaximum(nCount);
+
+        setHeader(*ppModel,&listLabels);
+
+        XBinary::_MEMORY_MAP memoryMap=pPE->getMemoryMap();
+
+        for(int i=0; i<nCount; i++)
+        {
+            QStandardItem *pItem=new QStandardItem(XBinary::valueToHex(listRFE.at(i).BeginAddress));
+//                pItem->setData(Qt::UserRole,listRH.at(i).nOffset);
+
+            pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS,listRFE.at(i).BeginAddress);
+            pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE,listRFE.at(i).EndAddress-listRFE.at(i).BeginAddress);
+            pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET,pPE->addressToOffset(&memoryMap,memoryMap.nBaseAddress+listRFE.at(i).BeginAddress));
+
+            (*ppModel)->setItem(i,N_IMAGE_EXCEPTIONS::BeginAddress,         pItem);
+            (*ppModel)->setItem(i,N_IMAGE_EXCEPTIONS::EndAddress,           new QStandardItem(XBinary::valueToHex(listRFE.at(i).EndAddress)));
+            (*ppModel)->setItem(i,N_IMAGE_EXCEPTIONS::UnwindInfoAddress,    new QStandardItem(XBinary::valueToHex(listRFE.at(i).UnwindInfoAddress)));
+
+            incValue();
+        }
+    }
 }
 
 void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
