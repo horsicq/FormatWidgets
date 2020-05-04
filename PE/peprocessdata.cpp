@@ -46,6 +46,42 @@ void PEProcessData::_process()
         setMaximum(nCount);
 
         setHeader(*ppModel,&listLabels);
+
+        for(int i=0; i<nCount; i++)
+        {
+            QStandardItem *itemNumber=new QStandardItem(QString::number(i));
+
+            itemNumber->setData(listSections.at(i).VirtualAddress,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS);
+
+            if(pPE->isImage())
+            {
+                itemNumber->setData(listSections.at(i).Misc.VirtualSize,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
+                itemNumber->setData(listSections.at(i).VirtualAddress,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+            }
+            else
+            {
+                itemNumber->setData(listSections.at(i).SizeOfRawData,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
+                itemNumber->setData(listSections.at(i).PointerToRawData,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+            }
+
+            (*ppModel)->setItem(i,0,itemNumber);
+
+            QStandardItem *itemName=new QStandardItem();
+            QString sName=QString((char *)listSections.at(i).Name);
+            sName.resize(qMin(sName.length(),XPE_DEF::S_IMAGE_SIZEOF_SHORT_NAME));
+            itemName->setText(sName);
+            (*ppModel)->setItem(i,N_IMAGE_SECTION_HEADER::Name+1,itemName);
+
+            (*ppModel)->setItem(i,N_IMAGE_SECTION_HEADER::VirtualSize+1,          new QStandardItem(XBinary::valueToHex(listSections.at(i).Misc.VirtualSize)));
+            (*ppModel)->setItem(i,N_IMAGE_SECTION_HEADER::VirtualAddress+1,       new QStandardItem(XBinary::valueToHex(listSections.at(i).VirtualAddress)));
+            (*ppModel)->setItem(i,N_IMAGE_SECTION_HEADER::SizeOfRawData+1,        new QStandardItem(XBinary::valueToHex(listSections.at(i).SizeOfRawData)));
+            (*ppModel)->setItem(i,N_IMAGE_SECTION_HEADER::PointerToRawData+1,     new QStandardItem(XBinary::valueToHex(listSections.at(i).PointerToRawData)));
+            (*ppModel)->setItem(i,N_IMAGE_SECTION_HEADER::PointerToRelocations+1, new QStandardItem(XBinary::valueToHex(listSections.at(i).PointerToRelocations)));
+            (*ppModel)->setItem(i,N_IMAGE_SECTION_HEADER::PointerToLinenumbers+1, new QStandardItem(XBinary::valueToHex(listSections.at(i).PointerToLinenumbers)));
+            (*ppModel)->setItem(i,N_IMAGE_SECTION_HEADER::NumberOfRelocations+1,  new QStandardItem(XBinary::valueToHex(listSections.at(i).NumberOfRelocations)));
+            (*ppModel)->setItem(i,N_IMAGE_SECTION_HEADER::NumberOfLinenumbers+1,  new QStandardItem(XBinary::valueToHex(listSections.at(i).NumberOfLinenumbers)));
+            (*ppModel)->setItem(i,N_IMAGE_SECTION_HEADER::Characteristics+1,      new QStandardItem(XBinary::valueToHex(listSections.at(i).Characteristics)));
+        }
     }
     else if(type==SPE::TYPE_RELOCS_POSITION)
     {
@@ -157,9 +193,9 @@ void PEProcessData::_process()
             QStandardItem *pItem=new QStandardItem(XBinary::valueToHex(listRFE.at(i).BeginAddress));
 //                pItem->setData(Qt::UserRole,listRH.at(i).nOffset);
 
-            pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS,listRFE.at(i).BeginAddress);
-            pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE,listRFE.at(i).EndAddress-listRFE.at(i).BeginAddress);
-            pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET,pPE->addressToOffset(&memoryMap,memoryMap.nBaseAddress+listRFE.at(i).BeginAddress));
+            pItem->setData(listRFE.at(i).BeginAddress,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS);
+            pItem->setData(listRFE.at(i).EndAddress-listRFE.at(i).BeginAddress,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
+            pItem->setData(pPE->addressToOffset(&memoryMap,memoryMap.nBaseAddress+listRFE.at(i).BeginAddress),Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
 
             (*ppModel)->setItem(i,N_IMAGE_EXCEPTIONS::BeginAddress,         pItem);
             (*ppModel)->setItem(i,N_IMAGE_EXCEPTIONS::EndAddress,           new QStandardItem(XBinary::valueToHex(listRFE.at(i).EndAddress)));
