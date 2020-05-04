@@ -32,7 +32,22 @@ PEProcessData::PEProcessData(int type, QStandardItemModel **ppModel, XPE *pPE, q
 
 void PEProcessData::_process()
 {
-    if(type==SPE::TYPE_RELOCS_POSITION)
+    if(type==SPE::TYPE_IMAGE_SECTION_HEADER)
+    {
+        QList<QString> listLabels;
+        listLabels.append(getStructList(N_IMAGE_SECTION_HEADER::records,N_IMAGE_SECTION_HEADER::__data_size));
+
+        QList<XPE_DEF::IMAGE_SECTION_HEADER> listSections=pPE->getSectionHeaders();
+
+        int nCount=listSections.count();
+
+        *ppModel=new QStandardItemModel(nCount,listLabels.count());
+
+        setMaximum(nCount);
+
+        setHeader(*ppModel,&listLabels);
+    }
+    else if(type==SPE::TYPE_RELOCS_POSITION)
     {
         QList<QString> listLabels;
         listLabels.append(getStructList(N_IMAGE_RELOCS_POSITION::records,N_IMAGE_RELOCS_POSITION::__data_size));
