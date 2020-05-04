@@ -210,13 +210,24 @@ void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
 {
     int nSymbolWidth=XLineEditHEX::getSymbolWidth(pWidget);
 
-    if(type==SPE::TYPE_RELOCS_POSITION)
+    if(type==SPE::TYPE_IMAGE_SECTION_HEADER)
+    {
+
+    }
+    else if(type==SPE::TYPE_RELOCS_POSITION)
     {
         pTableView->setColumnWidth(0,nSymbolWidth*6);
         pTableView->setColumnWidth(1,nSymbolWidth*12);
-        pTableView->setColumnWidth(2,nSymbolWidth*8);
     }
     else if(type==SPE::TYPE_IMPORT_FUNCTION)
+    {
+        pTableView->setColumnWidth(0,nSymbolWidth*4);
+        pTableView->setColumnWidth(1,nSymbolWidth*12);
+        pTableView->setColumnWidth(2,nSymbolWidth*8);
+        pTableView->setColumnWidth(3,nSymbolWidth*6);
+        pTableView->setColumnWidth(4,nSymbolWidth*22);
+    }
+    else if(type==SPE::TYPE_EXCEPTION)
     {
         pTableView->setColumnWidth(0,nSymbolWidth*4);
         pTableView->setColumnWidth(1,nSymbolWidth*12);
