@@ -1633,28 +1633,13 @@ void PEWidget::reloadData()
         }
         else if(nType==SPE::TYPE_DELAYIMPORT)
         {
-            // TODO LIbrary Name!
-            if(!bInit[nType])
+            PEProcessData peProcessData(SPE::TYPE_DELAYIMPORT,&tvModel[SPE::TYPE_DELAYIMPORT],&pe,0,0,0);
+
+            ajustTableView(&peProcessData,&tvModel[SPE::TYPE_DELAYIMPORT],ui->tableView_DelayImport);
+
+            if(tvModel[SPE::TYPE_DELAYIMPORT]->rowCount())
             {
-                bInit[nType]=createSectionTable(SPE::TYPE_DELAYIMPORT,ui->tableWidget_DelayImport,N_IMAGE_DELAYIMPORT::records,N_IMAGE_DELAYIMPORT::__data_size);
-            }
-
-            QList<XPE_DEF::S_IMAGE_DELAYLOAD_DESCRIPTOR> listDelayImport=pe.getDelayImportsList();
-
-            int nCount=listDelayImport.count();
-            ui->tableWidget_DelayImport->setRowCount(nCount);
-
-            for(int i=0; i<nCount; i++)
-            {
-                QTableWidgetItem *pItem=new QTableWidgetItem(XBinary::valueToHex(listDelayImport.at(i).AllAttributes));
-                ui->tableWidget_DelayImport->setItem(i,N_IMAGE_DELAYIMPORT::AllAttributes,                  pItem);
-                ui->tableWidget_DelayImport->setItem(i,N_IMAGE_DELAYIMPORT::DllNameRVA,                     new QTableWidgetItem(XBinary::valueToHex(listDelayImport.at(i).DllNameRVA)));
-                ui->tableWidget_DelayImport->setItem(i,N_IMAGE_DELAYIMPORT::ModuleHandleRVA,                new QTableWidgetItem(XBinary::valueToHex(listDelayImport.at(i).ModuleHandleRVA)));
-                ui->tableWidget_DelayImport->setItem(i,N_IMAGE_DELAYIMPORT::ImportAddressTableRVA,          new QTableWidgetItem(XBinary::valueToHex(listDelayImport.at(i).ImportAddressTableRVA)));
-                ui->tableWidget_DelayImport->setItem(i,N_IMAGE_DELAYIMPORT::ImportNameTableRVA,             new QTableWidgetItem(XBinary::valueToHex(listDelayImport.at(i).ImportNameTableRVA)));
-                ui->tableWidget_DelayImport->setItem(i,N_IMAGE_DELAYIMPORT::BoundImportAddressTableRVA,     new QTableWidgetItem(XBinary::valueToHex(listDelayImport.at(i).BoundImportAddressTableRVA)));
-                ui->tableWidget_DelayImport->setItem(i,N_IMAGE_DELAYIMPORT::UnloadInformationTableRVA,      new QTableWidgetItem(XBinary::valueToHex(listDelayImport.at(i).UnloadInformationTableRVA)));
-                ui->tableWidget_DelayImport->setItem(i,N_IMAGE_DELAYIMPORT::TimeDateStamp,                  new QTableWidgetItem(XBinary::valueToHex(listDelayImport.at(i).TimeDateStamp)));
+                ui->tableView_DelayImport->setCurrentIndex(ui->tableView_DelayImport->model()->index(0,0));
             }
         }
         else if(nType==SPE::TYPE_NETHEADER)

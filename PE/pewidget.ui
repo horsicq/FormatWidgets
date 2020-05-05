@@ -92,7 +92,7 @@
      </widget>
      <widget class="QStackedWidget" name="stackedWidgetInfo">
       <property name="currentIndex">
-       <number>3</number>
+       <number>21</number>
       </property>
       <widget class="QWidget" name="page_HEX">
        <layout class="QVBoxLayout" name="verticalLayout_13">
@@ -1000,7 +1000,7 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QTableWidget" name="tableWidget_DelayImport">
+         <widget class="QTableView" name="tableView_DelayImport">
           <property name="contextMenuPolicy">
            <enum>Qt::CustomContextMenu</enum>
           </property>
@@ -1013,14 +1013,17 @@
           <property name="selectionBehavior">
            <enum>QAbstractItemView::SelectRows</enum>
           </property>
-          <attribute name="horizontalHeaderVisible">
-           <bool>false</bool>
+          <attribute name="horizontalHeaderDefaultSectionSize">
+           <number>35</number>
           </attribute>
           <attribute name="verticalHeaderVisible">
            <bool>false</bool>
           </attribute>
+          <attribute name="verticalHeaderMinimumSectionSize">
+           <number>20</number>
+          </attribute>
           <attribute name="verticalHeaderDefaultSectionSize">
-           <number>21</number>
+           <number>20</number>
           </attribute>
          </widget>
         </item>
