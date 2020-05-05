@@ -111,6 +111,34 @@ void PEProcessData::_process()
             incValue();
         }
     }
+    else if(type==SPE::TYPE_IMPORT)
+    {
+        QList<QString> listLabels;
+        listLabels.append(getStructList(N_IMAGE_IMPORT::records,N_IMAGE_IMPORT::__data_size));
+        listLabels.append("");
+
+        QList<XPE::IMAGE_IMPORT_DESCRIPTOR_EX> listID=pPE->getImportDescriptorsEx();
+
+        int nCount=listID.count();
+
+        *ppModel=new QStandardItemModel(nCount,listLabels.count());
+
+        setMaximum(nCount);
+
+        setHeader(*ppModel,&listLabels);
+
+        for(int i=0; i<nCount; i++)
+        {
+            (*ppModel)->setItem(i,N_IMAGE_IMPORT::OriginalFirstThunk,              new QStandardItem(XBinary::valueToHex(listID.at(i).OriginalFirstThunk)));
+            (*ppModel)->setItem(i,N_IMAGE_IMPORT::TimeDateStamp,                   new QStandardItem(XBinary::valueToHex(listID.at(i).TimeDateStamp)));
+            (*ppModel)->setItem(i,N_IMAGE_IMPORT::ForwarderChain,                  new QStandardItem(XBinary::valueToHex(listID.at(i).ForwarderChain)));
+            (*ppModel)->setItem(i,N_IMAGE_IMPORT::Name,                            new QStandardItem(XBinary::valueToHex(listID.at(i).Name)));
+            (*ppModel)->setItem(i,N_IMAGE_IMPORT::FirstThunk,                      new QStandardItem(XBinary::valueToHex(listID.at(i).FirstThunk)));
+            (*ppModel)->setItem(i,N_IMAGE_IMPORT::FirstThunk+1,                    new QStandardItem(listID.at(i).sLibrary));
+
+            incValue();
+        }
+    }
     else if(type==SPE::TYPE_IMPORT_FUNCTION)
     {
         QList<QString> listLabels;
