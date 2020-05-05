@@ -1566,8 +1566,6 @@ void PEWidget::reloadData()
 
             blockSignals(true);
 
-            // TODO
-
             if(pe.is64())
             {
                 XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64 lc64=pe.getLoadConfigDirectory64();

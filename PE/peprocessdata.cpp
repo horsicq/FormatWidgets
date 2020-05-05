@@ -204,6 +204,36 @@ void PEProcessData::_process()
             incValue();
         }
     }
+    else if(type==SPE::TYPE_DELAYIMPORT)
+    {
+        QList<QString> listLabels;
+        listLabels.append(getStructList(N_IMAGE_DELAYIMPORT::records,N_IMAGE_DELAYIMPORT::__data_size));
+
+        QList<XPE_DEF::S_IMAGE_DELAYLOAD_DESCRIPTOR> listDelayImport=pPE->getDelayImportsList();
+
+        int nCount=listDelayImport.count();
+
+        *ppModel=new QStandardItemModel(nCount,listLabels.count());
+
+        setMaximum(nCount);
+
+        setHeader(*ppModel,&listLabels);
+
+        for(int i=0; i<nCount; i++)
+        {
+            QStandardItem *pItem=new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).AllAttributes));
+            (*ppModel)->setItem(i,N_IMAGE_DELAYIMPORT::AllAttributes,                  pItem);
+            (*ppModel)->setItem(i,N_IMAGE_DELAYIMPORT::DllNameRVA,                     new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).DllNameRVA)));
+            (*ppModel)->setItem(i,N_IMAGE_DELAYIMPORT::ModuleHandleRVA,                new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).ModuleHandleRVA)));
+            (*ppModel)->setItem(i,N_IMAGE_DELAYIMPORT::ImportAddressTableRVA,          new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).ImportAddressTableRVA)));
+            (*ppModel)->setItem(i,N_IMAGE_DELAYIMPORT::ImportNameTableRVA,             new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).ImportNameTableRVA)));
+            (*ppModel)->setItem(i,N_IMAGE_DELAYIMPORT::BoundImportAddressTableRVA,     new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).BoundImportAddressTableRVA)));
+            (*ppModel)->setItem(i,N_IMAGE_DELAYIMPORT::UnloadInformationTableRVA,      new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).UnloadInformationTableRVA)));
+            (*ppModel)->setItem(i,N_IMAGE_DELAYIMPORT::TimeDateStamp,                  new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).TimeDateStamp)));
+
+            incValue();
+        }
+    }
 }
 
 void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
