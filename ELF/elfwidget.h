@@ -90,8 +90,11 @@ private slots:
     void on_tableView_DynamicArrayTags_customContextMenuRequested(const QPoint &pos);
     void on_tableView_Notes_doubleClicked(const QModelIndex &index);
     void on_tableView_Rela_doubleClicked(const QModelIndex &index);
+    void on_tableView_Rel_doubleClicked(const QModelIndex &index);
     void on_tableView_Rela_customContextMenuRequested(const QPoint &pos);
+    void on_tableView_Rel_customContextMenuRequested(const QPoint &pos);
     void editRelaHeaderTag();
+    void editRelHeaderTag();
 
 private:
     // TODO rename

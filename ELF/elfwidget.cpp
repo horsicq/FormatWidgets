@@ -569,7 +569,7 @@ void ELFWidget::reloadData()
             {
                 ELFProcessData elfProcessData(SELF::TYPE_Elf_Rel,&tvModel[SELF::TYPE_Elf_Rel],&elf,nDataOffset,nDataSize,nDataExtraOffset,nDataExtraSize);
 
-                ajustTableView(&elfProcessData,&tvModel[SELF::TYPE_Elf_Rel],ui->tableView_Rela);
+                ajustTableView(&elfProcessData,&tvModel[SELF::TYPE_Elf_Rel],ui->tableView_Rel);
             }
         }
 
@@ -612,6 +612,10 @@ void ELFWidget::addDatasets(XELF *pElf, QTreeWidgetItem *pParent, QList<XBinary:
         else if(pList->at(i).nType==XELF::DS_RELA)
         {
             pParent->addChild(createNewItem(SELF::TYPE_Elf_Rela,pList->at(i).sName,pList->at(i).nOffset,pList->at(i).nSize,pList->at(i).nStringTableOffset,pList->at(i).nStringTableSize));
+        }
+        else if(pList->at(i).nType==XELF::DS_REL)
+        {
+            pParent->addChild(createNewItem(SELF::TYPE_Elf_Rel,pList->at(i).sName,pList->at(i).nOffset,pList->at(i).nSize,pList->at(i).nStringTableOffset,pList->at(i).nStringTableSize));
         }
         else if(pList->at(i).nType==XELF::DS_DYNAMICTAGS)
         {
@@ -849,6 +853,7 @@ QString ELFWidget::typeIdToString(int type)
         case SELF::TYPE_SYMBOLTABLE:            sResult=QString("Symbol header");       break;
         case SELF::TYPE_Elf_DynamicArrayTags:   sResult=QString("Tag");                 break;
         case SELF::TYPE_Elf_Rela:               sResult=QString("Relocation");          break;
+        case SELF::TYPE_Elf_Rel:                sResult=QString("Relocation");          break;
     }
 
     return sResult;
@@ -1026,4 +1031,32 @@ void ELFWidget::on_tableView_Rela_customContextMenuRequested(const QPoint &pos)
 void ELFWidget::editRelaHeaderTag()
 {
     showSectionHeader(SELF::TYPE_Elf_Rela,ui->tableView_Rela);
+}
+
+void ELFWidget::editRelHeaderTag()
+{
+    showSectionHeader(SELF::TYPE_Elf_Rel,ui->tableView_Rel);
+}
+
+void ELFWidget::on_tableView_Rel_doubleClicked(const QModelIndex &index)
+{
+    Q_UNUSED(index)
+
+    editRelHeaderTag();
+}
+
+void ELFWidget::on_tableView_Rel_customContextMenuRequested(const QPoint &pos)
+{
+    int nRow=ui->tableView_Rel->currentIndex().row();
+
+    if(nRow!=-1)
+    {
+        QMenu contextMenu(this);
+
+        QAction actionEdit(tr("Edit"),this);
+        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editRelHeaderTag()));
+        contextMenu.addAction(&actionEdit);
+
+        contextMenu.exec(ui->tableView_Rel->viewport()->mapToGlobal(pos));
+    }
 }
