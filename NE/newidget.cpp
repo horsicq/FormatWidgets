@@ -90,7 +90,12 @@ void NEWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_DOS_HEADER,"DOS_HEADER"));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_OS2_HEADER,"OS2_HEADER"));
 
-        // TODO Segments
+        QList<XNE_DEF::NE_SEGMENT> listSegments=ne.getSegmentList();
+
+        if(listSegments.count())
+        {
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_SEGMENTS,tr("Segments")));
+        }
 
         if(ne.isOverlayPresent())
         {

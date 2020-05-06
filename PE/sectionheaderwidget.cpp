@@ -61,6 +61,12 @@ SectionHeaderWidget::SectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pO
         nComboBoxSize=N_IMAGE_DEBUG::__CB_size;
         nInvWidgetSize=N_IMAGE_DEBUG::__INV_size;
     }
+    else if(nType==SPE::TYPE_RELOCS)
+    {
+        nLineEditSize=N_IMAGE_RELOCS::__data_size;
+        nComboBoxSize=N_IMAGE_RELOCS::__CB_size;
+        nInvWidgetSize=N_IMAGE_RELOCS::__INV_size;
+    }
 
     if(nLineEditSize)
     {
@@ -208,6 +214,13 @@ bool SectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int
                         case N_IMAGE_DEBUG::PointerToRawData:       pe.setDebugHeader_PointerToRawData(nPosition,(quint32)nValue);      break;
                     }
                     break;
+
+                case SPE::TYPE_RELOCS:
+                    switch(nNdata)
+                    {
+                        case N_IMAGE_RELOCS::VirtualAddress:        pe.setRelocsVirtualAddress(nPosition,(quint32)nValue);      break;
+                        case N_IMAGE_RELOCS::SizeOfBlock:           pe.setRelocsSizeOfBlock(nPosition,(quint32)nValue);         break;
+                    }
             }
 
             switch(nStype)
@@ -270,6 +283,14 @@ void SectionHeaderWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget
             pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
             pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*6);
             pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*20);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*8);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
+            break;
+
+        case SPE::TYPE_RELOCS:
+            pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*6);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*16);
             pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*8);
             pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
             break;
@@ -395,6 +416,30 @@ void SectionHeaderWidget::reloadData()
 
                 qint64 nOffset=pe.getDebugHeaderOffset(getNumber());
                 qint64 nSize=pe.getDebugHeaderSize();
+                qint64 nAddress=pe.offsetToRelAddress(nOffset);
+
+                loadHexSubdevice(nOffset,nSize,nAddress,&pSubDevice,ui->widgetHex);
+
+                blockSignals(false);
+            }
+            else if(nType==SPE::TYPE_RELOCS)
+            {
+                if(!bInit)
+                {
+                    bInit=createHeaderTable(SPE::TYPE_RELOCS,ui->tableWidget,N_IMAGE_RELOCS::records,ppLinedEdit,N_IMAGE_RELOCS::__data_size,getNumber());
+                }
+
+                blockSignals(true);
+
+                qint64 nOffset=getOffset();
+
+                quint32 nVirtualAddress=pe.getRelocsVirtualAddress(nOffset);
+                quint32 nSizeOfBlock=pe.getRelocsSizeOfBlock(nOffset);
+
+                ppLinedEdit[N_IMAGE_RELOCS::VirtualAddress]->setValue(nVirtualAddress);
+                ppLinedEdit[N_IMAGE_RELOCS::SizeOfBlock]->setValue(nSizeOfBlock);
+
+                qint64 nSize=nSizeOfBlock;
                 qint64 nAddress=pe.offsetToRelAddress(nOffset);
 
                 loadHexSubdevice(nOffset,nSize,nAddress,&pSubDevice,ui->widgetHex);
