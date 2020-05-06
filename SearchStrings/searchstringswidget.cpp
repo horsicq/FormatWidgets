@@ -241,7 +241,7 @@ void SearchStringsWidget::search()
             ui->tableViewResult->setModel(pFilter);
 
             ui->tableViewResult->setColumnWidth(0,120);  // TODO
-            ui->tableViewResult->setColumnWidth(1,60); // TODO
+            ui->tableViewResult->setColumnWidth(1,80); // TODO
             ui->tableViewResult->setColumnWidth(2,30); // TODO
 
             QFuture<void> future=QtConcurrent::run(this,&SearchStringsWidget::deleteOldModel);
