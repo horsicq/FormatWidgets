@@ -86,7 +86,6 @@ private slots:
     void on_tableWidget_LoadConfig_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     void on_tableWidget_NetHeader_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     void on_tableWidget_TLS_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
-    void on_tableWidget_ImportLibraries_customContextMenuRequested(const QPoint &pos);
     void on_tableWidget_ImportFunctions_customContextMenuRequested(const QPoint &pos);
     void editImportHeader();
     void on_tableWidget_ExportFunctions_customContextMenuRequested(const QPoint &pos);
@@ -102,8 +101,8 @@ private slots:
     void on_tableWidget_Relocs_doubleClicked(const QModelIndex &index);
     void on_tableWidget_Exceptions_doubleClicked(const QModelIndex &index);
     void showSectionHeader(int type,QTableView *pTableView);
-
     void on_tableView_Sections_doubleClicked(const QModelIndex &index);
+    void on_tableView_ImportLibraries_customContextMenuRequested(const QPoint &pos);
 
 private:
     enum CB

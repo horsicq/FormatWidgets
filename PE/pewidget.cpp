@@ -1128,38 +1128,13 @@ void PEWidget::reloadData()
         }
         else if(nType==SPE::TYPE_IMPORT)
         {
-            if(!bInit[nType])
+            PEProcessData peProcessData(SPE::TYPE_IMPORT,&tvModel[SPE::TYPE_IMPORT],&pe,0,0,0);
+
+            ajustTableView(&peProcessData,&tvModel[SPE::TYPE_IMPORT],ui->tableView_ImportLibraries);
+
+            if(tvModel[SPE::TYPE_IMPORT]->rowCount())
             {
-                bInit[nType]=createSectionTable(SPE::TYPE_IMPORT,ui->tableWidget_ImportLibraries,N_IMAGE_IMPORT::records,N_IMAGE_IMPORT::__data_size);
-//                createSectionTable(SPE::TYPE_IMPORT_FUNCTION,ui->tableWidget_ImportFunctions,pe.is64()?(N_IMAGE_IMPORT_FUNCTION::records64):(N_IMAGE_IMPORT_FUNCTION::records32),N_IMAGE_IMPORT_FUNCTION::__data_size);
-            }
-
-            QList<XPE::IMAGE_IMPORT_DESCRIPTOR_EX> listID=pe.getImportDescriptorsEx();
-            int nCount=listID.count();
-            ui->tableWidget_ImportLibraries->setRowCount(nCount);
-
-            for(int i=0; i<nCount; i++)
-            {
-                ui->tableWidget_ImportLibraries->setItem(i,N_IMAGE_IMPORT::OriginalFirstThunk,              new QTableWidgetItem(XBinary::valueToHex(listID.at(i).OriginalFirstThunk)));
-                ui->tableWidget_ImportLibraries->setItem(i,N_IMAGE_IMPORT::TimeDateStamp,                   new QTableWidgetItem(XBinary::valueToHex(listID.at(i).TimeDateStamp)));
-                ui->tableWidget_ImportLibraries->setItem(i,N_IMAGE_IMPORT::ForwarderChain,                  new QTableWidgetItem(XBinary::valueToHex(listID.at(i).ForwarderChain)));
-                ui->tableWidget_ImportLibraries->setItem(i,N_IMAGE_IMPORT::Name,                            new QTableWidgetItem(XBinary::valueToHex(listID.at(i).Name)));
-                ui->tableWidget_ImportLibraries->setItem(i,N_IMAGE_IMPORT::FirstThunk,                      new QTableWidgetItem(XBinary::valueToHex(listID.at(i).FirstThunk)));
-                ui->tableWidget_ImportLibraries->setItem(i,N_IMAGE_IMPORT::FirstThunk+1,                    new QTableWidgetItem(listID.at(i).sLibrary));
-            }
-
-//            ui->tableWidget_ImportFunctions->setRowCount(0);
-
-            if(nCount)
-            {
-                if(ui->tableWidget_ImportLibraries->currentRow()==0)
-                {
-                    loadImportLibrary(0);
-                }
-                else
-                {
-                    ui->tableWidget_ImportLibraries->selectRow(0);
-                }
+                ui->tableView_ImportLibraries->setCurrentIndex(ui->tableView_ImportLibraries->model()->index(0,0));
             }
         }
         else if(nType==SPE::TYPE_RESOURCE)
@@ -2069,22 +2044,6 @@ void PEWidget::on_tableWidget_TLS_currentCellChanged(int currentRow, int current
     setHeaderTableSelection(ui->widgetHex_TLS,ui->tableWidget_TLS);
 }
 
-void PEWidget::on_tableWidget_ImportLibraries_customContextMenuRequested(const QPoint &pos)
-{
-    int nRow=ui->tableWidget_ImportLibraries->currentRow();
-
-    if(nRow!=-1)
-    {
-        QMenu contextMenu(this);
-
-        QAction actionEdit(tr("Edit"),this);
-        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editImportHeader()));
-        contextMenu.addAction(&actionEdit);
-
-        contextMenu.exec(ui->tableWidget_ImportLibraries->viewport()->mapToGlobal(pos));
-    }
-}
-
 void PEWidget::on_tableWidget_ImportFunctions_customContextMenuRequested(const QPoint &pos)
 {
     // TODO
@@ -2092,7 +2051,7 @@ void PEWidget::on_tableWidget_ImportFunctions_customContextMenuRequested(const Q
 
 void PEWidget::editImportHeader()
 {
-    showSectionHeader(SPE::TYPE_IMPORT,ui->tableWidget_ImportLibraries);
+    showSectionHeader(SPE::TYPE_IMPORT,ui->tableView_ImportLibraries);
 }
 
 void PEWidget::on_tableWidget_ExportFunctions_customContextMenuRequested(const QPoint &pos)
@@ -2155,28 +2114,7 @@ void PEWidget::on_tableWidget_Relocs_customContextMenuRequested(const QPoint &po
 
 void PEWidget::editRelocsHeader()
 {
-    int nRow=ui->tableWidget_Relocs->currentRow();
-
-    if(nRow!=-1)
-    {
-        qint64 nOffset=ui->tableWidget_Relocs->item(nRow,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
-
-        RelocsHeaderWidget *pRelocsHeaderWidget=new RelocsHeaderWidget(this);
-        DialogSectionHeader dsh(this);
-        dsh.setWidget(pRelocsHeaderWidget);
-        dsh.setData(getDevice(),getOptions(),(quint32)nRow,nOffset,tr("Relocs Header"),0);
-        dsh.setEdited(isEdited());
-
-        connect(&dsh,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
-
-        dsh.exec();
-
-        delete pRelocsHeaderWidget;
-
-        reloadData();
-
-        ui->tableWidget_Relocs->setCurrentCell(nRow,0);
-    }
+    showSectionHeader(SPE::TYPE_RELOCS,ui->tableWidget_Relocs);
 }
 
 void PEWidget::editExceptionHeader()
@@ -2252,4 +2190,20 @@ void PEWidget::on_tableView_Sections_doubleClicked(const QModelIndex &index)
     Q_UNUSED(index)
 
     editSectionHeader();
+}
+
+void PEWidget::on_tableView_ImportLibraries_customContextMenuRequested(const QPoint &pos)
+{
+    int nRow=ui->tableView_ImportLibraries->currentIndex().row();
+
+    if(nRow!=-1)
+    {
+        QMenu contextMenu(this);
+
+        QAction actionEdit(tr("Edit"),this);
+        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editImportHeader()));
+        contextMenu.addAction(&actionEdit);
+
+        contextMenu.exec(ui->tableView_ImportLibraries->viewport()->mapToGlobal(pos));
+    }
 }
