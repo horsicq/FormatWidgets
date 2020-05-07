@@ -204,23 +204,24 @@ bool SectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int
                 case SPE::TYPE_DEBUG:
                     switch(nNdata)
                     {
-                        case N_IMAGE_DEBUG::Characteristics:        pe.setDebugHeader_Characteristics(nPosition,(quint32)nValue);       break;
-                        case N_IMAGE_DEBUG::TimeDateStamp:          pe.setDebugHeader_TimeDateStamp(nPosition,(quint32)nValue);         break;
-                        case N_IMAGE_DEBUG::MajorVersion:           pe.setDebugHeader_MajorVersion(nPosition,(quint16)nValue);          break;
-                        case N_IMAGE_DEBUG::MinorVersion:           pe.setDebugHeader_MinorVersion(nPosition,(quint16)nValue);          break;
-                        case N_IMAGE_DEBUG::Type:                   pe.setDebugHeader_Type(nPosition,(quint32)nValue);                  break;
-                        case N_IMAGE_DEBUG::SizeOfData:             pe.setDebugHeader_SizeOfData(nPosition,(quint32)nValue);            break;
-                        case N_IMAGE_DEBUG::AddressOfRawData:       pe.setDebugHeader_AddressOfRawData(nPosition,(quint32)nValue);      break;
-                        case N_IMAGE_DEBUG::PointerToRawData:       pe.setDebugHeader_PointerToRawData(nPosition,(quint32)nValue);      break;
+                        case N_IMAGE_DEBUG::Characteristics:                pe.setDebugHeader_Characteristics(nPosition,(quint32)nValue);           break;
+                        case N_IMAGE_DEBUG::TimeDateStamp:                  pe.setDebugHeader_TimeDateStamp(nPosition,(quint32)nValue);             break;
+                        case N_IMAGE_DEBUG::MajorVersion:                   pe.setDebugHeader_MajorVersion(nPosition,(quint16)nValue);              break;
+                        case N_IMAGE_DEBUG::MinorVersion:                   pe.setDebugHeader_MinorVersion(nPosition,(quint16)nValue);              break;
+                        case N_IMAGE_DEBUG::Type:                           pe.setDebugHeader_Type(nPosition,(quint32)nValue);                      break;
+                        case N_IMAGE_DEBUG::SizeOfData:                     pe.setDebugHeader_SizeOfData(nPosition,(quint32)nValue);                break;
+                        case N_IMAGE_DEBUG::AddressOfRawData:               pe.setDebugHeader_AddressOfRawData(nPosition,(quint32)nValue);          break;
+                        case N_IMAGE_DEBUG::PointerToRawData:               pe.setDebugHeader_PointerToRawData(nPosition,(quint32)nValue);          break;
                     }
                     break;
 
                 case SPE::TYPE_RELOCS:
                     switch(nNdata)
                     {
-                        case N_IMAGE_RELOCS::VirtualAddress:        pe.setRelocsVirtualAddress(nPosition,(quint32)nValue);      break;
-                        case N_IMAGE_RELOCS::SizeOfBlock:           pe.setRelocsSizeOfBlock(nPosition,(quint32)nValue);         break;
+                        case N_IMAGE_RELOCS::VirtualAddress:                pe.setRelocsVirtualAddress(nPosition,(quint32)nValue);                  break;
+                        case N_IMAGE_RELOCS::SizeOfBlock:                   pe.setRelocsSizeOfBlock(nPosition,(quint32)nValue);                     break;
                     }
+                    break;
             }
 
             switch(nStype)
