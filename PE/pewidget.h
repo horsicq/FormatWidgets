@@ -62,13 +62,13 @@ private slots:
     void editSectionHeader();
     void sectionHex();
     void reloadData();
-    void on_tableWidget_Sections_customContextMenuRequested(const QPoint &pos);
+    void on_tableView_Sections_customContextMenuRequested(const QPoint &pos);
     void loadImportLibrary(int nNumber);
     void loadRelocs(int nNumber);
-    void loadSection(int nNumber);
-    void loadException(int nNumber);
+    void loadSection(int nRow);
+    void loadException(int nRow);
     void loadDirectory(int nNumber);
-    void loadDebug(int nNumber);
+    void loadDebug(int nRow);
     void on_tableWidget_ImportLibraries_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     void on_tableWidget_Relocs_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     bool createSectionTable(int type, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount);
@@ -103,6 +103,8 @@ private slots:
     void on_tableWidget_Relocs_doubleClicked(const QModelIndex &index);
     void on_tableWidget_Exceptions_doubleClicked(const QModelIndex &index);
     void showSectionHeader(int type,QTableView *pTableView);
+
+    void on_tableView_Sections_doubleClicked(const QModelIndex &index);
 
 private:
     enum CB

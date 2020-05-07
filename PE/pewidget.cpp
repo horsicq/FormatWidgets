@@ -675,23 +675,12 @@ void PEWidget::on_checkBoxReadonly_toggled(bool checked)
 
 void PEWidget::editSectionHeader()
 {
-    showSectionHeader(SPE::TYPE_IMAGE_SECTION_HEADER,ui->tableWidget_Sections);
+    showSectionHeader(SPE::TYPE_IMAGE_SECTION_HEADER,ui->tableView_Sections);
 }
 
 void PEWidget::sectionHex()
 {
-    int nRow=ui->tableWidget_Sections->currentRow();
-
-    if(nRow!=-1)
-    {
-        qint64 nOffset=ui->tableWidget_Sections->item(nRow,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
-        qint64 nSize=ui->tableWidget_Sections->item(nRow,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
-        showHex(nOffset,nSize);
-
-        reloadData();
-
-        ui->tableWidget_Sections->setCurrentCell(nRow,0);
-    }
+    showSectionHex(ui->tableView_Sections);
 }
 
 void PEWidget::reloadData()
@@ -1068,70 +1057,14 @@ void PEWidget::reloadData()
         }
         else if(nType==SPE::TYPE_SECTIONS)
         {
-            if(!bInit[nType])
+            PEProcessData peProcessData(SPE::TYPE_SECTIONS,&tvModel[SPE::TYPE_SECTIONS],&pe,0,0,0);
+
+            ajustTableView(&peProcessData,&tvModel[SPE::TYPE_SECTIONS],ui->tableView_Sections);
+
+            if(tvModel[SPE::TYPE_SECTIONS]->rowCount())
             {
-                bInit[nType]=createSectionTable(SPE::TYPE_SECTIONS,ui->tableWidget_Sections,N_IMAGE_SECTION_HEADER::records,N_IMAGE_SECTION_HEADER::__data_size);
+                ui->tableView_Sections->setCurrentIndex(ui->tableView_Sections->model()->index(0,0));
             }
-
-            blockSignals(true);
-
-            QList<XPE_DEF::IMAGE_SECTION_HEADER> listSections=pe.getSectionHeaders();
-            int nCount=listSections.count();
-
-            ui->tableWidget_Sections->setRowCount(nCount);
-
-            //            record.sName=QString((char *)pList->at(i).Name);
-            //            record.sName.resize(qMin(record.sName.length(),XPE_DEF::IMAGE_SIZEOF_SHORT_NAME));
-
-            for(int i=0; i<nCount; i++)
-            {
-                QTableWidgetItem *itemNumber=new QTableWidgetItem(QString::number(i));
-
-                itemNumber->setData(Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS,listSections.at(i).VirtualAddress);
-
-                if(getOptions()->bIsImage)
-                {
-                    itemNumber->setData(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE,listSections.at(i).Misc.VirtualSize);
-                    itemNumber->setData(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET,listSections.at(i).VirtualAddress);
-                }
-                else
-                {
-                    itemNumber->setData(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE,listSections.at(i).SizeOfRawData);
-                    itemNumber->setData(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET,listSections.at(i).PointerToRawData);
-                }
-
-                ui->tableWidget_Sections->setItem(i,0,itemNumber);
-
-                QTableWidgetItem *itemName=new QTableWidgetItem();
-                QString sName=QString((char *)listSections.at(i).Name);
-                sName.resize(qMin(sName.length(),XPE_DEF::S_IMAGE_SIZEOF_SHORT_NAME));
-                itemName->setText(sName);
-                ui->tableWidget_Sections->setItem(i,N_IMAGE_SECTION_HEADER::Name+1,itemName);
-
-                ui->tableWidget_Sections->setItem(i,N_IMAGE_SECTION_HEADER::VirtualSize+1,          new QTableWidgetItem(XBinary::valueToHex(listSections.at(i).Misc.VirtualSize)));
-                ui->tableWidget_Sections->setItem(i,N_IMAGE_SECTION_HEADER::VirtualAddress+1,       new QTableWidgetItem(XBinary::valueToHex(listSections.at(i).VirtualAddress)));
-                ui->tableWidget_Sections->setItem(i,N_IMAGE_SECTION_HEADER::SizeOfRawData+1,        new QTableWidgetItem(XBinary::valueToHex(listSections.at(i).SizeOfRawData)));
-                ui->tableWidget_Sections->setItem(i,N_IMAGE_SECTION_HEADER::PointerToRawData+1,     new QTableWidgetItem(XBinary::valueToHex(listSections.at(i).PointerToRawData)));
-                ui->tableWidget_Sections->setItem(i,N_IMAGE_SECTION_HEADER::PointerToRelocations+1, new QTableWidgetItem(XBinary::valueToHex(listSections.at(i).PointerToRelocations)));
-                ui->tableWidget_Sections->setItem(i,N_IMAGE_SECTION_HEADER::PointerToLinenumbers+1, new QTableWidgetItem(XBinary::valueToHex(listSections.at(i).PointerToLinenumbers)));
-                ui->tableWidget_Sections->setItem(i,N_IMAGE_SECTION_HEADER::NumberOfRelocations+1,  new QTableWidgetItem(XBinary::valueToHex(listSections.at(i).NumberOfRelocations)));
-                ui->tableWidget_Sections->setItem(i,N_IMAGE_SECTION_HEADER::NumberOfLinenumbers+1,  new QTableWidgetItem(XBinary::valueToHex(listSections.at(i).NumberOfLinenumbers)));
-                ui->tableWidget_Sections->setItem(i,N_IMAGE_SECTION_HEADER::Characteristics+1,      new QTableWidgetItem(XBinary::valueToHex(listSections.at(i).Characteristics)));
-            }
-
-            if(nCount)
-            {
-                if(ui->tableWidget_Sections->currentRow()==0)
-                {
-                    loadSection(0);
-                }
-                else
-                {
-                    ui->tableWidget_Sections->setCurrentCell(0,0);
-                }
-            }
-
-            blockSignals(false);
         }
         else if(nType==SPE::TYPE_EXPORT)
         {
@@ -1687,12 +1620,14 @@ void PEWidget::reloadData()
     }
 }
 
-void PEWidget::on_tableWidget_Sections_customContextMenuRequested(const QPoint &pos)
+void PEWidget::on_tableView_Sections_customContextMenuRequested(const QPoint &pos)
 {
-    int nRow=ui->tableWidget_Sections->currentRow();
+    int nRow=ui->tableView_Sections->currentIndex().row();
 
     if(nRow!=-1)
     {
+        bool bIsEnable=getTableViewItemSize(ui->tableView_Sections,nRow);
+
         QMenu contextMenu(this);
 
         QAction actionEdit(tr("Edit"),this);
@@ -1701,12 +1636,12 @@ void PEWidget::on_tableWidget_Sections_customContextMenuRequested(const QPoint &
 
         QAction actionHex(tr("Hex"),this);
         connect(&actionHex, SIGNAL(triggered()), this, SLOT(sectionHex()));
-        actionHex.setEnabled(ui->tableWidget_Sections->item(nRow,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong());
+        actionHex.setEnabled(bIsEnable);
         contextMenu.addAction(&actionHex);
 
         // TODO Entropy
 
-        contextMenu.exec(ui->tableWidget_Sections->viewport()->mapToGlobal(pos));
+        contextMenu.exec(ui->tableView_Sections->viewport()->mapToGlobal(pos));
     }
 }
 
@@ -1746,20 +1681,25 @@ void PEWidget::loadRelocs(int nNumber)
     }
 }
 
-void PEWidget::loadSection(int nNumber)
+void PEWidget::loadSection(int nRow)
 {
-    qint64 nOffset=ui->tableWidget_Sections->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
-    qint64 nSize=ui->tableWidget_Sections->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
-    qint64 nAddress=ui->tableWidget_Sections->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
+    if(nRow!=-1)
+    {
+        QModelIndex index=ui->tableView_Sections->model()->index(nRow,0);
 
-    loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_SECTIONS],ui->widgetSectionHex);
+        qint64 nOffset=ui->tableView_Sections->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
+        qint64 nSize=ui->tableView_Sections->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
+        qint64 nAddress=ui->tableView_Sections->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
+
+        loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_SECTIONS],ui->widgetSectionHex);
+    }
 }
 
-void PEWidget::loadException(int nNumber)
+void PEWidget::loadException(int nRow)
 {
-    qint64 nOffset=ui->tableWidget_Exceptions->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
-    qint64 nSize=ui->tableWidget_Exceptions->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
-    qint64 nAddress=ui->tableWidget_Exceptions->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
+    qint64 nOffset=ui->tableWidget_Exceptions->item(nRow,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
+    qint64 nSize=ui->tableWidget_Exceptions->item(nRow,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
+    qint64 nAddress=ui->tableWidget_Exceptions->item(nRow,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
 
     loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_EXCEPTION],ui->widgetExceptionHex);
 }
@@ -1773,11 +1713,11 @@ void PEWidget::loadDirectory(int nNumber)
     loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_IMAGE_DIRECTORY_ENTRIES],ui->widgetDirectoryHex);
 }
 
-void PEWidget::loadDebug(int nNumber)
+void PEWidget::loadDebug(int nRow)
 {
-    qint64 nOffset=ui->tableWidget_Debug->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
-    qint64 nSize=ui->tableWidget_Debug->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
-    qint64 nAddress=ui->tableWidget_Debug->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
+    qint64 nOffset=ui->tableWidget_Debug->item(nRow,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
+    qint64 nSize=ui->tableWidget_Debug->item(nRow,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
+    qint64 nAddress=ui->tableWidget_Debug->item(nRow,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
 
     loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_DEBUG],ui->widgetDebugHex);
 }
@@ -2305,4 +2245,11 @@ void PEWidget::showSectionHeader(int type, QTableView *pTableView)
 
         pTableView->setCurrentIndex(pTableView->model()->index(nRow,0));
     }
+}
+
+void PEWidget::on_tableView_Sections_doubleClicked(const QModelIndex &index)
+{
+    Q_UNUSED(index)
+
+    editSectionHeader();
 }

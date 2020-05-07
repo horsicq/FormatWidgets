@@ -32,9 +32,10 @@ PEProcessData::PEProcessData(int type, QStandardItemModel **ppModel, XPE *pPE, q
 
 void PEProcessData::_process()
 {
-    if(type==SPE::TYPE_IMAGE_SECTION_HEADER)
+    if(type==SPE::TYPE_SECTIONS)
     {
         QList<QString> listLabels;
+        listLabels.append("");
         listLabels.append(getStructList(N_IMAGE_SECTION_HEADER::records,N_IMAGE_SECTION_HEADER::__data_size));
 
         QList<XPE_DEF::IMAGE_SECTION_HEADER> listSections=pPE->getSectionHeaders();
@@ -268,14 +269,25 @@ void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
 {
     int nSymbolWidth=XLineEditHEX::getSymbolWidth(pWidget);
 
-    if(type==SPE::TYPE_IMAGE_SECTION_HEADER)
+    if(type==SPE::TYPE_SECTIONS)
     {
-
+        pTableView->setColumnWidth(0,nSymbolWidth*4);
+        pTableView->setColumnWidth(1,nSymbolWidth*8);
+        pTableView->setColumnWidth(2,nSymbolWidth*8);
+        pTableView->setColumnWidth(3,nSymbolWidth*8);
+        pTableView->setColumnWidth(4,nSymbolWidth*8);
+        pTableView->setColumnWidth(5,nSymbolWidth*8);
+        pTableView->setColumnWidth(6,nSymbolWidth*8);
+        pTableView->setColumnWidth(7,nSymbolWidth*8);
+        pTableView->setColumnWidth(8,nSymbolWidth*8);
+        pTableView->setColumnWidth(9,nSymbolWidth*8);
+        pTableView->setColumnWidth(10,nSymbolWidth*8);
     }
     else if(type==SPE::TYPE_RELOCS_POSITION)
     {
-        pTableView->setColumnWidth(0,nSymbolWidth*6);
+        pTableView->setColumnWidth(0,nSymbolWidth*8);
         pTableView->setColumnWidth(1,nSymbolWidth*12);
+        pTableView->setColumnWidth(2,nSymbolWidth*12);
     }
     else if(type==SPE::TYPE_IMPORT_FUNCTION)
     {
