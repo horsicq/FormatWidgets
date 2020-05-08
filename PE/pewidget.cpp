@@ -1887,18 +1887,6 @@ bool PEWidget::createSectionTable(int type, QTableWidget *pTableWidget, const FW
     return true;
 }
 
-void PEWidget::on_tableWidget_Sections_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
-{
-    Q_UNUSED(currentColumn)
-    Q_UNUSED(previousRow)
-    Q_UNUSED(previousColumn)
-
-    if(currentRow!=-1)
-    {
-        loadSection(currentRow);
-    }
-}
-
 void PEWidget::on_treeWidgetResources_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
 {
     Q_UNUSED(previous)
@@ -2115,13 +2103,6 @@ void PEWidget::editExceptionHeader()
     qDebug("void PEWidget::editExceptionHeader()");
 }
 
-void PEWidget::on_tableWidget_ImportLibraries_doubleClicked(const QModelIndex &index)
-{
-    Q_UNUSED(index)
-
-    editImportHeader();
-}
-
 void PEWidget::on_tableWidget_Debug_doubleClicked(const QModelIndex &index)
 {
     Q_UNUSED(index)
@@ -2209,4 +2190,11 @@ void PEWidget::onTableView_ImportLibraries_currentRowChanged(const QModelIndex &
     {
         loadImportLibrary(nRow);
     }
+}
+
+void PEWidget::on_tableView_ImportLibraries_doubleClicked(const QModelIndex &index)
+{
+    Q_UNUSED(index)
+
+    editImportHeader();
 }
