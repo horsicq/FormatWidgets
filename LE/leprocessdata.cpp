@@ -24,7 +24,7 @@ LEProcessData::LEProcessData(int type, QStandardItemModel **ppModel, XLE *pLE, q
 {
     this->type=type;
     this->ppModel=ppModel;
-    this->pNE=pNE;
+    this->pLE=pLE;
     this->nOffset=nOffset;
     this->nSize=nSize;
 }

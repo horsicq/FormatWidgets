@@ -22,7 +22,7 @@
 #define SECTIONHEADERWIDGET_H
 
 #include "../formatwidget.h"
-#include "mach_defs.h"
+#include "le_defs.h"
 
 namespace Ui {
 class SectionHeaderWidget;
@@ -68,7 +68,7 @@ private:
     };
 
     Ui::SectionHeaderWidget *ui;
-    XLineEditHEX *lineEdit_Section[N_mach_sections::__data_size];
+//    XLineEditHEX *lineEdit_Section[N_mach_sections::__data_size];
     bool bInit;
     InvWidget *invWidget[__INV_size];
     SubDevice *pSubDevice;
