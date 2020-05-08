@@ -2099,8 +2099,7 @@ void PEWidget::editRelocsHeader()
 
 void PEWidget::editExceptionHeader()
 {
-    // TODO
-    qDebug("void PEWidget::editExceptionHeader()");
+    showSectionHeader(SPE::TYPE_EXCEPTION,ui->tableWidget_Exceptions);
 }
 
 void PEWidget::on_tableWidget_Debug_doubleClicked(const QModelIndex &index)
