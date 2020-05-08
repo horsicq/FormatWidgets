@@ -24,7 +24,6 @@
 #include "../formatwidget.h"
 #include "dialogsectionheader.h"
 #include "sectionheaderwidget.h"
-#include "exceptionheaderwidget.h"
 #include "pe_defs.h"
 #include "peprocessdata.h"
 
@@ -95,7 +94,6 @@ private slots:
     void on_tableWidget_Relocs_customContextMenuRequested(const QPoint &pos);
     void editRelocsHeader();
     void editExceptionHeader();
-    void on_tableWidget_Sections_doubleClicked(const QModelIndex &index);
     void on_tableWidget_ImportLibraries_doubleClicked(const QModelIndex &index);
     void on_tableWidget_Debug_doubleClicked(const QModelIndex &index);
     void on_tableWidget_Relocs_doubleClicked(const QModelIndex &index);
@@ -103,6 +101,7 @@ private slots:
     void showSectionHeader(int type,QTableView *pTableView);
     void on_tableView_Sections_doubleClicked(const QModelIndex &index);
     void on_tableView_ImportLibraries_customContextMenuRequested(const QPoint &pos);
+    void onTableView_Sections_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
 
 private:
     enum CB

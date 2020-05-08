@@ -551,7 +551,7 @@ void PEWidget::setReadonly(bool bState)
     setDateTimeEditReadOnly(dateTimeEdit,__TD_size,bState);
 
     ui->widgetHex->setReadonly(bState);
-    ui->widgetSectionHex->setReadonly(bState);
+    ui->widgetHex_Section->setReadonly(bState);
     ui->widgetOverlayHex->setReadonly(bState);
     ui->widgetResourcesHex->setReadonly(bState);
 }
@@ -1057,13 +1057,18 @@ void PEWidget::reloadData()
         }
         else if(nType==SPE::TYPE_SECTIONS)
         {
-            PEProcessData peProcessData(SPE::TYPE_SECTIONS,&tvModel[SPE::TYPE_SECTIONS],&pe,0,0,0);
-
-            ajustTableView(&peProcessData,&tvModel[SPE::TYPE_SECTIONS],ui->tableView_Sections);
-
-            if(tvModel[SPE::TYPE_SECTIONS]->rowCount())
+            if(!bInit[nType])
             {
-                ui->tableView_Sections->setCurrentIndex(ui->tableView_Sections->model()->index(0,0));
+                PEProcessData peProcessData(SPE::TYPE_SECTIONS,&tvModel[SPE::TYPE_SECTIONS],&pe,0,0,0);
+
+                ajustTableView(&peProcessData,&tvModel[SPE::TYPE_SECTIONS],ui->tableView_Sections);
+
+                connect(ui->tableView_Sections->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_Sections_currentRowChanged(QModelIndex,QModelIndex)));
+
+                if(tvModel[SPE::TYPE_SECTIONS]->rowCount())
+                {
+                    ui->tableView_Sections->setCurrentIndex(ui->tableView_Sections->model()->index(0,0));
+                }
             }
         }
         else if(nType==SPE::TYPE_EXPORT)
@@ -1128,13 +1133,16 @@ void PEWidget::reloadData()
         }
         else if(nType==SPE::TYPE_IMPORT)
         {
-            PEProcessData peProcessData(SPE::TYPE_IMPORT,&tvModel[SPE::TYPE_IMPORT],&pe,0,0,0);
-
-            ajustTableView(&peProcessData,&tvModel[SPE::TYPE_IMPORT],ui->tableView_ImportLibraries);
-
-            if(tvModel[SPE::TYPE_IMPORT]->rowCount())
+            if(!bInit[nType])
             {
-                ui->tableView_ImportLibraries->setCurrentIndex(ui->tableView_ImportLibraries->model()->index(0,0));
+                PEProcessData peProcessData(SPE::TYPE_IMPORT,&tvModel[SPE::TYPE_IMPORT],&pe,0,0,0);
+
+                ajustTableView(&peProcessData,&tvModel[SPE::TYPE_IMPORT],ui->tableView_ImportLibraries);
+
+                if(tvModel[SPE::TYPE_IMPORT]->rowCount())
+                {
+                    ui->tableView_ImportLibraries->setCurrentIndex(ui->tableView_ImportLibraries->model()->index(0,0));
+                }
             }
         }
         else if(nType==SPE::TYPE_RESOURCE)
@@ -1666,7 +1674,7 @@ void PEWidget::loadSection(int nRow)
         qint64 nSize=ui->tableView_Sections->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
         qint64 nAddress=ui->tableView_Sections->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
 
-        loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_SECTIONS],ui->widgetSectionHex);
+        loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_SECTIONS],ui->widgetHex_Section);
     }
 }
 
@@ -1808,12 +1816,6 @@ bool PEWidget::createSectionTable(int type, QTableWidget *pTableWidget, const FW
 
     switch(type)
     {
-        case SPE::TYPE_SECTIONS:
-            pTableWidget->setColumnCount(nRecordCount+1);
-            pTableWidget->setColumnWidth(0,nSymbolWidth*4);
-            slHeader.append("");
-            break;
-
         case SPE::TYPE_EXPORT_FUNCTION:
             pTableWidget->setColumnCount(nRecordCount+1); // TODO
             pTableWidget->setColumnWidth(nRecordCount,nSymbolWidth*40);
@@ -2123,13 +2125,6 @@ void PEWidget::editExceptionHeader()
     qDebug("void PEWidget::editExceptionHeader()");
 }
 
-void PEWidget::on_tableWidget_Sections_doubleClicked(const QModelIndex &index)
-{
-    Q_UNUSED(index)
-
-    editSectionHeader();
-}
-
 void PEWidget::on_tableWidget_ImportLibraries_doubleClicked(const QModelIndex &index)
 {
     Q_UNUSED(index)
@@ -2206,4 +2201,12 @@ void PEWidget::on_tableView_ImportLibraries_customContextMenuRequested(const QPo
 
         contextMenu.exec(ui->tableView_ImportLibraries->viewport()->mapToGlobal(pos));
     }
+}
+
+void PEWidget::onTableView_Sections_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
+    Q_UNUSED(current)
+    Q_UNUSED(previous)
+
+    loadHexSubdeviceByTableView(current.row(),SPE::TYPE_SECTIONS,ui->widgetHex_Section,ui->tableView_Sections,&subDevice[SPE::TYPE_SECTIONS]);
 }
