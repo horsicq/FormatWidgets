@@ -1139,6 +1139,8 @@ void PEWidget::reloadData()
 
                 ajustTableView(&peProcessData,&tvModel[SPE::TYPE_IMPORT],ui->tableView_ImportLibraries);
 
+                connect(ui->tableView_ImportLibraries->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_ImportLibraries_currentRowChanged(QModelIndex,QModelIndex)));
+
                 if(tvModel[SPE::TYPE_IMPORT]->rowCount())
                 {
                     ui->tableView_ImportLibraries->setCurrentIndex(ui->tableView_ImportLibraries->model()->index(0,0));
@@ -1705,18 +1707,6 @@ void PEWidget::loadDebug(int nRow)
     loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_DEBUG],ui->widgetDebugHex);
 }
 
-void PEWidget::on_tableWidget_ImportLibraries_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
-{
-    Q_UNUSED(currentColumn)
-    Q_UNUSED(previousRow)
-    Q_UNUSED(previousColumn)
-
-    if(currentRow!=-1)
-    {
-        loadImportLibrary(currentRow);
-    }
-}
-
 void PEWidget::on_tableWidget_Relocs_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
 {
     Q_UNUSED(currentColumn)
@@ -2209,4 +2199,14 @@ void PEWidget::onTableView_Sections_currentRowChanged(const QModelIndex &current
     Q_UNUSED(previous)
 
     loadHexSubdeviceByTableView(current.row(),SPE::TYPE_SECTIONS,ui->widgetHex_Section,ui->tableView_Sections,&subDevice[SPE::TYPE_SECTIONS]);
+}
+
+void PEWidget::onTableView_ImportLibraries_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
+    int nRow=current.row();
+
+    if(nRow!=-1)
+    {
+        loadImportLibrary(nRow);
+    }
 }

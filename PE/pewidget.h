@@ -67,7 +67,6 @@ private slots:
     void loadException(int nRow);
     void loadDirectory(int nNumber);
     void loadDebug(int nRow);
-    void on_tableWidget_ImportLibraries_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     void on_tableWidget_Relocs_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     bool createSectionTable(int type, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount);
     void on_tableWidget_Sections_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
@@ -77,7 +76,6 @@ private slots:
     void on_tableWidget_Exceptions_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     void on_tableWidget_IMAGE_DIRECTORY_ENTRIES_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     void on_tableWidget_Debug_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
-
     void on_tableWidget_IMAGE_DOS_HEADER_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     void on_tableWidget_IMAGE_NT_HEADERS_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     void on_tableWidget_IMAGE_FILE_HEADER_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
@@ -99,9 +97,11 @@ private slots:
     void on_tableWidget_Relocs_doubleClicked(const QModelIndex &index);
     void on_tableWidget_Exceptions_doubleClicked(const QModelIndex &index);
     void showSectionHeader(int type,QTableView *pTableView);
+
     void on_tableView_Sections_doubleClicked(const QModelIndex &index);
     void on_tableView_ImportLibraries_customContextMenuRequested(const QPoint &pos);
     void onTableView_Sections_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
+    void onTableView_ImportLibraries_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
 
 private:
     enum CB
