@@ -1410,60 +1410,60 @@ void PEWidget::reloadData()
                 invWidget[INV_IMAGE_TLS_AddressOfIndex]=createInvWidget(ui->tableWidget_TLS,SPE::TYPE_TLS,N_IMAGE_TLS::AddressOfIndex,InvWidget::TYPE_HEX);
                 invWidget[INV_IMAGE_TLS_EndAddressOfRawData]=createInvWidget(ui->tableWidget_TLS,SPE::TYPE_TLS,N_IMAGE_TLS::EndAddressOfRawData,InvWidget::TYPE_HEX);
                 invWidget[INV_IMAGE_TLS_StartAddressOfRawData]=createInvWidget(ui->tableWidget_TLS,SPE::TYPE_TLS,N_IMAGE_TLS::StartAddressOfRawData,InvWidget::TYPE_HEX);
+
+                blockSignals(true);
+
+                XBinary::_MEMORY_MAP memoryMap=pe.getMemoryMap();
+
+                if(pe.is64())
+                {
+                    XPE_DEF::S_IMAGE_TLS_DIRECTORY64 tls64=pe.getTLSDirectory64();
+                    lineEdit_TLS[N_IMAGE_TLS::StartAddressOfRawData]->setValue(tls64.StartAddressOfRawData);
+                    lineEdit_TLS[N_IMAGE_TLS::EndAddressOfRawData]->setValue(tls64.EndAddressOfRawData);
+                    lineEdit_TLS[N_IMAGE_TLS::AddressOfIndex]->setValue(tls64.AddressOfIndex);
+                    lineEdit_TLS[N_IMAGE_TLS::AddressOfCallBacks]->setValue(tls64.AddressOfCallBacks);
+                    lineEdit_TLS[N_IMAGE_TLS::SizeOfZeroFill]->setValue(tls64.SizeOfZeroFill);
+                    lineEdit_TLS[N_IMAGE_TLS::Characteristics]->setValue(tls64.Characteristics);
+
+                    invWidget[INV_IMAGE_TLS_AddressOfCallBacks]->setAddressAndSize(&pe,tls64.AddressOfCallBacks,0);
+                    invWidget[INV_IMAGE_TLS_AddressOfIndex]->setAddressAndSize(&pe,tls64.AddressOfIndex,0);
+                    invWidget[INV_IMAGE_TLS_EndAddressOfRawData]->setAddressAndSize(&pe,tls64.EndAddressOfRawData,0);
+                    invWidget[INV_IMAGE_TLS_StartAddressOfRawData]->setAddressAndSize(&pe,tls64.StartAddressOfRawData,0);
+
+                    addComment(ui->tableWidget_TLS,N_IMAGE_TLS::AddressOfCallBacks,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByAddress(&memoryMap,tls64.AddressOfCallBacks));
+                    addComment(ui->tableWidget_TLS,N_IMAGE_TLS::AddressOfIndex,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByAddress(&memoryMap,tls64.AddressOfIndex));
+                    addComment(ui->tableWidget_TLS,N_IMAGE_TLS::EndAddressOfRawData,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByAddress(&memoryMap,tls64.EndAddressOfRawData));
+                    addComment(ui->tableWidget_TLS,N_IMAGE_TLS::StartAddressOfRawData,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByAddress(&memoryMap,tls64.StartAddressOfRawData));
+                }
+                else
+                {
+                    XPE_DEF::S_IMAGE_TLS_DIRECTORY32 tls32=pe.getTLSDirectory32();
+                    lineEdit_TLS[N_IMAGE_TLS::StartAddressOfRawData]->setValue(tls32.StartAddressOfRawData);
+                    lineEdit_TLS[N_IMAGE_TLS::EndAddressOfRawData]->setValue(tls32.EndAddressOfRawData);
+                    lineEdit_TLS[N_IMAGE_TLS::AddressOfIndex]->setValue(tls32.AddressOfIndex);
+                    lineEdit_TLS[N_IMAGE_TLS::AddressOfCallBacks]->setValue(tls32.AddressOfCallBacks);
+                    lineEdit_TLS[N_IMAGE_TLS::SizeOfZeroFill]->setValue(tls32.SizeOfZeroFill);
+                    lineEdit_TLS[N_IMAGE_TLS::Characteristics]->setValue(tls32.Characteristics);
+
+                    invWidget[INV_IMAGE_TLS_AddressOfCallBacks]->setAddressAndSize(&pe,tls32.AddressOfCallBacks,0);
+                    invWidget[INV_IMAGE_TLS_AddressOfIndex]->setAddressAndSize(&pe,tls32.AddressOfIndex,0);
+                    invWidget[INV_IMAGE_TLS_EndAddressOfRawData]->setAddressAndSize(&pe,tls32.EndAddressOfRawData,0);
+                    invWidget[INV_IMAGE_TLS_StartAddressOfRawData]->setAddressAndSize(&pe,tls32.StartAddressOfRawData,0);
+
+                    addComment(ui->tableWidget_TLS,N_IMAGE_TLS::AddressOfCallBacks,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByAddress(&memoryMap,tls32.AddressOfCallBacks));
+                    addComment(ui->tableWidget_TLS,N_IMAGE_TLS::AddressOfIndex,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByAddress(&memoryMap,tls32.AddressOfIndex));
+                    addComment(ui->tableWidget_TLS,N_IMAGE_TLS::EndAddressOfRawData,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByAddress(&memoryMap,tls32.EndAddressOfRawData));
+                    addComment(ui->tableWidget_TLS,N_IMAGE_TLS::StartAddressOfRawData,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByAddress(&memoryMap,tls32.StartAddressOfRawData));
+                }
+
+                qint64 nOffset=pe.getTLSHeaderOffset();
+                qint64 nSize=pe.getTLSHeaderSize();
+                qint64 nAddress=pe.offsetToRelAddress(nOffset);
+
+                loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_TLS],ui->widgetHex_TLS);
+
+                blockSignals(false);
             }
-
-            blockSignals(true);
-
-            XBinary::_MEMORY_MAP memoryMap=pe.getMemoryMap();
-
-            if(pe.is64())
-            {
-                XPE_DEF::S_IMAGE_TLS_DIRECTORY64 tls64=pe.getTLSDirectory64();
-                lineEdit_TLS[N_IMAGE_TLS::StartAddressOfRawData]->setValue(tls64.StartAddressOfRawData);
-                lineEdit_TLS[N_IMAGE_TLS::EndAddressOfRawData]->setValue(tls64.EndAddressOfRawData);
-                lineEdit_TLS[N_IMAGE_TLS::AddressOfIndex]->setValue(tls64.AddressOfIndex);
-                lineEdit_TLS[N_IMAGE_TLS::AddressOfCallBacks]->setValue(tls64.AddressOfCallBacks);
-                lineEdit_TLS[N_IMAGE_TLS::SizeOfZeroFill]->setValue(tls64.SizeOfZeroFill);
-                lineEdit_TLS[N_IMAGE_TLS::Characteristics]->setValue(tls64.Characteristics);
-
-                invWidget[INV_IMAGE_TLS_AddressOfCallBacks]->setAddressAndSize(&pe,tls64.AddressOfCallBacks,0);
-                invWidget[INV_IMAGE_TLS_AddressOfIndex]->setAddressAndSize(&pe,tls64.AddressOfIndex,0);
-                invWidget[INV_IMAGE_TLS_EndAddressOfRawData]->setAddressAndSize(&pe,tls64.EndAddressOfRawData,0);
-                invWidget[INV_IMAGE_TLS_StartAddressOfRawData]->setAddressAndSize(&pe,tls64.StartAddressOfRawData,0);
-
-                addComment(ui->tableWidget_TLS,N_IMAGE_TLS::AddressOfCallBacks,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByAddress(&memoryMap,tls64.AddressOfCallBacks));
-                addComment(ui->tableWidget_TLS,N_IMAGE_TLS::AddressOfIndex,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByAddress(&memoryMap,tls64.AddressOfIndex));
-                addComment(ui->tableWidget_TLS,N_IMAGE_TLS::EndAddressOfRawData,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByAddress(&memoryMap,tls64.EndAddressOfRawData));
-                addComment(ui->tableWidget_TLS,N_IMAGE_TLS::StartAddressOfRawData,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByAddress(&memoryMap,tls64.StartAddressOfRawData));
-            }
-            else
-            {
-                XPE_DEF::S_IMAGE_TLS_DIRECTORY32 tls32=pe.getTLSDirectory32();
-                lineEdit_TLS[N_IMAGE_TLS::StartAddressOfRawData]->setValue(tls32.StartAddressOfRawData);
-                lineEdit_TLS[N_IMAGE_TLS::EndAddressOfRawData]->setValue(tls32.EndAddressOfRawData);
-                lineEdit_TLS[N_IMAGE_TLS::AddressOfIndex]->setValue(tls32.AddressOfIndex);
-                lineEdit_TLS[N_IMAGE_TLS::AddressOfCallBacks]->setValue(tls32.AddressOfCallBacks);
-                lineEdit_TLS[N_IMAGE_TLS::SizeOfZeroFill]->setValue(tls32.SizeOfZeroFill);
-                lineEdit_TLS[N_IMAGE_TLS::Characteristics]->setValue(tls32.Characteristics);
-
-                invWidget[INV_IMAGE_TLS_AddressOfCallBacks]->setAddressAndSize(&pe,tls32.AddressOfCallBacks,0);
-                invWidget[INV_IMAGE_TLS_AddressOfIndex]->setAddressAndSize(&pe,tls32.AddressOfIndex,0);
-                invWidget[INV_IMAGE_TLS_EndAddressOfRawData]->setAddressAndSize(&pe,tls32.EndAddressOfRawData,0);
-                invWidget[INV_IMAGE_TLS_StartAddressOfRawData]->setAddressAndSize(&pe,tls32.StartAddressOfRawData,0);
-
-                addComment(ui->tableWidget_TLS,N_IMAGE_TLS::AddressOfCallBacks,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByAddress(&memoryMap,tls32.AddressOfCallBacks));
-                addComment(ui->tableWidget_TLS,N_IMAGE_TLS::AddressOfIndex,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByAddress(&memoryMap,tls32.AddressOfIndex));
-                addComment(ui->tableWidget_TLS,N_IMAGE_TLS::EndAddressOfRawData,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByAddress(&memoryMap,tls32.EndAddressOfRawData));
-                addComment(ui->tableWidget_TLS,N_IMAGE_TLS::StartAddressOfRawData,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByAddress(&memoryMap,tls32.StartAddressOfRawData));
-            }
-
-            qint64 nOffset=pe.getTLSHeaderOffset();
-            qint64 nSize=pe.getTLSHeaderSize();
-            qint64 nAddress=pe.offsetToRelAddress(nOffset);
-
-            loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_TLS],ui->widgetHex_TLS);
-
-            blockSignals(false);
         }
         else if(nType==SPE::TYPE_LOADCONFIG)
         {
@@ -1472,70 +1472,70 @@ void PEWidget::reloadData()
                 createHeaderTable(SPE::TYPE_LOADCONFIG,ui->tableWidget_LoadConfig,pe.is64()?(N_IMAGE_LOADCONFIG::records64):(N_IMAGE_LOADCONFIG::records32),lineEdit_LoadConfig,N_IMAGE_LOADCONFIG::__data_size,0);
                 invWidget[INV_IMAGE_LOADCONFIG_SecurityCookie]=createInvWidget(ui->tableWidget_LoadConfig,SPE::TYPE_LOADCONFIG,N_IMAGE_LOADCONFIG::SecurityCookie,InvWidget::TYPE_HEX);
                 invWidget[INV_IMAGE_LOADCONFIG_SEHandlerTable]=createInvWidget(ui->tableWidget_LoadConfig,SPE::TYPE_LOADCONFIG,N_IMAGE_LOADCONFIG::SEHandlerTable,InvWidget::TYPE_HEX);
+
+                blockSignals(true);
+
+                if(pe.is64())
+                {
+                    XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64 lc64=pe.getLoadConfigDirectory64();
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::Size]->setValue(lc64.Size);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::TimeDateStamp]->setValue(lc64.TimeDateStamp);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::MinorVersion]->setValue(lc64.MinorVersion);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::MajorVersion]->setValue(lc64.MajorVersion);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GlobalFlagsClear]->setValue(lc64.GlobalFlagsClear);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GlobalFlagsSet]->setValue(lc64.GlobalFlagsSet);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CriticalSectionDefaultTimeout]->setValue(lc64.CriticalSectionDefaultTimeout);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DeCommitFreeBlockThreshold]->setValue(lc64.DeCommitFreeBlockThreshold);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DeCommitTotalFreeThreshold]->setValue(lc64.DeCommitTotalFreeThreshold);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::LockPrefixTable]->setValue(lc64.LockPrefixTable);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::MaximumAllocationSize]->setValue(lc64.MaximumAllocationSize);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::VirtualMemoryThreshold]->setValue(lc64.VirtualMemoryThreshold);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::ProcessAffinityMask]->setValue(lc64.ProcessAffinityMask);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CSDVersion]->setValue(lc64.CSDVersion);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DependentLoadFlags]->setValue(lc64.DependentLoadFlags);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::EditList]->setValue(lc64.EditList);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SecurityCookie]->setValue(lc64.SecurityCookie);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SEHandlerTable]->setValue(lc64.SEHandlerTable);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SEHandlerCount]->setValue(lc64.SEHandlerCount);
+
+                    invWidget[INV_IMAGE_LOADCONFIG_SecurityCookie]->setAddressAndSize(&pe,lc64.SecurityCookie,0);
+                    invWidget[INV_IMAGE_LOADCONFIG_SEHandlerTable]->setAddressAndSize(&pe,lc64.SEHandlerTable,0);
+                }
+                else
+                {
+                    XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32 lc32=pe.getLoadConfigDirectory32();
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::Size]->setValue(lc32.Size);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::TimeDateStamp]->setValue(lc32.TimeDateStamp);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::MinorVersion]->setValue(lc32.MinorVersion);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::MajorVersion]->setValue(lc32.MajorVersion);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GlobalFlagsClear]->setValue(lc32.GlobalFlagsClear);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GlobalFlagsSet]->setValue(lc32.GlobalFlagsSet);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CriticalSectionDefaultTimeout]->setValue(lc32.CriticalSectionDefaultTimeout);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DeCommitFreeBlockThreshold]->setValue(lc32.DeCommitFreeBlockThreshold);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DeCommitTotalFreeThreshold]->setValue(lc32.DeCommitTotalFreeThreshold);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::LockPrefixTable]->setValue(lc32.LockPrefixTable);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::MaximumAllocationSize]->setValue(lc32.MaximumAllocationSize);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::VirtualMemoryThreshold]->setValue(lc32.VirtualMemoryThreshold);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::ProcessAffinityMask]->setValue(lc32.ProcessAffinityMask);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CSDVersion]->setValue(lc32.CSDVersion);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DependentLoadFlags]->setValue(lc32.DependentLoadFlags);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::EditList]->setValue(lc32.EditList);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SecurityCookie]->setValue(lc32.SecurityCookie);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SEHandlerTable]->setValue(lc32.SEHandlerTable);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SEHandlerCount]->setValue(lc32.SEHandlerCount);
+
+                    invWidget[INV_IMAGE_LOADCONFIG_SecurityCookie]->setAddressAndSize(&pe,lc32.SecurityCookie,0);
+                    invWidget[INV_IMAGE_LOADCONFIG_SEHandlerTable]->setAddressAndSize(&pe,lc32.SEHandlerTable,0);
+                }
+
+                qint64 nOffset=pe.getLoadConfigDirectoryOffset();
+                qint64 nSize=pe.getLoadConfigDirectorySize();
+                qint64 nAddress=pe.offsetToRelAddress(nOffset);
+
+                loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_LOADCONFIG],ui->widgetHex_LoadConfig);
+
+                blockSignals(false);
             }
-
-            blockSignals(true);
-
-            if(pe.is64())
-            {
-                XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64 lc64=pe.getLoadConfigDirectory64();
-                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::Size]->setValue(lc64.Size);
-                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::TimeDateStamp]->setValue(lc64.TimeDateStamp);
-                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::MinorVersion]->setValue(lc64.MinorVersion);
-                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::MajorVersion]->setValue(lc64.MajorVersion);
-                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GlobalFlagsClear]->setValue(lc64.GlobalFlagsClear);
-                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GlobalFlagsSet]->setValue(lc64.GlobalFlagsSet);
-                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CriticalSectionDefaultTimeout]->setValue(lc64.CriticalSectionDefaultTimeout);
-                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DeCommitFreeBlockThreshold]->setValue(lc64.DeCommitFreeBlockThreshold);
-                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DeCommitTotalFreeThreshold]->setValue(lc64.DeCommitTotalFreeThreshold);
-                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::LockPrefixTable]->setValue(lc64.LockPrefixTable);
-                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::MaximumAllocationSize]->setValue(lc64.MaximumAllocationSize);
-                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::VirtualMemoryThreshold]->setValue(lc64.VirtualMemoryThreshold);
-                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::ProcessAffinityMask]->setValue(lc64.ProcessAffinityMask);
-                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CSDVersion]->setValue(lc64.CSDVersion);
-                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DependentLoadFlags]->setValue(lc64.DependentLoadFlags);
-                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::EditList]->setValue(lc64.EditList);
-                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SecurityCookie]->setValue(lc64.SecurityCookie);
-                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SEHandlerTable]->setValue(lc64.SEHandlerTable);
-                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SEHandlerCount]->setValue(lc64.SEHandlerCount);
-
-                invWidget[INV_IMAGE_LOADCONFIG_SecurityCookie]->setAddressAndSize(&pe,lc64.SecurityCookie,0);
-                invWidget[INV_IMAGE_LOADCONFIG_SEHandlerTable]->setAddressAndSize(&pe,lc64.SEHandlerTable,0);
-            }
-            else
-            {
-                XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32 lc32=pe.getLoadConfigDirectory32();
-                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::Size]->setValue(lc32.Size);
-                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::TimeDateStamp]->setValue(lc32.TimeDateStamp);
-                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::MinorVersion]->setValue(lc32.MinorVersion);
-                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::MajorVersion]->setValue(lc32.MajorVersion);
-                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GlobalFlagsClear]->setValue(lc32.GlobalFlagsClear);
-                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GlobalFlagsSet]->setValue(lc32.GlobalFlagsSet);
-                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CriticalSectionDefaultTimeout]->setValue(lc32.CriticalSectionDefaultTimeout);
-                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DeCommitFreeBlockThreshold]->setValue(lc32.DeCommitFreeBlockThreshold);
-                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DeCommitTotalFreeThreshold]->setValue(lc32.DeCommitTotalFreeThreshold);
-                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::LockPrefixTable]->setValue(lc32.LockPrefixTable);
-                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::MaximumAllocationSize]->setValue(lc32.MaximumAllocationSize);
-                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::VirtualMemoryThreshold]->setValue(lc32.VirtualMemoryThreshold);
-                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::ProcessAffinityMask]->setValue(lc32.ProcessAffinityMask);
-                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CSDVersion]->setValue(lc32.CSDVersion);
-                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DependentLoadFlags]->setValue(lc32.DependentLoadFlags);
-                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::EditList]->setValue(lc32.EditList);
-                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SecurityCookie]->setValue(lc32.SecurityCookie);
-                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SEHandlerTable]->setValue(lc32.SEHandlerTable);
-                lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SEHandlerCount]->setValue(lc32.SEHandlerCount);
-
-                invWidget[INV_IMAGE_LOADCONFIG_SecurityCookie]->setAddressAndSize(&pe,lc32.SecurityCookie,0);
-                invWidget[INV_IMAGE_LOADCONFIG_SEHandlerTable]->setAddressAndSize(&pe,lc32.SEHandlerTable,0);
-            }
-
-            qint64 nOffset=pe.getLoadConfigDirectoryOffset();
-            qint64 nSize=pe.getLoadConfigDirectorySize();
-            qint64 nAddress=pe.offsetToRelAddress(nOffset);
-
-            loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_LOADCONFIG],ui->widgetHex_LoadConfig);
-
-            blockSignals(false);
         }
         else if(nType==SPE::TYPE_BOUNDIMPORT)
         {
@@ -1543,13 +1543,16 @@ void PEWidget::reloadData()
         }
         else if(nType==SPE::TYPE_DELAYIMPORT)
         {
-            PEProcessData peProcessData(SPE::TYPE_DELAYIMPORT,&tvModel[SPE::TYPE_DELAYIMPORT],&pe,0,0,0);
-
-            ajustTableView(&peProcessData,&tvModel[SPE::TYPE_DELAYIMPORT],ui->tableView_DelayImport);
-
-            if(tvModel[SPE::TYPE_DELAYIMPORT]->rowCount())
+            if(!bInit[nType])
             {
-                ui->tableView_DelayImport->setCurrentIndex(ui->tableView_DelayImport->model()->index(0,0));
+                PEProcessData peProcessData(SPE::TYPE_DELAYIMPORT,&tvModel[SPE::TYPE_DELAYIMPORT],&pe,0,0,0);
+
+                ajustTableView(&peProcessData,&tvModel[SPE::TYPE_DELAYIMPORT],ui->tableView_DelayImport);
+
+                if(tvModel[SPE::TYPE_DELAYIMPORT]->rowCount())
+                {
+                    ui->tableView_DelayImport->setCurrentIndex(ui->tableView_DelayImport->model()->index(0,0));
+                }
             }
         }
         else if(nType==SPE::TYPE_NETHEADER)
@@ -1559,38 +1562,41 @@ void PEWidget::reloadData()
                 createHeaderTable(SPE::TYPE_NETHEADER,ui->tableWidget_NetHeader,N_IMAGE_NETHEADER::records,lineEdit_NetHeader,N_IMAGE_NETHEADER::__data_size,0);
 
                 comboBox[CB_IMAGE_NETHEADER_FLAGS]=createComboBox(ui->tableWidget_NetHeader,XPE::getComImageFlagsS(),SPE::TYPE_NETHEADER,N_IMAGE_NETHEADER::Flags,XComboBoxEx::CBTYPE_FLAGS);
+
+                blockSignals(true);
+
+                XPE::NET_HEADER netHeader=pe.getNetHeader();
+
+                lineEdit_NetHeader[N_IMAGE_NETHEADER::cb]->setValue(netHeader.cb);
+                lineEdit_NetHeader[N_IMAGE_NETHEADER::MajorRuntimeVersion]->setValue(netHeader.MajorRuntimeVersion);
+                lineEdit_NetHeader[N_IMAGE_NETHEADER::MinorRuntimeVersion]->setValue(netHeader.MinorRuntimeVersion);
+                lineEdit_NetHeader[N_IMAGE_NETHEADER::MetaData_Address]->setValue(netHeader.MetaData_Address);
+                lineEdit_NetHeader[N_IMAGE_NETHEADER::MetaData_Size]->setValue(netHeader.MetaData_Size);
+                lineEdit_NetHeader[N_IMAGE_NETHEADER::Flags]->setValue(netHeader.Flags);
+                lineEdit_NetHeader[N_IMAGE_NETHEADER::EntryPoint]->setValue(netHeader.EntryPoint);
+
+                // TODO more
+
+                comboBox[CB_IMAGE_NETHEADER_FLAGS]->setValue(netHeader.Flags);
+
+                qint64 nOffset=pe.getNetHeaderOffset();
+                qint64 nSize=pe.getNetHeaderSize();
+                qint64 nAddress=pe.offsetToRelAddress(nOffset);
+
+                loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_NETHEADER],ui->widgetHex_NetHeader);
+
+                blockSignals(false);
             }
-
-            blockSignals(true);
-
-            XPE::NET_HEADER netHeader=pe.getNetHeader();
-
-            lineEdit_NetHeader[N_IMAGE_NETHEADER::cb]->setValue(netHeader.cb);
-            lineEdit_NetHeader[N_IMAGE_NETHEADER::MajorRuntimeVersion]->setValue(netHeader.MajorRuntimeVersion);
-            lineEdit_NetHeader[N_IMAGE_NETHEADER::MinorRuntimeVersion]->setValue(netHeader.MinorRuntimeVersion);
-            lineEdit_NetHeader[N_IMAGE_NETHEADER::MetaData_Address]->setValue(netHeader.MetaData_Address);
-            lineEdit_NetHeader[N_IMAGE_NETHEADER::MetaData_Size]->setValue(netHeader.MetaData_Size);
-            lineEdit_NetHeader[N_IMAGE_NETHEADER::Flags]->setValue(netHeader.Flags);
-            lineEdit_NetHeader[N_IMAGE_NETHEADER::EntryPoint]->setValue(netHeader.EntryPoint);
-
-            // TODO more
-
-            comboBox[CB_IMAGE_NETHEADER_FLAGS]->setValue(netHeader.Flags);
-
-            qint64 nOffset=pe.getNetHeaderOffset();
-            qint64 nSize=pe.getNetHeaderSize();
-            qint64 nAddress=pe.offsetToRelAddress(nOffset);
-
-            loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_NETHEADER],ui->widgetHex_NetHeader);
-
-            blockSignals(false);
         }
         else if(nType==SPE::TYPE_OVERLAY)
         {
-            qint64 nOverLayOffset=pe.getOverlayOffset();
-            qint64 nOverlaySize=pe.getOverlaySize();
+            if(!bInit[nType])
+            {
+                qint64 nOverLayOffset=pe.getOverlayOffset();
+                qint64 nOverlaySize=pe.getOverlaySize();
 
-            loadHexSubdevice(nOverLayOffset,nOverlaySize,nOverLayOffset,&subDevice[SPE::TYPE_OVERLAY],ui->widgetOverlayHex);
+                loadHexSubdevice(nOverLayOffset,nOverlaySize,nOverLayOffset,&subDevice[SPE::TYPE_OVERLAY],ui->widgetOverlayHex);
+            }
         }
 
         bInit[nType]=true;
