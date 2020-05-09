@@ -84,6 +84,10 @@ void PEProcessData::_process()
             (*ppModel)->setItem(i,N_IMAGE_SECTION_HEADER::Characteristics+1,      new QStandardItem(XBinary::valueToHex(listSections.at(i).Characteristics)));
         }
     }
+    else if(type==SPE::TYPE_RELOCS)
+    {
+        // TODO
+    }
     else if(type==SPE::TYPE_RELOCS_POSITION)
     {
         QList<QString> listLabels;
@@ -308,6 +312,10 @@ void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
         pTableView->setColumnWidth(8,nSymbolWidth*8);
         pTableView->setColumnWidth(9,nSymbolWidth*8);
         pTableView->setColumnWidth(10,nSymbolWidth*8);
+    }
+    else if(type==SPE::TYPE_RELOCS)
+    {
+        // TODO
     }
     else if(type==SPE::TYPE_RELOCS_POSITION)
     {
