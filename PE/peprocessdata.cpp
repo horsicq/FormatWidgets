@@ -280,7 +280,11 @@ void PEProcessData::_process()
 
         for(int i=0; i<nCount; i++)
         {
-            // TODO
+            (*ppModel)->setItem(i,N_IMAGE_EXPORT_FUNCTION::Ordinal,                 new QStandardItem(XBinary::valueToHex(eh.listPositions.at(i).nOrdinal)));
+            (*ppModel)->setItem(i,N_IMAGE_EXPORT_FUNCTION::RVA,                     new QStandardItem(XBinary::valueToHex(eh.listPositions.at(i).nRVA)));
+            (*ppModel)->setItem(i,N_IMAGE_EXPORT_FUNCTION::Name,                    new QStandardItem(XBinary::valueToHex(eh.listPositions.at(i).nNameRVA)));
+            (*ppModel)->setItem(i,N_IMAGE_EXPORT_FUNCTION::Name+1,                  new QStandardItem(eh.listPositions.at(i).sFunctionName));
+
             incValue();
         }
     }
