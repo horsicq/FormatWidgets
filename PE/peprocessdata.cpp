@@ -86,7 +86,26 @@ void PEProcessData::_process()
     }
     else if(type==SPE::TYPE_RELOCS)
     {
-        // TODO
+        QList<QString> listLabels;
+        listLabels.append(getStructList(N_IMAGE_RELOCS::records,N_IMAGE_RELOCS::__data_size));
+        listLabels.append("");
+
+        QList<XPE::RELOCS_HEADER> listRH=pPE->getRelocsHeaders();
+
+        int nCount=listRH.count();
+
+        *ppModel=new QStandardItemModel(nCount,listLabels.count());
+
+        setMaximum(nCount);
+
+        setHeader(*ppModel,&listLabels);
+
+        for(int i=0; i<nCount; i++)
+        {
+            // TODO
+
+            incValue();
+        }
     }
     else if(type==SPE::TYPE_RELOCS_POSITION)
     {
