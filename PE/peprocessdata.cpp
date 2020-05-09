@@ -263,6 +263,27 @@ void PEProcessData::_process()
             incValue();
         }
     }
+    else if(type==SPE::TYPE_EXPORT)
+    {
+        QList<QString> listLabels;
+        listLabels.append(getStructList(N_IMAGE_EXPORT_FUNCTION::records,N_IMAGE_EXPORT_FUNCTION::__data_size));
+
+        XPE::EXPORT_HEADER eh=pPE->getExport();
+
+        int nCount=eh.listPositions.count();
+
+        *ppModel=new QStandardItemModel(nCount,listLabels.count());
+
+        setMaximum(nCount);
+
+        setHeader(*ppModel,&listLabels);
+
+        for(int i=0; i<nCount; i++)
+        {
+            // TODO
+            incValue();
+        }
+    }
 }
 
 void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
