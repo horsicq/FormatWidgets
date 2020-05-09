@@ -263,10 +263,11 @@ void PEProcessData::_process()
             incValue();
         }
     }
-    else if(type==SPE::TYPE_EXPORT)
+    else if(type==SPE::TYPE_EXPORT_FUNCTION)
     {
         QList<QString> listLabels;
         listLabels.append(getStructList(N_IMAGE_EXPORT_FUNCTION::records,N_IMAGE_EXPORT_FUNCTION::__data_size));
+        listLabels.append("");
 
         XPE::EXPORT_HEADER eh=pPE->getExport();
 
@@ -350,8 +351,11 @@ void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
         pTableView->setColumnWidth(6,nSymbolWidth*8);
         pTableView->setColumnWidth(7,nSymbolWidth*8);
     }
-    else if(type==SPE::TYPE_EXPORT)
+    else if(type==SPE::TYPE_EXPORT_FUNCTION)
     {
-        // TODO
+        pTableView->setColumnWidth(0,nSymbolWidth*4);
+        pTableView->setColumnWidth(1,nSymbolWidth*8);
+        pTableView->setColumnWidth(2,nSymbolWidth*8);
+        pTableView->setColumnWidth(3,nSymbolWidth*30);
     }
 }
