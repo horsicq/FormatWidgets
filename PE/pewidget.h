@@ -82,9 +82,7 @@ private slots:
     void on_tableWidget_LoadConfig_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     void on_tableWidget_NetHeader_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     void on_tableWidget_TLS_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
-    void on_tableWidget_ImportFunctions_customContextMenuRequested(const QPoint &pos);
     void editImportHeader();
-    void on_tableWidget_ExportFunctions_customContextMenuRequested(const QPoint &pos);
     void on_tableWidget_Exceptions_customContextMenuRequested(const QPoint &pos);
     void on_tableWidget_Debug_customContextMenuRequested(const QPoint &pos);
     void editDebugHeader();

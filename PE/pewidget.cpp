@@ -1237,48 +1237,51 @@ void PEWidget::reloadData()
             if(!bInit[nType])
             {
                 createHeaderTable(SPE::TYPE_RESOURCE_VERSION,ui->tableWidget_Resources_Version,N_IMAGE_RESOURCE_FIXEDFILEINFO::records,lineEdit_Version_FixedFileInfo,N_IMAGE_RESOURCE_FIXEDFILEINFO::__data_size,0);
+
+                blockSignals(true);
+
+                XPE::RESOURCE_VERSION resourceVersion=pe.getResourceVersion();
+
+                lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwSignature]->setValue(resourceVersion.fileInfo.dwSignature);
+                lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwStrucVersion]->setValue(resourceVersion.fileInfo.dwStrucVersion);
+                lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileVersionMS]->setValue(resourceVersion.fileInfo.dwFileVersionMS);
+                lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileVersionLS]->setValue(resourceVersion.fileInfo.dwFileVersionLS);
+                lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwProductVersionMS]->setValue(resourceVersion.fileInfo.dwProductVersionMS);
+                lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwProductVersionLS]->setValue(resourceVersion.fileInfo.dwProductVersionLS);
+                lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileFlagsMask]->setValue(resourceVersion.fileInfo.dwFileFlagsMask);
+                lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileFlags]->setValue(resourceVersion.fileInfo.dwFileFlags);
+                lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileOS]->setValue(resourceVersion.fileInfo.dwFileOS);
+                lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileType]->setValue(resourceVersion.fileInfo.dwFileType);
+                lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileSubtype]->setValue(resourceVersion.fileInfo.dwFileSubtype);
+                lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileDateMS]->setValue(resourceVersion.fileInfo.dwFileDateMS);
+                lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileDateLS]->setValue(resourceVersion.fileInfo.dwFileDateLS);
+
+                ui->textEditResources_Version->clear();
+
+                int nCount=resourceVersion.listRecords.count();
+
+                QString sVersion;
+
+                for(int i=0;i<nCount;i++)
+                {
+                    sVersion+=resourceVersion.listRecords.at(i)+QString("\r\n");
+                }
+
+                ui->textEditResources_Version->setText(sVersion);
+
+                blockSignals(false);
             }
-
-            blockSignals(true);
-
-            XPE::RESOURCE_VERSION resourceVersion=pe.getResourceVersion();
-
-            lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwSignature]->setValue(resourceVersion.fileInfo.dwSignature);
-            lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwStrucVersion]->setValue(resourceVersion.fileInfo.dwStrucVersion);
-            lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileVersionMS]->setValue(resourceVersion.fileInfo.dwFileVersionMS);
-            lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileVersionLS]->setValue(resourceVersion.fileInfo.dwFileVersionLS);
-            lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwProductVersionMS]->setValue(resourceVersion.fileInfo.dwProductVersionMS);
-            lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwProductVersionLS]->setValue(resourceVersion.fileInfo.dwProductVersionLS);
-            lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileFlagsMask]->setValue(resourceVersion.fileInfo.dwFileFlagsMask);
-            lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileFlags]->setValue(resourceVersion.fileInfo.dwFileFlags);
-            lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileOS]->setValue(resourceVersion.fileInfo.dwFileOS);
-            lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileType]->setValue(resourceVersion.fileInfo.dwFileType);
-            lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileSubtype]->setValue(resourceVersion.fileInfo.dwFileSubtype);
-            lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileDateMS]->setValue(resourceVersion.fileInfo.dwFileDateMS);
-            lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileDateLS]->setValue(resourceVersion.fileInfo.dwFileDateLS);
-
-            ui->textEditResources_Version->clear();
-
-            int nCount=resourceVersion.listRecords.count();
-
-            QString sVersion;
-
-            for(int i=0;i<nCount;i++)
-            {
-                sVersion+=resourceVersion.listRecords.at(i)+QString("\r\n");
-            }
-
-            ui->textEditResources_Version->setText(sVersion);
-
-            blockSignals(false);
         }
         else if(nType==SPE::TYPE_RESOURCE_MANIFEST)
         {
-            ui->textEditResources_Manifest->clear();
+            if(!bInit[nType])
+            {
+                ui->textEditResources_Manifest->clear();
 
-            QString sManifest=pe.getResourceManifest();
+                QString sManifest=pe.getResourceManifest();
 
-            ui->textEditResources_Manifest->setText(sManifest);
+                ui->textEditResources_Manifest->setText(sManifest);
+            }
         }
         else if(nType==SPE::TYPE_EXCEPTION)
         {
@@ -2014,19 +2017,9 @@ void PEWidget::on_tableWidget_TLS_currentCellChanged(int currentRow, int current
     setHeaderTableSelection(ui->widgetHex_TLS,ui->tableWidget_TLS);
 }
 
-void PEWidget::on_tableWidget_ImportFunctions_customContextMenuRequested(const QPoint &pos)
-{
-    // TODO
-}
-
 void PEWidget::editImportHeader()
 {
     showSectionHeader(SPE::TYPE_IMPORT,ui->tableView_ImportLibraries);
-}
-
-void PEWidget::on_tableWidget_ExportFunctions_customContextMenuRequested(const QPoint &pos)
-{
-    // TODO
 }
 
 void PEWidget::on_tableWidget_Exceptions_customContextMenuRequested(const QPoint &pos)
