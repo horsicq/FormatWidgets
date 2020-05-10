@@ -67,7 +67,6 @@ private slots:
     void loadException(int nRow);
     void loadDirectory(int nNumber);
     void loadDebug(int nRow);
-    void on_tableWidget_Relocs_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     bool createSectionTable(int type, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount);
     void on_treeWidgetResources_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
     void on_pushButtonReload_clicked();
@@ -86,11 +85,9 @@ private slots:
     void on_tableWidget_Exceptions_customContextMenuRequested(const QPoint &pos);
     void on_tableWidget_Debug_customContextMenuRequested(const QPoint &pos);
     void editDebugHeader();
-    void on_tableWidget_Relocs_customContextMenuRequested(const QPoint &pos);
     void editRelocsHeader();
     void editExceptionHeader();
     void on_tableWidget_Debug_doubleClicked(const QModelIndex &index);
-    void on_tableWidget_Relocs_doubleClicked(const QModelIndex &index);
     void on_tableWidget_Exceptions_doubleClicked(const QModelIndex &index);
     void showSectionHeader(int type,QTableView *pTableView);
 
@@ -100,6 +97,9 @@ private slots:
     void on_tableView_ImportLibraries_customContextMenuRequested(const QPoint &pos);
     void onTableView_ImportLibraries_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
     void on_tableView_ImportLibraries_doubleClicked(const QModelIndex &index);
+    void on_tableView_Relocs_customContextMenuRequested(const QPoint &pos);
+    void onTableView_Relocs_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
+    void on_tableView_Relocs_doubleClicked(const QModelIndex &index);
 
 private:
     enum CB
