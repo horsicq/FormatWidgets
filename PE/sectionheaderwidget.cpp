@@ -451,6 +451,19 @@ void SectionHeaderWidget::reloadData()
 
                 blockSignals(false);
             }
+            else if(nType==SPE::TYPE_EXCEPTION)
+            {
+                if(!bInit)
+                {
+                    bInit=createHeaderTable(SPE::TYPE_EXCEPTION,ui->tableWidget,N_IMAGE_EXCEPTIONS::records,ppLinedEdit,N_IMAGE_EXCEPTIONS::__data_size,getNumber());
+                }
+
+                blockSignals(true);
+
+                // TODO
+
+                blockSignals(false);
+            }
         }
 
         setReadonly(ui->checkBoxReadonly->isChecked());
