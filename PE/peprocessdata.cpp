@@ -89,6 +89,7 @@ void PEProcessData::_process()
         QList<QString> listLabels;
         listLabels.append(getStructList(N_IMAGE_RELOCS::records,N_IMAGE_RELOCS::__data_size));
         listLabels.append("");
+        listLabels.append("");
 
         QList<XPE::RELOCS_HEADER> listRH=pPE->getRelocsHeaders();
 
@@ -339,7 +340,10 @@ void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
     }
     else if(type==SPE::TYPE_RELOCS)
     {
-        // TODO
+        pTableView->setColumnWidth(0,nSymbolWidth*8);
+        pTableView->setColumnWidth(1,nSymbolWidth*8);
+        pTableView->setColumnWidth(2,nSymbolWidth*8);
+        pTableView->setColumnWidth(3,nSymbolWidth*30);
     }
     else if(type==SPE::TYPE_RELOCS_POSITION)
     {
