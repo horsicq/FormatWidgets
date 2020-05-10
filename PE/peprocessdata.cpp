@@ -102,7 +102,12 @@ void PEProcessData::_process()
 
         for(int i=0; i<nCount; i++)
         {
-            // TODO
+            QStandardItem *pItem=new QStandardItem(XBinary::valueToHex(listRH.at(i).ibr.VirtualAddress));
+            pItem->setData(listRH.at(i).nOffset,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+            (*ppModel)->setItem(i,N_IMAGE_RELOCS::VirtualAddress,               pItem);
+            (*ppModel)->setItem(i,N_IMAGE_RELOCS::SizeOfBlock,                  new QStandardItem(XBinary::valueToHex(listRH.at(i).ibr.SizeOfBlock)));
+            (*ppModel)->setItem(i,N_IMAGE_RELOCS::SizeOfBlock+1,                new QStandardItem(QString::number(listRH.at(i).nCount)));
+            (*ppModel)->setItem(i,N_IMAGE_RELOCS::SizeOfBlock+2,                new QStandardItem(pPE->getMemoryRecordInfoByRelAddress(listRH.at(i).ibr.VirtualAddress))); // Comment
 
             incValue();
         }
