@@ -1759,9 +1759,10 @@ QString PEWidget::typeIdToString(int type)
 
     switch(type)
     {
-        case SPE::TYPE_IMAGE_SECTION_HEADER:    sResult=QString("Section header");      break; // TODO tr
-        case SPE::TYPE_IMPORT:                  sResult=QString("Import header");       break; // TODO tr
-        case SPE::TYPE_DEBUG:                   sResult=QString("Debug header");        break; // TODO tr
+        case SPE::TYPE_IMAGE_SECTION_HEADER:    sResult=QString("Section header");          break; // TODO tr
+        case SPE::TYPE_IMPORT:                  sResult=QString("Import header");           break; // TODO tr
+        case SPE::TYPE_DEBUG:                   sResult=QString("Debug header");            break; // TODO tr
+        case SPE::TYPE_EXCEPTION:               sResult=QString("Exception header");        break; // TODO tr
     }
 
     return sResult;

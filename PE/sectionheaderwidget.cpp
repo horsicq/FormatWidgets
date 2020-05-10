@@ -67,6 +67,12 @@ SectionHeaderWidget::SectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pO
         nComboBoxSize=N_IMAGE_RELOCS::__CB_size;
         nInvWidgetSize=N_IMAGE_RELOCS::__INV_size;
     }
+    else if(nType==SPE::TYPE_EXCEPTION)
+    {
+        nLineEditSize=N_IMAGE_EXCEPTIONS::__data_size;
+        nComboBoxSize=N_IMAGE_EXCEPTIONS::__CB_size;
+        nInvWidgetSize=N_IMAGE_EXCEPTIONS::__INV_size;
+    }
 
     if(nLineEditSize)
     {
