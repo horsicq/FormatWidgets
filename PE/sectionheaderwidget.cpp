@@ -326,8 +326,6 @@ void SectionHeaderWidget::reloadData()
 
                 XPE_DEF::IMAGE_SECTION_HEADER ish=pe.getSectionHeader(getNumber());
 
-                //        lineEdit_IMAGE_SECTION_HEADER[N_IMAGE_SECTION_HEADER::e_magic]->setValue(ish.);
-
                 QString sName=QString((char *)ish.Name);
                 sName.resize(qMin(sName.length(),XPE_DEF::S_IMAGE_SIZEOF_SHORT_NAME));
 
