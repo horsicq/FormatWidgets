@@ -228,6 +228,13 @@ bool SectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int
                         case N_IMAGE_RELOCS::SizeOfBlock:                   pe.setRelocsSizeOfBlock(nPosition,(quint32)nValue);                     break;
                     }
                     break;
+
+                case SPE::TYPE_EXCEPTION:
+                    switch(nNdata)
+                    {
+                        // TODO
+                    }
+                    break;
             }
 
             switch(nStype)
@@ -295,6 +302,14 @@ void SectionHeaderWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget
             break;
 
         case SPE::TYPE_RELOCS:
+            pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*6);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*16);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*8);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
+            break;
+
+        case SPE::TYPE_EXCEPTION:
             pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
             pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*6);
             pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*16);
@@ -460,7 +475,18 @@ void SectionHeaderWidget::reloadData()
 
                 blockSignals(true);
 
-                // TODO
+                qint64 nOffset=pe.getExceptionRecordOffset(getNumber());
+
+                XPE_DEF::S_IMAGE_RUNTIME_FUNCTION_ENTRY exception=pe._read_IMAGE_RUNTIME_FUNCTION_ENTRY(nOffset);
+
+                ppLinedEdit[N_IMAGE_EXCEPTIONS::BeginAddress]->setValue(exception.BeginAddress);
+                ppLinedEdit[N_IMAGE_EXCEPTIONS::EndAddress]->setValue(exception.EndAddress);
+                ppLinedEdit[N_IMAGE_EXCEPTIONS::UnwindInfoAddress]->setValue(exception.UnwindInfoAddress);
+
+                qint64 nSize=pe.getExceptionRecordSize();
+                qint64 nAddress=pe.offsetToRelAddress(nOffset);
+
+                loadHexSubdevice(nOffset,nSize,nAddress,&pSubDevice,ui->widgetHex);
 
                 blockSignals(false);
             }

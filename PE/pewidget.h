@@ -71,9 +71,7 @@ private slots:
     void on_treeWidgetResources_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
     void on_pushButtonReload_clicked();
     void enableButton();
-    void on_tableWidget_Exceptions_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     void on_tableWidget_IMAGE_DIRECTORY_ENTRIES_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
-    void on_tableWidget_Debug_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     void on_tableWidget_IMAGE_DOS_HEADER_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     void on_tableWidget_IMAGE_NT_HEADERS_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     void on_tableWidget_IMAGE_FILE_HEADER_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
@@ -82,13 +80,10 @@ private slots:
     void on_tableWidget_NetHeader_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     void on_tableWidget_TLS_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     void editImportHeader();
-    void on_tableWidget_Exceptions_customContextMenuRequested(const QPoint &pos);
-    void on_tableWidget_Debug_customContextMenuRequested(const QPoint &pos);
     void editDebugHeader();
     void editRelocsHeader();
     void editExceptionHeader();
-    void on_tableWidget_Debug_doubleClicked(const QModelIndex &index);
-    void on_tableWidget_Exceptions_doubleClicked(const QModelIndex &index);
+
     void showSectionHeader(int type,QTableView *pTableView);
 
     void on_tableView_Sections_customContextMenuRequested(const QPoint &pos);
@@ -100,6 +95,12 @@ private slots:
     void on_tableView_Relocs_customContextMenuRequested(const QPoint &pos);
     void onTableView_Relocs_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
     void on_tableView_Relocs_doubleClicked(const QModelIndex &index);
+    void on_tableView_Debug_customContextMenuRequested(const QPoint &pos);
+    void onTableView_Debug_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
+    void on_tableView_Debug_doubleClicked(const QModelIndex &index);
+    void on_tableView_Exceptions_customContextMenuRequested(const QPoint &pos);
+    void onTableView_Exceptions_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
+    void on_tableView_Exceptions_doubleClicked(const QModelIndex &index);
 
 private:
     enum CB

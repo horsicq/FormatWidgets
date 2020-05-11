@@ -92,7 +92,7 @@
      </widget>
      <widget class="QStackedWidget" name="stackedWidgetInfo">
       <property name="currentIndex">
-       <number>10</number>
+       <number>16</number>
       </property>
       <widget class="QWidget" name="page_HEX">
        <layout class="QVBoxLayout" name="verticalLayout_13">
@@ -735,7 +735,7 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QTableWidget" name="tableWidget_Exceptions">
+         <widget class="QTableView" name="tableView_Exceptions">
           <property name="contextMenuPolicy">
            <enum>Qt::CustomContextMenu</enum>
           </property>
@@ -748,14 +748,20 @@
           <property name="selectionBehavior">
            <enum>QAbstractItemView::SelectRows</enum>
           </property>
-          <attribute name="horizontalHeaderVisible">
-           <bool>false</bool>
+          <attribute name="horizontalHeaderDefaultSectionSize">
+           <number>35</number>
           </attribute>
           <attribute name="verticalHeaderVisible">
            <bool>false</bool>
           </attribute>
+          <attribute name="verticalHeaderMinimumSectionSize">
+           <number>20</number>
+          </attribute>
           <attribute name="verticalHeaderDefaultSectionSize">
-           <number>21</number>
+           <number>20</number>
+          </attribute>
+          <attribute name="verticalHeaderHighlightSections">
+           <bool>false</bool>
           </attribute>
          </widget>
         </item>
@@ -802,11 +808,14 @@
           <attribute name="horizontalHeaderDefaultSectionSize">
            <number>35</number>
           </attribute>
+          <attribute name="verticalHeaderVisible">
+           <bool>false</bool>
+          </attribute>
           <attribute name="verticalHeaderMinimumSectionSize">
-           <number>21</number>
+           <number>20</number>
           </attribute>
           <attribute name="verticalHeaderDefaultSectionSize">
-           <number>21</number>
+           <number>20</number>
           </attribute>
          </widget>
         </item>
@@ -858,7 +867,7 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QTableWidget" name="tableWidget_Debug">
+         <widget class="QTableView" name="tableView_Debug">
           <property name="contextMenuPolicy">
            <enum>Qt::CustomContextMenu</enum>
           </property>
@@ -871,14 +880,17 @@
           <property name="selectionBehavior">
            <enum>QAbstractItemView::SelectRows</enum>
           </property>
-          <attribute name="horizontalHeaderVisible">
-           <bool>false</bool>
+          <attribute name="horizontalHeaderDefaultSectionSize">
+           <number>35</number>
           </attribute>
-          <attribute name="verticalHeaderVisible">
-           <bool>false</bool>
+          <attribute name="verticalHeaderMinimumSectionSize">
+           <number>20</number>
           </attribute>
           <attribute name="verticalHeaderDefaultSectionSize">
-           <number>21</number>
+           <number>20</number>
+          </attribute>
+          <attribute name="verticalHeaderHighlightSections">
+           <bool>false</bool>
           </attribute>
          </widget>
         </item>

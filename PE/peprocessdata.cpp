@@ -318,6 +318,39 @@ void PEProcessData::_process()
             incValue();
         }
     }
+    else if(type==SPE::TYPE_DEBUG)
+    {
+        QList<QString> listLabels;
+        listLabels.append(getStructList(N_IMAGE_DEBUG::records,N_IMAGE_DEBUG::__data_size));
+
+        QList<XPE_DEF::S_IMAGE_DEBUG_DIRECTORY> listDebug=pPE->getDebugList();
+
+        int nCount=listDebug.count();
+
+        *ppModel=new QStandardItemModel(nCount,listLabels.count());
+
+        setMaximum(nCount);
+
+        setHeader(*ppModel,&listLabels);
+
+        for(int i=0; i<nCount; i++)
+        {
+            QStandardItem *pItem=new QStandardItem(XBinary::valueToHex(listDebug.at(i).Characteristics));
+            pItem->setData(listDebug.at(i).AddressOfRawData,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS);
+            pItem->setData(listDebug.at(i).SizeOfData,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
+            pItem->setData(listDebug.at(i).PointerToRawData,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+            (*ppModel)->setItem(i,N_IMAGE_DEBUG::Characteristics,                    pItem);
+            (*ppModel)->setItem(i,N_IMAGE_DEBUG::TimeDateStamp,                     new QStandardItem(XBinary::valueToHex(listDebug.at(i).TimeDateStamp)));
+            (*ppModel)->setItem(i,N_IMAGE_DEBUG::MajorVersion,                      new QStandardItem(XBinary::valueToHex(listDebug.at(i).MajorVersion)));
+            (*ppModel)->setItem(i,N_IMAGE_DEBUG::MinorVersion,                      new QStandardItem(XBinary::valueToHex(listDebug.at(i).MinorVersion)));
+            (*ppModel)->setItem(i,N_IMAGE_DEBUG::Type,                              new QStandardItem(XBinary::valueToHex(listDebug.at(i).Type)));
+            (*ppModel)->setItem(i,N_IMAGE_DEBUG::SizeOfData,                        new QStandardItem(XBinary::valueToHex(listDebug.at(i).SizeOfData)));
+            (*ppModel)->setItem(i,N_IMAGE_DEBUG::AddressOfRawData,                  new QStandardItem(XBinary::valueToHex(listDebug.at(i).AddressOfRawData)));
+            (*ppModel)->setItem(i,N_IMAGE_DEBUG::PointerToRawData,                  new QStandardItem(XBinary::valueToHex(listDebug.at(i).PointerToRawData)));
+
+            incValue();
+        }
+    }
 }
 
 void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
@@ -370,11 +403,9 @@ void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
     }
     else if(type==SPE::TYPE_EXCEPTION)
     {
-        pTableView->setColumnWidth(0,nSymbolWidth*4);
-        pTableView->setColumnWidth(1,nSymbolWidth*12);
+        pTableView->setColumnWidth(0,nSymbolWidth*8);
+        pTableView->setColumnWidth(1,nSymbolWidth*8);
         pTableView->setColumnWidth(2,nSymbolWidth*8);
-        pTableView->setColumnWidth(3,nSymbolWidth*6);
-        pTableView->setColumnWidth(4,nSymbolWidth*22);
     }
     else if(type==SPE::TYPE_DELAYIMPORT)
     {
@@ -393,5 +424,16 @@ void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
         pTableView->setColumnWidth(1,nSymbolWidth*8);
         pTableView->setColumnWidth(2,nSymbolWidth*8);
         pTableView->setColumnWidth(3,nSymbolWidth*30);
+    }
+    else if(type==SPE::TYPE_DEBUG)
+    {
+        pTableView->setColumnWidth(0,nSymbolWidth*8);
+        pTableView->setColumnWidth(1,nSymbolWidth*8);
+        pTableView->setColumnWidth(2,nSymbolWidth*8);
+        pTableView->setColumnWidth(3,nSymbolWidth*8);
+        pTableView->setColumnWidth(4,nSymbolWidth*8);
+        pTableView->setColumnWidth(5,nSymbolWidth*8);
+        pTableView->setColumnWidth(6,nSymbolWidth*8);
+        pTableView->setColumnWidth(7,nSymbolWidth*8);
     }
 }
