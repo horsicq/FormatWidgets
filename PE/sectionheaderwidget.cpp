@@ -232,7 +232,9 @@ bool SectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int
                 case SPE::TYPE_EXCEPTION:
                     switch(nNdata)
                     {
-                        // TODO
+                        case N_IMAGE_EXCEPTIONS::BeginAddress:              pe.setException_BeginAddress(nPosition,(quint32)nValue);                break;
+                        case N_IMAGE_EXCEPTIONS::EndAddress:                pe.setException_EndAddress(nPosition,(quint32)nValue);                  break;
+                        case N_IMAGE_EXCEPTIONS::UnwindInfoAddress:         pe.setException_UnwindInfoAddress(nPosition,(quint16)nValue);           break;
                     }
                     break;
             }

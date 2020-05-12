@@ -92,7 +92,7 @@
      </widget>
      <widget class="QStackedWidget" name="stackedWidgetInfo">
       <property name="currentIndex">
-       <number>16</number>
+       <number>23</number>
       </property>
       <widget class="QWidget" name="page_HEX">
        <layout class="QVBoxLayout" name="verticalLayout_13">
@@ -641,7 +641,7 @@
          </widget>
         </item>
         <item>
-         <widget class="ToolsWidget" name="widgetResourcesHex" native="true">
+         <widget class="ToolsWidget" name="widgetHex_Resources" native="true">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
             <horstretch>0</horstretch>
@@ -766,7 +766,7 @@
          </widget>
         </item>
         <item>
-         <widget class="ToolsWidget" name="widgetExceptionHex" native="true">
+         <widget class="ToolsWidget" name="widgetHex_Exception" native="true">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
             <horstretch>0</horstretch>
@@ -895,7 +895,7 @@
          </widget>
         </item>
         <item>
-         <widget class="ToolsWidget" name="widgetDebugHex" native="true">
+         <widget class="ToolsWidget" name="widgetHex_Debug" native="true">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
             <horstretch>0</horstretch>
@@ -1116,7 +1116,7 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="ToolsWidget" name="widgetOverlayHex" native="true"/>
+         <widget class="ToolsWidget" name="widgetHex_Overlay" native="true"/>
         </item>
        </layout>
       </widget>
