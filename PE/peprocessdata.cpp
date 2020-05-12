@@ -266,6 +266,7 @@ void PEProcessData::_process()
     {
         QList<QString> listLabels;
         listLabels.append(getStructList(N_IMAGE_DELAYIMPORT::records,N_IMAGE_DELAYIMPORT::__data_size));
+        listLabels.append("");
 
         QList<XPE_DEF::S_IMAGE_DELAYLOAD_DESCRIPTOR> listDelayImport=pPE->getDelayImportsList();
 
@@ -277,8 +278,12 @@ void PEProcessData::_process()
 
         setHeader(*ppModel,&listLabels);
 
+        XBinary::_MEMORY_MAP memoryMap=pPE->getMemoryMap();
+
         for(int i=0; i<nCount; i++)
         {
+            QString sLibraryName=pPE->read_ansiString(pPE->relAddressToOffset(&memoryMap,listDelayImport.at(i).DllNameRVA));
+
             QStandardItem *pItem=new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).AllAttributes));
             (*ppModel)->setItem(i,N_IMAGE_DELAYIMPORT::AllAttributes,                  pItem);
             (*ppModel)->setItem(i,N_IMAGE_DELAYIMPORT::DllNameRVA,                     new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).DllNameRVA)));
@@ -288,6 +293,7 @@ void PEProcessData::_process()
             (*ppModel)->setItem(i,N_IMAGE_DELAYIMPORT::BoundImportAddressTableRVA,     new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).BoundImportAddressTableRVA)));
             (*ppModel)->setItem(i,N_IMAGE_DELAYIMPORT::UnloadInformationTableRVA,      new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).UnloadInformationTableRVA)));
             (*ppModel)->setItem(i,N_IMAGE_DELAYIMPORT::TimeDateStamp,                  new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).TimeDateStamp)));
+            (*ppModel)->setItem(i,N_IMAGE_DELAYIMPORT::TimeDateStamp+1,                new QStandardItem(sLibraryName));
 
             incValue();
         }
@@ -417,6 +423,7 @@ void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
         pTableView->setColumnWidth(5,nSymbolWidth*8);
         pTableView->setColumnWidth(6,nSymbolWidth*8);
         pTableView->setColumnWidth(7,nSymbolWidth*8);
+        pTableView->setColumnWidth(8,nSymbolWidth*15);
     }
     else if(type==SPE::TYPE_EXPORT_FUNCTION)
     {
