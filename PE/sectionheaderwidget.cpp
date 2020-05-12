@@ -520,7 +520,27 @@ void SectionHeaderWidget::reloadData()
                     bInit=createHeaderTable(SPE::TYPE_DELAYIMPORT,ui->tableWidget,N_IMAGE_DELAYIMPORT::records,ppLinedEdit,N_IMAGE_DELAYIMPORT::__data_size,getNumber());
                 }
 
-                // TODO
+                blockSignals(true);
+
+                qint64 nOffset=pe.getDelayImportRecordOffset(getNumber());
+
+                XPE_DEF::S_IMAGE_DELAYLOAD_DESCRIPTOR delayImport=pe._read_IMAGE_DELAYLOAD_DESCRIPTOR(nOffset);
+
+                ppLinedEdit[N_IMAGE_DELAYIMPORT::AllAttributes]->setValue(delayImport.AllAttributes);
+                ppLinedEdit[N_IMAGE_DELAYIMPORT::DllNameRVA]->setValue(delayImport.DllNameRVA);
+                ppLinedEdit[N_IMAGE_DELAYIMPORT::ModuleHandleRVA]->setValue(delayImport.ModuleHandleRVA);
+                ppLinedEdit[N_IMAGE_DELAYIMPORT::ImportAddressTableRVA]->setValue(delayImport.ImportAddressTableRVA);
+                ppLinedEdit[N_IMAGE_DELAYIMPORT::ImportNameTableRVA]->setValue(delayImport.ImportNameTableRVA);
+                ppLinedEdit[N_IMAGE_DELAYIMPORT::BoundImportAddressTableRVA]->setValue(delayImport.BoundImportAddressTableRVA);
+                ppLinedEdit[N_IMAGE_DELAYIMPORT::UnloadInformationTableRVA]->setValue(delayImport.UnloadInformationTableRVA);
+                ppLinedEdit[N_IMAGE_DELAYIMPORT::TimeDateStamp]->setValue(delayImport.TimeDateStamp);
+
+                qint64 nSize=pe.getDelayImportRecordSize();
+                qint64 nAddress=pe.offsetToRelAddress(nOffset);
+
+                loadHexSubdevice(nOffset,nSize,nAddress,&pSubDevice,ui->widgetHex);
+
+                blockSignals(false);
             }
         }
 
