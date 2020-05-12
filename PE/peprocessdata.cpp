@@ -357,6 +357,104 @@ void PEProcessData::_process()
             incValue();
         }
     }
+    else if(type==SPE::TYPE_RESOURCE)
+    {
+        XPE::RESOURCE_HEADER rh=pPE->getResourceHeader();
+
+        int nHeaderCount=rh.listPositions.count();
+
+        if(nHeaderCount)
+        {
+            QStandardItem *pRoot=new QStandardItem();
+            pRoot->setText(tr("Resource"));
+
+            for(int i=0; i<nHeaderCount; i++)
+            {
+                XPE::RESOURCE_POSITION pos=rh.listPositions.at(i);
+                QStandardItem *pPos=new QStandardItem;
+                QString sPosText;
+
+                if(pos.rin.bIsName)
+                {
+                    sPosText=QString("\"%1\"").arg(pos.rin.sName);
+                }
+                else
+                {
+                    QMap<quint64, QString> mapRT=XPE::getResourceTypes();
+                    QString sType=mapRT.value(pos.rin.nID);
+
+                    if(sType!="")
+                    {
+                        sPosText=QString("%1(%2)").arg(sType).arg(pos.rin.nID);
+                    }
+                    else
+                    {
+                        sPosText=QString("%1").arg(pos.rin.nID);
+                    }
+                }
+
+                pPos->setText(sPosText);
+
+                pRoot->appendRow(pPos);
+
+                int nPosCount=pos.listPositions.count();
+
+                for(int j=0; j<nPosCount; j++)
+                {
+                    XPE::RESOURCE_POSITION subpos=rh.listPositions.at(i).listPositions.at(j);
+                    QStandardItem *pSubPos=new QStandardItem;
+                    QString sSubPosText;
+
+                    if(subpos.rin.bIsName)
+                    {
+                        sSubPosText=QString("\"%1\"").arg(subpos.rin.sName);
+                    }
+                    else
+                    {
+                        sSubPosText=QString("%1").arg(subpos.rin.nID);
+                    }
+
+                    pSubPos->setText(sSubPosText);
+
+                    pPos->appendRow(pSubPos);
+
+                    int nSubPosCount=subpos.listPositions.count();
+
+                    for(int k=0; k<nSubPosCount; k++)
+                    {
+                        XPE::RESOURCE_POSITION record=rh.listPositions.at(i).listPositions.at(j).listPositions.at(k);
+                        QStandardItem *pRecord=new QStandardItem;
+                        QString sRecordText;
+
+                        if(record.rin.bIsName)
+                        {
+                            sRecordText=QString("\"%1\"").arg(record.rin.sName);
+                        }
+                        else
+                        {
+                            sRecordText=QString("%1").arg(record.rin.nID);
+                        }
+
+                        pRecord->setText(sRecordText);
+
+                        pRecord->setData(record.data_entry.Size,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
+                        pRecord->setData(record.data_entry.OffsetToData,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS);
+
+                        if(pPE->isImage())
+                        {
+                            pRecord->setData(record.data_entry.OffsetToData,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+                        }
+                        else
+                        {
+                            pRecord->setData(record.nDataOffset,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+                        }
+
+                        pSubPos->appendRow(pRecord);
+                    }
+                }
+            }
+        }
+    }
 }
 
 void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
