@@ -73,6 +73,12 @@ SectionHeaderWidget::SectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pO
         nComboBoxSize=N_IMAGE_EXCEPTIONS::__CB_size;
         nInvWidgetSize=N_IMAGE_EXCEPTIONS::__INV_size;
     }
+    else if(nType==SPE::TYPE_DELAYIMPORT)
+    {
+        nLineEditSize=N_IMAGE_DELAYIMPORT::__data_size;
+        nComboBoxSize=N_IMAGE_DELAYIMPORT::__CB_size;
+        nInvWidgetSize=N_IMAGE_DELAYIMPORT::__INV_size;
+    }
 
     if(nLineEditSize)
     {
@@ -237,6 +243,13 @@ bool SectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int
                         case N_IMAGE_EXCEPTIONS::UnwindInfoAddress:         pe.setException_UnwindInfoAddress(nPosition,(quint16)nValue);           break;
                     }
                     break;
+
+                case SPE::TYPE_DELAYIMPORT:
+                    switch(nNdata)
+                    {
+                        // TODO
+                    }
+                    break;
             }
 
             switch(nStype)
@@ -312,6 +325,14 @@ void SectionHeaderWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget
             break;
 
         case SPE::TYPE_EXCEPTION:
+            pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*6);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*16);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*8);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
+            break;
+
+        case SPE::TYPE_DELAYIMPORT:
             pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
             pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*6);
             pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*16);
@@ -491,6 +512,10 @@ void SectionHeaderWidget::reloadData()
                 loadHexSubdevice(nOffset,nSize,nAddress,&pSubDevice,ui->widgetHex);
 
                 blockSignals(false);
+            }
+            else if(nType==SPE::TYPE_DELAYIMPORT)
+            {
+                // TODO
             }
         }
 

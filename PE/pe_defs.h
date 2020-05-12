@@ -370,6 +370,15 @@ enum DATA
 };
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
+
+enum CB
+{
+    __CB_size
+};
+enum INV
+{
+    __INV_size
+};
 }
 
 namespace N_IMAGE_IMPORT_FUNCTION
