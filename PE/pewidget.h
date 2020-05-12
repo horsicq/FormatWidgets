@@ -83,6 +83,7 @@ private slots:
     void editDebugHeader();
     void editRelocsHeader();
     void editExceptionHeader();
+    void editDelayImportHeader();
 
     void showSectionHeader(int type,QTableView *pTableView);
 
@@ -101,6 +102,9 @@ private slots:
     void on_tableView_Exceptions_customContextMenuRequested(const QPoint &pos);
     void onTableView_Exceptions_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
     void on_tableView_Exceptions_doubleClicked(const QModelIndex &index);
+    void on_tableView_DelayImport_customContextMenuRequested(const QPoint &pos);
+    void onTableView_DelayImport_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
+    void on_tableView_DelayImport_doubleClicked(const QModelIndex &index);
 
 private:
     enum CB

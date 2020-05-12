@@ -515,6 +515,11 @@ void SectionHeaderWidget::reloadData()
             }
             else if(nType==SPE::TYPE_DELAYIMPORT)
             {
+                if(!bInit)
+                {
+                    bInit=createHeaderTable(SPE::TYPE_DELAYIMPORT,ui->tableWidget,N_IMAGE_DELAYIMPORT::records,ppLinedEdit,N_IMAGE_DELAYIMPORT::__data_size,getNumber());
+                }
+
                 // TODO
             }
         }

@@ -1715,36 +1715,6 @@ bool PEWidget::createSectionTable(int type, QTableWidget *pTableWidget, const FW
 
     switch(type)
     {
-        case SPE::TYPE_EXPORT_FUNCTION:
-            pTableWidget->setColumnCount(nRecordCount+1); // TODO
-            pTableWidget->setColumnWidth(nRecordCount,nSymbolWidth*40);
-            break;
-
-        case SPE::TYPE_IMPORT_FUNCTION:
-            pTableWidget->setColumnCount(nRecordCount+1);
-            pTableWidget->setColumnWidth(0,nSymbolWidth*12);
-            pTableWidget->setColumnWidth(1,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(2,nSymbolWidth*6);
-            pTableWidget->setColumnWidth(nRecordCount,nSymbolWidth*22);
-            break;
-
-        case SPE::TYPE_IMPORT:
-            pTableWidget->setColumnCount(nRecordCount+1);
-            pTableWidget->setColumnWidth(nRecordCount,nSymbolWidth*20);
-            break;
-
-        case SPE::TYPE_RELOCS:
-            pTableWidget->setColumnCount(nRecordCount+2);
-            break;
-
-        case SPE::TYPE_DEBUG:
-            pTableWidget->setColumnCount(nRecordCount); // TODO
-            break;
-
-        case SPE::TYPE_RELOCS_POSITION:
-            pTableWidget->setColumnCount(nRecordCount+2);
-            break;
-
         case SPE::TYPE_IMAGE_DIRECTORY_ENTRIES:
             pTableWidget->setColumnCount(nRecordCount+2);
             pTableWidget->setColumnWidth(0,nSymbolWidth*3);
@@ -1767,23 +1737,6 @@ bool PEWidget::createSectionTable(int type, QTableWidget *pTableWidget, const FW
 
     switch(type)
     {
-        case SPE::TYPE_EXPORT_FUNCTION:
-        case SPE::TYPE_IMPORT_FUNCTION:
-        case SPE::TYPE_IMPORT:
-            slHeader.append("");
-            break;
-
-        case SPE::TYPE_RELOCS:
-            pTableWidget->horizontalHeader()->setSectionResizeMode(3,QHeaderView::Stretch);
-            slHeader.append(tr("Count"));
-            slHeader.append("");
-            break;
-
-        case SPE::TYPE_RELOCS_POSITION:
-            slHeader.append(tr("Type"));
-            slHeader.append(tr("Address"));
-            break;
-
         case SPE::TYPE_IMAGE_DIRECTORY_ENTRIES:
             pTableWidget->horizontalHeader()->setSectionResizeMode(4,QHeaderView::Stretch);
             slHeader.append("");
@@ -1927,6 +1880,11 @@ void PEWidget::editRelocsHeader()
 void PEWidget::editExceptionHeader()
 {
     showSectionHeader(SPE::TYPE_EXCEPTION,ui->tableView_Exceptions);
+}
+
+void PEWidget::editDelayImportHeader()
+{
+    showSectionHeader(SPE::TYPE_DELAYIMPORT,ui->tableView_DelayImport);
 }
 
 void PEWidget::showSectionHeader(int type, QTableView *pTableView)
@@ -2101,4 +2059,37 @@ void PEWidget::on_tableView_Exceptions_doubleClicked(const QModelIndex &index)
     Q_UNUSED(index)
 
     editExceptionHeader();
+}
+
+void PEWidget::on_tableView_DelayImport_customContextMenuRequested(const QPoint &pos)
+{
+    int nRow=ui->tableView_DelayImport->currentIndex().row();
+
+    if(nRow!=-1)
+    {
+        QMenu contextMenu(this);
+
+        QAction actionEdit(tr("Edit"),this);
+        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editDelayImportHeader()));
+        contextMenu.addAction(&actionEdit);
+
+        contextMenu.exec(ui->tableView_DelayImport->viewport()->mapToGlobal(pos));
+    }
+}
+
+void PEWidget::onTableView_DelayImport_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
+    int nRow=current.row();
+
+    if(nRow!=-1)
+    {
+        // TODO
+    }
+}
+
+void PEWidget::on_tableView_DelayImport_doubleClicked(const QModelIndex &index)
+{
+    Q_UNUSED(index)
+
+    editDelayImportHeader();
 }
