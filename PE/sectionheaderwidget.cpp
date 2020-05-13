@@ -247,7 +247,14 @@ bool SectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int
                 case SPE::TYPE_DELAYIMPORT:
                     switch(nNdata)
                     {
-                        // TODO
+                        case N_IMAGE_DELAYIMPORT::AllAttributes:                pe.setDelayImport_AllAttributes(nPosition,(quint32)nValue);                 break;
+                        case N_IMAGE_DELAYIMPORT::DllNameRVA:                   pe.setDelayImport_DllNameRVA(nPosition,(quint32)nValue);                    break;
+                        case N_IMAGE_DELAYIMPORT::ModuleHandleRVA:              pe.setDelayImport_ModuleHandleRVA(nPosition,(quint32)nValue);               break;
+                        case N_IMAGE_DELAYIMPORT::ImportAddressTableRVA:        pe.setDelayImport_ImportAddressTableRVA(nPosition,(quint32)nValue);         break;
+                        case N_IMAGE_DELAYIMPORT::ImportNameTableRVA:           pe.setDelayImport_ImportNameTableRVA(nPosition,(quint32)nValue);            break;
+                        case N_IMAGE_DELAYIMPORT::BoundImportAddressTableRVA:   pe.setDelayImport_BoundImportAddressTableRVA(nPosition,(quint32)nValue);    break;
+                        case N_IMAGE_DELAYIMPORT::UnloadInformationTableRVA:    pe.setDelayImport_UnloadInformationTableRVA(nPosition,(quint32)nValue);     break;
+                        case N_IMAGE_DELAYIMPORT::TimeDateStamp:                pe.setDelayImport_TimeDateStamp(nPosition,(quint32)nValue);                 break;
                     }
                     break;
             }
