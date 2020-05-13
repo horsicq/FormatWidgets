@@ -68,7 +68,6 @@ private slots:
     void loadDirectory(int nNumber);
     void loadDebug(int nRow);
     bool createSectionTable(int type, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount);
-    void on_treeWidgetResources_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
     void on_pushButtonReload_clicked();
     void enableButton();
     void on_tableWidget_IMAGE_DIRECTORY_ENTRIES_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
@@ -105,6 +104,8 @@ private slots:
     void on_tableView_DelayImport_customContextMenuRequested(const QPoint &pos);
     void onTableView_DelayImport_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
     void on_tableView_DelayImport_doubleClicked(const QModelIndex &index);
+
+    void onTreeView_Resources_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
 
 private:
     enum CB
