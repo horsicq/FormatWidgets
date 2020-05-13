@@ -130,7 +130,7 @@ void PEWidget::reload()
 
         if(pe.isExceptionPresent())
         {
-            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_EXCEPTION,"Exception"));
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_EXCEPTION,"Exceptions"));
         }
 
         if(pe.isRelocsPresent())
