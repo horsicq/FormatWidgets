@@ -230,13 +230,22 @@ void FormatWidget::ajustTableView(ProcessData *pProcessData, QStandardItemModel 
 
     dialogProcessData.exec();
 
-    pTableView->setSortingEnabled(false);
+    bool bSort=pTableView->isSortingEnabled();
+
+    if(bSort)
+    {
+        pTableView->setSortingEnabled(false);
+    }
 
     pTableView->setModel(*ppModel);
 
     pProcessData->ajustTableView(this,pTableView);
 
-    pTableView->setSortingEnabled(true);
+    if(bSort)
+    {
+        pTableView->setSortingEnabled(true);
+        pTableView->sortByColumn(0,Qt::AscendingOrder);
+    }
 
     delete pOldModel; // TODO Thread
 }

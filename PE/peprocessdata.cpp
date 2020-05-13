@@ -50,7 +50,8 @@ void PEProcessData::_process()
 
         for(int i=0; i<nCount; i++)
         {
-            QStandardItem *itemNumber=new QStandardItem(QString::number(i));
+            QStandardItem *itemNumber=new QStandardItem;
+            itemNumber->setData(i,Qt::DisplayRole);
 
             itemNumber->setData(listSections.at(i).VirtualAddress,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS);
 
