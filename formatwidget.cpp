@@ -247,7 +247,7 @@ void FormatWidget::ajustTreeView(ProcessData *pProcessData, QStandardItemModel *
 
     pTreeView->setModel(*ppModel);
 
-//    pProcessData->ajustTreeView(this,pTreeView);
+    pProcessData->ajustTreeView(this,pTreeView);
 
     delete pOldModel; // TODO Thread
 }

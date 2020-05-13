@@ -23,6 +23,7 @@
 
 #include <QObject>
 #include <QTableView>
+#include <QTreeView>
 #include <QStandardItemModel>
 #include <QElapsedTimer>
 #include "formatwidget_def.h"
@@ -39,6 +40,7 @@ public:
     bool isRun();
     virtual void _process()=0;
     virtual void ajustTableView(QWidget *pWidget,QTableView *pTableView)=0;
+    virtual void ajustTreeView(QWidget *pWidget,QTreeView *pTreeView);
     static QList<QString> getStructList(const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount);
     static void setHeader(QStandardItemModel *pModel,QList<QString> *pList);
 

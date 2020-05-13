@@ -361,12 +361,16 @@ void PEProcessData::_process()
     {
         XPE::RESOURCE_HEADER rh=pPE->getResourceHeader();
 
+        *ppModel=new QStandardItemModel;
+
         int nHeaderCount=rh.listPositions.count();
 
         if(nHeaderCount)
         {
             QStandardItem *pRoot=new QStandardItem();
-            pRoot->setText(tr("Resource"));
+            pRoot->setText(tr("Resources"));
+
+            (*ppModel)->appendRow(pRoot);
 
             for(int i=0; i<nHeaderCount; i++)
             {

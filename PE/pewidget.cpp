@@ -1140,100 +1140,103 @@ void PEWidget::reloadData()
             // TODO model
             if(!bInit[nType])
             {
-                ui->treeWidgetResources->clear();
+                PEProcessData peProcessData(SPE::TYPE_RESOURCE,&tvModel[SPE::TYPE_RESOURCE],&pe,0,0,0);
 
-                XPE::RESOURCE_HEADER rh=pe.getResourceHeader();
+                ajustTreeView(&peProcessData,&tvModel[SPE::TYPE_RESOURCE],ui->treeViewResources);
+//                ui->treeWidgetResources->clear();
 
-                int nHeaderCount=rh.listPositions.count();
+//                XPE::RESOURCE_HEADER rh=pe.getResourceHeader();
 
-                if(nHeaderCount)
-                {
-                    QTreeWidgetItem *pRoot=new QTreeWidgetItem(ui->treeWidgetResources);
-                    pRoot->setText(0,tr("Resource"));
-                    //                ui->treeWidgetResource->insertTopLevelItem(0,);
+//                int nHeaderCount=rh.listPositions.count();
 
-                    for(int i=0; i<nHeaderCount; i++)
-                    {
-                        XPE::RESOURCE_POSITION pos=rh.listPositions.at(i);
-                        QTreeWidgetItem *pPos=new QTreeWidgetItem(pRoot);
-                        QString sPosText;
+//                if(nHeaderCount)
+//                {
+//                    QTreeWidgetItem *pRoot=new QTreeWidgetItem(ui->treeWidgetResources);
+//                    pRoot->setText(0,tr("Resource"));
+//                    //                ui->treeWidgetResource->insertTopLevelItem(0,);
 
-                        if(pos.rin.bIsName)
-                        {
-                            sPosText=QString("\"%1\"").arg(pos.rin.sName);
-                        }
-                        else
-                        {
-                            QMap<quint64, QString> mapRT=XPE::getResourceTypes();
-                            QString sType=mapRT.value(pos.rin.nID);
+//                    for(int i=0; i<nHeaderCount; i++)
+//                    {
+//                        XPE::RESOURCE_POSITION pos=rh.listPositions.at(i);
+//                        QTreeWidgetItem *pPos=new QTreeWidgetItem(pRoot);
+//                        QString sPosText;
 
-                            if(sType!="")
-                            {
-                                sPosText=QString("%1(%2)").arg(sType).arg(pos.rin.nID);
-                            }
-                            else
-                            {
-                                sPosText=QString("%1").arg(pos.rin.nID);
-                            }
-                        }
+//                        if(pos.rin.bIsName)
+//                        {
+//                            sPosText=QString("\"%1\"").arg(pos.rin.sName);
+//                        }
+//                        else
+//                        {
+//                            QMap<quint64, QString> mapRT=XPE::getResourceTypes();
+//                            QString sType=mapRT.value(pos.rin.nID);
 
-                        pPos->setText(0,sPosText);
+//                            if(sType!="")
+//                            {
+//                                sPosText=QString("%1(%2)").arg(sType).arg(pos.rin.nID);
+//                            }
+//                            else
+//                            {
+//                                sPosText=QString("%1").arg(pos.rin.nID);
+//                            }
+//                        }
 
-                        int nPosCount=pos.listPositions.count();
+//                        pPos->setText(0,sPosText);
 
-                        for(int j=0; j<nPosCount; j++)
-                        {
-                            XPE::RESOURCE_POSITION subpos=rh.listPositions.at(i).listPositions.at(j);
-                            QTreeWidgetItem *pSubPos=new QTreeWidgetItem(pPos);
-                            QString sSubPosText;
+//                        int nPosCount=pos.listPositions.count();
 
-                            if(subpos.rin.bIsName)
-                            {
-                                sSubPosText=QString("\"%1\"").arg(subpos.rin.sName);
-                            }
-                            else
-                            {
-                                sSubPosText=QString("%1").arg(subpos.rin.nID);
-                            }
+//                        for(int j=0; j<nPosCount; j++)
+//                        {
+//                            XPE::RESOURCE_POSITION subpos=rh.listPositions.at(i).listPositions.at(j);
+//                            QTreeWidgetItem *pSubPos=new QTreeWidgetItem(pPos);
+//                            QString sSubPosText;
 
-                            pSubPos->setText(0,sSubPosText);
+//                            if(subpos.rin.bIsName)
+//                            {
+//                                sSubPosText=QString("\"%1\"").arg(subpos.rin.sName);
+//                            }
+//                            else
+//                            {
+//                                sSubPosText=QString("%1").arg(subpos.rin.nID);
+//                            }
 
-                            int nSubPosCount=subpos.listPositions.count();
+//                            pSubPos->setText(0,sSubPosText);
 
-                            for(int k=0; k<nSubPosCount; k++)
-                            {
-                                XPE::RESOURCE_POSITION record=rh.listPositions.at(i).listPositions.at(j).listPositions.at(k);
-                                QTreeWidgetItem *pRecord=new QTreeWidgetItem(pSubPos);
-                                QString sRecordText;
+//                            int nSubPosCount=subpos.listPositions.count();
 
-                                if(record.rin.bIsName)
-                                {
-                                    sRecordText=QString("\"%1\"").arg(record.rin.sName);
-                                }
-                                else
-                                {
-                                    sRecordText=QString("%1").arg(record.rin.nID);
-                                }
+//                            for(int k=0; k<nSubPosCount; k++)
+//                            {
+//                                XPE::RESOURCE_POSITION record=rh.listPositions.at(i).listPositions.at(j).listPositions.at(k);
+//                                QTreeWidgetItem *pRecord=new QTreeWidgetItem(pSubPos);
+//                                QString sRecordText;
 
-                                pRecord->setText(0,sRecordText);
+//                                if(record.rin.bIsName)
+//                                {
+//                                    sRecordText=QString("\"%1\"").arg(record.rin.sName);
+//                                }
+//                                else
+//                                {
+//                                    sRecordText=QString("%1").arg(record.rin.nID);
+//                                }
 
-                                pRecord->setData(0,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE,record.data_entry.Size);
-                                pRecord->setData(0,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS,record.data_entry.OffsetToData);
+//                                pRecord->setText(0,sRecordText);
 
-                                if(getOptions()->bIsImage)
-                                {
-                                    pRecord->setData(0,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET,record.data_entry.OffsetToData);
-                                }
-                                else
-                                {
-                                    pRecord->setData(0,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET,record.nDataOffset);
-                                }
-                            }
-                        }
-                    }
+//                                pRecord->setData(0,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE,record.data_entry.Size);
+//                                pRecord->setData(0,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS,record.data_entry.OffsetToData);
 
-                    ui->treeWidgetResources->expandItem(pRoot);
-                }
+//                                if(getOptions()->bIsImage)
+//                                {
+//                                    pRecord->setData(0,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET,record.data_entry.OffsetToData);
+//                                }
+//                                else
+//                                {
+//                                    pRecord->setData(0,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET,record.nDataOffset);
+//                                }
+//                            }
+//                        }
+//                    }
+
+//                    ui->treeWidgetResources->expandItem(pRoot);
+//                }
             }
         }
         else if(nType==SPE::TYPE_RESOURCE_VERSION)

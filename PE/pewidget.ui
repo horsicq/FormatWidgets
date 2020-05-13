@@ -92,7 +92,7 @@
      </widget>
      <widget class="QStackedWidget" name="stackedWidgetInfo">
       <property name="currentIndex">
-       <number>23</number>
+       <number>12</number>
       </property>
       <widget class="QWidget" name="page_HEX">
        <layout class="QVBoxLayout" name="verticalLayout_13">
@@ -629,15 +629,13 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QTreeWidget" name="treeWidgetResources">
+         <widget class="QTreeView" name="treeViewResources">
           <attribute name="headerVisible">
            <bool>false</bool>
           </attribute>
-          <column>
-           <property name="text">
-            <string notr="true">1</string>
-           </property>
-          </column>
+          <attribute name="headerDefaultSectionSize">
+           <number>35</number>
+          </attribute>
          </widget>
         </item>
         <item>
