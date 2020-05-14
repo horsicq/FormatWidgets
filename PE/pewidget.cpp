@@ -376,22 +376,7 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, in
                     }
 
                     ui->widgetHex_IMAGE_OPTIONAL_HEADER->reload();
-
                     break;
-
-//                case SPE::TYPE_IMAGE_DIRECTORY_ENTRIES:
-//                    switch(nVtype)
-//                    {
-//                        case VAL_TYPE_RELADDRESS:
-//                            pe.setOptionalHeader_DataDirectory_VirtualAddress((quint32)nNdata,(quint32)nValue);
-//                            break;
-
-//                        case VAL_TYPE_SIZE:
-//                            pe.setOptionalHeader_DataDirectory_Size((quint32)nNdata,(quint32)nValue);
-//                            break;
-//                    }
-
-//                    break;
 
                 case SPE::TYPE_EXPORT:
                     switch(nNdata)
