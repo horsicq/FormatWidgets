@@ -107,6 +107,12 @@ private slots:
 
     void onTreeView_Resources_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
 
+    void on_pushButtonHex_clicked();
+    void on_pushButtonStrings_clicked();
+    void on_pushButtonMemoryMap_clicked();
+    void on_pushButtonEntropy_clicked();
+    void on_pushButtonHeuristicScan_clicked();
+
 private:
     enum CB
     {

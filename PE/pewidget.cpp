@@ -1997,3 +1997,28 @@ void PEWidget::onTreeView_Resources_currentRowChanged(const QModelIndex &current
         }
     }
 }
+
+void PEWidget::on_pushButtonHex_clicked()
+{
+    ui->treeWidgetNavi->setCurrentItem(ui->treeWidgetNavi->topLevelItem(SPE::TYPE_HEX));
+}
+
+void PEWidget::on_pushButtonStrings_clicked()
+{
+    ui->treeWidgetNavi->setCurrentItem(ui->treeWidgetNavi->topLevelItem(SPE::TYPE_STRINGS));
+}
+
+void PEWidget::on_pushButtonMemoryMap_clicked()
+{
+    ui->treeWidgetNavi->setCurrentItem(ui->treeWidgetNavi->topLevelItem(SPE::TYPE_MEMORYMAP));
+}
+
+void PEWidget::on_pushButtonEntropy_clicked()
+{
+    ui->treeWidgetNavi->setCurrentItem(ui->treeWidgetNavi->topLevelItem(SPE::TYPE_ENTROPY));
+}
+
+void PEWidget::on_pushButtonHeuristicScan_clicked()
+{
+    ui->treeWidgetNavi->setCurrentItem(ui->treeWidgetNavi->topLevelItem(SPE::TYPE_HEURISTICSCAN));
+}
