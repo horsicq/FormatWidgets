@@ -81,7 +81,7 @@ void MSDOSWidget::reload()
 
     if(msdos.isValid())
     {
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_HEX,tr("Tools")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_HEX,tr("Hex")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_STRINGS,tr("Strings")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_MEMORYMAP,tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_ENTROPY,tr("Entropy")));
@@ -220,7 +220,6 @@ void MSDOSWidget::reloadData()
 
                 bInit[nType]=true;
             }
-            ui->widgetHex->reload();
         }
         else if(nType==SMSDOS::TYPE_MEMORYMAP)
         {
@@ -230,7 +229,6 @@ void MSDOSWidget::reloadData()
 
                 bInit[nType]=true;
             }
-            ui->widgetHex->reload();
         }
         else if(nType==SMSDOS::TYPE_ENTROPY)
         {

@@ -36,9 +36,9 @@ DEPENDPATH += $$PWD
     include($$PWD/../XEntropyWidget/xentropywidget.pri)
 }
 
-!contains(XCONFIG, xentropywidget) {
-    XCONFIG += xentropywidget
-    include($$PWD/../StaticScan/formresult.pri)
+!contains(XCONFIG, heurwidget) {
+    XCONFIG += heurwidget
+    include($$PWD/../StaticScan/heurwidget.pri)
 }
 
 HEADERS += \

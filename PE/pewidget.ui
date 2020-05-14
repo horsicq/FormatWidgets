@@ -173,7 +173,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="page_Detect"/>
+      <widget class="QWidget" name="page_HeuristicScan"/>
       <widget class="QWidget" name="page_IMAGE_DOS_HEADER">
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <property name="leftMargin">
