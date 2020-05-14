@@ -173,7 +173,25 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="page_HeuristicScan"/>
+      <widget class="QWidget" name="page_HeuristicScan">
+       <layout class="QVBoxLayout" name="verticalLayout_25">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="HeurWidget" name="widgetHeuristicScan" native="true"/>
+        </item>
+       </layout>
+      </widget>
       <widget class="QWidget" name="page_IMAGE_DOS_HEADER">
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <property name="leftMargin">
@@ -1165,6 +1183,12 @@
    <class>XEntropyWidget</class>
    <extends>QWidget</extends>
    <header>xentropywidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>HeurWidget</class>
+   <extends>QWidget</extends>
+   <header>heurwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

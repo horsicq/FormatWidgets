@@ -716,7 +716,7 @@ void PEWidget::reloadData()
         {
             if(!bInit[nType])
             {
-                // TODO
+                ui->widgetHeuristicScan->setData(getDevice(),true);
             }
         }
         else if(nType==SPE::TYPE_IMAGE_DOS_HEADER)
