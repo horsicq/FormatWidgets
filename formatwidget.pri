@@ -36,6 +36,11 @@ DEPENDPATH += $$PWD
     include($$PWD/../XEntropyWidget/xentropywidget.pri)
 }
 
+!contains(XCONFIG, xentropywidget) {
+    XCONFIG += xentropywidget
+    include($$PWD/../StaticScan/formresult.pri)
+}
+
 HEADERS += \
     $$PWD/dialogentropy.h \
     $$PWD/dialogprocessdata.h \

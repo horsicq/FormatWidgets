@@ -83,10 +83,11 @@ void LEWidget::reload()
 
     if(le.isValid())
     {
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_HEX,tr("Tools")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_HEX,tr("Hex")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_STRINGS,tr("Strings")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_MEMORYMAP,tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_ENTROPY,tr("Entropy")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_DETECT,tr("Detect")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_DOS_HEADER,"DOS_HEADER"));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_VXD_HEADER,"VXD_HEADER"));
 
@@ -323,6 +324,15 @@ void LEWidget::reloadData()
             if(!bInit[nType])
             {
                 ui->widgetEntropy->setData(getDevice(),0,getDevice()->size(),true);
+
+                bInit[nType]=true;
+            }
+        }
+        else if(nType==SLE::TYPE_DETECT)
+        {
+            if(!bInit[nType])
+            {
+                // TODO
 
                 bInit[nType]=true;
             }

@@ -32,6 +32,7 @@ enum TYPE
     TYPE_STRINGS,
     TYPE_MEMORYMAP,
     TYPE_ENTROPY,
+    TYPE_DETECT,
     TYPE_Elf_Ehdr,
     TYPE_Elf_Shdr,
     TYPE_Elf_Phdr,

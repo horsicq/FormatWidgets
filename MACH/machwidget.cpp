@@ -80,6 +80,7 @@ void MACHWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_STRINGS,tr("Strings")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_MEMORYMAP,tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_ENTROPY,tr("Entropy")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_ENTROPY,tr("Detect")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_mach_header,mach.is64()?("mach_header_64"):("mach_header")));
 
         QList<XMACH::COMMAND_RECORD> listCommandRecords=mach.getCommandRecords();
@@ -247,7 +248,6 @@ void MACHWidget::reloadData()
 
                 bInit[nData]=true;
             }
-            ui->widgetHex->reload();
         }
         else if(nData==SMACH::TYPE_MEMORYMAP)
         {
@@ -257,7 +257,6 @@ void MACHWidget::reloadData()
 
                 bInit[nData]=true;
             }
-            ui->widgetHex->reload();
         }
         else if(nData==SMACH::TYPE_ENTROPY)
         {
@@ -267,7 +266,15 @@ void MACHWidget::reloadData()
 
                 bInit[nData]=true;
             }
-            ui->widgetHex->reload();
+        }
+        else if(nData==SMACH::TYPE_DETECT)
+        {
+            if(!bInit[nData])
+            {
+                // TODO
+
+                bInit[nData]=true;
+            }
         }
         else if(nData==SMACH::TYPE_mach_header)
         {

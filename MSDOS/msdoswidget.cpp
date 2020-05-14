@@ -85,6 +85,7 @@ void MSDOSWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_STRINGS,tr("Strings")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_MEMORYMAP,tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_ENTROPY,tr("Entropy")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_DETECT,tr("Detect")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_DOS_HEADER,"DOS_HEADER"));
 
         if(msdos.isOverlayPresent())
@@ -236,6 +237,15 @@ void MSDOSWidget::reloadData()
             if(!bInit[nType])
             {
                 ui->widgetEntropy->setData(getDevice(),0,getDevice()->size(),true);
+
+                bInit[nType]=true;
+            }
+        }
+        else if(nType==SMSDOS::TYPE_DETECT)
+        {
+            if(!bInit[nType])
+            {
+                // Detect
 
                 bInit[nType]=true;
             }

@@ -91,6 +91,7 @@ void PEWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_STRINGS,tr("Strings")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_MEMORYMAP,tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_ENTROPY,tr("Entropy")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_DETECT,tr("Detect")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_IMAGE_DOS_HEADER,"IMAGE_DOS_HEADER"));
         QTreeWidgetItem *pNtHeaders=createNewItem(SPE::TYPE_IMAGE_NT_HEADERS,"IMAGE_NT_HEADERS");
         ui->treeWidgetNavi->addTopLevelItem(pNtHeaders);
@@ -709,6 +710,13 @@ void PEWidget::reloadData()
             if(!bInit[nType])
             {
                 ui->widgetEntropy->setData(getDevice(),0,getDevice()->size(),true);
+            }
+        }
+        else if(nType==SPE::TYPE_DETECT)
+        {
+            if(!bInit[nType])
+            {
+                // TODO
             }
         }
         else if(nType==SPE::TYPE_IMAGE_DOS_HEADER)

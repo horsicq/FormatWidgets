@@ -87,6 +87,7 @@ void NEWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_STRINGS,tr("Strings")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_MEMORYMAP,tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_ENTROPY,tr("Entropy")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_DETECT,tr("Detect")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_DOS_HEADER,"DOS_HEADER"));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_OS2_HEADER,"OS2_HEADER"));
 
@@ -332,6 +333,15 @@ void NEWidget::reloadData()
             if(!bInit[nData])
             {
                 ui->widgetEntropy->setData(getDevice(),0,getDevice()->size(),true);
+
+                bInit[nData]=true;
+            }
+        }
+        else if(nData==SNE::TYPE_DETECT)
+        {
+            if(!bInit[nData])
+            {
+                // TODO
 
                 bInit[nData]=true;
             }
