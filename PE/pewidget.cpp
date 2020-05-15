@@ -697,6 +697,7 @@ void PEWidget::reloadData()
             if(!bInit[nType])
             {
                 pDisasmWidget->setData(getDevice(),0,0,true);
+                pDisasmWidget->goToEntryPoint();
             }
         }
 #endif
