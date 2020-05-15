@@ -41,6 +41,20 @@ DEPENDPATH += $$PWD
     include($$PWD/../StaticScan/heurwidget.pri)
 }
 
+contains(XCONFIG, use_disasm) {
+    DEFINES += USE_DISASM
+
+    !contains(XCONFIG, xdisasm) {
+        XCONFIG += xdisasm
+        include($$PWD/../XDisasm/xdisasm.pri)
+    }
+
+    !contains(XCONFIG, xcapstone) {
+        XCONFIG += xcapstone
+        include($$PWD/../XCapstone/xcapstone.pri)
+    }
+}
+
 HEADERS += \
     $$PWD/dialogentropy.h \
     $$PWD/dialogprocessdata.h \
