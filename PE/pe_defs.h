@@ -29,6 +29,7 @@ namespace SPE
 enum TYPE
 {
     TYPE_HEX=0,
+    TYPE_DISASM,
     TYPE_STRINGS,
     TYPE_MEMORYMAP,
     TYPE_ENTROPY,

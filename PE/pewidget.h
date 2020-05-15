@@ -113,6 +113,8 @@ private slots:
     void on_pushButtonEntropy_clicked();
     void on_pushButtonHeuristicScan_clicked();
 
+    void on_pushButtonDisasm_clicked();
+
 private:
     enum CB
     {
@@ -176,6 +178,9 @@ private:
     SubDevice *subDevice[SPE::__TYPE_size];
     bool bInit[SPE::__TYPE_size];
     QStandardItemModel *tvModel[SPE::__TYPE_size_ext];
+#ifdef USE_DISASM
+    XDisasmWidget *pDisasmWidget;
+#endif
 };
 
 #endif // PEWIDGET_H

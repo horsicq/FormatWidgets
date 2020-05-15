@@ -39,6 +39,9 @@
 #include "toolswidget.h"
 #include "formatwidget_def.h"
 #include "dialogprocessdata.h"
+#ifdef USE_DISASM
+#include "xdisasmwidget.h"
+#endif
 
 class FormatWidget : public QWidget
 {

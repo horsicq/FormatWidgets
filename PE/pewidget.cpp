@@ -26,6 +26,13 @@ PEWidget::PEWidget(QWidget *parent) :
     ui(new Ui::PEWidget)
 {
     ui->setupUi(this);
+
+#ifdef USE_DISASM
+    pDisasmWidget=new XDisasmWidget(this);
+    ui->layot_Disasm->addWidget(pDisasmWidget);
+#else
+    ui->pushButtonDisasm->hide();
+#endif
 }
 
 PEWidget::PEWidget(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions, QWidget *parent) :
@@ -88,6 +95,9 @@ void PEWidget::reload()
     if(pe.isValid())
     {
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_HEX,tr("Hex")));
+#ifdef USE_DISASM
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_DISASM,tr("Disasm")));
+#endif
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_STRINGS,tr("Strings")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_MEMORYMAP,tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_ENTROPY,tr("Entropy")));
@@ -681,6 +691,15 @@ void PEWidget::reloadData()
                 ui->widgetHex->reload();
             }
         }
+#ifdef USE_DISASM
+        else if(nType==SPE::TYPE_DISASM)
+        {
+            if(!bInit[nType])
+            {
+                pDisasmWidget->setData(getDevice(),0,0,true);
+            }
+        }
+#endif
         else if(nType==SPE::TYPE_STRINGS)
         {
             if(!bInit[nType])
@@ -2011,4 +2030,11 @@ void PEWidget::on_pushButtonEntropy_clicked()
 void PEWidget::on_pushButtonHeuristicScan_clicked()
 {
     ui->treeWidgetNavi->setCurrentItem(ui->treeWidgetNavi->topLevelItem(SPE::TYPE_HEURISTICSCAN));
+}
+
+void PEWidget::on_pushButtonDisasm_clicked()
+{
+#ifdef USE_DISASM
+    ui->treeWidgetNavi->setCurrentItem(ui->treeWidgetNavi->topLevelItem(SPE::TYPE_DISASM));
+#endif
 }
