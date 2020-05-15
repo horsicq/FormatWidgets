@@ -312,7 +312,6 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, in
                     }
 
                     ui->widgetHex_IMAGE_DOS_HEADER->reload();
-
                     break;
 
                 case SPE::TYPE_IMAGE_NT_HEADERS:
@@ -322,7 +321,6 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, in
                     }
 
                     ui->widgetHex_IMAGE_NT_HEADERS->reload();
-
                     break;
 
                 case SPE::TYPE_IMAGE_FILE_HEADER:
@@ -338,7 +336,6 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, in
                     }
 
                     ui->widgetHex_IMAGE_FILE_HEADER->reload();
-
                     break;
 
                 case SPE::TYPE_IMAGE_OPTIONAL_HEADER:
@@ -408,7 +405,6 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, in
                     }
 
                     ui->widgetHex_TLS->reload();
-
                     break;
 
                 case SPE::TYPE_RESOURCE_VERSION:
@@ -443,7 +439,6 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, in
                     }
 
                     ui->widgetHex_NetHeader->reload();
-
                     break;
 
                 case SPE::TYPE_LOADCONFIG:
@@ -471,7 +466,6 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, in
                     }
 
                     ui->widgetHex_LoadConfig->reload();
-
                     break;
             }
 
@@ -484,7 +478,6 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, in
                         case N_IMAGE_OPTIONAL_HEADER::BaseOfCode:                   addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::BaseOfCode,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress((quint32)nValue));            break;
                         case N_IMAGE_OPTIONAL_HEADER::BaseOfData:                   addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::BaseOfData,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress((quint32)nValue));            break;
                     }
-
                     break;
 
                 case SPE::TYPE_EXPORT:
@@ -495,7 +488,6 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, in
                         case N_IMAGE_EXPORT::AddressOfNames:        addComment(ui->tableWidget_ExportHeader,N_IMAGE_EXPORT::AddressOfNames,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress((quint32)nValue));          break;
                         case N_IMAGE_EXPORT::AddressOfNameOrdinals: addComment(ui->tableWidget_ExportHeader,N_IMAGE_EXPORT::AddressOfNameOrdinals,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress((quint32)nValue));   break;
                     }
-
                     break;
 
                 case SPE::TYPE_TLS:
@@ -686,8 +678,8 @@ void PEWidget::reloadData()
                 ui->widgetHex->setBackupFileName(getOptions()->sBackupFileName);
                 ui->widgetHex->enableReadOnly(false);
                 connect(ui->widgetHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+                ui->widgetHex->reload();
             }
-            ui->widgetHex->reload();
         }
         else if(nType==SPE::TYPE_STRINGS)
         {
@@ -695,7 +687,6 @@ void PEWidget::reloadData()
             {
                 ui->widgetStrings->setData(getDevice(),0,true);
             }
-            ui->widgetHex->reload();
         }
         else if(nType==SPE::TYPE_MEMORYMAP)
         {
@@ -703,7 +694,6 @@ void PEWidget::reloadData()
             {
                 ui->widgetMemoryMap->setData(getDevice());
             }
-            ui->widgetHex->reload();
         }
         else if(nType==SPE::TYPE_ENTROPY)
         {
