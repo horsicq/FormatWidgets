@@ -1428,7 +1428,16 @@ void PEWidget::reloadData()
                 lineEdit_NetHeader[N_IMAGE_NETHEADER::Resources_Address]->setValue(netHeader.Resources.VirtualAddress);
                 lineEdit_NetHeader[N_IMAGE_NETHEADER::Resources_Size]->setValue(netHeader.Resources.Size);
 
-                // TODO more
+                lineEdit_NetHeader[N_IMAGE_NETHEADER::StrongNameSignature_Address]->setValue(netHeader.StrongNameSignature.VirtualAddress);
+                lineEdit_NetHeader[N_IMAGE_NETHEADER::StrongNameSignature_Size]->setValue(netHeader.StrongNameSignature.Size);
+                lineEdit_NetHeader[N_IMAGE_NETHEADER::CodeManagerTable_Address]->setValue(netHeader.CodeManagerTable.VirtualAddress);
+                lineEdit_NetHeader[N_IMAGE_NETHEADER::CodeManagerTable_Size]->setValue(netHeader.CodeManagerTable.Size);
+                lineEdit_NetHeader[N_IMAGE_NETHEADER::VTableFixups_Address]->setValue(netHeader.VTableFixups.VirtualAddress);
+                lineEdit_NetHeader[N_IMAGE_NETHEADER::VTableFixups_Size]->setValue(netHeader.VTableFixups.Size);
+                lineEdit_NetHeader[N_IMAGE_NETHEADER::ExportAddressTableJumps_Address]->setValue(netHeader.ExportAddressTableJumps.VirtualAddress);
+                lineEdit_NetHeader[N_IMAGE_NETHEADER::ExportAddressTableJumps_Size]->setValue(netHeader.ExportAddressTableJumps.Size);
+                lineEdit_NetHeader[N_IMAGE_NETHEADER::ManagedNativeHeader_Address]->setValue(netHeader.ManagedNativeHeader.VirtualAddress);
+                lineEdit_NetHeader[N_IMAGE_NETHEADER::ManagedNativeHeader_Size]->setValue(netHeader.ManagedNativeHeader.Size);
 
                 comboBox[CB_IMAGE_NETHEADER_FLAGS]->setValue(netHeader.Flags);
 
