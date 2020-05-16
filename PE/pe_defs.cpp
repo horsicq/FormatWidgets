@@ -357,15 +357,25 @@ namespace N_IMAGE_NETHEADER
 {
 const FW_DEF::HEADER_RECORD records[]=
 {
-    {cb,                        "cb",                   offsetof(XPE_DEF::IMAGE_COR20_HEADER,cb),                       4,      "DWORD",        FW_DEF::VAL_TYPE_SIZE},
-    {MajorRuntimeVersion,       "MajorRuntimeVersion",  offsetof(XPE_DEF::IMAGE_COR20_HEADER,MajorRuntimeVersion),      2,      "WORD",         FW_DEF::VAL_TYPE_DATA},
-    {MinorRuntimeVersion,       "MinorRuntimeVersion",  offsetof(XPE_DEF::IMAGE_COR20_HEADER,MinorRuntimeVersion),      2,      "WORD",         FW_DEF::VAL_TYPE_DATA},
-    {MetaData_Address,          "MetaData_Address",     offsetof(XPE_DEF::IMAGE_COR20_HEADER,MetaData.VirtualAddress),  4,      "DWORD",        FW_DEF::VAL_TYPE_RELADDRESS},
-    {MetaData_Size,             "MetaData_Size",        offsetof(XPE_DEF::IMAGE_COR20_HEADER,MetaData.Size),            4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
-    {Flags,                     "Flags",                offsetof(XPE_DEF::IMAGE_COR20_HEADER,Flags),                    4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
-    {EntryPoint,                "EntryPoint",           offsetof(XPE_DEF::IMAGE_COR20_HEADER,EntryPointRVA),            4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
-    {Resources_Address,         "Resources_Address",    offsetof(XPE_DEF::IMAGE_COR20_HEADER,Resources.VirtualAddress), 4,      "DWORD",        FW_DEF::VAL_TYPE_RELADDRESS},
-    {Resources_Size,            "Resources_Size",       offsetof(XPE_DEF::IMAGE_COR20_HEADER,Resources.Size),           4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
+    {cb,                                "cb",                               offsetof(XPE_DEF::IMAGE_COR20_HEADER,cb),                                       4,      "DWORD",        FW_DEF::VAL_TYPE_SIZE},
+    {MajorRuntimeVersion,               "MajorRuntimeVersion",              offsetof(XPE_DEF::IMAGE_COR20_HEADER,MajorRuntimeVersion),                      2,      "WORD",         FW_DEF::VAL_TYPE_DATA},
+    {MinorRuntimeVersion,               "MinorRuntimeVersion",              offsetof(XPE_DEF::IMAGE_COR20_HEADER,MinorRuntimeVersion),                      2,      "WORD",         FW_DEF::VAL_TYPE_DATA},
+    {MetaData_Address,                  "MetaData_Address",                 offsetof(XPE_DEF::IMAGE_COR20_HEADER,MetaData.VirtualAddress),                  4,      "DWORD",        FW_DEF::VAL_TYPE_RELADDRESS},
+    {MetaData_Size,                     "MetaData_Size",                    offsetof(XPE_DEF::IMAGE_COR20_HEADER,MetaData.Size),                            4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
+    {Flags,                             "Flags",                            offsetof(XPE_DEF::IMAGE_COR20_HEADER,Flags),                                    4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
+    {EntryPoint,                        "EntryPoint",                       offsetof(XPE_DEF::IMAGE_COR20_HEADER,EntryPointRVA),                            4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
+    {Resources_Address,                 "Resources_Address",                offsetof(XPE_DEF::IMAGE_COR20_HEADER,Resources.VirtualAddress),                 4,      "DWORD",        FW_DEF::VAL_TYPE_RELADDRESS},
+    {Resources_Size,                    "Resources_Size",                   offsetof(XPE_DEF::IMAGE_COR20_HEADER,Resources.Size),                           4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
+    {StrongNameSignature_Address,       "StrongNameSignature_Address",      offsetof(XPE_DEF::IMAGE_COR20_HEADER,StrongNameSignature.VirtualAddress),       4,      "DWORD",        FW_DEF::VAL_TYPE_RELADDRESS},
+    {StrongNameSignature_Size,          "StrongNameSignature_Size",         offsetof(XPE_DEF::IMAGE_COR20_HEADER,StrongNameSignature.Size),                 4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
+    {CodeManagerTable_Address,          "CodeManagerTable_Address",         offsetof(XPE_DEF::IMAGE_COR20_HEADER,CodeManagerTable.VirtualAddress),          4,      "DWORD",        FW_DEF::VAL_TYPE_RELADDRESS},
+    {CodeManagerTable_Size,             "CodeManagerTable_Size",            offsetof(XPE_DEF::IMAGE_COR20_HEADER,CodeManagerTable.Size),                    4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
+    {VTableFixups_Address,              "VTableFixups_Address",             offsetof(XPE_DEF::IMAGE_COR20_HEADER,VTableFixups.VirtualAddress),              4,      "DWORD",        FW_DEF::VAL_TYPE_RELADDRESS},
+    {VTableFixups_Size,                 "VTableFixups_Size",                offsetof(XPE_DEF::IMAGE_COR20_HEADER,VTableFixups.Size),                        4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
+    {ExportAddressTableJumps_Address,   "ExportAddressTableJumps_Address",  offsetof(XPE_DEF::IMAGE_COR20_HEADER,ExportAddressTableJumps.VirtualAddress),   4,      "DWORD",        FW_DEF::VAL_TYPE_RELADDRESS},
+    {ExportAddressTableJumps_Size,      "ExportAddressTableJumps_Size",     offsetof(XPE_DEF::IMAGE_COR20_HEADER,ExportAddressTableJumps.Size),             4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
+    {ManagedNativeHeader_Address,       "ManagedNativeHeader_Address",      offsetof(XPE_DEF::IMAGE_COR20_HEADER,ManagedNativeHeader.VirtualAddress),       4,      "DWORD",        FW_DEF::VAL_TYPE_RELADDRESS},
+    {ManagedNativeHeader_Size,          "ManagedNativeHeader_Size",         offsetof(XPE_DEF::IMAGE_COR20_HEADER,ManagedNativeHeader.Size),                 4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
 };
 }
 

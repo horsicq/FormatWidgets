@@ -431,6 +431,16 @@ enum DATA
     EntryPoint,
     Resources_Address,
     Resources_Size,
+    StrongNameSignature_Address,
+    StrongNameSignature_Size,
+    CodeManagerTable_Address,
+    CodeManagerTable_Size,
+    VTableFixups_Address,
+    VTableFixups_Size,
+    ExportAddressTableJumps_Address,
+    ExportAddressTableJumps_Size,
+    ManagedNativeHeader_Address,
+    ManagedNativeHeader_Size,
     __data_size
 };
 
