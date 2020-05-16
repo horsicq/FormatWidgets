@@ -364,6 +364,8 @@ const FW_DEF::HEADER_RECORD records[]=
     {MetaData_Size,             "MetaData_Size",        offsetof(XPE_DEF::IMAGE_COR20_HEADER,MetaData.Size),            4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
     {Flags,                     "Flags",                offsetof(XPE_DEF::IMAGE_COR20_HEADER,Flags),                    4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
     {EntryPoint,                "EntryPoint",           offsetof(XPE_DEF::IMAGE_COR20_HEADER,EntryPointRVA),            4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
+    {Resources_Address,         "Resources_Address",    offsetof(XPE_DEF::IMAGE_COR20_HEADER,Resources.VirtualAddress), 4,      "DWORD",        FW_DEF::VAL_TYPE_RELADDRESS},
+    {Resources_Size,            "Resources_Size",       offsetof(XPE_DEF::IMAGE_COR20_HEADER,Resources.Size),           4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
 };
 }
 

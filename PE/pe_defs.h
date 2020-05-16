@@ -429,6 +429,8 @@ enum DATA
     MetaData_Size,
     Flags,
     EntryPoint,
+    Resources_Address,
+    Resources_Size,
     __data_size
 };
 

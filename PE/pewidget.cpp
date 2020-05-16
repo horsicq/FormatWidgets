@@ -446,6 +446,8 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, in
                         case N_IMAGE_NETHEADER::MetaData_Size:                      pe.setNetHeader_MetaData_Size((quint32)nValue);                 break;
                         case N_IMAGE_NETHEADER::Flags:                              pe.setNetHeader_Flags((quint32)nValue);                         break;
                         case N_IMAGE_NETHEADER::EntryPoint:                         pe.setNetHeader_EntryPoint((quint32)nValue);                    break;
+                        case N_IMAGE_NETHEADER::Resources_Address:                  pe.setNetHeader_Resources_Address((quint32)nValue);             break;
+                        case N_IMAGE_NETHEADER::Resources_Size:                     pe.setNetHeader_Resources_Size((quint32)nValue);                break;
                     }
 
                     ui->widgetHex_NetHeader->reload();
@@ -1414,7 +1416,7 @@ void PEWidget::reloadData()
 
                 blockSignals(true);
 
-                XPE_DEF::IMAGE_COR20_HEADER netHeader=pe.getIMAGE_COR20_HEADER();
+                XPE_DEF::IMAGE_COR20_HEADER netHeader=pe.getNetHeader();
 
                 lineEdit_NetHeader[N_IMAGE_NETHEADER::cb]->setValue(netHeader.cb);
                 lineEdit_NetHeader[N_IMAGE_NETHEADER::MajorRuntimeVersion]->setValue(netHeader.MajorRuntimeVersion);
@@ -1423,6 +1425,8 @@ void PEWidget::reloadData()
                 lineEdit_NetHeader[N_IMAGE_NETHEADER::MetaData_Size]->setValue(netHeader.MetaData.Size);
                 lineEdit_NetHeader[N_IMAGE_NETHEADER::Flags]->setValue(netHeader.Flags);
                 lineEdit_NetHeader[N_IMAGE_NETHEADER::EntryPoint]->setValue(netHeader.EntryPointRVA);
+                lineEdit_NetHeader[N_IMAGE_NETHEADER::Resources_Address]->setValue(netHeader.Resources.VirtualAddress);
+                lineEdit_NetHeader[N_IMAGE_NETHEADER::Resources_Size]->setValue(netHeader.Resources.Size);
 
                 // TODO more
 
