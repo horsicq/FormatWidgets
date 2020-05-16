@@ -1414,15 +1414,15 @@ void PEWidget::reloadData()
 
                 blockSignals(true);
 
-                XPE::NET_HEADER netHeader=pe.getNetHeader();
+                XPE_DEF::IMAGE_COR20_HEADER netHeader=pe.getIMAGE_COR20_HEADER();
 
                 lineEdit_NetHeader[N_IMAGE_NETHEADER::cb]->setValue(netHeader.cb);
                 lineEdit_NetHeader[N_IMAGE_NETHEADER::MajorRuntimeVersion]->setValue(netHeader.MajorRuntimeVersion);
                 lineEdit_NetHeader[N_IMAGE_NETHEADER::MinorRuntimeVersion]->setValue(netHeader.MinorRuntimeVersion);
-                lineEdit_NetHeader[N_IMAGE_NETHEADER::MetaData_Address]->setValue(netHeader.MetaData_Address);
-                lineEdit_NetHeader[N_IMAGE_NETHEADER::MetaData_Size]->setValue(netHeader.MetaData_Size);
+                lineEdit_NetHeader[N_IMAGE_NETHEADER::MetaData_Address]->setValue(netHeader.MetaData.VirtualAddress);
+                lineEdit_NetHeader[N_IMAGE_NETHEADER::MetaData_Size]->setValue(netHeader.MetaData.Size);
                 lineEdit_NetHeader[N_IMAGE_NETHEADER::Flags]->setValue(netHeader.Flags);
-                lineEdit_NetHeader[N_IMAGE_NETHEADER::EntryPoint]->setValue(netHeader.EntryPoint);
+                lineEdit_NetHeader[N_IMAGE_NETHEADER::EntryPoint]->setValue(netHeader.EntryPointRVA);
 
                 // TODO more
 
