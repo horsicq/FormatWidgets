@@ -439,15 +439,25 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, in
                 case SPE::TYPE_NETHEADER:
                     switch(nNdata)
                     {
-                        case N_IMAGE_NETHEADER::cb:                                 pe.setNetHeader_cb((quint32)nValue);                            break;
-                        case N_IMAGE_NETHEADER::MinorRuntimeVersion:                pe.setNetHeader_MinorRuntimeVersion((quint16)nValue);           break;
-                        case N_IMAGE_NETHEADER::MajorRuntimeVersion:                pe.setNetHeader_MajorRuntimeVersion((quint16)nValue);           break;
-                        case N_IMAGE_NETHEADER::MetaData_Address:                   pe.setNetHeader_MetaData_Address((quint32)nValue);              break;
-                        case N_IMAGE_NETHEADER::MetaData_Size:                      pe.setNetHeader_MetaData_Size((quint32)nValue);                 break;
-                        case N_IMAGE_NETHEADER::Flags:                              pe.setNetHeader_Flags((quint32)nValue);                         break;
-                        case N_IMAGE_NETHEADER::EntryPoint:                         pe.setNetHeader_EntryPoint((quint32)nValue);                    break;
-                        case N_IMAGE_NETHEADER::Resources_Address:                  pe.setNetHeader_Resources_Address((quint32)nValue);             break;
-                        case N_IMAGE_NETHEADER::Resources_Size:                     pe.setNetHeader_Resources_Size((quint32)nValue);                break;
+                        case N_IMAGE_NETHEADER::cb:                                 pe.setNetHeader_cb((quint32)nValue);                                break;
+                        case N_IMAGE_NETHEADER::MinorRuntimeVersion:                pe.setNetHeader_MinorRuntimeVersion((quint16)nValue);               break;
+                        case N_IMAGE_NETHEADER::MajorRuntimeVersion:                pe.setNetHeader_MajorRuntimeVersion((quint16)nValue);               break;
+                        case N_IMAGE_NETHEADER::MetaData_Address:                   pe.setNetHeader_MetaData_Address((quint32)nValue);                  break;
+                        case N_IMAGE_NETHEADER::MetaData_Size:                      pe.setNetHeader_MetaData_Size((quint32)nValue);                     break;
+                        case N_IMAGE_NETHEADER::Flags:                              pe.setNetHeader_Flags((quint32)nValue);                             break;
+                        case N_IMAGE_NETHEADER::EntryPoint:                         pe.setNetHeader_EntryPoint((quint32)nValue);                        break;
+                        case N_IMAGE_NETHEADER::Resources_Address:                  pe.setNetHeader_Resources_Address((quint32)nValue);                 break;
+                        case N_IMAGE_NETHEADER::Resources_Size:                     pe.setNetHeader_Resources_Size((quint32)nValue);                    break;
+                        case N_IMAGE_NETHEADER::StrongNameSignature_Address:        pe.setNetHeader_StrongNameSignature_Address((quint32)nValue);       break;
+                        case N_IMAGE_NETHEADER::StrongNameSignature_Size:           pe.setNetHeader_StrongNameSignature_Size((quint32)nValue);          break;
+                        case N_IMAGE_NETHEADER::CodeManagerTable_Address:           pe.setNetHeader_CodeManagerTable_Address((quint32)nValue);          break;
+                        case N_IMAGE_NETHEADER::CodeManagerTable_Size:              pe.setNetHeader_CodeManagerTable_Size((quint32)nValue);             break;
+                        case N_IMAGE_NETHEADER::VTableFixups_Address:               pe.setNetHeader_VTableFixups_Address((quint32)nValue);              break;
+                        case N_IMAGE_NETHEADER::VTableFixups_Size:                  pe.setNetHeader_VTableFixups_Size((quint32)nValue);                 break;
+                        case N_IMAGE_NETHEADER::ExportAddressTableJumps_Address:    pe.setNetHeader_ExportAddressTableJumps_Address((quint32)nValue);   break;
+                        case N_IMAGE_NETHEADER::ExportAddressTableJumps_Size:       pe.setNetHeader_ExportAddressTableJumps_Size((quint32)nValue);      break;
+                        case N_IMAGE_NETHEADER::ManagedNativeHeader_Address:        pe.setNetHeader_ManagedNativeHeader_Address((quint32)nValue);       break;
+                        case N_IMAGE_NETHEADER::ManagedNativeHeader_Size:           pe.setNetHeader_ManagedNativeHeader_Size((quint32)nValue);          break;
                     }
 
                     ui->widgetHex_NetHeader->reload();
@@ -1427,7 +1437,6 @@ void PEWidget::reloadData()
                 lineEdit_NetHeader[N_IMAGE_NETHEADER::EntryPoint]->setValue(netHeader.EntryPointRVA);
                 lineEdit_NetHeader[N_IMAGE_NETHEADER::Resources_Address]->setValue(netHeader.Resources.VirtualAddress);
                 lineEdit_NetHeader[N_IMAGE_NETHEADER::Resources_Size]->setValue(netHeader.Resources.Size);
-
                 lineEdit_NetHeader[N_IMAGE_NETHEADER::StrongNameSignature_Address]->setValue(netHeader.StrongNameSignature.VirtualAddress);
                 lineEdit_NetHeader[N_IMAGE_NETHEADER::StrongNameSignature_Size]->setValue(netHeader.StrongNameSignature.Size);
                 lineEdit_NetHeader[N_IMAGE_NETHEADER::CodeManagerTable_Address]->setValue(netHeader.CodeManagerTable.VirtualAddress);
