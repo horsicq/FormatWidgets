@@ -145,6 +145,7 @@ void PEProcessData::_process()
     else if(type==SPE::TYPE_IMPORT)
     {
         QList<QString> listLabels;
+        listLabels.append("");
         listLabels.append(getStructList(N_IMAGE_IMPORT::records,N_IMAGE_IMPORT::__data_size));
         listLabels.append("");
 
@@ -160,12 +161,15 @@ void PEProcessData::_process()
 
         for(int i=0; i<nCount; i++)
         {
-            (*ppModel)->setItem(i,N_IMAGE_IMPORT::OriginalFirstThunk,              new QStandardItem(XBinary::valueToHex(listID.at(i).OriginalFirstThunk)));
-            (*ppModel)->setItem(i,N_IMAGE_IMPORT::TimeDateStamp,                   new QStandardItem(XBinary::valueToHex(listID.at(i).TimeDateStamp)));
-            (*ppModel)->setItem(i,N_IMAGE_IMPORT::ForwarderChain,                  new QStandardItem(XBinary::valueToHex(listID.at(i).ForwarderChain)));
-            (*ppModel)->setItem(i,N_IMAGE_IMPORT::Name,                            new QStandardItem(XBinary::valueToHex(listID.at(i).Name)));
-            (*ppModel)->setItem(i,N_IMAGE_IMPORT::FirstThunk,                      new QStandardItem(XBinary::valueToHex(listID.at(i).FirstThunk)));
-            (*ppModel)->setItem(i,N_IMAGE_IMPORT::FirstThunk+1,                    new QStandardItem(listID.at(i).sLibrary));
+            QStandardItem *pItem=new QStandardItem;
+            pItem->setData(i,Qt::DisplayRole);
+            (*ppModel)->setItem(i,0,                                                pItem);
+            (*ppModel)->setItem(i,N_IMAGE_IMPORT::OriginalFirstThunk+1,             new QStandardItem(XBinary::valueToHex(listID.at(i).OriginalFirstThunk)));
+            (*ppModel)->setItem(i,N_IMAGE_IMPORT::TimeDateStamp+1,                  new QStandardItem(XBinary::valueToHex(listID.at(i).TimeDateStamp)));
+            (*ppModel)->setItem(i,N_IMAGE_IMPORT::ForwarderChain+1,                 new QStandardItem(XBinary::valueToHex(listID.at(i).ForwarderChain)));
+            (*ppModel)->setItem(i,N_IMAGE_IMPORT::Name+1,                           new QStandardItem(XBinary::valueToHex(listID.at(i).Name)));
+            (*ppModel)->setItem(i,N_IMAGE_IMPORT::FirstThunk+1,                     new QStandardItem(XBinary::valueToHex(listID.at(i).FirstThunk)));
+            (*ppModel)->setItem(i,N_IMAGE_IMPORT::FirstThunk+2,                     new QStandardItem(listID.at(i).sLibrary));
 
             incValue();
         }
@@ -495,12 +499,13 @@ void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
     }
     else if(type==SPE::TYPE_IMPORT)
     {
-        pTableView->setColumnWidth(0,nSymbolWidth*8);
+        pTableView->setColumnWidth(0,nSymbolWidth*4);
         pTableView->setColumnWidth(1,nSymbolWidth*8);
         pTableView->setColumnWidth(2,nSymbolWidth*8);
         pTableView->setColumnWidth(3,nSymbolWidth*8);
         pTableView->setColumnWidth(4,nSymbolWidth*8);
-        pTableView->setColumnWidth(5,nSymbolWidth*12);
+        pTableView->setColumnWidth(5,nSymbolWidth*8);
+        pTableView->setColumnWidth(6,nSymbolWidth*12);
     }
     else if(type==SPE::TYPE_IMPORT_FUNCTION)
     {
