@@ -134,7 +134,7 @@
      </widget>
      <widget class="QStackedWidget" name="stackedWidgetInfo">
       <property name="currentIndex">
-       <number>1</number>
+       <number>19</number>
       </property>
       <widget class="QWidget" name="page_HEX">
        <layout class="QVBoxLayout" name="verticalLayout_13">
@@ -972,6 +972,9 @@
           </property>
           <attribute name="horizontalHeaderDefaultSectionSize">
            <number>35</number>
+          </attribute>
+          <attribute name="verticalHeaderVisible">
+           <bool>false</bool>
           </attribute>
           <attribute name="verticalHeaderMinimumSectionSize">
            <number>20</number>

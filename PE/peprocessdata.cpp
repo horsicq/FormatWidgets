@@ -332,6 +332,7 @@ void PEProcessData::_process()
     else if(type==SPE::TYPE_DEBUG)
     {
         QList<QString> listLabels;
+        listLabels.append("");
         listLabels.append(getStructList(N_IMAGE_DEBUG::records,N_IMAGE_DEBUG::__data_size));
 
         QList<XPE_DEF::S_IMAGE_DEBUG_DIRECTORY> listDebug=pPE->getDebugList();
@@ -346,18 +347,20 @@ void PEProcessData::_process()
 
         for(int i=0; i<nCount; i++)
         {
-            QStandardItem *pItem=new QStandardItem(XBinary::valueToHex(listDebug.at(i).Characteristics));
+            QStandardItem *pItem=new QStandardItem;
+            pItem->setData(i,Qt::DisplayRole);
             pItem->setData(listDebug.at(i).AddressOfRawData,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS);
             pItem->setData(listDebug.at(i).SizeOfData,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
             pItem->setData(listDebug.at(i).PointerToRawData,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
-            (*ppModel)->setItem(i,N_IMAGE_DEBUG::Characteristics,                    pItem);
-            (*ppModel)->setItem(i,N_IMAGE_DEBUG::TimeDateStamp,                     new QStandardItem(XBinary::valueToHex(listDebug.at(i).TimeDateStamp)));
-            (*ppModel)->setItem(i,N_IMAGE_DEBUG::MajorVersion,                      new QStandardItem(XBinary::valueToHex(listDebug.at(i).MajorVersion)));
-            (*ppModel)->setItem(i,N_IMAGE_DEBUG::MinorVersion,                      new QStandardItem(XBinary::valueToHex(listDebug.at(i).MinorVersion)));
-            (*ppModel)->setItem(i,N_IMAGE_DEBUG::Type,                              new QStandardItem(XBinary::valueToHex(listDebug.at(i).Type)));
-            (*ppModel)->setItem(i,N_IMAGE_DEBUG::SizeOfData,                        new QStandardItem(XBinary::valueToHex(listDebug.at(i).SizeOfData)));
-            (*ppModel)->setItem(i,N_IMAGE_DEBUG::AddressOfRawData,                  new QStandardItem(XBinary::valueToHex(listDebug.at(i).AddressOfRawData)));
-            (*ppModel)->setItem(i,N_IMAGE_DEBUG::PointerToRawData,                  new QStandardItem(XBinary::valueToHex(listDebug.at(i).PointerToRawData)));
+            (*ppModel)->setItem(i,0,                                                pItem);
+            (*ppModel)->setItem(i,N_IMAGE_DEBUG::Characteristics+1,                 new QStandardItem(XBinary::valueToHex(listDebug.at(i).Characteristics)));
+            (*ppModel)->setItem(i,N_IMAGE_DEBUG::TimeDateStamp+1,                   new QStandardItem(XBinary::valueToHex(listDebug.at(i).TimeDateStamp)));
+            (*ppModel)->setItem(i,N_IMAGE_DEBUG::MajorVersion+1,                    new QStandardItem(XBinary::valueToHex(listDebug.at(i).MajorVersion)));
+            (*ppModel)->setItem(i,N_IMAGE_DEBUG::MinorVersion+1,                    new QStandardItem(XBinary::valueToHex(listDebug.at(i).MinorVersion)));
+            (*ppModel)->setItem(i,N_IMAGE_DEBUG::Type+1,                            new QStandardItem(XBinary::valueToHex(listDebug.at(i).Type)));
+            (*ppModel)->setItem(i,N_IMAGE_DEBUG::SizeOfData+1,                      new QStandardItem(XBinary::valueToHex(listDebug.at(i).SizeOfData)));
+            (*ppModel)->setItem(i,N_IMAGE_DEBUG::AddressOfRawData+1,                new QStandardItem(XBinary::valueToHex(listDebug.at(i).AddressOfRawData)));
+            (*ppModel)->setItem(i,N_IMAGE_DEBUG::PointerToRawData+1,                new QStandardItem(XBinary::valueToHex(listDebug.at(i).PointerToRawData)));
 
             incValue();
         }
@@ -542,7 +545,7 @@ void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
     }
     else if(type==SPE::TYPE_DEBUG)
     {
-        pTableView->setColumnWidth(0,nSymbolWidth*8);
+        pTableView->setColumnWidth(0,nSymbolWidth*4);
         pTableView->setColumnWidth(1,nSymbolWidth*8);
         pTableView->setColumnWidth(2,nSymbolWidth*8);
         pTableView->setColumnWidth(3,nSymbolWidth*8);
@@ -550,5 +553,6 @@ void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
         pTableView->setColumnWidth(5,nSymbolWidth*8);
         pTableView->setColumnWidth(6,nSymbolWidth*8);
         pTableView->setColumnWidth(7,nSymbolWidth*8);
+        pTableView->setColumnWidth(8,nSymbolWidth*8);
     }
 }
