@@ -332,7 +332,7 @@ void SectionHeaderWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget
             pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*6);
             pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*20);
             pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*20);
             break;
 
         case SPE::TYPE_RELOCS:
