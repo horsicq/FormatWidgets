@@ -179,6 +179,11 @@ void PEWidget::reload()
             ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_NETHEADER,".NET"));
         }
 
+        // TODO NET MetaData
+        // TODO NET Resources
+        // TODO NET Strings
+        // TODO NET UnicodeStrings
+
         if(pe.isOverlayPresent())
         {
             ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_OVERLAY,tr("Overlay")));
