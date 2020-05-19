@@ -171,6 +171,11 @@ bool SectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int
                     {
                         case N_IMAGE_SECTION_HEADER::VirtualAddress:        ppInvWidget[N_IMAGE_SECTION_HEADER::INV_VirtualAddress]->setAddressAndSize(&pe,pe.getBaseAddress()+(quint32)nValue,0);        break;
                         case N_IMAGE_SECTION_HEADER::PointerToRawData:      ppInvWidget[N_IMAGE_SECTION_HEADER::INV_PointerToRawData]->setOffsetAndSize(&pe,(quint32)nValue,0);                           break;
+                        case N_IMAGE_SECTION_HEADER::Characteristics:
+                        case N_IMAGE_SECTION_HEADER::Characteristics+1:
+                            ppComboBox[N_IMAGE_SECTION_HEADER::CB_CHARACTERISTICS]->setValue((quint32)nValue);
+                            ppComboBox[N_IMAGE_SECTION_HEADER::CB_ALIGH]->setValue((quint32)nValue);
+                            break;
                     }
                     break;
 
@@ -180,6 +185,13 @@ bool SectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int
                         case N_IMAGE_IMPORT::OriginalFirstThunk:            ppInvWidget[N_IMAGE_IMPORT::INV_OriginalFirstThunk]->setAddressAndSize(&pe,pe.getBaseAddress()+(quint32)nValue,0);    break;
                         case N_IMAGE_IMPORT::Name:                          ppInvWidget[N_IMAGE_IMPORT::INV_Name]->setAddressAndSize(&pe,pe.getBaseAddress()+(quint32)nValue,0);                  break;
                         case N_IMAGE_IMPORT::FirstThunk:                    ppInvWidget[N_IMAGE_IMPORT::INV_FirstThunk]->setAddressAndSize(&pe,pe.getBaseAddress()+(quint32)nValue,0);            break;
+                    }
+                    break;
+
+                case SPE::TYPE_DEBUG:
+                    switch(nNdata)
+                    {
+                        case N_IMAGE_DEBUG::Type:              ppComboBox[N_IMAGE_DEBUG::CB_TYPE]->setValue((quint32)nValue);        break;
                     }
                     break;
             }
@@ -449,6 +461,7 @@ void SectionHeaderWidget::reloadData()
                 if(!bInit)
                 {
                     bInit=createHeaderTable(SPE::TYPE_DEBUG,ui->tableWidget,N_IMAGE_DEBUG::records,ppLinedEdit,N_IMAGE_DEBUG::__data_size,getNumber());
+                    ppComboBox[N_IMAGE_DEBUG::CB_TYPE]=createComboBox(ui->tableWidget,XPE::getDebugTypesS(),SPE::TYPE_DEBUG,N_IMAGE_DEBUG::Type,XComboBoxEx::CBTYPE_NORMAL);
                 }
 
                 blockSignals(true);
@@ -463,6 +476,8 @@ void SectionHeaderWidget::reloadData()
                 ppLinedEdit[N_IMAGE_DEBUG::SizeOfData]->setValue(idd.SizeOfData);
                 ppLinedEdit[N_IMAGE_DEBUG::AddressOfRawData]->setValue(idd.AddressOfRawData);
                 ppLinedEdit[N_IMAGE_DEBUG::PointerToRawData]->setValue(idd.PointerToRawData);
+
+                ppComboBox[N_IMAGE_DEBUG::CB_TYPE]->setValue(idd.Type);
 
                 qint64 nOffset=pe.getDebugHeaderOffset(getNumber());
                 qint64 nSize=pe.getDebugHeaderSize();
@@ -573,7 +588,15 @@ void SectionHeaderWidget::widgetValueChanged(quint64 nValue)
                     ppComboBox[N_IMAGE_SECTION_HEADER::CB_ALIGH]->setValue(nValue);
                     break;
             }
+            break;
 
+        case SPE::TYPE_DEBUG:
+            switch(nNdata)
+            {
+                case N_IMAGE_DEBUG::Type:
+                    ppLinedEdit[N_IMAGE_DEBUG::Type]->setValue((quint32)nValue);
+                    break;
+            }
             break;
     }
 }

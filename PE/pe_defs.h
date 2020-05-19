@@ -308,6 +308,7 @@ extern const FW_DEF::HEADER_RECORD records[__data_size];
 
 enum CB
 {
+    CB_TYPE=0,
     __CB_size
 };
 enum INV
