@@ -178,6 +178,11 @@ void PEWidget::reload()
         {  
             QTreeWidgetItem *pNetHeader=createNewItem(SPE::TYPE_NETHEADER,".NET");
             ui->treeWidgetNavi->addTopLevelItem(pNetHeader);
+
+            if(pe.isNetMetadataPresent())
+            {
+                // TODO
+            }
         }
 
         // TODO NET MetaData
