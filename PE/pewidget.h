@@ -115,6 +115,8 @@ private slots:
 
     void on_pushButtonDisasm_clicked();
 
+    void on_tableWidget_Net_Metadata_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
+
 private:
     enum CB
     {

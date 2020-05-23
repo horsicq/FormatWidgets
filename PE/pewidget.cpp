@@ -2091,3 +2091,13 @@ void PEWidget::on_pushButtonDisasm_clicked()
     ui->treeWidgetNavi->setCurrentItem(ui->treeWidgetNavi->topLevelItem(SPE::TYPE_DISASM));
 #endif
 }
+
+void PEWidget::on_tableWidget_Net_Metadata_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
+{
+    Q_UNUSED(currentRow)
+    Q_UNUSED(currentColumn)
+    Q_UNUSED(previousRow)
+    Q_UNUSED(previousColumn)
+
+    setHeaderTableSelection(ui->widgetHex_Net_Metadata,ui->tableWidget_Net_Metadata);
+}
