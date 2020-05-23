@@ -1480,6 +1480,10 @@ void PEWidget::reloadData()
 
                 XBinary::OFFSETSIZE os=pe.getNet_MetadataOffsetSize();
 
+                XPE::CLI_METADATA_HEADER header=pe._read_MetadataHeader(os.nOffset);
+
+                // TODO
+
                 qint64 nOffset=os.nOffset;
                 qint64 nSize=os.nSize;
                 qint64 nAddress=pe.offsetToRelAddress(nOffset);
