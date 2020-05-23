@@ -181,7 +181,7 @@ void PEWidget::reload()
 
             if(pe.isNetMetadataPresent())
             {
-                // TODO
+                pNetHeader->addChild(createNewItem(SPE::TYPE_NET_METADATA,"Metadata"));
             }
         }
 
@@ -1466,6 +1466,17 @@ void PEWidget::reloadData()
                 qint64 nAddress=pe.offsetToRelAddress(nOffset);
 
                 loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_NETHEADER],ui->widgetHex_NetHeader);
+
+                blockSignals(false);
+            }
+        }
+        else if(nType==SPE::TYPE_NET_METADATA)
+        {
+            if(!bInit[nType])
+            {
+                createHeaderTable(SPE::TYPE_NET_METADATA,ui->tableWidget_Net_Metadata,N_IMAGE_NET_METADATA::records,lineEdit_Net_Metadata,N_IMAGE_NET_METADATA::__data_size,0);
+
+                blockSignals(true);
 
                 blockSignals(false);
             }
