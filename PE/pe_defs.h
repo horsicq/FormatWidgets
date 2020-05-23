@@ -449,6 +449,24 @@ enum DATA
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 }
 
+namespace N_IMAGE_NET_METADATA
+{
+enum DATA
+{
+    Signature=0,
+    MajorVersion,
+    MinorVersion,
+    Reserved,
+    VersionStringLength,
+    Version,
+    Flags,
+    Streams,
+    __data_size
+};
+
+extern const FW_DEF::HEADER_RECORD records[__data_size];
+}
+
 namespace N_IMAGE_EXCEPTIONS
 {
 enum DATA
