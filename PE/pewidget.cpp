@@ -1478,6 +1478,14 @@ void PEWidget::reloadData()
 
                 blockSignals(true);
 
+                XBinary::OFFSETSIZE os=pe.getNet_MetadataOffsetSize();
+
+                qint64 nOffset=os.nOffset;
+                qint64 nSize=os.nSize;
+                qint64 nAddress=pe.offsetToRelAddress(nOffset);
+
+                loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_NET_METADATA],ui->widgetHex_Net_Metadata);
+
                 blockSignals(false);
             }
         }
