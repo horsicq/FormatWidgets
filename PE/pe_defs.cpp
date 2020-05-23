@@ -379,6 +379,21 @@ const FW_DEF::HEADER_RECORD records[]=
 };
 }
 
+namespace N_IMAGE_NET_METADATA
+{
+const FW_DEF::HEADER_RECORD records[]=
+{
+    {Signature,                 "Signature",                0,  0,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
+    {MajorVersion,              "MajorVersion",             0,  0,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
+    {MinorVersion,              "MinorVersion",             0,  0,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
+    {Reserved,                  "Reserved",                 0,  0,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
+    {VersionStringLength,       "VersionStringLength",      0,  0,      "DWORD",        FW_DEF::VAL_TYPE_SIZE},
+    {Version,                   "Version",                  0,  0,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
+    {Flags,                     "Flags",                    0,  0,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
+    {Streams,                   "Streams",                  0,  0,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
+};
+}
+
 namespace N_IMAGE_RESOURCE_FIXEDFILEINFO
 {
 const FW_DEF::HEADER_RECORD records[]=
