@@ -383,14 +383,14 @@ namespace N_IMAGE_NET_METADATA
 {
 const FW_DEF::HEADER_RECORD records[]=
 {
-    {Signature,                 "Signature",                0,  0,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
-    {MajorVersion,              "MajorVersion",             0,  0,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
-    {MinorVersion,              "MinorVersion",             0,  0,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
-    {Reserved,                  "Reserved",                 0,  0,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
-    {VersionStringLength,       "VersionStringLength",      0,  0,      "DWORD",        FW_DEF::VAL_TYPE_SIZE},
-    {Version,                   "Version",                  0,  0,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
-    {Flags,                     "Flags",                    0,  0,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
-    {Streams,                   "Streams",                  0,  0,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
+    {Signature,                 "Signature",                0,  4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
+    {MajorVersion,              "MajorVersion",             4,  2,      "WORD",         FW_DEF::VAL_TYPE_DATA},
+    {MinorVersion,              "MinorVersion",             6,  2,      "WORD",         FW_DEF::VAL_TYPE_DATA},
+    {Reserved,                  "Reserved",                 8,  4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
+    {VersionStringLength,       "VersionStringLength",      12, 4,      "DWORD",        FW_DEF::VAL_TYPE_SIZE},
+    {Version,                   "Version",                  -1, 0,      "TEXT",         FW_DEF::VAL_TYPE_TEXT},
+    {Flags,                     "Flags",                    -1, 2,      "WORD",         FW_DEF::VAL_TYPE_DATA},
+    {Streams,                   "Streams",                  -1, 2,      "WORD",         FW_DEF::VAL_TYPE_DATA},
 };
 }
 
