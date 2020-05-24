@@ -1487,9 +1487,12 @@ void PEWidget::reloadData()
                 lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::MinorVersion]->setValue(header.nMinorVersion);
                 lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::Reserved]->setValue(header.nReserved);
                 lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::VersionStringLength]->setValue(header.nVersionStringLength);
-                lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::Version]->setText(header.sVersion);
+                lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::Version]->setStringValue(header.sVersion,header.nVersionStringLength);
                 lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::Flags]->setValue(header.nFlags);
                 lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::Streams]->setValue(header.nStreams);
+
+                updateTableRecord(ui->tableWidget_Net_Metadata,N_IMAGE_NET_METADATA::Flags,16+header.nVersionStringLength,2);
+                updateTableRecord(ui->tableWidget_Net_Metadata,N_IMAGE_NET_METADATA::Streams,16+header.nVersionStringLength+2,2);
 
                 qint64 nOffset=os.nOffset;
                 qint64 nSize=os.nSize;

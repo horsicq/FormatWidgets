@@ -525,6 +525,14 @@ void FormatWidget::addComment(QTableWidget *pTableWidget, int nRow, int nColumn,
     pTableWidget->item(nRow,nColumn)->setText(sComment);
 }
 
+void FormatWidget::updateTableRecord(QTableWidget *pTableWidget, int nRow, qint64 nOffset, qint64 nSize)
+{
+    pTableWidget->item(nRow,HEADER_COLUMN_NAME)->setData(Qt::UserRole+HEADER_DATA_OFFSET,nOffset);
+    pTableWidget->item(nRow,HEADER_COLUMN_NAME)->setData(Qt::UserRole+HEADER_DATA_SIZE,nSize);
+    pTableWidget->item(nRow,HEADER_COLUMN_OFFSET)->setText(XBinary::valueToHex((quint16)nOffset));
+    pTableWidget->cellWidget(nRow,HEADER_COLUMN_VALUE)->setProperty("OFFSET",nOffset);
+}
+
 //bool FormatWidget::createDirectoryTable(int type, QTableWidget *pTableWidget, const DIRECTORY_ENTRY_RECORD *pRecords, int nRecordCount)
 //{
 //    Q_UNUSED(type)
