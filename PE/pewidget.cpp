@@ -62,6 +62,7 @@ void PEWidget::clear()
     memset(lineEdit_LoadConfig,0,sizeof lineEdit_LoadConfig);
     memset(lineEdit_Version_FixedFileInfo,0,sizeof lineEdit_Version_FixedFileInfo);
     memset(lineEdit_NetHeader,0,sizeof lineEdit_NetHeader);
+    memset(lineEdit_Net_Metadata,0,sizeof lineEdit_Net_Metadata);
     memset(lineEdit_EXPORT,0,sizeof lineEdit_EXPORT);
     memset(comboBox,0,sizeof comboBox);
     memset(pushButton,0,sizeof pushButton);
@@ -474,6 +475,15 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, in
                     ui->widgetHex_NetHeader->reload();
                     break;
 
+                case SPE::TYPE_NET_METADATA:
+                    switch(nNdata)
+                    {
+                        // TODO
+                    }
+
+                    ui->widgetHex_Net_Metadata->reload();
+                    break;
+
                 case SPE::TYPE_LOADCONFIG:
                     switch(nNdata)
                     {
@@ -554,6 +564,7 @@ void PEWidget::setReadonly(bool bState)
     setLineEditsReadOnly(lineEdit_LoadConfig,N_IMAGE_LOADCONFIG::__data_size,bState);
     setLineEditsReadOnly(lineEdit_EXPORT,N_IMAGE_EXPORT::__data_size,bState);
     setLineEditsReadOnly(lineEdit_NetHeader,N_IMAGE_NETHEADER::__data_size,bState);
+    setLineEditsReadOnly(lineEdit_Net_Metadata,N_IMAGE_NET_METADATA::__data_size,bState);
 //    setLineEditsReadOnly(lineEdit_IMAGE_DIRECTORY_ADDRESS,N_IMAGE_DIRECORIES::__data_size,bState);
 //    setLineEditsReadOnly(lineEdit_IMAGE_DIRECTORY_SIZE,N_IMAGE_DIRECORIES::__data_size,bState);
 
@@ -1491,6 +1502,7 @@ void PEWidget::reloadData()
                 lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::Flags]->setValue(header.nFlags);
                 lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::Streams]->setValue(header.nStreams);
 
+                updateTableRecord(ui->tableWidget_Net_Metadata,N_IMAGE_NET_METADATA::Version,16,header.nVersionStringLength);
                 updateTableRecord(ui->tableWidget_Net_Metadata,N_IMAGE_NET_METADATA::Flags,16+header.nVersionStringLength,2);
                 updateTableRecord(ui->tableWidget_Net_Metadata,N_IMAGE_NET_METADATA::Streams,16+header.nVersionStringLength+2,2);
 
