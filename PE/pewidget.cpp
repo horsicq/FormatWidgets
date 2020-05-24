@@ -212,6 +212,7 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, in
     blockSignals(true);
 
     quint64 nValue=vValue.toULongLong();
+    QString sValue=vValue.toString();
 
     if(getDevice()->isWritable())
     {
@@ -478,7 +479,14 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, in
                 case SPE::TYPE_NET_METADATA:
                     switch(nNdata)
                     {
-                        // TODO
+                        case N_IMAGE_NET_METADATA::Signature:                   pe.setMetadataHeader_Signature((quint32)nValue);                        break;
+                        case N_IMAGE_NET_METADATA::MajorVersion:                pe.setMetadataHeader_MajorVersion((quint16)nValue);                     break;
+                        case N_IMAGE_NET_METADATA::MinorVersion:                pe.setMetadataHeader_MinorVersion((quint16)nValue);                     break;
+                        case N_IMAGE_NET_METADATA::Reserved:                    pe.setMetadataHeader_Reserved((quint32)nValue);                         break;
+                        case N_IMAGE_NET_METADATA::VersionStringLength:         pe.setMetadataHeader_VersionStringLength((quint32)nValue);              break; // TODO reload!!!
+                        case N_IMAGE_NET_METADATA::Version:                     pe.setMetadataHeader_Version(sValue);                                   break;
+                        case N_IMAGE_NET_METADATA::Flags:                       pe.setMetadataHeader_Flags((quint16)nValue);                            break;
+                        case N_IMAGE_NET_METADATA::Streams:                     pe.setMetadataHeader_Streams((quint16)nValue);                          break;
                     }
 
                     ui->widgetHex_Net_Metadata->reload();
