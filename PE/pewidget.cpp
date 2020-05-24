@@ -597,6 +597,7 @@ void PEWidget::blockSignals(bool bState)
     _blockSignals((QObject **)lineEdit_LoadConfig,N_IMAGE_LOADCONFIG::__data_size,bState);
     _blockSignals((QObject **)lineEdit_EXPORT,N_IMAGE_EXPORT::__data_size,bState);
     _blockSignals((QObject **)lineEdit_NetHeader,N_IMAGE_NETHEADER::__data_size,bState);
+    _blockSignals((QObject **)lineEdit_Net_Metadata,N_IMAGE_NET_METADATA::__data_size,bState);
 //    _blockSignals((QObject **)lineEdit_IMAGE_DIRECTORY_ADDRESS,N_IMAGE_DIRECORIES::__data_size,bState);
 //    _blockSignals((QObject **)lineEdit_IMAGE_DIRECTORY_SIZE,N_IMAGE_DIRECORIES::__data_size,bState);
 
