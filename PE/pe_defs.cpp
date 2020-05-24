@@ -388,7 +388,7 @@ const FW_DEF::HEADER_RECORD records[]=
     {MinorVersion,              "MinorVersion",             6,  2,      "WORD",         FW_DEF::VAL_TYPE_DATA},
     {Reserved,                  "Reserved",                 8,  4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
     {VersionStringLength,       "VersionStringLength",      12, 4,      "DWORD",        FW_DEF::VAL_TYPE_SIZE},
-    {Version,                   "Version",                  -1, 0,      "TEXT",         FW_DEF::VAL_TYPE_TEXT},
+    {Version,                   "Version",                  16, 1,      "TEXT",         FW_DEF::VAL_TYPE_TEXT},
     {Flags,                     "Flags",                    -1, 2,      "WORD",         FW_DEF::VAL_TYPE_DATA},
     {Streams,                   "Streams",                  -1, 2,      "WORD",         FW_DEF::VAL_TYPE_DATA},
 };

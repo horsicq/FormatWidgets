@@ -1482,7 +1482,14 @@ void PEWidget::reloadData()
 
                 XPE::CLI_METADATA_HEADER header=pe._read_MetadataHeader(os.nOffset);
 
-                // TODO
+                lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::Signature]->setValue(header.nSignature);
+                lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::MajorVersion]->setValue(header.nMajorVersion);
+                lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::MinorVersion]->setValue(header.nMinorVersion);
+                lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::Reserved]->setValue(header.nReserved);
+                lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::VersionStringLength]->setValue(header.nVersionStringLength);
+                lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::Version]->setText(header.sVersion);
+                lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::Flags]->setValue(header.nFlags);
+                lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::Streams]->setValue(header.nStreams);
 
                 qint64 nOffset=os.nOffset;
                 qint64 nSize=os.nSize;
