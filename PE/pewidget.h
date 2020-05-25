@@ -179,11 +179,15 @@ private:
     XDateTimeEditX *dateTimeEdit[__TD_size];
     InvWidget *invWidget[__INV_size];
     SubDevice *subDevice[SPE::__TYPE_size];
-    bool bInit[SPE::__TYPE_size];
     QStandardItemModel *tvModel[SPE::__TYPE_size_ext];
 #ifdef USE_DISASM
     XDisasmWidget *pDisasmWidget;
 #endif
+
+    QSet<QString> stInit;
+
+    qint32 nLastType;
+    QString sLastInit;
 };
 
 #endif // PEWIDGET_H
