@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Binary</string>
+   <string notr="true">Binary</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
