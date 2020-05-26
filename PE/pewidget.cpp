@@ -182,7 +182,20 @@ void PEWidget::reload()
 
             if(pe.isNetMetadataPresent())
             {
-                pNetHeader->addChild(createNewItem(SPE::TYPE_NET_METADATA,"Metadata"));
+                QTreeWidgetItem *pNetMetadata=createNewItem(SPE::TYPE_NET_METADATA,"Metadata");
+                pNetHeader->addChild(pNetMetadata);
+
+                XPE::CLI_INFO cliInfo=pe.getCliInfo(true);
+
+                int nCount=cliInfo.cliMetadata.listStreams.count();
+
+                for(int i=0;i<nCount;i++)
+                {
+                    pNetMetadata->addChild(createNewItem(SPE::TYPE_NET_METADATA_STREAM,
+                                                         cliInfo.cliMetadata.listStreams.at(i).sName,
+                                                         cliInfo.cliMetadata.listStreams.at(i).nOffset,
+                                                         cliInfo.cliMetadata.listStreams.at(i).nSize));
+                }
             }
         }
 
@@ -584,6 +597,12 @@ void PEWidget::setReadonly(bool bState)
     ui->widgetHex_Section->setReadonly(bState);
     ui->widgetHex_Overlay->setReadonly(bState);
     ui->widgetHex_Resources->setReadonly(bState);
+    ui->widgetHex_Debug->setReadonly(bState);
+    ui->widgetHex_Exception->setReadonly(bState);
+    ui->widgetHex_LoadConfig->setReadonly(bState);
+    ui->widgetHex_NetHeader->setReadonly(bState);
+    ui->widgetHex_Net_Metadata->setReadonly(bState);
+    ui->widgetHex_Net_Metadata_Stream->setReadonly(bState);
 }
 
 void PEWidget::blockSignals(bool bState)
@@ -1534,6 +1553,17 @@ void PEWidget::reloadData()
                 loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_NET_METADATA],ui->widgetHex_Net_Metadata);
 
                 blockSignals(false);
+            }
+        }
+        else if(nType==SPE::TYPE_NET_METADATA_STREAM)
+        {
+            if(!stInit.contains(sInit))
+            {
+                qint64 nOffset=nDataOffset;
+                qint64 nSize=nDataSize;
+                qint64 nAddress=pe.offsetToRelAddress(nOffset);
+
+                loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_NET_METADATA_STREAM],ui->widgetHex_Net_Metadata_Stream);
             }
         }
         else if(nType==SPE::TYPE_OVERLAY)
