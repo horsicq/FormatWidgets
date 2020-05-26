@@ -83,7 +83,7 @@ void NEWidget::reload()
 
     if(ne.isValid())
     {
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_HEX,tr("Tools")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_HEX,QString("Hex")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_STRINGS,tr("Strings")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_MEMORYMAP,tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_ENTROPY,tr("Entropy")));

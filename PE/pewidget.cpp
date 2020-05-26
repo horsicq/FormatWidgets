@@ -95,7 +95,7 @@ void PEWidget::reload()
 
     if(pe.isValid())
     {
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_HEX,tr("Hex")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_HEX,QString("Hex")));
 #ifdef USE_DISASM
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_DISASM,tr("Disasm")));
 #endif

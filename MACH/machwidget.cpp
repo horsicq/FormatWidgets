@@ -76,7 +76,7 @@ void MACHWidget::reload()
 
     if(mach.isValid())
     {
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_HEX,tr("Tools")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_HEX,QString("Hex")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_STRINGS,tr("Strings")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_MEMORYMAP,tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_ENTROPY,tr("Entropy")));
