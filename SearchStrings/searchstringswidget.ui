@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string notr="true">Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="leftMargin">
@@ -44,14 +44,14 @@
      <item>
       <widget class="QCheckBox" name="checkBoxAnsi">
        <property name="text">
-        <string>ANSI</string>
+        <string notr="true">ANSI</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QCheckBox" name="checkBoxUnicode">
        <property name="text">
-        <string>Unicode</string>
+        <string notr="true">Unicode</string>
        </property>
       </widget>
      </item>
