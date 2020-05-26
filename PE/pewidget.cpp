@@ -180,12 +180,13 @@ void PEWidget::reload()
             QTreeWidgetItem *pNetHeader=createNewItem(SPE::TYPE_NETHEADER,".NET");
             ui->treeWidgetNavi->addTopLevelItem(pNetHeader);
 
-            if(pe.isNetMetadataPresent())
+            XPE::CLI_INFO cliInfo=pe.getCliInfo(true);
+            XBinary::_MEMORY_MAP memoryMap=pe.getMemoryMap();
+
+            if(pe.isNetMetadataPresent(&cliInfo,&memoryMap))
             {
                 QTreeWidgetItem *pNetMetadata=createNewItem(SPE::TYPE_NET_METADATA,"Metadata");
                 pNetHeader->addChild(pNetMetadata);
-
-                XPE::CLI_INFO cliInfo=pe.getCliInfo(true);
 
                 int nCount=cliInfo.cliMetadata.listStreams.count();
 
