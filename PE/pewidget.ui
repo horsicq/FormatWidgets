@@ -57,7 +57,7 @@
      <item>
       <widget class="QPushButton" name="pushButtonHex">
        <property name="text">
-        <string>Hex</string>
+        <string notr="true">Hex</string>
        </property>
       </widget>
      </item>

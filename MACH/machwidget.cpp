@@ -87,7 +87,7 @@ void MACHWidget::reload()
 
         if(listCommandRecords.count())
         {
-            QTreeWidgetItem *pItemCommands=createNewItem(SMACH::TYPE_mach_commands,tr("commands"));
+            QTreeWidgetItem *pItemCommands=createNewItem(SMACH::TYPE_mach_commands,tr("Commands"));
 
             ui->treeWidgetNavi->addTopLevelItem(pItemCommands);
         }
@@ -96,7 +96,7 @@ void MACHWidget::reload()
 
         if(listSegmentRecords.count())
         {
-            QTreeWidgetItem *pItemSegments=createNewItem(SMACH::TYPE_mach_segments,tr("segments"));
+            QTreeWidgetItem *pItemSegments=createNewItem(SMACH::TYPE_mach_segments,tr("Segments"));
 
             ui->treeWidgetNavi->addTopLevelItem(pItemSegments);
         }
@@ -105,7 +105,7 @@ void MACHWidget::reload()
 
         if(listSectionRecords.count())
         {
-            QTreeWidgetItem *pItemSections=createNewItem(SMACH::TYPE_mach_sections,tr("sections"));
+            QTreeWidgetItem *pItemSections=createNewItem(SMACH::TYPE_mach_sections,tr("Sections"));
 
             ui->treeWidgetNavi->addTopLevelItem(pItemSections);
         }
@@ -114,7 +114,7 @@ void MACHWidget::reload()
 
         if(listLibraryRecords.count())
         {
-            QTreeWidgetItem *pItemLibraries=createNewItem(SMACH::TYPE_mach_libraries,tr("libraries"));
+            QTreeWidgetItem *pItemLibraries=createNewItem(SMACH::TYPE_mach_libraries,tr("Libraries"));
 
             ui->treeWidgetNavi->addTopLevelItem(pItemLibraries);
         }
