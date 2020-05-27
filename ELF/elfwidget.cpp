@@ -970,7 +970,7 @@ void ELFWidget::on_tableView_Elf_Phdr_customContextMenuRequested(const QPoint &p
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editProgramHeader()));
         contextMenu.addAction(&actionEdit);
 
-        QAction actionHex(tr("Hex"),this);
+        QAction actionHex(QString("Hex"),this);
         connect(&actionHex, SIGNAL(triggered()), this, SLOT(programHex()));
         actionHex.setEnabled(bIsEnable);
         contextMenu.addAction(&actionHex);
