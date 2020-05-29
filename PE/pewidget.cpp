@@ -211,7 +211,8 @@ void PEWidget::reload()
         }
 
         ui->treeWidgetNavi->expandAll();
-        ui->treeWidgetNavi->setCurrentItem(ui->treeWidgetNavi->topLevelItem(SPE::TYPE_IMAGE_DOS_HEADER));
+//        ui->treeWidgetNavi->setCurrentItem(ui->treeWidgetNavi->topLevelItem(SPE::TYPE_IMAGE_DOS_HEADER));
+        ui->treeWidgetNavi->setCurrentItem(ui->treeWidgetNavi->topLevelItem(SPE::TYPE_HEURISTICSCAN));
     }
 }
 
