@@ -147,9 +147,14 @@ void PEProcessData::_process()
         QList<QString> listLabels;
         listLabels.append("");
         listLabels.append(getStructList(N_IMAGE_IMPORT::records,N_IMAGE_IMPORT::__data_size));
+        listLabels.append(QString("Hash"));
         listLabels.append("");
 
-        QList<XPE::IMAGE_IMPORT_DESCRIPTOR_EX> listID=pPE->getImportDescriptorsEx();
+        XBinary::_MEMORY_MAP memoryMap=pPE->getMemoryMap();
+
+        QList<quint32> listHashes=pPE->getImportPositionHashes(&memoryMap);
+
+        QList<XPE::IMAGE_IMPORT_DESCRIPTOR_EX> listID=pPE->getImportDescriptorsEx(&memoryMap);
 
         int nCount=listID.count();
 
@@ -169,7 +174,8 @@ void PEProcessData::_process()
             (*ppModel)->setItem(i,N_IMAGE_IMPORT::ForwarderChain+1,                 new QStandardItem(XBinary::valueToHex(listID.at(i).ForwarderChain)));
             (*ppModel)->setItem(i,N_IMAGE_IMPORT::Name+1,                           new QStandardItem(XBinary::valueToHex(listID.at(i).Name)));
             (*ppModel)->setItem(i,N_IMAGE_IMPORT::FirstThunk+1,                     new QStandardItem(XBinary::valueToHex(listID.at(i).FirstThunk)));
-            (*ppModel)->setItem(i,N_IMAGE_IMPORT::FirstThunk+2,                     new QStandardItem(listID.at(i).sLibrary));
+            (*ppModel)->setItem(i,N_IMAGE_IMPORT::FirstThunk+2,                     new QStandardItem(XBinary::valueToHex(listHashes.at(i))));
+            (*ppModel)->setItem(i,N_IMAGE_IMPORT::FirstThunk+3,                     new QStandardItem(listID.at(i).sLibrary));
 
             incValue();
         }
@@ -508,7 +514,8 @@ void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
         pTableView->setColumnWidth(3,nSymbolWidth*8);
         pTableView->setColumnWidth(4,nSymbolWidth*8);
         pTableView->setColumnWidth(5,nSymbolWidth*8);
-        pTableView->setColumnWidth(6,nSymbolWidth*12);
+        pTableView->setColumnWidth(6,nSymbolWidth*8);
+        pTableView->setColumnWidth(7,nSymbolWidth*16);
     }
     else if(type==SPE::TYPE_IMPORT_FUNCTION)
     {
