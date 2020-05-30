@@ -1203,6 +1203,11 @@ void PEWidget::reloadData()
         {
             if(!stInit.contains(sInit))
             {
+                XBinary::_MEMORY_MAP memoryMap=pe.getMemoryMap();
+
+                ui->lineEditHash64->setValue(pe.getImportHash64(&memoryMap));
+                ui->lineEditHash32->setValue(pe.getImportHash32(&memoryMap));
+
                 PEProcessData peProcessData(SPE::TYPE_IMPORT,&tvModel[SPE::TYPE_IMPORT],&pe,0,0,0);
 
                 ajustTableView(&peProcessData,&tvModel[SPE::TYPE_IMPORT],ui->tableView_ImportLibraries);
