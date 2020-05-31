@@ -145,6 +145,15 @@ bool FormatWidget::loadHexSubdevice(qint64 nOffset, qint64 nSize, qint64 nAddres
     {
         (*ppSubDevice)->close();
         delete (*ppSubDevice);
+
+        (*ppSubDevice)=0;
+    }
+
+    if((nOffset==-1)||(nAddress==-1)||(nSize==0))
+    {
+        nOffset=0;
+        nAddress=0;
+        nSize=0;
     }
 
     (*ppSubDevice)=new SubDevice(getDevice(),nOffset,nSize,this);
