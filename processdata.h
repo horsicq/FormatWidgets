@@ -32,6 +32,7 @@
 class ProcessData : public QObject
 {
     Q_OBJECT
+
 public:
     explicit ProcessData();
     void stop();
