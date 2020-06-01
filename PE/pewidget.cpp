@@ -1226,9 +1226,9 @@ void PEWidget::reloadData()
             {
                 PEProcessData peProcessData(SPE::TYPE_RESOURCE,&tvModel[SPE::TYPE_RESOURCE],&pe,0,0,0);
 
-                ajustTreeView(&peProcessData,&tvModel[SPE::TYPE_RESOURCE],ui->treeViewResources);
+                ajustTreeView(&peProcessData,&tvModel[SPE::TYPE_RESOURCE],ui->treeView_Resources);
 
-                connect(ui->treeViewResources->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTreeView_Resources_currentRowChanged(QModelIndex,QModelIndex)));
+                connect(ui->treeView_Resources->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTreeView_Resources_currentRowChanged(QModelIndex,QModelIndex)));
             }
         }
         else if(nType==SPE::TYPE_RESOURCE_VERSION)
@@ -2132,15 +2132,11 @@ void PEWidget::onTreeView_Resources_currentRowChanged(const QModelIndex &current
 
     if(current.row()!=-1)
     {
-        // TODO more info in side widget
-        if(ui->treeViewResources->model()->data(current,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong())
-        {
-            qint64 nOffset=ui->treeViewResources->model()->data(current,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
-            qint64 nSize=ui->treeViewResources->model()->data(current,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
-            qint64 nAddress=ui->treeViewResources->model()->data(current,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
+        qint64 nOffset=ui->treeView_Resources->model()->data(current,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
+        qint64 nSize=ui->treeView_Resources->model()->data(current,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
+        qint64 nAddress=ui->treeView_Resources->model()->data(current,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
 
-            loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_RESOURCE],ui->widgetHex_Resources);
-        }
+        loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_RESOURCE],ui->widgetHex_Resources);
     }
 }
 
