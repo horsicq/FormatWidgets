@@ -2134,9 +2134,19 @@ void PEWidget::onTreeView_Resources_currentRowChanged(const QModelIndex &current
 
     if(current.row()!=-1)
     {
+        QString sID1=ui->treeView_Resources->model()->data(current,Qt::UserRole+FW_DEF::SECTION_DATA_VALUE1).toString();
+        QString sID2=ui->treeView_Resources->model()->data(current,Qt::UserRole+FW_DEF::SECTION_DATA_VALUE2).toString();
+        QString sID3=ui->treeView_Resources->model()->data(current,Qt::UserRole+FW_DEF::SECTION_DATA_VALUE3).toString();
         qint64 nOffset=ui->treeView_Resources->model()->data(current,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
         qint64 nSize=ui->treeView_Resources->model()->data(current,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
         qint64 nAddress=ui->treeView_Resources->model()->data(current,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
+
+        lineEdit_Resources[N_IMAGE_RESOURCES::ID1]->setStringValue(sID1);
+        lineEdit_Resources[N_IMAGE_RESOURCES::ID2]->setStringValue(sID2);
+        lineEdit_Resources[N_IMAGE_RESOURCES::ID3]->setStringValue(sID3);
+        lineEdit_Resources[N_IMAGE_RESOURCES::ADDRESS]->setValue((quint32)nAddress);
+        lineEdit_Resources[N_IMAGE_RESOURCES::OFFSET]->setValue((quint32)nOffset);
+        lineEdit_Resources[N_IMAGE_RESOURCES::SIZE]->setValue((quint32)nSize);
 
         loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_RESOURCE],ui->widgetHex_Resources);
     }

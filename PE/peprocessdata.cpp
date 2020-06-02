@@ -478,6 +478,9 @@ void PEProcessData::_process()
 
                         pRecord->setText(sRecordText3);
 
+                        pRecord->setData(sRecordText1,Qt::UserRole+FW_DEF::SECTION_DATA_VALUE1);
+                        pRecord->setData(sRecordText2,Qt::UserRole+FW_DEF::SECTION_DATA_VALUE2);
+                        pRecord->setData(sRecordText3,Qt::UserRole+FW_DEF::SECTION_DATA_VALUE3);
                         pRecord->setData(record3.data_entry.Size,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
                         pRecord->setData(record3.data_entry.OffsetToData,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS);
 

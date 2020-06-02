@@ -298,6 +298,9 @@ enum DATA
     ID1=0,
     ID2,
     ID3,
+    ADDRESS,
+    OFFSET,
+    SIZE,
     __data_size
 };
 
