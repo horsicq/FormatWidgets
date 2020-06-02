@@ -440,31 +440,54 @@ void PEProcessData::_process()
 
                     for(int k=0; k<nSubPosCount; k++)
                     {
-                        XPE::RESOURCE_POSITION record=rh.listPositions.at(i).listPositions.at(j).listPositions.at(k);
+                        XPE::RESOURCE_POSITION record1=rh.listPositions.at(i);
+                        XPE::RESOURCE_POSITION record2=rh.listPositions.at(i).listPositions.at(j);
+                        XPE::RESOURCE_POSITION record3=rh.listPositions.at(i).listPositions.at(j).listPositions.at(k);
                         QStandardItem *pRecord=new QStandardItem;
-                        QString sRecordText;
 
-                        if(record.rin.bIsName)
+                        QString sRecordText1;
+                        QString sRecordText2;
+                        QString sRecordText3;
+
+                        if(record1.rin.bIsName)
                         {
-                            sRecordText=QString("\"%1\"").arg(record.rin.sName);
+                            sRecordText1=QString("\"%1\"").arg(record1.rin.sName);
                         }
                         else
                         {
-                            sRecordText=QString("%1").arg(record.rin.nID);
+                            sRecordText1=QString("%1").arg(record1.rin.nID);
                         }
 
-                        pRecord->setText(sRecordText);
+                        if(record2.rin.bIsName)
+                        {
+                            sRecordText2=QString("\"%1\"").arg(record2.rin.sName);
+                        }
+                        else
+                        {
+                            sRecordText2=QString("%1").arg(record2.rin.nID);
+                        }
 
-                        pRecord->setData(record.data_entry.Size,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
-                        pRecord->setData(record.data_entry.OffsetToData,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS);
+                        if(record3.rin.bIsName)
+                        {
+                            sRecordText3=QString("\"%1\"").arg(record3.rin.sName);
+                        }
+                        else
+                        {
+                            sRecordText3=QString("%1").arg(record3.rin.nID);
+                        }
+
+                        pRecord->setText(sRecordText3);
+
+                        pRecord->setData(record3.data_entry.Size,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
+                        pRecord->setData(record3.data_entry.OffsetToData,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS);
 
                         if(pPE->isImage())
                         {
-                            pRecord->setData(record.data_entry.OffsetToData,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+                            pRecord->setData(record3.data_entry.OffsetToData,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
                         }
                         else
                         {
-                            pRecord->setData(record.nDataOffset,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+                            pRecord->setData(record3.nDataOffset,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
                         }
 
                         pSubPos->appendRow(pRecord);
