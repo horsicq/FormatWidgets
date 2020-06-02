@@ -252,7 +252,9 @@ namespace N_IMAGE_RESOURCES
 {
 const FW_DEF::HEADER_RECORD records[]=
 {
-    {ID1,               "ID1",          -1,          0,      "",        FW_DEF::VAL_TYPE_UNKNOWN},
+    {ID1,           "ID1",          -1,         0,      "",        FW_DEF::VAL_TYPE_UNKNOWN},
+    {ID2,           "ID2",          -1,         0,      "",        FW_DEF::VAL_TYPE_UNKNOWN},
+    {ID3,           "ID3",          -1,         0,      "",        FW_DEF::VAL_TYPE_UNKNOWN},
 };
 }
 

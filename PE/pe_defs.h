@@ -296,6 +296,8 @@ namespace N_IMAGE_RESOURCES
 enum DATA
 {
     ID1=0,
+    ID2,
+    ID3,
     __data_size
 };
 
