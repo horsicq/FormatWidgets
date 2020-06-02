@@ -248,6 +248,14 @@ const FW_DEF::HEADER_RECORD records[]=
 };
 }
 
+namespace N_IMAGE_RESOURCES
+{
+const FW_DEF::HEADER_RECORD records[]=
+{
+    {ID1,               "ID1",          -1,          0,      "",        FW_DEF::VAL_TYPE_UNKNOWN},
+};
+}
+
 namespace N_IMAGE_EXPORT
 {
 const FW_DEF::HEADER_RECORD records[]=

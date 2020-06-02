@@ -512,11 +512,22 @@ bool FormatWidget::createListTable(int type, QTableWidget *pTableWidget, const F
         if(pRecords[i].vtype==FW_DEF::VAL_TYPE_TEXT)
         {
             ppLineEdits[i]->setAlignment(Qt::AlignLeft);
-            connect(ppLineEdits[i],SIGNAL(textChanged(QString)),this,SLOT(textValueChanged(QString)));
+        }
+
+        if(pRecords[i].nOffset!=-1)
+        {
+            if(pRecords[i].vtype==FW_DEF::VAL_TYPE_TEXT)
+            {
+                connect(ppLineEdits[i],SIGNAL(textChanged(QString)),this,SLOT(textValueChanged(QString)));
+            }
+            else
+            {
+                connect(ppLineEdits[i],SIGNAL(valueChanged(quint64)),this,SLOT(hexValueChanged(quint64)));
+            }
         }
         else
         {
-            connect(ppLineEdits[i],SIGNAL(valueChanged(quint64)),this,SLOT(hexValueChanged(quint64)));
+            ppLineEdits[i]->setReadOnly(true);
         }
 
         pTableWidget->setCellWidget(i,LIST_COLUMN_VALUE,ppLineEdits[i]);

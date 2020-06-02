@@ -173,6 +173,7 @@ private:
     XLineEditHEX *lineEdit_NetHeader[N_IMAGE_NETHEADER::__data_size];
     XLineEditHEX *lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::__data_size];
     XLineEditHEX *lineEdit_EXPORT[N_IMAGE_EXPORT::__data_size];
+    XLineEditHEX *lineEdit_Resources[N_IMAGE_RESOURCES::__data_size];
     XLineEditHEX *lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::__data_size];
     XComboBoxEx *comboBox[__CB_size];
     QPushButton *pushButton[__PB_size];

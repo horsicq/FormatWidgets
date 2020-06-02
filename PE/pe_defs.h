@@ -291,6 +291,17 @@ enum DATA
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 }
 
+namespace N_IMAGE_RESOURCES
+{
+enum DATA
+{
+    ID1=0,
+    __data_size
+};
+
+extern const FW_DEF::HEADER_RECORD records[__data_size];
+}
+
 namespace N_IMAGE_DEBUG
 {
 enum DATA

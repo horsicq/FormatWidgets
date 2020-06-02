@@ -1224,6 +1224,8 @@ void PEWidget::reloadData()
         {
             if(!stInit.contains(sInit))
             {
+                createListTable(SPE::TYPE_RESOURCE,ui->tableWidget_Resources,N_IMAGE_RESOURCES::records,lineEdit_Resources,N_IMAGE_RESOURCES::__data_size);
+
                 PEProcessData peProcessData(SPE::TYPE_RESOURCE,&tvModel[SPE::TYPE_RESOURCE],&pe,0,0,0);
 
                 ajustTreeView(&peProcessData,&tvModel[SPE::TYPE_RESOURCE],ui->treeView_Resources);

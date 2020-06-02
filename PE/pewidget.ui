@@ -827,7 +827,13 @@
             <number>35</number>
            </attribute>
           </widget>
-          <widget class="QTableView" name="tableView_Resources">
+          <widget class="QTableWidget" name="tableWidget_Resources">
+           <property name="maximumSize">
+            <size>
+             <width>300</width>
+             <height>16777215</height>
+            </size>
+           </property>
            <property name="contextMenuPolicy">
             <enum>Qt::CustomContextMenu</enum>
            </property>
@@ -843,20 +849,20 @@
            <property name="sortingEnabled">
             <bool>true</bool>
            </property>
-           <attribute name="horizontalHeaderDefaultSectionSize">
-            <number>35</number>
+           <attribute name="horizontalHeaderVisible">
+            <bool>true</bool>
+           </attribute>
+           <attribute name="horizontalHeaderHighlightSections">
+            <bool>true</bool>
            </attribute>
            <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
-            <bool>true</bool>
+            <bool>false</bool>
            </attribute>
            <attribute name="verticalHeaderVisible">
             <bool>false</bool>
            </attribute>
-           <attribute name="verticalHeaderMinimumSectionSize">
-            <number>20</number>
-           </attribute>
            <attribute name="verticalHeaderDefaultSectionSize">
-            <number>20</number>
+            <number>23</number>
            </attribute>
           </widget>
          </widget>
