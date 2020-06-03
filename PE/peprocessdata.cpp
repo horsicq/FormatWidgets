@@ -255,6 +255,7 @@ void PEProcessData::_process()
         QList<QString> listLabels;
         listLabels.append("");
         listLabels.append(getStructList(N_IMAGE_EXCEPTIONS::records,N_IMAGE_EXCEPTIONS::__data_size));
+        listLabels.append("");
 
         QList<XPE_DEF::S_IMAGE_RUNTIME_FUNCTION_ENTRY> listRFE=pPE->getExceptionsList();
 
@@ -282,6 +283,7 @@ void PEProcessData::_process()
             (*ppModel)->setItem(i,N_IMAGE_EXCEPTIONS::BeginAddress+1,       new QStandardItem(XBinary::valueToHex(listRFE.at(i).BeginAddress)));
             (*ppModel)->setItem(i,N_IMAGE_EXCEPTIONS::EndAddress+1,         new QStandardItem(XBinary::valueToHex(listRFE.at(i).EndAddress)));
             (*ppModel)->setItem(i,N_IMAGE_EXCEPTIONS::UnwindInfoAddress+1,  new QStandardItem(XBinary::valueToHex(listRFE.at(i).UnwindInfoAddress)));
+            (*ppModel)->setItem(i,N_IMAGE_EXCEPTIONS::UnwindInfoAddress+2,  new QStandardItem(pPE->getMemoryRecordInfoByRelAddress(listRFE.at(i).BeginAddress))); // Comment
 
             incValue();
         }
@@ -639,6 +641,7 @@ void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
         pTableView->setColumnWidth(1,nSymbolWidth*8);
         pTableView->setColumnWidth(2,nSymbolWidth*8);
         pTableView->setColumnWidth(3,nSymbolWidth*8);
+        pTableView->setColumnWidth(4,nSymbolWidth*30);
     }
     else if(type==SPE::TYPE_DELAYIMPORT)
     {
