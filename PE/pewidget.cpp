@@ -735,6 +735,11 @@ void PEWidget::sectionHex()
     showSectionHex(ui->tableView_Sections);
 }
 
+void PEWidget::sectionEntropy()
+{
+    showSectionEntropy(ui->tableView_Sections);
+}
+
 void PEWidget::reloadData()
 {
     int nType=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_TYPE).toInt();
@@ -1611,7 +1616,10 @@ void PEWidget::on_tableView_Sections_customContextMenuRequested(const QPoint &po
         actionHex.setEnabled(bIsEnable);
         contextMenu.addAction(&actionHex);
 
-        // TODO Entropy
+        QAction actionEntropy(tr("Entropy"),this);
+        connect(&actionEntropy, SIGNAL(triggered()), this, SLOT(sectionEntropy()));
+        actionHex.setEnabled(bIsEnable);
+        contextMenu.addAction(&actionEntropy);
 
         contextMenu.exec(ui->tableView_Sections->viewport()->mapToGlobal(pos));
     }

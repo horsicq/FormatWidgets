@@ -59,6 +59,7 @@ private slots:
     void on_checkBoxReadonly_toggled(bool checked);
     void editSectionHeader();
     void sectionHex();
+    void sectionEntropy();
     void reloadData();
 
     void loadImportLibrary(int nNumber);
