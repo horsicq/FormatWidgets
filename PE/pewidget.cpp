@@ -1486,6 +1486,8 @@ void PEWidget::reloadData()
 
                 ajustTableView(&peProcessData,&tvModel[SPE::TYPE_DELAYIMPORT],ui->tableView_DelayImport);
 
+                connect(ui->tableView_DelayImport->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_DelayImport_currentRowChanged(QModelIndex,QModelIndex)));
+
                 if(tvModel[SPE::TYPE_DELAYIMPORT]->rowCount())
                 {
                     ui->tableView_DelayImport->setCurrentIndex(ui->tableView_DelayImport->model()->index(0,0));
@@ -1625,13 +1627,13 @@ void PEWidget::on_tableView_Sections_customContextMenuRequested(const QPoint &po
     }
 }
 
-void PEWidget::loadImportLibrary(int nNumber)
+void PEWidget::loadImportLibrary(int nRow)
 {
     XPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
 
     if(pe.isValid())
     {
-        PEProcessData peProcessData(SPE::TYPE_IMPORT_FUNCTION,&tvModel[SPE::TYPE_IMPORT_FUNCTION],&pe,nNumber,0,0);
+        PEProcessData peProcessData(SPE::TYPE_IMPORT_FUNCTION,&tvModel[SPE::TYPE_IMPORT_FUNCTION],&pe,nRow,0,0);
 
         ajustTableView(&peProcessData,&tvModel[SPE::TYPE_IMPORT_FUNCTION],ui->tableView_ImportFunctions);
 
@@ -1642,9 +1644,9 @@ void PEWidget::loadImportLibrary(int nNumber)
     }
 }
 
-void PEWidget::loadRelocs(int nNumber)
+void PEWidget::loadRelocs(int nRow)
 {
-    QModelIndex index=ui->tableView_Relocs->model()->index(nNumber,0);
+    QModelIndex index=ui->tableView_Relocs->model()->index(nRow,0);
 
     qint64 nOffset=ui->tableView_Relocs->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
 
@@ -1673,11 +1675,11 @@ void PEWidget::loadException(int nRow)
     loadHexSubdeviceByTableView(nRow,SPE::TYPE_EXCEPTION,ui->widgetHex_Exception,ui->tableView_Exceptions,&subDevice[SPE::TYPE_EXCEPTION]);
 }
 
-void PEWidget::loadDirectory(int nNumber)
+void PEWidget::loadDirectory(int nRow)
 {
-    qint64 nOffset=ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
-    qint64 nSize=ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
-    qint64 nAddress=ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
+    qint64 nOffset=ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->item(nRow,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
+    qint64 nSize=ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->item(nRow,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
+    qint64 nAddress=ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->item(nRow,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
 
     loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_IMAGE_DIRECTORY_ENTRIES],ui->widgetDirectoryHex);
 }
@@ -1685,6 +1687,16 @@ void PEWidget::loadDirectory(int nNumber)
 void PEWidget::loadDebug(int nRow)
 {
     loadHexSubdeviceByTableView(nRow,SPE::TYPE_DEBUG,ui->widgetHex_Debug,ui->tableView_Debug,&subDevice[SPE::TYPE_DEBUG]);
+}
+
+void PEWidget::loadDelayImport(int nRow)
+{
+    XPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
+
+    if(pe.isValid())
+    {
+        // TODO
+    }
 }
 
 void PEWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)

@@ -62,12 +62,13 @@ private slots:
     void sectionEntropy();
     void reloadData();
 
-    void loadImportLibrary(int nNumber);
-    void loadRelocs(int nNumber);
+    void loadImportLibrary(int nRow);
+    void loadRelocs(int nRow);
     void loadSection(int nRow);
     void loadException(int nRow);
-    void loadDirectory(int nNumber);
+    void loadDirectory(int nRow);
     void loadDebug(int nRow);
+    void loadDelayImport(int nRow);
     bool createSectionTable(int type, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount);
     void on_pushButtonReload_clicked();
     void enableButton();
