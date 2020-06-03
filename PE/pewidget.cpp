@@ -2146,7 +2146,7 @@ void PEWidget::onTableView_DelayImportLibraries_currentRowChanged(const QModelIn
 
     if(nRow!=-1)
     {
-        // TODO
+        loadDelayImport(nRow);
     }
 }
 

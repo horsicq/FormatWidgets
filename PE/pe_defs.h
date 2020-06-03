@@ -421,7 +421,7 @@ namespace N_IMAGE_DELAYIMPORT_FUNCTION
 {
 enum DATA
 {
-    Thunk=0,
+    NameThunk=0,
     Ordinal,
     Hint,
     __data_size

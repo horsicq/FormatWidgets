@@ -398,6 +398,56 @@ void PEProcessData::_process()
         bool bIs64=pPE->is64();
         QList<XPE::DELAYIMPORT_POSITION> listDIP=pPE->getDelayImportPositions(nNumber);
 
+        int nCount=listDIP.count();
+
+        *ppModel=new QStandardItemModel(nCount,listLabels.count());
+
+        setMaximum(nCount);
+
+        setHeader(*ppModel,&listLabels);
+
+        for(int i=0; i<nCount; i++)
+        {
+            QStandardItem *pItem=new QStandardItem;
+            pItem->setData(i,Qt::DisplayRole);
+
+            (*ppModel)->setItem(i,0,pItem);
+
+            if(listDIP.at(i).nOrdinal)
+            {
+                QString sOrdinal;
+
+                if(bIs64)
+                {
+                    sOrdinal=XBinary::valueToHex((quint64)listDIP.at(i).nOrdinal);
+                }
+                else
+                {
+                    sOrdinal=XBinary::valueToHex((quint32)listDIP.at(i).nOrdinal);
+                }
+
+                (*ppModel)->setItem(i,N_IMAGE_DELAYIMPORT_FUNCTION::Ordinal+1,   new QStandardItem(sOrdinal));
+            }
+            else
+            {
+                QString sThunk;
+
+                if(bIs64)
+                {
+                    sThunk=XBinary::valueToHex((quint64)listDIP.at(i).nNameThunkValue);
+                }
+                else
+                {
+                    sThunk=XBinary::valueToHex((quint32)listDIP.at(i).nNameThunkValue);
+                }
+
+                (*ppModel)->setItem(i,N_IMAGE_DELAYIMPORT_FUNCTION::NameThunk+1,    new QStandardItem(sThunk));
+                (*ppModel)->setItem(i,N_IMAGE_DELAYIMPORT_FUNCTION::Hint+1,         new QStandardItem(XBinary::valueToHex(listDIP.at(i).nHint)));
+                (*ppModel)->setItem(i,N_IMAGE_DELAYIMPORT_FUNCTION::Hint+2,         new QStandardItem(listDIP.at(i).sName));
+            }
+
+            incValue();
+        }
     }
     else if(type==SPE::TYPE_RESOURCE)
     {
@@ -579,7 +629,7 @@ void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
     {
         pTableView->setColumnWidth(0,nSymbolWidth*4);
         pTableView->setColumnWidth(1,nSymbolWidth*12);
-        pTableView->setColumnWidth(2,nSymbolWidth*8);
+        pTableView->setColumnWidth(2,nSymbolWidth*12);
         pTableView->setColumnWidth(3,nSymbolWidth*6);
         pTableView->setColumnWidth(4,nSymbolWidth*22);
     }
@@ -624,6 +674,10 @@ void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
     }
     else if(type==SPE::TYPE_DELAYIMPORT_FUNCTION)
     {
-        // TODO
+        pTableView->setColumnWidth(0,nSymbolWidth*4);
+        pTableView->setColumnWidth(1,nSymbolWidth*12);
+        pTableView->setColumnWidth(2,nSymbolWidth*12);
+        pTableView->setColumnWidth(3,nSymbolWidth*6);
+        pTableView->setColumnWidth(4,nSymbolWidth*22);
     }
 }
