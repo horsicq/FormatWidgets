@@ -83,6 +83,8 @@ void PEProcessData::_process()
             (*ppModel)->setItem(i,N_IMAGE_SECTION_HEADER::NumberOfRelocations+1,  new QStandardItem(XBinary::valueToHex(listSections.at(i).NumberOfRelocations)));
             (*ppModel)->setItem(i,N_IMAGE_SECTION_HEADER::NumberOfLinenumbers+1,  new QStandardItem(XBinary::valueToHex(listSections.at(i).NumberOfLinenumbers)));
             (*ppModel)->setItem(i,N_IMAGE_SECTION_HEADER::Characteristics+1,      new QStandardItem(XBinary::valueToHex(listSections.at(i).Characteristics)));
+
+            incValue();
         }
     }
     else if(type==SPE::TYPE_RELOCS)
@@ -287,6 +289,7 @@ void PEProcessData::_process()
     else if(type==SPE::TYPE_DELAYIMPORT)
     {
         QList<QString> listLabels;
+        listLabels.append("");
         listLabels.append(getStructList(N_IMAGE_DELAYIMPORT::records,N_IMAGE_DELAYIMPORT::__data_size));
         listLabels.append("");
 
@@ -306,16 +309,19 @@ void PEProcessData::_process()
         {
             QString sLibraryName=pPE->read_ansiString(pPE->relAddressToOffset(&memoryMap,listDelayImport.at(i).DllNameRVA));
 
-            QStandardItem *pItem=new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).AllAttributes));
-            (*ppModel)->setItem(i,N_IMAGE_DELAYIMPORT::AllAttributes,                  pItem);
-            (*ppModel)->setItem(i,N_IMAGE_DELAYIMPORT::DllNameRVA,                     new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).DllNameRVA)));
-            (*ppModel)->setItem(i,N_IMAGE_DELAYIMPORT::ModuleHandleRVA,                new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).ModuleHandleRVA)));
-            (*ppModel)->setItem(i,N_IMAGE_DELAYIMPORT::ImportAddressTableRVA,          new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).ImportAddressTableRVA)));
-            (*ppModel)->setItem(i,N_IMAGE_DELAYIMPORT::ImportNameTableRVA,             new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).ImportNameTableRVA)));
-            (*ppModel)->setItem(i,N_IMAGE_DELAYIMPORT::BoundImportAddressTableRVA,     new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).BoundImportAddressTableRVA)));
-            (*ppModel)->setItem(i,N_IMAGE_DELAYIMPORT::UnloadInformationTableRVA,      new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).UnloadInformationTableRVA)));
-            (*ppModel)->setItem(i,N_IMAGE_DELAYIMPORT::TimeDateStamp,                  new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).TimeDateStamp)));
-            (*ppModel)->setItem(i,N_IMAGE_DELAYIMPORT::TimeDateStamp+1,                new QStandardItem(sLibraryName));
+            QStandardItem *pItem=new QStandardItem;
+            pItem->setData(i,Qt::DisplayRole);
+
+            (*ppModel)->setItem(i,0,                                                    pItem);
+            (*ppModel)->setItem(i,N_IMAGE_DELAYIMPORT::AllAttributes+1,                 new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).AllAttributes)));
+            (*ppModel)->setItem(i,N_IMAGE_DELAYIMPORT::DllNameRVA+1,                    new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).DllNameRVA)));
+            (*ppModel)->setItem(i,N_IMAGE_DELAYIMPORT::ModuleHandleRVA+1,               new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).ModuleHandleRVA)));
+            (*ppModel)->setItem(i,N_IMAGE_DELAYIMPORT::ImportAddressTableRVA+1,         new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).ImportAddressTableRVA)));
+            (*ppModel)->setItem(i,N_IMAGE_DELAYIMPORT::ImportNameTableRVA+1,            new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).ImportNameTableRVA)));
+            (*ppModel)->setItem(i,N_IMAGE_DELAYIMPORT::BoundImportAddressTableRVA+1,    new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).BoundImportAddressTableRVA)));
+            (*ppModel)->setItem(i,N_IMAGE_DELAYIMPORT::UnloadInformationTableRVA+1,     new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).UnloadInformationTableRVA)));
+            (*ppModel)->setItem(i,N_IMAGE_DELAYIMPORT::TimeDateStamp+1,                 new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).TimeDateStamp)));
+            (*ppModel)->setItem(i,N_IMAGE_DELAYIMPORT::TimeDateStamp+2,                 new QStandardItem(sLibraryName));
 
             incValue();
         }
@@ -507,6 +513,8 @@ void PEProcessData::_process()
                         pSubPos->appendRow(pRecord);
                     }
                 }
+
+                incValue();
             }
         }
     }
@@ -573,7 +581,7 @@ void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
     }
     else if(type==SPE::TYPE_DELAYIMPORT)
     {
-        pTableView->setColumnWidth(0,nSymbolWidth*8);
+        pTableView->setColumnWidth(0,nSymbolWidth*4);
         pTableView->setColumnWidth(1,nSymbolWidth*8);
         pTableView->setColumnWidth(2,nSymbolWidth*8);
         pTableView->setColumnWidth(3,nSymbolWidth*8);
@@ -581,7 +589,8 @@ void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
         pTableView->setColumnWidth(5,nSymbolWidth*8);
         pTableView->setColumnWidth(6,nSymbolWidth*8);
         pTableView->setColumnWidth(7,nSymbolWidth*8);
-        pTableView->setColumnWidth(8,nSymbolWidth*15);
+        pTableView->setColumnWidth(8,nSymbolWidth*8);
+        pTableView->setColumnWidth(9,nSymbolWidth*15);
     }
     else if(type==SPE::TYPE_EXPORT_FUNCTION)
     {
