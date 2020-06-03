@@ -251,6 +251,7 @@ void PEProcessData::_process()
     else if(type==SPE::TYPE_EXCEPTION)
     {
         QList<QString> listLabels;
+        listLabels.append("");
         listLabels.append(getStructList(N_IMAGE_EXCEPTIONS::records,N_IMAGE_EXCEPTIONS::__data_size));
 
         QList<XPE_DEF::S_IMAGE_RUNTIME_FUNCTION_ENTRY> listRFE=pPE->getExceptionsList();
@@ -267,16 +268,18 @@ void PEProcessData::_process()
 
         for(int i=0; i<nCount; i++)
         {
-            QStandardItem *pItem=new QStandardItem(XBinary::valueToHex(listRFE.at(i).BeginAddress));
+            QStandardItem *pItem=new QStandardItem;
+            pItem->setData(i,Qt::DisplayRole);
 //                pItem->setData(Qt::UserRole,listRH.at(i).nOffset);
 
             pItem->setData(listRFE.at(i).BeginAddress,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS);
             pItem->setData(listRFE.at(i).EndAddress-listRFE.at(i).BeginAddress,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
             pItem->setData(pPE->addressToOffset(&memoryMap,memoryMap.nBaseAddress+listRFE.at(i).BeginAddress),Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
 
-            (*ppModel)->setItem(i,N_IMAGE_EXCEPTIONS::BeginAddress,         pItem);
-            (*ppModel)->setItem(i,N_IMAGE_EXCEPTIONS::EndAddress,           new QStandardItem(XBinary::valueToHex(listRFE.at(i).EndAddress)));
-            (*ppModel)->setItem(i,N_IMAGE_EXCEPTIONS::UnwindInfoAddress,    new QStandardItem(XBinary::valueToHex(listRFE.at(i).UnwindInfoAddress)));
+            (*ppModel)->setItem(i,0,                                        pItem);
+            (*ppModel)->setItem(i,N_IMAGE_EXCEPTIONS::BeginAddress+1,       new QStandardItem(XBinary::valueToHex(listRFE.at(i).BeginAddress)));
+            (*ppModel)->setItem(i,N_IMAGE_EXCEPTIONS::EndAddress+1,         new QStandardItem(XBinary::valueToHex(listRFE.at(i).EndAddress)));
+            (*ppModel)->setItem(i,N_IMAGE_EXCEPTIONS::UnwindInfoAddress+1,  new QStandardItem(XBinary::valueToHex(listRFE.at(i).UnwindInfoAddress)));
 
             incValue();
         }
@@ -529,16 +532,18 @@ void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
     }
     else if(type==SPE::TYPE_RELOCS)
     {
-        pTableView->setColumnWidth(0,nSymbolWidth*8);
+        pTableView->setColumnWidth(0,nSymbolWidth*4);
         pTableView->setColumnWidth(1,nSymbolWidth*8);
         pTableView->setColumnWidth(2,nSymbolWidth*8);
-        pTableView->setColumnWidth(3,nSymbolWidth*30);
+        pTableView->setColumnWidth(3,nSymbolWidth*8);
+        pTableView->setColumnWidth(4,nSymbolWidth*30);
     }
     else if(type==SPE::TYPE_RELOCS_POSITION)
     {
-        pTableView->setColumnWidth(0,nSymbolWidth*8);
-        pTableView->setColumnWidth(1,nSymbolWidth*12);
+        pTableView->setColumnWidth(0,nSymbolWidth*4);
+        pTableView->setColumnWidth(1,nSymbolWidth*8);
         pTableView->setColumnWidth(2,nSymbolWidth*12);
+        pTableView->setColumnWidth(3,nSymbolWidth*12);
     }
     else if(type==SPE::TYPE_IMPORT)
     {
@@ -561,9 +566,10 @@ void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
     }
     else if(type==SPE::TYPE_EXCEPTION)
     {
-        pTableView->setColumnWidth(0,nSymbolWidth*8);
+        pTableView->setColumnWidth(0,nSymbolWidth*4);
         pTableView->setColumnWidth(1,nSymbolWidth*8);
         pTableView->setColumnWidth(2,nSymbolWidth*8);
+        pTableView->setColumnWidth(3,nSymbolWidth*8);
     }
     else if(type==SPE::TYPE_DELAYIMPORT)
     {
