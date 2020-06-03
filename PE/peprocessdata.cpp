@@ -388,6 +388,10 @@ void PEProcessData::_process()
             incValue();
         }
     }
+    else if(type==SPE::TYPE_DELAYIMPORT_FUNCTION)
+    {
+        // TODO
+    }
     else if(type==SPE::TYPE_RESOURCE)
     {
         XPE::RESOURCE_HEADER rh=pPE->getResourceHeader();
@@ -610,5 +614,9 @@ void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
         pTableView->setColumnWidth(6,nSymbolWidth*8);
         pTableView->setColumnWidth(7,nSymbolWidth*8);
         pTableView->setColumnWidth(8,nSymbolWidth*8);
+    }
+    else if(type==SPE::TYPE_DELAYIMPORT_FUNCTION)
+    {
+        // TODO
     }
 }

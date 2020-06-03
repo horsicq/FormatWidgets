@@ -1484,13 +1484,13 @@ void PEWidget::reloadData()
             {
                 PEProcessData peProcessData(SPE::TYPE_DELAYIMPORT,&tvModel[SPE::TYPE_DELAYIMPORT],&pe,0,0,0);
 
-                ajustTableView(&peProcessData,&tvModel[SPE::TYPE_DELAYIMPORT],ui->tableView_DelayImport);
+                ajustTableView(&peProcessData,&tvModel[SPE::TYPE_DELAYIMPORT],ui->tableView_DelayImportLibraries);
 
-                connect(ui->tableView_DelayImport->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_DelayImport_currentRowChanged(QModelIndex,QModelIndex)));
+                connect(ui->tableView_DelayImportLibraries->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_DelayImportLibraries_currentRowChanged(QModelIndex,QModelIndex)));
 
                 if(tvModel[SPE::TYPE_DELAYIMPORT]->rowCount())
                 {
-                    ui->tableView_DelayImport->setCurrentIndex(ui->tableView_DelayImport->model()->index(0,0));
+                    ui->tableView_DelayImportLibraries->setCurrentIndex(ui->tableView_DelayImportLibraries->model()->index(0,0));
                 }
             }
         }
@@ -1695,7 +1695,14 @@ void PEWidget::loadDelayImport(int nRow)
 
     if(pe.isValid())
     {
-        // TODO
+        PEProcessData peProcessData(SPE::TYPE_DELAYIMPORT_FUNCTION,&tvModel[SPE::TYPE_DELAYIMPORT_FUNCTION],&pe,nRow,0,0);
+
+        ajustTableView(&peProcessData,&tvModel[SPE::TYPE_DELAYIMPORT_FUNCTION],ui->tableView_DelayImportFunctions);
+
+        if(tvModel[SPE::TYPE_DELAYIMPORT]->rowCount())
+        {
+            ui->tableView_DelayImportFunctions->setCurrentIndex(ui->tableView_DelayImportFunctions->model()->index(0,0));
+        }
     }
 }
 
@@ -1940,7 +1947,7 @@ void PEWidget::editExceptionHeader()
 
 void PEWidget::editDelayImportHeader()
 {
-    showSectionHeader(SPE::TYPE_DELAYIMPORT,ui->tableView_DelayImport);
+    showSectionHeader(SPE::TYPE_DELAYIMPORT,ui->tableView_DelayImportLibraries);
 }
 
 void PEWidget::showSectionHeader(int type, QTableView *pTableView)
@@ -2117,9 +2124,9 @@ void PEWidget::on_tableView_Exceptions_doubleClicked(const QModelIndex &index)
     editExceptionHeader();
 }
 
-void PEWidget::on_tableView_DelayImport_customContextMenuRequested(const QPoint &pos)
+void PEWidget::on_tableView_DelayImportLibraries_customContextMenuRequested(const QPoint &pos)
 {
-    int nRow=ui->tableView_DelayImport->currentIndex().row();
+    int nRow=ui->tableView_DelayImportLibraries->currentIndex().row();
 
     if(nRow!=-1)
     {
@@ -2129,11 +2136,11 @@ void PEWidget::on_tableView_DelayImport_customContextMenuRequested(const QPoint 
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editDelayImportHeader()));
         contextMenu.addAction(&actionEdit);
 
-        contextMenu.exec(ui->tableView_DelayImport->viewport()->mapToGlobal(pos));
+        contextMenu.exec(ui->tableView_DelayImportLibraries->viewport()->mapToGlobal(pos));
     }
 }
 
-void PEWidget::onTableView_DelayImport_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+void PEWidget::onTableView_DelayImportLibraries_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
 {
     int nRow=current.row();
 
@@ -2143,7 +2150,7 @@ void PEWidget::onTableView_DelayImport_currentRowChanged(const QModelIndex &curr
     }
 }
 
-void PEWidget::on_tableView_DelayImport_doubleClicked(const QModelIndex &index)
+void PEWidget::on_tableView_DelayImportLibraries_doubleClicked(const QModelIndex &index)
 {
     Q_UNUSED(index)
 

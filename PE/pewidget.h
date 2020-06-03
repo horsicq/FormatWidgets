@@ -103,9 +103,9 @@ private slots:
     void on_tableView_Exceptions_customContextMenuRequested(const QPoint &pos);
     void onTableView_Exceptions_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
     void on_tableView_Exceptions_doubleClicked(const QModelIndex &index);
-    void on_tableView_DelayImport_customContextMenuRequested(const QPoint &pos);
-    void onTableView_DelayImport_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
-    void on_tableView_DelayImport_doubleClicked(const QModelIndex &index);
+    void on_tableView_DelayImportLibraries_customContextMenuRequested(const QPoint &pos);
+    void onTableView_DelayImportLibraries_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
+    void on_tableView_DelayImportLibraries_doubleClicked(const QModelIndex &index);
 
     void onTreeView_Resources_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
 
