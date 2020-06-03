@@ -199,11 +199,7 @@ void PEWidget::reload()
                 }
             }
         }
-
-        // TODO NET MetaData
         // TODO NET Resources
-        // TODO NET Strings
-        // TODO NET UnicodeStrings
 
         if(pe.isOverlayPresent())
         {
