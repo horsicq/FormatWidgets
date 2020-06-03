@@ -88,6 +88,7 @@ void PEProcessData::_process()
     else if(type==SPE::TYPE_RELOCS)
     {
         QList<QString> listLabels;
+        listLabels.append("");
         listLabels.append(getStructList(N_IMAGE_RELOCS::records,N_IMAGE_RELOCS::__data_size));
         listLabels.append("");
         listLabels.append("");
@@ -104,12 +105,14 @@ void PEProcessData::_process()
 
         for(int i=0; i<nCount; i++)
         {
-            QStandardItem *pItem=new QStandardItem(XBinary::valueToHex(listRH.at(i).ibr.VirtualAddress));
+            QStandardItem *pItem=new QStandardItem;
+            pItem->setData(i,Qt::DisplayRole);
             pItem->setData(listRH.at(i).nOffset,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
-            (*ppModel)->setItem(i,N_IMAGE_RELOCS::VirtualAddress,               pItem);
-            (*ppModel)->setItem(i,N_IMAGE_RELOCS::SizeOfBlock,                  new QStandardItem(XBinary::valueToHex(listRH.at(i).ibr.SizeOfBlock)));
-            (*ppModel)->setItem(i,N_IMAGE_RELOCS::SizeOfBlock+1,                new QStandardItem(QString::number(listRH.at(i).nCount)));
-            (*ppModel)->setItem(i,N_IMAGE_RELOCS::SizeOfBlock+2,                new QStandardItem(pPE->getMemoryRecordInfoByRelAddress(listRH.at(i).ibr.VirtualAddress))); // Comment
+            (*ppModel)->setItem(i,0,                                            pItem);
+            (*ppModel)->setItem(i,N_IMAGE_RELOCS::VirtualAddress+1,             new QStandardItem(XBinary::valueToHex(listRH.at(i).ibr.VirtualAddress)));
+            (*ppModel)->setItem(i,N_IMAGE_RELOCS::SizeOfBlock+1,                new QStandardItem(XBinary::valueToHex(listRH.at(i).ibr.SizeOfBlock)));
+            (*ppModel)->setItem(i,N_IMAGE_RELOCS::SizeOfBlock+2,                new QStandardItem(QString::number(listRH.at(i).nCount)));
+            (*ppModel)->setItem(i,N_IMAGE_RELOCS::SizeOfBlock+3,                new QStandardItem(pPE->getMemoryRecordInfoByRelAddress(listRH.at(i).ibr.VirtualAddress))); // Comment
 
             incValue();
         }
@@ -117,6 +120,7 @@ void PEProcessData::_process()
     else if(type==SPE::TYPE_RELOCS_POSITION)
     {
         QList<QString> listLabels;
+        listLabels.append("");
         listLabels.append(getStructList(N_IMAGE_RELOCS_POSITION::records,N_IMAGE_RELOCS_POSITION::__data_size));
         listLabels.append("Type");
         listLabels.append("Address");
@@ -135,9 +139,12 @@ void PEProcessData::_process()
 
         for(int i=0; i<nCount; i++)
         {
-            (*ppModel)->setItem(i,N_IMAGE_RELOCS_POSITION::TypeOffset,       new QStandardItem(XBinary::valueToHex(listRelocsPositions.at(i).nTypeOffset)));
-            (*ppModel)->setItem(i,N_IMAGE_RELOCS_POSITION::TypeOffset+1,     new QStandardItem(mapTypes.value(listRelocsPositions.at(i).nType)));
-            (*ppModel)->setItem(i,N_IMAGE_RELOCS_POSITION::TypeOffset+2,     new QStandardItem(XBinary::valueToHex((quint32)listRelocsPositions.at(i).nAddress)));
+            QStandardItem *pItem=new QStandardItem;
+            pItem->setData(i,Qt::DisplayRole);
+            (*ppModel)->setItem(i,0,                                            pItem);
+            (*ppModel)->setItem(i,N_IMAGE_RELOCS_POSITION::TypeOffset+1,        new QStandardItem(XBinary::valueToHex(listRelocsPositions.at(i).nTypeOffset)));
+            (*ppModel)->setItem(i,N_IMAGE_RELOCS_POSITION::TypeOffset+2,        new QStandardItem(mapTypes.value(listRelocsPositions.at(i).nType)));
+            (*ppModel)->setItem(i,N_IMAGE_RELOCS_POSITION::TypeOffset+3,        new QStandardItem(XBinary::valueToHex((quint32)listRelocsPositions.at(i).nAddress)));
 
             incValue();
         }
@@ -200,7 +207,8 @@ void PEProcessData::_process()
 
         for(int i=0; i<nCount; i++)
         {
-            QStandardItem *pItem=new QStandardItem(QString::number(i));
+            QStandardItem *pItem=new QStandardItem;
+            pItem->setData(i,Qt::DisplayRole);
 
             (*ppModel)->setItem(i,0,pItem);
 
