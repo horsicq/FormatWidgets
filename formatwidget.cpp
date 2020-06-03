@@ -436,7 +436,7 @@ bool FormatWidget::createHeaderTable(int type, QTableWidget *pTableWidget, const
     for(int i=0; i<nRecordCount; i++)
     {
         QTableWidgetItem *itemName=new QTableWidgetItem;
-        itemName->setText(pRecords[i].pszName);
+        itemName->setText(pRecords[i].sName);
         itemName->setData(Qt::UserRole+HEADER_DATA_OFFSET,pRecords[i].nOffset);
         itemName->setData(Qt::UserRole+HEADER_DATA_SIZE,pRecords[i].nSize);
         pTableWidget->setItem(i,HEADER_COLUMN_NAME,itemName);
@@ -451,7 +451,7 @@ bool FormatWidget::createHeaderTable(int type, QTableWidget *pTableWidget, const
         pTableWidget->setItem(i,HEADER_COLUMN_OFFSET,itemOffset);
 
         QTableWidgetItem *itemType=new QTableWidgetItem;
-        itemType->setText(pRecords[i].pszType);
+        itemType->setText(pRecords[i].sType);
         pTableWidget->setItem(i,HEADER_COLUMN_TYPE,itemType);
 
         ppLineEdits[i]=new XLineEditHEX(this);
@@ -501,7 +501,7 @@ bool FormatWidget::createListTable(int type, QTableWidget *pTableWidget, const F
     for(int i=0; i<nRecordCount; i++)
     {
         QTableWidgetItem *newItemName=new QTableWidgetItem;
-        newItemName->setText(pRecords[i].pszName);
+        newItemName->setText(pRecords[i].sName);
         pTableWidget->setItem(i,LIST_COLUMN_NAME,newItemName);
 
         ppLineEdits[i]=new XLineEditHEX(this);
@@ -618,7 +618,7 @@ bool FormatWidget::createSectionTable(int type, QTableWidget *pTableWidget, cons
 
     for(int i=0; i<nRecordCount; i++)
     {
-        slHeader.append(pRecords[i].pszName);
+        slHeader.append(pRecords[i].sName);
     }
 
     pTableWidget->setColumnCount(nRecordCount);

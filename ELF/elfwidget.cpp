@@ -650,7 +650,7 @@ bool ELFWidget::createSectionTable(int type, QTableWidget *pTableWidget, const F
 
     for(int i=0; i<nRecordCount; i++)
     {
-        slHeader.append(pRecords[i].pszName);
+        slHeader.append(pRecords[i].sName);
     }
 
     pTableWidget->setHorizontalHeaderLabels(slHeader);

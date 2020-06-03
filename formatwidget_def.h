@@ -49,10 +49,10 @@ namespace FW_DEF
     struct HEADER_RECORD
     {
         int nData;
-        const char *pszName;
+        QString sName;
         int nOffset;
         int nSize;
-        const char *pszType;
+        QString sType;
         VAL_TYPE vtype;
     };
 
