@@ -417,6 +417,20 @@ extern const FW_DEF::HEADER_RECORD records32[__data_size];
 extern const FW_DEF::HEADER_RECORD records64[__data_size];
 }
 
+namespace N_IMAGE_DELAYIMPORT_FUNCTION
+{
+enum DATA
+{
+    Thunk=0,
+    Ordinal,
+    Hint,
+    __data_size
+};
+
+extern const FW_DEF::HEADER_RECORD records32[__data_size];
+extern const FW_DEF::HEADER_RECORD records64[__data_size];
+}
+
 namespace N_IMAGE_RELOCS
 {
 enum DATA

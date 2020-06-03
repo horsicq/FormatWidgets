@@ -317,6 +317,23 @@ const FW_DEF::HEADER_RECORD records64[]=
 };
 }
 
+namespace N_IMAGE_DELAYIMPORT_FUNCTION
+{
+const FW_DEF::HEADER_RECORD records32[]=
+{
+    {Thunk,                     "Thunk",    0,  4,      "DWORD",        FW_DEF::VAL_TYPE_RELADDRESS},
+    {Ordinal,                   "Ordinal",  0,  4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
+    {Hint,                      "Hint",     0,  2,      "WORD",         FW_DEF::VAL_TYPE_DATA}
+};
+const FW_DEF::HEADER_RECORD records64[]=
+{
+    {Thunk,                     "Thunk",    0,  8,      "QWORD",        FW_DEF::VAL_TYPE_RELADDRESS},
+    {Ordinal,                   "Ordinal",  0,  8,      "QWORD",        FW_DEF::VAL_TYPE_DATA},
+    {Hint,                      "Hint",     0,  2,      "WORD",         FW_DEF::VAL_TYPE_DATA}
+};
+}
+
+
 namespace N_IMAGE_RELOCS
 {
 const FW_DEF::HEADER_RECORD records[]=

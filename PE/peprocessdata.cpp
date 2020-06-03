@@ -390,7 +390,14 @@ void PEProcessData::_process()
     }
     else if(type==SPE::TYPE_DELAYIMPORT_FUNCTION)
     {
-        // TODO
+        QList<QString> listLabels;
+        listLabels.append("");
+        listLabels.append(getStructList(N_IMAGE_DELAYIMPORT_FUNCTION::records32,N_IMAGE_DELAYIMPORT_FUNCTION::__data_size));
+        listLabels.append("Name");
+
+        bool bIs64=pPE->is64();
+        QList<XPE::DELAYIMPORT_POSITION> listDIP=pPE->getDelayImportPositions(nNumber);
+
     }
     else if(type==SPE::TYPE_RESOURCE)
     {
