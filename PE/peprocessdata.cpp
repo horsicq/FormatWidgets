@@ -417,11 +417,13 @@ void PEProcessData::_process()
 
             if(bIs64)
             {
-                (*ppModel)->setItem(i,N_IMAGE_DELAYIMPORT_FUNCTION::AddressThunk+1,    new QStandardItem(XBinary::valueToHex((quint64)listDIP.at(i).nAddressThunkRVA)));
+                (*ppModel)->setItem(i,N_IMAGE_DELAYIMPORT_FUNCTION::AddressThunk+1,     new QStandardItem(XBinary::valueToHex((quint64)listDIP.at(i).nAddressThunkRVA)));
+                (*ppModel)->setItem(i,N_IMAGE_DELAYIMPORT_FUNCTION::BoundThunk+1,       new QStandardItem(XBinary::valueToHex((quint64)listDIP.at(i).nBoundThunkRVA)));
             }
             else
             {
-                (*ppModel)->setItem(i,N_IMAGE_DELAYIMPORT_FUNCTION::AddressThunk+1,    new QStandardItem(XBinary::valueToHex((quint32)listDIP.at(i).nAddressThunkRVA)));
+                (*ppModel)->setItem(i,N_IMAGE_DELAYIMPORT_FUNCTION::AddressThunk+1,     new QStandardItem(XBinary::valueToHex((quint32)listDIP.at(i).nAddressThunkRVA)));
+                (*ppModel)->setItem(i,N_IMAGE_DELAYIMPORT_FUNCTION::BoundThunk+1,       new QStandardItem(XBinary::valueToHex((quint32)listDIP.at(i).nBoundThunkRVA)));
             }
 
             if(listDIP.at(i).nOrdinal)

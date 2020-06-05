@@ -322,6 +322,7 @@ namespace N_IMAGE_DELAYIMPORT_FUNCTION
 const FW_DEF::HEADER_RECORD records32[]=
 {
     {AddressThunk,              "AddressThunk", 0,  4,      "DWORD",        FW_DEF::VAL_TYPE_RELADDRESS},
+    {BoundThunk,                "BoundThunk",   0,  4,      "DWORD",        FW_DEF::VAL_TYPE_RELADDRESS},
     {NameThunk,                 "NameThunk",    0,  4,      "DWORD",        FW_DEF::VAL_TYPE_RELADDRESS},
     {Ordinal,                   "Ordinal",      0,  4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
     {Hint,                      "Hint",         0,  2,      "WORD",         FW_DEF::VAL_TYPE_DATA}
@@ -329,6 +330,7 @@ const FW_DEF::HEADER_RECORD records32[]=
 const FW_DEF::HEADER_RECORD records64[]=
 {
     {AddressThunk,              "AddressThunk", 0,  8,      "QWORD",        FW_DEF::VAL_TYPE_RELADDRESS},
+    {BoundThunk,                "BoundThunk",   0,  8,      "DWORD",        FW_DEF::VAL_TYPE_RELADDRESS},
     {NameThunk,                 "NameThunk",    0,  8,      "QWORD",        FW_DEF::VAL_TYPE_RELADDRESS},
     {Ordinal,                   "Ordinal",      0,  8,      "QWORD",        FW_DEF::VAL_TYPE_DATA},
     {Hint,                      "Hint",         0,  2,      "WORD",         FW_DEF::VAL_TYPE_DATA}
