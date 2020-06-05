@@ -415,6 +415,15 @@ void PEProcessData::_process()
 
             (*ppModel)->setItem(i,0,pItem);
 
+            if(bIs64)
+            {
+                (*ppModel)->setItem(i,N_IMAGE_DELAYIMPORT_FUNCTION::AddressThunk+1,    new QStandardItem(XBinary::valueToHex((quint64)listDIP.at(i).nAddressThunkRVA)));
+            }
+            else
+            {
+                (*ppModel)->setItem(i,N_IMAGE_DELAYIMPORT_FUNCTION::AddressThunk+1,    new QStandardItem(XBinary::valueToHex((quint32)listDIP.at(i).nAddressThunkRVA)));
+            }
+
             if(listDIP.at(i).nOrdinal)
             {
                 QString sOrdinal;
@@ -680,7 +689,8 @@ void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
         pTableView->setColumnWidth(0,nSymbolWidth*4);
         pTableView->setColumnWidth(1,nSymbolWidth*12);
         pTableView->setColumnWidth(2,nSymbolWidth*12);
-        pTableView->setColumnWidth(3,nSymbolWidth*6);
-        pTableView->setColumnWidth(4,nSymbolWidth*22);
+        pTableView->setColumnWidth(3,nSymbolWidth*12);
+        pTableView->setColumnWidth(4,nSymbolWidth*6);
+        pTableView->setColumnWidth(5,nSymbolWidth*22);
     }
 }
