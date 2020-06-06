@@ -331,7 +331,7 @@ void PEProcessData::_process()
     else if(type==SPE::TYPE_EXPORT_FUNCTION)
     {
         QList<QString> listLabels;
-        // TODO number
+        // No need number
         listLabels.append(getStructList(N_IMAGE_EXPORT_FUNCTION::records,N_IMAGE_EXPORT_FUNCTION::__data_size));
         listLabels.append("");
 
@@ -697,6 +697,10 @@ void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
         pTableView->setColumnWidth(1,nSymbolWidth*8);
         pTableView->setColumnWidth(2,nSymbolWidth*8);
         pTableView->setColumnWidth(3,nSymbolWidth*30);
+    }
+    else if(type==SPE::TYPE_BOUNDIMPORT)
+    {
+        // TODO
     }
     else if(type==SPE::TYPE_DEBUG)
     {
