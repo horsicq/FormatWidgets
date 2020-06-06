@@ -331,6 +331,7 @@ void PEProcessData::_process()
     else if(type==SPE::TYPE_EXPORT_FUNCTION)
     {
         QList<QString> listLabels;
+        // TODO number
         listLabels.append(getStructList(N_IMAGE_EXPORT_FUNCTION::records,N_IMAGE_EXPORT_FUNCTION::__data_size));
         listLabels.append("");
 
@@ -351,6 +352,29 @@ void PEProcessData::_process()
             (*ppModel)->setItem(i,N_IMAGE_EXPORT_FUNCTION::Name,                    new QStandardItem(XBinary::valueToHex(eh.listPositions.at(i).nNameRVA)));
             (*ppModel)->setItem(i,N_IMAGE_EXPORT_FUNCTION::Name+1,                  new QStandardItem(eh.listPositions.at(i).sFunctionName));
 
+            incValue();
+        }
+    }
+    else if(type==SPE::TYPE_BOUNDIMPORT)
+    {
+        QList<QString> listLabels;
+        listLabels.append("");
+        listLabels.append(getStructList(N_IMAGE_BOUNDIMPORT::records,N_IMAGE_BOUNDIMPORT::__data_size));
+        listLabels.append("");
+
+        // TODO
+
+        int nCount=0;
+
+        *ppModel=new QStandardItemModel(nCount,listLabels.count());
+
+        setMaximum(nCount);
+
+        setHeader(*ppModel,&listLabels);
+
+        for(int i=0; i<nCount; i++)
+        {
+            // TODO
             incValue();
         }
     }
