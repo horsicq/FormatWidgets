@@ -1472,7 +1472,17 @@ void PEWidget::reloadData()
         }
         else if(nType==SPE::TYPE_BOUNDIMPORT)
         {
-            // TODO
+            if(!stInit.contains(sInit))
+            {
+                PEProcessData peProcessData(SPE::TYPE_BOUNDIMPORT,&tvModel[SPE::TYPE_BOUNDIMPORT],&pe,0,0,0);
+
+                ajustTableView(&peProcessData,&tvModel[SPE::TYPE_BOUNDIMPORT],ui->tableView_BoundImport);
+
+                if(tvModel[SPE::TYPE_BOUNDIMPORT]->rowCount())
+                {
+                    ui->tableView_BoundImport->setCurrentIndex(ui->tableView_BoundImport->model()->index(0,0));
+                }
+            }
         }
         else if(nType==SPE::TYPE_DELAYIMPORT)
         {
