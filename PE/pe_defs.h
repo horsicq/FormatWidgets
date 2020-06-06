@@ -312,7 +312,7 @@ namespace N_IMAGE_DEBUG
 {
 enum DATA
 {
-    Characteristics,
+    Characteristics=0,
     TimeDateStamp,
     MajorVersion,
     MinorVersion,
@@ -353,7 +353,7 @@ namespace N_IMAGE_IMPORT
 {
 enum DATA
 {
-    OriginalFirstThunk,
+    OriginalFirstThunk=0,
     TimeDateStamp,
     ForwarderChain,
     Name,
@@ -369,7 +369,7 @@ enum CB
 };
 enum INV
 {
-    INV_OriginalFirstThunk,
+    INV_OriginalFirstThunk=0,
     INV_Name,
     INV_FirstThunk,
     __INV_size
@@ -380,7 +380,7 @@ namespace N_IMAGE_DELAYIMPORT
 {
 enum DATA
 {
-    AllAttributes,
+    AllAttributes=0,
     DllNameRVA,
     ModuleHandleRVA,
     ImportAddressTableRVA,
@@ -388,6 +388,28 @@ enum DATA
     BoundImportAddressTableRVA,
     UnloadInformationTableRVA,
     TimeDateStamp,
+    __data_size
+};
+
+extern const FW_DEF::HEADER_RECORD records[__data_size];
+
+enum CB
+{
+    __CB_size
+};
+enum INV
+{
+    __INV_size
+};
+}
+
+namespace N_IMAGE_BOUNDIMPORT
+{
+enum DATA
+{
+    TimeDateStamp=0,
+    OffsetModuleName,
+    NumberOfModuleForwarderRefs,
     __data_size
 };
 

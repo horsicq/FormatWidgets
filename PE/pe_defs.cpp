@@ -337,6 +337,15 @@ const FW_DEF::HEADER_RECORD records64[]=
 };
 }
 
+namespace N_IMAGE_BOUNDIMPORT
+{
+const FW_DEF::HEADER_RECORD records[]=
+{
+    {TimeDateStamp,                 "TimeDateStamp",                0,  4,      "DWORD",        FW_DEF::VAL_TYPE_UNIXTIME},
+    {OffsetModuleName,              "OffsetModuleName",             4,  2,      "WORD",         FW_DEF::VAL_TYPE_OFFSET},
+    {NumberOfModuleForwarderRefs,   "NumberOfModuleForwarderRefs",  6,  2,      "WORD",         FW_DEF::VAL_TYPE_DATA},
+};
+}
 
 namespace N_IMAGE_RELOCS
 {
