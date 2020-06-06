@@ -362,9 +362,9 @@ void PEProcessData::_process()
         listLabels.append(getStructList(N_IMAGE_BOUNDIMPORT::records,N_IMAGE_BOUNDIMPORT::__data_size));
         listLabels.append("");
 
-        // TODO
+        QList<XPE::BOUND_IMPORT_POSITION> listBIP=pPE->getBoundImportPositions();
 
-        int nCount=0;
+        int nCount=listBIP.count();
 
         *ppModel=new QStandardItemModel(nCount,listLabels.count());
 
@@ -374,6 +374,11 @@ void PEProcessData::_process()
 
         for(int i=0; i<nCount; i++)
         {
+            QStandardItem *pItem=new QStandardItem;
+            pItem->setData(i,Qt::DisplayRole);
+
+            (*ppModel)->setItem(i,0,                                                    pItem);
+
             // TODO
             incValue();
         }
