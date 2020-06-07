@@ -79,6 +79,12 @@ SectionHeaderWidget::SectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pO
         nComboBoxSize=N_IMAGE_DELAYIMPORT::__CB_size;
         nInvWidgetSize=N_IMAGE_DELAYIMPORT::__INV_size;
     }
+    else if(nType==SPE::TYPE_BOUNDIMPORT)
+    {
+        nLineEditSize=N_IMAGE_BOUNDIMPORT::__data_size;
+        nComboBoxSize=N_IMAGE_BOUNDIMPORT::__CB_size;
+        nInvWidgetSize=N_IMAGE_BOUNDIMPORT::__INV_size;
+    }
 
     if(nLineEditSize)
     {
@@ -269,6 +275,13 @@ bool SectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int
                         case N_IMAGE_DELAYIMPORT::TimeDateStamp:                pe.setDelayImport_TimeDateStamp(nPosition,(quint32)nValue);                 break;
                     }
                     break;
+
+                case SPE::TYPE_BOUNDIMPORT:
+                    switch(nNdata)
+                    {
+                        // TODO
+                    }
+                    break;
             }
 
             switch(nStype)
@@ -352,6 +365,14 @@ void SectionHeaderWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget
             break;
 
         case SPE::TYPE_DELAYIMPORT:
+            pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*6);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*16);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*8);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
+            break;
+
+        case SPE::TYPE_BOUNDIMPORT:
             pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
             pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*6);
             pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*16);
@@ -558,6 +579,30 @@ void SectionHeaderWidget::reloadData()
                 ppLinedEdit[N_IMAGE_DELAYIMPORT::TimeDateStamp]->setValue(delayImport.TimeDateStamp);
 
                 qint64 nSize=pe.getDelayImportRecordSize();
+                qint64 nAddress=pe.offsetToRelAddress(nOffset);
+
+                loadHexSubdevice(nOffset,nSize,nAddress,&pSubDevice,ui->widgetHex);
+
+                blockSignals(false);
+            }
+            else if(nType==SPE::TYPE_BOUNDIMPORT)
+            {
+                if(!bInit)
+                {
+                    bInit=createHeaderTable(SPE::TYPE_BOUNDIMPORT,ui->tableWidget,N_IMAGE_BOUNDIMPORT::records,ppLinedEdit,N_IMAGE_BOUNDIMPORT::__data_size,getNumber());
+                }
+
+                blockSignals(true);
+
+                qint64 nOffset=pe.getBoundImportRecordOffset(getNumber());
+
+                XPE_DEF::S_IMAGE_BOUND_IMPORT_DESCRIPTOR boundImport=pe._read_IMAGE_BOUND_IMPORT_DESCRIPTOR(nOffset);
+
+                ppLinedEdit[N_IMAGE_BOUNDIMPORT::TimeDateStamp]->setValue(boundImport.TimeDateStamp);
+                ppLinedEdit[N_IMAGE_BOUNDIMPORT::OffsetModuleName]->setValue(boundImport.OffsetModuleName);
+                ppLinedEdit[N_IMAGE_BOUNDIMPORT::NumberOfModuleForwarderRefs]->setValue(boundImport.NumberOfModuleForwarderRefs);
+
+                qint64 nSize=pe.getBoundImportRecordSize();
                 qint64 nAddress=pe.offsetToRelAddress(nOffset);
 
                 loadHexSubdevice(nOffset,nSize,nAddress,&pSubDevice,ui->widgetHex);
