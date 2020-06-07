@@ -377,7 +377,7 @@ void PEProcessData::_process()
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
 
-            (*ppModel)->setItem(i,0,                                                    pItem);
+            (*ppModel)->setItem(i,0,                    pItem);
 
             // TODO
             incValue();
