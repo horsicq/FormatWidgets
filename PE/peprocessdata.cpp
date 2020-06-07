@@ -382,7 +382,7 @@ void PEProcessData::_process()
             (*ppModel)->setItem(i,N_IMAGE_BOUNDIMPORT::TimeDateStamp+1,                 new QStandardItem(XBinary::valueToHex(listBIP.at(i).descriptor.TimeDateStamp)));
             (*ppModel)->setItem(i,N_IMAGE_BOUNDIMPORT::OffsetModuleName+1,              new QStandardItem(XBinary::valueToHex(listBIP.at(i).descriptor.OffsetModuleName)));
             (*ppModel)->setItem(i,N_IMAGE_BOUNDIMPORT::NumberOfModuleForwarderRefs+1,   new QStandardItem(XBinary::valueToHex(listBIP.at(i).descriptor.NumberOfModuleForwarderRefs)));
-            // TODO
+            (*ppModel)->setItem(i,N_IMAGE_BOUNDIMPORT::NumberOfModuleForwarderRefs+2,   new QStandardItem(XBinary::valueToTimeString(listBIP.at(i).descriptor.TimeDateStamp,XBinary::DT_TYPE_POSIX)));
             (*ppModel)->setItem(i,N_IMAGE_BOUNDIMPORT::NumberOfModuleForwarderRefs+3,   new QStandardItem(listBIP.at(i).sName));
 
             incValue();
