@@ -361,6 +361,7 @@ void PEProcessData::_process()
         listLabels.append("");
         listLabels.append(getStructList(N_IMAGE_BOUNDIMPORT::records,N_IMAGE_BOUNDIMPORT::__data_size));
         listLabels.append("");
+        listLabels.append("");
 
         QList<XPE::BOUND_IMPORT_POSITION> listBIP=pPE->getBoundImportPositions();
 
@@ -705,7 +706,12 @@ void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
     }
     else if(type==SPE::TYPE_BOUNDIMPORT)
     {
-        // TODO
+        pTableView->setColumnWidth(0,nSymbolWidth*4);
+        pTableView->setColumnWidth(1,nSymbolWidth*8);
+        pTableView->setColumnWidth(2,nSymbolWidth*8);
+        pTableView->setColumnWidth(3,nSymbolWidth*8);
+        pTableView->setColumnWidth(4,nSymbolWidth*12);
+        pTableView->setColumnWidth(5,nSymbolWidth*30);
     }
     else if(type==SPE::TYPE_DEBUG)
     {
