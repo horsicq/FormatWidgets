@@ -85,6 +85,7 @@ private slots:
     void editRelocsHeader();
     void editExceptionHeader();
     void editDelayImportHeader();
+    void editBoundImportHeader();
 
     void showSectionHeader(int type,QTableView *pTableView);
 
@@ -106,6 +107,9 @@ private slots:
     void on_tableView_DelayImportLibraries_customContextMenuRequested(const QPoint &pos);
     void onTableView_DelayImportLibraries_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
     void on_tableView_DelayImportLibraries_doubleClicked(const QModelIndex &index);
+
+    void on_tableView_BoundImport_customContextMenuRequested(const QPoint &pos);
+    void on_tableView_BoundImport_doubleClicked(const QModelIndex &index);
 
     void onTreeView_Resources_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
 

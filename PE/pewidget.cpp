@@ -1789,6 +1789,7 @@ QString PEWidget::typeIdToString(int type)
         case SPE::TYPE_EXCEPTION:               sResult=QString("Exception %1").arg(tr("Header"));          break;
         case SPE::TYPE_RELOCS:                  sResult=QString("Relocs %1").arg(tr("Header"));             break;
         case SPE::TYPE_DELAYIMPORT:             sResult=QString("Delay import %1").arg(tr("Header"));       break;
+        case SPE::TYPE_BOUNDIMPORT:             sResult=QString("Bound import %1").arg(tr("Header"));       break;
     }
 
     return sResult;
@@ -1954,6 +1955,11 @@ void PEWidget::editExceptionHeader()
 void PEWidget::editDelayImportHeader()
 {
     showSectionHeader(SPE::TYPE_DELAYIMPORT,ui->tableView_DelayImportLibraries);
+}
+
+void PEWidget::editBoundImportHeader()
+{
+    showSectionHeader(SPE::TYPE_BOUNDIMPORT,ui->tableView_BoundImport);
 }
 
 void PEWidget::showSectionHeader(int type, QTableView *pTableView)
@@ -2161,6 +2167,29 @@ void PEWidget::on_tableView_DelayImportLibraries_doubleClicked(const QModelIndex
     Q_UNUSED(index)
 
     editDelayImportHeader();
+}
+
+void PEWidget::on_tableView_BoundImport_customContextMenuRequested(const QPoint &pos)
+{
+    int nRow=ui->tableView_BoundImport->currentIndex().row();
+
+    if(nRow!=-1)
+    {
+        QMenu contextMenu(this);
+
+        QAction actionEdit(tr("Edit"),this);
+        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editBoundImportHeader()));
+        contextMenu.addAction(&actionEdit);
+
+        contextMenu.exec(ui->tableView_BoundImport->viewport()->mapToGlobal(pos));
+    }
+}
+
+void PEWidget::on_tableView_BoundImport_doubleClicked(const QModelIndex &index)
+{
+    Q_UNUSED(index)
+
+    editBoundImportHeader();
 }
 
 void PEWidget::onTreeView_Resources_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
