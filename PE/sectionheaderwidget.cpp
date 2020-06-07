@@ -279,7 +279,9 @@ bool SectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int
                 case SPE::TYPE_BOUNDIMPORT:
                     switch(nNdata)
                     {
-                        // TODO
+                        case N_IMAGE_BOUNDIMPORT::TimeDateStamp:                pe.setBoundImport_TimeDateStamp(nPosition,(quint32)nValue);                 break;
+                        case N_IMAGE_BOUNDIMPORT::OffsetModuleName:             pe.setBoundImport_OffsetModuleName(nPosition,(quint16)nValue);              break;
+                        case N_IMAGE_BOUNDIMPORT::NumberOfModuleForwarderRefs:  pe.setBoundImport_NumberOfModuleForwarderRefs(nPosition,(quint16)nValue);   break;
                     }
                     break;
             }
