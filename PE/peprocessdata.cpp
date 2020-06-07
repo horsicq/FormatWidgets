@@ -378,9 +378,13 @@ void PEProcessData::_process()
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
 
-            (*ppModel)->setItem(i,0,                    pItem);
-
+            (*ppModel)->setItem(i,0,                                                    pItem);
+            (*ppModel)->setItem(i,N_IMAGE_BOUNDIMPORT::TimeDateStamp+1,                 new QStandardItem(XBinary::valueToHex(listBIP.at(i).descriptor.TimeDateStamp)));
+            (*ppModel)->setItem(i,N_IMAGE_BOUNDIMPORT::OffsetModuleName+1,              new QStandardItem(XBinary::valueToHex(listBIP.at(i).descriptor.OffsetModuleName)));
+            (*ppModel)->setItem(i,N_IMAGE_BOUNDIMPORT::NumberOfModuleForwarderRefs+1,   new QStandardItem(XBinary::valueToHex(listBIP.at(i).descriptor.NumberOfModuleForwarderRefs)));
             // TODO
+            (*ppModel)->setItem(i,N_IMAGE_BOUNDIMPORT::NumberOfModuleForwarderRefs+3,   new QStandardItem(listBIP.at(i).sName));
+
             incValue();
         }
     }
