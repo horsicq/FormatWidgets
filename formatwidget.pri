@@ -62,7 +62,6 @@ HEADERS += \
     $$PWD/formatwidget.h \
     $$PWD/toolswidget.h \
     $$PWD/invwidget.h \
-    $$PWD/dialoghex.h \
     $$PWD/formatwidget_def.h \
     $$PWD/dialogsectionheader.h
 
@@ -73,13 +72,11 @@ SOURCES += \
     $$PWD/formatwidget.cpp \
     $$PWD/toolswidget.cpp \
     $$PWD/invwidget.cpp \
-    $$PWD/dialoghex.cpp \
     $$PWD/dialogsectionheader.cpp
 
 FORMS += \
     $$PWD/dialogentropy.ui \
     $$PWD/dialogprocessdata.ui \
     $$PWD/toolswidget.ui \
-    $$PWD/dialoghex.ui \
     $$PWD/dialogsectionheader.ui
 
