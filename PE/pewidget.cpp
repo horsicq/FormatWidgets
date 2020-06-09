@@ -777,6 +777,8 @@ void PEWidget::reloadData()
                 pDisasmWidget->setData(getDevice(),0,0,true);
                 pDisasmWidget->goToEntryPoint();
             }
+
+            pDisasmWidget->setBackupFileName(getOptions()->sBackupFileName);
         }
 #endif
         else if(nType==SPE::TYPE_STRINGS)
