@@ -84,10 +84,12 @@ private:
     XLineEditHEX *lineEdit_VXD_HEADER[N_VXD_HEADER::__data_size];
     XComboBoxEx *comboBox[__CB_size];
 
-    bool bInit[SLE::__TYPE_size];
-
     InvWidget *invWidget[__INV_size];
     SubDevice *subDevice[SLE::__TYPE_size];
+
+    QSet<QString> stInit;
+    qint32 nLastType;
+    QString sLastInit;
 };
 
 #endif // LEWIDGET_H
