@@ -476,6 +476,8 @@ void LEWidget::reloadData()
 
         setReadonly(ui->checkBoxReadonly->isChecked());
     }
+
+    stInit.insert(sInit);
 }
 
 void LEWidget::widgetValueChanged(quint64 nValue)
