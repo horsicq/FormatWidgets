@@ -91,7 +91,11 @@ private:
     XLineEditHEX *lineEdit_OS2_HEADER[N_OS2_HEADER::__data_size];
     XComboBoxEx *comboBox[__CB_size];
 
-    bool bInit[SNE::__TYPE_size];
+    QSet<QString> stInit;
+
+    qint32 nLastType;
+    QString sLastInit;
+
     InvWidget *invWidget[__INV_size];
     SubDevice *subDevice[SNE::__TYPE_size];
 };

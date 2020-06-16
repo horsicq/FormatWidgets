@@ -65,7 +65,7 @@ void NEWidget::cleanup()
 
 void NEWidget::reset()
 {
-    memset(bInit,0,sizeof bInit);
+    stInit.clear();
 }
 
 void NEWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions)
@@ -288,125 +288,126 @@ void NEWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
 
 void NEWidget::reloadData()
 {
-    int nData=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole).toInt();
-    ui->stackedWidgetInfo->setCurrentIndex(nData);
+    int nType=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_TYPE).toInt();
+    qint64 nDataOffset=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
+    qint64 nDataSize=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
+
+    QString sInit=QString("%1-%2-%3").arg(nType).arg(nDataOffset).arg(nDataSize);
+
+    if((nLastType==nType)&&(sInit!=sLastInit))
+    {
+        stInit.remove(sInit);
+    }
+
+    nLastType=nType;
+    sLastInit=sInit;
+
+    ui->stackedWidgetInfo->setCurrentIndex(nType);
 
     XNE ne(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
 
     if(ne.isValid())
     {
-        if(nData==SNE::TYPE_HEX)
+        if(nType==SNE::TYPE_HEX)
         {
-            if(!bInit[nData])
+            if(!stInit.contains(sInit))
             {
                 ui->widgetHex->setData(getDevice());
                 ui->widgetHex->setBackupFileName(getOptions()->sBackupFileName);
                 ui->widgetHex->enableReadOnly(false);
                 connect(ui->widgetHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
-
-                bInit[nData]=true;
+                ui->widgetHex->reload();
             }
-            ui->widgetHex->reload();
         }
-        else if(nData==SNE::TYPE_STRINGS)
+        else if(nType==SNE::TYPE_STRINGS)
         {
-            if(!bInit[nData])
+            if(!stInit.contains(sInit))
             {
                 ui->widgetStrings->setData(getDevice(),0,true);
-
-                bInit[nData]=true;
             }
-            ui->widgetHex->reload();
         }
-        else if(nData==SNE::TYPE_MEMORYMAP)
+        else if(nType==SNE::TYPE_MEMORYMAP)
         {
-            if(!bInit[nData])
+            if(!stInit.contains(sInit))
             {
                 ui->widgetMemoryMap->setData(getDevice());
-
-                bInit[nData]=true;
             }
-            ui->widgetHex->reload();
         }
-        else if(nData==SNE::TYPE_ENTROPY)
+        else if(nType==SNE::TYPE_ENTROPY)
         {
-            if(!bInit[nData])
+            if(!stInit.contains(sInit))
             {
                 ui->widgetEntropy->setData(getDevice(),0,getDevice()->size(),true);
-
-                bInit[nData]=true;
             }
         }
-        else if(nData==SNE::TYPE_DETECT)
+        else if(nType==SNE::TYPE_DETECT)
         {
-            if(!bInit[nData])
+            if(!stInit.contains(sInit))
             {
                 // TODO
-
-                bInit[nData]=true;
             }
         }
-        else if(nData==SNE::TYPE_DOS_HEADER)
+        else if(nType==SNE::TYPE_DOS_HEADER)
         {
-            if(!bInit[nData])
+            if(!stInit.contains(sInit))
             {
-                bInit[nData]=createHeaderTable(SNE::TYPE_DOS_HEADER,ui->tableWidget_DOS_HEADER,N_NE_DOS_HEADER::records,lineEdit_DOS_HEADER,N_NE_DOS_HEADER::__data_size,0);
+                createHeaderTable(SNE::TYPE_DOS_HEADER,ui->tableWidget_DOS_HEADER,N_NE_DOS_HEADER::records,lineEdit_DOS_HEADER,N_NE_DOS_HEADER::__data_size,0);
                 comboBox[CB_DOS_HEADER_e_magic]=createComboBox(ui->tableWidget_DOS_HEADER,XMSDOS::getImageMagicsS(),SNE::TYPE_DOS_HEADER,N_NE_DOS_HEADER::e_magic,XComboBoxEx::CBTYPE_NORMAL);
                 invWidget[INV_IMAGE_DOS_HEADER_e_lfanew]=createInvWidget(ui->tableWidget_DOS_HEADER,SNE::TYPE_DOS_HEADER,N_NE_DOS_HEADER::e_lfanew,InvWidget::TYPE_HEX);
+
+                blockSignals(true);
+
+                XMSDOS_DEF::IMAGE_DOS_HEADEREX msdosheaderex=ne.getDosHeaderEx();
+
+                lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_magic]->setValue(msdosheaderex.e_magic);
+                lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_cblp]->setValue(msdosheaderex.e_cblp);
+                lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_cp]->setValue(msdosheaderex.e_cp);
+                lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_crlc]->setValue(msdosheaderex.e_crlc);
+                lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_cparhdr]->setValue(msdosheaderex.e_cparhdr);
+                lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_minalloc]->setValue(msdosheaderex.e_minalloc);
+                lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_maxalloc]->setValue(msdosheaderex.e_maxalloc);
+                lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_ss]->setValue(msdosheaderex.e_ss);
+                lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_sp]->setValue(msdosheaderex.e_sp);
+                lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_csum]->setValue(msdosheaderex.e_csum);
+                lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_ip]->setValue(msdosheaderex.e_ip);
+                lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_cs]->setValue(msdosheaderex.e_cs);
+                lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_lfarlc]->setValue(msdosheaderex.e_lfarlc);
+                lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_ovno]->setValue(msdosheaderex.e_ovno);
+                lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res_0]->setValue(msdosheaderex.e_res[0]);
+                lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res_1]->setValue(msdosheaderex.e_res[1]);
+                lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res_2]->setValue(msdosheaderex.e_res[2]);
+                lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res_3]->setValue(msdosheaderex.e_res[3]);
+                lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_oemid]->setValue(msdosheaderex.e_oemid);
+                lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_oeminfo]->setValue(msdosheaderex.e_oeminfo);
+                lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res2_0]->setValue(msdosheaderex.e_res2[0]);
+                lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res2_1]->setValue(msdosheaderex.e_res2[1]);
+                lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res2_2]->setValue(msdosheaderex.e_res2[2]);
+                lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res2_3]->setValue(msdosheaderex.e_res2[3]);
+                lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res2_4]->setValue(msdosheaderex.e_res2[4]);
+                lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res2_5]->setValue(msdosheaderex.e_res2[5]);
+                lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res2_6]->setValue(msdosheaderex.e_res2[6]);
+                lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res2_7]->setValue(msdosheaderex.e_res2[7]);
+                lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res2_8]->setValue(msdosheaderex.e_res2[8]);
+                lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res2_9]->setValue(msdosheaderex.e_res2[9]);
+                lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_lfanew]->setValue(msdosheaderex.e_lfanew);
+
+                comboBox[CB_DOS_HEADER_e_magic]->setValue(msdosheaderex.e_magic);
+
+                invWidget[INV_IMAGE_DOS_HEADER_e_lfanew]->setOffsetAndSize(&ne,msdosheaderex.e_lfanew,0);
+
+                qint64 nOffset=ne.getDosHeaderExOffset();
+                qint64 nSize=ne.getDosHeaderExSize();
+
+                loadHexSubdevice(nOffset,nSize,nOffset,&subDevice[SNE::TYPE_DOS_HEADER],ui->widgetHex_DOS_HEADER);
+
+                blockSignals(false);
             }
-
-            blockSignals(true);
-
-            XMSDOS_DEF::IMAGE_DOS_HEADEREX msdosheaderex=ne.getDosHeaderEx();
-
-            lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_magic]->setValue(msdosheaderex.e_magic);
-            lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_cblp]->setValue(msdosheaderex.e_cblp);
-            lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_cp]->setValue(msdosheaderex.e_cp);
-            lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_crlc]->setValue(msdosheaderex.e_crlc);
-            lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_cparhdr]->setValue(msdosheaderex.e_cparhdr);
-            lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_minalloc]->setValue(msdosheaderex.e_minalloc);
-            lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_maxalloc]->setValue(msdosheaderex.e_maxalloc);
-            lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_ss]->setValue(msdosheaderex.e_ss);
-            lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_sp]->setValue(msdosheaderex.e_sp);
-            lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_csum]->setValue(msdosheaderex.e_csum);
-            lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_ip]->setValue(msdosheaderex.e_ip);
-            lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_cs]->setValue(msdosheaderex.e_cs);
-            lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_lfarlc]->setValue(msdosheaderex.e_lfarlc);
-            lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_ovno]->setValue(msdosheaderex.e_ovno);
-            lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res_0]->setValue(msdosheaderex.e_res[0]);
-            lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res_1]->setValue(msdosheaderex.e_res[1]);
-            lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res_2]->setValue(msdosheaderex.e_res[2]);
-            lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res_3]->setValue(msdosheaderex.e_res[3]);
-            lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_oemid]->setValue(msdosheaderex.e_oemid);
-            lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_oeminfo]->setValue(msdosheaderex.e_oeminfo);
-            lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res2_0]->setValue(msdosheaderex.e_res2[0]);
-            lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res2_1]->setValue(msdosheaderex.e_res2[1]);
-            lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res2_2]->setValue(msdosheaderex.e_res2[2]);
-            lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res2_3]->setValue(msdosheaderex.e_res2[3]);
-            lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res2_4]->setValue(msdosheaderex.e_res2[4]);
-            lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res2_5]->setValue(msdosheaderex.e_res2[5]);
-            lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res2_6]->setValue(msdosheaderex.e_res2[6]);
-            lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res2_7]->setValue(msdosheaderex.e_res2[7]);
-            lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res2_8]->setValue(msdosheaderex.e_res2[8]);
-            lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res2_9]->setValue(msdosheaderex.e_res2[9]);
-            lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_lfanew]->setValue(msdosheaderex.e_lfanew);
-
-            comboBox[CB_DOS_HEADER_e_magic]->setValue(msdosheaderex.e_magic);
-
-            invWidget[INV_IMAGE_DOS_HEADER_e_lfanew]->setOffsetAndSize(&ne,msdosheaderex.e_lfanew,0);
-
-            qint64 nOffset=ne.getDosHeaderExOffset();
-            qint64 nSize=ne.getDosHeaderExSize();
-
-            loadHexSubdevice(nOffset,nSize,nOffset,&subDevice[SNE::TYPE_DOS_HEADER],ui->widgetHex_DOS_HEADER);
-
-            blockSignals(false);
         }
-        else if(nData==SNE::TYPE_OS2_HEADER)
+        else if(nType==SNE::TYPE_OS2_HEADER)
         {
-            if(!bInit[nData])
+            if(!stInit.contains(sInit))
             {
-                bInit[nData]=createHeaderTable(SNE::TYPE_OS2_HEADER,ui->tableWidget_OS2_HEADER,N_OS2_HEADER::records,lineEdit_OS2_HEADER,N_OS2_HEADER::__data_size,0);
+                createHeaderTable(SNE::TYPE_OS2_HEADER,ui->tableWidget_OS2_HEADER,N_OS2_HEADER::records,lineEdit_OS2_HEADER,N_OS2_HEADER::__data_size,0);
                 comboBox[CB_OS2_HEADER_ne_magic]=createComboBox(ui->tableWidget_OS2_HEADER,XNE::getImageNEMagicsS(),SNE::TYPE_OS2_HEADER,N_OS2_HEADER::ne_magic,XComboBoxEx::CBTYPE_NORMAL);
                 comboBox[CB_OS2_HEADER_ne_flags]=createComboBox(ui->tableWidget_OS2_HEADER,XNE::getImageNEFlagsS(),SNE::TYPE_OS2_HEADER,N_OS2_HEADER::ne_flags,XComboBoxEx::CBTYPE_FLAGS);
                 comboBox[CB_OS2_HEADER_ne_exetype]=createComboBox(ui->tableWidget_OS2_HEADER,XNE::getImageNEExetypesS(),SNE::TYPE_OS2_HEADER,N_OS2_HEADER::ne_exetyp,XComboBoxEx::CBTYPE_NORMAL);
@@ -419,65 +420,65 @@ void NEWidget::reloadData()
                 invWidget[CB_OS2_HEADER_ne_modtab]=createInvWidget(ui->tableWidget_OS2_HEADER,SNE::TYPE_OS2_HEADER,N_OS2_HEADER::ne_modtab,InvWidget::TYPE_HEX);
                 invWidget[CB_OS2_HEADER_ne_imptab]=createInvWidget(ui->tableWidget_OS2_HEADER,SNE::TYPE_OS2_HEADER,N_OS2_HEADER::ne_imptab,InvWidget::TYPE_HEX);
                 invWidget[CB_OS2_HEADER_ne_nrestab]=createInvWidget(ui->tableWidget_OS2_HEADER,SNE::TYPE_OS2_HEADER,N_OS2_HEADER::ne_nrestab,InvWidget::TYPE_HEX);
+
+                blockSignals(true);
+
+                XNE_DEF::IMAGE_OS2_HEADER os2header=ne.getImageOS2Header();
+
+                lineEdit_OS2_HEADER[N_OS2_HEADER::ne_magic]->setValue(os2header.ne_magic);
+                lineEdit_OS2_HEADER[N_OS2_HEADER::ne_ver]->setValue(os2header.ne_ver);
+                lineEdit_OS2_HEADER[N_OS2_HEADER::ne_rev]->setValue(os2header.ne_rev);
+                lineEdit_OS2_HEADER[N_OS2_HEADER::ne_enttab]->setValue(os2header.ne_enttab);
+                lineEdit_OS2_HEADER[N_OS2_HEADER::ne_cbenttab]->setValue(os2header.ne_cbenttab);
+                lineEdit_OS2_HEADER[N_OS2_HEADER::ne_crc]->setValue(os2header.ne_crc);
+                lineEdit_OS2_HEADER[N_OS2_HEADER::ne_flags]->setValue(os2header.ne_flags);
+                lineEdit_OS2_HEADER[N_OS2_HEADER::ne_autodata]->setValue(os2header.ne_autodata);
+                lineEdit_OS2_HEADER[N_OS2_HEADER::ne_heap]->setValue(os2header.ne_heap);
+                lineEdit_OS2_HEADER[N_OS2_HEADER::ne_stack]->setValue(os2header.ne_stack);
+                lineEdit_OS2_HEADER[N_OS2_HEADER::ne_csip]->setValue(os2header.ne_csip);
+                lineEdit_OS2_HEADER[N_OS2_HEADER::ne_sssp]->setValue(os2header.ne_sssp);
+                lineEdit_OS2_HEADER[N_OS2_HEADER::ne_cseg]->setValue(os2header.ne_cseg);
+                lineEdit_OS2_HEADER[N_OS2_HEADER::ne_cmod]->setValue(os2header.ne_cmod);
+                lineEdit_OS2_HEADER[N_OS2_HEADER::ne_cbnrestab]->setValue(os2header.ne_cbnrestab);
+                lineEdit_OS2_HEADER[N_OS2_HEADER::ne_segtab]->setValue(os2header.ne_segtab);
+                lineEdit_OS2_HEADER[N_OS2_HEADER::ne_rsrctab]->setValue(os2header.ne_rsrctab);
+                lineEdit_OS2_HEADER[N_OS2_HEADER::ne_restab]->setValue(os2header.ne_restab);
+                lineEdit_OS2_HEADER[N_OS2_HEADER::ne_modtab]->setValue(os2header.ne_modtab);
+                lineEdit_OS2_HEADER[N_OS2_HEADER::ne_imptab]->setValue(os2header.ne_imptab);
+                lineEdit_OS2_HEADER[N_OS2_HEADER::ne_nrestab]->setValue(os2header.ne_nrestab);
+                lineEdit_OS2_HEADER[N_OS2_HEADER::ne_cmovent]->setValue(os2header.ne_cmovent);
+                lineEdit_OS2_HEADER[N_OS2_HEADER::ne_align]->setValue(os2header.ne_align);
+                lineEdit_OS2_HEADER[N_OS2_HEADER::ne_cres]->setValue(os2header.ne_cres);
+                lineEdit_OS2_HEADER[N_OS2_HEADER::ne_exetyp]->setValue(os2header.ne_exetyp);
+                lineEdit_OS2_HEADER[N_OS2_HEADER::ne_flagsothers]->setValue(os2header.ne_flagsothers);
+                lineEdit_OS2_HEADER[N_OS2_HEADER::ne_pretthunks]->setValue(os2header.ne_pretthunks);
+                lineEdit_OS2_HEADER[N_OS2_HEADER::ne_psegrefbytes]->setValue(os2header.ne_psegrefbytes);
+                lineEdit_OS2_HEADER[N_OS2_HEADER::ne_swaparea]->setValue(os2header.ne_swaparea);
+                lineEdit_OS2_HEADER[N_OS2_HEADER::ne_expver]->setValue(os2header.ne_expver);
+
+                comboBox[CB_OS2_HEADER_ne_magic]->setValue(os2header.ne_magic);
+                comboBox[CB_OS2_HEADER_ne_flags]->setValue(os2header.ne_flags);
+                comboBox[CB_OS2_HEADER_ne_exetype]->setValue(os2header.ne_exetyp);
+                comboBox[CB_OS2_HEADER_ne_flagsothers]->setValue(os2header.ne_flagsothers);
+
+                qint64 nOffset=ne.getImageOS2HeaderOffset();
+
+                invWidget[CB_OS2_HEADER_ne_enttab]->setOffsetAndSize(&ne,nOffset+os2header.ne_enttab,0);
+                invWidget[CB_OS2_HEADER_ne_segtab]->setOffsetAndSize(&ne,nOffset+os2header.ne_segtab,0);
+                invWidget[CB_OS2_HEADER_ne_rsrctab]->setOffsetAndSize(&ne,nOffset+os2header.ne_rsrctab,0);
+                invWidget[CB_OS2_HEADER_ne_restab]->setOffsetAndSize(&ne,nOffset+os2header.ne_restab,0);
+                invWidget[CB_OS2_HEADER_ne_modtab]->setOffsetAndSize(&ne,nOffset+os2header.ne_modtab,0);
+                invWidget[CB_OS2_HEADER_ne_imptab]->setOffsetAndSize(&ne,nOffset+os2header.ne_imptab,0);
+                invWidget[CB_OS2_HEADER_ne_nrestab]->setOffsetAndSize(&ne,os2header.ne_nrestab,0);
+
+                qint64 nSize=ne.getImageOS2HeaderSize();
+
+                loadHexSubdevice(nOffset,nSize,nOffset,&subDevice[SNE::TYPE_OS2_HEADER],ui->widgetHex_OS2_HEADER);
+
+                blockSignals(false);
             }
-
-            blockSignals(true);
-
-            XNE_DEF::IMAGE_OS2_HEADER os2header=ne.getImageOS2Header();
-
-            lineEdit_OS2_HEADER[N_OS2_HEADER::ne_magic]->setValue(os2header.ne_magic);
-            lineEdit_OS2_HEADER[N_OS2_HEADER::ne_ver]->setValue(os2header.ne_ver);
-            lineEdit_OS2_HEADER[N_OS2_HEADER::ne_rev]->setValue(os2header.ne_rev);
-            lineEdit_OS2_HEADER[N_OS2_HEADER::ne_enttab]->setValue(os2header.ne_enttab);
-            lineEdit_OS2_HEADER[N_OS2_HEADER::ne_cbenttab]->setValue(os2header.ne_cbenttab);
-            lineEdit_OS2_HEADER[N_OS2_HEADER::ne_crc]->setValue(os2header.ne_crc);
-            lineEdit_OS2_HEADER[N_OS2_HEADER::ne_flags]->setValue(os2header.ne_flags);
-            lineEdit_OS2_HEADER[N_OS2_HEADER::ne_autodata]->setValue(os2header.ne_autodata);
-            lineEdit_OS2_HEADER[N_OS2_HEADER::ne_heap]->setValue(os2header.ne_heap);
-            lineEdit_OS2_HEADER[N_OS2_HEADER::ne_stack]->setValue(os2header.ne_stack);
-            lineEdit_OS2_HEADER[N_OS2_HEADER::ne_csip]->setValue(os2header.ne_csip);
-            lineEdit_OS2_HEADER[N_OS2_HEADER::ne_sssp]->setValue(os2header.ne_sssp);
-            lineEdit_OS2_HEADER[N_OS2_HEADER::ne_cseg]->setValue(os2header.ne_cseg);
-            lineEdit_OS2_HEADER[N_OS2_HEADER::ne_cmod]->setValue(os2header.ne_cmod);
-            lineEdit_OS2_HEADER[N_OS2_HEADER::ne_cbnrestab]->setValue(os2header.ne_cbnrestab);
-            lineEdit_OS2_HEADER[N_OS2_HEADER::ne_segtab]->setValue(os2header.ne_segtab);
-            lineEdit_OS2_HEADER[N_OS2_HEADER::ne_rsrctab]->setValue(os2header.ne_rsrctab);
-            lineEdit_OS2_HEADER[N_OS2_HEADER::ne_restab]->setValue(os2header.ne_restab);
-            lineEdit_OS2_HEADER[N_OS2_HEADER::ne_modtab]->setValue(os2header.ne_modtab);
-            lineEdit_OS2_HEADER[N_OS2_HEADER::ne_imptab]->setValue(os2header.ne_imptab);
-            lineEdit_OS2_HEADER[N_OS2_HEADER::ne_nrestab]->setValue(os2header.ne_nrestab);
-            lineEdit_OS2_HEADER[N_OS2_HEADER::ne_cmovent]->setValue(os2header.ne_cmovent);
-            lineEdit_OS2_HEADER[N_OS2_HEADER::ne_align]->setValue(os2header.ne_align);
-            lineEdit_OS2_HEADER[N_OS2_HEADER::ne_cres]->setValue(os2header.ne_cres);
-            lineEdit_OS2_HEADER[N_OS2_HEADER::ne_exetyp]->setValue(os2header.ne_exetyp);
-            lineEdit_OS2_HEADER[N_OS2_HEADER::ne_flagsothers]->setValue(os2header.ne_flagsothers);
-            lineEdit_OS2_HEADER[N_OS2_HEADER::ne_pretthunks]->setValue(os2header.ne_pretthunks);
-            lineEdit_OS2_HEADER[N_OS2_HEADER::ne_psegrefbytes]->setValue(os2header.ne_psegrefbytes);
-            lineEdit_OS2_HEADER[N_OS2_HEADER::ne_swaparea]->setValue(os2header.ne_swaparea);
-            lineEdit_OS2_HEADER[N_OS2_HEADER::ne_expver]->setValue(os2header.ne_expver);
-
-            comboBox[CB_OS2_HEADER_ne_magic]->setValue(os2header.ne_magic);
-            comboBox[CB_OS2_HEADER_ne_flags]->setValue(os2header.ne_flags);
-            comboBox[CB_OS2_HEADER_ne_exetype]->setValue(os2header.ne_exetyp);
-            comboBox[CB_OS2_HEADER_ne_flagsothers]->setValue(os2header.ne_flagsothers);
-
-            qint64 nOffset=ne.getImageOS2HeaderOffset();
-
-            invWidget[CB_OS2_HEADER_ne_enttab]->setOffsetAndSize(&ne,nOffset+os2header.ne_enttab,0);
-            invWidget[CB_OS2_HEADER_ne_segtab]->setOffsetAndSize(&ne,nOffset+os2header.ne_segtab,0);
-            invWidget[CB_OS2_HEADER_ne_rsrctab]->setOffsetAndSize(&ne,nOffset+os2header.ne_rsrctab,0);
-            invWidget[CB_OS2_HEADER_ne_restab]->setOffsetAndSize(&ne,nOffset+os2header.ne_restab,0);
-            invWidget[CB_OS2_HEADER_ne_modtab]->setOffsetAndSize(&ne,nOffset+os2header.ne_modtab,0);
-            invWidget[CB_OS2_HEADER_ne_imptab]->setOffsetAndSize(&ne,nOffset+os2header.ne_imptab,0);
-            invWidget[CB_OS2_HEADER_ne_nrestab]->setOffsetAndSize(&ne,os2header.ne_nrestab,0);
-
-            qint64 nSize=ne.getImageOS2HeaderSize();
-
-            loadHexSubdevice(nOffset,nSize,nOffset,&subDevice[SNE::TYPE_OS2_HEADER],ui->widgetHex_OS2_HEADER);
-
-            blockSignals(false);
         }
-        else if(nData==SNE::TYPE_OVERLAY)
+        else if(nType==SNE::TYPE_OVERLAY)
         {
             qint64 nOverLayOffset=ne.getOverlayOffset();
             qint64 nOverlaySize=ne.getOverlaySize();
@@ -487,6 +488,8 @@ void NEWidget::reloadData()
 
         setReadonly(ui->checkBoxReadonly->isChecked());
     }
+
+    stInit.insert(sInit);
 }
 
 void NEWidget::widgetValueChanged(quint64 nValue)
