@@ -3,12 +3,12 @@ DEPENDPATH += $$PWD
 
 !contains(XCONFIG, xle) {
     XCONFIG += xle
-    include(../../Formats/xle.pri)
+    include($$PWD/../../Formats/xle.pri)
 }
 
 !contains(XCONFIG, formatwidget) {
     XCONFIG += formatwidget
-    include(../formatwidget.pri)
+    include($$PWD/../formatwidget.pri)
 }
 
 FORMS += \

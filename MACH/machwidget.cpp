@@ -637,7 +637,7 @@ bool MACHWidget::createSectionTable(int type, QTableWidget *pTableWidget, const 
 
     for(int i=0; i<nRecordCount; i++)
     {
-        slHeader.append(pRecords[i].pszName);
+        slHeader.append(pRecords[i].sName);
     }
 
     switch(type)
