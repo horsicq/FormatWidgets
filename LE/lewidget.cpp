@@ -87,7 +87,7 @@ void LEWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_STRINGS,tr("Strings")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_MEMORYMAP,tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_ENTROPY,tr("Entropy")));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_DETECT,tr("Detect")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_HEURISTICSCAN,tr("Heuristic scan")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_DOS_HEADER,"DOS_HEADER"));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_VXD_HEADER,"VXD_HEADER"));
 
@@ -332,11 +332,11 @@ void LEWidget::reloadData()
                 ui->widgetEntropy->setData(getDevice(),0,getDevice()->size(),true);
             }
         }
-        else if(nType==SLE::TYPE_DETECT)
+        else if(nType==SLE::TYPE_HEURISTICSCAN)
         {
             if(!stInit.contains(sInit))
             {
-                // TODO
+                ui->widgetHeuristicScan->setData(getDevice(),true);
             }
         }
         else if(nType==SLE::TYPE_DOS_HEADER)
