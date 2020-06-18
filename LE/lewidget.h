@@ -86,6 +86,7 @@ private:
 
     InvWidget *invWidget[__INV_size];
     SubDevice *subDevice[SLE::__TYPE_size];
+    QStandardItemModel *tvModel[SLE::__TYPE_size];
 
     QSet<QString> stInit;
     qint32 nLastType;

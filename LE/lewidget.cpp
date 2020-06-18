@@ -467,6 +467,15 @@ void LEWidget::reloadData()
                 blockSignals(false);
             }
         }
+        else if(nType==SLE::TYPE_OBJECTS)
+        {
+            if(!stInit.contains(sInit))
+            {
+                LEProcessData leProcessData(SLE::TYPE_OBJECTS,&tvModel[SLE::TYPE_OBJECTS],&le,nDataOffset,nDataSize);
+
+                // TODO
+            }
+        }
         else if(nType==SLE::TYPE_OVERLAY)
         {
             qint64 nOverLayOffset=le.getOverlayOffset();
