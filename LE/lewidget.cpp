@@ -90,6 +90,7 @@ void LEWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_HEURISTICSCAN,tr("Heuristic scan")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_DOS_HEADER,"DOS_HEADER"));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_VXD_HEADER,"VXD_HEADER"));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_OBJECTS,"Objects"));
 
         if(le.isOverlayPresent())
         {
