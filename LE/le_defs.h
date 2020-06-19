@@ -138,4 +138,20 @@ enum DATA
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 }
 
+namespace N_O32_OBJ
+{
+enum DATA
+{
+    o32_size=0,
+    o32_base,
+    o32_flags,
+    o32_pagemap,
+    o32_mapsize,
+    o32_reserved,
+    __data_size
+};
+
+extern const FW_DEF::HEADER_RECORD records[__data_size];
+}
+
 #endif // LE_DEFS_H
