@@ -115,11 +115,11 @@ namespace N_O32_OBJ
 {
 const FW_DEF::HEADER_RECORD records[]=
 {
-    {o32_size,          "o32_size",         offsetof(XLE_DEF::o32_obj,o32_size),                    4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
+    {o32_size,          "o32_size",         offsetof(XLE_DEF::o32_obj,o32_size),                    4,      "DWORD",        FW_DEF::VAL_TYPE_SIZE},
     {o32_base,          "o32_base",         offsetof(XLE_DEF::o32_obj,o32_base),                    4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
-    {o32_flags,         "o32_flags",        offsetof(XLE_DEF::o32_obj,o32_flags),                   4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
+    {o32_flags,         "o32_flags",        offsetof(XLE_DEF::o32_obj,o32_flags),                   4,      "DWORD",        FW_DEF::VAL_TYPE_FLAGS},
     {o32_pagemap,       "o32_pagemap",      offsetof(XLE_DEF::o32_obj,o32_pagemap),                 4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
-    {o32_mapsize,       "o32_mapsize",      offsetof(XLE_DEF::o32_obj,o32_mapsize),                 4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
+    {o32_mapsize,       "o32_mapsize",      offsetof(XLE_DEF::o32_obj,o32_mapsize),                 4,      "DWORD",        FW_DEF::VAL_TYPE_SIZE},
     {o32_reserved,      "o32_reserved",     offsetof(XLE_DEF::o32_obj,o32_reserved),                4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
 };
 

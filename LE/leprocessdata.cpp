@@ -31,10 +31,53 @@ LEProcessData::LEProcessData(int type, QStandardItemModel **ppModel, XLE *pLE, q
 
 void LEProcessData::_process()
 {
+    if(type==SLE::TYPE_OBJECTS)
+    {
+        QList<QString> listLabels;
+        listLabels.append("");
+        listLabels.append(getStructList(N_O32_OBJ::records,N_O32_OBJ::__data_size));
 
+        QList<XLE_DEF::o32_obj> listObjects=pLE->getObjects();
+
+        int nCount=listObjects.count();
+
+        *ppModel=new QStandardItemModel(nCount,listLabels.count());
+
+        setMaximum(nCount);
+
+        setHeader(*ppModel,&listLabels);
+
+        for(int i=0; i<nCount; i++)
+        {
+            QStandardItem *itemNumber=new QStandardItem;
+            itemNumber->setData(i,Qt::DisplayRole);
+
+            (*ppModel)->setItem(i,0,itemNumber);
+
+            (*ppModel)->setItem(i,N_O32_OBJ::o32_size+1,            new QStandardItem(XBinary::valueToHex(listObjects.at(i).o32_size)));
+            (*ppModel)->setItem(i,N_O32_OBJ::o32_base+1,            new QStandardItem(XBinary::valueToHex(listObjects.at(i).o32_base)));
+            (*ppModel)->setItem(i,N_O32_OBJ::o32_flags+1,           new QStandardItem(XBinary::valueToHex(listObjects.at(i).o32_flags)));
+            (*ppModel)->setItem(i,N_O32_OBJ::o32_pagemap+1,         new QStandardItem(XBinary::valueToHex(listObjects.at(i).o32_pagemap)));
+            (*ppModel)->setItem(i,N_O32_OBJ::o32_mapsize+1,         new QStandardItem(XBinary::valueToHex(listObjects.at(i).o32_mapsize)));
+            (*ppModel)->setItem(i,N_O32_OBJ::o32_reserved+1,        new QStandardItem(XBinary::valueToHex(listObjects.at(i).o32_reserved)));
+
+            incValue();
+        }
+    }
 }
 
 void LEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
 {
+    int nSymbolWidth=XLineEditHEX::getSymbolWidth(pWidget);
 
+    if(type==SLE::TYPE_OBJECTS)
+    {
+        pTableView->setColumnWidth(0,nSymbolWidth*4);
+        pTableView->setColumnWidth(1,nSymbolWidth*8);
+        pTableView->setColumnWidth(2,nSymbolWidth*8);
+        pTableView->setColumnWidth(3,nSymbolWidth*8);
+        pTableView->setColumnWidth(4,nSymbolWidth*8);
+        pTableView->setColumnWidth(5,nSymbolWidth*8);
+        pTableView->setColumnWidth(6,nSymbolWidth*8);
+    }
 }

@@ -473,7 +473,14 @@ void LEWidget::reloadData()
             {
                 LEProcessData leProcessData(SLE::TYPE_OBJECTS,&tvModel[SLE::TYPE_OBJECTS],&le,nDataOffset,nDataSize);
 
-                // TODO
+                ajustTableView(&leProcessData,&tvModel[SLE::TYPE_OBJECTS],ui->tableView_Objects);
+
+                connect(ui->tableView_Objects->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_Objects_currentRowChanged(QModelIndex,QModelIndex)));
+
+                if(tvModel[SLE::TYPE_OBJECTS]->rowCount())
+                {
+                    ui->tableView_Objects->setCurrentIndex(ui->tableView_Objects->model()->index(0,0));
+                }
             }
         }
         else if(nType==SLE::TYPE_OVERLAY)
@@ -561,4 +568,19 @@ void LEWidget::on_tableWidget_VXD_HEADER_currentCellChanged(int currentRow, int 
     Q_UNUSED(previousColumn)
 
     setHeaderTableSelection(ui->widgetHex_VXD_HEADER,ui->tableWidget_VXD_HEADER);
+}
+
+void LEWidget::on_tableView_Objects_customContextMenuRequested(const QPoint &pos)
+{
+
+}
+
+void LEWidget::on_tableView_Objects_doubleClicked(const QModelIndex &index)
+{
+
+}
+
+void LEWidget::onTableView_Objects_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
+
 }
