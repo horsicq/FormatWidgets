@@ -48,16 +48,6 @@ class FormatWidget : public QWidget
     Q_OBJECT
 
 public:
-
-//    struct DIRECTORY_ENTRY_RECORD
-//    {
-//        int nData;
-//        const char *pszName;
-//        int nSize[2];
-//        const char *pszType[2];
-//        VAL_TYPE vtype[2];
-//    };
-
     enum HEADER_COLUMN
     {
         HEADER_COLUMN_NAME=0,
