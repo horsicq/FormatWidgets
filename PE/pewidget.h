@@ -141,14 +141,12 @@ private:
         PB_CalculateChecksum,
         __PB_size
     };
-
     enum TD
     {
         TD_IMAGE_FILE_HEADER_TimeDateStamp,
         TD_IMAGE_EXPORT_TimeDateStamp,
         __TD_size
     };
-
     enum INV
     {
         INV_IMAGE_DOS_HEADER_e_lfanew,
