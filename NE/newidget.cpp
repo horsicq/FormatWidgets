@@ -136,6 +136,7 @@ bool NEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, in
                         case N_NE_DOS_HEADER::e_lfanew:        invWidget[INV_IMAGE_DOS_HEADER_e_lfanew]->setOffsetAndSize(&ne,(quint32)nValue,0);  break;
                     }
                     break;
+
                 case SNE::TYPE_OS2_HEADER:
                     switch(nNdata)
                     {
