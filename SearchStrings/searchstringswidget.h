@@ -31,7 +31,7 @@
 #include <QClipboard>
 #include <QFutureWatcher>
 #include <QtConcurrent>
-#include "dialogsearchstrings.h"
+#include "dialogsearchstringsprocess.h"
 
 namespace Ui
 {
