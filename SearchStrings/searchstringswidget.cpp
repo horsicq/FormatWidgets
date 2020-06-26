@@ -240,13 +240,13 @@ void SearchStringsWidget::search()
 
             QList<SearchStrings::RECORD> listRecords;
 
-            DialogSearchStrings ds(this);
-            ds.processSearch(pDevice,&listRecords,&options);
-            ds.exec();
+            DialogSearchStringsProcess dsp(this);
+            dsp.processSearch(pDevice,&listRecords,&options);
+            dsp.exec();
 
-            DialogSearchStrings dm(this);
-            dm.processModel(&listRecords,&pModel,&options);
-            dm.exec();
+            DialogSearchStringsProcess dmp(this);
+            dmp.processModel(&listRecords,&pModel,&options);
+            dmp.exec();
 
             pFilter->setSourceModel(pModel);
             ui->tableViewResult->setModel(pFilter);
