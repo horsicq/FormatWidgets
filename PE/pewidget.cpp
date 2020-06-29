@@ -799,7 +799,7 @@ void PEWidget::reloadData()
         {
             if(!stInit.contains(sInit))
             {
-                ui->widgetEntropy->setData(getDevice(),0,getDevice()->size(),true);
+                ui->widgetEntropy->setData(getDevice(),0,getDevice()->size(),true); // TODO save last directory
             }
         }
         else if(nType==SPE::TYPE_HEURISTICSCAN)
