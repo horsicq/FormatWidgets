@@ -30,6 +30,7 @@ namespace FW_DEF
         QString sBackupFileName;
         bool bIsImage;
         qint64 nImageBase; // TODO default_const
+        // TODO Last directory
     };
 
     enum VAL_TYPE
