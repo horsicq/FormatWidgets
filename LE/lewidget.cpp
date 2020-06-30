@@ -572,15 +572,43 @@ void LEWidget::on_tableWidget_VXD_HEADER_currentCellChanged(int currentRow, int 
 
 void LEWidget::on_tableView_Objects_customContextMenuRequested(const QPoint &pos)
 {
+    int nRow=ui->tableView_Objects->currentIndex().row();
 
+    if(nRow!=-1)
+    {
+        bool bIsEnable=getTableViewItemSize(ui->tableView_Objects,nRow);
+
+        QMenu contextMenu(this);
+
+        QAction actionEdit(tr("Edit"),this);
+//        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editSectionHeader()));
+        contextMenu.addAction(&actionEdit);
+
+        QAction actionHex(QString("Hex"),this);
+//        connect(&actionHex, SIGNAL(triggered()), this, SLOT(sectionHex()));
+        actionHex.setEnabled(bIsEnable);
+        contextMenu.addAction(&actionHex);
+
+        QAction actionEntropy(tr("Entropy"),this);
+//        connect(&actionEntropy, SIGNAL(triggered()), this, SLOT(sectionEntropy()));
+        actionHex.setEnabled(bIsEnable);
+        contextMenu.addAction(&actionEntropy);
+
+        contextMenu.exec(ui->tableView_Objects->viewport()->mapToGlobal(pos));
+    }
 }
 
 void LEWidget::on_tableView_Objects_doubleClicked(const QModelIndex &index)
 {
+    Q_UNUSED(index)
 
+//    editSectionHeader();
 }
 
 void LEWidget::onTableView_Objects_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
 {
+    Q_UNUSED(current)
+    Q_UNUSED(previous)
 
+    loadHexSubdeviceByTableView(current.row(),SLE::TYPE_OBJECTS,ui->widgetHex_Object,ui->tableView_Objects,&subDevice[SLE::TYPE_OBJECTS]);
 }
