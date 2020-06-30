@@ -20,11 +20,6 @@ SOURCES += \
     $$PWD/dialogpe.cpp \
     $$PWD/peprocessdata.cpp
 
-!contains(XCONFIG, xpe) {
-    XCONFIG += xpe
-    include($$PWD/../../Formats/xpe.pri)
-}
-
 !contains(XCONFIG, formatwidget) {
     XCONFIG += formatwidget
     include($$PWD/../formatwidget.pri)

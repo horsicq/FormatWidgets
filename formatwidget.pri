@@ -1,6 +1,28 @@
 INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
 
+HEADERS += \
+    $$PWD/dialogprocessdata.h \
+    $$PWD/processdata.h \
+    $$PWD/formatwidget.h \
+    $$PWD/toolswidget.h \
+    $$PWD/invwidget.h \
+    $$PWD/formatwidget_def.h \
+    $$PWD/dialogsectionheader.h
+
+SOURCES += \
+    $$PWD/dialogprocessdata.cpp \
+    $$PWD/processdata.cpp \
+    $$PWD/formatwidget.cpp \
+    $$PWD/toolswidget.cpp \
+    $$PWD/invwidget.cpp \
+    $$PWD/dialogsectionheader.cpp
+
+FORMS += \
+    $$PWD/dialogprocessdata.ui \
+    $$PWD/toolswidget.ui \
+    $$PWD/dialogsectionheader.ui
+
 !contains(XCONFIG, xlineedithex) {
     XCONFIG += xlineedithex
     include($$PWD/../Controls/xlineedithex.pri)
@@ -54,26 +76,3 @@ contains(XCONFIG, use_disasm) {
         include($$PWD/../XCapstone/xcapstone.pri)
     }
 }
-
-HEADERS += \
-    $$PWD/dialogprocessdata.h \
-    $$PWD/processdata.h \
-    $$PWD/formatwidget.h \
-    $$PWD/toolswidget.h \
-    $$PWD/invwidget.h \
-    $$PWD/formatwidget_def.h \
-    $$PWD/dialogsectionheader.h
-
-SOURCES += \
-    $$PWD/dialogprocessdata.cpp \
-    $$PWD/processdata.cpp \
-    $$PWD/formatwidget.cpp \
-    $$PWD/toolswidget.cpp \
-    $$PWD/invwidget.cpp \
-    $$PWD/dialogsectionheader.cpp
-
-FORMS += \
-    $$PWD/dialogprocessdata.ui \
-    $$PWD/toolswidget.ui \
-    $$PWD/dialogsectionheader.ui
-

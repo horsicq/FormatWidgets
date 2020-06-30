@@ -20,11 +20,6 @@ SOURCES += \
     $$PWD/dialogmach.cpp \
     $$PWD/sectionheaderwidget.cpp
 
-!contains(XCONFIG, xmach) {
-    XCONFIG += xmach
-    include($$PWD/../../Formats/xmach.pri)
-}
-
 !contains(XCONFIG, formatwidget) {
     XCONFIG += formatwidget
     include($$PWD/../formatwidget.pri)

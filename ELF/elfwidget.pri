@@ -20,11 +20,6 @@ SOURCES += \
     $$PWD/sectionheaderwidget.cpp \
     $$PWD/elfprocessdata.cpp
 
-!contains(XCONFIG, xelf) {
-    XCONFIG += xelf
-    include($$PWD/../../Formats/xelf.pri)
-}
-
 !contains(XCONFIG, formatwidget) {
     XCONFIG += formatwidget
     include($$PWD/../formatwidget.pri)

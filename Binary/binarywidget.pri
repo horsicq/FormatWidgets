@@ -15,11 +15,6 @@ SOURCES += \
     $$PWD/binary_defs.cpp \
     $$PWD/dialogbinary.cpp
 
-!contains(XCONFIG, xbinary) {
-    XCONFIG += xbinary
-    include($$PWD/../../Formats/xbinary.pri)
-}
-
 !contains(XCONFIG, formatwidget) {
     XCONFIG += formatwidget
     include($$PWD/../formatwidget.pri)

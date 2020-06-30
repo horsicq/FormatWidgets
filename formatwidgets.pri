@@ -1,6 +1,15 @@
 INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
 
+HEADERS += \
+    $$PWD/formatswidget.h
+
+SOURCES += \
+    $$PWD/formatswidget.cpp
+
+FORMS += \
+    $$PWD/formatswidget.ui
+
 !contains(XCONFIG, binarywidget) {
     XCONFIG += binarywidget
     include($$PWD/Binary/binarywidget.pri)

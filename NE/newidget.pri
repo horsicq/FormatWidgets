@@ -1,16 +1,6 @@
 INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
 
-!contains(XCONFIG, xne) {
-    XCONFIG += xne
-    include($$PWD/../../Formats/xne.pri)
-}
-
-!contains(XCONFIG, formatwidget) {
-    XCONFIG += formatwidget
-    include($$PWD/../formatwidget.pri)
-}
-
 FORMS += \
     $$PWD/newidget.ui \
     $$PWD/dialogne.ui \
@@ -29,3 +19,8 @@ SOURCES += \
     $$PWD/ne_defs.cpp \
     $$PWD/dialogne.cpp \
     $$PWD/sectionheaderwidget.cpp
+
+!contains(XCONFIG, formatwidget) {
+    XCONFIG += formatwidget
+    include($$PWD/../formatwidget.pri)
+}

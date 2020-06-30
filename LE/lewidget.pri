@@ -1,16 +1,6 @@
 INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
 
-!contains(XCONFIG, xle) {
-    XCONFIG += xle
-    include($$PWD/../../Formats/xle.pri)
-}
-
-!contains(XCONFIG, formatwidget) {
-    XCONFIG += formatwidget
-    include($$PWD/../formatwidget.pri)
-}
-
 FORMS += \
     $$PWD/lewidget.ui \
     $$PWD/dialogle.ui \
@@ -29,3 +19,8 @@ SOURCES += \
     $$PWD/le_defs.cpp \
     $$PWD/dialogle.cpp \
     $$PWD/sectionheaderwidget.cpp
+
+!contains(XCONFIG, formatwidget) {
+    XCONFIG += formatwidget
+    include($$PWD/../formatwidget.pri)
+}

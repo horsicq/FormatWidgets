@@ -49,7 +49,7 @@ public:
     struct OPTIONS
     {
         qint64 nBaseAddress;
-        qint32 nAddressWidth;
+        qint32 nAddressWidth; // TODO make auto
         bool bSearchAnsi;
         bool bSearchUnicode;
     };
