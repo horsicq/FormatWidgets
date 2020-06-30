@@ -542,7 +542,7 @@ void LEWidget::on_pushButtonReload_clicked()
     ui->pushButtonReload->setEnabled(false);
     reload();
 
-    QTimer::singleShot(1000,this,SLOT(enableButton()));
+    QTimer::singleShot(1000,this,SLOT(enableButton())); // TODO const
 }
 
 void LEWidget::enableButton()
