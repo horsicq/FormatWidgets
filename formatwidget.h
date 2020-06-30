@@ -127,7 +127,6 @@ public:
     bool loadHexSubdevice(qint64 nOffset, qint64 nSize, qint64 nAddress, SubDevice **ppSubDevice, ToolsWidget *pToolsWidget);
     bool loadHexSubdeviceByTableView(int nRow, int type, ToolsWidget *pToolsWidget, QTableView *pTableView, SubDevice **ppSubDevice);
 
-//    void resizeToolsWidget(QWidget *pParent,ToolsWidget *pToolWidget);
     void setHeaderTableSelection(ToolsWidget *pToolWidget,QTableWidget *pTableWidget);
 
     QColor getEnabledColor();
