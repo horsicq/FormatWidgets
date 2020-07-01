@@ -31,6 +31,24 @@ FormatsWidget::FormatsWidget(QWidget *parent) :
 void FormatsWidget::setFileName(QString sFileName)
 {
     this->sFileName=sFileName;
+
+    ui->comboBoxType->clear();
+
+    QList<XBinary::FT> listFileTypes=XBinary::_getFileTypeListFromSet(XBinary::getFileTypes(sFileName));
+
+    int nCount=listFileTypes.count();
+
+    for(int i=0;i<nCount;i++)
+    {
+        XBinary::FT ft=listFileTypes.at(i);
+        ui->comboBoxType->addItem(XBinary::fileTypeIdToString(ft),ft);
+    }
+
+    if(nCount)
+    {
+        ui->comboBoxType->setCurrentIndex(nCount-1);
+        // TODO
+    }
 }
 
 FormatsWidget::~FormatsWidget()
@@ -40,5 +58,7 @@ FormatsWidget::~FormatsWidget()
 
 void FormatsWidget::on_comboBoxType_currentIndexChanged(int index)
 {
-    // TODO
+    const QSignalBlocker blocker(ui->comboBoxType);
+
+
 }
