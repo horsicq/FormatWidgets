@@ -97,12 +97,6 @@
      </item>
      <item>
       <widget class="QPushButton" name="pushButtonDisasm">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
        <property name="text">
         <string>Disasm</string>
        </property>
@@ -123,12 +117,6 @@
      </item>
      <item>
       <widget class="QPushButton" name="pushButtonMemoryMap">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
        <property name="text">
         <string>Memory map</string>
        </property>
