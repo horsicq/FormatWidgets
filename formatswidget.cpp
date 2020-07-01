@@ -37,3 +37,8 @@ FormatsWidget::~FormatsWidget()
 {
     delete ui;
 }
+
+void FormatsWidget::on_comboBoxType_currentIndexChanged(int index)
+{
+    // TODO
+}

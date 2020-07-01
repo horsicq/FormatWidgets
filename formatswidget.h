@@ -37,6 +37,9 @@ public:
     void setFileName(QString sFileName);
     ~FormatsWidget();
 
+private slots:
+    void on_comboBoxType_currentIndexChanged(int index);
+
 private:
     Ui::FormatsWidget *ui;
     QString sFileName;
