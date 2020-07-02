@@ -74,31 +74,39 @@ void FormatsWidget::reload()
 {
     XBinary::FT ft=(XBinary::FT)ui->comboBoxType->currentData().toInt();
 
-    if(ft==XBinary::FT_BINARY)
+    QFile file;
+    file.setFileName(sFileName);
+
+    if(file.open(QIODevice::ReadOnly))
     {
-        ui->stackedWidgetMain->setCurrentIndex(TAB_BINARY);
+        if(ft==XBinary::FT_BINARY)
+        {
+            ui->stackedWidgetMain->setCurrentIndex(TAB_BINARY);
+        }
+        else if(ft==XBinary::FT_COM)
+        {
+            ui->stackedWidgetMain->setCurrentIndex(TAB_COM);
+        }
+        else if(ft==XBinary::FT_MSDOS)
+        {
+            ui->stackedWidgetMain->setCurrentIndex(TAB_MSDOS);
+        }
+        else if(ft==XBinary::FT_PE)
+        {
+            ui->stackedWidgetMain->setCurrentIndex(TAB_PE);
+        }
+        else if(ft==XBinary::FT_ELF)
+        {
+            ui->stackedWidgetMain->setCurrentIndex(TAB_ELF);
+        }
+        else if(ft==XBinary::FT_MACH)
+        {
+            ui->stackedWidgetMain->setCurrentIndex(TAB_MACH);
+        }
+
+        file.close();
     }
-    else if(ft==XBinary::FT_COM)
-    {
-        ui->stackedWidgetMain->setCurrentIndex(TAB_COM);
-    }
-    else if(ft==XBinary::FT_MSDOS)
-    {
-        ui->stackedWidgetMain->setCurrentIndex(TAB_MSDOS);
-    }
-    else if(ft==XBinary::FT_PE)
-    {
-        ui->stackedWidgetMain->setCurrentIndex(TAB_PE);
-    }
-    else if(ft==XBinary::FT_ELF)
-    {
-        ui->stackedWidgetMain->setCurrentIndex(TAB_ELF);
-    }
-    else if(ft==XBinary::FT_MACH)
-    {
-        ui->stackedWidgetMain->setCurrentIndex(TAB_MACH);
-    }
-    // TODO
+    // TODO Error message
 }
 
 void FormatsWidget::on_pushButtonDisasm_clicked()
