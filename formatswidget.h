@@ -32,6 +32,16 @@ class FormatsWidget : public QWidget
 {
     Q_OBJECT
 
+    enum TAB
+    {
+        TAB_BINARY=0,
+        TAB_COM,
+        TAB_MSDOS,
+        TAB_PE,
+        TAB_ELF,
+        TAB_MACH
+    };
+
 public:
     explicit FormatsWidget(QWidget *parent=nullptr);
     void setFileName(QString sFileName);
