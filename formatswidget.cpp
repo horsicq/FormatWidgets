@@ -72,5 +72,6 @@ void FormatsWidget::on_comboBoxType_currentIndexChanged(int index)
 
 void FormatsWidget::reload()
 {
+    XBinary::FT ft=(XBinary::FT)ui->comboBoxType->currentData().toInt();
     // TODO
 }
