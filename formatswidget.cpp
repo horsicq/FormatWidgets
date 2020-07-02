@@ -30,6 +30,8 @@ FormatsWidget::FormatsWidget(QWidget *parent) :
 
 void FormatsWidget::setFileName(QString sFileName)
 {
+     const QSignalBlocker blocker(ui->comboBoxType);
+
     this->sFileName=sFileName;
 
     ui->comboBoxType->clear();
@@ -64,8 +66,6 @@ FormatsWidget::~FormatsWidget()
 void FormatsWidget::on_comboBoxType_currentIndexChanged(int index)
 {
     Q_UNUSED(index)
-
-    const QSignalBlocker blocker(ui->comboBoxType);
 
     reload();
 }
