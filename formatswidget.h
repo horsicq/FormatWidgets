@@ -39,6 +39,7 @@ public:
 
 private slots:
     void on_comboBoxType_currentIndexChanged(int index);
+    void reload();
 
 private:
     Ui::FormatsWidget *ui;

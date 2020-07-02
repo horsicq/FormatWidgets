@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>622</width>
-    <height>88</height>
+    <width>631</width>
+    <height>188</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -125,17 +125,14 @@
     </layout>
    </item>
    <item>
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
+    <widget class="QStackedWidget" name="stackedWidgetMain">
+     <widget class="QWidget" name="pageBinary"/>
+     <widget class="QWidget" name="pageCOM"/>
+     <widget class="QWidget" name="pageMSDOS"/>
+     <widget class="QWidget" name="pagePE"/>
+     <widget class="QWidget" name="pageELF"/>
+     <widget class="QWidget" name="pageMACH"/>
+    </widget>
    </item>
   </layout>
  </widget>

@@ -63,6 +63,8 @@ FormatsWidget::~FormatsWidget()
 
 void FormatsWidget::on_comboBoxType_currentIndexChanged(int index)
 {
+    Q_UNUSED(index)
+
     const QSignalBlocker blocker(ui->comboBoxType);
 
     reload();
