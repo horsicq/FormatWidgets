@@ -51,7 +51,8 @@ void FormatsWidget::setFileName(QString sFileName)
     if(nCount)
     {
         ui->comboBoxType->setCurrentIndex(nCount-1);
-        // TODO
+
+        reload();
     }
 }
 
@@ -64,5 +65,10 @@ void FormatsWidget::on_comboBoxType_currentIndexChanged(int index)
 {
     const QSignalBlocker blocker(ui->comboBoxType);
 
+    reload();
+}
 
+void FormatsWidget::reload()
+{
+    // TODO
 }
