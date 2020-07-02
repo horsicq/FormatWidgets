@@ -50,6 +50,8 @@ public:
 private slots:
     void on_comboBoxType_currentIndexChanged(int index);
     void reload();
+    void on_pushButtonDisasm_clicked();
+    void on_pushButtonMemoryMap_clicked();
 
 private:
     Ui::FormatsWidget *ui;

@@ -100,3 +100,13 @@ void FormatsWidget::reload()
     }
     // TODO
 }
+
+void FormatsWidget::on_pushButtonDisasm_clicked()
+{
+
+}
+
+void FormatsWidget::on_pushButtonMemoryMap_clicked()
+{
+
+}
