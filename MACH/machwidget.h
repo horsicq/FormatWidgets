@@ -23,7 +23,7 @@
 
 #include "../formatwidget.h"
 #include "mach_defs.h"
-#include "sectionheaderwidget.h"
+#include "machsectionheaderwidget.h"
 #include "machprocessdata.h"
 
 namespace Ui

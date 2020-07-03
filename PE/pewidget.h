@@ -23,7 +23,7 @@
 
 #include "../formatwidget.h"
 #include "dialogsectionheader.h"
-#include "sectionheaderwidget.h"
+#include "pesectionheaderwidget.h"
 #include "pe_defs.h"
 #include "peprocessdata.h"
 

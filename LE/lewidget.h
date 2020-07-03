@@ -24,7 +24,7 @@
 #include "../formatwidget.h"
 #include "le_defs.h"
 #include "leprocessdata.h"
-#include "sectionheaderwidget.h"
+#include "lesectionheaderwidget.h"
 
 namespace Ui
 {

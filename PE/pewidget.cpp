@@ -1975,7 +1975,7 @@ void PEWidget::showSectionHeader(int type, QTableView *pTableView)
 
         qint64 nOffset=pTableView->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
 
-        SectionHeaderWidget *pSectionHeaderWidget=new SectionHeaderWidget(getDevice(),getOptions(),(quint32)nRow,nOffset,type,this);
+        PESectionHeaderWidget *pSectionHeaderWidget=new PESectionHeaderWidget(getDevice(),getOptions(),(quint32)nRow,nOffset,type,this);
 
         DialogSectionHeader dsh(this);
         dsh.setWidget(pSectionHeaderWidget);

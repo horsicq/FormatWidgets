@@ -24,7 +24,7 @@
 #include "../formatwidget.h"
 #include "ne_defs.h"
 #include "neprocessdata.h"
-#include "sectionheaderwidget.h"
+#include "nesectionheaderwidget.h"
 
 namespace Ui
 {

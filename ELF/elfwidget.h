@@ -23,7 +23,7 @@
 
 #include "../formatwidget.h"
 #include "dialogsectionheader.h"
-#include "sectionheaderwidget.h"
+#include "elfsectionheaderwidget.h"
 #include "elf_defs.h"
 #include "elfprocessdata.h"
 
