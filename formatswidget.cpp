@@ -91,15 +91,15 @@ void FormatsWidget::reload()
         {
             ui->stackedWidgetMain->setCurrentIndex(TAB_MSDOS);
         }
-        else if(ft==XBinary::FT_PE)
+        else if((ft==XBinary::FT_PE32)||(ft==XBinary::FT_PE64))
         {
             ui->stackedWidgetMain->setCurrentIndex(TAB_PE);
         }
-        else if(ft==XBinary::FT_ELF)
+        else if((ft==XBinary::FT_ELF32)||(ft==XBinary::FT_ELF64))
         {
             ui->stackedWidgetMain->setCurrentIndex(TAB_ELF);
         }
-        else if(ft==XBinary::FT_MACH)
+        else if((ft==XBinary::FT_MACH32)||(ft==XBinary::FT_MACH64))
         {
             ui->stackedWidgetMain->setCurrentIndex(TAB_MACH);
         }
