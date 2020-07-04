@@ -106,7 +106,10 @@ void FormatsWidget::reload()
 
         file.close();
     }
-    // TODO Error message
+    else
+    {
+        // TODO Error message
+    }
 }
 
 void FormatsWidget::on_pushButtonDisasm_clicked()
