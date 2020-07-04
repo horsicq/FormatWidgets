@@ -114,7 +114,7 @@ void FormatsWidget::reload()
 
 void FormatsWidget::on_pushButtonDisasm_clicked()
 {
-
+    // Check x86
 }
 
 void FormatsWidget::on_pushButtonMemoryMap_clicked()
