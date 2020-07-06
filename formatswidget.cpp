@@ -103,6 +103,7 @@ void FormatsWidget::reload()
             if(msdos.isValid())
             {
                 ui->lineEditEntryPoint->setValue((quint16)msdos.getEntryPointAddress());
+                ui->lineEditBaseAddress->setValue((quint16)msdos.getBaseAddress());
             }
         }
         else if((ft==XBinary::FT_PE32)||(ft==XBinary::FT_PE64))
@@ -116,10 +117,12 @@ void FormatsWidget::reload()
                 if(pe.is64())
                 {
                     ui->lineEditEntryPoint->setValue((quint64)pe.getEntryPointAddress());
+                    ui->lineEditBaseAddress->setValue((quint64)pe.getBaseAddress());
                 }
                 else
                 {
                     ui->lineEditEntryPoint->setValue((quint32)pe.getEntryPointAddress());
+                    ui->lineEditBaseAddress->setValue((quint32)pe.getBaseAddress());
                 }
             }
         }
@@ -134,10 +137,12 @@ void FormatsWidget::reload()
                 if(elf.is64())
                 {
                     ui->lineEditEntryPoint->setValue((quint64)elf.getEntryPointAddress());
+                    ui->lineEditBaseAddress->setValue((quint64)elf.getBaseAddress());
                 }
                 else
                 {
                     ui->lineEditEntryPoint->setValue((quint32)elf.getEntryPointAddress());
+                    ui->lineEditBaseAddress->setValue((quint32)elf.getBaseAddress());
                 }
             }
         }
@@ -152,10 +157,12 @@ void FormatsWidget::reload()
                 if(mach.is64())
                 {
                     ui->lineEditEntryPoint->setValue((quint64)mach.getEntryPointAddress());
+                    ui->lineEditBaseAddress->setValue((quint64)mach.getBaseAddress());
                 }
                 else
                 {
                     ui->lineEditEntryPoint->setValue((quint32)mach.getEntryPointAddress());
+                    ui->lineEditBaseAddress->setValue((quint32)mach.getBaseAddress());
                 }
             }
         }
