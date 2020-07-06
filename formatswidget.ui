@@ -59,13 +59,20 @@
       </widget>
      </item>
      <item>
-      <widget class="QGroupBox" name="groupBoxEntryPoint">
-       <property name="maximumSize">
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
         <size>
-         <width>240</width>
-         <height>16777215</height>
+         <width>40</width>
+         <height>20</height>
         </size>
        </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="groupBoxEntryPoint">
        <property name="title">
         <string>Entry point</string>
        </property>
@@ -84,6 +91,18 @@
         </property>
         <item>
          <widget class="XLineEditHEX" name="lineEditEntryPoint">
+          <property name="minimumSize">
+           <size>
+            <width>140</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>140</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
           </property>
@@ -103,26 +122,7 @@
       </widget>
      </item>
      <item>
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
       <widget class="QGroupBox" name="groupBoxBaseAddress">
-       <property name="maximumSize">
-        <size>
-         <width>240</width>
-         <height>16777215</height>
-        </size>
-       </property>
        <property name="title">
         <string>Base address</string>
        </property>
@@ -141,6 +141,18 @@
         </property>
         <item>
          <widget class="XLineEditHEX" name="lineEditBaseAddress">
+          <property name="minimumSize">
+           <size>
+            <width>140</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>140</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
           </property>

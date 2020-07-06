@@ -52,7 +52,14 @@ void FormatsWidget::setFileName(QString sFileName)
 
     if(nCount)
     {
-        ui->comboBoxType->setCurrentIndex(nCount-1);
+        if(listFileTypes.at(0)==XBinary::FT_BINARY)
+        {
+            ui->comboBoxType->setCurrentIndex(0);
+        }
+        else
+        {
+            ui->comboBoxType->setCurrentIndex(nCount-1);
+        }
 
         reload();
     }
@@ -155,15 +162,13 @@ void FormatsWidget::reload()
 
         if(ft==XBinary::FT_BINARY)
         {
-            ui->pushButtonDisasm->hide();
-            ui->pushButtonMemoryMap->hide();
             ui->groupBoxEntryPoint->hide();
+            ui->groupBoxBaseAddress->hide();
         }
         else
         {
-            ui->pushButtonDisasm->show();
-            ui->pushButtonMemoryMap->show();
             ui->groupBoxEntryPoint->show();
+            ui->groupBoxBaseAddress->show();
         }
 
         file.close();
@@ -181,5 +186,5 @@ void FormatsWidget::on_pushButtonDisasm_clicked()
 
 void FormatsWidget::on_pushButtonMemoryMap_clicked()
 {
-
+    // TODO
 }
