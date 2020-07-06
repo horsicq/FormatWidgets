@@ -94,6 +94,20 @@ void FormatsWidget::reload()
         else if((ft==XBinary::FT_PE32)||(ft==XBinary::FT_PE64))
         {
             ui->stackedWidgetMain->setCurrentIndex(TAB_PE);
+
+            XPE pe(&file);
+
+            if(pe.isValid())
+            {
+                if(pe.is64())
+                {
+                    ui->lineEditEntryPoint->setValue((quint64)pe.getEntryPointAddress());
+                }
+                else
+                {
+                    ui->lineEditEntryPoint->setValue((quint32)pe.getEntryPointAddress());
+                }
+            }
         }
         else if((ft==XBinary::FT_ELF32)||(ft==XBinary::FT_ELF64))
         {
