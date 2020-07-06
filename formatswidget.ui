@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>662</width>
-    <height>190</height>
+    <width>671</width>
+    <height>116</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -178,7 +178,73 @@
      <widget class="QWidget" name="pageBinary"/>
      <widget class="QWidget" name="pageCOM"/>
      <widget class="QWidget" name="pageMSDOS"/>
-     <widget class="QWidget" name="pagePE"/>
+     <widget class="QWidget" name="pagePE">
+      <widget class="QPushButton" name="pushButtonOverlay">
+       <property name="geometry">
+        <rect>
+         <x>470</x>
+         <y>0</y>
+         <width>75</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Overlay</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButtonExport">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>75</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Export</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButtonImport">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>0</y>
+         <width>75</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Import</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButtonResource">
+       <property name="geometry">
+        <rect>
+         <x>160</x>
+         <y>0</y>
+         <width>75</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Resource</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButtonPE">
+       <property name="geometry">
+        <rect>
+         <x>590</x>
+         <y>0</y>
+         <width>75</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>PE</string>
+       </property>
+      </widget>
+     </widget>
      <widget class="QWidget" name="pageELF"/>
      <widget class="QWidget" name="pageMACH"/>
     </widget>
