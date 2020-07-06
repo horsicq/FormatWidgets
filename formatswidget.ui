@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>631</width>
-    <height>188</height>
+    <width>661</width>
+    <height>77</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -59,7 +59,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QGroupBox" name="groupBoxSize_2">
+      <widget class="QGroupBox" name="groupBoxEntryPoint">
        <property name="maximumSize">
         <size>
          <width>120</width>
@@ -83,7 +83,7 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="XLineEditHEX" name="lineEditSize_2">
+         <widget class="XLineEditHEX" name="lineEditEntryPoint">
           <property name="alignment">
            <set>Qt::AlignCenter</set>
           </property>

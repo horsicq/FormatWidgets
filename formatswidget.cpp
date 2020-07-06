@@ -104,6 +104,19 @@ void FormatsWidget::reload()
             ui->stackedWidgetMain->setCurrentIndex(TAB_MACH);
         }
 
+        if(ft==XBinary::FT_BINARY)
+        {
+            ui->pushButtonDisasm->hide();
+            ui->pushButtonMemoryMap->hide();
+            ui->groupBoxEntryPoint->hide();
+        }
+        else
+        {
+            ui->pushButtonDisasm->show();
+            ui->pushButtonMemoryMap->show();
+            ui->groupBoxEntryPoint->show();
+        }
+
         file.close();
     }
     else
