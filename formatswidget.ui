@@ -195,21 +195,21 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_4">
          <item>
-          <widget class="QPushButton" name="pushButtonExport">
+          <widget class="QPushButton" name="pushButtonPEExport">
            <property name="text">
             <string>Export</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButtonImport">
+          <widget class="QPushButton" name="pushButtonPEImport">
            <property name="text">
             <string>Import</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButtonResource">
+          <widget class="QPushButton" name="pushButtonPEResource">
            <property name="text">
             <string>Resource</string>
            </property>
@@ -229,7 +229,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButtonOverlay">
+          <widget class="QPushButton" name="pushButtonPEOverlay">
            <property name="text">
             <string>Overlay</string>
            </property>
