@@ -90,6 +90,13 @@ void FormatsWidget::reload()
         else if(ft==XBinary::FT_MSDOS)
         {
             ui->stackedWidgetMain->setCurrentIndex(TAB_MSDOS);
+
+            XMSDOS msdos(&file);
+
+            if(msdos.isValid())
+            {
+                ui->lineEditEntryPoint->setValue((quint16)msdos.getEntryPointAddress());
+            }
         }
         else if((ft==XBinary::FT_PE32)||(ft==XBinary::FT_PE64))
         {
@@ -112,10 +119,38 @@ void FormatsWidget::reload()
         else if((ft==XBinary::FT_ELF32)||(ft==XBinary::FT_ELF64))
         {
             ui->stackedWidgetMain->setCurrentIndex(TAB_ELF);
+
+            XELF elf(&file);
+
+            if(elf.isValid())
+            {
+                if(elf.is64())
+                {
+                    ui->lineEditEntryPoint->setValue((quint64)elf.getEntryPointAddress());
+                }
+                else
+                {
+                    ui->lineEditEntryPoint->setValue((quint32)elf.getEntryPointAddress());
+                }
+            }
         }
         else if((ft==XBinary::FT_MACH32)||(ft==XBinary::FT_MACH64))
         {
             ui->stackedWidgetMain->setCurrentIndex(TAB_MACH);
+
+            XMACH mach(&file);
+
+            if(mach.isValid())
+            {
+                if(mach.is64())
+                {
+                    ui->lineEditEntryPoint->setValue((quint64)mach.getEntryPointAddress());
+                }
+                else
+                {
+                    ui->lineEditEntryPoint->setValue((quint32)mach.getEntryPointAddress());
+                }
+            }
         }
 
         if(ft==XBinary::FT_BINARY)
