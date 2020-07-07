@@ -194,8 +194,17 @@ void FormatsWidget::on_pushButtonDisasm_clicked()
 
 void FormatsWidget::on_pushButtonMemoryMap_clicked()
 {
-    // TODO
-    // Open ReadOnly
+    QFile file;
+    file.setFileName(sFileName);
+
+    if(file.open(QIODevice::ReadOnly))
+    {
+        DialogMemoryMap dialogMemoryMap(this,&file);
+
+        dialogMemoryMap.exec();
+
+        file.close();
+    }
 }
 
 void FormatsWidget::on_pushButtonPEExport_clicked()
