@@ -189,9 +189,41 @@ void FormatsWidget::reload()
 void FormatsWidget::on_pushButtonDisasm_clicked()
 {
     // Check x86
+    // Open ReadOnly
 }
 
 void FormatsWidget::on_pushButtonMemoryMap_clicked()
 {
     // TODO
+    // Open ReadOnly
+}
+
+void FormatsWidget::on_pushButtonPEExport_clicked()
+{
+    // TODO
+    // tryToOpen
+}
+
+void FormatsWidget::on_pushButtonPEImport_clicked()
+{
+    // TODO
+    // tryToOpen
+}
+
+void FormatsWidget::on_pushButtonPEResource_clicked()
+{
+    // TODO
+    // tryToOpen
+}
+
+void FormatsWidget::on_pushButtonPEOverlay_clicked()
+{
+    // TODO
+    // tryToOpen
+}
+
+void FormatsWidget::on_pushButtonPE_clicked()
+{
+    // TODO
+    // tryToOpen
 }

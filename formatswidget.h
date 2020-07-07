@@ -53,6 +53,16 @@ private slots:
     void on_pushButtonDisasm_clicked();
     void on_pushButtonMemoryMap_clicked();
 
+    void on_pushButtonPEExport_clicked();
+
+    void on_pushButtonPEImport_clicked();
+
+    void on_pushButtonPEResource_clicked();
+
+    void on_pushButtonPEOverlay_clicked();
+
+    void on_pushButtonPE_clicked();
+
 private:
     Ui::FormatsWidget *ui;
     QString sFileName;
