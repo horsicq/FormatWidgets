@@ -124,6 +124,7 @@ void FormatsWidget::reload()
                     ui->lineEditEntryPoint->setValue((quint32)pe.getEntryPointAddress());
                     ui->lineEditBaseAddress->setValue((quint32)pe.getBaseAddress());
                 }
+                ui->lineEditPESections->setValue((quint16)pe.getFileHeader_NumberOfSections());
             }
         }
         else if((ft==XBinary::FT_ELF32)||(ft==XBinary::FT_ELF64))
