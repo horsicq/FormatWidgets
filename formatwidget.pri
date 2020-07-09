@@ -63,6 +63,11 @@ FORMS += \
     include($$PWD/../StaticScan/heurwidget.pri)
 }
 
+!contains(XCONFIG, xhashwidget) {
+    XCONFIG += xhashwidget
+    include($$PWD/../XHashWidget/xhashwidget.pri)
+}
+
 contains(XCONFIG, use_disasm) {
     DEFINES += USE_DISASM
 
