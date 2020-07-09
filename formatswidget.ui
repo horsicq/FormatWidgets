@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>663</width>
-    <height>138</height>
+    <width>650</width>
+    <height>343</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2">
+  <layout class="QVBoxLayout" name="verticalLayout_3">
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -27,7 +27,7 @@
     <number>0</number>
    </property>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <layout class="QHBoxLayout" name="horizontalLayout_7">
      <item>
       <widget class="QGroupBox" name="groupBoxType">
        <property name="minimumSize">
@@ -175,11 +175,14 @@
    </item>
    <item>
     <widget class="QStackedWidget" name="stackedWidgetMain">
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
      <widget class="QWidget" name="pageBinary"/>
      <widget class="QWidget" name="pageCOM"/>
      <widget class="QWidget" name="pageMSDOS"/>
      <widget class="QWidget" name="pagePE">
-      <layout class="QVBoxLayout" name="verticalLayout_3">
+      <layout class="QVBoxLayout" name="verticalLayout_2">
        <property name="leftMargin">
         <number>0</number>
        </property>
@@ -377,7 +380,7 @@
          <property name="sizeHint" stdset="0">
           <size>
            <width>20</width>
-           <height>12</height>
+           <height>52</height>
           </size>
          </property>
         </spacer>
@@ -388,6 +391,51 @@
      <widget class="QWidget" name="pageMACH"/>
     </widget>
    </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QComboBox" name="comboBoxScanEngine">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>0</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_7">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QStackedWidget" name="stackedWidgetScan">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>120</height>
+      </size>
+     </property>
+     <widget class="DIE_Widget" name="pageScanDIE"/>
+     <widget class="QWidget" name="pageScanNFD"/>
+    </widget>
+   </item>
   </layout>
  </widget>
  <customwidgets>
@@ -395,6 +443,12 @@
    <class>XLineEditHEX</class>
    <extends>QLineEdit</extends>
    <header>xlineedithex.h</header>
+  </customwidget>
+  <customwidget>
+   <class>DIE_Widget</class>
+   <extends>QWidget</extends>
+   <header>die_widget.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>
