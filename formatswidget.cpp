@@ -245,6 +245,7 @@ void FormatsWidget::on_pushButtonPESections_clicked()
 
 void FormatsWidget::showPE(SPE::TYPE type)
 {
+    // TODO type
     QFile file;
     file.setFileName(sFileName);
 
