@@ -24,6 +24,7 @@
 #include <QWidget>
 #include "xformats.h"
 #include "dialogmemorymap.h"
+#include "dialogpe.h"
 
 namespace Ui {
 class FormatsWidget;
@@ -58,6 +59,8 @@ private slots:
     void on_pushButtonPEResource_clicked();
     void on_pushButtonPEOverlay_clicked();
     void on_pushButtonPE_clicked();
+    void on_pushButtonPESections_clicked();
+    void showPE(SPE::TYPE type);
 
 private:
     Ui::FormatsWidget *ui;

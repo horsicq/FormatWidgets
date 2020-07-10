@@ -210,30 +210,49 @@ void FormatsWidget::on_pushButtonMemoryMap_clicked()
 
 void FormatsWidget::on_pushButtonPEExport_clicked()
 {
-    // TODO
-    // tryToOpen
+    showPE(SPE::TYPE_EXPORT);
 }
 
 void FormatsWidget::on_pushButtonPEImport_clicked()
 {
-    // TODO
-    // tryToOpen
+    showPE(SPE::TYPE_IMPORT);
 }
 
 void FormatsWidget::on_pushButtonPEResource_clicked()
 {
-    // TODO
-    // tryToOpen
+    showPE(SPE::TYPE_RESOURCE);
 }
 
 void FormatsWidget::on_pushButtonPEOverlay_clicked()
 {
-    // TODO
-    // tryToOpen
+    showPE(SPE::TYPE_OVERLAY);
 }
 
 void FormatsWidget::on_pushButtonPE_clicked()
 {
-    // TODO
-    // tryToOpen
+    showPE(SPE::TYPE_IMAGE_FILE_HEADER);
+}
+
+void FormatsWidget::on_pushButtonPESections_clicked()
+{
+    showPE(SPE::TYPE_SECTIONS);
+}
+
+void FormatsWidget::showPE(SPE::TYPE type)
+{
+    QFile file;
+    file.setFileName(sFileName);
+
+    if(XBinary::tryToOpen(&file))
+    {
+        FW_DEF::OPTIONS options={};
+
+        DialogPE dialogPE(this);
+
+        dialogPE.setData(&file,&options);
+
+        dialogPE.exec();
+
+        file.close();
+    }
 }
