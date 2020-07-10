@@ -47,6 +47,7 @@ class FormatsWidget : public QWidget
 public:
     explicit FormatsWidget(QWidget *parent=nullptr);
     void setFileName(QString sFileName);
+    void setBackupFileName(QString sBackupFileName);
     ~FormatsWidget();
 
 private slots:
@@ -65,6 +66,7 @@ private slots:
 private:
     Ui::FormatsWidget *ui;
     QString sFileName;
+    QString sBackupFilename;
 };
 
 #endif // FORMATSWIDGET_H

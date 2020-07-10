@@ -65,6 +65,11 @@ void FormatsWidget::setFileName(QString sFileName)
     }
 }
 
+void FormatsWidget::setBackupFileName(QString sBackupFileName)
+{
+    this->sBackupFilename=sBackupFileName;
+}
+
 FormatsWidget::~FormatsWidget()
 {
     delete ui;
@@ -246,6 +251,11 @@ void FormatsWidget::showPE(SPE::TYPE type)
     if(XBinary::tryToOpen(&file))
     {
         FW_DEF::OPTIONS options={};
+
+        if(sBackupFilename!="")
+        {
+            options.sBackupFileName=sBackupFilename;
+        }
 
         DialogPE dialogPE(this);
 
