@@ -130,6 +130,11 @@ void FormatsWidget::reload()
                     ui->lineEditBaseAddress->setValue((quint32)pe.getBaseAddress());
                 }
                 ui->lineEditPESections->setValue((quint16)pe.getFileHeader_NumberOfSections());
+
+                ui->pushButtonPEExport->setEnabled(pe.isExportPresent());
+                ui->pushButtonPEImport->setEnabled(pe.isImportPresent());
+                ui->pushButtonPEResource->setEnabled(pe.isResourcesPresent());
+                ui->pushButtonPENET->setEnabled(pe.isNETPresent());
             }
         }
         else if((ft==XBinary::FT_ELF32)||(ft==XBinary::FT_ELF64))
