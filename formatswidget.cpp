@@ -243,6 +243,11 @@ void FormatsWidget::on_pushButtonPESections_clicked()
     showPE(SPE::TYPE_SECTIONS);
 }
 
+void FormatsWidget::on_pushButtonPENET_clicked()
+{
+    showPE(SPE::TYPE_NETHEADER);
+}
+
 void FormatsWidget::showPE(SPE::TYPE type)
 {
     // TODO type

@@ -59,6 +59,7 @@ private slots:
     void on_pushButtonPEImport_clicked();
     void on_pushButtonPEResource_clicked();
     void on_pushButtonPEOverlay_clicked();
+    void on_pushButtonPENET_clicked();
     void on_pushButtonPE_clicked();
     void on_pushButtonPESections_clicked();
     void showPE(SPE::TYPE type);
