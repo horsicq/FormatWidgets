@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>SectionHeaderWidget</class>
- <widget class="QWidget" name="SectionHeaderWidget">
+ <class>LESectionHeaderWidget</class>
+ <widget class="QWidget" name="LESectionHeaderWidget">
   <property name="geometry">
    <rect>
     <x>0</x>

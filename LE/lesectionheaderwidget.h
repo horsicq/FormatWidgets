@@ -18,17 +18,17 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-#ifndef SECTIONHEADERWIDGET_H
-#define SECTIONHEADERWIDGET_H
+#ifndef LESECTIONHEADERWIDGET_H
+#define LESECTIONHEADERWIDGET_H
 
 #include "../formatwidget.h"
 #include "le_defs.h"
 
 namespace Ui {
-class SectionHeaderWidget;
+class LESectionHeaderWidget;
 }
 
-class ELFSectionHeaderWidget : public FormatWidget
+class LESectionHeaderWidget : public FormatWidget
 {
     Q_OBJECT
 
@@ -39,9 +39,9 @@ public:
         CB_ALIGH,
         __CB_size
     };
-    ELFSectionHeaderWidget(QWidget *parent=nullptr);
-    ELFSectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *parent=nullptr);
-    ~ELFSectionHeaderWidget();
+    LESectionHeaderWidget(QWidget *parent=nullptr);
+    LESectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *parent=nullptr);
+    ~LESectionHeaderWidget();
     virtual void clear();
     virtual void setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset);
     virtual void reload();
@@ -67,11 +67,11 @@ private:
         __INV_size
     };
 
-    Ui::SectionHeaderWidget *ui;
+    Ui::LESectionHeaderWidget *ui;
 //    XLineEditHEX *lineEdit_Section[N_mach_sections::__data_size];
     bool bInit;
     InvWidget *invWidget[__INV_size];
     SubDevice *pSubDevice;
 };
 
-#endif // SECTIONHEADERWIDGET_H
+#endif // LESECTIONHEADERWIDGET_H

@@ -28,6 +28,8 @@
 #include "dialogne.h"
 #include "dialogle.h"
 #include "dialogpe.h"
+#include "dialogelf.h"
+#include "dialogmach.h"
 
 namespace Ui {
 class FormatsWidget;

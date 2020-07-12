@@ -18,71 +18,70 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-#include "machsectionheaderwidget.h"
-#include "ui_sectionheaderwidget.h"
+#include "lesectionheaderwidget.h"
+#include "ui_lesectionheaderwidget.h"
 
-
-ELFSectionHeaderWidget::ELFSectionHeaderWidget(QWidget *parent)
+LESectionHeaderWidget::LESectionHeaderWidget(QWidget *parent)
 {
 
 }
 
-ELFSectionHeaderWidget::ELFSectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset,qint32 nType, QWidget *parent)
+LESectionHeaderWidget::LESectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset,qint32 nType, QWidget *parent)
 {
 
 }
 
-ELFSectionHeaderWidget::~ELFSectionHeaderWidget()
+LESectionHeaderWidget::~LESectionHeaderWidget()
 {
 
 }
 
-void ELFSectionHeaderWidget::clear()
+void LESectionHeaderWidget::clear()
 {
 
 }
 
-void ELFSectionHeaderWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset)
+void LESectionHeaderWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset)
 {
 
 }
 
-void ELFSectionHeaderWidget::reload()
+void LESectionHeaderWidget::reload()
 {
 
 }
 
-bool ELFSectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
+bool LESectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
 {
     return false;
 }
 
-void ELFSectionHeaderWidget::setReadonly(bool bState)
+void LESectionHeaderWidget::setReadonly(bool bState)
 {
 
 }
 
-void ELFSectionHeaderWidget::blockSignals(bool bState)
+void LESectionHeaderWidget::blockSignals(bool bState)
 {
 
 }
 
-void ELFSectionHeaderWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
+void LESectionHeaderWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
 {
 
 }
 
-void ELFSectionHeaderWidget::on_checkBoxReadonly_toggled(bool checked)
+void LESectionHeaderWidget::on_checkBoxReadonly_toggled(bool checked)
 {
 
 }
 
-void ELFSectionHeaderWidget::reloadData()
+void LESectionHeaderWidget::reloadData()
 {
 
 }
 
-void ELFSectionHeaderWidget::on_tableWidget_Section_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
+void LESectionHeaderWidget::on_tableWidget_Section_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
 {
 
 }
