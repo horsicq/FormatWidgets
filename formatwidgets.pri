@@ -34,6 +34,10 @@ FORMS += \
     XCONFIG += newidget
     include($$PWD/NE/newidget.pri)
 }
+!contains(XCONFIG, lewidget) {
+    XCONFIG += lewidget
+    include($$PWD/LE/lewidget.pri)
+}
 !contains(XCONFIG, pewidget) {
     XCONFIG += pewidget
     include($$PWD/PE/pewidget.pri)

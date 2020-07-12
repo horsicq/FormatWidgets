@@ -25,6 +25,8 @@
 #include "xformats.h"
 #include "dialogmemorymap.h"
 #include "dialogmsdos.h"
+#include "dialogne.h"
+#include "dialogle.h"
 #include "dialogpe.h"
 
 namespace Ui {
