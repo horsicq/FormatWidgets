@@ -305,10 +305,10 @@ void FormatsWidget::showPE(SPE::TYPE type)
 
 void FormatsWidget::on_pushButtonMSDOSOverlay_clicked()
 {
-
+    showMSDOS(SMSDOS::TYPE_OVERLAY);
 }
 
 void FormatsWidget::on_pushButtonMSDOS_clicked()
 {
-
+    // TODO
 }
