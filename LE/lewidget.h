@@ -56,12 +56,10 @@ private slots:
     void widgetValueChanged(quint64 nValue);
     void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
     void on_checkBoxReadonly_toggled(bool checked);
-
     void on_pushButtonReload_clicked();
     void enableButton();
     void on_tableWidget_DOS_HEADER_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     void on_tableWidget_VXD_HEADER_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
-
     void on_tableView_Objects_customContextMenuRequested(const QPoint &pos);
     void on_tableView_Objects_doubleClicked(const QModelIndex &index);
     void onTableView_Objects_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
