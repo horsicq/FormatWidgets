@@ -24,6 +24,7 @@
 #include <QWidget>
 #include "xformats.h"
 #include "dialogmemorymap.h"
+#include "dialogmsdos.h"
 #include "dialogpe.h"
 
 namespace Ui {
@@ -62,7 +63,10 @@ private slots:
     void on_pushButtonPENET_clicked();
     void on_pushButtonPE_clicked();
     void on_pushButtonPESections_clicked();
+    void showMSDOS(SMSDOS::TYPE type);
     void showPE(SPE::TYPE type);
+    void on_pushButtonMSDOSOverlay_clicked();
+    void on_pushButtonMSDOS_clicked();
 
 private:
     Ui::FormatsWidget *ui;

@@ -253,6 +253,31 @@ void FormatsWidget::on_pushButtonPENET_clicked()
     showPE(SPE::TYPE_NETHEADER);
 }
 
+void FormatsWidget::showMSDOS(SMSDOS::TYPE type)
+{
+    // TODO type
+    QFile file;
+    file.setFileName(sFileName);
+
+    if(XBinary::tryToOpen(&file))
+    {
+        FW_DEF::OPTIONS options={};
+
+        if(sBackupFilename!="")
+        {
+            options.sBackupFileName=sBackupFilename;
+        }
+
+        DialogMSDOS dialogMSDOS(this);
+
+        dialogMSDOS.setData(&file,&options);
+
+        dialogMSDOS.exec();
+
+        file.close();
+    }
+}
+
 void FormatsWidget::showPE(SPE::TYPE type)
 {
     // TODO type
@@ -276,4 +301,14 @@ void FormatsWidget::showPE(SPE::TYPE type)
 
         file.close();
     }
+}
+
+void FormatsWidget::on_pushButtonMSDOSOverlay_clicked()
+{
+
+}
+
+void FormatsWidget::on_pushButtonMSDOS_clicked()
+{
+
 }
