@@ -68,7 +68,11 @@ private slots:
     void on_pushButtonPE_clicked();
     void on_pushButtonPESections_clicked();
     void showMSDOS(SMSDOS::TYPE type);
+    void showLE(SLE::TYPE type);
+    void showNE(SNE::TYPE type);
     void showPE(SPE::TYPE type);
+    void showELF(SELF::TYPE type);
+    void showMACH(SMACH::TYPE type);
     void on_pushButtonMSDOSOverlay_clicked();
     void on_pushButtonMSDOS_clicked();
 

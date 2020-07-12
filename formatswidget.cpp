@@ -278,6 +278,16 @@ void FormatsWidget::showMSDOS(SMSDOS::TYPE type)
     }
 }
 
+void FormatsWidget::showLE(SLE::TYPE type)
+{
+
+}
+
+void FormatsWidget::showNE(SNE::TYPE type)
+{
+
+}
+
 void FormatsWidget::showPE(SPE::TYPE type)
 {
     // TODO type
@@ -301,6 +311,16 @@ void FormatsWidget::showPE(SPE::TYPE type)
 
         file.close();
     }
+}
+
+void FormatsWidget::showELF(SELF::TYPE type)
+{
+
+}
+
+void FormatsWidget::showMACH(SMACH::TYPE type)
+{
+
 }
 
 void FormatsWidget::on_pushButtonMSDOSOverlay_clicked()
