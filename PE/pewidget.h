@@ -85,9 +85,7 @@ private slots:
     void editExceptionHeader();
     void editDelayImportHeader();
     void editBoundImportHeader();
-
     void showSectionHeader(int type,QTableView *pTableView);
-
     void on_tableView_Sections_customContextMenuRequested(const QPoint &pos);
     void on_tableView_Sections_doubleClicked(const QModelIndex &index);
     void onTableView_Sections_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
@@ -106,20 +104,15 @@ private slots:
     void on_tableView_DelayImportLibraries_customContextMenuRequested(const QPoint &pos);
     void onTableView_DelayImportLibraries_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
     void on_tableView_DelayImportLibraries_doubleClicked(const QModelIndex &index);
-
     void on_tableView_BoundImport_customContextMenuRequested(const QPoint &pos);
     void on_tableView_BoundImport_doubleClicked(const QModelIndex &index);
-
     void onTreeView_Resources_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
-
     void on_pushButtonHex_clicked();
     void on_pushButtonStrings_clicked();
     void on_pushButtonMemoryMap_clicked();
     void on_pushButtonEntropy_clicked();
     void on_pushButtonHeuristicScan_clicked();
-
     void on_pushButtonDisasm_clicked();
-
     void on_tableWidget_Net_Metadata_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
 
 private:
