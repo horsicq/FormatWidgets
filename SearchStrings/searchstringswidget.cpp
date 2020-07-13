@@ -138,9 +138,9 @@ void SearchStringsWidget::on_pushButtonSearch_clicked()
     search();
 }
 
-void SearchStringsWidget::on_lineEditFilter_textChanged(const QString &arg1)
+void SearchStringsWidget::on_lineEditFilter_textChanged(const QString &sText)
 {
-    filter(arg1);
+    filter(sText);
 }
 
 void SearchStringsWidget::filter(QString sString)

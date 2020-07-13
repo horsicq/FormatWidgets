@@ -52,7 +52,7 @@ public:
 private slots:
     void on_pushButtonSave_clicked();
     void on_pushButtonSearch_clicked();
-    void on_lineEditFilter_textChanged(const QString &arg1);
+    void on_lineEditFilter_textChanged(const QString &sText);
     void filter(QString sString);
     void on_tableViewResult_customContextMenuRequested(const QPoint &pos);
     void _copyString();
