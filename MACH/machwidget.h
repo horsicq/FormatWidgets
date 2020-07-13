@@ -54,7 +54,7 @@ private slots:
     virtual void reloadData();
     void widgetValueChanged(quint64 nValue);
     void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
-    void on_checkBoxReadonly_toggled(bool checked);
+    void on_checkBoxReadonly_toggled(bool bChecked);
     bool createSectionTable(int type, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount);
     void on_tableWidget_commands_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     void on_pushButtonReload_clicked();

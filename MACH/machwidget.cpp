@@ -569,9 +569,9 @@ void MACHWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *current, 
     }
 }
 
-void MACHWidget::on_checkBoxReadonly_toggled(bool checked)
+void MACHWidget::on_checkBoxReadonly_toggled(bool bChecked)
 {
-    setReadonly(checked);
+    setReadonly(bChecked);
 }
 
 bool MACHWidget::createSectionTable(int type, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount)

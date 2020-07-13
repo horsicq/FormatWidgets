@@ -57,7 +57,7 @@ private slots:
     void addDatasets(XELF *pElf,QTreeWidgetItem *pParent, QList<XBinary::DATASET> *pList);
     void widgetValueChanged(quint64 nValue);
     void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
-    void on_checkBoxReadonly_toggled(bool checked);
+    void on_checkBoxReadonly_toggled(bool bChecked);
     bool createSectionTable(int type, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount);
     void on_pushButtonReload_clicked();
     void enableButton();

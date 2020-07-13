@@ -455,9 +455,9 @@ void ELFSectionHeaderWidget::adjustHeaderTable(int type, QTableWidget *pTableWid
     }
 }
 
-void ELFSectionHeaderWidget::on_checkBoxReadonly_toggled(bool checked)
+void ELFSectionHeaderWidget::on_checkBoxReadonly_toggled(bool bChecked)
 {
-    setReadonly(checked);
+    setReadonly(bChecked);
 }
 
 void ELFSectionHeaderWidget::reloadData()

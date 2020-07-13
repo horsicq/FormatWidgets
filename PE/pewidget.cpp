@@ -714,11 +714,9 @@ void PEWidget::widgetAction()
     }
 }
 
-
-
-void PEWidget::on_checkBoxReadonly_toggled(bool checked)
+void PEWidget::on_checkBoxReadonly_toggled(bool bChecked)
 {
-    setReadonly(checked);
+    setReadonly(bChecked);
 }
 
 void PEWidget::editSectionHeader()

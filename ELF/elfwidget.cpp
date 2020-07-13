@@ -692,9 +692,9 @@ void ELFWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *current, Q
     }
 }
 
-void ELFWidget::on_checkBoxReadonly_toggled(bool checked)
+void ELFWidget::on_checkBoxReadonly_toggled(bool bChecked)
 {
-    setReadonly(checked);
+    setReadonly(bChecked);
 }
 
 void ELFWidget::on_pushButtonReload_clicked()

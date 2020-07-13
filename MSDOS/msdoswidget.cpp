@@ -326,9 +326,9 @@ void MSDOSWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *current,
     }
 }
 
-void MSDOSWidget::on_checkBoxReadonly_toggled(bool checked)
+void MSDOSWidget::on_checkBoxReadonly_toggled(bool bChecked)
 {
-    setReadonly(checked);
+    setReadonly(bChecked);
 }
 
 void MSDOSWidget::on_pushButtonReload_clicked()

@@ -72,7 +72,7 @@ void NESectionHeaderWidget::adjustHeaderTable(int type, QTableWidget *pTableWidg
 
 }
 
-void NESectionHeaderWidget::on_checkBoxReadonly_toggled(bool checked)
+void NESectionHeaderWidget::on_checkBoxReadonly_toggled(bool bChecked)
 {
 
 }

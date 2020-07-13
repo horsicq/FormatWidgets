@@ -144,9 +144,9 @@ void BinaryWidget::widgetValueChanged(quint64 nValue)
 //    int nNdata=pWidget->property("NDATA").toInt();
 }
 
-void BinaryWidget::on_checkBoxReadonly_toggled(bool checked)
+void BinaryWidget::on_checkBoxReadonly_toggled(bool bChecked)
 {
-    setReadonly(checked);
+    setReadonly(bChecked);
 }
 
 void BinaryWidget::on_pushButtonReload_clicked()

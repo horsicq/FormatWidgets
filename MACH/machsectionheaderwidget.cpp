@@ -71,7 +71,7 @@ void MACHSectionHeaderWidget::adjustHeaderTable(int type, QTableWidget *pTableWi
 
 }
 
-void MACHSectionHeaderWidget::on_checkBoxReadonly_toggled(bool checked)
+void MACHSectionHeaderWidget::on_checkBoxReadonly_toggled(bool bChecked)
 {
 
 }

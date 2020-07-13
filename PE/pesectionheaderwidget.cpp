@@ -384,9 +384,9 @@ void PESectionHeaderWidget::adjustHeaderTable(int type, QTableWidget *pTableWidg
     }
 }
 
-void PESectionHeaderWidget::on_checkBoxReadonly_toggled(bool checked)
+void PESectionHeaderWidget::on_checkBoxReadonly_toggled(bool bChecked)
 {
-    setReadonly(checked);
+    setReadonly(bChecked);
 }
 
 void PESectionHeaderWidget::reloadData()

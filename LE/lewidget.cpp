@@ -532,9 +532,9 @@ void LEWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *current, QT
     }
 }
 
-void LEWidget::on_checkBoxReadonly_toggled(bool checked)
+void LEWidget::on_checkBoxReadonly_toggled(bool bChecked)
 {
-    setReadonly(checked);
+    setReadonly(bChecked);
 }
 
 void LEWidget::on_pushButtonReload_clicked()

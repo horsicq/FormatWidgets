@@ -71,7 +71,7 @@ void LESectionHeaderWidget::adjustHeaderTable(int type, QTableWidget *pTableWidg
 
 }
 
-void LESectionHeaderWidget::on_checkBoxReadonly_toggled(bool checked)
+void LESectionHeaderWidget::on_checkBoxReadonly_toggled(bool bChecked)
 {
 
 }

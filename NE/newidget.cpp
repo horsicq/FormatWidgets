@@ -531,9 +531,9 @@ void NEWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *current, QT
     }
 }
 
-void NEWidget::on_checkBoxReadonly_toggled(bool checked)
+void NEWidget::on_checkBoxReadonly_toggled(bool bChecked)
 {
-    setReadonly(checked);
+    setReadonly(bChecked);
 }
 
 void NEWidget::on_pushButtonReload_clicked()

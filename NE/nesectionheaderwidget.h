@@ -53,7 +53,7 @@ protected:
     virtual void adjustHeaderTable(int type,QTableWidget *pTableWidget);
 
 private slots:
-    void on_checkBoxReadonly_toggled(bool checked);
+    void on_checkBoxReadonly_toggled(bool bChecked);
     void reloadData();
 
     void on_tableWidget_Section_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
