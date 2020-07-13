@@ -30,6 +30,7 @@
 #include "dialogpe.h"
 #include "dialogelf.h"
 #include "dialogmach.h"
+#include "dialogdisasm.h"
 
 namespace Ui {
 class FormatsWidget;
