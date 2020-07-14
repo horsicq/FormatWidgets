@@ -52,9 +52,10 @@ class FormatsWidget : public QWidget
 
 public:
     explicit FormatsWidget(QWidget *parent=nullptr);
-    void setFileName(QString sFileName);
+    void setFileName(QString sFileName,bool bScan);
     void setBackupFileName(QString sBackupFileName);
     ~FormatsWidget();
+    void setDIEDatabase(QString sDatabasePath);
 
 private slots:
     void on_comboBoxType_currentIndexChanged(int index);
@@ -80,6 +81,7 @@ private slots:
 private:
     Ui::FormatsWidget *ui;
     QString sFileName;
+    bool bScan;
     QString sBackupFilename;
 };
 

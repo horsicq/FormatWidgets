@@ -140,6 +140,8 @@ public:
     void showSectionEntropy(QTableView *pTableView);
     qint64 getTableViewItemSize(QTableView *pTableView,int nRow);
 
+    static void setTopTreeItem(QTreeWidget *pTree,int nID);
+
 signals:
     void editState(bool bState);
 

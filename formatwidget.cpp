@@ -321,6 +321,21 @@ qint64 FormatWidget::getTableViewItemSize(QTableView *pTableView, int nRow)
     return nResult;
 }
 
+void FormatWidget::setTopTreeItem(QTreeWidget *pTree, int nID)
+{
+    int nCount=pTree->topLevelItemCount();
+
+    for(int i=0;i<nCount;i++)
+    {
+        if(pTree->topLevelItem(i)->data(0,Qt::UserRole).toInt()==nID)
+        {
+            pTree->setCurrentItem(pTree->topLevelItem(i));
+
+            break;
+        }
+    }
+}
+
 //void FormatWidget::resizeToolsWidget(QWidget *pParent, ToolsWidget *pToolWidget)
 //{
 //    qint32 nHeight=pParent->height();

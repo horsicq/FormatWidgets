@@ -28,11 +28,12 @@ FormatsWidget::FormatsWidget(QWidget *parent) :
     ui->setupUi(this);
 }
 
-void FormatsWidget::setFileName(QString sFileName)
+void FormatsWidget::setFileName(QString sFileName, bool bScan)
 {
-     const QSignalBlocker blocker(ui->comboBoxType);
+    const QSignalBlocker blocker(ui->comboBoxType);
 
     this->sFileName=sFileName;
+    this->bScan=bScan;
 
     ui->comboBoxType->clear();
 
@@ -73,6 +74,11 @@ void FormatsWidget::setBackupFileName(QString sBackupFileName)
 FormatsWidget::~FormatsWidget()
 {
     delete ui;
+}
+
+void FormatsWidget::setDIEDatabase(QString sDatabasePath)
+{
+    ui->pageScanDIE->setDatabase(sDatabasePath);
 }
 
 void FormatsWidget::on_comboBoxType_currentIndexChanged(int index)
@@ -190,6 +196,9 @@ void FormatsWidget::reload()
         }
 
         file.close();
+
+        // TODO index
+        ui->pageScanDIE->setData(sFileName,bScan);
     }
     else
     {
@@ -200,7 +209,17 @@ void FormatsWidget::reload()
 void FormatsWidget::on_pushButtonDisasm_clicked()
 {
     // Check x86
-    // Open ReadOnly
+    QFile file;
+    file.setFileName(sFileName);
+
+    if(file.open(QIODevice::ReadOnly))
+    {
+        DialogDisasm dialogDisasm(this,&file);
+
+        dialogDisasm.exec();
+
+        file.close();
+    }
 }
 
 void FormatsWidget::on_pushButtonMemoryMap_clicked()
