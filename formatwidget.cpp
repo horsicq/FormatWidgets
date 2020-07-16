@@ -321,7 +321,7 @@ qint64 FormatWidget::getTableViewItemSize(QTableView *pTableView, int nRow)
     return nResult;
 }
 
-void FormatWidget::setTopTreeItem(QTreeWidget *pTree, int nID)
+void FormatWidget::setTreeTopItem(QTreeWidget *pTree, int nID)
 {
     int nCount=pTree->topLevelItemCount();
 

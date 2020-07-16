@@ -208,7 +208,7 @@ void PEWidget::reload()
 
         ui->treeWidgetNavi->expandAll();
 
-        setTopTreeItem(ui->treeWidgetNavi,SPE::TYPE_HEURISTICSCAN);
+        setTreeTopItem(ui->treeWidgetNavi,getOptions()->nStartType);
     }
 }
 
@@ -2219,27 +2219,27 @@ void PEWidget::onTreeView_Resources_currentRowChanged(const QModelIndex &current
 
 void PEWidget::on_pushButtonHex_clicked()
 {
-    setTopTreeItem(ui->treeWidgetNavi,SPE::TYPE_HEX);
+    setTreeTopItem(ui->treeWidgetNavi,SPE::TYPE_HEX);
 }
 
 void PEWidget::on_pushButtonStrings_clicked()
 {
-    setTopTreeItem(ui->treeWidgetNavi,SPE::TYPE_STRINGS);
+    setTreeTopItem(ui->treeWidgetNavi,SPE::TYPE_STRINGS);
 }
 
 void PEWidget::on_pushButtonMemoryMap_clicked()
 {
-    setTopTreeItem(ui->treeWidgetNavi,SPE::TYPE_MEMORYMAP);
+    setTreeTopItem(ui->treeWidgetNavi,SPE::TYPE_MEMORYMAP);
 }
 
 void PEWidget::on_pushButtonEntropy_clicked()
 {
-    setTopTreeItem(ui->treeWidgetNavi,SPE::TYPE_ENTROPY);
+    setTreeTopItem(ui->treeWidgetNavi,SPE::TYPE_ENTROPY);
 }
 
 void PEWidget::on_pushButtonHeuristicScan_clicked()
 {
-    setTopTreeItem(ui->treeWidgetNavi,SPE::TYPE_HEURISTICSCAN);
+    setTreeTopItem(ui->treeWidgetNavi,SPE::TYPE_HEURISTICSCAN);
 }
 
 void PEWidget::on_pushButtonDisasm_clicked()

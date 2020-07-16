@@ -31,6 +31,7 @@ namespace FW_DEF
         bool bIsImage;
         qint64 nImageBase; // TODO default_const
         // TODO Last directory
+        int nStartType;
     };
 
     enum VAL_TYPE

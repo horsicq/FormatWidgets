@@ -115,6 +115,8 @@ void FormatsWidget::reload()
             {
                 ui->lineEditEntryPoint->setValue((quint16)msdos.getEntryPointAddress());
                 ui->lineEditBaseAddress->setValue((quint16)msdos.getBaseAddress());
+
+                ui->pushButtonMSDOSOverlay->setEnabled(msdos.isOverlayPresent());
             }
         }
         else if((ft==XBinary::FT_PE32)||(ft==XBinary::FT_PE64))
@@ -141,6 +143,8 @@ void FormatsWidget::reload()
                 ui->pushButtonPEImport->setEnabled(pe.isImportPresent());
                 ui->pushButtonPEResource->setEnabled(pe.isResourcesPresent());
                 ui->pushButtonPENET->setEnabled(pe.isNETPresent());
+
+                ui->pushButtonPEOverlay->setEnabled(pe.isOverlayPresent());
             }
         }
         else if((ft==XBinary::FT_ELF32)||(ft==XBinary::FT_ELF64))
@@ -260,7 +264,7 @@ void FormatsWidget::on_pushButtonPEOverlay_clicked()
 
 void FormatsWidget::on_pushButtonPE_clicked()
 {
-    showPE(SPE::TYPE_IMAGE_FILE_HEADER);
+    showPE(SPE::TYPE_IMAGE_NT_HEADERS);
 }
 
 void FormatsWidget::on_pushButtonPESections_clicked()
@@ -322,6 +326,8 @@ void FormatsWidget::showPE(SPE::TYPE type)
         {
             options.sBackupFileName=sBackupFilename;
         }
+
+        options.nStartType=type;
 
         DialogPE dialogPE(this);
 
