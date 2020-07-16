@@ -105,7 +105,7 @@ void NEWidget::reload()
 
         ui->treeWidgetNavi->expandAll();
 
-        ui->treeWidgetNavi->setCurrentItem(ui->treeWidgetNavi->topLevelItem(SNE::TYPE_DOS_HEADER));
+        setTreeTopItem(ui->treeWidgetNavi,getOptions()->nStartType);
     }
 }
 

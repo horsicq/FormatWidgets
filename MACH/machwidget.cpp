@@ -121,7 +121,7 @@ void MACHWidget::reload()
 
         ui->treeWidgetNavi->expandAll();
 
-        ui->treeWidgetNavi->setCurrentItem(ui->treeWidgetNavi->topLevelItem(SMACH::TYPE_mach_header));
+        setTreeTopItem(ui->treeWidgetNavi,getOptions()->nStartType);
     }
 }
 

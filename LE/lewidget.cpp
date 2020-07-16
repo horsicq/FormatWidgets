@@ -99,7 +99,7 @@ void LEWidget::reload()
 
         ui->treeWidgetNavi->expandAll();
 
-        ui->treeWidgetNavi->setCurrentItem(ui->treeWidgetNavi->topLevelItem(SLE::TYPE_DOS_HEADER));
+        setTreeTopItem(ui->treeWidgetNavi,getOptions()->nStartType);
     }
 }
 
