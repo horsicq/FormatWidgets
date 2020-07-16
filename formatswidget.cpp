@@ -26,6 +26,8 @@ FormatsWidget::FormatsWidget(QWidget *parent) :
     ui(new Ui::FormatsWidget)
 {
     ui->setupUi(this);
+
+    ui->stackedWidgetMain->setCurrentIndex(TAB_BINARY);
 }
 
 void FormatsWidget::setFileName(QString sFileName, bool bScan)
@@ -143,6 +145,7 @@ void FormatsWidget::reload()
                 ui->pushButtonPEImport->setEnabled(pe.isImportPresent());
                 ui->pushButtonPEResource->setEnabled(pe.isResourcesPresent());
                 ui->pushButtonPENET->setEnabled(pe.isNETPresent());
+                ui->pushButtonPETLS->setEnabled(pe.isTLSPresent());
 
                 ui->pushButtonPEOverlay->setEnabled(pe.isOverlayPresent());
             }
@@ -441,4 +444,14 @@ void FormatsWidget::on_pushButtonMSDOSOverlay_clicked()
 void FormatsWidget::on_pushButtonMSDOS_clicked()
 {
     showMSDOS(SMSDOS::TYPE_DOS_HEADER);
+}
+
+void FormatsWidget::on_pushButtonPETLS_clicked()
+{
+    showPE(SPE::TYPE_TLS);
+}
+
+void FormatsWidget::on_pushButtonELF_clicked()
+{
+    showELF(SELF::TYPE_Elf_Ehdr);
 }

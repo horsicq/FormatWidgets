@@ -78,6 +78,10 @@ private slots:
     void on_pushButtonMSDOSOverlay_clicked();
     void on_pushButtonMSDOS_clicked();
 
+    void on_pushButtonPETLS_clicked();
+
+    void on_pushButtonELF_clicked();
+
 private:
     Ui::FormatsWidget *ui;
     QString sFileName;
