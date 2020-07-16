@@ -50,7 +50,7 @@ InvWidget::~InvWidget()
 
 void InvWidget::setOffsetAndSize(XBinary *pBinary, qint64 nOffset, qint64 nSize)
 {
-    if(pBinary->isOffsetValid(nOffset))
+    if(pBinary->isAddressPhysical(nOffset))
     {
         _setEnabled(true);
 
@@ -68,11 +68,13 @@ void InvWidget::setOffsetAndSize(XBinary *pBinary, qint64 nOffset, qint64 nSize)
 
 void InvWidget::setAddressAndSize(XBinary *pBinary, qint64 nAddress, qint64 nSize)
 {
-    if(pBinary->isAddressValid(nAddress))
+    XBinary::_MEMORY_MAP memoryMap=pBinary->getMemoryMap();
+
+    if(pBinary->isAddressPhysical(&memoryMap,nAddress))
     {
         _setEnabled(true);
 
-        this->nOffset=pBinary->addressToOffset(nAddress);
+        this->nOffset=pBinary->addressToOffset(&memoryMap,nAddress);
         this->nSize=nSize;
     }
     else
