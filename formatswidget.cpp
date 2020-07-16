@@ -279,7 +279,6 @@ void FormatsWidget::on_pushButtonPENET_clicked()
 
 void FormatsWidget::showMSDOS(SMSDOS::TYPE type)
 {
-    // TODO type
     QFile file;
     file.setFileName(sFileName);
 
@@ -291,6 +290,8 @@ void FormatsWidget::showMSDOS(SMSDOS::TYPE type)
         {
             options.sBackupFileName=sBackupFilename;
         }
+
+        options.nStartType=type;
 
         DialogMSDOS dialogMSDOS(this);
 
@@ -304,17 +305,58 @@ void FormatsWidget::showMSDOS(SMSDOS::TYPE type)
 
 void FormatsWidget::showLE(SLE::TYPE type)
 {
+    QFile file;
+    file.setFileName(sFileName);
 
+    if(XBinary::tryToOpen(&file))
+    {
+        FW_DEF::OPTIONS options={};
+
+        if(sBackupFilename!="")
+        {
+            options.sBackupFileName=sBackupFilename;
+        }
+
+        options.nStartType=type;
+
+        DialogLE dialogLE(this);
+
+        dialogLE.setData(&file,&options);
+
+        dialogLE.exec();
+
+        file.close();
+    }
 }
 
 void FormatsWidget::showNE(SNE::TYPE type)
 {
+    QFile file;
+    file.setFileName(sFileName);
 
+    if(XBinary::tryToOpen(&file))
+    {
+        FW_DEF::OPTIONS options={};
+
+        if(sBackupFilename!="")
+        {
+            options.sBackupFileName=sBackupFilename;
+        }
+
+        options.nStartType=type;
+
+        DialogNE dialogNE(this);
+
+        dialogNE.setData(&file,&options);
+
+        dialogNE.exec();
+
+        file.close();
+    }
 }
 
 void FormatsWidget::showPE(SPE::TYPE type)
 {
-    // TODO type
     QFile file;
     file.setFileName(sFileName);
 
@@ -341,12 +383,54 @@ void FormatsWidget::showPE(SPE::TYPE type)
 
 void FormatsWidget::showELF(SELF::TYPE type)
 {
+    QFile file;
+    file.setFileName(sFileName);
 
+    if(XBinary::tryToOpen(&file))
+    {
+        FW_DEF::OPTIONS options={};
+
+        if(sBackupFilename!="")
+        {
+            options.sBackupFileName=sBackupFilename;
+        }
+
+        options.nStartType=type;
+
+        DialogELF dialogELF(this);
+
+        dialogELF.setData(&file,&options);
+
+        dialogELF.exec();
+
+        file.close();
+    }
 }
 
 void FormatsWidget::showMACH(SMACH::TYPE type)
 {
+    QFile file;
+    file.setFileName(sFileName);
 
+    if(XBinary::tryToOpen(&file))
+    {
+        FW_DEF::OPTIONS options={};
+
+        if(sBackupFilename!="")
+        {
+            options.sBackupFileName=sBackupFilename;
+        }
+
+        options.nStartType=type;
+
+        DialogMACH dialogMACH(this);
+
+        dialogMACH.setData(&file,&options);
+
+        dialogMACH.exec();
+
+        file.close();
+    }
 }
 
 void FormatsWidget::on_pushButtonMSDOSOverlay_clicked()
@@ -356,5 +440,5 @@ void FormatsWidget::on_pushButtonMSDOSOverlay_clicked()
 
 void FormatsWidget::on_pushButtonMSDOS_clicked()
 {
-    // TODO
+    showMSDOS(SMSDOS::TYPE_DOS_HEADER);
 }

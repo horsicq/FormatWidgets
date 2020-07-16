@@ -95,7 +95,7 @@ void MSDOSWidget::reload()
 
         ui->treeWidgetNavi->expandAll();
 
-        ui->treeWidgetNavi->setCurrentItem(ui->treeWidgetNavi->topLevelItem(SMSDOS::TYPE_DOS_HEADER));
+        setTreeTopItem(ui->treeWidgetNavi,getOptions()->nStartType);
     }
 }
 
