@@ -44,6 +44,8 @@ class FormatsWidget : public QWidget
     {
         TABINFO_BINARY=0,
         TABINFO_COM,
+        TABINFO_NE,
+        TABINFO_LE,
         TABINFO_MSDOS,
         TABINFO_PE,
         TABINFO_ELF,
@@ -65,6 +67,7 @@ public:
 
 private slots:
     void on_comboBoxType_currentIndexChanged(int index);
+    void on_comboBoxScanEngine_currentIndexChanged(int index);
     void reload();
     void on_pushButtonDisasm_clicked();
     void on_pushButtonMemoryMap_clicked();
@@ -75,20 +78,17 @@ private slots:
     void on_pushButtonPENET_clicked();
     void on_pushButtonPE_clicked();
     void on_pushButtonPESections_clicked();
+    void on_pushButtonMSDOSOverlay_clicked();
+    void on_pushButtonMSDOS_clicked();
+    void on_pushButtonPETLS_clicked();
+    void on_pushButtonELF_clicked();
+
     void showMSDOS(SMSDOS::TYPE type);
     void showLE(SLE::TYPE type);
     void showNE(SNE::TYPE type);
     void showPE(SPE::TYPE type);
     void showELF(SELF::TYPE type);
     void showMACH(SMACH::TYPE type);
-    void on_pushButtonMSDOSOverlay_clicked();
-    void on_pushButtonMSDOS_clicked();
-
-    void on_pushButtonPETLS_clicked();
-
-    void on_pushButtonELF_clicked();
-
-    void on_comboBoxScanEngine_currentIndexChanged(int index);
 
 private:
     Ui::FormatsWidget *ui;
