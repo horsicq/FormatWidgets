@@ -90,6 +90,9 @@ private slots:
     void showELF(SELF::TYPE type);
     void showMACH(SMACH::TYPE type);
 
+    void on_pushButtonLE_clicked();
+    void on_pushButtonNE_clicked();
+
 private:
     Ui::FormatsWidget *ui;
     QString sFileName;

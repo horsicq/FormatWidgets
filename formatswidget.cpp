@@ -465,3 +465,13 @@ void FormatsWidget::on_comboBoxScanEngine_currentIndexChanged(int index)
 {
     ui->stackedWidgetScan->setCurrentIndex(index);
 }
+
+void FormatsWidget::on_pushButtonLE_clicked()
+{
+    // TODO
+}
+
+void FormatsWidget::on_pushButtonNE_clicked()
+{
+    // TODO
+}
