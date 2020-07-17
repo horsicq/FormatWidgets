@@ -468,10 +468,10 @@ void FormatsWidget::on_comboBoxScanEngine_currentIndexChanged(int index)
 
 void FormatsWidget::on_pushButtonLE_clicked()
 {
-    // TODO
+    showLE(SLE::TYPE_VXD_HEADER);
 }
 
 void FormatsWidget::on_pushButtonNE_clicked()
 {
-    // TODO
+    showNE(SNE::TYPE_OS2_HEADER);
 }

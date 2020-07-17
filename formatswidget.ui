@@ -179,12 +179,40 @@
       <enum>QFrame::NoFrame</enum>
      </property>
      <property name="currentIndex">
-      <number>3</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="pageBinary"/>
      <widget class="QWidget" name="pageCOM"/>
-     <widget class="QWidget" name="pageNE"/>
-     <widget class="QWidget" name="pageLE"/>
+     <widget class="QWidget" name="pageNE">
+      <widget class="QPushButton" name="pushButtonNE">
+       <property name="geometry">
+        <rect>
+         <x>570</x>
+         <y>20</y>
+         <width>75</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string notr="true">NE</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="pageLE">
+      <widget class="QPushButton" name="pushButtonLE">
+       <property name="geometry">
+        <rect>
+         <x>570</x>
+         <y>20</y>
+         <width>75</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string notr="true">LE</string>
+       </property>
+      </widget>
+     </widget>
      <widget class="QWidget" name="pageMSDOS">
       <layout class="QVBoxLayout" name="verticalLayout_4">
        <property name="leftMargin">
