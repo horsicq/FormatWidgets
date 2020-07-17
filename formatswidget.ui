@@ -570,7 +570,7 @@
       <widget class="QComboBox" name="comboBoxScanEngine">
        <property name="minimumSize">
         <size>
-         <width>150</width>
+         <width>200</width>
          <height>0</height>
         </size>
        </property>

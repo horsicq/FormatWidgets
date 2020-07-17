@@ -27,7 +27,12 @@ FormatsWidget::FormatsWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->stackedWidgetMain->setCurrentIndex(TAB_BINARY);
+    ui->stackedWidgetMain->setCurrentIndex(TABINFO_BINARY);
+
+    const QSignalBlocker blocker(ui->comboBoxScanEngine);
+
+    ui->comboBoxScanEngine->addItem(QString("Detect It Easy(DiE)"),TABSE_DIE);
+    ui->comboBoxScanEngine->addItem(QString("Nauz File Detector(NFD)"),TABSE_NFD);
 }
 
 void FormatsWidget::setFileName(QString sFileName, bool bScan)
@@ -101,15 +106,15 @@ void FormatsWidget::reload()
     {
         if(ft==XBinary::FT_BINARY)
         {
-            ui->stackedWidgetMain->setCurrentIndex(TAB_BINARY);
+            ui->stackedWidgetMain->setCurrentIndex(TABINFO_BINARY);
         }
         else if(ft==XBinary::FT_COM)
         {
-            ui->stackedWidgetMain->setCurrentIndex(TAB_COM);
+            ui->stackedWidgetMain->setCurrentIndex(TABINFO_COM);
         }
         else if(ft==XBinary::FT_MSDOS)
         {
-            ui->stackedWidgetMain->setCurrentIndex(TAB_MSDOS);
+            ui->stackedWidgetMain->setCurrentIndex(TABINFO_MSDOS);
 
             XMSDOS msdos(&file);
 
@@ -123,7 +128,7 @@ void FormatsWidget::reload()
         }
         else if((ft==XBinary::FT_PE32)||(ft==XBinary::FT_PE64))
         {
-            ui->stackedWidgetMain->setCurrentIndex(TAB_PE);
+            ui->stackedWidgetMain->setCurrentIndex(TABINFO_PE);
 
             XPE pe(&file);
 
@@ -152,7 +157,7 @@ void FormatsWidget::reload()
         }
         else if((ft==XBinary::FT_ELF32)||(ft==XBinary::FT_ELF64))
         {
-            ui->stackedWidgetMain->setCurrentIndex(TAB_ELF);
+            ui->stackedWidgetMain->setCurrentIndex(TABINFO_ELF);
 
             XELF elf(&file);
 
@@ -172,7 +177,7 @@ void FormatsWidget::reload()
         }
         else if((ft==XBinary::FT_MACH32)||(ft==XBinary::FT_MACH64))
         {
-            ui->stackedWidgetMain->setCurrentIndex(TAB_MACH);
+            ui->stackedWidgetMain->setCurrentIndex(TABINFO_MACH);
 
             XMACH mach(&file);
 
@@ -454,4 +459,9 @@ void FormatsWidget::on_pushButtonPETLS_clicked()
 void FormatsWidget::on_pushButtonELF_clicked()
 {
     showELF(SELF::TYPE_Elf_Ehdr);
+}
+
+void FormatsWidget::on_comboBoxScanEngine_currentIndexChanged(int index)
+{
+    ui->stackedWidgetScan->setCurrentIndex(index);
 }

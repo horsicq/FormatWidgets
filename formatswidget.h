@@ -40,14 +40,20 @@ class FormatsWidget : public QWidget
 {
     Q_OBJECT
 
-    enum TAB
+    enum TABINFO
     {
-        TAB_BINARY=0,
-        TAB_COM,
-        TAB_MSDOS,
-        TAB_PE,
-        TAB_ELF,
-        TAB_MACH
+        TABINFO_BINARY=0,
+        TABINFO_COM,
+        TABINFO_MSDOS,
+        TABINFO_PE,
+        TABINFO_ELF,
+        TABINFO_MACH
+    };
+
+    enum TABSE
+    {
+        TABSE_DIE=0,
+        TABSE_NFD
     };
 
 public:
@@ -81,6 +87,8 @@ private slots:
     void on_pushButtonPETLS_clicked();
 
     void on_pushButtonELF_clicked();
+
+    void on_comboBoxScanEngine_currentIndexChanged(int index);
 
 private:
     Ui::FormatsWidget *ui;
