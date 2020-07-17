@@ -82,6 +82,8 @@ private slots:
     void on_pushButtonMSDOS_clicked();
     void on_pushButtonPETLS_clicked();
     void on_pushButtonELF_clicked();
+    void on_pushButtonLE_clicked();
+    void on_pushButtonNE_clicked();
 
     void showMSDOS(SMSDOS::TYPE type);
     void showLE(SLE::TYPE type);
@@ -89,9 +91,6 @@ private slots:
     void showPE(SPE::TYPE type);
     void showELF(SELF::TYPE type);
     void showMACH(SMACH::TYPE type);
-
-    void on_pushButtonLE_clicked();
-    void on_pushButtonNE_clicked();
 
 private:
     Ui::FormatsWidget *ui;
