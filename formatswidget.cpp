@@ -112,23 +112,6 @@ void FormatsWidget::reload()
         {
             ui->stackedWidgetMain->setCurrentIndex(TABINFO_COM);
         }
-        else if(ft==XBinary::FT_LE)
-        {
-            ui->stackedWidgetMain->setCurrentIndex(TABINFO_LE);
-        }
-        else if(ft==XBinary::FT_NE)
-        {
-            ui->stackedWidgetMain->setCurrentIndex(TABINFO_NE);
-
-            XNE ne(&file);
-
-            if(ne.isValid())
-            {
-                ui->lineEditEntryPoint->setValue((quint16)ne.getEntryPointAddress());
-                ui->lineEditBaseAddress->setValue((quint16)ne.getBaseAddress());
-
-            }
-        }
         else if(ft==XBinary::FT_MSDOS)
         {
             ui->stackedWidgetMain->setCurrentIndex(TABINFO_MSDOS);
@@ -141,6 +124,30 @@ void FormatsWidget::reload()
                 ui->lineEditBaseAddress->setValue((quint16)msdos.getBaseAddress());
 
                 ui->pushButtonMSDOSOverlay->setEnabled(msdos.isOverlayPresent());
+            }
+        }
+        else if(ft==XBinary::FT_LE)
+        {
+            ui->stackedWidgetMain->setCurrentIndex(TABINFO_LE);
+
+            XLE le(&file);
+
+            if(le.isValid())
+            {
+                ui->lineEditEntryPoint->setValue((quint32)le.getEntryPointAddress());
+                ui->lineEditBaseAddress->setValue((quint32)le.getBaseAddress());
+            }
+        }
+        else if(ft==XBinary::FT_NE)
+        {
+            ui->stackedWidgetMain->setCurrentIndex(TABINFO_NE);
+
+            XNE ne(&file);
+
+            if(ne.isValid())
+            {
+                ui->lineEditEntryPoint->setValue((quint32)ne.getEntryPointAddress());
+                ui->lineEditBaseAddress->setValue((quint32)ne.getBaseAddress());
             }
         }
         else if((ft==XBinary::FT_PE32)||(ft==XBinary::FT_PE64))
