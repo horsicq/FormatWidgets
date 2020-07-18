@@ -69,6 +69,7 @@ private slots:
     void on_comboBoxType_currentIndexChanged(int index);
     void on_comboBoxScanEngine_currentIndexChanged(int index);
     void reload();
+    void scan();
     void on_pushButtonDisasm_clicked();
     void on_pushButtonMemoryMap_clicked();
     void on_pushButtonPEExport_clicked();

@@ -233,15 +233,24 @@ void FormatsWidget::reload()
 
         file.close();
 
-        // TODO index
-        ui->pageScanDIE->setData(sFileName,bScan);
-        // TODO NFD
-        // TODO YARA
+        scan();
     }
     else
     {
         // TODO Error message
     }
+}
+
+void FormatsWidget::scan()
+{
+    int nIndex=ui->comboBoxScanEngine->currentIndex();
+
+    if(nIndex==TABSE_DIE)
+    {
+        ui->pageScanDIE->setData(sFileName,bScan);
+    }
+    // TODO NFD
+    // TODO YARA
 }
 
 void FormatsWidget::on_pushButtonDisasm_clicked()
@@ -489,6 +498,8 @@ void FormatsWidget::on_pushButtonELF_clicked()
 void FormatsWidget::on_comboBoxScanEngine_currentIndexChanged(int index)
 {
     ui->stackedWidgetScan->setCurrentIndex(index);
+
+    scan();
 }
 
 void FormatsWidget::on_pushButtonLE_clicked()
