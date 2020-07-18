@@ -119,6 +119,15 @@ void FormatsWidget::reload()
         else if(ft==XBinary::FT_NE)
         {
             ui->stackedWidgetMain->setCurrentIndex(TABINFO_NE);
+
+            XNE ne(&file);
+
+            if(ne.isValid())
+            {
+                ui->lineEditEntryPoint->setValue((quint16)ne.getEntryPointAddress());
+                ui->lineEditBaseAddress->setValue((quint16)ne.getBaseAddress());
+
+            }
         }
         else if(ft==XBinary::FT_MSDOS)
         {
