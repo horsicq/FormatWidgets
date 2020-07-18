@@ -104,6 +104,7 @@ void FormatsWidget::reload()
 
     if(file.open(QIODevice::ReadOnly))
     {
+        // TODO LE, NE
         if(ft==XBinary::FT_BINARY)
         {
             ui->stackedWidgetMain->setCurrentIndex(TABINFO_BINARY);
