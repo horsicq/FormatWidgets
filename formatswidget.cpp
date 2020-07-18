@@ -104,7 +104,6 @@ void FormatsWidget::reload()
 
     if(file.open(QIODevice::ReadOnly))
     {
-        // TODO LE, NE
         if(ft==XBinary::FT_BINARY)
         {
             ui->stackedWidgetMain->setCurrentIndex(TABINFO_BINARY);
@@ -112,6 +111,14 @@ void FormatsWidget::reload()
         else if(ft==XBinary::FT_COM)
         {
             ui->stackedWidgetMain->setCurrentIndex(TABINFO_COM);
+        }
+        else if(ft==XBinary::FT_LE)
+        {
+            ui->stackedWidgetMain->setCurrentIndex(TABINFO_LE);
+        }
+        else if(ft==XBinary::FT_NE)
+        {
+            ui->stackedWidgetMain->setCurrentIndex(TABINFO_NE);
         }
         else if(ft==XBinary::FT_MSDOS)
         {
