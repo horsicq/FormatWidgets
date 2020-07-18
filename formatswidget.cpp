@@ -212,6 +212,7 @@ void FormatsWidget::reload()
         // TODO index
         ui->pageScanDIE->setData(sFileName,bScan);
         // TODO NFD
+        // TODO YARA
     }
     else
     {
