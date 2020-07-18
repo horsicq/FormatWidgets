@@ -249,7 +249,10 @@ void FormatsWidget::scan()
     {
         ui->pageScanDIE->setData(sFileName,bScan);
     }
-    // TODO NFD
+    else if(nIndex==TABSE_NFD)
+    {
+        // TODO
+    }
     // TODO YARA
 }
 
