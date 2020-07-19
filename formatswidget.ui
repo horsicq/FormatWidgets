@@ -179,7 +179,7 @@
       <enum>QFrame::NoFrame</enum>
      </property>
      <property name="currentIndex">
-      <number>7</number>
+      <number>5</number>
      </property>
      <widget class="QWidget" name="pageBinary"/>
      <widget class="QWidget" name="pageCOM"/>
@@ -416,7 +416,7 @@
          <item>
           <widget class="QPushButton" name="pushButtonPETLS">
            <property name="text">
-            <string>TLS</string>
+            <string notr="true">TLS</string>
            </property>
           </widget>
          </item>
