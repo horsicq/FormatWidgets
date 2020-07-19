@@ -52,6 +52,6 @@ FORMS += \
 
 !contains(XCONFIG, xdisasm) {
     XCONFIG += xdisasm
-    include(../../_mylibs/XDisasm/xdisasm.pri)
+    include($$PWD/../XDisasm/xdisasm.pri)
 }
 
