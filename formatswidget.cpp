@@ -27,12 +27,13 @@ FormatsWidget::FormatsWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->stackedWidgetMain->setCurrentIndex(TABINFO_BINARY);
-
     const QSignalBlocker blocker(ui->comboBoxScanEngine);
 
     ui->comboBoxScanEngine->addItem(QString("Detect It Easy(DiE)"),TABSE_DIE);
     ui->comboBoxScanEngine->addItem(QString("Nauz File Detector(NFD)"),TABSE_NFD);
+
+    ui->stackedWidgetMain->setCurrentIndex(TABINFO_BINARY);
+    ui->stackedWidgetScan->setCurrentIndex(TABSE_DIE);
 }
 
 void FormatsWidget::setFileName(QString sFileName, bool bScan)
