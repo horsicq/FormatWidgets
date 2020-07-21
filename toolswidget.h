@@ -50,7 +50,7 @@ signals:
     void editState(bool bState);
 
 private slots:
-    void on_tabWidgetMain_currentChanged(int index);
+    void on_tabWidgetMain_currentChanged(int nIndex);
 
 private:
     Ui::ToolsWidget *ui;

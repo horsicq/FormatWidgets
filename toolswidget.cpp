@@ -95,8 +95,8 @@ ToolsWidget::~ToolsWidget()
     delete ui;
 }
 
-void ToolsWidget::on_tabWidgetMain_currentChanged(int index)
+void ToolsWidget::on_tabWidgetMain_currentChanged(int nIndex)
 {
-    Q_UNUSED(index)
+    Q_UNUSED(nIndex)
     reload();
 }
