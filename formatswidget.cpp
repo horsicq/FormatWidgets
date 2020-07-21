@@ -89,9 +89,9 @@ void FormatsWidget::setDIEDatabase(QString sDatabasePath)
     ui->pageScanDIE->setDatabase(sDatabasePath);
 }
 
-void FormatsWidget::on_comboBoxType_currentIndexChanged(int index)
+void FormatsWidget::on_comboBoxType_currentIndexChanged(int nIndex)
 {
-    Q_UNUSED(index)
+    Q_UNUSED(nIndex)
 
     reload();
 }
@@ -499,9 +499,9 @@ void FormatsWidget::on_pushButtonELF_clicked()
     showELF(SELF::TYPE_Elf_Ehdr);
 }
 
-void FormatsWidget::on_comboBoxScanEngine_currentIndexChanged(int index)
+void FormatsWidget::on_comboBoxScanEngine_currentIndexChanged(int nIndex)
 {
-    ui->stackedWidgetScan->setCurrentIndex(index);
+    ui->stackedWidgetScan->setCurrentIndex(nIndex);
 
     scan();
 }
