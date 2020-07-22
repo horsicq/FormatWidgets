@@ -27,11 +27,18 @@ PEWidget::PEWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
+#ifndef USE_EXTRABUTTONS
 #ifdef USE_DISASM
     pDisasmWidget=new XDisasmWidget(this);
     ui->layot_Disasm->addWidget(pDisasmWidget);
 #else
     ui->pushButtonDisasm->hide();
+#endif
+    ui->pushButtonHex->hide();
+    ui->pushButtonEntropy->hide();
+    ui->pushButtonStrings->hide();
+    ui->pushButtonMemoryMap->hide();
+    ui->pushButtonHeuristicScan->hide();
 #endif
 }
 

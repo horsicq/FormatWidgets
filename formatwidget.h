@@ -119,7 +119,7 @@ public:
     virtual void blockSignals(bool bState)=0;
     virtual void adjustHeaderTable(int type,QTableWidget *pTableWidget);
     virtual void adjustListTable(int type,QTableWidget *pTableWidget);
-    virtual QString typeIdToString(int type);
+    virtual QString typeIdToString(int nType);
     bool isEdited();
 
     QPushButton *createHexButton(QTableWidget *pTableWidget,int type, int nData);

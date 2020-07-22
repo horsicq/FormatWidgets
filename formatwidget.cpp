@@ -129,8 +129,10 @@ void FormatWidget::adjustListTable(int type, QTableWidget *pTableWidget)
     Q_UNUSED(pTableWidget)
 }
 
-QString FormatWidget::typeIdToString(int type)
+QString FormatWidget::typeIdToString(int nType)
 {
+    Q_UNUSED(nType)
+
     return "";
 }
 

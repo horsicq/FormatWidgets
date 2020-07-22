@@ -81,3 +81,7 @@ contains(XCONFIG, use_disasm) {
         include($$PWD/../XCapstone/xcapstone.pri)
     }
 }
+
+contains(XCONFIG, use_extrabuttons) {
+    DEFINES += USE_EXTRABUTTONS
+}

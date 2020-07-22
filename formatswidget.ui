@@ -712,7 +712,7 @@
       </size>
      </property>
      <widget class="DIE_Widget" name="pageScanDIE"/>
-     <widget class="QWidget" name="pageScanNFD"/>
+     <widget class="NFD_Widget" name="pageScanNFD"/>
     </widget>
    </item>
   </layout>
@@ -727,6 +727,12 @@
    <class>DIE_Widget</class>
    <extends>QWidget</extends>
    <header>die_widget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>NFD_Widget</class>
+   <extends>QWidget</extends>
+   <header>nfd_widget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
