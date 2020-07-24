@@ -32,7 +32,7 @@ enum TYPE
     TYPE_STRINGS,
     TYPE_MEMORYMAP,
     TYPE_ENTROPY,
-    TYPE_DETECT,
+    TYPE_HEURISTICSCAN,
     TYPE_mach_header,
     TYPE_mach_commands,
     TYPE_mach_segments,

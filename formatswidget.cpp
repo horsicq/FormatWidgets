@@ -323,6 +323,11 @@ void FormatsWidget::on_pushButtonPENET_clicked()
     showPE(SPE::TYPE_NETHEADER);
 }
 
+void FormatsWidget::on_pushButtonMACH_clicked()
+{
+    showMACH(SMACH::TYPE_mach_header);
+}
+
 void FormatsWidget::showMSDOS(SMSDOS::TYPE type)
 {
     QFile file;
@@ -515,3 +520,5 @@ void FormatsWidget::on_pushButtonNE_clicked()
 {
     showNE(SNE::TYPE_OS2_HEADER);
 }
+
+

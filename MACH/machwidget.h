@@ -86,7 +86,9 @@ private:
 
     SubDevice *subDevice[SMACH::__TYPE_size];
 
-    bool bInit[SMACH::__TYPE_size];
+    QSet<QString> stInit;
+    qint32 nLastType;
+    QString sLastInit;
 };
 
 #endif // MACHWIDGET_H
