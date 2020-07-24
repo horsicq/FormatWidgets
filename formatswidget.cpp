@@ -265,12 +265,17 @@ void FormatsWidget::on_pushButtonDisasm_clicked()
 
     if(file.open(QIODevice::ReadOnly))
     {
-        DialogDisasm dialogDisasm(this,&file);
+        DialogDisasm dialogDisasm(this,&file); // TODO File_Type
 
         dialogDisasm.exec();
 
         file.close();
     }
+}
+
+void FormatsWidget::on_pushButtonHex_clicked()
+{
+    // TODO
 }
 
 void FormatsWidget::on_pushButtonMemoryMap_clicked()
@@ -520,5 +525,3 @@ void FormatsWidget::on_pushButtonNE_clicked()
 {
     showNE(SNE::TYPE_OS2_HEADER);
 }
-
-
