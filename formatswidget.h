@@ -71,7 +71,7 @@ private slots:
     void reload();
     void scan();
     void on_pushButtonDisasm_clicked();
-    void on_pushButtonHex_clicked();
+    void on_pushButtonHexEntryPoint_clicked();
     void on_pushButtonMemoryMap_clicked();
     void on_pushButtonPEExport_clicked();
     void on_pushButtonPEImport_clicked();

@@ -112,7 +112,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButtonHex">
+         <widget class="QPushButton" name="pushButtonHexEntryPoint">
           <property name="maximumSize">
            <size>
             <width>30</width>

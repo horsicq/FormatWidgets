@@ -677,7 +677,7 @@ void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
         pTableView->setColumnWidth(1,nSymbolWidth*12);
         pTableView->setColumnWidth(2,nSymbolWidth*12);
         pTableView->setColumnWidth(3,nSymbolWidth*6);
-        pTableView->setColumnWidth(4,nSymbolWidth*30); // TODO Check
+        pTableView->setColumnWidth(4,nSymbolWidth*50); // TODO Check
     }
     else if(type==SPE::TYPE_EXCEPTION)
     {

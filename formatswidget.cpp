@@ -273,7 +273,7 @@ void FormatsWidget::on_pushButtonDisasm_clicked()
     }
 }
 
-void FormatsWidget::on_pushButtonHex_clicked()
+void FormatsWidget::on_pushButtonHexEntryPoint_clicked()
 {
     // TODO
 }

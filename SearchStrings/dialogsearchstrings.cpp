@@ -27,6 +27,8 @@ DialogSearchStrings::DialogSearchStrings(QWidget *parent, QIODevice *pDevice, Se
 {
     ui->setupUi(this);
 
+    setWindowFlags(Qt::Window);
+
     ui->widgetSearchStrings->setData(pDevice,pOptions,bAuto);
 }
 
