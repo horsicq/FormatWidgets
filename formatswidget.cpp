@@ -509,6 +509,11 @@ void FormatsWidget::on_pushButtonELF_clicked()
     showELF(SELF::TYPE_Elf_Ehdr);
 }
 
+void FormatsWidget::on_pushButtonELFSections_clicked()
+{
+    showELF(SELF::TYPE_Elf_Shdr);
+}
+
 void FormatsWidget::on_comboBoxScanEngine_currentIndexChanged(int nIndex)
 {
     ui->stackedWidgetScan->setCurrentIndex(nIndex);
