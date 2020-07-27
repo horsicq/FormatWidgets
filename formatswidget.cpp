@@ -170,10 +170,8 @@ void FormatsWidget::reload()
                     ui->lineEditBaseAddress->setValue((quint32)pe.getBaseAddress());
                 }
 
-                quint16 nNumberOfSections=pe.getFileHeader_NumberOfSections();
-
-                ui->lineEditPESections->setValue(nNumberOfSections);
-                ui->pushButtonPESections->setEnabled(nNumberOfSections);
+                ui->lineEditPESections->setValue(pe.getFileHeader_NumberOfSections());
+                ui->pushButtonPESections->setEnabled(pe.isSectionsTablePresent());
 
                 ui->pushButtonPEExport->setEnabled(pe.isExportPresent());
                 ui->pushButtonPEImport->setEnabled(pe.isImportPresent());
