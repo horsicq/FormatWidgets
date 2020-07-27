@@ -169,7 +169,11 @@ void FormatsWidget::reload()
                     ui->lineEditEntryPoint->setValue((quint32)pe.getEntryPointAddress());
                     ui->lineEditBaseAddress->setValue((quint32)pe.getBaseAddress());
                 }
-                ui->lineEditPESections->setValue((quint16)pe.getFileHeader_NumberOfSections());
+
+                quint16 nNumberOfSections=pe.getFileHeader_NumberOfSections();
+
+                ui->lineEditPESections->setValue(nNumberOfSections);
+                ui->pushButtonPESections->setEnabled(nNumberOfSections);
 
                 ui->pushButtonPEExport->setEnabled(pe.isExportPresent());
                 ui->pushButtonPEImport->setEnabled(pe.isImportPresent());
@@ -512,6 +516,11 @@ void FormatsWidget::on_pushButtonELF_clicked()
 void FormatsWidget::on_pushButtonELFSections_clicked()
 {
     showELF(SELF::TYPE_Elf_Shdr);
+}
+
+void FormatsWidget::on_pushButtonELFPrograms_clicked()
+{
+    showELF(SELF::TYPE_Elf_Phdr);
 }
 
 void FormatsWidget::on_comboBoxScanEngine_currentIndexChanged(int nIndex)

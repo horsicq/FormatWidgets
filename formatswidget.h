@@ -85,6 +85,7 @@ private slots:
     void on_pushButtonPETLS_clicked();
     void on_pushButtonELF_clicked();
     void on_pushButtonELFSections_clicked();
+    void on_pushButtonELFPrograms_clicked();
     void on_pushButtonLE_clicked();
     void on_pushButtonNE_clicked();
     void on_pushButtonMACH_clicked();
