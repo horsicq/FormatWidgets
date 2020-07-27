@@ -196,13 +196,20 @@ void FormatsWidget::reload()
                 {
                     ui->lineEditEntryPoint->setValue((quint64)elf.getEntryPointAddress());
                     ui->lineEditBaseAddress->setValue((quint64)elf.getBaseAddress());
+                    ui->lineEditELFPrograms->setValue((quint16)elf.getHdr64_phnum());
+                    ui->lineEditELFSections->setValue((quint16)elf.getHdr64_shnum());
                 }
                 else
                 {
                     ui->lineEditEntryPoint->setValue((quint32)elf.getEntryPointAddress());
                     ui->lineEditBaseAddress->setValue((quint32)elf.getBaseAddress());
+                    ui->lineEditELFPrograms->setValue((quint16)elf.getHdr32_phnum());
+                    ui->lineEditELFSections->setValue((quint16)elf.getHdr32_shnum());
                 }
             }
+
+            ui->lineEditELFPrograms->setEnabled(elf.isProgramsTablePresent());
+            ui->lineEditELFSections->setEnabled(elf.isSectionsTablePresent());
         }
         else if((ft==XBinary::FT_MACH32)||(ft==XBinary::FT_MACH64))
         {
