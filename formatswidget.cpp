@@ -38,12 +38,12 @@ FormatsWidget::FormatsWidget(QWidget *parent) :
 
 void FormatsWidget::setFileName(QString sFileName, bool bScan)
 {
-    const QSignalBlocker blocker(ui->comboBoxType);
+    const QSignalBlocker blocker(ui->comboBoxFileType);
 
     this->sFileName=sFileName;
     this->bScan=bScan;
 
-    ui->comboBoxType->clear();
+    ui->comboBoxFileType->clear();
 
     QSet<XBinary::FT> stTypes=XBinary::getFileTypes(sFileName);
 
@@ -56,18 +56,18 @@ void FormatsWidget::setFileName(QString sFileName, bool bScan)
     for(int i=0;i<nCount;i++)
     {
         XBinary::FT ft=listFileTypes.at(i);
-        ui->comboBoxType->addItem(XBinary::fileTypeIdToString(ft),ft);
+        ui->comboBoxFileType->addItem(XBinary::fileTypeIdToString(ft),ft);
     }
 
     if(nCount)
     {
         if(listFileTypes.at(0)==XBinary::FT_BINARY)
         {
-            ui->comboBoxType->setCurrentIndex(0);
+            ui->comboBoxFileType->setCurrentIndex(0);
         }
         else
         {
-            ui->comboBoxType->setCurrentIndex(nCount-1);
+            ui->comboBoxFileType->setCurrentIndex(nCount-1);
         }
 
         reload();
@@ -89,7 +89,7 @@ void FormatsWidget::setDIEDatabase(QString sDatabasePath)
     ui->pageScanDIE->setDatabase(sDatabasePath);
 }
 
-void FormatsWidget::on_comboBoxType_currentIndexChanged(int nIndex)
+void FormatsWidget::on_comboBoxFileType_currentIndexChanged(int nIndex)
 {
     Q_UNUSED(nIndex)
 
@@ -98,7 +98,7 @@ void FormatsWidget::on_comboBoxType_currentIndexChanged(int nIndex)
 
 void FormatsWidget::reload()
 {
-    XBinary::FT ft=(XBinary::FT)ui->comboBoxType->currentData().toInt();
+    XBinary::FT ft=getCurrentFileType();
 
     QFile file;
     file.setFileName(sFileName);
@@ -527,7 +527,7 @@ void FormatsWidget::showMACH(SMACH::TYPE type)
 
 XBinary::FT FormatsWidget::getCurrentFileType()
 {
-    return (XBinary::FT)(ui->comboBoxType->currentData().toInt());
+    return (XBinary::FT)(ui->comboBoxFileType->currentData().toInt());
 }
 
 void FormatsWidget::on_pushButtonMSDOSOverlay_clicked()

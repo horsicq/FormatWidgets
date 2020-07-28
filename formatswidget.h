@@ -66,7 +66,7 @@ public:
     void setDIEDatabase(QString sDatabasePath);
 
 private slots:
-    void on_comboBoxType_currentIndexChanged(int nIndex);
+    void on_comboBoxFileType_currentIndexChanged(int nIndex);
     void on_comboBoxScanEngine_currentIndexChanged(int nIndex);
     void reload();
     void scan();
