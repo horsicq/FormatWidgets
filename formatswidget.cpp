@@ -256,11 +256,11 @@ void FormatsWidget::scan()
 
     if(nIndex==TABSE_DIE)
     {
-        ui->pageScanDIE->setData(sFileName,bScan);
+        ui->pageScanDIE->setData(sFileName,bScan,getCurrentFileType());
     }
     else if(nIndex==TABSE_NFD)
     {
-        ui->pageScanNFD->setData(sFileName,bScan);
+        ui->pageScanNFD->setData(sFileName,bScan,getCurrentFileType());
     }
     // TODO YARA
 }
