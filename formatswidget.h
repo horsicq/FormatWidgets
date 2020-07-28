@@ -89,6 +89,8 @@ private slots:
     void on_pushButtonLE_clicked();
     void on_pushButtonNE_clicked();
     void on_pushButtonMACH_clicked();
+    void on_pushButtonMACHSegments_clicked();
+    void on_pushButtonMACHSections_clicked();
 
     void showMSDOS(SMSDOS::TYPE type);
     void showLE(SLE::TYPE type);
