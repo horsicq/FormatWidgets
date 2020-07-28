@@ -251,6 +251,7 @@ void FormatsWidget::reload()
 
 void FormatsWidget::scan()
 {
+    // TODO FT
     int nIndex=ui->comboBoxScanEngine->currentIndex();
 
     if(nIndex==TABSE_DIE)
