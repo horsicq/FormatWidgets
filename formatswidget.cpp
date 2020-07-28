@@ -289,6 +289,7 @@ void FormatsWidget::on_pushButtonHexEntryPoint_clicked()
     {
         QHexView::OPTIONS hexOptions={};
         hexOptions.sBackupFileName=XBinary::getBackupName(&file);
+        hexOptions.nStartAddress=XFormats::getEntryPointOffset(getCurrentFileType(),&file);
 
         DialogHex dialogHex(this,&file,&hexOptions);
 
@@ -507,6 +508,11 @@ void FormatsWidget::showMACH(SMACH::TYPE type)
 
         file.close();
     }
+}
+
+XBinary::FT FormatsWidget::getCurrentFileType()
+{
+    return (XBinary::FT)(ui->comboBoxType->currentData().toInt());
 }
 
 void FormatsWidget::on_pushButtonMSDOSOverlay_clicked()

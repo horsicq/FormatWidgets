@@ -97,6 +97,8 @@ private slots:
     void showELF(SELF::TYPE type);
     void showMACH(SMACH::TYPE type);
 
+    XBinary::FT getCurrentFileType();
+
 private:
     Ui::FormatsWidget *ui;
     QString sFileName;
