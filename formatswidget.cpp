@@ -310,7 +310,7 @@ void FormatsWidget::on_pushButtonMemoryMap_clicked()
 
     if(file.open(QIODevice::ReadOnly))
     {
-        DialogMemoryMap dialogMemoryMap(this,&file);
+        DialogMemoryMap dialogMemoryMap(this,&file,getCurrentFileType());
 
         dialogMemoryMap.exec();
 
