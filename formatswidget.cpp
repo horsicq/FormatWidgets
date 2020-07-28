@@ -282,7 +282,20 @@ void FormatsWidget::on_pushButtonDisasm_clicked()
 
 void FormatsWidget::on_pushButtonHexEntryPoint_clicked()
 {
-    // TODO
+    QFile file;
+    file.setFileName(sFileName);
+
+    if(XBinary::tryToOpen(&file))
+    {
+        QHexView::OPTIONS hexOptions={};
+        hexOptions.sBackupFileName=XBinary::getBackupName(&file);
+
+        DialogHex dialogHex(this,&file,&hexOptions);
+
+        dialogHex.exec();
+
+        file.close();
+    }
 }
 
 void FormatsWidget::on_pushButtonMemoryMap_clicked()
