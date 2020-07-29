@@ -370,7 +370,7 @@ void FormatsWidget::on_pushButtonPEOverlay_clicked()
 
 void FormatsWidget::on_pushButtonPE_clicked()
 {
-    showPE(SPE::TYPE_IMAGE_NT_HEADERS);
+    showPE(SPE::TYPE_IMAGE_FILE_HEADER);
 }
 
 void FormatsWidget::on_pushButtonPESections_clicked()
