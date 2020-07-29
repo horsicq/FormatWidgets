@@ -132,7 +132,7 @@ void PEWidget::reload()
 
         if(pe.isResourcesPresent())
         {
-            QTreeWidgetItem *pResources=createNewItem(SPE::TYPE_RESOURCE,"Resources");
+            QTreeWidgetItem *pResources=createNewItem(SPE::TYPE_RESOURCES,"Resources");
 
             ui->treeWidgetNavi->addTopLevelItem(pResources);
 
@@ -1229,15 +1229,15 @@ void PEWidget::reloadData()
                 }
             }
         }
-        else if(nType==SPE::TYPE_RESOURCE)
+        else if(nType==SPE::TYPE_RESOURCES)
         {
             if(!stInit.contains(sInit))
             {
-                createListTable(SPE::TYPE_RESOURCE,ui->tableWidget_Resources,N_IMAGE_RESOURCES::records,lineEdit_Resources,N_IMAGE_RESOURCES::__data_size);
+                createListTable(SPE::TYPE_RESOURCES,ui->tableWidget_Resources,N_IMAGE_RESOURCES::records,lineEdit_Resources,N_IMAGE_RESOURCES::__data_size);
 
-                PEProcessData peProcessData(SPE::TYPE_RESOURCE,&tvModel[SPE::TYPE_RESOURCE],&pe,0,0,0);
+                PEProcessData peProcessData(SPE::TYPE_RESOURCES,&tvModel[SPE::TYPE_RESOURCES],&pe,0,0,0);
 
-                ajustTreeView(&peProcessData,&tvModel[SPE::TYPE_RESOURCE],ui->treeView_Resources);
+                ajustTreeView(&peProcessData,&tvModel[SPE::TYPE_RESOURCES],ui->treeView_Resources);
 
                 connect(ui->treeView_Resources->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTreeView_Resources_currentRowChanged(QModelIndex,QModelIndex)));
             }
@@ -2220,7 +2220,7 @@ void PEWidget::onTreeView_Resources_currentRowChanged(const QModelIndex &current
         lineEdit_Resources[N_IMAGE_RESOURCES::OFFSET]->setValue((quint32)nOffset);
         lineEdit_Resources[N_IMAGE_RESOURCES::SIZE]->setValue((quint32)nSize);
 
-        loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_RESOURCE],ui->widgetHex_Resources);
+        loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_RESOURCES],ui->widgetHex_Resources);
     }
 }
 

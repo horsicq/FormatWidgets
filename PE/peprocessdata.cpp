@@ -495,7 +495,7 @@ void PEProcessData::_process()
             incValue();
         }
     }
-    else if(type==SPE::TYPE_RESOURCE)
+    else if(type==SPE::TYPE_RESOURCES)
     {
         XPE::RESOURCE_HEADER rh=pPE->getResourceHeader();
 

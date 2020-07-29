@@ -107,6 +107,39 @@ void FormatsWidget::reload()
     {
         if(ft==XBinary::FT_BINARY)
         {
+            ui->groupBoxEntryPoint->hide();
+            ui->groupBoxBaseAddress->hide();
+        }
+        else
+        {
+            ui->groupBoxEntryPoint->show();
+            ui->groupBoxBaseAddress->show();
+        }
+
+        XBinary::_MEMORY_MAP memoryMap=XFormats::getMemoryMap(ft,&file);
+
+        if(memoryMap.mode==XBinary::MODE_16)
+        {
+            ui->lineEditBaseAddress->setValue((quint16)memoryMap.nBaseAddress);
+        }
+        else if((memoryMap.mode==XBinary::MODE_16SEG)||(memoryMap.mode==XBinary::MODE_32))
+        {
+            ui->lineEditBaseAddress->setValue((quint32)memoryMap.nBaseAddress);
+        }
+        else if(memoryMap.mode==XBinary::MODE_64)
+        {
+            ui->lineEditBaseAddress->setValue((quint64)memoryMap.nBaseAddress);
+        }
+
+        ui->labelEndianness->setText(XBinary::endiannessToString(memoryMap.bIsBigEndian));
+        ui->labelArch->setText(memoryMap.sArch);
+        ui->labelMode->setText(XBinary::modeIdToString(memoryMap.mode));
+        ui->labelType->setText(memoryMap.sType);
+
+        ui->pushButtonDisasm->setEnabled(XBinary::isX86asm(memoryMap.sArch));
+
+        if(ft==XBinary::FT_BINARY)
+        {
             ui->stackedWidgetMain->setCurrentIndex(TABINFO_BINARY);
         }
         else if(ft==XBinary::FT_COM)
@@ -122,7 +155,6 @@ void FormatsWidget::reload()
             if(msdos.isValid())
             {
                 ui->lineEditEntryPoint->setValue((quint16)msdos.getEntryPointAddress());
-                ui->lineEditBaseAddress->setValue((quint16)msdos.getBaseAddress());
 
                 ui->pushButtonMSDOSOverlay->setEnabled(msdos.isOverlayPresent());
             }
@@ -136,7 +168,6 @@ void FormatsWidget::reload()
             if(le.isValid())
             {
                 ui->lineEditEntryPoint->setValue((quint32)le.getEntryPointAddress());
-                ui->lineEditBaseAddress->setValue((quint32)le.getBaseAddress());
             }
         }
         else if(ft==XBinary::FT_NE)
@@ -148,7 +179,6 @@ void FormatsWidget::reload()
             if(ne.isValid())
             {
                 ui->lineEditEntryPoint->setValue((quint32)ne.getEntryPointAddress());
-                ui->lineEditBaseAddress->setValue((quint32)ne.getBaseAddress());
             }
         }
         else if((ft==XBinary::FT_PE32)||(ft==XBinary::FT_PE64))
@@ -162,12 +192,10 @@ void FormatsWidget::reload()
                 if(pe.is64())
                 {
                     ui->lineEditEntryPoint->setValue((quint64)pe.getEntryPointAddress());
-                    ui->lineEditBaseAddress->setValue((quint64)pe.getBaseAddress());
                 }
                 else
                 {
                     ui->lineEditEntryPoint->setValue((quint32)pe.getEntryPointAddress());
-                    ui->lineEditBaseAddress->setValue((quint32)pe.getBaseAddress());
                 }
 
                 ui->lineEditPESections->setValue(pe.getFileHeader_NumberOfSections());
@@ -175,7 +203,7 @@ void FormatsWidget::reload()
 
                 ui->pushButtonPEExport->setEnabled(pe.isExportPresent());
                 ui->pushButtonPEImport->setEnabled(pe.isImportPresent());
-                ui->pushButtonPEResource->setEnabled(pe.isResourcesPresent());
+                ui->pushButtonPEResources->setEnabled(pe.isResourcesPresent());
                 ui->pushButtonPENET->setEnabled(pe.isNETPresent());
                 ui->pushButtonPETLS->setEnabled(pe.isTLSPresent());
 
@@ -193,12 +221,10 @@ void FormatsWidget::reload()
                 if(elf.is64())
                 {
                     ui->lineEditEntryPoint->setValue((quint64)elf.getEntryPointAddress());
-                    ui->lineEditBaseAddress->setValue((quint64)elf.getBaseAddress());
                 }
                 else
                 {
                     ui->lineEditEntryPoint->setValue((quint32)elf.getEntryPointAddress());
-                    ui->lineEditBaseAddress->setValue((quint32)elf.getBaseAddress());
                 }
             }
 
@@ -218,25 +244,12 @@ void FormatsWidget::reload()
                 if(mach.is64())
                 {
                     ui->lineEditEntryPoint->setValue((quint64)mach.getEntryPointAddress());
-                    ui->lineEditBaseAddress->setValue((quint64)mach.getBaseAddress());
                 }
                 else
                 {
                     ui->lineEditEntryPoint->setValue((quint32)mach.getEntryPointAddress());
-                    ui->lineEditBaseAddress->setValue((quint32)mach.getBaseAddress());
                 }
             }
-        }
-
-        if(ft==XBinary::FT_BINARY)
-        {
-            ui->groupBoxEntryPoint->hide();
-            ui->groupBoxBaseAddress->hide();
-        }
-        else
-        {
-            ui->groupBoxEntryPoint->show();
-            ui->groupBoxBaseAddress->show();
         }
 
         file.close();
@@ -329,9 +342,9 @@ void FormatsWidget::on_pushButtonPEImport_clicked()
     showPE(SPE::TYPE_IMPORT);
 }
 
-void FormatsWidget::on_pushButtonPEResource_clicked()
+void FormatsWidget::on_pushButtonPEResources_clicked()
 {
-    showPE(SPE::TYPE_RESOURCE);
+    showPE(SPE::TYPE_RESOURCES);
 }
 
 void FormatsWidget::on_pushButtonPEOverlay_clicked()

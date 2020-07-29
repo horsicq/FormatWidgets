@@ -75,7 +75,7 @@ private slots:
     void on_pushButtonMemoryMap_clicked();
     void on_pushButtonPEExport_clicked();
     void on_pushButtonPEImport_clicked();
-    void on_pushButtonPEResource_clicked();
+    void on_pushButtonPEResources_clicked();
     void on_pushButtonPEOverlay_clicked();
     void on_pushButtonPENET_clicked();
     void on_pushButtonPE_clicked();
