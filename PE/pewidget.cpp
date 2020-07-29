@@ -2030,6 +2030,8 @@ void PEWidget::onTableView_Sections_currentRowChanged(const QModelIndex &current
 
 void PEWidget::onTableView_ImportLibraries_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
 {
+    Q_UNUSED(previous)
+
     int nRow=current.row();
 
     if(nRow!=-1)
@@ -2063,6 +2065,8 @@ void PEWidget::on_tableView_Relocs_customContextMenuRequested(const QPoint &pos)
 
 void PEWidget::onTableView_Relocs_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
 {
+    Q_UNUSED(previous)
+
     int nRow=current.row();
 
     if(nRow!=-1)
@@ -2096,6 +2100,8 @@ void PEWidget::on_tableView_Debug_customContextMenuRequested(const QPoint &pos)
 
 void PEWidget::onTableView_Debug_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
 {
+    Q_UNUSED(previous)
+
     int nRow=current.row();
 
     if(nRow!=-1)
@@ -2129,6 +2135,8 @@ void PEWidget::on_tableView_Exceptions_customContextMenuRequested(const QPoint &
 
 void PEWidget::onTableView_Exceptions_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
 {
+    Q_UNUSED(previous)
+
     int nRow=current.row();
 
     if(nRow!=-1)
@@ -2162,6 +2170,8 @@ void PEWidget::on_tableView_DelayImportLibraries_customContextMenuRequested(cons
 
 void PEWidget::onTableView_DelayImportLibraries_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
 {
+    Q_UNUSED(previous)
+
     int nRow=current.row();
 
     if(nRow!=-1)
