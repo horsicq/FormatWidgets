@@ -36,7 +36,7 @@ FormatsWidget::FormatsWidget(QWidget *parent) :
     ui->stackedWidgetScan->setCurrentIndex(TABSE_DIE);
 }
 
-void FormatsWidget::setFileName(QString sFileName, bool bScan)
+void FormatsWidget::setData(QString sFileName, bool bScan)
 {
     const QSignalBlocker blocker(ui->comboBoxFileType);
 
@@ -71,6 +71,18 @@ void FormatsWidget::setFileName(QString sFileName, bool bScan)
         }
 
         reload();
+    }
+}
+
+void FormatsWidget::setScanEngine(QString sScanEngine)
+{
+    if(sScanEngine=="die")
+    {
+        ui->comboBoxScanEngine->setCurrentIndex(TABSE_DIE);
+    }
+    else if(sScanEngine=="nfd")
+    {
+        ui->comboBoxScanEngine->setCurrentIndex(TABSE_NFD);
     }
 }
 

@@ -60,7 +60,8 @@ class FormatsWidget : public QWidget
 
 public:
     explicit FormatsWidget(QWidget *parent=nullptr);
-    void setFileName(QString sFileName,bool bScan);
+    void setData(QString sFileName,bool bScan);
+    void setScanEngine(QString sScanEngine);
     void setBackupFileName(QString sBackupFileName);
     ~FormatsWidget();
     void setDIEDatabase(QString sDatabasePath);
