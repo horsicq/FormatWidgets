@@ -224,6 +224,8 @@ void FormatsWidget::reload()
                 ui->pushButtonPEVersion->setEnabled(pe.isResourceVersionPresent());
 
                 ui->pushButtonPEOverlay->setEnabled(pe.isOverlayPresent());
+
+                ui->lineEditPETimeDateStamp->setText(XBinary::valueToTimeString(pe.getFileHeader_TimeDateStamp(),XBinary::DT_TYPE_POSIX));
             }
         }
         else if((ft==XBinary::FT_ELF32)||(ft==XBinary::FT_ELF64))
@@ -296,7 +298,6 @@ void FormatsWidget::scan()
 
 void FormatsWidget::on_pushButtonDisasm_clicked()
 {
-    // Check x86
     QFile file;
     file.setFileName(sFileName);
 
