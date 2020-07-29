@@ -219,6 +219,10 @@ void FormatsWidget::reload()
                 ui->pushButtonPENET->setEnabled(pe.isNETPresent());
                 ui->pushButtonPETLS->setEnabled(pe.isTLSPresent());
 
+                ui->groupBoxPEResources->setEnabled(pe.isResourcesPresent());
+                ui->pushButtonPEManifest->setEnabled(pe.isResourceManifestPresent());
+                ui->pushButtonPEVersion->setEnabled(pe.isResourceVersionPresent());
+
                 ui->pushButtonPEOverlay->setEnabled(pe.isOverlayPresent());
             }
         }
@@ -372,6 +376,16 @@ void FormatsWidget::on_pushButtonPE_clicked()
 void FormatsWidget::on_pushButtonPESections_clicked()
 {
     showPE(SPE::TYPE_SECTIONS);
+}
+
+void FormatsWidget::on_pushButtonPEManifest_clicked()
+{
+    showPE(SPE::TYPE_RESOURCE_MANIFEST);
+}
+
+void FormatsWidget::on_pushButtonPEVersion_clicked()
+{
+    showPE(SPE::TYPE_RESOURCE_VERSION);
 }
 
 void FormatsWidget::on_pushButtonPENET_clicked()

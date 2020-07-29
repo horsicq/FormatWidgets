@@ -325,16 +325,41 @@ qint64 FormatWidget::getTableViewItemSize(QTableView *pTableView, int nRow)
     return nResult;
 }
 
-void FormatWidget::setTreeTopItem(QTreeWidget *pTree, int nID)
+bool FormatWidget::_setTreeItem(QTreeWidget *pTree, QTreeWidgetItem *pItem, int nID)
+{
+    bool bResult=false;
+
+    if(pItem->data(0,Qt::UserRole).toInt()==nID)
+    {
+        pTree->setCurrentItem(pItem);
+
+        bResult=true;
+    }
+    else
+    {
+        int nCount=pItem->childCount();
+
+        for(int i=0;i<nCount;i++)
+        {
+            if(_setTreeItem(pTree,pItem->child(i),nID))
+            {
+                bResult=true;
+                break;
+            }
+        }
+    }
+
+    return bResult;
+}
+
+void FormatWidget::setTreeItem(QTreeWidget *pTree, int nID)
 {
     int nCount=pTree->topLevelItemCount();
 
     for(int i=0;i<nCount;i++)
     {
-        if(pTree->topLevelItem(i)->data(0,Qt::UserRole).toInt()==nID)
+        if(_setTreeItem(pTree,pTree->topLevelItem(i),nID))
         {
-            pTree->setCurrentItem(pTree->topLevelItem(i));
-
             break;
         }
     }

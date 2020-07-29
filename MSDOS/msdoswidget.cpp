@@ -95,7 +95,7 @@ void MSDOSWidget::reload()
 
         ui->treeWidgetNavi->expandAll();
 
-        setTreeTopItem(ui->treeWidgetNavi,getOptions()->nStartType);
+        setTreeItem(ui->treeWidgetNavi,getOptions()->nStartType);
     }
 }
 

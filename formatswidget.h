@@ -74,13 +74,15 @@ private slots:
     void on_pushButtonDisasm_clicked();
     void on_pushButtonHexEntryPoint_clicked();
     void on_pushButtonMemoryMap_clicked();
+    void on_pushButtonPE_clicked();
     void on_pushButtonPEExport_clicked();
     void on_pushButtonPEImport_clicked();
     void on_pushButtonPEResources_clicked();
     void on_pushButtonPEOverlay_clicked();
     void on_pushButtonPENET_clicked();
-    void on_pushButtonPE_clicked();
     void on_pushButtonPESections_clicked();
+    void on_pushButtonPEManifest_clicked();
+    void on_pushButtonPEVersion_clicked();
     void on_pushButtonMSDOSOverlay_clicked();
     void on_pushButtonMSDOS_clicked();
     void on_pushButtonPETLS_clicked();
