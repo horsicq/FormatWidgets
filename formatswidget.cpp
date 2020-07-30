@@ -210,16 +210,18 @@ void FormatsWidget::reload()
                     ui->lineEditEntryPoint->setValue((quint32)pe.getEntryPointAddress());
                 }
 
+                bool bIsResourcesPresent=pe.isResourcesPresent();
+
                 ui->lineEditPESections->setValue(pe.getFileHeader_NumberOfSections());
-                ui->pushButtonPESections->setEnabled(pe.isSectionsTablePresent());
+                ui->groupBoxPESections->setEnabled(pe.isSectionsTablePresent());
 
                 ui->pushButtonPEExport->setEnabled(pe.isExportPresent());
                 ui->pushButtonPEImport->setEnabled(pe.isImportPresent());
-                ui->pushButtonPEResources->setEnabled(pe.isResourcesPresent());
+                ui->pushButtonPEResources->setEnabled(bIsResourcesPresent);
                 ui->pushButtonPENET->setEnabled(pe.isNETPresent());
                 ui->pushButtonPETLS->setEnabled(pe.isTLSPresent());
 
-                ui->groupBoxPEResources->setEnabled(pe.isResourcesPresent());
+                ui->groupBoxPEResources->setEnabled(bIsResourcesPresent);
                 ui->pushButtonPEManifest->setEnabled(pe.isResourceManifestPresent());
                 ui->pushButtonPEVersion->setEnabled(pe.isResourceVersionPresent());
 
@@ -267,6 +269,8 @@ void FormatsWidget::reload()
                 {
                     ui->lineEditEntryPoint->setValue((quint32)mach.getEntryPointAddress());
                 }
+
+                // TODO
             }
         }
 
