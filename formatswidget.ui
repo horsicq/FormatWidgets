@@ -580,13 +580,13 @@
              <widget class="XLineEditHEX" name="lineEditPESizeOfImage">
               <property name="minimumSize">
                <size>
-                <width>140</width>
+                <width>100</width>
                 <height>0</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>140</width>
+                <width>100</width>
                 <height>16777215</height>
                </size>
               </property>
