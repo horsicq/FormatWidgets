@@ -96,9 +96,14 @@ FormatsWidget::~FormatsWidget()
     delete ui;
 }
 
-void FormatsWidget::setDIEDatabase(QString sDatabasePath)
+void FormatsWidget::setDIEDatabasePath(QString sDatabasePath)
 {
-    ui->pageScanDIE->setDatabase(sDatabasePath);
+    ui->pageScanDIE->setDatabasePath(sDatabasePath);
+}
+
+void FormatsWidget::setDIEInfoPath(QString sDatabasePath)
+{
+    ui->pageScanDIE->setInfoPath(sDatabasePath);
 }
 
 void FormatsWidget::on_comboBoxFileType_currentIndexChanged(int nIndex)

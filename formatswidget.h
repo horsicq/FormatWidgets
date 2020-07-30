@@ -64,7 +64,8 @@ public:
     void setScanEngine(QString sScanEngine);
     void setBackupFileName(QString sBackupFileName);
     ~FormatsWidget();
-    void setDIEDatabase(QString sDatabasePath);
+    void setDIEDatabasePath(QString sDatabasePath);
+    void setDIEInfoPath(QString sDatabasePath);
 
 private slots:
     void on_comboBoxFileType_currentIndexChanged(int nIndex);
