@@ -228,6 +228,7 @@ void FormatsWidget::reload()
                 ui->pushButtonPEOverlay->setEnabled(pe.isOverlayPresent());
 
                 ui->lineEditPETimeDateStamp->setText(XBinary::valueToTimeString(pe.getFileHeader_TimeDateStamp(),XBinary::DT_TYPE_POSIX));
+                ui->lineEditPESizeOfImage->setValue(pe.getOptionalHeader_SizeOfImage());
             }
         }
         else if((ft==XBinary::FT_ELF32)||(ft==XBinary::FT_ELF64))
@@ -270,7 +271,20 @@ void FormatsWidget::reload()
                     ui->lineEditEntryPoint->setValue((quint32)mach.getEntryPointAddress());
                 }
 
-                // TODO
+                QList<XMACH::COMMAND_RECORD> listCR=mach.getCommandRecords();
+                QList<XMACH::SECTION_RECORD> listSections=mach.getSectionRecords(&listCR);
+                QList<XMACH::SEGMENT_RECORD> listSegments=mach.getSegmentRecords(&listCR);
+                QList<XMACH::LIBRARY_RECORD> listLibraries=mach.getLibraryRecords(&listCR);
+
+                ui->lineEditMACHCommands->setEnabled(listCR.count());
+                ui->lineEditMACHSections->setEnabled(listSections.count());
+                ui->lineEditMACHSegments->setEnabled(listSegments.count());
+                ui->lineEditMACHLibraries->setEnabled(listLibraries.count());
+
+                ui->lineEditMACHCommands->setValue((quint16)listCR.count());
+                ui->lineEditMACHSections->setValue((quint16)listSections.count());
+                ui->lineEditMACHSegments->setValue((quint16)listSegments.count());
+                ui->lineEditMACHLibraries->setValue((quint16)listLibraries.count());
             }
         }
 

@@ -207,7 +207,7 @@
       <enum>QFrame::NoFrame</enum>
      </property>
      <property name="currentIndex">
-      <number>7</number>
+      <number>5</number>
      </property>
      <widget class="QWidget" name="pageBinary"/>
      <widget class="QWidget" name="pageCOM"/>
@@ -559,17 +559,47 @@
           </widget>
          </item>
          <item>
-          <spacer name="horizontalSpacer_3">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
+          <widget class="QGroupBox" name="groupBoxPESizeOfImage">
+           <property name="title">
+            <string notr="true">SizeOfImage</string>
            </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
+           <layout class="QHBoxLayout" name="horizontalLayout_41">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="XLineEditHEX" name="lineEditPESizeOfImage">
+              <property name="minimumSize">
+               <size>
+                <width>140</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>140</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
          </item>
          <item>
           <spacer name="horizontalSpacer_4">
@@ -884,7 +914,7 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_18">
          <item>
-          <widget class="QGroupBox" name="groupBoxELFCommands">
+          <widget class="QGroupBox" name="groupBoxMACHCommands">
            <property name="title">
             <string>Commands</string>
            </property>
@@ -902,7 +932,7 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="XLineEditHEX" name="lineEditELFCommands">
+             <widget class="XLineEditHEX" name="lineEditMACHCommands">
               <property name="minimumSize">
                <size>
                 <width>80</width>
@@ -924,7 +954,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButtonELFCommands">
+             <widget class="QPushButton" name="pushButtonMACHCommands">
               <property name="minimumSize">
                <size>
                 <width>30</width>
@@ -1109,7 +1139,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="QGroupBox" name="groupBoxELFLibraries">
+          <widget class="QGroupBox" name="groupBoxMACHLibraries">
            <property name="title">
             <string>Libraries</string>
            </property>
@@ -1127,7 +1157,7 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="XLineEditHEX" name="lineEditELFLibraries">
+             <widget class="XLineEditHEX" name="lineEditMACHLibraries">
               <property name="minimumSize">
                <size>
                 <width>80</width>
@@ -1149,7 +1179,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButtonELFLibraries">
+             <widget class="QPushButton" name="pushButtonMACHLibraries">
               <property name="minimumSize">
                <size>
                 <width>30</width>
