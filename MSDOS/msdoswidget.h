@@ -70,9 +70,11 @@ private:
     XLineEditHEX *lineEdit_DOS_HEADER[N_DOS_HEADER::__data_size];
     XComboBoxEx *comboBox[__CB_size];
 
-    bool bInit[SMSDOS::__TYPE_size];
-
     SubDevice *subDevice[SMSDOS::__TYPE_size];
+
+    QSet<QString> stInit;
+    qint32 nLastType;
+    QString sLastInit;
 };
 
 #endif // MSDOSWIDGET_H

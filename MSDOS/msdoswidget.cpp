@@ -63,7 +63,7 @@ void MSDOSWidget::cleanup()
 
 void MSDOSWidget::reset()
 {
-    memset(bInit,0,sizeof bInit);
+    stInit.clear();
 }
 
 void MSDOSWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions)
@@ -85,7 +85,7 @@ void MSDOSWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_STRINGS,tr("Strings")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_MEMORYMAP,tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_ENTROPY,tr("Entropy")));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_DETECT,tr("Detect")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_HEURISTICSCAN,tr("Heuristic scan")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_DOS_HEADER,"DOS_HEADER"));
 
         if(msdos.isOverlayPresent())
@@ -193,6 +193,19 @@ void MSDOSWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
 void MSDOSWidget::reloadData()
 {
     int nType=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_TYPE).toInt();
+    qint64 nDataOffset=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
+    qint64 nDataSize=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
+
+    QString sInit=QString("%1-%2-%3").arg(nType).arg(nDataOffset).arg(nDataSize);
+
+    if((nLastType==nType)&&(sInit!=sLastInit))
+    {
+        stInit.remove(sInit);
+    }
+
+    nLastType=nType;
+    sLastInit=sInit;
+
     ui->stackedWidgetInfo->setCurrentIndex(nType);
 
     XMSDOS msdos(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
@@ -201,99 +214,93 @@ void MSDOSWidget::reloadData()
     {
         if(nType==SMSDOS::TYPE_HEX)
         {
-            if(!bInit[nType])
+            if(!stInit.contains(sInit))
             {
                 ui->widgetHex->setData(getDevice());
                 ui->widgetHex->setBackupFileName(getOptions()->sBackupFileName);
                 ui->widgetHex->enableReadOnly(false);
                 connect(ui->widgetHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
-
-                bInit[nType]=true;
             }
-            ui->widgetHex->reload();
         }
         else if(nType==SMSDOS::TYPE_STRINGS)
         {
-            if(!bInit[nType])
+            if(!stInit.contains(sInit))
             {
                 ui->widgetStrings->setData(getDevice(),0,true);
-
-                bInit[nType]=true;
             }
         }
         else if(nType==SMSDOS::TYPE_MEMORYMAP)
         {
-            if(!bInit[nType])
+            if(!stInit.contains(sInit))
             {
                 ui->widgetMemoryMap->setData(getDevice());
-
-                bInit[nType]=true;
             }
         }
         else if(nType==SMSDOS::TYPE_ENTROPY)
         {
-            if(!bInit[nType])
+            if(!stInit.contains(sInit))
             {
                 ui->widgetEntropy->setData(getDevice(),0,getDevice()->size(),true);
-
-                bInit[nType]=true;
             }
         }
-        else if(nType==SMSDOS::TYPE_DETECT)
+        else if(nType==SMSDOS::TYPE_HEURISTICSCAN)
         {
-            if(!bInit[nType])
+            if(!stInit.contains(sInit))
             {
-                // Detect
-
-                bInit[nType]=true;
+                ui->widgetHeuristicScan->setData(getDevice(),true,XBinary::FT_MSDOS);
             }
         }
         else if(nType==SMSDOS::TYPE_DOS_HEADER)
         {
-            if(!bInit[nType])
+            if(!stInit.contains(sInit))
             {
-                bInit[nType]=createHeaderTable(SMSDOS::TYPE_DOS_HEADER,ui->tableWidget_DOS_HEADER,N_DOS_HEADER::records,lineEdit_DOS_HEADER,N_DOS_HEADER::__data_size,0);
+                createHeaderTable(SMSDOS::TYPE_DOS_HEADER,ui->tableWidget_DOS_HEADER,N_DOS_HEADER::records,lineEdit_DOS_HEADER,N_DOS_HEADER::__data_size,0);
                 comboBox[CB_DOS_HEADER_e_magic]=createComboBox(ui->tableWidget_DOS_HEADER,XMSDOS::getImageMagicsS(),SMSDOS::TYPE_DOS_HEADER,N_DOS_HEADER::e_magic,XComboBoxEx::CBTYPE_NORMAL);
+
+                blockSignals(true);
+
+                XMSDOS_DEF::IMAGE_DOS_HEADEREX msdosheaderex=msdos.getDosHeaderEx();
+
+                lineEdit_DOS_HEADER[N_DOS_HEADER::e_magic]->setValue(msdosheaderex.e_magic);
+                lineEdit_DOS_HEADER[N_DOS_HEADER::e_cblp]->setValue(msdosheaderex.e_cblp);
+                lineEdit_DOS_HEADER[N_DOS_HEADER::e_cp]->setValue(msdosheaderex.e_cp);
+                lineEdit_DOS_HEADER[N_DOS_HEADER::e_crlc]->setValue(msdosheaderex.e_crlc);
+                lineEdit_DOS_HEADER[N_DOS_HEADER::e_cparhdr]->setValue(msdosheaderex.e_cparhdr);
+                lineEdit_DOS_HEADER[N_DOS_HEADER::e_minalloc]->setValue(msdosheaderex.e_minalloc);
+                lineEdit_DOS_HEADER[N_DOS_HEADER::e_maxalloc]->setValue(msdosheaderex.e_maxalloc);
+                lineEdit_DOS_HEADER[N_DOS_HEADER::e_ss]->setValue(msdosheaderex.e_ss);
+                lineEdit_DOS_HEADER[N_DOS_HEADER::e_sp]->setValue(msdosheaderex.e_sp);
+                lineEdit_DOS_HEADER[N_DOS_HEADER::e_csum]->setValue(msdosheaderex.e_csum);
+                lineEdit_DOS_HEADER[N_DOS_HEADER::e_ip]->setValue(msdosheaderex.e_ip);
+                lineEdit_DOS_HEADER[N_DOS_HEADER::e_cs]->setValue(msdosheaderex.e_cs);
+                lineEdit_DOS_HEADER[N_DOS_HEADER::e_lfarlc]->setValue(msdosheaderex.e_lfarlc);
+                lineEdit_DOS_HEADER[N_DOS_HEADER::e_ovno]->setValue(msdosheaderex.e_ovno);
+
+                comboBox[CB_DOS_HEADER_e_magic]->setValue(msdosheaderex.e_magic);
+
+                qint64 nOffset=msdos.getDosHeaderExOffset(); // Ex!
+                qint64 nSize=msdos.getDosHeaderExSize();
+
+                loadHexSubdevice(nOffset,nSize,nOffset,&subDevice[SMSDOS::TYPE_DOS_HEADER],ui->widgetHex_DOS_HEADER);
+
+                blockSignals(false);
             }
-
-            blockSignals(true);
-
-            XMSDOS_DEF::IMAGE_DOS_HEADEREX msdosheaderex=msdos.getDosHeaderEx();
-
-            lineEdit_DOS_HEADER[N_DOS_HEADER::e_magic]->setValue(msdosheaderex.e_magic);
-            lineEdit_DOS_HEADER[N_DOS_HEADER::e_cblp]->setValue(msdosheaderex.e_cblp);
-            lineEdit_DOS_HEADER[N_DOS_HEADER::e_cp]->setValue(msdosheaderex.e_cp);
-            lineEdit_DOS_HEADER[N_DOS_HEADER::e_crlc]->setValue(msdosheaderex.e_crlc);
-            lineEdit_DOS_HEADER[N_DOS_HEADER::e_cparhdr]->setValue(msdosheaderex.e_cparhdr);
-            lineEdit_DOS_HEADER[N_DOS_HEADER::e_minalloc]->setValue(msdosheaderex.e_minalloc);
-            lineEdit_DOS_HEADER[N_DOS_HEADER::e_maxalloc]->setValue(msdosheaderex.e_maxalloc);
-            lineEdit_DOS_HEADER[N_DOS_HEADER::e_ss]->setValue(msdosheaderex.e_ss);
-            lineEdit_DOS_HEADER[N_DOS_HEADER::e_sp]->setValue(msdosheaderex.e_sp);
-            lineEdit_DOS_HEADER[N_DOS_HEADER::e_csum]->setValue(msdosheaderex.e_csum);
-            lineEdit_DOS_HEADER[N_DOS_HEADER::e_ip]->setValue(msdosheaderex.e_ip);
-            lineEdit_DOS_HEADER[N_DOS_HEADER::e_cs]->setValue(msdosheaderex.e_cs);
-            lineEdit_DOS_HEADER[N_DOS_HEADER::e_lfarlc]->setValue(msdosheaderex.e_lfarlc);
-            lineEdit_DOS_HEADER[N_DOS_HEADER::e_ovno]->setValue(msdosheaderex.e_ovno);
-
-            comboBox[CB_DOS_HEADER_e_magic]->setValue(msdosheaderex.e_magic);
-
-            qint64 nOffset=msdos.getDosHeaderExOffset(); // Ex!
-            qint64 nSize=msdos.getDosHeaderExSize();
-
-            loadHexSubdevice(nOffset,nSize,nOffset,&subDevice[SMSDOS::TYPE_DOS_HEADER],ui->widgetHex_DOS_HEADER);
-
-            blockSignals(false);
         }
         else if(nType==SMSDOS::TYPE_OVERLAY)
         {
-            qint64 nOverLayOffset=msdos.getOverlayOffset();
-            qint64 nOverlaySize=msdos.getOverlaySize();
+            if(!stInit.contains(sInit))
+            {
+                qint64 nOverLayOffset=msdos.getOverlayOffset();
+                qint64 nOverlaySize=msdos.getOverlaySize();
 
-            loadHexSubdevice(nOverLayOffset,nOverlaySize,nOverLayOffset,&subDevice[SMSDOS::TYPE_OVERLAY],ui->widgetHex_OVERLAY);
+                loadHexSubdevice(nOverLayOffset,nOverlaySize,nOverLayOffset,&subDevice[SMSDOS::TYPE_OVERLAY],ui->widgetHex_OVERLAY);
+            }
         }
 
         setReadonly(ui->checkBoxReadonly->isChecked());
     }
+
+    stInit.insert(sInit);
 }
 
 void MSDOSWidget::widgetValueChanged(quint64 nValue)

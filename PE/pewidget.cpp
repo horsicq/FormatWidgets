@@ -812,7 +812,7 @@ void PEWidget::reloadData()
         {
             if(!stInit.contains(sInit))
             {
-                ui->widgetHeuristicScan->setData(getDevice(),true);
+                ui->widgetHeuristicScan->setData(getDevice(),true,XBinary::FT_PE);
             }
         }
         else if(nType==SPE::TYPE_IMAGE_DOS_HEADER)
