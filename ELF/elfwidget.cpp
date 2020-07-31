@@ -86,7 +86,7 @@ void ELFWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_STRINGS,tr("Strings")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_MEMORYMAP,tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_ENTROPY,tr("Entropy")));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_DETECT,tr("Detect")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_HEURISTICSCAN,tr("Heuristic scan")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_Elf_Ehdr,"Elf_Ehdr"));
 
         QList<XELF_DEF::Elf_Shdr> listSections=elf.getElf_ShdrList();
@@ -317,11 +317,11 @@ void ELFWidget::reloadData()
                 ui->widgetEntropy->setData(getDevice(),0,getDevice()->size(),true);
             }
         }
-        else if(nType==SELF::TYPE_DETECT)
+        else if(nType==SELF::TYPE_HEURISTICSCAN)
         {
             if(!stInit.contains(sInit))
             {
-                // TODO
+                ui->widgetHeuristicScan->setData(getDevice(),true,XBinary::FT_ELF);
             }
         }
         else if(nType==SELF::TYPE_Elf_Ehdr)
