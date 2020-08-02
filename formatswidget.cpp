@@ -21,8 +21,8 @@
 #include "formatswidget.h"
 #include "ui_formatswidget.h"
 
-FormatsWidget::FormatsWidget(QWidget *parent) :
-    QWidget(parent),
+FormatsWidget::FormatsWidget(QWidget *pParent) :
+    QWidget(pParent),
     ui(new Ui::FormatsWidget)
 {
     ui->setupUi(this);
