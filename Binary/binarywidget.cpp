@@ -21,8 +21,8 @@
 #include "binarywidget.h"
 #include "ui_binarywidget.h"
 
-BinaryWidget::BinaryWidget(QWidget *parent) :
-    FormatWidget(parent),
+BinaryWidget::BinaryWidget(QWidget *pParent) :
+    FormatWidget(pParent),
     ui(new Ui::BinaryWidget)
 {
     ui->setupUi(this);
