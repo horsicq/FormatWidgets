@@ -47,7 +47,7 @@ void FormatsWidget::setData(QString sFileName, bool bScan)
 
     QSet<XBinary::FT> stTypes=XBinary::getFileTypes(sFileName);
 
-    XFormats::filterFileTypes(&stTypes);
+    XBinary::filterFileTypes(&stTypes);
 
     QList<XBinary::FT> listFileTypes=XBinary::_getFileTypeListFromSet(stTypes);
 
