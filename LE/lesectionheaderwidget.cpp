@@ -21,12 +21,12 @@
 #include "lesectionheaderwidget.h"
 #include "ui_lesectionheaderwidget.h"
 
-LESectionHeaderWidget::LESectionHeaderWidget(QWidget *parent)
+LESectionHeaderWidget::LESectionHeaderWidget(QWidget *pParent)
 {
 
 }
 
-LESectionHeaderWidget::LESectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset,qint32 nType, QWidget *parent)
+LESectionHeaderWidget::LESectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset,qint32 nType, QWidget *pParent)
 {
 
 }
