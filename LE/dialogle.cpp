@@ -21,8 +21,8 @@
 #include "dialogle.h"
 #include "ui_dialogle.h"
 
-DialogLE::DialogLE(QWidget *parent) :
-    QDialog(parent),
+DialogLE::DialogLE(QWidget *pParent) :
+    QDialog(pParent),
     ui(new Ui::DialogLE)
 {
     ui->setupUi(this);
