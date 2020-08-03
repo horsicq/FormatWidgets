@@ -21,8 +21,8 @@
 #include "dialogelf.h"
 #include "ui_dialogelf.h"
 
-DialogELF::DialogELF(QWidget *parent) :
-    QDialog(parent),
+DialogELF::DialogELF(QWidget *pParent) :
+    QDialog(pParent),
     ui(new Ui::DialogELF)
 {
     ui->setupUi(this);

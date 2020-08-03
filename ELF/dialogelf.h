@@ -34,7 +34,7 @@ class DialogELF : public QDialog
     Q_OBJECT
 
 public:
-    explicit DialogELF(QWidget *parent=nullptr);
+    explicit DialogELF(QWidget *pParent=nullptr);
     ~DialogELF();
 
     void setData(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions);
