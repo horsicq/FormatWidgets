@@ -36,6 +36,8 @@ SearchStringsWidget::SearchStringsWidget(QWidget *parent) :
 
     ui->checkBoxAnsi->setChecked(true);
     ui->checkBoxUnicode->setChecked(true);
+
+    ui->spinBoxMinLength->setValue(5);
 }
 
 SearchStringsWidget::~SearchStringsWidget()
@@ -230,6 +232,7 @@ void SearchStringsWidget::search()
 
         options.bSearchAnsi=ui->checkBoxAnsi->isChecked();
         options.bSearchUnicode=ui->checkBoxUnicode->isChecked();
+        options.nMinLenght=ui->spinBoxMinLength->value();
 
         if(options.bSearchAnsi||options.bSearchUnicode)
         {

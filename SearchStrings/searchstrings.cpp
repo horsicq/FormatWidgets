@@ -137,7 +137,7 @@ void SearchStrings::processSearch()
 
             if((!bIsAnsiSymbol)||(bIsEnd))
             {
-                if(nCurrentAnsiSize>4)
+                if(nCurrentAnsiSize>=options.nMinLenght)
                 {
                     if(nCurrentAnsiSize-1<N_MAX_STRING_SIZE)
                     {
@@ -193,7 +193,7 @@ void SearchStrings::processSearch()
 
                 if((!bIsUnicodeSymbol)||(bIsEnd))
                 {
-                    if(nCurrentUnicodeSize[nParity]>4)
+                    if(nCurrentUnicodeSize[nParity]>=options.nMinLenght)
                     {
                         if(nCurrentUnicodeSize[nParity]-1<N_MAX_STRING_SIZE)
                         {
@@ -227,7 +227,7 @@ void SearchStrings::processSearch()
                     {
                         int nO=(nParity==1)?(0):(1);
 
-                        if(nCurrentUnicodeSize[nO]>4)
+                        if(nCurrentUnicodeSize[nO]>=options.nMinLenght)
                         {
                             if(nCurrentUnicodeSize[nO]-1<N_MAX_STRING_SIZE)
                             {

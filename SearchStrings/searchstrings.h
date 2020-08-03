@@ -52,6 +52,7 @@ public:
         qint32 nAddressWidth; // TODO make auto
         bool bSearchAnsi;
         bool bSearchUnicode;
+        qint32 nMinLenght;
     };
 
     const int N_MAX=50000;

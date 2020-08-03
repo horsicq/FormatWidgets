@@ -56,6 +56,13 @@
       </widget>
      </item>
      <item>
+      <widget class="QSpinBox" name="spinBoxMinLength">
+       <property name="minimum">
+        <number>3</number>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="pushButtonSearch">
        <property name="text">
         <string>Search</string>

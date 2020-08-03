@@ -35,7 +35,7 @@ class BinaryWidget : public FormatWidget
 
 public:
     BinaryWidget(QWidget *pParent=nullptr);
-    BinaryWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *parent=nullptr);
+    BinaryWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *pParent=nullptr);
     ~BinaryWidget();
     virtual void clear();
     virtual void cleanup();
