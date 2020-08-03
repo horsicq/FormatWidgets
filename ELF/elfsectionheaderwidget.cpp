@@ -28,8 +28,8 @@ ELFSectionHeaderWidget::ELFSectionHeaderWidget(QWidget *pParent):
     ui->setupUi(this);
 }
 
-ELFSectionHeaderWidget::ELFSectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber,qint64 nOffset, qint32 nType, QWidget *parent):
-    FormatWidget(pDevice,pOptions,nNumber,nOffset,nType,parent),
+ELFSectionHeaderWidget::ELFSectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent):
+    FormatWidget(pDevice,pOptions,nNumber,nOffset,nType,pParent),
     ui(new Ui::ELFSectionHeaderWidget)
 {
     ui->setupUi(this);
