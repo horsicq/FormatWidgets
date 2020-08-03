@@ -34,7 +34,7 @@ class DialogBinary : public QDialog
     Q_OBJECT
 
 public:
-    explicit DialogBinary(QWidget *parent=nullptr);
+    explicit DialogBinary(QWidget *pParent=nullptr);
     ~DialogBinary();
 
     void setData(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions);

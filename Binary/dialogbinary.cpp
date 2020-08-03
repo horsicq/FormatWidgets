@@ -21,8 +21,8 @@
 #include "dialogbinary.h"
 #include "ui_dialogbinary.h"
 
-DialogBinary::DialogBinary(QWidget *parent) :
-    QDialog(parent),
+DialogBinary::DialogBinary(QWidget *pParent) :
+    QDialog(pParent),
     ui(new Ui::DialogBinary)
 {
     ui->setupUi(this);
