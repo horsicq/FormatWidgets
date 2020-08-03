@@ -21,15 +21,15 @@
 #include "elfwidget.h"
 #include "ui_elfwidget.h"
 
-ELFWidget::ELFWidget(QWidget *parent) :
-    FormatWidget(parent),
+ELFWidget::ELFWidget(QWidget *pParent) :
+    FormatWidget(pParent),
     ui(new Ui::ELFWidget)
 {
     ui->setupUi(this);
 }
 
-ELFWidget::ELFWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *parent) :
-    FormatWidget(pDevice,pOptions,0,0,0,parent),
+ELFWidget::ELFWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *pParent) :
+    FormatWidget(pDevice,pOptions,0,0,0,pParent),
     ui(new Ui::ELFWidget)
 {
     ui->setupUi(this);

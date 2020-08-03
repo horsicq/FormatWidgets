@@ -37,8 +37,8 @@ class ELFWidget : public FormatWidget
     Q_OBJECT
 
 public:
-    ELFWidget(QWidget *parent=nullptr);
-    ELFWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *parent=nullptr);
+    ELFWidget(QWidget *pParent=nullptr);
+    ELFWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *pParent=nullptr);
     ~ELFWidget();
     virtual void clear();
     virtual void cleanup();
