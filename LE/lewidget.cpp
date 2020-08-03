@@ -21,8 +21,8 @@
 #include "lewidget.h"
 #include "ui_lewidget.h"
 
-LEWidget::LEWidget(QWidget *parent) :
-    FormatWidget(parent),
+LEWidget::LEWidget(QWidget *pParent) :
+    FormatWidget(pParent),
     ui(new Ui::LEWidget)
 {
     ui->setupUi(this);

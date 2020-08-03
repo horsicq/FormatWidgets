@@ -36,7 +36,7 @@ class LEWidget : public FormatWidget
     Q_OBJECT
 
 public:
-    LEWidget(QWidget *parent=nullptr);
+    LEWidget(QWidget *pParent=nullptr);
     LEWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *parent=nullptr);
     ~LEWidget();
     virtual void clear();
