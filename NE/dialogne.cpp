@@ -21,8 +21,8 @@
 #include "dialogne.h"
 #include "ui_dialogne.h"
 
-DialogNE::DialogNE(QWidget *parent) :
-    QDialog(parent),
+DialogNE::DialogNE(QWidget *pParent) :
+    QDialog(pParent),
     ui(new Ui::DialogNE)
 {
     ui->setupUi(this);

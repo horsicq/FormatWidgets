@@ -20,7 +20,7 @@
 //
 #include "searchstrings.h"
 
-SearchStrings::SearchStrings(QObject *parent) : QObject(parent)
+SearchStrings::SearchStrings(QObject *pParent) : QObject(pParent)
 {
     bIsStop=false;
     options={};

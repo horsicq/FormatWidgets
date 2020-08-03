@@ -34,7 +34,7 @@ class DialogNE : public QDialog
     Q_OBJECT
 
 public:
-    explicit DialogNE(QWidget *parent=nullptr);
+    explicit DialogNE(QWidget *pParent=nullptr);
     ~DialogNE();
 
     void setData(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions);
