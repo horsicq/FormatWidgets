@@ -21,8 +21,8 @@
 #include "dialogmach.h"
 #include "ui_dialogmach.h"
 
-DialogMACH::DialogMACH(QWidget *parent) :
-    QDialog(parent),
+DialogMACH::DialogMACH(QWidget *pParent) :
+    QDialog(pParent),
     ui(new Ui::DialogMACH)
 {
     ui->setupUi(this);
