@@ -28,8 +28,8 @@ LEWidget::LEWidget(QWidget *pParent) :
     ui->setupUi(this);
 }
 
-LEWidget::LEWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *parent) :
-    FormatWidget(pDevice,pOptions,0,0,0,parent),
+LEWidget::LEWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *pParent) :
+    FormatWidget(pDevice,pOptions,0,0,0,pParent),
     ui(new Ui::LEWidget)
 {
     ui->setupUi(this);
