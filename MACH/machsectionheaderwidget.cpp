@@ -21,12 +21,12 @@
 #include "machsectionheaderwidget.h"
 #include "ui_machsectionheaderwidget.h"
 
-MACHSectionHeaderWidget::MACHSectionHeaderWidget(QWidget *parent)
+MACHSectionHeaderWidget::MACHSectionHeaderWidget(QWidget *pParent)
 {
 
 }
 
-MACHSectionHeaderWidget::MACHSectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset,qint32 nType, QWidget *parent)
+MACHSectionHeaderWidget::MACHSectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent)
 {
 
 }
