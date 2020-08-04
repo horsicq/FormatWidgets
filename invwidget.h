@@ -37,7 +37,7 @@ public:
         TYPE_HEX
     };
 
-    explicit InvWidget(QWidget *parent,TYPE type);
+    explicit InvWidget(QWidget *pParent,TYPE type);
     ~InvWidget();
 
     void setOffsetAndSize(XBinary *pBinary,qint64 nOffset,qint64 nSize);

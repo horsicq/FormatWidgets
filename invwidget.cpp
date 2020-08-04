@@ -20,8 +20,8 @@
 //
 #include "invwidget.h"
 
-InvWidget::InvWidget(QWidget *parent, TYPE type) :
-    QWidget(parent)
+InvWidget::InvWidget(QWidget *pParent, TYPE type) :
+    QWidget(pParent)
 {
     pHexPushButton=0;
 
