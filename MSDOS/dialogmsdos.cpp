@@ -21,8 +21,8 @@
 #include "dialogmsdos.h"
 #include "ui_dialogmsdos.h"
 
-DialogMSDOS::DialogMSDOS(QWidget *parent) :
-    QDialog(parent),
+DialogMSDOS::DialogMSDOS(QWidget *pParent) :
+    QDialog(pParent),
     ui(new Ui::DialogMSDOS)
 {
     ui->setupUi(this);

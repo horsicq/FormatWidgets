@@ -34,7 +34,7 @@ class DialogMSDOS : public QDialog
     Q_OBJECT
 
 public:
-    explicit DialogMSDOS(QWidget *parent=nullptr);
+    explicit DialogMSDOS(QWidget *pParent=nullptr);
     ~DialogMSDOS();
 
     void setData(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions);
