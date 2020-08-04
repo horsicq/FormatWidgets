@@ -21,8 +21,8 @@
 #include "pewidget.h"
 #include "ui_pewidget.h"
 
-PEWidget::PEWidget(QWidget *parent) :
-    FormatWidget(parent),
+PEWidget::PEWidget(QWidget *pParent) :
+    FormatWidget(pParent),
     ui(new Ui::PEWidget)
 {
     ui->setupUi(this);
@@ -42,8 +42,8 @@ PEWidget::PEWidget(QWidget *parent) :
 #endif
 }
 
-PEWidget::PEWidget(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions, QWidget *parent) :
-    FormatWidget(pDevice,pOptions,0,0,0,parent),
+PEWidget::PEWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *pParent) :
+    FormatWidget(pDevice,pOptions,0,0,0,pParent),
     ui(new Ui::PEWidget)
 {
     ui->setupUi(this);
