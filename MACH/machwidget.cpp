@@ -21,8 +21,8 @@
 #include "machwidget.h"
 #include "ui_machwidget.h"
 
-MACHWidget::MACHWidget(QWidget *parent) :
-    FormatWidget(parent),
+MACHWidget::MACHWidget(QWidget *pParent) :
+    FormatWidget(pParent),
     ui(new Ui::MACHWidget)
 {
     ui->setupUi(this);

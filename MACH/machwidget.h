@@ -36,7 +36,7 @@ class MACHWidget : public FormatWidget
     Q_OBJECT
 
 public:
-    MACHWidget(QWidget *parent=nullptr);
+    MACHWidget(QWidget *pParent=nullptr);
     MACHWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *parent=nullptr);
     ~MACHWidget();
     virtual void clear();
