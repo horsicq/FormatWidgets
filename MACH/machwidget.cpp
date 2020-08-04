@@ -28,8 +28,8 @@ MACHWidget::MACHWidget(QWidget *pParent) :
     ui->setupUi(this);
 }
 
-MACHWidget::MACHWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *parent) :
-    FormatWidget(pDevice,pOptions,0,0,0,parent),
+MACHWidget::MACHWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *pParent) :
+    FormatWidget(pDevice,pOptions,0,0,0,pParent),
     ui(new Ui::MACHWidget)
 {
     ui->setupUi(this);
