@@ -20,8 +20,8 @@
 //
 #include "formatwidget.h"
 
-FormatWidget::FormatWidget(QWidget *parent):
-    QWidget(parent)
+FormatWidget::FormatWidget(QWidget *pParent):
+    QWidget(pParent)
 {
     bIsReadonly=false;
     fwOptions={};
@@ -31,8 +31,8 @@ FormatWidget::FormatWidget(QWidget *parent):
     colEnabled=QWidget::palette().color(QPalette::BrightText);
 }
 
-FormatWidget::FormatWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *parent):
-    QWidget(parent)
+FormatWidget::FormatWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent):
+    QWidget(pParent)
 {
     fwOptions={};
     bIsEdited=false;

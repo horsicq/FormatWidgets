@@ -78,8 +78,8 @@ public:
         DIRECTORY_COLUMN_SIZE
     };
 
-    FormatWidget(QWidget *parent=nullptr);
-    FormatWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *parent);
+    FormatWidget(QWidget *pParent=nullptr);
+    FormatWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent);
     ~FormatWidget();
     virtual void clear()=0;
     virtual void reset()=0;
