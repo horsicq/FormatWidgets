@@ -36,7 +36,7 @@ class ToolsWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit ToolsWidget(QWidget *parent=nullptr);
+    explicit ToolsWidget(QWidget *pParent=nullptr);
     ~ToolsWidget();
 
     void setData(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions);

@@ -21,8 +21,8 @@
 #include "toolswidget.h"
 #include "ui_toolswidget.h"
 
-ToolsWidget::ToolsWidget(QWidget *parent) :
-    QWidget(parent),
+ToolsWidget::ToolsWidget(QWidget *pParent) :
+    QWidget(pParent),
     ui(new Ui::ToolsWidget)
 {
     ui->setupUi(this);
