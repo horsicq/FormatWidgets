@@ -21,15 +21,15 @@
 #include "pesectionheaderwidget.h"
 #include "ui_pesectionheaderwidget.h"
 
-PESectionHeaderWidget::PESectionHeaderWidget(QWidget *parent):
-    FormatWidget(parent),
+PESectionHeaderWidget::PESectionHeaderWidget(QWidget *pParent):
+    FormatWidget(pParent),
     ui(new Ui::PESectionHeaderWidget)
 {
     ui->setupUi(this);
 }
 
-PESectionHeaderWidget::PESectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *parent):
-    FormatWidget(pDevice,pOptions,nNumber,nOffset,nType,parent),
+PESectionHeaderWidget::PESectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent):
+    FormatWidget(pDevice,pOptions,nNumber,nOffset,nType,pParent),
     ui(new Ui::PESectionHeaderWidget)
 {
     ui->setupUi(this);

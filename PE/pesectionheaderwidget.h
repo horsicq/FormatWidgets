@@ -34,8 +34,8 @@ class PESectionHeaderWidget : public FormatWidget
     Q_OBJECT
 
 public:
-    PESectionHeaderWidget(QWidget *parent=nullptr);
-    PESectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *parent=nullptr);
+    PESectionHeaderWidget(QWidget *pParent=nullptr);
+    PESectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent=nullptr);
     ~PESectionHeaderWidget();
     virtual void clear();
     virtual void cleanup();
