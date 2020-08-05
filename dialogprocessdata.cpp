@@ -21,8 +21,8 @@
 #include "dialogprocessdata.h"
 #include "ui_dialogprocessdata.h"
 
-DialogProcessData::DialogProcessData(QWidget *parent, ProcessData *pProcessData) :
-    QDialog(parent),
+DialogProcessData::DialogProcessData(QWidget *pParent, ProcessData *pProcessData) :
+    QDialog(pParent),
     ui(new Ui::DialogProcessData)
 {
     ui->setupUi(this);
