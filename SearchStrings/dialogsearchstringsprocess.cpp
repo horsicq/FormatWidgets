@@ -21,8 +21,8 @@
 #include "dialogsearchstringsprocess.h"
 #include "ui_dialogsearchstringsprocess.h"
 
-DialogSearchStringsProcess::DialogSearchStringsProcess(QWidget *parent) :
-    QDialog(parent),
+DialogSearchStringsProcess::DialogSearchStringsProcess(QWidget *pParent) :
+    QDialog(pParent),
     ui(new Ui::DialogSearchStringsProcess)
 {
     ui->setupUi(this);
