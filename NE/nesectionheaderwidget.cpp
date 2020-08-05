@@ -22,12 +22,12 @@
 #include "ui_nesectionheaderwidget.h"
 
 
-NESectionHeaderWidget::NESectionHeaderWidget(QWidget *parent)
+NESectionHeaderWidget::NESectionHeaderWidget(QWidget *pParent)
 {
 
 }
 
-NESectionHeaderWidget::NESectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset,qint32 nType, QWidget *parent)
+NESectionHeaderWidget::NESectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent)
 {
 
 }
