@@ -21,8 +21,8 @@
 #include "dialogsectionheader.h"
 #include "ui_dialogsectionheader.h"
 
-DialogSectionHeader::DialogSectionHeader(QWidget *parent) :
-    QDialog(parent),
+DialogSectionHeader::DialogSectionHeader(QWidget *pParent) :
+    QDialog(pParent),
     ui(new Ui::DialogSectionHeader)
 {
     ui->setupUi(this);
