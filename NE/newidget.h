@@ -36,8 +36,8 @@ class NEWidget : public FormatWidget
     Q_OBJECT
 
 public:
-    NEWidget(QWidget *parent=nullptr);
-    NEWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *parent=nullptr);
+    NEWidget(QWidget *pParent=nullptr);
+    NEWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *pParent=nullptr);
     ~NEWidget();
     virtual void clear();
     virtual void cleanup();
