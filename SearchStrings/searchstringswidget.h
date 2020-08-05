@@ -43,7 +43,7 @@ class SearchStringsWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit SearchStringsWidget(QWidget *parent=nullptr);
+    explicit SearchStringsWidget(QWidget *pParent=nullptr);
     ~SearchStringsWidget();
     void setData(QIODevice *pDevice, SearchStrings::OPTIONS *pOptions, bool bAuto=false);
     void reload();

@@ -21,8 +21,8 @@
 #include "searchstringswidget.h"
 #include "ui_searchstringswidget.h"
 
-SearchStringsWidget::SearchStringsWidget(QWidget *parent) :
-    QWidget(parent),
+SearchStringsWidget::SearchStringsWidget(QWidget *pParent) :
+    QWidget(pParent),
     ui(new Ui::SearchStringsWidget)
 {
     ui->setupUi(this);
