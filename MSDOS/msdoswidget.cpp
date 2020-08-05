@@ -21,15 +21,15 @@
 #include "msdoswidget.h"
 #include "ui_msdoswidget.h"
 
-MSDOSWidget::MSDOSWidget(QWidget *parent) :
-    FormatWidget(parent),
+MSDOSWidget::MSDOSWidget(QWidget *pParent) :
+    FormatWidget(pParent),
     ui(new Ui::MSDOSWidget)
 {
     ui->setupUi(this);
 }
 
-MSDOSWidget::MSDOSWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *parent) :
-    FormatWidget(pDevice,pOptions,0,0,0,parent),
+MSDOSWidget::MSDOSWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *pParent) :
+    FormatWidget(pDevice,pOptions,0,0,0,pParent),
     ui(new Ui::MSDOSWidget)
 {
     ui->setupUi(this);

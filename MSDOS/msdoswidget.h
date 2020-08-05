@@ -34,8 +34,8 @@ class MSDOSWidget : public FormatWidget
     Q_OBJECT
 
 public:
-    MSDOSWidget(QWidget *parent=nullptr);
-    MSDOSWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *parent=nullptr);
+    MSDOSWidget(QWidget *pParent=nullptr);
+    MSDOSWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *pParent=nullptr);
     ~MSDOSWidget();
     virtual void clear();
     virtual void cleanup();

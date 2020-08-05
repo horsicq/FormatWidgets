@@ -33,7 +33,7 @@ class DialogSearchStrings : public QDialog
     Q_OBJECT
 
 public:
-    explicit DialogSearchStrings(QWidget *parent, QIODevice *pDevice, SearchStrings::OPTIONS *pOptions=0, bool bAuto=false);
+    explicit DialogSearchStrings(QWidget *pParent, QIODevice *pDevice, SearchStrings::OPTIONS *pOptions=0, bool bAuto=false);
     ~DialogSearchStrings();
 
 private slots:
