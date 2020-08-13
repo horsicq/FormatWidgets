@@ -461,7 +461,7 @@ bool FormatWidget::saveBackup()
     return bResult;
 }
 
-bool FormatWidget::createHeaderTable(int type, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nRecordCount, int nPosition, qint64 nOffset)
+bool FormatWidget::createHeaderTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nRecordCount, int nPosition, qint64 nOffset)
 {
     pTableWidget->setColumnCount(6);
     pTableWidget->setRowCount(nRecordCount);
@@ -499,7 +499,7 @@ bool FormatWidget::createHeaderTable(int type, QTableWidget *pTableWidget, const
         pTableWidget->setItem(i,HEADER_COLUMN_TYPE,itemType);
 
         ppLineEdits[i]=new XLineEditHEX(this);
-        ppLineEdits[i]->setProperty("STYPE",type);
+        ppLineEdits[i]->setProperty("STYPE",nType);
         ppLineEdits[i]->setProperty("NDATA",pRecords[i].nData);
         ppLineEdits[i]->setProperty("POSITION",nPosition);
         ppLineEdits[i]->setProperty("OFFSET",nOffset);
@@ -525,7 +525,7 @@ bool FormatWidget::createHeaderTable(int type, QTableWidget *pTableWidget, const
 
     pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_COMMENT,QHeaderView::Stretch);
 
-    adjustHeaderTable(type,pTableWidget);
+    adjustHeaderTable(nType,pTableWidget);
 
     return true;
 }
