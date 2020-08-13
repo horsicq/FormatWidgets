@@ -399,11 +399,11 @@ void ELFSectionHeaderWidget::blockSignals(bool bState)
     _blockSignals((QObject **)ppComboBox,nComboBoxSize,bState);
 }
 
-void ELFSectionHeaderWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
+void ELFSectionHeaderWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
 {
     int nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
 
-    switch(type)
+    switch(nType)
     {
         case SELF::TYPE_Elf_Shdr:
             pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
