@@ -265,9 +265,9 @@ void LEWidget::blockSignals(bool bState)
     _blockSignals((QObject **)comboBox,__CB_size,bState);
 }
 
-void LEWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
+void LEWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
 {
-    Q_UNUSED(type)
+    Q_UNUSED(nType)
 
     int nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
 
