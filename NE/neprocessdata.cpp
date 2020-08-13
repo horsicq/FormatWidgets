@@ -20,9 +20,9 @@
 //
 #include "neprocessdata.h"
 
-NEProcessData::NEProcessData(int type, QStandardItemModel **ppModel, XNE *pNE, qint64 nOffset, qint64 nSize)
+NEProcessData::NEProcessData(int nType, QStandardItemModel **ppModel, XNE *pNE, qint64 nOffset, qint64 nSize)
 {
-    this->type=type;
+    this->nType=nType;
     this->ppModel=ppModel;
     this->pNE=pNE;
     this->nOffset=nOffset;
