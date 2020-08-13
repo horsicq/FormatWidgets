@@ -109,9 +109,9 @@ void BinaryWidget::blockSignals(bool bState)
     Q_UNUSED(bState)
 }
 
-void BinaryWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
+void BinaryWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
 {
-    Q_UNUSED(type)
+    Q_UNUSED(nType)
     Q_UNUSED(pTableWidget)
 //    int nSymbolWidth=getSymbolWidth();
 }
