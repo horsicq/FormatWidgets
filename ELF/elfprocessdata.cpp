@@ -20,9 +20,9 @@
 //
 #include "elfprocessdata.h"
 
-ELFProcessData::ELFProcessData(int type, QStandardItemModel **ppModel, XELF *pELF, qint64 nOffset, qint64 nSize, qint64 nStringTableOffset, qint64 nStringTableSize)
+ELFProcessData::ELFProcessData(int nType, QStandardItemModel **ppModel, XELF *pELF, qint64 nOffset, qint64 nSize, qint64 nStringTableOffset, qint64 nStringTableSize)
 {
-    this->type=type;
+    this->nType=nType;
     this->ppModel=ppModel;
     this->pELF=pELF;
     this->nOffset=nOffset;
@@ -33,7 +33,7 @@ ELFProcessData::ELFProcessData(int type, QStandardItemModel **ppModel, XELF *pEL
 
 void ELFProcessData::_process()
 {
-    if(type==SELF::TYPE_Elf_Shdr)
+    if(nType==SELF::TYPE_Elf_Shdr)
     {
         bool bIs64=pELF->is64();
 
@@ -152,7 +152,7 @@ void ELFProcessData::_process()
             incValue();
         }
     }
-    else if(type==SELF::TYPE_Elf_Phdr)
+    else if(nType==SELF::TYPE_Elf_Phdr)
     {
         bool bIs64=pELF->is64();
 
@@ -254,7 +254,7 @@ void ELFProcessData::_process()
             }
         }
     }
-    else if(type==SELF::TYPE_SYMBOLTABLE)
+    else if(nType==SELF::TYPE_SYMBOLTABLE)
     {
         QMap<quint64, QString> mapBinds=pELF->getStBindsS();
         QMap<quint64, QString> mapTypes=pELF->getStTypesS();
@@ -354,7 +354,7 @@ void ELFProcessData::_process()
             }
         }
     }
-    else if(type==SELF::TYPE_Elf_DynamicArrayTags)
+    else if(nType==SELF::TYPE_Elf_DynamicArrayTags)
     {
         bool bIs64=pELF->is64();
 
@@ -401,7 +401,7 @@ void ELFProcessData::_process()
             incValue();
         }
     }
-    else if(type==SELF::TYPE_NOTES)
+    else if(nType==SELF::TYPE_NOTES)
     {
         QList<QString> listLabels;
         listLabels.append("");
@@ -433,7 +433,7 @@ void ELFProcessData::_process()
             incValue();
         }
     }
-    else if(type==SELF::TYPE_LIBRARIES)
+    else if(nType==SELF::TYPE_LIBRARIES)
     {
         QList<QString> listLabels;
         listLabels.append("");
@@ -463,7 +463,7 @@ void ELFProcessData::_process()
             incValue();
         }
     }
-    else if(type==SELF::TYPE_Elf_Rela)
+    else if(nType==SELF::TYPE_Elf_Rela)
     {
         bool bIs64=pELF->is64();
 
@@ -553,7 +553,7 @@ void ELFProcessData::_process()
             incValue();
         }
     }
-    else if(type==SELF::TYPE_Elf_Rel)
+    else if(nType==SELF::TYPE_Elf_Rel)
     {
         bool bIs64=pELF->is64();
 
@@ -647,7 +647,7 @@ void ELFProcessData::ajustTableView(QWidget *pWidget,QTableView *pTableView)
 {
     int nSymbolWidth=XLineEditHEX::getSymbolWidth(pWidget);
 
-    if(type==SELF::TYPE_SYMBOLTABLE)
+    if(nType==SELF::TYPE_SYMBOLTABLE)
     {
         if(pELF->is64())
         {
@@ -672,7 +672,7 @@ void ELFProcessData::ajustTableView(QWidget *pWidget,QTableView *pTableView)
             pTableView->setColumnWidth(N_Elf32_Sym::st_shndx+2,nSymbolWidth*35);
         }
     }
-    else if(type==SELF::TYPE_Elf_Shdr)
+    else if(nType==SELF::TYPE_Elf_Shdr)
     {
         if(pELF->is64())
         {
@@ -707,7 +707,7 @@ void ELFProcessData::ajustTableView(QWidget *pWidget,QTableView *pTableView)
             pTableView->setColumnWidth(12,nSymbolWidth*12);
         }
     }
-    else if(type==SELF::TYPE_Elf_Phdr)
+    else if(nType==SELF::TYPE_Elf_Phdr)
     {
         if(pELF->is64())
         {
@@ -736,25 +736,25 @@ void ELFProcessData::ajustTableView(QWidget *pWidget,QTableView *pTableView)
             pTableView->setColumnWidth(9,nSymbolWidth*12);
         }
     }
-    else if(type==SELF::TYPE_Elf_DynamicArrayTags)
+    else if(nType==SELF::TYPE_Elf_DynamicArrayTags)
     {
         pTableView->setColumnWidth(0,nSymbolWidth*4);
         pTableView->setColumnWidth(1,nSymbolWidth*12);
         pTableView->setColumnWidth(2,nSymbolWidth*12);
         pTableView->setColumnWidth(3,nSymbolWidth*20);
     }
-    else if(type==SELF::TYPE_NOTES)
+    else if(nType==SELF::TYPE_NOTES)
     {
         pTableView->setColumnWidth(0,nSymbolWidth*4);
         pTableView->setColumnWidth(1,nSymbolWidth*8);
         pTableView->setColumnWidth(2,nSymbolWidth*30);
     }
-    else if(type==SELF::TYPE_LIBRARIES)
+    else if(nType==SELF::TYPE_LIBRARIES)
     {
         pTableView->setColumnWidth(0,nSymbolWidth*4);
         pTableView->setColumnWidth(1,nSymbolWidth*30);
     }
-    else if(type==SELF::TYPE_Elf_Rela)
+    else if(nType==SELF::TYPE_Elf_Rela)
     {
         pTableView->setColumnWidth(0,nSymbolWidth*4);
         pTableView->setColumnWidth(1,nSymbolWidth*12);
@@ -763,7 +763,7 @@ void ELFProcessData::ajustTableView(QWidget *pWidget,QTableView *pTableView)
         pTableView->setColumnWidth(4,nSymbolWidth*8);
         pTableView->setColumnWidth(5,nSymbolWidth*12);
     }
-    else if(type==SELF::TYPE_Elf_Rel)
+    else if(nType==SELF::TYPE_Elf_Rel)
     {
         pTableView->setColumnWidth(0,nSymbolWidth*4);
         pTableView->setColumnWidth(1,nSymbolWidth*12);
