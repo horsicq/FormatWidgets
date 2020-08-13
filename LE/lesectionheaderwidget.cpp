@@ -66,7 +66,7 @@ void LESectionHeaderWidget::blockSignals(bool bState)
 
 }
 
-void LESectionHeaderWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
+void LESectionHeaderWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
 {
 
 }
