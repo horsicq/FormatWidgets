@@ -850,11 +850,11 @@ void ELFWidget::showSectionHeader(int type, QTableView *pTableView)
     }
 }
 
-QString ELFWidget::typeIdToString(int type)
+QString ELFWidget::typeIdToString(int nType)
 {
     QString sResult="Unknown";
 
-    switch(type)
+    switch(nType)
     {
         case SELF::TYPE_Elf_Shdr:               sResult=QString("Section header");      break;
         case SELF::TYPE_Elf_Phdr:               sResult=QString("Program header");      break;

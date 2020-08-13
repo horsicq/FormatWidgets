@@ -50,7 +50,7 @@ protected:
     virtual void setReadonly(bool bState);
     virtual void blockSignals(bool bState);
     virtual void adjustHeaderTable(int nType,QTableWidget *pTableWidget);
-    virtual QString typeIdToString(int type);
+    virtual QString typeIdToString(int nType);
 
 private slots:
     virtual void reloadData();
