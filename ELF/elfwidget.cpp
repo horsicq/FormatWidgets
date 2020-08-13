@@ -818,7 +818,7 @@ void ELFWidget::editSymbolHeader()
     showSectionHeader(SELF::TYPE_SYMBOLTABLE,ui->tableView_SymbolTable);
 }
 
-void ELFWidget::showSectionHeader(int type, QTableView *pTableView)
+void ELFWidget::showSectionHeader(int nType, QTableView *pTableView)
 {
     int nRow=pTableView->currentIndex().row();
 
@@ -831,13 +831,13 @@ void ELFWidget::showSectionHeader(int type, QTableView *pTableView)
         qint64 nStringTableOffset=pTableView->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_STRINGTABLEOFFSET).toLongLong();
         qint64 nStringTableSize=pTableView->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_STRINGTABLESIZE).toLongLong();
 
-        ELFSectionHeaderWidget *pSectionHeaderWidget=new ELFSectionHeaderWidget(getDevice(),getOptions(),(quint32)nRow,nOffset,type,this);
+        ELFSectionHeaderWidget *pSectionHeaderWidget=new ELFSectionHeaderWidget(getDevice(),getOptions(),(quint32)nRow,nOffset,nType,this);
 
         pSectionHeaderWidget->setStringTable(nStringTableOffset,nStringTableSize);
 
         DialogSectionHeader dsh(this);
         dsh.setWidget(pSectionHeaderWidget);
-        dsh.setData(typeIdToString(type));
+        dsh.setData(typeIdToString(nType));
         dsh.setEdited(isEdited());
 
         connect(&dsh,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
