@@ -530,7 +530,7 @@ bool FormatWidget::createHeaderTable(int nType, QTableWidget *pTableWidget, cons
     return true;
 }
 
-bool FormatWidget::createListTable(int type, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nRecordCount)
+bool FormatWidget::createListTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nRecordCount)
 {
     pTableWidget->setColumnCount(2);
     pTableWidget->setRowCount(nRecordCount);
@@ -550,7 +550,7 @@ bool FormatWidget::createListTable(int type, QTableWidget *pTableWidget, const F
 
         ppLineEdits[i]=new XLineEditHEX(this);
 
-        ppLineEdits[i]->setProperty("STYPE",type);
+        ppLineEdits[i]->setProperty("STYPE",nType);
         ppLineEdits[i]->setProperty("NDATA",pRecords[i].nData);
 
         if(pRecords[i].vtype==FW_DEF::VAL_TYPE_TEXT)
@@ -579,7 +579,7 @@ bool FormatWidget::createListTable(int type, QTableWidget *pTableWidget, const F
 
     pTableWidget->horizontalHeader()->setSectionResizeMode(LIST_COLUMN_VALUE,QHeaderView::Stretch);
 
-    adjustListTable(type,pTableWidget);
+    adjustListTable(nType,pTableWidget);
 
     return true;
 }

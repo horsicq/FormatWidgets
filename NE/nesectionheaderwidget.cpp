@@ -67,7 +67,7 @@ void NESectionHeaderWidget::blockSignals(bool bState)
 
 }
 
-void NESectionHeaderWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
+void NESectionHeaderWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
 {
 
 }

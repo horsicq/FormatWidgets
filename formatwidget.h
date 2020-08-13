@@ -94,7 +94,7 @@ public:
     bool isReadonly();
     QTreeWidgetItem *createNewItem(int nType, QString sTitle, qint64 nOffset=0, qint64 nSize=0, qint64 nExtraOffset=0, qint64 nExtraSize=0);
     bool createHeaderTable(int nType,QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nRecordCount,int nPosition=0,qint64 nOffset=0);
-    bool createListTable(int type,QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nRecordCount);
+    bool createListTable(int nType,QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nRecordCount);
     void addComment(QTableWidget *pTableWidget,int nRow,int nColumn,QString sComment);
     void updateTableRecord(QTableWidget *pTableWidget,int nRow,qint64 nOffset,qint64 nSize);
 
