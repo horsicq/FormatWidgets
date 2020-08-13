@@ -66,7 +66,7 @@ void MACHSectionHeaderWidget::blockSignals(bool bState)
 
 }
 
-void MACHSectionHeaderWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
+void MACHSectionHeaderWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
 {
 
 }
