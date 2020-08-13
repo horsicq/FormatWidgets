@@ -20,9 +20,9 @@
 //
 #include "leprocessdata.h"
 
-LEProcessData::LEProcessData(int type, QStandardItemModel **ppModel, XLE *pLE, qint64 nOffset, qint64 nSize)
+LEProcessData::LEProcessData(int nType, QStandardItemModel **ppModel, XLE *pLE, qint64 nOffset, qint64 nSize)
 {
-    this->type=type;
+    this->nType=nType;
     this->ppModel=ppModel;
     this->pLE=pLE;
     this->nOffset=nOffset;
@@ -31,7 +31,7 @@ LEProcessData::LEProcessData(int type, QStandardItemModel **ppModel, XLE *pLE, q
 
 void LEProcessData::_process()
 {
-    if(type==SLE::TYPE_OBJECTS)
+    if(nType==SLE::TYPE_OBJECTS)
     {
         QList<QString> listLabels;
         listLabels.append("");
@@ -70,7 +70,7 @@ void LEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
 {
     int nSymbolWidth=XLineEditHEX::getSymbolWidth(pWidget);
 
-    if(type==SLE::TYPE_OBJECTS)
+    if(nType==SLE::TYPE_OBJECTS)
     {
         pTableView->setColumnWidth(0,nSymbolWidth*4);
         pTableView->setColumnWidth(1,nSymbolWidth*8);

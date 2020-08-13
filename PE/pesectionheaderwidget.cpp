@@ -320,11 +320,11 @@ void PESectionHeaderWidget::blockSignals(bool bState)
     _blockSignals((QObject **)ppComboBox,nComboBoxSize,bState);
 }
 
-void PESectionHeaderWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
+void PESectionHeaderWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
 {
     int nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
 
-    switch(type)
+    switch(nType)
     {
         case SPE::TYPE_IMAGE_SECTION_HEADER:
             pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
