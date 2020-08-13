@@ -264,9 +264,9 @@ void NEWidget::blockSignals(bool bState)
     _blockSignals((QObject **)comboBox,__CB_size,bState);
 }
 
-void NEWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
+void NEWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
 {
-    Q_UNUSED(type);
+    Q_UNUSED(nType);
 
     int nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
 
@@ -275,7 +275,7 @@ void NEWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
     pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_TYPE,QHeaderView::ResizeToContents);
     pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*12);
 
-    switch(type)
+    switch(nType)
     {
         case SNE::TYPE_DOS_HEADER:
             pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*15);
