@@ -652,9 +652,9 @@ void FormatWidget::updateTableRecord(QTableWidget *pTableWidget, int nRow, qint6
 //    return true;
 //}
 
-bool FormatWidget::createSectionTable(int type, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount)
+bool FormatWidget::createSectionTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount)
 {
-    Q_UNUSED(type)
+    Q_UNUSED(nType)
 
     QStringList slHeader;
 
