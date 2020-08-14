@@ -1785,11 +1785,11 @@ void PEWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
     }
 }
 
-QString PEWidget::typeIdToString(int type)
+QString PEWidget::typeIdToString(int nType)
 {
     QString sResult="Unknown";
 
-    switch(type)
+    switch(nType)
     {
         case SPE::TYPE_IMAGE_SECTION_HEADER:    sResult=QString("Section %1").arg(tr("Header"));            break;
         case SPE::TYPE_IMPORT:                  sResult=QString("Import %1").arg(tr("Header"));             break;
