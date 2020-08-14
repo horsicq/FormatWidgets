@@ -1803,13 +1803,13 @@ QString PEWidget::typeIdToString(int nType)
     return sResult;
 }
 
-bool PEWidget::createSectionTable(int type, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount)
+bool PEWidget::createSectionTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount)
 {
     int nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
 
     QStringList slHeader;
 
-    switch(type)
+    switch(nType)
     {
         case SPE::TYPE_IMAGE_DIRECTORY_ENTRIES:
             pTableWidget->setColumnCount(nRecordCount+2);
@@ -1831,7 +1831,7 @@ bool PEWidget::createSectionTable(int type, QTableWidget *pTableWidget, const FW
         slHeader.append(pRecords[i].sName);
     }
 
-    switch(type)
+    switch(nType)
     {
         case SPE::TYPE_IMAGE_DIRECTORY_ENTRIES:
             pTableWidget->horizontalHeader()->setSectionResizeMode(4,QHeaderView::Stretch);
