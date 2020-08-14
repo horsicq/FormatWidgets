@@ -1720,14 +1720,14 @@ void PEWidget::loadDelayImport(int nRow)
     }
 }
 
-void PEWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
+void PEWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
 {
     int nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
 
     pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
     pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*6);
 
-    switch(type)
+    switch(nType)
     {
         case SPE::TYPE_IMAGE_DOS_HEADER:
             pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*12);
