@@ -201,7 +201,7 @@ void MACHWidget::blockSignals(bool bState)
     _blockSignals((QObject **)comboBox,__CB_size,bState);
 }
 
-void MACHWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
+void MACHWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
 {
     int nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
 
@@ -209,7 +209,7 @@ void MACHWidget::adjustHeaderTable(int type, QTableWidget *pTableWidget)
     pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_OFFSET,QHeaderView::ResizeToContents);
     pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_TYPE,QHeaderView::ResizeToContents);
 
-    switch(type)
+    switch(nType)
     {
         case SMACH::TYPE_mach_header:
             pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*12);
