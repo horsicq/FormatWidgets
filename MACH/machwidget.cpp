@@ -578,13 +578,13 @@ void MACHWidget::on_checkBoxReadonly_toggled(bool bChecked)
     setReadonly(bChecked);
 }
 
-bool MACHWidget::createSectionTable(int type, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount)
+bool MACHWidget::createSectionTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount)
 {
     int nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
     QStringList slHeader;
 
     // TODO
-    switch(type)
+    switch(nType)
     {
         case SMACH::TYPE_mach_commands:
             slHeader.append(tr(""));
@@ -644,7 +644,7 @@ bool MACHWidget::createSectionTable(int type, QTableWidget *pTableWidget, const 
         slHeader.append(pRecords[i].sName);
     }
 
-    switch(type)
+    switch(nType)
     {
         case SMACH::TYPE_mach_commands:
             slHeader.append(tr("Type"));
