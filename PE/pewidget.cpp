@@ -1970,7 +1970,7 @@ void PEWidget::editBoundImportHeader()
     showSectionHeader(SPE::TYPE_BOUNDIMPORT,ui->tableView_BoundImport);
 }
 
-void PEWidget::showSectionHeader(int type, QTableView *pTableView)
+void PEWidget::showSectionHeader(int nType, QTableView *pTableView)
 {
     int nRow=pTableView->currentIndex().row();
 
@@ -1980,11 +1980,11 @@ void PEWidget::showSectionHeader(int type, QTableView *pTableView)
 
         qint64 nOffset=pTableView->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
 
-        PESectionHeaderWidget *pSectionHeaderWidget=new PESectionHeaderWidget(getDevice(),getOptions(),(quint32)nRow,nOffset,type,this);
+        PESectionHeaderWidget *pSectionHeaderWidget=new PESectionHeaderWidget(getDevice(),getOptions(),(quint32)nRow,nOffset,nType,this);
 
         DialogSectionHeader dsh(this);
         dsh.setWidget(pSectionHeaderWidget);
-        dsh.setData(typeIdToString(type));
+        dsh.setData(typeIdToString(nType));
         dsh.setEdited(isEdited());
 
         connect(&dsh,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));

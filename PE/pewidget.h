@@ -85,7 +85,7 @@ private slots:
     void editExceptionHeader();
     void editDelayImportHeader();
     void editBoundImportHeader();
-    void showSectionHeader(int type,QTableView *pTableView);
+    void showSectionHeader(int nType,QTableView *pTableView);
     void on_tableView_Sections_customContextMenuRequested(const QPoint &pos);
     void on_tableView_Sections_doubleClicked(const QModelIndex &index);
     void onTableView_Sections_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
