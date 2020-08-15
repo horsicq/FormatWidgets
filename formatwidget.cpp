@@ -123,9 +123,9 @@ void FormatWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
     Q_UNUSED(pTableWidget)
 }
 
-void FormatWidget::adjustListTable(int type, QTableWidget *pTableWidget)
+void FormatWidget::adjustListTable(int nType, QTableWidget *pTableWidget)
 {
-    Q_UNUSED(type)
+    Q_UNUSED(nType)
     Q_UNUSED(pTableWidget)
 }
 

@@ -118,7 +118,7 @@ public:
     virtual void setReadonly(bool bState)=0;
     virtual void blockSignals(bool bState)=0;
     virtual void adjustHeaderTable(int nType,QTableWidget *pTableWidget);
-    virtual void adjustListTable(int type,QTableWidget *pTableWidget);
+    virtual void adjustListTable(int nType,QTableWidget *pTableWidget);
     virtual QString typeIdToString(int nType);
     bool isEdited();
 
