@@ -752,12 +752,12 @@ void ELFWidget::loadNote(int nRow)
     }
 }
 
-void ELFWidget::on_tableWidget_Elf_Ehdr_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
+void ELFWidget::on_tableWidget_Elf_Ehdr_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
 {
-    Q_UNUSED(currentRow);
-    Q_UNUSED(currentColumn);
-    Q_UNUSED(previousRow);
-    Q_UNUSED(previousColumn);
+    Q_UNUSED(nCurrentRow);
+    Q_UNUSED(nCurrentColumn);
+    Q_UNUSED(nPreviousRow);
+    Q_UNUSED(nPreviousColumn);
 
     setHeaderTableSelection(ui->widgetHex_Elf_Ehdr,ui->tableWidget_Elf_Ehdr);
 }

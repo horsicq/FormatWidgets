@@ -64,7 +64,7 @@ private slots:
     void loadShdr(int nRow);
     void loadPhdr(int nRow);
     void loadNote(int nRow);
-    void on_tableWidget_Elf_Ehdr_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
+    void on_tableWidget_Elf_Ehdr_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn);
     void editSectionHeader();
     void sectionHex();
     void sectionEntropy();
