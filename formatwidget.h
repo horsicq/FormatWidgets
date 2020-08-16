@@ -111,7 +111,7 @@ public:
     XComboBoxEx *createComboBox(QTableWidget *pTableWidget, QMap<quint64,QString> mapData, int nType, int nData, XComboBoxEx::CBTYPE cbtype,quint64 nMask=0);
     InvWidget *createInvWidget(QTableWidget *pTableWidget, int nType, int nData,InvWidget::TYPE widgetType);
     XDateTimeEditX *createTimeDateEdit(QTableWidget *pTableWidget,int nType, int nData,XDateTimeEditX::DT_TYPE dtType);
-    QPushButton *createPushButton(QTableWidget *pTableWidget,int type, int nData,QString sText);
+    QPushButton *createPushButton(QTableWidget *pTableWidget,int nType, int nData,QString sText);
 
     void setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset);
     virtual bool _setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition,qint64 nOffset)=0;
@@ -122,7 +122,7 @@ public:
     virtual QString typeIdToString(int nType);
     bool isEdited();
 
-    QPushButton *createHexButton(QTableWidget *pTableWidget,int type, int nData);
+//    QPushButton *createHexButton(QTableWidget *pTableWidget,int nType, int nData);
 
     bool loadHexSubdevice(qint64 nOffset, qint64 nSize, qint64 nAddress, SubDevice **ppSubDevice, ToolsWidget *pToolsWidget);
     bool loadHexSubdeviceByTableView(int nRow, int nType, ToolsWidget *pToolsWidget, QTableView *pTableView, SubDevice **ppSubDevice);

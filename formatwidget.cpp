@@ -785,12 +785,12 @@ XDateTimeEditX *FormatWidget::createTimeDateEdit(QTableWidget *pTableWidget, int
     return result;
 }
 
-QPushButton *FormatWidget::createPushButton(QTableWidget *pTableWidget, int type, int nData, QString sText)
+QPushButton *FormatWidget::createPushButton(QTableWidget *pTableWidget, int nType, int nData, QString sText)
 {
     QPushButton *result=new QPushButton(this);
 
     result->setText(sText);
-    result->setProperty("STYPE",type);
+    result->setProperty("STYPE",nType);
     result->setProperty("NDATA",nData);
 
     connect(result,SIGNAL(clicked()),this,SLOT(widgetAction()));
