@@ -1858,15 +1858,15 @@ void PEWidget::enableButton()
     ui->pushButtonReload->setEnabled(true);
 }
 
-void PEWidget::on_tableWidget_IMAGE_DIRECTORY_ENTRIES_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
+void PEWidget::on_tableWidget_IMAGE_DIRECTORY_ENTRIES_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
 {
-    Q_UNUSED(currentColumn)
-    Q_UNUSED(previousRow)
-    Q_UNUSED(previousColumn)
+    Q_UNUSED(nCurrentColumn)
+    Q_UNUSED(nPreviousRow)
+    Q_UNUSED(nPreviousColumn)
 
-    if(currentRow!=-1)
+    if(nCurrentRow!=-1)
     {
-        loadDirectory(currentRow);
+        loadDirectory(nCurrentRow);
     }
 }
 
