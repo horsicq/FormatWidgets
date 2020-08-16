@@ -109,8 +109,8 @@ public:
 
     void _blockSignals(QObject **ppObjects,int nCount,bool bState);
     XComboBoxEx *createComboBox(QTableWidget *pTableWidget, QMap<quint64,QString> mapData, int nType, int nData, XComboBoxEx::CBTYPE cbtype,quint64 nMask=0);
-    InvWidget *createInvWidget(QTableWidget *pTableWidget, int type, int nData,InvWidget::TYPE widgetType);
-    XDateTimeEditX *createTimeDateEdit(QTableWidget *pTableWidget,int type, int nData,XDateTimeEditX::DT_TYPE dtType);
+    InvWidget *createInvWidget(QTableWidget *pTableWidget, int nType, int nData,InvWidget::TYPE widgetType);
+    XDateTimeEditX *createTimeDateEdit(QTableWidget *pTableWidget,int nType, int nData,XDateTimeEditX::DT_TYPE dtType);
     QPushButton *createPushButton(QTableWidget *pTableWidget,int type, int nData,QString sText);
 
     void setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset);

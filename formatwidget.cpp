@@ -756,11 +756,11 @@ XComboBoxEx *FormatWidget::createComboBox(QTableWidget *pTableWidget, QMap<quint
     return result;
 }
 
-InvWidget *FormatWidget::createInvWidget(QTableWidget *pTableWidget, int type, int nData, InvWidget::TYPE widgetType)
+InvWidget *FormatWidget::createInvWidget(QTableWidget *pTableWidget, int nType, int nData, InvWidget::TYPE widgetType)
 {
     InvWidget *result=new InvWidget(this,widgetType);
 
-    result->setProperty("STYPE",type);
+    result->setProperty("STYPE",nType);
     result->setProperty("NDATA",nData);
 
     connect(result,SIGNAL(showHex(qint64,qint64)),this,SLOT(showHex(qint64,qint64)));
@@ -770,12 +770,12 @@ InvWidget *FormatWidget::createInvWidget(QTableWidget *pTableWidget, int type, i
     return result;
 }
 
-XDateTimeEditX *FormatWidget::createTimeDateEdit(QTableWidget *pTableWidget, int type, int nData, XDateTimeEditX::DT_TYPE dtType)
+XDateTimeEditX *FormatWidget::createTimeDateEdit(QTableWidget *pTableWidget, int nType, int nData, XDateTimeEditX::DT_TYPE dtType)
 {
     XDateTimeEditX *result=new XDateTimeEditX(this);
     result->setType(dtType);
 
-    result->setProperty("STYPE",type);
+    result->setProperty("STYPE",nType);
     result->setProperty("NDATA",nData);
 
     connect(result,SIGNAL(valueChanged(quint64)),this,SLOT(widgetValueChanged(quint64)));
