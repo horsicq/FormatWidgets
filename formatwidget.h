@@ -108,7 +108,7 @@ public:
     void _deleteObjects(QObject **ppObjects,int nCount);
 
     void _blockSignals(QObject **ppObjects,int nCount,bool bState);
-    XComboBoxEx *createComboBox(QTableWidget *pTableWidget, QMap<quint64,QString> mapData, int type, int nData, XComboBoxEx::CBTYPE cbtype,quint64 nMask=0);
+    XComboBoxEx *createComboBox(QTableWidget *pTableWidget, QMap<quint64,QString> mapData, int nType, int nData, XComboBoxEx::CBTYPE cbtype,quint64 nMask=0);
     InvWidget *createInvWidget(QTableWidget *pTableWidget, int type, int nData,InvWidget::TYPE widgetType);
     XDateTimeEditX *createTimeDateEdit(QTableWidget *pTableWidget,int type, int nData,XDateTimeEditX::DT_TYPE dtType);
     QPushButton *createPushButton(QTableWidget *pTableWidget,int type, int nData,QString sText);
