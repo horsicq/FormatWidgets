@@ -76,9 +76,9 @@ private slots:
     void on_tableWidget_IMAGE_NT_HEADERS_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn);
     void on_tableWidget_IMAGE_FILE_HEADER_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn);
     void on_tableWidget_IMAGE_OPTIONAL_HEADER_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn);
-    void on_tableWidget_LoadConfig_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
+    void on_tableWidget_LoadConfig_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn);
     void on_tableWidget_NetHeader_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
-    void on_tableWidget_TLS_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
+    void on_tableWidget_TLS_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn);
     void editImportHeader();
     void editDebugHeader();
     void editRelocsHeader();
