@@ -549,12 +549,12 @@ void NEWidget::enableButton()
     ui->pushButtonReload->setEnabled(true);
 }
 
-void NEWidget::on_tableWidget_DOS_HEADER_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
+void NEWidget::on_tableWidget_DOS_HEADER_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
 {
-    Q_UNUSED(currentRow);
-    Q_UNUSED(currentColumn);
-    Q_UNUSED(previousRow);
-    Q_UNUSED(previousColumn);
+    Q_UNUSED(nCurrentRow);
+    Q_UNUSED(nCurrentColumn);
+    Q_UNUSED(nPreviousRow);
+    Q_UNUSED(nPreviousColumn);
 
     setHeaderTableSelection(ui->widgetHex_DOS_HEADER,ui->tableWidget_DOS_HEADER);
 }
