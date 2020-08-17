@@ -700,13 +700,13 @@ void MACHWidget::on_tableWidget_segments_currentCellChanged(int nCurrentRow, int
 
 void MACHWidget::on_tableWidget_sections_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
 {
-    Q_UNUSED(currentColumn)
-    Q_UNUSED(previousRow)
-    Q_UNUSED(previousColumn)
+    Q_UNUSED(nCurrentColumn)
+    Q_UNUSED(nPreviousRow)
+    Q_UNUSED(nPreviousColumn)
 
-    if(currentRow!=-1)
+    if(nCurrentRow!=-1)
     {
-        loadSection(currentRow);
+        loadSection(nCurrentRow);
     }
 }
 
