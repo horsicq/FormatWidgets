@@ -644,6 +644,8 @@ void ELFWidget::addDatasets(XELF *pElf, QTreeWidgetItem *pParent, QList<XBinary:
 
 bool ELFWidget::createSectionTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount)
 {
+    Q_UNUSED(nType)
+
     QStringList slHeader;
 
     pTableWidget->setRowCount(0);
