@@ -661,15 +661,15 @@ bool MACHWidget::createSectionTable(int nType, QTableWidget *pTableWidget, const
     return true;
 }
 
-void MACHWidget::on_tableWidget_commands_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
+void MACHWidget::on_tableWidget_commands_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
 {
-    Q_UNUSED(currentColumn)
-    Q_UNUSED(previousRow)
-    Q_UNUSED(previousColumn)
+    Q_UNUSED(nCurrentColumn)
+    Q_UNUSED(nPreviousRow)
+    Q_UNUSED(nPreviousColumn)
 
-    if(currentRow!=-1)
+    if(nCurrentRow!=-1)
     {
-        loadCommand(currentRow);
+        loadCommand(nCurrentRow);
     }
 }
 
@@ -686,19 +686,19 @@ void MACHWidget::enableButton()
     ui->pushButtonReload->setEnabled(true);
 }
 
-void MACHWidget::on_tableWidget_segments_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
+void MACHWidget::on_tableWidget_segments_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
 {
-    Q_UNUSED(currentColumn)
-    Q_UNUSED(previousRow)
-    Q_UNUSED(previousColumn)
+    Q_UNUSED(nCurrentColumn)
+    Q_UNUSED(nPreviousRow)
+    Q_UNUSED(nPreviousColumn)
 
-    if(currentRow!=-1)
+    if(nCurrentRow!=-1)
     {
-        loadSegment(currentRow);
+        loadSegment(nCurrentRow);
     }
 }
 
-void MACHWidget::on_tableWidget_sections_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
+void MACHWidget::on_tableWidget_sections_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
 {
     Q_UNUSED(currentColumn)
     Q_UNUSED(previousRow)
@@ -737,12 +737,12 @@ void MACHWidget::loadSection(int nNumber)
     loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SMACH::TYPE_mach_sections],ui->widgetHex_sections);
 }
 
-void MACHWidget::on_tableWidget_mach_header_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
+void MACHWidget::on_tableWidget_mach_header_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
 {
-    Q_UNUSED(currentRow);
-    Q_UNUSED(currentColumn);
-    Q_UNUSED(previousRow);
-    Q_UNUSED(previousColumn);
+    Q_UNUSED(nCurrentRow);
+    Q_UNUSED(nCurrentColumn);
+    Q_UNUSED(nPreviousRow);
+    Q_UNUSED(nPreviousColumn);
 
     setHeaderTableSelection(ui->widgetHex_mach_header,ui->tableWidget_mach_header);
 }
