@@ -113,7 +113,7 @@ private slots:
     void on_pushButtonEntropy_clicked();
     void on_pushButtonHeuristicScan_clicked();
     void on_pushButtonDisasm_clicked();
-    void on_tableWidget_Net_Metadata_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
+    void on_tableWidget_Net_Metadata_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn);
 
 private:
     enum CB
