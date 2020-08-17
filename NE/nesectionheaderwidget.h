@@ -56,7 +56,7 @@ private slots:
     void on_checkBoxReadonly_toggled(bool bChecked);
     void reloadData();
 
-    void on_tableWidget_Section_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
+    void on_tableWidget_Section_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn);
 
 private:
     enum INV

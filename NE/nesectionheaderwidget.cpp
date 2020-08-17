@@ -82,7 +82,7 @@ void NESectionHeaderWidget::reloadData()
 
 }
 
-void NESectionHeaderWidget::on_tableWidget_Section_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
+void NESectionHeaderWidget::on_tableWidget_Section_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
 {
 
 }
