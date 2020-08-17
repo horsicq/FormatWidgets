@@ -1920,12 +1920,12 @@ void PEWidget::on_tableWidget_LoadConfig_currentCellChanged(int nCurrentRow, int
     setHeaderTableSelection(ui->widgetHex_LoadConfig,ui->tableWidget_LoadConfig);
 }
 
-void PEWidget::on_tableWidget_NetHeader_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
+void PEWidget::on_tableWidget_NetHeader_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
 {
-    Q_UNUSED(currentRow)
-    Q_UNUSED(currentColumn)
-    Q_UNUSED(previousRow)
-    Q_UNUSED(previousColumn)
+    Q_UNUSED(nCurrentRow)
+    Q_UNUSED(nCurrentColumn)
+    Q_UNUSED(nPreviousRow)
+    Q_UNUSED(nPreviousColumn)
 
     setHeaderTableSelection(ui->widgetHex_NetHeader,ui->tableWidget_NetHeader);
 }
