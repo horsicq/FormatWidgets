@@ -55,8 +55,8 @@ void FormatsWidget::setData(QString sFileName, bool bScan)
 
     for(int i=0;i<nCount;i++)
     {
-        XBinary::FT ft=listFileTypes.at(i);
-        ui->comboBoxFileType->addItem(XBinary::fileTypeIdToString(ft),ft);
+        XBinary::FT fileType=listFileTypes.at(i);
+        ui->comboBoxFileType->addItem(XBinary::fileTypeIdToString(fileType),fileType);
     }
 
     if(nCount)
