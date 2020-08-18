@@ -328,7 +328,7 @@ void FormatsWidget::on_pushButtonDisasm_clicked()
     {
         XDisasmModel::SHOWOPTIONS showOptions={};
         XDisasm::OPTIONS disasmOptions={};
-        disasmOptions.ft=getCurrentFileType();
+        disasmOptions.fileType=getCurrentFileType();
 
         DialogDisasm dialogDisasm(this,&file,&showOptions,&disasmOptions); // TODO File_Type
 
