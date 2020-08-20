@@ -521,11 +521,11 @@ void NEWidget::widgetValueChanged(quint64 nValue)
 }
 }
 
-void NEWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
+void NEWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent, QTreeWidgetItem *pPrevious)
 {
-    Q_UNUSED(previous)
+    Q_UNUSED(pPrevious)
 
-    if(current)
+    if(pCurrent)
     {
         reloadData();
     }
