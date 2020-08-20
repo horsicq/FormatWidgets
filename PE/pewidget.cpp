@@ -630,11 +630,11 @@ void PEWidget::blockSignals(bool bState)
     _blockSignals((QObject **)dateTimeEdit,__TD_size,bState);
 }
 
-void PEWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
+void PEWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent, QTreeWidgetItem *pPrevious)
 {
-    Q_UNUSED(previous)
+    Q_UNUSED(pPrevious)
 
-    if(current)
+    if(pCurrent)
     {
         reloadData();
     }
