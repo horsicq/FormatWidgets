@@ -1076,14 +1076,14 @@ void PEWidget::reloadData()
 
                     XPE_DEF::IMAGE_DATA_DIRECTORY dd=pe.getOptionalHeader_DataDirectory((quint32)i);
 
-                    QTableWidgetItem *itemNumber=new QTableWidgetItem(QString::number(i));
+                    QTableWidgetItem *pItemNumber=new QTableWidgetItem(QString::number(i));
 
-                    itemNumber->setData(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE,dd.Size);
+                    pItemNumber->setData(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE,dd.Size);
 
                     if(i!=XPE_DEF::S_IMAGE_DIRECTORY_ENTRY_SECURITY)
                     {
-                        itemNumber->setData(Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS,dd.VirtualAddress);
-                        itemNumber->setData(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET,pe.addressToOffset(&memoryMap,memoryMap.nBaseAddress+dd.VirtualAddress));
+                        pItemNumber->setData(Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS,dd.VirtualAddress);
+                        pItemNumber->setData(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET,pe.addressToOffset(&memoryMap,memoryMap.nBaseAddress+dd.VirtualAddress));
 
                         if((dd.VirtualAddress)&&(pe.isRelAddressValid(&memoryMap,dd.VirtualAddress)))
                         {
@@ -1092,8 +1092,8 @@ void PEWidget::reloadData()
                     }
                     else
                     {
-                        itemNumber->setData(Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS,dd.VirtualAddress);
-                        itemNumber->setData(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET,dd.VirtualAddress);
+                        pItemNumber->setData(Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS,dd.VirtualAddress);
+                        pItemNumber->setData(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET,dd.VirtualAddress);
 
                         if((dd.VirtualAddress)&&(pe.isOffsetValid(&memoryMap,dd.VirtualAddress)))
                         {
@@ -1101,7 +1101,7 @@ void PEWidget::reloadData()
                         }
                     }
 
-                    ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->setItem(i,0,itemNumber);
+                    ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->setItem(i,0,pItemNumber);
 
                     ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->setItem(i,1,new QTableWidgetItem(mapDD.value(i)));
                     ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->setItem(i,2,new QTableWidgetItem(XBinary::valueToHex(dd.VirtualAddress)));
