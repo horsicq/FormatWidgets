@@ -50,29 +50,29 @@ void PEProcessData::_process()
 
         for(int i=0; i<nCount; i++)
         {
-            QStandardItem *itemNumber=new QStandardItem;
-            itemNumber->setData(i,Qt::DisplayRole);
+            QStandardItem *pItemNumber=new QStandardItem;
+            pItemNumber->setData(i,Qt::DisplayRole);
 
-            itemNumber->setData(listSections.at(i).VirtualAddress,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS);
+            pItemNumber->setData(listSections.at(i).VirtualAddress,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS);
 
             if(pPE->isImage())
             {
-                itemNumber->setData(listSections.at(i).Misc.VirtualSize,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
-                itemNumber->setData(listSections.at(i).VirtualAddress,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+                pItemNumber->setData(listSections.at(i).Misc.VirtualSize,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
+                pItemNumber->setData(listSections.at(i).VirtualAddress,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
             }
             else
             {
-                itemNumber->setData(listSections.at(i).SizeOfRawData,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
-                itemNumber->setData(listSections.at(i).PointerToRawData,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+                pItemNumber->setData(listSections.at(i).SizeOfRawData,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
+                pItemNumber->setData(listSections.at(i).PointerToRawData,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
             }
 
-            (*ppModel)->setItem(i,0,itemNumber);
+            (*ppModel)->setItem(i,0,pItemNumber);
 
-            QStandardItem *itemName=new QStandardItem();
+            QStandardItem *pItemName=new QStandardItem();
             QString sName=QString((char *)listSections.at(i).Name);
             sName.resize(qMin(sName.length(),XPE_DEF::S_IMAGE_SIZEOF_SHORT_NAME));
-            itemName->setText(sName);
-            (*ppModel)->setItem(i,N_IMAGE_SECTION_HEADER::Name+1,itemName);
+            pItemName->setText(sName);
+            (*ppModel)->setItem(i,N_IMAGE_SECTION_HEADER::Name+1,pItemName);
 
             (*ppModel)->setItem(i,N_IMAGE_SECTION_HEADER::VirtualSize+1,          new QStandardItem(XBinary::valueToHex(listSections.at(i).Misc.VirtualSize)));
             (*ppModel)->setItem(i,N_IMAGE_SECTION_HEADER::VirtualAddress+1,       new QStandardItem(XBinary::valueToHex(listSections.at(i).VirtualAddress)));

@@ -49,10 +49,10 @@ void LEProcessData::_process()
 
         for(int i=0; i<nCount; i++)
         {
-            QStandardItem *itemNumber=new QStandardItem;
-            itemNumber->setData(i,Qt::DisplayRole);
+            QStandardItem *pItemNumber=new QStandardItem;
+            pItemNumber->setData(i,Qt::DisplayRole);
 
-            (*ppModel)->setItem(i,0,itemNumber);
+            (*ppModel)->setItem(i,0,pItemNumber);
 
             (*ppModel)->setItem(i,N_O32_OBJ::o32_size+1,            new QStandardItem(XBinary::valueToHex(listObjects.at(i).o32_size)));
             (*ppModel)->setItem(i,N_O32_OBJ::o32_base+1,            new QStandardItem(XBinary::valueToHex(listObjects.at(i).o32_base)));
