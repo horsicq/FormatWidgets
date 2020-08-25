@@ -51,7 +51,6 @@ DialogProcessData::~DialogProcessData()
     pThread->wait();
 
     delete ui;
-
     delete pThread;
 }
 
