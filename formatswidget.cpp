@@ -162,6 +162,13 @@ void FormatsWidget::reload()
         else if(fileType==XBinary::FT_COM)
         {
             ui->stackedWidgetMain->setCurrentIndex(TABINFO_COM);
+
+            XCOM com(&file);
+
+            if(com.isValid())
+            {
+                ui->lineEditEntryPoint->setValue((quint16)com.getEntryPointAddress());
+            }
         }
         else if(fileType==XBinary::FT_MSDOS)
         {
