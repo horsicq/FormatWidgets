@@ -57,22 +57,22 @@ void ELFProcessData::_process()
         QList<XELF_DEF::Elf64_Shdr> listSections64;
         QList<XELF_DEF::Elf32_Shdr> listSections32;
 
-        int nCount=0;
+        int nNumberOfSections=0;
 
         if(bIs64)
         {
             listSections64=pELF->getElf64_ShdrList();
-            nCount=listSections64.count();
+            nNumberOfSections=listSections64.count();
         }
         else
         {
             listSections32=pELF->getElf32_ShdrList();
-            nCount=listSections32.count();
+            nNumberOfSections=listSections32.count();
         }
 
-        *ppModel=new QStandardItemModel(nCount,listLabels.count());
+        *ppModel=new QStandardItemModel(nNumberOfSections,listLabels.count());
 
-        setMaximum(nCount);
+        setMaximum(nNumberOfSections);
 
         setHeader(*ppModel,&listLabels);
 
@@ -80,7 +80,7 @@ void ELFProcessData::_process()
 
         XBinary::OFFSETSIZE osStringTable=pELF->getSectionOffsetSize(nMainStringSection);
 
-        for(int i=0;(i<nCount)&&(isRun());i++)
+        for(int i=0;(i<nNumberOfSections)&&(isRun());i++)
         {
             if(bIs64)
             {
@@ -175,26 +175,26 @@ void ELFProcessData::_process()
         QList<XELF_DEF::Elf64_Phdr> listPrograms64;
         QList<XELF_DEF::Elf32_Phdr> listPrograms32;
 
-        int nCount=0;
+        int nNumerOfPrograms=0;
 
         if(bIs64)
         {
             listPrograms64=pELF->getElf64_PhdrList();
-            nCount=listPrograms64.count();
+            nNumerOfPrograms=listPrograms64.count();
         }
         else
         {
             listPrograms32=pELF->getElf32_PhdrList();
-            nCount=listPrograms32.count();
+            nNumerOfPrograms=listPrograms32.count();
         }
 
-        *ppModel=new QStandardItemModel(nCount,listLabels.count());
+        *ppModel=new QStandardItemModel(nNumerOfPrograms,listLabels.count());
 
-        setMaximum(nCount);
+        setMaximum(nNumerOfPrograms);
 
         setHeader(*ppModel,&listLabels);
 
-        for(int i=0;(i<nCount)&&(isRun());i++)
+        for(int i=0;(i<nNumerOfPrograms)&&(isRun());i++)
         {
             if(bIs64)
             {
