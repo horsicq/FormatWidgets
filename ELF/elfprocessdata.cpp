@@ -317,15 +317,15 @@ void ELFProcessData::_process()
 
             QList<XELF_DEF::Elf32_Sym> listSymbols=pELF->getElf32_SymList(nOffset,nSize);
 
-            int nCount=listSymbols.count();
+            int nNumberOfSymbols=listSymbols.count();
 
-            *ppModel=new QStandardItemModel(nCount,listLabels.count());
+            *ppModel=new QStandardItemModel(nNumberOfSymbols,listLabels.count());
 
-            setMaximum(nCount);
+            setMaximum(nNumberOfSymbols);
 
             setHeader(*ppModel,&listLabels);
 
-            for(int i=0;(i<nCount)&&(isRun());i++)
+            for(int i=0;(i<nNumberOfSymbols)&&(isRun());i++)
             {
                 QStandardItem *pItem=new QStandardItem;
                 pItem->setText(QString::number(i));
