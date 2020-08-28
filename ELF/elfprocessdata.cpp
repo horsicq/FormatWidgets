@@ -175,26 +175,26 @@ void ELFProcessData::_process()
         QList<XELF_DEF::Elf64_Phdr> listPrograms64;
         QList<XELF_DEF::Elf32_Phdr> listPrograms32;
 
-        int nNumerOfPrograms=0;
+        int nNumberOfPrograms=0;
 
         if(bIs64)
         {
             listPrograms64=pELF->getElf64_PhdrList();
-            nNumerOfPrograms=listPrograms64.count();
+            nNumberOfPrograms=listPrograms64.count();
         }
         else
         {
             listPrograms32=pELF->getElf32_PhdrList();
-            nNumerOfPrograms=listPrograms32.count();
+            nNumberOfPrograms=listPrograms32.count();
         }
 
-        *ppModel=new QStandardItemModel(nNumerOfPrograms,listLabels.count());
+        *ppModel=new QStandardItemModel(nNumberOfPrograms,listLabels.count());
 
-        setMaximum(nNumerOfPrograms);
+        setMaximum(nNumberOfPrograms);
 
         setHeader(*ppModel,&listLabels);
 
-        for(int i=0;(i<nNumerOfPrograms)&&(isRun());i++)
+        for(int i=0;(i<nNumberOfPrograms)&&(isRun());i++)
         {
             if(bIs64)
             {
@@ -270,15 +270,15 @@ void ELFProcessData::_process()
 
             QList<XELF_DEF::Elf64_Sym> listSymbols=pELF->getElf64_SymList(nOffset,nSize);
 
-            int nCount=listSymbols.count();
+            int nNumberOfSymbols=listSymbols.count();
 
-            *ppModel=new QStandardItemModel(nCount,listLabels.count());
+            *ppModel=new QStandardItemModel(nNumberOfSymbols,listLabels.count());
 
-            setMaximum(nCount);
+            setMaximum(nNumberOfSymbols);
 
             setHeader(*ppModel,&listLabels);
 
-            for(int i=0;(i<nCount)&&(isRun());i++)
+            for(int i=0;(i<nNumberOfSymbols)&&(isRun());i++)
             {
                 QStandardItem *pItem=new QStandardItem;
                 pItem->setText(QString::number(i));
