@@ -308,13 +308,13 @@ void SearchStrings::processModel()
     QElapsedTimer scanTimer;
     scanTimer.start();
 
-    int nCount=pListRecords->count();
-    *ppModel=new QStandardItemModel(nCount,4); // TODO Check maximum
+    int nNumberOfRecords=pListRecords->count();
+    *ppModel=new QStandardItemModel(nNumberOfRecords,4); // TODO Check maximum
 
     qint64 nBaseAddress=options.nBaseAddress;
     qint32 nAddressWidth=options.nAddressWidth;
 
-    qint64 _nProcent=nCount/100;
+    qint64 _nProcent=nNumberOfRecords/100;
     qint32 _nCurrentProcent=0;
 
     emit progressValue(_nCurrentProcent);
@@ -328,7 +328,7 @@ void SearchStrings::processModel()
 
     bIsStop=false;
 
-    for(int i=0; (i<nCount)&&(!bIsStop); i++)
+    for(int i=0; (i<nNumberOfRecords)&&(!bIsStop); i++)
     {
         SearchStrings::RECORD record=pListRecords->at(i);
 

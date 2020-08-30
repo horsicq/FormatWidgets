@@ -410,15 +410,15 @@ void ELFProcessData::_process()
 
         QList<XELF::NOTE> listNotes=pELF->_getNotes(nOffset,nSize,pELF->isBigEndian());
 
-        int nCount=listNotes.count();
+        int nNumberOfNotes=listNotes.count();
 
-        *ppModel=new QStandardItemModel(nCount,listLabels.count());
+        *ppModel=new QStandardItemModel(nNumberOfNotes,listLabels.count());
 
-        setMaximum(nCount);
+        setMaximum(nNumberOfNotes);
 
         setHeader(*ppModel,&listLabels);
 
-        for(int i=0;(i<nCount)&&(isRun());i++)
+        for(int i=0;(i<nNumberOfNotes)&&(isRun());i++)
         {
             QStandardItem *pItem=new QStandardItem(QString::number(i));
 
