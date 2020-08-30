@@ -195,9 +195,9 @@ void PEWidget::reload()
                 QTreeWidgetItem *pNetMetadata=createNewItem(SPE::TYPE_NET_METADATA,"Metadata");
                 pNetHeader->addChild(pNetMetadata);
 
-                int nCount=cliInfo.cliMetadata.listStreams.count();
+                int nNumberOfStreams=cliInfo.cliMetadata.listStreams.count();
 
-                for(int i=0;i<nCount;i++)
+                for(int i=0;i<nNumberOfStreams;i++)
                 {
                     pNetMetadata->addChild(createNewItem(SPE::TYPE_NET_METADATA_STREAM,
                                                          cliInfo.cliMetadata.listStreams.at(i).sName,
