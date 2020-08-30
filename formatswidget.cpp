@@ -439,6 +439,16 @@ void FormatsWidget::on_pushButtonMACHSections_clicked()
     showMACH(SMACH::TYPE_mach_sections);
 }
 
+void FormatsWidget::on_pushButtonMACHCommands_clicked()
+{
+    showMACH(SMACH::TYPE_mach_commands);
+}
+
+void FormatsWidget::on_pushButtonMACHLibraries_clicked()
+{
+    showMACH(SMACH::TYPE_mach_libraries);
+}
+
 void FormatsWidget::showMSDOS(SMSDOS::TYPE type)
 {
     QFile file;
