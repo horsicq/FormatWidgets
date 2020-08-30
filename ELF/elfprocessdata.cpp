@@ -374,17 +374,17 @@ void ELFProcessData::_process()
 
         QList<XELF::TAG_STRUCT> listTagStructs=pELF->_getTagStructs(nOffset,nSize,bIs64,pELF->isBigEndian());
 
-        int nCount=listTagStructs.count();
+        int nNumberOfTags=listTagStructs.count();
 
-        *ppModel=new QStandardItemModel(nCount,listLabels.count());
+        *ppModel=new QStandardItemModel(nNumberOfTags,listLabels.count());
 
-        setMaximum(nCount);
+        setMaximum(nNumberOfTags);
 
         setHeader(*ppModel,&listLabels);
 
         QMap<quint64,QString> mapTags=pELF->getDynamicTagsS();
 
-        for(int i=0;(i<nCount)&&(isRun());i++)
+        for(int i=0;(i<nNumberOfTags)&&(isRun());i++)
         {
             QStandardItem *pItem=new QStandardItem(QString::number(i));
 
