@@ -334,13 +334,13 @@ void MACHWidget::reloadData()
 
                 QList<XMACH::COMMAND_RECORD> listCommandRecords=mach.getCommandRecords();
 
-                int nCount=listCommandRecords.count();
+                int nNumberOfCommands=listCommandRecords.count();
 
-                ui->tableWidget_commands->setRowCount(nCount);
+                ui->tableWidget_commands->setRowCount(nNumberOfCommands);
 
                 QMap<quint64,QString> mapLC=mach.getLoadCommandTypesS();
 
-                for(int i=0; i<nCount; i++)
+                for(int i=0; i<nNumberOfCommands; i++)
                 {
                     QTableWidgetItem *pItem=new QTableWidgetItem(QString::number(i));
 
@@ -354,7 +354,7 @@ void MACHWidget::reloadData()
                     ui->tableWidget_commands->setItem(i,N_mach_commands::cmdsize+2,     new QTableWidgetItem(mapLC.value(listCommandRecords.at(i).nType)));
                 }
 
-                if(nCount)
+                if(nNumberOfCommands)
                 {
                     if(ui->tableWidget_commands->currentRow()==0)
                     {
