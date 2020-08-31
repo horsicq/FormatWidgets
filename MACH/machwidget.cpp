@@ -381,11 +381,11 @@ void MACHWidget::reloadData()
 
                 QList<XMACH::SEGMENT_RECORD> listSegmentRecords=mach.getSegmentRecords();
 
-                int nCount=listSegmentRecords.count();
+                int nNumberOfSegments=listSegmentRecords.count();
 
-                ui->tableWidget_segments->setRowCount(nCount);
+                ui->tableWidget_segments->setRowCount(nNumberOfSegments);
 
-                for(int i=0; i<nCount; i++)
+                for(int i=0; i<nNumberOfSegments; i++)
                 {
                     QTableWidgetItem *pItem=new QTableWidgetItem(QString::number(i));
 
@@ -426,7 +426,7 @@ void MACHWidget::reloadData()
                     ui->tableWidget_segments->setItem(i,N_mach_segments::flags+1,           new QTableWidgetItem(XBinary::valueToHex((quint32)listSegmentRecords.at(i).flags)));
                 }
 
-                if(nCount)
+                if(nNumberOfSegments)
                 {
                     if(ui->tableWidget_segments->currentRow()==0)
                     {
