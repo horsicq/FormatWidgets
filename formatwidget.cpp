@@ -337,9 +337,9 @@ bool FormatWidget::_setTreeItem(QTreeWidget *pTree, QTreeWidgetItem *pItem, int 
     }
     else
     {
-        int nCount=pItem->childCount();
+        int nNumberOfChilds=pItem->childCount();
 
-        for(int i=0;i<nCount;i++)
+        for(int i=0;i<nNumberOfChilds;i++)
         {
             if(_setTreeItem(pTree,pItem->child(i),nID))
             {
