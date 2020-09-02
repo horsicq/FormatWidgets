@@ -453,11 +453,11 @@ void MACHWidget::reloadData()
 
                 QList<XMACH::SECTION_RECORD> listSectionRecords=mach.getSectionRecords();
 
-                int nCount=listSectionRecords.count();
+                int nNumberOfSections=listSectionRecords.count();
 
-                ui->tableWidget_sections->setRowCount(nCount);
+                ui->tableWidget_sections->setRowCount(nNumberOfSections);
 
-                for(int i=0; i<nCount; i++)
+                for(int i=0; i<nNumberOfSections; i++)
                 {
                     QTableWidgetItem *pItem=new QTableWidgetItem(QString::number(i));
 
@@ -495,7 +495,7 @@ void MACHWidget::reloadData()
                     ui->tableWidget_sections->setItem(i,N_mach_sections::flags+1,       new QTableWidgetItem(XBinary::valueToHex((quint32)listSectionRecords.at(i).flags)));
                 }
 
-                if(nCount)
+                if(nNumberOfSections)
                 {
                     if(ui->tableWidget_sections->currentRow()==0)
                     {
