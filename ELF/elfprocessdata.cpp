@@ -442,15 +442,15 @@ void ELFProcessData::_process()
 
         QList<QString> listLibraries=pELF->getLibraries();
 
-        int nCount=listLibraries.count();
+        int nNumberOfLibraries=listLibraries.count();
 
-        *ppModel=new QStandardItemModel(nCount,listLabels.count());
+        *ppModel=new QStandardItemModel(nNumberOfLibraries,listLabels.count());
 
-        setMaximum(nCount);
+        setMaximum(nNumberOfLibraries);
 
         setHeader(*ppModel,&listLabels);
 
-        for(int i=0;(i<nCount)&&(isRun());i++)
+        for(int i=0;(i<nNumberOfLibraries)&&(isRun());i++)
         {
             QStandardItem *pItem=new QStandardItem(QString::number(i));
 
