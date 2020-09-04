@@ -113,11 +113,11 @@ void SearchStringsWidget::on_pushButtonSave_clicked()
 
             if(file.open(QIODevice::ReadWrite))
             {
-                int nCount=pModel->rowCount();
+                int nNumberOfRows=pModel->rowCount();
 
                 QString sResult;
 
-                for(int i=0; i<nCount; i++)
+                for(int i=0; i<nNumberOfRows; i++)
                 {
                     sResult+=QString("%1\t%2\t%3\t%4\r\n")
                              .arg(pModel->item(i,0)->text())
