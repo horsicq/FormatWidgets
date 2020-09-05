@@ -485,22 +485,22 @@ void ELFProcessData::_process()
         QList<XELF_DEF::Elf64_Rela> listRela64;
         QList<XELF_DEF::Elf32_Rela> listRela32;
 
-        int nCount=0;
+        int nNumberOfRels=0;
 
         if(bIs64)
         {
             listRela64=pELF->getElf64_RelaList(nOffset,nSize);
-            nCount=listRela64.count();
+            nNumberOfRels=listRela64.count();
         }
         else
         {
             listRela32=pELF->getElf32_RelaList(nOffset,nSize);
-            nCount=listRela32.count();
+            nNumberOfRels=listRela32.count();
         }
 
-        *ppModel=new QStandardItemModel(nCount,listLabels.count());
+        *ppModel=new QStandardItemModel(nNumberOfRels,listLabels.count());
 
-        setMaximum(nCount);
+        setMaximum(nNumberOfRels);
 
         setHeader(*ppModel,&listLabels);
 
@@ -521,7 +521,7 @@ void ELFProcessData::_process()
             mapTypes=pELF->getRelTypesS_x64();
         }
 
-        for(int i=0;(i<nCount)&&(isRun());i++)
+        for(int i=0;(i<nNumberOfRels)&&(isRun());i++)
         {
             if(bIs64)
             {
