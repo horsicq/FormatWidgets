@@ -129,17 +129,17 @@ void PEProcessData::_process()
 
         QList<XPE::RELOCS_POSITION> listRelocsPositions=pPE->getRelocsPositions(nOffset);
 
-        int nCount=listRelocsPositions.count();
+        int nNumberOfRelocs=listRelocsPositions.count();
 
-        *ppModel=new QStandardItemModel(nCount,listLabels.count());
+        *ppModel=new QStandardItemModel(nNumberOfRelocs,listLabels.count());
 
-        setMaximum(nCount);
+        setMaximum(nNumberOfRelocs);
 
         setHeader(*ppModel,&listLabels);
 
         QMap<quint64,QString> mapTypes=pPE->getImageRelBasedS();
 
-        for(int i=0; i<nCount; i++)
+        for(int i=0; i<nNumberOfRelocs; i++)
         {
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
