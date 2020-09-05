@@ -589,9 +589,9 @@ void ELFWidget::reloadData()
 
 void ELFWidget::addDatasets(XELF *pElf, QTreeWidgetItem *pParent, QList<XBinary::DATASET> *pList)
 {
-    int nCount=pList->count();
+    int nNumberOfRecords=pList->count();
 
-    for(int i=0;i<nCount;i++)
+    for(int i=0;i<nNumberOfRecords;i++)
     {
         if(pList->at(i).nType==XELF::DS_INTERPRETER)
         {
