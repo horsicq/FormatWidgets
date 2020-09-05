@@ -199,15 +199,15 @@ void PEProcessData::_process()
         bool bIs64=pPE->is64();
         QList<XPE::IMPORT_POSITION> listIP=pPE->getImportPositions(nNumber);
 
-        int nCount=listIP.count();
+        int nNumberOfIPs=listIP.count();
 
-        *ppModel=new QStandardItemModel(nCount,listLabels.count());
+        *ppModel=new QStandardItemModel(nNumberOfIPs,listLabels.count());
 
-        setMaximum(nCount);
+        setMaximum(nNumberOfIPs);
 
         setHeader(*ppModel,&listLabels);
 
-        for(int i=0; i<nCount; i++)
+        for(int i=0; i<nNumberOfIPs; i++)
         {
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
