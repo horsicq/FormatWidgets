@@ -165,15 +165,15 @@ void PEProcessData::_process()
 
         QList<XPE::IMAGE_IMPORT_DESCRIPTOR_EX> listID=pPE->getImportDescriptorsEx(&memoryMap);
 
-        int nCount=listID.count();
+        int nNumberOfIDs=listID.count();
 
-        *ppModel=new QStandardItemModel(nCount,listLabels.count());
+        *ppModel=new QStandardItemModel(nNumberOfIDs,listLabels.count());
 
-        setMaximum(nCount);
+        setMaximum(nNumberOfIDs);
 
         setHeader(*ppModel,&listLabels);
 
-        for(int i=0; i<nCount; i++)
+        for(int i=0; i<nNumberOfIDs; i++)
         {
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
