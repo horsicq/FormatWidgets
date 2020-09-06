@@ -520,11 +520,11 @@ void MACHWidget::reloadData()
 
                 QList<XMACH::LIBRARY_RECORD> listLibraries=mach.getLibraryRecords();
 
-                int nCount=listLibraries.count();
+                int nNumberOfLibraries=listLibraries.count();
 
-                ui->tableWidget_libraries->setRowCount(nCount);
+                ui->tableWidget_libraries->setRowCount(nNumberOfLibraries);
 
-                for(int i=0; i<nCount; i++)
+                for(int i=0; i<nNumberOfLibraries; i++)
                 {
                     ui->tableWidget_libraries->setItem(i,N_mach_libraries::timestamp,                   new QTableWidgetItem(XBinary::valueToHex(listLibraries.at(i).timestamp)));
                     ui->tableWidget_libraries->setItem(i,N_mach_libraries::current_version,             new QTableWidgetItem(XBinary::valueToHex(listLibraries.at(i).current_version)));
