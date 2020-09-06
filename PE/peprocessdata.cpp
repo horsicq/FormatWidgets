@@ -395,15 +395,15 @@ void PEProcessData::_process()
 
         QList<XPE_DEF::S_IMAGE_DEBUG_DIRECTORY> listDebug=pPE->getDebugList();
 
-        int nCount=listDebug.count();
+        int nNumberOfDebugs=listDebug.count();
 
-        *ppModel=new QStandardItemModel(nCount,listLabels.count());
+        *ppModel=new QStandardItemModel(nNumberOfDebugs,listLabels.count());
 
-        setMaximum(nCount);
+        setMaximum(nNumberOfDebugs);
 
         setHeader(*ppModel,&listLabels);
 
-        for(int i=0; i<nCount; i++)
+        for(int i=0; i<nNumberOfDebugs; i++)
         {
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
