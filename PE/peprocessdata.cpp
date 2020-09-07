@@ -336,15 +336,15 @@ void PEProcessData::_process()
 
         XPE::EXPORT_HEADER eh=pPE->getExport();
 
-        int nCount=eh.listPositions.count();
+        int nNumberOfPositions=eh.listPositions.count();
 
-        *ppModel=new QStandardItemModel(nCount,listLabels.count());
+        *ppModel=new QStandardItemModel(nNumberOfPositions,listLabels.count());
 
-        setMaximum(nCount);
+        setMaximum(nNumberOfPositions);
 
         setHeader(*ppModel,&listLabels);
 
-        for(int i=0; i<nCount; i++)
+        for(int i=0; i<nNumberOfPositions; i++)
         {
             (*ppModel)->setItem(i,N_IMAGE_EXPORT_FUNCTION::Ordinal,                 new QStandardItem(XBinary::valueToHex(eh.listPositions.at(i).nOrdinal)));
             (*ppModel)->setItem(i,N_IMAGE_EXPORT_FUNCTION::RVA,                     new QStandardItem(XBinary::valueToHex(eh.listPositions.at(i).nRVA)));
