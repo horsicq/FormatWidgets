@@ -433,15 +433,15 @@ void PEProcessData::_process()
         bool bIs64=pPE->is64();
         QList<XPE::DELAYIMPORT_POSITION> listDIP=pPE->getDelayImportPositions(nNumber);
 
-        int nCount=listDIP.count();
+        int nNumberOfDIPs=listDIP.count();
 
-        *ppModel=new QStandardItemModel(nCount,listLabels.count());
+        *ppModel=new QStandardItemModel(nNumberOfDIPs,listLabels.count());
 
-        setMaximum(nCount);
+        setMaximum(nNumberOfDIPs);
 
         setHeader(*ppModel,&listLabels);
 
-        for(int i=0; i<nCount; i++)
+        for(int i=0; i<nNumberOfDIPs; i++)
         {
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
