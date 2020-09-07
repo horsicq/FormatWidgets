@@ -501,16 +501,16 @@ void PEProcessData::_process()
 
         *ppModel=new QStandardItemModel;
 
-        int nHeaderCount=rh.listPositions.count();
+        int nNumberOfPositions=rh.listPositions.count();
 
-        if(nHeaderCount)
+        if(nNumberOfPositions)
         {
             QStandardItem *pRoot=new QStandardItem();
             pRoot->setText(tr("Resources"));
 
             (*ppModel)->appendRow(pRoot);
 
-            for(int i=0; i<nHeaderCount; i++)
+            for(int i=0; i<nNumberOfPositions; i++)
             {
                 XPE::RESOURCE_POSITION pos=rh.listPositions.at(i);
                 QStandardItem *pPos=new QStandardItem;
