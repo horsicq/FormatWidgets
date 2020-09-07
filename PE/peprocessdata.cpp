@@ -560,9 +560,9 @@ void PEProcessData::_process()
 
                     pPos->appendRow(pSubPos);
 
-                    int nSubPosCount=subpos.listPositions.count();
+                    int nNumberOfSubPositions=subpos.listPositions.count();
 
-                    for(int k=0; k<nSubPosCount; k++)
+                    for(int k=0; k<nNumberOfSubPositions; k++)
                     {
                         XPE::RESOURCE_POSITION record1=rh.listPositions.at(i);
                         XPE::RESOURCE_POSITION record2=rh.listPositions.at(i).listPositions.at(j);
