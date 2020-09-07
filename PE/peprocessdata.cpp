@@ -364,15 +364,15 @@ void PEProcessData::_process()
 
         QList<XPE::BOUND_IMPORT_POSITION> listBIP=pPE->getBoundImportPositions();
 
-        int nCount=listBIP.count();
+        int nNumberOfPositions=listBIP.count();
 
-        *ppModel=new QStandardItemModel(nCount,listLabels.count());
+        *ppModel=new QStandardItemModel(nNumberOfPositions,listLabels.count());
 
-        setMaximum(nCount);
+        setMaximum(nNumberOfPositions);
 
         setHeader(*ppModel,&listLabels);
 
-        for(int i=0; i<nCount; i++)
+        for(int i=0; i<nNumberOfPositions; i++)
         {
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);

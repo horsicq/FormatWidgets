@@ -51,15 +51,15 @@ void FormatsWidget::setData(QString sFileName, bool bScan)
 
     QList<XBinary::FT> listFileTypes=XBinary::_getFileTypeListFromSet(stTypes);
 
-    int nCount=listFileTypes.count();
+    int nNumberOfFileTypes=listFileTypes.count();
 
-    for(int i=0;i<nCount;i++)
+    for(int i=0;i<nNumberOfFileTypes;i++)
     {
         XBinary::FT fileType=listFileTypes.at(i);
         ui->comboBoxFileType->addItem(XBinary::fileTypeIdToString(fileType),fileType);
     }
 
-    if(nCount)
+    if(nNumberOfFileTypes)
     {
         if(listFileTypes.at(0)==XBinary::FT_BINARY)
         {
@@ -67,7 +67,7 @@ void FormatsWidget::setData(QString sFileName, bool bScan)
         }
         else
         {
-            ui->comboBoxFileType->setCurrentIndex(nCount-1);
+            ui->comboBoxFileType->setCurrentIndex(nNumberOfFileTypes-1);
         }
 
         reload();
