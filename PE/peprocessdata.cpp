@@ -259,17 +259,17 @@ void PEProcessData::_process()
 
         QList<XPE_DEF::S_IMAGE_RUNTIME_FUNCTION_ENTRY> listRFE=pPE->getExceptionsList();
 
-        int nCount=listRFE.count();
+        int nNumberOfRFEs=listRFE.count();
 
-        *ppModel=new QStandardItemModel(nCount,listLabels.count());
+        *ppModel=new QStandardItemModel(nNumberOfRFEs,listLabels.count());
 
-        setMaximum(nCount);
+        setMaximum(nNumberOfRFEs);
 
         setHeader(*ppModel,&listLabels);
 
         XBinary::_MEMORY_MAP memoryMap=pPE->getMemoryMap();
 
-        for(int i=0; i<nCount; i++)
+        for(int i=0; i<nNumberOfRFEs; i++)
         {
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
