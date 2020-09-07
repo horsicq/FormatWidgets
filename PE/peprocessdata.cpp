@@ -296,17 +296,17 @@ void PEProcessData::_process()
 
         QList<XPE_DEF::S_IMAGE_DELAYLOAD_DESCRIPTOR> listDelayImport=pPE->getDelayImportsList();
 
-        int nCount=listDelayImport.count();
+        int nNumberOfDelayImports=listDelayImport.count();
 
-        *ppModel=new QStandardItemModel(nCount,listLabels.count());
+        *ppModel=new QStandardItemModel(nNumberOfDelayImports,listLabels.count());
 
-        setMaximum(nCount);
+        setMaximum(nNumberOfDelayImports);
 
         setHeader(*ppModel,&listLabels);
 
         XBinary::_MEMORY_MAP memoryMap=pPE->getMemoryMap();
 
-        for(int i=0; i<nCount; i++)
+        for(int i=0; i<nNumberOfDelayImports; i++)
         {
             QString sLibraryName=pPE->read_ansiString(pPE->relAddressToOffset(&memoryMap,listDelayImport.at(i).DllNameRVA));
 
