@@ -539,9 +539,9 @@ void PEProcessData::_process()
 
                 pRoot->appendRow(pPos);
 
-                int nPosCount=pos.listPositions.count();
+                int nNumberOfPositions=pos.listPositions.count();
 
-                for(int j=0; j<nPosCount; j++)
+                for(int j=0; j<nNumberOfPositions; j++)
                 {
                     XPE::RESOURCE_POSITION subpos=rh.listPositions.at(i).listPositions.at(j);
                     QStandardItem *pSubPos=new QStandardItem;
