@@ -375,26 +375,26 @@ void FormatWidget::setTreeItem(QTreeWidget *pTree, int nID)
 
 void FormatWidget::hexValueChanged(quint64 nValue)
 {
-    XLineEditHEX *lineEdit=qobject_cast<XLineEditHEX *>(sender());
+    XLineEditHEX *pLineEdit=qobject_cast<XLineEditHEX *>(sender());
 
-    int nStype=lineEdit->property("STYPE").toInt();
-    int nNdata=lineEdit->property("NDATA").toInt();
-    int nVtype=lineEdit->property("VTYPE").toInt();
-    int nPosition=lineEdit->property("POSITION").toInt();
-    qint64 nOffset=lineEdit->property("OFFSET").toLongLong();
+    int nStype=pLineEdit->property("STYPE").toInt();
+    int nNdata=pLineEdit->property("NDATA").toInt();
+    int nVtype=pLineEdit->property("VTYPE").toInt();
+    int nPosition=pLineEdit->property("POSITION").toInt();
+    qint64 nOffset=pLineEdit->property("OFFSET").toLongLong();
 
     setValue(nValue,nStype,nNdata,nVtype,nPosition,nOffset);
 }
 
 void FormatWidget::textValueChanged(QString sText)
 {
-    XLineEditHEX *lineEdit=qobject_cast<XLineEditHEX *>(sender());
+    XLineEditHEX *pLineEdit=qobject_cast<XLineEditHEX *>(sender());
 
-    int nStype=lineEdit->property("STYPE").toInt();
-    int nNdata=lineEdit->property("NDATA").toInt();
-    int nVtype=lineEdit->property("VTYPE").toInt();
-    int nPosition=lineEdit->property("POSITION").toInt();
-    qint64 nOffset=lineEdit->property("OFFSET").toLongLong();
+    int nStype=pLineEdit->property("STYPE").toInt();
+    int nNdata=pLineEdit->property("NDATA").toInt();
+    int nVtype=pLineEdit->property("VTYPE").toInt();
+    int nPosition=pLineEdit->property("POSITION").toInt();
+    qint64 nOffset=pLineEdit->property("OFFSET").toLongLong();
 
     setValue(sText,nStype,nNdata,nVtype,nPosition,nOffset);
 }
