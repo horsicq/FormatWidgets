@@ -642,7 +642,7 @@ void ELFWidget::addDatasets(XELF *pElf, QTreeWidgetItem *pParent, QList<XBinary:
     }
 }
 
-bool ELFWidget::createSectionTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount)
+bool ELFWidget::createSectionTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nNumberOfRecords)
 {
     Q_UNUSED(nType)
 
@@ -650,7 +650,7 @@ bool ELFWidget::createSectionTable(int nType, QTableWidget *pTableWidget, const 
 
     pTableWidget->setRowCount(0);
 
-    for(int i=0; i<nRecordCount; i++)
+    for(int i=0; i<nNumberOfRecords; i++)
     {
         slHeader.append(pRecords[i].sName);
     }
