@@ -461,10 +461,10 @@ bool FormatWidget::saveBackup()
     return bResult;
 }
 
-bool FormatWidget::createHeaderTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nRecordCount, int nPosition, qint64 nOffset)
+bool FormatWidget::createHeaderTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nNumberOfRecords, int nPosition, qint64 nOffset)
 {
     pTableWidget->setColumnCount(6);
-    pTableWidget->setRowCount(nRecordCount);
+    pTableWidget->setRowCount(nNumberOfRecords);
 
     QStringList slHeader;
     slHeader.append(tr("Name"));
@@ -477,7 +477,7 @@ bool FormatWidget::createHeaderTable(int nType, QTableWidget *pTableWidget, cons
     pTableWidget->setHorizontalHeaderLabels(slHeader);
     pTableWidget->horizontalHeader()->setVisible(true);
 
-    for(int i=0; i<nRecordCount; i++)
+    for(int i=0; i<nNumberOfRecords; i++)
     {
         QTableWidgetItem *pItemName=new QTableWidgetItem;
         pItemName->setText(pRecords[i].sName);
@@ -530,10 +530,10 @@ bool FormatWidget::createHeaderTable(int nType, QTableWidget *pTableWidget, cons
     return true;
 }
 
-bool FormatWidget::createListTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nRecordCount)
+bool FormatWidget::createListTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nNumberOfRecords)
 {
     pTableWidget->setColumnCount(2);
-    pTableWidget->setRowCount(nRecordCount);
+    pTableWidget->setRowCount(nNumberOfRecords);
 
     QStringList slHeader;
     slHeader.append(tr("Name"));
@@ -542,7 +542,7 @@ bool FormatWidget::createListTable(int nType, QTableWidget *pTableWidget, const 
     pTableWidget->setHorizontalHeaderLabels(slHeader);
     pTableWidget->horizontalHeader()->setVisible(true);
 
-    for(int i=0; i<nRecordCount; i++)
+    for(int i=0; i<nNumberOfRecords; i++)
     {
         QTableWidgetItem *newItemName=new QTableWidgetItem;
         newItemName->setText(pRecords[i].sName);
@@ -652,7 +652,7 @@ void FormatWidget::updateTableRecord(QTableWidget *pTableWidget, int nRow, qint6
 //    return true;
 //}
 
-bool FormatWidget::createSectionTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount)
+bool FormatWidget::createSectionTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nNumberOfRecords)
 {
     Q_UNUSED(nType)
 
@@ -660,12 +660,12 @@ bool FormatWidget::createSectionTable(int nType, QTableWidget *pTableWidget, con
 
     pTableWidget->setRowCount(0);
 
-    for(int i=0; i<nRecordCount; i++)
+    for(int i=0; i<nNumberOfRecords; i++)
     {
         slHeader.append(pRecords[i].sName);
     }
 
-    pTableWidget->setColumnCount(nRecordCount);
+    pTableWidget->setColumnCount(nNumberOfRecords);
     pTableWidget->setHorizontalHeaderLabels(slHeader);
     pTableWidget->horizontalHeader()->setVisible(true);
 

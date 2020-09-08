@@ -93,13 +93,13 @@ public:
     qint32 getType();
     bool isReadonly();
     QTreeWidgetItem *createNewItem(int nType, QString sTitle, qint64 nOffset=0, qint64 nSize=0, qint64 nExtraOffset=0, qint64 nExtraSize=0);
-    bool createHeaderTable(int nType,QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nRecordCount,int nPosition=0,qint64 nOffset=0);
-    bool createListTable(int nType,QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nRecordCount);
+    bool createHeaderTable(int nType,QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nNumberOfRecords,int nPosition=0,qint64 nOffset=0);
+    bool createListTable(int nType,QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nNumberOfRecords);
     void addComment(QTableWidget *pTableWidget,int nRow,int nColumn,QString sComment);
     void updateTableRecord(QTableWidget *pTableWidget,int nRow,qint64 nOffset,qint64 nSize);
 
 //    bool createDirectoryTable(int type,QTableWidget *pTableWidget, const DIRECTORY_ENTRY_RECORD *pRecords,int nRecordCount);
-    bool createSectionTable(int nType,QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords,int nRecordCount);
+    bool createSectionTable(int nType,QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords,int nNumberOfRecords);
     void setLineEditsReadOnly(XLineEditHEX **ppLineEdits,int nCount,bool bState);
     void setComboBoxesReadOnly(XComboBoxEx **ppComboBoxes,int nCount,bool bState);
     void setPushButtonReadOnly(QPushButton **ppPushButtons,int nCount,bool bState);
