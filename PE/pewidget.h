@@ -68,7 +68,7 @@ private slots:
     void loadDirectory(int nRow);
     void loadDebug(int nRow);
     void loadDelayImport(int nRow);
-    bool createSectionTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount);
+    bool createSectionTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nNumberOfRecords);
     void on_pushButtonReload_clicked();
     void enableButton();
     void on_tableWidget_IMAGE_DIRECTORY_ENTRIES_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn);

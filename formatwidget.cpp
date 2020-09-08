@@ -354,9 +354,9 @@ bool FormatWidget::_setTreeItem(QTreeWidget *pTree, QTreeWidgetItem *pItem, int 
 
 void FormatWidget::setTreeItem(QTreeWidget *pTree, int nID)
 {
-    int nCount=pTree->topLevelItemCount();
+    int nNumberOfItems=pTree->topLevelItemCount();
 
-    for(int i=0;i<nCount;i++)
+    for(int i=0;i<nNumberOfItems;i++)
     {
         if(_setTreeItem(pTree,pTree->topLevelItem(i),nID))
         {

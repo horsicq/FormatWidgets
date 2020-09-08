@@ -1803,7 +1803,7 @@ QString PEWidget::typeIdToString(int nType)
     return sResult;
 }
 
-bool PEWidget::createSectionTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount)
+bool PEWidget::createSectionTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nNumberOfRecords)
 {
     int nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
 
@@ -1812,7 +1812,7 @@ bool PEWidget::createSectionTable(int nType, QTableWidget *pTableWidget, const F
     switch(nType)
     {
         case SPE::TYPE_IMAGE_DIRECTORY_ENTRIES:
-            pTableWidget->setColumnCount(nRecordCount+2);
+            pTableWidget->setColumnCount(nNumberOfRecords+2);
             pTableWidget->setColumnWidth(0,nSymbolWidth*3);
             pTableWidget->setColumnWidth(1,nSymbolWidth*12);
             pTableWidget->setColumnWidth(2,nSymbolWidth*8);
@@ -1821,12 +1821,12 @@ bool PEWidget::createSectionTable(int nType, QTableWidget *pTableWidget, const F
             break;
 
         default:
-            pTableWidget->setColumnCount(nRecordCount);
+            pTableWidget->setColumnCount(nNumberOfRecords);
     }
 
     pTableWidget->setRowCount(0);
 
-    for(int i=0; i<nRecordCount; i++)
+    for(int i=0; i<nNumberOfRecords; i++)
     {
         slHeader.append(pRecords[i].sName);
     }
