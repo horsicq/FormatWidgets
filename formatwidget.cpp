@@ -758,16 +758,16 @@ XComboBoxEx *FormatWidget::createComboBox(QTableWidget *pTableWidget, QMap<quint
 
 InvWidget *FormatWidget::createInvWidget(QTableWidget *pTableWidget, int nType, int nData, InvWidget::TYPE widgetType)
 {
-    InvWidget *result=new InvWidget(this,widgetType);
+    InvWidget *pResult=new InvWidget(this,widgetType);
 
-    result->setProperty("STYPE",nType);
-    result->setProperty("NDATA",nData);
+    pResult->setProperty("STYPE",nType);
+    pResult->setProperty("NDATA",nData);
 
-    connect(result,SIGNAL(showHex(qint64,qint64)),this,SLOT(showHex(qint64,qint64)));
+    connect(pResult,SIGNAL(showHex(qint64,qint64)),this,SLOT(showHex(qint64,qint64)));
 
-    pTableWidget->setCellWidget(nData,HEADER_COLUMN_INFO,result);
+    pTableWidget->setCellWidget(nData,HEADER_COLUMN_INFO,pResult);
 
-    return result;
+    return pResult;
 }
 
 XDateTimeEditX *FormatWidget::createTimeDateEdit(QTableWidget *pTableWidget, int nType, int nData, XDateTimeEditX::DT_TYPE dtType)
