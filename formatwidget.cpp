@@ -48,7 +48,7 @@ void FormatWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint3
 {
     this->pDevice=pDevice;
     this->g_nNumber=nNumber;
-    this->__nOffset=nOffset;
+    this->g_nOffset=nOffset;
     this->__nType=nType;
 
     if(pOptions)
@@ -76,7 +76,7 @@ quint32 FormatWidget::getNumber()
 
 qint64 FormatWidget::getOffset()
 {
-    return __nOffset;
+    return g_nOffset;
 }
 
 qint32 FormatWidget::getType()
@@ -91,15 +91,16 @@ bool FormatWidget::isReadonly()
 
 QTreeWidgetItem *FormatWidget::createNewItem(int nType, QString sTitle, qint64 nOffset, qint64 nSize, qint64 nExtraOffset, qint64 nExtraSize)
 {
-    QTreeWidgetItem *result=new QTreeWidgetItem;
-    result->setText(0,sTitle);
-    result->setData(0,Qt::UserRole+FW_DEF::SECTION_DATA_TYPE,nType);
-    result->setData(0,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET,nOffset);
-    result->setData(0,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE,nSize);
-    result->setData(0,Qt::UserRole+FW_DEF::SECTION_DATA_EXTRAOFFSET,nExtraOffset);
-    result->setData(0,Qt::UserRole+FW_DEF::SECTION_DATA_EXTRASIZE,nExtraSize);
+    QTreeWidgetItem *pResult=new QTreeWidgetItem;
 
-    return result;
+    pResult->setText(0,sTitle);
+    pResult->setData(0,Qt::UserRole+FW_DEF::SECTION_DATA_TYPE,nType);
+    pResult->setData(0,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET,nOffset);
+    pResult->setData(0,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE,nSize);
+    pResult->setData(0,Qt::UserRole+FW_DEF::SECTION_DATA_EXTRAOFFSET,nExtraOffset);
+    pResult->setData(0,Qt::UserRole+FW_DEF::SECTION_DATA_EXTRASIZE,nExtraSize);
+
+    return pResult;
 }
 
 void FormatWidget::setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
