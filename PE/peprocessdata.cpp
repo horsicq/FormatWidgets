@@ -111,10 +111,10 @@ void PEProcessData::_process()
             pItem->setData(i,Qt::DisplayRole);
             pItem->setData(listRH.at(i).nOffset,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
             (*ppModel)->setItem(i,0,                                            pItem);
-            (*ppModel)->setItem(i,N_IMAGE_RELOCS::VirtualAddress+1,             new QStandardItem(XBinary::valueToHex(listRH.at(i).ibr.VirtualAddress)));
-            (*ppModel)->setItem(i,N_IMAGE_RELOCS::SizeOfBlock+1,                new QStandardItem(XBinary::valueToHex(listRH.at(i).ibr.SizeOfBlock)));
+            (*ppModel)->setItem(i,N_IMAGE_RELOCS::VirtualAddress+1,             new QStandardItem(XBinary::valueToHex(listRH.at(i).baseRelocation.VirtualAddress)));
+            (*ppModel)->setItem(i,N_IMAGE_RELOCS::SizeOfBlock+1,                new QStandardItem(XBinary::valueToHex(listRH.at(i).baseRelocation.SizeOfBlock)));
             (*ppModel)->setItem(i,N_IMAGE_RELOCS::SizeOfBlock+2,                new QStandardItem(QString::number(listRH.at(i).nCount)));
-            (*ppModel)->setItem(i,N_IMAGE_RELOCS::SizeOfBlock+3,                new QStandardItem(pPE->getMemoryRecordInfoByRelAddress(listRH.at(i).ibr.VirtualAddress))); // Comment
+            (*ppModel)->setItem(i,N_IMAGE_RELOCS::SizeOfBlock+3,                new QStandardItem(pPE->getMemoryRecordInfoByRelAddress(listRH.at(i).baseRelocation.VirtualAddress))); // Comment
 
             incValue();
         }

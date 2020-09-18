@@ -195,14 +195,14 @@ void PEWidget::reload()
                 QTreeWidgetItem *pNetMetadata=createNewItem(SPE::TYPE_NET_METADATA,"Metadata");
                 pNetHeader->addChild(pNetMetadata);
 
-                int nNumberOfStreams=cliInfo.cliMetadata.listStreams.count();
+                int nNumberOfStreams=cliInfo.metaData.listStreams.count();
 
                 for(int i=0;i<nNumberOfStreams;i++)
                 {
                     pNetMetadata->addChild(createNewItem(SPE::TYPE_NET_METADATA_STREAM,
-                                                         cliInfo.cliMetadata.listStreams.at(i).sName,
-                                                         cliInfo.cliMetadata.listStreams.at(i).nOffset,
-                                                         cliInfo.cliMetadata.listStreams.at(i).nSize));
+                                                         cliInfo.metaData.listStreams.at(i).sName,
+                                                         cliInfo.metaData.listStreams.at(i).nOffset,
+                                                         cliInfo.metaData.listStreams.at(i).nSize));
                 }
             }
         }
