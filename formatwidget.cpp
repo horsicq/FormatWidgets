@@ -47,7 +47,7 @@ FormatWidget::~FormatWidget()
 void FormatWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset, qint32 nType)
 {
     this->pDevice=pDevice;
-    this->__nNumber=nNumber;
+    this->g_nNumber=nNumber;
     this->__nOffset=nOffset;
     this->__nType=nType;
 
@@ -71,7 +71,7 @@ FW_DEF::OPTIONS *FormatWidget::getOptions()
 
 quint32 FormatWidget::getNumber()
 {
-    return __nNumber;
+    return g_nNumber;
 }
 
 qint64 FormatWidget::getOffset()

@@ -162,7 +162,7 @@ private:
 private:
     QIODevice *pDevice;
     FW_DEF::OPTIONS fwOptions;
-    quint32 __nNumber;
+    quint32 g_nNumber;
     qint64 __nOffset;
     quint32 __nType;
     bool bIsReadonly;
