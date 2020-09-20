@@ -1559,9 +1559,9 @@ void PEWidget::reloadData()
 
                 blockSignals(true);
 
-                XBinary::OFFSETSIZE os=pe.getNet_MetadataOffsetSize();
+                XBinary::OFFSETSIZE offsetSize=pe.getNet_MetadataOffsetSize();
 
-                XPE::CLI_METADATA_HEADER header=pe._read_MetadataHeader(os.nOffset);
+                XPE::CLI_METADATA_HEADER header=pe._read_MetadataHeader(offsetSize.nOffset);
 
                 lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::Signature]->setValue(header.nSignature);
                 lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::MajorVersion]->setValue(header.nMajorVersion);
@@ -1576,8 +1576,8 @@ void PEWidget::reloadData()
                 updateTableRecord(ui->tableWidget_Net_Metadata,N_IMAGE_NET_METADATA::Flags,16+header.nVersionStringLength,2);
                 updateTableRecord(ui->tableWidget_Net_Metadata,N_IMAGE_NET_METADATA::Streams,16+header.nVersionStringLength+2,2);
 
-                qint64 nOffset=os.nOffset;
-                qint64 nSize=os.nSize;
+                qint64 nOffset=offsetSize.nOffset;
+                qint64 nSize=offsetSize.nSize;
                 qint64 nAddress=pe.offsetToRelAddress(nOffset);
 
                 loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_NET_METADATA],ui->widgetHex_Net_Metadata);
