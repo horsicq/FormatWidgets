@@ -89,28 +89,28 @@ void ELFWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_HEURISTICSCAN,tr("Heuristic scan")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_Elf_Ehdr,"Elf_Ehdr"));
 
-        QList<XELF_DEF::Elf_Shdr> listSections=elf.getElf_ShdrList();
+        QList<XELF_DEF::Elf_Shdr> listSectionHeaders=elf.getElf_ShdrList();
 
-        if(listSections.count())
+        if(listSectionHeaders.count())
         {
             QTreeWidgetItem *pItemSections=createNewItem(SELF::TYPE_Elf_Shdr,"Sections");
 
             ui->treeWidgetNavi->addTopLevelItem(pItemSections);
 
-            QList<XBinary::DATASET> listDS=elf.getDatasetsFromSections(&listSections);
+            QList<XBinary::DATASET> listDS=elf.getDatasetsFromSections(&listSectionHeaders);
 
             addDatasets(&elf,pItemSections,&listDS);
         }
 
-        QList<XELF_DEF::Elf_Phdr> listPrograms=elf.getElf_PhdrList();
+        QList<XELF_DEF::Elf_Phdr> listProgramHeaders=elf.getElf_PhdrList();
 
-        if(listPrograms.count())
+        if(listProgramHeaders.count())
         {
             QTreeWidgetItem *pItemPrograms=createNewItem(SELF::TYPE_Elf_Phdr,"Programs");
 
             ui->treeWidgetNavi->addTopLevelItem(pItemPrograms);
 
-            QList<XBinary::DATASET> listDS=elf.getDatasetsFromPrograms(&listPrograms);
+            QList<XBinary::DATASET> listDS=elf.getDatasetsFromPrograms(&listProgramHeaders);
 
             addDatasets(&elf,pItemPrograms,&listDS);
         }
