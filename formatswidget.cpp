@@ -45,11 +45,11 @@ void FormatsWidget::setData(QString sFileName, bool bScan)
 
     ui->comboBoxFileType->clear();
 
-    QSet<XBinary::FT> stTypes=XBinary::getFileTypes(sFileName);
+    QSet<XBinary::FT> stFileTypes=XBinary::getFileTypes(sFileName);
 
-    XBinary::filterFileTypes(&stTypes);
+    XBinary::filterFileTypes(&stFileTypes);
 
-    QList<XBinary::FT> listFileTypes=XBinary::_getFileTypeListFromSet(stTypes);
+    QList<XBinary::FT> listFileTypes=XBinary::_getFileTypeListFromSet(stFileTypes);
 
     int nNumberOfFileTypes=listFileTypes.count();
 
