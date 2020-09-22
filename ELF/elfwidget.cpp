@@ -635,9 +635,9 @@ void ELFWidget::addDatasets(XELF *pElf, QTreeWidgetItem *pParent, QList<XBinary:
 
             XBinary::_MEMORY_MAP memoryMap=pElf->getMemoryMap();
 
-            QList<XBinary::DATASET> listDS=pElf->getDatasetsFromTagStructs(&memoryMap,&listTagStructs);
+            QList<XBinary::DATASET> listDatasets=pElf->getDatasetsFromTagStructs(&memoryMap,&listTagStructs);
 
-            addDatasets(pElf,pDynamicTags,&listDS);
+            addDatasets(pElf,pDynamicTags,&listDatasets);
         }
     }
 }
