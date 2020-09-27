@@ -170,7 +170,7 @@ void ELFProcessData::_process()
 
         listLabels.append("Type");
 
-        QMap<quint64,QString> mapTypes=XELF::getProgramTypesS();
+        QMap<quint64,QString> mapProgramTypes=XELF::getProgramTypesS();
 
         QList<XELF_DEF::Elf64_Phdr> listPrograms64;
         QList<XELF_DEF::Elf32_Phdr> listPrograms32;
@@ -222,7 +222,7 @@ void ELFProcessData::_process()
                 (*ppModel)->setItem(i,N_Elf_Phdr64::p_filesz+1,       new QStandardItem(XBinary::valueToHex(listPrograms64.at(i).p_filesz)));
                 (*ppModel)->setItem(i,N_Elf_Phdr64::p_memsz+1,        new QStandardItem(XBinary::valueToHex(listPrograms64.at(i).p_memsz)));
                 (*ppModel)->setItem(i,N_Elf_Phdr64::p_align+1,        new QStandardItem(XBinary::valueToHex(listPrograms64.at(i).p_align)));
-                (*ppModel)->setItem(i,N_Elf_Phdr64::p_align+2,        new QStandardItem(mapTypes.value(listPrograms64.at(i).p_type)));
+                (*ppModel)->setItem(i,N_Elf_Phdr64::p_align+2,        new QStandardItem(mapProgramTypes.value(listPrograms64.at(i).p_type)));
             }
             else
             {
@@ -250,7 +250,7 @@ void ELFProcessData::_process()
                 (*ppModel)->setItem(i,N_Elf_Phdr32::p_memsz+1,        new QStandardItem(XBinary::valueToHex(listPrograms32.at(i).p_memsz)));
                 (*ppModel)->setItem(i,N_Elf_Phdr32::p_flags+1,        new QStandardItem(XBinary::valueToHex(listPrograms32.at(i).p_flags)));
                 (*ppModel)->setItem(i,N_Elf_Phdr32::p_align+1,        new QStandardItem(XBinary::valueToHex(listPrograms32.at(i).p_align)));
-                (*ppModel)->setItem(i,N_Elf_Phdr32::p_align+2,        new QStandardItem(mapTypes.value(listPrograms32.at(i).p_type)));
+                (*ppModel)->setItem(i,N_Elf_Phdr32::p_align+2,        new QStandardItem(mapProgramTypes.value(listPrograms32.at(i).p_type)));
             }
         }
     }
