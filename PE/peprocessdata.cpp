@@ -197,9 +197,9 @@ void PEProcessData::_process()
         listLabels.append("Name");
 
         bool bIs64=pPE->is64();
-        QList<XPE::IMPORT_POSITION> listIP=pPE->getImportPositions(nNumber);
+        QList<XPE::IMPORT_POSITION> listImportPositions=pPE->getImportPositions(nNumber);
 
-        int nNumberOfIPs=listIP.count();
+        int nNumberOfIPs=listImportPositions.count();
 
         *ppModel=new QStandardItemModel(nNumberOfIPs,listLabels.count());
 
@@ -214,17 +214,17 @@ void PEProcessData::_process()
 
             (*ppModel)->setItem(i,0,pItem);
 
-            if(listIP.at(i).nOrdinal)
+            if(listImportPositions.at(i).nOrdinal)
             {
                 QString sOrdinal;
 
                 if(bIs64)
                 {
-                    sOrdinal=XBinary::valueToHex((quint64)listIP.at(i).nOrdinal);
+                    sOrdinal=XBinary::valueToHex((quint64)listImportPositions.at(i).nOrdinal);
                 }
                 else
                 {
-                    sOrdinal=XBinary::valueToHex((quint32)listIP.at(i).nOrdinal);
+                    sOrdinal=XBinary::valueToHex((quint32)listImportPositions.at(i).nOrdinal);
                 }
 
                 (*ppModel)->setItem(i,N_IMAGE_IMPORT_FUNCTION::Ordinal+1,   new QStandardItem(sOrdinal));
@@ -235,16 +235,16 @@ void PEProcessData::_process()
 
                 if(bIs64)
                 {
-                    sThunk=XBinary::valueToHex((quint64)listIP.at(i).nThunkValue);
+                    sThunk=XBinary::valueToHex((quint64)listImportPositions.at(i).nThunkValue);
                 }
                 else
                 {
-                    sThunk=XBinary::valueToHex((quint32)listIP.at(i).nThunkValue);
+                    sThunk=XBinary::valueToHex((quint32)listImportPositions.at(i).nThunkValue);
                 }
 
                 (*ppModel)->setItem(i,N_IMAGE_IMPORT_FUNCTION::Thunk+1,     new QStandardItem(sThunk));
-                (*ppModel)->setItem(i,N_IMAGE_IMPORT_FUNCTION::Hint+1,      new QStandardItem(XBinary::valueToHex(listIP.at(i).nHint)));
-                (*ppModel)->setItem(i,N_IMAGE_IMPORT_FUNCTION::Hint+2,      new QStandardItem(listIP.at(i).sName));
+                (*ppModel)->setItem(i,N_IMAGE_IMPORT_FUNCTION::Hint+1,      new QStandardItem(XBinary::valueToHex(listImportPositions.at(i).nHint)));
+                (*ppModel)->setItem(i,N_IMAGE_IMPORT_FUNCTION::Hint+2,      new QStandardItem(listImportPositions.at(i).sName));
             }
 
             incValue();
