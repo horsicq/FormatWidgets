@@ -362,9 +362,9 @@ void PEProcessData::_process()
         listLabels.append("");
         listLabels.append("");
 
-        QList<XPE::BOUND_IMPORT_POSITION> listBIP=pPE->getBoundImportPositions();
+        QList<XPE::BOUND_IMPORT_POSITION> listBoundImportPositions=pPE->getBoundImportPositions();
 
-        int nNumberOfPositions=listBIP.count();
+        int nNumberOfPositions=listBoundImportPositions.count();
 
         *ppModel=new QStandardItemModel(nNumberOfPositions,listLabels.count());
 
@@ -378,11 +378,11 @@ void PEProcessData::_process()
             pItem->setData(i,Qt::DisplayRole);
 
             (*ppModel)->setItem(i,0,                                                    pItem);
-            (*ppModel)->setItem(i,N_IMAGE_BOUNDIMPORT::TimeDateStamp+1,                 new QStandardItem(XBinary::valueToHex(listBIP.at(i).descriptor.TimeDateStamp)));
-            (*ppModel)->setItem(i,N_IMAGE_BOUNDIMPORT::OffsetModuleName+1,              new QStandardItem(XBinary::valueToHex(listBIP.at(i).descriptor.OffsetModuleName)));
-            (*ppModel)->setItem(i,N_IMAGE_BOUNDIMPORT::NumberOfModuleForwarderRefs+1,   new QStandardItem(XBinary::valueToHex(listBIP.at(i).descriptor.NumberOfModuleForwarderRefs)));
-            (*ppModel)->setItem(i,N_IMAGE_BOUNDIMPORT::NumberOfModuleForwarderRefs+2,   new QStandardItem(XBinary::valueToTimeString(listBIP.at(i).descriptor.TimeDateStamp,XBinary::DT_TYPE_POSIX)));
-            (*ppModel)->setItem(i,N_IMAGE_BOUNDIMPORT::NumberOfModuleForwarderRefs+3,   new QStandardItem(listBIP.at(i).sName));
+            (*ppModel)->setItem(i,N_IMAGE_BOUNDIMPORT::TimeDateStamp+1,                 new QStandardItem(XBinary::valueToHex(listBoundImportPositions.at(i).descriptor.TimeDateStamp)));
+            (*ppModel)->setItem(i,N_IMAGE_BOUNDIMPORT::OffsetModuleName+1,              new QStandardItem(XBinary::valueToHex(listBoundImportPositions.at(i).descriptor.OffsetModuleName)));
+            (*ppModel)->setItem(i,N_IMAGE_BOUNDIMPORT::NumberOfModuleForwarderRefs+1,   new QStandardItem(XBinary::valueToHex(listBoundImportPositions.at(i).descriptor.NumberOfModuleForwarderRefs)));
+            (*ppModel)->setItem(i,N_IMAGE_BOUNDIMPORT::NumberOfModuleForwarderRefs+2,   new QStandardItem(XBinary::valueToTimeString(listBoundImportPositions.at(i).descriptor.TimeDateStamp,XBinary::DT_TYPE_POSIX)));
+            (*ppModel)->setItem(i,N_IMAGE_BOUNDIMPORT::NumberOfModuleForwarderRefs+3,   new QStandardItem(listBoundImportPositions.at(i).sName));
 
             incValue();
         }
