@@ -97,9 +97,9 @@ void ELFWidget::reload()
 
             ui->treeWidgetNavi->addTopLevelItem(pItemSections);
 
-            QList<XBinary::DATASET> listDS=elf.getDatasetsFromSections(&listSectionHeaders);
+            QList<XBinary::DATASET> listDataSets=elf.getDatasetsFromSections(&listSectionHeaders);
 
-            addDatasets(&elf,pItemSections,&listDS);
+            addDatasets(&elf,pItemSections,&listDataSets);
         }
 
         QList<XELF_DEF::Elf_Phdr> listProgramHeaders=elf.getElf_PhdrList();
