@@ -161,7 +161,7 @@ void PEProcessData::_process()
 
         XBinary::_MEMORY_MAP memoryMap=pPE->getMemoryMap();
 
-        QList<quint32> listHashes=pPE->getImportPositionHashes(&memoryMap);
+        QList<quint32> listImportPositionHashes=pPE->getImportPositionHashes(&memoryMap);
 
         QList<XPE::IMAGE_IMPORT_DESCRIPTOR_EX> listID=pPE->getImportDescriptorsEx(&memoryMap);
 
@@ -183,7 +183,7 @@ void PEProcessData::_process()
             (*ppModel)->setItem(i,N_IMAGE_IMPORT::ForwarderChain+1,                 new QStandardItem(XBinary::valueToHex(listID.at(i).ForwarderChain)));
             (*ppModel)->setItem(i,N_IMAGE_IMPORT::Name+1,                           new QStandardItem(XBinary::valueToHex(listID.at(i).Name)));
             (*ppModel)->setItem(i,N_IMAGE_IMPORT::FirstThunk+1,                     new QStandardItem(XBinary::valueToHex(listID.at(i).FirstThunk)));
-            (*ppModel)->setItem(i,N_IMAGE_IMPORT::FirstThunk+2,                     new QStandardItem(XBinary::valueToHex(listHashes.at(i))));
+            (*ppModel)->setItem(i,N_IMAGE_IMPORT::FirstThunk+2,                     new QStandardItem(XBinary::valueToHex(listImportPositionHashes.at(i))));
             (*ppModel)->setItem(i,N_IMAGE_IMPORT::FirstThunk+3,                     new QStandardItem(listID.at(i).sLibrary));
 
             incValue();
