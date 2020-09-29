@@ -284,17 +284,17 @@ void FormatsWidget::reload()
                 }
 
                 QList<XMACH::COMMAND_RECORD> listCommandRecords=mach.getCommandRecords();
-                QList<XMACH::SECTION_RECORD> listSections=mach.getSectionRecords(&listCommandRecords);
+                QList<XMACH::SECTION_RECORD> listSectionRecords=mach.getSectionRecords(&listCommandRecords);
                 QList<XMACH::SEGMENT_RECORD> listSegments=mach.getSegmentRecords(&listCommandRecords);
                 QList<XMACH::LIBRARY_RECORD> listLibraries=mach.getLibraryRecords(&listCommandRecords);
 
                 ui->lineEditMACHCommands->setEnabled(listCommandRecords.count());
-                ui->lineEditMACHSections->setEnabled(listSections.count());
+                ui->lineEditMACHSections->setEnabled(listSectionRecords.count());
                 ui->lineEditMACHSegments->setEnabled(listSegments.count());
                 ui->lineEditMACHLibraries->setEnabled(listLibraries.count());
 
                 ui->lineEditMACHCommands->setValue((quint16)listCommandRecords.count());
-                ui->lineEditMACHSections->setValue((quint16)listSections.count());
+                ui->lineEditMACHSections->setValue((quint16)listSectionRecords.count());
                 ui->lineEditMACHSegments->setValue((quint16)listSegments.count());
                 ui->lineEditMACHLibraries->setValue((quint16)listLibraries.count());
             }
