@@ -73,13 +73,13 @@ QList<QString> ProcessData::getStructList(const FW_DEF::HEADER_RECORD *pRecords,
     return listResult;
 }
 
-void ProcessData::setHeader(QStandardItemModel *pModel, QList<QString> *pList)
+void ProcessData::setHeader(QStandardItemModel *pModel, QList<QString> *pListStrings)
 {
-    int nNumberOfRecords=pList->count();
+    int nNumberOfRecords=pListStrings->count();
 
     for(int i=0;i<nNumberOfRecords;i++)
     {
-        pModel->setHeaderData(i,Qt::Horizontal,pList->at(i));
+        pModel->setHeaderData(i,Qt::Horizontal,pListStrings->at(i));
     }
 }
 

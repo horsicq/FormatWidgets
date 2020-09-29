@@ -587,51 +587,51 @@ void ELFWidget::reloadData()
     stInit.insert(sInit);
 }
 
-void ELFWidget::addDatasets(XELF *pElf, QTreeWidgetItem *pParent, QList<XBinary::DATASET> *pList)
+void ELFWidget::addDatasets(XELF *pElf, QTreeWidgetItem *pParent, QList<XBinary::DATASET> *pListDataSets)
 {
-    int nNumberOfRecords=pList->count();
+    int nNumberOfRecords=pListDataSets->count();
 
     for(int i=0;i<nNumberOfRecords;i++)
     {
-        if(pList->at(i).nType==XELF::DS_INTERPRETER)
+        if(pListDataSets->at(i).nType==XELF::DS_INTERPRETER)
         {
-            pParent->addChild(createNewItem(SELF::TYPE_INTERPRETER,pList->at(i).sName,pList->at(i).nOffset,pList->at(i).nSize,pList->at(i).nStringTableOffset,pList->at(i).nStringTableSize));
+            pParent->addChild(createNewItem(SELF::TYPE_INTERPRETER,pListDataSets->at(i).sName,pListDataSets->at(i).nOffset,pListDataSets->at(i).nSize,pListDataSets->at(i).nStringTableOffset,pListDataSets->at(i).nStringTableSize));
         }
-        else if(pList->at(i).nType==XELF::DS_LIBRARIES)
+        else if(pListDataSets->at(i).nType==XELF::DS_LIBRARIES)
         {
-            pParent->addChild(createNewItem(SELF::TYPE_LIBRARIES,pList->at(i).sName,pList->at(i).nOffset,pList->at(i).nSize,pList->at(i).nStringTableOffset,pList->at(i).nStringTableSize));
+            pParent->addChild(createNewItem(SELF::TYPE_LIBRARIES,pListDataSets->at(i).sName,pListDataSets->at(i).nOffset,pListDataSets->at(i).nSize,pListDataSets->at(i).nStringTableOffset,pListDataSets->at(i).nStringTableSize));
         }
-        else if(pList->at(i).nType==XELF::DS_STRINGTABLE)
+        else if(pListDataSets->at(i).nType==XELF::DS_STRINGTABLE)
         {
-            pParent->addChild(createNewItem(SELF::TYPE_STRINGTABLE,pList->at(i).sName,pList->at(i).nOffset,pList->at(i).nSize,pList->at(i).nStringTableOffset,pList->at(i).nStringTableSize));
+            pParent->addChild(createNewItem(SELF::TYPE_STRINGTABLE,pListDataSets->at(i).sName,pListDataSets->at(i).nOffset,pListDataSets->at(i).nSize,pListDataSets->at(i).nStringTableOffset,pListDataSets->at(i).nStringTableSize));
         }
-        else if(pList->at(i).nType==XELF::DS_SYMBOLTABLE)
+        else if(pListDataSets->at(i).nType==XELF::DS_SYMBOLTABLE)
         {
-            pParent->addChild(createNewItem(SELF::TYPE_SYMBOLTABLE,pList->at(i).sName,pList->at(i).nOffset,pList->at(i).nSize,pList->at(i).nStringTableOffset,pList->at(i).nStringTableSize));
+            pParent->addChild(createNewItem(SELF::TYPE_SYMBOLTABLE,pListDataSets->at(i).sName,pListDataSets->at(i).nOffset,pListDataSets->at(i).nSize,pListDataSets->at(i).nStringTableOffset,pListDataSets->at(i).nStringTableSize));
         }
-        else if(pList->at(i).nType==XELF::DS_RUNPATH)
+        else if(pListDataSets->at(i).nType==XELF::DS_RUNPATH)
         {
-            pParent->addChild(createNewItem(SELF::TYPE_RUNPATH,pList->at(i).sName,pList->at(i).nOffset,pList->at(i).nSize,pList->at(i).nStringTableOffset,pList->at(i).nStringTableSize));
+            pParent->addChild(createNewItem(SELF::TYPE_RUNPATH,pListDataSets->at(i).sName,pListDataSets->at(i).nOffset,pListDataSets->at(i).nSize,pListDataSets->at(i).nStringTableOffset,pListDataSets->at(i).nStringTableSize));
         }
-        else if(pList->at(i).nType==XELF::DS_NOTES)
+        else if(pListDataSets->at(i).nType==XELF::DS_NOTES)
         {
-            pParent->addChild(createNewItem(SELF::TYPE_NOTES,pList->at(i).sName,pList->at(i).nOffset,pList->at(i).nSize,pList->at(i).nStringTableOffset,pList->at(i).nStringTableSize));
+            pParent->addChild(createNewItem(SELF::TYPE_NOTES,pListDataSets->at(i).sName,pListDataSets->at(i).nOffset,pListDataSets->at(i).nSize,pListDataSets->at(i).nStringTableOffset,pListDataSets->at(i).nStringTableSize));
         }
-        else if(pList->at(i).nType==XELF::DS_RELA)
+        else if(pListDataSets->at(i).nType==XELF::DS_RELA)
         {
-            pParent->addChild(createNewItem(SELF::TYPE_Elf_Rela,pList->at(i).sName,pList->at(i).nOffset,pList->at(i).nSize,pList->at(i).nStringTableOffset,pList->at(i).nStringTableSize));
+            pParent->addChild(createNewItem(SELF::TYPE_Elf_Rela,pListDataSets->at(i).sName,pListDataSets->at(i).nOffset,pListDataSets->at(i).nSize,pListDataSets->at(i).nStringTableOffset,pListDataSets->at(i).nStringTableSize));
         }
-        else if(pList->at(i).nType==XELF::DS_REL)
+        else if(pListDataSets->at(i).nType==XELF::DS_REL)
         {
-            pParent->addChild(createNewItem(SELF::TYPE_Elf_Rel,pList->at(i).sName,pList->at(i).nOffset,pList->at(i).nSize,pList->at(i).nStringTableOffset,pList->at(i).nStringTableSize));
+            pParent->addChild(createNewItem(SELF::TYPE_Elf_Rel,pListDataSets->at(i).sName,pListDataSets->at(i).nOffset,pListDataSets->at(i).nSize,pListDataSets->at(i).nStringTableOffset,pListDataSets->at(i).nStringTableSize));
         }
-        else if(pList->at(i).nType==XELF::DS_DYNAMICTAGS)
+        else if(pListDataSets->at(i).nType==XELF::DS_DYNAMICTAGS)
         {
-            QTreeWidgetItem *pDynamicTags=createNewItem(SELF::TYPE_Elf_DynamicArrayTags,pList->at(i).sName,pList->at(i).nOffset,pList->at(i).nSize,pList->at(i).nStringTableOffset,pList->at(i).nStringTableSize);
+            QTreeWidgetItem *pDynamicTags=createNewItem(SELF::TYPE_Elf_DynamicArrayTags,pListDataSets->at(i).sName,pListDataSets->at(i).nOffset,pListDataSets->at(i).nSize,pListDataSets->at(i).nStringTableOffset,pListDataSets->at(i).nStringTableSize);
 
             pParent->addChild(pDynamicTags);
 
-            QList<XELF::TAG_STRUCT> listTagStructs=pElf->_getTagStructs(pList->at(i).nOffset,pList->at(i).nSize,pElf->is64(),pElf->isBigEndian());
+            QList<XELF::TAG_STRUCT> listTagStructs=pElf->_getTagStructs(pListDataSets->at(i).nOffset,pListDataSets->at(i).nSize,pElf->is64(),pElf->isBigEndian());
 
             XBinary::_MEMORY_MAP memoryMap=pElf->getMemoryMap();
 
@@ -642,7 +642,7 @@ void ELFWidget::addDatasets(XELF *pElf, QTreeWidgetItem *pParent, QList<XBinary:
     }
 }
 
-bool ELFWidget::createSectionTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nNumberOfRecords)
+bool ELFWidget::createSectionTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pHeaderRecord, int nNumberOfRecords)
 {
     Q_UNUSED(nType)
 
@@ -652,7 +652,7 @@ bool ELFWidget::createSectionTable(int nType, QTableWidget *pTableWidget, const 
 
     for(int i=0; i<nNumberOfRecords; i++)
     {
-        slHeader.append(pRecords[i].sName);
+        slHeader.append(pHeaderRecord[i].sName);
     }
 
     pTableWidget->setHorizontalHeaderLabels(slHeader);

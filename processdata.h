@@ -43,7 +43,7 @@ public:
     virtual void ajustTableView(QWidget *pWidget,QTableView *pTableView)=0;
     virtual void ajustTreeView(QWidget *pWidget,QTreeView *pTreeView);
     static QList<QString> getStructList(const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount);
-    static void setHeader(QStandardItemModel *pModel,QList<QString> *pList);
+    static void setHeader(QStandardItemModel *pModel,QList<QString> *pListStrings);
 
 public slots:
     void process();
