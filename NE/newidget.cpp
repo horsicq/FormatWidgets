@@ -87,7 +87,7 @@ void NEWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_STRINGS,tr("Strings")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_MEMORYMAP,tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_ENTROPY,tr("Entropy")));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_DETECT,tr("Detect")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_HEURISTICSCAN,tr("Heuristic scan")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_DOS_HEADER,"DOS_HEADER"));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_OS2_HEADER,"OS2_HEADER"));
 
@@ -341,11 +341,11 @@ void NEWidget::reloadData()
                 ui->widgetEntropy->setData(getDevice(),0,getDevice()->size(),true);
             }
         }
-        else if(nType==SNE::TYPE_DETECT)
+        else if(nType==SNE::TYPE_HEURISTICSCAN)
         {
             if(!stInit.contains(sInit))
             {
-                // TODO
+                ui->widgetHeuristicScan->setData(getDevice(),true,XBinary::FT_NE);
             }
         }
         else if(nType==SNE::TYPE_DOS_HEADER)
