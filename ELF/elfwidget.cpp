@@ -162,10 +162,7 @@ bool ELFWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, i
                 case SELF::TYPE_Elf_Ehdr:
                     switch(nNdata)
                     {
-                        case N_Elf_Ehdr::ei_mag_0:      elf.setIdent_mag((quint8)nValue,0);                                                                 break;
-                        case N_Elf_Ehdr::ei_mag_1:      elf.setIdent_mag((quint8)nValue,1);                                                                 break;
-                        case N_Elf_Ehdr::ei_mag_2:      elf.setIdent_mag((quint8)nValue,2);                                                                 break;
-                        case N_Elf_Ehdr::ei_mag_3:      elf.setIdent_mag((quint8)nValue,3);                                                                 break;
+                        case N_Elf_Ehdr::ei_mag:        elf.setIdent_mag((quint32)nValue,0);                                                                break;
                         case N_Elf_Ehdr::ei_class:      elf.setIdent_class((quint8)nValue);                                                                 break;
                         case N_Elf_Ehdr::ei_data:       elf.setIdent_data((quint8)nValue);                                                                  break;
                         case N_Elf_Ehdr::ei_version:    elf.setIdent_version((quint8)nValue);                                                               break;
@@ -337,6 +334,7 @@ void ELFWidget::reloadData()
                     createHeaderTable(SELF::TYPE_Elf_Ehdr,ui->tableWidget_Elf_Ehdr,N_Elf_Ehdr::records32,lineEdit_Elf_Ehdr,N_Elf_Ehdr::__data_size,0);
                 }
 
+                comboBox[CB_Elf_Ehdr_mag]=createComboBox(ui->tableWidget_Elf_Ehdr,XELF::getIndentMagS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::ei_mag,XComboBoxEx::CBTYPE_NORMAL);
                 comboBox[CB_Elf_Ehdr_iclass]=createComboBox(ui->tableWidget_Elf_Ehdr,XELF::getIndentClassesS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::ei_class,XComboBoxEx::CBTYPE_NORMAL);
                 comboBox[CB_Elf_Ehdr_idata]=createComboBox(ui->tableWidget_Elf_Ehdr,XELF::getIndentDatasS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::ei_data,XComboBoxEx::CBTYPE_NORMAL);
                 comboBox[CB_Elf_Ehdr_iversion]=createComboBox(ui->tableWidget_Elf_Ehdr,XELF::getIndentVersionsS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::ei_version,XComboBoxEx::CBTYPE_NORMAL);
@@ -350,10 +348,7 @@ void ELFWidget::reloadData()
 
                 blockSignals(true);
 
-                lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_mag_0]->setValue(elf.getIdent_mag(0));
-                lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_mag_1]->setValue(elf.getIdent_mag(1));
-                lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_mag_2]->setValue(elf.getIdent_mag(2));
-                lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_mag_3]->setValue(elf.getIdent_mag(3));
+                lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_mag]->setValue(elf.getIdent_mag_LE());
                 lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_class]->setValue(elf.getIdent_class());
                 lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_data]->setValue(elf.getIdent_data());
                 lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_version]->setValue(elf.getIdent_version());
@@ -414,6 +409,7 @@ void ELFWidget::reloadData()
                     invWidget[INV_CB_Elf_e_shoff]->setOffsetAndSize(&elf,elf.getHdr32_shoff(),0); // TODO offset
                 }
 
+                comboBox[CB_Elf_Ehdr_mag]->setValue(elf.getIdent_mag_LE());
                 comboBox[CB_Elf_Ehdr_iclass]->setValue(elf.getIdent_class());
                 comboBox[CB_Elf_Ehdr_idata]->setValue(elf.getIdent_data());
                 comboBox[CB_Elf_Ehdr_iversion]->setValue(elf.getIdent_version());

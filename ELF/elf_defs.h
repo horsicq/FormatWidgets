@@ -53,10 +53,7 @@ namespace N_Elf_Ehdr
 {
 enum DATA
 {
-    ei_mag_0=0,
-    ei_mag_1,
-    ei_mag_2,
-    ei_mag_3,
+    ei_mag=0,
     ei_class,
     ei_data,
     ei_version,

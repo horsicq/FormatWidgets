@@ -24,10 +24,7 @@ namespace N_Elf_Ehdr
 {
 const FW_DEF::HEADER_RECORD records32[]=
 {
-    {ei_mag_0,              "ei_mag_0",             offsetof(XELF_DEF::Elf32_Ehdr,e_ident)+0,       1,      "unsigned char",        FW_DEF::VAL_TYPE_DATA},
-    {ei_mag_1,              "ei_mag_1",             offsetof(XELF_DEF::Elf32_Ehdr,e_ident)+1,       1,      "unsigned char",        FW_DEF::VAL_TYPE_DATA},
-    {ei_mag_2,              "ei_mag_2",             offsetof(XELF_DEF::Elf32_Ehdr,e_ident)+2,       1,      "unsigned char",        FW_DEF::VAL_TYPE_DATA},
-    {ei_mag_3,              "ei_mag_3",             offsetof(XELF_DEF::Elf32_Ehdr,e_ident)+3,       1,      "unsigned char",        FW_DEF::VAL_TYPE_DATA},
+    {ei_mag,                "ei_mag",               offsetof(XELF_DEF::Elf32_Ehdr,e_ident)+0,       4,      "uint32 LE",            FW_DEF::VAL_TYPE_DATA},
     {ei_class,              "ei_class",             offsetof(XELF_DEF::Elf32_Ehdr,e_ident)+4,       1,      "unsigned char",        FW_DEF::VAL_TYPE_DATA},
     {ei_data,               "ei_data",              offsetof(XELF_DEF::Elf32_Ehdr,e_ident)+5,       1,      "unsigned char",        FW_DEF::VAL_TYPE_DATA},
     {ei_version,            "ei_version",           offsetof(XELF_DEF::Elf32_Ehdr,e_ident)+6,       1,      "unsigned char",        FW_DEF::VAL_TYPE_DATA},
@@ -56,10 +53,7 @@ const FW_DEF::HEADER_RECORD records32[]=
 };
 const FW_DEF::HEADER_RECORD records64[]=
 {
-    {ei_mag_0,              "ei_mag_0",             offsetof(XELF_DEF::Elf64_Ehdr,e_ident)+0,       1,      "unsigned char",        FW_DEF::VAL_TYPE_DATA},
-    {ei_mag_1,              "ei_mag_1",             offsetof(XELF_DEF::Elf64_Ehdr,e_ident)+1,       1,      "unsigned char",        FW_DEF::VAL_TYPE_DATA},
-    {ei_mag_2,              "ei_mag_2",             offsetof(XELF_DEF::Elf64_Ehdr,e_ident)+2,       1,      "unsigned char",        FW_DEF::VAL_TYPE_DATA},
-    {ei_mag_3,              "ei_mag_3",             offsetof(XELF_DEF::Elf64_Ehdr,e_ident)+3,       1,      "unsigned char",        FW_DEF::VAL_TYPE_DATA},
+    {ei_mag,                "ei_mag",               offsetof(XELF_DEF::Elf64_Ehdr,e_ident)+0,       4,      "uint32 LE",            FW_DEF::VAL_TYPE_DATA},
     {ei_class,              "ei_class",             offsetof(XELF_DEF::Elf64_Ehdr,e_ident)+4,       1,      "unsigned char",        FW_DEF::VAL_TYPE_DATA},
     {ei_data,               "ei_data",              offsetof(XELF_DEF::Elf64_Ehdr,e_ident)+5,       1,      "unsigned char",        FW_DEF::VAL_TYPE_DATA},
     {ei_version,            "ei_version",           offsetof(XELF_DEF::Elf64_Ehdr,e_ident)+6,       1,      "unsigned char",        FW_DEF::VAL_TYPE_DATA},
