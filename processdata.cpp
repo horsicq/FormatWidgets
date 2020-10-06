@@ -89,7 +89,7 @@ void ProcessData::process()
     scanTimer.start();
 
     emit progressMinimum(0);
-    emit progressMinimum(100);
+    emit progressMaximum(100);
 
     _process();
 
