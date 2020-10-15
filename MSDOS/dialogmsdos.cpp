@@ -37,6 +37,8 @@ DialogMSDOS::~DialogMSDOS()
 
 void DialogMSDOS::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions)
 {
+    setWindowTitle(pOptions->sTitle);
+
     ui->widget->setData(pDevice,pOptions);
     ui->widget->reload();
 }

@@ -32,6 +32,7 @@ namespace FW_DEF
         qint64 nImageBase; // TODO default_const
         // TODO Last directory
         int nStartType;
+        QString sTitle; // For dialogs
     };
 
     enum VAL_TYPE
