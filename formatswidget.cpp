@@ -45,7 +45,7 @@ void FormatsWidget::setData(QString sFileName, bool bScan)
 
     ui->comboBoxFileType->clear();
 
-    QSet<XBinary::FT> stFileTypes=XBinary::getFileTypes(sFileName);
+    QSet<XBinary::FT> stFileTypes=XBinary::getFileTypes(sFileName,true);
 
     XBinary::filterFileTypes(&stFileTypes);
 
@@ -122,7 +122,9 @@ void FormatsWidget::reload()
 
     if(file.open(QIODevice::ReadOnly))
     {
-        if(fileType==XBinary::FT_BINARY)
+        if( (fileType==XBinary::FT_BINARY)||
+            (fileType==XBinary::FT_DEX)||
+            (fileType==XBinary::FT_ZIP))
         {
             ui->groupBoxEntryPoint->hide();
             ui->groupBoxBaseAddress->hide();
@@ -169,6 +171,14 @@ void FormatsWidget::reload()
             {
                 ui->lineEditEntryPoint->setValue((quint16)com.getEntryPointAddress());
             }
+        }
+        else if(fileType==XBinary::FT_ZIP)
+        {
+            ui->stackedWidgetMain->setCurrentIndex(TABINFO_ZIP);
+        }
+        else if(fileType==XBinary::FT_DEX)
+        {
+            ui->stackedWidgetMain->setCurrentIndex(TABINFO_DEX);
         }
         else if(fileType==XBinary::FT_MSDOS)
         {
@@ -605,9 +615,37 @@ void FormatsWidget::showMACH(SMACH::TYPE type)
     }
 }
 
+void FormatsWidget::showDEX(SDEX::TYPE type)
+{
+    QFile file;
+    file.setFileName(sFileName);
+
+    if(XBinary::tryToOpen(&file))
+    {
+        FW_DEF::OPTIONS options={};
+
+        if(sBackupFilename!="")
+        {
+            options.sBackupFileName=sBackupFilename;
+        }
+
+        options.nStartType=type;
+
+        DialogDEX dialogDEX(this);
+
+        dialogDEX.setData(&file,&options);
+
+        dialogDEX.exec();
+
+        file.close();
+    }
+}
+
 XBinary::FT FormatsWidget::getCurrentFileType()
 {
-    return (XBinary::FT)(ui->comboBoxFileType->currentData().toInt());
+    XBinary::FT fileType=(XBinary::FT)(ui->comboBoxFileType->currentData().toInt());
+
+    return fileType;
 }
 
 void FormatsWidget::on_pushButtonMSDOSOverlay_clicked()
@@ -655,4 +693,9 @@ void FormatsWidget::on_pushButtonLE_clicked()
 void FormatsWidget::on_pushButtonNE_clicked()
 {
     showNE(SNE::TYPE_OS2_HEADER);
+}
+
+void FormatsWidget::on_pushButtonDEX_clicked()
+{
+    showDEX(SDEX::TYPE_HEADER);
 }

@@ -31,6 +31,7 @@
 #include "dialogelf.h"
 #include "dialogmach.h"
 #include "dialogdisasm.h"
+#include "dialogdex.h"
 
 namespace Ui {
 class FormatsWidget;
@@ -44,6 +45,8 @@ class FormatsWidget : public QWidget
     {
         TABINFO_BINARY=0,
         TABINFO_COM,
+        TABINFO_ZIP,
+        TABINFO_DEX,
         TABINFO_NE,
         TABINFO_LE,
         TABINFO_MSDOS,
@@ -97,6 +100,7 @@ private slots:
     void on_pushButtonMACHSections_clicked();
     void on_pushButtonMACHCommands_clicked();
     void on_pushButtonMACHLibraries_clicked();
+    void on_pushButtonDEX_clicked();
 
     void showMSDOS(SMSDOS::TYPE type);
     void showLE(SLE::TYPE type);
@@ -104,6 +108,7 @@ private slots:
     void showPE(SPE::TYPE type);
     void showELF(SELF::TYPE type);
     void showMACH(SMACH::TYPE type);
+    void showDEX(SDEX::TYPE type);
 
     XBinary::FT getCurrentFileType();
 

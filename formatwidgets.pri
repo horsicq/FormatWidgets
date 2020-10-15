@@ -50,6 +50,11 @@ FORMS += \
     include($$PWD/PE/pewidget.pri)
 }
 
+!contains(XCONFIG, dexwidget) {
+    XCONFIG += dexwidget
+    include($$PWD/DEX/dexwidget.pri)
+}
+
 !contains(XCONFIG, xdisasm) {
     XCONFIG += xdisasm
     include($$PWD/../XDisasm/xdisasm.pri)
