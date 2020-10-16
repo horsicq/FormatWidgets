@@ -254,7 +254,7 @@ void MACHWidget::reloadData()
         {
             if(!stInit.contains(sInit))
             {
-                ui->widgetStrings->setData(getDevice(),0,true);
+                ui->widgetStrings->setData(getDevice(),nullptr,true);
             }
         }
         else if(nType==SMACH::TYPE_MEMORYMAP)
