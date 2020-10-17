@@ -69,3 +69,8 @@ FORMS += \
     XCONFIG += nfd_widget
     include($$PWD/../nfd_widget/nfd_widget.pri)
 }
+
+!contains(XCONFIG, archive_widget) {
+    XCONFIG += archive_widget
+    include($$PWD/../archive_widget/archive_widget.pri)
+}

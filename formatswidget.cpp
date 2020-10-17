@@ -175,6 +175,8 @@ void FormatsWidget::reload()
         else if(fileType==XBinary::FT_ZIP)
         {
             ui->stackedWidgetMain->setCurrentIndex(TABINFO_ZIP);
+
+            ui->widgetZIP->setData(sFileName); // TODO pDevice
         }
         else if(fileType==XBinary::FT_DEX)
         {
