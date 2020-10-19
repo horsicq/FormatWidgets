@@ -226,7 +226,44 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="Archive_widget" name="widgetZIP" native="true"/>
+        <layout class="QHBoxLayout" name="horizontalLayout_23">
+         <item>
+          <widget class="QPushButton" name="pushButtonZIP">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
+           <property name="text">
+            <string notr="true">ZIP</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_5">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>46</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>
@@ -1500,12 +1537,6 @@
    <class>NFD_Widget</class>
    <extends>QWidget</extends>
    <header>nfd_widget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>Archive_widget</class>
-   <extends>QWidget</extends>
-   <header>archive_widget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

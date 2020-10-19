@@ -236,9 +236,19 @@ void FormatWidget::setLineEdit(XLineEditHEX *pLineEdit, qint32 nMaxLength, QStri
     pLineEdit->setProperty("OFFSET",nOffset);
 }
 
-void FormatWidget::ajustTableView(ProcessData *pProcessData, QStandardItemModel **ppModel, QTableView *pTableView)
+void FormatWidget::ajustTableView(ProcessData *pProcessData, QStandardItemModel **ppModel, QTableView *pTableView, QSortFilterProxyModel *pProxyModel)
 {
-    QAbstractItemModel *pOldModel=pTableView->model();
+    QAbstractItemModel *pOldModel=0;
+
+    if(pProxyModel)
+    {
+        pOldModel=pProxyModel->sourceModel();
+        pProxyModel->setSourceModel(0);
+    }
+    else
+    {
+        pOldModel=pTableView->model();
+    }
 
     DialogProcessData dialogProcessData(this,pProcessData);
 
@@ -251,7 +261,15 @@ void FormatWidget::ajustTableView(ProcessData *pProcessData, QStandardItemModel 
         pTableView->setSortingEnabled(false);
     }
 
-    pTableView->setModel(*ppModel);
+    if(pProxyModel)
+    {
+        pProxyModel->setSourceModel(*ppModel);
+        pTableView->setModel(pProxyModel);
+    }
+    else
+    {
+        pTableView->setModel(*ppModel);
+    }
 
     pProcessData->ajustTableView(this,pTableView);
 

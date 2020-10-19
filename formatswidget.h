@@ -112,6 +112,8 @@ private slots:
 
     XBinary::FT getCurrentFileType();
 
+    void on_pushButtonZIP_clicked();
+
 private:
     Ui::FormatsWidget *ui;
     QString sFileName;

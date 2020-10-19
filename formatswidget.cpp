@@ -175,8 +175,6 @@ void FormatsWidget::reload()
         else if(fileType==XBinary::FT_ZIP)
         {
             ui->stackedWidgetMain->setCurrentIndex(TABINFO_ZIP);
-
-            ui->widgetZIP->setData(sFileName); // TODO pDevice
         }
         else if(fileType==XBinary::FT_DEX)
         {
@@ -700,4 +698,9 @@ void FormatsWidget::on_pushButtonNE_clicked()
 void FormatsWidget::on_pushButtonDEX_clicked()
 {
     showDEX(SDEX::TYPE_HEADER);
+}
+
+void FormatsWidget::on_pushButtonZIP_clicked()
+{
+    // TODO
 }
