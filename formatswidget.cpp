@@ -34,6 +34,8 @@ FormatsWidget::FormatsWidget(QWidget *pParent) :
 
     ui->stackedWidgetMain->setCurrentIndex(TABINFO_BINARY);
     ui->stackedWidgetScan->setCurrentIndex(TABSE_DIE);
+
+    // TODO switch to NFD if DEX or ZIP
 }
 
 void FormatsWidget::setData(QString sFileName, bool bScan)

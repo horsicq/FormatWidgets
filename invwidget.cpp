@@ -50,7 +50,7 @@ InvWidget::~InvWidget()
 
 void InvWidget::setOffsetAndSize(XBinary *pBinary, qint64 nOffset, qint64 nSize)
 {
-    if(pBinary->isAddressPhysical(nOffset))
+    if(pBinary->isOffsetValid(nOffset))
     {
         _setEnabled(true);
 
