@@ -30,7 +30,7 @@ class MACHProcessData : public ProcessData
 public:
     explicit MACHProcessData(int nType,QStandardItemModel **ppModel,XMACH *pXMACH,qint64 nOffset,qint64 nSize);
     virtual void _process();
-    virtual void ajustTableView(QWidget *pWidget, QTableView *pTableView);
+    virtual void ajustTableView(QWidget *pWidget,QTableView *pTableView);
 
 private:
     int nType;

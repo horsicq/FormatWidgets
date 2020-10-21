@@ -40,10 +40,10 @@ public:
         __CB_size
     };
     MACHSectionHeaderWidget(QWidget *pParent=nullptr);
-    MACHSectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent=nullptr);
+    MACHSectionHeaderWidget(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions,quint32 nNumber,qint64 nOffset,qint32 nType,QWidget *pParent=nullptr);
     ~MACHSectionHeaderWidget();
     virtual void clear();
-    virtual void setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset);
+    virtual void setData(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions,quint32 nNumber,qint64 nOffset);
     virtual void reload();
 
 protected:
