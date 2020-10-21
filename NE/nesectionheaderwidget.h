@@ -40,10 +40,10 @@ public:
         __CB_size
     };
     NESectionHeaderWidget(QWidget *pParent=nullptr);
-    NESectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent=nullptr);
+    NESectionHeaderWidget(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions,quint32 nNumber,qint64 nOffset,qint32 nType,QWidget *pParent=nullptr);
     ~NESectionHeaderWidget();
     virtual void clear();
-    virtual void setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset);
+    virtual void setData(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions,quint32 nNumber,qint64 nOffset);
     virtual void reload();
 
 protected:
@@ -56,7 +56,7 @@ private slots:
     void on_checkBoxReadonly_toggled(bool bChecked);
     void reloadData();
 
-    void on_tableWidget_Section_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn);
+    void on_tableWidget_Section_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
 
 private:
     enum INV

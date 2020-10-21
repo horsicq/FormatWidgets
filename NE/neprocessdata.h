@@ -32,7 +32,7 @@ class NEProcessData : public ProcessData
 public:
     explicit NEProcessData(int nType,QStandardItemModel **ppModel,XNE *pNE,qint64 nOffset,qint64 nSize);
     virtual void _process();
-    virtual void ajustTableView(QWidget *pWidget, QTableView *pTableView);
+    virtual void ajustTableView(QWidget *pWidget,QTableView *pTableView);
 
 private:
     int nType;
