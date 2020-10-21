@@ -35,7 +35,7 @@ class PESectionHeaderWidget : public FormatWidget
 
 public:
     PESectionHeaderWidget(QWidget *pParent=nullptr);
-    PESectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent=nullptr);
+    PESectionHeaderWidget(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions,quint32 nNumber,qint64 nOffset,qint32 nType,QWidget *pParent=nullptr);
     ~PESectionHeaderWidget();
     virtual void clear();
     virtual void cleanup();
@@ -52,7 +52,7 @@ private slots:
     void on_checkBoxReadonly_toggled(bool bChecked);
     void reloadData();
     void widgetValueChanged(quint64 nValue);
-    void on_tableWidget_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn);
+    void on_tableWidget_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
 
 private:
 

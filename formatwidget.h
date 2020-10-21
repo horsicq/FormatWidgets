@@ -134,8 +134,8 @@ public:
 
     void setItemEnable(QTableWidgetItem *pItem,bool bState);
     void setLineEdit(XLineEditHEX *pLineEdit,qint32 nMaxLength,QString sText,qint64 nOffset);
-    void ajustTableView(ProcessData *pProcessData, QStandardItemModel **ppModel, QTableView *pTableView, QSortFilterProxyModel *pProxyModel=nullptr);
-    void ajustTreeView(ProcessData *pProcessData, QStandardItemModel **ppModel, QTreeView *pTreeView);
+    void ajustTableView(ProcessData *pProcessData,QStandardItemModel **ppModel,QTableView *pTableView,QSortFilterProxyModel *pProxyModel=nullptr);
+    void ajustTreeView(ProcessData *pProcessData,QStandardItemModel **ppModel,QTreeView *pTreeView);
     void showSectionHex(QTableView *pTableView);
     void showSectionEntropy(QTableView *pTableView);
     qint64 getTableViewItemSize(QTableView *pTableView,int nRow);

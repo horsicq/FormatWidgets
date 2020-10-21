@@ -38,7 +38,7 @@ class PEWidget : public FormatWidget
 
 public:
     PEWidget(QWidget *pParent=nullptr);
-    PEWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *pParent=nullptr);
+    PEWidget(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions,QWidget *pParent=nullptr);
     ~PEWidget();
     virtual void clear();
     virtual void cleanup();
@@ -53,7 +53,7 @@ protected:
     virtual QString typeIdToString(int nType);
 
 private slots:
-    void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent, QTreeWidgetItem *pPrevious);
+    void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent,QTreeWidgetItem *pPrevious);
     void widgetValueChanged(quint64 nValue);
     void widgetAction();
     void on_checkBoxReadonly_toggled(bool bChecked);
@@ -68,17 +68,17 @@ private slots:
     void loadDirectory(int nRow);
     void loadDebug(int nRow);
     void loadDelayImport(int nRow);
-    bool createSectionTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nNumberOfRecords);
+    bool createSectionTable(int nType,QTableWidget *pTableWidget,const FW_DEF::HEADER_RECORD *pRecords,int nNumberOfRecords);
     void on_pushButtonReload_clicked();
     void enableButton();
-    void on_tableWidget_IMAGE_DIRECTORY_ENTRIES_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn);
-    void on_tableWidget_IMAGE_DOS_HEADER_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn);
-    void on_tableWidget_IMAGE_NT_HEADERS_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn);
-    void on_tableWidget_IMAGE_FILE_HEADER_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn);
-    void on_tableWidget_IMAGE_OPTIONAL_HEADER_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn);
-    void on_tableWidget_LoadConfig_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn);
-    void on_tableWidget_NetHeader_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn);
-    void on_tableWidget_TLS_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn);
+    void on_tableWidget_IMAGE_DIRECTORY_ENTRIES_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
+    void on_tableWidget_IMAGE_DOS_HEADER_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
+    void on_tableWidget_IMAGE_NT_HEADERS_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
+    void on_tableWidget_IMAGE_FILE_HEADER_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
+    void on_tableWidget_IMAGE_OPTIONAL_HEADER_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
+    void on_tableWidget_LoadConfig_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
+    void on_tableWidget_NetHeader_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
+    void on_tableWidget_TLS_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
     void editImportHeader();
     void editDebugHeader();
     void editRelocsHeader();
@@ -88,32 +88,32 @@ private slots:
     void showSectionHeader(int nType,QTableView *pTableView);
     void on_tableView_Sections_customContextMenuRequested(const QPoint &pos);
     void on_tableView_Sections_doubleClicked(const QModelIndex &index);
-    void onTableView_Sections_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
+    void onTableView_Sections_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
     void on_tableView_ImportLibraries_customContextMenuRequested(const QPoint &pos);
-    void onTableView_ImportLibraries_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
+    void onTableView_ImportLibraries_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
     void on_tableView_ImportLibraries_doubleClicked(const QModelIndex &index);
     void on_tableView_Relocs_customContextMenuRequested(const QPoint &pos);
-    void onTableView_Relocs_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
+    void onTableView_Relocs_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
     void on_tableView_Relocs_doubleClicked(const QModelIndex &index);
     void on_tableView_Debug_customContextMenuRequested(const QPoint &pos);
-    void onTableView_Debug_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
+    void onTableView_Debug_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
     void on_tableView_Debug_doubleClicked(const QModelIndex &index);
     void on_tableView_Exceptions_customContextMenuRequested(const QPoint &pos);
-    void onTableView_Exceptions_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
+    void onTableView_Exceptions_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
     void on_tableView_Exceptions_doubleClicked(const QModelIndex &index);
     void on_tableView_DelayImportLibraries_customContextMenuRequested(const QPoint &pos);
-    void onTableView_DelayImportLibraries_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
+    void onTableView_DelayImportLibraries_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
     void on_tableView_DelayImportLibraries_doubleClicked(const QModelIndex &index);
     void on_tableView_BoundImport_customContextMenuRequested(const QPoint &pos);
     void on_tableView_BoundImport_doubleClicked(const QModelIndex &index);
-    void onTreeView_Resources_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
+    void onTreeView_Resources_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
     void on_pushButtonHex_clicked();
     void on_pushButtonStrings_clicked();
     void on_pushButtonMemoryMap_clicked();
     void on_pushButtonEntropy_clicked();
     void on_pushButtonHeuristicScan_clicked();
     void on_pushButtonDisasm_clicked();
-    void on_tableWidget_Net_Metadata_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn);
+    void on_tableWidget_Net_Metadata_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
 
 private:
     enum CB
