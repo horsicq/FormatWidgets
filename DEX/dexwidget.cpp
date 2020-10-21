@@ -1,0 +1,593 @@
+// copyright (c) 2017-2020 hors<horsicq@gmail.com>
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+//
+#include "dexwidget.h"
+#include "ui_dexwidget.h"
+
+DEXWidget::DEXWidget(QWidget *pParent) :
+    FormatWidget(pParent),
+    ui(new Ui::DEXWidget)
+{
+    ui->setupUi(this);
+
+    pFilterStrings=new QSortFilterProxyModel(this);
+    pFilterTypes=new QSortFilterProxyModel(this);
+}
+
+DEXWidget::DEXWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *pParent) :
+    FormatWidget(pDevice,pOptions,0,0,0,pParent),
+    ui(new Ui::DEXWidget)
+{
+    ui->setupUi(this);
+
+    pFilterStrings=new QSortFilterProxyModel(this);
+    pFilterTypes=new QSortFilterProxyModel(this);
+
+    nLastType=-1;
+
+    setData(pDevice,pOptions,0,0,0);
+    reload();
+}
+
+DEXWidget::~DEXWidget()
+{
+    delete ui;
+}
+
+void DEXWidget::clear()
+{
+    reset();
+
+    memset(lineEdit_HEADER,0,sizeof lineEdit_HEADER);
+    memset(comboBox,0,sizeof comboBox);
+    memset(invWidget,0,sizeof invWidget);
+    memset(subDevice,0,sizeof subDevice);
+    memset(tvModel,0,sizeof tvModel);
+
+    ui->checkBoxReadonly->setChecked(true);
+
+    ui->treeWidgetNavi->clear();
+}
+
+void DEXWidget::cleanup()
+{
+
+}
+
+void DEXWidget::reset()
+{
+    stInit.clear();
+}
+
+void DEXWidget::reload()
+{
+    clear();
+
+    ui->checkBoxReadonly->setEnabled(!isReadonly());
+
+    XDEX dex(getDevice());
+
+    if(dex.isValid())
+    {
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_HEX,QString("Hex")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_STRINGS,tr("Strings")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_MEMORYMAP,tr("Memory map")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_ENTROPY,tr("Entropy")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_HEURISTICSCAN,tr("Heuristic scan")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_HEADER,"Header"));
+
+        QList<XDEX_DEF::MAP_ITEM> listMapItems=dex.getMapItems();
+
+        if(listMapItems.count())
+        {
+            QTreeWidgetItem *pItemMapItems=createNewItem(SDEX::TYPE_MAPITEMS,"Map items");
+
+            ui->treeWidgetNavi->addTopLevelItem(pItemMapItems);
+
+            if(dex.isMapItemPresent(XDEX_DEF::TYPE_STRING_ID_ITEM,&listMapItems))
+            {
+                pItemMapItems->addChild(createNewItem(SDEX::TYPE_STRING_ID_ITEM,"STRING_ID_ITEM"));
+            }
+
+            if(dex.isMapItemPresent(XDEX_DEF::TYPE_TYPE_ID_ITEM,&listMapItems))
+            {
+                pItemMapItems->addChild(createNewItem(SDEX::TYPE_TYPE_ID_ITEM,"TYPE_ID_ITEM"));
+            }
+
+            if(dex.isMapItemPresent(XDEX_DEF::TYPE_PROTO_ID_ITEM,&listMapItems))
+            {
+                pItemMapItems->addChild(createNewItem(SDEX::TYPE_PROTO_ID_ITEM,"PROTO_ID_ITEM"));
+            }
+
+            if(dex.isMapItemPresent(XDEX_DEF::TYPE_FIELD_ID_ITEM,&listMapItems))
+            {
+                pItemMapItems->addChild(createNewItem(SDEX::TYPE_FIELD_ID_ITEM,"TYPE_FIELD_ID_ITEM"));
+            }
+
+            if(dex.isMapItemPresent(XDEX_DEF::TYPE_METHOD_ID_ITEM,&listMapItems))
+            {
+                pItemMapItems->addChild(createNewItem(SDEX::TYPE_METHOD_ID_ITEM,"TYPE_METHOD_ID_ITEM"));
+            }
+
+            if(dex.isMapItemPresent(XDEX_DEF::TYPE_CLASS_DEF_ITEM,&listMapItems))
+            {
+                pItemMapItems->addChild(createNewItem(SDEX::TYPE_CLASS_DEF_ITEM,"TYPE_CLASS_DEF_ITEM"));
+            }
+        }
+
+        ui->treeWidgetNavi->expandAll();
+
+        setTreeItem(ui->treeWidgetNavi,getOptions()->nStartType);
+    }
+}
+
+bool DEXWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
+{
+    Q_UNUSED(nVtype)
+    Q_UNUSED(nPosition)
+
+    bool bResult=false;
+
+    blockSignals(true);
+
+    quint64 nValue=vValue.toULongLong();
+    QString sValue=vValue.toString();
+
+    if(getDevice()->isWritable())
+    {
+        XDEX dex(getDevice());
+
+        if(dex.isValid())
+        {
+            switch(nStype)
+            {
+                case SDEX::TYPE_HEADER:
+                    switch(nNdata)
+                    {
+                        case N_DEX_HEADER::magic:           comboBox[CB_Dex_Header_magic]->setValue(nValue);                                                                                        break;
+                        case N_DEX_HEADER::version:         comboBox[CB_Dex_Header_version]->setValue(nValue);                                                                                      break;
+                        case N_DEX_HEADER::endian_tag:      comboBox[CB_Dex_Header_endian_tag]->setValue(nValue);                                                                                   break;
+                        case N_DEX_HEADER::link_size:       invWidget[INV_link]->setOffsetAndSize(&dex,dex.getHeader_link_off(),(quint32)nValue);                                                   break;
+                        case N_DEX_HEADER::link_off:        invWidget[INV_link]->setOffsetAndSize(&dex,(quint32)nValue,dex.getHeader_link_size());                                                  break;
+                        case N_DEX_HEADER::map_off:         invWidget[INV_map]->setOffsetAndSize(&dex,(quint32)nValue,0);                                                                           break;
+                        case N_DEX_HEADER::string_ids_size: invWidget[INV_string_ids]->setOffsetAndSize(&dex,dex.getHeader_string_ids_off(),(quint32)nValue*sizeof(XDEX_DEF::STRING_ITEM_ID));      break;
+                        case N_DEX_HEADER::string_ids_off:  invWidget[INV_string_ids]->setOffsetAndSize(&dex,(quint32)nValue,dex.getHeader_string_ids_size()*sizeof(XDEX_DEF::STRING_ITEM_ID));     break;
+                        case N_DEX_HEADER::type_ids_size:   invWidget[INV_type_ids]->setOffsetAndSize(&dex,dex.getHeader_type_ids_off(),(quint32)nValue*sizeof(XDEX_DEF::TYPE_ITEM_ID));            break;
+                        case N_DEX_HEADER::type_ids_off:    invWidget[INV_type_ids]->setOffsetAndSize(&dex,(quint32)nValue,dex.getHeader_type_ids_size()*sizeof(XDEX_DEF::TYPE_ITEM_ID));           break;
+                        case N_DEX_HEADER::proto_ids_size:  invWidget[INV_proto_ids]->setOffsetAndSize(&dex,dex.getHeader_proto_ids_off(),(quint32)nValue*sizeof(XDEX_DEF::PROTO_ITEM_ID));         break;
+                        case N_DEX_HEADER::proto_ids_off:   invWidget[INV_proto_ids]->setOffsetAndSize(&dex,(quint32)nValue,dex.getHeader_proto_ids_size()*sizeof(XDEX_DEF::PROTO_ITEM_ID));        break;
+                        case N_DEX_HEADER::field_ids_size:  invWidget[INV_field_ids]->setOffsetAndSize(&dex,dex.getHeader_field_ids_off(),(quint32)nValue*sizeof(XDEX_DEF::FIELD_ITEM_ID));         break;
+                        case N_DEX_HEADER::field_ids_off:   invWidget[INV_field_ids]->setOffsetAndSize(&dex,(quint32)nValue,dex.getHeader_field_ids_size()*sizeof(XDEX_DEF::FIELD_ITEM_ID));        break;
+                        case N_DEX_HEADER::method_ids_size: invWidget[INV_method_ids]->setOffsetAndSize(&dex,dex.getHeader_method_ids_off(),(quint32)nValue*sizeof(XDEX_DEF::METHOD_ITEM_ID));      break;
+                        case N_DEX_HEADER::method_ids_off:  invWidget[INV_method_ids]->setOffsetAndSize(&dex,(quint32)nValue,dex.getHeader_method_ids_size()*sizeof(XDEX_DEF::METHOD_ITEM_ID));     break;
+                        case N_DEX_HEADER::class_defs_size: invWidget[INV_class_defs]->setOffsetAndSize(&dex,dex.getHeader_class_defs_off(),(quint32)nValue*sizeof(XDEX_DEF::CLASS_ITEM_DEF));      break;
+                        case N_DEX_HEADER::class_defs_off:  invWidget[INV_class_defs]->setOffsetAndSize(&dex,(quint32)nValue,dex.getHeader_class_defs_size()*sizeof(XDEX_DEF::CLASS_ITEM_DEF));     break;
+                        case N_DEX_HEADER::data_size:       invWidget[INV_data]->setOffsetAndSize(&dex,dex.getHeader_data_off(),(quint32)nValue);                                                   break;
+                        case N_DEX_HEADER::data_off:        invWidget[INV_data]->setOffsetAndSize(&dex,(quint32)nValue,dex.getHeader_data_size());                                                  break;
+                    }
+
+                    break;
+            }
+
+            switch(nStype)
+            {
+                case SDEX::TYPE_HEADER:
+                    switch(nNdata)
+                    {
+                        case N_DEX_HEADER::magic:           dex.setHeader_magic((quint32)nValue);           break;
+                        case N_DEX_HEADER::version:         dex.setHeader_version((quint32)nValue);         break;
+                        case N_DEX_HEADER::checksum:        dex.setHeader_checksum((quint32)nValue);        break;
+                        case N_DEX_HEADER::file_size:       dex.setHeader_file_size((quint32)nValue);       break;
+                        case N_DEX_HEADER::header_size:     dex.setHeader_header_size((quint32)nValue);     break;
+                        case N_DEX_HEADER::endian_tag:      dex.setHeader_endian_tag((quint32)nValue);      break;
+                        case N_DEX_HEADER::link_size:       dex.setHeader_link_size((quint32)nValue);       break;
+                        case N_DEX_HEADER::link_off:        dex.setHeader_link_off((quint32)nValue);        break;
+                        case N_DEX_HEADER::map_off:         dex.setHeader_map_off((quint32)nValue);         break;
+                        case N_DEX_HEADER::string_ids_size: dex.setHeader_string_ids_size((quint32)nValue); break;
+                        case N_DEX_HEADER::string_ids_off:  dex.setHeader_string_ids_off((quint32)nValue);  break;
+                        case N_DEX_HEADER::type_ids_size:   dex.setHeader_type_ids_size((quint32)nValue);   break;
+                        case N_DEX_HEADER::type_ids_off:    dex.setHeader_type_ids_off((quint32)nValue);    break;
+                        case N_DEX_HEADER::proto_ids_size:  dex.setHeader_proto_ids_size((quint32)nValue);  break;
+                        case N_DEX_HEADER::proto_ids_off:   dex.setHeader_proto_ids_off((quint32)nValue);   break;
+                        case N_DEX_HEADER::field_ids_size:  dex.setHeader_field_ids_size((quint32)nValue);  break;
+                        case N_DEX_HEADER::field_ids_off:   dex.setHeader_field_ids_off((quint32)nValue);   break;
+                        case N_DEX_HEADER::method_ids_size: dex.setHeader_method_ids_size((quint32)nValue); break;
+                        case N_DEX_HEADER::method_ids_off:  dex.setHeader_method_ids_off((quint32)nValue);  break;
+                        case N_DEX_HEADER::class_defs_size: dex.setHeader_class_defs_size((quint32)nValue); break;
+                        case N_DEX_HEADER::class_defs_off:  dex.setHeader_class_defs_off((quint32)nValue);  break;
+                        case N_DEX_HEADER::data_size:       dex.setHeader_data_size((quint32)nValue);       break;
+                        case N_DEX_HEADER::data_off:        dex.setHeader_data_off((quint32)nValue);        break;
+                    }
+
+                    ui->widgetHex_Header->reload();
+
+                    break;
+            }
+
+            bResult=true;
+        }
+    }
+
+    blockSignals(false);
+
+    return bResult;
+}
+
+void DEXWidget::setReadonly(bool bState)
+{
+    setLineEditsReadOnly(lineEdit_HEADER,N_DEX_HEADER::__data_size,bState);
+    setComboBoxesReadOnly(comboBox,__CB_size,bState);
+
+    ui->widgetHex->setReadonly(bState);
+}
+
+void DEXWidget::blockSignals(bool bState)
+{
+    _blockSignals((QObject **)lineEdit_HEADER,N_DEX_HEADER::__data_size,bState);
+    _blockSignals((QObject **)comboBox,__CB_size,bState);
+}
+
+void DEXWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
+{
+    int nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
+
+    pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_NAME,QHeaderView::ResizeToContents);
+    pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_OFFSET,QHeaderView::ResizeToContents);
+    pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_TYPE,QHeaderView::ResizeToContents);
+
+    switch(nType)
+    {
+        // TODO
+    }
+}
+
+QString DEXWidget::typeIdToString(int nType)
+{
+    return "";
+}
+
+void DEXWidget::reloadData()
+{
+    int nType=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_TYPE).toInt();
+    qint64 nDataOffset=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
+    qint64 nDataSize=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
+    qint64 nDataExtraOffset=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_EXTRAOFFSET).toLongLong();
+    qint64 nDataExtraSize=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_EXTRASIZE).toLongLong();
+
+    QString sInit=QString("%1-%2-%3").arg(nType).arg(nDataOffset).arg(nDataSize);
+
+    if((nLastType==nType)&&(sInit!=sLastInit))
+    {
+        stInit.remove(sInit);
+    }
+
+    nLastType=nType;
+    sLastInit=sInit;
+
+    ui->stackedWidgetInfo->setCurrentIndex(nType);
+
+    XDEX dex(getDevice());
+
+    if(dex.isValid())
+    {
+        if(nType==SDEX::TYPE_HEX)
+        {
+            if(!stInit.contains(sInit))
+            {
+                ui->widgetHex->setData(getDevice());
+                ui->widgetHex->setBackupFileName(getOptions()->sBackupFileName);
+                ui->widgetHex->enableReadOnly(false);
+                connect(ui->widgetHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+
+                ui->widgetHex->reload();
+            }
+        }
+        else if(nType==SDEX::TYPE_STRINGS)
+        {
+            if(!stInit.contains(sInit))
+            {
+                ui->widgetStrings->setData(getDevice(),0,true);
+            }
+        }
+        else if(nType==SDEX::TYPE_MEMORYMAP)
+        {
+            if(!stInit.contains(sInit))
+            {
+                ui->widgetMemoryMap->setData(getDevice(),XBinary::FT_DEX);
+            }
+        }
+        else if(nType==SDEX::TYPE_ENTROPY)
+        {
+            if(!stInit.contains(sInit))
+            {
+                ui->widgetEntropy->setData(getDevice(),0,getDevice()->size(),true);
+            }
+        }
+        else if(nType==SDEX::TYPE_HEURISTICSCAN)
+        {
+            if(!stInit.contains(sInit))
+            {
+                ui->widgetHeuristicScan->setData(getDevice(),true,XBinary::FT_DEX);
+            }
+        }
+        else if(nType==SDEX::TYPE_HEADER)
+        {
+            if(!stInit.contains(sInit))
+            {
+                createHeaderTable(SDEX::TYPE_HEADER,ui->tableWidget_Header,N_DEX_HEADER::records,lineEdit_HEADER,N_DEX_HEADER::__data_size,0);
+
+                comboBox[CB_Dex_Header_magic]=createComboBox(ui->tableWidget_Header,XDEX::getHeaderMagics(),SDEX::TYPE_HEADER,N_DEX_HEADER::magic,XComboBoxEx::CBTYPE_NORMAL);
+                comboBox[CB_Dex_Header_version]=createComboBox(ui->tableWidget_Header,XDEX::getHeaderVersions(),SDEX::TYPE_HEADER,N_DEX_HEADER::version,XComboBoxEx::CBTYPE_NORMAL);
+                comboBox[CB_Dex_Header_endian_tag]=createComboBox(ui->tableWidget_Header,XDEX::getHeaderEndianTags(),SDEX::TYPE_HEADER,N_DEX_HEADER::endian_tag,XComboBoxEx::CBTYPE_NORMAL);
+
+                invWidget[INV_link]=createInvWidget(ui->tableWidget_Header,SDEX::TYPE_HEADER,N_DEX_HEADER::link_off,InvWidget::TYPE_HEX);
+                invWidget[INV_map]=createInvWidget(ui->tableWidget_Header,SDEX::TYPE_HEADER,N_DEX_HEADER::map_off,InvWidget::TYPE_HEX);
+                invWidget[INV_string_ids]=createInvWidget(ui->tableWidget_Header,SDEX::TYPE_HEADER,N_DEX_HEADER::string_ids_off,InvWidget::TYPE_HEX);
+                invWidget[INV_type_ids]=createInvWidget(ui->tableWidget_Header,SDEX::TYPE_HEADER,N_DEX_HEADER::type_ids_off,InvWidget::TYPE_HEX);
+                invWidget[INV_proto_ids]=createInvWidget(ui->tableWidget_Header,SDEX::TYPE_HEADER,N_DEX_HEADER::proto_ids_off,InvWidget::TYPE_HEX);
+                invWidget[INV_field_ids]=createInvWidget(ui->tableWidget_Header,SDEX::TYPE_HEADER,N_DEX_HEADER::field_ids_off,InvWidget::TYPE_HEX);
+                invWidget[INV_method_ids]=createInvWidget(ui->tableWidget_Header,SDEX::TYPE_HEADER,N_DEX_HEADER::method_ids_off,InvWidget::TYPE_HEX);
+                invWidget[INV_class_defs]=createInvWidget(ui->tableWidget_Header,SDEX::TYPE_HEADER,N_DEX_HEADER::class_defs_off,InvWidget::TYPE_HEX);
+                invWidget[INV_data]=createInvWidget(ui->tableWidget_Header,SDEX::TYPE_HEADER,N_DEX_HEADER::data_off,InvWidget::TYPE_HEX);
+
+                blockSignals(true);
+
+                XDEX_DEF::HEADER header=dex.getHeader();
+
+                lineEdit_HEADER[N_DEX_HEADER::magic]->setValue(header.magic);
+                lineEdit_HEADER[N_DEX_HEADER::version]->setValue(header.version);
+                lineEdit_HEADER[N_DEX_HEADER::checksum]->setValue(header.checksum);
+
+                lineEdit_HEADER[N_DEX_HEADER::file_size]->setValue(header.file_size);
+                lineEdit_HEADER[N_DEX_HEADER::header_size]->setValue(header.header_size);
+                lineEdit_HEADER[N_DEX_HEADER::endian_tag]->setValue(header.endian_tag);
+                lineEdit_HEADER[N_DEX_HEADER::link_size]->setValue(header.link_size);
+                lineEdit_HEADER[N_DEX_HEADER::link_off]->setValue(header.link_off);
+                lineEdit_HEADER[N_DEX_HEADER::map_off]->setValue(header.map_off);
+                lineEdit_HEADER[N_DEX_HEADER::string_ids_size]->setValue(header.string_ids_size);
+                lineEdit_HEADER[N_DEX_HEADER::string_ids_off]->setValue(header.string_ids_off);
+                lineEdit_HEADER[N_DEX_HEADER::type_ids_size]->setValue(header.type_ids_size);
+                lineEdit_HEADER[N_DEX_HEADER::type_ids_off]->setValue(header.type_ids_off);
+                lineEdit_HEADER[N_DEX_HEADER::proto_ids_size]->setValue(header.proto_ids_size);
+                lineEdit_HEADER[N_DEX_HEADER::proto_ids_off]->setValue(header.proto_ids_off);
+                lineEdit_HEADER[N_DEX_HEADER::field_ids_size]->setValue(header.field_ids_size);
+                lineEdit_HEADER[N_DEX_HEADER::field_ids_off]->setValue(header.field_ids_off);
+                lineEdit_HEADER[N_DEX_HEADER::method_ids_size]->setValue(header.method_ids_size);
+                lineEdit_HEADER[N_DEX_HEADER::method_ids_off]->setValue(header.method_ids_off);
+                lineEdit_HEADER[N_DEX_HEADER::class_defs_size]->setValue(header.class_defs_size);
+                lineEdit_HEADER[N_DEX_HEADER::class_defs_off]->setValue(header.class_defs_off);
+                lineEdit_HEADER[N_DEX_HEADER::data_size]->setValue(header.data_size);
+                lineEdit_HEADER[N_DEX_HEADER::data_off]->setValue(header.data_off);
+
+                comboBox[CB_Dex_Header_magic]->setValue(header.magic);
+                comboBox[CB_Dex_Header_version]->setValue(header.version);
+                comboBox[CB_Dex_Header_endian_tag]->setValue(header.endian_tag);
+
+                invWidget[INV_link]->setOffsetAndSize(&dex,header.link_off,header.link_size);
+                invWidget[INV_map]->setOffsetAndSize(&dex,header.map_off,0);
+                invWidget[INV_string_ids]->setOffsetAndSize(&dex,header.string_ids_off,header.string_ids_size*sizeof(XDEX_DEF::STRING_ITEM_ID));
+                invWidget[INV_type_ids]->setOffsetAndSize(&dex,header.type_ids_off,header.type_ids_size*sizeof(XDEX_DEF::TYPE_ITEM_ID));
+                invWidget[INV_proto_ids]->setOffsetAndSize(&dex,header.proto_ids_off,header.proto_ids_size*sizeof(XDEX_DEF::PROTO_ITEM_ID));
+                invWidget[INV_field_ids]->setOffsetAndSize(&dex,header.field_ids_off,header.field_ids_size*sizeof(XDEX_DEF::FIELD_ITEM_ID));
+                invWidget[INV_method_ids]->setOffsetAndSize(&dex,header.method_ids_off,header.method_ids_size*sizeof(XDEX_DEF::METHOD_ITEM_ID));
+                invWidget[INV_class_defs]->setOffsetAndSize(&dex,header.class_defs_off,header.class_defs_size*sizeof(XDEX_DEF::CLASS_ITEM_DEF));
+                invWidget[INV_data]->setOffsetAndSize(&dex,header.data_off,header.data_size);
+
+                quint32 nHeaderSize=dex.getHeaderSize();
+
+                loadHexSubdevice(0,nHeaderSize,0,&subDevice[SDEX::TYPE_HEADER],ui->widgetHex_Header);
+
+                blockSignals(false);
+            }
+        }
+        else if(nType==SDEX::TYPE_MAPITEMS)
+        {
+            if(!stInit.contains(sInit))
+            {
+                DEXProcessData dexProcessData(SDEX::TYPE_MAPITEMS,&tvModel[SDEX::TYPE_MAPITEMS],&dex,nDataOffset,nDataSize);
+
+                ajustTableView(&dexProcessData,&tvModel[SDEX::TYPE_MAPITEMS],ui->tableView_MapItems);
+
+                if(tvModel[SDEX::TYPE_MAPITEMS]->rowCount())
+                {
+                    ui->tableView_MapItems->setCurrentIndex(ui->tableView_MapItems->model()->index(0,0));
+                }
+            }
+        }
+        else if(nType==SDEX::TYPE_STRING_ID_ITEM)
+        {
+            if(!stInit.contains(sInit))
+            {
+                DEXProcessData dexProcessData(SDEX::TYPE_STRING_ID_ITEM,&tvModel[SDEX::TYPE_STRING_ID_ITEM],&dex,nDataOffset,nDataSize);
+
+                ajustTableView(&dexProcessData,&tvModel[SDEX::TYPE_STRING_ID_ITEM],ui->tableView_STRING_ID_ITEM,pFilterStrings);
+
+                if(tvModel[SDEX::TYPE_STRING_ID_ITEM]->rowCount())
+                {
+                    ui->tableView_STRING_ID_ITEM->setCurrentIndex(ui->tableView_STRING_ID_ITEM->model()->index(0,0));
+                }
+            }
+        }
+        else if(nType==SDEX::TYPE_TYPE_ID_ITEM)
+        {
+            if(!stInit.contains(sInit))
+            {
+                DEXProcessData dexProcessData(SDEX::TYPE_TYPE_ID_ITEM,&tvModel[SDEX::TYPE_TYPE_ID_ITEM],&dex,nDataOffset,nDataSize);
+
+                ajustTableView(&dexProcessData,&tvModel[SDEX::TYPE_TYPE_ID_ITEM],ui->tableView_TYPE_ID_ITEM,pFilterTypes);
+
+                if(tvModel[SDEX::TYPE_TYPE_ID_ITEM]->rowCount())
+                {
+                    ui->tableView_TYPE_ID_ITEM->setCurrentIndex(ui->tableView_TYPE_ID_ITEM->model()->index(0,0));
+                }
+            }
+        }
+        else if(nType==SDEX::TYPE_PROTO_ID_ITEM)
+        {
+            if(!stInit.contains(sInit))
+            {
+                DEXProcessData dexProcessData(SDEX::TYPE_PROTO_ID_ITEM,&tvModel[SDEX::TYPE_PROTO_ID_ITEM],&dex,nDataOffset,nDataSize);
+
+                ajustTableView(&dexProcessData,&tvModel[SDEX::TYPE_PROTO_ID_ITEM],ui->tableView_PROTO_ID_ITEM);
+
+                if(tvModel[SDEX::TYPE_PROTO_ID_ITEM]->rowCount())
+                {
+                    ui->tableView_PROTO_ID_ITEM->setCurrentIndex(ui->tableView_PROTO_ID_ITEM->model()->index(0,0));
+                }
+            }
+        }
+        else if(nType==SDEX::TYPE_FIELD_ID_ITEM)
+        {
+            if(!stInit.contains(sInit))
+            {
+                DEXProcessData dexProcessData(SDEX::TYPE_FIELD_ID_ITEM,&tvModel[SDEX::TYPE_FIELD_ID_ITEM],&dex,nDataOffset,nDataSize);
+
+                ajustTableView(&dexProcessData,&tvModel[SDEX::TYPE_FIELD_ID_ITEM],ui->tableView_FIELD_ID_ITEM);
+
+                if(tvModel[SDEX::TYPE_FIELD_ID_ITEM]->rowCount())
+                {
+                    ui->tableView_FIELD_ID_ITEM->setCurrentIndex(ui->tableView_FIELD_ID_ITEM->model()->index(0,0));
+                }
+            }
+        }
+        else if(nType==SDEX::TYPE_METHOD_ID_ITEM)
+        {
+            if(!stInit.contains(sInit))
+            {
+                DEXProcessData dexProcessData(SDEX::TYPE_METHOD_ID_ITEM,&tvModel[SDEX::TYPE_METHOD_ID_ITEM],&dex,nDataOffset,nDataSize);
+
+                ajustTableView(&dexProcessData,&tvModel[SDEX::TYPE_METHOD_ID_ITEM],ui->tableView_METHOD_ID_ITEM);
+
+                if(tvModel[SDEX::TYPE_METHOD_ID_ITEM]->rowCount())
+                {
+                    ui->tableView_METHOD_ID_ITEM->setCurrentIndex(ui->tableView_METHOD_ID_ITEM->model()->index(0,0));
+                }
+            }
+        }
+        else if(nType==SDEX::TYPE_CLASS_DEF_ITEM)
+        {
+            if(!stInit.contains(sInit))
+            {
+                DEXProcessData dexProcessData(SDEX::TYPE_CLASS_DEF_ITEM,&tvModel[SDEX::TYPE_CLASS_DEF_ITEM],&dex,nDataOffset,nDataSize);
+
+                ajustTableView(&dexProcessData,&tvModel[SDEX::TYPE_CLASS_DEF_ITEM],ui->tableView_CLASS_DEF_ITEM);
+
+                if(tvModel[SDEX::TYPE_CLASS_DEF_ITEM]->rowCount())
+                {
+                    ui->tableView_CLASS_DEF_ITEM->setCurrentIndex(ui->tableView_CLASS_DEF_ITEM->model()->index(0,0));
+                }
+            }
+        }
+
+        setReadonly(ui->checkBoxReadonly->isChecked());
+    }
+
+    stInit.insert(sInit);
+}
+
+
+bool DEXWidget::createSectionTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pHeaderRecord, int nNumberOfRecords)
+{
+    Q_UNUSED(nType)
+
+    QStringList slHeader;
+
+    pTableWidget->setRowCount(0);
+
+    for(int i=0; i<nNumberOfRecords; i++)
+    {
+        slHeader.append(pHeaderRecord[i].sName);
+    }
+
+    pTableWidget->setHorizontalHeaderLabels(slHeader);
+    pTableWidget->horizontalHeader()->setVisible(true);
+
+    return true;
+}
+
+void DEXWidget::widgetValueChanged(quint64 nValue)
+{
+    QWidget *pWidget=qobject_cast<QWidget *>(sender());
+    int nStype=pWidget->property("STYPE").toInt();
+    int nNdata=pWidget->property("NDATA").toInt();
+
+    switch(nStype)
+    {
+        case SDEX::TYPE_HEADER:
+            switch(nNdata)
+            {
+                case N_DEX_HEADER::magic:      lineEdit_HEADER[N_DEX_HEADER::magic]->setValue((quint32)nValue);      break;
+            }
+
+            break;
+    }
+}
+
+void DEXWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent, QTreeWidgetItem *pPrevious)
+{
+    Q_UNUSED(pPrevious)
+
+    if(pCurrent)
+    {
+        reloadData();
+    }
+}
+
+void DEXWidget::on_checkBoxReadonly_toggled(bool bChecked)
+{
+    setReadonly(bChecked);
+}
+
+void DEXWidget::on_pushButtonReload_clicked()
+{
+    ui->pushButtonReload->setEnabled(false);
+    reload();
+
+    QTimer::singleShot(1000,this,SLOT(enableButton()));
+}
+
+void DEXWidget::enableButton()
+{
+    ui->pushButtonReload->setEnabled(true);
+}
+
+void DEXWidget::on_tableWidget_Header_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
+    Q_UNUSED(nCurrentRow);
+    Q_UNUSED(nCurrentColumn);
+    Q_UNUSED(nPreviousRow);
+    Q_UNUSED(nPreviousColumn);
+
+    setHeaderTableSelection(ui->widgetHex_Header,ui->tableWidget_Header);
+}
+
+void DEXWidget::on_lineEditFilterStrings_textChanged(const QString &sString)
+{
+    pFilterStrings->setFilterRegExp(sString);
+    pFilterStrings->setFilterCaseSensitivity(Qt::CaseInsensitive);
+    pFilterStrings->setFilterKeyColumn(3);
+}
+
+void DEXWidget::on_lineEditFilterTypes_textChanged(const QString &sString)
+{
+    pFilterTypes->setFilterRegExp(sString);
+    pFilterTypes->setFilterCaseSensitivity(Qt::CaseInsensitive);
+    pFilterTypes->setFilterKeyColumn(2);
+}
