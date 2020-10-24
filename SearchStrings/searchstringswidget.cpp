@@ -27,6 +27,7 @@ SearchStringsWidget::SearchStringsWidget(QWidget *pParent) :
 {
     ui->setupUi(this);
     pDevice=nullptr;
+    this->pParent=pParent;
     pFilter=new QSortFilterProxyModel(this);
 
     options.nAddressWidth=8;
@@ -47,9 +48,10 @@ SearchStringsWidget::~SearchStringsWidget()
     delete ui;
 }
 
-void SearchStringsWidget::setData(QIODevice *pDevice, SearchStrings::OPTIONS *pOptions, bool bAuto)
+void SearchStringsWidget::setData(QIODevice *pDevice, SearchStrings::OPTIONS *pOptions, bool bAuto,QWidget *pParent)
 {
     this->pDevice=pDevice;
+    this->pParent=pParent;
     bInit=false;
 
     qint64 nSize=pDevice->size();
@@ -238,16 +240,16 @@ void SearchStringsWidget::search()
         {
             pOldModel=pModel;
 
-            pFilter->setSourceModel(0);
-            ui->tableViewResult->setModel(0);
+            pFilter->setSourceModel(nullptr);
+            ui->tableViewResult->setModel(nullptr);
 
             QList<SearchStrings::RECORD> listRecords;
 
-            DialogSearchStringsProcess dsp(this);
+            DialogSearchStringsProcess dsp(pParent);
             dsp.processSearch(pDevice,&listRecords,&options);
             dsp.exec();
 
-            DialogSearchStringsProcess dmp(this);
+            DialogSearchStringsProcess dmp(pParent);
             dmp.processModel(&listRecords,&pModel,&options);
             dmp.exec();
 

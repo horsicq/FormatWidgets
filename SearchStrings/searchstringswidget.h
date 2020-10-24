@@ -45,7 +45,7 @@ class SearchStringsWidget : public QWidget
 public:
     explicit SearchStringsWidget(QWidget *pParent=nullptr);
     ~SearchStringsWidget();
-    void setData(QIODevice *pDevice, SearchStrings::OPTIONS *pOptions, bool bAuto=false);
+    void setData(QIODevice *pDevice,SearchStrings::OPTIONS *pOptions,bool bAuto=false,QWidget *pParent=nullptr);
     void reload();
     bool getInitStatus();
 
@@ -64,6 +64,7 @@ private slots:
 private:
     Ui::SearchStringsWidget *ui;
     QIODevice *pDevice;
+    QWidget *pParent;
     QSortFilterProxyModel *pFilter;
     SearchStrings::OPTIONS options;
     QStandardItemModel *pModel;
