@@ -38,7 +38,7 @@ class ELFWidget : public FormatWidget
 
 public:
     ELFWidget(QWidget *pParent=nullptr);
-    ELFWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *pParent=nullptr);
+    ELFWidget(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions,QWidget *pParent=nullptr);
     ~ELFWidget();
     virtual void clear();
     virtual void cleanup();
@@ -54,17 +54,17 @@ protected:
 
 private slots:
     virtual void reloadData();
-    void addDatasets(XELF *pElf,QTreeWidgetItem *pParent, QList<XBinary::DATASET> *pListDataSets);
+    void addDatasets(XELF *pElf,QTreeWidgetItem *pParent,QList<XBinary::DATASET> *pListDataSets);
     void widgetValueChanged(quint64 nValue);
-    void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent, QTreeWidgetItem *pPrevious);
+    void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent,QTreeWidgetItem *pPrevious);
     void on_checkBoxReadonly_toggled(bool bChecked);
-    bool createSectionTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pHeaderRecord, int nNumberOfRecords);
+    bool createSectionTable(int nType,QTableWidget *pTableWidget,const FW_DEF::HEADER_RECORD *pHeaderRecord,int nNumberOfRecords);
     void on_pushButtonReload_clicked();
     void enableButton();
     void loadShdr(int nRow);
     void loadPhdr(int nRow);
     void loadNote(int nRow);
-    void on_tableWidget_Elf_Ehdr_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn);
+    void on_tableWidget_Elf_Ehdr_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
     void editSectionHeader();
     void sectionHex();
     void sectionEntropy();
@@ -78,11 +78,11 @@ private slots:
     void on_tableView_Elf_Shdr_doubleClicked(const QModelIndex &index);
     void on_tableView_Elf_Shdr_customContextMenuRequested(const QPoint &pos);
     void on_tableView_SymbolTable_doubleClicked(const QModelIndex &index);
-    void onTableView_Elf_Shdr_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
-    void onTableView_Elf_Phdr_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
-    void onTableView_DynamicArrayTags_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
-    void onTableView_Notes_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
-    void onTableView_Libraries_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
+    void onTableView_Elf_Shdr_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
+    void onTableView_Elf_Phdr_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
+    void onTableView_DynamicArrayTags_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
+    void onTableView_Notes_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
+    void onTableView_Libraries_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
     void on_tableView_Elf_Phdr_doubleClicked(const QModelIndex &index);
     void on_tableView_Elf_Phdr_customContextMenuRequested(const QPoint &pos);
     void on_tableView_DynamicArrayTags_doubleClicked(const QModelIndex &index);
