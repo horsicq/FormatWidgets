@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>658</width>
+    <width>741</width>
     <height>349</height>
    </rect>
   </property>
@@ -528,7 +528,7 @@
            <bool>false</bool>
           </property>
           <attribute name="horizontalHeaderDefaultSectionSize">
-           <number>35</number>
+           <number>57</number>
           </attribute>
           <attribute name="verticalHeaderVisible">
            <bool>false</bool>
@@ -616,7 +616,7 @@
            <bool>true</bool>
           </property>
           <attribute name="horizontalHeaderDefaultSectionSize">
-           <number>35</number>
+           <number>57</number>
           </attribute>
           <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
            <bool>true</bool>
@@ -754,7 +754,7 @@
            <enum>QAbstractItemView::SelectRows</enum>
           </property>
           <attribute name="horizontalHeaderDefaultSectionSize">
-           <number>35</number>
+           <number>57</number>
           </attribute>
           <attribute name="verticalHeaderVisible">
            <bool>false</bool>
@@ -782,7 +782,7 @@
            <enum>QAbstractItemView::SelectRows</enum>
           </property>
           <attribute name="horizontalHeaderDefaultSectionSize">
-           <number>35</number>
+           <number>57</number>
           </attribute>
           <attribute name="verticalHeaderVisible">
            <bool>false</bool>
@@ -824,7 +824,7 @@
             <bool>false</bool>
            </attribute>
            <attribute name="headerDefaultSectionSize">
-            <number>35</number>
+            <number>57</number>
            </attribute>
           </widget>
           <widget class="QTableWidget" name="tableWidget_Resources">
@@ -979,7 +979,7 @@
            <enum>QAbstractItemView::SelectRows</enum>
           </property>
           <attribute name="horizontalHeaderDefaultSectionSize">
-           <number>35</number>
+           <number>57</number>
           </attribute>
           <attribute name="verticalHeaderVisible">
            <bool>false</bool>
@@ -1036,7 +1036,7 @@
            <enum>QAbstractItemView::SelectRows</enum>
           </property>
           <attribute name="horizontalHeaderDefaultSectionSize">
-           <number>35</number>
+           <number>57</number>
           </attribute>
           <attribute name="verticalHeaderVisible">
            <bool>false</bool>
@@ -1064,7 +1064,7 @@
            <enum>QAbstractItemView::SelectRows</enum>
           </property>
           <attribute name="horizontalHeaderDefaultSectionSize">
-           <number>35</number>
+           <number>57</number>
           </attribute>
           <attribute name="verticalHeaderVisible">
            <bool>false</bool>
@@ -1111,7 +1111,7 @@
            <enum>QAbstractItemView::SelectRows</enum>
           </property>
           <attribute name="horizontalHeaderDefaultSectionSize">
-           <number>35</number>
+           <number>57</number>
           </attribute>
           <attribute name="verticalHeaderVisible">
            <bool>false</bool>
@@ -1264,7 +1264,7 @@
            <enum>QAbstractItemView::SelectRows</enum>
           </property>
           <attribute name="horizontalHeaderDefaultSectionSize">
-           <number>35</number>
+           <number>57</number>
           </attribute>
           <attribute name="verticalHeaderVisible">
            <bool>false</bool>
@@ -1308,7 +1308,7 @@
            <enum>QAbstractItemView::SelectRows</enum>
           </property>
           <attribute name="horizontalHeaderDefaultSectionSize">
-           <number>35</number>
+           <number>57</number>
           </attribute>
           <attribute name="verticalHeaderVisible">
            <bool>false</bool>
@@ -1336,7 +1336,7 @@
            <enum>QAbstractItemView::SelectRows</enum>
           </property>
           <attribute name="horizontalHeaderDefaultSectionSize">
-           <number>35</number>
+           <number>57</number>
           </attribute>
           <attribute name="verticalHeaderVisible">
            <bool>false</bool>
