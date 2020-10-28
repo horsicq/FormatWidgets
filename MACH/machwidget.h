@@ -53,18 +53,18 @@ protected:
 private slots:
     virtual void reloadData();
     void widgetValueChanged(quint64 nValue);
-    void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent, QTreeWidgetItem *pPrevious);
+    void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent,QTreeWidgetItem *pPrevious);
     void on_checkBoxReadonly_toggled(bool bChecked);
-    bool createSectionTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount);
-    void on_tableWidget_commands_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn);
+    bool createSectionTable(int nType,QTableWidget *pTableWidget,const FW_DEF::HEADER_RECORD *pRecords,int nRecordCount);
+    void on_tableWidget_commands_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
     void on_pushButtonReload_clicked();
     void enableButton();
-    void on_tableWidget_segments_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn);
-    void on_tableWidget_sections_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn);
+    void on_tableWidget_segments_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
+    void on_tableWidget_sections_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
     void loadCommand(int nNumber);
     void loadSegment(int nNumber);
     void loadSection(int nNumber);
-    void on_tableWidget_mach_header_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn);
+    void on_tableWidget_mach_header_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
     void on_tableWidget_commands_customContextMenuRequested(const QPoint &pos);
     void on_tableWidget_segments_customContextMenuRequested(const QPoint &pos);
     void on_tableWidget_sections_customContextMenuRequested(const QPoint &pos);

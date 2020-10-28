@@ -52,11 +52,11 @@ protected:
 private slots:
     virtual void reloadData();
     void widgetValueChanged(quint64 nValue);
-    void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent, QTreeWidgetItem *pPrevious);
+    void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent,QTreeWidgetItem *pPrevious);
     void on_checkBoxReadonly_toggled(bool bChecked);
     void on_pushButtonReload_clicked();
     void enableButton();
-    void on_tableWidget_DOS_HEADER_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn);
+    void on_tableWidget_DOS_HEADER_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
 
 private:
     enum CB
