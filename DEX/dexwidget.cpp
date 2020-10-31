@@ -589,5 +589,5 @@ void DEXWidget::on_lineEditFilterTypes_textChanged(const QString &sString)
 {
     pFilterTypes->setFilterRegExp(sString);
     pFilterTypes->setFilterCaseSensitivity(Qt::CaseInsensitive);
-    pFilterTypes->setFilterKeyColumn(2);
+    pFilterTypes->setFilterKeyColumn(3);
 }
