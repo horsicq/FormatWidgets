@@ -37,7 +37,10 @@ DialogDEX::~DialogDEX()
 
 void DialogDEX::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions)
 {
-    setWindowTitle(pOptions->sTitle);
+    if(pOptions->sTitle!="")
+    {
+        setWindowTitle(pOptions->sTitle);
+    }
 
     ui->widget->setData(pDevice,pOptions,0,0,0);
     ui->widget->reload();

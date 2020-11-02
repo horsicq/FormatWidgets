@@ -29,11 +29,13 @@ FormatsWidget::FormatsWidget(QWidget *pParent) :
 
     const QSignalBlocker blocker(ui->comboBoxScanEngine);
 
-    ui->comboBoxScanEngine->addItem(QString("Detect It Easy(DiE)"),TABSE_DIE);
-    ui->comboBoxScanEngine->addItem(QString("Nauz File Detector(NFD)"),TABSE_NFD);
+    ui->comboBoxScanEngine->addItem(QString("Auto"),SE_AUTO);
+    ui->comboBoxScanEngine->addItem(QString("Detect It Easy(DiE)"),SE_DIE);
+    ui->comboBoxScanEngine->addItem(QString("Nauz File Detector(NFD)"),SE_NFD);
 
     ui->stackedWidgetMain->setCurrentIndex(TABINFO_BINARY);
-    ui->stackedWidgetScan->setCurrentIndex(TABSE_DIE);
+
+    adjustScanTab(SE_AUTO);
 
     // TODO switch to NFD if DEX or ZIP
 }
@@ -80,11 +82,11 @@ void FormatsWidget::setScanEngine(QString sScanEngine)
 {
     if(sScanEngine=="die")
     {
-        ui->comboBoxScanEngine->setCurrentIndex(TABSE_DIE);
+        ui->comboBoxScanEngine->setCurrentIndex(SE_DIE);
     }
     else if(sScanEngine=="nfd")
     {
-        ui->comboBoxScanEngine->setCurrentIndex(TABSE_NFD);
+        ui->comboBoxScanEngine->setCurrentIndex(SE_NFD);
     }
 }
 
@@ -117,6 +119,8 @@ void FormatsWidget::on_comboBoxFileType_currentIndexChanged(int nIndex)
 
 void FormatsWidget::reload()
 {
+    adjustScanTab(getScanEngine((SE)ui->comboBoxScanEngine->currentIndex()));
+
     XBinary::FT fileType=getCurrentFileType();
 
     QFile file;
@@ -327,11 +331,15 @@ void FormatsWidget::scan()
     // TODO FT
     int nIndex=ui->comboBoxScanEngine->currentIndex();
 
-    if(nIndex==TABSE_DIE)
+    nIndex=getScanEngine((SE)nIndex);
+
+    adjustScanTab((SE)nIndex);
+
+    if(nIndex==SE_DIE)
     {
         ui->pageScanDIE->setData(sFileName,bScan,getCurrentFileType());
     }
-    else if(nIndex==TABSE_NFD)
+    else if(nIndex==SE_NFD)
     {
         ui->pageScanNFD->setData(sFileName,bScan,getCurrentFileType());
     }
@@ -682,7 +690,7 @@ void FormatsWidget::on_pushButtonELFPrograms_clicked()
 
 void FormatsWidget::on_comboBoxScanEngine_currentIndexChanged(int nIndex)
 {
-    ui->stackedWidgetScan->setCurrentIndex(nIndex);
+    adjustScanTab(getScanEngine((SE)nIndex));
 
     scan();
 }
@@ -704,5 +712,52 @@ void FormatsWidget::on_pushButtonDEX_clicked()
 
 void FormatsWidget::on_pushButtonZIP_clicked()
 {
-    // TODO
+    DialogArchive dialogArchive(this);
+
+    FW_DEF::OPTIONS options={};
+
+    if(sBackupFilename!="")
+    {
+        options.sBackupFileName=sBackupFilename;
+    }
+
+    dialogArchive.setData(sFileName,&options);
+
+    dialogArchive.exec();
+}
+
+FormatsWidget::SE FormatsWidget::getScanEngine(FormatsWidget::SE seIndex)
+{
+    SE tabResult=seIndex;
+
+    if(seIndex==SE_AUTO)
+    {
+        tabResult=SE_DIE;
+
+        XBinary::FT fileType=getCurrentFileType();
+
+        if( (fileType==XBinary::FT_DEX)||
+            (fileType==XBinary::FT_ELF32)||
+            (fileType==XBinary::FT_ELF64)||
+            (fileType==XBinary::FT_MACH32)||
+            (fileType==XBinary::FT_MACH64)||
+            (fileType==XBinary::FT_ZIP))
+        {
+            tabResult=SE_NFD;
+        }
+    }
+
+    return tabResult;
+}
+
+void FormatsWidget::adjustScanTab(FormatsWidget::SE seIndex)
+{
+    if(seIndex==SE_DIE)
+    {
+        ui->stackedWidgetScan->setCurrentIndex(0);
+    }
+    else if(seIndex==SE_NFD)
+    {
+        ui->stackedWidgetScan->setCurrentIndex(1);
+    }
 }

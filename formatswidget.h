@@ -32,6 +32,7 @@
 #include "dialogmach.h"
 #include "dialogdisasm.h"
 #include "dialogdex.h"
+#include "dialogarchive.h"
 
 namespace Ui {
 class FormatsWidget;
@@ -55,10 +56,11 @@ class FormatsWidget : public QWidget
         TABINFO_MACH
     };
 
-    enum TABSE
+    enum SE
     {
-        TABSE_DIE=0,
-        TABSE_NFD
+        SE_AUTO=0,
+        SE_DIE,
+        SE_NFD
     };
 
 public:
@@ -101,6 +103,7 @@ private slots:
     void on_pushButtonMACHCommands_clicked();
     void on_pushButtonMACHLibraries_clicked();
     void on_pushButtonDEX_clicked();
+    void on_pushButtonZIP_clicked();
 
     void showMSDOS(SMSDOS::TYPE type);
     void showLE(SLE::TYPE type);
@@ -112,7 +115,8 @@ private slots:
 
     XBinary::FT getCurrentFileType();
 
-    void on_pushButtonZIP_clicked();
+    SE getScanEngine(SE seIndex);
+    void adjustScanTab(SE seIndex);
 
 private:
     Ui::FormatsWidget *ui;

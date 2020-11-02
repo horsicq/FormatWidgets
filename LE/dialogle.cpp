@@ -37,7 +37,10 @@ DialogLE::~DialogLE()
 
 void DialogLE::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions)
 {
-    setWindowTitle(pOptions->sTitle);
+    if(pOptions->sTitle!="")
+    {
+        setWindowTitle(pOptions->sTitle);
+    }
 
     ui->widget->setData(pDevice,pOptions);
     ui->widget->reload();
