@@ -118,6 +118,9 @@ private slots:
     SE getScanEngine(SE seIndex);
     void adjustScanTab(SE seIndex);
 
+    void onScanStarted();
+    void onScanFinished();
+
 private:
     Ui::FormatsWidget *ui;
     QString sFileName;

@@ -37,7 +37,10 @@ FormatsWidget::FormatsWidget(QWidget *pParent) :
 
     adjustScanTab(SE_AUTO);
 
-    // TODO switch to NFD if DEX or ZIP
+    connect(ui->pageScanNFD,SIGNAL(scanStarted()),this,SLOT(onScanStarted()));
+    connect(ui->pageScanNFD,SIGNAL(scanFinished()),this,SLOT(onScanFinished()));
+    connect(ui->pageScanDIE,SIGNAL(scanStarted()),this,SLOT(onScanStarted()));
+    connect(ui->pageScanDIE,SIGNAL(scanFinished()),this,SLOT(onScanFinished()));
 }
 
 void FormatsWidget::setData(QString sFileName, bool bScan)
@@ -133,11 +136,19 @@ void FormatsWidget::reload()
             (fileType==XBinary::FT_ZIP))
         {
             ui->groupBoxEntryPoint->hide();
-            ui->groupBoxBaseAddress->hide();
         }
         else
         {
             ui->groupBoxEntryPoint->show();
+        }
+
+        if( (fileType==XBinary::FT_BINARY)||
+            (fileType==XBinary::FT_ZIP))
+        {
+            ui->groupBoxBaseAddress->hide();
+        }
+        else
+        {
             ui->groupBoxBaseAddress->show();
         }
 
@@ -156,10 +167,10 @@ void FormatsWidget::reload()
             ui->lineEditBaseAddress->setValue((quint64)memoryMap.nBaseAddress);
         }
 
-        ui->labelEndianness->setText(XBinary::endiannessToString(memoryMap.bIsBigEndian));
-        ui->labelArch->setText(memoryMap.sArch);
-        ui->labelMode->setText(XBinary::modeIdToString(memoryMap.mode));
-        ui->labelType->setText(memoryMap.sType);
+        ui->lineEditEndianness->setText(XBinary::endiannessToString(memoryMap.bIsBigEndian));
+        ui->lineEditArch->setText(memoryMap.sArch);
+        ui->lineEditMode->setText(XBinary::modeIdToString(memoryMap.mode));
+        ui->lineEditType->setText(memoryMap.sType);
 
         ui->pushButtonDisasm->setEnabled(XBinary::isX86asm(memoryMap.sArch));
 
@@ -328,7 +339,6 @@ void FormatsWidget::reload()
 
 void FormatsWidget::scan()
 {
-    // TODO FT
     int nIndex=ui->comboBoxScanEngine->currentIndex();
 
     nIndex=getScanEngine((SE)nIndex);
@@ -760,4 +770,20 @@ void FormatsWidget::adjustScanTab(FormatsWidget::SE seIndex)
     {
         ui->stackedWidgetScan->setCurrentIndex(1);
     }
+}
+
+void FormatsWidget::onScanStarted()
+{
+    ui->stackedWidgetMain->setEnabled(false);
+    ui->groupBoxFileType->setEnabled(false);
+    ui->groupBoxScanEngine->setEnabled(false);
+    ui->groupBoxEntryPoint->setEnabled(false);
+}
+
+void FormatsWidget::onScanFinished()
+{
+    ui->stackedWidgetMain->setEnabled(true);
+    ui->groupBoxFileType->setEnabled(true);
+    ui->groupBoxScanEngine->setEnabled(true);
+    ui->groupBoxEntryPoint->setEnabled(true);
 }

@@ -1379,12 +1379,12 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QLabel" name="labelEndianness">
-          <property name="text">
-           <string/>
-          </property>
+         <widget class="QLineEdit" name="lineEditEndianness">
           <property name="alignment">
            <set>Qt::AlignCenter</set>
+          </property>
+          <property name="readOnly">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -1395,7 +1395,7 @@
       <widget class="QGroupBox" name="groupBoxMode">
        <property name="maximumSize">
         <size>
-         <width>50</width>
+         <width>70</width>
          <height>16777215</height>
         </size>
        </property>
@@ -1419,12 +1419,12 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QLabel" name="labelMode">
-          <property name="text">
-           <string/>
-          </property>
+         <widget class="QLineEdit" name="lineEditMode">
           <property name="alignment">
            <set>Qt::AlignCenter</set>
+          </property>
+          <property name="readOnly">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -1433,6 +1433,12 @@
      </item>
      <item>
       <widget class="QGroupBox" name="groupBoxArch">
+       <property name="maximumSize">
+        <size>
+         <width>120</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="title">
         <string>Architecture</string>
        </property>
@@ -1453,12 +1459,12 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QLabel" name="labelArch">
-          <property name="text">
-           <string/>
-          </property>
+         <widget class="QLineEdit" name="lineEditArch">
           <property name="alignment">
            <set>Qt::AlignCenter</set>
+          </property>
+          <property name="readOnly">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -1467,6 +1473,12 @@
      </item>
      <item>
       <widget class="QGroupBox" name="groupBoxType">
+       <property name="maximumSize">
+        <size>
+         <width>120</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="title">
         <string>Type</string>
        </property>
@@ -1487,12 +1499,12 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QLabel" name="labelType">
-          <property name="text">
-           <string/>
-          </property>
+         <widget class="QLineEdit" name="lineEditType">
           <property name="alignment">
            <set>Qt::AlignCenter</set>
+          </property>
+          <property name="readOnly">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
