@@ -164,7 +164,7 @@ private:
     FW_DEF::OPTIONS fwOptions;
     quint32 g_nNumber;
     qint64 g_nOffset;
-    quint32 __nType;
+    quint32 g_nType;
     bool bIsReadonly;
     bool bIsEdited;
 

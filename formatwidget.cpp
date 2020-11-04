@@ -49,7 +49,7 @@ void FormatWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint3
     this->pDevice=pDevice;
     this->g_nNumber=nNumber;
     this->g_nOffset=nOffset;
-    this->__nType=nType;
+    this->g_nType=nType;
 
     if(pOptions)
     {
@@ -81,7 +81,7 @@ qint64 FormatWidget::getOffset()
 
 qint32 FormatWidget::getType()
 {
-    return __nType;
+    return g_nType;
 }
 
 bool FormatWidget::isReadonly()
