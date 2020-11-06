@@ -35,6 +35,7 @@ void DEXProcessData::_process()
     {
         QList<QString> listLabels;
         listLabels.append("");
+        listLabels.append("");
 
         listLabels.append(getStructList(N_DEX_MAP_ITEM::records,N_DEX_MAP_ITEM::__data_size));
 
@@ -58,9 +59,10 @@ void DEXProcessData::_process()
 //            pItem->setData(nStringTableSize,Qt::UserRole+FW_DEF::SECTION_DATA_STRINGTABLESIZE);
 
             (*ppModel)->setItem(i,0,                                pItem);
-            (*ppModel)->setItem(i,N_DEX_MAP_ITEM::type+1,           new QStandardItem(mapTypes.value(listMapItems.at(i).nType,XBinary::valueToHex(listMapItems.at(i).nType))));
-            (*ppModel)->setItem(i,N_DEX_MAP_ITEM::count+1,          new QStandardItem(XBinary::valueToHex(listMapItems.at(i).nCount)));
-            (*ppModel)->setItem(i,N_DEX_MAP_ITEM::offset+1,         new QStandardItem(XBinary::valueToHex(listMapItems.at(i).nOffset)));
+            (*ppModel)->setItem(i,1,                                new QStandardItem(XBinary::valueToHex(listMapItems.at(i).nType)));
+            (*ppModel)->setItem(i,N_DEX_MAP_ITEM::type+2,           new QStandardItem(mapTypes.value(listMapItems.at(i).nType,XBinary::valueToHex(listMapItems.at(i).nType))));
+            (*ppModel)->setItem(i,N_DEX_MAP_ITEM::count+2,          new QStandardItem(XBinary::valueToHex(listMapItems.at(i).nCount)));
+            (*ppModel)->setItem(i,N_DEX_MAP_ITEM::offset+2,         new QStandardItem(XBinary::valueToHex(listMapItems.at(i).nOffset)));
 
             incValue();
         }
@@ -283,9 +285,10 @@ void DEXProcessData::ajustTableView(QWidget *pWidget,QTableView *pTableView)
     if(nType==SDEX::TYPE_MAPITEMS)
     {
         pTableView->setColumnWidth(0,nSymbolWidth*4);
-        pTableView->setColumnWidth(1,nSymbolWidth*30);
-        pTableView->setColumnWidth(2,nSymbolWidth*8);
+        pTableView->setColumnWidth(1,nSymbolWidth*6);
+        pTableView->setColumnWidth(2,nSymbolWidth*30);
         pTableView->setColumnWidth(3,nSymbolWidth*8);
+        pTableView->setColumnWidth(4,nSymbolWidth*8);
     }
     else if(nType==SDEX::TYPE_STRING_ID_ITEM)
     {
