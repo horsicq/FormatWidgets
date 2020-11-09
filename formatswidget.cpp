@@ -142,8 +142,7 @@ void FormatsWidget::reload()
             ui->groupBoxEntryPoint->show();
         }
 
-        if( (fileType==XBinary::FT_BINARY)||
-            (fileType==XBinary::FT_ZIP))
+        if( (fileType==XBinary::FT_BINARY))
         {
             ui->groupBoxBaseAddress->hide();
         }
