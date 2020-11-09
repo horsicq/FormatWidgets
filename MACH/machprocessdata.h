@@ -27,6 +27,7 @@
 class MACHProcessData : public ProcessData
 {
     Q_OBJECT
+
 public:
     explicit MACHProcessData(int nType,QStandardItemModel **ppModel,XMACH *pXMACH,qint64 nOffset,qint64 nSize);
     virtual void _process();
