@@ -35,7 +35,7 @@ class DEXSectionHeaderWidget : public FormatWidget
 
 public:
     DEXSectionHeaderWidget(QWidget *pParent=nullptr);
-    DEXSectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent=nullptr);
+    DEXSectionHeaderWidget(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions,quint32 nNumber,qint64 nOffset,qint32 nType,QWidget *pParent=nullptr);
     ~DEXSectionHeaderWidget();
     virtual void clear();
     virtual void cleanup();

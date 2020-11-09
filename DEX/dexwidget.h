@@ -38,7 +38,7 @@ class DEXWidget : public FormatWidget
 
 public:
     DEXWidget(QWidget *pParent=nullptr);
-    DEXWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *pParent=nullptr);
+    DEXWidget(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions,QWidget *pParent=nullptr);
     ~DEXWidget();
     virtual void clear();
     virtual void cleanup();
@@ -55,12 +55,12 @@ protected:
 private slots:
     virtual void reloadData();
     void widgetValueChanged(quint64 nValue);
-    void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent, QTreeWidgetItem *pPrevious);
+    void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent,QTreeWidgetItem *pPrevious);
     void on_checkBoxReadonly_toggled(bool bChecked);
-    bool createSectionTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pHeaderRecord, int nNumberOfRecords);
+    bool createSectionTable(int nType, QTableWidget *pTableWidget,const FW_DEF::HEADER_RECORD *pHeaderRecord,int nNumberOfRecords);
     void on_pushButtonReload_clicked();
     void enableButton();
-    void on_tableWidget_Header_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn);
+    void on_tableWidget_Header_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
     void on_lineEditFilterStrings_textChanged(const QString &sString);
     void on_lineEditFilterTypes_textChanged(const QString &sString);
 
