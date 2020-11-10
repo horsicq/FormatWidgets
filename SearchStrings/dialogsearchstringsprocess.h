@@ -40,7 +40,7 @@ public:
     explicit DialogSearchStringsProcess(QWidget *pParent=nullptr);
     ~DialogSearchStringsProcess();
     void processSearch(QIODevice *pDevice,QList<SearchStrings::RECORD> *pListRecords,SearchStrings::OPTIONS *pOptions);
-    void processModel(QList<SearchStrings::RECORD> *pListRecords,QStandardItemModel **ppModel, SearchStrings::OPTIONS *pOptions);
+    void processModel(QList<SearchStrings::RECORD> *pListRecords,QStandardItemModel **ppModel,SearchStrings::OPTIONS *pOptions);
 
 private slots:
     void on_pushButtonCancel_clicked();

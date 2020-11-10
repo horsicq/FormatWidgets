@@ -62,7 +62,7 @@ private slots:
     void on_tableWidget_VXD_HEADER_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
     void on_tableView_Objects_customContextMenuRequested(const QPoint &pos);
     void on_tableView_Objects_doubleClicked(const QModelIndex &index);
-    void onTableView_Objects_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
+    void onTableView_Objects_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
 
 private:
     enum CB

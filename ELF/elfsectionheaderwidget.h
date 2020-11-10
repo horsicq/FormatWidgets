@@ -54,7 +54,7 @@ private slots:
     void reloadData();
     void widgetValueChanged(quint64 nValue);
 
-    void on_tableWidget_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn);
+    void on_tableWidget_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
 
 private:
     Ui::ELFSectionHeaderWidget *ui;
