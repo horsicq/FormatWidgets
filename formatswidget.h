@@ -33,6 +33,7 @@
 #include "dialogdisasm.h"
 #include "dialogdex.h"
 #include "dialogarchive.h"
+#include "dialogtextinfo.h"
 
 namespace Ui {
 class FormatsWidget;
