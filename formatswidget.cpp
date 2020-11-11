@@ -292,7 +292,7 @@ void FormatsWidget::reload()
             ui->lineEditELFPrograms->setValue(elf.getNumberOfPrograms());
             ui->lineEditELFSections->setValue(elf.getNumberOfSections());
         }
-        else if((fileType==XBinary::FT_MACH32)||(fileType==XBinary::FT_MACH64))
+        else if((fileType==XBinary::FT_MACHO32)||(fileType==XBinary::FT_MACHO64))
         {
             ui->stackedWidgetMain->setCurrentIndex(TABINFO_MACH);
 
@@ -748,8 +748,8 @@ FormatsWidget::SE FormatsWidget::getScanEngine(FormatsWidget::SE seIndex)
         if( (fileType==XBinary::FT_DEX)||
             (fileType==XBinary::FT_ELF32)||
             (fileType==XBinary::FT_ELF64)||
-            (fileType==XBinary::FT_MACH32)||
-            (fileType==XBinary::FT_MACH64)||
+            (fileType==XBinary::FT_MACHO32)||
+            (fileType==XBinary::FT_MACHO64)||
             (fileType==XBinary::FT_ZIP))
         {
             tabResult=SE_NFD;

@@ -275,7 +275,7 @@ void MACHWidget::reloadData()
         {
             if(!stInit.contains(sInit))
             {
-                ui->widgetHeuristicScan->setData(getDevice(),true,XBinary::FT_MACH);
+                ui->widgetHeuristicScan->setData(getDevice(),true,XBinary::FT_MACHO);
             }
         }
         else if(nType==SMACH::TYPE_mach_header)
