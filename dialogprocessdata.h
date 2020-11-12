@@ -48,8 +48,8 @@ private slots:
 
 private:
     Ui::DialogProcessData *ui;
-    ProcessData *pProcessData;
-    QThread *pThread;
+    ProcessData *g_pProcessData;
+    QThread *g_pThread;
 };
 
 #endif // DIALOGPROCESSDATA_H

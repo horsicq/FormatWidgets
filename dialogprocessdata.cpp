@@ -27,36 +27,36 @@ DialogProcessData::DialogProcessData(QWidget *pParent, ProcessData *pProcessData
 {
     ui->setupUi(this);
 
-    this->pProcessData=pProcessData;
+    this->g_pProcessData=pProcessData;
 
-    pThread=new QThread;
+    g_pThread=new QThread;
 
-    pProcessData->moveToThread(pThread);
+    pProcessData->moveToThread(g_pThread);
 
-    connect(pThread, SIGNAL(started()), pProcessData, SLOT(process()));
+    connect(g_pThread, SIGNAL(started()), pProcessData, SLOT(process()));
     connect(pProcessData, SIGNAL(completed(qint64)), this, SLOT(onCompleted(qint64)));
     connect(pProcessData, SIGNAL(errorMessage(QString)), this, SLOT(errorMessage(QString)));
     connect(pProcessData, SIGNAL(progressValue(qint32)), this, SLOT(progressValue(qint32)));
     connect(pProcessData, SIGNAL(progressMinimum(qint32)), this, SLOT(progressMinimum(qint32)));
     connect(pProcessData, SIGNAL(progressMaximum(qint32)), this, SLOT(progressMaximum(qint32)));
 
-    pThread->start();
+    g_pThread->start();
 }
 
 DialogProcessData::~DialogProcessData()
 {
-    pProcessData->stop();
+    g_pProcessData->stop();
 
-    pThread->quit();
-    pThread->wait();
+    g_pThread->quit();
+    g_pThread->wait();
 
     delete ui;
-    delete pThread;
+    delete g_pThread;
 }
 
 void DialogProcessData::on_pushButtonCancel_clicked()
 {
-    pProcessData->stop();
+    g_pProcessData->stop();
 }
 
 void DialogProcessData::errorMessage(QString sText)
