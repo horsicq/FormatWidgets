@@ -207,7 +207,7 @@
       <enum>QFrame::NoFrame</enum>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>9</number>
      </property>
      <widget class="QWidget" name="pageBinary"/>
      <widget class="QWidget" name="pageCOM"/>
@@ -1001,7 +1001,7 @@
          <item>
           <widget class="QPushButton" name="pushButtonMACH">
            <property name="text">
-            <string notr="true">MACH</string>
+            <string notr="true">Mach-O</string>
            </property>
           </widget>
          </item>

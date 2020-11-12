@@ -2262,7 +2262,7 @@ void PEWidget::on_pushButtonHeuristicScan_clicked()
 void PEWidget::on_pushButtonDisasm_clicked()
 {
 #ifdef USE_DISASM
-    setTopTreeItem(ui->treeWidgetNavi,SPE::TYPE_DISASM);
+    setTreeItem(ui->treeWidgetNavi,SPE::TYPE_DISASM);
 #endif
 }
 

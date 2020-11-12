@@ -46,3 +46,9 @@ DEPENDPATH += $$PWD
     include($$PWD/SearchStrings/searchstringswidget.pri)
 }
 
+contains(XCONFIG, use_dex) {
+    !contains(XCONFIG, dexwidget) {
+        XCONFIG += dexwidget
+        include($$PWD/DEX/dexwidget.pri)
+    }
+}
