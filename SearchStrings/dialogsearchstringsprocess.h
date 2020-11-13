@@ -50,10 +50,10 @@ private slots:
 
 private:
     Ui::DialogSearchStringsProcess *ui;
-    SearchStrings *pHandleStrings;
-    SearchStrings *pHandleModel;
-    QThread *pThreadSearch;
-    QThread *pThreadModel;
+    SearchStrings *g_pHandleStrings;
+    SearchStrings *g_pHandleModel;
+    QThread *g_pThreadSearch;
+    QThread *g_pThreadModel;
 };
 
 #endif // DIALOGSEARCHSTRINGSPROCESS_H
