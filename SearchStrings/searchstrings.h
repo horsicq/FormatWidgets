@@ -76,11 +76,11 @@ private:
     bool isUnicodeSymbol(quint16 nCode);
 
 private:
-    QIODevice *pDevice;
-    QList<RECORD> *pListRecords;
-    OPTIONS options;
-    QStandardItemModel **ppModel;
-    bool bIsStop;
+    QIODevice *g_pDevice;
+    QList<RECORD> *g_pListRecords;
+    OPTIONS g_options;
+    QStandardItemModel **g_ppModel;
+    bool g_bIsStop;
 };
 
 #endif // SEARCHSTRINGS_H

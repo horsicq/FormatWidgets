@@ -22,36 +22,36 @@
 
 SearchStrings::SearchStrings(QObject *pParent) : QObject(pParent)
 {
-    bIsStop=false;
-    options={};
-    ppModel=nullptr;
+    g_bIsStop=false;
+    g_options={};
+    g_ppModel=nullptr;
 }
 
 void SearchStrings::setSearchData(QIODevice *pDevice, QList<RECORD> *pListRecords, OPTIONS *pOptions)
 {
-    this->pDevice=pDevice;
-    this->pListRecords=pListRecords;
+    this->g_pDevice=pDevice;
+    this->g_pListRecords=pListRecords;
 
     if(pOptions)
     {
-        options=*pOptions;
+        g_options=*pOptions;
     }
 }
 
 void SearchStrings::setModelData(QList<SearchStrings::RECORD> *pListRecords, QStandardItemModel **ppModel, OPTIONS *pOptions)
 {
-    this->pListRecords=pListRecords;
-    this->ppModel=ppModel;
+    this->g_pListRecords=pListRecords;
+    this->g_ppModel=ppModel;
 
     if(pOptions)
     {
-        options=*pOptions;
+        g_options=*pOptions;
     }
 }
 
 void SearchStrings::stop()
 {
-    bIsStop=true;
+    g_bIsStop=true;
 }
 
 void SearchStrings::processSearch()
@@ -59,14 +59,14 @@ void SearchStrings::processSearch()
     QElapsedTimer scanTimer;
     scanTimer.start();
 
-    pListRecords->clear();
+    g_pListRecords->clear();
 
-    qint64 nBaseAddress=options.nBaseAddress;
+    qint64 nBaseAddress=g_options.nBaseAddress;
 
     const qint64 N_BUFFER_SIZE=0x1000;
     const qint64 N_MAX_STRING_SIZE=128;
 
-    qint64 _nSize=pDevice->size();
+    qint64 _nSize=g_pDevice->size();
     qint64 _nOffset=0;
     qint64 _nRawOffset=0;
     qint64 _nProcent=_nSize/100;
@@ -89,17 +89,17 @@ void SearchStrings::processSearch()
 
     emit progressValue(_nCurrentProcent);
 
-    bIsStop=false;
+    g_bIsStop=false;
 
     int nCurrentRecords=0;
 
-    while((_nSize>0)&&(!bIsStop))
+    while((_nSize>0)&&(!g_bIsStop))
     {
         qint64 nCurrentSize=qMin(N_BUFFER_SIZE,_nSize);
 
-        if(pDevice->seek(_nOffset))
+        if(g_pDevice->seek(_nOffset))
         {
-            if(pDevice->read(pBuffer,nCurrentSize)!=nCurrentSize)
+            if(g_pDevice->read(pBuffer,nCurrentSize)!=nCurrentSize)
             {
                 bReadError=true;
                 break;
@@ -137,7 +137,7 @@ void SearchStrings::processSearch()
 
             if((!bIsAnsiSymbol)||(bIsEnd))
             {
-                if(nCurrentAnsiSize>=options.nMinLenght)
+                if(nCurrentAnsiSize>=g_options.nMinLenght)
                 {
                     if(nCurrentAnsiSize-1<N_MAX_STRING_SIZE)
                     {
@@ -148,7 +148,7 @@ void SearchStrings::processSearch()
                         pAnsiBuffer[N_MAX_STRING_SIZE]=0;
                     }
 
-                    if(options.bSearchAnsi)
+                    if(g_options.bSearchAnsi)
                     {
                         RECORD record;
                         record.recordType=RECORD_TYPE_ANSI;
@@ -156,7 +156,7 @@ void SearchStrings::processSearch()
                         record.nSize=nCurrentAnsiSize;
                         record.sString=pAnsiBuffer;
 
-                        pListRecords->append(record);
+                        g_pListRecords->append(record);
 
                         nCurrentRecords++;
 
@@ -193,7 +193,7 @@ void SearchStrings::processSearch()
 
                 if((!bIsUnicodeSymbol)||(bIsEnd))
                 {
-                    if(nCurrentUnicodeSize[nParity]>=options.nMinLenght)
+                    if(nCurrentUnicodeSize[nParity]>=g_options.nMinLenght)
                     {
                         if(nCurrentUnicodeSize[nParity]-1<N_MAX_STRING_SIZE)
                         {
@@ -204,7 +204,7 @@ void SearchStrings::processSearch()
                             pUnicodeBuffer[nParity][N_MAX_STRING_SIZE]=0;
                         }
 
-                        if(options.bSearchUnicode)
+                        if(g_options.bSearchUnicode)
                         {
                             RECORD record;
                             record.recordType=RECORD_TYPE_UNICODE;
@@ -212,7 +212,7 @@ void SearchStrings::processSearch()
                             record.nSize=nCurrentUnicodeSize[nParity];
                             record.sString=QString::fromUtf16(pUnicodeBuffer[nParity]);
 
-                            pListRecords->append(record);
+                            g_pListRecords->append(record);
 
                             nCurrentRecords++;
 
@@ -227,7 +227,7 @@ void SearchStrings::processSearch()
                     {
                         int nO=(nParity==1)?(0):(1);
 
-                        if(nCurrentUnicodeSize[nO]>=options.nMinLenght)
+                        if(nCurrentUnicodeSize[nO]>=g_options.nMinLenght)
                         {
                             if(nCurrentUnicodeSize[nO]-1<N_MAX_STRING_SIZE)
                             {
@@ -238,7 +238,7 @@ void SearchStrings::processSearch()
                                 pUnicodeBuffer[nO][N_MAX_STRING_SIZE]=0;
                             }
 
-                            if(options.bSearchUnicode)
+                            if(g_options.bSearchUnicode)
                             {
                                 RECORD record;
                                 record.recordType=RECORD_TYPE_UNICODE;
@@ -246,7 +246,7 @@ void SearchStrings::processSearch()
                                 record.nSize=nCurrentUnicodeSize[nO];
                                 record.sString=QString::fromUtf16(pUnicodeBuffer[nO]);
 
-                                pListRecords->append(record);
+                                g_pListRecords->append(record);
 
                                 nCurrentRecords++;
 
@@ -293,7 +293,7 @@ void SearchStrings::processSearch()
         emit errorMessage(tr("Read error"));
     }
 
-    bIsStop=false;
+    g_bIsStop=false;
 
     delete [] pBuffer;
     delete [] pAnsiBuffer;
@@ -308,39 +308,39 @@ void SearchStrings::processModel()
     QElapsedTimer scanTimer;
     scanTimer.start();
 
-    int nNumberOfRecords=pListRecords->count();
-    *ppModel=new QStandardItemModel(nNumberOfRecords,4); // TODO Check maximum
+    int nNumberOfRecords=g_pListRecords->count();
+    *g_ppModel=new QStandardItemModel(nNumberOfRecords,4); // TODO Check maximum
 
-    qint64 nBaseAddress=options.nBaseAddress;
-    qint32 nAddressWidth=options.nAddressWidth;
+    qint64 nBaseAddress=g_options.nBaseAddress;
+    qint32 nAddressWidth=g_options.nAddressWidth;
 
     qint64 _nProcent=nNumberOfRecords/100;
     qint32 _nCurrentProcent=0;
 
     emit progressValue(_nCurrentProcent);
 
-    (*ppModel)->setHeaderData(0,Qt::Horizontal,nBaseAddress?(tr("Address")):(tr("Offset")));
-    (*ppModel)->setHeaderData(1,Qt::Horizontal,tr("Size"));
-    (*ppModel)->setHeaderData(2,Qt::Horizontal,tr("Type"));
-    (*ppModel)->setHeaderData(3,Qt::Horizontal,tr("String"));
+    (*g_ppModel)->setHeaderData(0,Qt::Horizontal,nBaseAddress?(tr("Address")):(tr("Offset")));
+    (*g_ppModel)->setHeaderData(1,Qt::Horizontal,tr("Size"));
+    (*g_ppModel)->setHeaderData(2,Qt::Horizontal,tr("Type"));
+    (*g_ppModel)->setHeaderData(3,Qt::Horizontal,tr("String"));
 
     emit progressValue(0);
 
-    bIsStop=false;
+    g_bIsStop=false;
 
-    for(int i=0; (i<nNumberOfRecords)&&(!bIsStop); i++)
+    for(int i=0; (i<nNumberOfRecords)&&(!g_bIsStop); i++)
     {
-        SearchStrings::RECORD record=pListRecords->at(i);
+        SearchStrings::RECORD record=g_pListRecords->at(i);
 
         QStandardItem *pTypeAddress=new QStandardItem;
         pTypeAddress->setText(QString("%1").arg(record.nOffset,nAddressWidth,16,QChar('0')));
         pTypeAddress->setTextAlignment(Qt::AlignRight);
-        (*ppModel)->setItem(i,0,pTypeAddress);
+        (*g_ppModel)->setItem(i,0,pTypeAddress);
 
         QStandardItem *pTypeSize=new QStandardItem;
         pTypeSize->setText(QString("%1").arg(record.nSize,8,16,QChar('0')));
         pTypeSize->setTextAlignment(Qt::AlignRight);
-        (*ppModel)->setItem(i,1,pTypeSize);
+        (*g_ppModel)->setItem(i,1,pTypeSize);
 
         QStandardItem *pTypeItem=new QStandardItem;
 
@@ -353,8 +353,8 @@ void SearchStrings::processModel()
             pTypeItem->setText("U");
         }
 
-        (*ppModel)->setItem(i,2,pTypeItem);
-        (*ppModel)->setItem(i,3,new QStandardItem(record.sString));
+        (*g_ppModel)->setItem(i,2,pTypeItem);
+        (*g_ppModel)->setItem(i,3,new QStandardItem(record.sString));
 
         if(i>((_nCurrentProcent+1)*_nProcent))
         {
@@ -363,7 +363,7 @@ void SearchStrings::processModel()
         }
     }
 
-    bIsStop=false;
+    g_bIsStop=false;
 
     emit completed(scanTimer.elapsed());
 }
