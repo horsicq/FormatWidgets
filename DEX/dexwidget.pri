@@ -24,8 +24,3 @@ SOURCES += \
     XCONFIG += formatwidget
     include($$PWD/../formatwidget.pri)
 }
-
-!contains(XCONFIG, xdex) {
-    XCONFIG += xdex
-    include($$PWD/../../XDEX/xdex.pri)
-}
