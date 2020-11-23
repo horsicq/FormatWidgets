@@ -67,8 +67,8 @@ private:
 
     Ui::MSDOSWidget *ui;
 
-    XLineEditHEX *lineEdit_DOS_HEADER[N_DOS_HEADER::__data_size];
-    XComboBoxEx *comboBox[__CB_size];
+    XLineEditHEX *g_lineEdit_DOS_HEADER[N_DOS_HEADER::__data_size];
+    XComboBoxEx *g_comboBox[__CB_size];
 
     SubDevice *subDevice[SMSDOS::__TYPE_size];
 
