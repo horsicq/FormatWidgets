@@ -49,7 +49,7 @@ void MSDOSWidget::clear()
 
     memset(g_lineEdit_DOS_HEADER,0,sizeof g_lineEdit_DOS_HEADER);
     memset(g_comboBox,0,sizeof g_comboBox);
-    memset(subDevice,0,sizeof subDevice);
+    memset(g_subDevice,0,sizeof g_subDevice);
 
     ui->checkBoxReadonly->setChecked(true);
 
@@ -63,7 +63,7 @@ void MSDOSWidget::cleanup()
 
 void MSDOSWidget::reset()
 {
-    stInit.clear();
+    g_stInit.clear();
 }
 
 void MSDOSWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions)
@@ -199,13 +199,13 @@ void MSDOSWidget::reloadData()
 
     QString sInit=QString("%1-%2-%3").arg(nType).arg(nDataOffset).arg(nDataSize);
 
-    if((nLastType==nType)&&(sInit!=sLastInit))
+    if((g_nLastType==nType)&&(sInit!=g_sLastInit))
     {
-        stInit.remove(sInit);
+        g_stInit.remove(sInit);
     }
 
-    nLastType=nType;
-    sLastInit=sInit;
+    g_nLastType=nType;
+    g_sLastInit=sInit;
 
     ui->stackedWidgetInfo->setCurrentIndex(nType);
 
@@ -215,7 +215,7 @@ void MSDOSWidget::reloadData()
     {
         if(nType==SMSDOS::TYPE_HEX)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 ui->widgetHex->setData(getDevice());
                 ui->widgetHex->setBackupFileName(getOptions()->sBackupFileName);
@@ -225,35 +225,35 @@ void MSDOSWidget::reloadData()
         }
         else if(nType==SMSDOS::TYPE_STRINGS)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 ui->widgetStrings->setData(getDevice(),0,true);
             }
         }
         else if(nType==SMSDOS::TYPE_MEMORYMAP)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 ui->widgetMemoryMap->setData(getDevice());
             }
         }
         else if(nType==SMSDOS::TYPE_ENTROPY)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 ui->widgetEntropy->setData(getDevice(),0,getDevice()->size(),true);
             }
         }
         else if(nType==SMSDOS::TYPE_HEURISTICSCAN)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 ui->widgetHeuristicScan->setData(getDevice(),true,XBinary::FT_MSDOS);
             }
         }
         else if(nType==SMSDOS::TYPE_DOS_HEADER)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 createHeaderTable(SMSDOS::TYPE_DOS_HEADER,ui->tableWidget_DOS_HEADER,N_DOS_HEADER::records,g_lineEdit_DOS_HEADER,N_DOS_HEADER::__data_size,0);
                 g_comboBox[CB_DOS_HEADER_e_magic]=createComboBox(ui->tableWidget_DOS_HEADER,XMSDOS::getImageMagicsS(),SMSDOS::TYPE_DOS_HEADER,N_DOS_HEADER::e_magic,XComboBoxEx::CBTYPE_NORMAL);
@@ -282,26 +282,26 @@ void MSDOSWidget::reloadData()
                 qint64 nOffset=msdos.getDosHeaderExOffset(); // Ex!
                 qint64 nSize=msdos.getDosHeaderExSize();
 
-                loadHexSubdevice(nOffset,nSize,nOffset,&subDevice[SMSDOS::TYPE_DOS_HEADER],ui->widgetHex_DOS_HEADER);
+                loadHexSubdevice(nOffset,nSize,nOffset,&g_subDevice[SMSDOS::TYPE_DOS_HEADER],ui->widgetHex_DOS_HEADER);
 
                 blockSignals(false);
             }
         }
         else if(nType==SMSDOS::TYPE_OVERLAY)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 qint64 nOverLayOffset=msdos.getOverlayOffset();
                 qint64 nOverlaySize=msdos.getOverlaySize();
 
-                loadHexSubdevice(nOverLayOffset,nOverlaySize,nOverLayOffset,&subDevice[SMSDOS::TYPE_OVERLAY],ui->widgetHex_OVERLAY);
+                loadHexSubdevice(nOverLayOffset,nOverlaySize,nOverLayOffset,&g_subDevice[SMSDOS::TYPE_OVERLAY],ui->widgetHex_OVERLAY);
             }
         }
 
         setReadonly(ui->checkBoxReadonly->isChecked());
     }
 
-    stInit.insert(sInit);
+    g_stInit.insert(sInit);
 }
 
 void MSDOSWidget::widgetValueChanged(quint64 nValue)
