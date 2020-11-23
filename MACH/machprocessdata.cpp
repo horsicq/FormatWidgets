@@ -23,11 +23,11 @@
 
 MACHProcessData::MACHProcessData(int nType, QStandardItemModel **ppModel, XMACH *pXMACH, qint64 nOffset, qint64 nSize)
 {
-    this->nType=nType;
-    this->ppModel=ppModel;
-    this->pXMACH=pXMACH;
-    this->nOffset=nOffset;
-    this->nSize=nSize;
+    this->g_nType=nType;
+    this->g_ppModel=ppModel;
+    this->g_pXMACH=pXMACH;
+    this->g_nOffset=nOffset;
+    this->g_nSize=nSize;
 }
 
 void MACHProcessData::_process()
