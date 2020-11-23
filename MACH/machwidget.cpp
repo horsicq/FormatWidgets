@@ -47,9 +47,9 @@ void MACHWidget::clear()
 {
     reset();
 
-    memset(lineEdit_mach_header,0,sizeof lineEdit_mach_header);
-    memset(comboBox,0,sizeof comboBox);
-    memset(subDevice,0,sizeof subDevice);
+    memset(g_lineEdit_mach_header,0,sizeof g_lineEdit_mach_header);
+    memset(g_comboBox,0,sizeof g_comboBox);
+    memset(g_subDevice,0,sizeof g_subDevice);
 
     ui->checkBoxReadonly->setChecked(true);
 
@@ -63,7 +63,7 @@ void MACHWidget::cleanup()
 
 void MACHWidget::reset()
 {
-    stInit.clear();
+    g_stInit.clear();
 }
 
 void MACHWidget::reload()
@@ -148,10 +148,10 @@ bool MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, 
                 case SMACH::TYPE_mach_header:
                     switch(nNdata)
                     {
-                        case N_mach_header::magic:      comboBox[CB_mach_header_magic]->setValue(nValue);       break; // TODO reload all data
-                        case N_mach_header::cputype:    comboBox[CB_mach_header_cputype]->setValue(nValue);     break;
-                        case N_mach_header::filetype:   comboBox[CB_mach_header_filetype]->setValue(nValue);    break;
-                        case N_mach_header::flags:      comboBox[CB_mach_header_flags]->setValue(nValue);       break;
+                        case N_mach_header::magic:      g_comboBox[CB_mach_header_magic]->setValue(nValue);       break; // TODO reload all data
+                        case N_mach_header::cputype:    g_comboBox[CB_mach_header_cputype]->setValue(nValue);     break;
+                        case N_mach_header::filetype:   g_comboBox[CB_mach_header_filetype]->setValue(nValue);    break;
+                        case N_mach_header::flags:      g_comboBox[CB_mach_header_flags]->setValue(nValue);       break;
                     }
                     break;
             }
@@ -187,18 +187,18 @@ bool MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, 
 
 void MACHWidget::setReadonly(bool bState)
 {
-    setLineEditsReadOnly(lineEdit_mach_header,N_mach_header::__data_size,bState);
+    setLineEditsReadOnly(g_lineEdit_mach_header,N_mach_header::__data_size,bState);
 
-    setComboBoxesReadOnly(comboBox,__CB_size,bState);
+    setComboBoxesReadOnly(g_comboBox,__CB_size,bState);
 
     ui->widgetHex->setReadonly(bState);
 }
 
 void MACHWidget::blockSignals(bool bState)
 {
-    _blockSignals((QObject **)lineEdit_mach_header,N_mach_header::__data_size,bState);
+    _blockSignals((QObject **)g_lineEdit_mach_header,N_mach_header::__data_size,bState);
 
-    _blockSignals((QObject **)comboBox,__CB_size,bState);
+    _blockSignals((QObject **)g_comboBox,__CB_size,bState);
 }
 
 void MACHWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
@@ -226,13 +226,13 @@ void MACHWidget::reloadData()
 
     QString sInit=QString("%1-%2-%3").arg(nType).arg(nDataOffset).arg(nDataSize);
 
-    if((nLastType==nType)&&(sInit!=sLastInit))
+    if((g_nLastType==nType)&&(sInit!=g_sLastInit))
     {
-        stInit.remove(sInit);
+        g_stInit.remove(sInit);
     }
 
-    nLastType=nType;
-    sLastInit=sInit;
+    g_nLastType=nType;
+    g_sLastInit=sInit;
 
     ui->stackedWidgetInfo->setCurrentIndex(nType);
 
@@ -242,7 +242,7 @@ void MACHWidget::reloadData()
     {
         if(nType==SMACH::TYPE_HEX)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 ui->widgetHex->setData(getDevice());
                 ui->widgetHex->setBackupFileName(getOptions()->sBackupFileName);
@@ -252,81 +252,81 @@ void MACHWidget::reloadData()
         }
         else if(nType==SMACH::TYPE_STRINGS)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 ui->widgetStrings->setData(getDevice(),nullptr,true);
             }
         }
         else if(nType==SMACH::TYPE_MEMORYMAP)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 ui->widgetMemoryMap->setData(getDevice());
             }
         }
         else if(nType==SMACH::TYPE_ENTROPY)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 ui->widgetEntropy->setData(getDevice(),0,getDevice()->size(),true);
             }
         }
         else if(nType==SMACH::TYPE_HEURISTICSCAN)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 ui->widgetHeuristicScan->setData(getDevice(),true,XBinary::FT_MACHO);
             }
         }
         else if(nType==SMACH::TYPE_mach_header)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 if(!mach.is64())
                 {
-                    createHeaderTable(SMACH::TYPE_mach_header,ui->tableWidget_mach_header,N_mach_header::records32,lineEdit_mach_header,N_mach_header::__data_size-1,0);
+                    createHeaderTable(SMACH::TYPE_mach_header,ui->tableWidget_mach_header,N_mach_header::records32,g_lineEdit_mach_header,N_mach_header::__data_size-1,0);
                 }
                 else
                 {
-                    createHeaderTable(SMACH::TYPE_mach_header,ui->tableWidget_mach_header,N_mach_header::records64,lineEdit_mach_header,N_mach_header::__data_size,0);
+                    createHeaderTable(SMACH::TYPE_mach_header,ui->tableWidget_mach_header,N_mach_header::records64,g_lineEdit_mach_header,N_mach_header::__data_size,0);
                 }
 
-                comboBox[CB_mach_header_magic]=createComboBox(ui->tableWidget_mach_header,XMACH::getHeaderMagicsS(),SMACH::TYPE_mach_header,N_mach_header::magic,XComboBoxEx::CBTYPE_NORMAL);
-                comboBox[CB_mach_header_cputype]=createComboBox(ui->tableWidget_mach_header,XMACH::getHeaderCpuTypesS(),SMACH::TYPE_mach_header,N_mach_header::cputype,XComboBoxEx::CBTYPE_NORMAL);
-                comboBox[CB_mach_header_filetype]=createComboBox(ui->tableWidget_mach_header,XMACH::getHeaderFileTypesS(),SMACH::TYPE_mach_header,N_mach_header::filetype,XComboBoxEx::CBTYPE_NORMAL);
-                comboBox[CB_mach_header_flags]=createComboBox(ui->tableWidget_mach_header,XMACH::getHeaderFlagsS(),SMACH::TYPE_mach_header,N_mach_header::flags,XComboBoxEx::CBTYPE_FLAGS);
+                g_comboBox[CB_mach_header_magic]=createComboBox(ui->tableWidget_mach_header,XMACH::getHeaderMagicsS(),SMACH::TYPE_mach_header,N_mach_header::magic,XComboBoxEx::CBTYPE_NORMAL);
+                g_comboBox[CB_mach_header_cputype]=createComboBox(ui->tableWidget_mach_header,XMACH::getHeaderCpuTypesS(),SMACH::TYPE_mach_header,N_mach_header::cputype,XComboBoxEx::CBTYPE_NORMAL);
+                g_comboBox[CB_mach_header_filetype]=createComboBox(ui->tableWidget_mach_header,XMACH::getHeaderFileTypesS(),SMACH::TYPE_mach_header,N_mach_header::filetype,XComboBoxEx::CBTYPE_NORMAL);
+                g_comboBox[CB_mach_header_flags]=createComboBox(ui->tableWidget_mach_header,XMACH::getHeaderFlagsS(),SMACH::TYPE_mach_header,N_mach_header::flags,XComboBoxEx::CBTYPE_FLAGS);
 
                 blockSignals(true);
 
-                lineEdit_mach_header[N_mach_header::magic]->setValue(mach.getHeader_magic());
-                lineEdit_mach_header[N_mach_header::cputype]->setValue(mach.getHeader_cputype());
-                lineEdit_mach_header[N_mach_header::cpusubtype]->setValue(mach.getHeader_cpusubtype());
-                lineEdit_mach_header[N_mach_header::filetype]->setValue(mach.getHeader_filetype());
-                lineEdit_mach_header[N_mach_header::ncmds]->setValue(mach.getHeader_ncmds());
-                lineEdit_mach_header[N_mach_header::sizeofcmds]->setValue(mach.getHeader_sizeofcmds());
-                lineEdit_mach_header[N_mach_header::flags]->setValue(mach.getHeader_flags());
+                g_lineEdit_mach_header[N_mach_header::magic]->setValue(mach.getHeader_magic());
+                g_lineEdit_mach_header[N_mach_header::cputype]->setValue(mach.getHeader_cputype());
+                g_lineEdit_mach_header[N_mach_header::cpusubtype]->setValue(mach.getHeader_cpusubtype());
+                g_lineEdit_mach_header[N_mach_header::filetype]->setValue(mach.getHeader_filetype());
+                g_lineEdit_mach_header[N_mach_header::ncmds]->setValue(mach.getHeader_ncmds());
+                g_lineEdit_mach_header[N_mach_header::sizeofcmds]->setValue(mach.getHeader_sizeofcmds());
+                g_lineEdit_mach_header[N_mach_header::flags]->setValue(mach.getHeader_flags());
 
                 if(mach.is64())
                 {
-                    lineEdit_mach_header[N_mach_header::reserved]->setValue(mach.getHeader_reserved());
+                    g_lineEdit_mach_header[N_mach_header::reserved]->setValue(mach.getHeader_reserved());
                 }
 
-                comboBox[CB_mach_header_magic]->setValue(mach.getHeader_magic());
-                comboBox[CB_mach_header_cputype]->setValue((quint32)mach.getHeader_cputype());
-                comboBox[CB_mach_header_filetype]->setValue((quint32)mach.getHeader_filetype());
-                comboBox[CB_mach_header_flags]->setValue((quint32)mach.getHeader_flags());
+                g_comboBox[CB_mach_header_magic]->setValue(mach.getHeader_magic());
+                g_comboBox[CB_mach_header_cputype]->setValue((quint32)mach.getHeader_cputype());
+                g_comboBox[CB_mach_header_filetype]->setValue((quint32)mach.getHeader_filetype());
+                g_comboBox[CB_mach_header_flags]->setValue((quint32)mach.getHeader_flags());
 
                 qint64 nOffset=mach.getHeaderOffset();
                 qint64 nSize=mach.getHeaderSize();
 
-                loadHexSubdevice(nOffset,nSize,nOffset,&subDevice[SMACH::TYPE_mach_header],ui->widgetHex_mach_header);
+                loadHexSubdevice(nOffset,nSize,nOffset,&g_subDevice[SMACH::TYPE_mach_header],ui->widgetHex_mach_header);
 
                 blockSignals(false);
             }
         }
         else if(nType==SMACH::TYPE_mach_commands)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 createSectionTable(SMACH::TYPE_mach_commands,ui->tableWidget_commands,N_mach_commands::records,N_mach_commands::__data_size);
 
@@ -371,7 +371,7 @@ void MACHWidget::reloadData()
         }
         else if(nType==SMACH::TYPE_mach_segments)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 bool bIs64=mach.is64();
 
@@ -443,7 +443,7 @@ void MACHWidget::reloadData()
         }
         else if(nType==SMACH::TYPE_mach_sections)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 bool bIs64=mach.is64();
 
@@ -512,7 +512,7 @@ void MACHWidget::reloadData()
         }
         else if(nType==SMACH::TYPE_mach_libraries)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 createSectionTable(SMACH::TYPE_mach_libraries,ui->tableWidget_libraries,N_mach_libraries::records,N_mach_libraries::__data_size);
 
@@ -539,7 +539,7 @@ void MACHWidget::reloadData()
         setReadonly(ui->checkBoxReadonly->isChecked());
     }
 
-    stInit.insert(sInit);
+    g_stInit.insert(sInit);
 }
 
 void MACHWidget::widgetValueChanged(quint64 nValue)
@@ -553,10 +553,10 @@ void MACHWidget::widgetValueChanged(quint64 nValue)
         case SMACH::TYPE_mach_header:
             switch(nNdata)
             {
-                case N_mach_header::magic:      lineEdit_mach_header[N_mach_header::magic]->setValue((quint32)nValue);      break;
-                case N_mach_header::cputype:    lineEdit_mach_header[N_mach_header::cputype]->setValue((quint32)nValue);    break;
-                case N_mach_header::filetype:   lineEdit_mach_header[N_mach_header::filetype]->setValue((quint32)nValue);   break;
-                case N_mach_header::flags:      lineEdit_mach_header[N_mach_header::flags]->setValue((quint32)nValue);      break;
+                case N_mach_header::magic:      g_lineEdit_mach_header[N_mach_header::magic]->setValue((quint32)nValue);      break;
+                case N_mach_header::cputype:    g_lineEdit_mach_header[N_mach_header::cputype]->setValue((quint32)nValue);    break;
+                case N_mach_header::filetype:   g_lineEdit_mach_header[N_mach_header::filetype]->setValue((quint32)nValue);   break;
+                case N_mach_header::flags:      g_lineEdit_mach_header[N_mach_header::flags]->setValue((quint32)nValue);      break;
             }
 
             break;
@@ -716,7 +716,7 @@ void MACHWidget::loadCommand(int nNumber)
     qint64 nSize=ui->tableWidget_commands->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
     qint64 nAddress=ui->tableWidget_commands->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
 
-    loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SMACH::TYPE_mach_commands],ui->widgetHex_commands);
+    loadHexSubdevice(nOffset,nSize,nAddress,&g_subDevice[SMACH::TYPE_mach_commands],ui->widgetHex_commands);
 }
 
 void MACHWidget::loadSegment(int nNumber)
@@ -725,7 +725,7 @@ void MACHWidget::loadSegment(int nNumber)
     qint64 nSize=ui->tableWidget_segments->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
     qint64 nAddress=ui->tableWidget_segments->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
 
-    loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SMACH::TYPE_mach_segments],ui->widgetHex_segments);
+    loadHexSubdevice(nOffset,nSize,nAddress,&g_subDevice[SMACH::TYPE_mach_segments],ui->widgetHex_segments);
 }
 
 void MACHWidget::loadSection(int nNumber)
@@ -734,7 +734,7 @@ void MACHWidget::loadSection(int nNumber)
     qint64 nSize=ui->tableWidget_sections->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
     qint64 nAddress=ui->tableWidget_sections->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
 
-    loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SMACH::TYPE_mach_sections],ui->widgetHex_sections);
+    loadHexSubdevice(nOffset,nSize,nAddress,&g_subDevice[SMACH::TYPE_mach_sections],ui->widgetHex_sections);
 }
 
 void MACHWidget::on_tableWidget_mach_header_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)

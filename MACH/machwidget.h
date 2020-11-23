@@ -81,14 +81,14 @@ private:
 
     Ui::MACHWidget *ui;
 
-    XLineEditHEX *lineEdit_mach_header[N_mach_header::__data_size];
-    XComboBoxEx *comboBox[__CB_size];
+    XLineEditHEX *g_lineEdit_mach_header[N_mach_header::__data_size];
+    XComboBoxEx *g_comboBox[__CB_size];
 
-    SubDevice *subDevice[SMACH::__TYPE_size];
+    SubDevice *g_subDevice[SMACH::__TYPE_size];
 
-    QSet<QString> stInit;
-    qint32 nLastType;
-    QString sLastInit;
+    QSet<QString> g_stInit;
+    qint32 g_nLastType;
+    QString g_sLastInit;
 };
 
 #endif // MACHWIDGET_H
