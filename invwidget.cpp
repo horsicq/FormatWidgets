@@ -23,24 +23,24 @@
 InvWidget::InvWidget(QWidget *pParent, TYPE type) :
     QWidget(pParent)
 {
-    pHexPushButton=0;
+    _pHexPushButton=0;
 
     QHBoxLayout *pLayot=new QHBoxLayout(this);
     pLayot->setContentsMargins(0,0,0,0);
 
     if(type==TYPE_HEX)
     {
-        pHexPushButton=new QPushButton(QString("Hex"),this);
+        _pHexPushButton=new QPushButton(QString("Hex"),this);
 
-        connect(pHexPushButton,SIGNAL(clicked()),this,SLOT(showHexSlot()));
+        connect(_pHexPushButton,SIGNAL(clicked()),this,SLOT(showHexSlot()));
 
-        pLayot->addWidget(pHexPushButton);
+        pLayot->addWidget(_pHexPushButton);
     }
 
     setLayout(pLayot);
 
-    nOffset=0;
-    nSize=0;
+    _nOffset=0;
+    _nSize=0;
 }
 
 InvWidget::~InvWidget()
@@ -54,15 +54,15 @@ void InvWidget::setOffsetAndSize(XBinary *pBinary, qint64 nOffset, qint64 nSize)
     {
         _setEnabled(true);
 
-        this->nOffset=nOffset;
-        this->nSize=nSize;
+        this->_nOffset=nOffset;
+        this->_nSize=nSize;
     }
     else
     {
         _setEnabled(false);
 
-        this->nOffset=0;
-        this->nSize=0;
+        this->_nOffset=0;
+        this->_nSize=0;
     }
 }
 
@@ -74,27 +74,27 @@ void InvWidget::setAddressAndSize(XBinary *pBinary, qint64 nAddress, qint64 nSiz
     {
         _setEnabled(true);
 
-        this->nOffset=pBinary->addressToOffset(&memoryMap,nAddress);
-        this->nSize=nSize;
+        this->_nOffset=pBinary->addressToOffset(&memoryMap,nAddress);
+        this->_nSize=nSize;
     }
     else
     {
         _setEnabled(false);
 
-        this->nOffset=0;
-        this->nSize=0;
+        this->_nOffset=0;
+        this->_nSize=0;
     }
 }
 
 void InvWidget::_setEnabled(bool bState)
 {
-    if(pHexPushButton)
+    if(_pHexPushButton)
     {
-        pHexPushButton->setEnabled(bState);
+        _pHexPushButton->setEnabled(bState);
     }
 }
 
 void InvWidget::showHexSlot()
 {
-    emit showHex(nOffset,nSize);
+    emit showHex(_nOffset,_nSize);
 }
