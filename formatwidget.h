@@ -160,8 +160,8 @@ private:
     bool saveBackup();
 
 private:
-    QIODevice *pDevice;
-    FW_DEF::OPTIONS fwOptions;
+    QIODevice *g_pDevice;
+    FW_DEF::OPTIONS g_fwOptions;
     quint32 g_nNumber;
     qint64 g_nOffset;
     quint32 g_nType;

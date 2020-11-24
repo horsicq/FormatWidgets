@@ -24,7 +24,7 @@ FormatWidget::FormatWidget(QWidget *pParent):
     QWidget(pParent)
 {
     bIsReadonly=false;
-    fwOptions={};
+    g_fwOptions={};
     bIsEdited=false;
 
     colDisabled=QWidget::palette().color(QPalette::Window);
@@ -34,7 +34,7 @@ FormatWidget::FormatWidget(QWidget *pParent):
 FormatWidget::FormatWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent):
     QWidget(pParent)
 {
-    fwOptions={};
+    g_fwOptions={};
     bIsEdited=false;
     setData(pDevice,pOptions,nNumber,nOffset,nType);
 }
@@ -46,14 +46,14 @@ FormatWidget::~FormatWidget()
 
 void FormatWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset, qint32 nType)
 {
-    this->pDevice=pDevice;
+    this->g_pDevice=pDevice;
     this->g_nNumber=nNumber;
     this->g_nOffset=nOffset;
     this->g_nType=nType;
 
     if(pOptions)
     {
-        fwOptions=*pOptions;
+        g_fwOptions=*pOptions;
     }
 
     bIsReadonly=!(pDevice->isWritable());
@@ -61,12 +61,12 @@ void FormatWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint3
 
 QIODevice *FormatWidget::getDevice()
 {
-    return this->pDevice;
+    return this->g_pDevice;
 }
 
 FW_DEF::OPTIONS *FormatWidget::getOptions()
 {
-    return &fwOptions;
+    return &g_fwOptions;
 }
 
 quint32 FormatWidget::getNumber()
@@ -114,7 +114,7 @@ void FormatWidget::setValue(QVariant vValue, int nStype, int nNdata, int nVtype,
     }
     else
     {
-        QMessageBox::critical(this,tr("Error"),tr("Cannot save file")+QString(": %1").arg(fwOptions.sBackupFileName));
+        QMessageBox::critical(this,tr("Error"),tr("Cannot save file")+QString(": %1").arg(g_fwOptions.sBackupFileName));
     }
 }
 
@@ -432,15 +432,15 @@ void FormatWidget::showHex(qint64 nOffset, qint64 nSize)
     // mb TODO StartAddress
     QHexView::OPTIONS hexOptions={};
 
-    XBinary binary(pDevice,true,fwOptions.nImageBase);
+    XBinary binary(g_pDevice,true,g_fwOptions.nImageBase);
 
     hexOptions.memoryMap=binary.getMemoryMap();
-    hexOptions.sBackupFileName=fwOptions.sBackupFileName;
+    hexOptions.sBackupFileName=g_fwOptions.sBackupFileName;
     hexOptions.nStartAddress=nOffset;
     hexOptions.nStartSelectionAddress=nOffset;
     hexOptions.nSizeOfSelection=nSize;
 
-    DialogHex dialogHex(this,pDevice,&hexOptions);
+    DialogHex dialogHex(this,g_pDevice,&hexOptions);
 
     connect(&dialogHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
 
@@ -451,7 +451,7 @@ void FormatWidget::showHex(qint64 nOffset, qint64 nSize)
 
 void FormatWidget::showEntropy(qint64 nOffset, qint64 nSize)
 {
-    DialogEntropy dialogEntropy(this,pDevice,nOffset,nSize);
+    DialogEntropy dialogEntropy(this,g_pDevice,nOffset,nSize);
 
     dialogEntropy.exec();
 }
@@ -463,15 +463,15 @@ bool FormatWidget::saveBackup()
     if(!bIsEdited)
     {
         // Save backup
-        if(fwOptions.sBackupFileName!="")
+        if(g_fwOptions.sBackupFileName!="")
         {
-            if(!QFile::exists(fwOptions.sBackupFileName))
+            if(!QFile::exists(g_fwOptions.sBackupFileName))
             {
-                if(pDevice->metaObject()->className()==QString("QFile"))
+                if(g_pDevice->metaObject()->className()==QString("QFile"))
                 {
-                    QString sFileName=((QFile *)pDevice)->fileName();
+                    QString sFileName=((QFile *)g_pDevice)->fileName();
 
-                    bResult=QFile::copy(sFileName,fwOptions.sBackupFileName);
+                    bResult=QFile::copy(sFileName,g_fwOptions.sBackupFileName);
                 }
             }
         }
