@@ -63,14 +63,14 @@ private slots:
 
 private:
     Ui::SearchStringsWidget *ui;
-    QIODevice *pDevice;
-    QWidget *pParent;
-    QSortFilterProxyModel *pFilter;
-    SearchStrings::OPTIONS options;
-    QStandardItemModel *pModel;
-    bool bInit;
-    QStandardItemModel *pOldModel;
-    QFutureWatcher<void> watcher;
+    QIODevice *g_pDevice;
+    QWidget *g_pParent;
+    QSortFilterProxyModel *g_pFilter;
+    SearchStrings::OPTIONS g_options;
+    QStandardItemModel *g_pModel;
+    bool g_bInit;
+    QStandardItemModel *g_pOldModel;
+    QFutureWatcher<void> g_watcher;
 };
 
 #endif // SEARCHSTRINGSWIDGET_H

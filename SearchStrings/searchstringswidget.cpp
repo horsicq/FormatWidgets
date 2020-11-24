@@ -26,14 +26,14 @@ SearchStringsWidget::SearchStringsWidget(QWidget *pParent) :
     ui(new Ui::SearchStringsWidget)
 {
     ui->setupUi(this);
-    pDevice=nullptr;
-    this->pParent=pParent;
-    pFilter=new QSortFilterProxyModel(this);
+    g_pDevice=nullptr;
+    this->g_pParent=pParent;
+    g_pFilter=new QSortFilterProxyModel(this);
 
-    options.nAddressWidth=8;
-    options.nBaseAddress=0;
-    pModel=nullptr;
-    bInit=false;
+    g_options.nAddressWidth=8;
+    g_options.nBaseAddress=0;
+    g_pModel=nullptr;
+    g_bInit=false;
 
     ui->checkBoxAnsi->setChecked(true);
     ui->checkBoxUnicode->setChecked(true);
@@ -43,16 +43,16 @@ SearchStringsWidget::SearchStringsWidget(QWidget *pParent) :
 
 SearchStringsWidget::~SearchStringsWidget()
 {
-    watcher.waitForFinished();
+    g_watcher.waitForFinished();
 
     delete ui;
 }
 
 void SearchStringsWidget::setData(QIODevice *pDevice, SearchStrings::OPTIONS *pOptions, bool bAuto,QWidget *pParent)
 {
-    this->pDevice=pDevice;
-    this->pParent=pParent;
-    bInit=false;
+    this->g_pDevice=pDevice;
+    this->g_pParent=pParent;
+    g_bInit=false;
 
     qint64 nSize=pDevice->size();
 
@@ -60,29 +60,29 @@ void SearchStringsWidget::setData(QIODevice *pDevice, SearchStrings::OPTIONS *pO
 
     if(pOptions)
     {
-        options=*pOptions;
+        g_options=*pOptions;
     }
     else
     {
-        options.nBaseAddress=0;
+        g_options.nBaseAddress=0;
     }
 
-    if(options.nBaseAddress==-1)
+    if(g_options.nBaseAddress==-1)
     {
-        options.nBaseAddress=0;
+        g_options.nBaseAddress=0;
     }
 
-    if(nSize+options.nBaseAddress>0xFFFFFFFF)
+    if(nSize+g_options.nBaseAddress>0xFFFFFFFF)
     {
-        options.nAddressWidth=16;
+        g_options.nAddressWidth=16;
     }
     else
     {
-        options.nAddressWidth=8;
+        g_options.nAddressWidth=8;
     }
 
-    QString sInfo=QString("0x%1 - 0x%2 ( 0x%3 )").arg(options.nBaseAddress,options.nAddressWidth,16,QChar('0'))
-                  .arg(options.nBaseAddress+nSize-1,options.nAddressWidth,16,QChar('0'))
+    QString sInfo=QString("0x%1 - 0x%2 ( 0x%3 )").arg(g_options.nBaseAddress,g_options.nAddressWidth,16,QChar('0'))
+                  .arg(g_options.nBaseAddress+nSize-1,g_options.nAddressWidth,16,QChar('0'))
                   .arg(nSize,8,16,QChar('0'));
     ui->labelInfo->setText(sInfo);
 
@@ -99,12 +99,12 @@ void SearchStringsWidget::reload()
 
 bool SearchStringsWidget::getInitStatus()
 {
-    return bInit;
+    return g_bInit;
 }
 
 void SearchStringsWidget::on_pushButtonSave_clicked()
 {
-    if(pModel)
+    if(g_pModel)
     {
         QString sFileName=QFileDialog::getSaveFileName(this, tr("Save file"),QString("%1.txt").arg(tr("Strings")), QString("%1 (*.txt);;%2 (*)").arg(tr("Text files")).arg(tr("All files")));
 
@@ -115,17 +115,17 @@ void SearchStringsWidget::on_pushButtonSave_clicked()
 
             if(file.open(QIODevice::ReadWrite))
             {
-                int nNumberOfRows=pModel->rowCount();
+                int nNumberOfRows=g_pModel->rowCount();
 
                 QString sResult;
 
                 for(int i=0; i<nNumberOfRows; i++)
                 {
                     sResult+=QString("%1\t%2\t%3\t%4\r\n")
-                             .arg(pModel->item(i,0)->text())
-                             .arg(pModel->item(i,1)->text())
-                             .arg(pModel->item(i,2)->text())
-                             .arg(pModel->item(i,3)->text());
+                             .arg(g_pModel->item(i,0)->text())
+                             .arg(g_pModel->item(i,1)->text())
+                             .arg(g_pModel->item(i,2)->text())
+                             .arg(g_pModel->item(i,3)->text());
                 }
 
                 file.resize(0);
@@ -149,9 +149,9 @@ void SearchStringsWidget::on_lineEditFilter_textChanged(const QString &sText)
 
 void SearchStringsWidget::filter(QString sString)
 {
-    pFilter->setFilterRegExp(sString);
-    pFilter->setFilterCaseSensitivity(Qt::CaseInsensitive);
-    pFilter->setFilterKeyColumn(3);
+    g_pFilter->setFilterRegExp(sString);
+    g_pFilter->setFilterCaseSensitivity(Qt::CaseInsensitive);
+    g_pFilter->setFilterKeyColumn(3);
 }
 
 void SearchStringsWidget::on_tableViewResult_customContextMenuRequested(const QPoint &pos)
@@ -164,7 +164,7 @@ void SearchStringsWidget::on_tableViewResult_customContextMenuRequested(const QP
 
     QString sCopyString;
 
-    if(options.nBaseAddress)
+    if(g_options.nBaseAddress)
     {
         sCopyString=tr("Copy address");
     }
@@ -188,7 +188,7 @@ void SearchStringsWidget::_copyString()
 {
     int nRow=ui->tableViewResult->currentIndex().row();
 
-    if((nRow!=-1)&&(pModel))
+    if((nRow!=-1)&&(g_pModel))
     {
         QModelIndex index=ui->tableViewResult->selectionModel()->selectedIndexes().at(3);
 
@@ -202,7 +202,7 @@ void SearchStringsWidget::_copyAddress()
 {
     int nRow=ui->tableViewResult->currentIndex().row();
 
-    if((nRow!=-1)&&(pModel))
+    if((nRow!=-1)&&(g_pModel))
     {
         QModelIndex index=ui->tableViewResult->selectionModel()->selectedIndexes().at(0);
 
@@ -216,7 +216,7 @@ void SearchStringsWidget::_copySize()
 {
     int nRow=ui->tableViewResult->currentIndex().row();
 
-    if((nRow!=-1)&&(pModel))
+    if((nRow!=-1)&&(g_pModel))
     {
         QModelIndex index=ui->tableViewResult->selectionModel()->selectedIndexes().at(1);
 
@@ -228,33 +228,33 @@ void SearchStringsWidget::_copySize()
 
 void SearchStringsWidget::search()
 {
-    if(pDevice)
+    if(g_pDevice)
     {
         ui->lineEditFilter->clear();
 
-        options.bSearchAnsi=ui->checkBoxAnsi->isChecked();
-        options.bSearchUnicode=ui->checkBoxUnicode->isChecked();
-        options.nMinLenght=ui->spinBoxMinLength->value();
+        g_options.bSearchAnsi=ui->checkBoxAnsi->isChecked();
+        g_options.bSearchUnicode=ui->checkBoxUnicode->isChecked();
+        g_options.nMinLenght=ui->spinBoxMinLength->value();
 
-        if(options.bSearchAnsi||options.bSearchUnicode)
+        if(g_options.bSearchAnsi||g_options.bSearchUnicode)
         {
-            pOldModel=pModel;
+            g_pOldModel=g_pModel;
 
-            pFilter->setSourceModel(nullptr);
+            g_pFilter->setSourceModel(nullptr);
             ui->tableViewResult->setModel(nullptr);
 
             QList<SearchStrings::RECORD> listRecords;
 
-            DialogSearchStringsProcess dsp(pParent);
-            dsp.processSearch(pDevice,&listRecords,&options);
+            DialogSearchStringsProcess dsp(g_pParent);
+            dsp.processSearch(g_pDevice,&listRecords,&g_options);
             dsp.exec();
 
-            DialogSearchStringsProcess dmp(pParent);
-            dmp.processModel(&listRecords,&pModel,&options);
+            DialogSearchStringsProcess dmp(g_pParent);
+            dmp.processModel(&listRecords,&g_pModel,&g_options);
             dmp.exec();
 
-            pFilter->setSourceModel(pModel);
-            ui->tableViewResult->setModel(pFilter);
+            g_pFilter->setSourceModel(g_pModel);
+            ui->tableViewResult->setModel(g_pFilter);
 
             ui->tableViewResult->setColumnWidth(0,120);  // TODO
             ui->tableViewResult->setColumnWidth(1,80); // TODO
@@ -262,16 +262,16 @@ void SearchStringsWidget::search()
 
             QFuture<void> future=QtConcurrent::run(this,&SearchStringsWidget::deleteOldModel);
 
-            watcher.setFuture(future);
+            g_watcher.setFuture(future);
 
 //            watcher.waitForFinished();
         }
 
-        bInit=true;
+        g_bInit=true;
     }
 }
 
 void SearchStringsWidget::deleteOldModel()
 {
-    delete pOldModel;
+    delete g_pOldModel;
 }
