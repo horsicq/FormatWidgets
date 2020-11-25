@@ -22,11 +22,11 @@
 
 NEProcessData::NEProcessData(int nType, QStandardItemModel **ppModel, XNE *pNE, qint64 nOffset, qint64 nSize)
 {
-    this->nType=nType;
-    this->ppModel=ppModel;
-    this->pNE=pNE;
-    this->nOffset=nOffset;
-    this->nSize=nSize;
+    this->g_nType=nType;
+    this->g_ppModel=ppModel;
+    this->g_pNE=pNE;
+    this->g_nOffset=nOffset;
+    this->g_nSize=nSize;
 }
 
 void NEProcessData::_process()
