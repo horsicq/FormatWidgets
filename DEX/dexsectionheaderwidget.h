@@ -58,16 +58,16 @@ private slots:
 
 private:
     Ui::DEXSectionHeaderWidget *ui;
-    XLineEditHEX **ppLinedEdit;
-    int nLineEditSize;
-    XComboBoxEx **ppComboBox;
-    int nComboBoxSize;
-    InvWidget **ppInvWidget;
-    int nInvWidgetSize;
-    SubDevice *pSubDevice;
-    bool bInit;
-    qint64 nStringTableOffset;
-    qint64 nStringTableSize;
+    XLineEditHEX **g_ppLinedEdit;
+    int g_nLineEditSize;
+    XComboBoxEx **g_ppComboBox;
+    int g_nComboBoxSize;
+    InvWidget **g_ppInvWidget;
+    int g_nInvWidgetSize;
+    SubDevice *g_pSubDevice;
+    bool g_bInit;
+    qint64 g_nStringTableOffset;
+    qint64 g_nStringTableSize;
 };
 
 #endif // DEXSECTIONHEADERWIDGET_H
