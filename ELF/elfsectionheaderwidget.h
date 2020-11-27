@@ -58,13 +58,13 @@ private slots:
 
 private:
     Ui::ELFSectionHeaderWidget *ui;
-    XLineEditHEX **ppLinedEdit;
-    int nLineEditSize;
-    XComboBoxEx **ppComboBox;
-    int nComboBoxSize;
-    InvWidget **ppInvWidget;
-    int nInvWidgetSize;
-    SubDevice *pSubDevice;
+    XLineEditHEX **g_ppLinedEdit;
+    int g_nLineEditSize;
+    XComboBoxEx **g_ppComboBox;
+    int g_nComboBoxSize;
+    InvWidget **g_ppInvWidget;
+    int g_nInvWidgetSize;
+    SubDevice *g_pSubDevice;
     bool bInit;
     qint64 nStringTableOffset;
     qint64 nStringTableSize;

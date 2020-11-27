@@ -36,80 +36,80 @@ ELFSectionHeaderWidget::ELFSectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIO
 
     setData(pDevice,pOptions,nNumber,nOffset,nType);
 
-    ppLinedEdit=0;
-    nLineEditSize=0;
-    ppComboBox=0;
-    nComboBoxSize=0;
-    ppInvWidget=0;
-    nInvWidgetSize=0;
+    g_ppLinedEdit=0;
+    g_nLineEditSize=0;
+    g_ppComboBox=0;
+    g_nComboBoxSize=0;
+    g_ppInvWidget=0;
+    g_nInvWidgetSize=0;
 
     if(nType==SELF::TYPE_Elf_Shdr)
     {
-        nLineEditSize=N_Elf_Shdr::__data_size;
-        nComboBoxSize=N_Elf_Shdr::__CB_size;
-        nInvWidgetSize=N_Elf_Shdr::__INV_size;
+        g_nLineEditSize=N_Elf_Shdr::__data_size;
+        g_nComboBoxSize=N_Elf_Shdr::__CB_size;
+        g_nInvWidgetSize=N_Elf_Shdr::__INV_size;
     }
     else if(nType==SELF::TYPE_Elf_Phdr)
     {
-        nLineEditSize=N_Elf_Phdr32::__data_size;
-        nComboBoxSize=N_Elf_Phdr32::__CB_size;
-        nInvWidgetSize=N_Elf_Phdr32::__INV_size;
+        g_nLineEditSize=N_Elf_Phdr32::__data_size;
+        g_nComboBoxSize=N_Elf_Phdr32::__CB_size;
+        g_nInvWidgetSize=N_Elf_Phdr32::__INV_size;
     }
     else if(nType==SELF::TYPE_Elf_DynamicArrayTags)
     {
-        nLineEditSize=N_Elf_DynamicArrayTags::__data_size;
-        nComboBoxSize=N_Elf_DynamicArrayTags::__CB_size;
-        nInvWidgetSize=N_Elf_DynamicArrayTags::__INV_size;
+        g_nLineEditSize=N_Elf_DynamicArrayTags::__data_size;
+        g_nComboBoxSize=N_Elf_DynamicArrayTags::__CB_size;
+        g_nInvWidgetSize=N_Elf_DynamicArrayTags::__INV_size;
     }
     else if(nType==SELF::TYPE_SYMBOLTABLE)
     {
-        nLineEditSize=N_Elf32_Sym::__data_size;
-        nComboBoxSize=N_Elf32_Sym::__CB_size;
-        nInvWidgetSize=N_Elf32_Sym::__INV_size;
+        g_nLineEditSize=N_Elf32_Sym::__data_size;
+        g_nComboBoxSize=N_Elf32_Sym::__CB_size;
+        g_nInvWidgetSize=N_Elf32_Sym::__INV_size;
     }
     else if(nType==SELF::TYPE_Elf_Rela)
     {
-        nLineEditSize=N_Elf_Rela::__data_size;
-        nComboBoxSize=N_Elf_Rela::__CB_size;
-        nInvWidgetSize=N_Elf_Rela::__INV_size;
+        g_nLineEditSize=N_Elf_Rela::__data_size;
+        g_nComboBoxSize=N_Elf_Rela::__CB_size;
+        g_nInvWidgetSize=N_Elf_Rela::__INV_size;
     }
     else if(nType==SELF::TYPE_Elf_Rel)
     {
-        nLineEditSize=N_Elf_Rel::__data_size;
-        nComboBoxSize=N_Elf_Rel::__CB_size;
+        g_nLineEditSize=N_Elf_Rel::__data_size;
+        g_nComboBoxSize=N_Elf_Rel::__CB_size;
     }
 
-    if(nLineEditSize)
+    if(g_nLineEditSize)
     {
-        ppLinedEdit=new PXLineEditHEX[nLineEditSize];
+        g_ppLinedEdit=new PXLineEditHEX[g_nLineEditSize];
     }
 
-    if(nComboBoxSize)
+    if(g_nComboBoxSize)
     {
-        ppComboBox=new PXComboBoxEx[nComboBoxSize];
+        g_ppComboBox=new PXComboBoxEx[g_nComboBoxSize];
     }
 
-    if(nInvWidgetSize)
+    if(g_nInvWidgetSize)
     {
-        ppInvWidget=new PInvWidget[nInvWidgetSize];
+        g_ppInvWidget=new PInvWidget[g_nInvWidgetSize];
     }
 }
 
 ELFSectionHeaderWidget::~ELFSectionHeaderWidget()
 {
-    if(ppLinedEdit)
+    if(g_ppLinedEdit)
     {
-        delete[] ppLinedEdit;
+        delete[] g_ppLinedEdit;
     }
 
-    if(ppComboBox)
+    if(g_ppComboBox)
     {
-        delete[] ppComboBox;
+        delete[] g_ppComboBox;
     }
 
-    if(ppInvWidget)
+    if(g_ppInvWidget)
     {
-        delete[] ppInvWidget;
+        delete[] g_ppInvWidget;
     }
 
     delete ui;
@@ -119,11 +119,11 @@ void ELFSectionHeaderWidget::clear()
 {
     reset();
 
-    memset(ppLinedEdit,0,nLineEditSize*sizeof(XLineEditHEX *));
-    memset(ppComboBox,0,nComboBoxSize*sizeof(XComboBoxEx *));
-    memset(ppInvWidget,0,nInvWidgetSize*sizeof(InvWidget *));
+    memset(g_ppLinedEdit,0,g_nLineEditSize*sizeof(XLineEditHEX *));
+    memset(g_ppComboBox,0,g_nComboBoxSize*sizeof(XComboBoxEx *));
+    memset(g_ppInvWidget,0,g_nInvWidgetSize*sizeof(InvWidget *));
 
-    pSubDevice=nullptr;
+    g_pSubDevice=nullptr;
 
     ui->checkBoxReadonly->setChecked(true);
 }
@@ -174,8 +174,8 @@ bool ELFSectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
                     switch(nNdata)
                     {
                         case N_Elf_Shdr::sh_name:       addComment(ui->tableWidget,N_Elf_Shdr::sh_name,HEADER_COLUMN_COMMENT,elf.getStringFromIndex(nStringTableOffset,nStringTableSize,nValue));   break;
-                        case N_Elf_Shdr::sh_type:       ppComboBox[N_Elf_Shdr::sh_type]->setValue(nValue);                  break;
-                        case N_Elf_Shdr::sh_flags:      ppComboBox[N_Elf_Shdr::sh_flags]->setValue(nValue);                 break;
+                        case N_Elf_Shdr::sh_type:       g_ppComboBox[N_Elf_Shdr::sh_type]->setValue(nValue);                  break;
+                        case N_Elf_Shdr::sh_flags:      g_ppComboBox[N_Elf_Shdr::sh_flags]->setValue(nValue);                 break;
                     }
 
                     break;
@@ -185,16 +185,16 @@ bool ELFSectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
                     {
                         switch(nNdata)
                         {
-                            case N_Elf_Phdr64::p_type:      ppComboBox[N_Elf_Phdr64::p_type]->setValue(nValue);                 break;
-                            case N_Elf_Phdr64::p_flags:     ppComboBox[N_Elf_Phdr64::p_flags]->setValue(nValue);                break;
+                            case N_Elf_Phdr64::p_type:      g_ppComboBox[N_Elf_Phdr64::p_type]->setValue(nValue);                 break;
+                            case N_Elf_Phdr64::p_flags:     g_ppComboBox[N_Elf_Phdr64::p_flags]->setValue(nValue);                break;
                         }
                     }
                     else
                     {
                         switch(nNdata)
                         {
-                            case N_Elf_Phdr32::p_type:      ppComboBox[N_Elf_Phdr32::p_type]->setValue(nValue);                 break;
-                            case N_Elf_Phdr32::p_flags:     ppComboBox[N_Elf_Phdr32::p_flags]->setValue(nValue);                break;
+                            case N_Elf_Phdr32::p_type:      g_ppComboBox[N_Elf_Phdr32::p_type]->setValue(nValue);                 break;
+                            case N_Elf_Phdr32::p_flags:     g_ppComboBox[N_Elf_Phdr32::p_flags]->setValue(nValue);                break;
                         }
                     }
 
@@ -203,7 +203,7 @@ bool ELFSectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
                 case SELF::TYPE_Elf_DynamicArrayTags:
                     switch(nNdata)
                     {
-                        case N_Elf_DynamicArrayTags::d_tag:     ppComboBox[N_Elf_DynamicArrayTags::d_tag]->setValue(nValue);        break;
+                        case N_Elf_DynamicArrayTags::d_tag:     g_ppComboBox[N_Elf_DynamicArrayTags::d_tag]->setValue(nValue);        break;
                     }
 
                     break;
@@ -387,16 +387,16 @@ bool ELFSectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
 }
 void ELFSectionHeaderWidget::setReadonly(bool bState)
 {
-    setLineEditsReadOnly(ppLinedEdit,nLineEditSize,bState);
+    setLineEditsReadOnly(g_ppLinedEdit,g_nLineEditSize,bState);
 
-    setComboBoxesReadOnly(ppComboBox,nComboBoxSize,bState);
+    setComboBoxesReadOnly(g_ppComboBox,g_nComboBoxSize,bState);
 }
 
 void ELFSectionHeaderWidget::blockSignals(bool bState)
 {
-    _blockSignals((QObject **)ppLinedEdit,nLineEditSize,bState);
+    _blockSignals((QObject **)g_ppLinedEdit,g_nLineEditSize,bState);
 
-    _blockSignals((QObject **)ppComboBox,nComboBoxSize,bState);
+    _blockSignals((QObject **)g_ppComboBox,g_nComboBoxSize,bState);
 }
 
 void ELFSectionHeaderWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
@@ -474,9 +474,9 @@ void ELFSectionHeaderWidget::reloadData()
         {
             if(nType==SELF::TYPE_Elf_Shdr)
             {
-                bInit=createHeaderTable(SELF::TYPE_Elf_Shdr,ui->tableWidget,bIs64?(N_Elf_Shdr::records64):(N_Elf_Shdr::records32),ppLinedEdit,N_Elf_Shdr::__data_size,getNumber());
-                ppComboBox[N_Elf_Shdr::CB_TYPE]=createComboBox(ui->tableWidget,XELF::getSectionTypesS(),SELF::TYPE_Elf_Shdr,N_Elf_Shdr::sh_type,XComboBoxEx::CBTYPE_NORMAL);
-                ppComboBox[N_Elf_Shdr::CB_FLAGS]=createComboBox(ui->tableWidget,XELF::getSectionFlagsS(),SELF::TYPE_Elf_Shdr,N_Elf_Shdr::sh_flags,XComboBoxEx::CBTYPE_FLAGS);
+                bInit=createHeaderTable(SELF::TYPE_Elf_Shdr,ui->tableWidget,bIs64?(N_Elf_Shdr::records64):(N_Elf_Shdr::records32),g_ppLinedEdit,N_Elf_Shdr::__data_size,getNumber());
+                g_ppComboBox[N_Elf_Shdr::CB_TYPE]=createComboBox(ui->tableWidget,XELF::getSectionTypesS(),SELF::TYPE_Elf_Shdr,N_Elf_Shdr::sh_type,XComboBoxEx::CBTYPE_NORMAL);
+                g_ppComboBox[N_Elf_Shdr::CB_FLAGS]=createComboBox(ui->tableWidget,XELF::getSectionFlagsS(),SELF::TYPE_Elf_Shdr,N_Elf_Shdr::sh_flags,XComboBoxEx::CBTYPE_FLAGS);
 
                 blockSignals(true);
 
@@ -484,19 +484,19 @@ void ELFSectionHeaderWidget::reloadData()
                 {
                     XELF_DEF::Elf64_Shdr shdr64=elf.getElf64_Shdr(getNumber());
 
-                    ppLinedEdit[N_Elf_Shdr::sh_name]->setValue(shdr64.sh_name);
-                    ppLinedEdit[N_Elf_Shdr::sh_type]->setValue(shdr64.sh_type);
-                    ppLinedEdit[N_Elf_Shdr::sh_flags]->setValue(shdr64.sh_flags);
-                    ppLinedEdit[N_Elf_Shdr::sh_addr]->setValue(shdr64.sh_addr);
-                    ppLinedEdit[N_Elf_Shdr::sh_offset]->setValue(shdr64.sh_offset);
-                    ppLinedEdit[N_Elf_Shdr::sh_size]->setValue(shdr64.sh_size);
-                    ppLinedEdit[N_Elf_Shdr::sh_link]->setValue(shdr64.sh_link);
-                    ppLinedEdit[N_Elf_Shdr::sh_info]->setValue(shdr64.sh_info);
-                    ppLinedEdit[N_Elf_Shdr::sh_addralign]->setValue(shdr64.sh_addralign);
-                    ppLinedEdit[N_Elf_Shdr::sh_entsize]->setValue(shdr64.sh_entsize);
+                    g_ppLinedEdit[N_Elf_Shdr::sh_name]->setValue(shdr64.sh_name);
+                    g_ppLinedEdit[N_Elf_Shdr::sh_type]->setValue(shdr64.sh_type);
+                    g_ppLinedEdit[N_Elf_Shdr::sh_flags]->setValue(shdr64.sh_flags);
+                    g_ppLinedEdit[N_Elf_Shdr::sh_addr]->setValue(shdr64.sh_addr);
+                    g_ppLinedEdit[N_Elf_Shdr::sh_offset]->setValue(shdr64.sh_offset);
+                    g_ppLinedEdit[N_Elf_Shdr::sh_size]->setValue(shdr64.sh_size);
+                    g_ppLinedEdit[N_Elf_Shdr::sh_link]->setValue(shdr64.sh_link);
+                    g_ppLinedEdit[N_Elf_Shdr::sh_info]->setValue(shdr64.sh_info);
+                    g_ppLinedEdit[N_Elf_Shdr::sh_addralign]->setValue(shdr64.sh_addralign);
+                    g_ppLinedEdit[N_Elf_Shdr::sh_entsize]->setValue(shdr64.sh_entsize);
 
-                    ppComboBox[N_Elf_Shdr::CB_TYPE]->setValue(shdr64.sh_type);
-                    ppComboBox[N_Elf_Shdr::CB_FLAGS]->setValue(shdr64.sh_flags);
+                    g_ppComboBox[N_Elf_Shdr::CB_TYPE]->setValue(shdr64.sh_type);
+                    g_ppComboBox[N_Elf_Shdr::CB_FLAGS]->setValue(shdr64.sh_flags);
 
                     addComment(ui->tableWidget,N_Elf_Shdr::sh_name,HEADER_COLUMN_COMMENT,elf.getStringFromIndex(nStringTableOffset,nStringTableSize,shdr64.sh_name));
                 }
@@ -504,19 +504,19 @@ void ELFSectionHeaderWidget::reloadData()
                 {
                     XELF_DEF::Elf32_Shdr shdr32=elf.getElf32_Shdr(getNumber());
 
-                    ppLinedEdit[N_Elf_Shdr::sh_name]->setValue(shdr32.sh_name);
-                    ppLinedEdit[N_Elf_Shdr::sh_type]->setValue(shdr32.sh_type);
-                    ppLinedEdit[N_Elf_Shdr::sh_flags]->setValue(shdr32.sh_flags);
-                    ppLinedEdit[N_Elf_Shdr::sh_addr]->setValue(shdr32.sh_addr);
-                    ppLinedEdit[N_Elf_Shdr::sh_offset]->setValue(shdr32.sh_offset);
-                    ppLinedEdit[N_Elf_Shdr::sh_size]->setValue(shdr32.sh_size);
-                    ppLinedEdit[N_Elf_Shdr::sh_link]->setValue(shdr32.sh_link);
-                    ppLinedEdit[N_Elf_Shdr::sh_info]->setValue(shdr32.sh_info);
-                    ppLinedEdit[N_Elf_Shdr::sh_addralign]->setValue(shdr32.sh_addralign);
-                    ppLinedEdit[N_Elf_Shdr::sh_entsize]->setValue(shdr32.sh_entsize);
+                    g_ppLinedEdit[N_Elf_Shdr::sh_name]->setValue(shdr32.sh_name);
+                    g_ppLinedEdit[N_Elf_Shdr::sh_type]->setValue(shdr32.sh_type);
+                    g_ppLinedEdit[N_Elf_Shdr::sh_flags]->setValue(shdr32.sh_flags);
+                    g_ppLinedEdit[N_Elf_Shdr::sh_addr]->setValue(shdr32.sh_addr);
+                    g_ppLinedEdit[N_Elf_Shdr::sh_offset]->setValue(shdr32.sh_offset);
+                    g_ppLinedEdit[N_Elf_Shdr::sh_size]->setValue(shdr32.sh_size);
+                    g_ppLinedEdit[N_Elf_Shdr::sh_link]->setValue(shdr32.sh_link);
+                    g_ppLinedEdit[N_Elf_Shdr::sh_info]->setValue(shdr32.sh_info);
+                    g_ppLinedEdit[N_Elf_Shdr::sh_addralign]->setValue(shdr32.sh_addralign);
+                    g_ppLinedEdit[N_Elf_Shdr::sh_entsize]->setValue(shdr32.sh_entsize);
 
-                    ppComboBox[N_Elf_Shdr::CB_TYPE]->setValue(shdr32.sh_type);
-                    ppComboBox[N_Elf_Shdr::CB_FLAGS]->setValue(shdr32.sh_flags);
+                    g_ppComboBox[N_Elf_Shdr::CB_TYPE]->setValue(shdr32.sh_type);
+                    g_ppComboBox[N_Elf_Shdr::CB_FLAGS]->setValue(shdr32.sh_flags);
 
                     addComment(ui->tableWidget,N_Elf_Shdr::sh_name,HEADER_COLUMN_COMMENT,elf.getStringFromIndex(nStringTableOffset,nStringTableSize,shdr32.sh_name));
                 }
@@ -525,15 +525,15 @@ void ELFSectionHeaderWidget::reloadData()
                 qint64 nSize=elf.getShdrSize();
                 qint64 nAddress=elf.offsetToRelAddress(nOffset);
 
-                loadHexSubdevice(nOffset,nSize,nAddress,&pSubDevice,ui->widgetHex);
+                loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
 
                 blockSignals(false);
             }
             else if(nType==SELF::TYPE_Elf_Phdr)
             {
-                bInit=createHeaderTable(SELF::TYPE_Elf_Phdr,ui->tableWidget,bIs64?(N_Elf_Phdr64::records):(N_Elf_Phdr32::records),ppLinedEdit,bIs64?(N_Elf_Phdr64::__data_size):(N_Elf_Phdr32::__data_size),getNumber());
-                ppComboBox[N_Elf_Phdr32::CB_TYPE]=createComboBox(ui->tableWidget,XELF::getProgramTypesS(),SELF::TYPE_Elf_Phdr,bIs64?(N_Elf_Phdr64::p_type):(N_Elf_Phdr32::p_type),XComboBoxEx::CBTYPE_NORMAL);
-                ppComboBox[N_Elf_Phdr32::CB_FLAGS]=createComboBox(ui->tableWidget,XELF::getProgramFlagsS(),SELF::TYPE_Elf_Phdr,bIs64?(N_Elf_Phdr64::p_flags):(N_Elf_Phdr32::p_flags),XComboBoxEx::CBTYPE_FLAGS);
+                bInit=createHeaderTable(SELF::TYPE_Elf_Phdr,ui->tableWidget,bIs64?(N_Elf_Phdr64::records):(N_Elf_Phdr32::records),g_ppLinedEdit,bIs64?(N_Elf_Phdr64::__data_size):(N_Elf_Phdr32::__data_size),getNumber());
+                g_ppComboBox[N_Elf_Phdr32::CB_TYPE]=createComboBox(ui->tableWidget,XELF::getProgramTypesS(),SELF::TYPE_Elf_Phdr,bIs64?(N_Elf_Phdr64::p_type):(N_Elf_Phdr32::p_type),XComboBoxEx::CBTYPE_NORMAL);
+                g_ppComboBox[N_Elf_Phdr32::CB_FLAGS]=createComboBox(ui->tableWidget,XELF::getProgramFlagsS(),SELF::TYPE_Elf_Phdr,bIs64?(N_Elf_Phdr64::p_flags):(N_Elf_Phdr32::p_flags),XComboBoxEx::CBTYPE_FLAGS);
 
                 blockSignals(true);
 
@@ -541,47 +541,47 @@ void ELFSectionHeaderWidget::reloadData()
                 {
                     XELF_DEF::Elf64_Phdr phdr64=elf.getElf64_Phdr(getNumber());
 
-                    ppLinedEdit[N_Elf_Phdr64::p_type]->setValue(phdr64.p_type);
-                    ppLinedEdit[N_Elf_Phdr64::p_flags]->setValue(phdr64.p_flags);
-                    ppLinedEdit[N_Elf_Phdr64::p_offset]->setValue(phdr64.p_offset);
-                    ppLinedEdit[N_Elf_Phdr64::p_vaddr]->setValue(phdr64.p_vaddr);
-                    ppLinedEdit[N_Elf_Phdr64::p_paddr]->setValue(phdr64.p_paddr);
-                    ppLinedEdit[N_Elf_Phdr64::p_filesz]->setValue(phdr64.p_filesz);
-                    ppLinedEdit[N_Elf_Phdr64::p_memsz]->setValue(phdr64.p_memsz);
-                    ppLinedEdit[N_Elf_Phdr64::p_align]->setValue(phdr64.p_align);
+                    g_ppLinedEdit[N_Elf_Phdr64::p_type]->setValue(phdr64.p_type);
+                    g_ppLinedEdit[N_Elf_Phdr64::p_flags]->setValue(phdr64.p_flags);
+                    g_ppLinedEdit[N_Elf_Phdr64::p_offset]->setValue(phdr64.p_offset);
+                    g_ppLinedEdit[N_Elf_Phdr64::p_vaddr]->setValue(phdr64.p_vaddr);
+                    g_ppLinedEdit[N_Elf_Phdr64::p_paddr]->setValue(phdr64.p_paddr);
+                    g_ppLinedEdit[N_Elf_Phdr64::p_filesz]->setValue(phdr64.p_filesz);
+                    g_ppLinedEdit[N_Elf_Phdr64::p_memsz]->setValue(phdr64.p_memsz);
+                    g_ppLinedEdit[N_Elf_Phdr64::p_align]->setValue(phdr64.p_align);
 
-                    ppComboBox[N_Elf_Phdr32::CB_TYPE]->setValue(phdr64.p_type);
-                    ppComboBox[N_Elf_Phdr32::CB_FLAGS]->setValue(phdr64.p_flags);
+                    g_ppComboBox[N_Elf_Phdr32::CB_TYPE]->setValue(phdr64.p_type);
+                    g_ppComboBox[N_Elf_Phdr32::CB_FLAGS]->setValue(phdr64.p_flags);
                 }
                 else
                 {
                     XELF_DEF::Elf32_Phdr phdr32=elf.getElf32_Phdr(getNumber());
 
-                    ppLinedEdit[N_Elf_Phdr32::p_type]->setValue(phdr32.p_type);
-                    ppLinedEdit[N_Elf_Phdr32::p_offset]->setValue(phdr32.p_offset);
-                    ppLinedEdit[N_Elf_Phdr32::p_vaddr]->setValue(phdr32.p_vaddr);
-                    ppLinedEdit[N_Elf_Phdr32::p_paddr]->setValue(phdr32.p_paddr);
-                    ppLinedEdit[N_Elf_Phdr32::p_filesz]->setValue(phdr32.p_filesz);
-                    ppLinedEdit[N_Elf_Phdr32::p_memsz]->setValue(phdr32.p_memsz);
-                    ppLinedEdit[N_Elf_Phdr32::p_flags]->setValue(phdr32.p_flags);
-                    ppLinedEdit[N_Elf_Phdr32::p_align]->setValue(phdr32.p_align);
+                    g_ppLinedEdit[N_Elf_Phdr32::p_type]->setValue(phdr32.p_type);
+                    g_ppLinedEdit[N_Elf_Phdr32::p_offset]->setValue(phdr32.p_offset);
+                    g_ppLinedEdit[N_Elf_Phdr32::p_vaddr]->setValue(phdr32.p_vaddr);
+                    g_ppLinedEdit[N_Elf_Phdr32::p_paddr]->setValue(phdr32.p_paddr);
+                    g_ppLinedEdit[N_Elf_Phdr32::p_filesz]->setValue(phdr32.p_filesz);
+                    g_ppLinedEdit[N_Elf_Phdr32::p_memsz]->setValue(phdr32.p_memsz);
+                    g_ppLinedEdit[N_Elf_Phdr32::p_flags]->setValue(phdr32.p_flags);
+                    g_ppLinedEdit[N_Elf_Phdr32::p_align]->setValue(phdr32.p_align);
 
-                    ppComboBox[N_Elf_Phdr32::CB_TYPE]->setValue(phdr32.p_type);
-                    ppComboBox[N_Elf_Phdr32::CB_FLAGS]->setValue(phdr32.p_flags);
+                    g_ppComboBox[N_Elf_Phdr32::CB_TYPE]->setValue(phdr32.p_type);
+                    g_ppComboBox[N_Elf_Phdr32::CB_FLAGS]->setValue(phdr32.p_flags);
                 }
 
                 qint64 nOffset=elf.getPhdrOffset(getNumber());
                 qint64 nSize=elf.getPhdrSize();
                 qint64 nAddress=elf.offsetToRelAddress(nOffset);
 
-                loadHexSubdevice(nOffset,nSize,nAddress,&pSubDevice,ui->widgetHex);
+                loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
 
                 blockSignals(false);
             }
             else if(nType==SELF::TYPE_Elf_DynamicArrayTags)
             {
-                bInit=createHeaderTable(SELF::TYPE_Elf_DynamicArrayTags,ui->tableWidget,bIs64?(N_Elf_DynamicArrayTags::records64):(N_Elf_DynamicArrayTags::records32),ppLinedEdit,N_Elf_DynamicArrayTags::__data_size,getNumber(),getOffset());
-                ppComboBox[N_Elf_DynamicArrayTags::CB_TAG]=createComboBox(ui->tableWidget,XELF::getDynamicTagsS(),SELF::TYPE_Elf_DynamicArrayTags,N_Elf_DynamicArrayTags::d_tag,XComboBoxEx::CBTYPE_NORMAL);
+                bInit=createHeaderTable(SELF::TYPE_Elf_DynamicArrayTags,ui->tableWidget,bIs64?(N_Elf_DynamicArrayTags::records64):(N_Elf_DynamicArrayTags::records32),g_ppLinedEdit,N_Elf_DynamicArrayTags::__data_size,getNumber(),getOffset());
+                g_ppComboBox[N_Elf_DynamicArrayTags::CB_TAG]=createComboBox(ui->tableWidget,XELF::getDynamicTagsS(),SELF::TYPE_Elf_DynamicArrayTags,N_Elf_DynamicArrayTags::d_tag,XComboBoxEx::CBTYPE_NORMAL);
 
                 blockSignals(true);
 
@@ -590,21 +590,21 @@ void ELFSectionHeaderWidget::reloadData()
                 qint64 nTag=elf.getDynamicArrayTag(nOffset);
                 qint64 nValue=elf.getDynamicArrayValue(nOffset);
 
-                ppLinedEdit[N_Elf_DynamicArrayTags::d_tag]->setValue(bIs64?((qint64)nTag):((qint32)nTag));
-                ppLinedEdit[N_Elf_DynamicArrayTags::d_value]->setValue(bIs64?((qint64)nValue):((qint32)nValue));
+                g_ppLinedEdit[N_Elf_DynamicArrayTags::d_tag]->setValue(bIs64?((qint64)nTag):((qint32)nTag));
+                g_ppLinedEdit[N_Elf_DynamicArrayTags::d_value]->setValue(bIs64?((qint64)nValue):((qint32)nValue));
 
-                ppComboBox[N_Elf_DynamicArrayTags::CB_TAG]->setValue(nTag);
+                g_ppComboBox[N_Elf_DynamicArrayTags::CB_TAG]->setValue(nTag);
 
                 qint64 nSize=elf.getDynamicArraySize();
                 qint64 nAddress=elf.offsetToRelAddress(nOffset);
 
-                loadHexSubdevice(nOffset,nSize,nAddress,&pSubDevice,ui->widgetHex);
+                loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
 
                 blockSignals(false);
             }
             else if(nType==SELF::TYPE_SYMBOLTABLE)
             {
-                bInit=createHeaderTable(SELF::TYPE_SYMBOLTABLE,ui->tableWidget,bIs64?(N_Elf64_Sym::records):(N_Elf32_Sym::records),ppLinedEdit,N_Elf32_Sym::__data_size,getNumber(),getOffset());
+                bInit=createHeaderTable(SELF::TYPE_SYMBOLTABLE,ui->tableWidget,bIs64?(N_Elf64_Sym::records):(N_Elf32_Sym::records),g_ppLinedEdit,N_Elf32_Sym::__data_size,getNumber(),getOffset());
 
                 blockSignals(true);
 
@@ -616,12 +616,12 @@ void ELFSectionHeaderWidget::reloadData()
                 {
                     XELF_DEF::Elf64_Sym sym64=elf._readElf64_Sym(nOffset,bIsBigEndian);
 
-                    ppLinedEdit[N_Elf64_Sym::st_name]->setValue(sym64.st_name);
-                    ppLinedEdit[N_Elf64_Sym::st_info]->setValue(sym64.st_info);
-                    ppLinedEdit[N_Elf64_Sym::st_other]->setValue(sym64.st_other);
-                    ppLinedEdit[N_Elf64_Sym::st_shndx]->setValue(sym64.st_shndx);
-                    ppLinedEdit[N_Elf64_Sym::st_value]->setValue(sym64.st_value);
-                    ppLinedEdit[N_Elf64_Sym::st_size]->setValue(sym64.st_size);
+                    g_ppLinedEdit[N_Elf64_Sym::st_name]->setValue(sym64.st_name);
+                    g_ppLinedEdit[N_Elf64_Sym::st_info]->setValue(sym64.st_info);
+                    g_ppLinedEdit[N_Elf64_Sym::st_other]->setValue(sym64.st_other);
+                    g_ppLinedEdit[N_Elf64_Sym::st_shndx]->setValue(sym64.st_shndx);
+                    g_ppLinedEdit[N_Elf64_Sym::st_value]->setValue(sym64.st_value);
+                    g_ppLinedEdit[N_Elf64_Sym::st_size]->setValue(sym64.st_size);
 
                     addComment(ui->tableWidget,N_Elf64_Sym::st_name,HEADER_COLUMN_COMMENT,elf.getStringFromIndex(nStringTableOffset,nStringTableSize,sym64.st_name));
                 }
@@ -629,12 +629,12 @@ void ELFSectionHeaderWidget::reloadData()
                 {
                     XELF_DEF::Elf32_Sym sym32=elf._readElf32_Sym(nOffset,bIsBigEndian);
 
-                    ppLinedEdit[N_Elf32_Sym::st_name]->setValue(sym32.st_name);
-                    ppLinedEdit[N_Elf32_Sym::st_value]->setValue(sym32.st_value);
-                    ppLinedEdit[N_Elf32_Sym::st_size]->setValue(sym32.st_size);
-                    ppLinedEdit[N_Elf32_Sym::st_info]->setValue(sym32.st_info);
-                    ppLinedEdit[N_Elf32_Sym::st_other]->setValue(sym32.st_other);
-                    ppLinedEdit[N_Elf32_Sym::st_shndx]->setValue(sym32.st_shndx);
+                    g_ppLinedEdit[N_Elf32_Sym::st_name]->setValue(sym32.st_name);
+                    g_ppLinedEdit[N_Elf32_Sym::st_value]->setValue(sym32.st_value);
+                    g_ppLinedEdit[N_Elf32_Sym::st_size]->setValue(sym32.st_size);
+                    g_ppLinedEdit[N_Elf32_Sym::st_info]->setValue(sym32.st_info);
+                    g_ppLinedEdit[N_Elf32_Sym::st_other]->setValue(sym32.st_other);
+                    g_ppLinedEdit[N_Elf32_Sym::st_shndx]->setValue(sym32.st_shndx);
 
                     addComment(ui->tableWidget,N_Elf32_Sym::st_name,HEADER_COLUMN_COMMENT,elf.getStringFromIndex(nStringTableOffset,nStringTableSize,sym32.st_name));
                 }
@@ -642,13 +642,13 @@ void ELFSectionHeaderWidget::reloadData()
                 qint64 nSize=elf.getSymSize();
                 qint64 nAddress=elf.offsetToRelAddress(nOffset);
 
-                loadHexSubdevice(nOffset,nSize,nAddress,&pSubDevice,ui->widgetHex);
+                loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
 
                 blockSignals(false);
             }
             else if(nType==SELF::TYPE_Elf_Rela)
             {
-                bInit=createHeaderTable(SELF::TYPE_Elf_Rela,ui->tableWidget,bIs64?(N_Elf_Rela::records64):(N_Elf_Rela::records32),ppLinedEdit,N_Elf_Rela::__data_size,getNumber(),getOffset());
+                bInit=createHeaderTable(SELF::TYPE_Elf_Rela,ui->tableWidget,bIs64?(N_Elf_Rela::records64):(N_Elf_Rela::records32),g_ppLinedEdit,N_Elf_Rela::__data_size,getNumber(),getOffset());
 
                 blockSignals(true);
 
@@ -660,29 +660,29 @@ void ELFSectionHeaderWidget::reloadData()
                 {
                     XELF_DEF::Elf64_Rela rela64=elf._readElf64_Rela(nOffset,bIsBigEndian);
 
-                    ppLinedEdit[N_Elf_Rela::r_offset]->setValue(rela64.r_offset);
-                    ppLinedEdit[N_Elf_Rela::r_info]->setValue(rela64.r_info);
-                    ppLinedEdit[N_Elf_Rela::r_addend]->setValue(rela64.r_addend);
+                    g_ppLinedEdit[N_Elf_Rela::r_offset]->setValue(rela64.r_offset);
+                    g_ppLinedEdit[N_Elf_Rela::r_info]->setValue(rela64.r_info);
+                    g_ppLinedEdit[N_Elf_Rela::r_addend]->setValue(rela64.r_addend);
                 }
                 else
                 {
                     XELF_DEF::Elf32_Rela rela32=elf._readElf32_Rela(nOffset,bIsBigEndian);
 
-                    ppLinedEdit[N_Elf_Rela::r_offset]->setValue(rela32.r_offset);
-                    ppLinedEdit[N_Elf_Rela::r_info]->setValue(rela32.r_info);
-                    ppLinedEdit[N_Elf_Rela::r_addend]->setValue(rela32.r_addend);
+                    g_ppLinedEdit[N_Elf_Rela::r_offset]->setValue(rela32.r_offset);
+                    g_ppLinedEdit[N_Elf_Rela::r_info]->setValue(rela32.r_info);
+                    g_ppLinedEdit[N_Elf_Rela::r_addend]->setValue(rela32.r_addend);
                 }
 
                 qint64 nSize=elf.getSymSize();
                 qint64 nAddress=elf.offsetToRelAddress(nOffset);
 
-                loadHexSubdevice(nOffset,nSize,nAddress,&pSubDevice,ui->widgetHex);
+                loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
 
                 blockSignals(false);
             }
             else if(nType==SELF::TYPE_Elf_Rel)
             {
-                bInit=createHeaderTable(SELF::TYPE_Elf_Rel,ui->tableWidget,bIs64?(N_Elf_Rel::records64):(N_Elf_Rel::records32),ppLinedEdit,N_Elf_Rel::__data_size,getNumber(),getOffset());
+                bInit=createHeaderTable(SELF::TYPE_Elf_Rel,ui->tableWidget,bIs64?(N_Elf_Rel::records64):(N_Elf_Rel::records32),g_ppLinedEdit,N_Elf_Rel::__data_size,getNumber(),getOffset());
 
                 blockSignals(true);
 
@@ -694,21 +694,21 @@ void ELFSectionHeaderWidget::reloadData()
                 {
                     XELF_DEF::Elf64_Rel rel64=elf._readElf64_Rel(nOffset,bIsBigEndian);
 
-                    ppLinedEdit[N_Elf_Rel::r_offset]->setValue(rel64.r_offset);
-                    ppLinedEdit[N_Elf_Rel::r_info]->setValue(rel64.r_info);
+                    g_ppLinedEdit[N_Elf_Rel::r_offset]->setValue(rel64.r_offset);
+                    g_ppLinedEdit[N_Elf_Rel::r_info]->setValue(rel64.r_info);
                 }
                 else
                 {
                     XELF_DEF::Elf32_Rel rel32=elf._readElf32_Rel(nOffset,bIsBigEndian);
 
-                    ppLinedEdit[N_Elf_Rel::r_offset]->setValue(rel32.r_offset);
-                    ppLinedEdit[N_Elf_Rel::r_info]->setValue(rel32.r_info);
+                    g_ppLinedEdit[N_Elf_Rel::r_offset]->setValue(rel32.r_offset);
+                    g_ppLinedEdit[N_Elf_Rel::r_info]->setValue(rel32.r_info);
                 }
 
                 qint64 nSize=elf.getSymSize();
                 qint64 nAddress=elf.offsetToRelAddress(nOffset);
 
-                loadHexSubdevice(nOffset,nSize,nAddress,&pSubDevice,ui->widgetHex);
+                loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
 
                 blockSignals(false);
             }
@@ -735,8 +735,8 @@ void ELFSectionHeaderWidget::widgetValueChanged(quint64 nValue)
             case SELF::TYPE_Elf_Shdr:
                 switch(nNdata)
                 {
-                    case N_Elf_Shdr::sh_type:       ppLinedEdit[N_Elf_Shdr::sh_type]->setValue((quint32)nValue);                                break;
-                    case N_Elf_Shdr::sh_flags:      ppLinedEdit[N_Elf_Shdr::sh_flags]->setValue(bIs64?((quint64)nValue):((quint32)nValue));     break;
+                    case N_Elf_Shdr::sh_type:       g_ppLinedEdit[N_Elf_Shdr::sh_type]->setValue((quint32)nValue);                                break;
+                    case N_Elf_Shdr::sh_flags:      g_ppLinedEdit[N_Elf_Shdr::sh_flags]->setValue(bIs64?((quint64)nValue):((quint32)nValue));     break;
                 }
                 break;
 
@@ -745,16 +745,16 @@ void ELFSectionHeaderWidget::widgetValueChanged(quint64 nValue)
                 {
                     switch(nNdata)
                     {
-                        case N_Elf_Phdr64::p_type:  ppLinedEdit[N_Elf_Phdr64::p_type]->setValue((quint32)nValue);       break;
-                        case N_Elf_Phdr64::p_flags: ppLinedEdit[N_Elf_Phdr64::p_flags]->setValue((quint32)nValue);      break;
+                        case N_Elf_Phdr64::p_type:  g_ppLinedEdit[N_Elf_Phdr64::p_type]->setValue((quint32)nValue);       break;
+                        case N_Elf_Phdr64::p_flags: g_ppLinedEdit[N_Elf_Phdr64::p_flags]->setValue((quint32)nValue);      break;
                     }
                 }
                 else
                 {
                     switch(nNdata)
                     {
-                        case N_Elf_Phdr32::p_type:  ppLinedEdit[N_Elf_Phdr32::p_type]->setValue((quint32)nValue);       break;
-                        case N_Elf_Phdr32::p_flags: ppLinedEdit[N_Elf_Phdr32::p_flags]->setValue((quint32)nValue);      break;
+                        case N_Elf_Phdr32::p_type:  g_ppLinedEdit[N_Elf_Phdr32::p_type]->setValue((quint32)nValue);       break;
+                        case N_Elf_Phdr32::p_flags: g_ppLinedEdit[N_Elf_Phdr32::p_flags]->setValue((quint32)nValue);      break;
                     }
                 }
 
@@ -764,7 +764,7 @@ void ELFSectionHeaderWidget::widgetValueChanged(quint64 nValue)
 
                 switch(nNdata)
                 {
-                    case N_Elf_DynamicArrayTags::d_tag: ppLinedEdit[N_Elf_DynamicArrayTags::d_tag]->setValue(bIs64?((qint64)nValue):((qint32)nValue));  break;
+                    case N_Elf_DynamicArrayTags::d_tag: g_ppLinedEdit[N_Elf_DynamicArrayTags::d_tag]->setValue(bIs64?((qint64)nValue):((qint32)nValue));  break;
                 }
 
                 break;
