@@ -90,21 +90,21 @@ private:
 
     Ui::DEXWidget *ui;
 
-    XLineEditHEX *lineEdit_HEADER[N_DEX_HEADER::__data_size];
+    XLineEditHEX *g_lineEdit_HEADER[N_DEX_HEADER::__data_size];
 
-    XComboBoxEx *comboBox[__CB_size];
-    InvWidget *invWidget[__INV_size];
+    XComboBoxEx *g_comboBox[__CB_size];
+    InvWidget *g_invWidget[__INV_size];
 
-    SubDevice *subDevice[SDEX::__TYPE_size];
-    QStandardItemModel *tvModel[SDEX::__TYPE_size];
+    SubDevice *g_subDevice[SDEX::__TYPE_size];
+    QStandardItemModel *g_tvModel[SDEX::__TYPE_size];
 
-    QSet<QString> stInit;
+    QSet<QString> g_stInit;
 
-    qint32 nLastType;
-    QString sLastInit;
+    qint32 g_nLastType;
+    QString g_sLastInit;
 
-    QSortFilterProxyModel *pFilterStrings;
-    QSortFilterProxyModel *pFilterTypes;
+    QSortFilterProxyModel *g_pFilterStrings;
+    QSortFilterProxyModel *g_pFilterTypes;
 };
 
 #endif // DEXWIDGET_H
