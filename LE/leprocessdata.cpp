@@ -22,44 +22,44 @@
 
 LEProcessData::LEProcessData(int nType, QStandardItemModel **ppModel, XLE *pLE, qint64 nOffset, qint64 nSize)
 {
-    this->nType=nType;
-    this->ppModel=ppModel;
-    this->pLE=pLE;
-    this->nOffset=nOffset;
-    this->nSize=nSize;
+    this->g_nType=nType;
+    this->g_ppModel=ppModel;
+    this->g_pLE=pLE;
+    this->g_nOffset=nOffset;
+    this->g_nSize=nSize;
 }
 
 void LEProcessData::_process()
 {
-    if(nType==SLE::TYPE_OBJECTS)
+    if(g_nType==SLE::TYPE_OBJECTS)
     {
         QList<QString> listLabels;
         listLabels.append("");
         listLabels.append(getStructList(N_O32_OBJ::records,N_O32_OBJ::__data_size));
 
-        QList<XLE_DEF::o32_obj> listObjects=pLE->getObjects();
+        QList<XLE_DEF::o32_obj> listObjects=g_pLE->getObjects();
 
         int nNumberOfObjects=listObjects.count();
 
-        *ppModel=new QStandardItemModel(nNumberOfObjects,listLabels.count());
+        *g_ppModel=new QStandardItemModel(nNumberOfObjects,listLabels.count());
 
         setMaximum(nNumberOfObjects);
 
-        setHeader(*ppModel,&listLabels);
+        setHeader(*g_ppModel,&listLabels);
 
         for(int i=0; i<nNumberOfObjects; i++)
         {
             QStandardItem *pItemNumber=new QStandardItem;
             pItemNumber->setData(i,Qt::DisplayRole);
 
-            (*ppModel)->setItem(i,0,pItemNumber);
+            (*g_ppModel)->setItem(i,0,pItemNumber);
 
-            (*ppModel)->setItem(i,N_O32_OBJ::o32_size+1,            new QStandardItem(XBinary::valueToHex(listObjects.at(i).o32_size)));
-            (*ppModel)->setItem(i,N_O32_OBJ::o32_base+1,            new QStandardItem(XBinary::valueToHex(listObjects.at(i).o32_base)));
-            (*ppModel)->setItem(i,N_O32_OBJ::o32_flags+1,           new QStandardItem(XBinary::valueToHex(listObjects.at(i).o32_flags)));
-            (*ppModel)->setItem(i,N_O32_OBJ::o32_pagemap+1,         new QStandardItem(XBinary::valueToHex(listObjects.at(i).o32_pagemap)));
-            (*ppModel)->setItem(i,N_O32_OBJ::o32_mapsize+1,         new QStandardItem(XBinary::valueToHex(listObjects.at(i).o32_mapsize)));
-            (*ppModel)->setItem(i,N_O32_OBJ::o32_reserved+1,        new QStandardItem(XBinary::valueToHex(listObjects.at(i).o32_reserved)));
+            (*g_ppModel)->setItem(i,N_O32_OBJ::o32_size+1,            new QStandardItem(XBinary::valueToHex(listObjects.at(i).o32_size)));
+            (*g_ppModel)->setItem(i,N_O32_OBJ::o32_base+1,            new QStandardItem(XBinary::valueToHex(listObjects.at(i).o32_base)));
+            (*g_ppModel)->setItem(i,N_O32_OBJ::o32_flags+1,           new QStandardItem(XBinary::valueToHex(listObjects.at(i).o32_flags)));
+            (*g_ppModel)->setItem(i,N_O32_OBJ::o32_pagemap+1,         new QStandardItem(XBinary::valueToHex(listObjects.at(i).o32_pagemap)));
+            (*g_ppModel)->setItem(i,N_O32_OBJ::o32_mapsize+1,         new QStandardItem(XBinary::valueToHex(listObjects.at(i).o32_mapsize)));
+            (*g_ppModel)->setItem(i,N_O32_OBJ::o32_reserved+1,        new QStandardItem(XBinary::valueToHex(listObjects.at(i).o32_reserved)));
 
             incValue();
         }
@@ -70,7 +70,7 @@ void LEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
 {
     int nSymbolWidth=XLineEditHEX::getSymbolWidth(pWidget);
 
-    if(nType==SLE::TYPE_OBJECTS)
+    if(g_nType==SLE::TYPE_OBJECTS)
     {
         pTableView->setColumnWidth(0,nSymbolWidth*4);
         pTableView->setColumnWidth(1,nSymbolWidth*8);
