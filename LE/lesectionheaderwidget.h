@@ -69,9 +69,9 @@ private:
 
     Ui::LESectionHeaderWidget *ui;
 //    XLineEditHEX *lineEdit_Section[N_mach_sections::__data_size];
-    bool bInit;
-    InvWidget *invWidget[__INV_size];
-    SubDevice *pSubDevice;
+    bool g_bInit;
+    InvWidget *g_invWidget[__INV_size];
+    SubDevice *g_pSubDevice;
 };
 
 #endif // LESECTIONHEADERWIDGET_H
