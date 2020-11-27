@@ -125,10 +125,10 @@ private:
     XComboBoxEx *comboBox[__CB_size];
     InvWidget *invWidget[__INV_size];
 
-    SubDevice *subDevice[SELF::__TYPE_size];
-    QStandardItemModel *tvModel[SELF::__TYPE_size];
+    SubDevice *g_subDevice[SELF::__TYPE_size];
+    QStandardItemModel *g_tvModel[SELF::__TYPE_size];
 
-    QSet<QString> stInit;
+    QSet<QString> g_stInit;
 
     qint32 g_nLastType;
     QString g_sLastInit;

@@ -54,8 +54,8 @@ void ELFWidget::clear()
     memset(lineEdit_Elf_RunPath,0,sizeof lineEdit_Elf_RunPath);
     memset(comboBox,0,sizeof comboBox);
     memset(invWidget,0,sizeof invWidget);
-    memset(subDevice,0,sizeof subDevice);
-    memset(tvModel,0,sizeof tvModel);
+    memset(g_subDevice,0,sizeof g_subDevice);
+    memset(g_tvModel,0,sizeof g_tvModel);
 
     ui->checkBoxReadonly->setChecked(true);
 
@@ -69,7 +69,7 @@ void ELFWidget::cleanup()
 
 void ELFWidget::reset()
 {
-    stInit.clear();
+    g_stInit.clear();
 }
 
 void ELFWidget::reload()
@@ -269,7 +269,7 @@ void ELFWidget::reloadData()
 
     if((g_nLastType==nType)&&(sInit!=g_sLastInit))
     {
-        stInit.remove(sInit);
+        g_stInit.remove(sInit);
     }
 
     g_nLastType=nType;
@@ -283,7 +283,7 @@ void ELFWidget::reloadData()
     {
         if(nType==SELF::TYPE_HEX)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 ui->widgetHex->setData(getDevice());
                 ui->widgetHex->setBackupFileName(getOptions()->sBackupFileName);
@@ -295,35 +295,35 @@ void ELFWidget::reloadData()
         }
         else if(nType==SELF::TYPE_STRINGS)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 ui->widgetStrings->setData(getDevice(),0,true);
             }
         }
         else if(nType==SELF::TYPE_MEMORYMAP)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 ui->widgetMemoryMap->setData(getDevice());
             }
         }
         else if(nType==SELF::TYPE_ENTROPY)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 ui->widgetEntropy->setData(getDevice(),0,getDevice()->size(),true);
             }
         }
         else if(nType==SELF::TYPE_HEURISTICSCAN)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 ui->widgetHeuristicScan->setData(getDevice(),true,XBinary::FT_ELF);
             }
         }
         else if(nType==SELF::TYPE_Elf_Ehdr)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 if(elf.is64())
                 {
@@ -427,22 +427,22 @@ void ELFWidget::reloadData()
                     nSize=elf.getEhdr32Size();
                 }
 
-                loadHexSubdevice(nOffset,nSize,nOffset,&subDevice[SELF::TYPE_Elf_Ehdr],ui->widgetHex_Elf_Ehdr);
+                loadHexSubdevice(nOffset,nSize,nOffset,&g_subDevice[SELF::TYPE_Elf_Ehdr],ui->widgetHex_Elf_Ehdr);
 
                 blockSignals(false);
             }
         }
         else if(nType==SELF::TYPE_Elf_Shdr)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
-                ELFProcessData elfProcessData(SELF::TYPE_Elf_Shdr,&tvModel[SELF::TYPE_Elf_Shdr],&elf,nDataOffset,nDataSize,nDataExtraOffset,nDataExtraSize);
+                ELFProcessData elfProcessData(SELF::TYPE_Elf_Shdr,&g_tvModel[SELF::TYPE_Elf_Shdr],&elf,nDataOffset,nDataSize,nDataExtraOffset,nDataExtraSize);
 
-                ajustTableView(&elfProcessData,&tvModel[SELF::TYPE_Elf_Shdr],ui->tableView_Elf_Shdr);
+                ajustTableView(&elfProcessData,&g_tvModel[SELF::TYPE_Elf_Shdr],ui->tableView_Elf_Shdr);
 
                 connect(ui->tableView_Elf_Shdr->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_Elf_Shdr_currentRowChanged(QModelIndex,QModelIndex)));
 
-                if(tvModel[SELF::TYPE_Elf_Shdr]->rowCount())
+                if(g_tvModel[SELF::TYPE_Elf_Shdr]->rowCount())
                 {
                     ui->tableView_Elf_Shdr->setCurrentIndex(ui->tableView_Elf_Shdr->model()->index(0,0));
                 }
@@ -450,15 +450,15 @@ void ELFWidget::reloadData()
         }
         else if(nType==SELF::TYPE_Elf_Phdr)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
-                ELFProcessData elfProcessData(SELF::TYPE_Elf_Phdr,&tvModel[SELF::TYPE_Elf_Phdr],&elf,nDataOffset,nDataSize,nDataExtraOffset,nDataExtraSize);
+                ELFProcessData elfProcessData(SELF::TYPE_Elf_Phdr,&g_tvModel[SELF::TYPE_Elf_Phdr],&elf,nDataOffset,nDataSize,nDataExtraOffset,nDataExtraSize);
 
-                ajustTableView(&elfProcessData,&tvModel[SELF::TYPE_Elf_Phdr],ui->tableView_Elf_Phdr);
+                ajustTableView(&elfProcessData,&g_tvModel[SELF::TYPE_Elf_Phdr],ui->tableView_Elf_Phdr);
 
                 connect(ui->tableView_Elf_Phdr->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_Elf_Phdr_currentRowChanged(QModelIndex,QModelIndex)));
 
-                if(tvModel[SELF::TYPE_Elf_Phdr]->rowCount())
+                if(g_tvModel[SELF::TYPE_Elf_Phdr]->rowCount())
                 {
                     ui->tableView_Elf_Phdr->setCurrentIndex(ui->tableView_Elf_Phdr->model()->index(0,0));
                 }
@@ -466,15 +466,15 @@ void ELFWidget::reloadData()
         }
         else if(nType==SELF::TYPE_Elf_DynamicArrayTags)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
-                ELFProcessData elfProcessData(SELF::TYPE_Elf_DynamicArrayTags,&tvModel[SELF::TYPE_Elf_DynamicArrayTags],&elf,nDataOffset,nDataSize,nDataExtraOffset,nDataExtraSize);
+                ELFProcessData elfProcessData(SELF::TYPE_Elf_DynamicArrayTags,&g_tvModel[SELF::TYPE_Elf_DynamicArrayTags],&elf,nDataOffset,nDataSize,nDataExtraOffset,nDataExtraSize);
 
-                ajustTableView(&elfProcessData,&tvModel[SELF::TYPE_Elf_DynamicArrayTags],ui->tableView_DynamicArrayTags);
+                ajustTableView(&elfProcessData,&g_tvModel[SELF::TYPE_Elf_DynamicArrayTags],ui->tableView_DynamicArrayTags);
 
                 connect(ui->tableView_DynamicArrayTags->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_DynamicArrayTags_currentRowChanged(QModelIndex,QModelIndex)));
 
-                if(tvModel[SELF::TYPE_Elf_DynamicArrayTags]->rowCount())
+                if(g_tvModel[SELF::TYPE_Elf_DynamicArrayTags]->rowCount())
                 {
                     ui->tableView_DynamicArrayTags->setCurrentIndex(ui->tableView_DynamicArrayTags->model()->index(0,0));
                 }
@@ -482,15 +482,15 @@ void ELFWidget::reloadData()
         }
         else if(nType==SELF::TYPE_LIBRARIES)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
-                ELFProcessData elfProcessData(SELF::TYPE_LIBRARIES,&tvModel[SELF::TYPE_LIBRARIES],&elf,nDataOffset,nDataSize,nDataExtraOffset,nDataExtraSize);
+                ELFProcessData elfProcessData(SELF::TYPE_LIBRARIES,&g_tvModel[SELF::TYPE_LIBRARIES],&elf,nDataOffset,nDataSize,nDataExtraOffset,nDataExtraSize);
 
-                ajustTableView(&elfProcessData,&tvModel[SELF::TYPE_LIBRARIES],ui->tableView_Libraries);
+                ajustTableView(&elfProcessData,&g_tvModel[SELF::TYPE_LIBRARIES],ui->tableView_Libraries);
 
                 connect(ui->tableView_Libraries->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_Libraries_currentRowChanged(QModelIndex,QModelIndex)));
 
-                if(tvModel[SELF::TYPE_LIBRARIES]->rowCount())
+                if(g_tvModel[SELF::TYPE_LIBRARIES]->rowCount())
                 {
                     ui->tableView_Libraries->setCurrentIndex(ui->tableView_Libraries->model()->index(0,0));
                 }
@@ -498,7 +498,7 @@ void ELFWidget::reloadData()
         }
         else if(nType==SELF::TYPE_INTERPRETER)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 createListTable(SELF::TYPE_INTERPRETER,ui->tableWidget_Interpreter,N_ELF_INTERPRETER::records,lineEdit_Elf_Interpreter,N_ELF_INTERPRETER::__data_size);
 
@@ -513,15 +513,15 @@ void ELFWidget::reloadData()
         }
         else if(nType==SELF::TYPE_NOTES)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
-                ELFProcessData elfProcessData(SELF::TYPE_NOTES,&tvModel[SELF::TYPE_NOTES],&elf,nDataOffset,nDataSize,nDataExtraOffset,nDataExtraSize);
+                ELFProcessData elfProcessData(SELF::TYPE_NOTES,&g_tvModel[SELF::TYPE_NOTES],&elf,nDataOffset,nDataSize,nDataExtraOffset,nDataExtraSize);
 
-                ajustTableView(&elfProcessData,&tvModel[SELF::TYPE_NOTES],ui->tableView_Notes);
+                ajustTableView(&elfProcessData,&g_tvModel[SELF::TYPE_NOTES],ui->tableView_Notes);
 
                 connect(ui->tableView_Notes->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_Notes_currentRowChanged(QModelIndex,QModelIndex)));
 
-                if(tvModel[SELF::TYPE_NOTES]->rowCount())
+                if(g_tvModel[SELF::TYPE_NOTES]->rowCount())
                 {
                     ui->tableView_Notes->setCurrentIndex(ui->tableView_Notes->model()->index(0,0));
                 }
@@ -529,7 +529,7 @@ void ELFWidget::reloadData()
         }
         else if(nType==SELF::TYPE_RUNPATH)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 createListTable(SELF::TYPE_RUNPATH,ui->tableWidget_RunPath,N_ELF_RUNPATH::records,lineEdit_Elf_RunPath,N_ELF_RUNPATH::__data_size);
 
@@ -544,43 +544,43 @@ void ELFWidget::reloadData()
         }
         else if(nType==SELF::TYPE_STRINGTABLE)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
-                loadHexSubdevice(nDataOffset,nDataSize,0,&subDevice[SELF::TYPE_STRINGTABLE],ui->widgetHex_StringTable);
+                loadHexSubdevice(nDataOffset,nDataSize,0,&g_subDevice[SELF::TYPE_STRINGTABLE],ui->widgetHex_StringTable);
             }
         }
         else if(nType==SELF::TYPE_SYMBOLTABLE)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
-                ELFProcessData elfProcessData(SELF::TYPE_SYMBOLTABLE,&tvModel[SELF::TYPE_SYMBOLTABLE],&elf,nDataOffset,nDataSize,nDataExtraOffset,nDataExtraSize);
+                ELFProcessData elfProcessData(SELF::TYPE_SYMBOLTABLE,&g_tvModel[SELF::TYPE_SYMBOLTABLE],&elf,nDataOffset,nDataSize,nDataExtraOffset,nDataExtraSize);
 
-                ajustTableView(&elfProcessData,&tvModel[SELF::TYPE_SYMBOLTABLE],ui->tableView_SymbolTable);
+                ajustTableView(&elfProcessData,&g_tvModel[SELF::TYPE_SYMBOLTABLE],ui->tableView_SymbolTable);
             }
         }
         else if(nType==SELF::TYPE_Elf_Rela)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
-                ELFProcessData elfProcessData(SELF::TYPE_Elf_Rela,&tvModel[SELF::TYPE_Elf_Rela],&elf,nDataOffset,nDataSize,nDataExtraOffset,nDataExtraSize);
+                ELFProcessData elfProcessData(SELF::TYPE_Elf_Rela,&g_tvModel[SELF::TYPE_Elf_Rela],&elf,nDataOffset,nDataSize,nDataExtraOffset,nDataExtraSize);
 
-                ajustTableView(&elfProcessData,&tvModel[SELF::TYPE_Elf_Rela],ui->tableView_Rela);
+                ajustTableView(&elfProcessData,&g_tvModel[SELF::TYPE_Elf_Rela],ui->tableView_Rela);
             }
         }
         else if(nType==SELF::TYPE_Elf_Rel)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
-                ELFProcessData elfProcessData(SELF::TYPE_Elf_Rel,&tvModel[SELF::TYPE_Elf_Rel],&elf,nDataOffset,nDataSize,nDataExtraOffset,nDataExtraSize);
+                ELFProcessData elfProcessData(SELF::TYPE_Elf_Rel,&g_tvModel[SELF::TYPE_Elf_Rel],&elf,nDataOffset,nDataSize,nDataExtraOffset,nDataExtraSize);
 
-                ajustTableView(&elfProcessData,&tvModel[SELF::TYPE_Elf_Rel],ui->tableView_Rel);
+                ajustTableView(&elfProcessData,&g_tvModel[SELF::TYPE_Elf_Rel],ui->tableView_Rel);
             }
         }
 
         setReadonly(ui->checkBoxReadonly->isChecked());
     }
 
-    stInit.insert(sInit);
+    g_stInit.insert(sInit);
 }
 
 void ELFWidget::addDatasets(XELF *pElf, QTreeWidgetItem *pParent, QList<XBinary::DATASET> *pListDataSets)
@@ -718,7 +718,7 @@ void ELFWidget::loadShdr(int nRow)
         qint64 nSize=ui->tableView_Elf_Shdr->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
         qint64 nAddress=ui->tableView_Elf_Shdr->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
 
-        loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SELF::TYPE_Elf_Shdr],ui->widgetHex_Elf_Shdr);
+        loadHexSubdevice(nOffset,nSize,nAddress,&g_subDevice[SELF::TYPE_Elf_Shdr],ui->widgetHex_Elf_Shdr);
     }
 }
 
@@ -732,7 +732,7 @@ void ELFWidget::loadPhdr(int nRow)
         qint64 nSize=ui->tableView_Elf_Phdr->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
         qint64 nAddress=ui->tableView_Elf_Phdr->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
 
-        loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SELF::TYPE_Elf_Phdr],ui->widgetHex_Elf_Phdr);
+        loadHexSubdevice(nOffset,nSize,nAddress,&g_subDevice[SELF::TYPE_Elf_Phdr],ui->widgetHex_Elf_Phdr);
     }
 }
 
@@ -746,7 +746,7 @@ void ELFWidget::loadNote(int nRow)
         qint64 nSize=ui->tableView_Notes->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
         qint64 nAddress=ui->tableView_Notes->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
 
-        loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SELF::TYPE_NOTES],ui->widgetHex_Notes);
+        loadHexSubdevice(nOffset,nSize,nAddress,&g_subDevice[SELF::TYPE_NOTES],ui->widgetHex_Notes);
     }
 }
 
@@ -912,7 +912,7 @@ void ELFWidget::onTableView_Elf_Shdr_currentRowChanged(const QModelIndex &curren
     Q_UNUSED(current)
     Q_UNUSED(previous)
 
-    loadHexSubdeviceByTableView(current.row(),SELF::TYPE_Elf_Shdr,ui->widgetHex_Elf_Shdr,ui->tableView_Elf_Shdr,&subDevice[SELF::TYPE_Elf_Shdr]);
+    loadHexSubdeviceByTableView(current.row(),SELF::TYPE_Elf_Shdr,ui->widgetHex_Elf_Shdr,ui->tableView_Elf_Shdr,&g_subDevice[SELF::TYPE_Elf_Shdr]);
 }
 
 void ELFWidget::onTableView_Elf_Phdr_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
@@ -920,7 +920,7 @@ void ELFWidget::onTableView_Elf_Phdr_currentRowChanged(const QModelIndex &curren
     Q_UNUSED(current)
     Q_UNUSED(previous)
 
-    loadHexSubdeviceByTableView(current.row(),SELF::TYPE_Elf_Phdr,ui->widgetHex_Elf_Phdr,ui->tableView_Elf_Phdr,&subDevice[SELF::TYPE_Elf_Phdr]);
+    loadHexSubdeviceByTableView(current.row(),SELF::TYPE_Elf_Phdr,ui->widgetHex_Elf_Phdr,ui->tableView_Elf_Phdr,&g_subDevice[SELF::TYPE_Elf_Phdr]);
 }
 
 void ELFWidget::onTableView_DynamicArrayTags_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
@@ -936,7 +936,7 @@ void ELFWidget::onTableView_Notes_currentRowChanged(const QModelIndex &current, 
     Q_UNUSED(current)
     Q_UNUSED(previous)
 
-    loadHexSubdeviceByTableView(current.row(),SELF::TYPE_NOTES,ui->widgetHex_Notes,ui->tableView_Notes,&subDevice[SELF::TYPE_NOTES]);
+    loadHexSubdeviceByTableView(current.row(),SELF::TYPE_NOTES,ui->widgetHex_Notes,ui->tableView_Notes,&g_subDevice[SELF::TYPE_NOTES]);
 }
 
 void ELFWidget::onTableView_Libraries_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
