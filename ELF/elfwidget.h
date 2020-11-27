@@ -130,8 +130,8 @@ private:
 
     QSet<QString> stInit;
 
-    qint32 nLastType;
-    QString sLastInit;
+    qint32 g_nLastType;
+    QString g_sLastInit;
 };
 
 #endif // ELFWIDGET_H

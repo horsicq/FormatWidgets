@@ -34,7 +34,7 @@ ELFWidget::ELFWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *pPa
 {
     ui->setupUi(this);
 
-    nLastType=-1;
+    g_nLastType=-1;
 
     setData(pDevice,pOptions,0,0,0);
     reload();
@@ -267,13 +267,13 @@ void ELFWidget::reloadData()
 
     QString sInit=QString("%1-%2-%3").arg(nType).arg(nDataOffset).arg(nDataSize);
 
-    if((nLastType==nType)&&(sInit!=sLastInit))
+    if((g_nLastType==nType)&&(sInit!=g_sLastInit))
     {
         stInit.remove(sInit);
     }
 
-    nLastType=nType;
-    sLastInit=sInit;
+    g_nLastType=nType;
+    g_sLastInit=sInit;
 
     ui->stackedWidgetInfo->setCurrentIndex(nType);
 

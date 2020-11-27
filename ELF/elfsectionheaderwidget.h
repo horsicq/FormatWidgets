@@ -65,9 +65,9 @@ private:
     InvWidget **g_ppInvWidget;
     int g_nInvWidgetSize;
     SubDevice *g_pSubDevice;
-    bool bInit;
-    qint64 nStringTableOffset;
-    qint64 nStringTableSize;
+    bool g_bInit;
+    qint64 g_nStringTableOffset;
+    qint64 g_nStringTableSize;
 };
 
 #endif // ELFSECTIONHEADERWIDGET_H
