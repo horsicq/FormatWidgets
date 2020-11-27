@@ -35,12 +35,12 @@ public:
     virtual void ajustTableView(QWidget *pWidget,QTableView *pTableView);
 
 private:
-    int nType;
-    XPE *pPE;
-    QStandardItemModel **ppModel;
-    qint32 nNumber;
-    qint64 nOffset;
-    qint64 nSize;
+    int g_nType;
+    XPE *g_pPE;
+    QStandardItemModel **g_ppModel;
+    qint32 g_nNumber;
+    qint64 g_nOffset;
+    qint64 g_nSize;
 };
 
 #endif // PEPROCESSDATA_H
