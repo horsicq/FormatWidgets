@@ -119,11 +119,11 @@ private:
 
     Ui::ELFWidget *ui;
 
-    XLineEditHEX *lineEdit_Elf_Ehdr[N_Elf_Ehdr::__data_size];
-    XLineEditHEX *lineEdit_Elf_Interpreter[N_ELF_INTERPRETER::__data_size];
-    XLineEditHEX *lineEdit_Elf_RunPath[N_ELF_RUNPATH::__data_size];
-    XComboBoxEx *comboBox[__CB_size];
-    InvWidget *invWidget[__INV_size];
+    XLineEditHEX *g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::__data_size];
+    XLineEditHEX *g_lineEdit_Elf_Interpreter[N_ELF_INTERPRETER::__data_size];
+    XLineEditHEX *g_lineEdit_Elf_RunPath[N_ELF_RUNPATH::__data_size];
+    XComboBoxEx *g_comboBox[__CB_size];
+    InvWidget *g_invWidget[__INV_size];
 
     SubDevice *g_subDevice[SELF::__TYPE_size];
     QStandardItemModel *g_tvModel[SELF::__TYPE_size];

@@ -49,11 +49,11 @@ void ELFWidget::clear()
 {
     reset();
 
-    memset(lineEdit_Elf_Ehdr,0,sizeof lineEdit_Elf_Ehdr);
-    memset(lineEdit_Elf_Interpreter,0,sizeof lineEdit_Elf_Interpreter);
-    memset(lineEdit_Elf_RunPath,0,sizeof lineEdit_Elf_RunPath);
-    memset(comboBox,0,sizeof comboBox);
-    memset(invWidget,0,sizeof invWidget);
+    memset(g_lineEdit_Elf_Ehdr,0,sizeof g_lineEdit_Elf_Ehdr);
+    memset(g_lineEdit_Elf_Interpreter,0,sizeof g_lineEdit_Elf_Interpreter);
+    memset(g_lineEdit_Elf_RunPath,0,sizeof g_lineEdit_Elf_RunPath);
+    memset(g_comboBox,0,sizeof g_comboBox);
+    memset(g_invWidget,0,sizeof g_invWidget);
     memset(g_subDevice,0,sizeof g_subDevice);
     memset(g_tvModel,0,sizeof g_tvModel);
 
@@ -144,15 +144,15 @@ bool ELFWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, i
                 case SELF::TYPE_Elf_Ehdr:
                     switch(nNdata)
                     {
-                        case N_Elf_Ehdr::ei_class:      comboBox[CB_Elf_Ehdr_iclass]->setValue(nValue);                                                             break;
-                        case N_Elf_Ehdr::ei_data:       comboBox[CB_Elf_Ehdr_idata]->setValue(nValue);                                                              break;
-                        case N_Elf_Ehdr::ei_version:    comboBox[CB_Elf_Ehdr_iversion]->setValue(nValue);                                                           break;
-                        case N_Elf_Ehdr::ei_osabi:      comboBox[CB_Elf_Ehdr_iosabi]->setValue(nValue);                                                             break;
-                        case N_Elf_Ehdr::e_type:        comboBox[CB_Elf_Ehdr_type]->setValue(nValue);                                                               break;
-                        case N_Elf_Ehdr::e_machine:     comboBox[CB_Elf_Ehdr_machine]->setValue(nValue);                                                            break;
-                        case N_Elf_Ehdr::e_entry:       invWidget[INV_CB_Elf_e_entry]->setAddressAndSize(&elf,elf.is64()?((quint64)nValue):((quint32)nValue),0);    break;
-                        case N_Elf_Ehdr::e_phoff:       invWidget[INV_CB_Elf_e_phoff]->setOffsetAndSize(&elf,elf.is64()?((quint64)nValue):((quint32)nValue),0);     break;
-                        case N_Elf_Ehdr::e_shoff:       invWidget[INV_CB_Elf_e_shoff]->setOffsetAndSize(&elf,elf.is64()?((quint64)nValue):((quint32)nValue),0);     break;
+                        case N_Elf_Ehdr::ei_class:      g_comboBox[CB_Elf_Ehdr_iclass]->setValue(nValue);                                                             break;
+                        case N_Elf_Ehdr::ei_data:       g_comboBox[CB_Elf_Ehdr_idata]->setValue(nValue);                                                              break;
+                        case N_Elf_Ehdr::ei_version:    g_comboBox[CB_Elf_Ehdr_iversion]->setValue(nValue);                                                           break;
+                        case N_Elf_Ehdr::ei_osabi:      g_comboBox[CB_Elf_Ehdr_iosabi]->setValue(nValue);                                                             break;
+                        case N_Elf_Ehdr::e_type:        g_comboBox[CB_Elf_Ehdr_type]->setValue(nValue);                                                               break;
+                        case N_Elf_Ehdr::e_machine:     g_comboBox[CB_Elf_Ehdr_machine]->setValue(nValue);                                                            break;
+                        case N_Elf_Ehdr::e_entry:       g_invWidget[INV_CB_Elf_e_entry]->setAddressAndSize(&elf,elf.is64()?((quint64)nValue):((quint32)nValue),0);    break;
+                        case N_Elf_Ehdr::e_phoff:       g_invWidget[INV_CB_Elf_e_phoff]->setOffsetAndSize(&elf,elf.is64()?((quint64)nValue):((quint32)nValue),0);     break;
+                        case N_Elf_Ehdr::e_shoff:       g_invWidget[INV_CB_Elf_e_shoff]->setOffsetAndSize(&elf,elf.is64()?((quint64)nValue):((quint32)nValue),0);     break;
                     }
                     break;
             }
@@ -222,22 +222,22 @@ bool ELFWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, i
 
 void ELFWidget::setReadonly(bool bState)
 {
-    setLineEditsReadOnly(lineEdit_Elf_Ehdr,N_Elf_Ehdr::__data_size,bState);
-    setLineEditsReadOnly(lineEdit_Elf_Interpreter,N_ELF_INTERPRETER::__data_size,bState);
-    setLineEditsReadOnly(lineEdit_Elf_RunPath,N_ELF_RUNPATH::__data_size,bState);
+    setLineEditsReadOnly(g_lineEdit_Elf_Ehdr,N_Elf_Ehdr::__data_size,bState);
+    setLineEditsReadOnly(g_lineEdit_Elf_Interpreter,N_ELF_INTERPRETER::__data_size,bState);
+    setLineEditsReadOnly(g_lineEdit_Elf_RunPath,N_ELF_RUNPATH::__data_size,bState);
 
-    setComboBoxesReadOnly(comboBox,__CB_size,bState);
+    setComboBoxesReadOnly(g_comboBox,__CB_size,bState);
 
     ui->widgetHex->setReadonly(bState);
 }
 
 void ELFWidget::blockSignals(bool bState)
 {
-    _blockSignals((QObject **)lineEdit_Elf_Ehdr,N_Elf_Ehdr::__data_size,bState);
-    _blockSignals((QObject **)lineEdit_Elf_Interpreter,N_ELF_INTERPRETER::__data_size,bState);
-    _blockSignals((QObject **)lineEdit_Elf_RunPath,N_ELF_RUNPATH::__data_size,bState);
+    _blockSignals((QObject **)g_lineEdit_Elf_Ehdr,N_Elf_Ehdr::__data_size,bState);
+    _blockSignals((QObject **)g_lineEdit_Elf_Interpreter,N_ELF_INTERPRETER::__data_size,bState);
+    _blockSignals((QObject **)g_lineEdit_Elf_RunPath,N_ELF_RUNPATH::__data_size,bState);
 
-    _blockSignals((QObject **)comboBox,__CB_size,bState);
+    _blockSignals((QObject **)g_comboBox,__CB_size,bState);
 }
 
 void ELFWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
@@ -327,93 +327,93 @@ void ELFWidget::reloadData()
             {
                 if(elf.is64())
                 {
-                    createHeaderTable(SELF::TYPE_Elf_Ehdr,ui->tableWidget_Elf_Ehdr,N_Elf_Ehdr::records64,lineEdit_Elf_Ehdr,N_Elf_Ehdr::__data_size,0);
+                    createHeaderTable(SELF::TYPE_Elf_Ehdr,ui->tableWidget_Elf_Ehdr,N_Elf_Ehdr::records64,g_lineEdit_Elf_Ehdr,N_Elf_Ehdr::__data_size,0);
                 }
                 else
                 {
-                    createHeaderTable(SELF::TYPE_Elf_Ehdr,ui->tableWidget_Elf_Ehdr,N_Elf_Ehdr::records32,lineEdit_Elf_Ehdr,N_Elf_Ehdr::__data_size,0);
+                    createHeaderTable(SELF::TYPE_Elf_Ehdr,ui->tableWidget_Elf_Ehdr,N_Elf_Ehdr::records32,g_lineEdit_Elf_Ehdr,N_Elf_Ehdr::__data_size,0);
                 }
 
-                comboBox[CB_Elf_Ehdr_mag]=createComboBox(ui->tableWidget_Elf_Ehdr,XELF::getIndentMagS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::ei_mag,XComboBoxEx::CBTYPE_NORMAL);
-                comboBox[CB_Elf_Ehdr_iclass]=createComboBox(ui->tableWidget_Elf_Ehdr,XELF::getIndentClassesS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::ei_class,XComboBoxEx::CBTYPE_NORMAL);
-                comboBox[CB_Elf_Ehdr_idata]=createComboBox(ui->tableWidget_Elf_Ehdr,XELF::getIndentDatasS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::ei_data,XComboBoxEx::CBTYPE_NORMAL);
-                comboBox[CB_Elf_Ehdr_iversion]=createComboBox(ui->tableWidget_Elf_Ehdr,XELF::getIndentVersionsS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::ei_version,XComboBoxEx::CBTYPE_NORMAL);
-                comboBox[CB_Elf_Ehdr_iosabi]=createComboBox(ui->tableWidget_Elf_Ehdr,XELF::getIndentOsabisS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::ei_osabi,XComboBoxEx::CBTYPE_NORMAL);
-                comboBox[CB_Elf_Ehdr_type]=createComboBox(ui->tableWidget_Elf_Ehdr,XELF::getTypesS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::e_type,XComboBoxEx::CBTYPE_NORMAL);
-                comboBox[CB_Elf_Ehdr_machine]=createComboBox(ui->tableWidget_Elf_Ehdr,XELF::getMachinesS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::e_machine,XComboBoxEx::CBTYPE_NORMAL);
+                g_comboBox[CB_Elf_Ehdr_mag]=createComboBox(ui->tableWidget_Elf_Ehdr,XELF::getIndentMagS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::ei_mag,XComboBoxEx::CBTYPE_NORMAL);
+                g_comboBox[CB_Elf_Ehdr_iclass]=createComboBox(ui->tableWidget_Elf_Ehdr,XELF::getIndentClassesS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::ei_class,XComboBoxEx::CBTYPE_NORMAL);
+                g_comboBox[CB_Elf_Ehdr_idata]=createComboBox(ui->tableWidget_Elf_Ehdr,XELF::getIndentDatasS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::ei_data,XComboBoxEx::CBTYPE_NORMAL);
+                g_comboBox[CB_Elf_Ehdr_iversion]=createComboBox(ui->tableWidget_Elf_Ehdr,XELF::getIndentVersionsS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::ei_version,XComboBoxEx::CBTYPE_NORMAL);
+                g_comboBox[CB_Elf_Ehdr_iosabi]=createComboBox(ui->tableWidget_Elf_Ehdr,XELF::getIndentOsabisS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::ei_osabi,XComboBoxEx::CBTYPE_NORMAL);
+                g_comboBox[CB_Elf_Ehdr_type]=createComboBox(ui->tableWidget_Elf_Ehdr,XELF::getTypesS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::e_type,XComboBoxEx::CBTYPE_NORMAL);
+                g_comboBox[CB_Elf_Ehdr_machine]=createComboBox(ui->tableWidget_Elf_Ehdr,XELF::getMachinesS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::e_machine,XComboBoxEx::CBTYPE_NORMAL);
 
-                invWidget[INV_CB_Elf_e_entry]=createInvWidget(ui->tableWidget_Elf_Ehdr,SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::e_entry,InvWidget::TYPE_HEX);
-                invWidget[INV_CB_Elf_e_phoff]=createInvWidget(ui->tableWidget_Elf_Ehdr,SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::e_phoff,InvWidget::TYPE_HEX);
-                invWidget[INV_CB_Elf_e_shoff]=createInvWidget(ui->tableWidget_Elf_Ehdr,SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::e_shoff,InvWidget::TYPE_HEX);
+                g_invWidget[INV_CB_Elf_e_entry]=createInvWidget(ui->tableWidget_Elf_Ehdr,SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::e_entry,InvWidget::TYPE_HEX);
+                g_invWidget[INV_CB_Elf_e_phoff]=createInvWidget(ui->tableWidget_Elf_Ehdr,SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::e_phoff,InvWidget::TYPE_HEX);
+                g_invWidget[INV_CB_Elf_e_shoff]=createInvWidget(ui->tableWidget_Elf_Ehdr,SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::e_shoff,InvWidget::TYPE_HEX);
 
                 blockSignals(true);
 
-                lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_mag]->setValue(elf.getIdent_mag_LE());
-                lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_class]->setValue(elf.getIdent_class());
-                lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_data]->setValue(elf.getIdent_data());
-                lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_version]->setValue(elf.getIdent_version());
-                lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_osabi]->setValue(elf.getIdent_osabi());
-                lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_abiversion]->setValue(elf.getIdent_abiversion());
-                lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_0]->setValue(elf.getIdent_pad(0));
-                lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_1]->setValue(elf.getIdent_pad(1));
-                lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_2]->setValue(elf.getIdent_pad(2));
-                lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_3]->setValue(elf.getIdent_pad(3));
-                lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_4]->setValue(elf.getIdent_pad(4));
-                lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_5]->setValue(elf.getIdent_pad(5));
-                lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_6]->setValue(elf.getIdent_pad(6));
+                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_mag]->setValue(elf.getIdent_mag_LE());
+                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_class]->setValue(elf.getIdent_class());
+                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_data]->setValue(elf.getIdent_data());
+                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_version]->setValue(elf.getIdent_version());
+                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_osabi]->setValue(elf.getIdent_osabi());
+                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_abiversion]->setValue(elf.getIdent_abiversion());
+                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_0]->setValue(elf.getIdent_pad(0));
+                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_1]->setValue(elf.getIdent_pad(1));
+                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_2]->setValue(elf.getIdent_pad(2));
+                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_3]->setValue(elf.getIdent_pad(3));
+                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_4]->setValue(elf.getIdent_pad(4));
+                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_5]->setValue(elf.getIdent_pad(5));
+                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_6]->setValue(elf.getIdent_pad(6));
 
                 if(elf.is64())
                 {
-                    lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_type]->setValue(elf.getHdr64_type());
-                    lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_machine]->setValue(elf.getHdr64_machine());
-                    lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_version]->setValue(elf.getHdr64_version());
-                    lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_entry]->setValue(elf.getHdr64_entry());
-                    lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_phoff]->setValue(elf.getHdr64_phoff());
-                    lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shoff]->setValue(elf.getHdr64_shoff());
-                    lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_flags]->setValue(elf.getHdr64_flags());
-                    lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_ehsize]->setValue(elf.getHdr64_ehsize());
-                    lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_phentsize]->setValue(elf.getHdr64_phentsize());
-                    lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_phnum]->setValue(elf.getHdr64_phnum());
-                    lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shentsize]->setValue(elf.getHdr64_shentsize());
-                    lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shnum]->setValue(elf.getHdr64_shnum());
-                    lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shstrndx]->setValue(elf.getHdr64_shstrndx());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_type]->setValue(elf.getHdr64_type());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_machine]->setValue(elf.getHdr64_machine());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_version]->setValue(elf.getHdr64_version());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_entry]->setValue(elf.getHdr64_entry());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_phoff]->setValue(elf.getHdr64_phoff());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shoff]->setValue(elf.getHdr64_shoff());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_flags]->setValue(elf.getHdr64_flags());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_ehsize]->setValue(elf.getHdr64_ehsize());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_phentsize]->setValue(elf.getHdr64_phentsize());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_phnum]->setValue(elf.getHdr64_phnum());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shentsize]->setValue(elf.getHdr64_shentsize());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shnum]->setValue(elf.getHdr64_shnum());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shstrndx]->setValue(elf.getHdr64_shstrndx());
 
-                    comboBox[CB_Elf_Ehdr_type]->setValue(elf.getHdr64_type());
-                    comboBox[CB_Elf_Ehdr_machine]->setValue(elf.getHdr64_machine());
+                    g_comboBox[CB_Elf_Ehdr_type]->setValue(elf.getHdr64_type());
+                    g_comboBox[CB_Elf_Ehdr_machine]->setValue(elf.getHdr64_machine());
 
-                    invWidget[INV_CB_Elf_e_entry]->setAddressAndSize(&elf,elf.getHdr64_entry(),0);
-                    invWidget[INV_CB_Elf_e_phoff]->setOffsetAndSize(&elf,elf.getHdr64_phoff(),0);
-                    invWidget[INV_CB_Elf_e_shoff]->setOffsetAndSize(&elf,elf.getHdr64_shoff(),0); // TODO offset
+                    g_invWidget[INV_CB_Elf_e_entry]->setAddressAndSize(&elf,elf.getHdr64_entry(),0);
+                    g_invWidget[INV_CB_Elf_e_phoff]->setOffsetAndSize(&elf,elf.getHdr64_phoff(),0);
+                    g_invWidget[INV_CB_Elf_e_shoff]->setOffsetAndSize(&elf,elf.getHdr64_shoff(),0); // TODO offset
                 }
                 else
                 {
-                    lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_type]->setValue(elf.getHdr32_type());
-                    lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_machine]->setValue(elf.getHdr32_machine());
-                    lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_version]->setValue(elf.getHdr32_version());
-                    lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_entry]->setValue(elf.getHdr32_entry());
-                    lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_phoff]->setValue(elf.getHdr32_phoff());
-                    lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shoff]->setValue(elf.getHdr32_shoff());
-                    lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_flags]->setValue(elf.getHdr32_flags());
-                    lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_ehsize]->setValue(elf.getHdr32_ehsize());
-                    lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_phentsize]->setValue(elf.getHdr32_phentsize());
-                    lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_phnum]->setValue(elf.getHdr32_phnum());
-                    lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shentsize]->setValue(elf.getHdr32_shentsize());
-                    lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shnum]->setValue(elf.getHdr32_shnum());
-                    lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shstrndx]->setValue(elf.getHdr32_shstrndx());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_type]->setValue(elf.getHdr32_type());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_machine]->setValue(elf.getHdr32_machine());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_version]->setValue(elf.getHdr32_version());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_entry]->setValue(elf.getHdr32_entry());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_phoff]->setValue(elf.getHdr32_phoff());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shoff]->setValue(elf.getHdr32_shoff());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_flags]->setValue(elf.getHdr32_flags());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_ehsize]->setValue(elf.getHdr32_ehsize());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_phentsize]->setValue(elf.getHdr32_phentsize());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_phnum]->setValue(elf.getHdr32_phnum());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shentsize]->setValue(elf.getHdr32_shentsize());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shnum]->setValue(elf.getHdr32_shnum());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shstrndx]->setValue(elf.getHdr32_shstrndx());
 
-                    comboBox[CB_Elf_Ehdr_type]->setValue(elf.getHdr32_type());
-                    comboBox[CB_Elf_Ehdr_machine]->setValue(elf.getHdr32_machine());
+                    g_comboBox[CB_Elf_Ehdr_type]->setValue(elf.getHdr32_type());
+                    g_comboBox[CB_Elf_Ehdr_machine]->setValue(elf.getHdr32_machine());
 
-                    invWidget[INV_CB_Elf_e_entry]->setAddressAndSize(&elf,elf.getHdr32_entry(),0);
-                    invWidget[INV_CB_Elf_e_phoff]->setOffsetAndSize(&elf,elf.getHdr32_phoff(),0);
-                    invWidget[INV_CB_Elf_e_shoff]->setOffsetAndSize(&elf,elf.getHdr32_shoff(),0); // TODO offset
+                    g_invWidget[INV_CB_Elf_e_entry]->setAddressAndSize(&elf,elf.getHdr32_entry(),0);
+                    g_invWidget[INV_CB_Elf_e_phoff]->setOffsetAndSize(&elf,elf.getHdr32_phoff(),0);
+                    g_invWidget[INV_CB_Elf_e_shoff]->setOffsetAndSize(&elf,elf.getHdr32_shoff(),0); // TODO offset
                 }
 
-                comboBox[CB_Elf_Ehdr_mag]->setValue(elf.getIdent_mag_LE());
-                comboBox[CB_Elf_Ehdr_iclass]->setValue(elf.getIdent_class());
-                comboBox[CB_Elf_Ehdr_idata]->setValue(elf.getIdent_data());
-                comboBox[CB_Elf_Ehdr_iversion]->setValue(elf.getIdent_version());
-                comboBox[CB_Elf_Ehdr_iosabi]->setValue(elf.getIdent_osabi());
+                g_comboBox[CB_Elf_Ehdr_mag]->setValue(elf.getIdent_mag_LE());
+                g_comboBox[CB_Elf_Ehdr_iclass]->setValue(elf.getIdent_class());
+                g_comboBox[CB_Elf_Ehdr_idata]->setValue(elf.getIdent_data());
+                g_comboBox[CB_Elf_Ehdr_iversion]->setValue(elf.getIdent_version());
+                g_comboBox[CB_Elf_Ehdr_iosabi]->setValue(elf.getIdent_osabi());
 
                 qint64 nOffset=elf.getEhdrOffset();
                 qint64 nSize=0;
@@ -500,13 +500,13 @@ void ELFWidget::reloadData()
         {
             if(!g_stInit.contains(sInit))
             {
-                createListTable(SELF::TYPE_INTERPRETER,ui->tableWidget_Interpreter,N_ELF_INTERPRETER::records,lineEdit_Elf_Interpreter,N_ELF_INTERPRETER::__data_size);
+                createListTable(SELF::TYPE_INTERPRETER,ui->tableWidget_Interpreter,N_ELF_INTERPRETER::records,g_lineEdit_Elf_Interpreter,N_ELF_INTERPRETER::__data_size);
 
                 blockSignals(true);
 
                 XBinary::OS_ANSISTRING osAnsiString=elf.getOsAnsiString(nDataOffset,nDataSize);
 
-                setLineEdit(lineEdit_Elf_Interpreter[N_ELF_INTERPRETER::interpreter],osAnsiString.nSize,osAnsiString.sAnsiString,osAnsiString.nOffset);
+                setLineEdit(g_lineEdit_Elf_Interpreter[N_ELF_INTERPRETER::interpreter],osAnsiString.nSize,osAnsiString.sAnsiString,osAnsiString.nOffset);
 
                 blockSignals(false);
             }
@@ -531,13 +531,13 @@ void ELFWidget::reloadData()
         {
             if(!g_stInit.contains(sInit))
             {
-                createListTable(SELF::TYPE_RUNPATH,ui->tableWidget_RunPath,N_ELF_RUNPATH::records,lineEdit_Elf_RunPath,N_ELF_RUNPATH::__data_size);
+                createListTable(SELF::TYPE_RUNPATH,ui->tableWidget_RunPath,N_ELF_RUNPATH::records,g_lineEdit_Elf_RunPath,N_ELF_RUNPATH::__data_size);
 
                 blockSignals(true);
 
                 XBinary::OS_ANSISTRING osAnsiString=elf.getOsAnsiString(nDataOffset,nDataSize);
 
-                setLineEdit(lineEdit_Elf_RunPath[N_ELF_RUNPATH::runpath],osAnsiString.nSize,osAnsiString.sAnsiString,osAnsiString.nOffset);
+                setLineEdit(g_lineEdit_Elf_RunPath[N_ELF_RUNPATH::runpath],osAnsiString.nSize,osAnsiString.sAnsiString,osAnsiString.nOffset);
 
                 blockSignals(false);
             }
@@ -668,12 +668,12 @@ void ELFWidget::widgetValueChanged(quint64 nValue)
         case SELF::TYPE_Elf_Ehdr:
             switch(nNdata)
             {
-                case N_Elf_Ehdr::ei_class:      lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_class]->setValue((quint8)nValue);      break;
-                case N_Elf_Ehdr::ei_data:       lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_data]->setValue((quint8)nValue);       break;
-                case N_Elf_Ehdr::ei_version:    lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_version]->setValue((quint8)nValue);    break;
-                case N_Elf_Ehdr::ei_osabi:      lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_osabi]->setValue((quint8)nValue);      break;
-                case N_Elf_Ehdr::e_type:        lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_type]->setValue((quint16)nValue);       break;
-                case N_Elf_Ehdr::e_machine:     lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_machine]->setValue((quint16)nValue);    break;
+                case N_Elf_Ehdr::ei_class:      g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_class]->setValue((quint8)nValue);      break;
+                case N_Elf_Ehdr::ei_data:       g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_data]->setValue((quint8)nValue);       break;
+                case N_Elf_Ehdr::ei_version:    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_version]->setValue((quint8)nValue);    break;
+                case N_Elf_Ehdr::ei_osabi:      g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_osabi]->setValue((quint8)nValue);      break;
+                case N_Elf_Ehdr::e_type:        g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_type]->setValue((quint16)nValue);       break;
+                case N_Elf_Ehdr::e_machine:     g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_machine]->setValue((quint16)nValue);    break;
             }
 
             break;
