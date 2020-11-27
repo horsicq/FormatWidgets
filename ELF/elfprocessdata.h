@@ -34,13 +34,13 @@ public:
     virtual void ajustTableView(QWidget *pWidget,QTableView *pTableView);
 
 private:
-    int nType;
-    XELF *pELF;
-    QStandardItemModel **ppModel;
-    qint64 nOffset;
-    qint64 nSize;
-    qint64 nStringTableOffset;
-    qint64 nStringTableSize;
+    int g_nType;
+    XELF *g_pELF;
+    QStandardItemModel **g_ppModel;
+    qint64 g_nOffset;
+    qint64 g_nSize;
+    qint64 g_nStringTableOffset;
+    qint64 g_nStringTableSize;
 };
 
 #endif // ELFPROCESSDATA_H
