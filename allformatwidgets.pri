@@ -11,21 +11,6 @@ DEPENDPATH += $$PWD
     include($$PWD/MSDOS/msdoswidget.pri)
 }
 
-!contains(XCONFIG, elfwidget) {
-    XCONFIG += elfwidget
-    include($$PWD/ELF/elfwidget.pri)
-}
-
-!contains(XCONFIG, msdoswidget) {
-    XCONFIG += lewidget
-    include($$PWD/LE/lewidget.pri)
-}
-
-!contains(XCONFIG, machwidget) {
-    XCONFIG += machwidget
-    include($$PWD/MACH/machwidget.pri)
-}
-
 !contains(XCONFIG, newidget) {
     XCONFIG += newidget
     include($$PWD/NE/newidget.pri)
@@ -39,6 +24,16 @@ DEPENDPATH += $$PWD
 !contains(XCONFIG, pewidget) {
     XCONFIG += pewidget
     include($$PWD/PE/pewidget.pri)
+}
+
+!contains(XCONFIG, elfwidget) {
+    XCONFIG += elfwidget
+    include($$PWD/ELF/elfwidget.pri)
+}
+
+!contains(XCONFIG, machwidget) {
+    XCONFIG += machwidget
+    include($$PWD/MACH/machwidget.pri)
 }
 
 !contains(XCONFIG, searchstringswidget) {
