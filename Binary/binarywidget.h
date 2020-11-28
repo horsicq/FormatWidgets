@@ -57,7 +57,7 @@ private slots:
 
 private:
     Ui::BinaryWidget *ui;
-    bool bInit;
+    bool g_bInit;
 };
 
 #endif // BINARYWIDGET_H

@@ -57,7 +57,7 @@ void BinaryWidget::cleanup()
 
 void BinaryWidget::reset()
 {
-    bInit=false;
+    g_bInit=false;
 }
 
 void BinaryWidget::reload()
@@ -122,13 +122,13 @@ void BinaryWidget::reloadData()
 
     if(binary.isValid())
     {
-        if(!bInit)
+        if(!g_bInit)
         {
             ui->widgetHex->setData(getDevice(),getOptions());
             ui->widgetHex->setEdited(isEdited());
             connect(ui->widgetHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
 
-            bInit=true;
+            g_bInit=true;
         }
         ui->widgetHex->reload();
 
