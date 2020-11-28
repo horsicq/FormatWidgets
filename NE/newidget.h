@@ -91,13 +91,13 @@ private:
     XLineEditHEX *g_lineEdit_OS2_HEADER[N_OS2_HEADER::__data_size];
     XComboBoxEx *g_comboBox[__CB_size];
 
-    QSet<QString> stInit;
+    QSet<QString> g_stInit;
 
-    qint32 nLastType;
-    QString sLastInit;
+    qint32 g_nLastType;
+    QString g_sLastInit;
 
-    InvWidget *invWidget[__INV_size];
-    SubDevice *subDevice[SNE::__TYPE_size];
+    InvWidget *g_invWidget[__INV_size];
+    SubDevice *g_subDevice[SNE::__TYPE_size];
 };
 
 #endif // NEWIDGET_H

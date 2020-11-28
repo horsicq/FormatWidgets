@@ -50,8 +50,8 @@ void NEWidget::clear()
     memset(g_lineEdit_DOS_HEADER,0,sizeof g_lineEdit_DOS_HEADER);
     memset(g_lineEdit_OS2_HEADER,0,sizeof g_lineEdit_OS2_HEADER);
     memset(g_comboBox,0,sizeof g_comboBox);
-    memset(invWidget,0,sizeof invWidget);
-    memset(subDevice,0,sizeof subDevice);
+    memset(g_invWidget,0,sizeof g_invWidget);
+    memset(g_subDevice,0,sizeof g_subDevice);
 
     ui->checkBoxReadonly->setChecked(true);
 
@@ -65,7 +65,7 @@ void NEWidget::cleanup()
 
 void NEWidget::reset()
 {
-    stInit.clear();
+    g_stInit.clear();
 }
 
 void NEWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions)
@@ -133,7 +133,7 @@ bool NEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, in
                     switch(nNdata)
                     {
                         case N_NE_DOS_HEADER::e_magic:         g_comboBox[CB_DOS_HEADER_e_magic]->setValue(nValue);                                  break;
-                        case N_NE_DOS_HEADER::e_lfanew:        invWidget[INV_IMAGE_DOS_HEADER_e_lfanew]->setOffsetAndSize(&ne,(quint32)nValue,0);  break;
+                        case N_NE_DOS_HEADER::e_lfanew:        g_invWidget[INV_IMAGE_DOS_HEADER_e_lfanew]->setOffsetAndSize(&ne,(quint32)nValue,0);  break;
                     }
                     break;
 
@@ -144,13 +144,13 @@ bool NEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, in
                         case N_OS2_HEADER::ne_flags:        g_comboBox[CB_OS2_HEADER_ne_flags]->setValue(nValue);                                                 break;
                         case N_OS2_HEADER::ne_exetyp:       g_comboBox[CB_OS2_HEADER_ne_exetype]->setValue(nValue);                                               break;
                         case N_OS2_HEADER::ne_flagsothers:  g_comboBox[CB_OS2_HEADER_ne_flagsothers]->setValue(nValue);                                           break;
-                        case N_OS2_HEADER::ne_enttab:       invWidget[CB_OS2_HEADER_ne_enttab]->setOffsetAndSize(&ne,ne.getImageOS2HeaderOffset()+nValue,0);    break;
-                        case N_OS2_HEADER::ne_segtab:       invWidget[CB_OS2_HEADER_ne_segtab]->setOffsetAndSize(&ne,ne.getImageOS2HeaderOffset()+nValue,0);    break;
-                        case N_OS2_HEADER::ne_rsrctab:      invWidget[CB_OS2_HEADER_ne_rsrctab]->setOffsetAndSize(&ne,ne.getImageOS2HeaderOffset()+nValue,0);   break;
-                        case N_OS2_HEADER::ne_restab:       invWidget[CB_OS2_HEADER_ne_restab]->setOffsetAndSize(&ne,ne.getImageOS2HeaderOffset()+nValue,0);    break;
-                        case N_OS2_HEADER::ne_modtab:       invWidget[CB_OS2_HEADER_ne_modtab]->setOffsetAndSize(&ne,ne.getImageOS2HeaderOffset()+nValue,0);    break;
-                        case N_OS2_HEADER::ne_imptab:       invWidget[CB_OS2_HEADER_ne_imptab]->setOffsetAndSize(&ne,ne.getImageOS2HeaderOffset()+nValue,0);    break;
-                        case N_OS2_HEADER::ne_nrestab:      invWidget[CB_OS2_HEADER_ne_nrestab]->setOffsetAndSize(&ne,nValue,0);                                break;
+                        case N_OS2_HEADER::ne_enttab:       g_invWidget[CB_OS2_HEADER_ne_enttab]->setOffsetAndSize(&ne,ne.getImageOS2HeaderOffset()+nValue,0);    break;
+                        case N_OS2_HEADER::ne_segtab:       g_invWidget[CB_OS2_HEADER_ne_segtab]->setOffsetAndSize(&ne,ne.getImageOS2HeaderOffset()+nValue,0);    break;
+                        case N_OS2_HEADER::ne_rsrctab:      g_invWidget[CB_OS2_HEADER_ne_rsrctab]->setOffsetAndSize(&ne,ne.getImageOS2HeaderOffset()+nValue,0);   break;
+                        case N_OS2_HEADER::ne_restab:       g_invWidget[CB_OS2_HEADER_ne_restab]->setOffsetAndSize(&ne,ne.getImageOS2HeaderOffset()+nValue,0);    break;
+                        case N_OS2_HEADER::ne_modtab:       g_invWidget[CB_OS2_HEADER_ne_modtab]->setOffsetAndSize(&ne,ne.getImageOS2HeaderOffset()+nValue,0);    break;
+                        case N_OS2_HEADER::ne_imptab:       g_invWidget[CB_OS2_HEADER_ne_imptab]->setOffsetAndSize(&ne,ne.getImageOS2HeaderOffset()+nValue,0);    break;
+                        case N_OS2_HEADER::ne_nrestab:      g_invWidget[CB_OS2_HEADER_ne_nrestab]->setOffsetAndSize(&ne,nValue,0);                                break;
                     }
                     break;
             }
@@ -295,13 +295,13 @@ void NEWidget::reloadData()
 
     QString sInit=QString("%1-%2-%3").arg(nType).arg(nDataOffset).arg(nDataSize);
 
-    if((nLastType==nType)&&(sInit!=sLastInit))
+    if((g_nLastType==nType)&&(sInit!=g_sLastInit))
     {
-        stInit.remove(sInit);
+        g_stInit.remove(sInit);
     }
 
-    nLastType=nType;
-    sLastInit=sInit;
+    g_nLastType=nType;
+    g_sLastInit=sInit;
 
     ui->stackedWidgetInfo->setCurrentIndex(nType);
 
@@ -311,7 +311,7 @@ void NEWidget::reloadData()
     {
         if(nType==SNE::TYPE_HEX)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 ui->widgetHex->setData(getDevice());
                 ui->widgetHex->setBackupFileName(getOptions()->sBackupFileName);
@@ -322,39 +322,39 @@ void NEWidget::reloadData()
         }
         else if(nType==SNE::TYPE_STRINGS)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 ui->widgetStrings->setData(getDevice(),0,true);
             }
         }
         else if(nType==SNE::TYPE_MEMORYMAP)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 ui->widgetMemoryMap->setData(getDevice());
             }
         }
         else if(nType==SNE::TYPE_ENTROPY)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 ui->widgetEntropy->setData(getDevice(),0,getDevice()->size(),true);
             }
         }
         else if(nType==SNE::TYPE_HEURISTICSCAN)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 ui->widgetHeuristicScan->setData(getDevice(),true,XBinary::FT_NE);
             }
         }
         else if(nType==SNE::TYPE_DOS_HEADER)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 createHeaderTable(SNE::TYPE_DOS_HEADER,ui->tableWidget_DOS_HEADER,N_NE_DOS_HEADER::records,g_lineEdit_DOS_HEADER,N_NE_DOS_HEADER::__data_size,0);
                 g_comboBox[CB_DOS_HEADER_e_magic]=createComboBox(ui->tableWidget_DOS_HEADER,XMSDOS::getImageMagicsS(),SNE::TYPE_DOS_HEADER,N_NE_DOS_HEADER::e_magic,XComboBoxEx::CBTYPE_NORMAL);
-                invWidget[INV_IMAGE_DOS_HEADER_e_lfanew]=createInvWidget(ui->tableWidget_DOS_HEADER,SNE::TYPE_DOS_HEADER,N_NE_DOS_HEADER::e_lfanew,InvWidget::TYPE_HEX);
+                g_invWidget[INV_IMAGE_DOS_HEADER_e_lfanew]=createInvWidget(ui->tableWidget_DOS_HEADER,SNE::TYPE_DOS_HEADER,N_NE_DOS_HEADER::e_lfanew,InvWidget::TYPE_HEX);
 
                 blockSignals(true);
 
@@ -394,19 +394,19 @@ void NEWidget::reloadData()
 
                 g_comboBox[CB_DOS_HEADER_e_magic]->setValue(msdosheaderex.e_magic);
 
-                invWidget[INV_IMAGE_DOS_HEADER_e_lfanew]->setOffsetAndSize(&ne,msdosheaderex.e_lfanew,0);
+                g_invWidget[INV_IMAGE_DOS_HEADER_e_lfanew]->setOffsetAndSize(&ne,msdosheaderex.e_lfanew,0);
 
                 qint64 nOffset=ne.getDosHeaderExOffset();
                 qint64 nSize=ne.getDosHeaderExSize();
 
-                loadHexSubdevice(nOffset,nSize,nOffset,&subDevice[SNE::TYPE_DOS_HEADER],ui->widgetHex_DOS_HEADER);
+                loadHexSubdevice(nOffset,nSize,nOffset,&g_subDevice[SNE::TYPE_DOS_HEADER],ui->widgetHex_DOS_HEADER);
 
                 blockSignals(false);
             }
         }
         else if(nType==SNE::TYPE_OS2_HEADER)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 createHeaderTable(SNE::TYPE_OS2_HEADER,ui->tableWidget_OS2_HEADER,N_OS2_HEADER::records,g_lineEdit_OS2_HEADER,N_OS2_HEADER::__data_size,0);
                 g_comboBox[CB_OS2_HEADER_ne_magic]=createComboBox(ui->tableWidget_OS2_HEADER,XNE::getImageNEMagicsS(),SNE::TYPE_OS2_HEADER,N_OS2_HEADER::ne_magic,XComboBoxEx::CBTYPE_NORMAL);
@@ -414,13 +414,13 @@ void NEWidget::reloadData()
                 g_comboBox[CB_OS2_HEADER_ne_exetype]=createComboBox(ui->tableWidget_OS2_HEADER,XNE::getImageNEExetypesS(),SNE::TYPE_OS2_HEADER,N_OS2_HEADER::ne_exetyp,XComboBoxEx::CBTYPE_NORMAL);
                 g_comboBox[CB_OS2_HEADER_ne_flagsothers]=createComboBox(ui->tableWidget_OS2_HEADER,XNE::getImageNEFlagsothersS(),SNE::TYPE_OS2_HEADER,N_OS2_HEADER::ne_flagsothers,XComboBoxEx::CBTYPE_FLAGS);
 
-                invWidget[CB_OS2_HEADER_ne_enttab]=createInvWidget(ui->tableWidget_OS2_HEADER,SNE::TYPE_OS2_HEADER,N_OS2_HEADER::ne_enttab,InvWidget::TYPE_HEX);
-                invWidget[CB_OS2_HEADER_ne_segtab]=createInvWidget(ui->tableWidget_OS2_HEADER,SNE::TYPE_OS2_HEADER,N_OS2_HEADER::ne_segtab,InvWidget::TYPE_HEX);
-                invWidget[CB_OS2_HEADER_ne_rsrctab]=createInvWidget(ui->tableWidget_OS2_HEADER,SNE::TYPE_OS2_HEADER,N_OS2_HEADER::ne_rsrctab,InvWidget::TYPE_HEX);
-                invWidget[CB_OS2_HEADER_ne_restab]=createInvWidget(ui->tableWidget_OS2_HEADER,SNE::TYPE_OS2_HEADER,N_OS2_HEADER::ne_restab,InvWidget::TYPE_HEX);
-                invWidget[CB_OS2_HEADER_ne_modtab]=createInvWidget(ui->tableWidget_OS2_HEADER,SNE::TYPE_OS2_HEADER,N_OS2_HEADER::ne_modtab,InvWidget::TYPE_HEX);
-                invWidget[CB_OS2_HEADER_ne_imptab]=createInvWidget(ui->tableWidget_OS2_HEADER,SNE::TYPE_OS2_HEADER,N_OS2_HEADER::ne_imptab,InvWidget::TYPE_HEX);
-                invWidget[CB_OS2_HEADER_ne_nrestab]=createInvWidget(ui->tableWidget_OS2_HEADER,SNE::TYPE_OS2_HEADER,N_OS2_HEADER::ne_nrestab,InvWidget::TYPE_HEX);
+                g_invWidget[CB_OS2_HEADER_ne_enttab]=createInvWidget(ui->tableWidget_OS2_HEADER,SNE::TYPE_OS2_HEADER,N_OS2_HEADER::ne_enttab,InvWidget::TYPE_HEX);
+                g_invWidget[CB_OS2_HEADER_ne_segtab]=createInvWidget(ui->tableWidget_OS2_HEADER,SNE::TYPE_OS2_HEADER,N_OS2_HEADER::ne_segtab,InvWidget::TYPE_HEX);
+                g_invWidget[CB_OS2_HEADER_ne_rsrctab]=createInvWidget(ui->tableWidget_OS2_HEADER,SNE::TYPE_OS2_HEADER,N_OS2_HEADER::ne_rsrctab,InvWidget::TYPE_HEX);
+                g_invWidget[CB_OS2_HEADER_ne_restab]=createInvWidget(ui->tableWidget_OS2_HEADER,SNE::TYPE_OS2_HEADER,N_OS2_HEADER::ne_restab,InvWidget::TYPE_HEX);
+                g_invWidget[CB_OS2_HEADER_ne_modtab]=createInvWidget(ui->tableWidget_OS2_HEADER,SNE::TYPE_OS2_HEADER,N_OS2_HEADER::ne_modtab,InvWidget::TYPE_HEX);
+                g_invWidget[CB_OS2_HEADER_ne_imptab]=createInvWidget(ui->tableWidget_OS2_HEADER,SNE::TYPE_OS2_HEADER,N_OS2_HEADER::ne_imptab,InvWidget::TYPE_HEX);
+                g_invWidget[CB_OS2_HEADER_ne_nrestab]=createInvWidget(ui->tableWidget_OS2_HEADER,SNE::TYPE_OS2_HEADER,N_OS2_HEADER::ne_nrestab,InvWidget::TYPE_HEX);
 
                 blockSignals(true);
 
@@ -464,17 +464,17 @@ void NEWidget::reloadData()
 
                 qint64 nOffset=ne.getImageOS2HeaderOffset();
 
-                invWidget[CB_OS2_HEADER_ne_enttab]->setOffsetAndSize(&ne,nOffset+os2header.ne_enttab,0);
-                invWidget[CB_OS2_HEADER_ne_segtab]->setOffsetAndSize(&ne,nOffset+os2header.ne_segtab,0);
-                invWidget[CB_OS2_HEADER_ne_rsrctab]->setOffsetAndSize(&ne,nOffset+os2header.ne_rsrctab,0);
-                invWidget[CB_OS2_HEADER_ne_restab]->setOffsetAndSize(&ne,nOffset+os2header.ne_restab,0);
-                invWidget[CB_OS2_HEADER_ne_modtab]->setOffsetAndSize(&ne,nOffset+os2header.ne_modtab,0);
-                invWidget[CB_OS2_HEADER_ne_imptab]->setOffsetAndSize(&ne,nOffset+os2header.ne_imptab,0);
-                invWidget[CB_OS2_HEADER_ne_nrestab]->setOffsetAndSize(&ne,os2header.ne_nrestab,0);
+                g_invWidget[CB_OS2_HEADER_ne_enttab]->setOffsetAndSize(&ne,nOffset+os2header.ne_enttab,0);
+                g_invWidget[CB_OS2_HEADER_ne_segtab]->setOffsetAndSize(&ne,nOffset+os2header.ne_segtab,0);
+                g_invWidget[CB_OS2_HEADER_ne_rsrctab]->setOffsetAndSize(&ne,nOffset+os2header.ne_rsrctab,0);
+                g_invWidget[CB_OS2_HEADER_ne_restab]->setOffsetAndSize(&ne,nOffset+os2header.ne_restab,0);
+                g_invWidget[CB_OS2_HEADER_ne_modtab]->setOffsetAndSize(&ne,nOffset+os2header.ne_modtab,0);
+                g_invWidget[CB_OS2_HEADER_ne_imptab]->setOffsetAndSize(&ne,nOffset+os2header.ne_imptab,0);
+                g_invWidget[CB_OS2_HEADER_ne_nrestab]->setOffsetAndSize(&ne,os2header.ne_nrestab,0);
 
                 qint64 nSize=ne.getImageOS2HeaderSize();
 
-                loadHexSubdevice(nOffset,nSize,nOffset,&subDevice[SNE::TYPE_OS2_HEADER],ui->widgetHex_OS2_HEADER);
+                loadHexSubdevice(nOffset,nSize,nOffset,&g_subDevice[SNE::TYPE_OS2_HEADER],ui->widgetHex_OS2_HEADER);
 
                 blockSignals(false);
             }
@@ -484,13 +484,13 @@ void NEWidget::reloadData()
             qint64 nOverLayOffset=ne.getOverlayOffset();
             qint64 nOverlaySize=ne.getOverlaySize();
 
-            loadHexSubdevice(nOverLayOffset,nOverlaySize,nOverLayOffset,&subDevice[SNE::TYPE_OVERLAY],ui->widgetHex_OVERLAY);
+            loadHexSubdevice(nOverLayOffset,nOverlaySize,nOverLayOffset,&g_subDevice[SNE::TYPE_OVERLAY],ui->widgetHex_OVERLAY);
         }
 
         setReadonly(ui->checkBoxReadonly->isChecked());
     }
 
-    stInit.insert(sInit);
+    g_stInit.insert(sInit);
 }
 
 void NEWidget::widgetValueChanged(quint64 nValue)
