@@ -60,11 +60,11 @@ private:
     XLineEditHEX **g_ppLinedEdit;
     int g_nLineEditSize;
     XComboBoxEx **g_ppComboBox;
-    int nComboBoxSize;
-    InvWidget **ppInvWidget;
-    int nInvWidgetSize;
-    SubDevice *pSubDevice;
-    bool bInit;
+    int g_nComboBoxSize;
+    InvWidget **g_ppInvWidget;
+    int g_nInvWidgetSize;
+    SubDevice *g_pSubDevice;
+    bool g_bInit;
 };
 
 #endif // PESECTIONHEADERWIDGET_H
