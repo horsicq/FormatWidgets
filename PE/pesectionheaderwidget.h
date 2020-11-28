@@ -57,9 +57,9 @@ private slots:
 private:
 
     Ui::PESectionHeaderWidget *ui;
-    XLineEditHEX **ppLinedEdit;
-    int nLineEditSize;
-    XComboBoxEx **ppComboBox;
+    XLineEditHEX **g_ppLinedEdit;
+    int g_nLineEditSize;
+    XComboBoxEx **g_ppComboBox;
     int nComboBoxSize;
     InvWidget **ppInvWidget;
     int nInvWidgetSize;
