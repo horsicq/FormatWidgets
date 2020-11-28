@@ -87,9 +87,9 @@ private:
 
     Ui::NEWidget *ui;
 
-    XLineEditHEX *lineEdit_DOS_HEADER[N_NE_DOS_HEADER::__data_size];
-    XLineEditHEX *lineEdit_OS2_HEADER[N_OS2_HEADER::__data_size];
-    XComboBoxEx *comboBox[__CB_size];
+    XLineEditHEX *g_lineEdit_DOS_HEADER[N_NE_DOS_HEADER::__data_size];
+    XLineEditHEX *g_lineEdit_OS2_HEADER[N_OS2_HEADER::__data_size];
+    XComboBoxEx *g_comboBox[__CB_size];
 
     QSet<QString> stInit;
 
