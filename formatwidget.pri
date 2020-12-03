@@ -51,6 +51,11 @@ FORMS += \
     include($$PWD/../QHexView/qhexview.pri)
 }
 
+!contains(XCONFIG, xhexview) {
+    XCONFIG += xhexview
+    include($$PWD/../XHexView/xhexview.pri)
+}
+
 !contains(XCONFIG, searchstringswidget) {
     XCONFIG += searchstringswidget
     include($$PWD/SearchStrings/searchstringswidget.pri)
