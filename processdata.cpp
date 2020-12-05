@@ -22,17 +22,17 @@
 
 ProcessData::ProcessData()
 {
-    bIsStop=false;
+    g_bIsStop=false;
 }
 
 void ProcessData::stop()
 {
-    bIsStop=true;
+    g_bIsStop=true;
 }
 
 void ProcessData::setMaximum(quint64 nMaximum)
 {
-    this->_nMaximum=nMaximum;
+    this->g_nMaximum=nMaximum;
     _nProcent=nMaximum/100;
     _nCurrentProcent=0;
     _nValue=0;
@@ -51,7 +51,7 @@ void ProcessData::incValue()
 
 bool ProcessData::isRun()
 {
-    return !(bIsStop);
+    return !(g_bIsStop);
 }
 
 void ProcessData::ajustTreeView(QWidget *pWidget, QTreeView *pTreeView)
@@ -93,7 +93,7 @@ void ProcessData::process()
 
     _process();
 
-    bIsStop=false;
+    g_bIsStop=false;
 
     emit progressValue(100);
 

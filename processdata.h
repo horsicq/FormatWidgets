@@ -56,8 +56,8 @@ signals:
     void progressMaximum(qint32 nValue);
 
 private:
-    bool bIsStop;
-    quint64 _nMaximum;
+    bool g_bIsStop;
+    quint64 g_nMaximum;
     quint64 _nValue;
     quint64 _nProcent;
     qint32 _nCurrentProcent;
