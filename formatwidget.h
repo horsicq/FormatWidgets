@@ -113,7 +113,7 @@ public:
     XDateTimeEditX *createTimeDateEdit(QTableWidget *pTableWidget,int nType,int nData,XDateTimeEditX::DT_TYPE dtType);
     QPushButton *createPushButton(QTableWidget *pTableWidget,int nType,int nData,QString sText);
 
-    void setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset);
+    void setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition,qint64 nOffset);
     virtual bool _setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition,qint64 nOffset)=0;
     virtual void setReadonly(bool bState)=0;
     virtual void blockSignals(bool bState)=0;
