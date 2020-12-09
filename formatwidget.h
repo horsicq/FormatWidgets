@@ -124,8 +124,8 @@ public:
 
 //    QPushButton *createHexButton(QTableWidget *pTableWidget,int nType, int nData);
 
-    bool loadHexSubdevice(qint64 nOffset, qint64 nSize, qint64 nAddress, SubDevice **ppSubDevice, ToolsWidget *pToolsWidget);
-    bool loadHexSubdeviceByTableView(int nRow, int nType, ToolsWidget *pToolsWidget, QTableView *pTableView, SubDevice **ppSubDevice);
+    bool loadHexSubdevice(qint64 nOffset,qint64 nSize,qint64 nAddress,SubDevice **ppSubDevice,ToolsWidget *pToolsWidget);
+    bool loadHexSubdeviceByTableView(int nRow,int nType,ToolsWidget *pToolsWidget,QTableView *pTableView,SubDevice **ppSubDevice);
 
     void setHeaderTableSelection(ToolsWidget *pToolWidget,QTableWidget *pTableWidget);
 
