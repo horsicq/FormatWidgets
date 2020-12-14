@@ -89,7 +89,7 @@ void PEWidget::cleanup()
 
 void PEWidget::reset()
 {
-    stInit.clear();
+    g_stInit.clear();
 }
 
 void PEWidget::reload()
@@ -751,7 +751,7 @@ void PEWidget::reloadData()
 
     if((nLastType==nType)&&(sInit!=sLastInit))
     {
-        stInit.remove(sInit);
+        g_stInit.remove(sInit);
     }
 
     nLastType=nType;
@@ -765,7 +765,7 @@ void PEWidget::reloadData()
     {
         if(nType==SPE::TYPE_HEX)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 ui->widgetHex->setData(getDevice());
                 ui->widgetHex->setBackupFileName(getOptions()->sBackupFileName);
@@ -778,7 +778,7 @@ void PEWidget::reloadData()
 #ifdef USE_DISASM
         else if(nType==SPE::TYPE_DISASM)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 pDisasmWidget->setData(getDevice(),0,0,true);
                 pDisasmWidget->goToEntryPoint();
@@ -789,35 +789,35 @@ void PEWidget::reloadData()
 #endif
         else if(nType==SPE::TYPE_STRINGS)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 ui->widgetStrings->setData(getDevice(),0,true);
             }
         }
         else if(nType==SPE::TYPE_MEMORYMAP)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 ui->widgetMemoryMap->setData(getDevice());
             }
         }
         else if(nType==SPE::TYPE_ENTROPY)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 ui->widgetEntropy->setData(getDevice(),0,getDevice()->size(),true); // TODO save last directory
             }
         }
         else if(nType==SPE::TYPE_HEURISTICSCAN)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 ui->widgetHeuristicScan->setData(getDevice(),true,XBinary::FT_PE);
             }
         }
         else if(nType==SPE::TYPE_IMAGE_DOS_HEADER)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 createHeaderTable(SPE::TYPE_IMAGE_DOS_HEADER,ui->tableWidget_IMAGE_DOS_HEADER,N_IMAGE_DOS_HEADER::records,lineEdit_IMAGE_DOS_HEADER,N_IMAGE_DOS_HEADER::__data_size,0);
                 comboBox[CB_IMAGE_DOS_HEADER_e_magic]=createComboBox(ui->tableWidget_IMAGE_DOS_HEADER,XPE::getImageMagicsS(),SPE::TYPE_IMAGE_DOS_HEADER,N_IMAGE_DOS_HEADER::e_magic,XComboBoxEx::CBTYPE_NORMAL);
@@ -874,7 +874,7 @@ void PEWidget::reloadData()
         }
         else if(nType==SPE::TYPE_IMAGE_NT_HEADERS)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 createHeaderTable(SPE::TYPE_IMAGE_NT_HEADERS,ui->tableWidget_IMAGE_NT_HEADERS,N_IMAGE_NT_HEADERS::records,lineEdit_IMAGE_NT_HEADERS,N_IMAGE_NT_HEADERS::__data_size,0);
                 comboBox[CB_IMAGE_NT_HEADERS_Signature]=createComboBox(ui->tableWidget_IMAGE_NT_HEADERS,XPE::getImageNtHeadersSignaturesS(),SPE::TYPE_IMAGE_NT_HEADERS,N_IMAGE_NT_HEADERS::Signature,XComboBoxEx::CBTYPE_NORMAL);
@@ -897,7 +897,7 @@ void PEWidget::reloadData()
         }
         else if(nType==SPE::TYPE_IMAGE_FILE_HEADER)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 createHeaderTable(SPE::TYPE_IMAGE_FILE_HEADER,ui->tableWidget_IMAGE_FILE_HEADER,N_IMAGE_FILE_HEADER::records,lineEdit_IMAGE_FILE_HEADER,N_IMAGE_FILE_HEADER::__data_size,0);
                 comboBox[CB_IMAGE_FILE_HEADER_Machine]=createComboBox(ui->tableWidget_IMAGE_FILE_HEADER,XPE::getImageFileHeaderMachinesS(),SPE::TYPE_IMAGE_FILE_HEADER,N_IMAGE_FILE_HEADER::Machine,XComboBoxEx::CBTYPE_NORMAL);
@@ -935,7 +935,7 @@ void PEWidget::reloadData()
         }
         else if(nType==SPE::TYPE_IMAGE_OPTIONAL_HEADER)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 createHeaderTable(SPE::TYPE_IMAGE_OPTIONAL_HEADER,ui->tableWidget_IMAGE_OPTIONAL_HEADER,pe.is64()?(N_IMAGE_OPTIONAL_HEADER::records64):(N_IMAGE_OPTIONAL_HEADER::records32),lineEdit_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::__data_size,0);
                 comboBox[CB_IMAGE_OPTIONAL_HEADER_Magic]=createComboBox(ui->tableWidget_IMAGE_OPTIONAL_HEADER,XPE::getImageOptionalHeaderMagicS(),SPE::TYPE_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::Magic,XComboBoxEx::CBTYPE_NORMAL);
@@ -1057,7 +1057,7 @@ void PEWidget::reloadData()
         }
         else if(nType==SPE::TYPE_IMAGE_DIRECTORY_ENTRIES)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 createSectionTable(SPE::TYPE_IMAGE_DIRECTORY_ENTRIES,ui->tableWidget_IMAGE_DIRECTORY_ENTRIES,N_IMAGE_DIRECORIES::records,N_IMAGE_DIRECORIES::__data_size);
 
@@ -1138,7 +1138,7 @@ void PEWidget::reloadData()
         }
         else if(nType==SPE::TYPE_SECTIONS)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 PEProcessData peProcessData(SPE::TYPE_SECTIONS,&tvModel[SPE::TYPE_SECTIONS],&pe,0,0,0);
 
@@ -1154,7 +1154,7 @@ void PEWidget::reloadData()
         }
         else if(nType==SPE::TYPE_EXPORT)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 createHeaderTable(SPE::TYPE_EXPORT,ui->tableWidget_ExportHeader,N_IMAGE_EXPORT::records,lineEdit_EXPORT,N_IMAGE_EXPORT::__data_size,0);
 
@@ -1210,7 +1210,7 @@ void PEWidget::reloadData()
         }
         else if(nType==SPE::TYPE_IMPORT)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 XBinary::_MEMORY_MAP memoryMap=pe.getMemoryMap();
 
@@ -1231,7 +1231,7 @@ void PEWidget::reloadData()
         }
         else if(nType==SPE::TYPE_RESOURCES)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 createListTable(SPE::TYPE_RESOURCES,ui->tableWidget_Resources,N_IMAGE_RESOURCES::records,lineEdit_Resources,N_IMAGE_RESOURCES::__data_size);
 
@@ -1244,7 +1244,7 @@ void PEWidget::reloadData()
         }
         else if(nType==SPE::TYPE_RESOURCE_VERSION)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 createHeaderTable(SPE::TYPE_RESOURCE_VERSION,ui->tableWidget_Resources_Version,N_IMAGE_RESOURCE_FIXEDFILEINFO::records,lineEdit_Version_FixedFileInfo,N_IMAGE_RESOURCE_FIXEDFILEINFO::__data_size,0);
 
@@ -1284,7 +1284,7 @@ void PEWidget::reloadData()
         }
         else if(nType==SPE::TYPE_RESOURCE_MANIFEST)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 ui->textEditResources_Manifest->clear();
 
@@ -1295,7 +1295,7 @@ void PEWidget::reloadData()
         }
         else if(nType==SPE::TYPE_EXCEPTION)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 PEProcessData peProcessData(SPE::TYPE_EXCEPTION,&tvModel[SPE::TYPE_EXCEPTION],&pe,0,0,0);
 
@@ -1311,7 +1311,7 @@ void PEWidget::reloadData()
         }
         else if(nType==SPE::TYPE_RELOCS)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 PEProcessData peProcessData(SPE::TYPE_RELOCS,&tvModel[SPE::TYPE_RELOCS],&pe,0,0,0);
 
@@ -1327,7 +1327,7 @@ void PEWidget::reloadData()
         }
         else if(nType==SPE::TYPE_DEBUG)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 PEProcessData peProcessData(SPE::TYPE_DEBUG,&tvModel[SPE::TYPE_DEBUG],&pe,0,0,0);
 
@@ -1343,7 +1343,7 @@ void PEWidget::reloadData()
         }
         else if(nType==SPE::TYPE_TLS)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 createHeaderTable(SPE::TYPE_TLS,ui->tableWidget_TLS,pe.is64()?(N_IMAGE_TLS::records64):(N_IMAGE_TLS::records32),lineEdit_TLS,N_IMAGE_TLS::__data_size,0);
 
@@ -1408,7 +1408,7 @@ void PEWidget::reloadData()
         }
         else if(nType==SPE::TYPE_LOADCONFIG)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 createHeaderTable(SPE::TYPE_LOADCONFIG,ui->tableWidget_LoadConfig,pe.is64()?(N_IMAGE_LOADCONFIG::records64):(N_IMAGE_LOADCONFIG::records32),lineEdit_LoadConfig,N_IMAGE_LOADCONFIG::__data_size,0);
                 invWidget[INV_IMAGE_LOADCONFIG_SecurityCookie]=createInvWidget(ui->tableWidget_LoadConfig,SPE::TYPE_LOADCONFIG,N_IMAGE_LOADCONFIG::SecurityCookie,InvWidget::TYPE_HEX);
@@ -1480,7 +1480,7 @@ void PEWidget::reloadData()
         }
         else if(nType==SPE::TYPE_BOUNDIMPORT)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 PEProcessData peProcessData(SPE::TYPE_BOUNDIMPORT,&tvModel[SPE::TYPE_BOUNDIMPORT],&pe,0,0,0);
 
@@ -1494,7 +1494,7 @@ void PEWidget::reloadData()
         }
         else if(nType==SPE::TYPE_DELAYIMPORT)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 PEProcessData peProcessData(SPE::TYPE_DELAYIMPORT,&tvModel[SPE::TYPE_DELAYIMPORT],&pe,0,0,0);
 
@@ -1510,7 +1510,7 @@ void PEWidget::reloadData()
         }
         else if(nType==SPE::TYPE_NETHEADER)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 createHeaderTable(SPE::TYPE_NETHEADER,ui->tableWidget_NetHeader,N_IMAGE_NETHEADER::records,lineEdit_NetHeader,N_IMAGE_NETHEADER::__data_size,0);
 
@@ -1553,7 +1553,7 @@ void PEWidget::reloadData()
         }
         else if(nType==SPE::TYPE_NET_METADATA)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 createHeaderTable(SPE::TYPE_NET_METADATA,ui->tableWidget_Net_Metadata,N_IMAGE_NET_METADATA::records,lineEdit_Net_Metadata,N_IMAGE_NET_METADATA::__data_size,0);
 
@@ -1587,7 +1587,7 @@ void PEWidget::reloadData()
         }
         else if(nType==SPE::TYPE_NET_METADATA_STREAM)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 qint64 nOffset=nDataOffset;
                 qint64 nSize=nDataSize;
@@ -1598,7 +1598,7 @@ void PEWidget::reloadData()
         }
         else if(nType==SPE::TYPE_OVERLAY)
         {
-            if(!stInit.contains(sInit))
+            if(!g_stInit.contains(sInit))
             {
                 qint64 nOverLayOffset=pe.getOverlayOffset();
                 qint64 nOverlaySize=pe.getOverlaySize();
@@ -1610,7 +1610,7 @@ void PEWidget::reloadData()
         setReadonly(ui->checkBoxReadonly->isChecked());
     }
 
-    stInit.insert(sInit);
+    g_stInit.insert(sInit);
 }
 
 void PEWidget::on_tableView_Sections_customContextMenuRequested(const QPoint &pos)

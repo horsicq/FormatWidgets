@@ -83,6 +83,9 @@ void ELFWidget::reload()
     if(elf.isValid())
     {
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_HEX,QString("Hex")));
+#ifdef USE_DISASM
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_DISASM,tr("Disasm")));
+#endif
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_STRINGS,tr("Strings")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_MEMORYMAP,tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_ENTROPY,tr("Entropy")));
@@ -293,6 +296,18 @@ void ELFWidget::reloadData()
                 ui->widgetHex->reload();
             }
         }
+#ifdef USE_DISASM
+//        else if(nType==SELF::TYPE_DISASM)
+//        {
+//            if(!g_stInit.contains(sInit))
+//            {
+//                pDisasmWidget->setData(getDevice(),0,0,true);
+//                pDisasmWidget->goToEntryPoint();
+//            }
+
+//            pDisasmWidget->setBackupFileName(getOptions()->sBackupFileName);
+//        }
+#endif
         else if(nType==SELF::TYPE_STRINGS)
         {
             if(!g_stInit.contains(sInit))
@@ -1065,4 +1080,36 @@ void ELFWidget::on_tableView_Rel_customContextMenuRequested(const QPoint &pos)
 
         contextMenu.exec(ui->tableView_Rel->viewport()->mapToGlobal(pos));
     }
+}
+
+void ELFWidget::on_pushButtonHex_clicked()
+{
+    setTreeItem(ui->treeWidgetNavi,SELF::TYPE_HEX);
+}
+
+void ELFWidget::on_pushButtonDisasm_clicked()
+{
+#ifdef USE_DISASM
+    setTreeItem(ui->treeWidgetNavi,SELF::TYPE_DISASM);
+#endif
+}
+
+void ELFWidget::on_pushButtonStrings_clicked()
+{
+    setTreeItem(ui->treeWidgetNavi,SELF::TYPE_STRINGS);
+}
+
+void ELFWidget::on_pushButtonMemoryMap_clicked()
+{
+    setTreeItem(ui->treeWidgetNavi,SELF::TYPE_MEMORYMAP);
+}
+
+void ELFWidget::on_pushButtonEntropy_clicked()
+{
+    setTreeItem(ui->treeWidgetNavi,SELF::TYPE_ENTROPY);
+}
+
+void ELFWidget::on_pushButtonHeuristicScan_clicked()
+{
+    setTreeItem(ui->treeWidgetNavi,SELF::TYPE_HEURISTICSCAN);
 }

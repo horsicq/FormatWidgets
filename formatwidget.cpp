@@ -225,7 +225,7 @@ void FormatWidget::setItemEnable(QTableWidgetItem *pItem, bool bState)
 {
     if(!bState)
     {
-        pItem->setBackgroundColor(colDisabled);
+        pItem->setBackground(colDisabled);
     }
 }
 

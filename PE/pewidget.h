@@ -183,7 +183,7 @@ private:
 #ifdef USE_DISASM
     XDisasmWidget *pDisasmWidget;
 #endif
-    QSet<QString> stInit;
+    QSet<QString> g_stInit;
     qint32 nLastType;
     QString sLastInit;
 };
