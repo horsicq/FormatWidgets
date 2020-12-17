@@ -113,9 +113,9 @@ void ELFWidget::reload()
 
             ui->treeWidgetNavi->addTopLevelItem(pItemPrograms);
 
-            QList<XBinary::DATASET> listDS=elf.getDatasetsFromPrograms(&listProgramHeaders);
+            QList<XBinary::DATASET> listDataSets=elf.getDatasetsFromPrograms(&listProgramHeaders);
 
-            addDatasets(&elf,pItemPrograms,&listDS);
+            addDatasets(&elf,pItemPrograms,&listDataSets);
         }
 
         ui->treeWidgetNavi->expandAll();
@@ -297,16 +297,19 @@ void ELFWidget::reloadData()
             }
         }
 #ifdef USE_DISASM
-//        else if(nType==SELF::TYPE_DISASM)
-//        {
-//            if(!g_stInit.contains(sInit))
-//            {
-//                pDisasmWidget->setData(getDevice(),0,0,true);
-//                pDisasmWidget->goToEntryPoint();
-//            }
+        else if(nType==SELF::TYPE_DISASM)
+        {
+            if(!g_stInit.contains(sInit))
+            {
+                XDisasmView::OPTIONS disasmOptions={};
+                disasmOptions.memoryMap=elf.getMemoryMap();
+
+                ui->widgetDisasm->setData(getDevice(),disasmOptions);
+                ui->widgetDisasm->goToAddress(elf.getEntryPointAddress());
+            }
 
 //            pDisasmWidget->setBackupFileName(getOptions()->sBackupFileName);
-//        }
+        }
 #endif
         else if(nType==SELF::TYPE_STRINGS)
         {

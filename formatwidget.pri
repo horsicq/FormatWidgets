@@ -89,9 +89,9 @@ contains(XCONFIG, use_disasm) {
         include($$PWD/../XDisasm/xdisasm.pri)
     }
 
-    !contains(XCONFIG, xcapstone) {
-        XCONFIG += xcapstone
-        include($$PWD/../XCapstone/xcapstone.pri)
+    !contains(XCONFIG, xdisasmview) {
+        XCONFIG += xdisasmview
+        include($$PWD/../XDisasmView/xdisasmview.pri)
     }
 }
 
