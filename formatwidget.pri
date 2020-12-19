@@ -88,11 +88,11 @@ contains(XCONFIG, use_disasm) {
         XCONFIG += xdisasm
         include($$PWD/../XDisasm/xdisasm.pri)
     }
+}
 
-    !contains(XCONFIG, xdisasmview) {
-        XCONFIG += xdisasmview
-        include($$PWD/../XDisasmView/xdisasmview.pri)
-    }
+!contains(XCONFIG, xdisasmview) {
+    XCONFIG += xdisasmview
+    include($$PWD/../XDisasmView/xdisasmview.pri)
 }
 
 contains(XCONFIG, use_extrabuttons) {
