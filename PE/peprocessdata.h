@@ -21,7 +21,6 @@
 #ifndef PEPROCESSDATA_H
 #define PEPROCESSDATA_H
 
-#include <QObject>
 #include "processdata.h"
 #include "pe_defs.h"
 
