@@ -21,7 +21,6 @@
 #ifndef SEARCHSTRINGS_H
 #define SEARCHSTRINGS_H
 
-#include <QObject>
 #include <QIODevice>
 #include <QElapsedTimer>
 #include <QStandardItemModel>
