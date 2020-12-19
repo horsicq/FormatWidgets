@@ -21,7 +21,6 @@
 #ifndef LEPROCESSDATA_H
 #define LEPROCESSDATA_H
 
-#include <QObject>
 #include "processdata.h"
 #include "le_defs.h"
 
