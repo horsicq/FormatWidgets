@@ -21,7 +21,6 @@
 #ifndef NEPROCESSDATA_H
 #define NEPROCESSDATA_H
 
-#include <QObject>
 #include "processdata.h"
 #include "ne_defs.h"
 
