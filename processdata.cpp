@@ -33,19 +33,19 @@ void ProcessData::stop()
 void ProcessData::setMaximum(quint64 nMaximum)
 {
     this->g_nMaximum=nMaximum;
-    _nProcent=nMaximum/100;
-    _nCurrentProcent=0;
-    _nValue=0;
+    g_nProcent=nMaximum/100;
+    g_nCurrentProcent=0;
+    g_nValue=0;
 }
 
 void ProcessData::incValue()
 {
-    _nValue++;
+    g_nValue++;
 
-    if(_nValue>((_nCurrentProcent+1)*_nProcent))
+    if(g_nValue>((g_nCurrentProcent+1)*g_nProcent))
     {
-        _nCurrentProcent++;
-        emit progressValue(_nCurrentProcent);
+        g_nCurrentProcent++;
+        emit progressValue(g_nCurrentProcent);
     }
 }
 

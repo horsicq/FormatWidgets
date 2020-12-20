@@ -57,9 +57,9 @@ signals:
 private:
     bool g_bIsStop;
     quint64 g_nMaximum;
-    quint64 _nValue;
-    quint64 _nProcent;
-    qint32 _nCurrentProcent;
+    quint64 g_nValue;
+    quint64 g_nProcent;
+    qint32 g_nCurrentProcent;
 };
 
 #endif // PROCESSDATA_H
