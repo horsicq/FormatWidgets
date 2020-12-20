@@ -21,7 +21,6 @@
 #ifndef PROCESSDATA_H
 #define PROCESSDATA_H
 
-#include <QObject>
 #include <QTableView>
 #include <QTreeView>
 #include <QStandardItemModel>
