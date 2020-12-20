@@ -51,9 +51,9 @@ signals:
     void showHex(qint64 nOffset,qint64 nSize);
 
 private:
-    qint64 _nOffset;
-    qint64 _nSize;
-    QPushButton *_pHexPushButton;
+    qint64 g_nOffset;
+    qint64 g_nSize;
+    QPushButton *g_pHexPushButton;
 };
 
 #define PInvWidget InvWidget *

@@ -23,24 +23,24 @@
 InvWidget::InvWidget(QWidget *pParent, TYPE type) :
     QWidget(pParent)
 {
-    _pHexPushButton=0;
+    g_pHexPushButton=0;
 
     QHBoxLayout *pLayot=new QHBoxLayout(this);
     pLayot->setContentsMargins(0,0,0,0);
 
     if(type==TYPE_HEX)
     {
-        _pHexPushButton=new QPushButton(QString("Hex"),this);
+        g_pHexPushButton=new QPushButton(QString("Hex"),this);
 
-        connect(_pHexPushButton,SIGNAL(clicked()),this,SLOT(showHexSlot()));
+        connect(g_pHexPushButton,SIGNAL(clicked()),this,SLOT(showHexSlot()));
 
-        pLayot->addWidget(_pHexPushButton);
+        pLayot->addWidget(g_pHexPushButton);
     }
 
     setLayout(pLayot);
 
-    _nOffset=0;
-    _nSize=0;
+    g_nOffset=0;
+    g_nSize=0;
 }
 
 InvWidget::~InvWidget()
@@ -54,15 +54,15 @@ void InvWidget::setOffsetAndSize(XBinary *pBinary, qint64 nOffset, qint64 nSize)
     {
         _setEnabled(true);
 
-        this->_nOffset=nOffset;
-        this->_nSize=nSize;
+        this->g_nOffset=nOffset;
+        this->g_nSize=nSize;
     }
     else
     {
         _setEnabled(false);
 
-        this->_nOffset=0;
-        this->_nSize=0;
+        this->g_nOffset=0;
+        this->g_nSize=0;
     }
 }
 
@@ -74,27 +74,27 @@ void InvWidget::setAddressAndSize(XBinary *pBinary, qint64 nAddress, qint64 nSiz
     {
         _setEnabled(true);
 
-        this->_nOffset=pBinary->addressToOffset(&memoryMap,nAddress);
-        this->_nSize=nSize;
+        this->g_nOffset=pBinary->addressToOffset(&memoryMap,nAddress);
+        this->g_nSize=nSize;
     }
     else
     {
         _setEnabled(false);
 
-        this->_nOffset=0;
-        this->_nSize=0;
+        this->g_nOffset=0;
+        this->g_nSize=0;
     }
 }
 
 void InvWidget::_setEnabled(bool bState)
 {
-    if(_pHexPushButton)
+    if(g_pHexPushButton)
     {
-        _pHexPushButton->setEnabled(bState);
+        g_pHexPushButton->setEnabled(bState);
     }
 }
 
 void InvWidget::showHexSlot()
 {
-    emit showHex(_nOffset,_nSize);
+    emit showHex(g_nOffset,g_nSize);
 }
