@@ -142,7 +142,7 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QHexViewWidget" name="widgetHex" native="true"/>
+         <widget class="XHexViewWidget" name="widgetHex" native="true"/>
         </item>
        </layout>
       </widget>
@@ -843,12 +843,6 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>QHexViewWidget</class>
-   <extends>QWidget</extends>
-   <header>qhexviewwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>SearchStringsWidget</class>
    <extends>QWidget</extends>
    <header>searchstringswidget.h</header>
@@ -876,6 +870,12 @@
    <class>XMultiDisasmWidget</class>
    <extends>QWidget</extends>
    <header>xmultidisasmwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>XHexViewWidget</class>
+   <extends>QWidget</extends>
+   <header>xhexviewwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

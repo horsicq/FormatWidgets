@@ -204,9 +204,9 @@ void FormatWidget::setHeaderTableSelection(ToolsWidget *pToolWidget, QTableWidge
 
         if(nOffset!=-1)
         {
-            qint64 nAddress=pToolWidget->getBaseAddress()+nOffset;
+//            qint64 nAddress=pToolWidget->getStartAddress()+nOffset;
 
-            pToolWidget->setSelection(nAddress,nSize);
+            pToolWidget->setSelection(nOffset,nSize);
         }
     }
 }
@@ -430,21 +430,17 @@ void FormatWidget::setEdited(bool bState)
 void FormatWidget::showHex(qint64 nOffset, qint64 nSize)
 {
     // mb TODO StartAddress
-    QHexView::OPTIONS hexOptions={};
+    XHexView::OPTIONS hexOptions={};
 
-    XBinary binary(g_pDevice,true,g_fwOptions.nImageBase);
-
-    hexOptions.memoryMap=binary.getMemoryMap();
-    hexOptions.sBackupFileName=g_fwOptions.sBackupFileName;
-    hexOptions.nStartAddress=nOffset;
-    hexOptions.nStartSelectionAddress=nOffset;
+    hexOptions.nStartAddress=0;
+    hexOptions.nStartSelectionOffset=nOffset;
     hexOptions.nSizeOfSelection=nSize;
 
-    DialogHex dialogHex(this,g_pDevice,&hexOptions);
+    DialogHexView dialogHexView(this,g_pDevice,hexOptions);
 
-    connect(&dialogHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+    connect(&dialogHexView,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
 
-    dialogHex.exec();
+    dialogHexView.exec();
 
     reloadData();
 }

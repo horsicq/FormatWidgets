@@ -381,11 +381,11 @@ void FormatsWidget::on_pushButtonHexEntryPoint_clicked()
 
     if(XBinary::tryToOpen(&file))
     {
-        QHexView::OPTIONS hexOptions={};
-        hexOptions.sBackupFileName=XBinary::getBackupName(&file);
-        hexOptions.nStartAddress=XFormats::getEntryPointOffset(getCurrentFileType(),&file);
+        XHexView::OPTIONS hexOptions={};
+//        hexOptions.sBackupFileName=XBinary::getBackupName(&file);
+        hexOptions.nStartSelectionOffset=XFormats::getEntryPointOffset(getCurrentFileType(),&file);
 
-        DialogHex dialogHex(this,&file,&hexOptions);
+        DialogHexView dialogHex(this,&file,hexOptions);
 
         dialogHex.exec();
 

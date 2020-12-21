@@ -32,16 +32,12 @@
 #include "xlineedithex.h"
 #include "xcomboboxex.h"
 #include "xdatetimeeditx.h"
-#include "qhexview.h"
 #include "invwidget.h"
-#include "dialoghex.h"
+#include "dialoghexview.h"
 #include "dialogentropy.h"
 #include "toolswidget.h"
 #include "formatwidget_def.h"
 #include "dialogprocessdata.h"
-#ifdef USE_DISASM
-#include "xdisasmwidget.h"
-#endif
 
 class FormatWidget : public QWidget
 {

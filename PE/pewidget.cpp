@@ -768,7 +768,7 @@ void PEWidget::reloadData()
             if(!g_stInit.contains(sInit))
             {
                 ui->widgetHex->setData(getDevice());
-                ui->widgetHex->setBackupFileName(getOptions()->sBackupFileName);
+//                ui->widgetHex->setBackupFileName(getOptions()->sBackupFileName);
                 // TODO save directory
                 ui->widgetHex->enableReadOnly(false);
                 connect(ui->widgetHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));

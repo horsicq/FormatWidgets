@@ -32,18 +32,12 @@ ToolsWidget::ToolsWidget(QWidget *pParent) :
 
 void ToolsWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions)
 {
-    hexOptions={};
+    XHexView::OPTIONS hexOptions={};
+    hexOptions.nStartAddress=pOptions->nImageBase;
 
-    XBinary binary(pDevice,true,pOptions->nImageBase);
-
-    hexOptions.memoryMap=binary.getMemoryMap();
-
-    hexOptions.sBackupFileName=pOptions->sBackupFileName;
-
-    ui->widgetHex->enableHeader(true);
     ui->widgetHex->enableReadOnly(false);
 
-    ui->widgetHex->setData(pDevice,&hexOptions);
+    ui->widgetHex->setData(pDevice,hexOptions);
 
     stringsOptions={};
     stringsOptions.nBaseAddress=pOptions->nImageBase;
@@ -80,14 +74,14 @@ void ToolsWidget::reload()
     }
 }
 
-qint64 ToolsWidget::getBaseAddress()
+qint64 ToolsWidget::getStartAddress()
 {
-    return ui->widgetHex->getBaseAddress();
+    return ui->widgetHex->getStartAddress();
 }
 
-void ToolsWidget::setSelection(qint64 nAddress, qint64 nSize)
+void ToolsWidget::setSelection(qint64 nOffset, qint64 nSize)
 {
-    ui->widgetHex->setSelection(nAddress,nSize);
+    ui->widgetHex->setSelection(nOffset,nSize);
 }
 
 ToolsWidget::~ToolsWidget()

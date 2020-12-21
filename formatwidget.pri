@@ -46,11 +46,6 @@ FORMS += \
     include($$PWD/../Controls/xdatetimeeditx.pri)
 }
 
-!contains(XCONFIG, qhexview) {
-    XCONFIG += qhexview
-    include($$PWD/../QHexView/qhexview.pri)
-}
-
 !contains(XCONFIG, xhexview) {
     XCONFIG += xhexview
     include($$PWD/../XHexView/xhexview.pri)
@@ -79,15 +74,6 @@ FORMS += \
 !contains(XCONFIG, xhashwidget) {
     XCONFIG += xhashwidget
     include($$PWD/../XHashWidget/xhashwidget.pri)
-}
-
-contains(XCONFIG, use_disasm) {
-    DEFINES += USE_DISASM
-
-    !contains(XCONFIG, xdisasm) {
-        XCONFIG += xdisasm
-        include($$PWD/../XDisasm/xdisasm.pri)
-    }
 }
 
 !contains(XCONFIG, xdisasmview) {

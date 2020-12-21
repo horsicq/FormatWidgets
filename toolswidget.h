@@ -23,7 +23,7 @@
 
 #include <QWidget>
 #include "searchstringswidget.h"
-#include "qhexview.h"
+#include "xhexview.h"
 #include "formatwidget_def.h"
 
 namespace Ui
@@ -43,8 +43,8 @@ public:
     void setEdited(bool bState);
     void setReadonly(bool bState);
     void reload();
-    qint64 getBaseAddress();
-    void setSelection(qint64 nAddress,qint64 nSize);
+    qint64 getStartAddress();
+    void setSelection(qint64 nOffset, qint64 nSize);
 
 signals:
     void editState(bool bState);
@@ -54,7 +54,6 @@ private slots:
 
 private:
     Ui::ToolsWidget *ui;
-    QHexView::OPTIONS hexOptions;
     SearchStrings::OPTIONS stringsOptions;
 };
 

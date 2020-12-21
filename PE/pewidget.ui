@@ -134,7 +134,7 @@
      </widget>
      <widget class="QStackedWidget" name="stackedWidgetInfo">
       <property name="currentIndex">
-       <number>3</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="page_HEX">
        <layout class="QVBoxLayout" name="verticalLayout_13">
@@ -154,7 +154,7 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QHexViewWidget" name="widgetHex" native="true"/>
+         <widget class="XHexViewWidget" name="widgetHex" native="true"/>
         </item>
        </layout>
       </widget>
@@ -1504,12 +1504,6 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>QHexViewWidget</class>
-   <extends>QWidget</extends>
-   <header>qhexviewwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>SearchStringsWidget</class>
    <extends>QWidget</extends>
    <header>searchstringswidget.h</header>
@@ -1536,6 +1530,12 @@
    <class>XMemoryMapWidget</class>
    <extends>QWidget</extends>
    <header>xmemorymapwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>XHexViewWidget</class>
+   <extends>QWidget</extends>
+   <header>xhexviewwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

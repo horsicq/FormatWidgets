@@ -83,9 +83,7 @@ void ELFWidget::reload()
     if(elf.isValid())
     {
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_HEX,QString("Hex")));
-#ifdef USE_DISASM
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_DISASM,tr("Disasm")));
-#endif
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_STRINGS,tr("Strings")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_MEMORYMAP,tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_ENTROPY,tr("Entropy")));
@@ -289,14 +287,13 @@ void ELFWidget::reloadData()
             if(!g_stInit.contains(sInit))
             {
                 ui->widgetHex->setData(getDevice());
-                ui->widgetHex->setBackupFileName(getOptions()->sBackupFileName);
+//                ui->widgetHex->setBackupFileName(getOptions()->sBackupFileName);
                 ui->widgetHex->enableReadOnly(false);
                 connect(ui->widgetHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
 
                 ui->widgetHex->reload();
             }
         }
-#ifdef USE_DISASM
         else if(nType==SELF::TYPE_DISASM)
         {
             if(!g_stInit.contains(sInit))
@@ -310,7 +307,6 @@ void ELFWidget::reloadData()
 
 //            pDisasmWidget->setBackupFileName(getOptions()->sBackupFileName);
         }
-#endif
         else if(nType==SELF::TYPE_STRINGS)
         {
             if(!g_stInit.contains(sInit))
@@ -1092,9 +1088,7 @@ void ELFWidget::on_pushButtonHex_clicked()
 
 void ELFWidget::on_pushButtonDisasm_clicked()
 {
-#ifdef USE_DISASM
     setTreeItem(ui->treeWidgetNavi,SELF::TYPE_DISASM);
-#endif
 }
 
 void ELFWidget::on_pushButtonStrings_clicked()
