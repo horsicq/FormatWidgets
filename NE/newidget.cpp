@@ -84,6 +84,7 @@ void NEWidget::reload()
     if(ne.isValid())
     {
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_HEX,QString("Hex")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_DISASM,tr("Disasm")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_STRINGS,tr("Strings")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_MEMORYMAP,tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_ENTROPY,tr("Entropy")));
@@ -318,6 +319,13 @@ void NEWidget::reloadData()
                 ui->widgetHex->enableReadOnly(false);
                 connect(ui->widgetHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
                 ui->widgetHex->reload();
+            }
+        }
+        else if(nType==SNE::TYPE_DISASM)
+        {
+            if(!g_stInit.contains(sInit))
+            {
+                ui->widgetDisasm->setData(getDevice(),XBinary::FT_NE,ne.getEntryPointAddress());
             }
         }
         else if(nType==SNE::TYPE_STRINGS)

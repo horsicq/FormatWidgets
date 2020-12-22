@@ -28,12 +28,6 @@ PEWidget::PEWidget(QWidget *pParent) :
     ui->setupUi(this);
 
 #ifndef USE_EXTRABUTTONS
-#ifdef USE_DISASM
-    pDisasmWidget=new XDisasmWidget(this);
-    ui->layot_Disasm->addWidget(pDisasmWidget);
-#else
-    ui->pushButtonDisasm->hide();
-#endif
     ui->pushButtonHex->hide();
     ui->pushButtonEntropy->hide();
     ui->pushButtonStrings->hide();
@@ -103,9 +97,7 @@ void PEWidget::reload()
     if(pe.isValid())
     {
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_HEX,QString("Hex")));
-#ifdef USE_DISASM
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_DISASM,tr("Disasm")));
-#endif
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_STRINGS,tr("Strings")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_MEMORYMAP,tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_ENTROPY,tr("Entropy")));
@@ -775,18 +767,15 @@ void PEWidget::reloadData()
                 ui->widgetHex->reload();
             }
         }
-#ifdef USE_DISASM
         else if(nType==SPE::TYPE_DISASM)
         {
             if(!g_stInit.contains(sInit))
             {
-                pDisasmWidget->setData(getDevice(),0,0,true);
-                pDisasmWidget->goToEntryPoint();
+                ui->widgetDisasm->setData(getDevice(),XBinary::FT_PE,pe.getEntryPointAddress());
             }
 
-            pDisasmWidget->setBackupFileName(getOptions()->sBackupFileName);
+//            pDisasmWidget->setBackupFileName(getOptions()->sBackupFileName);
         }
-#endif
         else if(nType==SPE::TYPE_STRINGS)
         {
             if(!g_stInit.contains(sInit))
@@ -2261,9 +2250,7 @@ void PEWidget::on_pushButtonHeuristicScan_clicked()
 
 void PEWidget::on_pushButtonDisasm_clicked()
 {
-#ifdef USE_DISASM
     setTreeItem(ui->treeWidgetNavi,SPE::TYPE_DISASM);
-#endif
 }
 
 void PEWidget::on_tableWidget_Net_Metadata_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)

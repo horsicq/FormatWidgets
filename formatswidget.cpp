@@ -362,11 +362,10 @@ void FormatsWidget::on_pushButtonDisasm_clicked()
 
     if(file.open(QIODevice::ReadOnly))
     {
-        XDisasmModel::SHOWOPTIONS showOptions={};
-        XDisasm::OPTIONS disasmOptions={};
-        disasmOptions.fileType=getCurrentFileType();
+//        XDisasmView::OPTIONS disasmOptions={};
+//        disasmOptions.fileType=getCurrentFileType();
 
-        DialogDisasm dialogDisasm(this,&file,&showOptions,&disasmOptions); // TODO File_Type
+        DialogMultiDisasm dialogDisasm(this); // TODO File_Type
 
         dialogDisasm.exec();
 

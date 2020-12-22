@@ -82,6 +82,7 @@ void MSDOSWidget::reload()
     if(msdos.isValid())
     {
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_HEX,QString("Hex")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_DISASM,tr("Disasm")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_STRINGS,tr("Strings")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_MEMORYMAP,tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_ENTROPY,tr("Entropy")));
@@ -221,6 +222,13 @@ void MSDOSWidget::reloadData()
 //                ui->widgetHex->setBackupFileName(getOptions()->sBackupFileName);
                 ui->widgetHex->enableReadOnly(false);
                 connect(ui->widgetHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+            }
+        }
+        else if(nType==SMSDOS::TYPE_DISASM)
+        {
+            if(!g_stInit.contains(sInit))
+            {
+                ui->widgetDisasm->setData(getDevice(),XBinary::FT_MSDOS,msdos.getEntryPointAddress());
             }
         }
         else if(nType==SMSDOS::TYPE_STRINGS)

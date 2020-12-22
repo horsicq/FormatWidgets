@@ -77,6 +77,7 @@ void MACHWidget::reload()
     if(mach.isValid())
     {
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_HEX,QString("Hex")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_DISASM,tr("Disasm")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_STRINGS,tr("Strings")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_MEMORYMAP,tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_ENTROPY,tr("Entropy")));
@@ -248,6 +249,13 @@ void MACHWidget::reloadData()
 //                ui->widgetHex->setBackupFileName(getOptions()->sBackupFileName);
                 ui->widgetHex->enableReadOnly(false);
                 connect(ui->widgetHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+            }
+        }
+        else if(nType==SMACH::TYPE_DISASM)
+        {
+            if(!g_stInit.contains(sInit))
+            {
+                ui->widgetDisasm->setData(getDevice(),XBinary::FT_MACHO,mach.getEntryPointAddress());
             }
         }
         else if(nType==SMACH::TYPE_STRINGS)

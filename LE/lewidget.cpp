@@ -84,6 +84,7 @@ void LEWidget::reload()
     if(le.isValid())
     {
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_HEX,QString("Hex")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_DISASM,tr("Disasm")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_STRINGS,tr("Strings")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_MEMORYMAP,tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_ENTROPY,tr("Entropy")));
@@ -310,6 +311,13 @@ void LEWidget::reloadData()
                 connect(ui->widgetHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
 
                 ui->widgetHex->reload();
+            }
+        }
+        else if(nType==SLE::TYPE_DISASM)
+        {
+            if(!g_stInit.contains(sInit))
+            {
+                ui->widgetDisasm->setData(getDevice(),XBinary::FT_LE,le.getEntryPointAddress());
             }
         }
         else if(nType==SLE::TYPE_STRINGS)

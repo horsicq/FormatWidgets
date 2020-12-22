@@ -30,7 +30,7 @@
 #include "dialogpe.h"
 #include "dialogelf.h"
 #include "dialogmach.h"
-#include "dialogdisasm.h"
+#include "dialogmultidisasm.h"
 #include "dialogdex.h"
 #include "dialogarchive.h"
 #include "dialogtextinfo.h"

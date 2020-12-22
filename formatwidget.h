@@ -38,6 +38,7 @@
 #include "toolswidget.h"
 #include "formatwidget_def.h"
 #include "dialogprocessdata.h"
+#include "xmultidisasmwidget.h"
 
 class FormatWidget : public QWidget
 {

@@ -298,11 +298,7 @@ void ELFWidget::reloadData()
         {
             if(!g_stInit.contains(sInit))
             {
-                XDisasmView::OPTIONS disasmOptions={};
-                disasmOptions.memoryMap=elf.getMemoryMap();
-
-                ui->widgetDisasm->setData(getDevice(),disasmOptions);
-                ui->widgetDisasm->goToAddress(elf.getEntryPointAddress());
+                ui->widgetDisasm->setData(getDevice(),XBinary::FT_ELF,elf.getEntryPointAddress());
             }
 
 //            pDisasmWidget->setBackupFileName(getOptions()->sBackupFileName);

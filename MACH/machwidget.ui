@@ -110,6 +110,25 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="page_Disasm">
+       <layout class="QVBoxLayout" name="verticalLayout_12">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="XMultiDisasmWidget" name="widgetDisasm" native="true"/>
+        </item>
+       </layout>
+      </widget>
       <widget class="QWidget" name="page_Strings">
        <layout class="QVBoxLayout" name="verticalLayout_9">
         <property name="leftMargin">
@@ -447,21 +466,9 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>XHexViewWidget</class>
-   <extends>QWidget</extends>
-   <header>xhexviewwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>SearchStringsWidget</class>
    <extends>QWidget</extends>
    <header>searchstringswidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>XMemoryMapWidget</class>
-   <extends>QWidget</extends>
-   <header>xmemorymapwidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
@@ -474,6 +481,24 @@
    <class>HeurWidget</class>
    <extends>QWidget</extends>
    <header>heurwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>XMemoryMapWidget</class>
+   <extends>QWidget</extends>
+   <header>xmemorymapwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>XHexViewWidget</class>
+   <extends>QWidget</extends>
+   <header>xhexviewwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>XMultiDisasmWidget</class>
+   <extends>QWidget</extends>
+   <header>xmultidisasmwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

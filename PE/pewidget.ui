@@ -134,7 +134,7 @@
      </widget>
      <widget class="QStackedWidget" name="stackedWidgetInfo">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="page_HEX">
        <layout class="QVBoxLayout" name="verticalLayout_13">
@@ -173,7 +173,7 @@
          <number>0</number>
         </property>
         <item>
-         <layout class="QVBoxLayout" name="layot_Disasm"/>
+         <widget class="XMultiDisasmWidget" name="widgetDisasm" native="true"/>
         </item>
        </layout>
       </widget>
@@ -1536,6 +1536,12 @@
    <class>XHexViewWidget</class>
    <extends>QWidget</extends>
    <header>xhexviewwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>XMultiDisasmWidget</class>
+   <extends>QWidget</extends>
+   <header>xmultidisasmwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

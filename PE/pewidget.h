@@ -180,9 +180,7 @@ private:
     InvWidget *invWidget[__INV_size];
     SubDevice *subDevice[SPE::__TYPE_size];
     QStandardItemModel *tvModel[SPE::__TYPE_size_ext];
-#ifdef USE_DISASM
-    XDisasmWidget *pDisasmWidget;
-#endif
+
     QSet<QString> g_stInit;
     qint32 nLastType;
     QString sLastInit;
