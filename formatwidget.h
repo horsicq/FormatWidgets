@@ -165,8 +165,8 @@ private:
     bool g_bIsReadonly;
     bool g_bIsEdited;
 
-    QColor colEnabled;
-    QColor colDisabled;
+    QColor g_colEnabled;
+    QColor g_colDisabled;
 };
 
 #endif // FORMATWIDGET_H

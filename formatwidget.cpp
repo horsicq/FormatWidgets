@@ -27,8 +27,8 @@ FormatWidget::FormatWidget(QWidget *pParent):
     g_fwOptions={};
     g_bIsEdited=false;
 
-    colDisabled=QWidget::palette().color(QPalette::Window);
-    colEnabled=QWidget::palette().color(QPalette::BrightText);
+    g_colDisabled=QWidget::palette().color(QPalette::Window);
+    g_colEnabled=QWidget::palette().color(QPalette::BrightText);
 }
 
 FormatWidget::FormatWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent):
@@ -213,19 +213,19 @@ void FormatWidget::setHeaderTableSelection(ToolsWidget *pToolWidget, QTableWidge
 
 QColor FormatWidget::getEnabledColor()
 {
-    return colEnabled;
+    return g_colEnabled;
 }
 
 QColor FormatWidget::getDisabledColor()
 {
-    return colDisabled;
+    return g_colDisabled;
 }
 
 void FormatWidget::setItemEnable(QTableWidgetItem *pItem, bool bState)
 {
     if(!bState)
     {
-        pItem->setBackground(colDisabled);
+        pItem->setBackground(g_colDisabled);
     }
 }
 
