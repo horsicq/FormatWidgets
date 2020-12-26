@@ -39,10 +39,10 @@ void ToolsWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions)
 
     ui->widgetHex->setData(pDevice,hexOptions);
 
-    stringsOptions={};
-    stringsOptions.nBaseAddress=pOptions->nImageBase;
+    g_stringsOptions={};
+    g_stringsOptions.nBaseAddress=pOptions->nImageBase;
 
-    ui->widgetStrings->setData(pDevice,&stringsOptions);
+    ui->widgetStrings->setData(pDevice,&g_stringsOptions);
 
     reload();
 }

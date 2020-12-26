@@ -54,7 +54,7 @@ private slots:
 
 private:
     Ui::ToolsWidget *ui;
-    SearchStrings::OPTIONS stringsOptions;
+    SearchStrings::OPTIONS g_stringsOptions;
 };
 
 #endif // TOOLSWIDGET_H
