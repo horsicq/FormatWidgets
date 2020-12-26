@@ -23,9 +23,9 @@
 FormatWidget::FormatWidget(QWidget *pParent):
     QWidget(pParent)
 {
-    bIsReadonly=false;
+    g_bIsReadonly=false;
     g_fwOptions={};
-    bIsEdited=false;
+    g_bIsEdited=false;
 
     colDisabled=QWidget::palette().color(QPalette::Window);
     colEnabled=QWidget::palette().color(QPalette::BrightText);
@@ -35,7 +35,7 @@ FormatWidget::FormatWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint3
     QWidget(pParent)
 {
     g_fwOptions={};
-    bIsEdited=false;
+    g_bIsEdited=false;
     setData(pDevice,pOptions,nNumber,nOffset,nType);
 }
 
@@ -56,7 +56,7 @@ void FormatWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint3
         g_fwOptions=*pOptions;
     }
 
-    bIsReadonly=!(pDevice->isWritable());
+    g_bIsReadonly=!(pDevice->isWritable());
 }
 
 QIODevice *FormatWidget::getDevice()
@@ -86,7 +86,7 @@ qint32 FormatWidget::getType()
 
 bool FormatWidget::isReadonly()
 {
-    return bIsReadonly;
+    return g_bIsReadonly;
 }
 
 QTreeWidgetItem *FormatWidget::createNewItem(int nType, QString sTitle, qint64 nOffset, qint64 nSize, qint64 nExtraOffset, qint64 nExtraSize)
@@ -139,7 +139,7 @@ QString FormatWidget::typeIdToString(int nType)
 
 bool FormatWidget::isEdited()
 {
-    return bIsEdited;
+    return g_bIsEdited;
 }
 
 bool FormatWidget::loadHexSubdevice(qint64 nOffset, qint64 nSize, qint64 nAddress,SubDevice **ppSubDevice,ToolsWidget *pToolsWidget)
@@ -420,7 +420,7 @@ void FormatWidget::textValueChanged(QString sText)
 
 void FormatWidget::setEdited(bool bState)
 {
-    bIsEdited=bState;
+    g_bIsEdited=bState;
 
     reset();
 
@@ -456,7 +456,7 @@ bool FormatWidget::saveBackup()
 {
     bool bResult=true;
     // TODO Check
-    if(!bIsEdited)
+    if(!g_bIsEdited)
     {
         // Save backup
         if(g_fwOptions.sBackupFileName!="")
