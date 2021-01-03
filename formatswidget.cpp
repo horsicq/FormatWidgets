@@ -131,26 +131,6 @@ void FormatsWidget::reload()
 
     if(file.open(QIODevice::ReadOnly))
     {
-        if( (fileType==XBinary::FT_BINARY)||
-            (fileType==XBinary::FT_DEX)||
-            (fileType==XBinary::FT_ZIP))
-        {
-            ui->groupBoxEntryPoint->hide();
-        }
-        else
-        {
-            ui->groupBoxEntryPoint->show();
-        }
-
-        if( (fileType==XBinary::FT_BINARY))
-        {
-            ui->groupBoxBaseAddress->hide();
-        }
-        else
-        {
-            ui->groupBoxBaseAddress->show();
-        }
-
         XBinary::_MEMORY_MAP memoryMap=XFormats::getMemoryMap(fileType,&file);
 
         if(memoryMap.mode==XBinary::MODE_16)
@@ -171,11 +151,13 @@ void FormatsWidget::reload()
         ui->lineEditMode->setText(XBinary::modeIdToString(memoryMap.mode));
         ui->lineEditType->setText(memoryMap.sType);
 
-        ui->pushButtonDisasm->setEnabled(XBinary::isX86asm(memoryMap.sArch));
-
         if(fileType==XBinary::FT_BINARY)
         {
+            XBinary binary(&file);
+
             ui->stackedWidgetMain->setCurrentIndex(TABINFO_BINARY);
+
+            ui->lineEditEntryPoint->setValue((quint32)binary.getEntryPointAddress());
         }
         else if(fileType==XBinary::FT_COM)
         {
