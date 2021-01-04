@@ -45,12 +45,8 @@ FormatsWidget::FormatsWidget(QWidget *pParent) :
 
 void FormatsWidget::setData(QString sFileName, bool bScan)
 {
-    const QSignalBlocker blocker(ui->comboBoxFileType);
-
     this->sFileName=sFileName;
     this->bScan=bScan;
-
-    ui->comboBoxFileType->clear();
 
     QSet<XBinary::FT> stFileTypes=XBinary::getFileTypes(sFileName,true);
 
@@ -58,27 +54,19 @@ void FormatsWidget::setData(QString sFileName, bool bScan)
 
     QList<XBinary::FT> listFileTypes=XBinary::_getFileTypeListFromSet(stFileTypes);
 
-    int nNumberOfFileTypes=listFileTypes.count();
+    XBinary::FT fileType=XBinary::FT_UNKNOWN;
 
-    for(int i=0;i<nNumberOfFileTypes;i++)
-    {
-        XBinary::FT fileType=listFileTypes.at(i);
-        ui->comboBoxFileType->addItem(XBinary::fileTypeIdToString(fileType),fileType);
-    }
-
-    if(nNumberOfFileTypes)
+    if(listFileTypes.size())
     {
         if(listFileTypes.at(0)==XBinary::FT_BINARY)
         {
-            ui->comboBoxFileType->setCurrentIndex(0);
+            fileType=XBinary::FT_BINARY;
         }
-        else
-        {
-            ui->comboBoxFileType->setCurrentIndex(nNumberOfFileTypes-1);
-        }
-
-        reload();
     }
+
+    XFormats::setFileTypeComboBox(ui->comboBoxFileType,&listFileTypes,fileType);
+
+    reload();
 }
 
 void FormatsWidget::setScanEngine(QString sScanEngine)
