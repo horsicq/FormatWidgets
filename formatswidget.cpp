@@ -133,15 +133,22 @@ void FormatsWidget::reload()
     {
         XBinary::_MEMORY_MAP memoryMap=XFormats::getMemoryMap(fileType,&file);
 
-        if(memoryMap.mode==XBinary::MODE_16)
+        XBinary::MODE mode=memoryMap.mode;
+
+        if(mode==XBinary::MODE_UNKNOWN)
+        {
+            mode=XBinary::getModeFromSize(file.size());
+        }
+
+        if(mode==XBinary::MODE_16)
         {
             ui->lineEditBaseAddress->setValue((quint16)memoryMap.nBaseAddress);
         }
-        else if((memoryMap.mode==XBinary::MODE_16SEG)||(memoryMap.mode==XBinary::MODE_32))
+        else if((mode==XBinary::MODE_16SEG)||(mode==XBinary::MODE_32))
         {
             ui->lineEditBaseAddress->setValue((quint32)memoryMap.nBaseAddress);
         }
-        else if(memoryMap.mode==XBinary::MODE_64)
+        else if(mode==XBinary::MODE_64)
         {
             ui->lineEditBaseAddress->setValue((quint64)memoryMap.nBaseAddress);
         }
