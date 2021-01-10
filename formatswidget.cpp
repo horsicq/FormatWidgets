@@ -1,4 +1,4 @@
-// Copyright (c) 2020 hors<horsicq@gmail.com>
+// Copyright (c) 2020-2021 hors<horsicq@gmail.com>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -123,12 +123,16 @@ void FormatsWidget::reload()
 
         XBinary::MODE mode=memoryMap.mode;
 
-        if(mode==XBinary::MODE_UNKNOWN)
+        if((mode==XBinary::MODE_UNKNOWN)||(mode==XBinary::MODE_DATA))
         {
             mode=XBinary::getModeFromSize(file.size());
         }
 
-        if(mode==XBinary::MODE_16)
+        if(mode==XBinary::MODE_8)
+        {
+            ui->lineEditBaseAddress->setValue((quint8)memoryMap.nBaseAddress);
+        }
+        else if(mode==XBinary::MODE_16)
         {
             ui->lineEditBaseAddress->setValue((quint16)memoryMap.nBaseAddress);
         }
@@ -168,10 +172,24 @@ void FormatsWidget::reload()
         else if(fileType==XBinary::FT_ZIP)
         {
             ui->stackedWidgetMain->setCurrentIndex(TABINFO_ZIP);
+
+            XZip xzip(&file);
+
+            if(xzip.isValid())
+            {
+                ui->lineEditEntryPoint->setValue(xzip.getEntryPointAddress());
+            }
         }
         else if(fileType==XBinary::FT_DEX)
         {
             ui->stackedWidgetMain->setCurrentIndex(TABINFO_DEX);
+
+            XDEX dex(&file);
+
+            if(dex.isValid())
+            {
+                ui->lineEditEntryPoint->setValue((quint16)dex.getEntryPointAddress());
+            }
         }
         else if(fileType==XBinary::FT_MSDOS)
         {
@@ -334,52 +352,62 @@ void FormatsWidget::scan()
 
 void FormatsWidget::on_pushButtonDisasm_clicked()
 {
-    QFile file;
-    file.setFileName(sFileName);
-
-    if(file.open(QIODevice::ReadOnly))
+    if(sFileName!="")
     {
-        DialogMultiDisasm dialogDisasm(this); // TODO File_Type
+        QFile file;
+        file.setFileName(sFileName);
 
-        dialogDisasm.setData(&file,getCurrentFileType(),ui->lineEditEntryPoint->getValue());
+        if(file.open(QIODevice::ReadOnly))
+        {
+            DialogMultiDisasm dialogDisasm(this); // TODO File_Type
 
-        dialogDisasm.exec();
+            dialogDisasm.setData(&file,getCurrentFileType(),ui->lineEditEntryPoint->getValue());
 
-        file.close();
+            dialogDisasm.exec();
+
+            file.close();
+        }
     }
 }
 
 void FormatsWidget::on_pushButtonHexEntryPoint_clicked()
 {
-    QFile file;
-    file.setFileName(sFileName);
-
-    if(XBinary::tryToOpen(&file))
+    if(sFileName!="")
     {
-        XHexView::OPTIONS hexOptions={};
-//        hexOptions.sBackupFileName=XBinary::getBackupName(&file);
-        hexOptions.nStartSelectionOffset=XFormats::getEntryPointOffset(getCurrentFileType(),&file);
+        QFile file;
+        file.setFileName(sFileName);
 
-        DialogHexView dialogHex(this,&file,hexOptions);
+        if(XBinary::tryToOpen(&file))
+        {
+            XHexView::OPTIONS hexOptions={};
+    //        hexOptions.sBackupFileName=XBinary::getBackupName(&file);
+            hexOptions.nStartSelectionOffset=XFormats::getEntryPointOffset(getCurrentFileType(),&file);
 
-        dialogHex.exec();
+            DialogHexView dialogHex(this,&file,hexOptions);
 
-        file.close();
+            dialogHex.exec();
+
+            file.close();
+        }
     }
+
 }
 
 void FormatsWidget::on_pushButtonMemoryMap_clicked()
 {
-    QFile file;
-    file.setFileName(sFileName);
-
-    if(file.open(QIODevice::ReadOnly))
+    if(sFileName!="")
     {
-        DialogMemoryMap dialogMemoryMap(this,&file,getCurrentFileType());
+        QFile file;
+        file.setFileName(sFileName);
 
-        dialogMemoryMap.exec();
+        if(file.open(QIODevice::ReadOnly))
+        {
+            DialogMemoryMap dialogMemoryMap(this,&file,getCurrentFileType());
 
-        file.close();
+            dialogMemoryMap.exec();
+
+            file.close();
+        }
     }
 }
 
