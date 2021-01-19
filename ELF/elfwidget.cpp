@@ -298,7 +298,7 @@ void ELFWidget::reloadData()
         {
             if(!g_stInit.contains(sInit))
             {
-                ui->widgetDisasm->setData(getDevice(),XBinary::FT_ELF,elf.getEntryPointAddress());
+                ui->widgetDisasm->setData(getDevice(),elf.getFileType(),elf.getEntryPointAddress());
             }
 
 //            pDisasmWidget->setBackupFileName(getOptions()->sBackupFileName);
