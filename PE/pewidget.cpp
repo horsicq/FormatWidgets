@@ -771,7 +771,7 @@ void PEWidget::reloadData()
         {
             if(!g_stInit.contains(sInit))
             {
-                ui->widgetDisasm->setData(getDevice(),XBinary::FT_PE,pe.getEntryPointAddress());
+                ui->widgetDisasm->setData(getDevice(),pe.getFileType(),pe.getEntryPointAddress());
             }
 
 //            pDisasmWidget->setBackupFileName(getOptions()->sBackupFileName);
