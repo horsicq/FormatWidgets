@@ -255,7 +255,7 @@ void MACHWidget::reloadData()
         {
             if(!g_stInit.contains(sInit))
             {
-                ui->widgetDisasm->setData(getDevice(),XBinary::FT_MACHO,mach.getEntryPointAddress());
+                ui->widgetDisasm->setData(getDevice(),mach.getFileType(),mach.getEntryPointAddress());
             }
         }
         else if(nType==SMACH::TYPE_STRINGS)
