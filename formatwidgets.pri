@@ -63,11 +63,6 @@ FORMS += \
     include($$PWD/DEX/dexwidget.pri)
 }
 
-!contains(XCONFIG, xdisasm) {
-    XCONFIG += xdisasm
-    include($$PWD/../XDisasm/xdisasm.pri)
-}
-
 !contains(XCONFIG, die_widget) {
     XCONFIG += die_widget
     include($$PWD/../die_widget/die_widget.pri)

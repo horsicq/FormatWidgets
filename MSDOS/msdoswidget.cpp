@@ -228,7 +228,7 @@ void MSDOSWidget::reloadData()
         {
             if(!g_stInit.contains(sInit))
             {
-                ui->widgetDisasm->setData(getDevice(),XBinary::FT_MSDOS,msdos.getEntryPointAddress());
+                ui->widgetDisasm->setData(getDevice(),msdos.getFileType(),msdos.getEntryPointAddress());
             }
         }
         else if(nType==SMSDOS::TYPE_STRINGS)
