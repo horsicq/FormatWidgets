@@ -325,7 +325,7 @@ void NEWidget::reloadData()
         {
             if(!g_stInit.contains(sInit))
             {
-                ui->widgetDisasm->setData(getDevice(),XBinary::FT_NE,ne.getEntryPointAddress());
+                ui->widgetDisasm->setData(getDevice(),ne.getFileType(),ne.getEntryPointAddress());
             }
         }
         else if(nType==SNE::TYPE_STRINGS)
