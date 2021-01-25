@@ -57,7 +57,7 @@
      <item>
       <widget class="QPushButton" name="pushButtonHex">
        <property name="text">
-        <string notr="true">Hex</string>
+        <string>Hex</string>
        </property>
       </widget>
      </item>
@@ -1498,6 +1498,11 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>XLineEditHEX</class>
+   <extends>QLineEdit</extends>
+   <header>xlineedithex.h</header>
+  </customwidget>
+  <customwidget>
    <class>ToolsWidget</class>
    <extends>QWidget</extends>
    <header>toolswidget.h</header>
@@ -1520,11 +1525,6 @@
    <extends>QWidget</extends>
    <header>heurwidget.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>XLineEditHEX</class>
-   <extends>QLineEdit</extends>
-   <header>xlineedithex.h</header>
   </customwidget>
   <customwidget>
    <class>XMemoryMapWidget</class>

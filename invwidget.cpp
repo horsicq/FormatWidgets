@@ -30,7 +30,7 @@ InvWidget::InvWidget(QWidget *pParent, TYPE type) :
 
     if(type==TYPE_HEX)
     {
-        g_pHexPushButton=new QPushButton(QString("Hex"),this);
+        g_pHexPushButton=new QPushButton(tr("Hex"),this);
 
         connect(g_pHexPushButton,SIGNAL(clicked()),this,SLOT(showHexSlot()));
 

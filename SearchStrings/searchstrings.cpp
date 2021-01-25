@@ -1,4 +1,4 @@
-// copyright (c) 2019-2020 hors<horsicq@gmail.com>
+// copyright (c) 2019-2021 hors<horsicq@gmail.com>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -328,7 +328,7 @@ void SearchStrings::processModel()
 
     g_bIsStop=false;
 
-    for(int i=0; (i<nNumberOfRecords)&&(!g_bIsStop); i++)
+    for(int i=0;(i<nNumberOfRecords)&&(!g_bIsStop);i++)
     {
         SearchStrings::RECORD record=g_pListRecords->at(i);
 

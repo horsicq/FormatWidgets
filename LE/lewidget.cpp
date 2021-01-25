@@ -83,7 +83,7 @@ void LEWidget::reload()
 
     if(le.isValid())
     {
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_HEX,QString("Hex")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_HEX,tr("Hex")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_DISASM,tr("Disasm")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_STRINGS,tr("Strings")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_MEMORYMAP,tr("Memory map")));
@@ -592,7 +592,7 @@ void LEWidget::on_tableView_Objects_customContextMenuRequested(const QPoint &pos
 //        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editSectionHeader()));
         contextMenu.addAction(&actionEdit);
 
-        QAction actionHex(QString("Hex"),this);
+        QAction actionHex(tr("Hex"),this);
 //        connect(&actionHex, SIGNAL(triggered()), this, SLOT(sectionHex()));
         actionHex.setEnabled(bIsEnable);
         contextMenu.addAction(&actionHex);
