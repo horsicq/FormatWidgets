@@ -101,6 +101,11 @@ void FormatsWidget::setDIEInfoPath(QString sDatabasePath)
     ui->pageScanDIE->setInfoPath(sDatabasePath);
 }
 
+void FormatsWidget::setShortcuts(XShortcuts *pShortcuts)
+{
+    g_pShortcuts=pShortcuts;
+}
+
 void FormatsWidget::on_comboBoxFileType_currentIndexChanged(int nIndex)
 {
     Q_UNUSED(nIndex)

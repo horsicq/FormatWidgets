@@ -77,3 +77,9 @@ FORMS += \
     XCONFIG += archive_widget
     include($$PWD/../archive_widget/archive_widget.pri)
 }
+
+!contains(XCONFIG, xshortcuts) {
+    XCONFIG += xshortcuts
+    include($$PWD/../XShortcuts/xshortcuts.pri)
+}
+

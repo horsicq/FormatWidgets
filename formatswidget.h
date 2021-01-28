@@ -34,6 +34,7 @@
 #include "dialogdex.h"
 #include "dialogarchive.h"
 #include "dialogtextinfo.h"
+#include "xshortcuts.h"
 
 namespace Ui {
 class FormatsWidget;
@@ -72,6 +73,7 @@ public:
     ~FormatsWidget();
     void setDIEDatabasePath(QString sDatabasePath);
     void setDIEInfoPath(QString sDatabasePath);
+    void setShortcuts(XShortcuts *pShortcuts);
 
 private slots:
     void on_comboBoxFileType_currentIndexChanged(int nIndex);
@@ -127,6 +129,7 @@ private:
     QString sFileName;
     bool bScan;
     QString sBackupFilename;
+    XShortcuts *g_pShortcuts;
 };
 
 #endif // FORMATSWIDGET_H
