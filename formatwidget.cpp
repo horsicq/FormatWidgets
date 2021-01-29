@@ -29,6 +29,8 @@ FormatWidget::FormatWidget(QWidget *pParent):
 
     g_colDisabled=QWidget::palette().color(QPalette::Window);
     g_colEnabled=QWidget::palette().color(QPalette::BrightText);
+
+    setShortcuts(&g_scEmpty);
 }
 
 FormatWidget::FormatWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent):
@@ -57,6 +59,16 @@ void FormatWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint3
     }
 
     g_bIsReadonly=!(pDevice->isWritable());
+}
+
+void FormatWidget::setShortcuts(XShortcuts *pShortcuts)
+{
+    g_pShortcuts=pShortcuts;
+}
+
+XShortcuts *FormatWidget::getShortcuts()
+{
+    return g_pShortcuts;
 }
 
 QIODevice *FormatWidget::getDevice()

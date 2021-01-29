@@ -82,6 +82,8 @@ public:
     virtual void reset()=0;
     virtual void cleanup()=0;
     void setData(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions,quint32 nNumber,qint64 nOffset,qint32 nType);
+    void setShortcuts(XShortcuts *pShortcuts);
+    XShortcuts *getShortcuts();
     virtual void reload()=0;
     QIODevice *getDevice();
     FW_DEF::OPTIONS *getOptions();
@@ -159,6 +161,8 @@ private:
 private:
     QIODevice *g_pDevice;
     FW_DEF::OPTIONS g_fwOptions;
+    XShortcuts *g_pShortcuts;
+    XShortcuts g_scEmpty;
     quint32 g_nNumber;
     qint64 g_nOffset;
     quint32 g_nType;
