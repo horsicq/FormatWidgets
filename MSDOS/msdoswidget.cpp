@@ -34,8 +34,8 @@ MSDOSWidget::MSDOSWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget 
 {
     ui->setupUi(this);
 
-    setData(pDevice,pOptions);
-    reload();
+    setData(pDevice,pOptions,0,0,0);
+    MSDOSWidget::reload();
 }
 
 MSDOSWidget::~MSDOSWidget()
@@ -45,7 +45,7 @@ MSDOSWidget::~MSDOSWidget()
 
 void MSDOSWidget::clear()
 {
-    reset();
+    MSDOSWidget::reset();
 
     memset(g_lineEdit_DOS_HEADER,0,sizeof g_lineEdit_DOS_HEADER);
     memset(g_comboBox,0,sizeof g_comboBox);
@@ -66,14 +66,9 @@ void MSDOSWidget::reset()
     g_stInit.clear();
 }
 
-void MSDOSWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions)
-{
-    FormatWidget::setData(pDevice,pOptions,0,0,0);
-}
-
 void MSDOSWidget::reload()
 {
-    clear();
+    MSDOSWidget::clear();
 
     ui->checkBoxReadonly->setEnabled(!isReadonly());
 
@@ -81,6 +76,8 @@ void MSDOSWidget::reload()
 
     if(msdos.isValid())
     {
+        setFileType(msdos.getFileType());
+
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_HEX,tr("Hex")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_DISASM,tr("Disasm")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_STRINGS,tr("Strings")));

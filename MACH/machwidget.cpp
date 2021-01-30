@@ -35,7 +35,7 @@ MACHWidget::MACHWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *p
     ui->setupUi(this);
 
     setData(pDevice,pOptions,0,0,0);
-    reload();
+    MACHWidget::reload();
 }
 
 MACHWidget::~MACHWidget()
@@ -45,7 +45,7 @@ MACHWidget::~MACHWidget()
 
 void MACHWidget::clear()
 {
-    reset();
+    MACHWidget::reset();
 
     memset(g_lineEdit_mach_header,0,sizeof g_lineEdit_mach_header);
     memset(g_comboBox,0,sizeof g_comboBox);
@@ -68,7 +68,7 @@ void MACHWidget::reset()
 
 void MACHWidget::reload()
 {
-    clear();
+    MACHWidget::clear();
 
     ui->checkBoxReadonly->setEnabled(!isReadonly());
 
@@ -76,6 +76,8 @@ void MACHWidget::reload()
 
     if(mach.isValid())
     {
+        setFileType(mach.getFileType());
+
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_HEX,tr("Hex")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_DISASM,tr("Disasm")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_STRINGS,tr("Strings")));

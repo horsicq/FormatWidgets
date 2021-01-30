@@ -89,6 +89,12 @@ ToolsWidget::~ToolsWidget()
     delete ui;
 }
 
+void ToolsWidget::setShortcuts(XShortcuts *pShortcuts)
+{
+    ui->widgetHex->setShortcuts(pShortcuts);
+    ui->widgetStrings->setShortcuts(pShortcuts);
+}
+
 void ToolsWidget::on_tabWidgetMain_currentChanged(int nIndex)
 {
     Q_UNUSED(nIndex)

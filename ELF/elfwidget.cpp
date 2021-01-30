@@ -37,7 +37,7 @@ ELFWidget::ELFWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *pPa
     g_nLastType=-1;
 
     setData(pDevice,pOptions,0,0,0);
-    reload();
+    ELFWidget::reload();
 }
 
 ELFWidget::~ELFWidget()
@@ -47,7 +47,7 @@ ELFWidget::~ELFWidget()
 
 void ELFWidget::clear()
 {
-    reset();
+    ELFWidget::reset();
 
     memset(g_lineEdit_Elf_Ehdr,0,sizeof g_lineEdit_Elf_Ehdr);
     memset(g_lineEdit_Elf_Interpreter,0,sizeof g_lineEdit_Elf_Interpreter);
@@ -74,7 +74,7 @@ void ELFWidget::reset()
 
 void ELFWidget::reload()
 {
-    clear();
+    ELFWidget::clear();
 
     ui->checkBoxReadonly->setEnabled(!isReadonly());
 
@@ -82,6 +82,8 @@ void ELFWidget::reload()
 
     if(elf.isValid())
     {
+        setFileType(elf.getFileType());
+
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_HEX,tr("Hex")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_DISASM,tr("Disasm")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_STRINGS,tr("Strings")));

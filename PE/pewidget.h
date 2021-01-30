@@ -40,6 +40,7 @@ public:
     PEWidget(QWidget *pParent=nullptr);
     PEWidget(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions,QWidget *pParent=nullptr);
     ~PEWidget();
+    void setShortcuts(XShortcuts *pShortcuts);
     virtual void clear();
     virtual void cleanup();
     virtual void reset();

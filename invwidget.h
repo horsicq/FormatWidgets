@@ -25,6 +25,7 @@
 #include <QHBoxLayout>
 #include <QPushButton>
 #include "xbinary.h"
+#include "xshortcuts.h"
 
 // TODO changed signal
 class InvWidget : public QWidget
@@ -34,7 +35,8 @@ class InvWidget : public QWidget
 public:
     enum TYPE
     {
-        TYPE_HEX
+        TYPE_HEX,
+        TYPE_DISASM
     };
 
     explicit InvWidget(QWidget *pParent,TYPE type);
@@ -46,14 +48,18 @@ public:
 
 private slots:
     void showHexSlot();
+    void showDisasmSlot();
 
 signals:
     void showHex(qint64 nOffset,qint64 nSize);
+    void showDisasm(qint64 nAddress);
 
 private:
+    qint64 g_nAddress;
     qint64 g_nOffset;
     qint64 g_nSize;
     QPushButton *g_pHexPushButton;
+    QPushButton *g_pDisasmPushButton;
 };
 
 #define PInvWidget InvWidget *

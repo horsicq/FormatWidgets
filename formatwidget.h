@@ -34,6 +34,7 @@
 #include "xdatetimeeditx.h"
 #include "invwidget.h"
 #include "dialoghexview.h"
+#include "dialogmultidisasm.h"
 #include "dialogentropy.h"
 #include "toolswidget.h"
 #include "formatwidget_def.h"
@@ -81,8 +82,11 @@ public:
     virtual void clear()=0;
     virtual void reset()=0;
     virtual void cleanup()=0;
-    void setData(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions,quint32 nNumber,qint64 nOffset,qint32 nType);
+    void setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset, qint32 nType);
     void setShortcuts(XShortcuts *pShortcuts);
+
+    void setFileType(XBinary::FT fileType);
+    XBinary::FT getFileType();
     XShortcuts *getShortcuts();
     virtual void reload()=0;
     QIODevice *getDevice();
@@ -150,6 +154,7 @@ public slots:
     void textValueChanged(QString sText);
     void setEdited(bool bState);
     void showHex(qint64 nOffset,qint64 nSize);
+    void showDisasm(qint64 nAddress);
     void showEntropy(qint64 nOffset,qint64 nSize);
 
 private slots:
@@ -171,6 +176,8 @@ private:
 
     QColor g_colEnabled;
     QColor g_colDisabled;
+
+    XBinary::FT g_fileType;
 };
 
 #endif // FORMATWIDGET_H

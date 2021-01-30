@@ -34,10 +34,8 @@ FormatWidget::FormatWidget(QWidget *pParent):
 }
 
 FormatWidget::FormatWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent):
-    QWidget(pParent)
+    FormatWidget(pParent)
 {
-    g_fwOptions={};
-    g_bIsEdited=false;
     setData(pDevice,pOptions,nNumber,nOffset,nType);
 }
 
@@ -64,6 +62,16 @@ void FormatWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint3
 void FormatWidget::setShortcuts(XShortcuts *pShortcuts)
 {
     g_pShortcuts=pShortcuts;
+}
+
+void FormatWidget::setFileType(XBinary::FT fileType)
+{
+    g_fileType=fileType;
+}
+
+XBinary::FT FormatWidget::getFileType()
+{
+    return g_fileType;
 }
 
 XShortcuts *FormatWidget::getShortcuts()
@@ -457,6 +465,19 @@ void FormatWidget::showHex(qint64 nOffset, qint64 nSize)
     reloadData();
 }
 
+void FormatWidget::showDisasm(qint64 nAddress)
+{
+    DialogMultiDisasm dialogMultiDisasm(this);
+
+    dialogMultiDisasm.setData(g_pDevice,g_fileType,nAddress);
+
+//    connect(&dialogHexView,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+
+    dialogMultiDisasm.exec();
+
+    reloadData();
+}
+
 void FormatWidget::showEntropy(qint64 nOffset, qint64 nSize)
 {
     DialogEntropy dialogEntropy(this,g_pDevice,nOffset,nSize);
@@ -791,6 +812,7 @@ InvWidget *FormatWidget::createInvWidget(QTableWidget *pTableWidget, int nType, 
     pResult->setProperty("NDATA",nData);
 
     connect(pResult,SIGNAL(showHex(qint64,qint64)),this,SLOT(showHex(qint64,qint64)));
+    connect(pResult,SIGNAL(showDisasm(qint64)),this,SLOT(showDisasm(qint64)));
 
     pTableWidget->setCellWidget(nData,HEADER_COLUMN_INFO,pResult);
 

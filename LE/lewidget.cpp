@@ -34,8 +34,8 @@ LEWidget::LEWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *pPare
 {
     ui->setupUi(this);
 
-    setData(pDevice,pOptions);
-    reload();
+    setData(pDevice,pOptions,0,0,0);
+    LEWidget::reload();
 }
 
 LEWidget::~LEWidget()
@@ -45,7 +45,7 @@ LEWidget::~LEWidget()
 
 void LEWidget::clear()
 {
-    reset();
+    LEWidget::reset();
 
     memset(g_lineEdit_DOS_HEADER,0,sizeof g_lineEdit_DOS_HEADER);
     memset(g_lineEdit_VXD_HEADER,0,sizeof g_lineEdit_VXD_HEADER);
@@ -68,14 +68,9 @@ void LEWidget::reset()
     g_stInit.clear();
 }
 
-void LEWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions)
-{
-    FormatWidget::setData(pDevice,pOptions,0,0,0);
-}
-
 void LEWidget::reload()
 {
-    clear();
+    LEWidget::clear();
 
     ui->checkBoxReadonly->setEnabled(!isReadonly());
 
@@ -83,6 +78,8 @@ void LEWidget::reload()
 
     if(le.isValid())
     {
+        setFileType(le.getFileType());
+
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_HEX,tr("Hex")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_DISASM,tr("Disasm")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_STRINGS,tr("Strings")));

@@ -43,12 +43,21 @@ PEWidget::PEWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *pPare
     ui->setupUi(this);
 
     setData(pDevice,pOptions,0,0,0);
-    reload();
+    PEWidget::reload();
 }
 
 PEWidget::~PEWidget()
 {
     delete ui;
+}
+
+void PEWidget::setShortcuts(XShortcuts *pShortcuts)
+{
+    ui->widgetHex->setShortcuts(pShortcuts);
+    // TODO more
+    ui->widgetHex->setShortcuts(pShortcuts);
+
+    FormatWidget::setShortcuts(pShortcuts);
 }
 
 void PEWidget::clear()
@@ -96,6 +105,8 @@ void PEWidget::reload()
 
     if(pe.isValid())
     {
+        setFileType(pe.getFileType());
+
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_HEX,tr("Hex")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_DISASM,tr("Disasm")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_STRINGS,tr("Strings")));

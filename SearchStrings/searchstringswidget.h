@@ -32,6 +32,7 @@
 #include <QFutureWatcher>
 #include <QtConcurrent>
 #include "dialogsearchstringsprocess.h"
+#include "xshortcuts.h"
 
 namespace Ui
 {
@@ -46,6 +47,8 @@ public:
     explicit SearchStringsWidget(QWidget *pParent=nullptr);
     ~SearchStringsWidget();
     void setData(QIODevice *pDevice,SearchStrings::OPTIONS *pOptions,bool bAuto=false,QWidget *pParent=nullptr);
+    void setShortcuts(XShortcuts *pShortcuts);
+
     void reload();
     bool getInitStatus();
 
@@ -71,6 +74,8 @@ private:
     bool g_bInit;
     QStandardItemModel *g_pOldModel;
     QFutureWatcher<void> g_watcher;
+    XShortcuts *g_pShortcuts;
+    XShortcuts g_scEmpty;
 };
 
 #endif // SEARCHSTRINGSWIDGET_H

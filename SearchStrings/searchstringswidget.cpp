@@ -39,6 +39,8 @@ SearchStringsWidget::SearchStringsWidget(QWidget *pParent) :
     ui->checkBoxUnicode->setChecked(true);
 
     ui->spinBoxMinLength->setValue(5);
+
+    setShortcuts(&g_scEmpty);
 }
 
 SearchStringsWidget::~SearchStringsWidget()
@@ -90,6 +92,11 @@ void SearchStringsWidget::setData(QIODevice *pDevice, SearchStrings::OPTIONS *pO
     {
         search();
     }
+}
+
+void SearchStringsWidget::setShortcuts(XShortcuts *pShortcuts)
+{
+    g_pShortcuts=pShortcuts;
 }
 
 void SearchStringsWidget::reload()
@@ -159,6 +166,7 @@ void SearchStringsWidget::on_tableViewResult_customContextMenuRequested(const QP
     QMenu contextMenu(this);
 
     QAction actionCopyString(tr("Copy string"),this);
+    actionCopyString.setShortcut(g_pShortcuts->getShortcut(XShortcuts::ID_STRINGS_COPYSTRING));
     connect(&actionCopyString,SIGNAL(triggered()),this,SLOT(_copyString()));
     contextMenu.addAction(&actionCopyString);
 
@@ -174,10 +182,12 @@ void SearchStringsWidget::on_tableViewResult_customContextMenuRequested(const QP
     }
 
     QAction actionCopyAddress(sCopyString,this);
+    actionCopyAddress.setShortcut(g_pShortcuts->getShortcut(XShortcuts::ID_STRINGS_COPYOFFSET));
     connect(&actionCopyAddress,SIGNAL(triggered()),this,SLOT(_copyAddress()));
     contextMenu.addAction(&actionCopyAddress);
 
     QAction actionCopySize(tr("Copy size"),this);
+    actionCopySize.setShortcut(g_pShortcuts->getShortcut(XShortcuts::ID_STRINGS_COPYSIZE));
     connect(&actionCopySize,SIGNAL(triggered()),this,SLOT(_copySize()));
     contextMenu.addAction(&actionCopySize);
 

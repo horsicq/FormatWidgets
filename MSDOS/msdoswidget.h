@@ -40,7 +40,6 @@ public:
     virtual void clear();
     virtual void cleanup();
     virtual void reset();
-    virtual void setData(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions);
     virtual void reload();
 
 protected:

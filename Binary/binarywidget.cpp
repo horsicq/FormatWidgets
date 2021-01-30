@@ -35,7 +35,7 @@ BinaryWidget::BinaryWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidge
     ui->setupUi(this);
 
     setData(pDevice,pOptions,0,0,0);
-    reload();
+    BinaryWidget::reload();
 }
 
 BinaryWidget::~BinaryWidget()
@@ -45,7 +45,7 @@ BinaryWidget::~BinaryWidget()
 
 void BinaryWidget::clear()
 {
-    reset();
+    BinaryWidget::reset();
 
     ui->checkBoxReadonly->setChecked(true);
 }
@@ -62,7 +62,7 @@ void BinaryWidget::reset()
 
 void BinaryWidget::reload()
 {
-    clear();
+    BinaryWidget::clear();
 
     ui->checkBoxReadonly->setEnabled(!isReadonly());
 
@@ -70,7 +70,9 @@ void BinaryWidget::reload()
 
     if(binary.isValid())
     {
-        reloadData();
+        setFileType(binary.getFileType());
+
+        BinaryWidget::reloadData();
     }
 }
 
@@ -132,7 +134,7 @@ void BinaryWidget::reloadData()
         }
         ui->widgetHex->reload();
 
-        setReadonly(ui->checkBoxReadonly->isChecked());
+        BinaryWidget::setReadonly(ui->checkBoxReadonly->isChecked());
     }
 }
 

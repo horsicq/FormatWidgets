@@ -23,7 +23,8 @@
 InvWidget::InvWidget(QWidget *pParent, TYPE type) :
     QWidget(pParent)
 {
-    g_pHexPushButton=0;
+    g_pHexPushButton=nullptr;
+    g_pDisasmPushButton=nullptr;
 
     QHBoxLayout *pLayot=new QHBoxLayout(this);
     pLayot->setContentsMargins(0,0,0,0);
@@ -35,6 +36,14 @@ InvWidget::InvWidget(QWidget *pParent, TYPE type) :
         connect(g_pHexPushButton,SIGNAL(clicked()),this,SLOT(showHexSlot()));
 
         pLayot->addWidget(g_pHexPushButton);
+    }
+    else if(type==TYPE_DISASM)
+    {
+        g_pDisasmPushButton=new QPushButton(tr("Disasm"),this);
+
+        connect(g_pDisasmPushButton,SIGNAL(clicked()),this,SLOT(showDisasmSlot()));
+
+        pLayot->addWidget(g_pDisasmPushButton);
     }
 
     setLayout(pLayot);
@@ -68,6 +77,8 @@ void InvWidget::setOffsetAndSize(XBinary *pBinary, qint64 nOffset, qint64 nSize)
 
 void InvWidget::setAddressAndSize(XBinary *pBinary, qint64 nAddress, qint64 nSize)
 {
+    this->g_nAddress=nAddress;
+
     XBinary::_MEMORY_MAP memoryMap=pBinary->getMemoryMap();
 
     if(pBinary->isAddressPhysical(&memoryMap,nAddress))
@@ -88,7 +99,12 @@ void InvWidget::setAddressAndSize(XBinary *pBinary, qint64 nAddress, qint64 nSiz
 
 void InvWidget::_setEnabled(bool bState)
 {
-    if(g_pHexPushButton)
+    if(g_pDisasmPushButton)
+    {
+        g_pHexPushButton->setEnabled(bState);
+    }
+
+    if(g_pDisasmPushButton)
     {
         g_pHexPushButton->setEnabled(bState);
     }
@@ -97,4 +113,9 @@ void InvWidget::_setEnabled(bool bState)
 void InvWidget::showHexSlot()
 {
     emit showHex(g_nOffset,g_nSize);
+}
+
+void InvWidget::showDisasmSlot()
+{
+    emit showDisasm(g_nAddress);
 }

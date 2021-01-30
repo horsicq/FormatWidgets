@@ -43,7 +43,7 @@ DEXWidget::DEXWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *pPa
     g_nLastType=-1;
 
     setData(pDevice,pOptions,0,0,0);
-    reload();
+    DEXWidget::reload();
 }
 
 DEXWidget::~DEXWidget()
@@ -53,7 +53,7 @@ DEXWidget::~DEXWidget()
 
 void DEXWidget::clear()
 {
-    reset();
+    DEXWidget::reset();
 
     memset(g_lineEdit_HEADER,0,sizeof g_lineEdit_HEADER);
     memset(g_comboBox,0,sizeof g_comboBox);
@@ -78,7 +78,7 @@ void DEXWidget::reset()
 
 void DEXWidget::reload()
 {
-    clear();
+    DEXWidget::clear();
 
     ui->checkBoxReadonly->setEnabled(!isReadonly());
 
@@ -86,6 +86,8 @@ void DEXWidget::reload()
 
     if(dex.isValid())
     {
+        setFileType(dex.getFileType());
+
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_HEX,tr("Hex")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_STRINGS,tr("Strings")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_MEMORYMAP,tr("Memory map")));

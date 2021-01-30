@@ -34,8 +34,8 @@ NEWidget::NEWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *pPare
 {
     ui->setupUi(this);
 
-    setData(pDevice,pOptions);
-    reload();
+    setData(pDevice,pOptions,0,0,0);
+    NEWidget::reload();
 }
 
 NEWidget::~NEWidget()
@@ -45,7 +45,7 @@ NEWidget::~NEWidget()
 
 void NEWidget::clear()
 {
-    reset();
+    NEWidget::reset();
 
     memset(g_lineEdit_DOS_HEADER,0,sizeof g_lineEdit_DOS_HEADER);
     memset(g_lineEdit_OS2_HEADER,0,sizeof g_lineEdit_OS2_HEADER);
@@ -68,14 +68,9 @@ void NEWidget::reset()
     g_stInit.clear();
 }
 
-void NEWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions)
-{
-    FormatWidget::setData(pDevice,pOptions,0,0,0);
-}
-
 void NEWidget::reload()
 {
-    clear();
+    NEWidget::clear();
 
     ui->checkBoxReadonly->setEnabled(!isReadonly());
 
@@ -83,6 +78,8 @@ void NEWidget::reload()
 
     if(ne.isValid())
     {
+        setFileType(ne.getFileType());
+
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_HEX,tr("Hex")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_DISASM,tr("Disasm")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_STRINGS,tr("Strings")));
