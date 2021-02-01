@@ -38,6 +38,7 @@ public:
     ~DialogMSDOS();
 
     void setData(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions);
+    void setShortcuts(XShortcuts *pShortcuts);
 
 private:
     Ui::DialogMSDOS *ui;

@@ -54,8 +54,24 @@ PEWidget::~PEWidget()
 void PEWidget::setShortcuts(XShortcuts *pShortcuts)
 {
     ui->widgetHex->setShortcuts(pShortcuts);
+    ui->widgetDisasm->setShortcuts(pShortcuts);
+    ui->widgetStrings->setShortcuts(pShortcuts);
+    ui->widgetHex_Debug->setShortcuts(pShortcuts);
+    ui->widgetHex_Exception->setShortcuts(pShortcuts);
+    ui->widgetHex_IMAGE_DIRECTORY_ENTRIES->setShortcuts(pShortcuts);
+    ui->widgetHex_IMAGE_DOS_HEADER->setShortcuts(pShortcuts);
+    ui->widgetHex_IMAGE_FILE_HEADER->setShortcuts(pShortcuts);
+    ui->widgetHex_IMAGE_NT_HEADERS->setShortcuts(pShortcuts);
+    ui->widgetHex_IMAGE_OPTIONAL_HEADER->setShortcuts(pShortcuts);
+    ui->widgetHex_LoadConfig->setShortcuts(pShortcuts);
+    ui->widgetHex_NetHeader->setShortcuts(pShortcuts);
+    ui->widgetHex_Net_Metadata->setShortcuts(pShortcuts);
+    ui->widgetHex_Net_Metadata_Stream->setShortcuts(pShortcuts);
+    ui->widgetHex_Overlay->setShortcuts(pShortcuts);
+    ui->widgetHex_Resources->setShortcuts(pShortcuts);
+    ui->widgetHex_Section->setShortcuts(pShortcuts);
+    ui->widgetHex_TLS->setShortcuts(pShortcuts);
     // TODO more
-    ui->widgetHex->setShortcuts(pShortcuts);
 
     FormatWidget::setShortcuts(pShortcuts);
 }
@@ -1695,7 +1711,7 @@ void PEWidget::loadDirectory(int nRow)
     qint64 nSize=ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->item(nRow,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
     qint64 nAddress=ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->item(nRow,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
 
-    loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_IMAGE_DIRECTORY_ENTRIES],ui->widgetDirectoryHex);
+    loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_IMAGE_DIRECTORY_ENTRIES],ui->widgetHex_IMAGE_DIRECTORY_ENTRIES);
 }
 
 void PEWidget::loadDebug(int nRow)

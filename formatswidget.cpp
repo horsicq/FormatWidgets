@@ -367,6 +367,7 @@ void FormatsWidget::on_pushButtonDisasm_clicked()
             DialogMultiDisasm dialogDisasm(this); // TODO File_Type
 
             dialogDisasm.setData(&file,getCurrentFileType(),ui->lineEditEntryPoint->getValue());
+            dialogDisasm.setShortcuts(g_pShortcuts);
 
             dialogDisasm.exec();
 
@@ -389,6 +390,7 @@ void FormatsWidget::on_pushButtonHexEntryPoint_clicked()
             hexOptions.nStartSelectionOffset=XFormats::getEntryPointOffset(getCurrentFileType(),&file);
 
             DialogHexView dialogHex(this,&file,hexOptions);
+            dialogHex.setShortcuts(g_pShortcuts);
 
             dialogHex.exec();
 
@@ -408,6 +410,7 @@ void FormatsWidget::on_pushButtonMemoryMap_clicked()
         if(file.open(QIODevice::ReadOnly))
         {
             DialogMemoryMap dialogMemoryMap(this,&file,getCurrentFileType());
+            dialogMemoryMap.setShortcuts(g_pShortcuts);
 
             dialogMemoryMap.exec();
 
@@ -505,6 +508,7 @@ void FormatsWidget::showMSDOS(SMSDOS::TYPE type)
         DialogMSDOS dialogMSDOS(this);
 
         dialogMSDOS.setData(&file,&options);
+        dialogMSDOS.setShortcuts(g_pShortcuts);
 
         dialogMSDOS.exec();
 
@@ -531,6 +535,7 @@ void FormatsWidget::showLE(SLE::TYPE type)
         DialogLE dialogLE(this);
 
         dialogLE.setData(&file,&options);
+        dialogLE.setShortcuts(g_pShortcuts);
 
         dialogLE.exec();
 
@@ -557,6 +562,7 @@ void FormatsWidget::showNE(SNE::TYPE type)
         DialogNE dialogNE(this);
 
         dialogNE.setData(&file,&options);
+        dialogNE.setShortcuts(g_pShortcuts);
 
         dialogNE.exec();
 
@@ -583,6 +589,7 @@ void FormatsWidget::showPE(SPE::TYPE type)
         DialogPE dialogPE(this);
 
         dialogPE.setData(&file,&options);
+        dialogPE.setShortcuts(g_pShortcuts);
 
         dialogPE.exec();
 
@@ -609,6 +616,7 @@ void FormatsWidget::showELF(SELF::TYPE type)
         DialogELF dialogELF(this);
 
         dialogELF.setData(&file,&options);
+        dialogELF.setShortcuts(g_pShortcuts);
 
         dialogELF.exec();
 
@@ -635,6 +643,7 @@ void FormatsWidget::showMACH(SMACH::TYPE type)
         DialogMACH dialogMACH(this);
 
         dialogMACH.setData(&file,&options);
+        dialogMACH.setShortcuts(g_pShortcuts);
 
         dialogMACH.exec();
 
@@ -661,6 +670,7 @@ void FormatsWidget::showDEX(SDEX::TYPE type)
         DialogDEX dialogDEX(this);
 
         dialogDEX.setData(&file,&options);
+        dialogDEX.setShortcuts(g_pShortcuts);
 
         dialogDEX.exec();
 
@@ -739,6 +749,7 @@ void FormatsWidget::on_pushButtonZIP_clicked()
     }
 
     dialogArchive.setData(sFileName,&options);
+    dialogArchive.setShortcuts(g_pShortcuts);
 
     dialogArchive.exec();
 }

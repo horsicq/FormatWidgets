@@ -37,6 +37,7 @@ public:
     explicit DialogPE(QWidget *pParent=nullptr);
     ~DialogPE();
     void setData(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions);
+    void setShortcuts(XShortcuts *pShortcuts);
 
 private:
     Ui::DialogPE *ui;

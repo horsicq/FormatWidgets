@@ -134,7 +134,7 @@
      </widget>
      <widget class="QStackedWidget" name="stackedWidgetInfo">
       <property name="currentIndex">
-       <number>1</number>
+       <number>10</number>
       </property>
       <widget class="QWidget" name="page_HEX">
        <layout class="QVBoxLayout" name="verticalLayout_13">
@@ -482,7 +482,7 @@
          </widget>
         </item>
         <item>
-         <widget class="ToolsWidget" name="widgetDirectoryHex" native="true">
+         <widget class="ToolsWidget" name="widgetHex_IMAGE_DIRECTORY_ENTRIES" native="true">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
             <horstretch>0</horstretch>

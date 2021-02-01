@@ -37,6 +37,7 @@ public:
     explicit DialogDEX(QWidget *pParent=nullptr);
     ~DialogDEX();
     void setData(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions);
+    void setShortcuts(XShortcuts *pShortcuts);
 
 private:
     Ui::DialogDEX *ui;
