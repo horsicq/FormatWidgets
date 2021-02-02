@@ -334,6 +334,7 @@ void SearchStrings::processModel()
 
         QStandardItem *pTypeAddress=new QStandardItem;
         pTypeAddress->setText(QString("%1").arg(record.nOffset,nAddressWidth,16,QChar('0')));
+        pTypeAddress->setData(record.nOffset);
         pTypeAddress->setTextAlignment(Qt::AlignRight);
         (*g_ppModel)->setItem(i,0,pTypeAddress);
 

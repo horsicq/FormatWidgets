@@ -61,8 +61,12 @@ private slots:
     void _copyString();
     void _copyAddress();
     void _copySize();
+    void _hex();
     void search();
     void deleteOldModel();
+
+signals:
+    void showHex(qint64 nOffset);
 
 private:
     Ui::SearchStringsWidget *ui;

@@ -23,6 +23,7 @@
 
 #include <QDialog>
 #include "searchstrings.h"
+#include "xshortcuts.h"
 
 namespace Ui {
 class DialogSearchStrings;
@@ -35,6 +36,7 @@ class DialogSearchStrings : public QDialog
 public:
     explicit DialogSearchStrings(QWidget *pParent,QIODevice *pDevice,SearchStrings::OPTIONS *pOptions=nullptr,bool bAuto=false);
     ~DialogSearchStrings();
+    void setShortcuts(XShortcuts *pShortcuts);
 
 private slots:
     void on_pushButtonClose_clicked();

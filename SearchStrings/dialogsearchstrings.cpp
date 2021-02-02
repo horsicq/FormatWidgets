@@ -37,6 +37,11 @@ DialogSearchStrings::~DialogSearchStrings()
     delete ui;
 }
 
+void DialogSearchStrings::setShortcuts(XShortcuts *pShortcuts)
+{
+    ui->widgetSearchStrings->setShortcuts(pShortcuts);
+}
+
 void DialogSearchStrings::on_pushButtonClose_clicked()
 {
     this->close();

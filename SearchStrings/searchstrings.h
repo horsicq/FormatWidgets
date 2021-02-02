@@ -52,6 +52,7 @@ public:
         bool bSearchAnsi;
         bool bSearchUnicode;
         qint32 nMinLenght;
+        bool bMenu_Hex;
     };
 
     const int N_MAX=50000;

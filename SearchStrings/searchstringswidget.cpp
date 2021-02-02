@@ -41,6 +41,8 @@ SearchStringsWidget::SearchStringsWidget(QWidget *pParent) :
     ui->spinBoxMinLength->setValue(5);
 
     setShortcuts(&g_scEmpty);
+
+    // mb TODO registerShortcuts
 }
 
 SearchStringsWidget::~SearchStringsWidget()
@@ -191,6 +193,15 @@ void SearchStringsWidget::on_tableViewResult_customContextMenuRequested(const QP
     connect(&actionCopySize,SIGNAL(triggered()),this,SLOT(_copySize()));
     contextMenu.addAction(&actionCopySize);
 
+    QAction actionHex(tr("Hex"),this);
+
+    if(g_options.bMenu_Hex)
+    {
+        actionHex.setShortcut(g_pShortcuts->getShortcut(XShortcuts::ID_STRINGS_HEX));
+        connect(&actionHex,SIGNAL(triggered()),this,SLOT(_hex()));
+        contextMenu.addAction(&actionHex);
+    }
+
     contextMenu.exec(ui->tableViewResult->viewport()->mapToGlobal(pos));
 }
 
@@ -233,6 +244,20 @@ void SearchStringsWidget::_copySize()
         QString sString=ui->tableViewResult->model()->data(index).toString();
 
         QApplication::clipboard()->setText(sString);
+    }
+}
+
+void SearchStringsWidget::_hex()
+{
+    int nRow=ui->tableViewResult->currentIndex().row();
+
+    if((nRow!=-1)&&(g_pModel))
+    {
+        QModelIndex index=ui->tableViewResult->selectionModel()->selectedIndexes().at(0);
+
+        qint64 nOffset=ui->tableViewResult->model()->data(index,Qt::UserRole+1).toLongLong();
+
+        emit showHex(nOffset);
     }
 }
 
