@@ -351,6 +351,20 @@ void FormatWidget::showSectionEntropy(QTableView *pTableView)
     }
 }
 
+void FormatWidget::showSectionDisasm(QTableView *pTableView)
+{
+    int nRow=pTableView->currentIndex().row();
+
+    if(nRow!=-1)
+    {
+        QModelIndex index=pTableView->selectionModel()->selectedIndexes().at(0);
+
+        qint64 nAddress=pTableView->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
+
+        showInDisasmWindow(nAddress);
+    }
+}
+
 qint64 FormatWidget::getTableViewItemSize(QTableView *pTableView, int nRow)
 {
     qint64 nResult=0;
@@ -402,6 +416,16 @@ void FormatWidget::setTreeItem(QTreeWidget *pTree, int nID)
             break;
         }
     }
+}
+
+void FormatWidget::_showInDisasmWindow(qint64 nAddress)
+{
+    qDebug("TODO _showInDisasmWindow");
+}
+
+void FormatWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
+{
+    qDebug("TODO _showInHexWindow");
 }
 
 //void FormatWidget::resizeToolsWidget(QWidget *pParent, ToolsWidget *pToolWidget)
@@ -457,6 +481,7 @@ void FormatWidget::showHex(qint64 nOffset, qint64 nSize)
     hexOptions.nSizeOfSelection=nSize;
 
     DialogHexView dialogHexView(this,g_pDevice,hexOptions);
+    dialogHexView.setShortcuts(g_pShortcuts);
 
     connect(&dialogHexView,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
 
@@ -465,17 +490,14 @@ void FormatWidget::showHex(qint64 nOffset, qint64 nSize)
     reloadData();
 }
 
-void FormatWidget::showDisasm(qint64 nAddress)
+void FormatWidget::showInDisasmWindow(qint64 nAddress)
 {
-    DialogMultiDisasm dialogMultiDisasm(this);
+    _showInDisasmWindow(nAddress);
+}
 
-    dialogMultiDisasm.setData(g_pDevice,g_fileType,nAddress);
-
-//    connect(&dialogHexView,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
-
-    dialogMultiDisasm.exec();
-
-    reloadData();
+void FormatWidget::showInHexWindow(qint64 nOffset, qint64 nSize)
+{
+    _showInHexWindow(nOffset,nSize);
 }
 
 void FormatWidget::showEntropy(qint64 nOffset, qint64 nSize)
@@ -811,8 +833,8 @@ InvWidget *FormatWidget::createInvWidget(QTableWidget *pTableWidget, int nType, 
     pResult->setProperty("STYPE",nType);
     pResult->setProperty("NDATA",nData);
 
-    connect(pResult,SIGNAL(showHex(qint64,qint64)),this,SLOT(showHex(qint64,qint64)));
-    connect(pResult,SIGNAL(showDisasm(qint64)),this,SLOT(showDisasm(qint64)));
+    connect(pResult,SIGNAL(showHex(qint64,qint64)),this,SLOT(showHex(qint64,qint64))); // mb TODO showInHexWindow
+    connect(pResult,SIGNAL(showDisasm(qint64)),this,SLOT(showInDisasmWindow(qint64)));
 
     pTableWidget->setCellWidget(nData,HEADER_COLUMN_INFO,pResult);
 

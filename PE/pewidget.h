@@ -86,6 +86,8 @@ private slots:
     void editExceptionHeader();
     void editDelayImportHeader();
     void editBoundImportHeader();
+    void exportFunctionHex();
+    void exportFunctionDisasm();
     void showSectionHeader(int nType,QTableView *pTableView);
     void on_tableView_Sections_customContextMenuRequested(const QPoint &pos);
     void on_tableView_Sections_doubleClicked(const QModelIndex &index);
@@ -108,6 +110,7 @@ private slots:
     void on_tableView_BoundImport_customContextMenuRequested(const QPoint &pos);
     void on_tableView_BoundImport_doubleClicked(const QModelIndex &index);
     void onTreeView_Resources_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
+    void on_tableView_ExportFunctions_customContextMenuRequested(const QPoint &pos);
     void on_pushButtonHex_clicked();
     void on_pushButtonStrings_clicked();
     void on_pushButtonMemoryMap_clicked();

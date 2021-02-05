@@ -141,10 +141,14 @@ public:
     void ajustTreeView(ProcessData *pProcessData,QStandardItemModel **ppModel,QTreeView *pTreeView);
     void showSectionHex(QTableView *pTableView);
     void showSectionEntropy(QTableView *pTableView);
+    void showSectionDisasm(QTableView *pTableView);
     qint64 getTableViewItemSize(QTableView *pTableView,int nRow);
 
     static bool _setTreeItem(QTreeWidget *pTree,QTreeWidgetItem *pItem,int nID);
     static void setTreeItem(QTreeWidget *pTree,int nID);
+
+    virtual void _showInDisasmWindow(qint64 nAddress);
+    virtual void _showInHexWindow(qint64 nOffset,qint64 nSize);
 
 signals:
     void editState(bool bState);
@@ -154,7 +158,8 @@ public slots:
     void textValueChanged(QString sText);
     void setEdited(bool bState);
     void showHex(qint64 nOffset,qint64 nSize);
-    void showDisasm(qint64 nAddress);
+    void showInDisasmWindow(qint64 nAddress);
+    void showInHexWindow(qint64 nOffset,qint64 nSize);
     void showEntropy(qint64 nOffset,qint64 nSize);
 
 private slots:

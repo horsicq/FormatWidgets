@@ -344,9 +344,18 @@ void PEProcessData::_process()
 
         setHeader(*g_ppModel,&listLabels);
 
+        XBinary::_MEMORY_MAP memoryMap=g_pPE->getMemoryMap();
+
         for(int i=0; i<nNumberOfPositions; i++)
         {
-            (*g_ppModel)->setItem(i,N_IMAGE_EXPORT_FUNCTION::Ordinal,                 new QStandardItem(XBinary::valueToHex(eh.listPositions.at(i).nOrdinal)));
+            QStandardItem *pItem=new QStandardItem;
+            pItem->setText(XBinary::valueToHex(eh.listPositions.at(i).nOrdinal));
+
+            pItem->setData(memoryMap.nBaseAddress+eh.listPositions.at(i).nRVA,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS);
+            pItem->setData(1,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
+            pItem->setData(g_pPE->addressToOffset(&memoryMap,memoryMap.nBaseAddress+eh.listPositions.at(i).nRVA),Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+
+            (*g_ppModel)->setItem(i,N_IMAGE_EXPORT_FUNCTION::Ordinal,                 pItem);
             (*g_ppModel)->setItem(i,N_IMAGE_EXPORT_FUNCTION::RVA,                     new QStandardItem(XBinary::valueToHex(eh.listPositions.at(i).nRVA)));
             (*g_ppModel)->setItem(i,N_IMAGE_EXPORT_FUNCTION::Name,                    new QStandardItem(XBinary::valueToHex(eh.listPositions.at(i).nNameRVA)));
             (*g_ppModel)->setItem(i,N_IMAGE_EXPORT_FUNCTION::Name+1,                  new QStandardItem(eh.listPositions.at(i).sFunctionName));

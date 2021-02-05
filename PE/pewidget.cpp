@@ -1986,6 +1986,16 @@ void PEWidget::editBoundImportHeader()
     showSectionHeader(SPE::TYPE_BOUNDIMPORT,ui->tableView_BoundImport);
 }
 
+void PEWidget::exportFunctionHex()
+{
+    showSectionHex(ui->tableView_ExportFunctions);
+}
+
+void PEWidget::exportFunctionDisasm()
+{
+    showSectionDisasm(ui->tableView_ExportFunctions);
+}
+
 void PEWidget::showSectionHeader(int nType, QTableView *pTableView)
 {
     int nRow=pTableView->currentIndex().row();
@@ -2247,6 +2257,26 @@ void PEWidget::onTreeView_Resources_currentRowChanged(const QModelIndex &current
         lineEdit_Resources[N_IMAGE_RESOURCES::SIZE]->setValue((quint32)nSize);
 
         loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_RESOURCES],ui->widgetHex_Resources);
+    }
+}
+
+void PEWidget::on_tableView_ExportFunctions_customContextMenuRequested(const QPoint &pos)
+{
+    int nRow=ui->tableView_ExportFunctions->currentIndex().row();
+
+    if(nRow!=-1)
+    {
+        QMenu contextMenu(this);
+
+        QAction actionHex(tr("Hex"),this);
+        connect(&actionHex, SIGNAL(triggered()), this, SLOT(exportFunctionHex()));
+        contextMenu.addAction(&actionHex);
+
+        QAction actionDisasm(tr("Disasm"),this);
+        connect(&actionDisasm, SIGNAL(triggered()), this, SLOT(exportFunctionDisasm()));
+        contextMenu.addAction(&actionDisasm);
+
+        contextMenu.exec(ui->tableView_ExportFunctions->viewport()->mapToGlobal(pos));
     }
 }
 
