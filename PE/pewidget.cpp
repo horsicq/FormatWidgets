@@ -656,6 +656,9 @@ void PEWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent, Q
     if(pCurrent)
     {
         reloadData();
+        addPage(pCurrent);
+        ui->toolButtonPrev->setEnabled(isPrevPageAvailable());
+        ui->toolButtonNext->setEnabled(isNextPageAvailable());
     }
 }
 
@@ -1819,6 +1822,19 @@ QString PEWidget::typeIdToString(int nType)
     return sResult;
 }
 
+void PEWidget::_showInDisasmWindow(qint64 nAddress)
+{
+    setTreeItem(ui->treeWidgetNavi,SPE::TYPE_DISASM);
+    ui->widgetDisasm->goToAddress(nAddress);
+
+}
+
+void PEWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
+{
+    setTreeItem(ui->treeWidgetNavi,SPE::TYPE_HEX);
+    ui->widgetHex->setSelection(nOffset,nSize);
+}
+
 bool PEWidget::createSectionTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nNumberOfRecords)
 {
     int nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
@@ -2318,4 +2334,18 @@ void PEWidget::on_tableWidget_Net_Metadata_currentCellChanged(int nCurrentRow, i
     Q_UNUSED(nPreviousColumn)
 
     setHeaderTableSelection(ui->widgetHex_Net_Metadata,ui->tableWidget_Net_Metadata);
+}
+
+void PEWidget::on_toolButtonPrev_clicked()
+{
+    setAddPageEnabled(false);
+    ui->treeWidgetNavi->setCurrentItem(getPrevPage());
+    setAddPageEnabled(true);
+}
+
+void PEWidget::on_toolButtonNext_clicked()
+{
+    setAddPageEnabled(false);
+    ui->treeWidgetNavi->setCurrentItem(getNextPage());
+    setAddPageEnabled(true);
 }

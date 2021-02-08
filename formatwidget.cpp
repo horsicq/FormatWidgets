@@ -26,6 +26,8 @@ FormatWidget::FormatWidget(QWidget *pParent):
     g_bIsReadonly=false;
     g_fwOptions={};
     g_bIsEdited=false;
+    g_bAddPageEnable=true;
+    g_nPageIndex=0;
 
     g_colDisabled=QWidget::palette().color(QPalette::Window);
     g_colEnabled=QWidget::palette().color(QPalette::BrightText);
@@ -328,7 +330,7 @@ void FormatWidget::showSectionHex(QTableView *pTableView)
         qint64 nOffset=pTableView->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
         qint64 nSize=pTableView->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
 
-        showHex(nOffset,nSize);
+        showInHexWindow(nOffset,nSize);
 
         reloadData();
 
@@ -416,6 +418,63 @@ void FormatWidget::setTreeItem(QTreeWidget *pTree, int nID)
             break;
         }
     }
+}
+
+void FormatWidget::addPage(QTreeWidgetItem *pItem)
+{
+    if(g_bAddPageEnable)
+    {
+        qint32 nNumberOfPages=g_listPages.count();
+
+        for(int i=nNumberOfPages-1;i>g_nPageIndex;i--)
+        {
+            g_listPages.removeAt(i);
+        }
+
+        g_listPages.append(pItem);
+        g_nPageIndex=g_listPages.count()-1;
+    }
+}
+
+void FormatWidget::setAddPageEnabled(bool bEnable)
+{
+    g_bAddPageEnable=bEnable;
+}
+
+QTreeWidgetItem *FormatWidget::getPrevPage()
+{
+    QTreeWidgetItem *pResult=0;
+
+    if(isPrevPageAvailable())
+    {
+        g_nPageIndex--;
+        pResult=g_listPages.at(g_nPageIndex);
+    }
+
+    return pResult;
+}
+
+QTreeWidgetItem *FormatWidget::getNextPage()
+{
+    QTreeWidgetItem *pResult=0;
+
+    if(isNextPageAvailable())
+    {
+        g_nPageIndex++;
+        pResult=g_listPages.at(g_nPageIndex);
+    }
+
+    return pResult;
+}
+
+bool FormatWidget::isPrevPageAvailable()
+{
+    return g_nPageIndex>0;
+}
+
+bool FormatWidget::isNextPageAvailable()
+{
+    return g_nPageIndex<(g_listPages.count()-1);
 }
 
 void FormatWidget::_showInDisasmWindow(qint64 nAddress)
@@ -833,7 +892,7 @@ InvWidget *FormatWidget::createInvWidget(QTableWidget *pTableWidget, int nType, 
     pResult->setProperty("STYPE",nType);
     pResult->setProperty("NDATA",nData);
 
-    connect(pResult,SIGNAL(showHex(qint64,qint64)),this,SLOT(showHex(qint64,qint64))); // mb TODO showInHexWindow
+    connect(pResult,SIGNAL(showHex(qint64,qint64)),this,SLOT(showInHexWindow(qint64,qint64)));
     connect(pResult,SIGNAL(showDisasm(qint64)),this,SLOT(showInDisasmWindow(qint64)));
 
     pTableWidget->setCellWidget(nData,HEADER_COLUMN_INFO,pResult);

@@ -52,6 +52,8 @@ protected:
     virtual void blockSignals(bool bState);
     virtual void adjustHeaderTable(int nType,QTableWidget *pTableWidget);
     virtual QString typeIdToString(int nType);
+    virtual void _showInDisasmWindow(qint64 nAddress);
+    virtual void _showInHexWindow(qint64 nOffset,qint64 nSize);
 
 private slots:
     void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent,QTreeWidgetItem *pPrevious);
@@ -118,6 +120,8 @@ private slots:
     void on_pushButtonHeuristicScan_clicked();
     void on_pushButtonDisasm_clicked();
     void on_tableWidget_Net_Metadata_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
+    void on_toolButtonPrev_clicked();
+    void on_toolButtonNext_clicked();
 
 private:
     enum CB

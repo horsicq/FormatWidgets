@@ -41,6 +41,7 @@
 #include "dialogprocessdata.h"
 #include "xmultidisasmwidget.h"
 
+// TODO Focus In/Out shortcuts!
 class FormatWidget : public QWidget
 {
     Q_OBJECT
@@ -79,16 +80,13 @@ public:
     FormatWidget(QWidget *pParent=nullptr);
     FormatWidget(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions,quint32 nNumber,qint64 nOffset,qint32 nType,QWidget *pParent);
     ~FormatWidget();
-    virtual void clear()=0;
-    virtual void reset()=0;
-    virtual void cleanup()=0;
+
     void setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset, qint32 nType);
     void setShortcuts(XShortcuts *pShortcuts);
 
     void setFileType(XBinary::FT fileType);
     XBinary::FT getFileType();
     XShortcuts *getShortcuts();
-    virtual void reload()=0;
     QIODevice *getDevice();
     FW_DEF::OPTIONS *getOptions();
     quint32 getNumber();
@@ -117,12 +115,7 @@ public:
     QPushButton *createPushButton(QTableWidget *pTableWidget,int nType,int nData,QString sText);
 
     void setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition,qint64 nOffset);
-    virtual bool _setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition,qint64 nOffset)=0;
-    virtual void setReadonly(bool bState)=0;
-    virtual void blockSignals(bool bState)=0;
-    virtual void adjustHeaderTable(int nType,QTableWidget *pTableWidget);
-    virtual void adjustListTable(int nType,QTableWidget *pTableWidget);
-    virtual QString typeIdToString(int nType);
+
     bool isEdited();
 
 //    QPushButton *createHexButton(QTableWidget *pTableWidget,int nType, int nData);
@@ -146,9 +139,28 @@ public:
 
     static bool _setTreeItem(QTreeWidget *pTree,QTreeWidgetItem *pItem,int nID);
     static void setTreeItem(QTreeWidget *pTree,int nID);
+    virtual void clear()=0;
+    virtual void reset()=0;
+    virtual void cleanup()=0;
+    virtual void reload()=0;
 
+    void addPage(QTreeWidgetItem *pItem);
+    void setAddPageEnabled(bool bEnable);
+    QTreeWidgetItem *getPrevPage();
+    QTreeWidgetItem *getNextPage();
+    bool isPrevPageAvailable();
+    bool isNextPageAvailable();
+
+protected:
+    virtual bool _setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition,qint64 nOffset)=0;
+    virtual void setReadonly(bool bState)=0;
+    virtual void blockSignals(bool bState)=0;
+    virtual void adjustHeaderTable(int nType,QTableWidget *pTableWidget);
+    virtual void adjustListTable(int nType,QTableWidget *pTableWidget);
+    virtual QString typeIdToString(int nType);
     virtual void _showInDisasmWindow(qint64 nAddress);
     virtual void _showInHexWindow(qint64 nOffset,qint64 nSize);
+    virtual void reloadData()=0;
 
 signals:
     void editState(bool bState);
@@ -161,11 +173,6 @@ public slots:
     void showInDisasmWindow(qint64 nAddress);
     void showInHexWindow(qint64 nOffset,qint64 nSize);
     void showEntropy(qint64 nOffset,qint64 nSize);
-
-private slots:
-    virtual void reloadData()=0;
-
-private:
     bool saveBackup();
 
 private:
@@ -183,6 +190,9 @@ private:
     QColor g_colDisabled;
 
     XBinary::FT g_fileType;
+    QList<QTreeWidgetItem *> g_listPages;
+    qint32 g_nPageIndex;
+    bool g_bAddPageEnable;
 };
 
 #endif // FORMATWIDGET_H
