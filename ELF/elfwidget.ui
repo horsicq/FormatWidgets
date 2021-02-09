@@ -36,6 +36,20 @@
       </widget>
      </item>
      <item>
+      <widget class="QToolButton" name="toolButtonPrev">
+       <property name="text">
+        <string notr="true">&lt;</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="toolButtonNext">
+       <property name="text">
+        <string notr="true">&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -849,12 +863,6 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>XMemoryMapWidget</class>
-   <extends>QWidget</extends>
-   <header>xmemorymapwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>XEntropyWidget</class>
    <extends>QWidget</extends>
    <header>xentropywidget.h</header>
@@ -867,15 +875,21 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>XMultiDisasmWidget</class>
+   <class>XMemoryMapWidget</class>
    <extends>QWidget</extends>
-   <header>xmultidisasmwidget.h</header>
+   <header>xmemorymapwidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>XHexViewWidget</class>
    <extends>QWidget</extends>
    <header>xhexviewwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>XMultiDisasmWidget</class>
+   <extends>QWidget</extends>
+   <header>xmultidisasmwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

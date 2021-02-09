@@ -66,7 +66,7 @@ private slots:
     void deleteOldModel();
 
 signals:
-    void showHex(qint64 nOffset);
+    void showHex(qint64 nOffset,qint64 nSize);
 
 private:
     Ui::SearchStringsWidget *ui;

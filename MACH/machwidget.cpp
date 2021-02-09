@@ -26,11 +26,12 @@ MACHWidget::MACHWidget(QWidget *pParent) :
     ui(new Ui::MACHWidget)
 {
     ui->setupUi(this);
+
+    connect(ui->widgetStrings,SIGNAL(showHex(qint64,qint64)),this,SLOT(showInHexWindow(qint64,qint64)));
 }
 
 MACHWidget::MACHWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *pParent) :
-    FormatWidget(pDevice,pOptions,0,0,0,pParent),
-    ui(new Ui::MACHWidget)
+    MACHWidget(pParent)
 {
     ui->setupUi(this);
 
@@ -41,6 +42,22 @@ MACHWidget::MACHWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *p
 MACHWidget::~MACHWidget()
 {
     delete ui;
+}
+
+void MACHWidget::setShortcuts(XShortcuts *pShortcuts)
+{
+    ui->widgetHex->setShortcuts(pShortcuts);
+    ui->widgetDisasm->setShortcuts(pShortcuts);
+    ui->widgetStrings->setShortcuts(pShortcuts);
+    ui->widgetEntropy->setShortcuts(pShortcuts);
+    ui->widgetHeuristicScan->setShortcuts(pShortcuts);
+    ui->widgetMemoryMap->setShortcuts(pShortcuts);
+    ui->widgetHex_commands->setShortcuts(pShortcuts);
+    ui->widgetHex_mach_header->setShortcuts(pShortcuts);
+    ui->widgetHex_sections->setShortcuts(pShortcuts);
+    ui->widgetHex_segments->setShortcuts(pShortcuts);
+
+    FormatWidget::setShortcuts(pShortcuts);
 }
 
 void MACHWidget::clear()
@@ -247,7 +264,9 @@ void MACHWidget::reloadData()
         {
             if(!g_stInit.contains(sInit))
             {
-                ui->widgetHex->setData(getDevice());
+                XHexView::OPTIONS options={};
+                options.bMenu_Disasm=true;
+                ui->widgetHex->setData(getDevice(),options);
 //                ui->widgetHex->setBackupFileName(getOptions()->sBackupFileName);
                 ui->widgetHex->enableReadOnly(false);
                 connect(ui->widgetHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
@@ -580,6 +599,9 @@ void MACHWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent,
     if(pCurrent)
     {
         reloadData();
+        addPage(pCurrent);
+        ui->toolButtonPrev->setEnabled(isPrevPageAvailable());
+        ui->toolButtonNext->setEnabled(isNextPageAvailable());
     }
 }
 
@@ -770,4 +792,18 @@ void MACHWidget::on_tableWidget_segments_customContextMenuRequested(const QPoint
 void MACHWidget::on_tableWidget_sections_customContextMenuRequested(const QPoint &pos)
 {
     // TODO
+}
+
+void MACHWidget::on_toolButtonPrev_clicked()
+{
+    setAddPageEnabled(false);
+    ui->treeWidgetNavi->setCurrentItem(getPrevPage());
+    setAddPageEnabled(true);
+}
+
+void MACHWidget::on_toolButtonNext_clicked()
+{
+    setAddPageEnabled(false);
+    ui->treeWidgetNavi->setCurrentItem(getNextPage());
+    setAddPageEnabled(true);
 }

@@ -26,15 +26,16 @@ ELFWidget::ELFWidget(QWidget *pParent) :
     ui(new Ui::ELFWidget)
 {
     ui->setupUi(this);
+
+    g_nLastType=-1;
+
+    connect(ui->widgetStrings,SIGNAL(showHex(qint64,qint64)),this,SLOT(showInHexWindow(qint64,qint64)));
 }
 
 ELFWidget::ELFWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *pParent) :
-    FormatWidget(pDevice,pOptions,0,0,0,pParent),
-    ui(new Ui::ELFWidget)
+    ELFWidget(pParent)
 {
     ui->setupUi(this);
-
-    g_nLastType=-1;
 
     setData(pDevice,pOptions,0,0,0);
     ELFWidget::reload();
@@ -43,6 +44,23 @@ ELFWidget::ELFWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *pPa
 ELFWidget::~ELFWidget()
 {
     delete ui;
+}
+
+void ELFWidget::setShortcuts(XShortcuts *pShortcuts)
+{
+    ui->widgetHex->setShortcuts(pShortcuts);
+    ui->widgetDisasm->setShortcuts(pShortcuts);
+    ui->widgetStrings->setShortcuts(pShortcuts);
+    ui->widgetEntropy->setShortcuts(pShortcuts);
+    ui->widgetHeuristicScan->setShortcuts(pShortcuts);
+    ui->widgetMemoryMap->setShortcuts(pShortcuts);
+    ui->widgetHex_Elf_Ehdr->setShortcuts(pShortcuts);
+    ui->widgetHex_Elf_Phdr->setShortcuts(pShortcuts);
+    ui->widgetHex_Elf_Shdr->setShortcuts(pShortcuts);
+    ui->widgetHex_Notes->setShortcuts(pShortcuts);
+    ui->widgetHex_StringTable->setShortcuts(pShortcuts);
+
+    FormatWidget::setShortcuts(pShortcuts);
 }
 
 void ELFWidget::clear()
@@ -288,7 +306,9 @@ void ELFWidget::reloadData()
         {
             if(!g_stInit.contains(sInit))
             {
-                ui->widgetHex->setData(getDevice());
+                XHexView::OPTIONS options={};
+                options.bMenu_Disasm=true;
+                ui->widgetHex->setData(getDevice(),options);
 //                ui->widgetHex->setBackupFileName(getOptions()->sBackupFileName);
                 ui->widgetHex->enableReadOnly(false);
                 connect(ui->widgetHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
@@ -699,6 +719,9 @@ void ELFWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent, 
     if(pCurrent)
     {
         reloadData();
+        addPage(pCurrent);
+        ui->toolButtonPrev->setEnabled(isPrevPageAvailable());
+        ui->toolButtonNext->setEnabled(isNextPageAvailable());
     }
 }
 
@@ -1107,4 +1130,18 @@ void ELFWidget::on_pushButtonEntropy_clicked()
 void ELFWidget::on_pushButtonHeuristicScan_clicked()
 {
     setTreeItem(ui->treeWidgetNavi,SELF::TYPE_HEURISTICSCAN);
+}
+
+void ELFWidget::on_toolButtonPrev_clicked()
+{
+    setAddPageEnabled(false);
+    ui->treeWidgetNavi->setCurrentItem(getPrevPage());
+    setAddPageEnabled(true);
+}
+
+void ELFWidget::on_toolButtonNext_clicked()
+{
+    setAddPageEnabled(false);
+    ui->treeWidgetNavi->setCurrentItem(getNextPage());
+    setAddPageEnabled(true);
 }

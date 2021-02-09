@@ -363,7 +363,7 @@ void FormatWidget::showSectionDisasm(QTableView *pTableView)
 
         qint64 nAddress=pTableView->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
 
-        showInDisasmWindow(nAddress);
+        showInDisasmWindowAddress(nAddress);
     }
 }
 
@@ -477,9 +477,19 @@ bool FormatWidget::isNextPageAvailable()
     return g_nPageIndex<(g_listPages.count()-1);
 }
 
-void FormatWidget::_showInDisasmWindow(qint64 nAddress)
+void FormatWidget::_showInDisasmWindowAddress(qint64 nAddress)
 {
-    qDebug("TODO _showInDisasmWindow");
+    qDebug("TODO _showInDisasmWindowAddress");
+}
+
+void FormatWidget::_showInDisasmWindowOffset(qint64 nOffset)
+{
+    qDebug("TODO _showInDisasmWindowOffset");
+}
+
+void FormatWidget::_showInMemoryMapWindowOffset(qint64 nOffset)
+{
+    qDebug("TODO _showInMemoryMapWindowOffset");
 }
 
 void FormatWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
@@ -549,9 +559,19 @@ void FormatWidget::showHex(qint64 nOffset, qint64 nSize)
     reloadData();
 }
 
-void FormatWidget::showInDisasmWindow(qint64 nAddress)
+void FormatWidget::showInDisasmWindowAddress(qint64 nAddress)
 {
-    _showInDisasmWindow(nAddress);
+    _showInDisasmWindowAddress(nAddress);
+}
+
+void FormatWidget::showInDisasmWindowOffset(qint64 nOffset)
+{
+    _showInDisasmWindowOffset(nOffset);
+}
+
+void FormatWidget::showInMemoryMapWindowOffset(qint64 nOffset)
+{
+     _showInMemoryMapWindowOffset(nOffset);
 }
 
 void FormatWidget::showInHexWindow(qint64 nOffset, qint64 nSize)
@@ -893,7 +913,7 @@ InvWidget *FormatWidget::createInvWidget(QTableWidget *pTableWidget, int nType, 
     pResult->setProperty("NDATA",nData);
 
     connect(pResult,SIGNAL(showHex(qint64,qint64)),this,SLOT(showInHexWindow(qint64,qint64)));
-    connect(pResult,SIGNAL(showDisasm(qint64)),this,SLOT(showInDisasmWindow(qint64)));
+    connect(pResult,SIGNAL(showDisasm(qint64)),this,SLOT(showInDisasmWindowAddress(qint64)));
 
     pTableWidget->setCellWidget(nData,HEADER_COLUMN_INFO,pResult);
 

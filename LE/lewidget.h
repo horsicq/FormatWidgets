@@ -39,6 +39,8 @@ public:
     LEWidget(QWidget *pParent=nullptr);
     LEWidget(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions,QWidget *pParent=nullptr);
     ~LEWidget();
+    void setShortcuts(XShortcuts *pShortcuts);
+
     virtual void clear();
     virtual void cleanup();
     virtual void reset();
@@ -62,6 +64,8 @@ private slots:
     void on_tableView_Objects_customContextMenuRequested(const QPoint &pos);
     void on_tableView_Objects_doubleClicked(const QModelIndex &index);
     void onTableView_Objects_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
+    void on_toolButtonPrev_clicked();
+    void on_toolButtonNext_clicked();
 
 private:
     enum CB

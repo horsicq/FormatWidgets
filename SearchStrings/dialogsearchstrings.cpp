@@ -30,6 +30,8 @@ DialogSearchStrings::DialogSearchStrings(QWidget *pParent, QIODevice *pDevice, S
     setWindowFlags(Qt::Window);
 
     ui->widgetSearchStrings->setData(pDevice,pOptions,bAuto);
+
+    connect(ui->widgetSearchStrings,SIGNAL(showHex(qint64,qint64)),this,SIGNAL(showHex(qint64,qint64)));
 }
 
 DialogSearchStrings::~DialogSearchStrings()

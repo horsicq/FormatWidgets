@@ -256,8 +256,9 @@ void SearchStringsWidget::_hex()
         QModelIndex index=ui->tableViewResult->selectionModel()->selectedIndexes().at(0);
 
         qint64 nOffset=ui->tableViewResult->model()->data(index,Qt::UserRole+1).toLongLong();
+        qint64 nSize=ui->tableViewResult->model()->data(index,Qt::UserRole+2).toLongLong();
 
-        emit showHex(nOffset);
+        emit showHex(nOffset,nSize);
     }
 }
 

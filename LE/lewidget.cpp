@@ -26,11 +26,12 @@ LEWidget::LEWidget(QWidget *pParent) :
     ui(new Ui::LEWidget)
 {
     ui->setupUi(this);
+
+    connect(ui->widgetStrings,SIGNAL(showHex(qint64,qint64)),this,SLOT(showInHexWindow(qint64,qint64)));
 }
 
 LEWidget::LEWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *pParent) :
-    FormatWidget(pDevice,pOptions,0,0,0,pParent),
-    ui(new Ui::LEWidget)
+    LEWidget(pParent)
 {
     ui->setupUi(this);
 
@@ -41,6 +42,22 @@ LEWidget::LEWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *pPare
 LEWidget::~LEWidget()
 {
     delete ui;
+}
+
+void LEWidget::setShortcuts(XShortcuts *pShortcuts)
+{
+    ui->widgetHex->setShortcuts(pShortcuts);
+    ui->widgetDisasm->setShortcuts(pShortcuts);
+    ui->widgetStrings->setShortcuts(pShortcuts);
+    ui->widgetEntropy->setShortcuts(pShortcuts);
+    ui->widgetHeuristicScan->setShortcuts(pShortcuts);
+    ui->widgetMemoryMap->setShortcuts(pShortcuts);
+    ui->widgetHex_DOS_HEADER->setShortcuts(pShortcuts);
+    ui->widgetHex_Object->setShortcuts(pShortcuts);
+    ui->widgetHex_OVERLAY->setShortcuts(pShortcuts);
+    ui->widgetHex_VXD_HEADER->setShortcuts(pShortcuts);
+
+    FormatWidget::setShortcuts(pShortcuts);
 }
 
 void LEWidget::clear()
@@ -302,7 +319,9 @@ void LEWidget::reloadData()
         {
             if(!g_stInit.contains(sInit))
             {
-                ui->widgetHex->setData(getDevice());
+                XHexView::OPTIONS options={};
+                options.bMenu_Disasm=true;
+                ui->widgetHex->setData(getDevice(),options);
 //                ui->widgetHex->setBackupFileName(getOptions()->sBackupFileName);
                 ui->widgetHex->enableReadOnly(false);
                 connect(ui->widgetHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
@@ -534,6 +553,9 @@ void LEWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent, Q
     if(pCurrent)
     {
         reloadData();
+        addPage(pCurrent);
+        ui->toolButtonPrev->setEnabled(isPrevPageAvailable());
+        ui->toolButtonNext->setEnabled(isNextPageAvailable());
     }
 }
 
@@ -616,4 +638,18 @@ void LEWidget::onTableView_Objects_currentRowChanged(const QModelIndex &current,
     Q_UNUSED(previous)
 
     loadHexSubdeviceByTableView(current.row(),SLE::TYPE_OBJECTS,ui->widgetHex_Object,ui->tableView_Objects,&g_subDevice[SLE::TYPE_OBJECTS]);
+}
+
+void LEWidget::on_toolButtonPrev_clicked()
+{
+    setAddPageEnabled(false);
+    ui->treeWidgetNavi->setCurrentItem(getPrevPage());
+    setAddPageEnabled(true);
+}
+
+void LEWidget::on_toolButtonNext_clicked()
+{
+    setAddPageEnabled(false);
+    ui->treeWidgetNavi->setCurrentItem(getNextPage());
+    setAddPageEnabled(true);
 }

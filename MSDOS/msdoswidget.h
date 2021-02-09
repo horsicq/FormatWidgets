@@ -37,6 +37,8 @@ public:
     MSDOSWidget(QWidget *pParent=nullptr);
     MSDOSWidget(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions,QWidget *pParent=nullptr);
     ~MSDOSWidget();
+    void setShortcuts(XShortcuts *pShortcuts);
+
     virtual void clear();
     virtual void cleanup();
     virtual void reset();
@@ -56,6 +58,8 @@ private slots:
     void on_pushButtonReload_clicked();
     void enableButton();
     void on_tableWidget_DOS_HEADER_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
+    void on_toolButtonPrev_clicked();
+    void on_toolButtonNext_clicked();
 
 private:
     enum CB

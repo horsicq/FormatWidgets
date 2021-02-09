@@ -50,6 +50,8 @@ public:
 
 signals:
     void editState(bool bState);
+    void showOffsetDisasm(qint64 nOffset);
+    void showOffsetMemoryMap(qint64 nOffset);
 
 private slots:
     void on_tabWidgetMain_currentChanged(int nIndex);

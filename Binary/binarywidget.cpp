@@ -26,11 +26,12 @@ BinaryWidget::BinaryWidget(QWidget *pParent) :
     ui(new Ui::BinaryWidget)
 {
     ui->setupUi(this);
+
+//    connect(ui->widgetStrings,SIGNAL(showHex(qint64,qint64)),this,SLOT(showInHexWindow(qint64,qint64)));
 }
 
 BinaryWidget::BinaryWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *pParent) :
-    FormatWidget(pDevice,pOptions,0,0,0,pParent),
-    ui(new Ui::BinaryWidget)
+    BinaryWidget(pParent)
 {
     ui->setupUi(this);
 

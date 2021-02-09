@@ -39,6 +39,8 @@ public:
     NEWidget(QWidget *pParent=nullptr);
     NEWidget(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions,QWidget *pParent=nullptr);
     ~NEWidget();
+    void setShortcuts(XShortcuts *pShortcuts);
+
     virtual void clear();
     virtual void cleanup();
     virtual void reset();
@@ -59,6 +61,8 @@ private slots:
     void enableButton();
     void on_tableWidget_DOS_HEADER_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
     void on_tableWidget_OS2_HEADER_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
+    void on_toolButtonPrev_clicked();
+    void on_toolButtonNext_clicked();
 
 private:
     enum CB

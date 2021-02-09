@@ -158,7 +158,9 @@ protected:
     virtual void adjustHeaderTable(int nType,QTableWidget *pTableWidget);
     virtual void adjustListTable(int nType,QTableWidget *pTableWidget);
     virtual QString typeIdToString(int nType);
-    virtual void _showInDisasmWindow(qint64 nAddress);
+    virtual void _showInDisasmWindowAddress(qint64 nAddress);
+    virtual void _showInDisasmWindowOffset(qint64 nOffset);
+    virtual void _showInMemoryMapWindowOffset(qint64 nOffset);
     virtual void _showInHexWindow(qint64 nOffset,qint64 nSize);
     virtual void reloadData()=0;
 
@@ -170,7 +172,9 @@ public slots:
     void textValueChanged(QString sText);
     void setEdited(bool bState);
     void showHex(qint64 nOffset,qint64 nSize);
-    void showInDisasmWindow(qint64 nAddress);
+    void showInDisasmWindowAddress(qint64 nAddress);
+    void showInDisasmWindowOffset(qint64 nOffset);
+    void showInMemoryMapWindowOffset(qint64 nOffset);
     void showInHexWindow(qint64 nOffset,qint64 nSize);
     void showEntropy(qint64 nOffset,qint64 nSize);
     bool saveBackup();

@@ -40,6 +40,8 @@ public:
     ELFWidget(QWidget *pParent=nullptr);
     ELFWidget(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions,QWidget *pParent=nullptr);
     ~ELFWidget();
+    void setShortcuts(XShortcuts *pShortcuts);
+
     virtual void clear();
     virtual void cleanup();
     virtual void reset();
@@ -101,6 +103,9 @@ private slots:
     void on_pushButtonMemoryMap_clicked();
     void on_pushButtonEntropy_clicked();
     void on_pushButtonHeuristicScan_clicked();
+
+    void on_toolButtonPrev_clicked();
+    void on_toolButtonNext_clicked();
 
 private:
     // TODO rename

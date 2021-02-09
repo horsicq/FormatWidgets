@@ -29,18 +29,16 @@ DEXWidget::DEXWidget(QWidget *pParent) :
 
     g_pFilterStrings=new QSortFilterProxyModel(this);
     g_pFilterTypes=new QSortFilterProxyModel(this);
+
+    g_nLastType=-1;
+
+    connect(ui->widgetStrings,SIGNAL(showHex(qint64,qint64)),this,SLOT(showInHexWindow(qint64,qint64)));
 }
 
 DEXWidget::DEXWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *pParent) :
-    FormatWidget(pDevice,pOptions,0,0,0,pParent),
-    ui(new Ui::DEXWidget)
+    DEXWidget(pParent)
 {
     ui->setupUi(this);
-
-    g_pFilterStrings=new QSortFilterProxyModel(this);
-    g_pFilterTypes=new QSortFilterProxyModel(this);
-
-    g_nLastType=-1;
 
     setData(pDevice,pOptions,0,0,0);
     DEXWidget::reload();
@@ -49,6 +47,19 @@ DEXWidget::DEXWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *pPa
 DEXWidget::~DEXWidget()
 {
     delete ui;
+}
+
+void DEXWidget::setShortcuts(XShortcuts *pShortcuts)
+{
+    ui->widgetHex->setShortcuts(pShortcuts);
+//    ui->widgetDisasm->setShortcuts(pShortcuts);
+    ui->widgetStrings->setShortcuts(pShortcuts);
+    ui->widgetEntropy->setShortcuts(pShortcuts);
+    ui->widgetHeuristicScan->setShortcuts(pShortcuts);
+    ui->widgetMemoryMap->setShortcuts(pShortcuts);
+    ui->widgetHex_Header->setShortcuts(pShortcuts);
+
+    FormatWidget::setShortcuts(pShortcuts);
 }
 
 void DEXWidget::clear()
@@ -293,7 +304,9 @@ void DEXWidget::reloadData()
         {
             if(!g_stInit.contains(sInit))
             {
-                ui->widgetHex->setData(getDevice());
+                XHexView::OPTIONS options={};
+                options.bMenu_Disasm=true;
+                ui->widgetHex->setData(getDevice(),options);
 //                ui->widgetHex->setBackupFileName(getOptions()->sBackupFileName);
                 ui->widgetHex->enableReadOnly(false);
                 connect(ui->widgetHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
@@ -549,6 +562,9 @@ void DEXWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent, 
     if(pCurrent)
     {
         reloadData();
+        addPage(pCurrent);
+        ui->toolButtonPrev->setEnabled(isPrevPageAvailable());
+        ui->toolButtonNext->setEnabled(isNextPageAvailable());
     }
 }
 
@@ -592,4 +608,18 @@ void DEXWidget::on_lineEditFilterTypes_textChanged(const QString &sString)
     g_pFilterTypes->setFilterRegExp(sString);
     g_pFilterTypes->setFilterCaseSensitivity(Qt::CaseInsensitive);
     g_pFilterTypes->setFilterKeyColumn(3);
+}
+
+void DEXWidget::on_toolButtonPrev_clicked()
+{
+    setAddPageEnabled(false);
+    ui->treeWidgetNavi->setCurrentItem(getPrevPage());
+    setAddPageEnabled(true);
+}
+
+void DEXWidget::on_toolButtonNext_clicked()
+{
+    setAddPageEnabled(false);
+    ui->treeWidgetNavi->setCurrentItem(getNextPage());
+    setAddPageEnabled(true);
 }

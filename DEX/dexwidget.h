@@ -40,6 +40,7 @@ public:
     DEXWidget(QWidget *pParent=nullptr);
     DEXWidget(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions,QWidget *pParent=nullptr);
     ~DEXWidget();
+    void setShortcuts(XShortcuts *pShortcuts);
     virtual void clear();
     virtual void cleanup();
     virtual void reset();
@@ -63,6 +64,8 @@ private slots:
     void on_tableWidget_Header_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
     void on_lineEditFilterStrings_textChanged(const QString &sString);
     void on_lineEditFilterTypes_textChanged(const QString &sString);
+    void on_toolButtonPrev_clicked();
+    void on_toolButtonNext_clicked();
 
 private:
     // TODO rename

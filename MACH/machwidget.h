@@ -39,6 +39,8 @@ public:
     MACHWidget(QWidget *pParent=nullptr);
     MACHWidget(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions,QWidget *pParent=nullptr);
     ~MACHWidget();
+    void setShortcuts(XShortcuts *pShortcuts);
+
     virtual void clear();
     virtual void cleanup();
     virtual void reset();
@@ -68,6 +70,8 @@ private slots:
     void on_tableWidget_commands_customContextMenuRequested(const QPoint &pos);
     void on_tableWidget_segments_customContextMenuRequested(const QPoint &pos);
     void on_tableWidget_sections_customContextMenuRequested(const QPoint &pos);
+    void on_toolButtonPrev_clicked();
+    void on_toolButtonNext_clicked();
 
 private:
     enum CB

@@ -34,11 +34,12 @@ PEWidget::PEWidget(QWidget *pParent) :
     ui->pushButtonMemoryMap->hide();
     ui->pushButtonHeuristicScan->hide();
 #endif
+
+    connect(ui->widgetStrings,SIGNAL(showHex(qint64,qint64)),this,SLOT(showInHexWindow(qint64,qint64)));
 }
 
 PEWidget::PEWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *pParent) :
-    FormatWidget(pDevice,pOptions,0,0,0,pParent),
-    ui(new Ui::PEWidget)
+    PEWidget(pParent)
 {
     ui->setupUi(this);
 
@@ -56,6 +57,9 @@ void PEWidget::setShortcuts(XShortcuts *pShortcuts)
     ui->widgetHex->setShortcuts(pShortcuts);
     ui->widgetDisasm->setShortcuts(pShortcuts);
     ui->widgetStrings->setShortcuts(pShortcuts);
+    ui->widgetEntropy->setShortcuts(pShortcuts);
+    ui->widgetHeuristicScan->setShortcuts(pShortcuts);
+    ui->widgetMemoryMap->setShortcuts(pShortcuts);
     ui->widgetHex_Debug->setShortcuts(pShortcuts);
     ui->widgetHex_Exception->setShortcuts(pShortcuts);
     ui->widgetHex_IMAGE_DIRECTORY_ENTRIES->setShortcuts(pShortcuts);
@@ -71,7 +75,6 @@ void PEWidget::setShortcuts(XShortcuts *pShortcuts)
     ui->widgetHex_Resources->setShortcuts(pShortcuts);
     ui->widgetHex_Section->setShortcuts(pShortcuts);
     ui->widgetHex_TLS->setShortcuts(pShortcuts);
-    // TODO more
 
     FormatWidget::setShortcuts(pShortcuts);
 }
@@ -789,11 +792,16 @@ void PEWidget::reloadData()
         {
             if(!g_stInit.contains(sInit))
             {
-                ui->widgetHex->setData(getDevice());
+                XHexView::OPTIONS options={};
+                options.bMenu_Disasm=true;
+                options.bMenu_MemoryMap=true;
+                ui->widgetHex->setData(getDevice(),options);
 //                ui->widgetHex->setBackupFileName(getOptions()->sBackupFileName);
                 // TODO save directory
                 ui->widgetHex->enableReadOnly(false);
                 connect(ui->widgetHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+                connect(ui->widgetHex,SIGNAL(showOffsetDisasm(qint64)),this,SLOT(showInDisasmWindowOffset(qint64))); // TODO for all widgets
+                connect(ui->widgetHex,SIGNAL(showOffsetMemoryMap(qint64)),this,SLOT(showInMemoryMapWindowOffset(qint64))); // TODO for all widgets
                 ui->widgetHex->reload();
             }
         }
@@ -1822,11 +1830,23 @@ QString PEWidget::typeIdToString(int nType)
     return sResult;
 }
 
-void PEWidget::_showInDisasmWindow(qint64 nAddress)
+void PEWidget::_showInDisasmWindowAddress(qint64 nAddress)
 {
     setTreeItem(ui->treeWidgetNavi,SPE::TYPE_DISASM);
     ui->widgetDisasm->goToAddress(nAddress);
 
+}
+
+void PEWidget::_showInDisasmWindowOffset(qint64 nOffset)
+{
+    setTreeItem(ui->treeWidgetNavi,SPE::TYPE_DISASM);
+    ui->widgetDisasm->goToOffset(nOffset);
+}
+
+void PEWidget::_showInMemoryMapWindowOffset(qint64 nOffset)
+{
+    setTreeItem(ui->treeWidgetNavi,SPE::TYPE_MEMORYMAP);
+    ui->widgetMemoryMap->goToOffset(nOffset);
 }
 
 void PEWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
