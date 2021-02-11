@@ -40,7 +40,7 @@ public:
     struct RECORD
     {
         QString sString;
-        qint64 nOffset;
+        qint64 nAddress;
         qint64 nSize;
         RECORD_TYPE recordType;
     };

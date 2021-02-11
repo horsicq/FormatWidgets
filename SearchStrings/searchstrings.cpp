@@ -152,7 +152,7 @@ void SearchStrings::processSearch()
                     {
                         RECORD record;
                         record.recordType=RECORD_TYPE_ANSI;
-                        record.nOffset=nCurrentAnsiOffset+nBaseAddress;
+                        record.nAddress=nCurrentAnsiOffset+nBaseAddress;
                         record.nSize=nCurrentAnsiSize;
                         record.sString=pAnsiBuffer;
 
@@ -208,7 +208,7 @@ void SearchStrings::processSearch()
                         {
                             RECORD record;
                             record.recordType=RECORD_TYPE_UNICODE;
-                            record.nOffset=nCurrentUnicodeOffset[nParity]+nBaseAddress;
+                            record.nAddress=nCurrentUnicodeOffset[nParity]+nBaseAddress;
                             record.nSize=nCurrentUnicodeSize[nParity];
                             record.sString=QString::fromUtf16(pUnicodeBuffer[nParity]);
 
@@ -242,7 +242,7 @@ void SearchStrings::processSearch()
                             {
                                 RECORD record;
                                 record.recordType=RECORD_TYPE_UNICODE;
-                                record.nOffset=nCurrentUnicodeOffset[nO]+nBaseAddress;
+                                record.nAddress=nCurrentUnicodeOffset[nO]+nBaseAddress;
                                 record.nSize=nCurrentUnicodeSize[nO];
                                 record.sString=QString::fromUtf16(pUnicodeBuffer[nO]);
 
@@ -333,8 +333,8 @@ void SearchStrings::processModel()
         SearchStrings::RECORD record=g_pListRecords->at(i);
 
         QStandardItem *pTypeAddress=new QStandardItem;
-        pTypeAddress->setText(QString("%1").arg(record.nOffset,nAddressWidth,16,QChar('0')));
-        pTypeAddress->setData(record.nOffset,Qt::UserRole+1);
+        pTypeAddress->setText(QString("%1").arg(record.nAddress,nAddressWidth,16,QChar('0')));
+        pTypeAddress->setData(record.nAddress-nBaseAddress,Qt::UserRole+1);
         pTypeAddress->setData(record.nSize,Qt::UserRole+2);
         pTypeAddress->setTextAlignment(Qt::AlignRight);
         (*g_ppModel)->setItem(i,0,pTypeAddress);

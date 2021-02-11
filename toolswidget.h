@@ -50,14 +50,19 @@ public:
 
 signals:
     void editState(bool bState);
+    void showOffsetHex(qint64 nOffset,qint64 nSize);
     void showOffsetDisasm(qint64 nOffset);
     void showOffsetMemoryMap(qint64 nOffset);
 
 private slots:
     void on_tabWidgetMain_currentChanged(int nIndex);
+    void _showHex(qint64 nOffset, qint64 nSize);
+    void _showDisasm(qint64 nOffset);
+    void _showMemoryMap(qint64 nOffset);
 
 private:
     Ui::ToolsWidget *ui;
+    QIODevice *g_pDevice;
     SearchStrings::OPTIONS g_stringsOptions;
 };
 

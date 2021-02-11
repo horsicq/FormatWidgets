@@ -27,13 +27,22 @@ ToolsWidget::ToolsWidget(QWidget *pParent) :
 {
     ui->setupUi(this);
 
+    g_pDevice=nullptr;
+
     connect(ui->widgetHex,SIGNAL(editState(bool)),this,SIGNAL(editState(bool)));
+    connect(ui->widgetHex,SIGNAL(showOffsetDisasm(qint64)),this,SLOT(_showDisasm(qint64)));
+    connect(ui->widgetHex,SIGNAL(showOffsetMemoryMap(qint64)),this,SLOT(_showMemoryMap(qint64)));
+    connect(ui->widgetStrings,SIGNAL(showHex(qint64,qint64)),this,SLOT(_showHex(qint64,qint64)));
 }
 
 void ToolsWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions)
 {
+    g_pDevice=pDevice;
+
     XHexView::OPTIONS hexOptions={};
     hexOptions.nStartAddress=pOptions->nImageBase;
+    hexOptions.bMenu_MemoryMap=true;
+    hexOptions.bMenu_Disasm=true;
 
     ui->widgetHex->enableReadOnly(false);
 
@@ -41,6 +50,7 @@ void ToolsWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions)
 
     g_stringsOptions={};
     g_stringsOptions.nBaseAddress=pOptions->nImageBase;
+    g_stringsOptions.bMenu_Hex=true;
 
     ui->widgetStrings->setData(pDevice,&g_stringsOptions);
 
@@ -99,4 +109,40 @@ void ToolsWidget::on_tabWidgetMain_currentChanged(int nIndex)
 {
     Q_UNUSED(nIndex)
     reload();
+}
+
+void ToolsWidget::_showHex(qint64 nOffset,qint64 nSize)
+{
+    SubDevice *pSubDevice=qobject_cast<SubDevice *>(g_pDevice);
+
+    if(pSubDevice)
+    {
+        nOffset+=pSubDevice->getInitOffset();
+    }
+
+    emit showOffsetHex(nOffset,nSize);
+}
+
+void ToolsWidget::_showDisasm(qint64 nOffset)
+{
+    SubDevice *pSubDevice=qobject_cast<SubDevice *>(g_pDevice);
+
+    if(pSubDevice)
+    {
+        nOffset+=pSubDevice->getInitOffset();
+    }
+
+    emit showOffsetDisasm(nOffset);
+}
+
+void ToolsWidget::_showMemoryMap(qint64 nOffset)
+{
+    SubDevice *pSubDevice=qobject_cast<SubDevice *>(g_pDevice);
+
+    if(pSubDevice)
+    {
+        nOffset+=pSubDevice->getInitOffset();
+    }
+
+    emit showOffsetMemoryMap(nOffset);
 }

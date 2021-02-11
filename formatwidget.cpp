@@ -191,6 +191,9 @@ bool FormatWidget::loadHexSubdevice(qint64 nOffset, qint64 nSize, qint64 nAddres
     pToolsWidget->setData((*ppSubDevice),&hexOptions);
     pToolsWidget->setEdited(isEdited());
     connect(pToolsWidget,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+    connect(pToolsWidget,SIGNAL(showOffsetHex(qint64,qint64)),this,SLOT(showInHexWindow(qint64,qint64)));
+    connect(pToolsWidget,SIGNAL(showOffsetDisasm(qint64)),this,SLOT(showInDisasmWindowOffset(qint64)));
+    connect(pToolsWidget,SIGNAL(showOffsetMemoryMap(qint64)),this,SLOT(showInMemoryMapWindowOffset(qint64)));
 
     return true;
 }
