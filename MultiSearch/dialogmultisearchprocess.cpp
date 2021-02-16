@@ -38,12 +38,12 @@ DialogMultiSearchProcess::DialogMultiSearchProcess(QWidget *pParent) :
     connect(g_pThreadSearch, SIGNAL(started()), g_pHandleSearch, SLOT(processSearch()));
     connect(g_pHandleSearch, SIGNAL(completed(qint64)), this, SLOT(onCompleted(qint64)));
     connect(g_pHandleSearch, SIGNAL(errorMessage(QString)), this, SLOT(errorMessage(QString)));
-    connect(g_pHandleSearch, SIGNAL(progressValue(qint32)), this, SLOT(progressValue(qint32)));
+    connect(g_pHandleSearch, SIGNAL(progressValueChanged(qint32)), this, SLOT(onProgressValueChanged(qint32)));
 
     connect(g_pThreadModel, SIGNAL(started()), g_pHandleModel, SLOT(processModel()));
     connect(g_pHandleModel, SIGNAL(completed(qint64)), this, SLOT(onCompleted(qint64)));
     connect(g_pHandleModel, SIGNAL(errorMessage(QString)), this, SLOT(errorMessage(QString)));
-    connect(g_pHandleModel, SIGNAL(progressValue(qint32)), this, SLOT(progressValue(qint32)));
+    connect(g_pHandleModel, SIGNAL(progressValueChanged(qint32)), this, SLOT(onProgressValueChanged(qint32)));
 
     ui->progressBar->setMaximum(100);
     ui->progressBar->setMinimum(0);
@@ -68,7 +68,7 @@ DialogMultiSearchProcess::~DialogMultiSearchProcess()
     delete g_pHandleModel;
 }
 
-void DialogMultiSearchProcess::processSearch(QIODevice *pDevice, QList<MultiSearch::RECORD> *pListRecords, MultiSearch::OPTIONS *pOptions)
+void DialogMultiSearchProcess::processSearch(QIODevice *pDevice, QList<XBinary::MS_RECORD> *pListRecords, MultiSearch::OPTIONS *pOptions)
 {
     setWindowTitle(tr("Search strings"));
 
@@ -76,7 +76,7 @@ void DialogMultiSearchProcess::processSearch(QIODevice *pDevice, QList<MultiSear
     g_pThreadSearch->start();
 }
 
-void DialogMultiSearchProcess::processModel(QList<MultiSearch::RECORD> *pListRecords, QStandardItemModel **ppModel, MultiSearch::OPTIONS *pOptions)
+void DialogMultiSearchProcess::processModel(QList<XBinary::MS_RECORD> *pListRecords, QStandardItemModel **ppModel, MultiSearch::OPTIONS *pOptions)
 {
     setWindowTitle(tr("Create view model"));
 
@@ -102,7 +102,7 @@ void DialogMultiSearchProcess::onCompleted(qint64 nElapsed)
     this->close();
 }
 
-void DialogMultiSearchProcess::progressValue(qint32 nValue)
+void DialogMultiSearchProcess::onProgressValueChanged(qint32 nValue)
 {
     ui->progressBar->setValue(nValue);
 }

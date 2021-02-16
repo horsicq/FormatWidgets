@@ -279,7 +279,7 @@ void SearchStringsWidget::search()
             g_pFilter->setSourceModel(nullptr);
             ui->tableViewResult->setModel(nullptr);
 
-            QList<MultiSearch::RECORD> listRecords;
+            QList<XBinary::MS_RECORD> listRecords;
 
             DialogMultiSearchProcess dsp(g_pParent);
             dsp.processSearch(g_pDevice,&listRecords,&g_options);

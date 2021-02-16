@@ -24,27 +24,13 @@
 #include <QIODevice>
 #include <QElapsedTimer>
 #include <QStandardItemModel>
+#include "xbinary.h"
 
 class MultiSearch : public QObject
 {
     Q_OBJECT
 
 public:
-    enum RECORD_TYPE
-    {
-        RECORD_TYPE_UNKNOWN=0,
-        RECORD_TYPE_ANSI,
-        RECORD_TYPE_UNICODE
-        // TODO Signature
-    };
-
-    struct RECORD
-    {
-        qint64 nOffset;
-        qint64 nSize;
-        RECORD_TYPE recordType;
-        QString sString;
-    };
 
     struct OPTIONS
     {
@@ -59,13 +45,13 @@ public:
     const int N_MAX=50000;
 
     explicit MultiSearch(QObject *pParent=nullptr);
-    void setSearchData(QIODevice *pDevice,QList<RECORD> *pListRecords,OPTIONS *pOptions=nullptr);
-    void setModelData(QList<MultiSearch::RECORD> *pListRecords,QStandardItemModel **ppModel,OPTIONS *pOptions=nullptr);
+    void setSearchData(QIODevice *pDevice,QList<XBinary::MS_RECORD> *pListRecords,OPTIONS *pOptions=nullptr);
+    void setModelData(QList<XBinary::MS_RECORD> *pListRecords,QStandardItemModel **ppModel,OPTIONS *pOptions=nullptr);
 
 signals:
     void errorMessage(QString sText);
     void completed(qint64 nElapsed);
-    void progressValue(qint32 nValue);
+    void progressValueChanged(qint32 nValue);
 
 public slots:
     void stop();
@@ -73,15 +59,12 @@ public slots:
     void processModel();
 
 private:
-    bool isAnsiSymbol(quint8 cCode);
-    bool isUnicodeSymbol(quint16 nCode);
-
-private:
     QIODevice *g_pDevice;
-    QList<RECORD> *g_pListRecords;
+    QList<XBinary::MS_RECORD> *g_pListRecords;
     OPTIONS g_options;
     QStandardItemModel **g_ppModel;
     bool g_bIsStop;
+    XBinary g_binary;
 };
 
 #endif // MULTISEARCH_H

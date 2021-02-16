@@ -25,12 +25,18 @@ MultiSearch::MultiSearch(QObject *pParent) : QObject(pParent)
     g_bIsStop=false;
     g_options={};
     g_ppModel=nullptr;
+
+    connect(&g_binary,SIGNAL(searchProgressValueChanged(qint32)),this,SIGNAL(progressValueChanged(qint32)));
+//    connect(&xBinary,SIGNAL(searchProgressMinimumChanged(qint32)),this,SIGNAL(progressValueMinimum(qint32)));
+//    connect(&xBinary,SIGNAL(searchProgressMaximumChanged(qint32)),this,SIGNAL(progressValueMaximum(qint32)));
 }
 
-void MultiSearch::setSearchData(QIODevice *pDevice, QList<RECORD> *pListRecords, OPTIONS *pOptions)
+void MultiSearch::setSearchData(QIODevice *pDevice, QList<XBinary::MS_RECORD> *pListRecords, OPTIONS *pOptions)
 {
     this->g_pDevice=pDevice;
     this->g_pListRecords=pListRecords;
+
+    g_binary.setDevice(pDevice);
 
     if(pOptions)
     {
@@ -38,7 +44,7 @@ void MultiSearch::setSearchData(QIODevice *pDevice, QList<RECORD> *pListRecords,
     }
 }
 
-void MultiSearch::setModelData(QList<RECORD> *pListRecords, QStandardItemModel **ppModel, OPTIONS *pOptions)
+void MultiSearch::setModelData(QList<XBinary::MS_RECORD> *pListRecords, QStandardItemModel **ppModel, OPTIONS *pOptions)
 {
     this->g_pListRecords=pListRecords;
     this->g_ppModel=ppModel;
@@ -52,252 +58,15 @@ void MultiSearch::setModelData(QList<RECORD> *pListRecords, QStandardItemModel *
 void MultiSearch::stop()
 {
     g_bIsStop=true;
+    g_binary.setSearchProcessEnable(false);
 }
 
 void MultiSearch::processSearch()
 {
-    // TODO move to XBinary
     QElapsedTimer scanTimer;
     scanTimer.start();
 
-    g_pListRecords->clear();
-
-    const qint64 N_BUFFER_SIZE=0x1000;
-    const qint64 N_MAX_STRING_SIZE=128;
-
-    qint64 _nSize=g_pDevice->size();
-    qint64 _nOffset=0;
-    qint64 _nRawOffset=0;
-    qint64 _nProcent=_nSize/100;
-    qint32 _nCurrentProcent=0;
-
-    bool bReadError=false;
-
-    char *pBuffer=new char[N_BUFFER_SIZE];
-    char *pAnsiBuffer=new char[N_MAX_STRING_SIZE+1];
-
-    quint16 *pUnicodeBuffer[2]={new quint16[N_MAX_STRING_SIZE+1],new quint16[N_MAX_STRING_SIZE+1]};
-    qint64 nCurrentUnicodeSize[2]={0,0};
-    qint64 nCurrentUnicodeOffset[2]={0,0};
-
-    qint64 nCurrentAnsiSize=0;
-    qint64 nCurrentAnsiOffset=0;
-
-    bool bIsStart=true;
-    char cPrevSymbol=0;
-
-    emit progressValue(_nCurrentProcent);
-
-    g_bIsStop=false;
-
-    int nCurrentRecords=0;
-
-    while((_nSize>0)&&(!g_bIsStop))
-    {
-        qint64 nCurrentSize=qMin(N_BUFFER_SIZE,_nSize);
-
-        if(g_pDevice->seek(_nOffset))
-        {
-            if(g_pDevice->read(pBuffer,nCurrentSize)!=nCurrentSize)
-            {
-                bReadError=true;
-                break;
-            }
-        }
-        else
-        {
-            bReadError=true;
-            break;
-        }
-
-        for(qint64 i=0; i<nCurrentSize; i++)
-        {
-            bool bIsEnd=((i==(nCurrentSize-1))&&(_nSize==nCurrentSize));
-            int nParity=(_nOffset+i)%2;
-
-            char cSymbol=*(pBuffer+i);
-
-            bool bIsAnsiSymbol=isAnsiSymbol((quint8)cSymbol);
-
-            if(bIsAnsiSymbol)
-            {
-                if(nCurrentAnsiSize==0)
-                {
-                    nCurrentAnsiOffset=_nOffset+i;
-                }
-
-                if(nCurrentAnsiSize<N_MAX_STRING_SIZE)
-                {
-                    *(pAnsiBuffer+nCurrentAnsiSize)=cSymbol;
-                }
-
-                nCurrentAnsiSize++;
-            }
-
-            if((!bIsAnsiSymbol)||(bIsEnd))
-            {
-                if(nCurrentAnsiSize>=g_options.nMinLenght)
-                {
-                    if(nCurrentAnsiSize-1<N_MAX_STRING_SIZE)
-                    {
-                        pAnsiBuffer[nCurrentAnsiSize]=0;
-                    }
-                    else
-                    {
-                        pAnsiBuffer[N_MAX_STRING_SIZE]=0;
-                    }
-
-                    if(g_options.bSearchAnsi)
-                    {
-                        RECORD record;
-                        record.recordType=RECORD_TYPE_ANSI;
-                        record.nOffset=nCurrentAnsiOffset;
-                        record.nSize=nCurrentAnsiSize;
-                        record.sString=pAnsiBuffer;
-
-                        g_pListRecords->append(record);
-
-                        nCurrentRecords++;
-
-                        if(nCurrentRecords>=N_MAX)
-                        {
-                            break;
-                        }
-                    }
-                }
-
-                nCurrentAnsiSize=0;
-            }
-
-            if(!bIsStart)
-            {
-                quint16 nCode=cPrevSymbol+(cSymbol<<8); // TODO BE/LE
-
-                bool bIsUnicodeSymbol=isUnicodeSymbol(nCode);
-
-                if(bIsUnicodeSymbol)
-                {
-                    if(nCurrentUnicodeSize[nParity]==0)
-                    {
-                        nCurrentUnicodeOffset[nParity]=_nOffset-1+i;
-                    }
-
-                    if(nCurrentUnicodeSize[nParity]<N_MAX_STRING_SIZE)
-                    {
-                        *(pUnicodeBuffer[nParity]+nCurrentUnicodeSize[nParity])=nCode;
-                    }
-
-                    nCurrentUnicodeSize[nParity]++;
-                }
-
-                if((!bIsUnicodeSymbol)||(bIsEnd))
-                {
-                    if(nCurrentUnicodeSize[nParity]>=g_options.nMinLenght)
-                    {
-                        if(nCurrentUnicodeSize[nParity]-1<N_MAX_STRING_SIZE)
-                        {
-                            pUnicodeBuffer[nParity][nCurrentUnicodeSize[nParity]]=0;
-                        }
-                        else
-                        {
-                            pUnicodeBuffer[nParity][N_MAX_STRING_SIZE]=0;
-                        }
-
-                        if(g_options.bSearchUnicode)
-                        {
-                            RECORD record;
-                            record.recordType=RECORD_TYPE_UNICODE;
-                            record.nOffset=nCurrentUnicodeOffset[nParity];
-                            record.nSize=nCurrentUnicodeSize[nParity];
-                            record.sString=QString::fromUtf16(pUnicodeBuffer[nParity]);
-
-                            g_pListRecords->append(record);
-
-                            nCurrentRecords++;
-
-                            if(nCurrentRecords>=N_MAX)
-                            {
-                                break;
-                            }
-                        }
-                    }
-
-                    if(bIsEnd)
-                    {
-                        int nO=(nParity==1)?(0):(1);
-
-                        if(nCurrentUnicodeSize[nO]>=g_options.nMinLenght)
-                        {
-                            if(nCurrentUnicodeSize[nO]-1<N_MAX_STRING_SIZE)
-                            {
-                                pUnicodeBuffer[nO][nCurrentUnicodeSize[nO]]=0;
-                            }
-                            else
-                            {
-                                pUnicodeBuffer[nO][N_MAX_STRING_SIZE]=0;
-                            }
-
-                            if(g_options.bSearchUnicode)
-                            {
-                                RECORD record;
-                                record.recordType=RECORD_TYPE_UNICODE;
-                                record.nOffset=nCurrentUnicodeOffset[nO];
-                                record.nSize=nCurrentUnicodeSize[nO];
-                                record.sString=QString::fromUtf16(pUnicodeBuffer[nO]);
-
-                                g_pListRecords->append(record);
-
-                                nCurrentRecords++;
-
-                                if(nCurrentRecords>=N_MAX)
-                                {
-                                    break;
-                                }
-                            }
-                        }
-                    }
-
-                    nCurrentUnicodeSize[nParity]=0;
-                }
-            }
-
-            cPrevSymbol=cSymbol;
-
-            if(bIsStart)
-            {
-                bIsStart=false;
-            }
-        }
-
-        _nSize-=nCurrentSize;
-        _nOffset+=nCurrentSize;
-        _nRawOffset+=nCurrentSize;
-
-        if(_nRawOffset>((_nCurrentProcent+1)*_nProcent))
-        {
-            _nCurrentProcent++;
-            emit progressValue(_nCurrentProcent);
-        }
-
-        if(nCurrentRecords>=N_MAX)
-        {
-            emit errorMessage(QString("%1: %2").arg(tr("Maximum")).arg(nCurrentRecords));
-
-            break;
-        }
-    }
-
-    if(bReadError)
-    {
-        emit errorMessage(tr("Read error"));
-    }
-
-    g_bIsStop=false;
-
-    delete [] pBuffer;
-    delete [] pAnsiBuffer;
-    delete [] pUnicodeBuffer[0];
-    delete [] pUnicodeBuffer[1];
+    *g_pListRecords=g_binary.multiSearch_AllStrings(0,g_pDevice->size(),N_MAX,g_options.nMinLenght,128,g_options.bSearchAnsi,g_options.bSearchUnicode);
 
     emit completed(scanTimer.elapsed());
 }
@@ -316,20 +85,20 @@ void MultiSearch::processModel()
     qint64 _nProcent=nNumberOfRecords/100;
     qint32 _nCurrentProcent=0;
 
-    emit progressValue(_nCurrentProcent);
+    emit progressValueChanged(_nCurrentProcent); // TODO Make procesnt from xbinary
 
     (*g_ppModel)->setHeaderData(0,Qt::Horizontal,nBaseAddress?(tr("Address")):(tr("Offset")));
     (*g_ppModel)->setHeaderData(1,Qt::Horizontal,tr("Size"));
     (*g_ppModel)->setHeaderData(2,Qt::Horizontal,tr("Type"));
     (*g_ppModel)->setHeaderData(3,Qt::Horizontal,tr("String"));
 
-    emit progressValue(0);
+    emit progressValueChanged(0);
 
     g_bIsStop=false;
 
     for(int i=0;(i<nNumberOfRecords)&&(!g_bIsStop);i++)
     {
-        MultiSearch::RECORD record=g_pListRecords->at(i);
+        XBinary::MS_RECORD record=g_pListRecords->at(i);
 
         QStandardItem *pTypeAddress=new QStandardItem;
         pTypeAddress->setText(QString("%1").arg(record.nOffset+nBaseAddress,nAddressWidth,16,QChar('0')));
@@ -345,11 +114,11 @@ void MultiSearch::processModel()
 
         QStandardItem *pTypeItem=new QStandardItem;
 
-        if(record.recordType==MultiSearch::RECORD_TYPE_ANSI)
+        if(record.recordType==XBinary::MS_RECORD_TYPE_ANSI)
         {
             pTypeItem->setText("A");
         }
-        else if(record.recordType==MultiSearch::RECORD_TYPE_UNICODE)
+        else if(record.recordType==XBinary::MS_RECORD_TYPE_UNICODE)
         {
             pTypeItem->setText("U");
         }
@@ -360,7 +129,7 @@ void MultiSearch::processModel()
         if(i>((_nCurrentProcent+1)*_nProcent))
         {
             _nCurrentProcent++;
-            emit progressValue(_nCurrentProcent);
+            emit progressValueChanged(_nCurrentProcent);
         }
     }
 
@@ -369,26 +138,3 @@ void MultiSearch::processModel()
     emit completed(scanTimer.elapsed());
 }
 
-bool MultiSearch::isAnsiSymbol(quint8 cCode)
-{
-    bool bResult=false;
-
-    if((cCode>=20)&&(cCode<0x80))
-    {
-        bResult=true;
-    }
-
-    return bResult;
-}
-
-bool MultiSearch::isUnicodeSymbol(quint16 nCode)
-{
-    bool bResult=false;
-
-    if((nCode>=20)&&(nCode<0x80))
-    {
-        bResult=true;
-    }
-
-    return bResult;
-}
