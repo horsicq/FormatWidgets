@@ -26,6 +26,7 @@ MultiSearch::MultiSearch(QObject *pParent) : QObject(pParent)
     g_options={};
     g_ppModel=nullptr;
 
+    connect(&g_binary,SIGNAL(errorMessage(QString)),this,SIGNAL(errorMessage(QString)));
     connect(&g_binary,SIGNAL(searchProgressValueChanged(qint32)),this,SIGNAL(progressValueChanged(qint32)));
 //    connect(&xBinary,SIGNAL(searchProgressMinimumChanged(qint32)),this,SIGNAL(progressValueMinimum(qint32)));
 //    connect(&xBinary,SIGNAL(searchProgressMaximumChanged(qint32)),this,SIGNAL(progressValueMaximum(qint32)));
