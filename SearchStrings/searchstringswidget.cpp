@@ -52,7 +52,7 @@ SearchStringsWidget::~SearchStringsWidget()
     delete ui;
 }
 
-void SearchStringsWidget::setData(QIODevice *pDevice, SearchStrings::OPTIONS *pOptions, bool bAuto,QWidget *pParent)
+void SearchStringsWidget::setData(QIODevice *pDevice, MultiSearch::OPTIONS *pOptions, bool bAuto,QWidget *pParent)
 {
     this->g_pDevice=pDevice;
     this->g_pParent=pParent;
@@ -279,13 +279,13 @@ void SearchStringsWidget::search()
             g_pFilter->setSourceModel(nullptr);
             ui->tableViewResult->setModel(nullptr);
 
-            QList<SearchStrings::RECORD> listRecords;
+            QList<MultiSearch::RECORD> listRecords;
 
-            DialogSearchStringsProcess dsp(g_pParent);
+            DialogMultiSearchProcess dsp(g_pParent);
             dsp.processSearch(g_pDevice,&listRecords,&g_options);
             dsp.exec();
 
-            DialogSearchStringsProcess dmp(g_pParent);
+            DialogMultiSearchProcess dmp(g_pParent);
             dmp.processModel(&listRecords,&g_pModel,&g_options);
             dmp.exec();
 

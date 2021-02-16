@@ -18,52 +18,42 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-#ifndef TOOLSWIDGET_H
-#define TOOLSWIDGET_H
+#ifndef DIALOGMULTISEARCHSPROCESS_H
+#define DIALOGMULTISEARCHSPROCESS_H
 
-#include <QWidget>
-#include "searchstringswidget.h"
-#include "xhexview.h"
-#include "formatwidget_def.h"
+#include <QDialog>
+#include <QIODevice>
+#include <QThread>
+#include <QMessageBox>
+#include "multisearch.h"
 
 namespace Ui
 {
-class ToolsWidget;
+class DialogMultiSearchProcess;
 }
 
-class ToolsWidget : public QWidget
+class DialogMultiSearchProcess : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit ToolsWidget(QWidget *pParent=nullptr);
-    ~ToolsWidget();
-
-    void setShortcuts(XShortcuts *pShortcuts);
-
-    void setData(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions);
-    void setEdited(bool bState);
-    void setReadonly(bool bState);
-    void reload();
-    qint64 getStartAddress();
-    void setSelection(qint64 nOffset, qint64 nSize);
-
-signals:
-    void editState(bool bState);
-    void showOffsetHex(qint64 nOffset,qint64 nSize);
-    void showOffsetDisasm(qint64 nOffset);
-    void showOffsetMemoryMap(qint64 nOffset);
+    explicit DialogMultiSearchProcess(QWidget *pParent=nullptr);
+    ~DialogMultiSearchProcess();
+    void processSearch(QIODevice *pDevice,QList<MultiSearch::RECORD> *pListRecords,MultiSearch::OPTIONS *pOptions);
+    void processModel(QList<MultiSearch::RECORD> *pListRecords,QStandardItemModel **ppModel,MultiSearch::OPTIONS *pOptions);
 
 private slots:
-    void on_tabWidgetMain_currentChanged(int nIndex);
-    void _showHex(qint64 nOffset, qint64 nSize);
-    void _showDisasm(qint64 nOffset);
-    void _showMemoryMap(qint64 nOffset);
+    void on_pushButtonCancel_clicked();
+    void errorMessage(QString sText);
+    void onCompleted(qint64 nElapsed);
+    void progressValue(qint32 nValue);
 
 private:
-    Ui::ToolsWidget *ui;
-    QIODevice *g_pDevice;
-    MultiSearch::OPTIONS g_stringsOptions;
+    Ui::DialogMultiSearchProcess *ui;
+    MultiSearch *g_pHandleSearch;
+    MultiSearch *g_pHandleModel;
+    QThread *g_pThreadSearch;
+    QThread *g_pThreadModel;
 };
 
-#endif // TOOLSWIDGET_H
+#endif // DIALOGMULTISEARCHSPROCESS_H

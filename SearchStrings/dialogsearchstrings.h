@@ -22,7 +22,7 @@
 #define DIALOGSEARCHSTRINGS_H
 
 #include <QDialog>
-#include "searchstrings.h"
+#include "multisearch.h"
 #include "xshortcuts.h"
 
 namespace Ui {
@@ -34,7 +34,7 @@ class DialogSearchStrings : public QDialog
     Q_OBJECT
 
 public:
-    explicit DialogSearchStrings(QWidget *pParent,QIODevice *pDevice,SearchStrings::OPTIONS *pOptions=nullptr,bool bAuto=false);
+    explicit DialogSearchStrings(QWidget *pParent,QIODevice *pDevice,MultiSearch::OPTIONS *pOptions=nullptr,bool bAuto=false);
     ~DialogSearchStrings();
     void setShortcuts(XShortcuts *pShortcuts);
 

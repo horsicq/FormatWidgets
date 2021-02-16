@@ -31,7 +31,7 @@
 #include <QClipboard>
 #include <QFutureWatcher>
 #include <QtConcurrent>
-#include "dialogsearchstringsprocess.h"
+#include "dialogmultisearchprocess.h"
 #include "xshortcuts.h"
 
 namespace Ui
@@ -46,7 +46,7 @@ class SearchStringsWidget : public QWidget
 public:
     explicit SearchStringsWidget(QWidget *pParent=nullptr);
     ~SearchStringsWidget();
-    void setData(QIODevice *pDevice,SearchStrings::OPTIONS *pOptions,bool bAuto=false,QWidget *pParent=nullptr);
+    void setData(QIODevice *pDevice,MultiSearch::OPTIONS *pOptions,bool bAuto=false,QWidget *pParent=nullptr);
     void setShortcuts(XShortcuts *pShortcuts);
 
     void reload();
@@ -73,7 +73,7 @@ private:
     QIODevice *g_pDevice;
     QWidget *g_pParent;
     QSortFilterProxyModel *g_pFilter;
-    SearchStrings::OPTIONS g_options;
+    MultiSearch::OPTIONS g_options;
     QStandardItemModel *g_pModel;
     bool g_bInit;
     QStandardItemModel *g_pOldModel;
