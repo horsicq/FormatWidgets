@@ -69,8 +69,7 @@ void MultiSearch::processSearch()
     }
     else if(g_type==TYPE_SIGNATURES)
     {
-        //TODO
-        *g_pListRecords=g_binary.multiSearch_signature(0,g_pDevice->size(),N_MAX,"00+00");
+        *g_pListRecords=g_binary.multiSearch_signature(0,g_pDevice->size(),N_MAX,"11+22");
     }
 
     emit completed(scanTimer.elapsed());
@@ -156,7 +155,7 @@ void MultiSearch::processModel()
         emit progressValueChanged(_nCurrentProcent); // TODO Make procents from xbinary
 
         (*g_ppModel)->setHeaderData(0,Qt::Horizontal,tr("Offset"));
-        (*g_ppModel)->setHeaderData(3,Qt::Horizontal,tr("String"));
+        (*g_ppModel)->setHeaderData(1,Qt::Horizontal,tr("Signature"));
 
         emit progressValueChanged(0);
 
