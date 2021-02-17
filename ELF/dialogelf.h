@@ -36,7 +36,7 @@ class DialogELF : public QDialog
 public:
     explicit DialogELF(QWidget *pParent=nullptr);
     ~DialogELF();
-    void setData(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions);
+    void setData(QIODevice *pDevice, FW_DEF::OPTIONS options);
     void setShortcuts(XShortcuts *pShortcuts);
 
 private:

@@ -78,17 +78,17 @@ public:
     };
 
     FormatWidget(QWidget *pParent=nullptr);
-    FormatWidget(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions,quint32 nNumber,qint64 nOffset,qint32 nType,QWidget *pParent);
+    FormatWidget(QIODevice *pDevice,FW_DEF::OPTIONS options,quint32 nNumber,qint64 nOffset,qint32 nType,QWidget *pParent);
     ~FormatWidget();
 
-    void setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset, qint32 nType);
+    void setData(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType);
     void setShortcuts(XShortcuts *pShortcuts);
 
     void setFileType(XBinary::FT fileType);
     XBinary::FT getFileType();
     XShortcuts *getShortcuts();
     QIODevice *getDevice();
-    FW_DEF::OPTIONS *getOptions();
+    FW_DEF::OPTIONS getOptions();
     quint32 getNumber();
     qint64 getOffset();
     qint32 getType();

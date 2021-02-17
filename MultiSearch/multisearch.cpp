@@ -32,28 +32,24 @@ MultiSearch::MultiSearch(QObject *pParent) : QObject(pParent)
 //    connect(&xBinary,SIGNAL(searchProgressMaximumChanged(qint32)),this,SIGNAL(progressValueMaximum(qint32)));
 }
 
-void MultiSearch::setSearchData(QIODevice *pDevice, QList<XBinary::MS_RECORD> *pListRecords, OPTIONS *pOptions)
+void MultiSearch::setSearchData(QIODevice *pDevice, QList<XBinary::MS_RECORD> *pListRecords, OPTIONS options, TYPE type)
 {
     this->g_pDevice=pDevice;
     this->g_pListRecords=pListRecords;
 
     g_binary.setDevice(pDevice);
 
-    if(pOptions)
-    {
-        g_options=*pOptions;
-    }
+    g_options=options;
+    g_type=type;
 }
 
-void MultiSearch::setModelData(QList<XBinary::MS_RECORD> *pListRecords, QStandardItemModel **ppModel, OPTIONS *pOptions)
+void MultiSearch::setModelData(QList<XBinary::MS_RECORD> *pListRecords, QStandardItemModel **ppModel, OPTIONS options, TYPE type)
 {
     this->g_pListRecords=pListRecords;
     this->g_ppModel=ppModel;
 
-    if(pOptions)
-    {
-        g_options=*pOptions;
-    }
+    g_options=options;
+    g_type=type;
 }
 
 void MultiSearch::stop()
@@ -67,7 +63,15 @@ void MultiSearch::processSearch()
     QElapsedTimer scanTimer;
     scanTimer.start();
 
-    *g_pListRecords=g_binary.multiSearch_AllStrings(0,g_pDevice->size(),N_MAX,g_options.nMinLenght,128,g_options.bSearchAnsi,g_options.bSearchUnicode);
+    if(g_type==TYPE_STRINGS)
+    {
+        *g_pListRecords=g_binary.multiSearch_allStrings(0,g_pDevice->size(),N_MAX,g_options.nMinLenght,128,g_options.bAnsi,g_options.bUnicode);
+    }
+    else if(g_type==TYPE_SIGNATURES)
+    {
+        //TODO
+        *g_pListRecords=g_binary.multiSearch_signature(0,g_pDevice->size(),N_MAX,"00+00");
+    }
 
     emit completed(scanTimer.elapsed());
 }
@@ -77,64 +81,109 @@ void MultiSearch::processModel()
     QElapsedTimer scanTimer;
     scanTimer.start();
 
-    int nNumberOfRecords=g_pListRecords->count();
-    *g_ppModel=new QStandardItemModel(nNumberOfRecords,4); // TODO Check maximum
-
-    qint64 nBaseAddress=g_options.nBaseAddress;
-    qint32 nAddressWidth=g_options.nAddressWidth;
-
-    qint64 _nProcent=nNumberOfRecords/100;
-    qint32 _nCurrentProcent=0;
-
-    emit progressValueChanged(_nCurrentProcent); // TODO Make procesnt from xbinary
-
-    (*g_ppModel)->setHeaderData(0,Qt::Horizontal,nBaseAddress?(tr("Address")):(tr("Offset")));
-    (*g_ppModel)->setHeaderData(1,Qt::Horizontal,tr("Size"));
-    (*g_ppModel)->setHeaderData(2,Qt::Horizontal,tr("Type"));
-    (*g_ppModel)->setHeaderData(3,Qt::Horizontal,tr("String"));
-
-    emit progressValueChanged(0);
-
-    g_bIsStop=false;
-
-    for(int i=0;(i<nNumberOfRecords)&&(!g_bIsStop);i++)
+    if(g_type==TYPE_STRINGS)
     {
-        XBinary::MS_RECORD record=g_pListRecords->at(i);
+        int nNumberOfRecords=g_pListRecords->count();
+        *g_ppModel=new QStandardItemModel(nNumberOfRecords,4); // TODO Check maximum
 
-        QStandardItem *pTypeAddress=new QStandardItem;
-        pTypeAddress->setText(QString("%1").arg(record.nOffset+nBaseAddress,nAddressWidth,16,QChar('0')));
-        pTypeAddress->setData(record.nOffset,Qt::UserRole+1);
-        pTypeAddress->setData(record.nSize,Qt::UserRole+2);
-        pTypeAddress->setTextAlignment(Qt::AlignRight);
-        (*g_ppModel)->setItem(i,0,pTypeAddress);
+        qint64 nBaseAddress=g_options.nBaseAddress;
+        qint32 nAddressWidth=g_options.nAddressWidth;
 
-        QStandardItem *pTypeSize=new QStandardItem;
-        pTypeSize->setText(QString("%1").arg(record.nSize,8,16,QChar('0')));
-        pTypeSize->setTextAlignment(Qt::AlignRight);
-        (*g_ppModel)->setItem(i,1,pTypeSize);
+        qint64 _nProcent=nNumberOfRecords/100;
+        qint32 _nCurrentProcent=0;
 
-        QStandardItem *pTypeItem=new QStandardItem;
+        emit progressValueChanged(_nCurrentProcent); // TODO Make procents from xbinary
 
-        if(record.recordType==XBinary::MS_RECORD_TYPE_ANSI)
+        (*g_ppModel)->setHeaderData(0,Qt::Horizontal,nBaseAddress?(tr("Address")):(tr("Offset")));
+        (*g_ppModel)->setHeaderData(1,Qt::Horizontal,tr("Size"));
+        (*g_ppModel)->setHeaderData(2,Qt::Horizontal,tr("Type"));
+        (*g_ppModel)->setHeaderData(3,Qt::Horizontal,tr("String"));
+
+        emit progressValueChanged(0);
+
+        g_bIsStop=false;
+
+        for(int i=0;(i<nNumberOfRecords)&&(!g_bIsStop);i++)
         {
-            pTypeItem->setText("A");
-        }
-        else if(record.recordType==XBinary::MS_RECORD_TYPE_UNICODE)
-        {
-            pTypeItem->setText("U");
+            XBinary::MS_RECORD record=g_pListRecords->at(i);
+
+            QStandardItem *pTypeAddress=new QStandardItem;
+            pTypeAddress->setText(QString("%1").arg(record.nOffset+nBaseAddress,nAddressWidth,16,QChar('0')));
+            pTypeAddress->setData(record.nOffset,Qt::UserRole+1);
+            pTypeAddress->setData(record.nSize,Qt::UserRole+2);
+            pTypeAddress->setTextAlignment(Qt::AlignRight);
+            (*g_ppModel)->setItem(i,0,pTypeAddress);
+
+            QStandardItem *pTypeSize=new QStandardItem;
+            pTypeSize->setText(QString("%1").arg(record.nSize,8,16,QChar('0')));
+            pTypeSize->setTextAlignment(Qt::AlignRight);
+            (*g_ppModel)->setItem(i,1,pTypeSize);
+
+            QStandardItem *pTypeItem=new QStandardItem;
+
+            if(record.recordType==XBinary::MS_RECORD_TYPE_ANSI)
+            {
+                pTypeItem->setText("A");
+            }
+            else if(record.recordType==XBinary::MS_RECORD_TYPE_UNICODE)
+            {
+                pTypeItem->setText("U");
+            }
+
+            (*g_ppModel)->setItem(i,2,pTypeItem);
+            (*g_ppModel)->setItem(i,3,new QStandardItem(record.sString));
+
+            if(i>((_nCurrentProcent+1)*_nProcent))
+            {
+                _nCurrentProcent++;
+                emit progressValueChanged(_nCurrentProcent);
+            }
         }
 
-        (*g_ppModel)->setItem(i,2,pTypeItem);
-        (*g_ppModel)->setItem(i,3,new QStandardItem(record.sString));
-
-        if(i>((_nCurrentProcent+1)*_nProcent))
-        {
-            _nCurrentProcent++;
-            emit progressValueChanged(_nCurrentProcent);
-        }
+        g_bIsStop=false;
     }
+    else if(g_type==TYPE_SIGNATURES)
+    {
+        int nNumberOfRecords=g_pListRecords->count();
+        *g_ppModel=new QStandardItemModel(nNumberOfRecords,2); // TODO Check maximum
 
-    g_bIsStop=false;
+        qint64 nBaseAddress=g_options.nBaseAddress;
+        qint32 nAddressWidth=g_options.nAddressWidth;
+
+        qint64 _nProcent=nNumberOfRecords/100;
+        qint32 _nCurrentProcent=0;
+
+        emit progressValueChanged(_nCurrentProcent); // TODO Make procents from xbinary
+
+        (*g_ppModel)->setHeaderData(0,Qt::Horizontal,tr("Offset"));
+        (*g_ppModel)->setHeaderData(3,Qt::Horizontal,tr("String"));
+
+        emit progressValueChanged(0);
+
+        g_bIsStop=false;
+
+        for(int i=0;(i<nNumberOfRecords)&&(!g_bIsStop);i++)
+        {
+            XBinary::MS_RECORD record=g_pListRecords->at(i);
+
+            QStandardItem *pTypeAddress=new QStandardItem;
+            pTypeAddress->setText(QString("%1").arg(record.nOffset+nBaseAddress,nAddressWidth,16,QChar('0')));
+            pTypeAddress->setData(record.nOffset,Qt::UserRole+1);
+            pTypeAddress->setData(record.nSize,Qt::UserRole+2);
+            pTypeAddress->setTextAlignment(Qt::AlignRight);
+            (*g_ppModel)->setItem(i,0,pTypeAddress);
+
+            (*g_ppModel)->setItem(i,1,new QStandardItem(record.sString));
+
+            if(i>((_nCurrentProcent+1)*_nProcent))
+            {
+                _nCurrentProcent++;
+                emit progressValueChanged(_nCurrentProcent);
+            }
+        }
+
+        g_bIsStop=false;
+    }
 
     emit completed(scanTimer.elapsed());
 }

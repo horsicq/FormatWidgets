@@ -35,14 +35,14 @@ DialogNE::~DialogNE()
     delete ui;
 }
 
-void DialogNE::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions)
+void DialogNE::setData(QIODevice *pDevice, FW_DEF::OPTIONS options)
 {
-    if(pOptions->sTitle!="")
+    if(options.sTitle!="")
     {
-        setWindowTitle(pOptions->sTitle);
+        setWindowTitle(options.sTitle);
     }
 
-    ui->widget->setData(pDevice,pOptions,0,0,0);
+    ui->widget->setData(pDevice,options,0,0,0);
     ui->widget->reload();
 }
 

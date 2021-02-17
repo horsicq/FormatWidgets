@@ -35,12 +35,12 @@ ToolsWidget::ToolsWidget(QWidget *pParent) :
     connect(ui->widgetStrings,SIGNAL(showHex(qint64,qint64)),this,SLOT(_showHex(qint64,qint64)));
 }
 
-void ToolsWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions)
+void ToolsWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS options)
 {
     g_pDevice=pDevice;
 
     XHexView::OPTIONS hexOptions={};
-    hexOptions.nStartAddress=pOptions->nImageBase;
+    hexOptions.nStartAddress=options.nImageBase;
     hexOptions.bMenu_MemoryMap=true;
     hexOptions.bMenu_Disasm=true;
 
@@ -49,10 +49,12 @@ void ToolsWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions)
     ui->widgetHex->setData(pDevice,hexOptions);
 
     g_stringsOptions={};
-    g_stringsOptions.nBaseAddress=pOptions->nImageBase;
+    g_stringsOptions.nBaseAddress=options.nImageBase;
     g_stringsOptions.bMenu_Hex=true;
+    g_stringsOptions.bAnsi=true;
+    g_stringsOptions.bUnicode=true;
 
-    ui->widgetStrings->setData(pDevice,&g_stringsOptions);
+    ui->widgetStrings->setData(pDevice,g_stringsOptions);
 
     reload();
 }

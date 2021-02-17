@@ -39,8 +39,8 @@ class DialogMultiSearchProcess : public QDialog
 public:
     explicit DialogMultiSearchProcess(QWidget *pParent=nullptr);
     ~DialogMultiSearchProcess();
-    void processSearch(QIODevice *pDevice,QList<XBinary::MS_RECORD> *pListRecords,MultiSearch::OPTIONS *pOptions);
-    void processModel(QList<XBinary::MS_RECORD> *pListRecords,QStandardItemModel **ppModel,MultiSearch::OPTIONS *pOptions);
+    void processSearch(QIODevice *pDevice,QList<XBinary::MS_RECORD> *pListRecords,MultiSearch::OPTIONS options,MultiSearch::TYPE type);
+    void processModel(QList<XBinary::MS_RECORD> *pListRecords,QStandardItemModel **ppModel,MultiSearch::OPTIONS options,MultiSearch::TYPE type);
 
 private slots:
     void on_pushButtonCancel_clicked();

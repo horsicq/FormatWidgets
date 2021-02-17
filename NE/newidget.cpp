@@ -30,13 +30,10 @@ NEWidget::NEWidget(QWidget *pParent) :
     connect(ui->widgetStrings,SIGNAL(showHex(qint64,qint64)),this,SLOT(showInHexWindow(qint64,qint64)));
 }
 
-NEWidget::NEWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *pParent) :
-    FormatWidget(pParent),
-    ui(new Ui::NEWidget)
+NEWidget::NEWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) :
+    NEWidget(pParent)
 {
-    ui->setupUi(this);
-
-    setData(pDevice,pOptions,0,0,0);
+    setData(pDevice,options,0,0,0);
     NEWidget::reload();
 }
 
@@ -91,7 +88,7 @@ void NEWidget::reload()
 
     ui->checkBoxReadonly->setEnabled(!isReadonly());
 
-    XNE ne(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
+    XNE ne(getDevice(),getOptions().bIsImage,getOptions().nImageBase);
 
     if(ne.isValid())
     {
@@ -120,7 +117,7 @@ void NEWidget::reload()
 
         ui->treeWidgetNavi->expandAll();
 
-        setTreeItem(ui->treeWidgetNavi,getOptions()->nStartType);
+        setTreeItem(ui->treeWidgetNavi,getOptions().nStartType);
     }
 }
 
@@ -138,7 +135,7 @@ bool NEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, in
 
     if(getDevice()->isWritable())
     {
-        XNE ne(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
+        XNE ne(getDevice(),getOptions().bIsImage,getOptions().nImageBase);
 
         if(ne.isValid())
         {
@@ -320,7 +317,7 @@ void NEWidget::reloadData()
 
     ui->stackedWidgetInfo->setCurrentIndex(nType);
 
-    XNE ne(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
+    XNE ne(getDevice(),getOptions().bIsImage,getOptions().nImageBase);
 
     if(ne.isValid())
     {
@@ -331,7 +328,7 @@ void NEWidget::reloadData()
                 XHexView::OPTIONS options={};
                 options.bMenu_Disasm=true;
                 ui->widgetHex->setData(getDevice(),options);
-//                ui->widgetHex->setBackupFileName(getOptions()->sBackupFileName);
+//                ui->widgetHex->setBackupFileName(getOptions().sBackupFileName);
                 ui->widgetHex->enableReadOnly(false);
                 connect(ui->widgetHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
                 ui->widgetHex->reload();
@@ -348,7 +345,12 @@ void NEWidget::reloadData()
         {
             if(!g_stInit.contains(sInit))
             {
-                ui->widgetStrings->setData(getDevice(),0,true);
+                MultiSearch::OPTIONS stringsOptions={};
+                stringsOptions.bMenu_Hex=true;
+                stringsOptions.bAnsi=true;
+                stringsOptions.bUnicode=true;
+
+                ui->widgetStrings->setData(getDevice(),stringsOptions,true);
             }
         }
         else if(nType==SNE::TYPE_MEMORYMAP)

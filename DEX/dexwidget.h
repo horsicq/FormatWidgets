@@ -38,7 +38,7 @@ class DEXWidget : public FormatWidget
 
 public:
     DEXWidget(QWidget *pParent=nullptr);
-    DEXWidget(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions,QWidget *pParent=nullptr);
+    DEXWidget(QIODevice *pDevice,FW_DEF::OPTIONS options,QWidget *pParent=nullptr);
     ~DEXWidget();
     void setShortcuts(XShortcuts *pShortcuts);
     virtual void clear();

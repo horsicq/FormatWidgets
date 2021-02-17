@@ -28,13 +28,13 @@ PESectionHeaderWidget::PESectionHeaderWidget(QWidget *pParent):
     ui->setupUi(this);
 }
 
-PESectionHeaderWidget::PESectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent):
-    FormatWidget(pDevice,pOptions,nNumber,nOffset,nType,pParent),
+PESectionHeaderWidget::PESectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent):
+    FormatWidget(pDevice,options,nNumber,nOffset,nType,pParent),
     ui(new Ui::PESectionHeaderWidget)
 {
     ui->setupUi(this);
 
-    setData(pDevice,pOptions,nNumber,nOffset,nType);
+    setData(pDevice,options,nNumber,nOffset,nType);
 
     g_ppLinedEdit=0;
     g_nLineEditSize=0;
@@ -166,7 +166,7 @@ bool PESectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, i
 
     if(getDevice()->isWritable())
     {
-        XPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
+        XPE pe(getDevice(),getOptions().bIsImage,getOptions().nImageBase);
 
         if(pe.isValid())
         {
@@ -393,7 +393,7 @@ void PESectionHeaderWidget::reloadData()
 {
     int nType=getType();
 
-    XPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
+    XPE pe(getDevice(),getOptions().bIsImage,getOptions().nImageBase);
 
     if(pe.isValid())
     {

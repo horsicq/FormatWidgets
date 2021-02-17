@@ -37,7 +37,7 @@ class MACHWidget : public FormatWidget
 
 public:
     MACHWidget(QWidget *pParent=nullptr);
-    MACHWidget(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions,QWidget *pParent=nullptr);
+    MACHWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent=nullptr);
     ~MACHWidget();
     void setShortcuts(XShortcuts *pShortcuts);
 

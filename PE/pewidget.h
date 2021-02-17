@@ -38,7 +38,7 @@ class PEWidget : public FormatWidget
 
 public:
     PEWidget(QWidget *pParent=nullptr);
-    PEWidget(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions,QWidget *pParent=nullptr);
+    PEWidget(QIODevice *pDevice,FW_DEF::OPTIONS options,QWidget *pParent=nullptr);
     ~PEWidget();
     void setShortcuts(XShortcuts *pShortcuts);
     virtual void clear();

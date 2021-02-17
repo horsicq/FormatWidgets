@@ -36,7 +36,7 @@ class DialogDEX : public QDialog
 public:
     explicit DialogDEX(QWidget *pParent=nullptr);
     ~DialogDEX();
-    void setData(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions);
+    void setData(QIODevice *pDevice,FW_DEF::OPTIONS options);
     void setShortcuts(XShortcuts *pShortcuts);
 
 private:

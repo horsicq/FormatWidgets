@@ -37,7 +37,7 @@ class LEWidget : public FormatWidget
 
 public:
     LEWidget(QWidget *pParent=nullptr);
-    LEWidget(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions,QWidget *pParent=nullptr);
+    LEWidget(QIODevice *pDevice,FW_DEF::OPTIONS options,QWidget *pParent=nullptr);
     ~LEWidget();
     void setShortcuts(XShortcuts *pShortcuts);
 

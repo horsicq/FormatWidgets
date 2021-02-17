@@ -38,12 +38,12 @@ PEWidget::PEWidget(QWidget *pParent) :
     connect(ui->widgetStrings,SIGNAL(showHex(qint64,qint64)),this,SLOT(showInHexWindow(qint64,qint64)));
 }
 
-PEWidget::PEWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *pParent) :
+PEWidget::PEWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) :
     PEWidget(pParent)
 {
     ui->setupUi(this);
 
-    setData(pDevice,pOptions,0,0,0);
+    setData(pDevice,options,0,0,0);
     PEWidget::reload();
 }
 
@@ -120,7 +120,7 @@ void PEWidget::reload()
 
     ui->checkBoxReadonly->setEnabled(!isReadonly());
 
-    XPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
+    XPE pe(getDevice(),getOptions().bIsImage,getOptions().nImageBase);
 
     if(pe.isValid())
     {
@@ -237,7 +237,7 @@ void PEWidget::reload()
 
         ui->treeWidgetNavi->expandAll();
 
-        setTreeItem(ui->treeWidgetNavi,getOptions()->nStartType);
+        setTreeItem(ui->treeWidgetNavi,getOptions().nStartType);
     }
 }
 
@@ -256,7 +256,7 @@ bool PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, in
 
     if(getDevice()->isWritable())
     {
-        XPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
+        XPE pe(getDevice(),getOptions().bIsImage,getOptions().nImageBase);
 
         if(pe.isValid())
         {
@@ -733,7 +733,7 @@ void PEWidget::widgetAction()
             switch(nNdata)
             {
                 case N_IMAGE_OPTIONAL_HEADER::CheckSum:
-                    XPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
+                    XPE pe(getDevice(),getOptions().bIsImage,getOptions().nImageBase);
 
                     if(pe.isValid())
                     {
@@ -784,7 +784,7 @@ void PEWidget::reloadData()
 
     ui->stackedWidgetInfo->setCurrentIndex(nType);
 
-    XPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
+    XPE pe(getDevice(),getOptions().bIsImage,getOptions().nImageBase);
 
     if(pe.isValid())
     {
@@ -796,7 +796,7 @@ void PEWidget::reloadData()
                 options.bMenu_Disasm=true;
                 options.bMenu_MemoryMap=true;
                 ui->widgetHex->setData(getDevice(),options);
-//                ui->widgetHex->setBackupFileName(getOptions()->sBackupFileName);
+//                ui->widgetHex->setBackupFileName(getOptions().sBackupFileName);
                 // TODO save directory
                 ui->widgetHex->enableReadOnly(false);
                 connect(ui->widgetHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
@@ -812,13 +812,18 @@ void PEWidget::reloadData()
                 ui->widgetDisasm->setData(getDevice(),pe.getFileType(),pe.getEntryPointAddress());
             }
 
-//            pDisasmWidget->setBackupFileName(getOptions()->sBackupFileName);
+//            pDisasmWidget->setBackupFileName(getOptions().sBackupFileName);
         }
         else if(nType==SPE::TYPE_STRINGS)
         {
             if(!g_stInit.contains(sInit))
             {
-                ui->widgetStrings->setData(getDevice(),0,true);
+                MultiSearch::OPTIONS stringsOptions={};
+                stringsOptions.bMenu_Hex=true;
+                stringsOptions.bAnsi=true;
+                stringsOptions.bUnicode=true;
+
+                ui->widgetStrings->setData(getDevice(),stringsOptions,true);
             }
         }
         else if(nType==SPE::TYPE_MEMORYMAP)
@@ -1670,7 +1675,7 @@ void PEWidget::on_tableView_Sections_customContextMenuRequested(const QPoint &po
 
 void PEWidget::loadImportLibrary(int nRow)
 {
-    XPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
+    XPE pe(getDevice(),getOptions().bIsImage,getOptions().nImageBase);
 
     if(pe.isValid())
     {
@@ -1691,7 +1696,7 @@ void PEWidget::loadRelocs(int nRow)
 
     qint64 nOffset=ui->tableView_Relocs->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
 
-    XPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
+    XPE pe(getDevice(),getOptions().bIsImage,getOptions().nImageBase);
 
     if(pe.isValid())
     {
@@ -1732,7 +1737,7 @@ void PEWidget::loadDebug(int nRow)
 
 void PEWidget::loadDelayImport(int nRow)
 {
-    XPE pe(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
+    XPE pe(getDevice(),getOptions().bIsImage,getOptions().nImageBase);
 
     if(pe.isValid())
     {

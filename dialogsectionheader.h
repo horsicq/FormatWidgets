@@ -37,7 +37,7 @@ public:
     explicit DialogSectionHeader(QWidget *pParent);
     ~DialogSectionHeader();
     void setWidget(FormatWidget *pWidget);
-    void setData(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions,quint32 nNumber,qint64 nOffset,QString sTitle,qint32 nType); // TODO remove
+    void setData(QIODevice *pDevice,FW_DEF::OPTIONS options,quint32 nNumber,qint64 nOffset,QString sTitle,qint32 nType); // TODO remove
     void setData(QString sTitle);
     void setEdited(bool bState);
 

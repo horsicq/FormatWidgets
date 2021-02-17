@@ -35,7 +35,7 @@ class ELFSectionHeaderWidget : public FormatWidget
 
 public:
     ELFSectionHeaderWidget(QWidget *pParent=nullptr);
-    ELFSectionHeaderWidget(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions,quint32 nNumber,qint64 nOffset,qint32 nType,QWidget *pParent=nullptr);
+    ELFSectionHeaderWidget(QIODevice *pDevice,FW_DEF::OPTIONS options,quint32 nNumber,qint64 nOffset,qint32 nType,QWidget *pParent=nullptr);
     ~ELFSectionHeaderWidget();
     virtual void clear();
     virtual void cleanup();

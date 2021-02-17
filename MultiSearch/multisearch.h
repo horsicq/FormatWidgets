@@ -32,12 +32,18 @@ class MultiSearch : public QObject
 
 public:
 
+    enum TYPE
+    {
+        TYPE_STRINGS=0,
+        TYPE_SIGNATURES
+    };
+
     struct OPTIONS
     {
         qint64 nBaseAddress;
         qint32 nAddressWidth; // TODO make auto
-        bool bSearchAnsi;
-        bool bSearchUnicode;
+        bool bAnsi; // TODO
+        bool bUnicode; // TODO
         qint32 nMinLenght;
         bool bMenu_Hex;
     };
@@ -45,8 +51,8 @@ public:
     const int N_MAX=50000;
 
     explicit MultiSearch(QObject *pParent=nullptr);
-    void setSearchData(QIODevice *pDevice,QList<XBinary::MS_RECORD> *pListRecords,OPTIONS *pOptions=nullptr);
-    void setModelData(QList<XBinary::MS_RECORD> *pListRecords,QStandardItemModel **ppModel,OPTIONS *pOptions=nullptr);
+    void setSearchData(QIODevice *pDevice,QList<XBinary::MS_RECORD> *pListRecords,OPTIONS options,TYPE type);
+    void setModelData(QList<XBinary::MS_RECORD> *pListRecords,QStandardItemModel **ppModel,OPTIONS options,TYPE type);
 
 signals:
     void errorMessage(QString sText);
@@ -62,6 +68,7 @@ private:
     QIODevice *g_pDevice;
     QList<XBinary::MS_RECORD> *g_pListRecords;
     OPTIONS g_options;
+    TYPE g_type;
     QStandardItemModel **g_ppModel;
     bool g_bIsStop;
     XBinary g_binary;

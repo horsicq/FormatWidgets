@@ -35,12 +35,10 @@ DEXWidget::DEXWidget(QWidget *pParent) :
     connect(ui->widgetStrings,SIGNAL(showHex(qint64,qint64)),this,SLOT(showInHexWindow(qint64,qint64)));
 }
 
-DEXWidget::DEXWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *pParent) :
+DEXWidget::DEXWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) :
     DEXWidget(pParent)
 {
-    ui->setupUi(this);
-
-    setData(pDevice,pOptions,0,0,0);
+    setData(pDevice,options,0,0,0);
     DEXWidget::reload();
 }
 
@@ -147,7 +145,7 @@ void DEXWidget::reload()
 
         ui->treeWidgetNavi->expandAll();
 
-        setTreeItem(ui->treeWidgetNavi,getOptions()->nStartType);
+        setTreeItem(ui->treeWidgetNavi,getOptions().nStartType);
     }
 }
 
@@ -307,7 +305,7 @@ void DEXWidget::reloadData()
                 XHexView::OPTIONS options={};
                 options.bMenu_Disasm=true;
                 ui->widgetHex->setData(getDevice(),options);
-//                ui->widgetHex->setBackupFileName(getOptions()->sBackupFileName);
+//                ui->widgetHex->setBackupFileName(getOptions().sBackupFileName);
                 ui->widgetHex->enableReadOnly(false);
                 connect(ui->widgetHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
 
@@ -318,7 +316,12 @@ void DEXWidget::reloadData()
         {
             if(!g_stInit.contains(sInit))
             {
-                ui->widgetStrings->setData(getDevice(),0,true);
+                MultiSearch::OPTIONS stringsOptions={};
+                stringsOptions.bMenu_Hex=true;
+                stringsOptions.bAnsi=true;
+                stringsOptions.bUnicode=true;
+
+                ui->widgetStrings->setData(getDevice(),stringsOptions,true);
             }
         }
         else if(nType==SDEX::TYPE_MEMORYMAP)

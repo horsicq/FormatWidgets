@@ -46,7 +46,7 @@ class SearchStringsWidget : public QWidget
 public:
     explicit SearchStringsWidget(QWidget *pParent=nullptr);
     ~SearchStringsWidget();
-    void setData(QIODevice *pDevice,MultiSearch::OPTIONS *pOptions,bool bAuto=false,QWidget *pParent=nullptr);
+    void setData(QIODevice *pDevice,MultiSearch::OPTIONS options,bool bAuto=false,QWidget *pParent=nullptr);
     void setShortcuts(XShortcuts *pShortcuts);
 
     void reload();

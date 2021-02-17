@@ -30,12 +30,10 @@ MACHWidget::MACHWidget(QWidget *pParent) :
     connect(ui->widgetStrings,SIGNAL(showHex(qint64,qint64)),this,SLOT(showInHexWindow(qint64,qint64)));
 }
 
-MACHWidget::MACHWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *pParent) :
+MACHWidget::MACHWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) :
     MACHWidget(pParent)
 {
-    ui->setupUi(this);
-
-    setData(pDevice,pOptions,0,0,0);
+    setData(pDevice,options,0,0,0);
     MACHWidget::reload();
 }
 
@@ -89,7 +87,7 @@ void MACHWidget::reload()
 
     ui->checkBoxReadonly->setEnabled(!isReadonly());
 
-    XMACH mach(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
+    XMACH mach(getDevice(),getOptions().bIsImage,getOptions().nImageBase);
 
     if(mach.isValid())
     {
@@ -141,7 +139,7 @@ void MACHWidget::reload()
 
         ui->treeWidgetNavi->expandAll();
 
-        setTreeItem(ui->treeWidgetNavi,getOptions()->nStartType);
+        setTreeItem(ui->treeWidgetNavi,getOptions().nStartType);
     }
 }
 
@@ -159,7 +157,7 @@ bool MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, 
 
     if(getDevice()->isWritable())
     {
-        XMACH mach(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
+        XMACH mach(getDevice(),getOptions().bIsImage,getOptions().nImageBase);
 
         if(mach.isValid())
         {
@@ -256,7 +254,7 @@ void MACHWidget::reloadData()
 
     ui->stackedWidgetInfo->setCurrentIndex(nType);
 
-    XMACH mach(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
+    XMACH mach(getDevice(),getOptions().bIsImage,getOptions().nImageBase);
 
     if(mach.isValid())
     {
@@ -267,7 +265,7 @@ void MACHWidget::reloadData()
                 XHexView::OPTIONS options={};
                 options.bMenu_Disasm=true;
                 ui->widgetHex->setData(getDevice(),options);
-//                ui->widgetHex->setBackupFileName(getOptions()->sBackupFileName);
+//                ui->widgetHex->setBackupFileName(getOptions().sBackupFileName);
                 ui->widgetHex->enableReadOnly(false);
                 connect(ui->widgetHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
             }
@@ -283,7 +281,12 @@ void MACHWidget::reloadData()
         {
             if(!g_stInit.contains(sInit))
             {
-                ui->widgetStrings->setData(getDevice(),nullptr,true);
+                MultiSearch::OPTIONS stringsOptions={};
+                stringsOptions.bMenu_Hex=true;
+                stringsOptions.bAnsi=true;
+                stringsOptions.bUnicode=true;
+
+                ui->widgetStrings->setData(getDevice(),stringsOptions,true);
             }
         }
         else if(nType==SMACH::TYPE_MEMORYMAP)
@@ -418,7 +421,7 @@ void MACHWidget::reloadData()
                 {
                     QTableWidgetItem *pItem=new QTableWidgetItem(QString::number(i));
 
-                    if(getOptions()->bIsImage)
+                    if(getOptions().bIsImage)
                     {
                         pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET,listSegmentRecords.at(i).vmaddr);
                         pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE,listSegmentRecords.at(i).vmsize);
@@ -490,7 +493,7 @@ void MACHWidget::reloadData()
                 {
                     QTableWidgetItem *pItem=new QTableWidgetItem(QString::number(i));
 
-                    if(getOptions()->bIsImage)
+                    if(getOptions().bIsImage)
                     {
                         pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET,listSectionRecords.at(i).addr);
                     }

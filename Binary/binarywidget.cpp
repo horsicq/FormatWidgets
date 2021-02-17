@@ -30,12 +30,12 @@ BinaryWidget::BinaryWidget(QWidget *pParent) :
 //    connect(ui->widgetStrings,SIGNAL(showHex(qint64,qint64)),this,SLOT(showInHexWindow(qint64,qint64)));
 }
 
-BinaryWidget::BinaryWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *pParent) :
+BinaryWidget::BinaryWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) :
     BinaryWidget(pParent)
 {
     ui->setupUi(this);
 
-    setData(pDevice,pOptions,0,0,0);
+    setData(pDevice,options,0,0,0);
     BinaryWidget::reload();
 }
 
@@ -67,7 +67,7 @@ void BinaryWidget::reload()
 
     ui->checkBoxReadonly->setEnabled(!isReadonly());
 
-    XBinary binary(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
+    XBinary binary(getDevice(),getOptions().bIsImage,getOptions().nImageBase);
 
     if(binary.isValid())
     {
@@ -121,7 +121,7 @@ void BinaryWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
 
 void BinaryWidget::reloadData()
 {
-    XBinary binary(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
+    XBinary binary(getDevice(),getOptions().bIsImage,getOptions().nImageBase);
 
     if(binary.isValid())
     {

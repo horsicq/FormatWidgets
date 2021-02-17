@@ -32,12 +32,10 @@ ELFWidget::ELFWidget(QWidget *pParent) :
     connect(ui->widgetStrings,SIGNAL(showHex(qint64,qint64)),this,SLOT(showInHexWindow(qint64,qint64)));
 }
 
-ELFWidget::ELFWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, QWidget *pParent) :
+ELFWidget::ELFWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) :
     ELFWidget(pParent)
 {
-    ui->setupUi(this);
-
-    setData(pDevice,pOptions,0,0,0);
+    setData(pDevice,options,0,0,0);
     ELFWidget::reload();
 }
 
@@ -96,7 +94,7 @@ void ELFWidget::reload()
 
     ui->checkBoxReadonly->setEnabled(!isReadonly());
 
-    XELF elf(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
+    XELF elf(getDevice(),getOptions().bIsImage,getOptions().nImageBase);
 
     if(elf.isValid())
     {
@@ -138,7 +136,7 @@ void ELFWidget::reload()
 
         ui->treeWidgetNavi->expandAll();
 
-        setTreeItem(ui->treeWidgetNavi,getOptions()->nStartType);
+        setTreeItem(ui->treeWidgetNavi,getOptions().nStartType);
     }
 }
 
@@ -156,7 +154,7 @@ bool ELFWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, i
 
     if(getDevice()->isWritable())
     {
-        XELF elf(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
+        XELF elf(getDevice(),getOptions().bIsImage,getOptions().nImageBase);
 
         if(elf.isValid())
         {
@@ -298,7 +296,7 @@ void ELFWidget::reloadData()
 
     ui->stackedWidgetInfo->setCurrentIndex(nType);
 
-    XELF elf(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
+    XELF elf(getDevice(),getOptions().bIsImage,getOptions().nImageBase);
 
     if(elf.isValid())
     {
@@ -309,7 +307,7 @@ void ELFWidget::reloadData()
                 XHexView::OPTIONS options={};
                 options.bMenu_Disasm=true;
                 ui->widgetHex->setData(getDevice(),options);
-//                ui->widgetHex->setBackupFileName(getOptions()->sBackupFileName);
+//                ui->widgetHex->setBackupFileName(getOptions().sBackupFileName);
                 ui->widgetHex->enableReadOnly(false);
                 connect(ui->widgetHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
 
@@ -323,13 +321,18 @@ void ELFWidget::reloadData()
                 ui->widgetDisasm->setData(getDevice(),elf.getFileType(),elf.getEntryPointAddress());
             }
 
-//            pDisasmWidget->setBackupFileName(getOptions()->sBackupFileName);
+//            pDisasmWidget->setBackupFileName(getOptions().sBackupFileName);
         }
         else if(nType==SELF::TYPE_STRINGS)
         {
             if(!g_stInit.contains(sInit))
             {
-                ui->widgetStrings->setData(getDevice(),0,true);
+                MultiSearch::OPTIONS stringsOptions={};
+                stringsOptions.bMenu_Hex=true;
+                stringsOptions.bAnsi=true;
+                stringsOptions.bUnicode=true;
+
+                ui->widgetStrings->setData(getDevice(),stringsOptions,true);
             }
         }
         else if(nType==SELF::TYPE_MEMORYMAP)

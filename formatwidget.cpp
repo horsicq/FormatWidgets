@@ -35,10 +35,10 @@ FormatWidget::FormatWidget(QWidget *pParent):
     setShortcuts(&g_scEmpty);
 }
 
-FormatWidget::FormatWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent):
+FormatWidget::FormatWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent):
     FormatWidget(pParent)
 {
-    setData(pDevice,pOptions,nNumber,nOffset,nType);
+    setData(pDevice,options,nNumber,nOffset,nType);
 }
 
 FormatWidget::~FormatWidget()
@@ -46,17 +46,13 @@ FormatWidget::~FormatWidget()
 
 }
 
-void FormatWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset, qint32 nType)
+void FormatWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType)
 {
-    this->g_pDevice=pDevice;
-    this->g_nNumber=nNumber;
-    this->g_nOffset=nOffset;
-    this->g_nType=nType;
-
-    if(pOptions)
-    {
-        g_fwOptions=*pOptions;
-    }
+    g_pDevice=pDevice;
+    g_nNumber=nNumber;
+    g_nOffset=nOffset;
+    g_nType=nType;
+    g_fwOptions=options;
 
     g_bIsReadonly=!(pDevice->isWritable());
 }
@@ -86,9 +82,9 @@ QIODevice *FormatWidget::getDevice()
     return this->g_pDevice;
 }
 
-FW_DEF::OPTIONS *FormatWidget::getOptions()
+FW_DEF::OPTIONS FormatWidget::getOptions()
 {
-    return &g_fwOptions;
+    return g_fwOptions;
 }
 
 quint32 FormatWidget::getNumber()
@@ -185,10 +181,10 @@ bool FormatWidget::loadHexSubdevice(qint64 nOffset, qint64 nSize, qint64 nAddres
 
     (*ppSubDevice)->open(getDevice()->openMode());
 
-    FW_DEF::OPTIONS hexOptions=*getOptions();
+    FW_DEF::OPTIONS hexOptions=getOptions();
     hexOptions.nImageBase=nAddress;
 
-    pToolsWidget->setData((*ppSubDevice),&hexOptions);
+    pToolsWidget->setData((*ppSubDevice),hexOptions);
     pToolsWidget->setEdited(isEdited());
     connect(pToolsWidget,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
     connect(pToolsWidget,SIGNAL(showOffsetHex(qint64,qint64)),this,SLOT(showInHexWindow(qint64,qint64)));

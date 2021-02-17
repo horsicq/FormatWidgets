@@ -28,13 +28,13 @@ DEXSectionHeaderWidget::DEXSectionHeaderWidget(QWidget *pParent):
     ui->setupUi(this);
 }
 
-DEXSectionHeaderWidget::DEXSectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent):
-    FormatWidget(pDevice,pOptions,nNumber,nOffset,nType,pParent),
+DEXSectionHeaderWidget::DEXSectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent):
+    FormatWidget(pDevice,options,nNumber,nOffset,nType,pParent),
     ui(new Ui::DEXSectionHeaderWidget)
 {
     ui->setupUi(this);
 
-    setData(pDevice,pOptions,nNumber,nOffset,nType);
+    setData(pDevice,options,nNumber,nOffset,nType);
 
     g_ppLinedEdit=0;
     g_nLineEditSize=0;

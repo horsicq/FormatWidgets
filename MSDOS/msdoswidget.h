@@ -35,7 +35,7 @@ class MSDOSWidget : public FormatWidget
 
 public:
     MSDOSWidget(QWidget *pParent=nullptr);
-    MSDOSWidget(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions,QWidget *pParent=nullptr);
+    MSDOSWidget(QIODevice *pDevice,FW_DEF::OPTIONS options,QWidget *pParent=nullptr);
     ~MSDOSWidget();
     void setShortcuts(XShortcuts *pShortcuts);
 

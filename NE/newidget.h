@@ -37,7 +37,7 @@ class NEWidget : public FormatWidget
 
 public:
     NEWidget(QWidget *pParent=nullptr);
-    NEWidget(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions,QWidget *pParent=nullptr);
+    NEWidget(QIODevice *pDevice,FW_DEF::OPTIONS options,QWidget *pParent=nullptr);
     ~NEWidget();
     void setShortcuts(XShortcuts *pShortcuts);
 

@@ -38,7 +38,7 @@ class ELFWidget : public FormatWidget
 
 public:
     ELFWidget(QWidget *pParent=nullptr);
-    ELFWidget(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions,QWidget *pParent=nullptr);
+    ELFWidget(QIODevice *pDevice,FW_DEF::OPTIONS options,QWidget *pParent=nullptr);
     ~ELFWidget();
     void setShortcuts(XShortcuts *pShortcuts);
 

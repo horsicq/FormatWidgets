@@ -507,7 +507,7 @@ void FormatsWidget::showMSDOS(SMSDOS::TYPE type)
 
         DialogMSDOS dialogMSDOS(this);
 
-        dialogMSDOS.setData(&file,&options);
+        dialogMSDOS.setData(&file,options);
         dialogMSDOS.setShortcuts(g_pShortcuts);
 
         dialogMSDOS.exec();
@@ -534,7 +534,7 @@ void FormatsWidget::showLE(SLE::TYPE type)
 
         DialogLE dialogLE(this);
 
-        dialogLE.setData(&file,&options);
+        dialogLE.setData(&file,options);
         dialogLE.setShortcuts(g_pShortcuts);
 
         dialogLE.exec();
@@ -561,7 +561,7 @@ void FormatsWidget::showNE(SNE::TYPE type)
 
         DialogNE dialogNE(this);
 
-        dialogNE.setData(&file,&options);
+        dialogNE.setData(&file,options);
         dialogNE.setShortcuts(g_pShortcuts);
 
         dialogNE.exec();
@@ -588,7 +588,7 @@ void FormatsWidget::showPE(SPE::TYPE type)
 
         DialogPE dialogPE(this);
 
-        dialogPE.setData(&file,&options);
+        dialogPE.setData(&file,options);
         dialogPE.setShortcuts(g_pShortcuts);
 
         dialogPE.exec();
@@ -615,7 +615,7 @@ void FormatsWidget::showELF(SELF::TYPE type)
 
         DialogELF dialogELF(this);
 
-        dialogELF.setData(&file,&options);
+        dialogELF.setData(&file,options);
         dialogELF.setShortcuts(g_pShortcuts);
 
         dialogELF.exec();
@@ -642,7 +642,7 @@ void FormatsWidget::showMACH(SMACH::TYPE type)
 
         DialogMACH dialogMACH(this);
 
-        dialogMACH.setData(&file,&options);
+        dialogMACH.setData(&file,options);
         dialogMACH.setShortcuts(g_pShortcuts);
 
         dialogMACH.exec();
@@ -669,7 +669,7 @@ void FormatsWidget::showDEX(SDEX::TYPE type)
 
         DialogDEX dialogDEX(this);
 
-        dialogDEX.setData(&file,&options);
+        dialogDEX.setData(&file,options);
         dialogDEX.setShortcuts(g_pShortcuts);
 
         dialogDEX.exec();

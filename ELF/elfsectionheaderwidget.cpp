@@ -28,13 +28,13 @@ ELFSectionHeaderWidget::ELFSectionHeaderWidget(QWidget *pParent):
     ui->setupUi(this);
 }
 
-ELFSectionHeaderWidget::ELFSectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent):
-    FormatWidget(pDevice,pOptions,nNumber,nOffset,nType,pParent),
+ELFSectionHeaderWidget::ELFSectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent):
+    FormatWidget(pDevice,options,nNumber,nOffset,nType,pParent),
     ui(new Ui::ELFSectionHeaderWidget)
 {
     ui->setupUi(this);
 
-    setData(pDevice,pOptions,nNumber,nOffset,nType);
+    setData(pDevice,options,nNumber,nOffset,nType);
 
     g_ppLinedEdit=0;
     g_nLineEditSize=0;
@@ -164,7 +164,7 @@ bool ELFSectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
 
     if(getDevice()->isWritable())
     {
-        XELF elf(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
+        XELF elf(getDevice(),getOptions().bIsImage,getOptions().nImageBase);
 
         if(elf.isValid())
         {
@@ -464,7 +464,7 @@ void ELFSectionHeaderWidget::reloadData()
 {
     int nType=getType();
 
-    XELF elf(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
+    XELF elf(getDevice(),getOptions().bIsImage,getOptions().nImageBase);
 
     if(elf.isValid())
     {       
@@ -724,7 +724,7 @@ void ELFSectionHeaderWidget::widgetValueChanged(quint64 nValue)
     int nStype=pWidget->property("STYPE").toInt();
     int nNdata=pWidget->property("NDATA").toInt();
 
-    XELF elf(getDevice(),getOptions()->bIsImage,getOptions()->nImageBase);
+    XELF elf(getDevice(),getOptions().bIsImage,getOptions().nImageBase);
 
     if(elf.isValid())
     {

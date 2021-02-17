@@ -35,6 +35,8 @@ SearchStringsWidget::SearchStringsWidget(QWidget *pParent) :
     g_pModel=nullptr;
     g_bInit=false;
 
+    g_options={};
+
     ui->checkBoxAnsi->setChecked(true);
     ui->checkBoxUnicode->setChecked(true);
 
@@ -52,7 +54,7 @@ SearchStringsWidget::~SearchStringsWidget()
     delete ui;
 }
 
-void SearchStringsWidget::setData(QIODevice *pDevice, MultiSearch::OPTIONS *pOptions, bool bAuto,QWidget *pParent)
+void SearchStringsWidget::setData(QIODevice *pDevice, MultiSearch::OPTIONS options, bool bAuto, QWidget *pParent)
 {
     this->g_pDevice=pDevice;
     this->g_pParent=pParent;
@@ -62,14 +64,7 @@ void SearchStringsWidget::setData(QIODevice *pDevice, MultiSearch::OPTIONS *pOpt
 
     ui->tableViewResult->setModel(nullptr);
 
-    if(pOptions)
-    {
-        g_options=*pOptions;
-    }
-    else
-    {
-        g_options.nBaseAddress=0;
-    }
+    g_options=options;
 
     if(g_options.nBaseAddress==-1)
     {
@@ -268,11 +263,11 @@ void SearchStringsWidget::search()
     {
         ui->lineEditFilter->clear();
 
-        g_options.bSearchAnsi=ui->checkBoxAnsi->isChecked();
-        g_options.bSearchUnicode=ui->checkBoxUnicode->isChecked();
+        g_options.bAnsi=ui->checkBoxAnsi->isChecked();
+        g_options.bUnicode=ui->checkBoxUnicode->isChecked();
         g_options.nMinLenght=ui->spinBoxMinLength->value();
 
-        if(g_options.bSearchAnsi||g_options.bSearchUnicode)
+        if(g_options.bAnsi||g_options.bUnicode)
         {
             g_pOldModel=g_pModel;
 
@@ -282,11 +277,11 @@ void SearchStringsWidget::search()
             QList<XBinary::MS_RECORD> listRecords;
 
             DialogMultiSearchProcess dsp(g_pParent);
-            dsp.processSearch(g_pDevice,&listRecords,&g_options);
+            dsp.processSearch(g_pDevice,&listRecords,g_options,MultiSearch::TYPE_STRINGS);
             dsp.exec();
 
             DialogMultiSearchProcess dmp(g_pParent);
-            dmp.processModel(&listRecords,&g_pModel,&g_options);
+            dmp.processModel(&listRecords,&g_pModel,g_options,MultiSearch::TYPE_STRINGS);
             dmp.exec();
 
             g_pFilter->setSourceModel(g_pModel);

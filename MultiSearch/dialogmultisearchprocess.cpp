@@ -68,19 +68,19 @@ DialogMultiSearchProcess::~DialogMultiSearchProcess()
     delete g_pHandleModel;
 }
 
-void DialogMultiSearchProcess::processSearch(QIODevice *pDevice, QList<XBinary::MS_RECORD> *pListRecords, MultiSearch::OPTIONS *pOptions)
+void DialogMultiSearchProcess::processSearch(QIODevice *pDevice, QList<XBinary::MS_RECORD> *pListRecords, MultiSearch::OPTIONS options, MultiSearch::TYPE type)
 {
     setWindowTitle(tr("Search strings"));
 
-    g_pHandleSearch->setSearchData(pDevice,pListRecords,pOptions);
+    g_pHandleSearch->setSearchData(pDevice,pListRecords,options,type);
     g_pThreadSearch->start();
 }
 
-void DialogMultiSearchProcess::processModel(QList<XBinary::MS_RECORD> *pListRecords, QStandardItemModel **ppModel, MultiSearch::OPTIONS *pOptions)
+void DialogMultiSearchProcess::processModel(QList<XBinary::MS_RECORD> *pListRecords, QStandardItemModel **ppModel, MultiSearch::OPTIONS options,MultiSearch::TYPE type)
 {
     setWindowTitle(tr("Create view model"));
 
-    g_pHandleModel->setModelData(pListRecords,ppModel,pOptions);
+    g_pHandleModel->setModelData(pListRecords,ppModel,options,type);
     g_pThreadModel->start();
 }
 
