@@ -129,7 +129,7 @@ void MultiSearch::processModel()
             {
                 pTypeItem->setText("U");
             }
-
+            pTypeItem->setTextAlignment(Qt::AlignLeft);
             (*g_ppModel)->setItem(i,2,pTypeItem);
             (*g_ppModel)->setItem(i,3,new QStandardItem(record.sString));
 
@@ -145,7 +145,7 @@ void MultiSearch::processModel()
     else if(g_type==TYPE_SIGNATURES)
     {
         int nNumberOfRecords=g_pListRecords->count();
-        *g_ppModel=new QStandardItemModel(nNumberOfRecords,2); // TODO Check maximum
+        *g_ppModel=new QStandardItemModel(nNumberOfRecords,3); // TODO Check maximum
 
         XBinary::MODE modeAddress=XBinary::getWidthModeFromMemoryMap(&(g_options.memoryMap));
 
@@ -173,7 +173,12 @@ void MultiSearch::processModel()
             // TODO Address
             pTypeAddress->setTextAlignment(Qt::AlignRight);
             (*g_ppModel)->setItem(i,0,pTypeAddress);
-            (*g_ppModel)->setItem(i,1,new QStandardItem((XBinary::valueToHex(modeAddress,record.nOffset))));
+
+            QStandardItem *pTypeOffset=new QStandardItem;
+            pTypeOffset->setText((XBinary::valueToHex(modeAddress,record.nOffset)));
+            pTypeOffset->setTextAlignment(Qt::AlignRight);
+
+            (*g_ppModel)->setItem(i,1,pTypeOffset);
             (*g_ppModel)->setItem(i,2,new QStandardItem(record.sString));
 
             if(i>((_nCurrentProcent+1)*_nProcent))
