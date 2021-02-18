@@ -111,12 +111,12 @@ void MultiSearch::processModel()
             pTypeAddress->setText(XBinary::valueToHex(modeAddress,record.nOffset+nBaseAddress));
             pTypeAddress->setData(record.nOffset,Qt::UserRole+1);
             pTypeAddress->setData(record.nSize,Qt::UserRole+2);
-            pTypeAddress->setTextAlignment(Qt::AlignRight);
+            pTypeAddress->setTextAlignment(Qt::AlignRight|Qt::AlignVCenter);
             (*g_ppModel)->setItem(i,0,pTypeAddress);
 
             QStandardItem *pTypeSize=new QStandardItem;
             pTypeSize->setText(XBinary::valueToHex(XBinary::MODE_32,record.nSize));
-            pTypeSize->setTextAlignment(Qt::AlignRight);
+            pTypeSize->setTextAlignment(Qt::AlignRight|Qt::AlignVCenter);
             (*g_ppModel)->setItem(i,1,pTypeSize);
 
             QStandardItem *pTypeItem=new QStandardItem;
@@ -166,19 +166,24 @@ void MultiSearch::processModel()
         {
             XBinary::MS_RECORD record=g_pListRecords->at(i);
 
+            qint64 nAddress=XBinary::offsetToAddress(&(g_options.memoryMap),record.nOffset);
+
             QStandardItem *pTypeAddress=new QStandardItem;
-            pTypeAddress->setText(XBinary::valueToHex(modeAddress,XBinary::offsetToAddress(&(g_options.memoryMap),record.nOffset)));
+            pTypeAddress->setText(XBinary::valueToHex(modeAddress,nAddress));
             pTypeAddress->setData(record.nOffset,Qt::UserRole+1);
             pTypeAddress->setData(record.nSize,Qt::UserRole+2);
-            // TODO Address
-            pTypeAddress->setTextAlignment(Qt::AlignRight);
+            pTypeAddress->setData(record.sString,Qt::UserRole+3);
+            pTypeAddress->setData(record.sInfo,Qt::UserRole+4);
+            pTypeAddress->setData(nAddress,Qt::UserRole+5);
+            pTypeAddress->setTextAlignment(Qt::AlignRight|Qt::AlignVCenter);
             (*g_ppModel)->setItem(i,0,pTypeAddress);
 
             QStandardItem *pTypeOffset=new QStandardItem;
             pTypeOffset->setText((XBinary::valueToHex(modeAddress,record.nOffset)));
-            pTypeOffset->setTextAlignment(Qt::AlignRight);
+            pTypeOffset->setTextAlignment(Qt::AlignRight|Qt::AlignVCenter);
 
             (*g_ppModel)->setItem(i,1,pTypeOffset);
+
             (*g_ppModel)->setItem(i,2,new QStandardItem(record.sString));
 
             if(i>((_nCurrentProcent+1)*_nProcent))
