@@ -748,7 +748,7 @@ void FormatsWidget::on_pushButtonZIP_clicked()
         options.sBackupFileName=sBackupFilename;
     }
 
-    dialogArchive.setData(sFileName,&options);
+    dialogArchive.setData(sFileName,options);
     dialogArchive.setShortcuts(g_pShortcuts);
 
     dialogArchive.exec();
