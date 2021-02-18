@@ -63,16 +63,24 @@ class FormatsWidget : public QWidget
         SE_AUTO=0,
         SE_DIE,
         SE_NFD
-    };
+    };   
 
 public:
+
+    struct OPTIONS
+    {
+        QString sDatabasePath;
+        QString sInfoPath;
+        bool bIsSaveBackup;
+        // TODO More
+    };
+
     explicit FormatsWidget(QWidget *pParent=nullptr);
-    void setData(QString sFileName,bool bScan);
-    void setScanEngine(QString sScanEngine);
-    void setBackupFileName(QString sBackupFileName);
     ~FormatsWidget();
-    void setDIEDatabasePath(QString sDatabasePath);
-    void setDIEInfoPath(QString sDatabasePath);
+    void setFileName(QString sFileName,bool bScan);
+    void setScanEngine(QString sScanEngine);
+    void setOptions(OPTIONS options);
+
     void setShortcuts(XShortcuts *pShortcuts);
 
 private slots:
@@ -124,11 +132,13 @@ private slots:
     void onScanStarted();
     void onScanFinished();
 
+    QString getBackupFileName();
+
 private:
     Ui::FormatsWidget *ui;
     QString sFileName;
     bool bScan;
-    QString sBackupFilename;
+    OPTIONS g_options;
     XShortcuts *g_pShortcuts;
 };
 

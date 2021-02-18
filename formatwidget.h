@@ -88,6 +88,7 @@ public:
     XBinary::FT getFileType();
     XShortcuts *getShortcuts();
     QIODevice *getDevice();
+    virtual void setOptions(FW_DEF::OPTIONS options); // TODO for all Widgets
     FW_DEF::OPTIONS getOptions();
     quint32 getNumber();
     qint64 getOffset();

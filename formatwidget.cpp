@@ -82,6 +82,11 @@ QIODevice *FormatWidget::getDevice()
     return this->g_pDevice;
 }
 
+void FormatWidget::setOptions(FW_DEF::OPTIONS options)
+{
+    g_fwOptions=options;
+}
+
 FW_DEF::OPTIONS FormatWidget::getOptions()
 {
     return g_fwOptions;

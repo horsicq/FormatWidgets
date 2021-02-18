@@ -27,6 +27,7 @@ namespace FW_DEF
 {
     struct OPTIONS
     {
+        // TODO More
         QString sBackupFileName;
         bool bIsImage;
         qint64 nImageBase; // TODO default_const

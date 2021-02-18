@@ -41,9 +41,11 @@ FormatsWidget::FormatsWidget(QWidget *pParent) :
     connect(ui->pageScanNFD,SIGNAL(scanFinished()),this,SLOT(onScanFinished()));
     connect(ui->pageScanDIE,SIGNAL(scanStarted()),this,SLOT(onScanStarted()));
     connect(ui->pageScanDIE,SIGNAL(scanFinished()),this,SLOT(onScanFinished()));
+
+    g_options={};
 }
 
-void FormatsWidget::setData(QString sFileName, bool bScan)
+void FormatsWidget::setFileName(QString sFileName, bool bScan)
 {
     this->sFileName=sFileName;
     this->bScan=bScan;
@@ -81,24 +83,16 @@ void FormatsWidget::setScanEngine(QString sScanEngine)
     }
 }
 
-void FormatsWidget::setBackupFileName(QString sBackupFileName)
+void FormatsWidget::setOptions(FormatsWidget::OPTIONS options)
 {
-    this->sBackupFilename=sBackupFileName;
+    g_options=options;
+    ui->pageScanDIE->setDatabasePath(options.sDatabasePath);
+    ui->pageScanDIE->setInfoPath(options.sInfoPath);
 }
 
 FormatsWidget::~FormatsWidget()
 {
     delete ui;
-}
-
-void FormatsWidget::setDIEDatabasePath(QString sDatabasePath)
-{
-    ui->pageScanDIE->setDatabasePath(sDatabasePath);
-}
-
-void FormatsWidget::setDIEInfoPath(QString sDatabasePath)
-{
-    ui->pageScanDIE->setInfoPath(sDatabasePath);
 }
 
 void FormatsWidget::setShortcuts(XShortcuts *pShortcuts)
@@ -498,11 +492,7 @@ void FormatsWidget::showMSDOS(SMSDOS::TYPE type)
     {
         FW_DEF::OPTIONS options={};
 
-        if(sBackupFilename!="")
-        {
-            options.sBackupFileName=sBackupFilename;
-        }
-
+        options.sBackupFileName=getBackupFileName();
         options.nStartType=type;
 
         DialogMSDOS dialogMSDOS(this);
@@ -525,11 +515,7 @@ void FormatsWidget::showLE(SLE::TYPE type)
     {
         FW_DEF::OPTIONS options={};
 
-        if(sBackupFilename!="")
-        {
-            options.sBackupFileName=sBackupFilename;
-        }
-
+        options.sBackupFileName=getBackupFileName();
         options.nStartType=type;
 
         DialogLE dialogLE(this);
@@ -552,11 +538,7 @@ void FormatsWidget::showNE(SNE::TYPE type)
     {
         FW_DEF::OPTIONS options={};
 
-        if(sBackupFilename!="")
-        {
-            options.sBackupFileName=sBackupFilename;
-        }
-
+        options.sBackupFileName=getBackupFileName();
         options.nStartType=type;
 
         DialogNE dialogNE(this);
@@ -579,11 +561,7 @@ void FormatsWidget::showPE(SPE::TYPE type)
     {
         FW_DEF::OPTIONS options={};
 
-        if(sBackupFilename!="")
-        {
-            options.sBackupFileName=sBackupFilename;
-        }
-
+        options.sBackupFileName=getBackupFileName();
         options.nStartType=type;
 
         DialogPE dialogPE(this);
@@ -606,11 +584,7 @@ void FormatsWidget::showELF(SELF::TYPE type)
     {
         FW_DEF::OPTIONS options={};
 
-        if(sBackupFilename!="")
-        {
-            options.sBackupFileName=sBackupFilename;
-        }
-
+        options.sBackupFileName=getBackupFileName();
         options.nStartType=type;
 
         DialogELF dialogELF(this);
@@ -633,11 +607,7 @@ void FormatsWidget::showMACH(SMACH::TYPE type)
     {
         FW_DEF::OPTIONS options={};
 
-        if(sBackupFilename!="")
-        {
-            options.sBackupFileName=sBackupFilename;
-        }
-
+        options.sBackupFileName=getBackupFileName();
         options.nStartType=type;
 
         DialogMACH dialogMACH(this);
@@ -660,11 +630,7 @@ void FormatsWidget::showDEX(SDEX::TYPE type)
     {
         FW_DEF::OPTIONS options={};
 
-        if(sBackupFilename!="")
-        {
-            options.sBackupFileName=sBackupFilename;
-        }
-
+        options.sBackupFileName=getBackupFileName();
         options.nStartType=type;
 
         DialogDEX dialogDEX(this);
@@ -743,10 +709,7 @@ void FormatsWidget::on_pushButtonZIP_clicked()
 
     FW_DEF::OPTIONS options={};
 
-    if(sBackupFilename!="")
-    {
-        options.sBackupFileName=sBackupFilename;
-    }
+    options.sBackupFileName=getBackupFileName();
 
     dialogArchive.setData(sFileName,options);
     dialogArchive.setShortcuts(g_pShortcuts);
@@ -804,4 +767,16 @@ void FormatsWidget::onScanFinished()
     ui->groupBoxFileType->setEnabled(true);
     ui->groupBoxScanEngine->setEnabled(true);
     ui->groupBoxEntryPoint->setEnabled(true);
+}
+
+QString FormatsWidget::getBackupFileName()
+{
+    QString sResult;
+
+    if(g_options.bIsSaveBackup)
+    {
+        sResult=XBinary::getBackupName(sFileName);
+    }
+
+    return sResult;
 }

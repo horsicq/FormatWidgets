@@ -43,8 +43,18 @@ public:
         XBinary::_MEMORY_MAP memoryMap;
         bool bAnsi; // TODO
         bool bUnicode; // TODO
+        bool bSignature;
+        bool bIsBigEndian;
         qint32 nMinLenght;
         bool bMenu_Hex;
+    };
+
+    struct SIGNATURE_RECORD
+    {
+        QString sName;
+        bool bIsBigEndian;
+        bool bIsLittleEndian;
+        QString sSignature;
     };
 
     const int N_MAX=50000;
@@ -52,6 +62,8 @@ public:
     explicit MultiSearch(QObject *pParent=nullptr);
     void setSearchData(QIODevice *pDevice,QList<XBinary::MS_RECORD> *pListRecords,OPTIONS options,TYPE type);
     void setModelData(QList<XBinary::MS_RECORD> *pListRecords,QStandardItemModel **ppModel,OPTIONS options,TYPE type);
+
+    static QList<SIGNATURE_RECORD> loadSignaturesFromFile(QString sFileName);
 
 signals:
     void errorMessage(QString sText);

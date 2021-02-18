@@ -52,6 +52,40 @@ void MultiSearch::setModelData(QList<XBinary::MS_RECORD> *pListRecords, QStandar
     g_type=type;
 }
 
+QList<MultiSearch::SIGNATURE_RECORD> MultiSearch::loadSignaturesFromFile(QString sFileName)
+{
+    QList<SIGNATURE_RECORD> listResult;
+
+    QFile file;
+    file.setFileName(sFileName);
+
+    if(file.open(QIODevice::ReadOnly))
+    {
+        QTextStream in(&file);
+        while(!in.atEnd())
+        {
+            QString sLine=in.readLine().trimmed();
+            if(sLine!="")
+            {
+                SIGNATURE_RECORD record={};
+                record.sName=sLine.section(";",0,0);
+                record.sSignature=sLine.section(";",2,-1);
+
+                QString sEndianess=sLine.section(";",1,1);
+
+                record.bIsBigEndian=(sEndianess=="BE");
+                record.bIsLittleEndian=(sEndianess=="LE");
+
+                listResult.append(record);
+            }
+        }
+
+        file.close();
+    }
+
+    return listResult;
+}
+
 void MultiSearch::stop()
 {
     g_bIsStop=true;
