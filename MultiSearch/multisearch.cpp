@@ -156,7 +156,7 @@ void MultiSearch::processModel()
 
         (*g_ppModel)->setHeaderData(0,Qt::Horizontal,tr("Address"));
         (*g_ppModel)->setHeaderData(1,Qt::Horizontal,tr("Offset"));
-        (*g_ppModel)->setHeaderData(2,Qt::Horizontal,tr("Signature"));
+        (*g_ppModel)->setHeaderData(2,Qt::Horizontal,tr("Name"));
 
         emit progressValueChanged(0);
 
