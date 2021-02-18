@@ -69,7 +69,7 @@ void MultiSearch::processSearch()
     }
     else if(g_type==TYPE_SIGNATURES)
     {
-        *g_pListRecords=g_binary.multiSearch_signature(0,g_pDevice->size(),N_MAX,"11+22");
+        *g_pListRecords=g_binary.multiSearch_signature(0,g_pDevice->size(),N_MAX,"00+00");
     }
 
     emit completed(scanTimer.elapsed());
@@ -85,8 +85,9 @@ void MultiSearch::processModel()
         int nNumberOfRecords=g_pListRecords->count();
         *g_ppModel=new QStandardItemModel(nNumberOfRecords,4); // TODO Check maximum
 
-        qint64 nBaseAddress=g_options.nBaseAddress;
-        qint32 nAddressWidth=g_options.nAddressWidth;
+        qint64 nBaseAddress=g_options.memoryMap.nBaseAddress;
+
+        XBinary::MODE modeAddress=XBinary::getWidthModeFromSize(nBaseAddress+g_options.memoryMap.nRawSize);
 
         qint64 _nProcent=nNumberOfRecords/100;
         qint32 _nCurrentProcent=0;
@@ -107,14 +108,14 @@ void MultiSearch::processModel()
             XBinary::MS_RECORD record=g_pListRecords->at(i);
 
             QStandardItem *pTypeAddress=new QStandardItem;
-            pTypeAddress->setText(QString("%1").arg(record.nOffset+nBaseAddress,nAddressWidth,16,QChar('0')));
+            pTypeAddress->setText(XBinary::valueToHex(modeAddress,record.nOffset+nBaseAddress));
             pTypeAddress->setData(record.nOffset,Qt::UserRole+1);
             pTypeAddress->setData(record.nSize,Qt::UserRole+2);
             pTypeAddress->setTextAlignment(Qt::AlignRight);
             (*g_ppModel)->setItem(i,0,pTypeAddress);
 
             QStandardItem *pTypeSize=new QStandardItem;
-            pTypeSize->setText(QString("%1").arg(record.nSize,8,16,QChar('0')));
+            pTypeSize->setText(XBinary::valueToHex(XBinary::MODE_32,record.nSize));
             pTypeSize->setTextAlignment(Qt::AlignRight);
             (*g_ppModel)->setItem(i,1,pTypeSize);
 
@@ -146,16 +147,16 @@ void MultiSearch::processModel()
         int nNumberOfRecords=g_pListRecords->count();
         *g_ppModel=new QStandardItemModel(nNumberOfRecords,2); // TODO Check maximum
 
-        qint64 nBaseAddress=g_options.nBaseAddress;
-        qint32 nAddressWidth=g_options.nAddressWidth;
+        XBinary::MODE modeAddress=XBinary::getWidthModeFromMemoryMap(&(g_options.memoryMap));
 
         qint64 _nProcent=nNumberOfRecords/100;
         qint32 _nCurrentProcent=0;
 
         emit progressValueChanged(_nCurrentProcent); // TODO Make procents from xbinary
 
-        (*g_ppModel)->setHeaderData(0,Qt::Horizontal,tr("Offset"));
-        (*g_ppModel)->setHeaderData(1,Qt::Horizontal,tr("Signature"));
+        (*g_ppModel)->setHeaderData(0,Qt::Horizontal,tr("Address"));
+        (*g_ppModel)->setHeaderData(1,Qt::Horizontal,tr("Offset"));
+        (*g_ppModel)->setHeaderData(2,Qt::Horizontal,tr("Signature"));
 
         emit progressValueChanged(0);
 
@@ -166,13 +167,14 @@ void MultiSearch::processModel()
             XBinary::MS_RECORD record=g_pListRecords->at(i);
 
             QStandardItem *pTypeAddress=new QStandardItem;
-            pTypeAddress->setText(QString("%1").arg(record.nOffset+nBaseAddress,nAddressWidth,16,QChar('0')));
+            pTypeAddress->setText(XBinary::valueToHex(modeAddress,XBinary::offsetToAddress(&(g_options.memoryMap),record.nOffset)));
             pTypeAddress->setData(record.nOffset,Qt::UserRole+1);
             pTypeAddress->setData(record.nSize,Qt::UserRole+2);
+            // TODO Address
             pTypeAddress->setTextAlignment(Qt::AlignRight);
             (*g_ppModel)->setItem(i,0,pTypeAddress);
-
-            (*g_ppModel)->setItem(i,1,new QStandardItem(record.sString));
+            (*g_ppModel)->setItem(i,1,new QStandardItem((XBinary::valueToHex(modeAddress,record.nOffset))));
+            (*g_ppModel)->setItem(i,2,new QStandardItem(record.sString));
 
             if(i>((_nCurrentProcent+1)*_nProcent))
             {

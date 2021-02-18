@@ -130,7 +130,7 @@ void FormatsWidget::reload()
 
         if((mode==XBinary::MODE_UNKNOWN)||(mode==XBinary::MODE_DATA))
         {
-            mode=XBinary::getModeFromSize(file.size());
+            mode=XBinary::getWidthModeFromSize(file.size());
         }
 
         if(mode==XBinary::MODE_8)

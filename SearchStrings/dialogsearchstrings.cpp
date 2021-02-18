@@ -21,7 +21,7 @@
 #include "dialogsearchstrings.h"
 #include "ui_dialogsearchstrings.h"
 
-DialogSearchStrings::DialogSearchStrings(QWidget *pParent, QIODevice *pDevice, MultiSearch::OPTIONS options, bool bAuto) :
+DialogSearchStrings::DialogSearchStrings(QWidget *pParent, QIODevice *pDevice, SearchStringsWidget::OPTIONS options, bool bAuto) :
     QDialog(pParent),
     ui(new Ui::DialogSearchStrings)
 {

@@ -63,7 +63,7 @@ private slots:
 private:
     Ui::ToolsWidget *ui;
     QIODevice *g_pDevice;
-    MultiSearch::OPTIONS g_stringsOptions;
+    SearchStringsWidget::OPTIONS g_stringsOptions;
 };
 
 #endif // TOOLSWIDGET_H

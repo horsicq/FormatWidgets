@@ -44,9 +44,19 @@ class SearchStringsWidget : public QWidget
     Q_OBJECT
 
 public:
+
+    struct OPTIONS
+    {
+        qint64 nBaseAddress;
+        bool bAnsi; // TODO
+        bool bUnicode; // TODO
+        qint32 nMinLenght;
+        bool bMenu_Hex;
+    };
+
     explicit SearchStringsWidget(QWidget *pParent=nullptr);
     ~SearchStringsWidget();
-    void setData(QIODevice *pDevice,MultiSearch::OPTIONS options,bool bAuto=false,QWidget *pParent=nullptr);
+    void setData(QIODevice *pDevice,SearchStringsWidget::OPTIONS options,bool bAuto=false,QWidget *pParent=nullptr);
     void setShortcuts(XShortcuts *pShortcuts);
 
     void reload();
@@ -73,7 +83,7 @@ private:
     QIODevice *g_pDevice;
     QWidget *g_pParent;
     QSortFilterProxyModel *g_pFilter;
-    MultiSearch::OPTIONS g_options;
+    SearchStringsWidget::OPTIONS g_options;
     QStandardItemModel *g_pModel;
     bool g_bInit;
     QStandardItemModel *g_pOldModel;

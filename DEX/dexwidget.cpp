@@ -316,7 +316,7 @@ void DEXWidget::reloadData()
         {
             if(!g_stInit.contains(sInit))
             {
-                MultiSearch::OPTIONS stringsOptions={};
+                SearchStringsWidget::OPTIONS stringsOptions={};
                 stringsOptions.bMenu_Hex=true;
                 stringsOptions.bAnsi=true;
                 stringsOptions.bUnicode=true;
@@ -328,14 +328,14 @@ void DEXWidget::reloadData()
         {
             if(!g_stInit.contains(sInit))
             {
-                ui->widgetMemoryMap->setData(getDevice(),XBinary::FT_DEX);
+                ui->widgetMemoryMap->setData(getDevice(),dex.getFileType());
             }
         }
         else if(nType==SDEX::TYPE_ENTROPY)
         {
             if(!g_stInit.contains(sInit))
             {
-                ui->widgetEntropy->setData(getDevice(),0,getDevice()->size(),true);
+                ui->widgetEntropy->setData(getDevice(),0,getDevice()->size(),dex.getFileType(),true,this);
             }
         }
         else if(nType==SDEX::TYPE_HEURISTICSCAN)

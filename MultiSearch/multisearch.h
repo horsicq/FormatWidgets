@@ -40,8 +40,7 @@ public:
 
     struct OPTIONS
     {
-        qint64 nBaseAddress;
-        qint32 nAddressWidth; // TODO make auto
+        XBinary::_MEMORY_MAP memoryMap;
         bool bAnsi; // TODO
         bool bUnicode; // TODO
         qint32 nMinLenght;

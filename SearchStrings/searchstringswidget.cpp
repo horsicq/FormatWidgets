@@ -30,7 +30,6 @@ SearchStringsWidget::SearchStringsWidget(QWidget *pParent) :
     this->g_pParent=pParent;
     g_pFilter=new QSortFilterProxyModel(this);
 
-    g_options.nAddressWidth=8;
     g_options.nBaseAddress=0;
     g_pModel=nullptr;
     g_bInit=false;
@@ -54,7 +53,7 @@ SearchStringsWidget::~SearchStringsWidget()
     delete ui;
 }
 
-void SearchStringsWidget::setData(QIODevice *pDevice, MultiSearch::OPTIONS options, bool bAuto, QWidget *pParent)
+void SearchStringsWidget::setData(QIODevice *pDevice, OPTIONS options, bool bAuto, QWidget *pParent)
 {
     this->g_pDevice=pDevice;
     this->g_pParent=pParent;
@@ -71,17 +70,19 @@ void SearchStringsWidget::setData(QIODevice *pDevice, MultiSearch::OPTIONS optio
         g_options.nBaseAddress=0;
     }
 
+    qint32 nAddressWidth=8;
+
     if(nSize+g_options.nBaseAddress>0xFFFFFFFF)
     {
-        g_options.nAddressWidth=16;
+        nAddressWidth=16;
     }
     else
     {
-        g_options.nAddressWidth=8;
+        nAddressWidth=8;
     }
 
-    QString sInfo=QString("0x%1 - 0x%2 ( 0x%3 )").arg(g_options.nBaseAddress,g_options.nAddressWidth,16,QChar('0'))
-                  .arg(g_options.nBaseAddress+nSize-1,g_options.nAddressWidth,16,QChar('0'))
+    QString sInfo=QString("0x%1 - 0x%2 ( 0x%3 )").arg(g_options.nBaseAddress,nAddressWidth,16,QChar('0'))
+                  .arg(g_options.nBaseAddress+nSize-1,nAddressWidth,16,QChar('0'))
                   .arg(nSize,8,16,QChar('0'));
     ui->labelInfo->setText(sInfo);
 
@@ -269,6 +270,14 @@ void SearchStringsWidget::search()
 
         if(g_options.bAnsi||g_options.bUnicode)
         {
+            MultiSearch::OPTIONS options={};
+
+            options.bAnsi=g_options.bAnsi;
+            options.bUnicode=g_options.bUnicode;
+            options.bMenu_Hex=g_options.bMenu_Hex;
+            options.nMinLenght=g_options.nMinLenght;
+            options.memoryMap=XBinary(g_pDevice,true,g_options.nBaseAddress).getMemoryMap();
+
             g_pOldModel=g_pModel;
 
             g_pFilter->setSourceModel(nullptr);
@@ -277,11 +286,11 @@ void SearchStringsWidget::search()
             QList<XBinary::MS_RECORD> listRecords;
 
             DialogMultiSearchProcess dsp(g_pParent);
-            dsp.processSearch(g_pDevice,&listRecords,g_options,MultiSearch::TYPE_STRINGS);
+            dsp.processSearch(g_pDevice,&listRecords,options,MultiSearch::TYPE_STRINGS);
             dsp.exec();
 
             DialogMultiSearchProcess dmp(g_pParent);
-            dmp.processModel(&listRecords,&g_pModel,g_options,MultiSearch::TYPE_STRINGS);
+            dmp.processModel(&listRecords,&g_pModel,options,MultiSearch::TYPE_STRINGS);
             dmp.exec();
 
             g_pFilter->setSourceModel(g_pModel);

@@ -331,14 +331,14 @@ void LEWidget::reloadData()
         {
             if(!g_stInit.contains(sInit))
             {
-                ui->widgetDisasm->setData(getDevice(),XBinary::FT_LE,le.getEntryPointAddress());
+                ui->widgetDisasm->setData(getDevice(),le.getFileType(),le.getEntryPointAddress());
             }
         }
         else if(nType==SLE::TYPE_STRINGS)
         {
             if(!g_stInit.contains(sInit))
             {
-                MultiSearch::OPTIONS stringsOptions={};
+                SearchStringsWidget::OPTIONS stringsOptions={};
                 stringsOptions.bMenu_Hex=true;
                 stringsOptions.bAnsi=true;
                 stringsOptions.bUnicode=true;
@@ -350,21 +350,21 @@ void LEWidget::reloadData()
         {
             if(!g_stInit.contains(sInit))
             {
-                ui->widgetMemoryMap->setData(getDevice());
+                ui->widgetMemoryMap->setData(getDevice(),le.getFileType());
             }
         }
         else if(nType==SLE::TYPE_ENTROPY)
         {
             if(!g_stInit.contains(sInit))
             {
-                ui->widgetEntropy->setData(getDevice(),0,getDevice()->size(),true);
+                ui->widgetEntropy->setData(getDevice(),0,getDevice()->size(),le.getFileType(),true,this);
             }
         }
         else if(nType==SLE::TYPE_HEURISTICSCAN)
         {
             if(!g_stInit.contains(sInit))
             {
-                ui->widgetHeuristicScan->setData(getDevice(),true,XBinary::FT_LE);
+                ui->widgetHeuristicScan->setData(getDevice(),true,le.getFileType());
             }
         }
         else if(nType==SLE::TYPE_DOS_HEADER)

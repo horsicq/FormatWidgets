@@ -345,7 +345,7 @@ void NEWidget::reloadData()
         {
             if(!g_stInit.contains(sInit))
             {
-                MultiSearch::OPTIONS stringsOptions={};
+                SearchStringsWidget::OPTIONS stringsOptions={};
                 stringsOptions.bMenu_Hex=true;
                 stringsOptions.bAnsi=true;
                 stringsOptions.bUnicode=true;
@@ -357,21 +357,21 @@ void NEWidget::reloadData()
         {
             if(!g_stInit.contains(sInit))
             {
-                ui->widgetMemoryMap->setData(getDevice());
+                ui->widgetMemoryMap->setData(getDevice(),ne.getFileType());
             }
         }
         else if(nType==SNE::TYPE_ENTROPY)
         {
             if(!g_stInit.contains(sInit))
             {
-                ui->widgetEntropy->setData(getDevice(),0,getDevice()->size(),true);
+                ui->widgetEntropy->setData(getDevice(),0,getDevice()->size(),ne.getFileType(),true,this);
             }
         }
         else if(nType==SNE::TYPE_HEURISTICSCAN)
         {
             if(!g_stInit.contains(sInit))
             {
-                ui->widgetHeuristicScan->setData(getDevice(),true,XBinary::FT_NE);
+                ui->widgetHeuristicScan->setData(getDevice(),true,ne.getFileType());
             }
         }
         else if(nType==SNE::TYPE_DOS_HEADER)

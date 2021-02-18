@@ -247,7 +247,7 @@ void MSDOSWidget::reloadData()
         {
             if(!g_stInit.contains(sInit))
             {
-                MultiSearch::OPTIONS stringsOptions={};
+                SearchStringsWidget::OPTIONS stringsOptions={};
                 stringsOptions.bMenu_Hex=true;
                 stringsOptions.bAnsi=true;
                 stringsOptions.bUnicode=true;
@@ -259,21 +259,21 @@ void MSDOSWidget::reloadData()
         {
             if(!g_stInit.contains(sInit))
             {
-                ui->widgetMemoryMap->setData(getDevice());
+                ui->widgetMemoryMap->setData(getDevice(),msdos.getFileType());
             }
         }
         else if(nType==SMSDOS::TYPE_ENTROPY)
         {
             if(!g_stInit.contains(sInit))
             {
-                ui->widgetEntropy->setData(getDevice(),0,getDevice()->size(),true);
+                ui->widgetEntropy->setData(getDevice(),0,getDevice()->size(),msdos.getFileType(),true,this);
             }
         }
         else if(nType==SMSDOS::TYPE_HEURISTICSCAN)
         {
             if(!g_stInit.contains(sInit))
             {
-                ui->widgetHeuristicScan->setData(getDevice(),true,XBinary::FT_MSDOS);
+                ui->widgetHeuristicScan->setData(getDevice(),true,msdos.getFileType());
             }
         }
         else if(nType==SMSDOS::TYPE_DOS_HEADER)
