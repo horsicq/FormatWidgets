@@ -38,6 +38,14 @@ public:
         TYPE_SIGNATURES
     };
 
+    struct SIGNATURE_RECORD
+    {
+        QString sName;
+        bool bIsBigEndian;
+        bool bIsLittleEndian;
+        QString sSignature;
+    };
+
     struct OPTIONS
     {
         XBinary::_MEMORY_MAP memoryMap;
@@ -46,15 +54,8 @@ public:
         bool bSignature;
         bool bIsBigEndian;
         qint32 nMinLenght;
+        QList<SIGNATURE_RECORD> *pListSignatureRecords;
         bool bMenu_Hex;
-    };
-
-    struct SIGNATURE_RECORD
-    {
-        QString sName;
-        bool bIsBigEndian;
-        bool bIsLittleEndian;
-        QString sSignature;
     };
 
     const int N_MAX=50000;

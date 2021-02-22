@@ -103,7 +103,16 @@ void MultiSearch::processSearch()
     }
     else if(g_type==TYPE_SIGNATURES)
     {
-        *g_pListRecords=g_binary.multiSearch_signature(0,g_pDevice->size(),N_MAX,"00+00");
+        g_binary.setProcessSignalsEnable(false);
+
+        int nNumberOfSignatures=g_options.pListSignatureRecords->count();
+
+        for(int i=0;i<nNumberOfSignatures;i++)
+        {
+            g_pListRecords->append(g_binary.multiSearch_signature(0,g_pDevice->size(),N_MAX,g_options.pListSignatureRecords->at(i).sSignature));
+        }
+
+        g_binary.setProcessSignalsEnable(true);
     }
 
     emit completed(scanTimer.elapsed());
