@@ -25,19 +25,18 @@ MultiSearch::MultiSearch(QObject *pParent) : QObject(pParent)
     g_bIsStop=false;
     g_options={};
     g_ppModel=nullptr;
+    g_pSemaphore=new QSemaphore(N_MAXNUMBEROFTHREADS);;
+}
 
-    connect(&g_binary,SIGNAL(errorMessage(QString)),this,SIGNAL(errorMessage(QString)));
-    connect(&g_binary,SIGNAL(searchProgressValueChanged(qint32)),this,SIGNAL(progressValueChanged(qint32)));
-//    connect(&xBinary,SIGNAL(searchProgressMinimumChanged(qint32)),this,SIGNAL(progressValueMinimum(qint32)));
-//    connect(&xBinary,SIGNAL(searchProgressMaximumChanged(qint32)),this,SIGNAL(progressValueMaximum(qint32)));
+MultiSearch::~MultiSearch()
+{
+    delete g_pSemaphore;
 }
 
 void MultiSearch::setSearchData(QIODevice *pDevice, QList<XBinary::MS_RECORD> *pListRecords, OPTIONS options, TYPE type)
 {
     this->g_pDevice=pDevice;
     this->g_pListRecords=pListRecords;
-
-    g_binary.setDevice(pDevice);
 
     g_options=options;
     g_type=type;
@@ -86,10 +85,26 @@ QList<MultiSearch::SIGNATURE_RECORD> MultiSearch::loadSignaturesFromFile(QString
     return listResult;
 }
 
+void MultiSearch::processSignature(MultiSearch::SIGNATURE_RECORD signatureRecord)
+{
+    g_pSemaphore->acquire();
+
+    XBinary binary(g_pDevice);
+
+    binary.setReadWriteMutex(&g_mutex);
+
+    connect(this,SIGNAL(setSearchProcessEnable(bool)),&binary,SLOT(setSearchProcessEnable(bool)),Qt::DirectConnection);
+
+    g_pListRecords->append(binary.multiSearch_signature(0,g_pDevice->size(),N_MAX,signatureRecord.sSignature,signatureRecord.sName));
+
+    g_pSemaphore->release();
+}
+
 void MultiSearch::stop()
 {
+    emit setSearchProcessEnable(false);
+
     g_bIsStop=true;
-    g_binary.setSearchProcessEnable(false);
 }
 
 void MultiSearch::processSearch()
@@ -99,20 +114,86 @@ void MultiSearch::processSearch()
 
     if(g_type==TYPE_STRINGS)
     {
-        *g_pListRecords=g_binary.multiSearch_allStrings(0,g_pDevice->size(),N_MAX,g_options.nMinLenght,128,g_options.bAnsi,g_options.bUnicode);
+        XBinary binary(g_pDevice);
+
+        connect(&binary,SIGNAL(errorMessage(QString)),this,SIGNAL(errorMessage(QString)));
+        connect(&binary,SIGNAL(searchProgressValueChanged(qint32)),this,SIGNAL(progressValueChanged(qint32)));
+        connect(this,SIGNAL(setSearchProcessEnable(bool)),&binary,SLOT(setSearchProcessEnable(bool)),Qt::DirectConnection);
+
+        *g_pListRecords=binary.multiSearch_allStrings(0,g_pDevice->size(),N_MAX,g_options.nMinLenght,128,g_options.bAnsi,g_options.bUnicode);
     }
     else if(g_type==TYPE_SIGNATURES)
     {
-        g_binary.setProcessSignalsEnable(false);
+    #ifdef QT_DEBUG
+        QElapsedTimer timer;
+        timer.start();
+        qDebug("Signatures start");
+    #endif
 
         int nNumberOfSignatures=g_options.pListSignatureRecords->count();
 
-        for(int i=0;i<nNumberOfSignatures;i++)
+        XBinary::PROCENT procent=XBinary::procentInit(nNumberOfSignatures,true);
+
+        emit progressValueChanged(0);
+
+        for(int i=0;(i<nNumberOfSignatures)&&(!g_bIsStop);i++)
         {
-            g_pListRecords->append(g_binary.multiSearch_signature(0,g_pDevice->size(),N_MAX,g_options.pListSignatureRecords->at(i).sSignature));
+            SIGNATURE_RECORD signatureRecord=g_options.pListSignatureRecords->at(i);
+
+            bool bSuccess=false;
+
+            if((signatureRecord.bIsBigEndian)&&(g_options.bIsBigEndian))
+            {
+                bSuccess=true;
+            }
+            else if((signatureRecord.bIsLittleEndian)&&(!g_options.bIsBigEndian))
+            {
+                bSuccess=true;
+            }
+            else if((!signatureRecord.bIsLittleEndian)&&(!signatureRecord.bIsBigEndian))
+            {
+                bSuccess=true;
+            }
+
+            if(bSuccess)
+            {
+                QFuture<void> future=QtConcurrent::run(this,&MultiSearch::processSignature,signatureRecord);
+
+                if(XBinary::procentSetCurrentValue(&procent,i))
+                {
+                    emit progressValueChanged(procent.nCurrentProcent);
+                }
+
+                while(true)
+                {
+                    int nAvailable=g_pSemaphore->available();
+
+                    if(nAvailable)
+                    {
+                        break;
+                    }
+//                    QThread::msleep(5);
+                }
+            }
         }
 
-        g_binary.setProcessSignalsEnable(true);
+        while(true)
+        {
+            int nAvailable=g_pSemaphore->available();
+
+            if(nAvailable==N_MAXNUMBEROFTHREADS)
+            {
+                break;
+            }
+
+            QThread::msleep(10);
+        }
+
+        emit progressValueChanged(procent.nMaxProcent);
+
+    #ifdef QT_DEBUG
+        qDebug("Signatures end: %lld msec",timer.elapsed());
+    #endif
     }
 
     emit completed(scanTimer.elapsed());
@@ -227,7 +308,14 @@ void MultiSearch::processModel()
 
             (*g_ppModel)->setItem(i,1,pTypeOffset);
 
-            (*g_ppModel)->setItem(i,2,new QStandardItem(record.sString));
+            QString sName=record.sInfo;
+
+            if(sName=="")
+            {
+                sName=record.sString;
+            }
+
+            (*g_ppModel)->setItem(i,2,new QStandardItem(sName));
 
             if(i>((_nCurrentProcent+1)*_nProcent))
             {

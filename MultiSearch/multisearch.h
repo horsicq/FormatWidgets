@@ -22,6 +22,10 @@
 #define MULTISEARCH_H
 
 #include <QIODevice>
+#include <QSemaphore>
+#include <QFuture>
+#include <QtConcurrent>
+#include <QtConcurrentMap>
 #include <QElapsedTimer>
 #include <QStandardItemModel>
 #include "xbinary.h"
@@ -59,17 +63,21 @@ public:
     };
 
     const int N_MAX=50000;
+    const int N_MAXNUMBEROFTHREADS=8;
 
     explicit MultiSearch(QObject *pParent=nullptr);
+    ~MultiSearch();
     void setSearchData(QIODevice *pDevice,QList<XBinary::MS_RECORD> *pListRecords,OPTIONS options,TYPE type);
     void setModelData(QList<XBinary::MS_RECORD> *pListRecords,QStandardItemModel **ppModel,OPTIONS options,TYPE type);
 
     static QList<SIGNATURE_RECORD> loadSignaturesFromFile(QString sFileName);
+    void processSignature(SIGNATURE_RECORD signatureRecord);
 
 signals:
     void errorMessage(QString sText);
     void completed(qint64 nElapsed);
     void progressValueChanged(qint32 nValue);
+    void setSearchProcessEnable(bool bState);
 
 public slots:
     void stop();
@@ -83,7 +91,8 @@ private:
     TYPE g_type;
     QStandardItemModel **g_ppModel;
     bool g_bIsStop;
-    XBinary g_binary;
+    QSemaphore *g_pSemaphore;
+    QMutex g_mutex;
 };
 
 #endif // MULTISEARCH_H

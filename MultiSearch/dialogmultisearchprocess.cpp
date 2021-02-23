@@ -70,7 +70,14 @@ DialogMultiSearchProcess::~DialogMultiSearchProcess()
 
 void DialogMultiSearchProcess::processSearch(QIODevice *pDevice, QList<XBinary::MS_RECORD> *pListRecords, MultiSearch::OPTIONS options, MultiSearch::TYPE type)
 {
-    setWindowTitle(tr("Search strings"));
+    if(type==MultiSearch::TYPE_STRINGS)
+    {
+        setWindowTitle(tr("Search strings"));
+    }
+    else if(type==MultiSearch::TYPE_SIGNATURES)
+    {
+        setWindowTitle(tr("Search signatures"));
+    }
 
     g_pHandleSearch->setSearchData(pDevice,pListRecords,options,type);
     g_pThreadSearch->start();
