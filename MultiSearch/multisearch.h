@@ -44,6 +44,7 @@ public:
 
     struct SIGNATURE_RECORD
     {
+        qint32 nNumber;
         QString sName;
         bool bIsBigEndian;
         bool bIsLittleEndian;
@@ -77,6 +78,8 @@ signals:
     void errorMessage(QString sText);
     void completed(qint64 nElapsed);
     void progressValueChanged(qint32 nValue);
+    void progressInfo(QString sText);
+    void progressFound(qint32 nValue);
     void setSearchProcessEnable(bool bState);
 
 public slots:
@@ -93,6 +96,7 @@ private:
     bool g_bIsStop;
     QSemaphore *g_pSemaphore;
     QMutex g_mutex;
+    XBinary::PROCENT g_procent;
 };
 
 #endif // MULTISEARCH_H

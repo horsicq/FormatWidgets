@@ -494,6 +494,7 @@ void FormatsWidget::showMSDOS(SMSDOS::TYPE type)
 
         options.sBackupFileName=getBackupFileName();
         options.nStartType=type;
+        options.sSearchSignaturesPath=g_options.sSearchSignaturesPath;
 
         DialogMSDOS dialogMSDOS(this);
 
@@ -517,6 +518,7 @@ void FormatsWidget::showLE(SLE::TYPE type)
 
         options.sBackupFileName=getBackupFileName();
         options.nStartType=type;
+        options.sSearchSignaturesPath=g_options.sSearchSignaturesPath;
 
         DialogLE dialogLE(this);
 
@@ -540,6 +542,7 @@ void FormatsWidget::showNE(SNE::TYPE type)
 
         options.sBackupFileName=getBackupFileName();
         options.nStartType=type;
+        options.sSearchSignaturesPath=g_options.sSearchSignaturesPath;
 
         DialogNE dialogNE(this);
 
@@ -563,6 +566,7 @@ void FormatsWidget::showPE(SPE::TYPE type)
 
         options.sBackupFileName=getBackupFileName();
         options.nStartType=type;
+        options.sSearchSignaturesPath=g_options.sSearchSignaturesPath;
 
         DialogPE dialogPE(this);
 
@@ -586,6 +590,7 @@ void FormatsWidget::showELF(SELF::TYPE type)
 
         options.sBackupFileName=getBackupFileName();
         options.nStartType=type;
+        options.sSearchSignaturesPath=g_options.sSearchSignaturesPath;
 
         DialogELF dialogELF(this);
 
@@ -609,6 +614,7 @@ void FormatsWidget::showMACH(SMACH::TYPE type)
 
         options.sBackupFileName=getBackupFileName();
         options.nStartType=type;
+        options.sSearchSignaturesPath=g_options.sSearchSignaturesPath;
 
         DialogMACH dialogMACH(this);
 
@@ -632,6 +638,7 @@ void FormatsWidget::showDEX(SDEX::TYPE type)
 
         options.sBackupFileName=getBackupFileName();
         options.nStartType=type;
+        options.sSearchSignaturesPath=g_options.sSearchSignaturesPath;
 
         DialogDEX dialogDEX(this);
 

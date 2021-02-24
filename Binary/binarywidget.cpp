@@ -35,7 +35,7 @@ BinaryWidget::BinaryWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget 
 {
     ui->setupUi(this);
 
-    setData(pDevice,options,0,0,0);
+    BinaryWidget::setData(pDevice,options,0,0,0);
     BinaryWidget::reload();
 }
 

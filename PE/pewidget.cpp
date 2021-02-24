@@ -27,23 +27,13 @@ PEWidget::PEWidget(QWidget *pParent) :
 {
     ui->setupUi(this);
 
-#ifndef USE_EXTRABUTTONS
-    ui->pushButtonHex->hide();
-    ui->pushButtonEntropy->hide();
-    ui->pushButtonStrings->hide();
-    ui->pushButtonMemoryMap->hide();
-    ui->pushButtonHeuristicScan->hide();
-#endif
-
     connect(ui->widgetStrings,SIGNAL(showHex(qint64,qint64)),this,SLOT(showInHexWindow(qint64,qint64)));
 }
 
 PEWidget::PEWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) :
     PEWidget(pParent)
 {
-    ui->setupUi(this);
-
-    setData(pDevice,options,0,0,0);
+    PEWidget::setData(pDevice,options,0,0,0);
     PEWidget::reload();
 }
 
@@ -57,6 +47,7 @@ void PEWidget::setShortcuts(XShortcuts *pShortcuts)
     ui->widgetHex->setShortcuts(pShortcuts);
     ui->widgetDisasm->setShortcuts(pShortcuts);
     ui->widgetStrings->setShortcuts(pShortcuts);
+    ui->widgetSignatures->setShortcuts(pShortcuts);
     ui->widgetEntropy->setShortcuts(pShortcuts);
     ui->widgetHeuristicScan->setShortcuts(pShortcuts);
     ui->widgetMemoryMap->setShortcuts(pShortcuts);
@@ -129,6 +120,7 @@ void PEWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_HEX,tr("Hex")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_DISASM,tr("Disasm")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_STRINGS,tr("Strings")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_SIGNATURES,tr("Signatures")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_MEMORYMAP,tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_ENTROPY,tr("Entropy")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_HEURISTICSCAN,tr("Heuristic scan")));
@@ -824,6 +816,17 @@ void PEWidget::reloadData()
                 stringsOptions.bUnicode=true;
 
                 ui->widgetStrings->setData(getDevice(),stringsOptions,true);
+            }
+        }
+        else if(nType==SPE::TYPE_SIGNATURES)
+        {
+            if(!g_stInit.contains(sInit))
+            {
+                SearchSignaturesWidget::OPTIONS signaturesOptions={};
+                signaturesOptions.bMenu_Hex=true;
+                signaturesOptions.sSignaturesPath=getOptions().sSearchSignaturesPath;
+
+                ui->widgetSignatures->setData(getDevice(),pe.getFileType(),signaturesOptions,false,this);
             }
         }
         else if(nType==SPE::TYPE_MEMORYMAP)

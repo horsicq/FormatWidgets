@@ -33,7 +33,7 @@ MACHWidget::MACHWidget(QWidget *pParent) :
 MACHWidget::MACHWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) :
     MACHWidget(pParent)
 {
-    setData(pDevice,options,0,0,0);
+    MACHWidget::setData(pDevice,options,0,0,0);
     MACHWidget::reload();
 }
 

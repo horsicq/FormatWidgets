@@ -47,6 +47,8 @@ private slots:
     void errorMessage(QString sText);
     void onCompleted(qint64 nElapsed);
     void onProgressValueChanged(qint32 nValue);
+    void onProgressInfo(QString sInfo);
+    void onProgressFound(qint32 nValue);
 
 private:
     Ui::DialogMultiSearchProcess *ui;

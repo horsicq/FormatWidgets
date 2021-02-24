@@ -33,7 +33,7 @@ NEWidget::NEWidget(QWidget *pParent) :
 NEWidget::NEWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) :
     NEWidget(pParent)
 {
-    setData(pDevice,options,0,0,0);
+    NEWidget::setData(pDevice,options,0,0,0);
     NEWidget::reload();
 }
 

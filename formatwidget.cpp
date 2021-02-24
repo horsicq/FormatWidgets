@@ -38,7 +38,7 @@ FormatWidget::FormatWidget(QWidget *pParent):
 FormatWidget::FormatWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent):
     FormatWidget(pParent)
 {
-    setData(pDevice,options,nNumber,nOffset,nType);
+    FormatWidget::setData(pDevice,options,nNumber,nOffset,nType);
 }
 
 FormatWidget::~FormatWidget()
@@ -52,9 +52,10 @@ void FormatWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 
     g_nNumber=nNumber;
     g_nOffset=nOffset;
     g_nType=nType;
-    g_fwOptions=options;
 
     g_bIsReadonly=!(pDevice->isWritable());
+
+    setOptions(options);
 }
 
 void FormatWidget::setShortcuts(XShortcuts *pShortcuts)

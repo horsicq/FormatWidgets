@@ -35,7 +35,7 @@ ELFWidget::ELFWidget(QWidget *pParent) :
 ELFWidget::ELFWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) :
     ELFWidget(pParent)
 {
-    setData(pDevice,options,0,0,0);
+    ELFWidget::setData(pDevice,options,0,0,0);
     ELFWidget::reload();
 }
 

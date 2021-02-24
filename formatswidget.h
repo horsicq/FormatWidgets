@@ -72,6 +72,7 @@ public:
         QString sDatabasePath;
         QString sInfoPath;
         bool bIsSaveBackup;
+        QString sSearchSignaturesPath;
         // TODO More
     };
 

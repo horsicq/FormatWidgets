@@ -38,7 +38,7 @@ DEXWidget::DEXWidget(QWidget *pParent) :
 DEXWidget::DEXWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) :
     DEXWidget(pParent)
 {
-    setData(pDevice,options,0,0,0);
+    DEXWidget::setData(pDevice,options,0,0,0);
     DEXWidget::reload();
 }
 

@@ -33,7 +33,7 @@ MSDOSWidget::MSDOSWidget(QWidget *pParent) :
 MSDOSWidget::MSDOSWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) :
     MSDOSWidget(pParent)
 {
-    setData(pDevice,options,0,0,0);
+    MSDOSWidget::setData(pDevice,options,0,0,0);
     MSDOSWidget::reload();
 }
 

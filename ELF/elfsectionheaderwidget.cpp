@@ -29,11 +29,8 @@ ELFSectionHeaderWidget::ELFSectionHeaderWidget(QWidget *pParent):
 }
 
 ELFSectionHeaderWidget::ELFSectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent):
-    FormatWidget(pDevice,options,nNumber,nOffset,nType,pParent),
-    ui(new Ui::ELFSectionHeaderWidget)
+    ELFSectionHeaderWidget(pParent)
 {
-    ui->setupUi(this);
-
     setData(pDevice,options,nNumber,nOffset,nType);
 
     g_ppLinedEdit=0;

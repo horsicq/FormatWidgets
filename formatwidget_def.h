@@ -29,6 +29,7 @@ namespace FW_DEF
     {
         // TODO More
         QString sBackupFileName;
+        QString sSearchSignaturesPath;
         bool bIsImage;
         qint64 nImageBase; // TODO default_const
         // TODO Last directory

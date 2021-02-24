@@ -25,7 +25,8 @@ MultiSearch::MultiSearch(QObject *pParent) : QObject(pParent)
     g_bIsStop=false;
     g_options={};
     g_ppModel=nullptr;
-    g_pSemaphore=new QSemaphore(N_MAXNUMBEROFTHREADS);;
+    g_pSemaphore=new QSemaphore(N_MAXNUMBEROFTHREADS);
+    g_procent={};
 }
 
 MultiSearch::~MultiSearch()
@@ -58,6 +59,8 @@ QList<MultiSearch::SIGNATURE_RECORD> MultiSearch::loadSignaturesFromFile(QString
     QFile file;
     file.setFileName(sFileName);
 
+    qint32 nIndex=0;
+
     if(file.open(QIODevice::ReadOnly))
     {
         QTextStream in(&file);
@@ -67,6 +70,7 @@ QList<MultiSearch::SIGNATURE_RECORD> MultiSearch::loadSignaturesFromFile(QString
             if(sLine!="")
             {
                 SIGNATURE_RECORD record={};
+                record.nNumber=nIndex++;
                 record.sName=sLine.section(";",0,0);
                 record.sSignature=sLine.section(";",2,-1);
 
@@ -87,6 +91,10 @@ QList<MultiSearch::SIGNATURE_RECORD> MultiSearch::loadSignaturesFromFile(QString
 
 void MultiSearch::processSignature(MultiSearch::SIGNATURE_RECORD signatureRecord)
 {
+//#ifdef QT_DEBUG
+//    QElapsedTimer timer;
+//    timer.start();
+//#endif
     g_pSemaphore->acquire();
 
     XBinary binary(g_pDevice);
@@ -97,7 +105,17 @@ void MultiSearch::processSignature(MultiSearch::SIGNATURE_RECORD signatureRecord
 
     g_pListRecords->append(binary.multiSearch_signature(0,g_pDevice->size(),N_MAX,signatureRecord.sSignature,signatureRecord.sName));
 
+    if(XBinary::procentSetCurrentValue(&g_procent,signatureRecord.nNumber))
+    {
+        emit progressValueChanged(g_procent.nCurrentProcent);
+        emit progressInfo(signatureRecord.sName);
+        emit progressFound(g_pListRecords->count());
+    }
+
     g_pSemaphore->release();
+//#ifdef QT_DEBUG
+//    qDebug("%lld %s",timer.elapsed(),signatureRecord.sName.toLatin1().data());
+//#endif
 }
 
 void MultiSearch::stop()
@@ -132,7 +150,7 @@ void MultiSearch::processSearch()
 
         int nNumberOfSignatures=g_options.pListSignatureRecords->count();
 
-        XBinary::PROCENT procent=XBinary::procentInit(nNumberOfSignatures,true);
+        g_procent=XBinary::procentInit(nNumberOfSignatures,true);
 
         emit progressValueChanged(0);
 
@@ -159,11 +177,6 @@ void MultiSearch::processSearch()
             {
                 QFuture<void> future=QtConcurrent::run(this,&MultiSearch::processSignature,signatureRecord);
 
-                if(XBinary::procentSetCurrentValue(&procent,i))
-                {
-                    emit progressValueChanged(procent.nCurrentProcent);
-                }
-
                 while(true)
                 {
                     int nAvailable=g_pSemaphore->available();
@@ -189,7 +202,7 @@ void MultiSearch::processSearch()
             QThread::msleep(10);
         }
 
-        emit progressValueChanged(procent.nMaxProcent);
+        emit progressValueChanged(g_procent.nMaxProcent);
 
     #ifdef QT_DEBUG
         qDebug("Signatures end: %lld msec",timer.elapsed());

@@ -56,6 +56,11 @@ FORMS += \
     include($$PWD/SearchStrings/searchstringswidget.pri)
 }
 
+!contains(XCONFIG, searchsignatureswidget) {
+    XCONFIG += searchsignatureswidget
+    include($$PWD/SearchSignatures/searchsignatureswidget.pri)
+}
+
 !contains(XCONFIG, xmemorymapwidget) {
     XCONFIG += xmemorymapwidget
     include($$PWD/../XMemoryMapWidget/xmemorymapwidget.pri)
@@ -79,8 +84,4 @@ FORMS += \
 !contains(XCONFIG, xdisasmview) {
     XCONFIG += xdisasmview
     include($$PWD/../XDisasmView/xdisasmview.pri)
-}
-
-contains(XCONFIG, use_extrabuttons) {
-    DEFINES += USE_EXTRABUTTONS
 }
