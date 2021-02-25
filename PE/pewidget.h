@@ -124,6 +124,7 @@ private slots:
     void on_tableWidget_Net_Metadata_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
     void on_toolButtonPrev_clicked();
     void on_toolButtonNext_clicked();
+    void on_checkBoxExportShowValid_stateChanged(int arg1);
 
 private:
     enum CB

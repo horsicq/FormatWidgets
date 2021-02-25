@@ -32,14 +32,14 @@
 #include <QFutureWatcher>
 #include <QtConcurrent>
 #include "dialogmultisearchprocess.h"
-#include "xshortcuts.h"
+#include "xshortcutswidget.h"
 
 namespace Ui
 {
 class SearchStringsWidget;
 }
 
-class SearchStringsWidget : public QWidget
+class SearchStringsWidget : public XShortcutsWidget
 {
     Q_OBJECT
 
@@ -57,7 +57,6 @@ public:
     explicit SearchStringsWidget(QWidget *pParent=nullptr);
     ~SearchStringsWidget();
     void setData(QIODevice *pDevice,SearchStringsWidget::OPTIONS options,bool bAuto=false,QWidget *pParent=nullptr);
-    void setShortcuts(XShortcuts *pShortcuts);
 
     void reload();
     bool getInitStatus();
@@ -69,11 +68,14 @@ private slots:
     void filter(QString sString);
     void on_tableViewResult_customContextMenuRequested(const QPoint &pos);
     void _copyString();
-    void _copyAddress();
+    void _copyOffset();
     void _copySize();
     void _hex();
     void search();
     void deleteOldModel();
+
+protected:
+    virtual void registerShortcuts(bool bState);
 
 signals:
     void showHex(qint64 nOffset,qint64 nSize);
@@ -88,8 +90,10 @@ private:
     bool g_bInit;
     QStandardItemModel *g_pOldModel;
     QFutureWatcher<void> g_watcher;
-    XShortcuts *g_pShortcuts;
-    XShortcuts g_scEmpty;
+    QShortcut *g_scCopyString;
+    QShortcut *g_scCopyOffset;
+    QShortcut *g_scCopySize;
+    QShortcut *g_scHex;
 };
 
 #endif // SEARCHSTRINGSWIDGET_H

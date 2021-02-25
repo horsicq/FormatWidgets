@@ -22,7 +22,7 @@
 #include "ui_searchstringswidget.h"
 
 SearchStringsWidget::SearchStringsWidget(QWidget *pParent) :
-    QWidget(pParent),
+    XShortcutsWidget(pParent),
     ui(new Ui::SearchStringsWidget)
 {
     ui->setupUi(this);
@@ -41,9 +41,10 @@ SearchStringsWidget::SearchStringsWidget(QWidget *pParent) :
 
     ui->spinBoxMinLength->setValue(5);
 
-    setShortcuts(&g_scEmpty);
-
-    // mb TODO registerShortcuts
+    g_scCopyString=nullptr;
+    g_scCopyOffset=nullptr;
+    g_scCopySize=nullptr;
+    g_scHex=nullptr;
 }
 
 SearchStringsWidget::~SearchStringsWidget()
@@ -90,11 +91,6 @@ void SearchStringsWidget::setData(QIODevice *pDevice, OPTIONS options, bool bAut
     {
         search();
     }
-}
-
-void SearchStringsWidget::setShortcuts(XShortcuts *pShortcuts)
-{
-    g_pShortcuts=pShortcuts;
 }
 
 void SearchStringsWidget::reload()
@@ -164,7 +160,7 @@ void SearchStringsWidget::on_tableViewResult_customContextMenuRequested(const QP
     QMenu contextMenu(this);
 
     QAction actionCopyString(tr("Copy string"),this);
-    actionCopyString.setShortcut(g_pShortcuts->getShortcut(XShortcuts::ID_STRINGS_COPYSTRING));
+    actionCopyString.setShortcut(getShortcuts()->getShortcut(XShortcuts::ID_STRINGS_COPYSTRING));
     connect(&actionCopyString,SIGNAL(triggered()),this,SLOT(_copyString()));
     contextMenu.addAction(&actionCopyString);
 
@@ -179,13 +175,13 @@ void SearchStringsWidget::on_tableViewResult_customContextMenuRequested(const QP
         sCopyString=tr("Copy offset");
     }
 
-    QAction actionCopyAddress(sCopyString,this);
-    actionCopyAddress.setShortcut(g_pShortcuts->getShortcut(XShortcuts::ID_STRINGS_COPYOFFSET));
-    connect(&actionCopyAddress,SIGNAL(triggered()),this,SLOT(_copyAddress()));
-    contextMenu.addAction(&actionCopyAddress);
+    QAction actionCopyOffset(sCopyString,this);
+    actionCopyOffset.setShortcut(getShortcuts()->getShortcut(XShortcuts::ID_STRINGS_COPYOFFSET));
+    connect(&actionCopyOffset,SIGNAL(triggered()),this,SLOT(_copyOffset()));
+    contextMenu.addAction(&actionCopyOffset);
 
     QAction actionCopySize(tr("Copy size"),this);
-    actionCopySize.setShortcut(g_pShortcuts->getShortcut(XShortcuts::ID_STRINGS_COPYSIZE));
+    actionCopySize.setShortcut(getShortcuts()->getShortcut(XShortcuts::ID_STRINGS_COPYSIZE));
     connect(&actionCopySize,SIGNAL(triggered()),this,SLOT(_copySize()));
     contextMenu.addAction(&actionCopySize);
 
@@ -193,7 +189,7 @@ void SearchStringsWidget::on_tableViewResult_customContextMenuRequested(const QP
 
     if(g_options.bMenu_Hex)
     {
-        actionHex.setShortcut(g_pShortcuts->getShortcut(XShortcuts::ID_STRINGS_HEX));
+        actionHex.setShortcut(getShortcuts()->getShortcut(XShortcuts::ID_STRINGS_HEX));
         connect(&actionHex,SIGNAL(triggered()),this,SLOT(_hex()));
         contextMenu.addAction(&actionHex);
     }
@@ -215,7 +211,7 @@ void SearchStringsWidget::_copyString()
     }
 }
 
-void SearchStringsWidget::_copyAddress()
+void SearchStringsWidget::_copyOffset()
 {
     int nRow=ui->tableViewResult->currentIndex().row();
 
@@ -314,4 +310,22 @@ void SearchStringsWidget::search()
 void SearchStringsWidget::deleteOldModel()
 {
     delete g_pOldModel;
+}
+
+void SearchStringsWidget::registerShortcuts(bool bState)
+{
+    if(bState)
+    {
+        if(!g_scCopyString)         g_scCopyString      =new QShortcut(getShortcuts()->getShortcut(XShortcuts::ID_STRINGS_COPYSTRING),      this,SLOT(_copyString()));
+        if(!g_scCopyOffset)         g_scCopyOffset      =new QShortcut(getShortcuts()->getShortcut(XShortcuts::ID_STRINGS_COPYOFFSET),      this,SLOT(_copyOffset()));
+        if(!g_scCopySize)           g_scCopySize        =new QShortcut(getShortcuts()->getShortcut(XShortcuts::ID_STRINGS_COPYSIZE),        this,SLOT(_copySize()));
+        if(!g_scHex)                g_scHex             =new QShortcut(getShortcuts()->getShortcut(XShortcuts::ID_STRINGS_HEX),             this,SLOT(_hex()));
+    }
+    else
+    {
+        if(g_scCopyString)          {delete g_scCopyString;     g_scCopyString=nullptr;}
+        if(g_scCopyOffset)          {delete g_scCopyOffset;     g_scCopyOffset=nullptr;}
+        if(g_scCopySize)            {delete g_scCopySize;       g_scCopySize=nullptr;}
+        if(g_scHex)                 {delete g_scHex;            g_scHex=nullptr;}
+    }
 }

@@ -30,6 +30,7 @@ ELFWidget::ELFWidget(QWidget *pParent) :
     g_nLastType=-1;
 
     connect(ui->widgetStrings,SIGNAL(showHex(qint64,qint64)),this,SLOT(showInHexWindow(qint64,qint64)));
+    connect(ui->widgetSignatures,SIGNAL(showHex(qint64,qint64)),this,SLOT(showInHexWindow(qint64,qint64)));
 }
 
 ELFWidget::ELFWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) :
@@ -49,6 +50,7 @@ void ELFWidget::setShortcuts(XShortcuts *pShortcuts)
     ui->widgetHex->setShortcuts(pShortcuts);
     ui->widgetDisasm->setShortcuts(pShortcuts);
     ui->widgetStrings->setShortcuts(pShortcuts);
+    ui->widgetSignatures->setShortcuts(pShortcuts);
     ui->widgetEntropy->setShortcuts(pShortcuts);
     ui->widgetHeuristicScan->setShortcuts(pShortcuts);
     ui->widgetMemoryMap->setShortcuts(pShortcuts);
@@ -103,6 +105,7 @@ void ELFWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_HEX,tr("Hex")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_DISASM,tr("Disasm")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_STRINGS,tr("Strings")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_SIGNATURES,tr("Signatures")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_MEMORYMAP,tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_ENTROPY,tr("Entropy")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_HEURISTICSCAN,tr("Heuristic scan")));
@@ -333,6 +336,17 @@ void ELFWidget::reloadData()
                 stringsOptions.bUnicode=true;
 
                 ui->widgetStrings->setData(getDevice(),stringsOptions,true);
+            }
+        }
+        else if(nType==SELF::TYPE_SIGNATURES)
+        {
+            if(!g_stInit.contains(sInit))
+            {
+                SearchSignaturesWidget::OPTIONS signaturesOptions={};
+                signaturesOptions.bMenu_Hex=true;
+                signaturesOptions.sSignaturesPath=getOptions().sSearchSignaturesPath;
+
+                ui->widgetSignatures->setData(getDevice(),elf.getFileType(),signaturesOptions,false,this);
             }
         }
         else if(nType==SELF::TYPE_MEMORYMAP)

@@ -28,6 +28,7 @@ PEWidget::PEWidget(QWidget *pParent) :
     ui->setupUi(this);
 
     connect(ui->widgetStrings,SIGNAL(showHex(qint64,qint64)),this,SLOT(showInHexWindow(qint64,qint64)));
+    connect(ui->widgetSignatures,SIGNAL(showHex(qint64,qint64)),this,SLOT(showInHexWindow(qint64,qint64)));
 }
 
 PEWidget::PEWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) :
@@ -1233,7 +1234,7 @@ void PEWidget::reloadData()
 
                 blockSignals(false);
 
-                PEProcessData peProcessData(SPE::TYPE_EXPORT_FUNCTION,&tvModel[SPE::TYPE_EXPORT_FUNCTION],&pe,0,0,0);
+                PEProcessData peProcessData(SPE::TYPE_EXPORT_FUNCTION,&tvModel[SPE::TYPE_EXPORT_FUNCTION],&pe,0,0,0,ui->checkBoxExportShowValid->isChecked());
 
                 ajustTableView(&peProcessData,&tvModel[SPE::TYPE_EXPORT_FUNCTION],ui->tableView_ExportFunctions);
 
@@ -2376,4 +2377,18 @@ void PEWidget::on_toolButtonNext_clicked()
     setAddPageEnabled(false);
     ui->treeWidgetNavi->setCurrentItem(getNextPage());
     setAddPageEnabled(true);
+}
+
+void PEWidget::on_checkBoxExportShowValid_stateChanged(int arg1)
+{
+    Q_UNUSED(arg1)
+
+    XPE pe(getDevice(),getOptions().bIsImage,getOptions().nImageBase);
+
+    if(pe.isValid())
+    {
+        PEProcessData peProcessData(SPE::TYPE_EXPORT_FUNCTION,&tvModel[SPE::TYPE_EXPORT_FUNCTION],&pe,0,0,0,ui->checkBoxExportShowValid->isChecked());
+
+        ajustTableView(&peProcessData,&tvModel[SPE::TYPE_EXPORT_FUNCTION],ui->tableView_ExportFunctions);
+    }
 }

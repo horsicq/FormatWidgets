@@ -21,7 +21,7 @@
 #include "machprocessdata.h"
 
 
-MACHProcessData::MACHProcessData(int nType, QStandardItemModel **ppModel, XMACH *pXMACH, qint64 nOffset, qint64 nSize)
+MACHProcessData::MACHProcessData(int nType, QStandardItemModel **ppModel, XMACH *pXMACH, qint64 nOffset, qint64 nSize) : ProcessData()
 {
     this->g_nType=nType;
     this->g_ppModel=ppModel;

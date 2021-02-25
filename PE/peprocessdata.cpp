@@ -20,7 +20,7 @@
 //
 #include "peprocessdata.h"
 
-PEProcessData::PEProcessData(int nType, QStandardItemModel **ppModel, XPE *pPE, qint32 nNumber, qint64 nOffset, qint64 nSize)
+PEProcessData::PEProcessData(int nType, QStandardItemModel **ppModel, XPE *pPE, qint32 nNumber, qint64 nOffset, qint64 nSize, QVariant varInfo) : ProcessData()
 {
     this->g_nType=nType;
     this->g_ppModel=ppModel;
@@ -28,6 +28,7 @@ PEProcessData::PEProcessData(int nType, QStandardItemModel **ppModel, XPE *pPE, 
     this->g_nNumber=nNumber;
     this->g_nOffset=nOffset;
     this->g_nSize=nSize;
+    this->g_varInfo=varInfo;
 }
 
 void PEProcessData::_process()
@@ -333,6 +334,8 @@ void PEProcessData::_process()
         // No need number
         listLabels.append(getStructList(N_IMAGE_EXPORT_FUNCTION::records,N_IMAGE_EXPORT_FUNCTION::__data_size));
         listLabels.append("");
+
+        bool bFilter=g_varInfo.toBool();
 
         XPE::EXPORT_HEADER eh=g_pPE->getExport();
 

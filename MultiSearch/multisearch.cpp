@@ -97,13 +97,18 @@ void MultiSearch::processSignature(MultiSearch::SIGNATURE_RECORD signatureRecord
 //#endif
     g_pSemaphore->acquire();
 
-    XBinary binary(g_pDevice);
+    bool bLog=false;
+
+    XBinary binary;
 
     binary.setReadWriteMutex(&g_mutex);
+    binary.setDevice(g_pDevice);
 
     connect(this,SIGNAL(setSearchProcessEnable(bool)),&binary,SLOT(setSearchProcessEnable(bool)),Qt::DirectConnection);
 
-    g_pListRecords->append(binary.multiSearch_signature(0,g_pDevice->size(),N_MAX,signatureRecord.sSignature,signatureRecord.sName));
+    QList<XBinary::MS_RECORD> listResult=binary.multiSearch_signature(&(g_options.memoryMap),0,binary.getSize(),N_MAX,signatureRecord.sSignature,signatureRecord.sName);
+
+    g_pListRecords->append(listResult);
 
     if(XBinary::procentSetCurrentValue(&g_procent,signatureRecord.nNumber))
     {
@@ -201,6 +206,8 @@ void MultiSearch::processSearch()
 
             QThread::msleep(10);
         }
+
+        QThread::msleep(100);
 
         emit progressValueChanged(g_procent.nMaxProcent);
 
