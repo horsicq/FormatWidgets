@@ -45,6 +45,8 @@ SearchStringsWidget::SearchStringsWidget(QWidget *pParent) :
     g_scCopyOffset=nullptr;
     g_scCopySize=nullptr;
     g_scHex=nullptr;
+
+    ui->tableViewResult->installEventFilter(this);
 }
 
 SearchStringsWidget::~SearchStringsWidget()
