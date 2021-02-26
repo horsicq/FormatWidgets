@@ -230,6 +230,8 @@ void MSDOSWidget::reloadData()
             {
                 XHexView::OPTIONS options={};
                 options.bMenu_Disasm=true;
+                options.bMenu_MemoryMap=true;
+                options.sSignaturesPath=getOptions().sSearchSignaturesPath;
                 ui->widgetHex->setData(getDevice(),options);
 //                ui->widgetHex->setBackupFileName(getOptions().sBackupFileName);
                 ui->widgetHex->enableReadOnly(false);
@@ -240,7 +242,12 @@ void MSDOSWidget::reloadData()
         {
             if(!g_stInit.contains(sInit))
             {
-                ui->widgetDisasm->setData(getDevice(),msdos.getFileType(),msdos.getEntryPointAddress());
+                XMultiDisasmWidget::OPTIONS options={};
+                options.fileType=msdos.getFileType();
+                options.nInitAddress=msdos.getEntryPointAddress();
+                options.sSignaturesPath=getOptions().sSearchSignaturesPath;
+
+                ui->widgetDisasm->setData(getDevice(),options);
             }
         }
         else if(nType==SMSDOS::TYPE_STRINGS)

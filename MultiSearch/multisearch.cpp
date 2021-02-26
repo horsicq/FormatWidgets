@@ -89,6 +89,11 @@ QList<MultiSearch::SIGNATURE_RECORD> MultiSearch::loadSignaturesFromFile(QString
     return listResult;
 }
 
+QString MultiSearch::createSignature(QString sName, QString sSignature)
+{
+    return QString("%1;%2;%3").arg(sName).arg("0").arg(sSignature);
+}
+
 void MultiSearch::processSignature(MultiSearch::SIGNATURE_RECORD signatureRecord)
 {
 //#ifdef QT_DEBUG

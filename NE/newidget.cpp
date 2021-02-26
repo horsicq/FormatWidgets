@@ -327,6 +327,8 @@ void NEWidget::reloadData()
             {
                 XHexView::OPTIONS options={};
                 options.bMenu_Disasm=true;
+                options.bMenu_MemoryMap=true;
+                options.sSignaturesPath=getOptions().sSearchSignaturesPath;
                 ui->widgetHex->setData(getDevice(),options);
 //                ui->widgetHex->setBackupFileName(getOptions().sBackupFileName);
                 ui->widgetHex->enableReadOnly(false);
@@ -338,7 +340,12 @@ void NEWidget::reloadData()
         {
             if(!g_stInit.contains(sInit))
             {
-                ui->widgetDisasm->setData(getDevice(),ne.getFileType(),ne.getEntryPointAddress());
+                XMultiDisasmWidget::OPTIONS options={};
+                options.fileType=ne.getFileType();
+                options.nInitAddress=ne.getEntryPointAddress();
+                options.sSignaturesPath=getOptions().sSearchSignaturesPath;
+
+                ui->widgetDisasm->setData(getDevice(),options);
             }
         }
         else if(nType==SNE::TYPE_STRINGS)

@@ -309,6 +309,8 @@ void ELFWidget::reloadData()
             {
                 XHexView::OPTIONS options={};
                 options.bMenu_Disasm=true;
+                options.bMenu_MemoryMap=true;
+                options.sSignaturesPath=getOptions().sSearchSignaturesPath;
                 ui->widgetHex->setData(getDevice(),options);
 //                ui->widgetHex->setBackupFileName(getOptions().sBackupFileName);
                 ui->widgetHex->enableReadOnly(false);
@@ -321,7 +323,12 @@ void ELFWidget::reloadData()
         {
             if(!g_stInit.contains(sInit))
             {
-                ui->widgetDisasm->setData(getDevice(),elf.getFileType(),elf.getEntryPointAddress());
+                XMultiDisasmWidget::OPTIONS options={};
+                options.fileType=elf.getFileType();
+                options.nInitAddress=elf.getEntryPointAddress();
+                options.sSignaturesPath=getOptions().sSearchSignaturesPath;
+
+                ui->widgetDisasm->setData(getDevice(),options);
             }
 
 //            pDisasmWidget->setBackupFileName(getOptions().sBackupFileName);

@@ -360,7 +360,12 @@ void FormatsWidget::on_pushButtonDisasm_clicked()
         {
             DialogMultiDisasm dialogDisasm(this); // TODO File_Type
 
-            dialogDisasm.setData(&file,getCurrentFileType(),ui->lineEditEntryPoint->getValue());
+            XMultiDisasmWidget::OPTIONS options={};
+            options.fileType=getCurrentFileType();
+            options.nInitAddress=ui->lineEditEntryPoint->getValue();
+            options.sSignaturesPath=g_options.sSearchSignaturesPath;
+
+            dialogDisasm.setData(&file,options);
             dialogDisasm.setShortcuts(g_pShortcuts);
 
             dialogDisasm.exec();
