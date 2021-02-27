@@ -93,6 +93,11 @@ void SearchSignaturesWidget::setSignaturesPath(QString sPath)
 
     ui->comboBoxFile->clear();
 
+    if(g_options.sUserSignature!="")
+    {
+        ui->comboBoxFile->addItem("",g_options.sUserSignature);
+    }
+
     QList<QString> listFiles=XBinary::getAllFilesFromDirectory(sPath,"*.db");
 
     int nNumberOfFiles=listFiles.count();
@@ -103,7 +108,11 @@ void SearchSignaturesWidget::setSignaturesPath(QString sPath)
         ui->comboBoxFile->addItem(XBinary::getBaseFileName(sFileName),sPath+QDir::separator()+sFileName);
     }
 
-    if(nNumberOfFiles)
+    if(g_options.sUserSignature!="")
+    {
+        loadSignatures("");
+    }
+    else if(nNumberOfFiles)
     {
         loadSignatures(ui->comboBoxFile->currentData().toString());
     }
@@ -320,9 +329,23 @@ void SearchSignaturesWidget::deleteOldModel()
 
 void SearchSignaturesWidget::loadSignatures(QString sFileName)
 {
-    g_listSignatureRecords=MultiSearch::loadSignaturesFromFile(sFileName);
+    int nNumberOfSignatures=0;
 
-    ui->labelInfo->setText(QString("%1: %2").arg(tr("Signatures")).arg(g_listSignatureRecords.count()));
+    g_listSignatureRecords.clear();
+
+    if(sFileName!="")
+    {
+        g_listSignatureRecords=MultiSearch::loadSignaturesFromFile(sFileName);
+        nNumberOfSignatures=g_listSignatureRecords.count();
+    }
+    else
+    {
+        // User signature
+        g_listSignatureRecords.append(MultiSearch::createSignature(g_options.sUserSignature,g_options.sUserSignature));
+        nNumberOfSignatures=1;
+    }
+
+    ui->labelInfo->setText(QString("%1: %2").arg(tr("Signatures")).arg(nNumberOfSignatures));
 }
 
 void SearchSignaturesWidget::on_comboBoxFile_currentIndexChanged(int index)

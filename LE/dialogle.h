@@ -29,7 +29,7 @@ namespace Ui
 class DialogLE;
 }
 
-class DialogLE : public QDialog
+class DialogLE : public XShortcutsDialog
 {
     Q_OBJECT
 

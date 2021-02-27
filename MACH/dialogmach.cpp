@@ -22,7 +22,7 @@
 #include "ui_dialogmach.h"
 
 DialogMACH::DialogMACH(QWidget *pParent) :
-    QDialog(pParent),
+    XShortcutsDialog(pParent),
     ui(new Ui::DialogMACH)
 {
     ui->setupUi(this);
@@ -49,4 +49,5 @@ void DialogMACH::setData(QIODevice *pDevice, FW_DEF::OPTIONS options)
 void DialogMACH::setShortcuts(XShortcuts *pShortcuts)
 {
     ui->widget->setShortcuts(pShortcuts);
+    XShortcutsDialog::setShortcuts(pShortcuts);
 }

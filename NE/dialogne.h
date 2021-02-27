@@ -29,7 +29,7 @@ namespace Ui
 class DialogNE;
 }
 
-class DialogNE : public QDialog
+class DialogNE : public XShortcutsDialog
 {
     Q_OBJECT
 

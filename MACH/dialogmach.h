@@ -29,7 +29,7 @@ namespace Ui
 class DialogMACH;
 }
 
-class DialogMACH : public QDialog
+class DialogMACH : public XShortcutsDialog
 {
     Q_OBJECT
 

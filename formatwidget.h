@@ -40,6 +40,7 @@
 #include "formatwidget_def.h"
 #include "dialogprocessdata.h"
 #include "xmultidisasmwidget.h"
+#include "xshortcutsdialog.h"
 
 // TODO Focus In/Out shortcuts!
 class FormatWidget : public QWidget

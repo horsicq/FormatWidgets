@@ -24,13 +24,13 @@
 #include <QDialog>
 #include "multisearch.h"
 #include "searchsignatureswidget.h"
-#include "xshortcuts.h"
+#include "xshortcutsdialog.h"
 
 namespace Ui {
 class DialogSearchSignatures;
 }
 
-class DialogSearchSignatures : public QDialog
+class DialogSearchSignatures : public XShortcutsDialog
 {
     Q_OBJECT
 

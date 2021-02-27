@@ -22,7 +22,7 @@
 #include "ui_dialogne.h"
 
 DialogNE::DialogNE(QWidget *pParent) :
-    QDialog(pParent),
+    XShortcutsDialog(pParent),
     ui(new Ui::DialogNE)
 {
     ui->setupUi(this);
@@ -49,4 +49,5 @@ void DialogNE::setData(QIODevice *pDevice, FW_DEF::OPTIONS options)
 void DialogNE::setShortcuts(XShortcuts *pShortcuts)
 {
     ui->widget->setShortcuts(pShortcuts);
+    XShortcutsDialog::setShortcuts(pShortcuts);
 }

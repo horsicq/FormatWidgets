@@ -40,7 +40,7 @@ namespace Ui {
 class FormatsWidget;
 }
 
-class FormatsWidget : public QWidget
+class FormatsWidget : public XShortcutsWidget
 {
     Q_OBJECT
 
@@ -81,8 +81,6 @@ public:
     void setFileName(QString sFileName,bool bScan);
     void setScanEngine(QString sScanEngine);
     void setOptions(OPTIONS options);
-
-    void setShortcuts(XShortcuts *pShortcuts);
 
 private slots:
     void on_comboBoxFileType_currentIndexChanged(int nIndex);
@@ -135,12 +133,14 @@ private slots:
 
     QString getBackupFileName();
 
+protected:
+    virtual void registerShortcuts(bool bState);
+
 private:
     Ui::FormatsWidget *ui;
     QString sFileName;
     bool bScan;
     OPTIONS g_options;
-    XShortcuts *g_pShortcuts;
 };
 
 #endif // FORMATSWIDGET_H

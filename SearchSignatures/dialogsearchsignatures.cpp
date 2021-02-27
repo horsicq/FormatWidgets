@@ -22,7 +22,7 @@
 #include "ui_dialogsearchsignatures.h"
 
 DialogSearchSignatures::DialogSearchSignatures(QWidget *pParent, QIODevice *pDevice, XBinary::FT fileType, SearchSignaturesWidget::OPTIONS options, bool bAuto) :
-    QDialog(pParent),
+    XShortcutsDialog(pParent),
     ui(new Ui::DialogSearchSignatures)
 {
     ui->setupUi(this);
@@ -42,6 +42,8 @@ DialogSearchSignatures::~DialogSearchSignatures()
 void DialogSearchSignatures::setShortcuts(XShortcuts *pShortcuts)
 {
     ui->searchSignaturesWidget->setShortcuts(pShortcuts);
+
+    XShortcutsDialog::setShortcuts(pShortcuts);
 }
 
 void DialogSearchSignatures::on_pushButtonClose_clicked()

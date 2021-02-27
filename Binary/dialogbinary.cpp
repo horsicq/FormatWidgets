@@ -22,7 +22,7 @@
 #include "ui_dialogbinary.h"
 
 DialogBinary::DialogBinary(QWidget *pParent) :
-    QDialog(pParent),
+    XShortcutsDialog(pParent),
     ui(new Ui::DialogBinary)
 {
     ui->setupUi(this);
@@ -44,4 +44,6 @@ void DialogBinary::setData(QIODevice *pDevice, FW_DEF::OPTIONS options)
 void DialogBinary::setShortcuts(XShortcuts *pShortcuts)
 {
     ui->widget->setShortcuts(pShortcuts);
+
+    XShortcutsDialog::setShortcuts(pShortcuts);
 }

@@ -29,7 +29,7 @@ namespace Ui
 class DialogMSDOS;
 }
 
-class DialogMSDOS : public QDialog
+class DialogMSDOS : public XShortcutsDialog
 {
     Q_OBJECT
 

@@ -22,7 +22,7 @@
 #include "ui_formatswidget.h"
 
 FormatsWidget::FormatsWidget(QWidget *pParent) :
-    QWidget(pParent),
+    XShortcutsWidget(pParent),
     ui(new Ui::FormatsWidget)
 {
     ui->setupUi(this);
@@ -93,11 +93,6 @@ void FormatsWidget::setOptions(FormatsWidget::OPTIONS options)
 FormatsWidget::~FormatsWidget()
 {
     delete ui;
-}
-
-void FormatsWidget::setShortcuts(XShortcuts *pShortcuts)
-{
-    g_pShortcuts=pShortcuts;
 }
 
 void FormatsWidget::on_comboBoxFileType_currentIndexChanged(int nIndex)
@@ -366,7 +361,7 @@ void FormatsWidget::on_pushButtonDisasm_clicked()
             options.sSignaturesPath=g_options.sSearchSignaturesPath;
 
             dialogDisasm.setData(&file,options);
-            dialogDisasm.setShortcuts(g_pShortcuts);
+            dialogDisasm.setShortcuts(getShortcuts());
 
             dialogDisasm.exec();
 
@@ -389,7 +384,7 @@ void FormatsWidget::on_pushButtonHexEntryPoint_clicked()
             hexOptions.nStartSelectionOffset=XFormats::getEntryPointOffset(getCurrentFileType(),&file);
 
             DialogHexView dialogHex(this,&file,hexOptions);
-            dialogHex.setShortcuts(g_pShortcuts);
+            dialogHex.setShortcuts(getShortcuts());
 
             dialogHex.exec();
 
@@ -409,7 +404,7 @@ void FormatsWidget::on_pushButtonMemoryMap_clicked()
         if(file.open(QIODevice::ReadOnly))
         {
             DialogMemoryMap dialogMemoryMap(this,&file,getCurrentFileType());
-            dialogMemoryMap.setShortcuts(g_pShortcuts);
+            dialogMemoryMap.setShortcuts(getShortcuts());
 
             dialogMemoryMap.exec();
 
@@ -504,7 +499,7 @@ void FormatsWidget::showMSDOS(SMSDOS::TYPE type)
         DialogMSDOS dialogMSDOS(this);
 
         dialogMSDOS.setData(&file,options);
-        dialogMSDOS.setShortcuts(g_pShortcuts);
+        dialogMSDOS.setShortcuts(getShortcuts());
 
         dialogMSDOS.exec();
 
@@ -528,7 +523,7 @@ void FormatsWidget::showLE(SLE::TYPE type)
         DialogLE dialogLE(this);
 
         dialogLE.setData(&file,options);
-        dialogLE.setShortcuts(g_pShortcuts);
+        dialogLE.setShortcuts(getShortcuts());
 
         dialogLE.exec();
 
@@ -552,7 +547,7 @@ void FormatsWidget::showNE(SNE::TYPE type)
         DialogNE dialogNE(this);
 
         dialogNE.setData(&file,options);
-        dialogNE.setShortcuts(g_pShortcuts);
+        dialogNE.setShortcuts(getShortcuts());
 
         dialogNE.exec();
 
@@ -576,7 +571,7 @@ void FormatsWidget::showPE(SPE::TYPE type)
         DialogPE dialogPE(this);
 
         dialogPE.setData(&file,options);
-        dialogPE.setShortcuts(g_pShortcuts);
+        dialogPE.setShortcuts(getShortcuts());
 
         dialogPE.exec();
 
@@ -600,7 +595,7 @@ void FormatsWidget::showELF(SELF::TYPE type)
         DialogELF dialogELF(this);
 
         dialogELF.setData(&file,options);
-        dialogELF.setShortcuts(g_pShortcuts);
+        dialogELF.setShortcuts(getShortcuts());
 
         dialogELF.exec();
 
@@ -624,7 +619,7 @@ void FormatsWidget::showMACH(SMACH::TYPE type)
         DialogMACH dialogMACH(this);
 
         dialogMACH.setData(&file,options);
-        dialogMACH.setShortcuts(g_pShortcuts);
+        dialogMACH.setShortcuts(getShortcuts());
 
         dialogMACH.exec();
 
@@ -648,7 +643,7 @@ void FormatsWidget::showDEX(SDEX::TYPE type)
         DialogDEX dialogDEX(this);
 
         dialogDEX.setData(&file,options);
-        dialogDEX.setShortcuts(g_pShortcuts);
+        dialogDEX.setShortcuts(getShortcuts());
 
         dialogDEX.exec();
 
@@ -724,7 +719,7 @@ void FormatsWidget::on_pushButtonZIP_clicked()
     options.sBackupFileName=getBackupFileName();
 
     dialogArchive.setData(sFileName,options);
-    dialogArchive.setShortcuts(g_pShortcuts);
+    dialogArchive.setShortcuts(getShortcuts());
 
     dialogArchive.exec();
 }
@@ -791,4 +786,9 @@ QString FormatsWidget::getBackupFileName()
     }
 
     return sResult;
+}
+
+void FormatsWidget::registerShortcuts(bool bState)
+{
+    Q_UNUSED(bState)
 }

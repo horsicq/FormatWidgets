@@ -49,6 +49,7 @@ public:
     {
         QString sSignaturesPath;
         bool bMenu_Hex;
+        QString sUserSignature;
     };
 
     explicit SearchSignaturesWidget(QWidget *pParent=nullptr);

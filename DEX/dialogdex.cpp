@@ -22,7 +22,7 @@
 #include "ui_dialogdex.h"
 
 DialogDEX::DialogDEX(QWidget *pParent) :
-    QDialog(pParent),
+    XShortcutsDialog(pParent),
     ui(new Ui::DialogDEX)
 {
     ui->setupUi(this);
@@ -49,4 +49,6 @@ void DialogDEX::setData(QIODevice *pDevice, FW_DEF::OPTIONS options)
 void DialogDEX::setShortcuts(XShortcuts *pShortcuts)
 {
     ui->widget->setShortcuts(pShortcuts);
+
+    XShortcutsDialog::setShortcuts(pShortcuts);
 }

@@ -23,13 +23,13 @@
 
 #include <QDialog>
 #include "searchstringswidget.h"
-#include "xshortcuts.h"
+#include "xshortcutsdialog.h"
 
 namespace Ui {
 class DialogSearchStrings;
 }
 
-class DialogSearchStrings : public QDialog
+class DialogSearchStrings : public XShortcutsDialog
 {
     Q_OBJECT
 

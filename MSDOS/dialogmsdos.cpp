@@ -22,7 +22,7 @@
 #include "ui_dialogmsdos.h"
 
 DialogMSDOS::DialogMSDOS(QWidget *pParent) :
-    QDialog(pParent),
+    XShortcutsDialog(pParent),
     ui(new Ui::DialogMSDOS)
 {
     ui->setupUi(this);
@@ -49,4 +49,5 @@ void DialogMSDOS::setData(QIODevice *pDevice, FW_DEF::OPTIONS options)
 void DialogMSDOS::setShortcuts(XShortcuts *pShortcuts)
 {
     ui->widget->setShortcuts(pShortcuts);
+    XShortcutsDialog::setShortcuts(pShortcuts);
 }

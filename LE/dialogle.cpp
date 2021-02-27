@@ -22,7 +22,7 @@
 #include "ui_dialogle.h"
 
 DialogLE::DialogLE(QWidget *pParent) :
-    QDialog(pParent),
+    XShortcutsDialog(pParent),
     ui(new Ui::DialogLE)
 {
     ui->setupUi(this);
@@ -49,4 +49,5 @@ void DialogLE::setData(QIODevice *pDevice, FW_DEF::OPTIONS options)
 void DialogLE::setShortcuts(XShortcuts *pShortcuts)
 {
     ui->widget->setShortcuts(pShortcuts);
+    XShortcutsDialog::setShortcuts(pShortcuts);
 }

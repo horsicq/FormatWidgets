@@ -22,7 +22,7 @@
 #include "ui_dialogelf.h"
 
 DialogELF::DialogELF(QWidget *pParent) :
-    QDialog(pParent),
+    XShortcutsDialog(pParent),
     ui(new Ui::DialogELF)
 {
     ui->setupUi(this);
@@ -49,4 +49,6 @@ void DialogELF::setData(QIODevice *pDevice, FW_DEF::OPTIONS options)
 void DialogELF::setShortcuts(XShortcuts *pShortcuts)
 {
     ui->widget->setShortcuts(pShortcuts);
+
+    XShortcutsDialog::setShortcuts(pShortcuts);
 }

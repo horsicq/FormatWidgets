@@ -89,9 +89,17 @@ QList<MultiSearch::SIGNATURE_RECORD> MultiSearch::loadSignaturesFromFile(QString
     return listResult;
 }
 
-QString MultiSearch::createSignature(QString sName, QString sSignature)
+MultiSearch::SIGNATURE_RECORD MultiSearch::createSignature(QString sName, QString sSignature)
 {
-    return QString("%1;%2;%3").arg(sName).arg("0").arg(sSignature);
+    MultiSearch::SIGNATURE_RECORD result={};
+
+    result.bIsBigEndian=false;
+    result.bIsLittleEndian=true;
+    result.nNumber=0;
+    result.sName=sName;
+    result.sSignature=sSignature;
+
+    return result;
 }
 
 void MultiSearch::processSignature(MultiSearch::SIGNATURE_RECORD signatureRecord)
@@ -186,6 +194,8 @@ void MultiSearch::processSearch()
             if(bSuccess)
             {
                 QFuture<void> future=QtConcurrent::run(this,&MultiSearch::processSignature,signatureRecord);
+
+                QThread::msleep(5); // wait till run started TODO rewrite!
 
                 while(true)
                 {

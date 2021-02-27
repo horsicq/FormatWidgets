@@ -29,7 +29,7 @@ namespace Ui
 class DialogBinary;
 }
 
-class DialogBinary : public QDialog
+class DialogBinary : public XShortcutsDialog
 {
     Q_OBJECT
 
