@@ -403,7 +403,7 @@ void FormatsWidget::on_pushButtonMemoryMap_clicked()
 
         if(file.open(QIODevice::ReadOnly))
         {
-            DialogMemoryMap dialogMemoryMap(this,&file,getCurrentFileType());
+            DialogMemoryMap dialogMemoryMap(this,&file,getCurrentFileType(),g_options.sSearchSignaturesPath);
             dialogMemoryMap.setShortcuts(getShortcuts());
 
             dialogMemoryMap.exec();

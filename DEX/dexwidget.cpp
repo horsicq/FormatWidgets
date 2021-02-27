@@ -330,7 +330,7 @@ void DEXWidget::reloadData()
         {
             if(!g_stInit.contains(sInit))
             {
-                ui->widgetMemoryMap->setData(getDevice(),dex.getFileType());
+                ui->widgetMemoryMap->setData(getDevice(),dex.getFileType(),getOptions().sSearchSignaturesPath);
             }
         }
         else if(nType==SDEX::TYPE_ENTROPY)

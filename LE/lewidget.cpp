@@ -357,7 +357,7 @@ void LEWidget::reloadData()
         {
             if(!g_stInit.contains(sInit))
             {
-                ui->widgetMemoryMap->setData(getDevice(),le.getFileType());
+                ui->widgetMemoryMap->setData(getDevice(),le.getFileType(),getOptions().sSearchSignaturesPath);
             }
         }
         else if(nType==SLE::TYPE_ENTROPY)

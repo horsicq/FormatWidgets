@@ -300,7 +300,7 @@ void MACHWidget::reloadData()
         {
             if(!g_stInit.contains(sInit))
             {
-                ui->widgetMemoryMap->setData(getDevice(),mach.getFileType());
+                ui->widgetMemoryMap->setData(getDevice(),mach.getFileType(),getOptions().sSearchSignaturesPath);
             }
         }
         else if(nType==SMACH::TYPE_ENTROPY)

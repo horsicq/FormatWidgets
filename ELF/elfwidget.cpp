@@ -360,7 +360,7 @@ void ELFWidget::reloadData()
         {
             if(!g_stInit.contains(sInit))
             {
-                ui->widgetMemoryMap->setData(getDevice(),elf.getFileType());
+                ui->widgetMemoryMap->setData(getDevice(),elf.getFileType(),getOptions().sSearchSignaturesPath);
             }
         }
         else if(nType==SELF::TYPE_ENTROPY)

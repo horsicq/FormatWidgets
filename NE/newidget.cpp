@@ -364,7 +364,7 @@ void NEWidget::reloadData()
         {
             if(!g_stInit.contains(sInit))
             {
-                ui->widgetMemoryMap->setData(getDevice(),ne.getFileType());
+                ui->widgetMemoryMap->setData(getDevice(),ne.getFileType(),getOptions().sSearchSignaturesPath);
             }
         }
         else if(nType==SNE::TYPE_ENTROPY)

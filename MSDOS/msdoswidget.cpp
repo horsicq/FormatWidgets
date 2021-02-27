@@ -266,7 +266,7 @@ void MSDOSWidget::reloadData()
         {
             if(!g_stInit.contains(sInit))
             {
-                ui->widgetMemoryMap->setData(getDevice(),msdos.getFileType());
+                ui->widgetMemoryMap->setData(getDevice(),msdos.getFileType(),getOptions().sSearchSignaturesPath);
             }
         }
         else if(nType==SMSDOS::TYPE_ENTROPY)
