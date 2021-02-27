@@ -840,7 +840,7 @@ void PEWidget::reloadData()
         {
             if(!g_stInit.contains(sInit))
             {
-                ui->widgetMemoryMap->setData(getDevice(),pe.getFileType());
+                ui->widgetMemoryMap->setData(getDevice(),pe.getFileType(),getOptions().sSearchSignaturesPath);
             }
         }
         else if(nType==SPE::TYPE_ENTROPY)
