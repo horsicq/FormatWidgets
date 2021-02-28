@@ -42,8 +42,7 @@
 #include "xmultidisasmwidget.h"
 #include "xshortcutsdialog.h"
 
-// TODO Focus In/Out shortcuts!
-class FormatWidget : public QWidget
+class FormatWidget : public XShortcutsWidget
 {
     Q_OBJECT
 
@@ -83,11 +82,9 @@ public:
     ~FormatWidget();
 
     void setData(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType);
-    void setShortcuts(XShortcuts *pShortcuts);
 
     void setFileType(XBinary::FT fileType);
     XBinary::FT getFileType();
-    XShortcuts *getShortcuts();
     QIODevice *getDevice();
     virtual void setOptions(FW_DEF::OPTIONS options); // TODO for all Widgets
     FW_DEF::OPTIONS getOptions();
@@ -181,11 +178,12 @@ public slots:
     void showEntropy(qint64 nOffset,qint64 nSize);
     bool saveBackup();
 
+protected:
+    virtual void registerShortcuts(bool bState);
+
 private:
     QIODevice *g_pDevice;
     FW_DEF::OPTIONS g_fwOptions;
-    XShortcuts *g_pShortcuts;
-    XShortcuts g_scEmpty;
     quint32 g_nNumber;
     qint64 g_nOffset;
     quint32 g_nType;

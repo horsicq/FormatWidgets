@@ -21,7 +21,7 @@
 #include "formatwidget.h"
 
 FormatWidget::FormatWidget(QWidget *pParent):
-    QWidget(pParent)
+    XShortcutsWidget(pParent)
 {
     g_bIsReadonly=false;
     g_fwOptions={};
@@ -31,8 +31,6 @@ FormatWidget::FormatWidget(QWidget *pParent):
 
     g_colDisabled=QWidget::palette().color(QPalette::Window);
     g_colEnabled=QWidget::palette().color(QPalette::BrightText);
-
-    setShortcuts(&g_scEmpty);
 }
 
 FormatWidget::FormatWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent):
@@ -58,11 +56,6 @@ void FormatWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 
     setOptions(options);
 }
 
-void FormatWidget::setShortcuts(XShortcuts *pShortcuts)
-{
-    g_pShortcuts=pShortcuts;
-}
-
 void FormatWidget::setFileType(XBinary::FT fileType)
 {
     g_fileType=fileType;
@@ -71,11 +64,6 @@ void FormatWidget::setFileType(XBinary::FT fileType)
 XBinary::FT FormatWidget::getFileType()
 {
     return g_fileType;
-}
-
-XShortcuts *FormatWidget::getShortcuts()
-{
-    return g_pShortcuts;
 }
 
 QIODevice *FormatWidget::getDevice()
@@ -555,7 +543,7 @@ void FormatWidget::showHex(qint64 nOffset, qint64 nSize)
     hexOptions.nSizeOfSelection=nSize;
 
     DialogHexView dialogHexView(this,g_pDevice,hexOptions);
-    dialogHexView.setShortcuts(g_pShortcuts);
+    dialogHexView.setShortcuts(getShortcuts());
 
     connect(&dialogHexView,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
 
@@ -613,6 +601,11 @@ bool FormatWidget::saveBackup()
     }
 
     return bResult;
+}
+
+void FormatWidget::registerShortcuts(bool bState)
+{
+    Q_UNUSED(bState)
 }
 
 bool FormatWidget::createHeaderTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nNumberOfRecords, int nPosition, qint64 nOffset)

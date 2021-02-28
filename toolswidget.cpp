@@ -22,7 +22,7 @@
 #include "ui_toolswidget.h"
 
 ToolsWidget::ToolsWidget(QWidget *pParent) :
-    QWidget(pParent),
+    XShortcutsWidget(pParent),
     ui(new Ui::ToolsWidget)
 {
     ui->setupUi(this);
@@ -147,4 +147,9 @@ void ToolsWidget::_showMemoryMap(qint64 nOffset)
     }
 
     emit showOffsetMemoryMap(nOffset);
+}
+
+void ToolsWidget::registerShortcuts(bool bState)
+{
+    Q_UNUSED(bState)
 }

@@ -31,7 +31,7 @@ namespace Ui
 class ToolsWidget;
 }
 
-class ToolsWidget : public QWidget
+class ToolsWidget : public XShortcutsWidget
 {
     Q_OBJECT
 
@@ -59,6 +59,9 @@ private slots:
     void _showHex(qint64 nOffset, qint64 nSize);
     void _showDisasm(qint64 nOffset);
     void _showMemoryMap(qint64 nOffset);
+
+protected:
+    virtual void registerShortcuts(bool bState);
 
 private:
     Ui::ToolsWidget *ui;

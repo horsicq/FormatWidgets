@@ -21,7 +21,7 @@
 #include "invwidget.h"
 
 InvWidget::InvWidget(QWidget *pParent, TYPE type) :
-    QWidget(pParent)
+    XShortcutsWidget(pParent)
 {
     g_pHexPushButton=nullptr;
     g_pDisasmPushButton=nullptr;
@@ -118,4 +118,9 @@ void InvWidget::showHexSlot()
 void InvWidget::showDisasmSlot()
 {
     emit showDisasm(g_nAddress);
+}
+
+void InvWidget::registerShortcuts(bool bState)
+{
+    Q_UNUSED(bState)
 }

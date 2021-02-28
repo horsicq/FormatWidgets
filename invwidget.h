@@ -25,10 +25,10 @@
 #include <QHBoxLayout>
 #include <QPushButton>
 #include "xbinary.h"
-#include "xshortcuts.h"
+#include "xshortcutswidget.h"
 
 // TODO changed signal
-class InvWidget : public QWidget
+class InvWidget : public XShortcutsWidget
 {
     Q_OBJECT
 
@@ -53,6 +53,9 @@ private slots:
 signals:
     void showHex(qint64 nOffset,qint64 nSize);
     void showDisasm(qint64 nAddress);
+
+protected:
+    virtual void registerShortcuts(bool bState);
 
 private:
     qint64 g_nAddress;
