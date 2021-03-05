@@ -25,7 +25,6 @@ FormatWidget::FormatWidget(QWidget *pParent):
 {
     g_bIsReadonly=false;
     g_fwOptions={};
-    g_bIsEdited=false;
     g_bAddPageEnable=true;
     g_nPageIndex=0;
 
@@ -126,7 +125,7 @@ void FormatWidget::setValue(QVariant vValue, int nStype, int nNdata, int nVtype,
     }
     else
     {
-        QMessageBox::critical(this,tr("Error"),tr("Cannot save file")+QString(": %1").arg(g_fwOptions.sBackupFileName));
+        QMessageBox::critical(this,tr("Error"),tr("Cannot save file")+QString(": %1").arg(XBinary::getBackupName(getDevice())));
     }
 }
 
@@ -151,7 +150,7 @@ QString FormatWidget::typeIdToString(int nType)
 
 bool FormatWidget::isEdited()
 {
-    return g_bIsEdited;
+    return XBinary::isFileExists(XBinary::getBackupName(getDevice()));
 }
 
 bool FormatWidget::loadHexSubdevice(qint64 nOffset, qint64 nSize, qint64 nAddress,SubDevice **ppSubDevice,ToolsWidget *pToolsWidget)
@@ -526,8 +525,6 @@ void FormatWidget::textValueChanged(QString sText)
 
 void FormatWidget::setEdited(bool bState)
 {
-    g_bIsEdited=bState;
-
     reset();
 
     emit editState(bState);
@@ -583,18 +580,25 @@ bool FormatWidget::saveBackup()
 {
     bool bResult=true;
     // TODO Check
-    if(!g_bIsEdited)
+    if(!isEdited())
     {
         // Save backup
-        if(g_fwOptions.sBackupFileName!="")
-        {
-            if(!QFile::exists(g_fwOptions.sBackupFileName))
-            {
-                if(g_pDevice->metaObject()->className()==QString("QFile"))
-                {
-                    QString sFileName=((QFile *)g_pDevice)->fileName();
 
-                    bResult=QFile::copy(sFileName,g_fwOptions.sBackupFileName);
+        QString sBackupFileName=XBinary::getBackupName(getDevice());
+
+        if(sBackupFileName!="")
+        {
+            if(!QFile::exists(sBackupFileName))
+            {
+                QString sFileName=XBinary::getDeviceFileName(getDevice());
+
+                if(sFileName!="")
+                {
+                    bResult=QFile::copy(sFileName,sBackupFileName);
+                }
+                else
+                {
+                    bResult=XBinary::writeToFile(sBackupFileName,getDevice());
                 }
             }
         }

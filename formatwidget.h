@@ -188,7 +188,6 @@ private:
     qint64 g_nOffset;
     quint32 g_nType;
     bool g_bIsReadonly;
-    bool g_bIsEdited;
 
     QColor g_colEnabled;
     QColor g_colDisabled;

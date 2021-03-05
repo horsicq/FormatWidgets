@@ -28,7 +28,7 @@ namespace FW_DEF
     struct OPTIONS
     {
         // TODO More
-        QString sBackupFileName;
+        bool bSaveBackup;
         QString sSearchSignaturesPath;
         bool bIsImage;
         qint64 nImageBase; // TODO default_const

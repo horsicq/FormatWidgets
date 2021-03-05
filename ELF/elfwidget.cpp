@@ -327,6 +327,7 @@ void ELFWidget::reloadData()
                 options.fileType=elf.getFileType();
                 options.nInitAddress=elf.getEntryPointAddress();
                 options.sSignaturesPath=getOptions().sSearchSignaturesPath;
+                // TODO edit state
 
                 ui->widgetDisasm->setData(getDevice(),options);
             }
