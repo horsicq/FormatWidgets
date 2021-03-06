@@ -44,7 +44,6 @@ class SearchSignaturesWidget : public XShortcutsWidget
     Q_OBJECT
 
 public:
-
     struct OPTIONS
     {
         QString sSignaturesPath;
