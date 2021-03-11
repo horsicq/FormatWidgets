@@ -98,7 +98,7 @@ void SearchSignaturesWidget::setSignaturesPath(QString sPath)
         ui->comboBoxFile->addItem("",g_options.sUserSignature);
     }
 
-    QList<QString> listFiles=XBinary::getAllFilesFromDirectory(sPath,"*.db");
+    QList<QString> listFiles=XBinary::getAllFilesFromDirectory(XBinary::convertPathName(sPath),"*.db");
 
     int nNumberOfFiles=listFiles.count();
 
