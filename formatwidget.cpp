@@ -293,6 +293,8 @@ void FormatWidget::ajustTableView(ProcessData *pProcessData, QStandardItemModel 
         pTableView->sortByColumn(0,Qt::AscendingOrder);
     }
 
+    pTableView->horizontalHeader()->setStretchLastSection(true);
+
     delete pOldModel; // TODO Thread
 }
 
