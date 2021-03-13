@@ -35,7 +35,6 @@ class MultiSearch : public QObject
     Q_OBJECT
 
 public:
-
     enum TYPE
     {
         TYPE_STRINGS=0,
