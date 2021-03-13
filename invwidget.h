@@ -21,7 +21,6 @@
 #ifndef INVWIDGET_H
 #define INVWIDGET_H
 
-#include <QWidget>
 #include <QHBoxLayout>
 #include <QPushButton>
 #include "xbinary.h"
