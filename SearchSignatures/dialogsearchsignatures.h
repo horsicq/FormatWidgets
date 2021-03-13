@@ -21,7 +21,6 @@
 #ifndef DIALOGSEARCHSIGNATURES_H
 #define DIALOGSEARCHSIGNATURES_H
 
-#include <QDialog>
 #include "multisearch.h"
 #include "searchsignatureswidget.h"
 #include "xshortcutsdialog.h"
