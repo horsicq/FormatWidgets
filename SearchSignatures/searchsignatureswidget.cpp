@@ -87,8 +87,6 @@ SearchSignaturesWidget::OPTIONS SearchSignaturesWidget::getOptions()
 
 void SearchSignaturesWidget::setSignaturesPath(QString sPath)
 {
-    g_sPath=sPath;
-
     QSignalBlocker block(ui->comboBoxFile);
 
     ui->comboBoxFile->clear();
@@ -105,7 +103,7 @@ void SearchSignaturesWidget::setSignaturesPath(QString sPath)
     for(int i=0;i<nNumberOfFiles;i++)
     {
         QString sFileName=listFiles.at(i);
-        ui->comboBoxFile->addItem(XBinary::getBaseFileName(sFileName),sPath+QDir::separator()+sFileName);
+        ui->comboBoxFile->addItem(XBinary::getBaseFileName(sFileName),XBinary::convertPathName(sPath)+QDir::separator()+sFileName);
     }
 
     if(g_options.sUserSignature!="")

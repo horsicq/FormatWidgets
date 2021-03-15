@@ -92,7 +92,6 @@ private:
     QStandardItemModel *g_pOldModel;
     QFutureWatcher<void> g_watcher;
     QList<MultiSearch::SIGNATURE_RECORD> g_listSignatureRecords;
-    QString g_sPath;
     OPTIONS g_options;
 
     QShortcut *g_scCopyName;
