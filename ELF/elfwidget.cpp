@@ -914,12 +914,12 @@ QString ELFWidget::typeIdToString(int nType)
 
     switch(nType)
     {
-        case SELF::TYPE_Elf_Shdr:               sResult=QString("Section header");      break;
-        case SELF::TYPE_Elf_Phdr:               sResult=QString("Program header");      break;
-        case SELF::TYPE_SYMBOLTABLE:            sResult=QString("Symbol header");       break;
-        case SELF::TYPE_Elf_DynamicArrayTags:   sResult=QString("Tag");                 break;
-        case SELF::TYPE_Elf_Rela:               sResult=QString("Relocation");          break;
-        case SELF::TYPE_Elf_Rel:                sResult=QString("Relocation");          break;
+        case SELF::TYPE_Elf_Shdr:               sResult=QString("Section %1").arg(tr("Header"));    break;
+        case SELF::TYPE_Elf_Phdr:               sResult=QString("Program %1").arg(tr("Header"));    break;
+        case SELF::TYPE_SYMBOLTABLE:            sResult=QString("Symbol %1").arg(tr("Header"));     break;
+        case SELF::TYPE_Elf_DynamicArrayTags:   sResult=QString("Tag");                             break;
+        case SELF::TYPE_Elf_Rela:               sResult=QString("Relocation");                      break;
+        case SELF::TYPE_Elf_Rel:                sResult=QString("Relocation");                      break;
     }
 
     return sResult;
