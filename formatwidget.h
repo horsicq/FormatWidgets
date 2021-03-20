@@ -22,7 +22,6 @@
 #define FORMATWIDGET_H
 
 #include <QFile>
-#include <QWidget>
 #include <QDialog>
 #include <QTreeWidgetItem>
 #include <QTableWidget>

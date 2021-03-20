@@ -21,7 +21,6 @@
 #ifndef TOOLSWIDGET_H
 #define TOOLSWIDGET_H
 
-#include <QWidget>
 #include "searchstringswidget.h"
 #include "xhexview.h"
 #include "formatwidget_def.h"
