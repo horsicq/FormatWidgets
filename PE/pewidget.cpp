@@ -1849,7 +1849,6 @@ void PEWidget::_showInDisasmWindowAddress(qint64 nAddress)
 {
     setTreeItem(ui->treeWidgetNavi,SPE::TYPE_DISASM);
     ui->widgetDisasm->goToAddress(nAddress);
-
 }
 
 void PEWidget::_showInDisasmWindowOffset(qint64 nOffset)

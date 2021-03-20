@@ -53,6 +53,10 @@ protected:
     virtual void blockSignals(bool bState);
     virtual void adjustHeaderTable(int nType,QTableWidget *pTableWidget);
     virtual QString typeIdToString(int nType);
+    virtual void _showInDisasmWindowAddress(qint64 nAddress);
+    virtual void _showInDisasmWindowOffset(qint64 nOffset);
+    virtual void _showInMemoryMapWindowOffset(qint64 nOffset);
+    virtual void _showInHexWindow(qint64 nOffset,qint64 nSize);
 
 private slots:
     virtual void reloadData();

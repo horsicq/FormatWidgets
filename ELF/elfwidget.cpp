@@ -925,6 +925,30 @@ QString ELFWidget::typeIdToString(int nType)
     return sResult;
 }
 
+void ELFWidget::_showInDisasmWindowAddress(qint64 nAddress)
+{
+    setTreeItem(ui->treeWidgetNavi,SELF::TYPE_DISASM);
+    ui->widgetDisasm->goToAddress(nAddress);
+}
+
+void ELFWidget::_showInDisasmWindowOffset(qint64 nOffset)
+{
+    setTreeItem(ui->treeWidgetNavi,SELF::TYPE_DISASM);
+    ui->widgetDisasm->goToOffset(nOffset);
+}
+
+void ELFWidget::_showInMemoryMapWindowOffset(qint64 nOffset)
+{
+    setTreeItem(ui->treeWidgetNavi,SELF::TYPE_MEMORYMAP);
+    ui->widgetMemoryMap->goToOffset(nOffset);
+}
+
+void ELFWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
+{
+    setTreeItem(ui->treeWidgetNavi,SELF::TYPE_HEX);
+    ui->widgetHex->setSelection(nOffset,nSize);
+}
+
 void ELFWidget::on_tableView_Elf_Shdr_doubleClicked(const QModelIndex &index)
 {
     Q_UNUSED(index)
