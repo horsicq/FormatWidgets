@@ -51,6 +51,7 @@ public:
         bool bUnicode; // TODO
         qint32 nMinLenght;
         bool bMenu_Hex;
+        // TODO demangle
     };
 
     explicit SearchStringsWidget(QWidget *pParent=nullptr);

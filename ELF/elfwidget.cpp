@@ -918,7 +918,7 @@ QString ELFWidget::typeIdToString(int nType)
         case SELF::TYPE_Elf_Phdr:               sResult=QString("Program %1").arg(tr("Header"));    break;
         case SELF::TYPE_SYMBOLTABLE:            sResult=QString("Symbol %1").arg(tr("Header"));     break;
         case SELF::TYPE_Elf_DynamicArrayTags:   sResult=QString("Tag");                             break;
-        case SELF::TYPE_Elf_Rela:               sResult=QString("Relocation");                      break;
+        case SELF::TYPE_Elf_Rela:               sResult=QString("Relocation A");                    break;
         case SELF::TYPE_Elf_Rel:                sResult=QString("Relocation");                      break;
     }
 
