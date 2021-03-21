@@ -80,6 +80,7 @@ private slots:
     void editDynamicArrayTag();
     void on_tableView_SymbolTable_customContextMenuRequested(const QPoint &pos);
     void editSymbolHeader();
+    void demangleSymbol();
     void showSectionHeader(int nType,QTableView *pTableView);
     void on_tableView_Elf_Shdr_doubleClicked(const QModelIndex &index);
     void on_tableView_Elf_Shdr_customContextMenuRequested(const QPoint &pos);

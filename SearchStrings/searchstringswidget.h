@@ -51,7 +51,7 @@ public:
         bool bUnicode; // TODO
         qint32 nMinLenght;
         bool bMenu_Hex;
-        // TODO demangle
+        bool bMenu_Demangle;
     };
 
     explicit SearchStringsWidget(QWidget *pParent=nullptr);
@@ -71,6 +71,7 @@ private slots:
     void _copyOffset();
     void _copySize();
     void _hex();
+    void _demangle();
     void search();
     void deleteOldModel();
 
@@ -79,6 +80,7 @@ protected:
 
 signals:
     void showHex(qint64 nOffset,qint64 nSize);
+    void showDemangle(QString sText);
 
 private:
     Ui::SearchStringsWidget *ui;
@@ -94,6 +96,7 @@ private:
     QShortcut *g_scCopyOffset;
     QShortcut *g_scCopySize;
     QShortcut *g_scHex;
+    QShortcut *g_scDemangle;
 };
 
 #endif // SEARCHSTRINGSWIDGET_H

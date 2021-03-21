@@ -865,7 +865,12 @@ void ELFWidget::on_tableView_SymbolTable_customContextMenuRequested(const QPoint
 
         QAction actionEdit(tr("Edit"),this);
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editSymbolHeader()));
+
+        QAction actionDemangle(tr("Demangle"),this);
+        connect(&actionDemangle, SIGNAL(triggered()), this, SLOT(demangleSymbol()));
+
         contextMenu.addAction(&actionEdit);
+        contextMenu.addAction(&actionDemangle);
 
         contextMenu.exec(ui->tableView_SymbolTable->viewport()->mapToGlobal(pos));
     }
@@ -874,6 +879,11 @@ void ELFWidget::on_tableView_SymbolTable_customContextMenuRequested(const QPoint
 void ELFWidget::editSymbolHeader()
 {
     showSectionHeader(SELF::TYPE_SYMBOLTABLE,ui->tableView_SymbolTable);
+}
+
+void ELFWidget::demangleSymbol()
+{
+    qDebug("TODO demangleSymbol");
 }
 
 void ELFWidget::showSectionHeader(int nType, QTableView *pTableView)

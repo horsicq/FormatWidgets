@@ -45,6 +45,7 @@ SearchStringsWidget::SearchStringsWidget(QWidget *pParent) :
     g_scCopyOffset=nullptr;
     g_scCopySize=nullptr;
     g_scHex=nullptr;
+    g_scDemangle=nullptr;
 
     ui->tableViewResult->installEventFilter(this);
 }
@@ -188,12 +189,20 @@ void SearchStringsWidget::on_tableViewResult_customContextMenuRequested(const QP
     contextMenu.addAction(&actionCopySize);
 
     QAction actionHex(tr("Hex"),this);
+    QAction actionDemangle(tr("Demangle"),this);
 
     if(g_options.bMenu_Hex)
     {
         actionHex.setShortcut(getShortcuts()->getShortcut(XShortcuts::ID_STRINGS_HEX));
         connect(&actionHex,SIGNAL(triggered()),this,SLOT(_hex()));
         contextMenu.addAction(&actionHex);
+    }
+
+    if(g_options.bMenu_Demangle)
+    {
+        actionDemangle.setShortcut(getShortcuts()->getShortcut(XShortcuts::ID_STRINGS_DEMANGLE));
+        connect(&actionDemangle,SIGNAL(triggered()),this,SLOT(_demangle()));
+        contextMenu.addAction(&actionDemangle);
     }
 
     contextMenu.exec(ui->tableViewResult->viewport()->mapToGlobal(pos));
@@ -253,6 +262,20 @@ void SearchStringsWidget::_hex()
         qint64 nSize=ui->tableViewResult->model()->data(index,Qt::UserRole+2).toLongLong();
 
         emit showHex(nOffset,nSize);
+    }
+}
+
+void SearchStringsWidget::_demangle()
+{
+    int nRow=ui->tableViewResult->currentIndex().row();
+
+    if((nRow!=-1)&&(g_pModel))
+    {
+        QModelIndex index=ui->tableViewResult->selectionModel()->selectedIndexes().at(3);
+
+        QString sText=ui->tableViewResult->model()->data(index).toString();
+
+        emit showDemangle(sText);
     }
 }
 
@@ -322,6 +345,7 @@ void SearchStringsWidget::registerShortcuts(bool bState)
         if(!g_scCopyOffset)         g_scCopyOffset      =new QShortcut(getShortcuts()->getShortcut(XShortcuts::ID_STRINGS_COPYOFFSET),      this,SLOT(_copyOffset()));
         if(!g_scCopySize)           g_scCopySize        =new QShortcut(getShortcuts()->getShortcut(XShortcuts::ID_STRINGS_COPYSIZE),        this,SLOT(_copySize()));
         if(!g_scHex)                g_scHex             =new QShortcut(getShortcuts()->getShortcut(XShortcuts::ID_STRINGS_HEX),             this,SLOT(_hex()));
+        if(!g_scDemangle)           g_scDemangle        =new QShortcut(getShortcuts()->getShortcut(XShortcuts::ID_STRINGS_DEMANGLE),        this,SLOT(_demangle()));
     }
     else
     {
@@ -329,5 +353,6 @@ void SearchStringsWidget::registerShortcuts(bool bState)
         if(g_scCopyOffset)          {delete g_scCopyOffset;     g_scCopyOffset=nullptr;}
         if(g_scCopySize)            {delete g_scCopySize;       g_scCopySize=nullptr;}
         if(g_scHex)                 {delete g_scHex;            g_scHex=nullptr;}
+        if(g_scDemangle)            {delete g_scDemangle;       g_scDemangle=nullptr;}
     }
 }
