@@ -33,6 +33,7 @@ ToolsWidget::ToolsWidget(QWidget *pParent) :
     connect(ui->widgetHex,SIGNAL(showOffsetDisasm(qint64)),this,SLOT(_showDisasm(qint64)));
     connect(ui->widgetHex,SIGNAL(showOffsetMemoryMap(qint64)),this,SLOT(_showMemoryMap(qint64)));
     connect(ui->widgetStrings,SIGNAL(showHex(qint64,qint64)),this,SLOT(_showHex(qint64,qint64)));
+    // TODO Demangle
 }
 
 void ToolsWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS options)
@@ -51,6 +52,7 @@ void ToolsWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS options)
     g_stringsOptions={};
     g_stringsOptions.nBaseAddress=options.nImageBase;
     g_stringsOptions.bMenu_Hex=true;
+    g_stringsOptions.bMenu_Demangle=true;
     g_stringsOptions.bAnsi=true;
     g_stringsOptions.bUnicode=true;
 

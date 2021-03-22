@@ -80,7 +80,7 @@ protected:
 
 signals:
     void showHex(qint64 nOffset,qint64 nSize);
-    void showDemangle(QString sText);
+    void showDemangle(QString sString);
 
 private:
     Ui::SearchStringsWidget *ui;

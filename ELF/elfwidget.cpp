@@ -30,6 +30,7 @@ ELFWidget::ELFWidget(QWidget *pParent) :
     g_nLastType=-1;
 
     connect(ui->widgetStrings,SIGNAL(showHex(qint64,qint64)),this,SLOT(showInHexWindow(qint64,qint64)));
+    connect(ui->widgetStrings,SIGNAL(showDemangle(QString)),this,SLOT(showDemangle(QString)));
     connect(ui->widgetSignatures,SIGNAL(showHex(qint64,qint64)),this,SLOT(showInHexWindow(qint64,qint64)));
 }
 
@@ -340,6 +341,7 @@ void ELFWidget::reloadData()
             {
                 SearchStringsWidget::OPTIONS stringsOptions={};
                 stringsOptions.bMenu_Hex=true;
+                stringsOptions.bMenu_Demangle=true;
                 stringsOptions.bAnsi=true;
                 stringsOptions.bUnicode=true;
 

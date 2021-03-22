@@ -175,6 +175,7 @@ public slots:
     void showInMemoryMapWindowOffset(qint64 nOffset);
     void showInHexWindow(qint64 nOffset,qint64 nSize);
     void showEntropy(qint64 nOffset,qint64 nSize);
+    void showDemangle(QString sString);
     bool saveBackup();
 
 protected:

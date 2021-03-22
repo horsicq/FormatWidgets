@@ -33,6 +33,7 @@ DEXWidget::DEXWidget(QWidget *pParent) :
     g_nLastType=-1;
 
     connect(ui->widgetStrings,SIGNAL(showHex(qint64,qint64)),this,SLOT(showInHexWindow(qint64,qint64)));
+    connect(ui->widgetStrings,SIGNAL(showDemangle(QString)),this,SLOT(showDemangle(QString)));
 }
 
 DEXWidget::DEXWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) :
@@ -320,6 +321,7 @@ void DEXWidget::reloadData()
             {
                 SearchStringsWidget::OPTIONS stringsOptions={};
                 stringsOptions.bMenu_Hex=true;
+                stringsOptions.bMenu_Demangle=true;
                 stringsOptions.bAnsi=true;
                 stringsOptions.bUnicode=true;
 

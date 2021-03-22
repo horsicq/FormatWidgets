@@ -578,6 +578,11 @@ void FormatWidget::showEntropy(qint64 nOffset, qint64 nSize)
     dialogEntropy.exec();
 }
 
+void FormatWidget::showDemangle(QString sString)
+{
+    qDebug("void FormatWidget::showDemangle(QString sString)");
+}
+
 bool FormatWidget::saveBackup()
 {
     bool bResult=true;
