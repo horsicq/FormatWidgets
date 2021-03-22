@@ -885,7 +885,7 @@ void ELFWidget::editSymbolHeader()
 
 void ELFWidget::demangleSymbol()
 {
-    qDebug("TODO demangleSymbol");
+    showTableViewDemangle(ui->tableView_SymbolTable,N_Elf64_Sym::st_size+2);
 }
 
 void ELFWidget::showSectionHeader(int nType, QTableView *pTableView)
@@ -974,7 +974,7 @@ void ELFWidget::on_tableView_Elf_Shdr_customContextMenuRequested(const QPoint &p
 
     if(nRow!=-1)
     {
-        bool bIsEnable=getTableViewItemSize(ui->tableView_Elf_Shdr,nRow);
+        bool bIsEnable=getTableViewItemSize(ui->tableView_Elf_Shdr);
 
         QMenu contextMenu(this);
 
@@ -1056,7 +1056,7 @@ void ELFWidget::on_tableView_Elf_Phdr_customContextMenuRequested(const QPoint &p
 
     if(nRow!=-1)
     {
-        bool bIsEnable=getTableViewItemSize(ui->tableView_Elf_Phdr,nRow);
+        bool bIsEnable=getTableViewItemSize(ui->tableView_Elf_Phdr);
 
         QMenu contextMenu(this);
 

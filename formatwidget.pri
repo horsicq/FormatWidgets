@@ -85,3 +85,8 @@ FORMS += \
     XCONFIG += xdisasmview
     include($$PWD/../XDisasmView/xdisasmview.pri)
 }
+
+!contains(XCONFIG, xdemanglewidget) {
+    XCONFIG += xdemanglewidget
+    include($$PWD/../XDemangleWidget/xdemanglewidget.pri)
+}

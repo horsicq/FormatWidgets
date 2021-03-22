@@ -361,9 +361,11 @@ void FormatWidget::showSectionDisasm(QTableView *pTableView)
     }
 }
 
-qint64 FormatWidget::getTableViewItemSize(QTableView *pTableView, int nRow)
+qint64 FormatWidget::getTableViewItemSize(QTableView *pTableView)
 {
     qint64 nResult=0;
+
+    int nRow=pTableView->currentIndex().row();
 
     if(nRow!=-1)
     {
@@ -372,6 +374,19 @@ qint64 FormatWidget::getTableViewItemSize(QTableView *pTableView, int nRow)
     }
 
     return nResult;
+}
+
+void FormatWidget::showTableViewDemangle(QTableView *pTableView, int nColumn)
+{
+    int nRow=pTableView->currentIndex().row();
+
+    if(nRow!=-1)
+    {
+        QModelIndex index=pTableView->selectionModel()->selectedIndexes().at(nColumn);
+        QString sString=pTableView->model()->data(index).toString();
+
+        showDemangle(sString);
+    }
 }
 
 bool FormatWidget::_setTreeItem(QTreeWidget *pTree, QTreeWidgetItem *pItem, int nID)
@@ -580,7 +595,9 @@ void FormatWidget::showEntropy(qint64 nOffset, qint64 nSize)
 
 void FormatWidget::showDemangle(QString sString)
 {
-    qDebug("void FormatWidget::showDemangle(QString sString)");
+    DialogDemangle dialogDemangle(this,sString);
+
+    dialogDemangle.exec();
 }
 
 bool FormatWidget::saveBackup()

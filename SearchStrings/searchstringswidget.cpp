@@ -273,9 +273,9 @@ void SearchStringsWidget::_demangle()
     {
         QModelIndex index=ui->tableViewResult->selectionModel()->selectedIndexes().at(3);
 
-        QString sText=ui->tableViewResult->model()->data(index).toString();
+        QString sString=ui->tableViewResult->model()->data(index).toString();
 
-        emit showDemangle(sText);
+        emit showDemangle(sString);
     }
 }
 

@@ -1663,7 +1663,7 @@ void PEWidget::on_tableView_Sections_customContextMenuRequested(const QPoint &po
 
     if(nRow!=-1)
     {
-        bool bIsEnable=getTableViewItemSize(ui->tableView_Sections,nRow);
+        bool bIsEnable=getTableViewItemSize(ui->tableView_Sections);
 
         QMenu contextMenu(this);
 

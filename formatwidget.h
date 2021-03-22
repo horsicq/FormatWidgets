@@ -40,6 +40,7 @@
 #include "dialogprocessdata.h"
 #include "xmultidisasmwidget.h"
 #include "xshortcutsdialog.h"
+#include "dialogdemangle.h"
 
 class FormatWidget : public XShortcutsWidget
 {
@@ -133,7 +134,9 @@ public:
     void showSectionHex(QTableView *pTableView);
     void showSectionEntropy(QTableView *pTableView);
     void showSectionDisasm(QTableView *pTableView);
-    qint64 getTableViewItemSize(QTableView *pTableView,int nRow);
+    qint64 getTableViewItemSize(QTableView *pTableView);
+
+    void showTableViewDemangle(QTableView *pTableView,int nColumn);
 
     static bool _setTreeItem(QTreeWidget *pTree,QTreeWidgetItem *pItem,int nID);
     static void setTreeItem(QTreeWidget *pTree,int nID);

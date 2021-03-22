@@ -333,14 +333,18 @@ void FormatsWidget::scan()
 
     adjustScanTab((SE)nIndex);
 
-    if(nIndex==SE_DIE)
+    if(sFileName!="")
     {
-        ui->pageScanDIE->setData(sFileName,bScan,getCurrentFileType());
+        if(nIndex==SE_DIE)
+        {
+            ui->pageScanDIE->setData(sFileName,bScan,getCurrentFileType());
+        }
+        else if(nIndex==SE_NFD)
+        {
+            ui->pageScanNFD->setData(sFileName,bScan,getCurrentFileType());
+        }
     }
-    else if(nIndex==SE_NFD)
-    {
-        ui->pageScanNFD->setData(sFileName,bScan,getCurrentFileType());
-    }
+
     // TODO YARA
 }
 
