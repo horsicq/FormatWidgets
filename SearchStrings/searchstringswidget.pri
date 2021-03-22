@@ -12,5 +12,8 @@ HEADERS += \
 SOURCES += \
     $$PWD/dialogsearchstrings.cpp \
     $$PWD/searchstringswidget.cpp
-    
-include($$PWD/../MultiSearch/multisearch.pri)
+
+!contains(XCONFIG, multisearch) {
+    XCONFIG += multisearch
+    include($$PWD/../MultiSearch/multisearch.pri)
+}

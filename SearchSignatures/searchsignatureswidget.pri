@@ -13,4 +13,7 @@ SOURCES += \
     $$PWD/dialogsearchsignatures.cpp \
     $$PWD/searchsignatureswidget.cpp
     
-include($$PWD/../MultiSearch/multisearch.pri)
+!contains(XCONFIG, multisearch) {
+    XCONFIG += multisearch
+    include($$PWD/../MultiSearch/multisearch.pri)
+}
