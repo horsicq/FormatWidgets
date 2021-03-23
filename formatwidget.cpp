@@ -183,6 +183,7 @@ bool FormatWidget::loadHexSubdevice(qint64 nOffset, qint64 nSize, qint64 nAddres
     connect(pToolsWidget,SIGNAL(showOffsetHex(qint64,qint64)),this,SLOT(showInHexWindow(qint64,qint64)));
     connect(pToolsWidget,SIGNAL(showOffsetDisasm(qint64)),this,SLOT(showInDisasmWindowOffset(qint64)));
     connect(pToolsWidget,SIGNAL(showOffsetMemoryMap(qint64)),this,SLOT(showInMemoryMapWindowOffset(qint64)));
+    connect(pToolsWidget,SIGNAL(showDemangle(QString)),this,SLOT(showDemangle(QString)));
 
     return true;
 }
