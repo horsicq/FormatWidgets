@@ -780,18 +780,6 @@ void FormatsWidget::onScanFinished()
     ui->groupBoxEntryPoint->setEnabled(true);
 }
 
-QString FormatsWidget::getBackupFileName()
-{
-    QString sResult;
-
-    if(g_options.bIsSaveBackup)
-    {
-        sResult=XBinary::getBackupName(sFileName);
-    }
-
-    return sResult;
-}
-
 void FormatsWidget::registerShortcuts(bool bState)
 {
     Q_UNUSED(bState)

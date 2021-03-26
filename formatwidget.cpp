@@ -150,7 +150,7 @@ QString FormatWidget::typeIdToString(int nType)
 
 bool FormatWidget::isEdited()
 {
-    return XBinary::isFileExists(XBinary::getBackupName(getDevice()));
+    return XBinary::isBackupPresent(getDevice());
 }
 
 bool FormatWidget::loadHexSubdevice(qint64 nOffset, qint64 nSize, qint64 nAddress,SubDevice **ppSubDevice,ToolsWidget *pToolsWidget)
@@ -608,25 +608,7 @@ bool FormatWidget::saveBackup()
     if(!isEdited())
     {
         // Save backup
-
-        QString sBackupFileName=XBinary::getBackupName(getDevice());
-
-        if(sBackupFileName!="")
-        {
-            if(!QFile::exists(sBackupFileName))
-            {
-                QString sFileName=XBinary::getDeviceFileName(getDevice());
-
-                if(sFileName!="")
-                {
-                    bResult=QFile::copy(sFileName,sBackupFileName);
-                }
-                else
-                {
-                    bResult=XBinary::writeToFile(sBackupFileName,getDevice());
-                }
-            }
-        }
+        bResult=XBinary::saveBackup(getDevice());
     }
 
     return bResult;

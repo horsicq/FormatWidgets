@@ -71,7 +71,7 @@ public:
     {
         QString sDatabasePath;
         QString sInfoPath;
-        bool bIsSaveBackup;
+        bool bSaveBackup;
         QString sSearchSignaturesPath;
         // TODO More
     };
@@ -130,8 +130,6 @@ private slots:
 
     void onScanStarted();
     void onScanFinished();
-
-    QString getBackupFileName();
 
 protected:
     virtual void registerShortcuts(bool bState);
