@@ -37,7 +37,7 @@ public:
     explicit DialogNE(QWidget *pParent=nullptr);
     ~DialogNE();
 
-    void setData(QIODevice *pDevice, FW_DEF::OPTIONS options);
+    void setData(QIODevice *pDevice,FW_DEF::OPTIONS options);
     void setShortcuts(XShortcuts *pShortcuts);
 
 private:

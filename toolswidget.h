@@ -45,7 +45,7 @@ public:
     void setReadonly(bool bState);
     void reload();
     qint64 getStartAddress();
-    void setSelection(qint64 nOffset, qint64 nSize);
+    void setSelection(qint64 nOffset,qint64 nSize);
 
 signals:
     void editState(bool bState);
@@ -56,7 +56,7 @@ signals:
 
 private slots:
     void on_tabWidgetMain_currentChanged(int nIndex);
-    void _showHex(qint64 nOffset, qint64 nSize);
+    void _showHex(qint64 nOffset,qint64 nSize);
     void _showDisasm(qint64 nOffset);
     void _showMemoryMap(qint64 nOffset);
 

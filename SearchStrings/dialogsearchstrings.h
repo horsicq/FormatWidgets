@@ -34,7 +34,7 @@ class DialogSearchStrings : public XShortcutsDialog
     Q_OBJECT
 
 public:
-    explicit DialogSearchStrings(QWidget *pParent, QIODevice *pDevice, SearchStringsWidget::OPTIONS options, bool bAuto=false);
+    explicit DialogSearchStrings(QWidget *pParent,QIODevice *pDevice,SearchStringsWidget::OPTIONS options,bool bAuto=false);
     ~DialogSearchStrings();
     void setShortcuts(XShortcuts *pShortcuts);
 

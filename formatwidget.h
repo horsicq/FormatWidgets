@@ -81,7 +81,7 @@ public:
     FormatWidget(QIODevice *pDevice,FW_DEF::OPTIONS options,quint32 nNumber,qint64 nOffset,qint32 nType,QWidget *pParent);
     ~FormatWidget();
 
-    void setData(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType);
+    void setData(QIODevice *pDevice,FW_DEF::OPTIONS options,quint32 nNumber,qint64 nOffset,qint32 nType);
 
     void setFileType(XBinary::FT fileType);
     XBinary::FT getFileType();
@@ -117,7 +117,7 @@ public:
 
     bool isEdited();
 
-//    QPushButton *createHexButton(QTableWidget *pTableWidget,int nType, int nData);
+//    QPushButton *createHexButton(QTableWidget *pTableWidget,int nType,int nData);
 
     bool loadHexSubdevice(qint64 nOffset,qint64 nSize,qint64 nAddress,SubDevice **ppSubDevice,ToolsWidget *pToolsWidget);
     bool loadHexSubdeviceByTableView(int nRow,int nType,ToolsWidget *pToolsWidget,QTableView *pTableView,SubDevice **ppSubDevice);
