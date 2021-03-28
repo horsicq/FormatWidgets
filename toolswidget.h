@@ -39,7 +39,6 @@ public:
     ~ToolsWidget();
 
     void setShortcuts(XShortcuts *pShortcuts);
-
     void setData(QIODevice *pDevice,FW_DEF::OPTIONS options);
     void setEdited(bool bState);
     void setReadonly(bool bState);
