@@ -824,7 +824,7 @@ void PEWidget::reloadData()
                 stringsOptions.bAnsi=true;
                 stringsOptions.bUnicode=true;
 
-                ui->widgetStrings->setData(getDevice(),stringsOptions,true);
+                ui->widgetStrings->setData(getDevice(),stringsOptions,true,this);
             }
         }
         else if(nType==SPE::TYPE_SIGNATURES)
@@ -856,7 +856,7 @@ void PEWidget::reloadData()
         {
             if(!g_stInit.contains(sInit))
             {
-                ui->widgetHeuristicScan->setData(getDevice(),true,pe.getFileType());
+                ui->widgetHeuristicScan->setData(getDevice(),true,pe.getFileType(),this);
             }
         }
         else if(nType==SPE::TYPE_IMAGE_DOS_HEADER)
@@ -2048,6 +2048,11 @@ void PEWidget::exportFunctionDisasm()
     showSectionDisasm(ui->tableView_ExportFunctions);
 }
 
+void PEWidget::exportFunctionDemangle()
+{
+    showTableViewDemangle(ui->tableView_ExportFunctions,N_IMAGE_EXPORT_FUNCTION::Name+1);
+}
+
 void PEWidget::showSectionHeader(int nType, QTableView *pTableView)
 {
     int nRow=pTableView->currentIndex().row();
@@ -2327,6 +2332,10 @@ void PEWidget::on_tableView_ExportFunctions_customContextMenuRequested(const QPo
         QAction actionDisasm(tr("Disasm"),this);
         connect(&actionDisasm, SIGNAL(triggered()), this, SLOT(exportFunctionDisasm()));
         contextMenu.addAction(&actionDisasm);
+
+        QAction actionDemangle(tr("Demangle"),this);
+        connect(&actionDemangle, SIGNAL(triggered()), this, SLOT(exportFunctionDemangle()));
+        contextMenu.addAction(&actionDemangle);
 
         contextMenu.exec(ui->tableView_ExportFunctions->viewport()->mapToGlobal(pos));
     }

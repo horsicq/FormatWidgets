@@ -261,7 +261,7 @@ void MSDOSWidget::reloadData()
                 stringsOptions.bAnsi=true;
                 stringsOptions.bUnicode=true;
 
-                ui->widgetStrings->setData(getDevice(),stringsOptions,true);
+                ui->widgetStrings->setData(getDevice(),stringsOptions,true,this);
             }
         }
         else if(nType==SMSDOS::TYPE_MEMORYMAP)
@@ -282,7 +282,7 @@ void MSDOSWidget::reloadData()
         {
             if(!g_stInit.contains(sInit))
             {
-                ui->widgetHeuristicScan->setData(getDevice(),true,msdos.getFileType());
+                ui->widgetHeuristicScan->setData(getDevice(),true,msdos.getFileType(),this);
             }
         }
         else if(nType==SMSDOS::TYPE_DOS_HEADER)

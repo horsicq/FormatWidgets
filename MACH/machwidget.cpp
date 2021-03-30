@@ -295,7 +295,7 @@ void MACHWidget::reloadData()
                 stringsOptions.bAnsi=true;
                 stringsOptions.bUnicode=true;
 
-                ui->widgetStrings->setData(getDevice(),stringsOptions,true);
+                ui->widgetStrings->setData(getDevice(),stringsOptions,true,this);
             }
         }
         else if(nType==SMACH::TYPE_MEMORYMAP)
@@ -316,7 +316,7 @@ void MACHWidget::reloadData()
         {
             if(!g_stInit.contains(sInit))
             {
-                ui->widgetHeuristicScan->setData(getDevice(),true,mach.getFileType());
+                ui->widgetHeuristicScan->setData(getDevice(),true,mach.getFileType(),this);
             }
         }
         else if(nType==SMACH::TYPE_mach_header)

@@ -345,7 +345,7 @@ void ELFWidget::reloadData()
                 stringsOptions.bAnsi=true;
                 stringsOptions.bUnicode=true;
 
-                ui->widgetStrings->setData(getDevice(),stringsOptions,true);
+                ui->widgetStrings->setData(getDevice(),stringsOptions,true,this);
             }
         }
         else if(nType==SELF::TYPE_SIGNATURES)
@@ -377,7 +377,7 @@ void ELFWidget::reloadData()
         {
             if(!g_stInit.contains(sInit))
             {
-                ui->widgetHeuristicScan->setData(getDevice(),true,elf.getFileType());
+                ui->widgetHeuristicScan->setData(getDevice(),true,elf.getFileType(),this);
             }
         }
         else if(nType==SELF::TYPE_Elf_Ehdr)

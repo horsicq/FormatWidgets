@@ -92,6 +92,7 @@ private slots:
     void editBoundImportHeader();
     void exportFunctionHex();
     void exportFunctionDisasm();
+    void exportFunctionDemangle();
     void showSectionHeader(int nType,QTableView *pTableView);
     void on_tableView_Sections_customContextMenuRequested(const QPoint &pos);
     void on_tableView_Sections_doubleClicked(const QModelIndex &index);

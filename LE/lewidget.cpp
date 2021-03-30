@@ -352,7 +352,7 @@ void LEWidget::reloadData()
                 stringsOptions.bAnsi=true;
                 stringsOptions.bUnicode=true;
 
-                ui->widgetStrings->setData(getDevice(),stringsOptions,true);
+                ui->widgetStrings->setData(getDevice(),stringsOptions,true,this);
             }
         }
         else if(nType==SLE::TYPE_MEMORYMAP)
@@ -373,7 +373,7 @@ void LEWidget::reloadData()
         {
             if(!g_stInit.contains(sInit))
             {
-                ui->widgetHeuristicScan->setData(getDevice(),true,le.getFileType());
+                ui->widgetHeuristicScan->setData(getDevice(),true,le.getFileType(),this);
             }
         }
         else if(nType==SLE::TYPE_DOS_HEADER)

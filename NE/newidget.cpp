@@ -359,7 +359,7 @@ void NEWidget::reloadData()
                 stringsOptions.bAnsi=true;
                 stringsOptions.bUnicode=true;
 
-                ui->widgetStrings->setData(getDevice(),stringsOptions,true);
+                ui->widgetStrings->setData(getDevice(),stringsOptions,true,this);
             }
         }
         else if(nType==SNE::TYPE_MEMORYMAP)
@@ -380,7 +380,7 @@ void NEWidget::reloadData()
         {
             if(!g_stInit.contains(sInit))
             {
-                ui->widgetHeuristicScan->setData(getDevice(),true,ne.getFileType());
+                ui->widgetHeuristicScan->setData(getDevice(),true,ne.getFileType(),this);
             }
         }
         else if(nType==SNE::TYPE_DOS_HEADER)
