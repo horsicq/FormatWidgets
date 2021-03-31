@@ -55,6 +55,7 @@ public:
         XBinary::_MEMORY_MAP memoryMap;
         bool bAnsi; // TODO
         bool bUnicode; // TODO
+        bool bCStrings;
         bool bSignature;
         bool bIsBigEndian;
         qint32 nMinLenght;

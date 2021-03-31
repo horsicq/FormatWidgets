@@ -302,6 +302,7 @@ void SearchStringsWidget::search()
 
             options.bAnsi=g_options.bAnsi;
             options.bUnicode=g_options.bUnicode;
+            options.bCStrings=g_options.bCStrings;
             options.bMenu_Hex=g_options.bMenu_Hex;
             options.nMinLenght=g_options.nMinLenght;
             options.memoryMap=XBinary(g_pDevice,true,g_options.nBaseAddress).getMemoryMap();

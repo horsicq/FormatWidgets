@@ -56,6 +56,13 @@
       </widget>
      </item>
      <item>
+      <widget class="QCheckBox" name="checkBoxCStrings">
+       <property name="text">
+        <string notr="true">C Strings</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QSpinBox" name="spinBoxMinLength">
        <property name="minimum">
         <number>3</number>
