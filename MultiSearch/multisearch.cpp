@@ -156,7 +156,7 @@ void MultiSearch::processSearch()
         connect(&binary,SIGNAL(searchProgressValueChanged(qint32)),this,SIGNAL(progressValueChanged(qint32)));
         connect(this,SIGNAL(setSearchProcessEnable(bool)),&binary,SLOT(setSearchProcessEnable(bool)),Qt::DirectConnection);
 
-        *g_pListRecords=binary.multiSearch_allStrings(0,g_pDevice->size(),N_MAX,g_options.nMinLenght,128,g_options.bAnsi,g_options.bUnicode);
+        *g_pListRecords=binary.multiSearch_allStrings(0,g_pDevice->size(),N_MAX,g_options.nMinLenght,128,g_options.bAnsi,g_options.bUnicode,g_options.bCStrings);
     }
     else if(g_type==TYPE_SIGNATURES)
     {
