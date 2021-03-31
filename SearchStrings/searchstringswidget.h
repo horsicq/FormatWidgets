@@ -49,6 +49,7 @@ public:
         qint64 nBaseAddress;
         bool bAnsi; // TODO
         bool bUnicode; // TODO
+        bool bCStrings;
         qint32 nMinLenght;
         bool bMenu_Hex;
         bool bMenu_Demangle;

@@ -38,6 +38,7 @@ SearchStringsWidget::SearchStringsWidget(QWidget *pParent) :
 
     ui->checkBoxAnsi->setChecked(true);
     ui->checkBoxUnicode->setChecked(true);
+    ui->checkBoxCStrings->setChecked(false);
 
     ui->spinBoxMinLength->setValue(5);
 
@@ -61,6 +62,11 @@ void SearchStringsWidget::setData(QIODevice *pDevice, OPTIONS options, bool bAut
 {
     this->g_pDevice=pDevice;
     this->g_pParent=pParent;
+
+    ui->checkBoxAnsi->setChecked(options.bAnsi);
+    ui->checkBoxUnicode->setChecked(options.bUnicode);
+    ui->checkBoxCStrings->setChecked(options.bCStrings);
+
     g_bInit=false;
 
     qint64 nSize=pDevice->size();
@@ -287,6 +293,7 @@ void SearchStringsWidget::search()
 
         g_options.bAnsi=ui->checkBoxAnsi->isChecked();
         g_options.bUnicode=ui->checkBoxUnicode->isChecked();
+        g_options.bCStrings=ui->checkBoxCStrings->isChecked();
         g_options.nMinLenght=ui->spinBoxMinLength->value();
 
         if(g_options.bAnsi||g_options.bUnicode)

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>SearchStringsWidget</class>
+ <class>searchStringsWidget</class>
  <widget class="QWidget" name="searchStringsWidget">
   <property name="geometry">
    <rect>
@@ -52,6 +52,13 @@
       <widget class="QCheckBox" name="checkBoxUnicode">
        <property name="text">
         <string notr="true">Unicode</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBoxCStrings">
+       <property name="text">
+        <string notr="true">C strings</string>
        </property>
       </widget>
      </item>
