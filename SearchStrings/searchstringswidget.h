@@ -33,8 +33,7 @@
 #include "dialogmultisearchprocess.h"
 #include "xshortcutswidget.h"
 
-namespace Ui
-{
+namespace Ui{
 class SearchStringsWidget;
 }
 
