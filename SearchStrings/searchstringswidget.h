@@ -33,7 +33,8 @@
 #include "dialogmultisearchprocess.h"
 #include "xshortcutswidget.h"
 
-namespace Ui{
+namespace Ui
+{
 class SearchStringsWidget;
 }
 
@@ -48,7 +49,6 @@ public:
         qint64 nBaseAddress;
         bool bAnsi; // TODO
         bool bUnicode; // TODO
-        bool bCStrings;
         qint32 nMinLenght;
         bool bMenu_Hex;
         bool bMenu_Demangle;
