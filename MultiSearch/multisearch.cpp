@@ -268,8 +268,9 @@ void MultiSearch::processModel()
 
             QStandardItem *pTypeAddress=new QStandardItem;
             pTypeAddress->setText(XBinary::valueToHex(modeAddress,record.nOffset+nBaseAddress));
-            pTypeAddress->setData(record.nOffset,Qt::UserRole+1);
-            pTypeAddress->setData(record.nSize,Qt::UserRole+2);
+            pTypeAddress->setData(record.nOffset,Qt::UserRole+USERROLE_OFFSET);
+            pTypeAddress->setData(record.nSize,Qt::UserRole+USERROLE_SIZE);
+            pTypeAddress->setData(record.recordType,Qt::UserRole+USERROLE_TYPE);
             pTypeAddress->setTextAlignment(Qt::AlignRight|Qt::AlignVCenter);
             (*g_ppModel)->setItem(i,0,pTypeAddress);
 
@@ -329,11 +330,11 @@ void MultiSearch::processModel()
 
             QStandardItem *pTypeAddress=new QStandardItem;
             pTypeAddress->setText(XBinary::valueToHex(modeAddress,nAddress));
-            pTypeAddress->setData(record.nOffset,Qt::UserRole+1);
-            pTypeAddress->setData(record.nSize,Qt::UserRole+2);
-            pTypeAddress->setData(record.sString,Qt::UserRole+3);
-            pTypeAddress->setData(record.sInfo,Qt::UserRole+4);
-            pTypeAddress->setData(nAddress,Qt::UserRole+5);
+            pTypeAddress->setData(record.nOffset,Qt::UserRole+USERROLE_OFFSET);
+            pTypeAddress->setData(record.nSize,Qt::UserRole+USERROLE_SIZE);
+            pTypeAddress->setData(record.sString,Qt::UserRole+USERROLE_STRING);
+            pTypeAddress->setData(record.sInfo,Qt::UserRole+USERROLE_INFO);
+            pTypeAddress->setData(nAddress,Qt::UserRole+USERROLE_ADDRESS);
             pTypeAddress->setTextAlignment(Qt::AlignRight|Qt::AlignVCenter);
             (*g_ppModel)->setItem(i,0,pTypeAddress);
 

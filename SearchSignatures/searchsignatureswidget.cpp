@@ -225,7 +225,7 @@ void SearchSignaturesWidget::_copySignature()
     {
         QModelIndex index=ui->tableViewResult->selectionModel()->selectedIndexes().at(0);
 
-        QString sString=ui->tableViewResult->model()->data(index,Qt::UserRole+3).toString();
+        QString sString=ui->tableViewResult->model()->data(index,Qt::UserRole+MultiSearch::USERROLE_STRING).toString();
 
         QApplication::clipboard()->setText(sString);
     }
@@ -267,8 +267,8 @@ void SearchSignaturesWidget::_hex()
     {
         QModelIndex index=ui->tableViewResult->selectionModel()->selectedIndexes().at(0);
 
-        qint64 nOffset=ui->tableViewResult->model()->data(index,Qt::UserRole+1).toLongLong();
-        qint64 nSize=ui->tableViewResult->model()->data(index,Qt::UserRole+2).toLongLong();
+        qint64 nOffset=ui->tableViewResult->model()->data(index,Qt::UserRole+MultiSearch::USERROLE_OFFSET).toLongLong();
+        qint64 nSize=ui->tableViewResult->model()->data(index,Qt::UserRole+MultiSearch::USERROLE_SIZE).toLongLong();
 
         emit showHex(nOffset,nSize);
     }

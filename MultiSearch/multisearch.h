@@ -41,6 +41,16 @@ public:
         TYPE_SIGNATURES
     };
 
+    enum USERROLE
+    {
+        USERROLE_SIZE=0,
+        USERROLE_OFFSET,
+        USERROLE_ADDRESS,
+        USERROLE_STRING,
+        USERROLE_INFO,
+        USERROLE_TYPE
+    };
+
     struct SIGNATURE_RECORD
     {
         qint32 nNumber;

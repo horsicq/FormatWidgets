@@ -264,8 +264,15 @@ void SearchStringsWidget::_hex()
     {
         QModelIndex index=ui->tableViewResult->selectionModel()->selectedIndexes().at(0);
 
-        qint64 nOffset=ui->tableViewResult->model()->data(index,Qt::UserRole+1).toLongLong();
-        qint64 nSize=ui->tableViewResult->model()->data(index,Qt::UserRole+2).toLongLong();
+        qint64 nOffset=ui->tableViewResult->model()->data(index,Qt::UserRole+MultiSearch::USERROLE_OFFSET).toLongLong();
+        qint64 nSize=ui->tableViewResult->model()->data(index,Qt::UserRole+MultiSearch::USERROLE_SIZE).toLongLong();
+
+        XBinary::MS_RECORD_TYPE recordType=(XBinary::MS_RECORD_TYPE)(ui->tableViewResult->model()->data(index,Qt::UserRole+MultiSearch::USERROLE_TYPE).toLongLong());
+
+        if(recordType==XBinary::MS_RECORD_TYPE_UNICODE)
+        {
+            nSize*=2;
+        }
 
         emit showHex(nOffset,nSize);
     }
