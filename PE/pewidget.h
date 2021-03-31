@@ -93,6 +93,7 @@ private slots:
     void exportFunctionHex();
     void exportFunctionDisasm();
     void exportFunctionDemangle();
+    void importFunctionDemangle();
     void showSectionHeader(int nType,QTableView *pTableView);
     void on_tableView_Sections_customContextMenuRequested(const QPoint &pos);
     void on_tableView_Sections_doubleClicked(const QModelIndex &index);
@@ -126,6 +127,7 @@ private slots:
     void on_toolButtonPrev_clicked();
     void on_toolButtonNext_clicked();
     void on_checkBoxExportShowValid_stateChanged(int arg1);
+    void on_tableView_ImportFunctions_customContextMenuRequested(const QPoint &pos);
 
 private:
     enum CB

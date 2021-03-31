@@ -2053,6 +2053,11 @@ void PEWidget::exportFunctionDemangle()
     showTableViewDemangle(ui->tableView_ExportFunctions,N_IMAGE_EXPORT_FUNCTION::Name+1);
 }
 
+void PEWidget::importFunctionDemangle()
+{
+    showTableViewDemangle(ui->tableView_ImportFunctions,N_IMAGE_IMPORT_FUNCTION::Hint+2);
+}
+
 void PEWidget::showSectionHeader(int nType, QTableView *pTableView)
 {
     int nRow=pTableView->currentIndex().row();
@@ -2406,5 +2411,21 @@ void PEWidget::on_checkBoxExportShowValid_stateChanged(int arg1)
         PEProcessData peProcessData(SPE::TYPE_EXPORT_FUNCTION,&tvModel[SPE::TYPE_EXPORT_FUNCTION],&pe,0,0,0,ui->checkBoxExportShowValid->isChecked());
 
         ajustTableView(&peProcessData,&tvModel[SPE::TYPE_EXPORT_FUNCTION],ui->tableView_ExportFunctions);
+    }
+}
+
+void PEWidget::on_tableView_ImportFunctions_customContextMenuRequested(const QPoint &pos)
+{
+    int nRow=ui->tableView_ImportFunctions->currentIndex().row();
+
+    if(nRow!=-1)
+    {
+        QMenu contextMenu(this);
+
+        QAction actionDemangle(tr("Demangle"),this);
+        connect(&actionDemangle, SIGNAL(triggered()), this, SLOT(importFunctionDemangle()));
+        contextMenu.addAction(&actionDemangle);
+
+        contextMenu.exec(ui->tableView_ImportFunctions->viewport()->mapToGlobal(pos));
     }
 }
