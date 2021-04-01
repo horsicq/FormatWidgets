@@ -27,9 +27,13 @@ MACHWidget::MACHWidget(QWidget *pParent) :
 {
     ui->setupUi(this);
 
-    connect(ui->widgetStrings,SIGNAL(showHex(qint64,qint64)),this,SLOT(showInHexWindow(qint64,qint64)));
-    connect(ui->widgetStrings,SIGNAL(showDemangle(QString)),this,SLOT(showDemangle(QString)));
-    connect(ui->widgetSignatures,SIGNAL(showHex(qint64,qint64)),this,SLOT(showInHexWindow(qint64,qint64)));
+    initHexViewWidget(ui->widgetHex);
+    initSearchSignaturesWidget(ui->widgetSignatures);
+    initSearchStringsWidget(ui->widgetStrings);
+    initToolsWidget(ui->widgetHex_commands);
+    initToolsWidget(ui->widgetHex_mach_header);
+    initToolsWidget(ui->widgetHex_sections);
+    initToolsWidget(ui->widgetHex_segments);
 }
 
 MACHWidget::MACHWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) :
@@ -300,7 +304,6 @@ void MACHWidget::reloadData()
                 options.sSignaturesPath=getOptions().sSearchSignaturesPath;
                 ui->widgetHex->setData(getDevice(),options);
                 ui->widgetHex->enableReadOnly(false);
-                connect(ui->widgetHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
             }
         }
         else if(nType==SMACH::TYPE_DISASM)

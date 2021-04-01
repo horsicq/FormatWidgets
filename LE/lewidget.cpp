@@ -27,8 +27,13 @@ LEWidget::LEWidget(QWidget *pParent) :
 {
     ui->setupUi(this);
 
-    connect(ui->widgetStrings,SIGNAL(showHex(qint64,qint64)),this,SLOT(showInHexWindow(qint64,qint64)));
-    connect(ui->widgetStrings,SIGNAL(showDemangle(QString)),this,SLOT(showDemangle(QString)));
+    initHexViewWidget(ui->widgetHex);
+//    initSearchSignaturesWidget(ui->widgetSignatures);
+    initSearchStringsWidget(ui->widgetStrings);
+    initToolsWidget(ui->widgetHex_DOS_HEADER);
+    initToolsWidget(ui->widgetHex_Object);
+    initToolsWidget(ui->widgetHex_OVERLAY);
+    initToolsWidget(ui->widgetHex_VXD_HEADER);
 }
 
 LEWidget::LEWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) :
@@ -325,7 +330,6 @@ void LEWidget::reloadData()
                 ui->widgetHex->setData(getDevice(),options);
 //                ui->widgetHex->setBackupFileName(getOptions().sBackupFileName);
                 ui->widgetHex->enableReadOnly(false);
-                connect(ui->widgetHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
 
                 ui->widgetHex->reload();
             }

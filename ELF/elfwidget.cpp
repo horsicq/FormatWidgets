@@ -29,9 +29,14 @@ ELFWidget::ELFWidget(QWidget *pParent) :
 
     g_nLastType=-1;
 
-    connect(ui->widgetStrings,SIGNAL(showHex(qint64,qint64)),this,SLOT(showInHexWindow(qint64,qint64)));
-    connect(ui->widgetStrings,SIGNAL(showDemangle(QString)),this,SLOT(showDemangle(QString)));
-    connect(ui->widgetSignatures,SIGNAL(showHex(qint64,qint64)),this,SLOT(showInHexWindow(qint64,qint64)));
+    initHexViewWidget(ui->widgetHex);
+    initSearchSignaturesWidget(ui->widgetSignatures);
+    initSearchStringsWidget(ui->widgetStrings);
+    initToolsWidget(ui->widgetHex_Elf_Ehdr);
+    initToolsWidget(ui->widgetHex_Elf_Phdr);
+    initToolsWidget(ui->widgetHex_Elf_Shdr);
+    initToolsWidget(ui->widgetHex_Notes);
+    initToolsWidget(ui->widgetHex_StringTable);
 }
 
 ELFWidget::ELFWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) :
@@ -315,7 +320,6 @@ void ELFWidget::reloadData()
                 ui->widgetHex->setData(getDevice(),options);
 //                ui->widgetHex->setBackupFileName(getOptions().sBackupFileName);
                 ui->widgetHex->enableReadOnly(false);
-                connect(ui->widgetHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
 
                 ui->widgetHex->reload();
             }
