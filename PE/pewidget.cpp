@@ -27,9 +27,24 @@ PEWidget::PEWidget(QWidget *pParent) :
 {
     ui->setupUi(this);
 
-    connect(ui->widgetStrings,SIGNAL(showHex(qint64,qint64)),this,SLOT(showInHexWindow(qint64,qint64)));
-    connect(ui->widgetStrings,SIGNAL(showDemangle(QString)),this,SLOT(showDemangle(QString)));
-    connect(ui->widgetSignatures,SIGNAL(showHex(qint64,qint64)),this,SLOT(showInHexWindow(qint64,qint64)));
+    initHexViewWidget(ui->widgetHex);
+    initSearchSignaturesWidget(ui->widgetSignatures);
+    initSearchStringsWidget(ui->widgetStrings);
+    initToolsWidget(ui->widgetHex_Debug);
+    initToolsWidget(ui->widgetHex_Exception);
+    initToolsWidget(ui->widgetHex_IMAGE_DIRECTORY_ENTRIES);
+    initToolsWidget(ui->widgetHex_IMAGE_DOS_HEADER);
+    initToolsWidget(ui->widgetHex_IMAGE_FILE_HEADER);
+    initToolsWidget(ui->widgetHex_IMAGE_NT_HEADERS);
+    initToolsWidget(ui->widgetHex_IMAGE_OPTIONAL_HEADER);
+    initToolsWidget(ui->widgetHex_LoadConfig);
+    initToolsWidget(ui->widgetHex_NetHeader);
+    initToolsWidget(ui->widgetHex_Net_Metadata);
+    initToolsWidget(ui->widgetHex_Net_Metadata_Stream);
+    initToolsWidget(ui->widgetHex_Overlay);
+    initToolsWidget(ui->widgetHex_Resources);
+    initToolsWidget(ui->widgetHex_Section);
+    initToolsWidget(ui->widgetHex_TLS);
 }
 
 PEWidget::PEWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) :
@@ -791,12 +806,9 @@ void PEWidget::reloadData()
                 options.bMenu_MemoryMap=true;
                 options.sSignaturesPath=getOptions().sSearchSignaturesPath;
                 ui->widgetHex->setData(getDevice(),options);
-//                ui->widgetHex->setBackupFileName(getOptions().sBackupFileName);
                 // TODO save directory
                 ui->widgetHex->enableReadOnly(false);
-                connect(ui->widgetHex,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
-                connect(ui->widgetHex,SIGNAL(showOffsetDisasm(qint64)),this,SLOT(showInDisasmWindowOffset(qint64))); // TODO for all widgets
-                connect(ui->widgetHex,SIGNAL(showOffsetMemoryMap(qint64)),this,SLOT(showInMemoryMapWindowOffset(qint64))); // TODO for all widgets
+
                 ui->widgetHex->reload();
             }
         }
@@ -811,8 +823,6 @@ void PEWidget::reloadData()
 
                 ui->widgetDisasm->setData(getDevice(),options);
             }
-
-//            pDisasmWidget->setBackupFileName(getOptions().sBackupFileName);
         }
         else if(nType==SPE::TYPE_STRINGS)
         {

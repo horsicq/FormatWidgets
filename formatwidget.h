@@ -41,6 +41,7 @@
 #include "xmultidisasmwidget.h"
 #include "xshortcutsdialog.h"
 #include "dialogdemangle.h"
+#include "xhexviewwidget.h"
 
 class FormatWidget : public XShortcutsWidget
 {
@@ -151,6 +152,11 @@ public:
     QTreeWidgetItem *getNextPage();
     bool isPrevPageAvailable();
     bool isNextPageAvailable();
+
+    void initSearchStringsWidget(SearchStringsWidget *pWidget);
+    void initSearchSignaturesWidget(SearchSignaturesWidget *pWidget);
+    void initHexViewWidget(XHexViewWidget *pWidget);
+    void initToolsWidget(ToolsWidget *pWidget);
 
 protected:
     virtual bool _setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition,qint64 nOffset)=0;

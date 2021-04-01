@@ -29,6 +29,7 @@ MACHWidget::MACHWidget(QWidget *pParent) :
 
     connect(ui->widgetStrings,SIGNAL(showHex(qint64,qint64)),this,SLOT(showInHexWindow(qint64,qint64)));
     connect(ui->widgetStrings,SIGNAL(showDemangle(QString)),this,SLOT(showDemangle(QString)));
+    connect(ui->widgetSignatures,SIGNAL(showHex(qint64,qint64)),this,SLOT(showInHexWindow(qint64,qint64)));
 }
 
 MACHWidget::MACHWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) :
@@ -235,6 +236,36 @@ void MACHWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
             pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*26);
             break;
     }
+}
+
+QString MACHWidget::typeIdToString(int nType)
+{
+    // TODO !!!
+    return FormatWidget::typeIdToString(nType);
+}
+
+void MACHWidget::_showInDisasmWindowAddress(qint64 nAddress)
+{
+    setTreeItem(ui->treeWidgetNavi,SMACH::TYPE_DISASM);
+    ui->widgetDisasm->goToAddress(nAddress);
+}
+
+void MACHWidget::_showInDisasmWindowOffset(qint64 nOffset)
+{
+    setTreeItem(ui->treeWidgetNavi,SMACH::TYPE_DISASM);
+    ui->widgetDisasm->goToOffset(nOffset);
+}
+
+void MACHWidget::_showInMemoryMapWindowOffset(qint64 nOffset)
+{
+    setTreeItem(ui->treeWidgetNavi,SMACH::TYPE_MEMORYMAP);
+    ui->widgetMemoryMap->goToOffset(nOffset);
+}
+
+void MACHWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
+{
+    setTreeItem(ui->treeWidgetNavi,SMACH::TYPE_HEX);
+    ui->widgetHex->setSelection(nOffset,nSize);
 }
 
 void MACHWidget::reloadData()

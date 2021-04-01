@@ -179,11 +179,6 @@ bool FormatWidget::loadHexSubdevice(qint64 nOffset, qint64 nSize, qint64 nAddres
 
     pToolsWidget->setData((*ppSubDevice),hexOptions);
     pToolsWidget->setEdited(isEdited());
-    connect(pToolsWidget,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
-    connect(pToolsWidget,SIGNAL(showOffsetHex(qint64,qint64)),this,SLOT(showInHexWindow(qint64,qint64)));
-    connect(pToolsWidget,SIGNAL(showOffsetDisasm(qint64)),this,SLOT(showInDisasmWindowOffset(qint64)));
-    connect(pToolsWidget,SIGNAL(showOffsetMemoryMap(qint64)),this,SLOT(showInMemoryMapWindowOffset(qint64)));
-    connect(pToolsWidget,SIGNAL(showDemangle(QString)),this,SLOT(showDemangle(QString)));
 
     return true;
 }
@@ -485,6 +480,33 @@ bool FormatWidget::isPrevPageAvailable()
 bool FormatWidget::isNextPageAvailable()
 {
     return g_nPageIndex<(g_listPages.count()-1);
+}
+
+void FormatWidget::initSearchStringsWidget(SearchStringsWidget *pWidget)
+{
+    connect(pWidget,SIGNAL(showHex(qint64,qint64)),this,SLOT(showInHexWindow(qint64,qint64)));
+    connect(pWidget,SIGNAL(showDemangle(QString)),this,SLOT(showDemangle(QString)));
+}
+
+void FormatWidget::initSearchSignaturesWidget(SearchSignaturesWidget *pWidget)
+{
+    connect(pWidget,SIGNAL(showHex(qint64,qint64)),this,SLOT(showInHexWindow(qint64,qint64)));
+}
+
+void FormatWidget::initHexViewWidget(XHexViewWidget *pWidget)
+{
+    connect(pWidget,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+    connect(pWidget,SIGNAL(showOffsetDisasm(qint64)),this,SLOT(showInDisasmWindowOffset(qint64)));
+    connect(pWidget,SIGNAL(showOffsetMemoryMap(qint64)),this,SLOT(showInMemoryMapWindowOffset(qint64)));
+}
+
+void FormatWidget::initToolsWidget(ToolsWidget *pWidget)
+{
+    connect(pWidget,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+    connect(pWidget,SIGNAL(showOffsetHex(qint64,qint64)),this,SLOT(showInHexWindow(qint64,qint64)));
+    connect(pWidget,SIGNAL(showOffsetDisasm(qint64)),this,SLOT(showInDisasmWindowOffset(qint64)));
+    connect(pWidget,SIGNAL(showOffsetMemoryMap(qint64)),this,SLOT(showInMemoryMapWindowOffset(qint64)));
+    connect(pWidget,SIGNAL(showDemangle(QString)),this,SLOT(showDemangle(QString)));
 }
 
 void FormatWidget::_showInDisasmWindowAddress(qint64 nAddress)
