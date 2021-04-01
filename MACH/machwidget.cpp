@@ -298,6 +298,17 @@ void MACHWidget::reloadData()
                 ui->widgetStrings->setData(getDevice(),stringsOptions,true,this);
             }
         }
+        else if(nType==SMACH::TYPE_SIGNATURES)
+        {
+            if(!g_stInit.contains(sInit))
+            {
+                SearchSignaturesWidget::OPTIONS signaturesOptions={};
+                signaturesOptions.bMenu_Hex=true;
+                signaturesOptions.sSignaturesPath=getOptions().sSearchSignaturesPath;
+
+                ui->widgetSignatures->setData(getDevice(),mach.getFileType(),signaturesOptions,false,this);
+            }
+        }
         else if(nType==SMACH::TYPE_MEMORYMAP)
         {
             if(!g_stInit.contains(sInit))
