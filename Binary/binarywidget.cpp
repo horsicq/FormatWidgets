@@ -77,7 +77,7 @@ void BinaryWidget::reload()
     }
 }
 
-bool BinaryWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
+FormatWidget::SV BinaryWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
 {
     Q_UNUSED(vValue)
     Q_UNUSED(nStype)
@@ -86,7 +86,7 @@ bool BinaryWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype
     Q_UNUSED(nPosition)
     Q_UNUSED(nOffset)
 
-    bool bResult=false;
+    SV result=SV_NONE;
 
     blockSignals(true);
 
@@ -99,7 +99,7 @@ bool BinaryWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype
 
     blockSignals(false);
 
-    return bResult;
+    return result;
 }
 
 void BinaryWidget::setReadonly(bool bState)

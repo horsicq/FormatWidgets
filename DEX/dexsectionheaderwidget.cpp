@@ -114,12 +114,12 @@ void DEXSectionHeaderWidget::setStringTable(qint64 nStringTableOffset, qint64 nS
     this->g_nStringTableSize=nStringTableSize;
 }
 
-bool DEXSectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
+FormatWidget::SV DEXSectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
 {
     Q_UNUSED(nVtype)
     Q_UNUSED(nOffset)
 
-    bool bResult=false;
+    SV result=SV_NONE;
 
     quint64 nValue=vValue.toULongLong();
 
@@ -133,11 +133,11 @@ bool DEXSectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
 
             ui->widgetHex->reload();
 
-            bResult=true;
+            result=SV_EDITED;
         }
     }
 
-    return bResult;
+    return result;
 }
 void DEXSectionHeaderWidget::setReadonly(bool bState)
 {

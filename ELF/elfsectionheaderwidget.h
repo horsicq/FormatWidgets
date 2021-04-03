@@ -44,7 +44,7 @@ public:
     void setStringTable(qint64 nStringTableOffset,qint64 nStringTableSize);
 
 protected:
-    virtual bool _setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition,qint64 nOffset);
+    virtual SV _setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition,qint64 nOffset);
     virtual void setReadonly(bool bState);
     virtual void blockSignals(bool bState);
     virtual void adjustHeaderTable(int nType,QTableWidget *pTableWidget);

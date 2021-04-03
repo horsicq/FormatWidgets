@@ -51,9 +51,9 @@ void LESectionHeaderWidget::reload()
 
 }
 
-bool LESectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
+FormatWidget::SV LESectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
 {
-    return false;
+    return SV_NONE;
 }
 
 void LESectionHeaderWidget::setReadonly(bool bState)

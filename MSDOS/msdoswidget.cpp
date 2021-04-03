@@ -114,13 +114,13 @@ void MSDOSWidget::reload()
     }
 }
 
-bool MSDOSWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
+FormatWidget::SV MSDOSWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
 {
     Q_UNUSED(nVtype)
     Q_UNUSED(nPosition)
     Q_UNUSED(nOffset)
 
-    bool bResult=false;
+    SV result=SV_NONE;
 
     blockSignals(true);
 
@@ -168,13 +168,13 @@ bool MSDOSWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,
                     break;
             }
 
-            bResult=true;
+            result=SV_EDITED;
         }
     }
 
     blockSignals(false);
 
-    return bResult;
+    return result;
 }
 
 void MSDOSWidget::setReadonly(bool bState)

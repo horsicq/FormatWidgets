@@ -152,12 +152,12 @@ void DEXWidget::reload()
     }
 }
 
-bool DEXWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
+FormatWidget::SV DEXWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
 {
     Q_UNUSED(nVtype)
     Q_UNUSED(nPosition)
 
-    bool bResult=false;
+    SV result=SV_NONE;
 
     blockSignals(true);
 
@@ -235,13 +235,13 @@ bool DEXWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, i
                     break;
             }
 
-            bResult=true;
+            result=SV_EDITED;
         }
     }
 
     blockSignals(false);
 
-    return bResult;
+    return result;
 }
 
 void DEXWidget::setReadonly(bool bState)

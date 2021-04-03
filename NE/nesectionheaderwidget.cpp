@@ -52,9 +52,9 @@ void NESectionHeaderWidget::reload()
 
 }
 
-bool NESectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
+FormatWidget::SV NESectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
 {
-    return false;
+    return SV_NONE;
 }
 
 void NESectionHeaderWidget::setReadonly(bool bState)

@@ -151,12 +151,12 @@ void PESectionHeaderWidget::reload()
     reloadData();
 }
 
-bool PESectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int nPosition,qint64 nOffset)
+FormatWidget::SV PESectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int nPosition,qint64 nOffset)
 {
     Q_UNUSED(nVtype)
     Q_UNUSED(nOffset)
 
-    bool bResult=false;
+    SV result=SV_NONE;
 
     quint64 nValue=vValue.toULongLong();
     QString sValue=vValue.toString();
@@ -297,11 +297,11 @@ bool PESectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, i
 
             ui->widgetHex->reload();
 
-            bResult=true;
+            result=SV_EDITED;
         }
     }
 
-    return bResult;
+    return result;
 }
 void PESectionHeaderWidget::setReadonly(bool bState)
 {
