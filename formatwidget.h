@@ -159,7 +159,14 @@ public:
     void initToolsWidget(ToolsWidget *pWidget);
 
 protected:
-    virtual bool _setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition,qint64 nOffset)=0;
+    enum SV
+    {
+        SV_NONE=0,
+        SV_EDITED,
+        SV_RELOAD
+    };
+
+    virtual SV _setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition,qint64 nOffset)=0;
     virtual void setReadonly(bool bState)=0;
     virtual void blockSignals(bool bState)=0;
     virtual void adjustHeaderTable(int nType,QTableWidget *pTableWidget);

@@ -118,9 +118,15 @@ void FormatWidget::setValue(QVariant vValue, int nStype, int nNdata, int nVtype,
 {
     if(saveBackup())
     {
-        if(_setValue(vValue,nStype,nNdata,nVtype,nPosition,nOffset))
+        SV sv=_setValue(vValue,nStype,nNdata,nVtype,nPosition,nOffset);
+        if(sv==SV_EDITED)
         {
             setEdited(true);
+        }
+        else if(sv==SV_RELOAD)
+        {
+            setEdited(true);
+            reloadData();
         }
     }
     else

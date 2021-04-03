@@ -47,7 +47,7 @@ public:
     virtual void reload();
 
 protected:
-    virtual bool _setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition,qint64 nOffset);
+    virtual SV _setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition,qint64 nOffset);
     virtual void setReadonly(bool bState);
     virtual void blockSignals(bool bState);
     virtual void adjustHeaderTable(int nType,QTableWidget *pTableWidget);
@@ -83,6 +83,7 @@ private:
     {
         CB_mach_header_magic=0,
         CB_mach_header_cputype,
+        CB_mach_header_cpusubtype,
         CB_mach_header_filetype,
         CB_mach_header_flags,
         __CB_size

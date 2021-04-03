@@ -77,7 +77,7 @@ void ToolsWidget::reload()
 
     if(nIndex==0) // Hex
     {
-        ui->widgetHex->reload();
+        ui->widgetHex->reload(true);
     }
     else if(nIndex==1) // Strings
     {

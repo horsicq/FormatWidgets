@@ -51,9 +51,9 @@ void MACHSectionHeaderWidget::reload()
 
 }
 
-bool MACHSectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
+FormatWidget::SV MACHSectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
 {
-    return false;
+    return SV_NONE;
 }
 
 void MACHSectionHeaderWidget::setReadonly(bool bState)

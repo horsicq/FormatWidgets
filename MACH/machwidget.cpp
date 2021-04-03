@@ -150,13 +150,13 @@ void MACHWidget::reload()
     }
 }
 
-bool MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
+FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
 {
     Q_UNUSED(nVtype)
     Q_UNUSED(nPosition)
     Q_UNUSED(nOffset)
 
-    bool bResult=false;
+    SV result=SV_NONE;
 
     blockSignals(true);
 
@@ -175,6 +175,7 @@ bool MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, 
                     {
                         case N_mach_header::magic:      g_comboBox[CB_mach_header_magic]->setValue(nValue);       break; // TODO reload all data
                         case N_mach_header::cputype:    g_comboBox[CB_mach_header_cputype]->setValue(nValue);     break;
+                        case N_mach_header::cpusubtype: g_comboBox[CB_mach_header_cpusubtype]->setValue(nValue);  break;
                         case N_mach_header::filetype:   g_comboBox[CB_mach_header_filetype]->setValue(nValue);    break;
                         case N_mach_header::flags:      g_comboBox[CB_mach_header_flags]->setValue(nValue);       break;
                     }
@@ -201,13 +202,25 @@ bool MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, 
                     break;
             }
 
-            bResult=true;
+            result=SV_EDITED;
+
+            switch(nStype)
+            {
+                case SMACH::TYPE_mach_header:
+                    switch(nNdata)
+                    {
+                        case N_mach_header::magic:      result=SV_RELOAD;           break;
+                        case N_mach_header::cputype:    result=SV_RELOAD;           break;
+                    }
+
+                    break;
+            }
         }
     }
 
     blockSignals(false);
 
-    return bResult;
+    return result;
 }
 
 void MACHWidget::setReadonly(bool bState)
@@ -379,6 +392,7 @@ void MACHWidget::reloadData()
 
                 g_comboBox[CB_mach_header_magic]=createComboBox(ui->tableWidget_mach_header,XMACH::getHeaderMagicsS(),SMACH::TYPE_mach_header,N_mach_header::magic,XComboBoxEx::CBTYPE_NORMAL);
                 g_comboBox[CB_mach_header_cputype]=createComboBox(ui->tableWidget_mach_header,XMACH::getHeaderCpuTypesS(),SMACH::TYPE_mach_header,N_mach_header::cputype,XComboBoxEx::CBTYPE_NORMAL);
+                g_comboBox[CB_mach_header_cpusubtype]=createComboBox(ui->tableWidget_mach_header,XMACH::getHeaderCpuSubTypes(mach.getHeader_cputype()),SMACH::TYPE_mach_header,N_mach_header::cpusubtype,XComboBoxEx::CBTYPE_NORMAL);
                 g_comboBox[CB_mach_header_filetype]=createComboBox(ui->tableWidget_mach_header,XMACH::getHeaderFileTypesS(),SMACH::TYPE_mach_header,N_mach_header::filetype,XComboBoxEx::CBTYPE_NORMAL);
                 g_comboBox[CB_mach_header_flags]=createComboBox(ui->tableWidget_mach_header,XMACH::getHeaderFlagsS(),SMACH::TYPE_mach_header,N_mach_header::flags,XComboBoxEx::CBTYPE_FLAGS);
 
@@ -399,6 +413,7 @@ void MACHWidget::reloadData()
 
                 g_comboBox[CB_mach_header_magic]->setValue(mach.getHeader_magic());
                 g_comboBox[CB_mach_header_cputype]->setValue((quint32)mach.getHeader_cputype());
+                g_comboBox[CB_mach_header_cpusubtype]->setValue((quint32)mach.getHeader_cpusubtype());
                 g_comboBox[CB_mach_header_filetype]->setValue((quint32)mach.getHeader_filetype());
                 g_comboBox[CB_mach_header_flags]->setValue((quint32)mach.getHeader_flags());
 
