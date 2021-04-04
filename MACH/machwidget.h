@@ -63,12 +63,10 @@ private slots:
     void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent,QTreeWidgetItem *pPrevious);
     void on_checkBoxReadonly_toggled(bool bChecked);
     bool createSectionTable(int nType,QTableWidget *pTableWidget,const FW_DEF::HEADER_RECORD *pRecords,int nRecordCount);
-    void on_tableWidget_commands_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
     void on_pushButtonReload_clicked();
     void enableButton();
     void on_tableWidget_segments_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
     void on_tableWidget_sections_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
-    void loadCommand(int nNumber);
     void loadSegment(int nNumber);
     void loadSection(int nNumber);
     void on_tableWidget_mach_header_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
@@ -77,6 +75,7 @@ private slots:
     void on_tableWidget_sections_customContextMenuRequested(const QPoint &pos);
     void on_toolButtonPrev_clicked();
     void on_toolButtonNext_clicked();
+    void onTableView_commands_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
 
 private:
     enum CB
@@ -95,6 +94,7 @@ private:
     XComboBoxEx *g_comboBox[__CB_size];
 
     SubDevice *g_subDevice[SMACH::__TYPE_size];
+    QStandardItemModel *tvModel[SMACH::__TYPE_size];
 
     QSet<QString> g_stInit;
     qint32 g_nLastType;

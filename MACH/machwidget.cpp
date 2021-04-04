@@ -115,33 +115,33 @@ void MACHWidget::reload()
             QTreeWidgetItem *pItemCommands=createNewItem(SMACH::TYPE_mach_commands,tr("Commands"));
 
             ui->treeWidgetNavi->addTopLevelItem(pItemCommands);
-        }
 
-        QList<XMACH::SEGMENT_RECORD> listSegmentRecords=mach.getSegmentRecords(&listCommandRecords);
+            QList<XMACH::SEGMENT_RECORD> listSegmentRecords=mach.getSegmentRecords(&listCommandRecords);
 
-        if(listSegmentRecords.count())
-        {
-            QTreeWidgetItem *pItemSegments=createNewItem(SMACH::TYPE_mach_segments,tr("Segments"));
+            if(listSegmentRecords.count())
+            {
+                QTreeWidgetItem *pItemSegments=createNewItem(SMACH::TYPE_mach_segments,tr("Segments"));
 
-            ui->treeWidgetNavi->addTopLevelItem(pItemSegments);
-        }
+                pItemCommands->addChild(pItemSegments);
 
-        QList<XMACH::SECTION_RECORD> listSectionRecords=mach.getSectionRecords(&listCommandRecords);
+                QList<XMACH::SECTION_RECORD> listSectionRecords=mach.getSectionRecords(&listCommandRecords);
 
-        if(listSectionRecords.count())
-        {
-            QTreeWidgetItem *pItemSections=createNewItem(SMACH::TYPE_mach_sections,tr("Sections"));
+                if(listSectionRecords.count())
+                {
+                    QTreeWidgetItem *pItemSections=createNewItem(SMACH::TYPE_mach_sections,tr("Sections"));
 
-            ui->treeWidgetNavi->addTopLevelItem(pItemSections);
-        }
+                    pItemSegments->addChild(pItemSections);
+                }
+            }
 
-        QList<XMACH::LIBRARY_RECORD> listLibraryRecords=mach.getLibraryRecords(&listCommandRecords);
+            QList<XMACH::LIBRARY_RECORD> listLibraryRecords=mach.getLibraryRecords(&listCommandRecords);
 
-        if(listLibraryRecords.count())
-        {
-            QTreeWidgetItem *pItemLibraries=createNewItem(SMACH::TYPE_mach_libraries,tr("Libraries"));
+            if(listLibraryRecords.count())
+            {
+                QTreeWidgetItem *pItemLibraries=createNewItem(SMACH::TYPE_mach_libraries,tr("Libraries"));
 
-            ui->treeWidgetNavi->addTopLevelItem(pItemLibraries);
+                pItemCommands->addChild(pItemLibraries);
+            }
         }
 
         ui->treeWidgetNavi->expandAll();
@@ -209,8 +209,8 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
                 case SMACH::TYPE_mach_header:
                     switch(nNdata)
                     {
-                        case N_mach_header::magic:      result=SV_RELOAD;           break;
-                        case N_mach_header::cputype:    result=SV_RELOAD;           break;
+                        case N_mach_header::magic:      result=SV_RELOAD;               break;
+                        case N_mach_header::cputype:    result=SV_RELOADDATA;           break;
                     }
 
                     break;
@@ -429,45 +429,16 @@ void MACHWidget::reloadData()
         {
             if(!g_stInit.contains(sInit))
             {
-                createSectionTable(SMACH::TYPE_mach_commands,ui->tableWidget_commands,N_mach_commands::records,N_mach_commands::__data_size);
+                MACHProcessData machProcessData(SMACH::TYPE_mach_commands,&tvModel[SMACH::TYPE_mach_commands],&mach,0,0);
 
-                blockSignals(true);
+                ajustTableView(&machProcessData,&tvModel[SMACH::TYPE_mach_commands],ui->tableView_commands);
 
-                QList<XMACH::COMMAND_RECORD> listCommandRecords=mach.getCommandRecords();
+                connect(ui->tableView_commands->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_commands_currentRowChanged(QModelIndex,QModelIndex)));
 
-                int nNumberOfCommands=listCommandRecords.count();
-
-                ui->tableWidget_commands->setRowCount(nNumberOfCommands);
-
-                QMap<quint64,QString> mapLC=mach.getLoadCommandTypesS();
-
-                for(int i=0; i<nNumberOfCommands; i++)
+                if(tvModel[SMACH::TYPE_mach_commands]->rowCount())
                 {
-                    QTableWidgetItem *pItem=new QTableWidgetItem(QString::number(i));
-
-                    pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET,listCommandRecords.at(i).nOffset);
-                    pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE,listCommandRecords.at(i).nSize);
-                    pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS,listCommandRecords.at(i).nOffset);
-
-                    ui->tableWidget_commands->setItem(i,0,                              pItem);
-                    ui->tableWidget_commands->setItem(i,N_mach_commands::cmd+1,         new QTableWidgetItem(XBinary::valueToHex((quint32)listCommandRecords.at(i).nType)));
-                    ui->tableWidget_commands->setItem(i,N_mach_commands::cmdsize+1,     new QTableWidgetItem(XBinary::valueToHex((quint32)listCommandRecords.at(i).nSize)));
-                    ui->tableWidget_commands->setItem(i,N_mach_commands::cmdsize+2,     new QTableWidgetItem(mapLC.value(listCommandRecords.at(i).nType)));
+                    ui->tableView_commands->setCurrentIndex(ui->tableView_commands->model()->index(0,0));
                 }
-
-                if(nNumberOfCommands)
-                {
-                    if(ui->tableWidget_commands->currentRow()==0)
-                    {
-                        loadCommand(0);
-                    }
-                    else
-                    {
-                        ui->tableWidget_commands->setCurrentCell(0,0);
-                    }
-                }
-
-                blockSignals(false);
             }
         }
         else if(nType==SMACH::TYPE_mach_segments)
@@ -690,15 +661,6 @@ bool MACHWidget::createSectionTable(int nType, QTableWidget *pTableWidget, const
     // TODO
     switch(nType)
     {
-        case SMACH::TYPE_mach_commands:
-            slHeader.append(tr(""));
-            pTableWidget->setColumnCount(nRecordCount+2);
-            pTableWidget->setColumnWidth(0,nSymbolWidth*4);
-            pTableWidget->setColumnWidth(1,nSymbolWidth*10);
-            pTableWidget->setColumnWidth(2,nSymbolWidth*10);
-            pTableWidget->setColumnWidth(3,nSymbolWidth*20);
-            break;
-
         case SMACH::TYPE_mach_segments:
             slHeader.append(tr(""));
             pTableWidget->setColumnCount(nRecordCount+1);
@@ -750,10 +712,6 @@ bool MACHWidget::createSectionTable(int nType, QTableWidget *pTableWidget, const
 
     switch(nType)
     {
-        case SMACH::TYPE_mach_commands:
-            slHeader.append(tr("Type"));
-            break;
-
         case SMACH::TYPE_mach_libraries:
             slHeader.append(tr("Library"));
             break;
@@ -763,18 +721,6 @@ bool MACHWidget::createSectionTable(int nType, QTableWidget *pTableWidget, const
     pTableWidget->horizontalHeader()->setVisible(true);
 
     return true;
-}
-
-void MACHWidget::on_tableWidget_commands_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
-{
-    Q_UNUSED(nCurrentColumn)
-    Q_UNUSED(nPreviousRow)
-    Q_UNUSED(nPreviousColumn)
-
-    if(nCurrentRow!=-1)
-    {
-        loadCommand(nCurrentRow);
-    }
 }
 
 void MACHWidget::on_pushButtonReload_clicked()
@@ -812,15 +758,6 @@ void MACHWidget::on_tableWidget_sections_currentCellChanged(int nCurrentRow, int
     {
         loadSection(nCurrentRow);
     }
-}
-
-void MACHWidget::loadCommand(int nNumber)
-{
-    qint64 nOffset=ui->tableWidget_commands->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
-    qint64 nSize=ui->tableWidget_commands->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
-    qint64 nAddress=ui->tableWidget_commands->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
-
-    loadHexSubdevice(nOffset,nSize,nAddress,&g_subDevice[SMACH::TYPE_mach_commands],ui->widgetHex_commands);
 }
 
 void MACHWidget::loadSegment(int nNumber)
@@ -878,4 +815,12 @@ void MACHWidget::on_toolButtonNext_clicked()
     setAddPageEnabled(false);
     ui->treeWidgetNavi->setCurrentItem(getNextPage());
     setAddPageEnabled(true);
+}
+
+void MACHWidget::onTableView_commands_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
+    Q_UNUSED(current)
+    Q_UNUSED(previous)
+
+    loadHexSubdeviceByTableView(current.row(),SMACH::TYPE_mach_commands,ui->widgetHex_commands,ui->tableView_commands,&g_subDevice[SMACH::TYPE_mach_commands]);
 }

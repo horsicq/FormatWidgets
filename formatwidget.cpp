@@ -126,6 +126,12 @@ void FormatWidget::setValue(QVariant vValue, int nStype, int nNdata, int nVtype,
         else if(sv==SV_RELOAD)
         {
             setEdited(true);
+            reload();
+            reloadData();
+        }
+        else if(sv==SV_RELOADDATA)
+        {
+            setEdited(true);
             reloadData();
         }
     }

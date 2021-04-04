@@ -98,15 +98,15 @@ void PEProcessData::_process()
 
         QList<XPE::RELOCS_HEADER> listRelocsHeaders=g_pPE->getRelocsHeaders();
 
-        int nNumberOfRelocsHeaders=listRelocsHeaders.count();
+        int nNumberOfRecords=listRelocsHeaders.count();
 
-        *g_ppModel=new QStandardItemModel(nNumberOfRelocsHeaders,listLabels.count());
+        *g_ppModel=new QStandardItemModel(nNumberOfRecords,listLabels.count());
 
-        setMaximum(nNumberOfRelocsHeaders);
+        setMaximum(nNumberOfRecords);
 
         setHeader(*g_ppModel,&listLabels);
 
-        for(int i=0; i<nNumberOfRelocsHeaders; i++)
+        for(int i=0; i<nNumberOfRecords; i++)
         {
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);

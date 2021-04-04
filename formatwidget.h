@@ -163,7 +163,8 @@ protected:
     {
         SV_NONE=0,
         SV_EDITED,
-        SV_RELOAD
+        SV_RELOAD,
+        SV_RELOADDATA
     };
 
     virtual SV _setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition,qint64 nOffset)=0;
