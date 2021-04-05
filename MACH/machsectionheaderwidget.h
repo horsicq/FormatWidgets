@@ -33,17 +33,12 @@ class MACHSectionHeaderWidget : public FormatWidget
     Q_OBJECT
 
 public:
-    enum CB
-    {
-        CB_CHARACTERISTICS=0,
-        CB_ALIGH,
-        __CB_size
-    };
     MACHSectionHeaderWidget(QWidget *pParent=nullptr);
-    MACHSectionHeaderWidget(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions,quint32 nNumber,qint64 nOffset,qint32 nType,QWidget *pParent=nullptr);
+    MACHSectionHeaderWidget(QIODevice *pDevice,FW_DEF::OPTIONS options,quint32 nNumber,qint64 nOffset,qint32 nType,QWidget *pParent=nullptr);
     ~MACHSectionHeaderWidget();
     virtual void clear();
-    virtual void setData(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions,quint32 nNumber,qint64 nOffset);
+    virtual void cleanup();
+    virtual void reset();
     virtual void reload();
 
 protected:
@@ -55,23 +50,19 @@ protected:
 private slots:
     void on_checkBoxReadonly_toggled(bool bChecked);
     void reloadData();
-
-    void on_tableWidget_Section_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
+    void widgetValueChanged(quint64 nValue);
+    void on_tableWidget_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
 
 private:
-    enum INV
-    {
-        INV_OriginalFirstThunk,
-        INV_Name,
-        INV_FirstThunk,
-        __INV_size
-    };
 
     Ui::MACHSectionHeaderWidget *ui;
-    XLineEditHEX *g_lineEdit_Section[N_mach_sections::__data_size];
-    bool g_bInit;
-    InvWidget *g_invWidget[__INV_size];
+    XLineEditHEX **g_ppLinedEdit;
+    int g_nLineEditSize;
+    XComboBoxEx **g_ppComboBox;
+    int g_nComboBoxSize;
+    InvWidget **g_ppInvWidget;
+    int g_nInvWidgetSize;
     SubDevice *g_pSubDevice;
+    bool g_bInit;
 };
-
 #endif // MACHSECTIONHEADERWIDGET_H

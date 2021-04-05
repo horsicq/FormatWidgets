@@ -460,7 +460,7 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QTableWidget" name="tableWidget_libraries">
+         <widget class="QTableView" name="tableView_libraries">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
             <horstretch>0</horstretch>
@@ -484,6 +484,9 @@
           </attribute>
           <attribute name="verticalHeaderDefaultSectionSize">
            <number>20</number>
+          </attribute>
+          <attribute name="verticalHeaderStretchLastSection">
+           <bool>false</bool>
           </attribute>
          </widget>
         </item>

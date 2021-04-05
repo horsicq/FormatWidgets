@@ -285,6 +285,7 @@ void ELFProcessData::_process()
                 pItem->setTextAlignment(Qt::AlignRight);
 
                 pItem->setData(g_nOffset+i*sizeof(XELF_DEF::Elf64_Sym),Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+                pItem->setData(g_nOffset+i*sizeof(XELF_DEF::Elf64_Sym),Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
 
                 pItem->setData(g_nStringTableOffset,Qt::UserRole+FW_DEF::SECTION_DATA_STRINGTABLEOFFSET);
                 pItem->setData(g_nStringTableSize,Qt::UserRole+FW_DEF::SECTION_DATA_STRINGTABLESIZE);
@@ -389,6 +390,7 @@ void ELFProcessData::_process()
             QStandardItem *pItem=new QStandardItem(QString::number(i));
 
             pItem->setData(listTagStructs.at(i).nOffset,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+            pItem->setData(listTagStructs.at(i).nOffset,Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
 
             pItem->setData(g_nStringTableOffset,Qt::UserRole+FW_DEF::SECTION_DATA_STRINGTABLEOFFSET);
             pItem->setData(g_nStringTableSize,Qt::UserRole+FW_DEF::SECTION_DATA_STRINGTABLESIZE);
@@ -423,6 +425,7 @@ void ELFProcessData::_process()
             QStandardItem *pItem=new QStandardItem(QString::number(i));
 
             pItem->setData(listNotes.at(i).nOffset,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+            pItem->setData(listNotes.at(i).nOffset,Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
             pItem->setData(listNotes.at(i).nOffset,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS);
             pItem->setData(listNotes.at(i).nSize,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
 
@@ -528,6 +531,7 @@ void ELFProcessData::_process()
                 QStandardItem *pItem=new QStandardItem(QString::number(i));
 
                 pItem->setData(g_nOffset+i*sizeof(XELF_DEF::Elf64_Rela),Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+                pItem->setData(g_nOffset+i*sizeof(XELF_DEF::Elf64_Rela),Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
 
                 (*g_ppModel)->setItem(i,0,                            pItem);
                 (*g_ppModel)->setItem(i,N_Elf_Rela::r_offset+1,       new QStandardItem(XBinary::valueToHex(listRela64.at(i).r_offset)));
@@ -541,6 +545,7 @@ void ELFProcessData::_process()
                 QStandardItem *pItem=new QStandardItem(QString::number(i));
 
                 pItem->setData(g_nOffset+i*sizeof(XELF_DEF::Elf32_Rela),Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+                pItem->setData(g_nOffset+i*sizeof(XELF_DEF::Elf32_Rela),Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
 
                 (*g_ppModel)->setItem(i,0,                            pItem);
                 (*g_ppModel)->setItem(i,N_Elf_Rela::r_offset+1,       new QStandardItem(XBinary::valueToHex(listRela32.at(i).r_offset)));
@@ -618,6 +623,7 @@ void ELFProcessData::_process()
                 QStandardItem *pItem=new QStandardItem(QString::number(i));
 
                 pItem->setData(g_nOffset+i*sizeof(XELF_DEF::Elf64_Rel),Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+                pItem->setData(g_nOffset+i*sizeof(XELF_DEF::Elf64_Rel),Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
 
                 (*g_ppModel)->setItem(i,0,                            pItem);
                 (*g_ppModel)->setItem(i,N_Elf_Rel::r_offset+1,        new QStandardItem(XBinary::valueToHex(listRel64.at(i).r_offset)));
@@ -630,6 +636,7 @@ void ELFProcessData::_process()
                 QStandardItem *pItem=new QStandardItem(QString::number(i));
 
                 pItem->setData(g_nOffset+i*sizeof(XELF_DEF::Elf32_Rel),Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+                pItem->setData(g_nOffset+i*sizeof(XELF_DEF::Elf32_Rel),Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
 
                 (*g_ppModel)->setItem(i,0,                            pItem);
                 (*g_ppModel)->setItem(i,N_Elf_Rel::r_offset+1,        new QStandardItem(XBinary::valueToHex(listRel32.at(i).r_offset)));

@@ -258,8 +258,14 @@ void MACHWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
 
 QString MACHWidget::typeIdToString(int nType)
 {
-    // TODO !!!
-    return FormatWidget::typeIdToString(nType);
+    QString sResult="Unknown";
+
+    switch(nType)
+    {
+        case SMACH::TYPE_mach_commands:         sResult=QString("Command %1").arg(tr("Header"));        break;
+    }
+
+    return sResult;
 }
 
 void MACHWidget::_showInDisasmWindowAddress(qint64 nAddress)
@@ -586,25 +592,14 @@ void MACHWidget::reloadData()
         {
             if(!g_stInit.contains(sInit))
             {
-                createSectionTable(SMACH::TYPE_mach_libraries,ui->tableWidget_libraries,N_mach_libraries::records,N_mach_libraries::__data_size);
+                MACHProcessData machProcessData(SMACH::TYPE_mach_libraries,&tvModel[SMACH::TYPE_mach_libraries],&mach,0,0);
 
-                blockSignals(true);
+                ajustTableView(&machProcessData,&tvModel[SMACH::TYPE_mach_libraries],ui->tableView_libraries);
 
-                QList<XMACH::LIBRARY_RECORD> listLibraries=mach.getLibraryRecords();
-
-                int nNumberOfLibraries=listLibraries.count();
-
-                ui->tableWidget_libraries->setRowCount(nNumberOfLibraries);
-
-                for(int i=0; i<nNumberOfLibraries; i++)
+                if(tvModel[SMACH::TYPE_mach_libraries]->rowCount())
                 {
-                    ui->tableWidget_libraries->setItem(i,N_mach_libraries::timestamp,                   new QTableWidgetItem(XBinary::valueToHex(listLibraries.at(i).timestamp)));
-                    ui->tableWidget_libraries->setItem(i,N_mach_libraries::current_version,             new QTableWidgetItem(XBinary::valueToHex(listLibraries.at(i).current_version)));
-                    ui->tableWidget_libraries->setItem(i,N_mach_libraries::compatibility_version,       new QTableWidgetItem(XBinary::valueToHex(listLibraries.at(i).compatibility_version)));
-                    ui->tableWidget_libraries->setItem(i,N_mach_libraries::compatibility_version+1,     new QTableWidgetItem(listLibraries.at(i).sFullName));
+                    ui->tableView_libraries->setCurrentIndex(ui->tableView_libraries->model()->index(0,0));
                 }
-
-                blockSignals(false);
             }
         }
 
@@ -788,21 +783,6 @@ void MACHWidget::on_tableWidget_mach_header_currentCellChanged(int nCurrentRow, 
     setHeaderTableSelection(ui->widgetHex_mach_header,ui->tableWidget_mach_header);
 }
 
-void MACHWidget::on_tableWidget_commands_customContextMenuRequested(const QPoint &pos)
-{
-    // TODO
-}
-
-void MACHWidget::on_tableWidget_segments_customContextMenuRequested(const QPoint &pos)
-{
-    // TODO
-}
-
-void MACHWidget::on_tableWidget_sections_customContextMenuRequested(const QPoint &pos)
-{
-    // TODO
-}
-
 void MACHWidget::on_toolButtonPrev_clicked()
 {
     setAddPageEnabled(false);
@@ -823,4 +803,58 @@ void MACHWidget::onTableView_commands_currentRowChanged(const QModelIndex &curre
     Q_UNUSED(previous)
 
     loadHexSubdeviceByTableView(current.row(),SMACH::TYPE_mach_commands,ui->widgetHex_commands,ui->tableView_commands,&g_subDevice[SMACH::TYPE_mach_commands]);
+}
+
+void MACHWidget::on_tableView_commands_doubleClicked(const QModelIndex &index)
+{
+    Q_UNUSED(index)
+    editCommandHeader();
+}
+
+void MACHWidget::on_tableView_commands_customContextMenuRequested(const QPoint &pos)
+{
+    int nRow=ui->tableView_commands->currentIndex().row();
+
+    if(nRow!=-1)
+    {
+        QMenu contextMenu(this);
+
+        QAction actionEdit(tr("Edit"),this);
+        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editCommandHeader()));
+        contextMenu.addAction(&actionEdit);
+
+        contextMenu.exec(ui->tableView_commands->viewport()->mapToGlobal(pos));
+    }
+}
+
+void MACHWidget::editCommandHeader()
+{
+    showSectionHeader(SMACH::TYPE_mach_commands,ui->tableView_commands);
+}
+
+void MACHWidget::showSectionHeader(int nType, QTableView *pTableView)
+{
+    int nRow=pTableView->currentIndex().row();
+
+    if(nRow!=-1)
+    {
+        QModelIndex index=pTableView->selectionModel()->selectedIndexes().at(0);
+
+        qint64 nOffset=pTableView->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET).toLongLong();
+
+        MACHSectionHeaderWidget *pSectionHeaderWidget=new MACHSectionHeaderWidget(getDevice(),getOptions(),(quint32)nRow,nOffset,nType,this);
+
+        DialogSectionHeader dsh(this);
+        dsh.setWidget(pSectionHeaderWidget);
+        dsh.setData(typeIdToString(nType));
+        dsh.setEdited(isEdited());
+
+        connect(&dsh,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+
+        dsh.exec();
+
+        reloadData();
+
+        pTableView->setCurrentIndex(pTableView->model()->index(nRow,0));
+    }
 }

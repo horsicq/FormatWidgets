@@ -900,7 +900,7 @@ void ELFWidget::showSectionHeader(int nType, QTableView *pTableView)
     {
         QModelIndex index=pTableView->selectionModel()->selectedIndexes().at(0);
 
-        qint64 nOffset=pTableView->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
+        qint64 nOffset=pTableView->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET).toLongLong();
 
         qint64 nStringTableOffset=pTableView->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_STRINGTABLEOFFSET).toLongLong();
         qint64 nStringTableSize=pTableView->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_STRINGTABLESIZE).toLongLong();

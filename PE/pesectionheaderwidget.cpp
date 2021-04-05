@@ -306,14 +306,12 @@ FormatWidget::SV PESectionHeaderWidget::_setValue(QVariant vValue, int nStype, i
 void PESectionHeaderWidget::setReadonly(bool bState)
 {
     setLineEditsReadOnly(g_ppLinedEdit,g_nLineEditSize,bState);
-
     setComboBoxesReadOnly(g_ppComboBox,g_nComboBoxSize,bState);
 }
 
 void PESectionHeaderWidget::blockSignals(bool bState)
 {
     _blockSignals((QObject **)g_ppLinedEdit,g_nLineEditSize,bState);
-
     _blockSignals((QObject **)g_ppComboBox,g_nComboBoxSize,bState);
 }
 

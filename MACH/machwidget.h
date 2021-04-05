@@ -22,6 +22,7 @@
 #define MACHWIDGET_H
 
 #include "../formatwidget.h"
+#include "dialogsectionheader.h"
 #include "mach_defs.h"
 #include "machsectionheaderwidget.h"
 #include "machprocessdata.h"
@@ -70,12 +71,13 @@ private slots:
     void loadSegment(int nNumber);
     void loadSection(int nNumber);
     void on_tableWidget_mach_header_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
-    void on_tableWidget_commands_customContextMenuRequested(const QPoint &pos);
-    void on_tableWidget_segments_customContextMenuRequested(const QPoint &pos);
-    void on_tableWidget_sections_customContextMenuRequested(const QPoint &pos);
     void on_toolButtonPrev_clicked();
     void on_toolButtonNext_clicked();
     void onTableView_commands_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
+    void on_tableView_commands_doubleClicked(const QModelIndex &index);
+    void on_tableView_commands_customContextMenuRequested(const QPoint &pos);
+    void editCommandHeader();
+    void showSectionHeader(int nType,QTableView *pTableView);
 
 private:
     enum CB

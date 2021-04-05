@@ -55,12 +55,43 @@ void MACHProcessData::_process()
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
             pItem->setData(listCommandRecords.at(i).nOffset,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+            pItem->setData(listCommandRecords.at(i).nOffset,Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
             pItem->setData(listCommandRecords.at(i).nSize,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
             pItem->setData(listCommandRecords.at(i).nOffset,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS);
             (*g_ppModel)->setItem(i,0,                                          pItem);
             (*g_ppModel)->setItem(i,N_mach_commands::cmd+1,                     new QStandardItem(XBinary::valueToHex((quint32)listCommandRecords.at(i).nType)));
             (*g_ppModel)->setItem(i,N_mach_commands::cmdsize+1,                 new QStandardItem(XBinary::valueToHex((quint32)listCommandRecords.at(i).nSize)));
             (*g_ppModel)->setItem(i,N_mach_commands::cmdsize+2,                 new QStandardItem(mapLC.value(listCommandRecords.at(i).nType)));
+
+            incValue();
+        }
+    }
+    else if(g_nType==SMACH::TYPE_mach_libraries)
+    {
+        QList<QString> listLabels;
+        listLabels.append("");
+        listLabels.append(getStructList(N_mach_libraries::records,N_mach_libraries::__data_size));
+        listLabels.append(tr("Library"));
+
+        QList<XMACH::LIBRARY_RECORD> listLibraries=g_pXMACH->getLibraryRecords();
+
+        int nNumberOfRecords=listLibraries.count();
+
+        *g_ppModel=new QStandardItemModel(nNumberOfRecords,listLabels.count());
+
+        setMaximum(nNumberOfRecords);
+
+        setHeader(*g_ppModel,&listLabels);
+
+        for(int i=0; i<nNumberOfRecords; i++)
+        {
+            QStandardItem *pItem=new QStandardItem;
+            pItem->setData(i,Qt::DisplayRole);
+            (*g_ppModel)->setItem(i,0,                                              pItem);
+            (*g_ppModel)->setItem(i,N_mach_libraries::timestamp+1,                  new QStandardItem(XBinary::valueToHex(listLibraries.at(i).timestamp)));
+            (*g_ppModel)->setItem(i,N_mach_libraries::current_version+1,            new QStandardItem(XBinary::valueToHex(listLibraries.at(i).current_version)));
+            (*g_ppModel)->setItem(i,N_mach_libraries::compatibility_version+1,      new QStandardItem(XBinary::valueToHex(listLibraries.at(i).compatibility_version)));
+            (*g_ppModel)->setItem(i,N_mach_libraries::compatibility_version+2,      new QStandardItem(listLibraries.at(i).sFullName));
 
             incValue();
         }
@@ -77,5 +108,13 @@ void MACHProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
         pTableView->setColumnWidth(1,nSymbolWidth*10);
         pTableView->setColumnWidth(2,nSymbolWidth*10);
         pTableView->setColumnWidth(3,nSymbolWidth*20);
+    }
+    else if(g_nType==SMACH::TYPE_mach_libraries)
+    {
+        pTableView->setColumnWidth(0,nSymbolWidth*4);
+        pTableView->setColumnWidth(1,nSymbolWidth*10);
+        pTableView->setColumnWidth(2,nSymbolWidth*10);
+        pTableView->setColumnWidth(3,nSymbolWidth*10);
+        pTableView->setColumnWidth(4,nSymbolWidth*45);
     }
 }

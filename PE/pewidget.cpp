@@ -2076,7 +2076,7 @@ void PEWidget::showSectionHeader(int nType, QTableView *pTableView)
     {
         QModelIndex index=pTableView->selectionModel()->selectedIndexes().at(0);
 
-        qint64 nOffset=pTableView->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
+        qint64 nOffset=pTableView->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET).toLongLong();
 
         PESectionHeaderWidget *pSectionHeaderWidget=new PESectionHeaderWidget(getDevice(),getOptions(),(quint32)nRow,nOffset,nType,this);
 

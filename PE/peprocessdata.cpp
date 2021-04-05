@@ -111,6 +111,7 @@ void PEProcessData::_process()
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
             pItem->setData(listRelocsHeaders.at(i).nOffset,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+            pItem->setData(listRelocsHeaders.at(i).nOffset,Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
             (*g_ppModel)->setItem(i,0,                                            pItem);
             (*g_ppModel)->setItem(i,N_IMAGE_RELOCS::VirtualAddress+1,             new QStandardItem(XBinary::valueToHex(listRelocsHeaders.at(i).baseRelocation.VirtualAddress)));
             (*g_ppModel)->setItem(i,N_IMAGE_RELOCS::SizeOfBlock+1,                new QStandardItem(XBinary::valueToHex(listRelocsHeaders.at(i).baseRelocation.SizeOfBlock)));
