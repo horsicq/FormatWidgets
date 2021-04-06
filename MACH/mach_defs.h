@@ -73,6 +73,17 @@ enum DATA
 };
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
+
+enum CB
+{
+    CB_CMD,
+    __CB_size
+};
+
+enum INV
+{
+    __INV_size
+};
 }
 
 namespace N_mach_segments
@@ -93,6 +104,16 @@ enum DATA
 
 extern const FW_DEF::HEADER_RECORD records32[__data_size];
 extern const FW_DEF::HEADER_RECORD records64[__data_size];
+
+enum CB
+{
+    __CB_size
+};
+
+enum INV
+{
+    __INV_size
+};
 }
 
 namespace N_mach_sections
@@ -113,6 +134,16 @@ enum DATA
 
 extern const FW_DEF::HEADER_RECORD records32[__data_size];
 extern const FW_DEF::HEADER_RECORD records64[__data_size];
+
+enum CB
+{
+    __CB_size
+};
+
+enum INV
+{
+    __INV_size
+};
 }
 
 namespace N_mach_libraries

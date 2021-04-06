@@ -50,8 +50,8 @@ namespace N_mach_commands
 {
 const FW_DEF::HEADER_RECORD records[]=
 {
-    {cmd,                  "cmd",               offsetof(XMACH_DEF::load_command,cmd),      2,      "uint32_t",             FW_DEF::VAL_TYPE_DATA},
-    {cmdsize,              "cmdsize",           offsetof(XMACH_DEF::load_command,cmdsize),  4,      "uint32_t",             FW_DEF::VAL_TYPE_SIZE},
+    {cmd,                  "cmd",               offsetof(XMACH_DEF::load_command,cmd),          4,      "uint32_t",             FW_DEF::VAL_TYPE_DATA},
+    {cmdsize,              "cmdsize",           offsetof(XMACH_DEF::load_command,cmdsize),      4,      "uint32_t",             FW_DEF::VAL_TYPE_SIZE},
 };
 }
 

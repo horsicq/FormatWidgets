@@ -360,7 +360,7 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QTableWidget" name="tableWidget_segments">
+         <widget class="QTableView" name="tableView_segments">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
             <horstretch>0</horstretch>
@@ -387,6 +387,9 @@
           </attribute>
           <attribute name="verticalHeaderDefaultSectionSize">
            <number>20</number>
+          </attribute>
+          <attribute name="verticalHeaderStretchLastSection">
+           <bool>false</bool>
           </attribute>
          </widget>
         </item>
@@ -410,7 +413,7 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QTableWidget" name="tableWidget_sections">
+         <widget class="QTableView" name="tableView_sections">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
             <horstretch>0</horstretch>
@@ -436,7 +439,10 @@
            <number>20</number>
           </attribute>
           <attribute name="verticalHeaderDefaultSectionSize">
-           <number>20</number>
+           <number>21</number>
+          </attribute>
+          <attribute name="verticalHeaderStretchLastSection">
+           <bool>false</bool>
           </attribute>
          </widget>
         </item>

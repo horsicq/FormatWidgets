@@ -153,7 +153,6 @@ void ELFSectionHeaderWidget::setStringTable(qint64 nStringTableOffset, qint64 nS
 FormatWidget::SV ELFSectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
 {
     Q_UNUSED(nVtype)
-    Q_UNUSED(nOffset)
 
     SV result=SV_NONE;
 
@@ -385,14 +384,12 @@ FormatWidget::SV ELFSectionHeaderWidget::_setValue(QVariant vValue, int nStype, 
 void ELFSectionHeaderWidget::setReadonly(bool bState)
 {
     setLineEditsReadOnly(g_ppLinedEdit,g_nLineEditSize,bState);
-
     setComboBoxesReadOnly(g_ppComboBox,g_nComboBoxSize,bState);
 }
 
 void ELFSectionHeaderWidget::blockSignals(bool bState)
 {
     _blockSignals((QObject **)g_ppLinedEdit,g_nLineEditSize,bState);
-
     _blockSignals((QObject **)g_ppComboBox,g_nComboBoxSize,bState);
 }
 

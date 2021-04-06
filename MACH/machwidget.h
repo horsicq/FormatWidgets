@@ -63,20 +63,23 @@ private slots:
     void widgetValueChanged(quint64 nValue);
     void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent,QTreeWidgetItem *pPrevious);
     void on_checkBoxReadonly_toggled(bool bChecked);
-    bool createSectionTable(int nType,QTableWidget *pTableWidget,const FW_DEF::HEADER_RECORD *pRecords,int nRecordCount);
     void on_pushButtonReload_clicked();
     void enableButton();
-    void on_tableWidget_segments_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
-    void on_tableWidget_sections_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
-    void loadSegment(int nNumber);
-    void loadSection(int nNumber);
     void on_tableWidget_mach_header_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
     void on_toolButtonPrev_clicked();
     void on_toolButtonNext_clicked();
     void onTableView_commands_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
+    void onTableView_segments_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
+    void onTableView_sections_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
     void on_tableView_commands_doubleClicked(const QModelIndex &index);
     void on_tableView_commands_customContextMenuRequested(const QPoint &pos);
+    void on_tableView_segments_doubleClicked(const QModelIndex &index);
+    void on_tableView_segments_customContextMenuRequested(const QPoint &pos);
+    void on_tableView_sections_doubleClicked(const QModelIndex &index);
+    void on_tableView_sections_customContextMenuRequested(const QPoint &pos);
     void editCommandHeader();
+    void editSegmentHeader();
+    void editSectionHeader();
     void showSectionHeader(int nType,QTableView *pTableView);
 
 private:

@@ -263,6 +263,8 @@ QString MACHWidget::typeIdToString(int nType)
     switch(nType)
     {
         case SMACH::TYPE_mach_commands:         sResult=QString("Command %1").arg(tr("Header"));        break;
+        case SMACH::TYPE_mach_segments:         sResult=QString("Segment %1").arg(tr("Header"));        break;
+        case SMACH::TYPE_mach_sections:         sResult=QString("Section %1").arg(tr("Header"));        break;
     }
 
     return sResult;
@@ -451,141 +453,32 @@ void MACHWidget::reloadData()
         {
             if(!g_stInit.contains(sInit))
             {
-                bool bIs64=mach.is64();
+                MACHProcessData machProcessData(SMACH::TYPE_mach_segments,&tvModel[SMACH::TYPE_mach_segments],&mach,0,0);
 
-                createSectionTable(SMACH::TYPE_mach_segments,ui->tableWidget_segments,bIs64?(N_mach_segments::records64):(N_mach_segments::records32),N_mach_segments::__data_size);
+                ajustTableView(&machProcessData,&tvModel[SMACH::TYPE_mach_segments],ui->tableView_segments);
 
-                blockSignals(true);
+                connect(ui->tableView_segments->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_segments_currentRowChanged(QModelIndex,QModelIndex)));
 
-                QList<XMACH::SEGMENT_RECORD> listSegmentRecords=mach.getSegmentRecords();
-
-                int nNumberOfSegments=listSegmentRecords.count();
-
-                ui->tableWidget_segments->setRowCount(nNumberOfSegments);
-
-                for(int i=0; i<nNumberOfSegments; i++)
+                if(tvModel[SMACH::TYPE_mach_segments]->rowCount())
                 {
-                    QTableWidgetItem *pItem=new QTableWidgetItem(QString::number(i));
-
-                    if(getOptions().bIsImage)
-                    {
-                        pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET,listSegmentRecords.at(i).vmaddr);
-                        pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE,listSegmentRecords.at(i).vmsize);
-                    }
-                    else
-                    {
-                        pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET,listSegmentRecords.at(i).fileoff);
-                        pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE,listSegmentRecords.at(i).filesize);
-                    }
-
-                    pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS,listSegmentRecords.at(i).vmaddr);
-
-                    ui->tableWidget_segments->setItem(i,0,                                  pItem);
-                    ui->tableWidget_segments->setItem(i,N_mach_segments::segname+1,         new QTableWidgetItem(listSegmentRecords.at(i).segname));
-
-                    if(bIs64)
-                    {
-                        ui->tableWidget_segments->setItem(i,N_mach_segments::vmaddr+1,      new QTableWidgetItem(XBinary::valueToHex((quint64)listSegmentRecords.at(i).vmaddr)));
-                        ui->tableWidget_segments->setItem(i,N_mach_segments::vmsize+1,      new QTableWidgetItem(XBinary::valueToHex((quint64)listSegmentRecords.at(i).vmsize)));
-                        ui->tableWidget_segments->setItem(i,N_mach_segments::fileoff+1,     new QTableWidgetItem(XBinary::valueToHex((quint64)listSegmentRecords.at(i).fileoff)));
-                        ui->tableWidget_segments->setItem(i,N_mach_segments::filesize+1,    new QTableWidgetItem(XBinary::valueToHex((quint64)listSegmentRecords.at(i).filesize)));
-                    }
-                    else
-                    {
-                        ui->tableWidget_segments->setItem(i,N_mach_segments::vmaddr+1,      new QTableWidgetItem(XBinary::valueToHex((quint32)listSegmentRecords.at(i).vmaddr)));
-                        ui->tableWidget_segments->setItem(i,N_mach_segments::vmsize+1,      new QTableWidgetItem(XBinary::valueToHex((quint32)listSegmentRecords.at(i).vmsize)));
-                        ui->tableWidget_segments->setItem(i,N_mach_segments::fileoff+1,     new QTableWidgetItem(XBinary::valueToHex((quint32)listSegmentRecords.at(i).fileoff)));
-                        ui->tableWidget_segments->setItem(i,N_mach_segments::filesize+1,    new QTableWidgetItem(XBinary::valueToHex((quint32)listSegmentRecords.at(i).filesize)));
-                    }
-
-                    ui->tableWidget_segments->setItem(i,N_mach_segments::maxprot+1,         new QTableWidgetItem(XBinary::valueToHex((quint32)listSegmentRecords.at(i).maxprot)));
-                    ui->tableWidget_segments->setItem(i,N_mach_segments::initprot+1,        new QTableWidgetItem(XBinary::valueToHex((quint32)listSegmentRecords.at(i).initprot)));
-                    ui->tableWidget_segments->setItem(i,N_mach_segments::nsects+1,          new QTableWidgetItem(XBinary::valueToHex((quint32)listSegmentRecords.at(i).nsects)));
-                    ui->tableWidget_segments->setItem(i,N_mach_segments::flags+1,           new QTableWidgetItem(XBinary::valueToHex((quint32)listSegmentRecords.at(i).flags)));
+                    ui->tableView_segments->setCurrentIndex(ui->tableView_segments->model()->index(0,0));
                 }
-
-                if(nNumberOfSegments)
-                {
-                    if(ui->tableWidget_segments->currentRow()==0)
-                    {
-                        loadSegment(0);
-                    }
-                    else
-                    {
-                        ui->tableWidget_segments->setCurrentCell(0,0);
-                    }
-                }
-
-                blockSignals(false);
             }
         }
         else if(nType==SMACH::TYPE_mach_sections)
         {
             if(!g_stInit.contains(sInit))
             {
-                bool bIs64=mach.is64();
+                MACHProcessData machProcessData(SMACH::TYPE_mach_sections,&tvModel[SMACH::TYPE_mach_sections],&mach,0,0);
 
-                createSectionTable(SMACH::TYPE_mach_sections,ui->tableWidget_sections,bIs64?(N_mach_sections::records64):(N_mach_sections::records32),N_mach_sections::__data_size);
+                ajustTableView(&machProcessData,&tvModel[SMACH::TYPE_mach_sections],ui->tableView_sections);
 
-                blockSignals(true);
+                connect(ui->tableView_sections->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_sections_currentRowChanged(QModelIndex,QModelIndex)));
 
-                QList<XMACH::SECTION_RECORD> listSectionRecords=mach.getSectionRecords();
-
-                int nNumberOfSections=listSectionRecords.count();
-
-                ui->tableWidget_sections->setRowCount(nNumberOfSections);
-
-                for(int i=0; i<nNumberOfSections; i++)
+                if(tvModel[SMACH::TYPE_mach_sections]->rowCount())
                 {
-                    QTableWidgetItem *pItem=new QTableWidgetItem(QString::number(i));
-
-                    if(getOptions().bIsImage)
-                    {
-                        pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET,listSectionRecords.at(i).addr);
-                    }
-                    else
-                    {
-                        pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET,listSectionRecords.at(i).offset);
-                    }
-
-                    pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE,listSectionRecords.at(i).size);
-                    pItem->setData(Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS,listSectionRecords.at(i).addr);
-
-                    ui->tableWidget_sections->setItem(i,0,                              pItem);
-                    ui->tableWidget_sections->setItem(i,N_mach_sections::segname+1,     new QTableWidgetItem(listSectionRecords.at(i).segname));
-                    ui->tableWidget_sections->setItem(i,N_mach_sections::sectname+1,    new QTableWidgetItem(listSectionRecords.at(i).sectname));
-
-                    if(bIs64)
-                    {
-                        ui->tableWidget_sections->setItem(i,N_mach_sections::addr+1,    new QTableWidgetItem(XBinary::valueToHex((quint64)listSectionRecords.at(i).addr)));
-                        ui->tableWidget_sections->setItem(i,N_mach_sections::size+1,    new QTableWidgetItem(XBinary::valueToHex((quint64)listSectionRecords.at(i).size)));
-                    }
-                    else
-                    {
-                        ui->tableWidget_sections->setItem(i,N_mach_sections::addr+1,    new QTableWidgetItem(XBinary::valueToHex((quint32)listSectionRecords.at(i).addr)));
-                        ui->tableWidget_sections->setItem(i,N_mach_sections::size+1,    new QTableWidgetItem(XBinary::valueToHex((quint32)listSectionRecords.at(i).size)));
-                    }
-
-                    ui->tableWidget_sections->setItem(i,N_mach_sections::offset+1,      new QTableWidgetItem(XBinary::valueToHex((quint32)listSectionRecords.at(i).offset)));
-                    ui->tableWidget_sections->setItem(i,N_mach_sections::align+1,       new QTableWidgetItem(XBinary::valueToHex((quint32)listSectionRecords.at(i).align)));
-                    ui->tableWidget_sections->setItem(i,N_mach_sections::reloff+1,      new QTableWidgetItem(XBinary::valueToHex((quint32)listSectionRecords.at(i).reloff)));
-                    ui->tableWidget_sections->setItem(i,N_mach_sections::nreloc+1,      new QTableWidgetItem(XBinary::valueToHex((quint32)listSectionRecords.at(i).nreloc)));
-                    ui->tableWidget_sections->setItem(i,N_mach_sections::flags+1,       new QTableWidgetItem(XBinary::valueToHex((quint32)listSectionRecords.at(i).flags)));
+                    ui->tableView_sections->setCurrentIndex(ui->tableView_sections->model()->index(0,0));
                 }
-
-                if(nNumberOfSections)
-                {
-                    if(ui->tableWidget_sections->currentRow()==0)
-                    {
-                        loadSection(0);
-                    }
-                    else
-                    {
-                        ui->tableWidget_sections->setCurrentCell(0,0);
-                    }
-                }
-
-                blockSignals(false);
             }
         }
         else if(nType==SMACH::TYPE_mach_libraries)
@@ -648,76 +541,6 @@ void MACHWidget::on_checkBoxReadonly_toggled(bool bChecked)
     setReadonly(bChecked);
 }
 
-bool MACHWidget::createSectionTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount)
-{
-    int nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
-    QStringList slHeader;
-
-    // TODO
-    switch(nType)
-    {
-        case SMACH::TYPE_mach_segments:
-            slHeader.append(tr(""));
-            pTableWidget->setColumnCount(nRecordCount+1);
-            pTableWidget->setColumnWidth(0,nSymbolWidth*4);
-            pTableWidget->setColumnWidth(1,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(2,nSymbolWidth*12);
-            pTableWidget->setColumnWidth(3,nSymbolWidth*12);
-            pTableWidget->setColumnWidth(4,nSymbolWidth*12);
-            pTableWidget->setColumnWidth(5,nSymbolWidth*12);
-            pTableWidget->setColumnWidth(6,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(7,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(8,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(9,nSymbolWidth*8);
-            break;
-
-        case SMACH::TYPE_mach_sections:
-            slHeader.append(tr(""));
-            pTableWidget->setColumnCount(nRecordCount+1);
-            pTableWidget->setColumnWidth(0,nSymbolWidth*4);
-            pTableWidget->setColumnWidth(1,nSymbolWidth*12);
-            pTableWidget->setColumnWidth(2,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(3,nSymbolWidth*12);
-            pTableWidget->setColumnWidth(4,nSymbolWidth*12);
-            pTableWidget->setColumnWidth(5,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(6,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(7,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(8,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(9,nSymbolWidth*8);
-            break;
-
-        case SMACH::TYPE_mach_libraries:
-            pTableWidget->setColumnCount(nRecordCount+1);
-            pTableWidget->setColumnWidth(0,nSymbolWidth*10);
-            pTableWidget->setColumnWidth(1,nSymbolWidth*10);
-            pTableWidget->setColumnWidth(2,nSymbolWidth*10);
-            pTableWidget->setColumnWidth(3,nSymbolWidth*45);
-            break;
-
-        default:
-            pTableWidget->setColumnCount(nRecordCount);
-    }
-
-    pTableWidget->setRowCount(0);
-
-    for(int i=0; i<nRecordCount; i++)
-    {
-        slHeader.append(pRecords[i].sName);
-    }
-
-    switch(nType)
-    {
-        case SMACH::TYPE_mach_libraries:
-            slHeader.append(tr("Library"));
-            break;
-    }
-
-    pTableWidget->setHorizontalHeaderLabels(slHeader);
-    pTableWidget->horizontalHeader()->setVisible(true);
-
-    return true;
-}
-
 void MACHWidget::on_pushButtonReload_clicked()
 {
     ui->pushButtonReload->setEnabled(false);
@@ -729,48 +552,6 @@ void MACHWidget::on_pushButtonReload_clicked()
 void MACHWidget::enableButton()
 {
     ui->pushButtonReload->setEnabled(true);
-}
-
-void MACHWidget::on_tableWidget_segments_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
-{
-    Q_UNUSED(nCurrentColumn)
-    Q_UNUSED(nPreviousRow)
-    Q_UNUSED(nPreviousColumn)
-
-    if(nCurrentRow!=-1)
-    {
-        loadSegment(nCurrentRow);
-    }
-}
-
-void MACHWidget::on_tableWidget_sections_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
-{
-    Q_UNUSED(nCurrentColumn)
-    Q_UNUSED(nPreviousRow)
-    Q_UNUSED(nPreviousColumn)
-
-    if(nCurrentRow!=-1)
-    {
-        loadSection(nCurrentRow);
-    }
-}
-
-void MACHWidget::loadSegment(int nNumber)
-{
-    qint64 nOffset=ui->tableWidget_segments->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
-    qint64 nSize=ui->tableWidget_segments->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
-    qint64 nAddress=ui->tableWidget_segments->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
-
-    loadHexSubdevice(nOffset,nSize,nAddress,&g_subDevice[SMACH::TYPE_mach_segments],ui->widgetHex_segments);
-}
-
-void MACHWidget::loadSection(int nNumber)
-{
-    qint64 nOffset=ui->tableWidget_sections->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
-    qint64 nSize=ui->tableWidget_sections->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
-    qint64 nAddress=ui->tableWidget_sections->item(nNumber,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
-
-    loadHexSubdevice(nOffset,nSize,nAddress,&g_subDevice[SMACH::TYPE_mach_sections],ui->widgetHex_sections);
 }
 
 void MACHWidget::on_tableWidget_mach_header_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
@@ -805,6 +586,22 @@ void MACHWidget::onTableView_commands_currentRowChanged(const QModelIndex &curre
     loadHexSubdeviceByTableView(current.row(),SMACH::TYPE_mach_commands,ui->widgetHex_commands,ui->tableView_commands,&g_subDevice[SMACH::TYPE_mach_commands]);
 }
 
+void MACHWidget::onTableView_segments_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
+    Q_UNUSED(current)
+    Q_UNUSED(previous)
+
+    loadHexSubdeviceByTableView(current.row(),SMACH::TYPE_mach_segments,ui->widgetHex_segments,ui->tableView_segments,&g_subDevice[SMACH::TYPE_mach_segments]);
+}
+
+void MACHWidget::onTableView_sections_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
+    Q_UNUSED(current)
+    Q_UNUSED(previous)
+
+    loadHexSubdeviceByTableView(current.row(),SMACH::TYPE_mach_sections,ui->widgetHex_sections,ui->tableView_sections,&g_subDevice[SMACH::TYPE_mach_sections]);
+}
+
 void MACHWidget::on_tableView_commands_doubleClicked(const QModelIndex &index)
 {
     Q_UNUSED(index)
@@ -827,9 +624,63 @@ void MACHWidget::on_tableView_commands_customContextMenuRequested(const QPoint &
     }
 }
 
+void MACHWidget::on_tableView_segments_doubleClicked(const QModelIndex &index)
+{
+    Q_UNUSED(index)
+    editSegmentHeader();
+}
+
+void MACHWidget::on_tableView_segments_customContextMenuRequested(const QPoint &pos)
+{
+    int nRow=ui->tableView_segments->currentIndex().row();
+
+    if(nRow!=-1)
+    {
+        QMenu contextMenu(this);
+
+        QAction actionEdit(tr("Edit"),this);
+        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editSegmentHeader()));
+        contextMenu.addAction(&actionEdit);
+
+        contextMenu.exec(ui->tableView_segments->viewport()->mapToGlobal(pos));
+    }
+}
+
+void MACHWidget::on_tableView_sections_doubleClicked(const QModelIndex &index)
+{
+    Q_UNUSED(index)
+    editSectionHeader();
+}
+
+void MACHWidget::on_tableView_sections_customContextMenuRequested(const QPoint &pos)
+{
+    int nRow=ui->tableView_sections->currentIndex().row();
+
+    if(nRow!=-1)
+    {
+        QMenu contextMenu(this);
+
+        QAction actionEdit(tr("Edit"),this);
+        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editSectionHeader()));
+        contextMenu.addAction(&actionEdit);
+
+        contextMenu.exec(ui->tableView_sections->viewport()->mapToGlobal(pos));
+    }
+}
+
 void MACHWidget::editCommandHeader()
 {
     showSectionHeader(SMACH::TYPE_mach_commands,ui->tableView_commands);
+}
+
+void MACHWidget::editSegmentHeader()
+{
+    showSectionHeader(SMACH::TYPE_mach_segments,ui->tableView_segments);
+}
+
+void MACHWidget::editSectionHeader()
+{
+    showSectionHeader(SMACH::TYPE_mach_sections,ui->tableView_sections);
 }
 
 void MACHWidget::showSectionHeader(int nType, QTableView *pTableView)
