@@ -226,7 +226,6 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
 void MACHWidget::setReadonly(bool bState)
 {
     setLineEditsReadOnly(g_lineEdit_mach_header,N_mach_header::__data_size,bState);
-
     setComboBoxesReadOnly(g_comboBox,__CB_size,bState);
 
     ui->widgetHex->setReadonly(bState);
@@ -235,7 +234,6 @@ void MACHWidget::setReadonly(bool bState)
 void MACHWidget::blockSignals(bool bState)
 {
     _blockSignals((QObject **)g_lineEdit_mach_header,N_mach_header::__data_size,bState);
-
     _blockSignals((QObject **)g_comboBox,__CB_size,bState);
 }
 
@@ -439,7 +437,7 @@ void MACHWidget::reloadData()
             {
                 MACHProcessData machProcessData(SMACH::TYPE_mach_commands,&tvModel[SMACH::TYPE_mach_commands],&mach,0,0);
 
-                ajustTableView(&machProcessData,&tvModel[SMACH::TYPE_mach_commands],ui->tableView_commands);
+                ajustTableView(&machProcessData,&tvModel[SMACH::TYPE_mach_commands],ui->tableView_commands,nullptr,true);
 
                 connect(ui->tableView_commands->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_commands_currentRowChanged(QModelIndex,QModelIndex)));
 
@@ -455,7 +453,7 @@ void MACHWidget::reloadData()
             {
                 MACHProcessData machProcessData(SMACH::TYPE_mach_segments,&tvModel[SMACH::TYPE_mach_segments],&mach,0,0);
 
-                ajustTableView(&machProcessData,&tvModel[SMACH::TYPE_mach_segments],ui->tableView_segments);
+                ajustTableView(&machProcessData,&tvModel[SMACH::TYPE_mach_segments],ui->tableView_segments,nullptr,false);
 
                 connect(ui->tableView_segments->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_segments_currentRowChanged(QModelIndex,QModelIndex)));
 
@@ -471,7 +469,7 @@ void MACHWidget::reloadData()
             {
                 MACHProcessData machProcessData(SMACH::TYPE_mach_sections,&tvModel[SMACH::TYPE_mach_sections],&mach,0,0);
 
-                ajustTableView(&machProcessData,&tvModel[SMACH::TYPE_mach_sections],ui->tableView_sections);
+                ajustTableView(&machProcessData,&tvModel[SMACH::TYPE_mach_sections],ui->tableView_sections,nullptr,false);
 
                 connect(ui->tableView_sections->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_sections_currentRowChanged(QModelIndex,QModelIndex)));
 
@@ -487,7 +485,7 @@ void MACHWidget::reloadData()
             {
                 MACHProcessData machProcessData(SMACH::TYPE_mach_libraries,&tvModel[SMACH::TYPE_mach_libraries],&mach,0,0);
 
-                ajustTableView(&machProcessData,&tvModel[SMACH::TYPE_mach_libraries],ui->tableView_libraries);
+                ajustTableView(&machProcessData,&tvModel[SMACH::TYPE_mach_libraries],ui->tableView_libraries,nullptr,true);
 
                 if(tvModel[SMACH::TYPE_mach_libraries]->rowCount())
                 {
@@ -699,6 +697,7 @@ void MACHWidget::showSectionHeader(int nType, QTableView *pTableView)
         dsh.setWidget(pSectionHeaderWidget);
         dsh.setData(typeIdToString(nType));
         dsh.setEdited(isEdited());
+        dsh.setShortcuts(getShortcuts());
 
         connect(&dsh,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
 

@@ -84,9 +84,9 @@ const FW_DEF::HEADER_RECORD records64[]=
 };
 }
 
-namespace N_mach_sections
+namespace N_mach_sections32
 {
-const FW_DEF::HEADER_RECORD records32[]=
+const FW_DEF::HEADER_RECORD records[]=
 {
     {sectname,              "sectname",         offsetof(XMACH_DEF::section,sectname),      16,     "char[16]",             FW_DEF::VAL_TYPE_TEXT},
     {segname,               "segname",          offsetof(XMACH_DEF::section,segname),       16,     "char[16]",             FW_DEF::VAL_TYPE_TEXT},
@@ -97,9 +97,14 @@ const FW_DEF::HEADER_RECORD records32[]=
     {reloff,                "reloff",           offsetof(XMACH_DEF::section,reloff),        4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
     {nreloc,                "nreloc",           offsetof(XMACH_DEF::section,nreloc),        4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
     {flags,                 "flags",            offsetof(XMACH_DEF::section,flags),         4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {reserved1,             "reserved1",        offsetof(XMACH_DEF::section,reserved1),     4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {reserved2,             "reserved2",        offsetof(XMACH_DEF::section,reserved2),     4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
 };
+}
 
-const FW_DEF::HEADER_RECORD records64[]=
+namespace N_mach_sections64
+{
+const FW_DEF::HEADER_RECORD records[]=
 {
     {sectname,              "sectname",         offsetof(XMACH_DEF::section_64,sectname),   16,     "char[16]",             FW_DEF::VAL_TYPE_TEXT},
     {segname,               "segname",          offsetof(XMACH_DEF::section_64,segname),    16,     "char[16]",             FW_DEF::VAL_TYPE_TEXT},
@@ -110,6 +115,9 @@ const FW_DEF::HEADER_RECORD records64[]=
     {reloff,                "reloff",           offsetof(XMACH_DEF::section_64,reloff),     4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
     {nreloc,                "nreloc",           offsetof(XMACH_DEF::section_64,nreloc),     4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
     {flags,                 "flags",            offsetof(XMACH_DEF::section_64,flags),      4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {reserved1,             "reserved1",        offsetof(XMACH_DEF::section_64,reserved1),  4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {reserved2,             "reserved2",        offsetof(XMACH_DEF::section_64,reserved2),  4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {reserved3,             "reserved3",        offsetof(XMACH_DEF::section_64,reserved3),  4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
 };
 }
 

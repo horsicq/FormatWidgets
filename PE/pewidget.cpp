@@ -1196,7 +1196,7 @@ void PEWidget::reloadData()
             {
                 PEProcessData peProcessData(SPE::TYPE_SECTIONS,&tvModel[SPE::TYPE_SECTIONS],&pe,0,0,0);
 
-                ajustTableView(&peProcessData,&tvModel[SPE::TYPE_SECTIONS],ui->tableView_Sections);
+                ajustTableView(&peProcessData,&tvModel[SPE::TYPE_SECTIONS],ui->tableView_Sections,nullptr,false);
 
                 connect(ui->tableView_Sections->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_Sections_currentRowChanged(QModelIndex,QModelIndex)));
 
@@ -1353,7 +1353,7 @@ void PEWidget::reloadData()
             {
                 PEProcessData peProcessData(SPE::TYPE_EXCEPTION,&tvModel[SPE::TYPE_EXCEPTION],&pe,0,0,0);
 
-                ajustTableView(&peProcessData,&tvModel[SPE::TYPE_EXCEPTION],ui->tableView_Exceptions);
+                ajustTableView(&peProcessData,&tvModel[SPE::TYPE_EXCEPTION],ui->tableView_Exceptions,nullptr,false);
 
                 connect(ui->tableView_Exceptions->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_Exceptions_currentRowChanged(QModelIndex,QModelIndex)));
 
@@ -1369,7 +1369,7 @@ void PEWidget::reloadData()
             {
                 PEProcessData peProcessData(SPE::TYPE_RELOCS,&tvModel[SPE::TYPE_RELOCS],&pe,0,0,0);
 
-                ajustTableView(&peProcessData,&tvModel[SPE::TYPE_RELOCS],ui->tableView_Relocs);
+                ajustTableView(&peProcessData,&tvModel[SPE::TYPE_RELOCS],ui->tableView_Relocs,nullptr,false);
 
                 connect(ui->tableView_Relocs->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_Relocs_currentRowChanged(QModelIndex,QModelIndex)));
 
@@ -1385,7 +1385,7 @@ void PEWidget::reloadData()
             {
                 PEProcessData peProcessData(SPE::TYPE_DEBUG,&tvModel[SPE::TYPE_DEBUG],&pe,0,0,0);
 
-                ajustTableView(&peProcessData,&tvModel[SPE::TYPE_DEBUG],ui->tableView_Debug);
+                ajustTableView(&peProcessData,&tvModel[SPE::TYPE_DEBUG],ui->tableView_Debug,nullptr,false);
 
                 connect(ui->tableView_Debug->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_Debug_currentRowChanged(QModelIndex,QModelIndex)));
 
@@ -1724,7 +1724,7 @@ void PEWidget::loadRelocs(int nRow)
     {
         PEProcessData peProcessData(SPE::TYPE_RELOCS_POSITION,&tvModel[SPE::TYPE_RELOCS_POSITION],&pe,0,nOffset,0);
 
-        ajustTableView(&peProcessData,&tvModel[SPE::TYPE_RELOCS_POSITION],ui->tableView_RelocsPositions);
+        ajustTableView(&peProcessData,&tvModel[SPE::TYPE_RELOCS_POSITION],ui->tableView_RelocsPositions,nullptr,false);
 
         if(tvModel[SPE::TYPE_RELOCS_POSITION]->rowCount())
         {

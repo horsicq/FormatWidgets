@@ -41,6 +41,7 @@ public:
     virtual void cleanup();
     virtual void reset();
     virtual void reload();
+    virtual void setShortcuts(XShortcuts *pShortcuts);
     void setStringTable(qint64 nStringTableOffset,qint64 nStringTableSize);
 
 protected:

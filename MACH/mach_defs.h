@@ -116,7 +116,7 @@ enum INV
 };
 }
 
-namespace N_mach_sections
+namespace N_mach_sections32
 {
 enum DATA
 {
@@ -129,11 +129,44 @@ enum DATA
     reloff,
     nreloc,
     flags,
+    reserved1,
+    reserved2,
     __data_size
 };
 
-extern const FW_DEF::HEADER_RECORD records32[__data_size];
-extern const FW_DEF::HEADER_RECORD records64[__data_size];
+extern const FW_DEF::HEADER_RECORD records[__data_size];
+
+enum CB
+{
+    __CB_size
+};
+
+enum INV
+{
+    __INV_size
+};
+}
+
+namespace N_mach_sections64
+{
+enum DATA
+{
+    sectname=0,
+    segname,
+    addr,
+    size,
+    offset,
+    align,
+    reloff,
+    nreloc,
+    flags,
+    reserved1,
+    reserved2,
+    reserved3,
+    __data_size
+};
+
+extern const FW_DEF::HEADER_RECORD records[__data_size];
 
 enum CB
 {

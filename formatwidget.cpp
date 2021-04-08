@@ -258,7 +258,7 @@ void FormatWidget::setLineEdit(XLineEditHEX *pLineEdit, qint32 nMaxLength, QStri
     pLineEdit->setProperty("OFFSET",nOffset);
 }
 
-void FormatWidget::ajustTableView(ProcessData *pProcessData, QStandardItemModel **ppModel, QTableView *pTableView, QSortFilterProxyModel *pProxyModel)
+void FormatWidget::ajustTableView(ProcessData *pProcessData, QStandardItemModel **ppModel, QTableView *pTableView, QSortFilterProxyModel *pProxyModel, bool bStretchLastSection)
 {
     QAbstractItemModel *pOldModel=0;
 
@@ -301,7 +301,7 @@ void FormatWidget::ajustTableView(ProcessData *pProcessData, QStandardItemModel 
         pTableView->sortByColumn(0,Qt::AscendingOrder);
     }
 
-    pTableView->horizontalHeader()->setStretchLastSection(true);
+    pTableView->horizontalHeader()->setStretchLastSection(bStretchLastSection);
 
     delete pOldModel; // TODO Thread
 }

@@ -501,7 +501,7 @@ void ELFWidget::reloadData()
             {
                 ELFProcessData elfProcessData(SELF::TYPE_Elf_Shdr,&g_tvModel[SELF::TYPE_Elf_Shdr],&elf,nDataOffset,nDataSize,nDataExtraOffset,nDataExtraSize);
 
-                ajustTableView(&elfProcessData,&g_tvModel[SELF::TYPE_Elf_Shdr],ui->tableView_Elf_Shdr);
+                ajustTableView(&elfProcessData,&g_tvModel[SELF::TYPE_Elf_Shdr],ui->tableView_Elf_Shdr,nullptr,false);
 
                 connect(ui->tableView_Elf_Shdr->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_Elf_Shdr_currentRowChanged(QModelIndex,QModelIndex)));
 
@@ -517,7 +517,7 @@ void ELFWidget::reloadData()
             {
                 ELFProcessData elfProcessData(SELF::TYPE_Elf_Phdr,&g_tvModel[SELF::TYPE_Elf_Phdr],&elf,nDataOffset,nDataSize,nDataExtraOffset,nDataExtraSize);
 
-                ajustTableView(&elfProcessData,&g_tvModel[SELF::TYPE_Elf_Phdr],ui->tableView_Elf_Phdr);
+                ajustTableView(&elfProcessData,&g_tvModel[SELF::TYPE_Elf_Phdr],ui->tableView_Elf_Phdr,nullptr,false);
 
                 connect(ui->tableView_Elf_Phdr->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_Elf_Phdr_currentRowChanged(QModelIndex,QModelIndex)));
 
@@ -618,7 +618,7 @@ void ELFWidget::reloadData()
             {
                 ELFProcessData elfProcessData(SELF::TYPE_SYMBOLTABLE,&g_tvModel[SELF::TYPE_SYMBOLTABLE],&elf,nDataOffset,nDataSize,nDataExtraOffset,nDataExtraSize);
 
-                ajustTableView(&elfProcessData,&g_tvModel[SELF::TYPE_SYMBOLTABLE],ui->tableView_SymbolTable);
+                ajustTableView(&elfProcessData,&g_tvModel[SELF::TYPE_SYMBOLTABLE],ui->tableView_SymbolTable,nullptr,false);
             }
         }
         else if(nType==SELF::TYPE_Elf_Rela)
@@ -627,7 +627,7 @@ void ELFWidget::reloadData()
             {
                 ELFProcessData elfProcessData(SELF::TYPE_Elf_Rela,&g_tvModel[SELF::TYPE_Elf_Rela],&elf,nDataOffset,nDataSize,nDataExtraOffset,nDataExtraSize);
 
-                ajustTableView(&elfProcessData,&g_tvModel[SELF::TYPE_Elf_Rela],ui->tableView_Rela);
+                ajustTableView(&elfProcessData,&g_tvModel[SELF::TYPE_Elf_Rela],ui->tableView_Rela,nullptr,false);
             }
         }
         else if(nType==SELF::TYPE_Elf_Rel)
@@ -636,7 +636,7 @@ void ELFWidget::reloadData()
             {
                 ELFProcessData elfProcessData(SELF::TYPE_Elf_Rel,&g_tvModel[SELF::TYPE_Elf_Rel],&elf,nDataOffset,nDataSize,nDataExtraOffset,nDataExtraSize);
 
-                ajustTableView(&elfProcessData,&g_tvModel[SELF::TYPE_Elf_Rel],ui->tableView_Rel);
+                ajustTableView(&elfProcessData,&g_tvModel[SELF::TYPE_Elf_Rel],ui->tableView_Rel,nullptr,false);
             }
         }
 
@@ -699,25 +699,6 @@ void ELFWidget::addDatasets(XELF *pElf, QTreeWidgetItem *pParent, QList<XBinary:
             addDatasets(pElf,pDynamicTags,&listDatasets);
         }
     }
-}
-
-bool ELFWidget::createSectionTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pHeaderRecord, int nNumberOfRecords)
-{
-    Q_UNUSED(nType)
-
-    QStringList slHeader;
-
-    pTableWidget->setRowCount(0);
-
-    for(int i=0; i<nNumberOfRecords; i++)
-    {
-        slHeader.append(pHeaderRecord[i].sName);
-    }
-
-    pTableWidget->setHorizontalHeaderLabels(slHeader);
-    pTableWidget->horizontalHeader()->setVisible(true);
-
-    return true;
 }
 
 void ELFWidget::widgetValueChanged(quint64 nValue)

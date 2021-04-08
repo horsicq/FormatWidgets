@@ -22,6 +22,7 @@
 #define DIALOGSECTIONHEADER_H
 
 #include <QDialog>
+#include "xshortcutsdialog.h"
 #include "formatwidget.h"
 
 namespace Ui
@@ -29,7 +30,7 @@ namespace Ui
 class DialogSectionHeader;
 }
 
-class DialogSectionHeader : public QDialog
+class DialogSectionHeader : public XShortcutsDialog
 {
     Q_OBJECT
 
@@ -40,13 +41,14 @@ public:
     void setData(QIODevice *pDevice,FW_DEF::OPTIONS options,quint32 nNumber,qint64 nOffset,QString sTitle,qint32 nType); // TODO remove
     void setData(QString sTitle);
     void setEdited(bool bState);
+    virtual void setShortcuts(XShortcuts *pShortcuts);
 
 signals:
     void editState(bool bState);
 
 private:
     Ui::DialogSectionHeader *ui;
-    FormatWidget *pWidget;
+    FormatWidget *g_pWidget;
 };
 
 #endif // DIALOGSECTIONHEADER_H

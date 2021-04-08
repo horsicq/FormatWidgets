@@ -144,6 +144,12 @@ void ELFSectionHeaderWidget::reload()
     reloadData();
 }
 
+void ELFSectionHeaderWidget::setShortcuts(XShortcuts *pShortcuts)
+{
+    ui->widgetHex->setShortcuts(pShortcuts);
+    XShortcutsWidget::setShortcuts(pShortcuts);
+}
+
 void ELFSectionHeaderWidget::setStringTable(qint64 nStringTableOffset, qint64 nStringTableSize)
 {
     this->g_nStringTableOffset=nStringTableOffset;

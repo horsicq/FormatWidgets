@@ -41,6 +41,7 @@ public:
     virtual void cleanup();
     virtual void reset();
     virtual void reload();
+    virtual void setShortcuts(XShortcuts *pShortcuts);
 
 protected:
     virtual SV _setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition,qint64 nOffset);

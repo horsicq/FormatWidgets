@@ -22,10 +22,12 @@
 #include "ui_dialogsectionheader.h"
 
 DialogSectionHeader::DialogSectionHeader(QWidget *pParent) :
-    QDialog(pParent),
+    XShortcutsDialog(pParent),
     ui(new Ui::DialogSectionHeader)
 {
     ui->setupUi(this);
+
+    this->g_pWidget=nullptr;
 
     setWindowFlags(Qt::Window);
 }
@@ -37,7 +39,7 @@ DialogSectionHeader::~DialogSectionHeader()
 
 void DialogSectionHeader::setWidget(FormatWidget *pWidget)
 {
-    this->pWidget=pWidget;
+    this->g_pWidget=pWidget;
 
     ui->WidgetLayout->addWidget(pWidget);
 
@@ -48,18 +50,26 @@ void DialogSectionHeader::setData(QIODevice *pDevice, FW_DEF::OPTIONS options, q
 {
     setWindowTitle(sTitle);
 
-    pWidget->setData(pDevice,options,nNumber,nOffset,nType);
-    pWidget->reload();
+    g_pWidget->setData(pDevice,options,nNumber,nOffset,nType);
+    g_pWidget->reload();
 }
 
 void DialogSectionHeader::setData(QString sTitle)
 {
     setWindowTitle(sTitle);
 
-    pWidget->reload();
+    g_pWidget->reload();
 }
 
 void DialogSectionHeader::setEdited(bool bState)
 {
-    pWidget->setEdited(bState);
+    g_pWidget->setEdited(bState);
+}
+
+void DialogSectionHeader::setShortcuts(XShortcuts *pShortcuts)
+{
+    if(g_pWidget)
+    {
+        g_pWidget->setShortcuts(pShortcuts);
+    }
 }

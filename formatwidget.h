@@ -130,7 +130,7 @@ public:
 
     void setItemEnable(QTableWidgetItem *pItem,bool bState);
     void setLineEdit(XLineEditHEX *pLineEdit,qint32 nMaxLength,QString sText,qint64 nOffset);
-    void ajustTableView(ProcessData *pProcessData,QStandardItemModel **ppModel,QTableView *pTableView,QSortFilterProxyModel *pProxyModel=nullptr);
+    void ajustTableView(ProcessData *pProcessData,QStandardItemModel **ppModel,QTableView *pTableView,QSortFilterProxyModel *pProxyModel=nullptr,bool bStretchLastSection=true);
     void ajustTreeView(ProcessData *pProcessData,QStandardItemModel **ppModel,QTreeView *pTreeView);
     void showSectionHex(QTableView *pTableView);
     void showSectionEntropy(QTableView *pTableView);

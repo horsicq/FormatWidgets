@@ -40,6 +40,7 @@ public:
     virtual void cleanup();
     virtual void reset();
     virtual void reload();
+    virtual void setShortcuts(XShortcuts *pShortcuts);
 
 protected:
     virtual SV _setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition,qint64 nOffset);
@@ -54,7 +55,6 @@ private slots:
     void on_tableWidget_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
 
 private:
-
     Ui::MACHSectionHeaderWidget *ui;
     XLineEditHEX **g_ppLinedEdit;
     int g_nLineEditSize;
