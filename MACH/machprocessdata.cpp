@@ -176,7 +176,7 @@ void MACHProcessData::_process()
 
         if(bIs64)
         {
-            listLabels.append(getStructList(N_mach_sections32::records,N_mach_sections32::__data_size));
+            listLabels.append(getStructList(N_mach_sections64::records,N_mach_sections64::__data_size));
         }
         else
         {

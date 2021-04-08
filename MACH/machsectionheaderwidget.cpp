@@ -33,6 +33,10 @@ MACHSectionHeaderWidget::MACHSectionHeaderWidget(QIODevice *pDevice,FW_DEF::OPTI
 {
      MACHSectionHeaderWidget::setData(pDevice,options,nNumber,nOffset,nType);
 
+     XMACH mach(getDevice(),getOptions().bIsImage,getOptions().nImageBase);
+
+     bool bIs64=mach.is64();
+
      g_ppLinedEdit=0;
      g_nLineEditSize=0;
      g_ppComboBox=0;
@@ -54,9 +58,18 @@ MACHSectionHeaderWidget::MACHSectionHeaderWidget(QIODevice *pDevice,FW_DEF::OPTI
      }
      else if(nType==SMACH::TYPE_mach_sections)
      {
-         g_nLineEditSize=N_mach_sections32::__data_size;
-         g_nComboBoxSize=N_mach_sections32::__CB_size;
-         g_nInvWidgetSize=N_mach_sections32::__INV_size;
+         if(bIs64)
+         {
+             g_nLineEditSize=N_mach_sections64::__data_size;
+             g_nComboBoxSize=N_mach_sections64::__CB_size;
+             g_nInvWidgetSize=N_mach_sections64::__INV_size;
+         }
+         else
+         {
+             g_nLineEditSize=N_mach_sections32::__data_size;
+             g_nComboBoxSize=N_mach_sections32::__CB_size;
+             g_nInvWidgetSize=N_mach_sections32::__INV_size;
+         }
      }
 
      if(g_nLineEditSize)
@@ -250,7 +263,7 @@ void MACHSectionHeaderWidget::reloadData()
 
                 qint64 nHeaderOffset=getOffset();
 
-                XMACH::COMMAND_RECORD cr=mach._readCommand(nHeaderOffset,bIsBigEndian);
+                XMACH::COMMAND_RECORD cr=mach._readLoadCommand(nHeaderOffset,bIsBigEndian);
 
                 g_ppLinedEdit[N_mach_commands::cmd]->setValue((quint32)cr.nType);
                 g_ppLinedEdit[N_mach_commands::cmdsize]->setValue((quint32)cr.nSize);
