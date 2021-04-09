@@ -176,8 +176,8 @@ FormatWidget::SV MACHSectionHeaderWidget::_setValue(QVariant vValue, int nStype,
                 case SMACH::TYPE_mach_commands:
                     switch(nNdata)
                     {
-                        case N_mach_commands::cmd:          mach.setCommand_cmd(nOffset,nValue);                        break;
-                        case N_mach_commands::cmdsize:      mach.setCommand_cmdsize(nOffset,nValue);                    break;
+                        case N_mach_commands::cmd:          mach._setCommand_cmd(nOffset,nValue);                        break;
+                        case N_mach_commands::cmdsize:      mach._setCommand_cmdsize(nOffset,nValue);                    break;
                     }
 
                     break;
