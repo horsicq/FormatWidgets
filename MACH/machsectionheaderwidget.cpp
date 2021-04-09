@@ -287,10 +287,34 @@ void MACHSectionHeaderWidget::reloadData()
 
                 qint64 nHeaderOffset=getOffset();
 
-//                XMACH::COMMAND_RECORD cr=mach._readCommand(nHeaderOffset,bIsBigEndian);
+                if(bIs64)
+                {
+                    XMACH_DEF::segment_command_64 segment=mach._readSegment64(nHeaderOffset,bIsBigEndian);
 
-//                g_ppLinedEdit[N_mach_commands::cmd]->setValue((quint32)cr.nType);
-//                g_ppLinedEdit[N_mach_commands::cmdsize]->setValue((quint32)cr.nSize);
+                    g_ppLinedEdit[N_mach_segments::segname]->setStringValue(segment.segname);
+                    g_ppLinedEdit[N_mach_segments::vmaddr]->setValue(segment.vmaddr);
+                    g_ppLinedEdit[N_mach_segments::vmsize]->setValue(segment.vmsize);
+                    g_ppLinedEdit[N_mach_segments::fileoff]->setValue(segment.fileoff);
+                    g_ppLinedEdit[N_mach_segments::filesize]->setValue(segment.filesize);
+                    g_ppLinedEdit[N_mach_segments::maxprot]->setValue(segment.maxprot);
+                    g_ppLinedEdit[N_mach_segments::initprot]->setValue(segment.initprot);
+                    g_ppLinedEdit[N_mach_segments::nsects]->setValue(segment.nsects);
+                    g_ppLinedEdit[N_mach_segments::flags]->setValue(segment.flags);
+                }
+                else
+                {
+                    XMACH_DEF::segment_command segment=mach._readSegment32(nHeaderOffset,bIsBigEndian);
+
+                    g_ppLinedEdit[N_mach_segments::segname]->setStringValue(segment.segname);
+                    g_ppLinedEdit[N_mach_segments::vmaddr]->setValue(segment.vmaddr);
+                    g_ppLinedEdit[N_mach_segments::vmsize]->setValue(segment.vmsize);
+                    g_ppLinedEdit[N_mach_segments::fileoff]->setValue(segment.fileoff);
+                    g_ppLinedEdit[N_mach_segments::filesize]->setValue(segment.filesize);
+                    g_ppLinedEdit[N_mach_segments::maxprot]->setValue(segment.maxprot);
+                    g_ppLinedEdit[N_mach_segments::initprot]->setValue(segment.initprot);
+                    g_ppLinedEdit[N_mach_segments::nsects]->setValue(segment.nsects);
+                    g_ppLinedEdit[N_mach_segments::flags]->setValue(segment.flags);
+                }
 
 //                g_ppComboBox[N_mach_commands::CB_CMD]->setValue(cr.nType);
 
@@ -311,12 +335,39 @@ void MACHSectionHeaderWidget::reloadData()
 
                 qint64 nHeaderOffset=getOffset();
 
-//                XMACH::COMMAND_RECORD cr=mach._readCommand(nHeaderOffset,bIsBigEndian);
+                if(bIs64)
+                {
+                    XMACH_DEF::section_64 section=mach._readSection64(nHeaderOffset,bIsBigEndian);
 
-//                g_ppLinedEdit[N_mach_commands::cmd]->setValue((quint32)cr.nType);
-//                g_ppLinedEdit[N_mach_commands::cmdsize]->setValue((quint32)cr.nSize);
+                    g_ppLinedEdit[N_mach_sections64::sectname]->setStringValue(section.sectname);
+                    g_ppLinedEdit[N_mach_sections64::segname]->setStringValue(section.segname);
+                    g_ppLinedEdit[N_mach_sections64::addr]->setValue(section.addr);
+                    g_ppLinedEdit[N_mach_sections64::size]->setValue(section.size);
+                    g_ppLinedEdit[N_mach_sections64::offset]->setValue(section.offset);
+                    g_ppLinedEdit[N_mach_sections64::align]->setValue(section.align);
+                    g_ppLinedEdit[N_mach_sections64::reloff]->setValue(section.reloff);
+                    g_ppLinedEdit[N_mach_sections64::nreloc]->setValue(section.nreloc);
+                    g_ppLinedEdit[N_mach_sections64::flags]->setValue(section.flags);
+                    g_ppLinedEdit[N_mach_sections64::reserved1]->setValue(section.reserved1);
+                    g_ppLinedEdit[N_mach_sections64::reserved2]->setValue(section.reserved2);
+                    g_ppLinedEdit[N_mach_sections64::reserved3]->setValue(section.reserved3);
+                }
+                else
+                {
+                    XMACH_DEF::section section=mach._readSection32(nHeaderOffset,bIsBigEndian);
 
-//                g_ppComboBox[N_mach_commands::CB_CMD]->setValue(cr.nType);
+                    g_ppLinedEdit[N_mach_sections32::sectname]->setStringValue(section.sectname);
+                    g_ppLinedEdit[N_mach_sections32::segname]->setStringValue(section.segname);
+                    g_ppLinedEdit[N_mach_sections32::addr]->setValue(section.addr);
+                    g_ppLinedEdit[N_mach_sections32::size]->setValue(section.size);
+                    g_ppLinedEdit[N_mach_sections32::offset]->setValue(section.offset);
+                    g_ppLinedEdit[N_mach_sections32::align]->setValue(section.align);
+                    g_ppLinedEdit[N_mach_sections32::reloff]->setValue(section.reloff);
+                    g_ppLinedEdit[N_mach_sections32::nreloc]->setValue(section.nreloc);
+                    g_ppLinedEdit[N_mach_sections32::flags]->setValue(section.flags);
+                    g_ppLinedEdit[N_mach_sections32::reserved1]->setValue(section.reserved1);
+                    g_ppLinedEdit[N_mach_sections32::reserved2]->setValue(section.reserved2);
+                }
 
                 qint64 nOffset=nHeaderOffset;
                 qint64 nSize=mach.getSectionHeaderSize();
