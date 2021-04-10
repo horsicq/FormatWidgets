@@ -153,6 +153,7 @@ FormatWidget::SV MACHSectionHeaderWidget::_setValue(QVariant vValue, int nStype,
     SV result=SV_NONE;
 
     quint64 nValue=vValue.toULongLong();
+    QString sValue=vValue.toString();
 
     if(getDevice()->isWritable())
     {
@@ -176,8 +177,42 @@ FormatWidget::SV MACHSectionHeaderWidget::_setValue(QVariant vValue, int nStype,
                 case SMACH::TYPE_mach_commands:
                     switch(nNdata)
                     {
-                        case N_mach_commands::cmd:          mach._setCommand_cmd(nOffset,nValue);                        break;
-                        case N_mach_commands::cmdsize:      mach._setCommand_cmdsize(nOffset,nValue);                    break;
+                        case N_mach_commands::cmd:          mach._setCommand_cmd(nOffset,nValue);                       break;
+                        case N_mach_commands::cmdsize:      mach._setCommand_cmdsize(nOffset,nValue);                   break;
+                    }
+
+                    break;
+
+                case SMACH::TYPE_mach_segments:
+                    if(mach.is64())
+                    {
+                        switch(nNdata)
+                        {
+                            case N_mach_segments::segname:      mach._setSegment64_segname(nOffset,sValue);             break;
+                            case N_mach_segments::vmaddr:       mach._setSegment64_vmaddr(nOffset,nValue);              break;
+                            case N_mach_segments::vmsize:       mach._setSegment64_vmsize(nOffset,nValue);              break;
+                            case N_mach_segments::fileoff:      mach._setSegment64_fileoff(nOffset,nValue);             break;
+                            case N_mach_segments::filesize:     mach._setSegment64_filesize(nOffset,nValue);            break;
+                            case N_mach_segments::maxprot:      mach._setSegment64_maxprot(nOffset,nValue);             break;
+                            case N_mach_segments::initprot:     mach._setSegment64_initprot(nOffset,nValue);            break;
+                            case N_mach_segments::nsects:       mach._setSegment64_nsects(nOffset,nValue);              break;
+                            case N_mach_segments::flags:        mach._setSegment64_flags(nOffset,nValue);               break;
+                        }
+                    }
+                    else
+                    {
+                        switch(nNdata)
+                        {
+                            case N_mach_segments::segname:      mach._setSegment32_segname(nOffset,sValue);             break;
+                            case N_mach_segments::vmaddr:       mach._setSegment32_vmaddr(nOffset,nValue);              break;
+                            case N_mach_segments::vmsize:       mach._setSegment32_vmsize(nOffset,nValue);              break;
+                            case N_mach_segments::fileoff:      mach._setSegment32_fileoff(nOffset,nValue);             break;
+                            case N_mach_segments::filesize:     mach._setSegment32_filesize(nOffset,nValue);            break;
+                            case N_mach_segments::maxprot:      mach._setSegment32_maxprot(nOffset,nValue);             break;
+                            case N_mach_segments::initprot:     mach._setSegment32_initprot(nOffset,nValue);            break;
+                            case N_mach_segments::nsects:       mach._setSegment32_nsects(nOffset,nValue);              break;
+                            case N_mach_segments::flags:        mach._setSegment32_flags(nOffset,nValue);               break;
+                        }
                     }
 
                     break;
