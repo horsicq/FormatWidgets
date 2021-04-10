@@ -216,6 +216,45 @@ FormatWidget::SV MACHSectionHeaderWidget::_setValue(QVariant vValue, int nStype,
                     }
 
                     break;
+
+                case SMACH::TYPE_mach_sections:
+                    if(mach.is64())
+                    {
+                        switch(nNdata)
+                        {
+                            case N_mach_sections64::sectname:   mach._setSection64_sectname(nOffset,sValue);            break;
+                            case N_mach_sections64::segname:    mach._setSection64_segname(nOffset,sValue);             break;
+                            case N_mach_sections64::addr:       mach._setSection64_addr(nOffset,nValue);                break;
+                            case N_mach_sections64::size:       mach._setSection64_size(nOffset,nValue);                break;
+                            case N_mach_sections64::offset:     mach._setSection64_offset(nOffset,nValue);              break;
+                            case N_mach_sections64::align:      mach._setSection64_align(nOffset,nValue);               break;
+                            case N_mach_sections64::reloff:     mach._setSection64_reloff(nOffset,nValue);              break;
+                            case N_mach_sections64::nreloc:     mach._setSection64_nreloc(nOffset,nValue);              break;
+                            case N_mach_sections64::flags:      mach._setSection64_flags(nOffset,nValue);               break;
+                            case N_mach_sections64::reserved1:  mach._setSection64_reserved1(nOffset,nValue);           break;
+                            case N_mach_sections64::reserved2:  mach._setSection64_reserved2(nOffset,nValue);           break;
+                            case N_mach_sections64::reserved3:  mach._setSection64_reserved3(nOffset,nValue);           break;
+                        }
+                    }
+                    else
+                    {
+                        switch(nNdata)
+                        {
+                            case N_mach_sections32::sectname:   mach._setSection32_sectname(nOffset,sValue);            break;
+                            case N_mach_sections32::segname:    mach._setSection32_segname(nOffset,sValue);             break;
+                            case N_mach_sections32::addr:       mach._setSection32_addr(nOffset,nValue);                break;
+                            case N_mach_sections32::size:       mach._setSection32_size(nOffset,nValue);                break;
+                            case N_mach_sections32::offset:     mach._setSection32_offset(nOffset,nValue);              break;
+                            case N_mach_sections32::align:      mach._setSection32_align(nOffset,nValue);               break;
+                            case N_mach_sections32::reloff:     mach._setSection32_reloff(nOffset,nValue);              break;
+                            case N_mach_sections32::nreloc:     mach._setSection32_nreloc(nOffset,nValue);              break;
+                            case N_mach_sections32::flags:      mach._setSection32_flags(nOffset,nValue);               break;
+                            case N_mach_sections32::reserved1:  mach._setSection32_reserved1(nOffset,nValue);           break;
+                            case N_mach_sections32::reserved2:  mach._setSection32_reserved2(nOffset,nValue);           break;
+                        }
+                    }
+
+                    break;
             }
 
             ui->widgetHex->reload();
