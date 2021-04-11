@@ -70,13 +70,13 @@ namespace N_IMAGE_FILE_HEADER
 {
 const FW_DEF::HEADER_RECORD records[]=
 {
-    {Machine,               "Machine",              offsetof(XPE_DEF::S_IMAGE_FILE_HEADER,Machine),                 2,      "WORD",         FW_DEF::VAL_TYPE_DATA},
-    {NumberOfSections,      "NumberOfSections",     offsetof(XPE_DEF::S_IMAGE_FILE_HEADER,NumberOfSections),        2,      "WORD",         FW_DEF::VAL_TYPE_DATA},
-    {TimeDateStamp,         "TimeDateStamp",        offsetof(XPE_DEF::S_IMAGE_FILE_HEADER,TimeDateStamp),           4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
-    {PointerToSymbolTable,  "PointerToSymbolTable", offsetof(XPE_DEF::S_IMAGE_FILE_HEADER,PointerToSymbolTable),    4,      "DWORD",        FW_DEF::VAL_TYPE_OFFSET},
-    {NumberOfSymbols,       "NumberOfSymbols",      offsetof(XPE_DEF::S_IMAGE_FILE_HEADER,NumberOfSymbols),         4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
-    {SizeOfOptionalHeader,  "SizeOfOptionalHeader", offsetof(XPE_DEF::S_IMAGE_FILE_HEADER,SizeOfOptionalHeader),    2,      "WORD",         FW_DEF::VAL_TYPE_SIZE},
-    {Characteristics,       "Characteristics",      offsetof(XPE_DEF::S_IMAGE_FILE_HEADER,Characteristics),         2,      "WORD",         FW_DEF::VAL_TYPE_FLAGS}
+    {Machine,               "Machine",              offsetof(XPE_DEF::IMAGE_FILE_HEADER,Machine),                 2,      "WORD",         FW_DEF::VAL_TYPE_DATA},
+    {NumberOfSections,      "NumberOfSections",     offsetof(XPE_DEF::IMAGE_FILE_HEADER,NumberOfSections),        2,      "WORD",         FW_DEF::VAL_TYPE_DATA},
+    {TimeDateStamp,         "TimeDateStamp",        offsetof(XPE_DEF::IMAGE_FILE_HEADER,TimeDateStamp),           4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
+    {PointerToSymbolTable,  "PointerToSymbolTable", offsetof(XPE_DEF::IMAGE_FILE_HEADER,PointerToSymbolTable),    4,      "DWORD",        FW_DEF::VAL_TYPE_OFFSET},
+    {NumberOfSymbols,       "NumberOfSymbols",      offsetof(XPE_DEF::IMAGE_FILE_HEADER,NumberOfSymbols),         4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
+    {SizeOfOptionalHeader,  "SizeOfOptionalHeader", offsetof(XPE_DEF::IMAGE_FILE_HEADER,SizeOfOptionalHeader),    2,      "WORD",         FW_DEF::VAL_TYPE_SIZE},
+    {Characteristics,       "Characteristics",      offsetof(XPE_DEF::IMAGE_FILE_HEADER,Characteristics),         2,      "WORD",         FW_DEF::VAL_TYPE_FLAGS}
 };
 }
 
@@ -441,19 +441,19 @@ namespace N_IMAGE_RESOURCE_FIXEDFILEINFO
 {
 const FW_DEF::HEADER_RECORD records[]=
 {
-    {dwSignature,               "dwSignature",          offsetof(XPE_DEF::S_tagVS_FIXEDFILEINFO,dwSignature),           4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
-    {dwStrucVersion,            "dwStrucVersion",       offsetof(XPE_DEF::S_tagVS_FIXEDFILEINFO,dwStrucVersion),        4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
-    {dwFileVersionMS,           "dwFileVersionMS",      offsetof(XPE_DEF::S_tagVS_FIXEDFILEINFO,dwFileVersionMS),       4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
-    {dwFileVersionLS,           "dwFileVersionLS",      offsetof(XPE_DEF::S_tagVS_FIXEDFILEINFO,dwFileVersionLS),       4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
-    {dwProductVersionMS,        "dwProductVersionMS",   offsetof(XPE_DEF::S_tagVS_FIXEDFILEINFO,dwProductVersionMS),    4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
-    {dwProductVersionLS,        "dwProductVersionLS",   offsetof(XPE_DEF::S_tagVS_FIXEDFILEINFO,dwProductVersionLS),    4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
-    {dwFileFlagsMask,           "dwFileFlagsMask",      offsetof(XPE_DEF::S_tagVS_FIXEDFILEINFO,dwFileFlagsMask),       4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
-    {dwFileFlags,               "dwFileFlags",          offsetof(XPE_DEF::S_tagVS_FIXEDFILEINFO,dwFileFlags),           4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
-    {dwFileOS,                  "dwFileOS",             offsetof(XPE_DEF::S_tagVS_FIXEDFILEINFO,dwFileOS),              4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
-    {dwFileType,                "dwFileType",           offsetof(XPE_DEF::S_tagVS_FIXEDFILEINFO,dwFileType),            4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
-    {dwFileSubtype,             "dwFileSubtype",        offsetof(XPE_DEF::S_tagVS_FIXEDFILEINFO,dwFileSubtype),         4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
-    {dwFileDateMS,              "dwFileDateMS",         offsetof(XPE_DEF::S_tagVS_FIXEDFILEINFO,dwFileDateMS),          4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
-    {dwFileDateLS,              "dwFileDateLS",         offsetof(XPE_DEF::S_tagVS_FIXEDFILEINFO,dwFileDateLS),          4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
+    {dwSignature,               "dwSignature",          offsetof(XPE_DEF::tagVS_FIXEDFILEINFO,dwSignature),           4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
+    {dwStrucVersion,            "dwStrucVersion",       offsetof(XPE_DEF::tagVS_FIXEDFILEINFO,dwStrucVersion),        4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
+    {dwFileVersionMS,           "dwFileVersionMS",      offsetof(XPE_DEF::tagVS_FIXEDFILEINFO,dwFileVersionMS),       4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
+    {dwFileVersionLS,           "dwFileVersionLS",      offsetof(XPE_DEF::tagVS_FIXEDFILEINFO,dwFileVersionLS),       4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
+    {dwProductVersionMS,        "dwProductVersionMS",   offsetof(XPE_DEF::tagVS_FIXEDFILEINFO,dwProductVersionMS),    4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
+    {dwProductVersionLS,        "dwProductVersionLS",   offsetof(XPE_DEF::tagVS_FIXEDFILEINFO,dwProductVersionLS),    4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
+    {dwFileFlagsMask,           "dwFileFlagsMask",      offsetof(XPE_DEF::tagVS_FIXEDFILEINFO,dwFileFlagsMask),       4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
+    {dwFileFlags,               "dwFileFlags",          offsetof(XPE_DEF::tagVS_FIXEDFILEINFO,dwFileFlags),           4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
+    {dwFileOS,                  "dwFileOS",             offsetof(XPE_DEF::tagVS_FIXEDFILEINFO,dwFileOS),              4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
+    {dwFileType,                "dwFileType",           offsetof(XPE_DEF::tagVS_FIXEDFILEINFO,dwFileType),            4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
+    {dwFileSubtype,             "dwFileSubtype",        offsetof(XPE_DEF::tagVS_FIXEDFILEINFO,dwFileSubtype),         4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
+    {dwFileDateMS,              "dwFileDateMS",         offsetof(XPE_DEF::tagVS_FIXEDFILEINFO,dwFileDateMS),          4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
+    {dwFileDateLS,              "dwFileDateLS",         offsetof(XPE_DEF::tagVS_FIXEDFILEINFO,dwFileDateLS),          4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
 };
 }
 

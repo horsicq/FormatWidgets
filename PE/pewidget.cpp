@@ -962,7 +962,7 @@ void PEWidget::reloadData()
 
                 blockSignals(true);
 
-                XPE_DEF::S_IMAGE_FILE_HEADER fileheader=pe.getFileHeader();
+                XPE_DEF::IMAGE_FILE_HEADER fileheader=pe.getFileHeader();
 
                 lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::Machine]->setValue(fileheader.Machine);
                 lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::NumberOfSections]->setValue(fileheader.NumberOfSections);

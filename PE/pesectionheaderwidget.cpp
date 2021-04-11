@@ -599,7 +599,7 @@ void PESectionHeaderWidget::reloadData()
 
                 qint64 nOffset=pe.getBoundImportRecordOffset(getNumber());
 
-                XPE_DEF::S_IMAGE_BOUND_IMPORT_DESCRIPTOR boundImport=pe._read_IMAGE_BOUND_IMPORT_DESCRIPTOR(nOffset);
+                XPE_DEF::IMAGE_BOUND_IMPORT_DESCRIPTOR boundImport=pe._read_IMAGE_BOUND_IMPORT_DESCRIPTOR(nOffset);
 
                 g_ppLinedEdit[N_IMAGE_BOUNDIMPORT::TimeDateStamp]->setValue(boundImport.TimeDateStamp);
                 g_ppLinedEdit[N_IMAGE_BOUNDIMPORT::OffsetModuleName]->setValue(boundImport.OffsetModuleName);
