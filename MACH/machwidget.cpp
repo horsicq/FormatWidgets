@@ -134,7 +134,16 @@ void MACHWidget::reload()
                 }
             }
 
-            QList<XMACH::LIBRARY_RECORD> listLibraryRecords=mach.getLibraryRecords(&listCommandRecords);
+            QList<XMACH::LIBRARY_RECORD> listIdLibraryRecords=mach.getLibraryRecords(&listCommandRecords,XMACH_DEF::LC_ID_DYLIB);
+
+            if(listIdLibraryRecords.count())
+            {
+                QTreeWidgetItem *pItemLibraries=createNewItem(SMACH::TYPE_mach_id_library,QString("Id %1").arg(tr("Library")));
+
+                pItemCommands->addChild(pItemLibraries);
+            }
+
+            QList<XMACH::LIBRARY_RECORD> listLibraryRecords=mach.getLibraryRecords(&listCommandRecords,XMACH_DEF::LC_LOAD_DYLIB);
 
             if(listLibraryRecords.count())
             {
@@ -263,6 +272,8 @@ QString MACHWidget::typeIdToString(int nType)
         case SMACH::TYPE_mach_commands:         sResult=QString("Command %1").arg(tr("Header"));        break;
         case SMACH::TYPE_mach_segments:         sResult=QString("Segment %1").arg(tr("Header"));        break;
         case SMACH::TYPE_mach_sections:         sResult=QString("Section %1").arg(tr("Header"));        break;
+        case SMACH::TYPE_mach_libraries:        sResult=QString("Library %1").arg(tr("Header"));        break;
+        case SMACH::TYPE_mach_id_library:       sResult=QString("Id Library %1").arg(tr("Header"));     break;
     }
 
     return sResult;
@@ -487,9 +498,27 @@ void MACHWidget::reloadData()
 
                 ajustTableView(&machProcessData,&tvModel[SMACH::TYPE_mach_libraries],ui->tableView_libraries,nullptr,true);
 
+                connect(ui->tableView_libraries->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_libraries_currentRowChanged(QModelIndex,QModelIndex)));
+
                 if(tvModel[SMACH::TYPE_mach_libraries]->rowCount())
                 {
                     ui->tableView_libraries->setCurrentIndex(ui->tableView_libraries->model()->index(0,0));
+                }
+            }
+        }
+        else if(nType==SMACH::TYPE_mach_id_library)
+        {
+            if(!g_stInit.contains(sInit))
+            {
+                MACHProcessData machProcessData(SMACH::TYPE_mach_id_library,&tvModel[SMACH::TYPE_mach_id_library],&mach,0,0);
+
+                ajustTableView(&machProcessData,&tvModel[SMACH::TYPE_mach_id_library],ui->tableView_id_library,nullptr,true);
+
+                connect(ui->tableView_id_library->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_id_library_currentRowChanged(QModelIndex,QModelIndex)));
+
+                if(tvModel[SMACH::TYPE_mach_id_library]->rowCount())
+                {
+                    ui->tableView_id_library->setCurrentIndex(ui->tableView_id_library->model()->index(0,0));
                 }
             }
         }
@@ -600,6 +629,22 @@ void MACHWidget::onTableView_sections_currentRowChanged(const QModelIndex &curre
     loadHexSubdeviceByTableView(current.row(),SMACH::TYPE_mach_sections,ui->widgetHex_sections,ui->tableView_sections,&g_subDevice[SMACH::TYPE_mach_sections]);
 }
 
+void MACHWidget::onTableView_libraries_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
+    Q_UNUSED(current)
+    Q_UNUSED(previous)
+
+    loadHexSubdeviceByTableView(current.row(),SMACH::TYPE_mach_libraries,ui->widgetHex_libraries,ui->tableView_libraries,&g_subDevice[SMACH::TYPE_mach_libraries]);
+}
+
+void MACHWidget::onTableView_id_library_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
+    Q_UNUSED(current)
+    Q_UNUSED(previous)
+
+    loadHexSubdeviceByTableView(current.row(),SMACH::TYPE_mach_id_library,ui->widgetHex_id_library,ui->tableView_id_library,&g_subDevice[SMACH::TYPE_mach_id_library]);
+}
+
 void MACHWidget::on_tableView_commands_doubleClicked(const QModelIndex &index)
 {
     Q_UNUSED(index)
@@ -666,6 +711,50 @@ void MACHWidget::on_tableView_sections_customContextMenuRequested(const QPoint &
     }
 }
 
+void MACHWidget::on_tableView_libraries_doubleClicked(const QModelIndex &index)
+{
+    Q_UNUSED(index)
+    editLibraryHeader();
+}
+
+void MACHWidget::on_tableView_libraries_customContextMenuRequested(const QPoint &pos)
+{
+    int nRow=ui->tableView_libraries->currentIndex().row();
+
+    if(nRow!=-1)
+    {
+        QMenu contextMenu(this);
+
+        QAction actionEdit(tr("Edit"),this);
+        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editLibraryHeader()));
+        contextMenu.addAction(&actionEdit);
+
+        contextMenu.exec(ui->tableView_libraries->viewport()->mapToGlobal(pos));
+    }
+}
+
+void MACHWidget::on_tableView_id_library_doubleClicked(const QModelIndex &index)
+{
+    Q_UNUSED(index)
+    editIdLibraryHeader();
+}
+
+void MACHWidget::on_tableView_id_library_customContextMenuRequested(const QPoint &pos)
+{
+    int nRow=ui->tableView_id_library->currentIndex().row();
+
+    if(nRow!=-1)
+    {
+        QMenu contextMenu(this);
+
+        QAction actionEdit(tr("Edit"),this);
+        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editIdLibraryHeader()));
+        contextMenu.addAction(&actionEdit);
+
+        contextMenu.exec(ui->tableView_id_library->viewport()->mapToGlobal(pos));
+    }
+}
+
 void MACHWidget::editCommandHeader()
 {
     showSectionHeader(SMACH::TYPE_mach_commands,ui->tableView_commands);
@@ -679,6 +768,16 @@ void MACHWidget::editSegmentHeader()
 void MACHWidget::editSectionHeader()
 {
     showSectionHeader(SMACH::TYPE_mach_sections,ui->tableView_sections);
+}
+
+void MACHWidget::editLibraryHeader()
+{
+    showSectionHeader(SMACH::TYPE_mach_libraries,ui->tableView_libraries);
+}
+
+void MACHWidget::editIdLibraryHeader()
+{
+    showSectionHeader(SMACH::TYPE_mach_id_library,ui->tableView_id_library);
 }
 
 void MACHWidget::showSectionHeader(int nType, QTableView *pTableView)

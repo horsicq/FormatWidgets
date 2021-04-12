@@ -40,6 +40,7 @@ enum TYPE
     TYPE_mach_segments,
     TYPE_mach_sections,
     TYPE_mach_libraries,
+    TYPE_mach_id_library,
     __TYPE_size
 };
 }
@@ -179,17 +180,28 @@ enum INV
 };
 }
 
-namespace N_mach_libraries
+namespace N_mach_library
 {
 enum DATA
 {
     timestamp,
     current_version,
     compatibility_version,
+    name,
     __data_size
 };
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
+
+enum CB
+{
+    __CB_size
+};
+
+enum INV
+{
+    __INV_size
+};
 }
 
 #endif // MACH_DEFS_H

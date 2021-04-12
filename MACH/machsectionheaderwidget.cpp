@@ -50,6 +50,12 @@ MACHSectionHeaderWidget::MACHSectionHeaderWidget(QIODevice *pDevice,FW_DEF::OPTI
          g_nComboBoxSize=N_mach_commands::__CB_size;
          g_nInvWidgetSize=N_mach_commands::__INV_size;
      }
+     if((nType==SMACH::TYPE_mach_libraries)||(nType==SMACH::TYPE_mach_id_library))
+     {
+         g_nLineEditSize=N_mach_library::__data_size;
+         g_nComboBoxSize=N_mach_library::__CB_size;
+         g_nInvWidgetSize=N_mach_library::__INV_size;
+     }
      else if(nType==SMACH::TYPE_mach_segments)
      {
          g_nLineEditSize=N_mach_segments::__data_size;
@@ -183,6 +189,17 @@ FormatWidget::SV MACHSectionHeaderWidget::_setValue(QVariant vValue, int nStype,
 
                     break;
 
+                case SMACH::TYPE_mach_libraries:
+                    switch(nNdata)
+                    {
+                        case N_mach_library::timestamp:               mach._setLibraryRecord_timestamp(nOffset,nValue);               break;
+                        case N_mach_library::current_version:         mach._setLibraryRecord_current_version(nOffset,nValue);         break;
+                        case N_mach_library::compatibility_version:   mach._setLibraryRecord_compatibility_version(nOffset,nValue);   break;
+                        case N_mach_library::name:                    mach._setLibraryRecord_name(nOffset,sValue);                    break;
+                    }
+
+                    break;
+
                 case SMACH::TYPE_mach_segments:
                     if(mach.is64())
                     {
@@ -292,6 +309,15 @@ void MACHSectionHeaderWidget::adjustHeaderTable(int nType, QTableWidget *pTableW
             pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
             break;
 
+        case SMACH::TYPE_mach_id_library:
+        case SMACH::TYPE_mach_libraries:
+            pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*8);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*8);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*12);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
+            break;
+
         case SMACH::TYPE_mach_segments:
             pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
             pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*8);
@@ -346,6 +372,40 @@ void MACHSectionHeaderWidget::reloadData()
 
                 qint64 nOffset=nHeaderOffset;
                 qint64 nSize=mach.getCommandHeaderSize();
+                qint64 nAddress=mach.offsetToRelAddress(nOffset);
+
+                loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
+
+                blockSignals(false);
+            }
+            else if((nType==SMACH::TYPE_mach_libraries)||(nType==SMACH::TYPE_mach_id_library))
+            {
+                g_bInit=createHeaderTable(nType,ui->tableWidget,N_mach_library::records,g_ppLinedEdit,N_mach_library::__data_size,getNumber(),getOffset());
+
+                blockSignals(true);
+
+                qint64 nHeaderOffset=getOffset();
+
+                XMACH::LIBRARY_RECORD lr=mach._readLibraryRecord(nHeaderOffset,bIsBigEndian);
+                XMACH::COMMAND_RECORD cr=mach._readLoadCommand(nHeaderOffset,bIsBigEndian);
+
+                g_ppLinedEdit[N_mach_library::timestamp]->setValue((quint32)lr.timestamp);
+                g_ppLinedEdit[N_mach_library::current_version]->setValue((quint32)lr.current_version);
+                g_ppLinedEdit[N_mach_library::compatibility_version]->setValue((quint32)lr.compatibility_version);
+                g_ppLinedEdit[N_mach_library::name]->setStringValue(lr.sFullName,lr.nMaxStringSize);
+
+                if(lr.nMaxStringSize)
+                {
+                    QTableWidgetItem *pItem=ui->tableWidget->item(N_mach_library::name,0);
+
+                    if(pItem)
+                    {
+                        pItem->setData(Qt::UserRole+HEADER_DATA_SIZE,lr.nMaxStringSize);
+                    }
+                }
+
+                qint64 nOffset=nHeaderOffset;
+                qint64 nSize=cr.nSize;
                 qint64 nAddress=mach.offsetToRelAddress(nOffset);
 
                 loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
@@ -452,6 +512,8 @@ void MACHSectionHeaderWidget::reloadData()
                 blockSignals(false);
             }
         }
+
+        setReadonly(ui->checkBoxReadonly->isChecked());
     }
 }
 

@@ -699,6 +699,11 @@ bool FormatWidget::createHeaderTable(int nType, QTableWidget *pTableWidget, cons
         if(pRecords[i].vtype==FW_DEF::VAL_TYPE_TEXT)
         {
             connect(ppLineEdits[i],SIGNAL(textChanged(QString)),this,SLOT(textValueChanged(QString)));
+
+            if(pRecords[i].nSize!=-1)
+            {
+                ppLineEdits[i]->setMaxLength(pRecords[i].nSize);
+            }
         }
         else
         {
