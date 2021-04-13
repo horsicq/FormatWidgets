@@ -134,22 +134,25 @@ void MACHWidget::reload()
                 }
             }
 
-            QList<XMACH::LIBRARY_RECORD> listIdLibraryRecords=mach.getLibraryRecords(&listCommandRecords,XMACH_DEF::LC_ID_DYLIB);
-
-            if(listIdLibraryRecords.count())
+            if(mach.isCommandPresent(XMACH_DEF::LC_ID_DYLIB,&listCommandRecords))
             {
                 QTreeWidgetItem *pItemLibraries=createNewItem(SMACH::TYPE_mach_id_library,QString("Id %1").arg(tr("Library")));
 
                 pItemCommands->addChild(pItemLibraries);
             }
 
-            QList<XMACH::LIBRARY_RECORD> listLibraryRecords=mach.getLibraryRecords(&listCommandRecords,XMACH_DEF::LC_LOAD_DYLIB);
-
-            if(listLibraryRecords.count())
+            if(mach.isCommandPresent(XMACH_DEF::LC_LOAD_DYLIB,&listCommandRecords))
             {
                 QTreeWidgetItem *pItemLibraries=createNewItem(SMACH::TYPE_mach_libraries,tr("Libraries"));
 
                 pItemCommands->addChild(pItemLibraries);
+            }
+
+            if(mach.isCommandPresent(XMACH_DEF::LC_DYLD_INFO_ONLY,&listCommandRecords))
+            {
+                QTreeWidgetItem *pItemDyldInfo=createNewItem(SMACH::TYPE_mach_dyld_info_only,QString("LC_DYLD_INFO_ONLY")); // TODO rename
+
+                pItemCommands->addChild(pItemDyldInfo);
             }
         }
 
