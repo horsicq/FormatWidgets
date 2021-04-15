@@ -153,7 +153,23 @@ namespace N_mach_uuid
 {
 const FW_DEF::HEADER_RECORD records[]=
 {
-    {uuid,                  "uuid",                     sizeof(XMACH_DEF::load_command),            16,      "bytes",               FW_DEF::VAL_TYPE_UUID},
+    {uuid,                  "uuid",                     sizeof(XMACH_DEF::load_command),            16,         "bytes",                FW_DEF::VAL_TYPE_UUID},
+};
+}
+
+namespace N_mach_dylinker
+{
+const FW_DEF::HEADER_RECORD records[]=
+{
+    {dylinker,              "dylinker",                 sizeof(XMACH_DEF::load_command),            -1,         "Ansi string",          FW_DEF::VAL_TYPE_TEXT},
+};
+}
+
+namespace N_mach_rpath
+{
+const FW_DEF::HEADER_RECORD records[]=
+{
+    {path,                  "path",                     sizeof(XMACH_DEF::load_command),            -1,         "Ansi string",          FW_DEF::VAL_TYPE_TEXT},
 };
 }
 

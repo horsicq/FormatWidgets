@@ -71,6 +71,8 @@ void MACHWidget::clear()
     memset(g_lineEdit_mach_header,0,sizeof g_lineEdit_mach_header);
     memset(g_lineEdit_mach_dyld_info_only,0,sizeof g_lineEdit_mach_dyld_info_only);
     memset(g_lineEdit_mach_uuid,0,sizeof g_lineEdit_mach_uuid);
+    memset(g_lineEdit_mach_dylinker,0,sizeof g_lineEdit_mach_dylinker);
+    memset(g_lineEdit_mach_rpath,0,sizeof g_lineEdit_mach_rpath);
     memset(g_lineEdit_mach_symtab,0,sizeof g_lineEdit_mach_symtab);
     memset(g_lineEdit_mach_dysymtab,0,sizeof g_lineEdit_mach_dysymtab);
     memset(g_lineEdit_mach_version_min,0,sizeof g_lineEdit_mach_version_min);
@@ -199,11 +201,25 @@ void MACHWidget::reload()
 
                 pItemCommands->addChild(pItemVersionMin);
             }
-            if(mach.isCommandPresent(XMACH_DEF::LC_VERSION_MIN_WATCHOS,&listCommandRecords))
+            else if(mach.isCommandPresent(XMACH_DEF::LC_VERSION_MIN_WATCHOS,&listCommandRecords))
             {
                 QTreeWidgetItem *pItemVersionMin=createNewItem(SMACH::TYPE_mach_version_min,QString("LC_VERSION_MIN_WATCHOS"),mach.getCommandRecordOffset(XMACH_DEF::LC_VERSION_MIN_WATCHOS,0)); // TODO rename
 
                 pItemCommands->addChild(pItemVersionMin);
+            }
+
+            if(mach.isCommandPresent(XMACH_DEF::LC_LOAD_DYLINKER,&listCommandRecords))
+            {
+                QTreeWidgetItem *pDylinker=createNewItem(SMACH::TYPE_mach_dylinker,QString("LC_LOAD_DYLINKER"),mach.getCommandRecordOffset(XMACH_DEF::LC_LOAD_DYLINKER,0)); // TODO rename
+
+                pItemCommands->addChild(pDylinker);
+            }
+
+            if(mach.isCommandPresent(XMACH_DEF::LC_RPATH,&listCommandRecords))
+            {
+                QTreeWidgetItem *pRPath=createNewItem(SMACH::TYPE_mach_rpath,QString("LC_RPATH"),mach.getCommandRecordOffset(XMACH_DEF::LC_RPATH,0)); // TODO rename
+
+                pItemCommands->addChild(pRPath);
             }
         }
 
@@ -286,7 +302,23 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
                 case SMACH::TYPE_mach_uuid:
                     switch(nNdata)
                     {
-                        case N_mach_uuid::uuid:         mach.setUUID(sValue);           break;
+                        case N_mach_uuid::uuid:             mach.setUUID(sValue);               break;
+                    }
+
+                    break;
+
+                case SMACH::TYPE_mach_dylinker:
+                    switch(nNdata)
+                    {
+                        case N_mach_dylinker::dylinker:     mach.setLoadDylinker(sValue);       break;
+                    }
+
+                    break;
+
+                case SMACH::TYPE_mach_rpath:
+                    switch(nNdata)
+                    {
+                        case N_mach_rpath::path:            mach.setRPath(sValue);              break;
                     }
 
                     break;
@@ -369,6 +401,8 @@ void MACHWidget::setReadonly(bool bState)
     setLineEditsReadOnly(g_lineEdit_mach_header,N_mach_header::__data_size,bState);
     setLineEditsReadOnly(g_lineEdit_mach_dyld_info_only,N_mach_dyld_info::__data_size,bState);
     setLineEditsReadOnly(g_lineEdit_mach_uuid,N_mach_uuid::__data_size,bState);
+    setLineEditsReadOnly(g_lineEdit_mach_dylinker,N_mach_dylinker::__data_size,bState);
+    setLineEditsReadOnly(g_lineEdit_mach_rpath,N_mach_rpath::__data_size,bState);
     setLineEditsReadOnly(g_lineEdit_mach_symtab,N_mach_symtab::__data_size,bState);
     setLineEditsReadOnly(g_lineEdit_mach_dysymtab,N_mach_dysymtab::__data_size,bState);
     setLineEditsReadOnly(g_lineEdit_mach_version_min,N_mach_version_min::__data_size,bState);
@@ -382,6 +416,8 @@ void MACHWidget::blockSignals(bool bState)
     _blockSignals((QObject **)g_lineEdit_mach_header,N_mach_header::__data_size,bState);
     _blockSignals((QObject **)g_lineEdit_mach_dyld_info_only,N_mach_dyld_info::__data_size,bState);
     _blockSignals((QObject **)g_lineEdit_mach_uuid,N_mach_uuid::__data_size,bState);
+    _blockSignals((QObject **)g_lineEdit_mach_dylinker,N_mach_dylinker::__data_size,bState);
+    _blockSignals((QObject **)g_lineEdit_mach_rpath,N_mach_rpath::__data_size,bState);
     _blockSignals((QObject **)g_lineEdit_mach_symtab,N_mach_symtab::__data_size,bState);
     _blockSignals((QObject **)g_lineEdit_mach_dysymtab,N_mach_dysymtab::__data_size,bState);
     _blockSignals((QObject **)g_lineEdit_mach_version_min,N_mach_version_min::__data_size,bState);
@@ -702,6 +738,32 @@ void MACHWidget::reloadData()
                 blockSignals(true);
 
                 g_lineEdit_mach_uuid[N_mach_uuid::uuid]->setUUID(mach.getUUID());
+
+                blockSignals(false);
+            }
+        }
+        else if(nType==SMACH::TYPE_mach_dylinker)
+        {
+            if(!g_stInit.contains(sInit))
+            {
+                createListTable(SMACH::TYPE_mach_dylinker,ui->tableWidget_dylinker,N_mach_dylinker::records,g_lineEdit_mach_dylinker,N_mach_dylinker::__data_size);
+
+                blockSignals(true);
+
+                g_lineEdit_mach_dylinker[N_mach_dylinker::dylinker]->setStringValue(mach.getLoadDylinker()); // TODO Max Size!!!
+
+                blockSignals(false);
+            }
+        }
+        else if(nType==SMACH::TYPE_mach_rpath)
+        {
+            if(!g_stInit.contains(sInit))
+            {
+                createListTable(SMACH::TYPE_mach_rpath,ui->tableWidget_rpath,N_mach_rpath::records,g_lineEdit_mach_rpath,N_mach_rpath::__data_size);
+
+                blockSignals(true);
+
+                g_lineEdit_mach_rpath[N_mach_rpath::path]->setStringValue(mach.getRPath()); // TODO Max Size!!!
 
                 blockSignals(false);
             }

@@ -46,6 +46,8 @@ enum TYPE
     TYPE_mach_symtab,
     TYPE_mach_dysymtab,
     TYPE_mach_version_min,
+    TYPE_mach_dylinker,
+    TYPE_mach_rpath,
     __TYPE_size
 };
 }
@@ -244,6 +246,28 @@ namespace N_mach_uuid
 enum DATA
 {
     uuid=0,
+    __data_size
+};
+
+extern const FW_DEF::HEADER_RECORD records[__data_size];
+}
+
+namespace N_mach_dylinker
+{
+enum DATA
+{
+    dylinker=0,
+    __data_size
+};
+
+extern const FW_DEF::HEADER_RECORD records[__data_size];
+}
+
+namespace N_mach_rpath
+{
+enum DATA
+{
+    path=0,
     __data_size
 };
 

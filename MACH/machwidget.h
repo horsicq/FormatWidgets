@@ -109,6 +109,8 @@ private:
     XLineEditHEX *g_lineEdit_mach_header[N_mach_header::__data_size];
     XLineEditHEX *g_lineEdit_mach_dyld_info_only[N_mach_dyld_info::__data_size];
     XLineEditHEX *g_lineEdit_mach_uuid[N_mach_uuid::__data_size];
+    XLineEditHEX *g_lineEdit_mach_dylinker[N_mach_dylinker::__data_size];
+    XLineEditHEX *g_lineEdit_mach_rpath[N_mach_rpath::__data_size];
     XLineEditHEX *g_lineEdit_mach_symtab[N_mach_symtab::__data_size];
     XLineEditHEX *g_lineEdit_mach_dysymtab[N_mach_dysymtab::__data_size];
     XLineEditHEX *g_lineEdit_mach_version_min[N_mach_version_min::__data_size];
