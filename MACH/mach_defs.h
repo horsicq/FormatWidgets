@@ -42,6 +42,10 @@ enum TYPE
     TYPE_mach_libraries,
     TYPE_mach_id_library,
     TYPE_mach_dyld_info_only,
+    TYPE_mach_uuid,
+    TYPE_mach_symtab,
+    TYPE_mach_dysymtab,
+    TYPE_mach_version_min,
     __TYPE_size
 };
 }
@@ -189,6 +193,131 @@ enum DATA
     current_version,
     compatibility_version,
     name,
+    __data_size
+};
+
+extern const FW_DEF::HEADER_RECORD records[__data_size];
+
+enum CB
+{
+    __CB_size
+};
+
+enum INV
+{
+    __INV_size
+};
+}
+
+namespace N_mach_dyld_info
+{
+enum DATA
+{
+    rebase_off,
+    rebase_size,
+    bind_off,
+    bind_size,
+    weak_bind_off,
+    weak_bind_size,
+    lazy_bind_off,
+    lazy_bind_size,
+    export_off,
+    export_size,
+    __data_size
+};
+
+extern const FW_DEF::HEADER_RECORD records[__data_size];
+
+enum CB
+{
+    __CB_size
+};
+
+enum INV
+{
+    __INV_size
+};
+}
+
+namespace N_mach_uuid
+{
+enum DATA
+{
+    uuid=0,
+    __data_size
+};
+
+extern const FW_DEF::HEADER_RECORD records[__data_size];
+}
+
+namespace N_mach_symtab
+{
+enum DATA
+{
+    symoff,
+    nsyms,
+    stroff,
+    strsize,
+    __data_size
+};
+
+extern const FW_DEF::HEADER_RECORD records[__data_size];
+
+enum CB
+{
+    __CB_size
+};
+
+enum INV
+{
+    __INV_size
+};
+}
+
+namespace N_mach_dysymtab
+{
+enum DATA
+{
+    ilocalsym,
+    nlocalsym,
+    iextdefsym,
+    nextdefsym,
+    iundefsym,
+    nundefsym,
+    tocoff,
+    ntoc,
+    modtaboff,
+    nmodtab,
+    extrefsymoff,
+    nextrefsyms,
+    indirectsymoff,
+    nindirectsyms,
+    extreloff,
+    nextrel,
+    locreloff,
+    nlocrel,
+    __data_size
+};
+
+extern const FW_DEF::HEADER_RECORD records[__data_size];
+
+enum CB
+{
+    __CB_size
+};
+
+enum INV
+{
+    __INV_size
+};
+}
+
+namespace N_mach_version_min
+{
+enum DATA
+{
+    version,
+    sdk,
     __data_size
 };
 

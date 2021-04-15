@@ -66,6 +66,9 @@ private slots:
     void on_pushButtonReload_clicked();
     void enableButton();
     void on_tableWidget_mach_header_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
+    void on_tableWidget_dyld_info_only_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
+    void on_tableWidget_symtab_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
+    void on_tableWidget_dysymtab_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
     void on_toolButtonPrev_clicked();
     void on_toolButtonNext_clicked();
     void onTableView_commands_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
@@ -104,6 +107,11 @@ private:
     Ui::MACHWidget *ui;
 
     XLineEditHEX *g_lineEdit_mach_header[N_mach_header::__data_size];
+    XLineEditHEX *g_lineEdit_mach_dyld_info_only[N_mach_dyld_info::__data_size];
+    XLineEditHEX *g_lineEdit_mach_uuid[N_mach_uuid::__data_size];
+    XLineEditHEX *g_lineEdit_mach_symtab[N_mach_symtab::__data_size];
+    XLineEditHEX *g_lineEdit_mach_dysymtab[N_mach_dysymtab::__data_size];
+    XLineEditHEX *g_lineEdit_mach_version_min[N_mach_version_min::__data_size];
     XComboBoxEx *g_comboBox[__CB_size];
 
     SubDevice *g_subDevice[SMACH::__TYPE_size];

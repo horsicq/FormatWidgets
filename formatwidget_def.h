@@ -48,7 +48,8 @@ namespace FW_DEF
         VAL_TYPE_SIZE,
         VAL_TYPE_TEXT,
         VAL_TYPE_LABEL,
-        VAL_TYPE_UNIXTIME // TODO
+        VAL_TYPE_UNIXTIME, // TODO
+        VAL_TYPE_UUID
     };
 
     struct HEADER_RECORD

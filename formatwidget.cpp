@@ -696,9 +696,9 @@ bool FormatWidget::createHeaderTable(int nType, QTableWidget *pTableWidget, cons
         ppLineEdits[i]->setProperty("POSITION",nPosition);
         ppLineEdits[i]->setProperty("OFFSET",nOffset);
 
-        if(pRecords[i].vtype==FW_DEF::VAL_TYPE_TEXT)
+        if((pRecords[i].vtype==FW_DEF::VAL_TYPE_TEXT)||(pRecords[i].vtype==FW_DEF::VAL_TYPE_UUID))
         {
-            connect(ppLineEdits[i],SIGNAL(textChanged(QString)),this,SLOT(textValueChanged(QString)));
+            connect(ppLineEdits[i],SIGNAL(valueChanged(QString)),this,SLOT(textValueChanged(QString)));
 
             if(pRecords[i].nSize!=-1)
             {
@@ -757,9 +757,9 @@ bool FormatWidget::createListTable(int nType, QTableWidget *pTableWidget, const 
 
         if(pRecords[i].nOffset!=-1)
         {
-            if(pRecords[i].vtype==FW_DEF::VAL_TYPE_TEXT)
+            if((pRecords[i].vtype==FW_DEF::VAL_TYPE_TEXT)||(pRecords[i].vtype==FW_DEF::VAL_TYPE_UUID))
             {
-                connect(ppLineEdits[i],SIGNAL(textChanged(QString)),this,SLOT(textValueChanged(QString)));
+                connect(ppLineEdits[i],SIGNAL(valueChanged(QString)),this,SLOT(textValueChanged(QString)));
             }
             else
             {

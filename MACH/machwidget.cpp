@@ -69,6 +69,11 @@ void MACHWidget::clear()
     MACHWidget::reset();
 
     memset(g_lineEdit_mach_header,0,sizeof g_lineEdit_mach_header);
+    memset(g_lineEdit_mach_dyld_info_only,0,sizeof g_lineEdit_mach_dyld_info_only);
+    memset(g_lineEdit_mach_uuid,0,sizeof g_lineEdit_mach_uuid);
+    memset(g_lineEdit_mach_symtab,0,sizeof g_lineEdit_mach_symtab);
+    memset(g_lineEdit_mach_dysymtab,0,sizeof g_lineEdit_mach_dysymtab);
+    memset(g_lineEdit_mach_version_min,0,sizeof g_lineEdit_mach_version_min);
     memset(g_comboBox,0,sizeof g_comboBox);
     memset(g_subDevice,0,sizeof g_subDevice);
 
@@ -136,7 +141,7 @@ void MACHWidget::reload()
 
             if(mach.isCommandPresent(XMACH_DEF::LC_ID_DYLIB,&listCommandRecords))
             {
-                QTreeWidgetItem *pItemLibraries=createNewItem(SMACH::TYPE_mach_id_library,QString("Id %1").arg(tr("Library")));
+                QTreeWidgetItem *pItemLibraries=createNewItem(SMACH::TYPE_mach_id_library,QString("LC_ID_DYLIB"));
 
                 pItemCommands->addChild(pItemLibraries);
             }
@@ -150,9 +155,55 @@ void MACHWidget::reload()
 
             if(mach.isCommandPresent(XMACH_DEF::LC_DYLD_INFO_ONLY,&listCommandRecords))
             {
-                QTreeWidgetItem *pItemDyldInfo=createNewItem(SMACH::TYPE_mach_dyld_info_only,QString("LC_DYLD_INFO_ONLY")); // TODO rename
+                QTreeWidgetItem *pItemDyldInfo=createNewItem(SMACH::TYPE_mach_dyld_info_only,QString("LC_DYLD_INFO_ONLY"),mach.getCommandRecordOffset(XMACH_DEF::LC_DYLD_INFO_ONLY,0)); // TODO rename
 
                 pItemCommands->addChild(pItemDyldInfo);
+            }
+
+            if(mach.isCommandPresent(XMACH_DEF::LC_UUID,&listCommandRecords))
+            {
+                QTreeWidgetItem *pItemUuid=createNewItem(SMACH::TYPE_mach_uuid,QString("LC_UUID"),mach.getCommandRecordOffset(XMACH_DEF::LC_UUID,0)); // TODO rename
+
+                pItemCommands->addChild(pItemUuid);
+            }
+
+            if(mach.isCommandPresent(XMACH_DEF::LC_SYMTAB,&listCommandRecords))
+            {
+                QTreeWidgetItem *pItemSymtab=createNewItem(SMACH::TYPE_mach_symtab,QString("LC_SYMTAB"),mach.getCommandRecordOffset(XMACH_DEF::LC_SYMTAB,0)); // TODO rename
+
+                pItemCommands->addChild(pItemSymtab);
+            }
+
+            if(mach.isCommandPresent(XMACH_DEF::LC_DYSYMTAB,&listCommandRecords))
+            {
+                QTreeWidgetItem *pItemDysymtab=createNewItem(SMACH::TYPE_mach_dysymtab,QString("LC_DYSYMTAB"),mach.getCommandRecordOffset(XMACH_DEF::LC_DYSYMTAB,0)); // TODO rename
+
+                pItemCommands->addChild(pItemDysymtab);
+            }
+
+            if(mach.isCommandPresent(XMACH_DEF::LC_VERSION_MIN_MACOSX,&listCommandRecords))
+            {
+                QTreeWidgetItem *pItemVersionMin=createNewItem(SMACH::TYPE_mach_version_min,QString("LC_VERSION_MIN_MACOSX"),mach.getCommandRecordOffset(XMACH_DEF::LC_VERSION_MIN_MACOSX,0)); // TODO rename
+
+                pItemCommands->addChild(pItemVersionMin);
+            }
+            else if(mach.isCommandPresent(XMACH_DEF::LC_VERSION_MIN_IPHONEOS,&listCommandRecords))
+            {
+                QTreeWidgetItem *pItemVersionMin=createNewItem(SMACH::TYPE_mach_version_min,QString("LC_VERSION_MIN_IPHONEOS"),mach.getCommandRecordOffset(XMACH_DEF::LC_VERSION_MIN_IPHONEOS,0)); // TODO rename
+
+                pItemCommands->addChild(pItemVersionMin);
+            }
+            else if(mach.isCommandPresent(XMACH_DEF::LC_VERSION_MIN_TVOS,&listCommandRecords))
+            {
+                QTreeWidgetItem *pItemVersionMin=createNewItem(SMACH::TYPE_mach_version_min,QString("LC_VERSION_MIN_TVOS"),mach.getCommandRecordOffset(XMACH_DEF::LC_VERSION_MIN_TVOS,0)); // TODO rename
+
+                pItemCommands->addChild(pItemVersionMin);
+            }
+            if(mach.isCommandPresent(XMACH_DEF::LC_VERSION_MIN_WATCHOS,&listCommandRecords))
+            {
+                QTreeWidgetItem *pItemVersionMin=createNewItem(SMACH::TYPE_mach_version_min,QString("LC_VERSION_MIN_WATCHOS"),mach.getCommandRecordOffset(XMACH_DEF::LC_VERSION_MIN_WATCHOS,0)); // TODO rename
+
+                pItemCommands->addChild(pItemVersionMin);
             }
         }
 
@@ -166,13 +217,13 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
 {
     Q_UNUSED(nVtype)
     Q_UNUSED(nPosition)
-    Q_UNUSED(nOffset)
 
     SV result=SV_NONE;
 
     blockSignals(true);
 
     quint64 nValue=vValue.toULongLong();
+    QString sValue=vValue.toString();
 
     if(getDevice()->isWritable())
     {
@@ -212,6 +263,84 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
                     ui->widgetHex_mach_header->reload();
 
                     break;
+
+                case SMACH::TYPE_mach_dyld_info_only:
+                    switch(nNdata)
+                    {
+                        case N_mach_dyld_info::rebase_off:          mach._set_dyld_info_command_rebase_off(nOffset,nValue);           break;
+                        case N_mach_dyld_info::rebase_size:         mach._set_dyld_info_command_rebase_size(nOffset,nValue);          break;
+                        case N_mach_dyld_info::bind_off:            mach._set_dyld_info_command_bind_off(nOffset,nValue);             break;
+                        case N_mach_dyld_info::bind_size:           mach._set_dyld_info_command_bind_size(nOffset,nValue);            break;
+                        case N_mach_dyld_info::weak_bind_off:       mach._set_dyld_info_command_weak_bind_off(nOffset,nValue);        break;
+                        case N_mach_dyld_info::weak_bind_size:      mach._set_dyld_info_command_weak_bind_size(nOffset,nValue);       break;
+                        case N_mach_dyld_info::lazy_bind_off:       mach._set_dyld_info_command_lazy_bind_off(nOffset,nValue);        break;
+                        case N_mach_dyld_info::lazy_bind_size:      mach._set_dyld_info_command_lazy_bind_size(nOffset,nValue);       break;
+                        case N_mach_dyld_info::export_off:          mach._set_dyld_info_command_export_off(nOffset,nValue);           break;
+                        case N_mach_dyld_info::export_size:         mach._set_dyld_info_command_export_size(nOffset,nValue);          break;
+                    }
+
+                    ui->widgetHex_dyld_info_only->reload();
+
+                    break;
+
+                case SMACH::TYPE_mach_uuid:
+                    switch(nNdata)
+                    {
+                        case N_mach_uuid::uuid:         mach.setUUID(sValue);           break;
+                    }
+
+                    break;
+
+                case SMACH::TYPE_mach_symtab:
+                    switch(nNdata)
+                    {
+                        case N_mach_symtab::symoff:             mach._set_symtab_command_symoff(nOffset,nValue);            break;
+                        case N_mach_symtab::nsyms:              mach._set_symtab_command_nsyms(nOffset,nValue);             break;
+                        case N_mach_symtab::stroff:             mach._set_symtab_command_stroff(nOffset,nValue);            break;
+                        case N_mach_symtab::strsize:            mach._set_symtab_command_strsize(nOffset,nValue);           break;
+                    }
+
+                    ui->widgetHex_symtab->reload();
+
+                    break;
+
+                case SMACH::TYPE_mach_dysymtab:
+                    switch(nNdata)
+                    {
+                        case N_mach_dysymtab::ilocalsym:            mach._set_dysymtab_command_ilocalsym(nOffset,nValue);           break;
+                        case N_mach_dysymtab::nlocalsym:            mach._set_dysymtab_command_nlocalsym(nOffset,nValue);           break;
+                        case N_mach_dysymtab::iextdefsym:           mach._set_dysymtab_command_iextdefsym(nOffset,nValue);          break;
+                        case N_mach_dysymtab::nextdefsym:           mach._set_dysymtab_command_nextdefsym(nOffset,nValue);          break;
+                        case N_mach_dysymtab::iundefsym:            mach._set_dysymtab_command_iundefsym(nOffset,nValue);           break;
+                        case N_mach_dysymtab::nundefsym:            mach._set_dysymtab_command_nundefsym(nOffset,nValue);           break;
+                        case N_mach_dysymtab::tocoff:               mach._set_dysymtab_command_tocoff(nOffset,nValue);              break;
+                        case N_mach_dysymtab::ntoc:                 mach._set_dysymtab_command_ntoc(nOffset,nValue);                break;
+                        case N_mach_dysymtab::modtaboff:            mach._set_dysymtab_command_modtaboff(nOffset,nValue);           break;
+                        case N_mach_dysymtab::nmodtab:              mach._set_dysymtab_command_nmodtab(nOffset,nValue);             break;
+                        case N_mach_dysymtab::extrefsymoff:         mach._set_dysymtab_command_extrefsymoff(nOffset,nValue);        break;
+                        case N_mach_dysymtab::nextrefsyms:          mach._set_dysymtab_command_nextrefsyms(nOffset,nValue);         break;
+                        case N_mach_dysymtab::indirectsymoff:       mach._set_dysymtab_command_indirectsymoff(nOffset,nValue);      break;
+                        case N_mach_dysymtab::nindirectsyms:        mach._set_dysymtab_command_nindirectsyms(nOffset,nValue);       break;
+                        case N_mach_dysymtab::extreloff:            mach._set_dysymtab_command_extreloff(nOffset,nValue);           break;
+                        case N_mach_dysymtab::nextrel:              mach._set_dysymtab_command_nextrel(nOffset,nValue);             break;
+                        case N_mach_dysymtab::locreloff:            mach._set_dysymtab_command_locreloff(nOffset,nValue);           break;
+                        case N_mach_dysymtab::nlocrel:              mach._set_dysymtab_command_nlocrel(nOffset,nValue);             break;
+                    }
+
+                    ui->widgetHex_dysymtab->reload();
+
+                    break;
+
+                case SMACH::TYPE_mach_version_min:
+                    switch(nNdata)
+                    {
+                        case N_mach_version_min::version:           mach._set_version_min_command_version(nOffset,nValue);          break;
+                        case N_mach_version_min::sdk:               mach._set_version_min_command_sdk(nOffset,nValue);              break;
+                    }
+
+                    ui->widgetHex_version_min->reload();
+
+                    break;
             }
 
             result=SV_EDITED;
@@ -238,6 +367,11 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
 void MACHWidget::setReadonly(bool bState)
 {
     setLineEditsReadOnly(g_lineEdit_mach_header,N_mach_header::__data_size,bState);
+    setLineEditsReadOnly(g_lineEdit_mach_dyld_info_only,N_mach_dyld_info::__data_size,bState);
+    setLineEditsReadOnly(g_lineEdit_mach_uuid,N_mach_uuid::__data_size,bState);
+    setLineEditsReadOnly(g_lineEdit_mach_symtab,N_mach_symtab::__data_size,bState);
+    setLineEditsReadOnly(g_lineEdit_mach_dysymtab,N_mach_dysymtab::__data_size,bState);
+    setLineEditsReadOnly(g_lineEdit_mach_version_min,N_mach_version_min::__data_size,bState);
     setComboBoxesReadOnly(g_comboBox,__CB_size,bState);
 
     ui->widgetHex->setReadonly(bState);
@@ -246,6 +380,11 @@ void MACHWidget::setReadonly(bool bState)
 void MACHWidget::blockSignals(bool bState)
 {
     _blockSignals((QObject **)g_lineEdit_mach_header,N_mach_header::__data_size,bState);
+    _blockSignals((QObject **)g_lineEdit_mach_dyld_info_only,N_mach_dyld_info::__data_size,bState);
+    _blockSignals((QObject **)g_lineEdit_mach_uuid,N_mach_uuid::__data_size,bState);
+    _blockSignals((QObject **)g_lineEdit_mach_symtab,N_mach_symtab::__data_size,bState);
+    _blockSignals((QObject **)g_lineEdit_mach_dysymtab,N_mach_dysymtab::__data_size,bState);
+    _blockSignals((QObject **)g_lineEdit_mach_version_min,N_mach_version_min::__data_size,bState);
     _blockSignals((QObject **)g_comboBox,__CB_size,bState);
 }
 
@@ -276,7 +415,7 @@ QString MACHWidget::typeIdToString(int nType)
         case SMACH::TYPE_mach_segments:         sResult=QString("Segment %1").arg(tr("Header"));        break;
         case SMACH::TYPE_mach_sections:         sResult=QString("Section %1").arg(tr("Header"));        break;
         case SMACH::TYPE_mach_libraries:        sResult=QString("Library %1").arg(tr("Header"));        break;
-        case SMACH::TYPE_mach_id_library:       sResult=QString("Id Library %1").arg(tr("Header"));     break;
+        case SMACH::TYPE_mach_id_library:       sResult=QString("Library %1").arg(tr("Header"));        break;
     }
 
     return sResult;
@@ -525,6 +664,129 @@ void MACHWidget::reloadData()
                 }
             }
         }
+        else if(nType==SMACH::TYPE_mach_dyld_info_only)
+        {
+            if(!g_stInit.contains(sInit))
+            {
+                createHeaderTable(SMACH::TYPE_mach_dyld_info_only,ui->tableWidget_dyld_info_only,N_mach_dyld_info::records,g_lineEdit_mach_dyld_info_only,N_mach_dyld_info::__data_size,0,nDataOffset);
+
+                blockSignals(true);
+
+                XMACH_DEF::dyld_info_command dyld_info=mach._read_dyld_info_command(nDataOffset);
+
+                g_lineEdit_mach_dyld_info_only[N_mach_dyld_info::rebase_off]->setValue(dyld_info.rebase_off);
+                g_lineEdit_mach_dyld_info_only[N_mach_dyld_info::rebase_size]->setValue(dyld_info.rebase_size);
+                g_lineEdit_mach_dyld_info_only[N_mach_dyld_info::bind_off]->setValue(dyld_info.bind_off);
+                g_lineEdit_mach_dyld_info_only[N_mach_dyld_info::bind_size]->setValue(dyld_info.bind_size);
+                g_lineEdit_mach_dyld_info_only[N_mach_dyld_info::weak_bind_off]->setValue(dyld_info.weak_bind_off);
+                g_lineEdit_mach_dyld_info_only[N_mach_dyld_info::weak_bind_size]->setValue(dyld_info.weak_bind_size);
+                g_lineEdit_mach_dyld_info_only[N_mach_dyld_info::lazy_bind_off]->setValue(dyld_info.lazy_bind_off);
+                g_lineEdit_mach_dyld_info_only[N_mach_dyld_info::lazy_bind_size]->setValue(dyld_info.lazy_bind_size);
+                g_lineEdit_mach_dyld_info_only[N_mach_dyld_info::export_off]->setValue(dyld_info.export_off);
+                g_lineEdit_mach_dyld_info_only[N_mach_dyld_info::export_size]->setValue(dyld_info.export_size);
+
+                qint64 nOffset=nDataOffset;
+                qint64 nSize=mach.get_dyld_info_command_size();
+
+                loadHexSubdevice(nOffset,nSize,nOffset,&g_subDevice[SMACH::TYPE_mach_dyld_info_only],ui->widgetHex_dyld_info_only);
+
+                blockSignals(false);
+            }
+        }
+        else if(nType==SMACH::TYPE_mach_uuid)
+        {
+            if(!g_stInit.contains(sInit))
+            {
+                createListTable(SMACH::TYPE_mach_uuid,ui->tableWidget_uuid,N_mach_uuid::records,g_lineEdit_mach_uuid,N_mach_uuid::__data_size);
+
+                blockSignals(true);
+
+                g_lineEdit_mach_uuid[N_mach_uuid::uuid]->setUUID(mach.getUUID());
+
+                blockSignals(false);
+            }
+        }
+        else if(nType==SMACH::TYPE_mach_symtab)
+        {
+            if(!g_stInit.contains(sInit))
+            {
+                createHeaderTable(SMACH::TYPE_mach_symtab,ui->tableWidget_symtab,N_mach_symtab::records,g_lineEdit_mach_symtab,N_mach_symtab::__data_size,0,nDataOffset);
+
+                blockSignals(true);
+
+                XMACH_DEF::symtab_command symtab=mach._read_symtab_command(nDataOffset);
+
+                g_lineEdit_mach_symtab[N_mach_symtab::symoff]->setValue(symtab.symoff);
+                g_lineEdit_mach_symtab[N_mach_symtab::nsyms]->setValue(symtab.nsyms);
+                g_lineEdit_mach_symtab[N_mach_symtab::stroff]->setValue(symtab.stroff);
+                g_lineEdit_mach_symtab[N_mach_symtab::strsize]->setValue(symtab.strsize);
+
+                qint64 nOffset=nDataOffset;
+                qint64 nSize=mach.get_symtab_command_size();
+
+                loadHexSubdevice(nOffset,nSize,nOffset,&g_subDevice[SMACH::TYPE_mach_symtab],ui->widgetHex_symtab);
+
+                blockSignals(false);
+            }
+        }
+        else if(nType==SMACH::TYPE_mach_dysymtab)
+        {
+            if(!g_stInit.contains(sInit))
+            {
+                createHeaderTable(SMACH::TYPE_mach_dysymtab,ui->tableWidget_dysymtab,N_mach_dysymtab::records,g_lineEdit_mach_dysymtab,N_mach_dysymtab::__data_size,0,nDataOffset);
+
+                blockSignals(true);
+
+                XMACH_DEF::dysymtab_command dysymtab=mach._read_dysymtab_command(nDataOffset);
+
+                g_lineEdit_mach_dysymtab[N_mach_dysymtab::ilocalsym]->setValue(dysymtab.ilocalsym);
+                g_lineEdit_mach_dysymtab[N_mach_dysymtab::nlocalsym]->setValue(dysymtab.nlocalsym);
+                g_lineEdit_mach_dysymtab[N_mach_dysymtab::iextdefsym]->setValue(dysymtab.iextdefsym);
+                g_lineEdit_mach_dysymtab[N_mach_dysymtab::nextdefsym]->setValue(dysymtab.nextdefsym);
+                g_lineEdit_mach_dysymtab[N_mach_dysymtab::iundefsym]->setValue(dysymtab.iundefsym);
+                g_lineEdit_mach_dysymtab[N_mach_dysymtab::nundefsym]->setValue(dysymtab.nundefsym);
+                g_lineEdit_mach_dysymtab[N_mach_dysymtab::tocoff]->setValue(dysymtab.tocoff);
+                g_lineEdit_mach_dysymtab[N_mach_dysymtab::ntoc]->setValue(dysymtab.ntoc);
+                g_lineEdit_mach_dysymtab[N_mach_dysymtab::modtaboff]->setValue(dysymtab.modtaboff);
+                g_lineEdit_mach_dysymtab[N_mach_dysymtab::nmodtab]->setValue(dysymtab.nmodtab);
+                g_lineEdit_mach_dysymtab[N_mach_dysymtab::extrefsymoff]->setValue(dysymtab.extrefsymoff);
+                g_lineEdit_mach_dysymtab[N_mach_dysymtab::nextrefsyms]->setValue(dysymtab.nextrefsyms);
+                g_lineEdit_mach_dysymtab[N_mach_dysymtab::indirectsymoff]->setValue(dysymtab.indirectsymoff);
+                g_lineEdit_mach_dysymtab[N_mach_dysymtab::nindirectsyms]->setValue(dysymtab.nindirectsyms);
+                g_lineEdit_mach_dysymtab[N_mach_dysymtab::extreloff]->setValue(dysymtab.extreloff);
+                g_lineEdit_mach_dysymtab[N_mach_dysymtab::nextrel]->setValue(dysymtab.nextrel);
+                g_lineEdit_mach_dysymtab[N_mach_dysymtab::locreloff]->setValue(dysymtab.locreloff);
+                g_lineEdit_mach_dysymtab[N_mach_dysymtab::nlocrel]->setValue(dysymtab.nlocrel);
+
+                qint64 nOffset=nDataOffset;
+                qint64 nSize=mach.get_dysymtab_command_size();
+
+                loadHexSubdevice(nOffset,nSize,nOffset,&g_subDevice[SMACH::TYPE_mach_dysymtab],ui->widgetHex_dysymtab);
+
+                blockSignals(false);
+            }
+        }
+        else if(nType==SMACH::TYPE_mach_version_min)
+        {
+            if(!g_stInit.contains(sInit))
+            {
+                createHeaderTable(SMACH::TYPE_mach_version_min,ui->tableWidget_version_min,N_mach_version_min::records,g_lineEdit_mach_version_min,N_mach_version_min::__data_size,0,nDataOffset);
+
+                blockSignals(true);
+
+                XMACH_DEF::version_min_command version_min=mach._read_version_min_command(nDataOffset);
+
+                g_lineEdit_mach_version_min[N_mach_version_min::version]->setValue(version_min.version);
+                g_lineEdit_mach_version_min[N_mach_version_min::sdk]->setValue(version_min.sdk);
+
+                qint64 nOffset=nDataOffset;
+                qint64 nSize=mach.get_version_min_command_size();
+
+                loadHexSubdevice(nOffset,nSize,nOffset,&g_subDevice[SMACH::TYPE_mach_version_min],ui->widgetHex_version_min);
+
+                blockSignals(false);
+            }
+        }
 
         setReadonly(ui->checkBoxReadonly->isChecked());
     }
@@ -592,6 +854,36 @@ void MACHWidget::on_tableWidget_mach_header_currentCellChanged(int nCurrentRow, 
     Q_UNUSED(nPreviousColumn);
 
     setHeaderTableSelection(ui->widgetHex_mach_header,ui->tableWidget_mach_header);
+}
+
+void MACHWidget::on_tableWidget_dyld_info_only_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
+    Q_UNUSED(nCurrentRow);
+    Q_UNUSED(nCurrentColumn);
+    Q_UNUSED(nPreviousRow);
+    Q_UNUSED(nPreviousColumn);
+
+    setHeaderTableSelection(ui->widgetHex_dyld_info_only,ui->tableWidget_dyld_info_only);
+}
+
+void MACHWidget::on_tableWidget_symtab_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
+    Q_UNUSED(nCurrentRow);
+    Q_UNUSED(nCurrentColumn);
+    Q_UNUSED(nPreviousRow);
+    Q_UNUSED(nPreviousColumn);
+
+    setHeaderTableSelection(ui->widgetHex_symtab,ui->tableWidget_symtab);
+}
+
+void MACHWidget::on_tableWidget_dysymtab_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
+    Q_UNUSED(nCurrentRow);
+    Q_UNUSED(nCurrentColumn);
+    Q_UNUSED(nPreviousRow);
+    Q_UNUSED(nPreviousColumn);
+
+    setHeaderTableSelection(ui->widgetHex_dysymtab,ui->tableWidget_dysymtab);
 }
 
 void MACHWidget::on_toolButtonPrev_clicked()

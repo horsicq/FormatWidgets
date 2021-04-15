@@ -131,3 +131,73 @@ const FW_DEF::HEADER_RECORD records[]=
     {name,                  "name",                     sizeof(XMACH_DEF::load_command)+sizeof(XMACH_DEF::dylib),                           -1,     "Ansi string",          FW_DEF::VAL_TYPE_TEXT},
 };
 }
+
+namespace N_mach_dyld_info
+{
+const FW_DEF::HEADER_RECORD records[]=
+{
+    {rebase_off,            "rebase_off",               offsetof(XMACH_DEF::dyld_info_command,rebase_off),              4,      "uint32",               FW_DEF::VAL_TYPE_OFFSET},
+    {rebase_size,           "rebase_size",              offsetof(XMACH_DEF::dyld_info_command,rebase_size),             4,      "uint32",               FW_DEF::VAL_TYPE_SIZE},
+    {bind_off,              "bind_off",                 offsetof(XMACH_DEF::dyld_info_command,bind_off),                4,      "uint32",               FW_DEF::VAL_TYPE_OFFSET},
+    {bind_size,             "bind_size",                offsetof(XMACH_DEF::dyld_info_command,bind_size),               4,      "uint32",               FW_DEF::VAL_TYPE_SIZE},
+    {weak_bind_off,         "weak_bind_off",            offsetof(XMACH_DEF::dyld_info_command,weak_bind_off),           4,      "uint32",               FW_DEF::VAL_TYPE_OFFSET},
+    {weak_bind_size,        "weak_bind_size",           offsetof(XMACH_DEF::dyld_info_command,weak_bind_size),          4,      "uint32",               FW_DEF::VAL_TYPE_SIZE},
+    {lazy_bind_off,         "lazy_bind_off",            offsetof(XMACH_DEF::dyld_info_command,lazy_bind_off),           4,      "uint32",               FW_DEF::VAL_TYPE_OFFSET},
+    {lazy_bind_size,        "lazy_bind_size",           offsetof(XMACH_DEF::dyld_info_command,lazy_bind_size),          4,      "uint32",               FW_DEF::VAL_TYPE_SIZE},
+    {export_off,            "export_off",               offsetof(XMACH_DEF::dyld_info_command,export_off),              4,      "uint32",               FW_DEF::VAL_TYPE_OFFSET},
+    {export_size,           "export_size",              offsetof(XMACH_DEF::dyld_info_command,export_size),             4,      "uint32",               FW_DEF::VAL_TYPE_SIZE},
+};
+}
+
+namespace N_mach_uuid
+{
+const FW_DEF::HEADER_RECORD records[]=
+{
+    {uuid,                  "uuid",                     sizeof(XMACH_DEF::load_command),            16,      "bytes",               FW_DEF::VAL_TYPE_UUID},
+};
+}
+
+namespace N_mach_symtab
+{
+const FW_DEF::HEADER_RECORD records[]=
+{
+    {symoff,                "symoff",                   offsetof(XMACH_DEF::symtab_command,symoff),         4,      "uint32",               FW_DEF::VAL_TYPE_OFFSET},
+    {nsyms,                 "nsyms",                    offsetof(XMACH_DEF::symtab_command,nsyms),          4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {stroff,                "stroff",                   offsetof(XMACH_DEF::symtab_command,stroff),         4,      "uint32",               FW_DEF::VAL_TYPE_OFFSET},
+    {strsize,               "strsize",                  offsetof(XMACH_DEF::symtab_command,strsize),        4,      "uint32",               FW_DEF::VAL_TYPE_SIZE},
+};
+}
+
+namespace N_mach_dysymtab
+{
+const FW_DEF::HEADER_RECORD records[]=
+{
+    {ilocalsym,             "ilocalsym",                offsetof(XMACH_DEF::dysymtab_command,ilocalsym),        4,      "uint32",               FW_DEF::VAL_TYPE_OFFSET},
+    {nlocalsym,             "nlocalsym",                offsetof(XMACH_DEF::dysymtab_command,nlocalsym),        4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {iextdefsym,            "iextdefsym",               offsetof(XMACH_DEF::dysymtab_command,iextdefsym),       4,      "uint32",               FW_DEF::VAL_TYPE_OFFSET},
+    {nextdefsym,            "nextdefsym",               offsetof(XMACH_DEF::dysymtab_command,nextdefsym),       4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {iundefsym,             "iundefsym",                offsetof(XMACH_DEF::dysymtab_command,iundefsym),        4,      "uint32",               FW_DEF::VAL_TYPE_OFFSET},
+    {nundefsym,             "nundefsym",                offsetof(XMACH_DEF::dysymtab_command,nundefsym),        4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {tocoff,                "tocoff",                   offsetof(XMACH_DEF::dysymtab_command,tocoff),           4,      "uint32",               FW_DEF::VAL_TYPE_OFFSET},
+    {ntoc,                  "ntoc",                     offsetof(XMACH_DEF::dysymtab_command,ntoc),             4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {modtaboff,             "modtaboff",                offsetof(XMACH_DEF::dysymtab_command,modtaboff),        4,      "uint32",               FW_DEF::VAL_TYPE_OFFSET},
+    {nmodtab,               "nmodtab",                  offsetof(XMACH_DEF::dysymtab_command,nmodtab),          4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {extrefsymoff,          "extrefsymoff",             offsetof(XMACH_DEF::dysymtab_command,extrefsymoff),     4,      "uint32",               FW_DEF::VAL_TYPE_OFFSET},
+    {nextrefsyms,           "nextrefsyms",              offsetof(XMACH_DEF::dysymtab_command,nextrefsyms),      4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {indirectsymoff,        "indirectsymoff",           offsetof(XMACH_DEF::dysymtab_command,indirectsymoff),   4,      "uint32",               FW_DEF::VAL_TYPE_OFFSET},
+    {nindirectsyms,         "nindirectsyms",            offsetof(XMACH_DEF::dysymtab_command,nindirectsyms),    4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {extreloff,             "extreloff",                offsetof(XMACH_DEF::dysymtab_command,extreloff),        4,      "uint32",               FW_DEF::VAL_TYPE_OFFSET},
+    {nextrel,               "nextrel",                  offsetof(XMACH_DEF::dysymtab_command,nextrel),          4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {locreloff,             "locreloff",                offsetof(XMACH_DEF::dysymtab_command,locreloff),        4,      "uint32",               FW_DEF::VAL_TYPE_OFFSET},
+    {nlocrel,               "nlocrel",                  offsetof(XMACH_DEF::dysymtab_command,nlocrel),          4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+};
+}
+
+namespace N_mach_version_min
+{
+const FW_DEF::HEADER_RECORD records[]=
+{
+    {version,               "version",                  offsetof(XMACH_DEF::version_min_command,version),       4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {sdk,                   "sdk",                      offsetof(XMACH_DEF::version_min_command,sdk),           4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+};
+}
