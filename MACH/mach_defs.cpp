@@ -217,3 +217,29 @@ const FW_DEF::HEADER_RECORD records[]=
     {sdk,                   "sdk",                      offsetof(XMACH_DEF::version_min_command,sdk),           4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
 };
 }
+
+namespace N_mach_source_version
+{
+const FW_DEF::HEADER_RECORD records[]=
+{
+    {version,               "version",                  offsetof(XMACH_DEF::source_version_command,version),    8,      "uint64",          FW_DEF::VAL_TYPE_DATA},
+};
+}
+
+namespace N_mach_encryption_info
+{
+const FW_DEF::HEADER_RECORD records32[]=
+{
+    {cryptoff,              "cryptoff",                 offsetof(XMACH_DEF::encryption_info_command,cryptoff),      4,      "uint32",           FW_DEF::VAL_TYPE_OFFSET},
+    {cryptsize,             "cryptsize",                offsetof(XMACH_DEF::encryption_info_command,cryptsize),     4,      "uint32",           FW_DEF::VAL_TYPE_SIZE},
+    {cryptid,               "cryptid",                  offsetof(XMACH_DEF::encryption_info_command,cryptid),       4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+};
+
+const FW_DEF::HEADER_RECORD records64[]=
+{
+    {cryptoff,              "cryptoff",                 offsetof(XMACH_DEF::encryption_info_command_64,cryptoff),   4,      "uint32",           FW_DEF::VAL_TYPE_OFFSET},
+    {cryptsize,             "cryptsize",                offsetof(XMACH_DEF::encryption_info_command_64,cryptsize),  4,      "uint32",           FW_DEF::VAL_TYPE_SIZE},
+    {cryptid,               "cryptid",                  offsetof(XMACH_DEF::encryption_info_command_64,cryptid),    4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {pad,                   "pad",                      offsetof(XMACH_DEF::encryption_info_command_64,pad),        4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+};
+}

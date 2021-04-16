@@ -48,6 +48,8 @@ enum TYPE
     TYPE_mach_version_min,
     TYPE_mach_dylinker,
     TYPE_mach_rpath,
+    TYPE_mach_source_version,
+    TYPE_mach_encryption_info,
     __TYPE_size
 };
 }
@@ -286,16 +288,6 @@ enum DATA
 };
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
-
-enum CB
-{
-    __CB_size
-};
-
-enum INV
-{
-    __INV_size
-};
 }
 
 namespace N_mach_dysymtab
@@ -324,16 +316,6 @@ enum DATA
 };
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
-
-enum CB
-{
-    __CB_size
-};
-
-enum INV
-{
-    __INV_size
-};
 }
 
 namespace N_mach_version_min
@@ -346,16 +328,32 @@ enum DATA
 };
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
+}
 
-enum CB
+namespace N_mach_source_version
 {
-    __CB_size
+enum DATA
+{
+    version=0,
+    __data_size
 };
 
-enum INV
+extern const FW_DEF::HEADER_RECORD records[__data_size];
+}
+
+namespace N_mach_encryption_info
 {
-    __INV_size
+enum DATA
+{
+    cryptoff=0,
+    cryptsize,
+    cryptid,
+    pad,
+    __data_size
 };
+
+extern const FW_DEF::HEADER_RECORD records32[__data_size-1];
+extern const FW_DEF::HEADER_RECORD records64[__data_size];
 }
 
 #endif // MACH_DEFS_H

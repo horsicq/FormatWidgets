@@ -423,7 +423,7 @@ void MACHSectionHeaderWidget::reloadData()
 
                 if(bIs64)
                 {
-                    XMACH_DEF::segment_command_64 segment=mach._readSegment64(nHeaderOffset,bIsBigEndian);
+                    XMACH_DEF::segment_command_64 segment=mach._read_segment_command_64(nHeaderOffset,bIsBigEndian);
 
                     g_ppLinedEdit[N_mach_segments::segname]->setStringValue(segment.segname);
                     g_ppLinedEdit[N_mach_segments::vmaddr]->setValue(segment.vmaddr);
@@ -437,7 +437,7 @@ void MACHSectionHeaderWidget::reloadData()
                 }
                 else
                 {
-                    XMACH_DEF::segment_command segment=mach._readSegment32(nHeaderOffset,bIsBigEndian);
+                    XMACH_DEF::segment_command segment=mach._read_segment_command(nHeaderOffset,bIsBigEndian);
 
                     g_ppLinedEdit[N_mach_segments::segname]->setStringValue(segment.segname);
                     g_ppLinedEdit[N_mach_segments::vmaddr]->setValue(segment.vmaddr);
@@ -471,7 +471,7 @@ void MACHSectionHeaderWidget::reloadData()
 
                 if(bIs64)
                 {
-                    XMACH_DEF::section_64 section=mach._readSection64(nHeaderOffset,bIsBigEndian);
+                    XMACH_DEF::section_64 section=mach._read_section_64(nHeaderOffset,bIsBigEndian);
 
                     g_ppLinedEdit[N_mach_sections64::sectname]->setStringValue(section.sectname);
                     g_ppLinedEdit[N_mach_sections64::segname]->setStringValue(section.segname);
@@ -488,7 +488,7 @@ void MACHSectionHeaderWidget::reloadData()
                 }
                 else
                 {
-                    XMACH_DEF::section section=mach._readSection32(nHeaderOffset,bIsBigEndian);
+                    XMACH_DEF::section section=mach._read_section(nHeaderOffset,bIsBigEndian);
 
                     g_ppLinedEdit[N_mach_sections32::sectname]->setStringValue(section.sectname);
                     g_ppLinedEdit[N_mach_sections32::segname]->setStringValue(section.segname);

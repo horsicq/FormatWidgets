@@ -76,6 +76,8 @@ void MACHWidget::clear()
     memset(g_lineEdit_mach_symtab,0,sizeof g_lineEdit_mach_symtab);
     memset(g_lineEdit_mach_dysymtab,0,sizeof g_lineEdit_mach_dysymtab);
     memset(g_lineEdit_mach_version_min,0,sizeof g_lineEdit_mach_version_min);
+    memset(g_lineEdit_mach_source_version,0,sizeof g_lineEdit_mach_source_version);
+    memset(g_lineEdit_mach_encryption_info,0,sizeof g_lineEdit_mach_encryption_info);
     memset(g_comboBox,0,sizeof g_comboBox);
     memset(g_subDevice,0,sizeof g_subDevice);
 
@@ -210,16 +212,37 @@ void MACHWidget::reload()
 
             if(mach.isCommandPresent(XMACH_DEF::LC_LOAD_DYLINKER,&listCommandRecords))
             {
-                QTreeWidgetItem *pDylinker=createNewItem(SMACH::TYPE_mach_dylinker,QString("LC_LOAD_DYLINKER"),mach.getCommandRecordOffset(XMACH_DEF::LC_LOAD_DYLINKER,0)); // TODO rename
+                QTreeWidgetItem *pItemDylinker=createNewItem(SMACH::TYPE_mach_dylinker,QString("LC_LOAD_DYLINKER"),mach.getCommandRecordOffset(XMACH_DEF::LC_LOAD_DYLINKER,0)); // TODO rename
 
-                pItemCommands->addChild(pDylinker);
+                pItemCommands->addChild(pItemDylinker);
             }
 
             if(mach.isCommandPresent(XMACH_DEF::LC_RPATH,&listCommandRecords))
             {
-                QTreeWidgetItem *pRPath=createNewItem(SMACH::TYPE_mach_rpath,QString("LC_RPATH"),mach.getCommandRecordOffset(XMACH_DEF::LC_RPATH,0)); // TODO rename
+                QTreeWidgetItem *pItemRPath=createNewItem(SMACH::TYPE_mach_rpath,QString("LC_RPATH"),mach.getCommandRecordOffset(XMACH_DEF::LC_RPATH,0)); // TODO rename
 
-                pItemCommands->addChild(pRPath);
+                pItemCommands->addChild(pItemRPath);
+            }
+
+            if(mach.isCommandPresent(XMACH_DEF::LC_SOURCE_VERSION,&listCommandRecords))
+            {
+                QTreeWidgetItem *pItemSourceVersion=createNewItem(SMACH::TYPE_mach_source_version,QString("LC_SOURCE_VERSION"),mach.getCommandRecordOffset(XMACH_DEF::LC_SOURCE_VERSION,0)); // TODO rename
+
+                pItemCommands->addChild(pItemSourceVersion);
+            }
+
+            if(mach.isCommandPresent(XMACH_DEF::LC_ENCRYPTION_INFO,&listCommandRecords))
+            {
+                QTreeWidgetItem *pItemEncryptionInfo=createNewItem(SMACH::TYPE_mach_encryption_info,QString("LC_ENCRYPTION_INFO"),mach.getCommandRecordOffset(XMACH_DEF::LC_ENCRYPTION_INFO,0),mach.get_encryption_info_command_size()); // TODO rename
+
+                pItemCommands->addChild(pItemEncryptionInfo);
+            }
+
+            if(mach.isCommandPresent(XMACH_DEF::LC_ENCRYPTION_INFO_64,&listCommandRecords))
+            {
+                QTreeWidgetItem *pItemEncryptionInfo=createNewItem(SMACH::TYPE_mach_encryption_info,QString("LC_ENCRYPTION_INFO_64"),mach.getCommandRecordOffset(XMACH_DEF::LC_ENCRYPTION_INFO_64,0),mach.get_encryption_info_command_64_size()); // TODO rename
+
+                pItemCommands->addChild(pItemEncryptionInfo);
             }
         }
 
@@ -323,6 +346,16 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
 
                     break;
 
+                case SMACH::TYPE_mach_source_version:
+                    switch(nNdata)
+                    {
+                        case N_mach_source_version::version:    mach.setSourceVersion(nValue);  break;
+                    }
+
+                    ui->widgetHex_source_version->reload();
+
+                    break;
+
                 case SMACH::TYPE_mach_symtab:
                     switch(nNdata)
                     {
@@ -373,6 +406,19 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
                     ui->widgetHex_version_min->reload();
 
                     break;
+
+                case SMACH::TYPE_mach_encryption_info:
+                    switch(nNdata)
+                    {
+                        case N_mach_encryption_info::cryptoff:      mach._set_encryption_info_command_64_cryptoff(nOffset,nValue);      break;
+                        case N_mach_encryption_info::cryptsize:     mach._set_encryption_info_command_64_cryptsize(nOffset,nValue);     break;
+                        case N_mach_encryption_info::cryptid:       mach._set_encryption_info_command_64_cryptid(nOffset,nValue);       break;
+                        case N_mach_encryption_info::pad:           mach._set_encryption_info_command_64_pad(nOffset,nValue);           break;
+                    }
+
+                    ui->widgetHex_encryption_info->reload();
+
+                    break;
             }
 
             result=SV_EDITED;
@@ -406,6 +452,8 @@ void MACHWidget::setReadonly(bool bState)
     setLineEditsReadOnly(g_lineEdit_mach_symtab,N_mach_symtab::__data_size,bState);
     setLineEditsReadOnly(g_lineEdit_mach_dysymtab,N_mach_dysymtab::__data_size,bState);
     setLineEditsReadOnly(g_lineEdit_mach_version_min,N_mach_version_min::__data_size,bState);
+    setLineEditsReadOnly(g_lineEdit_mach_source_version,N_mach_source_version::__data_size,bState);
+    setLineEditsReadOnly(g_lineEdit_mach_encryption_info,N_mach_encryption_info::__data_size,bState);
     setComboBoxesReadOnly(g_comboBox,__CB_size,bState);
 
     ui->widgetHex->setReadonly(bState);
@@ -421,6 +469,8 @@ void MACHWidget::blockSignals(bool bState)
     _blockSignals((QObject **)g_lineEdit_mach_symtab,N_mach_symtab::__data_size,bState);
     _blockSignals((QObject **)g_lineEdit_mach_dysymtab,N_mach_dysymtab::__data_size,bState);
     _blockSignals((QObject **)g_lineEdit_mach_version_min,N_mach_version_min::__data_size,bState);
+    _blockSignals((QObject **)g_lineEdit_mach_source_version,N_mach_source_version::__data_size,bState);
+    _blockSignals((QObject **)g_lineEdit_mach_encryption_info,N_mach_encryption_info::__data_size,bState);
     _blockSignals((QObject **)g_comboBox,__CB_size,bState);
 }
 
@@ -849,6 +899,64 @@ void MACHWidget::reloadData()
                 blockSignals(false);
             }
         }
+        else if(nType==SMACH::TYPE_mach_source_version)
+        {
+            if(!g_stInit.contains(sInit))
+            {
+                createHeaderTable(SMACH::TYPE_mach_source_version,ui->tableWidget_source_version,N_mach_source_version::records,g_lineEdit_mach_source_version,N_mach_source_version::__data_size,0,nDataOffset);
+
+                blockSignals(true);
+
+                XMACH_DEF::source_version_command source_version=mach._read_source_version_command(nDataOffset);
+
+                g_lineEdit_mach_source_version[N_mach_source_version::version]->setValue(source_version.version);
+
+                qint64 nOffset=nDataOffset;
+                qint64 nSize=mach.get_source_version_command_size();
+
+                loadHexSubdevice(nOffset,nSize,nOffset,&g_subDevice[SMACH::TYPE_mach_source_version],ui->widgetHex_source_version);
+
+                blockSignals(false);
+            }
+        }
+        else if(nType==SMACH::TYPE_mach_encryption_info)
+        {
+            if(!g_stInit.contains(sInit))
+            {
+                if(nDataSize==mach.get_encryption_info_command_64_size())
+                {
+                    createHeaderTable(SMACH::TYPE_mach_encryption_info,ui->tableWidget_encryption_info,N_mach_encryption_info::records64,g_lineEdit_mach_encryption_info,N_mach_encryption_info::__data_size,0,nDataOffset);
+
+                    blockSignals(true);
+
+                    XMACH_DEF::encryption_info_command_64 encryption_info=mach._read_encryption_info_command_64(nDataOffset);
+
+                    g_lineEdit_mach_encryption_info[N_mach_encryption_info::cryptoff]->setValue(encryption_info.cryptoff);
+                    g_lineEdit_mach_encryption_info[N_mach_encryption_info::cryptsize]->setValue(encryption_info.cryptsize);
+                    g_lineEdit_mach_encryption_info[N_mach_encryption_info::cryptid]->setValue(encryption_info.cryptid);
+                    g_lineEdit_mach_encryption_info[N_mach_encryption_info::pad]->setValue(encryption_info.pad);
+                }
+                else
+                {
+                    createHeaderTable(SMACH::TYPE_mach_encryption_info,ui->tableWidget_encryption_info,N_mach_encryption_info::records32,g_lineEdit_mach_encryption_info,N_mach_encryption_info::__data_size-1,0,nDataOffset);
+
+                    blockSignals(true);
+
+                    XMACH_DEF::encryption_info_command encryption_info=mach._read_encryption_info_command(nDataOffset);
+
+                    g_lineEdit_mach_encryption_info[N_mach_encryption_info::cryptoff]->setValue(encryption_info.cryptoff);
+                    g_lineEdit_mach_encryption_info[N_mach_encryption_info::cryptsize]->setValue(encryption_info.cryptsize);
+                    g_lineEdit_mach_encryption_info[N_mach_encryption_info::cryptid]->setValue(encryption_info.cryptid);
+                }
+
+                qint64 nOffset=nDataOffset;
+                qint64 nSize=nDataSize;
+
+                loadHexSubdevice(nOffset,nSize,nOffset,&g_subDevice[SMACH::TYPE_mach_encryption_info],ui->widgetHex_encryption_info);
+
+                blockSignals(false);
+            }
+        }
 
         setReadonly(ui->checkBoxReadonly->isChecked());
     }
@@ -946,6 +1054,36 @@ void MACHWidget::on_tableWidget_dysymtab_currentCellChanged(int nCurrentRow, int
     Q_UNUSED(nPreviousColumn);
 
     setHeaderTableSelection(ui->widgetHex_dysymtab,ui->tableWidget_dysymtab);
+}
+
+void MACHWidget::on_tableWidget_version_min_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
+    Q_UNUSED(nCurrentRow);
+    Q_UNUSED(nCurrentColumn);
+    Q_UNUSED(nPreviousRow);
+    Q_UNUSED(nPreviousColumn);
+
+    setHeaderTableSelection(ui->widgetHex_version_min,ui->tableWidget_version_min);
+}
+
+void MACHWidget::on_tableWidget_source_version_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
+    Q_UNUSED(nCurrentRow);
+    Q_UNUSED(nCurrentColumn);
+    Q_UNUSED(nPreviousRow);
+    Q_UNUSED(nPreviousColumn);
+
+    setHeaderTableSelection(ui->widgetHex_source_version,ui->tableWidget_source_version);
+}
+
+void MACHWidget::on_tableWidget_encryption_info_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
+    Q_UNUSED(nCurrentRow);
+    Q_UNUSED(nCurrentColumn);
+    Q_UNUSED(nPreviousRow);
+    Q_UNUSED(nPreviousColumn);
+
+    setHeaderTableSelection(ui->widgetHex_encryption_info,ui->tableWidget_encryption_info);
 }
 
 void MACHWidget::on_toolButtonPrev_clicked()
