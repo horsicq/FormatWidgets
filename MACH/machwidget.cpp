@@ -129,7 +129,7 @@ void MACHWidget::reload()
 
             if(listSegmentRecords.count())
             {
-                QTreeWidgetItem *pItemSegments=createNewItem(SMACH::TYPE_mach_segments,tr("Segments"));
+                QTreeWidgetItem *pItemSegments=createNewItem(SMACH::TYPE_mach_segments,tr("Segments")); // TODO rename
 
                 pItemCommands->addChild(pItemSegments);
 
@@ -137,7 +137,7 @@ void MACHWidget::reload()
 
                 if(listSectionRecords.count())
                 {
-                    QTreeWidgetItem *pItemSections=createNewItem(SMACH::TYPE_mach_sections,tr("Sections"));
+                    QTreeWidgetItem *pItemSections=createNewItem(SMACH::TYPE_mach_sections,tr("Sections")); // TODO rename
 
                     pItemSegments->addChild(pItemSections);
                 }
@@ -152,7 +152,7 @@ void MACHWidget::reload()
 
             if(mach.isCommandPresent(XMACH_DEF::LC_LOAD_DYLIB,&listCommandRecords))
             {
-                QTreeWidgetItem *pItemLibraries=createNewItem(SMACH::TYPE_mach_libraries,tr("Libraries"));
+                QTreeWidgetItem *pItemLibraries=createNewItem(SMACH::TYPE_mach_libraries,QString("LC_LOAD_DYLIB"));
 
                 pItemCommands->addChild(pItemLibraries);
             }
