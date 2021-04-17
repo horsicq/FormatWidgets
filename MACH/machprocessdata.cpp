@@ -66,7 +66,7 @@ void MACHProcessData::_process()
             incValue();
         }
     }
-    else if((g_nType==SMACH::TYPE_mach_libraries)||(g_nType==SMACH::TYPE_mach_id_library))
+    else if((g_nType==SMACH::TYPE_mach_libraries)||(g_nType==SMACH::TYPE_mach_weak_libraries)||(g_nType==SMACH::TYPE_mach_id_library))
     {
         QList<QString> listLabels;
         listLabels.append("");
@@ -74,7 +74,11 @@ void MACHProcessData::_process()
 
         int nType=XMACH_DEF::LC_LOAD_DYLIB;
 
-        if(g_nType==SMACH::TYPE_mach_id_library)
+        if(g_nType==SMACH::TYPE_mach_weak_libraries)
+        {
+            nType=XMACH_DEF::LC_LOAD_WEAK_DYLIB;
+        }
+        else if(g_nType==SMACH::TYPE_mach_id_library)
         {
             nType=XMACH_DEF::LC_ID_DYLIB;
         }

@@ -78,6 +78,7 @@ private slots:
     void onTableView_segments_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
     void onTableView_sections_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
     void onTableView_libraries_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
+    void onTableView_weak_libraries_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
     void onTableView_id_library_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
     void on_tableView_commands_doubleClicked(const QModelIndex &index);
     void on_tableView_commands_customContextMenuRequested(const QPoint &pos);
@@ -87,12 +88,15 @@ private slots:
     void on_tableView_sections_customContextMenuRequested(const QPoint &pos);
     void on_tableView_libraries_doubleClicked(const QModelIndex &index);
     void on_tableView_libraries_customContextMenuRequested(const QPoint &pos);
+    void on_tableView_weak_libraries_doubleClicked(const QModelIndex &index);
+    void on_tableView_weak_libraries_customContextMenuRequested(const QPoint &pos);
     void on_tableView_id_library_doubleClicked(const QModelIndex &index);
     void on_tableView_id_library_customContextMenuRequested(const QPoint &pos);
     void editCommandHeader();
     void editSegmentHeader();
     void editSectionHeader();
     void editLibraryHeader();
+    void editWeakLibraryHeader();
     void editIdLibraryHeader();
     void showSectionHeader(int nType,QTableView *pTableView);
 

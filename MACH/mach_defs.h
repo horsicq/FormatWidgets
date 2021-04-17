@@ -40,6 +40,7 @@ enum TYPE
     TYPE_mach_segments,
     TYPE_mach_sections,
     TYPE_mach_libraries,
+    TYPE_mach_weak_libraries,
     TYPE_mach_id_library,
     TYPE_mach_dyld_info_only,
     TYPE_mach_uuid,

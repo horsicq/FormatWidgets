@@ -157,6 +157,13 @@ void MACHWidget::reload()
                 pItemCommands->addChild(pItemLibraries);
             }
 
+            if(mach.isCommandPresent(XMACH_DEF::LC_LOAD_WEAK_DYLIB,&listCommandRecords))
+            {
+                QTreeWidgetItem *pItemLibraries=createNewItem(SMACH::TYPE_mach_weak_libraries,QString("LC_LOAD_WEAK_DYLIB"));
+
+                pItemCommands->addChild(pItemLibraries);
+            }
+
             if(mach.isCommandPresent(XMACH_DEF::LC_DYLD_INFO_ONLY,&listCommandRecords))
             {
                 QTreeWidgetItem *pItemDyldInfo=createNewItem(SMACH::TYPE_mach_dyld_info_only,QString("LC_DYLD_INFO_ONLY"),mach.getCommandRecordOffset(XMACH_DEF::LC_DYLD_INFO_ONLY,0)); // TODO rename
@@ -501,6 +508,7 @@ QString MACHWidget::typeIdToString(int nType)
         case SMACH::TYPE_mach_segments:         sResult=QString("Segment %1").arg(tr("Header"));        break;
         case SMACH::TYPE_mach_sections:         sResult=QString("Section %1").arg(tr("Header"));        break;
         case SMACH::TYPE_mach_libraries:        sResult=QString("Library %1").arg(tr("Header"));        break;
+        case SMACH::TYPE_mach_weak_libraries:   sResult=QString("Library %1").arg(tr("Header"));        break;
         case SMACH::TYPE_mach_id_library:       sResult=QString("Library %1").arg(tr("Header"));        break;
     }
 
@@ -731,6 +739,22 @@ void MACHWidget::reloadData()
                 if(tvModel[SMACH::TYPE_mach_libraries]->rowCount())
                 {
                     ui->tableView_libraries->setCurrentIndex(ui->tableView_libraries->model()->index(0,0));
+                }
+            }
+        }
+        else if(nType==SMACH::TYPE_mach_weak_libraries)
+        {
+            if(!g_stInit.contains(sInit))
+            {
+                MACHProcessData machProcessData(SMACH::TYPE_mach_weak_libraries,&tvModel[SMACH::TYPE_mach_weak_libraries],&mach,0,0);
+
+                ajustTableView(&machProcessData,&tvModel[SMACH::TYPE_mach_weak_libraries],ui->tableView_weak_libraries,nullptr,true);
+
+                connect(ui->tableView_weak_libraries->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_weak_libraries_currentRowChanged(QModelIndex,QModelIndex)));
+
+                if(tvModel[SMACH::TYPE_mach_weak_libraries]->rowCount())
+                {
+                    ui->tableView_weak_libraries->setCurrentIndex(ui->tableView_weak_libraries->model()->index(0,0));
                 }
             }
         }
@@ -1132,6 +1156,14 @@ void MACHWidget::onTableView_libraries_currentRowChanged(const QModelIndex &curr
     loadHexSubdeviceByTableView(current.row(),SMACH::TYPE_mach_libraries,ui->widgetHex_libraries,ui->tableView_libraries,&g_subDevice[SMACH::TYPE_mach_libraries]);
 }
 
+void MACHWidget::onTableView_weak_libraries_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
+    Q_UNUSED(current)
+    Q_UNUSED(previous)
+
+    loadHexSubdeviceByTableView(current.row(),SMACH::TYPE_mach_weak_libraries,ui->widgetHex_weak_libraries,ui->tableView_weak_libraries,&g_subDevice[SMACH::TYPE_mach_weak_libraries]);
+}
+
 void MACHWidget::onTableView_id_library_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
 {
     Q_UNUSED(current)
@@ -1228,6 +1260,28 @@ void MACHWidget::on_tableView_libraries_customContextMenuRequested(const QPoint 
     }
 }
 
+void MACHWidget::on_tableView_weak_libraries_doubleClicked(const QModelIndex &index)
+{
+    Q_UNUSED(index)
+    editWeakLibraryHeader();
+}
+
+void MACHWidget::on_tableView_weak_libraries_customContextMenuRequested(const QPoint &pos)
+{
+    int nRow=ui->tableView_weak_libraries->currentIndex().row();
+
+    if(nRow!=-1)
+    {
+        QMenu contextMenu(this);
+
+        QAction actionEdit(tr("Edit"),this);
+        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editWeakLibraryHeader()));
+        contextMenu.addAction(&actionEdit);
+
+        contextMenu.exec(ui->tableView_weak_libraries->viewport()->mapToGlobal(pos));
+    }
+}
+
 void MACHWidget::on_tableView_id_library_doubleClicked(const QModelIndex &index)
 {
     Q_UNUSED(index)
@@ -1268,6 +1322,11 @@ void MACHWidget::editSectionHeader()
 void MACHWidget::editLibraryHeader()
 {
     showSectionHeader(SMACH::TYPE_mach_libraries,ui->tableView_libraries);
+}
+
+void MACHWidget::editWeakLibraryHeader()
+{
+    showSectionHeader(SMACH::TYPE_mach_weak_libraries,ui->tableView_weak_libraries);
 }
 
 void MACHWidget::editIdLibraryHeader()
