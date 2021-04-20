@@ -51,6 +51,8 @@ enum TYPE
     TYPE_mach_rpath,
     TYPE_mach_source_version,
     TYPE_mach_encryption_info,
+    TYPE_mach_function_starts,
+    TYPE_mach_data_in_code,
     __TYPE_size
 };
 }
@@ -355,6 +357,18 @@ enum DATA
 
 extern const FW_DEF::HEADER_RECORD records32[__data_size-1];
 extern const FW_DEF::HEADER_RECORD records64[__data_size];
+}
+
+namespace N_mach_linkedit_data
+{
+enum DATA
+{
+    dataoff,
+    datasize,
+    __data_size
+};
+
+extern const FW_DEF::HEADER_RECORD records[__data_size];
 }
 
 #endif // MACH_DEFS_H

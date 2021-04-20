@@ -243,3 +243,11 @@ const FW_DEF::HEADER_RECORD records64[]=
     {pad,                   "pad",                      offsetof(XMACH_DEF::encryption_info_command_64,pad),        4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
 };
 }
+namespace N_mach_linkedit_data
+{
+const FW_DEF::HEADER_RECORD records[]=
+{
+    {dataoff,               "dataoff",                  offsetof(XMACH_DEF::linkedit_data_command,dataoff),         4,      "uint32",           FW_DEF::VAL_TYPE_OFFSET},
+    {datasize,              "datasize",                 offsetof(XMACH_DEF::linkedit_data_command,datasize),        4,      "uint32",           FW_DEF::VAL_TYPE_SIZE},
+};
+}

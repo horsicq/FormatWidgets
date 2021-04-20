@@ -78,6 +78,9 @@ void MACHWidget::clear()
     memset(g_lineEdit_mach_version_min,0,sizeof g_lineEdit_mach_version_min);
     memset(g_lineEdit_mach_source_version,0,sizeof g_lineEdit_mach_source_version);
     memset(g_lineEdit_mach_encryption_info,0,sizeof g_lineEdit_mach_encryption_info);
+    memset(g_lineEdit_function_starts,0,sizeof g_lineEdit_function_starts);
+    memset(g_lineEdit_data_in_code,0,sizeof g_lineEdit_data_in_code);
+
     memset(g_comboBox,0,sizeof g_comboBox);
     memset(g_subDevice,0,sizeof g_subDevice);
 
@@ -250,6 +253,20 @@ void MACHWidget::reload()
                 QTreeWidgetItem *pItemEncryptionInfo=createNewItem(SMACH::TYPE_mach_encryption_info,QString("LC_ENCRYPTION_INFO_64"),mach.getCommandRecordOffset(XMACH_DEF::LC_ENCRYPTION_INFO_64,0),mach.get_encryption_info_command_64_size()); // TODO rename
 
                 pItemCommands->addChild(pItemEncryptionInfo);
+            }
+
+            if(mach.isCommandPresent(XMACH_DEF::LC_FUNCTION_STARTS,&listCommandRecords))
+            {
+                QTreeWidgetItem *pItemFunctionStarts=createNewItem(SMACH::TYPE_mach_function_starts,QString("LC_FUNCTION_STARTS"),mach.getCommandRecordOffset(XMACH_DEF::LC_FUNCTION_STARTS,0)); // TODO rename
+
+                pItemCommands->addChild(pItemFunctionStarts);
+            }
+
+            if(mach.isCommandPresent(XMACH_DEF::LC_DATA_IN_CODE,&listCommandRecords))
+            {
+                QTreeWidgetItem *pItemDataInCode=createNewItem(SMACH::TYPE_mach_data_in_code,QString("LC_DATA_IN_CODE"),mach.getCommandRecordOffset(XMACH_DEF::LC_DATA_IN_CODE,0)); // TODO rename
+
+                pItemCommands->addChild(pItemDataInCode);
             }
         }
 
@@ -426,6 +443,28 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
                     ui->widgetHex_encryption_info->reload();
 
                     break;
+
+                case SMACH::TYPE_mach_function_starts:
+                    switch(nNdata)
+                    {
+                        case N_mach_linkedit_data::dataoff:         mach._set_linkedit_data_command_dataoff(nOffset,nValue);                break;
+                        case N_mach_linkedit_data::datasize:        mach._set_linkedit_data_command_datasize(nOffset,nValue);               break;
+                    }
+
+                    ui->widgetHex_function_starts->reload();
+
+                    break;
+
+                case SMACH::TYPE_mach_data_in_code:
+                    switch(nNdata)
+                    {
+                        case N_mach_linkedit_data::dataoff:         mach._set_linkedit_data_command_dataoff(nOffset,nValue);                break;
+                        case N_mach_linkedit_data::datasize:        mach._set_linkedit_data_command_datasize(nOffset,nValue);               break;
+                    }
+
+                    ui->widgetHex_data_in_code->reload();
+
+                    break;
             }
 
             result=SV_EDITED;
@@ -461,6 +500,8 @@ void MACHWidget::setReadonly(bool bState)
     setLineEditsReadOnly(g_lineEdit_mach_version_min,N_mach_version_min::__data_size,bState);
     setLineEditsReadOnly(g_lineEdit_mach_source_version,N_mach_source_version::__data_size,bState);
     setLineEditsReadOnly(g_lineEdit_mach_encryption_info,N_mach_encryption_info::__data_size,bState);
+    setLineEditsReadOnly(g_lineEdit_function_starts,N_mach_linkedit_data::__data_size,bState);
+    setLineEditsReadOnly(g_lineEdit_data_in_code,N_mach_linkedit_data::__data_size,bState);
     setComboBoxesReadOnly(g_comboBox,__CB_size,bState);
 
     ui->widgetHex->setReadonly(bState);
@@ -478,6 +519,8 @@ void MACHWidget::blockSignals(bool bState)
     _blockSignals((QObject **)g_lineEdit_mach_version_min,N_mach_version_min::__data_size,bState);
     _blockSignals((QObject **)g_lineEdit_mach_source_version,N_mach_source_version::__data_size,bState);
     _blockSignals((QObject **)g_lineEdit_mach_encryption_info,N_mach_encryption_info::__data_size,bState);
+    _blockSignals((QObject **)g_lineEdit_function_starts,N_mach_linkedit_data::__data_size,bState);
+    _blockSignals((QObject **)g_lineEdit_data_in_code,N_mach_linkedit_data::__data_size,bState);
     _blockSignals((QObject **)g_comboBox,__CB_size,bState);
 }
 
@@ -981,6 +1024,48 @@ void MACHWidget::reloadData()
                 blockSignals(false);
             }
         }
+        else if(nType==SMACH::TYPE_mach_function_starts)
+        {
+            if(!g_stInit.contains(sInit))
+            {
+                createHeaderTable(SMACH::TYPE_mach_function_starts,ui->tableWidget_function_starts,N_mach_linkedit_data::records,g_lineEdit_function_starts,N_mach_linkedit_data::__data_size,0,nDataOffset);
+
+                blockSignals(true);
+
+                XMACH_DEF::linkedit_data_command linkedit_data=mach._read_linkedit_data_command(nDataOffset);
+
+                g_lineEdit_function_starts[N_mach_linkedit_data::dataoff]->setValue(linkedit_data.dataoff);
+                g_lineEdit_function_starts[N_mach_linkedit_data::datasize]->setValue(linkedit_data.datasize);
+
+                qint64 nOffset=nDataOffset;
+                qint64 nSize=mach.get_linkedit_data_command_size();
+
+                loadHexSubdevice(nOffset,nSize,nOffset,&g_subDevice[SMACH::TYPE_mach_function_starts],ui->widgetHex_function_starts);
+
+                blockSignals(false);
+            }
+        }
+        else if(nType==SMACH::TYPE_mach_data_in_code)
+        {
+            if(!g_stInit.contains(sInit))
+            {
+                createHeaderTable(SMACH::TYPE_mach_data_in_code,ui->tableWidget_data_in_code,N_mach_linkedit_data::records,g_lineEdit_data_in_code,N_mach_linkedit_data::__data_size,0,nDataOffset);
+
+                blockSignals(true);
+
+                XMACH_DEF::linkedit_data_command linkedit_data=mach._read_linkedit_data_command(nDataOffset);
+
+                g_lineEdit_data_in_code[N_mach_linkedit_data::dataoff]->setValue(linkedit_data.dataoff);
+                g_lineEdit_data_in_code[N_mach_linkedit_data::datasize]->setValue(linkedit_data.datasize);
+
+                qint64 nOffset=nDataOffset;
+                qint64 nSize=mach.get_linkedit_data_command_size();
+
+                loadHexSubdevice(nOffset,nSize,nOffset,&g_subDevice[SMACH::TYPE_mach_data_in_code],ui->widgetHex_data_in_code);
+
+                blockSignals(false);
+            }
+        }
 
         setReadonly(ui->checkBoxReadonly->isChecked());
     }
@@ -1108,6 +1193,26 @@ void MACHWidget::on_tableWidget_encryption_info_currentCellChanged(int nCurrentR
     Q_UNUSED(nPreviousColumn);
 
     setHeaderTableSelection(ui->widgetHex_encryption_info,ui->tableWidget_encryption_info);
+}
+
+void MACHWidget::on_tableWidget_function_starts_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
+    Q_UNUSED(nCurrentRow);
+    Q_UNUSED(nCurrentColumn);
+    Q_UNUSED(nPreviousRow);
+    Q_UNUSED(nPreviousColumn);
+
+    setHeaderTableSelection(ui->widgetHex_function_starts,ui->tableWidget_function_starts);
+}
+
+void MACHWidget::on_tableWidget_data_in_code_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
+    Q_UNUSED(nCurrentRow);
+    Q_UNUSED(nCurrentColumn);
+    Q_UNUSED(nPreviousRow);
+    Q_UNUSED(nPreviousColumn);
+
+    setHeaderTableSelection(ui->widgetHex_data_in_code,ui->tableWidget_data_in_code);
 }
 
 void MACHWidget::on_toolButtonPrev_clicked()

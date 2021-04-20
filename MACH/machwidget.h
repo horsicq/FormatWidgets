@@ -72,6 +72,9 @@ private slots:
     void on_tableWidget_version_min_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
     void on_tableWidget_source_version_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
     void on_tableWidget_encryption_info_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
+    void on_tableWidget_function_starts_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
+    void on_tableWidget_data_in_code_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
+
     void on_toolButtonPrev_clicked();
     void on_toolButtonNext_clicked();
     void onTableView_commands_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
@@ -123,6 +126,8 @@ private:
     XLineEditHEX *g_lineEdit_mach_version_min[N_mach_version_min::__data_size];
     XLineEditHEX *g_lineEdit_mach_source_version[N_mach_source_version::__data_size];
     XLineEditHEX *g_lineEdit_mach_encryption_info[N_mach_encryption_info::__data_size];
+    XLineEditHEX *g_lineEdit_function_starts[N_mach_linkedit_data::__data_size];
+    XLineEditHEX *g_lineEdit_data_in_code[N_mach_linkedit_data::__data_size];
     XComboBoxEx *g_comboBox[__CB_size];
 
     SubDevice *g_subDevice[SMACH::__TYPE_size];

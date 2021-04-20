@@ -48,6 +48,7 @@ protected:
     virtual void setReadonly(bool bState);
     virtual void blockSignals(bool bState);
     virtual void adjustHeaderTable(int nType,QTableWidget *pTableWidget);
+    virtual void _showInHexWindow(qint64 nOffset,qint64 nSize);
 
 private slots:
     void on_checkBoxReadonly_toggled(bool bChecked);

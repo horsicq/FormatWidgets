@@ -385,6 +385,11 @@ void PESectionHeaderWidget::adjustHeaderTable(int nType, QTableWidget *pTableWid
     }
 }
 
+void PESectionHeaderWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
+{
+    showHex(nOffset,nSize);
+}
+
 void PESectionHeaderWidget::on_checkBoxReadonly_toggled(bool bChecked)
 {
     setReadonly(bChecked);
