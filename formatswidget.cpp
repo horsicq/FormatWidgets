@@ -165,6 +165,7 @@ void FormatsWidget::reload()
         }
         else if(fileType==XBinary::FT_ZIP)
         {
+            // TODO Set name on button
             ui->stackedWidgetMain->setCurrentIndex(TABINFO_ZIP);
 
             XZip xzip(&file);
@@ -722,7 +723,7 @@ void FormatsWidget::on_pushButtonZIP_clicked()
 
     options.bSaveBackup=options.bSaveBackup;;
 
-    dialogArchive.setData(sFileName,options);
+    dialogArchive.setData(sFileName,options,QSet<XBinary::FT>());
     dialogArchive.setShortcuts(getShortcuts());
 
     dialogArchive.exec();

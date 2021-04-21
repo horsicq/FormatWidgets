@@ -29,6 +29,7 @@ namespace SMACH
 enum TYPE
 {
     TYPE_HEX=0,
+    TYPE_HASH,
     TYPE_DISASM,
     TYPE_STRINGS,
     TYPE_SIGNATURES,

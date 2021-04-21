@@ -112,6 +112,7 @@ void MACHWidget::reload()
         setFileType(mach.getFileType());
 
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_HEX,tr("Hex")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_HASH,tr("Hash")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_DISASM,tr("Disasm")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_STRINGS,tr("Strings")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_SIGNATURES,tr("Signatures")));
@@ -614,6 +615,13 @@ void MACHWidget::reloadData()
                 options.sSignaturesPath=getOptions().sSearchSignaturesPath;
                 ui->widgetHex->setData(getDevice(),options);
                 ui->widgetHex->enableReadOnly(false);
+            }
+        }
+        else if(nType==SMACH::TYPE_HASH)
+        {
+            if(!g_stInit.contains(sInit))
+            {
+                ui->widgetHash->setData(getDevice(),mach.getFileType(),0,-1,true,this);
             }
         }
         else if(nType==SMACH::TYPE_DISASM)
@@ -1465,4 +1473,34 @@ void MACHWidget::showSectionHeader(int nType, QTableView *pTableView)
 
         pTableView->setCurrentIndex(pTableView->model()->index(nRow,0));
     }
+}
+
+void MACHWidget::on_pushButtonHex_clicked()
+{
+    setTreeItem(ui->treeWidgetNavi,SMACH::TYPE_HEX);
+}
+
+void MACHWidget::on_pushButtonDisasm_clicked()
+{
+    setTreeItem(ui->treeWidgetNavi,SMACH::TYPE_DISASM);
+}
+
+void MACHWidget::on_pushButtonStrings_clicked()
+{
+    setTreeItem(ui->treeWidgetNavi,SMACH::TYPE_STRINGS);
+}
+
+void MACHWidget::on_pushButtonMemoryMap_clicked()
+{
+    setTreeItem(ui->treeWidgetNavi,SMACH::TYPE_MEMORYMAP);
+}
+
+void MACHWidget::on_pushButtonEntropy_clicked()
+{
+    setTreeItem(ui->treeWidgetNavi,SMACH::TYPE_ENTROPY);
+}
+
+void MACHWidget::on_pushButtonHeuristicScan_clicked()
+{
+    setTreeItem(ui->treeWidgetNavi,SMACH::TYPE_HEURISTICSCAN);
 }

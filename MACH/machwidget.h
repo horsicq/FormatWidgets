@@ -103,6 +103,13 @@ private slots:
     void editIdLibraryHeader();
     void showSectionHeader(int nType,QTableView *pTableView);
 
+    void on_pushButtonHex_clicked();
+    void on_pushButtonDisasm_clicked();
+    void on_pushButtonStrings_clicked();
+    void on_pushButtonMemoryMap_clicked();
+    void on_pushButtonEntropy_clicked();
+    void on_pushButtonHeuristicScan_clicked();
+
 private:
     enum CB
     {
