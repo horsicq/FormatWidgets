@@ -35,6 +35,8 @@ namespace FW_DEF
         // TODO Last directory
         int nStartType;
         QString sTitle; // For dialogs
+        bool bFilter; // For Archive_widget
+        bool bNoWindowOpen; // For Archive_widget
     };
 
     enum VAL_TYPE

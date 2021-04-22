@@ -251,3 +251,21 @@ const FW_DEF::HEADER_RECORD records[]=
     {datasize,              "datasize",                 offsetof(XMACH_DEF::linkedit_data_command,datasize),        4,      "uint32",           FW_DEF::VAL_TYPE_SIZE},
 };
 }
+
+namespace N_mach_main
+{
+const FW_DEF::HEADER_RECORD records[]=
+{
+    {entryoff,              "entryoff",                 offsetof(XMACH_DEF::entry_point_command,entryoff),          8,      "uint64",           FW_DEF::VAL_TYPE_ADDRESS},
+    {stacksize,             "stacksize",                offsetof(XMACH_DEF::entry_point_command,stacksize),         8,      "uint64",           FW_DEF::VAL_TYPE_SIZE},
+};
+}
+
+namespace N_mach_unix_thread
+{
+const FW_DEF::HEADER_RECORD records[]=
+{
+    {flavor,                "flavor",                   offsetof(XMACH_DEF::unix_thread_command,flavor),            4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {count,                 "count",                    offsetof(XMACH_DEF::unix_thread_command,count),             4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+};
+}

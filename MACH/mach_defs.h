@@ -54,6 +54,9 @@ enum TYPE
     TYPE_mach_encryption_info,
     TYPE_mach_function_starts,
     TYPE_mach_data_in_code,
+    TYPE_mach_code_signature,
+    TYPE_mach_main,
+    TYPE_mach_unix_thread,
     __TYPE_size
 };
 }
@@ -366,6 +369,30 @@ enum DATA
 {
     dataoff,
     datasize,
+    __data_size
+};
+
+extern const FW_DEF::HEADER_RECORD records[__data_size];
+}
+
+namespace N_mach_main
+{
+enum DATA
+{
+    entryoff,
+    stacksize,
+    __data_size
+};
+
+extern const FW_DEF::HEADER_RECORD records[__data_size];
+}
+
+namespace N_mach_unix_thread
+{
+enum DATA
+{
+    flavor,
+    count,
     __data_size
 };
 

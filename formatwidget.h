@@ -181,6 +181,7 @@ protected:
 
 signals:
     void editState(bool bState);
+    void closeApp();
 
 public slots:
     void hexValueChanged(quint64 nValue);
