@@ -23,6 +23,8 @@
 FormatWidget::FormatWidget(QWidget *pParent):
     XShortcutsWidget(pParent)
 {
+    g_pDevice=nullptr;
+    g_pBackupDevice=nullptr;
     g_bIsReadonly=false;
     g_fwOptions={};
     g_bAddPageEnable=true;
@@ -53,6 +55,11 @@ void FormatWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 
     g_bIsReadonly=!(pDevice->isWritable());
 
     setOptions(options);
+}
+
+void FormatWidget::setBackupDevice(QIODevice *pDevice)
+{
+    g_pBackupDevice=pDevice;
 }
 
 void FormatWidget::setFileType(XBinary::FT fileType)
@@ -162,7 +169,18 @@ QString FormatWidget::typeIdToString(int nType)
 
 bool FormatWidget::isEdited()
 {
-    return XBinary::isBackupPresent(getDevice());
+    bool bResult=false;
+
+    if(g_pBackupDevice)
+    {
+        bResult=XBinary::isBackupPresent(g_pBackupDevice);
+    }
+    else
+    {
+        bResult=XBinary::isBackupPresent(getDevice());
+    }
+
+    return bResult;
 }
 
 bool FormatWidget::loadHexSubdevice(qint64 nOffset, qint64 nSize, qint64 nAddress,SubDevice **ppSubDevice,ToolsWidget *pToolsWidget)
@@ -642,7 +660,14 @@ bool FormatWidget::saveBackup()
     if(!isEdited())
     {
         // Save backup
-        bResult=XBinary::saveBackup(getDevice());
+        if(g_pBackupDevice)
+        {
+            bResult=XBinary::saveBackup(g_pBackupDevice);
+        }
+        else
+        {
+            bResult=XBinary::saveBackup(getDevice());
+        }
     }
 
     return bResult;

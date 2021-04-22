@@ -83,6 +83,7 @@ public:
     ~FormatWidget();
 
     void setData(QIODevice *pDevice,FW_DEF::OPTIONS options,quint32 nNumber,qint64 nOffset,qint32 nType);
+    void setBackupDevice(QIODevice *pDevice);
 
     void setFileType(XBinary::FT fileType);
     XBinary::FT getFileType();
@@ -201,6 +202,7 @@ protected:
 
 private:
     QIODevice *g_pDevice;
+    QIODevice *g_pBackupDevice;
     FW_DEF::OPTIONS g_fwOptions;
     quint32 g_nNumber;
     qint64 g_nOffset;

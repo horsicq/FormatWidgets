@@ -173,123 +173,123 @@ void MACHWidget::reload()
 
             if(mach.isCommandPresent(XMACH_DEF::LC_DYLD_INFO_ONLY,&listCommandRecords))
             {
-                QTreeWidgetItem *pItemDyldInfo=createNewItem(SMACH::TYPE_mach_dyld_info_only,QString("LC_DYLD_INFO_ONLY"),mach.getCommandRecordOffset(XMACH_DEF::LC_DYLD_INFO_ONLY,0)); // TODO rename
+                QTreeWidgetItem *pItemDyldInfo=createNewItem(SMACH::TYPE_mach_dyld_info_only,QString("LC_DYLD_INFO_ONLY"),mach.getCommandRecordOffset(XMACH_DEF::LC_DYLD_INFO_ONLY,0,&listCommandRecords)); // TODO rename
 
                 pItemCommands->addChild(pItemDyldInfo);
             }
 
             if(mach.isCommandPresent(XMACH_DEF::LC_UUID,&listCommandRecords))
             {
-                QTreeWidgetItem *pItemUuid=createNewItem(SMACH::TYPE_mach_uuid,QString("LC_UUID"),mach.getCommandRecordOffset(XMACH_DEF::LC_UUID,0)); // TODO rename
+                QTreeWidgetItem *pItemUuid=createNewItem(SMACH::TYPE_mach_uuid,QString("LC_UUID"),mach.getCommandRecordOffset(XMACH_DEF::LC_UUID,0,&listCommandRecords)); // TODO rename
 
                 pItemCommands->addChild(pItemUuid);
             }
 
             if(mach.isCommandPresent(XMACH_DEF::LC_SYMTAB,&listCommandRecords))
             {
-                QTreeWidgetItem *pItemSymtab=createNewItem(SMACH::TYPE_mach_symtab,QString("LC_SYMTAB"),mach.getCommandRecordOffset(XMACH_DEF::LC_SYMTAB,0)); // TODO rename
+                QTreeWidgetItem *pItemSymtab=createNewItem(SMACH::TYPE_mach_symtab,QString("LC_SYMTAB"),mach.getCommandRecordOffset(XMACH_DEF::LC_SYMTAB,0,&listCommandRecords)); // TODO rename
 
                 pItemCommands->addChild(pItemSymtab);
             }
 
             if(mach.isCommandPresent(XMACH_DEF::LC_DYSYMTAB,&listCommandRecords))
             {
-                QTreeWidgetItem *pItemDysymtab=createNewItem(SMACH::TYPE_mach_dysymtab,QString("LC_DYSYMTAB"),mach.getCommandRecordOffset(XMACH_DEF::LC_DYSYMTAB,0)); // TODO rename
+                QTreeWidgetItem *pItemDysymtab=createNewItem(SMACH::TYPE_mach_dysymtab,QString("LC_DYSYMTAB"),mach.getCommandRecordOffset(XMACH_DEF::LC_DYSYMTAB,0,&listCommandRecords)); // TODO rename
 
                 pItemCommands->addChild(pItemDysymtab);
             }
 
             if(mach.isCommandPresent(XMACH_DEF::LC_VERSION_MIN_MACOSX,&listCommandRecords))
             {
-                QTreeWidgetItem *pItemVersionMin=createNewItem(SMACH::TYPE_mach_version_min,QString("LC_VERSION_MIN_MACOSX"),mach.getCommandRecordOffset(XMACH_DEF::LC_VERSION_MIN_MACOSX,0)); // TODO rename
+                QTreeWidgetItem *pItemVersionMin=createNewItem(SMACH::TYPE_mach_version_min,QString("LC_VERSION_MIN_MACOSX"),mach.getCommandRecordOffset(XMACH_DEF::LC_VERSION_MIN_MACOSX,0,&listCommandRecords)); // TODO rename
 
                 pItemCommands->addChild(pItemVersionMin);
             }
             else if(mach.isCommandPresent(XMACH_DEF::LC_VERSION_MIN_IPHONEOS,&listCommandRecords))
             {
-                QTreeWidgetItem *pItemVersionMin=createNewItem(SMACH::TYPE_mach_version_min,QString("LC_VERSION_MIN_IPHONEOS"),mach.getCommandRecordOffset(XMACH_DEF::LC_VERSION_MIN_IPHONEOS,0)); // TODO rename
+                QTreeWidgetItem *pItemVersionMin=createNewItem(SMACH::TYPE_mach_version_min,QString("LC_VERSION_MIN_IPHONEOS"),mach.getCommandRecordOffset(XMACH_DEF::LC_VERSION_MIN_IPHONEOS,0,&listCommandRecords)); // TODO rename
 
                 pItemCommands->addChild(pItemVersionMin);
             }
             else if(mach.isCommandPresent(XMACH_DEF::LC_VERSION_MIN_TVOS,&listCommandRecords))
             {
-                QTreeWidgetItem *pItemVersionMin=createNewItem(SMACH::TYPE_mach_version_min,QString("LC_VERSION_MIN_TVOS"),mach.getCommandRecordOffset(XMACH_DEF::LC_VERSION_MIN_TVOS,0)); // TODO rename
+                QTreeWidgetItem *pItemVersionMin=createNewItem(SMACH::TYPE_mach_version_min,QString("LC_VERSION_MIN_TVOS"),mach.getCommandRecordOffset(XMACH_DEF::LC_VERSION_MIN_TVOS,0,&listCommandRecords)); // TODO rename
 
                 pItemCommands->addChild(pItemVersionMin);
             }
             else if(mach.isCommandPresent(XMACH_DEF::LC_VERSION_MIN_WATCHOS,&listCommandRecords))
             {
-                QTreeWidgetItem *pItemVersionMin=createNewItem(SMACH::TYPE_mach_version_min,QString("LC_VERSION_MIN_WATCHOS"),mach.getCommandRecordOffset(XMACH_DEF::LC_VERSION_MIN_WATCHOS,0)); // TODO rename
+                QTreeWidgetItem *pItemVersionMin=createNewItem(SMACH::TYPE_mach_version_min,QString("LC_VERSION_MIN_WATCHOS"),mach.getCommandRecordOffset(XMACH_DEF::LC_VERSION_MIN_WATCHOS,0,&listCommandRecords)); // TODO rename
 
                 pItemCommands->addChild(pItemVersionMin);
             }
 
             if(mach.isCommandPresent(XMACH_DEF::LC_LOAD_DYLINKER,&listCommandRecords))
             {
-                QTreeWidgetItem *pItemDylinker=createNewItem(SMACH::TYPE_mach_dylinker,QString("LC_LOAD_DYLINKER"),mach.getCommandRecordOffset(XMACH_DEF::LC_LOAD_DYLINKER,0)); // TODO rename
+                QTreeWidgetItem *pItemDylinker=createNewItem(SMACH::TYPE_mach_dylinker,QString("LC_LOAD_DYLINKER"),mach.getCommandRecordOffset(XMACH_DEF::LC_LOAD_DYLINKER,0,&listCommandRecords)); // TODO rename
 
                 pItemCommands->addChild(pItemDylinker);
             }
 
             if(mach.isCommandPresent(XMACH_DEF::LC_RPATH,&listCommandRecords))
             {
-                QTreeWidgetItem *pItemRPath=createNewItem(SMACH::TYPE_mach_rpath,QString("LC_RPATH"),mach.getCommandRecordOffset(XMACH_DEF::LC_RPATH,0)); // TODO rename
+                QTreeWidgetItem *pItemRPath=createNewItem(SMACH::TYPE_mach_rpath,QString("LC_RPATH"),mach.getCommandRecordOffset(XMACH_DEF::LC_RPATH,0,&listCommandRecords)); // TODO rename
 
                 pItemCommands->addChild(pItemRPath);
             }
 
             if(mach.isCommandPresent(XMACH_DEF::LC_SOURCE_VERSION,&listCommandRecords))
             {
-                QTreeWidgetItem *pItemSourceVersion=createNewItem(SMACH::TYPE_mach_source_version,QString("LC_SOURCE_VERSION"),mach.getCommandRecordOffset(XMACH_DEF::LC_SOURCE_VERSION,0)); // TODO rename
+                QTreeWidgetItem *pItemSourceVersion=createNewItem(SMACH::TYPE_mach_source_version,QString("LC_SOURCE_VERSION"),mach.getCommandRecordOffset(XMACH_DEF::LC_SOURCE_VERSION,0,&listCommandRecords)); // TODO rename
 
                 pItemCommands->addChild(pItemSourceVersion);
             }
 
             if(mach.isCommandPresent(XMACH_DEF::LC_ENCRYPTION_INFO,&listCommandRecords))
             {
-                QTreeWidgetItem *pItemEncryptionInfo=createNewItem(SMACH::TYPE_mach_encryption_info,QString("LC_ENCRYPTION_INFO"),mach.getCommandRecordOffset(XMACH_DEF::LC_ENCRYPTION_INFO,0),mach.get_encryption_info_command_size()); // TODO rename
+                QTreeWidgetItem *pItemEncryptionInfo=createNewItem(SMACH::TYPE_mach_encryption_info,QString("LC_ENCRYPTION_INFO"),mach.getCommandRecordOffset(XMACH_DEF::LC_ENCRYPTION_INFO,0,&listCommandRecords),mach.get_encryption_info_command_size()); // TODO rename
 
                 pItemCommands->addChild(pItemEncryptionInfo);
             }
 
             if(mach.isCommandPresent(XMACH_DEF::LC_ENCRYPTION_INFO_64,&listCommandRecords))
             {
-                QTreeWidgetItem *pItemEncryptionInfo=createNewItem(SMACH::TYPE_mach_encryption_info,QString("LC_ENCRYPTION_INFO_64"),mach.getCommandRecordOffset(XMACH_DEF::LC_ENCRYPTION_INFO_64,0),mach.get_encryption_info_command_64_size()); // TODO rename
+                QTreeWidgetItem *pItemEncryptionInfo=createNewItem(SMACH::TYPE_mach_encryption_info,QString("LC_ENCRYPTION_INFO_64"),mach.getCommandRecordOffset(XMACH_DEF::LC_ENCRYPTION_INFO_64,0,&listCommandRecords),mach.get_encryption_info_command_64_size()); // TODO rename
 
                 pItemCommands->addChild(pItemEncryptionInfo);
             }
 
             if(mach.isCommandPresent(XMACH_DEF::LC_FUNCTION_STARTS,&listCommandRecords))
             {
-                QTreeWidgetItem *pItemFunctionStarts=createNewItem(SMACH::TYPE_mach_function_starts,QString("LC_FUNCTION_STARTS"),mach.getCommandRecordOffset(XMACH_DEF::LC_FUNCTION_STARTS,0)); // TODO rename
+                QTreeWidgetItem *pItemFunctionStarts=createNewItem(SMACH::TYPE_mach_function_starts,QString("LC_FUNCTION_STARTS"),mach.getCommandRecordOffset(XMACH_DEF::LC_FUNCTION_STARTS,0,&listCommandRecords)); // TODO rename
 
                 pItemCommands->addChild(pItemFunctionStarts);
             }
 
             if(mach.isCommandPresent(XMACH_DEF::LC_DATA_IN_CODE,&listCommandRecords))
             {
-                QTreeWidgetItem *pItemDataInCode=createNewItem(SMACH::TYPE_mach_data_in_code,QString("LC_DATA_IN_CODE"),mach.getCommandRecordOffset(XMACH_DEF::LC_DATA_IN_CODE,0)); // TODO rename
+                QTreeWidgetItem *pItemDataInCode=createNewItem(SMACH::TYPE_mach_data_in_code,QString("LC_DATA_IN_CODE"),mach.getCommandRecordOffset(XMACH_DEF::LC_DATA_IN_CODE,0,&listCommandRecords)); // TODO rename
 
                 pItemCommands->addChild(pItemDataInCode);
             }
 
             if(mach.isCommandPresent(XMACH_DEF::LC_CODE_SIGNATURE,&listCommandRecords))
             {
-                QTreeWidgetItem *pItemCodeSignature=createNewItem(SMACH::TYPE_mach_code_signature,QString("LC_CODE_SIGNATURE"),mach.getCommandRecordOffset(XMACH_DEF::LC_CODE_SIGNATURE,0)); // TODO rename
+                QTreeWidgetItem *pItemCodeSignature=createNewItem(SMACH::TYPE_mach_code_signature,QString("LC_CODE_SIGNATURE"),mach.getCommandRecordOffset(XMACH_DEF::LC_CODE_SIGNATURE,0,&listCommandRecords)); // TODO rename
 
                 pItemCommands->addChild(pItemCodeSignature);
             }
 
             if(mach.isCommandPresent(XMACH_DEF::LC_MAIN,&listCommandRecords))
             {
-                QTreeWidgetItem *pItemMain=createNewItem(SMACH::TYPE_mach_main,QString("LC_MAIN"),mach.getCommandRecordOffset(XMACH_DEF::LC_MAIN,0)); // TODO rename
+                QTreeWidgetItem *pItemMain=createNewItem(SMACH::TYPE_mach_main,QString("LC_MAIN"),mach.getCommandRecordOffset(XMACH_DEF::LC_MAIN,0,&listCommandRecords)); // TODO rename
 
                 pItemCommands->addChild(pItemMain);
             }
 
             if(mach.isCommandPresent(XMACH_DEF::LC_UNIXTHREAD,&listCommandRecords))
             {
-                QTreeWidgetItem *pItemUnixThread=createNewItem(SMACH::TYPE_mach_unix_thread,QString("LC_UNIXTHREAD"),mach.getCommandRecordOffset(XMACH_DEF::LC_UNIXTHREAD,0)); // TODO rename
+                QTreeWidgetItem *pItemUnixThread=createNewItem(SMACH::TYPE_mach_unix_thread,QString("LC_UNIXTHREAD"),mach.getCommandRecordOffset(XMACH_DEF::LC_UNIXTHREAD,0,&listCommandRecords)); // TODO rename
 
                 pItemCommands->addChild(pItemUnixThread);
             }

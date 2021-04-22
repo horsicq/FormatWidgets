@@ -275,7 +275,9 @@ void MACHProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
         pTableView->setColumnWidth(2,nSymbolWidth*10);
         pTableView->setColumnWidth(3,nSymbolWidth*20);
     }
-    else if((g_nType==SMACH::TYPE_mach_id_library)||(g_nType==SMACH::TYPE_mach_libraries))
+    else if((g_nType==SMACH::TYPE_mach_id_library)||
+            (g_nType==SMACH::TYPE_mach_weak_libraries)||
+            (g_nType==SMACH::TYPE_mach_libraries))
     {
         pTableView->setColumnWidth(0,nSymbolWidth*4);
         pTableView->setColumnWidth(1,nSymbolWidth*10);

@@ -36,6 +36,11 @@ DEPENDPATH += $$PWD
     include($$PWD/MACH/machwidget.pri)
 }
 
+!contains(XCONFIG, machofatwidget) {
+    XCONFIG += machofatwidget
+    include($$PWD/MACHOFAT/machofatwidget.pri)
+}
+
 !contains(XCONFIG, searchstringswidget) {
     XCONFIG += searchstringswidget
     include($$PWD/SearchStrings/searchstringswidget.pri)

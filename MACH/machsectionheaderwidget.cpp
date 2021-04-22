@@ -50,7 +50,9 @@ MACHSectionHeaderWidget::MACHSectionHeaderWidget(QIODevice *pDevice,FW_DEF::OPTI
          g_nComboBoxSize=N_mach_commands::__CB_size;
          g_nInvWidgetSize=N_mach_commands::__INV_size;
      }
-     if((nType==SMACH::TYPE_mach_libraries)||(nType==SMACH::TYPE_mach_id_library))
+     if(    (nType==SMACH::TYPE_mach_libraries)||
+            (nType==SMACH::TYPE_mach_weak_libraries)||
+            (nType==SMACH::TYPE_mach_id_library))
      {
          g_nLineEditSize=N_mach_library::__data_size;
          g_nComboBoxSize=N_mach_library::__CB_size;
@@ -190,6 +192,8 @@ FormatWidget::SV MACHSectionHeaderWidget::_setValue(QVariant vValue, int nStype,
                     break;
 
                 case SMACH::TYPE_mach_libraries:
+                case SMACH::TYPE_mach_weak_libraries:
+                case SMACH::TYPE_mach_id_library:
                     switch(nNdata)
                     {
                         case N_mach_library::timestamp:               mach._setLibraryRecord_timestamp(nOffset,nValue);               break;
@@ -378,7 +382,9 @@ void MACHSectionHeaderWidget::reloadData()
 
                 blockSignals(false);
             }
-            else if((nType==SMACH::TYPE_mach_libraries)||(nType==SMACH::TYPE_mach_id_library))
+            else if((nType==SMACH::TYPE_mach_libraries)||
+                    (nType==SMACH::TYPE_mach_weak_libraries)||
+                    (nType==SMACH::TYPE_mach_id_library))
             {
                 g_bInit=createHeaderTable(nType,ui->tableWidget,N_mach_library::records,g_ppLinedEdit,N_mach_library::__data_size,getNumber(),getOffset());
 
