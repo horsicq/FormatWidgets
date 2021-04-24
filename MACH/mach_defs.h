@@ -57,6 +57,11 @@ enum TYPE
     TYPE_mach_code_signature,
     TYPE_mach_main,
     TYPE_mach_unix_thread,
+    TYPE_mach_unix_thread_x86_32,
+    TYPE_mach_unix_thread_x86_64,
+    TYPE_mach_unix_thread_arm_32,
+    TYPE_mach_unix_thread_arm_64,
+    TYPE_mach_unix_thread_ppc_32,
     __TYPE_size
 };
 }

@@ -140,7 +140,8 @@ private:
     XLineEditHEX *g_lineEdit_mach_data_in_code[N_mach_linkedit_data::__data_size];
     XLineEditHEX *g_lineEdit_mach_code_signature[N_mach_linkedit_data::__data_size];
     XLineEditHEX *g_lineEdit_mach_main[N_mach_main::__data_size];
-    XLineEditHEX *g_lineEdit_mach_unix_thread[N_mach_unix_thread::__data_size];
+    XLineEditHEX *g_lineEdit_mach_unix_thread[N_mach_unix_thread::__data_size];  
+
     XComboBoxEx *g_comboBox[__CB_size];
 
     SubDevice *g_subDevice[SMACH::__TYPE_size];
