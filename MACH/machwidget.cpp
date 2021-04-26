@@ -1204,6 +1204,27 @@ void MACHWidget::reloadData()
                 blockSignals(false);
             }
         }
+        else if(nType==SMACH::TYPE_mach_unix_thread_x86_32)
+        {
+            if(!g_stInit.contains(sInit))
+            {
+//                createHeaderTable(SMACH::TYPE_mach_unix_thread_x86_32,ui->tableWidget_unix_thread_x86_32,N_mach_unix_thread::records,g_lineEdit_mach_unix_thread_x86_32,N_mach_unix_thread::__data_size,0,nDataOffset);
+
+//                blockSignals(true);
+
+//                XMACH_DEF::unix_thread_command unix_thread=mach._read_unix_thread_command(nDataOffset);
+
+//                g_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread::flavor]->setValue(unix_thread.flavor);
+//                g_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread::count]->setValue(unix_thread.count);
+
+//                qint64 nOffset=nDataOffset;
+//                qint64 nSize=mach.get_unix_thread_command_size();
+
+//                loadHexSubdevice(nOffset,nSize,nOffset,&g_subDevice[SMACH::TYPE_mach_unix_thread_x86_32],ui->widgetHex_unix_thread_x86_32);
+
+//                blockSignals(false);
+            }
+        }
 
         setReadonly(ui->checkBoxReadonly->isChecked());
     }

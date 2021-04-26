@@ -404,4 +404,30 @@ enum DATA
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 }
 
+namespace N_mach_unix_thread_x86_32
+{
+enum DATA
+{
+    eax,
+    ebx,
+    ecx,
+    edx,
+    edi,
+    esi,
+    ebp,
+    esp,
+    ss,
+    eflags,
+    eip,
+    cs,
+    ds,
+    es,
+    fs,
+    gs,
+    __data_size
+};
+
+extern const FW_DEF::HEADER_RECORD records[__data_size];
+}
+
 #endif // MACH_DEFS_H
