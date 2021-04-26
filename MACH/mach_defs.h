@@ -430,4 +430,157 @@ enum DATA
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 }
 
+namespace N_mach_unix_thread_x86_64
+{
+enum DATA
+{
+    rax,
+    rbx,
+    rcx,
+    rdx,
+    rdi,
+    rsi,
+    rbp,
+    rsp,
+    r8,
+    r9,
+    r10,
+    r11,
+    r12,
+    r13,
+    r14,
+    r15,
+    rip,
+    rflags,
+    cs,
+    fs,
+    gs,
+    __data_size
+};
+
+extern const FW_DEF::HEADER_RECORD records[__data_size];
+}
+
+namespace N_mach_unix_thread_arm_32
+{
+enum DATA
+{
+    r0,
+    r1,
+    r2,
+    r3,
+    r4,
+    r5,
+    r6,
+    r7,
+    r8,
+    r9,
+    r10,
+    r11,
+    r12,
+    sp,
+    lr,
+    pc,
+    cpsr,
+    __data_size
+};
+
+extern const FW_DEF::HEADER_RECORD records[__data_size];
+}
+
+namespace N_mach_unix_thread_arm_64
+{
+enum DATA
+{
+    x0,
+    x1,
+    x2,
+    x3,
+    x4,
+    x5,
+    x6,
+    x7,
+    x8,
+    x9,
+    x10,
+    x11,
+    x12,
+    x13,
+    x14,
+    x15,
+    x16,
+    x17,
+    x18,
+    x19,
+    x20,
+    x21,
+    x22,
+    x23,
+    x24,
+    x25,
+    x26,
+    x27,
+    x28,
+    fp,
+    lr,
+    sp,
+    pc,
+    cpsr,
+    pad,
+    __data_size
+};
+
+extern const FW_DEF::HEADER_RECORD records[__data_size];
+}
+
+namespace N_mach_unix_thread_ppc_32
+{
+enum DATA
+{
+    srr0,
+    srr1,
+    r0,
+    r1,
+    r2,
+    r3,
+    r4,
+    r5,
+    r6,
+    r7,
+    r8,
+    r9,
+    r10,
+    r11,
+    r12,
+    r13,
+    r14,
+    r15,
+    r16,
+    r17,
+    r18,
+    r19,
+    r20,
+    r21,
+    r22,
+    r23,
+    r24,
+    r25,
+    r26,
+    r27,
+    r28,
+    r29,
+    r30,
+    r31,
+    ct,
+    xer,
+    lr,
+    ctr,
+    mq,
+    vrsave,
+    __data_size
+};
+
+extern const FW_DEF::HEADER_RECORD records[__data_size];
+}
+
 #endif // MACH_DEFS_H

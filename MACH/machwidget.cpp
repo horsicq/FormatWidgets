@@ -83,6 +83,10 @@ void MACHWidget::clear()
     memset(g_lineEdit_mach_code_signature,0,sizeof g_lineEdit_mach_code_signature);
     memset(g_lineEdit_mach_main,0,sizeof g_lineEdit_mach_main);
     memset(g_lineEdit_mach_unix_thread,0,sizeof g_lineEdit_mach_unix_thread);
+    memset(g_lineEdit_mach_unix_thread_x86_32,0,sizeof g_lineEdit_mach_unix_thread_x86_32);
+    memset(g_lineEdit_mach_unix_thread_x86_64,0,sizeof g_lineEdit_mach_unix_thread_x86_64);
+    memset(g_lineEdit_mach_unix_thread_arm_32,0,sizeof g_lineEdit_mach_unix_thread_arm_32);
+    memset(g_lineEdit_mach_unix_thread_arm_64,0,sizeof g_lineEdit_mach_unix_thread_arm_64);
 
     memset(g_comboBox,0,sizeof g_comboBox);
     memset(g_subDevice,0,sizeof g_subDevice);
@@ -563,6 +567,11 @@ void MACHWidget::setReadonly(bool bState)
     setLineEditsReadOnly(g_lineEdit_mach_code_signature,N_mach_linkedit_data::__data_size,bState);
     setLineEditsReadOnly(g_lineEdit_mach_main,N_mach_main::__data_size,bState);
     setLineEditsReadOnly(g_lineEdit_mach_unix_thread,N_mach_unix_thread::__data_size,bState);
+    setLineEditsReadOnly(g_lineEdit_mach_unix_thread_x86_32,N_mach_unix_thread_x86_32::__data_size,bState);
+    setLineEditsReadOnly(g_lineEdit_mach_unix_thread_x86_64,N_mach_unix_thread_x86_64::__data_size,bState);
+    setLineEditsReadOnly(g_lineEdit_mach_unix_thread_arm_32,N_mach_unix_thread_arm_32::__data_size,bState);
+    setLineEditsReadOnly(g_lineEdit_mach_unix_thread_arm_64,N_mach_unix_thread_arm_64::__data_size,bState);
+    setLineEditsReadOnly(g_lineEdit_mach_unix_thread_ppc_32,N_mach_unix_thread_ppc_32::__data_size,bState);
     setComboBoxesReadOnly(g_comboBox,__CB_size,bState);
 
     ui->widgetHex->setReadonly(bState);
@@ -585,6 +594,11 @@ void MACHWidget::blockSignals(bool bState)
     _blockSignals((QObject **)g_lineEdit_mach_code_signature,N_mach_linkedit_data::__data_size,bState);
     _blockSignals((QObject **)g_lineEdit_mach_main,N_mach_main::__data_size,bState);
     _blockSignals((QObject **)g_lineEdit_mach_unix_thread,N_mach_unix_thread::__data_size,bState);
+    _blockSignals((QObject **)g_lineEdit_mach_unix_thread_x86_32,N_mach_unix_thread_x86_32::__data_size,bState);
+    _blockSignals((QObject **)g_lineEdit_mach_unix_thread_x86_64,N_mach_unix_thread_x86_64::__data_size,bState);
+    _blockSignals((QObject **)g_lineEdit_mach_unix_thread_arm_32,N_mach_unix_thread_arm_32::__data_size,bState);
+    _blockSignals((QObject **)g_lineEdit_mach_unix_thread_arm_64,N_mach_unix_thread_arm_64::__data_size,bState);
+    _blockSignals((QObject **)g_lineEdit_mach_unix_thread_ppc_32,N_mach_unix_thread_ppc_32::__data_size,bState);
     _blockSignals((QObject **)g_comboBox,__CB_size,bState);
 }
 
@@ -1208,21 +1222,100 @@ void MACHWidget::reloadData()
         {
             if(!g_stInit.contains(sInit))
             {
-//                createHeaderTable(SMACH::TYPE_mach_unix_thread_x86_32,ui->tableWidget_unix_thread_x86_32,N_mach_unix_thread::records,g_lineEdit_mach_unix_thread_x86_32,N_mach_unix_thread::__data_size,0,nDataOffset);
+                createHeaderTable(SMACH::TYPE_mach_unix_thread_x86_32,ui->tableWidget_unix_thread_x86_32,N_mach_unix_thread_x86_32::records,g_lineEdit_mach_unix_thread_x86_32,N_mach_unix_thread_x86_32::__data_size,0,nDataOffset);
 
-//                blockSignals(true);
+                blockSignals(true);
 
-//                XMACH_DEF::unix_thread_command unix_thread=mach._read_unix_thread_command(nDataOffset);
+                XMACH_DEF::x86_thread_state32_t state=mach._read_x86_thread_state32_t(nDataOffset);
 
-//                g_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread::flavor]->setValue(unix_thread.flavor);
-//                g_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread::count]->setValue(unix_thread.count);
+                g_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::eax]->setValue(state.eax);
 
-//                qint64 nOffset=nDataOffset;
-//                qint64 nSize=mach.get_unix_thread_command_size();
+                qint64 nOffset=nDataOffset;
+                qint64 nSize=mach.get_x86_thread_state32_t_size();
 
-//                loadHexSubdevice(nOffset,nSize,nOffset,&g_subDevice[SMACH::TYPE_mach_unix_thread_x86_32],ui->widgetHex_unix_thread_x86_32);
+                loadHexSubdevice(nOffset,nSize,nOffset,&g_subDevice[SMACH::TYPE_mach_unix_thread_x86_32],ui->widgetHex_unix_thread_x86_32);
 
-//                blockSignals(false);
+                blockSignals(false);
+            }
+        }
+        else if(nType==SMACH::TYPE_mach_unix_thread_x86_64)
+        {
+            if(!g_stInit.contains(sInit))
+            {
+                createHeaderTable(SMACH::TYPE_mach_unix_thread_x86_64,ui->tableWidget_unix_thread_x86_64,N_mach_unix_thread_x86_64::records,g_lineEdit_mach_unix_thread_x86_64,N_mach_unix_thread_x86_64::__data_size,0,nDataOffset);
+
+                blockSignals(true);
+
+                XMACH_DEF::x86_thread_state64_t state=mach._read_x86_thread_state64_t(nDataOffset);
+
+                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rax]->setValue(state.rax);
+
+                qint64 nOffset=nDataOffset;
+                qint64 nSize=mach.get_x86_thread_state64_t_size();
+
+                loadHexSubdevice(nOffset,nSize,nOffset,&g_subDevice[SMACH::TYPE_mach_unix_thread_x86_64],ui->widgetHex_unix_thread_x86_64);
+
+                blockSignals(false);
+            }
+        }
+        else if(nType==SMACH::TYPE_mach_unix_thread_arm_32)
+        {
+            if(!g_stInit.contains(sInit))
+            {
+                createHeaderTable(SMACH::TYPE_mach_unix_thread_arm_32,ui->tableWidget_unix_thread_arm_32,N_mach_unix_thread_arm_32::records,g_lineEdit_mach_unix_thread_arm_32,N_mach_unix_thread_arm_32::__data_size,0,nDataOffset);
+
+                blockSignals(true);
+
+                XMACH_DEF::arm_thread_state32_t state=mach._read_arm_thread_state32_t(nDataOffset);
+
+                g_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::pc]->setValue(state.pc);
+
+                qint64 nOffset=nDataOffset;
+                qint64 nSize=mach.get_arm_thread_state32_t_size();
+
+                loadHexSubdevice(nOffset,nSize,nOffset,&g_subDevice[SMACH::TYPE_mach_unix_thread_arm_32],ui->widgetHex_unix_thread_arm_32);
+
+                blockSignals(false);
+            }
+        }
+        else if(nType==SMACH::TYPE_mach_unix_thread_arm_64)
+        {
+            if(!g_stInit.contains(sInit))
+            {
+                createHeaderTable(SMACH::TYPE_mach_unix_thread_arm_64,ui->tableWidget_unix_thread_arm_64,N_mach_unix_thread_arm_64::records,g_lineEdit_mach_unix_thread_arm_64,N_mach_unix_thread_arm_64::__data_size,0,nDataOffset);
+
+                blockSignals(true);
+
+                XMACH_DEF::arm_thread_state64_t state=mach._read_arm_thread_state64_t(nDataOffset);
+
+                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x0]->setValue(state.x[0]);
+
+                qint64 nOffset=nDataOffset;
+                qint64 nSize=mach.get_arm_thread_state64_t_size();
+
+                loadHexSubdevice(nOffset,nSize,nOffset,&g_subDevice[SMACH::TYPE_mach_unix_thread_arm_64],ui->widgetHex_unix_thread_arm_64);
+
+                blockSignals(false);
+            }
+        }
+        else if(nType==SMACH::TYPE_mach_unix_thread_ppc_32)
+        {
+            if(!g_stInit.contains(sInit))
+            {
+                createHeaderTable(SMACH::TYPE_mach_unix_thread_ppc_32,ui->tableWidget_unix_thread_ppc_32,N_mach_unix_thread_ppc_32::records,g_lineEdit_mach_unix_thread_ppc_32,N_mach_unix_thread_ppc_32::__data_size,0,nDataOffset);
+
+                blockSignals(true);
+
+                XMACH_DEF::ppc_thread_state32_t state=mach._read_ppc_thread_state32_t(nDataOffset);
+
+                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r0]->setValue(state.r0);
+
+                qint64 nOffset=nDataOffset;
+                qint64 nSize=mach.get_ppc_thread_state32_t_size();
+
+                loadHexSubdevice(nOffset,nSize,nOffset,&g_subDevice[SMACH::TYPE_mach_unix_thread_arm_32],ui->widgetHex_unix_thread_arm_32);
+
+                blockSignals(false);
             }
         }
 

@@ -293,3 +293,145 @@ const FW_DEF::HEADER_RECORD records[]=
 };
 }
 
+namespace N_mach_unix_thread_x86_64
+{
+const FW_DEF::HEADER_RECORD records[]=
+{
+    {rax,               "rax",                  offsetof(XMACH_DEF::x86_thread_state64_t,rax),          8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {rbx,               "rbx",                  offsetof(XMACH_DEF::x86_thread_state64_t,rbx),          8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {rcx,               "rcx",                  offsetof(XMACH_DEF::x86_thread_state64_t,rcx),          8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {rdx,               "rdx",                  offsetof(XMACH_DEF::x86_thread_state64_t,rdx),          8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {rdi,               "rdi",                  offsetof(XMACH_DEF::x86_thread_state64_t,rdi),          8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {rsi,               "rsi",                  offsetof(XMACH_DEF::x86_thread_state64_t,rsi),          8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {rbp,               "rbp",                  offsetof(XMACH_DEF::x86_thread_state64_t,rbp),          8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {rsp,               "esp",                  offsetof(XMACH_DEF::x86_thread_state64_t,rsp),          8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {r8,                "r8",                   offsetof(XMACH_DEF::x86_thread_state64_t,r8),           8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {r9,                "r9",                   offsetof(XMACH_DEF::x86_thread_state64_t,r9),           8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {r10,               "r10",                  offsetof(XMACH_DEF::x86_thread_state64_t,r10),          8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {r11,               "r11",                  offsetof(XMACH_DEF::x86_thread_state64_t,r11),          8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {r12,               "r12",                  offsetof(XMACH_DEF::x86_thread_state64_t,r12),          8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {r13,               "r13",                  offsetof(XMACH_DEF::x86_thread_state64_t,r13),          8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {r14,               "r14",                  offsetof(XMACH_DEF::x86_thread_state64_t,r14),          8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {r15,               "r15",                  offsetof(XMACH_DEF::x86_thread_state64_t,r15),          8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {rip,               "rip",                  offsetof(XMACH_DEF::x86_thread_state64_t,rip),          8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {rflags,            "rflags",               offsetof(XMACH_DEF::x86_thread_state64_t,rflags),       8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {cs,                "cs",                   offsetof(XMACH_DEF::x86_thread_state64_t,cs),           8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {fs,                "fs",                   offsetof(XMACH_DEF::x86_thread_state64_t,fs),           8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {gs,                "gs",                   offsetof(XMACH_DEF::x86_thread_state64_t,gs),           8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+};
+}
+
+namespace N_mach_unix_thread_arm_32
+{
+const FW_DEF::HEADER_RECORD records[]=
+{
+    {r0,                "r0",                   offsetof(XMACH_DEF::arm_thread_state32_t,r)+sizeof(quint32)*0,      4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {r1,                "r1",                   offsetof(XMACH_DEF::arm_thread_state32_t,r)+sizeof(quint32)*1,      4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {r2,                "r2",                   offsetof(XMACH_DEF::arm_thread_state32_t,r)+sizeof(quint32)*2,      4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {r3,                "r3",                   offsetof(XMACH_DEF::arm_thread_state32_t,r)+sizeof(quint32)*3,      4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {r4,                "r4",                   offsetof(XMACH_DEF::arm_thread_state32_t,r)+sizeof(quint32)*4,      4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {r5,                "r5",                   offsetof(XMACH_DEF::arm_thread_state32_t,r)+sizeof(quint32)*5,      4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {r6,                "r6",                   offsetof(XMACH_DEF::arm_thread_state32_t,r)+sizeof(quint32)*6,      4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {r7,                "r7",                   offsetof(XMACH_DEF::arm_thread_state32_t,r)+sizeof(quint32)*7,      4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {r8,                "r8",                   offsetof(XMACH_DEF::arm_thread_state32_t,r)+sizeof(quint32)*8,      4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {r9,                "r9",                   offsetof(XMACH_DEF::arm_thread_state32_t,r)+sizeof(quint32)*9,      4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {r10,               "r10",                  offsetof(XMACH_DEF::arm_thread_state32_t,r)+sizeof(quint32)*10,     4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {r11,               "r11",                  offsetof(XMACH_DEF::arm_thread_state32_t,r)+sizeof(quint32)*11,     4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {r12,               "r12",                  offsetof(XMACH_DEF::arm_thread_state32_t,r)+sizeof(quint32)*12,     4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {sp,                "sp",                   offsetof(XMACH_DEF::arm_thread_state32_t,sp),                       4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {lr,                "lr",                   offsetof(XMACH_DEF::arm_thread_state32_t,lr),                       4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {pc,                "pc",                   offsetof(XMACH_DEF::arm_thread_state32_t,pc),                       4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {cpsr,              "cpsr",                 offsetof(XMACH_DEF::arm_thread_state32_t,cpsr),                     4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+};
+}
+
+namespace N_mach_unix_thread_arm_64
+{
+const FW_DEF::HEADER_RECORD records[]=
+{
+    {x0,                "x0",                   offsetof(XMACH_DEF::arm_thread_state64_t,x)+sizeof(quint64)*0,      8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {x1,                "x1",                   offsetof(XMACH_DEF::arm_thread_state64_t,x)+sizeof(quint64)*1,      8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {x2,                "x2",                   offsetof(XMACH_DEF::arm_thread_state64_t,x)+sizeof(quint64)*2,      8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {x3,                "x3",                   offsetof(XMACH_DEF::arm_thread_state64_t,x)+sizeof(quint64)*3,      8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {x4,                "x4",                   offsetof(XMACH_DEF::arm_thread_state64_t,x)+sizeof(quint64)*4,      8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {x5,                "x5",                   offsetof(XMACH_DEF::arm_thread_state64_t,x)+sizeof(quint64)*5,      8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {x6,                "x6",                   offsetof(XMACH_DEF::arm_thread_state64_t,x)+sizeof(quint64)*6,      8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {x7,                "x7",                   offsetof(XMACH_DEF::arm_thread_state64_t,x)+sizeof(quint64)*7,      8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {x8,                "x8",                   offsetof(XMACH_DEF::arm_thread_state64_t,x)+sizeof(quint64)*8,      8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {x9,                "x9",                   offsetof(XMACH_DEF::arm_thread_state64_t,x)+sizeof(quint64)*9,      8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {x10,               "x10",                  offsetof(XMACH_DEF::arm_thread_state64_t,x)+sizeof(quint64)*10,     8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {x11,               "x11",                  offsetof(XMACH_DEF::arm_thread_state64_t,x)+sizeof(quint64)*11,     8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {x12,               "x12",                  offsetof(XMACH_DEF::arm_thread_state64_t,x)+sizeof(quint64)*12,     8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {x13,               "x13",                  offsetof(XMACH_DEF::arm_thread_state64_t,x)+sizeof(quint64)*13,     8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {x14,               "x14",                  offsetof(XMACH_DEF::arm_thread_state64_t,x)+sizeof(quint64)*14,     8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {x15,               "x15",                  offsetof(XMACH_DEF::arm_thread_state64_t,x)+sizeof(quint64)*15,     8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {x16,               "x16",                  offsetof(XMACH_DEF::arm_thread_state64_t,x)+sizeof(quint64)*16,     8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {x17,               "x17",                  offsetof(XMACH_DEF::arm_thread_state64_t,x)+sizeof(quint64)*17,     8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {x18,               "x18",                  offsetof(XMACH_DEF::arm_thread_state64_t,x)+sizeof(quint64)*18,     8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {x19,               "x19",                  offsetof(XMACH_DEF::arm_thread_state64_t,x)+sizeof(quint64)*19,     8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {x20,               "x20",                  offsetof(XMACH_DEF::arm_thread_state64_t,x)+sizeof(quint64)*20,     8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {x21,               "x21",                  offsetof(XMACH_DEF::arm_thread_state64_t,x)+sizeof(quint64)*21,     8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {x22,               "x22",                  offsetof(XMACH_DEF::arm_thread_state64_t,x)+sizeof(quint64)*22,     8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {x23,               "x23",                  offsetof(XMACH_DEF::arm_thread_state64_t,x)+sizeof(quint64)*23,     8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {x24,               "x24",                  offsetof(XMACH_DEF::arm_thread_state64_t,x)+sizeof(quint64)*24,     8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {x25,               "x25",                  offsetof(XMACH_DEF::arm_thread_state64_t,x)+sizeof(quint64)*25,     8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {x26,               "x26",                  offsetof(XMACH_DEF::arm_thread_state64_t,x)+sizeof(quint64)*26,     8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {x27,               "x27",                  offsetof(XMACH_DEF::arm_thread_state64_t,x)+sizeof(quint64)*27,     8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {x28,               "x28",                  offsetof(XMACH_DEF::arm_thread_state64_t,x)+sizeof(quint64)*28,     8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {fp,                "fp",                   offsetof(XMACH_DEF::arm_thread_state64_t,fp),                       8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {lr,                "lr",                   offsetof(XMACH_DEF::arm_thread_state64_t,lr),                       8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {sp,                "sp",                   offsetof(XMACH_DEF::arm_thread_state64_t,sp),                       8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {pc,                "pc",                   offsetof(XMACH_DEF::arm_thread_state64_t,pc),                       8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {cpsr,              "cpsr",                 offsetof(XMACH_DEF::arm_thread_state64_t,cpsr),                     8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+    {pad,               "pad",                  offsetof(XMACH_DEF::arm_thread_state64_t,pad),                      8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
+};
+}
+
+namespace N_mach_unix_thread_ppc_32
+{
+const FW_DEF::HEADER_RECORD records[]=
+{
+    {srr0,              "srr0",                 offsetof(XMACH_DEF::ppc_thread_state32_t,srr0),                     4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {srr1,              "srr1",                 offsetof(XMACH_DEF::ppc_thread_state32_t,srr1),                     4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {r0,                "r0",                   offsetof(XMACH_DEF::ppc_thread_state32_t,r0),                       4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {r1,                "r1",                   offsetof(XMACH_DEF::ppc_thread_state32_t,r1),                       4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {r2,                "r2",                   offsetof(XMACH_DEF::ppc_thread_state32_t,r2),                       4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {r3,                "r3",                   offsetof(XMACH_DEF::ppc_thread_state32_t,r3),                       4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {r4,                "r4",                   offsetof(XMACH_DEF::ppc_thread_state32_t,r4),                       4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {r5,                "r5",                   offsetof(XMACH_DEF::ppc_thread_state32_t,r5),                       4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {r6,                "r6",                   offsetof(XMACH_DEF::ppc_thread_state32_t,r6),                       4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {r7,                "r7",                   offsetof(XMACH_DEF::ppc_thread_state32_t,r7),                       4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {r8,                "r8",                   offsetof(XMACH_DEF::ppc_thread_state32_t,r8),                       4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {r9,                "r9",                   offsetof(XMACH_DEF::ppc_thread_state32_t,r9),                       4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {r10,               "r10",                  offsetof(XMACH_DEF::ppc_thread_state32_t,r10),                      4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {r11,               "r11",                  offsetof(XMACH_DEF::ppc_thread_state32_t,r11),                      4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {r12,               "r12",                  offsetof(XMACH_DEF::ppc_thread_state32_t,r12),                      4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {r13,               "r13",                  offsetof(XMACH_DEF::ppc_thread_state32_t,r13),                      4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {r14,               "r14",                  offsetof(XMACH_DEF::ppc_thread_state32_t,r14),                      4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {r15,               "r15",                  offsetof(XMACH_DEF::ppc_thread_state32_t,r15),                      4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {r16,               "r16",                  offsetof(XMACH_DEF::ppc_thread_state32_t,r16),                      4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {r17,               "r17",                  offsetof(XMACH_DEF::ppc_thread_state32_t,r17),                      4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {r18,               "r18",                  offsetof(XMACH_DEF::ppc_thread_state32_t,r18),                      4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {r19,               "r19",                  offsetof(XMACH_DEF::ppc_thread_state32_t,r19),                      4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {r10,               "r20",                  offsetof(XMACH_DEF::ppc_thread_state32_t,r20),                      4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {r21,               "r21",                  offsetof(XMACH_DEF::ppc_thread_state32_t,r21),                      4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {r22,               "r22",                  offsetof(XMACH_DEF::ppc_thread_state32_t,r22),                      4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {r23,               "r23",                  offsetof(XMACH_DEF::ppc_thread_state32_t,r23),                      4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {r24,               "r24",                  offsetof(XMACH_DEF::ppc_thread_state32_t,r24),                      4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {r25,               "r25",                  offsetof(XMACH_DEF::ppc_thread_state32_t,r25),                      4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {r26,               "r26",                  offsetof(XMACH_DEF::ppc_thread_state32_t,r26),                      4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {r27,               "r27",                  offsetof(XMACH_DEF::ppc_thread_state32_t,r27),                      4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {r28,               "r28",                  offsetof(XMACH_DEF::ppc_thread_state32_t,r28),                      4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {r29,               "r29",                  offsetof(XMACH_DEF::ppc_thread_state32_t,r29),                      4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {r30,               "r30",                  offsetof(XMACH_DEF::ppc_thread_state32_t,r30),                      4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {r31,               "r31",                  offsetof(XMACH_DEF::ppc_thread_state32_t,r31),                      4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {ct,                "ct",                   offsetof(XMACH_DEF::ppc_thread_state32_t,ct),                       4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {xer,               "xer",                  offsetof(XMACH_DEF::ppc_thread_state32_t,xer),                      4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {lr,                "lr",                   offsetof(XMACH_DEF::ppc_thread_state32_t,lr),                       4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {ctr,               "ctr",                  offsetof(XMACH_DEF::ppc_thread_state32_t,ctr),                      4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {mq,                "mq",                   offsetof(XMACH_DEF::ppc_thread_state32_t,mq),                       4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {vrsave,            "vrsave",               offsetof(XMACH_DEF::ppc_thread_state32_t,vrsave),                   4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+};
+
+extern const FW_DEF::HEADER_RECORD records[__data_size];
+}
