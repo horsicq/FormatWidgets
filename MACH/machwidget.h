@@ -78,6 +78,12 @@ private slots:
     void on_tableWidget_main_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
     void on_tableWidget_unix_thread_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
 
+    void on_tableWidget_unix_thread_x86_32_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
+    void on_tableWidget_unix_thread_x86_64_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
+    void on_tableWidget_unix_thread_arm_32_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
+    void on_tableWidget_unix_thread_arm_64_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
+    void on_tableWidget_unix_thread_ppc_32_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
+
     void on_toolButtonPrev_clicked();
     void on_toolButtonNext_clicked();
     void onTableView_commands_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
