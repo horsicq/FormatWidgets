@@ -294,9 +294,54 @@ void MACHWidget::reload()
 
             if(mach.isCommandPresent(XMACH_DEF::LC_UNIXTHREAD,&listCommandRecords))
             {
-                QTreeWidgetItem *pItemUnixThread=createNewItem(SMACH::TYPE_mach_unix_thread,QString("LC_UNIXTHREAD"),mach.getCommandRecordOffset(XMACH_DEF::LC_UNIXTHREAD,0,&listCommandRecords)); // TODO rename
+                qint64 _nOffset=mach.getCommandRecordOffset(XMACH_DEF::LC_UNIXTHREAD,0,&listCommandRecords);
+
+                QTreeWidgetItem *pItemUnixThread=createNewItem(SMACH::TYPE_mach_unix_thread,QString("LC_UNIXTHREAD"),_nOffset); // TODO rename
 
                 pItemCommands->addChild(pItemUnixThread);
+
+                XMACH_DEF::unix_thread_command unix_thread=mach._read_unix_thread_command(_nOffset);
+
+                quint32 nMachine=mach.getHeader_cputype();
+
+                _nOffset+=sizeof(XMACH_DEF::unix_thread_command);
+
+                if((nMachine==XMACH_DEF::CPU_TYPE_I386)||(nMachine==XMACH_DEF::CPU_TYPE_X86_64))
+                {
+                    if(unix_thread.flavor==XMACH_DEF::x86_THREAD_STATE32)
+                    {
+                        QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_mach_unix_thread_x86_32,QString("x86_thread_state32_t"),_nOffset); // TODO rename
+
+                        pItemUnixThread->addChild(pItem);
+                    }
+                    else if(unix_thread.flavor==XMACH_DEF::x86_THREAD_STATE64)
+                    {
+                        QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_mach_unix_thread_x86_64,QString("x86_thread_state64_t"),_nOffset); // TODO rename
+
+                        pItemUnixThread->addChild(pItem);
+                    }
+                }
+                else if((nMachine==XMACH_DEF::CPU_TYPE_ARM)||(nMachine==XMACH_DEF::CPU_TYPE_ARM64))
+                {
+                    if(unix_thread.flavor==XMACH_DEF::ARM_THREAD_STATE)
+                    {
+                        QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_mach_unix_thread_arm_32,QString("arm_thread_state32_t"),_nOffset); // TODO rename
+
+                        pItemUnixThread->addChild(pItem);
+                    }
+                    else if(unix_thread.flavor==XMACH_DEF::ARM_THREAD_STATE64)
+                    {
+                        QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_mach_unix_thread_arm_64,QString("arm_thread_state64_t"),_nOffset); // TODO rename
+
+                        pItemUnixThread->addChild(pItem);
+                    }
+                }
+                else if(nMachine==XMACH_DEF::CPU_TYPE_POWERPC)
+                {
+                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_mach_unix_thread_ppc_32,QString("ppc_thread_state32_t"),_nOffset); // TODO rename
+
+                    pItemUnixThread->addChild(pItem);
+                }
             }
         }
 
