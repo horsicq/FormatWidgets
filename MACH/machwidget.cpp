@@ -87,6 +87,7 @@ void MACHWidget::clear()
     memset(g_lineEdit_mach_unix_thread_x86_64,0,sizeof g_lineEdit_mach_unix_thread_x86_64);
     memset(g_lineEdit_mach_unix_thread_arm_32,0,sizeof g_lineEdit_mach_unix_thread_arm_32);
     memset(g_lineEdit_mach_unix_thread_arm_64,0,sizeof g_lineEdit_mach_unix_thread_arm_64);
+    memset(g_lineEdit_mach_unix_thread_ppc_32,0,sizeof g_lineEdit_mach_unix_thread_ppc_32);
 
     memset(g_comboBox,0,sizeof g_comboBox);
     memset(g_subDevice,0,sizeof g_subDevice);
