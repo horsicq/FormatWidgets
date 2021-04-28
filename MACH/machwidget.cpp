@@ -709,6 +709,55 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
                     ui->widgetHex_unix_thread_arm_64->reload();
 
                     break;
+
+                case SMACH::TYPE_mach_unix_thread_ppc_32:
+                    switch(nNdata)
+                    {
+                        case N_mach_unix_thread_ppc_32::srr0:       mach._set_ppc_thread_state32_t_srr0(nOffset,nValue);                break;
+                        case N_mach_unix_thread_ppc_32::srr1:       mach._set_ppc_thread_state32_t_srr1(nOffset,nValue);                break;
+                        case N_mach_unix_thread_ppc_32::r0:
+                        case N_mach_unix_thread_ppc_32::r1:
+                        case N_mach_unix_thread_ppc_32::r2:
+                        case N_mach_unix_thread_ppc_32::r3:
+                        case N_mach_unix_thread_ppc_32::r4:
+                        case N_mach_unix_thread_ppc_32::r5:
+                        case N_mach_unix_thread_ppc_32::r6:
+                        case N_mach_unix_thread_ppc_32::r7:
+                        case N_mach_unix_thread_ppc_32::r8:
+                        case N_mach_unix_thread_ppc_32::r9:
+                        case N_mach_unix_thread_ppc_32::r10:
+                        case N_mach_unix_thread_ppc_32::r11:
+                        case N_mach_unix_thread_ppc_32::r12:
+                        case N_mach_unix_thread_ppc_32::r13:
+                        case N_mach_unix_thread_ppc_32::r14:
+                        case N_mach_unix_thread_ppc_32::r15:
+                        case N_mach_unix_thread_ppc_32::r16:
+                        case N_mach_unix_thread_ppc_32::r17:
+                        case N_mach_unix_thread_ppc_32::r18:
+                        case N_mach_unix_thread_ppc_32::r19:
+                        case N_mach_unix_thread_ppc_32::r20:
+                        case N_mach_unix_thread_ppc_32::r21:
+                        case N_mach_unix_thread_ppc_32::r22:
+                        case N_mach_unix_thread_ppc_32::r23:
+                        case N_mach_unix_thread_ppc_32::r24:
+                        case N_mach_unix_thread_ppc_32::r25:
+                        case N_mach_unix_thread_ppc_32::r26:
+                        case N_mach_unix_thread_ppc_32::r27:
+                        case N_mach_unix_thread_ppc_32::r28:
+                        case N_mach_unix_thread_ppc_32::r29:
+                        case N_mach_unix_thread_ppc_32::r30:
+                        case N_mach_unix_thread_ppc_32::r31:            mach._set_ppc_thread_state32_t_r(nOffset,nValue,nNdata-N_mach_unix_thread_ppc_32::r0);  break;
+                        case N_mach_unix_thread_ppc_32::ct:             mach._set_ppc_thread_state32_t_ct(nOffset,nValue);                  break;
+                        case N_mach_unix_thread_ppc_32::xer:            mach._set_ppc_thread_state32_t_xer(nOffset,nValue);                 break;
+                        case N_mach_unix_thread_ppc_32::lr:             mach._set_ppc_thread_state32_t_lr(nOffset,nValue);                  break;
+                        case N_mach_unix_thread_ppc_32::ctr:            mach._set_ppc_thread_state32_t_ctr(nOffset,nValue);                 break;
+                        case N_mach_unix_thread_ppc_32::mq:             mach._set_ppc_thread_state32_t_mq(nOffset,nValue);                  break;
+                        case N_mach_unix_thread_ppc_32::vrsave:         mach._set_ppc_thread_state32_t_vrsave(nOffset,nValue);              break;
+                    }
+
+                    ui->widgetHex_unix_thread_ppc_32->reload();
+
+                    break;
             }
 
             result=SV_EDITED;
