@@ -609,6 +609,36 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
                     ui->widgetHex_unix_thread_x86_32->reload();
 
                     break;
+
+                case SMACH::TYPE_mach_unix_thread_x86_64:
+                    switch(nNdata)
+                    {
+                        case N_mach_unix_thread_x86_64::rax:        mach._set_x86_thread_state64_t_rax(nOffset,nValue);                 break;
+                        case N_mach_unix_thread_x86_64::rbx:        mach._set_x86_thread_state64_t_rbx(nOffset,nValue);                 break;
+                        case N_mach_unix_thread_x86_64::rcx:        mach._set_x86_thread_state64_t_rcx(nOffset,nValue);                 break;
+                        case N_mach_unix_thread_x86_64::rdx:        mach._set_x86_thread_state64_t_rdx(nOffset,nValue);                 break;
+                        case N_mach_unix_thread_x86_64::rdi:        mach._set_x86_thread_state64_t_rdi(nOffset,nValue);                 break;
+                        case N_mach_unix_thread_x86_64::rsi:        mach._set_x86_thread_state64_t_rsi(nOffset,nValue);                 break;
+                        case N_mach_unix_thread_x86_64::rbp:        mach._set_x86_thread_state64_t_rbp(nOffset,nValue);                 break;
+                        case N_mach_unix_thread_x86_64::rsp:        mach._set_x86_thread_state64_t_rsp(nOffset,nValue);                 break;
+                        case N_mach_unix_thread_x86_64::r8:         mach._set_x86_thread_state64_t_r8(nOffset,nValue);                  break;
+                        case N_mach_unix_thread_x86_64::r9:         mach._set_x86_thread_state64_t_r9(nOffset,nValue);                  break;
+                        case N_mach_unix_thread_x86_64::r10:        mach._set_x86_thread_state64_t_r10(nOffset,nValue);                 break;
+                        case N_mach_unix_thread_x86_64::r11:        mach._set_x86_thread_state64_t_r11(nOffset,nValue);                 break;
+                        case N_mach_unix_thread_x86_64::r12:        mach._set_x86_thread_state64_t_r12(nOffset,nValue);                 break;
+                        case N_mach_unix_thread_x86_64::r13:        mach._set_x86_thread_state64_t_r13(nOffset,nValue);                 break;
+                        case N_mach_unix_thread_x86_64::r14:        mach._set_x86_thread_state64_t_r14(nOffset,nValue);                 break;
+                        case N_mach_unix_thread_x86_64::r15:        mach._set_x86_thread_state64_t_r15(nOffset,nValue);                 break;
+                        case N_mach_unix_thread_x86_64::rip:        mach._set_x86_thread_state64_t_rip(nOffset,nValue);                 break;
+                        case N_mach_unix_thread_x86_64::rflags:     mach._set_x86_thread_state64_t_rflags(nOffset,nValue);              break;
+                        case N_mach_unix_thread_x86_64::cs:         mach._set_x86_thread_state64_t_cs(nOffset,nValue);                  break;
+                        case N_mach_unix_thread_x86_64::fs:         mach._set_x86_thread_state64_t_fs(nOffset,nValue);                  break;
+                        case N_mach_unix_thread_x86_64::gs:         mach._set_x86_thread_state64_t_gs(nOffset,nValue);                  break;
+                    }
+
+                    ui->widgetHex_unix_thread_x86_32->reload();
+
+                    break;
             }
 
             result=SV_EDITED;
