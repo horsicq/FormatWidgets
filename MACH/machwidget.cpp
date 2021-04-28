@@ -192,9 +192,20 @@ void MACHWidget::reload()
 
             if(mach.isCommandPresent(XMACH_DEF::LC_SYMTAB,&listCommandRecords))
             {
-                QTreeWidgetItem *pItemSymtab=createNewItem(SMACH::TYPE_mach_symtab,QString("LC_SYMTAB"),mach.getCommandRecordOffset(XMACH_DEF::LC_SYMTAB,0,&listCommandRecords)); // TODO rename
+                qint64 _nOffset=mach.getCommandRecordOffset(XMACH_DEF::LC_SYMTAB,0,&listCommandRecords);
+
+                QTreeWidgetItem *pItemSymtab=createNewItem(SMACH::TYPE_mach_symtab,QString("LC_SYMTAB"),_nOffset); // TODO rename
 
                 pItemCommands->addChild(pItemSymtab);
+
+                XMACH_DEF::symtab_command symtab=mach._read_symtab_command(_nOffset);
+
+                if(mach.isOffsetValid(symtab.stroff)&&(symtab.strsize))
+                {
+                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_STRINGTABLE,tr("String table"),symtab.stroff,symtab.strsize); // TODO rename
+
+                    pItemSymtab->addChild(pItem);
+                }
             }
 
             if(mach.isCommandPresent(XMACH_DEF::LC_DYSYMTAB,&listCommandRecords))
@@ -570,7 +581,32 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
                         case N_mach_unix_thread::count:             mach._set_unix_thread_command_count(nOffset,nValue);                    break;
                     }
 
-                    ui->widgetHex_main->reload();
+                    ui->widgetHex_unix_thread->reload();
+
+                    break;
+
+                case SMACH::TYPE_mach_unix_thread_x86_32:
+                    switch(nNdata)
+                    {
+                        case N_mach_unix_thread_x86_32::eax:        mach._set_x86_thread_state32_t_eax(nOffset,nValue);                 break;
+                        case N_mach_unix_thread_x86_32::ebx:        mach._set_x86_thread_state32_t_ebx(nOffset,nValue);                 break;
+                        case N_mach_unix_thread_x86_32::ecx:        mach._set_x86_thread_state32_t_ecx(nOffset,nValue);                 break;
+                        case N_mach_unix_thread_x86_32::edx:        mach._set_x86_thread_state32_t_edx(nOffset,nValue);                 break;
+                        case N_mach_unix_thread_x86_32::edi:        mach._set_x86_thread_state32_t_edi(nOffset,nValue);                 break;
+                        case N_mach_unix_thread_x86_32::esi:        mach._set_x86_thread_state32_t_esi(nOffset,nValue);                 break;
+                        case N_mach_unix_thread_x86_32::ebp:        mach._set_x86_thread_state32_t_ebp(nOffset,nValue);                 break;
+                        case N_mach_unix_thread_x86_32::esp:        mach._set_x86_thread_state32_t_esp(nOffset,nValue);                 break;
+                        case N_mach_unix_thread_x86_32::ss:         mach._set_x86_thread_state32_t_ss(nOffset,nValue);                  break;
+                        case N_mach_unix_thread_x86_32::eflags:     mach._set_x86_thread_state32_t_eflags(nOffset,nValue);              break;
+                        case N_mach_unix_thread_x86_32::eip:        mach._set_x86_thread_state32_t_eip(nOffset,nValue);                 break;
+                        case N_mach_unix_thread_x86_32::cs:         mach._set_x86_thread_state32_t_cs(nOffset,nValue);                  break;
+                        case N_mach_unix_thread_x86_32::ds:         mach._set_x86_thread_state32_t_ds(nOffset,nValue);                  break;
+                        case N_mach_unix_thread_x86_32::es:         mach._set_x86_thread_state32_t_es(nOffset,nValue);                  break;
+                        case N_mach_unix_thread_x86_32::fs:         mach._set_x86_thread_state32_t_fs(nOffset,nValue);                  break;
+                        case N_mach_unix_thread_x86_32::gs:         mach._set_x86_thread_state32_t_gs(nOffset,nValue);                  break;
+                    }
+
+                    ui->widgetHex_unix_thread_x86_32->reload();
 
                     break;
             }
@@ -1275,6 +1311,21 @@ void MACHWidget::reloadData()
                 XMACH_DEF::x86_thread_state32_t state=mach._read_x86_thread_state32_t(nDataOffset);
 
                 g_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::eax]->setValue(state.eax);
+                g_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::ebx]->setValue(state.ebx);
+                g_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::ecx]->setValue(state.ecx);
+                g_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::edx]->setValue(state.edx);
+                g_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::edi]->setValue(state.edi);
+                g_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::esi]->setValue(state.esi);
+                g_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::ebp]->setValue(state.ebp);
+                g_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::esp]->setValue(state.esp);
+                g_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::ss]->setValue(state.ss);
+                g_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::eflags]->setValue(state.eflags);
+                g_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::eip]->setValue(state.eip);
+                g_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::cs]->setValue(state.cs);
+                g_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::ds]->setValue(state.ds);
+                g_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::es]->setValue(state.es);
+                g_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::fs]->setValue(state.fs);
+                g_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::gs]->setValue(state.gs);
 
                 qint64 nOffset=nDataOffset;
                 qint64 nSize=mach.get_x86_thread_state32_t_size();
@@ -1295,6 +1346,26 @@ void MACHWidget::reloadData()
                 XMACH_DEF::x86_thread_state64_t state=mach._read_x86_thread_state64_t(nDataOffset);
 
                 g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rax]->setValue(state.rax);
+                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rbx]->setValue(state.rbx);
+                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rcx]->setValue(state.rcx);
+                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rdx]->setValue(state.rdx);
+                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rdi]->setValue(state.rdi);
+                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rsi]->setValue(state.rsi);
+                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rbp]->setValue(state.rbp);
+                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rsp]->setValue(state.rsp);
+                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::r8]->setValue(state.r8);
+                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::r9]->setValue(state.r9);
+                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::r10]->setValue(state.r10);
+                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::r11]->setValue(state.r11);
+                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::r12]->setValue(state.r12);
+                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::r13]->setValue(state.r13);
+                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::r14]->setValue(state.r14);
+                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::r15]->setValue(state.r15);
+                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rip]->setValue(state.rip);
+                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rflags]->setValue(state.rflags);
+                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::cs]->setValue(state.cs);
+                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::fs]->setValue(state.fs);
+                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::gs]->setValue(state.gs);
 
                 qint64 nOffset=nDataOffset;
                 qint64 nSize=mach.get_x86_thread_state64_t_size();
@@ -1314,7 +1385,23 @@ void MACHWidget::reloadData()
 
                 XMACH_DEF::arm_thread_state32_t state=mach._read_arm_thread_state32_t(nDataOffset);
 
+                g_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::r0]->setValue(state.r[0]);
+                g_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::r1]->setValue(state.r[1]);
+                g_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::r2]->setValue(state.r[2]);
+                g_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::r3]->setValue(state.r[3]);
+                g_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::r4]->setValue(state.r[4]);
+                g_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::r5]->setValue(state.r[5]);
+                g_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::r6]->setValue(state.r[6]);
+                g_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::r7]->setValue(state.r[7]);
+                g_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::r8]->setValue(state.r[8]);
+                g_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::r9]->setValue(state.r[9]);
+                g_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::r10]->setValue(state.r[10]);
+                g_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::r11]->setValue(state.r[11]);
+                g_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::r12]->setValue(state.r[12]);
+                g_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::sp]->setValue(state.sp);
+                g_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::lr]->setValue(state.lr);
                 g_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::pc]->setValue(state.pc);
+                g_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::cpsr]->setValue(state.cpsr);
 
                 qint64 nOffset=nDataOffset;
                 qint64 nSize=mach.get_arm_thread_state32_t_size();
@@ -1335,6 +1422,40 @@ void MACHWidget::reloadData()
                 XMACH_DEF::arm_thread_state64_t state=mach._read_arm_thread_state64_t(nDataOffset);
 
                 g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x0]->setValue(state.x[0]);
+                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x1]->setValue(state.x[1]);
+                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x2]->setValue(state.x[2]);
+                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x3]->setValue(state.x[3]);
+                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x4]->setValue(state.x[4]);
+                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x5]->setValue(state.x[5]);
+                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x6]->setValue(state.x[6]);
+                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x7]->setValue(state.x[7]);
+                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x8]->setValue(state.x[8]);
+                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x9]->setValue(state.x[9]);
+                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x10]->setValue(state.x[10]);
+                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x11]->setValue(state.x[11]);
+                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x12]->setValue(state.x[12]);
+                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x13]->setValue(state.x[13]);
+                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x14]->setValue(state.x[14]);
+                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x15]->setValue(state.x[15]);
+                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x16]->setValue(state.x[16]);
+                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x17]->setValue(state.x[17]);
+                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x18]->setValue(state.x[18]);
+                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x19]->setValue(state.x[19]);
+                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x20]->setValue(state.x[20]);
+                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x21]->setValue(state.x[21]);
+                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x22]->setValue(state.x[22]);
+                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x23]->setValue(state.x[23]);
+                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x24]->setValue(state.x[24]);
+                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x25]->setValue(state.x[25]);
+                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x26]->setValue(state.x[26]);
+                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x27]->setValue(state.x[27]);
+                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x28]->setValue(state.x[28]);
+                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::fp]->setValue(state.fp);
+                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::lr]->setValue(state.lr);
+                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::sp]->setValue(state.sp);
+                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::pc]->setValue(state.pc);
+                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::cpsr]->setValue(state.cpsr);
+                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::pad]->setValue(state.pad);
 
                 qint64 nOffset=nDataOffset;
                 qint64 nSize=mach.get_arm_thread_state64_t_size();
@@ -1354,7 +1475,46 @@ void MACHWidget::reloadData()
 
                 XMACH_DEF::ppc_thread_state32_t state=mach._read_ppc_thread_state32_t(nDataOffset);
 
-                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r0]->setValue(state.r0);
+                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::srr0]->setValue(state.srr0);
+                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::srr1]->setValue(state.srr1);
+                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r0]->setValue(state.r[0]);
+                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r1]->setValue(state.r[1]);
+                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r2]->setValue(state.r[2]);
+                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r3]->setValue(state.r[3]);
+                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r4]->setValue(state.r[4]);
+                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r5]->setValue(state.r[5]);
+                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r6]->setValue(state.r[6]);
+                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r7]->setValue(state.r[7]);
+                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r8]->setValue(state.r[8]);
+                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r9]->setValue(state.r[9]);
+                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r10]->setValue(state.r[10]);
+                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r11]->setValue(state.r[11]);
+                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r12]->setValue(state.r[12]);
+                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r13]->setValue(state.r[13]);
+                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r14]->setValue(state.r[14]);
+                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r15]->setValue(state.r[15]);
+                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r16]->setValue(state.r[16]);
+                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r17]->setValue(state.r[17]);
+                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r18]->setValue(state.r[18]);
+                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r19]->setValue(state.r[19]);
+                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r20]->setValue(state.r[20]);
+                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r21]->setValue(state.r[21]);
+                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r22]->setValue(state.r[22]);
+                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r23]->setValue(state.r[23]);
+                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r24]->setValue(state.r[24]);
+                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r25]->setValue(state.r[25]);
+                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r26]->setValue(state.r[26]);
+                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r27]->setValue(state.r[27]);
+                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r28]->setValue(state.r[28]);
+                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r29]->setValue(state.r[29]);
+                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r30]->setValue(state.r[30]);
+                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r31]->setValue(state.r[31]);
+                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::ct]->setValue(state.ct);
+                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::xer]->setValue(state.xer);
+                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::lr]->setValue(state.lr);
+                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::ctr]->setValue(state.ctr);
+                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::mq]->setValue(state.mq);
+                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::vrsave]->setValue(state.vrsave);
 
                 qint64 nOffset=nDataOffset;
                 qint64 nSize=mach.get_ppc_thread_state32_t_size();
@@ -1362,6 +1522,13 @@ void MACHWidget::reloadData()
                 loadHexSubdevice(nOffset,nSize,nOffset,&g_subDevice[SMACH::TYPE_mach_unix_thread_arm_32],ui->widgetHex_unix_thread_arm_32);
 
                 blockSignals(false);
+            }
+        }
+        else if(nType==SMACH::TYPE_STRINGTABLE)
+        {
+            if(!g_stInit.contains(sInit))
+            {
+                loadHexSubdevice(nDataOffset,nDataSize,0,&g_subDevice[SMACH::TYPE_STRINGTABLE],ui->widgetHex_StringTable);
             }
         }
 

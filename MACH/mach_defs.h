@@ -62,6 +62,8 @@ enum TYPE
     TYPE_mach_unix_thread_arm_32,
     TYPE_mach_unix_thread_arm_64,
     TYPE_mach_unix_thread_ppc_32,
+    TYPE_STRINGTABLE,
+    TYPE_SYMBOLTABLE,
     __TYPE_size
 };
 }
