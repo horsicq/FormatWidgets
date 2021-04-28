@@ -636,7 +636,77 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
                         case N_mach_unix_thread_x86_64::gs:         mach._set_x86_thread_state64_t_gs(nOffset,nValue);                  break;
                     }
 
-                    ui->widgetHex_unix_thread_x86_32->reload();
+                    ui->widgetHex_unix_thread_x86_64->reload();
+
+                    break;
+
+                case SMACH::TYPE_mach_unix_thread_arm_32:
+                    switch(nNdata)
+                    {
+                        case N_mach_unix_thread_arm_32::r0:
+                        case N_mach_unix_thread_arm_32::r1:
+                        case N_mach_unix_thread_arm_32::r2:
+                        case N_mach_unix_thread_arm_32::r3:
+                        case N_mach_unix_thread_arm_32::r4:
+                        case N_mach_unix_thread_arm_32::r5:
+                        case N_mach_unix_thread_arm_32::r6:
+                        case N_mach_unix_thread_arm_32::r7:
+                        case N_mach_unix_thread_arm_32::r8:
+                        case N_mach_unix_thread_arm_32::r9:
+                        case N_mach_unix_thread_arm_32::r10:
+                        case N_mach_unix_thread_arm_32::r11:
+                        case N_mach_unix_thread_arm_32::r12:        mach._set_arm_thread_state32_t_r(nOffset,nValue,nNdata-N_mach_unix_thread_arm_32::r0);  break;
+                        case N_mach_unix_thread_arm_32::sp:         mach._set_arm_thread_state32_t_sp(nOffset,nValue);                  break;
+                        case N_mach_unix_thread_arm_32::lr:         mach._set_arm_thread_state32_t_lr(nOffset,nValue);                  break;
+                        case N_mach_unix_thread_arm_32::pc:         mach._set_arm_thread_state32_t_pc(nOffset,nValue);                  break;
+                        case N_mach_unix_thread_arm_32::cpsr:       mach._set_arm_thread_state32_t_cpsr(nOffset,nValue);                break;
+                    }
+
+                    ui->widgetHex_unix_thread_arm_32->reload();
+
+                    break;
+
+                case SMACH::TYPE_mach_unix_thread_arm_64:
+                    switch(nNdata)
+                    {
+                        case N_mach_unix_thread_arm_64::x0:
+                        case N_mach_unix_thread_arm_64::x1:
+                        case N_mach_unix_thread_arm_64::x2:
+                        case N_mach_unix_thread_arm_64::x3:
+                        case N_mach_unix_thread_arm_64::x4:
+                        case N_mach_unix_thread_arm_64::x5:
+                        case N_mach_unix_thread_arm_64::x6:
+                        case N_mach_unix_thread_arm_64::x7:
+                        case N_mach_unix_thread_arm_64::x8:
+                        case N_mach_unix_thread_arm_64::x9:
+                        case N_mach_unix_thread_arm_64::x10:
+                        case N_mach_unix_thread_arm_64::x11:
+                        case N_mach_unix_thread_arm_64::x12:
+                        case N_mach_unix_thread_arm_64::x13:
+                        case N_mach_unix_thread_arm_64::x14:
+                        case N_mach_unix_thread_arm_64::x15:
+                        case N_mach_unix_thread_arm_64::x16:
+                        case N_mach_unix_thread_arm_64::x17:
+                        case N_mach_unix_thread_arm_64::x18:
+                        case N_mach_unix_thread_arm_64::x19:
+                        case N_mach_unix_thread_arm_64::x20:
+                        case N_mach_unix_thread_arm_64::x21:
+                        case N_mach_unix_thread_arm_64::x22:
+                        case N_mach_unix_thread_arm_64::x23:
+                        case N_mach_unix_thread_arm_64::x24:
+                        case N_mach_unix_thread_arm_64::x25:
+                        case N_mach_unix_thread_arm_64::x26:
+                        case N_mach_unix_thread_arm_64::x27:
+                        case N_mach_unix_thread_arm_64::x28:        mach._set_arm_thread_state64_t_x(nOffset,nValue,nNdata-N_mach_unix_thread_arm_64::x0);  break;
+                        case N_mach_unix_thread_arm_64::fp:         mach._set_arm_thread_state64_t_fp(nOffset,nValue);                  break;
+                        case N_mach_unix_thread_arm_64::lr:         mach._set_arm_thread_state64_t_lr(nOffset,nValue);                  break;
+                        case N_mach_unix_thread_arm_64::sp:         mach._set_arm_thread_state64_t_sp(nOffset,nValue);                  break;
+                        case N_mach_unix_thread_arm_64::pc:         mach._set_arm_thread_state64_t_pc(nOffset,nValue);                  break;
+                        case N_mach_unix_thread_arm_64::cpsr:       mach._set_arm_thread_state64_t_cpsr(nOffset,nValue);                break;
+                        case N_mach_unix_thread_arm_64::pad:        mach._set_arm_thread_state64_t_pad(nOffset,nValue);                 break;
+                    }
+
+                    ui->widgetHex_unix_thread_arm_64->reload();
 
                     break;
             }
