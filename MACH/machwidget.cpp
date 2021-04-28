@@ -34,6 +34,26 @@ MACHWidget::MACHWidget(QWidget *pParent) :
     initToolsWidget(ui->widgetHex_mach_header);
     initToolsWidget(ui->widgetHex_sections);
     initToolsWidget(ui->widgetHex_segments);
+    initToolsWidget(ui->widgetHex_code_signature);
+    initToolsWidget(ui->widgetHex_data_in_code);
+    initToolsWidget(ui->widgetHex_dyld_info_only);
+    initToolsWidget(ui->widgetHex_dysymtab);
+    initToolsWidget(ui->widgetHex_encryption_info);
+    initToolsWidget(ui->widgetHex_function_starts);
+    initToolsWidget(ui->widgetHex_id_library);
+    initToolsWidget(ui->widgetHex_libraries);
+    initToolsWidget(ui->widgetHex_main);
+    initToolsWidget(ui->widgetHex_source_version);
+    initToolsWidget(ui->widgetHex_StringTable);
+    initToolsWidget(ui->widgetHex_symtab);
+    initToolsWidget(ui->widgetHex_unix_thread);
+    initToolsWidget(ui->widgetHex_unix_thread_arm_32);
+    initToolsWidget(ui->widgetHex_unix_thread_arm_64);
+    initToolsWidget(ui->widgetHex_unix_thread_ppc_32);
+    initToolsWidget(ui->widgetHex_unix_thread_x86_32);
+    initToolsWidget(ui->widgetHex_unix_thread_x86_64);
+    initToolsWidget(ui->widgetHex_version_min);
+    initToolsWidget(ui->widgetHex_weak_libraries);
 }
 
 MACHWidget::MACHWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) :
@@ -56,10 +76,31 @@ void MACHWidget::setShortcuts(XShortcuts *pShortcuts)
     ui->widgetEntropy->setShortcuts(pShortcuts);
     ui->widgetHeuristicScan->setShortcuts(pShortcuts);
     ui->widgetMemoryMap->setShortcuts(pShortcuts);
+
     ui->widgetHex_commands->setShortcuts(pShortcuts);
     ui->widgetHex_mach_header->setShortcuts(pShortcuts);
     ui->widgetHex_sections->setShortcuts(pShortcuts);
     ui->widgetHex_segments->setShortcuts(pShortcuts);
+    ui->widgetHex_code_signature->setShortcuts(pShortcuts);
+    ui->widgetHex_data_in_code->setShortcuts(pShortcuts);
+    ui->widgetHex_dyld_info_only->setShortcuts(pShortcuts);
+    ui->widgetHex_dysymtab->setShortcuts(pShortcuts);
+    ui->widgetHex_encryption_info->setShortcuts(pShortcuts);
+    ui->widgetHex_function_starts->setShortcuts(pShortcuts);
+    ui->widgetHex_id_library->setShortcuts(pShortcuts);
+    ui->widgetHex_libraries->setShortcuts(pShortcuts);
+    ui->widgetHex_main->setShortcuts(pShortcuts);
+    ui->widgetHex_source_version->setShortcuts(pShortcuts);
+    ui->widgetHex_StringTable->setShortcuts(pShortcuts);
+    ui->widgetHex_symtab->setShortcuts(pShortcuts);
+    ui->widgetHex_unix_thread->setShortcuts(pShortcuts);
+    ui->widgetHex_unix_thread_arm_32->setShortcuts(pShortcuts);
+    ui->widgetHex_unix_thread_arm_64->setShortcuts(pShortcuts);
+    ui->widgetHex_unix_thread_ppc_32->setShortcuts(pShortcuts);
+    ui->widgetHex_unix_thread_x86_32->setShortcuts(pShortcuts);
+    ui->widgetHex_unix_thread_x86_64->setShortcuts(pShortcuts);
+    ui->widgetHex_version_min->setShortcuts(pShortcuts);
+    ui->widgetHex_weak_libraries->setShortcuts(pShortcuts);
 
     FormatWidget::setShortcuts(pShortcuts);
 }
