@@ -1732,7 +1732,7 @@ void MACHWidget::reloadData()
         {
             if(!g_stInit.contains(sInit))
             {
-                MACHProcessData machProcessData(SMACH::TYPE_SYMBOLTABLE,&tvModel[SMACH::TYPE_SYMBOLTABLE],&mach,0,0);
+                MACHProcessData machProcessData(SMACH::TYPE_SYMBOLTABLE,&tvModel[SMACH::TYPE_SYMBOLTABLE],&mach,nDataOffset,nDataSize);
 
                 ajustTableView(&machProcessData,&tvModel[SMACH::TYPE_SYMBOLTABLE],ui->tableView_SymbolTable,nullptr,true);
             }

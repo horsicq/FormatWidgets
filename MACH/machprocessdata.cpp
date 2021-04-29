@@ -143,42 +143,62 @@ void MACHProcessData::_process()
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
 
-            if(g_pXMACH->isImage())
-            {
-                pItem->setData(listSegmentRecords.at(i).vmaddr,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
-                pItem->setData(listSegmentRecords.at(i).vmsize,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
-            }
-            else
-            {
-                pItem->setData(listSegmentRecords.at(i).fileoff,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
-                pItem->setData(listSegmentRecords.at(i).filesize,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
-            }
-
-            pItem->setData(listSegmentRecords.at(i).vmaddr,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS);
-            pItem->setData(listSegmentRecords.at(i).nStructOffset,Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
-
-            (*g_ppModel)->setItem(i,0,                                  pItem);
-            (*g_ppModel)->setItem(i,N_mach_segments::segname+1,         new QStandardItem(listSegmentRecords.at(i).segname));
-
             if(bIs64)
             {
-                (*g_ppModel)->setItem(i,N_mach_segments::vmaddr+1,      new QStandardItem(XBinary::valueToHex((quint64)listSegmentRecords.at(i).vmaddr)));
-                (*g_ppModel)->setItem(i,N_mach_segments::vmsize+1,      new QStandardItem(XBinary::valueToHex((quint64)listSegmentRecords.at(i).vmsize)));
-                (*g_ppModel)->setItem(i,N_mach_segments::fileoff+1,     new QStandardItem(XBinary::valueToHex((quint64)listSegmentRecords.at(i).fileoff)));
-                (*g_ppModel)->setItem(i,N_mach_segments::filesize+1,    new QStandardItem(XBinary::valueToHex((quint64)listSegmentRecords.at(i).filesize)));
+                if(g_pXMACH->isImage())
+                {
+                    pItem->setData(listSegmentRecords.at(i).s.segment64.vmaddr,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+                    pItem->setData(listSegmentRecords.at(i).s.segment64.vmsize,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
+                }
+                else
+                {
+                    pItem->setData(listSegmentRecords.at(i).s.segment64.fileoff,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+                    pItem->setData(listSegmentRecords.at(i).s.segment64.filesize,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
+                }
+
+                pItem->setData(listSegmentRecords.at(i).s.segment64.vmaddr,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS);
+                pItem->setData(listSegmentRecords.at(i).nStructOffset,Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
+
+                (*g_ppModel)->setItem(i,0,                                  pItem);
+                (*g_ppModel)->setItem(i,N_mach_segments::segname+1,         new QStandardItem(listSegmentRecords.at(i).s.segment64.segname));
+
+                (*g_ppModel)->setItem(i,N_mach_segments::vmaddr+1,          new QStandardItem(XBinary::valueToHex(listSegmentRecords.at(i).s.segment64.vmaddr)));
+                (*g_ppModel)->setItem(i,N_mach_segments::vmsize+1,          new QStandardItem(XBinary::valueToHex(listSegmentRecords.at(i).s.segment64.vmsize)));
+                (*g_ppModel)->setItem(i,N_mach_segments::fileoff+1,         new QStandardItem(XBinary::valueToHex(listSegmentRecords.at(i).s.segment64.fileoff)));
+                (*g_ppModel)->setItem(i,N_mach_segments::filesize+1,        new QStandardItem(XBinary::valueToHex(listSegmentRecords.at(i).s.segment64.filesize)));
+                (*g_ppModel)->setItem(i,N_mach_segments::maxprot+1,         new QStandardItem(XBinary::valueToHex(listSegmentRecords.at(i).s.segment64.maxprot)));
+                (*g_ppModel)->setItem(i,N_mach_segments::initprot+1,        new QStandardItem(XBinary::valueToHex(listSegmentRecords.at(i).s.segment64.initprot)));
+                (*g_ppModel)->setItem(i,N_mach_segments::nsects+1,          new QStandardItem(XBinary::valueToHex(listSegmentRecords.at(i).s.segment64.nsects)));
+                (*g_ppModel)->setItem(i,N_mach_segments::flags+1,           new QStandardItem(XBinary::valueToHex(listSegmentRecords.at(i).s.segment64.flags)));
             }
             else
             {
-                (*g_ppModel)->setItem(i,N_mach_segments::vmaddr+1,      new QStandardItem(XBinary::valueToHex((quint32)listSegmentRecords.at(i).vmaddr)));
-                (*g_ppModel)->setItem(i,N_mach_segments::vmsize+1,      new QStandardItem(XBinary::valueToHex((quint32)listSegmentRecords.at(i).vmsize)));
-                (*g_ppModel)->setItem(i,N_mach_segments::fileoff+1,     new QStandardItem(XBinary::valueToHex((quint32)listSegmentRecords.at(i).fileoff)));
-                (*g_ppModel)->setItem(i,N_mach_segments::filesize+1,    new QStandardItem(XBinary::valueToHex((quint32)listSegmentRecords.at(i).filesize)));
-            }
+                if(g_pXMACH->isImage())
+                {
+                    pItem->setData(listSegmentRecords.at(i).s.segment32.vmaddr,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+                    pItem->setData(listSegmentRecords.at(i).s.segment32.vmsize,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
+                }
+                else
+                {
+                    pItem->setData(listSegmentRecords.at(i).s.segment32.fileoff,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+                    pItem->setData(listSegmentRecords.at(i).s.segment32.filesize,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
+                }
 
-            (*g_ppModel)->setItem(i,N_mach_segments::maxprot+1,         new QStandardItem(XBinary::valueToHex((quint32)listSegmentRecords.at(i).maxprot)));
-            (*g_ppModel)->setItem(i,N_mach_segments::initprot+1,        new QStandardItem(XBinary::valueToHex((quint32)listSegmentRecords.at(i).initprot)));
-            (*g_ppModel)->setItem(i,N_mach_segments::nsects+1,          new QStandardItem(XBinary::valueToHex((quint32)listSegmentRecords.at(i).nsects)));
-            (*g_ppModel)->setItem(i,N_mach_segments::flags+1,           new QStandardItem(XBinary::valueToHex((quint32)listSegmentRecords.at(i).flags)));
+                pItem->setData(listSegmentRecords.at(i).s.segment32.vmaddr,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS);
+                pItem->setData(listSegmentRecords.at(i).nStructOffset,Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
+
+                (*g_ppModel)->setItem(i,0,                                  pItem);
+                (*g_ppModel)->setItem(i,N_mach_segments::segname+1,         new QStandardItem(listSegmentRecords.at(i).s.segment32.segname));
+
+                (*g_ppModel)->setItem(i,N_mach_segments::vmaddr+1,          new QStandardItem(XBinary::valueToHex(listSegmentRecords.at(i).s.segment32.vmaddr)));
+                (*g_ppModel)->setItem(i,N_mach_segments::vmsize+1,          new QStandardItem(XBinary::valueToHex(listSegmentRecords.at(i).s.segment32.vmsize)));
+                (*g_ppModel)->setItem(i,N_mach_segments::fileoff+1,         new QStandardItem(XBinary::valueToHex(listSegmentRecords.at(i).s.segment32.fileoff)));
+                (*g_ppModel)->setItem(i,N_mach_segments::filesize+1,        new QStandardItem(XBinary::valueToHex(listSegmentRecords.at(i).s.segment32.filesize)));
+                (*g_ppModel)->setItem(i,N_mach_segments::maxprot+1,         new QStandardItem(XBinary::valueToHex(listSegmentRecords.at(i).s.segment32.maxprot)));
+                (*g_ppModel)->setItem(i,N_mach_segments::initprot+1,        new QStandardItem(XBinary::valueToHex(listSegmentRecords.at(i).s.segment32.initprot)));
+                (*g_ppModel)->setItem(i,N_mach_segments::nsects+1,          new QStandardItem(XBinary::valueToHex(listSegmentRecords.at(i).s.segment32.nsects)));
+                (*g_ppModel)->setItem(i,N_mach_segments::flags+1,           new QStandardItem(XBinary::valueToHex(listSegmentRecords.at(i).s.segment32.flags)));
+            }
 
             incValue();
         }
@@ -264,7 +284,12 @@ void MACHProcessData::_process()
     }
     else if(g_nType==SMACH::TYPE_SYMBOLTABLE)
     {
-        *g_ppModel=new QStandardItemModel(1,1);
+        bool bIs64=g_pXMACH->is64();
+
+        QList<QString> listLabels;
+        listLabels.append("");
+
+        *g_ppModel=new QStandardItemModel(this->g_nSize,listLabels.count());
     }
 }
 
