@@ -247,6 +247,13 @@ void MACHWidget::reload()
 
                     pItemSymtab->addChild(pItem);
                 }
+
+                if(mach.isOffsetValid(symtab.symoff)&&(symtab.nsyms))
+                {
+                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_SYMBOLTABLE,tr("Symbol table"),symtab.symoff,symtab.nsyms); // TODO rename
+
+                    pItemSymtab->addChild(pItem);
+                }
             }
 
             if(mach.isCommandPresent(XMACH_DEF::LC_DYSYMTAB,&listCommandRecords))
@@ -1049,7 +1056,7 @@ void MACHWidget::reloadData()
 
                 g_comboBox[CB_mach_header_magic]=createComboBox(ui->tableWidget_mach_header,XMACH::getHeaderMagicsS(),SMACH::TYPE_mach_header,N_mach_header::magic,XComboBoxEx::CBTYPE_NORMAL);
                 g_comboBox[CB_mach_header_cputype]=createComboBox(ui->tableWidget_mach_header,XMACH::getHeaderCpuTypesS(),SMACH::TYPE_mach_header,N_mach_header::cputype,XComboBoxEx::CBTYPE_NORMAL);
-                g_comboBox[CB_mach_header_cpusubtype]=createComboBox(ui->tableWidget_mach_header,XMACH::getHeaderCpuSubTypes(mach.getHeader_cputype()),SMACH::TYPE_mach_header,N_mach_header::cpusubtype,XComboBoxEx::CBTYPE_NORMAL);
+                g_comboBox[CB_mach_header_cpusubtype]=createComboBox(ui->tableWidget_mach_header,XMACH::getHeaderCpuSubTypesS(mach.getHeader_cputype()),SMACH::TYPE_mach_header,N_mach_header::cpusubtype,XComboBoxEx::CBTYPE_NORMAL);
                 g_comboBox[CB_mach_header_filetype]=createComboBox(ui->tableWidget_mach_header,XMACH::getHeaderFileTypesS(),SMACH::TYPE_mach_header,N_mach_header::filetype,XComboBoxEx::CBTYPE_NORMAL);
                 g_comboBox[CB_mach_header_flags]=createComboBox(ui->tableWidget_mach_header,XMACH::getHeaderFlagsS(),SMACH::TYPE_mach_header,N_mach_header::flags,XComboBoxEx::CBTYPE_FLAGS);
 
@@ -1719,6 +1726,15 @@ void MACHWidget::reloadData()
             if(!g_stInit.contains(sInit))
             {
                 loadHexSubdevice(nDataOffset,nDataSize,0,&g_subDevice[SMACH::TYPE_STRINGTABLE],ui->widgetHex_StringTable);
+            }
+        }
+        else if(nType==SMACH::TYPE_SYMBOLTABLE)
+        {
+            if(!g_stInit.contains(sInit))
+            {
+                MACHProcessData machProcessData(SMACH::TYPE_SYMBOLTABLE,&tvModel[SMACH::TYPE_SYMBOLTABLE],&mach,0,0);
+
+                ajustTableView(&machProcessData,&tvModel[SMACH::TYPE_SYMBOLTABLE],ui->tableView_SymbolTable,nullptr,true);
             }
         }
 

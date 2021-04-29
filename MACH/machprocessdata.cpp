@@ -262,6 +262,10 @@ void MACHProcessData::_process()
             incValue();
         }
     }
+    else if(g_nType==SMACH::TYPE_SYMBOLTABLE)
+    {
+        *g_ppModel=new QStandardItemModel(1,1);
+    }
 }
 
 void MACHProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
