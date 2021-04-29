@@ -40,6 +40,7 @@ SearchStringsWidget::SearchStringsWidget(QWidget *pParent) :
     ui->checkBoxUnicode->setChecked(true);
     ui->checkBoxCStrings->setChecked(false);
 
+    ui->spinBoxMinLength->setMinimum(1);
     ui->spinBoxMinLength->setValue(5);
 
     g_scCopyString=nullptr;
