@@ -24,25 +24,25 @@ namespace N_mach_header
 {
 const FW_DEF::HEADER_RECORD records32[]=
 {
-    {magic,                 "magic",            offsetof(XMACH_DEF::mach_header,magic),         4,      "uint32_t",             FW_DEF::VAL_TYPE_DATA},
-    {cputype,               "cputype",          offsetof(XMACH_DEF::mach_header,cputype),       4,      "cpu_type_t",           FW_DEF::VAL_TYPE_DATA},
-    {cpusubtype,            "cpusubtype",       offsetof(XMACH_DEF::mach_header,cpusubtype),    4,      "cpu_subtype_t",        FW_DEF::VAL_TYPE_DATA},
-    {filetype,              "filetype",         offsetof(XMACH_DEF::mach_header,filetype),      4,      "uint32_t",             FW_DEF::VAL_TYPE_DATA},
-    {ncmds,                 "ncmds",            offsetof(XMACH_DEF::mach_header,ncmds),         4,      "uint32_t",             FW_DEF::VAL_TYPE_DATA},
-    {sizeofcmds,            "sizeofcmds",       offsetof(XMACH_DEF::mach_header,sizeofcmds),    4,      "uint32_t",             FW_DEF::VAL_TYPE_DATA},
-    {flags,                 "flags",            offsetof(XMACH_DEF::mach_header,flags),         4,      "uint32_t",             FW_DEF::VAL_TYPE_DATA},
+    {magic,                 "magic",            offsetof(XMACH_DEF::mach_header,magic),         4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {cputype,               "cputype",          offsetof(XMACH_DEF::mach_header,cputype),       4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {cpusubtype,            "cpusubtype",       offsetof(XMACH_DEF::mach_header,cpusubtype),    4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {filetype,              "filetype",         offsetof(XMACH_DEF::mach_header,filetype),      4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {ncmds,                 "ncmds",            offsetof(XMACH_DEF::mach_header,ncmds),         4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {sizeofcmds,            "sizeofcmds",       offsetof(XMACH_DEF::mach_header,sizeofcmds),    4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {flags,                 "flags",            offsetof(XMACH_DEF::mach_header,flags),         4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
 };
 
 const FW_DEF::HEADER_RECORD records64[]=
 {
-    {magic,                 "magic",            offsetof(XMACH_DEF::mach_header_64,magic),      4,      "uint32_t",             FW_DEF::VAL_TYPE_DATA},
-    {cputype,               "cputype",          offsetof(XMACH_DEF::mach_header_64,cputype),    4,      "cpu_type_t",           FW_DEF::VAL_TYPE_DATA},
-    {cpusubtype,            "cpusubtype",       offsetof(XMACH_DEF::mach_header_64,cpusubtype), 4,      "cpu_subtype_t",        FW_DEF::VAL_TYPE_DATA},
-    {filetype,              "filetype",         offsetof(XMACH_DEF::mach_header_64,filetype),   4,      "uint32_t",             FW_DEF::VAL_TYPE_DATA},
-    {ncmds,                 "ncmds",            offsetof(XMACH_DEF::mach_header_64,ncmds),      4,      "uint32_t",             FW_DEF::VAL_TYPE_DATA},
-    {sizeofcmds,            "sizeofcmds",       offsetof(XMACH_DEF::mach_header_64,sizeofcmds), 4,      "uint32_t",             FW_DEF::VAL_TYPE_DATA},
-    {flags,                 "flags",            offsetof(XMACH_DEF::mach_header_64,flags),      4,      "uint32_t",             FW_DEF::VAL_TYPE_DATA},
-    {reserved,              "reserved",         offsetof(XMACH_DEF::mach_header_64,reserved),   4,      "uint32_t",             FW_DEF::VAL_TYPE_DATA},
+    {magic,                 "magic",            offsetof(XMACH_DEF::mach_header_64,magic),      4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {cputype,               "cputype",          offsetof(XMACH_DEF::mach_header_64,cputype),    4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {cpusubtype,            "cpusubtype",       offsetof(XMACH_DEF::mach_header_64,cpusubtype), 4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {filetype,              "filetype",         offsetof(XMACH_DEF::mach_header_64,filetype),   4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {ncmds,                 "ncmds",            offsetof(XMACH_DEF::mach_header_64,ncmds),      4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {sizeofcmds,            "sizeofcmds",       offsetof(XMACH_DEF::mach_header_64,sizeofcmds), 4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {flags,                 "flags",            offsetof(XMACH_DEF::mach_header_64,flags),      4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {reserved,              "reserved",         offsetof(XMACH_DEF::mach_header_64,reserved),   4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
 };
 }
 
@@ -50,8 +50,8 @@ namespace N_mach_commands
 {
 const FW_DEF::HEADER_RECORD records[]=
 {
-    {cmd,                  "cmd",               offsetof(XMACH_DEF::load_command,cmd),          4,      "uint32_t",             FW_DEF::VAL_TYPE_DATA},
-    {cmdsize,              "cmdsize",           offsetof(XMACH_DEF::load_command,cmdsize),      4,      "uint32_t",             FW_DEF::VAL_TYPE_SIZE},
+    {cmd,                  "cmd",               offsetof(XMACH_DEF::load_command,cmd),          4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {cmdsize,              "cmdsize",           offsetof(XMACH_DEF::load_command,cmdsize),      4,      "uint32",               FW_DEF::VAL_TYPE_SIZE},
 };
 }
 
@@ -434,4 +434,25 @@ const FW_DEF::HEADER_RECORD records[]=
 };
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
+}
+
+namespace N_mach_nlist
+{
+const FW_DEF::HEADER_RECORD records32[]=
+{
+    {n_strx,                "n_strx",           offsetof(XMACH_DEF::nlist,n_strx),          4,      "uint32",          FW_DEF::VAL_TYPE_DATA},
+    {n_type,                "n_type",           offsetof(XMACH_DEF::nlist,n_type),          1,      "uint8",              FW_DEF::VAL_TYPE_DATA},
+    {n_sect,                "n_sect",           offsetof(XMACH_DEF::nlist,n_sect),          1,      "uint8",              FW_DEF::VAL_TYPE_DATA},
+    {n_desc,                "n_desc",           offsetof(XMACH_DEF::nlist,n_desc),          2,      "uint16",             FW_DEF::VAL_TYPE_DATA},
+    {n_value,               "n_value",          offsetof(XMACH_DEF::nlist,n_value),         4,      "uint32",             FW_DEF::VAL_TYPE_DATA},
+};
+
+const FW_DEF::HEADER_RECORD records64[]=
+{
+    {n_strx,                "n_strx",           offsetof(XMACH_DEF::nlist_64,n_strx),       4,      "uint32",             FW_DEF::VAL_TYPE_DATA},
+    {n_type,                "n_type",           offsetof(XMACH_DEF::nlist_64,n_type),       1,      "uint8",              FW_DEF::VAL_TYPE_DATA},
+    {n_sect,                "n_sect",           offsetof(XMACH_DEF::nlist_64,n_sect),       1,      "uint8",              FW_DEF::VAL_TYPE_DATA},
+    {n_desc,                "n_desc",           offsetof(XMACH_DEF::nlist_64,n_desc),       2,      "uint16",             FW_DEF::VAL_TYPE_DATA},
+    {n_value,               "n_value",          offsetof(XMACH_DEF::nlist_64,n_value),      8,      "uint64",             FW_DEF::VAL_TYPE_DATA},
+};
 }

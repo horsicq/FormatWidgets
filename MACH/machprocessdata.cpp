@@ -142,6 +142,7 @@ void MACHProcessData::_process()
         {
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
+            pItem->setData(listSegmentRecords.at(i).nStructOffset,Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
 
             if(bIs64)
             {
@@ -157,7 +158,6 @@ void MACHProcessData::_process()
                 }
 
                 pItem->setData(listSegmentRecords.at(i).s.segment64.vmaddr,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS);
-                pItem->setData(listSegmentRecords.at(i).nStructOffset,Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
 
                 (*g_ppModel)->setItem(i,0,                                  pItem);
                 (*g_ppModel)->setItem(i,N_mach_segments::segname+1,         new QStandardItem(listSegmentRecords.at(i).s.segment64.segname));
@@ -185,7 +185,6 @@ void MACHProcessData::_process()
                 }
 
                 pItem->setData(listSegmentRecords.at(i).s.segment32.vmaddr,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS);
-                pItem->setData(listSegmentRecords.at(i).nStructOffset,Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
 
                 (*g_ppModel)->setItem(i,0,                                  pItem);
                 (*g_ppModel)->setItem(i,N_mach_segments::segname+1,         new QStandardItem(listSegmentRecords.at(i).s.segment32.segname));
@@ -233,6 +232,7 @@ void MACHProcessData::_process()
         {
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
+            pItem->setData(listSectionRecords.at(i).nStructOffset,Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
 
             if(bIs64)
             {
@@ -247,7 +247,6 @@ void MACHProcessData::_process()
 
                 pItem->setData(listSectionRecords.at(i).s.section64.size,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
                 pItem->setData(listSectionRecords.at(i).s.section64.addr,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS);
-                pItem->setData(listSectionRecords.at(i).nStructOffset,Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
 
                 (*g_ppModel)->setItem(i,0,                                  pItem);
 
@@ -277,7 +276,6 @@ void MACHProcessData::_process()
 
                 pItem->setData(listSectionRecords.at(i).s.section32.size,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
                 pItem->setData(listSectionRecords.at(i).s.section32.addr,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS);
-                pItem->setData(listSectionRecords.at(i).nStructOffset,Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
 
                 (*g_ppModel)->setItem(i,0,                                  pItem);
 
@@ -304,10 +302,18 @@ void MACHProcessData::_process()
         QList<QString> listLabels;
         listLabels.append("");
 
+        if(bIs64)
+        {
+            listLabels.append(getStructList(N_mach_nlist::records64,N_mach_nlist::__data_size));
+        }
+        else
+        {
+            listLabels.append(getStructList(N_mach_nlist::records32,N_mach_nlist::__data_size));
+        }
 
-        QList<XMACH::SECTION_RECORD> listSectionRecords=g_pXMACH->getSectionRecords();
+        QList<XMACH::NLIST_RECORD> listRecords=g_pXMACH->getNlistRecords();
 
-        int nNumberOfRecords=this->g_nSize;
+        int nNumberOfRecords=listRecords.count();
 
         *g_ppModel=new QStandardItemModel(nNumberOfRecords,listLabels.count());
 
@@ -317,6 +323,29 @@ void MACHProcessData::_process()
 
         for(int i=0; i<nNumberOfRecords; i++)
         {
+            QStandardItem *pItem=new QStandardItem;
+            pItem->setData(i,Qt::DisplayRole);
+            pItem->setData(listRecords.at(i).nStructOffset,Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
+
+            (*g_ppModel)->setItem(i,0,pItem);
+
+            if(bIs64)
+            {
+                (*g_ppModel)->setItem(i,N_mach_nlist::n_strx+1,             new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.nlist64.n_strx)));
+                (*g_ppModel)->setItem(i,N_mach_nlist::n_type+1,             new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.nlist64.n_type)));
+                (*g_ppModel)->setItem(i,N_mach_nlist::n_sect+1,             new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.nlist64.n_sect)));
+                (*g_ppModel)->setItem(i,N_mach_nlist::n_desc+1,             new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.nlist64.n_desc)));
+                (*g_ppModel)->setItem(i,N_mach_nlist::n_value+1,            new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.nlist64.n_value)));
+            }
+            else
+            {
+                (*g_ppModel)->setItem(i,N_mach_nlist::n_strx+1,             new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.nlist32.n_strx)));
+                (*g_ppModel)->setItem(i,N_mach_nlist::n_type+1,             new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.nlist32.n_type)));
+                (*g_ppModel)->setItem(i,N_mach_nlist::n_sect+1,             new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.nlist32.n_sect)));
+                (*g_ppModel)->setItem(i,N_mach_nlist::n_desc+1,             new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.nlist32.n_desc)));
+                (*g_ppModel)->setItem(i,N_mach_nlist::n_value+1,            new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.nlist32.n_value)));
+            }
+
             incValue();
         }
     }
@@ -368,5 +397,14 @@ void MACHProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
         pTableView->setColumnWidth(7,nSymbolWidth*8);
         pTableView->setColumnWidth(8,nSymbolWidth*8);
         pTableView->setColumnWidth(9,nSymbolWidth*8);
+    }
+    else if(g_nType==SMACH::TYPE_SYMBOLTABLE)
+    {
+        pTableView->setColumnWidth(0,nSymbolWidth*4);
+        pTableView->setColumnWidth(1,nSymbolWidth*8);
+        pTableView->setColumnWidth(2,nSymbolWidth*6);
+        pTableView->setColumnWidth(3,nSymbolWidth*6);
+        pTableView->setColumnWidth(4,nSymbolWidth*8);
+        pTableView->setColumnWidth(5,nSymbolWidth*12);
     }
 }

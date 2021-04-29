@@ -585,4 +585,21 @@ enum DATA
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 }
 
+
+namespace N_mach_nlist
+{
+enum DATA
+{
+    n_strx,
+    n_type,
+    n_sect,
+    n_desc,
+    n_value,
+    __data_size
+};
+
+extern const FW_DEF::HEADER_RECORD records32[__data_size];
+extern const FW_DEF::HEADER_RECORD records64[__data_size];
+}
+
 #endif // MACH_DEFS_H
