@@ -234,49 +234,64 @@ void MACHProcessData::_process()
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
 
-            if(g_pXMACH->isImage())
-            {
-                pItem->setData(listSectionRecords.at(i).addr,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
-            }
-            else
-            {
-                pItem->setData(listSectionRecords.at(i).offset,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
-            }
-
-            pItem->setData(listSectionRecords.at(i).size,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
-            pItem->setData(listSectionRecords.at(i).addr,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS);
-            pItem->setData(listSectionRecords.at(i).nStructOffset,Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
-
-            (*g_ppModel)->setItem(i,0,                                  pItem);
-
             if(bIs64)
             {
-                (*g_ppModel)->setItem(i,N_mach_sections64::segname+1,       new QStandardItem(listSectionRecords.at(i).segname));
-                (*g_ppModel)->setItem(i,N_mach_sections64::sectname+1,      new QStandardItem(listSectionRecords.at(i).sectname));
-                (*g_ppModel)->setItem(i,N_mach_sections64::addr+1,          new QStandardItem(XBinary::valueToHex((quint64)listSectionRecords.at(i).addr)));
-                (*g_ppModel)->setItem(i,N_mach_sections64::size+1,          new QStandardItem(XBinary::valueToHex((quint64)listSectionRecords.at(i).size)));
-                (*g_ppModel)->setItem(i,N_mach_sections64::offset+1,        new QStandardItem(XBinary::valueToHex((quint32)listSectionRecords.at(i).offset)));
-                (*g_ppModel)->setItem(i,N_mach_sections64::align+1,         new QStandardItem(XBinary::valueToHex((quint32)listSectionRecords.at(i).align)));
-                (*g_ppModel)->setItem(i,N_mach_sections64::reloff+1,        new QStandardItem(XBinary::valueToHex((quint32)listSectionRecords.at(i).reloff)));
-                (*g_ppModel)->setItem(i,N_mach_sections64::nreloc+1,        new QStandardItem(XBinary::valueToHex((quint32)listSectionRecords.at(i).nreloc)));
-                (*g_ppModel)->setItem(i,N_mach_sections64::flags+1,         new QStandardItem(XBinary::valueToHex((quint32)listSectionRecords.at(i).flags)));
-                (*g_ppModel)->setItem(i,N_mach_sections64::reserved1+1,     new QStandardItem(XBinary::valueToHex((quint32)listSectionRecords.at(i).reserved1)));
-                (*g_ppModel)->setItem(i,N_mach_sections64::reserved2+1,     new QStandardItem(XBinary::valueToHex((quint32)listSectionRecords.at(i).reserved2)));
-                (*g_ppModel)->setItem(i,N_mach_sections64::reserved3+1,     new QStandardItem(XBinary::valueToHex((quint32)listSectionRecords.at(i).reserved3)));
+                if(g_pXMACH->isImage())
+                {
+                    pItem->setData(listSectionRecords.at(i).s.section64.addr,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+                }
+                else
+                {
+                    pItem->setData(listSectionRecords.at(i).s.section64.offset,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+                }
+
+                pItem->setData(listSectionRecords.at(i).s.section64.size,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
+                pItem->setData(listSectionRecords.at(i).s.section64.addr,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS);
+                pItem->setData(listSectionRecords.at(i).nStructOffset,Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
+
+                (*g_ppModel)->setItem(i,0,                                  pItem);
+
+                (*g_ppModel)->setItem(i,N_mach_sections64::segname+1,       new QStandardItem(listSectionRecords.at(i).s.section64.segname));
+                (*g_ppModel)->setItem(i,N_mach_sections64::sectname+1,      new QStandardItem(listSectionRecords.at(i).s.section64.sectname));
+                (*g_ppModel)->setItem(i,N_mach_sections64::addr+1,          new QStandardItem(XBinary::valueToHex(listSectionRecords.at(i).s.section64.addr)));
+                (*g_ppModel)->setItem(i,N_mach_sections64::size+1,          new QStandardItem(XBinary::valueToHex(listSectionRecords.at(i).s.section64.size)));
+                (*g_ppModel)->setItem(i,N_mach_sections64::offset+1,        new QStandardItem(XBinary::valueToHex(listSectionRecords.at(i).s.section64.offset)));
+                (*g_ppModel)->setItem(i,N_mach_sections64::align+1,         new QStandardItem(XBinary::valueToHex(listSectionRecords.at(i).s.section64.align)));
+                (*g_ppModel)->setItem(i,N_mach_sections64::reloff+1,        new QStandardItem(XBinary::valueToHex(listSectionRecords.at(i).s.section64.reloff)));
+                (*g_ppModel)->setItem(i,N_mach_sections64::nreloc+1,        new QStandardItem(XBinary::valueToHex(listSectionRecords.at(i).s.section64.nreloc)));
+                (*g_ppModel)->setItem(i,N_mach_sections64::flags+1,         new QStandardItem(XBinary::valueToHex(listSectionRecords.at(i).s.section64.flags)));
+                (*g_ppModel)->setItem(i,N_mach_sections64::reserved1+1,     new QStandardItem(XBinary::valueToHex(listSectionRecords.at(i).s.section64.reserved1)));
+                (*g_ppModel)->setItem(i,N_mach_sections64::reserved2+1,     new QStandardItem(XBinary::valueToHex(listSectionRecords.at(i).s.section64.reserved2)));
+                (*g_ppModel)->setItem(i,N_mach_sections64::reserved3+1,     new QStandardItem(XBinary::valueToHex(listSectionRecords.at(i).s.section64.reserved3)));
             }
             else
             {
-                (*g_ppModel)->setItem(i,N_mach_sections32::segname+1,       new QStandardItem(listSectionRecords.at(i).segname));
-                (*g_ppModel)->setItem(i,N_mach_sections32::sectname+1,      new QStandardItem(listSectionRecords.at(i).sectname));
-                (*g_ppModel)->setItem(i,N_mach_sections32::addr+1,          new QStandardItem(XBinary::valueToHex((quint32)listSectionRecords.at(i).addr)));
-                (*g_ppModel)->setItem(i,N_mach_sections32::size+1,          new QStandardItem(XBinary::valueToHex((quint32)listSectionRecords.at(i).size)));
-                (*g_ppModel)->setItem(i,N_mach_sections32::offset+1,        new QStandardItem(XBinary::valueToHex((quint32)listSectionRecords.at(i).offset)));
-                (*g_ppModel)->setItem(i,N_mach_sections32::align+1,         new QStandardItem(XBinary::valueToHex((quint32)listSectionRecords.at(i).align)));
-                (*g_ppModel)->setItem(i,N_mach_sections32::reloff+1,        new QStandardItem(XBinary::valueToHex((quint32)listSectionRecords.at(i).reloff)));
-                (*g_ppModel)->setItem(i,N_mach_sections32::nreloc+1,        new QStandardItem(XBinary::valueToHex((quint32)listSectionRecords.at(i).nreloc)));
-                (*g_ppModel)->setItem(i,N_mach_sections32::flags+1,         new QStandardItem(XBinary::valueToHex((quint32)listSectionRecords.at(i).flags)));
-                (*g_ppModel)->setItem(i,N_mach_sections32::reserved1+1,     new QStandardItem(XBinary::valueToHex((quint32)listSectionRecords.at(i).reserved1)));
-                (*g_ppModel)->setItem(i,N_mach_sections32::reserved2+1,     new QStandardItem(XBinary::valueToHex((quint32)listSectionRecords.at(i).reserved2)));
+                if(g_pXMACH->isImage())
+                {
+                    pItem->setData(listSectionRecords.at(i).s.section32.addr,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+                }
+                else
+                {
+                    pItem->setData(listSectionRecords.at(i).s.section32.offset,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+                }
+
+                pItem->setData(listSectionRecords.at(i).s.section32.size,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
+                pItem->setData(listSectionRecords.at(i).s.section32.addr,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS);
+                pItem->setData(listSectionRecords.at(i).nStructOffset,Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
+
+                (*g_ppModel)->setItem(i,0,                                  pItem);
+
+                (*g_ppModel)->setItem(i,N_mach_sections32::segname+1,       new QStandardItem(listSectionRecords.at(i).s.section32.segname));
+                (*g_ppModel)->setItem(i,N_mach_sections32::sectname+1,      new QStandardItem(listSectionRecords.at(i).s.section32.sectname));
+                (*g_ppModel)->setItem(i,N_mach_sections32::addr+1,          new QStandardItem(XBinary::valueToHex(listSectionRecords.at(i).s.section32.addr)));
+                (*g_ppModel)->setItem(i,N_mach_sections32::size+1,          new QStandardItem(XBinary::valueToHex(listSectionRecords.at(i).s.section32.size)));
+                (*g_ppModel)->setItem(i,N_mach_sections32::offset+1,        new QStandardItem(XBinary::valueToHex(listSectionRecords.at(i).s.section32.offset)));
+                (*g_ppModel)->setItem(i,N_mach_sections32::align+1,         new QStandardItem(XBinary::valueToHex(listSectionRecords.at(i).s.section32.align)));
+                (*g_ppModel)->setItem(i,N_mach_sections32::reloff+1,        new QStandardItem(XBinary::valueToHex(listSectionRecords.at(i).s.section32.reloff)));
+                (*g_ppModel)->setItem(i,N_mach_sections32::nreloc+1,        new QStandardItem(XBinary::valueToHex(listSectionRecords.at(i).s.section32.nreloc)));
+                (*g_ppModel)->setItem(i,N_mach_sections32::flags+1,         new QStandardItem(XBinary::valueToHex(listSectionRecords.at(i).s.section32.flags)));
+                (*g_ppModel)->setItem(i,N_mach_sections32::reserved1+1,     new QStandardItem(XBinary::valueToHex(listSectionRecords.at(i).s.section32.reserved1)));
+                (*g_ppModel)->setItem(i,N_mach_sections32::reserved2+1,     new QStandardItem(XBinary::valueToHex(listSectionRecords.at(i).s.section32.reserved2)));
             }
 
             incValue();
