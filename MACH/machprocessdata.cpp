@@ -304,7 +304,21 @@ void MACHProcessData::_process()
         QList<QString> listLabels;
         listLabels.append("");
 
-        *g_ppModel=new QStandardItemModel(this->g_nSize,listLabels.count());
+
+        QList<XMACH::SECTION_RECORD> listSectionRecords=g_pXMACH->getSectionRecords();
+
+        int nNumberOfRecords=this->g_nSize;
+
+        *g_ppModel=new QStandardItemModel(nNumberOfRecords,listLabels.count());
+
+        setMaximum(nNumberOfRecords);
+
+        setHeader(*g_ppModel,&listLabels);
+
+        for(int i=0; i<nNumberOfRecords; i++)
+        {
+            incValue();
+        }
     }
 }
 
