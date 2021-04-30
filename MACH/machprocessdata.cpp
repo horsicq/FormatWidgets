@@ -311,6 +311,10 @@ void MACHProcessData::_process()
             listLabels.append(getStructList(N_mach_nlist::records32,N_mach_nlist::__data_size));
         }
 
+        listLabels.append(tr("Name"));
+
+        XBinary::OFFSETSIZE osStringTable=g_pXMACH->getStringTableOS();
+
         QList<XMACH::NLIST_RECORD> listRecords=g_pXMACH->getNlistRecords();
 
         int nNumberOfRecords=listRecords.count();
@@ -336,6 +340,10 @@ void MACHProcessData::_process()
                 (*g_ppModel)->setItem(i,N_mach_nlist::n_sect+1,             new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.nlist64.n_sect)));
                 (*g_ppModel)->setItem(i,N_mach_nlist::n_desc+1,             new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.nlist64.n_desc)));
                 (*g_ppModel)->setItem(i,N_mach_nlist::n_value+1,            new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.nlist64.n_value)));
+
+                QString sName=g_pXMACH->getStringFromIndex(osStringTable.nOffset,osStringTable.nSize,listRecords.at(i).s.nlist64.n_strx);
+
+                (*g_ppModel)->setItem(i,N_mach_nlist::n_value+2,           new QStandardItem(sName));
             }
             else
             {
@@ -344,6 +352,10 @@ void MACHProcessData::_process()
                 (*g_ppModel)->setItem(i,N_mach_nlist::n_sect+1,             new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.nlist32.n_sect)));
                 (*g_ppModel)->setItem(i,N_mach_nlist::n_desc+1,             new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.nlist32.n_desc)));
                 (*g_ppModel)->setItem(i,N_mach_nlist::n_value+1,            new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.nlist32.n_value)));
+
+                QString sName=g_pXMACH->getStringFromIndex(osStringTable.nOffset,osStringTable.nSize,listRecords.at(i).s.nlist32.n_strx);
+
+                (*g_ppModel)->setItem(i,N_mach_nlist::n_value+2,           new QStandardItem(sName));
             }
 
             incValue();
@@ -406,5 +418,6 @@ void MACHProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
         pTableView->setColumnWidth(3,nSymbolWidth*6);
         pTableView->setColumnWidth(4,nSymbolWidth*8);
         pTableView->setColumnWidth(5,nSymbolWidth*12);
+        pTableView->setColumnWidth(6,nSymbolWidth*35);
     }
 }

@@ -79,6 +79,12 @@ MACHSectionHeaderWidget::MACHSectionHeaderWidget(QIODevice *pDevice,FW_DEF::OPTI
              g_nInvWidgetSize=N_mach_sections32::__INV_size;
          }
      }
+     else if(nType==SMACH::TYPE_SYMBOLTABLE)
+     {
+         g_nLineEditSize=N_mach_nlist::__data_size;
+         g_nComboBoxSize=N_mach_nlist::__CB_size;
+         g_nInvWidgetSize=N_mach_nlist::__INV_size;
+     }
 
      if(g_nLineEditSize)
      {
@@ -178,6 +184,17 @@ FormatWidget::SV MACHSectionHeaderWidget::_setValue(QVariant vValue, int nStype,
                     }
 
                     break;
+
+                case SMACH::TYPE_SYMBOLTABLE:
+                    switch(nNdata)
+                    {
+                        case N_mach_nlist::n_strx:
+                            XBinary::OFFSETSIZE osStringTable=mach.getStringTableOS();
+                            addComment(ui->tableWidget,N_mach_nlist::n_strx,HEADER_COLUMN_COMMENT,mach.getStringFromIndex(osStringTable.nOffset,osStringTable.nSize,nValue));
+                            break;
+                    }
+
+                    break;
             }
 
             switch(nStype)
@@ -272,6 +289,32 @@ FormatWidget::SV MACHSectionHeaderWidget::_setValue(QVariant vValue, int nStype,
                             case N_mach_sections32::flags:      mach._setSection32_flags(nOffset,nValue);               break;
                             case N_mach_sections32::reserved1:  mach._setSection32_reserved1(nOffset,nValue);           break;
                             case N_mach_sections32::reserved2:  mach._setSection32_reserved2(nOffset,nValue);           break;
+                        }
+                    }
+
+                    break;
+
+                case SMACH::TYPE_SYMBOLTABLE:
+                    if(mach.is64())
+                    {
+                        switch(nNdata)
+                        {
+                            case N_mach_nlist::n_strx:          mach._set_nlist_64_n_strx(nOffset,nValue);              break;
+                            case N_mach_nlist::n_type:          mach._set_nlist_64_n_type(nOffset,nValue);              break;
+                            case N_mach_nlist::n_sect:          mach._set_nlist_64_n_sect(nOffset,nValue);              break;
+                            case N_mach_nlist::n_desc:          mach._set_nlist_64_n_desc(nOffset,nValue);              break;
+                            case N_mach_nlist::n_value:         mach._set_nlist_64_n_value(nOffset,nValue);             break;
+                        }
+                    }
+                    else
+                    {
+                        switch(nNdata)
+                        {
+                            case N_mach_nlist::n_strx:          mach._set_nlist_n_strx(nOffset,nValue);                 break;
+                            case N_mach_nlist::n_type:          mach._set_nlist_n_type(nOffset,nValue);                 break;
+                            case N_mach_nlist::n_sect:          mach._set_nlist_n_sect(nOffset,nValue);                 break;
+                            case N_mach_nlist::n_desc:          mach._set_nlist_n_desc(nOffset,nValue);                 break;
+                            case N_mach_nlist::n_value:         mach._set_nlist_n_value(nOffset,nValue);                break;
                         }
                     }
 
@@ -511,6 +554,59 @@ void MACHSectionHeaderWidget::reloadData()
 
                 qint64 nOffset=nHeaderOffset;
                 qint64 nSize=mach.getSectionHeaderSize();
+                qint64 nAddress=mach.offsetToRelAddress(nOffset);
+
+                loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
+
+                blockSignals(false);
+            }
+            else if(nType==SMACH::TYPE_SYMBOLTABLE)
+            {
+                g_bInit=createHeaderTable(SMACH::TYPE_SYMBOLTABLE,ui->tableWidget,bIs64?(N_mach_nlist::records64):(N_mach_nlist::records32),g_ppLinedEdit,N_mach_nlist::__data_size,getNumber(),getOffset());
+
+                blockSignals(true);
+
+                XBinary::OFFSETSIZE osStringTable=mach.getStringTableOS();
+
+                qint64 nHeaderOffset=getOffset();
+
+                if(bIs64)
+                {
+                    XMACH_DEF::nlist_64 nlist=mach._read_nlist_64(nHeaderOffset);
+
+                    g_ppLinedEdit[N_mach_nlist::n_strx]->setValue(nlist.n_strx);
+                    g_ppLinedEdit[N_mach_nlist::n_type]->setValue(nlist.n_type);
+                    g_ppLinedEdit[N_mach_nlist::n_sect]->setValue(nlist.n_sect);
+                    g_ppLinedEdit[N_mach_nlist::n_desc]->setValue(nlist.n_desc);
+                    g_ppLinedEdit[N_mach_nlist::n_value]->setValue(nlist.n_value);
+
+                    addComment(ui->tableWidget,N_mach_nlist::n_strx,HEADER_COLUMN_COMMENT,mach.getStringFromIndex(osStringTable.nOffset,osStringTable.nSize,nlist.n_strx));
+                }
+                else
+                {
+                    XMACH_DEF::nlist nlist=mach._read_nlist(nHeaderOffset);
+
+                    g_ppLinedEdit[N_mach_nlist::n_strx]->setValue(nlist.n_strx);
+                    g_ppLinedEdit[N_mach_nlist::n_type]->setValue(nlist.n_type);
+                    g_ppLinedEdit[N_mach_nlist::n_sect]->setValue(nlist.n_sect);
+                    g_ppLinedEdit[N_mach_nlist::n_desc]->setValue(nlist.n_desc);
+                    g_ppLinedEdit[N_mach_nlist::n_value]->setValue(nlist.n_value);
+
+                    addComment(ui->tableWidget,N_mach_nlist::n_strx,HEADER_COLUMN_COMMENT,mach.getStringFromIndex(osStringTable.nOffset,osStringTable.nSize,nlist.n_strx));
+                }
+
+                qint64 nOffset=nHeaderOffset;
+                qint64 nSize=0;
+
+                if(bIs64)
+                {
+                    nSize=mach.get_nlist_64_size();
+                }
+                else
+                {
+                    nSize=mach.get_nlist_size();
+                }
+
                 qint64 nAddress=mach.offsetToRelAddress(nOffset);
 
                 loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);

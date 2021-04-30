@@ -104,13 +104,18 @@ private slots:
     void on_tableView_weak_libraries_customContextMenuRequested(const QPoint &pos);
     void on_tableView_id_library_doubleClicked(const QModelIndex &index);
     void on_tableView_id_library_customContextMenuRequested(const QPoint &pos);
+    void on_tableView_SymbolTable_doubleClicked(const QModelIndex &index);
+    void on_tableView_SymbolTable_customContextMenuRequested(const QPoint &pos);
     void editCommandHeader();
     void editSegmentHeader();
     void editSectionHeader();
     void editLibraryHeader();
     void editWeakLibraryHeader();
     void editIdLibraryHeader();
+    void editSymbolHeader();
     void showSectionHeader(int nType,QTableView *pTableView);
+
+    void demangleSymbol();
 
     void on_pushButtonHex_clicked();
     void on_pushButtonDisasm_clicked();

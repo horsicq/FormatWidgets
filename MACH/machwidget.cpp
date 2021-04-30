@@ -914,6 +914,7 @@ QString MACHWidget::typeIdToString(int nType)
         case SMACH::TYPE_mach_libraries:        sResult=QString("Library %1").arg(tr("Header"));        break;
         case SMACH::TYPE_mach_weak_libraries:   sResult=QString("Library %1").arg(tr("Header"));        break;
         case SMACH::TYPE_mach_id_library:       sResult=QString("Library %1").arg(tr("Header"));        break;
+        case SMACH::TYPE_SYMBOLTABLE:           sResult=QString("Symbol %1").arg(tr("Header"));         break;
     }
 
     return sResult;
@@ -1734,7 +1735,7 @@ void MACHWidget::reloadData()
             {
                 MACHProcessData machProcessData(SMACH::TYPE_SYMBOLTABLE,&tvModel[SMACH::TYPE_SYMBOLTABLE],&mach,nDataOffset,nDataSize);
 
-                ajustTableView(&machProcessData,&tvModel[SMACH::TYPE_SYMBOLTABLE],ui->tableView_SymbolTable,nullptr,true);
+                ajustTableView(&machProcessData,&tvModel[SMACH::TYPE_SYMBOLTABLE],ui->tableView_SymbolTable,nullptr,false);
             }
         }
 
@@ -2160,6 +2161,33 @@ void MACHWidget::on_tableView_id_library_customContextMenuRequested(const QPoint
     }
 }
 
+void MACHWidget::on_tableView_SymbolTable_doubleClicked(const QModelIndex &index)
+{
+    Q_UNUSED(index)
+    editSymbolHeader();
+}
+
+void MACHWidget::on_tableView_SymbolTable_customContextMenuRequested(const QPoint &pos)
+{
+    int nRow=ui->tableView_SymbolTable->currentIndex().row();
+
+    if(nRow!=-1)
+    {
+        QMenu contextMenu(this);
+
+        QAction actionEdit(tr("Edit"),this);
+        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editSymbolHeader()));
+
+        QAction actionDemangle(tr("Demangle"),this);
+        connect(&actionDemangle, SIGNAL(triggered()), this, SLOT(demangleSymbol()));
+
+        contextMenu.addAction(&actionEdit);
+        contextMenu.addAction(&actionDemangle);
+
+        contextMenu.exec(ui->tableView_SymbolTable->viewport()->mapToGlobal(pos));
+    }
+}
+
 void MACHWidget::editCommandHeader()
 {
     showSectionHeader(SMACH::TYPE_mach_commands,ui->tableView_commands);
@@ -2190,6 +2218,11 @@ void MACHWidget::editIdLibraryHeader()
     showSectionHeader(SMACH::TYPE_mach_id_library,ui->tableView_id_library);
 }
 
+void MACHWidget::editSymbolHeader()
+{
+    showSectionHeader(SMACH::TYPE_SYMBOLTABLE,ui->tableView_SymbolTable);
+}
+
 void MACHWidget::showSectionHeader(int nType, QTableView *pTableView)
 {
     int nRow=pTableView->currentIndex().row();
@@ -2216,6 +2249,11 @@ void MACHWidget::showSectionHeader(int nType, QTableView *pTableView)
 
         pTableView->setCurrentIndex(pTableView->model()->index(nRow,0));
     }
+}
+
+void MACHWidget::demangleSymbol()
+{
+    showTableViewDemangle(ui->tableView_SymbolTable,N_mach_nlist::n_value+2);
 }
 
 void MACHWidget::on_pushButtonHex_clicked()
