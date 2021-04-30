@@ -127,9 +127,9 @@ private:
 
     enum INV
     {
-        INV_CB_Elf_e_entry,
-        INV_CB_Elf_e_phoff,
-        INV_CB_Elf_e_shoff,
+        INV_Elf_e_entry,
+        INV_Elf_e_phoff,
+        INV_Elf_e_shoff,
         __INV_size
     };
 
