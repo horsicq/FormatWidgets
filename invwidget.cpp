@@ -57,9 +57,20 @@ InvWidget::~InvWidget()
 
 }
 
-void InvWidget::setOffsetAndSize(XBinary *pBinary, qint64 nOffset, qint64 nSize)
+void InvWidget::setOffsetAndSize(XBinary *pBinary, qint64 nOffset, qint64 nSize, bool bNotNull)
 {
-    if(pBinary->isOffsetValid(nOffset))
+    bool bValid=false;
+
+    if((bNotNull)&&(nOffset==0))
+    {
+        bValid=false;
+    }
+    else if(pBinary->isOffsetValid(nOffset))
+    {
+        bValid=true;
+    }
+
+    if(bValid)
     {
         _setEnabled(true);
 
@@ -75,13 +86,24 @@ void InvWidget::setOffsetAndSize(XBinary *pBinary, qint64 nOffset, qint64 nSize)
     }
 }
 
-void InvWidget::setAddressAndSize(XBinary *pBinary, qint64 nAddress, qint64 nSize)
+void InvWidget::setAddressAndSize(XBinary *pBinary, qint64 nAddress, qint64 nSize, bool bNotNull)
 {
+    bool bValid=false;
+
     this->g_nAddress=nAddress;
 
     XBinary::_MEMORY_MAP memoryMap=pBinary->getMemoryMap();
 
-    if(pBinary->isAddressPhysical(&memoryMap,nAddress))
+    if((bNotNull)&&(nAddress==0))
+    {
+        bValid=false;
+    }
+    else if(pBinary->isAddressPhysical(&memoryMap,nAddress))
+    {
+        bValid=true;
+    }
+
+    if(bValid)
     {
         _setEnabled(true);
 

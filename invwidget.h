@@ -41,8 +41,8 @@ public:
     explicit InvWidget(QWidget *pParent,TYPE type);
     ~InvWidget();
 
-    void setOffsetAndSize(XBinary *pBinary,qint64 nOffset,qint64 nSize);
-    void setAddressAndSize(XBinary *pBinary,qint64 nAddress,qint64 nSize);
+    void setOffsetAndSize(XBinary *pBinary,qint64 nOffset,qint64 nSize,bool bNotNull=false);
+    void setAddressAndSize(XBinary *pBinary,qint64 nAddress,qint64 nSize,bool bNotNull=false);
     void _setEnabled(bool bState);
 
 private slots:

@@ -445,25 +445,25 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
                 case SMACH::TYPE_mach_dyld_info_only:
                     switch(nNdata)
                     {
-                        case N_mach_dyld_info::rebase_off:      g_invWidget[INV_rebase_off]->setOffsetAndSize(&mach,nValue,mach.get_dyld_info().rebase_size);           break;
-                        case N_mach_dyld_info::rebase_size:     g_invWidget[INV_rebase_off]->setOffsetAndSize(&mach,mach.get_dyld_info().rebase_off,nValue);            break;
-                        case N_mach_dyld_info::bind_off:        g_invWidget[INV_bind_off]->setOffsetAndSize(&mach,nValue,mach.get_dyld_info().bind_size);               break;
-                        case N_mach_dyld_info::bind_size:       g_invWidget[INV_bind_off]->setOffsetAndSize(&mach,mach.get_dyld_info().bind_off,nValue);                break;
-                        case N_mach_dyld_info::weak_bind_off:   g_invWidget[INV_weak_bind_off]->setOffsetAndSize(&mach,nValue,mach.get_dyld_info().weak_bind_size);     break;
-                        case N_mach_dyld_info::weak_bind_size:  g_invWidget[INV_weak_bind_off]->setOffsetAndSize(&mach,mach.get_dyld_info().weak_bind_off,nValue);      break;
-                        case N_mach_dyld_info::lazy_bind_off:   g_invWidget[INV_lazy_bind_off]->setOffsetAndSize(&mach,nValue,mach.get_dyld_info().lazy_bind_size);     break;
-                        case N_mach_dyld_info::lazy_bind_size:  g_invWidget[INV_lazy_bind_off]->setOffsetAndSize(&mach,mach.get_dyld_info().lazy_bind_off,nValue);      break;
-                        case N_mach_dyld_info::export_off:      g_invWidget[INV_export_off]->setOffsetAndSize(&mach,nValue,mach.get_dyld_info().export_size);           break;
-                        case N_mach_dyld_info::export_size:     g_invWidget[INV_export_off]->setOffsetAndSize(&mach,mach.get_dyld_info().export_off,nValue);            break;
+                        case N_mach_dyld_info::rebase_off:      g_invWidget[INV_rebase_off]->setOffsetAndSize(&mach,nValue,mach.get_dyld_info().rebase_size,true);          break;
+                        case N_mach_dyld_info::rebase_size:     g_invWidget[INV_rebase_off]->setOffsetAndSize(&mach,mach.get_dyld_info().rebase_off,nValue,true);           break;
+                        case N_mach_dyld_info::bind_off:        g_invWidget[INV_bind_off]->setOffsetAndSize(&mach,nValue,mach.get_dyld_info().bind_size,true);              break;
+                        case N_mach_dyld_info::bind_size:       g_invWidget[INV_bind_off]->setOffsetAndSize(&mach,mach.get_dyld_info().bind_off,nValue,true);               break;
+                        case N_mach_dyld_info::weak_bind_off:   g_invWidget[INV_weak_bind_off]->setOffsetAndSize(&mach,nValue,mach.get_dyld_info().weak_bind_size,true);    break;
+                        case N_mach_dyld_info::weak_bind_size:  g_invWidget[INV_weak_bind_off]->setOffsetAndSize(&mach,mach.get_dyld_info().weak_bind_off,nValue,true);     break;
+                        case N_mach_dyld_info::lazy_bind_off:   g_invWidget[INV_lazy_bind_off]->setOffsetAndSize(&mach,nValue,mach.get_dyld_info().lazy_bind_size,true);    break;
+                        case N_mach_dyld_info::lazy_bind_size:  g_invWidget[INV_lazy_bind_off]->setOffsetAndSize(&mach,mach.get_dyld_info().lazy_bind_off,nValue,true);     break;
+                        case N_mach_dyld_info::export_off:      g_invWidget[INV_export_off]->setOffsetAndSize(&mach,nValue,mach.get_dyld_info().export_size,true);          break;
+                        case N_mach_dyld_info::export_size:     g_invWidget[INV_export_off]->setOffsetAndSize(&mach,mach.get_dyld_info().export_off,nValue,true);           break;
                     }
                     break;
 
                 case SMACH::TYPE_mach_symtab:
                     switch(nNdata)
                     {
-                        case N_mach_symtab::symoff:             g_invWidget[INV_symoff]->setOffsetAndSize(&mach,nValue,0);                                      break; // TODO Size
-                        case N_mach_symtab::stroff:             g_invWidget[INV_stroff]->setOffsetAndSize(&mach,nValue,mach.get_symtab().strsize);              break;
-                        case N_mach_symtab::strsize:            g_invWidget[INV_stroff]->setOffsetAndSize(&mach,mach.get_symtab().stroff,nValue);               break;
+                        case N_mach_symtab::symoff:             g_invWidget[INV_symoff]->setOffsetAndSize(&mach,nValue,0,true);                                     break; // TODO Size
+                        case N_mach_symtab::stroff:             g_invWidget[INV_stroff]->setOffsetAndSize(&mach,nValue,mach.get_symtab().strsize,true);             break;
+                        case N_mach_symtab::strsize:            g_invWidget[INV_stroff]->setOffsetAndSize(&mach,mach.get_symtab().stroff,nValue,true);              break;
                     }
                     break;
             }
@@ -1239,11 +1239,11 @@ void MACHWidget::reloadData()
                 g_lineEdit_mach_dyld_info_only[N_mach_dyld_info::export_off]->setValue(dyld_info.export_off);
                 g_lineEdit_mach_dyld_info_only[N_mach_dyld_info::export_size]->setValue(dyld_info.export_size);
 
-                g_invWidget[INV_rebase_off]->setOffsetAndSize(&mach,dyld_info.rebase_off,dyld_info.rebase_size);
-                g_invWidget[INV_bind_off]->setOffsetAndSize(&mach,dyld_info.bind_off,dyld_info.bind_size);
-                g_invWidget[INV_weak_bind_off]->setOffsetAndSize(&mach,dyld_info.weak_bind_off,dyld_info.weak_bind_size);
-                g_invWidget[INV_lazy_bind_off]->setOffsetAndSize(&mach,dyld_info.lazy_bind_off,dyld_info.lazy_bind_size);
-                g_invWidget[INV_export_off]->setOffsetAndSize(&mach,dyld_info.export_off,dyld_info.export_size);
+                g_invWidget[INV_rebase_off]->setOffsetAndSize(&mach,dyld_info.rebase_off,dyld_info.rebase_size,true);
+                g_invWidget[INV_bind_off]->setOffsetAndSize(&mach,dyld_info.bind_off,dyld_info.bind_size,true);
+                g_invWidget[INV_weak_bind_off]->setOffsetAndSize(&mach,dyld_info.weak_bind_off,dyld_info.weak_bind_size,true);
+                g_invWidget[INV_lazy_bind_off]->setOffsetAndSize(&mach,dyld_info.lazy_bind_off,dyld_info.lazy_bind_size,true);
+                g_invWidget[INV_export_off]->setOffsetAndSize(&mach,dyld_info.export_off,dyld_info.export_size,true);
 
                 qint64 nOffset=nDataOffset;
                 qint64 nSize=mach.get_dyld_info_command_size();
@@ -1310,8 +1310,8 @@ void MACHWidget::reloadData()
                 g_lineEdit_mach_symtab[N_mach_symtab::stroff]->setValue(symtab.stroff);
                 g_lineEdit_mach_symtab[N_mach_symtab::strsize]->setValue(symtab.strsize);
 
-                g_invWidget[INV_symoff]->setOffsetAndSize(&mach,symtab.symoff,0);
-                g_invWidget[INV_stroff]->setOffsetAndSize(&mach,symtab.stroff,symtab.strsize);
+                g_invWidget[INV_symoff]->setOffsetAndSize(&mach,symtab.symoff,0,true);
+                g_invWidget[INV_stroff]->setOffsetAndSize(&mach,symtab.stroff,symtab.strsize,true);
 
                 qint64 nOffset=nDataOffset;
                 qint64 nSize=mach.get_symtab_command_size();
