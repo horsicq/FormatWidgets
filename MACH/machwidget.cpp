@@ -457,6 +457,15 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
                         case N_mach_dyld_info::export_size:     g_invWidget[INV_export_off]->setOffsetAndSize(&mach,mach.get_dyld_info().export_off,nValue);            break;
                     }
                     break;
+
+                case SMACH::TYPE_mach_symtab:
+                    switch(nNdata)
+                    {
+                        case N_mach_symtab::symoff:             g_invWidget[INV_symoff]->setOffsetAndSize(&mach,nValue,0);                                      break; // TODO Size
+                        case N_mach_symtab::stroff:             g_invWidget[INV_stroff]->setOffsetAndSize(&mach,nValue,mach.get_symtab().strsize);              break;
+                        case N_mach_symtab::strsize:            g_invWidget[INV_stroff]->setOffsetAndSize(&mach,mach.get_symtab().stroff,nValue);               break;
+                    }
+                    break;
             }
 
             switch(nStype)
@@ -1289,6 +1298,9 @@ void MACHWidget::reloadData()
             {
                 createHeaderTable(SMACH::TYPE_mach_symtab,ui->tableWidget_symtab,N_mach_symtab::records,g_lineEdit_mach_symtab,N_mach_symtab::__data_size,0,nDataOffset);
 
+                g_invWidget[INV_symoff]=createInvWidget(ui->tableWidget_symtab,SMACH::TYPE_mach_symtab,N_mach_symtab::symoff,InvWidget::TYPE_HEX);
+                g_invWidget[INV_stroff]=createInvWidget(ui->tableWidget_symtab,SMACH::TYPE_mach_symtab,N_mach_symtab::stroff,InvWidget::TYPE_HEX);
+
                 blockSignals(true);
 
                 XMACH_DEF::symtab_command symtab=mach._read_symtab_command(nDataOffset);
@@ -1297,6 +1309,9 @@ void MACHWidget::reloadData()
                 g_lineEdit_mach_symtab[N_mach_symtab::nsyms]->setValue(symtab.nsyms);
                 g_lineEdit_mach_symtab[N_mach_symtab::stroff]->setValue(symtab.stroff);
                 g_lineEdit_mach_symtab[N_mach_symtab::strsize]->setValue(symtab.strsize);
+
+                g_invWidget[INV_symoff]->setOffsetAndSize(&mach,symtab.symoff,0);
+                g_invWidget[INV_stroff]->setOffsetAndSize(&mach,symtab.stroff,symtab.strsize);
 
                 qint64 nOffset=nDataOffset;
                 qint64 nSize=mach.get_symtab_command_size();

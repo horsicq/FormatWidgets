@@ -445,8 +445,8 @@ void ELFWidget::reloadData()
                     g_comboBox[CB_Elf_Ehdr_machine]->setValue(elf.getHdr64_machine());
 
                     g_invWidget[INV_Elf_e_entry]->setAddressAndSize(&elf,elf.getHdr64_entry(),0);
-                    g_invWidget[INV_Elf_e_phoff]->setOffsetAndSize(&elf,elf.getHdr64_phoff(),0);
-                    g_invWidget[INV_Elf_e_shoff]->setOffsetAndSize(&elf,elf.getHdr64_shoff(),0); // TODO offset
+                    g_invWidget[INV_Elf_e_phoff]->setOffsetAndSize(&elf,elf.getHdr64_phoff(),0); // TODO Size
+                    g_invWidget[INV_Elf_e_shoff]->setOffsetAndSize(&elf,elf.getHdr64_shoff(),0); // TODO Size
                 }
                 else
                 {
@@ -468,8 +468,8 @@ void ELFWidget::reloadData()
                     g_comboBox[CB_Elf_Ehdr_machine]->setValue(elf.getHdr32_machine());
 
                     g_invWidget[INV_Elf_e_entry]->setAddressAndSize(&elf,elf.getHdr32_entry(),0);
-                    g_invWidget[INV_Elf_e_phoff]->setOffsetAndSize(&elf,elf.getHdr32_phoff(),0);
-                    g_invWidget[INV_Elf_e_shoff]->setOffsetAndSize(&elf,elf.getHdr32_shoff(),0); // TODO offset
+                    g_invWidget[INV_Elf_e_phoff]->setOffsetAndSize(&elf,elf.getHdr32_phoff(),0); // TODO Size
+                    g_invWidget[INV_Elf_e_shoff]->setOffsetAndSize(&elf,elf.getHdr32_shoff(),0); // TODO Size
                 }
 
                 g_comboBox[CB_Elf_Ehdr_mag]->setValue(elf.getIdent_mag_LE());

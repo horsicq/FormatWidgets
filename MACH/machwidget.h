@@ -142,6 +142,8 @@ private:
         INV_weak_bind_off,
         INV_lazy_bind_off,
         INV_export_off,
+        INV_symoff,
+        INV_stroff,
         __INV_size
     };
 
