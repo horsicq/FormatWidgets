@@ -131,6 +131,7 @@ void MACHWidget::clear()
     memset(g_lineEdit_mach_unix_thread_ppc_32,0,sizeof g_lineEdit_mach_unix_thread_ppc_32);
 
     memset(g_comboBox,0,sizeof g_comboBox);
+    memset(g_invWidget,0,sizeof g_invWidget);
     memset(g_subDevice,0,sizeof g_subDevice);
 
     ui->checkBoxReadonly->setChecked(true);

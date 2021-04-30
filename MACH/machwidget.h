@@ -135,6 +135,14 @@ private:
         __CB_size
     };
 
+    enum INV
+    {
+        INV_Elf_e_entry,
+        INV_Elf_e_phoff,
+        INV_Elf_e_shoff,
+        __INV_size
+    };
+
     Ui::MACHWidget *ui;
 
     XLineEditHEX *g_lineEdit_mach_header[N_mach_header::__data_size];
@@ -159,6 +167,7 @@ private:
     XLineEditHEX *g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::__data_size];
 
     XComboBoxEx *g_comboBox[__CB_size];
+    InvWidget *g_invWidget[__INV_size];
 
     SubDevice *g_subDevice[SMACH::__TYPE_size];
     QStandardItemModel *tvModel[SMACH::__TYPE_size];
