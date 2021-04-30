@@ -466,6 +466,18 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
                         case N_mach_symtab::strsize:            g_invWidget[INV_stroff]->setOffsetAndSize(&mach,mach.get_symtab().stroff,nValue,true);              break;
                     }
                     break;
+
+                case SMACH::TYPE_mach_dysymtab:
+                    switch(nNdata)
+                    {
+                        case N_mach_dysymtab::tocoff:           g_invWidget[INV_tocoff]->setOffsetAndSize(&mach,nValue,0,true);             break; // TODO Size
+                        case N_mach_dysymtab::modtaboff:        g_invWidget[INV_modtaboff]->setOffsetAndSize(&mach,nValue,0,true);          break; // TODO Size
+                        case N_mach_dysymtab::extrefsymoff:     g_invWidget[INV_extrefsymoff]->setOffsetAndSize(&mach,nValue,0,true);       break; // TODO Size
+                        case N_mach_dysymtab::indirectsymoff:   g_invWidget[INV_indirectsymoff]->setOffsetAndSize(&mach,nValue,0,true);     break; // TODO Size
+                        case N_mach_dysymtab::extreloff:        g_invWidget[INV_extreloff]->setOffsetAndSize(&mach,nValue,0,true);          break; // TODO Size
+                        case N_mach_dysymtab::locreloff:        g_invWidget[INV_locreloff]->setOffsetAndSize(&mach,nValue,0,true);          break; // TODO Size
+                    }
+                    break;
             }
 
             switch(nStype)
@@ -921,9 +933,10 @@ void MACHWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
             pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*12);
             pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*26);
             break;
+        // TODO more
         default:
             pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*12);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*26);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*12);
             break;
     }
 }
@@ -1327,6 +1340,13 @@ void MACHWidget::reloadData()
             {
                 createHeaderTable(SMACH::TYPE_mach_dysymtab,ui->tableWidget_dysymtab,N_mach_dysymtab::records,g_lineEdit_mach_dysymtab,N_mach_dysymtab::__data_size,0,nDataOffset);
 
+                g_invWidget[INV_tocoff]=createInvWidget(ui->tableWidget_dysymtab,SMACH::TYPE_mach_dysymtab,N_mach_dysymtab::tocoff,InvWidget::TYPE_HEX);
+                g_invWidget[INV_modtaboff]=createInvWidget(ui->tableWidget_dysymtab,SMACH::TYPE_mach_dysymtab,N_mach_dysymtab::modtaboff,InvWidget::TYPE_HEX);
+                g_invWidget[INV_extrefsymoff]=createInvWidget(ui->tableWidget_dysymtab,SMACH::TYPE_mach_dysymtab,N_mach_dysymtab::extrefsymoff,InvWidget::TYPE_HEX);
+                g_invWidget[INV_indirectsymoff]=createInvWidget(ui->tableWidget_dysymtab,SMACH::TYPE_mach_dysymtab,N_mach_dysymtab::indirectsymoff,InvWidget::TYPE_HEX);
+                g_invWidget[INV_extreloff]=createInvWidget(ui->tableWidget_dysymtab,SMACH::TYPE_mach_dysymtab,N_mach_dysymtab::extreloff,InvWidget::TYPE_HEX);
+                g_invWidget[INV_locreloff]=createInvWidget(ui->tableWidget_dysymtab,SMACH::TYPE_mach_dysymtab,N_mach_dysymtab::locreloff,InvWidget::TYPE_HEX);
+
                 blockSignals(true);
 
                 XMACH_DEF::dysymtab_command dysymtab=mach._read_dysymtab_command(nDataOffset);
@@ -1349,6 +1369,13 @@ void MACHWidget::reloadData()
                 g_lineEdit_mach_dysymtab[N_mach_dysymtab::nextrel]->setValue(dysymtab.nextrel);
                 g_lineEdit_mach_dysymtab[N_mach_dysymtab::locreloff]->setValue(dysymtab.locreloff);
                 g_lineEdit_mach_dysymtab[N_mach_dysymtab::nlocrel]->setValue(dysymtab.nlocrel);
+
+                g_invWidget[INV_tocoff]->setOffsetAndSize(&mach,dysymtab.tocoff,0,true);
+                g_invWidget[INV_modtaboff]->setOffsetAndSize(&mach,dysymtab.modtaboff,0,true);
+                g_invWidget[INV_extrefsymoff]->setOffsetAndSize(&mach,dysymtab.extrefsymoff,0,true);
+                g_invWidget[INV_indirectsymoff]->setOffsetAndSize(&mach,dysymtab.indirectsymoff,0,true);
+                g_invWidget[INV_extreloff]->setOffsetAndSize(&mach,dysymtab.extreloff,0,true);
+                g_invWidget[INV_locreloff]->setOffsetAndSize(&mach,dysymtab.locreloff,0,true);
 
                 qint64 nOffset=nDataOffset;
                 qint64 nSize=mach.get_dysymtab_command_size();

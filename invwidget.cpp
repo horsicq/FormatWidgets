@@ -121,14 +121,14 @@ void InvWidget::setAddressAndSize(XBinary *pBinary, qint64 nAddress, qint64 nSiz
 
 void InvWidget::_setEnabled(bool bState)
 {
-    if(g_pDisasmPushButton)
+    if(g_pHexPushButton)
     {
         g_pHexPushButton->setEnabled(bState);
     }
 
     if(g_pDisasmPushButton)
     {
-        g_pHexPushButton->setEnabled(bState);
+        g_pDisasmPushButton->setEnabled(bState);
     }
 }
 

@@ -144,6 +144,12 @@ private:
         INV_export_off,
         INV_symoff,
         INV_stroff,
+        INV_tocoff,
+        INV_modtaboff,
+        INV_extrefsymoff,
+        INV_indirectsymoff,
+        INV_extreloff,
+        INV_locreloff,
         __INV_size
     };
 
