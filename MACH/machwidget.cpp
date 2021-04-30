@@ -434,11 +434,22 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
                 case SMACH::TYPE_mach_header:
                     switch(nNdata)
                     {
-                        case N_mach_header::magic:      g_comboBox[CB_mach_header_magic]->setValue(nValue);       break; // TODO reload all data
+                        case N_mach_header::magic:      g_comboBox[CB_mach_header_magic]->setValue(nValue);       break;
                         case N_mach_header::cputype:    g_comboBox[CB_mach_header_cputype]->setValue(nValue);     break;
                         case N_mach_header::cpusubtype: g_comboBox[CB_mach_header_cpusubtype]->setValue(nValue);  break;
                         case N_mach_header::filetype:   g_comboBox[CB_mach_header_filetype]->setValue(nValue);    break;
                         case N_mach_header::flags:      g_comboBox[CB_mach_header_flags]->setValue(nValue);       break;
+                    }
+                    break;
+
+                case SMACH::TYPE_mach_dyld_info_only:
+                    switch(nNdata)
+                    {
+                        case N_mach_dyld_info::rebase_off:      g_invWidget[INV_rebase_off]->setOffsetAndSize(&mach,nValue,0);      break; // TODO Size
+                        case N_mach_dyld_info::bind_off:        g_invWidget[INV_bind_off]->setOffsetAndSize(&mach,nValue,0);        break; // TODO Size
+                        case N_mach_dyld_info::weak_bind_off:   g_invWidget[INV_weak_bind_off]->setOffsetAndSize(&mach,nValue,0);   break; // TODO Size
+                        case N_mach_dyld_info::lazy_bind_off:   g_invWidget[INV_lazy_bind_off]->setOffsetAndSize(&mach,nValue,0);   break; // TODO Size
+                        case N_mach_dyld_info::export_off:      g_invWidget[INV_export_off]->setOffsetAndSize(&mach,nValue,0);      break; // TODO Size
                     }
                     break;
             }
@@ -1193,6 +1204,12 @@ void MACHWidget::reloadData()
             {
                 createHeaderTable(SMACH::TYPE_mach_dyld_info_only,ui->tableWidget_dyld_info_only,N_mach_dyld_info::records,g_lineEdit_mach_dyld_info_only,N_mach_dyld_info::__data_size,0,nDataOffset);
 
+                g_invWidget[INV_rebase_off]=createInvWidget(ui->tableWidget_dyld_info_only,SMACH::TYPE_mach_dyld_info_only,N_mach_dyld_info::rebase_off,InvWidget::TYPE_HEX);
+                g_invWidget[INV_bind_off]=createInvWidget(ui->tableWidget_dyld_info_only,SMACH::TYPE_mach_dyld_info_only,N_mach_dyld_info::bind_off,InvWidget::TYPE_HEX);
+                g_invWidget[INV_weak_bind_off]=createInvWidget(ui->tableWidget_dyld_info_only,SMACH::TYPE_mach_dyld_info_only,N_mach_dyld_info::weak_bind_off,InvWidget::TYPE_HEX);
+                g_invWidget[INV_lazy_bind_off]=createInvWidget(ui->tableWidget_dyld_info_only,SMACH::TYPE_mach_dyld_info_only,N_mach_dyld_info::lazy_bind_off,InvWidget::TYPE_HEX);
+                g_invWidget[INV_export_off]=createInvWidget(ui->tableWidget_dyld_info_only,SMACH::TYPE_mach_dyld_info_only,N_mach_dyld_info::export_off,InvWidget::TYPE_HEX);
+
                 blockSignals(true);
 
                 XMACH_DEF::dyld_info_command dyld_info=mach._read_dyld_info_command(nDataOffset);
@@ -1207,6 +1224,12 @@ void MACHWidget::reloadData()
                 g_lineEdit_mach_dyld_info_only[N_mach_dyld_info::lazy_bind_size]->setValue(dyld_info.lazy_bind_size);
                 g_lineEdit_mach_dyld_info_only[N_mach_dyld_info::export_off]->setValue(dyld_info.export_off);
                 g_lineEdit_mach_dyld_info_only[N_mach_dyld_info::export_size]->setValue(dyld_info.export_size);
+
+                g_invWidget[INV_rebase_off]->setOffsetAndSize(&mach,dyld_info.rebase_off,dyld_info.rebase_size);
+                g_invWidget[INV_bind_off]->setOffsetAndSize(&mach,dyld_info.bind_off,dyld_info.bind_size);
+                g_invWidget[INV_weak_bind_off]->setOffsetAndSize(&mach,dyld_info.weak_bind_off,dyld_info.weak_bind_size);
+                g_invWidget[INV_lazy_bind_off]->setOffsetAndSize(&mach,dyld_info.lazy_bind_off,dyld_info.lazy_bind_size);
+                g_invWidget[INV_export_off]->setOffsetAndSize(&mach,dyld_info.export_off,dyld_info.export_size);
 
                 qint64 nOffset=nDataOffset;
                 qint64 nSize=mach.get_dyld_info_command_size();

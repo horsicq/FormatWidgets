@@ -137,9 +137,11 @@ private:
 
     enum INV
     {
-        INV_Elf_e_entry,
-        INV_Elf_e_phoff,
-        INV_Elf_e_shoff,
+        INV_rebase_off,
+        INV_bind_off,
+        INV_weak_bind_off,
+        INV_lazy_bind_off,
+        INV_export_off,
         __INV_size
     };
 
