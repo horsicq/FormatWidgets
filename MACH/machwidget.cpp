@@ -478,6 +478,26 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
                         case N_mach_dysymtab::locreloff:        g_invWidget[INV_locreloff]->setOffsetAndSize(&mach,nValue,0,true);          break; // TODO Size
                     }
                     break;
+
+                case SMACH::TYPE_mach_encryption_info:
+                    if(mach.is64())
+                    {
+                        switch(nNdata)
+                        {
+                            case N_mach_encryption_info::cryptoff:          g_invWidget[INV_cryptoff]->setOffsetAndSize(&mach,nValue,mach.get_encryption_info_64().cryptsize,true);             break;
+                            case N_mach_encryption_info::cryptsize:         g_invWidget[INV_cryptoff]->setOffsetAndSize(&mach,mach.get_encryption_info_64().cryptoff,nValue,true);              break;
+                        }
+                    }
+                    else
+                    {
+                        switch(nNdata)
+                        {
+                            case N_mach_encryption_info::cryptoff:          g_invWidget[INV_cryptoff]->setOffsetAndSize(&mach,nValue,mach.get_encryption_info().cryptsize,true);                break;
+                            case N_mach_encryption_info::cryptsize:         g_invWidget[INV_cryptoff]->setOffsetAndSize(&mach,mach.get_encryption_info().cryptoff,nValue,true);                 break;
+                        }
+                    }
+
+                    break;
             }
 
             switch(nStype)
@@ -1434,6 +1454,8 @@ void MACHWidget::reloadData()
                 {
                     createHeaderTable(SMACH::TYPE_mach_encryption_info,ui->tableWidget_encryption_info,N_mach_encryption_info::records64,g_lineEdit_mach_encryption_info,N_mach_encryption_info::__data_size,0,nDataOffset);
 
+                    g_invWidget[INV_cryptoff]=createInvWidget(ui->tableWidget_encryption_info,SMACH::TYPE_mach_encryption_info,N_mach_encryption_info::cryptoff,InvWidget::TYPE_HEX);
+
                     blockSignals(true);
 
                     XMACH_DEF::encryption_info_command_64 encryption_info=mach._read_encryption_info_command_64(nDataOffset);
@@ -1442,10 +1464,14 @@ void MACHWidget::reloadData()
                     g_lineEdit_mach_encryption_info[N_mach_encryption_info::cryptsize]->setValue(encryption_info.cryptsize);
                     g_lineEdit_mach_encryption_info[N_mach_encryption_info::cryptid]->setValue(encryption_info.cryptid);
                     g_lineEdit_mach_encryption_info[N_mach_encryption_info::pad]->setValue(encryption_info.pad);
+
+                    g_invWidget[INV_cryptoff]->setOffsetAndSize(&mach,encryption_info.cryptoff,encryption_info.cryptsize,true);
                 }
                 else
                 {
                     createHeaderTable(SMACH::TYPE_mach_encryption_info,ui->tableWidget_encryption_info,N_mach_encryption_info::records32,g_lineEdit_mach_encryption_info,N_mach_encryption_info::__data_size-1,0,nDataOffset);
+
+                    g_invWidget[INV_cryptoff]=createInvWidget(ui->tableWidget_encryption_info,SMACH::TYPE_mach_encryption_info,N_mach_encryption_info::cryptoff,InvWidget::TYPE_HEX);
 
                     blockSignals(true);
 
@@ -1454,6 +1480,8 @@ void MACHWidget::reloadData()
                     g_lineEdit_mach_encryption_info[N_mach_encryption_info::cryptoff]->setValue(encryption_info.cryptoff);
                     g_lineEdit_mach_encryption_info[N_mach_encryption_info::cryptsize]->setValue(encryption_info.cryptsize);
                     g_lineEdit_mach_encryption_info[N_mach_encryption_info::cryptid]->setValue(encryption_info.cryptid);
+
+                    g_invWidget[INV_cryptoff]->setOffsetAndSize(&mach,encryption_info.cryptoff,encryption_info.cryptsize,true);
                 }
 
                 qint64 nOffset=nDataOffset;

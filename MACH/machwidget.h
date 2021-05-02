@@ -150,6 +150,7 @@ private:
         INV_indirectsymoff,
         INV_extreloff,
         INV_locreloff,
+        INV_cryptoff,
         __INV_size
     };
 
