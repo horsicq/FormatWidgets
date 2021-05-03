@@ -151,6 +151,8 @@ private:
         INV_extreloff,
         INV_locreloff,
         INV_cryptoff,
+        INV_FUNCTION_STARTS_dataoff,
+        INV_DATA_IN_CODE_dataoff,
         __INV_size
     };
 

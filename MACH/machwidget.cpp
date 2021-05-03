@@ -498,6 +498,22 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
                     }
 
                     break;
+
+                case SMACH::TYPE_mach_data_in_code:
+                    switch(nNdata)
+                    {
+                        case N_mach_linkedit_data::dataoff:                 g_invWidget[INV_DATA_IN_CODE_dataoff]->setOffsetAndSize(&mach,nValue,mach.get_linkedit_data(XMACH_DEF::LC_DATA_IN_CODE).datasize,true);             break;
+                        case N_mach_linkedit_data::datasize:                g_invWidget[INV_DATA_IN_CODE_dataoff]->setOffsetAndSize(&mach,mach.get_linkedit_data(XMACH_DEF::LC_DATA_IN_CODE).dataoff,nValue,true);              break;
+                    }
+                    break;
+
+                case SMACH::TYPE_mach_function_starts:
+                    switch(nNdata)
+                    {
+                        case N_mach_linkedit_data::dataoff:                 g_invWidget[INV_FUNCTION_STARTS_dataoff]->setOffsetAndSize(&mach,nValue,mach.get_linkedit_data(XMACH_DEF::LC_FUNCTION_STARTS).datasize,true);             break;
+                        case N_mach_linkedit_data::datasize:                g_invWidget[INV_FUNCTION_STARTS_dataoff]->setOffsetAndSize(&mach,mach.get_linkedit_data(XMACH_DEF::LC_FUNCTION_STARTS).dataoff,nValue,true);              break;
+                    }
+                    break;
             }
 
             switch(nStype)
@@ -1498,12 +1514,16 @@ void MACHWidget::reloadData()
             {
                 createHeaderTable(SMACH::TYPE_mach_function_starts,ui->tableWidget_function_starts,N_mach_linkedit_data::records,g_lineEdit_mach_function_starts,N_mach_linkedit_data::__data_size,0,nDataOffset);
 
+                g_invWidget[INV_FUNCTION_STARTS_dataoff]=createInvWidget(ui->tableWidget_function_starts,SMACH::TYPE_mach_function_starts,N_mach_linkedit_data::dataoff,InvWidget::TYPE_HEX);
+
                 blockSignals(true);
 
                 XMACH_DEF::linkedit_data_command linkedit_data=mach._read_linkedit_data_command(nDataOffset);
 
                 g_lineEdit_mach_function_starts[N_mach_linkedit_data::dataoff]->setValue(linkedit_data.dataoff);
                 g_lineEdit_mach_function_starts[N_mach_linkedit_data::datasize]->setValue(linkedit_data.datasize);
+
+                g_invWidget[INV_FUNCTION_STARTS_dataoff]->setOffsetAndSize(&mach,linkedit_data.dataoff,linkedit_data.datasize,true);
 
                 qint64 nOffset=nDataOffset;
                 qint64 nSize=mach.get_linkedit_data_command_size();
@@ -1519,12 +1539,16 @@ void MACHWidget::reloadData()
             {
                 createHeaderTable(SMACH::TYPE_mach_data_in_code,ui->tableWidget_data_in_code,N_mach_linkedit_data::records,g_lineEdit_mach_data_in_code,N_mach_linkedit_data::__data_size,0,nDataOffset);
 
+                g_invWidget[INV_DATA_IN_CODE_dataoff]=createInvWidget(ui->tableWidget_data_in_code,SMACH::TYPE_mach_data_in_code,N_mach_linkedit_data::dataoff,InvWidget::TYPE_HEX);
+
                 blockSignals(true);
 
                 XMACH_DEF::linkedit_data_command linkedit_data=mach._read_linkedit_data_command(nDataOffset);
 
                 g_lineEdit_mach_data_in_code[N_mach_linkedit_data::dataoff]->setValue(linkedit_data.dataoff);
                 g_lineEdit_mach_data_in_code[N_mach_linkedit_data::datasize]->setValue(linkedit_data.datasize);
+
+                g_invWidget[INV_DATA_IN_CODE_dataoff]->setOffsetAndSize(&mach,linkedit_data.dataoff,linkedit_data.datasize,true);
 
                 qint64 nOffset=nDataOffset;
                 qint64 nSize=mach.get_linkedit_data_command_size();
