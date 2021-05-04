@@ -54,6 +54,10 @@ void FormatWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 
 
     g_bIsReadonly=!(pDevice->isWritable());
 
+    g_listPages.clear();
+    g_nPageIndex=0;
+    g_bAddPageEnable=true;
+
     setOptions(options);
 }
 
@@ -453,6 +457,34 @@ void FormatWidget::setTreeItem(QTreeWidget *pTree, int nID)
             break;
         }
     }
+}
+
+void FormatWidget::reset()
+{
+    g_stInit.clear();
+}
+
+QString FormatWidget::getInitString(QTreeWidgetItem *pItem)
+{
+    QString sResult;
+
+    int nType=pItem->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_TYPE).toInt();
+    qint64 nDataOffset=pItem->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
+    qint64 nDataSize=pItem->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
+
+    sResult=QString("%1-%2-%3").arg(nType).arg(nDataOffset).arg(nDataSize);
+
+    return sResult;
+}
+
+void FormatWidget::addInit(QString sString)
+{
+    g_stInit.insert(sString);
+}
+
+bool FormatWidget::isInitPresent(QString sString)
+{
+    return g_stInit.contains(sString);
 }
 
 void FormatWidget::addPage(QTreeWidgetItem *pItem)

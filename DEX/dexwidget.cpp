@@ -30,8 +30,6 @@ DEXWidget::DEXWidget(QWidget *pParent) :
     g_pFilterStrings=new QSortFilterProxyModel(this);
     g_pFilterTypes=new QSortFilterProxyModel(this);
 
-    g_nLastType=-1; // TODO !!!
-
     initHexViewWidget(ui->widgetHex);
 //    initSearchSignaturesWidget(ui->widgetSignatures);
     initSearchStringsWidget(ui->widgetStrings);
@@ -81,11 +79,6 @@ void DEXWidget::clear()
 void DEXWidget::cleanup()
 {
 
-}
-
-void DEXWidget::reset()
-{
-    g_stInit.clear();
 }
 
 void DEXWidget::reload()
@@ -285,15 +278,7 @@ void DEXWidget::reloadData()
     qint64 nDataExtraOffset=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_EXTRAOFFSET).toLongLong();
     qint64 nDataExtraSize=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_EXTRASIZE).toLongLong();
 
-    QString sInit=QString("%1-%2-%3").arg(nType).arg(nDataOffset).arg(nDataSize);
-
-    if((g_nLastType==nType)&&(sInit!=g_sLastInit))
-    {
-        g_stInit.remove(sInit);
-    }
-
-    g_nLastType=nType;
-    g_sLastInit=sInit;
+    QString sInit=getInitString(ui->treeWidgetNavi->currentItem());
 
     ui->stackedWidgetInfo->setCurrentIndex(nType);
 
@@ -303,7 +288,7 @@ void DEXWidget::reloadData()
     {
         if(nType==SDEX::TYPE_HEX)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 XHexView::OPTIONS options={};
                 options.bMenu_Disasm=true;
@@ -318,7 +303,7 @@ void DEXWidget::reloadData()
         }
         else if(nType==SDEX::TYPE_STRINGS)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 SearchStringsWidget::OPTIONS stringsOptions={};
                 stringsOptions.bMenu_Hex=true;
@@ -331,28 +316,28 @@ void DEXWidget::reloadData()
         }
         else if(nType==SDEX::TYPE_MEMORYMAP)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 ui->widgetMemoryMap->setData(getDevice(),dex.getFileType(),getOptions().sSearchSignaturesPath);
             }
         }
         else if(nType==SDEX::TYPE_ENTROPY)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 ui->widgetEntropy->setData(getDevice(),0,getDevice()->size(),dex.getFileType(),true,this);
             }
         }
         else if(nType==SDEX::TYPE_HEURISTICSCAN)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 ui->widgetHeuristicScan->setData(getDevice(),true,XBinary::FT_DEX,this);
             }
         }
         else if(nType==SDEX::TYPE_HEADER)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 createHeaderTable(SDEX::TYPE_HEADER,ui->tableWidget_Header,N_DEX_HEADER::records,g_lineEdit_HEADER,N_DEX_HEADER::__data_size,0);
 
@@ -422,7 +407,7 @@ void DEXWidget::reloadData()
         }
         else if(nType==SDEX::TYPE_MAPITEMS)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 DEXProcessData dexProcessData(SDEX::TYPE_MAPITEMS,&g_tvModel[SDEX::TYPE_MAPITEMS],&dex,nDataOffset,nDataSize);
 
@@ -436,7 +421,7 @@ void DEXWidget::reloadData()
         }
         else if(nType==SDEX::TYPE_STRING_ID_ITEM)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 DEXProcessData dexProcessData(SDEX::TYPE_STRING_ID_ITEM,&g_tvModel[SDEX::TYPE_STRING_ID_ITEM],&dex,nDataOffset,nDataSize);
 
@@ -450,7 +435,7 @@ void DEXWidget::reloadData()
         }
         else if(nType==SDEX::TYPE_TYPE_ID_ITEM)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 DEXProcessData dexProcessData(SDEX::TYPE_TYPE_ID_ITEM,&g_tvModel[SDEX::TYPE_TYPE_ID_ITEM],&dex,nDataOffset,nDataSize);
 
@@ -464,7 +449,7 @@ void DEXWidget::reloadData()
         }
         else if(nType==SDEX::TYPE_PROTO_ID_ITEM)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 DEXProcessData dexProcessData(SDEX::TYPE_PROTO_ID_ITEM,&g_tvModel[SDEX::TYPE_PROTO_ID_ITEM],&dex,nDataOffset,nDataSize);
 
@@ -478,7 +463,7 @@ void DEXWidget::reloadData()
         }
         else if(nType==SDEX::TYPE_FIELD_ID_ITEM)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 DEXProcessData dexProcessData(SDEX::TYPE_FIELD_ID_ITEM,&g_tvModel[SDEX::TYPE_FIELD_ID_ITEM],&dex,nDataOffset,nDataSize);
 
@@ -492,7 +477,7 @@ void DEXWidget::reloadData()
         }
         else if(nType==SDEX::TYPE_METHOD_ID_ITEM)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 DEXProcessData dexProcessData(SDEX::TYPE_METHOD_ID_ITEM,&g_tvModel[SDEX::TYPE_METHOD_ID_ITEM],&dex,nDataOffset,nDataSize);
 
@@ -506,7 +491,7 @@ void DEXWidget::reloadData()
         }
         else if(nType==SDEX::TYPE_CLASS_DEF_ITEM)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 DEXProcessData dexProcessData(SDEX::TYPE_CLASS_DEF_ITEM,&g_tvModel[SDEX::TYPE_CLASS_DEF_ITEM],&dex,nDataOffset,nDataSize);
 
@@ -522,7 +507,7 @@ void DEXWidget::reloadData()
         setReadonly(ui->checkBoxReadonly->isChecked());
     }
 
-    g_stInit.insert(sInit);
+    addInit(sInit);
 }
 
 

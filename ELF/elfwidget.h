@@ -44,7 +44,6 @@ public:
 
     virtual void clear();
     virtual void cleanup();
-    virtual void reset();
     virtual void reload();
 
 protected:
@@ -143,11 +142,6 @@ private:
 
     SubDevice *g_subDevice[SELF::__TYPE_size];
     QStandardItemModel *g_tvModel[SELF::__TYPE_size];
-
-    QSet<QString> g_stInit;
-
-    qint32 g_nLastType;
-    QString g_sLastInit;
 };
 
 #endif // ELFWIDGET_H

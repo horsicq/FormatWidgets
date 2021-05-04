@@ -39,7 +39,6 @@ public:
     ~BinaryWidget();
     virtual void clear();
     virtual void cleanup();
-    virtual void reset();
     virtual void reload();
 
 protected:
@@ -57,7 +56,6 @@ private slots:
 
 private:
     Ui::BinaryWidget *ui;
-    bool g_bInit;
 };
 
 #endif // BINARYWIDGET_H

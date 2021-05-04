@@ -44,7 +44,6 @@ public:
 
     virtual void clear();
     virtual void cleanup();
-    virtual void reset();
     virtual void reload();
 
 protected:
@@ -106,6 +105,7 @@ private slots:
     void on_tableView_id_library_customContextMenuRequested(const QPoint &pos);
     void on_tableView_SymbolTable_doubleClicked(const QModelIndex &index);
     void on_tableView_SymbolTable_customContextMenuRequested(const QPoint &pos);
+    void on_tableView_Functions_customContextMenuRequested(const QPoint &pos);
     void editCommandHeader();
     void editSegmentHeader();
     void editSectionHeader();
@@ -113,6 +113,8 @@ private slots:
     void editWeakLibraryHeader();
     void editIdLibraryHeader();
     void editSymbolHeader();
+    void hexFunction();
+    void disasmFunction();
     void showSectionHeader(int nType,QTableView *pTableView);
 
     void demangleSymbol();
@@ -184,10 +186,6 @@ private:
 
     SubDevice *g_subDevice[SMACH::__TYPE_size];
     QStandardItemModel *tvModel[SMACH::__TYPE_size];
-
-    QSet<QString> g_stInit;
-    qint32 g_nLastType;
-    QString g_sLastInit;
 };
 
 #endif // MACHWIDGET_H

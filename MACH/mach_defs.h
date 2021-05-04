@@ -64,6 +64,7 @@ enum TYPE
     TYPE_mach_unix_thread_ppc_32,
     TYPE_STRINGTABLE,
     TYPE_SYMBOLTABLE,
+    TYPE_FUNCTIONS,
     __TYPE_size
 };
 }
@@ -584,7 +585,6 @@ enum DATA
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 }
-
 
 namespace N_mach_nlist
 {

@@ -440,19 +440,19 @@ namespace N_mach_nlist
 {
 const FW_DEF::HEADER_RECORD records32[]=
 {
-    {n_strx,                "n_strx",           offsetof(XMACH_DEF::nlist,n_strx),          4,      "uint32",          FW_DEF::VAL_TYPE_DATA},
-    {n_type,                "n_type",           offsetof(XMACH_DEF::nlist,n_type),          1,      "uint8",              FW_DEF::VAL_TYPE_DATA},
-    {n_sect,                "n_sect",           offsetof(XMACH_DEF::nlist,n_sect),          1,      "uint8",              FW_DEF::VAL_TYPE_DATA},
-    {n_desc,                "n_desc",           offsetof(XMACH_DEF::nlist,n_desc),          2,      "uint16",             FW_DEF::VAL_TYPE_DATA},
-    {n_value,               "n_value",          offsetof(XMACH_DEF::nlist,n_value),         4,      "uint32",             FW_DEF::VAL_TYPE_DATA},
+    {n_strx,                "n_strx",           offsetof(XMACH_DEF::nlist,n_strx),          4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {n_type,                "n_type",           offsetof(XMACH_DEF::nlist,n_type),          1,      "uint8",            FW_DEF::VAL_TYPE_DATA},
+    {n_sect,                "n_sect",           offsetof(XMACH_DEF::nlist,n_sect),          1,      "uint8",            FW_DEF::VAL_TYPE_DATA},
+    {n_desc,                "n_desc",           offsetof(XMACH_DEF::nlist,n_desc),          2,      "uint16",           FW_DEF::VAL_TYPE_DATA},
+    {n_value,               "n_value",          offsetof(XMACH_DEF::nlist,n_value),         4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
 };
 
 const FW_DEF::HEADER_RECORD records64[]=
 {
-    {n_strx,                "n_strx",           offsetof(XMACH_DEF::nlist_64,n_strx),       4,      "uint32",             FW_DEF::VAL_TYPE_DATA},
-    {n_type,                "n_type",           offsetof(XMACH_DEF::nlist_64,n_type),       1,      "uint8",              FW_DEF::VAL_TYPE_DATA},
-    {n_sect,                "n_sect",           offsetof(XMACH_DEF::nlist_64,n_sect),       1,      "uint8",              FW_DEF::VAL_TYPE_DATA},
-    {n_desc,                "n_desc",           offsetof(XMACH_DEF::nlist_64,n_desc),       2,      "uint16",             FW_DEF::VAL_TYPE_DATA},
-    {n_value,               "n_value",          offsetof(XMACH_DEF::nlist_64,n_value),      8,      "uint64",             FW_DEF::VAL_TYPE_DATA},
+    {n_strx,                "n_strx",           offsetof(XMACH_DEF::nlist_64,n_strx),       4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {n_type,                "n_type",           offsetof(XMACH_DEF::nlist_64,n_type),       1,      "uint8",            FW_DEF::VAL_TYPE_DATA},
+    {n_sect,                "n_sect",           offsetof(XMACH_DEF::nlist_64,n_sect),       1,      "uint8",            FW_DEF::VAL_TYPE_DATA},
+    {n_desc,                "n_desc",           offsetof(XMACH_DEF::nlist_64,n_desc),       2,      "uint16",           FW_DEF::VAL_TYPE_DATA},
+    {n_value,               "n_value",          offsetof(XMACH_DEF::nlist_64,n_value),      8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
 };
 }

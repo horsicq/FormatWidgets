@@ -144,11 +144,6 @@ void MACHWidget::cleanup()
 
 }
 
-void MACHWidget::reset()
-{
-    g_stInit.clear();
-}
-
 void MACHWidget::reload()
 {
     MACHWidget::clear();
@@ -326,9 +321,20 @@ void MACHWidget::reload()
 
             if(mach.isCommandPresent(XMACH_DEF::LC_FUNCTION_STARTS,&listCommandRecords))
             {
+                qint64 _nOffset=mach.getCommandRecordOffset(XMACH_DEF::LC_FUNCTION_STARTS,0,&listCommandRecords);
+
                 QTreeWidgetItem *pItemFunctionStarts=createNewItem(SMACH::TYPE_mach_function_starts,QString("LC_FUNCTION_STARTS"),mach.getCommandRecordOffset(XMACH_DEF::LC_FUNCTION_STARTS,0,&listCommandRecords)); // TODO rename
 
                 pItemCommands->addChild(pItemFunctionStarts);
+
+                XMACH_DEF::linkedit_data_command linkedit_data=mach._read_linkedit_data_command(_nOffset);
+
+                if(mach.isOffsetValid(linkedit_data.dataoff)&&(linkedit_data.datasize))
+                {
+                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_FUNCTIONS,tr("Functions"),linkedit_data.dataoff,linkedit_data.datasize); // TODO rename
+
+                    pItemFunctionStarts->addChild(pItem);
+                }
             }
 
             if(mach.isCommandPresent(XMACH_DEF::LC_DATA_IN_CODE,&listCommandRecords))
@@ -1025,15 +1031,7 @@ void MACHWidget::reloadData()
     qint64 nDataOffset=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
     qint64 nDataSize=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
 
-    QString sInit=QString("%1-%2-%3").arg(nType).arg(nDataOffset).arg(nDataSize);
-
-    if((g_nLastType==nType)&&(sInit!=g_sLastInit))
-    {
-        g_stInit.remove(sInit);
-    }
-
-    g_nLastType=nType;
-    g_sLastInit=sInit;
+    QString sInit=getInitString(ui->treeWidgetNavi->currentItem());
 
     ui->stackedWidgetInfo->setCurrentIndex(nType);
 
@@ -1043,7 +1041,7 @@ void MACHWidget::reloadData()
     {
         if(nType==SMACH::TYPE_HEX)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 XHexView::OPTIONS options={};
                 options.bMenu_Disasm=true;
@@ -1055,14 +1053,14 @@ void MACHWidget::reloadData()
         }
         else if(nType==SMACH::TYPE_HASH)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 ui->widgetHash->setData(getDevice(),mach.getFileType(),0,-1,true,this);
             }
         }
         else if(nType==SMACH::TYPE_DISASM)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 XMultiDisasmWidget::OPTIONS options={};
                 options.fileType=mach.getFileType();
@@ -1074,7 +1072,7 @@ void MACHWidget::reloadData()
         }
         else if(nType==SMACH::TYPE_STRINGS)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 SearchStringsWidget::OPTIONS stringsOptions={};
                 stringsOptions.bMenu_Hex=true;
@@ -1087,7 +1085,7 @@ void MACHWidget::reloadData()
         }
         else if(nType==SMACH::TYPE_SIGNATURES)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 SearchSignaturesWidget::OPTIONS signaturesOptions={};
                 signaturesOptions.bMenu_Hex=true;
@@ -1098,28 +1096,28 @@ void MACHWidget::reloadData()
         }
         else if(nType==SMACH::TYPE_MEMORYMAP)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 ui->widgetMemoryMap->setData(getDevice(),mach.getFileType(),getOptions().sSearchSignaturesPath);
             }
         }
         else if(nType==SMACH::TYPE_ENTROPY)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 ui->widgetEntropy->setData(getDevice(),0,getDevice()->size(),mach.getFileType(),true,this);
             }
         }
         else if(nType==SMACH::TYPE_HEURISTICSCAN)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 ui->widgetHeuristicScan->setData(getDevice(),true,mach.getFileType(),this);
             }
         }
         else if(nType==SMACH::TYPE_mach_header)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 if(!mach.is64())
                 {
@@ -1167,7 +1165,7 @@ void MACHWidget::reloadData()
         }
         else if(nType==SMACH::TYPE_mach_commands)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 MACHProcessData machProcessData(SMACH::TYPE_mach_commands,&tvModel[SMACH::TYPE_mach_commands],&mach,0,0);
 
@@ -1183,7 +1181,7 @@ void MACHWidget::reloadData()
         }
         else if(nType==SMACH::TYPE_mach_segments)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 MACHProcessData machProcessData(SMACH::TYPE_mach_segments,&tvModel[SMACH::TYPE_mach_segments],&mach,0,0);
 
@@ -1199,7 +1197,7 @@ void MACHWidget::reloadData()
         }
         else if(nType==SMACH::TYPE_mach_sections)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 MACHProcessData machProcessData(SMACH::TYPE_mach_sections,&tvModel[SMACH::TYPE_mach_sections],&mach,0,0);
 
@@ -1215,7 +1213,7 @@ void MACHWidget::reloadData()
         }
         else if(nType==SMACH::TYPE_mach_libraries)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 MACHProcessData machProcessData(SMACH::TYPE_mach_libraries,&tvModel[SMACH::TYPE_mach_libraries],&mach,0,0);
 
@@ -1231,7 +1229,7 @@ void MACHWidget::reloadData()
         }
         else if(nType==SMACH::TYPE_mach_weak_libraries)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 MACHProcessData machProcessData(SMACH::TYPE_mach_weak_libraries,&tvModel[SMACH::TYPE_mach_weak_libraries],&mach,0,0);
 
@@ -1247,7 +1245,7 @@ void MACHWidget::reloadData()
         }
         else if(nType==SMACH::TYPE_mach_id_library)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 MACHProcessData machProcessData(SMACH::TYPE_mach_id_library,&tvModel[SMACH::TYPE_mach_id_library],&mach,0,0);
 
@@ -1263,7 +1261,7 @@ void MACHWidget::reloadData()
         }
         else if(nType==SMACH::TYPE_mach_dyld_info_only)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 createHeaderTable(SMACH::TYPE_mach_dyld_info_only,ui->tableWidget_dyld_info_only,N_mach_dyld_info::records,g_lineEdit_mach_dyld_info_only,N_mach_dyld_info::__data_size,0,nDataOffset);
 
@@ -1304,7 +1302,7 @@ void MACHWidget::reloadData()
         }
         else if(nType==SMACH::TYPE_mach_uuid)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 createListTable(SMACH::TYPE_mach_uuid,ui->tableWidget_uuid,N_mach_uuid::records,g_lineEdit_mach_uuid,N_mach_uuid::__data_size);
 
@@ -1317,7 +1315,7 @@ void MACHWidget::reloadData()
         }
         else if(nType==SMACH::TYPE_mach_dylinker)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 createListTable(SMACH::TYPE_mach_dylinker,ui->tableWidget_dylinker,N_mach_dylinker::records,g_lineEdit_mach_dylinker,N_mach_dylinker::__data_size);
 
@@ -1330,7 +1328,7 @@ void MACHWidget::reloadData()
         }
         else if(nType==SMACH::TYPE_mach_rpath)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 createListTable(SMACH::TYPE_mach_rpath,ui->tableWidget_rpath,N_mach_rpath::records,g_lineEdit_mach_rpath,N_mach_rpath::__data_size);
 
@@ -1343,7 +1341,7 @@ void MACHWidget::reloadData()
         }
         else if(nType==SMACH::TYPE_mach_symtab)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 createHeaderTable(SMACH::TYPE_mach_symtab,ui->tableWidget_symtab,N_mach_symtab::records,g_lineEdit_mach_symtab,N_mach_symtab::__data_size,0,nDataOffset);
 
@@ -1372,7 +1370,7 @@ void MACHWidget::reloadData()
         }
         else if(nType==SMACH::TYPE_mach_dysymtab)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 createHeaderTable(SMACH::TYPE_mach_dysymtab,ui->tableWidget_dysymtab,N_mach_dysymtab::records,g_lineEdit_mach_dysymtab,N_mach_dysymtab::__data_size,0,nDataOffset);
 
@@ -1423,7 +1421,7 @@ void MACHWidget::reloadData()
         }
         else if(nType==SMACH::TYPE_mach_version_min)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 createHeaderTable(SMACH::TYPE_mach_version_min,ui->tableWidget_version_min,N_mach_version_min::records,g_lineEdit_mach_version_min,N_mach_version_min::__data_size,0,nDataOffset);
 
@@ -1444,7 +1442,7 @@ void MACHWidget::reloadData()
         }
         else if(nType==SMACH::TYPE_mach_source_version)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 createHeaderTable(SMACH::TYPE_mach_source_version,ui->tableWidget_source_version,N_mach_source_version::records,g_lineEdit_mach_source_version,N_mach_source_version::__data_size,0,nDataOffset);
 
@@ -1464,7 +1462,7 @@ void MACHWidget::reloadData()
         }
         else if(nType==SMACH::TYPE_mach_encryption_info)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 if(nDataSize==mach.get_encryption_info_command_64_size())
                 {
@@ -1510,7 +1508,7 @@ void MACHWidget::reloadData()
         }
         else if(nType==SMACH::TYPE_mach_function_starts)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 createHeaderTable(SMACH::TYPE_mach_function_starts,ui->tableWidget_function_starts,N_mach_linkedit_data::records,g_lineEdit_mach_function_starts,N_mach_linkedit_data::__data_size,0,nDataOffset);
 
@@ -1535,7 +1533,7 @@ void MACHWidget::reloadData()
         }
         else if(nType==SMACH::TYPE_mach_data_in_code)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 createHeaderTable(SMACH::TYPE_mach_data_in_code,ui->tableWidget_data_in_code,N_mach_linkedit_data::records,g_lineEdit_mach_data_in_code,N_mach_linkedit_data::__data_size,0,nDataOffset);
 
@@ -1560,7 +1558,7 @@ void MACHWidget::reloadData()
         }
         else if(nType==SMACH::TYPE_mach_code_signature)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 createHeaderTable(SMACH::TYPE_mach_code_signature,ui->tableWidget_code_signature,N_mach_linkedit_data::records,g_lineEdit_mach_code_signature,N_mach_linkedit_data::__data_size,0,nDataOffset);
 
@@ -1581,7 +1579,7 @@ void MACHWidget::reloadData()
         }
         else if(nType==SMACH::TYPE_mach_main)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 createHeaderTable(SMACH::TYPE_mach_main,ui->tableWidget_main,N_mach_main::records,g_lineEdit_mach_main,N_mach_main::__data_size,0,nDataOffset);
 
@@ -1602,7 +1600,7 @@ void MACHWidget::reloadData()
         }
         else if(nType==SMACH::TYPE_mach_unix_thread)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 createHeaderTable(SMACH::TYPE_mach_unix_thread,ui->tableWidget_unix_thread,N_mach_unix_thread::records,g_lineEdit_mach_unix_thread,N_mach_unix_thread::__data_size,0,nDataOffset);
 
@@ -1623,7 +1621,7 @@ void MACHWidget::reloadData()
         }
         else if(nType==SMACH::TYPE_mach_unix_thread_x86_32)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 createHeaderTable(SMACH::TYPE_mach_unix_thread_x86_32,ui->tableWidget_unix_thread_x86_32,N_mach_unix_thread_x86_32::records,g_lineEdit_mach_unix_thread_x86_32,N_mach_unix_thread_x86_32::__data_size,0,nDataOffset);
 
@@ -1658,7 +1656,7 @@ void MACHWidget::reloadData()
         }
         else if(nType==SMACH::TYPE_mach_unix_thread_x86_64)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 createHeaderTable(SMACH::TYPE_mach_unix_thread_x86_64,ui->tableWidget_unix_thread_x86_64,N_mach_unix_thread_x86_64::records,g_lineEdit_mach_unix_thread_x86_64,N_mach_unix_thread_x86_64::__data_size,0,nDataOffset);
 
@@ -1698,7 +1696,7 @@ void MACHWidget::reloadData()
         }
         else if(nType==SMACH::TYPE_mach_unix_thread_arm_32)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 createHeaderTable(SMACH::TYPE_mach_unix_thread_arm_32,ui->tableWidget_unix_thread_arm_32,N_mach_unix_thread_arm_32::records,g_lineEdit_mach_unix_thread_arm_32,N_mach_unix_thread_arm_32::__data_size,0,nDataOffset);
 
@@ -1734,7 +1732,7 @@ void MACHWidget::reloadData()
         }
         else if(nType==SMACH::TYPE_mach_unix_thread_arm_64)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 createHeaderTable(SMACH::TYPE_mach_unix_thread_arm_64,ui->tableWidget_unix_thread_arm_64,N_mach_unix_thread_arm_64::records,g_lineEdit_mach_unix_thread_arm_64,N_mach_unix_thread_arm_64::__data_size,0,nDataOffset);
 
@@ -1788,7 +1786,7 @@ void MACHWidget::reloadData()
         }
         else if(nType==SMACH::TYPE_mach_unix_thread_ppc_32)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 createHeaderTable(SMACH::TYPE_mach_unix_thread_ppc_32,ui->tableWidget_unix_thread_ppc_32,N_mach_unix_thread_ppc_32::records,g_lineEdit_mach_unix_thread_ppc_32,N_mach_unix_thread_ppc_32::__data_size,0,nDataOffset);
 
@@ -1847,25 +1845,34 @@ void MACHWidget::reloadData()
         }
         else if(nType==SMACH::TYPE_STRINGTABLE)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 loadHexSubdevice(nDataOffset,nDataSize,0,&g_subDevice[SMACH::TYPE_STRINGTABLE],ui->widgetHex_StringTable);
             }
         }
         else if(nType==SMACH::TYPE_SYMBOLTABLE)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 MACHProcessData machProcessData(SMACH::TYPE_SYMBOLTABLE,&tvModel[SMACH::TYPE_SYMBOLTABLE],&mach,nDataOffset,nDataSize);
 
                 ajustTableView(&machProcessData,&tvModel[SMACH::TYPE_SYMBOLTABLE],ui->tableView_SymbolTable,nullptr,false);
             }
         }
+        else if(nType==SMACH::TYPE_FUNCTIONS)
+        {
+            if(!isInitPresent(sInit))
+            {
+                MACHProcessData machProcessData(SMACH::TYPE_FUNCTIONS,&tvModel[SMACH::TYPE_FUNCTIONS],&mach,nDataOffset,nDataSize);
+
+                ajustTableView(&machProcessData,&tvModel[SMACH::TYPE_FUNCTIONS],ui->tableView_Functions,nullptr,false);
+            }
+        }
 
         setReadonly(ui->checkBoxReadonly->isChecked());
     }
 
-    g_stInit.insert(sInit);
+    addInit(sInit);
 }
 
 void MACHWidget::widgetValueChanged(quint64 nValue)
@@ -2311,6 +2318,27 @@ void MACHWidget::on_tableView_SymbolTable_customContextMenuRequested(const QPoin
     }
 }
 
+void MACHWidget::on_tableView_Functions_customContextMenuRequested(const QPoint &pos)
+{
+    int nRow=ui->tableView_Functions->currentIndex().row();
+
+    if(nRow!=-1)
+    {
+        QMenu contextMenu(this);
+
+        QAction actionHex(tr("Hex"),this);
+        connect(&actionHex, SIGNAL(triggered()), this, SLOT(hexFunction()));
+
+        QAction actionDisasm(tr("Disasm"),this);
+        connect(&actionDisasm, SIGNAL(triggered()), this, SLOT(disasmFunction()));
+
+        contextMenu.addAction(&actionHex);
+        contextMenu.addAction(&actionDisasm);
+
+        contextMenu.exec(ui->tableView_Functions->viewport()->mapToGlobal(pos));
+    }
+}
+
 void MACHWidget::editCommandHeader()
 {
     showSectionHeader(SMACH::TYPE_mach_commands,ui->tableView_commands);
@@ -2344,6 +2372,16 @@ void MACHWidget::editIdLibraryHeader()
 void MACHWidget::editSymbolHeader()
 {
     showSectionHeader(SMACH::TYPE_SYMBOLTABLE,ui->tableView_SymbolTable);
+}
+
+void MACHWidget::hexFunction()
+{
+    qDebug("void MACHWidget::hexFunction()");
+}
+
+void MACHWidget::disasmFunction()
+{
+    qDebug("void MACHWidget::disasmFunction()");
 }
 
 void MACHWidget::showSectionHeader(int nType, QTableView *pTableView)

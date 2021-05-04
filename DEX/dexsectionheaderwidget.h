@@ -39,7 +39,6 @@ public:
     ~DEXSectionHeaderWidget();
     virtual void clear();
     virtual void cleanup();
-    virtual void reset();
     virtual void reload();
     void setStringTable(qint64 nStringTableOffset,qint64 nStringTableSize);
 
@@ -65,7 +64,6 @@ private:
     InvWidget **g_ppInvWidget;
     int g_nInvWidgetSize;
     SubDevice *g_pSubDevice;
-    bool g_bInit;
     qint64 g_nStringTableOffset;
     qint64 g_nStringTableSize;
 };

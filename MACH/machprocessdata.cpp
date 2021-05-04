@@ -32,6 +32,8 @@ MACHProcessData::MACHProcessData(int nType, QStandardItemModel **ppModel, XMACH 
 
 void MACHProcessData::_process()
 {
+    bool bIs64=g_pXMACH->is64();
+
     if(g_nType==SMACH::TYPE_mach_commands)
     {
         QList<QString> listLabels;
@@ -114,8 +116,6 @@ void MACHProcessData::_process()
     }
     else if(g_nType==SMACH::TYPE_mach_segments)
     {
-        bool bIs64=g_pXMACH->is64();
-
         QList<QString> listLabels;
         listLabels.append("");
 
@@ -204,8 +204,6 @@ void MACHProcessData::_process()
     }
     else if(g_nType==SMACH::TYPE_mach_sections)
     {
-        bool bIs64=g_pXMACH->is64();
-
         QList<QString> listLabels;
         listLabels.append("");
 
@@ -297,8 +295,6 @@ void MACHProcessData::_process()
     }
     else if(g_nType==SMACH::TYPE_SYMBOLTABLE)
     {
-        bool bIs64=g_pXMACH->is64();
-
         QList<QString> listLabels;
         listLabels.append("");
 
@@ -356,6 +352,44 @@ void MACHProcessData::_process()
                 QString sName=g_pXMACH->getStringFromIndex(osStringTable.nOffset,osStringTable.nSize,listRecords.at(i).s.nlist32.n_strx);
 
                 (*g_ppModel)->setItem(i,N_mach_nlist::n_value+2,           new QStandardItem(sName));
+            }
+
+            incValue();
+        }
+    }
+    else if(g_nType==SMACH::TYPE_FUNCTIONS)
+    {
+        QList<QString> listLabels;
+        listLabels.append("");
+        listLabels.append(tr("Offset"));
+        listLabels.append(tr("Address"));
+
+        QList<XMACH::FUNCTION_RECORD> listRecords=g_pXMACH->getFunctionRecords(g_nOffset,g_nSize);
+
+        int nNumberOfRecords=listRecords.count();
+
+        *g_ppModel=new QStandardItemModel(nNumberOfRecords,listLabels.count());
+
+        setMaximum(nNumberOfRecords);
+
+        setHeader(*g_ppModel,&listLabels);
+
+        for(int i=0; i<nNumberOfRecords; i++)
+        {
+            QStandardItem *pItem=new QStandardItem;
+            pItem->setData(i,Qt::DisplayRole);
+
+            (*g_ppModel)->setItem(i,0,pItem);
+
+            if(bIs64)
+            {
+                (*g_ppModel)->setItem(i,1,          new QStandardItem(XBinary::valueToHex((quint64)listRecords.at(i).nOffset)));
+                (*g_ppModel)->setItem(i,2,          new QStandardItem(XBinary::valueToHex((quint64)listRecords.at(i).nAddress)));
+            }
+            else
+            {
+                (*g_ppModel)->setItem(i,1,          new QStandardItem(XBinary::valueToHex((quint32)listRecords.at(i).nOffset)));
+                (*g_ppModel)->setItem(i,2,          new QStandardItem(XBinary::valueToHex((quint64)listRecords.at(i).nAddress)));
             }
 
             incValue();
@@ -419,5 +453,11 @@ void MACHProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
         pTableView->setColumnWidth(4,nSymbolWidth*8);
         pTableView->setColumnWidth(5,nSymbolWidth*12);
         pTableView->setColumnWidth(6,nSymbolWidth*35);
+    }
+    else if(g_nType==SMACH::TYPE_FUNCTIONS)
+    {
+        pTableView->setColumnWidth(0,nSymbolWidth*4);
+        pTableView->setColumnWidth(1,nSymbolWidth*12);
+        pTableView->setColumnWidth(2,nSymbolWidth*12);
     }
 }

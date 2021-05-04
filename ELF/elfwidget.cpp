@@ -27,8 +27,6 @@ ELFWidget::ELFWidget(QWidget *pParent) :
 {
     ui->setupUi(this);
 
-    g_nLastType=-1;
-
     initHexViewWidget(ui->widgetHex);
     initSearchSignaturesWidget(ui->widgetSignatures);
     initSearchStringsWidget(ui->widgetStrings);
@@ -89,11 +87,6 @@ void ELFWidget::clear()
 void ELFWidget::cleanup()
 {
 
-}
-
-void ELFWidget::reset()
-{
-    g_stInit.clear();
 }
 
 void ELFWidget::reload()
@@ -293,15 +286,7 @@ void ELFWidget::reloadData()
     qint64 nDataExtraOffset=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_EXTRAOFFSET).toLongLong();
     qint64 nDataExtraSize=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_EXTRASIZE).toLongLong();
 
-    QString sInit=QString("%1-%2-%3").arg(nType).arg(nDataOffset).arg(nDataSize);
-
-    if((g_nLastType==nType)&&(sInit!=g_sLastInit))
-    {
-        g_stInit.remove(sInit);
-    }
-
-    g_nLastType=nType;
-    g_sLastInit=sInit;
+    QString sInit=getInitString(ui->treeWidgetNavi->currentItem());
 
     ui->stackedWidgetInfo->setCurrentIndex(nType);
 
@@ -311,7 +296,7 @@ void ELFWidget::reloadData()
     {
         if(nType==SELF::TYPE_HEX)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 XHexView::OPTIONS options={};
                 options.bMenu_Disasm=true;
@@ -326,7 +311,7 @@ void ELFWidget::reloadData()
         }
         else if(nType==SELF::TYPE_DISASM)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 XMultiDisasmWidget::OPTIONS options={};
                 options.fileType=elf.getFileType();
@@ -341,7 +326,7 @@ void ELFWidget::reloadData()
         }
         else if(nType==SELF::TYPE_STRINGS)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 SearchStringsWidget::OPTIONS stringsOptions={};
                 stringsOptions.bMenu_Hex=true;
@@ -354,7 +339,7 @@ void ELFWidget::reloadData()
         }
         else if(nType==SELF::TYPE_SIGNATURES)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 SearchSignaturesWidget::OPTIONS signaturesOptions={};
                 signaturesOptions.bMenu_Hex=true;
@@ -365,28 +350,28 @@ void ELFWidget::reloadData()
         }
         else if(nType==SELF::TYPE_MEMORYMAP)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 ui->widgetMemoryMap->setData(getDevice(),elf.getFileType(),getOptions().sSearchSignaturesPath);
             }
         }
         else if(nType==SELF::TYPE_ENTROPY)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 ui->widgetEntropy->setData(getDevice(),0,getDevice()->size(),elf.getFileType(),true,this);
             }
         }
         else if(nType==SELF::TYPE_HEURISTICSCAN)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 ui->widgetHeuristicScan->setData(getDevice(),true,elf.getFileType(),this);
             }
         }
         else if(nType==SELF::TYPE_Elf_Ehdr)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 if(elf.is64())
                 {
@@ -497,7 +482,7 @@ void ELFWidget::reloadData()
         }
         else if(nType==SELF::TYPE_Elf_Shdr)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 ELFProcessData elfProcessData(SELF::TYPE_Elf_Shdr,&g_tvModel[SELF::TYPE_Elf_Shdr],&elf,nDataOffset,nDataSize,nDataExtraOffset,nDataExtraSize);
 
@@ -513,7 +498,7 @@ void ELFWidget::reloadData()
         }
         else if(nType==SELF::TYPE_Elf_Phdr)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 ELFProcessData elfProcessData(SELF::TYPE_Elf_Phdr,&g_tvModel[SELF::TYPE_Elf_Phdr],&elf,nDataOffset,nDataSize,nDataExtraOffset,nDataExtraSize);
 
@@ -529,7 +514,7 @@ void ELFWidget::reloadData()
         }
         else if(nType==SELF::TYPE_Elf_DynamicArrayTags)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 ELFProcessData elfProcessData(SELF::TYPE_Elf_DynamicArrayTags,&g_tvModel[SELF::TYPE_Elf_DynamicArrayTags],&elf,nDataOffset,nDataSize,nDataExtraOffset,nDataExtraSize);
 
@@ -545,7 +530,7 @@ void ELFWidget::reloadData()
         }
         else if(nType==SELF::TYPE_LIBRARIES)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 ELFProcessData elfProcessData(SELF::TYPE_LIBRARIES,&g_tvModel[SELF::TYPE_LIBRARIES],&elf,nDataOffset,nDataSize,nDataExtraOffset,nDataExtraSize);
 
@@ -561,7 +546,7 @@ void ELFWidget::reloadData()
         }
         else if(nType==SELF::TYPE_INTERPRETER)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 createListTable(SELF::TYPE_INTERPRETER,ui->tableWidget_Interpreter,N_ELF_INTERPRETER::records,g_lineEdit_Elf_Interpreter,N_ELF_INTERPRETER::__data_size);
 
@@ -576,7 +561,7 @@ void ELFWidget::reloadData()
         }
         else if(nType==SELF::TYPE_NOTES)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 ELFProcessData elfProcessData(SELF::TYPE_NOTES,&g_tvModel[SELF::TYPE_NOTES],&elf,nDataOffset,nDataSize,nDataExtraOffset,nDataExtraSize);
 
@@ -592,7 +577,7 @@ void ELFWidget::reloadData()
         }
         else if(nType==SELF::TYPE_RUNPATH)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 createListTable(SELF::TYPE_RUNPATH,ui->tableWidget_RunPath,N_ELF_RUNPATH::records,g_lineEdit_Elf_RunPath,N_ELF_RUNPATH::__data_size);
 
@@ -607,14 +592,14 @@ void ELFWidget::reloadData()
         }
         else if(nType==SELF::TYPE_STRINGTABLE)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 loadHexSubdevice(nDataOffset,nDataSize,0,&g_subDevice[SELF::TYPE_STRINGTABLE],ui->widgetHex_StringTable);
             }
         }
         else if(nType==SELF::TYPE_SYMBOLTABLE)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 ELFProcessData elfProcessData(SELF::TYPE_SYMBOLTABLE,&g_tvModel[SELF::TYPE_SYMBOLTABLE],&elf,nDataOffset,nDataSize,nDataExtraOffset,nDataExtraSize);
 
@@ -623,7 +608,7 @@ void ELFWidget::reloadData()
         }
         else if(nType==SELF::TYPE_Elf_Rela)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 ELFProcessData elfProcessData(SELF::TYPE_Elf_Rela,&g_tvModel[SELF::TYPE_Elf_Rela],&elf,nDataOffset,nDataSize,nDataExtraOffset,nDataExtraSize);
 
@@ -632,7 +617,7 @@ void ELFWidget::reloadData()
         }
         else if(nType==SELF::TYPE_Elf_Rel)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 ELFProcessData elfProcessData(SELF::TYPE_Elf_Rel,&g_tvModel[SELF::TYPE_Elf_Rel],&elf,nDataOffset,nDataSize,nDataExtraOffset,nDataExtraSize);
 
@@ -643,7 +628,7 @@ void ELFWidget::reloadData()
         setReadonly(ui->checkBoxReadonly->isChecked());
     }
 
-    g_stInit.insert(sInit);
+    addInit(sInit);
 }
 
 void ELFWidget::addDatasets(XELF *pElf, QTreeWidgetItem *pParent, QList<XBinary::DATASET> *pListDataSets)

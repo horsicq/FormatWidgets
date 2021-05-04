@@ -56,11 +56,6 @@ void BinaryWidget::cleanup()
 
 }
 
-void BinaryWidget::reset()
-{
-    g_bInit=false;
-}
-
 void BinaryWidget::reload()
 {
     BinaryWidget::clear();
@@ -125,13 +120,8 @@ void BinaryWidget::reloadData()
 
     if(binary.isValid())
     {
-        if(!g_bInit)
-        {
-            ui->widgetHex->setData(getDevice(),getOptions());
-            ui->widgetHex->setEdited(isEdited());
-
-            g_bInit=true;
-        }
+        ui->widgetHex->setData(getDevice(),getOptions());
+        ui->widgetHex->setEdited(isEdited());
         ui->widgetHex->reload();
 
         BinaryWidget::setReadonly(ui->checkBoxReadonly->isChecked());

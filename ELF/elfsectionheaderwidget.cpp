@@ -130,11 +130,6 @@ void ELFSectionHeaderWidget::cleanup()
 
 }
 
-void ELFSectionHeaderWidget::reset()
-{
-    g_bInit=false;
-}
-
 void ELFSectionHeaderWidget::reload()
 {
     clear();
@@ -470,248 +465,245 @@ void ELFSectionHeaderWidget::reloadData()
     {       
         bool bIs64=elf.is64();
 
-        if(!g_bInit)
+        if(nType==SELF::TYPE_Elf_Shdr)
         {
-            if(nType==SELF::TYPE_Elf_Shdr)
+            createHeaderTable(SELF::TYPE_Elf_Shdr,ui->tableWidget,bIs64?(N_Elf_Shdr::records64):(N_Elf_Shdr::records32),g_ppLinedEdit,N_Elf_Shdr::__data_size,getNumber());
+            g_ppComboBox[N_Elf_Shdr::CB_TYPE]=createComboBox(ui->tableWidget,XELF::getSectionTypesS(),SELF::TYPE_Elf_Shdr,N_Elf_Shdr::sh_type,XComboBoxEx::CBTYPE_NORMAL);
+            g_ppComboBox[N_Elf_Shdr::CB_FLAGS]=createComboBox(ui->tableWidget,XELF::getSectionFlagsS(),SELF::TYPE_Elf_Shdr,N_Elf_Shdr::sh_flags,XComboBoxEx::CBTYPE_FLAGS);
+
+            blockSignals(true);
+
+            if(bIs64)
             {
-                g_bInit=createHeaderTable(SELF::TYPE_Elf_Shdr,ui->tableWidget,bIs64?(N_Elf_Shdr::records64):(N_Elf_Shdr::records32),g_ppLinedEdit,N_Elf_Shdr::__data_size,getNumber());
-                g_ppComboBox[N_Elf_Shdr::CB_TYPE]=createComboBox(ui->tableWidget,XELF::getSectionTypesS(),SELF::TYPE_Elf_Shdr,N_Elf_Shdr::sh_type,XComboBoxEx::CBTYPE_NORMAL);
-                g_ppComboBox[N_Elf_Shdr::CB_FLAGS]=createComboBox(ui->tableWidget,XELF::getSectionFlagsS(),SELF::TYPE_Elf_Shdr,N_Elf_Shdr::sh_flags,XComboBoxEx::CBTYPE_FLAGS);
+                XELF_DEF::Elf64_Shdr shdr64=elf.getElf64_Shdr(getNumber());
 
-                blockSignals(true);
+                g_ppLinedEdit[N_Elf_Shdr::sh_name]->setValue(shdr64.sh_name);
+                g_ppLinedEdit[N_Elf_Shdr::sh_type]->setValue(shdr64.sh_type);
+                g_ppLinedEdit[N_Elf_Shdr::sh_flags]->setValue(shdr64.sh_flags);
+                g_ppLinedEdit[N_Elf_Shdr::sh_addr]->setValue(shdr64.sh_addr);
+                g_ppLinedEdit[N_Elf_Shdr::sh_offset]->setValue(shdr64.sh_offset);
+                g_ppLinedEdit[N_Elf_Shdr::sh_size]->setValue(shdr64.sh_size);
+                g_ppLinedEdit[N_Elf_Shdr::sh_link]->setValue(shdr64.sh_link);
+                g_ppLinedEdit[N_Elf_Shdr::sh_info]->setValue(shdr64.sh_info);
+                g_ppLinedEdit[N_Elf_Shdr::sh_addralign]->setValue(shdr64.sh_addralign);
+                g_ppLinedEdit[N_Elf_Shdr::sh_entsize]->setValue(shdr64.sh_entsize);
 
-                if(bIs64)
-                {
-                    XELF_DEF::Elf64_Shdr shdr64=elf.getElf64_Shdr(getNumber());
+                g_ppComboBox[N_Elf_Shdr::CB_TYPE]->setValue(shdr64.sh_type);
+                g_ppComboBox[N_Elf_Shdr::CB_FLAGS]->setValue(shdr64.sh_flags);
 
-                    g_ppLinedEdit[N_Elf_Shdr::sh_name]->setValue(shdr64.sh_name);
-                    g_ppLinedEdit[N_Elf_Shdr::sh_type]->setValue(shdr64.sh_type);
-                    g_ppLinedEdit[N_Elf_Shdr::sh_flags]->setValue(shdr64.sh_flags);
-                    g_ppLinedEdit[N_Elf_Shdr::sh_addr]->setValue(shdr64.sh_addr);
-                    g_ppLinedEdit[N_Elf_Shdr::sh_offset]->setValue(shdr64.sh_offset);
-                    g_ppLinedEdit[N_Elf_Shdr::sh_size]->setValue(shdr64.sh_size);
-                    g_ppLinedEdit[N_Elf_Shdr::sh_link]->setValue(shdr64.sh_link);
-                    g_ppLinedEdit[N_Elf_Shdr::sh_info]->setValue(shdr64.sh_info);
-                    g_ppLinedEdit[N_Elf_Shdr::sh_addralign]->setValue(shdr64.sh_addralign);
-                    g_ppLinedEdit[N_Elf_Shdr::sh_entsize]->setValue(shdr64.sh_entsize);
-
-                    g_ppComboBox[N_Elf_Shdr::CB_TYPE]->setValue(shdr64.sh_type);
-                    g_ppComboBox[N_Elf_Shdr::CB_FLAGS]->setValue(shdr64.sh_flags);
-
-                    addComment(ui->tableWidget,N_Elf_Shdr::sh_name,HEADER_COLUMN_COMMENT,elf.getStringFromIndex(g_nStringTableOffset,g_nStringTableSize,shdr64.sh_name));
-                }
-                else
-                {
-                    XELF_DEF::Elf32_Shdr shdr32=elf.getElf32_Shdr(getNumber());
-
-                    g_ppLinedEdit[N_Elf_Shdr::sh_name]->setValue(shdr32.sh_name);
-                    g_ppLinedEdit[N_Elf_Shdr::sh_type]->setValue(shdr32.sh_type);
-                    g_ppLinedEdit[N_Elf_Shdr::sh_flags]->setValue(shdr32.sh_flags);
-                    g_ppLinedEdit[N_Elf_Shdr::sh_addr]->setValue(shdr32.sh_addr);
-                    g_ppLinedEdit[N_Elf_Shdr::sh_offset]->setValue(shdr32.sh_offset);
-                    g_ppLinedEdit[N_Elf_Shdr::sh_size]->setValue(shdr32.sh_size);
-                    g_ppLinedEdit[N_Elf_Shdr::sh_link]->setValue(shdr32.sh_link);
-                    g_ppLinedEdit[N_Elf_Shdr::sh_info]->setValue(shdr32.sh_info);
-                    g_ppLinedEdit[N_Elf_Shdr::sh_addralign]->setValue(shdr32.sh_addralign);
-                    g_ppLinedEdit[N_Elf_Shdr::sh_entsize]->setValue(shdr32.sh_entsize);
-
-                    g_ppComboBox[N_Elf_Shdr::CB_TYPE]->setValue(shdr32.sh_type);
-                    g_ppComboBox[N_Elf_Shdr::CB_FLAGS]->setValue(shdr32.sh_flags);
-
-                    addComment(ui->tableWidget,N_Elf_Shdr::sh_name,HEADER_COLUMN_COMMENT,elf.getStringFromIndex(g_nStringTableOffset,g_nStringTableSize,shdr32.sh_name));
-                }
-
-                qint64 nOffset=elf.getShdrOffset(getNumber());
-                qint64 nSize=elf.getShdrSize();
-                qint64 nAddress=elf.offsetToRelAddress(nOffset);
-
-                loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
-
-                blockSignals(false);
+                addComment(ui->tableWidget,N_Elf_Shdr::sh_name,HEADER_COLUMN_COMMENT,elf.getStringFromIndex(g_nStringTableOffset,g_nStringTableSize,shdr64.sh_name));
             }
-            else if(nType==SELF::TYPE_Elf_Phdr)
+            else
             {
-                g_bInit=createHeaderTable(SELF::TYPE_Elf_Phdr,ui->tableWidget,bIs64?(N_Elf_Phdr64::records):(N_Elf_Phdr32::records),g_ppLinedEdit,bIs64?(N_Elf_Phdr64::__data_size):(N_Elf_Phdr32::__data_size),getNumber());
-                g_ppComboBox[N_Elf_Phdr32::CB_TYPE]=createComboBox(ui->tableWidget,XELF::getProgramTypesS(),SELF::TYPE_Elf_Phdr,bIs64?(N_Elf_Phdr64::p_type):(N_Elf_Phdr32::p_type),XComboBoxEx::CBTYPE_NORMAL);
-                g_ppComboBox[N_Elf_Phdr32::CB_FLAGS]=createComboBox(ui->tableWidget,XELF::getProgramFlagsS(),SELF::TYPE_Elf_Phdr,bIs64?(N_Elf_Phdr64::p_flags):(N_Elf_Phdr32::p_flags),XComboBoxEx::CBTYPE_FLAGS);
+                XELF_DEF::Elf32_Shdr shdr32=elf.getElf32_Shdr(getNumber());
 
-                blockSignals(true);
+                g_ppLinedEdit[N_Elf_Shdr::sh_name]->setValue(shdr32.sh_name);
+                g_ppLinedEdit[N_Elf_Shdr::sh_type]->setValue(shdr32.sh_type);
+                g_ppLinedEdit[N_Elf_Shdr::sh_flags]->setValue(shdr32.sh_flags);
+                g_ppLinedEdit[N_Elf_Shdr::sh_addr]->setValue(shdr32.sh_addr);
+                g_ppLinedEdit[N_Elf_Shdr::sh_offset]->setValue(shdr32.sh_offset);
+                g_ppLinedEdit[N_Elf_Shdr::sh_size]->setValue(shdr32.sh_size);
+                g_ppLinedEdit[N_Elf_Shdr::sh_link]->setValue(shdr32.sh_link);
+                g_ppLinedEdit[N_Elf_Shdr::sh_info]->setValue(shdr32.sh_info);
+                g_ppLinedEdit[N_Elf_Shdr::sh_addralign]->setValue(shdr32.sh_addralign);
+                g_ppLinedEdit[N_Elf_Shdr::sh_entsize]->setValue(shdr32.sh_entsize);
 
-                if(bIs64)
-                {
-                    XELF_DEF::Elf64_Phdr phdr64=elf.getElf64_Phdr(getNumber());
+                g_ppComboBox[N_Elf_Shdr::CB_TYPE]->setValue(shdr32.sh_type);
+                g_ppComboBox[N_Elf_Shdr::CB_FLAGS]->setValue(shdr32.sh_flags);
 
-                    g_ppLinedEdit[N_Elf_Phdr64::p_type]->setValue(phdr64.p_type);
-                    g_ppLinedEdit[N_Elf_Phdr64::p_flags]->setValue(phdr64.p_flags);
-                    g_ppLinedEdit[N_Elf_Phdr64::p_offset]->setValue(phdr64.p_offset);
-                    g_ppLinedEdit[N_Elf_Phdr64::p_vaddr]->setValue(phdr64.p_vaddr);
-                    g_ppLinedEdit[N_Elf_Phdr64::p_paddr]->setValue(phdr64.p_paddr);
-                    g_ppLinedEdit[N_Elf_Phdr64::p_filesz]->setValue(phdr64.p_filesz);
-                    g_ppLinedEdit[N_Elf_Phdr64::p_memsz]->setValue(phdr64.p_memsz);
-                    g_ppLinedEdit[N_Elf_Phdr64::p_align]->setValue(phdr64.p_align);
-
-                    g_ppComboBox[N_Elf_Phdr32::CB_TYPE]->setValue(phdr64.p_type);
-                    g_ppComboBox[N_Elf_Phdr32::CB_FLAGS]->setValue(phdr64.p_flags);
-                }
-                else
-                {
-                    XELF_DEF::Elf32_Phdr phdr32=elf.getElf32_Phdr(getNumber());
-
-                    g_ppLinedEdit[N_Elf_Phdr32::p_type]->setValue(phdr32.p_type);
-                    g_ppLinedEdit[N_Elf_Phdr32::p_offset]->setValue(phdr32.p_offset);
-                    g_ppLinedEdit[N_Elf_Phdr32::p_vaddr]->setValue(phdr32.p_vaddr);
-                    g_ppLinedEdit[N_Elf_Phdr32::p_paddr]->setValue(phdr32.p_paddr);
-                    g_ppLinedEdit[N_Elf_Phdr32::p_filesz]->setValue(phdr32.p_filesz);
-                    g_ppLinedEdit[N_Elf_Phdr32::p_memsz]->setValue(phdr32.p_memsz);
-                    g_ppLinedEdit[N_Elf_Phdr32::p_flags]->setValue(phdr32.p_flags);
-                    g_ppLinedEdit[N_Elf_Phdr32::p_align]->setValue(phdr32.p_align);
-
-                    g_ppComboBox[N_Elf_Phdr32::CB_TYPE]->setValue(phdr32.p_type);
-                    g_ppComboBox[N_Elf_Phdr32::CB_FLAGS]->setValue(phdr32.p_flags);
-                }
-
-                qint64 nOffset=elf.getPhdrOffset(getNumber());
-                qint64 nSize=elf.getPhdrSize();
-                qint64 nAddress=elf.offsetToRelAddress(nOffset);
-
-                loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
-
-                blockSignals(false);
+                addComment(ui->tableWidget,N_Elf_Shdr::sh_name,HEADER_COLUMN_COMMENT,elf.getStringFromIndex(g_nStringTableOffset,g_nStringTableSize,shdr32.sh_name));
             }
-            else if(nType==SELF::TYPE_Elf_DynamicArrayTags)
+
+            qint64 nOffset=elf.getShdrOffset(getNumber());
+            qint64 nSize=elf.getShdrSize();
+            qint64 nAddress=elf.offsetToRelAddress(nOffset);
+
+            loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
+
+            blockSignals(false);
+        }
+        else if(nType==SELF::TYPE_Elf_Phdr)
+        {
+            createHeaderTable(SELF::TYPE_Elf_Phdr,ui->tableWidget,bIs64?(N_Elf_Phdr64::records):(N_Elf_Phdr32::records),g_ppLinedEdit,bIs64?(N_Elf_Phdr64::__data_size):(N_Elf_Phdr32::__data_size),getNumber());
+            g_ppComboBox[N_Elf_Phdr32::CB_TYPE]=createComboBox(ui->tableWidget,XELF::getProgramTypesS(),SELF::TYPE_Elf_Phdr,bIs64?(N_Elf_Phdr64::p_type):(N_Elf_Phdr32::p_type),XComboBoxEx::CBTYPE_NORMAL);
+            g_ppComboBox[N_Elf_Phdr32::CB_FLAGS]=createComboBox(ui->tableWidget,XELF::getProgramFlagsS(),SELF::TYPE_Elf_Phdr,bIs64?(N_Elf_Phdr64::p_flags):(N_Elf_Phdr32::p_flags),XComboBoxEx::CBTYPE_FLAGS);
+
+            blockSignals(true);
+
+            if(bIs64)
             {
-                g_bInit=createHeaderTable(SELF::TYPE_Elf_DynamicArrayTags,ui->tableWidget,bIs64?(N_Elf_DynamicArrayTags::records64):(N_Elf_DynamicArrayTags::records32),g_ppLinedEdit,N_Elf_DynamicArrayTags::__data_size,getNumber(),getOffset());
-                g_ppComboBox[N_Elf_DynamicArrayTags::CB_TAG]=createComboBox(ui->tableWidget,XELF::getDynamicTagsS(),SELF::TYPE_Elf_DynamicArrayTags,N_Elf_DynamicArrayTags::d_tag,XComboBoxEx::CBTYPE_NORMAL);
+                XELF_DEF::Elf64_Phdr phdr64=elf.getElf64_Phdr(getNumber());
 
-                blockSignals(true);
+                g_ppLinedEdit[N_Elf_Phdr64::p_type]->setValue(phdr64.p_type);
+                g_ppLinedEdit[N_Elf_Phdr64::p_flags]->setValue(phdr64.p_flags);
+                g_ppLinedEdit[N_Elf_Phdr64::p_offset]->setValue(phdr64.p_offset);
+                g_ppLinedEdit[N_Elf_Phdr64::p_vaddr]->setValue(phdr64.p_vaddr);
+                g_ppLinedEdit[N_Elf_Phdr64::p_paddr]->setValue(phdr64.p_paddr);
+                g_ppLinedEdit[N_Elf_Phdr64::p_filesz]->setValue(phdr64.p_filesz);
+                g_ppLinedEdit[N_Elf_Phdr64::p_memsz]->setValue(phdr64.p_memsz);
+                g_ppLinedEdit[N_Elf_Phdr64::p_align]->setValue(phdr64.p_align);
 
-                qint64 nOffset=getOffset();
-
-                qint64 nTag=elf.getDynamicArrayTag(nOffset);
-                qint64 nValue=elf.getDynamicArrayValue(nOffset);
-
-                g_ppLinedEdit[N_Elf_DynamicArrayTags::d_tag]->setValue(bIs64?((qint64)nTag):((qint32)nTag));
-                g_ppLinedEdit[N_Elf_DynamicArrayTags::d_value]->setValue(bIs64?((qint64)nValue):((qint32)nValue));
-
-                g_ppComboBox[N_Elf_DynamicArrayTags::CB_TAG]->setValue(nTag);
-
-                qint64 nSize=elf.getDynamicArraySize();
-                qint64 nAddress=elf.offsetToRelAddress(nOffset);
-
-                loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
-
-                blockSignals(false);
+                g_ppComboBox[N_Elf_Phdr32::CB_TYPE]->setValue(phdr64.p_type);
+                g_ppComboBox[N_Elf_Phdr32::CB_FLAGS]->setValue(phdr64.p_flags);
             }
-            else if(nType==SELF::TYPE_SYMBOLTABLE)
+            else
             {
-                g_bInit=createHeaderTable(SELF::TYPE_SYMBOLTABLE,ui->tableWidget,bIs64?(N_Elf64_Sym::records):(N_Elf32_Sym::records),g_ppLinedEdit,N_Elf32_Sym::__data_size,getNumber(),getOffset());
+                XELF_DEF::Elf32_Phdr phdr32=elf.getElf32_Phdr(getNumber());
 
-                blockSignals(true);
+                g_ppLinedEdit[N_Elf_Phdr32::p_type]->setValue(phdr32.p_type);
+                g_ppLinedEdit[N_Elf_Phdr32::p_offset]->setValue(phdr32.p_offset);
+                g_ppLinedEdit[N_Elf_Phdr32::p_vaddr]->setValue(phdr32.p_vaddr);
+                g_ppLinedEdit[N_Elf_Phdr32::p_paddr]->setValue(phdr32.p_paddr);
+                g_ppLinedEdit[N_Elf_Phdr32::p_filesz]->setValue(phdr32.p_filesz);
+                g_ppLinedEdit[N_Elf_Phdr32::p_memsz]->setValue(phdr32.p_memsz);
+                g_ppLinedEdit[N_Elf_Phdr32::p_flags]->setValue(phdr32.p_flags);
+                g_ppLinedEdit[N_Elf_Phdr32::p_align]->setValue(phdr32.p_align);
 
-                qint64 nOffset=getOffset();
-
-                bool bIsBigEndian=elf.isBigEndian();
-
-                if(bIs64)
-                {
-                    XELF_DEF::Elf64_Sym sym64=elf._readElf64_Sym(nOffset,bIsBigEndian);
-
-                    g_ppLinedEdit[N_Elf64_Sym::st_name]->setValue(sym64.st_name);
-                    g_ppLinedEdit[N_Elf64_Sym::st_info]->setValue(sym64.st_info);
-                    g_ppLinedEdit[N_Elf64_Sym::st_other]->setValue(sym64.st_other);
-                    g_ppLinedEdit[N_Elf64_Sym::st_shndx]->setValue(sym64.st_shndx);
-                    g_ppLinedEdit[N_Elf64_Sym::st_value]->setValue(sym64.st_value);
-                    g_ppLinedEdit[N_Elf64_Sym::st_size]->setValue(sym64.st_size);
-
-                    addComment(ui->tableWidget,N_Elf64_Sym::st_name,HEADER_COLUMN_COMMENT,elf.getStringFromIndex(g_nStringTableOffset,g_nStringTableSize,sym64.st_name));
-                }
-                else
-                {
-                    XELF_DEF::Elf32_Sym sym32=elf._readElf32_Sym(nOffset,bIsBigEndian);
-
-                    g_ppLinedEdit[N_Elf32_Sym::st_name]->setValue(sym32.st_name);
-                    g_ppLinedEdit[N_Elf32_Sym::st_value]->setValue(sym32.st_value);
-                    g_ppLinedEdit[N_Elf32_Sym::st_size]->setValue(sym32.st_size);
-                    g_ppLinedEdit[N_Elf32_Sym::st_info]->setValue(sym32.st_info);
-                    g_ppLinedEdit[N_Elf32_Sym::st_other]->setValue(sym32.st_other);
-                    g_ppLinedEdit[N_Elf32_Sym::st_shndx]->setValue(sym32.st_shndx);
-
-                    addComment(ui->tableWidget,N_Elf32_Sym::st_name,HEADER_COLUMN_COMMENT,elf.getStringFromIndex(g_nStringTableOffset,g_nStringTableSize,sym32.st_name));
-                }
-
-                qint64 nSize=elf.getSymSize();
-                qint64 nAddress=elf.offsetToRelAddress(nOffset);
-
-                loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
-
-                blockSignals(false);
+                g_ppComboBox[N_Elf_Phdr32::CB_TYPE]->setValue(phdr32.p_type);
+                g_ppComboBox[N_Elf_Phdr32::CB_FLAGS]->setValue(phdr32.p_flags);
             }
-            else if(nType==SELF::TYPE_Elf_Rela)
+
+            qint64 nOffset=elf.getPhdrOffset(getNumber());
+            qint64 nSize=elf.getPhdrSize();
+            qint64 nAddress=elf.offsetToRelAddress(nOffset);
+
+            loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
+
+            blockSignals(false);
+        }
+        else if(nType==SELF::TYPE_Elf_DynamicArrayTags)
+        {
+            createHeaderTable(SELF::TYPE_Elf_DynamicArrayTags,ui->tableWidget,bIs64?(N_Elf_DynamicArrayTags::records64):(N_Elf_DynamicArrayTags::records32),g_ppLinedEdit,N_Elf_DynamicArrayTags::__data_size,getNumber(),getOffset());
+            g_ppComboBox[N_Elf_DynamicArrayTags::CB_TAG]=createComboBox(ui->tableWidget,XELF::getDynamicTagsS(),SELF::TYPE_Elf_DynamicArrayTags,N_Elf_DynamicArrayTags::d_tag,XComboBoxEx::CBTYPE_NORMAL);
+
+            blockSignals(true);
+
+            qint64 nOffset=getOffset();
+
+            qint64 nTag=elf.getDynamicArrayTag(nOffset);
+            qint64 nValue=elf.getDynamicArrayValue(nOffset);
+
+            g_ppLinedEdit[N_Elf_DynamicArrayTags::d_tag]->setValue(bIs64?((qint64)nTag):((qint32)nTag));
+            g_ppLinedEdit[N_Elf_DynamicArrayTags::d_value]->setValue(bIs64?((qint64)nValue):((qint32)nValue));
+
+            g_ppComboBox[N_Elf_DynamicArrayTags::CB_TAG]->setValue(nTag);
+
+            qint64 nSize=elf.getDynamicArraySize();
+            qint64 nAddress=elf.offsetToRelAddress(nOffset);
+
+            loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
+
+            blockSignals(false);
+        }
+        else if(nType==SELF::TYPE_SYMBOLTABLE)
+        {
+            createHeaderTable(SELF::TYPE_SYMBOLTABLE,ui->tableWidget,bIs64?(N_Elf64_Sym::records):(N_Elf32_Sym::records),g_ppLinedEdit,N_Elf32_Sym::__data_size,getNumber(),getOffset());
+
+            blockSignals(true);
+
+            qint64 nOffset=getOffset();
+
+            bool bIsBigEndian=elf.isBigEndian();
+
+            if(bIs64)
             {
-                g_bInit=createHeaderTable(SELF::TYPE_Elf_Rela,ui->tableWidget,bIs64?(N_Elf_Rela::records64):(N_Elf_Rela::records32),g_ppLinedEdit,N_Elf_Rela::__data_size,getNumber(),getOffset());
+                XELF_DEF::Elf64_Sym sym64=elf._readElf64_Sym(nOffset,bIsBigEndian);
 
-                blockSignals(true);
+                g_ppLinedEdit[N_Elf64_Sym::st_name]->setValue(sym64.st_name);
+                g_ppLinedEdit[N_Elf64_Sym::st_info]->setValue(sym64.st_info);
+                g_ppLinedEdit[N_Elf64_Sym::st_other]->setValue(sym64.st_other);
+                g_ppLinedEdit[N_Elf64_Sym::st_shndx]->setValue(sym64.st_shndx);
+                g_ppLinedEdit[N_Elf64_Sym::st_value]->setValue(sym64.st_value);
+                g_ppLinedEdit[N_Elf64_Sym::st_size]->setValue(sym64.st_size);
 
-                qint64 nOffset=getOffset();
-
-                bool bIsBigEndian=elf.isBigEndian();
-
-                if(bIs64)
-                {
-                    XELF_DEF::Elf64_Rela rela64=elf._readElf64_Rela(nOffset,bIsBigEndian);
-
-                    g_ppLinedEdit[N_Elf_Rela::r_offset]->setValue(rela64.r_offset);
-                    g_ppLinedEdit[N_Elf_Rela::r_info]->setValue(rela64.r_info);
-                    g_ppLinedEdit[N_Elf_Rela::r_addend]->setValue(rela64.r_addend);
-                }
-                else
-                {
-                    XELF_DEF::Elf32_Rela rela32=elf._readElf32_Rela(nOffset,bIsBigEndian);
-
-                    g_ppLinedEdit[N_Elf_Rela::r_offset]->setValue(rela32.r_offset);
-                    g_ppLinedEdit[N_Elf_Rela::r_info]->setValue(rela32.r_info);
-                    g_ppLinedEdit[N_Elf_Rela::r_addend]->setValue(rela32.r_addend);
-                }
-
-                qint64 nSize=elf.getSymSize();
-                qint64 nAddress=elf.offsetToRelAddress(nOffset);
-
-                loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
-
-                blockSignals(false);
+                addComment(ui->tableWidget,N_Elf64_Sym::st_name,HEADER_COLUMN_COMMENT,elf.getStringFromIndex(g_nStringTableOffset,g_nStringTableSize,sym64.st_name));
             }
-            else if(nType==SELF::TYPE_Elf_Rel)
+            else
             {
-                g_bInit=createHeaderTable(SELF::TYPE_Elf_Rel,ui->tableWidget,bIs64?(N_Elf_Rel::records64):(N_Elf_Rel::records32),g_ppLinedEdit,N_Elf_Rel::__data_size,getNumber(),getOffset());
+                XELF_DEF::Elf32_Sym sym32=elf._readElf32_Sym(nOffset,bIsBigEndian);
 
-                blockSignals(true);
+                g_ppLinedEdit[N_Elf32_Sym::st_name]->setValue(sym32.st_name);
+                g_ppLinedEdit[N_Elf32_Sym::st_value]->setValue(sym32.st_value);
+                g_ppLinedEdit[N_Elf32_Sym::st_size]->setValue(sym32.st_size);
+                g_ppLinedEdit[N_Elf32_Sym::st_info]->setValue(sym32.st_info);
+                g_ppLinedEdit[N_Elf32_Sym::st_other]->setValue(sym32.st_other);
+                g_ppLinedEdit[N_Elf32_Sym::st_shndx]->setValue(sym32.st_shndx);
 
-                qint64 nOffset=getOffset();
-
-                bool bIsBigEndian=elf.isBigEndian();
-
-                if(bIs64)
-                {
-                    XELF_DEF::Elf64_Rel rel64=elf._readElf64_Rel(nOffset,bIsBigEndian);
-
-                    g_ppLinedEdit[N_Elf_Rel::r_offset]->setValue(rel64.r_offset);
-                    g_ppLinedEdit[N_Elf_Rel::r_info]->setValue(rel64.r_info);
-                }
-                else
-                {
-                    XELF_DEF::Elf32_Rel rel32=elf._readElf32_Rel(nOffset,bIsBigEndian);
-
-                    g_ppLinedEdit[N_Elf_Rel::r_offset]->setValue(rel32.r_offset);
-                    g_ppLinedEdit[N_Elf_Rel::r_info]->setValue(rel32.r_info);
-                }
-
-                qint64 nSize=elf.getSymSize();
-                qint64 nAddress=elf.offsetToRelAddress(nOffset);
-
-                loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
-
-                blockSignals(false);
+                addComment(ui->tableWidget,N_Elf32_Sym::st_name,HEADER_COLUMN_COMMENT,elf.getStringFromIndex(g_nStringTableOffset,g_nStringTableSize,sym32.st_name));
             }
+
+            qint64 nSize=elf.getSymSize();
+            qint64 nAddress=elf.offsetToRelAddress(nOffset);
+
+            loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
+
+            blockSignals(false);
+        }
+        else if(nType==SELF::TYPE_Elf_Rela)
+        {
+            createHeaderTable(SELF::TYPE_Elf_Rela,ui->tableWidget,bIs64?(N_Elf_Rela::records64):(N_Elf_Rela::records32),g_ppLinedEdit,N_Elf_Rela::__data_size,getNumber(),getOffset());
+
+            blockSignals(true);
+
+            qint64 nOffset=getOffset();
+
+            bool bIsBigEndian=elf.isBigEndian();
+
+            if(bIs64)
+            {
+                XELF_DEF::Elf64_Rela rela64=elf._readElf64_Rela(nOffset,bIsBigEndian);
+
+                g_ppLinedEdit[N_Elf_Rela::r_offset]->setValue(rela64.r_offset);
+                g_ppLinedEdit[N_Elf_Rela::r_info]->setValue(rela64.r_info);
+                g_ppLinedEdit[N_Elf_Rela::r_addend]->setValue(rela64.r_addend);
+            }
+            else
+            {
+                XELF_DEF::Elf32_Rela rela32=elf._readElf32_Rela(nOffset,bIsBigEndian);
+
+                g_ppLinedEdit[N_Elf_Rela::r_offset]->setValue(rela32.r_offset);
+                g_ppLinedEdit[N_Elf_Rela::r_info]->setValue(rela32.r_info);
+                g_ppLinedEdit[N_Elf_Rela::r_addend]->setValue(rela32.r_addend);
+            }
+
+            qint64 nSize=elf.getSymSize();
+            qint64 nAddress=elf.offsetToRelAddress(nOffset);
+
+            loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
+
+            blockSignals(false);
+        }
+        else if(nType==SELF::TYPE_Elf_Rel)
+        {
+            createHeaderTable(SELF::TYPE_Elf_Rel,ui->tableWidget,bIs64?(N_Elf_Rel::records64):(N_Elf_Rel::records32),g_ppLinedEdit,N_Elf_Rel::__data_size,getNumber(),getOffset());
+
+            blockSignals(true);
+
+            qint64 nOffset=getOffset();
+
+            bool bIsBigEndian=elf.isBigEndian();
+
+            if(bIs64)
+            {
+                XELF_DEF::Elf64_Rel rel64=elf._readElf64_Rel(nOffset,bIsBigEndian);
+
+                g_ppLinedEdit[N_Elf_Rel::r_offset]->setValue(rel64.r_offset);
+                g_ppLinedEdit[N_Elf_Rel::r_info]->setValue(rel64.r_info);
+            }
+            else
+            {
+                XELF_DEF::Elf32_Rel rel32=elf._readElf32_Rel(nOffset,bIsBigEndian);
+
+                g_ppLinedEdit[N_Elf_Rel::r_offset]->setValue(rel32.r_offset);
+                g_ppLinedEdit[N_Elf_Rel::r_info]->setValue(rel32.r_info);
+            }
+
+            qint64 nSize=elf.getSymSize();
+            qint64 nAddress=elf.offsetToRelAddress(nOffset);
+
+            loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
+
+            blockSignals(false);
         }
 
         setReadonly(ui->checkBoxReadonly->isChecked());

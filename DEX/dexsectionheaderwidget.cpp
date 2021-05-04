@@ -94,11 +94,6 @@ void DEXSectionHeaderWidget::cleanup()
 
 }
 
-void DEXSectionHeaderWidget::reset()
-{
-    g_bInit=false;
-}
-
 void DEXSectionHeaderWidget::reload()
 {
     clear();

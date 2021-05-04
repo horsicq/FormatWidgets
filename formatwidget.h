@@ -143,9 +143,13 @@ public:
     static bool _setTreeItem(QTreeWidget *pTree,QTreeWidgetItem *pItem,int nID);
     static void setTreeItem(QTreeWidget *pTree,int nID);
     virtual void clear()=0;
-    virtual void reset()=0;
     virtual void cleanup()=0;
     virtual void reload()=0;
+
+    void reset();
+    QString getInitString(QTreeWidgetItem *pItem);
+    void addInit(QString sString);
+    bool isInitPresent(QString sString);
 
     void addPage(QTreeWidgetItem *pItem);
     void setAddPageEnabled(bool bEnable);
@@ -216,6 +220,7 @@ private:
     QList<QTreeWidgetItem *> g_listPages;
     qint32 g_nPageIndex;
     bool g_bAddPageEnable;
+    QSet<QString> g_stInit;
 };
 
 #endif // FORMATWIDGET_H
