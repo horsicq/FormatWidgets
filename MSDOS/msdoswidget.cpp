@@ -78,11 +78,6 @@ void MSDOSWidget::cleanup()
 
 }
 
-void MSDOSWidget::reset()
-{
-    g_stInit.clear();
-}
-
 void MSDOSWidget::reload()
 {
     MSDOSWidget::clear();
@@ -212,15 +207,7 @@ void MSDOSWidget::reloadData()
     qint64 nDataOffset=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
     qint64 nDataSize=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
 
-    QString sInit=QString("%1-%2-%3").arg(nType).arg(nDataOffset).arg(nDataSize);
-
-    if((g_nLastType==nType)&&(sInit!=g_sLastInit))
-    {
-        g_stInit.remove(sInit);
-    }
-
-    g_nLastType=nType;
-    g_sLastInit=sInit;
+    QString sInit=getInitString(ui->treeWidgetNavi->currentItem());
 
     ui->stackedWidgetInfo->setCurrentIndex(nType);
 
@@ -230,7 +217,7 @@ void MSDOSWidget::reloadData()
     {
         if(nType==SMSDOS::TYPE_HEX)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 XHexView::OPTIONS options={};
                 options.bMenu_Disasm=true;
@@ -243,7 +230,7 @@ void MSDOSWidget::reloadData()
         }
         else if(nType==SMSDOS::TYPE_DISASM)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 XMultiDisasmWidget::OPTIONS options={};
                 options.fileType=msdos.getFileType();
@@ -255,7 +242,7 @@ void MSDOSWidget::reloadData()
         }
         else if(nType==SMSDOS::TYPE_STRINGS)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 SearchStringsWidget::OPTIONS stringsOptions={};
                 stringsOptions.bMenu_Hex=true;
@@ -268,28 +255,28 @@ void MSDOSWidget::reloadData()
         }
         else if(nType==SMSDOS::TYPE_MEMORYMAP)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 ui->widgetMemoryMap->setData(getDevice(),msdos.getFileType(),getOptions().sSearchSignaturesPath);
             }
         }
         else if(nType==SMSDOS::TYPE_ENTROPY)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 ui->widgetEntropy->setData(getDevice(),0,getDevice()->size(),msdos.getFileType(),true,this);
             }
         }
         else if(nType==SMSDOS::TYPE_HEURISTICSCAN)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 ui->widgetHeuristicScan->setData(getDevice(),true,msdos.getFileType(),this);
             }
         }
         else if(nType==SMSDOS::TYPE_DOS_HEADER)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 createHeaderTable(SMSDOS::TYPE_DOS_HEADER,ui->tableWidget_DOS_HEADER,N_DOS_HEADER::records,g_lineEdit_DOS_HEADER,N_DOS_HEADER::__data_size,0);
                 g_comboBox[CB_DOS_HEADER_e_magic]=createComboBox(ui->tableWidget_DOS_HEADER,XMSDOS::getImageMagicsS(),SMSDOS::TYPE_DOS_HEADER,N_DOS_HEADER::e_magic,XComboBoxEx::CBTYPE_NORMAL);
@@ -325,7 +312,7 @@ void MSDOSWidget::reloadData()
         }
         else if(nType==SMSDOS::TYPE_OVERLAY)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 qint64 nOverLayOffset=msdos.getOverlayOffset();
                 qint64 nOverlaySize=msdos.getOverlaySize();
@@ -337,7 +324,7 @@ void MSDOSWidget::reloadData()
         setReadonly(ui->checkBoxReadonly->isChecked());
     }
 
-    g_stInit.insert(sInit);
+    addInit(sInit);
 }
 
 void MSDOSWidget::widgetValueChanged(quint64 nValue)

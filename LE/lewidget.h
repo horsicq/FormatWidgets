@@ -43,7 +43,6 @@ public:
 
     virtual void clear();
     virtual void cleanup();
-    virtual void reset();
     virtual void reload();
 
 protected:
@@ -92,10 +91,6 @@ private:
     InvWidget *g_invWidget[__INV_size];
     SubDevice *g_subDevice[SLE::__TYPE_size];
     QStandardItemModel *g_tvModel[SLE::__TYPE_size];
-
-    QSet<QString> g_stInit;
-    qint32 g_nLastType;
-    QString g_sLastInit;
 };
 
 #endif // LEWIDGET_H

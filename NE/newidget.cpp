@@ -82,11 +82,6 @@ void NEWidget::cleanup()
 
 }
 
-void NEWidget::reset()
-{
-    g_stInit.clear();
-}
-
 void NEWidget::reload()
 {
     NEWidget::clear();
@@ -310,15 +305,7 @@ void NEWidget::reloadData()
     qint64 nDataOffset=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
     qint64 nDataSize=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
 
-    QString sInit=QString("%1-%2-%3").arg(nType).arg(nDataOffset).arg(nDataSize);
-
-    if((g_nLastType==nType)&&(sInit!=g_sLastInit))
-    {
-        g_stInit.remove(sInit);
-    }
-
-    g_nLastType=nType;
-    g_sLastInit=sInit;
+    QString sInit=getInitString(ui->treeWidgetNavi->currentItem());
 
     ui->stackedWidgetInfo->setCurrentIndex(nType);
 
@@ -328,7 +315,7 @@ void NEWidget::reloadData()
     {
         if(nType==SNE::TYPE_HEX)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 XHexView::OPTIONS options={};
                 options.bMenu_Disasm=true;
@@ -342,7 +329,7 @@ void NEWidget::reloadData()
         }
         else if(nType==SNE::TYPE_DISASM)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 XMultiDisasmWidget::OPTIONS options={};
                 options.fileType=ne.getFileType();
@@ -354,7 +341,7 @@ void NEWidget::reloadData()
         }
         else if(nType==SNE::TYPE_STRINGS)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 SearchStringsWidget::OPTIONS stringsOptions={};
                 stringsOptions.bMenu_Hex=true;
@@ -367,28 +354,28 @@ void NEWidget::reloadData()
         }
         else if(nType==SNE::TYPE_MEMORYMAP)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 ui->widgetMemoryMap->setData(getDevice(),ne.getFileType(),getOptions().sSearchSignaturesPath);
             }
         }
         else if(nType==SNE::TYPE_ENTROPY)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 ui->widgetEntropy->setData(getDevice(),0,getDevice()->size(),ne.getFileType(),true,this);
             }
         }
         else if(nType==SNE::TYPE_HEURISTICSCAN)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 ui->widgetHeuristicScan->setData(getDevice(),true,ne.getFileType(),this);
             }
         }
         else if(nType==SNE::TYPE_DOS_HEADER)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 createHeaderTable(SNE::TYPE_DOS_HEADER,ui->tableWidget_DOS_HEADER,N_NE_DOS_HEADER::records,g_lineEdit_DOS_HEADER,N_NE_DOS_HEADER::__data_size,0);
                 g_comboBox[CB_DOS_HEADER_e_magic]=createComboBox(ui->tableWidget_DOS_HEADER,XMSDOS::getImageMagicsS(),SNE::TYPE_DOS_HEADER,N_NE_DOS_HEADER::e_magic,XComboBoxEx::CBTYPE_NORMAL);
@@ -444,7 +431,7 @@ void NEWidget::reloadData()
         }
         else if(nType==SNE::TYPE_OS2_HEADER)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 createHeaderTable(SNE::TYPE_OS2_HEADER,ui->tableWidget_OS2_HEADER,N_OS2_HEADER::records,g_lineEdit_OS2_HEADER,N_OS2_HEADER::__data_size,0);
                 g_comboBox[CB_OS2_HEADER_ne_magic]=createComboBox(ui->tableWidget_OS2_HEADER,XNE::getImageNEMagicsS(),SNE::TYPE_OS2_HEADER,N_OS2_HEADER::ne_magic,XComboBoxEx::CBTYPE_NORMAL);
@@ -517,7 +504,7 @@ void NEWidget::reloadData()
                 blockSignals(false);
             }
         }
-        else if(nType==SNE::TYPE_OVERLAY)
+        else if(nType==SNE::TYPE_OVERLAY) // TODO Check
         {
             qint64 nOverLayOffset=ne.getOverlayOffset();
             qint64 nOverlaySize=ne.getOverlaySize();
@@ -528,7 +515,7 @@ void NEWidget::reloadData()
         setReadonly(ui->checkBoxReadonly->isChecked());
     }
 
-    g_stInit.insert(sInit);
+    addInit(sInit);
 }
 
 void NEWidget::widgetValueChanged(quint64 nValue)

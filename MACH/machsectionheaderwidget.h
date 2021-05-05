@@ -38,7 +38,6 @@ public:
     ~MACHSectionHeaderWidget();
     virtual void clear();
     virtual void cleanup();
-    virtual void reset();
     virtual void reload();
     virtual void setShortcuts(XShortcuts *pShortcuts);
 
@@ -63,6 +62,5 @@ private:
     InvWidget **g_ppInvWidget;
     int g_nInvWidgetSize;
     SubDevice *g_pSubDevice;
-    bool g_bInit;
 };
 #endif // MACHSECTIONHEADERWIDGET_H

@@ -84,11 +84,6 @@ void LEWidget::cleanup()
 
 }
 
-void LEWidget::reset()
-{
-    g_stInit.clear();
-}
-
 void LEWidget::reload()
 {
     LEWidget::clear();
@@ -303,15 +298,7 @@ void LEWidget::reloadData()
     qint64 nDataOffset=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
     qint64 nDataSize=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
 
-    QString sInit=QString("%1-%2-%3").arg(nType).arg(nDataOffset).arg(nDataSize);
-
-    if((g_nLastType==nType)&&(sInit!=g_sLastInit))
-    {
-        g_stInit.remove(sInit);
-    }
-
-    g_nLastType=nType;
-    g_sLastInit=sInit;
+    QString sInit=getInitString(ui->treeWidgetNavi->currentItem());
 
     ui->stackedWidgetInfo->setCurrentIndex(nType);
 
@@ -321,7 +308,7 @@ void LEWidget::reloadData()
     {
         if(nType==SLE::TYPE_HEX)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 XHexView::OPTIONS options={};
                 options.bMenu_Disasm=true;
@@ -336,7 +323,7 @@ void LEWidget::reloadData()
         }
         else if(nType==SLE::TYPE_DISASM)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 XMultiDisasmWidget::OPTIONS options={};
                 options.fileType=le.getFileType();
@@ -348,7 +335,7 @@ void LEWidget::reloadData()
         }
         else if(nType==SLE::TYPE_STRINGS)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 SearchStringsWidget::OPTIONS stringsOptions={};
                 stringsOptions.bMenu_Hex=true;
@@ -361,28 +348,28 @@ void LEWidget::reloadData()
         }
         else if(nType==SLE::TYPE_MEMORYMAP)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 ui->widgetMemoryMap->setData(getDevice(),le.getFileType(),getOptions().sSearchSignaturesPath);
             }
         }
         else if(nType==SLE::TYPE_ENTROPY)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 ui->widgetEntropy->setData(getDevice(),0,getDevice()->size(),le.getFileType(),true,this);
             }
         }
         else if(nType==SLE::TYPE_HEURISTICSCAN)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 ui->widgetHeuristicScan->setData(getDevice(),true,le.getFileType(),this);
             }
         }
         else if(nType==SLE::TYPE_DOS_HEADER)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 createHeaderTable(SLE::TYPE_DOS_HEADER,ui->tableWidget_DOS_HEADER,N_LE_DOS_HEADER::records,g_lineEdit_DOS_HEADER,N_LE_DOS_HEADER::__data_size,0);
                 g_comboBox[CB_DOS_HEADER_e_magic]=createComboBox(ui->tableWidget_DOS_HEADER,XMSDOS::getImageMagicsS(),SLE::TYPE_DOS_HEADER,N_LE_DOS_HEADER::e_magic,XComboBoxEx::CBTYPE_NORMAL);
@@ -437,7 +424,7 @@ void LEWidget::reloadData()
         }
         else if(nType==SLE::TYPE_VXD_HEADER)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 createHeaderTable(SLE::TYPE_VXD_HEADER,ui->tableWidget_VXD_HEADER,N_VXD_HEADER::records,g_lineEdit_VXD_HEADER,N_VXD_HEADER::__data_size,0);
                 g_comboBox[CB_VXD_HEADER_e32_magic]=createComboBox(ui->tableWidget_VXD_HEADER,XLE::getImageLEMagicsS(),SLE::TYPE_VXD_HEADER,N_VXD_HEADER::e32_magic,XComboBoxEx::CBTYPE_NORMAL);
@@ -509,7 +496,7 @@ void LEWidget::reloadData()
         }
         else if(nType==SLE::TYPE_OBJECTS)
         {
-            if(!g_stInit.contains(sInit))
+            if(!isInitPresent(sInit))
             {
                 LEProcessData leProcessData(SLE::TYPE_OBJECTS,&g_tvModel[SLE::TYPE_OBJECTS],&le,nDataOffset,nDataSize);
 
@@ -534,7 +521,7 @@ void LEWidget::reloadData()
         setReadonly(ui->checkBoxReadonly->isChecked());
     }
 
-    g_stInit.insert(sInit);
+    addInit(sInit);
 }
 
 void LEWidget::widgetValueChanged(quint64 nValue)

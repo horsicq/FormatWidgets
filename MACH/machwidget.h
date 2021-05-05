@@ -106,18 +106,28 @@ private slots:
     void on_tableView_SymbolTable_doubleClicked(const QModelIndex &index);
     void on_tableView_SymbolTable_customContextMenuRequested(const QPoint &pos);
     void on_tableView_Functions_customContextMenuRequested(const QPoint &pos);
+    void on_tableView_data_in_code_entry_customContextMenuRequested(const QPoint &pos);
     void editCommandHeader();
     void editSegmentHeader();
+    void segmentHex();
+    void segmentDisasm();
+    void segmentEntropy();
     void editSectionHeader();
+    void sectionHex();
+    void sectionDisasm();
+    void sectionEntropy();
     void editLibraryHeader();
     void editWeakLibraryHeader();
     void editIdLibraryHeader();
     void editSymbolHeader();
-    void hexFunction();
-    void disasmFunction();
+    void functionHex();
+    void functionDisasm();
+    void functionDemangle();
+    void editDiceHeader();
+    void diceHex();
     void showSectionHeader(int nType,QTableView *pTableView);
 
-    void demangleSymbol();
+    void symbolDemangle();
 
     void on_pushButtonHex_clicked();
     void on_pushButtonDisasm_clicked();

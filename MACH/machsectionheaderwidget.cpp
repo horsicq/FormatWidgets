@@ -85,6 +85,12 @@ MACHSectionHeaderWidget::MACHSectionHeaderWidget(QIODevice *pDevice,FW_DEF::OPTI
          g_nComboBoxSize=N_mach_nlist::__CB_size;
          g_nInvWidgetSize=N_mach_nlist::__INV_size;
      }
+     else if(nType==SMACH::TYPE_DICE)
+     {
+         g_nLineEditSize=N_mach_data_in_code_entry::__data_size;
+         g_nComboBoxSize=N_mach_data_in_code_entry::__CB_size;
+         g_nInvWidgetSize=N_mach_data_in_code_entry::__INV_size;
+     }
 
      if(g_nLineEditSize)
      {
@@ -138,11 +144,6 @@ void MACHSectionHeaderWidget::clear()
 void MACHSectionHeaderWidget::cleanup()
 {
 
-}
-
-void MACHSectionHeaderWidget::reset()
-{
-    g_bInit=false;
 }
 
 void MACHSectionHeaderWidget::reload()
@@ -319,6 +320,16 @@ FormatWidget::SV MACHSectionHeaderWidget::_setValue(QVariant vValue, int nStype,
                     }
 
                     break;
+
+                case SMACH::TYPE_mach_data_in_code:
+                    switch(nNdata)
+                    {
+                        case N_mach_data_in_code_entry::offset:         mach._set_data_in_code_entry_offset(nOffset,nValue);                break;
+                        case N_mach_data_in_code_entry::length:         mach._set_data_in_code_entry_length(nOffset,nValue);                break;
+                        case N_mach_data_in_code_entry::kind:           mach._set_data_in_code_entry_kind(nOffset,nValue);                  break;
+                    }
+
+                    break;
             }
 
             ui->widgetHex->reload();
@@ -396,223 +407,242 @@ void MACHSectionHeaderWidget::reloadData()
 
     if(mach.isValid())
     {
-        if(!g_bInit)
+        bool bIs64=mach.is64();
+        bool bIsBigEndian=mach.isBigEndian();
+
+        if(nType==SMACH::TYPE_mach_commands)
         {
-            bool bIs64=mach.is64();
-            bool bIsBigEndian=mach.isBigEndian();
+            createHeaderTable(SMACH::TYPE_mach_commands,ui->tableWidget,N_mach_commands::records,g_ppLinedEdit,N_mach_commands::__data_size,getNumber(),getOffset());
+            g_ppComboBox[N_mach_commands::CB_CMD]=createComboBox(ui->tableWidget,XMACH::getLoadCommandTypesS(),SMACH::TYPE_mach_commands,N_mach_commands::cmd,XComboBoxEx::CBTYPE_NORMAL);
 
-            if(nType==SMACH::TYPE_mach_commands)
+            blockSignals(true);
+
+            qint64 nHeaderOffset=getOffset();
+
+            XMACH::COMMAND_RECORD cr=mach._readLoadCommand(nHeaderOffset,bIsBigEndian);
+
+            g_ppLinedEdit[N_mach_commands::cmd]->setValue((quint32)cr.nType);
+            g_ppLinedEdit[N_mach_commands::cmdsize]->setValue((quint32)cr.nSize);
+
+            g_ppComboBox[N_mach_commands::CB_CMD]->setValue(cr.nType);
+
+            qint64 nOffset=nHeaderOffset;
+            qint64 nSize=mach.getCommandHeaderSize();
+            qint64 nAddress=mach.offsetToRelAddress(nOffset);
+
+            loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
+
+            blockSignals(false);
+        }
+        else if((nType==SMACH::TYPE_mach_libraries)||
+                (nType==SMACH::TYPE_mach_weak_libraries)||
+                (nType==SMACH::TYPE_mach_id_library))
+        {
+            createHeaderTable(nType,ui->tableWidget,N_mach_library::records,g_ppLinedEdit,N_mach_library::__data_size,getNumber(),getOffset());
+
+            blockSignals(true);
+
+            qint64 nHeaderOffset=getOffset();
+
+            XMACH::LIBRARY_RECORD lr=mach._readLibraryRecord(nHeaderOffset,bIsBigEndian);
+            XMACH::COMMAND_RECORD cr=mach._readLoadCommand(nHeaderOffset,bIsBigEndian);
+
+            g_ppLinedEdit[N_mach_library::timestamp]->setValue((quint32)lr.timestamp);
+            g_ppLinedEdit[N_mach_library::current_version]->setValue((quint32)lr.current_version);
+            g_ppLinedEdit[N_mach_library::compatibility_version]->setValue((quint32)lr.compatibility_version);
+            g_ppLinedEdit[N_mach_library::name]->setStringValue(lr.sFullName,lr.nMaxStringSize);
+
+            if(lr.nMaxStringSize)
             {
-                g_bInit=createHeaderTable(SMACH::TYPE_mach_commands,ui->tableWidget,N_mach_commands::records,g_ppLinedEdit,N_mach_commands::__data_size,getNumber(),getOffset());
-                g_ppComboBox[N_mach_commands::CB_CMD]=createComboBox(ui->tableWidget,XMACH::getLoadCommandTypesS(),SMACH::TYPE_mach_commands,N_mach_commands::cmd,XComboBoxEx::CBTYPE_NORMAL);
+                QTableWidgetItem *pItem=ui->tableWidget->item(N_mach_library::name,0);
 
-                blockSignals(true);
-
-                qint64 nHeaderOffset=getOffset();
-
-                XMACH::COMMAND_RECORD cr=mach._readLoadCommand(nHeaderOffset,bIsBigEndian);
-
-                g_ppLinedEdit[N_mach_commands::cmd]->setValue((quint32)cr.nType);
-                g_ppLinedEdit[N_mach_commands::cmdsize]->setValue((quint32)cr.nSize);
-
-                g_ppComboBox[N_mach_commands::CB_CMD]->setValue(cr.nType);
-
-                qint64 nOffset=nHeaderOffset;
-                qint64 nSize=mach.getCommandHeaderSize();
-                qint64 nAddress=mach.offsetToRelAddress(nOffset);
-
-                loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
-
-                blockSignals(false);
-            }
-            else if((nType==SMACH::TYPE_mach_libraries)||
-                    (nType==SMACH::TYPE_mach_weak_libraries)||
-                    (nType==SMACH::TYPE_mach_id_library))
-            {
-                g_bInit=createHeaderTable(nType,ui->tableWidget,N_mach_library::records,g_ppLinedEdit,N_mach_library::__data_size,getNumber(),getOffset());
-
-                blockSignals(true);
-
-                qint64 nHeaderOffset=getOffset();
-
-                XMACH::LIBRARY_RECORD lr=mach._readLibraryRecord(nHeaderOffset,bIsBigEndian);
-                XMACH::COMMAND_RECORD cr=mach._readLoadCommand(nHeaderOffset,bIsBigEndian);
-
-                g_ppLinedEdit[N_mach_library::timestamp]->setValue((quint32)lr.timestamp);
-                g_ppLinedEdit[N_mach_library::current_version]->setValue((quint32)lr.current_version);
-                g_ppLinedEdit[N_mach_library::compatibility_version]->setValue((quint32)lr.compatibility_version);
-                g_ppLinedEdit[N_mach_library::name]->setStringValue(lr.sFullName,lr.nMaxStringSize);
-
-                if(lr.nMaxStringSize)
+                if(pItem)
                 {
-                    QTableWidgetItem *pItem=ui->tableWidget->item(N_mach_library::name,0);
-
-                    if(pItem)
-                    {
-                        pItem->setData(Qt::UserRole+HEADER_DATA_SIZE,lr.nMaxStringSize);
-                    }
+                    pItem->setData(Qt::UserRole+HEADER_DATA_SIZE,lr.nMaxStringSize);
                 }
-
-                qint64 nOffset=nHeaderOffset;
-                qint64 nSize=cr.nSize;
-                qint64 nAddress=mach.offsetToRelAddress(nOffset);
-
-                loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
-
-                blockSignals(false);
             }
-            else if(nType==SMACH::TYPE_mach_segments)
-            {
-                g_bInit=createHeaderTable(SMACH::TYPE_mach_segments,ui->tableWidget,bIs64?(N_mach_segments::records64):(N_mach_segments::records32),g_ppLinedEdit,N_mach_segments::__data_size,getNumber(),getOffset());
+
+            qint64 nOffset=nHeaderOffset;
+            qint64 nSize=cr.nSize;
+            qint64 nAddress=mach.offsetToRelAddress(nOffset);
+
+            loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
+
+            blockSignals(false);
+        }
+        else if(nType==SMACH::TYPE_mach_segments)
+        {
+            createHeaderTable(SMACH::TYPE_mach_segments,ui->tableWidget,bIs64?(N_mach_segments::records64):(N_mach_segments::records32),g_ppLinedEdit,N_mach_segments::__data_size,getNumber(),getOffset());
 //                g_ppComboBox[N_mach_commands::CB_CMD]=createComboBox(ui->tableWidget,XMACH::getLoadCommandTypesS(),SMACH::TYPE_mach_commands,N_mach_commands::cmd,XComboBoxEx::CBTYPE_NORMAL);
 
-                blockSignals(true);
+            blockSignals(true);
 
-                qint64 nHeaderOffset=getOffset();
+            qint64 nHeaderOffset=getOffset();
 
-                if(bIs64)
-                {
-                    XMACH_DEF::segment_command_64 segment=mach._read_segment_command_64(nHeaderOffset,bIsBigEndian);
+            if(bIs64)
+            {
+                XMACH_DEF::segment_command_64 segment=mach._read_segment_command_64(nHeaderOffset,bIsBigEndian);
 
-                    g_ppLinedEdit[N_mach_segments::segname]->setStringValue(segment.segname);
-                    g_ppLinedEdit[N_mach_segments::vmaddr]->setValue(segment.vmaddr);
-                    g_ppLinedEdit[N_mach_segments::vmsize]->setValue(segment.vmsize);
-                    g_ppLinedEdit[N_mach_segments::fileoff]->setValue(segment.fileoff);
-                    g_ppLinedEdit[N_mach_segments::filesize]->setValue(segment.filesize);
-                    g_ppLinedEdit[N_mach_segments::maxprot]->setValue(segment.maxprot);
-                    g_ppLinedEdit[N_mach_segments::initprot]->setValue(segment.initprot);
-                    g_ppLinedEdit[N_mach_segments::nsects]->setValue(segment.nsects);
-                    g_ppLinedEdit[N_mach_segments::flags]->setValue(segment.flags);
-                }
-                else
-                {
-                    XMACH_DEF::segment_command segment=mach._read_segment_command(nHeaderOffset,bIsBigEndian);
+                g_ppLinedEdit[N_mach_segments::segname]->setStringValue(segment.segname);
+                g_ppLinedEdit[N_mach_segments::vmaddr]->setValue(segment.vmaddr);
+                g_ppLinedEdit[N_mach_segments::vmsize]->setValue(segment.vmsize);
+                g_ppLinedEdit[N_mach_segments::fileoff]->setValue(segment.fileoff);
+                g_ppLinedEdit[N_mach_segments::filesize]->setValue(segment.filesize);
+                g_ppLinedEdit[N_mach_segments::maxprot]->setValue(segment.maxprot);
+                g_ppLinedEdit[N_mach_segments::initprot]->setValue(segment.initprot);
+                g_ppLinedEdit[N_mach_segments::nsects]->setValue(segment.nsects);
+                g_ppLinedEdit[N_mach_segments::flags]->setValue(segment.flags);
+            }
+            else
+            {
+                XMACH_DEF::segment_command segment=mach._read_segment_command(nHeaderOffset,bIsBigEndian);
 
-                    g_ppLinedEdit[N_mach_segments::segname]->setStringValue(segment.segname);
-                    g_ppLinedEdit[N_mach_segments::vmaddr]->setValue(segment.vmaddr);
-                    g_ppLinedEdit[N_mach_segments::vmsize]->setValue(segment.vmsize);
-                    g_ppLinedEdit[N_mach_segments::fileoff]->setValue(segment.fileoff);
-                    g_ppLinedEdit[N_mach_segments::filesize]->setValue(segment.filesize);
-                    g_ppLinedEdit[N_mach_segments::maxprot]->setValue(segment.maxprot);
-                    g_ppLinedEdit[N_mach_segments::initprot]->setValue(segment.initprot);
-                    g_ppLinedEdit[N_mach_segments::nsects]->setValue(segment.nsects);
-                    g_ppLinedEdit[N_mach_segments::flags]->setValue(segment.flags);
-                }
+                g_ppLinedEdit[N_mach_segments::segname]->setStringValue(segment.segname);
+                g_ppLinedEdit[N_mach_segments::vmaddr]->setValue(segment.vmaddr);
+                g_ppLinedEdit[N_mach_segments::vmsize]->setValue(segment.vmsize);
+                g_ppLinedEdit[N_mach_segments::fileoff]->setValue(segment.fileoff);
+                g_ppLinedEdit[N_mach_segments::filesize]->setValue(segment.filesize);
+                g_ppLinedEdit[N_mach_segments::maxprot]->setValue(segment.maxprot);
+                g_ppLinedEdit[N_mach_segments::initprot]->setValue(segment.initprot);
+                g_ppLinedEdit[N_mach_segments::nsects]->setValue(segment.nsects);
+                g_ppLinedEdit[N_mach_segments::flags]->setValue(segment.flags);
+            }
 
 //                g_ppComboBox[N_mach_commands::CB_CMD]->setValue(cr.nType);
 
-                qint64 nOffset=nHeaderOffset;
-                qint64 nSize=mach.getSegmentHeaderSize();
-                qint64 nAddress=mach.offsetToRelAddress(nOffset);
+            qint64 nOffset=nHeaderOffset;
+            qint64 nSize=mach.getSegmentHeaderSize();
+            qint64 nAddress=mach.offsetToRelAddress(nOffset);
 
-                loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
+            loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
 
-                blockSignals(false);
-            }
-            else if(nType==SMACH::TYPE_mach_sections)
-            {
-                g_bInit=createHeaderTable(SMACH::TYPE_mach_sections,ui->tableWidget,bIs64?(N_mach_sections64::records):(N_mach_sections32::records),g_ppLinedEdit,bIs64?(N_mach_sections64::__data_size):(N_mach_sections32::__data_size),getNumber(),getOffset());
+            blockSignals(false);
+        }
+        else if(nType==SMACH::TYPE_mach_sections)
+        {
+            createHeaderTable(SMACH::TYPE_mach_sections,ui->tableWidget,bIs64?(N_mach_sections64::records):(N_mach_sections32::records),g_ppLinedEdit,bIs64?(N_mach_sections64::__data_size):(N_mach_sections32::__data_size),getNumber(),getOffset());
 //                g_ppComboBox[N_mach_commands::CB_CMD]=createComboBox(ui->tableWidget,XMACH::getLoadCommandTypesS(),SMACH::TYPE_mach_commands,N_mach_commands::cmd,XComboBoxEx::CBTYPE_NORMAL);
 
-                blockSignals(true);
+            blockSignals(true);
 
-                qint64 nHeaderOffset=getOffset();
+            qint64 nHeaderOffset=getOffset();
 
-                if(bIs64)
-                {
-                    XMACH_DEF::section_64 section=mach._read_section_64(nHeaderOffset,bIsBigEndian);
-
-                    g_ppLinedEdit[N_mach_sections64::sectname]->setStringValue(section.sectname);
-                    g_ppLinedEdit[N_mach_sections64::segname]->setStringValue(section.segname);
-                    g_ppLinedEdit[N_mach_sections64::addr]->setValue(section.addr);
-                    g_ppLinedEdit[N_mach_sections64::size]->setValue(section.size);
-                    g_ppLinedEdit[N_mach_sections64::offset]->setValue(section.offset);
-                    g_ppLinedEdit[N_mach_sections64::align]->setValue(section.align);
-                    g_ppLinedEdit[N_mach_sections64::reloff]->setValue(section.reloff);
-                    g_ppLinedEdit[N_mach_sections64::nreloc]->setValue(section.nreloc);
-                    g_ppLinedEdit[N_mach_sections64::flags]->setValue(section.flags);
-                    g_ppLinedEdit[N_mach_sections64::reserved1]->setValue(section.reserved1);
-                    g_ppLinedEdit[N_mach_sections64::reserved2]->setValue(section.reserved2);
-                    g_ppLinedEdit[N_mach_sections64::reserved3]->setValue(section.reserved3);
-                }
-                else
-                {
-                    XMACH_DEF::section section=mach._read_section(nHeaderOffset,bIsBigEndian);
-
-                    g_ppLinedEdit[N_mach_sections32::sectname]->setStringValue(section.sectname);
-                    g_ppLinedEdit[N_mach_sections32::segname]->setStringValue(section.segname);
-                    g_ppLinedEdit[N_mach_sections32::addr]->setValue(section.addr);
-                    g_ppLinedEdit[N_mach_sections32::size]->setValue(section.size);
-                    g_ppLinedEdit[N_mach_sections32::offset]->setValue(section.offset);
-                    g_ppLinedEdit[N_mach_sections32::align]->setValue(section.align);
-                    g_ppLinedEdit[N_mach_sections32::reloff]->setValue(section.reloff);
-                    g_ppLinedEdit[N_mach_sections32::nreloc]->setValue(section.nreloc);
-                    g_ppLinedEdit[N_mach_sections32::flags]->setValue(section.flags);
-                    g_ppLinedEdit[N_mach_sections32::reserved1]->setValue(section.reserved1);
-                    g_ppLinedEdit[N_mach_sections32::reserved2]->setValue(section.reserved2);
-                }
-
-                qint64 nOffset=nHeaderOffset;
-                qint64 nSize=mach.getSectionHeaderSize();
-                qint64 nAddress=mach.offsetToRelAddress(nOffset);
-
-                loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
-
-                blockSignals(false);
-            }
-            else if(nType==SMACH::TYPE_SYMBOLTABLE)
+            if(bIs64)
             {
-                g_bInit=createHeaderTable(SMACH::TYPE_SYMBOLTABLE,ui->tableWidget,bIs64?(N_mach_nlist::records64):(N_mach_nlist::records32),g_ppLinedEdit,N_mach_nlist::__data_size,getNumber(),getOffset());
+                XMACH_DEF::section_64 section=mach._read_section_64(nHeaderOffset,bIsBigEndian);
 
-                blockSignals(true);
-
-                XBinary::OFFSETSIZE osStringTable=mach.getStringTableOS();
-
-                qint64 nHeaderOffset=getOffset();
-
-                if(bIs64)
-                {
-                    XMACH_DEF::nlist_64 nlist=mach._read_nlist_64(nHeaderOffset);
-
-                    g_ppLinedEdit[N_mach_nlist::n_strx]->setValue(nlist.n_strx);
-                    g_ppLinedEdit[N_mach_nlist::n_type]->setValue(nlist.n_type);
-                    g_ppLinedEdit[N_mach_nlist::n_sect]->setValue(nlist.n_sect);
-                    g_ppLinedEdit[N_mach_nlist::n_desc]->setValue(nlist.n_desc);
-                    g_ppLinedEdit[N_mach_nlist::n_value]->setValue(nlist.n_value);
-
-                    addComment(ui->tableWidget,N_mach_nlist::n_strx,HEADER_COLUMN_COMMENT,mach.getStringFromIndex(osStringTable.nOffset,osStringTable.nSize,nlist.n_strx));
-                }
-                else
-                {
-                    XMACH_DEF::nlist nlist=mach._read_nlist(nHeaderOffset);
-
-                    g_ppLinedEdit[N_mach_nlist::n_strx]->setValue(nlist.n_strx);
-                    g_ppLinedEdit[N_mach_nlist::n_type]->setValue(nlist.n_type);
-                    g_ppLinedEdit[N_mach_nlist::n_sect]->setValue(nlist.n_sect);
-                    g_ppLinedEdit[N_mach_nlist::n_desc]->setValue(nlist.n_desc);
-                    g_ppLinedEdit[N_mach_nlist::n_value]->setValue(nlist.n_value);
-
-                    addComment(ui->tableWidget,N_mach_nlist::n_strx,HEADER_COLUMN_COMMENT,mach.getStringFromIndex(osStringTable.nOffset,osStringTable.nSize,nlist.n_strx));
-                }
-
-                qint64 nOffset=nHeaderOffset;
-                qint64 nSize=0;
-
-                if(bIs64)
-                {
-                    nSize=mach.get_nlist_64_size();
-                }
-                else
-                {
-                    nSize=mach.get_nlist_size();
-                }
-
-                qint64 nAddress=mach.offsetToRelAddress(nOffset);
-
-                loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
-
-                blockSignals(false);
+                g_ppLinedEdit[N_mach_sections64::sectname]->setStringValue(section.sectname);
+                g_ppLinedEdit[N_mach_sections64::segname]->setStringValue(section.segname);
+                g_ppLinedEdit[N_mach_sections64::addr]->setValue(section.addr);
+                g_ppLinedEdit[N_mach_sections64::size]->setValue(section.size);
+                g_ppLinedEdit[N_mach_sections64::offset]->setValue(section.offset);
+                g_ppLinedEdit[N_mach_sections64::align]->setValue(section.align);
+                g_ppLinedEdit[N_mach_sections64::reloff]->setValue(section.reloff);
+                g_ppLinedEdit[N_mach_sections64::nreloc]->setValue(section.nreloc);
+                g_ppLinedEdit[N_mach_sections64::flags]->setValue(section.flags);
+                g_ppLinedEdit[N_mach_sections64::reserved1]->setValue(section.reserved1);
+                g_ppLinedEdit[N_mach_sections64::reserved2]->setValue(section.reserved2);
+                g_ppLinedEdit[N_mach_sections64::reserved3]->setValue(section.reserved3);
             }
+            else
+            {
+                XMACH_DEF::section section=mach._read_section(nHeaderOffset,bIsBigEndian);
+
+                g_ppLinedEdit[N_mach_sections32::sectname]->setStringValue(section.sectname);
+                g_ppLinedEdit[N_mach_sections32::segname]->setStringValue(section.segname);
+                g_ppLinedEdit[N_mach_sections32::addr]->setValue(section.addr);
+                g_ppLinedEdit[N_mach_sections32::size]->setValue(section.size);
+                g_ppLinedEdit[N_mach_sections32::offset]->setValue(section.offset);
+                g_ppLinedEdit[N_mach_sections32::align]->setValue(section.align);
+                g_ppLinedEdit[N_mach_sections32::reloff]->setValue(section.reloff);
+                g_ppLinedEdit[N_mach_sections32::nreloc]->setValue(section.nreloc);
+                g_ppLinedEdit[N_mach_sections32::flags]->setValue(section.flags);
+                g_ppLinedEdit[N_mach_sections32::reserved1]->setValue(section.reserved1);
+                g_ppLinedEdit[N_mach_sections32::reserved2]->setValue(section.reserved2);
+            }
+
+            qint64 nOffset=nHeaderOffset;
+            qint64 nSize=mach.getSectionHeaderSize();
+            qint64 nAddress=mach.offsetToRelAddress(nOffset);
+
+            loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
+
+            blockSignals(false);
+        }
+        else if(nType==SMACH::TYPE_SYMBOLTABLE)
+        {
+            createHeaderTable(SMACH::TYPE_SYMBOLTABLE,ui->tableWidget,bIs64?(N_mach_nlist::records64):(N_mach_nlist::records32),g_ppLinedEdit,N_mach_nlist::__data_size,getNumber(),getOffset());
+
+            blockSignals(true);
+
+            XBinary::OFFSETSIZE osStringTable=mach.getStringTableOS();
+
+            qint64 nHeaderOffset=getOffset();
+
+            if(bIs64)
+            {
+                XMACH_DEF::nlist_64 nlist=mach._read_nlist_64(nHeaderOffset);
+
+                g_ppLinedEdit[N_mach_nlist::n_strx]->setValue(nlist.n_strx);
+                g_ppLinedEdit[N_mach_nlist::n_type]->setValue(nlist.n_type);
+                g_ppLinedEdit[N_mach_nlist::n_sect]->setValue(nlist.n_sect);
+                g_ppLinedEdit[N_mach_nlist::n_desc]->setValue(nlist.n_desc);
+                g_ppLinedEdit[N_mach_nlist::n_value]->setValue(nlist.n_value);
+
+                addComment(ui->tableWidget,N_mach_nlist::n_strx,HEADER_COLUMN_COMMENT,mach.getStringFromIndex(osStringTable.nOffset,osStringTable.nSize,nlist.n_strx));
+            }
+            else
+            {
+                XMACH_DEF::nlist nlist=mach._read_nlist(nHeaderOffset);
+
+                g_ppLinedEdit[N_mach_nlist::n_strx]->setValue(nlist.n_strx);
+                g_ppLinedEdit[N_mach_nlist::n_type]->setValue(nlist.n_type);
+                g_ppLinedEdit[N_mach_nlist::n_sect]->setValue(nlist.n_sect);
+                g_ppLinedEdit[N_mach_nlist::n_desc]->setValue(nlist.n_desc);
+                g_ppLinedEdit[N_mach_nlist::n_value]->setValue(nlist.n_value);
+
+                addComment(ui->tableWidget,N_mach_nlist::n_strx,HEADER_COLUMN_COMMENT,mach.getStringFromIndex(osStringTable.nOffset,osStringTable.nSize,nlist.n_strx));
+            }
+
+            qint64 nOffset=nHeaderOffset;
+            qint64 nSize=0;
+
+            if(bIs64)
+            {
+                nSize=mach.get_nlist_64_size();
+            }
+            else
+            {
+                nSize=mach.get_nlist_size();
+            }
+
+            qint64 nAddress=mach.offsetToRelAddress(nOffset);
+
+            loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
+
+            blockSignals(false);
+        }
+        else if(nType==SMACH::TYPE_DICE)
+        {
+            createHeaderTable(SMACH::TYPE_DICE,ui->tableWidget,N_mach_data_in_code_entry::records,g_ppLinedEdit,N_mach_data_in_code_entry::__data_size,getNumber(),getOffset());
+
+            blockSignals(true);
+
+            qint64 nHeaderOffset=getOffset();
+
+            XMACH_DEF::data_in_code_entry dice=mach._read_data_in_code_entry(nHeaderOffset);
+
+            g_ppLinedEdit[N_mach_data_in_code_entry::offset]->setValue(dice.offset);
+            g_ppLinedEdit[N_mach_data_in_code_entry::length]->setValue(dice.length);
+            g_ppLinedEdit[N_mach_data_in_code_entry::kind]->setValue(dice.kind);
+
+            qint64 nOffset=nHeaderOffset;
+            qint64 nSize=mach.get_data_in_code_entry_size();
+            qint64 nAddress=mach.offsetToRelAddress(nOffset);
+
+            loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
+
+            blockSignals(false);
         }
 
         setReadonly(ui->checkBoxReadonly->isChecked());

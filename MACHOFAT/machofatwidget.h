@@ -36,7 +36,6 @@ public:
     ~MACHOFATWidget();
     virtual void clear();
     virtual void cleanup();
-    virtual void reset();
     virtual void reload();
 
 protected:

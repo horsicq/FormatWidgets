@@ -456,3 +456,13 @@ const FW_DEF::HEADER_RECORD records64[]=
     {n_value,               "n_value",          offsetof(XMACH_DEF::nlist_64,n_value),      8,      "uint64",           FW_DEF::VAL_TYPE_DATA},
 };
 }
+
+namespace N_mach_data_in_code_entry
+{
+const FW_DEF::HEADER_RECORD records[]=
+{
+    {offset,                "offset",           offsetof(XMACH_DEF::data_in_code_entry,offset),         4,      "uint32",           FW_DEF::VAL_TYPE_OFFSET},
+    {length,                "length",           offsetof(XMACH_DEF::data_in_code_entry,length),         1,      "uint8",            FW_DEF::VAL_TYPE_SIZE},
+    {kind,                  "kind",             offsetof(XMACH_DEF::data_in_code_entry,kind),           1,      "uint8",            FW_DEF::VAL_TYPE_DATA},
+};
+}

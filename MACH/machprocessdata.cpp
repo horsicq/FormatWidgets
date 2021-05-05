@@ -329,7 +329,7 @@ void MACHProcessData::_process()
 
             (*g_ppModel)->setItem(i,0,pItem);
 
-            if(bIs64)
+            if(listRecords.at(i).bIs64)
             {
                 (*g_ppModel)->setItem(i,N_mach_nlist::n_strx+1,             new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.nlist64.n_strx)));
                 (*g_ppModel)->setItem(i,N_mach_nlist::n_type+1,             new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.nlist64.n_type)));
@@ -363,8 +363,11 @@ void MACHProcessData::_process()
         listLabels.append("");
         listLabels.append(tr("Offset"));
         listLabels.append(tr("Address"));
+        listLabels.append(tr("Name"));
 
         QList<XMACH::FUNCTION_RECORD> listRecords=g_pXMACH->getFunctionRecords(g_nOffset,g_nSize);
+        QList<XMACH::NLIST_RECORD> listNlistRecords=g_pXMACH->getNlistRecords();
+        XBinary::OFFSETSIZE osStringTable=g_pXMACH->getStringTableOS();
 
         int nNumberOfRecords=listRecords.count();
 
@@ -379,18 +382,62 @@ void MACHProcessData::_process()
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
 
+            pItem->setData(listRecords.at(i).nDataOffset,Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
+            pItem->setData(listRecords.at(i).nFunctionOffset,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+            pItem->setData(0,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
+            pItem->setData(listRecords.at(i).nFunctionAddress,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS);
+
             (*g_ppModel)->setItem(i,0,pItem);
+
+            XMACH::NLIST_RECORD nlist=XMACH::searchNlistRecordByValue(&listNlistRecords,listRecords.at(i).nFunctionAddress);
 
             if(bIs64)
             {
-                (*g_ppModel)->setItem(i,1,          new QStandardItem(XBinary::valueToHex((quint64)listRecords.at(i).nOffset)));
-                (*g_ppModel)->setItem(i,2,          new QStandardItem(XBinary::valueToHex((quint64)listRecords.at(i).nAddress)));
+                QString sName=g_pXMACH->getStringFromIndex(osStringTable.nOffset,osStringTable.nSize,nlist.s.nlist64.n_strx);
+
+                (*g_ppModel)->setItem(i,1,          new QStandardItem(XBinary::valueToHex((quint64)listRecords.at(i).nFunctionOffset)));
+                (*g_ppModel)->setItem(i,2,          new QStandardItem(XBinary::valueToHex((quint64)listRecords.at(i).nFunctionAddress)));
+                (*g_ppModel)->setItem(i,3,          new QStandardItem(sName));
             }
             else
             {
-                (*g_ppModel)->setItem(i,1,          new QStandardItem(XBinary::valueToHex((quint32)listRecords.at(i).nOffset)));
-                (*g_ppModel)->setItem(i,2,          new QStandardItem(XBinary::valueToHex((quint64)listRecords.at(i).nAddress)));
+                QString sName=g_pXMACH->getStringFromIndex(osStringTable.nOffset,osStringTable.nSize,nlist.s.nlist32.n_strx);
+
+                (*g_ppModel)->setItem(i,1,          new QStandardItem(XBinary::valueToHex((quint32)listRecords.at(i).nFunctionOffset)));
+                (*g_ppModel)->setItem(i,2,          new QStandardItem(XBinary::valueToHex((quint32)listRecords.at(i).nFunctionAddress)));
+                (*g_ppModel)->setItem(i,2,          new QStandardItem(sName));
             }
+
+            incValue();
+        }
+    }
+    else if(g_nType==SMACH::TYPE_DICE)
+    {
+        QList<QString> listLabels;
+        listLabels.append("");
+        listLabels.append(getStructList(N_mach_data_in_code_entry::records,N_mach_data_in_code_entry::__data_size));
+
+        QList<XMACH::DICE_RECORD> listRecords=g_pXMACH->getDiceRecords(g_nOffset,g_nSize);
+
+        int nNumberOfRecords=listRecords.count();
+
+        *g_ppModel=new QStandardItemModel(nNumberOfRecords,listLabels.count());
+
+        setMaximum(nNumberOfRecords);
+
+        setHeader(*g_ppModel,&listLabels);
+
+        for(int i=0; i<nNumberOfRecords; i++)
+        {
+            QStandardItem *pItem=new QStandardItem;
+            pItem->setData(i,Qt::DisplayRole);
+            pItem->setData(listRecords.at(i).nStructOffset,Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
+            pItem->setData(listRecords.at(i).dice.offset,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+            pItem->setData(listRecords.at(i).dice.length,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
+            (*g_ppModel)->setItem(i,0,                                          pItem);
+            (*g_ppModel)->setItem(i,N_mach_data_in_code_entry::offset+1,        new QStandardItem(XBinary::valueToHex(listRecords.at(i).dice.offset)));
+            (*g_ppModel)->setItem(i,N_mach_data_in_code_entry::length+1,        new QStandardItem(XBinary::valueToHex(listRecords.at(i).dice.length)));
+            (*g_ppModel)->setItem(i,N_mach_data_in_code_entry::kind+1,          new QStandardItem(XBinary::valueToHex(listRecords.at(i).dice.kind)));
 
             incValue();
         }
@@ -452,12 +499,20 @@ void MACHProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
         pTableView->setColumnWidth(3,nSymbolWidth*6);
         pTableView->setColumnWidth(4,nSymbolWidth*8);
         pTableView->setColumnWidth(5,nSymbolWidth*12);
-        pTableView->setColumnWidth(6,nSymbolWidth*35);
+        pTableView->setColumnWidth(6,nSymbolWidth*50);
     }
     else if(g_nType==SMACH::TYPE_FUNCTIONS)
     {
         pTableView->setColumnWidth(0,nSymbolWidth*4);
         pTableView->setColumnWidth(1,nSymbolWidth*12);
         pTableView->setColumnWidth(2,nSymbolWidth*12);
+        pTableView->setColumnWidth(3,nSymbolWidth*50);
+    }
+    else if(g_nType==SMACH::TYPE_DICE)
+    {
+        pTableView->setColumnWidth(0,nSymbolWidth*4);
+        pTableView->setColumnWidth(1,nSymbolWidth*8);
+        pTableView->setColumnWidth(2,nSymbolWidth*8);
+        pTableView->setColumnWidth(3,nSymbolWidth*8);
     }
 }

@@ -43,7 +43,6 @@ public:
     void setShortcuts(XShortcuts *pShortcuts);
     virtual void clear();
     virtual void cleanup();
-    virtual void reset();
     virtual void reload();
 
 protected:
@@ -194,10 +193,6 @@ private:
     InvWidget *invWidget[__INV_size];
     SubDevice *subDevice[SPE::__TYPE_size];
     QStandardItemModel *tvModel[SPE::__TYPE_size_ext];
-
-    QSet<QString> g_stInit;
-    qint32 nLastType;
-    QString sLastInit;
 };
 
 #endif // PEWIDGET_H

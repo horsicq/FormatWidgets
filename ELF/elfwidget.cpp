@@ -839,7 +839,7 @@ void ELFWidget::on_tableView_SymbolTable_customContextMenuRequested(const QPoint
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editSymbolHeader()));
 
         QAction actionDemangle(tr("Demangle"),this);
-        connect(&actionDemangle, SIGNAL(triggered()), this, SLOT(demangleSymbol()));
+        connect(&actionDemangle, SIGNAL(triggered()), this, SLOT(symbolDemangle()));
 
         contextMenu.addAction(&actionEdit);
         contextMenu.addAction(&actionDemangle);
@@ -853,7 +853,7 @@ void ELFWidget::editSymbolHeader()
     showSectionHeader(SELF::TYPE_SYMBOLTABLE,ui->tableView_SymbolTable);
 }
 
-void ELFWidget::demangleSymbol()
+void ELFWidget::symbolDemangle()
 {
     showTableViewDemangle(ui->tableView_SymbolTable,N_Elf64_Sym::st_size+2);
 }

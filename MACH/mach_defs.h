@@ -65,6 +65,7 @@ enum TYPE
     TYPE_STRINGTABLE,
     TYPE_SYMBOLTABLE,
     TYPE_FUNCTIONS,
+    TYPE_DICE,
     __TYPE_size
 };
 }
@@ -600,6 +601,29 @@ enum DATA
 
 extern const FW_DEF::HEADER_RECORD records32[__data_size];
 extern const FW_DEF::HEADER_RECORD records64[__data_size];
+
+enum CB
+{
+    __CB_size
+};
+
+enum INV
+{
+    __INV_size
+};
+}
+
+namespace N_mach_data_in_code_entry
+{
+enum DATA
+{
+    offset,
+    length,
+    kind,
+    __data_size
+};
+
+extern const FW_DEF::HEADER_RECORD records[__data_size];
 
 enum CB
 {

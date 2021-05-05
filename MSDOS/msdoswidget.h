@@ -41,7 +41,6 @@ public:
 
     virtual void clear();
     virtual void cleanup();
-    virtual void reset();
     virtual void reload();
 
 protected:
@@ -74,10 +73,6 @@ private:
     XComboBoxEx *g_comboBox[__CB_size];
 
     SubDevice *g_subDevice[SMSDOS::__TYPE_size];
-
-    QSet<QString> g_stInit;
-    qint32 g_nLastType;
-    QString g_sLastInit;
 };
 
 #endif // MSDOSWIDGET_H

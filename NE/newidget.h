@@ -43,7 +43,6 @@ public:
 
     virtual void clear();
     virtual void cleanup();
-    virtual void reset();
     virtual void reload();
 
 protected:
@@ -93,11 +92,6 @@ private:
     XLineEditHEX *g_lineEdit_DOS_HEADER[N_NE_DOS_HEADER::__data_size];
     XLineEditHEX *g_lineEdit_OS2_HEADER[N_OS2_HEADER::__data_size];
     XComboBoxEx *g_comboBox[__CB_size];
-
-    QSet<QString> g_stInit;
-
-    qint32 g_nLastType;
-    QString g_sLastInit;
 
     InvWidget *g_invWidget[__INV_size];
     SubDevice *g_subDevice[SNE::__TYPE_size];

@@ -59,11 +59,6 @@ void MACHOFATWidget::cleanup()
 
 }
 
-void MACHOFATWidget::reset()
-{
-
-}
-
 void MACHOFATWidget::reload()
 {
     Q_UNUSED(ui->comboBoxFilePart);

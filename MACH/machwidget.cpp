@@ -323,7 +323,7 @@ void MACHWidget::reload()
             {
                 qint64 _nOffset=mach.getCommandRecordOffset(XMACH_DEF::LC_FUNCTION_STARTS,0,&listCommandRecords);
 
-                QTreeWidgetItem *pItemFunctionStarts=createNewItem(SMACH::TYPE_mach_function_starts,QString("LC_FUNCTION_STARTS"),mach.getCommandRecordOffset(XMACH_DEF::LC_FUNCTION_STARTS,0,&listCommandRecords)); // TODO rename
+                QTreeWidgetItem *pItemFunctionStarts=createNewItem(SMACH::TYPE_mach_function_starts,QString("LC_FUNCTION_STARTS"),_nOffset); // TODO rename
 
                 pItemCommands->addChild(pItemFunctionStarts);
 
@@ -339,9 +339,20 @@ void MACHWidget::reload()
 
             if(mach.isCommandPresent(XMACH_DEF::LC_DATA_IN_CODE,&listCommandRecords))
             {
-                QTreeWidgetItem *pItemDataInCode=createNewItem(SMACH::TYPE_mach_data_in_code,QString("LC_DATA_IN_CODE"),mach.getCommandRecordOffset(XMACH_DEF::LC_DATA_IN_CODE,0,&listCommandRecords)); // TODO rename
+                qint64 _nOffset=mach.getCommandRecordOffset(XMACH_DEF::LC_DATA_IN_CODE,0,&listCommandRecords);
+
+                QTreeWidgetItem *pItemDataInCode=createNewItem(SMACH::TYPE_mach_data_in_code,QString("LC_DATA_IN_CODE"),_nOffset); // TODO rename
 
                 pItemCommands->addChild(pItemDataInCode);
+
+                XMACH_DEF::linkedit_data_command linkedit_data=mach._read_linkedit_data_command(_nOffset);
+
+                if(mach.isOffsetValid(linkedit_data.dataoff)&&(linkedit_data.datasize))
+                {
+                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_DICE,tr("Data in code"),linkedit_data.dataoff,linkedit_data.datasize); // TODO rename
+
+                    pItemDataInCode->addChild(pItem);
+                }
             }
 
             if(mach.isCommandPresent(XMACH_DEF::LC_CODE_SIGNATURE,&listCommandRecords))
@@ -996,6 +1007,7 @@ QString MACHWidget::typeIdToString(int nType)
         case SMACH::TYPE_mach_weak_libraries:   sResult=QString("Library %1").arg(tr("Header"));        break;
         case SMACH::TYPE_mach_id_library:       sResult=QString("Library %1").arg(tr("Header"));        break;
         case SMACH::TYPE_SYMBOLTABLE:           sResult=QString("Symbol %1").arg(tr("Header"));         break;
+        case SMACH::TYPE_DICE:                  sResult=QString("DICE %1").arg(tr("Header"));           break;
     }
 
     return sResult;
@@ -1868,6 +1880,15 @@ void MACHWidget::reloadData()
                 ajustTableView(&machProcessData,&tvModel[SMACH::TYPE_FUNCTIONS],ui->tableView_Functions,nullptr,false);
             }
         }
+        else if(nType==SMACH::TYPE_DICE)
+        {
+            if(!isInitPresent(sInit))
+            {
+                MACHProcessData machProcessData(SMACH::TYPE_DICE,&tvModel[SMACH::TYPE_DICE],&mach,nDataOffset,nDataSize);
+
+                ajustTableView(&machProcessData,&tvModel[SMACH::TYPE_DICE],ui->tableView_data_in_code_entry,nullptr,false);
+            }
+        }
 
         setReadonly(ui->checkBoxReadonly->isChecked());
     }
@@ -2193,11 +2214,28 @@ void MACHWidget::on_tableView_segments_customContextMenuRequested(const QPoint &
 
     if(nRow!=-1)
     {
+        bool bIsEnable=getTableViewItemSize(ui->tableView_segments);
+
         QMenu contextMenu(this);
 
         QAction actionEdit(tr("Edit"),this);
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editSegmentHeader()));
         contextMenu.addAction(&actionEdit);
+
+        QAction actionHex(tr("Hex"),this);
+        connect(&actionHex, SIGNAL(triggered()), this, SLOT(segmentHex()));
+        actionHex.setEnabled(bIsEnable);
+        contextMenu.addAction(&actionHex);
+
+        QAction actionDisasm(tr("Disasm"),this);
+        connect(&actionDisasm, SIGNAL(triggered()), this, SLOT(segmentDisasm()));
+        actionDisasm.setEnabled(bIsEnable);
+        contextMenu.addAction(&actionDisasm);
+
+        QAction actionEntropy(tr("Entropy"),this);
+        connect(&actionEntropy, SIGNAL(triggered()), this, SLOT(segmentEntropy()));
+        actionEntropy.setEnabled(bIsEnable);
+        contextMenu.addAction(&actionEntropy);
 
         contextMenu.exec(ui->tableView_segments->viewport()->mapToGlobal(pos));
     }
@@ -2215,11 +2253,28 @@ void MACHWidget::on_tableView_sections_customContextMenuRequested(const QPoint &
 
     if(nRow!=-1)
     {
+        bool bIsEnable=getTableViewItemSize(ui->tableView_sections);
+
         QMenu contextMenu(this);
 
         QAction actionEdit(tr("Edit"),this);
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editSectionHeader()));
         contextMenu.addAction(&actionEdit);
+
+        QAction actionHex(tr("Hex"),this);
+        connect(&actionHex, SIGNAL(triggered()), this, SLOT(sectionHex()));
+        actionHex.setEnabled(bIsEnable);
+        contextMenu.addAction(&actionHex);
+
+        QAction actionDisasm(tr("Disasm"),this);
+        connect(&actionDisasm, SIGNAL(triggered()), this, SLOT(sectionDisasm()));
+        actionDisasm.setEnabled(bIsEnable);
+        contextMenu.addAction(&actionDisasm);
+
+        QAction actionEntropy(tr("Entropy"),this);
+        connect(&actionEntropy, SIGNAL(triggered()), this, SLOT(sectionEntropy()));
+        actionEntropy.setEnabled(bIsEnable);
+        contextMenu.addAction(&actionEntropy);
 
         contextMenu.exec(ui->tableView_sections->viewport()->mapToGlobal(pos));
     }
@@ -2309,7 +2364,7 @@ void MACHWidget::on_tableView_SymbolTable_customContextMenuRequested(const QPoin
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editSymbolHeader()));
 
         QAction actionDemangle(tr("Demangle"),this);
-        connect(&actionDemangle, SIGNAL(triggered()), this, SLOT(demangleSymbol()));
+        connect(&actionDemangle, SIGNAL(triggered()), this, SLOT(symbolDemangle()));
 
         contextMenu.addAction(&actionEdit);
         contextMenu.addAction(&actionDemangle);
@@ -2327,15 +2382,40 @@ void MACHWidget::on_tableView_Functions_customContextMenuRequested(const QPoint 
         QMenu contextMenu(this);
 
         QAction actionHex(tr("Hex"),this);
-        connect(&actionHex, SIGNAL(triggered()), this, SLOT(hexFunction()));
+        connect(&actionHex, SIGNAL(triggered()), this, SLOT(functionHex()));
 
         QAction actionDisasm(tr("Disasm"),this);
-        connect(&actionDisasm, SIGNAL(triggered()), this, SLOT(disasmFunction()));
+        connect(&actionDisasm, SIGNAL(triggered()), this, SLOT(functionDisasm()));
+
+        QAction actionDemangle(tr("Demangle"),this);
+        connect(&actionDemangle, SIGNAL(triggered()), this, SLOT(functionDemangle()));
 
         contextMenu.addAction(&actionHex);
         contextMenu.addAction(&actionDisasm);
+        contextMenu.addAction(&actionDemangle);
 
         contextMenu.exec(ui->tableView_Functions->viewport()->mapToGlobal(pos));
+    }
+}
+
+void MACHWidget::on_tableView_data_in_code_entry_customContextMenuRequested(const QPoint &pos)
+{
+    int nRow=ui->tableView_data_in_code_entry->currentIndex().row();
+
+    if(nRow!=-1)
+    {
+        QMenu contextMenu(this);
+
+        QAction actionEdit(tr("Edit"),this);
+        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editDiceHeader()));
+
+        QAction actionHex(tr("Hex"),this);
+        connect(&actionHex, SIGNAL(triggered()), this, SLOT(diceHex()));
+
+        contextMenu.addAction(&actionEdit);
+        contextMenu.addAction(&actionHex);
+
+        contextMenu.exec(ui->tableView_data_in_code_entry->viewport()->mapToGlobal(pos));
     }
 }
 
@@ -2349,9 +2429,39 @@ void MACHWidget::editSegmentHeader()
     showSectionHeader(SMACH::TYPE_mach_segments,ui->tableView_segments);
 }
 
+void MACHWidget::segmentHex()
+{
+    showSectionHex(ui->tableView_segments);
+}
+
+void MACHWidget::segmentDisasm()
+{
+    showSectionDisasm(ui->tableView_segments);
+}
+
+void MACHWidget::segmentEntropy()
+{
+    showSectionEntropy(ui->tableView_segments);
+}
+
 void MACHWidget::editSectionHeader()
 {
     showSectionHeader(SMACH::TYPE_mach_sections,ui->tableView_sections);
+}
+
+void MACHWidget::sectionHex()
+{
+    showSectionHex(ui->tableView_sections);
+}
+
+void MACHWidget::sectionDisasm()
+{
+    showSectionDisasm(ui->tableView_sections);
+}
+
+void MACHWidget::sectionEntropy()
+{
+    showSectionEntropy(ui->tableView_sections);
 }
 
 void MACHWidget::editLibraryHeader()
@@ -2374,14 +2484,29 @@ void MACHWidget::editSymbolHeader()
     showSectionHeader(SMACH::TYPE_SYMBOLTABLE,ui->tableView_SymbolTable);
 }
 
-void MACHWidget::hexFunction()
+void MACHWidget::functionHex()
 {
-    qDebug("void MACHWidget::hexFunction()");
+    showSectionHex(ui->tableView_Functions);
 }
 
-void MACHWidget::disasmFunction()
+void MACHWidget::functionDisasm()
 {
-    qDebug("void MACHWidget::disasmFunction()");
+    showSectionDisasm(ui->tableView_Functions);
+}
+
+void MACHWidget::functionDemangle()
+{
+    showTableViewDemangle(ui->tableView_Functions,3);
+}
+
+void MACHWidget::editDiceHeader()
+{
+    showSectionHeader(SMACH::TYPE_DICE,ui->tableView_data_in_code_entry);
+}
+
+void MACHWidget::diceHex()
+{
+    showSectionHex(ui->tableView_data_in_code_entry);
 }
 
 void MACHWidget::showSectionHeader(int nType, QTableView *pTableView)
@@ -2412,7 +2537,7 @@ void MACHWidget::showSectionHeader(int nType, QTableView *pTableView)
     }
 }
 
-void MACHWidget::demangleSymbol()
+void MACHWidget::symbolDemangle()
 {
     showTableViewDemangle(ui->tableView_SymbolTable,N_mach_nlist::n_value+2);
 }

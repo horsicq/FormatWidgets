@@ -137,11 +137,6 @@ void PESectionHeaderWidget::cleanup()
 
 }
 
-void PESectionHeaderWidget::reset()
-{
-    g_bInit=false;
-}
-
 void PESectionHeaderWidget::reload()
 {
     clear();
@@ -403,220 +398,199 @@ void PESectionHeaderWidget::reloadData()
 
     if(pe.isValid())
     {
-        if(!g_bInit)
+        if(nType==SPE::TYPE_IMAGE_SECTION_HEADER)
         {
-            if(nType==SPE::TYPE_IMAGE_SECTION_HEADER)
-            {
-                g_bInit=createHeaderTable(SPE::TYPE_IMAGE_SECTION_HEADER,ui->tableWidget,N_IMAGE_SECTION_HEADER::records,g_ppLinedEdit,N_IMAGE_SECTION_HEADER::__data_size+1,getNumber());
-                g_ppComboBox[N_IMAGE_SECTION_HEADER::CB_CHARACTERISTICS]=createComboBox(ui->tableWidget,XPE::getImageSectionHeaderFlagsS(),SPE::TYPE_IMAGE_SECTION_HEADER,N_IMAGE_SECTION_HEADER::Characteristics,XComboBoxEx::CBTYPE_FLAGS);
-                g_ppComboBox[N_IMAGE_SECTION_HEADER::CB_ALIGH]=createComboBox(ui->tableWidget,XPE::getImageSectionHeaderAlignsS(),SPE::TYPE_IMAGE_SECTION_HEADER,N_IMAGE_SECTION_HEADER::Characteristics+1,XComboBoxEx::CBTYPE_EFLAGS,XPE_DEF::S_IMAGE_SCN_ALIGN_MASK);
+            createHeaderTable(SPE::TYPE_IMAGE_SECTION_HEADER,ui->tableWidget,N_IMAGE_SECTION_HEADER::records,g_ppLinedEdit,N_IMAGE_SECTION_HEADER::__data_size+1,getNumber());
+            g_ppComboBox[N_IMAGE_SECTION_HEADER::CB_CHARACTERISTICS]=createComboBox(ui->tableWidget,XPE::getImageSectionHeaderFlagsS(),SPE::TYPE_IMAGE_SECTION_HEADER,N_IMAGE_SECTION_HEADER::Characteristics,XComboBoxEx::CBTYPE_FLAGS);
+            g_ppComboBox[N_IMAGE_SECTION_HEADER::CB_ALIGH]=createComboBox(ui->tableWidget,XPE::getImageSectionHeaderAlignsS(),SPE::TYPE_IMAGE_SECTION_HEADER,N_IMAGE_SECTION_HEADER::Characteristics+1,XComboBoxEx::CBTYPE_EFLAGS,XPE_DEF::S_IMAGE_SCN_ALIGN_MASK);
 
-                g_ppInvWidget[N_IMAGE_SECTION_HEADER::INV_VirtualAddress]=createInvWidget(ui->tableWidget,SPE::TYPE_IMAGE_SECTION_HEADER,N_IMAGE_SECTION_HEADER::VirtualAddress,InvWidget::TYPE_HEX);
-                g_ppInvWidget[N_IMAGE_SECTION_HEADER::INV_PointerToRawData]=createInvWidget(ui->tableWidget,SPE::TYPE_IMAGE_SECTION_HEADER,N_IMAGE_SECTION_HEADER::PointerToRawData,InvWidget::TYPE_HEX);
+            g_ppInvWidget[N_IMAGE_SECTION_HEADER::INV_VirtualAddress]=createInvWidget(ui->tableWidget,SPE::TYPE_IMAGE_SECTION_HEADER,N_IMAGE_SECTION_HEADER::VirtualAddress,InvWidget::TYPE_HEX);
+            g_ppInvWidget[N_IMAGE_SECTION_HEADER::INV_PointerToRawData]=createInvWidget(ui->tableWidget,SPE::TYPE_IMAGE_SECTION_HEADER,N_IMAGE_SECTION_HEADER::PointerToRawData,InvWidget::TYPE_HEX);
 
-                blockSignals(true);
+            blockSignals(true);
 
-                XPE_DEF::IMAGE_SECTION_HEADER ish=pe.getSectionHeader(getNumber());
+            XPE_DEF::IMAGE_SECTION_HEADER ish=pe.getSectionHeader(getNumber());
 
-                QString sName=QString((char *)ish.Name);
-                sName.resize(qMin(sName.length(),XPE_DEF::S_IMAGE_SIZEOF_SHORT_NAME));
+            QString sName=QString((char *)ish.Name);
+            sName.resize(qMin(sName.length(),XPE_DEF::S_IMAGE_SIZEOF_SHORT_NAME));
 
-                g_ppLinedEdit[N_IMAGE_SECTION_HEADER::Name]->setStringValue(sName,XPE_DEF::S_IMAGE_SIZEOF_SHORT_NAME); // TODO Check
-                g_ppLinedEdit[N_IMAGE_SECTION_HEADER::VirtualSize]->setValue(ish.Misc.VirtualSize);
-                g_ppLinedEdit[N_IMAGE_SECTION_HEADER::VirtualAddress]->setValue(ish.VirtualAddress);
-                g_ppLinedEdit[N_IMAGE_SECTION_HEADER::SizeOfRawData]->setValue(ish.SizeOfRawData);
-                g_ppLinedEdit[N_IMAGE_SECTION_HEADER::PointerToRawData]->setValue(ish.PointerToRawData);
-                g_ppLinedEdit[N_IMAGE_SECTION_HEADER::PointerToRelocations]->setValue(ish.PointerToRelocations);
-                g_ppLinedEdit[N_IMAGE_SECTION_HEADER::PointerToLinenumbers]->setValue(ish.PointerToLinenumbers);
-                g_ppLinedEdit[N_IMAGE_SECTION_HEADER::NumberOfRelocations]->setValue(ish.NumberOfRelocations);
-                g_ppLinedEdit[N_IMAGE_SECTION_HEADER::NumberOfLinenumbers]->setValue(ish.NumberOfLinenumbers);
-                g_ppLinedEdit[N_IMAGE_SECTION_HEADER::Characteristics]->setValue(ish.Characteristics);
+            g_ppLinedEdit[N_IMAGE_SECTION_HEADER::Name]->setStringValue(sName,XPE_DEF::S_IMAGE_SIZEOF_SHORT_NAME); // TODO Check
+            g_ppLinedEdit[N_IMAGE_SECTION_HEADER::VirtualSize]->setValue(ish.Misc.VirtualSize);
+            g_ppLinedEdit[N_IMAGE_SECTION_HEADER::VirtualAddress]->setValue(ish.VirtualAddress);
+            g_ppLinedEdit[N_IMAGE_SECTION_HEADER::SizeOfRawData]->setValue(ish.SizeOfRawData);
+            g_ppLinedEdit[N_IMAGE_SECTION_HEADER::PointerToRawData]->setValue(ish.PointerToRawData);
+            g_ppLinedEdit[N_IMAGE_SECTION_HEADER::PointerToRelocations]->setValue(ish.PointerToRelocations);
+            g_ppLinedEdit[N_IMAGE_SECTION_HEADER::PointerToLinenumbers]->setValue(ish.PointerToLinenumbers);
+            g_ppLinedEdit[N_IMAGE_SECTION_HEADER::NumberOfRelocations]->setValue(ish.NumberOfRelocations);
+            g_ppLinedEdit[N_IMAGE_SECTION_HEADER::NumberOfLinenumbers]->setValue(ish.NumberOfLinenumbers);
+            g_ppLinedEdit[N_IMAGE_SECTION_HEADER::Characteristics]->setValue(ish.Characteristics);
 
-                g_ppComboBox[N_IMAGE_SECTION_HEADER::CB_CHARACTERISTICS]->setValue(ish.Characteristics);
-                g_ppComboBox[N_IMAGE_SECTION_HEADER::CB_ALIGH]->setValue(ish.Characteristics);
+            g_ppComboBox[N_IMAGE_SECTION_HEADER::CB_CHARACTERISTICS]->setValue(ish.Characteristics);
+            g_ppComboBox[N_IMAGE_SECTION_HEADER::CB_ALIGH]->setValue(ish.Characteristics);
 
-                g_ppInvWidget[N_IMAGE_SECTION_HEADER::INV_VirtualAddress]->setAddressAndSize(&pe,pe.getBaseAddress()+ish.VirtualAddress,0);
-                g_ppInvWidget[N_IMAGE_SECTION_HEADER::INV_PointerToRawData]->setOffsetAndSize(&pe,ish.PointerToRawData,0);
+            g_ppInvWidget[N_IMAGE_SECTION_HEADER::INV_VirtualAddress]->setAddressAndSize(&pe,pe.getBaseAddress()+ish.VirtualAddress,0);
+            g_ppInvWidget[N_IMAGE_SECTION_HEADER::INV_PointerToRawData]->setOffsetAndSize(&pe,ish.PointerToRawData,0);
 
-                qint64 nOffset=pe.getSectionHeaderOffset(getNumber());
-                qint64 nSize=pe.getSectionHeaderSize();
-                qint64 nAddress=pe.offsetToRelAddress(nOffset);
+            qint64 nOffset=pe.getSectionHeaderOffset(getNumber());
+            qint64 nSize=pe.getSectionHeaderSize();
+            qint64 nAddress=pe.offsetToRelAddress(nOffset);
 
-                loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
+            loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
 
-                blockSignals(false);
-            }
-            else if(nType==SPE::TYPE_IMPORT)
-            {
-                if(!g_bInit)
-                {
-                    g_bInit=createHeaderTable(SPE::TYPE_IMPORT,ui->tableWidget,N_IMAGE_IMPORT::records,g_ppLinedEdit,N_IMAGE_IMPORT::__data_size,getNumber());
+            blockSignals(false);
+        }
+        else if(nType==SPE::TYPE_IMPORT)
+        {
+            createHeaderTable(SPE::TYPE_IMPORT,ui->tableWidget,N_IMAGE_IMPORT::records,g_ppLinedEdit,N_IMAGE_IMPORT::__data_size,getNumber());
 
-                    g_ppInvWidget[N_IMAGE_IMPORT::INV_OriginalFirstThunk]=createInvWidget(ui->tableWidget,SPE::TYPE_IMPORT,N_IMAGE_IMPORT::OriginalFirstThunk,InvWidget::TYPE_HEX);
-                    g_ppInvWidget[N_IMAGE_IMPORT::INV_Name]=createInvWidget(ui->tableWidget,SPE::TYPE_IMPORT,N_IMAGE_IMPORT::Name,InvWidget::TYPE_HEX);
-                    g_ppInvWidget[N_IMAGE_IMPORT::INV_FirstThunk]=createInvWidget(ui->tableWidget,SPE::TYPE_IMPORT,N_IMAGE_IMPORT::FirstThunk,InvWidget::TYPE_HEX);
-                }
+            g_ppInvWidget[N_IMAGE_IMPORT::INV_OriginalFirstThunk]=createInvWidget(ui->tableWidget,SPE::TYPE_IMPORT,N_IMAGE_IMPORT::OriginalFirstThunk,InvWidget::TYPE_HEX);
+            g_ppInvWidget[N_IMAGE_IMPORT::INV_Name]=createInvWidget(ui->tableWidget,SPE::TYPE_IMPORT,N_IMAGE_IMPORT::Name,InvWidget::TYPE_HEX);
+            g_ppInvWidget[N_IMAGE_IMPORT::INV_FirstThunk]=createInvWidget(ui->tableWidget,SPE::TYPE_IMPORT,N_IMAGE_IMPORT::FirstThunk,InvWidget::TYPE_HEX);
 
-                blockSignals(true);
+            blockSignals(true);
 
-                XBinary::_MEMORY_MAP memoryMap=pe.getMemoryMap();
+            XBinary::_MEMORY_MAP memoryMap=pe.getMemoryMap();
 
-                XPE_DEF::IMAGE_IMPORT_DESCRIPTOR idh=pe.getImportDescriptor(getNumber());
+            XPE_DEF::IMAGE_IMPORT_DESCRIPTOR idh=pe.getImportDescriptor(getNumber());
 
-                g_ppLinedEdit[N_IMAGE_IMPORT::OriginalFirstThunk]->setValue(idh.OriginalFirstThunk);
-                g_ppLinedEdit[N_IMAGE_IMPORT::TimeDateStamp]->setValue(idh.TimeDateStamp);
-                g_ppLinedEdit[N_IMAGE_IMPORT::ForwarderChain]->setValue(idh.ForwarderChain);
-                g_ppLinedEdit[N_IMAGE_IMPORT::Name]->setValue(idh.Name);
-                g_ppLinedEdit[N_IMAGE_IMPORT::FirstThunk]->setValue(idh.FirstThunk);
+            g_ppLinedEdit[N_IMAGE_IMPORT::OriginalFirstThunk]->setValue(idh.OriginalFirstThunk);
+            g_ppLinedEdit[N_IMAGE_IMPORT::TimeDateStamp]->setValue(idh.TimeDateStamp);
+            g_ppLinedEdit[N_IMAGE_IMPORT::ForwarderChain]->setValue(idh.ForwarderChain);
+            g_ppLinedEdit[N_IMAGE_IMPORT::Name]->setValue(idh.Name);
+            g_ppLinedEdit[N_IMAGE_IMPORT::FirstThunk]->setValue(idh.FirstThunk);
 
-                g_ppInvWidget[N_IMAGE_IMPORT::INV_OriginalFirstThunk]->setAddressAndSize(&pe,pe.getBaseAddress()+idh.OriginalFirstThunk,0);
-                g_ppInvWidget[N_IMAGE_IMPORT::INV_Name]->setAddressAndSize(&pe,pe.getBaseAddress()+idh.Name,0);
-                g_ppInvWidget[N_IMAGE_IMPORT::INV_FirstThunk]->setAddressAndSize(&pe,pe.getBaseAddress()+idh.FirstThunk,0);
+            g_ppInvWidget[N_IMAGE_IMPORT::INV_OriginalFirstThunk]->setAddressAndSize(&pe,pe.getBaseAddress()+idh.OriginalFirstThunk,0);
+            g_ppInvWidget[N_IMAGE_IMPORT::INV_Name]->setAddressAndSize(&pe,pe.getBaseAddress()+idh.Name,0);
+            g_ppInvWidget[N_IMAGE_IMPORT::INV_FirstThunk]->setAddressAndSize(&pe,pe.getBaseAddress()+idh.FirstThunk,0);
 
-                addComment(ui->tableWidget,N_IMAGE_IMPORT::OriginalFirstThunk,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress(&memoryMap,idh.OriginalFirstThunk));
-                addComment(ui->tableWidget,N_IMAGE_IMPORT::Name,HEADER_COLUMN_COMMENT,pe.read_ansiString(pe.relAddressToOffset(&memoryMap,idh.Name)));
-                addComment(ui->tableWidget,N_IMAGE_IMPORT::FirstThunk,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress(&memoryMap,idh.FirstThunk));
+            addComment(ui->tableWidget,N_IMAGE_IMPORT::OriginalFirstThunk,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress(&memoryMap,idh.OriginalFirstThunk));
+            addComment(ui->tableWidget,N_IMAGE_IMPORT::Name,HEADER_COLUMN_COMMENT,pe.read_ansiString(pe.relAddressToOffset(&memoryMap,idh.Name)));
+            addComment(ui->tableWidget,N_IMAGE_IMPORT::FirstThunk,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress(&memoryMap,idh.FirstThunk));
 
-                qint64 nOffset=pe.getImportDescriptorOffset(getNumber());
-                qint64 nSize=pe.getImportDescriptorSize();
-                qint64 nAddress=pe.offsetToRelAddress(nOffset);
+            qint64 nOffset=pe.getImportDescriptorOffset(getNumber());
+            qint64 nSize=pe.getImportDescriptorSize();
+            qint64 nAddress=pe.offsetToRelAddress(nOffset);
 
-                loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
+            loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
 
-                blockSignals(false);
-            }
-            else if(nType==SPE::TYPE_DEBUG)
-            {
-                if(!g_bInit)
-                {
-                    g_bInit=createHeaderTable(SPE::TYPE_DEBUG,ui->tableWidget,N_IMAGE_DEBUG::records,g_ppLinedEdit,N_IMAGE_DEBUG::__data_size,getNumber());
-                    g_ppComboBox[N_IMAGE_DEBUG::CB_TYPE]=createComboBox(ui->tableWidget,XPE::getDebugTypesS(),SPE::TYPE_DEBUG,N_IMAGE_DEBUG::Type,XComboBoxEx::CBTYPE_NORMAL);
-                }
+            blockSignals(false);
+        }
+        else if(nType==SPE::TYPE_DEBUG)
+        {
+            createHeaderTable(SPE::TYPE_DEBUG,ui->tableWidget,N_IMAGE_DEBUG::records,g_ppLinedEdit,N_IMAGE_DEBUG::__data_size,getNumber());
+            g_ppComboBox[N_IMAGE_DEBUG::CB_TYPE]=createComboBox(ui->tableWidget,XPE::getDebugTypesS(),SPE::TYPE_DEBUG,N_IMAGE_DEBUG::Type,XComboBoxEx::CBTYPE_NORMAL);
 
-                blockSignals(true);
+            blockSignals(true);
 
-                XPE_DEF::S_IMAGE_DEBUG_DIRECTORY idd=pe.getDebugHeader(getNumber());
+            XPE_DEF::S_IMAGE_DEBUG_DIRECTORY idd=pe.getDebugHeader(getNumber());
 
-                g_ppLinedEdit[N_IMAGE_DEBUG::Characteristics]->setValue(idd.Characteristics);
-                g_ppLinedEdit[N_IMAGE_DEBUG::TimeDateStamp]->setValue(idd.TimeDateStamp);
-                g_ppLinedEdit[N_IMAGE_DEBUG::MajorVersion]->setValue(idd.MajorVersion);
-                g_ppLinedEdit[N_IMAGE_DEBUG::MinorVersion]->setValue(idd.MinorVersion);
-                g_ppLinedEdit[N_IMAGE_DEBUG::Type]->setValue(idd.Type);
-                g_ppLinedEdit[N_IMAGE_DEBUG::SizeOfData]->setValue(idd.SizeOfData);
-                g_ppLinedEdit[N_IMAGE_DEBUG::AddressOfRawData]->setValue(idd.AddressOfRawData);
-                g_ppLinedEdit[N_IMAGE_DEBUG::PointerToRawData]->setValue(idd.PointerToRawData);
+            g_ppLinedEdit[N_IMAGE_DEBUG::Characteristics]->setValue(idd.Characteristics);
+            g_ppLinedEdit[N_IMAGE_DEBUG::TimeDateStamp]->setValue(idd.TimeDateStamp);
+            g_ppLinedEdit[N_IMAGE_DEBUG::MajorVersion]->setValue(idd.MajorVersion);
+            g_ppLinedEdit[N_IMAGE_DEBUG::MinorVersion]->setValue(idd.MinorVersion);
+            g_ppLinedEdit[N_IMAGE_DEBUG::Type]->setValue(idd.Type);
+            g_ppLinedEdit[N_IMAGE_DEBUG::SizeOfData]->setValue(idd.SizeOfData);
+            g_ppLinedEdit[N_IMAGE_DEBUG::AddressOfRawData]->setValue(idd.AddressOfRawData);
+            g_ppLinedEdit[N_IMAGE_DEBUG::PointerToRawData]->setValue(idd.PointerToRawData);
 
-                g_ppComboBox[N_IMAGE_DEBUG::CB_TYPE]->setValue(idd.Type);
+            g_ppComboBox[N_IMAGE_DEBUG::CB_TYPE]->setValue(idd.Type);
 
-                qint64 nOffset=pe.getDebugHeaderOffset(getNumber());
-                qint64 nSize=pe.getDebugHeaderSize();
-                qint64 nAddress=pe.offsetToRelAddress(nOffset);
+            qint64 nOffset=pe.getDebugHeaderOffset(getNumber());
+            qint64 nSize=pe.getDebugHeaderSize();
+            qint64 nAddress=pe.offsetToRelAddress(nOffset);
 
-                loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
+            loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
 
-                blockSignals(false);
-            }
-            else if(nType==SPE::TYPE_RELOCS)
-            {
-                if(!g_bInit)
-                {
-                    g_bInit=createHeaderTable(SPE::TYPE_RELOCS,ui->tableWidget,N_IMAGE_RELOCS::records,g_ppLinedEdit,N_IMAGE_RELOCS::__data_size,getNumber());
-                }
+            blockSignals(false);
+        }
+        else if(nType==SPE::TYPE_RELOCS)
+        {
+            createHeaderTable(SPE::TYPE_RELOCS,ui->tableWidget,N_IMAGE_RELOCS::records,g_ppLinedEdit,N_IMAGE_RELOCS::__data_size,getNumber());
 
-                blockSignals(true);
+            blockSignals(true);
 
-                qint64 nOffset=getOffset();
+            qint64 nOffset=getOffset();
 
-                quint32 nVirtualAddress=pe.getRelocsVirtualAddress(nOffset);
-                quint32 nSizeOfBlock=pe.getRelocsSizeOfBlock(nOffset);
+            quint32 nVirtualAddress=pe.getRelocsVirtualAddress(nOffset);
+            quint32 nSizeOfBlock=pe.getRelocsSizeOfBlock(nOffset);
 
-                g_ppLinedEdit[N_IMAGE_RELOCS::VirtualAddress]->setValue(nVirtualAddress);
-                g_ppLinedEdit[N_IMAGE_RELOCS::SizeOfBlock]->setValue(nSizeOfBlock);
+            g_ppLinedEdit[N_IMAGE_RELOCS::VirtualAddress]->setValue(nVirtualAddress);
+            g_ppLinedEdit[N_IMAGE_RELOCS::SizeOfBlock]->setValue(nSizeOfBlock);
 
-                qint64 nSize=nSizeOfBlock;
-                qint64 nAddress=pe.offsetToRelAddress(nOffset);
+            qint64 nSize=nSizeOfBlock;
+            qint64 nAddress=pe.offsetToRelAddress(nOffset);
 
-                loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
+            loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
 
-                blockSignals(false);
-            }
-            else if(nType==SPE::TYPE_EXCEPTION)
-            {
-                if(!g_bInit)
-                {
-                    g_bInit=createHeaderTable(SPE::TYPE_EXCEPTION,ui->tableWidget,N_IMAGE_EXCEPTIONS::records,g_ppLinedEdit,N_IMAGE_EXCEPTIONS::__data_size,getNumber());
-                }
+            blockSignals(false);
+        }
+        else if(nType==SPE::TYPE_EXCEPTION)
+        {
+            createHeaderTable(SPE::TYPE_EXCEPTION,ui->tableWidget,N_IMAGE_EXCEPTIONS::records,g_ppLinedEdit,N_IMAGE_EXCEPTIONS::__data_size,getNumber());
 
-                blockSignals(true);
+            blockSignals(true);
 
-                qint64 nOffset=pe.getExceptionRecordOffset(getNumber());
+            qint64 nOffset=pe.getExceptionRecordOffset(getNumber());
 
-                XPE_DEF::S_IMAGE_RUNTIME_FUNCTION_ENTRY exception=pe._read_IMAGE_RUNTIME_FUNCTION_ENTRY(nOffset);
+            XPE_DEF::S_IMAGE_RUNTIME_FUNCTION_ENTRY exception=pe._read_IMAGE_RUNTIME_FUNCTION_ENTRY(nOffset);
 
-                g_ppLinedEdit[N_IMAGE_EXCEPTIONS::BeginAddress]->setValue(exception.BeginAddress);
-                g_ppLinedEdit[N_IMAGE_EXCEPTIONS::EndAddress]->setValue(exception.EndAddress);
-                g_ppLinedEdit[N_IMAGE_EXCEPTIONS::UnwindInfoAddress]->setValue(exception.UnwindInfoAddress);
+            g_ppLinedEdit[N_IMAGE_EXCEPTIONS::BeginAddress]->setValue(exception.BeginAddress);
+            g_ppLinedEdit[N_IMAGE_EXCEPTIONS::EndAddress]->setValue(exception.EndAddress);
+            g_ppLinedEdit[N_IMAGE_EXCEPTIONS::UnwindInfoAddress]->setValue(exception.UnwindInfoAddress);
 
-                qint64 nSize=pe.getExceptionRecordSize();
-                qint64 nAddress=pe.offsetToRelAddress(nOffset);
+            qint64 nSize=pe.getExceptionRecordSize();
+            qint64 nAddress=pe.offsetToRelAddress(nOffset);
 
-                loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
+            loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
 
-                blockSignals(false);
-            }
-            else if(nType==SPE::TYPE_DELAYIMPORT)
-            {
-                if(!g_bInit)
-                {
-                    g_bInit=createHeaderTable(SPE::TYPE_DELAYIMPORT,ui->tableWidget,N_IMAGE_DELAYIMPORT::records,g_ppLinedEdit,N_IMAGE_DELAYIMPORT::__data_size,getNumber());
-                }
+            blockSignals(false);
+        }
+        else if(nType==SPE::TYPE_DELAYIMPORT)
+        {
+            createHeaderTable(SPE::TYPE_DELAYIMPORT,ui->tableWidget,N_IMAGE_DELAYIMPORT::records,g_ppLinedEdit,N_IMAGE_DELAYIMPORT::__data_size,getNumber());
 
-                blockSignals(true);
+            blockSignals(true);
 
-                qint64 nOffset=pe.getDelayImportRecordOffset(getNumber());
+            qint64 nOffset=pe.getDelayImportRecordOffset(getNumber());
 
-                XPE_DEF::S_IMAGE_DELAYLOAD_DESCRIPTOR delayImport=pe._read_IMAGE_DELAYLOAD_DESCRIPTOR(nOffset);
+            XPE_DEF::S_IMAGE_DELAYLOAD_DESCRIPTOR delayImport=pe._read_IMAGE_DELAYLOAD_DESCRIPTOR(nOffset);
 
-                g_ppLinedEdit[N_IMAGE_DELAYIMPORT::AllAttributes]->setValue(delayImport.AllAttributes);
-                g_ppLinedEdit[N_IMAGE_DELAYIMPORT::DllNameRVA]->setValue(delayImport.DllNameRVA);
-                g_ppLinedEdit[N_IMAGE_DELAYIMPORT::ModuleHandleRVA]->setValue(delayImport.ModuleHandleRVA);
-                g_ppLinedEdit[N_IMAGE_DELAYIMPORT::ImportAddressTableRVA]->setValue(delayImport.ImportAddressTableRVA);
-                g_ppLinedEdit[N_IMAGE_DELAYIMPORT::ImportNameTableRVA]->setValue(delayImport.ImportNameTableRVA);
-                g_ppLinedEdit[N_IMAGE_DELAYIMPORT::BoundImportAddressTableRVA]->setValue(delayImport.BoundImportAddressTableRVA);
-                g_ppLinedEdit[N_IMAGE_DELAYIMPORT::UnloadInformationTableRVA]->setValue(delayImport.UnloadInformationTableRVA);
-                g_ppLinedEdit[N_IMAGE_DELAYIMPORT::TimeDateStamp]->setValue(delayImport.TimeDateStamp);
+            g_ppLinedEdit[N_IMAGE_DELAYIMPORT::AllAttributes]->setValue(delayImport.AllAttributes);
+            g_ppLinedEdit[N_IMAGE_DELAYIMPORT::DllNameRVA]->setValue(delayImport.DllNameRVA);
+            g_ppLinedEdit[N_IMAGE_DELAYIMPORT::ModuleHandleRVA]->setValue(delayImport.ModuleHandleRVA);
+            g_ppLinedEdit[N_IMAGE_DELAYIMPORT::ImportAddressTableRVA]->setValue(delayImport.ImportAddressTableRVA);
+            g_ppLinedEdit[N_IMAGE_DELAYIMPORT::ImportNameTableRVA]->setValue(delayImport.ImportNameTableRVA);
+            g_ppLinedEdit[N_IMAGE_DELAYIMPORT::BoundImportAddressTableRVA]->setValue(delayImport.BoundImportAddressTableRVA);
+            g_ppLinedEdit[N_IMAGE_DELAYIMPORT::UnloadInformationTableRVA]->setValue(delayImport.UnloadInformationTableRVA);
+            g_ppLinedEdit[N_IMAGE_DELAYIMPORT::TimeDateStamp]->setValue(delayImport.TimeDateStamp);
 
-                qint64 nSize=pe.getDelayImportRecordSize();
-                qint64 nAddress=pe.offsetToRelAddress(nOffset);
+            qint64 nSize=pe.getDelayImportRecordSize();
+            qint64 nAddress=pe.offsetToRelAddress(nOffset);
 
-                loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
+            loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
 
-                blockSignals(false);
-            }
-            else if(nType==SPE::TYPE_BOUNDIMPORT)
-            {
-                if(!g_bInit)
-                {
-                    g_bInit=createHeaderTable(SPE::TYPE_BOUNDIMPORT,ui->tableWidget,N_IMAGE_BOUNDIMPORT::records,g_ppLinedEdit,N_IMAGE_BOUNDIMPORT::__data_size,getNumber());
-                }
+            blockSignals(false);
+        }
+        else if(nType==SPE::TYPE_BOUNDIMPORT)
+        {
+            createHeaderTable(SPE::TYPE_BOUNDIMPORT,ui->tableWidget,N_IMAGE_BOUNDIMPORT::records,g_ppLinedEdit,N_IMAGE_BOUNDIMPORT::__data_size,getNumber());
 
-                blockSignals(true);
+            blockSignals(true);
 
-                qint64 nOffset=pe.getBoundImportRecordOffset(getNumber());
+            qint64 nOffset=pe.getBoundImportRecordOffset(getNumber());
 
-                XPE_DEF::IMAGE_BOUND_IMPORT_DESCRIPTOR boundImport=pe._read_IMAGE_BOUND_IMPORT_DESCRIPTOR(nOffset);
+            XPE_DEF::IMAGE_BOUND_IMPORT_DESCRIPTOR boundImport=pe._read_IMAGE_BOUND_IMPORT_DESCRIPTOR(nOffset);
 
-                g_ppLinedEdit[N_IMAGE_BOUNDIMPORT::TimeDateStamp]->setValue(boundImport.TimeDateStamp);
-                g_ppLinedEdit[N_IMAGE_BOUNDIMPORT::OffsetModuleName]->setValue(boundImport.OffsetModuleName);
-                g_ppLinedEdit[N_IMAGE_BOUNDIMPORT::NumberOfModuleForwarderRefs]->setValue(boundImport.NumberOfModuleForwarderRefs);
+            g_ppLinedEdit[N_IMAGE_BOUNDIMPORT::TimeDateStamp]->setValue(boundImport.TimeDateStamp);
+            g_ppLinedEdit[N_IMAGE_BOUNDIMPORT::OffsetModuleName]->setValue(boundImport.OffsetModuleName);
+            g_ppLinedEdit[N_IMAGE_BOUNDIMPORT::NumberOfModuleForwarderRefs]->setValue(boundImport.NumberOfModuleForwarderRefs);
 
-                qint64 nSize=pe.getBoundImportRecordSize();
-                qint64 nAddress=pe.offsetToRelAddress(nOffset);
+            qint64 nSize=pe.getBoundImportRecordSize();
+            qint64 nAddress=pe.offsetToRelAddress(nOffset);
 
-                loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
+            loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
 
-                blockSignals(false);
-            }
+            blockSignals(false);
         }
 
         setReadonly(ui->checkBoxReadonly->isChecked());
