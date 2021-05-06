@@ -382,13 +382,13 @@ void ELFWidget::reloadData()
                     createHeaderTable(SELF::TYPE_Elf_Ehdr,ui->tableWidget_Elf_Ehdr,N_Elf_Ehdr::records32,g_lineEdit_Elf_Ehdr,N_Elf_Ehdr::__data_size,0);
                 }
 
-                g_comboBox[CB_Elf_Ehdr_mag]=createComboBox(ui->tableWidget_Elf_Ehdr,XELF::getIndentMagS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::ei_mag,XComboBoxEx::CBTYPE_NORMAL);
-                g_comboBox[CB_Elf_Ehdr_iclass]=createComboBox(ui->tableWidget_Elf_Ehdr,XELF::getIndentClassesS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::ei_class,XComboBoxEx::CBTYPE_NORMAL);
-                g_comboBox[CB_Elf_Ehdr_idata]=createComboBox(ui->tableWidget_Elf_Ehdr,XELF::getIndentDatasS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::ei_data,XComboBoxEx::CBTYPE_NORMAL);
-                g_comboBox[CB_Elf_Ehdr_iversion]=createComboBox(ui->tableWidget_Elf_Ehdr,XELF::getIndentVersionsS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::ei_version,XComboBoxEx::CBTYPE_NORMAL);
-                g_comboBox[CB_Elf_Ehdr_iosabi]=createComboBox(ui->tableWidget_Elf_Ehdr,XELF::getIndentOsabisS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::ei_osabi,XComboBoxEx::CBTYPE_NORMAL);
-                g_comboBox[CB_Elf_Ehdr_type]=createComboBox(ui->tableWidget_Elf_Ehdr,XELF::getTypesS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::e_type,XComboBoxEx::CBTYPE_NORMAL);
-                g_comboBox[CB_Elf_Ehdr_machine]=createComboBox(ui->tableWidget_Elf_Ehdr,XELF::getMachinesS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::e_machine,XComboBoxEx::CBTYPE_NORMAL);
+                g_comboBox[CB_Elf_Ehdr_mag]=createComboBox(ui->tableWidget_Elf_Ehdr,XELF::getIndentMagS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::ei_mag,XComboBoxEx::CBTYPE_LIST);
+                g_comboBox[CB_Elf_Ehdr_iclass]=createComboBox(ui->tableWidget_Elf_Ehdr,XELF::getIndentClassesS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::ei_class,XComboBoxEx::CBTYPE_LIST);
+                g_comboBox[CB_Elf_Ehdr_idata]=createComboBox(ui->tableWidget_Elf_Ehdr,XELF::getIndentDatasS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::ei_data,XComboBoxEx::CBTYPE_LIST);
+                g_comboBox[CB_Elf_Ehdr_iversion]=createComboBox(ui->tableWidget_Elf_Ehdr,XELF::getIndentVersionsS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::ei_version,XComboBoxEx::CBTYPE_LIST);
+                g_comboBox[CB_Elf_Ehdr_iosabi]=createComboBox(ui->tableWidget_Elf_Ehdr,XELF::getIndentOsabisS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::ei_osabi,XComboBoxEx::CBTYPE_LIST);
+                g_comboBox[CB_Elf_Ehdr_type]=createComboBox(ui->tableWidget_Elf_Ehdr,XELF::getTypesS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::e_type,XComboBoxEx::CBTYPE_LIST);
+                g_comboBox[CB_Elf_Ehdr_machine]=createComboBox(ui->tableWidget_Elf_Ehdr,XELF::getMachinesS(),SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::e_machine,XComboBoxEx::CBTYPE_LIST);
 
                 g_invWidget[INV_Elf_e_entry]=createInvWidget(ui->tableWidget_Elf_Ehdr,SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::e_entry,InvWidget::TYPE_HEX);
                 g_invWidget[INV_Elf_e_phoff]=createInvWidget(ui->tableWidget_Elf_Ehdr,SELF::TYPE_Elf_Ehdr,N_Elf_Ehdr::e_phoff,InvWidget::TYPE_HEX);

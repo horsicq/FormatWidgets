@@ -974,22 +974,97 @@ void MACHWidget::blockSignals(bool bState)
 
 void MACHWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
 {
-    int nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
+    XBinary::MODE mode=XMACH::getMode(getDevice(),getOptions().bIsImage,getOptions().nImageBase);
 
-    pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_NAME,QHeaderView::ResizeToContents);
-    pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_OFFSET,QHeaderView::ResizeToContents);
-    pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_TYPE,QHeaderView::ResizeToContents);
+    pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,getColumnWidth(this,CW_UINT16,mode));
+    pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,getColumnWidth(this,CW_TYPE,mode));
 
     switch(nType)
     {
         case SMACH::TYPE_mach_header:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*12);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*26);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINT32,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGMID,mode));
             break;
-        // TODO more
-        default:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*12);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*12);
+        case SMACH::TYPE_mach_dyld_info_only:
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINT32,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGSHORT,mode));
+            break;
+        case SMACH::TYPE_mach_source_version:
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINT32,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGSHORT,mode));
+            break;
+        case SMACH::TYPE_mach_symtab:
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINT32,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGSHORT,mode));
+            break;
+        case SMACH::TYPE_mach_dysymtab:
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINT32,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGSHORT,mode));
+            break;
+        case SMACH::TYPE_mach_version_min:
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINT32,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGSHORT,mode));
+            break;
+        case SMACH::TYPE_mach_encryption_info:
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINT32,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGSHORT,mode));
+            break;
+        case SMACH::TYPE_mach_function_starts:
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINT32,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGSHORT,mode));
+            break;
+        case SMACH::TYPE_mach_data_in_code:
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINT32,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGSHORT,mode));
+            break;
+        case SMACH::TYPE_mach_code_signature:
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINT32,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGSHORT,mode));
+            break;
+        case SMACH::TYPE_mach_main:
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINT32,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGSHORT,mode));
+            break;
+        case SMACH::TYPE_mach_unix_thread:
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINT32,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGSHORT,mode));
+            break;
+        case SMACH::TYPE_mach_unix_thread_x86_32:
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINT32,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGSHORT,mode));
+            break;
+        case SMACH::TYPE_mach_unix_thread_x86_64:
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINT32,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGSHORT,mode));
+            break;
+        case SMACH::TYPE_mach_unix_thread_arm_32:
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINT32,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGSHORT,mode));
+            break;
+        case SMACH::TYPE_mach_unix_thread_arm_64:
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINT32,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGSHORT,mode));
+            break;
+        case SMACH::TYPE_mach_unix_thread_ppc_32:
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINT32,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGSHORT,mode));
             break;
     }
 }
@@ -1140,10 +1215,10 @@ void MACHWidget::reloadData()
                     createHeaderTable(SMACH::TYPE_mach_header,ui->tableWidget_mach_header,N_mach_header::records64,g_lineEdit_mach_header,N_mach_header::__data_size,0);
                 }
 
-                g_comboBox[CB_mach_header_magic]=createComboBox(ui->tableWidget_mach_header,XMACH::getHeaderMagicsS(),SMACH::TYPE_mach_header,N_mach_header::magic,XComboBoxEx::CBTYPE_NORMAL);
-                g_comboBox[CB_mach_header_cputype]=createComboBox(ui->tableWidget_mach_header,XMACH::getHeaderCpuTypesS(),SMACH::TYPE_mach_header,N_mach_header::cputype,XComboBoxEx::CBTYPE_NORMAL);
-                g_comboBox[CB_mach_header_cpusubtype]=createComboBox(ui->tableWidget_mach_header,XMACH::getHeaderCpuSubTypesS(mach.getHeader_cputype()),SMACH::TYPE_mach_header,N_mach_header::cpusubtype,XComboBoxEx::CBTYPE_NORMAL);
-                g_comboBox[CB_mach_header_filetype]=createComboBox(ui->tableWidget_mach_header,XMACH::getHeaderFileTypesS(),SMACH::TYPE_mach_header,N_mach_header::filetype,XComboBoxEx::CBTYPE_NORMAL);
+                g_comboBox[CB_mach_header_magic]=createComboBox(ui->tableWidget_mach_header,XMACH::getHeaderMagicsS(),SMACH::TYPE_mach_header,N_mach_header::magic,XComboBoxEx::CBTYPE_LIST);
+                g_comboBox[CB_mach_header_cputype]=createComboBox(ui->tableWidget_mach_header,XMACH::getHeaderCpuTypesS(),SMACH::TYPE_mach_header,N_mach_header::cputype,XComboBoxEx::CBTYPE_LIST);
+                g_comboBox[CB_mach_header_cpusubtype]=createComboBox(ui->tableWidget_mach_header,XMACH::getHeaderCpuSubTypesS(mach.getHeader_cputype()),SMACH::TYPE_mach_header,N_mach_header::cpusubtype,XComboBoxEx::CBTYPE_LIST);
+                g_comboBox[CB_mach_header_filetype]=createComboBox(ui->tableWidget_mach_header,XMACH::getHeaderFileTypesS(),SMACH::TYPE_mach_header,N_mach_header::filetype,XComboBoxEx::CBTYPE_LIST);
                 g_comboBox[CB_mach_header_flags]=createComboBox(ui->tableWidget_mach_header,XMACH::getHeaderFlagsS(),SMACH::TYPE_mach_header,N_mach_header::flags,XComboBoxEx::CBTYPE_FLAGS);
 
                 blockSignals(true);
@@ -2373,6 +2448,12 @@ void MACHWidget::on_tableView_SymbolTable_customContextMenuRequested(const QPoin
     }
 }
 
+void MACHWidget::on_tableView_Functions_doubleClicked(const QModelIndex &index)
+{
+    Q_UNUSED(index)
+    functionDisasm();
+}
+
 void MACHWidget::on_tableView_Functions_customContextMenuRequested(const QPoint &pos)
 {
     int nRow=ui->tableView_Functions->currentIndex().row();
@@ -2396,6 +2477,12 @@ void MACHWidget::on_tableView_Functions_customContextMenuRequested(const QPoint 
 
         contextMenu.exec(ui->tableView_Functions->viewport()->mapToGlobal(pos));
     }
+}
+
+void MACHWidget::on_tableView_data_in_code_entry_doubleClicked(const QModelIndex &index)
+{
+    Q_UNUSED(index)
+    editDiceHeader();
 }
 
 void MACHWidget::on_tableView_data_in_code_entry_customContextMenuRequested(const QPoint &pos)

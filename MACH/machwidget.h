@@ -105,7 +105,9 @@ private slots:
     void on_tableView_id_library_customContextMenuRequested(const QPoint &pos);
     void on_tableView_SymbolTable_doubleClicked(const QModelIndex &index);
     void on_tableView_SymbolTable_customContextMenuRequested(const QPoint &pos);
+    void on_tableView_Functions_doubleClicked(const QModelIndex &index);
     void on_tableView_Functions_customContextMenuRequested(const QPoint &pos);
+    void on_tableView_data_in_code_entry_doubleClicked(const QModelIndex &index);
     void on_tableView_data_in_code_entry_customContextMenuRequested(const QPoint &pos);
     void editCommandHeader();
     void editSegmentHeader();

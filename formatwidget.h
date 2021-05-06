@@ -163,6 +163,21 @@ public:
     void initHexViewWidget(XHexViewWidget *pWidget);
     void initToolsWidget(ToolsWidget *pWidget);
 
+    enum CW
+    {
+        CW_UINT8=0,
+        CW_UINT16,
+        CW_UINT32,
+        CW_UINT64,
+        CW_UINTMODE,
+        CW_TYPE,
+        CW_STRINGSHORT,
+        CW_STRINGMID,
+        CW_STRINGLONG
+    };
+
+    static qint32 getColumnWidth(QWidget *pParent,CW cw,XBinary::MODE mode);
+
 protected:
     enum SV
     {

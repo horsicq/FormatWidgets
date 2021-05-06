@@ -402,7 +402,7 @@ void PESectionHeaderWidget::reloadData()
         {
             createHeaderTable(SPE::TYPE_IMAGE_SECTION_HEADER,ui->tableWidget,N_IMAGE_SECTION_HEADER::records,g_ppLinedEdit,N_IMAGE_SECTION_HEADER::__data_size+1,getNumber());
             g_ppComboBox[N_IMAGE_SECTION_HEADER::CB_CHARACTERISTICS]=createComboBox(ui->tableWidget,XPE::getImageSectionHeaderFlagsS(),SPE::TYPE_IMAGE_SECTION_HEADER,N_IMAGE_SECTION_HEADER::Characteristics,XComboBoxEx::CBTYPE_FLAGS);
-            g_ppComboBox[N_IMAGE_SECTION_HEADER::CB_ALIGH]=createComboBox(ui->tableWidget,XPE::getImageSectionHeaderAlignsS(),SPE::TYPE_IMAGE_SECTION_HEADER,N_IMAGE_SECTION_HEADER::Characteristics+1,XComboBoxEx::CBTYPE_EFLAGS,XPE_DEF::S_IMAGE_SCN_ALIGN_MASK);
+            g_ppComboBox[N_IMAGE_SECTION_HEADER::CB_ALIGH]=createComboBox(ui->tableWidget,XPE::getImageSectionHeaderAlignsS(),SPE::TYPE_IMAGE_SECTION_HEADER,N_IMAGE_SECTION_HEADER::Characteristics+1,XComboBoxEx::CBTYPE_ELIST,XPE_DEF::S_IMAGE_SCN_ALIGN_MASK);
 
             g_ppInvWidget[N_IMAGE_SECTION_HEADER::INV_VirtualAddress]=createInvWidget(ui->tableWidget,SPE::TYPE_IMAGE_SECTION_HEADER,N_IMAGE_SECTION_HEADER::VirtualAddress,InvWidget::TYPE_HEX);
             g_ppInvWidget[N_IMAGE_SECTION_HEADER::INV_PointerToRawData]=createInvWidget(ui->tableWidget,SPE::TYPE_IMAGE_SECTION_HEADER,N_IMAGE_SECTION_HEADER::PointerToRawData,InvWidget::TYPE_HEX);
@@ -478,7 +478,7 @@ void PESectionHeaderWidget::reloadData()
         else if(nType==SPE::TYPE_DEBUG)
         {
             createHeaderTable(SPE::TYPE_DEBUG,ui->tableWidget,N_IMAGE_DEBUG::records,g_ppLinedEdit,N_IMAGE_DEBUG::__data_size,getNumber());
-            g_ppComboBox[N_IMAGE_DEBUG::CB_TYPE]=createComboBox(ui->tableWidget,XPE::getDebugTypesS(),SPE::TYPE_DEBUG,N_IMAGE_DEBUG::Type,XComboBoxEx::CBTYPE_NORMAL);
+            g_ppComboBox[N_IMAGE_DEBUG::CB_TYPE]=createComboBox(ui->tableWidget,XPE::getDebugTypesS(),SPE::TYPE_DEBUG,N_IMAGE_DEBUG::Type,XComboBoxEx::CBTYPE_LIST);
 
             blockSignals(true);
 

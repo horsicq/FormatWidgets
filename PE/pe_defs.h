@@ -251,7 +251,7 @@ enum DATA
     PointerToLinenumbers,
     NumberOfRelocations,
     NumberOfLinenumbers,
-    Characteristics,
+    Characteristics, // TODO !!!
     __data_size
 };
 

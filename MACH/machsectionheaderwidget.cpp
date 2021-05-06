@@ -31,81 +31,81 @@ MACHSectionHeaderWidget::MACHSectionHeaderWidget(QWidget *pParent):
 MACHSectionHeaderWidget::MACHSectionHeaderWidget(QIODevice *pDevice,FW_DEF::OPTIONS options,quint32 nNumber,qint64 nOffset,qint32 nType,QWidget *pParent):
     MACHSectionHeaderWidget(pParent)
 {
-     MACHSectionHeaderWidget::setData(pDevice,options,nNumber,nOffset,nType);
+    MACHSectionHeaderWidget::setData(pDevice,options,nNumber,nOffset,nType);
 
-     XMACH mach(getDevice(),getOptions().bIsImage,getOptions().nImageBase);
+    XMACH mach(getDevice(),getOptions().bIsImage,getOptions().nImageBase);
 
-     bool bIs64=mach.is64();
+    bool bIs64=mach.is64();
 
-     g_ppLinedEdit=0;
-     g_nLineEditSize=0;
-     g_ppComboBox=0;
-     g_nComboBoxSize=0;
-     g_ppInvWidget=0;
-     g_nInvWidgetSize=0;
+    g_ppLinedEdit=0;
+    g_nLineEditSize=0;
+    g_ppComboBox=0;
+    g_nComboBoxSize=0;
+    g_ppInvWidget=0;
+    g_nInvWidgetSize=0;
 
-     if(nType==SMACH::TYPE_mach_commands)
-     {
-         g_nLineEditSize=N_mach_commands::__data_size;
-         g_nComboBoxSize=N_mach_commands::__CB_size;
-         g_nInvWidgetSize=N_mach_commands::__INV_size;
-     }
-     if(    (nType==SMACH::TYPE_mach_libraries)||
-            (nType==SMACH::TYPE_mach_weak_libraries)||
-            (nType==SMACH::TYPE_mach_id_library))
-     {
-         g_nLineEditSize=N_mach_library::__data_size;
-         g_nComboBoxSize=N_mach_library::__CB_size;
-         g_nInvWidgetSize=N_mach_library::__INV_size;
-     }
-     else if(nType==SMACH::TYPE_mach_segments)
-     {
-         g_nLineEditSize=N_mach_segments::__data_size;
-         g_nComboBoxSize=N_mach_segments::__CB_size;
-         g_nInvWidgetSize=N_mach_segments::__INV_size;
-     }
-     else if(nType==SMACH::TYPE_mach_sections)
-     {
-         if(bIs64)
-         {
-             g_nLineEditSize=N_mach_sections64::__data_size;
-             g_nComboBoxSize=N_mach_sections64::__CB_size;
-             g_nInvWidgetSize=N_mach_sections64::__INV_size;
-         }
-         else
-         {
-             g_nLineEditSize=N_mach_sections32::__data_size;
-             g_nComboBoxSize=N_mach_sections32::__CB_size;
-             g_nInvWidgetSize=N_mach_sections32::__INV_size;
-         }
-     }
-     else if(nType==SMACH::TYPE_SYMBOLTABLE)
-     {
-         g_nLineEditSize=N_mach_nlist::__data_size;
-         g_nComboBoxSize=N_mach_nlist::__CB_size;
-         g_nInvWidgetSize=N_mach_nlist::__INV_size;
-     }
-     else if(nType==SMACH::TYPE_DICE)
-     {
-         g_nLineEditSize=N_mach_data_in_code_entry::__data_size;
-         g_nComboBoxSize=N_mach_data_in_code_entry::__CB_size;
-         g_nInvWidgetSize=N_mach_data_in_code_entry::__INV_size;
-     }
+    if(nType==SMACH::TYPE_mach_commands)
+    {
+        g_nLineEditSize=N_mach_commands::__data_size;
+        g_nComboBoxSize=N_mach_commands::__CB_size;
+        g_nInvWidgetSize=N_mach_commands::__INV_size;
+    }
+    if( (nType==SMACH::TYPE_mach_libraries)||
+        (nType==SMACH::TYPE_mach_weak_libraries)||
+        (nType==SMACH::TYPE_mach_id_library))
+    {
+        g_nLineEditSize=N_mach_library::__data_size;
+        g_nComboBoxSize=N_mach_library::__CB_size;
+        g_nInvWidgetSize=N_mach_library::__INV_size;
+    }
+    else if(nType==SMACH::TYPE_mach_segments)
+    {
+        g_nLineEditSize=N_mach_segments::__data_size;
+        g_nComboBoxSize=N_mach_segments::__CB_size;
+        g_nInvWidgetSize=N_mach_segments::__INV_size;
+    }
+    else if(nType==SMACH::TYPE_mach_sections)
+    {
+        if(bIs64)
+        {
+            g_nLineEditSize=N_mach_sections64_E::__data_size;
+            g_nComboBoxSize=N_mach_sections64_E::__CB_size;
+            g_nInvWidgetSize=N_mach_sections64_E::__INV_size;
+        }
+        else
+        {
+            g_nLineEditSize=N_mach_sections32_E::__data_size;
+            g_nComboBoxSize=N_mach_sections32_E::__CB_size;
+            g_nInvWidgetSize=N_mach_sections32_E::__INV_size;
+        }
+    }
+    else if(nType==SMACH::TYPE_SYMBOLTABLE)
+    {
+        g_nLineEditSize=N_mach_nlist::__data_size;
+        g_nComboBoxSize=N_mach_nlist::__CB_size;
+        g_nInvWidgetSize=N_mach_nlist::__INV_size;
+    }
+    else if(nType==SMACH::TYPE_DICE)
+    {
+        g_nLineEditSize=N_mach_data_in_code_entry::__data_size;
+        g_nComboBoxSize=N_mach_data_in_code_entry::__CB_size;
+        g_nInvWidgetSize=N_mach_data_in_code_entry::__INV_size;
+    }
 
-     if(g_nLineEditSize)
-     {
-         g_ppLinedEdit=new PXLineEditHEX[g_nLineEditSize];
-     }
+    if(g_nLineEditSize)
+    {
+        g_ppLinedEdit=new PXLineEditHEX[g_nLineEditSize];
+    }
 
-     if(g_nComboBoxSize)
-     {
-         g_ppComboBox=new PXComboBoxEx[g_nComboBoxSize];
-     }
+    if(g_nComboBoxSize)
+    {
+        g_ppComboBox=new PXComboBoxEx[g_nComboBoxSize];
+    }
 
-     if(g_nInvWidgetSize)
-     {
-         g_ppInvWidget=new PInvWidget[g_nInvWidgetSize];
-     }
+    if(g_nInvWidgetSize)
+    {
+        g_ppInvWidget=new PInvWidget[g_nInvWidgetSize];
+    }
 }
 
 MACHSectionHeaderWidget::~MACHSectionHeaderWidget()
@@ -181,7 +181,16 @@ FormatWidget::SV MACHSectionHeaderWidget::_setValue(QVariant vValue, int nStype,
                 case SMACH::TYPE_mach_commands:
                     switch(nNdata)
                     {
-                        case N_mach_commands::cmd:          g_ppComboBox[N_mach_commands::cmd]->setValue(nValue);               break;
+                        case N_mach_commands::cmd:          g_ppComboBox[N_mach_commands::CB_CMD]->setValue(nValue);            break;
+                    }
+
+                    break;
+
+                case SMACH::TYPE_mach_segments:
+                    switch(nNdata)
+                    {
+                        case N_mach_segments::initprot:     g_ppComboBox[N_mach_segments::CB_initprot]->setValue(nValue);       break;
+                        case N_mach_segments::maxprot:      g_ppComboBox[N_mach_segments::CB_maxprot]->setValue(nValue);        break;
                     }
 
                     break;
@@ -261,35 +270,35 @@ FormatWidget::SV MACHSectionHeaderWidget::_setValue(QVariant vValue, int nStype,
                     {
                         switch(nNdata)
                         {
-                            case N_mach_sections64::sectname:   mach._setSection64_sectname(nOffset,sValue);            break;
-                            case N_mach_sections64::segname:    mach._setSection64_segname(nOffset,sValue);             break;
-                            case N_mach_sections64::addr:       mach._setSection64_addr(nOffset,nValue);                break;
-                            case N_mach_sections64::size:       mach._setSection64_size(nOffset,nValue);                break;
-                            case N_mach_sections64::offset:     mach._setSection64_offset(nOffset,nValue);              break;
-                            case N_mach_sections64::align:      mach._setSection64_align(nOffset,nValue);               break;
-                            case N_mach_sections64::reloff:     mach._setSection64_reloff(nOffset,nValue);              break;
-                            case N_mach_sections64::nreloc:     mach._setSection64_nreloc(nOffset,nValue);              break;
-                            case N_mach_sections64::flags:      mach._setSection64_flags(nOffset,nValue);               break;
-                            case N_mach_sections64::reserved1:  mach._setSection64_reserved1(nOffset,nValue);           break;
-                            case N_mach_sections64::reserved2:  mach._setSection64_reserved2(nOffset,nValue);           break;
-                            case N_mach_sections64::reserved3:  mach._setSection64_reserved3(nOffset,nValue);           break;
+                            case N_mach_sections64_E::sectname:     mach._setSection64_sectname(nOffset,sValue);            break;
+                            case N_mach_sections64_E::segname:      mach._setSection64_segname(nOffset,sValue);             break;
+                            case N_mach_sections64_E::addr:         mach._setSection64_addr(nOffset,nValue);                break;
+                            case N_mach_sections64_E::size:         mach._setSection64_size(nOffset,nValue);                break;
+                            case N_mach_sections64_E::offset:       mach._setSection64_offset(nOffset,nValue);              break;
+                            case N_mach_sections64_E::align:        mach._setSection64_align(nOffset,nValue);               break;
+                            case N_mach_sections64_E::reloff:       mach._setSection64_reloff(nOffset,nValue);              break;
+                            case N_mach_sections64_E::nreloc:       mach._setSection64_nreloc(nOffset,nValue);              break;
+                            case N_mach_sections64_E::flags_0:      mach._setSection64_flags(nOffset,nValue);               break;
+                            case N_mach_sections64_E::reserved1:    mach._setSection64_reserved1(nOffset,nValue);           break;
+                            case N_mach_sections64_E::reserved2:    mach._setSection64_reserved2(nOffset,nValue);           break;
+                            case N_mach_sections64_E::reserved3:    mach._setSection64_reserved3(nOffset,nValue);           break;
                         }
                     }
                     else
                     {
                         switch(nNdata)
                         {
-                            case N_mach_sections32::sectname:   mach._setSection32_sectname(nOffset,sValue);            break;
-                            case N_mach_sections32::segname:    mach._setSection32_segname(nOffset,sValue);             break;
-                            case N_mach_sections32::addr:       mach._setSection32_addr(nOffset,nValue);                break;
-                            case N_mach_sections32::size:       mach._setSection32_size(nOffset,nValue);                break;
-                            case N_mach_sections32::offset:     mach._setSection32_offset(nOffset,nValue);              break;
-                            case N_mach_sections32::align:      mach._setSection32_align(nOffset,nValue);               break;
-                            case N_mach_sections32::reloff:     mach._setSection32_reloff(nOffset,nValue);              break;
-                            case N_mach_sections32::nreloc:     mach._setSection32_nreloc(nOffset,nValue);              break;
-                            case N_mach_sections32::flags:      mach._setSection32_flags(nOffset,nValue);               break;
-                            case N_mach_sections32::reserved1:  mach._setSection32_reserved1(nOffset,nValue);           break;
-                            case N_mach_sections32::reserved2:  mach._setSection32_reserved2(nOffset,nValue);           break;
+                            case N_mach_sections32_E::sectname:     mach._setSection32_sectname(nOffset,sValue);            break;
+                            case N_mach_sections32_E::segname:      mach._setSection32_segname(nOffset,sValue);             break;
+                            case N_mach_sections32_E::addr:         mach._setSection32_addr(nOffset,nValue);                break;
+                            case N_mach_sections32_E::size:         mach._setSection32_size(nOffset,nValue);                break;
+                            case N_mach_sections32_E::offset:       mach._setSection32_offset(nOffset,nValue);              break;
+                            case N_mach_sections32_E::align:        mach._setSection32_align(nOffset,nValue);               break;
+                            case N_mach_sections32_E::reloff:       mach._setSection32_reloff(nOffset,nValue);              break;
+                            case N_mach_sections32_E::nreloc:       mach._setSection32_nreloc(nOffset,nValue);              break;
+                            case N_mach_sections32_E::flags_0:      mach._setSection32_flags(nOffset,nValue);               break;
+                            case N_mach_sections32_E::reserved1:    mach._setSection32_reserved1(nOffset,nValue);           break;
+                            case N_mach_sections32_E::reserved2:    mach._setSection32_reserved2(nOffset,nValue);           break;
                         }
                     }
 
@@ -355,41 +364,49 @@ void MACHSectionHeaderWidget::blockSignals(bool bState)
 
 void MACHSectionHeaderWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
 {
-    int nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
+    XBinary::MODE mode=XMACH::getMode(getDevice(),getOptions().bIsImage,getOptions().nImageBase);
+
+    pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,getColumnWidth(this,CW_UINT16,mode));
+    pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,getColumnWidth(this,CW_TYPE,mode));
 
     switch(nType)
     {
         case SMACH::TYPE_mach_commands:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*12);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINT32,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGSHORT,mode));
             break;
 
-        case SMACH::TYPE_mach_id_library:
         case SMACH::TYPE_mach_libraries:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*12);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
+        case SMACH::TYPE_mach_weak_libraries:
+        case SMACH::TYPE_mach_id_library:
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINT32,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGSHORT,mode));
             break;
 
         case SMACH::TYPE_mach_segments:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*12);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINTMODE,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGSHORT,mode));
             break;
 
         case SMACH::TYPE_mach_sections:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*12);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINTMODE,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGMID,mode));
+            break;
+
+        case SMACH::TYPE_SYMBOLTABLE:
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINT32,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGSHORT,mode));
+            break;
+
+        case SMACH::TYPE_DICE:
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINT32,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGSHORT,mode));
             break;
     }
 }
@@ -413,7 +430,7 @@ void MACHSectionHeaderWidget::reloadData()
         if(nType==SMACH::TYPE_mach_commands)
         {
             createHeaderTable(SMACH::TYPE_mach_commands,ui->tableWidget,N_mach_commands::records,g_ppLinedEdit,N_mach_commands::__data_size,getNumber(),getOffset());
-            g_ppComboBox[N_mach_commands::CB_CMD]=createComboBox(ui->tableWidget,XMACH::getLoadCommandTypesS(),SMACH::TYPE_mach_commands,N_mach_commands::cmd,XComboBoxEx::CBTYPE_NORMAL);
+            g_ppComboBox[N_mach_commands::CB_CMD]=createComboBox(ui->tableWidget,XMACH::getLoadCommandTypesS(),SMACH::TYPE_mach_commands,N_mach_commands::cmd,XComboBoxEx::CBTYPE_LIST);
 
             blockSignals(true);
 
@@ -473,7 +490,8 @@ void MACHSectionHeaderWidget::reloadData()
         else if(nType==SMACH::TYPE_mach_segments)
         {
             createHeaderTable(SMACH::TYPE_mach_segments,ui->tableWidget,bIs64?(N_mach_segments::records64):(N_mach_segments::records32),g_ppLinedEdit,N_mach_segments::__data_size,getNumber(),getOffset());
-//                g_ppComboBox[N_mach_commands::CB_CMD]=createComboBox(ui->tableWidget,XMACH::getLoadCommandTypesS(),SMACH::TYPE_mach_commands,N_mach_commands::cmd,XComboBoxEx::CBTYPE_NORMAL);
+            g_ppComboBox[N_mach_segments::CB_initprot]=createComboBox(ui->tableWidget,XMACH::getVMProtectionsS(),SMACH::TYPE_mach_segments,N_mach_segments::initprot,XComboBoxEx::CBTYPE_FLAGS);
+            g_ppComboBox[N_mach_segments::CB_maxprot]=createComboBox(ui->tableWidget,XMACH::getVMProtectionsS(),SMACH::TYPE_mach_segments,N_mach_segments::maxprot,XComboBoxEx::CBTYPE_FLAGS);
 
             blockSignals(true);
 
@@ -492,6 +510,9 @@ void MACHSectionHeaderWidget::reloadData()
                 g_ppLinedEdit[N_mach_segments::initprot]->setValue(segment.initprot);
                 g_ppLinedEdit[N_mach_segments::nsects]->setValue(segment.nsects);
                 g_ppLinedEdit[N_mach_segments::flags]->setValue(segment.flags);
+
+                g_ppComboBox[N_mach_segments::CB_initprot]->setValue(segment.initprot);
+                g_ppComboBox[N_mach_segments::CB_maxprot]->setValue(segment.maxprot);
             }
             else
             {
@@ -506,9 +527,10 @@ void MACHSectionHeaderWidget::reloadData()
                 g_ppLinedEdit[N_mach_segments::initprot]->setValue(segment.initprot);
                 g_ppLinedEdit[N_mach_segments::nsects]->setValue(segment.nsects);
                 g_ppLinedEdit[N_mach_segments::flags]->setValue(segment.flags);
-            }
 
-//                g_ppComboBox[N_mach_commands::CB_CMD]->setValue(cr.nType);
+                g_ppComboBox[N_mach_segments::CB_initprot]->setValue(segment.initprot);
+                g_ppComboBox[N_mach_segments::CB_maxprot]->setValue(segment.maxprot);
+            }
 
             qint64 nOffset=nHeaderOffset;
             qint64 nSize=mach.getSegmentHeaderSize();
@@ -520,8 +542,7 @@ void MACHSectionHeaderWidget::reloadData()
         }
         else if(nType==SMACH::TYPE_mach_sections)
         {
-            createHeaderTable(SMACH::TYPE_mach_sections,ui->tableWidget,bIs64?(N_mach_sections64::records):(N_mach_sections32::records),g_ppLinedEdit,bIs64?(N_mach_sections64::__data_size):(N_mach_sections32::__data_size),getNumber(),getOffset());
-//                g_ppComboBox[N_mach_commands::CB_CMD]=createComboBox(ui->tableWidget,XMACH::getLoadCommandTypesS(),SMACH::TYPE_mach_commands,N_mach_commands::cmd,XComboBoxEx::CBTYPE_NORMAL);
+            createHeaderTable(SMACH::TYPE_mach_sections,ui->tableWidget,bIs64?(N_mach_sections64_E::records):(N_mach_sections32_E::records),g_ppLinedEdit,bIs64?(N_mach_sections64_E::__data_size):(N_mach_sections32_E::__data_size),getNumber(),getOffset());
 
             blockSignals(true);
 
@@ -529,36 +550,52 @@ void MACHSectionHeaderWidget::reloadData()
 
             if(bIs64)
             {
+                g_ppComboBox[N_mach_sections64_E::CB_flag0]=createComboBox(ui->tableWidget,XMACH::getSectionFlagsTypesS(),SMACH::TYPE_mach_sections,N_mach_sections64_E::flags_0,XComboBoxEx::CBTYPE_ELIST,XMACH_DEF::SECTION_TYPE);
+                g_ppComboBox[N_mach_sections64_E::CB_flag1]=createComboBox(ui->tableWidget,XMACH::getSectionAttributesSysS(),SMACH::TYPE_mach_sections,N_mach_sections64_E::flags_1,XComboBoxEx::CBTYPE_ELIST,XMACH_DEF::SECTION_ATTRIBUTES_SYS);
+                g_ppComboBox[N_mach_sections64_E::CB_flag2]=createComboBox(ui->tableWidget,XMACH::getSectionAttributesUsrS(),SMACH::TYPE_mach_sections,N_mach_sections64_E::flags_2,XComboBoxEx::CBTYPE_ELIST,XMACH_DEF::SECTION_ATTRIBUTES_USR);
+
                 XMACH_DEF::section_64 section=mach._read_section_64(nHeaderOffset,bIsBigEndian);
 
-                g_ppLinedEdit[N_mach_sections64::sectname]->setStringValue(section.sectname);
-                g_ppLinedEdit[N_mach_sections64::segname]->setStringValue(section.segname);
-                g_ppLinedEdit[N_mach_sections64::addr]->setValue(section.addr);
-                g_ppLinedEdit[N_mach_sections64::size]->setValue(section.size);
-                g_ppLinedEdit[N_mach_sections64::offset]->setValue(section.offset);
-                g_ppLinedEdit[N_mach_sections64::align]->setValue(section.align);
-                g_ppLinedEdit[N_mach_sections64::reloff]->setValue(section.reloff);
-                g_ppLinedEdit[N_mach_sections64::nreloc]->setValue(section.nreloc);
-                g_ppLinedEdit[N_mach_sections64::flags]->setValue(section.flags);
-                g_ppLinedEdit[N_mach_sections64::reserved1]->setValue(section.reserved1);
-                g_ppLinedEdit[N_mach_sections64::reserved2]->setValue(section.reserved2);
-                g_ppLinedEdit[N_mach_sections64::reserved3]->setValue(section.reserved3);
+                g_ppLinedEdit[N_mach_sections64_E::sectname]->setStringValue(section.sectname);
+                g_ppLinedEdit[N_mach_sections64_E::segname]->setStringValue(section.segname);
+                g_ppLinedEdit[N_mach_sections64_E::addr]->setValue(section.addr);
+                g_ppLinedEdit[N_mach_sections64_E::size]->setValue(section.size);
+                g_ppLinedEdit[N_mach_sections64_E::offset]->setValue(section.offset);
+                g_ppLinedEdit[N_mach_sections64_E::align]->setValue(section.align);
+                g_ppLinedEdit[N_mach_sections64_E::reloff]->setValue(section.reloff);
+                g_ppLinedEdit[N_mach_sections64_E::nreloc]->setValue(section.nreloc);
+                g_ppLinedEdit[N_mach_sections64_E::flags_0]->setValue(section.flags);
+                g_ppLinedEdit[N_mach_sections64_E::reserved1]->setValue(section.reserved1);
+                g_ppLinedEdit[N_mach_sections64_E::reserved2]->setValue(section.reserved2);
+                g_ppLinedEdit[N_mach_sections64_E::reserved3]->setValue(section.reserved3);
+
+                g_ppComboBox[N_mach_sections64_E::CB_flag0]->setValue(section.flags);
+                g_ppComboBox[N_mach_sections64_E::CB_flag1]->setValue(section.flags);
+                g_ppComboBox[N_mach_sections64_E::CB_flag2]->setValue(section.flags);
             }
             else
             {
+                g_ppComboBox[N_mach_sections32_E::CB_flag0]=createComboBox(ui->tableWidget,XMACH::getSectionFlagsTypesS(),SMACH::TYPE_mach_sections,N_mach_sections32_E::flags_0,XComboBoxEx::CBTYPE_ELIST,XMACH_DEF::SECTION_TYPE);
+                g_ppComboBox[N_mach_sections32_E::CB_flag1]=createComboBox(ui->tableWidget,XMACH::getSectionAttributesSysS(),SMACH::TYPE_mach_sections,N_mach_sections32_E::flags_1,XComboBoxEx::CBTYPE_ELIST,XMACH_DEF::SECTION_ATTRIBUTES_SYS);
+                g_ppComboBox[N_mach_sections32_E::CB_flag2]=createComboBox(ui->tableWidget,XMACH::getSectionAttributesUsrS(),SMACH::TYPE_mach_sections,N_mach_sections32_E::flags_2,XComboBoxEx::CBTYPE_ELIST,XMACH_DEF::SECTION_ATTRIBUTES_USR);
+
                 XMACH_DEF::section section=mach._read_section(nHeaderOffset,bIsBigEndian);
 
-                g_ppLinedEdit[N_mach_sections32::sectname]->setStringValue(section.sectname);
-                g_ppLinedEdit[N_mach_sections32::segname]->setStringValue(section.segname);
-                g_ppLinedEdit[N_mach_sections32::addr]->setValue(section.addr);
-                g_ppLinedEdit[N_mach_sections32::size]->setValue(section.size);
-                g_ppLinedEdit[N_mach_sections32::offset]->setValue(section.offset);
-                g_ppLinedEdit[N_mach_sections32::align]->setValue(section.align);
-                g_ppLinedEdit[N_mach_sections32::reloff]->setValue(section.reloff);
-                g_ppLinedEdit[N_mach_sections32::nreloc]->setValue(section.nreloc);
-                g_ppLinedEdit[N_mach_sections32::flags]->setValue(section.flags);
-                g_ppLinedEdit[N_mach_sections32::reserved1]->setValue(section.reserved1);
-                g_ppLinedEdit[N_mach_sections32::reserved2]->setValue(section.reserved2);
+                g_ppLinedEdit[N_mach_sections32_E::sectname]->setStringValue(section.sectname);
+                g_ppLinedEdit[N_mach_sections32_E::segname]->setStringValue(section.segname);
+                g_ppLinedEdit[N_mach_sections32_E::addr]->setValue(section.addr);
+                g_ppLinedEdit[N_mach_sections32_E::size]->setValue(section.size);
+                g_ppLinedEdit[N_mach_sections32_E::offset]->setValue(section.offset);
+                g_ppLinedEdit[N_mach_sections32_E::align]->setValue(section.align);
+                g_ppLinedEdit[N_mach_sections32_E::reloff]->setValue(section.reloff);
+                g_ppLinedEdit[N_mach_sections32_E::nreloc]->setValue(section.nreloc);
+                g_ppLinedEdit[N_mach_sections32_E::flags_0]->setValue(section.flags);
+                g_ppLinedEdit[N_mach_sections32_E::reserved1]->setValue(section.reserved1);
+                g_ppLinedEdit[N_mach_sections32_E::reserved2]->setValue(section.reserved2);
+
+                g_ppComboBox[N_mach_sections32_E::CB_flag0]->setValue(section.flags);
+                g_ppComboBox[N_mach_sections32_E::CB_flag1]->setValue(section.flags);
+                g_ppComboBox[N_mach_sections32_E::CB_flag2]->setValue(section.flags);
             }
 
             qint64 nOffset=nHeaderOffset;
@@ -655,14 +692,60 @@ void MACHSectionHeaderWidget::widgetValueChanged(quint64 nValue)
     int nStype=pWidget->property("STYPE").toInt();
     int nNdata=pWidget->property("NDATA").toInt();
 
-    switch(nStype)
+    XMACH mach(getDevice(),getOptions().bIsImage,getOptions().nImageBase);
+
+    if(mach.isValid())
     {
-        case SMACH::TYPE_mach_commands:
-            switch(nNdata)
-            {
-                case N_mach_commands::cmd:      g_ppLinedEdit[N_mach_commands::cmd]->setValue((quint32)nValue);                     break;
-            }
-            break;
+        switch(nStype)
+        {
+            case SMACH::TYPE_mach_commands:
+                switch(nNdata)
+                {
+                    case N_mach_commands::cmd:          g_ppLinedEdit[N_mach_commands::cmd]->setValue((quint32)nValue);                     break;
+                }
+                break;
+
+            case SMACH::TYPE_mach_segments:
+                switch(nNdata)
+                {
+                    case N_mach_segments::initprot:     g_ppLinedEdit[N_mach_segments::initprot]->setValue((quint32)nValue);                break;
+                    case N_mach_segments::maxprot:      g_ppLinedEdit[N_mach_segments::maxprot]->setValue((quint32)nValue);                 break;
+                }
+                break;
+
+            case SMACH::TYPE_mach_sections:
+
+                if(mach.is64())
+                {
+                    switch(nNdata)
+                    {
+                        case N_mach_sections64_E::flags_0:
+                        case N_mach_sections64_E::flags_1:
+                        case N_mach_sections64_E::flags_2:
+                            g_ppLinedEdit[N_mach_sections64_E::flags_0]->setValue((quint32)nValue);
+                            g_ppComboBox[N_mach_sections64_E::CB_flag0]->setValue(nValue);
+                            g_ppComboBox[N_mach_sections64_E::CB_flag1]->setValue(nValue);
+                            g_ppComboBox[N_mach_sections64_E::CB_flag2]->setValue(nValue);
+                            break;
+                    }
+                }
+                else
+                {
+                    switch(nNdata)
+                    {
+                        case N_mach_sections32_E::flags_0:
+                        case N_mach_sections32_E::flags_1:
+                        case N_mach_sections32_E::flags_2:
+                            g_ppLinedEdit[N_mach_sections32_E::flags_0]->setValue((quint32)nValue);
+                            g_ppComboBox[N_mach_sections32_E::CB_flag0]->setValue(nValue);
+                            g_ppComboBox[N_mach_sections32_E::CB_flag1]->setValue(nValue);
+                            g_ppComboBox[N_mach_sections32_E::CB_flag2]->setValue(nValue);
+                            break;
+                    }
+                }
+
+                break;
+        }
     }
 }
 

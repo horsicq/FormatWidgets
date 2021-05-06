@@ -133,6 +133,8 @@ extern const FW_DEF::HEADER_RECORD records64[__data_size];
 
 enum CB
 {
+    CB_maxprot,
+    CB_initprot,
     __CB_size
 };
 
@@ -173,6 +175,42 @@ enum INV
 };
 }
 
+namespace N_mach_sections32_E
+{
+enum DATA
+{
+    sectname=0,
+    segname,
+    addr,
+    size,
+    offset,
+    align,
+    reloff,
+    nreloc,
+    flags_0,
+    flags_1,
+    flags_2,
+    reserved1,
+    reserved2,
+    __data_size
+};
+
+extern const FW_DEF::HEADER_RECORD records[__data_size];
+
+enum CB
+{
+    CB_flag0,
+    CB_flag1,
+    CB_flag2,
+    __CB_size
+};
+
+enum INV
+{
+    __INV_size
+};
+}
+
 namespace N_mach_sections64
 {
 enum DATA
@@ -196,6 +234,43 @@ extern const FW_DEF::HEADER_RECORD records[__data_size];
 
 enum CB
 {
+    __CB_size
+};
+
+enum INV
+{
+    __INV_size
+};
+}
+
+namespace N_mach_sections64_E
+{
+enum DATA
+{
+    sectname=0,
+    segname,
+    addr,
+    size,
+    offset,
+    align,
+    reloff,
+    nreloc,
+    flags_0,
+    flags_1,
+    flags_2,
+    reserved1,
+    reserved2,
+    reserved3,
+    __data_size
+};
+
+extern const FW_DEF::HEADER_RECORD records[__data_size];
+
+enum CB
+{
+    CB_flag0,
+    CB_flag1,
+    CB_flag2,
     __CB_size
 };
 

@@ -468,7 +468,7 @@ void ELFSectionHeaderWidget::reloadData()
         if(nType==SELF::TYPE_Elf_Shdr)
         {
             createHeaderTable(SELF::TYPE_Elf_Shdr,ui->tableWidget,bIs64?(N_Elf_Shdr::records64):(N_Elf_Shdr::records32),g_ppLinedEdit,N_Elf_Shdr::__data_size,getNumber());
-            g_ppComboBox[N_Elf_Shdr::CB_TYPE]=createComboBox(ui->tableWidget,XELF::getSectionTypesS(),SELF::TYPE_Elf_Shdr,N_Elf_Shdr::sh_type,XComboBoxEx::CBTYPE_NORMAL);
+            g_ppComboBox[N_Elf_Shdr::CB_TYPE]=createComboBox(ui->tableWidget,XELF::getSectionTypesS(),SELF::TYPE_Elf_Shdr,N_Elf_Shdr::sh_type,XComboBoxEx::CBTYPE_LIST);
             g_ppComboBox[N_Elf_Shdr::CB_FLAGS]=createComboBox(ui->tableWidget,XELF::getSectionFlagsS(),SELF::TYPE_Elf_Shdr,N_Elf_Shdr::sh_flags,XComboBoxEx::CBTYPE_FLAGS);
 
             blockSignals(true);
@@ -525,7 +525,7 @@ void ELFSectionHeaderWidget::reloadData()
         else if(nType==SELF::TYPE_Elf_Phdr)
         {
             createHeaderTable(SELF::TYPE_Elf_Phdr,ui->tableWidget,bIs64?(N_Elf_Phdr64::records):(N_Elf_Phdr32::records),g_ppLinedEdit,bIs64?(N_Elf_Phdr64::__data_size):(N_Elf_Phdr32::__data_size),getNumber());
-            g_ppComboBox[N_Elf_Phdr32::CB_TYPE]=createComboBox(ui->tableWidget,XELF::getProgramTypesS(),SELF::TYPE_Elf_Phdr,bIs64?(N_Elf_Phdr64::p_type):(N_Elf_Phdr32::p_type),XComboBoxEx::CBTYPE_NORMAL);
+            g_ppComboBox[N_Elf_Phdr32::CB_TYPE]=createComboBox(ui->tableWidget,XELF::getProgramTypesS(),SELF::TYPE_Elf_Phdr,bIs64?(N_Elf_Phdr64::p_type):(N_Elf_Phdr32::p_type),XComboBoxEx::CBTYPE_LIST);
             g_ppComboBox[N_Elf_Phdr32::CB_FLAGS]=createComboBox(ui->tableWidget,XELF::getProgramFlagsS(),SELF::TYPE_Elf_Phdr,bIs64?(N_Elf_Phdr64::p_flags):(N_Elf_Phdr32::p_flags),XComboBoxEx::CBTYPE_FLAGS);
 
             blockSignals(true);
@@ -574,7 +574,7 @@ void ELFSectionHeaderWidget::reloadData()
         else if(nType==SELF::TYPE_Elf_DynamicArrayTags)
         {
             createHeaderTable(SELF::TYPE_Elf_DynamicArrayTags,ui->tableWidget,bIs64?(N_Elf_DynamicArrayTags::records64):(N_Elf_DynamicArrayTags::records32),g_ppLinedEdit,N_Elf_DynamicArrayTags::__data_size,getNumber(),getOffset());
-            g_ppComboBox[N_Elf_DynamicArrayTags::CB_TAG]=createComboBox(ui->tableWidget,XELF::getDynamicTagsS(),SELF::TYPE_Elf_DynamicArrayTags,N_Elf_DynamicArrayTags::d_tag,XComboBoxEx::CBTYPE_NORMAL);
+            g_ppComboBox[N_Elf_DynamicArrayTags::CB_TAG]=createComboBox(ui->tableWidget,XELF::getDynamicTagsS(),SELF::TYPE_Elf_DynamicArrayTags,N_Elf_DynamicArrayTags::d_tag,XComboBoxEx::CBTYPE_LIST);
 
             blockSignals(true);
 
