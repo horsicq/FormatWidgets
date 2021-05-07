@@ -652,6 +652,7 @@ void ELFProcessData::_process()
 
 void ELFProcessData::ajustTableView(QWidget *pWidget,QTableView *pTableView)
 {
+    // TODO like MACH !!!
     int nSymbolWidth=XLineEditHEX::getSymbolWidth(pWidget);
 
     if(g_nType==SELF::TYPE_SYMBOLTABLE)

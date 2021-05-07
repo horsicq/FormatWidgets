@@ -642,6 +642,7 @@ void PEProcessData::_process()
 
 void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
 {
+    // TODO like MACH !!!
     int nSymbolWidth=XLineEditHEX::getSymbolWidth(pWidget);
 
     if(g_nType==SPE::TYPE_SECTIONS)

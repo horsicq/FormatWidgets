@@ -318,6 +318,7 @@ void PESectionHeaderWidget::blockSignals(bool bState)
 
 void PESectionHeaderWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
 {
+    // TODO like MACH !!!
     int nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
 
     switch(nType)

@@ -278,6 +278,7 @@ void NEWidget::blockSignals(bool bState)
 
 void NEWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
 {
+    // TODO like MACH !!!
     Q_UNUSED(nType);
 
     int nSymbolWidth=XLineEditHEX::getSymbolWidth(this);

@@ -263,6 +263,7 @@ void ELFWidget::blockSignals(bool bState)
 
 void ELFWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
 {
+    // TODO like MACH !!!
     int nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
 
     pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_NAME,QHeaderView::ResizeToContents);

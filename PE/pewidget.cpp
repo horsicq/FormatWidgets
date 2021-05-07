@@ -1763,6 +1763,7 @@ void PEWidget::loadDelayImport(int nRow)
 
 void PEWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
 {
+    // TODO like MACH !!!
     int nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
 
     pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);

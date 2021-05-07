@@ -68,6 +68,7 @@ void LEProcessData::_process()
 
 void LEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
 {
+    // TODO like MACH !!!
     int nSymbolWidth=XLineEditHEX::getSymbolWidth(pWidget);
 
     if(g_nType==SLE::TYPE_OBJECTS)

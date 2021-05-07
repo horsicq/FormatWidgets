@@ -280,6 +280,7 @@ void DEXProcessData::_process()
 
 void DEXProcessData::ajustTableView(QWidget *pWidget,QTableView *pTableView)
 {
+    // TODO like MACH !!!
     int nSymbolWidth=XLineEditHEX::getSymbolWidth(pWidget);
 
     if(g_nType==SDEX::TYPE_MAPITEMS)

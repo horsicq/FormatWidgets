@@ -396,6 +396,7 @@ void ELFSectionHeaderWidget::blockSignals(bool bState)
 
 void ELFSectionHeaderWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
 {
+    // TODO like MACH !!!
     int nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
 
     switch(nType)
