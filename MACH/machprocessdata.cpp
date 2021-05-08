@@ -56,10 +56,12 @@ void MACHProcessData::_process()
         {
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
+
             pItem->setData(listCommandRecords.at(i).nStructOffset,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
             pItem->setData(listCommandRecords.at(i).nStructOffset,Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
             pItem->setData(listCommandRecords.at(i).nSize,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
             pItem->setData(listCommandRecords.at(i).nStructOffset,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS);
+
             (*g_ppModel)->setItem(i,0,                                          pItem);
             (*g_ppModel)->setItem(i,N_mach_commands::cmd+1,                     new QStandardItem(XBinary::valueToHex((quint32)listCommandRecords.at(i).nType)));
             (*g_ppModel)->setItem(i,N_mach_commands::cmdsize+1,                 new QStandardItem(XBinary::valueToHex((quint32)listCommandRecords.at(i).nSize)));
