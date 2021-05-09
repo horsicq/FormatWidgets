@@ -652,131 +652,130 @@ void ELFProcessData::_process()
 
 void ELFProcessData::ajustTableView(QWidget *pWidget,QTableView *pTableView)
 {
-    // TODO like MACH !!!
-    int nSymbolWidth=XLineEditHEX::getSymbolWidth(pWidget);
+    XBinary::MODE mode=g_pELF->getMode();
 
     if(g_nType==SELF::TYPE_SYMBOLTABLE)
     {
         if(g_pELF->is64())
         {
-            pTableView->setColumnWidth(0,nSymbolWidth*4);
-            pTableView->setColumnWidth(N_Elf64_Sym::st_name+1,nSymbolWidth*8);
-            pTableView->setColumnWidth(N_Elf64_Sym::st_info+1,nSymbolWidth*3);
-            pTableView->setColumnWidth(N_Elf64_Sym::st_other+1,nSymbolWidth*3);
-            pTableView->setColumnWidth(N_Elf64_Sym::st_shndx+1,nSymbolWidth*4);
-            pTableView->setColumnWidth(N_Elf64_Sym::st_value+1,nSymbolWidth*12);
-            pTableView->setColumnWidth(N_Elf64_Sym::st_size+1,nSymbolWidth*12);
-            pTableView->setColumnWidth(N_Elf64_Sym::st_size+2,nSymbolWidth*35);
+            pTableView->setColumnWidth(0,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT16,mode));
+            pTableView->setColumnWidth(N_Elf64_Sym::st_name+1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+            pTableView->setColumnWidth(N_Elf64_Sym::st_info+1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT8,mode));
+            pTableView->setColumnWidth(N_Elf64_Sym::st_other+1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT8,mode));
+            pTableView->setColumnWidth(N_Elf64_Sym::st_shndx+1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT16,mode));
+            pTableView->setColumnWidth(N_Elf64_Sym::st_value+1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
+            pTableView->setColumnWidth(N_Elf64_Sym::st_size+1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
+            pTableView->setColumnWidth(N_Elf64_Sym::st_size+2,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_STRINGLONG,mode));
         }
         else
         {
-            pTableView->setColumnWidth(0,nSymbolWidth*4);
-            pTableView->setColumnWidth(N_Elf32_Sym::st_name+1,nSymbolWidth*8);
-            pTableView->setColumnWidth(N_Elf32_Sym::st_value+1,nSymbolWidth*8);
-            pTableView->setColumnWidth(N_Elf32_Sym::st_size+1,nSymbolWidth*8);
-            pTableView->setColumnWidth(N_Elf32_Sym::st_info+1,nSymbolWidth*3);
-            pTableView->setColumnWidth(N_Elf32_Sym::st_other+1,nSymbolWidth*3);
-            pTableView->setColumnWidth(N_Elf32_Sym::st_shndx+1,nSymbolWidth*4);
-            pTableView->setColumnWidth(N_Elf32_Sym::st_shndx+2,nSymbolWidth*35);
+            pTableView->setColumnWidth(0,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT16,mode));
+            pTableView->setColumnWidth(N_Elf32_Sym::st_name+1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+            pTableView->setColumnWidth(N_Elf32_Sym::st_value+1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
+            pTableView->setColumnWidth(N_Elf32_Sym::st_size+1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
+            pTableView->setColumnWidth(N_Elf32_Sym::st_info+1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT8,mode));
+            pTableView->setColumnWidth(N_Elf32_Sym::st_other+1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT8,mode));
+            pTableView->setColumnWidth(N_Elf32_Sym::st_shndx+1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT16,mode));
+            pTableView->setColumnWidth(N_Elf32_Sym::st_shndx+2,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_STRINGLONG,mode));
         }
     }
     else if(g_nType==SELF::TYPE_Elf_Shdr)
     {
         if(g_pELF->is64())
         {
-            pTableView->setColumnWidth(0,nSymbolWidth*4);
-            pTableView->setColumnWidth(1,nSymbolWidth*8);
-            pTableView->setColumnWidth(2,nSymbolWidth*8);
-            pTableView->setColumnWidth(3,nSymbolWidth*12);
-            pTableView->setColumnWidth(4,nSymbolWidth*12);
-            pTableView->setColumnWidth(5,nSymbolWidth*12);
-            pTableView->setColumnWidth(6,nSymbolWidth*12);
-            pTableView->setColumnWidth(7,nSymbolWidth*8);
-            pTableView->setColumnWidth(8,nSymbolWidth*8);
-            pTableView->setColumnWidth(9,nSymbolWidth*12);
-            pTableView->setColumnWidth(10,nSymbolWidth*12);
-            pTableView->setColumnWidth(11,nSymbolWidth*12);
-            pTableView->setColumnWidth(12,nSymbolWidth*12);
+            pTableView->setColumnWidth(0,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT16,mode));
+            pTableView->setColumnWidth(1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+            pTableView->setColumnWidth(2,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+            pTableView->setColumnWidth(3,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
+            pTableView->setColumnWidth(4,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
+            pTableView->setColumnWidth(5,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
+            pTableView->setColumnWidth(6,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
+            pTableView->setColumnWidth(7,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+            pTableView->setColumnWidth(8,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+            pTableView->setColumnWidth(9,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
+            pTableView->setColumnWidth(10,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
+            pTableView->setColumnWidth(11,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
+            pTableView->setColumnWidth(12,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
         }
         else
         {
-            pTableView->setColumnWidth(0,nSymbolWidth*4);
-            pTableView->setColumnWidth(1,nSymbolWidth*8);
-            pTableView->setColumnWidth(2,nSymbolWidth*8);
-            pTableView->setColumnWidth(3,nSymbolWidth*12);
-            pTableView->setColumnWidth(4,nSymbolWidth*12);
-            pTableView->setColumnWidth(5,nSymbolWidth*12);
-            pTableView->setColumnWidth(6,nSymbolWidth*12);
-            pTableView->setColumnWidth(7,nSymbolWidth*8);
-            pTableView->setColumnWidth(8,nSymbolWidth*8);
-            pTableView->setColumnWidth(9,nSymbolWidth*12);
-            pTableView->setColumnWidth(10,nSymbolWidth*12);
-            pTableView->setColumnWidth(11,nSymbolWidth*12);
-            pTableView->setColumnWidth(12,nSymbolWidth*12);
+            pTableView->setColumnWidth(0,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT16,mode));
+            pTableView->setColumnWidth(1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+            pTableView->setColumnWidth(2,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+            pTableView->setColumnWidth(3,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
+            pTableView->setColumnWidth(4,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
+            pTableView->setColumnWidth(5,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
+            pTableView->setColumnWidth(6,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
+            pTableView->setColumnWidth(7,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+            pTableView->setColumnWidth(8,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+            pTableView->setColumnWidth(9,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
+            pTableView->setColumnWidth(10,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
+            pTableView->setColumnWidth(11,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
+            pTableView->setColumnWidth(12,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
         }
     }
     else if(g_nType==SELF::TYPE_Elf_Phdr)
     {
         if(g_pELF->is64())
         {
-            pTableView->setColumnWidth(0,nSymbolWidth*4);
-            pTableView->setColumnWidth(1,nSymbolWidth*8);
-            pTableView->setColumnWidth(2,nSymbolWidth*8);
-            pTableView->setColumnWidth(3,nSymbolWidth*12);
-            pTableView->setColumnWidth(4,nSymbolWidth*12);
-            pTableView->setColumnWidth(5,nSymbolWidth*12);
-            pTableView->setColumnWidth(6,nSymbolWidth*12);
-            pTableView->setColumnWidth(7,nSymbolWidth*12);
-            pTableView->setColumnWidth(8,nSymbolWidth*12);
-            pTableView->setColumnWidth(9,nSymbolWidth*12);
+            pTableView->setColumnWidth(0,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT16,mode));
+            pTableView->setColumnWidth(1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+            pTableView->setColumnWidth(2,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+            pTableView->setColumnWidth(3,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
+            pTableView->setColumnWidth(4,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
+            pTableView->setColumnWidth(5,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
+            pTableView->setColumnWidth(6,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
+            pTableView->setColumnWidth(7,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
+            pTableView->setColumnWidth(8,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
+            pTableView->setColumnWidth(9,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
         }
         else
         {
-            pTableView->setColumnWidth(0,nSymbolWidth*4);
-            pTableView->setColumnWidth(1,nSymbolWidth*8);
-            pTableView->setColumnWidth(2,nSymbolWidth*8);
-            pTableView->setColumnWidth(3,nSymbolWidth*12);
-            pTableView->setColumnWidth(4,nSymbolWidth*12);
-            pTableView->setColumnWidth(5,nSymbolWidth*12);
-            pTableView->setColumnWidth(6,nSymbolWidth*12);
-            pTableView->setColumnWidth(7,nSymbolWidth*12);
-            pTableView->setColumnWidth(8,nSymbolWidth*12);
-            pTableView->setColumnWidth(9,nSymbolWidth*12);
+            pTableView->setColumnWidth(0,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT16,mode));
+            pTableView->setColumnWidth(1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+            pTableView->setColumnWidth(2,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+            pTableView->setColumnWidth(3,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
+            pTableView->setColumnWidth(4,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
+            pTableView->setColumnWidth(5,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
+            pTableView->setColumnWidth(6,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
+            pTableView->setColumnWidth(7,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
+            pTableView->setColumnWidth(8,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
+            pTableView->setColumnWidth(9,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
         }
     }
     else if(g_nType==SELF::TYPE_Elf_DynamicArrayTags)
     {
-        pTableView->setColumnWidth(0,nSymbolWidth*4);
-        pTableView->setColumnWidth(1,nSymbolWidth*12);
-        pTableView->setColumnWidth(2,nSymbolWidth*12);
-        pTableView->setColumnWidth(3,nSymbolWidth*20);
+        pTableView->setColumnWidth(0,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT16,mode));
+        pTableView->setColumnWidth(1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
+        pTableView->setColumnWidth(2,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
+        pTableView->setColumnWidth(3,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_STRINGMID,mode));
     }
     else if(g_nType==SELF::TYPE_NOTES)
     {
-        pTableView->setColumnWidth(0,nSymbolWidth*4);
-        pTableView->setColumnWidth(1,nSymbolWidth*8);
-        pTableView->setColumnWidth(2,nSymbolWidth*30);
+        pTableView->setColumnWidth(0,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT16,mode));
+        pTableView->setColumnWidth(1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+        pTableView->setColumnWidth(2,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_STRINGLONG,mode));
     }
     else if(g_nType==SELF::TYPE_LIBRARIES)
     {
-        pTableView->setColumnWidth(0,nSymbolWidth*4);
-        pTableView->setColumnWidth(1,nSymbolWidth*30);
+        pTableView->setColumnWidth(0,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT16,mode));
+        pTableView->setColumnWidth(1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_STRINGLONG,mode));
     }
     else if(g_nType==SELF::TYPE_Elf_Rela)
     {
-        pTableView->setColumnWidth(0,nSymbolWidth*4);
-        pTableView->setColumnWidth(1,nSymbolWidth*12);
-        pTableView->setColumnWidth(2,nSymbolWidth*12);
-        pTableView->setColumnWidth(3,nSymbolWidth*12);
-        pTableView->setColumnWidth(4,nSymbolWidth*8);
-        pTableView->setColumnWidth(5,nSymbolWidth*12);
+        pTableView->setColumnWidth(0,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT16,mode));
+        pTableView->setColumnWidth(1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
+        pTableView->setColumnWidth(2,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
+        pTableView->setColumnWidth(3,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
+        pTableView->setColumnWidth(4,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+        pTableView->setColumnWidth(5,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
     }
     else if(g_nType==SELF::TYPE_Elf_Rel)
     {
-        pTableView->setColumnWidth(0,nSymbolWidth*4);
-        pTableView->setColumnWidth(1,nSymbolWidth*12);
-        pTableView->setColumnWidth(2,nSymbolWidth*12);
-        pTableView->setColumnWidth(3,nSymbolWidth*8);
-        pTableView->setColumnWidth(4,nSymbolWidth*12);
+        pTableView->setColumnWidth(0,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT16,mode));
+        pTableView->setColumnWidth(1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
+        pTableView->setColumnWidth(2,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
+        pTableView->setColumnWidth(3,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+        pTableView->setColumnWidth(4,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
     }
 }
