@@ -54,6 +54,11 @@ MACHWidget::MACHWidget(QWidget *pParent) :
     initToolsWidget(ui->widgetHex_unix_thread_x86_64);
     initToolsWidget(ui->widgetHex_version_min);
     initToolsWidget(ui->widgetHex_weak_libraries);
+    initToolsWidget(ui->widgetHex_DYLD_INFO_rebase);
+    initToolsWidget(ui->widgetHex_DYLD_INFO_bind);
+    initToolsWidget(ui->widgetHex_DYLD_INFO_weak_bind);
+    initToolsWidget(ui->widgetHex_DYLD_INFO_lazy_bind);
+    initToolsWidget(ui->widgetHex_DYLD_INFO_export);
 }
 
 MACHWidget::MACHWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) :
@@ -101,6 +106,11 @@ void MACHWidget::setShortcuts(XShortcuts *pShortcuts)
     ui->widgetHex_unix_thread_x86_64->setShortcuts(pShortcuts);
     ui->widgetHex_version_min->setShortcuts(pShortcuts);
     ui->widgetHex_weak_libraries->setShortcuts(pShortcuts);
+    ui->widgetHex_DYLD_INFO_rebase->setShortcuts(pShortcuts);
+    ui->widgetHex_DYLD_INFO_bind->setShortcuts(pShortcuts);
+    ui->widgetHex_DYLD_INFO_weak_bind->setShortcuts(pShortcuts);
+    ui->widgetHex_DYLD_INFO_lazy_bind->setShortcuts(pShortcuts);
+    ui->widgetHex_DYLD_INFO_export->setShortcuts(pShortcuts);
 
     FormatWidget::setShortcuts(pShortcuts);
 }
@@ -194,16 +204,16 @@ void MACHWidget::reload()
 
             if(mach.isCommandPresent(XMACH_DEF::LC_ID_DYLIB,&listCommandRecords))
             {
-                QTreeWidgetItem *pItemLibraries=createNewItem(SMACH::TYPE_mach_id_library,QString("LC_ID_DYLIB"));
+                QTreeWidgetItem *pItemIdDylib=createNewItem(SMACH::TYPE_mach_id_library,QString("LC_ID_DYLIB"));
 
-                pItemCommands->addChild(pItemLibraries);
+                pItemCommands->addChild(pItemIdDylib);
             }
 
             if(mach.isCommandPresent(XMACH_DEF::LC_LOAD_DYLIB,&listCommandRecords))
             {
-                QTreeWidgetItem *pItemLibraries=createNewItem(SMACH::TYPE_mach_libraries,QString("LC_LOAD_DYLIB"));
+                QTreeWidgetItem *pItemLoadDylib=createNewItem(SMACH::TYPE_mach_libraries,QString("LC_LOAD_DYLIB"));
 
-                pItemCommands->addChild(pItemLibraries);
+                pItemCommands->addChild(pItemLoadDylib);
             }
 
             if(mach.isCommandPresent(XMACH_DEF::LC_LOAD_WEAK_DYLIB,&listCommandRecords))
@@ -215,9 +225,48 @@ void MACHWidget::reload()
 
             if(mach.isCommandPresent(XMACH_DEF::LC_DYLD_INFO_ONLY,&listCommandRecords))
             {
-                QTreeWidgetItem *pItemDyldInfo=createNewItem(SMACH::TYPE_mach_dyld_info_only,QString("LC_DYLD_INFO_ONLY"),mach.getCommandRecordOffset(XMACH_DEF::LC_DYLD_INFO_ONLY,0,&listCommandRecords)); // TODO rename
+                qint64 _nOffset=mach.getCommandRecordOffset(XMACH_DEF::LC_DYLD_INFO_ONLY,0,&listCommandRecords);
+
+                QTreeWidgetItem *pItemDyldInfo=createNewItem(SMACH::TYPE_mach_dyld_info_only,QString("LC_DYLD_INFO_ONLY"),_nOffset); // TODO rename
 
                 pItemCommands->addChild(pItemDyldInfo);
+
+                XMACH_DEF::dyld_info_command dyld_info=mach._read_dyld_info_command(_nOffset);
+
+                if(mach.isOffsetValid(dyld_info.rebase_off)&&(dyld_info.rebase_size))
+                {
+                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_DYLD_INFO_rebase,QString("rebase"),dyld_info.rebase_off,dyld_info.rebase_size); // TODO rename
+
+                    pItemDyldInfo->addChild(pItem);
+                }
+
+                if(mach.isOffsetValid(dyld_info.bind_off)&&(dyld_info.bind_size))
+                {
+                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_DYLD_INFO_bind,QString("bind"),dyld_info.bind_off,dyld_info.bind_size); // TODO rename
+
+                    pItemDyldInfo->addChild(pItem);
+                }
+
+                if(mach.isOffsetValid(dyld_info.weak_bind_off)&&(dyld_info.weak_bind_size))
+                {
+                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_DYLD_INFO_weak_bind,QString("weak_bind"),dyld_info.weak_bind_off,dyld_info.weak_bind_size); // TODO rename
+
+                    pItemDyldInfo->addChild(pItem);
+                }
+
+                if(mach.isOffsetValid(dyld_info.lazy_bind_off)&&(dyld_info.lazy_bind_size))
+                {
+                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_DYLD_INFO_lazy_bind,QString("lazy_bind"),dyld_info.lazy_bind_off,dyld_info.lazy_bind_size); // TODO rename
+
+                    pItemDyldInfo->addChild(pItem);
+                }
+
+                if(mach.isOffsetValid(dyld_info.export_off)&&(dyld_info.export_size))
+                {
+                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_DYLD_INFO_export,QString("export"),dyld_info.export_off,dyld_info.export_size); // TODO rename
+
+                    pItemDyldInfo->addChild(pItem);
+                }
             }
 
             if(mach.isCommandPresent(XMACH_DEF::LC_UUID,&listCommandRecords))
@@ -1934,7 +1983,7 @@ void MACHWidget::reloadData()
         {
             if(!isInitPresent(sInit))
             {
-                loadHexSubdevice(nDataOffset,nDataSize,0,&g_subDevice[SMACH::TYPE_STRINGTABLE],ui->widgetHex_StringTable);
+                loadHexSubdevice(nDataOffset,nDataSize,nDataOffset,&g_subDevice[SMACH::TYPE_STRINGTABLE],ui->widgetHex_StringTable);
             }
         }
         else if(nType==SMACH::TYPE_SYMBOLTABLE)
@@ -1962,6 +2011,41 @@ void MACHWidget::reloadData()
                 MACHProcessData machProcessData(SMACH::TYPE_DICE,&tvModel[SMACH::TYPE_DICE],&mach,nDataOffset,nDataSize);
 
                 ajustTableView(&machProcessData,&tvModel[SMACH::TYPE_DICE],ui->tableView_data_in_code_entry,nullptr,false);
+            }
+        }
+        else if(nType==SMACH::TYPE_DYLD_INFO_rebase)
+        {
+            if(!isInitPresent(sInit))
+            {
+                loadHexSubdevice(nDataOffset,nDataSize,nDataOffset,&g_subDevice[SMACH::TYPE_DYLD_INFO_rebase],ui->widgetHex_DYLD_INFO_rebase);
+            }
+        }
+        else if(nType==SMACH::TYPE_DYLD_INFO_bind)
+        {
+            if(!isInitPresent(sInit))
+            {
+                loadHexSubdevice(nDataOffset,nDataSize,nDataOffset,&g_subDevice[SMACH::TYPE_DYLD_INFO_bind],ui->widgetHex_DYLD_INFO_bind);
+            }
+        }
+        else if(nType==SMACH::TYPE_DYLD_INFO_weak_bind)
+        {
+            if(!isInitPresent(sInit))
+            {
+                loadHexSubdevice(nDataOffset,nDataSize,nDataOffset,&g_subDevice[SMACH::TYPE_DYLD_INFO_weak_bind],ui->widgetHex_DYLD_INFO_weak_bind);
+            }
+        }
+        else if(nType==SMACH::TYPE_DYLD_INFO_lazy_bind)
+        {
+            if(!isInitPresent(sInit))
+            {
+                loadHexSubdevice(nDataOffset,nDataSize,nDataOffset,&g_subDevice[SMACH::TYPE_DYLD_INFO_lazy_bind],ui->widgetHex_DYLD_INFO_lazy_bind);
+            }
+        }
+        else if(nType==SMACH::TYPE_DYLD_INFO_export)
+        {
+            if(!isInitPresent(sInit))
+            {
+                loadHexSubdevice(nDataOffset,nDataSize,nDataOffset,&g_subDevice[SMACH::TYPE_DYLD_INFO_export],ui->widgetHex_DYLD_INFO_export);
             }
         }
 

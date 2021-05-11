@@ -66,6 +66,11 @@ enum TYPE
     TYPE_SYMBOLTABLE,
     TYPE_FUNCTIONS,
     TYPE_DICE,
+    TYPE_DYLD_INFO_rebase,
+    TYPE_DYLD_INFO_bind,
+    TYPE_DYLD_INFO_weak_bind,
+    TYPE_DYLD_INFO_lazy_bind,
+    TYPE_DYLD_INFO_export,
     __TYPE_size
 };
 }

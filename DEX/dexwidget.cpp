@@ -253,6 +253,7 @@ void DEXWidget::blockSignals(bool bState)
 
 void DEXWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
 {
+    // TODO like Mach
     int nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
 
     pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_NAME,QHeaderView::ResizeToContents);
