@@ -76,15 +76,15 @@ void MACHProcessData::_process()
         listLabels.append("");
         listLabels.append(getStructList(N_mach_library::records,N_mach_library::__data_size));
 
-        int nType=XMACH_DEF::LC_LOAD_DYLIB;
+        int nType=XMACH_DEF::S_LC_LOAD_DYLIB;
 
         if(g_nType==SMACH::TYPE_mach_weak_libraries)
         {
-            nType=XMACH_DEF::LC_LOAD_WEAK_DYLIB;
+            nType=XMACH_DEF::S_LC_LOAD_WEAK_DYLIB;
         }
         else if(g_nType==SMACH::TYPE_mach_id_library)
         {
-            nType=XMACH_DEF::LC_ID_DYLIB;
+            nType=XMACH_DEF::S_LC_ID_DYLIB;
         }
 
         QList<XMACH::LIBRARY_RECORD> listLibraries=g_pXMACH->getLibraryRecords(nType);
@@ -440,6 +440,37 @@ void MACHProcessData::_process()
             (*g_ppModel)->setItem(i,N_mach_data_in_code_entry::offset+1,        new QStandardItem(XBinary::valueToHex(listRecords.at(i).dice.offset)));
             (*g_ppModel)->setItem(i,N_mach_data_in_code_entry::length+1,        new QStandardItem(XBinary::valueToHex(listRecords.at(i).dice.length)));
             (*g_ppModel)->setItem(i,N_mach_data_in_code_entry::kind+1,          new QStandardItem(XBinary::valueToHex(listRecords.at(i).dice.kind)));
+
+            incValue();
+        }
+    }
+    else if(g_nType==SMACH::TYPE_DYLD_INFO_rebase)
+    {
+        QList<QString> listLabels;
+        listLabels.append("");
+        listLabels.append(tr("Offset"));
+        listLabels.append(tr("Opcode"));
+
+        QList<XBinary::OPCODE> listRecords=g_pXMACH->getOpcodes(g_nOffset,g_nSize,0);
+
+        int nNumberOfRecords=listRecords.count();
+
+        *g_ppModel=new QStandardItemModel(nNumberOfRecords,listLabels.count());
+
+        setMaximum(nNumberOfRecords);
+
+        setHeader(*g_ppModel,&listLabels);
+
+        for(int i=0; i<nNumberOfRecords; i++)
+        {
+            QStandardItem *pItem=new QStandardItem;
+            pItem->setData(i,Qt::DisplayRole);
+            pItem->setData(listRecords.at(i).nOffset,Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
+            pItem->setData(listRecords.at(i).nOffset,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+            pItem->setData(listRecords.at(i).nSize,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
+            (*g_ppModel)->setItem(i,0,          pItem);
+            (*g_ppModel)->setItem(i,1,          new QStandardItem(XBinary::valueToHex((qint32)listRecords.at(i).nOffset)));
+            (*g_ppModel)->setItem(i,2,          new QStandardItem(listRecords.at(i).sName));
 
             incValue();
         }

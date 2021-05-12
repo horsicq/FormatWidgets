@@ -202,30 +202,30 @@ void MACHWidget::reload()
                 }
             }
 
-            if(mach.isCommandPresent(XMACH_DEF::LC_ID_DYLIB,&listCommandRecords))
+            if(mach.isCommandPresent(XMACH_DEF::S_LC_ID_DYLIB,&listCommandRecords))
             {
                 QTreeWidgetItem *pItemIdDylib=createNewItem(SMACH::TYPE_mach_id_library,QString("LC_ID_DYLIB"));
 
                 pItemCommands->addChild(pItemIdDylib);
             }
 
-            if(mach.isCommandPresent(XMACH_DEF::LC_LOAD_DYLIB,&listCommandRecords))
+            if(mach.isCommandPresent(XMACH_DEF::S_LC_LOAD_DYLIB,&listCommandRecords))
             {
                 QTreeWidgetItem *pItemLoadDylib=createNewItem(SMACH::TYPE_mach_libraries,QString("LC_LOAD_DYLIB"));
 
                 pItemCommands->addChild(pItemLoadDylib);
             }
 
-            if(mach.isCommandPresent(XMACH_DEF::LC_LOAD_WEAK_DYLIB,&listCommandRecords))
+            if(mach.isCommandPresent(XMACH_DEF::S_LC_LOAD_WEAK_DYLIB,&listCommandRecords))
             {
                 QTreeWidgetItem *pItemLibraries=createNewItem(SMACH::TYPE_mach_weak_libraries,QString("LC_LOAD_WEAK_DYLIB"));
 
                 pItemCommands->addChild(pItemLibraries);
             }
 
-            if(mach.isCommandPresent(XMACH_DEF::LC_DYLD_INFO_ONLY,&listCommandRecords))
+            if(mach.isCommandPresent(XMACH_DEF::S_LC_DYLD_INFO_ONLY,&listCommandRecords))
             {
-                qint64 _nOffset=mach.getCommandRecordOffset(XMACH_DEF::LC_DYLD_INFO_ONLY,0,&listCommandRecords);
+                qint64 _nOffset=mach.getCommandRecordOffset(XMACH_DEF::S_LC_DYLD_INFO_ONLY,0,&listCommandRecords);
 
                 QTreeWidgetItem *pItemDyldInfo=createNewItem(SMACH::TYPE_mach_dyld_info_only,QString("LC_DYLD_INFO_ONLY"),_nOffset); // TODO rename
 
@@ -269,16 +269,16 @@ void MACHWidget::reload()
                 }
             }
 
-            if(mach.isCommandPresent(XMACH_DEF::LC_UUID,&listCommandRecords))
+            if(mach.isCommandPresent(XMACH_DEF::S_LC_UUID,&listCommandRecords))
             {
-                QTreeWidgetItem *pItemUuid=createNewItem(SMACH::TYPE_mach_uuid,QString("LC_UUID"),mach.getCommandRecordOffset(XMACH_DEF::LC_UUID,0,&listCommandRecords)); // TODO rename
+                QTreeWidgetItem *pItemUuid=createNewItem(SMACH::TYPE_mach_uuid,QString("LC_UUID"),mach.getCommandRecordOffset(XMACH_DEF::S_LC_UUID,0,&listCommandRecords)); // TODO rename
 
                 pItemCommands->addChild(pItemUuid);
             }
 
-            if(mach.isCommandPresent(XMACH_DEF::LC_SYMTAB,&listCommandRecords))
+            if(mach.isCommandPresent(XMACH_DEF::S_LC_SYMTAB,&listCommandRecords))
             {
-                qint64 _nOffset=mach.getCommandRecordOffset(XMACH_DEF::LC_SYMTAB,0,&listCommandRecords);
+                qint64 _nOffset=mach.getCommandRecordOffset(XMACH_DEF::S_LC_SYMTAB,0,&listCommandRecords);
 
                 QTreeWidgetItem *pItemSymtab=createNewItem(SMACH::TYPE_mach_symtab,QString("LC_SYMTAB"),_nOffset); // TODO rename
 
@@ -301,76 +301,76 @@ void MACHWidget::reload()
                 }
             }
 
-            if(mach.isCommandPresent(XMACH_DEF::LC_DYSYMTAB,&listCommandRecords))
+            if(mach.isCommandPresent(XMACH_DEF::S_LC_DYSYMTAB,&listCommandRecords))
             {
-                QTreeWidgetItem *pItemDysymtab=createNewItem(SMACH::TYPE_mach_dysymtab,QString("LC_DYSYMTAB"),mach.getCommandRecordOffset(XMACH_DEF::LC_DYSYMTAB,0,&listCommandRecords)); // TODO rename
+                QTreeWidgetItem *pItemDysymtab=createNewItem(SMACH::TYPE_mach_dysymtab,QString("LC_DYSYMTAB"),mach.getCommandRecordOffset(XMACH_DEF::S_LC_DYSYMTAB,0,&listCommandRecords)); // TODO rename
 
                 pItemCommands->addChild(pItemDysymtab);
             }
 
-            if(mach.isCommandPresent(XMACH_DEF::LC_VERSION_MIN_MACOSX,&listCommandRecords))
+            if(mach.isCommandPresent(XMACH_DEF::S_LC_VERSION_MIN_MACOSX,&listCommandRecords))
             {
-                QTreeWidgetItem *pItemVersionMin=createNewItem(SMACH::TYPE_mach_version_min,QString("LC_VERSION_MIN_MACOSX"),mach.getCommandRecordOffset(XMACH_DEF::LC_VERSION_MIN_MACOSX,0,&listCommandRecords)); // TODO rename
+                QTreeWidgetItem *pItemVersionMin=createNewItem(SMACH::TYPE_mach_version_min,QString("LC_VERSION_MIN_MACOSX"),mach.getCommandRecordOffset(XMACH_DEF::S_LC_VERSION_MIN_MACOSX,0,&listCommandRecords)); // TODO rename
 
                 pItemCommands->addChild(pItemVersionMin);
             }
-            else if(mach.isCommandPresent(XMACH_DEF::LC_VERSION_MIN_IPHONEOS,&listCommandRecords))
+            else if(mach.isCommandPresent(XMACH_DEF::S_LC_VERSION_MIN_IPHONEOS,&listCommandRecords))
             {
-                QTreeWidgetItem *pItemVersionMin=createNewItem(SMACH::TYPE_mach_version_min,QString("LC_VERSION_MIN_IPHONEOS"),mach.getCommandRecordOffset(XMACH_DEF::LC_VERSION_MIN_IPHONEOS,0,&listCommandRecords)); // TODO rename
+                QTreeWidgetItem *pItemVersionMin=createNewItem(SMACH::TYPE_mach_version_min,QString("LC_VERSION_MIN_IPHONEOS"),mach.getCommandRecordOffset(XMACH_DEF::S_LC_VERSION_MIN_IPHONEOS,0,&listCommandRecords)); // TODO rename
 
                 pItemCommands->addChild(pItemVersionMin);
             }
-            else if(mach.isCommandPresent(XMACH_DEF::LC_VERSION_MIN_TVOS,&listCommandRecords))
+            else if(mach.isCommandPresent(XMACH_DEF::S_LC_VERSION_MIN_TVOS,&listCommandRecords))
             {
-                QTreeWidgetItem *pItemVersionMin=createNewItem(SMACH::TYPE_mach_version_min,QString("LC_VERSION_MIN_TVOS"),mach.getCommandRecordOffset(XMACH_DEF::LC_VERSION_MIN_TVOS,0,&listCommandRecords)); // TODO rename
+                QTreeWidgetItem *pItemVersionMin=createNewItem(SMACH::TYPE_mach_version_min,QString("LC_VERSION_MIN_TVOS"),mach.getCommandRecordOffset(XMACH_DEF::S_LC_VERSION_MIN_TVOS,0,&listCommandRecords)); // TODO rename
 
                 pItemCommands->addChild(pItemVersionMin);
             }
-            else if(mach.isCommandPresent(XMACH_DEF::LC_VERSION_MIN_WATCHOS,&listCommandRecords))
+            else if(mach.isCommandPresent(XMACH_DEF::S_LC_VERSION_MIN_WATCHOS,&listCommandRecords))
             {
-                QTreeWidgetItem *pItemVersionMin=createNewItem(SMACH::TYPE_mach_version_min,QString("LC_VERSION_MIN_WATCHOS"),mach.getCommandRecordOffset(XMACH_DEF::LC_VERSION_MIN_WATCHOS,0,&listCommandRecords)); // TODO rename
+                QTreeWidgetItem *pItemVersionMin=createNewItem(SMACH::TYPE_mach_version_min,QString("LC_VERSION_MIN_WATCHOS"),mach.getCommandRecordOffset(XMACH_DEF::S_LC_VERSION_MIN_WATCHOS,0,&listCommandRecords)); // TODO rename
 
                 pItemCommands->addChild(pItemVersionMin);
             }
 
-            if(mach.isCommandPresent(XMACH_DEF::LC_LOAD_DYLINKER,&listCommandRecords))
+            if(mach.isCommandPresent(XMACH_DEF::S_LC_LOAD_DYLINKER,&listCommandRecords))
             {
-                QTreeWidgetItem *pItemDylinker=createNewItem(SMACH::TYPE_mach_dylinker,QString("LC_LOAD_DYLINKER"),mach.getCommandRecordOffset(XMACH_DEF::LC_LOAD_DYLINKER,0,&listCommandRecords)); // TODO rename
+                QTreeWidgetItem *pItemDylinker=createNewItem(SMACH::TYPE_mach_dylinker,QString("LC_LOAD_DYLINKER"),mach.getCommandRecordOffset(XMACH_DEF::S_LC_LOAD_DYLINKER,0,&listCommandRecords)); // TODO rename
 
                 pItemCommands->addChild(pItemDylinker);
             }
 
-            if(mach.isCommandPresent(XMACH_DEF::LC_RPATH,&listCommandRecords))
+            if(mach.isCommandPresent(XMACH_DEF::S_LC_RPATH,&listCommandRecords))
             {
-                QTreeWidgetItem *pItemRPath=createNewItem(SMACH::TYPE_mach_rpath,QString("LC_RPATH"),mach.getCommandRecordOffset(XMACH_DEF::LC_RPATH,0,&listCommandRecords)); // TODO rename
+                QTreeWidgetItem *pItemRPath=createNewItem(SMACH::TYPE_mach_rpath,QString("LC_RPATH"),mach.getCommandRecordOffset(XMACH_DEF::S_LC_RPATH,0,&listCommandRecords)); // TODO rename
 
                 pItemCommands->addChild(pItemRPath);
             }
 
-            if(mach.isCommandPresent(XMACH_DEF::LC_SOURCE_VERSION,&listCommandRecords))
+            if(mach.isCommandPresent(XMACH_DEF::S_LC_SOURCE_VERSION,&listCommandRecords))
             {
-                QTreeWidgetItem *pItemSourceVersion=createNewItem(SMACH::TYPE_mach_source_version,QString("LC_SOURCE_VERSION"),mach.getCommandRecordOffset(XMACH_DEF::LC_SOURCE_VERSION,0,&listCommandRecords)); // TODO rename
+                QTreeWidgetItem *pItemSourceVersion=createNewItem(SMACH::TYPE_mach_source_version,QString("LC_SOURCE_VERSION"),mach.getCommandRecordOffset(XMACH_DEF::S_LC_SOURCE_VERSION,0,&listCommandRecords)); // TODO rename
 
                 pItemCommands->addChild(pItemSourceVersion);
             }
 
-            if(mach.isCommandPresent(XMACH_DEF::LC_ENCRYPTION_INFO,&listCommandRecords))
+            if(mach.isCommandPresent(XMACH_DEF::S_LC_ENCRYPTION_INFO,&listCommandRecords))
             {
-                QTreeWidgetItem *pItemEncryptionInfo=createNewItem(SMACH::TYPE_mach_encryption_info,QString("LC_ENCRYPTION_INFO"),mach.getCommandRecordOffset(XMACH_DEF::LC_ENCRYPTION_INFO,0,&listCommandRecords),mach.get_encryption_info_command_size()); // TODO rename
+                QTreeWidgetItem *pItemEncryptionInfo=createNewItem(SMACH::TYPE_mach_encryption_info,QString("LC_ENCRYPTION_INFO"),mach.getCommandRecordOffset(XMACH_DEF::S_LC_ENCRYPTION_INFO,0,&listCommandRecords),mach.get_encryption_info_command_size()); // TODO rename
 
                 pItemCommands->addChild(pItemEncryptionInfo);
             }
 
-            if(mach.isCommandPresent(XMACH_DEF::LC_ENCRYPTION_INFO_64,&listCommandRecords))
+            if(mach.isCommandPresent(XMACH_DEF::S_LC_ENCRYPTION_INFO_64,&listCommandRecords))
             {
-                QTreeWidgetItem *pItemEncryptionInfo=createNewItem(SMACH::TYPE_mach_encryption_info,QString("LC_ENCRYPTION_INFO_64"),mach.getCommandRecordOffset(XMACH_DEF::LC_ENCRYPTION_INFO_64,0,&listCommandRecords),mach.get_encryption_info_command_64_size()); // TODO rename
+                QTreeWidgetItem *pItemEncryptionInfo=createNewItem(SMACH::TYPE_mach_encryption_info,QString("LC_ENCRYPTION_INFO_64"),mach.getCommandRecordOffset(XMACH_DEF::S_LC_ENCRYPTION_INFO_64,0,&listCommandRecords),mach.get_encryption_info_command_64_size()); // TODO rename
 
                 pItemCommands->addChild(pItemEncryptionInfo);
             }
 
-            if(mach.isCommandPresent(XMACH_DEF::LC_FUNCTION_STARTS,&listCommandRecords))
+            if(mach.isCommandPresent(XMACH_DEF::S_LC_FUNCTION_STARTS,&listCommandRecords))
             {
-                qint64 _nOffset=mach.getCommandRecordOffset(XMACH_DEF::LC_FUNCTION_STARTS,0,&listCommandRecords);
+                qint64 _nOffset=mach.getCommandRecordOffset(XMACH_DEF::S_LC_FUNCTION_STARTS,0,&listCommandRecords);
 
                 QTreeWidgetItem *pItemFunctionStarts=createNewItem(SMACH::TYPE_mach_function_starts,QString("LC_FUNCTION_STARTS"),_nOffset); // TODO rename
 
@@ -386,9 +386,9 @@ void MACHWidget::reload()
                 }
             }
 
-            if(mach.isCommandPresent(XMACH_DEF::LC_DATA_IN_CODE,&listCommandRecords))
+            if(mach.isCommandPresent(XMACH_DEF::S_LC_DATA_IN_CODE,&listCommandRecords))
             {
-                qint64 _nOffset=mach.getCommandRecordOffset(XMACH_DEF::LC_DATA_IN_CODE,0,&listCommandRecords);
+                qint64 _nOffset=mach.getCommandRecordOffset(XMACH_DEF::S_LC_DATA_IN_CODE,0,&listCommandRecords);
 
                 QTreeWidgetItem *pItemDataInCode=createNewItem(SMACH::TYPE_mach_data_in_code,QString("LC_DATA_IN_CODE"),_nOffset); // TODO rename
 
@@ -404,23 +404,23 @@ void MACHWidget::reload()
                 }
             }
 
-            if(mach.isCommandPresent(XMACH_DEF::LC_CODE_SIGNATURE,&listCommandRecords))
+            if(mach.isCommandPresent(XMACH_DEF::S_LC_CODE_SIGNATURE,&listCommandRecords))
             {
-                QTreeWidgetItem *pItemCodeSignature=createNewItem(SMACH::TYPE_mach_code_signature,QString("LC_CODE_SIGNATURE"),mach.getCommandRecordOffset(XMACH_DEF::LC_CODE_SIGNATURE,0,&listCommandRecords)); // TODO rename
+                QTreeWidgetItem *pItemCodeSignature=createNewItem(SMACH::TYPE_mach_code_signature,QString("LC_CODE_SIGNATURE"),mach.getCommandRecordOffset(XMACH_DEF::S_LC_CODE_SIGNATURE,0,&listCommandRecords)); // TODO rename
 
                 pItemCommands->addChild(pItemCodeSignature);
             }
 
-            if(mach.isCommandPresent(XMACH_DEF::LC_MAIN,&listCommandRecords))
+            if(mach.isCommandPresent(XMACH_DEF::S_LC_MAIN,&listCommandRecords))
             {
-                QTreeWidgetItem *pItemMain=createNewItem(SMACH::TYPE_mach_main,QString("LC_MAIN"),mach.getCommandRecordOffset(XMACH_DEF::LC_MAIN,0,&listCommandRecords)); // TODO rename
+                QTreeWidgetItem *pItemMain=createNewItem(SMACH::TYPE_mach_main,QString("LC_MAIN"),mach.getCommandRecordOffset(XMACH_DEF::S_LC_MAIN,0,&listCommandRecords)); // TODO rename
 
                 pItemCommands->addChild(pItemMain);
             }
 
-            if(mach.isCommandPresent(XMACH_DEF::LC_UNIXTHREAD,&listCommandRecords))
+            if(mach.isCommandPresent(XMACH_DEF::S_LC_UNIXTHREAD,&listCommandRecords))
             {
-                qint64 _nOffset=mach.getCommandRecordOffset(XMACH_DEF::LC_UNIXTHREAD,0,&listCommandRecords);
+                qint64 _nOffset=mach.getCommandRecordOffset(XMACH_DEF::S_LC_UNIXTHREAD,0,&listCommandRecords);
 
                 QTreeWidgetItem *pItemUnixThread=createNewItem(SMACH::TYPE_mach_unix_thread,QString("LC_UNIXTHREAD"),_nOffset); // TODO rename
 
@@ -432,7 +432,7 @@ void MACHWidget::reload()
 
                 _nOffset+=sizeof(XMACH_DEF::unix_thread_command);
 
-                if((nMachine==XMACH_DEF::CPU_TYPE_I386)||(nMachine==XMACH_DEF::CPU_TYPE_X86_64))
+                if((nMachine==XMACH_DEF::S_CPU_TYPE_I386)||(nMachine==XMACH_DEF::S_CPU_TYPE_X86_64))
                 {
                     if(unix_thread.flavor==XMACH_DEF::x86_THREAD_STATE32)
                     {
@@ -447,7 +447,7 @@ void MACHWidget::reload()
                         pItemUnixThread->addChild(pItem);
                     }
                 }
-                else if((nMachine==XMACH_DEF::CPU_TYPE_ARM)||(nMachine==XMACH_DEF::CPU_TYPE_ARM64))
+                else if((nMachine==XMACH_DEF::S_CPU_TYPE_ARM)||(nMachine==XMACH_DEF::S_CPU_TYPE_ARM64))
                 {
                     if(unix_thread.flavor==XMACH_DEF::ARM_THREAD_STATE)
                     {
@@ -462,7 +462,7 @@ void MACHWidget::reload()
                         pItemUnixThread->addChild(pItem);
                     }
                 }
-                else if(nMachine==XMACH_DEF::CPU_TYPE_POWERPC)
+                else if(nMachine==XMACH_DEF::S_CPU_TYPE_POWERPC)
                 {
                     QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_mach_unix_thread_ppc_32,QString("ppc_thread_state32_t"),_nOffset); // TODO rename
 
@@ -568,16 +568,16 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
                 case SMACH::TYPE_mach_data_in_code:
                     switch(nNdata)
                     {
-                        case N_mach_linkedit_data::dataoff:                 g_invWidget[INV_DATA_IN_CODE_dataoff]->setOffsetAndSize(&mach,nValue,mach.get_linkedit_data(XMACH_DEF::LC_DATA_IN_CODE).datasize,true);             break;
-                        case N_mach_linkedit_data::datasize:                g_invWidget[INV_DATA_IN_CODE_dataoff]->setOffsetAndSize(&mach,mach.get_linkedit_data(XMACH_DEF::LC_DATA_IN_CODE).dataoff,nValue,true);              break;
+                        case N_mach_linkedit_data::dataoff:                 g_invWidget[INV_DATA_IN_CODE_dataoff]->setOffsetAndSize(&mach,nValue,mach.get_linkedit_data(XMACH_DEF::S_LC_DATA_IN_CODE).datasize,true);             break;
+                        case N_mach_linkedit_data::datasize:                g_invWidget[INV_DATA_IN_CODE_dataoff]->setOffsetAndSize(&mach,mach.get_linkedit_data(XMACH_DEF::S_LC_DATA_IN_CODE).dataoff,nValue,true);              break;
                     }
                     break;
 
                 case SMACH::TYPE_mach_function_starts:
                     switch(nNdata)
                     {
-                        case N_mach_linkedit_data::dataoff:                 g_invWidget[INV_FUNCTION_STARTS_dataoff]->setOffsetAndSize(&mach,nValue,mach.get_linkedit_data(XMACH_DEF::LC_FUNCTION_STARTS).datasize,true);             break;
-                        case N_mach_linkedit_data::datasize:                g_invWidget[INV_FUNCTION_STARTS_dataoff]->setOffsetAndSize(&mach,mach.get_linkedit_data(XMACH_DEF::LC_FUNCTION_STARTS).dataoff,nValue,true);              break;
+                        case N_mach_linkedit_data::dataoff:                 g_invWidget[INV_FUNCTION_STARTS_dataoff]->setOffsetAndSize(&mach,nValue,mach.get_linkedit_data(XMACH_DEF::S_LC_FUNCTION_STARTS).datasize,true);             break;
+                        case N_mach_linkedit_data::datasize:                g_invWidget[INV_FUNCTION_STARTS_dataoff]->setOffsetAndSize(&mach,mach.get_linkedit_data(XMACH_DEF::S_LC_FUNCTION_STARTS).dataoff,nValue,true);              break;
                     }
                     break;
             }
@@ -2017,6 +2017,10 @@ void MACHWidget::reloadData()
         {
             if(!isInitPresent(sInit))
             {
+                MACHProcessData machProcessData(SMACH::TYPE_DYLD_INFO_rebase,&tvModel[SMACH::TYPE_DYLD_INFO_rebase],&mach,0,0);
+
+                ajustTableView(&machProcessData,&tvModel[SMACH::TYPE_DYLD_INFO_rebase],ui->tableView_DYLD_INFO_rebase,nullptr,true);
+
                 loadHexSubdevice(nDataOffset,nDataSize,nDataOffset,&g_subDevice[SMACH::TYPE_DYLD_INFO_rebase],ui->widgetHex_DYLD_INFO_rebase);
             }
         }

@@ -707,6 +707,7 @@ extern const FW_DEF::HEADER_RECORD records[__data_size];
 
 enum CB
 {
+    CB_kind,
     __CB_size
 };
 
