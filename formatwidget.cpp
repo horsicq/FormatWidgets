@@ -237,6 +237,26 @@ bool FormatWidget::loadHexSubdeviceByTableView(int nRow, int nType, ToolsWidget 
     return bResult;
 }
 
+bool FormatWidget::setHexSubdeviceByTableView(int nRow, int nType, ToolsWidget *pToolsWidget, QTableView *pTableView)
+{
+    Q_UNUSED(nType)
+
+    bool bResult=false;
+
+    if(nRow!=-1)
+    {
+        QModelIndex index=pTableView->model()->index(nRow,0);
+
+        qint64 nOffset=pTableView->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
+        qint64 nSize=pTableView->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
+
+        pToolsWidget->setSelection(nOffset,nSize);
+        bResult=true;
+    }
+
+    return bResult;
+}
+
 void FormatWidget::setHeaderTableSelection(ToolsWidget *pToolWidget, QTableWidget *pTableWidget)
 {
     qint32 nCurrentRow=pTableWidget->currentRow();

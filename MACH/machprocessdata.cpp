@@ -465,8 +465,8 @@ void MACHProcessData::_process()
         {
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
-            pItem->setData(listRecords.at(i).nOffset,Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
-            pItem->setData(listRecords.at(i).nOffset,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+            pItem->setData(listRecords.at(i).nOffset-g_nOffset,Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
+            pItem->setData(listRecords.at(i).nOffset-g_nOffset,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
             pItem->setData(listRecords.at(i).nSize,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
             (*g_ppModel)->setItem(i,0,          pItem);
             (*g_ppModel)->setItem(i,1,          new QStandardItem(XBinary::valueToHex((qint32)listRecords.at(i).nOffset)));
@@ -542,7 +542,7 @@ void MACHProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
         pTableView->setColumnWidth(0,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT16,mode));
         pTableView->setColumnWidth(1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
         pTableView->setColumnWidth(2,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
-        pTableView->setColumnWidth(3,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_STRINGLONG,mode));
+        pTableView->setColumnWidth(3,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_STRINGSHORT,mode));
     }
     else if(g_nType==SMACH::TYPE_DICE)
     {
@@ -550,5 +550,15 @@ void MACHProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
         pTableView->setColumnWidth(1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
         pTableView->setColumnWidth(2,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
         pTableView->setColumnWidth(3,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+    }
+    else if((g_nType==SMACH::TYPE_DYLD_INFO_bind)||
+            (g_nType==SMACH::TYPE_DYLD_INFO_export)||
+            (g_nType==SMACH::TYPE_DYLD_INFO_lazy_bind)||
+            (g_nType==SMACH::TYPE_DYLD_INFO_rebase)||
+            (g_nType==SMACH::TYPE_DYLD_INFO_weak_bind))
+    {
+        pTableView->setColumnWidth(0,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT16,mode));
+        pTableView->setColumnWidth(1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+        pTableView->setColumnWidth(2,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_STRINGLONG,mode));
     }
 }

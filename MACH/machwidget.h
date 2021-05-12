@@ -109,6 +109,7 @@ private slots:
     void on_tableView_Functions_customContextMenuRequested(const QPoint &pos);
     void on_tableView_data_in_code_entry_doubleClicked(const QModelIndex &index);
     void on_tableView_data_in_code_entry_customContextMenuRequested(const QPoint &pos);
+    void on_tableView_DYLD_INFO_rebase_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
     void editCommandHeader();
     void editSegmentHeader();
     void segmentHex();
