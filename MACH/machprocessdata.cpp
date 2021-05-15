@@ -487,6 +487,168 @@ void MACHProcessData::_process()
             incValue();
         }
     }
+    else if(g_nType==SMACH::TYPE_DYSYMTAB_toc)
+    {
+        QList<QString> listLabels;
+        listLabels.append("");
+        listLabels.append(tr("Value"));
+
+        QList<quint32> listRecords=g_pXMACH->get_toc_list();
+
+        int nNumberOfRecords=listRecords.count();
+
+        *g_ppModel=new QStandardItemModel(nNumberOfRecords,listLabels.count());
+
+        setMaximum(nNumberOfRecords);
+
+        setHeader(*g_ppModel,&listLabels);
+
+        for(int i=0; i<nNumberOfRecords; i++)
+        {
+            QStandardItem *pItem=new QStandardItem;
+            pItem->setData(i,Qt::DisplayRole);
+            pItem->setData(g_nOffset+i*sizeof(quint32),Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
+            (*g_ppModel)->setItem(i,0,          pItem);
+            (*g_ppModel)->setItem(i,1,          new QStandardItem(XBinary::valueToHex(listRecords.at(i))));
+
+            incValue();
+        }
+    }
+    else if(g_nType==SMACH::TYPE_DYSYMTAB_modtab)
+    {
+        QList<QString> listLabels;
+        listLabels.append("");
+        listLabels.append(tr("Value"));
+
+        QList<quint32> listRecords=g_pXMACH->get_modtab_list();
+
+        int nNumberOfRecords=listRecords.count();
+
+        *g_ppModel=new QStandardItemModel(nNumberOfRecords,listLabels.count());
+
+        setMaximum(nNumberOfRecords);
+
+        setHeader(*g_ppModel,&listLabels);
+
+        for(int i=0; i<nNumberOfRecords; i++)
+        {
+            QStandardItem *pItem=new QStandardItem;
+            pItem->setData(i,Qt::DisplayRole);
+            pItem->setData(g_nOffset+i*sizeof(quint32),Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
+            (*g_ppModel)->setItem(i,0,          pItem);
+            (*g_ppModel)->setItem(i,1,          new QStandardItem(XBinary::valueToHex(listRecords.at(i))));
+
+            incValue();
+        }
+    }
+    else if(g_nType==SMACH::TYPE_DYSYMTAB_extrefsyms)
+    {
+        QList<QString> listLabels;
+        listLabels.append("");
+        listLabels.append(tr("Value"));
+
+        QList<quint32> listRecords=g_pXMACH->get_extrefsyms_list();
+
+        int nNumberOfRecords=listRecords.count();
+
+        *g_ppModel=new QStandardItemModel(nNumberOfRecords,listLabels.count());
+
+        setMaximum(nNumberOfRecords);
+
+        setHeader(*g_ppModel,&listLabels);
+
+        for(int i=0; i<nNumberOfRecords; i++)
+        {
+            QStandardItem *pItem=new QStandardItem;
+            pItem->setData(i,Qt::DisplayRole);
+            pItem->setData(g_nOffset+i*sizeof(quint32),Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
+            (*g_ppModel)->setItem(i,0,          pItem);
+            (*g_ppModel)->setItem(i,1,          new QStandardItem(XBinary::valueToHex(listRecords.at(i))));
+
+            incValue();
+        }
+    }
+    else if(g_nType==SMACH::TYPE_DYSYMTAB_indirectsyms)
+    {
+        QList<QString> listLabels;
+        listLabels.append("");
+        listLabels.append(tr("Value"));
+
+        QList<quint32> listRecords=g_pXMACH->get_indirectsyms_list();
+
+        int nNumberOfRecords=listRecords.count();
+
+        *g_ppModel=new QStandardItemModel(nNumberOfRecords,listLabels.count());
+
+        setMaximum(nNumberOfRecords);
+
+        setHeader(*g_ppModel,&listLabels);
+
+        for(int i=0; i<nNumberOfRecords; i++)
+        {
+            QStandardItem *pItem=new QStandardItem;
+            pItem->setData(i,Qt::DisplayRole);
+            pItem->setData(g_nOffset+i*sizeof(quint32),Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
+            (*g_ppModel)->setItem(i,0,          pItem);
+            (*g_ppModel)->setItem(i,1,          new QStandardItem(XBinary::valueToHex(listRecords.at(i))));
+
+            incValue();
+        }
+    }
+    else if(g_nType==SMACH::TYPE_DYSYMTAB_extrel)
+    {
+        QList<QString> listLabels;
+        listLabels.append("");
+        listLabels.append(tr("Value"));
+
+        QList<quint32> listRecords=g_pXMACH->get_extrel_list();
+
+        int nNumberOfRecords=listRecords.count();
+
+        *g_ppModel=new QStandardItemModel(nNumberOfRecords,listLabels.count());
+
+        setMaximum(nNumberOfRecords);
+
+        setHeader(*g_ppModel,&listLabels);
+
+        for(int i=0; i<nNumberOfRecords; i++)
+        {
+            QStandardItem *pItem=new QStandardItem;
+            pItem->setData(i,Qt::DisplayRole);
+            pItem->setData(g_nOffset+i*sizeof(quint32),Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
+            (*g_ppModel)->setItem(i,0,          pItem);
+            (*g_ppModel)->setItem(i,1,          new QStandardItem(XBinary::valueToHex(listRecords.at(i))));
+
+            incValue();
+        }
+    }
+    else if(g_nType==SMACH::TYPE_DYSYMTAB_locrel)
+    {
+        QList<QString> listLabels;
+        listLabels.append("");
+        listLabels.append(tr("Value"));
+
+        QList<quint32> listRecords=g_pXMACH->get_locrel_list();
+
+        int nNumberOfRecords=listRecords.count();
+
+        *g_ppModel=new QStandardItemModel(nNumberOfRecords,listLabels.count());
+
+        setMaximum(nNumberOfRecords);
+
+        setHeader(*g_ppModel,&listLabels);
+
+        for(int i=0; i<nNumberOfRecords; i++)
+        {
+            QStandardItem *pItem=new QStandardItem;
+            pItem->setData(i,Qt::DisplayRole);
+            pItem->setData(g_nOffset+i*sizeof(quint32),Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
+            (*g_ppModel)->setItem(i,0,          pItem);
+            (*g_ppModel)->setItem(i,1,          new QStandardItem(XBinary::valueToHex(listRecords.at(i))));
+
+            incValue();
+        }
+    }
 }
 
 void MACHProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
@@ -572,5 +734,35 @@ void MACHProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
         pTableView->setColumnWidth(0,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT16,mode));
         pTableView->setColumnWidth(1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
         pTableView->setColumnWidth(2,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_STRINGLONG,mode));
+    }
+    else if(g_nType==SMACH::TYPE_DYSYMTAB_toc)
+    {
+        pTableView->setColumnWidth(0,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT16,mode));
+        pTableView->setColumnWidth(1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+    }
+    else if(g_nType==SMACH::TYPE_DYSYMTAB_modtab)
+    {
+        pTableView->setColumnWidth(0,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT16,mode));
+        pTableView->setColumnWidth(1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+    }
+    else if(g_nType==SMACH::TYPE_DYSYMTAB_extrefsyms)
+    {
+        pTableView->setColumnWidth(0,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT16,mode));
+        pTableView->setColumnWidth(1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+    }
+    else if(g_nType==SMACH::TYPE_DYSYMTAB_indirectsyms)
+    {
+        pTableView->setColumnWidth(0,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT16,mode));
+        pTableView->setColumnWidth(1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+    }
+    else if(g_nType==SMACH::TYPE_DYSYMTAB_extrel)
+    {
+        pTableView->setColumnWidth(0,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT16,mode));
+        pTableView->setColumnWidth(1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+    }
+    else if(g_nType==SMACH::TYPE_DYSYMTAB_locrel)
+    {
+        pTableView->setColumnWidth(0,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT16,mode));
+        pTableView->setColumnWidth(1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
     }
 }

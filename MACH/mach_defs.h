@@ -71,6 +71,12 @@ enum TYPE
     TYPE_DYLD_INFO_weak_bind,
     TYPE_DYLD_INFO_lazy_bind,
     TYPE_DYLD_INFO_export,
+    TYPE_DYSYMTAB_toc,
+    TYPE_DYSYMTAB_modtab,
+    TYPE_DYSYMTAB_extrefsyms,
+    TYPE_DYSYMTAB_indirectsyms,
+    TYPE_DYSYMTAB_extrel,
+    TYPE_DYSYMTAB_locrel,
     __TYPE_size
 };
 }

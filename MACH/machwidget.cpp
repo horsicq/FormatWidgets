@@ -303,9 +303,55 @@ void MACHWidget::reload()
 
             if(mach.isCommandPresent(XMACH_DEF::S_LC_DYSYMTAB,&listCommandRecords))
             {
-                QTreeWidgetItem *pItemDysymtab=createNewItem(SMACH::TYPE_mach_dysymtab,QString("LC_DYSYMTAB"),mach.getCommandRecordOffset(XMACH_DEF::S_LC_DYSYMTAB,0,&listCommandRecords)); // TODO rename
+                qint64 _nOffset=mach.getCommandRecordOffset(XMACH_DEF::S_LC_DYSYMTAB,0,&listCommandRecords);
+
+                QTreeWidgetItem *pItemDysymtab=createNewItem(SMACH::TYPE_mach_dysymtab,QString("LC_DYSYMTAB"),_nOffset); // TODO rename
 
                 pItemCommands->addChild(pItemDysymtab);
+
+                XMACH_DEF::dysymtab_command dysymtab=mach._read_dysymtab_command(_nOffset);
+
+                if(mach.isOffsetValid(dysymtab.tocoff)&&(dysymtab.ntoc))
+                {
+                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_DYSYMTAB_toc,tr("toc"),dysymtab.tocoff,dysymtab.ntoc); // TODO rename
+
+                    pItemDysymtab->addChild(pItem);
+                }
+
+                if(mach.isOffsetValid(dysymtab.modtaboff)&&(dysymtab.nmodtab))
+                {
+                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_DYSYMTAB_modtab,tr("modtab"),dysymtab.modtaboff,dysymtab.nmodtab); // TODO rename
+
+                    pItemDysymtab->addChild(pItem);
+                }
+
+                if(mach.isOffsetValid(dysymtab.extrefsymoff)&&(dysymtab.nextrefsyms))
+                {
+                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_DYSYMTAB_extrefsyms,tr("extrefsyms"),dysymtab.extrefsymoff,dysymtab.nextrefsyms); // TODO rename
+
+                    pItemDysymtab->addChild(pItem);
+                }
+
+                if(mach.isOffsetValid(dysymtab.indirectsymoff)&&(dysymtab.nindirectsyms))
+                {
+                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_DYSYMTAB_indirectsyms,tr("indirectsyms"),dysymtab.indirectsymoff,dysymtab.nindirectsyms); // TODO rename
+
+                    pItemDysymtab->addChild(pItem);
+                }
+
+                if(mach.isOffsetValid(dysymtab.extreloff)&&(dysymtab.nextrel))
+                {
+                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_DYSYMTAB_extrel,tr("extrel"),dysymtab.extreloff,dysymtab.nextrel); // TODO rename
+
+                    pItemDysymtab->addChild(pItem);
+                }
+
+                if(mach.isOffsetValid(dysymtab.locreloff)&&(dysymtab.nlocrel))
+                {
+                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_DYSYMTAB_locrel,tr("locrel"),dysymtab.locreloff,dysymtab.nlocrel); // TODO rename
+
+                    pItemDysymtab->addChild(pItem);
+                }
             }
 
             if(mach.isCommandPresent(XMACH_DEF::S_LC_VERSION_MIN_MACOSX,&listCommandRecords))
@@ -2076,6 +2122,60 @@ void MACHWidget::reloadData()
                 connect(ui->tableView_DYLD_INFO_export->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_DYLD_INFO_export_currentRowChanged(QModelIndex,QModelIndex)));
 
                 loadHexSubdevice(nDataOffset,nDataSize,nDataOffset,&g_subDevice[SMACH::TYPE_DYLD_INFO_export],ui->widgetHex_DYLD_INFO_export);
+            }
+        }
+        else if(nType==SMACH::TYPE_DYSYMTAB_toc)
+        {
+            if(!isInitPresent(sInit))
+            {
+                MACHProcessData machProcessData(SMACH::TYPE_DYSYMTAB_toc,&tvModel[SMACH::TYPE_DYSYMTAB_toc],&mach,nDataOffset,nDataSize);
+
+                ajustTableView(&machProcessData,&tvModel[SMACH::TYPE_DYSYMTAB_toc],ui->tableView_DYSYMTAB_toc,nullptr,false);
+            }
+        }
+        else if(nType==SMACH::TYPE_DYSYMTAB_modtab)
+        {
+            if(!isInitPresent(sInit))
+            {
+                MACHProcessData machProcessData(SMACH::TYPE_DYSYMTAB_modtab,&tvModel[SMACH::TYPE_DYSYMTAB_modtab],&mach,nDataOffset,nDataSize);
+
+                ajustTableView(&machProcessData,&tvModel[SMACH::TYPE_DYSYMTAB_modtab],ui->tableView_DYSYMTAB_modtab,nullptr,false);
+            }
+        }
+        else if(nType==SMACH::TYPE_DYSYMTAB_extrefsyms)
+        {
+            if(!isInitPresent(sInit))
+            {
+                MACHProcessData machProcessData(SMACH::TYPE_DYSYMTAB_extrefsyms,&tvModel[SMACH::TYPE_DYSYMTAB_extrefsyms],&mach,nDataOffset,nDataSize);
+
+                ajustTableView(&machProcessData,&tvModel[SMACH::TYPE_DYSYMTAB_extrefsyms],ui->tableView_DYSYMTAB_extrefsyms,nullptr,false);
+            }
+        }
+        else if(nType==SMACH::TYPE_DYSYMTAB_indirectsyms)
+        {
+            if(!isInitPresent(sInit))
+            {
+                MACHProcessData machProcessData(SMACH::TYPE_DYSYMTAB_indirectsyms,&tvModel[SMACH::TYPE_DYSYMTAB_indirectsyms],&mach,nDataOffset,nDataSize);
+
+                ajustTableView(&machProcessData,&tvModel[SMACH::TYPE_DYSYMTAB_indirectsyms],ui->tableView_DYSYMTAB_indirectsyms,nullptr,false);
+            }
+        }
+        else if(nType==SMACH::TYPE_DYSYMTAB_extrel)
+        {
+            if(!isInitPresent(sInit))
+            {
+                MACHProcessData machProcessData(SMACH::TYPE_DYSYMTAB_extrel,&tvModel[SMACH::TYPE_DYSYMTAB_extrel],&mach,nDataOffset,nDataSize);
+
+                ajustTableView(&machProcessData,&tvModel[SMACH::TYPE_DYSYMTAB_extrel],ui->tableView_DYSYMTAB_extrel,nullptr,false);
+            }
+        }
+        else if(nType==SMACH::TYPE_DYSYMTAB_locrel)
+        {
+            if(!isInitPresent(sInit))
+            {
+                MACHProcessData machProcessData(SMACH::TYPE_DYSYMTAB_locrel,&tvModel[SMACH::TYPE_DYSYMTAB_locrel],&mach,nDataOffset,nDataSize);
+
+                ajustTableView(&machProcessData,&tvModel[SMACH::TYPE_DYSYMTAB_locrel],ui->tableView_DYSYMTAB_locrel,nullptr,false);
             }
         }
 
