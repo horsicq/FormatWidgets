@@ -109,11 +109,11 @@ private slots:
     void on_tableView_Functions_customContextMenuRequested(const QPoint &pos);
     void on_tableView_data_in_code_entry_doubleClicked(const QModelIndex &index);
     void on_tableView_data_in_code_entry_customContextMenuRequested(const QPoint &pos);
-    void on_tableView_DYLD_INFO_rebase_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
-    void on_tableView_DYLD_INFO_bind_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
-    void on_tableView_DYLD_INFO_weak_bind_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
-    void on_tableView_DYLD_INFO_lazy_bind_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
-    void on_tableView_DYLD_INFO_export_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
+    void onTableView_DYLD_INFO_rebase_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
+    void onTableView_DYLD_INFO_bind_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
+    void onTableView_DYLD_INFO_weak_bind_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
+    void onTableView_DYLD_INFO_lazy_bind_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
+    void onTableView_DYLD_INFO_export_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
     void editCommandHeader();
     void editSegmentHeader();
     void segmentHex();

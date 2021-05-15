@@ -2021,7 +2021,7 @@ void MACHWidget::reloadData()
 
                 ajustTableView(&machProcessData,&tvModel[SMACH::TYPE_DYLD_INFO_rebase],ui->tableView_DYLD_INFO_rebase,nullptr,true);
 
-                connect(ui->tableView_DYLD_INFO_rebase->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(on_tableView_DYLD_INFO_rebase_currentRowChanged(QModelIndex,QModelIndex)));
+                connect(ui->tableView_DYLD_INFO_rebase->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_DYLD_INFO_rebase_currentRowChanged(QModelIndex,QModelIndex)));
 
                 loadHexSubdevice(nDataOffset,nDataSize,nDataOffset,&g_subDevice[SMACH::TYPE_DYLD_INFO_rebase],ui->widgetHex_DYLD_INFO_rebase);
             }
@@ -2034,7 +2034,7 @@ void MACHWidget::reloadData()
 
                 ajustTableView(&machProcessData,&tvModel[SMACH::TYPE_DYLD_INFO_bind],ui->tableView_DYLD_INFO_bind,nullptr,true);
 
-                connect(ui->tableView_DYLD_INFO_bind->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(on_tableView_DYLD_INFO_bind_currentRowChanged(QModelIndex,QModelIndex)));
+                connect(ui->tableView_DYLD_INFO_bind->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_DYLD_INFO_bind_currentRowChanged(QModelIndex,QModelIndex)));
 
                 loadHexSubdevice(nDataOffset,nDataSize,nDataOffset,&g_subDevice[SMACH::TYPE_DYLD_INFO_bind],ui->widgetHex_DYLD_INFO_bind);
             }
@@ -2047,7 +2047,7 @@ void MACHWidget::reloadData()
 
                 ajustTableView(&machProcessData,&tvModel[SMACH::TYPE_DYLD_INFO_weak_bind],ui->tableView_DYLD_INFO_weak_bind,nullptr,true);
 
-                connect(ui->tableView_DYLD_INFO_weak_bind->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(on_tableView_DYLD_INFO_weak_bind_currentRowChanged(QModelIndex,QModelIndex)));
+                connect(ui->tableView_DYLD_INFO_weak_bind->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_DYLD_INFO_weak_bind_currentRowChanged(QModelIndex,QModelIndex)));
 
                 loadHexSubdevice(nDataOffset,nDataSize,nDataOffset,&g_subDevice[SMACH::TYPE_DYLD_INFO_weak_bind],ui->widgetHex_DYLD_INFO_weak_bind);
             }
@@ -2060,7 +2060,7 @@ void MACHWidget::reloadData()
 
                 ajustTableView(&machProcessData,&tvModel[SMACH::TYPE_DYLD_INFO_lazy_bind],ui->tableView_DYLD_INFO_lazy_bind,nullptr,true);
 
-                connect(ui->tableView_DYLD_INFO_lazy_bind->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(on_tableView_DYLD_INFO_lazy_bind_currentRowChanged(QModelIndex,QModelIndex)));
+                connect(ui->tableView_DYLD_INFO_lazy_bind->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_DYLD_INFO_lazy_bind_currentRowChanged(QModelIndex,QModelIndex)));
 
                 loadHexSubdevice(nDataOffset,nDataSize,nDataOffset,&g_subDevice[SMACH::TYPE_DYLD_INFO_lazy_bind],ui->widgetHex_DYLD_INFO_lazy_bind);
             }
@@ -2073,7 +2073,7 @@ void MACHWidget::reloadData()
 
                 ajustTableView(&machProcessData,&tvModel[SMACH::TYPE_DYLD_INFO_export],ui->tableView_DYLD_INFO_export,nullptr,true);
 
-                connect(ui->tableView_DYLD_INFO_export->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(on_tableView_DYLD_INFO_export_currentRowChanged(QModelIndex,QModelIndex)));
+                connect(ui->tableView_DYLD_INFO_export->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_DYLD_INFO_export_currentRowChanged(QModelIndex,QModelIndex)));
 
                 loadHexSubdevice(nDataOffset,nDataSize,nDataOffset,&g_subDevice[SMACH::TYPE_DYLD_INFO_export],ui->widgetHex_DYLD_INFO_export);
             }
@@ -2620,7 +2620,7 @@ void MACHWidget::on_tableView_data_in_code_entry_customContextMenuRequested(cons
     }
 }
 
-void MACHWidget::on_tableView_DYLD_INFO_rebase_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+void MACHWidget::onTableView_DYLD_INFO_rebase_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
 {
     Q_UNUSED(current)
     Q_UNUSED(previous)
@@ -2628,7 +2628,7 @@ void MACHWidget::on_tableView_DYLD_INFO_rebase_currentRowChanged(const QModelInd
     setHexSubdeviceByTableView(current.row(),SMACH::TYPE_DYLD_INFO_rebase,ui->widgetHex_DYLD_INFO_rebase,ui->tableView_DYLD_INFO_rebase);
 }
 
-void MACHWidget::on_tableView_DYLD_INFO_bind_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+void MACHWidget::onTableView_DYLD_INFO_bind_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
 {
     Q_UNUSED(current)
     Q_UNUSED(previous)
@@ -2636,7 +2636,7 @@ void MACHWidget::on_tableView_DYLD_INFO_bind_currentRowChanged(const QModelIndex
     setHexSubdeviceByTableView(current.row(),SMACH::TYPE_DYLD_INFO_bind,ui->widgetHex_DYLD_INFO_bind,ui->tableView_DYLD_INFO_bind);
 }
 
-void MACHWidget::on_tableView_DYLD_INFO_weak_bind_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+void MACHWidget::onTableView_DYLD_INFO_weak_bind_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
 {
     Q_UNUSED(current)
     Q_UNUSED(previous)
@@ -2644,7 +2644,7 @@ void MACHWidget::on_tableView_DYLD_INFO_weak_bind_currentRowChanged(const QModel
     setHexSubdeviceByTableView(current.row(),SMACH::TYPE_DYLD_INFO_weak_bind,ui->widgetHex_DYLD_INFO_weak_bind,ui->tableView_DYLD_INFO_weak_bind);
 }
 
-void MACHWidget::on_tableView_DYLD_INFO_lazy_bind_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+void MACHWidget::onTableView_DYLD_INFO_lazy_bind_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
 {
     Q_UNUSED(current)
     Q_UNUSED(previous)
@@ -2652,7 +2652,7 @@ void MACHWidget::on_tableView_DYLD_INFO_lazy_bind_currentRowChanged(const QModel
     setHexSubdeviceByTableView(current.row(),SMACH::TYPE_DYLD_INFO_lazy_bind,ui->widgetHex_DYLD_INFO_lazy_bind,ui->tableView_DYLD_INFO_lazy_bind);
 }
 
-void MACHWidget::on_tableView_DYLD_INFO_export_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+void MACHWidget::onTableView_DYLD_INFO_export_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
 {
     Q_UNUSED(current)
     Q_UNUSED(previous)
