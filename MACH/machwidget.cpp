@@ -313,42 +313,42 @@ void MACHWidget::reload()
 
                 if(mach.isOffsetValid(dysymtab.tocoff)&&(dysymtab.ntoc))
                 {
-                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_DYSYMTAB_toc,tr("toc"),dysymtab.tocoff,dysymtab.ntoc); // TODO rename
+                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_DYSYMTAB_toc,QString("toc"),dysymtab.tocoff,dysymtab.ntoc); // TODO rename
 
                     pItemDysymtab->addChild(pItem);
                 }
 
                 if(mach.isOffsetValid(dysymtab.modtaboff)&&(dysymtab.nmodtab))
                 {
-                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_DYSYMTAB_modtab,tr("modtab"),dysymtab.modtaboff,dysymtab.nmodtab); // TODO rename
+                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_DYSYMTAB_modtab,QString("modtab"),dysymtab.modtaboff,dysymtab.nmodtab); // TODO rename
 
                     pItemDysymtab->addChild(pItem);
                 }
 
                 if(mach.isOffsetValid(dysymtab.extrefsymoff)&&(dysymtab.nextrefsyms))
                 {
-                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_DYSYMTAB_extrefsyms,tr("extrefsyms"),dysymtab.extrefsymoff,dysymtab.nextrefsyms); // TODO rename
+                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_DYSYMTAB_extrefsyms,QString("extrefsyms"),dysymtab.extrefsymoff,dysymtab.nextrefsyms); // TODO rename
 
                     pItemDysymtab->addChild(pItem);
                 }
 
                 if(mach.isOffsetValid(dysymtab.indirectsymoff)&&(dysymtab.nindirectsyms))
                 {
-                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_DYSYMTAB_indirectsyms,tr("indirectsyms"),dysymtab.indirectsymoff,dysymtab.nindirectsyms); // TODO rename
+                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_DYSYMTAB_indirectsyms,QString("indirectsyms"),dysymtab.indirectsymoff,dysymtab.nindirectsyms); // TODO rename
 
                     pItemDysymtab->addChild(pItem);
                 }
 
                 if(mach.isOffsetValid(dysymtab.extreloff)&&(dysymtab.nextrel))
                 {
-                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_DYSYMTAB_extrel,tr("extrel"),dysymtab.extreloff,dysymtab.nextrel); // TODO rename
+                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_DYSYMTAB_extrel,QString("extrel"),dysymtab.extreloff,dysymtab.nextrel); // TODO rename
 
                     pItemDysymtab->addChild(pItem);
                 }
 
                 if(mach.isOffsetValid(dysymtab.locreloff)&&(dysymtab.nlocrel))
                 {
-                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_DYSYMTAB_locrel,tr("locrel"),dysymtab.locreloff,dysymtab.nlocrel); // TODO rename
+                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_DYSYMTAB_locrel,QString("locrel"),dysymtab.locreloff,dysymtab.nlocrel); // TODO rename
 
                     pItemDysymtab->addChild(pItem);
                 }
