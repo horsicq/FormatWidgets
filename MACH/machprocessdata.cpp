@@ -493,7 +493,7 @@ void MACHProcessData::_process()
         listLabels.append("");
         listLabels.append(tr("Value"));
 
-        QList<quint32> listRecords=g_pXMACH->get_toc_list();
+        QList<quint64> listRecords=g_pXMACH->get_toc_list();
 
         int nNumberOfRecords=listRecords.count();
 
@@ -507,7 +507,7 @@ void MACHProcessData::_process()
         {
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
-            pItem->setData(g_nOffset+i*sizeof(quint32),Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
+            pItem->setData(g_nOffset+i*sizeof(quint64),Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
             (*g_ppModel)->setItem(i,0,          pItem);
             (*g_ppModel)->setItem(i,1,          new QStandardItem(XBinary::valueToHex(listRecords.at(i))));
 
@@ -518,9 +518,17 @@ void MACHProcessData::_process()
     {
         QList<QString> listLabels;
         listLabels.append("");
-        listLabels.append(tr("Value"));
 
-        QList<quint32> listRecords=g_pXMACH->get_modtab_list();
+        if(bIs64)
+        {
+            listLabels.append(getStructList(N_mach_modtab64::records,N_mach_modtab64::__data_size));
+        }
+        else
+        {
+            listLabels.append(getStructList(N_mach_modtab32::records,N_mach_modtab64::__data_size));
+        }
+
+        QList<XMACH::MODTAB_RECORD> listRecords=g_pXMACH->get_modtab_list();
 
         int nNumberOfRecords=listRecords.count();
 
@@ -534,9 +542,41 @@ void MACHProcessData::_process()
         {
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
-            pItem->setData(g_nOffset+i*sizeof(quint32),Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
+            pItem->setData(listRecords.at(i).nStructOffset,Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
             (*g_ppModel)->setItem(i,0,          pItem);
-            (*g_ppModel)->setItem(i,1,          new QStandardItem(XBinary::valueToHex(listRecords.at(i))));
+
+            if(listRecords.at(i).bIs64)
+            {
+                (*g_ppModel)->setItem(i,N_mach_modtab64::module_name+1,             new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.module64.module_name)));
+                (*g_ppModel)->setItem(i,N_mach_modtab64::iextdefsym+1,              new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.module64.iextdefsym)));
+                (*g_ppModel)->setItem(i,N_mach_modtab64::nextdefsym+1,              new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.module64.nextdefsym)));
+                (*g_ppModel)->setItem(i,N_mach_modtab64::irefsym+1,                 new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.module64.irefsym)));
+                (*g_ppModel)->setItem(i,N_mach_modtab64::nrefsym+1,                 new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.module64.nrefsym)));
+                (*g_ppModel)->setItem(i,N_mach_modtab64::ilocalsym+1,               new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.module64.ilocalsym)));
+                (*g_ppModel)->setItem(i,N_mach_modtab64::nlocalsym+1,               new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.module64.nlocalsym)));
+                (*g_ppModel)->setItem(i,N_mach_modtab64::iextrel+1,                 new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.module64.iextrel)));
+                (*g_ppModel)->setItem(i,N_mach_modtab64::nextrel+1,                 new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.module64.nextrel)));
+                (*g_ppModel)->setItem(i,N_mach_modtab64::iinit_iterm+1,             new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.module64.iinit_iterm)));
+                (*g_ppModel)->setItem(i,N_mach_modtab64::ninit_nterm+1,             new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.module64.ninit_nterm)));
+                (*g_ppModel)->setItem(i,N_mach_modtab64::objc_module_info_size+1,   new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.module64.objc_module_info_size)));
+                (*g_ppModel)->setItem(i,N_mach_modtab64::objc_module_info_addr+1,   new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.module64.objc_module_info_addr)));
+            }
+            else
+            {
+                (*g_ppModel)->setItem(i,N_mach_modtab32::module_name+1,             new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.module32.module_name)));
+                (*g_ppModel)->setItem(i,N_mach_modtab32::iextdefsym+1,              new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.module32.iextdefsym)));
+                (*g_ppModel)->setItem(i,N_mach_modtab32::nextdefsym+1,              new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.module32.nextdefsym)));
+                (*g_ppModel)->setItem(i,N_mach_modtab32::irefsym+1,                 new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.module32.irefsym)));
+                (*g_ppModel)->setItem(i,N_mach_modtab32::nrefsym+1,                 new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.module32.nrefsym)));
+                (*g_ppModel)->setItem(i,N_mach_modtab32::ilocalsym+1,               new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.module32.ilocalsym)));
+                (*g_ppModel)->setItem(i,N_mach_modtab32::nlocalsym+1,               new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.module32.nlocalsym)));
+                (*g_ppModel)->setItem(i,N_mach_modtab32::iextrel+1,                 new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.module32.iextrel)));
+                (*g_ppModel)->setItem(i,N_mach_modtab32::nextrel+1,                 new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.module32.nextrel)));
+                (*g_ppModel)->setItem(i,N_mach_modtab32::iinit_iterm+1,             new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.module32.iinit_iterm)));
+                (*g_ppModel)->setItem(i,N_mach_modtab32::ninit_nterm+1,             new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.module32.ninit_nterm)));
+                (*g_ppModel)->setItem(i,N_mach_modtab32::objc_module_info_addr+1,   new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.module32.objc_module_info_addr)));
+                (*g_ppModel)->setItem(i,N_mach_modtab32::objc_module_info_size+1,   new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.module32.objc_module_info_size)));
+            }
 
             incValue();
         }
@@ -601,7 +641,7 @@ void MACHProcessData::_process()
         listLabels.append("");
         listLabels.append(tr("Value"));
 
-        QList<quint32> listRecords=g_pXMACH->get_extrel_list();
+        QList<quint64> listRecords=g_pXMACH->get_extrel_list();
 
         int nNumberOfRecords=listRecords.count();
 
@@ -615,7 +655,7 @@ void MACHProcessData::_process()
         {
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
-            pItem->setData(g_nOffset+i*sizeof(quint32),Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
+            pItem->setData(g_nOffset+i*sizeof(quint64),Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
             (*g_ppModel)->setItem(i,0,          pItem);
             (*g_ppModel)->setItem(i,1,          new QStandardItem(XBinary::valueToHex(listRecords.at(i))));
 
@@ -628,7 +668,7 @@ void MACHProcessData::_process()
         listLabels.append("");
         listLabels.append(tr("Value"));
 
-        QList<quint32> listRecords=g_pXMACH->get_locrel_list();
+        QList<quint64> listRecords=g_pXMACH->get_locrel_list();
 
         int nNumberOfRecords=listRecords.count();
 
@@ -642,7 +682,7 @@ void MACHProcessData::_process()
         {
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
-            pItem->setData(g_nOffset+i*sizeof(quint32),Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
+            pItem->setData(g_nOffset+i*sizeof(quint64),Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
             (*g_ppModel)->setItem(i,0,          pItem);
             (*g_ppModel)->setItem(i,1,          new QStandardItem(XBinary::valueToHex(listRecords.at(i))));
 
@@ -738,12 +778,24 @@ void MACHProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
     else if(g_nType==SMACH::TYPE_DYSYMTAB_toc)
     {
         pTableView->setColumnWidth(0,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT16,mode));
-        pTableView->setColumnWidth(1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+        pTableView->setColumnWidth(1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT64,mode));
     }
     else if(g_nType==SMACH::TYPE_DYSYMTAB_modtab)
     {
         pTableView->setColumnWidth(0,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT16,mode));
         pTableView->setColumnWidth(1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+        pTableView->setColumnWidth(2,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+        pTableView->setColumnWidth(3,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+        pTableView->setColumnWidth(4,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+        pTableView->setColumnWidth(5,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+        pTableView->setColumnWidth(6,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+        pTableView->setColumnWidth(7,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+        pTableView->setColumnWidth(8,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+        pTableView->setColumnWidth(9,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+        pTableView->setColumnWidth(10,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+        pTableView->setColumnWidth(11,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+        pTableView->setColumnWidth(12,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+        pTableView->setColumnWidth(13,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
     }
     else if(g_nType==SMACH::TYPE_DYSYMTAB_extrefsyms)
     {
@@ -758,11 +810,11 @@ void MACHProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
     else if(g_nType==SMACH::TYPE_DYSYMTAB_extrel)
     {
         pTableView->setColumnWidth(0,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT16,mode));
-        pTableView->setColumnWidth(1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+        pTableView->setColumnWidth(1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT64,mode));
     }
     else if(g_nType==SMACH::TYPE_DYSYMTAB_locrel)
     {
         pTableView->setColumnWidth(0,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT16,mode));
-        pTableView->setColumnWidth(1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+        pTableView->setColumnWidth(1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT64,mode));
     }
 }

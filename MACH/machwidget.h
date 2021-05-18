@@ -109,6 +109,8 @@ private slots:
     void on_tableView_Functions_customContextMenuRequested(const QPoint &pos);
     void on_tableView_data_in_code_entry_doubleClicked(const QModelIndex &index);
     void on_tableView_data_in_code_entry_customContextMenuRequested(const QPoint &pos);
+    void on_tableView_DYSYMTAB_modtab_doubleClicked(const QModelIndex &index);
+    void on_tableView_DYSYMTAB_modtab_customContextMenuRequested(const QPoint &pos);
     void onTableView_DYLD_INFO_rebase_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
     void onTableView_DYLD_INFO_bind_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
     void onTableView_DYLD_INFO_weak_bind_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
@@ -131,6 +133,7 @@ private slots:
     void functionDisasm();
     void functionDemangle();
     void editDiceHeader();
+    void editModTabHeader();
     void diceHex();
     void showSectionHeader(int nType,QTableView *pTableView);
 

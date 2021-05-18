@@ -723,4 +723,69 @@ enum INV
 };
 }
 
+namespace N_mach_modtab32
+{
+enum DATA
+{
+    module_name,
+    iextdefsym,
+    nextdefsym,
+    irefsym,
+    nrefsym,
+    ilocalsym,
+    nlocalsym,
+    iextrel,
+    nextrel,
+    iinit_iterm,
+    ninit_nterm,
+    objc_module_info_addr,
+    objc_module_info_size,
+    __data_size
+};
+
+extern const FW_DEF::HEADER_RECORD records[__data_size];
+
+enum CB
+{
+    __CB_size
+};
+
+enum INV
+{
+    __INV_size
+};
+}
+
+namespace N_mach_modtab64
+{
+enum DATA
+{
+    module_name,
+    iextdefsym,
+    nextdefsym,
+    irefsym,
+    nrefsym,
+    ilocalsym,
+    nlocalsym,
+    iextrel,
+    nextrel,
+    iinit_iterm,
+    ninit_nterm,
+    objc_module_info_size,
+    objc_module_info_addr,
+    __data_size
+};
+
+extern const FW_DEF::HEADER_RECORD records[__data_size];
+
+enum CB
+{
+    __CB_size
+};
+
+enum INV
+{
+    __INV_size
+};
+}
 #endif // MACH_DEFS_H

@@ -235,35 +235,35 @@ void MACHWidget::reload()
 
                 if(mach.isOffsetValid(dyld_info.rebase_off)&&(dyld_info.rebase_size))
                 {
-                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_DYLD_INFO_rebase,QString("rebase"),dyld_info.rebase_off,dyld_info.rebase_size); // TODO rename
+                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_DYLD_INFO_rebase,tr("Rebase"),dyld_info.rebase_off,dyld_info.rebase_size); // TODO rename
 
                     pItemDyldInfo->addChild(pItem);
                 }
 
                 if(mach.isOffsetValid(dyld_info.bind_off)&&(dyld_info.bind_size))
                 {
-                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_DYLD_INFO_bind,QString("bind"),dyld_info.bind_off,dyld_info.bind_size); // TODO rename
+                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_DYLD_INFO_bind,tr("Binding"),dyld_info.bind_off,dyld_info.bind_size); // TODO rename
 
                     pItemDyldInfo->addChild(pItem);
                 }
 
                 if(mach.isOffsetValid(dyld_info.weak_bind_off)&&(dyld_info.weak_bind_size))
                 {
-                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_DYLD_INFO_weak_bind,QString("weak_bind"),dyld_info.weak_bind_off,dyld_info.weak_bind_size); // TODO rename
+                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_DYLD_INFO_weak_bind,tr("Weak binding"),dyld_info.weak_bind_off,dyld_info.weak_bind_size); // TODO rename
 
                     pItemDyldInfo->addChild(pItem);
                 }
 
                 if(mach.isOffsetValid(dyld_info.lazy_bind_off)&&(dyld_info.lazy_bind_size))
                 {
-                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_DYLD_INFO_lazy_bind,QString("lazy_bind"),dyld_info.lazy_bind_off,dyld_info.lazy_bind_size); // TODO rename
+                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_DYLD_INFO_lazy_bind,tr("Lazy binding"),dyld_info.lazy_bind_off,dyld_info.lazy_bind_size); // TODO rename
 
                     pItemDyldInfo->addChild(pItem);
                 }
 
                 if(mach.isOffsetValid(dyld_info.export_off)&&(dyld_info.export_size))
                 {
-                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_DYLD_INFO_export,QString("export"),dyld_info.export_off,dyld_info.export_size); // TODO rename
+                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_DYLD_INFO_export,tr("Export"),dyld_info.export_off,dyld_info.export_size); // TODO rename
 
                     pItemDyldInfo->addChild(pItem);
                 }
@@ -313,42 +313,42 @@ void MACHWidget::reload()
 
                 if(mach.isOffsetValid(dysymtab.tocoff)&&(dysymtab.ntoc))
                 {
-                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_DYSYMTAB_toc,QString("toc"),dysymtab.tocoff,dysymtab.ntoc); // TODO rename
+                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_DYSYMTAB_toc,tr("Table of contents"),dysymtab.tocoff,dysymtab.ntoc); // TODO rename
 
                     pItemDysymtab->addChild(pItem);
                 }
 
                 if(mach.isOffsetValid(dysymtab.modtaboff)&&(dysymtab.nmodtab))
                 {
-                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_DYSYMTAB_modtab,QString("modtab"),dysymtab.modtaboff,dysymtab.nmodtab); // TODO rename
+                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_DYSYMTAB_modtab,tr("Modules"),dysymtab.modtaboff,dysymtab.nmodtab); // TODO rename
 
                     pItemDysymtab->addChild(pItem);
                 }
 
                 if(mach.isOffsetValid(dysymtab.extrefsymoff)&&(dysymtab.nextrefsyms))
                 {
-                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_DYSYMTAB_extrefsyms,QString("extrefsyms"),dysymtab.extrefsymoff,dysymtab.nextrefsyms); // TODO rename
+                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_DYSYMTAB_extrefsyms,tr("External references"),dysymtab.extrefsymoff,dysymtab.nextrefsyms); // TODO rename
 
                     pItemDysymtab->addChild(pItem);
                 }
 
                 if(mach.isOffsetValid(dysymtab.indirectsymoff)&&(dysymtab.nindirectsyms))
                 {
-                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_DYSYMTAB_indirectsyms,QString("indirectsyms"),dysymtab.indirectsymoff,dysymtab.nindirectsyms); // TODO rename
+                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_DYSYMTAB_indirectsyms,tr("Indirect symbols"),dysymtab.indirectsymoff,dysymtab.nindirectsyms); // TODO rename
 
                     pItemDysymtab->addChild(pItem);
                 }
 
                 if(mach.isOffsetValid(dysymtab.extreloff)&&(dysymtab.nextrel))
                 {
-                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_DYSYMTAB_extrel,QString("extrel"),dysymtab.extreloff,dysymtab.nextrel); // TODO rename
+                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_DYSYMTAB_extrel,QString("External relocation"),dysymtab.extreloff,dysymtab.nextrel); // TODO rename
 
                     pItemDysymtab->addChild(pItem);
                 }
 
                 if(mach.isOffsetValid(dysymtab.locreloff)&&(dysymtab.nlocrel))
                 {
-                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_DYSYMTAB_locrel,QString("locrel"),dysymtab.locreloff,dysymtab.nlocrel); // TODO rename
+                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_DYSYMTAB_locrel,tr("Local relocation"),dysymtab.locreloff,dysymtab.nlocrel); // TODO rename
 
                     pItemDysymtab->addChild(pItem);
                 }
@@ -573,9 +573,10 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
                 case SMACH::TYPE_mach_symtab:
                     switch(nNdata)
                     {
-                        case N_mach_symtab::symoff:             g_invWidget[INV_symoff]->setOffsetAndSize(&mach,nValue,0,true);                                     break; // TODO Size
-                        case N_mach_symtab::stroff:             g_invWidget[INV_stroff]->setOffsetAndSize(&mach,nValue,mach.get_symtab().strsize,true);             break;
-                        case N_mach_symtab::strsize:            g_invWidget[INV_stroff]->setOffsetAndSize(&mach,mach.get_symtab().stroff,nValue,true);              break;
+                        case N_mach_symtab::symoff:             g_invWidget[INV_symoff]->setOffsetAndSize(&mach,nValue,mach.get_symtab().nsyms*mach.get_nlist_MODE_size(),true);    break;
+                        case N_mach_symtab::nsyms:              g_invWidget[INV_symoff]->setOffsetAndSize(&mach,mach.get_symtab().symoff,nValue*mach.get_nlist_MODE_size(),true);   break;
+                        case N_mach_symtab::stroff:             g_invWidget[INV_stroff]->setOffsetAndSize(&mach,nValue,mach.get_symtab().strsize,true);                             break;
+                        case N_mach_symtab::strsize:            g_invWidget[INV_stroff]->setOffsetAndSize(&mach,mach.get_symtab().stroff,nValue,true);                              break;
                     }
                     break;
 
@@ -1539,7 +1540,7 @@ void MACHWidget::reloadData()
                 g_lineEdit_mach_symtab[N_mach_symtab::stroff]->setValue(symtab.stroff);
                 g_lineEdit_mach_symtab[N_mach_symtab::strsize]->setValue(symtab.strsize);
 
-                g_invWidget[INV_symoff]->setOffsetAndSize(&mach,symtab.symoff,0,true);
+                g_invWidget[INV_symoff]->setOffsetAndSize(&mach,symtab.symoff,symtab.nsyms*mach.get_nlist_MODE_size(),true);
                 g_invWidget[INV_stroff]->setOffsetAndSize(&mach,symtab.stroff,symtab.strsize,true);
 
                 qint64 nOffset=nDataOffset;
@@ -2720,6 +2721,29 @@ void MACHWidget::on_tableView_data_in_code_entry_customContextMenuRequested(cons
     }
 }
 
+void MACHWidget::on_tableView_DYSYMTAB_modtab_doubleClicked(const QModelIndex &index)
+{
+    Q_UNUSED(index)
+    editModTabHeader();
+}
+
+void MACHWidget::on_tableView_DYSYMTAB_modtab_customContextMenuRequested(const QPoint &pos)
+{
+    int nRow=ui->tableView_DYSYMTAB_modtab->currentIndex().row();
+
+    if(nRow!=-1)
+    {
+        QMenu contextMenu(this);
+
+        QAction actionEdit(tr("Edit"),this);
+        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editModTabHeader()));
+
+        contextMenu.addAction(&actionEdit);
+
+        contextMenu.exec(ui->tableView_DYSYMTAB_modtab->viewport()->mapToGlobal(pos));
+    }
+}
+
 void MACHWidget::onTableView_DYLD_INFO_rebase_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
 {
     Q_UNUSED(current)
@@ -2843,6 +2867,11 @@ void MACHWidget::functionDemangle()
 void MACHWidget::editDiceHeader()
 {
     showSectionHeader(SMACH::TYPE_DICE,ui->tableView_data_in_code_entry);
+}
+
+void MACHWidget::editModTabHeader()
+{
+    showSectionHeader(SMACH::TYPE_DYSYMTAB_modtab,ui->tableView_DYSYMTAB_modtab);
 }
 
 void MACHWidget::diceHex()

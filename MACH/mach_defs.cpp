@@ -508,3 +508,43 @@ const FW_DEF::HEADER_RECORD records[]=
     {kind,                  "kind",             offsetof(XMACH_DEF::data_in_code_entry,kind),           1,      "uint8",            FW_DEF::VAL_TYPE_DATA},
 };
 }
+
+namespace N_mach_modtab32
+{
+const FW_DEF::HEADER_RECORD records[]=
+{
+    {module_name,               "module_name",              offsetof(XMACH_DEF::dylib_module,module_name),              4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {iextdefsym,                "iextdefsym",               offsetof(XMACH_DEF::dylib_module,iextdefsym),               4,      "uint32",               FW_DEF::VAL_TYPE_SIZE},
+    {nextdefsym,                "nextdefsym",               offsetof(XMACH_DEF::dylib_module,nextdefsym),               4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {irefsym,                   "irefsym",                  offsetof(XMACH_DEF::dylib_module,irefsym),                  4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {nrefsym,                   "nrefsym",                  offsetof(XMACH_DEF::dylib_module,nrefsym),                  4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {ilocalsym,                 "ilocalsym",                offsetof(XMACH_DEF::dylib_module,ilocalsym),                4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {nlocalsym,                 "flags",                    offsetof(XMACH_DEF::dylib_module,nlocalsym),                4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {iextrel,                   "iextrel",                  offsetof(XMACH_DEF::dylib_module,iextrel),                  4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {nextrel,                   "nextrel",                  offsetof(XMACH_DEF::dylib_module,nextrel),                  4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {iinit_iterm,               "iinit_iterm",              offsetof(XMACH_DEF::dylib_module,iinit_iterm),              4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {ninit_nterm,               "ninit_nterm",              offsetof(XMACH_DEF::dylib_module,ninit_nterm),              4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {objc_module_info_addr,     "objc_module_info_addr",    offsetof(XMACH_DEF::dylib_module,objc_module_info_addr),    4,      "uint32",               FW_DEF::VAL_TYPE_ADDRESS},
+    {objc_module_info_size,     "objc_module_info_size",    offsetof(XMACH_DEF::dylib_module,objc_module_info_size),    4,      "uint32",               FW_DEF::VAL_TYPE_SIZE},
+};
+}
+
+namespace N_mach_modtab64
+{
+const FW_DEF::HEADER_RECORD records[]=
+{
+    {module_name,               "module_name",              offsetof(XMACH_DEF::dylib_module,module_name),              4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {iextdefsym,                "iextdefsym",               offsetof(XMACH_DEF::dylib_module,iextdefsym),               4,      "uint32",               FW_DEF::VAL_TYPE_SIZE},
+    {nextdefsym,                "nextdefsym",               offsetof(XMACH_DEF::dylib_module,nextdefsym),               4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {irefsym,                   "irefsym",                  offsetof(XMACH_DEF::dylib_module,irefsym),                  4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {nrefsym,                   "nrefsym",                  offsetof(XMACH_DEF::dylib_module,nrefsym),                  4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {ilocalsym,                 "ilocalsym",                offsetof(XMACH_DEF::dylib_module,ilocalsym),                4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {nlocalsym,                 "flags",                    offsetof(XMACH_DEF::dylib_module,nlocalsym),                4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {iextrel,                   "iextrel",                  offsetof(XMACH_DEF::dylib_module,iextrel),                  4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {nextrel,                   "nextrel",                  offsetof(XMACH_DEF::dylib_module,nextrel),                  4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {iinit_iterm,               "iinit_iterm",              offsetof(XMACH_DEF::dylib_module,iinit_iterm),              4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {ninit_nterm,               "ninit_nterm",              offsetof(XMACH_DEF::dylib_module,ninit_nterm),              4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {objc_module_info_addr,     "objc_module_info_addr",    offsetof(XMACH_DEF::dylib_module,objc_module_info_addr),    4,      "uint32",               FW_DEF::VAL_TYPE_ADDRESS},
+    {objc_module_info_size,     "objc_module_info_size",    offsetof(XMACH_DEF::dylib_module,objc_module_info_size),    8,      "uint64",               FW_DEF::VAL_TYPE_SIZE},
+};
+}
