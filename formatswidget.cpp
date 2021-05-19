@@ -723,7 +723,7 @@ void FormatsWidget::on_pushButtonZIP_clicked()
 
     options.bSaveBackup=options.bSaveBackup;;
 
-    dialogArchive.setData(sFileName,options,QSet<XBinary::FT>());
+    dialogArchive.setFileName(sFileName,options,QSet<XBinary::FT>());
     dialogArchive.setShortcuts(getShortcuts());
 
     dialogArchive.exec();
