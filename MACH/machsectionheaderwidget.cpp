@@ -106,6 +106,36 @@ MACHSectionHeaderWidget::MACHSectionHeaderWidget(QIODevice *pDevice,FW_DEF::OPTI
             g_nInvWidgetSize=N_mach_modtab32::__INV_size;
         }
     }
+    else if(nType==SMACH::TYPE_DYSYMTAB_toc)
+    {
+        g_nLineEditSize=N_mach_table_of_contents::__data_size;
+        g_nComboBoxSize=N_mach_table_of_contents::__CB_size;
+        g_nInvWidgetSize=N_mach_table_of_contents::__INV_size;
+    }
+    else if(nType==SMACH::TYPE_DYSYMTAB_extrel)
+    {
+        g_nLineEditSize=N_mach_relocs::__data_size;
+        g_nComboBoxSize=N_mach_relocs::__CB_size;
+        g_nInvWidgetSize=N_mach_relocs::__INV_size;
+    }
+    else if(nType==SMACH::TYPE_DYSYMTAB_locrel)
+    {
+        g_nLineEditSize=N_mach_relocs::__data_size;
+        g_nComboBoxSize=N_mach_relocs::__CB_size;
+        g_nInvWidgetSize=N_mach_relocs::__INV_size;
+    }
+    else if(nType==SMACH::TYPE_DYSYMTAB_indirectsyms)
+    {
+        g_nLineEditSize=N_mach_value::__data_size;
+        g_nComboBoxSize=N_mach_value::__CB_size;
+        g_nInvWidgetSize=N_mach_value::__INV_size;
+    }
+    else if(nType==SMACH::TYPE_DYSYMTAB_extrefsyms)
+    {
+        g_nLineEditSize=N_mach_value::__data_size;
+        g_nComboBoxSize=N_mach_value::__CB_size;
+        g_nInvWidgetSize=N_mach_value::__INV_size;
+    }
 
     if(g_nLineEditSize)
     {
@@ -224,6 +254,22 @@ FormatWidget::SV MACHSectionHeaderWidget::_setValue(QVariant vValue, int nStype,
                         case N_mach_nlist::n_strx:
                             XBinary::OFFSETSIZE osStringTable=mach.getStringTableOS();
                             addComment(ui->tableWidget,N_mach_nlist::n_strx,HEADER_COLUMN_COMMENT,mach.getStringFromIndex(osStringTable.nOffset,osStringTable.nSize,nValue));
+                            break;
+                    }
+
+                case SMACH::TYPE_DYSYMTAB_indirectsyms:
+                    switch(nNdata)
+                    {
+                        case N_mach_value::value:
+                            addComment(ui->tableWidget,N_mach_value::value,HEADER_COLUMN_COMMENT,mach.getIndexSymbolName(nValue));
+                            break;
+                    }
+
+                case SMACH::TYPE_DYSYMTAB_toc:
+                    switch(nNdata)
+                    {
+                        case N_mach_table_of_contents::symbol_index:
+                            addComment(ui->tableWidget,N_mach_table_of_contents::symbol_index,HEADER_COLUMN_COMMENT,mach.getIndexSymbolName(nValue));
                             break;
                     }
 
@@ -387,20 +433,48 @@ FormatWidget::SV MACHSectionHeaderWidget::_setValue(QVariant vValue, int nStype,
                     {
                         switch(nNdata)
                         {
-                            case N_mach_modtab32::module_name:              mach._set_dylib_module_module_name(nOffset,nValue);              break;
-                            case N_mach_modtab32::iextdefsym:               mach._set_dylib_module_iextdefsym(nOffset,nValue);               break;
-                            case N_mach_modtab32::nextdefsym:               mach._set_dylib_module_nextdefsym(nOffset,nValue);               break;
-                            case N_mach_modtab32::irefsym:                  mach._set_dylib_module_irefsym(nOffset,nValue);                  break;
-                            case N_mach_modtab32::nrefsym:                  mach._set_dylib_module_nrefsym(nOffset,nValue);                  break;
-                            case N_mach_modtab32::ilocalsym:                mach._set_dylib_module_ilocalsym(nOffset,nValue);                break;
-                            case N_mach_modtab32::nlocalsym:                mach._set_dylib_module_nlocalsym(nOffset,nValue);                break;
-                            case N_mach_modtab32::iextrel:                  mach._set_dylib_module_iextrel(nOffset,nValue);                  break;
-                            case N_mach_modtab32::nextrel:                  mach._set_dylib_module_nextrel(nOffset,nValue);                  break;
-                            case N_mach_modtab32::iinit_iterm:              mach._set_dylib_module_iinit_iterm(nOffset,nValue);              break;
-                            case N_mach_modtab32::ninit_nterm:              mach._set_dylib_module_ninit_nterm(nOffset,nValue);              break;
-                            case N_mach_modtab32::objc_module_info_addr:    mach._set_dylib_module_objc_module_info_addr(nOffset,nValue);    break;
-                            case N_mach_modtab32::objc_module_info_size:    mach._set_dylib_module_objc_module_info_size(nOffset,nValue);    break;
+                            case N_mach_modtab32::module_name:              mach._set_dylib_module_module_name(nOffset,nValue);                 break;
+                            case N_mach_modtab32::iextdefsym:               mach._set_dylib_module_iextdefsym(nOffset,nValue);                  break;
+                            case N_mach_modtab32::nextdefsym:               mach._set_dylib_module_nextdefsym(nOffset,nValue);                  break;
+                            case N_mach_modtab32::irefsym:                  mach._set_dylib_module_irefsym(nOffset,nValue);                     break;
+                            case N_mach_modtab32::nrefsym:                  mach._set_dylib_module_nrefsym(nOffset,nValue);                     break;
+                            case N_mach_modtab32::ilocalsym:                mach._set_dylib_module_ilocalsym(nOffset,nValue);                   break;
+                            case N_mach_modtab32::nlocalsym:                mach._set_dylib_module_nlocalsym(nOffset,nValue);                   break;
+                            case N_mach_modtab32::iextrel:                  mach._set_dylib_module_iextrel(nOffset,nValue);                     break;
+                            case N_mach_modtab32::nextrel:                  mach._set_dylib_module_nextrel(nOffset,nValue);                     break;
+                            case N_mach_modtab32::iinit_iterm:              mach._set_dylib_module_iinit_iterm(nOffset,nValue);                 break;
+                            case N_mach_modtab32::ninit_nterm:              mach._set_dylib_module_ninit_nterm(nOffset,nValue);                 break;
+                            case N_mach_modtab32::objc_module_info_addr:    mach._set_dylib_module_objc_module_info_addr(nOffset,nValue);       break;
+                            case N_mach_modtab32::objc_module_info_size:    mach._set_dylib_module_objc_module_info_size(nOffset,nValue);       break;
                         }
+                    }
+
+                    break;
+
+                case SMACH::TYPE_DYSYMTAB_toc:
+                    switch(nNdata)
+                    {
+                        case N_mach_table_of_contents::symbol_index:        mach._set_dylib_table_of_contents_symbol_index(nOffset,nValue);     break;
+                        case N_mach_table_of_contents::module_index:        mach._set_dylib_table_of_contents_module_index(nOffset,nValue);     break;
+                    }
+
+                    break;
+
+                case SMACH::TYPE_DYSYMTAB_extrel:
+                case SMACH::TYPE_DYSYMTAB_locrel:
+                    switch(nNdata)
+                    {
+                        case N_mach_relocs::r_address:          mach._set_relocation_info_r_address(nOffset,nValue);            break;
+                        case N_mach_relocs::value:              mach._set_relocation_info_value(nOffset,nValue);                break;
+                    }
+
+                    break;
+
+                case SMACH::TYPE_DYSYMTAB_indirectsyms:
+                case SMACH::TYPE_DYSYMTAB_extrefsyms:
+                    switch(nNdata)
+                    {
+                        case N_mach_value::value:          mach.write_uint32(nOffset,nValue,mach.isBigEndian());         break;
                     }
 
                     break;
@@ -477,6 +551,26 @@ void MACHSectionHeaderWidget::adjustHeaderTable(int nType, QTableWidget *pTableW
         case SMACH::TYPE_DYSYMTAB_modtab:
             pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
             pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINTMODE,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGSHORT,mode));
+            break;
+
+        case SMACH::TYPE_DYSYMTAB_toc:
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINT32,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGSHORT,mode));
+            break;
+
+        case SMACH::TYPE_DYSYMTAB_extrel:
+        case SMACH::TYPE_DYSYMTAB_locrel:
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINT32,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGSHORT,mode));
+            break;
+
+        case SMACH::TYPE_DYSYMTAB_indirectsyms:
+        case SMACH::TYPE_DYSYMTAB_extrefsyms:
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINT32,mode));
             pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGSHORT,mode));
             break;
     }
@@ -812,6 +906,75 @@ void MACHSectionHeaderWidget::reloadData()
                 nSize=mach.get_dylib_module_size();
             }
 
+            qint64 nAddress=mach.offsetToRelAddress(nOffset);
+
+            loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
+
+            blockSignals(false);
+        }
+        else if(nType==SMACH::TYPE_DYSYMTAB_toc)
+        {
+            createHeaderTable(SMACH::TYPE_DYSYMTAB_toc,ui->tableWidget,N_mach_table_of_contents::records,g_ppLinedEdit,N_mach_table_of_contents::__data_size,getNumber(),getOffset());
+
+            blockSignals(true);
+
+            qint64 nHeaderOffset=getOffset();
+
+            XMACH_DEF::dylib_table_of_contents toc=mach._read_dylib_table_of_contents(nHeaderOffset);
+
+            g_ppLinedEdit[N_mach_table_of_contents::symbol_index]->setValue(toc.symbol_index);
+            g_ppLinedEdit[N_mach_table_of_contents::module_index]->setValue(toc.module_index);
+
+            addComment(ui->tableWidget,N_mach_table_of_contents::symbol_index,HEADER_COLUMN_COMMENT,mach.getIndexSymbolName(toc.symbol_index));
+
+            qint64 nOffset=nHeaderOffset;
+            qint64 nSize=mach.get_dylib_table_of_contents_size();
+            qint64 nAddress=mach.offsetToRelAddress(nOffset);
+
+            loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
+
+            blockSignals(false);
+        }
+        else if((nType==SMACH::TYPE_DYSYMTAB_extrel)||(nType==SMACH::TYPE_DYSYMTAB_locrel))
+        {
+            createHeaderTable(nType,ui->tableWidget,N_mach_relocs::records,g_ppLinedEdit,N_mach_relocs::__data_size,getNumber(),getOffset());
+
+            blockSignals(true);
+
+            qint64 nHeaderOffset=getOffset();
+
+            XMACH_DEF::relocation_info reloc=mach._read_relocation_info(nHeaderOffset);
+
+            g_ppLinedEdit[N_mach_relocs::r_address]->setValue(reloc.r_address);
+            g_ppLinedEdit[N_mach_relocs::value]->setValue(reloc.s.value);
+
+            qint64 nOffset=nHeaderOffset;
+            qint64 nSize=mach.get_relocation_info_size();
+            qint64 nAddress=mach.offsetToRelAddress(nOffset);
+
+            loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
+
+            blockSignals(false);
+        }
+        else if((nType==SMACH::TYPE_DYSYMTAB_indirectsyms)||(nType==SMACH::TYPE_DYSYMTAB_extrefsyms))
+        {
+            createHeaderTable(SMACH::TYPE_DYSYMTAB_indirectsyms,ui->tableWidget,N_mach_value::records,g_ppLinedEdit,N_mach_value::__data_size,getNumber(),getOffset());
+
+            blockSignals(true);
+
+            qint64 nHeaderOffset=getOffset();
+
+            quint32 nValue=mach.read_uint32(nHeaderOffset,mach.isBigEndian());
+
+            g_ppLinedEdit[N_mach_value::value]->setValue(nValue);
+
+            if(nType==SMACH::TYPE_DYSYMTAB_indirectsyms)
+            {
+                addComment(ui->tableWidget,N_mach_value::value,HEADER_COLUMN_COMMENT,mach.getIndexSymbolName(nValue));
+            }
+
+            qint64 nOffset=nHeaderOffset;
+            qint64 nSize=mach.get_value32_size();
             qint64 nAddress=mach.offsetToRelAddress(nOffset);
 
             loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);

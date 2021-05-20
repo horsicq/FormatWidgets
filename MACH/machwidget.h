@@ -111,6 +111,16 @@ private slots:
     void on_tableView_data_in_code_entry_customContextMenuRequested(const QPoint &pos);
     void on_tableView_DYSYMTAB_modtab_doubleClicked(const QModelIndex &index);
     void on_tableView_DYSYMTAB_modtab_customContextMenuRequested(const QPoint &pos);
+    void on_tableView_DYSYMTAB_toc_doubleClicked(const QModelIndex &index);
+    void on_tableView_DYSYMTAB_toc_customContextMenuRequested(const QPoint &pos);
+    void on_tableView_DYSYMTAB_extrel_doubleClicked(const QModelIndex &index);
+    void on_tableView_DYSYMTAB_extrel_customContextMenuRequested(const QPoint &pos);
+    void on_tableView_DYSYMTAB_locrel_doubleClicked(const QModelIndex &index);
+    void on_tableView_DYSYMTAB_locrel_customContextMenuRequested(const QPoint &pos);
+    void on_tableView_DYSYMTAB_indirectsyms_doubleClicked(const QModelIndex &index);
+    void on_tableView_DYSYMTAB_indirectsyms_customContextMenuRequested(const QPoint &pos);
+    void on_tableView_DYSYMTAB_extrefsyms_doubleClicked(const QModelIndex &index);
+    void on_tableView_DYSYMTAB_extrefsyms_customContextMenuRequested(const QPoint &pos);
     void onTableView_DYLD_INFO_rebase_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
     void onTableView_DYLD_INFO_bind_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
     void onTableView_DYLD_INFO_weak_bind_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
@@ -134,10 +144,18 @@ private slots:
     void functionDemangle();
     void editDiceHeader();
     void editModTabHeader();
+    void editTocHeader();
+    void editExtrelHeader();
+    void editLocrelHeader();
+    void editIndirectSymbolHeader();
+    void editExtRefSymbolHeader();
     void diceHex();
     void showSectionHeader(int nType,QTableView *pTableView);
 
     void symbolDemangle();
+    void indirectsymsDemangle();
+    void tocDemangle();
+    void extrefsymsDemangle();
 
     void on_pushButtonHex_clicked();
     void on_pushButtonDisasm_clicked();

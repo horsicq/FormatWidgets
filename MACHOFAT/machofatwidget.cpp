@@ -48,6 +48,7 @@ void MACHOFATWidget::clear()
 
     for(int i=0;i<nNumberOfRecords;i++)
     {
+        g_listDevices.at(i)->close();
         delete g_listDevices.at(i);
     }
 

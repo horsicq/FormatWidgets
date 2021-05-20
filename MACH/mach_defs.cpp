@@ -548,3 +548,51 @@ const FW_DEF::HEADER_RECORD records[]=
     {objc_module_info_size,     "objc_module_info_size",    offsetof(XMACH_DEF::dylib_module,objc_module_info_size),    8,      "uint64",               FW_DEF::VAL_TYPE_SIZE},
 };
 }
+
+namespace N_mach_table_of_contents
+{
+const FW_DEF::HEADER_RECORD records[]=
+{
+    {symbol_index,              "symbol_index",             offsetof(XMACH_DEF::dylib_table_of_contents,symbol_index),  4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {module_index,              "module_index",             offsetof(XMACH_DEF::dylib_table_of_contents,module_index),  4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+};
+}
+
+namespace N_mach_relocs
+{
+const FW_DEF::HEADER_RECORD records[]=
+{
+    {r_address,                 "r_address",                offsetof(XMACH_DEF::relocation_info,r_address),     4,      "uint32",               FW_DEF::VAL_TYPE_ADDRESS},
+    {value,                     "value",                    offsetof(XMACH_DEF::relocation_info,s),             4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+};
+}
+
+namespace N_mach_relocs_E
+{
+const FW_DEF::HEADER_RECORD records[]=
+{
+    {r_address,                 "r_address",                offsetof(XMACH_DEF::relocation_info,r_address),     4,      "uint32",               FW_DEF::VAL_TYPE_ADDRESS},
+    {r_symbolnum,               "r_symbolnum",              offsetof(XMACH_DEF::relocation_info,s),             4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {r_pcrel,                   "r_pcrel",                  offsetof(XMACH_DEF::relocation_info,s),             4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {r_length,                  "r_length",                 offsetof(XMACH_DEF::relocation_info,s),             4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {r_extern,                  "r_extern",                 offsetof(XMACH_DEF::relocation_info,s),             4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {r_type,                    "r_type",                   offsetof(XMACH_DEF::relocation_info,s),             4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+};
+}
+
+namespace N_mach_value
+{
+const FW_DEF::HEADER_RECORD records[]=
+{
+    {value,                     "value",                    0,              4,       "uint32",                FW_DEF::VAL_TYPE_DATA},
+};
+}
+
+namespace N_mach_refsyms
+{
+const FW_DEF::HEADER_RECORD records[]=
+{
+    {isym,                      "isym",                     0,              4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {flags,                     "flags",                    0,              4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+};
+}

@@ -1171,14 +1171,19 @@ QString MACHWidget::typeIdToString(int nType)
 
     switch(nType)
     {
-        case SMACH::TYPE_mach_commands:         sResult=QString("Command %1").arg(tr("Header"));        break;
-        case SMACH::TYPE_mach_segments:         sResult=QString("Segment %1").arg(tr("Header"));        break;
-        case SMACH::TYPE_mach_sections:         sResult=QString("Section %1").arg(tr("Header"));        break;
-        case SMACH::TYPE_mach_libraries:        sResult=QString("Library %1").arg(tr("Header"));        break;
-        case SMACH::TYPE_mach_weak_libraries:   sResult=QString("Library %1").arg(tr("Header"));        break;
-        case SMACH::TYPE_mach_id_library:       sResult=QString("Library %1").arg(tr("Header"));        break;
-        case SMACH::TYPE_SYMBOLTABLE:           sResult=QString("Symbol %1").arg(tr("Header"));         break;
-        case SMACH::TYPE_DICE:                  sResult=QString("DICE %1").arg(tr("Header"));           break;
+        case SMACH::TYPE_mach_commands:         sResult=QString("Command %1").arg(tr("Header"));            break;
+        case SMACH::TYPE_mach_segments:         sResult=QString("Segment %1").arg(tr("Header"));            break;
+        case SMACH::TYPE_mach_sections:         sResult=QString("Section %1").arg(tr("Header"));            break;
+        case SMACH::TYPE_mach_libraries:        sResult=QString("Library %1").arg(tr("Header"));            break;
+        case SMACH::TYPE_mach_weak_libraries:   sResult=QString("Library %1").arg(tr("Header"));            break;
+        case SMACH::TYPE_mach_id_library:       sResult=QString("Library %1").arg(tr("Header"));            break;
+        case SMACH::TYPE_SYMBOLTABLE:           sResult=QString("Symbol %1").arg(tr("Header"));             break;
+        case SMACH::TYPE_DICE:                  sResult=QString("DICE %1").arg(tr("Header"));               break;
+        case SMACH::TYPE_DYSYMTAB_modtab:       sResult=QString("MODTAB %1").arg(tr("Header"));             break;
+        case SMACH::TYPE_DYSYMTAB_toc:          sResult=QString("TOC %1").arg(tr("Header"));                break;
+        case SMACH::TYPE_DYSYMTAB_extrel:       sResult=QString("Reloc %1").arg(tr("Header"));              break;
+        case SMACH::TYPE_DYSYMTAB_locrel:       sResult=QString("Reloc %1").arg(tr("Header"));              break;
+        case SMACH::TYPE_DYSYMTAB_indirectsyms: sResult=QString("Indirect symbol %1").arg(tr("Header"));    break;
     }
 
     return sResult;
@@ -2744,6 +2749,133 @@ void MACHWidget::on_tableView_DYSYMTAB_modtab_customContextMenuRequested(const Q
     }
 }
 
+void MACHWidget::on_tableView_DYSYMTAB_toc_doubleClicked(const QModelIndex &index)
+{
+    Q_UNUSED(index)
+    editTocHeader();
+}
+
+void MACHWidget::on_tableView_DYSYMTAB_toc_customContextMenuRequested(const QPoint &pos)
+{
+    int nRow=ui->tableView_DYSYMTAB_toc->currentIndex().row();
+
+    if(nRow!=-1)
+    {
+        QMenu contextMenu(this);
+
+        QAction actionEdit(tr("Edit"),this);
+        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editTocHeader()));
+
+        QAction actionDemangle(tr("Demangle"),this);
+        connect(&actionDemangle, SIGNAL(triggered()), this, SLOT(tocDemangle()));
+
+        contextMenu.addAction(&actionEdit);
+        contextMenu.addAction(&actionDemangle);
+
+        contextMenu.exec(ui->tableView_DYSYMTAB_toc->viewport()->mapToGlobal(pos));
+    }
+}
+
+void MACHWidget::on_tableView_DYSYMTAB_extrel_doubleClicked(const QModelIndex &index)
+{
+    Q_UNUSED(index)
+    editExtrelHeader();
+}
+
+void MACHWidget::on_tableView_DYSYMTAB_extrel_customContextMenuRequested(const QPoint &pos)
+{
+    int nRow=ui->tableView_DYSYMTAB_extrel->currentIndex().row();
+
+    if(nRow!=-1)
+    {
+        QMenu contextMenu(this);
+
+        QAction actionEdit(tr("Edit"),this);
+        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editExtrelHeader()));
+
+        contextMenu.addAction(&actionEdit);
+
+        contextMenu.exec(ui->tableView_DYSYMTAB_extrel->viewport()->mapToGlobal(pos));
+    }
+}
+
+void MACHWidget::on_tableView_DYSYMTAB_locrel_doubleClicked(const QModelIndex &index)
+{
+    Q_UNUSED(index)
+    editLocrelHeader();
+}
+
+void MACHWidget::on_tableView_DYSYMTAB_locrel_customContextMenuRequested(const QPoint &pos)
+{
+    int nRow=ui->tableView_DYSYMTAB_locrel->currentIndex().row();
+
+    if(nRow!=-1)
+    {
+        QMenu contextMenu(this);
+
+        QAction actionEdit(tr("Edit"),this);
+        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editLocrelHeader()));
+
+        contextMenu.addAction(&actionEdit);
+
+        contextMenu.exec(ui->tableView_DYSYMTAB_locrel->viewport()->mapToGlobal(pos));
+    }
+}
+
+void MACHWidget::on_tableView_DYSYMTAB_indirectsyms_doubleClicked(const QModelIndex &index)
+{
+    Q_UNUSED(index)
+    editIndirectSymbolHeader();
+}
+
+void MACHWidget::on_tableView_DYSYMTAB_indirectsyms_customContextMenuRequested(const QPoint &pos)
+{
+    int nRow=ui->tableView_DYSYMTAB_indirectsyms->currentIndex().row();
+
+    if(nRow!=-1)
+    {
+        QMenu contextMenu(this);
+
+        QAction actionEdit(tr("Edit"),this);
+        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editIndirectSymbolHeader()));
+
+        QAction actionDemangle(tr("Demangle"),this);
+        connect(&actionDemangle, SIGNAL(triggered()), this, SLOT(indirectsymsDemangle()));
+
+        contextMenu.addAction(&actionEdit);
+        contextMenu.addAction(&actionDemangle);
+
+        contextMenu.exec(ui->tableView_DYSYMTAB_indirectsyms->viewport()->mapToGlobal(pos));
+    }
+}
+
+void MACHWidget::on_tableView_DYSYMTAB_extrefsyms_doubleClicked(const QModelIndex &index)
+{
+    Q_UNUSED(index)
+    editExtRefSymbolHeader();
+}
+
+void MACHWidget::on_tableView_DYSYMTAB_extrefsyms_customContextMenuRequested(const QPoint &pos)
+{
+    int nRow=ui->tableView_DYSYMTAB_extrefsyms->currentIndex().row();
+
+    if(nRow!=-1)
+    {
+        QMenu contextMenu(this);
+
+        QAction actionEdit(tr("Edit"),this);
+        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editExtRefSymbolHeader()));
+
+        QAction actionDemangle(tr("Demangle"),this);
+        connect(&actionDemangle, SIGNAL(triggered()), this, SLOT(extrefsymsDemangle()));
+
+        contextMenu.addAction(&actionEdit);
+        contextMenu.addAction(&actionDemangle);
+
+        contextMenu.exec(ui->tableView_DYSYMTAB_extrefsyms->viewport()->mapToGlobal(pos));
+    }
+}
+
 void MACHWidget::onTableView_DYLD_INFO_rebase_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
 {
     Q_UNUSED(current)
@@ -2874,6 +3006,31 @@ void MACHWidget::editModTabHeader()
     showSectionHeader(SMACH::TYPE_DYSYMTAB_modtab,ui->tableView_DYSYMTAB_modtab);
 }
 
+void MACHWidget::editTocHeader()
+{
+    showSectionHeader(SMACH::TYPE_DYSYMTAB_toc,ui->tableView_DYSYMTAB_toc);
+}
+
+void MACHWidget::editExtrelHeader()
+{
+    showSectionHeader(SMACH::TYPE_DYSYMTAB_extrel,ui->tableView_DYSYMTAB_extrel);
+}
+
+void MACHWidget::editLocrelHeader()
+{
+    showSectionHeader(SMACH::TYPE_DYSYMTAB_locrel,ui->tableView_DYSYMTAB_locrel);
+}
+
+void MACHWidget::editIndirectSymbolHeader()
+{
+    showSectionHeader(SMACH::TYPE_DYSYMTAB_indirectsyms,ui->tableView_DYSYMTAB_indirectsyms);
+}
+
+void MACHWidget::editExtRefSymbolHeader()
+{
+    showSectionHeader(SMACH::TYPE_DYSYMTAB_extrefsyms,ui->tableView_DYSYMTAB_extrefsyms);
+}
+
 void MACHWidget::diceHex()
 {
     showSectionHex(ui->tableView_data_in_code_entry);
@@ -2910,6 +3067,21 @@ void MACHWidget::showSectionHeader(int nType, QTableView *pTableView)
 void MACHWidget::symbolDemangle()
 {
     showTableViewDemangle(ui->tableView_SymbolTable,N_mach_nlist::n_value+2);
+}
+
+void MACHWidget::indirectsymsDemangle()
+{
+    showTableViewDemangle(ui->tableView_DYSYMTAB_indirectsyms,2);
+}
+
+void MACHWidget::tocDemangle()
+{
+    showTableViewDemangle(ui->tableView_DYSYMTAB_toc,3);
+}
+
+void MACHWidget::extrefsymsDemangle()
+{
+    showTableViewDemangle(ui->tableView_DYSYMTAB_extrefsyms,3);
 }
 
 void MACHWidget::on_pushButtonHex_clicked()

@@ -491,9 +491,12 @@ void MACHProcessData::_process()
     {
         QList<QString> listLabels;
         listLabels.append("");
-        listLabels.append(tr("Value"));
+        listLabels.append(getStructList(N_mach_table_of_contents::records,N_mach_table_of_contents::__data_size));
+        listLabels.append(tr("Name"));
 
-        QList<quint64> listRecords=g_pXMACH->get_toc_list();
+        QList<XMACH::TOC_RECORD> listRecords=g_pXMACH->get_toc_list();
+        QList<XMACH::NLIST_RECORD> listNlistRecords=g_pXMACH->getNlistRecords();
+        XBinary::OFFSETSIZE osStringTable=g_pXMACH->getStringTableOS();
 
         int nNumberOfRecords=listRecords.count();
 
@@ -507,9 +510,11 @@ void MACHProcessData::_process()
         {
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
-            pItem->setData(g_nOffset+i*sizeof(quint64),Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
+            pItem->setData(listRecords.at(i).nStructOffset,Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
             (*g_ppModel)->setItem(i,0,          pItem);
-            (*g_ppModel)->setItem(i,1,          new QStandardItem(XBinary::valueToHex(listRecords.at(i))));
+            (*g_ppModel)->setItem(i,N_mach_table_of_contents::symbol_index+1,       new QStandardItem(XBinary::valueToHex(listRecords.at(i).toc.symbol_index)));
+            (*g_ppModel)->setItem(i,N_mach_table_of_contents::module_index+1,       new QStandardItem(XBinary::valueToHex(listRecords.at(i).toc.module_index)));
+            (*g_ppModel)->setItem(i,N_mach_table_of_contents::module_index+2,       new QStandardItem(g_pXMACH->getIndexSymbolName(listRecords.at(i).toc.symbol_index,&listNlistRecords,osStringTable.nOffset,osStringTable.nSize)));
 
             incValue();
         }
@@ -585,39 +590,11 @@ void MACHProcessData::_process()
     {
         QList<QString> listLabels;
         listLabels.append("");
-        listLabels.append(tr("Value"));
-
-        QList<quint32> listRecords=g_pXMACH->get_extrefsyms_list();
-
-        int nNumberOfRecords=listRecords.count();
-
-        *g_ppModel=new QStandardItemModel(nNumberOfRecords,listLabels.count());
-
-        setMaximum(nNumberOfRecords);
-
-        setHeader(*g_ppModel,&listLabels);
-
-        for(int i=0; i<nNumberOfRecords; i++)
-        {
-            QStandardItem *pItem=new QStandardItem;
-            pItem->setData(i,Qt::DisplayRole);
-            pItem->setData(g_nOffset+i*sizeof(quint32),Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
-            (*g_ppModel)->setItem(i,0,          pItem);
-            (*g_ppModel)->setItem(i,1,          new QStandardItem(XBinary::valueToHex(listRecords.at(i))));
-
-            incValue();
-        }
-    }
-    else if(g_nType==SMACH::TYPE_DYSYMTAB_indirectsyms)
-    {
-        QList<QString> listLabels;
-        listLabels.append("");
-        listLabels.append(tr("Value"));
+        listLabels.append(getStructList(N_mach_refsyms::records,N_mach_refsyms::__data_size));
         listLabels.append(tr("Name"));
 
-        QList<quint32> listRecords=g_pXMACH->get_indirectsyms_list();
+        QList<XMACH::REFERENCE_RECORD> listRecords=g_pXMACH->get_extrefsyms_list();
         QList<XMACH::NLIST_RECORD> listNlistRecords=g_pXMACH->getNlistRecords();
-        int nNumberOfNlistRecords=listNlistRecords.count();
         XBinary::OFFSETSIZE osStringTable=g_pXMACH->getStringTableOS();
 
         int nNumberOfRecords=listRecords.count();
@@ -632,74 +609,68 @@ void MACHProcessData::_process()
         {
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
-            pItem->setData(g_nOffset+i*sizeof(quint32),Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
+            pItem->setData(listRecords.at(i).nStructOffset,Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
             (*g_ppModel)->setItem(i,0,          pItem);
-            (*g_ppModel)->setItem(i,1,          new QStandardItem(XBinary::valueToHex(listRecords.at(i))));
+            (*g_ppModel)->setItem(i,N_mach_refsyms::isym+1,         new QStandardItem(XBinary::valueToHex(listRecords.at(i).reference.s._value.isym)));
+            (*g_ppModel)->setItem(i,N_mach_refsyms::flags+1,        new QStandardItem(XBinary::valueToHex((quint8)listRecords.at(i).reference.s._value.flags)));
 
-            QString sName;
+            QString sName=g_pXMACH->getIndexSymbolName(listRecords.at(i).reference.s._value.isym,&listNlistRecords,osStringTable.nOffset,osStringTable.nSize);
 
-            if(listRecords.at(i)==XMACH_DEF::S_INDIRECT_SYMBOL_ABS)
-            {
-                sName="INDIRECT_SYMBOL_ABS";
-            }
-            else if(listRecords.at(i)==XMACH_DEF::S_INDIRECT_SYMBOL_LOCAL)
-            {
-                sName="INDIRECT_SYMBOL_LOCAL";
-            }
+            (*g_ppModel)->setItem(i,3,          new QStandardItem(sName));
 
-            if(listRecords.at(i)<(quint32)nNumberOfNlistRecords)
-            {
-                XMACH::NLIST_RECORD nlist_record=listNlistRecords.at(listRecords.at(i));
+            incValue();
+        }
+    }
+    else if(g_nType==SMACH::TYPE_DYSYMTAB_indirectsyms)
+    {
+        QList<QString> listLabels;
+        listLabels.append("");
+        listLabels.append(tr("Value"));
+        listLabels.append(tr("Name"));
 
-                if(nlist_record.bIs64)
-                {
-                    sName=g_pXMACH->getStringFromIndex(osStringTable.nOffset,osStringTable.nSize,nlist_record.s.nlist64.n_strx);
-                }
-                else
-                {
-                    sName=g_pXMACH->getStringFromIndex(osStringTable.nOffset,osStringTable.nSize,nlist_record.s.nlist32.n_strx);
-                }
-            }
+        QList<XMACH::VALUE32_RECORD> listRecords=g_pXMACH->get_indirectsyms_list();
+        QList<XMACH::NLIST_RECORD> listNlistRecords=g_pXMACH->getNlistRecords();
+        XBinary::OFFSETSIZE osStringTable=g_pXMACH->getStringTableOS();
+
+        int nNumberOfRecords=listRecords.count();
+
+        *g_ppModel=new QStandardItemModel(nNumberOfRecords,listLabels.count());
+
+        setMaximum(nNumberOfRecords);
+
+        setHeader(*g_ppModel,&listLabels);
+
+        for(int i=0; i<nNumberOfRecords; i++)
+        {
+            QStandardItem *pItem=new QStandardItem;
+            pItem->setData(i,Qt::DisplayRole);
+            pItem->setData(listRecords.at(i).nStructOffset,Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
+            (*g_ppModel)->setItem(i,0,          pItem);
+            (*g_ppModel)->setItem(i,1,          new QStandardItem(XBinary::valueToHex(listRecords.at(i).nValue)));
+
+            QString sName=g_pXMACH->getIndexSymbolName(listRecords.at(i).nValue,&listNlistRecords,osStringTable.nOffset,osStringTable.nSize);
 
             (*g_ppModel)->setItem(i,2,          new QStandardItem(sName));
 
             incValue();
         }
     }
-    else if(g_nType==SMACH::TYPE_DYSYMTAB_extrel)
+    else if((g_nType==SMACH::TYPE_DYSYMTAB_extrel)||(g_nType==SMACH::TYPE_DYSYMTAB_locrel))
     {
         QList<QString> listLabels;
         listLabels.append("");
-        listLabels.append(tr("Value"));
+        listLabels.append(getStructList(N_mach_relocs_E::records,N_mach_relocs_E::__data_size));
 
-        QList<quint64> listRecords=g_pXMACH->get_extrel_list();
+        QList<XMACH::RELOC_RECORD> listRecords;
 
-        int nNumberOfRecords=listRecords.count();
-
-        *g_ppModel=new QStandardItemModel(nNumberOfRecords,listLabels.count());
-
-        setMaximum(nNumberOfRecords);
-
-        setHeader(*g_ppModel,&listLabels);
-
-        for(int i=0; i<nNumberOfRecords; i++)
+        if(g_nType==SMACH::TYPE_DYSYMTAB_extrel)
         {
-            QStandardItem *pItem=new QStandardItem;
-            pItem->setData(i,Qt::DisplayRole);
-            pItem->setData(g_nOffset+i*sizeof(quint64),Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
-            (*g_ppModel)->setItem(i,0,          pItem);
-            (*g_ppModel)->setItem(i,1,          new QStandardItem(XBinary::valueToHex(listRecords.at(i))));
-
-            incValue();
+            listRecords=g_pXMACH->get_extrel_list();
         }
-    }
-    else if(g_nType==SMACH::TYPE_DYSYMTAB_locrel)
-    {
-        QList<QString> listLabels;
-        listLabels.append("");
-        listLabels.append(tr("Value"));
-
-        QList<quint64> listRecords=g_pXMACH->get_locrel_list();
+        else if(g_nType==SMACH::TYPE_DYSYMTAB_locrel)
+        {
+            listRecords=g_pXMACH->get_locrel_list();
+        }
 
         int nNumberOfRecords=listRecords.count();
 
@@ -713,9 +684,14 @@ void MACHProcessData::_process()
         {
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
-            pItem->setData(g_nOffset+i*sizeof(quint64),Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
+            pItem->setData(listRecords.at(i).nStructOffset,Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
             (*g_ppModel)->setItem(i,0,          pItem);
-            (*g_ppModel)->setItem(i,1,          new QStandardItem(XBinary::valueToHex(listRecords.at(i))));
+            (*g_ppModel)->setItem(i,N_mach_relocs_E::r_address+1,           new QStandardItem(XBinary::valueToHex(listRecords.at(i).reloc.r_address)));
+            (*g_ppModel)->setItem(i,N_mach_relocs_E::r_symbolnum+1,         new QStandardItem(XBinary::valueToHex(listRecords.at(i).reloc.s._value.r_symbolnum)));
+            (*g_ppModel)->setItem(i,N_mach_relocs_E::r_pcrel+1,             new QStandardItem(XBinary::valueToHex((quint8)listRecords.at(i).reloc.s._value.r_pcrel)));
+            (*g_ppModel)->setItem(i,N_mach_relocs_E::r_length+1,            new QStandardItem(XBinary::valueToHex((quint8)listRecords.at(i).reloc.s._value.r_length)));
+            (*g_ppModel)->setItem(i,N_mach_relocs_E::r_extern+1,            new QStandardItem(XBinary::valueToHex((quint8)listRecords.at(i).reloc.s._value.r_extern)));
+            (*g_ppModel)->setItem(i,N_mach_relocs_E::r_type+1,              new QStandardItem(XBinary::valueToHex((quint8)listRecords.at(i).reloc.s._value.r_type)));
 
             incValue();
         }
@@ -809,7 +785,9 @@ void MACHProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
     else if(g_nType==SMACH::TYPE_DYSYMTAB_toc)
     {
         pTableView->setColumnWidth(0,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT16,mode));
-        pTableView->setColumnWidth(1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT64,mode));
+        pTableView->setColumnWidth(1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+        pTableView->setColumnWidth(2,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+        pTableView->setColumnWidth(3,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_STRINGLONG,mode));
     }
     else if(g_nType==SMACH::TYPE_DYSYMTAB_modtab)
     {
@@ -832,6 +810,8 @@ void MACHProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
     {
         pTableView->setColumnWidth(0,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT16,mode));
         pTableView->setColumnWidth(1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+        pTableView->setColumnWidth(2,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT8,mode));
+        pTableView->setColumnWidth(3,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_STRINGLONG,mode));
     }
     else if(g_nType==SMACH::TYPE_DYSYMTAB_indirectsyms)
     {
@@ -839,14 +819,14 @@ void MACHProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
         pTableView->setColumnWidth(1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
         pTableView->setColumnWidth(2,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_STRINGLONG,mode));
     }
-    else if(g_nType==SMACH::TYPE_DYSYMTAB_extrel)
+    else if((g_nType==SMACH::TYPE_DYSYMTAB_extrel)||(g_nType==SMACH::TYPE_DYSYMTAB_locrel))
     {
         pTableView->setColumnWidth(0,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT16,mode));
-        pTableView->setColumnWidth(1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT64,mode));
-    }
-    else if(g_nType==SMACH::TYPE_DYSYMTAB_locrel)
-    {
-        pTableView->setColumnWidth(0,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT16,mode));
-        pTableView->setColumnWidth(1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT64,mode));
+        pTableView->setColumnWidth(1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+        pTableView->setColumnWidth(2,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+        pTableView->setColumnWidth(3,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT8,mode));
+        pTableView->setColumnWidth(4,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT8,mode));
+        pTableView->setColumnWidth(5,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT8,mode));
+        pTableView->setColumnWidth(6,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT8,mode));
     }
 }

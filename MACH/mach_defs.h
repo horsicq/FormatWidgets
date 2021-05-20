@@ -788,4 +788,118 @@ enum INV
     __INV_size
 };
 }
+
+namespace N_mach_table_of_contents
+{
+enum DATA
+{
+    symbol_index,
+    module_index,
+    __data_size
+};
+
+extern const FW_DEF::HEADER_RECORD records[__data_size];
+
+enum CB
+{
+    __CB_size
+};
+
+enum INV
+{
+    __INV_size
+};
+}
+
+namespace N_mach_relocs
+{
+enum DATA
+{
+    r_address,
+    value,
+    __data_size
+};
+
+extern const FW_DEF::HEADER_RECORD records[__data_size];
+
+enum CB
+{
+    __CB_size
+};
+
+enum INV
+{
+    __INV_size
+};
+}
+
+namespace N_mach_relocs_E
+{
+enum DATA
+{
+    r_address,
+    r_symbolnum,
+    r_pcrel,
+    r_length,
+    r_extern,
+    r_type,
+    __data_size
+};
+
+extern const FW_DEF::HEADER_RECORD records[__data_size];
+
+enum CB
+{
+    __CB_size
+};
+
+enum INV
+{
+    __INV_size
+};
+}
+
+namespace N_mach_value
+{
+enum DATA
+{
+    value,
+    __data_size
+};
+
+extern const FW_DEF::HEADER_RECORD records[__data_size];
+
+enum CB
+{
+    __CB_size
+};
+
+enum INV
+{
+    __INV_size
+};
+}
+
+namespace N_mach_refsyms
+{
+enum DATA
+{
+    isym,
+    flags,
+    __data_size
+};
+
+extern const FW_DEF::HEADER_RECORD records[__data_size];
+
+enum CB
+{
+    __CB_size
+};
+
+enum INV
+{
+    __INV_size
+};
+}
+
 #endif // MACH_DEFS_H
