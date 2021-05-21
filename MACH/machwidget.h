@@ -193,6 +193,7 @@ private:
         INV_cryptoff,
         INV_FUNCTION_STARTS_dataoff,
         INV_DATA_IN_CODE_dataoff,
+        INV_CODE_SIGNATURE_dataoff,
         __INV_size
     };
 

@@ -35,6 +35,8 @@ MACHOFATWidget::~MACHOFATWidget()
 
 void MACHOFATWidget::clear()
 {
+    ui->comboBoxFilePart->clear();
+
     QObjectList listWidgets=ui->stackedWidget->children();
 
     for(int i=0;i<listWidgets.count();i++)
