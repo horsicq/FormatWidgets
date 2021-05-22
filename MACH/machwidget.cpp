@@ -49,6 +49,7 @@ MACHWidget::MACHWidget(QWidget *pParent) :
     initToolsWidget(ui->widgetHex_unix_thread);
     initToolsWidget(ui->widgetHex_unix_thread_arm_32);
     initToolsWidget(ui->widgetHex_unix_thread_arm_64);
+    initToolsWidget(ui->widgetHex_unix_thread_m68k_32);
     initToolsWidget(ui->widgetHex_unix_thread_ppc_32);
     initToolsWidget(ui->widgetHex_unix_thread_x86_32);
     initToolsWidget(ui->widgetHex_unix_thread_x86_64);
@@ -59,6 +60,8 @@ MACHWidget::MACHWidget(QWidget *pParent) :
     initToolsWidget(ui->widgetHex_DYLD_INFO_weak_bind);
     initToolsWidget(ui->widgetHex_DYLD_INFO_lazy_bind);
     initToolsWidget(ui->widgetHex_DYLD_INFO_export);
+    initToolsWidget(ui->widgetHex_LOADFVMLIB);
+    initToolsWidget(ui->widgetHex_IDFVMLIB);
 }
 
 MACHWidget::MACHWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) :
@@ -101,6 +104,7 @@ void MACHWidget::setShortcuts(XShortcuts *pShortcuts)
     ui->widgetHex_unix_thread->setShortcuts(pShortcuts);
     ui->widgetHex_unix_thread_arm_32->setShortcuts(pShortcuts);
     ui->widgetHex_unix_thread_arm_64->setShortcuts(pShortcuts);
+    ui->widgetHex_unix_thread_m68k_32->setShortcuts(pShortcuts);
     ui->widgetHex_unix_thread_ppc_32->setShortcuts(pShortcuts);
     ui->widgetHex_unix_thread_x86_32->setShortcuts(pShortcuts);
     ui->widgetHex_unix_thread_x86_64->setShortcuts(pShortcuts);
@@ -111,6 +115,8 @@ void MACHWidget::setShortcuts(XShortcuts *pShortcuts)
     ui->widgetHex_DYLD_INFO_weak_bind->setShortcuts(pShortcuts);
     ui->widgetHex_DYLD_INFO_lazy_bind->setShortcuts(pShortcuts);
     ui->widgetHex_DYLD_INFO_export->setShortcuts(pShortcuts);
+    ui->widgetHex_LOADFVMLIB->setShortcuts(pShortcuts);
+    ui->widgetHex_IDFVMLIB->setShortcuts(pShortcuts);
 
     FormatWidget::setShortcuts(pShortcuts);
 }
@@ -138,6 +144,7 @@ void MACHWidget::clear()
     memset(g_lineEdit_mach_unix_thread_x86_64,0,sizeof g_lineEdit_mach_unix_thread_x86_64);
     memset(g_lineEdit_mach_unix_thread_arm_32,0,sizeof g_lineEdit_mach_unix_thread_arm_32);
     memset(g_lineEdit_mach_unix_thread_arm_64,0,sizeof g_lineEdit_mach_unix_thread_arm_64);
+    memset(g_lineEdit_mach_unix_thread_m68k_32,0,sizeof g_lineEdit_mach_unix_thread_m68k_32);
     memset(g_lineEdit_mach_unix_thread_ppc_32,0,sizeof g_lineEdit_mach_unix_thread_ppc_32);
 
     memset(g_comboBox,0,sizeof g_comboBox);
@@ -214,6 +221,20 @@ void MACHWidget::reload()
                 QTreeWidgetItem *pItemLoadDylib=createNewItem(SMACH::TYPE_mach_libraries,QString("LC_LOAD_DYLIB"));
 
                 pItemCommands->addChild(pItemLoadDylib);
+            }
+
+            if(mach.isCommandPresent(XMACH_DEF::S_LC_LOADFVMLIB,&listCommandRecords))
+            {
+                QTreeWidgetItem *pLoadFVMLib=createNewItem(SMACH::TYPE_mach_LOADFVMLIB,QString("LC_LOADFVMLIB"));
+
+                pItemCommands->addChild(pLoadFVMLib);
+            }
+
+            if(mach.isCommandPresent(XMACH_DEF::S_LC_IDFVMLIB,&listCommandRecords))
+            {
+                QTreeWidgetItem *pIdFMVLib=createNewItem(SMACH::TYPE_mach_IDFVMLIB,QString("LC_IDFVMLIB"));
+
+                pItemCommands->addChild(pIdFMVLib);
             }
 
             if(mach.isCommandPresent(XMACH_DEF::S_LC_LOAD_WEAK_DYLIB,&listCommandRecords))
@@ -478,35 +499,35 @@ void MACHWidget::reload()
 
                 _nOffset+=sizeof(XMACH_DEF::unix_thread_command);
 
-                if((nMachine==XMACH_DEF::S_CPU_TYPE_I386)||(nMachine==XMACH_DEF::S_CPU_TYPE_X86_64))
+                if(nMachine==XMACH_DEF::S_CPU_TYPE_I386)
                 {
-                    if(unix_thread.flavor==XMACH_DEF::x86_THREAD_STATE32)
-                    {
-                        QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_mach_unix_thread_x86_32,QString("x86_thread_state32_t"),_nOffset); // TODO rename
+                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_mach_unix_thread_x86_32,QString("x86_thread_state32_t"),_nOffset); // TODO rename
 
-                        pItemUnixThread->addChild(pItem);
-                    }
-                    else if(unix_thread.flavor==XMACH_DEF::x86_THREAD_STATE64)
-                    {
-                        QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_mach_unix_thread_x86_64,QString("x86_thread_state64_t"),_nOffset); // TODO rename
-
-                        pItemUnixThread->addChild(pItem);
-                    }
+                    pItemUnixThread->addChild(pItem);
                 }
-                else if((nMachine==XMACH_DEF::S_CPU_TYPE_ARM)||(nMachine==XMACH_DEF::S_CPU_TYPE_ARM64))
+                else if(nMachine==XMACH_DEF::S_CPU_TYPE_X86_64)
                 {
-                    if(unix_thread.flavor==XMACH_DEF::ARM_THREAD_STATE)
-                    {
-                        QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_mach_unix_thread_arm_32,QString("arm_thread_state32_t"),_nOffset); // TODO rename
+                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_mach_unix_thread_x86_64,QString("x86_thread_state64_t"),_nOffset); // TODO rename
 
-                        pItemUnixThread->addChild(pItem);
-                    }
-                    else if(unix_thread.flavor==XMACH_DEF::ARM_THREAD_STATE64)
-                    {
-                        QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_mach_unix_thread_arm_64,QString("arm_thread_state64_t"),_nOffset); // TODO rename
+                    pItemUnixThread->addChild(pItem);
+                }
+                else if(nMachine==XMACH_DEF::S_CPU_TYPE_ARM)
+                {
+                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_mach_unix_thread_arm_32,QString("arm_thread_state32_t"),_nOffset); // TODO rename
 
-                        pItemUnixThread->addChild(pItem);
-                    }
+                    pItemUnixThread->addChild(pItem);
+                }
+                else if(nMachine==XMACH_DEF::S_CPU_TYPE_ARM64)
+                {
+                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_mach_unix_thread_arm_64,QString("arm_thread_state64_t"),_nOffset); // TODO rename
+
+                    pItemUnixThread->addChild(pItem);
+                }
+                else if(nMachine==XMACH_DEF::S_CPU_TYPE_MC680x0)
+                {
+                    QTreeWidgetItem *pItem=createNewItem(SMACH::TYPE_mach_unix_thread_m68k_32,QString("m68k_thread_state32_t"),_nOffset); // TODO rename
+
+                    pItemUnixThread->addChild(pItem);
                 }
                 else if(nMachine==XMACH_DEF::S_CPU_TYPE_POWERPC)
                 {
@@ -953,6 +974,34 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
 
                     break;
 
+                case SMACH::TYPE_mach_unix_thread_m68k_32:
+                    switch(nNdata)
+                    {
+                        case N_mach_unix_thread_m68k_32::dreg0:
+                        case N_mach_unix_thread_m68k_32::dreg1:
+                        case N_mach_unix_thread_m68k_32::dreg2:
+                        case N_mach_unix_thread_m68k_32::dreg3:
+                        case N_mach_unix_thread_m68k_32::dreg4:
+                        case N_mach_unix_thread_m68k_32::dreg5:
+                        case N_mach_unix_thread_m68k_32::dreg6:
+                        case N_mach_unix_thread_m68k_32::dreg7:     mach._set_m68k_thread_state32_t_dreg(nOffset,nValue,nNdata-N_mach_unix_thread_m68k_32::dreg0);      break;
+                        case N_mach_unix_thread_m68k_32::areg0:
+                        case N_mach_unix_thread_m68k_32::areg1:
+                        case N_mach_unix_thread_m68k_32::areg2:
+                        case N_mach_unix_thread_m68k_32::areg3:
+                        case N_mach_unix_thread_m68k_32::areg4:
+                        case N_mach_unix_thread_m68k_32::areg5:
+                        case N_mach_unix_thread_m68k_32::areg6:
+                        case N_mach_unix_thread_m68k_32::areg7:     mach._set_m68k_thread_state32_t_areg(nOffset,nValue,nNdata-N_mach_unix_thread_m68k_32::areg0);      break;
+                        case N_mach_unix_thread_m68k_32::pad0:      mach._set_m68k_thread_state32_t_pad0(nOffset,nValue);               break;
+                        case N_mach_unix_thread_m68k_32::sr:        mach._set_m68k_thread_state32_t_sr(nOffset,nValue);                 break;
+                        case N_mach_unix_thread_m68k_32::pc:        mach._set_m68k_thread_state32_t_pc(nOffset,nValue);                 break;
+                    }
+
+                    ui->widgetHex_unix_thread_arm_32->reload();
+
+                    break;
+
                 case SMACH::TYPE_mach_unix_thread_ppc_32:
                     switch(nNdata)
                     {
@@ -1045,6 +1094,7 @@ void MACHWidget::setReadonly(bool bState)
     setLineEditsReadOnly(g_lineEdit_mach_unix_thread_x86_64,N_mach_unix_thread_x86_64::__data_size,bState);
     setLineEditsReadOnly(g_lineEdit_mach_unix_thread_arm_32,N_mach_unix_thread_arm_32::__data_size,bState);
     setLineEditsReadOnly(g_lineEdit_mach_unix_thread_arm_64,N_mach_unix_thread_arm_64::__data_size,bState);
+    setLineEditsReadOnly(g_lineEdit_mach_unix_thread_m68k_32,N_mach_unix_thread_m68k_32::__data_size,bState);
     setLineEditsReadOnly(g_lineEdit_mach_unix_thread_ppc_32,N_mach_unix_thread_ppc_32::__data_size,bState);
     setComboBoxesReadOnly(g_comboBox,__CB_size,bState);
 
@@ -1072,6 +1122,7 @@ void MACHWidget::blockSignals(bool bState)
     _blockSignals((QObject **)g_lineEdit_mach_unix_thread_x86_64,N_mach_unix_thread_x86_64::__data_size,bState);
     _blockSignals((QObject **)g_lineEdit_mach_unix_thread_arm_32,N_mach_unix_thread_arm_32::__data_size,bState);
     _blockSignals((QObject **)g_lineEdit_mach_unix_thread_arm_64,N_mach_unix_thread_arm_64::__data_size,bState);
+    _blockSignals((QObject **)g_lineEdit_mach_unix_thread_m68k_32,N_mach_unix_thread_m68k_32::__data_size,bState);
     _blockSignals((QObject **)g_lineEdit_mach_unix_thread_ppc_32,N_mach_unix_thread_ppc_32::__data_size,bState);
     _blockSignals((QObject **)g_comboBox,__CB_size,bState);
 }
@@ -1163,6 +1214,11 @@ void MACHWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
         case SMACH::TYPE_mach_unix_thread_arm_64:
             pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
             pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINT64,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGSHORT,mode));
+            break;
+        case SMACH::TYPE_mach_unix_thread_m68k_32:
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINT32,mode));
             pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGSHORT,mode));
             break;
         case SMACH::TYPE_mach_unix_thread_ppc_32:
@@ -1980,6 +2036,44 @@ void MACHWidget::reloadData()
                 qint64 nSize=mach.get_arm_thread_state64_t_size();
 
                 loadHexSubdevice(nOffset,nSize,nOffset,&g_subDevice[SMACH::TYPE_mach_unix_thread_arm_64],ui->widgetHex_unix_thread_arm_64);
+
+                blockSignals(false);
+            }
+        }
+        else if(nType==SMACH::TYPE_mach_unix_thread_m68k_32)
+        {
+            if(!isInitPresent(sInit))
+            {
+                createHeaderTable(SMACH::TYPE_mach_unix_thread_m68k_32,ui->tableWidget_unix_thread_m68k_32,N_mach_unix_thread_m68k_32::records,g_lineEdit_mach_unix_thread_m68k_32,N_mach_unix_thread_m68k_32::__data_size,0,nDataOffset);
+
+                blockSignals(true);
+
+                XMACH_DEF::m68k_thread_state32_t state=mach._read_m68k_thread_state32_t(nDataOffset);
+
+                g_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::dreg0]->setValue(state.dreg[0]);
+                g_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::dreg1]->setValue(state.dreg[1]);
+                g_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::dreg2]->setValue(state.dreg[2]);
+                g_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::dreg3]->setValue(state.dreg[3]);
+                g_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::dreg4]->setValue(state.dreg[4]);
+                g_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::dreg5]->setValue(state.dreg[5]);
+                g_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::dreg6]->setValue(state.dreg[6]);
+                g_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::dreg7]->setValue(state.dreg[7]);
+                g_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::areg0]->setValue(state.areg[0]);
+                g_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::areg1]->setValue(state.areg[1]);
+                g_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::areg2]->setValue(state.areg[2]);
+                g_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::areg3]->setValue(state.areg[3]);
+                g_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::areg4]->setValue(state.areg[4]);
+                g_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::areg5]->setValue(state.areg[5]);
+                g_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::areg6]->setValue(state.areg[6]);
+                g_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::areg7]->setValue(state.areg[7]);
+                g_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::pad0]->setValue(state.pad0);
+                g_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::sr]->setValue(state.sr);
+                g_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::pc]->setValue(state.pc);
+
+                qint64 nOffset=nDataOffset;
+                qint64 nSize=mach.get_m68k_thread_state32_t_size();
+
+                loadHexSubdevice(nOffset,nSize,nOffset,&g_subDevice[SMACH::TYPE_mach_unix_thread_m68k_32],ui->widgetHex_unix_thread_m68k_32);
 
                 blockSignals(false);
             }

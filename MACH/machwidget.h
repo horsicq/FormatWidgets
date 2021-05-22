@@ -218,6 +218,7 @@ private:
     XLineEditHEX *g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::__data_size];
     XLineEditHEX *g_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::__data_size];
     XLineEditHEX *g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::__data_size];
+    XLineEditHEX *g_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::__data_size];
     XLineEditHEX *g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::__data_size];
 
     XComboBoxEx *g_comboBox[__CB_size];

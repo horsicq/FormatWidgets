@@ -43,6 +43,8 @@ enum TYPE
     TYPE_mach_libraries,
     TYPE_mach_weak_libraries,
     TYPE_mach_id_library,
+    TYPE_mach_LOADFVMLIB,
+    TYPE_mach_IDFVMLIB,
     TYPE_mach_dyld_info_only,
     TYPE_mach_uuid,
     TYPE_mach_symtab,
@@ -61,6 +63,7 @@ enum TYPE
     TYPE_mach_unix_thread_x86_64,
     TYPE_mach_unix_thread_arm_32,
     TYPE_mach_unix_thread_arm_64,
+    TYPE_mach_unix_thread_m68k_32,
     TYPE_mach_unix_thread_ppc_32,
     TYPE_STRINGTABLE,
     TYPE_SYMBOLTABLE,
@@ -671,6 +674,34 @@ enum DATA
 };
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
+}
+
+namespace N_mach_unix_thread_m68k_32
+{
+enum DATA
+{
+    dreg0,
+    dreg1,
+    dreg2,
+    dreg3,
+    dreg4,
+    dreg5,
+    dreg6,
+    dreg7,
+    areg0,
+    areg1,
+    areg2,
+    areg3,
+    areg4,
+    areg5,
+    areg6,
+    areg7,
+    pad0,
+    sr,
+    pc,
+    __data_size
+};
+    extern const FW_DEF::HEADER_RECORD records[__data_size];
 }
 
 namespace N_mach_nlist

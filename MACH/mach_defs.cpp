@@ -478,6 +478,34 @@ const FW_DEF::HEADER_RECORD records[]=
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 }
 
+namespace N_mach_unix_thread_m68k_32
+{
+const FW_DEF::HEADER_RECORD records[]=
+{
+    {dreg0,             "dreg0",                offsetof(XMACH_DEF::m68k_thread_state32_t,dreg)+sizeof(quint32)*0,  4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {dreg1,             "dreg1",                offsetof(XMACH_DEF::m68k_thread_state32_t,dreg)+sizeof(quint32)*1,  4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {dreg2,             "dreg2",                offsetof(XMACH_DEF::m68k_thread_state32_t,dreg)+sizeof(quint32)*2,  4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {dreg3,             "dreg3",                offsetof(XMACH_DEF::m68k_thread_state32_t,dreg)+sizeof(quint32)*3,  4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {dreg4,             "dreg4",                offsetof(XMACH_DEF::m68k_thread_state32_t,dreg)+sizeof(quint32)*4,  4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {dreg5,             "dreg5",                offsetof(XMACH_DEF::m68k_thread_state32_t,dreg)+sizeof(quint32)*5,  4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {dreg6,             "dreg6",                offsetof(XMACH_DEF::m68k_thread_state32_t,dreg)+sizeof(quint32)*6,  4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {dreg7,             "dreg7",                offsetof(XMACH_DEF::m68k_thread_state32_t,dreg)+sizeof(quint32)*7,  4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {areg0,             "areg0",                offsetof(XMACH_DEF::m68k_thread_state32_t,areg)+sizeof(quint32)*0,  4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {areg1,             "areg1",                offsetof(XMACH_DEF::m68k_thread_state32_t,areg)+sizeof(quint32)*1,  4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {areg2,             "areg2",                offsetof(XMACH_DEF::m68k_thread_state32_t,areg)+sizeof(quint32)*2,  4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {areg3,             "areg3",                offsetof(XMACH_DEF::m68k_thread_state32_t,areg)+sizeof(quint32)*3,  4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {areg4,             "areg4",                offsetof(XMACH_DEF::m68k_thread_state32_t,areg)+sizeof(quint32)*4,  4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {areg5,             "areg5",                offsetof(XMACH_DEF::m68k_thread_state32_t,areg)+sizeof(quint32)*5,  4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {areg6,             "areg6",                offsetof(XMACH_DEF::m68k_thread_state32_t,areg)+sizeof(quint32)*6,  4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {areg7,             "areg7",                offsetof(XMACH_DEF::m68k_thread_state32_t,areg)+sizeof(quint32)*7,  4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+    {pad0,              "pad0",                 offsetof(XMACH_DEF::m68k_thread_state32_t,pad0),                    2,      "uint16",           FW_DEF::VAL_TYPE_DATA},
+    {sr,                "sr",                   offsetof(XMACH_DEF::m68k_thread_state32_t,sr),                      2,      "uint16",           FW_DEF::VAL_TYPE_DATA},
+    {pc,                "pc",                   offsetof(XMACH_DEF::m68k_thread_state32_t,pc),                      4,      "uint32",           FW_DEF::VAL_TYPE_DATA},
+};
+
+extern const FW_DEF::HEADER_RECORD records[__data_size];
+}
+
 namespace N_mach_nlist
 {
 const FW_DEF::HEADER_RECORD records32[]=
