@@ -58,6 +58,13 @@ MACHSectionHeaderWidget::MACHSectionHeaderWidget(QIODevice *pDevice,FW_DEF::OPTI
         g_nComboBoxSize=N_mach_library::__CB_size;
         g_nInvWidgetSize=N_mach_library::__INV_size;
     }
+    if( (nType==SMACH::TYPE_mach_LOADFVMLIB)||
+        (nType==SMACH::TYPE_mach_IDFVMLIB))
+    {
+        g_nLineEditSize=N_mach_fmv_library::__data_size;
+        g_nComboBoxSize=N_mach_fmv_library::__CB_size;
+        g_nInvWidgetSize=N_mach_fmv_library::__INV_size;
+    }
     else if(nType==SMACH::TYPE_mach_segments)
     {
         g_nLineEditSize=N_mach_segments::__data_size;
@@ -292,10 +299,21 @@ FormatWidget::SV MACHSectionHeaderWidget::_setValue(QVariant vValue, int nStype,
                 case SMACH::TYPE_mach_id_library:
                     switch(nNdata)
                     {
-                        case N_mach_library::timestamp:               mach._setLibraryRecord_timestamp(nOffset,nValue);               break;
-                        case N_mach_library::current_version:         mach._setLibraryRecord_current_version(nOffset,nValue);         break;
-                        case N_mach_library::compatibility_version:   mach._setLibraryRecord_compatibility_version(nOffset,nValue);   break;
-                        case N_mach_library::name:                    mach._setLibraryRecord_name(nOffset,sValue);                    break;
+                        case N_mach_library::timestamp:                 mach._setLibraryRecord_timestamp(nOffset,nValue);               break;
+                        case N_mach_library::current_version:           mach._setLibraryRecord_current_version(nOffset,nValue);         break;
+                        case N_mach_library::compatibility_version:     mach._setLibraryRecord_compatibility_version(nOffset,nValue);   break;
+                        case N_mach_library::name:                      mach._setLibraryRecord_name(nOffset,sValue);                    break;
+                    }
+
+                    break;
+
+                case SMACH::TYPE_mach_LOADFVMLIB:
+                case SMACH::TYPE_mach_IDFVMLIB:
+                    switch(nNdata)
+                    {
+                        case N_mach_fmv_library::minor_version:         mach._setFvmLibraryRecord_minor_version(nOffset,nValue);        break;
+                        case N_mach_fmv_library::header_addr:           mach._setFvmLibraryRecord_header_addr(nOffset,nValue);          break;
+                        case N_mach_fmv_library::name:                  mach._setLibraryRecord_name(nOffset,sValue);                    break;
                     }
 
                     break;
@@ -520,7 +538,14 @@ void MACHSectionHeaderWidget::adjustHeaderTable(int nType, QTableWidget *pTableW
         case SMACH::TYPE_mach_weak_libraries:
         case SMACH::TYPE_mach_id_library:
             pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINT32,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_STRINGMID,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGSHORT,mode));
+            break;
+
+        case SMACH::TYPE_mach_LOADFVMLIB:
+        case SMACH::TYPE_mach_IDFVMLIB:
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_STRINGMID,mode));
             pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGSHORT,mode));
             break;
 
@@ -637,6 +662,40 @@ void MACHSectionHeaderWidget::reloadData()
             if(lr.nMaxStringSize)
             {
                 QTableWidgetItem *pItem=ui->tableWidget->item(N_mach_library::name,0);
+
+                if(pItem)
+                {
+                    pItem->setData(Qt::UserRole+HEADER_DATA_SIZE,lr.nMaxStringSize);
+                }
+            }
+
+            qint64 nOffset=nHeaderOffset;
+            qint64 nSize=cr.nSize;
+            qint64 nAddress=mach.offsetToRelAddress(nOffset);
+
+            loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
+
+            blockSignals(false);
+        }
+        else if((nType==SMACH::TYPE_mach_LOADFVMLIB)||
+                (nType==SMACH::TYPE_mach_IDFVMLIB))
+        {
+            createHeaderTable(nType,ui->tableWidget,N_mach_fmv_library::records,g_ppLinedEdit,N_mach_fmv_library::__data_size,getNumber(),getOffset());
+
+            blockSignals(true);
+
+            qint64 nHeaderOffset=getOffset();
+
+            XMACH::FVM_LIBRARY_RECORD lr=mach._readFvmLibraryRecord(nHeaderOffset,bIsBigEndian);
+            XMACH::COMMAND_RECORD cr=mach._readLoadCommand(nHeaderOffset,bIsBigEndian);
+
+            g_ppLinedEdit[N_mach_fmv_library::minor_version]->setValue((quint32)lr.minor_version);
+            g_ppLinedEdit[N_mach_fmv_library::header_addr]->setValue((quint32)lr.header_addr);
+            g_ppLinedEdit[N_mach_fmv_library::name]->setStringValue(lr.sFullName,lr.nMaxStringSize);
+
+            if(lr.nMaxStringSize)
+            {
+                QTableWidgetItem *pItem=ui->tableWidget->item(N_mach_fmv_library::name,0);
 
                 if(pItem)
                 {

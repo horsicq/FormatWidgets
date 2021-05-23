@@ -116,6 +116,47 @@ void MACHProcessData::_process()
             incValue();
         }
     }
+    else if((g_nType==SMACH::TYPE_mach_IDFVMLIB)||(g_nType==SMACH::TYPE_mach_LOADFVMLIB))
+    {
+        QList<QString> listLabels;
+        listLabels.append("");
+        listLabels.append(getStructList(N_mach_fmv_library::records,N_mach_fmv_library::__data_size));
+
+        int nType=XMACH_DEF::S_LC_LOADFVMLIB;
+
+        if(g_nType==SMACH::TYPE_mach_IDFVMLIB)
+        {
+            nType=XMACH_DEF::S_LC_IDFVMLIB;
+        }
+
+        QList<XMACH::FVM_LIBRARY_RECORD> listLibraries=g_pXMACH->getFvmLibraryRecords(nType);
+
+        int nNumberOfRecords=listLibraries.count();
+
+        *g_ppModel=new QStandardItemModel(nNumberOfRecords,listLabels.count());
+
+        setMaximum(nNumberOfRecords);
+
+        setHeader(*g_ppModel,&listLabels);
+
+        for(int i=0; i<nNumberOfRecords; i++)
+        {
+            QStandardItem *pItem=new QStandardItem;
+            pItem->setData(i,Qt::DisplayRole);
+
+            pItem->setData(listLibraries.at(i).nStructOffset,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+            pItem->setData(listLibraries.at(i).nStructOffset,Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
+            pItem->setData(listLibraries.at(i).nStructSize,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
+            pItem->setData(listLibraries.at(i).nStructOffset,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS);
+
+            (*g_ppModel)->setItem(i,0,                                              pItem);
+            (*g_ppModel)->setItem(i,N_mach_fmv_library::minor_version+1,            new QStandardItem(XBinary::valueToHex(listLibraries.at(i).minor_version)));
+            (*g_ppModel)->setItem(i,N_mach_fmv_library::header_addr+1,              new QStandardItem(XBinary::valueToHex(listLibraries.at(i).header_addr)));
+            (*g_ppModel)->setItem(i,N_mach_fmv_library::name+1,                     new QStandardItem(listLibraries.at(i).sFullName));
+
+            incValue();
+        }
+    }
     else if(g_nType==SMACH::TYPE_mach_segments)
     {
         QList<QString> listLabels;
@@ -718,6 +759,14 @@ void MACHProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
         pTableView->setColumnWidth(2,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
         pTableView->setColumnWidth(3,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
         pTableView->setColumnWidth(4,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_STRINGLONG,mode));
+    }
+    else if((g_nType==SMACH::TYPE_mach_LOADFVMLIB)||
+            (g_nType==SMACH::TYPE_mach_IDFVMLIB))
+    {
+        pTableView->setColumnWidth(0,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT16,mode));
+        pTableView->setColumnWidth(1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+        pTableView->setColumnWidth(2,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+        pTableView->setColumnWidth(3,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_STRINGLONG,mode));
     }
     else if(g_nType==SMACH::TYPE_mach_segments)
     {

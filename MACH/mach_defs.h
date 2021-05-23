@@ -318,6 +318,29 @@ enum INV
 };
 }
 
+namespace N_mach_fmv_library
+{
+enum DATA
+{
+    minor_version,
+    header_addr,
+    name,
+    __data_size
+};
+
+extern const FW_DEF::HEADER_RECORD records[__data_size];
+
+enum CB
+{
+    __CB_size
+};
+
+enum INV
+{
+    __INV_size
+};
+}
+
 namespace N_mach_dyld_info
 {
 enum DATA

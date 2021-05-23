@@ -1248,6 +1248,8 @@ QString MACHWidget::typeIdToString(int nType)
         case SMACH::TYPE_DYSYMTAB_extrel:       sResult=QString("Reloc %1").arg(tr("Header"));              break;
         case SMACH::TYPE_DYSYMTAB_locrel:       sResult=QString("Reloc %1").arg(tr("Header"));              break;
         case SMACH::TYPE_DYSYMTAB_indirectsyms: sResult=QString("Indirect symbol %1").arg(tr("Header"));    break;
+        case SMACH::TYPE_mach_IDFVMLIB:         sResult=QString("IDFVMLIB %1").arg(tr("Header"));           break;
+        case SMACH::TYPE_mach_LOADFVMLIB:       sResult=QString("IDFVMLIB %1").arg(tr("Header"));           break;
     }
 
     return sResult;
@@ -1508,6 +1510,38 @@ void MACHWidget::reloadData()
                 if(tvModel[SMACH::TYPE_mach_id_library]->rowCount())
                 {
                     ui->tableView_id_library->setCurrentIndex(ui->tableView_id_library->model()->index(0,0));
+                }
+            }
+        }
+        else if(nType==SMACH::TYPE_mach_LOADFVMLIB)
+        {
+            if(!isInitPresent(sInit))
+            {
+                MACHProcessData machProcessData(SMACH::TYPE_mach_LOADFVMLIB,&tvModel[SMACH::TYPE_mach_LOADFVMLIB],&mach,0,0);
+
+                ajustTableView(&machProcessData,&tvModel[SMACH::TYPE_mach_LOADFVMLIB],ui->tableView_LOADFVMLIB,nullptr,true);
+
+                connect(ui->tableView_LOADFVMLIB->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_LOADFVMLIB_currentRowChanged(QModelIndex,QModelIndex)));
+
+                if(tvModel[SMACH::TYPE_mach_LOADFVMLIB]->rowCount())
+                {
+                    ui->tableView_LOADFVMLIB->setCurrentIndex(ui->tableView_LOADFVMLIB->model()->index(0,0));
+                }
+            }
+        }
+        else if(nType==SMACH::TYPE_mach_IDFVMLIB)
+        {
+            if(!isInitPresent(sInit))
+            {
+                MACHProcessData machProcessData(SMACH::TYPE_mach_IDFVMLIB,&tvModel[SMACH::TYPE_mach_IDFVMLIB],&mach,0,0);
+
+                ajustTableView(&machProcessData,&tvModel[SMACH::TYPE_mach_IDFVMLIB],ui->tableView_IDFVMLIB,nullptr,true);
+
+                connect(ui->tableView_IDFVMLIB->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_IDFVMLIB_currentRowChanged(QModelIndex,QModelIndex)));
+
+                if(tvModel[SMACH::TYPE_mach_IDFVMLIB]->rowCount())
+                {
+                    ui->tableView_IDFVMLIB->setCurrentIndex(ui->tableView_IDFVMLIB->model()->index(0,0));
                 }
             }
         }
@@ -2581,6 +2615,22 @@ void MACHWidget::onTableView_id_library_currentRowChanged(const QModelIndex &cur
     loadHexSubdeviceByTableView(current.row(),SMACH::TYPE_mach_id_library,ui->widgetHex_id_library,ui->tableView_id_library,&g_subDevice[SMACH::TYPE_mach_id_library]);
 }
 
+void MACHWidget::onTableView_LOADFVMLIB_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
+    Q_UNUSED(current)
+    Q_UNUSED(previous)
+
+    loadHexSubdeviceByTableView(current.row(),SMACH::TYPE_mach_LOADFVMLIB,ui->widgetHex_LOADFVMLIB,ui->tableView_LOADFVMLIB,&g_subDevice[SMACH::TYPE_mach_LOADFVMLIB]);
+}
+
+void MACHWidget::onTableView_IDFVMLIB_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
+    Q_UNUSED(current)
+    Q_UNUSED(previous)
+
+    loadHexSubdeviceByTableView(current.row(),SMACH::TYPE_mach_IDFVMLIB,ui->widgetHex_IDFVMLIB,ui->tableView_IDFVMLIB,&g_subDevice[SMACH::TYPE_mach_IDFVMLIB]);
+}
+
 void MACHWidget::on_tableView_commands_doubleClicked(const QModelIndex &index)
 {
     Q_UNUSED(index)
@@ -2744,6 +2794,50 @@ void MACHWidget::on_tableView_id_library_customContextMenuRequested(const QPoint
         contextMenu.addAction(&actionEdit);
 
         contextMenu.exec(ui->tableView_id_library->viewport()->mapToGlobal(pos));
+    }
+}
+
+void MACHWidget::on_tableView_LOADFVMLIB_doubleClicked(const QModelIndex &index)
+{
+    Q_UNUSED(index)
+    editLOADFVMLIBHeader();
+}
+
+void MACHWidget::on_tableView_LOADFVMLIB_customContextMenuRequested(const QPoint &pos)
+{
+    int nRow=ui->tableView_LOADFVMLIB->currentIndex().row();
+
+    if(nRow!=-1)
+    {
+        QMenu contextMenu(this);
+
+        QAction actionEdit(tr("Edit"),this);
+        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editLOADFVMLIBHeader()));
+        contextMenu.addAction(&actionEdit);
+
+        contextMenu.exec(ui->tableView_LOADFVMLIB->viewport()->mapToGlobal(pos));
+    }
+}
+
+void MACHWidget::on_tableView_IDFVMLIB_doubleClicked(const QModelIndex &index)
+{
+    Q_UNUSED(index)
+    editIDFVMLIBHeader();
+}
+
+void MACHWidget::on_tableView_IDFVMLIB_customContextMenuRequested(const QPoint &pos)
+{
+    int nRow=ui->tableView_IDFVMLIB->currentIndex().row();
+
+    if(nRow!=-1)
+    {
+        QMenu contextMenu(this);
+
+        QAction actionEdit(tr("Edit"),this);
+        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editIDFVMLIBHeader()));
+        contextMenu.addAction(&actionEdit);
+
+        contextMenu.exec(ui->tableView_IDFVMLIB->viewport()->mapToGlobal(pos));
     }
 }
 
@@ -3080,6 +3174,16 @@ void MACHWidget::editWeakLibraryHeader()
 void MACHWidget::editIdLibraryHeader()
 {
     showSectionHeader(SMACH::TYPE_mach_id_library,ui->tableView_id_library);
+}
+
+void MACHWidget::editIDFVMLIBHeader()
+{
+    showSectionHeader(SMACH::TYPE_mach_IDFVMLIB,ui->tableView_IDFVMLIB);
+}
+
+void MACHWidget::editLOADFVMLIBHeader()
+{
+    showSectionHeader(SMACH::TYPE_mach_LOADFVMLIB,ui->tableView_LOADFVMLIB);
 }
 
 void MACHWidget::editSymbolHeader()

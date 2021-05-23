@@ -91,6 +91,8 @@ private slots:
     void onTableView_libraries_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
     void onTableView_weak_libraries_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
     void onTableView_id_library_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
+    void onTableView_LOADFVMLIB_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
+    void onTableView_IDFVMLIB_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
     void on_tableView_commands_doubleClicked(const QModelIndex &index);
     void on_tableView_commands_customContextMenuRequested(const QPoint &pos);
     void on_tableView_segments_doubleClicked(const QModelIndex &index);
@@ -103,6 +105,10 @@ private slots:
     void on_tableView_weak_libraries_customContextMenuRequested(const QPoint &pos);
     void on_tableView_id_library_doubleClicked(const QModelIndex &index);
     void on_tableView_id_library_customContextMenuRequested(const QPoint &pos);
+    void on_tableView_LOADFVMLIB_doubleClicked(const QModelIndex &index);
+    void on_tableView_LOADFVMLIB_customContextMenuRequested(const QPoint &pos);
+    void on_tableView_IDFVMLIB_doubleClicked(const QModelIndex &index);
+    void on_tableView_IDFVMLIB_customContextMenuRequested(const QPoint &pos);
     void on_tableView_SymbolTable_doubleClicked(const QModelIndex &index);
     void on_tableView_SymbolTable_customContextMenuRequested(const QPoint &pos);
     void on_tableView_Functions_doubleClicked(const QModelIndex &index);
@@ -138,6 +144,8 @@ private slots:
     void editLibraryHeader();
     void editWeakLibraryHeader();
     void editIdLibraryHeader();
+    void editIDFVMLIBHeader();
+    void editLOADFVMLIBHeader();
     void editSymbolHeader();
     void functionHex();
     void functionDisasm();

@@ -174,6 +174,16 @@ const FW_DEF::HEADER_RECORD records[]=
 };
 }
 
+namespace N_mach_fmv_library
+{
+const FW_DEF::HEADER_RECORD records[]=
+{
+    {minor_version,         "minor_version",            sizeof(XMACH_DEF::load_command)+offsetof(XMACH_DEF::fvmlib,minor_version),          4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {header_addr,           "header_addr",              sizeof(XMACH_DEF::load_command)+offsetof(XMACH_DEF::fvmlib,header_addr),            4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {name,                  "name",                     sizeof(XMACH_DEF::load_command)+sizeof(XMACH_DEF::fvmlib),                          -1,     "Ansi string",          FW_DEF::VAL_TYPE_TEXT},
+};
+}
+
 namespace N_mach_dyld_info
 {
 const FW_DEF::HEADER_RECORD records[]=
