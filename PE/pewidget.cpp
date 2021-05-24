@@ -1763,66 +1763,66 @@ void PEWidget::loadDelayImport(int nRow)
 
 void PEWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
 {
-    // TODO like MACH !!!
-    int nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
+    XBinary::MODE mode=XPE::getMode(getDevice(),getOptions().bIsImage,getOptions().nImageBase);
 
-    pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
-    pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*6);
+    pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,getColumnWidth(this,CW_UINT16,mode));
+    pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,getColumnWidth(this,CW_TYPE,mode));
+
 
     switch(nType)
     {
         case SPE::TYPE_IMAGE_DOS_HEADER:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*12);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINT32,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGMID,mode));
             break;
 
-        case SPE::TYPE_IMAGE_NT_HEADERS:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*12);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
+            case SPE::TYPE_IMAGE_NT_HEADERS:
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINT32,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGMID,mode));
             break;
 
         case SPE::TYPE_IMAGE_FILE_HEADER:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*15);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*24);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINT32,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGMID,mode));
             break;
 
         case SPE::TYPE_IMAGE_OPTIONAL_HEADER:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*18);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*14);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*24);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINTMODE,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGMID,mode));
             break;
 
         case SPE::TYPE_EXPORT:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*18);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*14);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*22);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINTMODE,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGMID,mode));
             break;
 
         case SPE::TYPE_TLS:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*15);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*14);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*13);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINTMODE,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGMID,mode));
             break;
 
         case SPE::TYPE_LOADCONFIG:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*18);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*14);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*13);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINTMODE,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGMID,mode));
             break;
 
         case SPE::TYPE_NETHEADER:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*18);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*18);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINT32,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGMID,mode));
             break;
 
         case SPE::TYPE_RESOURCE_VERSION:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*16);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*18);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINT32,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGMID,mode));
             break;
     }
 }
