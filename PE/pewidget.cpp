@@ -1768,7 +1768,6 @@ void PEWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
     pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,getColumnWidth(this,CW_UINT16,mode));
     pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,getColumnWidth(this,CW_TYPE,mode));
 
-
     switch(nType)
     {
         case SPE::TYPE_IMAGE_DOS_HEADER:
