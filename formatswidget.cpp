@@ -27,7 +27,11 @@ FormatsWidget::FormatsWidget(QWidget *pParent) :
 {
     ui->setupUi(this);
 
+#if QT_VERSION >= 0x050300
     const QSignalBlocker blocker(ui->comboBoxScanEngine);
+#else
+    const bool bBlocked1=ui->comboBoxScanEngine->blockSignals(true);
+#endif
 
     ui->comboBoxScanEngine->addItem(QString("Auto"),SE_AUTO);
     ui->comboBoxScanEngine->addItem(QString("Detect It Easy(DiE)"),SE_DIE);
@@ -43,6 +47,10 @@ FormatsWidget::FormatsWidget(QWidget *pParent) :
     connect(ui->pageScanDIE,SIGNAL(scanFinished()),this,SLOT(onScanFinished()));
 
     g_options={};
+
+#if QT_VERSION < 0x050300
+    ui->comboBoxScanEngine->blockSignals(bBlocked1);
+#endif
 }
 
 void FormatsWidget::setFileName(QString sFileName, bool bScan)
