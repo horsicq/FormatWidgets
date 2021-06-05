@@ -163,7 +163,9 @@ void PEProcessData::_process()
 
         XBinary::_MEMORY_MAP memoryMap=g_pPE->getMemoryMap();
 
-        QList<quint32> listImportPositionHashes=g_pPE->getImportPositionHashes(&memoryMap);
+        QList<XPE::IMPORT_HEADER> listImport=g_pPE->getImports(&memoryMap);
+
+        QList<quint32> listImportPositionHashes=g_pPE->getImportPositionHashes(&listImport);
 
         QList<XPE::IMAGE_IMPORT_DESCRIPTOR_EX> listID=g_pPE->getImportDescriptorsEx(&memoryMap);
 
