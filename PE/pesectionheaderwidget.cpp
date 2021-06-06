@@ -318,65 +318,53 @@ void PESectionHeaderWidget::blockSignals(bool bState)
 
 void PESectionHeaderWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
 {
-    // TODO like MACH !!!
-    int nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
+    XBinary::MODE mode=XPE::getMode(getDevice(),getOptions().bIsImage,getOptions().nImageBase);
+
+    pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,getColumnWidth(this,CW_UINT16,mode));
+    pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,getColumnWidth(this,CW_TYPE,mode));
 
     switch(nType)
     {
         case SPE::TYPE_IMAGE_SECTION_HEADER:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*6);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*16);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*20);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGMID,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINT32,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGMID,mode));
             break;
 
         case SPE::TYPE_IMPORT:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*6);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*20);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGMID,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINT32,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGMID,mode));
             break;
 
         case SPE::TYPE_DEBUG:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*6);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*20);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*20);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGMID,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINT32,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGMID,mode));
             break;
 
         case SPE::TYPE_RELOCS:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*6);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*16);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGMID,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINT32,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGMID,mode));
             break;
 
         case SPE::TYPE_EXCEPTION:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*6);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*16);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGMID,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINT32,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGMID,mode));
             break;
 
         case SPE::TYPE_DELAYIMPORT:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*6);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*16);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGMID,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINT32,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGMID,mode));
             break;
 
         case SPE::TYPE_BOUNDIMPORT:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*6);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*16);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGMID,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINT32,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGMID,mode));
             break;
     }
 }
