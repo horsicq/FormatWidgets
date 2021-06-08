@@ -396,57 +396,47 @@ void ELFSectionHeaderWidget::blockSignals(bool bState)
 
 void ELFSectionHeaderWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
 {
-    // TODO like MACH !!!
-    int nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
+    XBinary::MODE mode=XELF::getMode(getDevice(),getOptions().bIsImage,getOptions().nImageBase);
+
+    pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,getColumnWidth(this,CW_UINT16,mode));
+    pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,getColumnWidth(this,CW_TYPE,mode));
 
     switch(nType)
     {
         case SELF::TYPE_Elf_Shdr:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*12);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINTMODE,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGMID,mode));
             break;
 
         case SELF::TYPE_Elf_Phdr:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*12);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINTMODE,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGMID,mode));
             break;
 
         case SELF::TYPE_Elf_DynamicArrayTags:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*12);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINTMODE,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGMID,mode));
             break;
 
         case SELF::TYPE_SYMBOLTABLE:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*10);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*12);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINTMODE,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGMID,mode));
             break;
 
         case SELF::TYPE_Elf_Rela:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*12);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINTMODE,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGMID,mode));
             break;
 
         case SELF::TYPE_Elf_Rel:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,nSymbolWidth*4);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,nSymbolWidth*8);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*12);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINTMODE,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGMID,mode));
             break;
     }
 }
