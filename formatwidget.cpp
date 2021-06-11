@@ -604,6 +604,7 @@ qint32 FormatWidget::getColumnWidth(QWidget *pParent, FormatWidget::CW cw, XBina
             case XBinary::MODE_16:      cw=CW_UINT16;       break;
             case XBinary::MODE_32:      cw=CW_UINT32;       break;
             case XBinary::MODE_64:      cw=CW_UINT64;       break;
+            default:                    cw=CW_UINT32;
         }
     }
 
@@ -617,6 +618,7 @@ qint32 FormatWidget::getColumnWidth(QWidget *pParent, FormatWidget::CW cw, XBina
         case CW_STRINGSHORT:    nResult=10*nSymbolWidth;        break;
         case CW_STRINGMID:      nResult=25*nSymbolWidth;        break;
         case CW_STRINGLONG:     nResult=50*nSymbolWidth;        break;
+        default:                nResult=8*nSymbolWidth;         break;
     }
 
     return nResult;
