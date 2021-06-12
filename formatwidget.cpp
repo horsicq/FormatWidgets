@@ -626,21 +626,30 @@ qint32 FormatWidget::getColumnWidth(QWidget *pParent, FormatWidget::CW cw, XBina
 
 void FormatWidget::_showInDisasmWindowAddress(qint64 nAddress)
 {
+    Q_UNUSED(nAddress)
+
     qDebug("TODO _showInDisasmWindowAddress");
 }
 
 void FormatWidget::_showInDisasmWindowOffset(qint64 nOffset)
 {
+    Q_UNUSED(nOffset)
+
     qDebug("TODO _showInDisasmWindowOffset");
 }
 
 void FormatWidget::_showInMemoryMapWindowOffset(qint64 nOffset)
 {
+    Q_UNUSED(nOffset)
+
     qDebug("TODO _showInMemoryMapWindowOffset");
 }
 
 void FormatWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
 {
+    Q_UNUSED(nOffset)
+    Q_UNUSED(nSize)
+
     qDebug("TODO _showInHexWindow");
 }
 
