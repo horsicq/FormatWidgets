@@ -110,8 +110,6 @@ void MultiSearch::processSignature(MultiSearch::SIGNATURE_RECORD signatureRecord
 //#endif
     g_pSemaphore->acquire();
 
-    bool bLog=false;
-
     XBinary binary;
 
     binary.setReadWriteMutex(&g_mutex);
