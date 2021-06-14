@@ -242,7 +242,7 @@ void MultiSearch::processModel()
         int nNumberOfRecords=g_pListRecords->count();
         *g_ppModel=new QStandardItemModel(nNumberOfRecords,4); // TODO Check maximum
 
-        qint64 nBaseAddress=g_options.memoryMap.nBaseAddress;
+        qint64 nBaseAddress=g_options.memoryMap.nModuleAddress;
 
         XBinary::MODE modeAddress=XBinary::getWidthModeFromSize(nBaseAddress+g_options.memoryMap.nRawSize);
 

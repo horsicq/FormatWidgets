@@ -263,18 +263,17 @@ void ELFWidget::blockSignals(bool bState)
 
 void ELFWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
 {
-    // TODO like MACH !!!
-    int nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
+    XBinary::MODE mode=XELF::getMode(getDevice(),getOptions().bIsImage,getOptions().nImageBase);
 
-    pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_NAME,QHeaderView::ResizeToContents);
-    pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_OFFSET,QHeaderView::ResizeToContents);
-    pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_TYPE,QHeaderView::ResizeToContents);
+    pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,getColumnWidth(this,CW_UINT16,mode));
+    pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,getColumnWidth(this,CW_TYPE,mode));
 
     switch(nType)
     {
         case SELF::TYPE_Elf_Ehdr:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,nSymbolWidth*12);
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*15);
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINTMODE,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGMID,mode));
             break;
     }
 }
