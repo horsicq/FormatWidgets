@@ -132,19 +132,19 @@ void FormatsWidget::reload()
 
         if(mode==XBinary::MODE_8)
         {
-            ui->lineEditBaseAddress->setValue((quint8)memoryMap.nBaseAddress);
+            ui->lineEditBaseAddress->setValue((quint8)memoryMap.nModuleAddress);
         }
         else if(mode==XBinary::MODE_16)
         {
-            ui->lineEditBaseAddress->setValue((quint16)memoryMap.nBaseAddress);
+            ui->lineEditBaseAddress->setValue((quint16)memoryMap.nModuleAddress);
         }
         else if((mode==XBinary::MODE_16SEG)||(mode==XBinary::MODE_32))
         {
-            ui->lineEditBaseAddress->setValue((quint32)memoryMap.nBaseAddress);
+            ui->lineEditBaseAddress->setValue((quint32)memoryMap.nModuleAddress);
         }
         else if(mode==XBinary::MODE_64)
         {
-            ui->lineEditBaseAddress->setValue((quint64)memoryMap.nBaseAddress);
+            ui->lineEditBaseAddress->setValue((quint64)memoryMap.nModuleAddress);
         }
 
         ui->lineEditEndianness->setText(XBinary::endiannessToString(memoryMap.bIsBigEndian));
