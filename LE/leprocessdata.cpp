@@ -69,16 +69,16 @@ void LEProcessData::_process()
 void LEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
 {
     // TODO like MACH !!!
-    int nSymbolWidth=XLineEditHEX::getSymbolWidth(pWidget);
+    XBinary::MODE mode=g_pLE->getMode();
 
     if(g_nType==SLE::TYPE_OBJECTS)
     {
-        pTableView->setColumnWidth(0,nSymbolWidth*4);
-        pTableView->setColumnWidth(1,nSymbolWidth*8);
-        pTableView->setColumnWidth(2,nSymbolWidth*8);
-        pTableView->setColumnWidth(3,nSymbolWidth*8);
-        pTableView->setColumnWidth(4,nSymbolWidth*8);
-        pTableView->setColumnWidth(5,nSymbolWidth*8);
-        pTableView->setColumnWidth(6,nSymbolWidth*8);
+        pTableView->setColumnWidth(0,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT16,mode));
+        pTableView->setColumnWidth(1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+        pTableView->setColumnWidth(2,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+        pTableView->setColumnWidth(3,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+        pTableView->setColumnWidth(4,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+        pTableView->setColumnWidth(5,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+        pTableView->setColumnWidth(6,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
     }
 }
