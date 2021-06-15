@@ -280,7 +280,7 @@ void PEProcessData::_process()
 
             pItem->setData(listRFE.at(i).BeginAddress,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS);
             pItem->setData(listRFE.at(i).EndAddress-listRFE.at(i).BeginAddress,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
-            pItem->setData(g_pPE->addressToOffset(&memoryMap,memoryMap.nBaseAddress+listRFE.at(i).BeginAddress),Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+            pItem->setData(g_pPE->addressToOffset(&memoryMap,memoryMap.nModuleAddress+listRFE.at(i).BeginAddress),Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
 
             (*g_ppModel)->setItem(i,0,                                        pItem);
             (*g_ppModel)->setItem(i,N_IMAGE_EXCEPTIONS::BeginAddress+1,       new QStandardItem(XBinary::valueToHex(listRFE.at(i).BeginAddress)));
@@ -340,7 +340,7 @@ void PEProcessData::_process()
 
         bool bFilter=g_varInfo.toBool();
 
-        XPE::EXPORT_HEADER eh=g_pPE->getExport();
+        XPE::EXPORT_HEADER eh=g_pPE->getExport(bFilter);
 
         int nNumberOfPositions=eh.listPositions.count();
 
@@ -357,9 +357,9 @@ void PEProcessData::_process()
             QStandardItem *pItem=new QStandardItem;
             pItem->setText(XBinary::valueToHex(eh.listPositions.at(i).nOrdinal));
 
-            pItem->setData(memoryMap.nBaseAddress+eh.listPositions.at(i).nRVA,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS);
+            pItem->setData(memoryMap.nModuleAddress+eh.listPositions.at(i).nRVA,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS);
             pItem->setData(1,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
-            pItem->setData(g_pPE->addressToOffset(&memoryMap,memoryMap.nBaseAddress+eh.listPositions.at(i).nRVA),Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+            pItem->setData(g_pPE->addressToOffset(&memoryMap,memoryMap.nModuleAddress+eh.listPositions.at(i).nRVA),Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
 
             (*g_ppModel)->setItem(i,N_IMAGE_EXPORT_FUNCTION::Ordinal,                 pItem);
             (*g_ppModel)->setItem(i,N_IMAGE_EXPORT_FUNCTION::RVA,                     new QStandardItem(XBinary::valueToHex(eh.listPositions.at(i).nRVA)));

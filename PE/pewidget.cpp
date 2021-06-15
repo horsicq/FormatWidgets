@@ -1124,7 +1124,7 @@ void PEWidget::reloadData()
                     if(i!=XPE_DEF::S_IMAGE_DIRECTORY_ENTRY_SECURITY)
                     {
                         pItemNumber->setData(Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS,dd.VirtualAddress);
-                        pItemNumber->setData(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET,pe.addressToOffset(&memoryMap,memoryMap.nBaseAddress+dd.VirtualAddress));
+                        pItemNumber->setData(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET,pe.addressToOffset(&memoryMap,memoryMap.nModuleAddress+dd.VirtualAddress));
 
                         if((dd.VirtualAddress)&&(pe.isRelAddressValid(&memoryMap,dd.VirtualAddress)))
                         {
