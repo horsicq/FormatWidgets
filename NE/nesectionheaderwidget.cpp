@@ -21,14 +21,17 @@
 #include "nesectionheaderwidget.h"
 #include "ui_nesectionheaderwidget.h"
 
-
-NESectionHeaderWidget::NESectionHeaderWidget(QWidget *pParent)
+NESectionHeaderWidget::NESectionHeaderWidget(QWidget *pParent):
+    FormatWidget(pParent),
+    ui(new Ui::NESectionHeaderWidget)
 {
-
+    ui->setupUi(this);
 }
 
-NESectionHeaderWidget::NESectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent)
+NESectionHeaderWidget::NESectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent):
+    NESectionHeaderWidget(pParent)
 {
+    NESectionHeaderWidget::setData(pDevice,options,nNumber,nOffset,nType);
 
 }
 
@@ -42,11 +45,6 @@ void NESectionHeaderWidget::clear()
 
 }
 
-void NESectionHeaderWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS *pOptions, quint32 nNumber, qint64 nOffset)
-{
-
-}
-
 void NESectionHeaderWidget::reload()
 {
 
@@ -54,6 +52,13 @@ void NESectionHeaderWidget::reload()
 
 FormatWidget::SV NESectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
 {
+    Q_UNUSED(vValue)
+    Q_UNUSED(nStype)
+    Q_UNUSED(nNdata)
+    Q_UNUSED(nVtype)
+    Q_UNUSED(nPosition)
+    Q_UNUSED(nOffset)
+
     return SV_NONE;
 }
 

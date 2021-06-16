@@ -216,6 +216,7 @@ void MACHSectionHeaderWidget::setShortcuts(XShortcuts *pShortcuts)
 FormatWidget::SV MACHSectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
 {
     Q_UNUSED(nVtype)
+    Q_UNUSED(nPosition)
 
     SV result=SV_NONE;
 
@@ -766,7 +767,7 @@ void MACHSectionHeaderWidget::reloadData()
         }
         else if(nType==SMACH::TYPE_mach_sections)
         {
-            createHeaderTable(SMACH::TYPE_mach_sections,ui->tableWidget,bIs64?(N_mach_sections64_E::records):(N_mach_sections32_E::records),g_ppLinedEdit,bIs64?(N_mach_sections64_E::__data_size):(N_mach_sections32_E::__data_size),getNumber(),getOffset());
+            createHeaderTable(SMACH::TYPE_mach_sections,ui->tableWidget,(bIs64)?(N_mach_sections64_E::records):(N_mach_sections32_E::records),g_ppLinedEdit,(bIs64)?(N_mach_sections64_E::__data_size):(N_mach_sections32_E::__data_size),getNumber(),getOffset());
 
             blockSignals(true);
 

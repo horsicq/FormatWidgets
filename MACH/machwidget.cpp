@@ -493,7 +493,7 @@ void MACHWidget::reload()
 
                 pItemCommands->addChild(pItemUnixThread);
 
-                XMACH_DEF::unix_thread_command unix_thread=mach._read_unix_thread_command(_nOffset);
+//                XMACH_DEF::unix_thread_command unix_thread=mach._read_unix_thread_command(_nOffset);
 
                 quint32 nMachine=mach.getHeader_cputype();
 
