@@ -265,6 +265,8 @@ FormatWidget::SV MACHSectionHeaderWidget::_setValue(QVariant vValue, int nStype,
                             break;
                     }
 
+                    break;
+
                 case SMACH::TYPE_DYSYMTAB_indirectsyms:
                     switch(nNdata)
                     {
@@ -272,6 +274,8 @@ FormatWidget::SV MACHSectionHeaderWidget::_setValue(QVariant vValue, int nStype,
                             addComment(ui->tableWidget,N_mach_value::value,HEADER_COLUMN_COMMENT,mach.getIndexSymbolName(nValue));
                             break;
                     }
+
+                    break;
 
                 case SMACH::TYPE_DYSYMTAB_toc:
                     switch(nNdata)

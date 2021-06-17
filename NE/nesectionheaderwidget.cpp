@@ -64,22 +64,23 @@ FormatWidget::SV NESectionHeaderWidget::_setValue(QVariant vValue, int nStype, i
 
 void NESectionHeaderWidget::setReadonly(bool bState)
 {
-
+    Q_UNUSED(bState)
 }
 
 void NESectionHeaderWidget::blockSignals(bool bState)
 {
-
+    Q_UNUSED(bState)
 }
 
 void NESectionHeaderWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
 {
-
+    Q_UNUSED(nType)
+    Q_UNUSED(pTableWidget)
 }
 
 void NESectionHeaderWidget::on_checkBoxReadonly_toggled(bool bChecked)
 {
-
+    Q_UNUSED(bChecked)
 }
 
 void NESectionHeaderWidget::reloadData()
@@ -89,5 +90,8 @@ void NESectionHeaderWidget::reloadData()
 
 void NESectionHeaderWidget::on_tableWidget_Section_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
 {
-
+    Q_UNUSED(nCurrentRow)
+    Q_UNUSED(nCurrentColumn)
+    Q_UNUSED(nPreviousRow)
+    Q_UNUSED(nPreviousColumn)
 }
