@@ -40,10 +40,9 @@ public:
         __CB_size
     };
     LESectionHeaderWidget(QWidget *pParent=nullptr);
-    LESectionHeaderWidget(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions,quint32 nNumber,qint64 nOffset,qint32 nType,QWidget *pParent=nullptr);
+    LESectionHeaderWidget(QIODevice *pDevice,FW_DEF::OPTIONS options,quint32 nNumber,qint64 nOffset,qint32 nType,QWidget *pParent=nullptr);
     ~LESectionHeaderWidget();
     virtual void clear();
-    virtual void setData(QIODevice *pDevice,FW_DEF::OPTIONS *pOptions,quint32 nNumber,qint64 nOffset);
     virtual void reload();
 
 protected:

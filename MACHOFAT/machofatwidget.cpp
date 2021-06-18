@@ -100,11 +100,19 @@ void MACHOFATWidget::reload()
 
 FormatWidget::SV MACHOFATWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
 {
+    Q_UNUSED(vValue)
+    Q_UNUSED(nStype)
+    Q_UNUSED(nNdata)
+    Q_UNUSED(nVtype)
+    Q_UNUSED(nPosition)
+    Q_UNUSED(nOffset)
+
     return SV_NONE;
 }
 
 void MACHOFATWidget::setReadonly(bool bState)
 {
+    Q_UNUSED(bState)
 //    // TODO Check
 //    int nNumberOfRecords=g_listDevices.count();
 
@@ -118,7 +126,7 @@ void MACHOFATWidget::setReadonly(bool bState)
 
 void MACHOFATWidget::blockSignals(bool bState)
 {
-
+    Q_UNUSED(bState)
 }
 
 void MACHOFATWidget::reloadData()

@@ -149,6 +149,7 @@ FormatWidget::SV DEXWidget::_setValue(QVariant vValue, int nStype, int nNdata, i
 {
     Q_UNUSED(nVtype)
     Q_UNUSED(nPosition)
+    Q_UNUSED(nOffset)
 
     SV result=SV_NONE;
 
@@ -254,7 +255,7 @@ void DEXWidget::blockSignals(bool bState)
 void DEXWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
 {
     // TODO like Mach
-    int nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
+//    int nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
 
     pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_NAME,QHeaderView::ResizeToContents);
     pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_OFFSET,QHeaderView::ResizeToContents);
@@ -268,6 +269,8 @@ void DEXWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
 
 QString DEXWidget::typeIdToString(int nType)
 {
+    Q_UNUSED(nType)
+
     return "";
 }
 
@@ -276,8 +279,8 @@ void DEXWidget::reloadData()
     int nType=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_TYPE).toInt();
     qint64 nDataOffset=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
     qint64 nDataSize=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
-    qint64 nDataExtraOffset=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_EXTRAOFFSET).toLongLong();
-    qint64 nDataExtraSize=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_EXTRASIZE).toLongLong();
+//    qint64 nDataExtraOffset=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_EXTRAOFFSET).toLongLong();
+//    qint64 nDataExtraSize=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_EXTRASIZE).toLongLong();
 
     QString sInit=getInitString(ui->treeWidgetNavi->currentItem());
 
