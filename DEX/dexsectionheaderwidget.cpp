@@ -111,12 +111,16 @@ void DEXSectionHeaderWidget::setStringTable(qint64 nStringTableOffset, qint64 nS
 
 FormatWidget::SV DEXSectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
 {
+    Q_UNUSED(vValue)
+    Q_UNUSED(nStype)
+    Q_UNUSED(nNdata)
     Q_UNUSED(nVtype)
+    Q_UNUSED(nPosition)
     Q_UNUSED(nOffset)
 
     SV result=SV_NONE;
 
-    quint64 nValue=vValue.toULongLong();
+//    quint64 nValue=vValue.toULongLong();
 
     if(getDevice()->isWritable())
     {

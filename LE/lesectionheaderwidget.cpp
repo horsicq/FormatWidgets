@@ -51,27 +51,35 @@ void LESectionHeaderWidget::reload()
 
 FormatWidget::SV LESectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
 {
+    Q_UNUSED(vValue)
+    Q_UNUSED(nStype)
+    Q_UNUSED(nNdata)
+    Q_UNUSED(nVtype)
+    Q_UNUSED(nPosition)
+    Q_UNUSED(nOffset)
+
     return SV_NONE;
 }
 
 void LESectionHeaderWidget::setReadonly(bool bState)
 {
-
+    Q_UNUSED(bState)
 }
 
 void LESectionHeaderWidget::blockSignals(bool bState)
 {
-
+    Q_UNUSED(bState)
 }
 
 void LESectionHeaderWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
 {
-
+    Q_UNUSED(nType)
+    Q_UNUSED(pTableWidget)
 }
 
 void LESectionHeaderWidget::on_checkBoxReadonly_toggled(bool bChecked)
 {
-
+    Q_UNUSED(bChecked)
 }
 
 void LESectionHeaderWidget::reloadData()
@@ -81,5 +89,8 @@ void LESectionHeaderWidget::reloadData()
 
 void LESectionHeaderWidget::on_tableWidget_Section_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
 {
-
+    Q_UNUSED(nCurrentRow)
+    Q_UNUSED(nCurrentColumn)
+    Q_UNUSED(nPreviousRow)
+    Q_UNUSED(nPreviousColumn)
 }
