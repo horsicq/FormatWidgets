@@ -154,12 +154,8 @@ void DEXSectionHeaderWidget::blockSignals(bool bState)
 
 void DEXSectionHeaderWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
 {
-    int nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
-
-    switch(nType)
-    {
-
-    }
+    Q_UNUSED(nType)
+    Q_UNUSED(pTableWidget)
 }
 
 void DEXSectionHeaderWidget::on_checkBoxReadonly_toggled(bool bChecked)
@@ -169,7 +165,7 @@ void DEXSectionHeaderWidget::on_checkBoxReadonly_toggled(bool bChecked)
 
 void DEXSectionHeaderWidget::reloadData()
 {
-    int nType=getType();
+//    int nType=getType();
 
     XDEX dex(getDevice());
 
@@ -183,9 +179,11 @@ void DEXSectionHeaderWidget::reloadData()
 
 void DEXSectionHeaderWidget::widgetValueChanged(quint64 nValue)
 {
-    QWidget *pWidget=qobject_cast<QWidget *>(sender());
-    int nStype=pWidget->property("STYPE").toInt();
-    int nNdata=pWidget->property("NDATA").toInt();
+    Q_UNUSED(nValue)
+
+//    QWidget *pWidget=qobject_cast<QWidget *>(sender());
+//    int nStype=pWidget->property("STYPE").toInt();
+//    int nNdata=pWidget->property("NDATA").toInt();
 
     XDEX dex(getDevice());
 

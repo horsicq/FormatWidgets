@@ -539,27 +539,57 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, in
                 case SPE::TYPE_LOADCONFIG:
                     switch(nNdata)
                     {
-                        case N_IMAGE_LOADCONFIG::Size:                          pe.setLoadConfig_Size((quint32)nValue);                             break;
-                        case N_IMAGE_LOADCONFIG::TimeDateStamp:                 pe.setLoadConfig_TimeDateStamp((quint32)nValue);                    break;
-                        case N_IMAGE_LOADCONFIG::MinorVersion:                  pe.setLoadConfig_MinorVersion((quint16)nValue);                     break;
-                        case N_IMAGE_LOADCONFIG::MajorVersion:                  pe.setLoadConfig_MajorVersion((quint16)nValue);                     break;
-                        case N_IMAGE_LOADCONFIG::GlobalFlagsClear:              pe.setLoadConfig_GlobalFlagsClear((quint32)nValue);                 break;
-                        case N_IMAGE_LOADCONFIG::GlobalFlagsSet:                pe.setLoadConfig_GlobalFlagsSet((quint32)nValue);                   break;
-                        case N_IMAGE_LOADCONFIG::CriticalSectionDefaultTimeout: pe.setLoadConfig_CriticalSectionDefaultTimeout((quint32)nValue);    break;
-                        case N_IMAGE_LOADCONFIG::DeCommitFreeBlockThreshold:    pe.setLoadConfig_DeCommitFreeBlockThreshold((quint64)nValue);       break;
-                        case N_IMAGE_LOADCONFIG::DeCommitTotalFreeThreshold:    pe.setLoadConfig_DeCommitTotalFreeThreshold((quint64)nValue);       break;
-                        case N_IMAGE_LOADCONFIG::LockPrefixTable:               pe.setLoadConfig_LockPrefixTable((quint64)nValue);                  break;
-                        case N_IMAGE_LOADCONFIG::MaximumAllocationSize:         pe.setLoadConfig_MaximumAllocationSize((quint64)nValue);            break;
-                        case N_IMAGE_LOADCONFIG::VirtualMemoryThreshold:        pe.setLoadConfig_VirtualMemoryThreshold((quint64)nValue);           break;
-                        case N_IMAGE_LOADCONFIG::ProcessAffinityMask:           pe.setLoadConfig_ProcessAffinityMask((quint64)nValue);              break;
-                        case N_IMAGE_LOADCONFIG::CSDVersion:                    pe.setLoadConfig_CSDVersion((quint16)nValue);                       break;
-                        case N_IMAGE_LOADCONFIG::DependentLoadFlags:            pe.setLoadConfig_DependentLoadFlags((quint16)nValue);               break;
-                        case N_IMAGE_LOADCONFIG::EditList:                      pe.setLoadConfig_EditList((quint64)nValue);                         break;
-                        case N_IMAGE_LOADCONFIG::SecurityCookie:                pe.setLoadConfig_SecurityCookie((quint64)nValue);                   break;
-                        case N_IMAGE_LOADCONFIG::SEHandlerTable:                pe.setLoadConfig_SEHandlerTable((quint64)nValue);                   break;
-                        case N_IMAGE_LOADCONFIG::SEHandlerCount:                pe.setLoadConfig_SEHandlerCount((quint64)nValue);                   break;
+                        case N_IMAGE_LOADCONFIG::Size:                                      pe.setLoadConfig_Size((quint32)nValue);                                     break;
+                        case N_IMAGE_LOADCONFIG::TimeDateStamp:                             pe.setLoadConfig_TimeDateStamp((quint32)nValue);                            break;
+                        case N_IMAGE_LOADCONFIG::MinorVersion:                              pe.setLoadConfig_MinorVersion((quint16)nValue);                             break;
+                        case N_IMAGE_LOADCONFIG::MajorVersion:                              pe.setLoadConfig_MajorVersion((quint16)nValue);                             break;
+                        case N_IMAGE_LOADCONFIG::GlobalFlagsClear:                          pe.setLoadConfig_GlobalFlagsClear((quint32)nValue);                         break;
+                        case N_IMAGE_LOADCONFIG::GlobalFlagsSet:                            pe.setLoadConfig_GlobalFlagsSet((quint32)nValue);                           break;
+                        case N_IMAGE_LOADCONFIG::CriticalSectionDefaultTimeout:             pe.setLoadConfig_CriticalSectionDefaultTimeout((quint32)nValue);            break;
+                        case N_IMAGE_LOADCONFIG::DeCommitFreeBlockThreshold:                pe.setLoadConfig_DeCommitFreeBlockThreshold((quint64)nValue);               break;
+                        case N_IMAGE_LOADCONFIG::DeCommitTotalFreeThreshold:                pe.setLoadConfig_DeCommitTotalFreeThreshold((quint64)nValue);               break;
+                        case N_IMAGE_LOADCONFIG::LockPrefixTable:                           pe.setLoadConfig_LockPrefixTable((quint64)nValue);                          break;
+                        case N_IMAGE_LOADCONFIG::MaximumAllocationSize:                     pe.setLoadConfig_MaximumAllocationSize((quint64)nValue);                    break;
+                        case N_IMAGE_LOADCONFIG::VirtualMemoryThreshold:                    pe.setLoadConfig_VirtualMemoryThreshold((quint64)nValue);                   break;
+                        case N_IMAGE_LOADCONFIG::ProcessAffinityMask:                       pe.setLoadConfig_ProcessAffinityMask((quint64)nValue);                      break;
+                        case N_IMAGE_LOADCONFIG::CSDVersion:                                pe.setLoadConfig_CSDVersion((quint16)nValue);                               break;
+                        case N_IMAGE_LOADCONFIG::DependentLoadFlags:                        pe.setLoadConfig_DependentLoadFlags((quint16)nValue);                       break;
+                        case N_IMAGE_LOADCONFIG::EditList:                                  pe.setLoadConfig_EditList((quint64)nValue);                                 break;
+                        case N_IMAGE_LOADCONFIG::SecurityCookie:                            pe.setLoadConfig_SecurityCookie((quint64)nValue);                           break;
+                        case N_IMAGE_LOADCONFIG::SEHandlerTable:                            pe.setLoadConfig_SEHandlerTable((quint64)nValue);                           break;
+                        case N_IMAGE_LOADCONFIG::SEHandlerCount:                            pe.setLoadConfig_SEHandlerCount((quint64)nValue);                           break;
+                        case N_IMAGE_LOADCONFIG::GuardCFCheckFunctionPointer:               pe.setLoadConfig_GuardCFCheckFunctionPointer((quint64)nValue);              break;
+                        case N_IMAGE_LOADCONFIG::GuardCFDispatchFunctionPointer:            pe.setLoadConfig_GuardCFDispatchFunctionPointer((quint64)nValue);           break;
+                        case N_IMAGE_LOADCONFIG::GuardCFFunctionTable:                      pe.setLoadConfig_GuardCFFunctionTable((quint64)nValue);                     break;
+                        case N_IMAGE_LOADCONFIG::GuardCFFunctionCount:                      pe.setLoadConfig_GuardCFFunctionCount((quint64)nValue);                     break;
+                        case N_IMAGE_LOADCONFIG::GuardFlags:                                pe.setLoadConfig_GuardFlags((quint32)nValue);                               break;
+                        case N_IMAGE_LOADCONFIG::CodeIntegrity_Flags:                       pe.setLoadConfig_CodeIntegrity_Flags((quint16)nValue);                      break;
+                        case N_IMAGE_LOADCONFIG::CodeIntegrity_Catalog:                     pe.setLoadConfig_CodeIntegrity_Catalog((quint16)nValue);                    break;
+                        case N_IMAGE_LOADCONFIG::CodeIntegrity_CatalogOffset:               pe.setLoadConfig_CodeIntegrity_CatalogOffset((quint32)nValue);              break;
+                        case N_IMAGE_LOADCONFIG::CodeIntegrity_Reserved:                    pe.setLoadConfig_CodeIntegrity_Reserved((quint32)nValue);                   break;
+                        case N_IMAGE_LOADCONFIG::GuardAddressTakenIatEntryTable:            pe.setLoadConfig_GuardAddressTakenIatEntryTable((quint64)nValue);           break;
+                        case N_IMAGE_LOADCONFIG::GuardAddressTakenIatEntryCount:            pe.setLoadConfig_GuardAddressTakenIatEntryCount((quint64)nValue);           break;
+                        case N_IMAGE_LOADCONFIG::GuardLongJumpTargetTable:                  pe.setLoadConfig_GuardLongJumpTargetTable((quint64)nValue);                 break;
+                        case N_IMAGE_LOADCONFIG::GuardLongJumpTargetCount:                  pe.setLoadConfig_GuardLongJumpTargetCount((quint64)nValue);                 break;
+                        case N_IMAGE_LOADCONFIG::DynamicValueRelocTable:                    pe.setLoadConfig_DynamicValueRelocTable((quint64)nValue);                   break;
+                        case N_IMAGE_LOADCONFIG::CHPEMetadataPointer:                       pe.setLoadConfig_CHPEMetadataPointer((quint64)nValue);                      break;
+                        case N_IMAGE_LOADCONFIG::GuardRFFailureRoutine:                     pe.setLoadConfig_GuardRFFailureRoutine((quint64)nValue);                    break;
+                        case N_IMAGE_LOADCONFIG::GuardRFFailureRoutineFunctionPointer:      pe.setLoadConfig_GuardRFFailureRoutineFunctionPointer((quint64)nValue);     break;
+                        case N_IMAGE_LOADCONFIG::DynamicValueRelocTableOffset:              pe.setLoadConfig_DynamicValueRelocTableOffset((quint32)nValue);             break;
+                        case N_IMAGE_LOADCONFIG::DynamicValueRelocTableSection:             pe.setLoadConfig_DynamicValueRelocTableSection((quint16)nValue);            break;
+                        case N_IMAGE_LOADCONFIG::Reserved2:                                 pe.setLoadConfig_Reserved2((quint16)nValue);                                break;
+                        case N_IMAGE_LOADCONFIG::GuardRFVerifyStackPointerFunctionPointer:  pe.setLoadConfig_GuardRFVerifyStackPointerFunctionPointer((quint64)nValue); break;
+                        case N_IMAGE_LOADCONFIG::HotPatchTableOffset:                       pe.setLoadConfig_HotPatchTableOffset((quint32)nValue);                      break;
+                        case N_IMAGE_LOADCONFIG::Reserved3:                                 pe.setLoadConfig_Reserved3((quint32)nValue);                                break;
+                        case N_IMAGE_LOADCONFIG::EnclaveConfigurationPointer:               pe.setLoadConfig_EnclaveConfigurationPointer((quint64)nValue);              break;
+                        case N_IMAGE_LOADCONFIG::VolatileMetadataPointer:                   pe.setLoadConfig_VolatileMetadataPointer((quint64)nValue);                  break;
+                        case N_IMAGE_LOADCONFIG::GuardEHContinuationTable:                  pe.setLoadConfig_GuardEHContinuationTable((quint64)nValue);                 break;
+                        case N_IMAGE_LOADCONFIG::GuardEHContinuationCount:                  pe.setLoadConfig_GuardEHContinuationCount((quint64)nValue);                 break;
+                        case N_IMAGE_LOADCONFIG::GuardXFGCheckFunctionPointer:              pe.setLoadConfig_GuardXFGCheckFunctionPointer((quint64)nValue);             break;
+                        case N_IMAGE_LOADCONFIG::GuardXFGDispatchFunctionPointer:           pe.setLoadConfig_GuardXFGDispatchFunctionPointer((quint64)nValue);          break;
+                        case N_IMAGE_LOADCONFIG::GuardXFGTableDispatchFunctionPointer:      pe.setLoadConfig_GuardXFGTableDispatchFunctionPointer((quint64)nValue);     break;
+                        case N_IMAGE_LOADCONFIG::CastGuardOsDeterminedFailureMode:          pe.setLoadConfig_CastGuardOsDeterminedFailureMode((quint64)nValue);         break;
                     }
-
                     ui->widgetHex_LoadConfig->reload();
                     break;
             }
@@ -1451,7 +1481,20 @@ void PEWidget::reloadData()
         {
             if(!isInitPresent(sInit))
             {
-                createHeaderTable(SPE::TYPE_LOADCONFIG,ui->tableWidget_LoadConfig,pe.is64()?(N_IMAGE_LOADCONFIG::records64):(N_IMAGE_LOADCONFIG::records32),lineEdit_LoadConfig,N_IMAGE_LOADCONFIG::__data_size,0);
+                qint32 nHeaderSize=pe.getLoadConfig_Size();
+
+                qint32 nRecordSize=N_IMAGE_LOADCONFIG::__data_size;
+
+                if(pe.is64())
+                {
+                    if(nHeaderSize==0x94)
+                    {
+                        nRecordSize=N_IMAGE_LOADCONFIG::CodeIntegrity_Flags;
+                    }
+                }
+
+
+                createHeaderTable(SPE::TYPE_LOADCONFIG,ui->tableWidget_LoadConfig,pe.is64()?(N_IMAGE_LOADCONFIG::records64):(N_IMAGE_LOADCONFIG::records32),lineEdit_LoadConfig,nRecordSize,0);
                 invWidget[INV_IMAGE_LOADCONFIG_SecurityCookie]=createInvWidget(ui->tableWidget_LoadConfig,SPE::TYPE_LOADCONFIG,N_IMAGE_LOADCONFIG::SecurityCookie,InvWidget::TYPE_HEX);
                 invWidget[INV_IMAGE_LOADCONFIG_SEHandlerTable]=createInvWidget(ui->tableWidget_LoadConfig,SPE::TYPE_LOADCONFIG,N_IMAGE_LOADCONFIG::SEHandlerTable,InvWidget::TYPE_HEX);
 
@@ -1479,6 +1522,41 @@ void PEWidget::reloadData()
                     lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SecurityCookie]->setValue(lc64.SecurityCookie);
                     lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SEHandlerTable]->setValue(lc64.SEHandlerTable);
                     lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SEHandlerCount]->setValue(lc64.SEHandlerCount);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardCFCheckFunctionPointer]->setValue(lc64.GuardCFCheckFunctionPointer);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardCFDispatchFunctionPointer]->setValue(lc64.GuardCFDispatchFunctionPointer);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardCFFunctionTable]->setValue(lc64.GuardCFFunctionTable);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardCFFunctionCount]->setValue(lc64.GuardCFFunctionCount);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardFlags]->setValue(lc64.GuardFlags);
+
+                    if(nHeaderSize>0x94)
+                    {
+                        lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CodeIntegrity_Flags]->setValue(lc64.CodeIntegrity.Flags);
+                        lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CodeIntegrity_Catalog]->setValue(lc64.CodeIntegrity.Catalog);
+                        lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CodeIntegrity_CatalogOffset]->setValue(lc64.CodeIntegrity.CatalogOffset);
+                        lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CodeIntegrity_Reserved]->setValue(lc64.CodeIntegrity.Reserved);
+                        lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardAddressTakenIatEntryTable]->setValue(lc64.GuardAddressTakenIatEntryTable);
+                        lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardAddressTakenIatEntryCount]->setValue(lc64.GuardAddressTakenIatEntryCount);
+                        lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardLongJumpTargetTable]->setValue(lc64.GuardLongJumpTargetTable);
+                        lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardLongJumpTargetCount]->setValue(lc64.GuardLongJumpTargetCount);
+                        lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DynamicValueRelocTable]->setValue(lc64.DynamicValueRelocTable);
+                        lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CHPEMetadataPointer]->setValue(lc64.CHPEMetadataPointer);
+                        lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardRFFailureRoutine]->setValue(lc64.GuardRFFailureRoutine);
+                        lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardRFFailureRoutineFunctionPointer]->setValue(lc64.GuardRFFailureRoutineFunctionPointer);
+                        lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DynamicValueRelocTableOffset]->setValue(lc64.DynamicValueRelocTableOffset);
+                        lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DynamicValueRelocTableSection]->setValue(lc64.DynamicValueRelocTableSection);
+                        lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::Reserved2]->setValue(lc64.Reserved2);
+                        lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardRFVerifyStackPointerFunctionPointer]->setValue(lc64.GuardRFVerifyStackPointerFunctionPointer);
+                        lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::HotPatchTableOffset]->setValue(lc64.HotPatchTableOffset);
+                        lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::Reserved3]->setValue(lc64.Reserved3);
+                        lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::EnclaveConfigurationPointer]->setValue(lc64.EnclaveConfigurationPointer);
+                        lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::VolatileMetadataPointer]->setValue(lc64.VolatileMetadataPointer);
+                        lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardEHContinuationTable]->setValue(lc64.GuardEHContinuationTable);
+                        lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardEHContinuationCount]->setValue(lc64.GuardEHContinuationCount);
+                        lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardXFGCheckFunctionPointer]->setValue(lc64.GuardXFGCheckFunctionPointer);
+                        lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardXFGDispatchFunctionPointer]->setValue(lc64.GuardXFGDispatchFunctionPointer);
+                        lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardXFGTableDispatchFunctionPointer]->setValue(lc64.GuardXFGTableDispatchFunctionPointer);
+                        lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CastGuardOsDeterminedFailureMode]->setValue(lc64.CastGuardOsDeterminedFailureMode);
+                    }
 
                     invWidget[INV_IMAGE_LOADCONFIG_SecurityCookie]->setAddressAndSize(&pe,lc64.SecurityCookie,0);
                     invWidget[INV_IMAGE_LOADCONFIG_SEHandlerTable]->setAddressAndSize(&pe,lc64.SEHandlerTable,0);
@@ -1505,6 +1583,37 @@ void PEWidget::reloadData()
                     lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SecurityCookie]->setValue(lc32.SecurityCookie);
                     lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SEHandlerTable]->setValue(lc32.SEHandlerTable);
                     lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SEHandlerCount]->setValue(lc32.SEHandlerCount);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardCFCheckFunctionPointer]->setValue(lc32.GuardCFCheckFunctionPointer);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardCFDispatchFunctionPointer]->setValue(lc32.GuardCFDispatchFunctionPointer);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardCFFunctionTable]->setValue(lc32.GuardCFFunctionTable);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardCFFunctionCount]->setValue(lc32.GuardCFFunctionCount);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardFlags]->setValue(lc32.GuardFlags);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CodeIntegrity_Flags]->setValue(lc32.CodeIntegrity.Flags);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CodeIntegrity_Catalog]->setValue(lc32.CodeIntegrity.Catalog);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CodeIntegrity_CatalogOffset]->setValue(lc32.CodeIntegrity.CatalogOffset);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CodeIntegrity_Reserved]->setValue(lc32.CodeIntegrity.Reserved);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardAddressTakenIatEntryTable]->setValue(lc32.GuardAddressTakenIatEntryTable);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardAddressTakenIatEntryCount]->setValue(lc32.GuardAddressTakenIatEntryCount);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardLongJumpTargetTable]->setValue(lc32.GuardLongJumpTargetTable);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardLongJumpTargetCount]->setValue(lc32.GuardLongJumpTargetCount);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DynamicValueRelocTable]->setValue(lc32.DynamicValueRelocTable);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CHPEMetadataPointer]->setValue(lc32.CHPEMetadataPointer);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardRFFailureRoutine]->setValue(lc32.GuardRFFailureRoutine);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardRFFailureRoutineFunctionPointer]->setValue(lc32.GuardRFFailureRoutineFunctionPointer);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DynamicValueRelocTableOffset]->setValue(lc32.DynamicValueRelocTableOffset);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DynamicValueRelocTableSection]->setValue(lc32.DynamicValueRelocTableSection);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::Reserved2]->setValue(lc32.Reserved2);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardRFVerifyStackPointerFunctionPointer]->setValue(lc32.GuardRFVerifyStackPointerFunctionPointer);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::HotPatchTableOffset]->setValue(lc32.HotPatchTableOffset);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::Reserved3]->setValue(lc32.Reserved3);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::EnclaveConfigurationPointer]->setValue(lc32.EnclaveConfigurationPointer);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::VolatileMetadataPointer]->setValue(lc32.VolatileMetadataPointer);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardEHContinuationTable]->setValue(lc32.GuardEHContinuationTable);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardEHContinuationCount]->setValue(lc32.GuardEHContinuationCount);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardXFGCheckFunctionPointer]->setValue(lc32.GuardXFGCheckFunctionPointer);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardXFGDispatchFunctionPointer]->setValue(lc32.GuardXFGDispatchFunctionPointer);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardXFGTableDispatchFunctionPointer]->setValue(lc32.GuardXFGTableDispatchFunctionPointer);
+                    lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CastGuardOsDeterminedFailureMode]->setValue(lc32.CastGuardOsDeterminedFailureMode);
 
                     invWidget[INV_IMAGE_LOADCONFIG_SecurityCookie]->setAddressAndSize(&pe,lc32.SecurityCookie,0);
                     invWidget[INV_IMAGE_LOADCONFIG_SEHandlerTable]->setAddressAndSize(&pe,lc32.SEHandlerTable,0);
@@ -1789,7 +1898,7 @@ void PEWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
             break;
 
         case SPE::TYPE_IMAGE_OPTIONAL_HEADER:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGMID,mode));
             pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINTMODE,mode));
             pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGMID,mode));
             break;
@@ -1807,7 +1916,7 @@ void PEWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
             break;
 
         case SPE::TYPE_LOADCONFIG:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGMID,mode));
             pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINTMODE,mode));
             pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGMID,mode));
             break;
@@ -1819,7 +1928,7 @@ void PEWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
             break;
 
         case SPE::TYPE_RESOURCE_VERSION:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGMID,mode));
             pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINT32,mode));
             pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGMID,mode));
             break;
