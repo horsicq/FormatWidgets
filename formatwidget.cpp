@@ -481,7 +481,7 @@ void FormatWidget::setTreeItem(QTreeWidget *pTree, int nID)
 
 void FormatWidget::reset()
 {
-    g_stInit.clear();
+    g_mapInit.clear();
 }
 
 QString FormatWidget::getInitString(QTreeWidgetItem *pItem)
@@ -499,12 +499,12 @@ QString FormatWidget::getInitString(QTreeWidgetItem *pItem)
 
 void FormatWidget::addInit(QString sString)
 {
-    g_stInit.insert(sString);
+    g_mapInit.insert(sString.section("-",0,0),sString);
 }
 
 bool FormatWidget::isInitPresent(QString sString)
 {
-    return g_stInit.contains(sString);
+    return (g_mapInit.value(sString.section("-",0,0))==sString);
 }
 
 void FormatWidget::addPage(QTreeWidgetItem *pItem)

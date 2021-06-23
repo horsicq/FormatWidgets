@@ -236,7 +236,7 @@ private:
     QList<QTreeWidgetItem *> g_listPages;
     qint32 g_nPageIndex;
     bool g_bAddPageEnable;
-    QSet<QString> g_stInit;
+    QMap<QString,QString> g_mapInit;
 };
 
 #endif // FORMATWIDGET_H
