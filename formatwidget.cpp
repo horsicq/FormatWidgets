@@ -735,7 +735,9 @@ void FormatWidget::showInHexWindow(qint64 nOffset, qint64 nSize)
 
 void FormatWidget::showEntropy(qint64 nOffset, qint64 nSize)
 {
-    DialogEntropy dialogEntropy(this,g_pDevice,nOffset,nSize);
+    DialogEntropy dialogEntropy(this);
+
+    dialogEntropy.setData(g_pDevice,nOffset,nSize);
 
     dialogEntropy.exec();
 }

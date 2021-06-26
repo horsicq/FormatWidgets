@@ -21,7 +21,7 @@
 #include "dialogsearchstrings.h"
 #include "ui_dialogsearchstrings.h"
 
-DialogSearchStrings::DialogSearchStrings(QWidget *pParent, QIODevice *pDevice, SearchStringsWidget::OPTIONS options, bool bAuto) :
+DialogSearchStrings::DialogSearchStrings(QWidget *pParent) :
     XShortcutsDialog(pParent),
     ui(new Ui::DialogSearchStrings)
 {
@@ -29,14 +29,17 @@ DialogSearchStrings::DialogSearchStrings(QWidget *pParent, QIODevice *pDevice, S
 
     setWindowFlags(Qt::Window);
 
-    ui->widgetSearchStrings->setData(pDevice,options,bAuto);
-
     connect(ui->widgetSearchStrings,SIGNAL(showHex(qint64,qint64)),this,SIGNAL(showHex(qint64,qint64)));
 }
 
 DialogSearchStrings::~DialogSearchStrings()
 {
     delete ui;
+}
+
+void DialogSearchStrings::setData(QIODevice *pDevice, SearchStringsWidget::OPTIONS options, bool bAuto)
+{
+    ui->widgetSearchStrings->setData(pDevice,options,bAuto);
 }
 
 void DialogSearchStrings::setShortcuts(XShortcuts *pShortcuts)

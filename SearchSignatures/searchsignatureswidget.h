@@ -53,7 +53,7 @@ public:
 
     explicit SearchSignaturesWidget(QWidget *pParent=nullptr);
     ~SearchSignaturesWidget();
-    void setData(QIODevice *pDevice,XBinary::FT fileType,OPTIONS options,bool bAuto=false,QWidget *pParent=nullptr);
+    void setData(QIODevice *pDevice, XBinary::FT fileType, OPTIONS options, bool bAuto=false);
     void setOptions(OPTIONS options);
     OPTIONS getOptions();
     void setSignaturesPath(QString sPath);
@@ -84,7 +84,6 @@ signals:
 private:
     Ui::SearchSignaturesWidget *ui;
     QIODevice *g_pDevice;
-    QWidget *g_pParent;
     QSortFilterProxyModel *g_pFilter;
     XBinary::FT g_fileType;
     QStandardItemModel *g_pModel;

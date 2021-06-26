@@ -56,7 +56,7 @@ void ToolsWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS options)
     g_stringsOptions.bAnsi=true;
     g_stringsOptions.bUnicode=true;
 
-    ui->widgetStrings->setData(pDevice,g_stringsOptions,false,this);
+    ui->widgetStrings->setData(pDevice,g_stringsOptions,false);
 
     reload();
 }

@@ -1309,7 +1309,7 @@ void MACHWidget::reloadData()
         {
             if(!isInitPresent(sInit))
             {
-                ui->widgetHash->setData(getDevice(),mach.getFileType(),0,-1,true,this);
+                ui->widgetHash->setData(getDevice(),mach.getFileType(),0,-1,true);
             }
         }
         else if(nType==SMACH::TYPE_DISASM)
@@ -1334,7 +1334,7 @@ void MACHWidget::reloadData()
                 stringsOptions.bAnsi=true;
                 stringsOptions.bUnicode=true;
 
-                ui->widgetStrings->setData(getDevice(),stringsOptions,true,this);
+                ui->widgetStrings->setData(getDevice(),stringsOptions,true);
             }
         }
         else if(nType==SMACH::TYPE_SIGNATURES)
@@ -1345,7 +1345,7 @@ void MACHWidget::reloadData()
                 signaturesOptions.bMenu_Hex=true;
                 signaturesOptions.sSignaturesPath=getOptions().sSearchSignaturesPath;
 
-                ui->widgetSignatures->setData(getDevice(),mach.getFileType(),signaturesOptions,false,this);
+                ui->widgetSignatures->setData(getDevice(),mach.getFileType(),signaturesOptions,false);
             }
         }
         else if(nType==SMACH::TYPE_MEMORYMAP)
@@ -1359,14 +1359,14 @@ void MACHWidget::reloadData()
         {
             if(!isInitPresent(sInit))
             {
-                ui->widgetEntropy->setData(getDevice(),0,getDevice()->size(),mach.getFileType(),true,this);
+                ui->widgetEntropy->setData(getDevice(),0,getDevice()->size(),mach.getFileType(),true);
             }
         }
         else if(nType==SMACH::TYPE_HEURISTICSCAN)
         {
             if(!isInitPresent(sInit))
             {
-                ui->widgetHeuristicScan->setData(getDevice(),true,mach.getFileType(),this);
+                ui->widgetHeuristicScan->setData(getDevice(),true,mach.getFileType());
             }
         }
         else if(nType==SMACH::TYPE_mach_header)

@@ -57,7 +57,7 @@ public:
 
     explicit SearchStringsWidget(QWidget *pParent=nullptr);
     ~SearchStringsWidget();
-    void setData(QIODevice *pDevice,SearchStringsWidget::OPTIONS options,bool bAuto=false,QWidget *pParent=nullptr);
+    void setData(QIODevice *pDevice,SearchStringsWidget::OPTIONS options,bool bAuto=false);
 
     void reload();
     bool getInitStatus();
@@ -86,7 +86,6 @@ signals:
 private:
     Ui::SearchStringsWidget *ui;
     QIODevice *g_pDevice;
-    QWidget *g_pParent;
     QSortFilterProxyModel *g_pFilter;
     SearchStringsWidget::OPTIONS g_options;
     QStandardItemModel *g_pModel;

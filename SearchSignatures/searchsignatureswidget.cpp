@@ -27,7 +27,6 @@ SearchSignaturesWidget::SearchSignaturesWidget(QWidget *pParent) :
 {
     ui->setupUi(this);
     g_pDevice=nullptr;
-    this->g_pParent=pParent;
     g_pFilter=new QSortFilterProxyModel(this);
 
     g_pModel=nullptr;
@@ -49,10 +48,9 @@ SearchSignaturesWidget::~SearchSignaturesWidget()
     delete ui;
 }
 
-void SearchSignaturesWidget::setData(QIODevice *pDevice, XBinary::FT fileType,OPTIONS options, bool bAuto, QWidget *pParent)
+void SearchSignaturesWidget::setData(QIODevice *pDevice, XBinary::FT fileType,OPTIONS options, bool bAuto)
 {
     this->g_pDevice=pDevice;
-    this->g_pParent=pParent;
     g_bInit=false;
 
     QSet<XBinary::FT> stFileType=XBinary::getFileTypes(pDevice,true);
@@ -302,11 +300,11 @@ void SearchSignaturesWidget::search()
 
         QList<XBinary::MS_RECORD> listRecords;
 
-        DialogMultiSearchProcess dsp(g_pParent);
+        DialogMultiSearchProcess dsp(this);
         dsp.processSearch(g_pDevice,&listRecords,options,MultiSearch::TYPE_SIGNATURES);
         dsp.exec();
 
-        DialogMultiSearchProcess dmp(g_pParent);
+        DialogMultiSearchProcess dmp(this);
         dmp.processModel(&listRecords,&g_pModel,options,MultiSearch::TYPE_SIGNATURES);
         dmp.exec();
 

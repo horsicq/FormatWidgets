@@ -27,7 +27,6 @@ SearchStringsWidget::SearchStringsWidget(QWidget *pParent) :
 {
     ui->setupUi(this);
     g_pDevice=nullptr;
-    this->g_pParent=pParent;
     g_pFilter=new QSortFilterProxyModel(this);
 
     g_options.nBaseAddress=0;
@@ -59,10 +58,9 @@ SearchStringsWidget::~SearchStringsWidget()
     delete ui;
 }
 
-void SearchStringsWidget::setData(QIODevice *pDevice, OPTIONS options, bool bAuto, QWidget *pParent)
+void SearchStringsWidget::setData(QIODevice *pDevice, OPTIONS options, bool bAuto)
 {
     this->g_pDevice=pDevice;
-    this->g_pParent=pParent;
 
     ui->checkBoxAnsi->setChecked(options.bAnsi);
     ui->checkBoxUnicode->setChecked(options.bUnicode);
@@ -322,11 +320,11 @@ void SearchStringsWidget::search()
 
             QList<XBinary::MS_RECORD> listRecords;
 
-            DialogMultiSearchProcess dsp(g_pParent);
+            DialogMultiSearchProcess dsp(this);
             dsp.processSearch(g_pDevice,&listRecords,options,MultiSearch::TYPE_STRINGS);
             dsp.exec();
 
-            DialogMultiSearchProcess dmp(g_pParent);
+            DialogMultiSearchProcess dmp(this);
             dmp.processModel(&listRecords,&g_pModel,options,MultiSearch::TYPE_STRINGS);
             dmp.exec();
 

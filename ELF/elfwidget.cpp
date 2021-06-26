@@ -334,7 +334,7 @@ void ELFWidget::reloadData()
                 stringsOptions.bAnsi=true;
                 stringsOptions.bUnicode=true;
 
-                ui->widgetStrings->setData(getDevice(),stringsOptions,true,this);
+                ui->widgetStrings->setData(getDevice(),stringsOptions,true);
             }
         }
         else if(nType==SELF::TYPE_SIGNATURES)
@@ -345,7 +345,7 @@ void ELFWidget::reloadData()
                 signaturesOptions.bMenu_Hex=true;
                 signaturesOptions.sSignaturesPath=getOptions().sSearchSignaturesPath;
 
-                ui->widgetSignatures->setData(getDevice(),elf.getFileType(),signaturesOptions,false,this);
+                ui->widgetSignatures->setData(getDevice(),elf.getFileType(),signaturesOptions,false);
             }
         }
         else if(nType==SELF::TYPE_MEMORYMAP)
@@ -359,14 +359,14 @@ void ELFWidget::reloadData()
         {
             if(!isInitPresent(sInit))
             {
-                ui->widgetEntropy->setData(getDevice(),0,getDevice()->size(),elf.getFileType(),true,this);
+                ui->widgetEntropy->setData(getDevice(),0,getDevice()->size(),elf.getFileType(),true);
             }
         }
         else if(nType==SELF::TYPE_HEURISTICSCAN)
         {
             if(!isInitPresent(sInit))
             {
-                ui->widgetHeuristicScan->setData(getDevice(),true,elf.getFileType(),this);
+                ui->widgetHeuristicScan->setData(getDevice(),true,elf.getFileType());
             }
         }
         else if(nType==SELF::TYPE_Elf_Ehdr)

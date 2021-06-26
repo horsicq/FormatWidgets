@@ -34,8 +34,9 @@ class DialogSearchSignatures : public XShortcutsDialog
     Q_OBJECT
 
 public:
-    explicit DialogSearchSignatures(QWidget *pParent,QIODevice *pDevice,XBinary::FT fileType,SearchSignaturesWidget::OPTIONS options,bool bAuto=false);
+    explicit DialogSearchSignatures(QWidget *pParent);
     ~DialogSearchSignatures();
+    void setData(QIODevice *pDevice,XBinary::FT fileType,SearchSignaturesWidget::OPTIONS options,bool bAuto=false);
     void setShortcuts(XShortcuts *pShortcuts);
 
 signals:

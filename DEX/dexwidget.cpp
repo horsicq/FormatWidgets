@@ -315,7 +315,7 @@ void DEXWidget::reloadData()
                 stringsOptions.bAnsi=true;
                 stringsOptions.bUnicode=true;
 
-                ui->widgetStrings->setData(getDevice(),stringsOptions,true,this);
+                ui->widgetStrings->setData(getDevice(),stringsOptions,true);
             }
         }
         else if(nType==SDEX::TYPE_MEMORYMAP)
@@ -329,14 +329,14 @@ void DEXWidget::reloadData()
         {
             if(!isInitPresent(sInit))
             {
-                ui->widgetEntropy->setData(getDevice(),0,getDevice()->size(),dex.getFileType(),true,this);
+                ui->widgetEntropy->setData(getDevice(),0,getDevice()->size(),dex.getFileType(),true);
             }
         }
         else if(nType==SDEX::TYPE_HEURISTICSCAN)
         {
             if(!isInitPresent(sInit))
             {
-                ui->widgetHeuristicScan->setData(getDevice(),true,XBinary::FT_DEX,this);
+                ui->widgetHeuristicScan->setData(getDevice(),true,XBinary::FT_DEX);
             }
         }
         else if(nType==SDEX::TYPE_HEADER)

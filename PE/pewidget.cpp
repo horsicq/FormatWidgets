@@ -851,7 +851,7 @@ void PEWidget::reloadData()
                 stringsOptions.bAnsi=true;
                 stringsOptions.bUnicode=true;
 
-                ui->widgetStrings->setData(getDevice(),stringsOptions,true,this);
+                ui->widgetStrings->setData(getDevice(),stringsOptions,true);
             }
         }
         else if(nType==SPE::TYPE_SIGNATURES)
@@ -862,7 +862,7 @@ void PEWidget::reloadData()
                 signaturesOptions.bMenu_Hex=true;
                 signaturesOptions.sSignaturesPath=getOptions().sSearchSignaturesPath;
 
-                ui->widgetSignatures->setData(getDevice(),pe.getFileType(),signaturesOptions,false,this);
+                ui->widgetSignatures->setData(getDevice(),pe.getFileType(),signaturesOptions,false);
             }
         }
         else if(nType==SPE::TYPE_MEMORYMAP)
@@ -876,14 +876,14 @@ void PEWidget::reloadData()
         {
             if(!isInitPresent(sInit))
             {
-                ui->widgetEntropy->setData(getDevice(),0,getDevice()->size(),pe.getFileType(),true,this); // TODO save last directory
+                ui->widgetEntropy->setData(getDevice(),0,getDevice()->size(),pe.getFileType(),true); // TODO save last directory
             }
         }
         else if(nType==SPE::TYPE_HEURISTICSCAN)
         {
             if(!isInitPresent(sInit))
             {
-                ui->widgetHeuristicScan->setData(getDevice(),true,pe.getFileType(),this);
+                ui->widgetHeuristicScan->setData(getDevice(),true,pe.getFileType());
             }
         }
         else if(nType==SPE::TYPE_IMAGE_DOS_HEADER)
