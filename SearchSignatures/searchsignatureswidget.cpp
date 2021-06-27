@@ -300,11 +300,13 @@ void SearchSignaturesWidget::search()
 
         QList<XBinary::MS_RECORD> listRecords;
 
-        DialogMultiSearchProcess dsp(this);
+        QWidget *pParent=XShortcutsWidget::getMainWidget(this);
+
+        DialogMultiSearchProcess dsp(pParent);
         dsp.processSearch(g_pDevice,&listRecords,options,MultiSearch::TYPE_SIGNATURES);
         dsp.exec();
 
-        DialogMultiSearchProcess dmp(this);
+        DialogMultiSearchProcess dmp(pParent);
         dmp.processModel(&listRecords,&g_pModel,options,MultiSearch::TYPE_SIGNATURES);
         dmp.exec();
 
