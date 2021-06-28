@@ -135,32 +135,12 @@ void SearchSignaturesWidget::on_pushButtonSave_clicked()
 {
     if(g_pModel)
     {
-        QString sFileName=QFileDialog::getSaveFileName(this, tr("Save file"),QString("%1.txt").arg(tr("Signatures")), QString("%1 (*.txt);;%2 (*)").arg(tr("Text files")).arg(tr("All files")));
+        QString sFileName=XBinary::getResultFileName(g_pDevice,QString("%1.txt").arg("Signatures"));
+        sFileName=QFileDialog::getSaveFileName(this, tr("Save file"),sFileName, QString("%1 (*.txt);;%2 (*)").arg(tr("Text files")).arg(tr("All files")));
 
         if(!sFileName.isEmpty())
         {
-            QFile file;
-            file.setFileName(sFileName);
-
-            if(file.open(QIODevice::ReadWrite))
-            {
-                int nNumberOfRows=g_pModel->rowCount();
-
-                QString sResult;
-
-                for(int i=0; i<nNumberOfRows; i++)
-                {
-                    sResult+=QString("%1\t%2\t%3\r\n")
-                             .arg(g_pModel->item(i,0)->text())
-                             .arg(g_pModel->item(i,1)->text())
-                             .arg(g_pModel->item(i,2)->text());
-                }
-
-                file.resize(0);
-                file.write(sResult.toLatin1().data());
-
-                file.close();
-            }
+            XOptions::saveTable(g_pModel,sFileName);
         }
     }
 }
@@ -300,7 +280,7 @@ void SearchSignaturesWidget::search()
 
         QList<XBinary::MS_RECORD> listRecords;
 
-        QWidget *pParent=XShortcutsWidget::getMainWidget(this);
+        QWidget *pParent=XOptions::getMainWidget(this);
 
         DialogMultiSearchProcess dsp(pParent);
         dsp.processSearch(g_pDevice,&listRecords,options,MultiSearch::TYPE_SIGNATURES);
