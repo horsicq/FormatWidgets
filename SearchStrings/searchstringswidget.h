@@ -47,8 +47,9 @@ public:
     struct OPTIONS
     {
         qint64 nBaseAddress;
-        bool bAnsi; // TODO
-        bool bUnicode; // TODO
+        bool bAnsi;
+        bool bUTF8;
+        bool bUnicode;
         bool bCStrings;
         qint32 nMinLenght;
         bool bMenu_Hex;

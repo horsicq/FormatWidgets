@@ -154,7 +154,16 @@ void MultiSearch::processSearch()
         connect(&binary,SIGNAL(searchProgressValueChanged(qint32)),this,SIGNAL(progressValueChanged(qint32)));
         connect(this,SIGNAL(setSearchProcessEnable(bool)),&binary,SLOT(setSearchProcessEnable(bool)),Qt::DirectConnection);
 
-        *g_pListRecords=binary.multiSearch_allStrings(0,g_pDevice->size(),N_MAX,g_options.nMinLenght,128,g_options.bAnsi,g_options.bUnicode,g_options.bCStrings);
+        XBinary::STRINGSEARCH_OPTIONS ssOptions={};
+        ssOptions.nLimit=N_MAX;
+        ssOptions.nMinLenght=g_options.nMinLenght;
+        ssOptions.nMaxLenght=128;
+        ssOptions.bAnsi=g_options.bAnsi;
+        ssOptions.bUTF8=g_options.bUTF8;
+        ssOptions.bUnicode=g_options.bUnicode;
+        ssOptions.bCStrings=g_options.bCStrings;
+
+        *g_pListRecords=binary.multiSearch_allStrings(0,g_pDevice->size(),ssOptions);
     }
     else if(g_type==TYPE_SIGNATURES)
     {
@@ -273,7 +282,7 @@ void MultiSearch::processModel()
             (*g_ppModel)->setItem(i,0,pTypeAddress);
 
             QStandardItem *pTypeSize=new QStandardItem;
-            pTypeSize->setText(XBinary::valueToHex(XBinary::MODE_32,record.nSize));
+            pTypeSize->setText(XBinary::valueToHex(XBinary::MODE_32,record.sString.size()));
             pTypeSize->setTextAlignment(Qt::AlignRight|Qt::AlignVCenter);
             (*g_ppModel)->setItem(i,1,pTypeSize);
 

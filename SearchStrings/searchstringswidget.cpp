@@ -36,6 +36,7 @@ SearchStringsWidget::SearchStringsWidget(QWidget *pParent) :
     g_options={};
 
     ui->checkBoxAnsi->setChecked(true);
+    ui->checkBoxUTF8->setChecked(true);
     ui->checkBoxUnicode->setChecked(true);
     ui->checkBoxCStrings->setChecked(false);
 
@@ -63,6 +64,7 @@ void SearchStringsWidget::setData(QIODevice *pDevice, OPTIONS options, bool bAut
     this->g_pDevice=pDevice;
 
     ui->checkBoxAnsi->setChecked(options.bAnsi);
+    ui->checkBoxUTF8->setChecked(options.bUTF8);
     ui->checkBoxUnicode->setChecked(options.bUnicode);
     ui->checkBoxCStrings->setChecked(options.bCStrings);
 
@@ -245,13 +247,6 @@ void SearchStringsWidget::_hex()
         qint64 nOffset=ui->tableViewResult->model()->data(index,Qt::UserRole+MultiSearch::USERROLE_OFFSET).toLongLong();
         qint64 nSize=ui->tableViewResult->model()->data(index,Qt::UserRole+MultiSearch::USERROLE_SIZE).toLongLong();
 
-        XBinary::MS_RECORD_TYPE recordType=(XBinary::MS_RECORD_TYPE)(ui->tableViewResult->model()->data(index,Qt::UserRole+MultiSearch::USERROLE_TYPE).toLongLong());
-
-        if(recordType==XBinary::MS_RECORD_TYPE_UNICODE)
-        {
-            nSize*=2;
-        }
-
         emit showHex(nOffset,nSize);
     }
 }
@@ -277,6 +272,7 @@ void SearchStringsWidget::search()
         ui->lineEditFilter->clear();
 
         g_options.bAnsi=ui->checkBoxAnsi->isChecked();
+        g_options.bUTF8=ui->checkBoxUTF8->isChecked();
         g_options.bUnicode=ui->checkBoxUnicode->isChecked();
         g_options.bCStrings=ui->checkBoxCStrings->isChecked();
         g_options.nMinLenght=ui->spinBoxMinLength->value();
@@ -286,6 +282,7 @@ void SearchStringsWidget::search()
             MultiSearch::OPTIONS options={};
 
             options.bAnsi=g_options.bAnsi;
+            options.bUTF8=g_options.bUTF8;
             options.bUnicode=g_options.bUnicode;
             options.bCStrings=g_options.bCStrings;
             options.bMenu_Hex=g_options.bMenu_Hex;

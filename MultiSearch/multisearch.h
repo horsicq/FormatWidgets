@@ -64,6 +64,7 @@ public:
     {
         XBinary::_MEMORY_MAP memoryMap;
         bool bAnsi; // TODO
+        bool bUTF8; // TODO
         bool bUnicode; // TODO
         bool bCStrings;
         bool bSignature;

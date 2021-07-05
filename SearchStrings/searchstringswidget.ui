@@ -49,6 +49,13 @@
       </widget>
      </item>
      <item>
+      <widget class="QCheckBox" name="checkBoxUTF8">
+       <property name="text">
+        <string notr="true">UTF8</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QCheckBox" name="checkBoxUnicode">
        <property name="text">
         <string notr="true">Unicode</string>
