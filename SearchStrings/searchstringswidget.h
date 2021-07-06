@@ -51,6 +51,7 @@ public:
         bool bUTF8;
         bool bUnicode;
         bool bCStrings;
+        QString sANSICodec;
         qint32 nMinLenght;
         bool bMenu_Hex;
         bool bMenu_Demangle;

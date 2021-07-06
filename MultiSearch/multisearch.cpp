@@ -157,11 +157,12 @@ void MultiSearch::processSearch()
         XBinary::STRINGSEARCH_OPTIONS ssOptions={};
         ssOptions.nLimit=N_MAX;
         ssOptions.nMinLenght=g_options.nMinLenght;
-        ssOptions.nMaxLenght=128;
+        ssOptions.nMaxLenght=256;
         ssOptions.bAnsi=g_options.bAnsi;
         ssOptions.bUTF8=g_options.bUTF8;
         ssOptions.bUnicode=g_options.bUnicode;
         ssOptions.bCStrings=g_options.bCStrings;
+        ssOptions.sANSICodec=g_options.sANSICodec;
 
         *g_pListRecords=binary.multiSearch_allStrings(0,g_pDevice->size(),ssOptions);
     }

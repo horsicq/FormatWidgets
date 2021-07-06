@@ -49,6 +49,45 @@ SearchStringsWidget::SearchStringsWidget(QWidget *pParent) :
     g_scHex=nullptr;
     g_scDemangle=nullptr;
 
+    ui->comboBoxANSICodec->addItem("");
+    ui->comboBoxANSICodec->addItem("IBM866");
+    ui->comboBoxANSICodec->addItem("ISO-8859-1");
+    ui->comboBoxANSICodec->addItem("ISO-8859-10");
+    ui->comboBoxANSICodec->addItem("ISO-8859-13");
+    ui->comboBoxANSICodec->addItem("ISO-8859-14");
+    ui->comboBoxANSICodec->addItem("ISO-8859-15");
+    ui->comboBoxANSICodec->addItem("ISO-8859-16");
+    ui->comboBoxANSICodec->addItem("ISO-8859-2");
+    ui->comboBoxANSICodec->addItem("ISO-8859-3");
+    ui->comboBoxANSICodec->addItem("ISO-8859-4");
+    ui->comboBoxANSICodec->addItem("ISO-8859-5");
+    ui->comboBoxANSICodec->addItem("ISO-8859-6");
+    ui->comboBoxANSICodec->addItem("ISO-8859-7");
+    ui->comboBoxANSICodec->addItem("ISO-8859-8");
+    ui->comboBoxANSICodec->addItem("ISO-8859-9");
+    ui->comboBoxANSICodec->addItem("KOI8-R");
+    ui->comboBoxANSICodec->addItem("KOI8-U");
+    ui->comboBoxANSICodec->addItem("windows-1250");
+    ui->comboBoxANSICodec->addItem("windows-1251");
+    ui->comboBoxANSICodec->addItem("windows-1252");
+    ui->comboBoxANSICodec->addItem("windows-1253");
+    ui->comboBoxANSICodec->addItem("windows-1254");
+    ui->comboBoxANSICodec->addItem("windows-1255");
+    ui->comboBoxANSICodec->addItem("windows-1256");
+    ui->comboBoxANSICodec->addItem("windows-1257");
+    ui->comboBoxANSICodec->addItem("windows-1258");
+
+//    QList<QByteArray> listCodecs=QTextCodec::availableCodecs();
+
+//    int nNumberOfCodecs=listCodecs.count();
+
+//    for(int i=0;i<nNumberOfCodecs;i++)
+//    {
+//        QString sRecord=listCodecs.at(i).data();
+
+//        qDebug(sRecord.toLatin1().data());
+//    }
+
     ui->tableViewResult->installEventFilter(this);
 }
 
@@ -275,6 +314,7 @@ void SearchStringsWidget::search()
         g_options.bUTF8=ui->checkBoxUTF8->isChecked();
         g_options.bUnicode=ui->checkBoxUnicode->isChecked();
         g_options.bCStrings=ui->checkBoxCStrings->isChecked();
+        g_options.sANSICodec=ui->comboBoxANSICodec->currentText();
         g_options.nMinLenght=ui->spinBoxMinLength->value();
 
         if(g_options.bAnsi||g_options.bUnicode)
@@ -285,6 +325,7 @@ void SearchStringsWidget::search()
             options.bUTF8=g_options.bUTF8;
             options.bUnicode=g_options.bUnicode;
             options.bCStrings=g_options.bCStrings;
+            options.sANSICodec=g_options.sANSICodec;
             options.bMenu_Hex=g_options.bMenu_Hex;
             options.nMinLenght=g_options.nMinLenght;
             options.memoryMap=XBinary(g_pDevice,true,g_options.nBaseAddress).getMemoryMap();

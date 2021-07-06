@@ -49,6 +49,16 @@
       </widget>
      </item>
      <item>
+      <widget class="QComboBox" name="comboBoxANSICodec">
+       <property name="minimumSize">
+        <size>
+         <width>120</width>
+         <height>0</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QCheckBox" name="checkBoxUTF8">
        <property name="text">
         <string notr="true">UTF8</string>

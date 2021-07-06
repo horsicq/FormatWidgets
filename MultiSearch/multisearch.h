@@ -67,6 +67,7 @@ public:
         bool bUTF8; // TODO
         bool bUnicode; // TODO
         bool bCStrings;
+        QString sANSICodec;
         bool bSignature;
         bool bIsBigEndian;
         qint32 nMinLenght;
