@@ -293,6 +293,10 @@ void MultiSearch::processModel()
             {
                 pTypeItem->setText("A");
             }
+            else if(record.recordType==XBinary::MS_RECORD_TYPE_UTF8)
+            {
+                pTypeItem->setText("UTF8");
+            }
             else if(record.recordType==XBinary::MS_RECORD_TYPE_UNICODE)
             {
                 pTypeItem->setText("U");
