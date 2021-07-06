@@ -77,6 +77,7 @@ private slots:
     void _demangle();
     void search();
     void deleteOldModel();
+    void on_checkBoxAnsi_stateChanged(int nArg);
 
 protected:
     virtual void registerShortcuts(bool bState);

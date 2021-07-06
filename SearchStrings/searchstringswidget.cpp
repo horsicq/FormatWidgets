@@ -389,3 +389,10 @@ void SearchStringsWidget::registerShortcuts(bool bState)
         if(g_scDemangle)            {delete g_scDemangle;       g_scDemangle=nullptr;}
     }
 }
+
+void SearchStringsWidget::on_checkBoxAnsi_stateChanged(int nArg)
+{
+    Q_UNUSED(nArg)
+
+    ui->comboBoxANSICodec->setEnabled(ui->checkBoxAnsi->isChecked());
+}
