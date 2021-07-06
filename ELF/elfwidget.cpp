@@ -332,7 +332,7 @@ void ELFWidget::reloadData()
                 stringsOptions.bMenu_Hex=true;
                 stringsOptions.bMenu_Demangle=true;
                 stringsOptions.bAnsi=true;
-                stringsOptions.bUTF8=true;
+                stringsOptions.bUTF8=false;
                 stringsOptions.bUnicode=true;
 
                 ui->widgetStrings->setData(getDevice(),stringsOptions,true);

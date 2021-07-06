@@ -36,7 +36,7 @@ SearchStringsWidget::SearchStringsWidget(QWidget *pParent) :
     g_options={};
 
     ui->checkBoxAnsi->setChecked(true);
-    ui->checkBoxUTF8->setChecked(true);
+    ui->checkBoxUTF8->setChecked(false);
     ui->checkBoxUnicode->setChecked(true);
     ui->checkBoxCStrings->setChecked(false);
 
