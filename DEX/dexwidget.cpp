@@ -253,17 +253,19 @@ void DEXWidget::blockSignals(bool bState)
 }
 
 void DEXWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
-{
-    // TODO like Mach
-//    int nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
+{   
+    XBinary::MODE mode=XDEX::getMode(getDevice());
 
-    pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_NAME,QHeaderView::ResizeToContents);
-    pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_OFFSET,QHeaderView::ResizeToContents);
-    pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_TYPE,QHeaderView::ResizeToContents);
+    pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,getColumnWidth(this,CW_UINT16,mode));
+    pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,getColumnWidth(this,CW_TYPE,mode));
 
     switch(nType)
     {
-        // TODO
+        case SDEX::TYPE_HEADER:
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINT32,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGMID,mode));
+            break;
     }
 }
 
