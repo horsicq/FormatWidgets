@@ -959,7 +959,7 @@ void ELFWidget::on_tableView_Elf_Shdr_customContextMenuRequested(const QPoint &p
         contextMenu.addAction(&actionHex);
 
         QAction actionEntropy(tr("Entropy"),this);
-        connect(&actionEntropy, SIGNAL(triggered()), this, SLOT(programEntropy()));
+        connect(&actionEntropy, SIGNAL(triggered()), this, SLOT(sectionEntropy()));
         actionHex.setEnabled(bIsEnable);
         contextMenu.addAction(&actionEntropy);
 
