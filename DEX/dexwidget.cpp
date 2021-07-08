@@ -264,7 +264,7 @@ void DEXWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
         case SDEX::TYPE_HEADER:
             pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
             pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINT32,mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGMID,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGSHORT2,mode));
             break;
     }
 }

@@ -173,6 +173,7 @@ public:
         CW_UINTMODE,
         CW_TYPE,
         CW_STRINGSHORT,
+        CW_STRINGSHORT2,
         CW_STRINGMID,
         CW_STRINGLONG
     };

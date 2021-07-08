@@ -616,6 +616,7 @@ qint32 FormatWidget::getColumnWidth(QWidget *pParent, FormatWidget::CW cw, XBina
         case CW_UINT64:         nResult=14*nSymbolWidth;        break;
         case CW_TYPE:           nResult=8*nSymbolWidth;         break;
         case CW_STRINGSHORT:    nResult=10*nSymbolWidth;        break;
+        case CW_STRINGSHORT2:   nResult=15*nSymbolWidth;        break;
         case CW_STRINGMID:      nResult=25*nSymbolWidth;        break;
         case CW_STRINGLONG:     nResult=50*nSymbolWidth;        break;
         default:                nResult=8*nSymbolWidth;         break;
