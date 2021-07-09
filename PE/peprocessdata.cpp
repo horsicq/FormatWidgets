@@ -49,7 +49,7 @@ void PEProcessData::_process()
 
         setHeader(*g_ppModel,&listLabels);
 
-        for(int i=0; i<nNumberOfSections; i++)
+        for(int i=0; (i<nNumberOfSections)&&(isRun()); i++)
         {
             QStandardItem *pItemNumber=new QStandardItem;
             pItemNumber->setData(i,Qt::DisplayRole);
@@ -106,7 +106,7 @@ void PEProcessData::_process()
 
         setHeader(*g_ppModel,&listLabels);
 
-        for(int i=0; i<nNumberOfRecords; i++)
+        for(int i=0; (i<nNumberOfRecords)&&(isRun()); i++)
         {
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
@@ -141,7 +141,7 @@ void PEProcessData::_process()
 
         QMap<quint64,QString> mapTypes=g_pPE->getImageRelBasedS();
 
-        for(int i=0; i<nNumberOfRelocs; i++)
+        for(int i=0; (i<nNumberOfRelocs)&&(isRun()); i++)
         {
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
@@ -177,7 +177,7 @@ void PEProcessData::_process()
 
         setHeader(*g_ppModel,&listLabels);
 
-        for(int i=0; i<nNumberOfIDs; i++)
+        for(int i=0; (i<nNumberOfIDs)&&(isRun()); i++)
         {
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
@@ -211,7 +211,7 @@ void PEProcessData::_process()
 
         setHeader(*g_ppModel,&listLabels);
 
-        for(int i=0; i<nNumberOfIPs; i++)
+        for(int i=0; (i<nNumberOfIPs)&&(isRun()); i++)
         {
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
@@ -273,7 +273,7 @@ void PEProcessData::_process()
 
         XBinary::_MEMORY_MAP memoryMap=g_pPE->getMemoryMap();
 
-        for(int i=0; i<nNumberOfRFEs; i++)
+        for(int i=0; (i<nNumberOfRFEs)&&(isRun()); i++)
         {
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
@@ -310,7 +310,7 @@ void PEProcessData::_process()
 
         XBinary::_MEMORY_MAP memoryMap=g_pPE->getMemoryMap();
 
-        for(int i=0; i<nNumberOfDelayImports; i++)
+        for(int i=0; (i<nNumberOfDelayImports)&&(isRun()); i++)
         {
             QString sLibraryName=g_pPE->read_ansiString(g_pPE->relAddressToOffset(&memoryMap,listDelayImport.at(i).DllNameRVA));
 
@@ -352,7 +352,7 @@ void PEProcessData::_process()
 
         XBinary::_MEMORY_MAP memoryMap=g_pPE->getMemoryMap();
 
-        for(int i=0; i<nNumberOfPositions; i++)
+        for(int i=0; (i<nNumberOfPositions)&&(isRun()); i++)
         {
             QStandardItem *pItem=new QStandardItem;
             pItem->setText(XBinary::valueToHex(eh.listPositions.at(i).nOrdinal));
@@ -387,7 +387,7 @@ void PEProcessData::_process()
 
         setHeader(*g_ppModel,&listLabels);
 
-        for(int i=0; i<nNumberOfPositions; i++)
+        for(int i=0; (i<nNumberOfPositions)&&(isRun()); i++)
         {
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
@@ -418,7 +418,7 @@ void PEProcessData::_process()
 
         setHeader(*g_ppModel,&listLabels);
 
-        for(int i=0; i<nNumberOfDebugs; i++)
+        for(int i=0; (i<nNumberOfDebugs)&&(isRun()); i++)
         {
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
@@ -456,7 +456,7 @@ void PEProcessData::_process()
 
         setHeader(*g_ppModel,&listLabels);
 
-        for(int i=0; i<nNumberOfDIPs; i++)
+        for(int i=0; (i<nNumberOfDIPs)&&(isRun()); i++)
         {
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
@@ -556,7 +556,7 @@ void PEProcessData::_process()
 
                 int nNumberOfPositions=pos.listPositions.count();
 
-                for(int j=0; j<nNumberOfPositions; j++)
+                for(int j=0; (j<nNumberOfPositions)&&(isRun()); j++)
                 {
                     XPE::RESOURCE_POSITION subpos=rh.listPositions.at(i).listPositions.at(j);
                     QStandardItem *pSubPos=new QStandardItem;

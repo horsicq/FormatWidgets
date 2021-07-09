@@ -52,7 +52,7 @@ void MACHProcessData::_process()
 
         setHeader(*g_ppModel,&listLabels);
 
-        for(int i=0; i<nNumberOfRecords; i++)
+        for(int i=0; (i<nNumberOfRecords)&&(isRun()); i++)
         {
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
@@ -97,7 +97,7 @@ void MACHProcessData::_process()
 
         setHeader(*g_ppModel,&listLabels);
 
-        for(int i=0; i<nNumberOfRecords; i++)
+        for(int i=0; (i<nNumberOfRecords)&&(isRun()); i++)
         {
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
@@ -139,7 +139,7 @@ void MACHProcessData::_process()
 
         setHeader(*g_ppModel,&listLabels);
 
-        for(int i=0; i<nNumberOfRecords; i++)
+        for(int i=0; (i<nNumberOfRecords)&&(isRun()); i++)
         {
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
@@ -181,7 +181,7 @@ void MACHProcessData::_process()
 
         setHeader(*g_ppModel,&listLabels);
 
-        for(int i=0; i<nNumberOfRecords; i++)
+        for(int i=0; (i<nNumberOfRecords)&&(isRun()); i++)
         {
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
@@ -269,7 +269,7 @@ void MACHProcessData::_process()
 
         setHeader(*g_ppModel,&listLabels);
 
-        for(int i=0; i<nNumberOfRecords; i++)
+        for(int i=0; (i<nNumberOfRecords)&&(isRun()); i++)
         {
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
@@ -364,7 +364,7 @@ void MACHProcessData::_process()
 
         setHeader(*g_ppModel,&listLabels);
 
-        for(int i=0; i<nNumberOfRecords; i++)
+        for(int i=0; (i<nNumberOfRecords)&&(isRun()); i++)
         {
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
@@ -420,7 +420,7 @@ void MACHProcessData::_process()
 
         setHeader(*g_ppModel,&listLabels);
 
-        for(int i=0; i<nNumberOfRecords; i++)
+        for(int i=0; (i<nNumberOfRecords)&&(isRun()); i++)
         {
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
@@ -470,7 +470,7 @@ void MACHProcessData::_process()
 
         setHeader(*g_ppModel,&listLabels);
 
-        for(int i=0; i<nNumberOfRecords; i++)
+        for(int i=0; (i<nNumberOfRecords)&&(isRun()); i++)
         {
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
@@ -514,7 +514,7 @@ void MACHProcessData::_process()
 
         setHeader(*g_ppModel,&listLabels);
 
-        for(int i=0; i<nNumberOfRecords; i++)
+        for(int i=0; (i<nNumberOfRecords)&&(isRun()); i++)
         {
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
@@ -547,7 +547,7 @@ void MACHProcessData::_process()
 
         setHeader(*g_ppModel,&listLabels);
 
-        for(int i=0; i<nNumberOfRecords; i++)
+        for(int i=0; (i<nNumberOfRecords)&&(isRun()); i++)
         {
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
@@ -584,7 +584,7 @@ void MACHProcessData::_process()
 
         setHeader(*g_ppModel,&listLabels);
 
-        for(int i=0; i<nNumberOfRecords; i++)
+        for(int i=0; (i<nNumberOfRecords)&&(isRun()); i++)
         {
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
@@ -646,7 +646,7 @@ void MACHProcessData::_process()
 
         setHeader(*g_ppModel,&listLabels);
 
-        for(int i=0; i<nNumberOfRecords; i++)
+        for(int i=0; (i<nNumberOfRecords)&&(isRun()); i++)
         {
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
@@ -681,7 +681,7 @@ void MACHProcessData::_process()
 
         setHeader(*g_ppModel,&listLabels);
 
-        for(int i=0; i<nNumberOfRecords; i++)
+        for(int i=0; (i<nNumberOfRecords)&&(isRun()); i++)
         {
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
@@ -721,7 +721,7 @@ void MACHProcessData::_process()
 
         setHeader(*g_ppModel,&listLabels);
 
-        for(int i=0; i<nNumberOfRecords; i++)
+        for(int i=0; (i<nNumberOfRecords)&&(isRun()); i++)
         {
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
