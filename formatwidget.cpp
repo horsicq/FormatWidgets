@@ -697,7 +697,6 @@ void FormatWidget::setEdited(bool bState)
 
 void FormatWidget::showHex(qint64 nOffset, qint64 nSize)
 {
-    // mb TODO StartAddress
     XHexView::OPTIONS hexOptions={};
 
     hexOptions.nStartAddress=0;
