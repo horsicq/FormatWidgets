@@ -131,6 +131,7 @@ void PEWidget::reload()
 
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_HEX,tr("Hex")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_DISASM,tr("Disasm")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_HASH,tr("Hash")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_STRINGS,tr("Strings")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_SIGNATURES,tr("Signatures")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_MEMORYMAP,tr("Memory map")));
@@ -839,6 +840,13 @@ void PEWidget::reloadData()
                 options.sSignaturesPath=getOptions().sSearchSignaturesPath;
 
                 ui->widgetDisasm->setData(getDevice(),options);
+            }
+        }
+        else if(nType==SPE::TYPE_HASH)
+        {
+            if(!isInitPresent(sInit))
+            {
+                ui->widgetHash->setData(getDevice(),pe.getFileType(),0,-1,true);
             }
         }
         else if(nType==SPE::TYPE_STRINGS)

@@ -148,7 +148,7 @@
      </widget>
      <widget class="QStackedWidget" name="stackedWidgetInfo">
       <property name="currentIndex">
-       <number>3</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="page_HEX">
        <layout class="QVBoxLayout" name="verticalLayout_13">
@@ -188,6 +188,25 @@
         </property>
         <item>
          <widget class="XMultiDisasmWidget" name="widgetDisasm" native="true"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="page_Hash">
+       <layout class="QVBoxLayout" name="verticalLayout_33">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="XHashWidget" name="widgetHash" native="true"/>
         </item>
        </layout>
       </widget>
@@ -1555,11 +1574,6 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>XLineEditHEX</class>
-   <extends>QLineEdit</extends>
-   <header>xlineedithex.h</header>
-  </customwidget>
-  <customwidget>
    <class>ToolsWidget</class>
    <extends>QWidget</extends>
    <header>toolswidget.h</header>
@@ -1606,6 +1620,17 @@
    <extends>QWidget</extends>
    <header>searchsignatureswidget.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>XHashWidget</class>
+   <extends>QWidget</extends>
+   <header>xhashwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>XLineEditHEX</class>
+   <extends>QLineEdit</extends>
+   <header>xlineedithex.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

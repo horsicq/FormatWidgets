@@ -174,8 +174,8 @@ void MACHWidget::reload()
         setFileType(mach.getFileType());
 
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_HEX,tr("Hex")));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_HASH,tr("Hash")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_DISASM,tr("Disasm")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_HASH,tr("Hash")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_STRINGS,tr("Strings")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_SIGNATURES,tr("Signatures")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_MEMORYMAP,tr("Memory map")));
@@ -1305,13 +1305,6 @@ void MACHWidget::reloadData()
                 ui->widgetHex->enableReadOnly(false);
             }
         }
-        else if(nType==SMACH::TYPE_HASH)
-        {
-            if(!isInitPresent(sInit))
-            {
-                ui->widgetHash->setData(getDevice(),mach.getFileType(),0,-1,true);
-            }
-        }
         else if(nType==SMACH::TYPE_DISASM)
         {
             if(!isInitPresent(sInit))
@@ -1322,6 +1315,13 @@ void MACHWidget::reloadData()
                 options.sSignaturesPath=getOptions().sSearchSignaturesPath;
 
                 ui->widgetDisasm->setData(getDevice(),options);
+            }
+        }
+        else if(nType==SMACH::TYPE_HASH)
+        {
+            if(!isInitPresent(sInit))
+            {
+                ui->widgetHash->setData(getDevice(),mach.getFileType(),0,-1,true);
             }
         }
         else if(nType==SMACH::TYPE_STRINGS)

@@ -103,6 +103,7 @@ void ELFWidget::reload()
 
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_HEX,tr("Hex")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_DISASM,tr("Disasm")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_HASH,tr("Hash")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_STRINGS,tr("Strings")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_SIGNATURES,tr("Signatures")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_MEMORYMAP,tr("Memory map")));
@@ -323,6 +324,13 @@ void ELFWidget::reloadData()
             }
 
 //            pDisasmWidget->setBackupFileName(getOptions().sBackupFileName);
+        }
+        else if(nType==SELF::TYPE_HASH)
+        {
+            if(!isInitPresent(sInit))
+            {
+                ui->widgetHash->setData(getDevice(),elf.getFileType(),0,-1,true);
+            }
         }
         else if(nType==SELF::TYPE_STRINGS)
         {

@@ -94,6 +94,7 @@ void DEXWidget::reload()
         setFileType(dex.getFileType());
 
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_HEX,tr("Hex")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_HASH,tr("Hash")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_STRINGS,tr("Strings")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_MEMORYMAP,tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_ENTROPY,tr("Entropy")));
@@ -305,6 +306,13 @@ void DEXWidget::reloadData()
                 ui->widgetHex->enableReadOnly(false);
 
                 ui->widgetHex->reload();
+            }
+        }
+        else if(nType==SDEX::TYPE_HASH)
+        {
+            if(!isInitPresent(sInit))
+            {
+                ui->widgetHash->setData(getDevice(),dex.getFileType(),0,-1,true);
             }
         }
         else if(nType==SDEX::TYPE_STRINGS)

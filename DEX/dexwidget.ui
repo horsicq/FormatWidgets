@@ -121,6 +121,25 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="page_Hash">
+       <layout class="QVBoxLayout" name="verticalLayout_15">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="XHashWidget" name="widgetHash" native="true"/>
+        </item>
+       </layout>
+      </widget>
       <widget class="QWidget" name="page_Strings">
        <layout class="QVBoxLayout" name="verticalLayout_8">
         <property name="leftMargin">
@@ -662,6 +681,12 @@
    <class>XHexViewWidget</class>
    <extends>QWidget</extends>
    <header>xhexviewwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>XHashWidget</class>
+   <extends>QWidget</extends>
+   <header>xhashwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
