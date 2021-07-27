@@ -589,6 +589,8 @@ void FormatWidget::initToolsWidget(ToolsWidget *pWidget)
     connect(pWidget,SIGNAL(showOffsetDisasm(qint64)),this,SLOT(showInDisasmWindowOffset(qint64)));
     connect(pWidget,SIGNAL(showOffsetMemoryMap(qint64)),this,SLOT(showInMemoryMapWindowOffset(qint64)));
     connect(pWidget,SIGNAL(showDemangle(QString)),this,SLOT(showDemangle(QString)));
+
+    pWidget->resize(pWidget->width(),150); // TODO Check
 }
 
 qint32 FormatWidget::getColumnWidth(QWidget *pParent, FormatWidget::CW cw, XBinary::MODE mode)

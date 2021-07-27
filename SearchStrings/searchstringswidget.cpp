@@ -131,10 +131,10 @@ void SearchStringsWidget::setData(QIODevice *pDevice, OPTIONS options, bool bAut
         nAddressWidth=8;
     }
 
-    QString sInfo=QString("0x%1 - 0x%2 ( 0x%3 )").arg(g_options.nBaseAddress,nAddressWidth,16,QChar('0'))
-                  .arg(g_options.nBaseAddress+nSize-1,nAddressWidth,16,QChar('0'))
-                  .arg(nSize,8,16,QChar('0'));
-    ui->labelInfo->setText(sInfo);
+//    QString sInfo=QString("0x%1 - 0x%2 ( 0x%3 )").arg(g_options.nBaseAddress,nAddressWidth,16,QChar('0'))
+//                  .arg(g_options.nBaseAddress+nSize-1,nAddressWidth,16,QChar('0'))
+//                  .arg(nSize,8,16,QChar('0'));
+//    ui->labelInfo->setText(sInfo);
 
     if(bAuto)
     {
