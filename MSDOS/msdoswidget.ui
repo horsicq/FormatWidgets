@@ -234,35 +234,31 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QTableWidget" name="tableWidget_DOS_HEADER">
-          <property name="editTriggers">
-           <set>QAbstractItemView::NoEditTriggers</set>
+         <widget class="QSplitter" name="splitter_2">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
           </property>
-          <property name="selectionMode">
-           <enum>QAbstractItemView::SingleSelection</enum>
-          </property>
-          <property name="selectionBehavior">
-           <enum>QAbstractItemView::SelectRows</enum>
-          </property>
-          <attribute name="horizontalHeaderVisible">
-           <bool>false</bool>
-          </attribute>
-          <attribute name="verticalHeaderVisible">
-           <bool>false</bool>
-          </attribute>
-          <attribute name="verticalHeaderDefaultSectionSize">
-           <number>21</number>
-          </attribute>
-         </widget>
-        </item>
-        <item>
-         <widget class="ToolsWidget" name="widgetHex_DOS_HEADER" native="true">
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>200</height>
-           </size>
-          </property>
+          <widget class="QTableWidget" name="tableWidget_DOS_HEADER">
+           <property name="editTriggers">
+            <set>QAbstractItemView::NoEditTriggers</set>
+           </property>
+           <property name="selectionMode">
+            <enum>QAbstractItemView::SingleSelection</enum>
+           </property>
+           <property name="selectionBehavior">
+            <enum>QAbstractItemView::SelectRows</enum>
+           </property>
+           <attribute name="horizontalHeaderVisible">
+            <bool>false</bool>
+           </attribute>
+           <attribute name="verticalHeaderVisible">
+            <bool>false</bool>
+           </attribute>
+           <attribute name="verticalHeaderDefaultSectionSize">
+            <number>21</number>
+           </attribute>
+          </widget>
+          <widget class="ToolsWidget" name="widgetHex_DOS_HEADER" native="true"/>
          </widget>
         </item>
        </layout>
