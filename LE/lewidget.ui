@@ -221,60 +221,38 @@
       </widget>
       <widget class="QWidget" name="page_DOS_HEADER">
        <layout class="QVBoxLayout" name="verticalLayout_3">
-        <property name="spacing">
-         <number>0</number>
-        </property>
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <property name="topMargin">
-         <number>0</number>
-        </property>
-        <property name="rightMargin">
-         <number>0</number>
-        </property>
-        <property name="bottomMargin">
-         <number>0</number>
-        </property>
         <item>
-         <widget class="QTableWidget" name="tableWidget_DOS_HEADER">
-          <property name="editTriggers">
-           <set>QAbstractItemView::NoEditTriggers</set>
+         <widget class="QSplitter" name="splitter_2">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
           </property>
-          <property name="selectionMode">
-           <enum>QAbstractItemView::SingleSelection</enum>
-          </property>
-          <property name="selectionBehavior">
-           <enum>QAbstractItemView::SelectRows</enum>
-          </property>
-          <attribute name="horizontalHeaderVisible">
-           <bool>false</bool>
-          </attribute>
-          <attribute name="verticalHeaderVisible">
-           <bool>false</bool>
-          </attribute>
-          <attribute name="verticalHeaderDefaultSectionSize">
-           <number>21</number>
-          </attribute>
-         </widget>
-        </item>
-        <item>
-         <widget class="ToolsWidget" name="widgetHex_DOS_HEADER" native="true">
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>200</height>
-           </size>
-          </property>
+          <widget class="QTableWidget" name="tableWidget_DOS_HEADER">
+           <property name="editTriggers">
+            <set>QAbstractItemView::NoEditTriggers</set>
+           </property>
+           <property name="selectionMode">
+            <enum>QAbstractItemView::SingleSelection</enum>
+           </property>
+           <property name="selectionBehavior">
+            <enum>QAbstractItemView::SelectRows</enum>
+           </property>
+           <attribute name="horizontalHeaderVisible">
+            <bool>false</bool>
+           </attribute>
+           <attribute name="verticalHeaderVisible">
+            <bool>false</bool>
+           </attribute>
+           <attribute name="verticalHeaderDefaultSectionSize">
+            <number>21</number>
+           </attribute>
+          </widget>
+          <widget class="ToolsWidget" name="widgetHex_DOS_HEADER" native="true"/>
          </widget>
         </item>
        </layout>
       </widget>
       <widget class="QWidget" name="page_VXD_HEADER">
        <layout class="QVBoxLayout" name="verticalLayout_5">
-        <property name="spacing">
-         <number>0</number>
-        </property>
         <property name="leftMargin">
          <number>0</number>
         </property>
@@ -288,41 +266,38 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QTableWidget" name="tableWidget_VXD_HEADER">
-          <property name="editTriggers">
-           <set>QAbstractItemView::NoEditTriggers</set>
+         <widget class="QSplitter" name="splitter_3">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
           </property>
-          <property name="selectionMode">
-           <enum>QAbstractItemView::SingleSelection</enum>
-          </property>
-          <property name="selectionBehavior">
-           <enum>QAbstractItemView::SelectRows</enum>
-          </property>
-          <attribute name="horizontalHeaderVisible">
-           <bool>false</bool>
-          </attribute>
-          <attribute name="verticalHeaderVisible">
-           <bool>false</bool>
-          </attribute>
-          <attribute name="verticalHeaderDefaultSectionSize">
-           <number>21</number>
-          </attribute>
-         </widget>
-        </item>
-        <item>
-         <widget class="ToolsWidget" name="widgetHex_VXD_HEADER" native="true">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>200</height>
-           </size>
-          </property>
+          <widget class="QTableWidget" name="tableWidget_VXD_HEADER">
+           <property name="editTriggers">
+            <set>QAbstractItemView::NoEditTriggers</set>
+           </property>
+           <property name="selectionMode">
+            <enum>QAbstractItemView::SingleSelection</enum>
+           </property>
+           <property name="selectionBehavior">
+            <enum>QAbstractItemView::SelectRows</enum>
+           </property>
+           <attribute name="horizontalHeaderVisible">
+            <bool>false</bool>
+           </attribute>
+           <attribute name="verticalHeaderVisible">
+            <bool>false</bool>
+           </attribute>
+           <attribute name="verticalHeaderDefaultSectionSize">
+            <number>21</number>
+           </attribute>
+          </widget>
+          <widget class="ToolsWidget" name="widgetHex_VXD_HEADER" native="true">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+          </widget>
          </widget>
         </item>
        </layout>
@@ -342,44 +317,47 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QTableView" name="tableView_Objects">
-          <property name="contextMenuPolicy">
-           <enum>Qt::CustomContextMenu</enum>
+         <widget class="QSplitter" name="splitter_4">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
           </property>
-          <property name="editTriggers">
-           <set>QAbstractItemView::NoEditTriggers</set>
-          </property>
-          <property name="selectionMode">
-           <enum>QAbstractItemView::SingleSelection</enum>
-          </property>
-          <property name="selectionBehavior">
-           <enum>QAbstractItemView::SelectRows</enum>
-          </property>
-          <property name="sortingEnabled">
-           <bool>false</bool>
-          </property>
-          <attribute name="horizontalHeaderDefaultSectionSize">
-           <number>35</number>
-          </attribute>
-          <attribute name="verticalHeaderVisible">
-           <bool>false</bool>
-          </attribute>
-          <attribute name="verticalHeaderMinimumSectionSize">
-           <number>20</number>
-          </attribute>
-          <attribute name="verticalHeaderDefaultSectionSize">
-           <number>20</number>
-          </attribute>
-         </widget>
-        </item>
-        <item>
-         <widget class="ToolsWidget" name="widgetHex_Object" native="true">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
+          <widget class="QTableView" name="tableView_Objects">
+           <property name="contextMenuPolicy">
+            <enum>Qt::CustomContextMenu</enum>
+           </property>
+           <property name="editTriggers">
+            <set>QAbstractItemView::NoEditTriggers</set>
+           </property>
+           <property name="selectionMode">
+            <enum>QAbstractItemView::SingleSelection</enum>
+           </property>
+           <property name="selectionBehavior">
+            <enum>QAbstractItemView::SelectRows</enum>
+           </property>
+           <property name="sortingEnabled">
+            <bool>false</bool>
+           </property>
+           <attribute name="horizontalHeaderDefaultSectionSize">
+            <number>35</number>
+           </attribute>
+           <attribute name="verticalHeaderVisible">
+            <bool>false</bool>
+           </attribute>
+           <attribute name="verticalHeaderMinimumSectionSize">
+            <number>20</number>
+           </attribute>
+           <attribute name="verticalHeaderDefaultSectionSize">
+            <number>20</number>
+           </attribute>
+          </widget>
+          <widget class="ToolsWidget" name="widgetHex_Object" native="true">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+          </widget>
          </widget>
         </item>
        </layout>
