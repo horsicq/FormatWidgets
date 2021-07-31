@@ -81,14 +81,7 @@
        <number>24</number>
       </attribute>
      </widget>
-     <widget class="ToolsWidget" name="widgetHex" native="true">
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>200</height>
-       </size>
-      </property>
-     </widget>
+     <widget class="ToolsWidget" name="widgetHex" native="true"/>
     </widget>
    </item>
   </layout>
