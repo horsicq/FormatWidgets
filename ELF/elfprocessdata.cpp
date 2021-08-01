@@ -522,7 +522,7 @@ void ELFProcessData::_process()
         QString sArch=g_pELF->getArch();
 
         // TODO More
-        if((sArch=="SPARC")||(sArch=="SPARC32PLUS")||(sArch=="SPARCV9"))
+        if((sArch=="SPARC")||(sArch=="SPARC32PLUS")||(sArch=="SPARCV9")) // TODO Check!
         {
             mapTypes=g_pELF->getRelTypesS_SPARC();
         }
