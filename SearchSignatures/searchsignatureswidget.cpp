@@ -330,7 +330,7 @@ void SearchSignaturesWidget::loadSignatures(QString sFileName)
         nNumberOfSignatures=1;
     }
 
-    ui->labelInfo->setText(QString("%1: %2").arg(tr("Signatures")).arg(nNumberOfSignatures));
+    ui->labelInfo->setText(QString("%1: %2").arg(tr("Signatures"),QString::number(nNumberOfSignatures)));
 }
 
 void SearchSignaturesWidget::on_comboBoxFile_currentIndexChanged(int index)
