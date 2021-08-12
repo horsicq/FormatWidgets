@@ -542,7 +542,7 @@ void PEProcessData::_process()
 
                     if(sType!="")
                     {
-                        sPosText=QString("%1(%2)").arg(sType).arg(pos.rin.nID);
+                        sPosText=QString("%1(%2)").arg(sType,QString::number(pos.rin.nID));
                     }
                     else
                     {

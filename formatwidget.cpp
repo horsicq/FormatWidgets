@@ -492,7 +492,7 @@ QString FormatWidget::getInitString(QTreeWidgetItem *pItem)
     qint64 nDataOffset=pItem->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
     qint64 nDataSize=pItem->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
 
-    sResult=QString("%1-%2-%3").arg(nType).arg(nDataOffset).arg(nDataSize);
+    sResult=QString("%1-%2-%3").arg(QString::number(nType),QString::number(nDataOffset),QString::number(nDataSize));
 
     return sResult;
 }
