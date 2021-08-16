@@ -78,6 +78,9 @@ private slots:
     void search();
     void deleteOldModel();
     void on_checkBoxAnsi_stateChanged(int nArg);
+    void on_checkBoxUTF8_stateChanged(int nArg);
+    void on_checkBoxUnicode_stateChanged(int nArg);
+    void adjust();
 
 protected:
     virtual void registerShortcuts(bool bState);

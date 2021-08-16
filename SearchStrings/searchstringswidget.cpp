@@ -35,6 +35,8 @@ SearchStringsWidget::SearchStringsWidget(QWidget *pParent) :
 
     g_options={};
 
+    ui->checkBoxCStrings->setEnabled(false);
+
     ui->checkBoxAnsi->setChecked(true);
     ui->checkBoxUTF8->setChecked(false);
     ui->checkBoxUnicode->setChecked(true);
@@ -178,7 +180,7 @@ void SearchStringsWidget::on_lineEditFilter_textChanged(const QString &sText)
 
 void SearchStringsWidget::filter(QString sString)
 {
-    g_pFilter->setFilterRegExp(sString);
+    g_pFilter->setFilterFixedString(sString);
     g_pFilter->setFilterCaseSensitivity(Qt::CaseInsensitive);
     g_pFilter->setFilterKeyColumn(3);
 }
@@ -394,5 +396,30 @@ void SearchStringsWidget::on_checkBoxAnsi_stateChanged(int nArg)
 {
     Q_UNUSED(nArg)
 
-    ui->comboBoxANSICodec->setEnabled(ui->checkBoxAnsi->isChecked());
+    adjust();
+}
+
+void SearchStringsWidget::on_checkBoxUTF8_stateChanged(int nArg)
+{
+    Q_UNUSED(nArg)
+
+    adjust();
+}
+
+void SearchStringsWidget::on_checkBoxUnicode_stateChanged(int nArg)
+{
+    Q_UNUSED(nArg)
+
+    adjust();
+}
+
+void SearchStringsWidget::adjust()
+{
+    bool bIsANSI=ui->checkBoxAnsi->isChecked();
+    bool bIsUTF8=ui->checkBoxUTF8->isChecked();
+    bool bIsUnicode=ui->checkBoxUnicode->isChecked();
+
+    ui->comboBoxANSICodec->setEnabled(bIsANSI);
+
+    ui->checkBoxCStrings->setEnabled(bIsANSI|bIsUTF8|bIsUnicode);
 }
