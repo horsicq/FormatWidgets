@@ -640,6 +640,39 @@ void PEProcessData::_process()
             }
         }
     }
+    else if(g_nType==SPE::TYPE_CERTIFICATE)
+    {
+        *g_ppModel=new QStandardItemModel;
+
+        XPE_DEF::IMAGE_DATA_DIRECTORY ddSecurity=g_pPE->getOptionalHeader_DataDirectory(XPE_DEF::S_IMAGE_DIRECTORY_ENTRY_SECURITY);
+
+        QList<XPE::CERT> listCert=g_pPE->getCertList(ddSecurity.VirtualAddress,ddSecurity.Size);
+
+        if(listCert.count())
+        {
+            int nNumberOfCerts=listCert.count();
+
+            for(int i=0;i<nNumberOfCerts;i++)
+            {
+                QStandardItem *pRoot=new QStandardItem;
+
+                pRoot->setText(tr("Certificate"));
+
+                pRoot->setData(listCert.at(i).record.dwLength,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
+                pRoot->setData(listCert.at(i).nOffset,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+
+                int nNumberOfRecords=listCert.at(i).certRecord.listRecords.count();
+
+                for(int j=0;j<nNumberOfRecords;j++)
+                {
+                    // TODO
+//                    sResult+=certRecordToString(pCertList->at(i).certRecord.listRecords.at(j),0);
+                }
+
+                (*g_ppModel)->appendRow(pRoot);
+            }
+        }
+    }
 }
 
 void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)

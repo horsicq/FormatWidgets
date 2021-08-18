@@ -34,6 +34,7 @@ namespace FW_DEF
         qint64 nImageBase; // TODO default_const
         // TODO Last directory
         int nStartType;
+        bool bOffset; // Show Offset title no Address
         QString sTitle; // For dialogs
         bool bFilter; // For Archive_widget
         bool bNoWindowOpen; // For Archive_widget

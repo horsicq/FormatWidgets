@@ -235,6 +235,11 @@ void PEWidget::reload()
         }
         // TODO NET Resources
 
+        if(pe.isSignPresent())
+        {
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_CERTIFICATE,tr("Certificate")));
+        }
+
         if(pe.isOverlayPresent())
         {
             ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_OVERLAY,tr("Overlay")));
@@ -1789,6 +1794,19 @@ void PEWidget::reloadData()
                 loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_NET_METADATA_STREAM],ui->widgetHex_Net_Metadata_Stream);
             }
         }
+        else if(nType==SPE::TYPE_CERTIFICATE)
+        {
+            if(!isInitPresent(sInit))
+            {
+                // TODO
+
+                PEProcessData peProcessData(SPE::TYPE_CERTIFICATE,&tvModel[SPE::TYPE_CERTIFICATE],&pe,0,0,0);
+
+                ajustTreeView(&peProcessData,&tvModel[SPE::TYPE_CERTIFICATE],ui->treeView_Certificate);
+
+                connect(ui->treeView_Certificate->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTreeView_Certificate_currentRowChanged(QModelIndex,QModelIndex)));
+            }
+        }
         else if(nType==SPE::TYPE_OVERLAY)
         {
             if(!isInitPresent(sInit))
@@ -1796,7 +1814,7 @@ void PEWidget::reloadData()
                 qint64 nOverLayOffset=pe.getOverlayOffset();
                 qint64 nOverlaySize=pe.getOverlaySize();
 
-                loadHexSubdevice(nOverLayOffset,nOverlaySize,nOverLayOffset,&subDevice[SPE::TYPE_OVERLAY],ui->widgetHex_Overlay);
+                loadHexSubdevice(nOverLayOffset,nOverlaySize,nOverLayOffset,&subDevice[SPE::TYPE_OVERLAY],ui->widgetHex_Overlay,true);
             }
         }
 
@@ -2468,6 +2486,19 @@ void PEWidget::onTreeView_Resources_currentRowChanged(const QModelIndex &current
         lineEdit_Resources[N_IMAGE_RESOURCES::SIZE]->setValue((quint32)nSize);
 
         loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_RESOURCES],ui->widgetHex_Resources);
+    }
+}
+
+void PEWidget::onTreeView_Certificate_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
+    Q_UNUSED(previous)
+
+    if(current.row()!=-1)
+    {
+        qint64 nOffset=ui->treeView_Certificate->model()->data(current,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
+        qint64 nSize=ui->treeView_Certificate->model()->data(current,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
+
+        loadHexSubdevice(nOffset,nSize,nOffset,&subDevice[SPE::TYPE_CERTIFICATE],ui->widgetHex_Certificate,true);
     }
 }
 

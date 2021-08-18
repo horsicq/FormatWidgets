@@ -187,7 +187,7 @@ bool FormatWidget::isEdited()
     return bResult;
 }
 
-bool FormatWidget::loadHexSubdevice(qint64 nOffset, qint64 nSize, qint64 nAddress,SubDevice **ppSubDevice,ToolsWidget *pToolsWidget)
+bool FormatWidget::loadHexSubdevice(qint64 nOffset, qint64 nSize, qint64 nAddress,SubDevice **ppSubDevice,ToolsWidget *pToolsWidget,bool bOffset)
 {
     if(*ppSubDevice)
     {
@@ -210,6 +210,7 @@ bool FormatWidget::loadHexSubdevice(qint64 nOffset, qint64 nSize, qint64 nAddres
 
     FW_DEF::OPTIONS hexOptions=getOptions();
     hexOptions.nImageBase=nAddress;
+    hexOptions.bOffset=bOffset;
 
     pToolsWidget->setData((*ppSubDevice),hexOptions);
     pToolsWidget->setEdited(isEdited());

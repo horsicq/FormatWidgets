@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>741</width>
-    <height>349</height>
+    <width>835</width>
+    <height>427</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -148,7 +148,7 @@
      </widget>
      <widget class="QStackedWidget" name="stackedWidgetInfo">
       <property name="currentIndex">
-       <number>25</number>
+       <number>29</number>
       </property>
       <widget class="QWidget" name="page_HEX">
        <layout class="QVBoxLayout" name="verticalLayout_13">
@@ -637,7 +637,7 @@
             <number>21</number>
            </attribute>
           </widget>
-          <widget class="QWidget" name="">
+          <widget class="QWidget" name="layoutWidget">
            <layout class="QVBoxLayout" name="verticalLayout_8">
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -725,7 +725,7 @@
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <widget class="QWidget" name="">
+          <widget class="QWidget" name="layoutWidget">
            <layout class="QVBoxLayout" name="verticalLayout_30">
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -1546,6 +1546,45 @@
         </property>
         <item>
          <widget class="ToolsWidget" name="widgetHex_Net_Metadata_Stream" native="true"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="page_Certificate">
+       <layout class="QVBoxLayout" name="verticalLayout_36">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QTreeView" name="treeView_Certificate">
+          <property name="editTriggers">
+           <set>QAbstractItemView::NoEditTriggers</set>
+          </property>
+          <attribute name="headerVisible">
+           <bool>false</bool>
+          </attribute>
+          <attribute name="headerDefaultSectionSize">
+           <number>57</number>
+          </attribute>
+         </widget>
+        </item>
+        <item>
+         <widget class="ToolsWidget" name="widgetHex_Certificate" native="true">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>

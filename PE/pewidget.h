@@ -115,6 +115,7 @@ private slots:
     void on_tableView_BoundImport_customContextMenuRequested(const QPoint &pos);
     void on_tableView_BoundImport_doubleClicked(const QModelIndex &index);
     void onTreeView_Resources_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
+    void onTreeView_Certificate_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
     void on_tableView_ExportFunctions_customContextMenuRequested(const QPoint &pos);
     void on_pushButtonHex_clicked();
     void on_pushButtonStrings_clicked();

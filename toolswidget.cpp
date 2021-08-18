@@ -44,6 +44,7 @@ void ToolsWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS options)
     hexOptions.nStartAddress=options.nImageBase;
     hexOptions.bMenu_MemoryMap=true;
     hexOptions.bMenu_Disasm=true;
+    hexOptions.bOffset=options.bOffset;
 
     ui->widgetHex->enableReadOnly(false);
 
