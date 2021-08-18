@@ -665,8 +665,11 @@ void PEProcessData::_process()
 
                 for(int j=0;j<nNumberOfRecords;j++)
                 {
-                    // TODO
-//                    sResult+=certRecordToString(pCertList->at(i).certRecord.listRecords.at(j),0);
+                    QStandardItem *pRecord=new QStandardItem;
+
+                    handleCertRecord(pRecord,listCert.at(i).certRecord.listRecords.at(j));
+
+                    pRoot->appendRow(pRecord);
                 }
 
                 (*g_ppModel)->appendRow(pRoot);
@@ -785,5 +788,24 @@ void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
         pTableView->setColumnWidth(4,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
         pTableView->setColumnWidth(5,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT16,mode));
         pTableView->setColumnWidth(6,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_STRINGMID,mode));
+    }
+}
+
+void PEProcessData::handleCertRecord(QStandardItem *pParent, XPE::CERT_RECORD certRecord)
+{
+    pParent->setText(XBinary::valueToHex(XBinary::MODE_UNKNOWN,certRecord.certTag.nTag));
+
+    pParent->setData(certRecord.certTag.nHeaderSize+certRecord.certTag.nSize,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
+    pParent->setData(certRecord.certTag.nOffset,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+
+    int nNumberOfRecords=certRecord.listRecords.count();
+
+    for(int i=0;i<nNumberOfRecords;i++)
+    {
+        QStandardItem *pRecord=new QStandardItem;
+
+        handleCertRecord(pRecord,certRecord.listRecords.at(i));
+
+        pParent->appendRow(pRecord);
     }
 }
