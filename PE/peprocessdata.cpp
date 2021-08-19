@@ -793,7 +793,14 @@ void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
 
 void PEProcessData::handleCertRecord(QStandardItem *pParent, XPE::CERT_RECORD certRecord)
 {
-    pParent->setText(XBinary::valueToHex(XBinary::MODE_UNKNOWN,certRecord.certTag.nTag));
+    QString sText=QString("%1 (%2)").arg(XBinary::valueToHex(XBinary::MODE_UNKNOWN,certRecord.certTag.nTag),XPE::certTagToString(certRecord.certTag.nTag));
+
+    if(certRecord.varValue.toString().size())
+    {
+        sText+=QString(": %1").arg(certRecord.varValue.toString());
+    }
+
+    pParent->setText(sText);
 
     pParent->setData(certRecord.certTag.nHeaderSize+certRecord.certTag.nSize,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
     pParent->setData(certRecord.certTag.nOffset,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
