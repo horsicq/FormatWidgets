@@ -43,7 +43,6 @@ class SearchStringsWidget : public XShortcutsWidget
     Q_OBJECT
 
 public:
-
     struct OPTIONS
     {
         qint64 nBaseAddress;
