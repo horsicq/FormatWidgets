@@ -56,7 +56,6 @@ private slots:
     void on_tableWidget_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
 
 private:
-
     Ui::PESectionHeaderWidget *ui;
     XLineEditHEX **g_ppLinedEdit;
     int g_nLineEditSize;
