@@ -795,9 +795,21 @@ void PEProcessData::handleCertRecord(QStandardItem *pParent, XPE::CERT_RECORD ce
 {
     QString sText=QString("%1 (%2)").arg(XBinary::valueToHex(XBinary::MODE_UNKNOWN,certRecord.certTag.nTag),XPE::certTagToString(certRecord.certTag.nTag));
 
-    if(certRecord.varValue.toString().size())
+    QString sValue=certRecord.varValue.toString();
+
+    if(sValue.size())
     {
-        sText+=QString(": %1").arg(certRecord.varValue.toString());
+        sText+=QString(": %1").arg(sValue);
+
+        if(certRecord.certTag.nTag==XPE_DEF::S_ASN1_OBJECT_ID)
+        {
+            QString sObject=XPE::objectIdToString(sValue);
+
+            if(sObject!="")
+            {
+                sText+=QString(": %1").arg(sObject);
+            }
+        }
     }
 
     pParent->setText(sText);
