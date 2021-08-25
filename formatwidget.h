@@ -229,10 +229,8 @@ private:
     qint64 g_nOffset;
     quint32 g_nType;
     bool g_bIsReadonly;
-
     QColor g_colEnabled;
     QColor g_colDisabled;
-
     XBinary::FT g_fileType;
     QList<QTreeWidgetItem *> g_listPages;
     qint32 g_nPageIndex;
