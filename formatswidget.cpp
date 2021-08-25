@@ -55,8 +55,8 @@ FormatsWidget::FormatsWidget(QWidget *pParent) :
 
 void FormatsWidget::setFileName(QString sFileName, bool bScan)
 {
-    this->sFileName=sFileName;
-    this->bScan=bScan;
+    this->g_sFileName=sFileName;
+    this->g_bScan=bScan;
 
     QSet<XBinary::FT> stFileTypes=XBinary::getFileTypes(sFileName,true);
 
@@ -117,7 +117,7 @@ void FormatsWidget::reload()
     XBinary::FT fileType=getCurrentFileType();
 
     QFile file;
-    file.setFileName(sFileName);
+    file.setFileName(g_sFileName);
 
     if(file.open(QIODevice::ReadOnly))
     {
@@ -342,15 +342,15 @@ void FormatsWidget::scan()
 
     adjustScanTab((SE)nIndex);
 
-    if(sFileName!="")
+    if(g_sFileName!="")
     {
         if(nIndex==SE_DIE)
         {
-            ui->pageScanDIE->setData(sFileName,bScan,getCurrentFileType());
+            ui->pageScanDIE->setData(g_sFileName,g_bScan,getCurrentFileType());
         }
         else if(nIndex==SE_NFD)
         {
-            ui->pageScanNFD->setData(sFileName,bScan,getCurrentFileType());
+            ui->pageScanNFD->setData(g_sFileName,g_bScan,getCurrentFileType());
         }
     }
 
@@ -359,10 +359,10 @@ void FormatsWidget::scan()
 
 void FormatsWidget::on_pushButtonDisasm_clicked()
 {
-    if(sFileName!="")
+    if(g_sFileName!="")
     {
         QFile file;
-        file.setFileName(sFileName);
+        file.setFileName(g_sFileName);
 
         if(file.open(QIODevice::ReadOnly))
         {
@@ -385,10 +385,10 @@ void FormatsWidget::on_pushButtonDisasm_clicked()
 
 void FormatsWidget::on_pushButtonHexEntryPoint_clicked()
 {
-    if(sFileName!="")
+    if(g_sFileName!="")
     {
         QFile file;
-        file.setFileName(sFileName);
+        file.setFileName(g_sFileName);
 
         if(XBinary::tryToOpen(&file))
         {
@@ -409,10 +409,10 @@ void FormatsWidget::on_pushButtonHexEntryPoint_clicked()
 
 void FormatsWidget::on_pushButtonMemoryMap_clicked()
 {
-    if(sFileName!="")
+    if(g_sFileName!="")
     {
         QFile file;
-        file.setFileName(sFileName);
+        file.setFileName(g_sFileName);
 
         if(file.open(QIODevice::ReadOnly))
         {
@@ -499,7 +499,7 @@ void FormatsWidget::on_pushButtonMACHLibraries_clicked()
 void FormatsWidget::showMSDOS(SMSDOS::TYPE type)
 {
     QFile file;
-    file.setFileName(sFileName);
+    file.setFileName(g_sFileName);
 
     if(XBinary::tryToOpen(&file))
     {
@@ -523,7 +523,7 @@ void FormatsWidget::showMSDOS(SMSDOS::TYPE type)
 void FormatsWidget::showLE(SLE::TYPE type)
 {
     QFile file;
-    file.setFileName(sFileName);
+    file.setFileName(g_sFileName);
 
     if(XBinary::tryToOpen(&file))
     {
@@ -547,7 +547,7 @@ void FormatsWidget::showLE(SLE::TYPE type)
 void FormatsWidget::showNE(SNE::TYPE type)
 {
     QFile file;
-    file.setFileName(sFileName);
+    file.setFileName(g_sFileName);
 
     if(XBinary::tryToOpen(&file))
     {
@@ -571,7 +571,7 @@ void FormatsWidget::showNE(SNE::TYPE type)
 void FormatsWidget::showPE(SPE::TYPE type)
 {
     QFile file;
-    file.setFileName(sFileName);
+    file.setFileName(g_sFileName);
 
     if(XBinary::tryToOpen(&file))
     {
@@ -595,7 +595,7 @@ void FormatsWidget::showPE(SPE::TYPE type)
 void FormatsWidget::showELF(SELF::TYPE type)
 {
     QFile file;
-    file.setFileName(sFileName);
+    file.setFileName(g_sFileName);
 
     if(XBinary::tryToOpen(&file))
     {
@@ -619,7 +619,7 @@ void FormatsWidget::showELF(SELF::TYPE type)
 void FormatsWidget::showMACH(SMACH::TYPE type)
 {
     QFile file;
-    file.setFileName(sFileName);
+    file.setFileName(g_sFileName);
 
     if(XBinary::tryToOpen(&file))
     {
@@ -643,7 +643,7 @@ void FormatsWidget::showMACH(SMACH::TYPE type)
 void FormatsWidget::showDEX(SDEX::TYPE type)
 {
     QFile file;
-    file.setFileName(sFileName);
+    file.setFileName(g_sFileName);
 
     if(XBinary::tryToOpen(&file))
     {
@@ -731,7 +731,7 @@ void FormatsWidget::on_pushButtonZIP_clicked()
 
     options.bSaveBackup=options.bSaveBackup;;
 
-    dialogArchive.setFileName(sFileName,options,QSet<XBinary::FT>());
+    dialogArchive.setFileName(g_sFileName,options,QSet<XBinary::FT>());
     dialogArchive.setShortcuts(getShortcuts());
 
     dialogArchive.exec();

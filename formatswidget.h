@@ -136,8 +136,8 @@ protected:
 
 private:
     Ui::FormatsWidget *ui;
-    QString sFileName;
-    bool bScan;
+    QString g_sFileName;
+    bool g_bScan;
     OPTIONS g_options;
 };
 
