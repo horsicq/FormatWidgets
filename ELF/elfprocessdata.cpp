@@ -49,8 +49,8 @@ void ELFProcessData::_process()
             listLabels.append(getStructList(N_Elf_Shdr::records32,N_Elf_Shdr::__data_size));
         }
 
-        listLabels.append("Name");
-        listLabels.append("Type");
+        listLabels.append(tr("Name"));
+        listLabels.append(tr("Type"));
 
         QMap<quint64,QString> mapTypes=XELF::getSectionTypesS();
 

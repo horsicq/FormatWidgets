@@ -286,7 +286,7 @@ namespace N_IMAGE_DIRECORIES
 {
 const FW_DEF::HEADER_RECORD records[]=
 {
-    {Name,                  "Name",                     0,  0,      "",             FW_DEF::VAL_TYPE_LABEL},
+    {Name,                  QObject::tr("Name"),        0,  0,      "",             FW_DEF::VAL_TYPE_LABEL},
     {Address,               "Address",                  4,  4,      "DWORD",        FW_DEF::VAL_TYPE_RELADDRESS},
     {Size,                  "Size",                     8,  4,      "DWORD",        FW_DEF::VAL_TYPE_SIZE},
 };
@@ -296,7 +296,7 @@ namespace N_IMAGE_SECTION_HEADER
 {
 const FW_DEF::HEADER_RECORD records[]=
 {
-    {Name,                  "Name",                     offsetof(XPE_DEF::IMAGE_SECTION_HEADER,Name),                   8,      "BYTE[8]",      FW_DEF::VAL_TYPE_TEXT},
+    {Name,                  QObject::tr("Name"),        offsetof(XPE_DEF::IMAGE_SECTION_HEADER,Name),                   8,      "BYTE[8]",      FW_DEF::VAL_TYPE_TEXT},
     {VirtualSize,           "VirtualSize",              offsetof(XPE_DEF::IMAGE_SECTION_HEADER,Misc.VirtualSize),       4,      "DWORD",        FW_DEF::VAL_TYPE_SIZE},
     {VirtualAddress,        "VirtualAddress",           offsetof(XPE_DEF::IMAGE_SECTION_HEADER,VirtualAddress),         4,      "DWORD",        FW_DEF::VAL_TYPE_RELADDRESS},
     {SizeOfRawData,         "SizeOfRawData",            offsetof(XPE_DEF::IMAGE_SECTION_HEADER,SizeOfRawData),          4,      "DWORD",        FW_DEF::VAL_TYPE_SIZE},
@@ -331,7 +331,7 @@ const FW_DEF::HEADER_RECORD records[]=
     {TimeDateStamp,             "TimeDateStamp",            offsetof(XPE_DEF::IMAGE_EXPORT_DIRECTORY,TimeDateStamp),            4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
     {MajorVersion,              "MajorVersion",             offsetof(XPE_DEF::IMAGE_EXPORT_DIRECTORY,MajorVersion),             2,      "WORD",         FW_DEF::VAL_TYPE_DATA},
     {MinorVersion,              "MinorVersion",             offsetof(XPE_DEF::IMAGE_EXPORT_DIRECTORY,MinorVersion),             2,      "WORD",         FW_DEF::VAL_TYPE_DATA},
-    {Name,                      "Name",                     offsetof(XPE_DEF::IMAGE_EXPORT_DIRECTORY,Name),                     4,      "DWORD",        FW_DEF::VAL_TYPE_RELADDRESS},
+    {Name,                      QObject::tr("Name"),        offsetof(XPE_DEF::IMAGE_EXPORT_DIRECTORY,Name),                     4,      "DWORD",        FW_DEF::VAL_TYPE_RELADDRESS},
     {Base,                      "Base",                     offsetof(XPE_DEF::IMAGE_EXPORT_DIRECTORY,Base),                     4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
     {NumberOfFunctions,         "NumberOfFunctions",        offsetof(XPE_DEF::IMAGE_EXPORT_DIRECTORY,NumberOfFunctions),        4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
     {NumberOfNames,             "NumberOfNames",            offsetof(XPE_DEF::IMAGE_EXPORT_DIRECTORY,NumberOfNames),            4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
@@ -345,9 +345,9 @@ namespace N_IMAGE_EXPORT_FUNCTION
 {
 const FW_DEF::HEADER_RECORD records[]=
 {
-    {Ordinal,                   "Ordinal",      0,  2,      "WORD",         FW_DEF::VAL_TYPE_DATA},
-    {RVA,                       "RVA",          0,  4,      "DWORD",        FW_DEF::VAL_TYPE_RELADDRESS},
-    {Name,                      "Name",         0,  4,      "SZCHAR",       FW_DEF::VAL_TYPE_RELADDRESS}
+    {Ordinal,                   "Ordinal",                  0,  2,      "WORD",         FW_DEF::VAL_TYPE_DATA},
+    {RVA,                       "RVA",                      0,  4,      "DWORD",        FW_DEF::VAL_TYPE_RELADDRESS},
+    {Name,                      QObject::tr("Name"),        0,  4,      "SZCHAR",       FW_DEF::VAL_TYPE_RELADDRESS}
 };
 }
 
@@ -358,7 +358,7 @@ const FW_DEF::HEADER_RECORD records[]=
     {OriginalFirstThunk,        "OriginalFirstThunk",   offsetof(XPE_DEF::IMAGE_IMPORT_DESCRIPTOR,OriginalFirstThunk),  4,      "DWORD",        FW_DEF::VAL_TYPE_RELADDRESS},
     {TimeDateStamp,             "TimeDateStamp",        offsetof(XPE_DEF::IMAGE_IMPORT_DESCRIPTOR,TimeDateStamp),       4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
     {ForwarderChain,            "ForwarderChain",       offsetof(XPE_DEF::IMAGE_IMPORT_DESCRIPTOR,ForwarderChain),      4,      "DWORD",        FW_DEF::VAL_TYPE_RELADDRESS},
-    {Name,                      "Name",                 offsetof(XPE_DEF::IMAGE_IMPORT_DESCRIPTOR,Name),                4,      "DWORD",        FW_DEF::VAL_TYPE_RELADDRESS},
+    {Name,                      QObject::tr("Name"),    offsetof(XPE_DEF::IMAGE_IMPORT_DESCRIPTOR,Name),                4,      "DWORD",        FW_DEF::VAL_TYPE_RELADDRESS},
     {FirstThunk,                "FirstThunk",           offsetof(XPE_DEF::IMAGE_IMPORT_DESCRIPTOR,FirstThunk),          4,      "DWORD",        FW_DEF::VAL_TYPE_RELADDRESS}
 };
 }

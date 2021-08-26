@@ -170,7 +170,7 @@ const FW_DEF::HEADER_RECORD records[]=
     {timestamp,             "timestamp",                sizeof(XMACH_DEF::load_command)+offsetof(XMACH_DEF::dylib,timestamp),               4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
     {current_version,       "current_version",          sizeof(XMACH_DEF::load_command)+offsetof(XMACH_DEF::dylib,current_version),         4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
     {compatibility_version, "compatibility_version",    sizeof(XMACH_DEF::load_command)+offsetof(XMACH_DEF::dylib,compatibility_version),   4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
-    {name,                  "name",                     sizeof(XMACH_DEF::load_command)+sizeof(XMACH_DEF::dylib),                           -1,     "Ansi string",          FW_DEF::VAL_TYPE_TEXT},
+    {name,                  QObject::tr("Name"),        sizeof(XMACH_DEF::load_command)+sizeof(XMACH_DEF::dylib),                           -1,     "Ansi string",          FW_DEF::VAL_TYPE_TEXT},
 };
 }
 
@@ -180,7 +180,7 @@ const FW_DEF::HEADER_RECORD records[]=
 {
     {minor_version,         "minor_version",            sizeof(XMACH_DEF::load_command)+offsetof(XMACH_DEF::fvmlib,minor_version),          4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
     {header_addr,           "header_addr",              sizeof(XMACH_DEF::load_command)+offsetof(XMACH_DEF::fvmlib,header_addr),            4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
-    {name,                  "name",                     sizeof(XMACH_DEF::load_command)+sizeof(XMACH_DEF::fvmlib),                          -1,     "Ansi string",          FW_DEF::VAL_TYPE_TEXT},
+    {name,                  QObject::tr("Name"),        sizeof(XMACH_DEF::load_command)+sizeof(XMACH_DEF::fvmlib),                          -1,     "Ansi string",          FW_DEF::VAL_TYPE_TEXT},
 };
 }
 
@@ -265,7 +265,7 @@ namespace N_mach_version_min
 {
 const FW_DEF::HEADER_RECORD records[]=
 {
-    {version,               "version",                  offsetof(XMACH_DEF::version_min_command,version),       4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {version,               QObject::tr("Version"),     offsetof(XMACH_DEF::version_min_command,version),       4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
     {sdk,                   "sdk",                      offsetof(XMACH_DEF::version_min_command,sdk),           4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
 };
 }
@@ -274,7 +274,7 @@ namespace N_mach_source_version
 {
 const FW_DEF::HEADER_RECORD records[]=
 {
-    {version,               "version",                  offsetof(XMACH_DEF::source_version_command,version),    8,      "uint64",          FW_DEF::VAL_TYPE_DATA},
+    {version,               QObject::tr("Version"),     offsetof(XMACH_DEF::source_version_command,version),    8,      "uint64",          FW_DEF::VAL_TYPE_DATA},
 };
 }
 

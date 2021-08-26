@@ -160,7 +160,7 @@ namespace N_ELF_LIBRARIES
 {
 const FW_DEF::HEADER_RECORD records[]=
 {
-    {library_name,          "library name",         0,  0,      "",                     FW_DEF::VAL_TYPE_DATA},
+    {library_name,          QObject::tr("Library name"),        0,  0,      "",                     FW_DEF::VAL_TYPE_DATA},
 };
 }
 
@@ -168,7 +168,7 @@ namespace N_ELF_INTERPRETER
 {
 const FW_DEF::HEADER_RECORD records[]=
 {
-    {interpreter,           "interpreter",          0,  -1,     "Ansi string",          FW_DEF::VAL_TYPE_TEXT},
+    {interpreter,           QObject::tr("Interpreter"),     0,  -1,     "Ansi string",          FW_DEF::VAL_TYPE_TEXT},
 };
 }
 
@@ -176,8 +176,8 @@ namespace N_ELF_NOTES
 {
 const FW_DEF::HEADER_RECORD records[]=
 {
-    {type,              "type",                     0,  -1,     "",                     FW_DEF::VAL_TYPE_DATA},
-    {name,              "name",                     0,  -1,     "",                     FW_DEF::VAL_TYPE_DATA},
+    {type,              QObject::tr("Type"),        0,  -1,     "",                     FW_DEF::VAL_TYPE_DATA},
+    {name,              QObject::tr("Name"),        0,  -1,     "",                     FW_DEF::VAL_TYPE_DATA},
 };
 }
 
