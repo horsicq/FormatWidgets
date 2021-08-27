@@ -55,9 +55,9 @@ namespace N_DEX_MAP_ITEM
 {
 const FW_DEF::HEADER_RECORD records[]=
 {
-    {type,                  "type",                 offsetof(XDEX_DEF::MAP_ITEM,nType),             2,      "uint16",               FW_DEF::VAL_TYPE_DATA},
-    {count,                 "count",                offsetof(XDEX_DEF::MAP_ITEM,nCount),            4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
-    {offset,                "offset",               offsetof(XDEX_DEF::MAP_ITEM,nOffset),           4,      "uint32",               FW_DEF::VAL_TYPE_OFFSET},
+    {type,                  QObject::tr("Type"),                offsetof(XDEX_DEF::MAP_ITEM,nType),             2,      "uint16",               FW_DEF::VAL_TYPE_DATA},
+    {count,                 QObject::tr("Count"),               offsetof(XDEX_DEF::MAP_ITEM,nCount),            4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {offset,                QObject::tr("Offset"),              offsetof(XDEX_DEF::MAP_ITEM,nOffset),           4,      "uint32",               FW_DEF::VAL_TYPE_OFFSET},
 };
 }
 
@@ -65,7 +65,7 @@ namespace N_DEX_STRING
 {
 const FW_DEF::HEADER_RECORD records[]=
 {
-    {string,                "string",               0,                                              2,      "string",               FW_DEF::VAL_TYPE_DATA},
+    {string,                QObject::tr("String"),      0,                                              2,      "string",               FW_DEF::VAL_TYPE_DATA},
 };
 }
 
