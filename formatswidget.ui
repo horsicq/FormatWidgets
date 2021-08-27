@@ -633,7 +633,7 @@
          <item>
           <widget class="QGroupBox" name="groupBoxPETimeDateStamp">
            <property name="title">
-            <string notr="true">TimeDateStamp</string>
+            <string>Time date stamp</string>
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_40">
             <property name="leftMargin">
@@ -670,7 +670,7 @@
          <item>
           <widget class="QGroupBox" name="groupBoxPESizeOfImage">
            <property name="title">
-            <string notr="true">SizeOfImage</string>
+            <string>Size of image</string>
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_41">
             <property name="leftMargin">
@@ -726,7 +726,7 @@
          <item>
           <widget class="QGroupBox" name="groupBoxPEResources">
            <property name="title">
-            <string notr="true">Resources</string>
+            <string>Resources</string>
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_19">
             <property name="leftMargin">
@@ -805,7 +805,7 @@
          <item>
           <widget class="QGroupBox" name="groupBoxELFPrograms">
            <property name="title">
-            <string notr="true">Programs</string>
+            <string>Programs</string>
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_16">
             <property name="leftMargin">

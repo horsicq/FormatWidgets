@@ -264,9 +264,9 @@ void ELFProcessData::_process()
             QList<QString> listLabels;
             listLabels.append("");
             listLabels.append(getStructList(N_Elf64_Sym::records,N_Elf64_Sym::__data_size));
-            listLabels.append("Name");
-            listLabels.append("Bind");
-            listLabels.append("Type");
+            listLabels.append(tr("Name"));
+            listLabels.append(tr("Bind"));
+            listLabels.append(tr("Type"));
 
             QList<XELF_DEF::Elf64_Sym> listSymbols=g_pELF->getElf64_SymList(g_nOffset,g_nSize);
 

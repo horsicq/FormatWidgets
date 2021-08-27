@@ -287,8 +287,8 @@ namespace N_IMAGE_DIRECORIES
 const FW_DEF::HEADER_RECORD records[]=
 {
     {Name,                  QObject::tr("Name"),        0,  0,      "",             FW_DEF::VAL_TYPE_LABEL},
-    {Address,               "Address",                  4,  4,      "DWORD",        FW_DEF::VAL_TYPE_RELADDRESS},
-    {Size,                  "Size",                     8,  4,      "DWORD",        FW_DEF::VAL_TYPE_SIZE},
+    {Address,               QObject::tr("Address"),     4,  4,      "DWORD",        FW_DEF::VAL_TYPE_RELADDRESS},
+    {Size,                  QObject::tr("Size"),        8,  4,      "DWORD",        FW_DEF::VAL_TYPE_SIZE},
 };
 }
 
@@ -331,7 +331,7 @@ const FW_DEF::HEADER_RECORD records[]=
     {TimeDateStamp,             "TimeDateStamp",            offsetof(XPE_DEF::IMAGE_EXPORT_DIRECTORY,TimeDateStamp),            4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
     {MajorVersion,              "MajorVersion",             offsetof(XPE_DEF::IMAGE_EXPORT_DIRECTORY,MajorVersion),             2,      "WORD",         FW_DEF::VAL_TYPE_DATA},
     {MinorVersion,              "MinorVersion",             offsetof(XPE_DEF::IMAGE_EXPORT_DIRECTORY,MinorVersion),             2,      "WORD",         FW_DEF::VAL_TYPE_DATA},
-    {Name,                      QObject::tr("Name"),        offsetof(XPE_DEF::IMAGE_EXPORT_DIRECTORY,Name),                     4,      "DWORD",        FW_DEF::VAL_TYPE_RELADDRESS},
+    {Name,                      "Name",                     offsetof(XPE_DEF::IMAGE_EXPORT_DIRECTORY,Name),                     4,      "DWORD",        FW_DEF::VAL_TYPE_RELADDRESS},
     {Base,                      "Base",                     offsetof(XPE_DEF::IMAGE_EXPORT_DIRECTORY,Base),                     4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
     {NumberOfFunctions,         "NumberOfFunctions",        offsetof(XPE_DEF::IMAGE_EXPORT_DIRECTORY,NumberOfFunctions),        4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
     {NumberOfNames,             "NumberOfNames",            offsetof(XPE_DEF::IMAGE_EXPORT_DIRECTORY,NumberOfNames),            4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
