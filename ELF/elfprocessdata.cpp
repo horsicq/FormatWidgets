@@ -168,7 +168,7 @@ void ELFProcessData::_process()
             listLabels.append(getStructList(N_Elf_Phdr32::records,N_Elf_Phdr32::__data_size));
         }
 
-        listLabels.append("Type");
+        listLabels.append(tr("Type"));
 
         QMap<quint64,QString> mapProgramTypes=XELF::getProgramTypesS();
 
@@ -312,9 +312,9 @@ void ELFProcessData::_process()
             QList<QString> listLabels;
             listLabels.append("");
             listLabels.append(getStructList(N_Elf32_Sym::records,N_Elf32_Sym::__data_size));
-            listLabels.append("Name");
-            listLabels.append("Bind");
-            listLabels.append("Type");
+            listLabels.append(tr("Name"));
+            listLabels.append(tr("Bind"));
+            listLabels.append(tr("Type"));
 
             QList<XELF_DEF::Elf32_Sym> listSymbols=g_pELF->getElf32_SymList(g_nOffset,g_nSize);
 
@@ -371,7 +371,7 @@ void ELFProcessData::_process()
             listLabels.append(getStructList(N_Elf_DynamicArrayTags::records32,N_Elf_DynamicArrayTags::__data_size));
         }
 
-        listLabels.append("Type");
+        listLabels.append(tr("Type"));
 
         QList<XELF::TAG_STRUCT> listTagStructs=g_pELF->_getTagStructs(g_nOffset,g_nSize,bIs64,g_pELF->isBigEndian());
 
@@ -493,7 +493,7 @@ void ELFProcessData::_process()
         }
 
         listLabels.append("Sym");
-        listLabels.append("Type");
+        listLabels.append(tr("Type"));
 
         QList<XELF_DEF::Elf64_Rela> listRela64;
         QList<XELF_DEF::Elf32_Rela> listRela32;
@@ -586,7 +586,7 @@ void ELFProcessData::_process()
         }
 
         listLabels.append("Sym");
-        listLabels.append("Type");
+        listLabels.append(tr("Type"));
 
         QList<XELF_DEF::Elf64_Rel> listRel64;
         QList<XELF_DEF::Elf32_Rel> listRel32;
