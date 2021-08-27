@@ -126,8 +126,8 @@ void PEProcessData::_process()
         QList<QString> listLabels;
         listLabels.append("");
         listLabels.append(getStructList(N_IMAGE_RELOCS_POSITION::records,N_IMAGE_RELOCS_POSITION::__data_size));
-        listLabels.append("Type");
-        listLabels.append("Address");
+        listLabels.append(tr("Type"));
+        listLabels.append(tr("Address"));
 
         QList<XPE::RELOCS_POSITION> listRelocsPositions=g_pPE->getRelocsPositions(g_nOffset);
 
@@ -158,7 +158,7 @@ void PEProcessData::_process()
         QList<QString> listLabels;
         listLabels.append("");
         listLabels.append(getStructList(N_IMAGE_IMPORT::records,N_IMAGE_IMPORT::__data_size));
-        listLabels.append(QString("Hash"));
+        listLabels.append(tr("Hash"));
         listLabels.append("");
 
         XBinary::_MEMORY_MAP memoryMap=g_pPE->getMemoryMap();
