@@ -443,7 +443,7 @@ void PEProcessData::_process()
         QList<QString> listLabels;
         listLabels.append("");
         listLabels.append(getStructList(N_IMAGE_DELAYIMPORT_FUNCTION::records32,N_IMAGE_DELAYIMPORT_FUNCTION::__data_size));
-        listLabels.append("Name");
+        listLabels.append(tr("Name"));
 
         bool bIs64=g_pPE->is64();
         QList<XPE::DELAYIMPORT_POSITION> listDIP=g_pPE->getDelayImportPositions(g_nNumber);
