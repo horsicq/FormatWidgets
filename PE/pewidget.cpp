@@ -45,6 +45,9 @@ PEWidget::PEWidget(QWidget *pParent) :
     initToolsWidget(ui->widgetHex_Resources);
     initToolsWidget(ui->widgetHex_Section);
     initToolsWidget(ui->widgetHex_TLS);
+
+    ui->groupBoxHash32->setTitle(QString("%1 32").arg(tr("Hash")));
+    ui->groupBoxHash64->setTitle(QString("%1 64").arg(tr("Hash")));
 }
 
 PEWidget::PEWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) :
