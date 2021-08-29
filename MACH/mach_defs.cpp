@@ -541,9 +541,9 @@ namespace N_mach_data_in_code_entry
 {
 const FW_DEF::HEADER_RECORD records[]=
 {
-    {offset,                "offset",           offsetof(XMACH_DEF::data_in_code_entry,offset),         4,      "uint32",           FW_DEF::VAL_TYPE_OFFSET},
-    {length,                "length",           offsetof(XMACH_DEF::data_in_code_entry,length),         1,      "uint8",            FW_DEF::VAL_TYPE_SIZE},
-    {kind,                  "kind",             offsetof(XMACH_DEF::data_in_code_entry,kind),           1,      "uint8",            FW_DEF::VAL_TYPE_DATA},
+    {offset,                QObject::tr("Offset"),  offsetof(XMACH_DEF::data_in_code_entry,offset),         4,      "uint32",           FW_DEF::VAL_TYPE_OFFSET},
+    {length,                QObject::tr("Length"),  offsetof(XMACH_DEF::data_in_code_entry,length),         1,      "uint8",            FW_DEF::VAL_TYPE_SIZE},
+    {kind,                  "kind",                 offsetof(XMACH_DEF::data_in_code_entry,kind),           1,      "uint8",            FW_DEF::VAL_TYPE_DATA},
 };
 }
 
@@ -601,7 +601,7 @@ namespace N_mach_relocs
 const FW_DEF::HEADER_RECORD records[]=
 {
     {r_address,                 "r_address",                offsetof(XMACH_DEF::relocation_info,r_address),     4,      "uint32",               FW_DEF::VAL_TYPE_ADDRESS},
-    {value,                     "value",                    offsetof(XMACH_DEF::relocation_info,s),             4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {value,                     QObject::tr("Value"),       offsetof(XMACH_DEF::relocation_info,s),             4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
 };
 }
 
@@ -622,7 +622,7 @@ namespace N_mach_value
 {
 const FW_DEF::HEADER_RECORD records[]=
 {
-    {value,                     "value",                    0,              4,       "uint32",                FW_DEF::VAL_TYPE_DATA},
+    {value,                     QObject::tr("Value"),       0,              4,       "uint32",                FW_DEF::VAL_TYPE_DATA},
 };
 }
 
