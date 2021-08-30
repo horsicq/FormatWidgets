@@ -146,13 +146,13 @@ namespace N_Elf_DynamicArrayTags
 {
 const FW_DEF::HEADER_RECORD records32[]=
 {
-    {d_tag,                 "d_tag",                0,  4,      "Elf32_SWord",          FW_DEF::VAL_TYPE_DATA},
-    {d_value,               "d_value",              4,  4,      "Elf32_Addr",           FW_DEF::VAL_TYPE_ADDRESS},
+    {d_tag,                 "d_tag",                            0,  4,      "Elf32_SWord",          FW_DEF::VAL_TYPE_DATA},
+    {d_value,               "d_value",                          4,  4,      "Elf32_Addr",           FW_DEF::VAL_TYPE_ADDRESS},
 };
 const FW_DEF::HEADER_RECORD records64[]=
 {
-    {d_tag,                 "d_tag",                0,  8,      "Elf64_Xword",          FW_DEF::VAL_TYPE_DATA},
-    {d_value,               "d_value",              8,  8,      "Elf64_Addr",           FW_DEF::VAL_TYPE_ADDRESS},
+    {d_tag,                 "d_tag",                            0,  8,      "Elf64_Xword",          FW_DEF::VAL_TYPE_DATA},
+    {d_value,               "d_value",                          8,  8,      "Elf64_Addr",           FW_DEF::VAL_TYPE_ADDRESS},
 };
 }
 
@@ -168,7 +168,7 @@ namespace N_ELF_INTERPRETER
 {
 const FW_DEF::HEADER_RECORD records[]=
 {
-    {interpreter,           QObject::tr("Interpreter"),     0,  -1,     "Ansi string",          FW_DEF::VAL_TYPE_TEXT},
+    {interpreter,           QObject::tr("Interpreter"),         0,  -1,     "Ansi string",          FW_DEF::VAL_TYPE_TEXT},
 };
 }
 
@@ -176,8 +176,8 @@ namespace N_ELF_NOTES
 {
 const FW_DEF::HEADER_RECORD records[]=
 {
-    {type,              QObject::tr("Type"),        0,  -1,     "",                     FW_DEF::VAL_TYPE_DATA},
-    {name,              QObject::tr("Name"),        0,  -1,     "",                     FW_DEF::VAL_TYPE_DATA},
+    {type,                  QObject::tr("Type"),                0,  -1,     "",                     FW_DEF::VAL_TYPE_DATA},
+    {name,                  QObject::tr("Name"),                0,  -1,     "",                     FW_DEF::VAL_TYPE_DATA},
 };
 }
 
@@ -185,7 +185,7 @@ namespace N_ELF_RUNPATH
 {
 const FW_DEF::HEADER_RECORD records[]=
 {
-    {runpath,               "runpath",              0,  -1,     "Ansi string",          FW_DEF::VAL_TYPE_TEXT},
+    {runpath,               "runpath",                          0,  -1,     "Ansi string",          FW_DEF::VAL_TYPE_TEXT},
 };
 }
 
