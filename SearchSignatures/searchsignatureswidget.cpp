@@ -28,10 +28,8 @@ SearchSignaturesWidget::SearchSignaturesWidget(QWidget *pParent) :
     ui->setupUi(this);
     g_pDevice=nullptr;
     g_pFilter=new QSortFilterProxyModel(this);
-
     g_pModel=nullptr;
     g_bInit=false;
-
     g_scCopyName=nullptr;
     g_scCopySignature=nullptr;
     g_scCopyAddress=nullptr;
