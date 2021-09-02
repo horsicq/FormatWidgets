@@ -754,6 +754,7 @@ void FormatWidget::showDemangle(QString sString)
 
 bool FormatWidget::saveBackup()
 {
+    // TODO Check isBackup
     bool bResult=true;
     // TODO Check
     if(!isEdited())
