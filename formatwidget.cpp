@@ -754,10 +754,9 @@ void FormatWidget::showDemangle(QString sString)
 
 bool FormatWidget::saveBackup()
 {
-    // TODO Check isBackup
     bool bResult=true;
-    // TODO Check
-    if(!isEdited())
+
+    if((g_fwOptions.bIsSaveBackup)&&(!isEdited()))
     {
         // Save backup
         if(g_pBackupDevice)
