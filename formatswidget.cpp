@@ -505,9 +505,9 @@ void FormatsWidget::showMSDOS(SMSDOS::TYPE type)
     {
         FW_DEF::OPTIONS options={};
 
-        options.bSaveBackup=options.bSaveBackup;
-        options.nStartType=type;
+        options.bIsSaveBackup=g_options.bIsSaveBackup;
         options.sSearchSignaturesPath=g_options.sSearchSignaturesPath;
+        options.nStartType=type;
 
         DialogMSDOS dialogMSDOS(this);
 
@@ -529,9 +529,9 @@ void FormatsWidget::showLE(SLE::TYPE type)
     {
         FW_DEF::OPTIONS options={};
 
-        options.bSaveBackup=options.bSaveBackup;
-        options.nStartType=type;
+        options.bIsSaveBackup=g_options.bIsSaveBackup;
         options.sSearchSignaturesPath=g_options.sSearchSignaturesPath;
+        options.nStartType=type;
 
         DialogLE dialogLE(this);
 
@@ -553,9 +553,9 @@ void FormatsWidget::showNE(SNE::TYPE type)
     {
         FW_DEF::OPTIONS options={};
 
-        options.bSaveBackup=options.bSaveBackup;
-        options.nStartType=type;
+        options.bIsSaveBackup=g_options.bIsSaveBackup;
         options.sSearchSignaturesPath=g_options.sSearchSignaturesPath;
+        options.nStartType=type;
 
         DialogNE dialogNE(this);
 
@@ -577,9 +577,9 @@ void FormatsWidget::showPE(SPE::TYPE type)
     {
         FW_DEF::OPTIONS options={};
 
-        options.bSaveBackup=options.bSaveBackup;
-        options.nStartType=type;
+        options.bIsSaveBackup=g_options.bIsSaveBackup;
         options.sSearchSignaturesPath=g_options.sSearchSignaturesPath;
+        options.nStartType=type;
 
         DialogPE dialogPE(this);
 
@@ -601,9 +601,9 @@ void FormatsWidget::showELF(SELF::TYPE type)
     {
         FW_DEF::OPTIONS options={};
 
-        options.bSaveBackup=options.bSaveBackup;
-        options.nStartType=type;
+        options.bIsSaveBackup=g_options.bIsSaveBackup;
         options.sSearchSignaturesPath=g_options.sSearchSignaturesPath;
+        options.nStartType=type;
 
         DialogELF dialogELF(this);
 
@@ -625,9 +625,9 @@ void FormatsWidget::showMACH(SMACH::TYPE type)
     {
         FW_DEF::OPTIONS options={};
 
-        options.bSaveBackup=options.bSaveBackup;
-        options.nStartType=type;
+        options.bIsSaveBackup=g_options.bIsSaveBackup;
         options.sSearchSignaturesPath=g_options.sSearchSignaturesPath;
+        options.nStartType=type;
 
         DialogMACH dialogMACH(this);
 
@@ -649,9 +649,9 @@ void FormatsWidget::showDEX(SDEX::TYPE type)
     {
         FW_DEF::OPTIONS options={};
 
-        options.bSaveBackup=options.bSaveBackup;
-        options.nStartType=type;
+        options.bIsSaveBackup=g_options.bIsSaveBackup;
         options.sSearchSignaturesPath=g_options.sSearchSignaturesPath;
+        options.nStartType=type;
 
         DialogDEX dialogDEX(this);
 
@@ -729,7 +729,7 @@ void FormatsWidget::on_pushButtonZIP_clicked()
 
     FW_DEF::OPTIONS options={};
 
-    options.bSaveBackup=options.bSaveBackup;;
+    options.bIsSaveBackup=options.bIsSaveBackup;;
 
     dialogArchive.setFileName(g_sFileName,options,QSet<XBinary::FT>());
     dialogArchive.setShortcuts(getShortcuts());
