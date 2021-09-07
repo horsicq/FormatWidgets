@@ -901,7 +901,7 @@ void ELFWidget::showSectionHeader(int nType, QTableView *pTableView)
 
 QString ELFWidget::typeIdToString(int nType)
 {
-    QString sResult="Unknown";
+    QString sResult=tr("Unknown");
 
     switch(nType)
     {
