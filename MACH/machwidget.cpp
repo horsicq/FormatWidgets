@@ -1231,7 +1231,7 @@ void MACHWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
 
 QString MACHWidget::typeIdToString(int nType)
 {
-    QString sResult="Unknown";
+    QString sResult=tr("Unknown");
 
     switch(nType)
     {
