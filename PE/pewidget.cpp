@@ -2001,7 +2001,7 @@ void PEWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
 
 QString PEWidget::typeIdToString(int nType)
 {
-    QString sResult="Unknown";
+    QString sResult=tr("Unknown");
 
     switch(nType)
     {
@@ -2610,5 +2610,19 @@ void PEWidget::on_tableView_ImportFunctions_customContextMenuRequested(const QPo
         contextMenu.addAction(&actionDemangle);
 
         contextMenu.exec(ui->tableView_ImportFunctions->viewport()->mapToGlobal(pos));
+    }
+}
+
+void PEWidget::on_pushButtonCertificateCheck_clicked()
+{
+    XPE pe(getDevice(),getOptions().bIsImage,getOptions().nImageBase);
+
+    if(pe.isValid())
+    {
+        PEProcessData peProcessData(SPE::TYPE_CERTIFICATE_CHECK,&tvModel[SPE::TYPE_CERTIFICATE_CHECK],&pe,0,0,0);
+
+        DialogProcessData dialogProcessData(this,&peProcessData);
+
+        dialogProcessData.exec();
     }
 }

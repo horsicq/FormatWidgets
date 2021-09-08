@@ -129,6 +129,8 @@ private slots:
     void on_checkBoxExportShowValid_stateChanged(int arg1);
     void on_tableView_ImportFunctions_customContextMenuRequested(const QPoint &pos);
 
+    void on_pushButtonCertificateCheck_clicked();
+
 private:
     enum CB
     {

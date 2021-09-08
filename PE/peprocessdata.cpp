@@ -577,7 +577,7 @@ void PEProcessData::_process()
 
                     int nNumberOfSubPositions=subpos.listPositions.count();
 
-                    for(int k=0; k<nNumberOfSubPositions; k++)
+                    for(int k=0; (k<nNumberOfSubPositions)&&(isRun()); k++)
                     {
                         XPE::RESOURCE_POSITION record1=rh.listPositions.at(i);
                         XPE::RESOURCE_POSITION record2=rh.listPositions.at(i).listPositions.at(j);
@@ -642,6 +642,8 @@ void PEProcessData::_process()
     }
     else if(g_nType==SPE::TYPE_CERTIFICATE)
     {
+//        g_pPE->getCertInfo();
+
         *g_ppModel=new QStandardItemModel;
 
         XPE_DEF::IMAGE_DATA_DIRECTORY ddSecurity=g_pPE->getOptionalHeader_DataDirectory(XPE_DEF::S_IMAGE_DIRECTORY_ENTRY_SECURITY);
@@ -652,7 +654,7 @@ void PEProcessData::_process()
         {
             int nNumberOfCerts=listCert.count();
 
-            for(int i=0;i<nNumberOfCerts;i++)
+            for(int i=0;(i<nNumberOfCerts)&&(isRun());i++)
             {
                 QStandardItem *pRoot=new QStandardItem;
 
@@ -663,7 +665,7 @@ void PEProcessData::_process()
 
                 int nNumberOfRecords=listCert.at(i).certRecord.listRecords.count();
 
-                for(int j=0;j<nNumberOfRecords;j++)
+                for(int j=0;(j<nNumberOfRecords)&&(isRun());j++)
                 {
                     QStandardItem *pRecord=new QStandardItem;
 
@@ -673,6 +675,21 @@ void PEProcessData::_process()
                 }
 
                 (*g_ppModel)->appendRow(pRoot);
+            }
+        }
+    }
+    else if(g_nType==SPE::TYPE_CERTIFICATE_CHECK)
+    {
+        *g_ppModel=new QStandardItemModel;
+
+        QTemporaryDir tempDir;
+        if(tempDir.isValid())
+        {
+            QString sFileName=tempDir.path()+QDir::separator()+"CERT.DAT";
+
+            if(g_pPE->dumpToFile(sFileName,(qint64)0,g_pPE->getSize()))
+            {
+                XPE::getCertInfo(sFileName);
             }
         }
     }
@@ -819,7 +836,7 @@ void PEProcessData::handleCertRecord(QStandardItem *pParent, XPE::CERT_RECORD ce
 
     int nNumberOfRecords=certRecord.listRecords.count();
 
-    for(int i=0;i<nNumberOfRecords;i++)
+    for(int i=0;(i<nNumberOfRecords)&&(isRun());i++)
     {
         QStandardItem *pRecord=new QStandardItem;
 
@@ -827,4 +844,11 @@ void PEProcessData::handleCertRecord(QStandardItem *pParent, XPE::CERT_RECORD ce
 
         pParent->appendRow(pRecord);
     }
+}
+
+void PEProcessData::stop()
+{
+    g_pPE->setDumpProcessEnable(false);
+
+    ProcessData::stop();
 }

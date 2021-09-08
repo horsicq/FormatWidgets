@@ -42,17 +42,41 @@ FormatWidget::FormatWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 
 
 FormatWidget::~FormatWidget()
 {
+    if(g_sFileName!="")
+    {
+        QFile *pFile=dynamic_cast<QFile *>(g_pDevice);
 
+        if(pFile)
+        {
+            pFile->close();
+        }
+    }
 }
 
 void FormatWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType)
 {
     g_pDevice=pDevice;
+    g_bIsReadonly=!(pDevice->isWritable());
+
+    setData(options,nNumber,nOffset,nType);
+}
+
+void FormatWidget::setData(QString sFileName, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType)
+{
+    g_sFileName=sFileName;
+
+    QFile *pFile=new QFile(sFileName);
+
+    XBinary::tryToOpen(pFile);
+
+    setData(pFile,options,nNumber,nOffset,nType);
+}
+
+void FormatWidget::setData(FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType)
+{
     g_nNumber=nNumber;
     g_nOffset=nOffset;
     g_nType=nType;
-
-    g_bIsReadonly=!(pDevice->isWritable());
 
     g_listPages.clear();
     g_nPageIndex=0;
@@ -706,7 +730,7 @@ void FormatWidget::showHex(qint64 nOffset, qint64 nSize)
     hexOptions.nStartSelectionOffset=nOffset;
     hexOptions.nSizeOfSelection=nSize;
 
-    DialogHexView dialogHexView(this,g_pDevice,hexOptions);
+    DialogHexView dialogHexView(this,getDevice(),hexOptions);
     dialogHexView.setShortcuts(getShortcuts());
 
     connect(&dialogHexView,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
@@ -740,7 +764,7 @@ void FormatWidget::showEntropy(qint64 nOffset, qint64 nSize)
 {
     DialogEntropy dialogEntropy(this);
 
-    dialogEntropy.setData(g_pDevice,nOffset,nSize);
+    dialogEntropy.setData(getDevice(),nOffset,nSize);
 
     dialogEntropy.exec();
 }
