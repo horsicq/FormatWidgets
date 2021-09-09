@@ -21,8 +21,6 @@
 #ifndef FORMATWIDGET_H
 #define FORMATWIDGET_H
 
-#include <QFile>
-#include <QDialog>
 #include <QTreeWidgetItem>
 #include <QTableWidget>
 #include <QHeaderView>
