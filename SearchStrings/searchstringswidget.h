@@ -21,7 +21,6 @@
 #ifndef SEARCHSTRINGSWIDGET_H
 #define SEARCHSTRINGSWIDGET_H
 
-#include <QFile>
 #include <QStandardItemModel>
 #include <QSortFilterProxyModel>
 #include <QFileDialog>
