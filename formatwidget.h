@@ -40,6 +40,7 @@
 #include "xshortcutsdialog.h"
 #include "dialogdemangle.h"
 #include "xhexviewwidget.h"
+#include "dialogmodelinfo.h"
 
 class FormatWidget : public XShortcutsWidget
 {
@@ -134,6 +135,7 @@ public:
     void setLineEdit(XLineEditHEX *pLineEdit,qint32 nMaxLength,QString sText,qint64 nOffset);
     void ajustTableView(ProcessData *pProcessData,QStandardItemModel **ppModel,QTableView *pTableView,QSortFilterProxyModel *pProxyModel=nullptr,bool bStretchLastSection=true);
     void ajustTreeView(ProcessData *pProcessData,QStandardItemModel **ppModel,QTreeView *pTreeView);
+    void ajustDialogModel(ProcessData *pProcessData,QStandardItemModel **ppModel,QString sTitle);
     void showSectionHex(QTableView *pTableView);
     void showSectionEntropy(QTableView *pTableView);
     void showSectionDisasm(QTableView *pTableView);

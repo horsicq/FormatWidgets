@@ -83,7 +83,7 @@ SearchSignaturesWidget::OPTIONS SearchSignaturesWidget::getOptions()
 
 void SearchSignaturesWidget::setSignaturesPath(QString sPath)
 {
-#if QT_VERSION >= 0x050300
+#if QT_VERSION >= QT_VERSION_CHECK(5,3,0)
     const QSignalBlocker block(ui->comboBoxFile);
 #else
     const bool bBlocked1=ui->comboBoxFile->blockSignals(true);

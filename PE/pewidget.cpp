@@ -48,6 +48,12 @@ PEWidget::PEWidget(QWidget *pParent) :
 
     ui->groupBoxHash32->setTitle(QString("%1 32").arg(tr("Hash")));
     ui->groupBoxHash64->setTitle(QString("%1 64").arg(tr("Hash")));
+
+#if defined(_MSC_VER)
+    ui->widgetCertificateCheck->show();
+#else
+    ui->widgetCertificateCheck->hide();
+#endif
 }
 
 PEWidget::PEWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) :
@@ -2621,8 +2627,6 @@ void PEWidget::on_pushButtonCertificateCheck_clicked()
     {
         PEProcessData peProcessData(SPE::TYPE_CERTIFICATE_CHECK,&tvModel[SPE::TYPE_CERTIFICATE_CHECK],&pe,0,0,0);
 
-        DialogProcessData dialogProcessData(this,&peProcessData);
-
-        dialogProcessData.exec();
+        ajustDialogModel(&peProcessData,&tvModel[SPE::TYPE_CERTIFICATE_CHECK],tr("Certificate"));
     }
 }

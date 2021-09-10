@@ -388,6 +388,19 @@ void FormatWidget::ajustTreeView(ProcessData *pProcessData, QStandardItemModel *
     delete pOldModel; // TODO Thread
 }
 
+void FormatWidget::ajustDialogModel(ProcessData *pProcessData, QStandardItemModel **ppModel, QString sTitle)
+{
+    DialogProcessData dialogProcessData(this,pProcessData);
+
+    dialogProcessData.exec();
+
+    DialogModelInfo dialogModelInfo(this);
+
+    dialogModelInfo.setData(sTitle,*ppModel);
+
+    dialogModelInfo.exec();
+}
+
 void FormatWidget::showSectionHex(QTableView *pTableView)
 {
     int nRow=pTableView->currentIndex().row();

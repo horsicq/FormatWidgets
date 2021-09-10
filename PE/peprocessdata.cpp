@@ -689,7 +689,13 @@ void PEProcessData::_process()
 
             if(g_pPE->dumpToFile(sFileName,(qint64)0,g_pPE->getSize()))
             {
-                XPE::getCertInfo(sFileName);
+                XPE::XCERT_INFO xsertInfo=XPE::getCertInfo(sFileName);
+
+                QStandardItem *pStatus=new QStandardItem(xsertInfo.sStatus);
+//                pStatus->appendColumn(new QStandardItem(tr("Status")));
+//                pStatus->appendColumn(new QStandardItem(xsertInfo.sStatus));
+
+                (*g_ppModel)->appendRow(pStatus);
             }
         }
     }
