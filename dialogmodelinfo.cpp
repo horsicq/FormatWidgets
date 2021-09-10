@@ -44,3 +44,8 @@ void DialogModelInfo::on_pushButtonOK_clicked()
 {
     this->close();
 }
+
+void DialogModelInfo::on_pushButtonSave_clicked()
+{
+    // TODO
+}

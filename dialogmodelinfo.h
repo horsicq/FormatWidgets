@@ -40,6 +40,8 @@ public:
 private slots:
     void on_pushButtonOK_clicked();
 
+    void on_pushButtonSave_clicked();
+
 private:
     Ui::DialogModelInfo *ui;
 };
