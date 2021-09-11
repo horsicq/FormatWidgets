@@ -72,7 +72,7 @@ const FW_DEF::HEADER_RECORD records[]=
 {
     {Machine,               "Machine",              offsetof(XPE_DEF::IMAGE_FILE_HEADER,Machine),                 2,      "WORD",         FW_DEF::VAL_TYPE_DATA},
     {NumberOfSections,      "NumberOfSections",     offsetof(XPE_DEF::IMAGE_FILE_HEADER,NumberOfSections),        2,      "WORD",         FW_DEF::VAL_TYPE_DATA},
-    {TimeDateStamp,         "TimeDateStamp",        offsetof(XPE_DEF::IMAGE_FILE_HEADER,TimeDateStamp),           4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
+    {TimeDateStamp,         "TimeDateStamp",        offsetof(XPE_DEF::IMAGE_FILE_HEADER,TimeDateStamp),           4,      "DWORD",        FW_DEF::VAL_TYPE_UNIXTIME},
     {PointerToSymbolTable,  "PointerToSymbolTable", offsetof(XPE_DEF::IMAGE_FILE_HEADER,PointerToSymbolTable),    4,      "DWORD",        FW_DEF::VAL_TYPE_OFFSET},
     {NumberOfSymbols,       "NumberOfSymbols",      offsetof(XPE_DEF::IMAGE_FILE_HEADER,NumberOfSymbols),         4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
     {SizeOfOptionalHeader,  "SizeOfOptionalHeader", offsetof(XPE_DEF::IMAGE_FILE_HEADER,SizeOfOptionalHeader),    2,      "WORD",         FW_DEF::VAL_TYPE_SIZE},
@@ -177,7 +177,7 @@ namespace N_IMAGE_LOADCONFIG
 const FW_DEF::HEADER_RECORD records32[]=
 {
     {Size,                                      "Size",                                     offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32,Size),                                        4,      "DWORD",        FW_DEF::VAL_TYPE_SIZE},
-    {TimeDateStamp,                             "TimeDateStamp",                            offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32,TimeDateStamp),                               4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
+    {TimeDateStamp,                             "TimeDateStamp",                            offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32,TimeDateStamp),                               4,      "DWORD",        FW_DEF::VAL_TYPE_UNIXTIME},
     {MajorVersion,                              "MajorVersion",                             offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32,MajorVersion),                                2,      "WORD",         FW_DEF::VAL_TYPE_DATA},
     {MinorVersion,                              "MinorVersion",                             offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32,MinorVersion),                                2,      "WORD",         FW_DEF::VAL_TYPE_DATA},
     {GlobalFlagsClear,                          "GlobalFlagsClear",                         offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32,GlobalFlagsClear),                            4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
@@ -230,7 +230,7 @@ const FW_DEF::HEADER_RECORD records32[]=
 const FW_DEF::HEADER_RECORD records64[]=
 {
     {Size,                                      "Size",                                     offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64,Size),                                        4,      "DWORD",        FW_DEF::VAL_TYPE_SIZE},
-    {TimeDateStamp,                             "TimeDateStamp",                            offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64,TimeDateStamp),                               4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
+    {TimeDateStamp,                             "TimeDateStamp",                            offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64,TimeDateStamp),                               4,      "DWORD",        FW_DEF::VAL_TYPE_UNIXTIME},
     {MajorVersion,                              "MajorVersion",                             offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64,MajorVersion),                                2,      "WORD",         FW_DEF::VAL_TYPE_DATA},
     {MinorVersion,                              "MinorVersion",                             offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64,MinorVersion),                                2,      "WORD",         FW_DEF::VAL_TYPE_DATA},
     {GlobalFlagsClear,                          "GlobalFlagsClear",                         offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64,GlobalFlagsClear),                            4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
@@ -328,7 +328,7 @@ namespace N_IMAGE_EXPORT
 const FW_DEF::HEADER_RECORD records[]=
 {
     {Characteristics,           "Characteristics",          offsetof(XPE_DEF::IMAGE_EXPORT_DIRECTORY,Characteristics),          4,      "DWORD",        FW_DEF::VAL_TYPE_FLAGS},
-    {TimeDateStamp,             "TimeDateStamp",            offsetof(XPE_DEF::IMAGE_EXPORT_DIRECTORY,TimeDateStamp),            4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
+    {TimeDateStamp,             "TimeDateStamp",            offsetof(XPE_DEF::IMAGE_EXPORT_DIRECTORY,TimeDateStamp),            4,      "DWORD",        FW_DEF::VAL_TYPE_UNIXTIME},
     {MajorVersion,              "MajorVersion",             offsetof(XPE_DEF::IMAGE_EXPORT_DIRECTORY,MajorVersion),             2,      "WORD",         FW_DEF::VAL_TYPE_DATA},
     {MinorVersion,              "MinorVersion",             offsetof(XPE_DEF::IMAGE_EXPORT_DIRECTORY,MinorVersion),             2,      "WORD",         FW_DEF::VAL_TYPE_DATA},
     {Name,                      "Name",                     offsetof(XPE_DEF::IMAGE_EXPORT_DIRECTORY,Name),                     4,      "DWORD",        FW_DEF::VAL_TYPE_RELADDRESS},
@@ -356,7 +356,7 @@ namespace N_IMAGE_IMPORT
 const FW_DEF::HEADER_RECORD records[]=
 {
     {OriginalFirstThunk,        "OriginalFirstThunk",   offsetof(XPE_DEF::IMAGE_IMPORT_DESCRIPTOR,OriginalFirstThunk),  4,      "DWORD",        FW_DEF::VAL_TYPE_RELADDRESS},
-    {TimeDateStamp,             "TimeDateStamp",        offsetof(XPE_DEF::IMAGE_IMPORT_DESCRIPTOR,TimeDateStamp),       4,      "DWORD",        FW_DEF::VAL_TYPE_DATA},
+    {TimeDateStamp,             "TimeDateStamp",        offsetof(XPE_DEF::IMAGE_IMPORT_DESCRIPTOR,TimeDateStamp),       4,      "DWORD",        FW_DEF::VAL_TYPE_UNIXTIME},
     {ForwarderChain,            "ForwarderChain",       offsetof(XPE_DEF::IMAGE_IMPORT_DESCRIPTOR,ForwarderChain),      4,      "DWORD",        FW_DEF::VAL_TYPE_RELADDRESS},
     {Name,                      QObject::tr("Name"),    offsetof(XPE_DEF::IMAGE_IMPORT_DESCRIPTOR,Name),                4,      "DWORD",        FW_DEF::VAL_TYPE_RELADDRESS},
     {FirstThunk,                "FirstThunk",           offsetof(XPE_DEF::IMAGE_IMPORT_DESCRIPTOR,FirstThunk),          4,      "DWORD",        FW_DEF::VAL_TYPE_RELADDRESS}
