@@ -260,7 +260,7 @@ FormatWidget::SV MACHSectionHeaderWidget::_setValue(QVariant vValue, int nStype,
                     switch(nNdata)
                     {
                         case N_mach_nlist::n_strx:
-                            XBinary::OFFSETSIZE osStringTable=mach.getStringTableOS();
+                            XBinary::OFFSETSIZE osStringTable=mach.getStringTableOffsetSize();
                             addComment(ui->tableWidget,N_mach_nlist::n_strx,HEADER_COLUMN_COMMENT,mach.getStringFromIndex(osStringTable.nOffset,osStringTable.nSize,nValue));
                             break;
                     }
@@ -841,7 +841,7 @@ void MACHSectionHeaderWidget::reloadData()
 
             blockSignals(true);
 
-            XBinary::OFFSETSIZE osStringTable=mach.getStringTableOS();
+            XBinary::OFFSETSIZE osStringTable=mach.getStringTableOffsetSize();
 
             qint64 nHeaderOffset=getOffset();
 

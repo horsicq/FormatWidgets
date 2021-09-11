@@ -352,7 +352,7 @@ void MACHProcessData::_process()
 
         listLabels.append(tr("Name"));
 
-        XBinary::OFFSETSIZE osStringTable=g_pXMACH->getStringTableOS();
+        XBinary::OFFSETSIZE osStringTable=g_pXMACH->getStringTableOffsetSize();
 
         QList<XMACH::NLIST_RECORD> listRecords=g_pXMACH->getNlistRecords();
 
@@ -410,7 +410,7 @@ void MACHProcessData::_process()
 
         QList<XMACH::FUNCTION_RECORD> listRecords=g_pXMACH->getFunctionRecords(g_nOffset,g_nSize);
         QList<XMACH::NLIST_RECORD> listNlistRecords=g_pXMACH->getNlistRecords();
-        XBinary::OFFSETSIZE osStringTable=g_pXMACH->getStringTableOS();
+        XBinary::OFFSETSIZE osStringTable=g_pXMACH->getStringTableOffsetSize();
 
         int nNumberOfRecords=listRecords.count();
 
@@ -537,7 +537,7 @@ void MACHProcessData::_process()
 
         QList<XMACH::TOC_RECORD> listRecords=g_pXMACH->get_toc_list();
         QList<XMACH::NLIST_RECORD> listNlistRecords=g_pXMACH->getNlistRecords();
-        XBinary::OFFSETSIZE osStringTable=g_pXMACH->getStringTableOS();
+        XBinary::OFFSETSIZE osStringTable=g_pXMACH->getStringTableOffsetSize();
 
         int nNumberOfRecords=listRecords.count();
 
@@ -636,7 +636,7 @@ void MACHProcessData::_process()
 
         QList<XMACH::REFERENCE_RECORD> listRecords=g_pXMACH->get_extrefsyms_list();
         QList<XMACH::NLIST_RECORD> listNlistRecords=g_pXMACH->getNlistRecords();
-        XBinary::OFFSETSIZE osStringTable=g_pXMACH->getStringTableOS();
+        XBinary::OFFSETSIZE osStringTable=g_pXMACH->getStringTableOffsetSize();
 
         int nNumberOfRecords=listRecords.count();
 
@@ -671,7 +671,7 @@ void MACHProcessData::_process()
 
         QList<XMACH::VALUE32_RECORD> listRecords=g_pXMACH->get_indirectsyms_list();
         QList<XMACH::NLIST_RECORD> listNlistRecords=g_pXMACH->getNlistRecords();
-        XBinary::OFFSETSIZE osStringTable=g_pXMACH->getStringTableOS();
+        XBinary::OFFSETSIZE osStringTable=g_pXMACH->getStringTableOffsetSize();
 
         int nNumberOfRecords=listRecords.count();
 
