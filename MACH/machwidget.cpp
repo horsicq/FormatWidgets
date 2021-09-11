@@ -699,7 +699,7 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
                 case SMACH::TYPE_mach_uuid:
                     switch(nNdata)
                     {
-                        case N_mach_uuid::uuid:             mach.setUUID(sValue);               break;
+                        case N_mach_uuid::uuid:             mach.setModuleUUID(sValue);               break;
                     }
 
                     break;
@@ -1595,7 +1595,7 @@ void MACHWidget::reloadData()
 
                 blockSignals(true);
 
-                g_lineEdit_mach_uuid[N_mach_uuid::uuid]->setUUID(mach.getUUID());
+                g_lineEdit_mach_uuid[N_mach_uuid::uuid]->setUUID(mach.getModuleUUID());
 
                 blockSignals(false);
             }
