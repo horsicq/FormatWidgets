@@ -619,6 +619,8 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, in
                         case N_IMAGE_OPTIONAL_HEADER::SizeOfCode:                   addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfCode,HEADER_COLUMN_COMMENT,pe.bytesCountToString(nValue));                          break;
                         case N_IMAGE_OPTIONAL_HEADER::SizeOfInitializedData:        addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfInitializedData,HEADER_COLUMN_COMMENT,pe.bytesCountToString(nValue));               break;
                         case N_IMAGE_OPTIONAL_HEADER::SizeOfUninitializedData:      addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfUninitializedData,HEADER_COLUMN_COMMENT,pe.bytesCountToString(nValue));             break;
+                        case N_IMAGE_OPTIONAL_HEADER::SectionAlignment:             addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SectionAlignment,HEADER_COLUMN_COMMENT,pe.bytesCountToString(nValue));                    break;
+                        case N_IMAGE_OPTIONAL_HEADER::FileAlignment:                addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::FileAlignment,HEADER_COLUMN_COMMENT,pe.bytesCountToString(nValue));                       break;
 
                         case N_IMAGE_OPTIONAL_HEADER::AddressOfEntryPoint:          addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::AddressOfEntryPoint,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress(nValue));    break;
                         case N_IMAGE_OPTIONAL_HEADER::BaseOfCode:                   addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::BaseOfCode,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress(nValue));             break;
@@ -1096,6 +1098,8 @@ void PEWidget::reloadData()
                     addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfCode,HEADER_COLUMN_COMMENT,pe.bytesCountToString(oh64.SizeOfCode));
                     addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfInitializedData,HEADER_COLUMN_COMMENT,pe.bytesCountToString(oh64.SizeOfInitializedData));
                     addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfUninitializedData,HEADER_COLUMN_COMMENT,pe.bytesCountToString(oh64.SizeOfUninitializedData));
+                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SectionAlignment,HEADER_COLUMN_COMMENT,pe.bytesCountToString(oh64.SectionAlignment));
+                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::FileAlignment,HEADER_COLUMN_COMMENT,pe.bytesCountToString(oh64.FileAlignment));
                     // TODO more
                     addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::AddressOfEntryPoint,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress(&memoryMap,oh64.AddressOfEntryPoint));
                     addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::BaseOfCode,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress(&memoryMap,oh64.BaseOfCode));
@@ -1144,6 +1148,8 @@ void PEWidget::reloadData()
                     addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfCode,HEADER_COLUMN_COMMENT,pe.bytesCountToString(oh32.SizeOfCode));
                     addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfInitializedData,HEADER_COLUMN_COMMENT,pe.bytesCountToString(oh32.SizeOfInitializedData));
                     addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfUninitializedData,HEADER_COLUMN_COMMENT,pe.bytesCountToString(oh32.SizeOfUninitializedData));
+                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SectionAlignment,HEADER_COLUMN_COMMENT,pe.bytesCountToString(oh32.SectionAlignment));
+                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::FileAlignment,HEADER_COLUMN_COMMENT,pe.bytesCountToString(oh32.FileAlignment));
                     // TODO more
                     addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::AddressOfEntryPoint,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress(&memoryMap,oh32.AddressOfEntryPoint));
                     addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::BaseOfCode,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress(&memoryMap,oh32.BaseOfCode));
