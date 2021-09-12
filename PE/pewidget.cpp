@@ -616,9 +616,13 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, in
                 case SPE::TYPE_IMAGE_OPTIONAL_HEADER:
                     switch(nNdata)
                     {
-                        case N_IMAGE_OPTIONAL_HEADER::AddressOfEntryPoint:          addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::AddressOfEntryPoint,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress((quint32)nValue));   break;
-                        case N_IMAGE_OPTIONAL_HEADER::BaseOfCode:                   addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::BaseOfCode,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress((quint32)nValue));            break;
-                        case N_IMAGE_OPTIONAL_HEADER::BaseOfData:                   addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::BaseOfData,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress((quint32)nValue));            break;
+                        case N_IMAGE_OPTIONAL_HEADER::SizeOfCode:                   addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfCode,HEADER_COLUMN_COMMENT,pe.bytesCountToString(nValue));                          break;
+                        case N_IMAGE_OPTIONAL_HEADER::SizeOfInitializedData:        addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfInitializedData,HEADER_COLUMN_COMMENT,pe.bytesCountToString(nValue));               break;
+                        case N_IMAGE_OPTIONAL_HEADER::SizeOfUninitializedData:      addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfUninitializedData,HEADER_COLUMN_COMMENT,pe.bytesCountToString(nValue));             break;
+
+                        case N_IMAGE_OPTIONAL_HEADER::AddressOfEntryPoint:          addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::AddressOfEntryPoint,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress(nValue));    break;
+                        case N_IMAGE_OPTIONAL_HEADER::BaseOfCode:                   addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::BaseOfCode,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress(nValue));             break;
+                        case N_IMAGE_OPTIONAL_HEADER::BaseOfData:                   addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::BaseOfData,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress(nValue));             break;
                     }
                     break;
 
@@ -1089,6 +1093,9 @@ void PEWidget::reloadData()
                     comboBox[CB_IMAGE_OPTIONAL_HEADER_Subsystem]->setValue(oh64.Subsystem);
                     comboBox[CB_IMAGE_OPTIONAL_HEADER_DllCharacteristics]->setValue(oh64.DllCharacteristics);
 
+                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfCode,HEADER_COLUMN_COMMENT,pe.bytesCountToString(oh64.SizeOfCode));
+                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfInitializedData,HEADER_COLUMN_COMMENT,pe.bytesCountToString(oh64.SizeOfInitializedData));
+                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfUninitializedData,HEADER_COLUMN_COMMENT,pe.bytesCountToString(oh64.SizeOfUninitializedData));
                     // TODO more
                     addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::AddressOfEntryPoint,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress(&memoryMap,oh64.AddressOfEntryPoint));
                     addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::BaseOfCode,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress(&memoryMap,oh64.BaseOfCode));
@@ -1134,6 +1141,9 @@ void PEWidget::reloadData()
                     comboBox[CB_IMAGE_OPTIONAL_HEADER_Subsystem]->setValue(oh32.Subsystem);
                     comboBox[CB_IMAGE_OPTIONAL_HEADER_DllCharacteristics]->setValue(oh32.DllCharacteristics);
 
+                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfCode,HEADER_COLUMN_COMMENT,pe.bytesCountToString(oh32.SizeOfCode));
+                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfInitializedData,HEADER_COLUMN_COMMENT,pe.bytesCountToString(oh32.SizeOfInitializedData));
+                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfUninitializedData,HEADER_COLUMN_COMMENT,pe.bytesCountToString(oh32.SizeOfUninitializedData));
                     // TODO more
                     addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::AddressOfEntryPoint,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress(&memoryMap,oh32.AddressOfEntryPoint));
                     addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::BaseOfCode,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress(&memoryMap,oh32.BaseOfCode));
