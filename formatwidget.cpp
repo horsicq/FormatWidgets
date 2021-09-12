@@ -668,8 +668,9 @@ qint32 FormatWidget::getColumnWidth(QWidget *pParent, FormatWidget::CW cw, XBina
 void FormatWidget::_showInDisasmWindowAddress(qint64 nAddress)
 {
     Q_UNUSED(nAddress)
-
+#ifdef QT_DEBUG
     qDebug("TODO _showInDisasmWindowAddress");
+#endif
 }
 
 void FormatWidget::_showInDisasmWindowOffset(qint64 nOffset)
