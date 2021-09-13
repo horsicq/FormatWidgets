@@ -968,7 +968,7 @@ void ELFWidget::on_tableView_Elf_Shdr_customContextMenuRequested(const QPoint &p
 
         QAction actionEntropy(tr("Entropy"),this);
         connect(&actionEntropy, SIGNAL(triggered()), this, SLOT(sectionEntropy()));
-        actionHex.setEnabled(bIsEnable);
+        actionEntropy.setEnabled(bIsEnable);
         contextMenu.addAction(&actionEntropy);
 
         contextMenu.exec(ui->tableView_Elf_Shdr->viewport()->mapToGlobal(pos));
@@ -1050,7 +1050,7 @@ void ELFWidget::on_tableView_Elf_Phdr_customContextMenuRequested(const QPoint &p
 
         QAction actionEntropy(tr("Entropy"),this);
         connect(&actionEntropy, SIGNAL(triggered()), this, SLOT(programEntropy()));
-        actionHex.setEnabled(bIsEnable);
+        actionEntropy.setEnabled(bIsEnable);
         contextMenu.addAction(&actionEntropy);
 
         contextMenu.exec(ui->tableView_Elf_Phdr->viewport()->mapToGlobal(pos));

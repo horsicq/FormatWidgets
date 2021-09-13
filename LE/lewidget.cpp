@@ -623,7 +623,7 @@ void LEWidget::on_tableView_Objects_customContextMenuRequested(const QPoint &pos
 
         QAction actionEntropy(tr("Entropy"),this);
 //        connect(&actionEntropy, SIGNAL(triggered()), this, SLOT(sectionEntropy()));
-        actionHex.setEnabled(bIsEnable);
+        actionEntropy.setEnabled(bIsEnable);
         contextMenu.addAction(&actionEntropy);
 
         contextMenu.exec(ui->tableView_Objects->viewport()->mapToGlobal(pos));
