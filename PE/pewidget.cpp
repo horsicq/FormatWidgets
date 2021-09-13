@@ -2740,10 +2740,10 @@ void PEWidget::editDirectoryHeader()
 
 void PEWidget::directoryHex()
 {
-    // TODO
+    showSectionHex(ui->tableWidget_IMAGE_DIRECTORY_ENTRIES);
 }
 
 void PEWidget::directoryEntropy()
 {
-    // TODO
+    showSectionEntropy(ui->tableWidget_IMAGE_DIRECTORY_ENTRIES);
 }
