@@ -2704,3 +2704,11 @@ void PEWidget::formatXML()
         }
     }
 }
+
+void PEWidget::on_tableWidget_IMAGE_DIRECTORY_ENTRIES_customContextMenuRequested(const QPoint &pos)
+{
+    // TODO
+    // Edit
+    // Hex
+    // Entropy
+}
