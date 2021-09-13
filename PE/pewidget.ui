@@ -148,7 +148,7 @@
      </widget>
      <widget class="QStackedWidget" name="stackedWidgetInfo">
       <property name="currentIndex">
-       <number>29</number>
+       <number>18</number>
       </property>
       <widget class="QWidget" name="page_HEX">
        <layout class="QVBoxLayout" name="verticalLayout_13">
@@ -1026,6 +1026,30 @@
          <number>0</number>
         </property>
         <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <item>
+           <widget class="QCheckBox" name="checkBox_ManifestFormat">
+            <property name="text">
+             <string>Format</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_5">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item>
          <widget class="QTextEdit" name="textEditResources_Manifest">
           <property name="readOnly">
            <bool>true</bool>
@@ -1568,7 +1592,7 @@
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <widget class="QWidget" name="">
+          <widget class="QWidget" name="layoutWidget">
            <layout class="QVBoxLayout" name="verticalLayout_36">
             <item>
              <widget class="QWidget" name="widgetCertificateCheck" native="true">

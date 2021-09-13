@@ -49,6 +49,8 @@ PEWidget::PEWidget(QWidget *pParent) :
     ui->groupBoxHash32->setTitle(QString("%1 32").arg(tr("Hash")));
     ui->groupBoxHash64->setTitle(QString("%1 64").arg(tr("Hash")));
 
+    ui->checkBox_ManifestFormat->setChecked(true);
+
 #if defined(_MSC_VER)
     ui->widgetCertificateCheck->show();
 #else
@@ -1427,11 +1429,7 @@ void PEWidget::reloadData()
         {
             if(!isInitPresent(sInit))
             {
-                ui->textEditResources_Manifest->clear();
-
-                QString sManifest=pe.getResourceManifest();
-
-                ui->textEditResources_Manifest->setText(sManifest);
+                formatXML();
             }
         }
         else if(nType==SPE::TYPE_EXCEPTION)
@@ -2675,5 +2673,34 @@ void PEWidget::on_pushButtonCertificateCheck_clicked()
         PEProcessData peProcessData(SPE::TYPE_CERTIFICATE_CHECK,&tvModel[SPE::TYPE_CERTIFICATE_CHECK],&pe,0,0,0);
 
         ajustDialogModel(&peProcessData,&tvModel[SPE::TYPE_CERTIFICATE_CHECK],tr("Certificate"));
+    }
+}
+
+void PEWidget::on_checkBox_ManifestFormat_stateChanged(int nState)
+{
+    Q_UNUSED(nState)
+
+    formatXML();
+}
+
+void PEWidget::formatXML()
+{
+    if(getDevice())
+    {
+        XPE pe(getDevice(),getOptions().bIsImage,getOptions().nImageBase);
+
+        if(pe.isValid())
+        {
+            ui->textEditResources_Manifest->clear();
+
+            QString sManifest=pe.getResourceManifest();
+
+            if(ui->checkBox_ManifestFormat->isChecked())
+            {
+                sManifest=XBinary::formatXML(sManifest);
+            }
+
+            ui->textEditResources_Manifest->setText(sManifest);
+        }
     }
 }

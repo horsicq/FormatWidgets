@@ -130,6 +130,8 @@ private slots:
     void on_tableView_ImportFunctions_customContextMenuRequested(const QPoint &pos);
 
     void on_pushButtonCertificateCheck_clicked();
+    void on_checkBox_ManifestFormat_stateChanged(int nState);
+    void formatXML();
 
 private:
     enum CB
