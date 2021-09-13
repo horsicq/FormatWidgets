@@ -128,10 +128,13 @@ private slots:
     void on_toolButtonNext_clicked();
     void on_checkBoxExportShowValid_stateChanged(int arg1);
     void on_tableView_ImportFunctions_customContextMenuRequested(const QPoint &pos);
-
     void on_pushButtonCertificateCheck_clicked();
     void on_checkBox_ManifestFormat_stateChanged(int nState);
     void formatXML();
+    void on_tableWidget_IMAGE_DIRECTORY_ENTRIES_customContextMenuRequested(const QPoint &pos);
+    void editDirectoryHeader();
+    void directoryHex();
+    void directoryEntropy();
 
 private:
     enum CB

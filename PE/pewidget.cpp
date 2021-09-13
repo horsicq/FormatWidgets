@@ -1899,7 +1899,7 @@ void PEWidget::on_tableView_Sections_customContextMenuRequested(const QPoint &po
 
         QAction actionEntropy(tr("Entropy"),this);
         connect(&actionEntropy, SIGNAL(triggered()), this, SLOT(sectionEntropy()));
-        actionHex.setEnabled(bIsEnable);
+        actionEntropy.setEnabled(bIsEnable);
         contextMenu.addAction(&actionEntropy);
 
         contextMenu.exec(ui->tableView_Sections->viewport()->mapToGlobal(pos));
@@ -2707,8 +2707,43 @@ void PEWidget::formatXML()
 
 void PEWidget::on_tableWidget_IMAGE_DIRECTORY_ENTRIES_customContextMenuRequested(const QPoint &pos)
 {
+    int nRow=ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->currentIndex().row();
+
+    if(nRow!=-1)
+    {
+        bool bIsEnable=getTableViewItemSize(ui->tableWidget_IMAGE_DIRECTORY_ENTRIES);
+
+        QMenu contextMenu(this);
+
+        QAction actionEdit(tr("Edit"),this);
+        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editDirectoryHeader()));
+        contextMenu.addAction(&actionEdit);
+
+        QAction actionHex(tr("Hex"),this);
+        connect(&actionHex, SIGNAL(triggered()), this, SLOT(directoryHex()));
+        actionHex.setEnabled(bIsEnable);
+        contextMenu.addAction(&actionHex);
+
+        QAction actionEntropy(tr("Entropy"),this);
+        connect(&actionEntropy, SIGNAL(triggered()), this, SLOT(directoryEntropy()));
+        actionEntropy.setEnabled(bIsEnable);
+        contextMenu.addAction(&actionEntropy);
+
+        contextMenu.exec(ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->viewport()->mapToGlobal(pos));
+    }
+}
+
+void PEWidget::editDirectoryHeader()
+{
     // TODO
-    // Edit
-    // Hex
-    // Entropy
+}
+
+void PEWidget::directoryHex()
+{
+    // TODO
+}
+
+void PEWidget::directoryEntropy()
+{
+    // TODO
 }
