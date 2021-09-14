@@ -82,6 +82,12 @@ PESectionHeaderWidget::PESectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS
         g_nComboBoxSize=N_IMAGE_BOUNDIMPORT::__CB_size;
         g_nInvWidgetSize=N_IMAGE_BOUNDIMPORT::__INV_size;
     }
+    else if(nType==SPE::TYPE_IMAGE_DIRECTORY_ENTRIES)
+    {
+        g_nLineEditSize=N_IMAGE_DATA_DIRECTORY::__data_size;
+        g_nComboBoxSize=N_IMAGE_DATA_DIRECTORY::__CB_size;
+        g_nInvWidgetSize=N_IMAGE_DATA_DIRECTORY::__INV_size;
+    }
 
     if(g_nLineEditSize)
     {
@@ -282,6 +288,14 @@ FormatWidget::SV PESectionHeaderWidget::_setValue(QVariant vValue, int nStype, i
                         case N_IMAGE_BOUNDIMPORT::NumberOfModuleForwarderRefs:  pe.setBoundImport_NumberOfModuleForwarderRefs(nPosition,(quint16)nValue);   break;
                     }
                     break;
+
+                case SPE::TYPE_IMAGE_DIRECTORY_ENTRIES:
+                    switch(nNdata)
+                    {
+                        case N_IMAGE_DATA_DIRECTORY::Address:                        pe.setOptionalHeader_DataDirectory_VirtualAddress(nPosition,(quint32)nValue);       break;
+                        case N_IMAGE_DATA_DIRECTORY::Size:                           pe.setOptionalHeader_DataDirectory_Size(nPosition,(quint32)nValue);                 break;
+                    }
+                    break;
             }
 
             switch(nStype)
@@ -362,6 +376,12 @@ void PESectionHeaderWidget::adjustHeaderTable(int nType, QTableWidget *pTableWid
             break;
 
         case SPE::TYPE_BOUNDIMPORT:
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGMID,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINT32,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGMID,mode));
+            break;
+
+        case SPE::TYPE_IMAGE_DIRECTORY_ENTRIES:
             pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGMID,mode));
             pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINT32,mode));
             pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGMID,mode));
@@ -575,6 +595,26 @@ void PESectionHeaderWidget::reloadData()
             g_ppLinedEdit[N_IMAGE_BOUNDIMPORT::NumberOfModuleForwarderRefs]->setValue(boundImport.NumberOfModuleForwarderRefs);
 
             qint64 nSize=pe.getBoundImportRecordSize();
+            qint64 nAddress=pe.offsetToRelAddress(nOffset);
+
+            loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);
+
+            blockSignals(false);
+        }
+        else if(nType==SPE::TYPE_IMAGE_DIRECTORY_ENTRIES)
+        {
+            createHeaderTable(SPE::TYPE_IMAGE_DIRECTORY_ENTRIES,ui->tableWidget,N_IMAGE_DATA_DIRECTORY::records,g_ppLinedEdit,N_IMAGE_DATA_DIRECTORY::__data_size,getNumber());
+
+            blockSignals(true);
+
+            qint64 nOffset=pe.getDataDirectoryHeaderOffset(getNumber());
+
+            XPE_DEF::IMAGE_DATA_DIRECTORY dataDirectory=pe.read_IMAGE_DATA_DIRECTORY(nOffset);
+
+            g_ppLinedEdit[N_IMAGE_DATA_DIRECTORY::Address]->setValue(dataDirectory.VirtualAddress);
+            g_ppLinedEdit[N_IMAGE_DATA_DIRECTORY::Size]->setValue(dataDirectory.Size);
+
+            qint64 nSize=pe.getDataDirectoryHeaderSize();
             qint64 nAddress=pe.offsetToRelAddress(nOffset);
 
             loadHexSubdevice(nOffset,nSize,nAddress,&g_pSubDevice,ui->widgetHex);

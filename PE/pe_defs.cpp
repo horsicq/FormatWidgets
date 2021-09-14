@@ -282,13 +282,12 @@ const FW_DEF::HEADER_RECORD records64[]=
 };
 }
 
-namespace N_IMAGE_DIRECORIES
+namespace N_IMAGE_DATA_DIRECTORY
 {
 const FW_DEF::HEADER_RECORD records[]=
 {
-    {Name,                  QObject::tr("Name"),        0,  0,      "",             FW_DEF::VAL_TYPE_LABEL},
-    {Address,               QObject::tr("Address"),     4,  4,      "DWORD",        FW_DEF::VAL_TYPE_RELADDRESS},
-    {Size,                  QObject::tr("Size"),        8,  4,      "DWORD",        FW_DEF::VAL_TYPE_SIZE},
+    {Address,               QObject::tr("Address"),     0,  4,      "DWORD",        FW_DEF::VAL_TYPE_RELADDRESS},
+    {Size,                  QObject::tr("Size"),        4,  4,      "DWORD",        FW_DEF::VAL_TYPE_SIZE},
 };
 }
 

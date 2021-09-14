@@ -259,12 +259,21 @@ extern const FW_DEF::HEADER_RECORD records32[__data_size];
 extern const FW_DEF::HEADER_RECORD records64[__data_size];
 }
 
-namespace N_IMAGE_DIRECORIES
+namespace N_IMAGE_DATA_DIRECTORY
 {
+enum CB
+{
+    __CB_size
+};
+
+enum INV
+{
+    __INV_size
+};
+
 enum DATA
 {
-    Name=0,
-    Address,
+    Address=0,
     Size,
     __data_size
 };
