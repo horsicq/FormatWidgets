@@ -691,11 +691,22 @@ void PEProcessData::_process()
             {
                 XPE::XCERT_INFO xsertInfo=XPE::getCertInfo(sFileName);
 
-                QStandardItem *pStatus=new QStandardItem(xsertInfo.sStatus);
-//                pStatus->appendColumn(new QStandardItem(tr("Status")));
-//                pStatus->appendColumn(new QStandardItem(xsertInfo.sStatus));
+                (*g_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Status"),xsertInfo.sStatus)));
 
-                (*g_ppModel)->appendRow(pStatus);
+                if(xsertInfo.sProgramName!="")
+                {
+                    (*g_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Program name"),xsertInfo.sProgramName)));
+                }
+
+                if(xsertInfo.sPublisher!="")
+                {
+                    (*g_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Publisher"),xsertInfo.sPublisher)));
+                }
+
+                if(xsertInfo.sMoreInfo!="")
+                {
+                    (*g_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("More info"),xsertInfo.sMoreInfo)));
+                }
             }
         }
     }

@@ -37,7 +37,14 @@ void DialogModelInfo::setData(QString sTitle, QStandardItemModel *pModel)
 {
     setWindowTitle(sTitle);
 
-    ui->tableViewMain->setModel(pModel);
+    int nNumberOfRecords=pModel->rowCount();
+
+    for(int i=0;i<nNumberOfRecords;i++)
+    {
+        QString sText=pModel->item(i)->text();
+
+        ui->textEdit->append(sText);
+    }
 }
 
 void DialogModelInfo::on_pushButtonOK_clicked()
