@@ -640,7 +640,7 @@
             <number>21</number>
            </attribute>
           </widget>
-          <widget class="QWidget" name="layoutWidget">
+          <widget class="QWidget" name="layoutWidget_X1">
            <layout class="QVBoxLayout" name="verticalLayout_8">
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -728,7 +728,7 @@
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <widget class="QWidget" name="layoutWidget">
+          <widget class="QWidget" name="layoutWidget_X2">
            <layout class="QVBoxLayout" name="verticalLayout_30">
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -1595,7 +1595,7 @@
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <widget class="QWidget" name="layoutWidget">
+          <widget class="QWidget" name="layoutWidget_X3">
            <layout class="QVBoxLayout" name="verticalLayout_36">
             <item>
              <widget class="QWidget" name="widgetCertificateCheck" native="true">
