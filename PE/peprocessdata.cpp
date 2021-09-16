@@ -707,6 +707,8 @@ void PEProcessData::_process()
                 {
                     (*g_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("More info"),xsertInfo.sMoreInfo)));
                 }
+
+                (*g_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Serial number"),xsertInfo.sSerialNumber)));
             }
         }
     }

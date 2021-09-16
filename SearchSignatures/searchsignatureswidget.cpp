@@ -138,7 +138,7 @@ void SearchSignaturesWidget::on_pushButtonSave_clicked()
 
         if(!sFileName.isEmpty())
         {
-            XOptions::saveTable(g_pModel,sFileName);
+            XOptions::saveModel(g_pModel,sFileName);
         }
     }
 }

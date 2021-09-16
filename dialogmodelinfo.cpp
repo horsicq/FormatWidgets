@@ -26,6 +26,8 @@ DialogModelInfo::DialogModelInfo(QWidget *pParent) :
     ui(new Ui::DialogModelInfo)
 {
     ui->setupUi(this);
+
+    g_pDevice=0;
 }
 
 DialogModelInfo::~DialogModelInfo()
@@ -33,8 +35,11 @@ DialogModelInfo::~DialogModelInfo()
     delete ui;
 }
 
-void DialogModelInfo::setData(QString sTitle, QStandardItemModel *pModel)
+void DialogModelInfo::setData(QIODevice *pDevice, QString sTitle, QStandardItemModel *pModel)
 {
+    g_pDevice=pDevice;
+    g_sTitle=sTitle;
+
     setWindowTitle(sTitle);
 
     int nNumberOfRecords=pModel->rowCount();
@@ -54,5 +59,11 @@ void DialogModelInfo::on_pushButtonOK_clicked()
 
 void DialogModelInfo::on_pushButtonSave_clicked()
 {
-    // TODO
+    QString sFileName=XBinary::getResultFileName(g_pDevice,QString("%1.txt").arg(g_sTitle));
+    sFileName=QFileDialog::getSaveFileName(this, tr("Save file"),sFileName, QString("%1 (*.txt);;%2 (*)").arg(tr("Text files"),tr("All files")));
+
+    if(!sFileName.isEmpty())
+    {
+        XOptions::saveTextEdit(ui->textEdit,sFileName);
+    }
 }

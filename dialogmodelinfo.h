@@ -23,6 +23,9 @@
 
 #include <QDialog>
 #include <QStandardItemModel>
+#include <QFileDialog>
+#include "xoptions.h"
+#include "xbinary.h"
 
 namespace Ui {
 class DialogModelInfo;
@@ -35,15 +38,16 @@ class DialogModelInfo : public QDialog
 public:
     explicit DialogModelInfo(QWidget *pParent=nullptr);
     ~DialogModelInfo();
-    void setData(QString sTitle,QStandardItemModel *pModel);
+    void setData(QIODevice *pDevice,QString sTitle,QStandardItemModel *pModel);
 
 private slots:
     void on_pushButtonOK_clicked();
-
     void on_pushButtonSave_clicked();
 
 private:
     Ui::DialogModelInfo *ui;
+    QIODevice *g_pDevice;
+    QString g_sTitle;
 };
 
 #endif // DIALOGMODELINFO_H

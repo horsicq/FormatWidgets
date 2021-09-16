@@ -396,7 +396,7 @@ void FormatWidget::ajustDialogModel(ProcessData *pProcessData, QStandardItemMode
 
     DialogModelInfo dialogModelInfo(this);
 
-    dialogModelInfo.setData(sTitle,*ppModel);
+    dialogModelInfo.setData(getDevice(),sTitle,*ppModel);
 
     dialogModelInfo.exec();
 }
