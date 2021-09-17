@@ -693,22 +693,16 @@ void PEProcessData::_process()
 
                 (*g_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Status"),xsertInfo.sStatus)));
 
-                if(xsertInfo.sProgramName!="")
-                {
-                    (*g_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Program name"),xsertInfo.sProgramName)));
-                }
-
-                if(xsertInfo.sPublisher!="")
-                {
-                    (*g_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Publisher"),xsertInfo.sPublisher)));
-                }
-
-                if(xsertInfo.sMoreInfo!="")
-                {
-                    (*g_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("More info"),xsertInfo.sMoreInfo)));
-                }
-
-                (*g_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Serial number"),xsertInfo.sSerialNumber)));
+                if(xsertInfo.sProgramName!="")      (*g_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Program name"),xsertInfo.sProgramName)));
+                if(xsertInfo.sPublisher!="")        (*g_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Publisher"),xsertInfo.sPublisher)));
+                if(xsertInfo.sMoreInfo!="")         (*g_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("More info"),xsertInfo.sMoreInfo)));
+                if(xsertInfo.sSerialNumber!="")     (*g_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Serial number"),xsertInfo.sSerialNumber)));
+                if(xsertInfo.sIssuer!="")           (*g_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Issuer"),xsertInfo.sIssuer)));
+                if(xsertInfo.sSubject!="")          (*g_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Subject"),xsertInfo.sSubject)));
+                if(xsertInfo.sAlgorithm!="")        (*g_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Algorithm"),xsertInfo.sAlgorithm)));
+                if(xsertInfo.sTSSerialNumber!="")   (*g_ppModel)->appendRow(new QStandardItem(QString("TS %1: %2").arg(tr("Serial number"),xsertInfo.sTSSerialNumber)));
+                if(xsertInfo.sTSIssuer!="")         (*g_ppModel)->appendRow(new QStandardItem(QString("TS %1: %2").arg(tr("Issuer"),xsertInfo.sTSIssuer)));
+                if(xsertInfo.sTSSubject!="")        (*g_ppModel)->appendRow(new QStandardItem(QString("TS %1: %2").arg(tr("Subject"),xsertInfo.sTSSubject)));
             }
         }
     }
