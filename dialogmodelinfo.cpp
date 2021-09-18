@@ -44,6 +44,7 @@ void DialogModelInfo::setData(QIODevice *pDevice, QString sTitle, QStandardItemM
 
     int nNumberOfRecords=pModel->rowCount();
 
+    // TODO columns
     for(int i=0;i<nNumberOfRecords;i++)
     {
         QString sText=pModel->item(i)->text();
