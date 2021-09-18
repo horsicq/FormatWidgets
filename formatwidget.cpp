@@ -903,9 +903,9 @@ bool FormatWidget::createListTable(int nType, QTableWidget *pTableWidget, const 
 
     for(int i=0; i<nNumberOfRecords; i++)
     {
-        QTableWidgetItem *newItemName=new QTableWidgetItem;
-        newItemName->setText(pRecords[i].sName);
-        pTableWidget->setItem(i,LIST_COLUMN_NAME,newItemName);
+        QTableWidgetItem *pItemName=new QTableWidgetItem;
+        pItemName->setText(pRecords[i].sName);
+        pTableWidget->setItem(i,LIST_COLUMN_NAME,pItemName);
 
         ppLineEdits[i]=new XLineEditHEX(this);
 
