@@ -444,6 +444,7 @@ void PEProcessData::_process()
         QList<QString> listLabels;
         listLabels.append("");
         listLabels.append(tr("Address"));
+        listLabels.append("");
 
         QList<qint64> listCallbacks=g_pPE->getTLS_CallbacksList();
 
@@ -465,12 +466,14 @@ void PEProcessData::_process()
             (*g_ppModel)->setItem(i,0,      pItem);
             if(bIs64)
             {
-                (*g_ppModel)->setItem(i,1,      new QStandardItem(XBinary::valueToHex((quint64)listCallbacks.at(i))));
+                (*g_ppModel)->setItem(i,1,  new QStandardItem(XBinary::valueToHex((quint64)listCallbacks.at(i))));
             }
             else
             {
-                (*g_ppModel)->setItem(i,1,      new QStandardItem(XBinary::valueToHex((quint32)listCallbacks.at(i))));
+                (*g_ppModel)->setItem(i,1,  new QStandardItem(XBinary::valueToHex((quint32)listCallbacks.at(i))));
             }
+
+            (*g_ppModel)->setItem(i,2,      new QStandardItem(g_pPE->getMemoryRecordInfoByRelAddress((quint32)listCallbacks.at(i))));
 
             incValue();
         }

@@ -1559,7 +1559,7 @@ void PEWidget::reloadData()
             {
                 PEProcessData peProcessData(SPE::TYPE_TLSCALLBACKS,&tvModel[SPE::TYPE_TLSCALLBACKS],&pe,0,0,0);
 
-                ajustTableView(&peProcessData,&tvModel[SPE::TYPE_TLSCALLBACKS],ui->tableView_TLSCallbacks,nullptr,false);
+                ajustTableView(&peProcessData,&tvModel[SPE::TYPE_TLSCALLBACKS],ui->tableView_TLSCallbacks,nullptr,true);
 
                 // connect(ui->tableView_Sections->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_Sections_currentRowChanged(QModelIndex,QModelIndex)));
 
@@ -2770,4 +2770,25 @@ void PEWidget::directoryHex()
 void PEWidget::directoryEntropy()
 {
     showSectionEntropy(ui->tableWidget_IMAGE_DIRECTORY_ENTRIES);
+}
+
+void PEWidget::on_tableView_TLSCallbacks_customContextMenuRequested(const QPoint &pos)
+{
+    int nRow=ui->tableView_TLSCallbacks->currentIndex().row();
+
+    if(nRow!=-1)
+    {
+        QMenu contextMenu(this);
+
+        QAction actionDisasm(tr("Disasm"),this);
+        connect(&actionDisasm, SIGNAL(triggered()), this, SLOT(disasmTLSCallback()));
+        contextMenu.addAction(&actionDisasm);
+
+        contextMenu.exec(ui->tableView_TLSCallbacks->viewport()->mapToGlobal(pos));
+    }
+}
+
+void PEWidget::disasmTLSCallback()
+{
+    showSectionDisasm(ui->tableView_TLSCallbacks);
 }

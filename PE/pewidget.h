@@ -135,6 +135,8 @@ private slots:
     void editDirectoryHeader();
     void directoryHex();
     void directoryEntropy();
+    void on_tableView_TLSCallbacks_customContextMenuRequested(const QPoint &pos);
+    void disasmTLSCallback();
 
 private:
     enum CB
