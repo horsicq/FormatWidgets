@@ -440,7 +440,24 @@ void PEProcessData::_process()
     }
     else if(g_nType==SPE::TYPE_TLSCALLBACKS)
     {
-        // TODO
+        QList<QString> listLabels;
+        listLabels.append("");
+        listLabels.append(tr("Address"));
+
+        QList<qint64> listCallbacks=g_pPE->getTLS_CallbacksList();
+
+        int nNumberOfRecords=listCallbacks.count();
+
+        *g_ppModel=new QStandardItemModel(nNumberOfRecords,listLabels.count());
+
+        setMaximum(nNumberOfRecords);
+
+        setHeader(*g_ppModel,&listLabels);
+
+        for(int i=0; (i<nNumberOfRecords)&&(isRun()); i++)
+        {
+            // TODO
+        }
     }
     else if(g_nType==SPE::TYPE_DELAYIMPORT_FUNCTION)
     {
