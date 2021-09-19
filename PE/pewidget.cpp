@@ -204,12 +204,14 @@ void PEWidget::reload()
 
         if(pe.isTLSPresent())
         {
-            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_TLS,QString("TLS")));
-        }
+            QTreeWidgetItem *pTLS=createNewItem(SPE::TYPE_TLS,QString("TLS"));
 
-        if(pe.isTLSCallbacksPresent(&memoryMap))
-        {
-            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_TLSCALLBACKS,QString("TLS %1").arg(tr("Callbacks"))));
+            ui->treeWidgetNavi->addTopLevelItem(pTLS);
+
+            if(pe.isTLSCallbacksPresent(&memoryMap))
+            {
+                pTLS->addChild(createNewItem(SPE::TYPE_TLSCALLBACKS,QString("TLS %1").arg(tr("Callbacks"))));
+            }
         }
 
         if(pe.isLoadConfigPresent())
@@ -1548,6 +1550,13 @@ void PEWidget::reloadData()
                 loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_TLS],ui->widgetHex_TLS);
 
                 blockSignals(false);
+            }
+        }
+        else if(nType==SPE::TYPE_TLSCALLBACKS)
+        {
+            if(!isInitPresent(sInit))
+            {
+                // TODO
             }
         }
         else if(nType==SPE::TYPE_LOADCONFIG)

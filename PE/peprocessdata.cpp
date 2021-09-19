@@ -438,6 +438,10 @@ void PEProcessData::_process()
             incValue();
         }
     }
+    else if(g_nType==SPE::TYPE_TLSCALLBACKS)
+    {
+        // TODO
+    }
     else if(g_nType==SPE::TYPE_DELAYIMPORT_FUNCTION)
     {
         QList<QString> listLabels;
