@@ -138,6 +138,8 @@ void PEWidget::reload()
 
     if(pe.isValid())
     {
+        XBinary::_MEMORY_MAP memoryMap=pe.getMemoryMap();
+
         setFileType(pe.getFileType());
 
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_HEX,tr("Hex")));
@@ -205,7 +207,10 @@ void PEWidget::reload()
             ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_TLS,QString("TLS")));
         }
 
-        // TODO TLS callbacks
+        if(pe.isTLSCallbacksPresent(&memoryMap))
+        {
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_TLSCALLBACKS,QString("TLS %1").arg(tr("Callbacks"))));
+        }
 
         if(pe.isLoadConfigPresent())
         {
@@ -228,7 +233,6 @@ void PEWidget::reload()
             ui->treeWidgetNavi->addTopLevelItem(pNetHeader);
 
             XPE::CLI_INFO cliInfo=pe.getCliInfo(true);
-            XBinary::_MEMORY_MAP memoryMap=pe.getMemoryMap();
 
             if(pe.isNetMetadataPresent(&cliInfo,&memoryMap))
             {
@@ -2020,7 +2024,7 @@ void PEWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
             break;
 
         case SPE::TYPE_EXPORT:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGMID,mode));
             pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINTMODE,mode));
             pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGMID,mode));
             break;
