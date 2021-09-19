@@ -192,6 +192,11 @@ void PEWidget::reload()
             ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_EXCEPTION,tr("Exceptions")));
         }
 
+        if(pe.isSignPresent())
+        {
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_CERTIFICATE,tr("Certificate")));
+        }
+
         if(pe.isRelocsPresent())
         {
             ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_RELOCS,tr("Relocs")));
@@ -216,17 +221,17 @@ void PEWidget::reload()
 
         if(pe.isLoadConfigPresent())
         {
-            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_LOADCONFIG,QString("Load Config")));
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_LOADCONFIG,tr("Load config")));
         }
 
         if(pe.isBoundImportPresent())
         {
-            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_BOUNDIMPORT,QString("Bound import")));
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_BOUNDIMPORT,tr("Bound import")));
         }
 
         if(pe.isDelayImportPresent())
         {
-            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_DELAYIMPORT,QString("Delay import")));
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_DELAYIMPORT,tr("Delay import")));
         }
 
         if(pe.isNETPresent())
@@ -253,11 +258,6 @@ void PEWidget::reload()
             }
 
             // TODO NET Resources
-        }
-
-        if(pe.isSignPresent())
-        {
-            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_CERTIFICATE,tr("Certificate")));
         }
 
         if(pe.isOverlayPresent())
