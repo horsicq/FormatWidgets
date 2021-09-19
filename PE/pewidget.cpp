@@ -1232,6 +1232,8 @@ void PEWidget::reloadData()
                     pItemNumber->setData(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE,dd.Size);
                     pItemNumber->setData(Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET,pe.getDataDirectoryHeaderOffset(i));
 
+                    addComment(ui->tableWidget_IMAGE_DIRECTORY_ENTRIES,i,4,pe.bytesCountToString(dd.Size));
+
                     if(i!=XPE_DEF::S_IMAGE_DIRECTORY_ENTRY_SECURITY)
                     {
                         pItemNumber->setData(Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS,dd.VirtualAddress);
@@ -1239,7 +1241,6 @@ void PEWidget::reloadData()
 
                         if((dd.VirtualAddress)&&(pe.isRelAddressValid(&memoryMap,dd.VirtualAddress)))
                         {
-                            addComment(ui->tableWidget_IMAGE_DIRECTORY_ENTRIES,i,4,pe.bytesCountToString(dd.Size));
                             addComment(ui->tableWidget_IMAGE_DIRECTORY_ENTRIES,i,5,pe.getMemoryRecordInfoByRelAddress(&memoryMap,dd.VirtualAddress));
                         }
                     }
@@ -1250,7 +1251,6 @@ void PEWidget::reloadData()
 
                         if((dd.VirtualAddress)&&(pe.isOffsetValid(&memoryMap,dd.VirtualAddress)))
                         {
-                            addComment(ui->tableWidget_IMAGE_DIRECTORY_ENTRIES,i,4,pe.bytesCountToString(dd.Size));
                             addComment(ui->tableWidget_IMAGE_DIRECTORY_ENTRIES,i,5,pe.getMemoryRecordInfoByOffset(&memoryMap,dd.VirtualAddress));
                         }
                     }
