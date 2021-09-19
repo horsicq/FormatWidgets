@@ -1209,7 +1209,7 @@ void PEWidget::reloadData()
         {
             if(!isInitPresent(sInit))
             {
-                createSectionTable(SPE::TYPE_IMAGE_DIRECTORY_ENTRIES,ui->tableWidget_IMAGE_DIRECTORY_ENTRIES,N_IMAGE_DATA_DIRECTORY::records,N_IMAGE_DATA_DIRECTORY::__data_size+1);
+                createSectionTable(SPE::TYPE_IMAGE_DIRECTORY_ENTRIES,ui->tableWidget_IMAGE_DIRECTORY_ENTRIES,N_IMAGE_DATA_DIRECTORY::records,N_IMAGE_DATA_DIRECTORY::__data_size);
 
                 blockSignals(true);
 
@@ -1223,6 +1223,7 @@ void PEWidget::reloadData()
                 for(int i=0; i<16; i++)
                 {
                     ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->setItem(i,4,new QTableWidgetItem()); // Comment
+                    ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->setItem(i,5,new QTableWidgetItem()); // Comment
 
                     XPE_DEF::IMAGE_DATA_DIRECTORY dd=pe.getOptionalHeader_DataDirectory((quint32)i);
 
@@ -1238,7 +1239,8 @@ void PEWidget::reloadData()
 
                         if((dd.VirtualAddress)&&(pe.isRelAddressValid(&memoryMap,dd.VirtualAddress)))
                         {
-                            addComment(ui->tableWidget_IMAGE_DIRECTORY_ENTRIES,i,4,pe.getMemoryRecordInfoByRelAddress(&memoryMap,dd.VirtualAddress));
+                            addComment(ui->tableWidget_IMAGE_DIRECTORY_ENTRIES,i,4,pe.bytesCountToString(dd.Size));
+                            addComment(ui->tableWidget_IMAGE_DIRECTORY_ENTRIES,i,5,pe.getMemoryRecordInfoByRelAddress(&memoryMap,dd.VirtualAddress));
                         }
                     }
                     else
@@ -1248,7 +1250,8 @@ void PEWidget::reloadData()
 
                         if((dd.VirtualAddress)&&(pe.isOffsetValid(&memoryMap,dd.VirtualAddress)))
                         {
-                            addComment(ui->tableWidget_IMAGE_DIRECTORY_ENTRIES,i,4,pe.getMemoryRecordInfoByOffset(&memoryMap,dd.VirtualAddress));
+                            addComment(ui->tableWidget_IMAGE_DIRECTORY_ENTRIES,i,4,pe.bytesCountToString(dd.Size));
+                            addComment(ui->tableWidget_IMAGE_DIRECTORY_ENTRIES,i,5,pe.getMemoryRecordInfoByOffset(&memoryMap,dd.VirtualAddress));
                         }
                     }
 
@@ -2125,11 +2128,13 @@ bool PEWidget::createSectionTable(int nType, QTableWidget *pTableWidget, const F
     switch(nType)
     {
         case SPE::TYPE_IMAGE_DIRECTORY_ENTRIES:
-            pTableWidget->setColumnCount(nNumberOfRecords+2);
+            pTableWidget->setColumnCount(nNumberOfRecords+4);
             pTableWidget->setColumnWidth(0,nSymbolWidth*3);
             pTableWidget->setColumnWidth(1,nSymbolWidth*12);
             pTableWidget->setColumnWidth(2,nSymbolWidth*8);
             pTableWidget->setColumnWidth(3,nSymbolWidth*8);
+            pTableWidget->setColumnWidth(4,nSymbolWidth*8);
+            slHeader.append("");
             slHeader.append("");
             break;
 
@@ -2147,13 +2152,20 @@ bool PEWidget::createSectionTable(int nType, QTableWidget *pTableWidget, const F
     switch(nType)
     {
         case SPE::TYPE_IMAGE_DIRECTORY_ENTRIES:
-            pTableWidget->horizontalHeader()->setSectionResizeMode(4,QHeaderView::Stretch);
+            slHeader.append("");
             slHeader.append("");
             break;
     }
 
     pTableWidget->setHorizontalHeaderLabels(slHeader);
     pTableWidget->horizontalHeader()->setVisible(true);
+
+    switch(nType)
+    {
+        case SPE::TYPE_IMAGE_DIRECTORY_ENTRIES:
+            pTableWidget->horizontalHeader()->setSectionResizeMode(5,QHeaderView::Stretch);
+            break;
+    }
 
     return true;
 }
