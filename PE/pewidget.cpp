@@ -251,8 +251,9 @@ void PEWidget::reload()
                                                          cliInfo.metaData.listStreams.at(i).nSize));
                 }
             }
+
+            // TODO NET Resources
         }
-        // TODO NET Resources
 
         if(pe.isSignPresent())
         {
