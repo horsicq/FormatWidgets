@@ -33,6 +33,8 @@ PEProcessData::PEProcessData(int nType, QStandardItemModel **ppModel, XPE *pPE, 
 
 void PEProcessData::_process()
 {
+    bool bIs64=g_pPE->is64();
+
     if(g_nType==SPE::TYPE_SECTIONS)
     {
         QList<QString> listLabels;
@@ -200,7 +202,6 @@ void PEProcessData::_process()
         listLabels.append(getStructList(N_IMAGE_IMPORT_FUNCTION::records32,N_IMAGE_IMPORT_FUNCTION::__data_size));
         listLabels.append("Name");
 
-        bool bIs64=g_pPE->is64();
         QList<XPE::IMPORT_POSITION> listImportPositions=g_pPE->getImportPositions(g_nNumber);
 
         int nNumberOfIPs=listImportPositions.count();
@@ -456,7 +457,22 @@ void PEProcessData::_process()
 
         for(int i=0; (i<nNumberOfRecords)&&(isRun()); i++)
         {
-            // TODO
+            QStandardItem *pItem=new QStandardItem;
+                        pItem->setData(i,Qt::DisplayRole);
+                        pItem->setData(listCallbacks.at(i),Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS);
+//                        pItem->setData(listCallbacks.at(i).SizeOfData,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
+//                        pItem->setData(listCallbacks.at(i).PointerToRawData,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+            (*g_ppModel)->setItem(i,0,      pItem);
+            if(bIs64)
+            {
+                (*g_ppModel)->setItem(i,1,      new QStandardItem(XBinary::valueToHex((quint64)listCallbacks.at(i))));
+            }
+            else
+            {
+                (*g_ppModel)->setItem(i,1,      new QStandardItem(XBinary::valueToHex((quint32)listCallbacks.at(i))));
+            }
+
+            incValue();
         }
     }
     else if(g_nType==SPE::TYPE_DELAYIMPORT_FUNCTION)
@@ -466,7 +482,6 @@ void PEProcessData::_process()
         listLabels.append(getStructList(N_IMAGE_DELAYIMPORT_FUNCTION::records32,N_IMAGE_DELAYIMPORT_FUNCTION::__data_size));
         listLabels.append(tr("Name"));
 
-        bool bIs64=g_pPE->is64();
         QList<XPE::DELAYIMPORT_POSITION> listDIP=g_pPE->getDelayImportPositions(g_nNumber);
 
         int nNumberOfDIPs=listDIP.count();
@@ -839,6 +854,11 @@ void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
         pTableView->setColumnWidth(4,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
         pTableView->setColumnWidth(5,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT16,mode));
         pTableView->setColumnWidth(6,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_STRINGMID,mode));
+    }
+    else if(g_nType==SPE::TYPE_TLSCALLBACKS)
+    {
+        pTableView->setColumnWidth(0,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT16,mode));
+        pTableView->setColumnWidth(1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
     }
 }
 

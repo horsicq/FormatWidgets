@@ -1557,7 +1557,16 @@ void PEWidget::reloadData()
         {
             if(!isInitPresent(sInit))
             {
-                // TODO
+                PEProcessData peProcessData(SPE::TYPE_TLSCALLBACKS,&tvModel[SPE::TYPE_TLSCALLBACKS],&pe,0,0,0);
+
+                ajustTableView(&peProcessData,&tvModel[SPE::TYPE_TLSCALLBACKS],ui->tableView_TLSCallbacks,nullptr,false);
+
+                // connect(ui->tableView_Sections->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_Sections_currentRowChanged(QModelIndex,QModelIndex)));
+
+                if(tvModel[SPE::TYPE_TLSCALLBACKS]->rowCount())
+                {
+                    ui->tableView_TLSCallbacks->setCurrentIndex(ui->tableView_TLSCallbacks->model()->index(0,0));
+                }
             }
         }
         else if(nType==SPE::TYPE_LOADCONFIG)
