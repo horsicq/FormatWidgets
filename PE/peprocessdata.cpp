@@ -458,22 +458,24 @@ void PEProcessData::_process()
 
         for(int i=0; (i<nNumberOfRecords)&&(isRun()); i++)
         {
+            qint64 nAddress=listCallbacks.at(i);
+
             QStandardItem *pItem=new QStandardItem;
                         pItem->setData(i,Qt::DisplayRole);
-                        pItem->setData(listCallbacks.at(i),Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS);
+                        pItem->setData(nAddress,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS);
 //                        pItem->setData(listCallbacks.at(i).SizeOfData,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
 //                        pItem->setData(listCallbacks.at(i).PointerToRawData,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
             (*g_ppModel)->setItem(i,0,      pItem);
             if(bIs64)
             {
-                (*g_ppModel)->setItem(i,1,  new QStandardItem(XBinary::valueToHex((quint64)listCallbacks.at(i))));
+                (*g_ppModel)->setItem(i,1,  new QStandardItem(XBinary::valueToHex((quint64)nAddress)));
             }
             else
             {
-                (*g_ppModel)->setItem(i,1,  new QStandardItem(XBinary::valueToHex((quint32)listCallbacks.at(i))));
+                (*g_ppModel)->setItem(i,1,  new QStandardItem(XBinary::valueToHex((quint32)nAddress)));
             }
 
-            (*g_ppModel)->setItem(i,2,      new QStandardItem(g_pPE->getMemoryRecordInfoByRelAddress((quint32)listCallbacks.at(i))));
+            (*g_ppModel)->setItem(i,2,      new QStandardItem(g_pPE->getMemoryRecordInfoByAddress(nAddress)));
 
             incValue();
         }
