@@ -174,7 +174,8 @@ enum DATA
     SizeOfHeapCommit,
     LoaderFlags,
     NumberOfRvaAndSizes,
-    __data_size
+    __data_size,
+    OperatingSystemVersion
 };
 
 extern const FW_DEF::HEADER_RECORD records32[__data_size];

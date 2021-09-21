@@ -1100,13 +1100,21 @@ void FormatWidget::_blockSignals(QObject **ppObjects, int nCount, bool bState)
     }
 }
 
-XComboBoxEx *FormatWidget::createComboBox(QTableWidget *pTableWidget, QMap<quint64, QString> mapData, int nType, int nData, XComboBoxEx::CBTYPE cbtype, quint64 nMask)
+XComboBoxEx *FormatWidget::createComboBox(QTableWidget *pTableWidget, QMap<quint64, QString> mapData, int nType, int nData, XComboBoxEx::CBTYPE cbtype, quint64 nMask, int nExtraData)
 {
     XComboBoxEx *result=new XComboBoxEx(this);
     result->setData(mapData,cbtype,nMask);
 
     result->setProperty("STYPE",nType);
-    result->setProperty("NDATA",nData);
+
+    if(nExtraData==-1)
+    {
+        result->setProperty("NDATA",nData);
+    }
+    else
+    {
+        result->setProperty("NDATA",nExtraData);
+    }
 
     connect(result,SIGNAL(valueChanged(quint64)),this,SLOT(widgetValueChanged(quint64)));
 

@@ -146,6 +146,7 @@ private:
         CB_IMAGE_FILE_HEADER_Machine,
         CB_IMAGE_FILE_HEADER_Characteristics,
         CB_IMAGE_OPTIONAL_HEADER_Magic,
+        CB_IMAGE_OPTIONAL_HEADER_OperationSystemVersion,
         CB_IMAGE_OPTIONAL_HEADER_Subsystem,
         CB_IMAGE_OPTIONAL_HEADER_DllCharacteristics,
         CB_IMAGE_NETHEADER_FLAGS,

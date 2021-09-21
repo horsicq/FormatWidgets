@@ -326,6 +326,12 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, in
                         case N_IMAGE_OPTIONAL_HEADER::BaseOfData:           invWidget[INV_IMAGE_OPTIONAL_HEADER_BaseOfData]->setAddressAndSize(&pe,pe.getBaseAddress()+(quint32)nValue,0);          break;
                         case N_IMAGE_OPTIONAL_HEADER::Subsystem:            comboBox[CB_IMAGE_OPTIONAL_HEADER_Subsystem]->setValue(nValue);                                                         break;
                         case N_IMAGE_OPTIONAL_HEADER::DllCharacteristics:   comboBox[CB_IMAGE_OPTIONAL_HEADER_DllCharacteristics]->setValue(nValue);                                                break;
+                        case N_IMAGE_OPTIONAL_HEADER::MajorOperatingSystemVersion:
+                        case N_IMAGE_OPTIONAL_HEADER::MinorOperatingSystemVersion:
+                        case N_IMAGE_OPTIONAL_HEADER::OperatingSystemVersion:
+                            quint32 nVersion=pe.getOperatingSystemVersion();
+                            comboBox[CB_IMAGE_OPTIONAL_HEADER_OperationSystemVersion]->setValue(nVersion);
+                            break;
                     }
                     break;
 
@@ -464,6 +470,8 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, in
                         case N_IMAGE_OPTIONAL_HEADER::SizeOfHeapCommit:             pe.setOptionalHeader_SizeOfHeapCommit((quint64)nValue);             break;
                         case N_IMAGE_OPTIONAL_HEADER::LoaderFlags:                  pe.setOptionalHeader_LoaderFlags((quint32)nValue);                  break;
                         case N_IMAGE_OPTIONAL_HEADER::NumberOfRvaAndSizes:          pe.setOptionalHeader_NumberOfRvaAndSizes((quint32)nValue);          break;
+                        // Extra
+                        case N_IMAGE_OPTIONAL_HEADER::OperatingSystemVersion:       pe.setOperatingSystemVersion((quint32)nValue);                      break;
                     }
 
                     ui->widgetHex_IMAGE_OPTIONAL_HEADER->reload();
@@ -781,6 +789,11 @@ void PEWidget::widgetValueChanged(quint64 nValue)
                 case N_IMAGE_OPTIONAL_HEADER::Magic:                lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::Magic]->setValue((quint16)nValue);              break;
                 case N_IMAGE_OPTIONAL_HEADER::Subsystem:            lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::Subsystem]->setValue((quint16)nValue);          break;
                 case N_IMAGE_OPTIONAL_HEADER::DllCharacteristics:   lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::DllCharacteristics]->setValue((quint16)nValue); break;
+                // Extra
+                case N_IMAGE_OPTIONAL_HEADER::OperatingSystemVersion:
+                   XBinary::XDWORD xdword=XBinary::make_xdword((quint32)nValue);
+                   lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MajorOperatingSystemVersion]->setValue((quint16)xdword.nValue1);
+                   lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MinorOperatingSystemVersion]->setValue((quint16)xdword.nValue2);
             }
             break;
 
@@ -1065,6 +1078,7 @@ void PEWidget::reloadData()
             {
                 createHeaderTable(SPE::TYPE_IMAGE_OPTIONAL_HEADER,ui->tableWidget_IMAGE_OPTIONAL_HEADER,pe.is64()?(N_IMAGE_OPTIONAL_HEADER::records64):(N_IMAGE_OPTIONAL_HEADER::records32),lineEdit_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::__data_size,0);
                 comboBox[CB_IMAGE_OPTIONAL_HEADER_Magic]=createComboBox(ui->tableWidget_IMAGE_OPTIONAL_HEADER,XPE::getImageOptionalHeaderMagicS(),SPE::TYPE_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::Magic,XComboBoxEx::CBTYPE_LIST);
+                comboBox[CB_IMAGE_OPTIONAL_HEADER_OperationSystemVersion]=createComboBox(ui->tableWidget_IMAGE_OPTIONAL_HEADER,XPE::getOperatingSystemVersions(),SPE::TYPE_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::MajorOperatingSystemVersion,XComboBoxEx::CBTYPE_LIST,0,N_IMAGE_OPTIONAL_HEADER::OperatingSystemVersion);
                 comboBox[CB_IMAGE_OPTIONAL_HEADER_Subsystem]=createComboBox(ui->tableWidget_IMAGE_OPTIONAL_HEADER,XPE::getImageOptionalHeaderSubsystemS(),SPE::TYPE_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::Subsystem,XComboBoxEx::CBTYPE_LIST);
                 comboBox[CB_IMAGE_OPTIONAL_HEADER_DllCharacteristics]=createComboBox(ui->tableWidget_IMAGE_OPTIONAL_HEADER,XPE::getImageOptionalHeaderDllCharacteristicsS(),SPE::TYPE_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::DllCharacteristics,XComboBoxEx::CBTYPE_FLAGS);
 
@@ -1195,6 +1209,8 @@ void PEWidget::reloadData()
                     invWidget[INV_IMAGE_OPTIONAL_HEADER_BaseOfCode]->setAddressAndSize(&pe,pe.getBaseAddress()+oh32.BaseOfCode,0);
                     invWidget[INV_IMAGE_OPTIONAL_HEADER_BaseOfData]->setAddressAndSize(&pe,pe.getBaseAddress()+oh32.BaseOfData,0);
                 }
+
+                comboBox[CB_IMAGE_OPTIONAL_HEADER_OperationSystemVersion]->setValue(pe.getOperatingSystemVersion());
 
                 qint64 nOffset=pe.getOptionalHeaderOffset();
                 qint64 nSize=pe.getOptionalHeaderSize();
