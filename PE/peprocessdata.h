@@ -32,7 +32,7 @@ public:
     explicit PEProcessData(int nType,QStandardItemModel **ppModel,XPE *pPE,qint32 nNumber,qint64 nOffset,qint64 nSize,QVariant varInfo=QVariant());
     virtual void _process();
     virtual void ajustTableView(QWidget *pWidget,QTableView *pTableView);
-    void handleCertRecord(QStandardItem *pParent, XPE::CERT_RECORD certRecord);
+    void handleCertRecord(QStandardItem *pParent,XPE::CERT_RECORD certRecord);
     void stop();
 
 private:
