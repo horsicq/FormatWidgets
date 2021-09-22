@@ -677,6 +677,13 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, in
                         case N_IMAGE_TLS::AddressOfCallBacks:       addComment(ui->tableWidget_TLS,N_IMAGE_TLS::AddressOfCallBacks,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByAddress((quint64)nValue));                     break;
                     }
                     break;
+
+                case SPE::TYPE_LOADCONFIG:
+                    switch(nNdata)
+                    {
+                        case N_IMAGE_LOADCONFIG::Size:              addComment(ui->tableWidget_LoadConfig,N_IMAGE_LOADCONFIG::Size,HEADER_COLUMN_COMMENT,pe.bytesCountToString((quint64)nValue));                               break;
+                    }
+                    break;
             }
 
             result=SV_EDITED;
@@ -1691,6 +1698,8 @@ void PEWidget::reloadData()
                         lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CastGuardOsDeterminedFailureMode]->setValue(lc64.CastGuardOsDeterminedFailureMode);
                     }
 
+                    addComment(ui->tableWidget_LoadConfig,N_IMAGE_LOADCONFIG::Size,HEADER_COLUMN_COMMENT,pe.bytesCountToString(lc64.Size));
+
                     invWidget[INV_IMAGE_LOADCONFIG_SecurityCookie]->setAddressAndSize(&pe,lc64.SecurityCookie,0);
                     invWidget[INV_IMAGE_LOADCONFIG_SEHandlerTable]->setAddressAndSize(&pe,lc64.SEHandlerTable,0);
                 }
@@ -1759,6 +1768,8 @@ void PEWidget::reloadData()
                     {
                         lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CastGuardOsDeterminedFailureMode]->setValue(lc32.CastGuardOsDeterminedFailureMode);
                     }
+
+                    addComment(ui->tableWidget_LoadConfig,N_IMAGE_LOADCONFIG::Size,HEADER_COLUMN_COMMENT,pe.bytesCountToString(lc32.Size));
 
                     invWidget[INV_IMAGE_LOADCONFIG_SecurityCookie]->setAddressAndSize(&pe,lc32.SecurityCookie,0);
                     invWidget[INV_IMAGE_LOADCONFIG_SEHandlerTable]->setAddressAndSize(&pe,lc32.SEHandlerTable,0);
