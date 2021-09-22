@@ -43,15 +43,15 @@ void PEProcessData::_process()
 
         QList<XPE_DEF::IMAGE_SECTION_HEADER> listSections=g_pPE->getSectionHeaders();
 
-        int nNumberOfSections=listSections.count();
+        int nNumberOfRecords=listSections.count();
 
-        *g_ppModel=new QStandardItemModel(nNumberOfSections,listLabels.count());
+        *g_ppModel=new QStandardItemModel(nNumberOfRecords,listLabels.count());
 
-        setMaximum(nNumberOfSections);
+        setMaximum(nNumberOfRecords);
 
         setHeader(*g_ppModel,&listLabels);
 
-        for(int i=0; (i<nNumberOfSections)&&(isRun()); i++)
+        for(int i=0; (i<nNumberOfRecords)&&(isRun()); i++)
         {
             QStandardItem *pItemNumber=new QStandardItem;
             pItemNumber->setData(i,Qt::DisplayRole);
