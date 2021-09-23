@@ -366,8 +366,9 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, in
                 case SPE::TYPE_LOADCONFIG:
                     switch(nNdata)
                     {
-                        case N_IMAGE_LOADCONFIG::SecurityCookie:    invWidget[INV_IMAGE_LOADCONFIG_SecurityCookie]->setAddressAndSize(&pe,(quint64)nValue,0);   break;
-                        case N_IMAGE_LOADCONFIG::SEHandlerTable:    invWidget[INV_IMAGE_LOADCONFIG_SEHandlerTable]->setAddressAndSize(&pe,(quint64)nValue,0);   break;
+                        case N_IMAGE_LOADCONFIG::SecurityCookie:                invWidget[INV_IMAGE_LOADCONFIG_SecurityCookie]->setAddressAndSize(&pe,(quint64)nValue,0);               break;
+                        case N_IMAGE_LOADCONFIG::SEHandlerTable:                invWidget[INV_IMAGE_LOADCONFIG_SEHandlerTable]->setAddressAndSize(&pe,(quint64)nValue,0);               break;
+                        case N_IMAGE_LOADCONFIG::GuardCFCheckFunctionPointer:   invWidget[INV_IMAGE_LOADCONFIG_GuardCFCheckFunctionPointer]->setAddressAndSize(&pe,(quint64)nValue,0);  break;
                     }
                     break;
             }
@@ -879,6 +880,8 @@ void PEWidget::reloadData()
 
     if(pe.isValid())
     {
+        bool bIs64=pe.is64();
+
         if(nType==SPE::TYPE_HEX)
         {
             if(!isInitPresent(sInit))
@@ -1092,7 +1095,7 @@ void PEWidget::reloadData()
                 invWidget[INV_IMAGE_OPTIONAL_HEADER_AddressOfEntryPoint]=createInvWidget(ui->tableWidget_IMAGE_OPTIONAL_HEADER,SPE::TYPE_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::AddressOfEntryPoint,InvWidget::TYPE_DISASM);
                 invWidget[INV_IMAGE_OPTIONAL_HEADER_BaseOfCode]=createInvWidget(ui->tableWidget_IMAGE_OPTIONAL_HEADER,SPE::TYPE_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::BaseOfCode,InvWidget::TYPE_HEX);
 
-                if(!pe.is64())
+                if(!bIs64)
                 {
                     invWidget[INV_IMAGE_OPTIONAL_HEADER_BaseOfData]=createInvWidget(ui->tableWidget_IMAGE_OPTIONAL_HEADER,SPE::TYPE_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::BaseOfData,InvWidget::TYPE_HEX);
                 }
@@ -1103,7 +1106,7 @@ void PEWidget::reloadData()
 
                 XBinary::_MEMORY_MAP memoryMap=pe.getMemoryMap();
 
-                if(pe.is64())
+                if(bIs64)
                 {
                     XPE_DEF::IMAGE_OPTIONAL_HEADER64S oh64=pe.getOptionalHeader64S();
                     lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::Magic]->setValue(oh64.Magic);
@@ -1529,7 +1532,7 @@ void PEWidget::reloadData()
 
                 XBinary::_MEMORY_MAP memoryMap=pe.getMemoryMap();
 
-                if(pe.is64())
+                if(bIs64)
                 {
                     XPE_DEF::S_IMAGE_TLS_DIRECTORY64 tls64=pe.getTLSDirectory64();
                     lineEdit_TLS[N_IMAGE_TLS::StartAddressOfRawData]->setValue(tls64.StartAddressOfRawData);
@@ -1603,7 +1606,7 @@ void PEWidget::reloadData()
 
                 qint32 nRecordSize=N_IMAGE_LOADCONFIG::__data_size;
 
-                if(pe.is64())
+                if(bIs64)
                 {
                     if(nHeaderSize==0x94)
                     {
@@ -1634,9 +1637,21 @@ void PEWidget::reloadData()
                 invWidget[INV_IMAGE_LOADCONFIG_SecurityCookie]=createInvWidget(ui->tableWidget_LoadConfig,SPE::TYPE_LOADCONFIG,N_IMAGE_LOADCONFIG::SecurityCookie,InvWidget::TYPE_HEX);
                 invWidget[INV_IMAGE_LOADCONFIG_SEHandlerTable]=createInvWidget(ui->tableWidget_LoadConfig,SPE::TYPE_LOADCONFIG,N_IMAGE_LOADCONFIG::SEHandlerTable,InvWidget::TYPE_HEX);
 
+                if(bIs64)
+                {
+                    invWidget[INV_IMAGE_LOADCONFIG_GuardCFCheckFunctionPointer]=createInvWidget(ui->tableWidget_LoadConfig,SPE::TYPE_LOADCONFIG,N_IMAGE_LOADCONFIG::GuardCFCheckFunctionPointer,InvWidget::TYPE_HEX);
+                }
+                else
+                {
+                    if(nRecordSize>N_IMAGE_LOADCONFIG::GuardCFCheckFunctionPointer)
+                    {
+                        invWidget[INV_IMAGE_LOADCONFIG_GuardCFCheckFunctionPointer]=createInvWidget(ui->tableWidget_LoadConfig,SPE::TYPE_LOADCONFIG,N_IMAGE_LOADCONFIG::GuardCFCheckFunctionPointer,InvWidget::TYPE_HEX);
+                    }
+                }
+
                 blockSignals(true);
 
-                if(pe.is64())
+                if(bIs64)
                 {
                     XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64 lc64=pe.getLoadConfigDirectory64();
                     lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::Size]->setValue(lc64.Size);
@@ -1664,7 +1679,7 @@ void PEWidget::reloadData()
                     lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardCFFunctionCount]->setValue(lc64.GuardCFFunctionCount);
                     lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardFlags]->setValue(lc64.GuardFlags);
 
-                    if(nHeaderSize>0x94)
+                    if(nRecordSize>N_IMAGE_LOADCONFIG::CodeIntegrity_Flags)
                     {
                         lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CodeIntegrity_Flags]->setValue(lc64.CodeIntegrity.Flags);
                         lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CodeIntegrity_Catalog]->setValue(lc64.CodeIntegrity.Catalog);
@@ -1693,7 +1708,7 @@ void PEWidget::reloadData()
                         lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardXFGTableDispatchFunctionPointer]->setValue(lc64.GuardXFGTableDispatchFunctionPointer);
                     }
 
-                    if(nHeaderSize>0x130)
+                    if(nRecordSize>N_IMAGE_LOADCONFIG::CastGuardOsDeterminedFailureMode)
                     {
                         lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CastGuardOsDeterminedFailureMode]->setValue(lc64.CastGuardOsDeterminedFailureMode);
                     }
@@ -1702,6 +1717,7 @@ void PEWidget::reloadData()
 
                     invWidget[INV_IMAGE_LOADCONFIG_SecurityCookie]->setAddressAndSize(&pe,lc64.SecurityCookie,0);
                     invWidget[INV_IMAGE_LOADCONFIG_SEHandlerTable]->setAddressAndSize(&pe,lc64.SEHandlerTable,0);
+                    invWidget[INV_IMAGE_LOADCONFIG_GuardCFCheckFunctionPointer]->setAddressAndSize(&pe,lc64.GuardCFCheckFunctionPointer,0);
                 }
                 else
                 {
@@ -1726,7 +1742,7 @@ void PEWidget::reloadData()
                     lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SEHandlerTable]->setValue(lc32.SEHandlerTable);
                     lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SEHandlerCount]->setValue(lc32.SEHandlerCount);
 
-                    if(nHeaderSize>0x48)
+                    if(nRecordSize>N_IMAGE_LOADCONFIG::GuardCFCheckFunctionPointer)
                     {
                         lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardCFCheckFunctionPointer]->setValue(lc32.GuardCFCheckFunctionPointer);
                         lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardCFDispatchFunctionPointer]->setValue(lc32.GuardCFDispatchFunctionPointer);
@@ -1735,7 +1751,7 @@ void PEWidget::reloadData()
                         lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardFlags]->setValue(lc32.GuardFlags);
                     }
 
-                    if(nHeaderSize>0x5c)
+                    if(nRecordSize>N_IMAGE_LOADCONFIG::CodeIntegrity_Flags)
                     {
                         lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CodeIntegrity_Flags]->setValue(lc32.CodeIntegrity.Flags);
                         lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CodeIntegrity_Catalog]->setValue(lc32.CodeIntegrity.Catalog);
@@ -1764,7 +1780,7 @@ void PEWidget::reloadData()
                         lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardXFGTableDispatchFunctionPointer]->setValue(lc32.GuardXFGTableDispatchFunctionPointer);
                     }
 
-                    if(nHeaderSize>0xb8)
+                    if(nRecordSize>N_IMAGE_LOADCONFIG::CastGuardOsDeterminedFailureMode)
                     {
                         lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CastGuardOsDeterminedFailureMode]->setValue(lc32.CastGuardOsDeterminedFailureMode);
                     }
@@ -1773,6 +1789,11 @@ void PEWidget::reloadData()
 
                     invWidget[INV_IMAGE_LOADCONFIG_SecurityCookie]->setAddressAndSize(&pe,lc32.SecurityCookie,0);
                     invWidget[INV_IMAGE_LOADCONFIG_SEHandlerTable]->setAddressAndSize(&pe,lc32.SEHandlerTable,0);
+
+                    if(nRecordSize>N_IMAGE_LOADCONFIG::GuardCFCheckFunctionPointer)
+                    {
+                        invWidget[INV_IMAGE_LOADCONFIG_GuardCFCheckFunctionPointer]->setAddressAndSize(&pe,lc32.GuardCFCheckFunctionPointer,0);
+                    }
                 }
 
                 qint64 nOffset=pe.getLoadConfigDirectoryOffset();

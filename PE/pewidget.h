@@ -183,6 +183,7 @@ private:
         INV_IMAGE_EXPORT_AddressOfNameOrdinals,
         INV_IMAGE_LOADCONFIG_SecurityCookie,
         INV_IMAGE_LOADCONFIG_SEHandlerTable,
+        INV_IMAGE_LOADCONFIG_GuardCFCheckFunctionPointer,
         __INV_size
     };
 
