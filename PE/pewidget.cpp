@@ -679,6 +679,17 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, in
                     }
                     break;
 
+                case SPE::TYPE_RESOURCE_VERSION:
+                    switch(nNdata)
+                    {
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwStrucVersion:        addComment(ui->tableWidget_Resources_Version,N_IMAGE_RESOURCE_FIXEDFILEINFO::dwStrucVersion,HEADER_COLUMN_COMMENT,XBinary::versionDwordToString((quint32)nValue));                  break;
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileVersionMS:       addComment(ui->tableWidget_Resources_Version,N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileVersionMS,HEADER_COLUMN_COMMENT,XBinary::versionDwordToString((quint32)nValue));                 break;
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileVersionLS:       addComment(ui->tableWidget_Resources_Version,N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileVersionLS,HEADER_COLUMN_COMMENT,XBinary::versionDwordToString((quint32)nValue));                 break;
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwProductVersionMS:    addComment(ui->tableWidget_Resources_Version,N_IMAGE_RESOURCE_FIXEDFILEINFO::dwProductVersionMS,HEADER_COLUMN_COMMENT,XBinary::versionDwordToString((quint32)nValue));              break;
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwProductVersionLS:    addComment(ui->tableWidget_Resources_Version,N_IMAGE_RESOURCE_FIXEDFILEINFO::dwProductVersionLS,HEADER_COLUMN_COMMENT,XBinary::versionDwordToString((quint32)nValue));              break;
+                    }
+                    break;
+
                 case SPE::TYPE_LOADCONFIG:
                     switch(nNdata)
                     {
@@ -1446,7 +1457,11 @@ void PEWidget::reloadData()
                 lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileDateMS]->setValue(resourceVersion.fileInfo.dwFileDateMS);
                 lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileDateLS]->setValue(resourceVersion.fileInfo.dwFileDateLS);
 
-                // TODO comments
+                addComment(ui->tableWidget_Resources_Version,N_IMAGE_RESOURCE_FIXEDFILEINFO::dwStrucVersion,HEADER_COLUMN_COMMENT,XBinary::versionDwordToString(resourceVersion.fileInfo.dwStrucVersion));
+                addComment(ui->tableWidget_Resources_Version,N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileVersionMS,HEADER_COLUMN_COMMENT,XBinary::versionDwordToString(resourceVersion.fileInfo.dwFileVersionMS));
+                addComment(ui->tableWidget_Resources_Version,N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileVersionLS,HEADER_COLUMN_COMMENT,XBinary::versionDwordToString(resourceVersion.fileInfo.dwFileVersionLS));
+                addComment(ui->tableWidget_Resources_Version,N_IMAGE_RESOURCE_FIXEDFILEINFO::dwProductVersionMS,HEADER_COLUMN_COMMENT,XBinary::versionDwordToString(resourceVersion.fileInfo.dwProductVersionMS));
+                addComment(ui->tableWidget_Resources_Version,N_IMAGE_RESOURCE_FIXEDFILEINFO::dwProductVersionLS,HEADER_COLUMN_COMMENT,XBinary::versionDwordToString(resourceVersion.fileInfo.dwProductVersionLS));
 
                 ui->textEditResources_Version->clear();
 
