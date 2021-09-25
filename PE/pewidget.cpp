@@ -634,28 +634,28 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, in
                 case SPE::TYPE_IMAGE_FILE_HEADER:
                     switch(nNdata)
                     {
-                        case N_IMAGE_FILE_HEADER::SizeOfOptionalHeader:             addComment(ui->tableWidget_IMAGE_FILE_HEADER,N_IMAGE_FILE_HEADER::SizeOfOptionalHeader,HEADER_COLUMN_COMMENT,pe.bytesCountToString(nValue));                        break;
+                        case N_IMAGE_FILE_HEADER::SizeOfOptionalHeader:             addComment(ui->tableWidget_IMAGE_FILE_HEADER,N_IMAGE_FILE_HEADER::SizeOfOptionalHeader,HEADER_COLUMN_COMMENT,XBinary::bytesCountToString(nValue));                      break;
                     }
                     break;
 
                 case SPE::TYPE_IMAGE_OPTIONAL_HEADER:
                     switch(nNdata)
                     {
-                        case N_IMAGE_OPTIONAL_HEADER::SizeOfCode:                   addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfCode,HEADER_COLUMN_COMMENT,pe.bytesCountToString(nValue));                          break;
-                        case N_IMAGE_OPTIONAL_HEADER::SizeOfInitializedData:        addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfInitializedData,HEADER_COLUMN_COMMENT,pe.bytesCountToString(nValue));               break;
-                        case N_IMAGE_OPTIONAL_HEADER::SizeOfUninitializedData:      addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfUninitializedData,HEADER_COLUMN_COMMENT,pe.bytesCountToString(nValue));             break;
-                        case N_IMAGE_OPTIONAL_HEADER::SectionAlignment:             addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SectionAlignment,HEADER_COLUMN_COMMENT,pe.bytesCountToString(nValue));                    break;
-                        case N_IMAGE_OPTIONAL_HEADER::FileAlignment:                addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::FileAlignment,HEADER_COLUMN_COMMENT,pe.bytesCountToString(nValue));                       break;
-                        case N_IMAGE_OPTIONAL_HEADER::SizeOfImage:                  addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfImage,HEADER_COLUMN_COMMENT,pe.bytesCountToString(nValue));                         break;
-                        case N_IMAGE_OPTIONAL_HEADER::SizeOfHeaders:                addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfHeaders,HEADER_COLUMN_COMMENT,pe.bytesCountToString(nValue));                       break;
-                        case N_IMAGE_OPTIONAL_HEADER::SizeOfStackReserve:           addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfStackReserve,HEADER_COLUMN_COMMENT,pe.bytesCountToString(nValue));                  break;
-                        case N_IMAGE_OPTIONAL_HEADER::SizeOfStackCommit:            addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfStackCommit,HEADER_COLUMN_COMMENT,pe.bytesCountToString(nValue));                   break;
-                        case N_IMAGE_OPTIONAL_HEADER::SizeOfHeapReserve:            addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfHeapReserve,HEADER_COLUMN_COMMENT,pe.bytesCountToString(nValue));                   break;
-                        case N_IMAGE_OPTIONAL_HEADER::SizeOfHeapCommit:             addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfHeapCommit,HEADER_COLUMN_COMMENT,pe.bytesCountToString(nValue));                    break;
+                        case N_IMAGE_OPTIONAL_HEADER::SizeOfCode:                   addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfCode,HEADER_COLUMN_COMMENT,XBinary::bytesCountToString(nValue));                        break;
+                        case N_IMAGE_OPTIONAL_HEADER::SizeOfInitializedData:        addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfInitializedData,HEADER_COLUMN_COMMENT,XBinary::bytesCountToString(nValue));             break;
+                        case N_IMAGE_OPTIONAL_HEADER::SizeOfUninitializedData:      addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfUninitializedData,HEADER_COLUMN_COMMENT,XBinary::bytesCountToString(nValue));           break;
+                        case N_IMAGE_OPTIONAL_HEADER::SectionAlignment:             addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SectionAlignment,HEADER_COLUMN_COMMENT,XBinary::bytesCountToString(nValue));                  break;
+                        case N_IMAGE_OPTIONAL_HEADER::FileAlignment:                addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::FileAlignment,HEADER_COLUMN_COMMENT,XBinary::bytesCountToString(nValue));                     break;
+                        case N_IMAGE_OPTIONAL_HEADER::SizeOfImage:                  addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfImage,HEADER_COLUMN_COMMENT,XBinary::bytesCountToString(nValue));                       break;
+                        case N_IMAGE_OPTIONAL_HEADER::SizeOfHeaders:                addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfHeaders,HEADER_COLUMN_COMMENT,XBinary::bytesCountToString(nValue));                     break;
+                        case N_IMAGE_OPTIONAL_HEADER::SizeOfStackReserve:           addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfStackReserve,HEADER_COLUMN_COMMENT,XBinary::bytesCountToString(nValue));                break;
+                        case N_IMAGE_OPTIONAL_HEADER::SizeOfStackCommit:            addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfStackCommit,HEADER_COLUMN_COMMENT,XBinary::bytesCountToString(nValue));                 break;
+                        case N_IMAGE_OPTIONAL_HEADER::SizeOfHeapReserve:            addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfHeapReserve,HEADER_COLUMN_COMMENT,XBinary::bytesCountToString(nValue));                 break;
+                        case N_IMAGE_OPTIONAL_HEADER::SizeOfHeapCommit:             addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfHeapCommit,HEADER_COLUMN_COMMENT,XBinary::bytesCountToString(nValue));                  break;
 
-                        case N_IMAGE_OPTIONAL_HEADER::AddressOfEntryPoint:          addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::AddressOfEntryPoint,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress(nValue));    break;
-                        case N_IMAGE_OPTIONAL_HEADER::BaseOfCode:                   addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::BaseOfCode,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress(nValue));             break;
-                        case N_IMAGE_OPTIONAL_HEADER::BaseOfData:                   addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::BaseOfData,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress(nValue));             break;
+                        case N_IMAGE_OPTIONAL_HEADER::AddressOfEntryPoint:          addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::AddressOfEntryPoint,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress(nValue));        break;
+                        case N_IMAGE_OPTIONAL_HEADER::BaseOfCode:                   addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::BaseOfCode,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress(nValue));                 break;
+                        case N_IMAGE_OPTIONAL_HEADER::BaseOfData:                   addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::BaseOfData,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress(nValue));                 break;
                     }
                     break;
 
@@ -682,7 +682,7 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, in
                 case SPE::TYPE_LOADCONFIG:
                     switch(nNdata)
                     {
-                        case N_IMAGE_LOADCONFIG::Size:              addComment(ui->tableWidget_LoadConfig,N_IMAGE_LOADCONFIG::Size,HEADER_COLUMN_COMMENT,pe.bytesCountToString((quint64)nValue));                               break;
+                        case N_IMAGE_LOADCONFIG::Size:              addComment(ui->tableWidget_LoadConfig,N_IMAGE_LOADCONFIG::Size,HEADER_COLUMN_COMMENT,XBinary::bytesCountToString((quint64)nValue));                               break;
                     }
                     break;
             }
@@ -1069,7 +1069,7 @@ void PEWidget::reloadData()
                 comboBox[CB_IMAGE_FILE_HEADER_Characteristics]->setValue(fileheader.Characteristics);
                 dateTimeEdit[TD_IMAGE_FILE_HEADER_TimeDateStamp]->setValue(fileheader.TimeDateStamp);
 
-                addComment(ui->tableWidget_IMAGE_FILE_HEADER,N_IMAGE_FILE_HEADER::SizeOfOptionalHeader,HEADER_COLUMN_COMMENT,pe.bytesCountToString(fileheader.SizeOfOptionalHeader));
+                addComment(ui->tableWidget_IMAGE_FILE_HEADER,N_IMAGE_FILE_HEADER::SizeOfOptionalHeader,HEADER_COLUMN_COMMENT,XBinary::bytesCountToString(fileheader.SizeOfOptionalHeader));
 
                 invWidget[INV_IMAGE_FILE_HEADER_PointerToSymbolTable]->setAddressAndSize(&pe,pe.getBaseAddress()+fileheader.PointerToSymbolTable,0);
 
@@ -1143,17 +1143,17 @@ void PEWidget::reloadData()
                     comboBox[CB_IMAGE_OPTIONAL_HEADER_Subsystem]->setValue(oh64.Subsystem);
                     comboBox[CB_IMAGE_OPTIONAL_HEADER_DllCharacteristics]->setValue(oh64.DllCharacteristics);
 
-                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfCode,HEADER_COLUMN_COMMENT,pe.bytesCountToString(oh64.SizeOfCode));
-                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfInitializedData,HEADER_COLUMN_COMMENT,pe.bytesCountToString(oh64.SizeOfInitializedData));
-                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfUninitializedData,HEADER_COLUMN_COMMENT,pe.bytesCountToString(oh64.SizeOfUninitializedData));
-                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SectionAlignment,HEADER_COLUMN_COMMENT,pe.bytesCountToString(oh64.SectionAlignment));
-                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::FileAlignment,HEADER_COLUMN_COMMENT,pe.bytesCountToString(oh64.FileAlignment));
-                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfImage,HEADER_COLUMN_COMMENT,pe.bytesCountToString(oh64.SizeOfImage));
-                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfHeaders,HEADER_COLUMN_COMMENT,pe.bytesCountToString(oh64.SizeOfHeaders));
-                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfStackReserve,HEADER_COLUMN_COMMENT,pe.bytesCountToString(oh64.SizeOfStackReserve));
-                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfStackCommit,HEADER_COLUMN_COMMENT,pe.bytesCountToString(oh64.SizeOfStackCommit));
-                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfHeapReserve,HEADER_COLUMN_COMMENT,pe.bytesCountToString(oh64.SizeOfHeapReserve));
-                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfHeapCommit,HEADER_COLUMN_COMMENT,pe.bytesCountToString(oh64.SizeOfHeapCommit));
+                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfCode,HEADER_COLUMN_COMMENT,XBinary::bytesCountToString(oh64.SizeOfCode));
+                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfInitializedData,HEADER_COLUMN_COMMENT,XBinary::bytesCountToString(oh64.SizeOfInitializedData));
+                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfUninitializedData,HEADER_COLUMN_COMMENT,XBinary::bytesCountToString(oh64.SizeOfUninitializedData));
+                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SectionAlignment,HEADER_COLUMN_COMMENT,XBinary::bytesCountToString(oh64.SectionAlignment));
+                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::FileAlignment,HEADER_COLUMN_COMMENT,XBinary::bytesCountToString(oh64.FileAlignment));
+                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfImage,HEADER_COLUMN_COMMENT,XBinary::bytesCountToString(oh64.SizeOfImage));
+                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfHeaders,HEADER_COLUMN_COMMENT,XBinary::bytesCountToString(oh64.SizeOfHeaders));
+                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfStackReserve,HEADER_COLUMN_COMMENT,XBinary::bytesCountToString(oh64.SizeOfStackReserve));
+                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfStackCommit,HEADER_COLUMN_COMMENT,XBinary::bytesCountToString(oh64.SizeOfStackCommit));
+                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfHeapReserve,HEADER_COLUMN_COMMENT,XBinary::bytesCountToString(oh64.SizeOfHeapReserve));
+                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfHeapCommit,HEADER_COLUMN_COMMENT,XBinary::bytesCountToString(oh64.SizeOfHeapCommit));
                     // TODO more
                     addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::AddressOfEntryPoint,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress(&memoryMap,oh64.AddressOfEntryPoint));
                     addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::BaseOfCode,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress(&memoryMap,oh64.BaseOfCode));
@@ -1199,17 +1199,17 @@ void PEWidget::reloadData()
                     comboBox[CB_IMAGE_OPTIONAL_HEADER_Subsystem]->setValue(oh32.Subsystem);
                     comboBox[CB_IMAGE_OPTIONAL_HEADER_DllCharacteristics]->setValue(oh32.DllCharacteristics);
 
-                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfCode,HEADER_COLUMN_COMMENT,pe.bytesCountToString(oh32.SizeOfCode));
-                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfInitializedData,HEADER_COLUMN_COMMENT,pe.bytesCountToString(oh32.SizeOfInitializedData));
-                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfUninitializedData,HEADER_COLUMN_COMMENT,pe.bytesCountToString(oh32.SizeOfUninitializedData));
-                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SectionAlignment,HEADER_COLUMN_COMMENT,pe.bytesCountToString(oh32.SectionAlignment));
-                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::FileAlignment,HEADER_COLUMN_COMMENT,pe.bytesCountToString(oh32.FileAlignment));
-                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfImage,HEADER_COLUMN_COMMENT,pe.bytesCountToString(oh32.SizeOfImage));
-                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfHeaders,HEADER_COLUMN_COMMENT,pe.bytesCountToString(oh32.SizeOfHeaders));
-                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfStackReserve,HEADER_COLUMN_COMMENT,pe.bytesCountToString(oh32.SizeOfStackReserve));
-                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfStackCommit,HEADER_COLUMN_COMMENT,pe.bytesCountToString(oh32.SizeOfStackCommit));
-                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfHeapReserve,HEADER_COLUMN_COMMENT,pe.bytesCountToString(oh32.SizeOfHeapReserve));
-                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfHeapCommit,HEADER_COLUMN_COMMENT,pe.bytesCountToString(oh32.SizeOfHeapCommit));
+                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfCode,HEADER_COLUMN_COMMENT,XBinary::bytesCountToString(oh32.SizeOfCode));
+                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfInitializedData,HEADER_COLUMN_COMMENT,XBinary::bytesCountToString(oh32.SizeOfInitializedData));
+                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfUninitializedData,HEADER_COLUMN_COMMENT,XBinary::bytesCountToString(oh32.SizeOfUninitializedData));
+                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SectionAlignment,HEADER_COLUMN_COMMENT,XBinary::bytesCountToString(oh32.SectionAlignment));
+                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::FileAlignment,HEADER_COLUMN_COMMENT,XBinary::bytesCountToString(oh32.FileAlignment));
+                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfImage,HEADER_COLUMN_COMMENT,XBinary::bytesCountToString(oh32.SizeOfImage));
+                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfHeaders,HEADER_COLUMN_COMMENT,XBinary::bytesCountToString(oh32.SizeOfHeaders));
+                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfStackReserve,HEADER_COLUMN_COMMENT,XBinary::bytesCountToString(oh32.SizeOfStackReserve));
+                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfStackCommit,HEADER_COLUMN_COMMENT,XBinary::bytesCountToString(oh32.SizeOfStackCommit));
+                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfHeapReserve,HEADER_COLUMN_COMMENT,XBinary::bytesCountToString(oh32.SizeOfHeapReserve));
+                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::SizeOfHeapCommit,HEADER_COLUMN_COMMENT,XBinary::bytesCountToString(oh32.SizeOfHeapCommit));
                     // TODO more
                     addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::AddressOfEntryPoint,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress(&memoryMap,oh32.AddressOfEntryPoint));
                     addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::BaseOfCode,HEADER_COLUMN_COMMENT,pe.getMemoryRecordInfoByRelAddress(&memoryMap,oh32.BaseOfCode));
@@ -1258,7 +1258,7 @@ void PEWidget::reloadData()
                     pItemNumber->setData(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE,dd.Size);
                     pItemNumber->setData(Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET,pe.getDataDirectoryHeaderOffset(i));
 
-                    addComment(ui->tableWidget_IMAGE_DIRECTORY_ENTRIES,i,4,pe.bytesCountToString(dd.Size));
+                    addComment(ui->tableWidget_IMAGE_DIRECTORY_ENTRIES,i,4,XBinary::bytesCountToString(dd.Size));
 
                     if(i!=XPE_DEF::S_IMAGE_DIRECTORY_ENTRY_SECURITY)
                     {
@@ -1445,6 +1445,8 @@ void PEWidget::reloadData()
                 lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileSubtype]->setValue(resourceVersion.fileInfo.dwFileSubtype);
                 lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileDateMS]->setValue(resourceVersion.fileInfo.dwFileDateMS);
                 lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileDateLS]->setValue(resourceVersion.fileInfo.dwFileDateLS);
+
+                // TODO comments
 
                 ui->textEditResources_Version->clear();
 
@@ -1713,7 +1715,7 @@ void PEWidget::reloadData()
                         lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CastGuardOsDeterminedFailureMode]->setValue(lc64.CastGuardOsDeterminedFailureMode);
                     }
 
-                    addComment(ui->tableWidget_LoadConfig,N_IMAGE_LOADCONFIG::Size,HEADER_COLUMN_COMMENT,pe.bytesCountToString(lc64.Size));
+                    addComment(ui->tableWidget_LoadConfig,N_IMAGE_LOADCONFIG::Size,HEADER_COLUMN_COMMENT,XBinary::bytesCountToString(lc64.Size));
 
                     invWidget[INV_IMAGE_LOADCONFIG_SecurityCookie]->setAddressAndSize(&pe,lc64.SecurityCookie,0);
                     invWidget[INV_IMAGE_LOADCONFIG_SEHandlerTable]->setAddressAndSize(&pe,lc64.SEHandlerTable,0);
@@ -1785,7 +1787,7 @@ void PEWidget::reloadData()
                         lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CastGuardOsDeterminedFailureMode]->setValue(lc32.CastGuardOsDeterminedFailureMode);
                     }
 
-                    addComment(ui->tableWidget_LoadConfig,N_IMAGE_LOADCONFIG::Size,HEADER_COLUMN_COMMENT,pe.bytesCountToString(lc32.Size));
+                    addComment(ui->tableWidget_LoadConfig,N_IMAGE_LOADCONFIG::Size,HEADER_COLUMN_COMMENT,XBinary::bytesCountToString(lc32.Size));
 
                     invWidget[INV_IMAGE_LOADCONFIG_SecurityCookie]->setAddressAndSize(&pe,lc32.SecurityCookie,0);
                     invWidget[INV_IMAGE_LOADCONFIG_SEHandlerTable]->setAddressAndSize(&pe,lc32.SEHandlerTable,0);
