@@ -1099,7 +1099,9 @@ void PEWidget::reloadData()
             {
                 createHeaderTable(SPE::TYPE_IMAGE_OPTIONAL_HEADER,ui->tableWidget_IMAGE_OPTIONAL_HEADER,pe.is64()?(N_IMAGE_OPTIONAL_HEADER::records64):(N_IMAGE_OPTIONAL_HEADER::records32),lineEdit_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::__data_size,0);
                 comboBox[CB_IMAGE_OPTIONAL_HEADER_Magic]=createComboBox(ui->tableWidget_IMAGE_OPTIONAL_HEADER,XPE::getImageOptionalHeaderMagicS(),SPE::TYPE_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::Magic,XComboBoxEx::CBTYPE_LIST);
-                comboBox[CB_IMAGE_OPTIONAL_HEADER_OperationSystemVersion]=createComboBox(ui->tableWidget_IMAGE_OPTIONAL_HEADER,XPE::getOperatingSystemVersions(),SPE::TYPE_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::MajorOperatingSystemVersion,XComboBoxEx::CBTYPE_LIST,0,N_IMAGE_OPTIONAL_HEADER::OperatingSystemVersion);
+
+                // TODO WindowsVersions if Windows
+                comboBox[CB_IMAGE_OPTIONAL_HEADER_OperationSystemVersion]=createComboBox(ui->tableWidget_IMAGE_OPTIONAL_HEADER,XPE::getWindowsOperatingSystemVersions(),SPE::TYPE_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::MajorOperatingSystemVersion,XComboBoxEx::CBTYPE_LIST,0,N_IMAGE_OPTIONAL_HEADER::OperatingSystemVersion);
                 comboBox[CB_IMAGE_OPTIONAL_HEADER_Subsystem]=createComboBox(ui->tableWidget_IMAGE_OPTIONAL_HEADER,XPE::getImageOptionalHeaderSubsystemS(),SPE::TYPE_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::Subsystem,XComboBoxEx::CBTYPE_LIST);
                 comboBox[CB_IMAGE_OPTIONAL_HEADER_DllCharacteristics]=createComboBox(ui->tableWidget_IMAGE_OPTIONAL_HEADER,XPE::getImageOptionalHeaderDllCharacteristicsS(),SPE::TYPE_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::DllCharacteristics,XComboBoxEx::CBTYPE_FLAGS);
 
