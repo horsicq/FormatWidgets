@@ -367,6 +367,7 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, in
                     switch(nNdata)
                     {
                         case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwSignature:       comboBox[CB_RESOURCES_VERSION_dwSignature]->setValue((quint32)nValue);      break;
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileFlags:       comboBox[CB_RESOURCES_VERSION_dwFileFlags]->setValue((quint32)nValue);      break;
                     }
                     break;
 
@@ -1456,6 +1457,7 @@ void PEWidget::reloadData()
                 createHeaderTable(SPE::TYPE_RESOURCES_VERSION,ui->tableWidget_Resources_Version,N_IMAGE_RESOURCE_FIXEDFILEINFO::records,lineEdit_Version_FixedFileInfo,N_IMAGE_RESOURCE_FIXEDFILEINFO::__data_size,0);
 
                 comboBox[CB_RESOURCES_VERSION_dwSignature]=createComboBox(ui->tableWidget_Resources_Version,XPE::getResourcesFixedFileInfoSignaturesS(),SPE::TYPE_RESOURCES_VERSION,N_IMAGE_RESOURCE_FIXEDFILEINFO::dwSignature,XComboBoxEx::CBTYPE_LIST);
+                comboBox[CB_RESOURCES_VERSION_dwFileFlags]=createComboBox(ui->tableWidget_Resources_Version,XPE::getResourcesFixedFileInfoFileFlagsS(),SPE::TYPE_RESOURCES_VERSION,N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileFlags,XComboBoxEx::CBTYPE_FLAGS);
 
                 blockSignals(true);
 
@@ -1476,7 +1478,7 @@ void PEWidget::reloadData()
                 lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileDateLS]->setValue(resourceVersion.fileInfo.dwFileDateLS);
 
                 comboBox[CB_RESOURCES_VERSION_dwSignature]->setValue(resourceVersion.fileInfo.dwSignature);
-                // TODO COMBOBOX dwFileFlags
+                comboBox[CB_RESOURCES_VERSION_dwFileFlags]->setValue(resourceVersion.fileInfo.dwFileFlags);
                 // TODO COMBOBOX dwFileOS
                 // TODO COMBOBOX dwFileType
                 // TODO COMBOBOX dwFileSubtype

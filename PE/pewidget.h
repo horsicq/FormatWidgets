@@ -151,6 +151,7 @@ private:
         CB_IMAGE_OPTIONAL_HEADER_DllCharacteristics,
         CB_IMAGE_NETHEADER_FLAGS,
         CB_RESOURCES_VERSION_dwSignature,
+        CB_RESOURCES_VERSION_dwFileFlags,
         __CB_size
     };
 
