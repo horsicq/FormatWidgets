@@ -178,7 +178,7 @@ void PEWidget::reload()
 
             if(pe.isResourceVersionPresent())
             {
-                pResources->addChild(createNewItem(SPE::TYPE_RESOURCE_VERSION,tr("Version")));
+                pResources->addChild(createNewItem(SPE::TYPE_RESOURCES_VERSION,tr("Version")));
             }
 
             if(pe.isResourceManifestPresent())
@@ -359,7 +359,14 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, in
                 case SPE::TYPE_NETHEADER:
                     switch(nNdata)
                     {
-                        case N_IMAGE_NETHEADER::Flags:      comboBox[CB_IMAGE_NETHEADER_FLAGS]->setValue((quint32)nValue);      break;
+                        case N_IMAGE_NETHEADER::Flags:              comboBox[CB_IMAGE_NETHEADER_FLAGS]->setValue((quint32)nValue);      break;
+                    }
+                    break;
+
+                case SPE::TYPE_RESOURCES_VERSION:
+                    switch(nNdata)
+                    {
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwSignature:       comboBox[CB_RESOURCES_VERSION_dwSignature]->setValue((quint32)nValue);      break;
                     }
                     break;
 
@@ -509,7 +516,7 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, in
                     ui->widgetHex_TLS->reload();
                     break;
 
-                case SPE::TYPE_RESOURCE_VERSION:
+                case SPE::TYPE_RESOURCES_VERSION:
                     switch(nNdata)
                     {
                         case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwSignature:           pe.setFixedFileInfo_dwSignature((quint32)nValue);               break;
@@ -679,7 +686,7 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, in
                     }
                     break;
 
-                case SPE::TYPE_RESOURCE_VERSION:
+                case SPE::TYPE_RESOURCES_VERSION:
                     switch(nNdata)
                     {
                         case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwStrucVersion:        addComment(ui->tableWidget_Resources_Version,N_IMAGE_RESOURCE_FIXEDFILEINFO::dwStrucVersion,HEADER_COLUMN_COMMENT,XBinary::versionDwordToString((quint32)nValue));                  break;
@@ -827,6 +834,13 @@ void PEWidget::widgetValueChanged(quint64 nValue)
             switch(nNdata)
             {
                 case N_IMAGE_NETHEADER::Flags:          lineEdit_NetHeader[N_IMAGE_NETHEADER::Flags]->setValue((quint32)nValue);    break;
+            }
+            break;
+
+        case SPE::TYPE_RESOURCES_VERSION:
+            switch(nNdata)
+            {
+                case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwSignature:       lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwSignature]->setValue((quint32)nValue);    break;
             }
             break;
     }
@@ -1435,15 +1449,17 @@ void PEWidget::reloadData()
                 connect(ui->treeView_Resources->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTreeView_Resources_currentRowChanged(QModelIndex,QModelIndex)));
             }
         }
-        else if(nType==SPE::TYPE_RESOURCE_VERSION)
+        else if(nType==SPE::TYPE_RESOURCES_VERSION)
         {
             if(!isInitPresent(sInit))
             {
-                createHeaderTable(SPE::TYPE_RESOURCE_VERSION,ui->tableWidget_Resources_Version,N_IMAGE_RESOURCE_FIXEDFILEINFO::records,lineEdit_Version_FixedFileInfo,N_IMAGE_RESOURCE_FIXEDFILEINFO::__data_size,0);
+                createHeaderTable(SPE::TYPE_RESOURCES_VERSION,ui->tableWidget_Resources_Version,N_IMAGE_RESOURCE_FIXEDFILEINFO::records,lineEdit_Version_FixedFileInfo,N_IMAGE_RESOURCE_FIXEDFILEINFO::__data_size,0);
+
+                comboBox[CB_RESOURCES_VERSION_dwSignature]=createComboBox(ui->tableWidget_Resources_Version,XPE::getResourcesFixedFileInfoSignaturesS(),SPE::TYPE_RESOURCES_VERSION,N_IMAGE_RESOURCE_FIXEDFILEINFO::dwSignature,XComboBoxEx::CBTYPE_LIST);
 
                 blockSignals(true);
 
-                XPE::RESOURCE_VERSION resourceVersion=pe.getResourceVersion();
+                XPE::RESOURCES_VERSION resourceVersion=pe.getResourcesVersion();
 
                 lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwSignature]->setValue(resourceVersion.fileInfo.dwSignature);
                 lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwStrucVersion]->setValue(resourceVersion.fileInfo.dwStrucVersion);
@@ -1459,7 +1475,7 @@ void PEWidget::reloadData()
                 lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileDateMS]->setValue(resourceVersion.fileInfo.dwFileDateMS);
                 lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileDateLS]->setValue(resourceVersion.fileInfo.dwFileDateLS);
 
-                // TODO COMBOBOX dwSignature
+                comboBox[CB_RESOURCES_VERSION_dwSignature]->setValue(resourceVersion.fileInfo.dwSignature);
                 // TODO COMBOBOX dwFileFlags
                 // TODO COMBOBOX dwFileOS
                 // TODO COMBOBOX dwFileType
@@ -2141,7 +2157,7 @@ void PEWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
             pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGMID,mode));
             break;
 
-        case SPE::TYPE_RESOURCE_VERSION:
+        case SPE::TYPE_RESOURCES_VERSION:
             pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGMID,mode));
             pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINT32,mode));
             pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGMID,mode));

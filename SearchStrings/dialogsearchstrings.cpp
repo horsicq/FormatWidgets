@@ -40,6 +40,11 @@ DialogSearchStrings::~DialogSearchStrings()
 void DialogSearchStrings::setData(QIODevice *pDevice, SearchStringsWidget::OPTIONS options, bool bAuto)
 {
     ui->widgetSearchStrings->setData(pDevice,options,bAuto);
+
+    if(options.sTitle!="")
+    {
+        setWindowTitle(options.sTitle);
+    }
 }
 
 void DialogSearchStrings::setShortcuts(XShortcuts *pShortcuts)

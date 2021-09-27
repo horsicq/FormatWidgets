@@ -53,6 +53,7 @@ public:
         qint32 nMinLenght;
         bool bMenu_Hex;
         bool bMenu_Demangle;
+        QString sTitle; // For dialog
     };
 
     explicit SearchStringsWidget(QWidget *pParent=nullptr);
