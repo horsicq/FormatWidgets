@@ -183,7 +183,7 @@ void PEWidget::reload()
 
             if(pe.isResourceManifestPresent())
             {
-                pResources->addChild(createNewItem(SPE::TYPE_RESOURCE_MANIFEST,tr("Manifest")));
+                pResources->addChild(createNewItem(SPE::TYPE_RESOURCES_MANIFEST,tr("Manifest")));
             }
         }
 
@@ -1504,7 +1504,7 @@ void PEWidget::reloadData()
                 blockSignals(false);
             }
         }
-        else if(nType==SPE::TYPE_RESOURCE_MANIFEST)
+        else if(nType==SPE::TYPE_RESOURCES_MANIFEST)
         {
             if(!isInitPresent(sInit))
             {

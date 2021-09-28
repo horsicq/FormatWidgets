@@ -458,12 +458,12 @@ void FormatsWidget::on_pushButtonPESections_clicked()
 
 void FormatsWidget::on_pushButtonPEManifest_clicked()
 {
-    showPE(SPE::TYPE_RESOURCE_MANIFEST);
+    showPE(SPE::TYPE_RESOURCES_MANIFEST);
 }
 
 void FormatsWidget::on_pushButtonPEVersion_clicked()
 {
-    showPE(SPE::TYPE_RESOURCE_VERSION);
+    showPE(SPE::TYPE_RESOURCES_VERSION);
 }
 
 void FormatsWidget::on_pushButtonPENET_clicked()
