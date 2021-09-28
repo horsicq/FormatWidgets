@@ -258,6 +258,7 @@ void PEWidget::reload()
             }
 
             // TODO NET Resources
+            // TODO more NET
         }
 
         if(pe.isOverlayPresent())
