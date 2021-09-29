@@ -1117,7 +1117,7 @@ void PEWidget::reloadData()
                 createHeaderTable(SPE::TYPE_IMAGE_OPTIONAL_HEADER,ui->tableWidget_IMAGE_OPTIONAL_HEADER,pe.is64()?(N_IMAGE_OPTIONAL_HEADER::records64):(N_IMAGE_OPTIONAL_HEADER::records32),lineEdit_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::__data_size,0);
                 comboBox[CB_IMAGE_OPTIONAL_HEADER_Magic]=createComboBox(ui->tableWidget_IMAGE_OPTIONAL_HEADER,XPE::getImageOptionalHeaderMagicS(),SPE::TYPE_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::Magic,XComboBoxEx::CBTYPE_LIST);
 
-                comboBox[CB_IMAGE_OPTIONAL_HEADER_OperationSystemVersion]=createComboBox(ui->tableWidget_IMAGE_OPTIONAL_HEADER,XPE::getOperatingSystemVersions(pe.getOsType()),SPE::TYPE_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::MajorOperatingSystemVersion,XComboBoxEx::CBTYPE_LIST,0,N_IMAGE_OPTIONAL_HEADER::OperatingSystemVersion);
+                comboBox[CB_IMAGE_OPTIONAL_HEADER_OperationSystemVersion]=createComboBox(ui->tableWidget_IMAGE_OPTIONAL_HEADER,XPE::getOperatingSystemVersions(pe.getOsName()),SPE::TYPE_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::MajorOperatingSystemVersion,XComboBoxEx::CBTYPE_LIST,0,N_IMAGE_OPTIONAL_HEADER::OperatingSystemVersion);
 
                 comboBox[CB_IMAGE_OPTIONAL_HEADER_Subsystem]=createComboBox(ui->tableWidget_IMAGE_OPTIONAL_HEADER,XPE::getImageOptionalHeaderSubsystemS(),SPE::TYPE_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::Subsystem,XComboBoxEx::CBTYPE_LIST);
                 comboBox[CB_IMAGE_OPTIONAL_HEADER_DllCharacteristics]=createComboBox(ui->tableWidget_IMAGE_OPTIONAL_HEADER,XPE::getImageOptionalHeaderDllCharacteristicsS(),SPE::TYPE_IMAGE_OPTIONAL_HEADER,N_IMAGE_OPTIONAL_HEADER::DllCharacteristics,XComboBoxEx::CBTYPE_FLAGS);
@@ -1657,6 +1657,10 @@ void PEWidget::reloadData()
                     {
                         nRecordSize=N_IMAGE_LOADCONFIG::CodeIntegrity_Flags;
                     }
+                    else if(nHeaderSize==0x100)
+                    {
+                        nRecordSize=N_IMAGE_LOADCONFIG::VolatileMetadataPointer;
+                    }
                     else if(nHeaderSize==0x130)
                     {
                         nRecordSize=N_IMAGE_LOADCONFIG::CastGuardOsDeterminedFailureMode;
@@ -1745,6 +1749,10 @@ void PEWidget::reloadData()
                         lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::HotPatchTableOffset]->setValue(lc64.HotPatchTableOffset);
                         lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::Reserved3]->setValue(lc64.Reserved3);
                         lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::EnclaveConfigurationPointer]->setValue(lc64.EnclaveConfigurationPointer);
+                    }
+
+                    if(nRecordSize>N_IMAGE_LOADCONFIG::VolatileMetadataPointer)
+                    {
                         lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::VolatileMetadataPointer]->setValue(lc64.VolatileMetadataPointer);
                         lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardEHContinuationTable]->setValue(lc64.GuardEHContinuationTable);
                         lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardEHContinuationCount]->setValue(lc64.GuardEHContinuationCount);
