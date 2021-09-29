@@ -152,6 +152,7 @@ private:
         CB_IMAGE_NETHEADER_FLAGS,
         CB_RESOURCES_VERSION_dwSignature,
         CB_RESOURCES_VERSION_dwFileFlags,
+        CB_RESOURCES_VERSION_dwFileOS,
         __CB_size
     };
 
