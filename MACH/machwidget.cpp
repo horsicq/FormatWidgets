@@ -1188,7 +1188,7 @@ void MACHWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
             break;
         case SMACH::TYPE_mach_main:
             pTableWidget->setColumnWidth(HEADER_COLUMN_NAME,getColumnWidth(this,CW_STRINGSHORT,mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINT32,mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE,getColumnWidth(this,CW_UINT64,mode));
             pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,getColumnWidth(this,CW_STRINGSHORT,mode));
             break;
         case SMACH::TYPE_mach_unix_thread:
