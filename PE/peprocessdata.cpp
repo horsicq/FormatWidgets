@@ -200,7 +200,7 @@ void PEProcessData::_process()
         QList<QString> listLabels;
         listLabels.append("");
         listLabels.append(getStructList(N_IMAGE_IMPORT_FUNCTION::records32,N_IMAGE_IMPORT_FUNCTION::__data_size));
-        listLabels.append("Name");
+        listLabels.append(tr("Name"));
 
         QList<XPE::IMPORT_POSITION> listImportPositions=g_pPE->getImportPositions(g_nNumber);
 
