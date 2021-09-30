@@ -126,7 +126,7 @@ private slots:
     void on_tableWidget_Net_Metadata_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
     void on_toolButtonPrev_clicked();
     void on_toolButtonNext_clicked();
-    void on_checkBoxExportShowValid_stateChanged(int arg1);
+    void on_checkBoxExportShowValid_stateChanged(int nState);
     void on_tableView_ImportFunctions_customContextMenuRequested(const QPoint &pos);
     void on_pushButtonCertificateCheck_clicked();
     void on_checkBox_ManifestFormat_stateChanged(int nState);

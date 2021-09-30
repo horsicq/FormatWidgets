@@ -2771,9 +2771,9 @@ void PEWidget::on_toolButtonNext_clicked()
     setAddPageEnabled(true);
 }
 
-void PEWidget::on_checkBoxExportShowValid_stateChanged(int arg1)
+void PEWidget::on_checkBoxExportShowValid_stateChanged(int nState)
 {
-    Q_UNUSED(arg1)
+    Q_UNUSED(nState)
 
     XPE pe(getDevice(),getOptions().bIsImage,getOptions().nImageBase);
 
