@@ -693,8 +693,9 @@ void FormatWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
 {
     Q_UNUSED(nOffset)
     Q_UNUSED(nSize)
-
+#ifdef QT_DEBUG
     qDebug("TODO _showInHexWindow");
+#endif
 }
 
 //void FormatWidget::resizeToolsWidget(QWidget *pParent, ToolsWidget *pToolWidget)
