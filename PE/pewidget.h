@@ -153,6 +153,7 @@ private:
         CB_RESOURCES_VERSION_dwSignature,
         CB_RESOURCES_VERSION_dwFileFlags,
         CB_RESOURCES_VERSION_dwFileOS,
+        CB_RESOURCES_VERSION_dwFileType,
         __CB_size
     };
 
