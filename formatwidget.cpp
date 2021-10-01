@@ -676,8 +676,9 @@ void FormatWidget::_showInDisasmWindowAddress(qint64 nAddress)
 void FormatWidget::_showInDisasmWindowOffset(qint64 nOffset)
 {
     Q_UNUSED(nOffset)
-
+#ifdef QT_DEBUG
     qDebug("TODO _showInDisasmWindowOffset");
+#endif
 }
 
 void FormatWidget::_showInMemoryMapWindowOffset(qint64 nOffset)
