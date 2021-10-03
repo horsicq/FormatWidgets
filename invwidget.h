@@ -26,7 +26,7 @@
 #include "xbinary.h"
 #include "xshortcutswidget.h"
 
-// TODO changed signal
+// TODO changed signal XHexEdit
 class InvWidget : public XShortcutsWidget
 {
     Q_OBJECT
