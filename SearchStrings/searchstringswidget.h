@@ -21,13 +21,13 @@
 #ifndef SEARCHSTRINGSWIDGET_H
 #define SEARCHSTRINGSWIDGET_H
 
-#include <QStandardItemModel>
-#include <QSortFilterProxyModel>
-#include <QFileDialog>
-#include <QMenu>
 #include <QApplication>
 #include <QClipboard>
+#include <QFileDialog>
 #include <QFutureWatcher>
+#include <QMenu>
+#include <QSortFilterProxyModel>
+#include <QStandardItemModel>
 #include <QtConcurrent>
 #include "dialogmultisearchprocess.h"
 #include "xshortcutswidget.h"
