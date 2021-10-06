@@ -367,19 +367,20 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, in
                 case SPE::TYPE_RESOURCES_VERSION:
                     switch(nNdata)
                     {
-                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwSignature:       comboBox[CB_RESOURCES_VERSION_dwSignature]->setValue((quint32)nValue);      break;
-                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileFlags:       comboBox[CB_RESOURCES_VERSION_dwFileFlags]->setValue((quint32)nValue);      break;
-                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileOS:          comboBox[CB_RESOURCES_VERSION_dwFileOS]->setValue((quint32)nValue);         break;
-                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileType:        comboBox[CB_RESOURCES_VERSION_dwFileType]->setValue((quint32)nValue);       break;
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwSignature:           comboBox[CB_RESOURCES_VERSION_dwSignature]->setValue((quint32)nValue);      break;
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileFlags:           comboBox[CB_RESOURCES_VERSION_dwFileFlags]->setValue((quint32)nValue);      break;
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileOS:              comboBox[CB_RESOURCES_VERSION_dwFileOS]->setValue((quint32)nValue);         break;
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileType:            comboBox[CB_RESOURCES_VERSION_dwFileType]->setValue((quint32)nValue);       break;
                     }
                     break;
 
                 case SPE::TYPE_LOADCONFIG:
                     switch(nNdata)
                     {
-                        case N_IMAGE_LOADCONFIG::SecurityCookie:                invWidget[INV_IMAGE_LOADCONFIG_SecurityCookie]->setAddressAndSize(&pe,(quint64)nValue,0);               break;
-                        case N_IMAGE_LOADCONFIG::SEHandlerTable:                invWidget[INV_IMAGE_LOADCONFIG_SEHandlerTable]->setAddressAndSize(&pe,(quint64)nValue,0);               break;
-                        case N_IMAGE_LOADCONFIG::GuardCFCheckFunctionPointer:   invWidget[INV_IMAGE_LOADCONFIG_GuardCFCheckFunctionPointer]->setAddressAndSize(&pe,(quint64)nValue,0);  break;
+                        case N_IMAGE_LOADCONFIG::SecurityCookie:                    invWidget[INV_IMAGE_LOADCONFIG_SecurityCookie]->setAddressAndSize(&pe,(quint64)nValue,0);                   break;
+                        case N_IMAGE_LOADCONFIG::SEHandlerTable:                    invWidget[INV_IMAGE_LOADCONFIG_SEHandlerTable]->setAddressAndSize(&pe,(quint64)nValue,0);                   break;
+                        case N_IMAGE_LOADCONFIG::GuardCFCheckFunctionPointer:       invWidget[INV_IMAGE_LOADCONFIG_GuardCFCheckFunctionPointer]->setAddressAndSize(&pe,(quint64)nValue,0);      break;
+                        case N_IMAGE_LOADCONFIG::GuardCFDispatchFunctionPointer:    invWidget[INV_IMAGE_LOADCONFIG_GuardCFDispatchFunctionPointer]->setAddressAndSize(&pe,(quint64)nValue,0);   break;
                     }
                     break;
             }
@@ -1691,16 +1692,14 @@ void PEWidget::reloadData()
                 invWidget[INV_IMAGE_LOADCONFIG_SecurityCookie]=createInvWidget(ui->tableWidget_LoadConfig,SPE::TYPE_LOADCONFIG,N_IMAGE_LOADCONFIG::SecurityCookie,InvWidget::TYPE_HEX);
                 invWidget[INV_IMAGE_LOADCONFIG_SEHandlerTable]=createInvWidget(ui->tableWidget_LoadConfig,SPE::TYPE_LOADCONFIG,N_IMAGE_LOADCONFIG::SEHandlerTable,InvWidget::TYPE_HEX);
 
-                if(bIs64)
+                if(nRecordSize>N_IMAGE_LOADCONFIG::GuardCFCheckFunctionPointer)
                 {
                     invWidget[INV_IMAGE_LOADCONFIG_GuardCFCheckFunctionPointer]=createInvWidget(ui->tableWidget_LoadConfig,SPE::TYPE_LOADCONFIG,N_IMAGE_LOADCONFIG::GuardCFCheckFunctionPointer,InvWidget::TYPE_HEX);
                 }
-                else
+
+                if(nRecordSize>N_IMAGE_LOADCONFIG::GuardCFDispatchFunctionPointer)
                 {
-                    if(nRecordSize>N_IMAGE_LOADCONFIG::GuardCFCheckFunctionPointer)
-                    {
-                        invWidget[INV_IMAGE_LOADCONFIG_GuardCFCheckFunctionPointer]=createInvWidget(ui->tableWidget_LoadConfig,SPE::TYPE_LOADCONFIG,N_IMAGE_LOADCONFIG::GuardCFCheckFunctionPointer,InvWidget::TYPE_HEX);
-                    }
+                    invWidget[INV_IMAGE_LOADCONFIG_GuardCFDispatchFunctionPointer]=createInvWidget(ui->tableWidget_LoadConfig,SPE::TYPE_LOADCONFIG,N_IMAGE_LOADCONFIG::GuardCFDispatchFunctionPointer,InvWidget::TYPE_HEX);
                 }
 
                 blockSignals(true);
@@ -1775,7 +1774,15 @@ void PEWidget::reloadData()
 
                     invWidget[INV_IMAGE_LOADCONFIG_SecurityCookie]->setAddressAndSize(&pe,lc64.SecurityCookie,0);
                     invWidget[INV_IMAGE_LOADCONFIG_SEHandlerTable]->setAddressAndSize(&pe,lc64.SEHandlerTable,0);
-                    invWidget[INV_IMAGE_LOADCONFIG_GuardCFCheckFunctionPointer]->setAddressAndSize(&pe,lc64.GuardCFCheckFunctionPointer,0);
+
+                    if(nRecordSize>N_IMAGE_LOADCONFIG::GuardCFCheckFunctionPointer)
+                    {
+                        invWidget[INV_IMAGE_LOADCONFIG_GuardCFCheckFunctionPointer]->setAddressAndSize(&pe,lc64.GuardCFCheckFunctionPointer,0);
+                    }
+                    if(nRecordSize>N_IMAGE_LOADCONFIG::GuardCFDispatchFunctionPointer)
+                    {
+                        invWidget[INV_IMAGE_LOADCONFIG_GuardCFDispatchFunctionPointer]->setAddressAndSize(&pe,lc64.GuardCFDispatchFunctionPointer,0);
+                    }
                 }
                 else
                 {
@@ -1851,6 +1858,10 @@ void PEWidget::reloadData()
                     if(nRecordSize>N_IMAGE_LOADCONFIG::GuardCFCheckFunctionPointer)
                     {
                         invWidget[INV_IMAGE_LOADCONFIG_GuardCFCheckFunctionPointer]->setAddressAndSize(&pe,lc32.GuardCFCheckFunctionPointer,0);
+                    }
+                    if(nRecordSize>N_IMAGE_LOADCONFIG::GuardCFDispatchFunctionPointer)
+                    {
+                        invWidget[INV_IMAGE_LOADCONFIG_GuardCFDispatchFunctionPointer]->setAddressAndSize(&pe,lc32.GuardCFDispatchFunctionPointer,0);
                     }
                 }
 

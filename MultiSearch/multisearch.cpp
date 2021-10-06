@@ -201,7 +201,8 @@ void MultiSearch::processSearch()
 
             if(bSuccess)
             {
-                QFuture<void> future=QtConcurrent::run(this,&MultiSearch::processSignature,signatureRecord);
+                //QFuture<void> future=QtConcurrent::run(this,&MultiSearch::processSignature,signatureRecord);
+                QtConcurrent::run(this,&MultiSearch::processSignature,signatureRecord);
 
                 QThread::msleep(5); // wait till run started TODO rewrite!
 
