@@ -21,7 +21,6 @@
 #ifndef DIALOGSEARCHSTRINGS_H
 #define DIALOGSEARCHSTRINGS_H
 
-#include <QDialog>
 #include "searchstringswidget.h"
 #include "xshortcutsdialog.h"
 
