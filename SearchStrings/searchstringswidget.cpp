@@ -51,6 +51,7 @@ SearchStringsWidget::SearchStringsWidget(QWidget *pParent) :
     g_scHex=nullptr;
     g_scDemangle=nullptr;
 
+    // TODO Check Qt6
     ui->comboBoxANSICodec->addItem("");
     ui->comboBoxANSICodec->addItem("IBM866");
     ui->comboBoxANSICodec->addItem("ISO-8859-1");
