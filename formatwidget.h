@@ -21,26 +21,26 @@
 #ifndef FORMATWIDGET_H
 #define FORMATWIDGET_H
 
-#include <QTreeWidgetItem>
-#include <QTableWidget>
 #include <QHeaderView>
 #include <QMessageBox>
 #include <QPushButton>
-#include "xlineedithex.h"
+#include <QTableWidget>
+#include <QTreeWidgetItem>
+#include "dialogdemangle.h"
+#include "dialogentropy.h"
+#include "dialoghexview.h"
+#include "dialogmodelinfo.h"
+#include "dialogmultidisasm.h"
+#include "dialogprocessdata.h"
+#include "formatwidget_def.h"
+#include "invwidget.h"
+#include "toolswidget.h"
 #include "xcomboboxex.h"
 #include "xdatetimeeditx.h"
-#include "invwidget.h"
-#include "dialoghexview.h"
-#include "dialogmultidisasm.h"
-#include "dialogentropy.h"
-#include "toolswidget.h"
-#include "formatwidget_def.h"
-#include "dialogprocessdata.h"
+#include "xhexviewwidget.h"
+#include "xlineedithex.h"
 #include "xmultidisasmwidget.h"
 #include "xshortcutsdialog.h"
-#include "dialogdemangle.h"
-#include "xhexviewwidget.h"
-#include "dialogmodelinfo.h"
 
 class FormatWidget : public XShortcutsWidget
 {
