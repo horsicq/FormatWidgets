@@ -23,9 +23,9 @@
 
 #include "../formatwidget.h"
 #include "dialogsectionheader.h"
-#include "pesectionheaderwidget.h"
 #include "pe_defs.h"
 #include "peprocessdata.h"
+#include "pesectionheaderwidget.h"
 
 namespace Ui
 {
