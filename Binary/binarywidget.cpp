@@ -58,6 +58,7 @@ void BinaryWidget::cleanup()
 
 void BinaryWidget::reload()
 {
+    // TODO Hex
     BinaryWidget::clear();
 
     ui->checkBoxReadonly->setEnabled(!isReadonly());
