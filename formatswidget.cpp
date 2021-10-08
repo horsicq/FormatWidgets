@@ -58,23 +58,7 @@ void FormatsWidget::setFileName(QString sFileName, bool bScan)
     this->g_sFileName=sFileName;
     this->g_bScan=bScan;
 
-    QSet<XBinary::FT> stFileTypes=XBinary::getFileTypes(sFileName,true);
-
-    XBinary::filterFileTypes(&stFileTypes);
-
-    QList<XBinary::FT> listFileTypes=XBinary::_getFileTypeListFromSet(stFileTypes);
-
-    XBinary::FT fileType=XBinary::FT_UNKNOWN;
-
-    if(listFileTypes.size())
-    {
-        if(listFileTypes.at(0)==XBinary::FT_BINARY)
-        {
-            fileType=XBinary::FT_BINARY;
-        }
-    }
-
-    XFormats::setFileTypeComboBox(ui->comboBoxFileType,&listFileTypes,fileType);
+    XFormats::setFileTypeComboBox(g_sFileName,ui->comboBoxFileType);
 
     reload();
 }

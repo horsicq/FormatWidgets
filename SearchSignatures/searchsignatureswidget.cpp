@@ -51,16 +51,12 @@ void SearchSignaturesWidget::setData(QIODevice *pDevice, XBinary::FT fileType,OP
     this->g_pDevice=pDevice;
     g_bInit=false;
 
-    QSet<XBinary::FT> stFileType=XBinary::getFileTypes(pDevice,true);
-    stFileType.insert(XBinary::FT_COM);
-    QList<XBinary::FT> listFileTypes=XBinary::_getFileTypeListFromSet(stFileType);
+    XFormats::setFileTypeComboBox(fileType,g_pDevice,ui->comboBoxType);
 
-    XBinary::FT _fileType=XFormats::setFileTypeComboBox(ui->comboBoxType,&listFileTypes,fileType);
-    XFormats::setEndianessComboBox(ui->comboBoxEndianness,_fileType);
+    // TODO get endianess XFormats;
+    XFormats::setEndianessComboBox(ui->comboBoxEndianness,false);
 
     ui->tableViewResult->setModel(nullptr);
-
-    g_fileType=fileType;
 
     setOptions(options);
 

@@ -85,7 +85,6 @@ private:
     Ui::SearchSignaturesWidget *ui;
     QIODevice *g_pDevice;
     QSortFilterProxyModel *g_pFilter;
-    XBinary::FT g_fileType;
     QStandardItemModel *g_pModel;
     bool g_bInit;
     QStandardItemModel *g_pOldModel;
