@@ -21,18 +21,18 @@
 #ifndef SEARCHSIGNATURESWIDGET_H
 #define SEARCHSIGNATURESWIDGET_H
 
-#include "xshortcutswidget.h"
-#include <QFile>
-#include <QStandardItemModel>
-#include <QSortFilterProxyModel>
-#include <QFileDialog>
-#include <QMenu>
 #include <QApplication>
 #include <QClipboard>
+#include <QFile>
+#include <QFileDialog>
 #include <QFutureWatcher>
+#include <QMenu>
+#include <QSortFilterProxyModel>
+#include <QStandardItemModel>
 #include <QtConcurrent>
 #include "dialogmultisearchprocess.h"
 #include "xformats.h"
+#include "xshortcutswidget.h"
 
 namespace Ui
 {

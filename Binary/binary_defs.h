@@ -18,12 +18,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-#ifndef MBINARY_DEFS_H
-#define MBINARY_DEFS_H
+#ifndef XBINARY_DEFS_H
+#define XBINARY_DEFS_H
 
 #include "../formatwidget.h"
 #include "xbinary.h"
 
 // TODO
 
-#endif // MBINARY_DEFS_H
+#endif // XBINARY_DEFS_H
