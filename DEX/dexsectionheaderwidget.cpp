@@ -37,7 +37,7 @@ DEXSectionHeaderWidget::DEXSectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIO
     g_nLineEditSize=0;
     g_ppComboBox=0;
     g_nComboBoxSize=0;
-    g_ppInvWidget=0;
+    g_ppInvWidget=nullptr;
     g_nInvWidgetSize=0;
 
     if(g_nLineEditSize)
