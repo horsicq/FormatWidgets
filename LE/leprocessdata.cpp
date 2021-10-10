@@ -47,7 +47,7 @@ void LEProcessData::_process()
 
         setHeader(*g_ppModel,&listLabels);
 
-        for(int i=0; i<nNumberOfObjects; i++)
+        for(int i=0;i<nNumberOfObjects;i++)
         {
             QStandardItem *pItemNumber=new QStandardItem;
             pItemNumber->setData(i,Qt::DisplayRole);
