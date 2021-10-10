@@ -172,7 +172,7 @@ void FormatWidget::setValue(QVariant vValue, int nStype, int nNdata, int nVtype,
     }
     else
     {
-        QMessageBox::critical(this,tr("Error"),tr("Cannot save file")+QString(": %1").arg(XBinary::getBackupFileName(getDevice())));
+        QMessageBox::critical(XOptions::getMainWidget(this),tr("Error"),tr("Cannot save file")+QString(": %1").arg(XBinary::getBackupFileName(getDevice())));
     }
 }
 

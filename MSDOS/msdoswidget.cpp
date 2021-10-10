@@ -251,6 +251,7 @@ void MSDOSWidget::reloadData()
                 stringsOptions.bAnsi=true;
                 stringsOptions.bUTF8=false;
                 stringsOptions.bUnicode=true;
+                stringsOptions.bCStrings=true;
 
                 ui->widgetStrings->setData(getDevice(),stringsOptions,true);
             }

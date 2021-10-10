@@ -61,7 +61,7 @@ void DialogProcessData::on_pushButtonCancel_clicked()
 
 void DialogProcessData::errorMessage(QString sText)
 {
-    QMessageBox::critical(this,tr("Error"),sText);
+    QMessageBox::critical(XOptions::getMainWidget(this),tr("Error"),sText);
 }
 
 void DialogProcessData::onCompleted(qint64 nElapsed)

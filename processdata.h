@@ -27,6 +27,7 @@
 #include <QElapsedTimer>
 #include "formatwidget_def.h"
 #include "xlineedithex.h"
+#include "xoptions.h"
 
 class ProcessData : public QObject
 {

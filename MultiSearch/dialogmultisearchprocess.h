@@ -26,6 +26,7 @@
 #include <QThread>
 #include <QMessageBox>
 #include "multisearch.h"
+#include "xoptions.h"
 
 namespace Ui
 {
