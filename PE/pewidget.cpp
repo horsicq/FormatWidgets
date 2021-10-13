@@ -1282,7 +1282,7 @@ void PEWidget::reloadData()
                 XBinary::_MEMORY_MAP memoryMap=pe.getMemoryMap();
                 QMap<quint64,QString> mapDD=XPE::getImageOptionalHeaderDataDirectoryS();
 
-                for(int i=0; i<16; i++)
+                for(int i=0;i<16;i++)
                 {
                     ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->setItem(i,4,new QTableWidgetItem()); // Comment
                     ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->setItem(i,5,new QTableWidgetItem()); // Comment
