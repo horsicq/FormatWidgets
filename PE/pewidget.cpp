@@ -2262,7 +2262,7 @@ bool PEWidget::createSectionTable(int nType, QTableWidget *pTableWidget, const F
 
     pTableWidget->setRowCount(0);
 
-    for(int i=0; i<nNumberOfRecords; i++)
+    for(int i=0;i<nNumberOfRecords;i++)
     {
         slHeader.append(pRecords[i].sName);
     }
