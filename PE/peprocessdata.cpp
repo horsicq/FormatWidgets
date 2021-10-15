@@ -456,7 +456,7 @@ void PEProcessData::_process()
 
         setHeader(*g_ppModel,&listLabels);
 
-        for(int i=0; (i<nNumberOfRecords)&&(isRun()); i++)
+        for(int i=0;(i<nNumberOfRecords)&&(isRun());i++)
         {
             qint64 nAddress=listCallbacks.at(i);
 
