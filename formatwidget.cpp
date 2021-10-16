@@ -1022,7 +1022,7 @@ bool FormatWidget::createSectionTable(int nType, QTableWidget *pTableWidget, con
 
     pTableWidget->setRowCount(0);
 
-    for(int i=0; i<nNumberOfRecords; i++)
+    for(int i=0;i<nNumberOfRecords;i++)
     {
         slHeader.append(pRecords[i].sName);
     }
