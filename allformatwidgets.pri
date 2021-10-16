@@ -52,3 +52,7 @@ contains(XCONFIG, use_dex) {
         include($$PWD/DEX/dexwidget.pri)
     }
 }
+
+DISTFILES += \
+    $$PWD/LICENSE \
+    $$PWD/README.md
