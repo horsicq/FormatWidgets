@@ -1069,7 +1069,7 @@ void FormatWidget::setPushButtonReadOnly(QPushButton **ppPushButtons, int nCount
 
 void FormatWidget::setDateTimeEditReadOnly(XDateTimeEditX **ppDateTimeEdits, int nCount, bool bState)
 {
-    for(int i=0; i<nCount; i++)
+    for(int i=0;i<nCount;i++)
     {
         if(ppDateTimeEdits[i])
         {
@@ -1082,7 +1082,7 @@ void FormatWidget::_deleteObjects(QObject **ppObjects, int nCount)
 {
     nCount=nCount/(sizeof (QObject *));
 
-    for(int i=0; i<nCount; i++)
+    for(int i=0;i<nCount;i++)
     {
         if(ppObjects[i])
         {
