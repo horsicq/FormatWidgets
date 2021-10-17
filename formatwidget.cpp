@@ -1094,7 +1094,7 @@ void FormatWidget::_deleteObjects(QObject **ppObjects, int nCount)
 
 void FormatWidget::_blockSignals(QObject **ppObjects, int nCount, bool bState)
 {
-    for(int i=0; i<nCount; i++)
+    for(int i=0;i<nCount;i++)
     {
         if(ppObjects[i])
         {
