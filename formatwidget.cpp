@@ -982,7 +982,7 @@ void FormatWidget::updateTableRecord(QTableWidget *pTableWidget, int nRow, qint6
 //    pTableWidget->setHorizontalHeaderLabels(slHeader);
 //    pTableWidget->horizontalHeader()->setVisible(true);
 
-//    for(int i=0; i<nRecordCount; i++)
+//    for(int i=0;i<nRecordCount;i++)
 //    {
 //        QTableWidgetItem *newItemNumber=new QTableWidgetItem;
 //        newItemNumber->setText(QString("%1").arg(i));
