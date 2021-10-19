@@ -21,13 +21,13 @@
 #ifndef MULTISEARCH_H
 #define MULTISEARCH_H
 
+#include <QElapsedTimer>
+#include <QFuture>
 #include <QIODevice>
 #include <QSemaphore>
-#include <QFuture>
+#include <QStandardItemModel>
 #include <QtConcurrent>
 #include <QtConcurrentMap>
-#include <QElapsedTimer>
-#include <QStandardItemModel>
 #include "xbinary.h"
 
 class MultiSearch : public QObject

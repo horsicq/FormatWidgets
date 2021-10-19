@@ -22,8 +22,8 @@
 #define DIALOGMODELINFO_H
 
 #include <QDialog>
-#include <QStandardItemModel>
 #include <QFileDialog>
+#include <QStandardItemModel>
 #include "xoptions.h"
 #include "xbinary.h"
 
