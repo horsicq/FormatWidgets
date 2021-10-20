@@ -180,7 +180,7 @@ void MultiSearch::processSearch()
 
         emit progressValueChanged(0);
 
-        for(int i=0;(i<nNumberOfSignatures)&&(!g_bIsStop);i++)
+        for(qint32 i=0;(i<nNumberOfSignatures)&&(!g_bIsStop);i++)
         {
             SIGNATURE_RECORD signatureRecord=g_options.pListSignatureRecords->at(i);
 
