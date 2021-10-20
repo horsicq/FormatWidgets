@@ -400,6 +400,13 @@ void MACHWidget::reload()
                 pItemCommands->addChild(pItemVersionMin);
             }
 
+            if(mach.isCommandPresent(XMACH_DEF::S_LC_BUILD_VERSION,&listCommandRecords))
+            {
+                QTreeWidgetItem *pItemBuildVersion=createNewItem(SMACH::TYPE_mach_build_version,QString("LC_BUILD_VERSION"),mach.getCommandRecordOffset(XMACH_DEF::S_LC_BUILD_VERSION,0,&listCommandRecords)); // TODO rename
+
+                pItemCommands->addChild(pItemBuildVersion);
+            }
+
             if(mach.isCommandPresent(XMACH_DEF::S_LC_LOAD_DYLINKER,&listCommandRecords))
             {
                 QTreeWidgetItem *pItemDylinker=createNewItem(SMACH::TYPE_mach_dylinker,QString("LC_LOAD_DYLINKER"),mach.getCommandRecordOffset(XMACH_DEF::S_LC_LOAD_DYLINKER,0,&listCommandRecords)); // TODO rename
@@ -1048,6 +1055,18 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
                     }
 
                     ui->widgetHex_unix_thread_ppc_32->reload();
+
+                    break;
+            }
+
+            switch(nStype)
+            {
+                case SMACH::TYPE_mach_version_min:
+                    switch(nNdata)
+                    {
+                        case N_mach_version_min::version:       addComment(ui->tableWidget_version_min,N_mach_version_min::version,HEADER_COLUMN_COMMENT,XBinary::fullVersionDwordToString((quint32)nValue));           break;
+                        case N_mach_version_min::sdk:           addComment(ui->tableWidget_version_min,N_mach_version_min::sdk,HEADER_COLUMN_COMMENT,XBinary::fullVersionDwordToString((quint32)nValue));               break;
+                    }
 
                     break;
             }
@@ -1720,10 +1739,37 @@ void MACHWidget::reloadData()
                 g_lineEdit_mach_version_min[N_mach_version_min::version]->setValue(version_min.version);
                 g_lineEdit_mach_version_min[N_mach_version_min::sdk]->setValue(version_min.sdk);
 
+                addComment(ui->tableWidget_version_min,N_mach_version_min::version,HEADER_COLUMN_COMMENT,XBinary::fullVersionDwordToString(version_min.version));
+                addComment(ui->tableWidget_version_min,N_mach_version_min::sdk,HEADER_COLUMN_COMMENT,XBinary::fullVersionDwordToString(version_min.sdk));
+
                 qint64 nOffset=nDataOffset;
                 qint64 nSize=mach.get_version_min_command_size();
 
                 loadHexSubdevice(nOffset,nSize,nOffset,&g_subDevice[SMACH::TYPE_mach_version_min],ui->widgetHex_version_min);
+
+                blockSignals(false);
+            }
+        }
+        else if(nType==SMACH::TYPE_mach_build_version)
+        {
+            if(!isInitPresent(sInit))
+            {
+//                createHeaderTable(SMACH::TYPE_mach_version_min,ui->tableWidget_version_min,N_mach_version_min::records,g_lineEdit_mach_version_min,N_mach_version_min::__data_size,0,nDataOffset);
+
+                blockSignals(true);
+
+//                XMACH_DEF::version_min_command version_min=mach._read_version_min_command(nDataOffset);
+
+//                g_lineEdit_mach_version_min[N_mach_version_min::version]->setValue(version_min.version);
+//                g_lineEdit_mach_version_min[N_mach_version_min::sdk]->setValue(version_min.sdk);
+
+//                addComment(ui->tableWidget_version_min,N_mach_version_min::version,HEADER_COLUMN_COMMENT,XBinary::fullVersionDwordToString(version_min.version));
+//                addComment(ui->tableWidget_version_min,N_mach_version_min::sdk,HEADER_COLUMN_COMMENT,XBinary::fullVersionDwordToString(version_min.sdk));
+
+                qint64 nOffset=nDataOffset;
+                qint64 nSize=mach.get_build_version_command_size();
+
+                loadHexSubdevice(nOffset,nSize,nOffset,&g_subDevice[SMACH::TYPE_mach_build_version],ui->widgetHex_build_version);
 
                 blockSignals(false);
             }

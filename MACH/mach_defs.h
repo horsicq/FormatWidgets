@@ -50,6 +50,7 @@ enum TYPE
     TYPE_mach_symtab,
     TYPE_mach_dysymtab,
     TYPE_mach_version_min,
+    TYPE_mach_build_version,
     TYPE_mach_dylinker,
     TYPE_mach_rpath,
     TYPE_mach_source_version,
