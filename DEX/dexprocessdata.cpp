@@ -51,7 +51,7 @@ void DEXProcessData::_process()
 
         QMap<quint64, QString> mapTypes=XDEX::getTypesS();
 
-        for(int i=0;(i<nNumberOfMapItems)&&(isRun());i++)
+        for(qint32 i=0;(i<nNumberOfMapItems)&&(isRun());i++)
         {
             QStandardItem *pItem=new QStandardItem(QString::number(i));
 
