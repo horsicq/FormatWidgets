@@ -248,7 +248,7 @@ void PEWidget::reload()
 
                 int nNumberOfStreams=cliInfo.metaData.listStreams.count();
 
-                for(int i=0;i<nNumberOfStreams;i++)
+                for(qint32 i=0;i<nNumberOfStreams;i++)
                 {
                     pNetMetadata->addChild(createNewItem(SPE::TYPE_NET_METADATA_STREAM,
                                                          cliInfo.metaData.listStreams.at(i).sName,
