@@ -335,7 +335,7 @@ void MultiSearch::processModel()
 
         g_bIsStop=false;
 
-        for(int i=0;(i<nNumberOfRecords)&&(!g_bIsStop);i++)
+        for(qint32 i=0;(i<nNumberOfRecords)&&(!g_bIsStop);i++)
         {
             XBinary::MS_RECORD record=g_pListRecords->at(i);
 
