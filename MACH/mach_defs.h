@@ -459,6 +459,20 @@ enum DATA
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 }
 
+namespace N_mach_build_version
+{
+enum DATA
+{
+    platform,
+    minos,
+    sdk,
+    ntools,
+    __data_size
+};
+
+extern const FW_DEF::HEADER_RECORD records[__data_size];
+}
+
 namespace N_mach_source_version
 {
 enum DATA

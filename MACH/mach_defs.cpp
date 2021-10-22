@@ -270,6 +270,18 @@ const FW_DEF::HEADER_RECORD records[]=
 };
 }
 
+namespace N_mach_build_version
+{
+const FW_DEF::HEADER_RECORD records[]=
+{
+    {platform,              "platform",                 offsetof(XMACH_DEF::build_version_command,platform),    4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {minos,                 "minos",                    offsetof(XMACH_DEF::build_version_command,minos),       4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {sdk,                   "sdk",                      offsetof(XMACH_DEF::build_version_command,sdk),         4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {ntools,                "ntools",                   offsetof(XMACH_DEF::build_version_command,ntools),      4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+
+};
+}
+
 namespace N_mach_source_version
 {
 const FW_DEF::HEADER_RECORD records[]=

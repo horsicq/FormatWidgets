@@ -54,6 +54,7 @@ MACHWidget::MACHWidget(QWidget *pParent) :
     initToolsWidget(ui->widgetHex_unix_thread_x86_32);
     initToolsWidget(ui->widgetHex_unix_thread_x86_64);
     initToolsWidget(ui->widgetHex_version_min);
+    initToolsWidget(ui->widgetHex_build_version);
     initToolsWidget(ui->widgetHex_weak_libraries);
     initToolsWidget(ui->widgetHex_DYLD_INFO_rebase);
     initToolsWidget(ui->widgetHex_DYLD_INFO_bind);
@@ -109,6 +110,7 @@ void MACHWidget::setShortcuts(XShortcuts *pShortcuts)
     ui->widgetHex_unix_thread_x86_32->setShortcuts(pShortcuts);
     ui->widgetHex_unix_thread_x86_64->setShortcuts(pShortcuts);
     ui->widgetHex_version_min->setShortcuts(pShortcuts);
+    ui->widgetHex_build_version->setShortcuts(pShortcuts);
     ui->widgetHex_weak_libraries->setShortcuts(pShortcuts);
     ui->widgetHex_DYLD_INFO_rebase->setShortcuts(pShortcuts);
     ui->widgetHex_DYLD_INFO_bind->setShortcuts(pShortcuts);
@@ -133,6 +135,7 @@ void MACHWidget::clear()
     memset(g_lineEdit_mach_symtab,0,sizeof g_lineEdit_mach_symtab);
     memset(g_lineEdit_mach_dysymtab,0,sizeof g_lineEdit_mach_dysymtab);
     memset(g_lineEdit_mach_version_min,0,sizeof g_lineEdit_mach_version_min);
+    memset(g_lineEdit_mach_build_version,0,sizeof g_lineEdit_mach_build_version);
     memset(g_lineEdit_mach_source_version,0,sizeof g_lineEdit_mach_source_version);
     memset(g_lineEdit_mach_encryption_info,0,sizeof g_lineEdit_mach_encryption_info);
     memset(g_lineEdit_mach_function_starts,0,sizeof g_lineEdit_mach_function_starts);
@@ -788,6 +791,19 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
 
                     break;
 
+                case SMACH::TYPE_mach_build_version:
+                    switch(nNdata)
+                    {
+                        case N_mach_build_version::platform:        mach._set_build_version_command_platform(nOffset,nValue);       break;
+                        case N_mach_build_version::minos:           mach._set_build_version_command_minos(nOffset,nValue);          break;
+                        case N_mach_build_version::sdk:             mach._set_build_version_command_sdk(nOffset,nValue);            break;
+                        case N_mach_build_version::ntools:          mach._set_build_version_command_ntools(nOffset,nValue);         break;
+                    }
+
+                    ui->widgetHex_build_version->reload();
+
+                    break;
+
                 case SMACH::TYPE_mach_encryption_info:
                     switch(nNdata)
                     {
@@ -1069,6 +1085,15 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
                     }
 
                     break;
+
+                case SMACH::TYPE_mach_build_version:
+                    switch(nNdata)
+                    {
+                        case N_mach_build_version::minos:       addComment(ui->tableWidget_build_version,N_mach_build_version::minos,HEADER_COLUMN_COMMENT,XBinary::fullVersionDwordToString((quint32)nValue));         break;
+                        case N_mach_build_version::sdk:         addComment(ui->tableWidget_build_version,N_mach_build_version::sdk,HEADER_COLUMN_COMMENT,XBinary::fullVersionDwordToString((quint32)nValue));           break;
+                    }
+
+                    break;
             }
 
             result=SV_EDITED;
@@ -1102,6 +1127,7 @@ void MACHWidget::setReadonly(bool bState)
     setLineEditsReadOnly(g_lineEdit_mach_symtab,N_mach_symtab::__data_size,bState);
     setLineEditsReadOnly(g_lineEdit_mach_dysymtab,N_mach_dysymtab::__data_size,bState);
     setLineEditsReadOnly(g_lineEdit_mach_version_min,N_mach_version_min::__data_size,bState);
+    setLineEditsReadOnly(g_lineEdit_mach_build_version,N_mach_build_version::__data_size,bState);
     setLineEditsReadOnly(g_lineEdit_mach_source_version,N_mach_source_version::__data_size,bState);
     setLineEditsReadOnly(g_lineEdit_mach_encryption_info,N_mach_encryption_info::__data_size,bState);
     setLineEditsReadOnly(g_lineEdit_mach_function_starts,N_mach_linkedit_data::__data_size,bState);
@@ -1130,6 +1156,7 @@ void MACHWidget::blockSignals(bool bState)
     _blockSignals((QObject **)g_lineEdit_mach_symtab,N_mach_symtab::__data_size,bState);
     _blockSignals((QObject **)g_lineEdit_mach_dysymtab,N_mach_dysymtab::__data_size,bState);
     _blockSignals((QObject **)g_lineEdit_mach_version_min,N_mach_version_min::__data_size,bState);
+    _blockSignals((QObject **)g_lineEdit_mach_build_version,N_mach_build_version::__data_size,bState);
     _blockSignals((QObject **)g_lineEdit_mach_source_version,N_mach_source_version::__data_size,bState);
     _blockSignals((QObject **)g_lineEdit_mach_encryption_info,N_mach_encryption_info::__data_size,bState);
     _blockSignals((QObject **)g_lineEdit_mach_function_starts,N_mach_linkedit_data::__data_size,bState);
@@ -1754,17 +1781,19 @@ void MACHWidget::reloadData()
         {
             if(!isInitPresent(sInit))
             {
-//                createHeaderTable(SMACH::TYPE_mach_version_min,ui->tableWidget_version_min,N_mach_version_min::records,g_lineEdit_mach_version_min,N_mach_version_min::__data_size,0,nDataOffset);
+                createHeaderTable(SMACH::TYPE_mach_build_version,ui->tableWidget_build_version,N_mach_build_version::records,g_lineEdit_mach_build_version,N_mach_build_version::__data_size,0,nDataOffset);
 
                 blockSignals(true);
 
-//                XMACH_DEF::version_min_command version_min=mach._read_version_min_command(nDataOffset);
+                XMACH_DEF::build_version_command build_version=mach._read_build_version_command(nDataOffset);
 
-//                g_lineEdit_mach_version_min[N_mach_version_min::version]->setValue(version_min.version);
-//                g_lineEdit_mach_version_min[N_mach_version_min::sdk]->setValue(version_min.sdk);
+                g_lineEdit_mach_build_version[N_mach_build_version::platform]->setValue(build_version.platform);
+                g_lineEdit_mach_build_version[N_mach_build_version::minos]->setValue(build_version.minos);
+                g_lineEdit_mach_build_version[N_mach_build_version::sdk]->setValue(build_version.sdk);
+                g_lineEdit_mach_build_version[N_mach_build_version::ntools]->setValue(build_version.ntools);
 
-//                addComment(ui->tableWidget_version_min,N_mach_version_min::version,HEADER_COLUMN_COMMENT,XBinary::fullVersionDwordToString(version_min.version));
-//                addComment(ui->tableWidget_version_min,N_mach_version_min::sdk,HEADER_COLUMN_COMMENT,XBinary::fullVersionDwordToString(version_min.sdk));
+                addComment(ui->tableWidget_build_version,N_mach_build_version::minos,HEADER_COLUMN_COMMENT,XBinary::fullVersionDwordToString(build_version.minos));
+                addComment(ui->tableWidget_build_version,N_mach_build_version::sdk,HEADER_COLUMN_COMMENT,XBinary::fullVersionDwordToString(build_version.sdk));
 
                 qint64 nOffset=nDataOffset;
                 qint64 nSize=mach.get_build_version_command_size();
@@ -2479,6 +2508,16 @@ void MACHWidget::on_tableWidget_version_min_currentCellChanged(int nCurrentRow, 
     Q_UNUSED(nPreviousColumn);
 
     setHeaderTableSelection(ui->widgetHex_version_min,ui->tableWidget_version_min);
+}
+
+void MACHWidget::on_tableWidget_build_version_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
+    Q_UNUSED(nCurrentRow);
+    Q_UNUSED(nCurrentColumn);
+    Q_UNUSED(nPreviousRow);
+    Q_UNUSED(nPreviousColumn);
+
+    setHeaderTableSelection(ui->widgetHex_build_version,ui->tableWidget_build_version);
 }
 
 void MACHWidget::on_tableWidget_source_version_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)

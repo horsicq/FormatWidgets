@@ -69,6 +69,7 @@ private slots:
     void on_tableWidget_symtab_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
     void on_tableWidget_dysymtab_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
     void on_tableWidget_version_min_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
+    void on_tableWidget_build_version_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
     void on_tableWidget_source_version_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
     void on_tableWidget_encryption_info_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
     void on_tableWidget_function_starts_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
@@ -215,6 +216,7 @@ private:
     XLineEditHEX *g_lineEdit_mach_symtab[N_mach_symtab::__data_size];
     XLineEditHEX *g_lineEdit_mach_dysymtab[N_mach_dysymtab::__data_size];
     XLineEditHEX *g_lineEdit_mach_version_min[N_mach_version_min::__data_size];
+    XLineEditHEX *g_lineEdit_mach_build_version[N_mach_build_version::__data_size];
     XLineEditHEX *g_lineEdit_mach_source_version[N_mach_source_version::__data_size];
     XLineEditHEX *g_lineEdit_mach_encryption_info[N_mach_encryption_info::__data_size];
     XLineEditHEX *g_lineEdit_mach_function_starts[N_mach_linkedit_data::__data_size];

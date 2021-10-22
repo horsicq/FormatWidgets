@@ -143,7 +143,7 @@ void PEProcessData::_process()
 
         QMap<quint64,QString> mapTypes=g_pPE->getImageRelBasedS();
 
-        for(int i=0;(i<nNumberOfRelocs)&&(isRun());i++)
+        for(qint32 i=0;(i<nNumberOfRelocs)&&(isRun());i++)
         {
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
