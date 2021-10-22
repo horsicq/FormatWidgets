@@ -119,7 +119,7 @@ void DEXProcessData::_process()
 
         XDEX_DEF::MAP_ITEM mapItemStrings=g_pDEX->getMapItem(XDEX_DEF::TYPE_STRING_ID_ITEM,&listMapItems);
 
-        int nNumberOfIds=listTypeItemIds.count();
+        qint32 nNumberOfIds=listTypeItemIds.count();
 
         *g_ppModel=new QStandardItemModel(nNumberOfIds,listLabels.count());
 
@@ -127,7 +127,7 @@ void DEXProcessData::_process()
 
         setHeader(*g_ppModel,&listLabels);
 
-        for(int i=0;(i<nNumberOfIds)&&(isRun());i++)
+        for(qint32 i=0;(i<nNumberOfIds)&&(isRun());i++)
         {
             QString sString=g_pDEX->getTypeItemIdString(listTypeItemIds.at(i),&mapItemStrings,baData.data(),nDataSize,nDataOffset);
 
