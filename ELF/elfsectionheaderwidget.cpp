@@ -515,9 +515,18 @@ void ELFSectionHeaderWidget::reloadData()
         }
         else if(nType==SELF::TYPE_Elf_Phdr)
         {
-            createHeaderTable(SELF::TYPE_Elf_Phdr,ui->tableWidget,bIs64?(N_Elf_Phdr64::records):(N_Elf_Phdr32::records),g_ppLinedEdit,bIs64?(N_Elf_Phdr64::__data_size):(N_Elf_Phdr32::__data_size),getNumber());
-            g_ppComboBox[N_Elf_Phdr32::CB_TYPE]=createComboBox(ui->tableWidget,XELF::getProgramTypesS(),SELF::TYPE_Elf_Phdr,bIs64?(N_Elf_Phdr64::p_type):(N_Elf_Phdr32::p_type),XComboBoxEx::CBTYPE_LIST);
-            g_ppComboBox[N_Elf_Phdr32::CB_FLAGS]=createComboBox(ui->tableWidget,XELF::getProgramFlagsS(),SELF::TYPE_Elf_Phdr,bIs64?(N_Elf_Phdr64::p_flags):(N_Elf_Phdr32::p_flags),XComboBoxEx::CBTYPE_FLAGS);
+            if(bIs64)
+            {
+                createHeaderTable(SELF::TYPE_Elf_Phdr,ui->tableWidget,N_Elf_Phdr64::records,g_ppLinedEdit,N_Elf_Phdr64::__data_size,getNumber());
+                g_ppComboBox[N_Elf_Phdr64::CB_TYPE]=createComboBox(ui->tableWidget,XELF::getProgramTypesS(),SELF::TYPE_Elf_Phdr,N_Elf_Phdr64::p_type,XComboBoxEx::CBTYPE_LIST);
+                g_ppComboBox[N_Elf_Phdr64::CB_FLAGS]=createComboBox(ui->tableWidget,XELF::getProgramFlagsS(),SELF::TYPE_Elf_Phdr,N_Elf_Phdr64::p_flags,XComboBoxEx::CBTYPE_FLAGS);
+            }
+            else
+            {
+                createHeaderTable(SELF::TYPE_Elf_Phdr,ui->tableWidget,N_Elf_Phdr32::records,g_ppLinedEdit,N_Elf_Phdr32::__data_size,getNumber());
+                g_ppComboBox[N_Elf_Phdr32::CB_TYPE]=createComboBox(ui->tableWidget,XELF::getProgramTypesS(),SELF::TYPE_Elf_Phdr,N_Elf_Phdr32::p_type,XComboBoxEx::CBTYPE_LIST);
+                g_ppComboBox[N_Elf_Phdr32::CB_FLAGS]=createComboBox(ui->tableWidget,XELF::getProgramFlagsS(),SELF::TYPE_Elf_Phdr,N_Elf_Phdr32::p_flags,XComboBoxEx::CBTYPE_FLAGS);
+            }
 
             blockSignals(true);
 

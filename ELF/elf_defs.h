@@ -172,6 +172,13 @@ enum DATA
 };
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
+
+enum CB
+{
+    CB_TYPE=0,
+    CB_FLAGS,
+    __CB_size
+};
 }
 
 namespace N_Elf_DynamicArrayTags
