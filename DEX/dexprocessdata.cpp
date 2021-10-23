@@ -186,7 +186,7 @@ void DEXProcessData::_process()
 
         QList<XDEX_DEF::FIELD_ITEM_ID> listFieldIDs=g_pDEX->getList_FIELD_ITEM_ID(&listMapItems);
 
-        int nNumberOfIds=listFieldIDs.count();
+        qint32 nNumberOfIds=listFieldIDs.count();
 
         *g_ppModel=new QStandardItemModel(nNumberOfIds,listLabels.count());
 
@@ -194,7 +194,7 @@ void DEXProcessData::_process()
 
         setHeader(*g_ppModel,&listLabels);
 
-        for(int i=0;(i<nNumberOfIds)&&(isRun());i++)
+        for(qint32 i=0;(i<nNumberOfIds)&&(isRun());i++)
         {
             QStandardItem *pItem=new QStandardItem(QString::number(i));
 
