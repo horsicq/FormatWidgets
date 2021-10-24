@@ -41,7 +41,7 @@ void DEXProcessData::_process()
 
         QList<XDEX_DEF::MAP_ITEM> listMapItems=g_pDEX->getMapItems();
 
-        int nNumberOfMapItems=listMapItems.count();
+        qint32 nNumberOfMapItems=listMapItems.count();
 
         *g_ppModel=new QStandardItemModel(nNumberOfMapItems,listLabels.count());
 
@@ -80,7 +80,7 @@ void DEXProcessData::_process()
         qint64 nDataSize=g_pDEX->getHeader_data_size();
         QByteArray baData=g_pDEX->read_array(nDataOffset,nDataSize);
 
-        int nNumberOfIds=listStringItemIds.count();
+        qint32 nNumberOfIds=listStringItemIds.count();
 
         *g_ppModel=new QStandardItemModel(nNumberOfIds,listLabels.count());
 
