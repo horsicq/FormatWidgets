@@ -112,7 +112,7 @@ void BinaryWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
 {
     Q_UNUSED(nType)
     Q_UNUSED(pTableWidget)
-//    int nSymbolWidth=getSymbolWidth();
+//    qint32 nSymbolWidth=getSymbolWidth();
 }
 
 void BinaryWidget::reloadData()

@@ -57,7 +57,7 @@ void ELFProcessData::_process()
         QList<XELF_DEF::Elf64_Shdr> listSectionHeaders64;
         QList<XELF_DEF::Elf32_Shdr> listSectionHeaders32;
 
-        int nNumberOfSections=0;
+        qint32 nNumberOfSections=0;
 
         if(bIs64)
         {
@@ -175,7 +175,7 @@ void ELFProcessData::_process()
         QList<XELF_DEF::Elf64_Phdr> listPrograms64;
         QList<XELF_DEF::Elf32_Phdr> listPrograms32;
 
-        int nNumberOfPrograms=0;
+        qint32 nNumberOfPrograms=0;
 
         if(bIs64)
         {
@@ -194,7 +194,7 @@ void ELFProcessData::_process()
 
         setHeader(*g_ppModel,&listLabels);
 
-        for(int i=0;(i<nNumberOfPrograms)&&(isRun());i++)
+        for(qint32 i=0;(i<nNumberOfPrograms)&&(isRun());i++)
         {
             if(bIs64)
             {
@@ -270,7 +270,7 @@ void ELFProcessData::_process()
 
             QList<XELF_DEF::Elf64_Sym> listSymbols=g_pELF->getElf64_SymList(g_nOffset,g_nSize);
 
-            int nNumberOfSymbols=listSymbols.count();
+            qint32 nNumberOfSymbols=listSymbols.count();
 
             *g_ppModel=new QStandardItemModel(nNumberOfSymbols,listLabels.count());
 
@@ -278,7 +278,7 @@ void ELFProcessData::_process()
 
             setHeader(*g_ppModel,&listLabels);
 
-            for(int i=0;(i<nNumberOfSymbols)&&(isRun());i++)
+            for(qint32 i=0;(i<nNumberOfSymbols)&&(isRun());i++)
             {
                 QStandardItem *pItem=new QStandardItem;
                 pItem->setText(QString::number(i));
