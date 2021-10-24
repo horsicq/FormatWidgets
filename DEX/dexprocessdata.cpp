@@ -218,7 +218,7 @@ void DEXProcessData::_process()
 
         QList<XDEX_DEF::METHOD_ITEM_ID> listMethodIDs=g_pDEX->getList_METHOD_ITEM_ID(&listMapItems);
 
-        int nNumberOfIds=listMethodIDs.count();
+        qint32 nNumberOfIds=listMethodIDs.count();
 
         *g_ppModel=new QStandardItemModel(nNumberOfIds,listLabels.count());
 
@@ -226,7 +226,7 @@ void DEXProcessData::_process()
 
         setHeader(*g_ppModel,&listLabels);
 
-        for(int i=0;(i<nNumberOfIds)&&(isRun());i++)
+        for(qint32 i=0;(i<nNumberOfIds)&&(isRun());i++)
         {
             QStandardItem *pItem=new QStandardItem(QString::number(i));
 
@@ -250,7 +250,7 @@ void DEXProcessData::_process()
 
         QList<XDEX_DEF::CLASS_ITEM_DEF> listClassDefss=g_pDEX->getList_CLASS_ITEM_DEF(&listMapItems);
 
-        int nNumberOfDefs=listClassDefss.count();
+        qint32 nNumberOfDefs=listClassDefss.count();
 
         *g_ppModel=new QStandardItemModel(nNumberOfDefs,listLabels.count());
 
@@ -258,7 +258,7 @@ void DEXProcessData::_process()
 
         setHeader(*g_ppModel,&listLabels);
 
-        for(int i=0;(i<nNumberOfDefs)&&(isRun());i++)
+        for(qint32 i=0;(i<nNumberOfDefs)&&(isRun());i++)
         {
             QStandardItem *pItem=new QStandardItem(QString::number(i));
 
