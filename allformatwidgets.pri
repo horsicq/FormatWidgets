@@ -55,4 +55,5 @@ contains(XCONFIG, use_dex) {
 
 DISTFILES += \
     $$PWD/LICENSE \
-    $$PWD/README.md
+    $$PWD/README.md \
+    $$PWD/allformatwidget.cmake
