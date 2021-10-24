@@ -11,7 +11,7 @@ include_directories(${CMAKE_CURRENT_LIST_DIR}/PE/)
 include_directories(${CMAKE_CURRENT_LIST_DIR}/SearchSignatures/)
 include_directories(${CMAKE_CURRENT_LIST_DIR}/SearchStrings/)
 
-set(ALLFORMATWIDGET_SOURCES
+set(ALLFORMATWIDGETS_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/dialogmodelinfo.cpp
     ${CMAKE_CURRENT_LIST_DIR}/dialogmodelinfo.ui
     ${CMAKE_CURRENT_LIST_DIR}/dialogprocessdata.cpp
