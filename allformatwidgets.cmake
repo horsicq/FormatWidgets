@@ -1,0 +1,92 @@
+include_directories(${CMAKE_CURRENT_LIST_DIR})
+include_directories(${CMAKE_CURRENT_LIST_DIR}/DEX/)
+include_directories(${CMAKE_CURRENT_LIST_DIR}/ELF/)
+include_directories(${CMAKE_CURRENT_LIST_DIR}/LE/)
+include_directories(${CMAKE_CURRENT_LIST_DIR}/MultiSearch/)
+include_directories(${CMAKE_CURRENT_LIST_DIR}/MACH/)
+include_directories(${CMAKE_CURRENT_LIST_DIR}/MACHOFAT/)
+include_directories(${CMAKE_CURRENT_LIST_DIR}/MSDOS/)
+include_directories(${CMAKE_CURRENT_LIST_DIR}/NE/)
+include_directories(${CMAKE_CURRENT_LIST_DIR}/PE/)
+include_directories(${CMAKE_CURRENT_LIST_DIR}/SearchSignatures/)
+include_directories(${CMAKE_CURRENT_LIST_DIR}/SearchStrings/)
+
+set(ALLFORMATWIDGET_SOURCES
+    ${CMAKE_CURRENT_LIST_DIR}/dialogmodelinfo.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/dialogmodelinfo.ui
+    ${CMAKE_CURRENT_LIST_DIR}/dialogprocessdata.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/dialogprocessdata.ui
+    ${CMAKE_CURRENT_LIST_DIR}/dialogsectionheader.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/dialogsectionheader.ui
+    ${CMAKE_CURRENT_LIST_DIR}/formatwidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/invwidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/processdata.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/toolswidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/toolswidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/DEX/dexsectionheaderwidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/DEX/dexwidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/DEX/dialogdex.ui
+    ${CMAKE_CURRENT_LIST_DIR}/DEX/dexsectionheaderwidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/DEX/dexwidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/DEX/dex_defs.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/DEX/dialogdex.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/DEX/dexprocessdata.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/ELF/elfsectionheaderwidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ELF/elfwidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ELF/dialogelf.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ELF/elfsectionheaderwidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/ELF/elfwidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/ELF/elf_defs.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/ELF/dialogelf.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/ELF/elfprocessdata.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/LE/lesectionheaderwidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/LE/lewidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/LE/dialogle.ui
+    ${CMAKE_CURRENT_LIST_DIR}/LE/leprocessdata.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/LE/lesectionheaderwidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/LE/lewidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/LE/le_defs.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/LE/dialogle.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/MultiSearch/dialogmultisearchprocess.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/MultiSearch/dialogmultisearchprocess.ui
+    ${CMAKE_CURRENT_LIST_DIR}/MultiSearch/multisearch.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/MACH/dialogmach.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/MACH/dialogmach.ui
+    ${CMAKE_CURRENT_LIST_DIR}/MACH/mach_defs.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/MACH/machprocessdata.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/MACH/machsectionheaderwidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/MACH/machsectionheaderwidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/MACH/machwidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/MACH/machwidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/MACHOFAT/machofatwidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/MACHOFAT/machofatwidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/MSDOS/msdoswidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/MSDOS/dialogmsdos.ui
+    ${CMAKE_CURRENT_LIST_DIR}/MSDOS/msdoswidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/MSDOS/msdos_defs.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/MSDOS/dialogmsdos.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/NE/nesectionheaderwidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/NE/newidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/NE/dialogne.ui
+    ${CMAKE_CURRENT_LIST_DIR}/NE/neprocessdata.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/NE/nesectionheaderwidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/NE/newidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/NE/ne_defs.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/NE/dialogne.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/PE/pesectionheaderwidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/PE/pewidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/PE/dialogpe.ui
+    ${CMAKE_CURRENT_LIST_DIR}/PE/pesectionheaderwidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/PE/pewidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/PE/pe_defs.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/PE/dialogpe.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/PE/peprocessdata.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/SearchSignatures/dialogsearchsignatures.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/SearchSignatures/dialogsearchsignatures.ui
+    ${CMAKE_CURRENT_LIST_DIR}/SearchSignatures/searchsignatureswidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/SearchSignatures/searchsignatureswidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/SearchStrings/dialogsearchstrings.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/SearchStrings/dialogsearchstrings.ui
+    ${CMAKE_CURRENT_LIST_DIR}/SearchStrings/searchstringswidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/SearchStrings/searchstringswidget.ui
+)
