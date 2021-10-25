@@ -318,7 +318,7 @@ void ELFProcessData::_process()
 
             QList<XELF_DEF::Elf32_Sym> listSymbols=g_pELF->getElf32_SymList(g_nOffset,g_nSize);
 
-            int nNumberOfSymbols=listSymbols.count();
+            qint32 nNumberOfSymbols=listSymbols.count();
 
             *g_ppModel=new QStandardItemModel(nNumberOfSymbols,listLabels.count());
 
@@ -326,7 +326,7 @@ void ELFProcessData::_process()
 
             setHeader(*g_ppModel,&listLabels);
 
-            for(int i=0;(i<nNumberOfSymbols)&&(isRun());i++)
+            for(qint32 i=0;(i<nNumberOfSymbols)&&(isRun());i++)
             {
                 QStandardItem *pItem=new QStandardItem;
                 pItem->setText(QString::number(i));
