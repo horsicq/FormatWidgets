@@ -455,7 +455,7 @@ void ELFProcessData::_process()
 
         QList<QString> listLibraries=g_pELF->getLibraries();
 
-        int nNumberOfLibraries=listLibraries.count();
+        qint32 nNumberOfLibraries=listLibraries.count();
 
         *g_ppModel=new QStandardItemModel(nNumberOfLibraries,listLabels.count());
 
@@ -463,7 +463,7 @@ void ELFProcessData::_process()
 
         setHeader(*g_ppModel,&listLabels);
 
-        for(int i=0;(i<nNumberOfLibraries)&&(isRun());i++)
+        for(qint32 i=0;(i<nNumberOfLibraries)&&(isRun());i++)
         {
             QStandardItem *pItem=new QStandardItem(QString::number(i));
 
