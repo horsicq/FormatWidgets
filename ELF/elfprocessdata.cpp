@@ -422,7 +422,7 @@ void ELFProcessData::_process()
 
         QList<XELF::NOTE> listNotes=g_pELF->_getNotes(g_nOffset,g_nSize,g_pELF->isBigEndian());
 
-        int nNumberOfNotes=listNotes.count();
+        qint32 nNumberOfNotes=listNotes.count();
 
         *g_ppModel=new QStandardItemModel(nNumberOfNotes,listLabels.count());
 
@@ -430,7 +430,7 @@ void ELFProcessData::_process()
 
         setHeader(*g_ppModel,&listLabels);
 
-        for(int i=0;(i<nNumberOfNotes)&&(isRun());i++)
+        for(qint32 i=0;(i<nNumberOfNotes)&&(isRun());i++)
         {
             QStandardItem *pItem=new QStandardItem(QString::number(i));
 
