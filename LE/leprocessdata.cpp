@@ -39,7 +39,7 @@ void LEProcessData::_process()
 
         QList<XLE_DEF::o32_obj> listObjects=g_pLE->getObjects();
 
-        int nNumberOfObjects=listObjects.count();
+        qint32 nNumberOfObjects=listObjects.count();
 
         *g_ppModel=new QStandardItemModel(nNumberOfObjects,listLabels.count());
 
@@ -47,7 +47,7 @@ void LEProcessData::_process()
 
         setHeader(*g_ppModel,&listLabels);
 
-        for(int i=0;i<nNumberOfObjects;i++)
+        for(qint32 i=0;i<nNumberOfObjects;i++)
         {
             QStandardItem *pItemNumber=new QStandardItem;
             pItemNumber->setData(i,Qt::DisplayRole);
