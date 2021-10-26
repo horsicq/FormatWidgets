@@ -250,7 +250,7 @@ void MultiSearch::processModel()
 
     if(g_type==TYPE_STRINGS)
     {
-        int nNumberOfRecords=g_pListRecords->count();
+        qint32 nNumberOfRecords=g_pListRecords->count();
         *g_ppModel=new QStandardItemModel(nNumberOfRecords,4); // TODO Check maximum
 
         qint64 nBaseAddress=g_options.memoryMap.nModuleAddress;
