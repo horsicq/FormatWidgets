@@ -3,7 +3,7 @@ include_directories(${CMAKE_CURRENT_LIST_DIR})
 include(${CMAKE_CURRENT_LIST_DIR}/../formatwidget.cmake)
 
 set(NEWIDGET_SOURCES
-    ${FORMAT_SOURCES}
+    ${FORMATWIDGET_SOURCES}
     ${CMAKE_CURRENT_LIST_DIR}/nesectionheaderwidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/newidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/dialogne.ui
