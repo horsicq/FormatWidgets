@@ -4,6 +4,6 @@ include(${CMAKE_CURRENT_LIST_DIR}/../formatwidget.cmake)
 
 set(MACHOFATWIDGET_SOURCES
     ${FORMATWIDGET_SOURCES}
-    ${CMAKE_CURRENT_LIST_DIR}/MACHOFAT/machofatwidget.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/MACHOFAT/machofatwidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/machofatwidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/machofatwidget.ui
     )
