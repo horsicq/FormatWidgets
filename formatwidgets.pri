@@ -83,3 +83,6 @@ FORMS += \
     include($$PWD/../XShortcuts/xshortcuts.pri)
 }
 
+DISTFILES += \
+    $$PWD/formatwidgets.cmake
+

@@ -93,3 +93,6 @@ FORMS += \
     XCONFIG += xdemanglewidget
     include($$PWD/../XDemangleWidget/xdemanglewidget.pri)
 }
+
+DISTFILES += \
+    $$PWD/formatwidget.cmake

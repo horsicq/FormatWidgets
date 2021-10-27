@@ -19,3 +19,6 @@ SOURCES += \
     XCONFIG += formatwidget
     include($$PWD/../formatwidget.pri)
 }
+
+DISTFILES += \
+    $$PWD/binarywidget.cmake

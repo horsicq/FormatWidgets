@@ -17,3 +17,6 @@ SOURCES += \
     XCONFIG += multisearch
     include($$PWD/../MultiSearch/multisearch.pri)
 }
+
+DISTFILES += \
+    $$PWD/searchstringswidget.cmake

@@ -1,4 +1,7 @@
 include_directories(${CMAKE_CURRENT_LIST_DIR})
 
-# TODO
-
+set(MULTISEARCH_SOURCES
+    ${CMAKE_CURRENT_LIST_DIR}/dialogmultisearchprocess.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/dialogmultisearchprocess.ui
+    ${CMAKE_CURRENT_LIST_DIR}/multisearch.cpp
+    )

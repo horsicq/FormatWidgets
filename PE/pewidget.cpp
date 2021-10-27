@@ -1500,11 +1500,11 @@ void PEWidget::reloadData()
 
                 ui->textEditResources_Version->clear();
 
-                int nNumberOfResources=resourceVersion.listRecords.count();
+                qint32 nNumberOfResources=resourceVersion.listRecords.count();
 
                 QString sVersion;
 
-                for(int i=0;i<nNumberOfResources;i++)
+                for(qint32 i=0;i<nNumberOfResources;i++)
                 {
                     sVersion+=resourceVersion.listRecords.at(i)+QString("\r\n");
                 }

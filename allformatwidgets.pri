@@ -41,11 +41,6 @@ DEPENDPATH += $$PWD
     include($$PWD/MACHOFAT/machofatwidget.pri)
 }
 
-!contains(XCONFIG, searchstringswidget) {
-    XCONFIG += searchstringswidget
-    include($$PWD/SearchStrings/searchstringswidget.pri)
-}
-
 contains(XCONFIG, use_dex) {
     !contains(XCONFIG, dexwidget) {
         XCONFIG += dexwidget
