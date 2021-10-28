@@ -317,7 +317,7 @@ void MultiSearch::processModel()
     }
     else if(g_type==TYPE_SIGNATURES)
     {
-        int nNumberOfRecords=g_pListRecords->count();
+        qint32 nNumberOfRecords=g_pListRecords->count();
         *g_ppModel=new QStandardItemModel(nNumberOfRecords,3); // TODO Check maximum
 
         XBinary::MODE modeAddress=XBinary::getWidthModeFromMemoryMap(&(g_options.memoryMap));
