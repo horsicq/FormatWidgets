@@ -1,5 +1,6 @@
 include_directories(${CMAKE_CURRENT_LIST_DIR})
 
+include(${CMAKE_CURRENT_LIST_DIR}/../XCppfilt/xcppfilt.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/SearchSignatures/searchsignatureswidget.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/SearchStrings/searchstringswidget.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../Controls/xlineedithex.cmake)
@@ -17,6 +18,7 @@ include(${CMAKE_CURRENT_LIST_DIR}/../Formats/xformats.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../XDEX/xdex.cmake)
 
 set(FORMATWIDGET_SOURCES
+    ${XCPPFILT_SOURCES}
     ${SEARCHSIGNATURESWIDGET_SOURCES}
     ${SEARCHSTRINGSWIDGET_SOURCES}
     ${XLINEEDITHEX_SOURCES}

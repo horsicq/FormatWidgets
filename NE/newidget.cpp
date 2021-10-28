@@ -281,7 +281,7 @@ void NEWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
     // TODO like MACH !!!
     Q_UNUSED(nType);
 
-    int nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
+    qint32 nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
 
     pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_NAME,QHeaderView::ResizeToContents);
     pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_OFFSET,QHeaderView::ResizeToContents);
