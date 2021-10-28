@@ -221,7 +221,7 @@ void MultiSearch::processSearch()
 
         while(true)
         {
-            int nAvailable=g_pSemaphore->available();
+            qint32 nAvailable=g_pSemaphore->available();
 
             if(nAvailable==N_MAXNUMBEROFTHREADS)
             {
