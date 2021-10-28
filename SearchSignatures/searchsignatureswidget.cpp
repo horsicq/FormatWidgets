@@ -94,9 +94,9 @@ void SearchSignaturesWidget::setSignaturesPath(QString sPath)
 
     QList<QString> listFiles=XBinary::getAllFilesFromDirectory(XBinary::convertPathName(sPath),"*.db");
 
-    int nNumberOfFiles=listFiles.count();
+    qint32 nNumberOfFiles=listFiles.count();
 
-    for(int i=0;i<nNumberOfFiles;i++)
+    for(qint32 i=0;i<nNumberOfFiles;i++)
     {
         QString sFileName=listFiles.at(i);
         ui->comboBoxFile->addItem(XBinary::getBaseFileName(sFileName),XBinary::convertPathName(sPath)+QDir::separator()+sFileName);
