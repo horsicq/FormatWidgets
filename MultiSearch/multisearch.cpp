@@ -174,7 +174,7 @@ void MultiSearch::processSearch()
         qDebug("Signatures start");
     #endif
 
-        int nNumberOfSignatures=g_options.pListSignatureRecords->count();
+        qint32 nNumberOfSignatures=g_options.pListSignatureRecords->count();
 
         g_procent=XBinary::procentInit(nNumberOfSignatures,true);
 

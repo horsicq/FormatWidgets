@@ -43,7 +43,7 @@ void PEProcessData::_process()
 
         QList<XPE_DEF::IMAGE_SECTION_HEADER> listSections=g_pPE->getSectionHeaders();
 
-        int nNumberOfRecords=listSections.count();
+        qint32 nNumberOfRecords=listSections.count();
 
         *g_ppModel=new QStandardItemModel(nNumberOfRecords,listLabels.count());
 
