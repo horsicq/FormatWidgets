@@ -1129,7 +1129,7 @@ void ELFWidget::on_tableView_Rel_doubleClicked(const QModelIndex &index)
 
 void ELFWidget::on_tableView_Rel_customContextMenuRequested(const QPoint &pos)
 {
-    int nRow=ui->tableView_Rel->currentIndex().row();
+    qint32 nRow=ui->tableView_Rel->currentIndex().row();
 
     if(nRow!=-1)
     {
