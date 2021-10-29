@@ -498,7 +498,7 @@ void ELFProcessData::_process()
         QList<XELF_DEF::Elf64_Rela> listRela64;
         QList<XELF_DEF::Elf32_Rela> listRela32;
 
-        int nNumberOfRels=0;
+        qint32 nNumberOfRels=0;
 
         if(bIs64)
         {
@@ -535,7 +535,7 @@ void ELFProcessData::_process()
             mapTypes=g_pELF->getRelTypesS_x64();
         }
 
-        for(int i=0;(i<nNumberOfRels)&&(isRun());i++)
+        for(qint32 i=0;(i<nNumberOfRels)&&(isRun());i++)
         {
             if(bIs64)
             {
