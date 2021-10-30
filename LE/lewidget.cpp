@@ -605,7 +605,7 @@ void LEWidget::on_tableWidget_VXD_HEADER_currentCellChanged(int nCurrentRow, int
 
 void LEWidget::on_tableView_Objects_customContextMenuRequested(const QPoint &pos)
 {
-    int nRow=ui->tableView_Objects->currentIndex().row();
+    qint32 nRow=ui->tableView_Objects->currentIndex().row();
 
     if(nRow!=-1)
     {
