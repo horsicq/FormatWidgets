@@ -950,7 +950,7 @@ void ELFWidget::on_tableView_Elf_Shdr_doubleClicked(const QModelIndex &index)
 
 void ELFWidget::on_tableView_Elf_Shdr_customContextMenuRequested(const QPoint &pos)
 {
-    int nRow=ui->tableView_Elf_Shdr->currentIndex().row();
+    qint32 nRow=ui->tableView_Elf_Shdr->currentIndex().row();
 
     if(nRow!=-1)
     {
