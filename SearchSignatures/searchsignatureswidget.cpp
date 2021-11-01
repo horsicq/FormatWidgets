@@ -196,7 +196,7 @@ void SearchSignaturesWidget::_copyName()
 
 void SearchSignaturesWidget::_copySignature()
 {
-    int nRow=ui->tableViewResult->currentIndex().row();
+    qint32 nRow=ui->tableViewResult->currentIndex().row();
 
     if((nRow!=-1)&&(g_pModel))
     {

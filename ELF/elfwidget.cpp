@@ -1032,7 +1032,7 @@ void ELFWidget::on_tableView_Elf_Phdr_doubleClicked(const QModelIndex &index)
 
 void ELFWidget::on_tableView_Elf_Phdr_customContextMenuRequested(const QPoint &pos)
 {
-    int nRow=ui->tableView_Elf_Phdr->currentIndex().row();
+    qint32 nRow=ui->tableView_Elf_Phdr->currentIndex().row();
 
     if(nRow!=-1)
     {
