@@ -401,7 +401,7 @@ void PESectionHeaderWidget::on_checkBoxReadonly_toggled(bool bChecked)
 
 void PESectionHeaderWidget::reloadData()
 {
-    int nType=getType();
+    qint32 nType=getType();
 
     XPE pe(getDevice(),getOptions().bIsImage,getOptions().nImageBase);
 
