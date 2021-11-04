@@ -2748,7 +2748,7 @@ void MACHWidget::on_tableView_segments_doubleClicked(const QModelIndex &index)
 
 void MACHWidget::on_tableView_segments_customContextMenuRequested(const QPoint &pos)
 {
-    int nRow=ui->tableView_segments->currentIndex().row();
+    qint32 nRow=ui->tableView_segments->currentIndex().row();
 
     if(nRow!=-1)
     {
