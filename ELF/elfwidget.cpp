@@ -1067,7 +1067,7 @@ void ELFWidget::on_tableView_DynamicArrayTags_doubleClicked(const QModelIndex &i
 
 void ELFWidget::on_tableView_DynamicArrayTags_customContextMenuRequested(const QPoint &pos)
 {
-    int nRow=ui->tableView_DynamicArrayTags->currentIndex().row();
+    qint32 nRow=ui->tableView_DynamicArrayTags->currentIndex().row();
 
     if(nRow!=-1)
     {
