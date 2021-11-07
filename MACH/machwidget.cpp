@@ -2787,7 +2787,7 @@ void MACHWidget::on_tableView_sections_doubleClicked(const QModelIndex &index)
 
 void MACHWidget::on_tableView_sections_customContextMenuRequested(const QPoint &pos)
 {
-    int nRow=ui->tableView_sections->currentIndex().row();
+    qint32 nRow=ui->tableView_sections->currentIndex().row();
 
     if(nRow!=-1)
     {
