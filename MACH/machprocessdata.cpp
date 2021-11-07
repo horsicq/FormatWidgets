@@ -89,7 +89,7 @@ void MACHProcessData::_process()
 
         QList<XMACH::LIBRARY_RECORD> listLibraries=g_pXMACH->getLibraryRecords(nType);
 
-        int nNumberOfRecords=listLibraries.count();
+        qint32 nNumberOfRecords=listLibraries.count();
 
         *g_ppModel=new QStandardItemModel(nNumberOfRecords,listLabels.count());
 
@@ -97,7 +97,7 @@ void MACHProcessData::_process()
 
         setHeader(*g_ppModel,&listLabels);
 
-        for(int i=0;(i<nNumberOfRecords)&&(isRun());i++)
+        for(qint32 i=0;(i<nNumberOfRecords)&&(isRun());i++)
         {
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
