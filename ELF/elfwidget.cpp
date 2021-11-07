@@ -1096,7 +1096,7 @@ void ELFWidget::on_tableView_Rela_doubleClicked(const QModelIndex &index)
 
 void ELFWidget::on_tableView_Rela_customContextMenuRequested(const QPoint &pos)
 {
-    int nRow=ui->tableView_Rela->currentIndex().row();
+    qint32 nRow=ui->tableView_Rela->currentIndex().row();
 
     if(nRow!=-1)
     {
