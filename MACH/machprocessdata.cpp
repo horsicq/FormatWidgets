@@ -173,7 +173,7 @@ void MACHProcessData::_process()
 
         QList<XMACH::SEGMENT_RECORD> listSegmentRecords=g_pXMACH->getSegmentRecords();
 
-        int nNumberOfRecords=listSegmentRecords.count();
+        qint32 nNumberOfRecords=listSegmentRecords.count();
 
         *g_ppModel=new QStandardItemModel(nNumberOfRecords,listLabels.count());
 
@@ -181,7 +181,7 @@ void MACHProcessData::_process()
 
         setHeader(*g_ppModel,&listLabels);
 
-        for(int i=0;(i<nNumberOfRecords)&&(isRun());i++)
+        for(qint32 i=0;(i<nNumberOfRecords)&&(isRun());i++)
         {
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
