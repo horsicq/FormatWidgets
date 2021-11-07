@@ -24,3 +24,6 @@ SOURCES += \
     XCONFIG += formatwidget
     include($$PWD/../formatwidget.pri)
 }
+
+DISTFILES += \
+    $$PWD/dexwidget.cmake
