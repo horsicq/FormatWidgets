@@ -76,7 +76,7 @@ void MACHProcessData::_process()
         listLabels.append("");
         listLabels.append(getStructList(N_mach_library::records,N_mach_library::__data_size));
 
-        int nType=XMACH_DEF::S_LC_LOAD_DYLIB;
+        qint32 nType=XMACH_DEF::S_LC_LOAD_DYLIB;
 
         if(g_nType==SMACH::TYPE_mach_weak_libraries)
         {
