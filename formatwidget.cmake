@@ -16,6 +16,7 @@ include(${CMAKE_CURRENT_LIST_DIR}/../XDemangleWidget/xdemanglewidget.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../Controls/xdatetimeeditx.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../Formats/xformats.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../XDEX/xdex.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/../XArchive/xarchives.cmake)
 
 set(FORMATWIDGET_SOURCES
     ${XCPPFILT_SOURCES}
@@ -34,6 +35,7 @@ set(FORMATWIDGET_SOURCES
     ${XDATETIMEEDITX_SOURCES}
     ${XFORMATS_SOURCES}
     ${XDEX_SOURCES}
+    ${XARCHIVES_SOURCES}
     ${CMAKE_CURRENT_LIST_DIR}/dialogmodelinfo.cpp
     ${CMAKE_CURRENT_LIST_DIR}/dialogmodelinfo.ui
     ${CMAKE_CURRENT_LIST_DIR}/dialogprocessdata.cpp
