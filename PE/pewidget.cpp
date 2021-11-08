@@ -2239,7 +2239,7 @@ void PEWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
 
 bool PEWidget::createSectionTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nNumberOfRecords)
 {
-    int nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
+    qint32 nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
 
     QStringList slHeader;
 
