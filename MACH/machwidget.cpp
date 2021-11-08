@@ -2994,7 +2994,7 @@ void MACHWidget::on_tableView_data_in_code_entry_doubleClicked(const QModelIndex
 
 void MACHWidget::on_tableView_data_in_code_entry_customContextMenuRequested(const QPoint &pos)
 {
-    int nRow=ui->tableView_data_in_code_entry->currentIndex().row();
+    qint32 nRow=ui->tableView_data_in_code_entry->currentIndex().row();
 
     if(nRow!=-1)
     {
