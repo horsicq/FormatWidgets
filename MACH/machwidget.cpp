@@ -2411,8 +2411,8 @@ void MACHWidget::reloadData()
 void MACHWidget::widgetValueChanged(quint64 nValue)
 {
     QWidget *pWidget=qobject_cast<QWidget *>(sender());
-    int nStype=pWidget->property("STYPE").toInt();
-    int nNdata=pWidget->property("NDATA").toInt();
+    qint32 nStype=pWidget->property("STYPE").toInt();
+    qint32 nNdata=pWidget->property("NDATA").toInt();
 
     switch(nStype)
     {
