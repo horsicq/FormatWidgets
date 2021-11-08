@@ -2826,7 +2826,7 @@ void MACHWidget::on_tableView_libraries_doubleClicked(const QModelIndex &index)
 
 void MACHWidget::on_tableView_libraries_customContextMenuRequested(const QPoint &pos)
 {
-    int nRow=ui->tableView_libraries->currentIndex().row();
+    qint32 nRow=ui->tableView_libraries->currentIndex().row();
 
     if(nRow!=-1)
     {
