@@ -2848,7 +2848,7 @@ void MACHWidget::on_tableView_weak_libraries_doubleClicked(const QModelIndex &in
 
 void MACHWidget::on_tableView_weak_libraries_customContextMenuRequested(const QPoint &pos)
 {
-    int nRow=ui->tableView_weak_libraries->currentIndex().row();
+    qint32 nRow=ui->tableView_weak_libraries->currentIndex().row();
 
     if(nRow!=-1)
     {
