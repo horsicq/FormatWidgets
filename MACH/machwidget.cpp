@@ -3021,7 +3021,7 @@ void MACHWidget::on_tableView_DYSYMTAB_modtab_doubleClicked(const QModelIndex &i
 
 void MACHWidget::on_tableView_DYSYMTAB_modtab_customContextMenuRequested(const QPoint &pos)
 {
-    int nRow=ui->tableView_DYSYMTAB_modtab->currentIndex().row();
+    qint32 nRow=ui->tableView_DYSYMTAB_modtab->currentIndex().row();
 
     if(nRow!=-1)
     {
