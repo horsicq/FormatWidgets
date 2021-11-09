@@ -448,7 +448,7 @@ void ELFSectionHeaderWidget::on_checkBoxReadonly_toggled(bool bChecked)
 
 void ELFSectionHeaderWidget::reloadData()
 {
-    int nType=getType();
+    qint32 nType=getType();
 
     XELF elf(getDevice(),getOptions().bIsImage,getOptions().nImageBase);
 
