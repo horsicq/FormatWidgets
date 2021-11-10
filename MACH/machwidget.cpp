@@ -3335,7 +3335,7 @@ void MACHWidget::diceHex()
 
 void MACHWidget::showSectionHeader(int nType, QTableView *pTableView)
 {
-    int nRow=pTableView->currentIndex().row();
+    qint32 nRow=pTableView->currentIndex().row();
 
     if(nRow!=-1)
     {
