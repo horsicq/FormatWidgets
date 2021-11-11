@@ -3094,7 +3094,7 @@ void MACHWidget::on_tableView_DYSYMTAB_locrel_doubleClicked(const QModelIndex &i
 
 void MACHWidget::on_tableView_DYSYMTAB_locrel_customContextMenuRequested(const QPoint &pos)
 {
-    int nRow=ui->tableView_DYSYMTAB_locrel->currentIndex().row();
+    qint32 nRow=ui->tableView_DYSYMTAB_locrel->currentIndex().row();
 
     if(nRow!=-1)
     {
