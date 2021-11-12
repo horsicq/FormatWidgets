@@ -82,6 +82,13 @@ void FormatWidget::setData(FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOff
     g_nPageIndex=0;
     g_bAddPageEnable=true;
 
+#ifdef QT_DEBUG
+    if(options.nImageBase==0)
+    {
+        qDebug("Check ImageBase!!!");
+    }
+#endif
+
     setOptions(options);
 }
 

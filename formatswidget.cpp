@@ -492,6 +492,7 @@ void FormatsWidget::showMSDOS(SMSDOS::TYPE type)
         options.bIsSaveBackup=g_options.bIsSaveBackup;
         options.sSearchSignaturesPath=g_options.sSearchSignaturesPath;
         options.nStartType=type;
+        options.nImageBase=-1;
 
         DialogMSDOS dialogMSDOS(this);
 
@@ -516,6 +517,7 @@ void FormatsWidget::showLE(SLE::TYPE type)
         options.bIsSaveBackup=g_options.bIsSaveBackup;
         options.sSearchSignaturesPath=g_options.sSearchSignaturesPath;
         options.nStartType=type;
+        options.nImageBase=-1;
 
         DialogLE dialogLE(this);
 
@@ -540,6 +542,7 @@ void FormatsWidget::showNE(SNE::TYPE type)
         options.bIsSaveBackup=g_options.bIsSaveBackup;
         options.sSearchSignaturesPath=g_options.sSearchSignaturesPath;
         options.nStartType=type;
+        options.nImageBase=-1;
 
         DialogNE dialogNE(this);
 
@@ -564,6 +567,7 @@ void FormatsWidget::showPE(SPE::TYPE type)
         options.bIsSaveBackup=g_options.bIsSaveBackup;
         options.sSearchSignaturesPath=g_options.sSearchSignaturesPath;
         options.nStartType=type;
+        options.nImageBase=-1;
 
         DialogPE dialogPE(this);
 
@@ -588,6 +592,7 @@ void FormatsWidget::showELF(SELF::TYPE type)
         options.bIsSaveBackup=g_options.bIsSaveBackup;
         options.sSearchSignaturesPath=g_options.sSearchSignaturesPath;
         options.nStartType=type;
+        options.nImageBase=-1;
 
         DialogELF dialogELF(this);
 
@@ -612,6 +617,7 @@ void FormatsWidget::showMACH(SMACH::TYPE type)
         options.bIsSaveBackup=g_options.bIsSaveBackup;
         options.sSearchSignaturesPath=g_options.sSearchSignaturesPath;
         options.nStartType=type;
+        options.nImageBase=-1;
 
         DialogMACH dialogMACH(this);
 
@@ -636,6 +642,7 @@ void FormatsWidget::showDEX(SDEX::TYPE type)
         options.bIsSaveBackup=g_options.bIsSaveBackup;
         options.sSearchSignaturesPath=g_options.sSearchSignaturesPath;
         options.nStartType=type;
+        options.nImageBase=-1;
 
         DialogDEX dialogDEX(this);
 
