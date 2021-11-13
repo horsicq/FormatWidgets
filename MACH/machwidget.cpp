@@ -2892,7 +2892,7 @@ void MACHWidget::on_tableView_LOADFVMLIB_doubleClicked(const QModelIndex &index)
 
 void MACHWidget::on_tableView_LOADFVMLIB_customContextMenuRequested(const QPoint &pos)
 {
-    int nRow=ui->tableView_LOADFVMLIB->currentIndex().row();
+    qint32 nRow=ui->tableView_LOADFVMLIB->currentIndex().row();
 
     if(nRow!=-1)
     {
