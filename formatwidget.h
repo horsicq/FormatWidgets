@@ -41,6 +41,7 @@
 #include "xlineedithex.h"
 #include "xmultidisasmwidget.h"
 #include "xshortcutsdialog.h"
+#include "xoptions.h"
 
 class FormatWidget : public XShortcutsWidget
 {
@@ -228,6 +229,8 @@ private:
     QString g_sFileName;
     QIODevice *g_pBackupDevice;
     FW_DEF::OPTIONS g_fwOptions;
+    XOptions xOptionsEmpty;
+    XOptions *g_pXOptions;
     quint32 g_nNumber;
     qint64 g_nOffset;
     quint32 g_nType;

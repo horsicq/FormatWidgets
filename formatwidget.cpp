@@ -24,6 +24,7 @@ FormatWidget::FormatWidget(QWidget *pParent):
     XShortcutsWidget(pParent)
 {
     g_pDevice=nullptr;
+    g_pXOptions=&xOptionsEmpty;
     g_pBackupDevice=nullptr;
     g_bIsReadonly=false;
     g_fwOptions={};
@@ -804,7 +805,7 @@ bool FormatWidget::saveBackup()
 {
     bool bResult=true;
 
-    if((g_fwOptions.bIsSaveBackup)&&(!isEdited()))
+    if((g_pXOptions->isSaveBackup())&&(!isEdited()))
     {
         // Save backup
         if(g_pBackupDevice)
