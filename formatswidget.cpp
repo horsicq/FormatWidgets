@@ -489,7 +489,7 @@ void FormatsWidget::showMSDOS(SMSDOS::TYPE type)
     {
         FW_DEF::OPTIONS options={};
 
-        options.bIsSaveBackup=g_options.bIsSaveBackup;
+//        options.bIsSaveBackup=g_options.bIsSaveBackup;
         options.sSearchSignaturesPath=g_options.sSearchSignaturesPath;
         options.nStartType=type;
         options.nImageBase=-1;
@@ -514,7 +514,7 @@ void FormatsWidget::showLE(SLE::TYPE type)
     {
         FW_DEF::OPTIONS options={};
 
-        options.bIsSaveBackup=g_options.bIsSaveBackup;
+//        options.bIsSaveBackup=g_options.bIsSaveBackup;
         options.sSearchSignaturesPath=g_options.sSearchSignaturesPath;
         options.nStartType=type;
         options.nImageBase=-1;
@@ -539,7 +539,7 @@ void FormatsWidget::showNE(SNE::TYPE type)
     {
         FW_DEF::OPTIONS options={};
 
-        options.bIsSaveBackup=g_options.bIsSaveBackup;
+//        options.bIsSaveBackup=g_options.bIsSaveBackup;
         options.sSearchSignaturesPath=g_options.sSearchSignaturesPath;
         options.nStartType=type;
         options.nImageBase=-1;
@@ -564,7 +564,7 @@ void FormatsWidget::showPE(SPE::TYPE type)
     {
         FW_DEF::OPTIONS options={};
 
-        options.bIsSaveBackup=g_options.bIsSaveBackup;
+//        options.bIsSaveBackup=g_options.bIsSaveBackup;
         options.sSearchSignaturesPath=g_options.sSearchSignaturesPath;
         options.nStartType=type;
         options.nImageBase=-1;
@@ -589,7 +589,7 @@ void FormatsWidget::showELF(SELF::TYPE type)
     {
         FW_DEF::OPTIONS options={};
 
-        options.bIsSaveBackup=g_options.bIsSaveBackup;
+//        options.bIsSaveBackup=g_options.bIsSaveBackup;
         options.sSearchSignaturesPath=g_options.sSearchSignaturesPath;
         options.nStartType=type;
         options.nImageBase=-1;
@@ -614,7 +614,7 @@ void FormatsWidget::showMACH(SMACH::TYPE type)
     {
         FW_DEF::OPTIONS options={};
 
-        options.bIsSaveBackup=g_options.bIsSaveBackup;
+//        options.bIsSaveBackup=g_options.bIsSaveBackup;
         options.sSearchSignaturesPath=g_options.sSearchSignaturesPath;
         options.nStartType=type;
         options.nImageBase=-1;
@@ -639,7 +639,7 @@ void FormatsWidget::showDEX(SDEX::TYPE type)
     {
         FW_DEF::OPTIONS options={};
 
-        options.bIsSaveBackup=g_options.bIsSaveBackup;
+//        options.bIsSaveBackup=g_options.bIsSaveBackup;
         options.sSearchSignaturesPath=g_options.sSearchSignaturesPath;
         options.nStartType=type;
         options.nImageBase=-1;
@@ -720,7 +720,7 @@ void FormatsWidget::on_pushButtonZIP_clicked()
 
     FW_DEF::OPTIONS options={};
 
-    options.bIsSaveBackup=options.bIsSaveBackup;;
+//    options.bIsSaveBackup=options.bIsSaveBackup;;
 
     dialogArchive.setFileName(g_sFileName,options,QSet<XBinary::FT>());
     dialogArchive.setShortcuts(getShortcuts());
