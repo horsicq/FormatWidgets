@@ -38,7 +38,7 @@ public:
     ~DialogNE();
 
     void setData(QIODevice *pDevice,FW_DEF::OPTIONS options);
-    void setShortcuts(XShortcuts *pShortcuts);
+    void setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions);
 
 private:
     Ui::DialogNE *ui;

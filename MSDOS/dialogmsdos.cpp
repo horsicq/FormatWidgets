@@ -46,8 +46,8 @@ void DialogMSDOS::setData(QIODevice *pDevice, FW_DEF::OPTIONS options)
     ui->widget->reload();
 }
 
-void DialogMSDOS::setShortcuts(XShortcuts *pShortcuts)
+void DialogMSDOS::setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions)
 {
-    ui->widget->setShortcuts(pShortcuts);
-    XShortcutsDialog::setShortcuts(pShortcuts);
+    ui->widget->setGlobal(pShortcuts,pXOptions);
+    XShortcutsDialog::setGlobal(pShortcuts,pXOptions);
 }

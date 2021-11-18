@@ -139,10 +139,10 @@ void ELFSectionHeaderWidget::reload()
     reloadData();
 }
 
-void ELFSectionHeaderWidget::setShortcuts(XShortcuts *pShortcuts)
+void ELFSectionHeaderWidget::setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions)
 {
-    ui->widgetHex->setShortcuts(pShortcuts);
-    XShortcutsWidget::setShortcuts(pShortcuts);
+    ui->widgetHex->setGlobal(pShortcuts,pXOptions);
+    XShortcutsWidget::setGlobal(pShortcuts,pXOptions);
 }
 
 void ELFSectionHeaderWidget::setStringTable(qint64 nStringTableOffset, qint64 nStringTableSize)

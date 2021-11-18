@@ -77,50 +77,50 @@ MACHWidget::~MACHWidget()
     delete ui;
 }
 
-void MACHWidget::setShortcuts(XShortcuts *pShortcuts)
+void MACHWidget::setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions)
 {
-    ui->widgetHex->setShortcuts(pShortcuts);
-    ui->widgetDisasm->setShortcuts(pShortcuts);
-    ui->widgetStrings->setShortcuts(pShortcuts);
-    ui->widgetEntropy->setShortcuts(pShortcuts);
-    ui->widgetHeuristicScan->setShortcuts(pShortcuts);
-    ui->widgetMemoryMap->setShortcuts(pShortcuts);
+    ui->widgetHex->setGlobal(pShortcuts,pXOptions);
+    ui->widgetDisasm->setGlobal(pShortcuts,pXOptions);
+    ui->widgetStrings->setGlobal(pShortcuts,pXOptions);
+    ui->widgetEntropy->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHeuristicScan->setGlobal(pShortcuts,pXOptions);
+    ui->widgetMemoryMap->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHash->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_commands->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_mach_header->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_sections->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_segments->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_code_signature->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_data_in_code->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_dyld_info_only->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_dysymtab->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_encryption_info->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_function_starts->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_id_library->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_libraries->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_main->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_source_version->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_StringTable->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_symtab->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_unix_thread->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_unix_thread_arm_32->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_unix_thread_arm_64->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_unix_thread_m68k_32->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_unix_thread_ppc_32->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_unix_thread_x86_32->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_unix_thread_x86_64->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_version_min->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_build_version->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_weak_libraries->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_DYLD_INFO_rebase->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_DYLD_INFO_bind->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_DYLD_INFO_weak_bind->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_DYLD_INFO_lazy_bind->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_DYLD_INFO_export->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_LOADFVMLIB->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_IDFVMLIB->setGlobal(pShortcuts,pXOptions);
 
-    ui->widgetHex_commands->setShortcuts(pShortcuts);
-    ui->widgetHex_mach_header->setShortcuts(pShortcuts);
-    ui->widgetHex_sections->setShortcuts(pShortcuts);
-    ui->widgetHex_segments->setShortcuts(pShortcuts);
-    ui->widgetHex_code_signature->setShortcuts(pShortcuts);
-    ui->widgetHex_data_in_code->setShortcuts(pShortcuts);
-    ui->widgetHex_dyld_info_only->setShortcuts(pShortcuts);
-    ui->widgetHex_dysymtab->setShortcuts(pShortcuts);
-    ui->widgetHex_encryption_info->setShortcuts(pShortcuts);
-    ui->widgetHex_function_starts->setShortcuts(pShortcuts);
-    ui->widgetHex_id_library->setShortcuts(pShortcuts);
-    ui->widgetHex_libraries->setShortcuts(pShortcuts);
-    ui->widgetHex_main->setShortcuts(pShortcuts);
-    ui->widgetHex_source_version->setShortcuts(pShortcuts);
-    ui->widgetHex_StringTable->setShortcuts(pShortcuts);
-    ui->widgetHex_symtab->setShortcuts(pShortcuts);
-    ui->widgetHex_unix_thread->setShortcuts(pShortcuts);
-    ui->widgetHex_unix_thread_arm_32->setShortcuts(pShortcuts);
-    ui->widgetHex_unix_thread_arm_64->setShortcuts(pShortcuts);
-    ui->widgetHex_unix_thread_m68k_32->setShortcuts(pShortcuts);
-    ui->widgetHex_unix_thread_ppc_32->setShortcuts(pShortcuts);
-    ui->widgetHex_unix_thread_x86_32->setShortcuts(pShortcuts);
-    ui->widgetHex_unix_thread_x86_64->setShortcuts(pShortcuts);
-    ui->widgetHex_version_min->setShortcuts(pShortcuts);
-    ui->widgetHex_build_version->setShortcuts(pShortcuts);
-    ui->widgetHex_weak_libraries->setShortcuts(pShortcuts);
-    ui->widgetHex_DYLD_INFO_rebase->setShortcuts(pShortcuts);
-    ui->widgetHex_DYLD_INFO_bind->setShortcuts(pShortcuts);
-    ui->widgetHex_DYLD_INFO_weak_bind->setShortcuts(pShortcuts);
-    ui->widgetHex_DYLD_INFO_lazy_bind->setShortcuts(pShortcuts);
-    ui->widgetHex_DYLD_INFO_export->setShortcuts(pShortcuts);
-    ui->widgetHex_LOADFVMLIB->setShortcuts(pShortcuts);
-    ui->widgetHex_IDFVMLIB->setShortcuts(pShortcuts);
-
-    FormatWidget::setShortcuts(pShortcuts);
+    FormatWidget::setGlobal(pShortcuts,pXOptions);
 }
 
 void MACHWidget::clear()
@@ -1346,7 +1346,6 @@ void MACHWidget::reloadData()
                 XHexView::OPTIONS options={};
                 options.bMenu_Disasm=true;
                 options.bMenu_MemoryMap=true;
-                options.sSignaturesPath=getOptions().sSearchSignaturesPath;
                 ui->widgetHex->setData(getDevice(),options);
                 ui->widgetHex->enableReadOnly(false);
             }
@@ -1358,7 +1357,6 @@ void MACHWidget::reloadData()
                 XMultiDisasmWidget::OPTIONS options={};
                 options.fileType=mach.getFileType();
                 options.nInitAddress=mach.getEntryPointAddress();
-                options.sSignaturesPath=getOptions().sSearchSignaturesPath;
 
                 ui->widgetDisasm->setData(getDevice(),options);
             }
@@ -1391,7 +1389,6 @@ void MACHWidget::reloadData()
             {
                 SearchSignaturesWidget::OPTIONS signaturesOptions={};
                 signaturesOptions.bMenu_Hex=true;
-                signaturesOptions.sSignaturesPath=getOptions().sSearchSignaturesPath;
 
                 ui->widgetSignatures->setData(getDevice(),mach.getFileType(),signaturesOptions,false);
             }
@@ -1400,7 +1397,7 @@ void MACHWidget::reloadData()
         {
             if(!isInitPresent(sInit))
             {
-                ui->widgetMemoryMap->setData(getDevice(),mach.getFileType(),getOptions().sSearchSignaturesPath);
+                ui->widgetMemoryMap->setData(getDevice(),mach.getFileType());
             }
         }
         else if(nType==SMACH::TYPE_ENTROPY)
@@ -3349,7 +3346,7 @@ void MACHWidget::showSectionHeader(int nType, QTableView *pTableView)
         dsh.setWidget(pSectionHeaderWidget);
         dsh.setData(typeIdToString(nType));
         dsh.setEdited(isEdited());
-        dsh.setShortcuts(getShortcuts());
+        dsh.setGlobal(getShortcuts(),getGlobalOptions());
 
         connect(&dsh,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
 

@@ -48,20 +48,21 @@ LEWidget::~LEWidget()
     delete ui;
 }
 
-void LEWidget::setShortcuts(XShortcuts *pShortcuts)
+void LEWidget::setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions)
 {
-    ui->widgetHex->setShortcuts(pShortcuts);
-    ui->widgetDisasm->setShortcuts(pShortcuts);
-    ui->widgetStrings->setShortcuts(pShortcuts);
-    ui->widgetEntropy->setShortcuts(pShortcuts);
-    ui->widgetHeuristicScan->setShortcuts(pShortcuts);
-    ui->widgetMemoryMap->setShortcuts(pShortcuts);
-    ui->widgetHex_DOS_HEADER->setShortcuts(pShortcuts);
-    ui->widgetHex_Object->setShortcuts(pShortcuts);
-    ui->widgetHex_OVERLAY->setShortcuts(pShortcuts);
-    ui->widgetHex_VXD_HEADER->setShortcuts(pShortcuts);
+    ui->widgetHex->setGlobal(pShortcuts,pXOptions);
+    ui->widgetDisasm->setGlobal(pShortcuts,pXOptions);
+    ui->widgetStrings->setGlobal(pShortcuts,pXOptions);
+    ui->widgetEntropy->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHeuristicScan->setGlobal(pShortcuts,pXOptions);
+    ui->widgetMemoryMap->setGlobal(pShortcuts,pXOptions);
+//    ui->widgetHash->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_DOS_HEADER->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_Object->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_OVERLAY->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_VXD_HEADER->setGlobal(pShortcuts,pXOptions);
 
-    FormatWidget::setShortcuts(pShortcuts);
+    FormatWidget::setGlobal(pShortcuts,pXOptions);
 }
 
 void LEWidget::clear()
@@ -314,7 +315,6 @@ void LEWidget::reloadData()
                 XHexView::OPTIONS options={};
                 options.bMenu_Disasm=true;
                 options.bMenu_MemoryMap=true;
-                options.sSignaturesPath=getOptions().sSearchSignaturesPath;
                 ui->widgetHex->setData(getDevice(),options);
 //                ui->widgetHex->setBackupFileName(getOptions().sBackupFileName);
                 ui->widgetHex->enableReadOnly(false);
@@ -329,7 +329,6 @@ void LEWidget::reloadData()
                 XMultiDisasmWidget::OPTIONS options={};
                 options.fileType=le.getFileType();
                 options.nInitAddress=le.getEntryPointAddress();
-                options.sSignaturesPath=getOptions().sSearchSignaturesPath;
 
                 ui->widgetDisasm->setData(getDevice(),options);
             }
@@ -353,7 +352,7 @@ void LEWidget::reloadData()
         {
             if(!isInitPresent(sInit))
             {
-                ui->widgetMemoryMap->setData(getDevice(),le.getFileType(),getOptions().sSearchSignaturesPath);
+                ui->widgetMemoryMap->setData(getDevice(),le.getFileType());
             }
         }
         else if(nType==SLE::TYPE_ENTROPY)

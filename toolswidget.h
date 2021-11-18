@@ -38,7 +38,7 @@ public:
     explicit ToolsWidget(QWidget *pParent=nullptr);
     ~ToolsWidget();
 
-    void setShortcuts(XShortcuts *pShortcuts);
+    void setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions);
     void setData(QIODevice *pDevice,FW_DEF::OPTIONS options);
     void setEdited(bool bState);
     void setReadonly(bool bState);

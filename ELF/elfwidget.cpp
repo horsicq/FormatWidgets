@@ -49,22 +49,23 @@ ELFWidget::~ELFWidget()
     delete ui;
 }
 
-void ELFWidget::setShortcuts(XShortcuts *pShortcuts)
+void ELFWidget::setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions)
 {
-    ui->widgetHex->setShortcuts(pShortcuts);
-    ui->widgetDisasm->setShortcuts(pShortcuts);
-    ui->widgetStrings->setShortcuts(pShortcuts);
-    ui->widgetSignatures->setShortcuts(pShortcuts);
-    ui->widgetEntropy->setShortcuts(pShortcuts);
-    ui->widgetHeuristicScan->setShortcuts(pShortcuts);
-    ui->widgetMemoryMap->setShortcuts(pShortcuts);
-    ui->widgetHex_Elf_Ehdr->setShortcuts(pShortcuts);
-    ui->widgetHex_Elf_Phdr->setShortcuts(pShortcuts);
-    ui->widgetHex_Elf_Shdr->setShortcuts(pShortcuts);
-    ui->widgetHex_Notes->setShortcuts(pShortcuts);
-    ui->widgetHex_StringTable->setShortcuts(pShortcuts);
+    ui->widgetHex->setGlobal(pShortcuts,pXOptions);
+    ui->widgetDisasm->setGlobal(pShortcuts,pXOptions);
+    ui->widgetStrings->setGlobal(pShortcuts,pXOptions);
+    ui->widgetSignatures->setGlobal(pShortcuts,pXOptions);
+    ui->widgetEntropy->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHeuristicScan->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHash->setGlobal(pShortcuts,pXOptions);
+    ui->widgetMemoryMap->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_Elf_Ehdr->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_Elf_Phdr->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_Elf_Shdr->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_Notes->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_StringTable->setGlobal(pShortcuts,pXOptions);
 
-    FormatWidget::setShortcuts(pShortcuts);
+    FormatWidget::setGlobal(pShortcuts,pXOptions);
 }
 
 void ELFWidget::clear()
@@ -302,7 +303,6 @@ void ELFWidget::reloadData()
                 XHexView::OPTIONS options={};
                 options.bMenu_Disasm=true;
                 options.bMenu_MemoryMap=true;
-                options.sSignaturesPath=getOptions().sSearchSignaturesPath;
                 ui->widgetHex->setData(getDevice(),options);
 //                ui->widgetHex->setBackupFileName(getOptions().sBackupFileName);
                 ui->widgetHex->enableReadOnly(false);
@@ -317,7 +317,6 @@ void ELFWidget::reloadData()
                 XMultiDisasmWidget::OPTIONS options={};
                 options.fileType=elf.getFileType();
                 options.nInitAddress=elf.getEntryPointAddress();
-                options.sSignaturesPath=getOptions().sSearchSignaturesPath;
                 // TODO edit state
 
                 ui->widgetDisasm->setData(getDevice(),options);
@@ -353,7 +352,6 @@ void ELFWidget::reloadData()
             {
                 SearchSignaturesWidget::OPTIONS signaturesOptions={};
                 signaturesOptions.bMenu_Hex=true;
-                signaturesOptions.sSignaturesPath=getOptions().sSearchSignaturesPath;
 
                 ui->widgetSignatures->setData(getDevice(),elf.getFileType(),signaturesOptions,false);
             }
@@ -362,7 +360,7 @@ void ELFWidget::reloadData()
         {
             if(!isInitPresent(sInit))
             {
-                ui->widgetMemoryMap->setData(getDevice(),elf.getFileType(),getOptions().sSearchSignaturesPath);
+                ui->widgetMemoryMap->setData(getDevice(),elf.getFileType());
             }
         }
         else if(nType==SELF::TYPE_ENTROPY)

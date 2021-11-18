@@ -67,20 +67,10 @@ class FormatsWidget : public XShortcutsWidget
 
 public:
 
-    struct OPTIONS
-    {
-        QString sDatabasePath;
-        QString sInfoPath;
-        bool bIsSaveBackup;
-        QString sSearchSignaturesPath;
-        // TODO More
-    };
-
     explicit FormatsWidget(QWidget *pParent=nullptr);
     ~FormatsWidget();
     void setFileName(QString sFileName,bool bScan);
     void setScanEngine(QString sScanEngine);
-    void setOptions(OPTIONS options);
 
 private slots:
     void on_comboBoxFileType_currentIndexChanged(int nIndex);
@@ -138,7 +128,6 @@ private:
     Ui::FormatsWidget *ui;
     QString g_sFileName;
     bool g_bScan;
-    OPTIONS g_options;
 };
 
 #endif // FORMATSWIDGET_H

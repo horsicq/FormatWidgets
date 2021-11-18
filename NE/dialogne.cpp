@@ -46,8 +46,8 @@ void DialogNE::setData(QIODevice *pDevice, FW_DEF::OPTIONS options)
     ui->widget->reload();
 }
 
-void DialogNE::setShortcuts(XShortcuts *pShortcuts)
+void DialogNE::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
 {
-    ui->widget->setShortcuts(pShortcuts);
-    XShortcutsDialog::setShortcuts(pShortcuts);
+    ui->widget->setGlobal(pShortcuts,pXOptions);
+    XShortcutsDialog::setGlobal(pShortcuts,pXOptions);
 }

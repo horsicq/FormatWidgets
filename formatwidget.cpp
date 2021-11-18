@@ -756,7 +756,7 @@ void FormatWidget::showHex(qint64 nOffset, qint64 nSize)
     hexOptions.nSizeOfSelection=nSize;
 
     DialogHexView dialogHexView(this,getDevice(),hexOptions);
-    dialogHexView.setShortcuts(getShortcuts());
+    dialogHexView.setGlobal(getShortcuts(),getGlobalOptions());
 
     connect(&dialogHexView,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
 

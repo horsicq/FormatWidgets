@@ -37,7 +37,7 @@ public:
     MSDOSWidget(QWidget *pParent=nullptr);
     MSDOSWidget(QIODevice *pDevice,FW_DEF::OPTIONS options,QWidget *pParent=nullptr);
     ~MSDOSWidget();
-    void setShortcuts(XShortcuts *pShortcuts);
+    void setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions);
 
     virtual void clear();
     virtual void cleanup();

@@ -47,10 +47,10 @@ void DialogSearchStrings::setData(QIODevice *pDevice, SearchStringsWidget::OPTIO
     }
 }
 
-void DialogSearchStrings::setShortcuts(XShortcuts *pShortcuts)
+void DialogSearchStrings::setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions)
 {
-    ui->widgetSearchStrings->setShortcuts(pShortcuts);
-    XShortcutsDialog::setShortcuts(pShortcuts);
+    ui->widgetSearchStrings->setGlobal(pShortcuts,pXOptions);
+    XShortcutsDialog::setGlobal(pShortcuts,pXOptions);
 }
 
 void DialogSearchStrings::on_pushButtonClose_clicked()

@@ -40,7 +40,7 @@ public:
     virtual void clear();
     virtual void cleanup();
     virtual void reload();
-    virtual void setShortcuts(XShortcuts *pShortcuts);
+    virtual void setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions);
     void setStringTable(qint64 nStringTableOffset,qint64 nStringTableSize);
 
 protected:

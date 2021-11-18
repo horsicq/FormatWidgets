@@ -66,10 +66,10 @@ void DialogSectionHeader::setEdited(bool bState)
     g_pWidget->setEdited(bState);
 }
 
-void DialogSectionHeader::setShortcuts(XShortcuts *pShortcuts)
+void DialogSectionHeader::setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions)
 {
     if(g_pWidget)
     {
-        g_pWidget->setShortcuts(pShortcuts);
+        g_pWidget->setGlobal(pShortcuts,pXOptions);
     }
 }

@@ -37,7 +37,7 @@ public:
     explicit DialogSearchSignatures(QWidget *pParent);
     ~DialogSearchSignatures();
     void setData(QIODevice *pDevice,XBinary::FT fileType,SearchSignaturesWidget::OPTIONS options,bool bAuto=false);
-    void setShortcuts(XShortcuts *pShortcuts);
+    void setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions);
 
 signals:
     void showHex(qint64 nOffset,qint64 nSize);

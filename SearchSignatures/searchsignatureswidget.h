@@ -46,7 +46,6 @@ class SearchSignaturesWidget : public XShortcutsWidget
 public:
     struct OPTIONS
     {
-        QString sSignaturesPath;
         bool bMenu_Hex;
         QString sUserSignature;
     };
@@ -56,7 +55,7 @@ public:
     void setData(QIODevice *pDevice,XBinary::FT fileType,OPTIONS options,bool bAuto=false);
     void setOptions(OPTIONS options);
     OPTIONS getOptions();
-    void setSignaturesPath(QString sPath);
+    void updateSignaturesPath();
 
     void reload();
     bool getInitStatus();

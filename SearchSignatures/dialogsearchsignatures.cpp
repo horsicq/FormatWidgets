@@ -42,11 +42,10 @@ void DialogSearchSignatures::setData(QIODevice *pDevice, XBinary::FT fileType, S
     ui->searchSignaturesWidget->setData(pDevice,fileType,options,bAuto);
 }
 
-void DialogSearchSignatures::setShortcuts(XShortcuts *pShortcuts)
+void DialogSearchSignatures::setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions)
 {
-    ui->searchSignaturesWidget->setShortcuts(pShortcuts);
-
-    XShortcutsDialog::setShortcuts(pShortcuts);
+    ui->searchSignaturesWidget->setGlobal(pShortcuts,pXOptions);
+    XShortcutsDialog::setGlobal(pShortcuts,pXOptions);
 }
 
 void DialogSearchSignatures::on_pushButtonClose_clicked()

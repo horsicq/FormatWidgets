@@ -36,7 +36,7 @@ public:
     explicit DialogSearchStrings(QWidget *pParent);
     ~DialogSearchStrings();
     void setData(QIODevice *pDevice,SearchStringsWidget::OPTIONS options,bool bAuto=false);
-    void setShortcuts(XShortcuts *pShortcuts);
+    void setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions);
 
 signals:
     void showHex(qint64 nOffset,qint64 nSize);

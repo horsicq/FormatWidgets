@@ -46,8 +46,8 @@ void DialogMACH::setData(QIODevice *pDevice, FW_DEF::OPTIONS options)
     ui->widget->reload();
 }
 
-void DialogMACH::setShortcuts(XShortcuts *pShortcuts)
+void DialogMACH::setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions)
 {
-    ui->widget->setShortcuts(pShortcuts);
-    XShortcutsDialog::setShortcuts(pShortcuts);
+    ui->widget->setGlobal(pShortcuts,pXOptions);
+    XShortcutsDialog::setGlobal(pShortcuts,pXOptions);
 }

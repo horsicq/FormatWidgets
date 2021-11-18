@@ -70,32 +70,33 @@ PEWidget::~PEWidget()
     delete ui;
 }
 
-void PEWidget::setShortcuts(XShortcuts *pShortcuts)
+void PEWidget::setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions)
 {
-    ui->widgetHex->setShortcuts(pShortcuts);
-    ui->widgetDisasm->setShortcuts(pShortcuts);
-    ui->widgetStrings->setShortcuts(pShortcuts);
-    ui->widgetSignatures->setShortcuts(pShortcuts);
-    ui->widgetEntropy->setShortcuts(pShortcuts);
-    ui->widgetHeuristicScan->setShortcuts(pShortcuts);
-    ui->widgetMemoryMap->setShortcuts(pShortcuts);
-    ui->widgetHex_Debug->setShortcuts(pShortcuts);
-    ui->widgetHex_Exception->setShortcuts(pShortcuts);
-    ui->widgetHex_IMAGE_DIRECTORY_ENTRIES->setShortcuts(pShortcuts);
-    ui->widgetHex_IMAGE_DOS_HEADER->setShortcuts(pShortcuts);
-    ui->widgetHex_IMAGE_FILE_HEADER->setShortcuts(pShortcuts);
-    ui->widgetHex_IMAGE_NT_HEADERS->setShortcuts(pShortcuts);
-    ui->widgetHex_IMAGE_OPTIONAL_HEADER->setShortcuts(pShortcuts);
-    ui->widgetHex_LoadConfig->setShortcuts(pShortcuts);
-    ui->widgetHex_NetHeader->setShortcuts(pShortcuts);
-    ui->widgetHex_Net_Metadata->setShortcuts(pShortcuts);
-    ui->widgetHex_Net_Metadata_Stream->setShortcuts(pShortcuts);
-    ui->widgetHex_Overlay->setShortcuts(pShortcuts);
-    ui->widgetHex_Resources->setShortcuts(pShortcuts);
-    ui->widgetHex_Section->setShortcuts(pShortcuts);
-    ui->widgetHex_TLS->setShortcuts(pShortcuts);
+    ui->widgetHex->setGlobal(pShortcuts,pXOptions);
+    ui->widgetDisasm->setGlobal(pShortcuts,pXOptions);
+    ui->widgetStrings->setGlobal(pShortcuts,pXOptions);
+    ui->widgetSignatures->setGlobal(pShortcuts,pXOptions);
+    ui->widgetEntropy->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHeuristicScan->setGlobal(pShortcuts,pXOptions);
+    ui->widgetMemoryMap->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHash->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_Debug->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_Exception->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_IMAGE_DIRECTORY_ENTRIES->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_IMAGE_DOS_HEADER->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_IMAGE_FILE_HEADER->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_IMAGE_NT_HEADERS->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_IMAGE_OPTIONAL_HEADER->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_LoadConfig->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_NetHeader->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_Net_Metadata->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_Net_Metadata_Stream->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_Overlay->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_Resources->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_Section->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_TLS->setGlobal(pShortcuts,pXOptions);
 
-    FormatWidget::setShortcuts(pShortcuts);
+    FormatWidget::setGlobal(pShortcuts,pXOptions);
 }
 
 void PEWidget::clear()
@@ -922,7 +923,6 @@ void PEWidget::reloadData()
                 XHexView::OPTIONS options={};
                 options.bMenu_Disasm=true;
                 options.bMenu_MemoryMap=true;
-                options.sSignaturesPath=getOptions().sSearchSignaturesPath;
                 ui->widgetHex->setData(getDevice(),options);
                 // TODO save directory
                 ui->widgetHex->enableReadOnly(false);
@@ -937,7 +937,6 @@ void PEWidget::reloadData()
                 XMultiDisasmWidget::OPTIONS options={};
                 options.fileType=pe.getFileType();
                 options.nInitAddress=pe.getEntryPointAddress();
-                options.sSignaturesPath=getOptions().sSearchSignaturesPath;
 
                 ui->widgetDisasm->setData(getDevice(),options);
             }
@@ -970,7 +969,6 @@ void PEWidget::reloadData()
             {
                 SearchSignaturesWidget::OPTIONS signaturesOptions={};
                 signaturesOptions.bMenu_Hex=true;
-                signaturesOptions.sSignaturesPath=getOptions().sSearchSignaturesPath;
 
                 ui->widgetSignatures->setData(getDevice(),pe.getFileType(),signaturesOptions,false);
             }
@@ -979,7 +977,7 @@ void PEWidget::reloadData()
         {
             if(!isInitPresent(sInit))
             {
-                ui->widgetMemoryMap->setData(getDevice(),pe.getFileType(),getOptions().sSearchSignaturesPath);
+                ui->widgetMemoryMap->setData(getDevice(),pe.getFileType());
             }
         }
         else if(nType==SPE::TYPE_ENTROPY)

@@ -69,7 +69,7 @@ void SearchSignaturesWidget::setData(QIODevice *pDevice, XBinary::FT fileType,OP
 void SearchSignaturesWidget::setOptions(SearchSignaturesWidget::OPTIONS options)
 {
     g_options=options;
-    setSignaturesPath(options.sSignaturesPath);
+    updateSignaturesPath();
 }
 
 SearchSignaturesWidget::OPTIONS SearchSignaturesWidget::getOptions()
@@ -77,7 +77,7 @@ SearchSignaturesWidget::OPTIONS SearchSignaturesWidget::getOptions()
     return g_options;
 }
 
-void SearchSignaturesWidget::setSignaturesPath(QString sPath)
+void SearchSignaturesWidget::updateSignaturesPath()
 {
 #if QT_VERSION >= QT_VERSION_CHECK(5,3,0)
     const QSignalBlocker block(ui->comboBoxFile);
@@ -92,14 +92,14 @@ void SearchSignaturesWidget::setSignaturesPath(QString sPath)
         ui->comboBoxFile->addItem("",g_options.sUserSignature);
     }
 
-    QList<QString> listFiles=XBinary::getAllFilesFromDirectory(XBinary::convertPathName(sPath),"*.db");
+    QList<QString> listFiles=XBinary::getAllFilesFromDirectory(XBinary::convertPathName(getGlobalOptions()->getSearchSignaturesPath()),"*.db");
 
     qint32 nNumberOfFiles=listFiles.count();
 
     for(qint32 i=0;i<nNumberOfFiles;i++)
     {
         QString sFileName=listFiles.at(i);
-        ui->comboBoxFile->addItem(XBinary::getBaseFileName(sFileName),XBinary::convertPathName(sPath)+QDir::separator()+sFileName);
+        ui->comboBoxFile->addItem(XBinary::getBaseFileName(sFileName),XBinary::convertPathName(getGlobalOptions()->getSearchSignaturesPath())+QDir::separator()+sFileName);
     }
 
     if(g_options.sUserSignature!="")

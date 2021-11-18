@@ -27,7 +27,6 @@ namespace FW_DEF
 {
     struct OPTIONS
     {
-        QString sSearchSignaturesPath; // TODO remove
         // TODO More
         bool bIsImage;
         qint64 nImageBase; // TODO default_const

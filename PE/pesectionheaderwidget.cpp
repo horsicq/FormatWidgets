@@ -152,10 +152,10 @@ void PESectionHeaderWidget::reload()
     reloadData();
 }
 
-void PESectionHeaderWidget::setShortcuts(XShortcuts *pShortcuts)
+void PESectionHeaderWidget::setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions)
 {
-    ui->widgetHex->setShortcuts(pShortcuts);
-    XShortcutsWidget::setShortcuts(pShortcuts);
+    ui->widgetHex->setGlobal(pShortcuts,pXOptions);
+    XShortcutsWidget::setGlobal(pShortcuts,pXOptions);
 }
 
 FormatWidget::SV PESectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int nPosition,qint64 nOffset)

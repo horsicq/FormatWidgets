@@ -41,9 +41,9 @@ void DialogBinary::setData(QIODevice *pDevice, FW_DEF::OPTIONS options)
     ui->widget->reload();
 }
 
-void DialogBinary::setShortcuts(XShortcuts *pShortcuts)
+void DialogBinary::setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions)
 {
-    ui->widget->setShortcuts(pShortcuts);
+    ui->widget->setGlobal(pShortcuts,pXOptions);
 
-    XShortcutsDialog::setShortcuts(pShortcuts);
+    XShortcutsDialog::setGlobal(pShortcuts,pXOptions);
 }

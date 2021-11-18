@@ -207,10 +207,10 @@ void MACHSectionHeaderWidget::reload()
     reloadData();
 }
 
-void MACHSectionHeaderWidget::setShortcuts(XShortcuts *pShortcuts)
+void MACHSectionHeaderWidget::setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions)
 {
-    ui->widgetHex->setShortcuts(pShortcuts);
-    XShortcutsWidget::setShortcuts(pShortcuts);
+    ui->widgetHex->setGlobal(pShortcuts,pXOptions);
+    XShortcutsWidget::setGlobal(pShortcuts,pXOptions);
 }
 
 FormatWidget::SV MACHSectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)

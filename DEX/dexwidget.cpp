@@ -48,17 +48,18 @@ DEXWidget::~DEXWidget()
     delete ui;
 }
 
-void DEXWidget::setShortcuts(XShortcuts *pShortcuts)
+void DEXWidget::setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions)
 {
-    ui->widgetHex->setShortcuts(pShortcuts);
+    ui->widgetHex->setGlobal(pShortcuts,pXOptions);
 //    ui->widgetDisasm->setShortcuts(pShortcuts);
-    ui->widgetStrings->setShortcuts(pShortcuts);
-    ui->widgetEntropy->setShortcuts(pShortcuts);
-    ui->widgetHeuristicScan->setShortcuts(pShortcuts);
-    ui->widgetMemoryMap->setShortcuts(pShortcuts);
-    ui->widgetHex_Header->setShortcuts(pShortcuts);
+    ui->widgetStrings->setGlobal(pShortcuts,pXOptions);
+    ui->widgetEntropy->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHeuristicScan->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHash->setGlobal(pShortcuts,pXOptions);
+    ui->widgetMemoryMap->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_Header->setGlobal(pShortcuts,pXOptions);
 
-    FormatWidget::setShortcuts(pShortcuts);
+    FormatWidget::setGlobal(pShortcuts,pXOptions);
 }
 
 void DEXWidget::clear()
@@ -300,7 +301,6 @@ void DEXWidget::reloadData()
                 XHexView::OPTIONS options={};
                 options.bMenu_Disasm=true;
                 options.bMenu_MemoryMap=true;
-                options.sSignaturesPath=getOptions().sSearchSignaturesPath;
                 ui->widgetHex->setData(getDevice(),options);
 //                ui->widgetHex->setBackupFileName(getOptions().sBackupFileName);
                 ui->widgetHex->enableReadOnly(false);
@@ -334,7 +334,7 @@ void DEXWidget::reloadData()
         {
             if(!isInitPresent(sInit))
             {
-                ui->widgetMemoryMap->setData(getDevice(),dex.getFileType(),getOptions().sSearchSignaturesPath);
+                ui->widgetMemoryMap->setData(getDevice(),dex.getFileType());
             }
         }
         else if(nType==SDEX::TYPE_ENTROPY)

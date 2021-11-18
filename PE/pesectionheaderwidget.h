@@ -40,7 +40,7 @@ public:
     virtual void clear();
     virtual void cleanup();
     virtual void reload();
-    virtual void setShortcuts(XShortcuts *pShortcuts);
+    virtual void setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions);
 
 protected:
     virtual SV _setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition,qint64 nOffset);

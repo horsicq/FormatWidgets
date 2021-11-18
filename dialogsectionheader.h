@@ -41,7 +41,7 @@ public:
     void setData(QIODevice *pDevice,FW_DEF::OPTIONS options,quint32 nNumber,qint64 nOffset,QString sTitle,qint32 nType); // TODO remove
     void setData(QString sTitle);
     void setEdited(bool bState);
-    virtual void setShortcuts(XShortcuts *pShortcuts);
+    virtual void setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions);
 
 signals:
     void editState(bool bState);

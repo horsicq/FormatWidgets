@@ -105,10 +105,10 @@ ToolsWidget::~ToolsWidget()
     delete ui;
 }
 
-void ToolsWidget::setShortcuts(XShortcuts *pShortcuts)
+void ToolsWidget::setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions)
 {
-    ui->widgetHex->setShortcuts(pShortcuts);
-    ui->widgetStrings->setShortcuts(pShortcuts);
+    ui->widgetHex->setGlobal(pShortcuts,pXOptions);
+    ui->widgetStrings->setGlobal(pShortcuts,pXOptions);
 }
 
 void ToolsWidget::on_tabWidgetMain_currentChanged(int nIndex)

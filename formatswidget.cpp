@@ -46,8 +46,6 @@ FormatsWidget::FormatsWidget(QWidget *pParent) :
     connect(ui->pageScanDIE,SIGNAL(scanStarted()),this,SLOT(onScanStarted()));
     connect(ui->pageScanDIE,SIGNAL(scanFinished()),this,SLOT(onScanFinished()));
 
-    g_options={};
-
 #if QT_VERSION < 0x050300
     ui->comboBoxScanEngine->blockSignals(bBlocked1);
 #endif
@@ -73,13 +71,6 @@ void FormatsWidget::setScanEngine(QString sScanEngine)
     {
         ui->comboBoxScanEngine->setCurrentIndex(SE_NFD);
     }
-}
-
-void FormatsWidget::setOptions(FormatsWidget::OPTIONS options)
-{
-    g_options=options;
-    ui->pageScanDIE->setDatabasePath(options.sDatabasePath);
-    ui->pageScanDIE->setInfoPath(options.sInfoPath);
 }
 
 FormatsWidget::~FormatsWidget()
@@ -355,10 +346,9 @@ void FormatsWidget::on_pushButtonDisasm_clicked()
             XMultiDisasmWidget::OPTIONS options={};
             options.fileType=getCurrentFileType();
             options.nInitAddress=ui->lineEditEntryPoint->getValue();
-            options.sSignaturesPath=g_options.sSearchSignaturesPath;
 
             dialogDisasm.setData(&file,options);
-            dialogDisasm.setShortcuts(getShortcuts());
+            dialogDisasm.setGlobal(getShortcuts(),getGlobalOptions());
 
             dialogDisasm.exec();
 
@@ -381,7 +371,7 @@ void FormatsWidget::on_pushButtonHexEntryPoint_clicked()
             hexOptions.nStartSelectionOffset=XFormats::getEntryPointOffset(getCurrentFileType(),&file);
 
             DialogHexView dialogHex(this,&file,hexOptions);
-            dialogHex.setShortcuts(getShortcuts());
+            dialogHex.setGlobal(getShortcuts(),getGlobalOptions());
 
             dialogHex.exec();
 
@@ -400,8 +390,8 @@ void FormatsWidget::on_pushButtonMemoryMap_clicked()
 
         if(file.open(QIODevice::ReadOnly))
         {
-            DialogMemoryMap dialogMemoryMap(this,&file,getCurrentFileType(),g_options.sSearchSignaturesPath);
-            dialogMemoryMap.setShortcuts(getShortcuts());
+            DialogMemoryMap dialogMemoryMap(this,&file,getCurrentFileType());
+            dialogMemoryMap.setGlobal(getShortcuts(),getGlobalOptions());
 
             dialogMemoryMap.exec();
 
@@ -489,15 +479,13 @@ void FormatsWidget::showMSDOS(SMSDOS::TYPE type)
     {
         FW_DEF::OPTIONS options={};
 
-//        options.bIsSaveBackup=g_options.bIsSaveBackup;
-        options.sSearchSignaturesPath=g_options.sSearchSignaturesPath;
         options.nStartType=type;
         options.nImageBase=-1;
 
         DialogMSDOS dialogMSDOS(this);
 
         dialogMSDOS.setData(&file,options);
-        dialogMSDOS.setShortcuts(getShortcuts());
+        dialogMSDOS.setGlobal(getShortcuts(),getGlobalOptions());
 
         dialogMSDOS.exec();
 
@@ -514,15 +502,13 @@ void FormatsWidget::showLE(SLE::TYPE type)
     {
         FW_DEF::OPTIONS options={};
 
-//        options.bIsSaveBackup=g_options.bIsSaveBackup;
-        options.sSearchSignaturesPath=g_options.sSearchSignaturesPath;
         options.nStartType=type;
         options.nImageBase=-1;
 
         DialogLE dialogLE(this);
 
         dialogLE.setData(&file,options);
-        dialogLE.setShortcuts(getShortcuts());
+        dialogLE.setGlobal(getShortcuts(),getGlobalOptions());
 
         dialogLE.exec();
 
@@ -539,15 +525,13 @@ void FormatsWidget::showNE(SNE::TYPE type)
     {
         FW_DEF::OPTIONS options={};
 
-//        options.bIsSaveBackup=g_options.bIsSaveBackup;
-        options.sSearchSignaturesPath=g_options.sSearchSignaturesPath;
         options.nStartType=type;
         options.nImageBase=-1;
 
         DialogNE dialogNE(this);
 
         dialogNE.setData(&file,options);
-        dialogNE.setShortcuts(getShortcuts());
+        dialogNE.setGlobal(getShortcuts(),getGlobalOptions());
 
         dialogNE.exec();
 
@@ -564,15 +548,13 @@ void FormatsWidget::showPE(SPE::TYPE type)
     {
         FW_DEF::OPTIONS options={};
 
-//        options.bIsSaveBackup=g_options.bIsSaveBackup;
-        options.sSearchSignaturesPath=g_options.sSearchSignaturesPath;
         options.nStartType=type;
         options.nImageBase=-1;
 
         DialogPE dialogPE(this);
 
         dialogPE.setData(&file,options);
-        dialogPE.setShortcuts(getShortcuts());
+        dialogPE.setGlobal(getShortcuts(),getGlobalOptions());
 
         dialogPE.exec();
 
@@ -589,15 +571,13 @@ void FormatsWidget::showELF(SELF::TYPE type)
     {
         FW_DEF::OPTIONS options={};
 
-//        options.bIsSaveBackup=g_options.bIsSaveBackup;
-        options.sSearchSignaturesPath=g_options.sSearchSignaturesPath;
         options.nStartType=type;
         options.nImageBase=-1;
 
         DialogELF dialogELF(this);
 
         dialogELF.setData(&file,options);
-        dialogELF.setShortcuts(getShortcuts());
+        dialogELF.setGlobal(getShortcuts(),getGlobalOptions());
 
         dialogELF.exec();
 
@@ -614,15 +594,13 @@ void FormatsWidget::showMACH(SMACH::TYPE type)
     {
         FW_DEF::OPTIONS options={};
 
-//        options.bIsSaveBackup=g_options.bIsSaveBackup;
-        options.sSearchSignaturesPath=g_options.sSearchSignaturesPath;
         options.nStartType=type;
         options.nImageBase=-1;
 
         DialogMACH dialogMACH(this);
 
         dialogMACH.setData(&file,options);
-        dialogMACH.setShortcuts(getShortcuts());
+        dialogMACH.setGlobal(getShortcuts(),getGlobalOptions());
 
         dialogMACH.exec();
 
@@ -639,15 +617,13 @@ void FormatsWidget::showDEX(SDEX::TYPE type)
     {
         FW_DEF::OPTIONS options={};
 
-//        options.bIsSaveBackup=g_options.bIsSaveBackup;
-        options.sSearchSignaturesPath=g_options.sSearchSignaturesPath;
         options.nStartType=type;
         options.nImageBase=-1;
 
         DialogDEX dialogDEX(this);
 
         dialogDEX.setData(&file,options);
-        dialogDEX.setShortcuts(getShortcuts());
+        dialogDEX.setGlobal(getShortcuts(),getGlobalOptions());
 
         dialogDEX.exec();
 
@@ -720,10 +696,8 @@ void FormatsWidget::on_pushButtonZIP_clicked()
 
     FW_DEF::OPTIONS options={};
 
-//    options.bIsSaveBackup=options.bIsSaveBackup;;
-
     dialogArchive.setFileName(g_sFileName,options,QSet<XBinary::FT>());
-    dialogArchive.setShortcuts(getShortcuts());
+    dialogArchive.setGlobal(getShortcuts(),getGlobalOptions());
 
     dialogArchive.exec();
 }
