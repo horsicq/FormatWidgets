@@ -210,7 +210,7 @@ void SearchSignaturesWidget::_copySignature()
 
 void SearchSignaturesWidget::_copyAddress()
 {
-    int nRow=ui->tableViewResult->currentIndex().row();
+    qint32 nRow=ui->tableViewResult->currentIndex().row();
 
     if((nRow!=-1)&&(g_pModel))
     {
