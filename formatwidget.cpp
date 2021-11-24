@@ -559,7 +559,7 @@ void FormatWidget::addPage(QTreeWidgetItem *pItem)
     {
         qint32 nNumberOfPages=g_listPages.count();
 
-        for(int i=nNumberOfPages-1;i>g_nPageIndex;i--)
+        for(qint32 i=nNumberOfPages-1;i>g_nPageIndex;i--)
         {
             g_listPages.removeAt(i);
         }
