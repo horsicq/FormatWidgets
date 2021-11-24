@@ -61,8 +61,18 @@ void FormatsWidget::setFileName(QString sFileName, bool bScan)
     reload();
 }
 
-void FormatsWidget::setScanEngine(QString sScanEngine)
+void FormatsWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
 {
+    ui->pageScanDIE->setGlobal(pShortcuts,pXOptions);
+    ui->pageScanNFD->setGlobal(pShortcuts,pXOptions);
+
+    XShortcutsWidget::setGlobal(pShortcuts,pXOptions);
+}
+
+void FormatsWidget::adjust()
+{
+    QString sScanEngine=getGlobalOptions()->getScanEngine();
+
     if(sScanEngine=="die")
     {
         ui->comboBoxScanEngine->setCurrentIndex(SE_DIE);
@@ -71,6 +81,9 @@ void FormatsWidget::setScanEngine(QString sScanEngine)
     {
         ui->comboBoxScanEngine->setCurrentIndex(SE_NFD);
     }
+
+    ui->pageScanDIE->adjust();
+    ui->pageScanNFD->adjust();
 }
 
 FormatsWidget::~FormatsWidget()

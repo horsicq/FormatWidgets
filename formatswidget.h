@@ -70,7 +70,8 @@ public:
     explicit FormatsWidget(QWidget *pParent=nullptr);
     ~FormatsWidget();
     void setFileName(QString sFileName,bool bScan);
-    void setScanEngine(QString sScanEngine);
+    void setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions);
+    void adjust();
 
 private slots:
     void on_comboBoxFileType_currentIndexChanged(int nIndex);
