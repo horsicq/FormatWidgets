@@ -1,4 +1,4 @@
-// copyright (c) 2019-2021 hors<horsicq@gmail.com>
+// Copyright (c) 2019-2021 hors<horsicq@gmail.com>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -69,7 +69,7 @@ void SearchSignaturesWidget::setData(QIODevice *pDevice, XBinary::FT fileType,OP
 void SearchSignaturesWidget::setOptions(SearchSignaturesWidget::OPTIONS options)
 {
     g_options=options;
-    updateSignaturesPath();
+    adjust();
 }
 
 SearchSignaturesWidget::OPTIONS SearchSignaturesWidget::getOptions()
@@ -123,6 +123,11 @@ void SearchSignaturesWidget::reload()
 bool SearchSignaturesWidget::getInitStatus()
 {
     return g_bInit;
+}
+
+void SearchSignaturesWidget::adjust()
+{
+    updateSignaturesPath();
 }
 
 void SearchSignaturesWidget::on_pushButtonSave_clicked()

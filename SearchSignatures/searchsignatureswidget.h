@@ -47,7 +47,7 @@ public:
     struct OPTIONS
     {
         bool bMenu_Hex;
-        QString sUserSignature;
+        QString sUserSignature; // Not global !!!
     };
 
     explicit SearchSignaturesWidget(QWidget *pParent=nullptr);
@@ -59,6 +59,7 @@ public:
 
     void reload();
     bool getInitStatus();
+    void adjust();
 
 private slots:
     void on_pushButtonSave_clicked();

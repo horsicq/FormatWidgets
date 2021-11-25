@@ -48,6 +48,11 @@ void DialogSearchSignatures::setGlobal(XShortcuts *pShortcuts,XOptions *pXOption
     XShortcutsDialog::setGlobal(pShortcuts,pXOptions);
 }
 
+void DialogSearchSignatures::adjust()
+{
+    ui->searchSignaturesWidget->adjust();
+}
+
 void DialogSearchSignatures::on_pushButtonClose_clicked()
 {
     this->close();
