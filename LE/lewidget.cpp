@@ -99,6 +99,7 @@ void LEWidget::reload()
 
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_HEX,tr("Hex")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_DISASM,tr("Disasm")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_HASH,tr("Hash")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_STRINGS,tr("Strings")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_MEMORYMAP,tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_ENTROPY,tr("Entropy")));
@@ -333,6 +334,13 @@ void LEWidget::reloadData()
                 ui->widgetDisasm->setData(getDevice(),options);
             }
         }
+        else if(nType==SLE::TYPE_HASH)
+        {
+            if(!isInitPresent(sInit))
+            {
+                ui->widgetHash->setData(getDevice(),le.getFileType(),0,-1,true);
+            }
+        }
         else if(nType==SLE::TYPE_STRINGS)
         {
             if(!isInitPresent(sInit))
@@ -502,7 +510,7 @@ void LEWidget::reloadData()
             {
                 LEProcessData leProcessData(SLE::TYPE_OBJECTS,&g_tvModel[SLE::TYPE_OBJECTS],&le,nDataOffset,nDataSize);
 
-                ajustTableView(&leProcessData,&g_tvModel[SLE::TYPE_OBJECTS],ui->tableView_Objects);
+                ajustTableView(&leProcessData,&g_tvModel[SLE::TYPE_OBJECTS],ui->tableView_Objects,nullptr,false);
 
                 connect(ui->tableView_Objects->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_Objects_currentRowChanged(QModelIndex,QModelIndex)));
 
@@ -657,4 +665,34 @@ void LEWidget::on_toolButtonNext_clicked()
     setAddPageEnabled(false);
     ui->treeWidgetNavi->setCurrentItem(getNextPage());
     setAddPageEnabled(true);
+}
+
+void LEWidget::on_pushButtonHex_clicked()
+{
+    setTreeItem(ui->treeWidgetNavi,SLE::TYPE_HEX);
+}
+
+void LEWidget::on_pushButtonDisasm_clicked()
+{
+    setTreeItem(ui->treeWidgetNavi,SLE::TYPE_DISASM);
+}
+
+void LEWidget::on_pushButtonStrings_clicked()
+{
+    setTreeItem(ui->treeWidgetNavi,SLE::TYPE_STRINGS);
+}
+
+void LEWidget::on_pushButtonMemoryMap_clicked()
+{
+    setTreeItem(ui->treeWidgetNavi,SLE::TYPE_MEMORYMAP);
+}
+
+void LEWidget::on_pushButtonEntropy_clicked()
+{
+    setTreeItem(ui->treeWidgetNavi,SLE::TYPE_ENTROPY);
+}
+
+void LEWidget::on_pushButtonHeuristicScan_clicked()
+{
+    setTreeItem(ui->treeWidgetNavi,SLE::TYPE_HEURISTICSCAN);
 }

@@ -100,7 +100,7 @@ void PEProcessData::_process()
 
         QList<XPE::RELOCS_HEADER> listRelocsHeaders=g_pPE->getRelocsHeaders();
 
-        int nNumberOfRecords=listRelocsHeaders.count();
+        qint32 nNumberOfRecords=listRelocsHeaders.count();
 
         *g_ppModel=new QStandardItemModel(nNumberOfRecords,listLabels.count());
 
