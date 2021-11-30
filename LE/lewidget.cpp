@@ -101,6 +101,7 @@ void LEWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_DISASM,tr("Disasm")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_HASH,tr("Hash")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_STRINGS,tr("Strings")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_SIGNATURES,tr("Signatures")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_MEMORYMAP,tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_ENTROPY,tr("Entropy")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_HEURISTICSCAN,tr("Heuristic scan")));
@@ -295,6 +296,41 @@ void LEWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
     pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*15);
 }
 
+QString LEWidget::typeIdToString(int nType)
+{
+    Q_UNUSED(nType)
+
+    QString sResult;
+
+    // TODO
+
+    return sResult;
+}
+
+void LEWidget::_showInDisasmWindowAddress(qint64 nAddress)
+{
+    setTreeItem(ui->treeWidgetNavi,SLE::TYPE_DISASM);
+    ui->widgetDisasm->goToAddress(nAddress);
+}
+
+void LEWidget::_showInDisasmWindowOffset(qint64 nOffset)
+{
+    setTreeItem(ui->treeWidgetNavi,SLE::TYPE_DISASM);
+    ui->widgetDisasm->goToOffset(nOffset);
+}
+
+void LEWidget::_showInMemoryMapWindowOffset(qint64 nOffset)
+{
+    setTreeItem(ui->treeWidgetNavi,SLE::TYPE_MEMORYMAP);
+    ui->widgetMemoryMap->goToOffset(nOffset);
+}
+
+void LEWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
+{
+    setTreeItem(ui->treeWidgetNavi,SLE::TYPE_HEX);
+    ui->widgetHex->setSelection(nOffset,nSize);
+}
+
 void LEWidget::reloadData()
 {
     qint32 nType=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_TYPE).toInt();
@@ -354,6 +390,16 @@ void LEWidget::reloadData()
                 stringsOptions.bCStrings=true;
 
                 ui->widgetStrings->setData(getDevice(),stringsOptions,true);
+            }
+        }
+        else if(nType==SLE::TYPE_SIGNATURES)
+        {
+            if(!isInitPresent(sInit))
+            {
+                SearchSignaturesWidget::OPTIONS signaturesOptions={};
+                signaturesOptions.bMenu_Hex=true;
+
+                ui->widgetSignatures->setData(getDevice(),le.getFileType(),signaturesOptions,false);
             }
         }
         else if(nType==SLE::TYPE_MEMORYMAP)

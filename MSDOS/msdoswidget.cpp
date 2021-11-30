@@ -93,7 +93,9 @@ void MSDOSWidget::reload()
 
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_HEX,tr("Hex")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_DISASM,tr("Disasm")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_HASH,tr("Hash")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_STRINGS,tr("Strings")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_SIGNATURES,tr("Signatures")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_MEMORYMAP,tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_ENTROPY,tr("Entropy")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_HEURISTICSCAN,tr("Heuristic scan")));
@@ -203,6 +205,41 @@ void MSDOSWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
     pTableWidget->setColumnWidth(HEADER_COLUMN_INFO,nSymbolWidth*16);
 }
 
+QString MSDOSWidget::typeIdToString(int nType)
+{
+    Q_UNUSED(nType)
+
+    QString sResult;
+
+    // TODO
+
+    return sResult;
+}
+
+void MSDOSWidget::_showInDisasmWindowAddress(qint64 nAddress)
+{
+    setTreeItem(ui->treeWidgetNavi,SMSDOS::TYPE_DISASM);
+    ui->widgetDisasm->goToAddress(nAddress);
+}
+
+void MSDOSWidget::_showInDisasmWindowOffset(qint64 nOffset)
+{
+    setTreeItem(ui->treeWidgetNavi,SMSDOS::TYPE_DISASM);
+    ui->widgetDisasm->goToOffset(nOffset);
+}
+
+void MSDOSWidget::_showInMemoryMapWindowOffset(qint64 nOffset)
+{
+    setTreeItem(ui->treeWidgetNavi,SMSDOS::TYPE_MEMORYMAP);
+    ui->widgetMemoryMap->goToOffset(nOffset);
+}
+
+void MSDOSWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
+{
+    setTreeItem(ui->treeWidgetNavi,SMSDOS::TYPE_HEX);
+    ui->widgetHex->setSelection(nOffset,nSize);
+}
+
 void MSDOSWidget::reloadData()
 {
     int nType=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_TYPE).toInt();
@@ -240,6 +277,13 @@ void MSDOSWidget::reloadData()
                 ui->widgetDisasm->setData(getDevice(),options);
             }
         }
+        else if(nType==SMSDOS::TYPE_HASH)
+        {
+            if(!isInitPresent(sInit))
+            {
+                ui->widgetHash->setData(getDevice(),msdos.getFileType(),0,-1,true);
+            }
+        }
         else if(nType==SMSDOS::TYPE_STRINGS)
         {
             if(!isInitPresent(sInit))
@@ -253,6 +297,16 @@ void MSDOSWidget::reloadData()
                 stringsOptions.bCStrings=true;
 
                 ui->widgetStrings->setData(getDevice(),stringsOptions,true);
+            }
+        }
+        else if(nType==SMSDOS::TYPE_SIGNATURES)
+        {
+            if(!isInitPresent(sInit))
+            {
+                SearchSignaturesWidget::OPTIONS signaturesOptions={};
+                signaturesOptions.bMenu_Hex=true;
+
+                ui->widgetSignatures->setData(getDevice(),msdos.getFileType(),signaturesOptions,false);
             }
         }
         else if(nType==SMSDOS::TYPE_MEMORYMAP)
@@ -402,4 +456,34 @@ void MSDOSWidget::on_toolButtonNext_clicked()
     setAddPageEnabled(false);
     ui->treeWidgetNavi->setCurrentItem(getNextPage());
     setAddPageEnabled(true);
+}
+
+void MSDOSWidget::on_pushButtonHex_clicked()
+{
+    setTreeItem(ui->treeWidgetNavi,SMSDOS::TYPE_HEX);
+}
+
+void MSDOSWidget::on_pushButtonDisasm_clicked()
+{
+    setTreeItem(ui->treeWidgetNavi,SMSDOS::TYPE_DISASM);
+}
+
+void MSDOSWidget::on_pushButtonStrings_clicked()
+{
+    setTreeItem(ui->treeWidgetNavi,SMSDOS::TYPE_STRINGS);
+}
+
+void MSDOSWidget::on_pushButtonMemoryMap_clicked()
+{
+    setTreeItem(ui->treeWidgetNavi,SMSDOS::TYPE_MEMORYMAP);
+}
+
+void MSDOSWidget::on_pushButtonEntropy_clicked()
+{
+    setTreeItem(ui->treeWidgetNavi,SMSDOS::TYPE_ENTROPY);
+}
+
+void MSDOSWidget::on_pushButtonHeuristicScan_clicked()
+{
+    setTreeItem(ui->treeWidgetNavi,SMSDOS::TYPE_HEURISTICSCAN);
 }

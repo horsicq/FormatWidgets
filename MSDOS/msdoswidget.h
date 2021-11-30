@@ -48,6 +48,11 @@ protected:
     virtual void setReadonly(bool bState);
     virtual void blockSignals(bool bState);
     virtual void adjustHeaderTable(int nType,QTableWidget *pTableWidget);
+    virtual QString typeIdToString(int nType);
+    virtual void _showInDisasmWindowAddress(qint64 nAddress);
+    virtual void _showInDisasmWindowOffset(qint64 nOffset);
+    virtual void _showInMemoryMapWindowOffset(qint64 nOffset);
+    virtual void _showInHexWindow(qint64 nOffset,qint64 nSize);
 
 private slots:
     virtual void reloadData();
@@ -59,6 +64,12 @@ private slots:
     void on_tableWidget_DOS_HEADER_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
     void on_toolButtonPrev_clicked();
     void on_toolButtonNext_clicked();
+    void on_pushButtonHex_clicked();
+    void on_pushButtonDisasm_clicked();
+    void on_pushButtonStrings_clicked();
+    void on_pushButtonMemoryMap_clicked();
+    void on_pushButtonEntropy_clicked();
+    void on_pushButtonHeuristicScan_clicked();
 
 private:
     enum CB

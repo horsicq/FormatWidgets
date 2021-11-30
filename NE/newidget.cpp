@@ -97,7 +97,9 @@ void NEWidget::reload()
 
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_HEX,tr("Hex")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_DISASM,tr("Disasm")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_HASH,tr("Hash")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_STRINGS,tr("Strings")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_SIGNATURES,tr("Signatures")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_MEMORYMAP,tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_ENTROPY,tr("Entropy")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_HEURISTICSCAN,tr("Heuristic scan")));
@@ -301,6 +303,41 @@ void NEWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
     }
 }
 
+QString NEWidget::typeIdToString(int nType)
+{
+    Q_UNUSED(nType)
+
+    QString sResult;
+
+    // TODO
+
+    return sResult;
+}
+
+void NEWidget::_showInDisasmWindowAddress(qint64 nAddress)
+{
+    setTreeItem(ui->treeWidgetNavi,SNE::TYPE_DISASM);
+    ui->widgetDisasm->goToAddress(nAddress);
+}
+
+void NEWidget::_showInDisasmWindowOffset(qint64 nOffset)
+{
+    setTreeItem(ui->treeWidgetNavi,SNE::TYPE_DISASM);
+    ui->widgetDisasm->goToOffset(nOffset);
+}
+
+void NEWidget::_showInMemoryMapWindowOffset(qint64 nOffset)
+{
+    setTreeItem(ui->treeWidgetNavi,SNE::TYPE_MEMORYMAP);
+    ui->widgetMemoryMap->goToOffset(nOffset);
+}
+
+void NEWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
+{
+    setTreeItem(ui->treeWidgetNavi,SNE::TYPE_HEX);
+    ui->widgetHex->setSelection(nOffset,nSize);
+}
+
 void NEWidget::reloadData()
 {
     int nType=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_TYPE).toInt();
@@ -339,6 +376,13 @@ void NEWidget::reloadData()
                 ui->widgetDisasm->setData(getDevice(),options);
             }
         }
+        else if(nType==SNE::TYPE_HASH)
+        {
+            if(!isInitPresent(sInit))
+            {
+                ui->widgetHash->setData(getDevice(),ne.getFileType(),0,-1,true);
+            }
+        }
         else if(nType==SNE::TYPE_STRINGS)
         {
             if(!isInitPresent(sInit))
@@ -352,6 +396,16 @@ void NEWidget::reloadData()
                 stringsOptions.bCStrings=true;
 
                 ui->widgetStrings->setData(getDevice(),stringsOptions,true);
+            }
+        }
+        else if(nType==SNE::TYPE_SIGNATURES)
+        {
+            if(!isInitPresent(sInit))
+            {
+                SearchSignaturesWidget::OPTIONS signaturesOptions={};
+                signaturesOptions.bMenu_Hex=true;
+
+                ui->widgetSignatures->setData(getDevice(),ne.getFileType(),signaturesOptions,false);
             }
         }
         else if(nType==SNE::TYPE_MEMORYMAP)
@@ -545,7 +599,7 @@ void NEWidget::widgetValueChanged(quint64 nValue)
         }
 
         break;
-}
+    }
 }
 
 void NEWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent, QTreeWidgetItem *pPrevious)
@@ -611,4 +665,34 @@ void NEWidget::on_toolButtonNext_clicked()
     setAddPageEnabled(false);
     ui->treeWidgetNavi->setCurrentItem(getNextPage());
     setAddPageEnabled(true);
+}
+
+void NEWidget::on_pushButtonHex_clicked()
+{
+    setTreeItem(ui->treeWidgetNavi,SNE::TYPE_HEX);
+}
+
+void NEWidget::on_pushButtonDisasm_clicked()
+{
+    setTreeItem(ui->treeWidgetNavi,SNE::TYPE_DISASM);
+}
+
+void NEWidget::on_pushButtonStrings_clicked()
+{
+    setTreeItem(ui->treeWidgetNavi,SNE::TYPE_STRINGS);
+}
+
+void NEWidget::on_pushButtonMemoryMap_clicked()
+{
+    setTreeItem(ui->treeWidgetNavi,SNE::TYPE_MEMORYMAP);
+}
+
+void NEWidget::on_pushButtonEntropy_clicked()
+{
+    setTreeItem(ui->treeWidgetNavi,SNE::TYPE_ENTROPY);
+}
+
+void NEWidget::on_pushButtonHeuristicScan_clicked()
+{
+    setTreeItem(ui->treeWidgetNavi,SNE::TYPE_HEURISTICSCAN);
 }

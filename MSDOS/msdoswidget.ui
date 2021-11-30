@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>619</width>
-    <height>254</height>
+    <width>761</width>
+    <height>206</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -64,6 +64,48 @@
         </size>
        </property>
       </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButtonHex">
+       <property name="text">
+        <string>Hex</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButtonDisasm">
+       <property name="text">
+        <string>Disasm</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButtonStrings">
+       <property name="text">
+        <string>Strings</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButtonMemoryMap">
+       <property name="text">
+        <string>Memory map</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButtonEntropy">
+       <property name="text">
+        <string>Entropy</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButtonHeuristicScan">
+       <property name="text">
+        <string>Heuristic scan</string>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QCheckBox" name="checkBoxReadonly">
@@ -143,6 +185,25 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="page_Hash">
+       <layout class="QVBoxLayout" name="verticalLayout_10">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="XHashWidget" name="widgetHash" native="true"/>
+        </item>
+       </layout>
+      </widget>
       <widget class="QWidget" name="page_Strings">
        <layout class="QVBoxLayout" name="verticalLayout_5">
         <property name="leftMargin">
@@ -159,6 +220,25 @@
         </property>
         <item>
          <widget class="SearchStringsWidget" name="widgetStrings" native="true"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="page_Signatures">
+       <layout class="QVBoxLayout" name="verticalLayout_11">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="SearchSignaturesWidget" name="widgetSignatures" native="true"/>
         </item>
        </layout>
       </widget>
@@ -331,6 +411,18 @@
    <class>XMultiDisasmWidget</class>
    <extends>QWidget</extends>
    <header>xmultidisasmwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>XHashWidget</class>
+   <extends>QWidget</extends>
+   <header>xhashwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SearchSignaturesWidget</class>
+   <extends>QWidget</extends>
+   <header>searchsignatureswidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
