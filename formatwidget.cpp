@@ -457,6 +457,21 @@ void FormatWidget::showSectionDisasm(QTableView *pTableView)
     }
 }
 
+void FormatWidget::dumpSection(QTableView *pTableView)
+{
+    int nRow=pTableView->currentIndex().row();
+
+    if(nRow!=-1)
+    {
+        QModelIndex index=pTableView->selectionModel()->selectedIndexes().at(0);
+
+        qint64 nOffset=pTableView->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
+        qint64 nSize=pTableView->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
+
+        dumpRegion(nOffset,nSize);
+    }
+}
+
 qint64 FormatWidget::getTableViewItemSize(QTableView *pTableView)
 {
     qint64 nResult=0;
@@ -792,6 +807,19 @@ void FormatWidget::showEntropy(qint64 nOffset, qint64 nSize)
     dialogEntropy.setData(getDevice(),nOffset,nSize);
 
     dialogEntropy.exec();
+}
+
+void FormatWidget::dumpRegion(qint64 nOffset, qint64 nSize)
+{
+    QString sSaveFileName=XBinary::getResultFileName(getDevice(),QString("%1.bin").arg(tr("Dump")));
+    QString sFileName=QFileDialog::getSaveFileName(this,tr("Save dump"),sSaveFileName,QString("%1 (*.bin)").arg(tr("Raw data")));
+
+    if(!sFileName.isEmpty())
+    {
+        DialogDumpProcess dd(this,getDevice(),nOffset,nSize,sFileName,DumpProcess::DT_OFFSET);
+
+        dd.exec();
+    }
 }
 
 void FormatWidget::showDemangle(QString sString)

@@ -195,7 +195,7 @@ void FormatsWidget::reload()
                 ui->pushButtonMSDOSOverlay->setEnabled(msdos.isOverlayPresent());
             }
         }
-        else if(fileType==XBinary::FT_LE)
+        else if((fileType==XBinary::FT_LE)||(fileType==XBinary::FT_LX))
         {
             ui->stackedWidgetMain->setCurrentIndex(TABINFO_LE);
 

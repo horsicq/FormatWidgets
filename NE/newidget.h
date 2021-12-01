@@ -73,6 +73,7 @@ private slots:
     void on_pushButtonMemoryMap_clicked();
     void on_pushButtonEntropy_clicked();
     void on_pushButtonHeuristicScan_clicked();
+    void onTableView_SEGMENTS_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
 
 private:
     enum CB
@@ -106,6 +107,7 @@ private:
 
     InvWidget *g_invWidget[__INV_size];
     SubDevice *g_subDevice[SNE::__TYPE_size];
+    QStandardItemModel *g_tvModel[SNE::__TYPE_size];
 };
 
 #endif // NEWIDGET_H

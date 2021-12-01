@@ -94,3 +94,15 @@ const FW_DEF::HEADER_RECORD records[]=
     {ne_expver,             "ne_expver",        offsetof(XNE_DEF::IMAGE_OS2_HEADER,ne_expver),          2,      "WORD",         FW_DEF::VAL_TYPE_DATA},
 };
 }
+
+namespace N_NE_SEGMENT
+{
+const FW_DEF::HEADER_RECORD records[]=
+{
+    {dwFileOffset,          "dwFileOffset",         offsetof(XNE_DEF::NE_SEGMENT,dwFileOffset),         2,      "WORD",         FW_DEF::VAL_TYPE_OFFSET},
+    {dwFileSize,            "dwFileSize",           offsetof(XNE_DEF::NE_SEGMENT,dwFileSize),           2,      "WORD",         FW_DEF::VAL_TYPE_SIZE},
+    {dwFlags,               "dwFlags",              offsetof(XNE_DEF::NE_SEGMENT,dwFlags),              2,      "WORD",         FW_DEF::VAL_TYPE_FLAGS},
+    {dwMinAllocSize,        "dwMinAllocSize",       offsetof(XNE_DEF::NE_SEGMENT,dwMinAllocSize),       2,      "WORD",         FW_DEF::VAL_TYPE_SIZE},
+};
+}
+

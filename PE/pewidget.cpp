@@ -113,6 +113,7 @@ void PEWidget::clear()
     memset(lineEdit_NetHeader,0,sizeof lineEdit_NetHeader);
     memset(lineEdit_Net_Metadata,0,sizeof lineEdit_Net_Metadata);
     memset(lineEdit_EXPORT,0,sizeof lineEdit_EXPORT);
+    memset(lineEdit_Resources,0,sizeof lineEdit_Resources);
     memset(comboBox,0,sizeof comboBox);
     memset(pushButton,0,sizeof pushButton);
     memset(dateTimeEdit,0,sizeof dateTimeEdit);
@@ -763,6 +764,8 @@ void PEWidget::blockSignals(bool bState)
     _blockSignals((QObject **)lineEdit_EXPORT,N_IMAGE_EXPORT::__data_size,bState);
     _blockSignals((QObject **)lineEdit_NetHeader,N_IMAGE_NETHEADER::__data_size,bState);
     _blockSignals((QObject **)lineEdit_Net_Metadata,N_IMAGE_NET_METADATA::__data_size,bState);
+    _blockSignals((QObject **)lineEdit_Resources,N_IMAGE_RESOURCES::__data_size,bState);
+
 //    _blockSignals((QObject **)lineEdit_IMAGE_DIRECTORY_ADDRESS,N_IMAGE_DIRECORIES::__data_size,bState);
 //    _blockSignals((QObject **)lineEdit_IMAGE_DIRECTORY_SIZE,N_IMAGE_DIRECORIES::__data_size,bState);
 
@@ -895,9 +898,39 @@ void PEWidget::sectionHex()
     showSectionHex(ui->tableView_Sections);
 }
 
+void PEWidget::sectionDisasm()
+{
+    showSectionDisasm(ui->tableView_Sections);
+}
+
 void PEWidget::sectionEntropy()
 {
     showSectionEntropy(ui->tableView_Sections);
+}
+
+void PEWidget::sectionDump()
+{
+    dumpSection(ui->tableView_Sections);
+}
+
+void PEWidget::resourceHex()
+{
+    showSectionHex(ui->tableView_Resources);
+}
+
+void PEWidget::resourceDisasm()
+{
+    showSectionDisasm(ui->tableView_Resources);
+}
+
+void PEWidget::resourceEntropy()
+{
+    showSectionEntropy(ui->tableView_Resources);
+}
+
+void PEWidget::resourceDump()
+{
+    dumpSection(ui->tableView_Resources);
 }
 
 void PEWidget::reloadData()
@@ -1447,11 +1480,24 @@ void PEWidget::reloadData()
         {
             if(!isInitPresent(sInit))
             {
+                // Table
+                PEProcessData peProcessData(SPE::TYPE_RESOURCES,&tvModel[SPE::TYPE_RESOURCES],&pe,0,0,0,false);
+
+                ajustTableView(&peProcessData,&tvModel[SPE::TYPE_RESOURCES],ui->tableView_Resources,nullptr,false);
+
+                connect(ui->tableView_Resources->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_Resources_currentRowChanged(QModelIndex,QModelIndex)));
+
+                if(tvModel[SPE::TYPE_RESOURCES]->rowCount())
+                {
+                    ui->tableView_Resources->setCurrentIndex(ui->tableView_Resources->model()->index(0,0));
+                }
+
+                // Tree
                 createListTable(SPE::TYPE_RESOURCES,ui->tableWidget_Resources,N_IMAGE_RESOURCES::records,lineEdit_Resources,N_IMAGE_RESOURCES::__data_size);
 
-                PEProcessData peProcessData(SPE::TYPE_RESOURCES,&tvModel[SPE::TYPE_RESOURCES],&pe,0,0,0);
+                PEProcessData peProcessDataTree(SPE::TYPE_RESOURCES,&tvModel[SPE::TYPE_RESOURCES_TREE],&pe,0,0,0,true);
 
-                ajustTreeView(&peProcessData,&tvModel[SPE::TYPE_RESOURCES],ui->treeView_Resources);
+                ajustTreeView(&peProcessDataTree,&tvModel[SPE::TYPE_RESOURCES_TREE],ui->treeView_Resources);
 
                 connect(ui->treeView_Resources->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTreeView_Resources_currentRowChanged(QModelIndex,QModelIndex)));
             }
@@ -2040,10 +2086,20 @@ void PEWidget::on_tableView_Sections_customContextMenuRequested(const QPoint &po
         actionHex.setEnabled(bIsEnable);
         contextMenu.addAction(&actionHex);
 
+        QAction actionDisasm(tr("Disasm"),this);
+        connect(&actionDisasm, SIGNAL(triggered()), this, SLOT(sectionDisasm()));
+        actionDisasm.setEnabled(bIsEnable);
+        contextMenu.addAction(&actionDisasm);
+
         QAction actionEntropy(tr("Entropy"),this);
         connect(&actionEntropy, SIGNAL(triggered()), this, SLOT(sectionEntropy()));
         actionEntropy.setEnabled(bIsEnable);
         contextMenu.addAction(&actionEntropy);
+
+        QAction actionDump(tr("Dump to file"),this);
+        connect(&actionDump, SIGNAL(triggered()), this, SLOT(sectionDump()));
+        actionDump.setEnabled(bIsEnable);
+        contextMenu.addAction(&actionDump);
 
         contextMenu.exec(ui->tableView_Sections->viewport()->mapToGlobal(pos));
     }
@@ -2576,6 +2632,47 @@ void PEWidget::on_tableView_Debug_doubleClicked(const QModelIndex &index)
     Q_UNUSED(index)
 
     editDebugHeader();
+}
+
+void PEWidget::on_tableView_Resources_customContextMenuRequested(const QPoint &pos)
+{
+    int nRow=ui->tableView_Resources->currentIndex().row();
+
+    if(nRow!=-1)
+    {
+        bool bIsEnable=getTableViewItemSize(ui->tableView_Resources);
+
+        QMenu contextMenu(this);
+
+        QAction actionHex(tr("Hex"),this);
+        connect(&actionHex, SIGNAL(triggered()), this, SLOT(resourceHex()));
+        actionHex.setEnabled(bIsEnable);
+        contextMenu.addAction(&actionHex);
+
+        QAction actionDisasm(tr("Disasm"),this);
+        connect(&actionDisasm, SIGNAL(triggered()), this, SLOT(resourceDisasm()));
+        actionDisasm.setEnabled(bIsEnable);
+        contextMenu.addAction(&actionDisasm);
+
+        QAction actionEntropy(tr("Entropy"),this);
+        connect(&actionEntropy, SIGNAL(triggered()), this, SLOT(resourceEntropy()));
+        actionEntropy.setEnabled(bIsEnable);
+        contextMenu.addAction(&actionEntropy);
+
+        QAction actionDump(tr("Dump to file"),this);
+        connect(&actionDump, SIGNAL(triggered()), this, SLOT(resourceDump()));
+        actionDump.setEnabled(bIsEnable);
+        contextMenu.addAction(&actionDump);
+
+        contextMenu.exec(ui->tableView_Resources->viewport()->mapToGlobal(pos));
+    }
+}
+
+void PEWidget::onTableView_Resources_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
+    Q_UNUSED(previous)
+
+    loadHexSubdeviceByTableView(current.row(),SPE::TYPE_RESOURCES,ui->widgetHex_Resources,ui->tableView_Resources,&subDevice[SPE::TYPE_RESOURCES]);
 }
 
 void PEWidget::on_tableView_Exceptions_customContextMenuRequested(const QPoint &pos)

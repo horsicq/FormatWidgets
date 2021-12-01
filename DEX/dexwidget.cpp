@@ -56,6 +56,7 @@ void DEXWidget::setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions)
     ui->widgetEntropy->setGlobal(pShortcuts,pXOptions);
     ui->widgetHeuristicScan->setGlobal(pShortcuts,pXOptions);
     ui->widgetHash->setGlobal(pShortcuts,pXOptions);
+//    ui->widgetSignatures->setGlobal(pShortcuts,pXOptions);
     ui->widgetMemoryMap->setGlobal(pShortcuts,pXOptions);
     ui->widgetHex_Header->setGlobal(pShortcuts,pXOptions);
 

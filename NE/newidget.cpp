@@ -32,6 +32,7 @@ NEWidget::NEWidget(QWidget *pParent) :
     initSearchStringsWidget(ui->widgetStrings);
     initToolsWidget(ui->widgetHex_DOS_HEADER);
     initToolsWidget(ui->widgetHex_OS2_HEADER);
+    initToolsWidget(ui->widgetHex_SEGMENTS);
     initToolsWidget(ui->widgetHex_OVERLAY);
 }
 
@@ -52,12 +53,14 @@ void NEWidget::setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions)
     ui->widgetHex->setGlobal(pShortcuts,pXOptions);
     ui->widgetDisasm->setGlobal(pShortcuts,pXOptions);
     ui->widgetStrings->setGlobal(pShortcuts,pXOptions);
+    ui->widgetSignatures->setGlobal(pShortcuts,pXOptions);
     ui->widgetEntropy->setGlobal(pShortcuts,pXOptions);
     ui->widgetHeuristicScan->setGlobal(pShortcuts,pXOptions);
     ui->widgetMemoryMap->setGlobal(pShortcuts,pXOptions);
-//    ui->widgetHash->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHash->setGlobal(pShortcuts,pXOptions);
     ui->widgetHex_DOS_HEADER->setGlobal(pShortcuts,pXOptions);
     ui->widgetHex_OS2_HEADER->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHex_SEGMENTS->setGlobal(pShortcuts,pXOptions);
     ui->widgetHex_OVERLAY->setGlobal(pShortcuts,pXOptions);
 
     FormatWidget::setGlobal(pShortcuts,pXOptions);
@@ -72,6 +75,7 @@ void NEWidget::clear()
     memset(g_comboBox,0,sizeof g_comboBox);
     memset(g_invWidget,0,sizeof g_invWidget);
     memset(g_subDevice,0,sizeof g_subDevice);
+    memset(g_tvModel,0,sizeof g_tvModel);
 
     ui->checkBoxReadonly->setChecked(true);
 
@@ -560,6 +564,22 @@ void NEWidget::reloadData()
                 blockSignals(false);
             }
         }
+        else if(nType==SNE::TYPE_SEGMENTS)
+        {
+            if(!isInitPresent(sInit))
+            {
+                NEProcessData neProcessData(SNE::TYPE_SEGMENTS,&g_tvModel[SNE::TYPE_SEGMENTS],&ne,0,0);
+
+                ajustTableView(&neProcessData,&g_tvModel[SNE::TYPE_SEGMENTS],ui->tableView_SEGMENTS,nullptr,false);
+
+                connect(ui->tableView_SEGMENTS->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_SEGMENTS_currentRowChanged(QModelIndex,QModelIndex)));
+
+                if(g_tvModel[SNE::TYPE_SEGMENTS]->rowCount())
+                {
+                    ui->tableView_SEGMENTS->setCurrentIndex(ui->tableView_SEGMENTS->model()->index(0,0));
+                }
+            }
+        }
         else if(nType==SNE::TYPE_OVERLAY) // TODO Check
         {
             qint64 nOverLayOffset=ne.getOverlayOffset();
@@ -695,4 +715,12 @@ void NEWidget::on_pushButtonEntropy_clicked()
 void NEWidget::on_pushButtonHeuristicScan_clicked()
 {
     setTreeItem(ui->treeWidgetNavi,SNE::TYPE_HEURISTICSCAN);
+}
+
+void NEWidget::onTableView_SEGMENTS_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
+    Q_UNUSED(current)
+    Q_UNUSED(previous)
+
+    loadHexSubdeviceByTableView(current.row(),SNE::TYPE_SEGMENTS,ui->widgetHex_SEGMENTS,ui->tableView_SEGMENTS,&g_subDevice[SNE::TYPE_SEGMENTS]);
 }

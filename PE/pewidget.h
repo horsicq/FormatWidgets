@@ -63,7 +63,13 @@ private slots:
     void on_checkBoxReadonly_toggled(bool bChecked);
     void editSectionHeader();
     void sectionHex();
+    void sectionDisasm();
     void sectionEntropy();
+    void sectionDump();
+    void resourceHex();
+    void resourceDisasm();
+    void resourceEntropy();
+    void resourceDump();
     void reloadData();
     void loadImportLibrary(int nRow);
     void loadRelocs(int nRow);
@@ -106,6 +112,8 @@ private slots:
     void on_tableView_Debug_customContextMenuRequested(const QPoint &pos);
     void onTableView_Debug_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
     void on_tableView_Debug_doubleClicked(const QModelIndex &index);
+    void on_tableView_Resources_customContextMenuRequested(const QPoint &pos);
+    void onTableView_Resources_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
     void on_tableView_Exceptions_customContextMenuRequested(const QPoint &pos);
     void onTableView_Exceptions_currentRowChanged(const QModelIndex &current,const QModelIndex &previous);
     void on_tableView_Exceptions_doubleClicked(const QModelIndex &index);

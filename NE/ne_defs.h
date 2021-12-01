@@ -125,4 +125,18 @@ enum DATA
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 }
 
+namespace N_NE_SEGMENT
+{
+enum DATA
+{
+    dwFileOffset=0,
+    dwFileSize,
+    dwFlags,
+    dwMinAllocSize,
+    __data_size
+};
+
+extern const FW_DEF::HEADER_RECORD records[__data_size];
+}
+
 #endif // NE_DEFS_H

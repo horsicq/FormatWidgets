@@ -553,129 +553,121 @@ void PEProcessData::_process()
     }
     else if(g_nType==SPE::TYPE_RESOURCES)
     {
-        XPE::RESOURCE_HEADER rh=g_pPE->getResourceHeader();
-
-        *g_ppModel=new QStandardItemModel;
-
-        int nNumberOfPositions=rh.listPositions.count();
-
-        if(nNumberOfPositions)
+        if(g_varInfo.toBool())
         {
-            QStandardItem *pRoot=new QStandardItem();
-            pRoot->setText(tr("Resources"));
+            XPE::RESOURCE_HEADER rh=g_pPE->getResourceHeader();
 
-            (*g_ppModel)->appendRow(pRoot);
+            *g_ppModel=new QStandardItemModel;
 
-            for(int i=0;i<nNumberOfPositions;i++)
+            int nNumberOfPositions=rh.listPositions.count();
+
+            if(nNumberOfPositions)
             {
-                XPE::RESOURCE_POSITION pos=rh.listPositions.at(i);
-                QStandardItem *pPos=new QStandardItem;
-                QString sPosText;
+                QStandardItem *pRoot=new QStandardItem();
+                pRoot->setText(tr("Resources"));
 
-                if(pos.rin.bIsName)
+                (*g_ppModel)->appendRow(pRoot);
+
+                for(int i=0;i<nNumberOfPositions;i++)
                 {
-                    sPosText=QString("\"%1\"").arg(pos.rin.sName);
+                    XPE::RESOURCE_POSITION pos=rh.listPositions.at(i);
+                    QStandardItem *pPos=new QStandardItem;
+                    QString sPosText=XPE::resourceIdNameToString(pos.rin,0);
+
+                    pPos->setText(sPosText);
+
+                    pRoot->appendRow(pPos);
+
+                    int nNumberOfPositions=pos.listPositions.count();
+
+                    for(int j=0; (j<nNumberOfPositions)&&(isRun()); j++)
+                    {
+                        XPE::RESOURCE_POSITION subpos=rh.listPositions.at(i).listPositions.at(j);
+                        QStandardItem *pSubPos=new QStandardItem;
+                        QString sSubPosText=XPE::resourceIdNameToString(pos.rin,1);
+
+                        pSubPos->setText(sSubPosText);
+
+                        pPos->appendRow(pSubPos);
+
+                        int nNumberOfSubPositions=subpos.listPositions.count();
+
+                        for(int k=0; (k<nNumberOfSubPositions)&&(isRun()); k++)
+                        {
+                            XPE::RESOURCE_POSITION record1=rh.listPositions.at(i);
+                            XPE::RESOURCE_POSITION record2=rh.listPositions.at(i).listPositions.at(j);
+                            XPE::RESOURCE_POSITION record3=rh.listPositions.at(i).listPositions.at(j).listPositions.at(k);
+                            QStandardItem *pRecord=new QStandardItem;
+
+                            QString sRecordText1=XPE::resourceIdNameToString(record1.rin,-1);
+                            QString sRecordText2=XPE::resourceIdNameToString(record2.rin,-1);
+                            QString sRecordText3=XPE::resourceIdNameToString(record3.rin,-1);
+
+                            pRecord->setText(sRecordText3);
+
+                            pRecord->setData(sRecordText1,Qt::UserRole+FW_DEF::SECTION_DATA_VALUE1);
+                            pRecord->setData(sRecordText2,Qt::UserRole+FW_DEF::SECTION_DATA_VALUE2);
+                            pRecord->setData(sRecordText3,Qt::UserRole+FW_DEF::SECTION_DATA_VALUE3);
+                            pRecord->setData(record3.dataEntry.Size,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
+                            pRecord->setData(record3.dataEntry.OffsetToData,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS);
+
+                            if(g_pPE->isImage())
+                            {
+                                pRecord->setData(record3.dataEntry.OffsetToData,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+                            }
+                            else
+                            {
+                                pRecord->setData(record3.nDataOffset,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+                            }
+
+                            pSubPos->appendRow(pRecord);
+                        }
+                    }
+
+                    incValue();
                 }
-                else
-                {
-                    QMap<quint64, QString> mapRT=XPE::getResourceTypes();
-                    QString sType=mapRT.value(pos.rin.nID);
+            }
+        }
+        else
+        {
+            QList<QString> listLabels;
+            listLabels.append("");
+            listLabels.append("");
+            listLabels.append("");
+            listLabels.append("");
+            listLabels.append(tr("Address"));
+            listLabels.append(tr("Offset"));
+            listLabels.append(tr("Size"));
 
-                    if(sType!="")
-                    {
-                        sPosText=QString("%1(%2)").arg(sType,QString::number(pos.rin.nID));
-                    }
-                    else
-                    {
-                        sPosText=QString("%1").arg(pos.rin.nID);
-                    }
-                }
+            QList<XPE::RESOURCE_RECORD> listResources=g_pPE->getResources();
 
-                pPos->setText(sPosText);
+            qint32 nNumberOfRecords=listResources.count();
 
-                pRoot->appendRow(pPos);
+            *g_ppModel=new QStandardItemModel(nNumberOfRecords,listLabels.count());
 
-                int nNumberOfPositions=pos.listPositions.count();
+            setMaximum(nNumberOfRecords);
 
-                for(int j=0; (j<nNumberOfPositions)&&(isRun()); j++)
-                {
-                    XPE::RESOURCE_POSITION subpos=rh.listPositions.at(i).listPositions.at(j);
-                    QStandardItem *pSubPos=new QStandardItem;
-                    QString sSubPosText;
+            setHeader(*g_ppModel,&listLabels);
 
-                    if(subpos.rin.bIsName)
-                    {
-                        sSubPosText=QString("\"%1\"").arg(subpos.rin.sName);
-                    }
-                    else
-                    {
-                        sSubPosText=QString("%1").arg(subpos.rin.nID);
-                    }
+            for(qint32 i=0;(i<nNumberOfRecords)&&(isRun());i++)
+            {
+                QStandardItem *pItemNumber=new QStandardItem;
+                pItemNumber->setData(i,Qt::DisplayRole);
 
-                    pSubPos->setText(sSubPosText);
+                pItemNumber->setData(listResources.at(i).nAddress,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS);
+                pItemNumber->setData(listResources.at(i).nOffset,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+                pItemNumber->setData(listResources.at(i).nSize,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
 
-                    pPos->appendRow(pSubPos);
+                (*g_ppModel)->setItem(i,0,pItemNumber);
 
-                    int nNumberOfSubPositions=subpos.listPositions.count();
+//                (*g_ppModel)->setItem(i,1,pItemName);
+                (*g_ppModel)->setItem(i,1,          new QStandardItem(XPE::resourceIdNameToString(listResources.at(i).irin[0],0)));
+                (*g_ppModel)->setItem(i,2,          new QStandardItem(XPE::resourceIdNameToString(listResources.at(i).irin[1],1)));
+                (*g_ppModel)->setItem(i,3,          new QStandardItem(XPE::resourceIdNameToString(listResources.at(i).irin[2],2)));
 
-                    for(int k=0; (k<nNumberOfSubPositions)&&(isRun()); k++)
-                    {
-                        XPE::RESOURCE_POSITION record1=rh.listPositions.at(i);
-                        XPE::RESOURCE_POSITION record2=rh.listPositions.at(i).listPositions.at(j);
-                        XPE::RESOURCE_POSITION record3=rh.listPositions.at(i).listPositions.at(j).listPositions.at(k);
-                        QStandardItem *pRecord=new QStandardItem;
-
-                        QString sRecordText1;
-                        QString sRecordText2;
-                        QString sRecordText3;
-
-                        if(record1.rin.bIsName)
-                        {
-                            sRecordText1=QString("\"%1\"").arg(record1.rin.sName);
-                        }
-                        else
-                        {
-                            sRecordText1=QString("%1").arg(record1.rin.nID);
-                        }
-
-                        if(record2.rin.bIsName)
-                        {
-                            sRecordText2=QString("\"%1\"").arg(record2.rin.sName);
-                        }
-                        else
-                        {
-                            sRecordText2=QString("%1").arg(record2.rin.nID);
-                        }
-
-                        if(record3.rin.bIsName)
-                        {
-                            sRecordText3=QString("\"%1\"").arg(record3.rin.sName);
-                        }
-                        else
-                        {
-                            sRecordText3=QString("%1").arg(record3.rin.nID);
-                        }
-
-                        pRecord->setText(sRecordText3);
-
-                        pRecord->setData(sRecordText1,Qt::UserRole+FW_DEF::SECTION_DATA_VALUE1);
-                        pRecord->setData(sRecordText2,Qt::UserRole+FW_DEF::SECTION_DATA_VALUE2);
-                        pRecord->setData(sRecordText3,Qt::UserRole+FW_DEF::SECTION_DATA_VALUE3);
-                        pRecord->setData(record3.dataEntry.Size,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
-                        pRecord->setData(record3.dataEntry.OffsetToData,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS);
-
-                        if(g_pPE->isImage())
-                        {
-                            pRecord->setData(record3.dataEntry.OffsetToData,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
-                        }
-                        else
-                        {
-                            pRecord->setData(record3.nDataOffset,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
-                        }
-
-                        pSubPos->appendRow(pRecord);
-                    }
-                }
+                (*g_ppModel)->setItem(i,4,          new QStandardItem(XBinary::valueToHexEx(listResources.at(i).nAddress)));
+                (*g_ppModel)->setItem(i,5,          new QStandardItem(XBinary::valueToHexEx(listResources.at(i).nOffset)));
+                (*g_ppModel)->setItem(i,6,          new QStandardItem(XBinary::valueToHexEx(listResources.at(i).nSize)));
 
                 incValue();
             }
@@ -864,6 +856,16 @@ void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
     {
         pTableView->setColumnWidth(0,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT16,mode));
         pTableView->setColumnWidth(1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
+    }
+    else if(g_nType==SPE::TYPE_RESOURCES)
+    {
+        pTableView->setColumnWidth(0,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT16,mode));
+        pTableView->setColumnWidth(1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_STRINGSHORT,mode));
+        pTableView->setColumnWidth(2,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_STRINGSHORT,mode));
+        pTableView->setColumnWidth(3,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+        pTableView->setColumnWidth(4,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
+        pTableView->setColumnWidth(5,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+        pTableView->setColumnWidth(6,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
     }
 }
 

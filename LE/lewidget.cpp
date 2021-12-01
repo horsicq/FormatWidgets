@@ -53,10 +53,11 @@ void LEWidget::setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions)
     ui->widgetHex->setGlobal(pShortcuts,pXOptions);
     ui->widgetDisasm->setGlobal(pShortcuts,pXOptions);
     ui->widgetStrings->setGlobal(pShortcuts,pXOptions);
+    ui->widgetSignatures->setGlobal(pShortcuts,pXOptions);
     ui->widgetEntropy->setGlobal(pShortcuts,pXOptions);
     ui->widgetHeuristicScan->setGlobal(pShortcuts,pXOptions);
     ui->widgetMemoryMap->setGlobal(pShortcuts,pXOptions);
-//    ui->widgetHash->setGlobal(pShortcuts,pXOptions);
+    ui->widgetHash->setGlobal(pShortcuts,pXOptions);
     ui->widgetHex_DOS_HEADER->setGlobal(pShortcuts,pXOptions);
     ui->widgetHex_Object->setGlobal(pShortcuts,pXOptions);
     ui->widgetHex_OVERLAY->setGlobal(pShortcuts,pXOptions);

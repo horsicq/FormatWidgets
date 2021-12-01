@@ -82,6 +82,7 @@ void MACHWidget::setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions)
     ui->widgetHex->setGlobal(pShortcuts,pXOptions);
     ui->widgetDisasm->setGlobal(pShortcuts,pXOptions);
     ui->widgetStrings->setGlobal(pShortcuts,pXOptions);
+    ui->widgetSignatures->setGlobal(pShortcuts,pXOptions);
     ui->widgetEntropy->setGlobal(pShortcuts,pXOptions);
     ui->widgetHeuristicScan->setGlobal(pShortcuts,pXOptions);
     ui->widgetMemoryMap->setGlobal(pShortcuts,pXOptions);

@@ -140,6 +140,7 @@ public:
     void showSectionHex(QTableView *pTableView);
     void showSectionEntropy(QTableView *pTableView);
     void showSectionDisasm(QTableView *pTableView);
+    void dumpSection(QTableView *pTableView);
     qint64 getTableViewItemSize(QTableView *pTableView);
 
     void showTableViewDemangle(QTableView *pTableView,int nColumn);
@@ -218,6 +219,7 @@ public slots:
     void showInMemoryMapWindowOffset(qint64 nOffset);
     void showInHexWindow(qint64 nOffset,qint64 nSize);
     void showEntropy(qint64 nOffset,qint64 nSize);
+    void dumpRegion(qint64 nOffset,qint64 nSize);
     void showDemangle(QString sString);
     bool saveBackup();
 
