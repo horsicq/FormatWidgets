@@ -23,6 +23,7 @@
 
 #include "processdata.h"
 #include "pe_defs.h"
+#include "specabstract.h"
 
 class PEProcessData : public ProcessData
 {

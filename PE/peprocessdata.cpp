@@ -739,6 +739,41 @@ void PEProcessData::_process()
             }
         }
     }
+    else if(g_nType==SPE::TYPE_RICH)
+    {
+        QList<QString> listLabels;
+        listLabels.append("");
+        listLabels.append("Id");
+        listLabels.append(tr("Version"));
+        listLabels.append(tr("Count"));
+        listLabels.append("");
+
+        QList<XMSDOS::MS_RICH_RECORD> listRichSignatures=g_pPE->getRichSignatureRecords();
+
+        qint32 nNumberOfRecords=listRichSignatures.count();
+
+        *g_ppModel=new QStandardItemModel(nNumberOfRecords,listLabels.count());
+
+        setMaximum(nNumberOfRecords);
+
+        setHeader(*g_ppModel,&listLabels);
+
+        for(qint32 i=0;(i<nNumberOfRecords)&&(isRun());i++)
+        {
+            QStandardItem *pItemNumber=new QStandardItem;
+            pItemNumber->setData(i,Qt::DisplayRole);
+
+            (*g_ppModel)->setItem(i,0,pItemNumber);
+
+//                (*g_ppModel)->setItem(i,1,pItemName);
+            (*g_ppModel)->setItem(i,1,          new QStandardItem(XBinary::valueToHex(listRichSignatures.at(i).nId)));
+            (*g_ppModel)->setItem(i,2,          new QStandardItem(QString::number(listRichSignatures.at(i).nVersion)));
+            (*g_ppModel)->setItem(i,3,          new QStandardItem(QString::number(listRichSignatures.at(i).nCount)));
+            (*g_ppModel)->setItem(i,4,          new QStandardItem(SpecAbstract::getMsRichString(listRichSignatures.at(i).nId,listRichSignatures.at(i).nVersion)));
+
+            incValue();
+        }
+    }
 }
 
 void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
@@ -866,6 +901,14 @@ void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
         pTableView->setColumnWidth(4,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINTMODE,mode));
         pTableView->setColumnWidth(5,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
         pTableView->setColumnWidth(6,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT32,mode));
+    }
+    else if(g_nType==SPE::TYPE_RESOURCES)
+    {
+        pTableView->setColumnWidth(0,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT16,mode));
+        pTableView->setColumnWidth(1,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT16,mode));
+        pTableView->setColumnWidth(2,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT16,mode));
+        pTableView->setColumnWidth(3,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_UINT16,mode));
+        pTableView->setColumnWidth(4,FormatWidget::getColumnWidth(pWidget,FormatWidget::CW_STRINGLONG,mode));
     }
 }
 

@@ -160,7 +160,15 @@ void PEWidget::reload()
         pNtHeaders->addChild(pOptionalHeader);
         pOptionalHeader->addChild(createNewItem(SPE::TYPE_IMAGE_DIRECTORY_ENTRIES,"IMAGE_DIRECTORY_ENTRIES"));
 
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_SECTIONS,tr("Sections")));
+        if(pe.isRichSignaturePresent())
+        {
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_RICH,QString("RICH %1").arg(tr("Signature"))));
+        }
+
+        if(pe.getFileHeader_NumberOfSections())
+        {
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_SECTIONS,tr("Sections")));
+        }
 
         if(pe.isExportPresent())
         {
@@ -1381,6 +1389,15 @@ void PEWidget::reloadData()
                 }
 
                 blockSignals(false);
+            }
+        }
+        else if(nType==SPE::TYPE_RICH)
+        {
+            if(!isInitPresent(sInit))
+            {
+                PEProcessData peProcessData(SPE::TYPE_RICH,&tvModel[SPE::TYPE_RICH],&pe,0,0,0);
+
+                ajustTableView(&peProcessData,&tvModel[SPE::TYPE_RICH],ui->tableView_RICH,nullptr,true);
             }
         }
         else if(nType==SPE::TYPE_SECTIONS)
