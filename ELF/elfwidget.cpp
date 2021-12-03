@@ -810,9 +810,19 @@ void ELFWidget::sectionHex()
     showSectionHex(ui->tableView_Elf_Shdr);
 }
 
+void ELFWidget::sectionDisasm()
+{
+    showSectionDisasm(ui->tableView_Elf_Shdr);
+}
+
 void ELFWidget::sectionEntropy()
 {
     showSectionEntropy(ui->tableView_Elf_Shdr);
+}
+
+void ELFWidget::sectionDump()
+{
+    dumpSection(ui->tableView_Elf_Shdr);
 }
 
 void ELFWidget::editProgramHeader()
@@ -825,9 +835,19 @@ void ELFWidget::programHex()
     showSectionHex(ui->tableView_Elf_Phdr);
 }
 
+void ELFWidget::programDisasm()
+{
+    showSectionDisasm(ui->tableView_Elf_Phdr);
+}
+
 void ELFWidget::programEntropy()
 {
     showSectionEntropy(ui->tableView_Elf_Phdr);
+}
+
+void ELFWidget::programDump()
+{
+    dumpSection(ui->tableView_Elf_Phdr);
 }
 
 void ELFWidget::editDynamicArrayTag()
@@ -965,10 +985,20 @@ void ELFWidget::on_tableView_Elf_Shdr_customContextMenuRequested(const QPoint &p
         actionHex.setEnabled(bIsEnable);
         contextMenu.addAction(&actionHex);
 
+        QAction actionDisasm(tr("Disasm"),this);
+        connect(&actionDisasm, SIGNAL(triggered()), this, SLOT(sectionDisasm()));
+        actionDisasm.setEnabled(bIsEnable);
+        contextMenu.addAction(&actionDisasm);
+
         QAction actionEntropy(tr("Entropy"),this);
         connect(&actionEntropy, SIGNAL(triggered()), this, SLOT(sectionEntropy()));
         actionEntropy.setEnabled(bIsEnable);
         contextMenu.addAction(&actionEntropy);
+
+        QAction actionDump(tr("Dump to file"),this);
+        connect(&actionDump, SIGNAL(triggered()), this, SLOT(sectionDump()));
+        actionDump.setEnabled(bIsEnable);
+        contextMenu.addAction(&actionDump);
 
         contextMenu.exec(ui->tableView_Elf_Shdr->viewport()->mapToGlobal(pos));
     }
@@ -1047,10 +1077,20 @@ void ELFWidget::on_tableView_Elf_Phdr_customContextMenuRequested(const QPoint &p
         actionHex.setEnabled(bIsEnable);
         contextMenu.addAction(&actionHex);
 
+        QAction actionDisasm(tr("Disasm"),this);
+        connect(&actionDisasm, SIGNAL(triggered()), this, SLOT(programDisasm()));
+        actionDisasm.setEnabled(bIsEnable);
+        contextMenu.addAction(&actionDisasm);
+
         QAction actionEntropy(tr("Entropy"),this);
         connect(&actionEntropy, SIGNAL(triggered()), this, SLOT(programEntropy()));
         actionEntropy.setEnabled(bIsEnable);
         contextMenu.addAction(&actionEntropy);
+
+        QAction actionDump(tr("Dump to file"),this);
+        connect(&actionDump, SIGNAL(triggered()), this, SLOT(programDump()));
+        actionDump.setEnabled(bIsEnable);
+        contextMenu.addAction(&actionDump);
 
         contextMenu.exec(ui->tableView_Elf_Phdr->viewport()->mapToGlobal(pos));
     }
