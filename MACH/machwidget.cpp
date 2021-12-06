@@ -2934,7 +2934,7 @@ void MACHWidget::on_tableView_SymbolTable_doubleClicked(const QModelIndex &index
 
 void MACHWidget::on_tableView_SymbolTable_customContextMenuRequested(const QPoint &pos)
 {
-    int nRow=ui->tableView_SymbolTable->currentIndex().row();
+    qint32 nRow=ui->tableView_SymbolTable->currentIndex().row();
 
     if(nRow!=-1)
     {
