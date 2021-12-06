@@ -95,4 +95,6 @@ FORMS += \
 }
 
 DISTFILES += \
+    $$PWD/LICENSE \
+    $$PWD/README.md \
     $$PWD/formatwidget.cmake
