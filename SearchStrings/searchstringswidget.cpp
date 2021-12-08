@@ -238,7 +238,7 @@ void SearchStringsWidget::on_tableViewResult_customContextMenuRequested(const QP
 
 void SearchStringsWidget::_copyString()
 {
-    int nRow=ui->tableViewResult->currentIndex().row();
+    qint32 nRow=ui->tableViewResult->currentIndex().row();
 
     if((nRow!=-1)&&(g_pModel))
     {
