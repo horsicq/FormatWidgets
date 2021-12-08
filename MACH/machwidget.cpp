@@ -3115,7 +3115,7 @@ void MACHWidget::on_tableView_DYSYMTAB_indirectsyms_doubleClicked(const QModelIn
 
 void MACHWidget::on_tableView_DYSYMTAB_indirectsyms_customContextMenuRequested(const QPoint &pos)
 {
-    int nRow=ui->tableView_DYSYMTAB_indirectsyms->currentIndex().row();
+    qint32 nRow=ui->tableView_DYSYMTAB_indirectsyms->currentIndex().row();
 
     if(nRow!=-1)
     {
