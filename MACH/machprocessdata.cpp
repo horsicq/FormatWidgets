@@ -131,7 +131,7 @@ void MACHProcessData::_process()
 
         QList<XMACH::FVM_LIBRARY_RECORD> listLibraries=g_pXMACH->getFvmLibraryRecords(nType);
 
-        int nNumberOfRecords=listLibraries.count();
+        qint32 nNumberOfRecords=listLibraries.count();
 
         *g_ppModel=new QStandardItemModel(nNumberOfRecords,listLabels.count());
 
