@@ -3042,7 +3042,7 @@ void MACHWidget::on_tableView_DYSYMTAB_toc_doubleClicked(const QModelIndex &inde
 
 void MACHWidget::on_tableView_DYSYMTAB_toc_customContextMenuRequested(const QPoint &pos)
 {
-    int nRow=ui->tableView_DYSYMTAB_toc->currentIndex().row();
+    qint32 nRow=ui->tableView_DYSYMTAB_toc->currentIndex().row();
 
     if(nRow!=-1)
     {
