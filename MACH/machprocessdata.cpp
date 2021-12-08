@@ -356,7 +356,7 @@ void MACHProcessData::_process()
 
         QList<XMACH::NLIST_RECORD> listRecords=g_pXMACH->getNlistRecords();
 
-        int nNumberOfRecords=listRecords.count();
+        qint32 nNumberOfRecords=listRecords.count();
 
         *g_ppModel=new QStandardItemModel(nNumberOfRecords,listLabels.count());
 
