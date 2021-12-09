@@ -3034,3 +3034,8 @@ void PEWidget::disasmTLSCallback()
 {
     showSectionDisasm(ui->tableView_TLSCallbacks);
 }
+
+void PEWidget::on_pushButtonSaveSections_clicked()
+{
+    XShortcutsWidget::saveModel(ui->tableView_Sections->model(),XBinary::getResultFileName(getDevice(),QString("%1.txt").arg(tr("Sections"))));
+}

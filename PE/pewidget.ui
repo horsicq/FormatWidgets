@@ -9,14 +9,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>835</width>
-    <height>427</height>
+    <width>739</width>
+    <height>369</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string notr="true">PE</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout_42">
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -148,7 +148,7 @@
      </widget>
      <widget class="QStackedWidget" name="stackedWidgetInfo">
       <property name="currentIndex">
-       <number>13</number>
+       <number>14</number>
       </property>
       <widget class="QWidget" name="page_HEX">
        <layout class="QVBoxLayout" name="verticalLayout_13">
@@ -341,7 +341,7 @@
             <bool>false</bool>
            </attribute>
            <attribute name="verticalHeaderDefaultSectionSize">
-            <number>21</number>
+            <number>24</number>
            </attribute>
           </widget>
           <widget class="ToolsWidget" name="widgetHex_IMAGE_DOS_HEADER" native="true"/>
@@ -385,7 +385,7 @@
             <bool>false</bool>
            </attribute>
            <attribute name="verticalHeaderDefaultSectionSize">
-            <number>21</number>
+            <number>24</number>
            </attribute>
           </widget>
           <widget class="ToolsWidget" name="widgetHex_IMAGE_NT_HEADERS" native="true"/>
@@ -429,7 +429,7 @@
             <bool>false</bool>
            </attribute>
            <attribute name="verticalHeaderDefaultSectionSize">
-            <number>21</number>
+            <number>24</number>
            </attribute>
           </widget>
           <widget class="ToolsWidget" name="widgetHex_IMAGE_FILE_HEADER" native="true"/>
@@ -473,7 +473,7 @@
             <bool>false</bool>
            </attribute>
            <attribute name="verticalHeaderDefaultSectionSize">
-            <number>21</number>
+            <number>24</number>
            </attribute>
           </widget>
           <widget class="ToolsWidget" name="widgetHex_IMAGE_OPTIONAL_HEADER" native="true"/>
@@ -520,7 +520,7 @@
             <bool>false</bool>
            </attribute>
            <attribute name="verticalHeaderDefaultSectionSize">
-            <number>21</number>
+            <number>24</number>
            </attribute>
           </widget>
           <widget class="ToolsWidget" name="widgetHex_IMAGE_DIRECTORY_ENTRIES" native="true">
@@ -597,48 +597,73 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QSplitter" name="splitter_8">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <widget class="QTableView" name="tableView_Sections">
-           <property name="contextMenuPolicy">
-            <enum>Qt::CustomContextMenu</enum>
-           </property>
-           <property name="editTriggers">
-            <set>QAbstractItemView::NoEditTriggers</set>
-           </property>
-           <property name="selectionMode">
-            <enum>QAbstractItemView::SingleSelection</enum>
-           </property>
-           <property name="selectionBehavior">
-            <enum>QAbstractItemView::SelectRows</enum>
-           </property>
-           <property name="sortingEnabled">
-            <bool>false</bool>
-           </property>
-           <attribute name="horizontalHeaderDefaultSectionSize">
-            <number>57</number>
-           </attribute>
-           <attribute name="verticalHeaderVisible">
-            <bool>false</bool>
-           </attribute>
-           <attribute name="verticalHeaderMinimumSectionSize">
-            <number>20</number>
-           </attribute>
-           <attribute name="verticalHeaderDefaultSectionSize">
-            <number>20</number>
-           </attribute>
-          </widget>
-          <widget class="ToolsWidget" name="widgetHex_Section" native="true">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-          </widget>
-         </widget>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_6">
+            <item>
+             <spacer name="horizontalSpacer_6">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButtonSaveSections">
+              <property name="text">
+               <string>Save</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QTableView" name="tableView_Sections">
+            <property name="contextMenuPolicy">
+             <enum>Qt::CustomContextMenu</enum>
+            </property>
+            <property name="editTriggers">
+             <set>QAbstractItemView::NoEditTriggers</set>
+            </property>
+            <property name="selectionMode">
+             <enum>QAbstractItemView::SingleSelection</enum>
+            </property>
+            <property name="selectionBehavior">
+             <enum>QAbstractItemView::SelectRows</enum>
+            </property>
+            <property name="sortingEnabled">
+             <bool>false</bool>
+            </property>
+            <attribute name="horizontalHeaderDefaultSectionSize">
+             <number>57</number>
+            </attribute>
+            <attribute name="verticalHeaderVisible">
+             <bool>false</bool>
+            </attribute>
+            <attribute name="verticalHeaderMinimumSectionSize">
+             <number>20</number>
+            </attribute>
+            <attribute name="verticalHeaderDefaultSectionSize">
+             <number>20</number>
+            </attribute>
+           </widget>
+          </item>
+          <item>
+           <widget class="ToolsWidget" name="widgetHex_Section" native="true">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
        </layout>
       </widget>
@@ -684,7 +709,7 @@
             <bool>false</bool>
            </attribute>
            <attribute name="verticalHeaderDefaultSectionSize">
-            <number>21</number>
+            <number>24</number>
            </attribute>
           </widget>
           <widget class="QWidget" name="layoutWidget_X1">
@@ -1124,7 +1149,7 @@
            <bool>false</bool>
           </attribute>
           <attribute name="verticalHeaderDefaultSectionSize">
-           <number>21</number>
+           <number>24</number>
           </attribute>
          </widget>
         </item>
@@ -1418,7 +1443,7 @@
             <bool>false</bool>
            </attribute>
            <attribute name="verticalHeaderDefaultSectionSize">
-            <number>21</number>
+            <number>24</number>
            </attribute>
           </widget>
           <widget class="ToolsWidget" name="widgetHex_TLS" native="true"/>
@@ -1509,7 +1534,7 @@
             <bool>false</bool>
            </attribute>
            <attribute name="verticalHeaderDefaultSectionSize">
-            <number>21</number>
+            <number>24</number>
            </attribute>
           </widget>
           <widget class="ToolsWidget" name="widgetHex_LoadConfig" native="true"/>
@@ -1675,7 +1700,7 @@
             <bool>false</bool>
            </attribute>
            <attribute name="verticalHeaderDefaultSectionSize">
-            <number>21</number>
+            <number>24</number>
            </attribute>
           </widget>
           <widget class="ToolsWidget" name="widgetHex_NetHeader" native="true"/>
@@ -1719,7 +1744,7 @@
             <bool>false</bool>
            </attribute>
            <attribute name="verticalHeaderDefaultSectionSize">
-            <number>21</number>
+            <number>24</number>
            </attribute>
           </widget>
           <widget class="ToolsWidget" name="widgetHex_Net_Metadata" native="true"/>

@@ -145,6 +145,7 @@ private slots:
     void directoryEntropy();
     void on_tableView_TLSCallbacks_customContextMenuRequested(const QPoint &pos);
     void disasmTLSCallback();
+    void on_pushButtonSaveSections_clicked();
 
 private:
     enum CB

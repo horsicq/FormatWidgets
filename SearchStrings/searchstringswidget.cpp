@@ -159,13 +159,7 @@ void SearchStringsWidget::on_pushButtonSave_clicked()
 {
     if(g_pModel)
     {
-        QString sFileName=XBinary::getResultFileName(g_pDevice,QString("%1.txt").arg(tr("Strings")));
-        sFileName=QFileDialog::getSaveFileName(this, tr("Save file"),sFileName, QString("%1 (*.txt);;%2 (*)").arg(tr("Text files"),tr("All files")));
-
-        if(!sFileName.isEmpty())
-        {
-            XOptions::saveModel(g_pModel,sFileName);
-        }
+        XShortcutsWidget::saveModel(g_pModel,XBinary::getResultFileName(g_pDevice,QString("%1.txt").arg(tr("Strings"))));
     }
 }
 
