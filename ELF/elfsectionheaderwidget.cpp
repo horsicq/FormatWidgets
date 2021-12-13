@@ -168,11 +168,23 @@ FormatWidget::SV ELFSectionHeaderWidget::_setValue(QVariant vValue, int nStype, 
             switch(nStype)
             {
                 case SELF::TYPE_Elf_Shdr:
-                    switch(nNdata)
+                    if(elf.is64())
                     {
-                        case N_Elf_Shdr::sh_name:       addComment(ui->tableWidget,N_Elf_Shdr::sh_name,HEADER_COLUMN_COMMENT,elf.getStringFromIndex(g_nStringTableOffset,g_nStringTableSize,nValue));   break;
-                        case N_Elf_Shdr::sh_type:       g_ppComboBox[N_Elf_Shdr::sh_type]->setValue(nValue);                  break;
-                        case N_Elf_Shdr::sh_flags:      g_ppComboBox[N_Elf_Shdr::sh_flags]->setValue(nValue);                 break;
+                        switch(nNdata)
+                        {
+                            case N_Elf_Shdr::sh_name:       addComment(ui->tableWidget,N_Elf_Shdr::sh_name,HEADER_COLUMN_COMMENT,elf.getStringFromIndex(g_nStringTableOffset,g_nStringTableSize,nValue));   break;
+                            case N_Elf_Shdr::sh_type:       g_ppComboBox[N_Elf_Shdr::CB_TYPE]->setValue(nValue);                  break;
+                            case N_Elf_Shdr::sh_flags:      g_ppComboBox[N_Elf_Shdr::CB_FLAGS]->setValue(nValue);                 break;
+                        }
+                    }
+                    else
+                    {
+                        switch(nNdata)
+                        {
+                            case N_Elf_Shdr::sh_name:       addComment(ui->tableWidget,N_Elf_Shdr::sh_name,HEADER_COLUMN_COMMENT,elf.getStringFromIndex(g_nStringTableOffset,g_nStringTableSize,nValue));   break;
+                            case N_Elf_Shdr::sh_type:       g_ppComboBox[N_Elf_Shdr::CB_TYPE]->setValue(nValue);                  break;
+                            case N_Elf_Shdr::sh_flags:      g_ppComboBox[N_Elf_Shdr::CB_FLAGS]->setValue(nValue);                 break;
+                        }
                     }
 
                     break;
@@ -182,16 +194,16 @@ FormatWidget::SV ELFSectionHeaderWidget::_setValue(QVariant vValue, int nStype, 
                     {
                         switch(nNdata)
                         {
-                            case N_Elf_Phdr64::p_type:      g_ppComboBox[N_Elf_Phdr64::p_type]->setValue(nValue);                 break;
-                            case N_Elf_Phdr64::p_flags:     g_ppComboBox[N_Elf_Phdr64::p_flags]->setValue(nValue);                break;
+                            case N_Elf_Phdr64::p_type:      g_ppComboBox[N_Elf_Phdr64::CB_TYPE]->setValue(nValue);                 break;
+                            case N_Elf_Phdr64::p_flags:     g_ppComboBox[N_Elf_Phdr64::CB_FLAGS]->setValue(nValue);                break;
                         }
                     }
                     else
                     {
                         switch(nNdata)
                         {
-                            case N_Elf_Phdr32::p_type:      g_ppComboBox[N_Elf_Phdr32::p_type]->setValue(nValue);                 break;
-                            case N_Elf_Phdr32::p_flags:     g_ppComboBox[N_Elf_Phdr32::p_flags]->setValue(nValue);                break;
+                            case N_Elf_Phdr32::p_type:      g_ppComboBox[N_Elf_Phdr32::CB_TYPE]->setValue(nValue);                 break;
+                            case N_Elf_Phdr32::p_flags:     g_ppComboBox[N_Elf_Phdr32::CB_FLAGS]->setValue(nValue);                break;
                         }
                     }
 
@@ -200,7 +212,7 @@ FormatWidget::SV ELFSectionHeaderWidget::_setValue(QVariant vValue, int nStype, 
                 case SELF::TYPE_Elf_DynamicArrayTags:
                     switch(nNdata)
                     {
-                        case N_Elf_DynamicArrayTags::d_tag:     g_ppComboBox[N_Elf_DynamicArrayTags::d_tag]->setValue(nValue);        break;
+                        case N_Elf_DynamicArrayTags::d_tag:     g_ppComboBox[N_Elf_DynamicArrayTags::CB_TAG]->setValue(nValue);        break;
                     }
 
                     break;
@@ -725,10 +737,21 @@ void ELFSectionHeaderWidget::widgetValueChanged(quint64 nValue)
         switch(nStype)
         {
             case SELF::TYPE_Elf_Shdr:
-                switch(nNdata)
+                if(bIs64)
                 {
-                    case N_Elf_Shdr::sh_type:       g_ppLinedEdit[N_Elf_Shdr::sh_type]->setValue((quint32)nValue);                                break;
-                    case N_Elf_Shdr::sh_flags:      g_ppLinedEdit[N_Elf_Shdr::sh_flags]->setValue(bIs64?((quint64)nValue):((quint32)nValue));     break;
+                    switch(nNdata)
+                    {
+                        case N_Elf_Shdr::sh_type:       g_ppLinedEdit[N_Elf_Shdr::sh_type]->setValue((quint32)nValue);          break;
+                        case N_Elf_Shdr::sh_flags:      g_ppLinedEdit[N_Elf_Shdr::sh_flags]->setValue((quint64)nValue);         break;
+                    }
+                }
+                else
+                {
+                    switch(nNdata)
+                    {
+                        case N_Elf_Shdr::sh_type:       g_ppLinedEdit[N_Elf_Shdr::sh_type]->setValue((quint32)nValue);          break;
+                        case N_Elf_Shdr::sh_flags:      g_ppLinedEdit[N_Elf_Shdr::sh_flags]->setValue((quint32)nValue);         break;
+                    }
                 }
                 break;
 
