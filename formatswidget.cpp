@@ -195,7 +195,7 @@ void FormatsWidget::reload()
                 ui->pushButtonMSDOSOverlay->setEnabled(msdos.isOverlayPresent());
             }
         }
-        else if((fileType==XBinary::FT_LE)||(fileType==XBinary::FT_LX))
+        else if((fileType==XBinary::FT_LE)||(fileType==XBinary::FT_LX)) // mb TODO LX
         {
             ui->stackedWidgetMain->setCurrentIndex(TABINFO_LE);
 
@@ -724,6 +724,8 @@ FormatsWidget::SE FormatsWidget::getScanEngine(FormatsWidget::SE seIndex)
         tabResult=SE_DIE;
 
         XBinary::FT fileType=getCurrentFileType();
+
+        // TODO !!!
 
         if( (fileType==XBinary::FT_DEX)||
             (fileType==XBinary::FT_ELF32)||
