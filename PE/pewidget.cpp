@@ -1477,9 +1477,10 @@ void PEWidget::reloadData()
             if(!isInitPresent(sInit))
             {
                 XBinary::_MEMORY_MAP memoryMap=pe.getMemoryMap();
+                QList<XPE::IMPORT_RECORD> listImportRecords=pe.getImportRecords(&memoryMap);
 
-                ui->lineEditHash64->setValue(pe.getImportHash64(&memoryMap));
-                ui->lineEditHash32->setValue(pe.getImportHash32(&memoryMap));
+                ui->lineEditHash64->setValue(pe.getImportHash64(&listImportRecords));
+                ui->lineEditHash32->setValue(pe.getImportHash32(&listImportRecords));
 
                 PEProcessData peProcessData(SPE::TYPE_IMPORT,&tvModel[SPE::TYPE_IMPORT],&pe,0,0,0);
 
