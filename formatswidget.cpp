@@ -118,13 +118,31 @@ void FormatsWidget::reload()
             mode=XBinary::getWidthModeFromSize(file.size());
         }
 
+        if(memoryMap.fileType==XBinary::FT_MSDOS)
+        {
+            ui->lineEditBaseAddress->setColon(true);
+            ui->lineEditEntryPoint->setColon(true);
+        }
+        else
+        {
+            ui->lineEditBaseAddress->setColon(false);
+            ui->lineEditEntryPoint->setColon(false);
+        }
+
         if(mode==XBinary::MODE_8)
         {
             ui->lineEditBaseAddress->setValue((quint8)memoryMap.nModuleAddress);
         }
         else if(mode==XBinary::MODE_16)
         {
-            ui->lineEditBaseAddress->setValue((quint16)memoryMap.nModuleAddress);
+            if(memoryMap.fileType==XBinary::FT_MSDOS)
+            {
+                ui->lineEditBaseAddress->setValue((quint32)memoryMap.nModuleAddress);
+            }
+            else
+            {
+                ui->lineEditBaseAddress->setValue((quint16)memoryMap.nModuleAddress);
+            }
         }
         else if((mode==XBinary::MODE_16SEG)||(mode==XBinary::MODE_32))
         {
@@ -190,7 +208,7 @@ void FormatsWidget::reload()
 
             if(msdos.isValid())
             {
-                ui->lineEditEntryPoint->setValue((quint16)msdos.getEntryPointAddress());
+                ui->lineEditEntryPoint->setValue((quint32)msdos.getEntryPointAddress());
 
                 ui->pushButtonMSDOSOverlay->setEnabled(msdos.isOverlayPresent());
             }
