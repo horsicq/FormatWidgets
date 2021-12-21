@@ -94,6 +94,11 @@ FORMS += \
     include($$PWD/../XDemangleWidget/xdemanglewidget.pri)
 }
 
+!contains(XCONFIG, xfileinfowidget) {
+    XCONFIG += xfileinfowidget
+    include($$PWD/../XFileInfo/xfileinfowidget.pri)
+}
+
 DISTFILES += \
     $$PWD/LICENSE \
     $$PWD/README.md \

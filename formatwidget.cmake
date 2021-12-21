@@ -13,6 +13,7 @@ include(${CMAKE_CURRENT_LIST_DIR}/../StaticScan/heurwidget.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../XHashWidget/xhashwidget.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../XDisasmView/xdisasmview.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../XDemangleWidget/xdemanglewidget.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/../XFileInfo/xfileinfowidget.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../Controls/xdatetimeeditx.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../Formats/xformats.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../XDEX/xdex.cmake)
@@ -32,6 +33,7 @@ set(FORMATWIDGET_SOURCES
     ${XHASHWIDGET_SOURCES}
     ${XDISASMVIEW_SOURCES}
     ${XDEMANGLEWIDGET_SOURCES}
+    ${XFILEINFOWIDGET_SOURCES}
     ${XDATETIMEEDITX_SOURCES}
     ${XFORMATS_SOURCES}
     ${XDEX_SOURCES}
