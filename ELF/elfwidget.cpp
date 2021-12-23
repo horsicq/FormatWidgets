@@ -102,6 +102,7 @@ void ELFWidget::reload()
     {
         setFileType(elf.getFileType());
 
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_INFO,tr("Info")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_HEX,tr("Hex")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_DISASM,tr("Disasm")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_HASH,tr("Hash")));
@@ -116,7 +117,7 @@ void ELFWidget::reload()
 
         if(listSectionHeaders.count())
         {
-            QTreeWidgetItem *pItemSections=createNewItem(SELF::TYPE_Elf_Shdr,"Sections");
+            QTreeWidgetItem *pItemSections=createNewItem(SELF::TYPE_Elf_Shdr,tr("Sections"));
 
             ui->treeWidgetNavi->addTopLevelItem(pItemSections);
 
@@ -297,6 +298,13 @@ void ELFWidget::reloadData()
     if(elf.isValid())
     {
         if(nType==SELF::TYPE_HEX)
+        {
+            if(!isInitPresent(sInit))
+            {
+                // TODO
+            }
+        }
+        else if(nType==SELF::TYPE_HEX)
         {
             if(!isInitPresent(sInit))
             {
@@ -1223,4 +1231,14 @@ void ELFWidget::on_toolButtonNext_clicked()
     setAddPageEnabled(false);
     ui->treeWidgetNavi->setCurrentItem(getNextPage());
     setAddPageEnabled(true);
+}
+
+void ELFWidget::on_pushButtonSaveSections_clicked()
+{
+    XShortcutsWidget::saveModel(ui->tableView_Elf_Shdr->model(),XBinary::getResultFileName(getDevice(),QString("%1.txt").arg(tr("Sections"))));
+}
+
+void ELFWidget::on_pushButtonSavePrograms_clicked()
+{
+    XShortcutsWidget::saveModel(ui->tableView_Elf_Phdr->model(),XBinary::getResultFileName(getDevice(),QString("%1.txt").arg(QString("Programs"))));
 }

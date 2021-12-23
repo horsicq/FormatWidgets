@@ -114,6 +114,9 @@ private slots:
     void on_toolButtonPrev_clicked();
     void on_toolButtonNext_clicked();
 
+    void on_pushButtonSaveSections_clicked();
+    void on_pushButtonSavePrograms_clicked();
+
 private:
     // TODO rename
     enum CB
