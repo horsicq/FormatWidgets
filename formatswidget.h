@@ -69,6 +69,7 @@ public:
 
     explicit FormatsWidget(QWidget *pParent=nullptr);
     ~FormatsWidget();
+
     void setFileName(QString sFileName,bool bScan);
     void setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions);
     void adjust();
