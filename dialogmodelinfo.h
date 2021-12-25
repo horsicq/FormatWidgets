@@ -38,6 +38,7 @@ class DialogModelInfo : public QDialog
 public:
     explicit DialogModelInfo(QWidget *pParent=nullptr);
     ~DialogModelInfo();
+
     void setData(QIODevice *pDevice,QString sTitle,QStandardItemModel *pModel);
 
 private slots:
