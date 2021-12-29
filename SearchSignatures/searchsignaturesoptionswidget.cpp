@@ -45,6 +45,11 @@ void SearchSignaturesOptionsWidget::save()
     g_pOptions->getLineEdit(ui->lineEditSearchSignaturesPath,XOptions::ID_SIGNATURES_PATH);
 }
 
+void SearchSignaturesOptionsWidget::setDefaultValues(XOptions *pOptions)
+{
+    pOptions->addID(XOptions::ID_SIGNATURES_PATH,"$data/signatures");
+}
+
 void SearchSignaturesOptionsWidget::on_toolButtonSearchSignaturesPath_clicked()
 {
     QString sText=ui->lineEditSearchSignaturesPath->text();

@@ -297,7 +297,7 @@ void ELFWidget::reloadData()
 
     if(elf.isValid())
     {
-        if(nType==SELF::TYPE_HEX)
+        if(nType==SELF::TYPE_INFO)
         {
             if(!isInitPresent(sInit))
             {

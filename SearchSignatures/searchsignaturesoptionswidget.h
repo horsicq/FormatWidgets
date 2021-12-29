@@ -40,6 +40,8 @@ public:
     void setOptions(XOptions *pOptions);
     void save();
 
+    static void setDefaultValues(XOptions *pOptions);
+
 private slots:
     void on_toolButtonSearchSignaturesPath_clicked();
 
