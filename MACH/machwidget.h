@@ -40,7 +40,6 @@ public:
     MACHWidget(QWidget *pParent=nullptr);
     MACHWidget(QIODevice *pDevice,FW_DEF::OPTIONS options,QWidget *pParent=nullptr);
     ~MACHWidget();
-    void setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions);
 
     virtual void clear();
     virtual void cleanup();

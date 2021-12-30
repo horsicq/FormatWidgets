@@ -27,42 +27,7 @@ MACHWidget::MACHWidget(QWidget *pParent) :
 {
     ui->setupUi(this);
 
-    initHexViewWidget(ui->widgetHex);
-    initSearchSignaturesWidget(ui->widgetSignatures);
-    initSearchStringsWidget(ui->widgetStrings);
-    initToolsWidget(ui->widgetHex_commands);
-    initToolsWidget(ui->widgetHex_mach_header);
-    initToolsWidget(ui->widgetHex_sections);
-    initToolsWidget(ui->widgetHex_segments);
-    initToolsWidget(ui->widgetHex_code_signature);
-    initToolsWidget(ui->widgetHex_data_in_code);
-    initToolsWidget(ui->widgetHex_dyld_info_only);
-    initToolsWidget(ui->widgetHex_dysymtab);
-    initToolsWidget(ui->widgetHex_encryption_info);
-    initToolsWidget(ui->widgetHex_function_starts);
-    initToolsWidget(ui->widgetHex_id_library);
-    initToolsWidget(ui->widgetHex_libraries);
-    initToolsWidget(ui->widgetHex_main);
-    initToolsWidget(ui->widgetHex_source_version);
-    initToolsWidget(ui->widgetHex_StringTable);
-    initToolsWidget(ui->widgetHex_symtab);
-    initToolsWidget(ui->widgetHex_unix_thread);
-    initToolsWidget(ui->widgetHex_unix_thread_arm_32);
-    initToolsWidget(ui->widgetHex_unix_thread_arm_64);
-    initToolsWidget(ui->widgetHex_unix_thread_m68k_32);
-    initToolsWidget(ui->widgetHex_unix_thread_ppc_32);
-    initToolsWidget(ui->widgetHex_unix_thread_x86_32);
-    initToolsWidget(ui->widgetHex_unix_thread_x86_64);
-    initToolsWidget(ui->widgetHex_version_min);
-    initToolsWidget(ui->widgetHex_build_version);
-    initToolsWidget(ui->widgetHex_weak_libraries);
-    initToolsWidget(ui->widgetHex_DYLD_INFO_rebase);
-    initToolsWidget(ui->widgetHex_DYLD_INFO_bind);
-    initToolsWidget(ui->widgetHex_DYLD_INFO_weak_bind);
-    initToolsWidget(ui->widgetHex_DYLD_INFO_lazy_bind);
-    initToolsWidget(ui->widgetHex_DYLD_INFO_export);
-    initToolsWidget(ui->widgetHex_LOADFVMLIB);
-    initToolsWidget(ui->widgetHex_IDFVMLIB);
+    initWidget();
 }
 
 MACHWidget::MACHWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) :
@@ -75,53 +40,6 @@ MACHWidget::MACHWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pPa
 MACHWidget::~MACHWidget()
 {
     delete ui;
-}
-
-void MACHWidget::setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions)
-{
-    ui->widgetHex->setGlobal(pShortcuts,pXOptions);
-    ui->widgetDisasm->setGlobal(pShortcuts,pXOptions);
-    ui->widgetStrings->setGlobal(pShortcuts,pXOptions);
-    ui->widgetSignatures->setGlobal(pShortcuts,pXOptions);
-    ui->widgetEntropy->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHeuristicScan->setGlobal(pShortcuts,pXOptions);
-    ui->widgetMemoryMap->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHash->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_commands->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_mach_header->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_sections->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_segments->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_code_signature->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_data_in_code->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_dyld_info_only->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_dysymtab->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_encryption_info->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_function_starts->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_id_library->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_libraries->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_main->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_source_version->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_StringTable->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_symtab->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_unix_thread->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_unix_thread_arm_32->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_unix_thread_arm_64->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_unix_thread_m68k_32->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_unix_thread_ppc_32->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_unix_thread_x86_32->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_unix_thread_x86_64->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_version_min->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_build_version->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_weak_libraries->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_DYLD_INFO_rebase->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_DYLD_INFO_bind->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_DYLD_INFO_weak_bind->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_DYLD_INFO_lazy_bind->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_DYLD_INFO_export->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_LOADFVMLIB->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_IDFVMLIB->setGlobal(pShortcuts,pXOptions);
-
-    FormatWidget::setGlobal(pShortcuts,pXOptions);
 }
 
 void MACHWidget::clear()

@@ -69,7 +69,7 @@ void FormatsWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
     XShortcutsWidget::setGlobal(pShortcuts,pXOptions);
 }
 
-void FormatsWidget::adjust()
+void FormatsWidget::adjustView()
 {
     QString sScanEngine=getGlobalOptions()->getScanEngine();
 
@@ -82,8 +82,10 @@ void FormatsWidget::adjust()
         ui->comboBoxScanEngine->setCurrentIndex(SE_NFD);
     }
 
-    ui->pageScanDIE->adjust();
-    ui->pageScanNFD->adjust();
+    ui->pageScanDIE->adjustView();
+    ui->pageScanNFD->adjustView();
+
+    XShortcutsWidget::adjustView();
 }
 
 FormatsWidget::~FormatsWidget()

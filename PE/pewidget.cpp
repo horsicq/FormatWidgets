@@ -27,24 +27,7 @@ PEWidget::PEWidget(QWidget *pParent) :
 {
     ui->setupUi(this);
 
-    initHexViewWidget(ui->widgetHex);
-    initSearchSignaturesWidget(ui->widgetSignatures);
-    initSearchStringsWidget(ui->widgetStrings);
-    initToolsWidget(ui->widgetHex_Debug);
-    initToolsWidget(ui->widgetHex_Exception);
-    initToolsWidget(ui->widgetHex_IMAGE_DIRECTORY_ENTRIES);
-    initToolsWidget(ui->widgetHex_IMAGE_DOS_HEADER);
-    initToolsWidget(ui->widgetHex_IMAGE_FILE_HEADER);
-    initToolsWidget(ui->widgetHex_IMAGE_NT_HEADERS);
-    initToolsWidget(ui->widgetHex_IMAGE_OPTIONAL_HEADER);
-    initToolsWidget(ui->widgetHex_LoadConfig);
-    initToolsWidget(ui->widgetHex_NetHeader);
-    initToolsWidget(ui->widgetHex_Net_Metadata);
-    initToolsWidget(ui->widgetHex_Net_Metadata_Stream);
-    initToolsWidget(ui->widgetHex_Overlay);
-    initToolsWidget(ui->widgetHex_Resources);
-    initToolsWidget(ui->widgetHex_Section);
-    initToolsWidget(ui->widgetHex_TLS);
+    initWidget();
 
     ui->groupBoxHash32->setTitle(QString("%1 32").arg(tr("Hash")));
     ui->groupBoxHash64->setTitle(QString("%1 64").arg(tr("Hash")));
@@ -68,35 +51,6 @@ PEWidget::PEWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent
 PEWidget::~PEWidget()
 {
     delete ui;
-}
-
-void PEWidget::setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions)
-{
-    ui->widgetHex->setGlobal(pShortcuts,pXOptions);
-    ui->widgetDisasm->setGlobal(pShortcuts,pXOptions);
-    ui->widgetStrings->setGlobal(pShortcuts,pXOptions);
-    ui->widgetSignatures->setGlobal(pShortcuts,pXOptions);
-    ui->widgetEntropy->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHeuristicScan->setGlobal(pShortcuts,pXOptions);
-    ui->widgetMemoryMap->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHash->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_Debug->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_Exception->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_IMAGE_DIRECTORY_ENTRIES->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_IMAGE_DOS_HEADER->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_IMAGE_FILE_HEADER->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_IMAGE_NT_HEADERS->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_IMAGE_OPTIONAL_HEADER->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_LoadConfig->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_NetHeader->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_Net_Metadata->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_Net_Metadata_Stream->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_Overlay->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_Resources->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_Section->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_TLS->setGlobal(pShortcuts,pXOptions);
-
-    FormatWidget::setGlobal(pShortcuts,pXOptions);
 }
 
 void PEWidget::clear()

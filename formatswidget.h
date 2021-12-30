@@ -72,7 +72,7 @@ public:
 
     void setFileName(QString sFileName,bool bScan);
     void setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions);
-    void adjust();
+    void adjustView();
 
 private slots:
     void on_comboBoxFileType_currentIndexChanged(int nIndex);

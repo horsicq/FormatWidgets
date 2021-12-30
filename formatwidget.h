@@ -82,6 +82,9 @@ public:
     FormatWidget(QIODevice *pDevice,FW_DEF::OPTIONS options,quint32 nNumber,qint64 nOffset,qint32 nType,QWidget *pParent);
     ~FormatWidget();
 
+    void setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions);
+    void adjustView();
+
     void setData(QIODevice *pDevice,FW_DEF::OPTIONS options,quint32 nNumber,qint64 nOffset,qint32 nType);
     void setData(QString sFileName,FW_DEF::OPTIONS options,quint32 nNumber,qint64 nOffset,qint32 nType);
     void setData(FW_DEF::OPTIONS options,quint32 nNumber,qint64 nOffset,qint32 nType);
@@ -162,6 +165,8 @@ public:
     QTreeWidgetItem *getNextPage();
     bool isPrevPageAvailable();
     bool isNextPageAvailable();
+
+    void initWidget();
 
     void initSearchStringsWidget(SearchStringsWidget *pWidget);
     void initSearchSignaturesWidget(SearchSignaturesWidget *pWidget);

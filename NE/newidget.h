@@ -39,7 +39,6 @@ public:
     NEWidget(QWidget *pParent=nullptr);
     NEWidget(QIODevice *pDevice,FW_DEF::OPTIONS options,QWidget *pParent=nullptr);
     ~NEWidget();
-    void setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions);
 
     virtual void clear();
     virtual void cleanup();

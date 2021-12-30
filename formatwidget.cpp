@@ -54,6 +54,68 @@ FormatWidget::~FormatWidget()
     }
 }
 
+void FormatWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
+{
+    QList<XShortcutsWidget *> listWidgets=this->findChildren<XShortcutsWidget *>();
+
+    qint32 nNumberOfWidgets=listWidgets.count();
+
+    for(int i=0;i<nNumberOfWidgets;i++)
+    {
+        XShortcutsWidget *pChild=dynamic_cast<XShortcutsWidget *>(listWidgets.at(i));
+
+        if(pChild)
+        {
+            pChild->setGlobal(pShortcuts,pXOptions);
+        }
+    }
+
+    QList<XShortcutstScrollArea *> listAreas=this->findChildren<XShortcutstScrollArea *>();
+
+    qint32 nNumberOfAreas=listAreas.count();
+
+    for(int i=0;i<nNumberOfAreas;i++)
+    {
+        XShortcutstScrollArea *pChild=dynamic_cast<XShortcutstScrollArea *>(listAreas.at(i));
+
+        if(pChild)
+        {
+            pChild->setGlobal(pShortcuts,pXOptions);
+        }
+    }
+}
+
+void FormatWidget::adjustView()
+{
+    QList<XShortcutsWidget *> listWidgets=this->findChildren<XShortcutsWidget *>();
+
+    qint32 nNumberOfWidgets=listWidgets.count();
+
+    for(int i=0;i<nNumberOfWidgets;i++)
+    {
+        XShortcutsWidget *pChild=dynamic_cast<XShortcutsWidget *>(listWidgets.at(i));
+
+        if(pChild)
+        {
+            pChild->adjustView();
+        }
+    }
+
+    QList<XShortcutstScrollArea *> listAreas=this->findChildren<XShortcutstScrollArea *>();
+
+    qint32 nNumberOfAreas=listAreas.count();
+
+    for(int i=0;i<nNumberOfAreas;i++)
+    {
+        XShortcutstScrollArea *pChild=dynamic_cast<XShortcutstScrollArea *>(listAreas.at(i));
+
+        if(pChild)
+        {
+            pChild->adjustView();
+        }
+    }
+}
+
 void FormatWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType)
 {
     g_pDevice=pDevice;
@@ -623,6 +685,70 @@ bool FormatWidget::isPrevPageAvailable()
 bool FormatWidget::isNextPageAvailable()
 {
     return g_nPageIndex<(g_listPages.count()-1);
+}
+
+void FormatWidget::initWidget()
+{
+    {
+        QList<XHexViewWidget *> listWidgets=this->findChildren<XHexViewWidget *>();
+
+        qint32 nNumberOfWidgets=listWidgets.count();
+
+        for(int i=0;i<nNumberOfWidgets;i++)
+        {
+            XHexViewWidget *pChild=dynamic_cast<XHexViewWidget *>(listWidgets.at(i));
+
+            if(pChild)
+            {
+                initHexViewWidget(pChild);
+            }
+        }
+    }
+    {
+        QList<SearchSignaturesWidget *> listWidgets=this->findChildren<SearchSignaturesWidget *>();
+
+        qint32 nNumberOfWidgets=listWidgets.count();
+
+        for(int i=0;i<nNumberOfWidgets;i++)
+        {
+            SearchSignaturesWidget *pChild=dynamic_cast<SearchSignaturesWidget *>(listWidgets.at(i));
+
+            if(pChild)
+            {
+                initSearchSignaturesWidget(pChild);
+            }
+        }
+    }
+    {
+        QList<SearchStringsWidget *> listWidgets=this->findChildren<SearchStringsWidget *>();
+
+        qint32 nNumberOfWidgets=listWidgets.count();
+
+        for(int i=0;i<nNumberOfWidgets;i++)
+        {
+            SearchStringsWidget *pChild=dynamic_cast<SearchStringsWidget *>(listWidgets.at(i));
+
+            if(pChild)
+            {
+                initSearchStringsWidget(pChild);
+            }
+        }
+    }
+    {
+        QList<ToolsWidget *> listWidgets=this->findChildren<ToolsWidget *>();
+
+        qint32 nNumberOfWidgets=listWidgets.count();
+
+        for(int i=0;i<nNumberOfWidgets;i++)
+        {
+            ToolsWidget *pChild=dynamic_cast<ToolsWidget *>(listWidgets.at(i));
+
+            if(pChild)
+            {
+                initToolsWidget(pChild);
+            }
+        }
+    }
 }
 
 void FormatWidget::initSearchStringsWidget(SearchStringsWidget *pWidget)

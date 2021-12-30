@@ -40,7 +40,6 @@ public:
     ELFWidget(QWidget *pParent=nullptr);
     ELFWidget(QIODevice *pDevice,FW_DEF::OPTIONS options,QWidget *pParent=nullptr);
     ~ELFWidget();
-    void setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions);
 
     virtual void clear();
     virtual void cleanup();

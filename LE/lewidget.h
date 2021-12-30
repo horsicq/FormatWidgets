@@ -39,7 +39,6 @@ public:
     LEWidget(QWidget *pParent=nullptr);
     LEWidget(QIODevice *pDevice,FW_DEF::OPTIONS options,QWidget *pParent=nullptr);
     ~LEWidget();
-    void setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions);
 
     virtual void clear();
     virtual void cleanup();

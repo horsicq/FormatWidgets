@@ -27,11 +27,7 @@ MSDOSWidget::MSDOSWidget(QWidget *pParent) :
 {
     ui->setupUi(this);
 
-    initHexViewWidget(ui->widgetHex);
-//    initSearchSignaturesWidget(ui->widgetSignatures);
-    initSearchStringsWidget(ui->widgetStrings);
-    initToolsWidget(ui->widgetHex_DOS_HEADER);
-    initToolsWidget(ui->widgetHex_OVERLAY);
+    initWidget();
 }
 
 MSDOSWidget::MSDOSWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) :
@@ -44,22 +40,6 @@ MSDOSWidget::MSDOSWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *p
 MSDOSWidget::~MSDOSWidget()
 {
     delete ui;
-}
-
-void MSDOSWidget::setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions)
-{
-    ui->widgetHex->setGlobal(pShortcuts,pXOptions);
-    ui->widgetDisasm->setGlobal(pShortcuts,pXOptions);
-    ui->widgetStrings->setGlobal(pShortcuts,pXOptions);
-    ui->widgetSignatures->setGlobal(pShortcuts,pXOptions);
-    ui->widgetEntropy->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHeuristicScan->setGlobal(pShortcuts,pXOptions);
-    ui->widgetMemoryMap->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHash->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_DOS_HEADER->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_OVERLAY->setGlobal(pShortcuts,pXOptions);
-
-    FormatWidget::setGlobal(pShortcuts,pXOptions);
 }
 
 void MSDOSWidget::clear()

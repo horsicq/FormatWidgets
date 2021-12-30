@@ -30,10 +30,7 @@ DEXWidget::DEXWidget(QWidget *pParent) :
     g_pFilterStrings=new QSortFilterProxyModel(this);
     g_pFilterTypes=new QSortFilterProxyModel(this);
 
-    initHexViewWidget(ui->widgetHex);
-//    initSearchSignaturesWidget(ui->widgetSignatures);
-    initSearchStringsWidget(ui->widgetStrings);
-    initToolsWidget(ui->widgetHex_Header);
+    initWidget();
 }
 
 DEXWidget::DEXWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) :
@@ -46,21 +43,6 @@ DEXWidget::DEXWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pPare
 DEXWidget::~DEXWidget()
 {
     delete ui;
-}
-
-void DEXWidget::setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions)
-{
-    ui->widgetHex->setGlobal(pShortcuts,pXOptions);
-//    ui->widgetDisasm->setShortcuts(pShortcuts);
-    ui->widgetStrings->setGlobal(pShortcuts,pXOptions);
-    ui->widgetEntropy->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHeuristicScan->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHash->setGlobal(pShortcuts,pXOptions);
-//    ui->widgetSignatures->setGlobal(pShortcuts,pXOptions);
-    ui->widgetMemoryMap->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_Header->setGlobal(pShortcuts,pXOptions);
-
-    FormatWidget::setGlobal(pShortcuts,pXOptions);
 }
 
 void DEXWidget::clear()

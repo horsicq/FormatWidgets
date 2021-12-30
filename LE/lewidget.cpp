@@ -27,13 +27,7 @@ LEWidget::LEWidget(QWidget *pParent) :
 {
     ui->setupUi(this);
 
-    initHexViewWidget(ui->widgetHex);
-//    initSearchSignaturesWidget(ui->widgetSignatures);
-    initSearchStringsWidget(ui->widgetStrings);
-    initToolsWidget(ui->widgetHex_DOS_HEADER);
-    initToolsWidget(ui->widgetHex_Object);
-    initToolsWidget(ui->widgetHex_OVERLAY);
-    initToolsWidget(ui->widgetHex_VXD_HEADER);
+    initWidget();
 }
 
 LEWidget::LEWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) :
@@ -46,24 +40,6 @@ LEWidget::LEWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent
 LEWidget::~LEWidget()
 {
     delete ui;
-}
-
-void LEWidget::setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions)
-{
-    ui->widgetHex->setGlobal(pShortcuts,pXOptions);
-    ui->widgetDisasm->setGlobal(pShortcuts,pXOptions);
-    ui->widgetStrings->setGlobal(pShortcuts,pXOptions);
-    ui->widgetSignatures->setGlobal(pShortcuts,pXOptions);
-    ui->widgetEntropy->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHeuristicScan->setGlobal(pShortcuts,pXOptions);
-    ui->widgetMemoryMap->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHash->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_DOS_HEADER->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_Object->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_OVERLAY->setGlobal(pShortcuts,pXOptions);
-    ui->widgetHex_VXD_HEADER->setGlobal(pShortcuts,pXOptions);
-
-    FormatWidget::setGlobal(pShortcuts,pXOptions);
 }
 
 void LEWidget::clear()

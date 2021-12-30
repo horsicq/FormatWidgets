@@ -26,6 +26,8 @@ SearchSignaturesOptionsWidget::SearchSignaturesOptionsWidget(QWidget *pParent) :
     ui(new Ui::SearchSignaturesOptionsWidget)
 {
     ui->setupUi(this);
+
+    g_pOptions=nullptr;
 }
 
 SearchSignaturesOptionsWidget::~SearchSignaturesOptionsWidget()
