@@ -275,7 +275,7 @@ void ELFWidget::reloadData()
         {
             if(!isInitPresent(sInit))
             {
-                // TODO
+                ui->widgetInfo->setData(getDevice(),elf.getFileType(),true);
             }
         }
         else if(nType==SELF::TYPE_HEX)
