@@ -67,6 +67,7 @@ namespace FW_DEF
     {
         SECTION_DATA_TYPE=0,
         SECTION_DATA_NUMBER,
+        SECTION_DATA_NAME,
         SECTION_DATA_OFFSET,
         SECTION_DATA_SIZE,
         SECTION_DATA_ADDRESS,

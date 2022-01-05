@@ -74,6 +74,7 @@ void LEWidget::reload()
     {
         setFileType(le.getFileType());
 
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_INFO,tr("Info")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_HEX,tr("Hex")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_DISASM,tr("Disasm")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_HASH,tr("Hash")));
@@ -322,7 +323,14 @@ void LEWidget::reloadData()
 
     if(le.isValid())
     {
-        if(nType==SLE::TYPE_HEX)
+        if(nType==SLE::TYPE_INFO)
+        {
+            if(!isInitPresent(sInit))
+            {
+                ui->widgetInfo->setData(getDevice(),le.getFileType(),true);
+            }
+        }
+        else if(nType==SLE::TYPE_HEX)
         {
             if(!isInitPresent(sInit))
             {

@@ -28,7 +28,8 @@ namespace SNE
 {
 enum TYPE
 {
-    TYPE_HEX=0,
+    TYPE_INFO=0,
+    TYPE_HEX,
     TYPE_DISASM,
     TYPE_HASH,
     TYPE_STRINGS,

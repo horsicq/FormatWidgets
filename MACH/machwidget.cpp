@@ -95,6 +95,7 @@ void MACHWidget::reload()
     {
         setFileType(mach.getFileType());
 
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_INFO,tr("Info")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_HEX,tr("Hex")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_DISASM,tr("Disasm")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_HASH,tr("Hash")));
@@ -1258,7 +1259,14 @@ void MACHWidget::reloadData()
 
     if(mach.isValid())
     {
-        if(nType==SMACH::TYPE_HEX)
+        if(nType==SMACH::TYPE_INFO)
+        {
+            if(!isInitPresent(sInit))
+            {
+                ui->widgetInfo->setData(getDevice(),mach.getFileType(),true);
+            }
+        }
+        else if(nType==SMACH::TYPE_HEX)
         {
             if(!isInitPresent(sInit))
             {

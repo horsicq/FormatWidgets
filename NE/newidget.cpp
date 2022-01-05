@@ -75,6 +75,7 @@ void NEWidget::reload()
     {
         setFileType(ne.getFileType());
 
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_INFO,tr("Info")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_HEX,tr("Hex")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_DISASM,tr("Disasm")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_HASH,tr("Hash")));
@@ -332,7 +333,14 @@ void NEWidget::reloadData()
 
     if(ne.isValid())
     {
-        if(nType==SNE::TYPE_HEX)
+        if(nType==SNE::TYPE_INFO)
+        {
+            if(!isInitPresent(sInit))
+            {
+                ui->widgetInfo->setData(getDevice(),ne.getFileType(),true);
+            }
+        }
+        else if(nType==SNE::TYPE_HEX)
         {
             if(!isInitPresent(sInit))
             {

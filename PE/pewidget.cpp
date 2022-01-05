@@ -98,6 +98,7 @@ void PEWidget::reload()
 
         setFileType(pe.getFileType());
 
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_INFO,tr("Info")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_HEX,tr("Hex")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_DISASM,tr("Disasm")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_HASH,tr("Hash")));
@@ -911,7 +912,14 @@ void PEWidget::reloadData()
     {
         bool bIs64=pe.is64();
 
-        if(nType==SPE::TYPE_HEX)
+        if(nType==SPE::TYPE_INFO)
+        {
+            if(!isInitPresent(sInit))
+            {
+                ui->widgetInfo->setData(getDevice(),pe.getFileType(),true);
+            }
+        }
+        else if(nType==SPE::TYPE_HEX)
         {
             if(!isInitPresent(sInit))
             {

@@ -144,6 +144,25 @@
       </column>
      </widget>
      <widget class="QStackedWidget" name="stackedWidgetInfo">
+      <widget class="QWidget" name="page_Info">
+       <layout class="QVBoxLayout" name="verticalLayout_12">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="XFileInfoWidget" name="widgetInfo" native="true"/>
+        </item>
+       </layout>
+      </widget>
       <widget class="QWidget" name="page_HEX">
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <property name="spacing">
@@ -335,7 +354,7 @@
             <bool>false</bool>
            </attribute>
            <attribute name="verticalHeaderDefaultSectionSize">
-            <number>21</number>
+            <number>24</number>
            </attribute>
           </widget>
           <widget class="ToolsWidget" name="widgetHex_DOS_HEADER" native="true"/>
@@ -423,6 +442,12 @@
    <class>SearchSignaturesWidget</class>
    <extends>QWidget</extends>
    <header>searchsignatureswidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>XFileInfoWidget</class>
+   <extends>QWidget</extends>
+   <header>xfileinfowidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

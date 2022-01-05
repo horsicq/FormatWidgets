@@ -215,6 +215,7 @@ QTreeWidgetItem *FormatWidget::createNewItem(int nType, QString sTitle, qint64 n
     pResult->setData(0,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE,nSize);
     pResult->setData(0,Qt::UserRole+FW_DEF::SECTION_DATA_EXTRAOFFSET,nExtraOffset);
     pResult->setData(0,Qt::UserRole+FW_DEF::SECTION_DATA_EXTRASIZE,nExtraSize);
+    pResult->setData(0,Qt::UserRole+FW_DEF::SECTION_DATA_NAME,sTitle);
 
     return pResult;
 }
@@ -529,8 +530,9 @@ void FormatWidget::dumpSection(QTableView *pTableView)
 
         qint64 nOffset=pTableView->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
         qint64 nSize=pTableView->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
+        QString sName=pTableView->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_NAME).toString();
 
-        dumpRegion(nOffset,nSize);
+        dumpRegion(nOffset,nSize,sName);
     }
 }
 
@@ -935,9 +937,14 @@ void FormatWidget::showEntropy(qint64 nOffset, qint64 nSize)
     dialogEntropy.exec();
 }
 
-void FormatWidget::dumpRegion(qint64 nOffset, qint64 nSize)
+void FormatWidget::dumpRegion(qint64 nOffset,qint64 nSize,QString sName)
 {
-    QString sSaveFileName=XBinary::getResultFileName(getDevice(),QString("%1.bin").arg(tr("Dump")));
+    if(sName=="")
+    {
+        sName=tr("Dump");
+    }
+
+    QString sSaveFileName=XBinary::getResultFileName(getDevice(),QString("%1.bin").arg(sName));
     QString sFileName=QFileDialog::getSaveFileName(this,tr("Save dump"),sSaveFileName,QString("%1 (*.bin)").arg(tr("Raw data")));
 
     if(!sFileName.isEmpty())

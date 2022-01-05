@@ -72,6 +72,7 @@ void MSDOSWidget::reload()
     {
         setFileType(msdos.getFileType());
 
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_INFO,tr("Info")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_HEX,tr("Hex")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_DISASM,tr("Disasm")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_HASH,tr("Hash")));
@@ -235,7 +236,14 @@ void MSDOSWidget::reloadData()
 
     if(msdos.isValid())
     {
-        if(nType==SMSDOS::TYPE_HEX)
+        if(nType==SMSDOS::TYPE_INFO)
+        {
+            if(!isInitPresent(sInit))
+            {
+                ui->widgetInfo->setData(getDevice(),msdos.getFileType(),true);
+            }
+        }
+        else if(nType==SMSDOS::TYPE_HEX)
         {
             if(!isInitPresent(sInit))
             {

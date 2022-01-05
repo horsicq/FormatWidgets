@@ -75,6 +75,9 @@ void PEProcessData::_process()
             QString sName=QString((char *)listSections.at(i).Name);
             sName.resize(qMin(sName.length(),XPE_DEF::S_IMAGE_SIZEOF_SHORT_NAME));
             pItemName->setText(sName);
+
+            pItemNumber->setData(QString("%1_%2_%3").arg(tr("Section"),QString::number(i),sName),Qt::UserRole+FW_DEF::SECTION_DATA_NAME);
+
             (*g_ppModel)->setItem(i,N_IMAGE_SECTION_HEADER::Name+1,pItemName);
 
             (*g_ppModel)->setItem(i,N_IMAGE_SECTION_HEADER::VirtualSize+1,          new QStandardItem(XBinary::valueToHex(listSections.at(i).Misc.VirtualSize)));
@@ -658,12 +661,18 @@ void PEProcessData::_process()
                 pItemNumber->setData(listResources.at(i).nOffset,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
                 pItemNumber->setData(listResources.at(i).nSize,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
 
+                QString sResID1=XPE::resourceIdNameToString(listResources.at(i).irin[0],0);
+                QString sResID2=XPE::resourceIdNameToString(listResources.at(i).irin[1],1);
+                QString sResID3=XPE::resourceIdNameToString(listResources.at(i).irin[2],2);
+
+                pItemNumber->setData(QString("%1_%2_%3").arg(sResID1,sResID2,sResID3),Qt::UserRole+FW_DEF::SECTION_DATA_NAME);
+
                 (*g_ppModel)->setItem(i,0,pItemNumber);
 
 //                (*g_ppModel)->setItem(i,1,pItemName);
-                (*g_ppModel)->setItem(i,1,          new QStandardItem(XPE::resourceIdNameToString(listResources.at(i).irin[0],0)));
-                (*g_ppModel)->setItem(i,2,          new QStandardItem(XPE::resourceIdNameToString(listResources.at(i).irin[1],1)));
-                (*g_ppModel)->setItem(i,3,          new QStandardItem(XPE::resourceIdNameToString(listResources.at(i).irin[2],2)));
+                (*g_ppModel)->setItem(i,1,          new QStandardItem(sResID1));
+                (*g_ppModel)->setItem(i,2,          new QStandardItem(sResID2));
+                (*g_ppModel)->setItem(i,3,          new QStandardItem(sResID3));
 
                 (*g_ppModel)->setItem(i,4,          new QStandardItem(XBinary::valueToHexEx(listResources.at(i).nAddress)));
                 (*g_ppModel)->setItem(i,5,          new QStandardItem(XBinary::valueToHexEx(listResources.at(i).nOffset)));
