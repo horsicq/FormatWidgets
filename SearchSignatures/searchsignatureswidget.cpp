@@ -288,7 +288,11 @@ void SearchSignaturesWidget::search()
         ui->tableViewResult->setColumnWidth(1,120); // TODO
         ui->tableViewResult->setColumnWidth(2,120); // TODO
 
+    #if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
+        QFuture<void> future=QtConcurrent::run(&SearchSignaturesWidget::deleteOldModel,this);
+    #else
         QFuture<void> future=QtConcurrent::run(this,&SearchSignaturesWidget::deleteOldModel);
+    #endif
 
         g_watcher.setFuture(future);
 

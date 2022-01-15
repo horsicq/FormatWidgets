@@ -202,7 +202,12 @@ void MultiSearch::processSearch()
             if(bSuccess)
             {
                 //QFuture<void> future=QtConcurrent::run(this,&MultiSearch::processSignature,signatureRecord);
+
+            #if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
+                QFuture<void> future=QtConcurrent::run(&MultiSearch::processSignature,this,signatureRecord); // mb TODO return
+            #else
                 QtConcurrent::run(this,&MultiSearch::processSignature,signatureRecord);
+            #endif
 
                 QThread::msleep(5); // wait till run started TODO rewrite!
 

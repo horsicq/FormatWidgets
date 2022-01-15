@@ -351,7 +351,11 @@ void SearchStringsWidget::search()
             ui->tableViewResult->setColumnWidth(1,80); // TODO
             ui->tableViewResult->setColumnWidth(2,30); // TODO
 
+        #if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
+            QFuture<void> future=QtConcurrent::run(&SearchStringsWidget::deleteOldModel,this);
+        #else
             QFuture<void> future=QtConcurrent::run(this,&SearchStringsWidget::deleteOldModel);
+        #endif
 
             g_watcher.setFuture(future);
 
