@@ -65,7 +65,7 @@ QList<QString> ProcessData::getStructList(const FW_DEF::HEADER_RECORD *pRecords,
 {
     QList<QString> listResult;
 
-    for(int i=0;i<nRecordCount;i++)
+    for(qint32 i=0;i<nRecordCount;i++)
     {
         listResult.append(pRecords[i].sName);
     }
