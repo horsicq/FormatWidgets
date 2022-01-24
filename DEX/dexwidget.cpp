@@ -598,14 +598,22 @@ void DEXWidget::on_tableWidget_Header_currentCellChanged(int nCurrentRow, int nC
 
 void DEXWidget::on_lineEditFilterStrings_textChanged(const QString &sString)
 {
+#if QT_VERSION >= QT_VERSION_CHECK(5,12,0)
+    g_pFilterStrings->setFilterRegularExpression(sString);
+#else
     g_pFilterStrings->setFilterRegExp(sString);
+#endif
     g_pFilterStrings->setFilterCaseSensitivity(Qt::CaseInsensitive);
     g_pFilterStrings->setFilterKeyColumn(3);
 }
 
 void DEXWidget::on_lineEditFilterTypes_textChanged(const QString &sString)
 {
+#if QT_VERSION >= QT_VERSION_CHECK(5,12,0)
+    g_pFilterTypes->setFilterRegularExpression(sString);
+#else
     g_pFilterTypes->setFilterRegExp(sString);
+#endif
     g_pFilterTypes->setFilterCaseSensitivity(Qt::CaseInsensitive);
     g_pFilterTypes->setFilterKeyColumn(3);
 }
