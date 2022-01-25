@@ -915,7 +915,7 @@ void MACHSectionHeaderWidget::reloadData()
         }
         else if(nType==SMACH::TYPE_DYSYMTAB_modtab)
         {
-            createHeaderTable(SMACH::TYPE_DYSYMTAB_modtab,ui->tableWidget,bIs64?(N_mach_modtab64::records):(N_mach_modtab32::records),g_ppLinedEdit,bIs64?(N_mach_modtab64::__data_size):(N_mach_modtab32::__data_size),getNumber(),getOffset());
+            createHeaderTable(SMACH::TYPE_DYSYMTAB_modtab,ui->tableWidget,(bIs64)?(N_mach_modtab64::records):(N_mach_modtab32::records),g_ppLinedEdit,(bIs64)?(N_mach_modtab64::__data_size):(N_mach_modtab32::__data_size),getNumber(),getOffset());
 
             blockSignals(true);
 
