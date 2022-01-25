@@ -88,6 +88,8 @@ void MACHOFATWidget::reload()
 
                 MACHWidget *pMachWidget=new MACHWidget(pSubDevice,getOptions(),this);
 
+                pMachWidget->setGlobal(getShortcuts(),getGlobalOptions());
+
                 pMachWidget->setBackupDevice(getDevice());
 
                 ui->stackedWidget->addWidget(pMachWidget);

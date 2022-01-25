@@ -83,6 +83,8 @@ void FormatWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
             pChild->setGlobal(pShortcuts,pXOptions);
         }
     }
+
+    XShortcutsWidget::setGlobal(pShortcuts,pXOptions);
 }
 
 void FormatWidget::adjustView()

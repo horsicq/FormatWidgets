@@ -202,6 +202,7 @@ private:
         INV_FUNCTION_STARTS_dataoff,
         INV_DATA_IN_CODE_dataoff,
         INV_CODE_SIGNATURE_dataoff,
+        INV_MAIN_entryoff,
         __INV_size
     };
 

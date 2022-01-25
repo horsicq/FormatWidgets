@@ -586,6 +586,13 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
                         case N_mach_linkedit_data::datasize:                g_invWidget[INV_CODE_SIGNATURE_dataoff]->setOffsetAndSize(&mach,mach.get_linkedit_data(XMACH_DEF::S_LC_CODE_SIGNATURE).dataoff,nValue,true);            break;
                     }
                     break;
+
+                case SMACH::TYPE_mach_main:
+                    switch(nNdata)
+                    {
+                        case N_mach_main::entryoff:                         g_invWidget[INV_MAIN_entryoff]->setOffsetAndSize(&mach,nValue,0,true);                                                                                  break;
+                    }
+                    break;
             }
 
             switch(nStype)
@@ -1874,12 +1881,16 @@ void MACHWidget::reloadData()
             {
                 createHeaderTable(SMACH::TYPE_mach_main,ui->tableWidget_main,N_mach_main::records,g_lineEdit_mach_main,N_mach_main::__data_size,0,nDataOffset);
 
+                g_invWidget[INV_MAIN_entryoff]=createInvWidget(ui->tableWidget_main,SMACH::TYPE_mach_main,N_mach_main::entryoff,InvWidget::TYPE_DISASM);
+
                 blockSignals(true);
 
                 XMACH_DEF::entry_point_command entry_point=mach._read_entry_point_command(nDataOffset);
 
                 g_lineEdit_mach_main[N_mach_main::entryoff]->setValue(entry_point.entryoff);
                 g_lineEdit_mach_main[N_mach_main::stacksize]->setValue(entry_point.stacksize);
+
+                g_invWidget[INV_MAIN_entryoff]->setOffsetAndSize(&mach,entry_point.entryoff,0,true);
 
                 qint64 nOffset=nDataOffset;
                 qint64 nSize=mach.get_entry_point_command_size();

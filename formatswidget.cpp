@@ -33,7 +33,7 @@ FormatsWidget::FormatsWidget(QWidget *pParent) :
     const bool bBlocked1=ui->comboBoxScanEngine->blockSignals(true);
 #endif
 
-    ui->comboBoxScanEngine->addItem(tr("Auto"),SE_AUTO);
+    ui->comboBoxScanEngine->addItem(tr("Automatic"),SE_AUTO);
     ui->comboBoxScanEngine->addItem(QString("Detect It Easy(DiE)"),SE_DIE);
     ui->comboBoxScanEngine->addItem(QString("Nauz File Detector(NFD)"),SE_NFD);
 
