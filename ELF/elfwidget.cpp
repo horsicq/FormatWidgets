@@ -137,6 +137,8 @@ FormatWidget::SV ELFWidget::_setValue(QVariant vValue, int nStype, int nNdata, i
 
         if(elf.isValid())
         {
+            bool bIs64=elf.is64();
+
             switch(nStype)
             {
                 case SELF::TYPE_Elf_Ehdr:
@@ -173,19 +175,19 @@ FormatWidget::SV ELFWidget::_setValue(QVariant vValue, int nStype, int nNdata, i
                         case N_Elf_Ehdr::ei_pad_4:      elf.setIdent_pad((quint8)nValue,4);                                                                 break;
                         case N_Elf_Ehdr::ei_pad_5:      elf.setIdent_pad((quint8)nValue,5);                                                                 break;
                         case N_Elf_Ehdr::ei_pad_6:      elf.setIdent_pad((quint8)nValue,6);                                                                 break;
-                        case N_Elf_Ehdr::e_type:        (elf.is64()?(elf.setHdr64_type((quint16)nValue)):(elf.setHdr32_type((quint16)nValue)));             break;
-                        case N_Elf_Ehdr::e_machine:     (elf.is64()?(elf.setHdr64_machine((quint16)nValue)):(elf.setHdr32_machine((quint16)nValue)));       break;
-                        case N_Elf_Ehdr::e_version:     (elf.is64()?(elf.setHdr64_version((quint32)nValue)):(elf.setHdr32_version((quint32)nValue)));       break;
-                        case N_Elf_Ehdr::e_entry:       (elf.is64()?(elf.setHdr64_entry((quint64)nValue)):(elf.setHdr32_entry((quint32)nValue)));           break;
-                        case N_Elf_Ehdr::e_phoff:       (elf.is64()?(elf.setHdr64_phoff((quint64)nValue)):(elf.setHdr32_phoff((quint32)nValue)));           break;
-                        case N_Elf_Ehdr::e_shoff:       (elf.is64()?(elf.setHdr64_shoff((quint64)nValue)):(elf.setHdr32_shoff((quint32)nValue)));           break;
-                        case N_Elf_Ehdr::e_flags:       (elf.is64()?(elf.setHdr64_flags((quint32)nValue)):(elf.setHdr32_flags((quint32)nValue)));           break;
-                        case N_Elf_Ehdr::e_ehsize:      (elf.is64()?(elf.setHdr64_ehsize((quint16)nValue)):(elf.setHdr32_ehsize((quint16)nValue)));         break;
-                        case N_Elf_Ehdr::e_phentsize:   (elf.is64()?(elf.setHdr64_phentsize((quint16)nValue)):(elf.setHdr32_phentsize((quint16)nValue)));   break;
-                        case N_Elf_Ehdr::e_phnum:       (elf.is64()?(elf.setHdr64_phnum((quint16)nValue)):(elf.setHdr32_phnum((quint16)nValue)));           break;
-                        case N_Elf_Ehdr::e_shentsize:   (elf.is64()?(elf.setHdr64_shentsize((quint16)nValue)):(elf.setHdr32_shentsize((quint16)nValue)));   break;
-                        case N_Elf_Ehdr::e_shnum:       (elf.is64()?(elf.setHdr64_shnum((quint16)nValue)):(elf.setHdr32_shnum((quint16)nValue)));           break;
-                        case N_Elf_Ehdr::e_shstrndx:    (elf.is64()?(elf.setHdr64_shstrndx((quint16)nValue)):(elf.setHdr32_shstrndx((quint16)nValue)));     break;
+                        case N_Elf_Ehdr::e_type:        (bIs64?(elf.setHdr64_type((quint16)nValue)):(elf.setHdr32_type((quint16)nValue)));                  break;
+                        case N_Elf_Ehdr::e_machine:     (bIs64?(elf.setHdr64_machine((quint16)nValue)):(elf.setHdr32_machine((quint16)nValue)));            break;
+                        case N_Elf_Ehdr::e_version:     (bIs64?(elf.setHdr64_version((quint32)nValue)):(elf.setHdr32_version((quint32)nValue)));            break;
+                        case N_Elf_Ehdr::e_entry:       (bIs64?(elf.setHdr64_entry((quint64)nValue)):(elf.setHdr32_entry((quint32)nValue)));                break;
+                        case N_Elf_Ehdr::e_phoff:       (bIs64?(elf.setHdr64_phoff((quint64)nValue)):(elf.setHdr32_phoff((quint32)nValue)));                break;
+                        case N_Elf_Ehdr::e_shoff:       (bIs64?(elf.setHdr64_shoff((quint64)nValue)):(elf.setHdr32_shoff((quint32)nValue)));                break;
+                        case N_Elf_Ehdr::e_flags:       (bIs64?(elf.setHdr64_flags((quint32)nValue)):(elf.setHdr32_flags((quint32)nValue)));                break;
+                        case N_Elf_Ehdr::e_ehsize:      (bIs64?(elf.setHdr64_ehsize((quint16)nValue)):(elf.setHdr32_ehsize((quint16)nValue)));              break;
+                        case N_Elf_Ehdr::e_phentsize:   (bIs64?(elf.setHdr64_phentsize((quint16)nValue)):(elf.setHdr32_phentsize((quint16)nValue)));        break;
+                        case N_Elf_Ehdr::e_phnum:       (bIs64?(elf.setHdr64_phnum((quint16)nValue)):(elf.setHdr32_phnum((quint16)nValue)));                break;
+                        case N_Elf_Ehdr::e_shentsize:   (bIs64?(elf.setHdr64_shentsize((quint16)nValue)):(elf.setHdr32_shentsize((quint16)nValue)));        break;
+                        case N_Elf_Ehdr::e_shnum:       (bIs64?(elf.setHdr64_shnum((quint16)nValue)):(elf.setHdr32_shnum((quint16)nValue)));                break;
+                        case N_Elf_Ehdr::e_shstrndx:    (bIs64?(elf.setHdr64_shstrndx((quint16)nValue)):(elf.setHdr32_shstrndx((quint16)nValue)));          break;
                     }
 
                     ui->widgetHex_Elf_Ehdr->reload();
