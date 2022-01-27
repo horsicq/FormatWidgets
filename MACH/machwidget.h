@@ -74,6 +74,7 @@ private slots:
     void on_tableWidget_function_starts_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
     void on_tableWidget_data_in_code_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
     void on_tableWidget_code_signature_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
+    void on_tableWidget_SuperBlob_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
     void on_tableWidget_main_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
     void on_tableWidget_unix_thread_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
 
@@ -222,6 +223,7 @@ private:
     XLineEditHEX *g_lineEdit_mach_function_starts[N_mach_linkedit_data::__data_size];
     XLineEditHEX *g_lineEdit_mach_data_in_code[N_mach_linkedit_data::__data_size];
     XLineEditHEX *g_lineEdit_mach_code_signature[N_mach_linkedit_data::__data_size];
+    XLineEditHEX *g_lineEdit_mach_SuperBlob[N_mach_SuperBlob::__data_size];
     XLineEditHEX *g_lineEdit_mach_main[N_mach_main::__data_size];
     XLineEditHEX *g_lineEdit_mach_unix_thread[N_mach_unix_thread::__data_size];
     XLineEditHEX *g_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::__data_size];

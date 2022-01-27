@@ -1344,6 +1344,50 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="page_SuperBlob">
+       <layout class="QVBoxLayout" name="verticalLayout_56">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QSplitter" name="splitter_34">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <widget class="QTableWidget" name="tableWidget_SuperBlob">
+           <property name="editTriggers">
+            <set>QAbstractItemView::NoEditTriggers</set>
+           </property>
+           <property name="selectionMode">
+            <enum>QAbstractItemView::SingleSelection</enum>
+           </property>
+           <property name="selectionBehavior">
+            <enum>QAbstractItemView::SelectRows</enum>
+           </property>
+           <attribute name="horizontalHeaderVisible">
+            <bool>false</bool>
+           </attribute>
+           <attribute name="verticalHeaderVisible">
+            <bool>false</bool>
+           </attribute>
+           <attribute name="verticalHeaderDefaultSectionSize">
+            <number>24</number>
+           </attribute>
+          </widget>
+          <widget class="ToolsWidget" name="widgetHex_SuperBlob" native="true"/>
+         </widget>
+        </item>
+       </layout>
+      </widget>
       <widget class="QWidget" name="page_main">
        <layout class="QVBoxLayout" name="verticalLayout_43">
         <item>

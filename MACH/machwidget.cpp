@@ -60,6 +60,7 @@ void MACHWidget::clear()
     memset(g_lineEdit_mach_function_starts,0,sizeof g_lineEdit_mach_function_starts);
     memset(g_lineEdit_mach_data_in_code,0,sizeof g_lineEdit_mach_data_in_code);
     memset(g_lineEdit_mach_code_signature,0,sizeof g_lineEdit_mach_code_signature);
+    memset(g_lineEdit_mach_SuperBlob,0,sizeof g_lineEdit_mach_SuperBlob);
     memset(g_lineEdit_mach_main,0,sizeof g_lineEdit_mach_main);
     memset(g_lineEdit_mach_unix_thread,0,sizeof g_lineEdit_mach_unix_thread);
     memset(g_lineEdit_mach_unix_thread_x86_32,0,sizeof g_lineEdit_mach_unix_thread_x86_32);
@@ -403,9 +404,20 @@ void MACHWidget::reload()
 
             if(mach.isCommandPresent(XMACH_DEF::S_LC_CODE_SIGNATURE,&listCommandRecords))
             {
-                QTreeWidgetItem *pItemCodeSignature=createNewItem(SMACH::TYPE_mach_code_signature,QString("LC_CODE_SIGNATURE"),mach.getCommandRecordOffset(XMACH_DEF::S_LC_CODE_SIGNATURE,0,&listCommandRecords)); // TODO rename
+                qint64 _nOffset=mach.getCommandRecordOffset(XMACH_DEF::S_LC_CODE_SIGNATURE,0,&listCommandRecords);
+
+                QTreeWidgetItem *pItemCodeSignature=createNewItem(SMACH::TYPE_mach_code_signature,QString("LC_CODE_SIGNATURE"),_nOffset); // TODO rename
 
                 pItemCommands->addChild(pItemCodeSignature);
+
+                XMACH_DEF::linkedit_data_command linkedit_data=mach._read_linkedit_data_command(_nOffset);
+
+                if(mach.isOffsetValid(linkedit_data.dataoff)&&(linkedit_data.datasize))
+                {
+                    QTreeWidgetItem *pItemSuperBlob=createNewItem(SMACH::TYPE_mach_SuperBlob,QString("__SC_SuperBlob"),linkedit_data.dataoff); // TODO rename
+
+                    pItemCodeSignature->addChild(pItemSuperBlob);
+                }
             }
 
             if(mach.isCommandPresent(XMACH_DEF::S_LC_MAIN,&listCommandRecords))
@@ -777,6 +789,18 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
 
                     break;
 
+                case SMACH::TYPE_mach_SuperBlob:
+                    switch(nNdata)
+                    {
+                        case N_mach_SuperBlob::magic:               mach._set_SC_SuperBlob_magic(nOffset,nValue);                           break;
+                        case N_mach_SuperBlob::length:              mach._set_SC_SuperBlob_length(nOffset,nValue);                          break;
+                        case N_mach_SuperBlob::count:               mach._set_SC_SuperBlob_count(nOffset,nValue);                           break;
+                    }
+
+                    ui->widgetHex_SuperBlob->reload();
+
+                    break;
+
                 case SMACH::TYPE_mach_main:
                     switch(nNdata)
                     {
@@ -1060,6 +1084,7 @@ void MACHWidget::setReadonly(bool bState)
     setLineEditsReadOnly(g_lineEdit_mach_function_starts,N_mach_linkedit_data::__data_size,bState);
     setLineEditsReadOnly(g_lineEdit_mach_data_in_code,N_mach_linkedit_data::__data_size,bState);
     setLineEditsReadOnly(g_lineEdit_mach_code_signature,N_mach_linkedit_data::__data_size,bState);
+    setLineEditsReadOnly(g_lineEdit_mach_SuperBlob,N_mach_SuperBlob::__data_size,bState);
     setLineEditsReadOnly(g_lineEdit_mach_main,N_mach_main::__data_size,bState);
     setLineEditsReadOnly(g_lineEdit_mach_unix_thread,N_mach_unix_thread::__data_size,bState);
     setLineEditsReadOnly(g_lineEdit_mach_unix_thread_x86_32,N_mach_unix_thread_x86_32::__data_size,bState);
@@ -1089,6 +1114,7 @@ void MACHWidget::blockSignals(bool bState)
     _blockSignals((QObject **)g_lineEdit_mach_function_starts,N_mach_linkedit_data::__data_size,bState);
     _blockSignals((QObject **)g_lineEdit_mach_data_in_code,N_mach_linkedit_data::__data_size,bState);
     _blockSignals((QObject **)g_lineEdit_mach_code_signature,N_mach_linkedit_data::__data_size,bState);
+    _blockSignals((QObject **)g_lineEdit_mach_SuperBlob,N_mach_SuperBlob::__data_size,bState);
     _blockSignals((QObject **)g_lineEdit_mach_main,N_mach_main::__data_size,bState);
     _blockSignals((QObject **)g_lineEdit_mach_unix_thread,N_mach_unix_thread::__data_size,bState);
     _blockSignals((QObject **)g_lineEdit_mach_unix_thread_x86_32,N_mach_unix_thread_x86_32::__data_size,bState);
@@ -1875,6 +1901,28 @@ void MACHWidget::reloadData()
                 blockSignals(false);
             }
         }
+        else if(nType==SMACH::TYPE_mach_SuperBlob)
+        {
+            if(!isInitPresent(sInit))
+            {
+                createHeaderTable(SMACH::TYPE_mach_SuperBlob,ui->tableWidget_SuperBlob,N_mach_SuperBlob::records,g_lineEdit_mach_SuperBlob,N_mach_SuperBlob::__data_size,0,nDataOffset);
+
+                blockSignals(true);
+
+                XMACH_DEF::__SC_SuperBlob super_blob=mach._read_SC_SuperBlob(nDataOffset);
+
+                g_lineEdit_mach_SuperBlob[N_mach_SuperBlob::magic]->setValue(super_blob.magic);
+                g_lineEdit_mach_SuperBlob[N_mach_SuperBlob::length]->setValue(super_blob.length);
+                g_lineEdit_mach_SuperBlob[N_mach_SuperBlob::count]->setValue(super_blob.count);
+
+                qint64 nOffset=nDataOffset;
+                qint64 nSize=super_blob.length;
+
+                loadHexSubdevice(nOffset,nSize,nOffset,&g_subDevice[SMACH::TYPE_mach_SuperBlob],ui->widgetHex_SuperBlob);
+
+                blockSignals(false);
+            }
+        }
         else if(nType==SMACH::TYPE_mach_main)
         {
             if(!isInitPresent(sInit))
@@ -2503,6 +2551,16 @@ void MACHWidget::on_tableWidget_code_signature_currentCellChanged(int nCurrentRo
     Q_UNUSED(nPreviousColumn);
 
     setHeaderTableSelection(ui->widgetHex_code_signature,ui->tableWidget_code_signature);
+}
+
+void MACHWidget::on_tableWidget_SuperBlob_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
+    Q_UNUSED(nCurrentRow);
+    Q_UNUSED(nCurrentColumn);
+    Q_UNUSED(nPreviousRow);
+    Q_UNUSED(nPreviousColumn);
+
+    setHeaderTableSelection(ui->widgetHex_SuperBlob,ui->tableWidget_SuperBlob);
 }
 
 void MACHWidget::on_tableWidget_main_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)

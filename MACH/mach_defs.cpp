@@ -646,3 +646,23 @@ const FW_DEF::HEADER_RECORD records[]=
     {flags,                     "flags",                    0,              4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
 };
 }
+
+namespace N_mach_SuperBlob
+{
+const FW_DEF::HEADER_RECORD records[]=
+{
+    {magic,                     "magic",                    offsetof(XMACH_DEF::__SC_SuperBlob,magic),          4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {length,                    "length",                   offsetof(XMACH_DEF::__SC_SuperBlob,length),         4,      "uint32",               FW_DEF::VAL_TYPE_SIZE},
+    {count,                     "count",                    offsetof(XMACH_DEF::__SC_SuperBlob,count),          4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+};
+}
+
+namespace N_mach_BlobIndex
+{
+const FW_DEF::HEADER_RECORD records[]=
+{
+    {type,                      "type",                     offsetof(XMACH_DEF::__BlobIndex,type),              4,      "uint32",               FW_DEF::VAL_TYPE_DATA},
+    {offset,                    "offset",                   offsetof(XMACH_DEF::__BlobIndex,offset),            4,      "uint32",               FW_DEF::VAL_TYPE_OFFSET},
+};
+}
+

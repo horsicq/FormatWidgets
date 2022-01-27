@@ -59,6 +59,7 @@ enum TYPE
     TYPE_mach_function_starts,
     TYPE_mach_data_in_code,
     TYPE_mach_code_signature,
+    TYPE_mach_SuperBlob,
     TYPE_mach_main,
     TYPE_mach_unix_thread,
     TYPE_mach_unix_thread_x86_32,
@@ -956,6 +957,51 @@ enum DATA
 {
     isym,
     flags,
+    __data_size
+};
+
+extern const FW_DEF::HEADER_RECORD records[__data_size];
+
+enum CB
+{
+    __CB_size
+};
+
+enum INV
+{
+    __INV_size
+};
+}
+
+namespace N_mach_SuperBlob
+{
+enum DATA
+{
+    magic,
+    length,
+    count,
+    __data_size
+};
+
+extern const FW_DEF::HEADER_RECORD records[__data_size];
+
+enum CB
+{
+    __CB_size
+};
+
+enum INV
+{
+    __INV_size
+};
+}
+
+namespace N_mach_BlobIndex
+{
+enum DATA
+{
+    type,
+    offset,
     __data_size
 };
 
