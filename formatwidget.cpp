@@ -24,7 +24,7 @@ FormatWidget::FormatWidget(QWidget *pParent):
     XShortcutsWidget(pParent)
 {
     g_pDevice=nullptr;
-    g_pXOptions=&xOptionsEmpty;
+    g_pXOptions=&g_xOptionsEmpty;
     g_pBackupDevice=nullptr;
     g_bIsReadonly=false;
     g_fwOptions={};
