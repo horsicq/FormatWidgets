@@ -262,6 +262,18 @@ QString DEXWidget::typeIdToString(int nType)
     return "";
 }
 
+void DEXWidget::_showInMemoryMapWindowOffset(qint64 nOffset)
+{
+    setTreeItem(ui->treeWidgetNavi,SDEX::TYPE_MEMORYMAP);
+    ui->widgetMemoryMap->goToOffset(nOffset);
+}
+
+void DEXWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
+{
+    setTreeItem(ui->treeWidgetNavi,SDEX::TYPE_HEX);
+    ui->widgetHex->setSelection(nOffset,nSize);
+}
+
 void DEXWidget::reloadData()
 {
     qint32 nType=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_TYPE).toInt();
