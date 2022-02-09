@@ -304,7 +304,12 @@ void SearchSignaturesWidget::search()
 
 void SearchSignaturesWidget::deleteOldModel()
 {
-    delete g_pOldModel;
+    if(g_pOldModel)
+    {
+        delete g_pOldModel;
+
+        g_pOldModel=0;
+    }
 }
 
 void SearchSignaturesWidget::loadSignatures(QString sFileName)
