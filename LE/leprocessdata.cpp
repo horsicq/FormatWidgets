@@ -20,7 +20,7 @@
  */
 #include "leprocessdata.h"
 
-LEProcessData::LEProcessData(int nType, QStandardItemModel **ppModel, XLE *pLE, qint64 nOffset, qint64 nSize) : ProcessData()
+LEProcessData::LEProcessData(int nType,QStandardItemModel **ppModel,XLE *pLE,qint64 nOffset,qint64 nSize) : ProcessData()
 {
     this->g_nType=nType;
     this->g_ppModel=ppModel;
