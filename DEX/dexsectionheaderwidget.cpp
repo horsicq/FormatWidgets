@@ -103,7 +103,7 @@ void DEXSectionHeaderWidget::reload()
     reloadData();
 }
 
-void DEXSectionHeaderWidget::setStringTable(qint64 nStringTableOffset, qint64 nStringTableSize)
+void DEXSectionHeaderWidget::setStringTable(qint64 nStringTableOffset,qint64 nStringTableSize)
 {
     this->g_nStringTableOffset=nStringTableOffset;
     this->g_nStringTableSize=nStringTableSize;
