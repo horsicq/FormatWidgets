@@ -35,7 +35,7 @@ DialogMultiSearchProcess::DialogMultiSearchProcess(QWidget *pParent) :
     g_pHandleSearch->moveToThread(g_pThreadSearch);
     g_pHandleModel->moveToThread(g_pThreadModel);
 
-    connect(g_pThreadSearch, SIGNAL(started()), g_pHandleSearch, SLOT(processSearch()));
+    connect(g_pThreadSearch,SIGNAL(started()),g_pHandleSearch,SLOT(processSearch()));
     connect(g_pHandleSearch, SIGNAL(completed(qint64)), this, SLOT(onCompleted(qint64)));
     connect(g_pHandleSearch, SIGNAL(errorMessage(QString)), this, SLOT(errorMessage(QString)));
     connect(g_pHandleSearch, SIGNAL(progressValueChanged(qint32)), this, SLOT(onProgressValueChanged(qint32)));
