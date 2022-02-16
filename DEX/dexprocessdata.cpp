@@ -49,7 +49,7 @@ void DEXProcessData::_process()
 
         setHeader(*g_ppModel,&listLabels);
 
-        QMap<quint64, QString> mapTypes=XDEX::getTypesS();
+        QMap<quint64,QString> mapTypes=XDEX::getTypesS();
 
         for(qint32 i=0;(i<nNumberOfMapItems)&&(isRun());i++)
         {
