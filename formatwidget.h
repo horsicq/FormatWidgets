@@ -201,6 +201,7 @@ protected:
     virtual SV _setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition,qint64 nOffset)=0;
     virtual void setReadonly(bool bState)=0;
     virtual void blockSignals(bool bState)=0;
+    virtual void reloadData()=0;
     virtual void adjustHeaderTable(int nType,QTableWidget *pTableWidget);
     virtual void adjustListTable(int nType,QTableWidget *pTableWidget);
     virtual QString typeIdToString(int nType);
@@ -208,7 +209,7 @@ protected:
     virtual void _showInDisasmWindowOffset(qint64 nOffset);
     virtual void _showInMemoryMapWindowOffset(qint64 nOffset);
     virtual void _showInHexWindow(qint64 nOffset,qint64 nSize);
-    virtual void reloadData()=0;
+
 
 signals:
     void editState(bool bState);

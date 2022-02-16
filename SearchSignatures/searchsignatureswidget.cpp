@@ -30,11 +30,8 @@ SearchSignaturesWidget::SearchSignaturesWidget(QWidget *pParent) :
     g_pFilter=new QSortFilterProxyModel(this);
     g_pModel=nullptr;
     g_bInit=false;
-    g_scCopyName=nullptr;
-    g_scCopySignature=nullptr;
-    g_scCopyAddress=nullptr;
-    g_scCopyOffset=nullptr;
-    g_scHex=nullptr;
+
+    memset(shortCuts,0,sizeof shortCuts);
 
     ui->tableViewResult->installEventFilter(this);
 }
@@ -346,18 +343,21 @@ void SearchSignaturesWidget::registerShortcuts(bool bState)
 {
     if(bState)
     {
-        if(!g_scCopyName)           g_scCopyName        =new QShortcut(getShortcuts()->getShortcut(XShortcuts::ID_SIGNATURES_COPYNAME),         this,SLOT(_copyName()));
-        if(!g_scCopySignature)      g_scCopySignature   =new QShortcut(getShortcuts()->getShortcut(XShortcuts::ID_SIGNATURES_COPYSIGNATURE),    this,SLOT(_copySignature()));
-        if(!g_scCopyAddress)        g_scCopyAddress     =new QShortcut(getShortcuts()->getShortcut(XShortcuts::ID_SIGNATURES_COPYADDRESS),      this,SLOT(_copyAddress()));
-        if(!g_scCopyOffset)         g_scCopyOffset      =new QShortcut(getShortcuts()->getShortcut(XShortcuts::ID_SIGNATURES_COPYOFFSET),       this,SLOT(_copyOffset()));
-        if(!g_scHex)                g_scHex             =new QShortcut(getShortcuts()->getShortcut(XShortcuts::ID_SIGNATURES_HEX),              this,SLOT(_hex()));
+        if(!shortCuts[SC_COPYNAME])             shortCuts[SC_COPYNAME]          =new QShortcut(getShortcuts()->getShortcut(XShortcuts::ID_SIGNATURES_COPYNAME),         this,SLOT(_copyName()));
+        if(!shortCuts[SC_COPYSIGNATURE])        shortCuts[SC_COPYSIGNATURE]     =new QShortcut(getShortcuts()->getShortcut(XShortcuts::ID_SIGNATURES_COPYSIGNATURE),    this,SLOT(_copySignature()));
+        if(!shortCuts[SC_COPYADDRESS])          shortCuts[SC_COPYADDRESS]       =new QShortcut(getShortcuts()->getShortcut(XShortcuts::ID_SIGNATURES_COPYADDRESS),      this,SLOT(_copyAddress()));
+        if(!shortCuts[SC_COPYOFFSET])           shortCuts[SC_COPYOFFSET]        =new QShortcut(getShortcuts()->getShortcut(XShortcuts::ID_SIGNATURES_COPYOFFSET),       this,SLOT(_copyOffset()));
+        if(!shortCuts[SC_HEX])                  shortCuts[SC_HEX]               =new QShortcut(getShortcuts()->getShortcut(XShortcuts::ID_SIGNATURES_HEX),              this,SLOT(_hex()));
     }
     else
     {
-        if(g_scCopyName)            {delete g_scCopyName;           g_scCopyName=nullptr;}
-        if(g_scCopySignature)       {delete g_scCopySignature;      g_scCopySignature=nullptr;}
-        if(g_scCopyAddress)         {delete g_scCopyAddress;        g_scCopyAddress=nullptr;}
-        if(g_scCopyOffset)          {delete g_scCopyOffset;         g_scCopyOffset=nullptr;}
-        if(g_scHex)                 {delete g_scHex;                g_scHex=nullptr;}
+        for(qint32 i=0;i<__SC_SIZE;i++)
+        {
+            if(shortCuts[i])
+            {
+                delete shortCuts[i];
+                shortCuts[i]=nullptr;
+            }
+        }
     }
 }

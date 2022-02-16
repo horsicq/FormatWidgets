@@ -43,6 +43,16 @@ class SearchSignaturesWidget : public XShortcutsWidget
 {
     Q_OBJECT
 
+    enum SC
+    {
+        SC_COPYNAME=0,
+        SC_COPYSIGNATURE,
+        SC_COPYADDRESS,
+        SC_COPYOFFSET,
+        SC_HEX,
+        __SC_SIZE
+    };
+
 public:
     struct OPTIONS
     {
@@ -91,12 +101,7 @@ private:
     QFutureWatcher<void> g_watcher;
     QList<MultiSearch::SIGNATURE_RECORD> g_listSignatureRecords;
     OPTIONS g_options;
-
-    QShortcut *g_scCopyName;
-    QShortcut *g_scCopySignature;
-    QShortcut *g_scCopyAddress;
-    QShortcut *g_scCopyOffset;
-    QShortcut *g_scHex;
+    QShortcut *shortCuts[__SC_SIZE];
 };
 
 #endif // SEARCHSIGNATURESWIDGET_H

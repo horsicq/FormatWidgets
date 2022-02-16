@@ -45,11 +45,7 @@ SearchStringsWidget::SearchStringsWidget(QWidget *pParent) :
     ui->spinBoxMinLength->setMinimum(2);
     ui->spinBoxMinLength->setValue(5);
 
-    g_scCopyString=nullptr;
-    g_scCopyOffset=nullptr;
-    g_scCopySize=nullptr;
-    g_scHex=nullptr;
-    g_scDemangle=nullptr;
+    memset(shortCuts,0,sizeof shortCuts);
 
     // TODO Check Qt6
     ui->comboBoxANSICodec->addItem("");
@@ -375,19 +371,22 @@ void SearchStringsWidget::registerShortcuts(bool bState)
 {
     if(bState)
     {
-        if(!g_scCopyString)         g_scCopyString      =new QShortcut(getShortcuts()->getShortcut(XShortcuts::ID_STRINGS_COPYSTRING),      this,SLOT(_copyString()));
-        if(!g_scCopyOffset)         g_scCopyOffset      =new QShortcut(getShortcuts()->getShortcut(XShortcuts::ID_STRINGS_COPYOFFSET),      this,SLOT(_copyOffset()));
-        if(!g_scCopySize)           g_scCopySize        =new QShortcut(getShortcuts()->getShortcut(XShortcuts::ID_STRINGS_COPYSIZE),        this,SLOT(_copySize()));
-        if(!g_scHex)                g_scHex             =new QShortcut(getShortcuts()->getShortcut(XShortcuts::ID_STRINGS_HEX),             this,SLOT(_hex()));
-        if(!g_scDemangle)           g_scDemangle        =new QShortcut(getShortcuts()->getShortcut(XShortcuts::ID_STRINGS_DEMANGLE),        this,SLOT(_demangle()));
+        if(!shortCuts[SC_COPYSTRING])           shortCuts[SC_COPYSTRING]        =new QShortcut(getShortcuts()->getShortcut(XShortcuts::ID_STRINGS_COPYSTRING),      this,SLOT(_copyString()));
+        if(!shortCuts[SC_COPYOFFSET])           shortCuts[SC_COPYOFFSET]        =new QShortcut(getShortcuts()->getShortcut(XShortcuts::ID_STRINGS_COPYOFFSET),      this,SLOT(_copyOffset()));
+        if(!shortCuts[SC_COPYSIZE])             shortCuts[SC_COPYSIZE]          =new QShortcut(getShortcuts()->getShortcut(XShortcuts::ID_STRINGS_COPYSIZE),        this,SLOT(_copySize()));
+        if(!shortCuts[SC_HEX])                  shortCuts[SC_HEX]               =new QShortcut(getShortcuts()->getShortcut(XShortcuts::ID_STRINGS_HEX),             this,SLOT(_hex()));
+        if(!shortCuts[SC_DEMANGLE])             shortCuts[SC_DEMANGLE]          =new QShortcut(getShortcuts()->getShortcut(XShortcuts::ID_STRINGS_DEMANGLE),        this,SLOT(_demangle()));
     }
     else
     {
-        if(g_scCopyString)          {delete g_scCopyString;     g_scCopyString=nullptr;}
-        if(g_scCopyOffset)          {delete g_scCopyOffset;     g_scCopyOffset=nullptr;}
-        if(g_scCopySize)            {delete g_scCopySize;       g_scCopySize=nullptr;}
-        if(g_scHex)                 {delete g_scHex;            g_scHex=nullptr;}
-        if(g_scDemangle)            {delete g_scDemangle;       g_scDemangle=nullptr;}
+        for(qint32 i=0;i<__SC_SIZE;i++)
+        {
+            if(shortCuts[i])
+            {
+                delete shortCuts[i];
+                shortCuts[i]=nullptr;
+            }
+        }
     }
 }
 

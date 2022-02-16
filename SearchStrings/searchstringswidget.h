@@ -41,6 +41,16 @@ class SearchStringsWidget : public XShortcutsWidget
 {
     Q_OBJECT
 
+    enum SC
+    {
+        SC_COPYSTRING=0,
+        SC_COPYOFFSET,
+        SC_COPYSIZE,
+        SC_HEX,
+        SC_DEMANGLE,
+        __SC_SIZE
+    };
+
 public:
     struct OPTIONS
     {
@@ -97,11 +107,7 @@ private:
     bool g_bInit;
     QStandardItemModel *g_pOldModel;
     QFutureWatcher<void> g_watcher;
-    QShortcut *g_scCopyString;
-    QShortcut *g_scCopyOffset;
-    QShortcut *g_scCopySize;
-    QShortcut *g_scHex;
-    QShortcut *g_scDemangle;
+    QShortcut *shortCuts[__SC_SIZE];
 };
 
 #endif // SEARCHSTRINGSWIDGET_H
