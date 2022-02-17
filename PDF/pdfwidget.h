@@ -35,6 +35,7 @@ class PDFWidget : public FormatWidget
 
 public:
     PDFWidget(QWidget *pParent=nullptr);
+    PDFWidget(QIODevice *pDevice,FW_DEF::OPTIONS options,QWidget *pParent=nullptr);
     ~PDFWidget();
 
     virtual void clear();
@@ -46,6 +47,11 @@ protected:
     virtual void setReadonly(bool bState);
     virtual void blockSignals(bool bState);
     virtual void reloadData();
+
+private slots:
+    void on_checkBoxReadonly_toggled(bool bChecked);
+
+    void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent,QTreeWidgetItem *pPrevious);
 
 private:
     Ui::PDFWidget *ui;

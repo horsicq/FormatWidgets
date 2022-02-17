@@ -73,13 +73,6 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButtonDisasm">
-       <property name="text">
-        <string>Disasm</string>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QPushButton" name="pushButtonStrings">
        <property name="text">
         <string>Strings</string>
@@ -182,25 +175,6 @@
         </property>
         <item>
          <widget class="XHexViewWidget" name="widgetHex" native="true"/>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="page_Disasm">
-       <layout class="QVBoxLayout" name="verticalLayout_9">
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <property name="topMargin">
-         <number>0</number>
-        </property>
-        <property name="rightMargin">
-         <number>0</number>
-        </property>
-        <property name="bottomMargin">
-         <number>0</number>
-        </property>
-        <item>
-         <widget class="XMultiDisasmWidget" name="widgetDisasm" native="true"/>
         </item>
        </layout>
       </widget>
@@ -318,84 +292,12 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="page_DOS_HEADER">
-       <layout class="QVBoxLayout" name="verticalLayout_3">
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <property name="topMargin">
-         <number>0</number>
-        </property>
-        <property name="rightMargin">
-         <number>0</number>
-        </property>
-        <property name="bottomMargin">
-         <number>0</number>
-        </property>
-        <item>
-         <widget class="QSplitter" name="splitter_2">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <widget class="QTableWidget" name="tableWidget_DOS_HEADER">
-           <property name="editTriggers">
-            <set>QAbstractItemView::NoEditTriggers</set>
-           </property>
-           <property name="selectionMode">
-            <enum>QAbstractItemView::SingleSelection</enum>
-           </property>
-           <property name="selectionBehavior">
-            <enum>QAbstractItemView::SelectRows</enum>
-           </property>
-           <attribute name="horizontalHeaderVisible">
-            <bool>false</bool>
-           </attribute>
-           <attribute name="verticalHeaderVisible">
-            <bool>false</bool>
-           </attribute>
-           <attribute name="verticalHeaderDefaultSectionSize">
-            <number>24</number>
-           </attribute>
-          </widget>
-          <widget class="ToolsWidget" name="widgetHex_DOS_HEADER" native="true"/>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="page_OVERLAY">
-       <layout class="QVBoxLayout" name="verticalLayout_4">
-        <property name="spacing">
-         <number>1</number>
-        </property>
-        <property name="leftMargin">
-         <number>1</number>
-        </property>
-        <property name="topMargin">
-         <number>1</number>
-        </property>
-        <property name="rightMargin">
-         <number>1</number>
-        </property>
-        <property name="bottomMargin">
-         <number>1</number>
-        </property>
-        <item>
-         <widget class="ToolsWidget" name="widgetHex_OVERLAY" native="true"/>
-        </item>
-       </layout>
-      </widget>
      </widget>
     </widget>
    </item>
   </layout>
  </widget>
  <customwidgets>
-  <customwidget>
-   <class>ToolsWidget</class>
-   <extends>QWidget</extends>
-   <header>toolswidget.h</header>
-   <container>1</container>
-  </customwidget>
   <customwidget>
    <class>SearchStringsWidget</class>
    <extends>QWidget</extends>
@@ -424,12 +326,6 @@
    <class>XHexViewWidget</class>
    <extends>QWidget</extends>
    <header>xhexviewwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>XMultiDisasmWidget</class>
-   <extends>QWidget</extends>
-   <header>xmultidisasmwidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
