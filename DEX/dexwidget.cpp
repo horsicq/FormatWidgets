@@ -33,7 +33,7 @@ DEXWidget::DEXWidget(QWidget *pParent) :
     initWidget();
 }
 
-DEXWidget::DEXWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) :
+DEXWidget::DEXWidget(QIODevice *pDevice,FW_DEF::OPTIONS options,QWidget *pParent) :
     DEXWidget(pParent)
 {
     DEXWidget::setData(pDevice,options,0,0,0);
