@@ -237,7 +237,7 @@ void PEWidget::reload()
     }
 }
 
-FormatWidget::SV PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
+FormatWidget::SV PEWidget::_setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition,qint64 nOffset)
 {
     Q_UNUSED(nVtype)
     Q_UNUSED(nPosition)
