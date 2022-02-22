@@ -112,7 +112,7 @@ public:
     void setPushButtonReadOnly(QPushButton **ppPushButtons,int nCount,bool bState);
     void setDateTimeEditReadOnly(XDateTimeEditX **ppDateTimeEdits,int nCount,bool bState);
 
-    void _deleteObjects(QObject **ppObjects,int nCount);
+    void _deleteObjects(QObject **ppObjects,qint32 nCount);
 
     void _blockSignals(QObject **ppObjects,int nCount,bool bState);
     XComboBoxEx *createComboBox(QTableWidget *pTableWidget,QMap<quint64,QString> mapData,int nType,int nData,XComboBoxEx::CBTYPE cbtype,quint64 nMask=0,int nExtraData=-1);

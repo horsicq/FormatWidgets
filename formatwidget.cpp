@@ -1249,7 +1249,7 @@ void FormatWidget::setDateTimeEditReadOnly(XDateTimeEditX **ppDateTimeEdits, int
     }
 }
 
-void FormatWidget::_deleteObjects(QObject **ppObjects, int nCount)
+void FormatWidget::_deleteObjects(QObject **ppObjects, qint32 nCount)
 {
     nCount=nCount/(sizeof (QObject *));
 
