@@ -530,7 +530,7 @@ void DEXWidget::reloadData()
 }
 
 
-bool DEXWidget::createSectionTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pHeaderRecord, int nNumberOfRecords)
+bool DEXWidget::createSectionTable(int nType,QTableWidget *pTableWidget,const FW_DEF::HEADER_RECORD *pHeaderRecord,int nNumberOfRecords)
 {
     Q_UNUSED(nType)
 
