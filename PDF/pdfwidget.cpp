@@ -80,6 +80,7 @@ void PDFWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPDF::TYPE_HEURISTICSCAN,tr("Heuristic scan")));
 
         qint64 nStarthref=pdf.findStartxref();
+        pdf.readTrailer();
 
         ui->treeWidgetNavi->expandAll();
 
