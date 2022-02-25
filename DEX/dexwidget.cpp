@@ -567,7 +567,7 @@ void DEXWidget::widgetValueChanged(quint64 nValue)
     }
 }
 
-void DEXWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent, QTreeWidgetItem *pPrevious)
+void DEXWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent,QTreeWidgetItem *pPrevious)
 {
     Q_UNUSED(pPrevious)
 
