@@ -28,7 +28,7 @@ ELFSectionHeaderWidget::ELFSectionHeaderWidget(QWidget *pParent):
     ui->setupUi(this);
 }
 
-ELFSectionHeaderWidget::ELFSectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent):
+ELFSectionHeaderWidget::ELFSectionHeaderWidget(QIODevice *pDevice,FW_DEF::OPTIONS options,quint32 nNumber,qint64 nOffset,qint32 nType,QWidget *pParent):
     ELFSectionHeaderWidget(pParent)
 {
     setData(pDevice,options,nNumber,nOffset,nType);
