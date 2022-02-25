@@ -268,7 +268,7 @@ void DEXWidget::_showInMemoryMapWindowOffset(qint64 nOffset)
     ui->widgetMemoryMap->goToOffset(nOffset);
 }
 
-void DEXWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
+void DEXWidget::_showInHexWindow(qint64 nOffset,qint64 nSize)
 {
     setTreeItem(ui->treeWidgetNavi,SDEX::TYPE_HEX);
     ui->widgetHex->setSelection(nOffset,nSize);
