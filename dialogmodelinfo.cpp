@@ -61,7 +61,7 @@ void DialogModelInfo::on_pushButtonOK_clicked()
 void DialogModelInfo::on_pushButtonSave_clicked()
 {
     QString sFileName=XBinary::getResultFileName(g_pDevice,QString("%1.txt").arg(g_sTitle));
-    sFileName=QFileDialog::getSaveFileName(this, tr("Save file"),sFileName, QString("%1 (*.txt);;%2 (*)").arg(tr("Text files"),tr("All files")));
+    sFileName=QFileDialog::getSaveFileName(this,tr("Save file"),sFileName,QString("%1 (*.txt);;%2 (*)").arg(tr("Text files"),tr("All files")));
 
     if(!sFileName.isEmpty())
     {
