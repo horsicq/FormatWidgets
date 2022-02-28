@@ -145,7 +145,7 @@ void ELFSectionHeaderWidget::setGlobal(XShortcuts *pShortcuts,XOptions *pXOption
     XShortcutsWidget::setGlobal(pShortcuts,pXOptions);
 }
 
-void ELFSectionHeaderWidget::setStringTable(qint64 nStringTableOffset, qint64 nStringTableSize)
+void ELFSectionHeaderWidget::setStringTable(qint64 nStringTableOffset,qint64 nStringTableSize)
 {
     this->g_nStringTableOffset=nStringTableOffset;
     this->g_nStringTableSize=nStringTableSize;
