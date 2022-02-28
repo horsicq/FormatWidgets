@@ -623,7 +623,7 @@ void ELFWidget::reloadData()
     addInit(sInit);
 }
 
-void ELFWidget::addDatasets(XELF *pElf, QTreeWidgetItem *pParent, QList<XBinary::DATASET> *pListDataSets)
+void ELFWidget::addDatasets(XELF *pElf,QTreeWidgetItem *pParent,QList<XBinary::DATASET> *pListDataSets)
 {
     qint32 nNumberOfRecords=pListDataSets->count();
 
