@@ -598,7 +598,7 @@ void DEXWidget::enableButton()
     ui->pushButtonReload->setEnabled(true);
 }
 
-void DEXWidget::on_tableWidget_Header_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+void DEXWidget::on_tableWidget_Header_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn)
 {
     Q_UNUSED(nCurrentRow);
     Q_UNUSED(nCurrentColumn);
