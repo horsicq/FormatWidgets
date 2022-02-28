@@ -848,7 +848,7 @@ void ELFWidget::on_tableView_SymbolTable_customContextMenuRequested(const QPoint
         QMenu contextMenu(this);
 
         QAction actionEdit(tr("Edit"),this);
-        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editSymbolHeader()));
+        connect(&actionEdit,SIGNAL(triggered()),this,SLOT(editSymbolHeader()));
 
         QAction actionDemangle(tr("Demangle"),this);
         connect(&actionDemangle, SIGNAL(triggered()), this, SLOT(symbolDemangle()));
