@@ -43,7 +43,7 @@ SearchSignaturesWidget::~SearchSignaturesWidget()
     delete ui;
 }
 
-void SearchSignaturesWidget::setData(QIODevice *pDevice, XBinary::FT fileType,OPTIONS options, bool bAuto)
+void SearchSignaturesWidget::setData(QIODevice *pDevice,XBinary::FT fileType,OPTIONS options,bool bAuto)
 {
     this->g_pDevice=pDevice;
     g_bInit=false;
