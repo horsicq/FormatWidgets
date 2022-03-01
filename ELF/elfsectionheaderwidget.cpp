@@ -406,7 +406,7 @@ void ELFSectionHeaderWidget::blockSignals(bool bState)
     _blockSignals((QObject **)g_ppComboBox,g_nComboBoxSize,bState);
 }
 
-void ELFSectionHeaderWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
+void ELFSectionHeaderWidget::adjustHeaderTable(int nType,QTableWidget *pTableWidget)
 {
     XBinary::MODE mode=XELF::getMode(getDevice(),getOptions().bIsImage,getOptions().nImageBase);
 
