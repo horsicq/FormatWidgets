@@ -929,7 +929,7 @@ void PEWidget::reloadData()
                 options.bMenu_MemoryMap=true;
                 ui->widgetHex->setData(getDevice(),options);
                 // TODO save directory
-                ui->widgetHex->enableReadOnly(false);
+//                ui->widgetHex->enableReadOnly(false);
 
                 ui->widgetHex->reload();
             }
@@ -2483,9 +2483,9 @@ void PEWidget::showSectionHeader(int nType, QTableView *pTableView)
         DialogSectionHeader dsh(this);
         dsh.setWidget(pSectionHeaderWidget);
         dsh.setData(typeIdToString(nType));
-        dsh.setEdited(isEdited());
+        dsh.setGlobal(getShortcuts(),getGlobalOptions());
 
-        connect(&dsh,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+        connect(&dsh,SIGNAL(changed()),this,SLOT(setEdited()));
 
         dsh.exec();
 

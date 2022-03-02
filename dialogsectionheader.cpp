@@ -43,7 +43,7 @@ void DialogSectionHeader::setWidget(FormatWidget *pWidget)
 
     ui->WidgetLayout->addWidget(pWidget);
 
-    connect(pWidget,SIGNAL(editState(bool)),this,SIGNAL(editState(bool)));
+    connect(pWidget,SIGNAL(changed()),this,SIGNAL(changed()));
 }
 
 void DialogSectionHeader::setData(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, QString sTitle, qint32 nType)
@@ -61,9 +61,9 @@ void DialogSectionHeader::setData(QString sTitle)
     g_pWidget->reload();
 }
 
-void DialogSectionHeader::setEdited(bool bState)
+void DialogSectionHeader::setEdited()
 {
-    g_pWidget->setEdited(bState);
+    g_pWidget->setEdited();
 }
 
 void DialogSectionHeader::setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions)

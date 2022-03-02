@@ -289,7 +289,7 @@ void ELFWidget::reloadData()
                 options.bMenu_MemoryMap=true;
                 ui->widgetHex->setData(getDevice(),options);
 //                ui->widgetHex->setBackupFileName(getOptions().sBackupFileName);
-                ui->widgetHex->enableReadOnly(false);
+//                ui->widgetHex->enableReadOnly(false);
 
                 ui->widgetHex->reload();
             }
@@ -890,7 +890,7 @@ void ELFWidget::showSectionHeader(int nType, QTableView *pTableView)
         DialogSectionHeader dsh(this);
         dsh.setWidget(pSectionHeaderWidget);
         dsh.setData(typeIdToString(nType));
-        dsh.setEdited(isEdited());
+        dsh.setGlobal(getShortcuts(),getGlobalOptions());
 
         connect(&dsh,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
 

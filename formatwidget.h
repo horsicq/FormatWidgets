@@ -212,13 +212,13 @@ protected:
 
 
 signals:
-    void editState(bool bState);
+    void changed();
     void closeApp();
 
 public slots:
     void hexValueChanged(quint64 nValue);
     void textValueChanged(QString sText);
-    void setEdited(bool bState);
+    void setEdited();
     void showHex(qint64 nOffset,qint64 nSize);
     void showInDisasmWindowAddress(qint64 nAddress);
     void showInDisasmWindowOffset(qint64 nOffset);

@@ -229,19 +229,21 @@ void FormatWidget::setValue(QVariant vValue, int nStype, int nNdata, int nVtype,
         SV sv=_setValue(vValue,nStype,nNdata,nVtype,nPosition,nOffset);
         if(sv==SV_EDITED)
         {
-            setEdited(true);
+            reset();
         }
         else if(sv==SV_RELOAD)
         {
-            setEdited(true);
+            reset();
             reload();
             reloadData();
         }
         else if(sv==SV_RELOADDATA)
         {
-            setEdited(true);
+            reset();
             reloadData();
         }
+
+        emit changed();
     }
     else
     {
@@ -310,7 +312,6 @@ bool FormatWidget::loadHexSubdevice(qint64 nOffset, qint64 nSize, qint64 nAddres
     hexOptions.bOffset=bOffset;
 
     pToolsWidget->setData((*ppSubDevice),hexOptions);
-    pToolsWidget->setEdited(isEdited());
 
     return true;
 }
@@ -768,14 +769,14 @@ void FormatWidget::initSearchSignaturesWidget(SearchSignaturesWidget *pWidget)
 
 void FormatWidget::initHexViewWidget(XHexViewWidget *pWidget)
 {
-    connect(pWidget,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+    connect(pWidget,SIGNAL(changed()),this,SLOT(setEdited()));
     connect(pWidget,SIGNAL(showOffsetDisasm(qint64)),this,SLOT(showInDisasmWindowOffset(qint64)));
     connect(pWidget,SIGNAL(showOffsetMemoryMap(qint64)),this,SLOT(showInMemoryMapWindowOffset(qint64)));
 }
 
 void FormatWidget::initToolsWidget(ToolsWidget *pWidget)
 {
-    connect(pWidget,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+    connect(pWidget,SIGNAL(changed()),this,SLOT(setEdited()));
     connect(pWidget,SIGNAL(showOffsetHex(qint64,qint64)),this,SLOT(showInHexWindow(qint64,qint64)));
     connect(pWidget,SIGNAL(showOffsetDisasm(qint64)),this,SLOT(showInDisasmWindowOffset(qint64)));
     connect(pWidget,SIGNAL(showOffsetMemoryMap(qint64)),this,SLOT(showInMemoryMapWindowOffset(qint64)));
@@ -885,11 +886,21 @@ void FormatWidget::textValueChanged(QString sText)
     setValue(sText,nStype,nNdata,nVtype,nPosition,nOffset);
 }
 
-void FormatWidget::setEdited(bool bState)
+void FormatWidget::setEdited()
 {
-    reset();
+    qDebug("void FormatWidget::setEdited()");
 
-    emit editState(bState);
+    reset();
+    reloadData();
+
+//    reset();
+
+//    if(bState)
+//    {
+//        reloadData();
+//    }
+
+//    emit changed();
 }
 
 void FormatWidget::showHex(qint64 nOffset, qint64 nSize)

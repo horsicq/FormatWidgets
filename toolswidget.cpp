@@ -29,7 +29,7 @@ ToolsWidget::ToolsWidget(QWidget *pParent) :
 
     g_pDevice=nullptr;
 
-    connect(ui->widgetHex,SIGNAL(editState(bool)),this,SIGNAL(editState(bool)));
+    connect(ui->widgetHex,SIGNAL(changed()),this,SIGNAL(changed()));
     connect(ui->widgetHex,SIGNAL(showOffsetDisasm(qint64)),this,SLOT(_showDisasm(qint64)));
     connect(ui->widgetHex,SIGNAL(showOffsetMemoryMap(qint64)),this,SLOT(_showMemoryMap(qint64)));
     connect(ui->widgetStrings,SIGNAL(showHex(qint64,qint64)),this,SLOT(_showHex(qint64,qint64)));
@@ -46,7 +46,7 @@ void ToolsWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS options)
     hexOptions.bMenu_Disasm=true;
     hexOptions.bIsOffsetTitle=options.bOffset;
 
-    ui->widgetHex->enableReadOnly(false);
+//    ui->widgetHex->enableReadOnly(false);
 
     ui->widgetHex->setData(pDevice,hexOptions);
 
@@ -63,9 +63,11 @@ void ToolsWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS options)
     reload();
 }
 
-void ToolsWidget::setEdited(bool bState)
+void ToolsWidget::setEdited()
 {
-    ui->widgetHex->setEdited(bState);
+    ui->widgetHex->setEdited();
+
+//    emit changed();
 }
 
 void ToolsWidget::setReadonly(bool bState)

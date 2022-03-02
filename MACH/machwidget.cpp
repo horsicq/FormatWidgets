@@ -1307,7 +1307,7 @@ void MACHWidget::reloadData()
                 options.bMenu_Disasm=true;
                 options.bMenu_MemoryMap=true;
                 ui->widgetHex->setData(getDevice(),options);
-                ui->widgetHex->enableReadOnly(false);
+//                ui->widgetHex->enableReadOnly(false);
             }
         }
         else if(nType==SMACH::TYPE_DISASM)
@@ -3341,7 +3341,6 @@ void MACHWidget::showSectionHeader(int nType, QTableView *pTableView)
         DialogSectionHeader dsh(this);
         dsh.setWidget(pSectionHeaderWidget);
         dsh.setData(typeIdToString(nType));
-        dsh.setEdited(isEdited());
         dsh.setGlobal(getShortcuts(),getGlobalOptions());
 
         connect(&dsh,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));

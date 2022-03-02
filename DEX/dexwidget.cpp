@@ -306,7 +306,7 @@ void DEXWidget::reloadData()
                 options.bMenu_MemoryMap=true;
                 ui->widgetHex->setData(getDevice(),options);
 //                ui->widgetHex->setBackupFileName(getOptions().sBackupFileName);
-                ui->widgetHex->enableReadOnly(false);
+//                ui->widgetHex->enableReadOnly(false);
 
                 ui->widgetHex->reload();
             }

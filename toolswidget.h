@@ -40,14 +40,14 @@ public:
 
     void setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions);
     void setData(QIODevice *pDevice,FW_DEF::OPTIONS options);
-    void setEdited(bool bState);
+    void setEdited();
     void setReadonly(bool bState);
     void reload();
     qint64 getStartAddress();
     void setSelection(qint64 nOffset,qint64 nSize);
 
 signals:
-    void editState(bool bState);
+    void changed();
     void showOffsetHex(qint64 nOffset,qint64 nSize);
     void showOffsetDisasm(qint64 nOffset);
     void showOffsetMemoryMap(qint64 nOffset);
