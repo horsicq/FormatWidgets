@@ -27,6 +27,14 @@ ELFWidget::ELFWidget(QWidget *pParent) :
 {
     ui->setupUi(this);
 
+    memset(g_lineEdit_Elf_Ehdr,0,sizeof g_lineEdit_Elf_Ehdr);
+    memset(g_lineEdit_Elf_Interpreter,0,sizeof g_lineEdit_Elf_Interpreter);
+    memset(g_lineEdit_Elf_RunPath,0,sizeof g_lineEdit_Elf_RunPath);
+    memset(g_comboBox,0,sizeof g_comboBox);
+    memset(g_invWidget,0,sizeof g_invWidget);
+    memset(g_subDevice,0,sizeof g_subDevice);
+    memset(g_tvModel,0,sizeof g_tvModel);
+
     initWidget();
 }
 
@@ -44,15 +52,17 @@ ELFWidget::~ELFWidget()
 
 void ELFWidget::clear()
 {
+    setTreeItem(ui->treeWidgetNavi,0);
+
     ELFWidget::reset();
 
-    memset(g_lineEdit_Elf_Ehdr,0,sizeof g_lineEdit_Elf_Ehdr);
-    memset(g_lineEdit_Elf_Interpreter,0,sizeof g_lineEdit_Elf_Interpreter);
-    memset(g_lineEdit_Elf_RunPath,0,sizeof g_lineEdit_Elf_RunPath);
-    memset(g_comboBox,0,sizeof g_comboBox);
-    memset(g_invWidget,0,sizeof g_invWidget);
-    memset(g_subDevice,0,sizeof g_subDevice);
-    memset(g_tvModel,0,sizeof g_tvModel);
+    _deleteObjects((QObject **)g_lineEdit_Elf_Ehdr,sizeof g_lineEdit_Elf_Ehdr);
+    _deleteObjects((QObject **)g_lineEdit_Elf_Interpreter,sizeof g_lineEdit_Elf_Interpreter);
+    _deleteObjects((QObject **)g_lineEdit_Elf_RunPath,sizeof g_lineEdit_Elf_RunPath);
+    _deleteObjects((QObject **)g_comboBox,sizeof g_comboBox);
+    _deleteObjects((QObject **)g_invWidget,sizeof g_invWidget);
+    _deleteObjects((QObject **)g_subDevice,sizeof g_subDevice);
+    _deleteObjects((QObject **)g_tvModel,sizeof g_tvModel);
 
     ui->checkBoxReadonly->setChecked(true);
 
@@ -229,6 +239,11 @@ void ELFWidget::setReadonly(bool bState)
     setComboBoxesReadOnly(g_comboBox,__CB_size,bState);
 
     ui->widgetHex->setReadonly(bState);
+    ui->widgetHex_Elf_Ehdr->setReadonly(bState);
+    ui->widgetHex_Elf_Phdr->setReadonly(bState);
+    ui->widgetHex_Elf_Shdr->setReadonly(bState);
+    ui->widgetHex_Notes->setReadonly(bState);
+    ui->widgetHex_StringTable->setReadonly(bState);
 }
 
 void ELFWidget::blockSignals(bool bState)
