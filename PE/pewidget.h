@@ -217,7 +217,7 @@ private:
     QPushButton *pushButton[__PB_size];
     XDateTimeEditX *dateTimeEdit[__TD_size];
     InvWidget *invWidget[__INV_size];
-    SubDevice *subDevice[SPE::__TYPE_size];
+    SubDevice *g_subDevice[SPE::__TYPE_size];
     QStandardItemModel *tvModel[SPE::__TYPE_size_ext];
 };
 

@@ -36,7 +36,7 @@ ToolsWidget::ToolsWidget(QWidget *pParent) :
     connect(ui->widgetStrings,SIGNAL(showDemangle(QString)),this,SIGNAL(showDemangle(QString)));
 }
 
-void ToolsWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS options)
+void ToolsWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS options,QIODevice *pBackupDevice)
 {
     g_pDevice=pDevice;
 
@@ -49,6 +49,7 @@ void ToolsWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS options)
 //    ui->widgetHex->enableReadOnly(false);
 
     ui->widgetHex->setData(pDevice,hexOptions);
+    ui->widgetHex->setBackupDevice(pBackupDevice);
 
     g_stringsOptions={};
     g_stringsOptions.nBaseAddress=options.nImageBase;
@@ -61,6 +62,16 @@ void ToolsWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS options)
     ui->widgetStrings->setData(pDevice,g_stringsOptions,false);
 
     reload();
+}
+
+void ToolsWidget::setDevice(QIODevice *pDevice)
+{
+    ui->widgetHex->setDevice(pDevice);
+}
+
+void ToolsWidget::setBackupDevice(QIODevice *pDevice)
+{
+    ui->widgetHex->setBackupDevice(pDevice);
 }
 
 void ToolsWidget::setEdited()

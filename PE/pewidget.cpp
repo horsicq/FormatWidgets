@@ -27,6 +27,8 @@ PEWidget::PEWidget(QWidget *pParent) :
 {
     ui->setupUi(this);
 
+    memset(g_subDevice,0,sizeof g_subDevice);
+
     initWidget();
 
     ui->groupBoxHash32->setTitle(QString("%1 32").arg(tr("Hash")));
@@ -55,7 +57,7 @@ PEWidget::~PEWidget()
 
 void PEWidget::clear()
 {
-    reset();
+    PEWidget::reset();
 
     memset(lineEdit_IMAGE_DOS_HEADER,0,sizeof lineEdit_IMAGE_DOS_HEADER);
     memset(lineEdit_IMAGE_NT_HEADERS,0,sizeof lineEdit_IMAGE_NT_HEADERS);
@@ -72,7 +74,10 @@ void PEWidget::clear()
     memset(pushButton,0,sizeof pushButton);
     memset(dateTimeEdit,0,sizeof dateTimeEdit);
     memset(invWidget,0,sizeof invWidget);
-    memset(subDevice,0,sizeof subDevice);
+
+    _deleteSubdevices(g_subDevice,(sizeof g_subDevice)/(sizeof (SubDevice *)));
+
+    resetWidget();
 
     ui->checkBoxReadonly->setChecked(true);
 
@@ -928,6 +933,7 @@ void PEWidget::reloadData()
                 options.bMenu_Disasm=true;
                 options.bMenu_MemoryMap=true;
                 ui->widgetHex->setData(getDevice(),options);
+                ui->widgetHex->setBackupDevice(getBackupDevice());
                 // TODO save directory
 //                ui->widgetHex->enableReadOnly(false);
 
@@ -1050,7 +1056,7 @@ void PEWidget::reloadData()
                 qint64 nSize=pe.getDosHeaderExSize();
                 qint64 nAddress=pe.offsetToRelAddress(nOffset);
 
-                loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_IMAGE_DOS_HEADER],ui->widgetHex_IMAGE_DOS_HEADER);
+                loadHexSubdevice(nOffset,nSize,nAddress,&g_subDevice[SPE::TYPE_IMAGE_DOS_HEADER],ui->widgetHex_IMAGE_DOS_HEADER);
 
                 blockSignals(false);
             }
@@ -1073,7 +1079,7 @@ void PEWidget::reloadData()
                 qint64 nSize=4;
                 qint64 nAddress=pe.offsetToRelAddress(nOffset);
 
-                loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_IMAGE_NT_HEADERS],ui->widgetHex_IMAGE_NT_HEADERS);
+                loadHexSubdevice(nOffset,nSize,nAddress,&g_subDevice[SPE::TYPE_IMAGE_NT_HEADERS],ui->widgetHex_IMAGE_NT_HEADERS);
 
                 blockSignals(false);
             }
@@ -1113,7 +1119,7 @@ void PEWidget::reloadData()
                 qint64 nSize=pe.getFileHeaderSize();
                 qint64 nAddress=pe.offsetToRelAddress(nOffset);
 
-                loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_IMAGE_FILE_HEADER],ui->widgetHex_IMAGE_FILE_HEADER);
+                loadHexSubdevice(nOffset,nSize,nAddress,&g_subDevice[SPE::TYPE_IMAGE_FILE_HEADER],ui->widgetHex_IMAGE_FILE_HEADER);
 
                 blockSignals(false);
             }
@@ -1264,7 +1270,7 @@ void PEWidget::reloadData()
                 qint64 nSize=pe.getOptionalHeaderSize();
                 qint64 nAddress=pe.offsetToRelAddress(nOffset);
 
-                loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_IMAGE_OPTIONAL_HEADER],ui->widgetHex_IMAGE_OPTIONAL_HEADER);
+                loadHexSubdevice(nOffset,nSize,nAddress,&g_subDevice[SPE::TYPE_IMAGE_OPTIONAL_HEADER],ui->widgetHex_IMAGE_OPTIONAL_HEADER);
 
                 blockSignals(false);
             }
@@ -1654,7 +1660,7 @@ void PEWidget::reloadData()
                 qint64 nSize=pe.getTLSHeaderSize();
                 qint64 nAddress=pe.offsetToRelAddress(nOffset);
 
-                loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_TLS],ui->widgetHex_TLS);
+                loadHexSubdevice(nOffset,nSize,nAddress,&g_subDevice[SPE::TYPE_TLS],ui->widgetHex_TLS);
 
                 blockSignals(false);
             }
@@ -1895,7 +1901,7 @@ void PEWidget::reloadData()
                 qint64 nSize=pe.getLoadConfigDirectorySize();
                 qint64 nAddress=pe.offsetToRelAddress(nOffset);
 
-                loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_LOADCONFIG],ui->widgetHex_LoadConfig);
+                loadHexSubdevice(nOffset,nSize,nAddress,&g_subDevice[SPE::TYPE_LOADCONFIG],ui->widgetHex_LoadConfig);
 
                 blockSignals(false);
             }
@@ -1968,7 +1974,7 @@ void PEWidget::reloadData()
                 qint64 nSize=pe.getNetHeaderSize();
                 qint64 nAddress=pe.offsetToRelAddress(nOffset);
 
-                loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_NETHEADER],ui->widgetHex_NetHeader);
+                loadHexSubdevice(nOffset,nSize,nAddress,&g_subDevice[SPE::TYPE_NETHEADER],ui->widgetHex_NetHeader);
 
                 blockSignals(false);
             }
@@ -2002,7 +2008,7 @@ void PEWidget::reloadData()
                 qint64 nSize=osMetadata.nSize;
                 qint64 nAddress=pe.offsetToRelAddress(nOffset);
 
-                loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_NET_METADATA],ui->widgetHex_Net_Metadata);
+                loadHexSubdevice(nOffset,nSize,nAddress,&g_subDevice[SPE::TYPE_NET_METADATA],ui->widgetHex_Net_Metadata);
 
                 blockSignals(false);
             }
@@ -2015,7 +2021,7 @@ void PEWidget::reloadData()
                 qint64 nSize=nDataSize;
                 qint64 nAddress=pe.offsetToRelAddress(nOffset);
 
-                loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_NET_METADATA_STREAM],ui->widgetHex_Net_Metadata_Stream);
+                loadHexSubdevice(nOffset,nSize,nAddress,&g_subDevice[SPE::TYPE_NET_METADATA_STREAM],ui->widgetHex_Net_Metadata_Stream);
             }
         }
         else if(nType==SPE::TYPE_CERTIFICATE)
@@ -2038,7 +2044,7 @@ void PEWidget::reloadData()
                 qint64 nOverLayOffset=pe.getOverlayOffset();
                 qint64 nOverlaySize=pe.getOverlaySize();
 
-                loadHexSubdevice(nOverLayOffset,nOverlaySize,nOverLayOffset,&subDevice[SPE::TYPE_OVERLAY],ui->widgetHex_Overlay,true);
+                loadHexSubdevice(nOverLayOffset,nOverlaySize,nOverLayOffset,&g_subDevice[SPE::TYPE_OVERLAY],ui->widgetHex_Overlay,true);
             }
         }
 
@@ -2126,12 +2132,12 @@ void PEWidget::loadRelocs(int nRow)
 
 void PEWidget::loadSection(int nRow)
 {
-    loadHexSubdeviceByTableView(nRow,SPE::TYPE_SECTIONS,ui->widgetHex_Section,ui->tableView_Sections,&subDevice[SPE::TYPE_SECTIONS]);
+    loadHexSubdeviceByTableView(nRow,SPE::TYPE_SECTIONS,ui->widgetHex_Section,ui->tableView_Sections,&g_subDevice[SPE::TYPE_SECTIONS]);
 }
 
 void PEWidget::loadException(int nRow)
 { 
-    loadHexSubdeviceByTableView(nRow,SPE::TYPE_EXCEPTION,ui->widgetHex_Exception,ui->tableView_Exceptions,&subDevice[SPE::TYPE_EXCEPTION]);
+    loadHexSubdeviceByTableView(nRow,SPE::TYPE_EXCEPTION,ui->widgetHex_Exception,ui->tableView_Exceptions,&g_subDevice[SPE::TYPE_EXCEPTION]);
 }
 
 void PEWidget::loadDirectory(int nRow)
@@ -2140,12 +2146,12 @@ void PEWidget::loadDirectory(int nRow)
     qint64 nSize=ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->item(nRow,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
     qint64 nAddress=ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->item(nRow,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
 
-    loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_IMAGE_DIRECTORY_ENTRIES],ui->widgetHex_IMAGE_DIRECTORY_ENTRIES);
+    loadHexSubdevice(nOffset,nSize,nAddress,&g_subDevice[SPE::TYPE_IMAGE_DIRECTORY_ENTRIES],ui->widgetHex_IMAGE_DIRECTORY_ENTRIES);
 }
 
 void PEWidget::loadDebug(int nRow)
 {
-    loadHexSubdeviceByTableView(nRow,SPE::TYPE_DEBUG,ui->widgetHex_Debug,ui->tableView_Debug,&subDevice[SPE::TYPE_DEBUG]);
+    loadHexSubdeviceByTableView(nRow,SPE::TYPE_DEBUG,ui->widgetHex_Debug,ui->tableView_Debug,&g_subDevice[SPE::TYPE_DEBUG]);
 }
 
 void PEWidget::loadDelayImport(int nRow)
@@ -2523,7 +2529,7 @@ void PEWidget::onTableView_Sections_currentRowChanged(const QModelIndex &current
     Q_UNUSED(current)
     Q_UNUSED(previous)
 
-    loadHexSubdeviceByTableView(current.row(),SPE::TYPE_SECTIONS,ui->widgetHex_Section,ui->tableView_Sections,&subDevice[SPE::TYPE_SECTIONS]);
+    loadHexSubdeviceByTableView(current.row(),SPE::TYPE_SECTIONS,ui->widgetHex_Section,ui->tableView_Sections,&g_subDevice[SPE::TYPE_SECTIONS]);
 }
 
 void PEWidget::onTableView_ImportLibraries_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
@@ -2653,7 +2659,7 @@ void PEWidget::onTableView_Resources_currentRowChanged(const QModelIndex &curren
 {
     Q_UNUSED(previous)
 
-    loadHexSubdeviceByTableView(current.row(),SPE::TYPE_RESOURCES,ui->widgetHex_Resources,ui->tableView_Resources,&subDevice[SPE::TYPE_RESOURCES]);
+    loadHexSubdeviceByTableView(current.row(),SPE::TYPE_RESOURCES,ui->widgetHex_Resources,ui->tableView_Resources,&g_subDevice[SPE::TYPE_RESOURCES]);
 }
 
 void PEWidget::on_tableView_Exceptions_customContextMenuRequested(const QPoint &pos)
@@ -2769,7 +2775,7 @@ void PEWidget::onTreeView_Resources_currentRowChanged(const QModelIndex &current
         lineEdit_Resources[N_IMAGE_RESOURCES::OFFSET]->setValue((quint32)nOffset);
         lineEdit_Resources[N_IMAGE_RESOURCES::SIZE]->setValue((quint32)nSize);
 
-        loadHexSubdevice(nOffset,nSize,nAddress,&subDevice[SPE::TYPE_RESOURCES],ui->widgetHex_Resources);
+        loadHexSubdevice(nOffset,nSize,nAddress,&g_subDevice[SPE::TYPE_RESOURCES],ui->widgetHex_Resources);
     }
 }
 
@@ -2782,7 +2788,7 @@ void PEWidget::onTreeView_Certificate_currentRowChanged(const QModelIndex &curre
         qint64 nOffset=ui->treeView_Certificate->model()->data(current,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
         qint64 nSize=ui->treeView_Certificate->model()->data(current,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
 
-        loadHexSubdevice(nOffset,nSize,nOffset,&subDevice[SPE::TYPE_CERTIFICATE],ui->widgetHex_Certificate,true);
+        loadHexSubdevice(nOffset,nSize,nOffset,&g_subDevice[SPE::TYPE_CERTIFICATE],ui->widgetHex_Certificate,true);
     }
 }
 

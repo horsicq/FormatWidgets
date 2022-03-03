@@ -27,6 +27,8 @@ NEWidget::NEWidget(QWidget *pParent) :
 {
     ui->setupUi(this);
 
+    memset(g_subDevice,0,sizeof g_subDevice);
+
     initWidget();
 }
 
@@ -50,8 +52,12 @@ void NEWidget::clear()
     memset(g_lineEdit_OS2_HEADER,0,sizeof g_lineEdit_OS2_HEADER);
     memset(g_comboBox,0,sizeof g_comboBox);
     memset(g_invWidget,0,sizeof g_invWidget);
-    memset(g_subDevice,0,sizeof g_subDevice);
+
     memset(g_tvModel,0,sizeof g_tvModel);
+
+    _deleteSubdevices(g_subDevice,(sizeof g_subDevice)/(sizeof (SubDevice *)));
+
+    resetWidget();
 
     ui->checkBoxReadonly->setChecked(true);
 
@@ -348,6 +354,7 @@ void NEWidget::reloadData()
                 options.bMenu_Disasm=true;
                 options.bMenu_MemoryMap=true;
                 ui->widgetHex->setData(getDevice(),options);
+                ui->widgetHex->setBackupDevice(getBackupDevice());
 //                ui->widgetHex->setBackupFileName(getOptions().sBackupFileName);
 //                ui->widgetHex->enableReadOnly(false);
                 ui->widgetHex->reload();

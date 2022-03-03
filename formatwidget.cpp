@@ -162,6 +162,22 @@ void FormatWidget::setBackupDevice(QIODevice *pDevice)
     g_pBackupDevice=pDevice;
 }
 
+QIODevice *FormatWidget::getBackupDevice()
+{
+    QIODevice *pResult=nullptr;
+
+    if(g_pBackupDevice)
+    {
+        pResult=g_pBackupDevice;
+    }
+    else
+    {
+        pResult=g_pDevice;
+    }
+
+    return pResult;
+}
+
 void FormatWidget::setFileType(XBinary::FT fileType)
 {
     g_fileType=fileType;
@@ -274,14 +290,7 @@ bool FormatWidget::isEdited()
 {
     bool bResult=false;
 
-    if(g_pBackupDevice)
-    {
-        bResult=XBinary::isBackupPresent(g_pBackupDevice);
-    }
-    else
-    {
-        bResult=XBinary::isBackupPresent(getDevice());
-    }
+    bResult=XBinary::isBackupPresent(getBackupDevice());
 
     return bResult;
 }
@@ -311,7 +320,7 @@ bool FormatWidget::loadHexSubdevice(qint64 nOffset, qint64 nSize, qint64 nAddres
     hexOptions.nImageBase=nAddress;
     hexOptions.bOffset=bOffset;
 
-    pToolsWidget->setData((*ppSubDevice),hexOptions);
+    pToolsWidget->setData((*ppSubDevice),hexOptions,getBackupDevice());
 
     return true;
 }
@@ -756,6 +765,40 @@ void FormatWidget::initWidget()
     }
 }
 
+void FormatWidget::resetWidget()
+{
+    {
+        QList<XHexViewWidget *> listWidgets=this->findChildren<XHexViewWidget *>();
+
+        qint32 nNumberOfWidgets=listWidgets.count();
+
+        for(int i=0;i<nNumberOfWidgets;i++)
+        {
+            XHexViewWidget *pChild=dynamic_cast<XHexViewWidget *>(listWidgets.at(i));
+
+            if(pChild)
+            {
+                pChild->setDevice(0);
+            }
+        }
+    }
+    {
+        QList<ToolsWidget *> listWidgets=this->findChildren<ToolsWidget *>();
+
+        qint32 nNumberOfWidgets=listWidgets.count();
+
+        for(int i=0;i<nNumberOfWidgets;i++)
+        {
+            ToolsWidget *pChild=dynamic_cast<ToolsWidget *>(listWidgets.at(i));
+
+            if(pChild)
+            {
+                pChild->setDevice(0);
+            }
+        }
+    }
+}
+
 void FormatWidget::initSearchStringsWidget(SearchStringsWidget *pWidget)
 {
     connect(pWidget,SIGNAL(showHex(qint64,qint64)),this,SLOT(showInHexWindow(qint64,qint64)));
@@ -982,14 +1025,7 @@ bool FormatWidget::saveBackup()
     if((g_pXOptions->isSaveBackup())&&(!isEdited()))
     {
         // Save backup
-        if(g_pBackupDevice)
-        {
-            bResult=XBinary::saveBackup(g_pBackupDevice);
-        }
-        else
-        {
-            bResult=XBinary::saveBackup(getDevice());
-        }
+        bResult=XBinary::saveBackup(getBackupDevice());
     }
 
     return bResult;
@@ -1270,6 +1306,20 @@ void FormatWidget::_deleteObjects(QObject **ppObjects, qint32 nCount)
         {
             delete (ppObjects[i]);
             ppObjects[i]=0;
+        }
+    }
+}
+
+void FormatWidget::_deleteSubdevices(SubDevice **ppSubdevices, qint32 nCount)
+{
+    for(int i=0;i<nCount;i++)
+    {
+        if(ppSubdevices[i])
+        {
+            ppSubdevices[i]->close();
+
+            delete (ppSubdevices[i]);
+            ppSubdevices[i]=0;
         }
     }
 }

@@ -89,6 +89,7 @@ public:
     void setData(QString sFileName,FW_DEF::OPTIONS options,quint32 nNumber,qint64 nOffset,qint32 nType);
     void setData(FW_DEF::OPTIONS options,quint32 nNumber,qint64 nOffset,qint32 nType);
     void setBackupDevice(QIODevice *pDevice);
+    QIODevice *getBackupDevice();
 
     void setFileType(XBinary::FT fileType);
     XBinary::FT getFileType();
@@ -113,6 +114,7 @@ public:
     void setDateTimeEditReadOnly(XDateTimeEditX **ppDateTimeEdits,int nCount,bool bState);
 
     void _deleteObjects(QObject **ppObjects,qint32 nCount);
+    void _deleteSubdevices(SubDevice **ppSubdevices,qint32 nCount);
 
     void _blockSignals(QObject **ppObjects,int nCount,bool bState);
     XComboBoxEx *createComboBox(QTableWidget *pTableWidget,QMap<quint64,QString> mapData,int nType,int nData,XComboBoxEx::CBTYPE cbtype,quint64 nMask=0,int nExtraData=-1);
@@ -167,6 +169,7 @@ public:
     bool isNextPageAvailable();
 
     void initWidget();
+    void resetWidget();
 
     void initSearchStringsWidget(SearchStringsWidget *pWidget);
     void initSearchSignaturesWidget(SearchSignaturesWidget *pWidget);
@@ -209,7 +212,6 @@ protected:
     virtual void _showInDisasmWindowOffset(qint64 nOffset);
     virtual void _showInMemoryMapWindowOffset(qint64 nOffset);
     virtual void _showInHexWindow(qint64 nOffset,qint64 nSize);
-
 
 signals:
     void changed();

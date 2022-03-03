@@ -121,7 +121,8 @@ void BinaryWidget::reloadData()
 
     if(binary.isValid())
     {
-        ui->widgetHex->setData(getDevice(),getOptions());
+        ui->widgetHex->setData(getDevice(),getOptions(),getBackupDevice());
+//        ui->widgetHex->setBackupDevice(getBackupDevice());
         ui->widgetHex->reload();
 
         BinaryWidget::setReadonly(ui->checkBoxReadonly->isChecked());

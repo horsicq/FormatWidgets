@@ -27,6 +27,8 @@ LEWidget::LEWidget(QWidget *pParent) :
 {
     ui->setupUi(this);
 
+    memset(g_subDevice,0,sizeof g_subDevice);
+
     initWidget();
 }
 
@@ -50,7 +52,10 @@ void LEWidget::clear()
     memset(g_lineEdit_VXD_HEADER,0,sizeof g_lineEdit_VXD_HEADER);
     memset(g_comboBox,0,sizeof g_comboBox);
     memset(g_invWidget,0,sizeof g_invWidget);
-    memset(g_subDevice,0,sizeof g_subDevice);
+
+    _deleteSubdevices(g_subDevice,(sizeof g_subDevice)/(sizeof (SubDevice *)));
+
+    resetWidget();
 
     ui->checkBoxReadonly->setChecked(true);
 
@@ -338,6 +343,7 @@ void LEWidget::reloadData()
                 options.bMenu_Disasm=true;
                 options.bMenu_MemoryMap=true;
                 ui->widgetHex->setData(getDevice(),options);
+                ui->widgetHex->setBackupDevice(getBackupDevice());
 //                ui->widgetHex->setBackupFileName(getOptions().sBackupFileName);
 //                ui->widgetHex->enableReadOnly(false);
 

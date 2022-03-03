@@ -403,7 +403,7 @@ void FormatsWidget::on_pushButtonHexEntryPoint_clicked()
     //        hexOptions.sBackupFileName=XBinary::getBackupName(&file);
             hexOptions.nStartSelectionOffset=XFormats::getEntryPointOffset(getCurrentFileType(),&file);
 
-            DialogHexView dialogHex(this,&file,hexOptions);
+            DialogHexView dialogHex(this,&file,hexOptions,&file);
             dialogHex.setGlobal(getShortcuts(),getGlobalOptions());
 
             dialogHex.exec();
