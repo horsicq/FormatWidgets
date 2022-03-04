@@ -27,13 +27,7 @@ ELFWidget::ELFWidget(QWidget *pParent) :
 {
     ui->setupUi(this);
 
-    memset(g_lineEdit_Elf_Ehdr,0,sizeof g_lineEdit_Elf_Ehdr);
-    memset(g_lineEdit_Elf_Interpreter,0,sizeof g_lineEdit_Elf_Interpreter);
-    memset(g_lineEdit_Elf_RunPath,0,sizeof g_lineEdit_Elf_RunPath);
-    memset(g_comboBox,0,sizeof g_comboBox);
-    memset(g_invWidget,0,sizeof g_invWidget);
     memset(g_subDevice,0,sizeof g_subDevice);
-    memset(g_tvModel,0,sizeof g_tvModel);
 
     initWidget();
 }
@@ -56,13 +50,16 @@ void ELFWidget::clear()
 
     ELFWidget::reset();
 
-    _deleteObjects((QObject **)g_lineEdit_Elf_Ehdr,sizeof g_lineEdit_Elf_Ehdr);
-    _deleteObjects((QObject **)g_lineEdit_Elf_Interpreter,sizeof g_lineEdit_Elf_Interpreter);
-    _deleteObjects((QObject **)g_lineEdit_Elf_RunPath,sizeof g_lineEdit_Elf_RunPath);
-    _deleteObjects((QObject **)g_comboBox,sizeof g_comboBox);
-    _deleteObjects((QObject **)g_invWidget,sizeof g_invWidget);
-    _deleteObjects((QObject **)g_subDevice,sizeof g_subDevice);
-    _deleteObjects((QObject **)g_tvModel,sizeof g_tvModel);
+    memset(g_lineEdit_Elf_Ehdr,0,sizeof g_lineEdit_Elf_Ehdr);
+    memset(g_lineEdit_Elf_Interpreter,0,sizeof g_lineEdit_Elf_Interpreter);
+    memset(g_lineEdit_Elf_RunPath,0,sizeof g_lineEdit_Elf_RunPath);
+    memset(g_comboBox,0,sizeof g_comboBox);
+    memset(g_invWidget,0,sizeof g_invWidget);
+    memset(g_tvModel,0,sizeof g_tvModel);
+
+    _deleteSubdevices(g_subDevice,(sizeof g_subDevice)/(sizeof (SubDevice *)));
+
+    resetWidget();
 
     ui->checkBoxReadonly->setChecked(true);
 
@@ -303,6 +300,7 @@ void ELFWidget::reloadData()
                 options.bMenu_Disasm=true;
                 options.bMenu_MemoryMap=true;
                 ui->widgetHex->setData(getDevice(),options);
+                ui->widgetHex->setBackupDevice(getBackupDevice());
 //                ui->widgetHex->setBackupFileName(getOptions().sBackupFileName);
 //                ui->widgetHex->enableReadOnly(false);
 
@@ -952,7 +950,7 @@ void ELFWidget::_showInMemoryMapWindowOffset(qint64 nOffset)
     ui->widgetMemoryMap->goToOffset(nOffset);
 }
 
-void ELFWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
+void ELFWidget::_showInHexWindow(qint64 nOffset,qint64 nSize)
 {
     setTreeItem(ui->treeWidgetNavi,SELF::TYPE_HEX);
     ui->widgetHex->setSelection(nOffset,nSize);
