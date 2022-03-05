@@ -308,7 +308,7 @@ void LEWidget::_showInMemoryMapWindowOffset(qint64 nOffset)
     ui->widgetMemoryMap->goToOffset(nOffset);
 }
 
-void LEWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
+void LEWidget::_showInHexWindow(qint64 nOffset,qint64 nSize)
 {
     setTreeItem(ui->treeWidgetNavi,SLE::TYPE_HEX);
     ui->widgetHex->setSelection(nOffset,nSize);
