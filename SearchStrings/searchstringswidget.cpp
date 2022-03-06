@@ -153,9 +153,9 @@ bool SearchStringsWidget::getInitStatus()
 
 void SearchStringsWidget::on_pushButtonSave_clicked()
 {
-    if(g_pModel)
+    if(g_pFilter)
     {
-        XShortcutsWidget::saveModel(g_pModel,XBinary::getResultFileName(g_pDevice,QString("%1.txt").arg(tr("Strings"))));
+        XShortcutsWidget::saveModel(g_pFilter,XBinary::getResultFileName(g_pDevice,QString("%1.txt").arg(tr("Strings"))));
     }
 }
 
