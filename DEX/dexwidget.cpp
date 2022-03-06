@@ -649,3 +649,19 @@ void DEXWidget::on_toolButtonNext_clicked()
     ui->treeWidgetNavi->setCurrentItem(getNextPage());
     setAddPageEnabled(true);
 }
+
+void DEXWidget::on_pushButtonSaveStringIdItem_clicked()
+{
+    if(g_pFilterStrings)
+    {
+        XShortcutsWidget::saveModel(g_pFilterStrings,XBinary::getResultFileName(getBackupDevice(),QString("%1.txt").arg(tr("Strings"))));
+    }
+}
+
+void DEXWidget::on_pushButtonSaveTypeIdItem_clicked()
+{
+    if(g_pFilterTypes)
+    {
+        XShortcutsWidget::saveModel(g_pFilterTypes,XBinary::getResultFileName(getBackupDevice(),QString("%1.txt").arg(tr("Strings"))));
+    }
+}

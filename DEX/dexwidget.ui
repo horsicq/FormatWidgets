@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>614</width>
-    <height>237</height>
+    <width>659</width>
+    <height>302</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -308,7 +308,7 @@
            <enum>QAbstractItemView::SelectRows</enum>
           </property>
           <attribute name="horizontalHeaderDefaultSectionSize">
-           <number>39</number>
+           <number>57</number>
           </attribute>
           <attribute name="verticalHeaderVisible">
            <bool>false</bool>
@@ -338,37 +338,48 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QGroupBox" name="groupBoxFilterStrings">
-          <property name="minimumSize">
-           <size>
-            <width>200</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="title">
-           <string>Filter</string>
-          </property>
-          <layout class="QVBoxLayout" name="verticalLayout_5">
-           <property name="spacing">
-            <number>0</number>
-           </property>
-           <property name="leftMargin">
-            <number>0</number>
-           </property>
-           <property name="topMargin">
-            <number>0</number>
-           </property>
-           <property name="rightMargin">
-            <number>0</number>
-           </property>
-           <property name="bottomMargin">
-            <number>0</number>
-           </property>
-           <item>
-            <widget class="QLineEdit" name="lineEditFilterStrings"/>
-           </item>
-          </layout>
-         </widget>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <widget class="QGroupBox" name="groupBoxFilterStrings">
+            <property name="minimumSize">
+             <size>
+              <width>200</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="title">
+             <string>Filter</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_5">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QLineEdit" name="lineEditFilterStrings"/>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButtonSaveStringIdItem">
+            <property name="text">
+             <string>Save</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
         <item>
          <widget class="QTableView" name="tableView_STRING_ID_ITEM">
@@ -385,7 +396,7 @@
            <enum>QAbstractItemView::SelectRows</enum>
           </property>
           <attribute name="horizontalHeaderDefaultSectionSize">
-           <number>39</number>
+           <number>57</number>
           </attribute>
           <attribute name="verticalHeaderVisible">
            <bool>false</bool>
@@ -415,37 +426,48 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QGroupBox" name="groupBoxFilterTypes">
-          <property name="minimumSize">
-           <size>
-            <width>200</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="title">
-           <string>Filter</string>
-          </property>
-          <layout class="QVBoxLayout" name="verticalLayout_6">
-           <property name="spacing">
-            <number>0</number>
-           </property>
-           <property name="leftMargin">
-            <number>0</number>
-           </property>
-           <property name="topMargin">
-            <number>0</number>
-           </property>
-           <property name="rightMargin">
-            <number>0</number>
-           </property>
-           <property name="bottomMargin">
-            <number>0</number>
-           </property>
-           <item>
-            <widget class="QLineEdit" name="lineEditFilterTypes"/>
-           </item>
-          </layout>
-         </widget>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <widget class="QGroupBox" name="groupBoxFilterTypes">
+            <property name="minimumSize">
+             <size>
+              <width>200</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="title">
+             <string>Filter</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_6">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QLineEdit" name="lineEditFilterTypes"/>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButtonSaveTypeIdItem">
+            <property name="text">
+             <string>Save</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
         <item>
          <widget class="QTableView" name="tableView_TYPE_ID_ITEM">
@@ -462,7 +484,7 @@
            <enum>QAbstractItemView::SelectRows</enum>
           </property>
           <attribute name="horizontalHeaderDefaultSectionSize">
-           <number>39</number>
+           <number>57</number>
           </attribute>
           <attribute name="verticalHeaderVisible">
            <bool>false</bool>
@@ -506,7 +528,7 @@
            <enum>QAbstractItemView::SelectRows</enum>
           </property>
           <attribute name="horizontalHeaderDefaultSectionSize">
-           <number>39</number>
+           <number>57</number>
           </attribute>
           <attribute name="verticalHeaderVisible">
            <bool>false</bool>
@@ -550,7 +572,7 @@
            <enum>QAbstractItemView::SelectRows</enum>
           </property>
           <attribute name="horizontalHeaderDefaultSectionSize">
-           <number>39</number>
+           <number>57</number>
           </attribute>
           <attribute name="verticalHeaderVisible">
            <bool>false</bool>
@@ -594,7 +616,7 @@
            <enum>QAbstractItemView::SelectRows</enum>
           </property>
           <attribute name="horizontalHeaderDefaultSectionSize">
-           <number>39</number>
+           <number>57</number>
           </attribute>
           <attribute name="verticalHeaderVisible">
            <bool>false</bool>
@@ -641,7 +663,7 @@
            <enum>QAbstractItemView::SelectRows</enum>
           </property>
           <attribute name="horizontalHeaderDefaultSectionSize">
-           <number>39</number>
+           <number>57</number>
           </attribute>
           <attribute name="verticalHeaderVisible">
            <bool>false</bool>
