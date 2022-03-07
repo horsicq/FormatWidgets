@@ -36,14 +36,14 @@ ToolsWidget::ToolsWidget(QWidget *pParent) :
     connect(ui->widgetStrings,SIGNAL(showDemangle(QString)),this,SIGNAL(showDemangle(QString)));
 }
 
-void ToolsWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS options,QIODevice *pBackupDevice)
+void ToolsWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS options,QIODevice *pBackupDevice,bool bDisasm)
 {
     g_pDevice=pDevice;
 
     XHexView::OPTIONS hexOptions={};
     hexOptions.nStartAddress=options.nImageBase;
     hexOptions.bMenu_MemoryMap=true;
-    hexOptions.bMenu_Disasm=true;
+    hexOptions.bMenu_Disasm=bDisasm;
     hexOptions.bIsOffsetTitle=options.bOffset;
 
 //    ui->widgetHex->enableReadOnly(false);

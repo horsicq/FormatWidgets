@@ -39,7 +39,7 @@ public:
     ~ToolsWidget();
 
     void setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions);
-    void setData(QIODevice *pDevice, FW_DEF::OPTIONS options, QIODevice *pBackupDevice);
+    void setData(QIODevice *pDevice, FW_DEF::OPTIONS options, QIODevice *pBackupDevice, bool bDisasm=false);
     void setDevice(QIODevice *pDevice);
     void setBackupDevice(QIODevice *pDevice);
     void setEdited();

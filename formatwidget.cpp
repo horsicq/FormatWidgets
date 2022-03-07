@@ -295,7 +295,7 @@ bool FormatWidget::isEdited()
     return bResult;
 }
 
-bool FormatWidget::loadHexSubdevice(qint64 nOffset, qint64 nSize, qint64 nAddress,SubDevice **ppSubDevice,ToolsWidget *pToolsWidget,bool bOffset)
+bool FormatWidget::loadHexSubdevice(qint64 nOffset, qint64 nSize, qint64 nAddress,SubDevice **ppSubDevice,ToolsWidget *pToolsWidget,bool bOffset,bool bDisasm)
 {
     if(*ppSubDevice)
     {
@@ -320,7 +320,7 @@ bool FormatWidget::loadHexSubdevice(qint64 nOffset, qint64 nSize, qint64 nAddres
     hexOptions.nImageBase=nAddress;
     hexOptions.bOffset=bOffset;
 
-    pToolsWidget->setData((*ppSubDevice),hexOptions,getBackupDevice());
+    pToolsWidget->setData((*ppSubDevice),hexOptions,getBackupDevice(),bDisasm);
 
     return true;
 }

@@ -307,7 +307,7 @@ void DEXWidget::reloadData()
             if(!isInitPresent(sInit))
             {
                 XHexView::OPTIONS options={};
-                options.bMenu_Disasm=true;
+//                options.bMenu_Disasm=true;
                 options.bMenu_MemoryMap=true;
                 ui->widgetHex->setData(getDevice(),options);
                 ui->widgetHex->setBackupDevice(getBackupDevice());
@@ -425,7 +425,7 @@ void DEXWidget::reloadData()
 
                 quint32 nHeaderSize=dex.getHeaderSize();
 
-                loadHexSubdevice(0,nHeaderSize,0,&g_subDevice[SDEX::TYPE_HEADER],ui->widgetHex_Header);
+                loadHexSubdevice(0,nHeaderSize,0,&g_subDevice[SDEX::TYPE_HEADER],ui->widgetHex_Header,false,false);
 
                 blockSignals(false);
             }
