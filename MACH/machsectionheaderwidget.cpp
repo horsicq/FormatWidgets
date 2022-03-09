@@ -771,7 +771,14 @@ void MACHSectionHeaderWidget::reloadData()
         }
         else if(nType==SMACH::TYPE_mach_sections)
         {
-            createHeaderTable(SMACH::TYPE_mach_sections,ui->tableWidget,(bIs64)?(N_mach_sections64_E::records):(N_mach_sections32_E::records),g_ppLinedEdit,(bIs64)?(N_mach_sections64_E::__data_size):(N_mach_sections32_E::__data_size),getNumber(),getOffset());
+            if(bIs64)
+            {
+                createHeaderTable(SMACH::TYPE_mach_sections,ui->tableWidget,N_mach_sections64_E::records,g_ppLinedEdit,N_mach_sections64_E::__data_size,getNumber(),getOffset());
+            }
+            else
+            {
+                createHeaderTable(SMACH::TYPE_mach_sections,ui->tableWidget,N_mach_sections32_E::records,g_ppLinedEdit,N_mach_sections32_E::__data_size,getNumber(),getOffset());
+            }
 
             blockSignals(true);
 
@@ -915,7 +922,14 @@ void MACHSectionHeaderWidget::reloadData()
         }
         else if(nType==SMACH::TYPE_DYSYMTAB_modtab)
         {
-            createHeaderTable(SMACH::TYPE_DYSYMTAB_modtab,ui->tableWidget,(bIs64)?(N_mach_modtab64::records):(N_mach_modtab32::records),g_ppLinedEdit,(bIs64)?(N_mach_modtab64::__data_size):(N_mach_modtab32::__data_size),getNumber(),getOffset());
+            if(bIs64)
+            {
+                createHeaderTable(SMACH::TYPE_DYSYMTAB_modtab,ui->tableWidget,N_mach_modtab64::records,g_ppLinedEdit,N_mach_modtab64::__data_size,getNumber(),getOffset());
+            }
+            else
+            {
+                createHeaderTable(SMACH::TYPE_DYSYMTAB_modtab,ui->tableWidget,N_mach_modtab32::records,g_ppLinedEdit,N_mach_modtab32::__data_size,getNumber(),getOffset());
+            }
 
             blockSignals(true);
 
