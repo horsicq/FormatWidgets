@@ -133,7 +133,7 @@ void PDFWidget::reloadData()
                 options.bMenu_MemoryMap=true;
                 ui->widgetHex->setData(getDevice(),options);
                 // TODO save directory
-                ui->widgetHex->enableReadOnly(false);
+//                ui->widgetHex->enableReadOnly(false);
 
                 ui->widgetHex->reload();
             }
