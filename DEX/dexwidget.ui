@@ -102,6 +102,9 @@
       </column>
      </widget>
      <widget class="QStackedWidget" name="stackedWidgetInfo">
+      <property name="currentIndex">
+       <number>13</number>
+      </property>
       <widget class="QWidget" name="page_Info">
        <layout class="QVBoxLayout" name="verticalLayout_16">
         <property name="leftMargin">
@@ -373,7 +376,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButtonSaveStringIdItem">
+           <widget class="QPushButton" name="pushButtonSave_STRING_ID_ITEM">
             <property name="text">
              <string>Save</string>
             </property>
@@ -461,7 +464,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButtonSaveTypeIdItem">
+           <widget class="QPushButton" name="pushButtonSave_TYPE_ID_ITEM">
             <property name="text">
              <string>Save</string>
             </property>
@@ -514,6 +517,30 @@
          <number>0</number>
         </property>
         <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <item>
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButtonSave_PROTO_ID_ITEM">
+            <property name="text">
+             <string>Save</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
          <widget class="QTableView" name="tableView_PROTO_ID_ITEM">
           <property name="contextMenuPolicy">
            <enum>Qt::CustomContextMenu</enum>
@@ -557,6 +584,30 @@
         <property name="bottomMargin">
          <number>0</number>
         </property>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <item>
+           <spacer name="horizontalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButtonSave_FIELD_ID_ITEM">
+            <property name="text">
+             <string>Save</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
         <item>
          <widget class="QTableView" name="tableView_FIELD_ID_ITEM">
           <property name="contextMenuPolicy">
@@ -602,6 +653,30 @@
          <number>0</number>
         </property>
         <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_6">
+          <item>
+           <spacer name="horizontalSpacer_4">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButtonSave_METHOD_ID_ITEM">
+            <property name="text">
+             <string>Save</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
          <widget class="QTableView" name="tableView_METHOD_ID_ITEM">
           <property name="contextMenuPolicy">
            <enum>Qt::CustomContextMenu</enum>
@@ -633,9 +708,6 @@
       </widget>
       <widget class="QWidget" name="page_CLASS_DEF_ITEM">
        <layout class="QVBoxLayout" name="verticalLayout_11">
-        <property name="spacing">
-         <number>0</number>
-        </property>
         <property name="leftMargin">
          <number>0</number>
         </property>
@@ -648,6 +720,30 @@
         <property name="bottomMargin">
          <number>0</number>
         </property>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_7">
+          <item>
+           <spacer name="horizontalSpacer_5">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButtonSave_CLASS_DEF_ITEM">
+            <property name="text">
+             <string>Save</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
         <item>
          <widget class="QTableView" name="tableView_CLASS_DEF_ITEM">
           <property name="contextMenuPolicy">

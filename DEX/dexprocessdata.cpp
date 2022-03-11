@@ -147,8 +147,18 @@ void DEXProcessData::_process()
         listLabels.append("");
         listLabels.append("");
         listLabels.append(getStructList(N_DEX_PROTO_ID::records,N_DEX_PROTO_ID::__data_size));
+        listLabels.append("shorty");
+        listLabels.append("return_type");
 
         QList<XDEX_DEF::MAP_ITEM> listMapItems=g_pDEX->getMapItems();
+        XDEX_DEF::MAP_ITEM mapItemString=g_pDEX->getMapItem(XDEX_DEF::TYPE_STRING_ID_ITEM,&listMapItems);
+
+        QList<XDEX_DEF::STRING_ITEM_ID> listStringID=g_pDEX->getList_STRING_ITEM_ID(&listMapItems);
+        QList<XDEX_DEF::TYPE_ITEM_ID> listItemID=g_pDEX->getList_TYPE_ITEM_ID(&listMapItems);
+
+        qint64 nDataOffset=g_pDEX->getHeader_data_off();
+        qint64 nDataSize=g_pDEX->getHeader_data_size();
+        QByteArray baData=g_pDEX->read_array(nDataOffset,nDataSize);
 
         QList<XDEX_DEF::PROTO_ITEM_ID> listProtoIDs=g_pDEX->getList_PROTO_ITEM_ID(&listMapItems);
 
@@ -172,6 +182,12 @@ void DEXProcessData::_process()
             (*g_ppModel)->setItem(i,N_DEX_PROTO_ID::return_type_idx+2,    new QStandardItem(XBinary::valueToHex(listProtoIDs.at(i).return_type_idx)));
             (*g_ppModel)->setItem(i,N_DEX_PROTO_ID::parameters_off+2,     new QStandardItem(XBinary::valueToHex(listProtoIDs.at(i).parameters_off)));
 
+            QString sShorty=g_pDEX->getStringItemIdString(&listStringID,listProtoIDs.at(i).shorty_idx,baData.data(),nDataSize,nDataOffset);
+            QString sReturnType=g_pDEX->getTypeItemIdString(&listItemID,listProtoIDs.at(i).return_type_idx,&mapItemString,baData.data(),nDataSize,nDataOffset);
+
+            (*g_ppModel)->setItem(i,N_DEX_PROTO_ID::parameters_off+3,     new QStandardItem(sShorty));
+            (*g_ppModel)->setItem(i,N_DEX_PROTO_ID::parameters_off+4,     new QStandardItem(sReturnType));
+
             incValue();
         }
     }
@@ -181,8 +197,16 @@ void DEXProcessData::_process()
         listLabels.append("");
         listLabels.append("");
         listLabels.append(getStructList(N_DEX_FIELD_ID::records,N_DEX_FIELD_ID::__data_size));
+        // TODO type
+        listLabels.append("name");
 
         QList<XDEX_DEF::MAP_ITEM> listMapItems=g_pDEX->getMapItems();
+
+        QList<XDEX_DEF::STRING_ITEM_ID> listStringID=g_pDEX->getList_STRING_ITEM_ID(&listMapItems);
+
+        qint64 nDataOffset=g_pDEX->getHeader_data_off();
+        qint64 nDataSize=g_pDEX->getHeader_data_size();
+        QByteArray baData=g_pDEX->read_array(nDataOffset,nDataSize);
 
         QList<XDEX_DEF::FIELD_ITEM_ID> listFieldIDs=g_pDEX->getList_FIELD_ITEM_ID(&listMapItems);
 
@@ -204,6 +228,10 @@ void DEXProcessData::_process()
             (*g_ppModel)->setItem(i,N_DEX_FIELD_ID::type_idx+2,           new QStandardItem(XBinary::valueToHex(listFieldIDs.at(i).type_idx)));
             (*g_ppModel)->setItem(i,N_DEX_FIELD_ID::name_idx+2,           new QStandardItem(XBinary::valueToHex(listFieldIDs.at(i).name_idx)));
 
+            QString sName=g_pDEX->getStringItemIdString(&listStringID,listFieldIDs.at(i).name_idx,baData.data(),nDataSize,nDataOffset);
+
+            (*g_ppModel)->setItem(i,N_DEX_FIELD_ID::name_idx+3,         new QStandardItem(sName));
+
             incValue();
         }
     }
@@ -213,8 +241,15 @@ void DEXProcessData::_process()
         listLabels.append("");
         listLabels.append("");
         listLabels.append(getStructList(N_DEX_METHOD_ID::records,N_DEX_METHOD_ID::__data_size));
+        listLabels.append("name");
 
         QList<XDEX_DEF::MAP_ITEM> listMapItems=g_pDEX->getMapItems();
+
+        QList<XDEX_DEF::STRING_ITEM_ID> listStringID=g_pDEX->getList_STRING_ITEM_ID(&listMapItems);
+
+        qint64 nDataOffset=g_pDEX->getHeader_data_off();
+        qint64 nDataSize=g_pDEX->getHeader_data_size();
+        QByteArray baData=g_pDEX->read_array(nDataOffset,nDataSize);
 
         QList<XDEX_DEF::METHOD_ITEM_ID> listMethodIDs=g_pDEX->getList_METHOD_ITEM_ID(&listMapItems);
 
@@ -235,6 +270,10 @@ void DEXProcessData::_process()
             (*g_ppModel)->setItem(i,N_DEX_METHOD_ID::class_idx+2,         new QStandardItem(XBinary::valueToHex(listMethodIDs.at(i).class_idx)));
             (*g_ppModel)->setItem(i,N_DEX_METHOD_ID::proto_idx+2,         new QStandardItem(XBinary::valueToHex(listMethodIDs.at(i).proto_idx)));
             (*g_ppModel)->setItem(i,N_DEX_METHOD_ID::name_idx+2,          new QStandardItem(XBinary::valueToHex(listMethodIDs.at(i).name_idx)));
+
+            QString sName=g_pDEX->getStringItemIdString(&listStringID,listMethodIDs.at(i).name_idx,baData.data(),nDataSize,nDataOffset);
+
+            (*g_ppModel)->setItem(i,N_DEX_METHOD_ID::name_idx+3,         new QStandardItem(sName));
 
             incValue();
         }

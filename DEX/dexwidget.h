@@ -67,8 +67,12 @@ private slots:
     void on_lineEditFilterTypes_textChanged(const QString &sString);
     void on_toolButtonPrev_clicked();
     void on_toolButtonNext_clicked();
-    void on_pushButtonSaveStringIdItem_clicked();
-    void on_pushButtonSaveTypeIdItem_clicked();
+    void on_pushButtonSave_STRING_ID_ITEM_clicked();
+    void on_pushButtonSave_TYPE_ID_ITEM_clicked();
+    void on_pushButtonSave_PROTO_ID_ITEM_clicked();
+    void on_pushButtonSave_FIELD_ID_ITEM_clicked();
+    void on_pushButtonSave_CLASS_DEF_ITEM_clicked();
+    void on_pushButtonSave_METHOD_ID_ITEM_clicked();
 
 private:
     // TODO rename
