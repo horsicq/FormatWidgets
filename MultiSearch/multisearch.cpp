@@ -74,10 +74,10 @@ QList<MultiSearch::SIGNATURE_RECORD> MultiSearch::loadSignaturesFromFile(QString
                 record.sName=sLine.section(";",0,0);
                 record.sSignature=sLine.section(";",2,-1);
 
-                QString sEndianess=sLine.section(";",1,1);
+                QString sEndianness=sLine.section(";",1,1);
 
-                record.bIsBigEndian=(sEndianess=="BE");
-                record.bIsLittleEndian=(sEndianess=="LE");
+                record.bIsBigEndian=(sEndianness=="BE");
+                record.bIsLittleEndian=(sEndianness=="LE");
 
                 listResult.append(record);
             }

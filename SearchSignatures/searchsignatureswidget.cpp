@@ -50,8 +50,8 @@ void SearchSignaturesWidget::setData(QIODevice *pDevice,XBinary::FT fileType,OPT
 
     XFormats::setFileTypeComboBox(fileType,g_pDevice,ui->comboBoxType);
 
-    // TODO get endianess XFormats;
-    XFormats::setEndianessComboBox(ui->comboBoxEndianness,false);
+    // TODO get endianness XFormats;
+    XFormats::setEndiannessComboBox(ui->comboBoxEndianness,false);
 
     ui->tableViewResult->setModel(nullptr);
 
