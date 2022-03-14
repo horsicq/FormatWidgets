@@ -66,7 +66,7 @@ void LEProcessData::_process()
     }
 }
 
-void LEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
+void LEProcessData::ajustTableView(QWidget *pWidget,QTableView *pTableView)
 {
     // TODO like MACH !!!
     XBinary::MODE mode=g_pLE->getMode();
