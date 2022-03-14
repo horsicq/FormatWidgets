@@ -988,12 +988,12 @@ void ELFWidget::on_tableView_Elf_Shdr_customContextMenuRequested(const QPoint &p
         contextMenu.addAction(&actionDisasm);
 
         QAction actionEntropy(tr("Entropy"),this);
-        connect(&actionEntropy, SIGNAL(triggered()),this,SLOT(sectionEntropy()));
+        connect(&actionEntropy,SIGNAL(triggered()),this,SLOT(sectionEntropy()));
         actionEntropy.setEnabled(bIsEnable);
         contextMenu.addAction(&actionEntropy);
 
         QAction actionDump(tr("Dump to file"),this);
-        connect(&actionDump, SIGNAL(triggered()), this, SLOT(sectionDump()));
+        connect(&actionDump,SIGNAL(triggered()),this,SLOT(sectionDump()));
         actionDump.setEnabled(bIsEnable);
         contextMenu.addAction(&actionDump);
 
