@@ -1008,7 +1008,7 @@ void ELFWidget::on_tableView_SymbolTable_doubleClicked(const QModelIndex &index)
     editSymbolHeader();
 }
 
-void ELFWidget::onTableView_Elf_Shdr_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+void ELFWidget::onTableView_Elf_Shdr_currentRowChanged(const QModelIndex &current,const QModelIndex &previous)
 {
     Q_UNUSED(current)
     Q_UNUSED(previous)
