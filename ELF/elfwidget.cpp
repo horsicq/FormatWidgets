@@ -32,7 +32,7 @@ ELFWidget::ELFWidget(QWidget *pParent) :
     initWidget();
 }
 
-ELFWidget::ELFWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) :
+ELFWidget::ELFWidget(QIODevice *pDevice,FW_DEF::OPTIONS options,QWidget *pParent) :
     ELFWidget(pParent)
 {
     ELFWidget::setData(pDevice,options,0,0,0);
