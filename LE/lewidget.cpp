@@ -265,7 +265,7 @@ void LEWidget::blockSignals(bool bState)
     _blockSignals((QObject **)g_comboBox,__CB_size,bState);
 }
 
-void LEWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
+void LEWidget::adjustHeaderTable(int nType,QTableWidget *pTableWidget)
 {
     // TODO like MACH !!!
     Q_UNUSED(nType)
