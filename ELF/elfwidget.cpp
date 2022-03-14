@@ -974,7 +974,7 @@ void ELFWidget::on_tableView_Elf_Shdr_customContextMenuRequested(const QPoint &p
         QMenu contextMenu(this);
 
         QAction actionEdit(tr("Edit"),this);
-        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editSectionHeader()));
+        connect(&actionEdit,SIGNAL(triggered()),this,SLOT(editSectionHeader()));
         contextMenu.addAction(&actionEdit);
 
         QAction actionHex(QString("Hex"),this);
