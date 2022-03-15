@@ -694,8 +694,8 @@ void ELFWidget::addDatasets(XELF *pElf,QTreeWidgetItem *pParent,QList<XBinary::D
 void ELFWidget::widgetValueChanged(quint64 nValue)
 {
     QWidget *pWidget=qobject_cast<QWidget *>(sender());
-    int nStype=pWidget->property("STYPE").toInt();
-    int nNdata=pWidget->property("NDATA").toInt();
+    qint32 nStype=pWidget->property("STYPE").toInt();
+    qint32 nNdata=pWidget->property("NDATA").toInt();
 
     switch(nStype)
     {
@@ -1070,7 +1070,7 @@ void ELFWidget::on_tableView_Elf_Phdr_customContextMenuRequested(const QPoint &p
         contextMenu.addAction(&actionEdit);
 
         QAction actionHex(QString("Hex"),this);
-        connect(&actionHex, SIGNAL(triggered()), this, SLOT(programHex()));
+        connect(&actionHex,SIGNAL(triggered()),this,SLOT(programHex()));
         actionHex.setEnabled(bIsEnable);
         contextMenu.addAction(&actionHex);
 
@@ -1085,7 +1085,7 @@ void ELFWidget::on_tableView_Elf_Phdr_customContextMenuRequested(const QPoint &p
         contextMenu.addAction(&actionEntropy);
 
         QAction actionDump(tr("Dump to file"),this);
-        connect(&actionDump, SIGNAL(triggered()), this, SLOT(programDump()));
+        connect(&actionDump,SIGNAL(triggered()),this,SLOT(programDump()));
         actionDump.setEnabled(bIsEnable);
         contextMenu.addAction(&actionDump);
 
