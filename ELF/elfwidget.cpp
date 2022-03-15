@@ -714,7 +714,7 @@ void ELFWidget::widgetValueChanged(quint64 nValue)
     }
 }
 
-void ELFWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent, QTreeWidgetItem *pPrevious)
+void ELFWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent,QTreeWidgetItem *pPrevious)
 {
     Q_UNUSED(pPrevious)
 
