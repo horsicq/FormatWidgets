@@ -35,7 +35,7 @@ DialogPE::~DialogPE()
     delete ui;
 }
 
-void DialogPE::setData(QIODevice *pDevice, FW_DEF::OPTIONS options)
+void DialogPE::setData(QIODevice *pDevice,FW_DEF::OPTIONS options)
 {
     if(options.sTitle!="")
     {

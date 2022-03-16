@@ -34,7 +34,7 @@ PEWidget::PEWidget(QWidget *pParent) :
     ui->groupBoxHash32->setTitle(QString("%1 32").arg(tr("Hash")));
     ui->groupBoxHash64->setTitle(QString("%1 64").arg(tr("Hash")));
 
-    ui->checkBox_ManifestFormat->setChecked(true);
+    ui->checkBox_ManifestFormat->setChecked(false);
 
 #if defined(_MSC_VER)
     ui->widgetCertificateCheck->show();
