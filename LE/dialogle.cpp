@@ -35,7 +35,7 @@ DialogLE::~DialogLE()
     delete ui;
 }
 
-void DialogLE::setData(QIODevice *pDevice, FW_DEF::OPTIONS options)
+void DialogLE::setData(QIODevice *pDevice,FW_DEF::OPTIONS options)
 {
     if(options.sTitle!="")
     {
