@@ -356,7 +356,7 @@ void PEProcessData::_process()
 
         XBinary::_MEMORY_MAP memoryMap=g_pPE->getMemoryMap();
 
-        for(int i=0;(i<nNumberOfPositions)&&(isRun());i++)
+        for(qint32 i=0;(i<nNumberOfPositions)&&(isRun());i++)
         {
             QStandardItem *pItem=new QStandardItem;
             pItem->setText(XBinary::valueToHex(eh.listPositions.at(i).nOrdinal));
