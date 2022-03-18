@@ -1171,7 +1171,7 @@ void ELFWidget::on_tableView_Rel_customContextMenuRequested(const QPoint &pos)
         QMenu contextMenu(this);
 
         QAction actionEdit(tr("Edit"),this);
-        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editRelHeaderTag()));
+        connect(&actionEdit,SIGNAL(triggered()),this,SLOT(editRelHeaderTag()));
         contextMenu.addAction(&actionEdit);
 
         contextMenu.exec(ui->tableView_Rel->viewport()->mapToGlobal(pos));
