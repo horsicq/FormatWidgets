@@ -2074,7 +2074,7 @@ void PEWidget::on_tableView_Sections_customContextMenuRequested(const QPoint &po
         contextMenu.addAction(&actionHex);
 
         QAction actionDisasm(tr("Disasm"),this);
-        connect(&actionDisasm, SIGNAL(triggered()), this, SLOT(sectionDisasm()));
+        connect(&actionDisasm, SIGNAL(triggered()),this,SLOT(sectionDisasm()));
         actionDisasm.setEnabled(bIsEnable);
         contextMenu.addAction(&actionDisasm);
 
