@@ -87,7 +87,7 @@ void LESectionHeaderWidget::reloadData()
 
 }
 
-void LESectionHeaderWidget::on_tableWidget_Section_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+void LESectionHeaderWidget::on_tableWidget_Section_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn)
 {
     Q_UNUSED(nCurrentRow)
     Q_UNUSED(nCurrentColumn)
