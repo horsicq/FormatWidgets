@@ -1080,7 +1080,7 @@ void ELFWidget::on_tableView_Elf_Phdr_customContextMenuRequested(const QPoint &p
         contextMenu.addAction(&actionDisasm);
 
         QAction actionEntropy(tr("Entropy"),this);
-        connect(&actionEntropy, SIGNAL(triggered()), this, SLOT(programEntropy()));
+        connect(&actionEntropy,SIGNAL(triggered()),this,SLOT(programEntropy()));
         actionEntropy.setEnabled(bIsEnable);
         contextMenu.addAction(&actionEntropy);
 
