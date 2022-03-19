@@ -34,7 +34,7 @@ MultiSearch::~MultiSearch()
     delete g_pSemaphore;
 }
 
-void MultiSearch::setSearchData(QIODevice *pDevice, QList<XBinary::MS_RECORD> *pListRecords, OPTIONS options, TYPE type)
+void MultiSearch::setSearchData(QIODevice *pDevice,QList<XBinary::MS_RECORD> *pListRecords,OPTIONS options,TYPE type)
 {
     this->g_pDevice=pDevice;
     this->g_pListRecords=pListRecords;
