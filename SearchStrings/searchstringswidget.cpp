@@ -97,7 +97,7 @@ SearchStringsWidget::~SearchStringsWidget()
     delete ui;
 }
 
-void SearchStringsWidget::setData(QIODevice *pDevice, OPTIONS options, bool bAuto)
+void SearchStringsWidget::setData(QIODevice *pDevice,OPTIONS options,bool bAuto)
 {
     this->g_pDevice=pDevice;
 
