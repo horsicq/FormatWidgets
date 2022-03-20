@@ -1109,7 +1109,7 @@ void ELFWidget::on_tableView_DynamicArrayTags_customContextMenuRequested(const Q
         QMenu contextMenu(this);
 
         QAction actionEdit(tr("Edit"),this);
-        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editDynamicArrayTag()));
+        connect(&actionEdit,SIGNAL(triggered()),this,SLOT(editDynamicArrayTag()));
         contextMenu.addAction(&actionEdit);
 
         contextMenu.exec(ui->tableView_DynamicArrayTags->viewport()->mapToGlobal(pos));
