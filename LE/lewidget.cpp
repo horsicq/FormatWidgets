@@ -658,7 +658,7 @@ void LEWidget::on_tableView_Objects_customContextMenuRequested(const QPoint &pos
         QMenu contextMenu(this);
 
         QAction actionEdit(tr("Edit"),this);
-//        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editSectionHeader()));
+//        connect(&actionEdit,SIGNAL(triggered()),this,SLOT(editSectionHeader()));
         contextMenu.addAction(&actionEdit);
 
         QAction actionHex(tr("Hex"),this);
