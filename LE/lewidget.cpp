@@ -667,7 +667,7 @@ void LEWidget::on_tableView_Objects_customContextMenuRequested(const QPoint &pos
         contextMenu.addAction(&actionHex);
 
         QAction actionEntropy(tr("Entropy"),this);
-//        connect(&actionEntropy, SIGNAL(triggered()), this, SLOT(sectionEntropy()));
+//        connect(&actionEntropy, SIGNAL(triggered()),this,SLOT(sectionEntropy()));
         actionEntropy.setEnabled(bIsEnable);
         contextMenu.addAction(&actionEntropy);
 
