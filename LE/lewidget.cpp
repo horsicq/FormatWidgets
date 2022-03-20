@@ -682,7 +682,7 @@ void LEWidget::on_tableView_Objects_doubleClicked(const QModelIndex &index)
 //    editSectionHeader();
 }
 
-void LEWidget::onTableView_Objects_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+void LEWidget::onTableView_Objects_currentRowChanged(const QModelIndex &current,const QModelIndex &previous)
 {
     Q_UNUSED(current)
     Q_UNUSED(previous)
