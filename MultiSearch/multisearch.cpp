@@ -43,7 +43,7 @@ void MultiSearch::setSearchData(QIODevice *pDevice,QList<XBinary::MS_RECORD> *pL
     g_type=type;
 }
 
-void MultiSearch::setModelData(QList<XBinary::MS_RECORD> *pListRecords, QStandardItemModel **ppModel, OPTIONS options, TYPE type)
+void MultiSearch::setModelData(QList<XBinary::MS_RECORD> *pListRecords,QStandardItemModel **ppModel,OPTIONS options,TYPE type)
 {
     this->g_pListRecords=pListRecords;
     this->g_ppModel=ppModel;
