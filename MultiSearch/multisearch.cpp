@@ -89,7 +89,7 @@ QList<MultiSearch::SIGNATURE_RECORD> MultiSearch::loadSignaturesFromFile(QString
     return listResult;
 }
 
-MultiSearch::SIGNATURE_RECORD MultiSearch::createSignature(QString sName, QString sSignature)
+MultiSearch::SIGNATURE_RECORD MultiSearch::createSignature(QString sName,QString sSignature)
 {
     MultiSearch::SIGNATURE_RECORD result={};
 
