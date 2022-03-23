@@ -819,7 +819,7 @@ void FormatWidget::initHexViewWidget(XHexViewWidget *pWidget)
 
 void FormatWidget::initToolsWidget(ToolsWidget *pWidget)
 {
-    connect(pWidget,SIGNAL(changed()),this,SLOT(setEdited()));
+    connect(pWidget,SIGNAL(dataChanged()),this,SLOT(setEdited()));
     connect(pWidget,SIGNAL(showOffsetHex(qint64,qint64)),this,SLOT(showInHexWindow(qint64,qint64)));
     connect(pWidget,SIGNAL(showOffsetDisasm(qint64)),this,SLOT(showInDisasmWindowOffset(qint64)));
     connect(pWidget,SIGNAL(showOffsetMemoryMap(qint64)),this,SLOT(showInMemoryMapWindowOffset(qint64)));

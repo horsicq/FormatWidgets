@@ -101,6 +101,8 @@ FormatWidget::SV BinaryWidget::_setValue(QVariant vValue,int nStype,int nNdata,i
 void BinaryWidget::setReadonly(bool bState)
 {
     ui->widgetHex->setReadonly(bState);
+//    ui->widgetDisasm->setReadonly(bState);
+//    ui->widgetStrings->setReadonly(bState);
 }
 
 void BinaryWidget::blockSignals(bool bState)

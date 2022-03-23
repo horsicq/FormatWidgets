@@ -27,11 +27,13 @@ SearchStringsWidget::SearchStringsWidget(QWidget *pParent) :
 {
     ui->setupUi(this);
     g_pDevice=nullptr;
+    g_pBackupDevice=nullptr;
     g_pFilter=new QSortFilterProxyModel(this);
 
     g_options.nBaseAddress=0;
     g_pModel=nullptr;
     g_bInit=false;
+    g_bIsReadonly=true;
 
     g_options={};
 
@@ -141,6 +143,32 @@ void SearchStringsWidget::setData(QIODevice *pDevice,OPTIONS options,bool bAuto)
     }
 }
 
+void SearchStringsWidget::setBackupDevice(QIODevice *pDevice)
+{
+    g_pBackupDevice=pDevice;
+}
+
+QIODevice *SearchStringsWidget::getDevice()
+{
+    return g_pDevice;
+}
+
+QIODevice *SearchStringsWidget::getBackupDevice()
+{
+    QIODevice *pResult=nullptr;
+
+    if(g_pBackupDevice)
+    {
+        pResult=g_pBackupDevice;
+    }
+    else
+    {
+        pResult=g_pDevice;
+    }
+
+    return pResult;
+}
+
 void SearchStringsWidget::reload()
 {
     search();
@@ -149,6 +177,36 @@ void SearchStringsWidget::reload()
 bool SearchStringsWidget::getInitStatus()
 {
     return g_bInit;
+}
+
+bool SearchStringsWidget::isEdited()
+{
+    bool bResult=XBinary::isBackupPresent(getBackupDevice());
+
+    return bResult;
+}
+
+bool SearchStringsWidget::saveBackup()
+{
+    bool bResult=true;
+
+    if((getGlobalOptions()->isSaveBackup())&&(!isEdited()))
+    {
+        // Save backup
+        bResult=XBinary::saveBackup(getBackupDevice());
+    }
+
+    return bResult;
+}
+
+void SearchStringsWidget::setReadonly(bool bState)
+{
+    g_bIsReadonly=bState;
+}
+
+bool SearchStringsWidget::isReadonly()
+{
+    return g_bIsReadonly;
 }
 
 void SearchStringsWidget::on_pushButtonSave_clicked()
@@ -227,6 +285,18 @@ void SearchStringsWidget::on_tableViewResult_customContextMenuRequested(const QP
         contextMenu.addAction(&actionDemangle);
     }
 
+    QMenu menuEdit(tr("Edit"),this);
+
+    QAction actionEditString(tr("String"),this);
+    actionEditString.setShortcut(getShortcuts()->getShortcut(XShortcuts::ID_STRINGS_EDIT_STRING));
+    connect(&actionEditString,SIGNAL(triggered()),this,SLOT(_editString()));
+
+    menuEdit.addAction(&actionEditString);
+
+    menuEdit.setEnabled(!isReadonly());
+
+    contextMenu.addMenu(&menuEdit);
+
     contextMenu.exec(ui->tableViewResult->viewport()->mapToGlobal(pos));
 }
 
@@ -298,6 +368,16 @@ void SearchStringsWidget::_demangle()
         QString sString=ui->tableViewResult->model()->data(index).toString();
 
         emit showDemangle(sString);
+    }
+}
+
+void SearchStringsWidget::_editString()
+{
+    if(!isReadonly())
+    {
+        DialogEditString dialogEditString(this);
+
+        dialogEditString.exec();
     }
 }
 
@@ -380,6 +460,7 @@ void SearchStringsWidget::registerShortcuts(bool bState)
         if(!shortCuts[SC_COPYSIZE])             shortCuts[SC_COPYSIZE]          =new QShortcut(getShortcuts()->getShortcut(XShortcuts::ID_STRINGS_COPY_SIZE),       this,SLOT(_copySize()));
         if(!shortCuts[SC_HEX])                  shortCuts[SC_HEX]               =new QShortcut(getShortcuts()->getShortcut(XShortcuts::ID_STRINGS_HEX),             this,SLOT(_hex()));
         if(!shortCuts[SC_DEMANGLE])             shortCuts[SC_DEMANGLE]          =new QShortcut(getShortcuts()->getShortcut(XShortcuts::ID_STRINGS_DEMANGLE),        this,SLOT(_demangle()));
+        if(!shortCuts[SC_EDITSTRING])           shortCuts[SC_EDITSTRING]        =new QShortcut(getShortcuts()->getShortcut(XShortcuts::ID_STRINGS_EDIT_STRING),     this,SLOT(_editString()));
     }
     else
     {

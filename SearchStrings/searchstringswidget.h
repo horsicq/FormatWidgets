@@ -31,6 +31,7 @@
 #include <QtConcurrent>
 #include "dialogmultisearchprocess.h"
 #include "xshortcutswidget.h"
+#include "dialogeditstring.h"
 
 namespace Ui
 {
@@ -48,6 +49,7 @@ class SearchStringsWidget : public XShortcutsWidget
         SC_COPYSIZE,
         SC_HEX,
         SC_DEMANGLE,
+        SC_EDITSTRING,
         __SC_SIZE
     };
 
@@ -69,9 +71,16 @@ public:
     explicit SearchStringsWidget(QWidget *pParent=nullptr);
     ~SearchStringsWidget();
     void setData(QIODevice *pDevice,SearchStringsWidget::OPTIONS options,bool bAuto=false);
+    void setBackupDevice(QIODevice *pDevice);
+    QIODevice *getDevice();
+    QIODevice *getBackupDevice();
 
     void reload();
     bool getInitStatus();
+    bool isEdited();
+    bool saveBackup();
+    void setReadonly(bool bState);
+    bool isReadonly();
 
 private slots:
     void on_pushButtonSave_clicked();
@@ -84,6 +93,7 @@ private slots:
     void _copySize();
     void _hex();
     void _demangle();
+    void _editString();
     void search();
     void deleteOldModel();
     void on_checkBoxAnsi_stateChanged(int nArg);
@@ -101,6 +111,7 @@ signals:
 private:
     Ui::SearchStringsWidget *ui;
     QIODevice *g_pDevice;
+    QIODevice *g_pBackupDevice;
     QSortFilterProxyModel *g_pFilter;
     SearchStringsWidget::OPTIONS g_options;
     QStandardItemModel *g_pModel;
@@ -108,6 +119,7 @@ private:
     QStandardItemModel *g_pOldModel;
     QFutureWatcher<void> g_watcher;
     QShortcut *shortCuts[__SC_SIZE];
+    bool g_bIsReadonly;
 };
 
 #endif // SEARCHSTRINGSWIDGET_H

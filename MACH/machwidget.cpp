@@ -1101,6 +1101,42 @@ void MACHWidget::setReadonly(bool bState)
     setComboBoxesReadOnly(g_comboBox,__CB_size,bState);
 
     ui->widgetHex->setReadonly(bState);
+    ui->widgetDisasm->setReadonly(bState);
+    ui->widgetStrings->setReadonly(bState);
+    ui->widgetHex_build_version->setReadonly(bState);
+    ui->widgetHex_code_signature->setReadonly(bState);
+    ui->widgetHex_commands->setReadonly(bState);
+    ui->widgetHex_data_in_code->setReadonly(bState);
+    ui->widgetHex_DYLD_INFO_bind->setReadonly(bState);
+    ui->widgetHex_DYLD_INFO_export->setReadonly(bState);
+    ui->widgetHex_DYLD_INFO_lazy_bind->setReadonly(bState);
+    ui->widgetHex_dyld_info_only->setReadonly(bState);
+    ui->widgetHex_DYLD_INFO_rebase->setReadonly(bState);
+    ui->widgetHex_DYLD_INFO_weak_bind->setReadonly(bState);
+    ui->widgetHex_dysymtab->setReadonly(bState);
+    ui->widgetHex_encryption_info->setReadonly(bState);
+    ui->widgetHex_function_starts->setReadonly(bState);
+    ui->widgetHex_IDFVMLIB->setReadonly(bState);
+    ui->widgetHex_id_library->setReadonly(bState);
+    ui->widgetHex_libraries->setReadonly(bState);
+    ui->widgetHex_LOADFVMLIB->setReadonly(bState);
+    ui->widgetHex_mach_header->setReadonly(bState);
+    ui->widgetHex_main->setReadonly(bState);
+    ui->widgetHex_sections->setReadonly(bState);
+    ui->widgetHex_segments->setReadonly(bState);
+    ui->widgetHex_source_version->setReadonly(bState);
+    ui->widgetHex_StringTable->setReadonly(bState);
+    ui->widgetHex_SuperBlob->setReadonly(bState);
+    ui->widgetHex_symtab->setReadonly(bState);
+    ui->widgetHex_unix_thread->setReadonly(bState);
+    ui->widgetHex_unix_thread_arm_32->setReadonly(bState);
+    ui->widgetHex_unix_thread_arm_64->setReadonly(bState);
+    ui->widgetHex_unix_thread_m68k_32->setReadonly(bState);
+    ui->widgetHex_unix_thread_ppc_32->setReadonly(bState);
+    ui->widgetHex_unix_thread_x86_32->setReadonly(bState);
+    ui->widgetHex_unix_thread_x86_64->setReadonly(bState);
+    ui->widgetHex_version_min->setReadonly(bState);
+    ui->widgetHex_weak_libraries->setReadonly(bState);
 }
 
 void MACHWidget::blockSignals(bool bState)

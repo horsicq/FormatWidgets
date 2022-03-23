@@ -49,7 +49,7 @@ public:
     void setSelection(qint64 nOffset,qint64 nSize);
 
 signals:
-    void changed();
+    void dataChanged();
     void showOffsetHex(qint64 nOffset,qint64 nSize);
     void showOffsetDisasm(qint64 nOffset);
     void showOffsetMemoryMap(qint64 nOffset);

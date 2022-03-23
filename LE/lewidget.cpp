@@ -255,6 +255,8 @@ void LEWidget::setReadonly(bool bState)
     setComboBoxesReadOnly(g_comboBox,__CB_size,bState);
 
     ui->widgetHex->setReadonly(bState);
+    ui->widgetDisasm->setReadonly(bState);
+    ui->widgetStrings->setReadonly(bState);
 }
 
 void LEWidget::blockSignals(bool bState)
@@ -596,7 +598,7 @@ void LEWidget::widgetValueChanged(quint64 nValue)
     }
 }
 
-void LEWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent, QTreeWidgetItem *pPrevious)
+void LEWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent,QTreeWidgetItem *pPrevious)
 {
     Q_UNUSED(pPrevious)
 

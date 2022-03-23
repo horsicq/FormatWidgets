@@ -236,6 +236,8 @@ void ELFWidget::setReadonly(bool bState)
     setComboBoxesReadOnly(g_comboBox,__CB_size,bState);
 
     ui->widgetHex->setReadonly(bState);
+    ui->widgetDisasm->setReadonly(bState);
+    ui->widgetStrings->setReadonly(bState);
     ui->widgetHex_Elf_Ehdr->setReadonly(bState);
     ui->widgetHex_Elf_Phdr->setReadonly(bState);
     ui->widgetHex_Elf_Shdr->setReadonly(bState);

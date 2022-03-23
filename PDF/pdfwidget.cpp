@@ -95,6 +95,7 @@ FormatWidget::SV PDFWidget::_setValue(QVariant vValue, int nStype, int nNdata, i
 void PDFWidget::setReadonly(bool bState)
 {
     ui->widgetHex->setReadonly(bState);
+    ui->widgetStrings->setReadonly(bState);
 }
 
 void PDFWidget::blockSignals(bool bState)

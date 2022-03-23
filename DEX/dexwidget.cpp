@@ -235,6 +235,7 @@ void DEXWidget::setReadonly(bool bState)
     setComboBoxesReadOnly(g_comboBox,__CB_size,bState);
 
     ui->widgetHex->setReadonly(bState);
+    ui->widgetStrings->setReadonly(bState);
 }
 
 void DEXWidget::blockSignals(bool bState)

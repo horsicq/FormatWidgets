@@ -169,6 +169,8 @@ void MSDOSWidget::setReadonly(bool bState)
     setComboBoxesReadOnly(g_comboBox,__CB_size,bState);
 
     ui->widgetHex->setReadonly(bState);
+    ui->widgetDisasm->setReadonly(bState);
+    ui->widgetStrings->setReadonly(bState);
 }
 
 void MSDOSWidget::blockSignals(bool bState)

@@ -18,5 +18,10 @@ SOURCES += \
     include($$PWD/../MultiSearch/multisearch.pri)
 }
 
+!contains(XCONFIG, dialogeditstring) {
+    XCONFIG += dialogeditstring
+    include($$PWD/../../FormatDialogs/dialogeditstring.pri)
+}
+
 DISTFILES += \
     $$PWD/searchstringswidget.cmake

@@ -709,6 +709,7 @@ void PEWidget::setReadonly(bool bState)
     setDateTimeEditReadOnly(g_dateTimeEdit,__TD_size,bState);
 
     ui->widgetHex->setReadonly(bState);
+    ui->widgetStrings->setReadonly(bState);
     ui->widgetDisasm->setReadonly(bState);
     ui->widgetHex_Section->setReadonly(bState);
     ui->widgetHex_Overlay->setReadonly(bState);
