@@ -32,7 +32,7 @@ LEWidget::LEWidget(QWidget *pParent) :
     initWidget();
 }
 
-LEWidget::LEWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) :
+LEWidget::LEWidget(QIODevice *pDevice,FW_DEF::OPTIONS options,QWidget *pParent) :
     LEWidget(pParent)
 {
     LEWidget::setData(pDevice,options,0,0,0);
