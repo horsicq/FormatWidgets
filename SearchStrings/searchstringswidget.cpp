@@ -375,9 +375,25 @@ void SearchStringsWidget::_editString()
 {
     if(!isReadonly())
     {
-        DialogEditString dialogEditString(this);
+        QModelIndex index0=ui->tableViewResult->selectionModel()->selectedIndexes().at(0);
+        QModelIndex index3=ui->tableViewResult->selectionModel()->selectedIndexes().at(3);
 
-        dialogEditString.exec();
+        DialogEditString::DATA_STRUCT dataStruct={};
+
+        dataStruct.nOffset=ui->tableViewResult->model()->data(index0,Qt::UserRole+MultiSearch::USERROLE_OFFSET).toLongLong();
+        dataStruct.nSize=ui->tableViewResult->model()->data(index0,Qt::UserRole+MultiSearch::USERROLE_SIZE).toLongLong();
+        dataStruct.recordType=(XBinary::MS_RECORD_TYPE)(ui->tableViewResult->model()->data(index0,Qt::UserRole+MultiSearch::USERROLE_TYPE).toLongLong());
+
+        dataStruct.sString=ui->tableViewResult->model()->data(index3).toString();
+
+        DialogEditString dialogEditString(this,g_pDevice,dataStruct);
+
+        if(dialogEditString.exec()==QDialog::Accepted)
+        {
+            // TODO update row
+
+            emit dataChanged();
+        }
     }
 }
 

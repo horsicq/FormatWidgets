@@ -32,6 +32,7 @@ ToolsWidget::ToolsWidget(QWidget *pParent) :
     connect(ui->widgetHex,SIGNAL(dataChanged()),this,SIGNAL(dataChanged()));
     connect(ui->widgetHex,SIGNAL(showOffsetDisasm(qint64)),this,SLOT(_showDisasm(qint64)));
     connect(ui->widgetHex,SIGNAL(showOffsetMemoryMap(qint64)),this,SLOT(_showMemoryMap(qint64)));
+    connect(ui->widgetStrings,SIGNAL(dataChanged()),this,SIGNAL(dataChanged()));
     connect(ui->widgetStrings,SIGNAL(showHex(qint64,qint64)),this,SLOT(_showHex(qint64,qint64)));
     connect(ui->widgetStrings,SIGNAL(showDemangle(QString)),this,SIGNAL(showDemangle(QString)));
 }

@@ -801,6 +801,7 @@ void FormatWidget::resetWidget()
 
 void FormatWidget::initSearchStringsWidget(SearchStringsWidget *pWidget)
 {
+    connect(pWidget,SIGNAL(dataChanged()),this,SLOT(setEdited()));
     connect(pWidget,SIGNAL(showHex(qint64,qint64)),this,SLOT(showInHexWindow(qint64,qint64)));
     connect(pWidget,SIGNAL(showDemangle(QString)),this,SLOT(showDemangle(QString)));
 }
@@ -812,7 +813,7 @@ void FormatWidget::initSearchSignaturesWidget(SearchSignaturesWidget *pWidget)
 
 void FormatWidget::initHexViewWidget(XHexViewWidget *pWidget)
 {
-    connect(pWidget,SIGNAL(changed()),this,SLOT(setEdited()));
+    connect(pWidget,SIGNAL(dataChanged()),this,SLOT(setEdited()));
     connect(pWidget,SIGNAL(showOffsetDisasm(qint64)),this,SLOT(showInDisasmWindowOffset(qint64)));
     connect(pWidget,SIGNAL(showOffsetMemoryMap(qint64)),this,SLOT(showInMemoryMapWindowOffset(qint64)));
 }
@@ -931,8 +932,9 @@ void FormatWidget::textValueChanged(QString sText)
 
 void FormatWidget::setEdited()
 {
+#ifdef QT_DEBUG
     qDebug("void FormatWidget::setEdited()");
-
+#endif
     reset();
     reloadData();
 

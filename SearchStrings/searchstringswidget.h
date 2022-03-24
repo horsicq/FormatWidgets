@@ -107,6 +107,7 @@ protected:
 signals:
     void showHex(qint64 nOffset,qint64 nSize);
     void showDemangle(QString sString);
+    void dataChanged();
 
 private:
     Ui::SearchStringsWidget *ui;
