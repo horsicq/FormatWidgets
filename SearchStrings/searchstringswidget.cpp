@@ -376,6 +376,8 @@ void SearchStringsWidget::_editString()
     if(!isReadonly())
     {
         QModelIndex index0=ui->tableViewResult->selectionModel()->selectedIndexes().at(0);
+        QModelIndex index1=ui->tableViewResult->selectionModel()->selectedIndexes().at(1);
+        QModelIndex index2=ui->tableViewResult->selectionModel()->selectedIndexes().at(2);
         QModelIndex index3=ui->tableViewResult->selectionModel()->selectedIndexes().at(3);
 
         DialogEditString::DATA_STRUCT dataStruct={};
@@ -383,16 +385,39 @@ void SearchStringsWidget::_editString()
         dataStruct.nOffset=ui->tableViewResult->model()->data(index0,Qt::UserRole+MultiSearch::USERROLE_OFFSET).toLongLong();
         dataStruct.nSize=ui->tableViewResult->model()->data(index0,Qt::UserRole+MultiSearch::USERROLE_SIZE).toLongLong();
         dataStruct.recordType=(XBinary::MS_RECORD_TYPE)(ui->tableViewResult->model()->data(index0,Qt::UserRole+MultiSearch::USERROLE_TYPE).toLongLong());
+        dataStruct.bIsCStrings=false;
 
         dataStruct.sString=ui->tableViewResult->model()->data(index3).toString();
 
-        DialogEditString dialogEditString(this,g_pDevice,dataStruct);
+        DialogEditString dialogEditString(this,g_pDevice,&dataStruct);
 
         if(dialogEditString.exec()==QDialog::Accepted)
         {
-            // TODO update row
+            bool bSuccess=false;
 
-            emit dataChanged();
+            if(saveBackup())
+            {
+                if(XBinary::write_array(g_pDevice,dataStruct.nOffset,XBinary::getStringData(dataStruct.recordType,dataStruct.sString,dataStruct.bIsCStrings)))
+                {
+                    ui->tableViewResult->model()->setData(index0,dataStruct.nSize,Qt::UserRole+MultiSearch::USERROLE_SIZE);
+                    ui->tableViewResult->model()->setData(index0,dataStruct.recordType,Qt::UserRole+MultiSearch::USERROLE_TYPE);
+
+                    ui->tableViewResult->model()->setData(index1,XBinary::valueToHexEx(dataStruct.sString.size()),Qt::DisplayRole);
+                    ui->tableViewResult->model()->setData(index2,XBinary::msRecordTypeIdToString(dataStruct.recordType),Qt::DisplayRole);
+                    ui->tableViewResult->model()->setData(index3,dataStruct.sString,Qt::DisplayRole);
+
+                    bSuccess=true;
+                }
+            }
+
+            if(bSuccess)
+            {
+                emit dataChanged();
+            }
+            else
+            {
+                QMessageBox::critical(XOptions::getMainWidget(this),tr("Error"),tr("Cannot save file")+QString(": %1").arg(XBinary::getBackupFileName(getBackupDevice())));
+            }
         }
     }
 }

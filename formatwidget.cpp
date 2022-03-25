@@ -24,7 +24,6 @@ FormatWidget::FormatWidget(QWidget *pParent):
     XShortcutsWidget(pParent)
 {
     g_pDevice=nullptr;
-    g_pXOptions=&g_xOptionsEmpty;
     g_pBackupDevice=nullptr;
     g_bIsReadonly=false;
     g_fwOptions={};
@@ -263,7 +262,7 @@ void FormatWidget::setValue(QVariant vValue, int nStype, int nNdata, int nVtype,
     }
     else
     {
-        QMessageBox::critical(XOptions::getMainWidget(this),tr("Error"),tr("Cannot save file")+QString(": %1").arg(XBinary::getBackupFileName(getDevice())));
+        QMessageBox::critical(XOptions::getMainWidget(this),tr("Error"),tr("Cannot save file")+QString(": %1").arg(XBinary::getBackupFileName(getBackupDevice())));
     }
 }
 
@@ -1024,7 +1023,7 @@ bool FormatWidget::saveBackup()
 {
     bool bResult=true;
 
-    if((g_pXOptions->isSaveBackup())&&(!isEdited()))
+    if((getGlobalOptions()->isSaveBackup())&&(!isEdited()))
     {
         // Save backup
         bResult=XBinary::saveBackup(getBackupDevice());

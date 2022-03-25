@@ -289,24 +289,14 @@ void MultiSearch::processModel()
             (*g_ppModel)->setItem(i,0,pTypeAddress);
 
             QStandardItem *pTypeSize=new QStandardItem;
-            pTypeSize->setText(XBinary::valueToHex(XBinary::MODE_32,record.sString.size()));
+            pTypeSize->setText(XBinary::valueToHexEx(record.sString.size()));
             pTypeSize->setTextAlignment(Qt::AlignRight|Qt::AlignVCenter);
             (*g_ppModel)->setItem(i,1,pTypeSize);
 
             QStandardItem *pTypeItem=new QStandardItem;
 
-            if(record.recordType==XBinary::MS_RECORD_TYPE_ANSI)
-            {
-                pTypeItem->setText("A");
-            }
-            else if(record.recordType==XBinary::MS_RECORD_TYPE_UTF8)
-            {
-                pTypeItem->setText("UTF8");
-            }
-            else if(record.recordType==XBinary::MS_RECORD_TYPE_UNICODE)
-            {
-                pTypeItem->setText("U");
-            }
+            pTypeItem->setText(XBinary::msRecordTypeIdToString(record.recordType));
+
             pTypeItem->setTextAlignment(Qt::AlignLeft);
             (*g_ppModel)->setItem(i,2,pTypeItem);
             (*g_ppModel)->setItem(i,3,new QStandardItem(record.sString));
