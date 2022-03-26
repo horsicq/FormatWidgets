@@ -1034,7 +1034,7 @@ void ELFWidget::onTableView_DynamicArrayTags_currentRowChanged(const QModelIndex
     // TODO
 }
 
-void ELFWidget::onTableView_Notes_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+void ELFWidget::onTableView_Notes_currentRowChanged(const QModelIndex &current,const QModelIndex &previous)
 {
     Q_UNUSED(current)
     Q_UNUSED(previous)
