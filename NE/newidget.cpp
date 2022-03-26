@@ -615,7 +615,7 @@ void NEWidget::widgetValueChanged(quint64 nValue)
     }
 }
 
-void NEWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent, QTreeWidgetItem *pPrevious)
+void NEWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent,QTreeWidgetItem *pPrevious)
 {
     Q_UNUSED(pPrevious)
 
