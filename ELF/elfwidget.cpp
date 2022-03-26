@@ -1018,7 +1018,7 @@ void ELFWidget::onTableView_Elf_Shdr_currentRowChanged(const QModelIndex &curren
     loadHexSubdeviceByTableView(current.row(),SELF::TYPE_Elf_Shdr,ui->widgetHex_Elf_Shdr,ui->tableView_Elf_Shdr,&g_subDevice[SELF::TYPE_Elf_Shdr]);
 }
 
-void ELFWidget::onTableView_Elf_Phdr_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+void ELFWidget::onTableView_Elf_Phdr_currentRowChanged(const QModelIndex &current,const QModelIndex &previous)
 {
     Q_UNUSED(current)
     Q_UNUSED(previous)
