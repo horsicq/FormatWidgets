@@ -2066,7 +2066,7 @@ void PEWidget::on_tableView_Sections_customContextMenuRequested(const QPoint &po
         QMenu contextMenu(this);
 
         QAction actionEdit(tr("Edit"),this);
-        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editSectionHeader()));
+        connect(&actionEdit,SIGNAL(triggered()),this,SLOT(editSectionHeader()));
         contextMenu.addAction(&actionEdit);
 
         QAction actionHex(tr("Hex"),this);
