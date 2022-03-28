@@ -61,7 +61,7 @@ void ProcessData::ajustTreeView(QWidget *pWidget, QTreeView *pTreeView)
     pTreeView->expand(pTreeView->model()->index(0,0));
 }
 
-QList<QString> ProcessData::getStructList(const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount)
+QList<QString> ProcessData::getStructList(const FW_DEF::HEADER_RECORD *pRecords,int nRecordCount)
 {
     QList<QString> listResult;
 
