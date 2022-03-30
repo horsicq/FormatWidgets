@@ -88,7 +88,7 @@ void NESectionHeaderWidget::reloadData()
 
 }
 
-void NESectionHeaderWidget::on_tableWidget_Section_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+void NESectionHeaderWidget::on_tableWidget_Section_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn)
 {
     Q_UNUSED(nCurrentRow)
     Q_UNUSED(nCurrentColumn)
