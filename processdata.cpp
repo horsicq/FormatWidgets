@@ -54,7 +54,7 @@ bool ProcessData::isRun()
     return !(g_bIsStop);
 }
 
-void ProcessData::ajustTreeView(QWidget *pWidget, QTreeView *pTreeView)
+void ProcessData::ajustTreeView(QWidget *pWidget,QTreeView *pTreeView)
 {
     Q_UNUSED(pWidget)
 
