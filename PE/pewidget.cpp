@@ -720,6 +720,13 @@ void PEWidget::setReadonly(bool bState)
     ui->widgetHex_NetHeader->setReadonly(bState);
     ui->widgetHex_Net_Metadata->setReadonly(bState);
     ui->widgetHex_Net_Metadata_Stream->setReadonly(bState);
+    ui->widgetHex_Certificate->setReadonly(bState);
+    ui->widgetHex_IMAGE_DIRECTORY_ENTRIES->setReadonly(bState);
+    ui->widgetHex_IMAGE_DOS_HEADER->setReadonly(bState);
+    ui->widgetHex_IMAGE_FILE_HEADER->setReadonly(bState);
+    ui->widgetHex_IMAGE_NT_HEADERS->setReadonly(bState);
+    ui->widgetHex_IMAGE_OPTIONAL_HEADER->setReadonly(bState);
+    ui->widgetHex_TLS->setReadonly(bState);
 }
 
 void PEWidget::blockSignals(bool bState)
