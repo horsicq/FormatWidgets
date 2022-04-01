@@ -86,7 +86,7 @@ void InvWidget::setOffsetAndSize(XBinary *pBinary, qint64 nOffset, qint64 nSize,
     }
 }
 
-void InvWidget::setAddressAndSize(XBinary *pBinary, qint64 nAddress, qint64 nSize, bool bNotNull)
+void InvWidget::setAddressAndSize(XBinary *pBinary,qint64 nAddress,qint64 nSize,bool bNotNull)
 {
     bool bValid=false;
 
