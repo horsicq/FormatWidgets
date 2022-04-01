@@ -664,7 +664,7 @@ void LEWidget::on_tableView_Objects_customContextMenuRequested(const QPoint &pos
         contextMenu.addAction(&actionEdit);
 
         QAction actionHex(tr("Hex"),this);
-//        connect(&actionHex, SIGNAL(triggered()),this,SLOT(sectionHex()));
+//        connect(&actionHex,SIGNAL(triggered()),this,SLOT(sectionHex()));
         actionHex.setEnabled(bIsEnable);
         contextMenu.addAction(&actionHex);
 
