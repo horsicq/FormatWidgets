@@ -1042,7 +1042,7 @@ void ELFWidget::onTableView_Notes_currentRowChanged(const QModelIndex &current,c
     loadHexSubdeviceByTableView(current.row(),SELF::TYPE_NOTES,ui->widgetHex_Notes,ui->tableView_Notes,&g_subDevice[SELF::TYPE_NOTES]);
 }
 
-void ELFWidget::onTableView_Libraries_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+void ELFWidget::onTableView_Libraries_currentRowChanged(const QModelIndex &current,const QModelIndex &previous)
 {
     Q_UNUSED(current)
     Q_UNUSED(previous)
