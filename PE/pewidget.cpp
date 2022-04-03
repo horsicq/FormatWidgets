@@ -2092,7 +2092,7 @@ void PEWidget::on_tableView_Sections_customContextMenuRequested(const QPoint &po
         contextMenu.addAction(&actionEntropy);
 
         QAction actionDump(tr("Dump to file"),this);
-        connect(&actionDump, SIGNAL(triggered()), this, SLOT(sectionDump()));
+        connect(&actionDump,SIGNAL(triggered()),this,SLOT(sectionDump()));
         actionDump.setEnabled(bIsEnable);
         contextMenu.addAction(&actionDump);
 
