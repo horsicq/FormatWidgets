@@ -2525,7 +2525,7 @@ void MACHWidget::on_tableWidget_dysymtab_currentCellChanged(int nCurrentRow, int
     setHeaderTableSelection(ui->widgetHex_dysymtab,ui->tableWidget_dysymtab);
 }
 
-void MACHWidget::on_tableWidget_version_min_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+void MACHWidget::on_tableWidget_version_min_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn)
 {
     Q_UNUSED(nCurrentRow);
     Q_UNUSED(nCurrentColumn);
