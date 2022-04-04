@@ -682,6 +682,37 @@ void PEProcessData::_process()
             }
         }
     }
+    else if(g_nType==SPE::TYPE_RESOURCES_STRINGTABLE)
+    {
+        QList<QString> listLabels;
+        listLabels.append("");
+        listLabels.append(QString("Id"));
+        listLabels.append(tr("Language"));
+        listLabels.append(tr("String"));
+
+        QList<XPE::RESOURCE_STRINGTABLE_RECORD> listSTR=g_pPE->getResourceStringTableRecords();
+
+        int nNumberOfRecords=listSTR.count();
+
+        *g_ppModel=new QStandardItemModel(nNumberOfRecords,listLabels.count());
+
+        setMaximum(nNumberOfRecords);
+
+        setHeader(*g_ppModel,&listLabels);
+
+        for(int i=0;(i<nNumberOfRecords)&&(isRun());i++)
+        {
+            QStandardItem *pItem=new QStandardItem;
+            pItem->setData(i,Qt::DisplayRole);
+
+            (*g_ppModel)->setItem(i,0,pItem);
+            (*g_ppModel)->setItem(i,1,new QStandardItem(QString::number(listSTR.at(i).nID)));
+            (*g_ppModel)->setItem(i,2,new QStandardItem(QString::number(listSTR.at(i).nLanguage)));
+            (*g_ppModel)->setItem(i,3,new QStandardItem(listSTR.at(i).sString));
+
+            incValue();
+        }
+    }
     else if(g_nType==SPE::TYPE_CERTIFICATE)
     {
 //        g_pPE->getCertInfo();

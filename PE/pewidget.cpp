@@ -146,6 +146,11 @@ void PEWidget::reload()
 
             ui->treeWidgetNavi->addTopLevelItem(pResources);
 
+            if(pe.isResourceStringTablePresent())
+            {
+                pResources->addChild(createNewItem(SPE::TYPE_RESOURCES_STRINGTABLE,tr("String table")));
+            }
+
             if(pe.isResourceVersionPresent())
             {
                 pResources->addChild(createNewItem(SPE::TYPE_RESOURCES_VERSION,tr("Version")));
@@ -1495,6 +1500,22 @@ void PEWidget::reloadData()
                 ajustTreeView(&peProcessDataTree,&g_tvModel[SPE::TYPE_RESOURCES_TREE],ui->treeView_Resources);
 
                 connect(ui->treeView_Resources->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTreeView_Resources_currentRowChanged(QModelIndex,QModelIndex)));
+            }
+        }
+        else if(nType==SPE::TYPE_RESOURCES_STRINGTABLE)
+        {
+            if(!isInitPresent(sInit))
+            {
+                PEProcessData peProcessData(SPE::TYPE_RESOURCES_STRINGTABLE,&g_tvModel[SPE::TYPE_RESOURCES_STRINGTABLE],&pe,0,0,0,false);
+
+                ajustTableView(&peProcessData,&g_tvModel[SPE::TYPE_RESOURCES_STRINGTABLE],ui->tableView_Resources_StringTable,nullptr,true);
+
+//                connect(ui->tableView_Resources_StringTable->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_Resources_StringTable_currentRowChanged(QModelIndex,QModelIndex)));
+
+//                if(g_tvModel[SPE::TYPE_RESOURCES_STRINGTABLE]->rowCount())
+//                {
+//                    ui->tableView_Resources_StringTable->setCurrentIndex(ui->tableView_Resources_StringTable->model()->index(0,0));
+//                }
             }
         }
         else if(nType==SPE::TYPE_RESOURCES_VERSION)
