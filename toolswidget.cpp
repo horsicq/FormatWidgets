@@ -58,7 +58,7 @@ void ToolsWidget::setData(QIODevice *pDevice,FW_DEF::OPTIONS options,QIODevice *
     g_stringsOptions.bMenu_Demangle=true;
     g_stringsOptions.bAnsi=true;
     g_stringsOptions.bUnicode=true;
-    g_stringsOptions.bCStrings=true;
+    g_stringsOptions.bCStrings=false;
 
     ui->widgetStrings->setData(pDevice,g_stringsOptions,false);
 

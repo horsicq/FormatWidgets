@@ -380,7 +380,7 @@ void LEWidget::reloadData()
                 stringsOptions.bAnsi=true;
                 stringsOptions.bUTF8=false;
                 stringsOptions.bUnicode=true;
-                stringsOptions.bCStrings=true;
+                stringsOptions.bCStrings=false;
 
                 ui->widgetStrings->setData(getDevice(),stringsOptions,true);
             }

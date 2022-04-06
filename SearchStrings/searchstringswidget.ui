@@ -99,7 +99,7 @@
      <item>
       <widget class="QCheckBox" name="checkBoxCStrings">
        <property name="text">
-        <string notr="true">C Strings</string>
+        <string>C Strings</string>
        </property>
       </widget>
      </item>

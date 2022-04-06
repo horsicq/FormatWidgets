@@ -981,7 +981,7 @@ void PEWidget::reloadData()
                 stringsOptions.bAnsi=true;
                 stringsOptions.bUTF8=false;
                 stringsOptions.bUnicode=true;
-                stringsOptions.bCStrings=true;
+                stringsOptions.bCStrings=false;
 
                 ui->widgetStrings->setData(getDevice(),stringsOptions,true);
             }
@@ -1743,6 +1743,10 @@ void PEWidget::reloadData()
                     {
                         nRecordSize=N_IMAGE_LOADCONFIG::CodeIntegrity_Flags;
                     }
+                    else if(nHeaderSize==0xac)
+                    {
+                        nRecordSize=N_IMAGE_LOADCONFIG::GuardXFGCheckFunctionPointer;
+                    }
                     else if(nHeaderSize==0xb8)
                     {
                         nRecordSize=N_IMAGE_LOADCONFIG::CastGuardOsDeterminedFailureMode;
@@ -1901,6 +1905,10 @@ void PEWidget::reloadData()
                         g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::VolatileMetadataPointer]->setValue(lc32.VolatileMetadataPointer);
                         g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardEHContinuationTable]->setValue(lc32.GuardEHContinuationTable);
                         g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardEHContinuationCount]->setValue(lc32.GuardEHContinuationCount);
+                    }
+
+                    if(nRecordSize>N_IMAGE_LOADCONFIG::GuardXFGCheckFunctionPointer)
+                    {
                         g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardXFGCheckFunctionPointer]->setValue(lc32.GuardXFGCheckFunctionPointer);
                         g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardXFGDispatchFunctionPointer]->setValue(lc32.GuardXFGDispatchFunctionPointer);
                         g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardXFGTableDispatchFunctionPointer]->setValue(lc32.GuardXFGTableDispatchFunctionPointer);
