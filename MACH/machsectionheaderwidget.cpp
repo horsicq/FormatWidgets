@@ -524,7 +524,7 @@ void MACHSectionHeaderWidget::blockSignals(bool bState)
     _blockSignals((QObject **)g_ppComboBox,g_nComboBoxSize,bState);
 }
 
-void MACHSectionHeaderWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
+void MACHSectionHeaderWidget::adjustHeaderTable(int nType,QTableWidget *pTableWidget)
 {
     XBinary::MODE mode=XMACH::getMode(getDevice(),getOptions().bIsImage,getOptions().nImageBase);
 
