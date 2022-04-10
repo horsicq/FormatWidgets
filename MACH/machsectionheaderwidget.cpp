@@ -1135,7 +1135,7 @@ void MACHSectionHeaderWidget::widgetValueChanged(quint64 nValue)
     }
 }
 
-void MACHSectionHeaderWidget::on_tableWidget_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+void MACHSectionHeaderWidget::on_tableWidget_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn)
 {
     Q_UNUSED(nCurrentRow)
     Q_UNUSED(nCurrentColumn)
