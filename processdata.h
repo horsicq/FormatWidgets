@@ -21,10 +21,10 @@
 #ifndef PROCESSDATA_H
 #define PROCESSDATA_H
 
+#include <QElapsedTimer>
+#include <QStandardItemModel>
 #include <QTableView>
 #include <QTreeView>
-#include <QStandardItemModel>
-#include <QElapsedTimer>
 #include "formatwidget_def.h"
 #include "xlineedithex.h"
 #include "xoptions.h"
@@ -35,6 +35,7 @@ class ProcessData : public QObject
 
 public:
     explicit ProcessData();
+    
     void stop();
     void setMaximum(quint64 nMaximum);
     void incValue();
