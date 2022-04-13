@@ -223,7 +223,7 @@ void MSDOSWidget::_showInMemoryMapWindowOffset(qint64 nOffset)
     ui->widgetMemoryMap->goToOffset(nOffset);
 }
 
-void MSDOSWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
+void MSDOSWidget::_showInHexWindow(qint64 nOffset,qint64 nSize)
 {
     setTreeItem(ui->treeWidgetNavi,SMSDOS::TYPE_HEX);
     ui->widgetHex->setSelection(nOffset,nSize);
