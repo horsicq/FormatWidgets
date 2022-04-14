@@ -110,7 +110,7 @@ qint64 ToolsWidget::getStartAddress()
     return ui->widgetHex->getStartAddress();
 }
 
-void ToolsWidget::setSelection(qint64 nOffset, qint64 nSize)
+void ToolsWidget::setSelection(qint64 nOffset,qint64 nSize)
 {
     ui->widgetHex->setSelection(nOffset,nSize);
 }
