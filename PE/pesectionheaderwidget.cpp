@@ -158,7 +158,7 @@ void PESectionHeaderWidget::setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions
     XShortcutsWidget::setGlobal(pShortcuts,pXOptions);
 }
 
-FormatWidget::SV PESectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype,int nPosition,qint64 nOffset)
+FormatWidget::SV PESectionHeaderWidget::_setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition,qint64 nOffset)
 {
     Q_UNUSED(nVtype)
     Q_UNUSED(nOffset)
