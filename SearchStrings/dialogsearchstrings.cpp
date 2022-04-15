@@ -37,7 +37,7 @@ DialogSearchStrings::~DialogSearchStrings()
     delete ui;
 }
 
-void DialogSearchStrings::setData(QIODevice *pDevice, SearchStringsWidget::OPTIONS options, bool bAuto)
+void DialogSearchStrings::setData(QIODevice *pDevice,SearchStringsWidget::OPTIONS options,bool bAuto)
 {
     ui->widgetSearchStrings->setData(pDevice,options,bAuto);
 
