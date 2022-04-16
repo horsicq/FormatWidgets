@@ -57,7 +57,7 @@ InvWidget::~InvWidget()
 
 }
 
-void InvWidget::setOffsetAndSize(XBinary *pBinary, qint64 nOffset, qint64 nSize, bool bNotNull)
+void InvWidget::setOffsetAndSize(XBinary *pBinary,qint64 nOffset,qint64 nSize,bool bNotNull)
 {
     bool bValid=false;
 
