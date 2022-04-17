@@ -21,8 +21,8 @@
 #ifndef PEPROCESSDATA_H
 #define PEPROCESSDATA_H
 
-#include "processdata.h"
 #include "pe_defs.h"
+#include "processdata.h"
 #include "specabstract.h"
 
 class PEProcessData : public ProcessData
