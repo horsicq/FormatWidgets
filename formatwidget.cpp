@@ -294,7 +294,7 @@ bool FormatWidget::isEdited()
     return bResult;
 }
 
-bool FormatWidget::loadHexSubdevice(qint64 nOffset, qint64 nSize, qint64 nAddress,SubDevice **ppSubDevice,ToolsWidget *pToolsWidget,bool bOffset,bool bDisasm)
+bool FormatWidget::loadHexSubdevice(qint64 nOffset, qint64 nSize, XADDR nAddress,SubDevice **ppSubDevice,ToolsWidget *pToolsWidget,bool bOffset,bool bDisasm)
 {
     if(*ppSubDevice)
     {
@@ -336,7 +336,7 @@ bool FormatWidget::loadHexSubdeviceByTableView(int nRow, int nType, ToolsWidget 
 
         qint64 nOffset=pTableView->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
         qint64 nSize=pTableView->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
-        qint64 nAddress=pTableView->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
+        XADDR nAddress=pTableView->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
 
         bResult=loadHexSubdevice(nOffset,nSize,nAddress,ppSubDevice,pToolsWidget);
     }
@@ -525,7 +525,7 @@ void FormatWidget::showSectionDisasm(QTableView *pTableView)
     {
         QModelIndex index=pTableView->selectionModel()->selectedIndexes().at(0);
 
-        qint64 nAddress=pTableView->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
+        XADDR nAddress=pTableView->model()->data(index,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
 
         showInDisasmWindowAddress(nAddress);
     }
@@ -862,7 +862,7 @@ qint32 FormatWidget::getColumnWidth(QWidget *pParent, FormatWidget::CW cw, XBina
     return nResult;
 }
 
-void FormatWidget::_showInDisasmWindowAddress(qint64 nAddress)
+void FormatWidget::_showInDisasmWindowAddress(XADDR nAddress)
 {
     Q_UNUSED(nAddress)
 #ifdef QT_DEBUG
@@ -965,7 +965,7 @@ void FormatWidget::showHex(qint64 nOffset, qint64 nSize)
     reloadData();
 }
 
-void FormatWidget::showInDisasmWindowAddress(qint64 nAddress)
+void FormatWidget::showInDisasmWindowAddress(XADDR nAddress)
 {
     _showInDisasmWindowAddress(nAddress);
 }

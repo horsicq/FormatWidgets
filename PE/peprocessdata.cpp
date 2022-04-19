@@ -449,7 +449,7 @@ void PEProcessData::_process()
         listLabels.append(tr("Address"));
         listLabels.append("");
 
-        QList<qint64> listCallbacks=g_pPE->getTLS_CallbacksList();
+        QList<XADDR> listCallbacks=g_pPE->getTLS_CallbacksList();
 
         int nNumberOfRecords=listCallbacks.count();
 
@@ -461,7 +461,7 @@ void PEProcessData::_process()
 
         for(int i=0;(i<nNumberOfRecords)&&(isRun());i++)
         {
-            qint64 nAddress=listCallbacks.at(i);
+            XADDR nAddress=listCallbacks.at(i);
 
             QStandardItem *pItem=new QStandardItem;
                         pItem->setData(i,Qt::DisplayRole);

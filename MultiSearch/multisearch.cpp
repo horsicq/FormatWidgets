@@ -258,7 +258,7 @@ void MultiSearch::processModel()
         qint32 nNumberOfRecords=g_pListRecords->count();
         *g_ppModel=new QStandardItemModel(nNumberOfRecords,4); // TODO Check maximum
 
-        qint64 nBaseAddress=g_options.memoryMap.nModuleAddress;
+        XADDR nBaseAddress=g_options.memoryMap.nModuleAddress;
 
         XBinary::MODE modeAddress=XBinary::getWidthModeFromSize(nBaseAddress+g_options.memoryMap.nRawSize);
 
@@ -334,7 +334,7 @@ void MultiSearch::processModel()
         {
             XBinary::MS_RECORD record=g_pListRecords->at(i);
 
-            qint64 nAddress=XBinary::offsetToAddress(&(g_options.memoryMap),record.nOffset);
+            XADDR nAddress=XBinary::offsetToAddress(&(g_options.memoryMap),record.nOffset);
 
             QStandardItem *pTypeAddress=new QStandardItem;
             pTypeAddress->setText(XBinary::valueToHex(modeAddress,nAddress));

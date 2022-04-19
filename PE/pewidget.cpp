@@ -2181,7 +2181,7 @@ void PEWidget::loadDirectory(int nRow)
 {
     qint64 nOffset=ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->item(nRow,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
     qint64 nSize=ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->item(nRow,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
-    qint64 nAddress=ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->item(nRow,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
+    XADDR nAddress=ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->item(nRow,0)->data(Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
 
     loadHexSubdevice(nOffset,nSize,nAddress,&g_subDevice[SPE::TYPE_IMAGE_DIRECTORY_ENTRIES],ui->widgetHex_IMAGE_DIRECTORY_ENTRIES);
 }
@@ -2291,7 +2291,7 @@ QString PEWidget::typeIdToString(int nType)
     return sResult;
 }
 
-void PEWidget::_showInDisasmWindowAddress(qint64 nAddress)
+void PEWidget::_showInDisasmWindowAddress(XADDR nAddress)
 {
     setTreeItem(ui->treeWidgetNavi,SPE::TYPE_DISASM);
     ui->widgetDisasm->goToAddress(nAddress);
@@ -2803,7 +2803,7 @@ void PEWidget::onTreeView_Resources_currentRowChanged(const QModelIndex &current
         QString sID3=ui->treeView_Resources->model()->data(current,Qt::UserRole+FW_DEF::SECTION_DATA_VALUE3).toString();
         qint64 nOffset=ui->treeView_Resources->model()->data(current,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
         qint64 nSize=ui->treeView_Resources->model()->data(current,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE).toLongLong();
-        qint64 nAddress=ui->treeView_Resources->model()->data(current,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
+        XADDR nAddress=ui->treeView_Resources->model()->data(current,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
 
         g_lineEdit_Resources[N_IMAGE_RESOURCES::ID1]->setStringValue(sID1);
         g_lineEdit_Resources[N_IMAGE_RESOURCES::ID2]->setStringValue(sID2);

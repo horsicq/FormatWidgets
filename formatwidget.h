@@ -128,7 +128,7 @@ public:
 
 //    QPushButton *createHexButton(QTableWidget *pTableWidget,int nType,int nData);
 
-    bool loadHexSubdevice(qint64 nOffset,qint64 nSize,qint64 nAddress,SubDevice **ppSubDevice,ToolsWidget *pToolsWidget,bool bOffset=false,bool bDisasm=true);
+    bool loadHexSubdevice(qint64 nOffset,qint64 nSize,XADDR nAddress,SubDevice **ppSubDevice,ToolsWidget *pToolsWidget,bool bOffset=false,bool bDisasm=true);
     bool loadHexSubdeviceByTableView(int nRow,int nType,ToolsWidget *pToolsWidget,QTableView *pTableView,SubDevice **ppSubDevice);
     bool setHexSubdeviceByTableView(int nRow,int nType,ToolsWidget *pToolsWidget,QTableView *pTableView);
 
@@ -208,7 +208,7 @@ protected:
     virtual void adjustHeaderTable(int nType,QTableWidget *pTableWidget);
     virtual void adjustListTable(int nType,QTableWidget *pTableWidget);
     virtual QString typeIdToString(int nType);
-    virtual void _showInDisasmWindowAddress(qint64 nAddress);
+    virtual void _showInDisasmWindowAddress(XADDR nAddress);
     virtual void _showInDisasmWindowOffset(qint64 nOffset);
     virtual void _showInMemoryMapWindowOffset(qint64 nOffset);
     virtual void _showInHexWindow(qint64 nOffset,qint64 nSize);
@@ -222,7 +222,7 @@ public slots:
     void textValueChanged(QString sText);
     void setEdited();
     void showHex(qint64 nOffset,qint64 nSize);
-    void showInDisasmWindowAddress(qint64 nAddress);
+    void showInDisasmWindowAddress(XADDR nAddress);
     void showInDisasmWindowOffset(qint64 nOffset);
     void showInMemoryMapWindowOffset(qint64 nOffset);
     void showInHexWindow(qint64 nOffset,qint64 nSize);
