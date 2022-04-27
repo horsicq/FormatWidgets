@@ -174,6 +174,7 @@ public:
     void initSearchStringsWidget(SearchStringsWidget *pWidget);
     void initSearchSignaturesWidget(SearchSignaturesWidget *pWidget);
     void initHexViewWidget(XHexViewWidget *pWidget);
+    void initHexView(XHexView *pWidget);
     void initToolsWidget(ToolsWidget *pWidget);
 
     enum CW

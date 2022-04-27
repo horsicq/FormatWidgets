@@ -702,18 +702,33 @@ bool FormatWidget::isNextPageAvailable()
 
 void FormatWidget::initWidget()
 {
+//    {
+//        QList<XHexViewWidget *> listWidgets=this->findChildren<XHexViewWidget *>();
+
+//        qint32 nNumberOfWidgets=listWidgets.count();
+
+//        for(int i=0;i<nNumberOfWidgets;i++)
+//        {
+//            XHexViewWidget *pChild=dynamic_cast<XHexViewWidget *>(listWidgets.at(i));
+
+//            if(pChild)
+//            {
+//                initHexViewWidget(pChild);
+//            }
+//        }
+//    }
     {
-        QList<XHexViewWidget *> listWidgets=this->findChildren<XHexViewWidget *>();
+        QList<XHexView *> listWidgets=this->findChildren<XHexView *>();
 
         qint32 nNumberOfWidgets=listWidgets.count();
 
         for(int i=0;i<nNumberOfWidgets;i++)
         {
-            XHexViewWidget *pChild=dynamic_cast<XHexViewWidget *>(listWidgets.at(i));
+            XHexView *pChild=dynamic_cast<XHexView *>(listWidgets.at(i));
 
             if(pChild)
             {
-                initHexViewWidget(pChild);
+                initHexView(pChild);
             }
         }
     }
@@ -747,21 +762,21 @@ void FormatWidget::initWidget()
             }
         }
     }
-    {
-        QList<ToolsWidget *> listWidgets=this->findChildren<ToolsWidget *>();
+//    {
+//        QList<ToolsWidget *> listWidgets=this->findChildren<ToolsWidget *>();
 
-        qint32 nNumberOfWidgets=listWidgets.count();
+//        qint32 nNumberOfWidgets=listWidgets.count();
 
-        for(int i=0;i<nNumberOfWidgets;i++)
-        {
-            ToolsWidget *pChild=dynamic_cast<ToolsWidget *>(listWidgets.at(i));
+//        for(int i=0;i<nNumberOfWidgets;i++)
+//        {
+//            ToolsWidget *pChild=dynamic_cast<ToolsWidget *>(listWidgets.at(i));
 
-            if(pChild)
-            {
-                initToolsWidget(pChild);
-            }
-        }
-    }
+//            if(pChild)
+//            {
+//                initToolsWidget(pChild);
+//            }
+//        }
+//    }
 }
 
 void FormatWidget::resetWidget()
@@ -811,6 +826,13 @@ void FormatWidget::initSearchSignaturesWidget(SearchSignaturesWidget *pWidget)
 }
 
 void FormatWidget::initHexViewWidget(XHexViewWidget *pWidget)
+{
+    connect(pWidget,SIGNAL(dataChanged()),this,SLOT(setEdited()));
+    connect(pWidget,SIGNAL(showOffsetDisasm(qint64)),this,SLOT(showInDisasmWindowOffset(qint64)));
+    connect(pWidget,SIGNAL(showOffsetMemoryMap(qint64)),this,SLOT(showInMemoryMapWindowOffset(qint64)));
+}
+
+void FormatWidget::initHexView(XHexView *pWidget)
 {
     connect(pWidget,SIGNAL(dataChanged()),this,SLOT(setEdited()));
     connect(pWidget,SIGNAL(showOffsetDisasm(qint64)),this,SLOT(showInDisasmWindowOffset(qint64)));
@@ -1367,7 +1389,7 @@ InvWidget *FormatWidget::createInvWidget(QTableWidget *pTableWidget, int nType, 
     pResult->setProperty("NDATA",nData);
 
     connect(pResult,SIGNAL(showHex(qint64,qint64)),this,SLOT(showInHexWindow(qint64,qint64)));
-    connect(pResult,SIGNAL(showDisasm(qint64)),this,SLOT(showInDisasmWindowAddress(qint64)));
+    connect(pResult,SIGNAL(showDisasm(XADDR)),this,SLOT(showInDisasmWindowAddress(XADDR)));
 
     pTableWidget->setCellWidget(nData,HEADER_COLUMN_INFO,pResult);
 

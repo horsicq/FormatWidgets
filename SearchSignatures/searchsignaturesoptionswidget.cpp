@@ -39,7 +39,7 @@ void SearchSignaturesOptionsWidget::setOptions(XOptions *pOptions)
 {
     g_pOptions=pOptions;
 
-    pOptions->setLineEdit(ui->lineEditSearchSignaturesPath,XOptions::ID_SIGNATURES_PATH);
+    reload();
 }
 
 void SearchSignaturesOptionsWidget::save()
@@ -50,6 +50,11 @@ void SearchSignaturesOptionsWidget::save()
 void SearchSignaturesOptionsWidget::setDefaultValues(XOptions *pOptions)
 {
     pOptions->addID(XOptions::ID_SIGNATURES_PATH,"$data/signatures");
+}
+
+void SearchSignaturesOptionsWidget::reload()
+{
+    g_pOptions->setLineEdit(ui->lineEditSearchSignaturesPath,XOptions::ID_SIGNATURES_PATH);
 }
 
 void SearchSignaturesOptionsWidget::on_toolButtonSearchSignaturesPath_clicked()
