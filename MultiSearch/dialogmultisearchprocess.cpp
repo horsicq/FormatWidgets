@@ -70,7 +70,7 @@ DialogMultiSearchProcess::~DialogMultiSearchProcess()
     delete g_pHandleModel;
 }
 
-void DialogMultiSearchProcess::processSearch(QIODevice *pDevice, QList<XBinary::MS_RECORD> *pListRecords, MultiSearch::OPTIONS options, MultiSearch::TYPE type)
+void DialogMultiSearchProcess::processSearch(QIODevice *pDevice,QList<XBinary::MS_RECORD> *pListRecords,MultiSearch::OPTIONS options,MultiSearch::TYPE type)
 {
     if(type==MultiSearch::TYPE_STRINGS)
     {
