@@ -85,7 +85,7 @@ void DialogMultiSearchProcess::processSearch(QIODevice *pDevice,QList<XBinary::M
     g_pThreadSearch->start();
 }
 
-void DialogMultiSearchProcess::processModel(QList<XBinary::MS_RECORD> *pListRecords, QStandardItemModel **ppModel, MultiSearch::OPTIONS options,MultiSearch::TYPE type)
+void DialogMultiSearchProcess::processModel(QList<XBinary::MS_RECORD> *pListRecords,QStandardItemModel **ppModel,MultiSearch::OPTIONS options,MultiSearch::TYPE type)
 {
     setWindowTitle(tr("Create view model"));
 
