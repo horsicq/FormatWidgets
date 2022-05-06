@@ -301,6 +301,7 @@ void ELFWidget::reloadData()
                 XHexView::OPTIONS options={};
                 options.bMenu_Disasm=true;
                 options.bMenu_MemoryMap=true;
+
                 ui->widgetHex->setData(getDevice(),options);
                 ui->widgetHex->setBackupDevice(getBackupDevice());
 //                ui->widgetHex->setBackupFileName(getOptions().sBackupFileName);
@@ -316,12 +317,10 @@ void ELFWidget::reloadData()
                 XMultiDisasmWidget::OPTIONS options={};
                 options.fileType=elf.getFileType();
                 options.nInitAddress=elf.getEntryPointAddress();
-                // TODO edit state
 
                 ui->widgetDisasm->setData(getDevice(),options);
+                ui->widgetDisasm->setBackupDevice(getBackupDevice());
             }
-
-//            pDisasmWidget->setBackupFileName(getOptions().sBackupFileName);
         }
         else if(nType==SELF::TYPE_HASH)
         {
