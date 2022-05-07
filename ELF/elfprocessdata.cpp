@@ -256,8 +256,8 @@ void ELFProcessData::_process()
     }
     else if(g_nType==SELF::TYPE_SYMBOLTABLE)
     {
-        QMap<quint64, QString> mapBinds=g_pELF->getStBindsS();
-        QMap<quint64, QString> mapTypes=g_pELF->getStTypesS();
+        QMap<quint64,QString> mapBinds=g_pELF->getStBindsS();
+        QMap<quint64,QString> mapTypes=g_pELF->getStTypesS();
 
         if(g_pELF->is64())
         {
