@@ -29,6 +29,7 @@ FormatWidget::FormatWidget(QWidget *pParent):
     g_fwOptions={};
     g_bAddPageEnable=true;
     g_nPageIndex=0;
+    g_pXInfoDB=nullptr;
 
     g_colDisabled=QWidget::palette().color(QPalette::Window);
     g_colEnabled=QWidget::palette().color(QPalette::BrightText);
@@ -51,6 +52,16 @@ FormatWidget::~FormatWidget()
             pFile->close();
         }
     }
+}
+
+void FormatWidget::setXInfoDB(XInfoDB *pXInfoDB)
+{
+    this->g_pXInfoDB=pXInfoDB;
+}
+
+XInfoDB *FormatWidget::getXInfoDB()
+{
+    return g_pXInfoDB;
 }
 
 void FormatWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)

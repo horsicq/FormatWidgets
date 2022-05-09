@@ -82,6 +82,9 @@ public:
     FormatWidget(QIODevice *pDevice,FW_DEF::OPTIONS options,quint32 nNumber,qint64 nOffset,qint32 nType,QWidget *pParent);
     ~FormatWidget();
 
+    void setXInfoDB(XInfoDB *pXInfoDB);
+    XInfoDB *getXInfoDB();
+
     void setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions);
     void adjustView();
 
@@ -251,6 +254,7 @@ private:
     qint32 g_nPageIndex;
     bool g_bAddPageEnable;
     QMap<QString,QString> g_mapInit;
+    XInfoDB *g_pXInfoDB;
 };
 
 #endif // FORMATWIDGET_H

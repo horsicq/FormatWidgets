@@ -33,7 +33,7 @@ DialogProcessData::DialogProcessData(QWidget *pParent, ProcessData *pProcessData
 
     pProcessData->moveToThread(g_pThread);
 
-    connect(g_pThread, SIGNAL(started()), pProcessData, SLOT(process()));
+    connect(g_pThread,SIGNAL(started()),pProcessData,SLOT(process()));
     connect(pProcessData, SIGNAL(completed(qint64)), this, SLOT(onCompleted(qint64)));
     connect(pProcessData, SIGNAL(errorMessage(QString)), this, SLOT(errorMessage(QString)));
     connect(pProcessData, SIGNAL(progressValue(qint32)), this, SLOT(progressValue(qint32)));
