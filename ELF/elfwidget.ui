@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>757</width>
+    <width>799</width>
     <height>233</height>
    </rect>
   </property>
@@ -375,7 +375,7 @@
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <widget class="QWidget" name="">
+          <widget class="QWidget" name="layoutWidget">
            <layout class="QVBoxLayout" name="verticalLayout_4">
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -416,7 +416,7 @@
                <enum>QAbstractItemView::SelectRows</enum>
               </property>
               <attribute name="horizontalHeaderDefaultSectionSize">
-               <number>39</number>
+               <number>57</number>
               </attribute>
               <attribute name="verticalHeaderVisible">
                <bool>false</bool>
@@ -462,7 +462,7 @@
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <widget class="QWidget" name="">
+          <widget class="QWidget" name="layoutWidget">
            <layout class="QVBoxLayout" name="verticalLayout_5">
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -503,7 +503,7 @@
                <enum>QAbstractItemView::SelectRows</enum>
               </property>
               <attribute name="horizontalHeaderDefaultSectionSize">
-               <number>39</number>
+               <number>57</number>
               </attribute>
               <attribute name="verticalHeaderVisible">
                <bool>false</bool>

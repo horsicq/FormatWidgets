@@ -42,6 +42,7 @@
 #include "xmultidisasmwidget.h"
 #include "xshortcutsdialog.h"
 #include "xoptions.h"
+#include "xmemorymapwidget.h"
 
 class FormatWidget : public XShortcutsWidget
 {

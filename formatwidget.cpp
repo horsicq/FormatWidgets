@@ -822,6 +822,21 @@ void FormatWidget::resetWidget()
             }
         }
     }
+    {
+        QList<XMemoryMapWidget *> listWidgets=this->findChildren<XMemoryMapWidget *>();
+
+        qint32 nNumberOfWidgets=listWidgets.count();
+
+        for(int i=0;i<nNumberOfWidgets;i++)
+        {
+            XMemoryMapWidget *pChild=dynamic_cast<XMemoryMapWidget *>(listWidgets.at(i));
+
+            if(pChild)
+            {
+                pChild->setData(0,XBinary::FT_UNKNOWN);
+            }
+        }
+    }
 }
 
 void FormatWidget::initSearchStringsWidget(SearchStringsWidget *pWidget)

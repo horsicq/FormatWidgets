@@ -934,7 +934,7 @@ QString ELFWidget::typeIdToString(int nType)
     return sResult;
 }
 
-void ELFWidget::_showInDisasmWindowAddress(qint64 nAddress)
+void ELFWidget::_showInDisasmWindowAddress(XADDR nAddress)
 {
     setTreeItem(ui->treeWidgetNavi,SELF::TYPE_DISASM);
     ui->widgetDisasm->goToAddress(nAddress);
