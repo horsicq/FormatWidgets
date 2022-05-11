@@ -371,6 +371,8 @@ void NEWidget::reloadData()
                 options.nInitAddress=ne.getEntryPointAddress();
 
                 ui->widgetDisasm->setData(getDevice(),options);
+                ui->widgetDisasm->setBackupDevice(getBackupDevice());
+                ui->widgetDisasm->setXIinfoDB(getXInfoDB());
             }
         }
         else if(nType==SNE::TYPE_HASH)

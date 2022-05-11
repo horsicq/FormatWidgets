@@ -361,6 +361,8 @@ void LEWidget::reloadData()
                 options.nInitAddress=le.getEntryPointAddress();
 
                 ui->widgetDisasm->setData(getDevice(),options);
+                ui->widgetDisasm->setBackupDevice(getBackupDevice());
+                ui->widgetDisasm->setXIinfoDB(getXInfoDB());
             }
         }
         else if(nType==SLE::TYPE_HASH)

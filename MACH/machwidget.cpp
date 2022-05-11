@@ -1361,6 +1361,8 @@ void MACHWidget::reloadData()
                 options.nInitAddress=mach.getEntryPointAddress();
 
                 ui->widgetDisasm->setData(getDevice(),options);
+                ui->widgetDisasm->setBackupDevice(getBackupDevice());
+                ui->widgetDisasm->setXIinfoDB(getXInfoDB());
             }
         }
         else if(nType==SMACH::TYPE_HASH)

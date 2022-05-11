@@ -272,6 +272,8 @@ void MSDOSWidget::reloadData()
                 options.nInitAddress=msdos.getEntryPointAddress();
 
                 ui->widgetDisasm->setData(getDevice(),options);
+                ui->widgetDisasm->setBackupDevice(getBackupDevice());
+                ui->widgetDisasm->setXIinfoDB(getXInfoDB());
             }
         }
         else if(nType==SMSDOS::TYPE_HASH)

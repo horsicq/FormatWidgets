@@ -962,6 +962,8 @@ void PEWidget::reloadData()
                 options.nInitAddress=pe.getEntryPointAddress();
 
                 ui->widgetDisasm->setData(getDevice(),options);
+                ui->widgetDisasm->setBackupDevice(getBackupDevice());
+                ui->widgetDisasm->setXIinfoDB(getXInfoDB());
             }
         }
         else if(nType==SPE::TYPE_HASH)
