@@ -145,24 +145,25 @@ void SearchSignaturesWidget::on_tableViewResult_customContextMenuRequested(const
     QMenu contextMenu(this);
 
     QMenu menuCopy(tr("Copy"),this);
+    QMenu menuFollowIn(tr("Follow in"),this);
 
     QAction actionCopyName(tr("Name"),this);
-    actionCopyName.setShortcut(getShortcuts()->getShortcut(XShortcuts::ID_SIGNATURES_COPY_NAME));
+    actionCopyName.setShortcut(getShortcuts()->getShortcut(X_ID_SIGNATURE_COPY_NAME));
     connect(&actionCopyName,SIGNAL(triggered()),this,SLOT(_copyName()));
     menuCopy.addAction(&actionCopyName);
 
     QAction actionCopySignature(tr("Signature"),this);
-    actionCopySignature.setShortcut(getShortcuts()->getShortcut(XShortcuts::ID_SIGNATURES_COPY_SIGNATURE));
+    actionCopySignature.setShortcut(getShortcuts()->getShortcut(X_ID_SIGNATURE_COPY_SIGNATURE));
     connect(&actionCopySignature,SIGNAL(triggered()),this,SLOT(_copySignature()));
     menuCopy.addAction(&actionCopySignature);
 
     QAction actionCopyAddress(tr("Address"),this);
-    actionCopyAddress.setShortcut(getShortcuts()->getShortcut(XShortcuts::ID_SIGNATURES_COPY_ADDRESS));
+    actionCopyAddress.setShortcut(getShortcuts()->getShortcut(X_ID_SIGNATURE_COPY_ADDRESS));
     connect(&actionCopyAddress,SIGNAL(triggered()),this,SLOT(_copyAddress()));
     menuCopy.addAction(&actionCopyAddress);
 
     QAction actionCopyOffset(tr("Offset"),this);
-    actionCopyOffset.setShortcut(getShortcuts()->getShortcut(XShortcuts::ID_SIGNATURES_COPY_OFFSET));
+    actionCopyOffset.setShortcut(getShortcuts()->getShortcut(X_ID_SIGNATURE_COPY_OFFSET));
     connect(&actionCopyOffset,SIGNAL(triggered()),this,SLOT(_copyOffset()));
     menuCopy.addAction(&actionCopyOffset);
 
@@ -172,9 +173,11 @@ void SearchSignaturesWidget::on_tableViewResult_customContextMenuRequested(const
 
     if(g_options.bMenu_Hex)
     {
-        actionHex.setShortcut(getShortcuts()->getShortcut(XShortcuts::ID_SIGNATURES_HEX));
+        actionHex.setShortcut(getShortcuts()->getShortcut(X_ID_SIGNATURE_FOLLOWIN_HEX));
         connect(&actionHex,SIGNAL(triggered()),this,SLOT(_hex()));
-        contextMenu.addAction(&actionHex);
+        menuFollowIn.addAction(&actionHex);
+
+        contextMenu.addMenu(&menuFollowIn);
     }
 
     contextMenu.exec(ui->tableViewResult->viewport()->mapToGlobal(pos));
@@ -347,11 +350,11 @@ void SearchSignaturesWidget::registerShortcuts(bool bState)
 {
     if(bState)
     {
-        if(!shortCuts[SC_COPYNAME])             shortCuts[SC_COPYNAME]          =new QShortcut(getShortcuts()->getShortcut(XShortcuts::ID_SIGNATURES_COPY_NAME),         this,SLOT(_copyName()));
-        if(!shortCuts[SC_COPYSIGNATURE])        shortCuts[SC_COPYSIGNATURE]     =new QShortcut(getShortcuts()->getShortcut(XShortcuts::ID_SIGNATURES_COPY_SIGNATURE),    this,SLOT(_copySignature()));
-        if(!shortCuts[SC_COPYADDRESS])          shortCuts[SC_COPYADDRESS]       =new QShortcut(getShortcuts()->getShortcut(XShortcuts::ID_SIGNATURES_COPY_ADDRESS),      this,SLOT(_copyAddress()));
-        if(!shortCuts[SC_COPYOFFSET])           shortCuts[SC_COPYOFFSET]        =new QShortcut(getShortcuts()->getShortcut(XShortcuts::ID_SIGNATURES_COPY_OFFSET),       this,SLOT(_copyOffset()));
-        if(!shortCuts[SC_HEX])                  shortCuts[SC_HEX]               =new QShortcut(getShortcuts()->getShortcut(XShortcuts::ID_SIGNATURES_HEX),              this,SLOT(_hex()));
+        if(!shortCuts[SC_COPYNAME])             shortCuts[SC_COPYNAME]          =new QShortcut(getShortcuts()->getShortcut(X_ID_SIGNATURE_COPY_NAME),           this,SLOT(_copyName()));
+        if(!shortCuts[SC_COPYSIGNATURE])        shortCuts[SC_COPYSIGNATURE]     =new QShortcut(getShortcuts()->getShortcut(X_ID_SIGNATURE_COPY_SIGNATURE),      this,SLOT(_copySignature()));
+        if(!shortCuts[SC_COPYADDRESS])          shortCuts[SC_COPYADDRESS]       =new QShortcut(getShortcuts()->getShortcut(X_ID_SIGNATURE_COPY_ADDRESS),        this,SLOT(_copyAddress()));
+        if(!shortCuts[SC_COPYOFFSET])           shortCuts[SC_COPYOFFSET]        =new QShortcut(getShortcuts()->getShortcut(X_ID_SIGNATURE_COPY_OFFSET),         this,SLOT(_copyOffset()));
+        if(!shortCuts[SC_HEX])                  shortCuts[SC_HEX]               =new QShortcut(getShortcuts()->getShortcut(X_ID_SIGNATURE_FOLLOWIN_HEX),        this,SLOT(_hex()));
     }
     else
     {

@@ -317,6 +317,7 @@ void ELFWidget::reloadData()
                 XMultiDisasmWidget::OPTIONS options={};
                 options.fileType=elf.getFileType();
                 options.nInitAddress=elf.getEntryPointAddress();
+//                options.bMenu_Hex=true;
 
                 ui->widgetDisasm->setData(getDevice(),options);
                 ui->widgetDisasm->setBackupDevice(getBackupDevice());
