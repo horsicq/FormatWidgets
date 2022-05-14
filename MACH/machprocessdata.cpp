@@ -738,7 +738,7 @@ void MACHProcessData::_process()
     }
 }
 
-void MACHProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
+void MACHProcessData::ajustTableView(QWidget *pWidget,QTableView *pTableView)
 {
     XBinary::MODE mode=g_pXMACH->getMode();
 
