@@ -2456,7 +2456,7 @@ void MACHWidget::widgetValueChanged(quint64 nValue)
     }
 }
 
-void MACHWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent, QTreeWidgetItem *pPrevious)
+void MACHWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent,QTreeWidgetItem *pPrevious)
 {
     Q_UNUSED(pPrevious)
 
