@@ -178,6 +178,7 @@ public:
     void initSearchStringsWidget(SearchStringsWidget *pWidget);
     void initSearchSignaturesWidget(SearchSignaturesWidget *pWidget);
     void initHexViewWidget(XHexViewWidget *pWidget);
+    void initMultiDisasmWidget(XMultiDisasmWidget *pWidget);
     void initHexView(XHexView *pWidget);
     void initToolsWidget(ToolsWidget *pWidget);
 
@@ -231,6 +232,7 @@ public slots:
     void showInDisasmWindowOffset(qint64 nOffset);
     void showInMemoryMapWindowOffset(qint64 nOffset);
     void showInHexWindow(qint64 nOffset,qint64 nSize);
+    void showInHexWindow(qint64 nOffset);
     void showEntropy(qint64 nOffset,qint64 nSize);
     void dumpRegion(qint64 nOffset,qint64 nSize,QString sName);
     void showDemangle(QString sString);

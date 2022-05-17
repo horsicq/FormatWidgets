@@ -42,7 +42,7 @@ public:
     ~InvWidget();
 
     void setOffsetAndSize(XBinary *pBinary,qint64 nOffset,qint64 nSize,bool bNotNull=false);
-    void setAddressAndSize(XBinary *pBinary, XADDR nAddress, qint64 nSize, bool bNotNull=false);
+    void setAddressAndSize(XBinary *pBinary,XADDR nAddress,qint64 nSize,bool bNotNull=false);
     void _setEnabled(bool bState);
 
 private slots:

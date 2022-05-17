@@ -744,6 +744,21 @@ void FormatWidget::initWidget()
         }
     }
     {
+        QList<XMultiDisasmWidget *> listWidgets=this->findChildren<XMultiDisasmWidget *>();
+
+        qint32 nNumberOfWidgets=listWidgets.count();
+
+        for(int i=0;i<nNumberOfWidgets;i++)
+        {
+            XMultiDisasmWidget *pChild=dynamic_cast<XMultiDisasmWidget *>(listWidgets.at(i));
+
+            if(pChild)
+            {
+                initMultiDisasmWidget(pChild);
+            }
+        }
+    }
+    {
         QList<SearchSignaturesWidget *> listWidgets=this->findChildren<SearchSignaturesWidget *>();
 
         qint32 nNumberOfWidgets=listWidgets.count();
@@ -856,6 +871,12 @@ void FormatWidget::initHexViewWidget(XHexViewWidget *pWidget)
     connect(pWidget,SIGNAL(dataChanged()),this,SLOT(setEdited()));
     connect(pWidget,SIGNAL(showOffsetDisasm(qint64)),this,SLOT(showInDisasmWindowOffset(qint64)));
     connect(pWidget,SIGNAL(showOffsetMemoryMap(qint64)),this,SLOT(showInMemoryMapWindowOffset(qint64)));
+}
+
+void FormatWidget::initMultiDisasmWidget(XMultiDisasmWidget *pWidget)
+{
+    connect(pWidget,SIGNAL(dataChanged()),this,SLOT(setEdited()));
+    connect(pWidget,SIGNAL(showOffsetHex(qint64)),this,SLOT(showInHexWindow(qint64)));
 }
 
 void FormatWidget::initHexView(XHexView *pWidget)
@@ -1031,6 +1052,11 @@ void FormatWidget::showInMemoryMapWindowOffset(qint64 nOffset)
 void FormatWidget::showInHexWindow(qint64 nOffset, qint64 nSize)
 {
     _showInHexWindow(nOffset,nSize);
+}
+
+void FormatWidget::showInHexWindow(qint64 nOffset)
+{
+    _showInHexWindow(nOffset,1);
 }
 
 void FormatWidget::showEntropy(qint64 nOffset, qint64 nSize)
