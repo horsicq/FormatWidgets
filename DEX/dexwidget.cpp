@@ -132,7 +132,7 @@ void DEXWidget::reload()
 
         ui->treeWidgetNavi->expandAll();
 
-        setTreeItem(ui->treeWidgetNavi,getOptions().nStartType);
+        setTreeItem(ui->treeWidgetNavi,getOptions().nStartType); // Optimize
     }
 }
 

@@ -244,6 +244,8 @@ void PEWidget::reload()
         ui->treeWidgetNavi->expandAll();
 
         setTreeItem(ui->treeWidgetNavi,getOptions().nStartType);
+
+        setDisasmInitAddress(pe.getEntryPointAddress()); // Optimize
     }
 }
 
@@ -959,11 +961,14 @@ void PEWidget::reloadData()
             {
                 XMultiDisasmWidget::OPTIONS options={};
                 options.fileType=pe.getFileType();
-                options.nInitAddress=pe.getEntryPointAddress();
+                options.nInitAddress=getDisasmInitAddress();
+                options.bMenu_Hex=true;
 
                 ui->widgetDisasm->setData(getDevice(),options);
                 ui->widgetDisasm->setBackupDevice(getBackupDevice());
                 ui->widgetDisasm->setXIinfoDB(getXInfoDB());
+
+                setDisasmInitAddress(-1);
             }
         }
         else if(nType==SPE::TYPE_HASH)

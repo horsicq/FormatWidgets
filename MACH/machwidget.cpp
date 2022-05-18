@@ -488,6 +488,8 @@ void MACHWidget::reload()
         ui->treeWidgetNavi->expandAll();
 
         setTreeItem(ui->treeWidgetNavi,getOptions().nStartType);
+
+        setDisasmInitAddress(mach.getEntryPointAddress()); // Optimize
     }
 }
 
@@ -1358,11 +1360,14 @@ void MACHWidget::reloadData()
             {
                 XMultiDisasmWidget::OPTIONS options={};
                 options.fileType=mach.getFileType();
-                options.nInitAddress=mach.getEntryPointAddress();
+                options.nInitAddress=getDisasmInitAddress();
+                options.bMenu_Hex=true;
 
                 ui->widgetDisasm->setData(getDevice(),options);
                 ui->widgetDisasm->setBackupDevice(getBackupDevice());
                 ui->widgetDisasm->setXIinfoDB(getXInfoDB());
+
+                setDisasmInitAddress(-1);
             }
         }
         else if(nType==SMACH::TYPE_HASH)

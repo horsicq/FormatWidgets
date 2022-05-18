@@ -123,6 +123,8 @@ void ELFWidget::reload()
         ui->treeWidgetNavi->expandAll();
 
         setTreeItem(ui->treeWidgetNavi,getOptions().nStartType);
+
+        setDisasmInitAddress(elf.getEntryPointAddress());
     }
 }
 
@@ -316,12 +318,14 @@ void ELFWidget::reloadData()
             {
                 XMultiDisasmWidget::OPTIONS options={};
                 options.fileType=elf.getFileType();
-                options.nInitAddress=elf.getEntryPointAddress();
+                options.nInitAddress=getDisasmInitAddress();
                 options.bMenu_Hex=true;
 
                 ui->widgetDisasm->setData(getDevice(),options);
                 ui->widgetDisasm->setBackupDevice(getBackupDevice());
                 ui->widgetDisasm->setXIinfoDB(getXInfoDB());
+
+                setDisasmInitAddress(-1);
             }
         }
         else if(nType==SELF::TYPE_HASH)

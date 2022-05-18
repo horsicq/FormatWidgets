@@ -333,6 +333,7 @@ void ELFProcessData::_process()
                 pItem->setTextAlignment(Qt::AlignRight);
 
                 pItem->setData(g_nOffset+i*sizeof(XELF_DEF::Elf32_Sym),Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+                pItem->setData(g_nOffset+i*sizeof(XELF_DEF::Elf32_Sym),Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
 
                 pItem->setData(g_nStringTableOffset,Qt::UserRole+FW_DEF::SECTION_DATA_STRINGTABLEOFFSET);
                 pItem->setData(g_nStringTableSize,Qt::UserRole+FW_DEF::SECTION_DATA_STRINGTABLESIZE);

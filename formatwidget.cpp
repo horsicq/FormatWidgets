@@ -30,12 +30,13 @@ FormatWidget::FormatWidget(QWidget *pParent):
     g_bAddPageEnable=true;
     g_nPageIndex=0;
     g_pXInfoDB=nullptr;
+    g_nDisamInitAddress=-1;
 
     g_colDisabled=QWidget::palette().color(QPalette::Window);
     g_colEnabled=QWidget::palette().color(QPalette::BrightText);
 }
 
-FormatWidget::FormatWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent):
+FormatWidget::FormatWidget(QIODevice *pDevice,FW_DEF::OPTIONS options,quint32 nNumber,qint64 nOffset,qint32 nType,QWidget *pParent):
     FormatWidget(pParent)
 {
     FormatWidget::setData(pDevice,options,nNumber,nOffset,nType);
@@ -838,6 +839,22 @@ void FormatWidget::resetWidget()
         }
     }
     {
+        QList<XMultiDisasmWidget *> listWidgets=this->findChildren<XMultiDisasmWidget *>();
+
+        qint32 nNumberOfWidgets=listWidgets.count();
+
+        for(int i=0;i<nNumberOfWidgets;i++)
+        {
+            XMultiDisasmWidget *pChild=dynamic_cast<XMultiDisasmWidget *>(listWidgets.at(i));
+
+            if(pChild)
+            {
+                pChild->setDevice(0);
+                pChild->setXIinfoDB(0);
+            }
+        }
+    }
+    {
         QList<XMemoryMapWidget *> listWidgets=this->findChildren<XMemoryMapWidget *>();
 
         qint32 nNumberOfWidgets=listWidgets.count();
@@ -929,6 +946,16 @@ qint32 FormatWidget::getColumnWidth(QWidget *pParent, FormatWidget::CW cw, XBina
     }
 
     return nResult;
+}
+
+void FormatWidget::setDisasmInitAddress(XADDR nDisasmInitAddress)
+{
+    g_nDisamInitAddress=nDisasmInitAddress;
+}
+
+XADDR FormatWidget::getDisasmInitAddress()
+{
+    return g_nDisamInitAddress;
 }
 
 void FormatWidget::_showInDisasmWindowAddress(XADDR nAddress)

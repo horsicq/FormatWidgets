@@ -100,6 +100,8 @@ void LEWidget::reload()
         ui->treeWidgetNavi->expandAll();
 
         setTreeItem(ui->treeWidgetNavi,getOptions().nStartType);
+
+        setDisasmInitAddress(le.getEntryPointAddress()); // Optimize
     }
 }
 
@@ -358,11 +360,14 @@ void LEWidget::reloadData()
             {
                 XMultiDisasmWidget::OPTIONS options={};
                 options.fileType=le.getFileType();
-                options.nInitAddress=le.getEntryPointAddress();
+                options.nInitAddress=getDisasmInitAddress();
+                options.bMenu_Hex=true;
 
                 ui->widgetDisasm->setData(getDevice(),options);
                 ui->widgetDisasm->setBackupDevice(getBackupDevice());
                 ui->widgetDisasm->setXIinfoDB(getXInfoDB());
+
+                setDisasmInitAddress(-1);
             }
         }
         else if(nType==SLE::TYPE_HASH)

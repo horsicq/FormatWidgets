@@ -198,6 +198,9 @@ public:
 
     static qint32 getColumnWidth(QWidget *pParent,CW cw,XBinary::MODE mode);
 
+    void setDisasmInitAddress(XADDR nDisasmInitAddress);
+    XADDR getDisasmInitAddress();
+
 protected:
     enum SV
     {
@@ -258,6 +261,7 @@ private:
     bool g_bAddPageEnable;
     QMap<QString,QString> g_mapInit;
     XInfoDB *g_pXInfoDB;
+    XADDR g_nDisamInitAddress;
 };
 
 #endif // FORMATWIDGET_H
