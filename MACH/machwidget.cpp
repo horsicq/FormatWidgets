@@ -1295,7 +1295,7 @@ QString MACHWidget::typeIdToString(int nType)
     return sResult;
 }
 
-void MACHWidget::_showInDisasmWindowAddress(qint64 nAddress)
+void MACHWidget::_showInDisasmWindowAddress(XADDR nAddress)
 {
     setTreeItem(ui->treeWidgetNavi,SMACH::TYPE_DISASM);
     ui->widgetDisasm->goToAddress(nAddress);
@@ -2288,7 +2288,7 @@ void MACHWidget::reloadData()
             {
                 MACHProcessData machProcessData(SMACH::TYPE_SYMBOLTABLE,&tvModel[SMACH::TYPE_SYMBOLTABLE],&mach,nDataOffset,nDataSize);
 
-                ajustTableView(&machProcessData,&tvModel[SMACH::TYPE_SYMBOLTABLE],ui->tableView_SymbolTable,nullptr,false);
+                ajustTableView(&machProcessData,&tvModel[SMACH::TYPE_SYMBOLTABLE],ui->tableView_SymbolTable,nullptr,true);
             }
         }
         else if(nType==SMACH::TYPE_FUNCTIONS)
@@ -2407,7 +2407,7 @@ void MACHWidget::reloadData()
             {
                 MACHProcessData machProcessData(SMACH::TYPE_DYSYMTAB_indirectsyms,&tvModel[SMACH::TYPE_DYSYMTAB_indirectsyms],&mach,nDataOffset,nDataSize);
 
-                ajustTableView(&machProcessData,&tvModel[SMACH::TYPE_DYSYMTAB_indirectsyms],ui->tableView_DYSYMTAB_indirectsyms,nullptr,false);
+                ajustTableView(&machProcessData,&tvModel[SMACH::TYPE_DYSYMTAB_indirectsyms],ui->tableView_DYSYMTAB_indirectsyms,nullptr,true);
             }
         }
         else if(nType==SMACH::TYPE_DYSYMTAB_extrel)
