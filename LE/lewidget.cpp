@@ -363,9 +363,8 @@ void LEWidget::reloadData()
                 options.nInitAddress=getDisasmInitAddress();
                 options.bMenu_Hex=true;
 
-                ui->widgetDisasm->setData(getDevice(),options);
+                ui->widgetDisasm->setData(getDevice(),options,getXInfoDB());
                 ui->widgetDisasm->setBackupDevice(getBackupDevice());
-                ui->widgetDisasm->setXIinfoDB(getXInfoDB());
 
                 setDisasmInitAddress(-1);
             }
