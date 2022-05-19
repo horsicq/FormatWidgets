@@ -53,7 +53,7 @@ void BinaryWidget::clear()
 
 void BinaryWidget::cleanup()
 {
-
+    BinaryWidget::clear();
 }
 
 void BinaryWidget::reload()

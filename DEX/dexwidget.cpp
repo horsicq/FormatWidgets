@@ -67,7 +67,7 @@ void DEXWidget::clear()
 
 void DEXWidget::cleanup()
 {
-
+    DEXWidget::clear();
 }
 
 void DEXWidget::reload()

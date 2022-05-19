@@ -91,12 +91,12 @@ void DEXSectionHeaderWidget::clear()
 
 void DEXSectionHeaderWidget::cleanup()
 {
-
+    DEXSectionHeaderWidget::clear();
 }
 
 void DEXSectionHeaderWidget::reload()
 {
-    clear();
+    DEXSectionHeaderWidget::clear();
 
     ui->checkBoxReadonly->setEnabled(!isReadonly());
 

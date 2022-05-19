@@ -62,7 +62,7 @@ void MSDOSWidget::clear()
 
 void MSDOSWidget::cleanup()
 {
-
+    MSDOSWidget::clear();
 }
 
 void MSDOSWidget::reload()

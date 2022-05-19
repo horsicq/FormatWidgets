@@ -64,7 +64,7 @@ void LEWidget::clear()
 
 void LEWidget::cleanup()
 {
-
+    LEWidget::clear();
 }
 
 void LEWidget::reload()

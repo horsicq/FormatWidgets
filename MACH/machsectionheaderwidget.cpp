@@ -195,12 +195,12 @@ void MACHSectionHeaderWidget::clear()
 
 void MACHSectionHeaderWidget::cleanup()
 {
-
+    MACHSectionHeaderWidget::clear();
 }
 
 void MACHSectionHeaderWidget::reload()
 {
-    clear();
+    MACHSectionHeaderWidget::clear();
 
     ui->checkBoxReadonly->setEnabled(!isReadonly());
 

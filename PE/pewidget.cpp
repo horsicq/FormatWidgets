@@ -86,12 +86,12 @@ void PEWidget::clear()
 
 void PEWidget::cleanup()
 {
-
+    PEWidget::clear();
 }
 
 void PEWidget::reload()
 {
-    clear();
+    PEWidget::clear();
 
     ui->checkBoxReadonly->setEnabled(!isReadonly());
 

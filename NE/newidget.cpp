@@ -66,7 +66,7 @@ void NEWidget::clear()
 
 void NEWidget::cleanup()
 {
-
+    NEWidget::clear();
 }
 
 void NEWidget::reload()

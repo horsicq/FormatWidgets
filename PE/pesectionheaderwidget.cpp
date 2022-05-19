@@ -140,12 +140,12 @@ void PESectionHeaderWidget::clear()
 
 void PESectionHeaderWidget::cleanup()
 {
-
+    PESectionHeaderWidget::clear();
 }
 
 void PESectionHeaderWidget::reload()
 {
-    clear();
+    PESectionHeaderWidget::clear();
 
     ui->checkBoxReadonly->setEnabled(!isReadonly());
 

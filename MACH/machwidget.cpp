@@ -86,7 +86,7 @@ void MACHWidget::clear()
 
 void MACHWidget::cleanup()
 {
-
+    MACHWidget::clear();
 }
 
 void MACHWidget::reload()
@@ -3392,7 +3392,7 @@ void MACHWidget::showSectionHeader(int nType, QTableView *pTableView)
         dsh.setData(typeIdToString(nType));
         dsh.setGlobal(getShortcuts(),getGlobalOptions());
 
-        connect(&dsh,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+        connect(&dsh,SIGNAL(changed()),this,SLOT(setEdited()));
 
         dsh.exec();
 

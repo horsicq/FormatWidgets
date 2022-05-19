@@ -127,12 +127,12 @@ void ELFSectionHeaderWidget::clear()
 
 void ELFSectionHeaderWidget::cleanup()
 {
-
+    ELFSectionHeaderWidget::clear();
 }
 
 void ELFSectionHeaderWidget::reload()
 {
-    clear();
+    ELFSectionHeaderWidget::clear();
 
     ui->checkBoxReadonly->setEnabled(!isReadonly());
 

@@ -912,7 +912,7 @@ void ELFWidget::showSectionHeader(int nType,QTableView *pTableView)
         dsh.setData(typeIdToString(nType));
         dsh.setGlobal(getShortcuts(),getGlobalOptions());
 
-        connect(&dsh,SIGNAL(editState(bool)),this,SLOT(setEdited(bool)));
+        connect(&dsh,SIGNAL(changed()),this,SLOT(setEdited()));
 
         dsh.exec();
 
