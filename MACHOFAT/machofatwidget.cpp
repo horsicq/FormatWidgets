@@ -44,6 +44,8 @@ void MACHOFATWidget::clear()
         QWidget *pWidget=qobject_cast<QWidget *>(listWidgets.at(i));
 
         ui->stackedWidget->removeWidget(pWidget);
+
+        delete pWidget;
     }
 
     int nNumberOfRecords=g_listDevices.count();
