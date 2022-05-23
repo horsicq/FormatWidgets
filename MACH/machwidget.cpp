@@ -2774,7 +2774,7 @@ void MACHWidget::on_tableView_commands_customContextMenuRequested(const QPoint &
         QMenu contextMenu(this);
 
         QAction actionEdit(tr("Edit"),this);
-        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editCommandHeader()));
+        connect(&actionEdit,SIGNAL(triggered()),this,SLOT(editCommandHeader()));
         contextMenu.addAction(&actionEdit);
 
         contextMenu.exec(ui->tableView_commands->viewport()->mapToGlobal(pos));
