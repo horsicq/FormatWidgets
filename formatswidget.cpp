@@ -735,6 +735,11 @@ void FormatsWidget::on_pushButtonZIP_clicked()
     dialogArchive.exec();
 }
 
+void FormatsWidget::on_pushButtonMACHOFAT_clicked()
+{
+    // TODO Dialog
+}
+
 FormatsWidget::SE FormatsWidget::getScanEngine(FormatsWidget::SE seIndex)
 {
     SE tabResult=seIndex;
@@ -752,6 +757,7 @@ FormatsWidget::SE FormatsWidget::getScanEngine(FormatsWidget::SE seIndex)
             (fileType==XBinary::FT_ELF64)||
             (fileType==XBinary::FT_MACHO32)||
             (fileType==XBinary::FT_MACHO64)||
+            (fileType==XBinary::FT_MACHOFAT)||
             (fileType==XBinary::FT_ZIP))
         {
             tabResult=SE_NFD;

@@ -106,6 +106,7 @@ private slots:
     void on_pushButtonMACHLibraries_clicked();
     void on_pushButtonDEX_clicked();
     void on_pushButtonZIP_clicked();
+    void on_pushButtonMACHOFAT_clicked();
 
     void showMSDOS(SMSDOS::TYPE type);
     void showLE(SLE::TYPE type);

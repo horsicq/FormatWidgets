@@ -2798,7 +2798,7 @@ void MACHWidget::on_tableView_segments_customContextMenuRequested(const QPoint &
         QMenu contextMenu(this);
 
         QAction actionEdit(tr("Edit"),this);
-        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editSegmentHeader()));
+        connect(&actionEdit,SIGNAL(triggered()),this,SLOT(editSegmentHeader()));
         contextMenu.addAction(&actionEdit);
 
         QAction actionHex(tr("Hex"),this);
