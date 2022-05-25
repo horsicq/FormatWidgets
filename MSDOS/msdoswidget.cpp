@@ -406,7 +406,7 @@ void MSDOSWidget::widgetValueChanged(quint64 nValue)
     }
 }
 
-void MSDOSWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent, QTreeWidgetItem *pPrevious)
+void MSDOSWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent,QTreeWidgetItem *pPrevious)
 {
     Q_UNUSED(pPrevious)
 
