@@ -331,6 +331,17 @@ void FormatsWidget::reload()
                 ui->lineEditMACHLibraries->setValue((quint16)listLibraryRecords.count());
             }
         }
+        else if(fileType==XBinary::FT_MACHOFAT)
+        {
+            ui->stackedWidgetMain->setCurrentIndex(TABINFO_MACHOFAT);
+
+            XMACHOFat machofat(&file);
+
+            if(machofat.isValid())
+            {
+                ui->lineEditEntryPoint->setValue(machofat.getEntryPointAddress());
+            }
+        }
 
         file.close();
 
@@ -737,7 +748,22 @@ void FormatsWidget::on_pushButtonZIP_clicked()
 
 void FormatsWidget::on_pushButtonMACHOFAT_clicked()
 {
-    // TODO Dialog
+    QFile file;
+    file.setFileName(g_sFileName);
+
+    if(XBinary::tryToOpen(&file))
+    {
+        DialogMACHOFAT dialogMACHOFAT(this);
+
+        FW_DEF::OPTIONS options={};
+
+        dialogMACHOFAT.setData(&file,options);
+        dialogMACHOFAT.setGlobal(getShortcuts(),getGlobalOptions());
+
+        dialogMACHOFAT.exec();
+
+        file.close();
+    }
 }
 
 FormatsWidget::SE FormatsWidget::getScanEngine(FormatsWidget::SE seIndex)
@@ -751,7 +777,6 @@ FormatsWidget::SE FormatsWidget::getScanEngine(FormatsWidget::SE seIndex)
         XBinary::FT fileType=getCurrentFileType();
 
         // TODO !!!
-
         if( (fileType==XBinary::FT_DEX)||
             (fileType==XBinary::FT_ELF32)||
             (fileType==XBinary::FT_ELF64)||

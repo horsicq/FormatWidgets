@@ -30,6 +30,7 @@
 #include "dialogpe.h"
 #include "dialogelf.h"
 #include "dialogmach.h"
+#include "dialogmachofat.h"
 #include "dialogmultidisasm.h"
 #include "dialogdex.h"
 #include "dialogarchive.h"
@@ -47,15 +48,16 @@ class FormatsWidget : public XShortcutsWidget
     enum TABINFO
     {
         TABINFO_BINARY=0,
-        TABINFO_COM,
+        TABINFO_MACHOFAT,
         TABINFO_ZIP,
+        TABINFO_COM,
         TABINFO_DEX,
         TABINFO_NE,
         TABINFO_LE,
         TABINFO_MSDOS,
         TABINFO_PE,
         TABINFO_ELF,
-        TABINFO_MACH
+        TABINFO_MACH,
     };
 
     enum SE

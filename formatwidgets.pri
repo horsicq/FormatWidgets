@@ -43,6 +43,11 @@ FORMS += \
     include($$PWD/MACH/machwidget.pri)
 }
 
+!contains(XCONFIG, machofatwidget) {
+    XCONFIG += machofatwidget
+    include($$PWD/MACHOFAT/machofatwidget.pri)
+}
+
 !contains(XCONFIG, newidget) {
     XCONFIG += newidget
     include($$PWD/NE/newidget.pri)
