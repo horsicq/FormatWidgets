@@ -20,7 +20,7 @@
  */
 #include "invwidget.h"
 
-InvWidget::InvWidget(QWidget *pParent, TYPE type) :
+InvWidget::InvWidget(QWidget *pParent,TYPE type) :
     XShortcutsWidget(pParent)
 {
     g_pHexPushButton=nullptr;
