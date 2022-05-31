@@ -28,7 +28,7 @@ PESectionHeaderWidget::PESectionHeaderWidget(QWidget *pParent):
     ui->setupUi(this);
 }
 
-PESectionHeaderWidget::PESectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent):
+PESectionHeaderWidget::PESectionHeaderWidget(QIODevice *pDevice,FW_DEF::OPTIONS options,quint32 nNumber,qint64 nOffset,qint32 nType,QWidget *pParent):
     PESectionHeaderWidget(pParent)
 {
     PESectionHeaderWidget::setData(pDevice,options,nNumber,nOffset,nType);
