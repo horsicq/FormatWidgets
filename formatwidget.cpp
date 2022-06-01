@@ -234,7 +234,7 @@ bool FormatWidget::isReadonly()
     return g_bIsReadonly;
 }
 
-QTreeWidgetItem *FormatWidget::createNewItem(int nType, QString sTitle, qint64 nOffset, qint64 nSize, qint64 nExtraOffset, qint64 nExtraSize)
+QTreeWidgetItem *FormatWidget::createNewItem(int nType,QString sTitle,qint64 nOffset,qint64 nSize,qint64 nExtraOffset,qint64 nExtraSize)
 {
     QTreeWidgetItem *pResult=new QTreeWidgetItem;
 
