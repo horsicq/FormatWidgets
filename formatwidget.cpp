@@ -148,7 +148,7 @@ void FormatWidget::setData(QString sFileName,FW_DEF::OPTIONS options,quint32 nNu
     setData(pFile,options,nNumber,nOffset,nType);
 }
 
-void FormatWidget::setData(FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType)
+void FormatWidget::setData(FW_DEF::OPTIONS options,quint32 nNumber,qint64 nOffset,qint32 nType)
 {
     g_nNumber=nNumber;
     g_nOffset=nOffset;
