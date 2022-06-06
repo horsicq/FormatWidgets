@@ -306,7 +306,7 @@ bool FormatWidget::isEdited()
     return bResult;
 }
 
-bool FormatWidget::loadHexSubdevice(qint64 nOffset, qint64 nSize, XADDR nAddress,SubDevice **ppSubDevice,ToolsWidget *pToolsWidget,bool bOffset,bool bDisasm)
+bool FormatWidget::loadHexSubdevice(qint64 nOffset,qint64 nSize,XADDR nAddress,SubDevice **ppSubDevice,ToolsWidget *pToolsWidget,bool bOffset,bool bDisasm)
 {
     if(*ppSubDevice)
     {
