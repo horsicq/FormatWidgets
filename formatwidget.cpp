@@ -278,13 +278,13 @@ void FormatWidget::setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int
     }
 }
 
-void FormatWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
+void FormatWidget::adjustHeaderTable(int nType,QTableWidget *pTableWidget)
 {
     Q_UNUSED(nType)
     Q_UNUSED(pTableWidget)
 }
 
-void FormatWidget::adjustListTable(int nType, QTableWidget *pTableWidget)
+void FormatWidget::adjustListTable(int nType,QTableWidget *pTableWidget)
 {
     Q_UNUSED(nType)
     Q_UNUSED(pTableWidget)
