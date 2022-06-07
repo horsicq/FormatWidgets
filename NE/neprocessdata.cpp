@@ -70,7 +70,7 @@ void NEProcessData::_process()
     }
 }
 
-void NEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
+void NEProcessData::ajustTableView(QWidget *pWidget,QTableView *pTableView)
 {
     Q_UNUSED(pWidget)
     Q_UNUSED(pTableView)
