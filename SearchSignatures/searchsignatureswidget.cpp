@@ -250,7 +250,7 @@ void SearchSignaturesWidget::_hex()
         qint64 nOffset=ui->tableViewResult->model()->data(index,Qt::UserRole+MultiSearch::USERROLE_OFFSET).toLongLong();
         qint64 nSize=ui->tableViewResult->model()->data(index,Qt::UserRole+MultiSearch::USERROLE_SIZE).toLongLong();
 
-        SubDevice *pSubDevice=static_cast<SubDevice *>(g_pDevice);
+        XIODevice *pSubDevice=dynamic_cast<XIODevice *>(g_pDevice);
 
         if(pSubDevice)
         {
