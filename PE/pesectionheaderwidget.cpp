@@ -330,7 +330,7 @@ void PESectionHeaderWidget::blockSignals(bool bState)
     _blockSignals((QObject **)g_ppComboBox,g_nComboBoxSize,bState);
 }
 
-void PESectionHeaderWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
+void PESectionHeaderWidget::adjustHeaderTable(int nType,QTableWidget *pTableWidget)
 {
     XBinary::MODE mode=XPE::getMode(getDevice(),getOptions().bIsImage,getOptions().nImageBase);
 
