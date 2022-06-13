@@ -716,7 +716,7 @@ void NEWidget::on_pushButtonHeuristicScan_clicked()
     setTreeItem(ui->treeWidgetNavi,SNE::TYPE_HEURISTICSCAN);
 }
 
-void NEWidget::onTableView_SEGMENTS_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+void NEWidget::onTableView_SEGMENTS_currentRowChanged(const QModelIndex &current,const QModelIndex &previous)
 {
     Q_UNUSED(current)
     Q_UNUSED(previous)

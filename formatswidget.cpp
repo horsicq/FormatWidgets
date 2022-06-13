@@ -756,6 +756,7 @@ void FormatsWidget::on_pushButtonMACHOFAT_clicked()
         DialogMACHOFAT dialogMACHOFAT(this);
 
         FW_DEF::OPTIONS options={};
+        options.nImageBase=-1;
 
         dialogMACHOFAT.setData(&file,options);
         dialogMACHOFAT.setGlobal(getShortcuts(),getGlobalOptions());
