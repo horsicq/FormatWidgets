@@ -389,7 +389,7 @@ void PESectionHeaderWidget::adjustHeaderTable(int nType,QTableWidget *pTableWidg
     }
 }
 
-void PESectionHeaderWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
+void PESectionHeaderWidget::_showInHexWindow(qint64 nOffset,qint64 nSize)
 {
     showHex(nOffset,nSize);
 }
