@@ -816,7 +816,7 @@ void PEProcessData::_process()
     }
 }
 
-void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
+void PEProcessData::ajustTableView(QWidget *pWidget,QTableView *pTableView)
 {
     XBinary::MODE mode=g_pPE->getMode();
 
