@@ -2551,7 +2551,7 @@ void MACHWidget::on_tableWidget_build_version_currentCellChanged(int nCurrentRow
     setHeaderTableSelection(ui->widgetHex_build_version,ui->tableWidget_build_version);
 }
 
-void MACHWidget::on_tableWidget_source_version_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+void MACHWidget::on_tableWidget_source_version_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn)
 {
     Q_UNUSED(nCurrentRow);
     Q_UNUSED(nCurrentColumn);
