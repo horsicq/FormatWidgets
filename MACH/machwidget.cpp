@@ -2571,7 +2571,7 @@ void MACHWidget::on_tableWidget_encryption_info_currentCellChanged(int nCurrentR
     setHeaderTableSelection(ui->widgetHex_encryption_info,ui->tableWidget_encryption_info);
 }
 
-void MACHWidget::on_tableWidget_function_starts_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+void MACHWidget::on_tableWidget_function_starts_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn)
 {
     Q_UNUSED(nCurrentRow);
     Q_UNUSED(nCurrentColumn);
