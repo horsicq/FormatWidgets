@@ -2511,7 +2511,7 @@ void MACHWidget::on_tableWidget_dyld_info_only_currentCellChanged(int nCurrentRo
     setHeaderTableSelection(ui->widgetHex_dyld_info_only,ui->tableWidget_dyld_info_only);
 }
 
-void MACHWidget::on_tableWidget_symtab_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+void MACHWidget::on_tableWidget_symtab_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn)
 {
     Q_UNUSED(nCurrentRow);
     Q_UNUSED(nCurrentColumn);
