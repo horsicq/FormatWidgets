@@ -814,6 +814,8 @@ void PEProcessData::_process()
             incValue();
         }
     }
+
+    setIsFinished(true);
 }
 
 void PEProcessData::ajustTableView(QWidget *pWidget,QTableView *pTableView)

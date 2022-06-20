@@ -32,7 +32,7 @@ NEWidget::NEWidget(QWidget *pParent) :
     initWidget();
 }
 
-NEWidget::NEWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) :
+NEWidget::NEWidget(QIODevice *pDevice,FW_DEF::OPTIONS options,QWidget *pParent) :
     NEWidget(pParent)
 {
     NEWidget::setData(pDevice,options,0,0,0);

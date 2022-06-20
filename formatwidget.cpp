@@ -435,7 +435,15 @@ void FormatWidget::ajustTableView(ProcessData *pProcessData, QStandardItemModel 
 
     DialogProcessData dialogProcessData(this,pProcessData);
 
-    dialogProcessData.exec();
+    // Not show if not a lot records
+    //QThread::msleep(50);
+    // TODO loop with +=10 msec, check progressbar state
+    // hide progressbar
+
+    if(!(pProcessData->isFinished()))
+    {
+        dialogProcessData.exec();
+    }
 
     bool bSort=pTableView->isSortingEnabled();
 

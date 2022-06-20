@@ -23,6 +23,7 @@
 ProcessData::ProcessData()
 {
     g_bIsStop=false;
+    g_bIsFinished=false;
 }
 
 void ProcessData::stop()
@@ -36,6 +37,11 @@ void ProcessData::setMaximum(quint64 nMaximum)
     g_nProcent=nMaximum/100;
     g_nCurrentProcent=0;
     g_nValue=0;
+}
+
+quint64 ProcessData::getMaximum()
+{
+    return g_nMaximum;
 }
 
 void ProcessData::incValue()
@@ -52,6 +58,16 @@ void ProcessData::incValue()
 bool ProcessData::isRun()
 {
     return !(g_bIsStop);
+}
+
+void ProcessData::setIsFinished(bool bState)
+{
+    g_bIsFinished=bState;
+}
+
+bool ProcessData::isFinished()
+{
+    return g_bIsFinished;
 }
 
 void ProcessData::ajustTreeView(QWidget *pWidget,QTreeView *pTreeView)

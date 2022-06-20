@@ -38,8 +38,11 @@ public:
     
     void stop();
     void setMaximum(quint64 nMaximum);
+    quint64 getMaximum();
     void incValue();
     bool isRun();
+    void setIsFinished(bool bState);
+    bool isFinished();
     virtual void _process()=0;
     virtual void ajustTableView(QWidget *pWidget,QTableView *pTableView)=0;
     virtual void ajustTreeView(QWidget *pWidget,QTreeView *pTreeView);
@@ -62,6 +65,7 @@ private:
     quint64 g_nValue;
     quint64 g_nProcent;
     qint32 g_nCurrentProcent;
+    bool g_bIsFinished;
 };
 
 #endif // PROCESSDATA_H

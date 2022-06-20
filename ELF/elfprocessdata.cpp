@@ -628,7 +628,7 @@ void ELFProcessData::_process()
             mapTypes=g_pELF->getRelTypesS_x64();
         }
 
-        for(int i=0;(i<nNumberOfRels)&&(isRun());i++)
+        for(qint32 i=0;(i<nNumberOfRels)&&(isRun());i++)
         {
             if(bIs64)
             {
@@ -660,6 +660,8 @@ void ELFProcessData::_process()
             incValue();
         }
     }
+
+    setIsFinished(true);
 }
 
 void ELFProcessData::ajustTableView(QWidget *pWidget,QTableView *pTableView)

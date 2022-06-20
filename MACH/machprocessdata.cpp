@@ -736,6 +736,8 @@ void MACHProcessData::_process()
             incValue();
         }
     }
+
+    setIsFinished(true);
 }
 
 void MACHProcessData::ajustTableView(QWidget *pWidget,QTableView *pTableView)

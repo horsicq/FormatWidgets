@@ -404,7 +404,7 @@ void SearchStringsWidget::_editString()
 
         DialogEditString dialogEditString(this,g_pDevice,&dataStruct);
 
-        if(dialogEditString.exec()==QDialog::Accepted)
+        if(dialogEditString.exec()==QDialog::Accepted) // TODO use status
         {
             bool bSuccess=false;
 
