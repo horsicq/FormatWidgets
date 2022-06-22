@@ -27,13 +27,14 @@
 #include <QMessageBox>
 #include "multisearch.h"
 #include "xoptions.h"
+#include "xdialogprocess.h"
 
 namespace Ui
 {
 class DialogMultiSearchProcess;
 }
 
-class DialogMultiSearchProcess : public QDialog // TODO XDialogProcess
+class DialogMultiSearchProcess : public XDialogProcess
 {
     Q_OBJECT
 

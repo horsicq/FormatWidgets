@@ -35,7 +35,6 @@ public:
     virtual void _process();
     virtual void ajustTableView(QWidget *pWidget,QTableView *pTableView);
     void handleCertRecord(QStandardItem *pParent,XPE::CERT_RECORD certRecord);
-    void stop();
 
 private:
     int g_nType;

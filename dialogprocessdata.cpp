@@ -22,12 +22,17 @@
 #include "ui_dialogprocessdata.h"
 
 DialogProcessData::DialogProcessData(QWidget *pParent,ProcessData *pProcessData) :
-    QDialog(pParent),
+    XDialogProcess(pParent),
     ui(new Ui::DialogProcessData)
 {
     ui->setupUi(this);
 
+    ui->progressBar->setMinimum(0);
+    ui->progressBar->setMaximum(1000);
+
     this->g_pProcessData=pProcessData;
+
+    pProcessData->setPdStruct(getPdStruct());
 
     g_pThread=new QThread;
 
@@ -36,16 +41,13 @@ DialogProcessData::DialogProcessData(QWidget *pParent,ProcessData *pProcessData)
     connect(g_pThread,SIGNAL(started()),pProcessData,SLOT(process()));
     connect(pProcessData,SIGNAL(completed(qint64)),this,SLOT(onCompleted(qint64)));
     connect(pProcessData,SIGNAL(errorMessage(QString)),this,SLOT(errorMessage(QString)));
-    connect(pProcessData,SIGNAL(progressValue(qint32)),this,SLOT(progressValue(qint32)));
-    connect(pProcessData,SIGNAL(progressMinimum(qint32)),this,SLOT(progressMinimum(qint32)));
-    connect(pProcessData,SIGNAL(progressMaximum(qint32)),this,SLOT(progressMaximum(qint32)));
 
     g_pThread->start();
 }
 
 DialogProcessData::~DialogProcessData()
 {
-    g_pProcessData->stop();
+    stop();
 
     g_pThread->quit();
     g_pThread->wait();
@@ -54,34 +56,15 @@ DialogProcessData::~DialogProcessData()
     delete g_pThread;
 }
 
+void DialogProcessData::_timerSlot()
+{
+    if(getPdStruct()->pdRecord.nTotal)
+    {
+        ui->progressBar->setValue((getPdStruct()->pdRecord.nCurrent*1000)/(getPdStruct()->pdRecord.nTotal));
+    }
+}
+
 void DialogProcessData::on_pushButtonCancel_clicked()
 {
-    g_pProcessData->stop();
-}
-
-void DialogProcessData::errorMessage(QString sText)
-{
-    QMessageBox::critical(XOptions::getMainWidget(this),tr("Error"),sText);
-}
-
-void DialogProcessData::onCompleted(qint64 nElapsed)
-{
-    Q_UNUSED(nElapsed)
-
-    this->close();
-}
-
-void DialogProcessData::progressValue(qint32 nValue)
-{
-    ui->progressBar->setValue(nValue);
-}
-
-void DialogProcessData::progressMinimum(qint32 nValue)
-{
-    ui->progressBar->setMinimum(nValue);
-}
-
-void DialogProcessData::progressMaximum(qint32 nValue)
-{
-    ui->progressBar->setMaximum(nValue);
+    stop();
 }

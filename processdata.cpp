@@ -22,52 +22,28 @@
 
 ProcessData::ProcessData()
 {
-    g_bIsStop=false;
-    g_bIsFinished=false;
+
 }
 
-void ProcessData::stop()
+void ProcessData::setPdStruct(XBinary::PDSTRUCT *pPdStruct)
 {
-    g_bIsStop=true;
+    g_pPdStruct=pPdStruct;
 }
 
 void ProcessData::setMaximum(quint64 nMaximum)
 {
-    this->g_nMaximum=nMaximum;
-    g_nProcent=nMaximum/100;
-    g_nCurrentProcent=0;
-    g_nValue=0;
-}
-
-quint64 ProcessData::getMaximum()
-{
-    return g_nMaximum;
+    g_pPdStruct->pdRecord.nTotal=nMaximum;
+    g_pPdStruct->pdRecord.nCurrent=0;
 }
 
 void ProcessData::incValue()
 {
-    g_nValue++;
-
-    if(g_nValue>((g_nCurrentProcent+1)*g_nProcent))
-    {
-        g_nCurrentProcent++;
-        emit progressValue(g_nCurrentProcent);
-    }
+    g_pPdStruct->pdRecord.nCurrent++;
 }
 
 bool ProcessData::isRun()
 {
-    return !(g_bIsStop);
-}
-
-void ProcessData::setIsFinished(bool bState)
-{
-    g_bIsFinished=bState;
-}
-
-bool ProcessData::isFinished()
-{
-    return g_bIsFinished;
+    return !(g_pPdStruct->bIsStop);
 }
 
 void ProcessData::ajustTreeView(QWidget *pWidget,QTreeView *pTreeView)
@@ -104,14 +80,14 @@ void ProcessData::process()
     QElapsedTimer scanTimer;
     scanTimer.start();
 
-    emit progressMinimum(0);
-    emit progressMaximum(100);
-
     _process();
 
-    g_bIsStop=false;
+    if(!(g_pPdStruct->bIsStop))
+    {
+        g_pPdStruct->pdRecord.bSuccess=true;
+    }
 
-    emit progressValue(100);
+    g_pPdStruct->pdRecord.bFinished=true;
 
     emit completed(scanTimer.elapsed());
 }

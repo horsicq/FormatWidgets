@@ -22,7 +22,7 @@
 #include "ui_dialogmultisearchprocess.h"
 
 DialogMultiSearchProcess::DialogMultiSearchProcess(QWidget *pParent) :
-    QDialog(pParent),
+    XDialogProcess(pParent),
     ui(new Ui::DialogMultiSearchProcess)
 {
     ui->setupUi(this);

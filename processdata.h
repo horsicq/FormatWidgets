@@ -27,6 +27,7 @@
 #include <QTreeView>
 #include "formatwidget_def.h"
 #include "xlineedithex.h"
+#include "xbinary.h"
 #include "xoptions.h"
 
 class ProcessData : public QObject
@@ -36,13 +37,10 @@ class ProcessData : public QObject
 public:
     explicit ProcessData();
     
-    void stop();
+    void setPdStruct(XBinary::PDSTRUCT *pPdStruct);
     void setMaximum(quint64 nMaximum);
-    quint64 getMaximum();
     void incValue();
     bool isRun();
-    void setIsFinished(bool bState);
-    bool isFinished();
     virtual void _process()=0;
     virtual void ajustTableView(QWidget *pWidget,QTableView *pTableView)=0;
     virtual void ajustTreeView(QWidget *pWidget,QTreeView *pTreeView);
@@ -55,17 +53,9 @@ public slots:
 signals:
     void errorMessage(QString sText);
     void completed(qint64 nElapsed);
-    void progressValue(qint32 nValue);
-    void progressMinimum(qint32 nValue);
-    void progressMaximum(qint32 nValue);
 
 private:
-    bool g_bIsStop;
-    quint64 g_nMaximum;
-    quint64 g_nValue;
-    quint64 g_nProcent;
-    qint32 g_nCurrentProcent;
-    bool g_bIsFinished;
+    XBinary::PDSTRUCT *g_pPdStruct;
 };
 
 #endif // PROCESSDATA_H

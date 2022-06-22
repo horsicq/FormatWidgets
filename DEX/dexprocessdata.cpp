@@ -315,8 +315,6 @@ void DEXProcessData::_process()
             incValue();
         }
     }
-
-    setIsFinished(true);
 }
 
 void DEXProcessData::ajustTableView(QWidget *pWidget,QTableView *pTableView)

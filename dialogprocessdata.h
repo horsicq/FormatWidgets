@@ -25,12 +25,13 @@
 #include <QThread>
 #include <QMessageBox>
 #include "processdata.h"
+#include "xdialogprocess.h"
 
 namespace Ui {
 class DialogProcessData;
 }
 
-class DialogProcessData : public QDialog  // TODO XDialogProcess
+class DialogProcessData : public XDialogProcess
 {
     Q_OBJECT
 
@@ -38,13 +39,11 @@ public:
     explicit DialogProcessData(QWidget *pParent,ProcessData *pProcessData);
     ~DialogProcessData();
 
+protected:
+    virtual void _timerSlot();
+
 private slots:
     void on_pushButtonCancel_clicked();
-    void errorMessage(QString sText);
-    void onCompleted(qint64 nElapsed);
-    void progressValue(qint32 nValue);
-    void progressMinimum(qint32 nValue);
-    void progressMaximum(qint32 nValue);
 
 private:
     Ui::DialogProcessData *ui;

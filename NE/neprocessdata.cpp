@@ -68,8 +68,6 @@ void NEProcessData::_process()
             incValue();
         }
     }
-
-    setIsFinished(true);
 }
 
 void NEProcessData::ajustTableView(QWidget *pWidget,QTableView *pTableView)

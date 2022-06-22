@@ -814,8 +814,6 @@ void PEProcessData::_process()
             incValue();
         }
     }
-
-    setIsFinished(true);
 }
 
 void PEProcessData::ajustTableView(QWidget *pWidget,QTableView *pTableView)
@@ -990,11 +988,4 @@ void PEProcessData::handleCertRecord(QStandardItem *pParent, XPE::CERT_RECORD ce
 
         pParent->appendRow(pRecord);
     }
-}
-
-void PEProcessData::stop()
-{
-    g_pPE->setDumpProcessEnable(false);
-
-    ProcessData::stop();
 }

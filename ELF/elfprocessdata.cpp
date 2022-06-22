@@ -660,8 +660,6 @@ void ELFProcessData::_process()
             incValue();
         }
     }
-
-    setIsFinished(true);
 }
 
 void ELFProcessData::ajustTableView(QWidget *pWidget,QTableView *pTableView)

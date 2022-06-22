@@ -435,15 +435,8 @@ void FormatWidget::ajustTableView(ProcessData *pProcessData,QStandardItemModel *
 
     DialogProcessData dialogProcessData(this,pProcessData);
 
-    // Not show if not a lot records
-    //QThread::msleep(50);
-    // TODO loop with +=10 msec, check progressbar state
-    // hide progressbar
-
-    if(!(pProcessData->isFinished()))
-    {
-        dialogProcessData.exec();
-    }
+//    dialogProcessData.showDialogDelay(1000);
+    dialogProcessData.exec();
 
     bool bSort=pTableView->isSortingEnabled();
 
@@ -481,6 +474,7 @@ void FormatWidget::ajustTreeView(ProcessData *pProcessData, QStandardItemModel *
 
     DialogProcessData dialogProcessData(this,pProcessData);
 
+//    dialogProcessData.showDialogDelay(1000);
     dialogProcessData.exec();
 
     pTreeView->setModel(*ppModel);
@@ -494,6 +488,7 @@ void FormatWidget::ajustDialogModel(ProcessData *pProcessData, QStandardItemMode
 {
     DialogProcessData dialogProcessData(this,pProcessData);
 
+//    dialogProcessData.showDialogDelay(1000);
     dialogProcessData.exec();
 
     DialogModelInfo dialogModelInfo(this);
