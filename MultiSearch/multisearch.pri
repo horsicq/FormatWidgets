@@ -23,3 +23,8 @@ SOURCES += \
     XCONFIG += xshortcuts
     include($$PWD/../../XShortcuts/xshortcuts.pri)
 }
+
+!contains(XCONFIG, xdialogprocess) {
+    XCONFIG += xdialogprocess
+    include($$PWD/../../FormatDialogs/xdialogprocess.pri)
+}
