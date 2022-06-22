@@ -30,7 +30,7 @@ namespace Ui {
 class DialogProcessData;
 }
 
-class DialogProcessData : public QDialog
+class DialogProcessData : public QDialog  // TODO XDialogProcess
 {
     Q_OBJECT
 

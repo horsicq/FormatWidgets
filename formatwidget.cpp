@@ -419,7 +419,7 @@ void FormatWidget::setLineEdit(XLineEditHEX *pLineEdit, qint32 nMaxLength, QStri
     pLineEdit->setProperty("OFFSET",nOffset);
 }
 
-void FormatWidget::ajustTableView(ProcessData *pProcessData, QStandardItemModel **ppModel, QTableView *pTableView, QSortFilterProxyModel *pProxyModel, bool bStretchLastSection)
+void FormatWidget::ajustTableView(ProcessData *pProcessData,QStandardItemModel **ppModel,QTableView *pTableView,QSortFilterProxyModel *pProxyModel,bool bStretchLastSection)
 {
     QAbstractItemModel *pOldModel=0;
 
