@@ -435,8 +435,7 @@ void FormatWidget::ajustTableView(ProcessData *pProcessData,QStandardItemModel *
 
     DialogProcessData dialogProcessData(this,pProcessData);
 
-//    dialogProcessData.showDialogDelay(1000);
-    dialogProcessData.exec();
+    dialogProcessData.showDialogDelay(1000);
 
     bool bSort=pTableView->isSortingEnabled();
 
@@ -474,8 +473,7 @@ void FormatWidget::ajustTreeView(ProcessData *pProcessData, QStandardItemModel *
 
     DialogProcessData dialogProcessData(this,pProcessData);
 
-//    dialogProcessData.showDialogDelay(1000);
-    dialogProcessData.exec();
+    dialogProcessData.showDialogDelay(1000);
 
     pTreeView->setModel(*ppModel);
 
@@ -488,8 +486,7 @@ void FormatWidget::ajustDialogModel(ProcessData *pProcessData, QStandardItemMode
 {
     DialogProcessData dialogProcessData(this,pProcessData);
 
-//    dialogProcessData.showDialogDelay(1000);
-    dialogProcessData.exec();
+    dialogProcessData.showDialogDelay(1000);
 
     DialogModelInfo dialogModelInfo(this);
 

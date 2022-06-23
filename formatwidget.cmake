@@ -20,6 +20,7 @@ include(${CMAKE_CURRENT_LIST_DIR}/../XDEX/xdex.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../XArchive/xarchives.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../XPDF/xpdf.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../XSymbolsWidget/xsymbolswidget.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/../XOnlineTools/xvirustotalwidget.cmake)
 
 set(FORMATWIDGET_SOURCES
     ${XCPPFILT_SOURCES}
@@ -41,6 +42,8 @@ set(FORMATWIDGET_SOURCES
     ${XDEX_SOURCES}
     ${XARCHIVES_SOURCES}
     ${XPDF_SOURCES}
+    ${XSYMBOLSWIDGET_SOURCES}
+    ${XVIRUSTOTALWIDGET_SOURCES}
     ${CMAKE_CURRENT_LIST_DIR}/dialogmodelinfo.cpp
     ${CMAKE_CURRENT_LIST_DIR}/dialogmodelinfo.ui
     ${CMAKE_CURRENT_LIST_DIR}/dialogprocessdata.cpp
