@@ -80,8 +80,8 @@ public:
 
     explicit MultiSearch(QObject *pParent=nullptr);
     ~MultiSearch();
-    void setSearchData(QIODevice *pDevice,QList<XBinary::MS_RECORD> *pListRecords,OPTIONS options,TYPE type);
-    void setModelData(QList<XBinary::MS_RECORD> *pListRecords,QStandardItemModel **ppModel,OPTIONS options,TYPE type);
+    void setSearchData(QIODevice *pDevice,QList<XBinary::MS_RECORD> *pListRecords,OPTIONS options,TYPE type,XBinary::PDSTRUCT *pPdStruct);
+    void setModelData(QList<XBinary::MS_RECORD> *pListRecords,QStandardItemModel **ppModel,OPTIONS options,TYPE type,XBinary::PDSTRUCT *pPdStruct);
 
     static QList<SIGNATURE_RECORD> loadSignaturesFromFile(QString sFileName);
     static SIGNATURE_RECORD createSignature(QString sName,QString sSignature);
@@ -90,13 +90,8 @@ public:
 signals:
     void errorMessage(QString sText);
     void completed(qint64 nElapsed);
-    void progressValueChanged(qint32 nValue);
-    void progressInfo(QString sText);
-    void progressFound(qint32 nValue);
-    void setSearchProcessEnable(bool bState);
 
 public slots:
-    void stop();
     void processSearch();
     void processModel();
 
@@ -106,10 +101,9 @@ private:
     OPTIONS g_options;
     TYPE g_type;
     QStandardItemModel **g_ppModel;
-    bool g_bIsStop;
     QSemaphore *g_pSemaphore;
     QMutex g_mutex;
-    XBinary::PROCENT g_procent;
+    XBinary::PDSTRUCT *g_pPdStruct;
 };
 
 #endif // MULTISEARCH_H

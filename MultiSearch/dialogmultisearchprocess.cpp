@@ -27,6 +27,11 @@ DialogMultiSearchProcess::DialogMultiSearchProcess(QWidget *pParent) :
 {
     ui->setupUi(this);
 
+    g_type=MultiSearch::TYPE_STRINGS;
+
+    ui->progressBar->setMinimum(0);
+    ui->progressBar->setMaximum(1000);
+
     g_pHandleSearch=new MultiSearch;
     g_pHandleModel=new MultiSearch;
     g_pThreadSearch=new QThread;
@@ -38,23 +43,15 @@ DialogMultiSearchProcess::DialogMultiSearchProcess(QWidget *pParent) :
     connect(g_pThreadSearch,SIGNAL(started()),g_pHandleSearch,SLOT(processSearch()));
     connect(g_pHandleSearch,SIGNAL(completed(qint64)),this,SLOT(onCompleted(qint64)));
     connect(g_pHandleSearch,SIGNAL(errorMessage(QString)),this,SLOT(errorMessage(QString)));
-    connect(g_pHandleSearch,SIGNAL(progressValueChanged(qint32)),this,SLOT(onProgressValueChanged(qint32)));
-    connect(g_pHandleSearch,SIGNAL(progressInfo(QString)),this,SLOT(onProgressInfo(QString)));
-    connect(g_pHandleSearch,SIGNAL(progressFound(qint32)),this,SLOT(onProgressFound(qint32)));
 
     connect(g_pThreadModel,SIGNAL(started()),g_pHandleModel,SLOT(processModel()));
     connect(g_pHandleModel,SIGNAL(completed(qint64)),this,SLOT(onCompleted(qint64)));
     connect(g_pHandleModel,SIGNAL(errorMessage(QString)),this,SLOT(errorMessage(QString)));
-    connect(g_pHandleModel,SIGNAL(progressValueChanged(qint32)),this,SLOT(onProgressValueChanged(qint32)));
-
-    ui->progressBar->setMaximum(100);
-    ui->progressBar->setMinimum(0);
 }
 
 DialogMultiSearchProcess::~DialogMultiSearchProcess()
 {
-    g_pHandleSearch->stop();
-    g_pHandleModel->stop();
+    stop();
 
     g_pThreadSearch->quit();
     g_pThreadSearch->wait();
@@ -72,6 +69,8 @@ DialogMultiSearchProcess::~DialogMultiSearchProcess()
 
 void DialogMultiSearchProcess::processSearch(QIODevice *pDevice,QList<XBinary::MS_RECORD> *pListRecords,MultiSearch::OPTIONS options,MultiSearch::TYPE type)
 {
+    g_type=type;
+
     if(type==MultiSearch::TYPE_STRINGS)
     {
         setWindowTitle(tr("Search strings"));
@@ -81,7 +80,7 @@ void DialogMultiSearchProcess::processSearch(QIODevice *pDevice,QList<XBinary::M
         setWindowTitle(tr("Search signatures"));
     }
 
-    g_pHandleSearch->setSearchData(pDevice,pListRecords,options,type);
+    g_pHandleSearch->setSearchData(pDevice,pListRecords,options,type,getPdStruct());
     g_pThreadSearch->start();
 }
 
@@ -89,39 +88,28 @@ void DialogMultiSearchProcess::processModel(QList<XBinary::MS_RECORD> *pListReco
 {
     setWindowTitle(tr("Create view model"));
 
-    g_pHandleModel->setModelData(pListRecords,ppModel,options,type);
+    g_pHandleModel->setModelData(pListRecords,ppModel,options,type,getPdStruct());
     g_pThreadModel->start();
 }
 
 void DialogMultiSearchProcess::on_pushButtonCancel_clicked()
 {
-    g_pHandleSearch->stop();
-    g_pHandleModel->stop();
+    stop();
 }
 
-void DialogMultiSearchProcess::errorMessage(QString sText)
+void DialogMultiSearchProcess::_timerSlot()
 {
-    QMessageBox::critical(XOptions::getMainWidget(this),tr("Error"),sText);
-}
-
-void DialogMultiSearchProcess::onCompleted(qint64 nElapsed)
-{
-    Q_UNUSED(nElapsed)
-
-    this->close();
-}
-
-void DialogMultiSearchProcess::onProgressValueChanged(qint32 nValue)
-{
-    ui->progressBar->setValue(nValue);
-}
-
-void DialogMultiSearchProcess::onProgressInfo(QString sInfo)
-{
-    ui->labelInfo->setText(sInfo);
-}
-
-void DialogMultiSearchProcess::onProgressFound(qint32 nValue)
-{
-    ui->labelFound->setText(QString::number(nValue));
+    if(getPdStruct()->pdRecord.nTotal)
+    {
+        if(g_type==MultiSearch::TYPE_STRINGS)
+        {
+            ui->progressBar->setValue((getPdStruct()->pdRecord.nCurrent*1000)/(getPdStruct()->pdRecord.nTotal));
+            ui->labelStatus->setText(getPdStruct()->pdRecord.sStatus);
+        }
+        else if(g_type==MultiSearch::TYPE_SIGNATURES)
+        {
+            ui->progressBar->setValue((getPdStruct()->pdRecordOpt.nCurrent*1000)/(getPdStruct()->pdRecordOpt.nTotal));
+            ui->labelStatus->setText(getPdStruct()->pdRecordOpt.sStatus);
+        }
+    }
 }

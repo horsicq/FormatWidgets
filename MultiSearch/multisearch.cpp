@@ -22,11 +22,9 @@
 
 MultiSearch::MultiSearch(QObject *pParent) : QObject(pParent)
 {
-    g_bIsStop=false;
     g_options={};
     g_ppModel=nullptr;
     g_pSemaphore=new QSemaphore(N_MAXNUMBEROFTHREADS);
-    g_procent={};
 }
 
 MultiSearch::~MultiSearch()
@@ -34,22 +32,24 @@ MultiSearch::~MultiSearch()
     delete g_pSemaphore;
 }
 
-void MultiSearch::setSearchData(QIODevice *pDevice,QList<XBinary::MS_RECORD> *pListRecords,OPTIONS options,TYPE type)
+void MultiSearch::setSearchData(QIODevice *pDevice, QList<XBinary::MS_RECORD> *pListRecords, OPTIONS options, TYPE type, XBinary::PDSTRUCT *pPdStruct)
 {
     this->g_pDevice=pDevice;
     this->g_pListRecords=pListRecords;
 
     g_options=options;
     g_type=type;
+    g_pPdStruct=pPdStruct;
 }
 
-void MultiSearch::setModelData(QList<XBinary::MS_RECORD> *pListRecords,QStandardItemModel **ppModel,OPTIONS options,TYPE type)
+void MultiSearch::setModelData(QList<XBinary::MS_RECORD> *pListRecords, QStandardItemModel **ppModel, OPTIONS options, TYPE type, XBinary::PDSTRUCT *pPdStruct)
 {
     this->g_pListRecords=pListRecords;
     this->g_ppModel=ppModel;
 
     g_options=options;
     g_type=type;
+    g_pPdStruct=pPdStruct;
 }
 
 QList<MultiSearch::SIGNATURE_RECORD> MultiSearch::loadSignaturesFromFile(QString sFileName)
@@ -115,18 +115,12 @@ void MultiSearch::processSignature(MultiSearch::SIGNATURE_RECORD signatureRecord
     binary.setReadWriteMutex(&g_mutex);
     binary.setDevice(g_pDevice);
 
-    connect(this,SIGNAL(setSearchProcessEnable(bool)),&binary,SLOT(setSearchProcessEnable(bool)),Qt::DirectConnection);
-
-    QList<XBinary::MS_RECORD> listResult=binary.multiSearch_signature(&(g_options.memoryMap),0,binary.getSize(),N_MAX,signatureRecord.sSignature,signatureRecord.sName);
+    QList<XBinary::MS_RECORD> listResult=binary.multiSearch_signature(&(g_options.memoryMap),0,binary.getSize(),N_MAX,signatureRecord.sSignature,signatureRecord.sName,g_pPdStruct);
 
     g_pListRecords->append(listResult);
 
-    if(XBinary::procentSetCurrentValue(&g_procent,signatureRecord.nNumber))
-    {
-        emit progressValueChanged(g_procent.nCurrentProcent);
-        emit progressInfo(signatureRecord.sName);
-        emit progressFound(g_pListRecords->count());
-    }
+    g_pPdStruct->pdRecordOpt.sStatus=signatureRecord.sName;
+    g_pPdStruct->pdRecordOpt.nCurrent=signatureRecord.nNumber;
 
     g_pSemaphore->release();
 //#ifdef QT_DEBUG
@@ -134,25 +128,18 @@ void MultiSearch::processSignature(MultiSearch::SIGNATURE_RECORD signatureRecord
 //#endif
 }
 
-void MultiSearch::stop()
-{
-    emit setSearchProcessEnable(false);
-
-    g_bIsStop=true;
-}
-
 void MultiSearch::processSearch()
 {
     QElapsedTimer scanTimer;
     scanTimer.start();
+
+    g_pPdStruct->pdRecordOpt.bIsValid=true;
 
     if(g_type==TYPE_STRINGS)
     {
         XBinary binary(g_pDevice);
 
         connect(&binary,SIGNAL(errorMessage(QString)),this,SIGNAL(errorMessage(QString)));
-        connect(&binary,SIGNAL(searchProgressValueChanged(qint32)),this,SIGNAL(progressValueChanged(qint32)));
-        connect(this,SIGNAL(setSearchProcessEnable(bool)),&binary,SLOT(setSearchProcessEnable(bool)),Qt::DirectConnection);
 
         XBinary::STRINGSEARCH_OPTIONS ssOptions={};
         ssOptions.nLimit=N_MAX;
@@ -164,7 +151,7 @@ void MultiSearch::processSearch()
         ssOptions.bCStrings=g_options.bCStrings;
         ssOptions.sANSICodec=g_options.sANSICodec;
 
-        *g_pListRecords=binary.multiSearch_allStrings(0,g_pDevice->size(),ssOptions);
+        *g_pListRecords=binary.multiSearch_allStrings(0,g_pDevice->size(),ssOptions,g_pPdStruct);
     }
     else if(g_type==TYPE_SIGNATURES)
     {
@@ -176,11 +163,9 @@ void MultiSearch::processSearch()
 
         qint32 nNumberOfSignatures=g_options.pListSignatureRecords->count();
 
-        g_procent=XBinary::procentInit(nNumberOfSignatures,true);
+        g_pPdStruct->pdRecordOpt.nTotal=nNumberOfSignatures;
 
-        emit progressValueChanged(0);
-
-        for(qint32 i=0;(i<nNumberOfSignatures)&&(!g_bIsStop);i++)
+        for(qint32 i=0;(i<nNumberOfSignatures)&&(!(g_pPdStruct->bIsStop));i++)
         {
             SIGNATURE_RECORD signatureRecord=g_options.pListSignatureRecords->at(i);
 
@@ -238,12 +223,17 @@ void MultiSearch::processSearch()
 
         QThread::msleep(100);
 
-        emit progressValueChanged(g_procent.nMaxProcent);
-
     #ifdef QT_DEBUG
         qDebug("Signatures end: %lld msec",timer.elapsed());
     #endif
     }
+
+    if(!(g_pPdStruct->bIsStop))
+    {
+        g_pPdStruct->pdRecordOpt.bSuccess=true;
+    }
+
+    g_pPdStruct->pdRecordOpt.bFinished=true;
 
     emit completed(scanTimer.elapsed());
 }
@@ -252,6 +242,8 @@ void MultiSearch::processModel()
 {
     QElapsedTimer scanTimer;
     scanTimer.start();
+
+    g_pPdStruct->pdRecordOpt.bIsValid=true;
 
     if(g_type==TYPE_STRINGS)
     {
@@ -262,21 +254,15 @@ void MultiSearch::processModel()
 
         XBinary::MODE modeAddress=XBinary::getWidthModeFromSize(nBaseAddress+g_options.memoryMap.nRawSize);
 
-        qint64 _nProcent=nNumberOfRecords/100;
-        qint32 _nCurrentProcent=0;
-
-        emit progressValueChanged(_nCurrentProcent); // TODO Make procents from xbinary
+        g_pPdStruct->pdRecordOpt.nTotal=nNumberOfRecords;
+        g_pPdStruct->pdRecordOpt.nCurrent=0;
 
         (*g_ppModel)->setHeaderData(0,Qt::Horizontal,nBaseAddress?(tr("Address")):(tr("Offset")));
         (*g_ppModel)->setHeaderData(1,Qt::Horizontal,tr("Size"));
         (*g_ppModel)->setHeaderData(2,Qt::Horizontal,tr("Type"));
         (*g_ppModel)->setHeaderData(3,Qt::Horizontal,tr("String"));
 
-        emit progressValueChanged(0);
-
-        g_bIsStop=false;
-
-        for(qint32 i=0;(i<nNumberOfRecords)&&(!g_bIsStop);i++)
+        for(qint32 i=0;(i<nNumberOfRecords)&&(!(g_pPdStruct->bIsStop));i++)
         {
             XBinary::MS_RECORD record=g_pListRecords->at(i);
 
@@ -301,14 +287,8 @@ void MultiSearch::processModel()
             (*g_ppModel)->setItem(i,2,pTypeItem);
             (*g_ppModel)->setItem(i,3,new QStandardItem(record.sString));
 
-            if(i>((_nCurrentProcent+1)*_nProcent))
-            {
-                _nCurrentProcent++;
-                emit progressValueChanged(_nCurrentProcent);
-            }
+            g_pPdStruct->pdRecordOpt.nCurrent=i;
         }
-
-        g_bIsStop=false;
     }
     else if(g_type==TYPE_SIGNATURES)
     {
@@ -317,20 +297,14 @@ void MultiSearch::processModel()
 
         XBinary::MODE modeAddress=XBinary::getWidthModeFromMemoryMap(&(g_options.memoryMap));
 
-        qint64 _nProcent=nNumberOfRecords/100;
-        qint32 _nCurrentProcent=0;
-
-        emit progressValueChanged(_nCurrentProcent); // TODO Make procents from xbinary
+        g_pPdStruct->pdRecordOpt.nTotal=nNumberOfRecords;
+        g_pPdStruct->pdRecordOpt.nCurrent=0;
 
         (*g_ppModel)->setHeaderData(0,Qt::Horizontal,tr("Address"));
         (*g_ppModel)->setHeaderData(1,Qt::Horizontal,tr("Offset"));
         (*g_ppModel)->setHeaderData(2,Qt::Horizontal,tr("Name"));
 
-        emit progressValueChanged(0);
-
-        g_bIsStop=false;
-
-        for(qint32 i=0;(i<nNumberOfRecords)&&(!g_bIsStop);i++)
+        for(qint32 i=0;(i<nNumberOfRecords)&&(!(g_pPdStruct->bIsStop));i++)
         {
             XBinary::MS_RECORD record=g_pListRecords->at(i);
 
@@ -361,15 +335,16 @@ void MultiSearch::processModel()
 
             (*g_ppModel)->setItem(i,2,new QStandardItem(sName));
 
-            if(i>((_nCurrentProcent+1)*_nProcent))
-            {
-                _nCurrentProcent++;
-                emit progressValueChanged(_nCurrentProcent);
-            }
+            g_pPdStruct->pdRecordOpt.nCurrent=i;
         }
-
-        g_bIsStop=false;
     }
+
+    if(!(g_pPdStruct->bIsStop))
+    {
+        g_pPdStruct->pdRecordOpt.bSuccess=true;
+    }
+
+    g_pPdStruct->pdRecordOpt.bFinished=true;
 
     emit completed(scanTimer.elapsed());
 }

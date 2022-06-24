@@ -1110,7 +1110,7 @@ void FormatWidget::dumpRegion(qint64 nOffset,qint64 nSize,QString sName)
     {
         DialogDumpProcess dd(this,getDevice(),nOffset,nSize,sFileName,DumpProcess::DT_OFFSET);
 
-        dd.exec();
+        dd.showDialogDelay(1000);
     }
 }
 

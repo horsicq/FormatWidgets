@@ -46,11 +46,9 @@ public:
 
 private slots:
     void on_pushButtonCancel_clicked();
-    void errorMessage(QString sText);
-    void onCompleted(qint64 nElapsed);
-    void onProgressValueChanged(qint32 nValue);
-    void onProgressInfo(QString sInfo);
-    void onProgressFound(qint32 nValue);
+
+protected:
+    virtual void _timerSlot();
 
 private:
     Ui::DialogMultiSearchProcess *ui;
@@ -58,6 +56,7 @@ private:
     MultiSearch *g_pHandleModel;
     QThread *g_pThreadSearch;
     QThread *g_pThreadModel;
+    MultiSearch::TYPE g_type;
 };
 
 #endif // DIALOGMULTISEARCHSPROCESS_H
