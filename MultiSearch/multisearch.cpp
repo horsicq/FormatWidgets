@@ -32,7 +32,7 @@ MultiSearch::~MultiSearch()
     delete g_pSemaphore;
 }
 
-void MultiSearch::setSearchData(QIODevice *pDevice, QList<XBinary::MS_RECORD> *pListRecords, OPTIONS options, TYPE type, XBinary::PDSTRUCT *pPdStruct)
+void MultiSearch::setSearchData(QIODevice *pDevice,QList<XBinary::MS_RECORD> *pListRecords,OPTIONS options,TYPE type,XBinary::PDSTRUCT *pPdStruct)
 {
     this->g_pDevice=pDevice;
     this->g_pListRecords=pListRecords;
@@ -42,7 +42,7 @@ void MultiSearch::setSearchData(QIODevice *pDevice, QList<XBinary::MS_RECORD> *p
     g_pPdStruct=pPdStruct;
 }
 
-void MultiSearch::setModelData(QList<XBinary::MS_RECORD> *pListRecords, QStandardItemModel **ppModel, OPTIONS options, TYPE type, XBinary::PDSTRUCT *pPdStruct)
+void MultiSearch::setModelData(QList<XBinary::MS_RECORD> *pListRecords,QStandardItemModel **ppModel,OPTIONS options,TYPE type,XBinary::PDSTRUCT *pPdStruct)
 {
     this->g_pListRecords=pListRecords;
     this->g_ppModel=ppModel;
