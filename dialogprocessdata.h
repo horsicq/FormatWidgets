@@ -27,10 +27,6 @@
 #include "processdata.h"
 #include "xdialogprocess.h"
 
-namespace Ui {
-class DialogProcessData;
-}
-
 class DialogProcessData : public XDialogProcess
 {
     Q_OBJECT
@@ -39,14 +35,7 @@ public:
     explicit DialogProcessData(QWidget *pParent,ProcessData *pProcessData);
     ~DialogProcessData();
 
-protected:
-    virtual void _timerSlot();
-
-private slots:
-    void on_pushButtonCancel_clicked();
-
 private:
-    Ui::DialogProcessData *ui;
     ProcessData *g_pProcessData;
     QThread *g_pThread;
 };

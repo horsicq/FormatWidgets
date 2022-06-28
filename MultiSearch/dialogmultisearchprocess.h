@@ -29,11 +29,6 @@
 #include "xoptions.h"
 #include "xdialogprocess.h"
 
-namespace Ui
-{
-class DialogMultiSearchProcess;
-}
-
 class DialogMultiSearchProcess : public XDialogProcess
 {
     Q_OBJECT
@@ -41,17 +36,11 @@ class DialogMultiSearchProcess : public XDialogProcess
 public:
     explicit DialogMultiSearchProcess(QWidget *pParent=nullptr);
     ~DialogMultiSearchProcess();
+
     void processSearch(QIODevice *pDevice,QList<XBinary::MS_RECORD> *pListRecords,MultiSearch::OPTIONS options,MultiSearch::TYPE type);
     void processModel(QList<XBinary::MS_RECORD> *pListRecords,QStandardItemModel **ppModel,MultiSearch::OPTIONS options,MultiSearch::TYPE type);
 
-private slots:
-    void on_pushButtonCancel_clicked();
-
-protected:
-    virtual void _timerSlot();
-
 private:
-    Ui::DialogMultiSearchProcess *ui;
     MultiSearch *g_pHandleSearch;
     MultiSearch *g_pHandleModel;
     QThread *g_pThreadSearch;

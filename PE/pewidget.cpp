@@ -2329,7 +2329,7 @@ void PEWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
     ui->widgetHex->setSelection(nOffset,nSize);
 }
 
-bool PEWidget::createSectionTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nNumberOfRecords)
+bool PEWidget::createSectionTable(int nType,QTableWidget *pTableWidget,const FW_DEF::HEADER_RECORD *pRecords,int nNumberOfRecords)
 {
     qint32 nSymbolWidth=XLineEditHEX::getSymbolWidth(this);
 

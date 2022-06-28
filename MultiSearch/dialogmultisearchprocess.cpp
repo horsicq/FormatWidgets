@@ -19,18 +19,11 @@
  * SOFTWARE.
  */
 #include "dialogmultisearchprocess.h"
-#include "ui_dialogmultisearchprocess.h"
 
 DialogMultiSearchProcess::DialogMultiSearchProcess(QWidget *pParent) :
-    XDialogProcess(pParent),
-    ui(new Ui::DialogMultiSearchProcess)
+    XDialogProcess(pParent)
 {
-    ui->setupUi(this);
-
     g_type=MultiSearch::TYPE_STRINGS;
-
-    ui->progressBar->setMinimum(0);
-    ui->progressBar->setMaximum(1000);
 
     g_pHandleSearch=new MultiSearch;
     g_pHandleModel=new MultiSearch;
@@ -58,8 +51,6 @@ DialogMultiSearchProcess::~DialogMultiSearchProcess()
 
     g_pThreadModel->quit();
     g_pThreadModel->wait();
-
-    delete ui;
 
     delete g_pThreadSearch;
     delete g_pThreadModel;
@@ -90,26 +81,4 @@ void DialogMultiSearchProcess::processModel(QList<XBinary::MS_RECORD> *pListReco
 
     g_pHandleModel->setModelData(pListRecords,ppModel,options,type,getPdStruct());
     g_pThreadModel->start();
-}
-
-void DialogMultiSearchProcess::on_pushButtonCancel_clicked()
-{
-    stop();
-}
-
-void DialogMultiSearchProcess::_timerSlot()
-{
-    if(getPdStruct()->pdRecord.nTotal)
-    {
-        if(g_type==MultiSearch::TYPE_STRINGS)
-        {
-            ui->progressBar->setValue((getPdStruct()->pdRecord.nCurrent*1000)/(getPdStruct()->pdRecord.nTotal));
-            ui->labelStatus->setText(getPdStruct()->pdRecord.sStatus);
-        }
-        else if(g_type==MultiSearch::TYPE_SIGNATURES)
-        {
-            ui->progressBar->setValue((getPdStruct()->pdRecordOpt.nCurrent*1000)/(getPdStruct()->pdRecordOpt.nTotal));
-            ui->labelStatus->setText(getPdStruct()->pdRecordOpt.sStatus);
-        }
-    }
 }

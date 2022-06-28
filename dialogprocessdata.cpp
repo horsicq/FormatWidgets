@@ -22,14 +22,8 @@
 #include "ui_dialogprocessdata.h"
 
 DialogProcessData::DialogProcessData(QWidget *pParent,ProcessData *pProcessData) :
-    XDialogProcess(pParent),
-    ui(new Ui::DialogProcessData)
+    XDialogProcess(pParent)
 {
-    ui->setupUi(this);
-
-    ui->progressBar->setMinimum(0);
-    ui->progressBar->setMaximum(1000);
-
     this->g_pProcessData=pProcessData;
 
     pProcessData->setPdStruct(getPdStruct());
@@ -52,19 +46,5 @@ DialogProcessData::~DialogProcessData()
     g_pThread->quit();
     g_pThread->wait();
 
-    delete ui;
     delete g_pThread;
-}
-
-void DialogProcessData::_timerSlot()
-{
-    if(getPdStruct()->pdRecord.nTotal)
-    {
-        ui->progressBar->setValue((getPdStruct()->pdRecord.nCurrent*1000)/(getPdStruct()->pdRecord.nTotal));
-    }
-}
-
-void DialogProcessData::on_pushButtonCancel_clicked()
-{
-    stop();
 }
