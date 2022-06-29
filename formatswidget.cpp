@@ -811,6 +811,7 @@ void FormatsWidget::onScanStarted()
     ui->groupBoxFileType->setEnabled(false);
     ui->groupBoxScanEngine->setEnabled(false);
     ui->groupBoxEntryPoint->setEnabled(false);
+    ui->groupBoxBaseAddress->setEnabled(false);
 }
 
 void FormatsWidget::onScanFinished()
@@ -819,6 +820,7 @@ void FormatsWidget::onScanFinished()
     ui->groupBoxFileType->setEnabled(true);
     ui->groupBoxScanEngine->setEnabled(true);
     ui->groupBoxEntryPoint->setEnabled(true);
+    ui->groupBoxBaseAddress->setEnabled(true);
 }
 
 void FormatsWidget::registerShortcuts(bool bState)
