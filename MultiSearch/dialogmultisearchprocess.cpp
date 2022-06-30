@@ -45,6 +45,7 @@ DialogMultiSearchProcess::DialogMultiSearchProcess(QWidget *pParent) :
 DialogMultiSearchProcess::~DialogMultiSearchProcess()
 {
     stop();
+    waitForFinished();
 
     g_pThreadSearch->quit();
     g_pThreadSearch->wait();

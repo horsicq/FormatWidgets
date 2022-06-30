@@ -42,6 +42,7 @@ DialogProcessData::DialogProcessData(QWidget *pParent,ProcessData *pProcessData)
 DialogProcessData::~DialogProcessData()
 {
     stop();
+    waitForFinished();
 
     g_pThread->quit();
     g_pThread->wait();
