@@ -952,7 +952,7 @@ void PEProcessData::ajustTableView(QWidget *pWidget,QTableView *pTableView)
     }
 }
 
-void PEProcessData::handleCertRecord(QStandardItem *pParent, XPE::CERT_RECORD certRecord)
+void PEProcessData::handleCertRecord(QStandardItem *pParent,XPE::CERT_RECORD certRecord)
 {
     QString sText=QString("%1 (%2)").arg(XBinary::valueToHex(XBinary::MODE_UNKNOWN,certRecord.certTag.nTag),XPE::certTagToString(certRecord.certTag.nTag));
 
