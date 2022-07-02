@@ -2393,7 +2393,7 @@ void PEWidget::enableButton()
     ui->pushButtonReload->setEnabled(true);
 }
 
-void PEWidget::on_tableWidget_IMAGE_DIRECTORY_ENTRIES_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+void PEWidget::on_tableWidget_IMAGE_DIRECTORY_ENTRIES_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn)
 {
     Q_UNUSED(nCurrentColumn)
     Q_UNUSED(nPreviousRow)
