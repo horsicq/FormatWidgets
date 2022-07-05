@@ -61,7 +61,7 @@ void FormatsWidget::setFileName(QString sFileName, bool bScan)
     reload();
 }
 
-void FormatsWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
+void FormatsWidget::setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions)
 {
     ui->pageScanDIE->setGlobal(pShortcuts,pXOptions);
     ui->pageScanNFD->setGlobal(pShortcuts,pXOptions);
