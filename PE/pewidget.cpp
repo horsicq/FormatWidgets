@@ -2415,7 +2415,7 @@ void PEWidget::on_tableWidget_IMAGE_DOS_HEADER_currentCellChanged(int nCurrentRo
     setHeaderTableSelection(ui->widgetHex_IMAGE_DOS_HEADER,ui->tableWidget_IMAGE_DOS_HEADER);
 }
 
-void PEWidget::on_tableWidget_IMAGE_NT_HEADERS_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+void PEWidget::on_tableWidget_IMAGE_NT_HEADERS_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn)
 {
     Q_UNUSED(nCurrentRow)
     Q_UNUSED(nCurrentColumn)
