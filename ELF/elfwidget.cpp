@@ -293,7 +293,7 @@ void ELFWidget::reloadData()
         {
             if(!isInitPresent(sInit))
             {
-                ui->widgetInfo->setData(getDevice(),elf.getFileType(),true);
+                ui->widgetInfo->setData(getDevice(),elf.getFileType(),"Info",true);
             }
         }
         else if(nType==SELF::TYPE_HEX)

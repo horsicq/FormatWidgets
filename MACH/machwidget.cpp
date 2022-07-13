@@ -1339,7 +1339,7 @@ void MACHWidget::reloadData()
         {
             if(!isInitPresent(sInit))
             {
-                ui->widgetInfo->setData(getDevice(),mach.getFileType(),true);
+                ui->widgetInfo->setData(getDevice(),mach.getFileType(),"Info",true);
             }
         }
         else if(nType==SMACH::TYPE_HEX)

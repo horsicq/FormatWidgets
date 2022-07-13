@@ -300,7 +300,7 @@ void DEXWidget::reloadData()
         {
             if(!isInitPresent(sInit))
             {
-                ui->widgetInfo->setData(getDevice(),dex.getFileType(),true);
+                ui->widgetInfo->setData(getDevice(),dex.getFileType(),"Info",true);
             }
         }
         else if(nType==SDEX::TYPE_HEX)

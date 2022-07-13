@@ -938,7 +938,7 @@ void PEWidget::reloadData()
         {
             if(!isInitPresent(sInit))
             {
-                ui->widgetInfo->setData(getDevice(),pe.getFileType(),true);
+                ui->widgetInfo->setData(getDevice(),pe.getFileType(),"Info",true);
             }
         }
         else if(nType==SPE::TYPE_VIRUSTOTAL)

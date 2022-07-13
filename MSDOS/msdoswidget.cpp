@@ -249,7 +249,7 @@ void MSDOSWidget::reloadData()
         {
             if(!isInitPresent(sInit))
             {
-                ui->widgetInfo->setData(getDevice(),msdos.getFileType(),true);
+                ui->widgetInfo->setData(getDevice(),msdos.getFileType(),"Info",true);
             }
         }
         else if(nType==SMSDOS::TYPE_HEX)

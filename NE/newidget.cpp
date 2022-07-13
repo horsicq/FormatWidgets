@@ -347,7 +347,7 @@ void NEWidget::reloadData()
         {
             if(!isInitPresent(sInit))
             {
-                ui->widgetInfo->setData(getDevice(),ne.getFileType(),true);
+                ui->widgetInfo->setData(getDevice(),ne.getFileType(),"Info",true);
             }
         }
         else if(nType==SNE::TYPE_HEX)

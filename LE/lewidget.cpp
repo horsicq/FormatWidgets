@@ -336,7 +336,7 @@ void LEWidget::reloadData()
         {
             if(!isInitPresent(sInit))
             {
-                ui->widgetInfo->setData(getDevice(),le.getFileType(),true);
+                ui->widgetInfo->setData(getDevice(),le.getFileType(),"Info",true);
             }
         }
         else if(nType==SLE::TYPE_HEX)
