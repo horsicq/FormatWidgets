@@ -915,7 +915,7 @@ void FormatWidget::initToolsWidget(ToolsWidget *pWidget)
     pWidget->resize(pWidget->width(),150); // TODO Check
 }
 
-qint32 FormatWidget::getColumnWidth(QWidget *pParent, FormatWidget::CW cw, XBinary::MODE mode)
+qint32 FormatWidget::getColumnWidth(QWidget *pParent,FormatWidget::CW cw,XBinary::MODE mode)
 {
     qint32 nResult=0;
 
