@@ -2683,17 +2683,17 @@ void PEWidget::on_tableView_Resources_customContextMenuRequested(const QPoint &p
         QMenu contextMenu(this);
 
         QAction actionHex(tr("Hex"),this);
-        connect(&actionHex, SIGNAL(triggered()), this, SLOT(resourceHex()));
+        connect(&actionHex,SIGNAL(triggered()),this,SLOT(resourceHex()));
         actionHex.setEnabled(bIsEnable);
         contextMenu.addAction(&actionHex);
 
         QAction actionDisasm(tr("Disasm"),this);
-        connect(&actionDisasm, SIGNAL(triggered()), this, SLOT(resourceDisasm()));
+        connect(&actionDisasm,SIGNAL(triggered()),this,SLOT(resourceDisasm()));
         actionDisasm.setEnabled(bIsEnable);
         contextMenu.addAction(&actionDisasm);
 
         QAction actionEntropy(tr("Entropy"),this);
-        connect(&actionEntropy, SIGNAL(triggered()), this, SLOT(resourceEntropy()));
+        connect(&actionEntropy,SIGNAL(triggered()),this,SLOT(resourceEntropy()));
         actionEntropy.setEnabled(bIsEnable);
         contextMenu.addAction(&actionEntropy);
 
