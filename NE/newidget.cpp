@@ -82,6 +82,7 @@ void NEWidget::reload()
         setFileType(ne.getFileType());
 
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_INFO,tr("Info")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_VIRUSTOTAL,"VirusTotal"));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_HEX,tr("Hex")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_DISASM,tr("Disasm")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_HASH,tr("Hash")));
@@ -348,6 +349,13 @@ void NEWidget::reloadData()
             if(!isInitPresent(sInit))
             {
                 ui->widgetInfo->setData(getDevice(),ne.getFileType(),"Info",true);
+            }
+        }
+        else if(nType==SNE::TYPE_VIRUSTOTAL)
+        {
+            if(!isInitPresent(sInit))
+            {
+                ui->widgetVirusTotal->setData(getDevice());
             }
         }
         else if(nType==SNE::TYPE_HEX)

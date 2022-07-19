@@ -359,6 +359,7 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue,int nStype,int nNdata,int n
                         case N_IMAGE_LOADCONFIG::SEHandlerTable:                    g_invWidget[INV_IMAGE_LOADCONFIG_SEHandlerTable]->setAddressAndSize(&pe,(quint64)nValue,0);                   break;
                         case N_IMAGE_LOADCONFIG::GuardCFCheckFunctionPointer:       g_invWidget[INV_IMAGE_LOADCONFIG_GuardCFCheckFunctionPointer]->setAddressAndSize(&pe,(quint64)nValue,0);      break;
                         case N_IMAGE_LOADCONFIG::GuardCFDispatchFunctionPointer:    g_invWidget[INV_IMAGE_LOADCONFIG_GuardCFDispatchFunctionPointer]->setAddressAndSize(&pe,(quint64)nValue,0);   break;
+                        case N_IMAGE_LOADCONFIG::GuardMemcpyFunctionPointer:        g_invWidget[INV_IMAGE_LOADCONFIG_GuardMemcpyFunctionPointer]->setAddressAndSize(&pe,(quint64)nValue,0);   break;
                     }
                     break;
             }
@@ -614,6 +615,7 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue,int nStype,int nNdata,int n
                         case N_IMAGE_LOADCONFIG::GuardXFGDispatchFunctionPointer:           pe.setLoadConfig_GuardXFGDispatchFunctionPointer((quint64)nValue);          break;
                         case N_IMAGE_LOADCONFIG::GuardXFGTableDispatchFunctionPointer:      pe.setLoadConfig_GuardXFGTableDispatchFunctionPointer((quint64)nValue);     break;
                         case N_IMAGE_LOADCONFIG::CastGuardOsDeterminedFailureMode:          pe.setLoadConfig_CastGuardOsDeterminedFailureMode((quint64)nValue);         break;
+                        case N_IMAGE_LOADCONFIG::GuardMemcpyFunctionPointer:                pe.setLoadConfig_GuardMemcpyFunctionPointer((quint64)nValue);               break;
                     }
                     ui->widgetHex_LoadConfig->reload();
                     break;
@@ -1734,38 +1736,55 @@ void PEWidget::reloadData()
 
                 if(bIs64)
                 {
-                    if(nHeaderSize==0x94)
+                    if(nHeaderSize>0x94)
                     {
-                        nRecordSize=N_IMAGE_LOADCONFIG::CodeIntegrity_Flags;
+                        nRecordSize=N_IMAGE_LOADCONFIG::CodeIntegrity_Flags+1;
                     }
-                    else if(nHeaderSize==0x100)
+
+                    if(nHeaderSize>0x100)
                     {
-                        nRecordSize=N_IMAGE_LOADCONFIG::VolatileMetadataPointer;
+                        nRecordSize=N_IMAGE_LOADCONFIG::VolatileMetadataPointer+1;
                     }
-                    else if(nHeaderSize==0x130)
+
+                    if(nHeaderSize>0x130)
                     {
-                        nRecordSize=N_IMAGE_LOADCONFIG::CastGuardOsDeterminedFailureMode;
+                        nRecordSize=N_IMAGE_LOADCONFIG::CastGuardOsDeterminedFailureMode+1;
+                    }
+
+                    if(nHeaderSize>0x138)
+                    {
+                        nRecordSize=N_IMAGE_LOADCONFIG::GuardMemcpyFunctionPointer+1;
                     }
                 }
                 else
                 {
-                    if(nHeaderSize==0x48)
+                    if(nHeaderSize>0x48)
                     {
-                        nRecordSize=N_IMAGE_LOADCONFIG::GuardCFCheckFunctionPointer;
+                        nRecordSize=N_IMAGE_LOADCONFIG::GuardCFCheckFunctionPointer+1;
                     }
-                    else if(nHeaderSize==0x5c)
+
+                    if(nHeaderSize>0x5c)
                     {
-                        nRecordSize=N_IMAGE_LOADCONFIG::CodeIntegrity_Flags;
+                        nRecordSize=N_IMAGE_LOADCONFIG::CodeIntegrity_Flags+1;
                     }
-                    else if(nHeaderSize==0xac)
+
+                    if(nHeaderSize>0xac)
                     {
-                        nRecordSize=N_IMAGE_LOADCONFIG::GuardXFGCheckFunctionPointer;
+                        nRecordSize=N_IMAGE_LOADCONFIG::GuardXFGCheckFunctionPointer+1;
                     }
-                    else if(nHeaderSize==0xb8)
+
+                    if(nHeaderSize>0xb8)
                     {
-                        nRecordSize=N_IMAGE_LOADCONFIG::CastGuardOsDeterminedFailureMode;
+                        nRecordSize=N_IMAGE_LOADCONFIG::CastGuardOsDeterminedFailureMode+1;
+                    }
+
+                    if(nHeaderSize>0xbc)
+                    {
+                        nRecordSize=N_IMAGE_LOADCONFIG::GuardMemcpyFunctionPointer+1;
                     }
                 }
+
+                nRecordSize=N_IMAGE_LOADCONFIG::__data_size; // TODO !!!!
 
                 createHeaderTable(SPE::TYPE_LOADCONFIG,ui->tableWidget_LoadConfig,pe.is64()?(N_IMAGE_LOADCONFIG::records64):(N_IMAGE_LOADCONFIG::records32),g_lineEdit_LoadConfig,nRecordSize,0);
                 g_invWidget[INV_IMAGE_LOADCONFIG_SecurityCookie]=createInvWidget(ui->tableWidget_LoadConfig,SPE::TYPE_LOADCONFIG,N_IMAGE_LOADCONFIG::SecurityCookie,InvWidget::TYPE_HEX);
@@ -1779,6 +1798,11 @@ void PEWidget::reloadData()
                 if(nRecordSize>N_IMAGE_LOADCONFIG::GuardCFDispatchFunctionPointer)
                 {
                     g_invWidget[INV_IMAGE_LOADCONFIG_GuardCFDispatchFunctionPointer]=createInvWidget(ui->tableWidget_LoadConfig,SPE::TYPE_LOADCONFIG,N_IMAGE_LOADCONFIG::GuardCFDispatchFunctionPointer,InvWidget::TYPE_HEX);
+                }
+
+                if(nRecordSize>N_IMAGE_LOADCONFIG::GuardMemcpyFunctionPointer)
+                {
+                    g_invWidget[INV_IMAGE_LOADCONFIG_GuardMemcpyFunctionPointer]=createInvWidget(ui->tableWidget_LoadConfig,SPE::TYPE_LOADCONFIG,N_IMAGE_LOADCONFIG::GuardMemcpyFunctionPointer,InvWidget::TYPE_HEX);
                 }
 
                 blockSignals(true);
@@ -1849,6 +1873,11 @@ void PEWidget::reloadData()
                         g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CastGuardOsDeterminedFailureMode]->setValue(lc64.CastGuardOsDeterminedFailureMode);
                     }
 
+                    if(nRecordSize>N_IMAGE_LOADCONFIG::GuardXFGTableDispatchFunctionPointer)
+                    {
+                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardMemcpyFunctionPointer]->setValue(lc64.GuardMemcpyFunctionPointer);
+                    }
+
                     addComment(ui->tableWidget_LoadConfig,N_IMAGE_LOADCONFIG::Size,HEADER_COLUMN_COMMENT,XBinary::bytesCountToString(lc64.Size));
 
                     g_invWidget[INV_IMAGE_LOADCONFIG_SecurityCookie]->setAddressAndSize(&pe,lc64.SecurityCookie,0);
@@ -1858,9 +1887,15 @@ void PEWidget::reloadData()
                     {
                         g_invWidget[INV_IMAGE_LOADCONFIG_GuardCFCheckFunctionPointer]->setAddressAndSize(&pe,lc64.GuardCFCheckFunctionPointer,0);
                     }
+
                     if(nRecordSize>N_IMAGE_LOADCONFIG::GuardCFDispatchFunctionPointer)
                     {
                         g_invWidget[INV_IMAGE_LOADCONFIG_GuardCFDispatchFunctionPointer]->setAddressAndSize(&pe,lc64.GuardCFDispatchFunctionPointer,0);
+                    }
+
+                    if(nRecordSize>N_IMAGE_LOADCONFIG::GuardMemcpyFunctionPointer)
+                    {
+                        g_invWidget[INV_IMAGE_LOADCONFIG_GuardMemcpyFunctionPointer]->setAddressAndSize(&pe,lc64.GuardMemcpyFunctionPointer,0);
                     }
                 }
                 else
@@ -1933,6 +1968,11 @@ void PEWidget::reloadData()
                         g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CastGuardOsDeterminedFailureMode]->setValue(lc32.CastGuardOsDeterminedFailureMode);
                     }
 
+                    if(nRecordSize>N_IMAGE_LOADCONFIG::GuardMemcpyFunctionPointer)
+                    {
+                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardMemcpyFunctionPointer]->setValue(lc32.GuardMemcpyFunctionPointer);
+                    }
+
                     addComment(ui->tableWidget_LoadConfig,N_IMAGE_LOADCONFIG::Size,HEADER_COLUMN_COMMENT,XBinary::bytesCountToString(lc32.Size));
 
                     g_invWidget[INV_IMAGE_LOADCONFIG_SecurityCookie]->setAddressAndSize(&pe,lc32.SecurityCookie,0);
@@ -1945,6 +1985,10 @@ void PEWidget::reloadData()
                     if(nRecordSize>N_IMAGE_LOADCONFIG::GuardCFDispatchFunctionPointer)
                     {
                         g_invWidget[INV_IMAGE_LOADCONFIG_GuardCFDispatchFunctionPointer]->setAddressAndSize(&pe,lc32.GuardCFDispatchFunctionPointer,0);
+                    }
+                    if(nRecordSize>N_IMAGE_LOADCONFIG::GuardMemcpyFunctionPointer)
+                    {
+                        g_invWidget[INV_IMAGE_LOADCONFIG_GuardMemcpyFunctionPointer]->setAddressAndSize(&pe,lc32.GuardMemcpyFunctionPointer,0);
                     }
                 }
 
@@ -2455,7 +2499,7 @@ void PEWidget::on_tableWidget_LoadConfig_currentCellChanged(int nCurrentRow, int
     setHeaderTableSelection(ui->widgetHex_LoadConfig,ui->tableWidget_LoadConfig);
 }
 
-void PEWidget::on_tableWidget_NetHeader_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+void PEWidget::on_tableWidget_NetHeader_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn)
 {
     Q_UNUSED(nCurrentRow)
     Q_UNUSED(nCurrentColumn)
@@ -2465,7 +2509,7 @@ void PEWidget::on_tableWidget_NetHeader_currentCellChanged(int nCurrentRow, int 
     setHeaderTableSelection(ui->widgetHex_NetHeader,ui->tableWidget_NetHeader);
 }
 
-void PEWidget::on_tableWidget_TLS_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+void PEWidget::on_tableWidget_TLS_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn)
 {
     Q_UNUSED(nCurrentRow)
     Q_UNUSED(nCurrentColumn)

@@ -29,6 +29,7 @@ namespace SELF
 enum TYPE
 {
     TYPE_INFO=0,
+    TYPE_VIRUSTOTAL,
     TYPE_HEX,
     TYPE_DISASM,
     TYPE_HASH,

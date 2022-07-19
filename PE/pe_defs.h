@@ -259,6 +259,7 @@ enum DATA
     GuardXFGDispatchFunctionPointer,
     GuardXFGTableDispatchFunctionPointer,
     CastGuardOsDeterminedFailureMode,
+    GuardMemcpyFunctionPointer,
     __data_size
 };
 

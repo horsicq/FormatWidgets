@@ -163,6 +163,25 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="page_VirusTotal">
+       <layout class="QVBoxLayout" name="verticalLayout_14_2">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="XVirusTotalWidget" name="widgetVirusTotal" native="true"/>
+        </item>
+       </layout>
+      </widget>
       <widget class="QWidget" name="page_HEX">
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <property name="spacing">
@@ -556,6 +575,12 @@
    <class>XFileInfoWidget</class>
    <extends>QWidget</extends>
    <header>xfileinfowidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>XVirusTotalWidget</class>
+   <extends>QWidget</extends>
+   <header>xvirustotalwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

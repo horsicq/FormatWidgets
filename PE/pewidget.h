@@ -198,6 +198,7 @@ private:
         INV_IMAGE_LOADCONFIG_SEHandlerTable,
         INV_IMAGE_LOADCONFIG_GuardCFCheckFunctionPointer,
         INV_IMAGE_LOADCONFIG_GuardCFDispatchFunctionPointer,
+        INV_IMAGE_LOADCONFIG_GuardMemcpyFunctionPointer,
         __INV_size
     };
 

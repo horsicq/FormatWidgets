@@ -226,6 +226,7 @@ const FW_DEF::HEADER_RECORD records32[]=
     {GuardXFGDispatchFunctionPointer,           "GuardXFGDispatchFunctionPointer",          offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32,GuardXFGDispatchFunctionPointer),             4,      "DWORD",        FW_DEF::VAL_TYPE_ADDRESS},
     {GuardXFGTableDispatchFunctionPointer,      "GuardXFGTableDispatchFunctionPointer",     offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32,GuardXFGTableDispatchFunctionPointer),        4,      "DWORD",        FW_DEF::VAL_TYPE_ADDRESS},
     {CastGuardOsDeterminedFailureMode,          "CastGuardOsDeterminedFailureMode",         offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32,CastGuardOsDeterminedFailureMode),            4,      "DWORD",        FW_DEF::VAL_TYPE_ADDRESS},
+    {GuardMemcpyFunctionPointer,                "GuardMemcpyFunctionPointer",               offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32,GuardMemcpyFunctionPointer),                  4,      "DWORD",        FW_DEF::VAL_TYPE_ADDRESS},
 };
 const FW_DEF::HEADER_RECORD records64[]=
 {
@@ -279,6 +280,7 @@ const FW_DEF::HEADER_RECORD records64[]=
     {GuardXFGDispatchFunctionPointer,           "GuardXFGDispatchFunctionPointer",          offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64,GuardXFGDispatchFunctionPointer),             8,      "ULONGLONG",    FW_DEF::VAL_TYPE_ADDRESS},
     {GuardXFGTableDispatchFunctionPointer,      "GuardXFGTableDispatchFunctionPointer",     offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64,GuardXFGTableDispatchFunctionPointer),        8,      "ULONGLONG",    FW_DEF::VAL_TYPE_ADDRESS},
     {CastGuardOsDeterminedFailureMode,          "CastGuardOsDeterminedFailureMode",         offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64,CastGuardOsDeterminedFailureMode),            8,      "ULONGLONG",    FW_DEF::VAL_TYPE_ADDRESS},
+    {GuardMemcpyFunctionPointer,                "GuardMemcpyFunctionPointer",               offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64,GuardMemcpyFunctionPointer),                  8,      "ULONGLONG",    FW_DEF::VAL_TYPE_ADDRESS},
 };
 }
 

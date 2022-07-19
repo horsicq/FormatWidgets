@@ -102,6 +102,7 @@ void MACHWidget::reload()
         setFileType(mach.getFileType());
 
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_INFO,tr("Info")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_VIRUSTOTAL,"VirusTotal"));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_HEX,tr("Hex")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_DISASM,tr("Disasm")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_HASH,tr("Hash")));
@@ -1340,6 +1341,13 @@ void MACHWidget::reloadData()
             if(!isInitPresent(sInit))
             {
                 ui->widgetInfo->setData(getDevice(),mach.getFileType(),"Info",true);
+            }
+        }
+        else if(nType==SMACH::TYPE_VIRUSTOTAL)
+        {
+            if(!isInitPresent(sInit))
+            {
+                ui->widgetVirusTotal->setData(getDevice());
             }
         }
         else if(nType==SMACH::TYPE_HEX)

@@ -78,6 +78,7 @@ void MSDOSWidget::reload()
         setFileType(msdos.getFileType());
 
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_INFO,tr("Info")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_VIRUSTOTAL,"VirusTotal"));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_HEX,tr("Hex")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_DISASM,tr("Disasm")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_HASH,tr("Hash")));
@@ -250,6 +251,13 @@ void MSDOSWidget::reloadData()
             if(!isInitPresent(sInit))
             {
                 ui->widgetInfo->setData(getDevice(),msdos.getFileType(),"Info",true);
+            }
+        }
+        else if(nType==SMSDOS::TYPE_VIRUSTOTAL)
+        {
+            if(!isInitPresent(sInit))
+            {
+                ui->widgetVirusTotal->setData(getDevice());
             }
         }
         else if(nType==SMSDOS::TYPE_HEX)
