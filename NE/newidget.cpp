@@ -324,7 +324,7 @@ void NEWidget::_showInMemoryMapWindowOffset(qint64 nOffset)
     ui->widgetMemoryMap->goToOffset(nOffset);
 }
 
-void NEWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
+void NEWidget::_showInHexWindow(qint64 nOffset,qint64 nSize)
 {
     setTreeItem(ui->treeWidgetNavi,SNE::TYPE_HEX);
     ui->widgetHex->setSelection(nOffset,nSize);

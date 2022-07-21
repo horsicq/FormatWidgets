@@ -81,7 +81,6 @@ private slots:
     void _copySignature();
     void _hex();
     void search();
-    void deleteOldModel();
     void loadSignatures(QString sFileName);
     void on_comboBoxFile_currentIndexChanged(int index);
 
