@@ -299,7 +299,7 @@ void SearchSignaturesWidget::search()
         ui->tableViewResult->setColumnWidth(1,120); // TODO
         ui->tableViewResult->setColumnWidth(2,120); // TODO
 
-        QFuture<void> future=deleteOldModel(&g_pOldModel);
+        QFuture<void> future=deleteOldStandardModel(&g_pOldModel);
 
         g_watcher.setFuture(future);
 

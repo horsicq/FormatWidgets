@@ -464,7 +464,7 @@ void FormatWidget::ajustTableView(ProcessData *pProcessData,QStandardItemModel *
 
     pTableView->horizontalHeader()->setStretchLastSection(bStretchLastSection);
 
-    delete pOldModel; // TODO Thread
+    deleteOldAbstractModel(&pOldModel);
 }
 
 void FormatWidget::ajustTreeView(ProcessData *pProcessData, QStandardItemModel **ppModel, QTreeView *pTreeView)
@@ -479,7 +479,7 @@ void FormatWidget::ajustTreeView(ProcessData *pProcessData, QStandardItemModel *
 
     pProcessData->ajustTreeView(this,pTreeView);
 
-    delete pOldModel; // TODO Thread
+    deleteOldAbstractModel(&pOldModel);
 }
 
 void FormatWidget::ajustDialogModel(ProcessData *pProcessData, QStandardItemModel **ppModel, QString sTitle)
@@ -1213,7 +1213,7 @@ bool FormatWidget::createHeaderTable(int nType,QTableWidget *pTableWidget,const 
     return true;
 }
 
-bool FormatWidget::createListTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nNumberOfRecords)
+bool FormatWidget::createListTable(int nType,QTableWidget *pTableWidget,const FW_DEF::HEADER_RECORD *pRecords,XLineEditHEX **ppLineEdits,int nNumberOfRecords)
 {
     pTableWidget->setColumnCount(2);
     pTableWidget->setRowCount(nNumberOfRecords);
