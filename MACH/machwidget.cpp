@@ -3200,10 +3200,10 @@ void MACHWidget::on_tableView_DYSYMTAB_extrefsyms_customContextMenuRequested(con
         QMenu contextMenu(this);
 
         QAction actionEdit(tr("Edit"),this);
-        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editExtRefSymbolHeader()));
+        connect(&actionEdit,SIGNAL(triggered()),this,SLOT(editExtRefSymbolHeader()));
 
         QAction actionDemangle(tr("Demangle"),this);
-        connect(&actionDemangle, SIGNAL(triggered()), this, SLOT(extrefsymsDemangle()));
+        connect(&actionDemangle,SIGNAL(triggered()),this,SLOT(extrefsymsDemangle()));
 
         contextMenu.addAction(&actionEdit);
         contextMenu.addAction(&actionDemangle);
