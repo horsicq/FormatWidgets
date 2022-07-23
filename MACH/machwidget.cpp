@@ -3173,10 +3173,10 @@ void MACHWidget::on_tableView_DYSYMTAB_indirectsyms_customContextMenuRequested(c
         QMenu contextMenu(this);
 
         QAction actionEdit(tr("Edit"),this);
-        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editIndirectSymbolHeader()));
+        connect(&actionEdit,SIGNAL(triggered()),this,SLOT(editIndirectSymbolHeader()));
 
         QAction actionDemangle(tr("Demangle"),this);
-        connect(&actionDemangle, SIGNAL(triggered()), this, SLOT(indirectsymsDemangle()));
+        connect(&actionDemangle,SIGNAL(triggered()),this,SLOT(indirectsymsDemangle()));
 
         contextMenu.addAction(&actionEdit);
         contextMenu.addAction(&actionDemangle);
