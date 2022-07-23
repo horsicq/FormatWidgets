@@ -2619,7 +2619,7 @@ void MACHWidget::on_tableWidget_SuperBlob_currentCellChanged(int nCurrentRow, in
     setHeaderTableSelection(ui->widgetHex_SuperBlob,ui->tableWidget_SuperBlob);
 }
 
-void MACHWidget::on_tableWidget_main_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+void MACHWidget::on_tableWidget_main_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn)
 {
     Q_UNUSED(nCurrentRow);
     Q_UNUSED(nCurrentColumn);
