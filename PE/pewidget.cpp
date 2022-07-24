@@ -2556,7 +2556,7 @@ void PEWidget::on_tableView_Relocs_customContextMenuRequested(const QPoint &pos)
         QMenu contextMenu(this);
 
         QAction actionEdit(tr("Edit"),this);
-        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editRelocsHeader()));
+        connect(&actionEdit,SIGNAL(triggered()),this,SLOT(editRelocsHeader()));
         contextMenu.addAction(&actionEdit);
 
         contextMenu.exec(ui->tableView_Relocs->viewport()->mapToGlobal(pos));
