@@ -21,20 +21,28 @@
 #ifndef FORMATSWIDGET_H
 #define FORMATSWIDGET_H
 
-#include <QWidget>
-#include "xformats.h"
-#include "dialogmemorymap.h"
-#include "dialogmsdos.h"
-#include "dialogne.h"
-#include "dialogle.h"
-#include "dialogpe.h"
+#include "dialogarchive.h"
+#include "dialogdex.h"
 #include "dialogelf.h"
+#include "dialogentropy.h"
+#include "dialoghash.h"
+#include "dialoghexview.h"
+#include "dialogle.h"
 #include "dialogmach.h"
 #include "dialogmachofat.h"
+#include "dialogmemorymap.h"
+#include "dialogmemorymap.h"
+#include "dialogmime.h"
+#include "dialogmsdos.h"
 #include "dialogmultidisasm.h"
-#include "dialogdex.h"
-#include "dialogarchive.h"
+#include "dialogne.h"
+#include "dialogpe.h"
+#include "dialogsearchsignatures.h"
+#include "dialogsearchstrings.h"
 #include "dialogtextinfo.h"
+#include "dialogxfileinfo.h"
+#include "dialogxvirustotal.h"
+#include "xformats.h"
 #include "xshortcuts.h"
 
 namespace Ui {
@@ -125,6 +133,15 @@ private slots:
 
     void onScanStarted();
     void onScanFinished();
+
+    void on_pushButtonFileInfo_clicked();
+    void on_pushButtonMIME_clicked();
+    void on_pushButtonStrings_clicked();
+    void on_pushButtonSignatures_clicked();
+    void on_pushButtonHex_clicked();
+    void on_pushButtonEntropy_clicked();
+    void on_pushButtonVirusTotal_clicked();
+    void on_pushButtonHash_clicked();
 
 protected:
     virtual void registerShortcuts(bool bState);

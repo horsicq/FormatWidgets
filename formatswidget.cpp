@@ -51,7 +51,7 @@ FormatsWidget::FormatsWidget(QWidget *pParent) :
 #endif
 }
 
-void FormatsWidget::setFileName(QString sFileName, bool bScan)
+void FormatsWidget::setFileName(QString sFileName,bool bScan)
 {
     this->g_sFileName=sFileName;
     this->g_bScan=bScan;
@@ -784,7 +784,11 @@ FormatsWidget::SE FormatsWidget::getScanEngine(FormatsWidget::SE seIndex)
             (fileType==XBinary::FT_MACHO32)||
             (fileType==XBinary::FT_MACHO64)||
             (fileType==XBinary::FT_MACHOFAT)||
-            (fileType==XBinary::FT_ZIP))
+            (fileType==XBinary::FT_ZIP)||
+            (fileType==XBinary::FT_JAR)||
+            (fileType==XBinary::FT_APK)||
+            (fileType==XBinary::FT_APKS)||
+            (fileType==XBinary::FT_IPA))
         {
             tabResult=SE_NFD;
         }
@@ -826,4 +830,197 @@ void FormatsWidget::onScanFinished()
 void FormatsWidget::registerShortcuts(bool bState)
 {
     Q_UNUSED(bState)
+}
+
+void FormatsWidget::on_pushButtonFileInfo_clicked()
+{
+    QString sFileName=g_sFileName;
+
+    if(sFileName!="")
+    {
+        QFile file;
+        file.setFileName(sFileName);
+
+        if(file.open(QIODevice::ReadOnly))
+        {
+            DialogXFileInfo dialogFileInfo(this);
+            dialogFileInfo.setGlobal(getShortcuts(),getGlobalOptions());
+
+            dialogFileInfo.setData(&file,XBinary::FT_UNKNOWN,"Info",true);
+
+            dialogFileInfo.exec();
+
+            file.close();
+        }
+    }
+}
+
+void FormatsWidget::on_pushButtonMIME_clicked()
+{
+    QString sFileName=g_sFileName;
+
+    if(sFileName!="")
+    {
+        QFile file;
+        file.setFileName(sFileName);
+
+        if(file.open(QIODevice::ReadOnly))
+        {
+            DialogMIME dialogMIME(this,&file);
+            dialogMIME.setGlobal(getShortcuts(),getGlobalOptions());
+
+            dialogMIME.exec();
+
+            file.close();
+        }
+    }
+}
+
+void FormatsWidget::on_pushButtonHash_clicked()
+{
+    QString sFileName=g_sFileName;
+
+    if(sFileName!="")
+    {
+        QFile file;
+        file.setFileName(sFileName);
+
+        if(file.open(QIODevice::ReadOnly))
+        {
+            DialogHash dialogHash(this);
+            dialogHash.setData(&file,XBinary::FT_UNKNOWN);
+            dialogHash.setGlobal(getShortcuts(),getGlobalOptions());
+
+            dialogHash.exec();
+
+            file.close();
+        }
+    }
+}
+
+void FormatsWidget::on_pushButtonStrings_clicked()
+{
+    QString sFileName=g_sFileName;
+
+    if(sFileName!="")
+    {
+        QFile file;
+        file.setFileName(sFileName);
+
+        if(file.open(QIODevice::ReadOnly))
+        {
+            SearchStringsWidget::OPTIONS stringsOptions={};
+            stringsOptions.bAnsi=true;
+            stringsOptions.bUTF8=false;
+            stringsOptions.bUnicode=true;
+            stringsOptions.bCStrings=true;
+
+            DialogSearchStrings dialogSearchStrings(this);
+            dialogSearchStrings.setData(&file,stringsOptions,true);
+            dialogSearchStrings.setGlobal(getShortcuts(),getGlobalOptions());
+
+            dialogSearchStrings.exec();
+
+            file.close();
+        }
+    }
+}
+
+void FormatsWidget::on_pushButtonSignatures_clicked()
+{
+    QString sFileName=g_sFileName;
+
+    if(sFileName!="")
+    {
+        QFile file;
+        file.setFileName(sFileName);
+
+        if(file.open(QIODevice::ReadOnly))
+        {
+            SearchSignaturesWidget::OPTIONS signaturesOptions={};
+
+            DialogSearchSignatures dialogSearchSignatures(this);
+            dialogSearchSignatures.setData(&file,XBinary::FT_UNKNOWN,signaturesOptions);
+            dialogSearchSignatures.setGlobal(getShortcuts(),getGlobalOptions());
+
+            dialogSearchSignatures.exec();
+
+            file.close();
+        }
+    }
+}
+
+void FormatsWidget::on_pushButtonHex_clicked()
+{
+    QString sFileName=g_sFileName;
+
+    if(sFileName!="")
+    {
+        QFile file;
+        file.setFileName(sFileName);
+
+        if(XBinary::tryToOpen(&file))
+        {
+            XHexView::OPTIONS hexOptions={};
+
+            DialogHexView dialogHex(this,&file,hexOptions,&file);
+            dialogHex.setGlobal(getShortcuts(),getGlobalOptions());
+
+            dialogHex.exec();
+
+            file.close();
+        }
+    }
+}
+
+void FormatsWidget::on_pushButtonEntropy_clicked()
+{
+    QString sFileName=g_sFileName;
+
+    if(sFileName!="")
+    {
+        QFile file;
+        file.setFileName(sFileName);
+
+        if(file.open(QIODevice::ReadOnly))
+        {
+            DialogEntropy dialogEntropy(this);
+            dialogEntropy.setData(&file);
+            dialogEntropy.setGlobal(getShortcuts(),getGlobalOptions());
+
+            dialogEntropy.exec();
+
+            file.close();
+        }
+    }
+}
+
+void FormatsWidget::on_pushButtonVirusTotal_clicked()
+{
+    QString sFileName=g_sFileName;
+
+    if(sFileName!="")
+    {
+        QFile file;
+        file.setFileName(sFileName);
+
+        if(file.open(QIODevice::ReadOnly))
+        {
+            if(getGlobalOptions()->getVirusTotalApiKey()!="")
+            {
+                DialogXVirusTotal dialogVirusTotal(this);
+                dialogVirusTotal.setGlobal(getShortcuts(),getGlobalOptions());
+                dialogVirusTotal.setData(&file);
+
+                dialogVirusTotal.exec();
+            }
+            else
+            {
+                QString sMD5=XBinary::getHash(XBinary::HASH_MD5,&file);
+                XVirusTotalWidget::showInBrowser(sMD5);
+            }
+
+            file.close();
+        }
+    }
 }
