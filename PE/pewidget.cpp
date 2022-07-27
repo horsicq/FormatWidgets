@@ -2737,7 +2737,7 @@ void PEWidget::on_tableView_BoundImport_customContextMenuRequested(const QPoint 
         QMenu contextMenu(this);
 
         QAction actionEdit(tr("Edit"),this);
-        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editBoundImportHeader()));
+        connect(&actionEdit,SIGNAL(triggered()),this,SLOT(editBoundImportHeader()));
         contextMenu.addAction(&actionEdit);
 
         contextMenu.exec(ui->tableView_BoundImport->viewport()->mapToGlobal(pos));
