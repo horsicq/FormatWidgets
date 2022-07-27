@@ -49,8 +49,9 @@ SearchStringsWidget::SearchStringsWidget(QWidget *pParent) :
 
     memset(shortCuts,0,sizeof shortCuts);
 
-    // TODO Check Qt6
     ui->comboBoxANSICodec->addItem("");
+
+#if (QT_VERSION_MAJOR<6)||defined(QT_CORE5COMPAT_LIB)
     ui->comboBoxANSICodec->addItem("IBM866");
     ui->comboBoxANSICodec->addItem("ISO-8859-1");
     ui->comboBoxANSICodec->addItem("ISO-8859-10");
@@ -78,7 +79,10 @@ SearchStringsWidget::SearchStringsWidget(QWidget *pParent) :
     ui->comboBoxANSICodec->addItem("windows-1257");
     ui->comboBoxANSICodec->addItem("windows-1258");
 
-//    QList<QByteArray> listCodecs=QTextCodec::availableCodecs();
+    XOptions::getCodePages();
+#endif
+
+//    QList<QByteArray> listCodecs=QStringConverter::availableCodecs();
 
 //    int nNumberOfCodecs=listCodecs.count();
 
