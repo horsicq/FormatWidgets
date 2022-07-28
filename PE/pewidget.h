@@ -146,6 +146,8 @@ private slots:
     void on_tableView_TLSCallbacks_customContextMenuRequested(const QPoint &pos);
     void disasmTLSCallback();
     void on_pushButtonSaveSections_clicked();
+    void on_tableView_Resources_StringTable_customContextMenuRequested(const QPoint &pos);
+    void stringTableHex();
 
 private:
     enum CB

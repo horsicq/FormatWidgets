@@ -49,49 +49,18 @@ SearchStringsWidget::SearchStringsWidget(QWidget *pParent) :
 
     memset(shortCuts,0,sizeof shortCuts);
 
+#if (QT_VERSION_MAJOR<6)||defined(QT_CORE5COMPAT_LIB)
     ui->comboBoxANSICodec->addItem("");
 
-#if (QT_VERSION_MAJOR<6)||defined(QT_CORE5COMPAT_LIB)
-    ui->comboBoxANSICodec->addItem("IBM866");
-    ui->comboBoxANSICodec->addItem("ISO-8859-1");
-    ui->comboBoxANSICodec->addItem("ISO-8859-10");
-    ui->comboBoxANSICodec->addItem("ISO-8859-13");
-    ui->comboBoxANSICodec->addItem("ISO-8859-14");
-    ui->comboBoxANSICodec->addItem("ISO-8859-15");
-    ui->comboBoxANSICodec->addItem("ISO-8859-16");
-    ui->comboBoxANSICodec->addItem("ISO-8859-2");
-    ui->comboBoxANSICodec->addItem("ISO-8859-3");
-    ui->comboBoxANSICodec->addItem("ISO-8859-4");
-    ui->comboBoxANSICodec->addItem("ISO-8859-5");
-    ui->comboBoxANSICodec->addItem("ISO-8859-6");
-    ui->comboBoxANSICodec->addItem("ISO-8859-7");
-    ui->comboBoxANSICodec->addItem("ISO-8859-8");
-    ui->comboBoxANSICodec->addItem("ISO-8859-9");
-    ui->comboBoxANSICodec->addItem("KOI8-R");
-    ui->comboBoxANSICodec->addItem("KOI8-U");
-    ui->comboBoxANSICodec->addItem("windows-1250");
-    ui->comboBoxANSICodec->addItem("windows-1251");
-    ui->comboBoxANSICodec->addItem("windows-1252");
-    ui->comboBoxANSICodec->addItem("windows-1253");
-    ui->comboBoxANSICodec->addItem("windows-1254");
-    ui->comboBoxANSICodec->addItem("windows-1255");
-    ui->comboBoxANSICodec->addItem("windows-1256");
-    ui->comboBoxANSICodec->addItem("windows-1257");
-    ui->comboBoxANSICodec->addItem("windows-1258");
+    QList<QString> listCodePages=XOptions::getCodePages(false);
 
-    XOptions::getCodePages();
+    qint32 nNumberOfRecords=listCodePages.count();
+
+    for(qint32 i=0;i<nNumberOfRecords;i++)
+    {
+        ui->comboBoxANSICodec->addItem(listCodePages.at(i));
+    }
 #endif
-
-//    QList<QByteArray> listCodecs=QStringConverter::availableCodecs();
-
-//    int nNumberOfCodecs=listCodecs.count();
-
-//    for(int i=0;i<nNumberOfCodecs;i++)
-//    {
-//        QString sRecord=listCodecs.at(i).data();
-
-//        qDebug(sRecord.toLatin1().data());
-//    }
 
     ui->tableViewResult->installEventFilter(this);
 }

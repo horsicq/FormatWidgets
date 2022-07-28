@@ -705,6 +705,10 @@ void PEProcessData::_process()
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
 
+            pItem->setData(listSTR.at(i).nAddress,Qt::UserRole+FW_DEF::SECTION_DATA_ADDRESS);
+            pItem->setData(listSTR.at(i).nOffset,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
+            pItem->setData(listSTR.at(i).nSize,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
+
             (*g_ppModel)->setItem(i,0,pItem);
             (*g_ppModel)->setItem(i,1,new QStandardItem(QString::number(listSTR.at(i).nID)));
             (*g_ppModel)->setItem(i,2,new QStandardItem(QString::number(listSTR.at(i).nLanguage)));

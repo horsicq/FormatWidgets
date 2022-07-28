@@ -3005,3 +3005,24 @@ void PEWidget::on_pushButtonSaveSections_clicked()
 {
     XShortcutsWidget::saveModel(ui->tableView_Sections->model(),XBinary::getResultFileName(getDevice(),QString("%1.txt").arg(tr("Sections"))));
 }
+
+void PEWidget::on_tableView_Resources_StringTable_customContextMenuRequested(const QPoint &pos)
+{
+    int nRow=ui->tableView_Resources_StringTable->currentIndex().row();
+
+    if(nRow!=-1)
+    {
+        QMenu contextMenu(this);
+
+        QAction actionHex(tr("Hex"),this);
+        connect(&actionHex, SIGNAL(triggered()),this,SLOT(stringTableHex()));
+        contextMenu.addAction(&actionHex);
+
+        contextMenu.exec(ui->tableView_Resources_StringTable->viewport()->mapToGlobal(pos));
+    }
+}
+
+void PEWidget::stringTableHex()
+{
+    showSectionHex(ui->tableView_Resources_StringTable);
+}
