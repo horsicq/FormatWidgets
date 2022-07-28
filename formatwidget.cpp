@@ -482,7 +482,7 @@ void FormatWidget::ajustTreeView(ProcessData *pProcessData, QStandardItemModel *
     deleteOldAbstractModel(&pOldModel);
 }
 
-void FormatWidget::ajustDialogModel(ProcessData *pProcessData, QStandardItemModel **ppModel, QString sTitle)
+void FormatWidget::ajustDialogModel(ProcessData *pProcessData,QStandardItemModel **ppModel,QString sTitle)
 {
     DialogProcessData dialogProcessData(this,pProcessData);
 
