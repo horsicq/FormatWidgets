@@ -2609,7 +2609,7 @@ void MACHWidget::on_tableWidget_code_signature_currentCellChanged(int nCurrentRo
     setHeaderTableSelection(ui->widgetHex_code_signature,ui->tableWidget_code_signature);
 }
 
-void MACHWidget::on_tableWidget_SuperBlob_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+void MACHWidget::on_tableWidget_SuperBlob_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn)
 {
     Q_UNUSED(nCurrentRow);
     Q_UNUSED(nCurrentColumn);
