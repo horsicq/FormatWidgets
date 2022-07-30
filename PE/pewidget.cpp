@@ -2842,7 +2842,7 @@ void PEWidget::on_pushButtonDisasm_clicked()
     setTreeItem(ui->treeWidgetNavi,SPE::TYPE_DISASM);
 }
 
-void PEWidget::on_tableWidget_Net_Metadata_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+void PEWidget::on_tableWidget_Net_Metadata_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn)
 {
     Q_UNUSED(nCurrentRow)
     Q_UNUSED(nCurrentColumn)
