@@ -2948,7 +2948,7 @@ void PEWidget::on_tableWidget_IMAGE_DIRECTORY_ENTRIES_customContextMenuRequested
         QMenu contextMenu(this);
 
         QAction actionEdit(tr("Edit"),this);
-        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editDirectoryHeader()));
+        connect(&actionEdit,SIGNAL(triggered()),this,SLOT(editDirectoryHeader()));
         contextMenu.addAction(&actionEdit);
 
         QAction actionHex(tr("Hex"),this);
