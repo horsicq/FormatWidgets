@@ -2957,7 +2957,7 @@ void PEWidget::on_tableWidget_IMAGE_DIRECTORY_ENTRIES_customContextMenuRequested
         contextMenu.addAction(&actionHex);
 
         QAction actionEntropy(tr("Entropy"),this);
-        connect(&actionEntropy, SIGNAL(triggered()), this, SLOT(directoryEntropy()));
+        connect(&actionEntropy,SIGNAL(triggered()),this,SLOT(directoryEntropy()));
         actionEntropy.setEnabled(bIsEnable);
         contextMenu.addAction(&actionEntropy);
 
