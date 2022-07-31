@@ -2952,7 +2952,7 @@ void PEWidget::on_tableWidget_IMAGE_DIRECTORY_ENTRIES_customContextMenuRequested
         contextMenu.addAction(&actionEdit);
 
         QAction actionHex(tr("Hex"),this);
-        connect(&actionHex, SIGNAL(triggered()), this, SLOT(directoryHex()));
+        connect(&actionHex,SIGNAL(triggered()),this,SLOT(directoryHex()));
         actionHex.setEnabled(bIsEnable);
         contextMenu.addAction(&actionHex);
 
