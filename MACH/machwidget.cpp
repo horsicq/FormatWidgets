@@ -3212,7 +3212,7 @@ void MACHWidget::on_tableView_DYSYMTAB_extrefsyms_customContextMenuRequested(con
     }
 }
 
-void MACHWidget::onTableView_DYLD_INFO_rebase_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+void MACHWidget::onTableView_DYLD_INFO_rebase_currentRowChanged(const QModelIndex &current,const QModelIndex &previous)
 {
     Q_UNUSED(current)
     Q_UNUSED(previous)
