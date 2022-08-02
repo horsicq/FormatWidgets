@@ -24,6 +24,22 @@
 #include "../formatwidget.h"
 #include "xbinary.h"
 
-// TODO
+namespace SBINARY
+{
+enum TYPE
+{
+    TYPE_INFO=0,
+    TYPE_VIRUSTOTAL,
+    TYPE_HEX,
+    TYPE_DISASM,
+    TYPE_HASH,
+    TYPE_STRINGS,
+    TYPE_SIGNATURES,
+    TYPE_MEMORYMAP,
+    TYPE_ENTROPY,
+    TYPE_HEURISTICSCAN,
+    __TYPE_size
+};
+}
 
 #endif // XBINARY_DEFS_H

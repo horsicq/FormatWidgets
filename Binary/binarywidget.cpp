@@ -27,7 +27,7 @@ BinaryWidget::BinaryWidget(QWidget *pParent) :
 {
     ui->setupUi(this);
 
-//    connect(ui->widgetStrings,SIGNAL(showHex(qint64,qint64)),this,SLOT(showInHexWindow(qint64,qint64)));
+    initWidget();
 }
 
 BinaryWidget::BinaryWidget(QIODevice *pDevice,FW_DEF::OPTIONS options,QWidget *pParent) :
@@ -46,14 +46,20 @@ BinaryWidget::~BinaryWidget()
 
 void BinaryWidget::clear()
 {
+    setTreeItem(ui->treeWidgetNavi,0);
+
     BinaryWidget::reset();
 
+    resetWidget();
+
     ui->checkBoxReadonly->setChecked(true);
+
+    ui->treeWidgetNavi->clear();
 }
 
 void BinaryWidget::cleanup()
 {
-    BinaryWidget::clear();
+
 }
 
 void BinaryWidget::reload()
@@ -69,7 +75,22 @@ void BinaryWidget::reload()
     {
         setFileType(binary.getFileType());
 
-        BinaryWidget::reloadData();
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_INFO,tr("Info")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_VIRUSTOTAL,"VirusTotal"));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_HEX,tr("Hex")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_DISASM,tr("Disasm")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_HASH,tr("Hash")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_STRINGS,tr("Strings")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_SIGNATURES,tr("Signatures")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_MEMORYMAP,tr("Memory map")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_ENTROPY,tr("Entropy")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_HEURISTICSCAN,tr("Heuristic scan")));
+
+        ui->treeWidgetNavi->expandAll();
+
+        setTreeItem(ui->treeWidgetNavi,getOptions().nStartType);
+
+        setDisasmInitAddress(binary.getEntryPointAddress());
     }
 }
 
@@ -101,8 +122,8 @@ FormatWidget::SV BinaryWidget::_setValue(QVariant vValue,int nStype,int nNdata,i
 void BinaryWidget::setReadonly(bool bState)
 {
     ui->widgetHex->setReadonly(bState);
-//    ui->widgetDisasm->setReadonly(bState);
-//    ui->widgetStrings->setReadonly(bState);
+    ui->widgetDisasm->setReadonly(bState);
+    ui->widgetStrings->setReadonly(bState);
 }
 
 void BinaryWidget::blockSignals(bool bState)
@@ -114,21 +135,148 @@ void BinaryWidget::adjustHeaderTable(int nType,QTableWidget *pTableWidget)
 {
     Q_UNUSED(nType)
     Q_UNUSED(pTableWidget)
-//    qint32 nSymbolWidth=getSymbolWidth();
+    //    qint32 nSymbolWidth=getSymbolWidth();
+}
+
+void BinaryWidget::_showInDisasmWindowAddress(XADDR nAddress)
+{
+    setTreeItem(ui->treeWidgetNavi,SBINARY::TYPE_DISASM);
+    ui->widgetDisasm->goToAddress(nAddress);
+}
+
+void BinaryWidget::_showInDisasmWindowOffset(qint64 nOffset)
+{
+    setTreeItem(ui->treeWidgetNavi,SBINARY::TYPE_DISASM);
+    ui->widgetDisasm->goToOffset(nOffset);
+}
+
+void BinaryWidget::_showInMemoryMapWindowOffset(qint64 nOffset)
+{
+    setTreeItem(ui->treeWidgetNavi,SBINARY::TYPE_MEMORYMAP);
+    ui->widgetMemoryMap->goToOffset(nOffset);
+}
+
+void BinaryWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
+{
+    setTreeItem(ui->treeWidgetNavi,SBINARY::TYPE_HEX);
+    ui->widgetHex->setSelection(nOffset,nSize);
 }
 
 void BinaryWidget::reloadData()
 {
+    qint32 nType=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_TYPE).toInt();
+
+    QString sInit=getInitString(ui->treeWidgetNavi->currentItem());
+
+    ui->stackedWidgetInfo->setCurrentIndex(nType);
+
     XBinary binary(getDevice(),getOptions().bIsImage,getOptions().nImageBase);
 
     if(binary.isValid())
     {
-        ui->widgetHex->setData(getDevice(),getOptions(),getBackupDevice());
-//        ui->widgetHex->setBackupDevice(getBackupDevice());
-        ui->widgetHex->reload();
+        if(nType==SBINARY::TYPE_INFO)
+        {
+            if(!isInitPresent(sInit))
+            {
+                ui->widgetInfo->setData(getDevice(),binary.getFileType(),"Info",true);
+            }
+        }
+        else if(nType==SBINARY::TYPE_VIRUSTOTAL)
+        {
+            if(!isInitPresent(sInit))
+            {
+                ui->widgetVirusTotal->setData(getDevice());
+            }
+        }
+        else if(nType==SBINARY::TYPE_HEX)
+        {
+            if(!isInitPresent(sInit))
+            {
+                XHexView::OPTIONS options={};
+                options.bMenu_Disasm=true;
+                options.bMenu_MemoryMap=true;
 
-        BinaryWidget::setReadonly(ui->checkBoxReadonly->isChecked());
+                ui->widgetHex->setData(getDevice(),options);
+                ui->widgetHex->setBackupDevice(getBackupDevice());
+//                ui->widgetHex->setBackupFileName(getOptions().sBackupFileName);
+//                ui->widgetHex->enableReadOnly(false);
+
+                ui->widgetHex->reload();
+            }
+        }
+        else if(nType==SBINARY::TYPE_DISASM)
+        {
+            if(!isInitPresent(sInit))
+            {
+                XMultiDisasmWidget::OPTIONS options={};
+                options.fileType=binary.getFileType();
+                options.nInitAddress=getDisasmInitAddress();
+                options.bMenu_Hex=true;
+
+                ui->widgetDisasm->setData(getDevice(),options,getXInfoDB());
+                ui->widgetDisasm->setBackupDevice(getBackupDevice());
+
+                setDisasmInitAddress(-1);
+            }
+        }
+        else if(nType==SBINARY::TYPE_HASH)
+        {
+            if(!isInitPresent(sInit))
+            {
+                ui->widgetHash->setData(getDevice(),binary.getFileType(),0,-1,true);
+            }
+        }
+        else if(nType==SBINARY::TYPE_STRINGS)
+        {
+            if(!isInitPresent(sInit))
+            {
+                SearchStringsWidget::OPTIONS stringsOptions={};
+                stringsOptions.bMenu_Hex=true;
+                stringsOptions.bMenu_Demangle=true;
+                stringsOptions.bAnsi=true;
+                stringsOptions.bUTF8=false;
+                stringsOptions.bUnicode=true;
+                stringsOptions.bCStrings=false;
+
+                ui->widgetStrings->setData(getDevice(),stringsOptions,true);
+            }
+        }
+        else if(nType==SBINARY::TYPE_SIGNATURES)
+        {
+            if(!isInitPresent(sInit))
+            {
+                SearchSignaturesWidget::OPTIONS signaturesOptions={};
+                signaturesOptions.bMenu_Hex=true;
+
+                ui->widgetSignatures->setData(getDevice(),binary.getFileType(),signaturesOptions,false);
+            }
+        }
+        else if(nType==SBINARY::TYPE_MEMORYMAP)
+        {
+            if(!isInitPresent(sInit))
+            {
+                ui->widgetMemoryMap->setData(getDevice(),binary.getFileType());
+            }
+        }
+        else if(nType==SBINARY::TYPE_ENTROPY)
+        {
+            if(!isInitPresent(sInit))
+            {
+                ui->widgetEntropy->setData(getDevice(),0,getDevice()->size(),binary.getFileType(),true);
+            }
+        }
+        else if(nType==SBINARY::TYPE_HEURISTICSCAN)
+        {
+            if(!isInitPresent(sInit))
+            {
+                ui->widgetHeuristicScan->setData(getDevice(),true,binary.getFileType());
+            }
+        }
+
+        setReadonly(ui->checkBoxReadonly->isChecked());
     }
+
+    addInit(sInit);
 }
 
 void BinaryWidget::widgetValueChanged(quint64 nValue)
@@ -155,4 +303,61 @@ void BinaryWidget::on_pushButtonReload_clicked()
 void BinaryWidget::enableButton()
 {
     ui->pushButtonReload->setEnabled(true);
+}
+
+void BinaryWidget::on_toolButtonPrev_clicked()
+{
+    setAddPageEnabled(false);
+    ui->treeWidgetNavi->setCurrentItem(getPrevPage());
+    setAddPageEnabled(true);
+}
+
+void BinaryWidget::on_toolButtonNext_clicked()
+{
+    setAddPageEnabled(false);
+    ui->treeWidgetNavi->setCurrentItem(getNextPage());
+    setAddPageEnabled(true);
+}
+
+void BinaryWidget::on_pushButtonHex_clicked()
+{
+    setTreeItem(ui->treeWidgetNavi,SBINARY::TYPE_HEX);
+}
+
+void BinaryWidget::on_pushButtonDisasm_clicked()
+{
+    setTreeItem(ui->treeWidgetNavi,SBINARY::TYPE_DISASM);
+}
+
+void BinaryWidget::on_pushButtonStrings_clicked()
+{
+    setTreeItem(ui->treeWidgetNavi,SBINARY::TYPE_STRINGS);
+}
+
+void BinaryWidget::on_pushButtonEntropy_clicked()
+{
+    setTreeItem(ui->treeWidgetNavi,SBINARY::TYPE_ENTROPY);
+}
+
+void BinaryWidget::on_pushButtonHeuristicScan_clicked()
+{
+    setTreeItem(ui->treeWidgetNavi,SBINARY::TYPE_HEURISTICSCAN);
+}
+
+void BinaryWidget::on_pushButtonMemoryMap_clicked()
+{
+    setTreeItem(ui->treeWidgetNavi,SBINARY::TYPE_MEMORYMAP);
+}
+
+void BinaryWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent,QTreeWidgetItem *pPrevious)
+{
+    Q_UNUSED(pPrevious)
+
+    if(pCurrent)
+    {
+        reloadData();
+        addPage(pCurrent);
+        ui->toolButtonPrev->setEnabled(isPrevPageAvailable());
+        ui->toolButtonNext->setEnabled(isNextPageAvailable());
+    }
 }

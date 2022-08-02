@@ -37,6 +37,7 @@ public:
     BinaryWidget(QWidget *pParent=nullptr);
     BinaryWidget(QIODevice *pDevice,FW_DEF::OPTIONS options,QWidget *pParent=nullptr);
     ~BinaryWidget();
+
     virtual void clear();
     virtual void cleanup();
     virtual void reload();
@@ -46,6 +47,10 @@ protected:
     virtual void setReadonly(bool bState);
     virtual void blockSignals(bool bState);
     virtual void adjustHeaderTable(int nType,QTableWidget *pTableWidget);
+    virtual void _showInDisasmWindowAddress(XADDR nAddress);
+    virtual void _showInDisasmWindowOffset(qint64 nOffset);
+    virtual void _showInMemoryMapWindowOffset(qint64 nOffset);
+    virtual void _showInHexWindow(qint64 nOffset,qint64 nSize);
 
 private slots:
     virtual void reloadData();
@@ -53,6 +58,15 @@ private slots:
     void on_checkBoxReadonly_toggled(bool bChecked);
     void on_pushButtonReload_clicked();
     void enableButton();
+    void on_toolButtonPrev_clicked();
+    void on_toolButtonNext_clicked();
+    void on_pushButtonHex_clicked();
+    void on_pushButtonDisasm_clicked();
+    void on_pushButtonStrings_clicked();
+    void on_pushButtonEntropy_clicked();
+    void on_pushButtonHeuristicScan_clicked();
+    void on_pushButtonMemoryMap_clicked();
+    void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent,QTreeWidgetItem *pPrevious);
 
 private:
     Ui::BinaryWidget *ui;
