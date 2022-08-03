@@ -32,6 +32,7 @@ ToolsWidget::ToolsWidget(QWidget *pParent) :
     connect(ui->widgetHex,SIGNAL(dataChanged()),this,SIGNAL(dataChanged()));
     connect(ui->widgetHex,SIGNAL(showOffsetDisasm(qint64)),this,SLOT(_showDisasm(qint64)));
     connect(ui->widgetHex,SIGNAL(showOffsetMemoryMap(qint64)),this,SLOT(_showMemoryMap(qint64)));
+    connect(ui->widgetHex,SIGNAL(showOffsetMainHex(qint64,qint64)),this,SLOT(_showHex(qint64,qint64)));
     connect(ui->widgetStrings,SIGNAL(dataChanged()),this,SIGNAL(dataChanged()));
     connect(ui->widgetStrings,SIGNAL(showHex(qint64,qint64)),this,SLOT(_showHex(qint64,qint64)));
     connect(ui->widgetStrings,SIGNAL(showDemangle(QString)),this,SIGNAL(showDemangle(QString)));
@@ -45,6 +46,7 @@ void ToolsWidget::setData(QIODevice *pDevice,FW_DEF::OPTIONS options,QIODevice *
     hexOptions.nStartAddress=options.nImageBase;
     hexOptions.bMenu_MemoryMap=true;
     hexOptions.bMenu_Disasm=bDisasm;
+    hexOptions.bMenu_MainHex=true;
     hexOptions.bIsOffsetTitle=options.bOffset;
 
 //    ui->widgetHex->enableReadOnly(false);
@@ -134,36 +136,36 @@ void ToolsWidget::on_tabWidgetMain_currentChanged(int nIndex)
 
 void ToolsWidget::_showHex(qint64 nOffset,qint64 nSize)
 {
-    SubDevice *pSubDevice=qobject_cast<SubDevice *>(g_pDevice);
+//    XIODevice *pSubDevice=dynamic_cast<XIODevice *>(getDevice());
 
-    if(pSubDevice)
-    {
-        nOffset+=pSubDevice->getInitOffset();
-    }
+//    if(pSubDevice)
+//    {
+//        nOffset+=pSubDevice->getInitOffset();
+//    }
 
     emit showOffsetHex(nOffset,nSize);
 }
 
 void ToolsWidget::_showDisasm(qint64 nOffset)
 {
-    SubDevice *pSubDevice=qobject_cast<SubDevice *>(g_pDevice);
+//    XIODevice *pSubDevice=dynamic_cast<XIODevice *>(getDevice());
 
-    if(pSubDevice)
-    {
-        nOffset+=pSubDevice->getInitOffset();
-    }
+//    if(pSubDevice)
+//    {
+//        nOffset+=pSubDevice->getInitOffset();
+//    }
 
     emit showOffsetDisasm(nOffset);
 }
 
 void ToolsWidget::_showMemoryMap(qint64 nOffset)
 {
-    SubDevice *pSubDevice=qobject_cast<SubDevice *>(g_pDevice);
+//    XIODevice *pSubDevice=dynamic_cast<XIODevice *>(getDevice());
 
-    if(pSubDevice)
-    {
-        nOffset+=pSubDevice->getInitOffset();
-    }
+//    if(pSubDevice)
+//    {
+//        nOffset+=pSubDevice->getInitOffset();
+//    }
 
     emit showOffsetMemoryMap(nOffset);
 }

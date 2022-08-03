@@ -156,7 +156,7 @@ void BinaryWidget::_showInMemoryMapWindowOffset(qint64 nOffset)
     ui->widgetMemoryMap->goToOffset(nOffset);
 }
 
-void BinaryWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
+void BinaryWidget::_showInHexWindow(qint64 nOffset,qint64 nSize)
 {
     setTreeItem(ui->treeWidgetNavi,SBINARY::TYPE_HEX);
     ui->widgetHex->setSelection(nOffset,nSize);
