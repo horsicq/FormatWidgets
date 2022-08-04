@@ -1273,7 +1273,7 @@ void FormatWidget::addComment(QTableWidget *pTableWidget, int nRow, int nColumn,
     pTableWidget->item(nRow,nColumn)->setText(sComment);
 }
 
-void FormatWidget::updateTableRecord(QTableWidget *pTableWidget, int nRow, qint64 nOffset, qint64 nSize)
+void FormatWidget::updateTableRecord(QTableWidget *pTableWidget,int nRow,qint64 nOffset,qint64 nSize)
 {
     pTableWidget->item(nRow,HEADER_COLUMN_NAME)->setData(Qt::UserRole+HEADER_DATA_OFFSET,nOffset);
     pTableWidget->item(nRow,HEADER_COLUMN_NAME)->setData(Qt::UserRole+HEADER_DATA_SIZE,nSize);
@@ -1424,17 +1424,6 @@ void FormatWidget::_deleteSubdevices(SubDevice **ppSubdevices, qint32 nCount)
 
             delete (ppSubdevices[i]);
             ppSubdevices[i]=0;
-        }
-    }
-}
-
-void FormatWidget::_blockSignals(QObject **ppObjects, int nCount, bool bState)
-{
-    for(int i=0;i<nCount;i++)
-    {
-        if(ppObjects[i])
-        {
-            ppObjects[i]->blockSignals(bState);
         }
     }
 }
