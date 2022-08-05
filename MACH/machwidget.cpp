@@ -2529,7 +2529,7 @@ void MACHWidget::on_tableWidget_symtab_currentCellChanged(int nCurrentRow,int nC
     setHeaderTableSelection(ui->widgetHex_symtab,ui->tableWidget_symtab);
 }
 
-void MACHWidget::on_tableWidget_dysymtab_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+void MACHWidget::on_tableWidget_dysymtab_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn)
 {
     Q_UNUSED(nCurrentRow);
     Q_UNUSED(nCurrentColumn);
