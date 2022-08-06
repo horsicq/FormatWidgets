@@ -2591,7 +2591,7 @@ void PEWidget::on_tableView_Debug_customContextMenuRequested(const QPoint &pos)
         QMenu contextMenu(this);
 
         QAction actionEdit(tr("Edit"),this);
-        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editDebugHeader()));
+        connect(&actionEdit,SIGNAL(triggered()),this,SLOT(editDebugHeader()));
         contextMenu.addAction(&actionEdit);
 
         contextMenu.exec(ui->tableView_Debug->viewport()->mapToGlobal(pos));
