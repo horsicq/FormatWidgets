@@ -29,6 +29,7 @@ namespace SPDF
 enum TYPE
 {
     TYPE_INFO=0,
+    TYPE_VIRUSTOTAL,
     TYPE_HEX,
     TYPE_HASH,
     TYPE_STRINGS,

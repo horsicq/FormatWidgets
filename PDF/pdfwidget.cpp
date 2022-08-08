@@ -71,6 +71,7 @@ void PDFWidget::reload()
         setFileType(pdf.getFileType());
 
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPDF::TYPE_INFO,tr("Info")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPDF::TYPE_VIRUSTOTAL,"VirusTotal"));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPDF::TYPE_HEX,tr("Hex")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPDF::TYPE_HASH,tr("Hash")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPDF::TYPE_STRINGS,tr("Strings")));
@@ -121,7 +122,14 @@ void PDFWidget::reloadData()
         {
             if(!isInitPresent(sInit))
             {
-                ui->widgetInfo->setData(getDevice(),pdf.getFileType(),true);
+                ui->widgetInfo->setData(getDevice(),pdf.getFileType(),"Info",true);
+            }
+        }
+        else if(nType==SPDF::TYPE_VIRUSTOTAL)
+        {
+            if(!isInitPresent(sInit))
+            {
+                ui->widgetVirusTotal->setData(getDevice());
             }
         }
         else if(nType==SPDF::TYPE_HEX)
