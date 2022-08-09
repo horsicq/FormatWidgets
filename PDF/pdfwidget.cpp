@@ -88,7 +88,7 @@ void PDFWidget::reload()
     }
 }
 
-FormatWidget::SV PDFWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
+FormatWidget::SV PDFWidget::_setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition,qint64 nOffset)
 {
     return SV_NONE;
 }
