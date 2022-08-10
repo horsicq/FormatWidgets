@@ -2643,7 +2643,7 @@ void PEWidget::on_tableView_Resources_customContextMenuRequested(const QPoint &p
         contextMenu.addAction(&actionEntropy);
 
         QAction actionDump(tr("Dump to file"),this);
-        connect(&actionDump, SIGNAL(triggered()), this, SLOT(resourceDump()));
+        connect(&actionDump,SIGNAL(triggered()),this,SLOT(resourceDump()));
         actionDump.setEnabled(bIsEnable);
         contextMenu.addAction(&actionDump);
 
