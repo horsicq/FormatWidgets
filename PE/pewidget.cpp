@@ -2667,7 +2667,7 @@ void PEWidget::on_tableView_Exceptions_customContextMenuRequested(const QPoint &
         QMenu contextMenu(this);
 
         QAction actionEdit(tr("Edit"),this);
-        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editExceptionHeader()));
+        connect(&actionEdit,SIGNAL(triggered()),this,SLOT(editExceptionHeader()));
         contextMenu.addAction(&actionEdit);
 
         contextMenu.exec(ui->tableView_Exceptions->viewport()->mapToGlobal(pos));
