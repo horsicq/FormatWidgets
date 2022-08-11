@@ -3015,7 +3015,7 @@ void PEWidget::on_tableView_Resources_StringTable_customContextMenuRequested(con
         QMenu contextMenu(this);
 
         QAction actionHex(tr("Hex"),this);
-        connect(&actionHex, SIGNAL(triggered()),this,SLOT(stringTableHex()));
+        connect(&actionHex,SIGNAL(triggered()),this,SLOT(stringTableHex()));
         contextMenu.addAction(&actionHex);
 
         contextMenu.exec(ui->tableView_Resources_StringTable->viewport()->mapToGlobal(pos));
