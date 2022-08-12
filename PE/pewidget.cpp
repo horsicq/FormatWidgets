@@ -2805,7 +2805,7 @@ void PEWidget::on_tableView_ExportFunctions_customContextMenuRequested(const QPo
         contextMenu.addAction(&actionDisasm);
 
         QAction actionDemangle(tr("Demangle"),this);
-        connect(&actionDemangle, SIGNAL(triggered()), this, SLOT(exportFunctionDemangle()));
+        connect(&actionDemangle,SIGNAL(triggered()),this,SLOT(exportFunctionDemangle()));
         contextMenu.addAction(&actionDemangle);
 
         contextMenu.exec(ui->tableView_ExportFunctions->viewport()->mapToGlobal(pos));

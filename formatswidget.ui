@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>696</width>
-    <height>365</height>
+    <width>915</width>
+    <height>569</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -273,11 +273,17 @@
    </item>
    <item>
     <widget class="QStackedWidget" name="stackedWidgetMain">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>150</height>
+      </size>
+     </property>
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>9</number>
      </property>
      <widget class="QWidget" name="pageBinary"/>
      <widget class="QWidget" name="pageMACHOFAT">
