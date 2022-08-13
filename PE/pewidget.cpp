@@ -2797,7 +2797,7 @@ void PEWidget::on_tableView_ExportFunctions_customContextMenuRequested(const QPo
         QMenu contextMenu(this);
 
         QAction actionHex(tr("Hex"),this);
-        connect(&actionHex, SIGNAL(triggered()), this, SLOT(exportFunctionHex()));
+        connect(&actionHex,SIGNAL(triggered()),this,SLOT(exportFunctionHex()));
         contextMenu.addAction(&actionHex);
 
         QAction actionDisasm(tr("Disasm"),this);
