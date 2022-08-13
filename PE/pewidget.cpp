@@ -2702,7 +2702,7 @@ void PEWidget::on_tableView_DelayImportLibraries_customContextMenuRequested(cons
         QMenu contextMenu(this);
 
         QAction actionEdit(tr("Edit"),this);
-        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editDelayImportHeader()));
+        connect(&actionEdit,SIGNAL(triggered()),this,SLOT(editDelayImportHeader()));
         contextMenu.addAction(&actionEdit);
 
         contextMenu.exec(ui->tableView_DelayImportLibraries->viewport()->mapToGlobal(pos));
