@@ -2989,7 +2989,7 @@ void PEWidget::on_tableView_TLSCallbacks_customContextMenuRequested(const QPoint
         QMenu contextMenu(this);
 
         QAction actionDisasm(tr("Disasm"),this);
-        connect(&actionDisasm, SIGNAL(triggered()), this, SLOT(disasmTLSCallback()));
+        connect(&actionDisasm,SIGNAL(triggered()),this,SLOT(disasmTLSCallback()));
         contextMenu.addAction(&actionDisasm);
 
         contextMenu.exec(ui->tableView_TLSCallbacks->viewport()->mapToGlobal(pos));
