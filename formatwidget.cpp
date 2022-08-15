@@ -587,7 +587,7 @@ void FormatWidget::showTableViewDemangle(QTableView *pTableView, int nColumn)
     }
 }
 
-bool FormatWidget::_setTreeItem(QTreeWidget *pTree, QTreeWidgetItem *pItem, int nID)
+bool FormatWidget::_setTreeItem(QTreeWidget *pTree,QTreeWidgetItem *pItem,int nID)
 {
     bool bResult=false;
 
