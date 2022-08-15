@@ -993,7 +993,7 @@ void FormatWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
 #endif
 }
 
-//void FormatWidget::resizeToolsWidget(QWidget *pParent, ToolsWidget *pToolWidget)
+//void FormatWidget::resizeToolsWidget(QWidget *pParent,ToolsWidget *pToolWidget)
 //{
 //    qint32 nHeight=pParent->height();
 //    qint32 _nMaxHeight=pToolWidget->maximumHeight();
