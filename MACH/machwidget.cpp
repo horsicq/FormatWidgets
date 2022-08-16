@@ -2649,7 +2649,7 @@ void MACHWidget::on_tableWidget_unix_thread_x86_32_currentCellChanged(int nCurre
     setHeaderTableSelection(ui->widgetHex_unix_thread_x86_32,ui->tableWidget_unix_thread_x86_32);
 }
 
-void MACHWidget::on_tableWidget_unix_thread_x86_64_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+void MACHWidget::on_tableWidget_unix_thread_x86_64_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn)
 {
     Q_UNUSED(nCurrentRow);
     Q_UNUSED(nCurrentColumn);
