@@ -2528,7 +2528,7 @@ void PEWidget::onTableView_Sections_currentRowChanged(const QModelIndex &current
     loadHexSubdeviceByTableView(current.row(),SPE::TYPE_SECTIONS,ui->widgetHex_Section,ui->tableView_Sections,&g_subDevice[SPE::TYPE_SECTIONS]);
 }
 
-void PEWidget::onTableView_ImportLibraries_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+void PEWidget::onTableView_ImportLibraries_currentRowChanged(const QModelIndex &current,const QModelIndex &previous)
 {
     Q_UNUSED(previous)
 
