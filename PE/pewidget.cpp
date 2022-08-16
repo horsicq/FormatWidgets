@@ -2520,7 +2520,7 @@ void PEWidget::on_tableView_ImportLibraries_customContextMenuRequested(const QPo
     }
 }
 
-void PEWidget::onTableView_Sections_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+void PEWidget::onTableView_Sections_currentRowChanged(const QModelIndex &current,const QModelIndex &previous)
 {
     Q_UNUSED(current)
     Q_UNUSED(previous)
