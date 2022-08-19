@@ -1356,7 +1356,7 @@ bool FormatWidget::createSectionTable(int nType,QTableWidget *pTableWidget,const
     return true;
 }
 
-void FormatWidget::setLineEditsReadOnly(XLineEditHEX **ppLineEdits, int nCount, bool bState)
+void FormatWidget::setLineEditsReadOnly(XLineEditHEX **ppLineEdits,int nCount,bool bState)
 {
     for(int i=0;i<nCount;i++)
     {
