@@ -1281,7 +1281,7 @@ void FormatWidget::updateTableRecord(QTableWidget *pTableWidget,int nRow,qint64 
     pTableWidget->cellWidget(nRow,HEADER_COLUMN_VALUE)->setProperty("OFFSET",nOffset);
 }
 
-//bool FormatWidget::createDirectoryTable(int type, QTableWidget *pTableWidget, const DIRECTORY_ENTRY_RECORD *pRecords, int nRecordCount)
+//bool FormatWidget::createDirectoryTable(int type,QTableWidget *pTableWidget,const DIRECTORY_ENTRY_RECORD *pRecords,int nRecordCount)
 //{
 //    Q_UNUSED(type)
 
