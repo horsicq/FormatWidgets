@@ -1451,7 +1451,7 @@ XComboBoxEx *FormatWidget::createComboBox(QTableWidget *pTableWidget,QMap<quint6
     return result;
 }
 
-InvWidget *FormatWidget::createInvWidget(QTableWidget *pTableWidget, int nType, int nData, InvWidget::TYPE widgetType)
+InvWidget *FormatWidget::createInvWidget(QTableWidget *pTableWidget,int nType,int nData,InvWidget::TYPE widgetType)
 {
     InvWidget *pResult=new InvWidget(this,widgetType);
 
