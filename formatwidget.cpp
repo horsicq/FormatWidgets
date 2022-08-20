@@ -376,7 +376,7 @@ bool FormatWidget::setHexSubdeviceByTableView(int nRow,int nType,ToolsWidget *pT
     return bResult;
 }
 
-void FormatWidget::setHeaderTableSelection(ToolsWidget *pToolWidget, QTableWidget *pTableWidget)
+void FormatWidget::setHeaderTableSelection(ToolsWidget *pToolWidget,QTableWidget *pTableWidget)
 {
     qint32 nCurrentRow=pTableWidget->currentRow();
 
