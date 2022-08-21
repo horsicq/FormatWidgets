@@ -467,7 +467,7 @@ void FormatWidget::ajustTableView(ProcessData *pProcessData,QStandardItemModel *
     deleteOldAbstractModel(&pOldModel);
 }
 
-void FormatWidget::ajustTreeView(ProcessData *pProcessData, QStandardItemModel **ppModel, QTreeView *pTreeView)
+void FormatWidget::ajustTreeView(ProcessData *pProcessData,QStandardItemModel **ppModel,QTreeView *pTreeView)
 {
     QAbstractItemModel *pOldModel=pTreeView->model();
 
