@@ -80,6 +80,7 @@ void SearchStringsWidget::setData(QIODevice *pDevice,OPTIONS options,bool bAuto)
     ui->checkBoxUTF8->setChecked(options.bUTF8);
     ui->checkBoxUnicode->setChecked(options.bUnicode);
     ui->checkBoxCStrings->setChecked(options.bCStrings);
+    ui->checkBoxLinks->setChecked(options.bLinks);
 
     g_bInit=false;
 
@@ -420,6 +421,7 @@ void SearchStringsWidget::search()
         g_options.bCStrings=ui->checkBoxCStrings->isChecked();
         g_options.sANSICodec=ui->comboBoxANSICodec->currentText();
         g_options.nMinLenght=ui->spinBoxMinLength->value();
+        g_options.bLinks=ui->checkBoxLinks->isChecked();
 
         if(g_options.bAnsi||g_options.bUnicode)
         {
@@ -430,6 +432,7 @@ void SearchStringsWidget::search()
             options.bUnicode=g_options.bUnicode;
             options.bCStrings=g_options.bCStrings;
             options.sANSICodec=g_options.sANSICodec;
+            options.bLinks=g_options.bLinks;
             options.bMenu_Hex=g_options.bMenu_Hex;
             options.nMinLenght=g_options.nMinLenght;
             options.memoryMap=XBinary(g_pDevice,true,g_options.nBaseAddress).getMemoryMap();

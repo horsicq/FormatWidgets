@@ -150,6 +150,7 @@ void MultiSearch::processSearch()
         ssOptions.bUnicode=g_options.bUnicode;
         ssOptions.bCStrings=g_options.bCStrings;
         ssOptions.sANSICodec=g_options.sANSICodec;
+        ssOptions.bLinks=g_options.bLinks;
 
         *g_pListRecords=binary.multiSearch_allStrings(0,g_pDevice->size(),ssOptions,g_pPdStruct);
     }

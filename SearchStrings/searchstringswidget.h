@@ -63,6 +63,7 @@ public:
         bool bCStrings;
         QString sANSICodec;
         qint32 nMinLenght;
+        bool bLinks;
         bool bMenu_Hex;
         bool bMenu_Demangle;
         QString sTitle; // For dialog
