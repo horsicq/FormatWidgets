@@ -2889,7 +2889,7 @@ void PEWidget::on_tableView_ImportFunctions_customContextMenuRequested(const QPo
         QMenu contextMenu(this);
 
         QAction actionDemangle(tr("Demangle"),this);
-        connect(&actionDemangle, SIGNAL(triggered()), this, SLOT(importFunctionDemangle()));
+        connect(&actionDemangle,SIGNAL(triggered()),this,SLOT(importFunctionDemangle()));
         contextMenu.addAction(&actionDemangle);
 
         contextMenu.exec(ui->tableView_ImportFunctions->viewport()->mapToGlobal(pos));
