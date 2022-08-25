@@ -3127,7 +3127,7 @@ void MACHWidget::on_tableView_DYSYMTAB_extrel_customContextMenuRequested(const Q
         QMenu contextMenu(this);
 
         QAction actionEdit(tr("Edit"),this);
-        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editExtrelHeader()));
+        connect(&actionEdit,SIGNAL(triggered()),this,SLOT(editExtrelHeader()));
 
         contextMenu.addAction(&actionEdit);
 
