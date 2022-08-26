@@ -1268,7 +1268,7 @@ bool FormatWidget::createListTable(int nType,QTableWidget *pTableWidget,const FW
     return true;
 }
 
-void FormatWidget::addComment(QTableWidget *pTableWidget, int nRow, int nColumn, QString sComment)
+void FormatWidget::addComment(QTableWidget *pTableWidget,int nRow,int nColumn,QString sComment)
 {
     pTableWidget->item(nRow,nColumn)->setText(sComment);
 }
