@@ -1389,7 +1389,7 @@ void FormatWidget::setPushButtonReadOnly(QPushButton **ppPushButtons,int nCount,
     }
 }
 
-void FormatWidget::setDateTimeEditReadOnly(XDateTimeEditX **ppDateTimeEdits, int nCount, bool bState)
+void FormatWidget::setDateTimeEditReadOnly(XDateTimeEditX **ppDateTimeEdits,int nCount,bool bState)
 {
     for(int i=0;i<nCount;i++)
     {
