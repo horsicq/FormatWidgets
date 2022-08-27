@@ -1414,7 +1414,7 @@ void FormatWidget::_deleteObjects(QObject **ppObjects,qint32 nCount)
     }
 }
 
-void FormatWidget::_deleteSubdevices(SubDevice **ppSubdevices, qint32 nCount)
+void FormatWidget::_deleteSubdevices(SubDevice **ppSubdevices,qint32 nCount)
 {
     for(int i=0;i<nCount;i++)
     {
