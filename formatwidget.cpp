@@ -65,7 +65,7 @@ XInfoDB *FormatWidget::getXInfoDB()
     return g_pXInfoDB;
 }
 
-void FormatWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
+void FormatWidget::setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions)
 {
     QList<XShortcutsWidget *> listWidgets=this->findChildren<XShortcutsWidget *>();
 
