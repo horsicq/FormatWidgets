@@ -984,7 +984,7 @@ void FormatWidget::_showInMemoryMapWindowOffset(qint64 nOffset)
 #endif
 }
 
-void FormatWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
+void FormatWidget::_showInHexWindow(qint64 nOffset,qint64 nSize)
 {
     Q_UNUSED(nOffset)
     Q_UNUSED(nSize)
