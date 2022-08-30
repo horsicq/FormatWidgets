@@ -574,7 +574,7 @@ qint64 FormatWidget::getTableViewItemSize(QTableView *pTableView)
     return nResult;
 }
 
-void FormatWidget::showTableViewDemangle(QTableView *pTableView, int nColumn)
+void FormatWidget::showTableViewDemangle(QTableView *pTableView,int nColumn)
 {
     int nRow=pTableView->currentIndex().row();
 
