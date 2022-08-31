@@ -404,7 +404,7 @@ QColor FormatWidget::getDisabledColor()
     return g_colDisabled;
 }
 
-void FormatWidget::setItemEnable(QTableWidgetItem *pItem, bool bState)
+void FormatWidget::setItemEnable(QTableWidgetItem *pItem,bool bState)
 {
     if(!bState)
     {
