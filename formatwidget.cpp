@@ -1078,7 +1078,7 @@ void FormatWidget::showInMemoryMapWindowOffset(qint64 nOffset)
      _showInMemoryMapWindowOffset(nOffset);
 }
 
-void FormatWidget::showInHexWindow(qint64 nOffset, qint64 nSize)
+void FormatWidget::showInHexWindow(qint64 nOffset,qint64 nSize)
 {
     _showInHexWindow(nOffset,nSize);
 }
