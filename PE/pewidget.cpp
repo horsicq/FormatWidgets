@@ -2801,7 +2801,7 @@ void PEWidget::on_tableView_ExportFunctions_customContextMenuRequested(const QPo
         contextMenu.addAction(&actionHex);
 
         QAction actionDisasm(tr("Disasm"),this);
-        connect(&actionDisasm, SIGNAL(triggered()), this, SLOT(exportFunctionDisasm()));
+        connect(&actionDisasm,SIGNAL(triggered()),this,SLOT(exportFunctionDisasm()));
         contextMenu.addAction(&actionDisasm);
 
         QAction actionDemangle(tr("Demangle"),this);
