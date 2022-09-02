@@ -1045,7 +1045,7 @@ void FormatWidget::setEdited()
 //    emit changed();
 }
 
-void FormatWidget::showHex(qint64 nOffset, qint64 nSize)
+void FormatWidget::showHex(qint64 nOffset,qint64 nSize)
 {
     XHexView::OPTIONS hexOptions={};
 
