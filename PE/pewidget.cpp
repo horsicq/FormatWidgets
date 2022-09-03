@@ -761,7 +761,7 @@ void PEWidget::blockSignals(bool bState)
     _blockSignals((QObject **)g_dateTimeEdit,__TD_size,bState);
 }
 
-void PEWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent, QTreeWidgetItem *pPrevious)
+void PEWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent,QTreeWidgetItem *pPrevious)
 {
     Q_UNUSED(pPrevious)
 
