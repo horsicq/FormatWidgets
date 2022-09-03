@@ -1316,7 +1316,7 @@ void MACHWidget::_showInMemoryMapWindowOffset(qint64 nOffset)
     ui->widgetMemoryMap->goToOffset(nOffset);
 }
 
-void MACHWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
+void MACHWidget::_showInHexWindow(qint64 nOffset,qint64 nSize)
 {
     setTreeItem(ui->treeWidgetNavi,SMACH::TYPE_HEX);
     ui->widgetHex->setSelection(nOffset,nSize);
