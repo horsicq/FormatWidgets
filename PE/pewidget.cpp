@@ -43,7 +43,7 @@ PEWidget::PEWidget(QWidget *pParent) :
 #endif
 }
 
-PEWidget::PEWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) :
+PEWidget::PEWidget(QIODevice *pDevice,FW_DEF::OPTIONS options,QWidget *pParent) :
     PEWidget(pParent)
 {
     PEWidget::setData(pDevice,options,0,0,0);
