@@ -1088,7 +1088,7 @@ void FormatWidget::showInHexWindow(qint64 nOffset)
     _showInHexWindow(nOffset,1);
 }
 
-void FormatWidget::showEntropy(qint64 nOffset, qint64 nSize)
+void FormatWidget::showEntropy(qint64 nOffset,qint64 nSize)
 {
     DialogEntropy dialogEntropy(this);
 
