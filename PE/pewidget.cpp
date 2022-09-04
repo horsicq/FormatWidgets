@@ -2167,7 +2167,7 @@ void PEWidget::loadDelayImport(int nRow)
     }
 }
 
-void PEWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
+void PEWidget::adjustHeaderTable(int nType,QTableWidget *pTableWidget)
 {
     XBinary::MODE mode=XPE::getMode(getDevice(),getOptions().bIsImage,getOptions().nImageBase);
 
