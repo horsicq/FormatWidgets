@@ -2820,7 +2820,7 @@ void MACHWidget::on_tableView_segments_customContextMenuRequested(const QPoint &
         contextMenu.addAction(&actionDisasm);
 
         QAction actionEntropy(tr("Entropy"),this);
-        connect(&actionEntropy, SIGNAL(triggered()), this, SLOT(segmentEntropy()));
+        connect(&actionEntropy,SIGNAL(triggered()),this,SLOT(segmentEntropy()));
         actionEntropy.setEnabled(bIsEnable);
         contextMenu.addAction(&actionEntropy);
 
