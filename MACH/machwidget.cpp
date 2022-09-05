@@ -2815,7 +2815,7 @@ void MACHWidget::on_tableView_segments_customContextMenuRequested(const QPoint &
         contextMenu.addAction(&actionHex);
 
         QAction actionDisasm(tr("Disasm"),this);
-        connect(&actionDisasm, SIGNAL(triggered()), this, SLOT(segmentDisasm()));
+        connect(&actionDisasm,SIGNAL(triggered()),this,SLOT(segmentDisasm()));
         actionDisasm.setEnabled(bIsEnable);
         contextMenu.addAction(&actionDisasm);
 
