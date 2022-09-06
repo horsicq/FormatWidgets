@@ -3100,7 +3100,7 @@ void MACHWidget::on_tableView_DYSYMTAB_toc_customContextMenuRequested(const QPoi
         QMenu contextMenu(this);
 
         QAction actionEdit(tr("Edit"),this);
-        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editTocHeader()));
+        connect(&actionEdit,SIGNAL(triggered()),this,SLOT(editTocHeader()));
 
         QAction actionDemangle(tr("Demangle"),this);
         connect(&actionDemangle, SIGNAL(triggered()), this, SLOT(tocDemangle()));
