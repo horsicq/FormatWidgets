@@ -2703,7 +2703,7 @@ void MACHWidget::on_toolButtonNext_clicked()
     setAddPageEnabled(true);
 }
 
-void MACHWidget::onTableView_commands_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+void MACHWidget::onTableView_commands_currentRowChanged(const QModelIndex &current,const QModelIndex &previous)
 {
     Q_UNUSED(current)
     Q_UNUSED(previous)
