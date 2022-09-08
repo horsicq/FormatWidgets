@@ -2268,7 +2268,7 @@ void PEWidget::_showInMemoryMapWindowOffset(qint64 nOffset)
     ui->widgetMemoryMap->goToOffset(nOffset);
 }
 
-void PEWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
+void PEWidget::_showInHexWindow(qint64 nOffset,qint64 nSize)
 {
     setTreeItem(ui->treeWidgetNavi,SPE::TYPE_HEX);
     ui->widgetHex->setSelection(nOffset,nSize);
