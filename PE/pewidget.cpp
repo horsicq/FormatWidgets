@@ -2709,7 +2709,7 @@ void PEWidget::on_tableView_DelayImportLibraries_customContextMenuRequested(cons
     }
 }
 
-void PEWidget::onTableView_DelayImportLibraries_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+void PEWidget::onTableView_DelayImportLibraries_currentRowChanged(const QModelIndex &current,const QModelIndex &previous)
 {
     Q_UNUSED(previous)
 
