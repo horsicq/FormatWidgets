@@ -2563,7 +2563,7 @@ void PEWidget::on_tableView_Relocs_customContextMenuRequested(const QPoint &pos)
     }
 }
 
-void PEWidget::onTableView_Relocs_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+void PEWidget::onTableView_Relocs_currentRowChanged(const QModelIndex &current,const QModelIndex &previous)
 {
     Q_UNUSED(previous)
 
