@@ -2759,7 +2759,7 @@ void MACHWidget::onTableView_LOADFVMLIB_currentRowChanged(const QModelIndex &cur
     loadHexSubdeviceByTableView(current.row(),SMACH::TYPE_mach_LOADFVMLIB,ui->widgetHex_LOADFVMLIB,ui->tableView_LOADFVMLIB,&g_subDevice[SMACH::TYPE_mach_LOADFVMLIB]);
 }
 
-void MACHWidget::onTableView_IDFVMLIB_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+void MACHWidget::onTableView_IDFVMLIB_currentRowChanged(const QModelIndex &current,const QModelIndex &previous)
 {
     Q_UNUSED(current)
     Q_UNUSED(previous)
