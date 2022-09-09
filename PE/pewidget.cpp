@@ -2470,7 +2470,7 @@ void PEWidget::importFunctionDemangle()
     showTableViewDemangle(ui->tableView_ImportFunctions,N_IMAGE_IMPORT_FUNCTION::Hint+2);
 }
 
-void PEWidget::showSectionHeader(int nType, QTableView *pTableView)
+void PEWidget::showSectionHeader(int nType,QTableView *pTableView)
 {
     int nRow=pTableView->currentIndex().row();
 
