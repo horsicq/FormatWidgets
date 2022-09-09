@@ -2859,7 +2859,7 @@ void MACHWidget::on_tableView_sections_customContextMenuRequested(const QPoint &
         contextMenu.addAction(&actionDisasm);
 
         QAction actionEntropy(tr("Entropy"),this);
-        connect(&actionEntropy, SIGNAL(triggered()), this, SLOT(sectionEntropy()));
+        connect(&actionEntropy,SIGNAL(triggered()),this,SLOT(sectionEntropy()));
         actionEntropy.setEnabled(bIsEnable);
         contextMenu.addAction(&actionEntropy);
 
