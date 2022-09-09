@@ -2904,7 +2904,7 @@ void MACHWidget::on_tableView_weak_libraries_customContextMenuRequested(const QP
         QMenu contextMenu(this);
 
         QAction actionEdit(tr("Edit"),this);
-        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editWeakLibraryHeader()));
+        connect(&actionEdit,SIGNAL(triggered()),this,SLOT(editWeakLibraryHeader()));
         contextMenu.addAction(&actionEdit);
 
         contextMenu.exec(ui->tableView_weak_libraries->viewport()->mapToGlobal(pos));
