@@ -2674,7 +2674,7 @@ void PEWidget::on_tableView_Exceptions_customContextMenuRequested(const QPoint &
     }
 }
 
-void PEWidget::onTableView_Exceptions_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+void PEWidget::onTableView_Exceptions_currentRowChanged(const QModelIndex &current,const QModelIndex &previous)
 {
     Q_UNUSED(previous)
 
