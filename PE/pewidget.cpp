@@ -2651,7 +2651,7 @@ void PEWidget::on_tableView_Resources_customContextMenuRequested(const QPoint &p
     }
 }
 
-void PEWidget::onTableView_Resources_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+void PEWidget::onTableView_Resources_currentRowChanged(const QModelIndex &current,const QModelIndex &previous)
 {
     Q_UNUSED(previous)
 
