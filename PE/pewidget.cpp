@@ -2775,7 +2775,7 @@ void PEWidget::onTreeView_Resources_currentRowChanged(const QModelIndex &current
     }
 }
 
-void PEWidget::onTreeView_Certificate_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+void PEWidget::onTreeView_Certificate_currentRowChanged(const QModelIndex &current,const QModelIndex &previous)
 {
     Q_UNUSED(previous)
 
