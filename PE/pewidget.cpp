@@ -2751,7 +2751,7 @@ void PEWidget::on_tableView_BoundImport_doubleClicked(const QModelIndex &index)
     editBoundImportHeader();
 }
 
-void PEWidget::onTreeView_Resources_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+void PEWidget::onTreeView_Resources_currentRowChanged(const QModelIndex &current,const QModelIndex &previous)
 {
     Q_UNUSED(previous)
 
