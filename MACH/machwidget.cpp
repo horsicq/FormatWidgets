@@ -2719,7 +2719,7 @@ void MACHWidget::onTableView_segments_currentRowChanged(const QModelIndex &curre
     loadHexSubdeviceByTableView(current.row(),SMACH::TYPE_mach_segments,ui->widgetHex_segments,ui->tableView_segments,&g_subDevice[SMACH::TYPE_mach_segments]);
 }
 
-void MACHWidget::onTableView_sections_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+void MACHWidget::onTableView_sections_currentRowChanged(const QModelIndex &current,const QModelIndex &previous)
 {
     Q_UNUSED(current)
     Q_UNUSED(previous)
