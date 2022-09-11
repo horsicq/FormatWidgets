@@ -2743,7 +2743,7 @@ void MACHWidget::onTableView_weak_libraries_currentRowChanged(const QModelIndex 
     loadHexSubdeviceByTableView(current.row(),SMACH::TYPE_mach_weak_libraries,ui->widgetHex_weak_libraries,ui->tableView_weak_libraries,&g_subDevice[SMACH::TYPE_mach_weak_libraries]);
 }
 
-void MACHWidget::onTableView_id_library_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+void MACHWidget::onTableView_id_library_currentRowChanged(const QModelIndex &current,const QModelIndex &previous)
 {
     Q_UNUSED(current)
     Q_UNUSED(previous)
