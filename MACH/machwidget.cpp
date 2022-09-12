@@ -3228,7 +3228,7 @@ void MACHWidget::onTableView_DYLD_INFO_bind_currentRowChanged(const QModelIndex 
     setHexSubdeviceByTableView(current.row(),SMACH::TYPE_DYLD_INFO_bind,ui->widgetHex_DYLD_INFO_bind,ui->tableView_DYLD_INFO_bind);
 }
 
-void MACHWidget::onTableView_DYLD_INFO_weak_bind_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+void MACHWidget::onTableView_DYLD_INFO_weak_bind_currentRowChanged(const QModelIndex &current,const QModelIndex &previous)
 {
     Q_UNUSED(current)
     Q_UNUSED(previous)
