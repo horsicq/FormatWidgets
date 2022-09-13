@@ -2849,7 +2849,7 @@ void MACHWidget::on_tableView_sections_customContextMenuRequested(const QPoint &
         contextMenu.addAction(&actionEdit);
 
         QAction actionHex(tr("Hex"),this);
-        connect(&actionHex, SIGNAL(triggered()), this, SLOT(sectionHex()));
+        connect(&actionHex,SIGNAL(triggered()),this,SLOT(sectionHex()));
         actionHex.setEnabled(bIsEnable);
         contextMenu.addAction(&actionHex);
 

@@ -76,7 +76,9 @@ void MACHOFATWidget::reload()
 
     if(machofat.isValid())
     {
-        QList<XArchive::RECORD> listRecords=machofat.getRecords();
+        XBinary::PDSTRUCT pdStruct={};
+
+        QList<XArchive::RECORD> listRecords=machofat.getRecords(-1,&pdStruct);
 
         int nNumberOfRecords=listRecords.count();
 
