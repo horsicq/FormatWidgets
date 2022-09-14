@@ -3025,7 +3025,7 @@ void MACHWidget::on_tableView_Functions_customContextMenuRequested(const QPoint 
         connect(&actionDisasm, SIGNAL(triggered()), this, SLOT(functionDisasm()));
 
         QAction actionDemangle(tr("Demangle"),this);
-        connect(&actionDemangle, SIGNAL(triggered()), this, SLOT(functionDemangle()));
+        connect(&actionDemangle,SIGNAL(triggered()),this,SLOT(functionDemangle()));
 
         contextMenu.addAction(&actionHex);
         contextMenu.addAction(&actionDisasm);
