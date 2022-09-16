@@ -57,7 +57,7 @@ public:
     struct OPTIONS
     {
         bool bMenu_Hex;
-        QString sUserSignature; // Not global !!!
+        QString sUserSignature; // It is not global
     };
 
     explicit SearchSignaturesWidget(QWidget *pParent=nullptr);
