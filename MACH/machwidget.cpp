@@ -3019,7 +3019,7 @@ void MACHWidget::on_tableView_Functions_customContextMenuRequested(const QPoint 
         QMenu contextMenu(this);
 
         QAction actionHex(tr("Hex"),this);
-        connect(&actionHex, SIGNAL(triggered()), this, SLOT(functionHex()));
+        connect(&actionHex,SIGNAL(triggered()),this,SLOT(functionHex()));
 
         QAction actionDisasm(tr("Disasm"),this);
         connect(&actionDisasm, SIGNAL(triggered()), this, SLOT(functionDisasm()));
