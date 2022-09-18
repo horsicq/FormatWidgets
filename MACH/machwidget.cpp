@@ -2948,7 +2948,7 @@ void MACHWidget::on_tableView_LOADFVMLIB_customContextMenuRequested(const QPoint
         QMenu contextMenu(this);
 
         QAction actionEdit(tr("Edit"),this);
-        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editLOADFVMLIBHeader()));
+        connect(&actionEdit,SIGNAL(triggered()),this,SLOT(editLOADFVMLIBHeader()));
         contextMenu.addAction(&actionEdit);
 
         contextMenu.exec(ui->tableView_LOADFVMLIB->viewport()->mapToGlobal(pos));
