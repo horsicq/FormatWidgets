@@ -3077,7 +3077,7 @@ void MACHWidget::on_tableView_DYSYMTAB_modtab_customContextMenuRequested(const Q
         QMenu contextMenu(this);
 
         QAction actionEdit(tr("Edit"),this);
-        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editModTabHeader()));
+        connect(&actionEdit,SIGNAL(triggered()),this,SLOT(editModTabHeader()));
 
         contextMenu.addAction(&actionEdit);
 
