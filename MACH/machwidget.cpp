@@ -3053,7 +3053,7 @@ void MACHWidget::on_tableView_data_in_code_entry_customContextMenuRequested(cons
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editDiceHeader()));
 
         QAction actionHex(tr("Hex"),this);
-        connect(&actionHex, SIGNAL(triggered()), this, SLOT(diceHex()));
+        connect(&actionHex,SIGNAL(triggered()),this,SLOT(diceHex()));
 
         contextMenu.addAction(&actionEdit);
         contextMenu.addAction(&actionHex);
