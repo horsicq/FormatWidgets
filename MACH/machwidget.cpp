@@ -2970,7 +2970,7 @@ void MACHWidget::on_tableView_IDFVMLIB_customContextMenuRequested(const QPoint &
         QMenu contextMenu(this);
 
         QAction actionEdit(tr("Edit"),this);
-        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editIDFVMLIBHeader()));
+        connect(&actionEdit,SIGNAL(triggered()),this,SLOT(editIDFVMLIBHeader()));
         contextMenu.addAction(&actionEdit);
 
         contextMenu.exec(ui->tableView_IDFVMLIB->viewport()->mapToGlobal(pos));
