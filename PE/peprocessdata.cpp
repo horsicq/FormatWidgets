@@ -277,7 +277,7 @@ void PEProcessData::_process()
 
         XBinary::_MEMORY_MAP memoryMap=g_pPE->getMemoryMap();
 
-        for(int i=0;(i<nNumberOfRFEs)&&(isRun());i++)
+        for(qint32 i=0;(i<nNumberOfRFEs)&&(isRun());i++)
         {
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
