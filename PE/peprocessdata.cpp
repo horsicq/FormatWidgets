@@ -182,7 +182,7 @@ void PEProcessData::_process()
 
         setHeader(*g_ppModel,&listLabels);
 
-        for(int i=0;(i<nNumberOfIDs)&&(isRun());i++)
+        for(qint32 i=0;(i<nNumberOfIDs)&&(isRun());i++)
         {
             QStandardItem *pItem=new QStandardItem;
             pItem->setData(i,Qt::DisplayRole);
