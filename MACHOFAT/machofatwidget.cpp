@@ -39,7 +39,7 @@ void MACHOFATWidget::clear()
 
     QObjectList listWidgets=ui->stackedWidget->children();
 
-    for(int i=0;i<listWidgets.count();i++)
+    for(qint32 i=0;i<listWidgets.count();i++)
     {
         QWidget *pWidget=qobject_cast<QWidget *>(listWidgets.at(i));
 
