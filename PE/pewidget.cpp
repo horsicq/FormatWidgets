@@ -123,7 +123,7 @@ void PEWidget::reload()
 
         if(pe.isRichSignaturePresent())
         {
-            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_RICH,QString("RICH %1").arg(tr("Signature"))));
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_RICH,QString("Rich %1").arg(tr("Signature"))));
         }
 
         if(pe.getFileHeader_NumberOfSections())

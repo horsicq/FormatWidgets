@@ -69,7 +69,7 @@ void ProcessData::setHeader(QStandardItemModel *pModel,QList<QString> *pListStri
 {
     int nNumberOfRecords=pListStrings->count();
 
-    for(int i=0;i<nNumberOfRecords;i++)
+    for(qint32 i=0;i<nNumberOfRecords;i++)
     {
         pModel->setHeaderData(i,Qt::Horizontal,pListStrings->at(i));
     }
