@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>915</width>
-    <height>569</height>
+    <width>693</width>
+    <height>435</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -65,27 +65,14 @@
       </widget>
      </item>
      <item>
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QGroupBox" name="groupBoxEntryPoint">
+      <widget class="QGroupBox" name="groupBoxFileSize">
        <property name="title">
-        <string>Entry point</string>
+        <string>File size</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
        </property>
-       <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <layout class="QVBoxLayout" name="verticalLayout_18">
         <property name="leftMargin">
          <number>0</number>
         </property>
@@ -99,16 +86,16 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="XLineEditHEX" name="lineEditEntryPoint">
+         <widget class="QLineEdit" name="lineEditFileSize">
           <property name="minimumSize">
            <size>
-            <width>140</width>
+            <width>100</width>
             <height>0</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>140</width>
+            <width>100</width>
             <height>16777215</height>
            </size>
           </property>
@@ -120,31 +107,36 @@
           </property>
          </widget>
         </item>
-        <item>
-         <widget class="QPushButton" name="pushButtonHexEntryPoint">
-          <property name="maximumSize">
-           <size>
-            <width>30</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="text">
-           <string notr="true">&gt;</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="pushButtonDisasm">
-          <property name="text">
-           <string>Disasm</string>
-          </property>
-         </widget>
-        </item>
        </layout>
       </widget>
      </item>
      <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
       <widget class="QGroupBox" name="groupBoxBaseAddress">
+       <property name="minimumSize">
+        <size>
+         <width>140</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>140</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="title">
         <string>Base address</string>
        </property>
@@ -166,18 +158,52 @@
         </property>
         <item>
          <widget class="XLineEditHEX" name="lineEditBaseAddress">
-          <property name="minimumSize">
-           <size>
-            <width>140</width>
-            <height>0</height>
-           </size>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
           </property>
-          <property name="maximumSize">
-           <size>
-            <width>140</width>
-            <height>16777215</height>
-           </size>
+          <property name="readOnly">
+           <bool>true</bool>
           </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="groupBoxEntryPoint">
+       <property name="minimumSize">
+        <size>
+         <width>180</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>180</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="title">
+        <string>Entry point</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="XLineEditHEX" name="lineEditEntryPoint">
           <property name="alignment">
            <set>Qt::AlignCenter</set>
           </property>
@@ -187,9 +213,15 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButtonMemoryMap">
+         <widget class="QPushButton" name="pushButtonHexEntryPoint">
+          <property name="maximumSize">
+           <size>
+            <width>30</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="text">
-           <string>Memory map</string>
+           <string notr="true">&gt;</string>
           </property>
          </widget>
         </item>
@@ -208,16 +240,36 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButtonMIME">
+      <spacer name="horizontalSpacer_19">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButtonDisasm">
        <property name="text">
-        <string notr="true">MIME</string>
+        <string>Disasm</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButtonHash">
+      <widget class="QPushButton" name="pushButtonHex">
        <property name="text">
-        <string>Hash</string>
+        <string>Hex</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButtonMemoryMap">
+       <property name="text">
+        <string>Memory map</string>
        </property>
       </widget>
      </item>
@@ -236,21 +288,25 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButtonHex">
+      <widget class="QPushButton" name="pushButtonVirusTotal">
        <property name="text">
-        <string>Hex</string>
+        <string notr="true">VirusTotal</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_26">
+     <item>
+      <widget class="QPushButton" name="pushButtonMIME">
+       <property name="text">
+        <string notr="true">MIME</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButtonEntropy">
-       <property name="text">
-        <string>Entropy</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_19">
+      <spacer name="horizontalSpacer_20">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -263,9 +319,23 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButtonVirusTotal">
+      <widget class="QPushButton" name="pushButtonHash">
        <property name="text">
-        <string notr="true">VirusTotal</string>
+        <string>Hash</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButtonEntropy">
+       <property name="text">
+        <string>Entropy</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButtonExtractor">
+       <property name="text">
+        <string>Extractor</string>
        </property>
       </widget>
      </item>

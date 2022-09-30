@@ -142,6 +142,7 @@ private slots:
     void on_pushButtonEntropy_clicked();
     void on_pushButtonVirusTotal_clicked();
     void on_pushButtonHash_clicked();
+    void on_pushButtonExtractor_clicked();
 
 protected:
     virtual void registerShortcuts(bool bState);

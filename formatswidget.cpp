@@ -111,6 +111,8 @@ void FormatsWidget::reload()
 
     if(file.open(QIODevice::ReadOnly))
     {
+        ui->lineEditFileSize->setText(XBinary::bytesCountToString(file.size()));
+
         XBinary::_MEMORY_MAP memoryMap=XFormats::getMemoryMap(fileType,&file);
 
         XBinary::MODE mode=memoryMap.mode;
@@ -1023,4 +1025,9 @@ void FormatsWidget::on_pushButtonVirusTotal_clicked()
             file.close();
         }
     }
+}
+
+void FormatsWidget::on_pushButtonExtractor_clicked()
+{
+    // TODO
 }
