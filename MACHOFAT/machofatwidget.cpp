@@ -50,7 +50,7 @@ void MACHOFATWidget::clear()
 
     int nNumberOfRecords=g_listDevices.count();
 
-    for(int i=0;i<nNumberOfRecords;i++)
+    for(qint32 i=0;i<nNumberOfRecords;i++)
     {
         g_listDevices.at(i)->close();
         delete g_listDevices.at(i);
