@@ -85,7 +85,7 @@ void FormatWidget::setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions)
 
     qint32 nNumberOfAreas=listAreas.count();
 
-    for(int i=0;i<nNumberOfAreas;i++)
+    for(qint32 i=0;i<nNumberOfAreas;i++)
     {
         XShortcutstScrollArea *pChild=dynamic_cast<XShortcutstScrollArea *>(listAreas.at(i));
 
