@@ -571,9 +571,9 @@ void ELFWidget::reloadData()
 
                 blockSignals(true);
 
-                XBinary::OS_ANSISTRING osAnsiString=elf.getOsAnsiString(nDataOffset,nDataSize);
+                XBinary::OS_STRING osAnsiString=elf.getOsAnsiString(nDataOffset,nDataSize);
 
-                setLineEdit(g_lineEdit_Elf_Interpreter[N_ELF_INTERPRETER::interpreter],osAnsiString.nSize,osAnsiString.sAnsiString,osAnsiString.nOffset);
+                setLineEdit(g_lineEdit_Elf_Interpreter[N_ELF_INTERPRETER::interpreter],osAnsiString.nSize,osAnsiString.sString,osAnsiString.nOffset);
 
                 blockSignals(false);
             }
@@ -602,9 +602,9 @@ void ELFWidget::reloadData()
 
                 blockSignals(true);
 
-                XBinary::OS_ANSISTRING osAnsiString=elf.getOsAnsiString(nDataOffset,nDataSize);
+                XBinary::OS_STRING osAnsiString=elf.getOsAnsiString(nDataOffset,nDataSize);
 
-                setLineEdit(g_lineEdit_Elf_RunPath[N_ELF_RUNPATH::runpath],osAnsiString.nSize,osAnsiString.sAnsiString,osAnsiString.nOffset);
+                setLineEdit(g_lineEdit_Elf_RunPath[N_ELF_RUNPATH::runpath],osAnsiString.nSize,osAnsiString.sString,osAnsiString.nOffset);
 
                 blockSignals(false);
             }

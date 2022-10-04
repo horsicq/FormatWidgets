@@ -82,7 +82,7 @@ void MACHOFATWidget::reload()
 
         int nNumberOfRecords=listRecords.count();
 
-        for(int i=0;i<nNumberOfRecords;i++)
+        for(qint32 i=0;i<nNumberOfRecords;i++)
         {
             SubDevice *pSubDevice=new SubDevice(getDevice(),listRecords.at(i).nDataOffset,listRecords.at(i).nUncompressedSize);
 
