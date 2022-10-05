@@ -108,6 +108,11 @@ FORMS += \
     include($$PWD/../XOnlineTools/xvirustotalwidget.pri)
 }
 
+!contains(XCONFIG, xextractorwidget) {
+    XCONFIG += xextractorwidget
+    include($$PWD/../XExtractorWidget/xextractorwidget.pri)
+}
+
 DISTFILES += \
     $$PWD/LICENSE \
     $$PWD/README.md \
