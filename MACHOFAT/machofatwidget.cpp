@@ -122,7 +122,7 @@ void MACHOFATWidget::setReadonly(bool bState)
 //    // TODO Check
 //    int nNumberOfRecords=g_listDevices.count();
 
-//    for(int i=0;i<nNumberOfRecords;i++)
+//    for(qint32 i=0;i<nNumberOfRecords;i++)
 //    {
 //        MACHWidget *pWidget=qobject_cast<MACHWidget *>(ui->stackedWidget->widget(i));
 
