@@ -314,7 +314,7 @@ void PEProcessData::_process()
 
         XBinary::_MEMORY_MAP memoryMap=g_pPE->getMemoryMap();
 
-        for(int i=0;(i<nNumberOfDelayImports)&&(isRun());i++)
+        for(qint32 i=0;(i<nNumberOfDelayImports)&&(isRun());i++)
         {
             QString sLibraryName=g_pPE->read_ansiString(g_pPE->relAddressToOffset(&memoryMap,listDelayImport.at(i).DllNameRVA));
 
