@@ -104,7 +104,7 @@ void FormatWidget::adjustView()
 
     qint32 nNumberOfWidgets=listWidgets.count();
 
-    for(int i=0;i<nNumberOfWidgets;i++)
+    for(qint32 i=0;i<nNumberOfWidgets;i++)
     {
         XShortcutsWidget *pChild=dynamic_cast<XShortcutsWidget *>(listWidgets.at(i));
 
