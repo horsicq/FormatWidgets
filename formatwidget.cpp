@@ -749,7 +749,7 @@ void FormatWidget::initWidget()
 
         qint32 nNumberOfWidgets=listWidgets.count();
 
-        for(int i=0;i<nNumberOfWidgets;i++)
+        for(qint32 i=0;i<nNumberOfWidgets;i++)
         {
             XMultiDisasmWidget *pChild=dynamic_cast<XMultiDisasmWidget *>(listWidgets.at(i));
 
