@@ -583,7 +583,7 @@ void PEProcessData::_process()
 
                     int nNumberOfPositions=pos.listPositions.count();
 
-                    for(int j=0;(j<nNumberOfPositions)&&(isRun());j++)
+                    for(qint32 j=0;(j<nNumberOfPositions)&&(isRun());j++)
                     {
                         XPE::RESOURCE_POSITION subpos=rh.listPositions.at(i).listPositions.at(j);
                         QStandardItem *pSubPos=new QStandardItem;
