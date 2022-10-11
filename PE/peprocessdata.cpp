@@ -571,7 +571,7 @@ void PEProcessData::_process()
 
                 (*g_ppModel)->appendRow(pRoot);
 
-                for(int i=0;i<nNumberOfPositions;i++)
+                for(qint32 i=0;i<nNumberOfPositions;i++)
                 {
                     XPE::RESOURCE_POSITION pos=rh.listPositions.at(i);
                     QStandardItem *pPos=new QStandardItem;
