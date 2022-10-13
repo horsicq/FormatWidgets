@@ -779,7 +779,7 @@ void FormatWidget::initWidget()
 
         qint32 nNumberOfWidgets=listWidgets.count();
 
-        for(int i=0;i<nNumberOfWidgets;i++)
+        for(qint32 i=0;i<nNumberOfWidgets;i++)
         {
             SearchStringsWidget *pChild=dynamic_cast<SearchStringsWidget *>(listWidgets.at(i));
 
