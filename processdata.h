@@ -56,6 +56,7 @@ signals:
 
 private:
     XBinary::PDSTRUCT *g_pPdStruct;
+    qint32 g_nFreeIndex;
 };
 
 #endif // PROCESSDATA_H

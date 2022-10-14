@@ -24,6 +24,8 @@ MultiSearch::MultiSearch(QObject *pParent) : QObject(pParent)
 {
     g_options={};
     g_ppModel=nullptr;
+    g_nFreeIndex=-1;
+    g_pPdStruct=nullptr;
     g_pSemaphore=new QSemaphore(N_MAXNUMBEROFTHREADS);
 }
 
@@ -119,8 +121,8 @@ void MultiSearch::processSignature(MultiSearch::SIGNATURE_RECORD signatureRecord
 
     g_pListRecords->append(listResult);
 
-    g_pPdStruct->pdRecordOpt.sStatus=signatureRecord.sName;
-    g_pPdStruct->pdRecordOpt.nCurrent=signatureRecord.nNumber;
+    XBinary::setPdStructStatus(g_pPdStruct,g_nFreeIndex,signatureRecord.sName);
+    XBinary::setPdStructCurrent(g_pPdStruct,g_nFreeIndex,signatureRecord.nNumber);
 
     g_pSemaphore->release();
 //#ifdef QT_DEBUG
@@ -133,7 +135,8 @@ void MultiSearch::processSearch()
     QElapsedTimer scanTimer;
     scanTimer.start();
 
-    g_pPdStruct->pdRecordOpt.bIsValid=true;
+    g_nFreeIndex=XBinary::getFreeIndex(g_pPdStruct);
+    XBinary::setPdStructInit(g_pPdStruct,g_nFreeIndex,0);
 
     if(g_type==TYPE_STRINGS)
     {
@@ -164,7 +167,7 @@ void MultiSearch::processSearch()
 
         qint32 nNumberOfSignatures=g_options.pListSignatureRecords->count();
 
-        g_pPdStruct->pdRecordOpt.nTotal=nNumberOfSignatures;
+        XBinary::setPdStructTotal(g_pPdStruct,g_nFreeIndex,nNumberOfSignatures);
 
         for(qint32 i=0;(i<nNumberOfSignatures)&&(!(g_pPdStruct->bIsStop));i++)
         {
@@ -229,12 +232,7 @@ void MultiSearch::processSearch()
     #endif
     }
 
-    if(!(g_pPdStruct->bIsStop))
-    {
-        g_pPdStruct->pdRecordOpt.bSuccess=true;
-    }
-
-    g_pPdStruct->pdRecordOpt.bFinished=true;
+    XBinary::setPdStructFinished(g_pPdStruct,g_nFreeIndex);
 
     emit completed(scanTimer.elapsed());
 }
@@ -244,7 +242,8 @@ void MultiSearch::processModel()
     QElapsedTimer scanTimer;
     scanTimer.start();
 
-    g_pPdStruct->pdRecordOpt.bIsValid=true;
+    g_nFreeIndex=XBinary::getFreeIndex(g_pPdStruct);
+    XBinary::setPdStructInit(g_pPdStruct,g_nFreeIndex,0);
 
     if(g_type==TYPE_STRINGS)
     {
@@ -255,8 +254,7 @@ void MultiSearch::processModel()
 
         XBinary::MODE modeAddress=XBinary::getWidthModeFromSize(nBaseAddress+g_options.memoryMap.nRawSize);
 
-        g_pPdStruct->pdRecordOpt.nTotal=nNumberOfRecords;
-        g_pPdStruct->pdRecordOpt.nCurrent=0;
+        XBinary::setPdStructTotal(g_pPdStruct,g_nFreeIndex,nNumberOfRecords);
 
         (*g_ppModel)->setHeaderData(0,Qt::Horizontal,nBaseAddress?(tr("Address")):(tr("Offset")));
         (*g_ppModel)->setHeaderData(1,Qt::Horizontal,tr("Size"));
@@ -288,7 +286,7 @@ void MultiSearch::processModel()
             (*g_ppModel)->setItem(i,2,pTypeItem);
             (*g_ppModel)->setItem(i,3,new QStandardItem(record.sString));
 
-            g_pPdStruct->pdRecordOpt.nCurrent=i;
+            XBinary::setPdStructCurrent(g_pPdStruct,g_nFreeIndex,i);
         }
     }
     else if(g_type==TYPE_SIGNATURES)
@@ -298,8 +296,7 @@ void MultiSearch::processModel()
 
         XBinary::MODE modeAddress=XBinary::getWidthModeFromMemoryMap(&(g_options.memoryMap));
 
-        g_pPdStruct->pdRecordOpt.nTotal=nNumberOfRecords;
-        g_pPdStruct->pdRecordOpt.nCurrent=0;
+        XBinary::setPdStructTotal(g_pPdStruct,g_nFreeIndex,nNumberOfRecords);
 
         (*g_ppModel)->setHeaderData(0,Qt::Horizontal,tr("Address"));
         (*g_ppModel)->setHeaderData(1,Qt::Horizontal,tr("Offset"));
@@ -336,16 +333,11 @@ void MultiSearch::processModel()
 
             (*g_ppModel)->setItem(i,2,new QStandardItem(sName));
 
-            g_pPdStruct->pdRecordOpt.nCurrent=i;
+            XBinary::setPdStructCurrent(g_pPdStruct,g_nFreeIndex,i);
         }
     }
 
-    if(!(g_pPdStruct->bIsStop))
-    {
-        g_pPdStruct->pdRecordOpt.bSuccess=true;
-    }
-
-    g_pPdStruct->pdRecordOpt.bFinished=true;
+    XBinary::setPdStructFinished(g_pPdStruct,g_nFreeIndex);
 
     emit completed(scanTimer.elapsed());
 }

@@ -105,6 +105,7 @@ private:
     QSemaphore *g_pSemaphore;
     QMutex g_mutex;
     XBinary::PDSTRUCT *g_pPdStruct;
+    qint32 g_nFreeIndex;
 };
 
 #endif // MULTISEARCH_H

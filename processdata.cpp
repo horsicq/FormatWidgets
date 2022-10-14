@@ -22,7 +22,8 @@
 
 ProcessData::ProcessData()
 {
-
+    g_pPdStruct=nullptr;
+    g_nFreeIndex=-1;
 }
 
 void ProcessData::setPdStruct(XBinary::PDSTRUCT *pPdStruct)
@@ -32,13 +33,12 @@ void ProcessData::setPdStruct(XBinary::PDSTRUCT *pPdStruct)
 
 void ProcessData::setMaximum(quint64 nMaximum)
 {
-    g_pPdStruct->pdRecord.nTotal=nMaximum;
-    g_pPdStruct->pdRecord.nCurrent=0;
+    XBinary::setPdStructTotal(g_pPdStruct,g_nFreeIndex,nMaximum);
 }
 
 void ProcessData::incValue()
 {
-    g_pPdStruct->pdRecord.nCurrent++;
+    XBinary::setPdStructCurrentIncrement(g_pPdStruct,g_nFreeIndex);
 }
 
 bool ProcessData::isRun()
@@ -80,14 +80,12 @@ void ProcessData::process()
     QElapsedTimer scanTimer;
     scanTimer.start();
 
+    g_nFreeIndex=XBinary::getFreeIndex(g_pPdStruct);
+    XBinary::setPdStructInit(g_pPdStruct,g_nFreeIndex,0);
+
     _process();
 
-    if(!(g_pPdStruct->bIsStop))
-    {
-        g_pPdStruct->pdRecord.bSuccess=true;
-    }
-
-    g_pPdStruct->pdRecord.bFinished=true;
+    XBinary::setPdStructFinished(g_pPdStruct,g_nFreeIndex);
 
     emit completed(scanTimer.elapsed());
 }
