@@ -860,7 +860,7 @@ void FormatWidget::resetWidget()
 
         qint32 nNumberOfWidgets=listWidgets.count();
 
-        for(int i=0;i<nNumberOfWidgets;i++)
+        for(qint32 i=0;i<nNumberOfWidgets;i++)
         {
             XMemoryMapWidget *pChild=dynamic_cast<XMemoryMapWidget *>(listWidgets.at(i));
 
