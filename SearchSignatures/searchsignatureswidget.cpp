@@ -127,6 +127,11 @@ void SearchSignaturesWidget::adjust()
     updateSignaturesPath();
 }
 
+void SearchSignaturesWidget::adjustView()
+{
+    adjust();
+}
+
 void SearchSignaturesWidget::on_pushButtonSave_clicked()
 {
     if(g_pModel)
