@@ -316,11 +316,16 @@ bool FormatWidget::loadHexSubdevice(qint64 nOffset,qint64 nSize,XADDR nAddress,S
         (*ppSubDevice)=0;
     }
 
-    if((nOffset==-1)||(nAddress==-1)||(nSize==0))
+    if((nOffset==-1)||(nSize==0))
     {
         nOffset=0;
         nAddress=0;
         nSize=0;
+    }
+
+    if(nAddress==-1)
+    {
+        nAddress=nOffset;
     }
 
     (*ppSubDevice)=new SubDevice(getDevice(),nOffset,nSize,this);
@@ -843,7 +848,7 @@ void FormatWidget::resetWidget()
 
         qint32 nNumberOfWidgets=listWidgets.count();
 
-        for(int i=0;i<nNumberOfWidgets;i++)
+        for(qint32 i=0;i<nNumberOfWidgets;i++)
         {
             XMultiDisasmWidget *pChild=dynamic_cast<XMultiDisasmWidget *>(listWidgets.at(i));
 

@@ -115,6 +115,8 @@ private slots:
 
     void on_pushButtonSaveSections_clicked();
     void on_pushButtonSavePrograms_clicked();
+    void on_pushButtonSaveRela_clicked();
+    void on_pushButtonSaveRel_clicked();
 
 private:
     // TODO rename

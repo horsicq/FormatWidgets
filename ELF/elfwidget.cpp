@@ -1245,3 +1245,14 @@ void ELFWidget::on_pushButtonSavePrograms_clicked()
 {
     XShortcutsWidget::saveModel(ui->tableView_Elf_Phdr->model(),XBinary::getResultFileName(getDevice(),QString("%1.txt").arg(QString("Programs"))));
 }
+
+void ELFWidget::on_pushButtonSaveRela_clicked()
+{
+    XShortcutsWidget::saveModel(ui->tableView_Rela->model(),XBinary::getResultFileName(getDevice(),QString("%1.txt").arg(QString("Rela"))));
+}
+
+void ELFWidget::on_pushButtonSaveRel_clicked()
+{
+    XShortcutsWidget::saveModel(ui->tableView_Rel->model(),XBinary::getResultFileName(getDevice(),QString("%1.txt").arg(QString("Rel"))));
+}
+
