@@ -796,3 +796,8 @@ void ELFSectionHeaderWidget::on_tableWidget_currentCellChanged(int nCurrentRow,i
 
     setHeaderTableSelection(ui->widgetHex,ui->tableWidget);
 }
+
+void ELFSectionHeaderWidget::on_pushButtonSaveHeader_clicked()
+{
+    saveHeaderTable(ui->tableWidget,XBinary::getResultFileName(getDevice(),QString("%1.txt").arg(tr("Header"))));
+}

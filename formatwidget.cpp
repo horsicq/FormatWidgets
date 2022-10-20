@@ -965,6 +965,73 @@ XADDR FormatWidget::getDisasmInitAddress()
     return g_nDisamInitAddress;
 }
 
+QStandardItemModel *FormatWidget::getHeaderTableModel(QTableWidget *pTableWidget)
+{
+    int nNumberOfColumns=pTableWidget->columnCount();
+    int nNumberOfRows=pTableWidget->rowCount();
+
+    QStandardItemModel *pResult=new QStandardItemModel(nNumberOfRows,nNumberOfColumns);
+
+    for(qint32 i=0;i<nNumberOfColumns;i++)
+    {
+        pResult->setHeaderData(i,Qt::Horizontal,pTableWidget->horizontalHeaderItem(i)->text());
+    }
+
+    for(qint32 i=0;i<nNumberOfRows;i++)
+    {
+        for(qint32 j=0;j<nNumberOfColumns;j++)
+        {
+            QString sText;
+
+            QTableWidgetItem *pTableWidgetItem=pTableWidget->item(i,j);
+
+            if(pTableWidgetItem)
+            {
+                sText=pTableWidgetItem->text();
+            }
+            else
+            {
+                QWidget *pWidget=pTableWidget->cellWidget(i,j);
+
+                XLineEditHEX *pLineEdit=dynamic_cast<XLineEditHEX *>(pWidget);
+                XComboBoxEx *pComboBox=dynamic_cast<XComboBoxEx *>(pWidget);
+
+                if(pLineEdit)
+                {
+                    sText=pLineEdit->text();
+                }
+                else if(pComboBox)
+                {
+                    sText=pComboBox->getDescription();
+                }
+            }
+
+            QStandardItem *pItem=new QStandardItem(sText);
+
+            pResult->setItem(i,j,pItem);
+        }
+    }
+
+    return pResult;
+}
+
+void FormatWidget::saveHeaderTable(QTableWidget *pTableWidget, QString sFileName)
+{
+    sFileName=QFileDialog::getSaveFileName(this,tr("Save"),sFileName,QString("%1 (*.txt);;%2 (*)").arg(tr("Text files"),tr("All files")));
+
+    if(!sFileName.isEmpty())
+    {
+        QStandardItemModel *pModel=getHeaderTableModel(pTableWidget);
+
+        if(!XOptions::saveModel(pModel,sFileName))
+        {
+            QMessageBox::critical(XOptions::getMainWidget(this),tr("Error"),QString("%1: %2").arg(tr("Cannot save file"),sFileName));
+        }
+
+        delete pModel;
+    }
+}
+
 void FormatWidget::_showInDisasmWindowAddress(XADDR nAddress)
 {
     Q_UNUSED(nAddress)
@@ -1396,7 +1463,7 @@ void FormatWidget::setPushButtonReadOnly(QPushButton **ppPushButtons,int nCount,
 
 void FormatWidget::setDateTimeEditReadOnly(XDateTimeEditX **ppDateTimeEdits,int nCount,bool bState)
 {
-    for(int i=0;i<nCount;i++)
+    for(qint32 i=0;i<nCount;i++)
     {
         if(ppDateTimeEdits[i])
         {
