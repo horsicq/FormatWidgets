@@ -1476,7 +1476,7 @@ void FormatWidget::_deleteObjects(QObject **ppObjects,qint32 nCount)
 {
     nCount=nCount/(sizeof (QObject *));
 
-    for(int i=0;i<nCount;i++)
+    for(qint32 i=0;i<nCount;i++)
     {
         if(ppObjects[i])
         {
