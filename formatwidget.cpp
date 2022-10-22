@@ -724,7 +724,7 @@ void FormatWidget::initWidget()
 
 //        qint32 nNumberOfWidgets=listWidgets.count();
 
-//        for(int i=0;i<nNumberOfWidgets;i++)
+//        for(qint32 i=0;i<nNumberOfWidgets;i++)
 //        {
 //            XHexViewWidget *pChild=dynamic_cast<XHexViewWidget *>(listWidgets.at(i));
 
