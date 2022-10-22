@@ -799,7 +799,7 @@ void FormatWidget::initWidget()
 
 //        qint32 nNumberOfWidgets=listWidgets.count();
 
-//        for(int i=0;i<nNumberOfWidgets;i++)
+//        for(qint32 i=0;i<nNumberOfWidgets;i++)
 //        {
 //            ToolsWidget *pChild=dynamic_cast<ToolsWidget *>(listWidgets.at(i));
 
