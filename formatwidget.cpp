@@ -1298,7 +1298,7 @@ bool FormatWidget::createListTable(int nType,QTableWidget *pTableWidget,const FW
     pTableWidget->setHorizontalHeaderLabels(slHeader);
     pTableWidget->horizontalHeader()->setVisible(true);
 
-    for(int i=0;i<nNumberOfRecords;i++)
+    for(qint32 i=0;i<nNumberOfRecords;i++)
     {
         QTableWidgetItem *pItemName=new QTableWidgetItem;
         pItemName->setText(pRecords[i].sName);
