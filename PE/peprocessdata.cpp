@@ -731,7 +731,7 @@ void PEProcessData::_process()
         {
             int nNumberOfCerts=listCert.count();
 
-            for(int i=0;(i<nNumberOfCerts)&&(isRun());i++)
+            for(qint32 i=0;(i<nNumberOfCerts)&&(isRun());i++)
             {
                 QStandardItem *pRoot=new QStandardItem;
 
