@@ -984,7 +984,7 @@ void PEProcessData::handleCertRecord(QStandardItem *pParent,XPE::CERT_RECORD cer
 
     int nNumberOfRecords=certRecord.listRecords.count();
 
-    for(int i=0;(i<nNumberOfRecords)&&(isRun());i++)
+    for(qint32 i=0;(i<nNumberOfRecords)&&(isRun());i++)
     {
         QStandardItem *pRecord=new QStandardItem;
 
