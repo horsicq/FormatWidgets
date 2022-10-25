@@ -1,11 +1,6 @@
 INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
 
-FORMS += \
-    $$PWD/elfsectionheaderwidget.ui \
-    $$PWD/elfwidget.ui \
-    $$PWD/dialogelf.ui
-
 HEADERS += \
     $$PWD/elfsectionheaderwidget.h \
     $$PWD/elfwidget.h \
@@ -19,6 +14,11 @@ SOURCES += \
     $$PWD/elf_defs.cpp \
     $$PWD/dialogelf.cpp \
     $$PWD/elfprocessdata.cpp
+
+FORMS += \
+    $$PWD/elfsectionheaderwidget.ui \
+    $$PWD/elfwidget.ui \
+    $$PWD/dialogelf.ui
 
 !contains(XCONFIG, formatwidget) {
     XCONFIG += formatwidget
