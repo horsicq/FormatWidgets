@@ -1,11 +1,6 @@
 INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
 
-FORMS += \
-    $$PWD/machsectionheaderwidget.ui \
-    $$PWD/machwidget.ui \
-    $$PWD/dialogmach.ui
-
 HEADERS += \
     $$PWD/machprocessdata.h \
     $$PWD/machsectionheaderwidget.h \
@@ -19,6 +14,11 @@ SOURCES += \
     $$PWD/machwidget.cpp \
     $$PWD/mach_defs.cpp \
     $$PWD/dialogmach.cpp
+
+FORMS += \
+    $$PWD/machsectionheaderwidget.ui \
+    $$PWD/machwidget.ui \
+    $$PWD/dialogmach.ui
 
 !contains(XCONFIG, formatwidget) {
     XCONFIG += formatwidget
