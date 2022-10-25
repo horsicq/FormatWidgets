@@ -742,7 +742,7 @@ void PEProcessData::_process()
 
                 int nNumberOfRecords=listCert.at(i).certRecord.listRecords.count();
 
-                for(int j=0;(j<nNumberOfRecords)&&(isRun());j++)
+                for(qint32 j=0;(j<nNumberOfRecords)&&(isRun());j++)
                 {
                     QStandardItem *pRecord=new QStandardItem;
 
