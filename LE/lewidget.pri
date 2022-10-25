@@ -1,11 +1,6 @@
 INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
 
-FORMS += \
-    $$PWD/lesectionheaderwidget.ui \
-    $$PWD/lewidget.ui \
-    $$PWD/dialogle.ui
-
 HEADERS += \
     $$PWD/leprocessdata.h \
     $$PWD/lesectionheaderwidget.h \
@@ -19,6 +14,11 @@ SOURCES += \
     $$PWD/lewidget.cpp \
     $$PWD/le_defs.cpp \
     $$PWD/dialogle.cpp
+
+FORMS += \
+    $$PWD/lesectionheaderwidget.ui \
+    $$PWD/lewidget.ui \
+    $$PWD/dialogle.ui
 
 !contains(XCONFIG, formatwidget) {
     XCONFIG += formatwidget
