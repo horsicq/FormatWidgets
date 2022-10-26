@@ -1,11 +1,6 @@
 INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
 
-FORMS += \
-    $$PWD/dialogsearchsignatures.ui \
-    $$PWD/searchsignaturesoptionswidget.ui \
-    $$PWD/searchsignatureswidget.ui
-
 HEADERS += \
     $$PWD/dialogsearchsignatures.h \
     $$PWD/searchsignaturesoptionswidget.h \
@@ -15,6 +10,11 @@ SOURCES += \
     $$PWD/dialogsearchsignatures.cpp \
     $$PWD/searchsignaturesoptionswidget.cpp \
     $$PWD/searchsignatureswidget.cpp
+
+FORMS += \
+    $$PWD/dialogsearchsignatures.ui \
+    $$PWD/searchsignaturesoptionswidget.ui \
+    $$PWD/searchsignatureswidget.ui
     
 !contains(XCONFIG, multisearch) {
     XCONFIG += multisearch
