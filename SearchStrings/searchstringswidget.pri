@@ -1,10 +1,6 @@
 INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
 
-FORMS += \
-    $$PWD/dialogsearchstrings.ui \
-    $$PWD/searchstringswidget.ui
-
 HEADERS += \
     $$PWD/dialogsearchstrings.h \
     $$PWD/searchstringswidget.h
@@ -12,6 +8,10 @@ HEADERS += \
 SOURCES += \
     $$PWD/dialogsearchstrings.cpp \
     $$PWD/searchstringswidget.cpp
+
+FORMS += \
+    $$PWD/dialogsearchstrings.ui \
+    $$PWD/searchstringswidget.ui
 
 !contains(XCONFIG, multisearch) {
     XCONFIG += multisearch
