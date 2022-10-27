@@ -1,11 +1,6 @@
 INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
 
-FORMS += \
-    $$PWD/nesectionheaderwidget.ui \
-    $$PWD/newidget.ui \
-    $$PWD/dialogne.ui
-
 HEADERS += \
     $$PWD/neprocessdata.h \
     $$PWD/nesectionheaderwidget.h \
@@ -19,6 +14,11 @@ SOURCES += \
     $$PWD/newidget.cpp \
     $$PWD/ne_defs.cpp \
     $$PWD/dialogne.cpp
+
+FORMS += \
+    $$PWD/nesectionheaderwidget.ui \
+    $$PWD/newidget.ui \
+    $$PWD/dialogne.ui
 
 !contains(XCONFIG, formatwidget) {
     XCONFIG += formatwidget
