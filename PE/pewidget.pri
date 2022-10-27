@@ -1,11 +1,6 @@
 INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
 
-FORMS += \
-    $$PWD/pesectionheaderwidget.ui \
-    $$PWD/pewidget.ui \
-    $$PWD/dialogpe.ui
-
 HEADERS += \
     $$PWD/pesectionheaderwidget.h \
     $$PWD/pewidget.h \
@@ -19,6 +14,11 @@ SOURCES += \
     $$PWD/pe_defs.cpp \
     $$PWD/dialogpe.cpp \
     $$PWD/peprocessdata.cpp
+
+FORMS += \
+    $$PWD/pesectionheaderwidget.ui \
+    $$PWD/pewidget.ui \
+    $$PWD/dialogpe.ui
 
 !contains(XCONFIG, formatwidget) {
     XCONFIG += formatwidget
