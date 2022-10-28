@@ -93,12 +93,6 @@
             <height>0</height>
            </size>
           </property>
-          <property name="maximumSize">
-           <size>
-            <width>100</width>
-            <height>16777215</height>
-           </size>
-          </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
           </property>
@@ -109,6 +103,19 @@
         </item>
        </layout>
       </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_23">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
      </item>
      <item>
       <spacer name="horizontalSpacer">
@@ -253,6 +260,13 @@
       </spacer>
      </item>
      <item>
+      <widget class="QPushButton" name="pushButtonMemoryMap">
+       <property name="text">
+        <string>Memory map</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="pushButtonDisasm">
        <property name="text">
         <string>Disasm</string>
@@ -263,13 +277,6 @@
       <widget class="QPushButton" name="pushButtonHex">
        <property name="text">
         <string>Hex</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pushButtonMemoryMap">
-       <property name="text">
-        <string>Memory map</string>
        </property>
       </widget>
      </item>
@@ -353,7 +360,7 @@
       <enum>QFrame::NoFrame</enum>
      </property>
      <property name="currentIndex">
-      <number>9</number>
+      <number>8</number>
      </property>
      <widget class="QWidget" name="pageBinary"/>
      <widget class="QWidget" name="pageMACHOFAT">
@@ -793,12 +800,6 @@
                 <height>0</height>
                </size>
               </property>
-              <property name="maximumSize">
-               <size>
-                <width>80</width>
-                <height>16777215</height>
-               </size>
-              </property>
               <property name="alignment">
                <set>Qt::AlignCenter</set>
               </property>
@@ -892,12 +893,6 @@
                 <height>0</height>
                </size>
               </property>
-              <property name="maximumSize">
-               <size>
-                <width>100</width>
-                <height>16777215</height>
-               </size>
-              </property>
               <property name="alignment">
                <set>Qt::AlignCenter</set>
               </property>
@@ -908,6 +903,32 @@
             </item>
            </layout>
           </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_21">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_22">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
          </item>
          <item>
           <spacer name="horizontalSpacer_4">
