@@ -30,6 +30,7 @@ class ELFProcessData : public ProcessData
 
 public:
     explicit ELFProcessData(int nType,QStandardItemModel **ppModel,XELF *pELF,qint64 nOffset,qint64 nSize,qint64 nStringTableOffset,qint64 nStringTableSize);
+
     virtual void _process();
     virtual void ajustTableView(QWidget *pWidget,QTableView *pTableView);
 
