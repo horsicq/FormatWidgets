@@ -1555,15 +1555,15 @@ XDateTimeEditX *FormatWidget::createTimeDateEdit(QTableWidget *pTableWidget,int 
 
 QPushButton *FormatWidget::createPushButton(QTableWidget *pTableWidget,int nType,int nData,QString sText)
 {
-    QPushButton *result=new QPushButton(this);
+    QPushButton *pPushButton=new QPushButton(this);
 
-    result->setText(sText);
-    result->setProperty("STYPE",nType);
-    result->setProperty("NDATA",nData);
+    pPushButton->setText(sText);
+    pPushButton->setProperty("STYPE",nType);
+    pPushButton->setProperty("NDATA",nData);
 
-    connect(result,SIGNAL(clicked()),this,SLOT(widgetAction()));
+    connect(pPushButton,SIGNAL(clicked()),this,SLOT(widgetAction()));
 
-    pTableWidget->setCellWidget(nData,HEADER_COLUMN_INFO,result);
+    pTableWidget->setCellWidget(nData,HEADER_COLUMN_INFO,pPushButton);
 
-    return result;
+    return pPushButton;
 }
