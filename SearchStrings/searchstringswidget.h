@@ -71,6 +71,7 @@ public:
 
     explicit SearchStringsWidget(QWidget *pParent=nullptr);
     ~SearchStringsWidget();
+
     void setData(QIODevice *pDevice,SearchStringsWidget::OPTIONS options,bool bAuto=false);
     void setBackupDevice(QIODevice *pDevice);
     QIODevice *getDevice();
