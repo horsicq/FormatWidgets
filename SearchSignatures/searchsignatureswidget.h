@@ -62,6 +62,7 @@ public:
 
     explicit SearchSignaturesWidget(QWidget *pParent=nullptr);
     ~SearchSignaturesWidget();
+
     void setData(QIODevice *pDevice,XBinary::FT fileType,OPTIONS options,bool bAuto=false);
     void setOptions(OPTIONS options);
     OPTIONS getOptions();
