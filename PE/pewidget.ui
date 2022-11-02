@@ -148,7 +148,7 @@
      </widget>
      <widget class="QStackedWidget" name="stackedWidgetInfo">
       <property name="currentIndex">
-       <number>20</number>
+       <number>14</number>
       </property>
       <widget class="QWidget" name="page_Info">
        <layout class="QVBoxLayout" name="verticalLayout_43">
@@ -343,6 +343,25 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="page_Extractor">
+       <layout class="QVBoxLayout" name="verticalLayout_26XX">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="XExtractorWidget" name="widgetExtractor" native="true"/>
+        </item>
+       </layout>
+      </widget>
       <widget class="QWidget" name="page_IMAGE_DOS_HEADER">
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <property name="leftMargin">
@@ -533,6 +552,30 @@
         <property name="bottomMargin">
          <number>0</number>
         </property>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_9">
+          <item>
+           <spacer name="horizontalSpacer_9">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButtonSave_IMAGE_DIRECTORY_ENTRIES">
+            <property name="text">
+             <string>Save</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
         <item>
          <widget class="QSplitter" name="splitter_7">
           <property name="orientation">
@@ -1309,6 +1352,30 @@
          <number>0</number>
         </property>
         <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_8">
+          <item>
+           <spacer name="horizontalSpacer_8">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButtonSave_Exception">
+            <property name="text">
+             <string>Save</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
          <widget class="QSplitter" name="splitter_12">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -1447,7 +1514,31 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QSplitter" name="splitter_14">
+         <layout class="QHBoxLayout" name="horizontalLayout_7">
+          <item>
+           <spacer name="horizontalSpacer_7">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButtonSave_Debug">
+            <property name="text">
+             <string>Save</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QSplitter" name="splitter_8">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
@@ -2039,6 +2130,12 @@
    <class>XVirusTotalWidget</class>
    <extends>QWidget</extends>
    <header>xvirustotalwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>XExtractorWidget</class>
+   <extends>QWidget</extends>
+   <header>xextractorwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -113,6 +113,7 @@ void PEWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_MEMORYMAP,tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_ENTROPY,tr("Entropy")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_HEURISTICSCAN,tr("Heuristic scan")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_EXTRACTOR,tr("Extractor")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_IMAGE_DOS_HEADER,"IMAGE_DOS_HEADER"));
         QTreeWidgetItem *pNtHeaders=createNewItem(SPE::TYPE_IMAGE_NT_HEADERS,"IMAGE_NT_HEADERS");
         ui->treeWidgetNavi->addTopLevelItem(pNtHeaders);
@@ -1031,6 +1032,13 @@ void PEWidget::reloadData()
             if(!isInitPresent(sInit))
             {
                 ui->widgetHeuristicScan->setData(getDevice(),true,pe.getFileType());
+            }
+        }
+        else if(nType==SPE::TYPE_EXTRACTOR)
+        {
+            if(!isInitPresent(sInit))
+            {
+                ui->widgetExtractor->setData(getDevice(),XExtractorWidget::getDefaultOptions(),true);
             }
         }
         else if(nType==SPE::TYPE_IMAGE_DOS_HEADER)
@@ -3025,4 +3033,19 @@ void PEWidget::on_tableView_Resources_StringTable_customContextMenuRequested(con
 void PEWidget::stringTableHex()
 {
     showSectionHex(ui->tableView_Resources_StringTable);
+}
+
+void PEWidget::on_pushButtonSave_Debug_clicked()
+{
+    XShortcutsWidget::saveModel(ui->tableView_Debug->model(),XBinary::getResultFileName(getDevice(),QString("%1.txt").arg(QString("Debug"))));
+}
+
+void PEWidget::on_pushButtonSave_Exception_clicked()
+{
+    XShortcutsWidget::saveModel(ui->tableView_Exceptions->model(),XBinary::getResultFileName(getDevice(),QString("%1.txt").arg(QString("Exceptions"))));
+}
+
+void PEWidget::on_pushButtonSave_IMAGE_DIRECTORY_ENTRIES_clicked()
+{
+    saveHeaderTable(ui->tableWidget_IMAGE_DIRECTORY_ENTRIES,XBinary::getResultFileName(getDevice(),QString("%1.txt").arg(QString("IMAGE_DIRECTORY_ENTRIES"))));
 }

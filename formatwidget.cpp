@@ -805,7 +805,11 @@ void FormatWidget::initWidget()
 
 //            if(pChild)
 //            {
-//                initToolsWidget(pChild);
+//                qDebug("Size: %d",pChild->height());
+
+//                pChild->resize(pChild->width(),150); // TODO Check
+
+//                qDebug("Size: %d",pChild->height());
 //            }
 //        }
 //    }

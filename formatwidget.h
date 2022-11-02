@@ -173,7 +173,6 @@ public:
 
     void initWidget();
     void resetWidget();
-
     void initSearchStringsWidget(SearchStringsWidget *pWidget);
     void initSearchSignaturesWidget(SearchSignaturesWidget *pWidget);
     void initHexViewWidget(XHexViewWidget *pWidget);

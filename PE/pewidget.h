@@ -148,6 +148,9 @@ private slots:
     void on_pushButtonSaveSections_clicked();
     void on_tableView_Resources_StringTable_customContextMenuRequested(const QPoint &pos);
     void stringTableHex();
+    void on_pushButtonSave_Debug_clicked();
+    void on_pushButtonSave_Exception_clicked();
+    void on_pushButtonSave_IMAGE_DIRECTORY_ENTRIES_clicked();
 
 private:
     enum CB
