@@ -1023,5 +1023,22 @@ void FormatsWidget::on_pushButtonVirusTotal_clicked()
 
 void FormatsWidget::on_pushButtonExtractor_clicked()
 {
-    // TODO
+    QString sFileName=g_sFileName;
+
+    if(sFileName!="")
+    {
+        QFile file;
+        file.setFileName(sFileName);
+
+        if(file.open(QIODevice::ReadOnly))
+        {
+            DialogXExtractor dialogExtractor(this);
+            dialogExtractor.setData(&file);
+            dialogExtractor.setGlobal(getShortcuts(),getGlobalOptions());
+
+            dialogExtractor.exec();
+
+            file.close();
+        }
+    }
 }

@@ -40,6 +40,7 @@
 #include "dialogsearchsignatures.h"
 #include "dialogsearchstrings.h"
 #include "dialogtextinfo.h"
+#include "dialogxextractor.h"
 #include "dialogxfileinfo.h"
 #include "dialogxvirustotal.h"
 #include "xformats.h"
