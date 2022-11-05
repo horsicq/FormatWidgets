@@ -349,7 +349,7 @@ void BinaryWidget::on_pushButtonMemoryMap_clicked()
     setTreeItem(ui->treeWidgetNavi,SBINARY::TYPE_MEMORYMAP);
 }
 
-void BinaryWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurrent, QTreeWidgetItem *pItemPrevious)
+void BinaryWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurrent,QTreeWidgetItem *pItemPrevious)
 {
     Q_UNUSED(pItemPrevious)
 
