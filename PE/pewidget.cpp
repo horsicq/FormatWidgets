@@ -1038,7 +1038,7 @@ void PEWidget::reloadData()
         {
             if(!isInitPresent(sInit))
             {
-                ui->widgetExtractor->setData(getDevice(),XExtractorWidget::getDefaultOptions(),true);
+                ui->widgetExtractor->setData(getDevice(),XExtractor::getDefaultOptions(),true);
             }
         }
         else if(nType==SPE::TYPE_IMAGE_DOS_HEADER)
