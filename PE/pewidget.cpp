@@ -762,14 +762,14 @@ void PEWidget::blockSignals(bool bState)
     _blockSignals((QObject **)g_dateTimeEdit,__TD_size,bState);
 }
 
-void PEWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent,QTreeWidgetItem *pPrevious)
+void PEWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurrent,QTreeWidgetItem *pItemPrevious)
 {
-    Q_UNUSED(pPrevious)
+    Q_UNUSED(pItemPrevious)
 
-    if(pCurrent)
+    if(pItemCurrent)
     {
         reloadData();
-        addPage(pCurrent);
+        addPage(pItemCurrent);
         ui->toolButtonPrev->setEnabled(isPrevPageAvailable());
         ui->toolButtonNext->setEnabled(isNextPageAvailable());
     }

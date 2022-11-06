@@ -57,7 +57,7 @@ protected:
     virtual void _showInHexWindow(qint64 nOffset,qint64 nSize);
 
 private slots:
-    void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent,QTreeWidgetItem *pPrevious);
+    void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurrent,QTreeWidgetItem *pItemPrevious);
     void widgetValueChanged(quint64 nValue);
     void widgetAction();
     void on_checkBoxReadonly_toggled(bool bChecked);
