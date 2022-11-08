@@ -1019,7 +1019,7 @@ QStandardItemModel *FormatWidget::getHeaderTableModel(QTableWidget *pTableWidget
     return pResult;
 }
 
-void FormatWidget::saveHeaderTable(QTableWidget *pTableWidget, QString sFileName)
+void FormatWidget::saveHeaderTable(QTableWidget *pTableWidget,QString sFileName)
 {
     sFileName=QFileDialog::getSaveFileName(this,tr("Save"),sFileName,QString("%1 (*.txt);;%2 (*)").arg(tr("Text files"),tr("All files")));
 
