@@ -2468,14 +2468,14 @@ void MACHWidget::widgetValueChanged(quint64 nValue)
     }
 }
 
-void MACHWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent,QTreeWidgetItem *pPrevious)
+void MACHWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurrent,QTreeWidgetItem *pItemPrevious)
 {
-    Q_UNUSED(pPrevious)
+    Q_UNUSED(pItemPrevious)
 
-    if(pCurrent)
+    if(pItemCurrent)
     {
         reloadData();
-        addPage(pCurrent);
+        addPage(pItemCurrent);
         ui->toolButtonPrev->setEnabled(isPrevPageAvailable());
         ui->toolButtonNext->setEnabled(isNextPageAvailable());
     }
