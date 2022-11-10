@@ -31,30 +31,28 @@
 class InvWidget : public XShortcutsWidget {
     Q_OBJECT
 
-   public:
+public:
     enum TYPE { TYPE_HEX, TYPE_DISASM };
 
     explicit InvWidget(QWidget *pParent, TYPE type);
     ~InvWidget();
 
-    void setOffsetAndSize(XBinary *pBinary, qint64 nOffset, qint64 nSize,
-                          bool bNotNull = false);
-    void setAddressAndSize(XBinary *pBinary, XADDR nAddress, qint64 nSize,
-                           bool bNotNull = false);
+    void setOffsetAndSize(XBinary *pBinary, qint64 nOffset, qint64 nSize, bool bNotNull = false);
+    void setAddressAndSize(XBinary *pBinary, XADDR nAddress, qint64 nSize, bool bNotNull = false);
     void _setEnabled(bool bState);
 
-   private slots:
+private slots:
     void showHexSlot();
     void showDisasmSlot();
 
-   signals:
+signals:
     void showHex(qint64 nOffset, qint64 nSize);
     void showDisasm(XADDR nAddress);
 
-   protected:
+protected:
     virtual void registerShortcuts(bool bState);
 
-   private:
+private:
     qint64 g_nAddress;
     qint64 g_nOffset;
     qint64 g_nSize;

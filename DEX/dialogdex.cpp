@@ -22,14 +22,15 @@
 
 #include "ui_dialogdex.h"
 
-DialogDEX::DialogDEX(QWidget *pParent)
-    : XShortcutsDialog(pParent), ui(new Ui::DialogDEX) {
+DialogDEX::DialogDEX(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogDEX) {
     ui->setupUi(this);
 
     setWindowFlags(Qt::Window);
 }
 
-DialogDEX::~DialogDEX() { delete ui; }
+DialogDEX::~DialogDEX() {
+    delete ui;
+}
 
 void DialogDEX::setData(QIODevice *pDevice, FW_DEF::OPTIONS options) {
     if (options.sTitle != "") {

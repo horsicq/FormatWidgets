@@ -42,16 +42,9 @@ class SearchSignaturesWidget;
 class SearchSignaturesWidget : public XShortcutsWidget {
     Q_OBJECT
 
-    enum SC {
-        SC_COPYNAME = 0,
-        SC_COPYSIGNATURE,
-        SC_COPYADDRESS,
-        SC_COPYOFFSET,
-        SC_HEX,
-        __SC_SIZE
-    };
+    enum SC { SC_COPYNAME = 0, SC_COPYSIGNATURE, SC_COPYADDRESS, SC_COPYOFFSET, SC_HEX, __SC_SIZE };
 
-   public:
+public:
     struct OPTIONS {
         bool bMenu_Hex;
         QString sUserSignature;  // It is not global
@@ -60,8 +53,7 @@ class SearchSignaturesWidget : public XShortcutsWidget {
     explicit SearchSignaturesWidget(QWidget *pParent = nullptr);
     ~SearchSignaturesWidget();
 
-    void setData(QIODevice *pDevice, XBinary::FT fileType, OPTIONS options,
-                 bool bAuto = false);
+    void setData(QIODevice *pDevice, XBinary::FT fileType, OPTIONS options, bool bAuto = false);
     void setOptions(OPTIONS options);
     OPTIONS getOptions();
     void updateSignaturesPath();
@@ -71,7 +63,7 @@ class SearchSignaturesWidget : public XShortcutsWidget {
     void adjust();
     void adjustView();
 
-   private slots:
+private slots:
     void on_pushButtonSave_clicked();
     void on_pushButtonSearch_clicked();
     void on_tableViewResult_customContextMenuRequested(const QPoint &pos);
@@ -84,13 +76,13 @@ class SearchSignaturesWidget : public XShortcutsWidget {
     void loadSignatures(QString sFileName);
     void on_comboBoxFile_currentIndexChanged(int index);
 
-   protected:
+protected:
     virtual void registerShortcuts(bool bState);
 
-   signals:
+signals:
     void showHex(qint64 nOffset, qint64 nSize);
 
-   private:
+private:
     Ui::SearchSignaturesWidget *ui;
     QIODevice *g_pDevice;
     QSortFilterProxyModel *g_pFilter;

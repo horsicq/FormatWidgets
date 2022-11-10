@@ -22,29 +22,21 @@
 
 #include "ui_toolswidget.h"
 
-ToolsWidget::ToolsWidget(QWidget *pParent)
-    : XShortcutsWidget(pParent), ui(new Ui::ToolsWidget) {
+ToolsWidget::ToolsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui::ToolsWidget) {
     ui->setupUi(this);
 
     g_pDevice = nullptr;
 
     connect(ui->widgetHex, SIGNAL(dataChanged()), this, SIGNAL(dataChanged()));
-    connect(ui->widgetHex, SIGNAL(showOffsetDisasm(qint64)), this,
-            SLOT(_showDisasm(qint64)));
-    connect(ui->widgetHex, SIGNAL(showOffsetMemoryMap(qint64)), this,
-            SLOT(_showMemoryMap(qint64)));
-    connect(ui->widgetHex, SIGNAL(showOffsetMainHex(qint64, qint64)), this,
-            SLOT(_showHex(qint64, qint64)));
-    connect(ui->widgetStrings, SIGNAL(dataChanged()), this,
-            SIGNAL(dataChanged()));
-    connect(ui->widgetStrings, SIGNAL(showHex(qint64, qint64)), this,
-            SLOT(_showHex(qint64, qint64)));
-    connect(ui->widgetStrings, SIGNAL(showDemangle(QString)), this,
-            SIGNAL(showDemangle(QString)));
+    connect(ui->widgetHex, SIGNAL(showOffsetDisasm(qint64)), this, SLOT(_showDisasm(qint64)));
+    connect(ui->widgetHex, SIGNAL(showOffsetMemoryMap(qint64)), this, SLOT(_showMemoryMap(qint64)));
+    connect(ui->widgetHex, SIGNAL(showOffsetMainHex(qint64, qint64)), this, SLOT(_showHex(qint64, qint64)));
+    connect(ui->widgetStrings, SIGNAL(dataChanged()), this, SIGNAL(dataChanged()));
+    connect(ui->widgetStrings, SIGNAL(showHex(qint64, qint64)), this, SLOT(_showHex(qint64, qint64)));
+    connect(ui->widgetStrings, SIGNAL(showDemangle(QString)), this, SIGNAL(showDemangle(QString)));
 }
 
-void ToolsWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS options,
-                          QIODevice *pBackupDevice, bool bDisasm) {
+void ToolsWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS options, QIODevice *pBackupDevice, bool bDisasm) {
     g_pDevice = pDevice;
 
     XHexView::OPTIONS hexOptions = {};
@@ -113,7 +105,9 @@ void ToolsWidget::setSelection(qint64 nOffset, qint64 nSize) {
     ui->widgetHex->setSelection(nOffset, nSize);
 }
 
-ToolsWidget::~ToolsWidget() { delete ui; }
+ToolsWidget::~ToolsWidget() {
+    delete ui;
+}
 
 void ToolsWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions) {
     ui->widgetHex->setGlobal(pShortcuts, pXOptions);
@@ -158,4 +152,6 @@ void ToolsWidget::_showMemoryMap(qint64 nOffset) {
     emit showOffsetMemoryMap(nOffset);
 }
 
-void ToolsWidget::registerShortcuts(bool bState) { Q_UNUSED(bState) }
+void ToolsWidget::registerShortcuts(bool bState) {
+    Q_UNUSED(bState)
+}

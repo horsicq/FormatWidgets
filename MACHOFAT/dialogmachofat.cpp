@@ -22,14 +22,15 @@
 
 #include "ui_dialogmachofat.h"
 
-DialogMACHOFAT::DialogMACHOFAT(QWidget *pParent)
-    : XShortcutsDialog(pParent), ui(new Ui::DialogMACHOFAT) {
+DialogMACHOFAT::DialogMACHOFAT(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogMACHOFAT) {
     ui->setupUi(this);
 
     setWindowFlags(Qt::Window);
 }
 
-DialogMACHOFAT::~DialogMACHOFAT() { delete ui; }
+DialogMACHOFAT::~DialogMACHOFAT() {
+    delete ui;
+}
 
 void DialogMACHOFAT::setData(QIODevice *pDevice, FW_DEF::OPTIONS options) {
     if (options.sTitle != "") {

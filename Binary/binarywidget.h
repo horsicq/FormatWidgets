@@ -31,19 +31,17 @@ class BinaryWidget;
 class BinaryWidget : public FormatWidget {
     Q_OBJECT
 
-   public:
+public:
     BinaryWidget(QWidget *pParent = nullptr);
-    BinaryWidget(QIODevice *pDevice, FW_DEF::OPTIONS options,
-                 QWidget *pParent = nullptr);
+    BinaryWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent = nullptr);
     ~BinaryWidget();
 
     virtual void clear();
     virtual void cleanup();
     virtual void reload();
 
-   protected:
-    virtual SV _setValue(QVariant vValue, int nStype, int nNdata, int nVtype,
-                         int nPosition, qint64 nOffset);
+protected:
+    virtual SV _setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset);
     virtual void setReadonly(bool bState);
     virtual void blockSignals(bool bState);
     virtual void adjustHeaderTable(int nType, QTableWidget *pTableWidget);
@@ -52,7 +50,7 @@ class BinaryWidget : public FormatWidget {
     virtual void _showInMemoryMapWindowOffset(qint64 nOffset);
     virtual void _showInHexWindow(qint64 nOffset, qint64 nSize);
 
-   private slots:
+private slots:
     virtual void reloadData();
     void widgetValueChanged(quint64 nValue);
     void on_checkBoxReadonly_toggled(bool bChecked);
@@ -66,10 +64,9 @@ class BinaryWidget : public FormatWidget {
     void on_pushButtonEntropy_clicked();
     void on_pushButtonHeuristicScan_clicked();
     void on_pushButtonMemoryMap_clicked();
-    void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurrent,
-                                              QTreeWidgetItem *pItemPrevious);
+    void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurrent, QTreeWidgetItem *pItemPrevious);
 
-   private:
+private:
     Ui::BinaryWidget *ui;
 };
 

@@ -27,13 +27,12 @@
 class MACHProcessData : public ProcessData {
     Q_OBJECT
 
-   public:
-    explicit MACHProcessData(int nType, QStandardItemModel **ppModel,
-                             XMACH *pXMACH, qint64 nOffset, qint64 nSize);
+public:
+    explicit MACHProcessData(int nType, QStandardItemModel **ppModel, XMACH *pXMACH, qint64 nOffset, qint64 nSize);
     virtual void _process();
     virtual void ajustTableView(QWidget *pWidget, QTableView *pTableView);
 
-   private:
+private:
     int g_nType;
     XMACH *g_pXMACH;
     QStandardItemModel **g_ppModel;

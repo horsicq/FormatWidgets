@@ -32,14 +32,14 @@ class DialogLE;
 class DialogLE : public XShortcutsDialog {
     Q_OBJECT
 
-   public:
+public:
     explicit DialogLE(QWidget *pParent = nullptr);
     ~DialogLE();
 
     void setData(QIODevice *pDevice, FW_DEF::OPTIONS options);
     void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
 
-   private:
+private:
     Ui::DialogLE *ui;
 };
 

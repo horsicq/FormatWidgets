@@ -22,14 +22,15 @@
 
 #include "ui_dialogelf.h"
 
-DialogELF::DialogELF(QWidget *pParent)
-    : XShortcutsDialog(pParent), ui(new Ui::DialogELF) {
+DialogELF::DialogELF(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogELF) {
     ui->setupUi(this);
 
     setWindowFlags(Qt::Window);
 }
 
-DialogELF::~DialogELF() { delete ui; }
+DialogELF::~DialogELF() {
+    delete ui;
+}
 
 void DialogELF::setData(QIODevice *pDevice, FW_DEF::OPTIONS options) {
     if (options.sTitle != "") {

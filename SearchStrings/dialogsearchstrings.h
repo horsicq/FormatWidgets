@@ -31,20 +31,19 @@ class DialogSearchStrings;
 class DialogSearchStrings : public XShortcutsDialog {
     Q_OBJECT
 
-   public:
+public:
     explicit DialogSearchStrings(QWidget *pParent);
     ~DialogSearchStrings();
-    void setData(QIODevice *pDevice, SearchStringsWidget::OPTIONS options,
-                 bool bAuto = false);
+    void setData(QIODevice *pDevice, SearchStringsWidget::OPTIONS options, bool bAuto = false);
     void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
 
-   signals:
+signals:
     void showHex(qint64 nOffset, qint64 nSize);
 
-   private slots:
+private slots:
     void on_pushButtonClose_clicked();
 
-   private:
+private:
     Ui::DialogSearchStrings *ui;
 };
 

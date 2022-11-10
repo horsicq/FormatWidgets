@@ -22,14 +22,15 @@
 
 #include "ui_dialogle.h"
 
-DialogLE::DialogLE(QWidget *pParent)
-    : XShortcutsDialog(pParent), ui(new Ui::DialogLE) {
+DialogLE::DialogLE(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogLE) {
     ui->setupUi(this);
 
     setWindowFlags(Qt::Window);
 }
 
-DialogLE::~DialogLE() { delete ui; }
+DialogLE::~DialogLE() {
+    delete ui;
+}
 
 void DialogLE::setData(QIODevice *pDevice, FW_DEF::OPTIONS options) {
     if (options.sTitle != "") {

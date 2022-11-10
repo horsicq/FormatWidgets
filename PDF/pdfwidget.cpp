@@ -22,21 +22,20 @@
 
 #include "ui_pdfwidget.h"
 
-PDFWidget::PDFWidget(QWidget *pParent)
-    : FormatWidget(pParent), ui(new Ui::PDFWidget) {
+PDFWidget::PDFWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::PDFWidget) {
     ui->setupUi(this);
 
     initWidget();
 }
 
-PDFWidget::PDFWidget(QIODevice *pDevice, FW_DEF::OPTIONS options,
-                     QWidget *pParent)
-    : PDFWidget(pParent) {
+PDFWidget::PDFWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) : PDFWidget(pParent) {
     PDFWidget::setData(pDevice, options, 0, 0, 0);
     PDFWidget::reload();
 }
 
-PDFWidget::~PDFWidget() { delete ui; }
+PDFWidget::~PDFWidget() {
+    delete ui;
+}
 
 void PDFWidget::clear() {
     reset();
@@ -46,7 +45,8 @@ void PDFWidget::clear() {
     ui->treeWidgetNavi->clear();
 }
 
-void PDFWidget::cleanup() {}
+void PDFWidget::cleanup() {
+}
 
 void PDFWidget::reload() {
     clear();
@@ -60,24 +60,15 @@ void PDFWidget::reload() {
 
         setFileType(pdf.getFileType());
 
-        ui->treeWidgetNavi->addTopLevelItem(
-            createNewItem(SPDF::TYPE_INFO, tr("Info")));
-        ui->treeWidgetNavi->addTopLevelItem(
-            createNewItem(SPDF::TYPE_VIRUSTOTAL, "VirusTotal"));
-        ui->treeWidgetNavi->addTopLevelItem(
-            createNewItem(SPDF::TYPE_HEX, tr("Hex")));
-        ui->treeWidgetNavi->addTopLevelItem(
-            createNewItem(SPDF::TYPE_HASH, tr("Hash")));
-        ui->treeWidgetNavi->addTopLevelItem(
-            createNewItem(SPDF::TYPE_STRINGS, tr("Strings")));
-        ui->treeWidgetNavi->addTopLevelItem(
-            createNewItem(SPDF::TYPE_SIGNATURES, tr("Signatures")));
-        ui->treeWidgetNavi->addTopLevelItem(
-            createNewItem(SPDF::TYPE_MEMORYMAP, tr("Memory map")));
-        ui->treeWidgetNavi->addTopLevelItem(
-            createNewItem(SPDF::TYPE_ENTROPY, tr("Entropy")));
-        ui->treeWidgetNavi->addTopLevelItem(
-            createNewItem(SPDF::TYPE_HEURISTICSCAN, tr("Heuristic scan")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPDF::TYPE_INFO, tr("Info")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPDF::TYPE_VIRUSTOTAL, "VirusTotal"));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPDF::TYPE_HEX, tr("Hex")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPDF::TYPE_HASH, tr("Hash")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPDF::TYPE_STRINGS, tr("Strings")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPDF::TYPE_SIGNATURES, tr("Signatures")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPDF::TYPE_MEMORYMAP, tr("Memory map")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPDF::TYPE_ENTROPY, tr("Entropy")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPDF::TYPE_HEURISTICSCAN, tr("Heuristic scan")));
 
         pdf.getInfo();
 
@@ -87,9 +78,7 @@ void PDFWidget::reload() {
     }
 }
 
-FormatWidget::SV PDFWidget::_setValue(QVariant vValue, int nStype, int nNdata,
-                                      int nVtype, int nPosition,
-                                      qint64 nOffset) {
+FormatWidget::SV PDFWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset) {
     return SV_NONE;
 }
 
@@ -98,19 +87,13 @@ void PDFWidget::setReadonly(bool bState) {
     ui->widgetStrings->setReadonly(bState);
 }
 
-void PDFWidget::blockSignals(bool bState) {}
+void PDFWidget::blockSignals(bool bState) {
+}
 
 void PDFWidget::reloadData() {
-    int nType = ui->treeWidgetNavi->currentItem()
-                    ->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_TYPE)
-                    .toInt();
-    qint64 nDataOffset =
-        ui->treeWidgetNavi->currentItem()
-            ->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET)
-            .toLongLong();
-    qint64 nDataSize = ui->treeWidgetNavi->currentItem()
-                           ->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_SIZE)
-                           .toLongLong();
+    int nType = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_TYPE).toInt();
+    qint64 nDataOffset = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET).toLongLong();
+    qint64 nDataSize = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_SIZE).toLongLong();
 
     QString sInit = getInitString(ui->treeWidgetNavi->currentItem());
 
@@ -121,8 +104,7 @@ void PDFWidget::reloadData() {
     if (pdf.isValid()) {
         if (nType == SPDF::TYPE_INFO) {
             if (!isInitPresent(sInit)) {
-                ui->widgetInfo->setData(getDevice(), pdf.getFileType(), "Info",
-                                        true);
+                ui->widgetInfo->setData(getDevice(), pdf.getFileType(), "Info", true);
             }
         } else if (nType == SPDF::TYPE_VIRUSTOTAL) {
             if (!isInitPresent(sInit)) {
@@ -141,8 +123,7 @@ void PDFWidget::reloadData() {
             }
         } else if (nType == SPDF::TYPE_HASH) {
             if (!isInitPresent(sInit)) {
-                ui->widgetHash->setData(getDevice(), pdf.getFileType(), 0, -1,
-                                        true);
+                ui->widgetHash->setData(getDevice(), pdf.getFileType(), 0, -1, true);
             }
         } else if (nType == SPDF::TYPE_STRINGS) {
             if (!isInitPresent(sInit)) {
@@ -161,8 +142,7 @@ void PDFWidget::reloadData() {
                 SearchSignaturesWidget::OPTIONS signaturesOptions = {};
                 signaturesOptions.bMenu_Hex = true;
 
-                ui->widgetSignatures->setData(getDevice(), pdf.getFileType(),
-                                              signaturesOptions, false);
+                ui->widgetSignatures->setData(getDevice(), pdf.getFileType(), signaturesOptions, false);
             }
         } else if (nType == SPDF::TYPE_MEMORYMAP) {
             if (!isInitPresent(sInit)) {
@@ -170,14 +150,12 @@ void PDFWidget::reloadData() {
             }
         } else if (nType == SPDF::TYPE_ENTROPY) {
             if (!isInitPresent(sInit)) {
-                ui->widgetEntropy->setData(getDevice(), 0, getDevice()->size(),
-                                           pdf.getFileType(),
+                ui->widgetEntropy->setData(getDevice(), 0, getDevice()->size(), pdf.getFileType(),
                                            true);  // TODO save last directory
             }
         } else if (nType == SPDF::TYPE_HEURISTICSCAN) {
             if (!isInitPresent(sInit)) {
-                ui->widgetHeuristicScan->setData(getDevice(), true,
-                                                 pdf.getFileType());
+                ui->widgetHeuristicScan->setData(getDevice(), true, pdf.getFileType());
             }
         }
 
@@ -191,8 +169,7 @@ void PDFWidget::on_checkBoxReadonly_toggled(bool bChecked) {
     setReadonly(bChecked);
 }
 
-void PDFWidget::on_treeWidgetNavi_currentItemChanged(
-    QTreeWidgetItem *pCurrent, QTreeWidgetItem *pPrevious) {
+void PDFWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent, QTreeWidgetItem *pPrevious) {
     Q_UNUSED(pPrevious)
 
     if (pCurrent) {

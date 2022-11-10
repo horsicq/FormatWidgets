@@ -121,16 +121,7 @@ extern const FW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace N_IMAGE_NT_HEADERS
 
 namespace N_IMAGE_FILE_HEADER {
-enum DATA {
-    Machine = 0,
-    NumberOfSections,
-    TimeDateStamp,
-    PointerToSymbolTable,
-    NumberOfSymbols,
-    SizeOfOptionalHeader,
-    Characteristics,
-    __data_size
-};
+enum DATA { Machine = 0, NumberOfSections, TimeDateStamp, PointerToSymbolTable, NumberOfSymbols, SizeOfOptionalHeader, Characteristics, __data_size };
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace N_IMAGE_FILE_HEADER
@@ -176,15 +167,7 @@ extern const FW_DEF::HEADER_RECORD records64[__data_size];
 }  // namespace N_IMAGE_OPTIONAL_HEADER
 
 namespace N_IMAGE_TLS {
-enum DATA {
-    StartAddressOfRawData = 0,
-    EndAddressOfRawData,
-    AddressOfIndex,
-    AddressOfCallBacks,
-    SizeOfZeroFill,
-    Characteristics,
-    __data_size
-};
+enum DATA { StartAddressOfRawData = 0, EndAddressOfRawData, AddressOfIndex, AddressOfCallBacks, SizeOfZeroFill, Characteristics, __data_size };
 
 extern const FW_DEF::HEADER_RECORD records32[__data_size];
 extern const FW_DEF::HEADER_RECORD records64[__data_size];
@@ -309,17 +292,7 @@ extern const FW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace N_IMAGE_RESOURCES
 
 namespace N_IMAGE_DEBUG {
-enum DATA {
-    Characteristics = 0,
-    TimeDateStamp,
-    MajorVersion,
-    MinorVersion,
-    Type,
-    SizeOfData,
-    AddressOfRawData,
-    PointerToRawData,
-    __data_size
-};
+enum DATA { Characteristics = 0, TimeDateStamp, MajorVersion, MinorVersion, Type, SizeOfData, AddressOfRawData, PointerToRawData, __data_size };
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 
@@ -334,14 +307,7 @@ extern const FW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace N_IMAGE_EXPORT_FUNCTION
 
 namespace N_IMAGE_IMPORT {
-enum DATA {
-    OriginalFirstThunk = 0,
-    TimeDateStamp,
-    ForwarderChain,
-    Name,
-    FirstThunk,
-    __data_size
-};
+enum DATA { OriginalFirstThunk = 0, TimeDateStamp, ForwarderChain, Name, FirstThunk, __data_size };
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 
@@ -369,12 +335,7 @@ enum INV { __INV_size };
 }  // namespace N_IMAGE_DELAYIMPORT
 
 namespace N_IMAGE_BOUNDIMPORT {
-enum DATA {
-    TimeDateStamp = 0,
-    OffsetModuleName,
-    NumberOfModuleForwarderRefs,
-    __data_size
-};
+enum DATA { TimeDateStamp = 0, OffsetModuleName, NumberOfModuleForwarderRefs, __data_size };
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 
@@ -390,14 +351,7 @@ extern const FW_DEF::HEADER_RECORD records64[__data_size];
 }  // namespace N_IMAGE_IMPORT_FUNCTION
 
 namespace N_IMAGE_DELAYIMPORT_FUNCTION {
-enum DATA {
-    AddressThunk = 0,
-    BoundThunk,
-    NameThunk,
-    Ordinal,
-    Hint,
-    __data_size
-};
+enum DATA { AddressThunk = 0, BoundThunk, NameThunk, Ordinal, Hint, __data_size };
 
 extern const FW_DEF::HEADER_RECORD records32[__data_size];
 extern const FW_DEF::HEADER_RECORD records64[__data_size];
@@ -440,17 +394,7 @@ extern const FW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace N_IMAGE_NETHEADER
 
 namespace N_IMAGE_NET_METADATA {
-enum DATA {
-    Signature = 0,
-    MajorVersion,
-    MinorVersion,
-    Reserved,
-    VersionStringLength,
-    Version,
-    Flags,
-    Streams,
-    __data_size
-};
+enum DATA { Signature = 0, MajorVersion, MinorVersion, Reserved, VersionStringLength, Version, Flags, Streams, __data_size };
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace N_IMAGE_NET_METADATA

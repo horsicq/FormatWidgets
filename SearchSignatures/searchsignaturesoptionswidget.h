@@ -33,7 +33,7 @@ class SearchSignaturesOptionsWidget;
 class SearchSignaturesOptionsWidget : public QWidget {
     Q_OBJECT
 
-   public:
+public:
     explicit SearchSignaturesOptionsWidget(QWidget *pParent = nullptr);
     ~SearchSignaturesOptionsWidget();
 
@@ -41,14 +41,14 @@ class SearchSignaturesOptionsWidget : public QWidget {
 
     static void setDefaultValues(XOptions *pOptions);
 
-   public slots:
+public slots:
     void save();
     void reload();
 
-   private slots:
+private slots:
     void on_toolButtonSearchSignaturesPath_clicked();
 
-   private:
+private:
     Ui::SearchSignaturesOptionsWidget *ui;
     XOptions *g_pOptions;
 };

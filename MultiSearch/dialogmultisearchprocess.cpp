@@ -20,8 +20,7 @@
  */
 #include "dialogmultisearchprocess.h"
 
-DialogMultiSearchProcess::DialogMultiSearchProcess(QWidget *pParent)
-    : XDialogProcess(pParent) {
+DialogMultiSearchProcess::DialogMultiSearchProcess(QWidget *pParent) : XDialogProcess(pParent) {
     g_type = MultiSearch::TYPE_STRINGS;
 
     g_pHandleSearch = new MultiSearch;
@@ -32,19 +31,13 @@ DialogMultiSearchProcess::DialogMultiSearchProcess(QWidget *pParent)
     g_pHandleSearch->moveToThread(g_pThreadSearch);
     g_pHandleModel->moveToThread(g_pThreadModel);
 
-    connect(g_pThreadSearch, SIGNAL(started()), g_pHandleSearch,
-            SLOT(processSearch()));
-    connect(g_pHandleSearch, SIGNAL(completed(qint64)), this,
-            SLOT(onCompleted(qint64)));
-    connect(g_pHandleSearch, SIGNAL(errorMessage(QString)), this,
-            SLOT(errorMessage(QString)));
+    connect(g_pThreadSearch, SIGNAL(started()), g_pHandleSearch, SLOT(processSearch()));
+    connect(g_pHandleSearch, SIGNAL(completed(qint64)), this, SLOT(onCompleted(qint64)));
+    connect(g_pHandleSearch, SIGNAL(errorMessage(QString)), this, SLOT(errorMessage(QString)));
 
-    connect(g_pThreadModel, SIGNAL(started()), g_pHandleModel,
-            SLOT(processModel()));
-    connect(g_pHandleModel, SIGNAL(completed(qint64)), this,
-            SLOT(onCompleted(qint64)));
-    connect(g_pHandleModel, SIGNAL(errorMessage(QString)), this,
-            SLOT(errorMessage(QString)));
+    connect(g_pThreadModel, SIGNAL(started()), g_pHandleModel, SLOT(processModel()));
+    connect(g_pHandleModel, SIGNAL(completed(qint64)), this, SLOT(onCompleted(qint64)));
+    connect(g_pHandleModel, SIGNAL(errorMessage(QString)), this, SLOT(errorMessage(QString)));
 }
 
 DialogMultiSearchProcess::~DialogMultiSearchProcess() {
@@ -63,9 +56,8 @@ DialogMultiSearchProcess::~DialogMultiSearchProcess() {
     delete g_pHandleModel;
 }
 
-void DialogMultiSearchProcess::processSearch(
-    QIODevice *pDevice, QList<XBinary::MS_RECORD> *pListRecords,
-    MultiSearch::OPTIONS options, MultiSearch::TYPE type) {
+void DialogMultiSearchProcess::processSearch(QIODevice *pDevice, QList<XBinary::MS_RECORD> *pListRecords, MultiSearch::OPTIONS options,
+                                             MultiSearch::TYPE type) {
     g_type = type;
 
     if (type == MultiSearch::TYPE_STRINGS) {
@@ -74,17 +66,14 @@ void DialogMultiSearchProcess::processSearch(
         setWindowTitle(tr("Search signatures"));
     }
 
-    g_pHandleSearch->setSearchData(pDevice, pListRecords, options, type,
-                                   getPdStruct());
+    g_pHandleSearch->setSearchData(pDevice, pListRecords, options, type, getPdStruct());
     g_pThreadSearch->start();
 }
 
-void DialogMultiSearchProcess::processModel(
-    QList<XBinary::MS_RECORD> *pListRecords, QStandardItemModel **ppModel,
-    MultiSearch::OPTIONS options, MultiSearch::TYPE type) {
+void DialogMultiSearchProcess::processModel(QList<XBinary::MS_RECORD> *pListRecords, QStandardItemModel **ppModel, MultiSearch::OPTIONS options,
+                                            MultiSearch::TYPE type) {
     setWindowTitle(tr("Create view model"));
 
-    g_pHandleModel->setModelData(pListRecords, ppModel, options, type,
-                                 getPdStruct());
+    g_pHandleModel->setModelData(pListRecords, ppModel, options, type, getPdStruct());
     g_pThreadModel->start();
 }

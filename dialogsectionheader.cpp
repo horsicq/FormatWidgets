@@ -22,8 +22,7 @@
 
 #include "ui_dialogsectionheader.h"
 
-DialogSectionHeader::DialogSectionHeader(QWidget *pParent)
-    : XShortcutsDialog(pParent), ui(new Ui::DialogSectionHeader) {
+DialogSectionHeader::DialogSectionHeader(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogSectionHeader) {
     ui->setupUi(this);
 
     this->g_pWidget = nullptr;
@@ -31,7 +30,9 @@ DialogSectionHeader::DialogSectionHeader(QWidget *pParent)
     setWindowFlags(Qt::Window);
 }
 
-DialogSectionHeader::~DialogSectionHeader() { delete ui; }
+DialogSectionHeader::~DialogSectionHeader() {
+    delete ui;
+}
 
 void DialogSectionHeader::setWidget(FormatWidget *pWidget) {
     this->g_pWidget = pWidget;
@@ -41,9 +42,7 @@ void DialogSectionHeader::setWidget(FormatWidget *pWidget) {
     connect(pWidget, SIGNAL(changed()), this, SIGNAL(changed()));
 }
 
-void DialogSectionHeader::setData(QIODevice *pDevice, FW_DEF::OPTIONS options,
-                                  quint32 nNumber, qint64 nOffset,
-                                  QString sTitle, qint32 nType) {
+void DialogSectionHeader::setData(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, QString sTitle, qint32 nType) {
     setWindowTitle(sTitle);
 
     g_pWidget->setData(pDevice, options, nNumber, nOffset, nType);
@@ -56,10 +55,11 @@ void DialogSectionHeader::setData(QString sTitle) {
     g_pWidget->reload();
 }
 
-void DialogSectionHeader::setEdited() { g_pWidget->setEdited(); }
+void DialogSectionHeader::setEdited() {
+    g_pWidget->setEdited();
+}
 
-void DialogSectionHeader::setGlobal(XShortcuts *pShortcuts,
-                                    XOptions *pXOptions) {
+void DialogSectionHeader::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions) {
     if (g_pWidget) {
         g_pWidget->setGlobal(pShortcuts, pXOptions);
     }

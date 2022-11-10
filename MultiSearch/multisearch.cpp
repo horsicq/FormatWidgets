@@ -28,12 +28,11 @@ MultiSearch::MultiSearch(QObject *pParent) : QObject(pParent) {
     g_pSemaphore = new QSemaphore(N_MAXNUMBEROFTHREADS);
 }
 
-MultiSearch::~MultiSearch() { delete g_pSemaphore; }
+MultiSearch::~MultiSearch() {
+    delete g_pSemaphore;
+}
 
-void MultiSearch::setSearchData(QIODevice *pDevice,
-                                QList<XBinary::MS_RECORD> *pListRecords,
-                                OPTIONS options, TYPE type,
-                                XBinary::PDSTRUCT *pPdStruct) {
+void MultiSearch::setSearchData(QIODevice *pDevice, QList<XBinary::MS_RECORD> *pListRecords, OPTIONS options, TYPE type, XBinary::PDSTRUCT *pPdStruct) {
     this->g_pDevice = pDevice;
     this->g_pListRecords = pListRecords;
 
@@ -42,9 +41,8 @@ void MultiSearch::setSearchData(QIODevice *pDevice,
     g_pPdStruct = pPdStruct;
 }
 
-void MultiSearch::setModelData(QList<XBinary::MS_RECORD> *pListRecords,
-                               QStandardItemModel **ppModel, OPTIONS options,
-                               TYPE type, XBinary::PDSTRUCT *pPdStruct) {
+void MultiSearch::setModelData(QList<XBinary::MS_RECORD> *pListRecords, QStandardItemModel **ppModel, OPTIONS options, TYPE type,
+                               XBinary::PDSTRUCT *pPdStruct) {
     this->g_pListRecords = pListRecords;
     this->g_ppModel = ppModel;
 
@@ -53,8 +51,7 @@ void MultiSearch::setModelData(QList<XBinary::MS_RECORD> *pListRecords,
     g_pPdStruct = pPdStruct;
 }
 
-QList<MultiSearch::SIGNATURE_RECORD> MultiSearch::loadSignaturesFromFile(
-    QString sFileName) {
+QList<MultiSearch::SIGNATURE_RECORD> MultiSearch::loadSignaturesFromFile(QString sFileName) {
     QList<SIGNATURE_RECORD> listResult;
 
     QFile file;
@@ -87,8 +84,7 @@ QList<MultiSearch::SIGNATURE_RECORD> MultiSearch::loadSignaturesFromFile(
     return listResult;
 }
 
-MultiSearch::SIGNATURE_RECORD MultiSearch::createSignature(QString sName,
-                                                           QString sSignature) {
+MultiSearch::SIGNATURE_RECORD MultiSearch::createSignature(QString sName, QString sSignature) {
     MultiSearch::SIGNATURE_RECORD result = {};
 
     result.bIsBigEndian = false;
@@ -100,8 +96,7 @@ MultiSearch::SIGNATURE_RECORD MultiSearch::createSignature(QString sName,
     return result;
 }
 
-void MultiSearch::processSignature(
-    MultiSearch::SIGNATURE_RECORD signatureRecord) {
+void MultiSearch::processSignature(MultiSearch::SIGNATURE_RECORD signatureRecord) {
     //#ifdef QT_DEBUG
     //    QElapsedTimer timer;
     //    timer.start();
@@ -113,16 +108,13 @@ void MultiSearch::processSignature(
     binary.setReadWriteMutex(&g_mutex);
     binary.setDevice(g_pDevice);
 
-    QList<XBinary::MS_RECORD> listResult = binary.multiSearch_signature(
-        &(g_options.memoryMap), 0, binary.getSize(), N_MAX,
-        signatureRecord.sSignature, signatureRecord.sName, g_pPdStruct);
+    QList<XBinary::MS_RECORD> listResult =
+        binary.multiSearch_signature(&(g_options.memoryMap), 0, binary.getSize(), N_MAX, signatureRecord.sSignature, signatureRecord.sName, g_pPdStruct);
 
     g_pListRecords->append(listResult);
 
-    XBinary::setPdStructStatus(g_pPdStruct, g_nFreeIndex,
-                               signatureRecord.sName);
-    XBinary::setPdStructCurrent(g_pPdStruct, g_nFreeIndex,
-                                signatureRecord.nNumber);
+    XBinary::setPdStructStatus(g_pPdStruct, g_nFreeIndex, signatureRecord.sName);
+    XBinary::setPdStructCurrent(g_pPdStruct, g_nFreeIndex, signatureRecord.nNumber);
 
     g_pSemaphore->release();
     //#ifdef QT_DEBUG
@@ -141,8 +133,7 @@ void MultiSearch::processSearch() {
     if (g_type == TYPE_STRINGS) {
         XBinary binary(g_pDevice);
 
-        connect(&binary, SIGNAL(errorMessage(QString)), this,
-                SIGNAL(errorMessage(QString)));
+        connect(&binary, SIGNAL(errorMessage(QString)), this, SIGNAL(errorMessage(QString)));
 
         XBinary::STRINGSEARCH_OPTIONS ssOptions = {};
         ssOptions.nLimit = N_MAX;
@@ -155,8 +146,7 @@ void MultiSearch::processSearch() {
         ssOptions.sANSICodec = g_options.sANSICodec;
         ssOptions.bLinks = g_options.bLinks;
 
-        *g_pListRecords = binary.multiSearch_allStrings(0, g_pDevice->size(),
-                                                        ssOptions, g_pPdStruct);
+        *g_pListRecords = binary.multiSearch_allStrings(0, g_pDevice->size(), ssOptions, g_pPdStruct);
     } else if (g_type == TYPE_SIGNATURES) {
 #ifdef QT_DEBUG
         QElapsedTimer timer;
@@ -166,23 +156,18 @@ void MultiSearch::processSearch() {
 
         qint32 nNumberOfSignatures = g_options.pListSignatureRecords->count();
 
-        XBinary::setPdStructTotal(g_pPdStruct, g_nFreeIndex,
-                                  nNumberOfSignatures);
+        XBinary::setPdStructTotal(g_pPdStruct, g_nFreeIndex, nNumberOfSignatures);
 
-        for (qint32 i = 0;
-             (i < nNumberOfSignatures) && (!(g_pPdStruct->bIsStop)); i++) {
-            SIGNATURE_RECORD signatureRecord =
-                g_options.pListSignatureRecords->at(i);
+        for (qint32 i = 0; (i < nNumberOfSignatures) && (!(g_pPdStruct->bIsStop)); i++) {
+            SIGNATURE_RECORD signatureRecord = g_options.pListSignatureRecords->at(i);
 
             bool bSuccess = false;
 
             if ((signatureRecord.bIsBigEndian) && (g_options.bIsBigEndian)) {
                 bSuccess = true;
-            } else if ((signatureRecord.bIsLittleEndian) &&
-                       (!g_options.bIsBigEndian)) {
+            } else if ((signatureRecord.bIsLittleEndian) && (!g_options.bIsBigEndian)) {
                 bSuccess = true;
-            } else if ((!signatureRecord.bIsLittleEndian) &&
-                       (!signatureRecord.bIsBigEndian)) {
+            } else if ((!signatureRecord.bIsLittleEndian) && (!signatureRecord.bIsBigEndian)) {
                 bSuccess = true;
             }
 
@@ -191,12 +176,10 @@ void MultiSearch::processSearch() {
                 // future=QtConcurrent::run(this,&MultiSearch::processSignature,signatureRecord);
 
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-                QFuture<void> future =
-                    QtConcurrent::run(&MultiSearch::processSignature, this,
-                                      signatureRecord);  // mb TODO return
+                QFuture<void> future = QtConcurrent::run(&MultiSearch::processSignature, this,
+                                                         signatureRecord);  // mb TODO return
 #else
-                QtConcurrent::run(this, &MultiSearch::processSignature,
-                                  signatureRecord);
+                QtConcurrent::run(this, &MultiSearch::processSignature, signatureRecord);
 #endif
 
                 QThread::msleep(5);  // wait till run started TODO rewrite!
@@ -243,35 +226,27 @@ void MultiSearch::processModel() {
 
     if (g_type == TYPE_STRINGS) {
         qint32 nNumberOfRecords = g_pListRecords->count();
-        *g_ppModel =
-            new QStandardItemModel(nNumberOfRecords, 4);  // TODO Check maximum
+        *g_ppModel = new QStandardItemModel(nNumberOfRecords, 4);  // TODO Check maximum
 
         XADDR nBaseAddress = g_options.memoryMap.nModuleAddress;
 
-        XBinary::MODE modeAddress = XBinary::getWidthModeFromSize(
-            nBaseAddress + g_options.memoryMap.nRawSize);
+        XBinary::MODE modeAddress = XBinary::getWidthModeFromSize(nBaseAddress + g_options.memoryMap.nRawSize);
 
         XBinary::setPdStructTotal(g_pPdStruct, g_nFreeIndex, nNumberOfRecords);
 
-        (*g_ppModel)
-            ->setHeaderData(0, Qt::Horizontal,
-                            nBaseAddress ? (tr("Address")) : (tr("Offset")));
+        (*g_ppModel)->setHeaderData(0, Qt::Horizontal, nBaseAddress ? (tr("Address")) : (tr("Offset")));
         (*g_ppModel)->setHeaderData(1, Qt::Horizontal, tr("Size"));
         (*g_ppModel)->setHeaderData(2, Qt::Horizontal, tr("Type"));
         (*g_ppModel)->setHeaderData(3, Qt::Horizontal, tr("String"));
 
-        for (qint32 i = 0; (i < nNumberOfRecords) && (!(g_pPdStruct->bIsStop));
-             i++) {
+        for (qint32 i = 0; (i < nNumberOfRecords) && (!(g_pPdStruct->bIsStop)); i++) {
             XBinary::MS_RECORD record = g_pListRecords->at(i);
 
             QStandardItem *pTypeAddress = new QStandardItem;
-            pTypeAddress->setText(XBinary::valueToHex(
-                modeAddress, record.nOffset + nBaseAddress));
-            pTypeAddress->setData(record.nOffset,
-                                  Qt::UserRole + USERROLE_OFFSET);
+            pTypeAddress->setText(XBinary::valueToHex(modeAddress, record.nOffset + nBaseAddress));
+            pTypeAddress->setData(record.nOffset, Qt::UserRole + USERROLE_OFFSET);
             pTypeAddress->setData(record.nSize, Qt::UserRole + USERROLE_SIZE);
-            pTypeAddress->setData(record.recordType,
-                                  Qt::UserRole + USERROLE_TYPE);
+            pTypeAddress->setData(record.recordType, Qt::UserRole + USERROLE_TYPE);
             pTypeAddress->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
             (*g_ppModel)->setItem(i, 0, pTypeAddress);
 
@@ -282,8 +257,7 @@ void MultiSearch::processModel() {
 
             QStandardItem *pTypeItem = new QStandardItem;
 
-            pTypeItem->setText(
-                XBinary::msRecordTypeIdToString(record.recordType));
+            pTypeItem->setText(XBinary::msRecordTypeIdToString(record.recordType));
 
             pTypeItem->setTextAlignment(Qt::AlignLeft);
             (*g_ppModel)->setItem(i, 2, pTypeItem);
@@ -293,11 +267,9 @@ void MultiSearch::processModel() {
         }
     } else if (g_type == TYPE_SIGNATURES) {
         qint32 nNumberOfRecords = g_pListRecords->count();
-        *g_ppModel =
-            new QStandardItemModel(nNumberOfRecords, 3);  // TODO Check maximum
+        *g_ppModel = new QStandardItemModel(nNumberOfRecords, 3);  // TODO Check maximum
 
-        XBinary::MODE modeAddress =
-            XBinary::getWidthModeFromMemoryMap(&(g_options.memoryMap));
+        XBinary::MODE modeAddress = XBinary::getWidthModeFromMemoryMap(&(g_options.memoryMap));
 
         XBinary::setPdStructTotal(g_pPdStruct, g_nFreeIndex, nNumberOfRecords);
 
@@ -305,28 +277,23 @@ void MultiSearch::processModel() {
         (*g_ppModel)->setHeaderData(1, Qt::Horizontal, tr("Offset"));
         (*g_ppModel)->setHeaderData(2, Qt::Horizontal, tr("Name"));
 
-        for (qint32 i = 0; (i < nNumberOfRecords) && (!(g_pPdStruct->bIsStop));
-             i++) {
+        for (qint32 i = 0; (i < nNumberOfRecords) && (!(g_pPdStruct->bIsStop)); i++) {
             XBinary::MS_RECORD record = g_pListRecords->at(i);
 
-            XADDR nAddress = XBinary::offsetToAddress(&(g_options.memoryMap),
-                                                      record.nOffset);
+            XADDR nAddress = XBinary::offsetToAddress(&(g_options.memoryMap), record.nOffset);
 
             QStandardItem *pTypeAddress = new QStandardItem;
             pTypeAddress->setText(XBinary::valueToHex(modeAddress, nAddress));
-            pTypeAddress->setData(record.nOffset,
-                                  Qt::UserRole + USERROLE_OFFSET);
+            pTypeAddress->setData(record.nOffset, Qt::UserRole + USERROLE_OFFSET);
             pTypeAddress->setData(record.nSize, Qt::UserRole + USERROLE_SIZE);
-            pTypeAddress->setData(record.sString,
-                                  Qt::UserRole + USERROLE_STRING);
+            pTypeAddress->setData(record.sString, Qt::UserRole + USERROLE_STRING);
             pTypeAddress->setData(record.sInfo, Qt::UserRole + USERROLE_INFO);
             pTypeAddress->setData(nAddress, Qt::UserRole + USERROLE_ADDRESS);
             pTypeAddress->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
             (*g_ppModel)->setItem(i, 0, pTypeAddress);
 
             QStandardItem *pTypeOffset = new QStandardItem;
-            pTypeOffset->setText(
-                (XBinary::valueToHex(modeAddress, record.nOffset)));
+            pTypeOffset->setText((XBinary::valueToHex(modeAddress, record.nOffset)));
             pTypeOffset->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
 
             (*g_ppModel)->setItem(i, 1, pTypeOffset);

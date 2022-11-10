@@ -43,23 +43,7 @@ enum TYPE {
 }
 
 namespace N_DOS_HEADER {
-enum DATA {
-    e_magic = 0,
-    e_cblp,
-    e_cp,
-    e_crlc,
-    e_cparhdr,
-    e_minalloc,
-    e_maxalloc,
-    e_ss,
-    e_sp,
-    e_csum,
-    e_ip,
-    e_cs,
-    e_lfarlc,
-    e_ovno,
-    __data_size
-};
+enum DATA { e_magic = 0, e_cblp, e_cp, e_crlc, e_cparhdr, e_minalloc, e_maxalloc, e_ss, e_sp, e_csum, e_ip, e_cs, e_lfarlc, e_ovno, __data_size };
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace N_DOS_HEADER

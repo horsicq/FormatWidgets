@@ -41,17 +41,9 @@ class SearchStringsWidget;
 class SearchStringsWidget : public XShortcutsWidget {
     Q_OBJECT
 
-    enum SC {
-        SC_COPYSTRING = 0,
-        SC_COPYOFFSET,
-        SC_COPYSIZE,
-        SC_HEX,
-        SC_DEMANGLE,
-        SC_EDITSTRING,
-        __SC_SIZE
-    };
+    enum SC { SC_COPYSTRING = 0, SC_COPYOFFSET, SC_COPYSIZE, SC_HEX, SC_DEMANGLE, SC_EDITSTRING, __SC_SIZE };
 
-   public:
+public:
     struct OPTIONS {
         qint64 nBaseAddress;
         bool bAnsi;
@@ -69,8 +61,7 @@ class SearchStringsWidget : public XShortcutsWidget {
     explicit SearchStringsWidget(QWidget *pParent = nullptr);
     ~SearchStringsWidget();
 
-    void setData(QIODevice *pDevice, SearchStringsWidget::OPTIONS options,
-                 bool bAuto = false);
+    void setData(QIODevice *pDevice, SearchStringsWidget::OPTIONS options, bool bAuto = false);
     void setBackupDevice(QIODevice *pDevice);
     QIODevice *getDevice();
     QIODevice *getBackupDevice();
@@ -82,7 +73,7 @@ class SearchStringsWidget : public XShortcutsWidget {
     void setReadonly(bool bState);
     bool isReadonly();
 
-   private slots:
+private slots:
     void on_pushButtonSave_clicked();
     void on_pushButtonSearch_clicked();
     void on_lineEditFilter_textChanged(const QString &sText);
@@ -101,15 +92,15 @@ class SearchStringsWidget : public XShortcutsWidget {
     void on_checkBoxUnicode_stateChanged(int nArg);
     void adjust();
 
-   protected:
+protected:
     virtual void registerShortcuts(bool bState);
 
-   signals:
+signals:
     void showHex(qint64 nOffset, qint64 nSize);
     void showDemangle(QString sString);
     void dataChanged();
 
-   private:
+private:
     Ui::SearchStringsWidget *ui;
     QIODevice *g_pDevice;
     QIODevice *g_pBackupDevice;

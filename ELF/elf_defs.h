@@ -88,19 +88,7 @@ extern const FW_DEF::HEADER_RECORD records64[__data_size];
 }  // namespace N_Elf_Ehdr
 
 namespace N_Elf_Shdr {
-enum DATA {
-    sh_name = 0,
-    sh_type,
-    sh_flags,
-    sh_addr,
-    sh_offset,
-    sh_size,
-    sh_link,
-    sh_info,
-    sh_addralign,
-    sh_entsize,
-    __data_size
-};
+enum DATA { sh_name = 0, sh_type, sh_flags, sh_addr, sh_offset, sh_size, sh_link, sh_info, sh_addralign, sh_entsize, __data_size };
 
 extern const FW_DEF::HEADER_RECORD records32[__data_size];
 extern const FW_DEF::HEADER_RECORD records64[__data_size];
@@ -111,17 +99,7 @@ enum INV { INV_VirtualAddress, INV_PointerToRawData, __INV_size };
 }  // namespace N_Elf_Shdr
 
 namespace N_Elf_Phdr32 {
-enum DATA {
-    p_type = 0,
-    p_offset,
-    p_vaddr,
-    p_paddr,
-    p_filesz,
-    p_memsz,
-    p_flags,
-    p_align,
-    __data_size
-};
+enum DATA { p_type = 0, p_offset, p_vaddr, p_paddr, p_filesz, p_memsz, p_flags, p_align, __data_size };
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 
@@ -131,17 +109,7 @@ enum INV { INV_VirtualAddress, INV_PointerToRawData, __INV_size };
 }  // namespace N_Elf_Phdr32
 
 namespace N_Elf_Phdr64 {
-enum DATA {
-    p_type = 0,
-    p_flags,
-    p_offset,
-    p_vaddr,
-    p_paddr,
-    p_filesz,
-    p_memsz,
-    p_align,
-    __data_size
-};
+enum DATA { p_type = 0, p_flags, p_offset, p_vaddr, p_paddr, p_filesz, p_memsz, p_align, __data_size };
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 
@@ -184,15 +152,7 @@ extern const FW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace N_ELF_RUNPATH
 
 namespace N_Elf32_Sym {
-enum DATA {
-    st_name = 0,
-    st_value,
-    st_size,
-    st_info,
-    st_other,
-    st_shndx,
-    __data_size
-};
+enum DATA { st_name = 0, st_value, st_size, st_info, st_other, st_shndx, __data_size };
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 
@@ -202,15 +162,7 @@ enum INV { __INV_size };
 }  // namespace N_Elf32_Sym
 
 namespace N_Elf64_Sym {
-enum DATA {
-    st_name,
-    st_info,
-    st_other,
-    st_shndx,
-    st_value,
-    st_size,
-    __data_size
-};
+enum DATA { st_name, st_info, st_other, st_shndx, st_value, st_size, __data_size };
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace N_Elf64_Sym

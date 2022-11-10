@@ -22,21 +22,19 @@
 
 #include "ui_dialogsearchstrings.h"
 
-DialogSearchStrings::DialogSearchStrings(QWidget *pParent)
-    : XShortcutsDialog(pParent), ui(new Ui::DialogSearchStrings) {
+DialogSearchStrings::DialogSearchStrings(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogSearchStrings) {
     ui->setupUi(this);
 
     setWindowFlags(Qt::Window);
 
-    connect(ui->widgetSearchStrings, SIGNAL(showHex(qint64, qint64)), this,
-            SIGNAL(showHex(qint64, qint64)));
+    connect(ui->widgetSearchStrings, SIGNAL(showHex(qint64, qint64)), this, SIGNAL(showHex(qint64, qint64)));
 }
 
-DialogSearchStrings::~DialogSearchStrings() { delete ui; }
+DialogSearchStrings::~DialogSearchStrings() {
+    delete ui;
+}
 
-void DialogSearchStrings::setData(QIODevice *pDevice,
-                                  SearchStringsWidget::OPTIONS options,
-                                  bool bAuto) {
+void DialogSearchStrings::setData(QIODevice *pDevice, SearchStringsWidget::OPTIONS options, bool bAuto) {
     ui->widgetSearchStrings->setData(pDevice, options, bAuto);
 
     if (options.sTitle != "") {
@@ -44,10 +42,11 @@ void DialogSearchStrings::setData(QIODevice *pDevice,
     }
 }
 
-void DialogSearchStrings::setGlobal(XShortcuts *pShortcuts,
-                                    XOptions *pXOptions) {
+void DialogSearchStrings::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions) {
     ui->widgetSearchStrings->setGlobal(pShortcuts, pXOptions);
     XShortcutsDialog::setGlobal(pShortcuts, pXOptions);
 }
 
-void DialogSearchStrings::on_pushButtonClose_clicked() { this->close(); }
+void DialogSearchStrings::on_pushButtonClose_clicked() {
+    this->close();
+}

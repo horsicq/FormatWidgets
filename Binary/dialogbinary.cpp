@@ -22,14 +22,15 @@
 
 #include "ui_dialogbinary.h"
 
-DialogBinary::DialogBinary(QWidget *pParent)
-    : XShortcutsDialog(pParent), ui(new Ui::DialogBinary) {
+DialogBinary::DialogBinary(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogBinary) {
     ui->setupUi(this);
 
     setWindowFlags(Qt::Window);
 }
 
-DialogBinary::~DialogBinary() { delete ui; }
+DialogBinary::~DialogBinary() {
+    delete ui;
+}
 
 void DialogBinary::setData(QIODevice *pDevice, FW_DEF::OPTIONS options) {
     ui->widget->setData(pDevice, options, 0, 0, 0);

@@ -22,8 +22,7 @@
 
 #include "ui_elfwidget.h"
 
-ELFWidget::ELFWidget(QWidget *pParent)
-    : FormatWidget(pParent), ui(new Ui::ELFWidget) {
+ELFWidget::ELFWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::ELFWidget) {
     ui->setupUi(this);
 
     memset(g_subDevice, 0, sizeof g_subDevice);
@@ -31,14 +30,14 @@ ELFWidget::ELFWidget(QWidget *pParent)
     initWidget();
 }
 
-ELFWidget::ELFWidget(QIODevice *pDevice, FW_DEF::OPTIONS options,
-                     QWidget *pParent)
-    : ELFWidget(pParent) {
+ELFWidget::ELFWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) : ELFWidget(pParent) {
     ELFWidget::setData(pDevice, options, 0, 0, 0);
     ELFWidget::reload();
 }
 
-ELFWidget::~ELFWidget() { delete ui; }
+ELFWidget::~ELFWidget() {
+    delete ui;
+}
 
 void ELFWidget::clear() {
     setTreeItem(ui->treeWidgetNavi, 0);
@@ -52,8 +51,7 @@ void ELFWidget::clear() {
     memset(g_invWidget, 0, sizeof g_invWidget);
     memset(g_tvModel, 0, sizeof g_tvModel);
 
-    _deleteSubdevices(g_subDevice,
-                      (sizeof g_subDevice) / (sizeof(SubDevice *)));
+    _deleteSubdevices(g_subDevice, (sizeof g_subDevice) / (sizeof(SubDevice *)));
 
     resetWidget();
 
@@ -62,7 +60,8 @@ void ELFWidget::clear() {
     ui->treeWidgetNavi->clear();
 }
 
-void ELFWidget::cleanup() {}
+void ELFWidget::cleanup() {
+}
 
 void ELFWidget::reload() {
     ELFWidget::clear();
@@ -74,39 +73,26 @@ void ELFWidget::reload() {
     if (elf.isValid()) {
         setFileType(elf.getFileType());
 
-        ui->treeWidgetNavi->addTopLevelItem(
-            createNewItem(SELF::TYPE_INFO, tr("Info")));
-        ui->treeWidgetNavi->addTopLevelItem(
-            createNewItem(SELF::TYPE_VIRUSTOTAL, "VirusTotal"));
-        ui->treeWidgetNavi->addTopLevelItem(
-            createNewItem(SELF::TYPE_HEX, tr("Hex")));
-        ui->treeWidgetNavi->addTopLevelItem(
-            createNewItem(SELF::TYPE_DISASM, tr("Disasm")));
-        ui->treeWidgetNavi->addTopLevelItem(
-            createNewItem(SELF::TYPE_HASH, tr("Hash")));
-        ui->treeWidgetNavi->addTopLevelItem(
-            createNewItem(SELF::TYPE_STRINGS, tr("Strings")));
-        ui->treeWidgetNavi->addTopLevelItem(
-            createNewItem(SELF::TYPE_SIGNATURES, tr("Signatures")));
-        ui->treeWidgetNavi->addTopLevelItem(
-            createNewItem(SELF::TYPE_MEMORYMAP, tr("Memory map")));
-        ui->treeWidgetNavi->addTopLevelItem(
-            createNewItem(SELF::TYPE_ENTROPY, tr("Entropy")));
-        ui->treeWidgetNavi->addTopLevelItem(
-            createNewItem(SELF::TYPE_HEURISTICSCAN, tr("Heuristic scan")));
-        ui->treeWidgetNavi->addTopLevelItem(
-            createNewItem(SELF::TYPE_Elf_Ehdr, "Elf_Ehdr"));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_INFO, tr("Info")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_VIRUSTOTAL, "VirusTotal"));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_HEX, tr("Hex")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_DISASM, tr("Disasm")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_HASH, tr("Hash")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_STRINGS, tr("Strings")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_SIGNATURES, tr("Signatures")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_MEMORYMAP, tr("Memory map")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_ENTROPY, tr("Entropy")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_HEURISTICSCAN, tr("Heuristic scan")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_Elf_Ehdr, "Elf_Ehdr"));
 
         QList<XELF_DEF::Elf_Shdr> listSectionHeaders = elf.getElf_ShdrList();
 
         if (listSectionHeaders.count()) {
-            QTreeWidgetItem *pItemSections =
-                createNewItem(SELF::TYPE_Elf_Shdr, tr("Sections"));
+            QTreeWidgetItem *pItemSections = createNewItem(SELF::TYPE_Elf_Shdr, tr("Sections"));
 
             ui->treeWidgetNavi->addTopLevelItem(pItemSections);
 
-            QList<XBinary::DATASET> listDataSets =
-                elf.getDatasetsFromSections(&listSectionHeaders);
+            QList<XBinary::DATASET> listDataSets = elf.getDatasetsFromSections(&listSectionHeaders);
 
             addDatasets(&elf, pItemSections, &listDataSets);
         }
@@ -114,13 +100,11 @@ void ELFWidget::reload() {
         QList<XELF_DEF::Elf_Phdr> listProgramHeaders = elf.getElf_PhdrList();
 
         if (listProgramHeaders.count()) {
-            QTreeWidgetItem *pItemPrograms =
-                createNewItem(SELF::TYPE_Elf_Phdr, "Programs");
+            QTreeWidgetItem *pItemPrograms = createNewItem(SELF::TYPE_Elf_Phdr, "Programs");
 
             ui->treeWidgetNavi->addTopLevelItem(pItemPrograms);
 
-            QList<XBinary::DATASET> listDataSets =
-                elf.getDatasetsFromPrograms(&listProgramHeaders);
+            QList<XBinary::DATASET> listDataSets = elf.getDatasetsFromPrograms(&listProgramHeaders);
 
             addDatasets(&elf, pItemPrograms, &listDataSets);
         }
@@ -133,9 +117,7 @@ void ELFWidget::reload() {
     }
 }
 
-FormatWidget::SV ELFWidget::_setValue(QVariant vValue, int nStype, int nNdata,
-                                      int nVtype, int nPosition,
-                                      qint64 nOffset) {
+FormatWidget::SV ELFWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset) {
     Q_UNUSED(nVtype)
     Q_UNUSED(nPosition)
 
@@ -174,25 +156,13 @@ FormatWidget::SV ELFWidget::_setValue(QVariant vValue, int nStype, int nNdata,
                             g_comboBox[CB_Elf_Ehdr_machine]->setValue(nValue);
                             break;
                         case N_Elf_Ehdr::e_entry:
-                            g_invWidget[INV_Elf_e_entry]->setAddressAndSize(
-                                &elf,
-                                elf.is64() ? ((quint64)nValue)
-                                           : ((quint32)nValue),
-                                0);
+                            g_invWidget[INV_Elf_e_entry]->setAddressAndSize(&elf, elf.is64() ? ((quint64)nValue) : ((quint32)nValue), 0);
                             break;
                         case N_Elf_Ehdr::e_phoff:
-                            g_invWidget[INV_Elf_e_phoff]->setOffsetAndSize(
-                                &elf,
-                                elf.is64() ? ((quint64)nValue)
-                                           : ((quint32)nValue),
-                                0);
+                            g_invWidget[INV_Elf_e_phoff]->setOffsetAndSize(&elf, elf.is64() ? ((quint64)nValue) : ((quint32)nValue), 0);
                             break;
                         case N_Elf_Ehdr::e_shoff:
-                            g_invWidget[INV_Elf_e_shoff]->setOffsetAndSize(
-                                &elf,
-                                elf.is64() ? ((quint64)nValue)
-                                           : ((quint32)nValue),
-                                0);
+                            g_invWidget[INV_Elf_e_shoff]->setOffsetAndSize(&elf, elf.is64() ? ((quint64)nValue) : ((quint32)nValue), 0);
                             break;
                     }
                     break;
@@ -241,56 +211,43 @@ FormatWidget::SV ELFWidget::_setValue(QVariant vValue, int nStype, int nNdata,
                             elf.setIdent_pad((quint8)nValue, 6);
                             break;
                         case N_Elf_Ehdr::e_type:
-                            (bIs64 ? (elf.setHdr64_type((quint16)nValue))
-                                   : (elf.setHdr32_type((quint16)nValue)));
+                            (bIs64 ? (elf.setHdr64_type((quint16)nValue)) : (elf.setHdr32_type((quint16)nValue)));
                             break;
                         case N_Elf_Ehdr::e_machine:
-                            (bIs64 ? (elf.setHdr64_machine((quint16)nValue))
-                                   : (elf.setHdr32_machine((quint16)nValue)));
+                            (bIs64 ? (elf.setHdr64_machine((quint16)nValue)) : (elf.setHdr32_machine((quint16)nValue)));
                             break;
                         case N_Elf_Ehdr::e_version:
-                            (bIs64 ? (elf.setHdr64_version((quint32)nValue))
-                                   : (elf.setHdr32_version((quint32)nValue)));
+                            (bIs64 ? (elf.setHdr64_version((quint32)nValue)) : (elf.setHdr32_version((quint32)nValue)));
                             break;
                         case N_Elf_Ehdr::e_entry:
-                            (bIs64 ? (elf.setHdr64_entry((quint64)nValue))
-                                   : (elf.setHdr32_entry((quint32)nValue)));
+                            (bIs64 ? (elf.setHdr64_entry((quint64)nValue)) : (elf.setHdr32_entry((quint32)nValue)));
                             break;
                         case N_Elf_Ehdr::e_phoff:
-                            (bIs64 ? (elf.setHdr64_phoff((quint64)nValue))
-                                   : (elf.setHdr32_phoff((quint32)nValue)));
+                            (bIs64 ? (elf.setHdr64_phoff((quint64)nValue)) : (elf.setHdr32_phoff((quint32)nValue)));
                             break;
                         case N_Elf_Ehdr::e_shoff:
-                            (bIs64 ? (elf.setHdr64_shoff((quint64)nValue))
-                                   : (elf.setHdr32_shoff((quint32)nValue)));
+                            (bIs64 ? (elf.setHdr64_shoff((quint64)nValue)) : (elf.setHdr32_shoff((quint32)nValue)));
                             break;
                         case N_Elf_Ehdr::e_flags:
-                            (bIs64 ? (elf.setHdr64_flags((quint32)nValue))
-                                   : (elf.setHdr32_flags((quint32)nValue)));
+                            (bIs64 ? (elf.setHdr64_flags((quint32)nValue)) : (elf.setHdr32_flags((quint32)nValue)));
                             break;
                         case N_Elf_Ehdr::e_ehsize:
-                            (bIs64 ? (elf.setHdr64_ehsize((quint16)nValue))
-                                   : (elf.setHdr32_ehsize((quint16)nValue)));
+                            (bIs64 ? (elf.setHdr64_ehsize((quint16)nValue)) : (elf.setHdr32_ehsize((quint16)nValue)));
                             break;
                         case N_Elf_Ehdr::e_phentsize:
-                            (bIs64 ? (elf.setHdr64_phentsize((quint16)nValue))
-                                   : (elf.setHdr32_phentsize((quint16)nValue)));
+                            (bIs64 ? (elf.setHdr64_phentsize((quint16)nValue)) : (elf.setHdr32_phentsize((quint16)nValue)));
                             break;
                         case N_Elf_Ehdr::e_phnum:
-                            (bIs64 ? (elf.setHdr64_phnum((quint16)nValue))
-                                   : (elf.setHdr32_phnum((quint16)nValue)));
+                            (bIs64 ? (elf.setHdr64_phnum((quint16)nValue)) : (elf.setHdr32_phnum((quint16)nValue)));
                             break;
                         case N_Elf_Ehdr::e_shentsize:
-                            (bIs64 ? (elf.setHdr64_shentsize((quint16)nValue))
-                                   : (elf.setHdr32_shentsize((quint16)nValue)));
+                            (bIs64 ? (elf.setHdr64_shentsize((quint16)nValue)) : (elf.setHdr32_shentsize((quint16)nValue)));
                             break;
                         case N_Elf_Ehdr::e_shnum:
-                            (bIs64 ? (elf.setHdr64_shnum((quint16)nValue))
-                                   : (elf.setHdr32_shnum((quint16)nValue)));
+                            (bIs64 ? (elf.setHdr64_shnum((quint16)nValue)) : (elf.setHdr32_shnum((quint16)nValue)));
                             break;
                         case N_Elf_Ehdr::e_shstrndx:
-                            (bIs64 ? (elf.setHdr64_shstrndx((quint16)nValue))
-                                   : (elf.setHdr32_shstrndx((quint16)nValue)));
+                            (bIs64 ? (elf.setHdr64_shstrndx((quint16)nValue)) : (elf.setHdr32_shstrndx((quint16)nValue)));
                             break;
                     }
 
@@ -328,10 +285,8 @@ FormatWidget::SV ELFWidget::_setValue(QVariant vValue, int nStype, int nNdata,
 
 void ELFWidget::setReadonly(bool bState) {
     setLineEditsReadOnly(g_lineEdit_Elf_Ehdr, N_Elf_Ehdr::__data_size, bState);
-    setLineEditsReadOnly(g_lineEdit_Elf_Interpreter,
-                         N_ELF_INTERPRETER::__data_size, bState);
-    setLineEditsReadOnly(g_lineEdit_Elf_RunPath, N_ELF_RUNPATH::__data_size,
-                         bState);
+    setLineEditsReadOnly(g_lineEdit_Elf_Interpreter, N_ELF_INTERPRETER::__data_size, bState);
+    setLineEditsReadOnly(g_lineEdit_Elf_RunPath, N_ELF_RUNPATH::__data_size, bState);
 
     setComboBoxesReadOnly(g_comboBox, __CB_size, bState);
 
@@ -346,56 +301,34 @@ void ELFWidget::setReadonly(bool bState) {
 }
 
 void ELFWidget::blockSignals(bool bState) {
-    _blockSignals((QObject **)g_lineEdit_Elf_Ehdr, N_Elf_Ehdr::__data_size,
-                  bState);
-    _blockSignals((QObject **)g_lineEdit_Elf_Interpreter,
-                  N_ELF_INTERPRETER::__data_size, bState);
-    _blockSignals((QObject **)g_lineEdit_Elf_RunPath,
-                  N_ELF_RUNPATH::__data_size, bState);
+    _blockSignals((QObject **)g_lineEdit_Elf_Ehdr, N_Elf_Ehdr::__data_size, bState);
+    _blockSignals((QObject **)g_lineEdit_Elf_Interpreter, N_ELF_INTERPRETER::__data_size, bState);
+    _blockSignals((QObject **)g_lineEdit_Elf_RunPath, N_ELF_RUNPATH::__data_size, bState);
 
     _blockSignals((QObject **)g_comboBox, __CB_size, bState);
 }
 
 void ELFWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget) {
-    XBinary::MODE mode = XELF::getMode(getDevice(), getOptions().bIsImage,
-                                       getOptions().nImageBase);
+    XBinary::MODE mode = XELF::getMode(getDevice(), getOptions().bIsImage, getOptions().nImageBase);
 
-    pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET,
-                                 getColumnWidth(this, CW_UINT16, mode));
-    pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE,
-                                 getColumnWidth(this, CW_TYPE, mode));
+    pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET, getColumnWidth(this, CW_UINT16, mode));
+    pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE, getColumnWidth(this, CW_TYPE, mode));
 
     switch (nType) {
         case SELF::TYPE_Elf_Ehdr:
-            pTableWidget->setColumnWidth(
-                HEADER_COLUMN_NAME, getColumnWidth(this, CW_STRINGSHORT, mode));
-            pTableWidget->setColumnWidth(
-                HEADER_COLUMN_VALUE, getColumnWidth(this, CW_UINTMODE, mode));
-            pTableWidget->setColumnWidth(
-                HEADER_COLUMN_INFO, getColumnWidth(this, CW_STRINGMID, mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME, getColumnWidth(this, CW_STRINGSHORT, mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE, getColumnWidth(this, CW_UINTMODE, mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, getColumnWidth(this, CW_STRINGMID, mode));
             break;
     }
 }
 
 void ELFWidget::reloadData() {
-    qint32 nType = ui->treeWidgetNavi->currentItem()
-                       ->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_TYPE)
-                       .toInt();
-    qint64 nDataOffset =
-        ui->treeWidgetNavi->currentItem()
-            ->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET)
-            .toLongLong();
-    qint64 nDataSize = ui->treeWidgetNavi->currentItem()
-                           ->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_SIZE)
-                           .toLongLong();
-    qint64 nDataExtraOffset =
-        ui->treeWidgetNavi->currentItem()
-            ->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_EXTRAOFFSET)
-            .toLongLong();
-    qint64 nDataExtraSize =
-        ui->treeWidgetNavi->currentItem()
-            ->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_EXTRASIZE)
-            .toLongLong();
+    qint32 nType = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_TYPE).toInt();
+    qint64 nDataOffset = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET).toLongLong();
+    qint64 nDataSize = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_SIZE).toLongLong();
+    qint64 nDataExtraOffset = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_EXTRAOFFSET).toLongLong();
+    qint64 nDataExtraSize = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_EXTRASIZE).toLongLong();
 
     QString sInit = getInitString(ui->treeWidgetNavi->currentItem());
 
@@ -406,8 +339,7 @@ void ELFWidget::reloadData() {
     if (elf.isValid()) {
         if (nType == SELF::TYPE_INFO) {
             if (!isInitPresent(sInit)) {
-                ui->widgetInfo->setData(getDevice(), elf.getFileType(), "Info",
-                                        true);
+                ui->widgetInfo->setData(getDevice(), elf.getFileType(), "Info", true);
             }
         } else if (nType == SELF::TYPE_VIRUSTOTAL) {
             if (!isInitPresent(sInit)) {
@@ -440,8 +372,7 @@ void ELFWidget::reloadData() {
             }
         } else if (nType == SELF::TYPE_HASH) {
             if (!isInitPresent(sInit)) {
-                ui->widgetHash->setData(getDevice(), elf.getFileType(), 0, -1,
-                                        true);
+                ui->widgetHash->setData(getDevice(), elf.getFileType(), 0, -1, true);
             }
         } else if (nType == SELF::TYPE_STRINGS) {
             if (!isInitPresent(sInit)) {
@@ -460,8 +391,7 @@ void ELFWidget::reloadData() {
                 SearchSignaturesWidget::OPTIONS signaturesOptions = {};
                 signaturesOptions.bMenu_Hex = true;
 
-                ui->widgetSignatures->setData(getDevice(), elf.getFileType(),
-                                              signaturesOptions, false);
+                ui->widgetSignatures->setData(getDevice(), elf.getFileType(), signaturesOptions, false);
             }
         } else if (nType == SELF::TYPE_MEMORYMAP) {
             if (!isInitPresent(sInit)) {
@@ -469,179 +399,103 @@ void ELFWidget::reloadData() {
             }
         } else if (nType == SELF::TYPE_ENTROPY) {
             if (!isInitPresent(sInit)) {
-                ui->widgetEntropy->setData(getDevice(), 0, getDevice()->size(),
-                                           elf.getFileType(), true);
+                ui->widgetEntropy->setData(getDevice(), 0, getDevice()->size(), elf.getFileType(), true);
             }
         } else if (nType == SELF::TYPE_HEURISTICSCAN) {
             if (!isInitPresent(sInit)) {
-                ui->widgetHeuristicScan->setData(getDevice(), true,
-                                                 elf.getFileType());
+                ui->widgetHeuristicScan->setData(getDevice(), true, elf.getFileType());
             }
         } else if (nType == SELF::TYPE_Elf_Ehdr) {
             if (!isInitPresent(sInit)) {
                 if (elf.is64()) {
-                    createHeaderTable(
-                        SELF::TYPE_Elf_Ehdr, ui->tableWidget_Elf_Ehdr,
-                        N_Elf_Ehdr::records64, g_lineEdit_Elf_Ehdr,
-                        N_Elf_Ehdr::__data_size, 0);
+                    createHeaderTable(SELF::TYPE_Elf_Ehdr, ui->tableWidget_Elf_Ehdr, N_Elf_Ehdr::records64, g_lineEdit_Elf_Ehdr, N_Elf_Ehdr::__data_size, 0);
                 } else {
-                    createHeaderTable(
-                        SELF::TYPE_Elf_Ehdr, ui->tableWidget_Elf_Ehdr,
-                        N_Elf_Ehdr::records32, g_lineEdit_Elf_Ehdr,
-                        N_Elf_Ehdr::__data_size, 0);
+                    createHeaderTable(SELF::TYPE_Elf_Ehdr, ui->tableWidget_Elf_Ehdr, N_Elf_Ehdr::records32, g_lineEdit_Elf_Ehdr, N_Elf_Ehdr::__data_size, 0);
                 }
 
-                g_comboBox[CB_Elf_Ehdr_mag] = createComboBox(
-                    ui->tableWidget_Elf_Ehdr, XELF::getIndentMagS(),
-                    SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::ei_mag,
-                    XComboBoxEx::CBTYPE_LIST);
-                g_comboBox[CB_Elf_Ehdr_iclass] = createComboBox(
-                    ui->tableWidget_Elf_Ehdr, XELF::getIndentClassesS(),
-                    SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::ei_class,
-                    XComboBoxEx::CBTYPE_LIST);
-                g_comboBox[CB_Elf_Ehdr_idata] = createComboBox(
-                    ui->tableWidget_Elf_Ehdr, XELF::getIndentDatasS(),
-                    SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::ei_data,
-                    XComboBoxEx::CBTYPE_LIST);
-                g_comboBox[CB_Elf_Ehdr_iversion] = createComboBox(
-                    ui->tableWidget_Elf_Ehdr, XELF::getIndentVersionsS(),
-                    SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::ei_version,
-                    XComboBoxEx::CBTYPE_LIST);
-                g_comboBox[CB_Elf_Ehdr_iosabi] = createComboBox(
-                    ui->tableWidget_Elf_Ehdr, XELF::getIndentOsabisS(),
-                    SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::ei_osabi,
-                    XComboBoxEx::CBTYPE_LIST);
+                g_comboBox[CB_Elf_Ehdr_mag] =
+                    createComboBox(ui->tableWidget_Elf_Ehdr, XELF::getIndentMagS(), SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::ei_mag, XComboBoxEx::CBTYPE_LIST);
+                g_comboBox[CB_Elf_Ehdr_iclass] =
+                    createComboBox(ui->tableWidget_Elf_Ehdr, XELF::getIndentClassesS(), SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::ei_class, XComboBoxEx::CBTYPE_LIST);
+                g_comboBox[CB_Elf_Ehdr_idata] =
+                    createComboBox(ui->tableWidget_Elf_Ehdr, XELF::getIndentDatasS(), SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::ei_data, XComboBoxEx::CBTYPE_LIST);
+                g_comboBox[CB_Elf_Ehdr_iversion] =
+                    createComboBox(ui->tableWidget_Elf_Ehdr, XELF::getIndentVersionsS(), SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::ei_version, XComboBoxEx::CBTYPE_LIST);
+                g_comboBox[CB_Elf_Ehdr_iosabi] =
+                    createComboBox(ui->tableWidget_Elf_Ehdr, XELF::getIndentOsabisS(), SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::ei_osabi, XComboBoxEx::CBTYPE_LIST);
                 g_comboBox[CB_Elf_Ehdr_type] =
-                    createComboBox(ui->tableWidget_Elf_Ehdr, XELF::getTypesS(),
-                                   SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::e_type,
-                                   XComboBoxEx::CBTYPE_LIST);
-                g_comboBox[CB_Elf_Ehdr_machine] = createComboBox(
-                    ui->tableWidget_Elf_Ehdr, XELF::getMachinesS(),
-                    SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::e_machine,
-                    XComboBoxEx::CBTYPE_LIST);
+                    createComboBox(ui->tableWidget_Elf_Ehdr, XELF::getTypesS(), SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::e_type, XComboBoxEx::CBTYPE_LIST);
+                g_comboBox[CB_Elf_Ehdr_machine] =
+                    createComboBox(ui->tableWidget_Elf_Ehdr, XELF::getMachinesS(), SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::e_machine, XComboBoxEx::CBTYPE_LIST);
 
-                g_invWidget[INV_Elf_e_entry] = createInvWidget(
-                    ui->tableWidget_Elf_Ehdr, SELF::TYPE_Elf_Ehdr,
-                    N_Elf_Ehdr::e_entry, InvWidget::TYPE_HEX);
-                g_invWidget[INV_Elf_e_phoff] = createInvWidget(
-                    ui->tableWidget_Elf_Ehdr, SELF::TYPE_Elf_Ehdr,
-                    N_Elf_Ehdr::e_phoff, InvWidget::TYPE_HEX);
-                g_invWidget[INV_Elf_e_shoff] = createInvWidget(
-                    ui->tableWidget_Elf_Ehdr, SELF::TYPE_Elf_Ehdr,
-                    N_Elf_Ehdr::e_shoff, InvWidget::TYPE_HEX);
+                g_invWidget[INV_Elf_e_entry] = createInvWidget(ui->tableWidget_Elf_Ehdr, SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::e_entry, InvWidget::TYPE_HEX);
+                g_invWidget[INV_Elf_e_phoff] = createInvWidget(ui->tableWidget_Elf_Ehdr, SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::e_phoff, InvWidget::TYPE_HEX);
+                g_invWidget[INV_Elf_e_shoff] = createInvWidget(ui->tableWidget_Elf_Ehdr, SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::e_shoff, InvWidget::TYPE_HEX);
 
                 blockSignals(true);
 
-                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_mag]->setValue(
-                    elf.getIdent_mag_LE());
-                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_class]->setValue(
-                    elf.getIdent_class());
-                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_data]->setValue(
-                    elf.getIdent_data());
-                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_version]->setValue(
-                    elf.getIdent_version());
-                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_osabi]->setValue(
-                    elf.getIdent_osabi());
-                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_abiversion]->setValue(
-                    elf.getIdent_abiversion());
-                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_0]->setValue(
-                    elf.getIdent_pad(0));
-                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_1]->setValue(
-                    elf.getIdent_pad(1));
-                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_2]->setValue(
-                    elf.getIdent_pad(2));
-                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_3]->setValue(
-                    elf.getIdent_pad(3));
-                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_4]->setValue(
-                    elf.getIdent_pad(4));
-                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_5]->setValue(
-                    elf.getIdent_pad(5));
-                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_6]->setValue(
-                    elf.getIdent_pad(6));
+                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_mag]->setValue(elf.getIdent_mag_LE());
+                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_class]->setValue(elf.getIdent_class());
+                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_data]->setValue(elf.getIdent_data());
+                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_version]->setValue(elf.getIdent_version());
+                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_osabi]->setValue(elf.getIdent_osabi());
+                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_abiversion]->setValue(elf.getIdent_abiversion());
+                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_0]->setValue(elf.getIdent_pad(0));
+                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_1]->setValue(elf.getIdent_pad(1));
+                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_2]->setValue(elf.getIdent_pad(2));
+                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_3]->setValue(elf.getIdent_pad(3));
+                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_4]->setValue(elf.getIdent_pad(4));
+                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_5]->setValue(elf.getIdent_pad(5));
+                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_6]->setValue(elf.getIdent_pad(6));
 
                 if (elf.is64()) {
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_type]->setValue(
-                        elf.getHdr64_type());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_machine]->setValue(
-                        elf.getHdr64_machine());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_version]->setValue(
-                        elf.getHdr64_version());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_entry]->setValue(
-                        elf.getHdr64_entry());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_phoff]->setValue(
-                        elf.getHdr64_phoff());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shoff]->setValue(
-                        elf.getHdr64_shoff());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_flags]->setValue(
-                        elf.getHdr64_flags());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_ehsize]->setValue(
-                        elf.getHdr64_ehsize());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_phentsize]->setValue(
-                        elf.getHdr64_phentsize());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_phnum]->setValue(
-                        elf.getHdr64_phnum());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shentsize]->setValue(
-                        elf.getHdr64_shentsize());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shnum]->setValue(
-                        elf.getHdr64_shnum());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shstrndx]->setValue(
-                        elf.getHdr64_shstrndx());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_type]->setValue(elf.getHdr64_type());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_machine]->setValue(elf.getHdr64_machine());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_version]->setValue(elf.getHdr64_version());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_entry]->setValue(elf.getHdr64_entry());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_phoff]->setValue(elf.getHdr64_phoff());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shoff]->setValue(elf.getHdr64_shoff());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_flags]->setValue(elf.getHdr64_flags());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_ehsize]->setValue(elf.getHdr64_ehsize());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_phentsize]->setValue(elf.getHdr64_phentsize());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_phnum]->setValue(elf.getHdr64_phnum());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shentsize]->setValue(elf.getHdr64_shentsize());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shnum]->setValue(elf.getHdr64_shnum());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shstrndx]->setValue(elf.getHdr64_shstrndx());
 
                     g_comboBox[CB_Elf_Ehdr_type]->setValue(elf.getHdr64_type());
-                    g_comboBox[CB_Elf_Ehdr_machine]->setValue(
-                        elf.getHdr64_machine());
+                    g_comboBox[CB_Elf_Ehdr_machine]->setValue(elf.getHdr64_machine());
 
-                    g_invWidget[INV_Elf_e_entry]->setAddressAndSize(
-                        &elf, elf.getHdr64_entry(), 0);
-                    g_invWidget[INV_Elf_e_phoff]->setOffsetAndSize(
-                        &elf, elf.getHdr64_phoff(), 0);  // TODO Size
-                    g_invWidget[INV_Elf_e_shoff]->setOffsetAndSize(
-                        &elf, elf.getHdr64_shoff(), 0);  // TODO Size
+                    g_invWidget[INV_Elf_e_entry]->setAddressAndSize(&elf, elf.getHdr64_entry(), 0);
+                    g_invWidget[INV_Elf_e_phoff]->setOffsetAndSize(&elf, elf.getHdr64_phoff(), 0);  // TODO Size
+                    g_invWidget[INV_Elf_e_shoff]->setOffsetAndSize(&elf, elf.getHdr64_shoff(), 0);  // TODO Size
                 } else {
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_type]->setValue(
-                        elf.getHdr32_type());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_machine]->setValue(
-                        elf.getHdr32_machine());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_version]->setValue(
-                        elf.getHdr32_version());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_entry]->setValue(
-                        elf.getHdr32_entry());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_phoff]->setValue(
-                        elf.getHdr32_phoff());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shoff]->setValue(
-                        elf.getHdr32_shoff());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_flags]->setValue(
-                        elf.getHdr32_flags());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_ehsize]->setValue(
-                        elf.getHdr32_ehsize());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_phentsize]->setValue(
-                        elf.getHdr32_phentsize());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_phnum]->setValue(
-                        elf.getHdr32_phnum());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shentsize]->setValue(
-                        elf.getHdr32_shentsize());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shnum]->setValue(
-                        elf.getHdr32_shnum());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shstrndx]->setValue(
-                        elf.getHdr32_shstrndx());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_type]->setValue(elf.getHdr32_type());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_machine]->setValue(elf.getHdr32_machine());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_version]->setValue(elf.getHdr32_version());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_entry]->setValue(elf.getHdr32_entry());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_phoff]->setValue(elf.getHdr32_phoff());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shoff]->setValue(elf.getHdr32_shoff());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_flags]->setValue(elf.getHdr32_flags());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_ehsize]->setValue(elf.getHdr32_ehsize());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_phentsize]->setValue(elf.getHdr32_phentsize());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_phnum]->setValue(elf.getHdr32_phnum());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shentsize]->setValue(elf.getHdr32_shentsize());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shnum]->setValue(elf.getHdr32_shnum());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shstrndx]->setValue(elf.getHdr32_shstrndx());
 
                     g_comboBox[CB_Elf_Ehdr_type]->setValue(elf.getHdr32_type());
-                    g_comboBox[CB_Elf_Ehdr_machine]->setValue(
-                        elf.getHdr32_machine());
+                    g_comboBox[CB_Elf_Ehdr_machine]->setValue(elf.getHdr32_machine());
 
-                    g_invWidget[INV_Elf_e_entry]->setAddressAndSize(
-                        &elf, elf.getHdr32_entry(), 0);
-                    g_invWidget[INV_Elf_e_phoff]->setOffsetAndSize(
-                        &elf, elf.getHdr32_phoff(), 0);  // TODO Size
-                    g_invWidget[INV_Elf_e_shoff]->setOffsetAndSize(
-                        &elf, elf.getHdr32_shoff(), 0);  // TODO Size
+                    g_invWidget[INV_Elf_e_entry]->setAddressAndSize(&elf, elf.getHdr32_entry(), 0);
+                    g_invWidget[INV_Elf_e_phoff]->setOffsetAndSize(&elf, elf.getHdr32_phoff(), 0);  // TODO Size
+                    g_invWidget[INV_Elf_e_shoff]->setOffsetAndSize(&elf, elf.getHdr32_shoff(), 0);  // TODO Size
                 }
 
                 g_comboBox[CB_Elf_Ehdr_mag]->setValue(elf.getIdent_mag_LE());
                 g_comboBox[CB_Elf_Ehdr_iclass]->setValue(elf.getIdent_class());
                 g_comboBox[CB_Elf_Ehdr_idata]->setValue(elf.getIdent_data());
-                g_comboBox[CB_Elf_Ehdr_iversion]->setValue(
-                    elf.getIdent_version());
+                g_comboBox[CB_Elf_Ehdr_iversion]->setValue(elf.getIdent_version());
                 g_comboBox[CB_Elf_Ehdr_iosabi]->setValue(elf.getIdent_osabi());
 
                 qint64 nOffset = elf.getEhdrOffset();
@@ -653,186 +507,128 @@ void ELFWidget::reloadData() {
                     nSize = elf.getEhdr32Size();
                 }
 
-                loadHexSubdevice(nOffset, nSize, nOffset,
-                                 &g_subDevice[SELF::TYPE_Elf_Ehdr],
-                                 ui->widgetHex_Elf_Ehdr);
+                loadHexSubdevice(nOffset, nSize, nOffset, &g_subDevice[SELF::TYPE_Elf_Ehdr], ui->widgetHex_Elf_Ehdr);
 
                 blockSignals(false);
             }
         } else if (nType == SELF::TYPE_Elf_Shdr) {
             if (!isInitPresent(sInit)) {
-                ELFProcessData elfProcessData(
-                    SELF::TYPE_Elf_Shdr, &g_tvModel[SELF::TYPE_Elf_Shdr], &elf,
-                    nDataOffset, nDataSize, nDataExtraOffset, nDataExtraSize);
+                ELFProcessData elfProcessData(SELF::TYPE_Elf_Shdr, &g_tvModel[SELF::TYPE_Elf_Shdr], &elf, nDataOffset, nDataSize, nDataExtraOffset,
+                                              nDataExtraSize);
 
-                ajustTableView(&elfProcessData, &g_tvModel[SELF::TYPE_Elf_Shdr],
-                               ui->tableView_Elf_Shdr, nullptr, false);
+                ajustTableView(&elfProcessData, &g_tvModel[SELF::TYPE_Elf_Shdr], ui->tableView_Elf_Shdr, nullptr, false);
 
-                connect(ui->tableView_Elf_Shdr->selectionModel(),
-                        SIGNAL(currentRowChanged(QModelIndex, QModelIndex)),
-                        this,
-                        SLOT(onTableView_Elf_Shdr_currentRowChanged(
-                            QModelIndex, QModelIndex)));
+                connect(ui->tableView_Elf_Shdr->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
+                        SLOT(onTableView_Elf_Shdr_currentRowChanged(QModelIndex, QModelIndex)));
 
                 if (g_tvModel[SELF::TYPE_Elf_Shdr]->rowCount()) {
-                    ui->tableView_Elf_Shdr->setCurrentIndex(
-                        ui->tableView_Elf_Shdr->model()->index(0, 0));
+                    ui->tableView_Elf_Shdr->setCurrentIndex(ui->tableView_Elf_Shdr->model()->index(0, 0));
                 }
             }
         } else if (nType == SELF::TYPE_Elf_Phdr) {
             if (!isInitPresent(sInit)) {
-                ELFProcessData elfProcessData(
-                    SELF::TYPE_Elf_Phdr, &g_tvModel[SELF::TYPE_Elf_Phdr], &elf,
-                    nDataOffset, nDataSize, nDataExtraOffset, nDataExtraSize);
+                ELFProcessData elfProcessData(SELF::TYPE_Elf_Phdr, &g_tvModel[SELF::TYPE_Elf_Phdr], &elf, nDataOffset, nDataSize, nDataExtraOffset,
+                                              nDataExtraSize);
 
-                ajustTableView(&elfProcessData, &g_tvModel[SELF::TYPE_Elf_Phdr],
-                               ui->tableView_Elf_Phdr, nullptr, false);
+                ajustTableView(&elfProcessData, &g_tvModel[SELF::TYPE_Elf_Phdr], ui->tableView_Elf_Phdr, nullptr, false);
 
-                connect(ui->tableView_Elf_Phdr->selectionModel(),
-                        SIGNAL(currentRowChanged(QModelIndex, QModelIndex)),
-                        this,
-                        SLOT(onTableView_Elf_Phdr_currentRowChanged(
-                            QModelIndex, QModelIndex)));
+                connect(ui->tableView_Elf_Phdr->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
+                        SLOT(onTableView_Elf_Phdr_currentRowChanged(QModelIndex, QModelIndex)));
 
                 if (g_tvModel[SELF::TYPE_Elf_Phdr]->rowCount()) {
-                    ui->tableView_Elf_Phdr->setCurrentIndex(
-                        ui->tableView_Elf_Phdr->model()->index(0, 0));
+                    ui->tableView_Elf_Phdr->setCurrentIndex(ui->tableView_Elf_Phdr->model()->index(0, 0));
                 }
             }
         } else if (nType == SELF::TYPE_Elf_DynamicArrayTags) {
             if (!isInitPresent(sInit)) {
-                ELFProcessData elfProcessData(
-                    SELF::TYPE_Elf_DynamicArrayTags,
-                    &g_tvModel[SELF::TYPE_Elf_DynamicArrayTags], &elf,
-                    nDataOffset, nDataSize, nDataExtraOffset, nDataExtraSize);
+                ELFProcessData elfProcessData(SELF::TYPE_Elf_DynamicArrayTags, &g_tvModel[SELF::TYPE_Elf_DynamicArrayTags], &elf, nDataOffset, nDataSize,
+                                              nDataExtraOffset, nDataExtraSize);
 
-                ajustTableView(&elfProcessData,
-                               &g_tvModel[SELF::TYPE_Elf_DynamicArrayTags],
-                               ui->tableView_DynamicArrayTags);
+                ajustTableView(&elfProcessData, &g_tvModel[SELF::TYPE_Elf_DynamicArrayTags], ui->tableView_DynamicArrayTags);
 
-                connect(ui->tableView_DynamicArrayTags->selectionModel(),
-                        SIGNAL(currentRowChanged(QModelIndex, QModelIndex)),
-                        this,
-                        SLOT(onTableView_DynamicArrayTags_currentRowChanged(
-                            QModelIndex, QModelIndex)));
+                connect(ui->tableView_DynamicArrayTags->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
+                        SLOT(onTableView_DynamicArrayTags_currentRowChanged(QModelIndex, QModelIndex)));
 
                 if (g_tvModel[SELF::TYPE_Elf_DynamicArrayTags]->rowCount()) {
-                    ui->tableView_DynamicArrayTags->setCurrentIndex(
-                        ui->tableView_DynamicArrayTags->model()->index(0, 0));
+                    ui->tableView_DynamicArrayTags->setCurrentIndex(ui->tableView_DynamicArrayTags->model()->index(0, 0));
                 }
             }
         } else if (nType == SELF::TYPE_LIBRARIES) {
             if (!isInitPresent(sInit)) {
-                ELFProcessData elfProcessData(SELF::TYPE_LIBRARIES,
-                                              &g_tvModel[SELF::TYPE_LIBRARIES],
-                                              &elf, nDataOffset, nDataSize,
-                                              nDataExtraOffset, nDataExtraSize);
+                ELFProcessData elfProcessData(SELF::TYPE_LIBRARIES, &g_tvModel[SELF::TYPE_LIBRARIES], &elf, nDataOffset, nDataSize, nDataExtraOffset,
+                                              nDataExtraSize);
 
-                ajustTableView(&elfProcessData,
-                               &g_tvModel[SELF::TYPE_LIBRARIES],
-                               ui->tableView_Libraries);
+                ajustTableView(&elfProcessData, &g_tvModel[SELF::TYPE_LIBRARIES], ui->tableView_Libraries);
 
-                connect(ui->tableView_Libraries->selectionModel(),
-                        SIGNAL(currentRowChanged(QModelIndex, QModelIndex)),
-                        this,
-                        SLOT(onTableView_Libraries_currentRowChanged(
-                            QModelIndex, QModelIndex)));
+                connect(ui->tableView_Libraries->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
+                        SLOT(onTableView_Libraries_currentRowChanged(QModelIndex, QModelIndex)));
 
                 if (g_tvModel[SELF::TYPE_LIBRARIES]->rowCount()) {
-                    ui->tableView_Libraries->setCurrentIndex(
-                        ui->tableView_Libraries->model()->index(0, 0));
+                    ui->tableView_Libraries->setCurrentIndex(ui->tableView_Libraries->model()->index(0, 0));
                 }
             }
         } else if (nType == SELF::TYPE_INTERPRETER) {
             if (!isInitPresent(sInit)) {
-                createListTable(
-                    SELF::TYPE_INTERPRETER, ui->tableWidget_Interpreter,
-                    N_ELF_INTERPRETER::records, g_lineEdit_Elf_Interpreter,
-                    N_ELF_INTERPRETER::__data_size);
+                createListTable(SELF::TYPE_INTERPRETER, ui->tableWidget_Interpreter, N_ELF_INTERPRETER::records, g_lineEdit_Elf_Interpreter,
+                                N_ELF_INTERPRETER::__data_size);
 
                 blockSignals(true);
 
-                XBinary::OS_STRING osAnsiString =
-                    elf.getOsAnsiString(nDataOffset, nDataSize);
+                XBinary::OS_STRING osAnsiString = elf.getOsAnsiString(nDataOffset, nDataSize);
 
-                setLineEdit(
-                    g_lineEdit_Elf_Interpreter[N_ELF_INTERPRETER::interpreter],
-                    osAnsiString.nSize, osAnsiString.sString,
-                    osAnsiString.nOffset);
+                setLineEdit(g_lineEdit_Elf_Interpreter[N_ELF_INTERPRETER::interpreter], osAnsiString.nSize, osAnsiString.sString, osAnsiString.nOffset);
 
                 blockSignals(false);
             }
         } else if (nType == SELF::TYPE_NOTES) {
             if (!isInitPresent(sInit)) {
-                ELFProcessData elfProcessData(
-                    SELF::TYPE_NOTES, &g_tvModel[SELF::TYPE_NOTES], &elf,
-                    nDataOffset, nDataSize, nDataExtraOffset, nDataExtraSize);
+                ELFProcessData elfProcessData(SELF::TYPE_NOTES, &g_tvModel[SELF::TYPE_NOTES], &elf, nDataOffset, nDataSize, nDataExtraOffset, nDataExtraSize);
 
-                ajustTableView(&elfProcessData, &g_tvModel[SELF::TYPE_NOTES],
-                               ui->tableView_Notes);
+                ajustTableView(&elfProcessData, &g_tvModel[SELF::TYPE_NOTES], ui->tableView_Notes);
 
-                connect(ui->tableView_Notes->selectionModel(),
-                        SIGNAL(currentRowChanged(QModelIndex, QModelIndex)),
-                        this,
-                        SLOT(onTableView_Notes_currentRowChanged(QModelIndex,
-                                                                 QModelIndex)));
+                connect(ui->tableView_Notes->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
+                        SLOT(onTableView_Notes_currentRowChanged(QModelIndex, QModelIndex)));
 
                 if (g_tvModel[SELF::TYPE_NOTES]->rowCount()) {
-                    ui->tableView_Notes->setCurrentIndex(
-                        ui->tableView_Notes->model()->index(0, 0));
+                    ui->tableView_Notes->setCurrentIndex(ui->tableView_Notes->model()->index(0, 0));
                 }
             }
         } else if (nType == SELF::TYPE_RUNPATH) {
             if (!isInitPresent(sInit)) {
-                createListTable(SELF::TYPE_RUNPATH, ui->tableWidget_RunPath,
-                                N_ELF_RUNPATH::records, g_lineEdit_Elf_RunPath,
-                                N_ELF_RUNPATH::__data_size);
+                createListTable(SELF::TYPE_RUNPATH, ui->tableWidget_RunPath, N_ELF_RUNPATH::records, g_lineEdit_Elf_RunPath, N_ELF_RUNPATH::__data_size);
 
                 blockSignals(true);
 
-                XBinary::OS_STRING osAnsiString =
-                    elf.getOsAnsiString(nDataOffset, nDataSize);
+                XBinary::OS_STRING osAnsiString = elf.getOsAnsiString(nDataOffset, nDataSize);
 
-                setLineEdit(g_lineEdit_Elf_RunPath[N_ELF_RUNPATH::runpath],
-                            osAnsiString.nSize, osAnsiString.sString,
-                            osAnsiString.nOffset);
+                setLineEdit(g_lineEdit_Elf_RunPath[N_ELF_RUNPATH::runpath], osAnsiString.nSize, osAnsiString.sString, osAnsiString.nOffset);
 
                 blockSignals(false);
             }
         } else if (nType == SELF::TYPE_STRINGTABLE) {
             if (!isInitPresent(sInit)) {
-                loadHexSubdevice(nDataOffset, nDataSize, 0,
-                                 &g_subDevice[SELF::TYPE_STRINGTABLE],
-                                 ui->widgetHex_StringTable);
+                loadHexSubdevice(nDataOffset, nDataSize, 0, &g_subDevice[SELF::TYPE_STRINGTABLE], ui->widgetHex_StringTable);
             }
         } else if (nType == SELF::TYPE_SYMBOLTABLE) {
             if (!isInitPresent(sInit)) {
-                ELFProcessData elfProcessData(
-                    SELF::TYPE_SYMBOLTABLE, &g_tvModel[SELF::TYPE_SYMBOLTABLE],
-                    &elf, nDataOffset, nDataSize, nDataExtraOffset,
-                    nDataExtraSize);
+                ELFProcessData elfProcessData(SELF::TYPE_SYMBOLTABLE, &g_tvModel[SELF::TYPE_SYMBOLTABLE], &elf, nDataOffset, nDataSize, nDataExtraOffset,
+                                              nDataExtraSize);
 
-                ajustTableView(&elfProcessData,
-                               &g_tvModel[SELF::TYPE_SYMBOLTABLE],
-                               ui->tableView_SymbolTable, nullptr, false);
+                ajustTableView(&elfProcessData, &g_tvModel[SELF::TYPE_SYMBOLTABLE], ui->tableView_SymbolTable, nullptr, false);
             }
         } else if (nType == SELF::TYPE_Elf_Rela) {
             if (!isInitPresent(sInit)) {
-                ELFProcessData elfProcessData(
-                    SELF::TYPE_Elf_Rela, &g_tvModel[SELF::TYPE_Elf_Rela], &elf,
-                    nDataOffset, nDataSize, nDataExtraOffset, nDataExtraSize);
+                ELFProcessData elfProcessData(SELF::TYPE_Elf_Rela, &g_tvModel[SELF::TYPE_Elf_Rela], &elf, nDataOffset, nDataSize, nDataExtraOffset,
+                                              nDataExtraSize);
 
-                ajustTableView(&elfProcessData, &g_tvModel[SELF::TYPE_Elf_Rela],
-                               ui->tableView_Rela, nullptr, false);
+                ajustTableView(&elfProcessData, &g_tvModel[SELF::TYPE_Elf_Rela], ui->tableView_Rela, nullptr, false);
             }
         } else if (nType == SELF::TYPE_Elf_Rel) {
             if (!isInitPresent(sInit)) {
-                ELFProcessData elfProcessData(
-                    SELF::TYPE_Elf_Rel, &g_tvModel[SELF::TYPE_Elf_Rel], &elf,
-                    nDataOffset, nDataSize, nDataExtraOffset, nDataExtraSize);
+                ELFProcessData elfProcessData(SELF::TYPE_Elf_Rel, &g_tvModel[SELF::TYPE_Elf_Rel], &elf, nDataOffset, nDataSize, nDataExtraOffset,
+                                              nDataExtraSize);
 
-                ajustTableView(&elfProcessData, &g_tvModel[SELF::TYPE_Elf_Rel],
-                               ui->tableView_Rel, nullptr, false);
+                ajustTableView(&elfProcessData, &g_tvModel[SELF::TYPE_Elf_Rel], ui->tableView_Rel, nullptr, false);
             }
         }
 
@@ -842,76 +638,47 @@ void ELFWidget::reloadData() {
     addInit(sInit);
 }
 
-void ELFWidget::addDatasets(XELF *pElf, QTreeWidgetItem *pParent,
-                            QList<XBinary::DATASET> *pListDataSets) {
+void ELFWidget::addDatasets(XELF *pElf, QTreeWidgetItem *pParent, QList<XBinary::DATASET> *pListDataSets) {
     qint32 nNumberOfRecords = pListDataSets->count();
 
     for (qint32 i = 0; i < nNumberOfRecords; i++) {
         if (pListDataSets->at(i).nType == XELF::DS_INTERPRETER) {
-            pParent->addChild(createNewItem(
-                SELF::TYPE_INTERPRETER, pListDataSets->at(i).sName,
-                pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
-                pListDataSets->at(i).nStringTableOffset,
-                pListDataSets->at(i).nStringTableSize));
+            pParent->addChild(createNewItem(SELF::TYPE_INTERPRETER, pListDataSets->at(i).sName, pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
+                                            pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
         } else if (pListDataSets->at(i).nType == XELF::DS_LIBRARIES) {
-            pParent->addChild(createNewItem(
-                SELF::TYPE_LIBRARIES, pListDataSets->at(i).sName,
-                pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
-                pListDataSets->at(i).nStringTableOffset,
-                pListDataSets->at(i).nStringTableSize));
+            pParent->addChild(createNewItem(SELF::TYPE_LIBRARIES, pListDataSets->at(i).sName, pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
+                                            pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
         } else if (pListDataSets->at(i).nType == XELF::DS_STRINGTABLE) {
-            pParent->addChild(createNewItem(
-                SELF::TYPE_STRINGTABLE, pListDataSets->at(i).sName,
-                pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
-                pListDataSets->at(i).nStringTableOffset,
-                pListDataSets->at(i).nStringTableSize));
+            pParent->addChild(createNewItem(SELF::TYPE_STRINGTABLE, pListDataSets->at(i).sName, pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
+                                            pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
         } else if (pListDataSets->at(i).nType == XELF::DS_SYMBOLTABLE) {
-            pParent->addChild(createNewItem(
-                SELF::TYPE_SYMBOLTABLE, pListDataSets->at(i).sName,
-                pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
-                pListDataSets->at(i).nStringTableOffset,
-                pListDataSets->at(i).nStringTableSize));
+            pParent->addChild(createNewItem(SELF::TYPE_SYMBOLTABLE, pListDataSets->at(i).sName, pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
+                                            pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
         } else if (pListDataSets->at(i).nType == XELF::DS_RUNPATH) {
-            pParent->addChild(createNewItem(
-                SELF::TYPE_RUNPATH, pListDataSets->at(i).sName,
-                pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
-                pListDataSets->at(i).nStringTableOffset,
-                pListDataSets->at(i).nStringTableSize));
+            pParent->addChild(createNewItem(SELF::TYPE_RUNPATH, pListDataSets->at(i).sName, pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
+                                            pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
         } else if (pListDataSets->at(i).nType == XELF::DS_NOTES) {
-            pParent->addChild(createNewItem(
-                SELF::TYPE_NOTES, pListDataSets->at(i).sName,
-                pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
-                pListDataSets->at(i).nStringTableOffset,
-                pListDataSets->at(i).nStringTableSize));
+            pParent->addChild(createNewItem(SELF::TYPE_NOTES, pListDataSets->at(i).sName, pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
+                                            pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
         } else if (pListDataSets->at(i).nType == XELF::DS_RELA) {
-            pParent->addChild(createNewItem(
-                SELF::TYPE_Elf_Rela, pListDataSets->at(i).sName,
-                pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
-                pListDataSets->at(i).nStringTableOffset,
-                pListDataSets->at(i).nStringTableSize));
+            pParent->addChild(createNewItem(SELF::TYPE_Elf_Rela, pListDataSets->at(i).sName, pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
+                                            pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
         } else if (pListDataSets->at(i).nType == XELF::DS_REL) {
-            pParent->addChild(createNewItem(
-                SELF::TYPE_Elf_Rel, pListDataSets->at(i).sName,
-                pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
-                pListDataSets->at(i).nStringTableOffset,
-                pListDataSets->at(i).nStringTableSize));
+            pParent->addChild(createNewItem(SELF::TYPE_Elf_Rel, pListDataSets->at(i).sName, pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
+                                            pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
         } else if (pListDataSets->at(i).nType == XELF::DS_DYNAMICTAGS) {
-            QTreeWidgetItem *pDynamicTags = createNewItem(
-                SELF::TYPE_Elf_DynamicArrayTags, pListDataSets->at(i).sName,
-                pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
-                pListDataSets->at(i).nStringTableOffset,
-                pListDataSets->at(i).nStringTableSize);
+            QTreeWidgetItem *pDynamicTags =
+                createNewItem(SELF::TYPE_Elf_DynamicArrayTags, pListDataSets->at(i).sName, pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
+                              pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize);
 
             pParent->addChild(pDynamicTags);
 
-            QList<XELF::TAG_STRUCT> listTagStructs = pElf->_getTagStructs(
-                pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
-                pElf->is64(), pElf->isBigEndian());
+            QList<XELF::TAG_STRUCT> listTagStructs =
+                pElf->_getTagStructs(pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize, pElf->is64(), pElf->isBigEndian());
 
             XBinary::_MEMORY_MAP memoryMap = pElf->getMemoryMap();
 
-            QList<XBinary::DATASET> listDatasets =
-                pElf->getDatasetsFromTagStructs(&memoryMap, &listTagStructs);
+            QList<XBinary::DATASET> listDatasets = pElf->getDatasetsFromTagStructs(&memoryMap, &listTagStructs);
 
             addDatasets(pElf, pDynamicTags, &listDatasets);
         }
@@ -927,28 +694,22 @@ void ELFWidget::widgetValueChanged(quint64 nValue) {
         case SELF::TYPE_Elf_Ehdr:
             switch (nNdata) {
                 case N_Elf_Ehdr::ei_class:
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_class]->setValue(
-                        (quint8)nValue);
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_class]->setValue((quint8)nValue);
                     break;
                 case N_Elf_Ehdr::ei_data:
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_data]->setValue(
-                        (quint8)nValue);
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_data]->setValue((quint8)nValue);
                     break;
                 case N_Elf_Ehdr::ei_version:
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_version]->setValue(
-                        (quint8)nValue);
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_version]->setValue((quint8)nValue);
                     break;
                 case N_Elf_Ehdr::ei_osabi:
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_osabi]->setValue(
-                        (quint8)nValue);
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_osabi]->setValue((quint8)nValue);
                     break;
                 case N_Elf_Ehdr::e_type:
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_type]->setValue(
-                        (quint16)nValue);
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_type]->setValue((quint16)nValue);
                     break;
                 case N_Elf_Ehdr::e_machine:
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_machine]->setValue(
-                        (quint16)nValue);
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_machine]->setValue((quint16)nValue);
                     break;
             }
 
@@ -956,8 +717,7 @@ void ELFWidget::widgetValueChanged(quint64 nValue) {
     }
 }
 
-void ELFWidget::on_treeWidgetNavi_currentItemChanged(
-    QTreeWidgetItem *pItemCurrent, QTreeWidgetItem *pItemPrevious) {
+void ELFWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurrent, QTreeWidgetItem *pItemPrevious) {
     Q_UNUSED(pItemPrevious)
 
     if (pItemCurrent) {
@@ -979,28 +739,19 @@ void ELFWidget::on_pushButtonReload_clicked() {
     QTimer::singleShot(1000, this, SLOT(enableButton()));
 }
 
-void ELFWidget::enableButton() { ui->pushButtonReload->setEnabled(true); }
+void ELFWidget::enableButton() {
+    ui->pushButtonReload->setEnabled(true);
+}
 
 void ELFWidget::loadShdr(int nRow) {
     if (nRow != -1) {
         QModelIndex index = ui->tableView_Elf_Shdr->model()->index(nRow, 0);
 
-        qint64 nOffset =
-            ui->tableView_Elf_Shdr->model()
-                ->data(index, Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET)
-                .toLongLong();
-        qint64 nSize =
-            ui->tableView_Elf_Shdr->model()
-                ->data(index, Qt::UserRole + FW_DEF::SECTION_DATA_SIZE)
-                .toLongLong();
-        qint64 nAddress =
-            ui->tableView_Elf_Shdr->model()
-                ->data(index, Qt::UserRole + FW_DEF::SECTION_DATA_ADDRESS)
-                .toLongLong();
+        qint64 nOffset = ui->tableView_Elf_Shdr->model()->data(index, Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET).toLongLong();
+        qint64 nSize = ui->tableView_Elf_Shdr->model()->data(index, Qt::UserRole + FW_DEF::SECTION_DATA_SIZE).toLongLong();
+        qint64 nAddress = ui->tableView_Elf_Shdr->model()->data(index, Qt::UserRole + FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
 
-        loadHexSubdevice(nOffset, nSize, nAddress,
-                         &g_subDevice[SELF::TYPE_Elf_Shdr],
-                         ui->widgetHex_Elf_Shdr);
+        loadHexSubdevice(nOffset, nSize, nAddress, &g_subDevice[SELF::TYPE_Elf_Shdr], ui->widgetHex_Elf_Shdr);
     }
 }
 
@@ -1008,22 +759,11 @@ void ELFWidget::loadPhdr(int nRow) {
     if (nRow != -1) {
         QModelIndex index = ui->tableView_Elf_Phdr->model()->index(nRow, 0);
 
-        qint64 nOffset =
-            ui->tableView_Elf_Phdr->model()
-                ->data(index, Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET)
-                .toLongLong();
-        qint64 nSize =
-            ui->tableView_Elf_Phdr->model()
-                ->data(index, Qt::UserRole + FW_DEF::SECTION_DATA_SIZE)
-                .toLongLong();
-        qint64 nAddress =
-            ui->tableView_Elf_Phdr->model()
-                ->data(index, Qt::UserRole + FW_DEF::SECTION_DATA_ADDRESS)
-                .toLongLong();
+        qint64 nOffset = ui->tableView_Elf_Phdr->model()->data(index, Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET).toLongLong();
+        qint64 nSize = ui->tableView_Elf_Phdr->model()->data(index, Qt::UserRole + FW_DEF::SECTION_DATA_SIZE).toLongLong();
+        qint64 nAddress = ui->tableView_Elf_Phdr->model()->data(index, Qt::UserRole + FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
 
-        loadHexSubdevice(nOffset, nSize, nAddress,
-                         &g_subDevice[SELF::TYPE_Elf_Phdr],
-                         ui->widgetHex_Elf_Phdr);
+        loadHexSubdevice(nOffset, nSize, nAddress, &g_subDevice[SELF::TYPE_Elf_Phdr], ui->widgetHex_Elf_Phdr);
     }
 }
 
@@ -1031,27 +771,15 @@ void ELFWidget::loadNote(int nRow) {
     if (nRow != -1) {
         QModelIndex index = ui->tableView_Notes->model()->index(nRow, 0);
 
-        qint64 nOffset =
-            ui->tableView_Notes->model()
-                ->data(index, Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET)
-                .toLongLong();
-        qint64 nSize =
-            ui->tableView_Notes->model()
-                ->data(index, Qt::UserRole + FW_DEF::SECTION_DATA_SIZE)
-                .toLongLong();
-        qint64 nAddress =
-            ui->tableView_Notes->model()
-                ->data(index, Qt::UserRole + FW_DEF::SECTION_DATA_ADDRESS)
-                .toLongLong();
+        qint64 nOffset = ui->tableView_Notes->model()->data(index, Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET).toLongLong();
+        qint64 nSize = ui->tableView_Notes->model()->data(index, Qt::UserRole + FW_DEF::SECTION_DATA_SIZE).toLongLong();
+        qint64 nAddress = ui->tableView_Notes->model()->data(index, Qt::UserRole + FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
 
-        loadHexSubdevice(nOffset, nSize, nAddress,
-                         &g_subDevice[SELF::TYPE_NOTES], ui->widgetHex_Notes);
+        loadHexSubdevice(nOffset, nSize, nAddress, &g_subDevice[SELF::TYPE_NOTES], ui->widgetHex_Notes);
     }
 }
 
-void ELFWidget::on_tableWidget_Elf_Ehdr_currentCellChanged(
-    int nCurrentRow, int nCurrentColumn, int nPreviousRow,
-    int nPreviousColumn) {
+void ELFWidget::on_tableWidget_Elf_Ehdr_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn) {
     Q_UNUSED(nCurrentRow);
     Q_UNUSED(nCurrentColumn);
     Q_UNUSED(nPreviousRow);
@@ -1064,51 +792,62 @@ void ELFWidget::editSectionHeader() {
     showSectionHeader(SELF::TYPE_Elf_Shdr, ui->tableView_Elf_Shdr);
 }
 
-void ELFWidget::sectionHex() { showSectionHex(ui->tableView_Elf_Shdr); }
+void ELFWidget::sectionHex() {
+    showSectionHex(ui->tableView_Elf_Shdr);
+}
 
-void ELFWidget::sectionDisasm() { showSectionDisasm(ui->tableView_Elf_Shdr); }
+void ELFWidget::sectionDisasm() {
+    showSectionDisasm(ui->tableView_Elf_Shdr);
+}
 
-void ELFWidget::sectionEntropy() { showSectionEntropy(ui->tableView_Elf_Shdr); }
+void ELFWidget::sectionEntropy() {
+    showSectionEntropy(ui->tableView_Elf_Shdr);
+}
 
-void ELFWidget::sectionDump() { dumpSection(ui->tableView_Elf_Shdr); }
+void ELFWidget::sectionDump() {
+    dumpSection(ui->tableView_Elf_Shdr);
+}
 
 void ELFWidget::editProgramHeader() {
     showSectionHeader(SELF::TYPE_Elf_Phdr, ui->tableView_Elf_Phdr);
 }
 
-void ELFWidget::programHex() { showSectionHex(ui->tableView_Elf_Phdr); }
-
-void ELFWidget::programDisasm() { showSectionDisasm(ui->tableView_Elf_Phdr); }
-
-void ELFWidget::programEntropy() { showSectionEntropy(ui->tableView_Elf_Phdr); }
-
-void ELFWidget::programDump() { dumpSection(ui->tableView_Elf_Phdr); }
-
-void ELFWidget::editDynamicArrayTag() {
-    showSectionHeader(SELF::TYPE_Elf_DynamicArrayTags,
-                      ui->tableView_DynamicArrayTags);
+void ELFWidget::programHex() {
+    showSectionHex(ui->tableView_Elf_Phdr);
 }
 
-void ELFWidget::on_tableView_SymbolTable_customContextMenuRequested(
-    const QPoint &pos) {
+void ELFWidget::programDisasm() {
+    showSectionDisasm(ui->tableView_Elf_Phdr);
+}
+
+void ELFWidget::programEntropy() {
+    showSectionEntropy(ui->tableView_Elf_Phdr);
+}
+
+void ELFWidget::programDump() {
+    dumpSection(ui->tableView_Elf_Phdr);
+}
+
+void ELFWidget::editDynamicArrayTag() {
+    showSectionHeader(SELF::TYPE_Elf_DynamicArrayTags, ui->tableView_DynamicArrayTags);
+}
+
+void ELFWidget::on_tableView_SymbolTable_customContextMenuRequested(const QPoint &pos) {
     qint32 nRow = ui->tableView_SymbolTable->currentIndex().row();
 
     if (nRow != -1) {
         QMenu contextMenu(this);
 
         QAction actionEdit(tr("Edit"), this);
-        connect(&actionEdit, SIGNAL(triggered()), this,
-                SLOT(editSymbolHeader()));
+        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editSymbolHeader()));
 
         QAction actionDemangle(tr("Demangle"), this);
-        connect(&actionDemangle, SIGNAL(triggered()), this,
-                SLOT(symbolDemangle()));
+        connect(&actionDemangle, SIGNAL(triggered()), this, SLOT(symbolDemangle()));
 
         contextMenu.addAction(&actionEdit);
         contextMenu.addAction(&actionDemangle);
 
-        contextMenu.exec(
-            ui->tableView_SymbolTable->viewport()->mapToGlobal(pos));
+        contextMenu.exec(ui->tableView_SymbolTable->viewport()->mapToGlobal(pos));
     }
 }
 
@@ -1124,31 +863,16 @@ void ELFWidget::showSectionHeader(int nType, QTableView *pTableView) {
     qint32 nRow = pTableView->currentIndex().row();
 
     if (nRow != -1) {
-        QModelIndex index =
-            pTableView->selectionModel()->selectedIndexes().at(0);
+        QModelIndex index = pTableView->selectionModel()->selectedIndexes().at(0);
 
-        qint64 nOffset =
-            pTableView->model()
-                ->data(index, Qt::UserRole + FW_DEF::SECTION_DATA_HEADEROFFSET)
-                .toLongLong();
+        qint64 nOffset = pTableView->model()->data(index, Qt::UserRole + FW_DEF::SECTION_DATA_HEADEROFFSET).toLongLong();
 
-        qint64 nStringTableOffset =
-            pTableView->model()
-                ->data(index,
-                       Qt::UserRole + FW_DEF::SECTION_DATA_STRINGTABLEOFFSET)
-                .toLongLong();
-        qint64 nStringTableSize =
-            pTableView->model()
-                ->data(index,
-                       Qt::UserRole + FW_DEF::SECTION_DATA_STRINGTABLESIZE)
-                .toLongLong();
+        qint64 nStringTableOffset = pTableView->model()->data(index, Qt::UserRole + FW_DEF::SECTION_DATA_STRINGTABLEOFFSET).toLongLong();
+        qint64 nStringTableSize = pTableView->model()->data(index, Qt::UserRole + FW_DEF::SECTION_DATA_STRINGTABLESIZE).toLongLong();
 
-        ELFSectionHeaderWidget *pSectionHeaderWidget =
-            new ELFSectionHeaderWidget(getDevice(), getOptions(), (quint32)nRow,
-                                       nOffset, nType, this);
+        ELFSectionHeaderWidget *pSectionHeaderWidget = new ELFSectionHeaderWidget(getDevice(), getOptions(), (quint32)nRow, nOffset, nType, this);
 
-        pSectionHeaderWidget->setStringTable(nStringTableOffset,
-                                             nStringTableSize);
+        pSectionHeaderWidget->setStringTable(nStringTableOffset, nStringTableSize);
 
         DialogSectionHeader dsh(this);
         dsh.setWidget(pSectionHeaderWidget);
@@ -1218,8 +942,7 @@ void ELFWidget::on_tableView_Elf_Shdr_doubleClicked(const QModelIndex &index) {
     editSectionHeader();
 }
 
-void ELFWidget::on_tableView_Elf_Shdr_customContextMenuRequested(
-    const QPoint &pos) {
+void ELFWidget::on_tableView_Elf_Shdr_customContextMenuRequested(const QPoint &pos) {
     qint32 nRow = ui->tableView_Elf_Shdr->currentIndex().row();
 
     if (nRow != -1) {
@@ -1228,8 +951,7 @@ void ELFWidget::on_tableView_Elf_Shdr_customContextMenuRequested(
         QMenu contextMenu(this);
 
         QAction actionEdit(tr("Edit"), this);
-        connect(&actionEdit, SIGNAL(triggered()), this,
-                SLOT(editSectionHeader()));
+        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editSectionHeader()));
         contextMenu.addAction(&actionEdit);
 
         QAction actionHex(QString("Hex"), this);
@@ -1238,14 +960,12 @@ void ELFWidget::on_tableView_Elf_Shdr_customContextMenuRequested(
         contextMenu.addAction(&actionHex);
 
         QAction actionDisasm(tr("Disasm"), this);
-        connect(&actionDisasm, SIGNAL(triggered()), this,
-                SLOT(sectionDisasm()));
+        connect(&actionDisasm, SIGNAL(triggered()), this, SLOT(sectionDisasm()));
         actionDisasm.setEnabled(bIsEnable);
         contextMenu.addAction(&actionDisasm);
 
         QAction actionEntropy(tr("Entropy"), this);
-        connect(&actionEntropy, SIGNAL(triggered()), this,
-                SLOT(sectionEntropy()));
+        connect(&actionEntropy, SIGNAL(triggered()), this, SLOT(sectionEntropy()));
         actionEntropy.setEnabled(bIsEnable);
         contextMenu.addAction(&actionEntropy);
 
@@ -1258,53 +978,41 @@ void ELFWidget::on_tableView_Elf_Shdr_customContextMenuRequested(
     }
 }
 
-void ELFWidget::on_tableView_SymbolTable_doubleClicked(
-    const QModelIndex &index) {
+void ELFWidget::on_tableView_SymbolTable_doubleClicked(const QModelIndex &index) {
     Q_UNUSED(index)
 
     editSymbolHeader();
 }
 
-void ELFWidget::onTableView_Elf_Shdr_currentRowChanged(
-    const QModelIndex &current, const QModelIndex &previous) {
+void ELFWidget::onTableView_Elf_Shdr_currentRowChanged(const QModelIndex &current, const QModelIndex &previous) {
     Q_UNUSED(current)
     Q_UNUSED(previous)
 
-    loadHexSubdeviceByTableView(current.row(), SELF::TYPE_Elf_Shdr,
-                                ui->widgetHex_Elf_Shdr, ui->tableView_Elf_Shdr,
-                                &g_subDevice[SELF::TYPE_Elf_Shdr]);
+    loadHexSubdeviceByTableView(current.row(), SELF::TYPE_Elf_Shdr, ui->widgetHex_Elf_Shdr, ui->tableView_Elf_Shdr, &g_subDevice[SELF::TYPE_Elf_Shdr]);
 }
 
-void ELFWidget::onTableView_Elf_Phdr_currentRowChanged(
-    const QModelIndex &current, const QModelIndex &previous) {
+void ELFWidget::onTableView_Elf_Phdr_currentRowChanged(const QModelIndex &current, const QModelIndex &previous) {
     Q_UNUSED(current)
     Q_UNUSED(previous)
 
-    loadHexSubdeviceByTableView(current.row(), SELF::TYPE_Elf_Phdr,
-                                ui->widgetHex_Elf_Phdr, ui->tableView_Elf_Phdr,
-                                &g_subDevice[SELF::TYPE_Elf_Phdr]);
+    loadHexSubdeviceByTableView(current.row(), SELF::TYPE_Elf_Phdr, ui->widgetHex_Elf_Phdr, ui->tableView_Elf_Phdr, &g_subDevice[SELF::TYPE_Elf_Phdr]);
 }
 
-void ELFWidget::onTableView_DynamicArrayTags_currentRowChanged(
-    const QModelIndex &current, const QModelIndex &previous) {
+void ELFWidget::onTableView_DynamicArrayTags_currentRowChanged(const QModelIndex &current, const QModelIndex &previous) {
     Q_UNUSED(current)
     Q_UNUSED(previous)
 
     // TODO
 }
 
-void ELFWidget::onTableView_Notes_currentRowChanged(
-    const QModelIndex &current, const QModelIndex &previous) {
+void ELFWidget::onTableView_Notes_currentRowChanged(const QModelIndex &current, const QModelIndex &previous) {
     Q_UNUSED(current)
     Q_UNUSED(previous)
 
-    loadHexSubdeviceByTableView(current.row(), SELF::TYPE_NOTES,
-                                ui->widgetHex_Notes, ui->tableView_Notes,
-                                &g_subDevice[SELF::TYPE_NOTES]);
+    loadHexSubdeviceByTableView(current.row(), SELF::TYPE_NOTES, ui->widgetHex_Notes, ui->tableView_Notes, &g_subDevice[SELF::TYPE_NOTES]);
 }
 
-void ELFWidget::onTableView_Libraries_currentRowChanged(
-    const QModelIndex &current, const QModelIndex &previous) {
+void ELFWidget::onTableView_Libraries_currentRowChanged(const QModelIndex &current, const QModelIndex &previous) {
     Q_UNUSED(current)
     Q_UNUSED(previous)
 
@@ -1317,8 +1025,7 @@ void ELFWidget::on_tableView_Elf_Phdr_doubleClicked(const QModelIndex &index) {
     editProgramHeader();
 }
 
-void ELFWidget::on_tableView_Elf_Phdr_customContextMenuRequested(
-    const QPoint &pos) {
+void ELFWidget::on_tableView_Elf_Phdr_customContextMenuRequested(const QPoint &pos) {
     qint32 nRow = ui->tableView_Elf_Phdr->currentIndex().row();
 
     if (nRow != -1) {
@@ -1327,8 +1034,7 @@ void ELFWidget::on_tableView_Elf_Phdr_customContextMenuRequested(
         QMenu contextMenu(this);
 
         QAction actionEdit(tr("Edit"), this);
-        connect(&actionEdit, SIGNAL(triggered()), this,
-                SLOT(editProgramHeader()));
+        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editProgramHeader()));
         contextMenu.addAction(&actionEdit);
 
         QAction actionHex(QString("Hex"), this);
@@ -1337,14 +1043,12 @@ void ELFWidget::on_tableView_Elf_Phdr_customContextMenuRequested(
         contextMenu.addAction(&actionHex);
 
         QAction actionDisasm(tr("Disasm"), this);
-        connect(&actionDisasm, SIGNAL(triggered()), this,
-                SLOT(programDisasm()));
+        connect(&actionDisasm, SIGNAL(triggered()), this, SLOT(programDisasm()));
         actionDisasm.setEnabled(bIsEnable);
         contextMenu.addAction(&actionDisasm);
 
         QAction actionEntropy(tr("Entropy"), this);
-        connect(&actionEntropy, SIGNAL(triggered()), this,
-                SLOT(programEntropy()));
+        connect(&actionEntropy, SIGNAL(triggered()), this, SLOT(programEntropy()));
         actionEntropy.setEnabled(bIsEnable);
         contextMenu.addAction(&actionEntropy);
 
@@ -1357,27 +1061,23 @@ void ELFWidget::on_tableView_Elf_Phdr_customContextMenuRequested(
     }
 }
 
-void ELFWidget::on_tableView_DynamicArrayTags_doubleClicked(
-    const QModelIndex &index) {
+void ELFWidget::on_tableView_DynamicArrayTags_doubleClicked(const QModelIndex &index) {
     Q_UNUSED(index)
 
     editDynamicArrayTag();
 }
 
-void ELFWidget::on_tableView_DynamicArrayTags_customContextMenuRequested(
-    const QPoint &pos) {
+void ELFWidget::on_tableView_DynamicArrayTags_customContextMenuRequested(const QPoint &pos) {
     qint32 nRow = ui->tableView_DynamicArrayTags->currentIndex().row();
 
     if (nRow != -1) {
         QMenu contextMenu(this);
 
         QAction actionEdit(tr("Edit"), this);
-        connect(&actionEdit, SIGNAL(triggered()), this,
-                SLOT(editDynamicArrayTag()));
+        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editDynamicArrayTag()));
         contextMenu.addAction(&actionEdit);
 
-        contextMenu.exec(
-            ui->tableView_DynamicArrayTags->viewport()->mapToGlobal(pos));
+        contextMenu.exec(ui->tableView_DynamicArrayTags->viewport()->mapToGlobal(pos));
     }
 }
 
@@ -1392,16 +1092,14 @@ void ELFWidget::on_tableView_Rela_doubleClicked(const QModelIndex &index) {
     editRelaHeaderTag();
 }
 
-void ELFWidget::on_tableView_Rela_customContextMenuRequested(
-    const QPoint &pos) {
+void ELFWidget::on_tableView_Rela_customContextMenuRequested(const QPoint &pos) {
     qint32 nRow = ui->tableView_Rela->currentIndex().row();
 
     if (nRow != -1) {
         QMenu contextMenu(this);
 
         QAction actionEdit(tr("Edit"), this);
-        connect(&actionEdit, SIGNAL(triggered()), this,
-                SLOT(editRelaHeaderTag()));
+        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editRelaHeaderTag()));
         contextMenu.addAction(&actionEdit);
 
         contextMenu.exec(ui->tableView_Rela->viewport()->mapToGlobal(pos));
@@ -1429,8 +1127,7 @@ void ELFWidget::on_tableView_Rel_customContextMenuRequested(const QPoint &pos) {
         QMenu contextMenu(this);
 
         QAction actionEdit(tr("Edit"), this);
-        connect(&actionEdit, SIGNAL(triggered()), this,
-                SLOT(editRelHeaderTag()));
+        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editRelHeaderTag()));
         contextMenu.addAction(&actionEdit);
 
         contextMenu.exec(ui->tableView_Rel->viewport()->mapToGlobal(pos));
@@ -1474,36 +1171,21 @@ void ELFWidget::on_toolButtonNext_clicked() {
 }
 
 void ELFWidget::on_pushButtonSaveSections_clicked() {
-    XShortcutsWidget::saveModel(
-        ui->tableView_Elf_Shdr->model(),
-        XBinary::getResultFileName(getDevice(),
-                                   QString("%1.txt").arg(tr("Sections"))));
+    XShortcutsWidget::saveModel(ui->tableView_Elf_Shdr->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(tr("Sections"))));
 }
 
 void ELFWidget::on_pushButtonSavePrograms_clicked() {
-    XShortcutsWidget::saveModel(
-        ui->tableView_Elf_Phdr->model(),
-        XBinary::getResultFileName(getDevice(),
-                                   QString("%1.txt").arg(QString("Programs"))));
+    XShortcutsWidget::saveModel(ui->tableView_Elf_Phdr->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Programs"))));
 }
 
 void ELFWidget::on_pushButtonSave_Rela_clicked() {
-    XShortcutsWidget::saveModel(
-        ui->tableView_Rela->model(),
-        XBinary::getResultFileName(getDevice(),
-                                   QString("%1.txt").arg(QString("Rela"))));
+    XShortcutsWidget::saveModel(ui->tableView_Rela->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Rela"))));
 }
 
 void ELFWidget::on_pushButtonSave_Rel_clicked() {
-    XShortcutsWidget::saveModel(
-        ui->tableView_Rel->model(),
-        XBinary::getResultFileName(getDevice(),
-                                   QString("%1.txt").arg(QString("Rel"))));
+    XShortcutsWidget::saveModel(ui->tableView_Rel->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Rel"))));
 }
 
 void ELFWidget::on_pushButtonSave_Elf_Ehdr_clicked() {
-    saveHeaderTable(
-        ui->tableWidget_Elf_Ehdr,
-        XBinary::getResultFileName(getDevice(),
-                                   QString("%1.txt").arg(QString("Elf_Ehdr"))));
+    saveHeaderTable(ui->tableWidget_Elf_Ehdr, XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Elf_Ehdr"))));
 }

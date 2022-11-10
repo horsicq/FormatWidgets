@@ -32,13 +32,12 @@ class ToolsWidget;
 class ToolsWidget : public XShortcutsWidget {
     Q_OBJECT
 
-   public:
+public:
     explicit ToolsWidget(QWidget *pParent = nullptr);
     ~ToolsWidget();
 
     void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
-    void setData(QIODevice *pDevice, FW_DEF::OPTIONS options,
-                 QIODevice *pBackupDevice, bool bDisasm = false);
+    void setData(QIODevice *pDevice, FW_DEF::OPTIONS options, QIODevice *pBackupDevice, bool bDisasm = false);
     void setDevice(QIODevice *pDevice);
     void setBackupDevice(QIODevice *pDevice);
     void setEdited();
@@ -47,23 +46,23 @@ class ToolsWidget : public XShortcutsWidget {
     qint64 getStartAddress();
     void setSelection(qint64 nOffset, qint64 nSize);
 
-   signals:
+signals:
     void dataChanged();
     void showOffsetHex(qint64 nOffset, qint64 nSize);
     void showOffsetDisasm(qint64 nOffset);
     void showOffsetMemoryMap(qint64 nOffset);
     void showDemangle(QString sString);
 
-   private slots:
+private slots:
     void on_tabWidgetMain_currentChanged(int nIndex);
     void _showHex(qint64 nOffset, qint64 nSize);
     void _showDisasm(qint64 nOffset);
     void _showMemoryMap(qint64 nOffset);
 
-   protected:
+protected:
     virtual void registerShortcuts(bool bState);
 
-   private:
+private:
     Ui::ToolsWidget *ui;
     QIODevice *g_pDevice;
     SearchStringsWidget::OPTIONS g_stringsOptions;

@@ -32,14 +32,14 @@ class DialogBinary;
 class DialogBinary : public XShortcutsDialog {
     Q_OBJECT
 
-   public:
+public:
     explicit DialogBinary(QWidget *pParent = nullptr);
     ~DialogBinary();
 
     void setData(QIODevice *pDevice, FW_DEF::OPTIONS options);
     void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
 
-   private:
+private:
     Ui::DialogBinary *ui;
 };
 

@@ -34,19 +34,17 @@ class ELFWidget;
 class ELFWidget : public FormatWidget {
     Q_OBJECT
 
-   public:
+public:
     ELFWidget(QWidget *pParent = nullptr);
-    ELFWidget(QIODevice *pDevice, FW_DEF::OPTIONS options,
-              QWidget *pParent = nullptr);
+    ELFWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent = nullptr);
     ~ELFWidget();
 
     virtual void clear();
     virtual void cleanup();
     virtual void reload();
 
-   protected:
-    virtual SV _setValue(QVariant vValue, int nStype, int nNdata, int nVtype,
-                         int nPosition, qint64 nOffset);
+protected:
+    virtual SV _setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset);
     virtual void setReadonly(bool bState);
     virtual void blockSignals(bool bState);
     virtual void adjustHeaderTable(int nType, QTableWidget *pTableWidget);
@@ -56,23 +54,18 @@ class ELFWidget : public FormatWidget {
     virtual void _showInMemoryMapWindowOffset(qint64 nOffset);
     virtual void _showInHexWindow(qint64 nOffset, qint64 nSize);
 
-   private slots:
+private slots:
     virtual void reloadData();
-    void addDatasets(XELF *pElf, QTreeWidgetItem *pParent,
-                     QList<XBinary::DATASET> *pListDataSets);
+    void addDatasets(XELF *pElf, QTreeWidgetItem *pParent, QList<XBinary::DATASET> *pListDataSets);
     void widgetValueChanged(quint64 nValue);
-    void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurrent,
-                                              QTreeWidgetItem *pItemPrevious);
+    void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurrent, QTreeWidgetItem *pItemPrevious);
     void on_checkBoxReadonly_toggled(bool bChecked);
     void on_pushButtonReload_clicked();
     void enableButton();
     void loadShdr(int nRow);
     void loadPhdr(int nRow);
     void loadNote(int nRow);
-    void on_tableWidget_Elf_Ehdr_currentCellChanged(int nCurrentRow,
-                                                    int nCurrentColumn,
-                                                    int nPreviousRow,
-                                                    int nPreviousColumn);
+    void on_tableWidget_Elf_Ehdr_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn);
     void editSectionHeader();
     void sectionHex();
     void sectionDisasm();
@@ -91,21 +84,15 @@ class ELFWidget : public FormatWidget {
     void on_tableView_Elf_Shdr_doubleClicked(const QModelIndex &index);
     void on_tableView_Elf_Shdr_customContextMenuRequested(const QPoint &pos);
     void on_tableView_SymbolTable_doubleClicked(const QModelIndex &index);
-    void onTableView_Elf_Shdr_currentRowChanged(const QModelIndex &current,
-                                                const QModelIndex &previous);
-    void onTableView_Elf_Phdr_currentRowChanged(const QModelIndex &current,
-                                                const QModelIndex &previous);
-    void onTableView_DynamicArrayTags_currentRowChanged(
-        const QModelIndex &current, const QModelIndex &previous);
-    void onTableView_Notes_currentRowChanged(const QModelIndex &current,
-                                             const QModelIndex &previous);
-    void onTableView_Libraries_currentRowChanged(const QModelIndex &current,
-                                                 const QModelIndex &previous);
+    void onTableView_Elf_Shdr_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
+    void onTableView_Elf_Phdr_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
+    void onTableView_DynamicArrayTags_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
+    void onTableView_Notes_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
+    void onTableView_Libraries_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
     void on_tableView_Elf_Phdr_doubleClicked(const QModelIndex &index);
     void on_tableView_Elf_Phdr_customContextMenuRequested(const QPoint &pos);
     void on_tableView_DynamicArrayTags_doubleClicked(const QModelIndex &index);
-    void on_tableView_DynamicArrayTags_customContextMenuRequested(
-        const QPoint &pos);
+    void on_tableView_DynamicArrayTags_customContextMenuRequested(const QPoint &pos);
     void on_tableView_Notes_doubleClicked(const QModelIndex &index);
     void on_tableView_Rela_doubleClicked(const QModelIndex &index);
     void on_tableView_Rel_doubleClicked(const QModelIndex &index);
@@ -130,7 +117,7 @@ class ELFWidget : public FormatWidget {
     void on_pushButtonSave_Rel_clicked();
     void on_pushButtonSave_Elf_Ehdr_clicked();
 
-   private:
+private:
     // TODO rename
     enum CB {
         CB_Elf_Ehdr_mag = 0,

@@ -22,9 +22,7 @@
 
 #include "ui_dialogprocessdata.h"
 
-DialogProcessData::DialogProcessData(QWidget *pParent,
-                                     ProcessData *pProcessData)
-    : XDialogProcess(pParent) {
+DialogProcessData::DialogProcessData(QWidget *pParent, ProcessData *pProcessData) : XDialogProcess(pParent) {
     this->g_pProcessData = pProcessData;
 
     pProcessData->setPdStruct(getPdStruct());
@@ -34,10 +32,8 @@ DialogProcessData::DialogProcessData(QWidget *pParent,
     pProcessData->moveToThread(g_pThread);
 
     connect(g_pThread, SIGNAL(started()), pProcessData, SLOT(process()));
-    connect(pProcessData, SIGNAL(completed(qint64)), this,
-            SLOT(onCompleted(qint64)));
-    connect(pProcessData, SIGNAL(errorMessage(QString)), this,
-            SLOT(errorMessage(QString)));
+    connect(pProcessData, SIGNAL(completed(qint64)), this, SLOT(onCompleted(qint64)));
+    connect(pProcessData, SIGNAL(errorMessage(QString)), this, SLOT(errorMessage(QString)));
 
     g_pThread->start();
 }

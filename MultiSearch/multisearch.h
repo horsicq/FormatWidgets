@@ -34,17 +34,10 @@
 class MultiSearch : public QObject {
     Q_OBJECT
 
-   public:
+public:
     enum TYPE { TYPE_STRINGS = 0, TYPE_SIGNATURES };
 
-    enum USERROLE {
-        USERROLE_SIZE = 0,
-        USERROLE_OFFSET,
-        USERROLE_ADDRESS,
-        USERROLE_STRING,
-        USERROLE_INFO,
-        USERROLE_TYPE
-    };
+    enum USERROLE { USERROLE_SIZE = 0, USERROLE_OFFSET, USERROLE_ADDRESS, USERROLE_STRING, USERROLE_INFO, USERROLE_TYPE };
 
     struct SIGNATURE_RECORD {
         qint32 nNumber;
@@ -74,26 +67,22 @@ class MultiSearch : public QObject {
 
     explicit MultiSearch(QObject *pParent = nullptr);
     ~MultiSearch();
-    void setSearchData(QIODevice *pDevice,
-                       QList<XBinary::MS_RECORD> *pListRecords, OPTIONS options,
-                       TYPE type, XBinary::PDSTRUCT *pPdStruct);
-    void setModelData(QList<XBinary::MS_RECORD> *pListRecords,
-                      QStandardItemModel **ppModel, OPTIONS options, TYPE type,
-                      XBinary::PDSTRUCT *pPdStruct);
+    void setSearchData(QIODevice *pDevice, QList<XBinary::MS_RECORD> *pListRecords, OPTIONS options, TYPE type, XBinary::PDSTRUCT *pPdStruct);
+    void setModelData(QList<XBinary::MS_RECORD> *pListRecords, QStandardItemModel **ppModel, OPTIONS options, TYPE type, XBinary::PDSTRUCT *pPdStruct);
 
     static QList<SIGNATURE_RECORD> loadSignaturesFromFile(QString sFileName);
     static SIGNATURE_RECORD createSignature(QString sName, QString sSignature);
     void processSignature(SIGNATURE_RECORD signatureRecord);
 
-   signals:
+signals:
     void errorMessage(QString sText);
     void completed(qint64 nElapsed);
 
-   public slots:
+public slots:
     void processSearch();
     void processModel();
 
-   private:
+private:
     QIODevice *g_pDevice;
     QList<XBinary::MS_RECORD> *g_pListRecords;
     OPTIONS g_options;

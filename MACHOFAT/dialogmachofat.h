@@ -32,14 +32,14 @@ class DialogMACHOFAT;
 class DialogMACHOFAT : public XShortcutsDialog {
     Q_OBJECT
 
-   public:
+public:
     explicit DialogMACHOFAT(QWidget *pParent = nullptr);
     ~DialogMACHOFAT();
 
     void setData(QIODevice *pDevice, FW_DEF::OPTIONS options);
     void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
 
-   private:
+private:
     Ui::DialogMACHOFAT *ui;
 };
 

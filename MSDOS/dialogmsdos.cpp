@@ -22,14 +22,15 @@
 
 #include "ui_dialogmsdos.h"
 
-DialogMSDOS::DialogMSDOS(QWidget *pParent)
-    : XShortcutsDialog(pParent), ui(new Ui::DialogMSDOS) {
+DialogMSDOS::DialogMSDOS(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogMSDOS) {
     ui->setupUi(this);
 
     setWindowFlags(Qt::Window);
 }
 
-DialogMSDOS::~DialogMSDOS() { delete ui; }
+DialogMSDOS::~DialogMSDOS() {
+    delete ui;
+}
 
 void DialogMSDOS::setData(QIODevice *pDevice, FW_DEF::OPTIONS options) {
     if (options.sTitle != "") {

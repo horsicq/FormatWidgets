@@ -32,14 +32,14 @@ class DialogMACH;
 class DialogMACH : public XShortcutsDialog {
     Q_OBJECT
 
-   public:
+public:
     explicit DialogMACH(QWidget *pParent = nullptr);
     ~DialogMACH();
 
     void setData(QIODevice *pDevice, FW_DEF::OPTIONS options);
     void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
 
-   private:
+private:
     Ui::DialogMACH *ui;
 };
 

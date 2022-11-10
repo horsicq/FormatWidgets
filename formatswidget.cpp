@@ -22,8 +22,7 @@
 
 #include "ui_formatswidget.h"
 
-FormatsWidget::FormatsWidget(QWidget *pParent)
-    : XShortcutsWidget(pParent), ui(new Ui::FormatsWidget) {
+FormatsWidget::FormatsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui::FormatsWidget) {
     ui->setupUi(this);
 
     const bool bBlocked1 = ui->comboBoxScanEngine->blockSignals(true);
@@ -36,14 +35,10 @@ FormatsWidget::FormatsWidget(QWidget *pParent)
 
     adjustScanTab(SE_AUTO);
 
-    connect(ui->pageScanNFD, SIGNAL(scanStarted()), this,
-            SLOT(onScanStarted()));
-    connect(ui->pageScanNFD, SIGNAL(scanFinished()), this,
-            SLOT(onScanFinished()));
-    connect(ui->pageScanDIE, SIGNAL(scanStarted()), this,
-            SLOT(onScanStarted()));
-    connect(ui->pageScanDIE, SIGNAL(scanFinished()), this,
-            SLOT(onScanFinished()));
+    connect(ui->pageScanNFD, SIGNAL(scanStarted()), this, SLOT(onScanStarted()));
+    connect(ui->pageScanNFD, SIGNAL(scanFinished()), this, SLOT(onScanFinished()));
+    connect(ui->pageScanDIE, SIGNAL(scanStarted()), this, SLOT(onScanStarted()));
+    connect(ui->pageScanDIE, SIGNAL(scanFinished()), this, SLOT(onScanFinished()));
 
     ui->comboBoxScanEngine->blockSignals(bBlocked1);
 }
@@ -79,7 +74,9 @@ void FormatsWidget::adjustView() {
     XShortcutsWidget::adjustView();
 }
 
-FormatsWidget::~FormatsWidget() { delete ui; }
+FormatsWidget::~FormatsWidget() {
+    delete ui;
+}
 
 void FormatsWidget::on_comboBoxFileType_currentIndexChanged(int nIndex) {
     Q_UNUSED(nIndex)
@@ -98,8 +95,7 @@ void FormatsWidget::reload() {
     if (file.open(QIODevice::ReadOnly)) {
         ui->lineEditFileSize->setText(XBinary::bytesCountToString(file.size()));
 
-        XBinary::_MEMORY_MAP memoryMap =
-            XFormats::getMemoryMap(fileType, &file);
+        XBinary::_MEMORY_MAP memoryMap = XFormats::getMemoryMap(fileType, &file);
 
         XBinary::MODE mode = memoryMap.mode;
 
@@ -119,23 +115,17 @@ void FormatsWidget::reload() {
             ui->lineEditBaseAddress->setValue((quint8)memoryMap.nModuleAddress);
         } else if (mode == XBinary::MODE_16) {
             if (memoryMap.fileType == XBinary::FT_MSDOS) {
-                ui->lineEditBaseAddress->setValue(
-                    (quint32)memoryMap.nModuleAddress);
+                ui->lineEditBaseAddress->setValue((quint32)memoryMap.nModuleAddress);
             } else {
-                ui->lineEditBaseAddress->setValue(
-                    (quint16)memoryMap.nModuleAddress);
+                ui->lineEditBaseAddress->setValue((quint16)memoryMap.nModuleAddress);
             }
-        } else if ((mode == XBinary::MODE_16SEG) ||
-                   (mode == XBinary::MODE_32)) {
-            ui->lineEditBaseAddress->setValue(
-                (quint32)memoryMap.nModuleAddress);
+        } else if ((mode == XBinary::MODE_16SEG) || (mode == XBinary::MODE_32)) {
+            ui->lineEditBaseAddress->setValue((quint32)memoryMap.nModuleAddress);
         } else if (mode == XBinary::MODE_64) {
-            ui->lineEditBaseAddress->setValue(
-                (quint64)memoryMap.nModuleAddress);
+            ui->lineEditBaseAddress->setValue((quint64)memoryMap.nModuleAddress);
         }
 
-        ui->lineEditEndianness->setText(
-            XBinary::endiannessToString(memoryMap.bIsBigEndian));
+        ui->lineEditEndianness->setText(XBinary::endiannessToString(memoryMap.bIsBigEndian));
         ui->lineEditArch->setText(memoryMap.sArch);
         ui->lineEditMode->setText(XBinary::modeIdToString(memoryMap.mode));
         ui->lineEditType->setText(memoryMap.sType);
@@ -145,16 +135,14 @@ void FormatsWidget::reload() {
 
             ui->stackedWidgetMain->setCurrentIndex(TABINFO_BINARY);
 
-            ui->lineEditEntryPoint->setValue(
-                (quint32)binary.getEntryPointAddress());
+            ui->lineEditEntryPoint->setValue((quint32)binary.getEntryPointAddress());
         } else if (fileType == XBinary::FT_COM) {
             ui->stackedWidgetMain->setCurrentIndex(TABINFO_COM);
 
             XCOM com(&file);
 
             if (com.isValid()) {
-                ui->lineEditEntryPoint->setValue(
-                    (quint16)com.getEntryPointAddress());
+                ui->lineEditEntryPoint->setValue((quint16)com.getEntryPointAddress());
             }
         } else if (fileType == XBinary::FT_ZIP) {
             // TODO Set name on button
@@ -171,8 +159,7 @@ void FormatsWidget::reload() {
             XDEX dex(&file);
 
             if (dex.isValid()) {
-                ui->lineEditEntryPoint->setValue(
-                    (quint16)dex.getEntryPointAddress());
+                ui->lineEditEntryPoint->setValue((quint16)dex.getEntryPointAddress());
             }
         } else if (fileType == XBinary::FT_MSDOS) {
             ui->stackedWidgetMain->setCurrentIndex(TABINFO_MSDOS);
@@ -180,22 +167,18 @@ void FormatsWidget::reload() {
             XMSDOS msdos(&file);
 
             if (msdos.isValid()) {
-                ui->lineEditEntryPoint->setValue(
-                    (quint32)msdos.getEntryPointAddress());
+                ui->lineEditEntryPoint->setValue((quint32)msdos.getEntryPointAddress());
 
-                ui->pushButtonMSDOSOverlay->setEnabled(
-                    msdos.isOverlayPresent());
+                ui->pushButtonMSDOSOverlay->setEnabled(msdos.isOverlayPresent());
             }
-        } else if ((fileType == XBinary::FT_LE) ||
-                   (fileType == XBinary::FT_LX))  // mb TODO LX
+        } else if ((fileType == XBinary::FT_LE) || (fileType == XBinary::FT_LX))  // mb TODO LX
         {
             ui->stackedWidgetMain->setCurrentIndex(TABINFO_LE);
 
             XLE le(&file);
 
             if (le.isValid()) {
-                ui->lineEditEntryPoint->setValue(
-                    (quint32)le.getEntryPointAddress());
+                ui->lineEditEntryPoint->setValue((quint32)le.getEntryPointAddress());
             }
         } else if (fileType == XBinary::FT_NE) {
             ui->stackedWidgetMain->setCurrentIndex(TABINFO_NE);
@@ -203,28 +186,23 @@ void FormatsWidget::reload() {
             XNE ne(&file);
 
             if (ne.isValid()) {
-                ui->lineEditEntryPoint->setValue(
-                    (quint32)ne.getEntryPointAddress());
+                ui->lineEditEntryPoint->setValue((quint32)ne.getEntryPointAddress());
             }
-        } else if ((fileType == XBinary::FT_PE32) ||
-                   (fileType == XBinary::FT_PE64)) {
+        } else if ((fileType == XBinary::FT_PE32) || (fileType == XBinary::FT_PE64)) {
             ui->stackedWidgetMain->setCurrentIndex(TABINFO_PE);
 
             XPE pe(&file);
 
             if (pe.isValid()) {
                 if (pe.is64()) {
-                    ui->lineEditEntryPoint->setValue(
-                        (quint64)pe.getEntryPointAddress());
+                    ui->lineEditEntryPoint->setValue((quint64)pe.getEntryPointAddress());
                 } else {
-                    ui->lineEditEntryPoint->setValue(
-                        (quint32)pe.getEntryPointAddress());
+                    ui->lineEditEntryPoint->setValue((quint32)pe.getEntryPointAddress());
                 }
 
                 bool bIsResourcesPresent = pe.isResourcesPresent();
 
-                ui->lineEditPESections->setValue(
-                    pe.getFileHeader_NumberOfSections());
+                ui->lineEditPESections->setValue(pe.getFileHeader_NumberOfSections());
                 ui->groupBoxPESections->setEnabled(pe.isSectionsTablePresent());
 
                 ui->pushButtonPEExport->setEnabled(pe.isExportPresent());
@@ -234,31 +212,24 @@ void FormatsWidget::reload() {
                 ui->pushButtonPETLS->setEnabled(pe.isTLSPresent());
 
                 ui->groupBoxPEResources->setEnabled(bIsResourcesPresent);
-                ui->pushButtonPEManifest->setEnabled(
-                    pe.isResourceManifestPresent());
-                ui->pushButtonPEVersion->setEnabled(
-                    pe.isResourceVersionPresent());
+                ui->pushButtonPEManifest->setEnabled(pe.isResourceManifestPresent());
+                ui->pushButtonPEVersion->setEnabled(pe.isResourceVersionPresent());
 
                 ui->pushButtonPEOverlay->setEnabled(pe.isOverlayPresent());
 
-                ui->lineEditPETimeDateStamp->setText(XBinary::valueToTimeString(
-                    pe.getFileHeader_TimeDateStamp(), XBinary::DT_TYPE_POSIX));
-                ui->lineEditPESizeOfImage->setValue(
-                    pe.getOptionalHeader_SizeOfImage());
+                ui->lineEditPETimeDateStamp->setText(XBinary::valueToTimeString(pe.getFileHeader_TimeDateStamp(), XBinary::DT_TYPE_POSIX));
+                ui->lineEditPESizeOfImage->setValue(pe.getOptionalHeader_SizeOfImage());
             }
-        } else if ((fileType == XBinary::FT_ELF32) ||
-                   (fileType == XBinary::FT_ELF64)) {
+        } else if ((fileType == XBinary::FT_ELF32) || (fileType == XBinary::FT_ELF64)) {
             ui->stackedWidgetMain->setCurrentIndex(TABINFO_ELF);
 
             XELF elf(&file);
 
             if (elf.isValid()) {
                 if (elf.is64()) {
-                    ui->lineEditEntryPoint->setValue(
-                        (quint64)elf.getEntryPointAddress());
+                    ui->lineEditEntryPoint->setValue((quint64)elf.getEntryPointAddress());
                 } else {
-                    ui->lineEditEntryPoint->setValue(
-                        (quint32)elf.getEntryPointAddress());
+                    ui->lineEditEntryPoint->setValue((quint32)elf.getEntryPointAddress());
                 }
             }
 
@@ -266,47 +237,32 @@ void FormatsWidget::reload() {
             ui->lineEditELFSections->setEnabled(elf.isSectionsTablePresent());
             ui->lineEditELFPrograms->setValue(elf.getNumberOfPrograms());
             ui->lineEditELFSections->setValue(elf.getNumberOfSections());
-        } else if ((fileType == XBinary::FT_MACHO32) ||
-                   (fileType == XBinary::FT_MACHO64)) {
+        } else if ((fileType == XBinary::FT_MACHO32) || (fileType == XBinary::FT_MACHO64)) {
             ui->stackedWidgetMain->setCurrentIndex(TABINFO_MACH);
 
             XMACH mach(&file);
 
             if (mach.isValid()) {
                 if (mach.is64()) {
-                    ui->lineEditEntryPoint->setValue(
-                        (quint64)mach.getEntryPointAddress());
+                    ui->lineEditEntryPoint->setValue((quint64)mach.getEntryPointAddress());
                 } else {
-                    ui->lineEditEntryPoint->setValue(
-                        (quint32)mach.getEntryPointAddress());
+                    ui->lineEditEntryPoint->setValue((quint32)mach.getEntryPointAddress());
                 }
 
-                QList<XMACH::COMMAND_RECORD> listCommandRecords =
-                    mach.getCommandRecords();
-                QList<XMACH::SECTION_RECORD> listSectionRecords =
-                    mach.getSectionRecords(&listCommandRecords);
-                QList<XMACH::SEGMENT_RECORD> listSegmentRecords =
-                    mach.getSegmentRecords(&listCommandRecords);
-                QList<XMACH::LIBRARY_RECORD> listLibraryRecords =
-                    mach.getLibraryRecords(&listCommandRecords);
+                QList<XMACH::COMMAND_RECORD> listCommandRecords = mach.getCommandRecords();
+                QList<XMACH::SECTION_RECORD> listSectionRecords = mach.getSectionRecords(&listCommandRecords);
+                QList<XMACH::SEGMENT_RECORD> listSegmentRecords = mach.getSegmentRecords(&listCommandRecords);
+                QList<XMACH::LIBRARY_RECORD> listLibraryRecords = mach.getLibraryRecords(&listCommandRecords);
 
-                ui->lineEditMACHCommands->setEnabled(
-                    listCommandRecords.count());
-                ui->lineEditMACHSections->setEnabled(
-                    listSectionRecords.count());
-                ui->lineEditMACHSegments->setEnabled(
-                    listSegmentRecords.count());
-                ui->lineEditMACHLibraries->setEnabled(
-                    listLibraryRecords.count());
+                ui->lineEditMACHCommands->setEnabled(listCommandRecords.count());
+                ui->lineEditMACHSections->setEnabled(listSectionRecords.count());
+                ui->lineEditMACHSegments->setEnabled(listSegmentRecords.count());
+                ui->lineEditMACHLibraries->setEnabled(listLibraryRecords.count());
 
-                ui->lineEditMACHCommands->setValue(
-                    (quint16)listCommandRecords.count());
-                ui->lineEditMACHSections->setValue(
-                    (quint16)listSectionRecords.count());
-                ui->lineEditMACHSegments->setValue(
-                    (quint16)listSegmentRecords.count());
-                ui->lineEditMACHLibraries->setValue(
-                    (quint16)listLibraryRecords.count());
+                ui->lineEditMACHCommands->setValue((quint16)listCommandRecords.count());
+                ui->lineEditMACHSections->setValue((quint16)listSectionRecords.count());
+                ui->lineEditMACHSegments->setValue((quint16)listSegmentRecords.count());
+                ui->lineEditMACHLibraries->setValue((quint16)listLibraryRecords.count());
             }
         } else if (fileType == XBinary::FT_MACHOFAT) {
             ui->stackedWidgetMain->setCurrentIndex(TABINFO_MACHOFAT);
@@ -314,8 +270,7 @@ void FormatsWidget::reload() {
             XMACHOFat machofat(&file);
 
             if (machofat.isValid()) {
-                ui->lineEditEntryPoint->setValue(
-                    machofat.getEntryPointAddress());
+                ui->lineEditEntryPoint->setValue(machofat.getEntryPointAddress());
             }
         }
 
@@ -336,11 +291,9 @@ void FormatsWidget::scan() {
 
     if (g_sFileName != "") {
         if (nIndex == SE_DIE) {
-            ui->pageScanDIE->setData(g_sFileName, g_bScan,
-                                     getCurrentFileType());
+            ui->pageScanDIE->setData(g_sFileName, g_bScan, getCurrentFileType());
         } else if (nIndex == SE_NFD) {
-            ui->pageScanNFD->setData(g_sFileName, g_bScan,
-                                     getCurrentFileType());
+            ui->pageScanNFD->setData(g_sFileName, g_bScan, getCurrentFileType());
         }
     }
 
@@ -377,8 +330,7 @@ void FormatsWidget::on_pushButtonHexEntryPoint_clicked() {
         if (XBinary::tryToOpen(&file)) {
             XHexView::OPTIONS hexOptions = {};
             //        hexOptions.sBackupFileName=XBinary::getBackupName(&file);
-            hexOptions.nStartSelectionOffset =
-                XFormats::getEntryPointOffset(getCurrentFileType(), &file);
+            hexOptions.nStartSelectionOffset = XFormats::getEntryPointOffset(getCurrentFileType(), &file);
 
             DialogHexView dialogHex(this, &file, hexOptions, &file);
             dialogHex.setGlobal(getShortcuts(), getGlobalOptions());
@@ -610,8 +562,7 @@ void FormatsWidget::showDEX(SDEX::TYPE type) {
 }
 
 XBinary::FT FormatsWidget::getCurrentFileType() {
-    XBinary::FT fileType =
-        (XBinary::FT)(ui->comboBoxFileType->currentData().toInt());
+    XBinary::FT fileType = (XBinary::FT)(ui->comboBoxFileType->currentData().toInt());
 
     return fileType;
 }
@@ -624,9 +575,13 @@ void FormatsWidget::on_pushButtonMSDOS_clicked() {
     showMSDOS(SMSDOS::TYPE_DOS_HEADER);
 }
 
-void FormatsWidget::on_pushButtonPETLS_clicked() { showPE(SPE::TYPE_TLS); }
+void FormatsWidget::on_pushButtonPETLS_clicked() {
+    showPE(SPE::TYPE_TLS);
+}
 
-void FormatsWidget::on_pushButtonELF_clicked() { showELF(SELF::TYPE_Elf_Ehdr); }
+void FormatsWidget::on_pushButtonELF_clicked() {
+    showELF(SELF::TYPE_Elf_Ehdr);
+}
 
 void FormatsWidget::on_pushButtonELFSections_clicked() {
     showELF(SELF::TYPE_Elf_Shdr);
@@ -642,11 +597,17 @@ void FormatsWidget::on_comboBoxScanEngine_currentIndexChanged(int nIndex) {
     scan();
 }
 
-void FormatsWidget::on_pushButtonLE_clicked() { showLE(SLE::TYPE_VXD_HEADER); }
+void FormatsWidget::on_pushButtonLE_clicked() {
+    showLE(SLE::TYPE_VXD_HEADER);
+}
 
-void FormatsWidget::on_pushButtonNE_clicked() { showNE(SNE::TYPE_OS2_HEADER); }
+void FormatsWidget::on_pushButtonNE_clicked() {
+    showNE(SNE::TYPE_OS2_HEADER);
+}
 
-void FormatsWidget::on_pushButtonDEX_clicked() { showDEX(SDEX::TYPE_HEADER); }
+void FormatsWidget::on_pushButtonDEX_clicked() {
+    showDEX(SDEX::TYPE_HEADER);
+}
 
 void FormatsWidget::on_pushButtonZIP_clicked() {
     DialogArchive dialogArchive(this);
@@ -687,14 +648,9 @@ FormatsWidget::SE FormatsWidget::getScanEngine(FormatsWidget::SE seIndex) {
         XBinary::FT fileType = getCurrentFileType();
 
         // TODO !!!
-        if ((fileType == XBinary::FT_DEX) || (fileType == XBinary::FT_ELF32) ||
-            (fileType == XBinary::FT_ELF64) ||
-            (fileType == XBinary::FT_MACHO32) ||
-            (fileType == XBinary::FT_MACHO64) ||
-            (fileType == XBinary::FT_MACHOFAT) ||
-            (fileType == XBinary::FT_ZIP) || (fileType == XBinary::FT_JAR) ||
-            (fileType == XBinary::FT_APK) || (fileType == XBinary::FT_APKS) ||
-            (fileType == XBinary::FT_IPA)) {
+        if ((fileType == XBinary::FT_DEX) || (fileType == XBinary::FT_ELF32) || (fileType == XBinary::FT_ELF64) || (fileType == XBinary::FT_MACHO32) ||
+            (fileType == XBinary::FT_MACHO64) || (fileType == XBinary::FT_MACHOFAT) || (fileType == XBinary::FT_ZIP) || (fileType == XBinary::FT_JAR) ||
+            (fileType == XBinary::FT_APK) || (fileType == XBinary::FT_APKS) || (fileType == XBinary::FT_IPA)) {
             tabResult = SE_NFD;
         }
     }
@@ -726,7 +682,9 @@ void FormatsWidget::onScanFinished() {
     ui->groupBoxBaseAddress->setEnabled(true);
 }
 
-void FormatsWidget::registerShortcuts(bool bState) { Q_UNUSED(bState) }
+void FormatsWidget::registerShortcuts(bool bState) {
+    Q_UNUSED(bState)
+}
 
 void FormatsWidget::on_pushButtonFileInfo_clicked() {
     QString sFileName = g_sFileName;
@@ -821,10 +779,8 @@ void FormatsWidget::on_pushButtonSignatures_clicked() {
             SearchSignaturesWidget::OPTIONS signaturesOptions = {};
 
             DialogSearchSignatures dialogSearchSignatures(this);
-            dialogSearchSignatures.setData(&file, XBinary::FT_UNKNOWN,
-                                           signaturesOptions);
-            dialogSearchSignatures.setGlobal(getShortcuts(),
-                                             getGlobalOptions());
+            dialogSearchSignatures.setData(&file, XBinary::FT_UNKNOWN, signaturesOptions);
+            dialogSearchSignatures.setGlobal(getShortcuts(), getGlobalOptions());
 
             dialogSearchSignatures.exec();
 

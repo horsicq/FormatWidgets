@@ -31,33 +31,28 @@ class MACHSectionHeaderWidget;
 class MACHSectionHeaderWidget : public FormatWidget {
     Q_OBJECT
 
-   public:
+public:
     MACHSectionHeaderWidget(QWidget *pParent = nullptr);
-    MACHSectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS options,
-                            quint32 nNumber, qint64 nOffset, qint32 nType,
-                            QWidget *pParent = nullptr);
+    MACHSectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent = nullptr);
     ~MACHSectionHeaderWidget();
     virtual void clear();
     virtual void cleanup();
     virtual void reload();
     virtual void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
 
-   protected:
-    virtual SV _setValue(QVariant vValue, int nStype, int nNdata, int nVtype,
-                         int nPosition, qint64 nOffset);
+protected:
+    virtual SV _setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset);
     virtual void setReadonly(bool bState);
     virtual void blockSignals(bool bState);
     virtual void adjustHeaderTable(int nType, QTableWidget *pTableWidget);
 
-   private slots:
+private slots:
     void on_checkBoxReadonly_toggled(bool bChecked);
     void reloadData();
     void widgetValueChanged(quint64 nValue);
-    void on_tableWidget_currentCellChanged(int nCurrentRow, int nCurrentColumn,
-                                           int nPreviousRow,
-                                           int nPreviousColumn);
+    void on_tableWidget_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn);
 
-   private:
+private:
     Ui::MACHSectionHeaderWidget *ui;
     XLineEditHEX **g_ppLinedEdit;
     int g_nLineEditSize;

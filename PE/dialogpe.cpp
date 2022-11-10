@@ -22,14 +22,15 @@
 
 #include "ui_dialogpe.h"
 
-DialogPE::DialogPE(QWidget *pParent)
-    : XShortcutsDialog(pParent), ui(new Ui::DialogPE) {
+DialogPE::DialogPE(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogPE) {
     ui->setupUi(this);
 
     setWindowFlags(Qt::Window);
 }
 
-DialogPE::~DialogPE() { delete ui; }
+DialogPE::~DialogPE() {
+    delete ui;
+}
 
 void DialogPE::setData(QIODevice *pDevice, FW_DEF::OPTIONS options) {
     if (options.sTitle != "") {

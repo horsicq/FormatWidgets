@@ -68,7 +68,7 @@ class FormatsWidget : public XShortcutsWidget {
 
     enum SE { SE_AUTO = 0, SE_DIE, SE_NFD };
 
-   public:
+public:
     explicit FormatsWidget(QWidget *pParent = nullptr);
     ~FormatsWidget();
 
@@ -76,7 +76,7 @@ class FormatsWidget : public XShortcutsWidget {
     void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
     void adjustView();
 
-   private slots:
+private slots:
     void on_comboBoxFileType_currentIndexChanged(int nIndex);
     void on_comboBoxScanEngine_currentIndexChanged(int nIndex);
     void reload();
@@ -136,10 +136,10 @@ class FormatsWidget : public XShortcutsWidget {
     void on_pushButtonHash_clicked();
     void on_pushButtonExtractor_clicked();
 
-   protected:
+protected:
     virtual void registerShortcuts(bool bState);
 
-   private:
+private:
     Ui::FormatsWidget *ui;
     QString g_sFileName;
     bool g_bScan;

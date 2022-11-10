@@ -30,7 +30,7 @@ class MACHOFATWidget;
 class MACHOFATWidget : public FormatWidget {
     Q_OBJECT
 
-   public:
+public:
     explicit MACHOFATWidget(QWidget *pParent = nullptr);
     ~MACHOFATWidget();
 
@@ -38,17 +38,16 @@ class MACHOFATWidget : public FormatWidget {
     virtual void cleanup();
     virtual void reload();
 
-   protected:
-    virtual SV _setValue(QVariant vValue, int nStype, int nNdata, int nVtype,
-                         int nPosition, qint64 nOffset);
+protected:
+    virtual SV _setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset);
     virtual void setReadonly(bool bState);
     virtual void blockSignals(bool bState);
 
-   private slots:
+private slots:
     void reloadData();
     void on_comboBoxFilePart_currentIndexChanged(int nIndex);
 
-   private:
+private:
     Ui::MACHOFATWidget *ui;
     QList<SubDevice *> g_listDevices;
 };

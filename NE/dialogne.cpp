@@ -22,14 +22,15 @@
 
 #include "ui_dialogne.h"
 
-DialogNE::DialogNE(QWidget *pParent)
-    : XShortcutsDialog(pParent), ui(new Ui::DialogNE) {
+DialogNE::DialogNE(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogNE) {
     ui->setupUi(this);
 
     setWindowFlags(Qt::Window);
 }
 
-DialogNE::~DialogNE() { delete ui; }
+DialogNE::~DialogNE() {
+    delete ui;
+}
 
 void DialogNE::setData(QIODevice *pDevice, FW_DEF::OPTIONS options) {
     if (options.sTitle != "") {

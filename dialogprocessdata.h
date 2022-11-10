@@ -31,11 +31,11 @@
 class DialogProcessData : public XDialogProcess {
     Q_OBJECT
 
-   public:
+public:
     explicit DialogProcessData(QWidget *pParent, ProcessData *pProcessData);
     ~DialogProcessData();
 
-   private:
+private:
     ProcessData *g_pProcessData;
     QThread *g_pThread;
 };

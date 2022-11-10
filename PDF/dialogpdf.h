@@ -32,14 +32,14 @@ class DialogPDF;
 class DialogPDF : public XShortcutsDialog {
     Q_OBJECT
 
-   public:
+public:
     explicit DialogPDF(QWidget *pParent = nullptr);
     ~DialogPDF();
 
     void setData(QIODevice *pDevice, FW_DEF::OPTIONS options);
     void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
 
-   private:
+private:
     Ui::DialogPDF *ui;
 };
 

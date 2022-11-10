@@ -27,13 +27,12 @@
 class NEProcessData : public ProcessData {
     Q_OBJECT
 
-   public:
-    explicit NEProcessData(int nType, QStandardItemModel **ppModel, XNE *pNE,
-                           qint64 nOffset, qint64 nSize);
+public:
+    explicit NEProcessData(int nType, QStandardItemModel **ppModel, XNE *pNE, qint64 nOffset, qint64 nSize);
     virtual void _process();
     virtual void ajustTableView(QWidget *pWidget, QTableView *pTableView);
 
-   private:
+private:
     int g_nType;
     XNE *g_pNE;
     QStandardItemModel **g_ppModel;

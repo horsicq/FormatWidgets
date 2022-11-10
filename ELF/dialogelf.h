@@ -32,13 +32,13 @@ class DialogELF;
 class DialogELF : public XShortcutsDialog {
     Q_OBJECT
 
-   public:
+public:
     explicit DialogELF(QWidget *pParent = nullptr);
     ~DialogELF();
     void setData(QIODevice *pDevice, FW_DEF::OPTIONS options);
     void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
 
-   private:
+private:
     Ui::DialogELF *ui;
 };
 

@@ -32,21 +32,20 @@ class DialogSearchSignatures;
 class DialogSearchSignatures : public XShortcutsDialog {
     Q_OBJECT
 
-   public:
+public:
     explicit DialogSearchSignatures(QWidget *pParent);
     ~DialogSearchSignatures();
-    void setData(QIODevice *pDevice, XBinary::FT fileType,
-                 SearchSignaturesWidget::OPTIONS options, bool bAuto = false);
+    void setData(QIODevice *pDevice, XBinary::FT fileType, SearchSignaturesWidget::OPTIONS options, bool bAuto = false);
     void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
     void adjust();
 
-   signals:
+signals:
     void showHex(qint64 nOffset, qint64 nSize);
 
-   private slots:
+private slots:
     void on_pushButtonClose_clicked();
 
-   private:
+private:
     Ui::DialogSearchSignatures *ui;
 };
 

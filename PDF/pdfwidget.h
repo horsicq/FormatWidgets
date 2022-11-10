@@ -31,30 +31,27 @@ class PDFWidget;
 class PDFWidget : public FormatWidget {
     Q_OBJECT
 
-   public:
+public:
     PDFWidget(QWidget *pParent = nullptr);
-    PDFWidget(QIODevice *pDevice, FW_DEF::OPTIONS options,
-              QWidget *pParent = nullptr);
+    PDFWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent = nullptr);
     ~PDFWidget();
 
     virtual void clear();
     virtual void cleanup();
     virtual void reload();
 
-   protected:
-    virtual SV _setValue(QVariant vValue, int nStype, int nNdata, int nVtype,
-                         int nPosition, qint64 nOffset);
+protected:
+    virtual SV _setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset);
     virtual void setReadonly(bool bState);
     virtual void blockSignals(bool bState);
     virtual void reloadData();
 
-   private slots:
+private slots:
     void on_checkBoxReadonly_toggled(bool bChecked);
 
-    void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent,
-                                              QTreeWidgetItem *pPrevious);
+    void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent, QTreeWidgetItem *pPrevious);
 
-   private:
+private:
     Ui::PDFWidget *ui;
 };
 

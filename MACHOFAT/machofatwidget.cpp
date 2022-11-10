@@ -22,12 +22,13 @@
 
 #include "ui_machofatwidget.h"
 
-MACHOFATWidget::MACHOFATWidget(QWidget *pParent)
-    : FormatWidget(pParent), ui(new Ui::MACHOFATWidget) {
+MACHOFATWidget::MACHOFATWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::MACHOFATWidget) {
     ui->setupUi(this);
 }
 
-MACHOFATWidget::~MACHOFATWidget() { delete ui; }
+MACHOFATWidget::~MACHOFATWidget() {
+    delete ui;
+}
 
 void MACHOFATWidget::clear() {
     ui->comboBoxFilePart->clear();
@@ -52,7 +53,9 @@ void MACHOFATWidget::clear() {
     g_listDevices.clear();
 }
 
-void MACHOFATWidget::cleanup() { MACHOFATWidget::clear(); }
+void MACHOFATWidget::cleanup() {
+    MACHOFATWidget::clear();
+}
 
 void MACHOFATWidget::reload() {
     // Q_UNUSED(ui->comboBoxFilePart);
@@ -66,21 +69,17 @@ void MACHOFATWidget::reload() {
     if (machofat.isValid()) {
         XBinary::PDSTRUCT pdStruct = {};
 
-        QList<XArchive::RECORD> listRecords =
-            machofat.getRecords(-1, &pdStruct);
+        QList<XArchive::RECORD> listRecords = machofat.getRecords(-1, &pdStruct);
 
         int nNumberOfRecords = listRecords.count();
 
         for (qint32 i = 0; i < nNumberOfRecords; i++) {
-            SubDevice *pSubDevice =
-                new SubDevice(getDevice(), listRecords.at(i).nDataOffset,
-                              listRecords.at(i).nUncompressedSize);
+            SubDevice *pSubDevice = new SubDevice(getDevice(), listRecords.at(i).nDataOffset, listRecords.at(i).nUncompressedSize);
 
             if (pSubDevice->open(getDevice()->openMode())) {
                 ui->comboBoxFilePart->addItem(listRecords.at(i).sFileName);
 
-                MACHWidget *pMachWidget =
-                    new MACHWidget(pSubDevice, getOptions(), this);
+                MACHWidget *pMachWidget = new MACHWidget(pSubDevice, getOptions(), this);
 
                 pMachWidget->setGlobal(getShortcuts(), getGlobalOptions());
 
@@ -94,9 +93,7 @@ void MACHOFATWidget::reload() {
     }
 }
 
-FormatWidget::SV MACHOFATWidget::_setValue(QVariant vValue, int nStype,
-                                           int nNdata, int nVtype,
-                                           int nPosition, qint64 nOffset) {
+FormatWidget::SV MACHOFATWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset) {
     Q_UNUSED(vValue)
     Q_UNUSED(nStype)
     Q_UNUSED(nNdata)
@@ -121,9 +118,12 @@ void MACHOFATWidget::setReadonly(bool bState) {
     //    }
 }
 
-void MACHOFATWidget::blockSignals(bool bState) { Q_UNUSED(bState) }
+void MACHOFATWidget::blockSignals(bool bState) {
+    Q_UNUSED(bState)
+}
 
-void MACHOFATWidget::reloadData() {}
+void MACHOFATWidget::reloadData() {
+}
 
 void MACHOFATWidget::on_comboBoxFilePart_currentIndexChanged(int nIndex) {
     ui->stackedWidget->setCurrentIndex(nIndex);

@@ -31,11 +31,9 @@ class ELFSectionHeaderWidget;
 class ELFSectionHeaderWidget : public FormatWidget {
     Q_OBJECT
 
-   public:
+public:
     ELFSectionHeaderWidget(QWidget *pParent = nullptr);
-    ELFSectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS options,
-                           quint32 nNumber, qint64 nOffset, qint32 nType,
-                           QWidget *pParent = nullptr);
+    ELFSectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent = nullptr);
     ~ELFSectionHeaderWidget();
     virtual void clear();
     virtual void cleanup();
@@ -43,23 +41,20 @@ class ELFSectionHeaderWidget : public FormatWidget {
     virtual void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
     void setStringTable(qint64 nStringTableOffset, qint64 nStringTableSize);
 
-   protected:
-    virtual SV _setValue(QVariant vValue, int nStype, int nNdata, int nVtype,
-                         int nPosition, qint64 nOffset);
+protected:
+    virtual SV _setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset);
     virtual void setReadonly(bool bState);
     virtual void blockSignals(bool bState);
     virtual void adjustHeaderTable(int nType, QTableWidget *pTableWidget);
 
-   private slots:
+private slots:
     void on_checkBoxReadonly_toggled(bool bChecked);
     void reloadData();
     void widgetValueChanged(quint64 nValue);
-    void on_tableWidget_currentCellChanged(int nCurrentRow, int nCurrentColumn,
-                                           int nPreviousRow,
-                                           int nPreviousColumn);
+    void on_tableWidget_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn);
     void on_pushButtonSaveHeader_clicked();
 
-   private:
+private:
     Ui::ELFSectionHeaderWidget *ui;
     XLineEditHEX **g_ppLinedEdit;
     int g_nLineEditSize;

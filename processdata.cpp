@@ -37,7 +37,9 @@ void ProcessData::incValue() {
     XBinary::setPdStructCurrentIncrement(g_pPdStruct, g_nFreeIndex);
 }
 
-bool ProcessData::isRun() { return !(g_pPdStruct->bIsStop); }
+bool ProcessData::isRun() {
+    return !(g_pPdStruct->bIsStop);
+}
 
 void ProcessData::ajustTreeView(QWidget *pWidget, QTreeView *pTreeView) {
     Q_UNUSED(pWidget)
@@ -45,8 +47,7 @@ void ProcessData::ajustTreeView(QWidget *pWidget, QTreeView *pTreeView) {
     pTreeView->expand(pTreeView->model()->index(0, 0));
 }
 
-QList<QString> ProcessData::getStructList(const FW_DEF::HEADER_RECORD *pRecords,
-                                          int nRecordCount) {
+QList<QString> ProcessData::getStructList(const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount) {
     QList<QString> listResult;
 
     for (qint32 i = 0; i < nRecordCount; i++) {
@@ -56,8 +57,7 @@ QList<QString> ProcessData::getStructList(const FW_DEF::HEADER_RECORD *pRecords,
     return listResult;
 }
 
-void ProcessData::setHeader(QStandardItemModel *pModel,
-                            QList<QString> *pListStrings) {
+void ProcessData::setHeader(QStandardItemModel *pModel, QList<QString> *pListStrings) {
     int nNumberOfRecords = pListStrings->count();
 
     for (qint32 i = 0; i < nNumberOfRecords; i++) {

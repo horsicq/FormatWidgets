@@ -33,18 +33,14 @@
 class DialogMultiSearchProcess : public XDialogProcess {
     Q_OBJECT
 
-   public:
+public:
     explicit DialogMultiSearchProcess(QWidget *pParent = nullptr);
     ~DialogMultiSearchProcess();
 
-    void processSearch(QIODevice *pDevice,
-                       QList<XBinary::MS_RECORD> *pListRecords,
-                       MultiSearch::OPTIONS options, MultiSearch::TYPE type);
-    void processModel(QList<XBinary::MS_RECORD> *pListRecords,
-                      QStandardItemModel **ppModel,
-                      MultiSearch::OPTIONS options, MultiSearch::TYPE type);
+    void processSearch(QIODevice *pDevice, QList<XBinary::MS_RECORD> *pListRecords, MultiSearch::OPTIONS options, MultiSearch::TYPE type);
+    void processModel(QList<XBinary::MS_RECORD> *pListRecords, QStandardItemModel **ppModel, MultiSearch::OPTIONS options, MultiSearch::TYPE type);
 
-   private:
+private:
     MultiSearch *g_pHandleSearch;
     MultiSearch *g_pHandleModel;
     QThread *g_pThreadSearch;

@@ -32,14 +32,14 @@ class DialogMSDOS;
 class DialogMSDOS : public XShortcutsDialog {
     Q_OBJECT
 
-   public:
+public:
     explicit DialogMSDOS(QWidget *pParent = nullptr);
     ~DialogMSDOS();
 
     void setData(QIODevice *pDevice, FW_DEF::OPTIONS options);
     void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
 
-   private:
+private:
     Ui::DialogMSDOS *ui;
 };
 

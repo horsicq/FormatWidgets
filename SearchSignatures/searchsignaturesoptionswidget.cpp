@@ -22,8 +22,7 @@
 
 #include "ui_searchsignaturesoptionswidget.h"
 
-SearchSignaturesOptionsWidget::SearchSignaturesOptionsWidget(QWidget *pParent)
-    : QWidget(pParent), ui(new Ui::SearchSignaturesOptionsWidget) {
+SearchSignaturesOptionsWidget::SearchSignaturesOptionsWidget(QWidget *pParent) : QWidget(pParent), ui(new Ui::SearchSignaturesOptionsWidget) {
     ui->setupUi(this);
 
     g_pOptions = nullptr;
@@ -31,7 +30,9 @@ SearchSignaturesOptionsWidget::SearchSignaturesOptionsWidget(QWidget *pParent)
     setProperty("GROUPID", XOptions::GROUPID_SIGNATURES);
 }
 
-SearchSignaturesOptionsWidget::~SearchSignaturesOptionsWidget() { delete ui; }
+SearchSignaturesOptionsWidget::~SearchSignaturesOptionsWidget() {
+    delete ui;
+}
 
 void SearchSignaturesOptionsWidget::setOptions(XOptions *pOptions) {
     g_pOptions = pOptions;
@@ -40,8 +41,7 @@ void SearchSignaturesOptionsWidget::setOptions(XOptions *pOptions) {
 }
 
 void SearchSignaturesOptionsWidget::save() {
-    g_pOptions->getLineEdit(ui->lineEditSearchSignaturesPath,
-                            XOptions::ID_SIGNATURES_PATH);
+    g_pOptions->getLineEdit(ui->lineEditSearchSignaturesPath, XOptions::ID_SIGNATURES_PATH);
 }
 
 void SearchSignaturesOptionsWidget::setDefaultValues(XOptions *pOptions) {
@@ -49,18 +49,14 @@ void SearchSignaturesOptionsWidget::setDefaultValues(XOptions *pOptions) {
 }
 
 void SearchSignaturesOptionsWidget::reload() {
-    g_pOptions->setLineEdit(ui->lineEditSearchSignaturesPath,
-                            XOptions::ID_SIGNATURES_PATH);
+    g_pOptions->setLineEdit(ui->lineEditSearchSignaturesPath, XOptions::ID_SIGNATURES_PATH);
 }
 
-void SearchSignaturesOptionsWidget::
-    on_toolButtonSearchSignaturesPath_clicked() {
+void SearchSignaturesOptionsWidget::on_toolButtonSearchSignaturesPath_clicked() {
     QString sText = ui->lineEditSearchSignaturesPath->text();
     QString sInitDirectory = XBinary::convertPathName(sText);
 
-    QString sDirectoryName = QFileDialog::getExistingDirectory(
-        this, tr("Open directory") + QString("..."), sInitDirectory,
-        QFileDialog::ShowDirsOnly);
+    QString sDirectoryName = QFileDialog::getExistingDirectory(this, tr("Open directory") + QString("..."), sInitDirectory, QFileDialog::ShowDirsOnly);
 
     if (!sDirectoryName.isEmpty()) {
         ui->lineEditSearchSignaturesPath->setText(sDirectoryName);

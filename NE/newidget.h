@@ -33,19 +33,17 @@ class NEWidget;
 class NEWidget : public FormatWidget {
     Q_OBJECT
 
-   public:
+public:
     NEWidget(QWidget *pParent = nullptr);
-    NEWidget(QIODevice *pDevice, FW_DEF::OPTIONS options,
-             QWidget *pParent = nullptr);
+    NEWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent = nullptr);
     ~NEWidget();
 
     virtual void clear();
     virtual void cleanup();
     virtual void reload();
 
-   protected:
-    virtual SV _setValue(QVariant vValue, int nStype, int nNdata, int nVtype,
-                         int nPosition, qint64 nOffset);
+protected:
+    virtual SV _setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset);
     virtual void setReadonly(bool bState);
     virtual void blockSignals(bool bState);
     virtual void adjustHeaderTable(int nType, QTableWidget *pTableWidget);
@@ -55,22 +53,15 @@ class NEWidget : public FormatWidget {
     virtual void _showInMemoryMapWindowOffset(qint64 nOffset);
     virtual void _showInHexWindow(qint64 nOffset, qint64 nSize);
 
-   private slots:
+private slots:
     virtual void reloadData();
     void widgetValueChanged(quint64 nValue);
-    void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurrent,
-                                              QTreeWidgetItem *pItemPrevious);
+    void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurrent, QTreeWidgetItem *pItemPrevious);
     void on_checkBoxReadonly_toggled(bool bChecked);
     void on_pushButtonReload_clicked();
     void enableButton();
-    void on_tableWidget_DOS_HEADER_currentCellChanged(int nCurrentRow,
-                                                      int nCurrentColumn,
-                                                      int nPreviousRow,
-                                                      int nPreviousColumn);
-    void on_tableWidget_OS2_HEADER_currentCellChanged(int nCurrentRow,
-                                                      int nCurrentColumn,
-                                                      int nPreviousRow,
-                                                      int nPreviousColumn);
+    void on_tableWidget_DOS_HEADER_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn);
+    void on_tableWidget_OS2_HEADER_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn);
     void on_toolButtonPrev_clicked();
     void on_toolButtonNext_clicked();
     void on_pushButtonHex_clicked();
@@ -79,18 +70,10 @@ class NEWidget : public FormatWidget {
     void on_pushButtonMemoryMap_clicked();
     void on_pushButtonEntropy_clicked();
     void on_pushButtonHeuristicScan_clicked();
-    void onTableView_SEGMENTS_currentRowChanged(const QModelIndex &current,
-                                                const QModelIndex &previous);
+    void onTableView_SEGMENTS_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
 
-   private:
-    enum CB {
-        CB_DOS_HEADER_e_magic = 0,
-        CB_OS2_HEADER_ne_magic,
-        CB_OS2_HEADER_ne_flags,
-        CB_OS2_HEADER_ne_exetype,
-        CB_OS2_HEADER_ne_flagsothers,
-        __CB_size
-    };
+private:
+    enum CB { CB_DOS_HEADER_e_magic = 0, CB_OS2_HEADER_ne_magic, CB_OS2_HEADER_ne_flags, CB_OS2_HEADER_ne_exetype, CB_OS2_HEADER_ne_flagsothers, __CB_size };
 
     enum INV {
         INV_IMAGE_DOS_HEADER_e_lfanew,

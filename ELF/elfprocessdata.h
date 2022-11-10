@@ -27,15 +27,14 @@
 class ELFProcessData : public ProcessData {
     Q_OBJECT
 
-   public:
-    explicit ELFProcessData(int nType, QStandardItemModel **ppModel, XELF *pELF,
-                            qint64 nOffset, qint64 nSize,
-                            qint64 nStringTableOffset, qint64 nStringTableSize);
+public:
+    explicit ELFProcessData(int nType, QStandardItemModel **ppModel, XELF *pELF, qint64 nOffset, qint64 nSize, qint64 nStringTableOffset,
+                            qint64 nStringTableSize);
 
     virtual void _process();
     virtual void ajustTableView(QWidget *pWidget, QTableView *pTableView);
 
-   private:
+private:
     int g_nType;
     XELF *g_pELF;
     QStandardItemModel **g_ppModel;

@@ -33,21 +33,20 @@ class DialogSectionHeader;
 class DialogSectionHeader : public XShortcutsDialog {
     Q_OBJECT
 
-   public:
+public:
     explicit DialogSectionHeader(QWidget *pParent);
     ~DialogSectionHeader();
 
     void setWidget(FormatWidget *pWidget);
-    void setData(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber,
-                 qint64 nOffset, QString sTitle, qint32 nType);  // TODO remove
+    void setData(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, QString sTitle, qint32 nType);  // TODO remove
     void setData(QString sTitle);
     void setEdited();
     virtual void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
 
-   signals:
+signals:
     void changed();
 
-   private:
+private:
     Ui::DialogSectionHeader *ui;
     FormatWidget *g_pWidget;
 };

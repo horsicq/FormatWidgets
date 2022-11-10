@@ -32,14 +32,14 @@ class DialogDEX;
 class DialogDEX : public XShortcutsDialog {
     Q_OBJECT
 
-   public:
+public:
     explicit DialogDEX(QWidget *pParent = nullptr);
     ~DialogDEX();
 
     void setData(QIODevice *pDevice, FW_DEF::OPTIONS options);
     void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
 
-   private:
+private:
     Ui::DialogDEX *ui;
 };
 

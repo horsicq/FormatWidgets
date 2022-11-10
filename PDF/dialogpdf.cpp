@@ -22,14 +22,15 @@
 
 #include "ui_dialogpdf.h"
 
-DialogPDF::DialogPDF(QWidget *pParent)
-    : XShortcutsDialog(pParent), ui(new Ui::DialogPDF) {
+DialogPDF::DialogPDF(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogPDF) {
     ui->setupUi(this);
 
     setWindowFlags(Qt::Window);
 }
 
-DialogPDF::~DialogPDF() { delete ui; }
+DialogPDF::~DialogPDF() {
+    delete ui;
+}
 
 void DialogPDF::setData(QIODevice *pDevice, FW_DEF::OPTIONS options) {
     if (options.sTitle != "") {

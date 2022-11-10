@@ -121,17 +121,7 @@ extern const FW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace N_DEX_METHOD_ID
 
 namespace N_DEX_CLASS_ITEM_DEF {
-enum DATA {
-    class_idx = 0,
-    access_flags,
-    superclass_idx,
-    interfaces_off,
-    source_file_idx,
-    annotations_off,
-    class_data_off,
-    static_values_off,
-    __data_size
-};
+enum DATA { class_idx = 0, access_flags, superclass_idx, interfaces_off, source_file_idx, annotations_off, class_data_off, static_values_off, __data_size };
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace N_DEX_CLASS_ITEM_DEF

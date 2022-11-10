@@ -22,14 +22,15 @@
 
 #include "ui_dialogmach.h"
 
-DialogMACH::DialogMACH(QWidget *pParent)
-    : XShortcutsDialog(pParent), ui(new Ui::DialogMACH) {
+DialogMACH::DialogMACH(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogMACH) {
     ui->setupUi(this);
 
     setWindowFlags(Qt::Window);
 }
 
-DialogMACH::~DialogMACH() { delete ui; }
+DialogMACH::~DialogMACH() {
+    delete ui;
+}
 
 void DialogMACH::setData(QIODevice *pDevice, FW_DEF::OPTIONS options) {
     if (options.sTitle != "") {
