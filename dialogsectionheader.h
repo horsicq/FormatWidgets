@@ -7,8 +7,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -22,34 +22,34 @@
 #define DIALOGSECTIONHEADER_H
 
 #include <QDialog>
-#include "xshortcutsdialog.h"
-#include "formatwidget.h"
 
-namespace Ui
-{
+#include "formatwidget.h"
+#include "xshortcutsdialog.h"
+
+namespace Ui {
 class DialogSectionHeader;
 }
 
-class DialogSectionHeader : public XShortcutsDialog
-{
+class DialogSectionHeader : public XShortcutsDialog {
     Q_OBJECT
 
-public:
+   public:
     explicit DialogSectionHeader(QWidget *pParent);
     ~DialogSectionHeader();
 
     void setWidget(FormatWidget *pWidget);
-    void setData(QIODevice *pDevice,FW_DEF::OPTIONS options,quint32 nNumber,qint64 nOffset,QString sTitle,qint32 nType); // TODO remove
+    void setData(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber,
+                 qint64 nOffset, QString sTitle, qint32 nType);  // TODO remove
     void setData(QString sTitle);
     void setEdited();
-    virtual void setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions);
+    virtual void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
 
-signals:
+   signals:
     void changed();
 
-private:
+   private:
     Ui::DialogSectionHeader *ui;
     FormatWidget *g_pWidget;
 };
 
-#endif // DIALOGSECTIONHEADER_H
+#endif  // DIALOGSECTIONHEADER_H

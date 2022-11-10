@@ -7,8 +7,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -28,24 +28,24 @@ namespace Ui {
 class DialogSearchStrings;
 }
 
-class DialogSearchStrings : public XShortcutsDialog
-{
+class DialogSearchStrings : public XShortcutsDialog {
     Q_OBJECT
 
-public:
+   public:
     explicit DialogSearchStrings(QWidget *pParent);
     ~DialogSearchStrings();
-    void setData(QIODevice *pDevice,SearchStringsWidget::OPTIONS options,bool bAuto=false);
-    void setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions);
+    void setData(QIODevice *pDevice, SearchStringsWidget::OPTIONS options,
+                 bool bAuto = false);
+    void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
 
-signals:
-    void showHex(qint64 nOffset,qint64 nSize);
+   signals:
+    void showHex(qint64 nOffset, qint64 nSize);
 
-private slots:
+   private slots:
     void on_pushButtonClose_clicked();
 
-private:
+   private:
     Ui::DialogSearchStrings *ui;
 };
 
-#endif // DIALOGSEARCHSTRINGS_H
+#endif  // DIALOGSEARCHSTRINGS_H

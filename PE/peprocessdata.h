@@ -7,8 +7,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -25,18 +25,19 @@
 #include "processdata.h"
 #include "specabstract.h"
 
-class PEProcessData : public ProcessData
-{
+class PEProcessData : public ProcessData {
     Q_OBJECT
 
-public:
-    explicit PEProcessData(int nType,QStandardItemModel **ppModel,XPE *pPE,qint32 nNumber,qint64 nOffset,qint64 nSize,QVariant varInfo=QVariant());
+   public:
+    explicit PEProcessData(int nType, QStandardItemModel **ppModel, XPE *pPE,
+                           qint32 nNumber, qint64 nOffset, qint64 nSize,
+                           QVariant varInfo = QVariant());
 
     virtual void _process();
-    virtual void ajustTableView(QWidget *pWidget,QTableView *pTableView);
-    void handleCertRecord(QStandardItem *pParent,XPE::CERT_RECORD certRecord);
+    virtual void ajustTableView(QWidget *pWidget, QTableView *pTableView);
+    void handleCertRecord(QStandardItem *pParent, XPE::CERT_RECORD certRecord);
 
-private:
+   private:
     int g_nType;
     XPE *g_pPE;
     QStandardItemModel **g_ppModel;
@@ -46,4 +47,4 @@ private:
     QVariant g_varInfo;
 };
 
-#endif // PEPROCESSDATA_H
+#endif  // PEPROCESSDATA_H

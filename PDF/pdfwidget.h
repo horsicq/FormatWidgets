@@ -7,8 +7,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -24,37 +24,38 @@
 #include "../formatwidget.h"
 #include "pdf_defs.h"
 
-namespace Ui
-{
+namespace Ui {
 class PDFWidget;
 }
 
-class PDFWidget : public FormatWidget
-{
+class PDFWidget : public FormatWidget {
     Q_OBJECT
 
-public:
-    PDFWidget(QWidget *pParent=nullptr);
-    PDFWidget(QIODevice *pDevice,FW_DEF::OPTIONS options,QWidget *pParent=nullptr);
+   public:
+    PDFWidget(QWidget *pParent = nullptr);
+    PDFWidget(QIODevice *pDevice, FW_DEF::OPTIONS options,
+              QWidget *pParent = nullptr);
     ~PDFWidget();
 
     virtual void clear();
     virtual void cleanup();
     virtual void reload();
 
-protected:
-    virtual SV _setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition,qint64 nOffset);
+   protected:
+    virtual SV _setValue(QVariant vValue, int nStype, int nNdata, int nVtype,
+                         int nPosition, qint64 nOffset);
     virtual void setReadonly(bool bState);
     virtual void blockSignals(bool bState);
     virtual void reloadData();
 
-private slots:
+   private slots:
     void on_checkBoxReadonly_toggled(bool bChecked);
 
-    void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent,QTreeWidgetItem *pPrevious);
+    void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent,
+                                              QTreeWidgetItem *pPrevious);
 
-private:
+   private:
     Ui::PDFWidget *ui;
 };
 
-#endif // PDFWIDGET_H
+#endif  // PDFWIDGET_H

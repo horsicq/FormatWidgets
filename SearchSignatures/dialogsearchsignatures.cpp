@@ -7,8 +7,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -19,41 +19,33 @@
  * SOFTWARE.
  */
 #include "dialogsearchsignatures.h"
+
 #include "ui_dialogsearchsignatures.h"
 
-DialogSearchSignatures::DialogSearchSignatures(QWidget *pParent) :
-    XShortcutsDialog(pParent),
-    ui(new Ui::DialogSearchSignatures)
-{
+DialogSearchSignatures::DialogSearchSignatures(QWidget *pParent)
+    : XShortcutsDialog(pParent), ui(new Ui::DialogSearchSignatures) {
     ui->setupUi(this);
 
     setWindowFlags(Qt::Window);
 
-    connect(ui->searchSignaturesWidget,SIGNAL(showHex(qint64,qint64)),this,SIGNAL(showHex(qint64,qint64)));
+    connect(ui->searchSignaturesWidget, SIGNAL(showHex(qint64, qint64)), this,
+            SIGNAL(showHex(qint64, qint64)));
 }
 
-DialogSearchSignatures::~DialogSearchSignatures()
-{
-    delete ui;
+DialogSearchSignatures::~DialogSearchSignatures() { delete ui; }
+
+void DialogSearchSignatures::setData(QIODevice *pDevice, XBinary::FT fileType,
+                                     SearchSignaturesWidget::OPTIONS options,
+                                     bool bAuto) {
+    ui->searchSignaturesWidget->setData(pDevice, fileType, options, bAuto);
 }
 
-void DialogSearchSignatures::setData(QIODevice *pDevice,XBinary::FT fileType,SearchSignaturesWidget::OPTIONS options,bool bAuto)
-{
-    ui->searchSignaturesWidget->setData(pDevice,fileType,options,bAuto);
+void DialogSearchSignatures::setGlobal(XShortcuts *pShortcuts,
+                                       XOptions *pXOptions) {
+    ui->searchSignaturesWidget->setGlobal(pShortcuts, pXOptions);
+    XShortcutsDialog::setGlobal(pShortcuts, pXOptions);
 }
 
-void DialogSearchSignatures::setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions)
-{
-    ui->searchSignaturesWidget->setGlobal(pShortcuts,pXOptions);
-    XShortcutsDialog::setGlobal(pShortcuts,pXOptions);
-}
+void DialogSearchSignatures::adjust() { ui->searchSignaturesWidget->adjust(); }
 
-void DialogSearchSignatures::adjust()
-{
-    ui->searchSignaturesWidget->adjust();
-}
-
-void DialogSearchSignatures::on_pushButtonClose_clicked()
-{
-    this->close();
-}
+void DialogSearchSignatures::on_pushButtonClose_clicked() { this->close(); }

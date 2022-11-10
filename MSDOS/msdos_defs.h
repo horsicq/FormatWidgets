@@ -7,8 +7,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -24,11 +24,9 @@
 #include "../formatwidget.h"
 #include "xmsdos.h"
 
-namespace SMSDOS
-{
-enum TYPE
-{
-    TYPE_INFO=0,
+namespace SMSDOS {
+enum TYPE {
+    TYPE_INFO = 0,
     TYPE_VIRUSTOTAL,
     TYPE_HEX,
     TYPE_DISASM,
@@ -44,11 +42,9 @@ enum TYPE
 };
 }
 
-namespace N_DOS_HEADER
-{
-enum DATA
-{
-    e_magic=0,
+namespace N_DOS_HEADER {
+enum DATA {
+    e_magic = 0,
     e_cblp,
     e_cp,
     e_crlc,
@@ -66,6 +62,6 @@ enum DATA
 };
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
-}
+}  // namespace N_DOS_HEADER
 
-#endif // MSDOS_DEFS_H
+#endif  // MSDOS_DEFS_H

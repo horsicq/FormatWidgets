@@ -7,8 +7,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -19,28 +19,30 @@
  * SOFTWARE.
  */
 #include "dialogprocessdata.h"
+
 #include "ui_dialogprocessdata.h"
 
-DialogProcessData::DialogProcessData(QWidget *pParent,ProcessData *pProcessData) :
-    XDialogProcess(pParent)
-{
-    this->g_pProcessData=pProcessData;
+DialogProcessData::DialogProcessData(QWidget *pParent,
+                                     ProcessData *pProcessData)
+    : XDialogProcess(pParent) {
+    this->g_pProcessData = pProcessData;
 
     pProcessData->setPdStruct(getPdStruct());
 
-    g_pThread=new QThread;
+    g_pThread = new QThread;
 
     pProcessData->moveToThread(g_pThread);
 
-    connect(g_pThread,SIGNAL(started()),pProcessData,SLOT(process()));
-    connect(pProcessData,SIGNAL(completed(qint64)),this,SLOT(onCompleted(qint64)));
-    connect(pProcessData,SIGNAL(errorMessage(QString)),this,SLOT(errorMessage(QString)));
+    connect(g_pThread, SIGNAL(started()), pProcessData, SLOT(process()));
+    connect(pProcessData, SIGNAL(completed(qint64)), this,
+            SLOT(onCompleted(qint64)));
+    connect(pProcessData, SIGNAL(errorMessage(QString)), this,
+            SLOT(errorMessage(QString)));
 
     g_pThread->start();
 }
 
-DialogProcessData::~DialogProcessData()
-{
+DialogProcessData::~DialogProcessData() {
     stop();
     waitForFinished();
 

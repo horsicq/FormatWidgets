@@ -7,8 +7,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -19,38 +19,32 @@
  * SOFTWARE.
  */
 #include "lesectionheaderwidget.h"
+
 #include "ui_lesectionheaderwidget.h"
 
-LESectionHeaderWidget::LESectionHeaderWidget(QWidget *pParent):
-    FormatWidget(pParent),
-    ui(new Ui::LESectionHeaderWidget)
-{
+LESectionHeaderWidget::LESectionHeaderWidget(QWidget *pParent)
+    : FormatWidget(pParent), ui(new Ui::LESectionHeaderWidget) {
     ui->setupUi(this);
 }
 
-LESectionHeaderWidget::LESectionHeaderWidget(QIODevice *pDevice,FW_DEF::OPTIONS options,quint32 nNumber,qint64 nOffset,qint32 nType,QWidget *pParent):
-    LESectionHeaderWidget(pParent)
-{
-    LESectionHeaderWidget::setData(pDevice,options,nNumber,nOffset,nType);
+LESectionHeaderWidget::LESectionHeaderWidget(QIODevice *pDevice,
+                                             FW_DEF::OPTIONS options,
+                                             quint32 nNumber, qint64 nOffset,
+                                             qint32 nType, QWidget *pParent)
+    : LESectionHeaderWidget(pParent) {
+    LESectionHeaderWidget::setData(pDevice, options, nNumber, nOffset, nType);
 }
 
-LESectionHeaderWidget::~LESectionHeaderWidget()
-{
+LESectionHeaderWidget::~LESectionHeaderWidget() {}
 
-}
+void LESectionHeaderWidget::clear() {}
 
-void LESectionHeaderWidget::clear()
-{
+void LESectionHeaderWidget::reload() {}
 
-}
-
-void LESectionHeaderWidget::reload()
-{
-
-}
-
-FormatWidget::SV LESectionHeaderWidget::_setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition,qint64 nOffset)
-{
+FormatWidget::SV LESectionHeaderWidget::_setValue(QVariant vValue, int nStype,
+                                                  int nNdata, int nVtype,
+                                                  int nPosition,
+                                                  qint64 nOffset) {
     Q_UNUSED(vValue)
     Q_UNUSED(nStype)
     Q_UNUSED(nNdata)
@@ -61,34 +55,25 @@ FormatWidget::SV LESectionHeaderWidget::_setValue(QVariant vValue,int nStype,int
     return SV_NONE;
 }
 
-void LESectionHeaderWidget::setReadonly(bool bState)
-{
-    Q_UNUSED(bState)
-}
+void LESectionHeaderWidget::setReadonly(bool bState) { Q_UNUSED(bState) }
 
-void LESectionHeaderWidget::blockSignals(bool bState)
-{
-    Q_UNUSED(bState)
-}
+void LESectionHeaderWidget::blockSignals(bool bState) { Q_UNUSED(bState) }
 
-void LESectionHeaderWidget::adjustHeaderTable(int nType,QTableWidget *pTableWidget)
-{
+void LESectionHeaderWidget::adjustHeaderTable(int nType,
+                                              QTableWidget *pTableWidget) {
     Q_UNUSED(nType)
     Q_UNUSED(pTableWidget)
 }
 
-void LESectionHeaderWidget::on_checkBoxReadonly_toggled(bool bChecked)
-{
+void LESectionHeaderWidget::on_checkBoxReadonly_toggled(bool bChecked) {
     Q_UNUSED(bChecked)
 }
 
-void LESectionHeaderWidget::reloadData()
-{
+void LESectionHeaderWidget::reloadData() {}
 
-}
-
-void LESectionHeaderWidget::on_tableWidget_Section_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn)
-{
+void LESectionHeaderWidget::on_tableWidget_Section_currentCellChanged(
+    int nCurrentRow, int nCurrentColumn, int nPreviousRow,
+    int nPreviousColumn) {
     Q_UNUSED(nCurrentRow)
     Q_UNUSED(nCurrentColumn)
     Q_UNUSED(nPreviousRow)

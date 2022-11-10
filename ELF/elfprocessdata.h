@@ -7,8 +7,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -21,20 +21,21 @@
 #ifndef ELFPROCESSDATA_H
 #define ELFPROCESSDATA_H
 
-#include "processdata.h"
 #include "elf_defs.h"
+#include "processdata.h"
 
-class ELFProcessData : public ProcessData
-{
+class ELFProcessData : public ProcessData {
     Q_OBJECT
 
-public:
-    explicit ELFProcessData(int nType,QStandardItemModel **ppModel,XELF *pELF,qint64 nOffset,qint64 nSize,qint64 nStringTableOffset,qint64 nStringTableSize);
+   public:
+    explicit ELFProcessData(int nType, QStandardItemModel **ppModel, XELF *pELF,
+                            qint64 nOffset, qint64 nSize,
+                            qint64 nStringTableOffset, qint64 nStringTableSize);
 
     virtual void _process();
-    virtual void ajustTableView(QWidget *pWidget,QTableView *pTableView);
+    virtual void ajustTableView(QWidget *pWidget, QTableView *pTableView);
 
-private:
+   private:
     int g_nType;
     XELF *g_pELF;
     QStandardItemModel **g_ppModel;
@@ -44,4 +45,4 @@ private:
     qint64 g_nStringTableSize;
 };
 
-#endif // ELFPROCESSDATA_H
+#endif  // ELFPROCESSDATA_H

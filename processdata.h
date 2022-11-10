@@ -7,8 +7,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -25,38 +25,40 @@
 #include <QStandardItemModel>
 #include <QTableView>
 #include <QTreeView>
+
 #include "formatwidget_def.h"
-#include "xlineedithex.h"
 #include "xbinary.h"
+#include "xlineedithex.h"
 #include "xoptions.h"
 
-class ProcessData : public QObject
-{
+class ProcessData : public QObject {
     Q_OBJECT
 
-public:
+   public:
     explicit ProcessData();
-    
+
     void setPdStruct(XBinary::PDSTRUCT *pPdStruct);
     void setMaximum(quint64 nMaximum);
     void incValue();
     bool isRun();
-    virtual void _process()=0;
-    virtual void ajustTableView(QWidget *pWidget,QTableView *pTableView)=0;
-    virtual void ajustTreeView(QWidget *pWidget,QTreeView *pTreeView);
-    static QList<QString> getStructList(const FW_DEF::HEADER_RECORD *pRecords,int nRecordCount);
-    static void setHeader(QStandardItemModel *pModel,QList<QString> *pListStrings);
+    virtual void _process() = 0;
+    virtual void ajustTableView(QWidget *pWidget, QTableView *pTableView) = 0;
+    virtual void ajustTreeView(QWidget *pWidget, QTreeView *pTreeView);
+    static QList<QString> getStructList(const FW_DEF::HEADER_RECORD *pRecords,
+                                        int nRecordCount);
+    static void setHeader(QStandardItemModel *pModel,
+                          QList<QString> *pListStrings);
 
-public slots:
+   public slots:
     void process();
 
-signals:
+   signals:
     void errorMessage(QString sText);
     void completed(qint64 nElapsed);
 
-private:
+   private:
     XBinary::PDSTRUCT *g_pPdStruct;
     qint32 g_nFreeIndex;
 };
 
-#endif // PROCESSDATA_H
+#endif  // PROCESSDATA_H

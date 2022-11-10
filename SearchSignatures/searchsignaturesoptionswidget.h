@@ -7,8 +7,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -22,35 +22,35 @@
 #define SEARCHSIGNATURESOPTIONSWIDGET_H
 
 #include <QWidget>
-#include "xoptions.h"
+
 #include "xbinary.h"
+#include "xoptions.h"
 
 namespace Ui {
 class SearchSignaturesOptionsWidget;
 }
 
-class SearchSignaturesOptionsWidget : public QWidget
-{
+class SearchSignaturesOptionsWidget : public QWidget {
     Q_OBJECT
 
-public:
-    explicit SearchSignaturesOptionsWidget(QWidget *pParent=nullptr);
+   public:
+    explicit SearchSignaturesOptionsWidget(QWidget *pParent = nullptr);
     ~SearchSignaturesOptionsWidget();
 
     void setOptions(XOptions *pOptions);
 
     static void setDefaultValues(XOptions *pOptions);
 
-public slots:
+   public slots:
     void save();
     void reload();
 
-private slots:
+   private slots:
     void on_toolButtonSearchSignaturesPath_clicked();
 
-private:
+   private:
     Ui::SearchSignaturesOptionsWidget *ui;
     XOptions *g_pOptions;
 };
 
-#endif // SEARCHSIGNATURESOPTIONSWIDGET_H
+#endif  // SEARCHSIGNATURESOPTIONSWIDGET_H

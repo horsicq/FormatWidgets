@@ -7,8 +7,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -19,83 +19,72 @@
  * SOFTWARE.
  */
 #include "dexsectionheaderwidget.h"
+
 #include "ui_dexsectionheaderwidget.h"
 
-DEXSectionHeaderWidget::DEXSectionHeaderWidget(QWidget *pParent):
-    FormatWidget(pParent),
-    ui(new Ui::DEXSectionHeaderWidget)
-{
+DEXSectionHeaderWidget::DEXSectionHeaderWidget(QWidget *pParent)
+    : FormatWidget(pParent), ui(new Ui::DEXSectionHeaderWidget) {
     ui->setupUi(this);
 }
 
-DEXSectionHeaderWidget::DEXSectionHeaderWidget(QIODevice *pDevice,FW_DEF::OPTIONS options,quint32 nNumber,qint64 nOffset,qint32 nType,QWidget *pParent):
-    DEXSectionHeaderWidget(pParent)
-{
-    DEXSectionHeaderWidget::setData(pDevice,options,nNumber,nOffset,nType);
+DEXSectionHeaderWidget::DEXSectionHeaderWidget(QIODevice *pDevice,
+                                               FW_DEF::OPTIONS options,
+                                               quint32 nNumber, qint64 nOffset,
+                                               qint32 nType, QWidget *pParent)
+    : DEXSectionHeaderWidget(pParent) {
+    DEXSectionHeaderWidget::setData(pDevice, options, nNumber, nOffset, nType);
 
-    g_ppLinedEdit=nullptr;
-    g_nLineEditSize=0;
-    g_ppComboBox=nullptr;
-    g_nComboBoxSize=0;
-    g_ppInvWidget=nullptr;
-    g_nInvWidgetSize=0;
+    g_ppLinedEdit = nullptr;
+    g_nLineEditSize = 0;
+    g_ppComboBox = nullptr;
+    g_nComboBoxSize = 0;
+    g_ppInvWidget = nullptr;
+    g_nInvWidgetSize = 0;
 
-    if(g_nLineEditSize)
-    {
-        g_ppLinedEdit=new PXLineEditHEX[g_nLineEditSize];
+    if (g_nLineEditSize) {
+        g_ppLinedEdit = new PXLineEditHEX[g_nLineEditSize];
     }
 
-    if(g_nComboBoxSize)
-    {
-        g_ppComboBox=new PXComboBoxEx[g_nComboBoxSize];
+    if (g_nComboBoxSize) {
+        g_ppComboBox = new PXComboBoxEx[g_nComboBoxSize];
     }
 
-    if(g_nInvWidgetSize)
-    {
-        g_ppInvWidget=new PInvWidget[g_nInvWidgetSize];
+    if (g_nInvWidgetSize) {
+        g_ppInvWidget = new PInvWidget[g_nInvWidgetSize];
     }
 }
 
-DEXSectionHeaderWidget::~DEXSectionHeaderWidget()
-{
-    if(g_ppLinedEdit)
-    {
+DEXSectionHeaderWidget::~DEXSectionHeaderWidget() {
+    if (g_ppLinedEdit) {
         delete[] g_ppLinedEdit;
     }
 
-    if(g_ppComboBox)
-    {
+    if (g_ppComboBox) {
         delete[] g_ppComboBox;
     }
 
-    if(g_ppInvWidget)
-    {
+    if (g_ppInvWidget) {
         delete[] g_ppInvWidget;
     }
 
     delete ui;
 }
 
-void DEXSectionHeaderWidget::clear()
-{
+void DEXSectionHeaderWidget::clear() {
     reset();
 
-    memset(g_ppLinedEdit,0,g_nLineEditSize*sizeof(XLineEditHEX *));
-    memset(g_ppComboBox,0,g_nComboBoxSize*sizeof(XComboBoxEx *));
-    memset(g_ppInvWidget,0,g_nInvWidgetSize*sizeof(InvWidget *));
+    memset(g_ppLinedEdit, 0, g_nLineEditSize * sizeof(XLineEditHEX *));
+    memset(g_ppComboBox, 0, g_nComboBoxSize * sizeof(XComboBoxEx *));
+    memset(g_ppInvWidget, 0, g_nInvWidgetSize * sizeof(InvWidget *));
 
-    g_pSubDevice=nullptr;
+    g_pSubDevice = nullptr;
 
     ui->checkBoxReadonly->setChecked(true);
 }
 
-void DEXSectionHeaderWidget::cleanup()
-{
-    DEXSectionHeaderWidget::clear();
-}
+void DEXSectionHeaderWidget::cleanup() { DEXSectionHeaderWidget::clear(); }
 
-void DEXSectionHeaderWidget::reload()
-{
+void DEXSectionHeaderWidget::reload() {
     DEXSectionHeaderWidget::clear();
 
     ui->checkBoxReadonly->setEnabled(!isReadonly());
@@ -103,14 +92,16 @@ void DEXSectionHeaderWidget::reload()
     reloadData();
 }
 
-void DEXSectionHeaderWidget::setStringTable(qint64 nStringTableOffset,qint64 nStringTableSize)
-{
-    this->g_nStringTableOffset=nStringTableOffset;
-    this->g_nStringTableSize=nStringTableSize;
+void DEXSectionHeaderWidget::setStringTable(qint64 nStringTableOffset,
+                                            qint64 nStringTableSize) {
+    this->g_nStringTableOffset = nStringTableOffset;
+    this->g_nStringTableSize = nStringTableSize;
 }
 
-FormatWidget::SV DEXSectionHeaderWidget::_setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition,qint64 nOffset)
-{
+FormatWidget::SV DEXSectionHeaderWidget::_setValue(QVariant vValue, int nStype,
+                                                   int nNdata, int nVtype,
+                                                   int nPosition,
+                                                   qint64 nOffset) {
     Q_UNUSED(vValue)
     Q_UNUSED(nStype)
     Q_UNUSED(nNdata)
@@ -118,87 +109,79 @@ FormatWidget::SV DEXSectionHeaderWidget::_setValue(QVariant vValue,int nStype,in
     Q_UNUSED(nPosition)
     Q_UNUSED(nOffset)
 
-    SV result=SV_NONE;
+    SV result = SV_NONE;
 
-//    quint64 nValue=vValue.toULongLong();
+    //    quint64 nValue=vValue.toULongLong();
 
-    if(getDevice()->isWritable())
-    {
+    if (getDevice()->isWritable()) {
         XDEX dex(getDevice());
 
-        if(dex.isValid())
-        {
+        if (dex.isValid()) {
             // TODO
 
             ui->widgetHex->reload();
 
-            result=SV_EDITED;
+            result = SV_EDITED;
         }
     }
 
     return result;
 }
-void DEXSectionHeaderWidget::setReadonly(bool bState)
-{
-    setLineEditsReadOnly(g_ppLinedEdit,g_nLineEditSize,bState);
+void DEXSectionHeaderWidget::setReadonly(bool bState) {
+    setLineEditsReadOnly(g_ppLinedEdit, g_nLineEditSize, bState);
 
-    setComboBoxesReadOnly(g_ppComboBox,g_nComboBoxSize,bState);
+    setComboBoxesReadOnly(g_ppComboBox, g_nComboBoxSize, bState);
 }
 
-void DEXSectionHeaderWidget::blockSignals(bool bState)
-{
-    _blockSignals((QObject **)g_ppLinedEdit,g_nLineEditSize,bState);
+void DEXSectionHeaderWidget::blockSignals(bool bState) {
+    _blockSignals((QObject **)g_ppLinedEdit, g_nLineEditSize, bState);
 
-    _blockSignals((QObject **)g_ppComboBox,g_nComboBoxSize,bState);
+    _blockSignals((QObject **)g_ppComboBox, g_nComboBoxSize, bState);
 }
 
-void DEXSectionHeaderWidget::adjustHeaderTable(int nType,QTableWidget *pTableWidget)
-{
+void DEXSectionHeaderWidget::adjustHeaderTable(int nType,
+                                               QTableWidget *pTableWidget) {
     Q_UNUSED(nType)
     Q_UNUSED(pTableWidget)
 }
 
-void DEXSectionHeaderWidget::on_checkBoxReadonly_toggled(bool bChecked)
-{
+void DEXSectionHeaderWidget::on_checkBoxReadonly_toggled(bool bChecked) {
     setReadonly(bChecked);
 }
 
-void DEXSectionHeaderWidget::reloadData()
-{
-//    int nType=getType();
+void DEXSectionHeaderWidget::reloadData() {
+    //    int nType=getType();
 
     XDEX dex(getDevice());
 
-    if(dex.isValid())
-    {       
+    if (dex.isValid()) {
         // TODO
 
         setReadonly(ui->checkBoxReadonly->isChecked());
     }
 }
 
-void DEXSectionHeaderWidget::widgetValueChanged(quint64 nValue)
-{
+void DEXSectionHeaderWidget::widgetValueChanged(quint64 nValue) {
     Q_UNUSED(nValue)
 
-//    QWidget *pWidget=qobject_cast<QWidget *>(sender());
-//    int nStype=pWidget->property("STYPE").toInt();
-//    int nNdata=pWidget->property("NDATA").toInt();
+    //    QWidget *pWidget=qobject_cast<QWidget *>(sender());
+    //    int nStype=pWidget->property("STYPE").toInt();
+    //    int nNdata=pWidget->property("NDATA").toInt();
 
     XDEX dex(getDevice());
 
-    if(dex.isValid())
-    {
+    if (dex.isValid()) {
         // TODO
     }
 }
 
-void DEXSectionHeaderWidget::on_tableWidget_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn)
-{
+void DEXSectionHeaderWidget::on_tableWidget_currentCellChanged(
+    int nCurrentRow, int nCurrentColumn, int nPreviousRow,
+    int nPreviousColumn) {
     Q_UNUSED(nCurrentRow)
     Q_UNUSED(nCurrentColumn)
     Q_UNUSED(nPreviousRow)
     Q_UNUSED(nPreviousColumn)
 
-    setHeaderTableSelection(ui->widgetHex,ui->tableWidget);
+    setHeaderTableSelection(ui->widgetHex, ui->tableWidget);
 }

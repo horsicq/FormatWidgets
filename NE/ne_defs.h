@@ -7,8 +7,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -24,11 +24,9 @@
 #include "../formatwidget.h"
 #include "xne.h"
 
-namespace SNE
-{
-enum TYPE
-{
-    TYPE_INFO=0,
+namespace SNE {
+enum TYPE {
+    TYPE_INFO = 0,
     TYPE_VIRUSTOTAL,
     TYPE_HEX,
     TYPE_DISASM,
@@ -46,11 +44,9 @@ enum TYPE
 };
 }
 
-namespace N_NE_DOS_HEADER
-{
-enum DATA
-{
-    e_magic=0,
+namespace N_NE_DOS_HEADER {
+enum DATA {
+    e_magic = 0,
     e_cblp,
     e_cp,
     e_crlc,
@@ -85,13 +81,11 @@ enum DATA
 };
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
-}
+}  // namespace N_NE_DOS_HEADER
 
-namespace N_OS2_HEADER
-{
-enum DATA
-{
-    ne_magic=0,
+namespace N_OS2_HEADER {
+enum DATA {
+    ne_magic = 0,
     ne_ver,
     ne_rev,
     ne_enttab,
@@ -125,13 +119,11 @@ enum DATA
 };
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
-}
+}  // namespace N_OS2_HEADER
 
-namespace N_NE_SEGMENT
-{
-enum DATA
-{
-    dwFileOffset=0,
+namespace N_NE_SEGMENT {
+enum DATA {
+    dwFileOffset = 0,
     dwFileSize,
     dwFlags,
     dwMinAllocSize,
@@ -139,6 +131,6 @@ enum DATA
 };
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
-}
+}  // namespace N_NE_SEGMENT
 
-#endif // NE_DEFS_H
+#endif  // NE_DEFS_H

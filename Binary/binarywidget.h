@@ -7,8 +7,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -24,35 +24,35 @@
 #include "../formatwidget.h"
 #include "binary_defs.h"
 
-namespace Ui
-{
+namespace Ui {
 class BinaryWidget;
 }
 
-class BinaryWidget : public FormatWidget
-{
+class BinaryWidget : public FormatWidget {
     Q_OBJECT
 
-public:
-    BinaryWidget(QWidget *pParent=nullptr);
-    BinaryWidget(QIODevice *pDevice,FW_DEF::OPTIONS options,QWidget *pParent=nullptr);
+   public:
+    BinaryWidget(QWidget *pParent = nullptr);
+    BinaryWidget(QIODevice *pDevice, FW_DEF::OPTIONS options,
+                 QWidget *pParent = nullptr);
     ~BinaryWidget();
 
     virtual void clear();
     virtual void cleanup();
     virtual void reload();
 
-protected:
-    virtual SV _setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition,qint64 nOffset);
+   protected:
+    virtual SV _setValue(QVariant vValue, int nStype, int nNdata, int nVtype,
+                         int nPosition, qint64 nOffset);
     virtual void setReadonly(bool bState);
     virtual void blockSignals(bool bState);
-    virtual void adjustHeaderTable(int nType,QTableWidget *pTableWidget);
+    virtual void adjustHeaderTable(int nType, QTableWidget *pTableWidget);
     virtual void _showInDisasmWindowAddress(XADDR nAddress);
     virtual void _showInDisasmWindowOffset(qint64 nOffset);
     virtual void _showInMemoryMapWindowOffset(qint64 nOffset);
-    virtual void _showInHexWindow(qint64 nOffset,qint64 nSize);
+    virtual void _showInHexWindow(qint64 nOffset, qint64 nSize);
 
-private slots:
+   private slots:
     virtual void reloadData();
     void widgetValueChanged(quint64 nValue);
     void on_checkBoxReadonly_toggled(bool bChecked);
@@ -66,10 +66,11 @@ private slots:
     void on_pushButtonEntropy_clicked();
     void on_pushButtonHeuristicScan_clicked();
     void on_pushButtonMemoryMap_clicked();
-    void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurrent,QTreeWidgetItem *pItemPrevious);
+    void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurrent,
+                                              QTreeWidgetItem *pItemPrevious);
 
-private:
+   private:
     Ui::BinaryWidget *ui;
 };
 
-#endif // BINARYWIDGET_H
+#endif  // BINARYWIDGET_H

@@ -7,8 +7,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -22,26 +22,25 @@
 #define DIALOGDEX_H
 
 #include <QDialog>
+
 #include "dexwidget.h"
 
-namespace Ui
-{
+namespace Ui {
 class DialogDEX;
 }
 
-class DialogDEX : public XShortcutsDialog
-{
+class DialogDEX : public XShortcutsDialog {
     Q_OBJECT
 
-public:
-    explicit DialogDEX(QWidget *pParent=nullptr);
+   public:
+    explicit DialogDEX(QWidget *pParent = nullptr);
     ~DialogDEX();
 
-    void setData(QIODevice *pDevice,FW_DEF::OPTIONS options);
-    void setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions);
+    void setData(QIODevice *pDevice, FW_DEF::OPTIONS options);
+    void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
 
-private:
+   private:
     Ui::DialogDEX *ui;
 };
 
-#endif // DIALOGDEX_H
+#endif  // DIALOGDEX_H

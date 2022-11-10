@@ -7,8 +7,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -24,31 +24,32 @@
 #include <QDialog>
 #include <QFileDialog>
 #include <QStandardItemModel>
-#include "xoptions.h"
+
 #include "xbinary.h"
+#include "xoptions.h"
 
 namespace Ui {
 class DialogModelInfo;
 }
 
-class DialogModelInfo : public QDialog
-{
+class DialogModelInfo : public QDialog {
     Q_OBJECT
 
-public:
-    explicit DialogModelInfo(QWidget *pParent=nullptr);
+   public:
+    explicit DialogModelInfo(QWidget *pParent = nullptr);
     ~DialogModelInfo();
 
-    void setData(QIODevice *pDevice,QString sTitle,QStandardItemModel *pModel);
+    void setData(QIODevice *pDevice, QString sTitle,
+                 QStandardItemModel *pModel);
 
-private slots:
+   private slots:
     void on_pushButtonOK_clicked();
     void on_pushButtonSave_clicked();
 
-private:
+   private:
     Ui::DialogModelInfo *ui;
     QIODevice *g_pDevice;
     QString g_sTitle;
 };
 
-#endif // DIALOGMODELINFO_H
+#endif  // DIALOGMODELINFO_H

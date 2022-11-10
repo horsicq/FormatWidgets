@@ -7,8 +7,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -19,39 +19,32 @@
  * SOFTWARE.
  */
 #include "nesectionheaderwidget.h"
+
 #include "ui_nesectionheaderwidget.h"
 
-NESectionHeaderWidget::NESectionHeaderWidget(QWidget *pParent):
-    FormatWidget(pParent),
-    ui(new Ui::NESectionHeaderWidget)
-{
+NESectionHeaderWidget::NESectionHeaderWidget(QWidget *pParent)
+    : FormatWidget(pParent), ui(new Ui::NESectionHeaderWidget) {
     ui->setupUi(this);
 }
 
-NESectionHeaderWidget::NESectionHeaderWidget(QIODevice *pDevice,FW_DEF::OPTIONS options,quint32 nNumber,qint64 nOffset,qint32 nType,QWidget *pParent):
-    NESectionHeaderWidget(pParent)
-{
-    NESectionHeaderWidget::setData(pDevice,options,nNumber,nOffset,nType);
-
+NESectionHeaderWidget::NESectionHeaderWidget(QIODevice *pDevice,
+                                             FW_DEF::OPTIONS options,
+                                             quint32 nNumber, qint64 nOffset,
+                                             qint32 nType, QWidget *pParent)
+    : NESectionHeaderWidget(pParent) {
+    NESectionHeaderWidget::setData(pDevice, options, nNumber, nOffset, nType);
 }
 
-NESectionHeaderWidget::~NESectionHeaderWidget()
-{
+NESectionHeaderWidget::~NESectionHeaderWidget() {}
 
-}
+void NESectionHeaderWidget::clear() {}
 
-void NESectionHeaderWidget::clear()
-{
+void NESectionHeaderWidget::reload() {}
 
-}
-
-void NESectionHeaderWidget::reload()
-{
-
-}
-
-FormatWidget::SV NESectionHeaderWidget::_setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition,qint64 nOffset)
-{
+FormatWidget::SV NESectionHeaderWidget::_setValue(QVariant vValue, int nStype,
+                                                  int nNdata, int nVtype,
+                                                  int nPosition,
+                                                  qint64 nOffset) {
     Q_UNUSED(vValue)
     Q_UNUSED(nStype)
     Q_UNUSED(nNdata)
@@ -62,34 +55,25 @@ FormatWidget::SV NESectionHeaderWidget::_setValue(QVariant vValue,int nStype,int
     return SV_NONE;
 }
 
-void NESectionHeaderWidget::setReadonly(bool bState)
-{
-    Q_UNUSED(bState)
-}
+void NESectionHeaderWidget::setReadonly(bool bState) { Q_UNUSED(bState) }
 
-void NESectionHeaderWidget::blockSignals(bool bState)
-{
-    Q_UNUSED(bState)
-}
+void NESectionHeaderWidget::blockSignals(bool bState) { Q_UNUSED(bState) }
 
-void NESectionHeaderWidget::adjustHeaderTable(int nType,QTableWidget *pTableWidget)
-{
+void NESectionHeaderWidget::adjustHeaderTable(int nType,
+                                              QTableWidget *pTableWidget) {
     Q_UNUSED(nType)
     Q_UNUSED(pTableWidget)
 }
 
-void NESectionHeaderWidget::on_checkBoxReadonly_toggled(bool bChecked)
-{
+void NESectionHeaderWidget::on_checkBoxReadonly_toggled(bool bChecked) {
     Q_UNUSED(bChecked)
 }
 
-void NESectionHeaderWidget::reloadData()
-{
+void NESectionHeaderWidget::reloadData() {}
 
-}
-
-void NESectionHeaderWidget::on_tableWidget_Section_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn)
-{
+void NESectionHeaderWidget::on_tableWidget_Section_currentCellChanged(
+    int nCurrentRow, int nCurrentColumn, int nPreviousRow,
+    int nPreviousColumn) {
     Q_UNUSED(nCurrentRow)
     Q_UNUSED(nCurrentColumn)
     Q_UNUSED(nPreviousRow)

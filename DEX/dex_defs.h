@@ -7,8 +7,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -24,11 +24,9 @@
 #include "../formatwidget.h"
 #include "xdex.h"
 
-namespace SDEX
-{
-enum TYPE
-{
-    TYPE_INFO=0,
+namespace SDEX {
+enum TYPE {
+    TYPE_INFO = 0,
     TYPE_VIRUSTOTAL,
     TYPE_HEX,
     TYPE_HASH,
@@ -48,11 +46,9 @@ enum TYPE
 };
 }
 
-namespace N_DEX_HEADER
-{
-enum DATA
-{
-    magic=0,
+namespace N_DEX_HEADER {
+enum DATA {
+    magic = 0,
     version,
     checksum,
     signature,
@@ -80,98 +76,53 @@ enum DATA
 };
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
-}
+}  // namespace N_DEX_HEADER
 
-namespace N_DEX_MAP_ITEM
-{
-enum DATA
-{
-    type=0,
-    count,
-    offset,
-    __data_size
-};
+namespace N_DEX_MAP_ITEM {
+enum DATA { type = 0, count, offset, __data_size };
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
-}
+}  // namespace N_DEX_MAP_ITEM
 
-namespace N_DEX_STRING
-{
-enum DATA
-{
-    string=0,
-    __data_size
-};
+namespace N_DEX_STRING {
+enum DATA { string = 0, __data_size };
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
-}
+}  // namespace N_DEX_STRING
 
-namespace N_DEX_STRING_ID
-{
-enum DATA
-{
-    string_data_off=0,
-    __data_size
-};
+namespace N_DEX_STRING_ID {
+enum DATA { string_data_off = 0, __data_size };
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
-}
+}  // namespace N_DEX_STRING_ID
 
-namespace N_DEX_TYPE_ID
-{
-enum DATA
-{
-    descriptor_idx=0,
-    __data_size
-};
+namespace N_DEX_TYPE_ID {
+enum DATA { descriptor_idx = 0, __data_size };
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
-}
+}  // namespace N_DEX_TYPE_ID
 
-namespace N_DEX_PROTO_ID
-{
-enum DATA
-{
-    shorty_idx=0,
-    return_type_idx,
-    parameters_off,
-    __data_size
-};
+namespace N_DEX_PROTO_ID {
+enum DATA { shorty_idx = 0, return_type_idx, parameters_off, __data_size };
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
-}
+}  // namespace N_DEX_PROTO_ID
 
-namespace N_DEX_FIELD_ID
-{
-enum DATA
-{
-    class_idx=0,
-    type_idx,
-    name_idx,
-    __data_size
-};
+namespace N_DEX_FIELD_ID {
+enum DATA { class_idx = 0, type_idx, name_idx, __data_size };
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
-}
+}  // namespace N_DEX_FIELD_ID
 
-namespace N_DEX_METHOD_ID
-{
-enum DATA
-{
-    class_idx=0,
-    proto_idx,
-    name_idx,
-    __data_size
-};
+namespace N_DEX_METHOD_ID {
+enum DATA { class_idx = 0, proto_idx, name_idx, __data_size };
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
-}
+}  // namespace N_DEX_METHOD_ID
 
-namespace N_DEX_CLASS_ITEM_DEF
-{
-enum DATA
-{
-    class_idx=0,
+namespace N_DEX_CLASS_ITEM_DEF {
+enum DATA {
+    class_idx = 0,
     access_flags,
     superclass_idx,
     interfaces_off,
@@ -183,6 +134,6 @@ enum DATA
 };
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
-}
+}  // namespace N_DEX_CLASS_ITEM_DEF
 
-#endif // DEX_DEFS_H
+#endif  // DEX_DEFS_H

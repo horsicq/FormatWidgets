@@ -7,8 +7,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -22,26 +22,25 @@
 #define DIALOGLE_H
 
 #include <QDialog>
+
 #include "lewidget.h"
 
-namespace Ui
-{
+namespace Ui {
 class DialogLE;
 }
 
-class DialogLE : public XShortcutsDialog
-{
+class DialogLE : public XShortcutsDialog {
     Q_OBJECT
 
-public:
-    explicit DialogLE(QWidget *pParent=nullptr);
+   public:
+    explicit DialogLE(QWidget *pParent = nullptr);
     ~DialogLE();
 
-    void setData(QIODevice *pDevice,FW_DEF::OPTIONS options);
-    void setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions);
+    void setData(QIODevice *pDevice, FW_DEF::OPTIONS options);
+    void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
 
-private:
+   private:
     Ui::DialogLE *ui;
 };
 
-#endif // DIALOGLE_H
+#endif  // DIALOGLE_H

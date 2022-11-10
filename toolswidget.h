@@ -7,8 +7,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -21,53 +21,52 @@
 #ifndef TOOLSWIDGET_H
 #define TOOLSWIDGET_H
 
+#include "formatwidget_def.h"
 #include "searchstringswidget.h"
 #include "xhexview.h"
-#include "formatwidget_def.h"
 
-namespace Ui
-{
+namespace Ui {
 class ToolsWidget;
 }
 
-class ToolsWidget : public XShortcutsWidget
-{
+class ToolsWidget : public XShortcutsWidget {
     Q_OBJECT
 
-public:
-    explicit ToolsWidget(QWidget *pParent=nullptr);
+   public:
+    explicit ToolsWidget(QWidget *pParent = nullptr);
     ~ToolsWidget();
 
-    void setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions);
-    void setData(QIODevice *pDevice,FW_DEF::OPTIONS options,QIODevice *pBackupDevice,bool bDisasm=false);
+    void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
+    void setData(QIODevice *pDevice, FW_DEF::OPTIONS options,
+                 QIODevice *pBackupDevice, bool bDisasm = false);
     void setDevice(QIODevice *pDevice);
     void setBackupDevice(QIODevice *pDevice);
     void setEdited();
     void setReadonly(bool bState);
     void reload();
     qint64 getStartAddress();
-    void setSelection(qint64 nOffset,qint64 nSize);
+    void setSelection(qint64 nOffset, qint64 nSize);
 
-signals:
+   signals:
     void dataChanged();
-    void showOffsetHex(qint64 nOffset,qint64 nSize);
+    void showOffsetHex(qint64 nOffset, qint64 nSize);
     void showOffsetDisasm(qint64 nOffset);
     void showOffsetMemoryMap(qint64 nOffset);
     void showDemangle(QString sString);
 
-private slots:
+   private slots:
     void on_tabWidgetMain_currentChanged(int nIndex);
-    void _showHex(qint64 nOffset,qint64 nSize);
+    void _showHex(qint64 nOffset, qint64 nSize);
     void _showDisasm(qint64 nOffset);
     void _showMemoryMap(qint64 nOffset);
 
-protected:
+   protected:
     virtual void registerShortcuts(bool bState);
 
-private:
+   private:
     Ui::ToolsWidget *ui;
     QIODevice *g_pDevice;
     SearchStringsWidget::OPTIONS g_stringsOptions;
 };
 
-#endif // TOOLSWIDGET_H
+#endif  // TOOLSWIDGET_H

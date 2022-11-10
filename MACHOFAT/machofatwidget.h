@@ -7,8 +7,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -27,30 +27,30 @@ namespace Ui {
 class MACHOFATWidget;
 }
 
-class MACHOFATWidget : public FormatWidget
-{
+class MACHOFATWidget : public FormatWidget {
     Q_OBJECT
 
-public:
-    explicit MACHOFATWidget(QWidget *pParent=nullptr);
+   public:
+    explicit MACHOFATWidget(QWidget *pParent = nullptr);
     ~MACHOFATWidget();
 
     virtual void clear();
     virtual void cleanup();
     virtual void reload();
 
-protected:
-    virtual SV _setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition,qint64 nOffset);
+   protected:
+    virtual SV _setValue(QVariant vValue, int nStype, int nNdata, int nVtype,
+                         int nPosition, qint64 nOffset);
     virtual void setReadonly(bool bState);
     virtual void blockSignals(bool bState);
 
-private slots:
+   private slots:
     void reloadData();
     void on_comboBoxFilePart_currentIndexChanged(int nIndex);
 
-private:
+   private:
     Ui::MACHOFATWidget *ui;
     QList<SubDevice *> g_listDevices;
 };
 
-#endif // MACHOFATWIDGET_H
+#endif  // MACHOFATWIDGET_H

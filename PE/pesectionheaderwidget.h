@@ -7,8 +7,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -24,38 +24,41 @@
 #include "../formatwidget.h"
 #include "pe_defs.h"
 
-namespace Ui
-{
+namespace Ui {
 class PESectionHeaderWidget;
 }
 
-class PESectionHeaderWidget : public FormatWidget
-{
+class PESectionHeaderWidget : public FormatWidget {
     Q_OBJECT
 
-public:
-    PESectionHeaderWidget(QWidget *pParent=nullptr);
-    PESectionHeaderWidget(QIODevice *pDevice,FW_DEF::OPTIONS options,quint32 nNumber,qint64 nOffset,qint32 nType,QWidget *pParent=nullptr);
+   public:
+    PESectionHeaderWidget(QWidget *pParent = nullptr);
+    PESectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS options,
+                          quint32 nNumber, qint64 nOffset, qint32 nType,
+                          QWidget *pParent = nullptr);
     ~PESectionHeaderWidget();
     virtual void clear();
     virtual void cleanup();
     virtual void reload();
-    virtual void setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions);
+    virtual void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
 
-protected:
-    virtual SV _setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition,qint64 nOffset);
+   protected:
+    virtual SV _setValue(QVariant vValue, int nStype, int nNdata, int nVtype,
+                         int nPosition, qint64 nOffset);
     virtual void setReadonly(bool bState);
     virtual void blockSignals(bool bState);
-    virtual void adjustHeaderTable(int nType,QTableWidget *pTableWidget);
-    virtual void _showInHexWindow(qint64 nOffset,qint64 nSize);
+    virtual void adjustHeaderTable(int nType, QTableWidget *pTableWidget);
+    virtual void _showInHexWindow(qint64 nOffset, qint64 nSize);
 
-private slots:
+   private slots:
     void on_checkBoxReadonly_toggled(bool bChecked);
     void reloadData();
     void widgetValueChanged(quint64 nValue);
-    void on_tableWidget_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
+    void on_tableWidget_currentCellChanged(int nCurrentRow, int nCurrentColumn,
+                                           int nPreviousRow,
+                                           int nPreviousColumn);
 
-private:
+   private:
     Ui::PESectionHeaderWidget *ui;
     XLineEditHEX **g_ppLinedEdit;
     int g_nLineEditSize;
@@ -66,4 +69,4 @@ private:
     SubDevice *g_pSubDevice;
 };
 
-#endif // PESECTIONHEADERWIDGET_H
+#endif  // PESECTIONHEADERWIDGET_H

@@ -7,8 +7,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -21,19 +21,19 @@
 #ifndef NEPROCESSDATA_H
 #define NEPROCESSDATA_H
 
-#include "processdata.h"
 #include "ne_defs.h"
+#include "processdata.h"
 
-class NEProcessData : public ProcessData
-{
+class NEProcessData : public ProcessData {
     Q_OBJECT
 
-public:
-    explicit NEProcessData(int nType,QStandardItemModel **ppModel,XNE *pNE,qint64 nOffset,qint64 nSize);
+   public:
+    explicit NEProcessData(int nType, QStandardItemModel **ppModel, XNE *pNE,
+                           qint64 nOffset, qint64 nSize);
     virtual void _process();
-    virtual void ajustTableView(QWidget *pWidget,QTableView *pTableView);
+    virtual void ajustTableView(QWidget *pWidget, QTableView *pTableView);
 
-private:
+   private:
     int g_nType;
     XNE *g_pNE;
     QStandardItemModel **g_ppModel;
@@ -41,4 +41,4 @@ private:
     qint64 g_nSize;
 };
 
-#endif // NEPROCESSDATA_H
+#endif  // NEPROCESSDATA_H

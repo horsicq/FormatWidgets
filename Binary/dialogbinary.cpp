@@ -7,8 +7,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -19,31 +19,25 @@
  * SOFTWARE.
  */
 #include "dialogbinary.h"
+
 #include "ui_dialogbinary.h"
 
-DialogBinary::DialogBinary(QWidget *pParent) :
-    XShortcutsDialog(pParent),
-    ui(new Ui::DialogBinary)
-{
+DialogBinary::DialogBinary(QWidget *pParent)
+    : XShortcutsDialog(pParent), ui(new Ui::DialogBinary) {
     ui->setupUi(this);
 
     setWindowFlags(Qt::Window);
 }
 
-DialogBinary::~DialogBinary()
-{
-    delete ui;
-}
+DialogBinary::~DialogBinary() { delete ui; }
 
-void DialogBinary::setData(QIODevice *pDevice,FW_DEF::OPTIONS options)
-{
-    ui->widget->setData(pDevice,options,0,0,0);
+void DialogBinary::setData(QIODevice *pDevice, FW_DEF::OPTIONS options) {
+    ui->widget->setData(pDevice, options, 0, 0, 0);
     ui->widget->reload();
 }
 
-void DialogBinary::setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions)
-{
-    ui->widget->setGlobal(pShortcuts,pXOptions);
+void DialogBinary::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions) {
+    ui->widget->setGlobal(pShortcuts, pXOptions);
 
-    XShortcutsDialog::setGlobal(pShortcuts,pXOptions);
+    XShortcutsDialog::setGlobal(pShortcuts, pXOptions);
 }

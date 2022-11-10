@@ -7,8 +7,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -24,11 +24,9 @@
 #include "../formatwidget.h"
 #include "xle.h"
 
-namespace SLE
-{
-enum TYPE
-{
-    TYPE_INFO=0,
+namespace SLE {
+enum TYPE {
+    TYPE_INFO = 0,
     TYPE_VIRUSTOTAL,
     TYPE_HEX,
     TYPE_DISASM,
@@ -46,11 +44,9 @@ enum TYPE
 };
 }
 
-namespace N_LE_DOS_HEADER
-{
-enum DATA
-{
-    e_magic=0,
+namespace N_LE_DOS_HEADER {
+enum DATA {
+    e_magic = 0,
     e_cblp,
     e_cp,
     e_crlc,
@@ -85,13 +81,11 @@ enum DATA
 };
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
-}
+}  // namespace N_LE_DOS_HEADER
 
-namespace N_VXD_HEADER
-{
-enum DATA
-{
-    e32_magic=0,
+namespace N_VXD_HEADER {
+enum DATA {
+    e32_magic = 0,
     e32_border,
     e32_worder,
     e32_level,
@@ -141,13 +135,11 @@ enum DATA
 };
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
-}
+}  // namespace N_VXD_HEADER
 
-namespace N_O32_OBJ
-{
-enum DATA
-{
-    o32_size=0,
+namespace N_O32_OBJ {
+enum DATA {
+    o32_size = 0,
     o32_base,
     o32_flags,
     o32_pagemap,
@@ -157,6 +149,6 @@ enum DATA
 };
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
-}
+}  // namespace N_O32_OBJ
 
-#endif // LE_DEFS_H
+#endif  // LE_DEFS_H

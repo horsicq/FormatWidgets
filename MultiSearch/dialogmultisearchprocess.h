@@ -7,8 +7,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -23,24 +23,28 @@
 
 #include <QDialog>
 #include <QIODevice>
-#include <QThread>
 #include <QMessageBox>
-#include "multisearch.h"
-#include "xoptions.h"
-#include "xdialogprocess.h"
+#include <QThread>
 
-class DialogMultiSearchProcess : public XDialogProcess
-{
+#include "multisearch.h"
+#include "xdialogprocess.h"
+#include "xoptions.h"
+
+class DialogMultiSearchProcess : public XDialogProcess {
     Q_OBJECT
 
-public:
-    explicit DialogMultiSearchProcess(QWidget *pParent=nullptr);
+   public:
+    explicit DialogMultiSearchProcess(QWidget *pParent = nullptr);
     ~DialogMultiSearchProcess();
 
-    void processSearch(QIODevice *pDevice,QList<XBinary::MS_RECORD> *pListRecords,MultiSearch::OPTIONS options,MultiSearch::TYPE type);
-    void processModel(QList<XBinary::MS_RECORD> *pListRecords,QStandardItemModel **ppModel,MultiSearch::OPTIONS options,MultiSearch::TYPE type);
+    void processSearch(QIODevice *pDevice,
+                       QList<XBinary::MS_RECORD> *pListRecords,
+                       MultiSearch::OPTIONS options, MultiSearch::TYPE type);
+    void processModel(QList<XBinary::MS_RECORD> *pListRecords,
+                      QStandardItemModel **ppModel,
+                      MultiSearch::OPTIONS options, MultiSearch::TYPE type);
 
-private:
+   private:
     MultiSearch *g_pHandleSearch;
     MultiSearch *g_pHandleModel;
     QThread *g_pThreadSearch;
@@ -48,4 +52,4 @@ private:
     MultiSearch::TYPE g_type;
 };
 
-#endif // DIALOGMULTISEARCHSPROCESS_H
+#endif  // DIALOGMULTISEARCHSPROCESS_H

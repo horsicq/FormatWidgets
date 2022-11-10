@@ -7,8 +7,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -19,35 +19,28 @@
  * SOFTWARE.
  */
 #include "dialogelf.h"
+
 #include "ui_dialogelf.h"
 
-DialogELF::DialogELF(QWidget *pParent) :
-    XShortcutsDialog(pParent),
-    ui(new Ui::DialogELF)
-{
+DialogELF::DialogELF(QWidget *pParent)
+    : XShortcutsDialog(pParent), ui(new Ui::DialogELF) {
     ui->setupUi(this);
 
     setWindowFlags(Qt::Window);
 }
 
-DialogELF::~DialogELF()
-{
-    delete ui;
-}
+DialogELF::~DialogELF() { delete ui; }
 
-void DialogELF::setData(QIODevice *pDevice,FW_DEF::OPTIONS options)
-{
-    if(options.sTitle!="")
-    {
+void DialogELF::setData(QIODevice *pDevice, FW_DEF::OPTIONS options) {
+    if (options.sTitle != "") {
         setWindowTitle(options.sTitle);
     }
 
-    ui->widget->setData(pDevice,options,0,0,0);
+    ui->widget->setData(pDevice, options, 0, 0, 0);
     ui->widget->reload();
 }
 
-void DialogELF::setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions)
-{
-    ui->widget->setGlobal(pShortcuts,pXOptions);
-    XShortcutsDialog::setGlobal(pShortcuts,pXOptions);
+void DialogELF::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions) {
+    ui->widget->setGlobal(pShortcuts, pXOptions);
+    XShortcutsDialog::setGlobal(pShortcuts, pXOptions);
 }

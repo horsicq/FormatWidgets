@@ -7,8 +7,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -31,7 +31,6 @@
 #include "dialogmach.h"
 #include "dialogmachofat.h"
 #include "dialogmemorymap.h"
-#include "dialogmemorymap.h"
 #include "dialogmime.h"
 #include "dialogmsdos.h"
 #include "dialogmultidisasm.h"
@@ -50,13 +49,11 @@ namespace Ui {
 class FormatsWidget;
 }
 
-class FormatsWidget : public XShortcutsWidget
-{
+class FormatsWidget : public XShortcutsWidget {
     Q_OBJECT
 
-    enum TABINFO
-    {
-        TABINFO_BINARY=0,
+    enum TABINFO {
+        TABINFO_BINARY = 0,
         TABINFO_MACHOFAT,
         TABINFO_ZIP,
         TABINFO_COM,
@@ -69,23 +66,17 @@ class FormatsWidget : public XShortcutsWidget
         TABINFO_MACH,
     };
 
-    enum SE
-    {
-        SE_AUTO=0,
-        SE_DIE,
-        SE_NFD
-    };   
+    enum SE { SE_AUTO = 0, SE_DIE, SE_NFD };
 
-public:
-
-    explicit FormatsWidget(QWidget *pParent=nullptr);
+   public:
+    explicit FormatsWidget(QWidget *pParent = nullptr);
     ~FormatsWidget();
 
-    void setFileName(QString sFileName,bool bScan);
-    void setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions);
+    void setFileName(QString sFileName, bool bScan);
+    void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
     void adjustView();
 
-private slots:
+   private slots:
     void on_comboBoxFileType_currentIndexChanged(int nIndex);
     void on_comboBoxScanEngine_currentIndexChanged(int nIndex);
     void reload();
@@ -145,13 +136,13 @@ private slots:
     void on_pushButtonHash_clicked();
     void on_pushButtonExtractor_clicked();
 
-protected:
+   protected:
     virtual void registerShortcuts(bool bState);
 
-private:
+   private:
     Ui::FormatsWidget *ui;
     QString g_sFileName;
     bool g_bScan;
 };
 
-#endif // FORMATSWIDGET_H
+#endif  // FORMATSWIDGET_H

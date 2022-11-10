@@ -7,8 +7,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -28,22 +28,17 @@
 #include <QStandardItemModel>
 #include <QtConcurrent>
 #include <QtConcurrentMap>
+
 #include "xbinary.h"
 
-class MultiSearch : public QObject
-{
+class MultiSearch : public QObject {
     Q_OBJECT
 
-public:
-    enum TYPE
-    {
-        TYPE_STRINGS=0,
-        TYPE_SIGNATURES
-    };
+   public:
+    enum TYPE { TYPE_STRINGS = 0, TYPE_SIGNATURES };
 
-    enum USERROLE
-    {
-        USERROLE_SIZE=0,
+    enum USERROLE {
+        USERROLE_SIZE = 0,
         USERROLE_OFFSET,
         USERROLE_ADDRESS,
         USERROLE_STRING,
@@ -51,8 +46,7 @@ public:
         USERROLE_TYPE
     };
 
-    struct SIGNATURE_RECORD
-    {
+    struct SIGNATURE_RECORD {
         qint32 nNumber;
         QString sName;
         bool bIsBigEndian;
@@ -60,12 +54,11 @@ public:
         QString sSignature;
     };
 
-    struct OPTIONS
-    {
+    struct OPTIONS {
         XBinary::_MEMORY_MAP memoryMap;
-        bool bAnsi; // TODO
-        bool bUTF8; // TODO
-        bool bUnicode; // TODO
+        bool bAnsi;     // TODO
+        bool bUTF8;     // TODO
+        bool bUnicode;  // TODO
         bool bCStrings;
         QString sANSICodec;
         bool bLinks;
@@ -76,27 +69,31 @@ public:
         bool bMenu_Hex;
     };
 
-    const int N_MAX=100000;
-    const int N_MAXNUMBEROFTHREADS=8;
+    const int N_MAX = 100000;
+    const int N_MAXNUMBEROFTHREADS = 8;
 
-    explicit MultiSearch(QObject *pParent=nullptr);
+    explicit MultiSearch(QObject *pParent = nullptr);
     ~MultiSearch();
-    void setSearchData(QIODevice *pDevice,QList<XBinary::MS_RECORD> *pListRecords,OPTIONS options,TYPE type,XBinary::PDSTRUCT *pPdStruct);
-    void setModelData(QList<XBinary::MS_RECORD> *pListRecords,QStandardItemModel **ppModel,OPTIONS options,TYPE type,XBinary::PDSTRUCT *pPdStruct);
+    void setSearchData(QIODevice *pDevice,
+                       QList<XBinary::MS_RECORD> *pListRecords, OPTIONS options,
+                       TYPE type, XBinary::PDSTRUCT *pPdStruct);
+    void setModelData(QList<XBinary::MS_RECORD> *pListRecords,
+                      QStandardItemModel **ppModel, OPTIONS options, TYPE type,
+                      XBinary::PDSTRUCT *pPdStruct);
 
     static QList<SIGNATURE_RECORD> loadSignaturesFromFile(QString sFileName);
-    static SIGNATURE_RECORD createSignature(QString sName,QString sSignature);
+    static SIGNATURE_RECORD createSignature(QString sName, QString sSignature);
     void processSignature(SIGNATURE_RECORD signatureRecord);
 
-signals:
+   signals:
     void errorMessage(QString sText);
     void completed(qint64 nElapsed);
 
-public slots:
+   public slots:
     void processSearch();
     void processModel();
 
-private:
+   private:
     QIODevice *g_pDevice;
     QList<XBinary::MS_RECORD> *g_pListRecords;
     OPTIONS g_options;
@@ -108,4 +105,4 @@ private:
     qint32 g_nFreeIndex;
 };
 
-#endif // MULTISEARCH_H
+#endif  // MULTISEARCH_H

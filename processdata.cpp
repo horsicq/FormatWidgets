@@ -7,8 +7,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -20,72 +20,61 @@
  */
 #include "processdata.h"
 
-ProcessData::ProcessData()
-{
-    g_pPdStruct=nullptr;
-    g_nFreeIndex=-1;
+ProcessData::ProcessData() {
+    g_pPdStruct = nullptr;
+    g_nFreeIndex = -1;
 }
 
-void ProcessData::setPdStruct(XBinary::PDSTRUCT *pPdStruct)
-{
-    g_pPdStruct=pPdStruct;
+void ProcessData::setPdStruct(XBinary::PDSTRUCT *pPdStruct) {
+    g_pPdStruct = pPdStruct;
 }
 
-void ProcessData::setMaximum(quint64 nMaximum)
-{
-    XBinary::setPdStructTotal(g_pPdStruct,g_nFreeIndex,nMaximum);
+void ProcessData::setMaximum(quint64 nMaximum) {
+    XBinary::setPdStructTotal(g_pPdStruct, g_nFreeIndex, nMaximum);
 }
 
-void ProcessData::incValue()
-{
-    XBinary::setPdStructCurrentIncrement(g_pPdStruct,g_nFreeIndex);
+void ProcessData::incValue() {
+    XBinary::setPdStructCurrentIncrement(g_pPdStruct, g_nFreeIndex);
 }
 
-bool ProcessData::isRun()
-{
-    return !(g_pPdStruct->bIsStop);
-}
+bool ProcessData::isRun() { return !(g_pPdStruct->bIsStop); }
 
-void ProcessData::ajustTreeView(QWidget *pWidget,QTreeView *pTreeView)
-{
+void ProcessData::ajustTreeView(QWidget *pWidget, QTreeView *pTreeView) {
     Q_UNUSED(pWidget)
 
-    pTreeView->expand(pTreeView->model()->index(0,0));
+    pTreeView->expand(pTreeView->model()->index(0, 0));
 }
 
-QList<QString> ProcessData::getStructList(const FW_DEF::HEADER_RECORD *pRecords,int nRecordCount)
-{
+QList<QString> ProcessData::getStructList(const FW_DEF::HEADER_RECORD *pRecords,
+                                          int nRecordCount) {
     QList<QString> listResult;
 
-    for(qint32 i=0;i<nRecordCount;i++)
-    {
+    for (qint32 i = 0; i < nRecordCount; i++) {
         listResult.append(pRecords[i].sName);
     }
 
     return listResult;
 }
 
-void ProcessData::setHeader(QStandardItemModel *pModel,QList<QString> *pListStrings)
-{
-    int nNumberOfRecords=pListStrings->count();
+void ProcessData::setHeader(QStandardItemModel *pModel,
+                            QList<QString> *pListStrings) {
+    int nNumberOfRecords = pListStrings->count();
 
-    for(qint32 i=0;i<nNumberOfRecords;i++)
-    {
-        pModel->setHeaderData(i,Qt::Horizontal,pListStrings->at(i));
+    for (qint32 i = 0; i < nNumberOfRecords; i++) {
+        pModel->setHeaderData(i, Qt::Horizontal, pListStrings->at(i));
     }
 }
 
-void ProcessData::process()
-{
+void ProcessData::process() {
     QElapsedTimer scanTimer;
     scanTimer.start();
 
-    g_nFreeIndex=XBinary::getFreeIndex(g_pPdStruct);
-    XBinary::setPdStructInit(g_pPdStruct,g_nFreeIndex,0);
+    g_nFreeIndex = XBinary::getFreeIndex(g_pPdStruct);
+    XBinary::setPdStructInit(g_pPdStruct, g_nFreeIndex, 0);
 
     _process();
 
-    XBinary::setPdStructFinished(g_pPdStruct,g_nFreeIndex);
+    XBinary::setPdStructFinished(g_pPdStruct, g_nFreeIndex);
 
     emit completed(scanTimer.elapsed());
 }

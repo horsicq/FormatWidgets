@@ -7,8 +7,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -22,25 +22,24 @@
 #define DIALOGELF_H
 
 #include <QDialog>
+
 #include "elfwidget.h"
 
-namespace Ui
-{
+namespace Ui {
 class DialogELF;
 }
 
-class DialogELF : public XShortcutsDialog
-{
+class DialogELF : public XShortcutsDialog {
     Q_OBJECT
 
-public:
-    explicit DialogELF(QWidget *pParent=nullptr);
+   public:
+    explicit DialogELF(QWidget *pParent = nullptr);
     ~DialogELF();
-    void setData(QIODevice *pDevice,FW_DEF::OPTIONS options);
-    void setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions);
+    void setData(QIODevice *pDevice, FW_DEF::OPTIONS options);
+    void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
 
-private:
+   private:
     Ui::DialogELF *ui;
 };
 
-#endif // DIALOGELF_H
+#endif  // DIALOGELF_H

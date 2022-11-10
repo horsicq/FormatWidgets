@@ -7,8 +7,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -19,55 +19,50 @@
  * SOFTWARE.
  */
 #include "searchsignaturesoptionswidget.h"
+
 #include "ui_searchsignaturesoptionswidget.h"
 
-SearchSignaturesOptionsWidget::SearchSignaturesOptionsWidget(QWidget *pParent) :
-    QWidget(pParent),
-    ui(new Ui::SearchSignaturesOptionsWidget)
-{
+SearchSignaturesOptionsWidget::SearchSignaturesOptionsWidget(QWidget *pParent)
+    : QWidget(pParent), ui(new Ui::SearchSignaturesOptionsWidget) {
     ui->setupUi(this);
 
-    g_pOptions=nullptr;
+    g_pOptions = nullptr;
 
-    setProperty("GROUPID",XOptions::GROUPID_SIGNATURES);
+    setProperty("GROUPID", XOptions::GROUPID_SIGNATURES);
 }
 
-SearchSignaturesOptionsWidget::~SearchSignaturesOptionsWidget()
-{
-    delete ui;
-}
+SearchSignaturesOptionsWidget::~SearchSignaturesOptionsWidget() { delete ui; }
 
-void SearchSignaturesOptionsWidget::setOptions(XOptions *pOptions)
-{
-    g_pOptions=pOptions;
+void SearchSignaturesOptionsWidget::setOptions(XOptions *pOptions) {
+    g_pOptions = pOptions;
 
     reload();
 }
 
-void SearchSignaturesOptionsWidget::save()
-{
-    g_pOptions->getLineEdit(ui->lineEditSearchSignaturesPath,XOptions::ID_SIGNATURES_PATH);
+void SearchSignaturesOptionsWidget::save() {
+    g_pOptions->getLineEdit(ui->lineEditSearchSignaturesPath,
+                            XOptions::ID_SIGNATURES_PATH);
 }
 
-void SearchSignaturesOptionsWidget::setDefaultValues(XOptions *pOptions)
-{
-    pOptions->addID(XOptions::ID_SIGNATURES_PATH,"$data/signatures");
+void SearchSignaturesOptionsWidget::setDefaultValues(XOptions *pOptions) {
+    pOptions->addID(XOptions::ID_SIGNATURES_PATH, "$data/signatures");
 }
 
-void SearchSignaturesOptionsWidget::reload()
-{
-    g_pOptions->setLineEdit(ui->lineEditSearchSignaturesPath,XOptions::ID_SIGNATURES_PATH);
+void SearchSignaturesOptionsWidget::reload() {
+    g_pOptions->setLineEdit(ui->lineEditSearchSignaturesPath,
+                            XOptions::ID_SIGNATURES_PATH);
 }
 
-void SearchSignaturesOptionsWidget::on_toolButtonSearchSignaturesPath_clicked()
-{
-    QString sText=ui->lineEditSearchSignaturesPath->text();
-    QString sInitDirectory=XBinary::convertPathName(sText);
+void SearchSignaturesOptionsWidget::
+    on_toolButtonSearchSignaturesPath_clicked() {
+    QString sText = ui->lineEditSearchSignaturesPath->text();
+    QString sInitDirectory = XBinary::convertPathName(sText);
 
-    QString sDirectoryName=QFileDialog::getExistingDirectory(this,tr("Open directory")+QString("..."),sInitDirectory,QFileDialog::ShowDirsOnly);
+    QString sDirectoryName = QFileDialog::getExistingDirectory(
+        this, tr("Open directory") + QString("..."), sInitDirectory,
+        QFileDialog::ShowDirsOnly);
 
-    if(!sDirectoryName.isEmpty())
-    {
+    if (!sDirectoryName.isEmpty()) {
         ui->lineEditSearchSignaturesPath->setText(sDirectoryName);
     }
 }

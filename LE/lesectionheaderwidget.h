@@ -7,8 +7,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -28,48 +28,42 @@ namespace Ui {
 class LESectionHeaderWidget;
 }
 
-class LESectionHeaderWidget : public FormatWidget
-{
+class LESectionHeaderWidget : public FormatWidget {
     Q_OBJECT
 
-public:
-    enum CB
-    {
-        CB_CHARACTERISTICS=0,
-        CB_ALIGH,
-        __CB_size
-    };
-    LESectionHeaderWidget(QWidget *pParent=nullptr);
-    LESectionHeaderWidget(QIODevice *pDevice,FW_DEF::OPTIONS options,quint32 nNumber,qint64 nOffset,qint32 nType,QWidget *pParent=nullptr);
+   public:
+    enum CB { CB_CHARACTERISTICS = 0, CB_ALIGH, __CB_size };
+    LESectionHeaderWidget(QWidget *pParent = nullptr);
+    LESectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS options,
+                          quint32 nNumber, qint64 nOffset, qint32 nType,
+                          QWidget *pParent = nullptr);
     ~LESectionHeaderWidget();
     virtual void clear();
     virtual void reload();
 
-protected:
-    virtual SV _setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition,qint64 nOffset);
+   protected:
+    virtual SV _setValue(QVariant vValue, int nStype, int nNdata, int nVtype,
+                         int nPosition, qint64 nOffset);
     virtual void setReadonly(bool bState);
     virtual void blockSignals(bool bState);
-    virtual void adjustHeaderTable(int nType,QTableWidget *pTableWidget);
+    virtual void adjustHeaderTable(int nType, QTableWidget *pTableWidget);
 
-private slots:
+   private slots:
     void on_checkBoxReadonly_toggled(bool bChecked);
     void reloadData();
 
-    void on_tableWidget_Section_currentCellChanged(int nCurrentRow,int nCurrentColumn,int nPreviousRow,int nPreviousColumn);
+    void on_tableWidget_Section_currentCellChanged(int nCurrentRow,
+                                                   int nCurrentColumn,
+                                                   int nPreviousRow,
+                                                   int nPreviousColumn);
 
-private:
-    enum INV
-    {
-        INV_OriginalFirstThunk,
-        INV_Name,
-        INV_FirstThunk,
-        __INV_size
-    };
+   private:
+    enum INV { INV_OriginalFirstThunk, INV_Name, INV_FirstThunk, __INV_size };
 
     Ui::LESectionHeaderWidget *ui;
-//    XLineEditHEX *lineEdit_Section[N_mach_sections::__data_size];
+    //    XLineEditHEX *lineEdit_Section[N_mach_sections::__data_size];
     InvWidget *g_invWidget[__INV_size];
     SubDevice *g_pSubDevice;
 };
 
-#endif // LESECTIONHEADERWIDGET_H
+#endif  // LESECTIONHEADERWIDGET_H

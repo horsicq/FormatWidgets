@@ -7,8 +7,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -20,129 +20,98 @@
  */
 #include "invwidget.h"
 
-InvWidget::InvWidget(QWidget *pParent,TYPE type) :
-    XShortcutsWidget(pParent)
-{
-    g_pHexPushButton=nullptr;
-    g_pDisasmPushButton=nullptr;
+InvWidget::InvWidget(QWidget *pParent, TYPE type) : XShortcutsWidget(pParent) {
+    g_pHexPushButton = nullptr;
+    g_pDisasmPushButton = nullptr;
 
-    QHBoxLayout *pLayot=new QHBoxLayout(this);
-    pLayot->setContentsMargins(0,0,0,0);
+    QHBoxLayout *pLayot = new QHBoxLayout(this);
+    pLayot->setContentsMargins(0, 0, 0, 0);
 
-    if(type==TYPE_HEX)
-    {
-        g_pHexPushButton=new QPushButton(tr("Hex"),this);
+    if (type == TYPE_HEX) {
+        g_pHexPushButton = new QPushButton(tr("Hex"), this);
 
-        connect(g_pHexPushButton,SIGNAL(clicked()),this,SLOT(showHexSlot()));
+        connect(g_pHexPushButton, SIGNAL(clicked()), this, SLOT(showHexSlot()));
 
         pLayot->addWidget(g_pHexPushButton);
-    }
-    else if(type==TYPE_DISASM)
-    {
-        g_pDisasmPushButton=new QPushButton(tr("Disasm"),this);
+    } else if (type == TYPE_DISASM) {
+        g_pDisasmPushButton = new QPushButton(tr("Disasm"), this);
 
-        connect(g_pDisasmPushButton,SIGNAL(clicked()),this,SLOT(showDisasmSlot()));
+        connect(g_pDisasmPushButton, SIGNAL(clicked()), this,
+                SLOT(showDisasmSlot()));
 
         pLayot->addWidget(g_pDisasmPushButton);
     }
 
     setLayout(pLayot);
 
-    g_nOffset=0;
-    g_nSize=0;
+    g_nOffset = 0;
+    g_nSize = 0;
 }
 
-InvWidget::~InvWidget()
-{
+InvWidget::~InvWidget() {}
 
-}
+void InvWidget::setOffsetAndSize(XBinary *pBinary, qint64 nOffset, qint64 nSize,
+                                 bool bNotNull) {
+    bool bValid = false;
 
-void InvWidget::setOffsetAndSize(XBinary *pBinary,qint64 nOffset,qint64 nSize,bool bNotNull)
-{
-    bool bValid=false;
-
-    if((bNotNull)&&(nOffset==0))
-    {
-        bValid=false;
-    }
-    else if(pBinary->isOffsetValid(nOffset))
-    {
-        bValid=true;
+    if ((bNotNull) && (nOffset == 0)) {
+        bValid = false;
+    } else if (pBinary->isOffsetValid(nOffset)) {
+        bValid = true;
     }
 
-    if(bValid)
-    {
+    if (bValid) {
         _setEnabled(true);
 
-        this->g_nOffset=nOffset;
-        this->g_nSize=nSize;
-    }
-    else
-    {
+        this->g_nOffset = nOffset;
+        this->g_nSize = nSize;
+    } else {
         _setEnabled(false);
 
-        this->g_nOffset=0;
-        this->g_nSize=0;
+        this->g_nOffset = 0;
+        this->g_nSize = 0;
     }
 }
 
-void InvWidget::setAddressAndSize(XBinary *pBinary,XADDR nAddress,qint64 nSize,bool bNotNull)
-{
-    bool bValid=false;
+void InvWidget::setAddressAndSize(XBinary *pBinary, XADDR nAddress,
+                                  qint64 nSize, bool bNotNull) {
+    bool bValid = false;
 
-    this->g_nAddress=nAddress;
+    this->g_nAddress = nAddress;
 
-    XBinary::_MEMORY_MAP memoryMap=pBinary->getMemoryMap();
+    XBinary::_MEMORY_MAP memoryMap = pBinary->getMemoryMap();
 
-    if((bNotNull)&&(nAddress==0))
-    {
-        bValid=false;
-    }
-    else if(pBinary->isAddressPhysical(&memoryMap,nAddress))
-    {
-        bValid=true;
+    if ((bNotNull) && (nAddress == 0)) {
+        bValid = false;
+    } else if (pBinary->isAddressPhysical(&memoryMap, nAddress)) {
+        bValid = true;
     }
 
-    if(bValid)
-    {
+    if (bValid) {
         _setEnabled(true);
 
-        this->g_nOffset=pBinary->addressToOffset(&memoryMap,nAddress);
-        this->g_nSize=nSize;
-    }
-    else
-    {
+        this->g_nOffset = pBinary->addressToOffset(&memoryMap, nAddress);
+        this->g_nSize = nSize;
+    } else {
         _setEnabled(false);
 
-        this->g_nOffset=0;
-        this->g_nSize=0;
+        this->g_nOffset = 0;
+        this->g_nSize = 0;
     }
 }
 
-void InvWidget::_setEnabled(bool bState)
-{
-    if(g_pHexPushButton)
-    {
+void InvWidget::_setEnabled(bool bState) {
+    if (g_pHexPushButton) {
         g_pHexPushButton->setEnabled(bState);
     }
 
-    if(g_pDisasmPushButton)
-    {
+    if (g_pDisasmPushButton) {
         g_pDisasmPushButton->setEnabled(bState);
     }
 }
 
-void InvWidget::showHexSlot()
-{
-    emit showHex(g_nOffset,g_nSize);
-}
+void InvWidget::showHexSlot() { emit showHex(g_nOffset, g_nSize); }
 
-void InvWidget::showDisasmSlot()
-{
-    emit showDisasm(g_nAddress);
-}
+void InvWidget::showDisasmSlot() { emit showDisasm(g_nAddress); }
 
-void InvWidget::registerShortcuts(bool bState)
-{
-    Q_UNUSED(bState)
-}
+void InvWidget::registerShortcuts(bool bState) { Q_UNUSED(bState) }

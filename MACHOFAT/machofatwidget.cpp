@@ -7,8 +7,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -19,39 +19,32 @@
  * SOFTWARE.
  */
 #include "machofatwidget.h"
+
 #include "ui_machofatwidget.h"
 
-MACHOFATWidget::MACHOFATWidget(QWidget *pParent) :
-    FormatWidget(pParent),
-    ui(new Ui::MACHOFATWidget)
-{
+MACHOFATWidget::MACHOFATWidget(QWidget *pParent)
+    : FormatWidget(pParent), ui(new Ui::MACHOFATWidget) {
     ui->setupUi(this);
 }
 
-MACHOFATWidget::~MACHOFATWidget()
-{
-    delete ui;
-}
+MACHOFATWidget::~MACHOFATWidget() { delete ui; }
 
-void MACHOFATWidget::clear()
-{
+void MACHOFATWidget::clear() {
     ui->comboBoxFilePart->clear();
 
-    QObjectList listWidgets=ui->stackedWidget->children();
+    QObjectList listWidgets = ui->stackedWidget->children();
 
-    for(qint32 i=0;i<listWidgets.count();i++)
-    {
-        QWidget *pWidget=qobject_cast<QWidget *>(listWidgets.at(i));
+    for (qint32 i = 0; i < listWidgets.count(); i++) {
+        QWidget *pWidget = qobject_cast<QWidget *>(listWidgets.at(i));
 
         ui->stackedWidget->removeWidget(pWidget);
 
         delete pWidget;
     }
 
-    int nNumberOfRecords=g_listDevices.count();
+    int nNumberOfRecords = g_listDevices.count();
 
-    for(qint32 i=0;i<nNumberOfRecords;i++)
-    {
+    for (qint32 i = 0; i < nNumberOfRecords; i++) {
         g_listDevices.at(i)->close();
         delete g_listDevices.at(i);
     }
@@ -59,40 +52,37 @@ void MACHOFATWidget::clear()
     g_listDevices.clear();
 }
 
-void MACHOFATWidget::cleanup()
-{
-    MACHOFATWidget::clear();
-}
+void MACHOFATWidget::cleanup() { MACHOFATWidget::clear(); }
 
-void MACHOFATWidget::reload()
-{
-    //Q_UNUSED(ui->comboBoxFilePart);
+void MACHOFATWidget::reload() {
+    // Q_UNUSED(ui->comboBoxFilePart);
 
     MACHOFATWidget::clear();
 
-//    ui->checkBoxReadonly->setEnabled(!isReadonly());
+    //    ui->checkBoxReadonly->setEnabled(!isReadonly());
 
     XMACHOFat machofat(getDevice());
 
-    if(machofat.isValid())
-    {
-        XBinary::PDSTRUCT pdStruct={};
+    if (machofat.isValid()) {
+        XBinary::PDSTRUCT pdStruct = {};
 
-        QList<XArchive::RECORD> listRecords=machofat.getRecords(-1,&pdStruct);
+        QList<XArchive::RECORD> listRecords =
+            machofat.getRecords(-1, &pdStruct);
 
-        int nNumberOfRecords=listRecords.count();
+        int nNumberOfRecords = listRecords.count();
 
-        for(qint32 i=0;i<nNumberOfRecords;i++)
-        {
-            SubDevice *pSubDevice=new SubDevice(getDevice(),listRecords.at(i).nDataOffset,listRecords.at(i).nUncompressedSize);
+        for (qint32 i = 0; i < nNumberOfRecords; i++) {
+            SubDevice *pSubDevice =
+                new SubDevice(getDevice(), listRecords.at(i).nDataOffset,
+                              listRecords.at(i).nUncompressedSize);
 
-            if(pSubDevice->open(getDevice()->openMode()))
-            {
+            if (pSubDevice->open(getDevice()->openMode())) {
                 ui->comboBoxFilePart->addItem(listRecords.at(i).sFileName);
 
-                MACHWidget *pMachWidget=new MACHWidget(pSubDevice,getOptions(),this);
+                MACHWidget *pMachWidget =
+                    new MACHWidget(pSubDevice, getOptions(), this);
 
-                pMachWidget->setGlobal(getShortcuts(),getGlobalOptions());
+                pMachWidget->setGlobal(getShortcuts(), getGlobalOptions());
 
                 pMachWidget->setBackupDevice(getDevice());
 
@@ -104,8 +94,9 @@ void MACHOFATWidget::reload()
     }
 }
 
-FormatWidget::SV MACHOFATWidget::_setValue(QVariant vValue,int nStype,int nNdata,int nVtype,int nPosition,qint64 nOffset)
-{
+FormatWidget::SV MACHOFATWidget::_setValue(QVariant vValue, int nStype,
+                                           int nNdata, int nVtype,
+                                           int nPosition, qint64 nOffset) {
     Q_UNUSED(vValue)
     Q_UNUSED(nStype)
     Q_UNUSED(nNdata)
@@ -116,31 +107,24 @@ FormatWidget::SV MACHOFATWidget::_setValue(QVariant vValue,int nStype,int nNdata
     return SV_NONE;
 }
 
-void MACHOFATWidget::setReadonly(bool bState)
-{
+void MACHOFATWidget::setReadonly(bool bState) {
     Q_UNUSED(bState)
-//    // TODO Check
-//    int nNumberOfRecords=g_listDevices.count();
+    //    // TODO Check
+    //    int nNumberOfRecords=g_listDevices.count();
 
-//    for(qint32 i=0;i<nNumberOfRecords;i++)
-//    {
-//        MACHWidget *pWidget=qobject_cast<MACHWidget *>(ui->stackedWidget->widget(i));
+    //    for(qint32 i=0;i<nNumberOfRecords;i++)
+    //    {
+    //        MACHWidget *pWidget=qobject_cast<MACHWidget
+    //        *>(ui->stackedWidget->widget(i));
 
-//        pWidget->setReadonly(bState);
-//    }
+    //        pWidget->setReadonly(bState);
+    //    }
 }
 
-void MACHOFATWidget::blockSignals(bool bState)
-{
-    Q_UNUSED(bState)
-}
+void MACHOFATWidget::blockSignals(bool bState) { Q_UNUSED(bState) }
 
-void MACHOFATWidget::reloadData()
-{
+void MACHOFATWidget::reloadData() {}
 
-}
-
-void MACHOFATWidget::on_comboBoxFilePart_currentIndexChanged(int nIndex)
-{
+void MACHOFATWidget::on_comboBoxFilePart_currentIndexChanged(int nIndex) {
     ui->stackedWidget->setCurrentIndex(nIndex);
 }

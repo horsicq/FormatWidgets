@@ -7,8 +7,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -30,22 +30,20 @@
 #include <QSortFilterProxyModel>
 #include <QStandardItemModel>
 #include <QtConcurrent>
+
 #include "dialogmultisearchprocess.h"
 #include "xformats.h"
 #include "xshortcutswidget.h"
 
-namespace Ui
-{
+namespace Ui {
 class SearchSignaturesWidget;
 }
 
-class SearchSignaturesWidget : public XShortcutsWidget
-{
+class SearchSignaturesWidget : public XShortcutsWidget {
     Q_OBJECT
 
-    enum SC
-    {
-        SC_COPYNAME=0,
+    enum SC {
+        SC_COPYNAME = 0,
         SC_COPYSIGNATURE,
         SC_COPYADDRESS,
         SC_COPYOFFSET,
@@ -53,17 +51,17 @@ class SearchSignaturesWidget : public XShortcutsWidget
         __SC_SIZE
     };
 
-public:
-    struct OPTIONS
-    {
+   public:
+    struct OPTIONS {
         bool bMenu_Hex;
-        QString sUserSignature; // It is not global
+        QString sUserSignature;  // It is not global
     };
 
-    explicit SearchSignaturesWidget(QWidget *pParent=nullptr);
+    explicit SearchSignaturesWidget(QWidget *pParent = nullptr);
     ~SearchSignaturesWidget();
 
-    void setData(QIODevice *pDevice,XBinary::FT fileType,OPTIONS options,bool bAuto=false);
+    void setData(QIODevice *pDevice, XBinary::FT fileType, OPTIONS options,
+                 bool bAuto = false);
     void setOptions(OPTIONS options);
     OPTIONS getOptions();
     void updateSignaturesPath();
@@ -73,7 +71,7 @@ public:
     void adjust();
     void adjustView();
 
-private slots:
+   private slots:
     void on_pushButtonSave_clicked();
     void on_pushButtonSearch_clicked();
     void on_tableViewResult_customContextMenuRequested(const QPoint &pos);
@@ -86,13 +84,13 @@ private slots:
     void loadSignatures(QString sFileName);
     void on_comboBoxFile_currentIndexChanged(int index);
 
-protected:
+   protected:
     virtual void registerShortcuts(bool bState);
 
-signals:
-    void showHex(qint64 nOffset,qint64 nSize);
+   signals:
+    void showHex(qint64 nOffset, qint64 nSize);
 
-private:
+   private:
     Ui::SearchSignaturesWidget *ui;
     QIODevice *g_pDevice;
     QSortFilterProxyModel *g_pFilter;
@@ -105,4 +103,4 @@ private:
     QShortcut *shortCuts[__SC_SIZE];
 };
 
-#endif // SEARCHSIGNATURESWIDGET_H
+#endif  // SEARCHSIGNATURESWIDGET_H
