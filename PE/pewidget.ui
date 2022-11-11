@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>739</width>
+    <width>799</width>
     <height>369</height>
    </rect>
   </property>
@@ -148,7 +148,7 @@
      </widget>
      <widget class="QStackedWidget" name="stackedWidgetInfo">
       <property name="currentIndex">
-       <number>14</number>
+       <number>34</number>
       </property>
       <widget class="QWidget" name="page_Info">
        <layout class="QVBoxLayout" name="verticalLayout_43">
@@ -1943,7 +1943,14 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="ToolsWidget" name="widgetHex_Net_Metadata_Stream" native="true"/>
+         <widget class="ToolsWidget" name="widgetHex_Net_Metadata_Stream" native="true">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
