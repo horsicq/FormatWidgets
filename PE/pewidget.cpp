@@ -3121,6 +3121,8 @@ void PEWidget::on_tableView_Resources_customContextMenuRequested(const QPoint &p
         actionDump.setEnabled(bIsEnable);
         contextMenu.addAction(&actionDump);
 
+        // TODO Add scan
+
         contextMenu.exec(ui->tableView_Resources->viewport()->mapToGlobal(pos));
     }
 }
