@@ -104,7 +104,6 @@ FormatWidget::SV DEXSectionHeaderWidget::_setValue(QVariant vValue, int nStype, 
     Q_UNUSED(nOffset)
 
     SV result = SV_NONE;
-
     //    quint64 nValue=vValue.toULongLong();
 
     if (getDevice()->isWritable()) {
