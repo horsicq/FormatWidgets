@@ -439,7 +439,6 @@ void DEXWidget::reloadData() {
                 g_lineEdit_HEADER[N_DEX_HEADER::magic]->setValue(header.magic);
                 g_lineEdit_HEADER[N_DEX_HEADER::version]->setValue(header.version);
                 g_lineEdit_HEADER[N_DEX_HEADER::checksum]->setValue(header.checksum);
-
                 g_lineEdit_HEADER[N_DEX_HEADER::file_size]->setValue(header.file_size);
                 g_lineEdit_HEADER[N_DEX_HEADER::header_size]->setValue(header.header_size);
                 g_lineEdit_HEADER[N_DEX_HEADER::endian_tag]->setValue(header.endian_tag);
