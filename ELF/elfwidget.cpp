@@ -100,7 +100,7 @@ void ELFWidget::reload() {
         QList<XELF_DEF::Elf_Phdr> listProgramHeaders = elf.getElf_PhdrList();
 
         if (listProgramHeaders.count()) {
-            QTreeWidgetItem *pItemPrograms = createNewItem(SELF::TYPE_Elf_Phdr, "Programs");
+            QTreeWidgetItem *pItemPrograms = createNewItem(SELF::TYPE_Elf_Phdr, "Programs"); // mn TODO tr
 
             ui->treeWidgetNavi->addTopLevelItem(pItemPrograms);
 
