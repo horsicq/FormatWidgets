@@ -755,7 +755,7 @@ void FormatsWidget::on_pushButtonStrings_clicked() {
             stringsOptions.bAnsi = true;
             stringsOptions.bUTF8 = false;
             stringsOptions.bUnicode = true;
-            stringsOptions.bCStrings = true;
+            stringsOptions.bCStrings = false;
 
             DialogSearchStrings dialogSearchStrings(this);
             dialogSearchStrings.setData(&file, stringsOptions, true);
