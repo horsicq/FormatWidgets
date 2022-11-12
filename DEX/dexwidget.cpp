@@ -374,7 +374,7 @@ void DEXWidget::reloadData() {
         } else if (nType == SDEX::TYPE_HEX) {
             if (!isInitPresent(sInit)) {
                 XHexView::OPTIONS options = {};
-                //                options.bMenu_Disasm=true;
+                //                options.bMenu_Disasm=true; // TODO
                 options.bMenu_MemoryMap = true;
                 ui->widgetHex->setData(getDevice(), options);
                 ui->widgetHex->setBackupDevice(getBackupDevice());
