@@ -130,7 +130,12 @@ private:
         __CB_size
     };
 
-    enum INV { INV_Elf_e_entry, INV_Elf_e_phoff, INV_Elf_e_shoff, __INV_size };
+    enum INV {
+        INV_Elf_e_entry,
+        INV_Elf_e_phoff,
+        INV_Elf_e_shoff,
+        __INV_size
+    };
 
     Ui::ELFWidget *ui;
 

@@ -38,6 +38,6 @@ enum TYPE {
     TYPE_HEURISTICSCAN,
     __TYPE_size
 };
-}
+}  // namespace SBINARY
 
 #endif  // XBINARY_DEFS_H

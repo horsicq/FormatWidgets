@@ -44,7 +44,7 @@ enum TYPE {
     TYPE_CLASS_DEF_ITEM,
     __TYPE_size
 };
-}
+}  // namespace SDEX
 
 namespace N_DEX_HEADER {
 enum DATA {
@@ -79,49 +79,88 @@ extern const FW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace N_DEX_HEADER
 
 namespace N_DEX_MAP_ITEM {
-enum DATA { type = 0, count, offset, __data_size };
+enum DATA {
+    type = 0,
+    count,
+    offset,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace N_DEX_MAP_ITEM
 
 namespace N_DEX_STRING {
-enum DATA { string = 0, __data_size };
+enum DATA {
+    string = 0,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace N_DEX_STRING
 
 namespace N_DEX_STRING_ID {
-enum DATA { string_data_off = 0, __data_size };
+enum DATA {
+    string_data_off = 0,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace N_DEX_STRING_ID
 
 namespace N_DEX_TYPE_ID {
-enum DATA { descriptor_idx = 0, __data_size };
+enum DATA {
+    descriptor_idx = 0,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace N_DEX_TYPE_ID
 
 namespace N_DEX_PROTO_ID {
-enum DATA { shorty_idx = 0, return_type_idx, parameters_off, __data_size };
+enum DATA {
+    shorty_idx = 0,
+    return_type_idx,
+    parameters_off,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace N_DEX_PROTO_ID
 
 namespace N_DEX_FIELD_ID {
-enum DATA { class_idx = 0, type_idx, name_idx, __data_size };
+enum DATA {
+    class_idx = 0,
+    type_idx,
+    name_idx,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace N_DEX_FIELD_ID
 
 namespace N_DEX_METHOD_ID {
-enum DATA { class_idx = 0, proto_idx, name_idx, __data_size };
+enum DATA {
+    class_idx = 0,
+    proto_idx,
+    name_idx,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace N_DEX_METHOD_ID
 
 namespace N_DEX_CLASS_ITEM_DEF {
-enum DATA { class_idx = 0, access_flags, superclass_idx, interfaces_off, source_file_idx, annotations_off, class_data_off, static_values_off, __data_size };
+enum DATA {
+    class_idx = 0,
+    access_flags,
+    superclass_idx,
+    interfaces_off,
+    source_file_idx,
+    annotations_off,
+    class_data_off,
+    static_values_off,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace N_DEX_CLASS_ITEM_DEF

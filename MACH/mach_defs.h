@@ -84,126 +84,292 @@ enum TYPE {
     TYPE_DYSYMTAB_locrel,
     __TYPE_size
 };
-}
+}  // namespace SMACH
 
 namespace N_mach_header {
-enum DATA { magic = 0, cputype, cpusubtype, filetype, ncmds, sizeofcmds, flags, reserved, __data_size };
+enum DATA {
+    magic = 0,
+    cputype,
+    cpusubtype,
+    filetype,
+    ncmds,
+    sizeofcmds,
+    flags,
+    reserved,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records32[__data_size - 1];
 extern const FW_DEF::HEADER_RECORD records64[__data_size];
 }  // namespace N_mach_header
 
 namespace N_mach_commands {
-enum DATA { cmd = 0, cmdsize, __data_size };
+enum DATA {
+    cmd = 0,
+    cmdsize,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 
-enum CB { CB_CMD, __CB_size };
+enum CB {
+    CB_CMD,
+    __CB_size
+};
 
-enum INV { __INV_size };
+enum INV {
+    __INV_size
+};
 }  // namespace N_mach_commands
 
 namespace N_mach_segments {
-enum DATA { segname = 0, vmaddr, vmsize, fileoff, filesize, maxprot, initprot, nsects, flags, __data_size };
+enum DATA {
+    segname = 0,
+    vmaddr,
+    vmsize,
+    fileoff,
+    filesize,
+    maxprot,
+    initprot,
+    nsects,
+    flags,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records32[__data_size];
 extern const FW_DEF::HEADER_RECORD records64[__data_size];
 
-enum CB { CB_maxprot, CB_initprot, __CB_size };
+enum CB {
+    CB_maxprot,
+    CB_initprot,
+    __CB_size
+};
 
-enum INV { __INV_size };
+enum INV {
+    __INV_size
+};
 }  // namespace N_mach_segments
 
 namespace N_mach_sections32 {
-enum DATA { sectname = 0, segname, addr, size, offset, align, reloff, nreloc, flags, reserved1, reserved2, __data_size };
+enum DATA {
+    sectname = 0,
+    segname,
+    addr,
+    size,
+    offset,
+    align,
+    reloff,
+    nreloc,
+    flags,
+    reserved1,
+    reserved2,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 
-enum CB { __CB_size };
+enum CB {
+    __CB_size
+};
 
-enum INV { __INV_size };
+enum INV {
+    __INV_size
+};
 }  // namespace N_mach_sections32
 
 namespace N_mach_sections32_E {
-enum DATA { sectname = 0, segname, addr, size, offset, align, reloff, nreloc, flags_0, flags_1, flags_2, reserved1, reserved2, __data_size };
+enum DATA {
+    sectname = 0,
+    segname,
+    addr,
+    size,
+    offset,
+    align,
+    reloff,
+    nreloc,
+    flags_0,
+    flags_1,
+    flags_2,
+    reserved1,
+    reserved2,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 
-enum CB { CB_flag0, CB_flag1, CB_flag2, __CB_size };
+enum CB {
+    CB_flag0,
+    CB_flag1,
+    CB_flag2,
+    __CB_size
+};
 
-enum INV { __INV_size };
+enum INV {
+    __INV_size
+};
 }  // namespace N_mach_sections32_E
 
 namespace N_mach_sections64 {
-enum DATA { sectname = 0, segname, addr, size, offset, align, reloff, nreloc, flags, reserved1, reserved2, reserved3, __data_size };
+enum DATA {
+    sectname = 0,
+    segname,
+    addr,
+    size,
+    offset,
+    align,
+    reloff,
+    nreloc,
+    flags,
+    reserved1,
+    reserved2,
+    reserved3,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 
-enum CB { __CB_size };
+enum CB {
+    __CB_size
+};
 
-enum INV { __INV_size };
+enum INV {
+    __INV_size
+};
 }  // namespace N_mach_sections64
 
 namespace N_mach_sections64_E {
-enum DATA { sectname = 0, segname, addr, size, offset, align, reloff, nreloc, flags_0, flags_1, flags_2, reserved1, reserved2, reserved3, __data_size };
+enum DATA {
+    sectname = 0,
+    segname,
+    addr,
+    size,
+    offset,
+    align,
+    reloff,
+    nreloc,
+    flags_0,
+    flags_1,
+    flags_2,
+    reserved1,
+    reserved2,
+    reserved3,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 
-enum CB { CB_flag0, CB_flag1, CB_flag2, __CB_size };
+enum CB {
+    CB_flag0,
+    CB_flag1,
+    CB_flag2,
+    __CB_size
+};
 
-enum INV { __INV_size };
+enum INV {
+    __INV_size
+};
 }  // namespace N_mach_sections64_E
 
 namespace N_mach_library {
-enum DATA { timestamp, current_version, compatibility_version, name, __data_size };
+enum DATA {
+    timestamp,
+    current_version,
+    compatibility_version,
+    name,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 
-enum CB { __CB_size };
+enum CB {
+    __CB_size
+};
 
-enum INV { __INV_size };
+enum INV {
+    __INV_size
+};
 }  // namespace N_mach_library
 
 namespace N_mach_fmv_library {
-enum DATA { minor_version, header_addr, name, __data_size };
+enum DATA {
+    minor_version,
+    header_addr,
+    name,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 
-enum CB { __CB_size };
+enum CB {
+    __CB_size
+};
 
-enum INV { __INV_size };
+enum INV {
+    __INV_size
+};
 }  // namespace N_mach_fmv_library
 
 namespace N_mach_dyld_info {
-enum DATA { rebase_off, rebase_size, bind_off, bind_size, weak_bind_off, weak_bind_size, lazy_bind_off, lazy_bind_size, export_off, export_size, __data_size };
+enum DATA {
+    rebase_off,
+    rebase_size,
+    bind_off,
+    bind_size,
+    weak_bind_off,
+    weak_bind_size,
+    lazy_bind_off,
+    lazy_bind_size,
+    export_off,
+    export_size,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 
-enum CB { __CB_size };
+enum CB {
+    __CB_size
+};
 
-enum INV { __INV_size };
+enum INV {
+    __INV_size
+};
 }  // namespace N_mach_dyld_info
 
 namespace N_mach_uuid {
-enum DATA { uuid = 0, __data_size };
+enum DATA {
+    uuid = 0,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace N_mach_uuid
 
 namespace N_mach_dylinker {
-enum DATA { dylinker = 0, __data_size };
+enum DATA {
+    dylinker = 0,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace N_mach_dylinker
 
 namespace N_mach_rpath {
-enum DATA { path = 0, __data_size };
+enum DATA {
+    path = 0,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace N_mach_rpath
 
 namespace N_mach_symtab {
-enum DATA { symoff, nsyms, stroff, strsize, __data_size };
+enum DATA {
+    symoff,
+    nsyms,
+    stroff,
+    strsize,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace N_mach_symtab
@@ -235,62 +401,153 @@ extern const FW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace N_mach_dysymtab
 
 namespace N_mach_version_min {
-enum DATA { version, sdk, __data_size };
+enum DATA {
+    version,
+    sdk,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace N_mach_version_min
 
 namespace N_mach_build_version {
-enum DATA { platform, minos, sdk, ntools, __data_size };
+enum DATA {
+    platform,
+    minos,
+    sdk,
+    ntools,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace N_mach_build_version
 
 namespace N_mach_source_version {
-enum DATA { version = 0, __data_size };
+enum DATA {
+    version = 0,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace N_mach_source_version
 
 namespace N_mach_encryption_info {
-enum DATA { cryptoff = 0, cryptsize, cryptid, pad, __data_size };
+enum DATA {
+    cryptoff = 0,
+    cryptsize,
+    cryptid,
+    pad,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records32[__data_size - 1];
 extern const FW_DEF::HEADER_RECORD records64[__data_size];
 }  // namespace N_mach_encryption_info
 
 namespace N_mach_linkedit_data {
-enum DATA { dataoff, datasize, __data_size };
+enum DATA {
+    dataoff,
+    datasize,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace N_mach_linkedit_data
 
 namespace N_mach_main {
-enum DATA { entryoff, stacksize, __data_size };
+enum DATA {
+    entryoff,
+    stacksize,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace N_mach_main
 
 namespace N_mach_unix_thread {
-enum DATA { flavor, count, __data_size };
+enum DATA {
+    flavor,
+    count,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace N_mach_unix_thread
 
 namespace N_mach_unix_thread_x86_32 {
-enum DATA { eax, ebx, ecx, edx, edi, esi, ebp, esp, ss, eflags, eip, cs, ds, es, fs, gs, __data_size };
+enum DATA {
+    eax,
+    ebx,
+    ecx,
+    edx,
+    edi,
+    esi,
+    ebp,
+    esp,
+    ss,
+    eflags,
+    eip,
+    cs,
+    ds,
+    es,
+    fs,
+    gs,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace N_mach_unix_thread_x86_32
 
 namespace N_mach_unix_thread_x86_64 {
-enum DATA { rax, rbx, rcx, rdx, rdi, rsi, rbp, rsp, r8, r9, r10, r11, r12, r13, r14, r15, rip, rflags, cs, fs, gs, __data_size };
+enum DATA {
+    rax,
+    rbx,
+    rcx,
+    rdx,
+    rdi,
+    rsi,
+    rbp,
+    rsp,
+    r8,
+    r9,
+    r10,
+    r11,
+    r12,
+    r13,
+    r14,
+    r15,
+    rip,
+    rflags,
+    cs,
+    fs,
+    gs,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace N_mach_unix_thread_x86_64
 
 namespace N_mach_unix_thread_arm_32 {
-enum DATA { r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, sp, lr, pc, cpsr, __data_size };
+enum DATA {
+    r0,
+    r1,
+    r2,
+    r3,
+    r4,
+    r5,
+    r6,
+    r7,
+    r8,
+    r9,
+    r10,
+    r11,
+    r12,
+    sp,
+    lr,
+    pc,
+    cpsr,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace N_mach_unix_thread_arm_32
@@ -387,29 +644,71 @@ extern const FW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace N_mach_unix_thread_ppc_32
 
 namespace N_mach_unix_thread_m68k_32 {
-enum DATA { dreg0, dreg1, dreg2, dreg3, dreg4, dreg5, dreg6, dreg7, areg0, areg1, areg2, areg3, areg4, areg5, areg6, areg7, pad0, sr, pc, __data_size };
+enum DATA {
+    dreg0,
+    dreg1,
+    dreg2,
+    dreg3,
+    dreg4,
+    dreg5,
+    dreg6,
+    dreg7,
+    areg0,
+    areg1,
+    areg2,
+    areg3,
+    areg4,
+    areg5,
+    areg6,
+    areg7,
+    pad0,
+    sr,
+    pc,
+    __data_size
+};
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace N_mach_unix_thread_m68k_32
 
 namespace N_mach_nlist {
-enum DATA { n_strx, n_type, n_sect, n_desc, n_value, __data_size };
+enum DATA {
+    n_strx,
+    n_type,
+    n_sect,
+    n_desc,
+    n_value,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records32[__data_size];
 extern const FW_DEF::HEADER_RECORD records64[__data_size];
 
-enum CB { __CB_size };
+enum CB {
+    __CB_size
+};
 
-enum INV { __INV_size };
+enum INV {
+    __INV_size
+};
 }  // namespace N_mach_nlist
 
 namespace N_mach_data_in_code_entry {
-enum DATA { offset, length, kind, __data_size };
+enum DATA {
+    offset,
+    length,
+    kind,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 
-enum CB { CB_kind, __CB_size };
+enum CB {
+    CB_kind,
+    __CB_size
+};
 
-enum INV { __INV_size };
+enum INV {
+    __INV_size
+};
 }  // namespace N_mach_data_in_code_entry
 
 namespace N_mach_modtab32 {
@@ -432,9 +731,13 @@ enum DATA {
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 
-enum CB { __CB_size };
+enum CB {
+    __CB_size
+};
 
-enum INV { __INV_size };
+enum INV {
+    __INV_size
+};
 }  // namespace N_mach_modtab32
 
 namespace N_mach_modtab64 {
@@ -457,79 +760,143 @@ enum DATA {
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 
-enum CB { __CB_size };
+enum CB {
+    __CB_size
+};
 
-enum INV { __INV_size };
+enum INV {
+    __INV_size
+};
 }  // namespace N_mach_modtab64
 
 namespace N_mach_table_of_contents {
-enum DATA { symbol_index, module_index, __data_size };
+enum DATA {
+    symbol_index,
+    module_index,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 
-enum CB { __CB_size };
+enum CB {
+    __CB_size
+};
 
-enum INV { __INV_size };
+enum INV {
+    __INV_size
+};
 }  // namespace N_mach_table_of_contents
 
 namespace N_mach_relocs {
-enum DATA { r_address, value, __data_size };
+enum DATA {
+    r_address,
+    value,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 
-enum CB { __CB_size };
+enum CB {
+    __CB_size
+};
 
-enum INV { __INV_size };
+enum INV {
+    __INV_size
+};
 }  // namespace N_mach_relocs
 
 namespace N_mach_relocs_E {
-enum DATA { r_address, r_symbolnum, r_pcrel, r_length, r_extern, r_type, __data_size };
+enum DATA {
+    r_address,
+    r_symbolnum,
+    r_pcrel,
+    r_length,
+    r_extern,
+    r_type,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 
-enum CB { __CB_size };
+enum CB {
+    __CB_size
+};
 
-enum INV { __INV_size };
+enum INV {
+    __INV_size
+};
 }  // namespace N_mach_relocs_E
 
 namespace N_mach_value {
-enum DATA { value, __data_size };
+enum DATA {
+    value,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 
-enum CB { __CB_size };
+enum CB {
+    __CB_size
+};
 
-enum INV { __INV_size };
+enum INV {
+    __INV_size
+};
 }  // namespace N_mach_value
 
 namespace N_mach_refsyms {
-enum DATA { isym, flags, __data_size };
+enum DATA {
+    isym,
+    flags,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 
-enum CB { __CB_size };
+enum CB {
+    __CB_size
+};
 
-enum INV { __INV_size };
+enum INV {
+    __INV_size
+};
 }  // namespace N_mach_refsyms
 
 namespace N_mach_SuperBlob {
-enum DATA { magic, length, count, __data_size };
+enum DATA {
+    magic,
+    length,
+    count,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 
-enum CB { __CB_size };
+enum CB {
+    __CB_size
+};
 
-enum INV { __INV_size };
+enum INV {
+    __INV_size
+};
 }  // namespace N_mach_SuperBlob
 
 namespace N_mach_BlobIndex {
-enum DATA { type, offset, __data_size };
+enum DATA {
+    type,
+    offset,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 
-enum CB { __CB_size };
+enum CB {
+    __CB_size
+};
 
-enum INV { __INV_size };
+enum INV {
+    __INV_size
+};
 }  // namespace N_mach_BlobIndex
 
 #endif  // MACH_DEFS_H

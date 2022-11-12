@@ -42,7 +42,14 @@ class SearchSignaturesWidget;
 class SearchSignaturesWidget : public XShortcutsWidget {
     Q_OBJECT
 
-    enum SC { SC_COPYNAME = 0, SC_COPYSIGNATURE, SC_COPYADDRESS, SC_COPYOFFSET, SC_HEX, __SC_SIZE };
+    enum SC {
+        SC_COPYNAME = 0,
+        SC_COPYSIGNATURE,
+        SC_COPYADDRESS,
+        SC_COPYOFFSET,
+        SC_HEX,
+        __SC_SIZE
+    };
 
 public:
     struct OPTIONS {

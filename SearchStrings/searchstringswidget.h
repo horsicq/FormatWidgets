@@ -41,7 +41,15 @@ class SearchStringsWidget;
 class SearchStringsWidget : public XShortcutsWidget {
     Q_OBJECT
 
-    enum SC { SC_COPYSTRING = 0, SC_COPYOFFSET, SC_COPYSIZE, SC_HEX, SC_DEMANGLE, SC_EDITSTRING, __SC_SIZE };
+    enum SC {
+        SC_COPYSTRING = 0,
+        SC_COPYOFFSET,
+        SC_COPYSIZE,
+        SC_HEX,
+        SC_DEMANGLE,
+        SC_EDITSTRING,
+        __SC_SIZE
+    };
 
 public:
     struct OPTIONS {

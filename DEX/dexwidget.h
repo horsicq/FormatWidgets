@@ -74,9 +74,25 @@ private slots:
 
 private:
     // TODO rename
-    enum CB { CB_Dex_Header_magic = 0, CB_Dex_Header_version, CB_Dex_Header_endian_tag, __CB_size };
+    enum CB {
+        CB_Dex_Header_magic = 0,
+        CB_Dex_Header_version,
+        CB_Dex_Header_endian_tag,
+        __CB_size
+    };
 
-    enum INV { INV_link = 0, INV_map, INV_string_ids, INV_type_ids, INV_proto_ids, INV_field_ids, INV_method_ids, INV_class_defs, INV_data, __INV_size };
+    enum INV {
+        INV_link = 0,
+        INV_map,
+        INV_string_ids,
+        INV_type_ids,
+        INV_proto_ids,
+        INV_field_ids,
+        INV_method_ids,
+        INV_class_defs,
+        INV_data,
+        __INV_size
+    };
 
     Ui::DEXWidget *ui;
 

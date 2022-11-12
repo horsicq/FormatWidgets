@@ -75,9 +75,18 @@ private slots:
     void on_pushButtonHeuristicScan_clicked();
 
 private:
-    enum CB { CB_DOS_HEADER_e_magic = 0, CB_VXD_HEADER_e32_magic, CB_VXD_HEADER_e32_cpu, CB_VXD_HEADER_e32_os, __CB_size };
+    enum CB {
+        CB_DOS_HEADER_e_magic = 0,
+        CB_VXD_HEADER_e32_magic,
+        CB_VXD_HEADER_e32_cpu,
+        CB_VXD_HEADER_e32_os,
+        __CB_size
+    };
 
-    enum INV { INV_DOS_HEADER_e_lfanew, __INV_size };
+    enum INV {
+        INV_DOS_HEADER_e_lfanew,
+        __INV_size
+    };
 
     Ui::LEWidget *ui;
 

@@ -810,8 +810,7 @@ void FormatWidget::initToolsWidget(ToolsWidget *pWidget) {
     pWidget->resize(pWidget->width(), 150);  // TODO Check
 }
 
-void FormatWidget::initExtractorWidget(XExtractorWidget *pWidget)
-{
+void FormatWidget::initExtractorWidget(XExtractorWidget *pWidget) {
     connect(pWidget, SIGNAL(showOffsetHex(qint64, qint64)), this, SLOT(showInHexWindow(qint64, qint64)));
 }
 

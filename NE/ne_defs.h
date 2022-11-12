@@ -42,7 +42,7 @@ enum TYPE {
     TYPE_OVERLAY,
     __TYPE_size
 };
-}
+}  // namespace SNE
 
 namespace N_NE_DOS_HEADER {
 enum DATA {
@@ -122,7 +122,13 @@ extern const FW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace N_OS2_HEADER
 
 namespace N_NE_SEGMENT {
-enum DATA { dwFileOffset = 0, dwFileSize, dwFlags, dwMinAllocSize, __data_size };
+enum DATA {
+    dwFileOffset = 0,
+    dwFileSize,
+    dwFlags,
+    dwMinAllocSize,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace N_NE_SEGMENT

@@ -73,7 +73,7 @@ enum TYPE {
     TYPE_RESOURCES_TREE,
     __TYPE_size_ext
 };
-}
+}  // namespace SPE
 
 namespace N_IMAGE_DOS_HEADER {
 enum DATA {
@@ -115,13 +115,25 @@ extern const FW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace N_IMAGE_DOS_HEADER
 
 namespace N_IMAGE_NT_HEADERS {
-enum DATA { Signature = 0, __data_size };
+enum DATA {
+    Signature = 0,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace N_IMAGE_NT_HEADERS
 
 namespace N_IMAGE_FILE_HEADER {
-enum DATA { Machine = 0, NumberOfSections, TimeDateStamp, PointerToSymbolTable, NumberOfSymbols, SizeOfOptionalHeader, Characteristics, __data_size };
+enum DATA {
+    Machine = 0,
+    NumberOfSections,
+    TimeDateStamp,
+    PointerToSymbolTable,
+    NumberOfSymbols,
+    SizeOfOptionalHeader,
+    Characteristics,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace N_IMAGE_FILE_HEADER
@@ -167,7 +179,15 @@ extern const FW_DEF::HEADER_RECORD records64[__data_size];
 }  // namespace N_IMAGE_OPTIONAL_HEADER
 
 namespace N_IMAGE_TLS {
-enum DATA { StartAddressOfRawData = 0, EndAddressOfRawData, AddressOfIndex, AddressOfCallBacks, SizeOfZeroFill, Characteristics, __data_size };
+enum DATA {
+    StartAddressOfRawData = 0,
+    EndAddressOfRawData,
+    AddressOfIndex,
+    AddressOfCallBacks,
+    SizeOfZeroFill,
+    Characteristics,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records32[__data_size];
 extern const FW_DEF::HEADER_RECORD records64[__data_size];
@@ -235,11 +255,19 @@ extern const FW_DEF::HEADER_RECORD records64[__data_size];
 }  // namespace N_IMAGE_LOADCONFIG
 
 namespace N_IMAGE_DATA_DIRECTORY {
-enum CB { __CB_size };
+enum CB {
+    __CB_size
+};
 
-enum INV { __INV_size };
+enum INV {
+    __INV_size
+};
 
-enum DATA { Address = 0, Size, __data_size };
+enum DATA {
+    Address = 0,
+    Size,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace N_IMAGE_DATA_DIRECTORY
@@ -261,9 +289,17 @@ enum DATA {
 
 extern const FW_DEF::HEADER_RECORD records[__data_size + 1];
 
-enum CB { CB_CHARACTERISTICS = 0, CB_ALIGH, __CB_size };
+enum CB {
+    CB_CHARACTERISTICS = 0,
+    CB_ALIGH,
+    __CB_size
+};
 
-enum INV { INV_VirtualAddress, INV_PointerToRawData, __INV_size };
+enum INV {
+    INV_VirtualAddress,
+    INV_PointerToRawData,
+    __INV_size
+};
 }  // namespace N_IMAGE_SECTION_HEADER
 
 namespace N_IMAGE_EXPORT {
@@ -286,33 +322,75 @@ extern const FW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace N_IMAGE_EXPORT
 
 namespace N_IMAGE_RESOURCES {
-enum DATA { ID1 = 0, ID2, ID3, ADDRESS, OFFSET, SIZE, __data_size };
+enum DATA {
+    ID1 = 0,
+    ID2,
+    ID3,
+    ADDRESS,
+    OFFSET,
+    SIZE,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace N_IMAGE_RESOURCES
 
 namespace N_IMAGE_DEBUG {
-enum DATA { Characteristics = 0, TimeDateStamp, MajorVersion, MinorVersion, Type, SizeOfData, AddressOfRawData, PointerToRawData, __data_size };
+enum DATA {
+    Characteristics = 0,
+    TimeDateStamp,
+    MajorVersion,
+    MinorVersion,
+    Type,
+    SizeOfData,
+    AddressOfRawData,
+    PointerToRawData,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 
-enum CB { CB_TYPE = 0, __CB_size };
-enum INV { __INV_size };
+enum CB {
+    CB_TYPE = 0,
+    __CB_size
+};
+enum INV {
+    __INV_size
+};
 }  // namespace N_IMAGE_DEBUG
 
 namespace N_IMAGE_EXPORT_FUNCTION {
-enum DATA { Ordinal = 0, RVA, Name, __data_size };
+enum DATA {
+    Ordinal = 0,
+    RVA,
+    Name,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace N_IMAGE_EXPORT_FUNCTION
 
 namespace N_IMAGE_IMPORT {
-enum DATA { OriginalFirstThunk = 0, TimeDateStamp, ForwarderChain, Name, FirstThunk, __data_size };
+enum DATA {
+    OriginalFirstThunk = 0,
+    TimeDateStamp,
+    ForwarderChain,
+    Name,
+    FirstThunk,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 
-enum CB { __CB_size };
-enum INV { INV_OriginalFirstThunk = 0, INV_Name, INV_FirstThunk, __INV_size };
+enum CB {
+    __CB_size
+};
+enum INV {
+    INV_OriginalFirstThunk = 0,
+    INV_Name,
+    INV_FirstThunk,
+    __INV_size
+};
 }  // namespace N_IMAGE_IMPORT
 
 namespace N_IMAGE_DELAYIMPORT {
@@ -330,40 +408,73 @@ enum DATA {
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 
-enum CB { __CB_size };
-enum INV { __INV_size };
+enum CB {
+    __CB_size
+};
+enum INV {
+    __INV_size
+};
 }  // namespace N_IMAGE_DELAYIMPORT
 
 namespace N_IMAGE_BOUNDIMPORT {
-enum DATA { TimeDateStamp = 0, OffsetModuleName, NumberOfModuleForwarderRefs, __data_size };
+enum DATA {
+    TimeDateStamp = 0,
+    OffsetModuleName,
+    NumberOfModuleForwarderRefs,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 
-enum CB { __CB_size };
-enum INV { __INV_size };
+enum CB {
+    __CB_size
+};
+enum INV {
+    __INV_size
+};
 }  // namespace N_IMAGE_BOUNDIMPORT
 
 namespace N_IMAGE_IMPORT_FUNCTION {
-enum DATA { Thunk = 0, Ordinal, Hint, __data_size };
+enum DATA {
+    Thunk = 0,
+    Ordinal,
+    Hint,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records32[__data_size];
 extern const FW_DEF::HEADER_RECORD records64[__data_size];
 }  // namespace N_IMAGE_IMPORT_FUNCTION
 
 namespace N_IMAGE_DELAYIMPORT_FUNCTION {
-enum DATA { AddressThunk = 0, BoundThunk, NameThunk, Ordinal, Hint, __data_size };
+enum DATA {
+    AddressThunk = 0,
+    BoundThunk,
+    NameThunk,
+    Ordinal,
+    Hint,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records32[__data_size];
 extern const FW_DEF::HEADER_RECORD records64[__data_size];
 }  // namespace N_IMAGE_DELAYIMPORT_FUNCTION
 
 namespace N_IMAGE_RELOCS {
-enum DATA { VirtualAddress = 0, SizeOfBlock, __data_size };
+enum DATA {
+    VirtualAddress = 0,
+    SizeOfBlock,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 
-enum CB { __CB_size };
-enum INV { __INV_size };
+enum CB {
+    __CB_size
+};
+enum INV {
+    __INV_size
+};
 }  // namespace N_IMAGE_RELOCS
 
 namespace N_IMAGE_NETHEADER {
@@ -394,22 +505,44 @@ extern const FW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace N_IMAGE_NETHEADER
 
 namespace N_IMAGE_NET_METADATA {
-enum DATA { Signature = 0, MajorVersion, MinorVersion, Reserved, VersionStringLength, Version, Flags, Streams, __data_size };
+enum DATA {
+    Signature = 0,
+    MajorVersion,
+    MinorVersion,
+    Reserved,
+    VersionStringLength,
+    Version,
+    Flags,
+    Streams,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace N_IMAGE_NET_METADATA
 
 namespace N_IMAGE_EXCEPTIONS {
-enum DATA { BeginAddress = 0, EndAddress, UnwindInfoAddress, __data_size };
+enum DATA {
+    BeginAddress = 0,
+    EndAddress,
+    UnwindInfoAddress,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 
-enum CB { __CB_size };
-enum INV { __INV_size };
+enum CB {
+    __CB_size
+};
+enum INV {
+    __INV_size
+};
 }  // namespace N_IMAGE_EXCEPTIONS
 
 namespace N_IMAGE_RELOCS_POSITION {
-enum DATA { TypeOffset = 0, __data_size };
+enum DATA {
+    TypeOffset = 0,
+    __data_size
+};
 
 extern const FW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace N_IMAGE_RELOCS_POSITION

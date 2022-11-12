@@ -32,7 +32,10 @@ class InvWidget : public XShortcutsWidget {
     Q_OBJECT
 
 public:
-    enum TYPE { TYPE_HEX, TYPE_DISASM };
+    enum TYPE {
+        TYPE_HEX,
+        TYPE_DISASM
+    };
 
     explicit InvWidget(QWidget *pParent, TYPE type);
     ~InvWidget();

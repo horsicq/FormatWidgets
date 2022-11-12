@@ -38,25 +38,43 @@
 #include "toolswidget.h"
 #include "xcomboboxex.h"
 #include "xdatetimeeditx.h"
+#include "xextractorwidget.h"
 #include "xhexviewwidget.h"
 #include "xlineedithex.h"
 #include "xmemorymapwidget.h"
 #include "xmultidisasmwidget.h"
 #include "xoptions.h"
 #include "xshortcutsdialog.h"
-#include "xextractorwidget.h"
 
 class FormatWidget : public XShortcutsWidget {
     Q_OBJECT
 
 public:
-    enum HEADER_COLUMN { HEADER_COLUMN_NAME = 0, HEADER_COLUMN_OFFSET, HEADER_COLUMN_TYPE, HEADER_COLUMN_VALUE, HEADER_COLUMN_INFO, HEADER_COLUMN_COMMENT };
+    enum HEADER_COLUMN {
+        HEADER_COLUMN_NAME = 0,
+        HEADER_COLUMN_OFFSET,
+        HEADER_COLUMN_TYPE,
+        HEADER_COLUMN_VALUE,
+        HEADER_COLUMN_INFO,
+        HEADER_COLUMN_COMMENT
+    };
 
-    enum LIST_COLUMN { LIST_COLUMN_NAME = 0, LIST_COLUMN_VALUE };
+    enum LIST_COLUMN {
+        LIST_COLUMN_NAME = 0,
+        LIST_COLUMN_VALUE
+    };
 
-    enum HEADER_DATA { HEADER_DATA_OFFSET = 0, HEADER_DATA_SIZE };
+    enum HEADER_DATA {
+        HEADER_DATA_OFFSET = 0,
+        HEADER_DATA_SIZE
+    };
 
-    enum DIRECTORY_COLUMN { DIRECTORY_COLUMN_NUMBER = 0, DIRECTORY_COLUMN_NAME, DIRECTORY_COLUMN_ADDRESS, DIRECTORY_COLUMN_SIZE };
+    enum DIRECTORY_COLUMN {
+        DIRECTORY_COLUMN_NUMBER = 0,
+        DIRECTORY_COLUMN_NAME,
+        DIRECTORY_COLUMN_ADDRESS,
+        DIRECTORY_COLUMN_SIZE
+    };
 
     FormatWidget(QWidget *pParent = nullptr);
     FormatWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent);
@@ -166,7 +184,18 @@ public:
     void initToolsWidget(ToolsWidget *pWidget);
     void initExtractorWidget(XExtractorWidget *pWidget);
 
-    enum CW { CW_UINT8 = 0, CW_UINT16, CW_UINT32, CW_UINT64, CW_UINTMODE, CW_TYPE, CW_STRINGSHORT, CW_STRINGSHORT2, CW_STRINGMID, CW_STRINGLONG };
+    enum CW {
+        CW_UINT8 = 0,
+        CW_UINT16,
+        CW_UINT32,
+        CW_UINT64,
+        CW_UINTMODE,
+        CW_TYPE,
+        CW_STRINGSHORT,
+        CW_STRINGSHORT2,
+        CW_STRINGMID,
+        CW_STRINGLONG
+    };
 
     static qint32 getColumnWidth(QWidget *pParent, CW cw, XBinary::MODE mode);
 
@@ -177,7 +206,12 @@ public:
     void saveHeaderTable(QTableWidget *pTableWidget, QString sFileName);
 
 protected:
-    enum SV { SV_NONE = 0, SV_EDITED, SV_RELOAD, SV_RELOADDATA };
+    enum SV {
+        SV_NONE = 0,
+        SV_EDITED,
+        SV_RELOAD,
+        SV_RELOADDATA
+    };
 
     virtual SV _setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset) = 0;
     virtual void setReadonly(bool bState) = 0;

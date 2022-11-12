@@ -32,7 +32,11 @@ class LESectionHeaderWidget : public FormatWidget {
     Q_OBJECT
 
 public:
-    enum CB { CB_CHARACTERISTICS = 0, CB_ALIGH, __CB_size };
+    enum CB {
+        CB_CHARACTERISTICS = 0,
+        CB_ALIGH,
+        __CB_size
+    };
     LESectionHeaderWidget(QWidget *pParent = nullptr);
     LESectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent = nullptr);
     ~LESectionHeaderWidget();
@@ -52,7 +56,12 @@ private slots:
     void on_tableWidget_Section_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn);
 
 private:
-    enum INV { INV_OriginalFirstThunk, INV_Name, INV_FirstThunk, __INV_size };
+    enum INV {
+        INV_OriginalFirstThunk,
+        INV_Name,
+        INV_FirstThunk,
+        __INV_size
+    };
 
     Ui::LESectionHeaderWidget *ui;
     //    XLineEditHEX *lineEdit_Section[N_mach_sections::__data_size];

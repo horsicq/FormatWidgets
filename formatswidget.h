@@ -66,7 +66,11 @@ class FormatsWidget : public XShortcutsWidget {
         TABINFO_MACH,
     };
 
-    enum SE { SE_AUTO = 0, SE_DIE, SE_NFD };
+    enum SE {
+        SE_AUTO = 0,
+        SE_DIE,
+        SE_NFD
+    };
 
 public:
     explicit FormatsWidget(QWidget *pParent = nullptr);

@@ -73,7 +73,14 @@ private slots:
     void onTableView_SEGMENTS_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
 
 private:
-    enum CB { CB_DOS_HEADER_e_magic = 0, CB_OS2_HEADER_ne_magic, CB_OS2_HEADER_ne_flags, CB_OS2_HEADER_ne_exetype, CB_OS2_HEADER_ne_flagsothers, __CB_size };
+    enum CB {
+        CB_DOS_HEADER_e_magic = 0,
+        CB_OS2_HEADER_ne_magic,
+        CB_OS2_HEADER_ne_flags,
+        CB_OS2_HEADER_ne_exetype,
+        CB_OS2_HEADER_ne_flagsothers,
+        __CB_size
+    };
 
     enum INV {
         INV_IMAGE_DOS_HEADER_e_lfanew,

@@ -69,7 +69,10 @@ private slots:
     void on_pushButtonHeuristicScan_clicked();
 
 private:
-    enum CB { CB_DOS_HEADER_e_magic = 0, __CB_size };
+    enum CB {
+        CB_DOS_HEADER_e_magic = 0,
+        __CB_size
+    };
 
     Ui::MSDOSWidget *ui;
 

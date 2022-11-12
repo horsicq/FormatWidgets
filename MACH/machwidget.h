@@ -172,7 +172,14 @@ private slots:
     void on_pushButtonHeuristicScan_clicked();
 
 private:
-    enum CB { CB_mach_header_magic = 0, CB_mach_header_cputype, CB_mach_header_cpusubtype, CB_mach_header_filetype, CB_mach_header_flags, __CB_size };
+    enum CB {
+        CB_mach_header_magic = 0,
+        CB_mach_header_cputype,
+        CB_mach_header_cpusubtype,
+        CB_mach_header_filetype,
+        CB_mach_header_flags,
+        __CB_size
+    };
 
     enum INV {
         INV_rebase_off,
