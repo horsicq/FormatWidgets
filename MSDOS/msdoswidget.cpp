@@ -200,11 +200,11 @@ void MSDOSWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget) {
 
     int nSymbolWidth = XLineEditHEX::getSymbolWidth(this);
 
-    pTableWidget->setColumnWidth(HEADER_COLUMN_NAME, nSymbolWidth * 12);
-    pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET, nSymbolWidth * 4);
-    pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE, nSymbolWidth * 6);
-    pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE, nSymbolWidth * 8);
-    pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, nSymbolWidth * 16);
+    pTableWidget->setColumnWidth(HEADER_COLUMN_NAME, nSymbolWidth * 12); // TODO
+    pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET, nSymbolWidth * 4); // TODO
+    pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE, nSymbolWidth * 6); // TODO
+    pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE, nSymbolWidth * 8); // TODO
+    pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, nSymbolWidth * 16); // TODO
 }
 
 QString MSDOSWidget::typeIdToString(int nType) {
