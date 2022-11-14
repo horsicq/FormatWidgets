@@ -1386,7 +1386,7 @@ void PEWidget::reloadData() {
                 ui->widgetHex->setData(getDevice(), options);
                 ui->widgetHex->setBackupDevice(getBackupDevice());
                 // TODO save directory
-                //                ui->widgetHex->enableReadOnly(false);
+                // ui->widgetHex->enableReadOnly(false);
 
                 ui->widgetHex->reload();
             }
@@ -1758,7 +1758,7 @@ void PEWidget::reloadData() {
                 ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->setRowCount(16);
 
                 XBinary::_MEMORY_MAP memoryMap = pe.getMemoryMap();
-                QMap<quint64, QString> mapDD = XPE::getImageOptionalHeaderDataDirectoryS();
+                QMap<quint64, QString> mapDataDirectories = XPE::getImageOptionalHeaderDataDirectoryS();
 
                 for (qint32 i = 0; i < 16; i++) {
                     ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->setItem(i, 4, new QTableWidgetItem());  // Comment
@@ -1791,7 +1791,7 @@ void PEWidget::reloadData() {
 
                     ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->setItem(i, 0, pItemNumber);
 
-                    ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->setItem(i, 1, new QTableWidgetItem(mapDD.value(i)));
+                    ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->setItem(i, 1, new QTableWidgetItem(mapDataDirectories.value(i)));
                     ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->setItem(i, 2, new QTableWidgetItem(XBinary::valueToHex(dd.VirtualAddress)));
 
                     QTableWidgetItem *pItem = new QTableWidgetItem(XBinary::valueToHex(dd.Size));
