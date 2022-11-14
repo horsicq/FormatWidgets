@@ -100,7 +100,7 @@ void ELFWidget::reload() {
         QList<XELF_DEF::Elf_Phdr> listProgramHeaders = elf.getElf_PhdrList();
 
         if (listProgramHeaders.count()) {
-            QTreeWidgetItem *pItemPrograms = createNewItem(SELF::TYPE_Elf_Phdr, "Programs"); // mn TODO tr
+            QTreeWidgetItem *pItemPrograms = createNewItem(SELF::TYPE_Elf_Phdr, "Programs");  // mn TODO tr
 
             ui->treeWidgetNavi->addTopLevelItem(pItemPrograms);
 
@@ -413,8 +413,7 @@ void ELFWidget::reloadData() {
                     createHeaderTable(SELF::TYPE_Elf_Ehdr, ui->tableWidget_Elf_Ehdr, N_Elf_Ehdr::records32, g_lineEdit_Elf_Ehdr, N_Elf_Ehdr::__data_size, 0);
                 }
 
-                g_comboBox[CB_Elf_Ehdr_mag] =
-                    createComboBox(ui->tableWidget_Elf_Ehdr, XELF::getIndentMagS(), SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::ei_mag, XComboBoxEx::CBTYPE_LIST);
+                g_comboBox[CB_Elf_Ehdr_mag] = createComboBox(ui->tableWidget_Elf_Ehdr, XELF::getIndentMagS(), SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::ei_mag, XComboBoxEx::CBTYPE_LIST);
                 g_comboBox[CB_Elf_Ehdr_iclass] =
                     createComboBox(ui->tableWidget_Elf_Ehdr, XELF::getIndentClassesS(), SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::ei_class, XComboBoxEx::CBTYPE_LIST);
                 g_comboBox[CB_Elf_Ehdr_idata] =
@@ -423,8 +422,7 @@ void ELFWidget::reloadData() {
                     createComboBox(ui->tableWidget_Elf_Ehdr, XELF::getIndentVersionsS(), SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::ei_version, XComboBoxEx::CBTYPE_LIST);
                 g_comboBox[CB_Elf_Ehdr_iosabi] =
                     createComboBox(ui->tableWidget_Elf_Ehdr, XELF::getIndentOsabisS(), SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::ei_osabi, XComboBoxEx::CBTYPE_LIST);
-                g_comboBox[CB_Elf_Ehdr_type] =
-                    createComboBox(ui->tableWidget_Elf_Ehdr, XELF::getTypesS(), SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::e_type, XComboBoxEx::CBTYPE_LIST);
+                g_comboBox[CB_Elf_Ehdr_type] = createComboBox(ui->tableWidget_Elf_Ehdr, XELF::getTypesS(), SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::e_type, XComboBoxEx::CBTYPE_LIST);
                 g_comboBox[CB_Elf_Ehdr_machine] =
                     createComboBox(ui->tableWidget_Elf_Ehdr, XELF::getMachinesS(), SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::e_machine, XComboBoxEx::CBTYPE_LIST);
 
@@ -513,8 +511,7 @@ void ELFWidget::reloadData() {
             }
         } else if (nType == SELF::TYPE_Elf_Shdr) {
             if (!isInitPresent(sInit)) {
-                ELFProcessData elfProcessData(SELF::TYPE_Elf_Shdr, &g_tvModel[SELF::TYPE_Elf_Shdr], &elf, nDataOffset, nDataSize, nDataExtraOffset,
-                                              nDataExtraSize);
+                ELFProcessData elfProcessData(SELF::TYPE_Elf_Shdr, &g_tvModel[SELF::TYPE_Elf_Shdr], &elf, nDataOffset, nDataSize, nDataExtraOffset, nDataExtraSize);
 
                 ajustTableView(&elfProcessData, &g_tvModel[SELF::TYPE_Elf_Shdr], ui->tableView_Elf_Shdr, nullptr, false);
 
@@ -527,8 +524,7 @@ void ELFWidget::reloadData() {
             }
         } else if (nType == SELF::TYPE_Elf_Phdr) {
             if (!isInitPresent(sInit)) {
-                ELFProcessData elfProcessData(SELF::TYPE_Elf_Phdr, &g_tvModel[SELF::TYPE_Elf_Phdr], &elf, nDataOffset, nDataSize, nDataExtraOffset,
-                                              nDataExtraSize);
+                ELFProcessData elfProcessData(SELF::TYPE_Elf_Phdr, &g_tvModel[SELF::TYPE_Elf_Phdr], &elf, nDataOffset, nDataSize, nDataExtraOffset, nDataExtraSize);
 
                 ajustTableView(&elfProcessData, &g_tvModel[SELF::TYPE_Elf_Phdr], ui->tableView_Elf_Phdr, nullptr, false);
 
@@ -541,8 +537,8 @@ void ELFWidget::reloadData() {
             }
         } else if (nType == SELF::TYPE_Elf_DynamicArrayTags) {
             if (!isInitPresent(sInit)) {
-                ELFProcessData elfProcessData(SELF::TYPE_Elf_DynamicArrayTags, &g_tvModel[SELF::TYPE_Elf_DynamicArrayTags], &elf, nDataOffset, nDataSize,
-                                              nDataExtraOffset, nDataExtraSize);
+                ELFProcessData elfProcessData(SELF::TYPE_Elf_DynamicArrayTags, &g_tvModel[SELF::TYPE_Elf_DynamicArrayTags], &elf, nDataOffset, nDataSize, nDataExtraOffset,
+                                              nDataExtraSize);
 
                 ajustTableView(&elfProcessData, &g_tvModel[SELF::TYPE_Elf_DynamicArrayTags], ui->tableView_DynamicArrayTags);
 
@@ -555,8 +551,7 @@ void ELFWidget::reloadData() {
             }
         } else if (nType == SELF::TYPE_LIBRARIES) {
             if (!isInitPresent(sInit)) {
-                ELFProcessData elfProcessData(SELF::TYPE_LIBRARIES, &g_tvModel[SELF::TYPE_LIBRARIES], &elf, nDataOffset, nDataSize, nDataExtraOffset,
-                                              nDataExtraSize);
+                ELFProcessData elfProcessData(SELF::TYPE_LIBRARIES, &g_tvModel[SELF::TYPE_LIBRARIES], &elf, nDataOffset, nDataSize, nDataExtraOffset, nDataExtraSize);
 
                 ajustTableView(&elfProcessData, &g_tvModel[SELF::TYPE_LIBRARIES], ui->tableView_Libraries);
 
@@ -569,8 +564,7 @@ void ELFWidget::reloadData() {
             }
         } else if (nType == SELF::TYPE_INTERPRETER) {
             if (!isInitPresent(sInit)) {
-                createListTable(SELF::TYPE_INTERPRETER, ui->tableWidget_Interpreter, N_ELF_INTERPRETER::records, g_lineEdit_Elf_Interpreter,
-                                N_ELF_INTERPRETER::__data_size);
+                createListTable(SELF::TYPE_INTERPRETER, ui->tableWidget_Interpreter, N_ELF_INTERPRETER::records, g_lineEdit_Elf_Interpreter, N_ELF_INTERPRETER::__data_size);
 
                 blockSignals(true);
 
@@ -611,22 +605,19 @@ void ELFWidget::reloadData() {
             }
         } else if (nType == SELF::TYPE_SYMBOLTABLE) {
             if (!isInitPresent(sInit)) {
-                ELFProcessData elfProcessData(SELF::TYPE_SYMBOLTABLE, &g_tvModel[SELF::TYPE_SYMBOLTABLE], &elf, nDataOffset, nDataSize, nDataExtraOffset,
-                                              nDataExtraSize);
+                ELFProcessData elfProcessData(SELF::TYPE_SYMBOLTABLE, &g_tvModel[SELF::TYPE_SYMBOLTABLE], &elf, nDataOffset, nDataSize, nDataExtraOffset, nDataExtraSize);
 
                 ajustTableView(&elfProcessData, &g_tvModel[SELF::TYPE_SYMBOLTABLE], ui->tableView_SymbolTable, nullptr, false);
             }
         } else if (nType == SELF::TYPE_Elf_Rela) {
             if (!isInitPresent(sInit)) {
-                ELFProcessData elfProcessData(SELF::TYPE_Elf_Rela, &g_tvModel[SELF::TYPE_Elf_Rela], &elf, nDataOffset, nDataSize, nDataExtraOffset,
-                                              nDataExtraSize);
+                ELFProcessData elfProcessData(SELF::TYPE_Elf_Rela, &g_tvModel[SELF::TYPE_Elf_Rela], &elf, nDataOffset, nDataSize, nDataExtraOffset, nDataExtraSize);
 
                 ajustTableView(&elfProcessData, &g_tvModel[SELF::TYPE_Elf_Rela], ui->tableView_Rela, nullptr, false);
             }
         } else if (nType == SELF::TYPE_Elf_Rel) {
             if (!isInitPresent(sInit)) {
-                ELFProcessData elfProcessData(SELF::TYPE_Elf_Rel, &g_tvModel[SELF::TYPE_Elf_Rel], &elf, nDataOffset, nDataSize, nDataExtraOffset,
-                                              nDataExtraSize);
+                ELFProcessData elfProcessData(SELF::TYPE_Elf_Rel, &g_tvModel[SELF::TYPE_Elf_Rel], &elf, nDataOffset, nDataSize, nDataExtraOffset, nDataExtraSize);
 
                 ajustTableView(&elfProcessData, &g_tvModel[SELF::TYPE_Elf_Rel], ui->tableView_Rel, nullptr, false);
             }
@@ -667,14 +658,12 @@ void ELFWidget::addDatasets(XELF *pElf, QTreeWidgetItem *pParent, QList<XBinary:
             pParent->addChild(createNewItem(SELF::TYPE_Elf_Rel, pListDataSets->at(i).sName, pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
                                             pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
         } else if (pListDataSets->at(i).nType == XELF::DS_DYNAMICTAGS) {
-            QTreeWidgetItem *pDynamicTags =
-                createNewItem(SELF::TYPE_Elf_DynamicArrayTags, pListDataSets->at(i).sName, pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
-                              pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize);
+            QTreeWidgetItem *pDynamicTags = createNewItem(SELF::TYPE_Elf_DynamicArrayTags, pListDataSets->at(i).sName, pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
+                                                          pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize);
 
             pParent->addChild(pDynamicTags);
 
-            QList<XELF::TAG_STRUCT> listTagStructs =
-                pElf->_getTagStructs(pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize, pElf->is64(), pElf->isBigEndian());
+            QList<XELF::TAG_STRUCT> listTagStructs = pElf->_getTagStructs(pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize, pElf->is64(), pElf->isBigEndian());
 
             XBinary::_MEMORY_MAP memoryMap = pElf->getMemoryMap();
 

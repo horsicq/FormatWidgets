@@ -531,12 +531,10 @@ void NEWidget::reloadData() {
             }
         } else if (nType == SNE::TYPE_DOS_HEADER) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SNE::TYPE_DOS_HEADER, ui->tableWidget_DOS_HEADER, N_NE_DOS_HEADER::records, g_lineEdit_DOS_HEADER,
-                                  N_NE_DOS_HEADER::__data_size, 0);
-                g_comboBox[CB_DOS_HEADER_e_magic] = createComboBox(ui->tableWidget_DOS_HEADER, XMSDOS::getImageMagicsS(), SNE::TYPE_DOS_HEADER,
-                                                                   N_NE_DOS_HEADER::e_magic, XComboBoxEx::CBTYPE_LIST);
-                g_invWidget[INV_IMAGE_DOS_HEADER_e_lfanew] =
-                    createInvWidget(ui->tableWidget_DOS_HEADER, SNE::TYPE_DOS_HEADER, N_NE_DOS_HEADER::e_lfanew, InvWidget::TYPE_HEX);
+                createHeaderTable(SNE::TYPE_DOS_HEADER, ui->tableWidget_DOS_HEADER, N_NE_DOS_HEADER::records, g_lineEdit_DOS_HEADER, N_NE_DOS_HEADER::__data_size, 0);
+                g_comboBox[CB_DOS_HEADER_e_magic] =
+                    createComboBox(ui->tableWidget_DOS_HEADER, XMSDOS::getImageMagicsS(), SNE::TYPE_DOS_HEADER, N_NE_DOS_HEADER::e_magic, XComboBoxEx::CBTYPE_LIST);
+                g_invWidget[INV_IMAGE_DOS_HEADER_e_lfanew] = createInvWidget(ui->tableWidget_DOS_HEADER, SNE::TYPE_DOS_HEADER, N_NE_DOS_HEADER::e_lfanew, InvWidget::TYPE_HEX);
 
                 blockSignals(true);
 
@@ -588,29 +586,22 @@ void NEWidget::reloadData() {
         } else if (nType == SNE::TYPE_OS2_HEADER) {
             if (!isInitPresent(sInit)) {
                 createHeaderTable(SNE::TYPE_OS2_HEADER, ui->tableWidget_OS2_HEADER, N_OS2_HEADER::records, g_lineEdit_OS2_HEADER, N_OS2_HEADER::__data_size, 0);
-                g_comboBox[CB_OS2_HEADER_ne_magic] = createComboBox(ui->tableWidget_OS2_HEADER, XNE::getImageNEMagicsS(), SNE::TYPE_OS2_HEADER,
-                                                                    N_OS2_HEADER::ne_magic, XComboBoxEx::CBTYPE_LIST);
-                g_comboBox[CB_OS2_HEADER_ne_flags] = createComboBox(ui->tableWidget_OS2_HEADER, XNE::getImageNEFlagsS(), SNE::TYPE_OS2_HEADER,
-                                                                    N_OS2_HEADER::ne_flags, XComboBoxEx::CBTYPE_FLAGS);
-                g_comboBox[CB_OS2_HEADER_ne_exetype] = createComboBox(ui->tableWidget_OS2_HEADER, XNE::getImageNEExetypesS(), SNE::TYPE_OS2_HEADER,
-                                                                      N_OS2_HEADER::ne_exetyp, XComboBoxEx::CBTYPE_LIST);
-                g_comboBox[CB_OS2_HEADER_ne_flagsothers] = createComboBox(ui->tableWidget_OS2_HEADER, XNE::getImageNEFlagsothersS(), SNE::TYPE_OS2_HEADER,
-                                                                          N_OS2_HEADER::ne_flagsothers, XComboBoxEx::CBTYPE_FLAGS);
+                g_comboBox[CB_OS2_HEADER_ne_magic] =
+                    createComboBox(ui->tableWidget_OS2_HEADER, XNE::getImageNEMagicsS(), SNE::TYPE_OS2_HEADER, N_OS2_HEADER::ne_magic, XComboBoxEx::CBTYPE_LIST);
+                g_comboBox[CB_OS2_HEADER_ne_flags] =
+                    createComboBox(ui->tableWidget_OS2_HEADER, XNE::getImageNEFlagsS(), SNE::TYPE_OS2_HEADER, N_OS2_HEADER::ne_flags, XComboBoxEx::CBTYPE_FLAGS);
+                g_comboBox[CB_OS2_HEADER_ne_exetype] =
+                    createComboBox(ui->tableWidget_OS2_HEADER, XNE::getImageNEExetypesS(), SNE::TYPE_OS2_HEADER, N_OS2_HEADER::ne_exetyp, XComboBoxEx::CBTYPE_LIST);
+                g_comboBox[CB_OS2_HEADER_ne_flagsothers] =
+                    createComboBox(ui->tableWidget_OS2_HEADER, XNE::getImageNEFlagsothersS(), SNE::TYPE_OS2_HEADER, N_OS2_HEADER::ne_flagsothers, XComboBoxEx::CBTYPE_FLAGS);
 
-                g_invWidget[CB_OS2_HEADER_ne_enttab] =
-                    createInvWidget(ui->tableWidget_OS2_HEADER, SNE::TYPE_OS2_HEADER, N_OS2_HEADER::ne_enttab, InvWidget::TYPE_HEX);
-                g_invWidget[CB_OS2_HEADER_ne_segtab] =
-                    createInvWidget(ui->tableWidget_OS2_HEADER, SNE::TYPE_OS2_HEADER, N_OS2_HEADER::ne_segtab, InvWidget::TYPE_HEX);
-                g_invWidget[CB_OS2_HEADER_ne_rsrctab] =
-                    createInvWidget(ui->tableWidget_OS2_HEADER, SNE::TYPE_OS2_HEADER, N_OS2_HEADER::ne_rsrctab, InvWidget::TYPE_HEX);
-                g_invWidget[CB_OS2_HEADER_ne_restab] =
-                    createInvWidget(ui->tableWidget_OS2_HEADER, SNE::TYPE_OS2_HEADER, N_OS2_HEADER::ne_restab, InvWidget::TYPE_HEX);
-                g_invWidget[CB_OS2_HEADER_ne_modtab] =
-                    createInvWidget(ui->tableWidget_OS2_HEADER, SNE::TYPE_OS2_HEADER, N_OS2_HEADER::ne_modtab, InvWidget::TYPE_HEX);
-                g_invWidget[CB_OS2_HEADER_ne_imptab] =
-                    createInvWidget(ui->tableWidget_OS2_HEADER, SNE::TYPE_OS2_HEADER, N_OS2_HEADER::ne_imptab, InvWidget::TYPE_HEX);
-                g_invWidget[CB_OS2_HEADER_ne_nrestab] =
-                    createInvWidget(ui->tableWidget_OS2_HEADER, SNE::TYPE_OS2_HEADER, N_OS2_HEADER::ne_nrestab, InvWidget::TYPE_HEX);
+                g_invWidget[CB_OS2_HEADER_ne_enttab] = createInvWidget(ui->tableWidget_OS2_HEADER, SNE::TYPE_OS2_HEADER, N_OS2_HEADER::ne_enttab, InvWidget::TYPE_HEX);
+                g_invWidget[CB_OS2_HEADER_ne_segtab] = createInvWidget(ui->tableWidget_OS2_HEADER, SNE::TYPE_OS2_HEADER, N_OS2_HEADER::ne_segtab, InvWidget::TYPE_HEX);
+                g_invWidget[CB_OS2_HEADER_ne_rsrctab] = createInvWidget(ui->tableWidget_OS2_HEADER, SNE::TYPE_OS2_HEADER, N_OS2_HEADER::ne_rsrctab, InvWidget::TYPE_HEX);
+                g_invWidget[CB_OS2_HEADER_ne_restab] = createInvWidget(ui->tableWidget_OS2_HEADER, SNE::TYPE_OS2_HEADER, N_OS2_HEADER::ne_restab, InvWidget::TYPE_HEX);
+                g_invWidget[CB_OS2_HEADER_ne_modtab] = createInvWidget(ui->tableWidget_OS2_HEADER, SNE::TYPE_OS2_HEADER, N_OS2_HEADER::ne_modtab, InvWidget::TYPE_HEX);
+                g_invWidget[CB_OS2_HEADER_ne_imptab] = createInvWidget(ui->tableWidget_OS2_HEADER, SNE::TYPE_OS2_HEADER, N_OS2_HEADER::ne_imptab, InvWidget::TYPE_HEX);
+                g_invWidget[CB_OS2_HEADER_ne_nrestab] = createInvWidget(ui->tableWidget_OS2_HEADER, SNE::TYPE_OS2_HEADER, N_OS2_HEADER::ne_nrestab, InvWidget::TYPE_HEX);
 
                 blockSignals(true);
 

@@ -34,8 +34,7 @@ FormatWidget::FormatWidget(QWidget *pParent) : XShortcutsWidget(pParent) {
     g_colEnabled = QWidget::palette().color(QPalette::BrightText);
 }
 
-FormatWidget::FormatWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent)
-    : FormatWidget(pParent) {
+FormatWidget::FormatWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent) : FormatWidget(pParent) {
     FormatWidget::setData(pDevice, options, nNumber, nOffset, nType);
 }
 
@@ -228,8 +227,7 @@ void FormatWidget::setValue(QVariant vValue, int nStype, int nNdata, int nVtype,
 
         emit changed();
     } else {
-        QMessageBox::critical(XOptions::getMainWidget(this), tr("Error"),
-                              tr("Cannot save file") + QString(": %1").arg(XBinary::getBackupFileName(getBackupDevice())));
+        QMessageBox::critical(XOptions::getMainWidget(this), tr("Error"), tr("Cannot save file") + QString(": %1").arg(XBinary::getBackupFileName(getBackupDevice())));
     }
 }
 
@@ -257,8 +255,7 @@ bool FormatWidget::isEdited() {
     return bResult;
 }
 
-bool FormatWidget::loadHexSubdevice(qint64 nOffset, qint64 nSize, XADDR nAddress, SubDevice **ppSubDevice, ToolsWidget *pToolsWidget, bool bOffset,
-                                    bool bDisasm) {
+bool FormatWidget::loadHexSubdevice(qint64 nOffset, qint64 nSize, XADDR nAddress, SubDevice **ppSubDevice, ToolsWidget *pToolsWidget, bool bOffset, bool bDisasm) {
     if (*ppSubDevice) {
         (*ppSubDevice)->close();
         delete (*ppSubDevice);
@@ -361,8 +358,7 @@ void FormatWidget::setLineEdit(XLineEditHEX *pLineEdit, qint32 nMaxLength, QStri
     pLineEdit->setProperty("OFFSET", nOffset);
 }
 
-void FormatWidget::ajustTableView(ProcessData *pProcessData, QStandardItemModel **ppModel, QTableView *pTableView, QSortFilterProxyModel *pProxyModel,
-                                  bool bStretchLastSection) {
+void FormatWidget::ajustTableView(ProcessData *pProcessData, QStandardItemModel **ppModel, QTableView *pTableView, QSortFilterProxyModel *pProxyModel, bool bStretchLastSection) {
     QAbstractItemModel *pOldModel = 0;
 
     if (pProxyModel) {
@@ -1093,8 +1089,8 @@ void FormatWidget::registerShortcuts(bool bState) {
     Q_UNUSED(bState)
 }
 
-bool FormatWidget::createHeaderTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits,
-                                     int nNumberOfRecords, int nPosition, qint64 nOffset) {
+bool FormatWidget::createHeaderTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nNumberOfRecords, int nPosition,
+                                     qint64 nOffset) {
     pTableWidget->setColumnCount(6);
     pTableWidget->setRowCount(nNumberOfRecords);
 
@@ -1160,8 +1156,7 @@ bool FormatWidget::createHeaderTable(int nType, QTableWidget *pTableWidget, cons
     return true;
 }
 
-bool FormatWidget::createListTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits,
-                                   int nNumberOfRecords) {
+bool FormatWidget::createListTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nNumberOfRecords) {
     pTableWidget->setColumnCount(2);
     pTableWidget->setRowCount(nNumberOfRecords);
 
@@ -1347,8 +1342,8 @@ void FormatWidget::_deleteSubdevices(SubDevice **ppSubdevices, qint32 nCount) {
     }
 }
 
-XComboBoxEx *FormatWidget::createComboBox(QTableWidget *pTableWidget, QMap<quint64, QString> mapData, int nType, int nData, XComboBoxEx::CBTYPE cbtype,
-                                          quint64 nMask, int nExtraData) {
+XComboBoxEx *FormatWidget::createComboBox(QTableWidget *pTableWidget, QMap<quint64, QString> mapData, int nType, int nData, XComboBoxEx::CBTYPE cbtype, quint64 nMask,
+                                          int nExtraData) {
     XComboBoxEx *result = new XComboBoxEx(this);
     result->setData(mapData, cbtype, nMask);
 

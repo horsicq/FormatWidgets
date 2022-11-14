@@ -159,12 +159,10 @@ FormatWidget::SV DEXWidget::_setValue(QVariant vValue, int nStype, int nNdata, i
                             g_invWidget[INV_map]->setOffsetAndSize(&dex, (quint32)nValue, 0);
                             break;
                         case N_DEX_HEADER::string_ids_size:
-                            g_invWidget[INV_string_ids]->setOffsetAndSize(&dex, dex.getHeader_string_ids_off(),
-                                                                          (quint32)nValue * sizeof(XDEX_DEF::STRING_ITEM_ID));
+                            g_invWidget[INV_string_ids]->setOffsetAndSize(&dex, dex.getHeader_string_ids_off(), (quint32)nValue * sizeof(XDEX_DEF::STRING_ITEM_ID));
                             break;
                         case N_DEX_HEADER::string_ids_off:
-                            g_invWidget[INV_string_ids]->setOffsetAndSize(&dex, (quint32)nValue,
-                                                                          dex.getHeader_string_ids_size() * sizeof(XDEX_DEF::STRING_ITEM_ID));
+                            g_invWidget[INV_string_ids]->setOffsetAndSize(&dex, (quint32)nValue, dex.getHeader_string_ids_size() * sizeof(XDEX_DEF::STRING_ITEM_ID));
                             break;
                         case N_DEX_HEADER::type_ids_size:
                             g_invWidget[INV_type_ids]->setOffsetAndSize(&dex, dex.getHeader_type_ids_off(), (quint32)nValue * sizeof(XDEX_DEF::TYPE_ITEM_ID));
@@ -173,36 +171,28 @@ FormatWidget::SV DEXWidget::_setValue(QVariant vValue, int nStype, int nNdata, i
                             g_invWidget[INV_type_ids]->setOffsetAndSize(&dex, (quint32)nValue, dex.getHeader_type_ids_size() * sizeof(XDEX_DEF::TYPE_ITEM_ID));
                             break;
                         case N_DEX_HEADER::proto_ids_size:
-                            g_invWidget[INV_proto_ids]->setOffsetAndSize(&dex, dex.getHeader_proto_ids_off(),
-                                                                         (quint32)nValue * sizeof(XDEX_DEF::PROTO_ITEM_ID));
+                            g_invWidget[INV_proto_ids]->setOffsetAndSize(&dex, dex.getHeader_proto_ids_off(), (quint32)nValue * sizeof(XDEX_DEF::PROTO_ITEM_ID));
                             break;
                         case N_DEX_HEADER::proto_ids_off:
-                            g_invWidget[INV_proto_ids]->setOffsetAndSize(&dex, (quint32)nValue,
-                                                                         dex.getHeader_proto_ids_size() * sizeof(XDEX_DEF::PROTO_ITEM_ID));
+                            g_invWidget[INV_proto_ids]->setOffsetAndSize(&dex, (quint32)nValue, dex.getHeader_proto_ids_size() * sizeof(XDEX_DEF::PROTO_ITEM_ID));
                             break;
                         case N_DEX_HEADER::field_ids_size:
-                            g_invWidget[INV_field_ids]->setOffsetAndSize(&dex, dex.getHeader_field_ids_off(),
-                                                                         (quint32)nValue * sizeof(XDEX_DEF::FIELD_ITEM_ID));
+                            g_invWidget[INV_field_ids]->setOffsetAndSize(&dex, dex.getHeader_field_ids_off(), (quint32)nValue * sizeof(XDEX_DEF::FIELD_ITEM_ID));
                             break;
                         case N_DEX_HEADER::field_ids_off:
-                            g_invWidget[INV_field_ids]->setOffsetAndSize(&dex, (quint32)nValue,
-                                                                         dex.getHeader_field_ids_size() * sizeof(XDEX_DEF::FIELD_ITEM_ID));
+                            g_invWidget[INV_field_ids]->setOffsetAndSize(&dex, (quint32)nValue, dex.getHeader_field_ids_size() * sizeof(XDEX_DEF::FIELD_ITEM_ID));
                             break;
                         case N_DEX_HEADER::method_ids_size:
-                            g_invWidget[INV_method_ids]->setOffsetAndSize(&dex, dex.getHeader_method_ids_off(),
-                                                                          (quint32)nValue * sizeof(XDEX_DEF::METHOD_ITEM_ID));
+                            g_invWidget[INV_method_ids]->setOffsetAndSize(&dex, dex.getHeader_method_ids_off(), (quint32)nValue * sizeof(XDEX_DEF::METHOD_ITEM_ID));
                             break;
                         case N_DEX_HEADER::method_ids_off:
-                            g_invWidget[INV_method_ids]->setOffsetAndSize(&dex, (quint32)nValue,
-                                                                          dex.getHeader_method_ids_size() * sizeof(XDEX_DEF::METHOD_ITEM_ID));
+                            g_invWidget[INV_method_ids]->setOffsetAndSize(&dex, (quint32)nValue, dex.getHeader_method_ids_size() * sizeof(XDEX_DEF::METHOD_ITEM_ID));
                             break;
                         case N_DEX_HEADER::class_defs_size:
-                            g_invWidget[INV_class_defs]->setOffsetAndSize(&dex, dex.getHeader_class_defs_off(),
-                                                                          (quint32)nValue * sizeof(XDEX_DEF::CLASS_ITEM_DEF));
+                            g_invWidget[INV_class_defs]->setOffsetAndSize(&dex, dex.getHeader_class_defs_off(), (quint32)nValue * sizeof(XDEX_DEF::CLASS_ITEM_DEF));
                             break;
                         case N_DEX_HEADER::class_defs_off:
-                            g_invWidget[INV_class_defs]->setOffsetAndSize(&dex, (quint32)nValue,
-                                                                          dex.getHeader_class_defs_size() * sizeof(XDEX_DEF::CLASS_ITEM_DEF));
+                            g_invWidget[INV_class_defs]->setOffsetAndSize(&dex, (quint32)nValue, dex.getHeader_class_defs_size() * sizeof(XDEX_DEF::CLASS_ITEM_DEF));
                             break;
                         case N_DEX_HEADER::data_size:
                             g_invWidget[INV_data]->setOffsetAndSize(&dex, dex.getHeader_data_off(), (quint32)nValue);
@@ -415,8 +405,7 @@ void DEXWidget::reloadData() {
             if (!isInitPresent(sInit)) {
                 createHeaderTable(SDEX::TYPE_HEADER, ui->tableWidget_Header, N_DEX_HEADER::records, g_lineEdit_HEADER, N_DEX_HEADER::__data_size, 0);
 
-                g_comboBox[CB_Dex_Header_magic] =
-                    createComboBox(ui->tableWidget_Header, XDEX::getHeaderMagics(), SDEX::TYPE_HEADER, N_DEX_HEADER::magic, XComboBoxEx::CBTYPE_LIST);
+                g_comboBox[CB_Dex_Header_magic] = createComboBox(ui->tableWidget_Header, XDEX::getHeaderMagics(), SDEX::TYPE_HEADER, N_DEX_HEADER::magic, XComboBoxEx::CBTYPE_LIST);
                 g_comboBox[CB_Dex_Header_version] =
                     createComboBox(ui->tableWidget_Header, XDEX::getHeaderVersions(), SDEX::TYPE_HEADER, N_DEX_HEADER::version, XComboBoxEx::CBTYPE_LIST);
                 g_comboBox[CB_Dex_Header_endian_tag] =
@@ -673,28 +662,24 @@ void DEXWidget::on_pushButtonSave_TYPE_ID_ITEM_clicked() {
 
 void DEXWidget::on_pushButtonSave_PROTO_ID_ITEM_clicked() {
     if (g_pFilterTypes) {
-        XShortcutsWidget::saveModel(ui->tableView_PROTO_ID_ITEM->model(),
-                                    XBinary::getResultFileName(getBackupDevice(), QString("%1.txt").arg(QString("PROTO_ID_ITEM"))));
+        XShortcutsWidget::saveModel(ui->tableView_PROTO_ID_ITEM->model(), XBinary::getResultFileName(getBackupDevice(), QString("%1.txt").arg(QString("PROTO_ID_ITEM"))));
     }
 }
 
 void DEXWidget::on_pushButtonSave_FIELD_ID_ITEM_clicked() {
     if (g_pFilterTypes) {
-        XShortcutsWidget::saveModel(ui->tableView_FIELD_ID_ITEM->model(),
-                                    XBinary::getResultFileName(getBackupDevice(), QString("%1.txt").arg(QString("FIELD_ID_ITEM"))));
+        XShortcutsWidget::saveModel(ui->tableView_FIELD_ID_ITEM->model(), XBinary::getResultFileName(getBackupDevice(), QString("%1.txt").arg(QString("FIELD_ID_ITEM"))));
     }
 }
 
 void DEXWidget::on_pushButtonSave_CLASS_DEF_ITEM_clicked() {
     if (g_pFilterTypes) {
-        XShortcutsWidget::saveModel(ui->tableView_CLASS_DEF_ITEM->model(),
-                                    XBinary::getResultFileName(getBackupDevice(), QString("%1.txt").arg(QString("CLASS_DEF_ITEM"))));
+        XShortcutsWidget::saveModel(ui->tableView_CLASS_DEF_ITEM->model(), XBinary::getResultFileName(getBackupDevice(), QString("%1.txt").arg(QString("CLASS_DEF_ITEM"))));
     }
 }
 
 void DEXWidget::on_pushButtonSave_METHOD_ID_ITEM_clicked() {
     if (g_pFilterTypes) {
-        XShortcutsWidget::saveModel(ui->tableView_METHOD_ID_ITEM->model(),
-                                    XBinary::getResultFileName(getBackupDevice(), QString("%1.txt").arg(QString("METHOD_ID_ITEM"))));
+        XShortcutsWidget::saveModel(ui->tableView_METHOD_ID_ITEM->model(), XBinary::getResultFileName(getBackupDevice(), QString("%1.txt").arg(QString("METHOD_ID_ITEM"))));
     }
 }

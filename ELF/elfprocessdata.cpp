@@ -20,8 +20,7 @@
  */
 #include "elfprocessdata.h"
 
-ELFProcessData::ELFProcessData(int nType, QStandardItemModel **ppModel, XELF *pELF, qint64 nOffset, qint64 nSize, qint64 nStringTableOffset,
-                               qint64 nStringTableSize)
+ELFProcessData::ELFProcessData(int nType, QStandardItemModel **ppModel, XELF *pELF, qint64 nOffset, qint64 nSize, qint64 nStringTableOffset, qint64 nStringTableSize)
     : ProcessData() {
     this->g_nType = nType;
     this->g_ppModel = ppModel;

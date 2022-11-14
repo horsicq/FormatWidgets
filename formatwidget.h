@@ -102,8 +102,8 @@ public:
     qint32 getType();
     bool isReadonly();
     QTreeWidgetItem *createNewItem(int nType, QString sTitle, qint64 nOffset = 0, qint64 nSize = 0, qint64 nExtraOffset = 0, qint64 nExtraSize = 0);
-    bool createHeaderTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nNumberOfRecords,
-                           int nPosition = 0, qint64 nOffset = 0);
+    bool createHeaderTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nNumberOfRecords, int nPosition = 0,
+                           qint64 nOffset = 0);
     bool createListTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nNumberOfRecords);
     void addComment(QTableWidget *pTableWidget, int nRow, int nColumn, QString sComment);
     void updateTableRecord(QTableWidget *pTableWidget, int nRow, qint64 nOffset, qint64 nSize);
@@ -132,8 +132,7 @@ public:
     //    QPushButton *createHexButton(QTableWidget *pTableWidget,int nType,int
     //    nData);
 
-    bool loadHexSubdevice(qint64 nOffset, qint64 nSize, XADDR nAddress, SubDevice **ppSubDevice, ToolsWidget *pToolsWidget, bool bOffset = false,
-                          bool bDisasm = true);
+    bool loadHexSubdevice(qint64 nOffset, qint64 nSize, XADDR nAddress, SubDevice **ppSubDevice, ToolsWidget *pToolsWidget, bool bOffset = false, bool bDisasm = true);
     bool loadHexSubdeviceByTableView(int nRow, int nType, ToolsWidget *pToolsWidget, QTableView *pTableView, SubDevice **ppSubDevice);
     bool setHexSubdeviceByTableView(int nRow, int nType, ToolsWidget *pToolsWidget, QTableView *pTableView);
 

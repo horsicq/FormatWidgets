@@ -150,8 +150,7 @@ namespace N_mach_library {
 const FW_DEF::HEADER_RECORD records[] = {
     {timestamp, "timestamp", sizeof(XMACH_DEF::load_command) + offsetof(XMACH_DEF::dylib, timestamp), 4, "uint32", FW_DEF::VAL_TYPE_DATA},
     {current_version, "current_version", sizeof(XMACH_DEF::load_command) + offsetof(XMACH_DEF::dylib, current_version), 4, "uint32", FW_DEF::VAL_TYPE_DATA},
-    {compatibility_version, "compatibility_version", sizeof(XMACH_DEF::load_command) + offsetof(XMACH_DEF::dylib, compatibility_version), 4, "uint32",
-     FW_DEF::VAL_TYPE_DATA},
+    {compatibility_version, "compatibility_version", sizeof(XMACH_DEF::load_command) + offsetof(XMACH_DEF::dylib, compatibility_version), 4, "uint32", FW_DEF::VAL_TYPE_DATA},
     {name, QObject::tr("Name"), sizeof(XMACH_DEF::load_command) + sizeof(XMACH_DEF::dylib), -1, "Ansi string", FW_DEF::VAL_TYPE_TEXT},
 };
 }

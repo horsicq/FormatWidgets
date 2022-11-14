@@ -198,8 +198,8 @@ void PEWidget::reload() {
                 qint32 nNumberOfStreams = cliInfo.metaData.listStreams.count();
 
                 for (qint32 i = 0; i < nNumberOfStreams; i++) {
-                    pNetMetadata->addChild(createNewItem(SPE::TYPE_NET_METADATA_STREAM, cliInfo.metaData.listStreams.at(i).sName,
-                                                         cliInfo.metaData.listStreams.at(i).nOffset, cliInfo.metaData.listStreams.at(i).nSize));
+                    pNetMetadata->addChild(createNewItem(SPE::TYPE_NET_METADATA_STREAM, cliInfo.metaData.listStreams.at(i).sName, cliInfo.metaData.listStreams.at(i).nOffset,
+                                                         cliInfo.metaData.listStreams.at(i).nSize));
                 }
             }
 
@@ -990,8 +990,7 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, in
                 case SPE::TYPE_IMAGE_FILE_HEADER:
                     switch (nNdata) {
                         case N_IMAGE_FILE_HEADER::SizeOfOptionalHeader:
-                            addComment(ui->tableWidget_IMAGE_FILE_HEADER, N_IMAGE_FILE_HEADER::SizeOfOptionalHeader, HEADER_COLUMN_COMMENT,
-                                       XBinary::bytesCountToString(nValue));
+                            addComment(ui->tableWidget_IMAGE_FILE_HEADER, N_IMAGE_FILE_HEADER::SizeOfOptionalHeader, HEADER_COLUMN_COMMENT, XBinary::bytesCountToString(nValue));
                             break;
                     }
                     break;
@@ -999,8 +998,7 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, in
                 case SPE::TYPE_IMAGE_OPTIONAL_HEADER:
                     switch (nNdata) {
                         case N_IMAGE_OPTIONAL_HEADER::SizeOfCode:
-                            addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER, N_IMAGE_OPTIONAL_HEADER::SizeOfCode, HEADER_COLUMN_COMMENT,
-                                       XBinary::bytesCountToString(nValue));
+                            addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER, N_IMAGE_OPTIONAL_HEADER::SizeOfCode, HEADER_COLUMN_COMMENT, XBinary::bytesCountToString(nValue));
                             break;
                         case N_IMAGE_OPTIONAL_HEADER::SizeOfInitializedData:
                             addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER, N_IMAGE_OPTIONAL_HEADER::SizeOfInitializedData, HEADER_COLUMN_COMMENT,
@@ -1015,16 +1013,13 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, in
                                        XBinary::bytesCountToString(nValue));
                             break;
                         case N_IMAGE_OPTIONAL_HEADER::FileAlignment:
-                            addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER, N_IMAGE_OPTIONAL_HEADER::FileAlignment, HEADER_COLUMN_COMMENT,
-                                       XBinary::bytesCountToString(nValue));
+                            addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER, N_IMAGE_OPTIONAL_HEADER::FileAlignment, HEADER_COLUMN_COMMENT, XBinary::bytesCountToString(nValue));
                             break;
                         case N_IMAGE_OPTIONAL_HEADER::SizeOfImage:
-                            addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER, N_IMAGE_OPTIONAL_HEADER::SizeOfImage, HEADER_COLUMN_COMMENT,
-                                       XBinary::bytesCountToString(nValue));
+                            addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER, N_IMAGE_OPTIONAL_HEADER::SizeOfImage, HEADER_COLUMN_COMMENT, XBinary::bytesCountToString(nValue));
                             break;
                         case N_IMAGE_OPTIONAL_HEADER::SizeOfHeaders:
-                            addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER, N_IMAGE_OPTIONAL_HEADER::SizeOfHeaders, HEADER_COLUMN_COMMENT,
-                                       XBinary::bytesCountToString(nValue));
+                            addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER, N_IMAGE_OPTIONAL_HEADER::SizeOfHeaders, HEADER_COLUMN_COMMENT, XBinary::bytesCountToString(nValue));
                             break;
                         case N_IMAGE_OPTIONAL_HEADER::SizeOfStackReserve:
                             addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER, N_IMAGE_OPTIONAL_HEADER::SizeOfStackReserve, HEADER_COLUMN_COMMENT,
@@ -1061,16 +1056,14 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, in
                 case SPE::TYPE_EXPORT:
                     switch (nNdata) {
                         case N_IMAGE_EXPORT::Name:
-                            addComment(ui->tableWidget_ExportHeader, N_IMAGE_EXPORT::Name, HEADER_COLUMN_COMMENT,
-                                       pe.read_ansiString(pe.relAddressToOffset((quint32)nValue)));
+                            addComment(ui->tableWidget_ExportHeader, N_IMAGE_EXPORT::Name, HEADER_COLUMN_COMMENT, pe.read_ansiString(pe.relAddressToOffset((quint32)nValue)));
                             break;
                         case N_IMAGE_EXPORT::AddressOfFunctions:
                             addComment(ui->tableWidget_ExportHeader, N_IMAGE_EXPORT::AddressOfFunctions, HEADER_COLUMN_COMMENT,
                                        pe.getMemoryRecordInfoByRelAddress((quint32)nValue));
                             break;
                         case N_IMAGE_EXPORT::AddressOfNames:
-                            addComment(ui->tableWidget_ExportHeader, N_IMAGE_EXPORT::AddressOfNames, HEADER_COLUMN_COMMENT,
-                                       pe.getMemoryRecordInfoByRelAddress((quint32)nValue));
+                            addComment(ui->tableWidget_ExportHeader, N_IMAGE_EXPORT::AddressOfNames, HEADER_COLUMN_COMMENT, pe.getMemoryRecordInfoByRelAddress((quint32)nValue));
                             break;
                         case N_IMAGE_EXPORT::AddressOfNameOrdinals:
                             addComment(ui->tableWidget_ExportHeader, N_IMAGE_EXPORT::AddressOfNameOrdinals, HEADER_COLUMN_COMMENT,
@@ -1082,20 +1075,16 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, in
                 case SPE::TYPE_TLS:
                     switch (nNdata) {
                         case N_IMAGE_TLS::StartAddressOfRawData:
-                            addComment(ui->tableWidget_TLS, N_IMAGE_TLS::StartAddressOfRawData, HEADER_COLUMN_COMMENT,
-                                       pe.getMemoryRecordInfoByAddress((quint64)nValue));
+                            addComment(ui->tableWidget_TLS, N_IMAGE_TLS::StartAddressOfRawData, HEADER_COLUMN_COMMENT, pe.getMemoryRecordInfoByAddress((quint64)nValue));
                             break;
                         case N_IMAGE_TLS::EndAddressOfRawData:
-                            addComment(ui->tableWidget_TLS, N_IMAGE_TLS::EndAddressOfRawData, HEADER_COLUMN_COMMENT,
-                                       pe.getMemoryRecordInfoByAddress((quint64)nValue));
+                            addComment(ui->tableWidget_TLS, N_IMAGE_TLS::EndAddressOfRawData, HEADER_COLUMN_COMMENT, pe.getMemoryRecordInfoByAddress((quint64)nValue));
                             break;
                         case N_IMAGE_TLS::AddressOfIndex:
-                            addComment(ui->tableWidget_TLS, N_IMAGE_TLS::AddressOfIndex, HEADER_COLUMN_COMMENT,
-                                       pe.getMemoryRecordInfoByAddress((quint64)nValue));
+                            addComment(ui->tableWidget_TLS, N_IMAGE_TLS::AddressOfIndex, HEADER_COLUMN_COMMENT, pe.getMemoryRecordInfoByAddress((quint64)nValue));
                             break;
                         case N_IMAGE_TLS::AddressOfCallBacks:
-                            addComment(ui->tableWidget_TLS, N_IMAGE_TLS::AddressOfCallBacks, HEADER_COLUMN_COMMENT,
-                                       pe.getMemoryRecordInfoByAddress((quint64)nValue));
+                            addComment(ui->tableWidget_TLS, N_IMAGE_TLS::AddressOfCallBacks, HEADER_COLUMN_COMMENT, pe.getMemoryRecordInfoByAddress((quint64)nValue));
                             break;
                     }
                     break;
@@ -1128,8 +1117,7 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, in
                 case SPE::TYPE_LOADCONFIG:
                     switch (nNdata) {
                         case N_IMAGE_LOADCONFIG::Size:
-                            addComment(ui->tableWidget_LoadConfig, N_IMAGE_LOADCONFIG::Size, HEADER_COLUMN_COMMENT,
-                                       XBinary::bytesCountToString((quint64)nValue));
+                            addComment(ui->tableWidget_LoadConfig, N_IMAGE_LOADCONFIG::Size, HEADER_COLUMN_COMMENT, XBinary::bytesCountToString((quint64)nValue));
                             break;
                     }
                     break;
@@ -1461,8 +1449,8 @@ void PEWidget::reloadData() {
             if (!isInitPresent(sInit)) {
                 createHeaderTable(SPE::TYPE_IMAGE_DOS_HEADER, ui->tableWidget_IMAGE_DOS_HEADER, N_IMAGE_DOS_HEADER::records, g_lineEdit_IMAGE_DOS_HEADER,
                                   N_IMAGE_DOS_HEADER::__data_size, 0);
-                g_comboBox[CB_IMAGE_DOS_HEADER_e_magic] = createComboBox(ui->tableWidget_IMAGE_DOS_HEADER, XPE::getImageMagicsS(), SPE::TYPE_IMAGE_DOS_HEADER,
-                                                                         N_IMAGE_DOS_HEADER::e_magic, XComboBoxEx::CBTYPE_LIST);
+                g_comboBox[CB_IMAGE_DOS_HEADER_e_magic] =
+                    createComboBox(ui->tableWidget_IMAGE_DOS_HEADER, XPE::getImageMagicsS(), SPE::TYPE_IMAGE_DOS_HEADER, N_IMAGE_DOS_HEADER::e_magic, XComboBoxEx::CBTYPE_LIST);
                 g_invWidget[INV_IMAGE_DOS_HEADER_e_lfanew] =
                     createInvWidget(ui->tableWidget_IMAGE_DOS_HEADER, SPE::TYPE_IMAGE_DOS_HEADER, N_IMAGE_DOS_HEADER::e_lfanew, InvWidget::TYPE_HEX);
 
@@ -1518,8 +1506,8 @@ void PEWidget::reloadData() {
             if (!isInitPresent(sInit)) {
                 createHeaderTable(SPE::TYPE_IMAGE_NT_HEADERS, ui->tableWidget_IMAGE_NT_HEADERS, N_IMAGE_NT_HEADERS::records, g_lineEdit_IMAGE_NT_HEADERS,
                                   N_IMAGE_NT_HEADERS::__data_size, 0);
-                g_comboBox[CB_IMAGE_NT_HEADERS_Signature] = createComboBox(ui->tableWidget_IMAGE_NT_HEADERS, XPE::getImageNtHeadersSignaturesS(),
-                                                                           SPE::TYPE_IMAGE_NT_HEADERS, N_IMAGE_NT_HEADERS::Signature, XComboBoxEx::CBTYPE_LIST);
+                g_comboBox[CB_IMAGE_NT_HEADERS_Signature] = createComboBox(ui->tableWidget_IMAGE_NT_HEADERS, XPE::getImageNtHeadersSignaturesS(), SPE::TYPE_IMAGE_NT_HEADERS,
+                                                                           N_IMAGE_NT_HEADERS::Signature, XComboBoxEx::CBTYPE_LIST);
 
                 blockSignals(true);
 
@@ -1540,16 +1528,15 @@ void PEWidget::reloadData() {
             if (!isInitPresent(sInit)) {
                 createHeaderTable(SPE::TYPE_IMAGE_FILE_HEADER, ui->tableWidget_IMAGE_FILE_HEADER, N_IMAGE_FILE_HEADER::records, g_lineEdit_IMAGE_FILE_HEADER,
                                   N_IMAGE_FILE_HEADER::__data_size, 0);
-                g_comboBox[CB_IMAGE_FILE_HEADER_Machine] = createComboBox(ui->tableWidget_IMAGE_FILE_HEADER, XPE::getImageFileHeaderMachinesS(),
-                                                                          SPE::TYPE_IMAGE_FILE_HEADER, N_IMAGE_FILE_HEADER::Machine, XComboBoxEx::CBTYPE_LIST);
-                g_comboBox[CB_IMAGE_FILE_HEADER_Characteristics] =
-                    createComboBox(ui->tableWidget_IMAGE_FILE_HEADER, XPE::getImageFileHeaderCharacteristicsS(), SPE::TYPE_IMAGE_FILE_HEADER,
-                                   N_IMAGE_FILE_HEADER::Characteristics, XComboBoxEx::CBTYPE_FLAGS);
+                g_comboBox[CB_IMAGE_FILE_HEADER_Machine] = createComboBox(ui->tableWidget_IMAGE_FILE_HEADER, XPE::getImageFileHeaderMachinesS(), SPE::TYPE_IMAGE_FILE_HEADER,
+                                                                          N_IMAGE_FILE_HEADER::Machine, XComboBoxEx::CBTYPE_LIST);
+                g_comboBox[CB_IMAGE_FILE_HEADER_Characteristics] = createComboBox(ui->tableWidget_IMAGE_FILE_HEADER, XPE::getImageFileHeaderCharacteristicsS(),
+                                                                                  SPE::TYPE_IMAGE_FILE_HEADER, N_IMAGE_FILE_HEADER::Characteristics, XComboBoxEx::CBTYPE_FLAGS);
 
-                g_dateTimeEdit[TD_IMAGE_FILE_HEADER_TimeDateStamp] = createTimeDateEdit(ui->tableWidget_IMAGE_FILE_HEADER, SPE::TYPE_IMAGE_FILE_HEADER,
-                                                                                        N_IMAGE_FILE_HEADER::TimeDateStamp, XDateTimeEditX::DT_TYPE_POSIX);
-                g_invWidget[INV_IMAGE_FILE_HEADER_PointerToSymbolTable] = createInvWidget(ui->tableWidget_IMAGE_FILE_HEADER, SPE::TYPE_IMAGE_FILE_HEADER,
-                                                                                          N_IMAGE_FILE_HEADER::PointerToSymbolTable, InvWidget::TYPE_HEX);
+                g_dateTimeEdit[TD_IMAGE_FILE_HEADER_TimeDateStamp] =
+                    createTimeDateEdit(ui->tableWidget_IMAGE_FILE_HEADER, SPE::TYPE_IMAGE_FILE_HEADER, N_IMAGE_FILE_HEADER::TimeDateStamp, XDateTimeEditX::DT_TYPE_POSIX);
+                g_invWidget[INV_IMAGE_FILE_HEADER_PointerToSymbolTable] =
+                    createInvWidget(ui->tableWidget_IMAGE_FILE_HEADER, SPE::TYPE_IMAGE_FILE_HEADER, N_IMAGE_FILE_HEADER::PointerToSymbolTable, InvWidget::TYPE_HEX);
 
                 blockSignals(true);
 
@@ -1585,34 +1572,31 @@ void PEWidget::reloadData() {
                 createHeaderTable(SPE::TYPE_IMAGE_OPTIONAL_HEADER, ui->tableWidget_IMAGE_OPTIONAL_HEADER,
                                   pe.is64() ? (N_IMAGE_OPTIONAL_HEADER::records64) : (N_IMAGE_OPTIONAL_HEADER::records32), g_lineEdit_IMAGE_OPTIONAL_HEADER,
                                   N_IMAGE_OPTIONAL_HEADER::__data_size, 0);
-                g_comboBox[CB_IMAGE_OPTIONAL_HEADER_Magic] =
-                    createComboBox(ui->tableWidget_IMAGE_OPTIONAL_HEADER, XPE::getImageOptionalHeaderMagicS(), SPE::TYPE_IMAGE_OPTIONAL_HEADER,
-                                   N_IMAGE_OPTIONAL_HEADER::Magic, XComboBoxEx::CBTYPE_LIST);
+                g_comboBox[CB_IMAGE_OPTIONAL_HEADER_Magic] = createComboBox(ui->tableWidget_IMAGE_OPTIONAL_HEADER, XPE::getImageOptionalHeaderMagicS(),
+                                                                            SPE::TYPE_IMAGE_OPTIONAL_HEADER, N_IMAGE_OPTIONAL_HEADER::Magic, XComboBoxEx::CBTYPE_LIST);
 
-                g_comboBox[CB_IMAGE_OPTIONAL_HEADER_OperationSystemVersion] = createComboBox(
-                    ui->tableWidget_IMAGE_OPTIONAL_HEADER, XPE::getOperatingSystemVersions(pe.getOsInfo().osName), SPE::TYPE_IMAGE_OPTIONAL_HEADER,
-                    N_IMAGE_OPTIONAL_HEADER::MajorOperatingSystemVersion, XComboBoxEx::CBTYPE_LIST, 0, N_IMAGE_OPTIONAL_HEADER::OperatingSystemVersion);
+                g_comboBox[CB_IMAGE_OPTIONAL_HEADER_OperationSystemVersion] =
+                    createComboBox(ui->tableWidget_IMAGE_OPTIONAL_HEADER, XPE::getOperatingSystemVersions(pe.getOsInfo().osName), SPE::TYPE_IMAGE_OPTIONAL_HEADER,
+                                   N_IMAGE_OPTIONAL_HEADER::MajorOperatingSystemVersion, XComboBoxEx::CBTYPE_LIST, 0, N_IMAGE_OPTIONAL_HEADER::OperatingSystemVersion);
 
-                g_comboBox[CB_IMAGE_OPTIONAL_HEADER_Subsystem] =
-                    createComboBox(ui->tableWidget_IMAGE_OPTIONAL_HEADER, XPE::getImageOptionalHeaderSubsystemS(), SPE::TYPE_IMAGE_OPTIONAL_HEADER,
-                                   N_IMAGE_OPTIONAL_HEADER::Subsystem, XComboBoxEx::CBTYPE_LIST);
+                g_comboBox[CB_IMAGE_OPTIONAL_HEADER_Subsystem] = createComboBox(ui->tableWidget_IMAGE_OPTIONAL_HEADER, XPE::getImageOptionalHeaderSubsystemS(),
+                                                                                SPE::TYPE_IMAGE_OPTIONAL_HEADER, N_IMAGE_OPTIONAL_HEADER::Subsystem, XComboBoxEx::CBTYPE_LIST);
                 g_comboBox[CB_IMAGE_OPTIONAL_HEADER_DllCharacteristics] =
                     createComboBox(ui->tableWidget_IMAGE_OPTIONAL_HEADER, XPE::getImageOptionalHeaderDllCharacteristicsS(), SPE::TYPE_IMAGE_OPTIONAL_HEADER,
                                    N_IMAGE_OPTIONAL_HEADER::DllCharacteristics, XComboBoxEx::CBTYPE_FLAGS);
 
                 g_invWidget[INV_IMAGE_OPTIONAL_HEADER_AddressOfEntryPoint] =
-                    createInvWidget(ui->tableWidget_IMAGE_OPTIONAL_HEADER, SPE::TYPE_IMAGE_OPTIONAL_HEADER, N_IMAGE_OPTIONAL_HEADER::AddressOfEntryPoint,
-                                    InvWidget::TYPE_DISASM);
-                g_invWidget[INV_IMAGE_OPTIONAL_HEADER_BaseOfCode] = createInvWidget(ui->tableWidget_IMAGE_OPTIONAL_HEADER, SPE::TYPE_IMAGE_OPTIONAL_HEADER,
-                                                                                    N_IMAGE_OPTIONAL_HEADER::BaseOfCode, InvWidget::TYPE_HEX);
+                    createInvWidget(ui->tableWidget_IMAGE_OPTIONAL_HEADER, SPE::TYPE_IMAGE_OPTIONAL_HEADER, N_IMAGE_OPTIONAL_HEADER::AddressOfEntryPoint, InvWidget::TYPE_DISASM);
+                g_invWidget[INV_IMAGE_OPTIONAL_HEADER_BaseOfCode] =
+                    createInvWidget(ui->tableWidget_IMAGE_OPTIONAL_HEADER, SPE::TYPE_IMAGE_OPTIONAL_HEADER, N_IMAGE_OPTIONAL_HEADER::BaseOfCode, InvWidget::TYPE_HEX);
 
                 if (!bIs64) {
-                    g_invWidget[INV_IMAGE_OPTIONAL_HEADER_BaseOfData] = createInvWidget(ui->tableWidget_IMAGE_OPTIONAL_HEADER, SPE::TYPE_IMAGE_OPTIONAL_HEADER,
-                                                                                        N_IMAGE_OPTIONAL_HEADER::BaseOfData, InvWidget::TYPE_HEX);
+                    g_invWidget[INV_IMAGE_OPTIONAL_HEADER_BaseOfData] =
+                        createInvWidget(ui->tableWidget_IMAGE_OPTIONAL_HEADER, SPE::TYPE_IMAGE_OPTIONAL_HEADER, N_IMAGE_OPTIONAL_HEADER::BaseOfData, InvWidget::TYPE_HEX);
                 }
 
-                g_pushButton[PB_CalculateChecksum] = createPushButton(ui->tableWidget_IMAGE_OPTIONAL_HEADER, SPE::TYPE_IMAGE_OPTIONAL_HEADER,
-                                                                      N_IMAGE_OPTIONAL_HEADER::CheckSum, tr("Calculate"));
+                g_pushButton[PB_CalculateChecksum] =
+                    createPushButton(ui->tableWidget_IMAGE_OPTIONAL_HEADER, SPE::TYPE_IMAGE_OPTIONAL_HEADER, N_IMAGE_OPTIONAL_HEADER::CheckSum, tr("Calculate"));
 
                 blockSignals(true);
 
@@ -1654,8 +1638,7 @@ void PEWidget::reloadData() {
                     g_comboBox[CB_IMAGE_OPTIONAL_HEADER_Subsystem]->setValue(oh64.Subsystem);
                     g_comboBox[CB_IMAGE_OPTIONAL_HEADER_DllCharacteristics]->setValue(oh64.DllCharacteristics);
 
-                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER, N_IMAGE_OPTIONAL_HEADER::SizeOfCode, HEADER_COLUMN_COMMENT,
-                               XBinary::bytesCountToString(oh64.SizeOfCode));
+                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER, N_IMAGE_OPTIONAL_HEADER::SizeOfCode, HEADER_COLUMN_COMMENT, XBinary::bytesCountToString(oh64.SizeOfCode));
                     addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER, N_IMAGE_OPTIONAL_HEADER::SizeOfInitializedData, HEADER_COLUMN_COMMENT,
                                XBinary::bytesCountToString(oh64.SizeOfInitializedData));
                     addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER, N_IMAGE_OPTIONAL_HEADER::SizeOfUninitializedData, HEADER_COLUMN_COMMENT,
@@ -1664,8 +1647,7 @@ void PEWidget::reloadData() {
                                XBinary::bytesCountToString(oh64.SectionAlignment));
                     addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER, N_IMAGE_OPTIONAL_HEADER::FileAlignment, HEADER_COLUMN_COMMENT,
                                XBinary::bytesCountToString(oh64.FileAlignment));
-                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER, N_IMAGE_OPTIONAL_HEADER::SizeOfImage, HEADER_COLUMN_COMMENT,
-                               XBinary::bytesCountToString(oh64.SizeOfImage));
+                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER, N_IMAGE_OPTIONAL_HEADER::SizeOfImage, HEADER_COLUMN_COMMENT, XBinary::bytesCountToString(oh64.SizeOfImage));
                     addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER, N_IMAGE_OPTIONAL_HEADER::SizeOfHeaders, HEADER_COLUMN_COMMENT,
                                XBinary::bytesCountToString(oh64.SizeOfHeaders));
                     addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER, N_IMAGE_OPTIONAL_HEADER::SizeOfStackReserve, HEADER_COLUMN_COMMENT,
@@ -1721,8 +1703,7 @@ void PEWidget::reloadData() {
                     g_comboBox[CB_IMAGE_OPTIONAL_HEADER_Subsystem]->setValue(oh32.Subsystem);
                     g_comboBox[CB_IMAGE_OPTIONAL_HEADER_DllCharacteristics]->setValue(oh32.DllCharacteristics);
 
-                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER, N_IMAGE_OPTIONAL_HEADER::SizeOfCode, HEADER_COLUMN_COMMENT,
-                               XBinary::bytesCountToString(oh32.SizeOfCode));
+                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER, N_IMAGE_OPTIONAL_HEADER::SizeOfCode, HEADER_COLUMN_COMMENT, XBinary::bytesCountToString(oh32.SizeOfCode));
                     addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER, N_IMAGE_OPTIONAL_HEADER::SizeOfInitializedData, HEADER_COLUMN_COMMENT,
                                XBinary::bytesCountToString(oh32.SizeOfInitializedData));
                     addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER, N_IMAGE_OPTIONAL_HEADER::SizeOfUninitializedData, HEADER_COLUMN_COMMENT,
@@ -1731,8 +1712,7 @@ void PEWidget::reloadData() {
                                XBinary::bytesCountToString(oh32.SectionAlignment));
                     addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER, N_IMAGE_OPTIONAL_HEADER::FileAlignment, HEADER_COLUMN_COMMENT,
                                XBinary::bytesCountToString(oh32.FileAlignment));
-                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER, N_IMAGE_OPTIONAL_HEADER::SizeOfImage, HEADER_COLUMN_COMMENT,
-                               XBinary::bytesCountToString(oh32.SizeOfImage));
+                    addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER, N_IMAGE_OPTIONAL_HEADER::SizeOfImage, HEADER_COLUMN_COMMENT, XBinary::bytesCountToString(oh32.SizeOfImage));
                     addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER, N_IMAGE_OPTIONAL_HEADER::SizeOfHeaders, HEADER_COLUMN_COMMENT,
                                XBinary::bytesCountToString(oh32.SizeOfHeaders));
                     addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER, N_IMAGE_OPTIONAL_HEADER::SizeOfStackReserve, HEADER_COLUMN_COMMENT,
@@ -1795,8 +1775,7 @@ void PEWidget::reloadData() {
 
                     if (i != XPE_DEF::S_IMAGE_DIRECTORY_ENTRY_SECURITY) {
                         pItemNumber->setData(Qt::UserRole + FW_DEF::SECTION_DATA_ADDRESS, dd.VirtualAddress);
-                        pItemNumber->setData(Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET,
-                                             pe.addressToOffset(&memoryMap, memoryMap.nModuleAddress + dd.VirtualAddress));
+                        pItemNumber->setData(Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET, pe.addressToOffset(&memoryMap, memoryMap.nModuleAddress + dd.VirtualAddress));
 
                         if ((dd.VirtualAddress) && (pe.isRelAddressValid(&memoryMap, dd.VirtualAddress))) {
                             addComment(ui->tableWidget_IMAGE_DIRECTORY_ENTRIES, i, 5, pe.getMemoryRecordInfoByRelAddress(&memoryMap, dd.VirtualAddress));
@@ -1870,8 +1849,7 @@ void PEWidget::reloadData() {
                     createInvWidget(ui->tableWidget_ExportHeader, SPE::TYPE_EXPORT, N_IMAGE_EXPORT::AddressOfFunctions, InvWidget::TYPE_HEX);
                 g_invWidget[INV_IMAGE_EXPORT_AddressOfNameOrdinals] =
                     createInvWidget(ui->tableWidget_ExportHeader, SPE::TYPE_EXPORT, N_IMAGE_EXPORT::AddressOfNameOrdinals, InvWidget::TYPE_HEX);
-                g_invWidget[INV_IMAGE_EXPORT_AddressOfNames] =
-                    createInvWidget(ui->tableWidget_ExportHeader, SPE::TYPE_EXPORT, N_IMAGE_EXPORT::AddressOfNames, InvWidget::TYPE_HEX);
+                g_invWidget[INV_IMAGE_EXPORT_AddressOfNames] = createInvWidget(ui->tableWidget_ExportHeader, SPE::TYPE_EXPORT, N_IMAGE_EXPORT::AddressOfNames, InvWidget::TYPE_HEX);
 
                 g_dateTimeEdit[TD_IMAGE_EXPORT_TimeDateStamp] =
                     createTimeDateEdit(ui->tableWidget_ExportHeader, SPE::TYPE_EXPORT, N_IMAGE_EXPORT::TimeDateStamp, XDateTimeEditX::DT_TYPE_POSIX);
@@ -1901,8 +1879,7 @@ void PEWidget::reloadData() {
 
                 XBinary::_MEMORY_MAP memoryMap = pe.getMemoryMap();
 
-                addComment(ui->tableWidget_ExportHeader, N_IMAGE_EXPORT::Name, HEADER_COLUMN_COMMENT,
-                           pe.read_ansiString(pe.relAddressToOffset(&memoryMap, eh.directory.Name)));
+                addComment(ui->tableWidget_ExportHeader, N_IMAGE_EXPORT::Name, HEADER_COLUMN_COMMENT, pe.read_ansiString(pe.relAddressToOffset(&memoryMap, eh.directory.Name)));
 
                 addComment(ui->tableWidget_ExportHeader, N_IMAGE_EXPORT::AddressOfFunctions, HEADER_COLUMN_COMMENT,
                            pe.getMemoryRecordInfoByRelAddress(&memoryMap, eh.directory.AddressOfFunctions));
@@ -1913,8 +1890,7 @@ void PEWidget::reloadData() {
 
                 blockSignals(false);
 
-                PEProcessData peProcessData(SPE::TYPE_EXPORT_FUNCTION, &g_tvModel[SPE::TYPE_EXPORT_FUNCTION], &pe, 0, 0, 0,
-                                            ui->checkBoxExportShowValid->isChecked());
+                PEProcessData peProcessData(SPE::TYPE_EXPORT_FUNCTION, &g_tvModel[SPE::TYPE_EXPORT_FUNCTION], &pe, 0, 0, 0, ui->checkBoxExportShowValid->isChecked());
 
                 ajustTableView(&peProcessData, &g_tvModel[SPE::TYPE_EXPORT_FUNCTION], ui->tableView_ExportFunctions);
 
@@ -1956,8 +1932,7 @@ void PEWidget::reloadData() {
                 }
 
                 // Tree
-                createListTable(SPE::TYPE_RESOURCES, ui->tableWidget_Resources, N_IMAGE_RESOURCES::records, g_lineEdit_Resources,
-                                N_IMAGE_RESOURCES::__data_size);
+                createListTable(SPE::TYPE_RESOURCES, ui->tableWidget_Resources, N_IMAGE_RESOURCES::records, g_lineEdit_Resources, N_IMAGE_RESOURCES::__data_size);
 
                 PEProcessData peProcessDataTree(SPE::TYPE_RESOURCES, &g_tvModel[SPE::TYPE_RESOURCES_TREE], &pe, 0, 0, 0, true);
 
@@ -1981,21 +1956,17 @@ void PEWidget::reloadData() {
             }
         } else if (nType == SPE::TYPE_RESOURCES_VERSION) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SPE::TYPE_RESOURCES_VERSION, ui->tableWidget_Resources_Version, N_IMAGE_RESOURCE_FIXEDFILEINFO::records,
-                                  g_lineEdit_Version_FixedFileInfo, N_IMAGE_RESOURCE_FIXEDFILEINFO::__data_size, 0);
+                createHeaderTable(SPE::TYPE_RESOURCES_VERSION, ui->tableWidget_Resources_Version, N_IMAGE_RESOURCE_FIXEDFILEINFO::records, g_lineEdit_Version_FixedFileInfo,
+                                  N_IMAGE_RESOURCE_FIXEDFILEINFO::__data_size, 0);
 
-                g_comboBox[CB_RESOURCES_VERSION_dwSignature] =
-                    createComboBox(ui->tableWidget_Resources_Version, XPE::getResourcesFixedFileInfoSignaturesS(), SPE::TYPE_RESOURCES_VERSION,
-                                   N_IMAGE_RESOURCE_FIXEDFILEINFO::dwSignature, XComboBoxEx::CBTYPE_LIST);
-                g_comboBox[CB_RESOURCES_VERSION_dwFileFlags] =
-                    createComboBox(ui->tableWidget_Resources_Version, XPE::getResourcesFixedFileInfoFileFlagsS(), SPE::TYPE_RESOURCES_VERSION,
-                                   N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileFlags, XComboBoxEx::CBTYPE_FLAGS);
-                g_comboBox[CB_RESOURCES_VERSION_dwFileOS] =
-                    createComboBox(ui->tableWidget_Resources_Version, XPE::getResourcesFixedFileInfoFileOsesS(), SPE::TYPE_RESOURCES_VERSION,
-                                   N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileOS, XComboBoxEx::CBTYPE_LIST);
-                g_comboBox[CB_RESOURCES_VERSION_dwFileType] =
-                    createComboBox(ui->tableWidget_Resources_Version, XPE::getResourcesFixedFileInfoFileTypesS(), SPE::TYPE_RESOURCES_VERSION,
-                                   N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileType, XComboBoxEx::CBTYPE_LIST);
+                g_comboBox[CB_RESOURCES_VERSION_dwSignature] = createComboBox(ui->tableWidget_Resources_Version, XPE::getResourcesFixedFileInfoSignaturesS(),
+                                                                              SPE::TYPE_RESOURCES_VERSION, N_IMAGE_RESOURCE_FIXEDFILEINFO::dwSignature, XComboBoxEx::CBTYPE_LIST);
+                g_comboBox[CB_RESOURCES_VERSION_dwFileFlags] = createComboBox(ui->tableWidget_Resources_Version, XPE::getResourcesFixedFileInfoFileFlagsS(),
+                                                                              SPE::TYPE_RESOURCES_VERSION, N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileFlags, XComboBoxEx::CBTYPE_FLAGS);
+                g_comboBox[CB_RESOURCES_VERSION_dwFileOS] = createComboBox(ui->tableWidget_Resources_Version, XPE::getResourcesFixedFileInfoFileOsesS(),
+                                                                           SPE::TYPE_RESOURCES_VERSION, N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileOS, XComboBoxEx::CBTYPE_LIST);
+                g_comboBox[CB_RESOURCES_VERSION_dwFileType] = createComboBox(ui->tableWidget_Resources_Version, XPE::getResourcesFixedFileInfoFileTypesS(),
+                                                                             SPE::TYPE_RESOURCES_VERSION, N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileType, XComboBoxEx::CBTYPE_LIST);
 
                 blockSignals(true);
 
@@ -2090,17 +2061,12 @@ void PEWidget::reloadData() {
             }
         } else if (nType == SPE::TYPE_TLS) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SPE::TYPE_TLS, ui->tableWidget_TLS, pe.is64() ? (N_IMAGE_TLS::records64) : (N_IMAGE_TLS::records32), g_lineEdit_TLS,
-                                  N_IMAGE_TLS::__data_size, 0);
+                createHeaderTable(SPE::TYPE_TLS, ui->tableWidget_TLS, pe.is64() ? (N_IMAGE_TLS::records64) : (N_IMAGE_TLS::records32), g_lineEdit_TLS, N_IMAGE_TLS::__data_size, 0);
 
-                g_invWidget[INV_IMAGE_TLS_AddressOfCallBacks] =
-                    createInvWidget(ui->tableWidget_TLS, SPE::TYPE_TLS, N_IMAGE_TLS::AddressOfCallBacks, InvWidget::TYPE_HEX);
-                g_invWidget[INV_IMAGE_TLS_AddressOfIndex] =
-                    createInvWidget(ui->tableWidget_TLS, SPE::TYPE_TLS, N_IMAGE_TLS::AddressOfIndex, InvWidget::TYPE_HEX);
-                g_invWidget[INV_IMAGE_TLS_EndAddressOfRawData] =
-                    createInvWidget(ui->tableWidget_TLS, SPE::TYPE_TLS, N_IMAGE_TLS::EndAddressOfRawData, InvWidget::TYPE_HEX);
-                g_invWidget[INV_IMAGE_TLS_StartAddressOfRawData] =
-                    createInvWidget(ui->tableWidget_TLS, SPE::TYPE_TLS, N_IMAGE_TLS::StartAddressOfRawData, InvWidget::TYPE_HEX);
+                g_invWidget[INV_IMAGE_TLS_AddressOfCallBacks] = createInvWidget(ui->tableWidget_TLS, SPE::TYPE_TLS, N_IMAGE_TLS::AddressOfCallBacks, InvWidget::TYPE_HEX);
+                g_invWidget[INV_IMAGE_TLS_AddressOfIndex] = createInvWidget(ui->tableWidget_TLS, SPE::TYPE_TLS, N_IMAGE_TLS::AddressOfIndex, InvWidget::TYPE_HEX);
+                g_invWidget[INV_IMAGE_TLS_EndAddressOfRawData] = createInvWidget(ui->tableWidget_TLS, SPE::TYPE_TLS, N_IMAGE_TLS::EndAddressOfRawData, InvWidget::TYPE_HEX);
+                g_invWidget[INV_IMAGE_TLS_StartAddressOfRawData] = createInvWidget(ui->tableWidget_TLS, SPE::TYPE_TLS, N_IMAGE_TLS::StartAddressOfRawData, InvWidget::TYPE_HEX);
 
                 blockSignals(true);
 
@@ -2120,10 +2086,8 @@ void PEWidget::reloadData() {
                     g_invWidget[INV_IMAGE_TLS_EndAddressOfRawData]->setAddressAndSize(&pe, tls64.EndAddressOfRawData, 0);
                     g_invWidget[INV_IMAGE_TLS_StartAddressOfRawData]->setAddressAndSize(&pe, tls64.StartAddressOfRawData, 0);
 
-                    addComment(ui->tableWidget_TLS, N_IMAGE_TLS::AddressOfCallBacks, HEADER_COLUMN_COMMENT,
-                               pe.getMemoryRecordInfoByAddress(&memoryMap, tls64.AddressOfCallBacks));
-                    addComment(ui->tableWidget_TLS, N_IMAGE_TLS::AddressOfIndex, HEADER_COLUMN_COMMENT,
-                               pe.getMemoryRecordInfoByAddress(&memoryMap, tls64.AddressOfIndex));
+                    addComment(ui->tableWidget_TLS, N_IMAGE_TLS::AddressOfCallBacks, HEADER_COLUMN_COMMENT, pe.getMemoryRecordInfoByAddress(&memoryMap, tls64.AddressOfCallBacks));
+                    addComment(ui->tableWidget_TLS, N_IMAGE_TLS::AddressOfIndex, HEADER_COLUMN_COMMENT, pe.getMemoryRecordInfoByAddress(&memoryMap, tls64.AddressOfIndex));
                     addComment(ui->tableWidget_TLS, N_IMAGE_TLS::EndAddressOfRawData, HEADER_COLUMN_COMMENT,
                                pe.getMemoryRecordInfoByAddress(&memoryMap, tls64.EndAddressOfRawData));
                     addComment(ui->tableWidget_TLS, N_IMAGE_TLS::StartAddressOfRawData, HEADER_COLUMN_COMMENT,
@@ -2142,10 +2106,8 @@ void PEWidget::reloadData() {
                     g_invWidget[INV_IMAGE_TLS_EndAddressOfRawData]->setAddressAndSize(&pe, tls32.EndAddressOfRawData, 0);
                     g_invWidget[INV_IMAGE_TLS_StartAddressOfRawData]->setAddressAndSize(&pe, tls32.StartAddressOfRawData, 0);
 
-                    addComment(ui->tableWidget_TLS, N_IMAGE_TLS::AddressOfCallBacks, HEADER_COLUMN_COMMENT,
-                               pe.getMemoryRecordInfoByAddress(&memoryMap, tls32.AddressOfCallBacks));
-                    addComment(ui->tableWidget_TLS, N_IMAGE_TLS::AddressOfIndex, HEADER_COLUMN_COMMENT,
-                               pe.getMemoryRecordInfoByAddress(&memoryMap, tls32.AddressOfIndex));
+                    addComment(ui->tableWidget_TLS, N_IMAGE_TLS::AddressOfCallBacks, HEADER_COLUMN_COMMENT, pe.getMemoryRecordInfoByAddress(&memoryMap, tls32.AddressOfCallBacks));
+                    addComment(ui->tableWidget_TLS, N_IMAGE_TLS::AddressOfIndex, HEADER_COLUMN_COMMENT, pe.getMemoryRecordInfoByAddress(&memoryMap, tls32.AddressOfIndex));
                     addComment(ui->tableWidget_TLS, N_IMAGE_TLS::EndAddressOfRawData, HEADER_COLUMN_COMMENT,
                                pe.getMemoryRecordInfoByAddress(&memoryMap, tls32.EndAddressOfRawData));
                     addComment(ui->tableWidget_TLS, N_IMAGE_TLS::StartAddressOfRawData, HEADER_COLUMN_COMMENT,
@@ -2199,8 +2161,8 @@ void PEWidget::reloadData() {
                     g_invWidget[INV_IMAGE_LOADCONFIG_GuardCFCheckFunctionPointer] =
                         createInvWidget(ui->tableWidget_LoadConfig, SPE::TYPE_LOADCONFIG, N_IMAGE_LOADCONFIG::GuardCFCheckFunctionPointer, InvWidget::TYPE_HEX);
                 if (nRecordSize > N_IMAGE_LOADCONFIG::GuardCFDispatchFunctionPointer)
-                    g_invWidget[INV_IMAGE_LOADCONFIG_GuardCFDispatchFunctionPointer] = createInvWidget(
-                        ui->tableWidget_LoadConfig, SPE::TYPE_LOADCONFIG, N_IMAGE_LOADCONFIG::GuardCFDispatchFunctionPointer, InvWidget::TYPE_HEX);
+                    g_invWidget[INV_IMAGE_LOADCONFIG_GuardCFDispatchFunctionPointer] =
+                        createInvWidget(ui->tableWidget_LoadConfig, SPE::TYPE_LOADCONFIG, N_IMAGE_LOADCONFIG::GuardCFDispatchFunctionPointer, InvWidget::TYPE_HEX);
                 if (nRecordSize > N_IMAGE_LOADCONFIG::GuardMemcpyFunctionPointer)
                     g_invWidget[INV_IMAGE_LOADCONFIG_GuardMemcpyFunctionPointer] =
                         createInvWidget(ui->tableWidget_LoadConfig, SPE::TYPE_LOADCONFIG, N_IMAGE_LOADCONFIG::GuardMemcpyFunctionPointer, InvWidget::TYPE_HEX);
@@ -2214,34 +2176,26 @@ void PEWidget::reloadData() {
                     if (nRecordSize > N_IMAGE_LOADCONFIG::TimeDateStamp) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::TimeDateStamp]->setValue(lc64.TimeDateStamp);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::MinorVersion) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::MinorVersion]->setValue(lc64.MinorVersion);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::MajorVersion) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::MajorVersion]->setValue(lc64.MajorVersion);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::GlobalFlagsClear)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GlobalFlagsClear]->setValue(lc64.GlobalFlagsClear);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::GlobalFlagsSet)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GlobalFlagsSet]->setValue(lc64.GlobalFlagsSet);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::GlobalFlagsClear) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GlobalFlagsClear]->setValue(lc64.GlobalFlagsClear);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::GlobalFlagsSet) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GlobalFlagsSet]->setValue(lc64.GlobalFlagsSet);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::CriticalSectionDefaultTimeout)
                         g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CriticalSectionDefaultTimeout]->setValue(lc64.CriticalSectionDefaultTimeout);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::DeCommitFreeBlockThreshold)
                         g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DeCommitFreeBlockThreshold]->setValue(lc64.DeCommitFreeBlockThreshold);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::DeCommitTotalFreeThreshold)
                         g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DeCommitTotalFreeThreshold]->setValue(lc64.DeCommitTotalFreeThreshold);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::LockPrefixTable)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::LockPrefixTable]->setValue(lc64.LockPrefixTable);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::LockPrefixTable) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::LockPrefixTable]->setValue(lc64.LockPrefixTable);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::MaximumAllocationSize)
                         g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::MaximumAllocationSize]->setValue(lc64.MaximumAllocationSize);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::VirtualMemoryThreshold)
                         g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::VirtualMemoryThreshold]->setValue(lc64.VirtualMemoryThreshold);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::ProcessAffinityMask)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::ProcessAffinityMask]->setValue(lc64.ProcessAffinityMask);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::ProcessAffinityMask) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::ProcessAffinityMask]->setValue(lc64.ProcessAffinityMask);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::CSDVersion) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CSDVersion]->setValue(lc64.CSDVersion);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::DependentLoadFlags)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DependentLoadFlags]->setValue(lc64.DependentLoadFlags);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::DependentLoadFlags) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DependentLoadFlags]->setValue(lc64.DependentLoadFlags);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::EditList) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::EditList]->setValue(lc64.EditList);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::SecurityCookie)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SecurityCookie]->setValue(lc64.SecurityCookie);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::SEHandlerTable)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SEHandlerTable]->setValue(lc64.SEHandlerTable);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::SEHandlerCount)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SEHandlerCount]->setValue(lc64.SEHandlerCount);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::SecurityCookie) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SecurityCookie]->setValue(lc64.SecurityCookie);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::SEHandlerTable) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SEHandlerTable]->setValue(lc64.SEHandlerTable);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::SEHandlerCount) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SEHandlerCount]->setValue(lc64.SEHandlerCount);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardCFCheckFunctionPointer)
                         g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardCFCheckFunctionPointer]->setValue(lc64.GuardCFCheckFunctionPointer);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardCFDispatchFunctionPointer)
@@ -2252,8 +2206,7 @@ void PEWidget::reloadData() {
                         g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardCFFunctionCount]->setValue(lc64.GuardCFFunctionCount);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardFlags) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardFlags]->setValue(lc64.GuardFlags);
 
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::CodeIntegrity_Flags)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CodeIntegrity_Flags]->setValue(lc64.CodeIntegrity.Flags);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::CodeIntegrity_Flags) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CodeIntegrity_Flags]->setValue(lc64.CodeIntegrity.Flags);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::CodeIntegrity_Catalog)
                         g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CodeIntegrity_Catalog]->setValue(lc64.CodeIntegrity.Catalog);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::CodeIntegrity_CatalogOffset)
@@ -2270,8 +2223,7 @@ void PEWidget::reloadData() {
                         g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardLongJumpTargetCount]->setValue(lc64.GuardLongJumpTargetCount);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::DynamicValueRelocTable)
                         g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DynamicValueRelocTable]->setValue(lc64.DynamicValueRelocTable);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::CHPEMetadataPointer)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CHPEMetadataPointer]->setValue(lc64.CHPEMetadataPointer);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::CHPEMetadataPointer) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CHPEMetadataPointer]->setValue(lc64.CHPEMetadataPointer);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardRFFailureRoutine)
                         g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardRFFailureRoutine]->setValue(lc64.GuardRFFailureRoutine);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardRFFailureRoutineFunctionPointer)
@@ -2282,10 +2234,8 @@ void PEWidget::reloadData() {
                         g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DynamicValueRelocTableSection]->setValue(lc64.DynamicValueRelocTableSection);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::Reserved2) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::Reserved2]->setValue(lc64.Reserved2);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardRFVerifyStackPointerFunctionPointer)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardRFVerifyStackPointerFunctionPointer]->setValue(
-                            lc64.GuardRFVerifyStackPointerFunctionPointer);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::HotPatchTableOffset)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::HotPatchTableOffset]->setValue(lc64.HotPatchTableOffset);
+                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardRFVerifyStackPointerFunctionPointer]->setValue(lc64.GuardRFVerifyStackPointerFunctionPointer);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::HotPatchTableOffset) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::HotPatchTableOffset]->setValue(lc64.HotPatchTableOffset);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::Reserved3) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::Reserved3]->setValue(lc64.Reserved3);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::EnclaveConfigurationPointer)
                         g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::EnclaveConfigurationPointer]->setValue(lc64.EnclaveConfigurationPointer);
@@ -2311,10 +2261,8 @@ void PEWidget::reloadData() {
                     if (nRecordSize > N_IMAGE_LOADCONFIG::Size)
                         addComment(ui->tableWidget_LoadConfig, N_IMAGE_LOADCONFIG::Size, HEADER_COLUMN_COMMENT, XBinary::bytesCountToString(lc64.Size));
 
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::SecurityCookie)
-                        g_invWidget[INV_IMAGE_LOADCONFIG_SecurityCookie]->setAddressAndSize(&pe, lc64.SecurityCookie, 0);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::SEHandlerTable)
-                        g_invWidget[INV_IMAGE_LOADCONFIG_SEHandlerTable]->setAddressAndSize(&pe, lc64.SEHandlerTable, 0);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::SecurityCookie) g_invWidget[INV_IMAGE_LOADCONFIG_SecurityCookie]->setAddressAndSize(&pe, lc64.SecurityCookie, 0);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::SEHandlerTable) g_invWidget[INV_IMAGE_LOADCONFIG_SEHandlerTable]->setAddressAndSize(&pe, lc64.SEHandlerTable, 0);
 
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardCFCheckFunctionPointer)
                         g_invWidget[INV_IMAGE_LOADCONFIG_GuardCFCheckFunctionPointer]->setAddressAndSize(&pe, lc64.GuardCFCheckFunctionPointer, 0);
@@ -2329,34 +2277,26 @@ void PEWidget::reloadData() {
                     if (nRecordSize > N_IMAGE_LOADCONFIG::TimeDateStamp) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::TimeDateStamp]->setValue(lc32.TimeDateStamp);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::MinorVersion) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::MinorVersion]->setValue(lc32.MinorVersion);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::MajorVersion) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::MajorVersion]->setValue(lc32.MajorVersion);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::GlobalFlagsClear)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GlobalFlagsClear]->setValue(lc32.GlobalFlagsClear);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::GlobalFlagsSet)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GlobalFlagsSet]->setValue(lc32.GlobalFlagsSet);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::GlobalFlagsClear) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GlobalFlagsClear]->setValue(lc32.GlobalFlagsClear);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::GlobalFlagsSet) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GlobalFlagsSet]->setValue(lc32.GlobalFlagsSet);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::CriticalSectionDefaultTimeout)
                         g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CriticalSectionDefaultTimeout]->setValue(lc32.CriticalSectionDefaultTimeout);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::DeCommitFreeBlockThreshold)
                         g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DeCommitFreeBlockThreshold]->setValue(lc32.DeCommitFreeBlockThreshold);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::DeCommitTotalFreeThreshold)
                         g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DeCommitTotalFreeThreshold]->setValue(lc32.DeCommitTotalFreeThreshold);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::LockPrefixTable)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::LockPrefixTable]->setValue(lc32.LockPrefixTable);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::LockPrefixTable) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::LockPrefixTable]->setValue(lc32.LockPrefixTable);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::MaximumAllocationSize)
                         g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::MaximumAllocationSize]->setValue(lc32.MaximumAllocationSize);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::VirtualMemoryThreshold)
                         g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::VirtualMemoryThreshold]->setValue(lc32.VirtualMemoryThreshold);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::ProcessAffinityMask)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::ProcessAffinityMask]->setValue(lc32.ProcessAffinityMask);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::ProcessAffinityMask) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::ProcessAffinityMask]->setValue(lc32.ProcessAffinityMask);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::CSDVersion) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CSDVersion]->setValue(lc32.CSDVersion);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::DependentLoadFlags)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DependentLoadFlags]->setValue(lc32.DependentLoadFlags);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::DependentLoadFlags) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DependentLoadFlags]->setValue(lc32.DependentLoadFlags);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::EditList) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::EditList]->setValue(lc32.EditList);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::SecurityCookie)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SecurityCookie]->setValue(lc32.SecurityCookie);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::SEHandlerTable)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SEHandlerTable]->setValue(lc32.SEHandlerTable);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::SEHandlerCount)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SEHandlerCount]->setValue(lc32.SEHandlerCount);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::SecurityCookie) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SecurityCookie]->setValue(lc32.SecurityCookie);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::SEHandlerTable) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SEHandlerTable]->setValue(lc32.SEHandlerTable);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::SEHandlerCount) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SEHandlerCount]->setValue(lc32.SEHandlerCount);
 
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardCFCheckFunctionPointer)
                         g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardCFCheckFunctionPointer]->setValue(lc32.GuardCFCheckFunctionPointer);
@@ -2368,8 +2308,7 @@ void PEWidget::reloadData() {
                         g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardCFFunctionCount]->setValue(lc32.GuardCFFunctionCount);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardFlags) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardFlags]->setValue(lc32.GuardFlags);
 
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::CodeIntegrity_Flags)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CodeIntegrity_Flags]->setValue(lc32.CodeIntegrity.Flags);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::CodeIntegrity_Flags) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CodeIntegrity_Flags]->setValue(lc32.CodeIntegrity.Flags);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::CodeIntegrity_Catalog)
                         g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CodeIntegrity_Catalog]->setValue(lc32.CodeIntegrity.Catalog);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::CodeIntegrity_CatalogOffset)
@@ -2386,8 +2325,7 @@ void PEWidget::reloadData() {
                         g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardLongJumpTargetCount]->setValue(lc32.GuardLongJumpTargetCount);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::DynamicValueRelocTable)
                         g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DynamicValueRelocTable]->setValue(lc32.DynamicValueRelocTable);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::CHPEMetadataPointer)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CHPEMetadataPointer]->setValue(lc32.CHPEMetadataPointer);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::CHPEMetadataPointer) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CHPEMetadataPointer]->setValue(lc32.CHPEMetadataPointer);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardRFFailureRoutine)
                         g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardRFFailureRoutine]->setValue(lc32.GuardRFFailureRoutine);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardRFFailureRoutineFunctionPointer)
@@ -2398,10 +2336,8 @@ void PEWidget::reloadData() {
                         g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DynamicValueRelocTableSection]->setValue(lc32.DynamicValueRelocTableSection);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::Reserved2) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::Reserved2]->setValue(lc32.Reserved2);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardRFVerifyStackPointerFunctionPointer)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardRFVerifyStackPointerFunctionPointer]->setValue(
-                            lc32.GuardRFVerifyStackPointerFunctionPointer);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::HotPatchTableOffset)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::HotPatchTableOffset]->setValue(lc32.HotPatchTableOffset);
+                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardRFVerifyStackPointerFunctionPointer]->setValue(lc32.GuardRFVerifyStackPointerFunctionPointer);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::HotPatchTableOffset) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::HotPatchTableOffset]->setValue(lc32.HotPatchTableOffset);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::Reserved3) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::Reserved3]->setValue(lc32.Reserved3);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::EnclaveConfigurationPointer)
                         g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::EnclaveConfigurationPointer]->setValue(lc32.EnclaveConfigurationPointer);
@@ -2428,10 +2364,8 @@ void PEWidget::reloadData() {
                     if (nRecordSize > N_IMAGE_LOADCONFIG::Size)
                         addComment(ui->tableWidget_LoadConfig, N_IMAGE_LOADCONFIG::Size, HEADER_COLUMN_COMMENT, XBinary::bytesCountToString(lc32.Size));
 
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::SecurityCookie)
-                        g_invWidget[INV_IMAGE_LOADCONFIG_SecurityCookie]->setAddressAndSize(&pe, lc32.SecurityCookie, 0);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::SEHandlerTable)
-                        g_invWidget[INV_IMAGE_LOADCONFIG_SEHandlerTable]->setAddressAndSize(&pe, lc32.SEHandlerTable, 0);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::SecurityCookie) g_invWidget[INV_IMAGE_LOADCONFIG_SecurityCookie]->setAddressAndSize(&pe, lc32.SecurityCookie, 0);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::SEHandlerTable) g_invWidget[INV_IMAGE_LOADCONFIG_SEHandlerTable]->setAddressAndSize(&pe, lc32.SEHandlerTable, 0);
 
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardCFCheckFunctionPointer)
                         g_invWidget[INV_IMAGE_LOADCONFIG_GuardCFCheckFunctionPointer]->setAddressAndSize(&pe, lc32.GuardCFCheckFunctionPointer, 0);
@@ -2474,11 +2408,10 @@ void PEWidget::reloadData() {
             }
         } else if (nType == SPE::TYPE_NETHEADER) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SPE::TYPE_NETHEADER, ui->tableWidget_NetHeader, N_IMAGE_NETHEADER::records, g_lineEdit_NetHeader,
-                                  N_IMAGE_NETHEADER::__data_size, 0);
+                createHeaderTable(SPE::TYPE_NETHEADER, ui->tableWidget_NetHeader, N_IMAGE_NETHEADER::records, g_lineEdit_NetHeader, N_IMAGE_NETHEADER::__data_size, 0);
 
-                g_comboBox[CB_IMAGE_NETHEADER_FLAGS] = createComboBox(ui->tableWidget_NetHeader, XPE::getComImageFlagsS(), SPE::TYPE_NETHEADER,
-                                                                      N_IMAGE_NETHEADER::Flags, XComboBoxEx::CBTYPE_FLAGS);
+                g_comboBox[CB_IMAGE_NETHEADER_FLAGS] =
+                    createComboBox(ui->tableWidget_NetHeader, XPE::getComImageFlagsS(), SPE::TYPE_NETHEADER, N_IMAGE_NETHEADER::Flags, XComboBoxEx::CBTYPE_FLAGS);
 
                 blockSignals(true);
 
@@ -2516,8 +2449,8 @@ void PEWidget::reloadData() {
             }
         } else if (nType == SPE::TYPE_NET_METADATA) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SPE::TYPE_NET_METADATA, ui->tableWidget_Net_Metadata, N_IMAGE_NET_METADATA::records, g_lineEdit_Net_Metadata,
-                                  N_IMAGE_NET_METADATA::__data_size, 0);
+                createHeaderTable(SPE::TYPE_NET_METADATA, ui->tableWidget_Net_Metadata, N_IMAGE_NET_METADATA::records, g_lineEdit_Net_Metadata, N_IMAGE_NET_METADATA::__data_size,
+                                  0);
 
                 blockSignals(true);
 
@@ -3460,6 +3393,5 @@ void PEWidget::on_pushButtonSave_Exception_clicked() {
 }
 
 void PEWidget::on_pushButtonSave_IMAGE_DIRECTORY_ENTRIES_clicked() {
-    saveHeaderTable(ui->tableWidget_IMAGE_DIRECTORY_ENTRIES,
-                    XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("IMAGE_DIRECTORY_ENTRIES"))));
+    saveHeaderTable(ui->tableWidget_IMAGE_DIRECTORY_ENTRIES, XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("IMAGE_DIRECTORY_ENTRIES"))));
 }

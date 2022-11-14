@@ -336,8 +336,7 @@ void SearchStringsWidget::_editString() {
             bool bSuccess = false;
 
             if (saveBackup()) {
-                if (XBinary::write_array(g_pDevice, dataStruct.nOffset,
-                                         XBinary::getStringData(dataStruct.recordType, dataStruct.sString, dataStruct.bIsCStrings))) {
+                if (XBinary::write_array(g_pDevice, dataStruct.nOffset, XBinary::getStringData(dataStruct.recordType, dataStruct.sString, dataStruct.bIsCStrings))) {
                     ui->tableViewResult->model()->setData(index0, dataStruct.nSize, Qt::UserRole + MultiSearch::USERROLE_SIZE);
                     ui->tableViewResult->model()->setData(index0, dataStruct.recordType, Qt::UserRole + MultiSearch::USERROLE_TYPE);
 
@@ -352,8 +351,7 @@ void SearchStringsWidget::_editString() {
             if (bSuccess) {
                 emit dataChanged();
             } else {
-                QMessageBox::critical(XOptions::getMainWidget(this), tr("Error"),
-                                      tr("Cannot save file") + QString(": %1").arg(XBinary::getBackupFileName(getBackupDevice())));
+                QMessageBox::critical(XOptions::getMainWidget(this), tr("Error"), tr("Cannot save file") + QString(": %1").arg(XBinary::getBackupFileName(getBackupDevice())));
             }
         }
     }
@@ -429,15 +427,12 @@ void SearchStringsWidget::deleteOldModel() {
 
 void SearchStringsWidget::registerShortcuts(bool bState) {
     if (bState) {
-        if (!shortCuts[SC_COPYSTRING])
-            shortCuts[SC_COPYSTRING] = new QShortcut(getShortcuts()->getShortcut(X_ID_STRINGS_COPY_STRING), this, SLOT(_copyString()));
-        if (!shortCuts[SC_COPYOFFSET])
-            shortCuts[SC_COPYOFFSET] = new QShortcut(getShortcuts()->getShortcut(X_ID_STRINGS_COPY_OFFSET), this, SLOT(_copyOffset()));
+        if (!shortCuts[SC_COPYSTRING]) shortCuts[SC_COPYSTRING] = new QShortcut(getShortcuts()->getShortcut(X_ID_STRINGS_COPY_STRING), this, SLOT(_copyString()));
+        if (!shortCuts[SC_COPYOFFSET]) shortCuts[SC_COPYOFFSET] = new QShortcut(getShortcuts()->getShortcut(X_ID_STRINGS_COPY_OFFSET), this, SLOT(_copyOffset()));
         if (!shortCuts[SC_COPYSIZE]) shortCuts[SC_COPYSIZE] = new QShortcut(getShortcuts()->getShortcut(X_ID_STRINGS_COPY_SIZE), this, SLOT(_copySize()));
         if (!shortCuts[SC_HEX]) shortCuts[SC_HEX] = new QShortcut(getShortcuts()->getShortcut(X_ID_STRINGS_FOLLOWIN_HEX), this, SLOT(_hex()));
         if (!shortCuts[SC_DEMANGLE]) shortCuts[SC_DEMANGLE] = new QShortcut(getShortcuts()->getShortcut(X_ID_STRINGS_DEMANGLE), this, SLOT(_demangle()));
-        if (!shortCuts[SC_EDITSTRING])
-            shortCuts[SC_EDITSTRING] = new QShortcut(getShortcuts()->getShortcut(X_ID_STRINGS_EDIT_STRING), this, SLOT(_editString()));
+        if (!shortCuts[SC_EDITSTRING]) shortCuts[SC_EDITSTRING] = new QShortcut(getShortcuts()->getShortcut(X_ID_STRINGS_EDIT_STRING), this, SLOT(_editString()));
     } else {
         for (qint32 i = 0; i < __SC_SIZE; i++) {
             if (shortCuts[i]) {

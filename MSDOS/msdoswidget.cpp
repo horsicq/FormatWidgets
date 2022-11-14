@@ -200,11 +200,11 @@ void MSDOSWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget) {
 
     int nSymbolWidth = XLineEditHEX::getSymbolWidth(this);
 
-    pTableWidget->setColumnWidth(HEADER_COLUMN_NAME, nSymbolWidth * 12); // TODO
-    pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET, nSymbolWidth * 4); // TODO
-    pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE, nSymbolWidth * 6); // TODO
-    pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE, nSymbolWidth * 8); // TODO
-    pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, nSymbolWidth * 16); // TODO
+    pTableWidget->setColumnWidth(HEADER_COLUMN_NAME, nSymbolWidth * 12);   // TODO
+    pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET, nSymbolWidth * 4);  // TODO
+    pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE, nSymbolWidth * 6);    // TODO
+    pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE, nSymbolWidth * 8);   // TODO
+    pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, nSymbolWidth * 16);   // TODO
 }
 
 QString MSDOSWidget::typeIdToString(int nType) {
@@ -318,10 +318,9 @@ void MSDOSWidget::reloadData() {
             }
         } else if (nType == SMSDOS::TYPE_DOS_HEADER) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SMSDOS::TYPE_DOS_HEADER, ui->tableWidget_DOS_HEADER, N_DOS_HEADER::records, g_lineEdit_DOS_HEADER, N_DOS_HEADER::__data_size,
-                                  0);
-                g_comboBox[CB_DOS_HEADER_e_magic] = createComboBox(ui->tableWidget_DOS_HEADER, XMSDOS::getImageMagicsS(), SMSDOS::TYPE_DOS_HEADER,
-                                                                   N_DOS_HEADER::e_magic, XComboBoxEx::CBTYPE_LIST);
+                createHeaderTable(SMSDOS::TYPE_DOS_HEADER, ui->tableWidget_DOS_HEADER, N_DOS_HEADER::records, g_lineEdit_DOS_HEADER, N_DOS_HEADER::__data_size, 0);
+                g_comboBox[CB_DOS_HEADER_e_magic] =
+                    createComboBox(ui->tableWidget_DOS_HEADER, XMSDOS::getImageMagicsS(), SMSDOS::TYPE_DOS_HEADER, N_DOS_HEADER::e_magic, XComboBoxEx::CBTYPE_LIST);
 
                 blockSignals(true);
 

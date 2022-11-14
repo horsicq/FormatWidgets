@@ -56,9 +56,7 @@ void DEXProcessData::_process() {
 
             (*g_ppModel)->setItem(i, 0, pItem);
             (*g_ppModel)->setItem(i, 1, new QStandardItem(XBinary::valueToHex(listMapItems.at(i).nType)));
-            (*g_ppModel)
-                ->setItem(i, N_DEX_MAP_ITEM::type + 2,
-                          new QStandardItem(mapTypes.value(listMapItems.at(i).nType, XBinary::valueToHex(listMapItems.at(i).nType))));
+            (*g_ppModel)->setItem(i, N_DEX_MAP_ITEM::type + 2, new QStandardItem(mapTypes.value(listMapItems.at(i).nType, XBinary::valueToHex(listMapItems.at(i).nType))));
             (*g_ppModel)->setItem(i, N_DEX_MAP_ITEM::count + 2, new QStandardItem(XBinary::valueToHex(listMapItems.at(i).nCount)));
             (*g_ppModel)->setItem(i, N_DEX_MAP_ITEM::offset + 2, new QStandardItem(XBinary::valueToHex(listMapItems.at(i).nOffset)));
 
@@ -173,8 +171,7 @@ void DEXProcessData::_process() {
             (*g_ppModel)->setItem(i, N_DEX_PROTO_ID::parameters_off + 2, new QStandardItem(XBinary::valueToHex(listProtoIDs.at(i).parameters_off)));
 
             QString sShorty = g_pDEX->getStringItemIdString(&listStringID, listProtoIDs.at(i).shorty_idx, baData.data(), nDataSize, nDataOffset);
-            QString sReturnType =
-                g_pDEX->getTypeItemIdString(&listItemID, listProtoIDs.at(i).return_type_idx, &mapItemString, baData.data(), nDataSize, nDataOffset);
+            QString sReturnType = g_pDEX->getTypeItemIdString(&listItemID, listProtoIDs.at(i).return_type_idx, &mapItemString, baData.data(), nDataSize, nDataOffset);
 
             (*g_ppModel)->setItem(i, N_DEX_PROTO_ID::parameters_off + 3, new QStandardItem(sShorty));
             (*g_ppModel)->setItem(i, N_DEX_PROTO_ID::parameters_off + 4, new QStandardItem(sReturnType));
@@ -292,8 +289,7 @@ void DEXProcessData::_process() {
             (*g_ppModel)->setItem(i, N_DEX_CLASS_ITEM_DEF::source_file_idx + 2, new QStandardItem(XBinary::valueToHex(listClassDefss.at(i).source_file_idx)));
             (*g_ppModel)->setItem(i, N_DEX_CLASS_ITEM_DEF::annotations_off + 2, new QStandardItem(XBinary::valueToHex(listClassDefss.at(i).annotations_off)));
             (*g_ppModel)->setItem(i, N_DEX_CLASS_ITEM_DEF::class_data_off + 2, new QStandardItem(XBinary::valueToHex(listClassDefss.at(i).class_data_off)));
-            (*g_ppModel)
-                ->setItem(i, N_DEX_CLASS_ITEM_DEF::static_values_off + 2, new QStandardItem(XBinary::valueToHex(listClassDefss.at(i).static_values_off)));
+            (*g_ppModel)->setItem(i, N_DEX_CLASS_ITEM_DEF::static_values_off + 2, new QStandardItem(XBinary::valueToHex(listClassDefss.at(i).static_values_off)));
 
             incValue();
         }

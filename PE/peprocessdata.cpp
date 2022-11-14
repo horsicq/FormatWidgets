@@ -20,8 +20,7 @@
  */
 #include "peprocessdata.h"
 
-PEProcessData::PEProcessData(int nType, QStandardItemModel **ppModel, XPE *pPE, qint32 nNumber, qint64 nOffset, qint64 nSize, QVariant varInfo)
-    : ProcessData() {
+PEProcessData::PEProcessData(int nType, QStandardItemModel **ppModel, XPE *pPE, qint32 nNumber, qint64 nOffset, qint64 nSize, QVariant varInfo) : ProcessData() {
     this->g_nType = nType;
     this->g_ppModel = ppModel;
     this->g_pPE = pPE;
@@ -78,14 +77,10 @@ void PEProcessData::_process() {
             (*g_ppModel)->setItem(i, N_IMAGE_SECTION_HEADER::VirtualAddress + 1, new QStandardItem(XBinary::valueToHex(listSections.at(i).VirtualAddress)));
             (*g_ppModel)->setItem(i, N_IMAGE_SECTION_HEADER::SizeOfRawData + 1, new QStandardItem(XBinary::valueToHex(listSections.at(i).SizeOfRawData)));
             (*g_ppModel)->setItem(i, N_IMAGE_SECTION_HEADER::PointerToRawData + 1, new QStandardItem(XBinary::valueToHex(listSections.at(i).PointerToRawData)));
-            (*g_ppModel)
-                ->setItem(i, N_IMAGE_SECTION_HEADER::PointerToRelocations + 1, new QStandardItem(XBinary::valueToHex(listSections.at(i).PointerToRelocations)));
-            (*g_ppModel)
-                ->setItem(i, N_IMAGE_SECTION_HEADER::PointerToLinenumbers + 1, new QStandardItem(XBinary::valueToHex(listSections.at(i).PointerToLinenumbers)));
-            (*g_ppModel)
-                ->setItem(i, N_IMAGE_SECTION_HEADER::NumberOfRelocations + 1, new QStandardItem(XBinary::valueToHex(listSections.at(i).NumberOfRelocations)));
-            (*g_ppModel)
-                ->setItem(i, N_IMAGE_SECTION_HEADER::NumberOfLinenumbers + 1, new QStandardItem(XBinary::valueToHex(listSections.at(i).NumberOfLinenumbers)));
+            (*g_ppModel)->setItem(i, N_IMAGE_SECTION_HEADER::PointerToRelocations + 1, new QStandardItem(XBinary::valueToHex(listSections.at(i).PointerToRelocations)));
+            (*g_ppModel)->setItem(i, N_IMAGE_SECTION_HEADER::PointerToLinenumbers + 1, new QStandardItem(XBinary::valueToHex(listSections.at(i).PointerToLinenumbers)));
+            (*g_ppModel)->setItem(i, N_IMAGE_SECTION_HEADER::NumberOfRelocations + 1, new QStandardItem(XBinary::valueToHex(listSections.at(i).NumberOfRelocations)));
+            (*g_ppModel)->setItem(i, N_IMAGE_SECTION_HEADER::NumberOfLinenumbers + 1, new QStandardItem(XBinary::valueToHex(listSections.at(i).NumberOfLinenumbers)));
             (*g_ppModel)->setItem(i, N_IMAGE_SECTION_HEADER::Characteristics + 1, new QStandardItem(XBinary::valueToHex(listSections.at(i).Characteristics)));
 
             incValue();
@@ -113,10 +108,8 @@ void PEProcessData::_process() {
             pItem->setData(listRelocsHeaders.at(i).nOffset, Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET);
             pItem->setData(listRelocsHeaders.at(i).nOffset, Qt::UserRole + FW_DEF::SECTION_DATA_HEADEROFFSET);
             (*g_ppModel)->setItem(i, 0, pItem);
-            (*g_ppModel)
-                ->setItem(i, N_IMAGE_RELOCS::VirtualAddress + 1, new QStandardItem(XBinary::valueToHex(listRelocsHeaders.at(i).baseRelocation.VirtualAddress)));
-            (*g_ppModel)
-                ->setItem(i, N_IMAGE_RELOCS::SizeOfBlock + 1, new QStandardItem(XBinary::valueToHex(listRelocsHeaders.at(i).baseRelocation.SizeOfBlock)));
+            (*g_ppModel)->setItem(i, N_IMAGE_RELOCS::VirtualAddress + 1, new QStandardItem(XBinary::valueToHex(listRelocsHeaders.at(i).baseRelocation.VirtualAddress)));
+            (*g_ppModel)->setItem(i, N_IMAGE_RELOCS::SizeOfBlock + 1, new QStandardItem(XBinary::valueToHex(listRelocsHeaders.at(i).baseRelocation.SizeOfBlock)));
             (*g_ppModel)->setItem(i, N_IMAGE_RELOCS::SizeOfBlock + 2, new QStandardItem(QString::number(listRelocsHeaders.at(i).nCount)));
             (*g_ppModel)
                 ->setItem(i, N_IMAGE_RELOCS::SizeOfBlock + 3,
@@ -149,8 +142,7 @@ void PEProcessData::_process() {
             (*g_ppModel)->setItem(i, 0, pItem);
             (*g_ppModel)->setItem(i, N_IMAGE_RELOCS_POSITION::TypeOffset + 1, new QStandardItem(XBinary::valueToHex(listRelocsPositions.at(i).nTypeOffset)));
             (*g_ppModel)->setItem(i, N_IMAGE_RELOCS_POSITION::TypeOffset + 2, new QStandardItem(mapTypes.value(listRelocsPositions.at(i).nType)));
-            (*g_ppModel)
-                ->setItem(i, N_IMAGE_RELOCS_POSITION::TypeOffset + 3, new QStandardItem(XBinary::valueToHex((quint32)listRelocsPositions.at(i).nAddress)));
+            (*g_ppModel)->setItem(i, N_IMAGE_RELOCS_POSITION::TypeOffset + 3, new QStandardItem(XBinary::valueToHex((quint32)listRelocsPositions.at(i).nAddress)));
 
             incValue();
         }
@@ -263,16 +255,14 @@ void PEProcessData::_process() {
 
             pItem->setData(listRFE.at(i).BeginAddress, Qt::UserRole + FW_DEF::SECTION_DATA_ADDRESS);
             pItem->setData(listRFE.at(i).EndAddress - listRFE.at(i).BeginAddress, Qt::UserRole + FW_DEF::SECTION_DATA_SIZE);
-            pItem->setData(g_pPE->addressToOffset(&memoryMap, memoryMap.nModuleAddress + listRFE.at(i).BeginAddress),
-                           Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET);
+            pItem->setData(g_pPE->addressToOffset(&memoryMap, memoryMap.nModuleAddress + listRFE.at(i).BeginAddress), Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET);
 
             (*g_ppModel)->setItem(i, 0, pItem);
             (*g_ppModel)->setItem(i, N_IMAGE_EXCEPTIONS::BeginAddress + 1, new QStandardItem(XBinary::valueToHex(listRFE.at(i).BeginAddress)));
             (*g_ppModel)->setItem(i, N_IMAGE_EXCEPTIONS::EndAddress + 1, new QStandardItem(XBinary::valueToHex(listRFE.at(i).EndAddress)));
             (*g_ppModel)->setItem(i, N_IMAGE_EXCEPTIONS::UnwindInfoAddress + 1, new QStandardItem(XBinary::valueToHex(listRFE.at(i).UnwindInfoAddress)));
-            (*g_ppModel)
-                ->setItem(i, N_IMAGE_EXCEPTIONS::UnwindInfoAddress + 2,
-                          new QStandardItem(g_pPE->getMemoryRecordInfoByRelAddress(listRFE.at(i).BeginAddress)));  // Comment
+            (*g_ppModel)->setItem(i, N_IMAGE_EXCEPTIONS::UnwindInfoAddress + 2,
+                                  new QStandardItem(g_pPE->getMemoryRecordInfoByRelAddress(listRFE.at(i).BeginAddress)));  // Comment
 
             incValue();
         }
@@ -304,17 +294,10 @@ void PEProcessData::_process() {
             (*g_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT::AllAttributes + 1, new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).AllAttributes)));
             (*g_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT::DllNameRVA + 1, new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).DllNameRVA)));
             (*g_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT::ModuleHandleRVA + 1, new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).ModuleHandleRVA)));
-            (*g_ppModel)
-                ->setItem(i, N_IMAGE_DELAYIMPORT::ImportAddressTableRVA + 1,
-                          new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).ImportAddressTableRVA)));
-            (*g_ppModel)
-                ->setItem(i, N_IMAGE_DELAYIMPORT::ImportNameTableRVA + 1, new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).ImportNameTableRVA)));
-            (*g_ppModel)
-                ->setItem(i, N_IMAGE_DELAYIMPORT::BoundImportAddressTableRVA + 1,
-                          new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).BoundImportAddressTableRVA)));
-            (*g_ppModel)
-                ->setItem(i, N_IMAGE_DELAYIMPORT::UnloadInformationTableRVA + 1,
-                          new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).UnloadInformationTableRVA)));
+            (*g_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT::ImportAddressTableRVA + 1, new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).ImportAddressTableRVA)));
+            (*g_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT::ImportNameTableRVA + 1, new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).ImportNameTableRVA)));
+            (*g_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT::BoundImportAddressTableRVA + 1, new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).BoundImportAddressTableRVA)));
+            (*g_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT::UnloadInformationTableRVA + 1, new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).UnloadInformationTableRVA)));
             (*g_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT::TimeDateStamp + 1, new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).TimeDateStamp)));
             (*g_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT::TimeDateStamp + 2, new QStandardItem(sLibraryName));
 
@@ -346,8 +329,7 @@ void PEProcessData::_process() {
 
             pItem->setData(memoryMap.nModuleAddress + eh.listPositions.at(i).nRVA, Qt::UserRole + FW_DEF::SECTION_DATA_ADDRESS);
             pItem->setData(1, Qt::UserRole + FW_DEF::SECTION_DATA_SIZE);
-            pItem->setData(g_pPE->addressToOffset(&memoryMap, memoryMap.nModuleAddress + eh.listPositions.at(i).nRVA),
-                           Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET);
+            pItem->setData(g_pPE->addressToOffset(&memoryMap, memoryMap.nModuleAddress + eh.listPositions.at(i).nRVA), Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET);
 
             (*g_ppModel)->setItem(i, N_IMAGE_EXPORT_FUNCTION::Ordinal, pItem);
             (*g_ppModel)->setItem(i, N_IMAGE_EXPORT_FUNCTION::RVA, new QStandardItem(XBinary::valueToHex(eh.listPositions.at(i).nRVA)));
@@ -378,12 +360,8 @@ void PEProcessData::_process() {
             pItem->setData(i, Qt::DisplayRole);
 
             (*g_ppModel)->setItem(i, 0, pItem);
-            (*g_ppModel)
-                ->setItem(i, N_IMAGE_BOUNDIMPORT::TimeDateStamp + 1,
-                          new QStandardItem(XBinary::valueToHex(listBoundImportPositions.at(i).descriptor.TimeDateStamp)));
-            (*g_ppModel)
-                ->setItem(i, N_IMAGE_BOUNDIMPORT::OffsetModuleName + 1,
-                          new QStandardItem(XBinary::valueToHex(listBoundImportPositions.at(i).descriptor.OffsetModuleName)));
+            (*g_ppModel)->setItem(i, N_IMAGE_BOUNDIMPORT::TimeDateStamp + 1, new QStandardItem(XBinary::valueToHex(listBoundImportPositions.at(i).descriptor.TimeDateStamp)));
+            (*g_ppModel)->setItem(i, N_IMAGE_BOUNDIMPORT::OffsetModuleName + 1, new QStandardItem(XBinary::valueToHex(listBoundImportPositions.at(i).descriptor.OffsetModuleName)));
             (*g_ppModel)
                 ->setItem(i, N_IMAGE_BOUNDIMPORT::NumberOfModuleForwarderRefs + 1,
                           new QStandardItem(XBinary::valueToHex(listBoundImportPositions.at(i).descriptor.NumberOfModuleForwarderRefs)));
@@ -485,17 +463,11 @@ void PEProcessData::_process() {
             (*g_ppModel)->setItem(i, 0, pItem);
 
             if (bIs64) {
-                (*g_ppModel)
-                    ->setItem(i, N_IMAGE_DELAYIMPORT_FUNCTION::AddressThunk + 1,
-                              new QStandardItem(XBinary::valueToHex((quint64)listDIP.at(i).nAddressThunkRVA)));
-                (*g_ppModel)
-                    ->setItem(i, N_IMAGE_DELAYIMPORT_FUNCTION::BoundThunk + 1, new QStandardItem(XBinary::valueToHex((quint64)listDIP.at(i).nBoundThunkRVA)));
+                (*g_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT_FUNCTION::AddressThunk + 1, new QStandardItem(XBinary::valueToHex((quint64)listDIP.at(i).nAddressThunkRVA)));
+                (*g_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT_FUNCTION::BoundThunk + 1, new QStandardItem(XBinary::valueToHex((quint64)listDIP.at(i).nBoundThunkRVA)));
             } else {
-                (*g_ppModel)
-                    ->setItem(i, N_IMAGE_DELAYIMPORT_FUNCTION::AddressThunk + 1,
-                              new QStandardItem(XBinary::valueToHex((quint32)listDIP.at(i).nAddressThunkRVA)));
-                (*g_ppModel)
-                    ->setItem(i, N_IMAGE_DELAYIMPORT_FUNCTION::BoundThunk + 1, new QStandardItem(XBinary::valueToHex((quint32)listDIP.at(i).nBoundThunkRVA)));
+                (*g_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT_FUNCTION::AddressThunk + 1, new QStandardItem(XBinary::valueToHex((quint32)listDIP.at(i).nAddressThunkRVA)));
+                (*g_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT_FUNCTION::BoundThunk + 1, new QStandardItem(XBinary::valueToHex((quint32)listDIP.at(i).nBoundThunkRVA)));
             }
 
             if (listDIP.at(i).nOrdinal) {
@@ -719,13 +691,11 @@ void PEProcessData::_process() {
                 if (xsertInfo.sProgramName != "") (*g_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Program name"), xsertInfo.sProgramName)));
                 if (xsertInfo.sPublisher != "") (*g_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Publisher"), xsertInfo.sPublisher)));
                 if (xsertInfo.sMoreInfo != "") (*g_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("More info"), xsertInfo.sMoreInfo)));
-                if (xsertInfo.sSerialNumber != "")
-                    (*g_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Serial number"), xsertInfo.sSerialNumber)));
+                if (xsertInfo.sSerialNumber != "") (*g_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Serial number"), xsertInfo.sSerialNumber)));
                 if (xsertInfo.sIssuer != "") (*g_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Issuer"), xsertInfo.sIssuer)));
                 if (xsertInfo.sSubject != "") (*g_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Subject"), xsertInfo.sSubject)));
                 if (xsertInfo.sAlgorithm != "") (*g_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Algorithm"), xsertInfo.sAlgorithm)));
-                if (xsertInfo.sTSSerialNumber != "")
-                    (*g_ppModel)->appendRow(new QStandardItem(QString("TS %1: %2").arg(tr("Serial number"), xsertInfo.sTSSerialNumber)));
+                if (xsertInfo.sTSSerialNumber != "") (*g_ppModel)->appendRow(new QStandardItem(QString("TS %1: %2").arg(tr("Serial number"), xsertInfo.sTSSerialNumber)));
                 if (xsertInfo.sTSIssuer != "") (*g_ppModel)->appendRow(new QStandardItem(QString("TS %1: %2").arg(tr("Issuer"), xsertInfo.sTSIssuer)));
                 if (xsertInfo.sTSSubject != "") (*g_ppModel)->appendRow(new QStandardItem(QString("TS %1: %2").arg(tr("Subject"), xsertInfo.sTSSubject)));
             }

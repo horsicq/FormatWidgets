@@ -537,12 +537,10 @@ void LEWidget::reloadData() {
             }
         } else if (nType == SLE::TYPE_DOS_HEADER) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SLE::TYPE_DOS_HEADER, ui->tableWidget_DOS_HEADER, N_LE_DOS_HEADER::records, g_lineEdit_DOS_HEADER,
-                                  N_LE_DOS_HEADER::__data_size, 0);
-                g_comboBox[CB_DOS_HEADER_e_magic] = createComboBox(ui->tableWidget_DOS_HEADER, XMSDOS::getImageMagicsS(), SLE::TYPE_DOS_HEADER,
-                                                                   N_LE_DOS_HEADER::e_magic, XComboBoxEx::CBTYPE_LIST);
-                g_invWidget[INV_DOS_HEADER_e_lfanew] =
-                    createInvWidget(ui->tableWidget_DOS_HEADER, SLE::TYPE_DOS_HEADER, N_LE_DOS_HEADER::e_lfanew, InvWidget::TYPE_HEX);
+                createHeaderTable(SLE::TYPE_DOS_HEADER, ui->tableWidget_DOS_HEADER, N_LE_DOS_HEADER::records, g_lineEdit_DOS_HEADER, N_LE_DOS_HEADER::__data_size, 0);
+                g_comboBox[CB_DOS_HEADER_e_magic] =
+                    createComboBox(ui->tableWidget_DOS_HEADER, XMSDOS::getImageMagicsS(), SLE::TYPE_DOS_HEADER, N_LE_DOS_HEADER::e_magic, XComboBoxEx::CBTYPE_LIST);
+                g_invWidget[INV_DOS_HEADER_e_lfanew] = createInvWidget(ui->tableWidget_DOS_HEADER, SLE::TYPE_DOS_HEADER, N_LE_DOS_HEADER::e_lfanew, InvWidget::TYPE_HEX);
                 blockSignals(true);
 
                 XMSDOS_DEF::IMAGE_DOS_HEADEREX msdosheaderex = le.getDosHeaderEx();
@@ -593,8 +591,8 @@ void LEWidget::reloadData() {
         } else if (nType == SLE::TYPE_VXD_HEADER) {
             if (!isInitPresent(sInit)) {
                 createHeaderTable(SLE::TYPE_VXD_HEADER, ui->tableWidget_VXD_HEADER, N_VXD_HEADER::records, g_lineEdit_VXD_HEADER, N_VXD_HEADER::__data_size, 0);
-                g_comboBox[CB_VXD_HEADER_e32_magic] = createComboBox(ui->tableWidget_VXD_HEADER, XLE::getImageLEMagicsS(), SLE::TYPE_VXD_HEADER,
-                                                                     N_VXD_HEADER::e32_magic, XComboBoxEx::CBTYPE_LIST);
+                g_comboBox[CB_VXD_HEADER_e32_magic] =
+                    createComboBox(ui->tableWidget_VXD_HEADER, XLE::getImageLEMagicsS(), SLE::TYPE_VXD_HEADER, N_VXD_HEADER::e32_magic, XComboBoxEx::CBTYPE_LIST);
                 g_comboBox[CB_VXD_HEADER_e32_cpu] =
                     createComboBox(ui->tableWidget_VXD_HEADER, XLE::getImageLECpusS(), SLE::TYPE_VXD_HEADER, N_VXD_HEADER::e32_cpu, XComboBoxEx::CBTYPE_LIST);
                 g_comboBox[CB_VXD_HEADER_e32_os] =

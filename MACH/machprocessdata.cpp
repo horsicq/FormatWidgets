@@ -99,8 +99,7 @@ void MACHProcessData::_process() {
             (*g_ppModel)->setItem(i, 0, pItem);
             (*g_ppModel)->setItem(i, N_mach_library::timestamp + 1, new QStandardItem(XBinary::valueToHex(listLibraries.at(i).timestamp)));
             (*g_ppModel)->setItem(i, N_mach_library::current_version + 1, new QStandardItem(XBinary::valueToHex(listLibraries.at(i).current_version)));
-            (*g_ppModel)
-                ->setItem(i, N_mach_library::compatibility_version + 1, new QStandardItem(XBinary::valueToHex(listLibraries.at(i).compatibility_version)));
+            (*g_ppModel)->setItem(i, N_mach_library::compatibility_version + 1, new QStandardItem(XBinary::valueToHex(listLibraries.at(i).compatibility_version)));
             (*g_ppModel)->setItem(i, N_mach_library::name + 1, new QStandardItem(listLibraries.at(i).sFullName));
 
             incValue();
@@ -261,12 +260,9 @@ void MACHProcessData::_process() {
                 (*g_ppModel)->setItem(i, N_mach_sections64::reloff + 1, new QStandardItem(XBinary::valueToHex(listSectionRecords.at(i).s.section64.reloff)));
                 (*g_ppModel)->setItem(i, N_mach_sections64::nreloc + 1, new QStandardItem(XBinary::valueToHex(listSectionRecords.at(i).s.section64.nreloc)));
                 (*g_ppModel)->setItem(i, N_mach_sections64::flags + 1, new QStandardItem(XBinary::valueToHex(listSectionRecords.at(i).s.section64.flags)));
-                (*g_ppModel)
-                    ->setItem(i, N_mach_sections64::reserved1 + 1, new QStandardItem(XBinary::valueToHex(listSectionRecords.at(i).s.section64.reserved1)));
-                (*g_ppModel)
-                    ->setItem(i, N_mach_sections64::reserved2 + 1, new QStandardItem(XBinary::valueToHex(listSectionRecords.at(i).s.section64.reserved2)));
-                (*g_ppModel)
-                    ->setItem(i, N_mach_sections64::reserved3 + 1, new QStandardItem(XBinary::valueToHex(listSectionRecords.at(i).s.section64.reserved3)));
+                (*g_ppModel)->setItem(i, N_mach_sections64::reserved1 + 1, new QStandardItem(XBinary::valueToHex(listSectionRecords.at(i).s.section64.reserved1)));
+                (*g_ppModel)->setItem(i, N_mach_sections64::reserved2 + 1, new QStandardItem(XBinary::valueToHex(listSectionRecords.at(i).s.section64.reserved2)));
+                (*g_ppModel)->setItem(i, N_mach_sections64::reserved3 + 1, new QStandardItem(XBinary::valueToHex(listSectionRecords.at(i).s.section64.reserved3)));
             } else {
                 if (g_pXMACH->isImage()) {
                     pItem->setData(listSectionRecords.at(i).s.section32.addr, Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET);
@@ -288,10 +284,8 @@ void MACHProcessData::_process() {
                 (*g_ppModel)->setItem(i, N_mach_sections32::reloff + 1, new QStandardItem(XBinary::valueToHex(listSectionRecords.at(i).s.section32.reloff)));
                 (*g_ppModel)->setItem(i, N_mach_sections32::nreloc + 1, new QStandardItem(XBinary::valueToHex(listSectionRecords.at(i).s.section32.nreloc)));
                 (*g_ppModel)->setItem(i, N_mach_sections32::flags + 1, new QStandardItem(XBinary::valueToHex(listSectionRecords.at(i).s.section32.flags)));
-                (*g_ppModel)
-                    ->setItem(i, N_mach_sections32::reserved1 + 1, new QStandardItem(XBinary::valueToHex(listSectionRecords.at(i).s.section32.reserved1)));
-                (*g_ppModel)
-                    ->setItem(i, N_mach_sections32::reserved2 + 1, new QStandardItem(XBinary::valueToHex(listSectionRecords.at(i).s.section32.reserved2)));
+                (*g_ppModel)->setItem(i, N_mach_sections32::reserved1 + 1, new QStandardItem(XBinary::valueToHex(listSectionRecords.at(i).s.section32.reserved1)));
+                (*g_ppModel)->setItem(i, N_mach_sections32::reserved2 + 1, new QStandardItem(XBinary::valueToHex(listSectionRecords.at(i).s.section32.reserved2)));
             }
 
             incValue();
@@ -496,8 +490,7 @@ void MACHProcessData::_process() {
             (*g_ppModel)->setItem(i, N_mach_table_of_contents::module_index + 1, new QStandardItem(XBinary::valueToHex(listRecords.at(i).toc.module_index)));
             (*g_ppModel)
                 ->setItem(i, N_mach_table_of_contents::module_index + 2,
-                          new QStandardItem(
-                              g_pXMACH->getIndexSymbolName(listRecords.at(i).toc.symbol_index, &listNlistRecords, osStringTable.nOffset, osStringTable.nSize)));
+                          new QStandardItem(g_pXMACH->getIndexSymbolName(listRecords.at(i).toc.symbol_index, &listNlistRecords, osStringTable.nOffset, osStringTable.nSize)));
 
             incValue();
         }
@@ -539,12 +532,8 @@ void MACHProcessData::_process() {
                 (*g_ppModel)->setItem(i, N_mach_modtab64::nextrel + 1, new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.module64.nextrel)));
                 (*g_ppModel)->setItem(i, N_mach_modtab64::iinit_iterm + 1, new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.module64.iinit_iterm)));
                 (*g_ppModel)->setItem(i, N_mach_modtab64::ninit_nterm + 1, new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.module64.ninit_nterm)));
-                (*g_ppModel)
-                    ->setItem(i, N_mach_modtab64::objc_module_info_size + 1,
-                              new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.module64.objc_module_info_size)));
-                (*g_ppModel)
-                    ->setItem(i, N_mach_modtab64::objc_module_info_addr + 1,
-                              new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.module64.objc_module_info_addr)));
+                (*g_ppModel)->setItem(i, N_mach_modtab64::objc_module_info_size + 1, new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.module64.objc_module_info_size)));
+                (*g_ppModel)->setItem(i, N_mach_modtab64::objc_module_info_addr + 1, new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.module64.objc_module_info_addr)));
             } else {
                 (*g_ppModel)->setItem(i, N_mach_modtab32::module_name + 1, new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.module32.module_name)));
                 (*g_ppModel)->setItem(i, N_mach_modtab32::iextdefsym + 1, new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.module32.iextdefsym)));
@@ -557,12 +546,8 @@ void MACHProcessData::_process() {
                 (*g_ppModel)->setItem(i, N_mach_modtab32::nextrel + 1, new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.module32.nextrel)));
                 (*g_ppModel)->setItem(i, N_mach_modtab32::iinit_iterm + 1, new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.module32.iinit_iterm)));
                 (*g_ppModel)->setItem(i, N_mach_modtab32::ninit_nterm + 1, new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.module32.ninit_nterm)));
-                (*g_ppModel)
-                    ->setItem(i, N_mach_modtab32::objc_module_info_addr + 1,
-                              new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.module32.objc_module_info_addr)));
-                (*g_ppModel)
-                    ->setItem(i, N_mach_modtab32::objc_module_info_size + 1,
-                              new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.module32.objc_module_info_size)));
+                (*g_ppModel)->setItem(i, N_mach_modtab32::objc_module_info_addr + 1, new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.module32.objc_module_info_addr)));
+                (*g_ppModel)->setItem(i, N_mach_modtab32::objc_module_info_size + 1, new QStandardItem(XBinary::valueToHex(listRecords.at(i).s.module32.objc_module_info_size)));
             }
 
             incValue();
@@ -593,8 +578,7 @@ void MACHProcessData::_process() {
             (*g_ppModel)->setItem(i, N_mach_refsyms::isym + 1, new QStandardItem(XBinary::valueToHex(listRecords.at(i).reference.s._value.isym)));
             (*g_ppModel)->setItem(i, N_mach_refsyms::flags + 1, new QStandardItem(XBinary::valueToHex((quint8)listRecords.at(i).reference.s._value.flags)));
 
-            QString sName =
-                g_pXMACH->getIndexSymbolName(listRecords.at(i).reference.s._value.isym, &listNlistRecords, osStringTable.nOffset, osStringTable.nSize);
+            QString sName = g_pXMACH->getIndexSymbolName(listRecords.at(i).reference.s._value.isym, &listNlistRecords, osStringTable.nOffset, osStringTable.nSize);
 
             (*g_ppModel)->setItem(i, 3, new QStandardItem(sName));
 

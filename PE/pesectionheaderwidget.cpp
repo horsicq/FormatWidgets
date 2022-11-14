@@ -351,12 +351,10 @@ FormatWidget::SV PESectionHeaderWidget::_setValue(QVariant vValue, int nStype, i
                 case SPE::TYPE_IMPORT:
                     switch (nNdata) {
                         case N_IMAGE_IMPORT::OriginalFirstThunk:
-                            addComment(ui->tableWidget, N_IMAGE_IMPORT::OriginalFirstThunk, HEADER_COLUMN_COMMENT,
-                                       pe.getMemoryRecordInfoByRelAddress((quint32)nValue));
+                            addComment(ui->tableWidget, N_IMAGE_IMPORT::OriginalFirstThunk, HEADER_COLUMN_COMMENT, pe.getMemoryRecordInfoByRelAddress((quint32)nValue));
                             break;
                         case N_IMAGE_IMPORT::Name:
-                            addComment(ui->tableWidget, N_IMAGE_IMPORT::Name, HEADER_COLUMN_COMMENT,
-                                       pe.read_ansiString(pe.relAddressToOffset((quint32)nValue)));
+                            addComment(ui->tableWidget, N_IMAGE_IMPORT::Name, HEADER_COLUMN_COMMENT, pe.read_ansiString(pe.relAddressToOffset((quint32)nValue)));
                             break;
                             break;
                         case N_IMAGE_IMPORT::FirstThunk:
@@ -456,14 +454,13 @@ void PESectionHeaderWidget::reloadData() {
 
     if (pe.isValid()) {
         if (nType == SPE::TYPE_IMAGE_SECTION_HEADER) {
-            createHeaderTable(SPE::TYPE_IMAGE_SECTION_HEADER, ui->tableWidget, N_IMAGE_SECTION_HEADER::records, g_ppLinedEdit,
-                              N_IMAGE_SECTION_HEADER::__data_size + 1, getNumber());
-            g_ppComboBox[N_IMAGE_SECTION_HEADER::CB_CHARACTERISTICS] =
-                createComboBox(ui->tableWidget, XPE::getImageSectionHeaderFlagsS(), SPE::TYPE_IMAGE_SECTION_HEADER, N_IMAGE_SECTION_HEADER::Characteristics,
-                               XComboBoxEx::CBTYPE_FLAGS);
+            createHeaderTable(SPE::TYPE_IMAGE_SECTION_HEADER, ui->tableWidget, N_IMAGE_SECTION_HEADER::records, g_ppLinedEdit, N_IMAGE_SECTION_HEADER::__data_size + 1,
+                              getNumber());
+            g_ppComboBox[N_IMAGE_SECTION_HEADER::CB_CHARACTERISTICS] = createComboBox(ui->tableWidget, XPE::getImageSectionHeaderFlagsS(), SPE::TYPE_IMAGE_SECTION_HEADER,
+                                                                                      N_IMAGE_SECTION_HEADER::Characteristics, XComboBoxEx::CBTYPE_FLAGS);
             g_ppComboBox[N_IMAGE_SECTION_HEADER::CB_ALIGH] =
-                createComboBox(ui->tableWidget, XPE::getImageSectionHeaderAlignsS(), SPE::TYPE_IMAGE_SECTION_HEADER,
-                               N_IMAGE_SECTION_HEADER::Characteristics + 1, XComboBoxEx::CBTYPE_ELIST, XPE_DEF::S_IMAGE_SCN_ALIGN_MASK);
+                createComboBox(ui->tableWidget, XPE::getImageSectionHeaderAlignsS(), SPE::TYPE_IMAGE_SECTION_HEADER, N_IMAGE_SECTION_HEADER::Characteristics + 1,
+                               XComboBoxEx::CBTYPE_ELIST, XPE_DEF::S_IMAGE_SCN_ALIGN_MASK);
 
             g_ppInvWidget[N_IMAGE_SECTION_HEADER::INV_VirtualAddress] =
                 createInvWidget(ui->tableWidget, SPE::TYPE_IMAGE_SECTION_HEADER, N_IMAGE_SECTION_HEADER::VirtualAddress, InvWidget::TYPE_HEX);
@@ -504,8 +501,7 @@ void PESectionHeaderWidget::reloadData() {
         } else if (nType == SPE::TYPE_IMPORT) {
             createHeaderTable(SPE::TYPE_IMPORT, ui->tableWidget, N_IMAGE_IMPORT::records, g_ppLinedEdit, N_IMAGE_IMPORT::__data_size, getNumber());
 
-            g_ppInvWidget[N_IMAGE_IMPORT::INV_OriginalFirstThunk] =
-                createInvWidget(ui->tableWidget, SPE::TYPE_IMPORT, N_IMAGE_IMPORT::OriginalFirstThunk, InvWidget::TYPE_HEX);
+            g_ppInvWidget[N_IMAGE_IMPORT::INV_OriginalFirstThunk] = createInvWidget(ui->tableWidget, SPE::TYPE_IMPORT, N_IMAGE_IMPORT::OriginalFirstThunk, InvWidget::TYPE_HEX);
             g_ppInvWidget[N_IMAGE_IMPORT::INV_Name] = createInvWidget(ui->tableWidget, SPE::TYPE_IMPORT, N_IMAGE_IMPORT::Name, InvWidget::TYPE_HEX);
             g_ppInvWidget[N_IMAGE_IMPORT::INV_FirstThunk] = createInvWidget(ui->tableWidget, SPE::TYPE_IMPORT, N_IMAGE_IMPORT::FirstThunk, InvWidget::TYPE_HEX);
 
@@ -525,8 +521,7 @@ void PESectionHeaderWidget::reloadData() {
             g_ppInvWidget[N_IMAGE_IMPORT::INV_Name]->setAddressAndSize(&pe, pe.getBaseAddress() + idh.Name, 0);
             g_ppInvWidget[N_IMAGE_IMPORT::INV_FirstThunk]->setAddressAndSize(&pe, pe.getBaseAddress() + idh.FirstThunk, 0);
 
-            addComment(ui->tableWidget, N_IMAGE_IMPORT::OriginalFirstThunk, HEADER_COLUMN_COMMENT,
-                       pe.getMemoryRecordInfoByRelAddress(&memoryMap, idh.OriginalFirstThunk));
+            addComment(ui->tableWidget, N_IMAGE_IMPORT::OriginalFirstThunk, HEADER_COLUMN_COMMENT, pe.getMemoryRecordInfoByRelAddress(&memoryMap, idh.OriginalFirstThunk));
             addComment(ui->tableWidget, N_IMAGE_IMPORT::Name, HEADER_COLUMN_COMMENT, pe.read_ansiString(pe.relAddressToOffset(&memoryMap, idh.Name)));
             addComment(ui->tableWidget, N_IMAGE_IMPORT::FirstThunk, HEADER_COLUMN_COMMENT, pe.getMemoryRecordInfoByRelAddress(&memoryMap, idh.FirstThunk));
 
@@ -539,8 +534,7 @@ void PESectionHeaderWidget::reloadData() {
             blockSignals(false);
         } else if (nType == SPE::TYPE_DEBUG) {
             createHeaderTable(SPE::TYPE_DEBUG, ui->tableWidget, N_IMAGE_DEBUG::records, g_ppLinedEdit, N_IMAGE_DEBUG::__data_size, getNumber());
-            g_ppComboBox[N_IMAGE_DEBUG::CB_TYPE] =
-                createComboBox(ui->tableWidget, XPE::getDebugTypesS(), SPE::TYPE_DEBUG, N_IMAGE_DEBUG::Type, XComboBoxEx::CBTYPE_LIST);
+            g_ppComboBox[N_IMAGE_DEBUG::CB_TYPE] = createComboBox(ui->tableWidget, XPE::getDebugTypesS(), SPE::TYPE_DEBUG, N_IMAGE_DEBUG::Type, XComboBoxEx::CBTYPE_LIST);
 
             blockSignals(true);
 
@@ -603,8 +597,7 @@ void PESectionHeaderWidget::reloadData() {
 
             blockSignals(false);
         } else if (nType == SPE::TYPE_DELAYIMPORT) {
-            createHeaderTable(SPE::TYPE_DELAYIMPORT, ui->tableWidget, N_IMAGE_DELAYIMPORT::records, g_ppLinedEdit, N_IMAGE_DELAYIMPORT::__data_size,
-                              getNumber());
+            createHeaderTable(SPE::TYPE_DELAYIMPORT, ui->tableWidget, N_IMAGE_DELAYIMPORT::records, g_ppLinedEdit, N_IMAGE_DELAYIMPORT::__data_size, getNumber());
 
             blockSignals(true);
 
@@ -628,8 +621,7 @@ void PESectionHeaderWidget::reloadData() {
 
             blockSignals(false);
         } else if (nType == SPE::TYPE_BOUNDIMPORT) {
-            createHeaderTable(SPE::TYPE_BOUNDIMPORT, ui->tableWidget, N_IMAGE_BOUNDIMPORT::records, g_ppLinedEdit, N_IMAGE_BOUNDIMPORT::__data_size,
-                              getNumber());
+            createHeaderTable(SPE::TYPE_BOUNDIMPORT, ui->tableWidget, N_IMAGE_BOUNDIMPORT::records, g_ppLinedEdit, N_IMAGE_BOUNDIMPORT::__data_size, getNumber());
 
             blockSignals(true);
 
@@ -648,8 +640,7 @@ void PESectionHeaderWidget::reloadData() {
 
             blockSignals(false);
         } else if (nType == SPE::TYPE_IMAGE_DIRECTORY_ENTRIES) {
-            createHeaderTable(SPE::TYPE_IMAGE_DIRECTORY_ENTRIES, ui->tableWidget, N_IMAGE_DATA_DIRECTORY::records, g_ppLinedEdit,
-                              N_IMAGE_DATA_DIRECTORY::__data_size, getNumber());
+            createHeaderTable(SPE::TYPE_IMAGE_DIRECTORY_ENTRIES, ui->tableWidget, N_IMAGE_DATA_DIRECTORY::records, g_ppLinedEdit, N_IMAGE_DATA_DIRECTORY::__data_size, getNumber());
 
             blockSignals(true);
 

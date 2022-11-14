@@ -82,8 +82,7 @@ void SearchSignaturesWidget::updateSignaturesPath() {
 
     for (qint32 i = 0; i < nNumberOfFiles; i++) {
         QString sFileName = listFiles.at(i);
-        ui->comboBoxFile->addItem(XBinary::getBaseFileName(sFileName),
-                                  XBinary::convertPathName(getGlobalOptions()->getSearchSignaturesPath()) + QDir::separator() + sFileName);
+        ui->comboBoxFile->addItem(XBinary::getBaseFileName(sFileName), XBinary::convertPathName(getGlobalOptions()->getSearchSignaturesPath()) + QDir::separator() + sFileName);
     }
 
     if (g_options.sUserSignature != "") {
@@ -303,12 +302,9 @@ void SearchSignaturesWidget::on_comboBoxFile_currentIndexChanged(int index) {
 void SearchSignaturesWidget::registerShortcuts(bool bState) {
     if (bState) {
         if (!shortCuts[SC_COPYNAME]) shortCuts[SC_COPYNAME] = new QShortcut(getShortcuts()->getShortcut(X_ID_SIGNATURES_COPY_NAME), this, SLOT(_copyName()));
-        if (!shortCuts[SC_COPYSIGNATURE])
-            shortCuts[SC_COPYSIGNATURE] = new QShortcut(getShortcuts()->getShortcut(X_ID_SIGNATURES_COPY_SIGNATURE), this, SLOT(_copySignature()));
-        if (!shortCuts[SC_COPYADDRESS])
-            shortCuts[SC_COPYADDRESS] = new QShortcut(getShortcuts()->getShortcut(X_ID_SIGNATURES_COPY_ADDRESS), this, SLOT(_copyAddress()));
-        if (!shortCuts[SC_COPYOFFSET])
-            shortCuts[SC_COPYOFFSET] = new QShortcut(getShortcuts()->getShortcut(X_ID_SIGNATURES_COPY_OFFSET), this, SLOT(_copyOffset()));
+        if (!shortCuts[SC_COPYSIGNATURE]) shortCuts[SC_COPYSIGNATURE] = new QShortcut(getShortcuts()->getShortcut(X_ID_SIGNATURES_COPY_SIGNATURE), this, SLOT(_copySignature()));
+        if (!shortCuts[SC_COPYADDRESS]) shortCuts[SC_COPYADDRESS] = new QShortcut(getShortcuts()->getShortcut(X_ID_SIGNATURES_COPY_ADDRESS), this, SLOT(_copyAddress()));
+        if (!shortCuts[SC_COPYOFFSET]) shortCuts[SC_COPYOFFSET] = new QShortcut(getShortcuts()->getShortcut(X_ID_SIGNATURES_COPY_OFFSET), this, SLOT(_copyOffset()));
         if (!shortCuts[SC_HEX]) shortCuts[SC_HEX] = new QShortcut(getShortcuts()->getShortcut(X_ID_SIGNATURES_FOLLOWIN_HEX), this, SLOT(_hex()));
     } else {
         for (qint32 i = 0; i < __SC_SIZE; i++) {
