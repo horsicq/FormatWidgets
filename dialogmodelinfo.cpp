@@ -25,7 +25,7 @@
 DialogModelInfo::DialogModelInfo(QWidget *pParent) : QDialog(pParent), ui(new Ui::DialogModelInfo) {
     ui->setupUi(this);
 
-    g_pDevice = 0;
+    g_pDevice = nullptr;
 }
 
 DialogModelInfo::~DialogModelInfo() {
