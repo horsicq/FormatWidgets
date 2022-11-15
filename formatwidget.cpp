@@ -26,7 +26,7 @@ FormatWidget::FormatWidget(QWidget *pParent) : XShortcutsWidget(pParent) {
     g_bIsReadonly = false;
     g_fwOptions = {};
     g_bAddPageEnable = true;
-    g_nPageIndex = 0;
+    g_nPageIndex = 0; // TODO Check
     g_pXInfoDB = nullptr;
     g_nDisamInitAddress = -1;
 
