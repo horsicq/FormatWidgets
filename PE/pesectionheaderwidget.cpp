@@ -22,12 +22,14 @@
 
 #include "ui_pesectionheaderwidget.h"
 
-PESectionHeaderWidget::PESectionHeaderWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::PESectionHeaderWidget) {
+PESectionHeaderWidget::PESectionHeaderWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::PESectionHeaderWidget)
+{
     ui->setupUi(this);
 }
 
 PESectionHeaderWidget::PESectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent)
-    : PESectionHeaderWidget(pParent) {
+    : PESectionHeaderWidget(pParent)
+{
     PESectionHeaderWidget::setData(pDevice, options, nNumber, nOffset, nType);
 
     g_ppLinedEdit = 0;
@@ -84,7 +86,8 @@ PESectionHeaderWidget::PESectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS
     }
 }
 
-PESectionHeaderWidget::~PESectionHeaderWidget() {
+PESectionHeaderWidget::~PESectionHeaderWidget()
+{
     if (g_ppLinedEdit) {
         delete[] g_ppLinedEdit;
     }
@@ -100,7 +103,8 @@ PESectionHeaderWidget::~PESectionHeaderWidget() {
     delete ui;
 }
 
-void PESectionHeaderWidget::clear() {
+void PESectionHeaderWidget::clear()
+{
     reset();
 
     memset(g_ppLinedEdit, 0, g_nLineEditSize * sizeof(XLineEditHEX *));
@@ -112,11 +116,13 @@ void PESectionHeaderWidget::clear() {
     ui->checkBoxReadonly->setChecked(true);
 }
 
-void PESectionHeaderWidget::cleanup() {
+void PESectionHeaderWidget::cleanup()
+{
     PESectionHeaderWidget::clear();
 }
 
-void PESectionHeaderWidget::reload() {
+void PESectionHeaderWidget::reload()
+{
     PESectionHeaderWidget::clear();
 
     ui->checkBoxReadonly->setEnabled(!isReadonly());
@@ -124,12 +130,14 @@ void PESectionHeaderWidget::reload() {
     reloadData();
 }
 
-void PESectionHeaderWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions) {
+void PESectionHeaderWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
+{
     ui->widgetHex->setGlobal(pShortcuts, pXOptions);
     XShortcutsWidget::setGlobal(pShortcuts, pXOptions);
 }
 
-FormatWidget::SV PESectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset) {
+FormatWidget::SV PESectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
+{
     Q_UNUSED(nVtype)
     Q_UNUSED(nOffset)
 
@@ -372,17 +380,20 @@ FormatWidget::SV PESectionHeaderWidget::_setValue(QVariant vValue, int nStype, i
 
     return result;
 }
-void PESectionHeaderWidget::setReadonly(bool bState) {
+void PESectionHeaderWidget::setReadonly(bool bState)
+{
     setLineEditsReadOnly(g_ppLinedEdit, g_nLineEditSize, bState);
     setComboBoxesReadOnly(g_ppComboBox, g_nComboBoxSize, bState);
 }
 
-void PESectionHeaderWidget::blockSignals(bool bState) {
+void PESectionHeaderWidget::blockSignals(bool bState)
+{
     _blockSignals((QObject **)g_ppLinedEdit, g_nLineEditSize, bState);
     _blockSignals((QObject **)g_ppComboBox, g_nComboBoxSize, bState);
 }
 
-void PESectionHeaderWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget) {
+void PESectionHeaderWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
+{
     XBinary::MODE mode = XPE::getMode(getDevice(), getOptions().bIsImage, getOptions().nImageBase);
 
     pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET, getColumnWidth(this, CW_UINT16, mode));
@@ -439,15 +450,18 @@ void PESectionHeaderWidget::adjustHeaderTable(int nType, QTableWidget *pTableWid
     }
 }
 
-void PESectionHeaderWidget::_showInHexWindow(qint64 nOffset, qint64 nSize) {
+void PESectionHeaderWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
+{
     showHex(nOffset, nSize);
 }
 
-void PESectionHeaderWidget::on_checkBoxReadonly_toggled(bool bChecked) {
+void PESectionHeaderWidget::on_checkBoxReadonly_toggled(bool bChecked)
+{
     setReadonly(bChecked);
 }
 
-void PESectionHeaderWidget::reloadData() {
+void PESectionHeaderWidget::reloadData()
+{
     qint32 nType = getType();
 
     XPE pe(getDevice(), getOptions().bIsImage, getOptions().nImageBase);
@@ -663,7 +677,8 @@ void PESectionHeaderWidget::reloadData() {
     }
 }
 
-void PESectionHeaderWidget::widgetValueChanged(quint64 nValue) {
+void PESectionHeaderWidget::widgetValueChanged(quint64 nValue)
+{
     QWidget *pWidget = qobject_cast<QWidget *>(sender());
     int nStype = pWidget->property("STYPE").toInt();
     int nNdata = pWidget->property("NDATA").toInt();
@@ -690,7 +705,8 @@ void PESectionHeaderWidget::widgetValueChanged(quint64 nValue) {
     }
 }
 
-void PESectionHeaderWidget::on_tableWidget_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn) {
+void PESectionHeaderWidget::on_tableWidget_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
     Q_UNUSED(nCurrentRow)
     Q_UNUSED(nCurrentColumn)
     Q_UNUSED(nPreviousRow)

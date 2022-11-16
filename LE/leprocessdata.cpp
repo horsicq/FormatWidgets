@@ -20,7 +20,8 @@
  */
 #include "leprocessdata.h"
 
-LEProcessData::LEProcessData(int nType, QStandardItemModel **ppModel, XLE *pLE, qint64 nOffset, qint64 nSize) : ProcessData() {
+LEProcessData::LEProcessData(int nType, QStandardItemModel **ppModel, XLE *pLE, qint64 nOffset, qint64 nSize) : ProcessData()
+{
     this->g_nType = nType;
     this->g_ppModel = ppModel;
     this->g_pLE = pLE;
@@ -28,7 +29,8 @@ LEProcessData::LEProcessData(int nType, QStandardItemModel **ppModel, XLE *pLE, 
     this->g_nSize = nSize;
 }
 
-void LEProcessData::_process() {
+void LEProcessData::_process()
+{
     if (g_nType == SLE::TYPE_OBJECTS) {
         QList<QString> listLabels;
         listLabels.append("");
@@ -62,7 +64,8 @@ void LEProcessData::_process() {
     }
 }
 
-void LEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView) {
+void LEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
+{
     // TODO like MACH !!!
     XBinary::MODE mode = g_pLE->getMode();
 

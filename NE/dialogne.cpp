@@ -22,17 +22,20 @@
 
 #include "ui_dialogne.h"
 
-DialogNE::DialogNE(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogNE) {
+DialogNE::DialogNE(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogNE)
+{
     ui->setupUi(this);
 
     setWindowFlags(Qt::Window);
 }
 
-DialogNE::~DialogNE() {
+DialogNE::~DialogNE()
+{
     delete ui;
 }
 
-void DialogNE::setData(QIODevice *pDevice, FW_DEF::OPTIONS options) {
+void DialogNE::setData(QIODevice *pDevice, FW_DEF::OPTIONS options)
+{
     if (options.sTitle != "") {
         setWindowTitle(options.sTitle);
     }
@@ -41,7 +44,8 @@ void DialogNE::setData(QIODevice *pDevice, FW_DEF::OPTIONS options) {
     ui->widget->reload();
 }
 
-void DialogNE::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions) {
+void DialogNE::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
+{
     ui->widget->setGlobal(pShortcuts, pXOptions);
     XShortcutsDialog::setGlobal(pShortcuts, pXOptions);
 }

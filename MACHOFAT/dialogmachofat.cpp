@@ -22,17 +22,20 @@
 
 #include "ui_dialogmachofat.h"
 
-DialogMACHOFAT::DialogMACHOFAT(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogMACHOFAT) {
+DialogMACHOFAT::DialogMACHOFAT(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogMACHOFAT)
+{
     ui->setupUi(this);
 
     setWindowFlags(Qt::Window);
 }
 
-DialogMACHOFAT::~DialogMACHOFAT() {
+DialogMACHOFAT::~DialogMACHOFAT()
+{
     delete ui;
 }
 
-void DialogMACHOFAT::setData(QIODevice *pDevice, FW_DEF::OPTIONS options) {
+void DialogMACHOFAT::setData(QIODevice *pDevice, FW_DEF::OPTIONS options)
+{
     if (options.sTitle != "") {
         setWindowTitle(options.sTitle);
     }
@@ -41,7 +44,8 @@ void DialogMACHOFAT::setData(QIODevice *pDevice, FW_DEF::OPTIONS options) {
     ui->widget->reload();
 }
 
-void DialogMACHOFAT::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions) {
+void DialogMACHOFAT::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
+{
     ui->widget->setGlobal(pShortcuts, pXOptions);
     XShortcutsDialog::setGlobal(pShortcuts, pXOptions);
 }

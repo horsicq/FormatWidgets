@@ -20,7 +20,8 @@
  */
 #include "peprocessdata.h"
 
-PEProcessData::PEProcessData(int nType, QStandardItemModel **ppModel, XPE *pPE, qint32 nNumber, qint64 nOffset, qint64 nSize, QVariant varInfo) : ProcessData() {
+PEProcessData::PEProcessData(int nType, QStandardItemModel **ppModel, XPE *pPE, qint32 nNumber, qint64 nOffset, qint64 nSize, QVariant varInfo) : ProcessData()
+{
     this->g_nType = nType;
     this->g_ppModel = ppModel;
     this->g_pPE = pPE;
@@ -30,7 +31,8 @@ PEProcessData::PEProcessData(int nType, QStandardItemModel **ppModel, XPE *pPE, 
     this->g_varInfo = varInfo;
 }
 
-void PEProcessData::_process() {
+void PEProcessData::_process()
+{
     bool bIs64 = g_pPE->is64();
 
     if (g_nType == SPE::TYPE_SECTIONS) {
@@ -735,7 +737,8 @@ void PEProcessData::_process() {
     }
 }
 
-void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView) {
+void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
+{
     XBinary::MODE mode = g_pPE->getMode();
 
     if (g_nType == SPE::TYPE_SECTIONS) {
@@ -843,7 +846,8 @@ void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView) {
     }
 }
 
-void PEProcessData::handleCertRecord(QStandardItem *pParent, XPE::CERT_RECORD certRecord) {
+void PEProcessData::handleCertRecord(QStandardItem *pParent, XPE::CERT_RECORD certRecord)
+{
     QString sText = QString("%1 (%2)").arg(XBinary::valueToHex(XBinary::MODE_UNKNOWN, certRecord.certTag.nTag), XPE::certTagToString(certRecord.certTag.nTag));
 
     QString sValue = certRecord.varValue.toString();

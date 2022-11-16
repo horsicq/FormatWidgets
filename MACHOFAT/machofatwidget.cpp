@@ -22,15 +22,18 @@
 
 #include "ui_machofatwidget.h"
 
-MACHOFATWidget::MACHOFATWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::MACHOFATWidget) {
+MACHOFATWidget::MACHOFATWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::MACHOFATWidget)
+{
     ui->setupUi(this);
 }
 
-MACHOFATWidget::~MACHOFATWidget() {
+MACHOFATWidget::~MACHOFATWidget()
+{
     delete ui;
 }
 
-void MACHOFATWidget::clear() {
+void MACHOFATWidget::clear()
+{
     ui->comboBoxFilePart->clear();
 
     QObjectList listWidgets = ui->stackedWidget->children();
@@ -53,11 +56,13 @@ void MACHOFATWidget::clear() {
     g_listDevices.clear();
 }
 
-void MACHOFATWidget::cleanup() {
+void MACHOFATWidget::cleanup()
+{
     MACHOFATWidget::clear();
 }
 
-void MACHOFATWidget::reload() {
+void MACHOFATWidget::reload()
+{
     // Q_UNUSED(ui->comboBoxFilePart);
 
     MACHOFATWidget::clear();
@@ -93,7 +98,8 @@ void MACHOFATWidget::reload() {
     }
 }
 
-FormatWidget::SV MACHOFATWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset) {
+FormatWidget::SV MACHOFATWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
+{
     Q_UNUSED(vValue)
     Q_UNUSED(nStype)
     Q_UNUSED(nNdata)
@@ -104,7 +110,8 @@ FormatWidget::SV MACHOFATWidget::_setValue(QVariant vValue, int nStype, int nNda
     return SV_NONE;
 }
 
-void MACHOFATWidget::setReadonly(bool bState) {
+void MACHOFATWidget::setReadonly(bool bState)
+{
     Q_UNUSED(bState)
     //    // TODO Check
     //    int nNumberOfRecords=g_listDevices.count();
@@ -118,13 +125,16 @@ void MACHOFATWidget::setReadonly(bool bState) {
     //    }
 }
 
-void MACHOFATWidget::blockSignals(bool bState) {
+void MACHOFATWidget::blockSignals(bool bState)
+{
     Q_UNUSED(bState)
 }
 
-void MACHOFATWidget::reloadData() {
+void MACHOFATWidget::reloadData()
+{
 }
 
-void MACHOFATWidget::on_comboBoxFilePart_currentIndexChanged(int nIndex) {
+void MACHOFATWidget::on_comboBoxFilePart_currentIndexChanged(int nIndex)
+{
     ui->stackedWidget->setCurrentIndex(nIndex);
 }

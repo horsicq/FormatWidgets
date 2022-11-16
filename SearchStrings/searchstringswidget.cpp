@@ -22,7 +22,8 @@
 
 #include "ui_searchstringswidget.h"
 
-SearchStringsWidget::SearchStringsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui::SearchStringsWidget) {
+SearchStringsWidget::SearchStringsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui::SearchStringsWidget)
+{
     ui->setupUi(this);
     g_pDevice = nullptr;
     g_pBackupDevice = nullptr;
@@ -62,13 +63,15 @@ SearchStringsWidget::SearchStringsWidget(QWidget *pParent) : XShortcutsWidget(pP
     ui->tableViewResult->installEventFilter(this);
 }
 
-SearchStringsWidget::~SearchStringsWidget() {
+SearchStringsWidget::~SearchStringsWidget()
+{
     g_watcher.waitForFinished();
 
     delete ui;
 }
 
-void SearchStringsWidget::setData(QIODevice *pDevice, OPTIONS options, bool bAuto) {
+void SearchStringsWidget::setData(QIODevice *pDevice, OPTIONS options, bool bAuto)
+{
     this->g_pDevice = pDevice;
 
     ui->checkBoxAnsi->setChecked(options.bAnsi);
@@ -108,15 +111,18 @@ void SearchStringsWidget::setData(QIODevice *pDevice, OPTIONS options, bool bAut
     }
 }
 
-void SearchStringsWidget::setBackupDevice(QIODevice *pDevice) {
+void SearchStringsWidget::setBackupDevice(QIODevice *pDevice)
+{
     g_pBackupDevice = pDevice;
 }
 
-QIODevice *SearchStringsWidget::getDevice() {
+QIODevice *SearchStringsWidget::getDevice()
+{
     return g_pDevice;
 }
 
-QIODevice *SearchStringsWidget::getBackupDevice() {
+QIODevice *SearchStringsWidget::getBackupDevice()
+{
     QIODevice *pResult = nullptr;
 
     if (g_pBackupDevice) {
@@ -128,21 +134,25 @@ QIODevice *SearchStringsWidget::getBackupDevice() {
     return pResult;
 }
 
-void SearchStringsWidget::reload() {
+void SearchStringsWidget::reload()
+{
     search();
 }
 
-bool SearchStringsWidget::getInitStatus() {
+bool SearchStringsWidget::getInitStatus()
+{
     return g_bInit;
 }
 
-bool SearchStringsWidget::isEdited() {
+bool SearchStringsWidget::isEdited()
+{
     bool bResult = XBinary::isBackupPresent(getBackupDevice());
 
     return bResult;
 }
 
-bool SearchStringsWidget::saveBackup() {
+bool SearchStringsWidget::saveBackup()
+{
     bool bResult = true;
 
     if ((getGlobalOptions()->isSaveBackup()) && (!isEdited())) {
@@ -153,35 +163,42 @@ bool SearchStringsWidget::saveBackup() {
     return bResult;
 }
 
-void SearchStringsWidget::setReadonly(bool bState) {
+void SearchStringsWidget::setReadonly(bool bState)
+{
     g_bIsReadonly = bState;
 }
 
-bool SearchStringsWidget::isReadonly() {
+bool SearchStringsWidget::isReadonly()
+{
     return g_bIsReadonly;
 }
 
-void SearchStringsWidget::on_pushButtonSave_clicked() {
+void SearchStringsWidget::on_pushButtonSave_clicked()
+{
     if (g_pFilter) {
         XShortcutsWidget::saveModel(g_pFilter, XBinary::getResultFileName(g_pDevice, QString("%1.txt").arg(tr("Strings"))));
     }
 }
 
-void SearchStringsWidget::on_pushButtonSearch_clicked() {
+void SearchStringsWidget::on_pushButtonSearch_clicked()
+{
     search();
 }
 
-void SearchStringsWidget::on_lineEditFilter_textChanged(const QString &sText) {
+void SearchStringsWidget::on_lineEditFilter_textChanged(const QString &sText)
+{
     filter(sText);
 }
 
-void SearchStringsWidget::filter(QString sString) {
+void SearchStringsWidget::filter(QString sString)
+{
     g_pFilter->setFilterFixedString(sString);
     g_pFilter->setFilterCaseSensitivity(Qt::CaseInsensitive);
     g_pFilter->setFilterKeyColumn(3);
 }
 
-void SearchStringsWidget::on_tableViewResult_customContextMenuRequested(const QPoint &pos) {
+void SearchStringsWidget::on_tableViewResult_customContextMenuRequested(const QPoint &pos)
+{
     QMenu contextMenu(this);
 
     QMenu menuCopy(tr("Copy"), this);
@@ -246,7 +263,8 @@ void SearchStringsWidget::on_tableViewResult_customContextMenuRequested(const QP
     contextMenu.exec(ui->tableViewResult->viewport()->mapToGlobal(pos));
 }
 
-void SearchStringsWidget::_copyString() {
+void SearchStringsWidget::_copyString()
+{
     qint32 nRow = ui->tableViewResult->currentIndex().row();
 
     if ((nRow != -1) && (g_pModel)) {
@@ -258,7 +276,8 @@ void SearchStringsWidget::_copyString() {
     }
 }
 
-void SearchStringsWidget::_copyOffset() {
+void SearchStringsWidget::_copyOffset()
+{
     int nRow = ui->tableViewResult->currentIndex().row();
 
     if ((nRow != -1) && (g_pModel)) {
@@ -270,7 +289,8 @@ void SearchStringsWidget::_copyOffset() {
     }
 }
 
-void SearchStringsWidget::_copySize() {
+void SearchStringsWidget::_copySize()
+{
     int nRow = ui->tableViewResult->currentIndex().row();
 
     if ((nRow != -1) && (g_pModel)) {
@@ -282,7 +302,8 @@ void SearchStringsWidget::_copySize() {
     }
 }
 
-void SearchStringsWidget::_hex() {
+void SearchStringsWidget::_hex()
+{
     int nRow = ui->tableViewResult->currentIndex().row();
 
     if ((nRow != -1) && (g_pModel)) {
@@ -301,7 +322,8 @@ void SearchStringsWidget::_hex() {
     }
 }
 
-void SearchStringsWidget::_demangle() {
+void SearchStringsWidget::_demangle()
+{
     int nRow = ui->tableViewResult->currentIndex().row();
 
     if ((nRow != -1) && (g_pModel)) {
@@ -313,7 +335,8 @@ void SearchStringsWidget::_demangle() {
     }
 }
 
-void SearchStringsWidget::_editString() {
+void SearchStringsWidget::_editString()
+{
     if (!isReadonly()) {
         QModelIndex index0 = ui->tableViewResult->selectionModel()->selectedIndexes().at(0);
         QModelIndex index1 = ui->tableViewResult->selectionModel()->selectedIndexes().at(1);
@@ -357,7 +380,8 @@ void SearchStringsWidget::_editString() {
     }
 }
 
-void SearchStringsWidget::search() {
+void SearchStringsWidget::search()
+{
     if (g_pDevice) {
         ui->lineEditFilter->clear();
 
@@ -421,11 +445,13 @@ void SearchStringsWidget::search() {
     }
 }
 
-void SearchStringsWidget::deleteOldModel() {
+void SearchStringsWidget::deleteOldModel()
+{
     delete g_pOldModel;
 }
 
-void SearchStringsWidget::registerShortcuts(bool bState) {
+void SearchStringsWidget::registerShortcuts(bool bState)
+{
     if (bState) {
         if (!shortCuts[SC_COPYSTRING]) shortCuts[SC_COPYSTRING] = new QShortcut(getShortcuts()->getShortcut(X_ID_STRINGS_COPY_STRING), this, SLOT(_copyString()));
         if (!shortCuts[SC_COPYOFFSET]) shortCuts[SC_COPYOFFSET] = new QShortcut(getShortcuts()->getShortcut(X_ID_STRINGS_COPY_OFFSET), this, SLOT(_copyOffset()));
@@ -443,25 +469,29 @@ void SearchStringsWidget::registerShortcuts(bool bState) {
     }
 }
 
-void SearchStringsWidget::on_checkBoxAnsi_stateChanged(int nArg) {
+void SearchStringsWidget::on_checkBoxAnsi_stateChanged(int nArg)
+{
     Q_UNUSED(nArg)
 
     adjust();
 }
 
-void SearchStringsWidget::on_checkBoxUTF8_stateChanged(int nArg) {
+void SearchStringsWidget::on_checkBoxUTF8_stateChanged(int nArg)
+{
     Q_UNUSED(nArg)
 
     adjust();
 }
 
-void SearchStringsWidget::on_checkBoxUnicode_stateChanged(int nArg) {
+void SearchStringsWidget::on_checkBoxUnicode_stateChanged(int nArg)
+{
     Q_UNUSED(nArg)
 
     adjust();
 }
 
-void SearchStringsWidget::adjust() {
+void SearchStringsWidget::adjust()
+{
     bool bIsANSI = ui->checkBoxAnsi->isChecked();
     bool bIsUTF8 = ui->checkBoxUTF8->isChecked();
     bool bIsUnicode = ui->checkBoxUnicode->isChecked();

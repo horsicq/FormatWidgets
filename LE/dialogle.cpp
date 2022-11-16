@@ -22,17 +22,20 @@
 
 #include "ui_dialogle.h"
 
-DialogLE::DialogLE(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogLE) {
+DialogLE::DialogLE(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogLE)
+{
     ui->setupUi(this);
 
     setWindowFlags(Qt::Window);
 }
 
-DialogLE::~DialogLE() {
+DialogLE::~DialogLE()
+{
     delete ui;
 }
 
-void DialogLE::setData(QIODevice *pDevice, FW_DEF::OPTIONS options) {
+void DialogLE::setData(QIODevice *pDevice, FW_DEF::OPTIONS options)
+{
     if (options.sTitle != "") {
         setWindowTitle(options.sTitle);
     }
@@ -41,7 +44,8 @@ void DialogLE::setData(QIODevice *pDevice, FW_DEF::OPTIONS options) {
     ui->widget->reload();
 }
 
-void DialogLE::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions) {
+void DialogLE::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
+{
     ui->widget->setGlobal(pShortcuts, pXOptions);
     XShortcutsDialog::setGlobal(pShortcuts, pXOptions);
 }

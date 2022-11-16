@@ -20,7 +20,8 @@
  */
 #include "invwidget.h"
 
-InvWidget::InvWidget(QWidget *pParent, TYPE type) : XShortcutsWidget(pParent) {
+InvWidget::InvWidget(QWidget *pParent, TYPE type) : XShortcutsWidget(pParent)
+{
     g_pHexPushButton = nullptr;
     g_pDisasmPushButton = nullptr;
 
@@ -47,10 +48,12 @@ InvWidget::InvWidget(QWidget *pParent, TYPE type) : XShortcutsWidget(pParent) {
     g_nSize = 0;
 }
 
-InvWidget::~InvWidget() {
+InvWidget::~InvWidget()
+{
 }
 
-void InvWidget::setOffsetAndSize(XBinary *pBinary, qint64 nOffset, qint64 nSize, bool bNotNull) {
+void InvWidget::setOffsetAndSize(XBinary *pBinary, qint64 nOffset, qint64 nSize, bool bNotNull)
+{
     bool bValid = false;
 
     if ((bNotNull) && (nOffset == 0)) {
@@ -72,7 +75,8 @@ void InvWidget::setOffsetAndSize(XBinary *pBinary, qint64 nOffset, qint64 nSize,
     }
 }
 
-void InvWidget::setAddressAndSize(XBinary *pBinary, XADDR nAddress, qint64 nSize, bool bNotNull) {
+void InvWidget::setAddressAndSize(XBinary *pBinary, XADDR nAddress, qint64 nSize, bool bNotNull)
+{
     bool bValid = false;
 
     this->g_nAddress = nAddress;
@@ -98,7 +102,8 @@ void InvWidget::setAddressAndSize(XBinary *pBinary, XADDR nAddress, qint64 nSize
     }
 }
 
-void InvWidget::_setEnabled(bool bState) {
+void InvWidget::_setEnabled(bool bState)
+{
     if (g_pHexPushButton) {
         g_pHexPushButton->setEnabled(bState);
     }
@@ -108,14 +113,17 @@ void InvWidget::_setEnabled(bool bState) {
     }
 }
 
-void InvWidget::showHexSlot() {
+void InvWidget::showHexSlot()
+{
     emit showHex(g_nOffset, g_nSize);
 }
 
-void InvWidget::showDisasmSlot() {
+void InvWidget::showDisasmSlot()
+{
     emit showDisasm(g_nAddress);
 }
 
-void InvWidget::registerShortcuts(bool bState) {
+void InvWidget::registerShortcuts(bool bState)
+{
     Q_UNUSED(bState)
 }

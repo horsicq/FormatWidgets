@@ -22,7 +22,8 @@
 
 #include "ui_msdoswidget.h"
 
-MSDOSWidget::MSDOSWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::MSDOSWidget) {
+MSDOSWidget::MSDOSWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::MSDOSWidget)
+{
     ui->setupUi(this);
 
     memset(g_subDevice, 0, sizeof g_subDevice);
@@ -30,16 +31,19 @@ MSDOSWidget::MSDOSWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::M
     initWidget();
 }
 
-MSDOSWidget::MSDOSWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) : MSDOSWidget(pParent) {
+MSDOSWidget::MSDOSWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) : MSDOSWidget(pParent)
+{
     MSDOSWidget::setData(pDevice, options, 0, 0, 0);
     MSDOSWidget::reload();
 }
 
-MSDOSWidget::~MSDOSWidget() {
+MSDOSWidget::~MSDOSWidget()
+{
     delete ui;
 }
 
-void MSDOSWidget::clear() {
+void MSDOSWidget::clear()
+{
     MSDOSWidget::reset();
 
     memset(g_lineEdit_DOS_HEADER, 0, sizeof g_lineEdit_DOS_HEADER);
@@ -54,11 +58,13 @@ void MSDOSWidget::clear() {
     ui->treeWidgetNavi->clear();
 }
 
-void MSDOSWidget::cleanup() {
+void MSDOSWidget::cleanup()
+{
     MSDOSWidget::clear();
 }
 
-void MSDOSWidget::reload() {
+void MSDOSWidget::reload()
+{
     MSDOSWidget::clear();
 
     ui->checkBoxReadonly->setEnabled(!isReadonly());
@@ -92,7 +98,8 @@ void MSDOSWidget::reload() {
     }
 }
 
-FormatWidget::SV MSDOSWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset) {
+FormatWidget::SV MSDOSWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
+{
     Q_UNUSED(nVtype)
     Q_UNUSED(nPosition)
     Q_UNUSED(nOffset)
@@ -178,7 +185,8 @@ FormatWidget::SV MSDOSWidget::_setValue(QVariant vValue, int nStype, int nNdata,
     return result;
 }
 
-void MSDOSWidget::setReadonly(bool bState) {
+void MSDOSWidget::setReadonly(bool bState)
+{
     setLineEditsReadOnly(g_lineEdit_DOS_HEADER, N_DOS_HEADER::__data_size, bState);
 
     setComboBoxesReadOnly(g_comboBox, __CB_size, bState);
@@ -188,13 +196,15 @@ void MSDOSWidget::setReadonly(bool bState) {
     ui->widgetStrings->setReadonly(bState);
 }
 
-void MSDOSWidget::blockSignals(bool bState) {
+void MSDOSWidget::blockSignals(bool bState)
+{
     _blockSignals((QObject **)g_lineEdit_DOS_HEADER, N_DOS_HEADER::__data_size, bState);
 
     _blockSignals((QObject **)g_comboBox, __CB_size, bState);
 }
 
-void MSDOSWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget) {
+void MSDOSWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
+{
     // TODO like MACH !!!
     Q_UNUSED(nType);
 
@@ -207,7 +217,8 @@ void MSDOSWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget) {
     pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, nSymbolWidth * 16);   // TODO
 }
 
-QString MSDOSWidget::typeIdToString(int nType) {
+QString MSDOSWidget::typeIdToString(int nType)
+{
     Q_UNUSED(nType)
 
     QString sResult;
@@ -217,27 +228,32 @@ QString MSDOSWidget::typeIdToString(int nType) {
     return sResult;
 }
 
-void MSDOSWidget::_showInDisasmWindowAddress(qint64 nAddress) {
+void MSDOSWidget::_showInDisasmWindowAddress(qint64 nAddress)
+{
     setTreeItem(ui->treeWidgetNavi, SMSDOS::TYPE_DISASM);
     ui->widgetDisasm->goToAddress(nAddress);
 }
 
-void MSDOSWidget::_showInDisasmWindowOffset(qint64 nOffset) {
+void MSDOSWidget::_showInDisasmWindowOffset(qint64 nOffset)
+{
     setTreeItem(ui->treeWidgetNavi, SMSDOS::TYPE_DISASM);
     ui->widgetDisasm->goToOffset(nOffset);
 }
 
-void MSDOSWidget::_showInMemoryMapWindowOffset(qint64 nOffset) {
+void MSDOSWidget::_showInMemoryMapWindowOffset(qint64 nOffset)
+{
     setTreeItem(ui->treeWidgetNavi, SMSDOS::TYPE_MEMORYMAP);
     ui->widgetMemoryMap->goToOffset(nOffset);
 }
 
-void MSDOSWidget::_showInHexWindow(qint64 nOffset, qint64 nSize) {
+void MSDOSWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
+{
     setTreeItem(ui->treeWidgetNavi, SMSDOS::TYPE_HEX);
     ui->widgetHex->setSelection(nOffset, nSize);
 }
 
-void MSDOSWidget::reloadData() {
+void MSDOSWidget::reloadData()
+{
     int nType = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_TYPE).toInt();
     //    qint64
     //    nDataOffset=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
@@ -365,7 +381,8 @@ void MSDOSWidget::reloadData() {
     addInit(sInit);
 }
 
-void MSDOSWidget::widgetValueChanged(quint64 nValue) {
+void MSDOSWidget::widgetValueChanged(quint64 nValue)
+{
     QWidget *pWidget = qobject_cast<QWidget *>(sender());
     int nStype = pWidget->property("STYPE").toInt();
     int nNdata = pWidget->property("NDATA").toInt();
@@ -382,7 +399,8 @@ void MSDOSWidget::widgetValueChanged(quint64 nValue) {
     }
 }
 
-void MSDOSWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurrent, QTreeWidgetItem *pItemPrevious) {
+void MSDOSWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurrent, QTreeWidgetItem *pItemPrevious)
+{
     Q_UNUSED(pItemPrevious)
 
     if (pItemCurrent) {
@@ -393,22 +411,26 @@ void MSDOSWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCur
     }
 }
 
-void MSDOSWidget::on_checkBoxReadonly_toggled(bool bChecked) {
+void MSDOSWidget::on_checkBoxReadonly_toggled(bool bChecked)
+{
     setReadonly(bChecked);
 }
 
-void MSDOSWidget::on_pushButtonReload_clicked() {
+void MSDOSWidget::on_pushButtonReload_clicked()
+{
     ui->pushButtonReload->setEnabled(false);
     reload();
 
     QTimer::singleShot(1000, this, SLOT(enableButton()));
 }
 
-void MSDOSWidget::enableButton() {
+void MSDOSWidget::enableButton()
+{
     ui->pushButtonReload->setEnabled(true);
 }
 
-void MSDOSWidget::on_tableWidget_DOS_HEADER_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn) {
+void MSDOSWidget::on_tableWidget_DOS_HEADER_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
     Q_UNUSED(nCurrentRow);
     Q_UNUSED(nCurrentColumn);
     Q_UNUSED(nPreviousRow);
@@ -417,38 +439,46 @@ void MSDOSWidget::on_tableWidget_DOS_HEADER_currentCellChanged(int nCurrentRow, 
     setHeaderTableSelection(ui->widgetHex_DOS_HEADER, ui->tableWidget_DOS_HEADER);
 }
 
-void MSDOSWidget::on_toolButtonPrev_clicked() {
+void MSDOSWidget::on_toolButtonPrev_clicked()
+{
     setAddPageEnabled(false);
     ui->treeWidgetNavi->setCurrentItem(getPrevPage());
     setAddPageEnabled(true);
 }
 
-void MSDOSWidget::on_toolButtonNext_clicked() {
+void MSDOSWidget::on_toolButtonNext_clicked()
+{
     setAddPageEnabled(false);
     ui->treeWidgetNavi->setCurrentItem(getNextPage());
     setAddPageEnabled(true);
 }
 
-void MSDOSWidget::on_pushButtonHex_clicked() {
+void MSDOSWidget::on_pushButtonHex_clicked()
+{
     setTreeItem(ui->treeWidgetNavi, SMSDOS::TYPE_HEX);
 }
 
-void MSDOSWidget::on_pushButtonDisasm_clicked() {
+void MSDOSWidget::on_pushButtonDisasm_clicked()
+{
     setTreeItem(ui->treeWidgetNavi, SMSDOS::TYPE_DISASM);
 }
 
-void MSDOSWidget::on_pushButtonStrings_clicked() {
+void MSDOSWidget::on_pushButtonStrings_clicked()
+{
     setTreeItem(ui->treeWidgetNavi, SMSDOS::TYPE_STRINGS);
 }
 
-void MSDOSWidget::on_pushButtonMemoryMap_clicked() {
+void MSDOSWidget::on_pushButtonMemoryMap_clicked()
+{
     setTreeItem(ui->treeWidgetNavi, SMSDOS::TYPE_MEMORYMAP);
 }
 
-void MSDOSWidget::on_pushButtonEntropy_clicked() {
+void MSDOSWidget::on_pushButtonEntropy_clicked()
+{
     setTreeItem(ui->treeWidgetNavi, SMSDOS::TYPE_ENTROPY);
 }
 
-void MSDOSWidget::on_pushButtonHeuristicScan_clicked() {
+void MSDOSWidget::on_pushButtonHeuristicScan_clicked()
+{
     setTreeItem(ui->treeWidgetNavi, SMSDOS::TYPE_HEURISTICSCAN);
 }

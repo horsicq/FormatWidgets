@@ -20,34 +20,41 @@
  */
 #include "processdata.h"
 
-ProcessData::ProcessData() {
+ProcessData::ProcessData()
+{
     g_pPdStruct = nullptr;
     g_nFreeIndex = -1;
 }
 
-void ProcessData::setPdStruct(XBinary::PDSTRUCT *pPdStruct) {
+void ProcessData::setPdStruct(XBinary::PDSTRUCT *pPdStruct)
+{
     g_pPdStruct = pPdStruct;
 }
 
-void ProcessData::setMaximum(quint64 nMaximum) {
+void ProcessData::setMaximum(quint64 nMaximum)
+{
     XBinary::setPdStructTotal(g_pPdStruct, g_nFreeIndex, nMaximum);
 }
 
-void ProcessData::incValue() {
+void ProcessData::incValue()
+{
     XBinary::setPdStructCurrentIncrement(g_pPdStruct, g_nFreeIndex);
 }
 
-bool ProcessData::isRun() {
+bool ProcessData::isRun()
+{
     return !(g_pPdStruct->bIsStop);
 }
 
-void ProcessData::ajustTreeView(QWidget *pWidget, QTreeView *pTreeView) {
+void ProcessData::ajustTreeView(QWidget *pWidget, QTreeView *pTreeView)
+{
     Q_UNUSED(pWidget)
 
     pTreeView->expand(pTreeView->model()->index(0, 0));
 }
 
-QList<QString> ProcessData::getStructList(const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount) {
+QList<QString> ProcessData::getStructList(const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount)
+{
     QList<QString> listResult;
 
     for (qint32 i = 0; i < nRecordCount; i++) {
@@ -57,7 +64,8 @@ QList<QString> ProcessData::getStructList(const FW_DEF::HEADER_RECORD *pRecords,
     return listResult;
 }
 
-void ProcessData::setHeader(QStandardItemModel *pModel, QList<QString> *pListStrings) {
+void ProcessData::setHeader(QStandardItemModel *pModel, QList<QString> *pListStrings)
+{
     int nNumberOfRecords = pListStrings->count();
 
     for (qint32 i = 0; i < nNumberOfRecords; i++) {
@@ -65,7 +73,8 @@ void ProcessData::setHeader(QStandardItemModel *pModel, QList<QString> *pListStr
     }
 }
 
-void ProcessData::process() {
+void ProcessData::process()
+{
     QElapsedTimer scanTimer;
     scanTimer.start();
 

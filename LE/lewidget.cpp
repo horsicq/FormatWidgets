@@ -22,7 +22,8 @@
 
 #include "ui_lewidget.h"
 
-LEWidget::LEWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::LEWidget) {
+LEWidget::LEWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::LEWidget)
+{
     ui->setupUi(this);
 
     memset(g_subDevice, 0, sizeof g_subDevice);
@@ -30,16 +31,19 @@ LEWidget::LEWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::LEWidge
     initWidget();
 }
 
-LEWidget::LEWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) : LEWidget(pParent) {
+LEWidget::LEWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) : LEWidget(pParent)
+{
     LEWidget::setData(pDevice, options, 0, 0, 0);
     LEWidget::reload();
 }
 
-LEWidget::~LEWidget() {
+LEWidget::~LEWidget()
+{
     delete ui;
 }
 
-void LEWidget::clear() {
+void LEWidget::clear()
+{
     LEWidget::reset();
 
     memset(g_lineEdit_DOS_HEADER, 0, sizeof g_lineEdit_DOS_HEADER);
@@ -56,11 +60,13 @@ void LEWidget::clear() {
     ui->treeWidgetNavi->clear();
 }
 
-void LEWidget::cleanup() {
+void LEWidget::cleanup()
+{
     LEWidget::clear();
 }
 
-void LEWidget::reload() {
+void LEWidget::reload()
+{
     LEWidget::clear();
 
     ui->checkBoxReadonly->setEnabled(!isReadonly());
@@ -96,7 +102,8 @@ void LEWidget::reload() {
     }
 }
 
-FormatWidget::SV LEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset) {
+FormatWidget::SV LEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
+{
     Q_UNUSED(nVtype)
     Q_UNUSED(nPosition)
     Q_UNUSED(nOffset)
@@ -395,7 +402,8 @@ FormatWidget::SV LEWidget::_setValue(QVariant vValue, int nStype, int nNdata, in
     return result;
 }
 
-void LEWidget::setReadonly(bool bState) {
+void LEWidget::setReadonly(bool bState)
+{
     setLineEditsReadOnly(g_lineEdit_DOS_HEADER, N_LE_DOS_HEADER::__data_size, bState);
     setLineEditsReadOnly(g_lineEdit_VXD_HEADER, N_VXD_HEADER::__data_size, bState);
 
@@ -406,14 +414,16 @@ void LEWidget::setReadonly(bool bState) {
     ui->widgetStrings->setReadonly(bState);
 }
 
-void LEWidget::blockSignals(bool bState) {
+void LEWidget::blockSignals(bool bState)
+{
     _blockSignals((QObject **)g_lineEdit_DOS_HEADER, N_LE_DOS_HEADER::__data_size, bState);
     _blockSignals((QObject **)g_lineEdit_VXD_HEADER, N_VXD_HEADER::__data_size, bState);
 
     _blockSignals((QObject **)g_comboBox, __CB_size, bState);
 }
 
-void LEWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget) {
+void LEWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
+{
     // TODO like MACH !!!
     Q_UNUSED(nType)
 
@@ -426,7 +436,8 @@ void LEWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget) {
     pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, nSymbolWidth * 15);
 }
 
-QString LEWidget::typeIdToString(int nType) {
+QString LEWidget::typeIdToString(int nType)
+{
     Q_UNUSED(nType)
 
     QString sResult;
@@ -436,27 +447,32 @@ QString LEWidget::typeIdToString(int nType) {
     return sResult;
 }
 
-void LEWidget::_showInDisasmWindowAddress(qint64 nAddress) {
+void LEWidget::_showInDisasmWindowAddress(qint64 nAddress)
+{
     setTreeItem(ui->treeWidgetNavi, SLE::TYPE_DISASM);
     ui->widgetDisasm->goToAddress(nAddress);
 }
 
-void LEWidget::_showInDisasmWindowOffset(qint64 nOffset) {
+void LEWidget::_showInDisasmWindowOffset(qint64 nOffset)
+{
     setTreeItem(ui->treeWidgetNavi, SLE::TYPE_DISASM);
     ui->widgetDisasm->goToOffset(nOffset);
 }
 
-void LEWidget::_showInMemoryMapWindowOffset(qint64 nOffset) {
+void LEWidget::_showInMemoryMapWindowOffset(qint64 nOffset)
+{
     setTreeItem(ui->treeWidgetNavi, SLE::TYPE_MEMORYMAP);
     ui->widgetMemoryMap->goToOffset(nOffset);
 }
 
-void LEWidget::_showInHexWindow(qint64 nOffset, qint64 nSize) {
+void LEWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
+{
     setTreeItem(ui->treeWidgetNavi, SLE::TYPE_HEX);
     ui->widgetHex->setSelection(nOffset, nSize);
 }
 
-void LEWidget::reloadData() {
+void LEWidget::reloadData()
+{
     qint32 nType = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_TYPE).toInt();
     qint64 nDataOffset = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET).toLongLong();
     qint64 nDataSize = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_SIZE).toLongLong();
@@ -686,7 +702,8 @@ void LEWidget::reloadData() {
     addInit(sInit);
 }
 
-void LEWidget::widgetValueChanged(quint64 nValue) {
+void LEWidget::widgetValueChanged(quint64 nValue)
+{
     QWidget *pWidget = qobject_cast<QWidget *>(sender());
     int nStype = pWidget->property("STYPE").toInt();
     int nNdata = pWidget->property("NDATA").toInt();
@@ -715,7 +732,8 @@ void LEWidget::widgetValueChanged(quint64 nValue) {
     }
 }
 
-void LEWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent, QTreeWidgetItem *pPrevious) {
+void LEWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent, QTreeWidgetItem *pPrevious)
+{
     Q_UNUSED(pPrevious)
 
     if (pCurrent) {
@@ -726,22 +744,26 @@ void LEWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent, Q
     }
 }
 
-void LEWidget::on_checkBoxReadonly_toggled(bool bChecked) {
+void LEWidget::on_checkBoxReadonly_toggled(bool bChecked)
+{
     setReadonly(bChecked);
 }
 
-void LEWidget::on_pushButtonReload_clicked() {
+void LEWidget::on_pushButtonReload_clicked()
+{
     ui->pushButtonReload->setEnabled(false);
     reload();
 
     QTimer::singleShot(1000, this, SLOT(enableButton()));  // TODO const
 }
 
-void LEWidget::enableButton() {
+void LEWidget::enableButton()
+{
     ui->pushButtonReload->setEnabled(true);
 }
 
-void LEWidget::on_tableWidget_DOS_HEADER_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn) {
+void LEWidget::on_tableWidget_DOS_HEADER_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
     Q_UNUSED(nCurrentRow)
     Q_UNUSED(nCurrentColumn)
     Q_UNUSED(nPreviousRow)
@@ -750,7 +772,8 @@ void LEWidget::on_tableWidget_DOS_HEADER_currentCellChanged(int nCurrentRow, int
     setHeaderTableSelection(ui->widgetHex_DOS_HEADER, ui->tableWidget_DOS_HEADER);
 }
 
-void LEWidget::on_tableWidget_VXD_HEADER_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn) {
+void LEWidget::on_tableWidget_VXD_HEADER_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
     Q_UNUSED(nCurrentRow)
     Q_UNUSED(nCurrentColumn)
     Q_UNUSED(nPreviousRow)
@@ -759,7 +782,8 @@ void LEWidget::on_tableWidget_VXD_HEADER_currentCellChanged(int nCurrentRow, int
     setHeaderTableSelection(ui->widgetHex_VXD_HEADER, ui->tableWidget_VXD_HEADER);
 }
 
-void LEWidget::on_tableView_Objects_customContextMenuRequested(const QPoint &pos) {
+void LEWidget::on_tableView_Objects_customContextMenuRequested(const QPoint &pos)
+{
     qint32 nRow = ui->tableView_Objects->currentIndex().row();
 
     if (nRow != -1) {
@@ -785,51 +809,61 @@ void LEWidget::on_tableView_Objects_customContextMenuRequested(const QPoint &pos
     }
 }
 
-void LEWidget::on_tableView_Objects_doubleClicked(const QModelIndex &index) {
+void LEWidget::on_tableView_Objects_doubleClicked(const QModelIndex &index)
+{
     Q_UNUSED(index)
 
     //    editSectionHeader();
 }
 
-void LEWidget::onTableView_Objects_currentRowChanged(const QModelIndex &current, const QModelIndex &previous) {
+void LEWidget::onTableView_Objects_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
     Q_UNUSED(current)
     Q_UNUSED(previous)
 
     loadHexSubdeviceByTableView(current.row(), SLE::TYPE_OBJECTS, ui->widgetHex_Object, ui->tableView_Objects, &g_subDevice[SLE::TYPE_OBJECTS]);
 }
 
-void LEWidget::on_toolButtonPrev_clicked() {
+void LEWidget::on_toolButtonPrev_clicked()
+{
     setAddPageEnabled(false);
     ui->treeWidgetNavi->setCurrentItem(getPrevPage());
     setAddPageEnabled(true);
 }
 
-void LEWidget::on_toolButtonNext_clicked() {
+void LEWidget::on_toolButtonNext_clicked()
+{
     setAddPageEnabled(false);
     ui->treeWidgetNavi->setCurrentItem(getNextPage());
     setAddPageEnabled(true);
 }
 
-void LEWidget::on_pushButtonHex_clicked() {
+void LEWidget::on_pushButtonHex_clicked()
+{
     setTreeItem(ui->treeWidgetNavi, SLE::TYPE_HEX);
 }
 
-void LEWidget::on_pushButtonDisasm_clicked() {
+void LEWidget::on_pushButtonDisasm_clicked()
+{
     setTreeItem(ui->treeWidgetNavi, SLE::TYPE_DISASM);
 }
 
-void LEWidget::on_pushButtonStrings_clicked() {
+void LEWidget::on_pushButtonStrings_clicked()
+{
     setTreeItem(ui->treeWidgetNavi, SLE::TYPE_STRINGS);
 }
 
-void LEWidget::on_pushButtonMemoryMap_clicked() {
+void LEWidget::on_pushButtonMemoryMap_clicked()
+{
     setTreeItem(ui->treeWidgetNavi, SLE::TYPE_MEMORYMAP);
 }
 
-void LEWidget::on_pushButtonEntropy_clicked() {
+void LEWidget::on_pushButtonEntropy_clicked()
+{
     setTreeItem(ui->treeWidgetNavi, SLE::TYPE_ENTROPY);
 }
 
-void LEWidget::on_pushButtonHeuristicScan_clicked() {
+void LEWidget::on_pushButtonHeuristicScan_clicked()
+{
     setTreeItem(ui->treeWidgetNavi, SLE::TYPE_HEURISTICSCAN);
 }

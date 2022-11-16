@@ -22,22 +22,26 @@
 
 #include "ui_dialogbinary.h"
 
-DialogBinary::DialogBinary(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogBinary) {
+DialogBinary::DialogBinary(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogBinary)
+{
     ui->setupUi(this);
 
     setWindowFlags(Qt::Window);
 }
 
-DialogBinary::~DialogBinary() {
+DialogBinary::~DialogBinary()
+{
     delete ui;
 }
 
-void DialogBinary::setData(QIODevice *pDevice, FW_DEF::OPTIONS options) {
+void DialogBinary::setData(QIODevice *pDevice, FW_DEF::OPTIONS options)
+{
     ui->widget->setData(pDevice, options, 0, 0, 0);
     ui->widget->reload();
 }
 
-void DialogBinary::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions) {
+void DialogBinary::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
+{
     ui->widget->setGlobal(pShortcuts, pXOptions);
 
     XShortcutsDialog::setGlobal(pShortcuts, pXOptions);

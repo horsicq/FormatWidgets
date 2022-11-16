@@ -22,12 +22,14 @@
 
 #include "ui_machsectionheaderwidget.h"
 
-MACHSectionHeaderWidget::MACHSectionHeaderWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::MACHSectionHeaderWidget) {
+MACHSectionHeaderWidget::MACHSectionHeaderWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::MACHSectionHeaderWidget)
+{
     ui->setupUi(this);
 }
 
 MACHSectionHeaderWidget::MACHSectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent)
-    : MACHSectionHeaderWidget(pParent) {
+    : MACHSectionHeaderWidget(pParent)
+{
     MACHSectionHeaderWidget::setData(pDevice, options, nNumber, nOffset, nType);
 
     XMACH mach(getDevice(), getOptions().bIsImage, getOptions().nImageBase);
@@ -122,7 +124,8 @@ MACHSectionHeaderWidget::MACHSectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPT
     }
 }
 
-MACHSectionHeaderWidget::~MACHSectionHeaderWidget() {
+MACHSectionHeaderWidget::~MACHSectionHeaderWidget()
+{
     if (g_ppLinedEdit) {
         delete[] g_ppLinedEdit;
     }
@@ -138,7 +141,8 @@ MACHSectionHeaderWidget::~MACHSectionHeaderWidget() {
     delete ui;
 }
 
-void MACHSectionHeaderWidget::clear() {
+void MACHSectionHeaderWidget::clear()
+{
     reset();
 
     memset(g_ppLinedEdit, 0, g_nLineEditSize * sizeof(XLineEditHEX *));
@@ -150,11 +154,13 @@ void MACHSectionHeaderWidget::clear() {
     ui->checkBoxReadonly->setChecked(true);
 }
 
-void MACHSectionHeaderWidget::cleanup() {
+void MACHSectionHeaderWidget::cleanup()
+{
     MACHSectionHeaderWidget::clear();
 }
 
-void MACHSectionHeaderWidget::reload() {
+void MACHSectionHeaderWidget::reload()
+{
     MACHSectionHeaderWidget::clear();
 
     ui->checkBoxReadonly->setEnabled(!isReadonly());
@@ -162,12 +168,14 @@ void MACHSectionHeaderWidget::reload() {
     reloadData();
 }
 
-void MACHSectionHeaderWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions) {
+void MACHSectionHeaderWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
+{
     ui->widgetHex->setGlobal(pShortcuts, pXOptions);
     XShortcutsWidget::setGlobal(pShortcuts, pXOptions);
 }
 
-FormatWidget::SV MACHSectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset) {
+FormatWidget::SV MACHSectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
+{
     Q_UNUSED(nVtype)
     Q_UNUSED(nPosition)
 
@@ -624,17 +632,20 @@ FormatWidget::SV MACHSectionHeaderWidget::_setValue(QVariant vValue, int nStype,
     return result;
 }
 
-void MACHSectionHeaderWidget::setReadonly(bool bState) {
+void MACHSectionHeaderWidget::setReadonly(bool bState)
+{
     setLineEditsReadOnly(g_ppLinedEdit, g_nLineEditSize, bState);
     setComboBoxesReadOnly(g_ppComboBox, g_nComboBoxSize, bState);
 }
 
-void MACHSectionHeaderWidget::blockSignals(bool bState) {
+void MACHSectionHeaderWidget::blockSignals(bool bState)
+{
     _blockSignals((QObject **)g_ppLinedEdit, g_nLineEditSize, bState);
     _blockSignals((QObject **)g_ppComboBox, g_nComboBoxSize, bState);
 }
 
-void MACHSectionHeaderWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget) {
+void MACHSectionHeaderWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
+{
     XBinary::MODE mode = XMACH::getMode(getDevice(), getOptions().bIsImage, getOptions().nImageBase);
 
     pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET, getColumnWidth(this, CW_UINT16, mode));
@@ -714,11 +725,13 @@ void MACHSectionHeaderWidget::adjustHeaderTable(int nType, QTableWidget *pTableW
     }
 }
 
-void MACHSectionHeaderWidget::on_checkBoxReadonly_toggled(bool bChecked) {
+void MACHSectionHeaderWidget::on_checkBoxReadonly_toggled(bool bChecked)
+{
     setReadonly(bChecked);
 }
 
-void MACHSectionHeaderWidget::reloadData() {
+void MACHSectionHeaderWidget::reloadData()
+{
     int nType = getType();
 
     XMACH mach(getDevice(), getOptions().bIsImage, getOptions().nImageBase);
@@ -1132,7 +1145,8 @@ void MACHSectionHeaderWidget::reloadData() {
     }
 }
 
-void MACHSectionHeaderWidget::widgetValueChanged(quint64 nValue) {
+void MACHSectionHeaderWidget::widgetValueChanged(quint64 nValue)
+{
     QWidget *pWidget = qobject_cast<QWidget *>(sender());
     int nStype = pWidget->property("STYPE").toInt();
     int nNdata = pWidget->property("NDATA").toInt();
@@ -1200,7 +1214,8 @@ void MACHSectionHeaderWidget::widgetValueChanged(quint64 nValue) {
     }
 }
 
-void MACHSectionHeaderWidget::on_tableWidget_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn) {
+void MACHSectionHeaderWidget::on_tableWidget_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
     Q_UNUSED(nCurrentRow)
     Q_UNUSED(nCurrentColumn)
     Q_UNUSED(nPreviousRow)

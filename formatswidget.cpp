@@ -22,7 +22,8 @@
 
 #include "ui_formatswidget.h"
 
-FormatsWidget::FormatsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui::FormatsWidget) {
+FormatsWidget::FormatsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui::FormatsWidget)
+{
     ui->setupUi(this);
 
     const bool bBlocked1 = ui->comboBoxScanEngine->blockSignals(true);
@@ -43,7 +44,8 @@ FormatsWidget::FormatsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(n
     ui->comboBoxScanEngine->blockSignals(bBlocked1);
 }
 
-void FormatsWidget::setFileName(QString sFileName, bool bScan) {
+void FormatsWidget::setFileName(QString sFileName, bool bScan)
+{
     this->g_sFileName = sFileName;
     this->g_bScan = bScan;
 
@@ -52,14 +54,16 @@ void FormatsWidget::setFileName(QString sFileName, bool bScan) {
     reload();
 }
 
-void FormatsWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions) {
+void FormatsWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
+{
     ui->pageScanDIE->setGlobal(pShortcuts, pXOptions);
     ui->pageScanNFD->setGlobal(pShortcuts, pXOptions);
 
     XShortcutsWidget::setGlobal(pShortcuts, pXOptions);
 }
 
-void FormatsWidget::adjustView() {
+void FormatsWidget::adjustView()
+{
     QString sScanEngine = getGlobalOptions()->getScanEngine();
 
     if (sScanEngine == "die") {
@@ -74,17 +78,20 @@ void FormatsWidget::adjustView() {
     XShortcutsWidget::adjustView();
 }
 
-FormatsWidget::~FormatsWidget() {
+FormatsWidget::~FormatsWidget()
+{
     delete ui;
 }
 
-void FormatsWidget::on_comboBoxFileType_currentIndexChanged(int nIndex) {
+void FormatsWidget::on_comboBoxFileType_currentIndexChanged(int nIndex)
+{
     Q_UNUSED(nIndex)
 
     reload();
 }
 
-void FormatsWidget::reload() {
+void FormatsWidget::reload()
+{
     adjustScanTab(getScanEngine((SE)ui->comboBoxScanEngine->currentIndex()));
 
     XBinary::FT fileType = getCurrentFileType();
@@ -282,7 +289,8 @@ void FormatsWidget::reload() {
     }
 }
 
-void FormatsWidget::scan() {
+void FormatsWidget::scan()
+{
     int nIndex = ui->comboBoxScanEngine->currentIndex();
 
     nIndex = getScanEngine((SE)nIndex);
@@ -300,7 +308,8 @@ void FormatsWidget::scan() {
     // TODO YARA
 }
 
-void FormatsWidget::on_pushButtonDisasm_clicked() {
+void FormatsWidget::on_pushButtonDisasm_clicked()
+{
     if (g_sFileName != "") {
         QFile file;
         file.setFileName(g_sFileName);
@@ -322,7 +331,8 @@ void FormatsWidget::on_pushButtonDisasm_clicked() {
     }
 }
 
-void FormatsWidget::on_pushButtonHexEntryPoint_clicked() {
+void FormatsWidget::on_pushButtonHexEntryPoint_clicked()
+{
     if (g_sFileName != "") {
         QFile file;
         file.setFileName(g_sFileName);
@@ -342,7 +352,8 @@ void FormatsWidget::on_pushButtonHexEntryPoint_clicked() {
     }
 }
 
-void FormatsWidget::on_pushButtonMemoryMap_clicked() {
+void FormatsWidget::on_pushButtonMemoryMap_clicked()
+{
     if (g_sFileName != "") {
         QFile file;
         file.setFileName(g_sFileName);
@@ -358,63 +369,78 @@ void FormatsWidget::on_pushButtonMemoryMap_clicked() {
     }
 }
 
-void FormatsWidget::on_pushButtonPEExport_clicked() {
+void FormatsWidget::on_pushButtonPEExport_clicked()
+{
     showPE(SPE::TYPE_EXPORT);
 }
 
-void FormatsWidget::on_pushButtonPEImport_clicked() {
+void FormatsWidget::on_pushButtonPEImport_clicked()
+{
     showPE(SPE::TYPE_IMPORT);
 }
 
-void FormatsWidget::on_pushButtonPEResources_clicked() {
+void FormatsWidget::on_pushButtonPEResources_clicked()
+{
     showPE(SPE::TYPE_RESOURCES);
 }
 
-void FormatsWidget::on_pushButtonPEOverlay_clicked() {
+void FormatsWidget::on_pushButtonPEOverlay_clicked()
+{
     showPE(SPE::TYPE_OVERLAY);
 }
 
-void FormatsWidget::on_pushButtonPE_clicked() {
+void FormatsWidget::on_pushButtonPE_clicked()
+{
     showPE(SPE::TYPE_IMAGE_FILE_HEADER);
 }
 
-void FormatsWidget::on_pushButtonPESections_clicked() {
+void FormatsWidget::on_pushButtonPESections_clicked()
+{
     showPE(SPE::TYPE_SECTIONS);
 }
 
-void FormatsWidget::on_pushButtonPEManifest_clicked() {
+void FormatsWidget::on_pushButtonPEManifest_clicked()
+{
     showPE(SPE::TYPE_RESOURCES_MANIFEST);
 }
 
-void FormatsWidget::on_pushButtonPEVersion_clicked() {
+void FormatsWidget::on_pushButtonPEVersion_clicked()
+{
     showPE(SPE::TYPE_RESOURCES_VERSION);
 }
 
-void FormatsWidget::on_pushButtonPENET_clicked() {
+void FormatsWidget::on_pushButtonPENET_clicked()
+{
     showPE(SPE::TYPE_NETHEADER);
 }
 
-void FormatsWidget::on_pushButtonMACH_clicked() {
+void FormatsWidget::on_pushButtonMACH_clicked()
+{
     showMACH(SMACH::TYPE_mach_header);
 }
 
-void FormatsWidget::on_pushButtonMACHSegments_clicked() {
+void FormatsWidget::on_pushButtonMACHSegments_clicked()
+{
     showMACH(SMACH::TYPE_mach_segments);
 }
 
-void FormatsWidget::on_pushButtonMACHSections_clicked() {
+void FormatsWidget::on_pushButtonMACHSections_clicked()
+{
     showMACH(SMACH::TYPE_mach_sections);
 }
 
-void FormatsWidget::on_pushButtonMACHCommands_clicked() {
+void FormatsWidget::on_pushButtonMACHCommands_clicked()
+{
     showMACH(SMACH::TYPE_mach_commands);
 }
 
-void FormatsWidget::on_pushButtonMACHLibraries_clicked() {
+void FormatsWidget::on_pushButtonMACHLibraries_clicked()
+{
     showMACH(SMACH::TYPE_mach_libraries);
 }
 
-void FormatsWidget::showMSDOS(SMSDOS::TYPE type) {
+void FormatsWidget::showMSDOS(SMSDOS::TYPE type)
+{
     QFile file;
     file.setFileName(g_sFileName);
 
@@ -435,7 +461,8 @@ void FormatsWidget::showMSDOS(SMSDOS::TYPE type) {
     }
 }
 
-void FormatsWidget::showLE(SLE::TYPE type) {
+void FormatsWidget::showLE(SLE::TYPE type)
+{
     QFile file;
     file.setFileName(g_sFileName);
 
@@ -456,7 +483,8 @@ void FormatsWidget::showLE(SLE::TYPE type) {
     }
 }
 
-void FormatsWidget::showNE(SNE::TYPE type) {
+void FormatsWidget::showNE(SNE::TYPE type)
+{
     QFile file;
     file.setFileName(g_sFileName);
 
@@ -477,7 +505,8 @@ void FormatsWidget::showNE(SNE::TYPE type) {
     }
 }
 
-void FormatsWidget::showPE(SPE::TYPE type) {
+void FormatsWidget::showPE(SPE::TYPE type)
+{
     QFile file;
     file.setFileName(g_sFileName);
 
@@ -498,7 +527,8 @@ void FormatsWidget::showPE(SPE::TYPE type) {
     }
 }
 
-void FormatsWidget::showELF(SELF::TYPE type) {
+void FormatsWidget::showELF(SELF::TYPE type)
+{
     QFile file;
     file.setFileName(g_sFileName);
 
@@ -519,7 +549,8 @@ void FormatsWidget::showELF(SELF::TYPE type) {
     }
 }
 
-void FormatsWidget::showMACH(SMACH::TYPE type) {
+void FormatsWidget::showMACH(SMACH::TYPE type)
+{
     QFile file;
     file.setFileName(g_sFileName);
 
@@ -540,7 +571,8 @@ void FormatsWidget::showMACH(SMACH::TYPE type) {
     }
 }
 
-void FormatsWidget::showDEX(SDEX::TYPE type) {
+void FormatsWidget::showDEX(SDEX::TYPE type)
+{
     QFile file;
     file.setFileName(g_sFileName);
 
@@ -561,55 +593,67 @@ void FormatsWidget::showDEX(SDEX::TYPE type) {
     }
 }
 
-XBinary::FT FormatsWidget::getCurrentFileType() {
+XBinary::FT FormatsWidget::getCurrentFileType()
+{
     XBinary::FT fileType = (XBinary::FT)(ui->comboBoxFileType->currentData().toInt());
 
     return fileType;
 }
 
-void FormatsWidget::on_pushButtonMSDOSOverlay_clicked() {
+void FormatsWidget::on_pushButtonMSDOSOverlay_clicked()
+{
     showMSDOS(SMSDOS::TYPE_OVERLAY);
 }
 
-void FormatsWidget::on_pushButtonMSDOS_clicked() {
+void FormatsWidget::on_pushButtonMSDOS_clicked()
+{
     showMSDOS(SMSDOS::TYPE_DOS_HEADER);
 }
 
-void FormatsWidget::on_pushButtonPETLS_clicked() {
+void FormatsWidget::on_pushButtonPETLS_clicked()
+{
     showPE(SPE::TYPE_TLS);
 }
 
-void FormatsWidget::on_pushButtonELF_clicked() {
+void FormatsWidget::on_pushButtonELF_clicked()
+{
     showELF(SELF::TYPE_Elf_Ehdr);
 }
 
-void FormatsWidget::on_pushButtonELFSections_clicked() {
+void FormatsWidget::on_pushButtonELFSections_clicked()
+{
     showELF(SELF::TYPE_Elf_Shdr);
 }
 
-void FormatsWidget::on_pushButtonELFPrograms_clicked() {
+void FormatsWidget::on_pushButtonELFPrograms_clicked()
+{
     showELF(SELF::TYPE_Elf_Phdr);
 }
 
-void FormatsWidget::on_comboBoxScanEngine_currentIndexChanged(int nIndex) {
+void FormatsWidget::on_comboBoxScanEngine_currentIndexChanged(int nIndex)
+{
     adjustScanTab(getScanEngine((SE)nIndex));
 
     scan();
 }
 
-void FormatsWidget::on_pushButtonLE_clicked() {
+void FormatsWidget::on_pushButtonLE_clicked()
+{
     showLE(SLE::TYPE_VXD_HEADER);
 }
 
-void FormatsWidget::on_pushButtonNE_clicked() {
+void FormatsWidget::on_pushButtonNE_clicked()
+{
     showNE(SNE::TYPE_OS2_HEADER);
 }
 
-void FormatsWidget::on_pushButtonDEX_clicked() {
+void FormatsWidget::on_pushButtonDEX_clicked()
+{
     showDEX(SDEX::TYPE_HEADER);
 }
 
-void FormatsWidget::on_pushButtonZIP_clicked() {
+void FormatsWidget::on_pushButtonZIP_clicked()
+{
     DialogArchive dialogArchive(this);
 
     FW_DEF::OPTIONS options = {};
@@ -620,7 +664,8 @@ void FormatsWidget::on_pushButtonZIP_clicked() {
     dialogArchive.exec();
 }
 
-void FormatsWidget::on_pushButtonMACHOFAT_clicked() {
+void FormatsWidget::on_pushButtonMACHOFAT_clicked()
+{
     QFile file;
     file.setFileName(g_sFileName);
 
@@ -639,7 +684,8 @@ void FormatsWidget::on_pushButtonMACHOFAT_clicked() {
     }
 }
 
-FormatsWidget::SE FormatsWidget::getScanEngine(FormatsWidget::SE seIndex) {
+FormatsWidget::SE FormatsWidget::getScanEngine(FormatsWidget::SE seIndex)
+{
     SE tabResult = seIndex;
 
     if (seIndex == SE_AUTO) {
@@ -658,7 +704,8 @@ FormatsWidget::SE FormatsWidget::getScanEngine(FormatsWidget::SE seIndex) {
     return tabResult;
 }
 
-void FormatsWidget::adjustScanTab(FormatsWidget::SE seIndex) {
+void FormatsWidget::adjustScanTab(FormatsWidget::SE seIndex)
+{
     if (seIndex == SE_DIE) {
         ui->stackedWidgetScan->setCurrentIndex(0);
     } else if (seIndex == SE_NFD) {
@@ -666,7 +713,8 @@ void FormatsWidget::adjustScanTab(FormatsWidget::SE seIndex) {
     }
 }
 
-void FormatsWidget::onScanStarted() {
+void FormatsWidget::onScanStarted()
+{
     ui->stackedWidgetMain->setEnabled(false);
     ui->groupBoxFileType->setEnabled(false);
     ui->groupBoxScanEngine->setEnabled(false);
@@ -674,7 +722,8 @@ void FormatsWidget::onScanStarted() {
     ui->groupBoxBaseAddress->setEnabled(false);
 }
 
-void FormatsWidget::onScanFinished() {
+void FormatsWidget::onScanFinished()
+{
     ui->stackedWidgetMain->setEnabled(true);
     ui->groupBoxFileType->setEnabled(true);
     ui->groupBoxScanEngine->setEnabled(true);
@@ -682,11 +731,13 @@ void FormatsWidget::onScanFinished() {
     ui->groupBoxBaseAddress->setEnabled(true);
 }
 
-void FormatsWidget::registerShortcuts(bool bState) {
+void FormatsWidget::registerShortcuts(bool bState)
+{
     Q_UNUSED(bState)
 }
 
-void FormatsWidget::on_pushButtonFileInfo_clicked() {
+void FormatsWidget::on_pushButtonFileInfo_clicked()
+{
     QString sFileName = g_sFileName;
 
     if (sFileName != "") {
@@ -706,7 +757,8 @@ void FormatsWidget::on_pushButtonFileInfo_clicked() {
     }
 }
 
-void FormatsWidget::on_pushButtonMIME_clicked() {
+void FormatsWidget::on_pushButtonMIME_clicked()
+{
     QString sFileName = g_sFileName;
 
     if (sFileName != "") {
@@ -724,7 +776,8 @@ void FormatsWidget::on_pushButtonMIME_clicked() {
     }
 }
 
-void FormatsWidget::on_pushButtonHash_clicked() {
+void FormatsWidget::on_pushButtonHash_clicked()
+{
     QString sFileName = g_sFileName;
 
     if (sFileName != "") {
@@ -743,7 +796,8 @@ void FormatsWidget::on_pushButtonHash_clicked() {
     }
 }
 
-void FormatsWidget::on_pushButtonStrings_clicked() {
+void FormatsWidget::on_pushButtonStrings_clicked()
+{
     QString sFileName = g_sFileName;
 
     if (sFileName != "") {
@@ -768,7 +822,8 @@ void FormatsWidget::on_pushButtonStrings_clicked() {
     }
 }
 
-void FormatsWidget::on_pushButtonSignatures_clicked() {
+void FormatsWidget::on_pushButtonSignatures_clicked()
+{
     QString sFileName = g_sFileName;
 
     if (sFileName != "") {
@@ -789,7 +844,8 @@ void FormatsWidget::on_pushButtonSignatures_clicked() {
     }
 }
 
-void FormatsWidget::on_pushButtonHex_clicked() {
+void FormatsWidget::on_pushButtonHex_clicked()
+{
     QString sFileName = g_sFileName;
 
     if (sFileName != "") {
@@ -809,7 +865,8 @@ void FormatsWidget::on_pushButtonHex_clicked() {
     }
 }
 
-void FormatsWidget::on_pushButtonEntropy_clicked() {
+void FormatsWidget::on_pushButtonEntropy_clicked()
+{
     QString sFileName = g_sFileName;
 
     if (sFileName != "") {
@@ -828,7 +885,8 @@ void FormatsWidget::on_pushButtonEntropy_clicked() {
     }
 }
 
-void FormatsWidget::on_pushButtonVirusTotal_clicked() {
+void FormatsWidget::on_pushButtonVirusTotal_clicked()
+{
     QString sFileName = g_sFileName;
 
     if (sFileName != "") {
@@ -852,7 +910,8 @@ void FormatsWidget::on_pushButtonVirusTotal_clicked() {
     }
 }
 
-void FormatsWidget::on_pushButtonExtractor_clicked() {
+void FormatsWidget::on_pushButtonExtractor_clicked()
+{
     QString sFileName = g_sFileName;
 
     if (sFileName != "") {

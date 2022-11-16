@@ -22,7 +22,8 @@
 
 #include "ui_dialogsearchsignatures.h"
 
-DialogSearchSignatures::DialogSearchSignatures(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogSearchSignatures) {
+DialogSearchSignatures::DialogSearchSignatures(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogSearchSignatures)
+{
     ui->setupUi(this);
 
     setWindowFlags(Qt::Window);
@@ -30,23 +31,28 @@ DialogSearchSignatures::DialogSearchSignatures(QWidget *pParent) : XShortcutsDia
     connect(ui->searchSignaturesWidget, SIGNAL(showHex(qint64, qint64)), this, SIGNAL(showHex(qint64, qint64)));
 }
 
-DialogSearchSignatures::~DialogSearchSignatures() {
+DialogSearchSignatures::~DialogSearchSignatures()
+{
     delete ui;
 }
 
-void DialogSearchSignatures::setData(QIODevice *pDevice, XBinary::FT fileType, SearchSignaturesWidget::OPTIONS options, bool bAuto) {
+void DialogSearchSignatures::setData(QIODevice *pDevice, XBinary::FT fileType, SearchSignaturesWidget::OPTIONS options, bool bAuto)
+{
     ui->searchSignaturesWidget->setData(pDevice, fileType, options, bAuto);
 }
 
-void DialogSearchSignatures::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions) {
+void DialogSearchSignatures::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
+{
     ui->searchSignaturesWidget->setGlobal(pShortcuts, pXOptions);
     XShortcutsDialog::setGlobal(pShortcuts, pXOptions);
 }
 
-void DialogSearchSignatures::adjust() {
+void DialogSearchSignatures::adjust()
+{
     ui->searchSignaturesWidget->adjust();
 }
 
-void DialogSearchSignatures::on_pushButtonClose_clicked() {
+void DialogSearchSignatures::on_pushButtonClose_clicked()
+{
     this->close();
 }

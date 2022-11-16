@@ -20,7 +20,8 @@
  */
 #include "neprocessdata.h"
 
-NEProcessData::NEProcessData(int nType, QStandardItemModel **ppModel, XNE *pNE, qint64 nOffset, qint64 nSize) : ProcessData() {
+NEProcessData::NEProcessData(int nType, QStandardItemModel **ppModel, XNE *pNE, qint64 nOffset, qint64 nSize) : ProcessData()
+{
     this->g_nType = nType;
     this->g_ppModel = ppModel;
     this->g_pNE = pNE;
@@ -28,7 +29,8 @@ NEProcessData::NEProcessData(int nType, QStandardItemModel **ppModel, XNE *pNE, 
     this->g_nSize = nSize;
 }
 
-void NEProcessData::_process() {
+void NEProcessData::_process()
+{
     if (g_nType == SNE::TYPE_SEGMENTS) {
         QList<QString> listLabels;
         listLabels.append("");
@@ -66,7 +68,8 @@ void NEProcessData::_process() {
     }
 }
 
-void NEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView) {
+void NEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
+{
     Q_UNUSED(pWidget)
     Q_UNUSED(pTableView)
 }

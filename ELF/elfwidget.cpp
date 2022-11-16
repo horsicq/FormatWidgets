@@ -22,7 +22,8 @@
 
 #include "ui_elfwidget.h"
 
-ELFWidget::ELFWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::ELFWidget) {
+ELFWidget::ELFWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::ELFWidget)
+{
     ui->setupUi(this);
 
     memset(g_subDevice, 0, sizeof g_subDevice);
@@ -30,16 +31,19 @@ ELFWidget::ELFWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::ELFWi
     initWidget();
 }
 
-ELFWidget::ELFWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) : ELFWidget(pParent) {
+ELFWidget::ELFWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) : ELFWidget(pParent)
+{
     ELFWidget::setData(pDevice, options, 0, 0, 0);
     ELFWidget::reload();
 }
 
-ELFWidget::~ELFWidget() {
+ELFWidget::~ELFWidget()
+{
     delete ui;
 }
 
-void ELFWidget::clear() {
+void ELFWidget::clear()
+{
     setTreeItem(ui->treeWidgetNavi, 0);
 
     ELFWidget::reset();
@@ -60,10 +64,12 @@ void ELFWidget::clear() {
     ui->treeWidgetNavi->clear();
 }
 
-void ELFWidget::cleanup() {
+void ELFWidget::cleanup()
+{
 }
 
-void ELFWidget::reload() {
+void ELFWidget::reload()
+{
     ELFWidget::clear();
 
     ui->checkBoxReadonly->setEnabled(!isReadonly());
@@ -117,7 +123,8 @@ void ELFWidget::reload() {
     }
 }
 
-FormatWidget::SV ELFWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset) {
+FormatWidget::SV ELFWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
+{
     Q_UNUSED(nVtype)
     Q_UNUSED(nPosition)
 
@@ -283,7 +290,8 @@ FormatWidget::SV ELFWidget::_setValue(QVariant vValue, int nStype, int nNdata, i
     return result;
 }
 
-void ELFWidget::setReadonly(bool bState) {
+void ELFWidget::setReadonly(bool bState)
+{
     setLineEditsReadOnly(g_lineEdit_Elf_Ehdr, N_Elf_Ehdr::__data_size, bState);
     setLineEditsReadOnly(g_lineEdit_Elf_Interpreter, N_ELF_INTERPRETER::__data_size, bState);
     setLineEditsReadOnly(g_lineEdit_Elf_RunPath, N_ELF_RUNPATH::__data_size, bState);
@@ -300,7 +308,8 @@ void ELFWidget::setReadonly(bool bState) {
     ui->widgetHex_StringTable->setReadonly(bState);
 }
 
-void ELFWidget::blockSignals(bool bState) {
+void ELFWidget::blockSignals(bool bState)
+{
     _blockSignals((QObject **)g_lineEdit_Elf_Ehdr, N_Elf_Ehdr::__data_size, bState);
     _blockSignals((QObject **)g_lineEdit_Elf_Interpreter, N_ELF_INTERPRETER::__data_size, bState);
     _blockSignals((QObject **)g_lineEdit_Elf_RunPath, N_ELF_RUNPATH::__data_size, bState);
@@ -308,7 +317,8 @@ void ELFWidget::blockSignals(bool bState) {
     _blockSignals((QObject **)g_comboBox, __CB_size, bState);
 }
 
-void ELFWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget) {
+void ELFWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
+{
     XBinary::MODE mode = XELF::getMode(getDevice(), getOptions().bIsImage, getOptions().nImageBase);
 
     pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET, getColumnWidth(this, CW_UINT16, mode));
@@ -323,7 +333,8 @@ void ELFWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget) {
     }
 }
 
-void ELFWidget::reloadData() {
+void ELFWidget::reloadData()
+{
     qint32 nType = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_TYPE).toInt();
     qint64 nDataOffset = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET).toLongLong();
     qint64 nDataSize = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_SIZE).toLongLong();
@@ -629,7 +640,8 @@ void ELFWidget::reloadData() {
     addInit(sInit);
 }
 
-void ELFWidget::addDatasets(XELF *pElf, QTreeWidgetItem *pParent, QList<XBinary::DATASET> *pListDataSets) {
+void ELFWidget::addDatasets(XELF *pElf, QTreeWidgetItem *pParent, QList<XBinary::DATASET> *pListDataSets)
+{
     qint32 nNumberOfRecords = pListDataSets->count();
 
     for (qint32 i = 0; i < nNumberOfRecords; i++) {
@@ -674,7 +686,8 @@ void ELFWidget::addDatasets(XELF *pElf, QTreeWidgetItem *pParent, QList<XBinary:
     }
 }
 
-void ELFWidget::widgetValueChanged(quint64 nValue) {
+void ELFWidget::widgetValueChanged(quint64 nValue)
+{
     QWidget *pWidget = qobject_cast<QWidget *>(sender());
     qint32 nStype = pWidget->property("STYPE").toInt();
     qint32 nNdata = pWidget->property("NDATA").toInt();
@@ -706,7 +719,8 @@ void ELFWidget::widgetValueChanged(quint64 nValue) {
     }
 }
 
-void ELFWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurrent, QTreeWidgetItem *pItemPrevious) {
+void ELFWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurrent, QTreeWidgetItem *pItemPrevious)
+{
     Q_UNUSED(pItemPrevious)
 
     if (pItemCurrent) {
@@ -717,22 +731,26 @@ void ELFWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurre
     }
 }
 
-void ELFWidget::on_checkBoxReadonly_toggled(bool bChecked) {
+void ELFWidget::on_checkBoxReadonly_toggled(bool bChecked)
+{
     setReadonly(bChecked);
 }
 
-void ELFWidget::on_pushButtonReload_clicked() {
+void ELFWidget::on_pushButtonReload_clicked()
+{
     ui->pushButtonReload->setEnabled(false);
     reload();
 
     QTimer::singleShot(1000, this, SLOT(enableButton()));
 }
 
-void ELFWidget::enableButton() {
+void ELFWidget::enableButton()
+{
     ui->pushButtonReload->setEnabled(true);
 }
 
-void ELFWidget::loadShdr(int nRow) {
+void ELFWidget::loadShdr(int nRow)
+{
     if (nRow != -1) {
         QModelIndex index = ui->tableView_Elf_Shdr->model()->index(nRow, 0);
 
@@ -744,7 +762,8 @@ void ELFWidget::loadShdr(int nRow) {
     }
 }
 
-void ELFWidget::loadPhdr(int nRow) {
+void ELFWidget::loadPhdr(int nRow)
+{
     if (nRow != -1) {
         QModelIndex index = ui->tableView_Elf_Phdr->model()->index(nRow, 0);
 
@@ -756,7 +775,8 @@ void ELFWidget::loadPhdr(int nRow) {
     }
 }
 
-void ELFWidget::loadNote(int nRow) {
+void ELFWidget::loadNote(int nRow)
+{
     if (nRow != -1) {
         QModelIndex index = ui->tableView_Notes->model()->index(nRow, 0);
 
@@ -768,7 +788,8 @@ void ELFWidget::loadNote(int nRow) {
     }
 }
 
-void ELFWidget::on_tableWidget_Elf_Ehdr_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn) {
+void ELFWidget::on_tableWidget_Elf_Ehdr_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
     Q_UNUSED(nCurrentRow);
     Q_UNUSED(nCurrentColumn);
     Q_UNUSED(nPreviousRow);
@@ -777,51 +798,63 @@ void ELFWidget::on_tableWidget_Elf_Ehdr_currentCellChanged(int nCurrentRow, int 
     setHeaderTableSelection(ui->widgetHex_Elf_Ehdr, ui->tableWidget_Elf_Ehdr);
 }
 
-void ELFWidget::editSectionHeader() {
+void ELFWidget::editSectionHeader()
+{
     showSectionHeader(SELF::TYPE_Elf_Shdr, ui->tableView_Elf_Shdr);
 }
 
-void ELFWidget::sectionHex() {
+void ELFWidget::sectionHex()
+{
     showSectionHex(ui->tableView_Elf_Shdr);
 }
 
-void ELFWidget::sectionDisasm() {
+void ELFWidget::sectionDisasm()
+{
     showSectionDisasm(ui->tableView_Elf_Shdr);
 }
 
-void ELFWidget::sectionEntropy() {
+void ELFWidget::sectionEntropy()
+{
     showSectionEntropy(ui->tableView_Elf_Shdr);
 }
 
-void ELFWidget::sectionDump() {
+void ELFWidget::sectionDump()
+{
     dumpSection(ui->tableView_Elf_Shdr);
 }
 
-void ELFWidget::editProgramHeader() {
+void ELFWidget::editProgramHeader()
+{
     showSectionHeader(SELF::TYPE_Elf_Phdr, ui->tableView_Elf_Phdr);
 }
 
-void ELFWidget::programHex() {
+void ELFWidget::programHex()
+{
     showSectionHex(ui->tableView_Elf_Phdr);
 }
 
-void ELFWidget::programDisasm() {
+void ELFWidget::programDisasm()
+{
     showSectionDisasm(ui->tableView_Elf_Phdr);
 }
 
-void ELFWidget::programEntropy() {
+void ELFWidget::programEntropy()
+{
     showSectionEntropy(ui->tableView_Elf_Phdr);
 }
 
-void ELFWidget::programDump() {
+void ELFWidget::programDump()
+{
     dumpSection(ui->tableView_Elf_Phdr);
 }
 
-void ELFWidget::editDynamicArrayTag() {
+void ELFWidget::editDynamicArrayTag()
+{
     showSectionHeader(SELF::TYPE_Elf_DynamicArrayTags, ui->tableView_DynamicArrayTags);
 }
 
-void ELFWidget::on_tableView_SymbolTable_customContextMenuRequested(const QPoint &pos) {
+void ELFWidget::on_tableView_SymbolTable_customContextMenuRequested(const QPoint &pos)
+{
     qint32 nRow = ui->tableView_SymbolTable->currentIndex().row();
 
     if (nRow != -1) {
@@ -840,15 +873,18 @@ void ELFWidget::on_tableView_SymbolTable_customContextMenuRequested(const QPoint
     }
 }
 
-void ELFWidget::editSymbolHeader() {
+void ELFWidget::editSymbolHeader()
+{
     showSectionHeader(SELF::TYPE_SYMBOLTABLE, ui->tableView_SymbolTable);
 }
 
-void ELFWidget::symbolDemangle() {
+void ELFWidget::symbolDemangle()
+{
     showTableViewDemangle(ui->tableView_SymbolTable, N_Elf64_Sym::st_size + 2);
 }
 
-void ELFWidget::showSectionHeader(int nType, QTableView *pTableView) {
+void ELFWidget::showSectionHeader(int nType, QTableView *pTableView)
+{
     qint32 nRow = pTableView->currentIndex().row();
 
     if (nRow != -1) {
@@ -878,7 +914,8 @@ void ELFWidget::showSectionHeader(int nType, QTableView *pTableView) {
     }
 }
 
-QString ELFWidget::typeIdToString(int nType) {
+QString ELFWidget::typeIdToString(int nType)
+{
     QString sResult = tr("Unknown");
 
     switch (nType) {
@@ -905,33 +942,39 @@ QString ELFWidget::typeIdToString(int nType) {
     return sResult;
 }
 
-void ELFWidget::_showInDisasmWindowAddress(XADDR nAddress) {
+void ELFWidget::_showInDisasmWindowAddress(XADDR nAddress)
+{
     setTreeItem(ui->treeWidgetNavi, SELF::TYPE_DISASM);
     ui->widgetDisasm->goToAddress(nAddress);
 }
 
-void ELFWidget::_showInDisasmWindowOffset(qint64 nOffset) {
+void ELFWidget::_showInDisasmWindowOffset(qint64 nOffset)
+{
     setTreeItem(ui->treeWidgetNavi, SELF::TYPE_DISASM);
     ui->widgetDisasm->goToOffset(nOffset);
 }
 
-void ELFWidget::_showInMemoryMapWindowOffset(qint64 nOffset) {
+void ELFWidget::_showInMemoryMapWindowOffset(qint64 nOffset)
+{
     setTreeItem(ui->treeWidgetNavi, SELF::TYPE_MEMORYMAP);
     ui->widgetMemoryMap->goToOffset(nOffset);
 }
 
-void ELFWidget::_showInHexWindow(qint64 nOffset, qint64 nSize) {
+void ELFWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
+{
     setTreeItem(ui->treeWidgetNavi, SELF::TYPE_HEX);
     ui->widgetHex->setSelection(nOffset, nSize);
 }
 
-void ELFWidget::on_tableView_Elf_Shdr_doubleClicked(const QModelIndex &index) {
+void ELFWidget::on_tableView_Elf_Shdr_doubleClicked(const QModelIndex &index)
+{
     Q_UNUSED(index)
 
     editSectionHeader();
 }
 
-void ELFWidget::on_tableView_Elf_Shdr_customContextMenuRequested(const QPoint &pos) {
+void ELFWidget::on_tableView_Elf_Shdr_customContextMenuRequested(const QPoint &pos)
+{
     qint32 nRow = ui->tableView_Elf_Shdr->currentIndex().row();
 
     if (nRow != -1) {
@@ -967,54 +1010,62 @@ void ELFWidget::on_tableView_Elf_Shdr_customContextMenuRequested(const QPoint &p
     }
 }
 
-void ELFWidget::on_tableView_SymbolTable_doubleClicked(const QModelIndex &index) {
+void ELFWidget::on_tableView_SymbolTable_doubleClicked(const QModelIndex &index)
+{
     Q_UNUSED(index)
 
     editSymbolHeader();
 }
 
-void ELFWidget::onTableView_Elf_Shdr_currentRowChanged(const QModelIndex &current, const QModelIndex &previous) {
+void ELFWidget::onTableView_Elf_Shdr_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
     Q_UNUSED(current)
     Q_UNUSED(previous)
 
     loadHexSubdeviceByTableView(current.row(), SELF::TYPE_Elf_Shdr, ui->widgetHex_Elf_Shdr, ui->tableView_Elf_Shdr, &g_subDevice[SELF::TYPE_Elf_Shdr]);
 }
 
-void ELFWidget::onTableView_Elf_Phdr_currentRowChanged(const QModelIndex &current, const QModelIndex &previous) {
+void ELFWidget::onTableView_Elf_Phdr_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
     Q_UNUSED(current)
     Q_UNUSED(previous)
 
     loadHexSubdeviceByTableView(current.row(), SELF::TYPE_Elf_Phdr, ui->widgetHex_Elf_Phdr, ui->tableView_Elf_Phdr, &g_subDevice[SELF::TYPE_Elf_Phdr]);
 }
 
-void ELFWidget::onTableView_DynamicArrayTags_currentRowChanged(const QModelIndex &current, const QModelIndex &previous) {
+void ELFWidget::onTableView_DynamicArrayTags_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
     Q_UNUSED(current)
     Q_UNUSED(previous)
 
     // TODO
 }
 
-void ELFWidget::onTableView_Notes_currentRowChanged(const QModelIndex &current, const QModelIndex &previous) {
+void ELFWidget::onTableView_Notes_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
     Q_UNUSED(current)
     Q_UNUSED(previous)
 
     loadHexSubdeviceByTableView(current.row(), SELF::TYPE_NOTES, ui->widgetHex_Notes, ui->tableView_Notes, &g_subDevice[SELF::TYPE_NOTES]);
 }
 
-void ELFWidget::onTableView_Libraries_currentRowChanged(const QModelIndex &current, const QModelIndex &previous) {
+void ELFWidget::onTableView_Libraries_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
     Q_UNUSED(current)
     Q_UNUSED(previous)
 
     // TODO
 }
 
-void ELFWidget::on_tableView_Elf_Phdr_doubleClicked(const QModelIndex &index) {
+void ELFWidget::on_tableView_Elf_Phdr_doubleClicked(const QModelIndex &index)
+{
     Q_UNUSED(index)
 
     editProgramHeader();
 }
 
-void ELFWidget::on_tableView_Elf_Phdr_customContextMenuRequested(const QPoint &pos) {
+void ELFWidget::on_tableView_Elf_Phdr_customContextMenuRequested(const QPoint &pos)
+{
     qint32 nRow = ui->tableView_Elf_Phdr->currentIndex().row();
 
     if (nRow != -1) {
@@ -1050,13 +1101,15 @@ void ELFWidget::on_tableView_Elf_Phdr_customContextMenuRequested(const QPoint &p
     }
 }
 
-void ELFWidget::on_tableView_DynamicArrayTags_doubleClicked(const QModelIndex &index) {
+void ELFWidget::on_tableView_DynamicArrayTags_doubleClicked(const QModelIndex &index)
+{
     Q_UNUSED(index)
 
     editDynamicArrayTag();
 }
 
-void ELFWidget::on_tableView_DynamicArrayTags_customContextMenuRequested(const QPoint &pos) {
+void ELFWidget::on_tableView_DynamicArrayTags_customContextMenuRequested(const QPoint &pos)
+{
     qint32 nRow = ui->tableView_DynamicArrayTags->currentIndex().row();
 
     if (nRow != -1) {
@@ -1070,18 +1123,21 @@ void ELFWidget::on_tableView_DynamicArrayTags_customContextMenuRequested(const Q
     }
 }
 
-void ELFWidget::on_tableView_Notes_doubleClicked(const QModelIndex &index) {
+void ELFWidget::on_tableView_Notes_doubleClicked(const QModelIndex &index)
+{
     Q_UNUSED(index)
     // TODO
 }
 
-void ELFWidget::on_tableView_Rela_doubleClicked(const QModelIndex &index) {
+void ELFWidget::on_tableView_Rela_doubleClicked(const QModelIndex &index)
+{
     Q_UNUSED(index)
 
     editRelaHeaderTag();
 }
 
-void ELFWidget::on_tableView_Rela_customContextMenuRequested(const QPoint &pos) {
+void ELFWidget::on_tableView_Rela_customContextMenuRequested(const QPoint &pos)
+{
     qint32 nRow = ui->tableView_Rela->currentIndex().row();
 
     if (nRow != -1) {
@@ -1095,21 +1151,25 @@ void ELFWidget::on_tableView_Rela_customContextMenuRequested(const QPoint &pos) 
     }
 }
 
-void ELFWidget::editRelaHeaderTag() {
+void ELFWidget::editRelaHeaderTag()
+{
     showSectionHeader(SELF::TYPE_Elf_Rela, ui->tableView_Rela);
 }
 
-void ELFWidget::editRelHeaderTag() {
+void ELFWidget::editRelHeaderTag()
+{
     showSectionHeader(SELF::TYPE_Elf_Rel, ui->tableView_Rel);
 }
 
-void ELFWidget::on_tableView_Rel_doubleClicked(const QModelIndex &index) {
+void ELFWidget::on_tableView_Rel_doubleClicked(const QModelIndex &index)
+{
     Q_UNUSED(index)
 
     editRelHeaderTag();
 }
 
-void ELFWidget::on_tableView_Rel_customContextMenuRequested(const QPoint &pos) {
+void ELFWidget::on_tableView_Rel_customContextMenuRequested(const QPoint &pos)
+{
     qint32 nRow = ui->tableView_Rel->currentIndex().row();
 
     if (nRow != -1) {
@@ -1123,58 +1183,71 @@ void ELFWidget::on_tableView_Rel_customContextMenuRequested(const QPoint &pos) {
     }
 }
 
-void ELFWidget::on_pushButtonHex_clicked() {
+void ELFWidget::on_pushButtonHex_clicked()
+{
     setTreeItem(ui->treeWidgetNavi, SELF::TYPE_HEX);
 }
 
-void ELFWidget::on_pushButtonDisasm_clicked() {
+void ELFWidget::on_pushButtonDisasm_clicked()
+{
     setTreeItem(ui->treeWidgetNavi, SELF::TYPE_DISASM);
 }
 
-void ELFWidget::on_pushButtonStrings_clicked() {
+void ELFWidget::on_pushButtonStrings_clicked()
+{
     setTreeItem(ui->treeWidgetNavi, SELF::TYPE_STRINGS);
 }
 
-void ELFWidget::on_pushButtonMemoryMap_clicked() {
+void ELFWidget::on_pushButtonMemoryMap_clicked()
+{
     setTreeItem(ui->treeWidgetNavi, SELF::TYPE_MEMORYMAP);
 }
 
-void ELFWidget::on_pushButtonEntropy_clicked() {
+void ELFWidget::on_pushButtonEntropy_clicked()
+{
     setTreeItem(ui->treeWidgetNavi, SELF::TYPE_ENTROPY);
 }
 
-void ELFWidget::on_pushButtonHeuristicScan_clicked() {
+void ELFWidget::on_pushButtonHeuristicScan_clicked()
+{
     setTreeItem(ui->treeWidgetNavi, SELF::TYPE_HEURISTICSCAN);
 }
 
-void ELFWidget::on_toolButtonPrev_clicked() {
+void ELFWidget::on_toolButtonPrev_clicked()
+{
     setAddPageEnabled(false);
     ui->treeWidgetNavi->setCurrentItem(getPrevPage());
     setAddPageEnabled(true);
 }
 
-void ELFWidget::on_toolButtonNext_clicked() {
+void ELFWidget::on_toolButtonNext_clicked()
+{
     setAddPageEnabled(false);
     ui->treeWidgetNavi->setCurrentItem(getNextPage());
     setAddPageEnabled(true);
 }
 
-void ELFWidget::on_pushButtonSaveSections_clicked() {
+void ELFWidget::on_pushButtonSaveSections_clicked()
+{
     XShortcutsWidget::saveModel(ui->tableView_Elf_Shdr->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(tr("Sections"))));
 }
 
-void ELFWidget::on_pushButtonSavePrograms_clicked() {
+void ELFWidget::on_pushButtonSavePrograms_clicked()
+{
     XShortcutsWidget::saveModel(ui->tableView_Elf_Phdr->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Programs"))));
 }
 
-void ELFWidget::on_pushButtonSave_Rela_clicked() {
+void ELFWidget::on_pushButtonSave_Rela_clicked()
+{
     XShortcutsWidget::saveModel(ui->tableView_Rela->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Rela"))));
 }
 
-void ELFWidget::on_pushButtonSave_Rel_clicked() {
+void ELFWidget::on_pushButtonSave_Rel_clicked()
+{
     XShortcutsWidget::saveModel(ui->tableView_Rel->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Rel"))));
 }
 
-void ELFWidget::on_pushButtonSave_Elf_Ehdr_clicked() {
+void ELFWidget::on_pushButtonSave_Elf_Ehdr_clicked()
+{
     saveHeaderTable(ui->tableWidget_Elf_Ehdr, XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Elf_Ehdr"))));
 }

@@ -22,17 +22,20 @@
 
 #include "ui_dialogelf.h"
 
-DialogELF::DialogELF(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogELF) {
+DialogELF::DialogELF(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogELF)
+{
     ui->setupUi(this);
 
     setWindowFlags(Qt::Window);
 }
 
-DialogELF::~DialogELF() {
+DialogELF::~DialogELF()
+{
     delete ui;
 }
 
-void DialogELF::setData(QIODevice *pDevice, FW_DEF::OPTIONS options) {
+void DialogELF::setData(QIODevice *pDevice, FW_DEF::OPTIONS options)
+{
     if (options.sTitle != "") {
         setWindowTitle(options.sTitle);
     }
@@ -41,7 +44,8 @@ void DialogELF::setData(QIODevice *pDevice, FW_DEF::OPTIONS options) {
     ui->widget->reload();
 }
 
-void DialogELF::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions) {
+void DialogELF::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
+{
     ui->widget->setGlobal(pShortcuts, pXOptions);
     XShortcutsDialog::setGlobal(pShortcuts, pXOptions);
 }

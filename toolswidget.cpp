@@ -22,7 +22,8 @@
 
 #include "ui_toolswidget.h"
 
-ToolsWidget::ToolsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui::ToolsWidget) {
+ToolsWidget::ToolsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui::ToolsWidget)
+{
     ui->setupUi(this);
 
     g_pDevice = nullptr;
@@ -36,7 +37,8 @@ ToolsWidget::ToolsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new U
     connect(ui->widgetStrings, SIGNAL(showDemangle(QString)), this, SIGNAL(showDemangle(QString)));
 }
 
-void ToolsWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS options, QIODevice *pBackupDevice, bool bDisasm) {
+void ToolsWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS options, QIODevice *pBackupDevice, bool bDisasm)
+{
     g_pDevice = pDevice;
 
     XHexView::OPTIONS hexOptions = {};
@@ -64,26 +66,31 @@ void ToolsWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS options, QIODevice
     reload();
 }
 
-void ToolsWidget::setDevice(QIODevice *pDevice) {
+void ToolsWidget::setDevice(QIODevice *pDevice)
+{
     ui->widgetHex->setDevice(pDevice);
 }
 
-void ToolsWidget::setBackupDevice(QIODevice *pDevice) {
+void ToolsWidget::setBackupDevice(QIODevice *pDevice)
+{
     ui->widgetHex->setBackupDevice(pDevice);
 }
 
-void ToolsWidget::setEdited() {
+void ToolsWidget::setEdited()
+{
     ui->widgetHex->setEdited();
 
     //    emit changed();
 }
 
-void ToolsWidget::setReadonly(bool bState) {
+void ToolsWidget::setReadonly(bool bState)
+{
     ui->widgetHex->setReadonly(bState);
     ui->widgetStrings->setReadonly(bState);
 }
 
-void ToolsWidget::reload() {
+void ToolsWidget::reload()
+{
     int nIndex = ui->tabWidgetMain->currentIndex();
 
     if (nIndex == 0)  // Hex
@@ -97,29 +104,35 @@ void ToolsWidget::reload() {
     }
 }
 
-qint64 ToolsWidget::getStartAddress() {
+qint64 ToolsWidget::getStartAddress()
+{
     return ui->widgetHex->getStartAddress();
 }
 
-void ToolsWidget::setSelection(qint64 nOffset, qint64 nSize) {
+void ToolsWidget::setSelection(qint64 nOffset, qint64 nSize)
+{
     ui->widgetHex->setSelection(nOffset, nSize);
 }
 
-ToolsWidget::~ToolsWidget() {
+ToolsWidget::~ToolsWidget()
+{
     delete ui;
 }
 
-void ToolsWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions) {
+void ToolsWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
+{
     ui->widgetHex->setGlobal(pShortcuts, pXOptions);
     ui->widgetStrings->setGlobal(pShortcuts, pXOptions);
 }
 
-void ToolsWidget::on_tabWidgetMain_currentChanged(int nIndex) {
+void ToolsWidget::on_tabWidgetMain_currentChanged(int nIndex)
+{
     Q_UNUSED(nIndex)
     reload();
 }
 
-void ToolsWidget::_showHex(qint64 nOffset, qint64 nSize) {
+void ToolsWidget::_showHex(qint64 nOffset, qint64 nSize)
+{
     //    XIODevice *pSubDevice=dynamic_cast<XIODevice *>(getDevice());
 
     //    if(pSubDevice)
@@ -130,7 +143,8 @@ void ToolsWidget::_showHex(qint64 nOffset, qint64 nSize) {
     emit showOffsetHex(nOffset, nSize);
 }
 
-void ToolsWidget::_showDisasm(qint64 nOffset) {
+void ToolsWidget::_showDisasm(qint64 nOffset)
+{
     //    XIODevice *pSubDevice=dynamic_cast<XIODevice *>(getDevice());
 
     //    if(pSubDevice)
@@ -141,7 +155,8 @@ void ToolsWidget::_showDisasm(qint64 nOffset) {
     emit showOffsetDisasm(nOffset);
 }
 
-void ToolsWidget::_showMemoryMap(qint64 nOffset) {
+void ToolsWidget::_showMemoryMap(qint64 nOffset)
+{
     //    XIODevice *pSubDevice=dynamic_cast<XIODevice *>(getDevice());
 
     //    if(pSubDevice)
@@ -152,6 +167,7 @@ void ToolsWidget::_showMemoryMap(qint64 nOffset) {
     emit showOffsetMemoryMap(nOffset);
 }
 
-void ToolsWidget::registerShortcuts(bool bState) {
+void ToolsWidget::registerShortcuts(bool bState)
+{
     Q_UNUSED(bState)
 }

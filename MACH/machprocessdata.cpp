@@ -20,7 +20,8 @@
  */
 #include "machprocessdata.h"
 
-MACHProcessData::MACHProcessData(int nType, QStandardItemModel **ppModel, XMACH *pXMACH, qint64 nOffset, qint64 nSize) : ProcessData() {
+MACHProcessData::MACHProcessData(int nType, QStandardItemModel **ppModel, XMACH *pXMACH, qint64 nOffset, qint64 nSize) : ProcessData()
+{
     this->g_nType = nType;
     this->g_ppModel = ppModel;
     this->g_pXMACH = pXMACH;
@@ -28,7 +29,8 @@ MACHProcessData::MACHProcessData(int nType, QStandardItemModel **ppModel, XMACH 
     this->g_nSize = nSize;
 }
 
-void MACHProcessData::_process() {
+void MACHProcessData::_process()
+{
     bool bIs64 = g_pXMACH->is64();
 
     if (g_nType == SMACH::TYPE_mach_commands) {
@@ -653,7 +655,8 @@ void MACHProcessData::_process() {
     }
 }
 
-void MACHProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView) {
+void MACHProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
+{
     XBinary::MODE mode = g_pXMACH->getMode();
 
     if (g_nType == SMACH::TYPE_mach_commands) {

@@ -22,7 +22,8 @@
 
 #include "ui_machwidget.h"
 
-MACHWidget::MACHWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::MACHWidget) {
+MACHWidget::MACHWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::MACHWidget)
+{
     ui->setupUi(this);
 
     memset(g_subDevice, 0, sizeof g_subDevice);
@@ -30,16 +31,19 @@ MACHWidget::MACHWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::MAC
     initWidget();
 }
 
-MACHWidget::MACHWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) : MACHWidget(pParent) {
+MACHWidget::MACHWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) : MACHWidget(pParent)
+{
     MACHWidget::setData(pDevice, options, 0, 0, 0);
     MACHWidget::reload();
 }
 
-MACHWidget::~MACHWidget() {
+MACHWidget::~MACHWidget()
+{
     delete ui;
 }
 
-void MACHWidget::clear() {
+void MACHWidget::clear()
+{
     MACHWidget::reset();
 
     memset(g_lineEdit_mach_header, 0, sizeof g_lineEdit_mach_header);
@@ -78,11 +82,13 @@ void MACHWidget::clear() {
     ui->treeWidgetNavi->clear();
 }
 
-void MACHWidget::cleanup() {
+void MACHWidget::cleanup()
+{
     MACHWidget::clear();
 }
 
-void MACHWidget::reload() {
+void MACHWidget::reload()
+{
     MACHWidget::clear();
 
     ui->checkBoxReadonly->setEnabled(!isReadonly());
@@ -475,7 +481,8 @@ void MACHWidget::reload() {
     }
 }
 
-FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset) {
+FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
+{
     Q_UNUSED(nVtype)
     Q_UNUSED(nPosition)
 
@@ -1355,7 +1362,8 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
     return result;
 }
 
-void MACHWidget::setReadonly(bool bState) {
+void MACHWidget::setReadonly(bool bState)
+{
     setLineEditsReadOnly(g_lineEdit_mach_header, N_mach_header::__data_size, bState);
     setLineEditsReadOnly(g_lineEdit_mach_dyld_info_only, N_mach_dyld_info::__data_size, bState);
     setLineEditsReadOnly(g_lineEdit_mach_uuid, N_mach_uuid::__data_size, bState);
@@ -1420,7 +1428,8 @@ void MACHWidget::setReadonly(bool bState) {
     ui->widgetHex_weak_libraries->setReadonly(bState);
 }
 
-void MACHWidget::blockSignals(bool bState) {
+void MACHWidget::blockSignals(bool bState)
+{
     _blockSignals((QObject **)g_lineEdit_mach_header, N_mach_header::__data_size, bState);
     _blockSignals((QObject **)g_lineEdit_mach_dyld_info_only, N_mach_dyld_info::__data_size, bState);
     _blockSignals((QObject **)g_lineEdit_mach_uuid, N_mach_uuid::__data_size, bState);
@@ -1447,7 +1456,8 @@ void MACHWidget::blockSignals(bool bState) {
     _blockSignals((QObject **)g_comboBox, __CB_size, bState);
 }
 
-void MACHWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget) {
+void MACHWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
+{
     XBinary::MODE mode = XMACH::getMode(getDevice(), getOptions().bIsImage, getOptions().nImageBase);
 
     pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET, getColumnWidth(this, CW_UINT16, mode));
@@ -1547,7 +1557,8 @@ void MACHWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget) {
     }
 }
 
-QString MACHWidget::typeIdToString(int nType) {
+QString MACHWidget::typeIdToString(int nType)
+{
     QString sResult = tr("Unknown");
 
     switch (nType) {
@@ -1601,27 +1612,32 @@ QString MACHWidget::typeIdToString(int nType) {
     return sResult;
 }
 
-void MACHWidget::_showInDisasmWindowAddress(XADDR nAddress) {
+void MACHWidget::_showInDisasmWindowAddress(XADDR nAddress)
+{
     setTreeItem(ui->treeWidgetNavi, SMACH::TYPE_DISASM);
     ui->widgetDisasm->goToAddress(nAddress);
 }
 
-void MACHWidget::_showInDisasmWindowOffset(qint64 nOffset) {
+void MACHWidget::_showInDisasmWindowOffset(qint64 nOffset)
+{
     setTreeItem(ui->treeWidgetNavi, SMACH::TYPE_DISASM);
     ui->widgetDisasm->goToOffset(nOffset);
 }
 
-void MACHWidget::_showInMemoryMapWindowOffset(qint64 nOffset) {
+void MACHWidget::_showInMemoryMapWindowOffset(qint64 nOffset)
+{
     setTreeItem(ui->treeWidgetNavi, SMACH::TYPE_MEMORYMAP);
     ui->widgetMemoryMap->goToOffset(nOffset);
 }
 
-void MACHWidget::_showInHexWindow(qint64 nOffset, qint64 nSize) {
+void MACHWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
+{
     setTreeItem(ui->treeWidgetNavi, SMACH::TYPE_HEX);
     ui->widgetHex->setSelection(nOffset, nSize);
 }
 
-void MACHWidget::reloadData() {
+void MACHWidget::reloadData()
+{
     qint32 nType = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_TYPE).toInt();
     qint64 nDataOffset = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET).toLongLong();
     qint64 nDataSize = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_SIZE).toLongLong();
@@ -2605,7 +2621,8 @@ void MACHWidget::reloadData() {
     addInit(sInit);
 }
 
-void MACHWidget::widgetValueChanged(quint64 nValue) {
+void MACHWidget::widgetValueChanged(quint64 nValue)
+{
     QWidget *pWidget = qobject_cast<QWidget *>(sender());
     qint32 nStype = pWidget->property("STYPE").toInt();
     qint32 nNdata = pWidget->property("NDATA").toInt();
@@ -2631,7 +2648,8 @@ void MACHWidget::widgetValueChanged(quint64 nValue) {
     }
 }
 
-void MACHWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurrent, QTreeWidgetItem *pItemPrevious) {
+void MACHWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurrent, QTreeWidgetItem *pItemPrevious)
+{
     Q_UNUSED(pItemPrevious)
 
     if (pItemCurrent) {
@@ -2642,22 +2660,26 @@ void MACHWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurr
     }
 }
 
-void MACHWidget::on_checkBoxReadonly_toggled(bool bChecked) {
+void MACHWidget::on_checkBoxReadonly_toggled(bool bChecked)
+{
     setReadonly(bChecked);
 }
 
-void MACHWidget::on_pushButtonReload_clicked() {
+void MACHWidget::on_pushButtonReload_clicked()
+{
     ui->pushButtonReload->setEnabled(false);
     reload();
 
     QTimer::singleShot(1000, this, SLOT(enableButton()));
 }
 
-void MACHWidget::enableButton() {
+void MACHWidget::enableButton()
+{
     ui->pushButtonReload->setEnabled(true);
 }
 
-void MACHWidget::on_tableWidget_mach_header_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn) {
+void MACHWidget::on_tableWidget_mach_header_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
     Q_UNUSED(nCurrentRow);
     Q_UNUSED(nCurrentColumn);
     Q_UNUSED(nPreviousRow);
@@ -2666,7 +2688,8 @@ void MACHWidget::on_tableWidget_mach_header_currentCellChanged(int nCurrentRow, 
     setHeaderTableSelection(ui->widgetHex_mach_header, ui->tableWidget_mach_header);
 }
 
-void MACHWidget::on_tableWidget_dyld_info_only_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn) {
+void MACHWidget::on_tableWidget_dyld_info_only_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
     Q_UNUSED(nCurrentRow);
     Q_UNUSED(nCurrentColumn);
     Q_UNUSED(nPreviousRow);
@@ -2675,7 +2698,8 @@ void MACHWidget::on_tableWidget_dyld_info_only_currentCellChanged(int nCurrentRo
     setHeaderTableSelection(ui->widgetHex_dyld_info_only, ui->tableWidget_dyld_info_only);
 }
 
-void MACHWidget::on_tableWidget_symtab_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn) {
+void MACHWidget::on_tableWidget_symtab_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
     Q_UNUSED(nCurrentRow);
     Q_UNUSED(nCurrentColumn);
     Q_UNUSED(nPreviousRow);
@@ -2684,7 +2708,8 @@ void MACHWidget::on_tableWidget_symtab_currentCellChanged(int nCurrentRow, int n
     setHeaderTableSelection(ui->widgetHex_symtab, ui->tableWidget_symtab);
 }
 
-void MACHWidget::on_tableWidget_dysymtab_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn) {
+void MACHWidget::on_tableWidget_dysymtab_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
     Q_UNUSED(nCurrentRow);
     Q_UNUSED(nCurrentColumn);
     Q_UNUSED(nPreviousRow);
@@ -2693,7 +2718,8 @@ void MACHWidget::on_tableWidget_dysymtab_currentCellChanged(int nCurrentRow, int
     setHeaderTableSelection(ui->widgetHex_dysymtab, ui->tableWidget_dysymtab);
 }
 
-void MACHWidget::on_tableWidget_version_min_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn) {
+void MACHWidget::on_tableWidget_version_min_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
     Q_UNUSED(nCurrentRow);
     Q_UNUSED(nCurrentColumn);
     Q_UNUSED(nPreviousRow);
@@ -2702,7 +2728,8 @@ void MACHWidget::on_tableWidget_version_min_currentCellChanged(int nCurrentRow, 
     setHeaderTableSelection(ui->widgetHex_version_min, ui->tableWidget_version_min);
 }
 
-void MACHWidget::on_tableWidget_build_version_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn) {
+void MACHWidget::on_tableWidget_build_version_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
     Q_UNUSED(nCurrentRow);
     Q_UNUSED(nCurrentColumn);
     Q_UNUSED(nPreviousRow);
@@ -2711,7 +2738,8 @@ void MACHWidget::on_tableWidget_build_version_currentCellChanged(int nCurrentRow
     setHeaderTableSelection(ui->widgetHex_build_version, ui->tableWidget_build_version);
 }
 
-void MACHWidget::on_tableWidget_source_version_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn) {
+void MACHWidget::on_tableWidget_source_version_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
     Q_UNUSED(nCurrentRow);
     Q_UNUSED(nCurrentColumn);
     Q_UNUSED(nPreviousRow);
@@ -2720,7 +2748,8 @@ void MACHWidget::on_tableWidget_source_version_currentCellChanged(int nCurrentRo
     setHeaderTableSelection(ui->widgetHex_source_version, ui->tableWidget_source_version);
 }
 
-void MACHWidget::on_tableWidget_encryption_info_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn) {
+void MACHWidget::on_tableWidget_encryption_info_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
     Q_UNUSED(nCurrentRow);
     Q_UNUSED(nCurrentColumn);
     Q_UNUSED(nPreviousRow);
@@ -2729,7 +2758,8 @@ void MACHWidget::on_tableWidget_encryption_info_currentCellChanged(int nCurrentR
     setHeaderTableSelection(ui->widgetHex_encryption_info, ui->tableWidget_encryption_info);
 }
 
-void MACHWidget::on_tableWidget_function_starts_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn) {
+void MACHWidget::on_tableWidget_function_starts_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
     Q_UNUSED(nCurrentRow);
     Q_UNUSED(nCurrentColumn);
     Q_UNUSED(nPreviousRow);
@@ -2738,7 +2768,8 @@ void MACHWidget::on_tableWidget_function_starts_currentCellChanged(int nCurrentR
     setHeaderTableSelection(ui->widgetHex_function_starts, ui->tableWidget_function_starts);
 }
 
-void MACHWidget::on_tableWidget_data_in_code_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn) {
+void MACHWidget::on_tableWidget_data_in_code_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
     Q_UNUSED(nCurrentRow);
     Q_UNUSED(nCurrentColumn);
     Q_UNUSED(nPreviousRow);
@@ -2747,7 +2778,8 @@ void MACHWidget::on_tableWidget_data_in_code_currentCellChanged(int nCurrentRow,
     setHeaderTableSelection(ui->widgetHex_data_in_code, ui->tableWidget_data_in_code);
 }
 
-void MACHWidget::on_tableWidget_code_signature_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn) {
+void MACHWidget::on_tableWidget_code_signature_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
     Q_UNUSED(nCurrentRow);
     Q_UNUSED(nCurrentColumn);
     Q_UNUSED(nPreviousRow);
@@ -2756,7 +2788,8 @@ void MACHWidget::on_tableWidget_code_signature_currentCellChanged(int nCurrentRo
     setHeaderTableSelection(ui->widgetHex_code_signature, ui->tableWidget_code_signature);
 }
 
-void MACHWidget::on_tableWidget_SuperBlob_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn) {
+void MACHWidget::on_tableWidget_SuperBlob_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
     Q_UNUSED(nCurrentRow);
     Q_UNUSED(nCurrentColumn);
     Q_UNUSED(nPreviousRow);
@@ -2765,7 +2798,8 @@ void MACHWidget::on_tableWidget_SuperBlob_currentCellChanged(int nCurrentRow, in
     setHeaderTableSelection(ui->widgetHex_SuperBlob, ui->tableWidget_SuperBlob);
 }
 
-void MACHWidget::on_tableWidget_main_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn) {
+void MACHWidget::on_tableWidget_main_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
     Q_UNUSED(nCurrentRow);
     Q_UNUSED(nCurrentColumn);
     Q_UNUSED(nPreviousRow);
@@ -2774,7 +2808,8 @@ void MACHWidget::on_tableWidget_main_currentCellChanged(int nCurrentRow, int nCu
     setHeaderTableSelection(ui->widgetHex_main, ui->tableWidget_main);
 }
 
-void MACHWidget::on_tableWidget_unix_thread_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn) {
+void MACHWidget::on_tableWidget_unix_thread_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
     Q_UNUSED(nCurrentRow);
     Q_UNUSED(nCurrentColumn);
     Q_UNUSED(nPreviousRow);
@@ -2783,7 +2818,8 @@ void MACHWidget::on_tableWidget_unix_thread_currentCellChanged(int nCurrentRow, 
     setHeaderTableSelection(ui->widgetHex_unix_thread, ui->tableWidget_unix_thread);
 }
 
-void MACHWidget::on_tableWidget_unix_thread_x86_32_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn) {
+void MACHWidget::on_tableWidget_unix_thread_x86_32_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
     Q_UNUSED(nCurrentRow);
     Q_UNUSED(nCurrentColumn);
     Q_UNUSED(nPreviousRow);
@@ -2792,7 +2828,8 @@ void MACHWidget::on_tableWidget_unix_thread_x86_32_currentCellChanged(int nCurre
     setHeaderTableSelection(ui->widgetHex_unix_thread_x86_32, ui->tableWidget_unix_thread_x86_32);
 }
 
-void MACHWidget::on_tableWidget_unix_thread_x86_64_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn) {
+void MACHWidget::on_tableWidget_unix_thread_x86_64_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
     Q_UNUSED(nCurrentRow);
     Q_UNUSED(nCurrentColumn);
     Q_UNUSED(nPreviousRow);
@@ -2801,7 +2838,8 @@ void MACHWidget::on_tableWidget_unix_thread_x86_64_currentCellChanged(int nCurre
     setHeaderTableSelection(ui->widgetHex_unix_thread_x86_64, ui->tableWidget_unix_thread_x86_64);
 }
 
-void MACHWidget::on_tableWidget_unix_thread_arm_32_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn) {
+void MACHWidget::on_tableWidget_unix_thread_arm_32_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
     Q_UNUSED(nCurrentRow);
     Q_UNUSED(nCurrentColumn);
     Q_UNUSED(nPreviousRow);
@@ -2810,7 +2848,8 @@ void MACHWidget::on_tableWidget_unix_thread_arm_32_currentCellChanged(int nCurre
     setHeaderTableSelection(ui->widgetHex_unix_thread_arm_32, ui->tableWidget_unix_thread_arm_32);
 }
 
-void MACHWidget::on_tableWidget_unix_thread_arm_64_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn) {
+void MACHWidget::on_tableWidget_unix_thread_arm_64_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
     Q_UNUSED(nCurrentRow);
     Q_UNUSED(nCurrentColumn);
     Q_UNUSED(nPreviousRow);
@@ -2819,7 +2858,8 @@ void MACHWidget::on_tableWidget_unix_thread_arm_64_currentCellChanged(int nCurre
     setHeaderTableSelection(ui->widgetHex_unix_thread_arm_64, ui->tableWidget_unix_thread_arm_64);
 }
 
-void MACHWidget::on_tableWidget_unix_thread_ppc_32_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn) {
+void MACHWidget::on_tableWidget_unix_thread_ppc_32_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
     Q_UNUSED(nCurrentRow);
     Q_UNUSED(nCurrentColumn);
     Q_UNUSED(nPreviousRow);
@@ -2828,47 +2868,54 @@ void MACHWidget::on_tableWidget_unix_thread_ppc_32_currentCellChanged(int nCurre
     setHeaderTableSelection(ui->widgetHex_unix_thread_ppc_32, ui->tableWidget_unix_thread_ppc_32);
 }
 
-void MACHWidget::on_toolButtonPrev_clicked() {
+void MACHWidget::on_toolButtonPrev_clicked()
+{
     setAddPageEnabled(false);
     ui->treeWidgetNavi->setCurrentItem(getPrevPage());
     setAddPageEnabled(true);
 }
 
-void MACHWidget::on_toolButtonNext_clicked() {
+void MACHWidget::on_toolButtonNext_clicked()
+{
     setAddPageEnabled(false);
     ui->treeWidgetNavi->setCurrentItem(getNextPage());
     setAddPageEnabled(true);
 }
 
-void MACHWidget::onTableView_commands_currentRowChanged(const QModelIndex &current, const QModelIndex &previous) {
+void MACHWidget::onTableView_commands_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
     Q_UNUSED(current)
     Q_UNUSED(previous)
 
     loadHexSubdeviceByTableView(current.row(), SMACH::TYPE_mach_commands, ui->widgetHex_commands, ui->tableView_commands, &g_subDevice[SMACH::TYPE_mach_commands]);
 }
 
-void MACHWidget::onTableView_segments_currentRowChanged(const QModelIndex &current, const QModelIndex &previous) {
+void MACHWidget::onTableView_segments_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
     Q_UNUSED(current)
     Q_UNUSED(previous)
 
     loadHexSubdeviceByTableView(current.row(), SMACH::TYPE_mach_segments, ui->widgetHex_segments, ui->tableView_segments, &g_subDevice[SMACH::TYPE_mach_segments]);
 }
 
-void MACHWidget::onTableView_sections_currentRowChanged(const QModelIndex &current, const QModelIndex &previous) {
+void MACHWidget::onTableView_sections_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
     Q_UNUSED(current)
     Q_UNUSED(previous)
 
     loadHexSubdeviceByTableView(current.row(), SMACH::TYPE_mach_sections, ui->widgetHex_sections, ui->tableView_sections, &g_subDevice[SMACH::TYPE_mach_sections]);
 }
 
-void MACHWidget::onTableView_libraries_currentRowChanged(const QModelIndex &current, const QModelIndex &previous) {
+void MACHWidget::onTableView_libraries_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
     Q_UNUSED(current)
     Q_UNUSED(previous)
 
     loadHexSubdeviceByTableView(current.row(), SMACH::TYPE_mach_libraries, ui->widgetHex_libraries, ui->tableView_libraries, &g_subDevice[SMACH::TYPE_mach_libraries]);
 }
 
-void MACHWidget::onTableView_weak_libraries_currentRowChanged(const QModelIndex &current, const QModelIndex &previous) {
+void MACHWidget::onTableView_weak_libraries_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
     Q_UNUSED(current)
     Q_UNUSED(previous)
 
@@ -2876,33 +2923,38 @@ void MACHWidget::onTableView_weak_libraries_currentRowChanged(const QModelIndex 
                                 &g_subDevice[SMACH::TYPE_mach_weak_libraries]);
 }
 
-void MACHWidget::onTableView_id_library_currentRowChanged(const QModelIndex &current, const QModelIndex &previous) {
+void MACHWidget::onTableView_id_library_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
     Q_UNUSED(current)
     Q_UNUSED(previous)
 
     loadHexSubdeviceByTableView(current.row(), SMACH::TYPE_mach_id_library, ui->widgetHex_id_library, ui->tableView_id_library, &g_subDevice[SMACH::TYPE_mach_id_library]);
 }
 
-void MACHWidget::onTableView_LOADFVMLIB_currentRowChanged(const QModelIndex &current, const QModelIndex &previous) {
+void MACHWidget::onTableView_LOADFVMLIB_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
     Q_UNUSED(current)
     Q_UNUSED(previous)
 
     loadHexSubdeviceByTableView(current.row(), SMACH::TYPE_mach_LOADFVMLIB, ui->widgetHex_LOADFVMLIB, ui->tableView_LOADFVMLIB, &g_subDevice[SMACH::TYPE_mach_LOADFVMLIB]);
 }
 
-void MACHWidget::onTableView_IDFVMLIB_currentRowChanged(const QModelIndex &current, const QModelIndex &previous) {
+void MACHWidget::onTableView_IDFVMLIB_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
     Q_UNUSED(current)
     Q_UNUSED(previous)
 
     loadHexSubdeviceByTableView(current.row(), SMACH::TYPE_mach_IDFVMLIB, ui->widgetHex_IDFVMLIB, ui->tableView_IDFVMLIB, &g_subDevice[SMACH::TYPE_mach_IDFVMLIB]);
 }
 
-void MACHWidget::on_tableView_commands_doubleClicked(const QModelIndex &index) {
+void MACHWidget::on_tableView_commands_doubleClicked(const QModelIndex &index)
+{
     Q_UNUSED(index)
     editCommandHeader();
 }
 
-void MACHWidget::on_tableView_commands_customContextMenuRequested(const QPoint &pos) {
+void MACHWidget::on_tableView_commands_customContextMenuRequested(const QPoint &pos)
+{
     qint32 nRow = ui->tableView_commands->currentIndex().row();
 
     if (nRow != -1) {
@@ -2916,12 +2968,14 @@ void MACHWidget::on_tableView_commands_customContextMenuRequested(const QPoint &
     }
 }
 
-void MACHWidget::on_tableView_segments_doubleClicked(const QModelIndex &index) {
+void MACHWidget::on_tableView_segments_doubleClicked(const QModelIndex &index)
+{
     Q_UNUSED(index)
     editSegmentHeader();
 }
 
-void MACHWidget::on_tableView_segments_customContextMenuRequested(const QPoint &pos) {
+void MACHWidget::on_tableView_segments_customContextMenuRequested(const QPoint &pos)
+{
     qint32 nRow = ui->tableView_segments->currentIndex().row();
 
     if (nRow != -1) {
@@ -2952,12 +3006,14 @@ void MACHWidget::on_tableView_segments_customContextMenuRequested(const QPoint &
     }
 }
 
-void MACHWidget::on_tableView_sections_doubleClicked(const QModelIndex &index) {
+void MACHWidget::on_tableView_sections_doubleClicked(const QModelIndex &index)
+{
     Q_UNUSED(index)
     editSectionHeader();
 }
 
-void MACHWidget::on_tableView_sections_customContextMenuRequested(const QPoint &pos) {
+void MACHWidget::on_tableView_sections_customContextMenuRequested(const QPoint &pos)
+{
     qint32 nRow = ui->tableView_sections->currentIndex().row();
 
     if (nRow != -1) {
@@ -2988,12 +3044,14 @@ void MACHWidget::on_tableView_sections_customContextMenuRequested(const QPoint &
     }
 }
 
-void MACHWidget::on_tableView_libraries_doubleClicked(const QModelIndex &index) {
+void MACHWidget::on_tableView_libraries_doubleClicked(const QModelIndex &index)
+{
     Q_UNUSED(index)
     editLibraryHeader();
 }
 
-void MACHWidget::on_tableView_libraries_customContextMenuRequested(const QPoint &pos) {
+void MACHWidget::on_tableView_libraries_customContextMenuRequested(const QPoint &pos)
+{
     qint32 nRow = ui->tableView_libraries->currentIndex().row();
 
     if (nRow != -1) {
@@ -3007,12 +3065,14 @@ void MACHWidget::on_tableView_libraries_customContextMenuRequested(const QPoint 
     }
 }
 
-void MACHWidget::on_tableView_weak_libraries_doubleClicked(const QModelIndex &index) {
+void MACHWidget::on_tableView_weak_libraries_doubleClicked(const QModelIndex &index)
+{
     Q_UNUSED(index)
     editWeakLibraryHeader();
 }
 
-void MACHWidget::on_tableView_weak_libraries_customContextMenuRequested(const QPoint &pos) {
+void MACHWidget::on_tableView_weak_libraries_customContextMenuRequested(const QPoint &pos)
+{
     qint32 nRow = ui->tableView_weak_libraries->currentIndex().row();
 
     if (nRow != -1) {
@@ -3026,12 +3086,14 @@ void MACHWidget::on_tableView_weak_libraries_customContextMenuRequested(const QP
     }
 }
 
-void MACHWidget::on_tableView_id_library_doubleClicked(const QModelIndex &index) {
+void MACHWidget::on_tableView_id_library_doubleClicked(const QModelIndex &index)
+{
     Q_UNUSED(index)
     editIdLibraryHeader();
 }
 
-void MACHWidget::on_tableView_id_library_customContextMenuRequested(const QPoint &pos) {
+void MACHWidget::on_tableView_id_library_customContextMenuRequested(const QPoint &pos)
+{
     qint32 nRow = ui->tableView_id_library->currentIndex().row();
 
     if (nRow != -1) {
@@ -3045,12 +3107,14 @@ void MACHWidget::on_tableView_id_library_customContextMenuRequested(const QPoint
     }
 }
 
-void MACHWidget::on_tableView_LOADFVMLIB_doubleClicked(const QModelIndex &index) {
+void MACHWidget::on_tableView_LOADFVMLIB_doubleClicked(const QModelIndex &index)
+{
     Q_UNUSED(index)
     editLOADFVMLIBHeader();
 }
 
-void MACHWidget::on_tableView_LOADFVMLIB_customContextMenuRequested(const QPoint &pos) {
+void MACHWidget::on_tableView_LOADFVMLIB_customContextMenuRequested(const QPoint &pos)
+{
     qint32 nRow = ui->tableView_LOADFVMLIB->currentIndex().row();
 
     if (nRow != -1) {
@@ -3064,12 +3128,14 @@ void MACHWidget::on_tableView_LOADFVMLIB_customContextMenuRequested(const QPoint
     }
 }
 
-void MACHWidget::on_tableView_IDFVMLIB_doubleClicked(const QModelIndex &index) {
+void MACHWidget::on_tableView_IDFVMLIB_doubleClicked(const QModelIndex &index)
+{
     Q_UNUSED(index)
     editIDFVMLIBHeader();
 }
 
-void MACHWidget::on_tableView_IDFVMLIB_customContextMenuRequested(const QPoint &pos) {
+void MACHWidget::on_tableView_IDFVMLIB_customContextMenuRequested(const QPoint &pos)
+{
     qint32 nRow = ui->tableView_IDFVMLIB->currentIndex().row();
 
     if (nRow != -1) {
@@ -3083,12 +3149,14 @@ void MACHWidget::on_tableView_IDFVMLIB_customContextMenuRequested(const QPoint &
     }
 }
 
-void MACHWidget::on_tableView_SymbolTable_doubleClicked(const QModelIndex &index) {
+void MACHWidget::on_tableView_SymbolTable_doubleClicked(const QModelIndex &index)
+{
     Q_UNUSED(index)
     editSymbolHeader();
 }
 
-void MACHWidget::on_tableView_SymbolTable_customContextMenuRequested(const QPoint &pos) {
+void MACHWidget::on_tableView_SymbolTable_customContextMenuRequested(const QPoint &pos)
+{
     qint32 nRow = ui->tableView_SymbolTable->currentIndex().row();
 
     if (nRow != -1) {
@@ -3107,12 +3175,14 @@ void MACHWidget::on_tableView_SymbolTable_customContextMenuRequested(const QPoin
     }
 }
 
-void MACHWidget::on_tableView_Functions_doubleClicked(const QModelIndex &index) {
+void MACHWidget::on_tableView_Functions_doubleClicked(const QModelIndex &index)
+{
     Q_UNUSED(index)
     functionDisasm();
 }
 
-void MACHWidget::on_tableView_Functions_customContextMenuRequested(const QPoint &pos) {
+void MACHWidget::on_tableView_Functions_customContextMenuRequested(const QPoint &pos)
+{
     qint32 nRow = ui->tableView_Functions->currentIndex().row();
 
     if (nRow != -1) {
@@ -3135,12 +3205,14 @@ void MACHWidget::on_tableView_Functions_customContextMenuRequested(const QPoint 
     }
 }
 
-void MACHWidget::on_tableView_data_in_code_entry_doubleClicked(const QModelIndex &index) {
+void MACHWidget::on_tableView_data_in_code_entry_doubleClicked(const QModelIndex &index)
+{
     Q_UNUSED(index)
     editDiceHeader();
 }
 
-void MACHWidget::on_tableView_data_in_code_entry_customContextMenuRequested(const QPoint &pos) {
+void MACHWidget::on_tableView_data_in_code_entry_customContextMenuRequested(const QPoint &pos)
+{
     qint32 nRow = ui->tableView_data_in_code_entry->currentIndex().row();
 
     if (nRow != -1) {
@@ -3159,12 +3231,14 @@ void MACHWidget::on_tableView_data_in_code_entry_customContextMenuRequested(cons
     }
 }
 
-void MACHWidget::on_tableView_DYSYMTAB_modtab_doubleClicked(const QModelIndex &index) {
+void MACHWidget::on_tableView_DYSYMTAB_modtab_doubleClicked(const QModelIndex &index)
+{
     Q_UNUSED(index)
     editModTabHeader();
 }
 
-void MACHWidget::on_tableView_DYSYMTAB_modtab_customContextMenuRequested(const QPoint &pos) {
+void MACHWidget::on_tableView_DYSYMTAB_modtab_customContextMenuRequested(const QPoint &pos)
+{
     qint32 nRow = ui->tableView_DYSYMTAB_modtab->currentIndex().row();
 
     if (nRow != -1) {
@@ -3179,12 +3253,14 @@ void MACHWidget::on_tableView_DYSYMTAB_modtab_customContextMenuRequested(const Q
     }
 }
 
-void MACHWidget::on_tableView_DYSYMTAB_toc_doubleClicked(const QModelIndex &index) {
+void MACHWidget::on_tableView_DYSYMTAB_toc_doubleClicked(const QModelIndex &index)
+{
     Q_UNUSED(index)
     editTocHeader();
 }
 
-void MACHWidget::on_tableView_DYSYMTAB_toc_customContextMenuRequested(const QPoint &pos) {
+void MACHWidget::on_tableView_DYSYMTAB_toc_customContextMenuRequested(const QPoint &pos)
+{
     qint32 nRow = ui->tableView_DYSYMTAB_toc->currentIndex().row();
 
     if (nRow != -1) {
@@ -3203,12 +3279,14 @@ void MACHWidget::on_tableView_DYSYMTAB_toc_customContextMenuRequested(const QPoi
     }
 }
 
-void MACHWidget::on_tableView_DYSYMTAB_extrel_doubleClicked(const QModelIndex &index) {
+void MACHWidget::on_tableView_DYSYMTAB_extrel_doubleClicked(const QModelIndex &index)
+{
     Q_UNUSED(index)
     editExtrelHeader();
 }
 
-void MACHWidget::on_tableView_DYSYMTAB_extrel_customContextMenuRequested(const QPoint &pos) {
+void MACHWidget::on_tableView_DYSYMTAB_extrel_customContextMenuRequested(const QPoint &pos)
+{
     qint32 nRow = ui->tableView_DYSYMTAB_extrel->currentIndex().row();
 
     if (nRow != -1) {
@@ -3223,12 +3301,14 @@ void MACHWidget::on_tableView_DYSYMTAB_extrel_customContextMenuRequested(const Q
     }
 }
 
-void MACHWidget::on_tableView_DYSYMTAB_locrel_doubleClicked(const QModelIndex &index) {
+void MACHWidget::on_tableView_DYSYMTAB_locrel_doubleClicked(const QModelIndex &index)
+{
     Q_UNUSED(index)
     editLocrelHeader();
 }
 
-void MACHWidget::on_tableView_DYSYMTAB_locrel_customContextMenuRequested(const QPoint &pos) {
+void MACHWidget::on_tableView_DYSYMTAB_locrel_customContextMenuRequested(const QPoint &pos)
+{
     qint32 nRow = ui->tableView_DYSYMTAB_locrel->currentIndex().row();
 
     if (nRow != -1) {
@@ -3243,12 +3323,14 @@ void MACHWidget::on_tableView_DYSYMTAB_locrel_customContextMenuRequested(const Q
     }
 }
 
-void MACHWidget::on_tableView_DYSYMTAB_indirectsyms_doubleClicked(const QModelIndex &index) {
+void MACHWidget::on_tableView_DYSYMTAB_indirectsyms_doubleClicked(const QModelIndex &index)
+{
     Q_UNUSED(index)
     editIndirectSymbolHeader();
 }
 
-void MACHWidget::on_tableView_DYSYMTAB_indirectsyms_customContextMenuRequested(const QPoint &pos) {
+void MACHWidget::on_tableView_DYSYMTAB_indirectsyms_customContextMenuRequested(const QPoint &pos)
+{
     qint32 nRow = ui->tableView_DYSYMTAB_indirectsyms->currentIndex().row();
 
     if (nRow != -1) {
@@ -3267,12 +3349,14 @@ void MACHWidget::on_tableView_DYSYMTAB_indirectsyms_customContextMenuRequested(c
     }
 }
 
-void MACHWidget::on_tableView_DYSYMTAB_extrefsyms_doubleClicked(const QModelIndex &index) {
+void MACHWidget::on_tableView_DYSYMTAB_extrefsyms_doubleClicked(const QModelIndex &index)
+{
     Q_UNUSED(index)
     editExtRefSymbolHeader();
 }
 
-void MACHWidget::on_tableView_DYSYMTAB_extrefsyms_customContextMenuRequested(const QPoint &pos) {
+void MACHWidget::on_tableView_DYSYMTAB_extrefsyms_customContextMenuRequested(const QPoint &pos)
+{
     qint32 nRow = ui->tableView_DYSYMTAB_extrefsyms->currentIndex().row();
 
     if (nRow != -1) {
@@ -3291,146 +3375,178 @@ void MACHWidget::on_tableView_DYSYMTAB_extrefsyms_customContextMenuRequested(con
     }
 }
 
-void MACHWidget::onTableView_DYLD_INFO_rebase_currentRowChanged(const QModelIndex &current, const QModelIndex &previous) {
+void MACHWidget::onTableView_DYLD_INFO_rebase_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
     Q_UNUSED(current)
     Q_UNUSED(previous)
 
     setHexSubdeviceByTableView(current.row(), SMACH::TYPE_DYLD_INFO_rebase, ui->widgetHex_DYLD_INFO_rebase, ui->tableView_DYLD_INFO_rebase);
 }
 
-void MACHWidget::onTableView_DYLD_INFO_bind_currentRowChanged(const QModelIndex &current, const QModelIndex &previous) {
+void MACHWidget::onTableView_DYLD_INFO_bind_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
     Q_UNUSED(current)
     Q_UNUSED(previous)
 
     setHexSubdeviceByTableView(current.row(), SMACH::TYPE_DYLD_INFO_bind, ui->widgetHex_DYLD_INFO_bind, ui->tableView_DYLD_INFO_bind);
 }
 
-void MACHWidget::onTableView_DYLD_INFO_weak_bind_currentRowChanged(const QModelIndex &current, const QModelIndex &previous) {
+void MACHWidget::onTableView_DYLD_INFO_weak_bind_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
     Q_UNUSED(current)
     Q_UNUSED(previous)
 
     setHexSubdeviceByTableView(current.row(), SMACH::TYPE_DYLD_INFO_weak_bind, ui->widgetHex_DYLD_INFO_weak_bind, ui->tableView_DYLD_INFO_weak_bind);
 }
 
-void MACHWidget::onTableView_DYLD_INFO_lazy_bind_currentRowChanged(const QModelIndex &current, const QModelIndex &previous) {
+void MACHWidget::onTableView_DYLD_INFO_lazy_bind_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
     Q_UNUSED(current)
     Q_UNUSED(previous)
 
     setHexSubdeviceByTableView(current.row(), SMACH::TYPE_DYLD_INFO_lazy_bind, ui->widgetHex_DYLD_INFO_lazy_bind, ui->tableView_DYLD_INFO_lazy_bind);
 }
 
-void MACHWidget::onTableView_DYLD_INFO_export_currentRowChanged(const QModelIndex &current, const QModelIndex &previous) {
+void MACHWidget::onTableView_DYLD_INFO_export_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
     Q_UNUSED(current)
     Q_UNUSED(previous)
 
     setHexSubdeviceByTableView(current.row(), SMACH::TYPE_DYLD_INFO_export, ui->widgetHex_DYLD_INFO_export, ui->tableView_DYLD_INFO_export);
 }
 
-void MACHWidget::editCommandHeader() {
+void MACHWidget::editCommandHeader()
+{
     showSectionHeader(SMACH::TYPE_mach_commands, ui->tableView_commands);
 }
 
-void MACHWidget::editSegmentHeader() {
+void MACHWidget::editSegmentHeader()
+{
     showSectionHeader(SMACH::TYPE_mach_segments, ui->tableView_segments);
 }
 
-void MACHWidget::segmentHex() {
+void MACHWidget::segmentHex()
+{
     showSectionHex(ui->tableView_segments);
 }
 
-void MACHWidget::segmentDisasm() {
+void MACHWidget::segmentDisasm()
+{
     showSectionDisasm(ui->tableView_segments);
 }
 
-void MACHWidget::segmentEntropy() {
+void MACHWidget::segmentEntropy()
+{
     showSectionEntropy(ui->tableView_segments);
 }
 
-void MACHWidget::editSectionHeader() {
+void MACHWidget::editSectionHeader()
+{
     showSectionHeader(SMACH::TYPE_mach_sections, ui->tableView_sections);
 }
 
-void MACHWidget::sectionHex() {
+void MACHWidget::sectionHex()
+{
     showSectionHex(ui->tableView_sections);
 }
 
-void MACHWidget::sectionDisasm() {
+void MACHWidget::sectionDisasm()
+{
     showSectionDisasm(ui->tableView_sections);
 }
 
-void MACHWidget::sectionEntropy() {
+void MACHWidget::sectionEntropy()
+{
     showSectionEntropy(ui->tableView_sections);
 }
 
-void MACHWidget::editLibraryHeader() {
+void MACHWidget::editLibraryHeader()
+{
     showSectionHeader(SMACH::TYPE_mach_libraries, ui->tableView_libraries);
 }
 
-void MACHWidget::editWeakLibraryHeader() {
+void MACHWidget::editWeakLibraryHeader()
+{
     showSectionHeader(SMACH::TYPE_mach_weak_libraries, ui->tableView_weak_libraries);
 }
 
-void MACHWidget::editIdLibraryHeader() {
+void MACHWidget::editIdLibraryHeader()
+{
     showSectionHeader(SMACH::TYPE_mach_id_library, ui->tableView_id_library);
 }
 
-void MACHWidget::editIDFVMLIBHeader() {
+void MACHWidget::editIDFVMLIBHeader()
+{
     showSectionHeader(SMACH::TYPE_mach_IDFVMLIB, ui->tableView_IDFVMLIB);
 }
 
-void MACHWidget::editLOADFVMLIBHeader() {
+void MACHWidget::editLOADFVMLIBHeader()
+{
     showSectionHeader(SMACH::TYPE_mach_LOADFVMLIB, ui->tableView_LOADFVMLIB);
 }
 
-void MACHWidget::editSymbolHeader() {
+void MACHWidget::editSymbolHeader()
+{
     showSectionHeader(SMACH::TYPE_SYMBOLTABLE, ui->tableView_SymbolTable);
 }
 
-void MACHWidget::functionHex() {
+void MACHWidget::functionHex()
+{
     showSectionHex(ui->tableView_Functions);
 }
 
-void MACHWidget::functionDisasm() {
+void MACHWidget::functionDisasm()
+{
     showSectionDisasm(ui->tableView_Functions);
 }
 
-void MACHWidget::functionDemangle() {
+void MACHWidget::functionDemangle()
+{
     showTableViewDemangle(ui->tableView_Functions, 3);
 }
 
-void MACHWidget::editDiceHeader() {
+void MACHWidget::editDiceHeader()
+{
     showSectionHeader(SMACH::TYPE_DICE, ui->tableView_data_in_code_entry);
 }
 
-void MACHWidget::editModTabHeader() {
+void MACHWidget::editModTabHeader()
+{
     showSectionHeader(SMACH::TYPE_DYSYMTAB_modtab, ui->tableView_DYSYMTAB_modtab);
 }
 
-void MACHWidget::editTocHeader() {
+void MACHWidget::editTocHeader()
+{
     showSectionHeader(SMACH::TYPE_DYSYMTAB_toc, ui->tableView_DYSYMTAB_toc);
 }
 
-void MACHWidget::editExtrelHeader() {
+void MACHWidget::editExtrelHeader()
+{
     showSectionHeader(SMACH::TYPE_DYSYMTAB_extrel, ui->tableView_DYSYMTAB_extrel);
 }
 
-void MACHWidget::editLocrelHeader() {
+void MACHWidget::editLocrelHeader()
+{
     showSectionHeader(SMACH::TYPE_DYSYMTAB_locrel, ui->tableView_DYSYMTAB_locrel);
 }
 
-void MACHWidget::editIndirectSymbolHeader() {
+void MACHWidget::editIndirectSymbolHeader()
+{
     showSectionHeader(SMACH::TYPE_DYSYMTAB_indirectsyms, ui->tableView_DYSYMTAB_indirectsyms);
 }
 
-void MACHWidget::editExtRefSymbolHeader() {
+void MACHWidget::editExtRefSymbolHeader()
+{
     showSectionHeader(SMACH::TYPE_DYSYMTAB_extrefsyms, ui->tableView_DYSYMTAB_extrefsyms);
 }
 
-void MACHWidget::diceHex() {
+void MACHWidget::diceHex()
+{
     showSectionHex(ui->tableView_data_in_code_entry);
 }
 
-void MACHWidget::showSectionHeader(int nType, QTableView *pTableView) {
+void MACHWidget::showSectionHeader(int nType, QTableView *pTableView)
+{
     qint32 nRow = pTableView->currentIndex().row();
 
     if (nRow != -1) {
@@ -3455,42 +3571,52 @@ void MACHWidget::showSectionHeader(int nType, QTableView *pTableView) {
     }
 }
 
-void MACHWidget::symbolDemangle() {
+void MACHWidget::symbolDemangle()
+{
     showTableViewDemangle(ui->tableView_SymbolTable, N_mach_nlist::n_value + 2);
 }
 
-void MACHWidget::indirectsymsDemangle() {
+void MACHWidget::indirectsymsDemangle()
+{
     showTableViewDemangle(ui->tableView_DYSYMTAB_indirectsyms, 2);
 }
 
-void MACHWidget::tocDemangle() {
+void MACHWidget::tocDemangle()
+{
     showTableViewDemangle(ui->tableView_DYSYMTAB_toc, 3);
 }
 
-void MACHWidget::extrefsymsDemangle() {
+void MACHWidget::extrefsymsDemangle()
+{
     showTableViewDemangle(ui->tableView_DYSYMTAB_extrefsyms, 3);
 }
 
-void MACHWidget::on_pushButtonHex_clicked() {
+void MACHWidget::on_pushButtonHex_clicked()
+{
     setTreeItem(ui->treeWidgetNavi, SMACH::TYPE_HEX);
 }
 
-void MACHWidget::on_pushButtonDisasm_clicked() {
+void MACHWidget::on_pushButtonDisasm_clicked()
+{
     setTreeItem(ui->treeWidgetNavi, SMACH::TYPE_DISASM);
 }
 
-void MACHWidget::on_pushButtonStrings_clicked() {
+void MACHWidget::on_pushButtonStrings_clicked()
+{
     setTreeItem(ui->treeWidgetNavi, SMACH::TYPE_STRINGS);
 }
 
-void MACHWidget::on_pushButtonMemoryMap_clicked() {
+void MACHWidget::on_pushButtonMemoryMap_clicked()
+{
     setTreeItem(ui->treeWidgetNavi, SMACH::TYPE_MEMORYMAP);
 }
 
-void MACHWidget::on_pushButtonEntropy_clicked() {
+void MACHWidget::on_pushButtonEntropy_clicked()
+{
     setTreeItem(ui->treeWidgetNavi, SMACH::TYPE_ENTROPY);
 }
 
-void MACHWidget::on_pushButtonHeuristicScan_clicked() {
+void MACHWidget::on_pushButtonHeuristicScan_clicked()
+{
     setTreeItem(ui->treeWidgetNavi, SMACH::TYPE_HEURISTICSCAN);
 }

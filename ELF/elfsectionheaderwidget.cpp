@@ -22,12 +22,14 @@
 
 #include "ui_elfsectionheaderwidget.h"
 
-ELFSectionHeaderWidget::ELFSectionHeaderWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::ELFSectionHeaderWidget) {
+ELFSectionHeaderWidget::ELFSectionHeaderWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::ELFSectionHeaderWidget)
+{
     ui->setupUi(this);
 }
 
 ELFSectionHeaderWidget::ELFSectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent)
-    : ELFSectionHeaderWidget(pParent) {
+    : ELFSectionHeaderWidget(pParent)
+{
     setData(pDevice, options, nNumber, nOffset, nType);
 
     g_ppLinedEdit = 0;
@@ -75,7 +77,8 @@ ELFSectionHeaderWidget::ELFSectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIO
     }
 }
 
-ELFSectionHeaderWidget::~ELFSectionHeaderWidget() {
+ELFSectionHeaderWidget::~ELFSectionHeaderWidget()
+{
     if (g_ppLinedEdit) {
         delete[] g_ppLinedEdit;
     }
@@ -91,7 +94,8 @@ ELFSectionHeaderWidget::~ELFSectionHeaderWidget() {
     delete ui;
 }
 
-void ELFSectionHeaderWidget::clear() {
+void ELFSectionHeaderWidget::clear()
+{
     reset();
 
     memset(g_ppLinedEdit, 0, g_nLineEditSize * sizeof(XLineEditHEX *));
@@ -103,11 +107,13 @@ void ELFSectionHeaderWidget::clear() {
     ui->checkBoxReadonly->setChecked(true);
 }
 
-void ELFSectionHeaderWidget::cleanup() {
+void ELFSectionHeaderWidget::cleanup()
+{
     ELFSectionHeaderWidget::clear();
 }
 
-void ELFSectionHeaderWidget::reload() {
+void ELFSectionHeaderWidget::reload()
+{
     ELFSectionHeaderWidget::clear();
 
     ui->checkBoxReadonly->setEnabled(!isReadonly());
@@ -115,17 +121,20 @@ void ELFSectionHeaderWidget::reload() {
     reloadData();
 }
 
-void ELFSectionHeaderWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions) {
+void ELFSectionHeaderWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
+{
     ui->widgetHex->setGlobal(pShortcuts, pXOptions);
     XShortcutsWidget::setGlobal(pShortcuts, pXOptions);
 }
 
-void ELFSectionHeaderWidget::setStringTable(qint64 nStringTableOffset, qint64 nStringTableSize) {
+void ELFSectionHeaderWidget::setStringTable(qint64 nStringTableOffset, qint64 nStringTableSize)
+{
     this->g_nStringTableOffset = nStringTableOffset;
     this->g_nStringTableSize = nStringTableSize;
 }
 
-FormatWidget::SV ELFSectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset) {
+FormatWidget::SV ELFSectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
+{
     Q_UNUSED(nVtype)
 
     SV result = SV_NONE;
@@ -467,17 +476,20 @@ FormatWidget::SV ELFSectionHeaderWidget::_setValue(QVariant vValue, int nStype, 
 
     return result;
 }
-void ELFSectionHeaderWidget::setReadonly(bool bState) {
+void ELFSectionHeaderWidget::setReadonly(bool bState)
+{
     setLineEditsReadOnly(g_ppLinedEdit, g_nLineEditSize, bState);
     setComboBoxesReadOnly(g_ppComboBox, g_nComboBoxSize, bState);
 }
 
-void ELFSectionHeaderWidget::blockSignals(bool bState) {
+void ELFSectionHeaderWidget::blockSignals(bool bState)
+{
     _blockSignals((QObject **)g_ppLinedEdit, g_nLineEditSize, bState);
     _blockSignals((QObject **)g_ppComboBox, g_nComboBoxSize, bState);
 }
 
-void ELFSectionHeaderWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget) {
+void ELFSectionHeaderWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
+{
     XBinary::MODE mode = XELF::getMode(getDevice(), getOptions().bIsImage, getOptions().nImageBase);
 
     pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET, getColumnWidth(this, CW_UINT16, mode));
@@ -522,11 +534,13 @@ void ELFSectionHeaderWidget::adjustHeaderTable(int nType, QTableWidget *pTableWi
     }
 }
 
-void ELFSectionHeaderWidget::on_checkBoxReadonly_toggled(bool bChecked) {
+void ELFSectionHeaderWidget::on_checkBoxReadonly_toggled(bool bChecked)
+{
     setReadonly(bChecked);
 }
 
-void ELFSectionHeaderWidget::reloadData() {
+void ELFSectionHeaderWidget::reloadData()
+{
     qint32 nType = getType();
 
     XELF elf(getDevice(), getOptions().bIsImage, getOptions().nImageBase);
@@ -768,7 +782,8 @@ void ELFSectionHeaderWidget::reloadData() {
     }
 }
 
-void ELFSectionHeaderWidget::widgetValueChanged(quint64 nValue) {
+void ELFSectionHeaderWidget::widgetValueChanged(quint64 nValue)
+{
     QWidget *pWidget = qobject_cast<QWidget *>(sender());
     qint32 nStype = pWidget->property("STYPE").toInt();
     qint32 nNdata = pWidget->property("NDATA").toInt();
@@ -837,7 +852,8 @@ void ELFSectionHeaderWidget::widgetValueChanged(quint64 nValue) {
     }
 }
 
-void ELFSectionHeaderWidget::on_tableWidget_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn) {
+void ELFSectionHeaderWidget::on_tableWidget_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
     Q_UNUSED(nCurrentRow)
     Q_UNUSED(nCurrentColumn)
     Q_UNUSED(nPreviousRow)
@@ -846,6 +862,7 @@ void ELFSectionHeaderWidget::on_tableWidget_currentCellChanged(int nCurrentRow, 
     setHeaderTableSelection(ui->widgetHex, ui->tableWidget);
 }
 
-void ELFSectionHeaderWidget::on_pushButtonSaveHeader_clicked() {
+void ELFSectionHeaderWidget::on_pushButtonSaveHeader_clicked()
+{
     saveHeaderTable(ui->tableWidget, XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(tr("Header"))));
 }

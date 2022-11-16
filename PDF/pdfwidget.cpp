@@ -22,22 +22,26 @@
 
 #include "ui_pdfwidget.h"
 
-PDFWidget::PDFWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::PDFWidget) {
+PDFWidget::PDFWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::PDFWidget)
+{
     ui->setupUi(this);
 
     initWidget();
 }
 
-PDFWidget::PDFWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) : PDFWidget(pParent) {
+PDFWidget::PDFWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) : PDFWidget(pParent)
+{
     PDFWidget::setData(pDevice, options, 0, 0, 0);
     PDFWidget::reload();
 }
 
-PDFWidget::~PDFWidget() {
+PDFWidget::~PDFWidget()
+{
     delete ui;
 }
 
-void PDFWidget::clear() {
+void PDFWidget::clear()
+{
     reset();
 
     ui->checkBoxReadonly->setChecked(true);
@@ -45,10 +49,12 @@ void PDFWidget::clear() {
     ui->treeWidgetNavi->clear();
 }
 
-void PDFWidget::cleanup() {
+void PDFWidget::cleanup()
+{
 }
 
-void PDFWidget::reload() {
+void PDFWidget::reload()
+{
     clear();
 
     ui->checkBoxReadonly->setEnabled(!isReadonly());
@@ -78,19 +84,23 @@ void PDFWidget::reload() {
     }
 }
 
-FormatWidget::SV PDFWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset) {
+FormatWidget::SV PDFWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
+{
     return SV_NONE;
 }
 
-void PDFWidget::setReadonly(bool bState) {
+void PDFWidget::setReadonly(bool bState)
+{
     ui->widgetHex->setReadonly(bState);
     ui->widgetStrings->setReadonly(bState);
 }
 
-void PDFWidget::blockSignals(bool bState) {
+void PDFWidget::blockSignals(bool bState)
+{
 }
 
-void PDFWidget::reloadData() {
+void PDFWidget::reloadData()
+{
     int nType = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_TYPE).toInt();
     qint64 nDataOffset = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET).toLongLong();
     qint64 nDataSize = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_SIZE).toLongLong();
@@ -165,11 +175,13 @@ void PDFWidget::reloadData() {
     addInit(sInit);
 }
 
-void PDFWidget::on_checkBoxReadonly_toggled(bool bChecked) {
+void PDFWidget::on_checkBoxReadonly_toggled(bool bChecked)
+{
     setReadonly(bChecked);
 }
 
-void PDFWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent, QTreeWidgetItem *pPrevious) {
+void PDFWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent, QTreeWidgetItem *pPrevious)
+{
     Q_UNUSED(pPrevious)
 
     if (pCurrent) {

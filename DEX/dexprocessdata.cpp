@@ -20,7 +20,8 @@
  */
 #include "dexprocessdata.h"
 
-DEXProcessData::DEXProcessData(int nType, QStandardItemModel **ppModel, XDEX *pDEX, qint64 nOffset, qint64 nSize) : ProcessData() {
+DEXProcessData::DEXProcessData(int nType, QStandardItemModel **ppModel, XDEX *pDEX, qint64 nOffset, qint64 nSize) : ProcessData()
+{
     this->g_nType = nType;
     this->g_ppModel = ppModel;
     this->g_pDEX = pDEX;
@@ -28,7 +29,8 @@ DEXProcessData::DEXProcessData(int nType, QStandardItemModel **ppModel, XDEX *pD
     this->g_nSize = nSize;
 }
 
-void DEXProcessData::_process() {
+void DEXProcessData::_process()
+{
     if (g_nType == SDEX::TYPE_MAPITEMS) {
         QList<QString> listLabels;
         listLabels.append("");
@@ -296,7 +298,8 @@ void DEXProcessData::_process() {
     }
 }
 
-void DEXProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView) {
+void DEXProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
+{
     XBinary::MODE mode = g_pDEX->getMode();
 
     if (g_nType == SDEX::TYPE_MAPITEMS) {

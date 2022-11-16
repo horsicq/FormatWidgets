@@ -22,17 +22,20 @@
 
 #include "ui_dialogpdf.h"
 
-DialogPDF::DialogPDF(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogPDF) {
+DialogPDF::DialogPDF(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogPDF)
+{
     ui->setupUi(this);
 
     setWindowFlags(Qt::Window);
 }
 
-DialogPDF::~DialogPDF() {
+DialogPDF::~DialogPDF()
+{
     delete ui;
 }
 
-void DialogPDF::setData(QIODevice *pDevice, FW_DEF::OPTIONS options) {
+void DialogPDF::setData(QIODevice *pDevice, FW_DEF::OPTIONS options)
+{
     if (options.sTitle != "") {
         setWindowTitle(options.sTitle);
     }
@@ -41,7 +44,8 @@ void DialogPDF::setData(QIODevice *pDevice, FW_DEF::OPTIONS options) {
     ui->widget->reload();
 }
 
-void DialogPDF::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions) {
+void DialogPDF::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
+{
     ui->widget->setGlobal(pShortcuts, pXOptions);
     XShortcutsDialog::setGlobal(pShortcuts, pXOptions);
 }

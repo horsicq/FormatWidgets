@@ -22,17 +22,20 @@
 
 #include "ui_dialogpe.h"
 
-DialogPE::DialogPE(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogPE) {
+DialogPE::DialogPE(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogPE)
+{
     ui->setupUi(this);
 
     setWindowFlags(Qt::Window);
 }
 
-DialogPE::~DialogPE() {
+DialogPE::~DialogPE()
+{
     delete ui;
 }
 
-void DialogPE::setData(QIODevice *pDevice, FW_DEF::OPTIONS options) {
+void DialogPE::setData(QIODevice *pDevice, FW_DEF::OPTIONS options)
+{
     if (options.sTitle != "") {
         setWindowTitle(options.sTitle);
     }
@@ -41,7 +44,8 @@ void DialogPE::setData(QIODevice *pDevice, FW_DEF::OPTIONS options) {
     ui->widget->reload();
 }
 
-void DialogPE::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions) {
+void DialogPE::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
+{
     ui->widget->setGlobal(pShortcuts, pXOptions);
     XShortcutsDialog::setGlobal(pShortcuts, pXOptions);
 }

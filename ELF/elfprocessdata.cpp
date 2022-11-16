@@ -21,7 +21,8 @@
 #include "elfprocessdata.h"
 
 ELFProcessData::ELFProcessData(int nType, QStandardItemModel **ppModel, XELF *pELF, qint64 nOffset, qint64 nSize, qint64 nStringTableOffset, qint64 nStringTableSize)
-    : ProcessData() {
+    : ProcessData()
+{
     this->g_nType = nType;
     this->g_ppModel = ppModel;
     this->g_pELF = pELF;
@@ -31,7 +32,8 @@ ELFProcessData::ELFProcessData(int nType, QStandardItemModel **ppModel, XELF *pE
     this->g_nStringTableSize = nStringTableSize;
 }
 
-void ELFProcessData::_process() {
+void ELFProcessData::_process()
+{
     if (g_nType == SELF::TYPE_Elf_Shdr) {
         bool bIs64 = g_pELF->is64();
 
@@ -575,7 +577,8 @@ void ELFProcessData::_process() {
     }
 }
 
-void ELFProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView) {
+void ELFProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
+{
     XBinary::MODE mode = g_pELF->getMode();
 
     if (g_nType == SELF::TYPE_SYMBOLTABLE) {

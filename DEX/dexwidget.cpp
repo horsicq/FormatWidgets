@@ -22,7 +22,8 @@
 
 #include "ui_dexwidget.h"
 
-DEXWidget::DEXWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::DEXWidget) {
+DEXWidget::DEXWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::DEXWidget)
+{
     ui->setupUi(this);
 
     memset(g_subDevice, 0, sizeof g_subDevice);
@@ -33,16 +34,19 @@ DEXWidget::DEXWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::DEXWi
     initWidget();
 }
 
-DEXWidget::DEXWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) : DEXWidget(pParent) {
+DEXWidget::DEXWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) : DEXWidget(pParent)
+{
     DEXWidget::setData(pDevice, options, 0, 0, 0);
     DEXWidget::reload();
 }
 
-DEXWidget::~DEXWidget() {
+DEXWidget::~DEXWidget()
+{
     delete ui;
 }
 
-void DEXWidget::clear() {
+void DEXWidget::clear()
+{
     DEXWidget::reset();
 
     memset(g_lineEdit_HEADER, 0, sizeof g_lineEdit_HEADER);
@@ -59,11 +63,13 @@ void DEXWidget::clear() {
     ui->treeWidgetNavi->clear();
 }
 
-void DEXWidget::cleanup() {
+void DEXWidget::cleanup()
+{
     DEXWidget::clear();
 }
 
-void DEXWidget::reload() {
+void DEXWidget::reload()
+{
     DEXWidget::clear();
 
     ui->checkBoxReadonly->setEnabled(!isReadonly());
@@ -121,7 +127,8 @@ void DEXWidget::reload() {
     }
 }
 
-FormatWidget::SV DEXWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset) {
+FormatWidget::SV DEXWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
+{
     Q_UNUSED(nVtype)
     Q_UNUSED(nPosition)
     Q_UNUSED(nOffset)
@@ -293,7 +300,8 @@ FormatWidget::SV DEXWidget::_setValue(QVariant vValue, int nStype, int nNdata, i
     return result;
 }
 
-void DEXWidget::setReadonly(bool bState) {
+void DEXWidget::setReadonly(bool bState)
+{
     setLineEditsReadOnly(g_lineEdit_HEADER, N_DEX_HEADER::__data_size, bState);
     setComboBoxesReadOnly(g_comboBox, __CB_size, bState);
 
@@ -301,12 +309,14 @@ void DEXWidget::setReadonly(bool bState) {
     ui->widgetStrings->setReadonly(bState);
 }
 
-void DEXWidget::blockSignals(bool bState) {
+void DEXWidget::blockSignals(bool bState)
+{
     _blockSignals((QObject **)g_lineEdit_HEADER, N_DEX_HEADER::__data_size, bState);
     _blockSignals((QObject **)g_comboBox, __CB_size, bState);
 }
 
-void DEXWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget) {
+void DEXWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
+{
     XBinary::MODE mode = XDEX::getMode(getDevice());
 
     pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET, getColumnWidth(this, CW_UINT16, mode));
@@ -321,23 +331,27 @@ void DEXWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget) {
     }
 }
 
-QString DEXWidget::typeIdToString(int nType) {
+QString DEXWidget::typeIdToString(int nType)
+{
     Q_UNUSED(nType)
 
     return "";
 }
 
-void DEXWidget::_showInMemoryMapWindowOffset(qint64 nOffset) {
+void DEXWidget::_showInMemoryMapWindowOffset(qint64 nOffset)
+{
     setTreeItem(ui->treeWidgetNavi, SDEX::TYPE_MEMORYMAP);
     ui->widgetMemoryMap->goToOffset(nOffset);
 }
 
-void DEXWidget::_showInHexWindow(qint64 nOffset, qint64 nSize) {
+void DEXWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
+{
     setTreeItem(ui->treeWidgetNavi, SDEX::TYPE_HEX);
     ui->widgetHex->setSelection(nOffset, nSize);
 }
 
-void DEXWidget::reloadData() {
+void DEXWidget::reloadData()
+{
     qint32 nType = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_TYPE).toInt();
     qint64 nDataOffset = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET).toLongLong();
     qint64 nDataSize = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_SIZE).toLongLong();
@@ -547,7 +561,8 @@ void DEXWidget::reloadData() {
     addInit(sInit);
 }
 
-bool DEXWidget::createSectionTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pHeaderRecord, int nNumberOfRecords) {
+bool DEXWidget::createSectionTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pHeaderRecord, int nNumberOfRecords)
+{
     Q_UNUSED(nType)
 
     QStringList slHeader;
@@ -564,7 +579,8 @@ bool DEXWidget::createSectionTable(int nType, QTableWidget *pTableWidget, const 
     return true;
 }
 
-void DEXWidget::widgetValueChanged(quint64 nValue) {
+void DEXWidget::widgetValueChanged(quint64 nValue)
+{
     QWidget *pWidget = qobject_cast<QWidget *>(sender());
     qint32 nStype = pWidget->property("STYPE").toInt();
     qint32 nNdata = pWidget->property("NDATA").toInt();
@@ -581,7 +597,8 @@ void DEXWidget::widgetValueChanged(quint64 nValue) {
     }
 }
 
-void DEXWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurrent, QTreeWidgetItem *pItemPrevious) {
+void DEXWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurrent, QTreeWidgetItem *pItemPrevious)
+{
     Q_UNUSED(pItemPrevious)
 
     if (pItemCurrent) {
@@ -592,22 +609,26 @@ void DEXWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurre
     }
 }
 
-void DEXWidget::on_checkBoxReadonly_toggled(bool bChecked) {
+void DEXWidget::on_checkBoxReadonly_toggled(bool bChecked)
+{
     setReadonly(bChecked);
 }
 
-void DEXWidget::on_pushButtonReload_clicked() {
+void DEXWidget::on_pushButtonReload_clicked()
+{
     ui->pushButtonReload->setEnabled(false);
     reload();
 
     QTimer::singleShot(1000, this, SLOT(enableButton()));
 }
 
-void DEXWidget::enableButton() {
+void DEXWidget::enableButton()
+{
     ui->pushButtonReload->setEnabled(true);
 }
 
-void DEXWidget::on_tableWidget_Header_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn) {
+void DEXWidget::on_tableWidget_Header_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
     Q_UNUSED(nCurrentRow);
     Q_UNUSED(nCurrentColumn);
     Q_UNUSED(nPreviousRow);
@@ -616,7 +637,8 @@ void DEXWidget::on_tableWidget_Header_currentCellChanged(int nCurrentRow, int nC
     setHeaderTableSelection(ui->widgetHex_Header, ui->tableWidget_Header);
 }
 
-void DEXWidget::on_lineEditFilterStrings_textChanged(const QString &sString) {
+void DEXWidget::on_lineEditFilterStrings_textChanged(const QString &sString)
+{
 #if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
     g_pFilterStrings->setFilterRegularExpression(sString);
 #else
@@ -626,7 +648,8 @@ void DEXWidget::on_lineEditFilterStrings_textChanged(const QString &sString) {
     g_pFilterStrings->setFilterKeyColumn(3);
 }
 
-void DEXWidget::on_lineEditFilterTypes_textChanged(const QString &sString) {
+void DEXWidget::on_lineEditFilterTypes_textChanged(const QString &sString)
+{
 #if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
     g_pFilterTypes->setFilterRegularExpression(sString);
 #else
@@ -636,49 +659,57 @@ void DEXWidget::on_lineEditFilterTypes_textChanged(const QString &sString) {
     g_pFilterTypes->setFilterKeyColumn(3);
 }
 
-void DEXWidget::on_toolButtonPrev_clicked() {
+void DEXWidget::on_toolButtonPrev_clicked()
+{
     setAddPageEnabled(false);
     ui->treeWidgetNavi->setCurrentItem(getPrevPage());
     setAddPageEnabled(true);
 }
 
-void DEXWidget::on_toolButtonNext_clicked() {
+void DEXWidget::on_toolButtonNext_clicked()
+{
     setAddPageEnabled(false);
     ui->treeWidgetNavi->setCurrentItem(getNextPage());
     setAddPageEnabled(true);
 }
 
-void DEXWidget::on_pushButtonSave_STRING_ID_ITEM_clicked() {
+void DEXWidget::on_pushButtonSave_STRING_ID_ITEM_clicked()
+{
     if (g_pFilterStrings) {
         XShortcutsWidget::saveModel(g_pFilterStrings, XBinary::getResultFileName(getBackupDevice(), QString("%1.txt").arg(QString("STRING_ID_ITEM"))));
     }
 }
 
-void DEXWidget::on_pushButtonSave_TYPE_ID_ITEM_clicked() {
+void DEXWidget::on_pushButtonSave_TYPE_ID_ITEM_clicked()
+{
     if (g_pFilterTypes) {
         XShortcutsWidget::saveModel(g_pFilterTypes, XBinary::getResultFileName(getBackupDevice(), QString("%1.txt").arg(QString("TYPE_ID_ITEM"))));
     }
 }
 
-void DEXWidget::on_pushButtonSave_PROTO_ID_ITEM_clicked() {
+void DEXWidget::on_pushButtonSave_PROTO_ID_ITEM_clicked()
+{
     if (g_pFilterTypes) {
         XShortcutsWidget::saveModel(ui->tableView_PROTO_ID_ITEM->model(), XBinary::getResultFileName(getBackupDevice(), QString("%1.txt").arg(QString("PROTO_ID_ITEM"))));
     }
 }
 
-void DEXWidget::on_pushButtonSave_FIELD_ID_ITEM_clicked() {
+void DEXWidget::on_pushButtonSave_FIELD_ID_ITEM_clicked()
+{
     if (g_pFilterTypes) {
         XShortcutsWidget::saveModel(ui->tableView_FIELD_ID_ITEM->model(), XBinary::getResultFileName(getBackupDevice(), QString("%1.txt").arg(QString("FIELD_ID_ITEM"))));
     }
 }
 
-void DEXWidget::on_pushButtonSave_CLASS_DEF_ITEM_clicked() {
+void DEXWidget::on_pushButtonSave_CLASS_DEF_ITEM_clicked()
+{
     if (g_pFilterTypes) {
         XShortcutsWidget::saveModel(ui->tableView_CLASS_DEF_ITEM->model(), XBinary::getResultFileName(getBackupDevice(), QString("%1.txt").arg(QString("CLASS_DEF_ITEM"))));
     }
 }
 
-void DEXWidget::on_pushButtonSave_METHOD_ID_ITEM_clicked() {
+void DEXWidget::on_pushButtonSave_METHOD_ID_ITEM_clicked()
+{
     if (g_pFilterTypes) {
         XShortcutsWidget::saveModel(ui->tableView_METHOD_ID_ITEM->model(), XBinary::getResultFileName(getBackupDevice(), QString("%1.txt").arg(QString("METHOD_ID_ITEM"))));
     }

@@ -22,24 +22,28 @@
 
 #include "ui_binarywidget.h"
 
-BinaryWidget::BinaryWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::BinaryWidget) {
+BinaryWidget::BinaryWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::BinaryWidget)
+{
     ui->setupUi(this);
 
     initWidget();
 }
 
-BinaryWidget::BinaryWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) : BinaryWidget(pParent) {
+BinaryWidget::BinaryWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) : BinaryWidget(pParent)
+{
     ui->setupUi(this);
 
     BinaryWidget::setData(pDevice, options, 0, 0, 0);
     BinaryWidget::reload();
 }
 
-BinaryWidget::~BinaryWidget() {
+BinaryWidget::~BinaryWidget()
+{
     delete ui;
 }
 
-void BinaryWidget::clear() {
+void BinaryWidget::clear()
+{
     setTreeItem(ui->treeWidgetNavi, 0);
 
     BinaryWidget::reset();
@@ -51,10 +55,12 @@ void BinaryWidget::clear() {
     ui->treeWidgetNavi->clear();
 }
 
-void BinaryWidget::cleanup() {
+void BinaryWidget::cleanup()
+{
 }
 
-void BinaryWidget::reload() {
+void BinaryWidget::reload()
+{
     // TODO Hex
     BinaryWidget::clear();
 
@@ -84,7 +90,8 @@ void BinaryWidget::reload() {
     }
 }
 
-FormatWidget::SV BinaryWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset) {
+FormatWidget::SV BinaryWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
+{
     Q_UNUSED(vValue)
     Q_UNUSED(nStype)
     Q_UNUSED(nNdata)
@@ -106,43 +113,51 @@ FormatWidget::SV BinaryWidget::_setValue(QVariant vValue, int nStype, int nNdata
     return result;
 }
 
-void BinaryWidget::setReadonly(bool bState) {
+void BinaryWidget::setReadonly(bool bState)
+{
     ui->widgetHex->setReadonly(bState);
     ui->widgetDisasm->setReadonly(bState);
     ui->widgetStrings->setReadonly(bState);
 }
 
-void BinaryWidget::blockSignals(bool bState) {
+void BinaryWidget::blockSignals(bool bState)
+{
     Q_UNUSED(bState)
 }
 
-void BinaryWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget) {
+void BinaryWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
+{
     Q_UNUSED(nType)
     Q_UNUSED(pTableWidget)
     //    qint32 nSymbolWidth=getSymbolWidth();
 }
 
-void BinaryWidget::_showInDisasmWindowAddress(XADDR nAddress) {
+void BinaryWidget::_showInDisasmWindowAddress(XADDR nAddress)
+{
     setTreeItem(ui->treeWidgetNavi, SBINARY::TYPE_DISASM);
     ui->widgetDisasm->goToAddress(nAddress);
 }
 
-void BinaryWidget::_showInDisasmWindowOffset(qint64 nOffset) {
+void BinaryWidget::_showInDisasmWindowOffset(qint64 nOffset)
+{
     setTreeItem(ui->treeWidgetNavi, SBINARY::TYPE_DISASM);
     ui->widgetDisasm->goToOffset(nOffset);
 }
 
-void BinaryWidget::_showInMemoryMapWindowOffset(qint64 nOffset) {
+void BinaryWidget::_showInMemoryMapWindowOffset(qint64 nOffset)
+{
     setTreeItem(ui->treeWidgetNavi, SBINARY::TYPE_MEMORYMAP);
     ui->widgetMemoryMap->goToOffset(nOffset);
 }
 
-void BinaryWidget::_showInHexWindow(qint64 nOffset, qint64 nSize) {
+void BinaryWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
+{
     setTreeItem(ui->treeWidgetNavi, SBINARY::TYPE_HEX);
     ui->widgetHex->setSelection(nOffset, nSize);
 }
 
-void BinaryWidget::reloadData() {
+void BinaryWidget::reloadData()
+{
     qint32 nType = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_TYPE).toInt();
 
     QString sInit = getInitString(ui->treeWidgetNavi->currentItem());
@@ -228,65 +243,78 @@ void BinaryWidget::reloadData() {
     addInit(sInit);
 }
 
-void BinaryWidget::widgetValueChanged(quint64 nValue) {
+void BinaryWidget::widgetValueChanged(quint64 nValue)
+{
     Q_UNUSED(nValue)
     //    QWidget *pWidget=qobject_cast<QWidget *>(sender());
     //    int nStype=pWidget->property("STYPE").toInt();
     //    int nNdata=pWidget->property("NDATA").toInt();
 }
 
-void BinaryWidget::on_checkBoxReadonly_toggled(bool bChecked) {
+void BinaryWidget::on_checkBoxReadonly_toggled(bool bChecked)
+{
     setReadonly(bChecked);
 }
 
-void BinaryWidget::on_pushButtonReload_clicked() {
+void BinaryWidget::on_pushButtonReload_clicked()
+{
     ui->pushButtonReload->setEnabled(false);
     reload();
 
     QTimer::singleShot(1000, this, SLOT(enableButton()));
 }
 
-void BinaryWidget::enableButton() {
+void BinaryWidget::enableButton()
+{
     ui->pushButtonReload->setEnabled(true);
 }
 
-void BinaryWidget::on_toolButtonPrev_clicked() {
+void BinaryWidget::on_toolButtonPrev_clicked()
+{
     setAddPageEnabled(false);
     ui->treeWidgetNavi->setCurrentItem(getPrevPage());
     setAddPageEnabled(true);
 }
 
-void BinaryWidget::on_toolButtonNext_clicked() {
+void BinaryWidget::on_toolButtonNext_clicked()
+{
     setAddPageEnabled(false);
     ui->treeWidgetNavi->setCurrentItem(getNextPage());
     setAddPageEnabled(true);
 }
 
-void BinaryWidget::on_pushButtonHex_clicked() {
+void BinaryWidget::on_pushButtonHex_clicked()
+{
     setTreeItem(ui->treeWidgetNavi, SBINARY::TYPE_HEX);
 }
 
-void BinaryWidget::on_pushButtonDisasm_clicked() {
+void BinaryWidget::on_pushButtonDisasm_clicked()
+{
     setTreeItem(ui->treeWidgetNavi, SBINARY::TYPE_DISASM);
 }
 
-void BinaryWidget::on_pushButtonStrings_clicked() {
+void BinaryWidget::on_pushButtonStrings_clicked()
+{
     setTreeItem(ui->treeWidgetNavi, SBINARY::TYPE_STRINGS);
 }
 
-void BinaryWidget::on_pushButtonEntropy_clicked() {
+void BinaryWidget::on_pushButtonEntropy_clicked()
+{
     setTreeItem(ui->treeWidgetNavi, SBINARY::TYPE_ENTROPY);
 }
 
-void BinaryWidget::on_pushButtonHeuristicScan_clicked() {
+void BinaryWidget::on_pushButtonHeuristicScan_clicked()
+{
     setTreeItem(ui->treeWidgetNavi, SBINARY::TYPE_HEURISTICSCAN);
 }
 
-void BinaryWidget::on_pushButtonMemoryMap_clicked() {
+void BinaryWidget::on_pushButtonMemoryMap_clicked()
+{
     setTreeItem(ui->treeWidgetNavi, SBINARY::TYPE_MEMORYMAP);
 }
 
-void BinaryWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurrent, QTreeWidgetItem *pItemPrevious) {
+void BinaryWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurrent, QTreeWidgetItem *pItemPrevious)
+{
     Q_UNUSED(pItemPrevious)
 
     if (pItemCurrent) {

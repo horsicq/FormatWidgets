@@ -22,7 +22,8 @@
 
 #include "ui_searchsignaturesoptionswidget.h"
 
-SearchSignaturesOptionsWidget::SearchSignaturesOptionsWidget(QWidget *pParent) : QWidget(pParent), ui(new Ui::SearchSignaturesOptionsWidget) {
+SearchSignaturesOptionsWidget::SearchSignaturesOptionsWidget(QWidget *pParent) : QWidget(pParent), ui(new Ui::SearchSignaturesOptionsWidget)
+{
     ui->setupUi(this);
 
     g_pOptions = nullptr;
@@ -30,29 +31,35 @@ SearchSignaturesOptionsWidget::SearchSignaturesOptionsWidget(QWidget *pParent) :
     setProperty("GROUPID", XOptions::GROUPID_SIGNATURES);
 }
 
-SearchSignaturesOptionsWidget::~SearchSignaturesOptionsWidget() {
+SearchSignaturesOptionsWidget::~SearchSignaturesOptionsWidget()
+{
     delete ui;
 }
 
-void SearchSignaturesOptionsWidget::setOptions(XOptions *pOptions) {
+void SearchSignaturesOptionsWidget::setOptions(XOptions *pOptions)
+{
     g_pOptions = pOptions;
 
     reload();
 }
 
-void SearchSignaturesOptionsWidget::save() {
+void SearchSignaturesOptionsWidget::save()
+{
     g_pOptions->getLineEdit(ui->lineEditSearchSignaturesPath, XOptions::ID_SIGNATURES_PATH);
 }
 
-void SearchSignaturesOptionsWidget::setDefaultValues(XOptions *pOptions) {
+void SearchSignaturesOptionsWidget::setDefaultValues(XOptions *pOptions)
+{
     pOptions->addID(XOptions::ID_SIGNATURES_PATH, "$data/signatures");
 }
 
-void SearchSignaturesOptionsWidget::reload() {
+void SearchSignaturesOptionsWidget::reload()
+{
     g_pOptions->setLineEdit(ui->lineEditSearchSignaturesPath, XOptions::ID_SIGNATURES_PATH);
 }
 
-void SearchSignaturesOptionsWidget::on_toolButtonSearchSignaturesPath_clicked() {
+void SearchSignaturesOptionsWidget::on_toolButtonSearchSignaturesPath_clicked()
+{
     QString sText = ui->lineEditSearchSignaturesPath->text();
     QString sInitDirectory = XBinary::convertPathName(sText);
 

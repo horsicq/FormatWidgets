@@ -22,7 +22,8 @@
 
 #include "ui_newidget.h"
 
-NEWidget::NEWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::NEWidget) {
+NEWidget::NEWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::NEWidget)
+{
     ui->setupUi(this);
 
     memset(g_subDevice, 0, sizeof g_subDevice);
@@ -30,16 +31,19 @@ NEWidget::NEWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::NEWidge
     initWidget();
 }
 
-NEWidget::NEWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) : NEWidget(pParent) {
+NEWidget::NEWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) : NEWidget(pParent)
+{
     NEWidget::setData(pDevice, options, 0, 0, 0);
     NEWidget::reload();
 }
 
-NEWidget::~NEWidget() {
+NEWidget::~NEWidget()
+{
     delete ui;
 }
 
-void NEWidget::clear() {
+void NEWidget::clear()
+{
     NEWidget::reset();
 
     memset(g_lineEdit_DOS_HEADER, 0, sizeof g_lineEdit_DOS_HEADER);
@@ -58,11 +62,13 @@ void NEWidget::clear() {
     ui->treeWidgetNavi->clear();
 }
 
-void NEWidget::cleanup() {
+void NEWidget::cleanup()
+{
     NEWidget::clear();
 }
 
-void NEWidget::reload() {
+void NEWidget::reload()
+{
     NEWidget::clear();
 
     ui->checkBoxReadonly->setEnabled(!isReadonly());
@@ -103,7 +109,8 @@ void NEWidget::reload() {
     }
 }
 
-FormatWidget::SV NEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset) {
+FormatWidget::SV NEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
+{
     Q_UNUSED(nVtype)
     Q_UNUSED(nPosition)
     Q_UNUSED(nOffset)
@@ -379,7 +386,8 @@ FormatWidget::SV NEWidget::_setValue(QVariant vValue, int nStype, int nNdata, in
     return result;
 }
 
-void NEWidget::setReadonly(bool bState) {
+void NEWidget::setReadonly(bool bState)
+{
     setLineEditsReadOnly(g_lineEdit_DOS_HEADER, N_NE_DOS_HEADER::__data_size, bState);
     setLineEditsReadOnly(g_lineEdit_OS2_HEADER, N_OS2_HEADER::__data_size, bState);
 
@@ -390,14 +398,16 @@ void NEWidget::setReadonly(bool bState) {
     ui->widgetStrings->setReadonly(bState);
 }
 
-void NEWidget::blockSignals(bool bState) {
+void NEWidget::blockSignals(bool bState)
+{
     _blockSignals((QObject **)g_lineEdit_DOS_HEADER, N_NE_DOS_HEADER::__data_size, bState);
     _blockSignals((QObject **)g_lineEdit_OS2_HEADER, N_OS2_HEADER::__data_size, bState);
 
     _blockSignals((QObject **)g_comboBox, __CB_size, bState);
 }
 
-void NEWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget) {
+void NEWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
+{
     // TODO like MACH !!!
     Q_UNUSED(nType);
 
@@ -419,7 +429,8 @@ void NEWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget) {
     }
 }
 
-QString NEWidget::typeIdToString(int nType) {
+QString NEWidget::typeIdToString(int nType)
+{
     Q_UNUSED(nType)
 
     QString sResult;
@@ -429,27 +440,32 @@ QString NEWidget::typeIdToString(int nType) {
     return sResult;
 }
 
-void NEWidget::_showInDisasmWindowAddress(qint64 nAddress) {
+void NEWidget::_showInDisasmWindowAddress(qint64 nAddress)
+{
     setTreeItem(ui->treeWidgetNavi, SNE::TYPE_DISASM);
     ui->widgetDisasm->goToAddress(nAddress);
 }
 
-void NEWidget::_showInDisasmWindowOffset(qint64 nOffset) {
+void NEWidget::_showInDisasmWindowOffset(qint64 nOffset)
+{
     setTreeItem(ui->treeWidgetNavi, SNE::TYPE_DISASM);
     ui->widgetDisasm->goToOffset(nOffset);
 }
 
-void NEWidget::_showInMemoryMapWindowOffset(qint64 nOffset) {
+void NEWidget::_showInMemoryMapWindowOffset(qint64 nOffset)
+{
     setTreeItem(ui->treeWidgetNavi, SNE::TYPE_MEMORYMAP);
     ui->widgetMemoryMap->goToOffset(nOffset);
 }
 
-void NEWidget::_showInHexWindow(qint64 nOffset, qint64 nSize) {
+void NEWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
+{
     setTreeItem(ui->treeWidgetNavi, SNE::TYPE_HEX);
     ui->widgetHex->setSelection(nOffset, nSize);
 }
 
-void NEWidget::reloadData() {
+void NEWidget::reloadData()
+{
     int nType = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_TYPE).toInt();
     //    qint64
     //    nDataOffset=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
@@ -686,7 +702,8 @@ void NEWidget::reloadData() {
     addInit(sInit);
 }
 
-void NEWidget::widgetValueChanged(quint64 nValue) {
+void NEWidget::widgetValueChanged(quint64 nValue)
+{
     QWidget *pWidget = qobject_cast<QWidget *>(sender());
     qint32 nStype = pWidget->property("STYPE").toInt();
     qint32 nNdata = pWidget->property("NDATA").toInt();
@@ -720,7 +737,8 @@ void NEWidget::widgetValueChanged(quint64 nValue) {
     }
 }
 
-void NEWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurrent, QTreeWidgetItem *pItemPrevious) {
+void NEWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurrent, QTreeWidgetItem *pItemPrevious)
+{
     Q_UNUSED(pItemPrevious)
 
     if (pItemCurrent) {
@@ -731,22 +749,26 @@ void NEWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurren
     }
 }
 
-void NEWidget::on_checkBoxReadonly_toggled(bool bChecked) {
+void NEWidget::on_checkBoxReadonly_toggled(bool bChecked)
+{
     setReadonly(bChecked);
 }
 
-void NEWidget::on_pushButtonReload_clicked() {
+void NEWidget::on_pushButtonReload_clicked()
+{
     ui->pushButtonReload->setEnabled(false);
     reload();
 
     QTimer::singleShot(1000, this, SLOT(enableButton()));
 }
 
-void NEWidget::enableButton() {
+void NEWidget::enableButton()
+{
     ui->pushButtonReload->setEnabled(true);
 }
 
-void NEWidget::on_tableWidget_DOS_HEADER_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn) {
+void NEWidget::on_tableWidget_DOS_HEADER_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
     Q_UNUSED(nCurrentRow);
     Q_UNUSED(nCurrentColumn);
     Q_UNUSED(nPreviousRow);
@@ -755,7 +777,8 @@ void NEWidget::on_tableWidget_DOS_HEADER_currentCellChanged(int nCurrentRow, int
     setHeaderTableSelection(ui->widgetHex_DOS_HEADER, ui->tableWidget_DOS_HEADER);
 }
 
-void NEWidget::on_tableWidget_OS2_HEADER_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn) {
+void NEWidget::on_tableWidget_OS2_HEADER_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
     Q_UNUSED(nCurrentRow);
     Q_UNUSED(nCurrentColumn);
     Q_UNUSED(nPreviousRow);
@@ -764,43 +787,52 @@ void NEWidget::on_tableWidget_OS2_HEADER_currentCellChanged(int nCurrentRow, int
     setHeaderTableSelection(ui->widgetHex_OS2_HEADER, ui->tableWidget_OS2_HEADER);
 }
 
-void NEWidget::on_toolButtonPrev_clicked() {
+void NEWidget::on_toolButtonPrev_clicked()
+{
     setAddPageEnabled(false);
     ui->treeWidgetNavi->setCurrentItem(getPrevPage());
     setAddPageEnabled(true);
 }
 
-void NEWidget::on_toolButtonNext_clicked() {
+void NEWidget::on_toolButtonNext_clicked()
+{
     setAddPageEnabled(false);
     ui->treeWidgetNavi->setCurrentItem(getNextPage());
     setAddPageEnabled(true);
 }
 
-void NEWidget::on_pushButtonHex_clicked() {
+void NEWidget::on_pushButtonHex_clicked()
+{
     setTreeItem(ui->treeWidgetNavi, SNE::TYPE_HEX);
 }
 
-void NEWidget::on_pushButtonDisasm_clicked() {
+void NEWidget::on_pushButtonDisasm_clicked()
+{
     setTreeItem(ui->treeWidgetNavi, SNE::TYPE_DISASM);
 }
 
-void NEWidget::on_pushButtonStrings_clicked() {
+void NEWidget::on_pushButtonStrings_clicked()
+{
     setTreeItem(ui->treeWidgetNavi, SNE::TYPE_STRINGS);
 }
 
-void NEWidget::on_pushButtonMemoryMap_clicked() {
+void NEWidget::on_pushButtonMemoryMap_clicked()
+{
     setTreeItem(ui->treeWidgetNavi, SNE::TYPE_MEMORYMAP);
 }
 
-void NEWidget::on_pushButtonEntropy_clicked() {
+void NEWidget::on_pushButtonEntropy_clicked()
+{
     setTreeItem(ui->treeWidgetNavi, SNE::TYPE_ENTROPY);
 }
 
-void NEWidget::on_pushButtonHeuristicScan_clicked() {
+void NEWidget::on_pushButtonHeuristicScan_clicked()
+{
     setTreeItem(ui->treeWidgetNavi, SNE::TYPE_HEURISTICSCAN);
 }
 
-void NEWidget::onTableView_SEGMENTS_currentRowChanged(const QModelIndex &current, const QModelIndex &previous) {
+void NEWidget::onTableView_SEGMENTS_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
     Q_UNUSED(current)
     Q_UNUSED(previous)
 

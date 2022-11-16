@@ -22,12 +22,14 @@
 
 #include "ui_dexsectionheaderwidget.h"
 
-DEXSectionHeaderWidget::DEXSectionHeaderWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::DEXSectionHeaderWidget) {
+DEXSectionHeaderWidget::DEXSectionHeaderWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::DEXSectionHeaderWidget)
+{
     ui->setupUi(this);
 }
 
 DEXSectionHeaderWidget::DEXSectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent)
-    : DEXSectionHeaderWidget(pParent) {
+    : DEXSectionHeaderWidget(pParent)
+{
     DEXSectionHeaderWidget::setData(pDevice, options, nNumber, nOffset, nType);
 
     g_ppLinedEdit = nullptr;
@@ -50,7 +52,8 @@ DEXSectionHeaderWidget::DEXSectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIO
     }
 }
 
-DEXSectionHeaderWidget::~DEXSectionHeaderWidget() {
+DEXSectionHeaderWidget::~DEXSectionHeaderWidget()
+{
     if (g_ppLinedEdit) {
         delete[] g_ppLinedEdit;
     }
@@ -66,7 +69,8 @@ DEXSectionHeaderWidget::~DEXSectionHeaderWidget() {
     delete ui;
 }
 
-void DEXSectionHeaderWidget::clear() {
+void DEXSectionHeaderWidget::clear()
+{
     reset();
 
     memset(g_ppLinedEdit, 0, g_nLineEditSize * sizeof(XLineEditHEX *));
@@ -78,11 +82,13 @@ void DEXSectionHeaderWidget::clear() {
     ui->checkBoxReadonly->setChecked(true);
 }
 
-void DEXSectionHeaderWidget::cleanup() {
+void DEXSectionHeaderWidget::cleanup()
+{
     DEXSectionHeaderWidget::clear();
 }
 
-void DEXSectionHeaderWidget::reload() {
+void DEXSectionHeaderWidget::reload()
+{
     DEXSectionHeaderWidget::clear();
 
     ui->checkBoxReadonly->setEnabled(!isReadonly());
@@ -90,12 +96,14 @@ void DEXSectionHeaderWidget::reload() {
     reloadData();
 }
 
-void DEXSectionHeaderWidget::setStringTable(qint64 nStringTableOffset, qint64 nStringTableSize) {
+void DEXSectionHeaderWidget::setStringTable(qint64 nStringTableOffset, qint64 nStringTableSize)
+{
     this->g_nStringTableOffset = nStringTableOffset;
     this->g_nStringTableSize = nStringTableSize;
 }
 
-FormatWidget::SV DEXSectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset) {
+FormatWidget::SV DEXSectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
+{
     Q_UNUSED(vValue)
     Q_UNUSED(nStype)
     Q_UNUSED(nNdata)
@@ -120,28 +128,33 @@ FormatWidget::SV DEXSectionHeaderWidget::_setValue(QVariant vValue, int nStype, 
 
     return result;
 }
-void DEXSectionHeaderWidget::setReadonly(bool bState) {
+void DEXSectionHeaderWidget::setReadonly(bool bState)
+{
     setLineEditsReadOnly(g_ppLinedEdit, g_nLineEditSize, bState);
 
     setComboBoxesReadOnly(g_ppComboBox, g_nComboBoxSize, bState);
 }
 
-void DEXSectionHeaderWidget::blockSignals(bool bState) {
+void DEXSectionHeaderWidget::blockSignals(bool bState)
+{
     _blockSignals((QObject **)g_ppLinedEdit, g_nLineEditSize, bState);
 
     _blockSignals((QObject **)g_ppComboBox, g_nComboBoxSize, bState);
 }
 
-void DEXSectionHeaderWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget) {
+void DEXSectionHeaderWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
+{
     Q_UNUSED(nType)
     Q_UNUSED(pTableWidget)
 }
 
-void DEXSectionHeaderWidget::on_checkBoxReadonly_toggled(bool bChecked) {
+void DEXSectionHeaderWidget::on_checkBoxReadonly_toggled(bool bChecked)
+{
     setReadonly(bChecked);
 }
 
-void DEXSectionHeaderWidget::reloadData() {
+void DEXSectionHeaderWidget::reloadData()
+{
     //    int nType=getType();
 
     XDEX dex(getDevice());
@@ -153,7 +166,8 @@ void DEXSectionHeaderWidget::reloadData() {
     }
 }
 
-void DEXSectionHeaderWidget::widgetValueChanged(quint64 nValue) {
+void DEXSectionHeaderWidget::widgetValueChanged(quint64 nValue)
+{
     Q_UNUSED(nValue)
 
     //    QWidget *pWidget=qobject_cast<QWidget *>(sender());
@@ -167,7 +181,8 @@ void DEXSectionHeaderWidget::widgetValueChanged(quint64 nValue) {
     }
 }
 
-void DEXSectionHeaderWidget::on_tableWidget_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn) {
+void DEXSectionHeaderWidget::on_tableWidget_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
     Q_UNUSED(nCurrentRow)
     Q_UNUSED(nCurrentColumn)
     Q_UNUSED(nPreviousRow)

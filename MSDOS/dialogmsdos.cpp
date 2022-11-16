@@ -22,17 +22,20 @@
 
 #include "ui_dialogmsdos.h"
 
-DialogMSDOS::DialogMSDOS(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogMSDOS) {
+DialogMSDOS::DialogMSDOS(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogMSDOS)
+{
     ui->setupUi(this);
 
     setWindowFlags(Qt::Window);
 }
 
-DialogMSDOS::~DialogMSDOS() {
+DialogMSDOS::~DialogMSDOS()
+{
     delete ui;
 }
 
-void DialogMSDOS::setData(QIODevice *pDevice, FW_DEF::OPTIONS options) {
+void DialogMSDOS::setData(QIODevice *pDevice, FW_DEF::OPTIONS options)
+{
     if (options.sTitle != "") {
         setWindowTitle(options.sTitle);
     }
@@ -41,7 +44,8 @@ void DialogMSDOS::setData(QIODevice *pDevice, FW_DEF::OPTIONS options) {
     ui->widget->reload();
 }
 
-void DialogMSDOS::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions) {
+void DialogMSDOS::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
+{
     ui->widget->setGlobal(pShortcuts, pXOptions);
     XShortcutsDialog::setGlobal(pShortcuts, pXOptions);
 }

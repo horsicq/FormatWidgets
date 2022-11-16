@@ -22,7 +22,8 @@
 
 #include "ui_searchsignatureswidget.h"
 
-SearchSignaturesWidget::SearchSignaturesWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui::SearchSignaturesWidget) {
+SearchSignaturesWidget::SearchSignaturesWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui::SearchSignaturesWidget)
+{
     ui->setupUi(this);
     g_pDevice = nullptr;
     g_pFilter = new QSortFilterProxyModel(this);
@@ -34,13 +35,15 @@ SearchSignaturesWidget::SearchSignaturesWidget(QWidget *pParent) : XShortcutsWid
     ui->tableViewResult->installEventFilter(this);
 }
 
-SearchSignaturesWidget::~SearchSignaturesWidget() {
+SearchSignaturesWidget::~SearchSignaturesWidget()
+{
     g_watcher.waitForFinished();
 
     delete ui;
 }
 
-void SearchSignaturesWidget::setData(QIODevice *pDevice, XBinary::FT fileType, OPTIONS options, bool bAuto) {
+void SearchSignaturesWidget::setData(QIODevice *pDevice, XBinary::FT fileType, OPTIONS options, bool bAuto)
+{
     this->g_pDevice = pDevice;
     g_bInit = false;
 
@@ -58,16 +61,19 @@ void SearchSignaturesWidget::setData(QIODevice *pDevice, XBinary::FT fileType, O
     }
 }
 
-void SearchSignaturesWidget::setOptions(SearchSignaturesWidget::OPTIONS options) {
+void SearchSignaturesWidget::setOptions(SearchSignaturesWidget::OPTIONS options)
+{
     g_options = options;
     adjust();
 }
 
-SearchSignaturesWidget::OPTIONS SearchSignaturesWidget::getOptions() {
+SearchSignaturesWidget::OPTIONS SearchSignaturesWidget::getOptions()
+{
     return g_options;
 }
 
-void SearchSignaturesWidget::updateSignaturesPath() {
+void SearchSignaturesWidget::updateSignaturesPath()
+{
     const bool bBlocked1 = ui->comboBoxFile->blockSignals(true);
 
     ui->comboBoxFile->clear();
@@ -94,33 +100,40 @@ void SearchSignaturesWidget::updateSignaturesPath() {
     ui->comboBoxFile->blockSignals(bBlocked1);
 }
 
-void SearchSignaturesWidget::reload() {
+void SearchSignaturesWidget::reload()
+{
     search();
 }
 
-bool SearchSignaturesWidget::getInitStatus() {
+bool SearchSignaturesWidget::getInitStatus()
+{
     return g_bInit;
 }
 
-void SearchSignaturesWidget::adjust() {
+void SearchSignaturesWidget::adjust()
+{
     updateSignaturesPath();
 }
 
-void SearchSignaturesWidget::adjustView() {
+void SearchSignaturesWidget::adjustView()
+{
     adjust();
 }
 
-void SearchSignaturesWidget::on_pushButtonSave_clicked() {
+void SearchSignaturesWidget::on_pushButtonSave_clicked()
+{
     if (g_pModel) {
         XShortcutsWidget::saveModel(g_pModel, XBinary::getResultFileName(g_pDevice, QString("%1.txt").arg(tr("Signatures"))));
     }
 }
 
-void SearchSignaturesWidget::on_pushButtonSearch_clicked() {
+void SearchSignaturesWidget::on_pushButtonSearch_clicked()
+{
     search();
 }
 
-void SearchSignaturesWidget::on_tableViewResult_customContextMenuRequested(const QPoint &pos) {
+void SearchSignaturesWidget::on_tableViewResult_customContextMenuRequested(const QPoint &pos)
+{
     QMenu contextMenu(this);
 
     QMenu menuCopy(tr("Copy"), this);
@@ -161,7 +174,8 @@ void SearchSignaturesWidget::on_tableViewResult_customContextMenuRequested(const
     contextMenu.exec(ui->tableViewResult->viewport()->mapToGlobal(pos));
 }
 
-void SearchSignaturesWidget::_copyName() {
+void SearchSignaturesWidget::_copyName()
+{
     qint32 nRow = ui->tableViewResult->currentIndex().row();
 
     if ((nRow != -1) && (g_pModel)) {
@@ -173,7 +187,8 @@ void SearchSignaturesWidget::_copyName() {
     }
 }
 
-void SearchSignaturesWidget::_copySignature() {
+void SearchSignaturesWidget::_copySignature()
+{
     qint32 nRow = ui->tableViewResult->currentIndex().row();
 
     if ((nRow != -1) && (g_pModel)) {
@@ -185,7 +200,8 @@ void SearchSignaturesWidget::_copySignature() {
     }
 }
 
-void SearchSignaturesWidget::_copyAddress() {
+void SearchSignaturesWidget::_copyAddress()
+{
     qint32 nRow = ui->tableViewResult->currentIndex().row();
 
     if ((nRow != -1) && (g_pModel)) {
@@ -197,7 +213,8 @@ void SearchSignaturesWidget::_copyAddress() {
     }
 }
 
-void SearchSignaturesWidget::_copyOffset() {
+void SearchSignaturesWidget::_copyOffset()
+{
     int nRow = ui->tableViewResult->currentIndex().row();
 
     if ((nRow != -1) && (g_pModel)) {
@@ -209,7 +226,8 @@ void SearchSignaturesWidget::_copyOffset() {
     }
 }
 
-void SearchSignaturesWidget::_hex() {
+void SearchSignaturesWidget::_hex()
+{
     int nRow = ui->tableViewResult->currentIndex().row();
 
     if ((nRow != -1) && (g_pModel)) {
@@ -228,7 +246,8 @@ void SearchSignaturesWidget::_hex() {
     }
 }
 
-void SearchSignaturesWidget::search() {
+void SearchSignaturesWidget::search()
+{
     if (g_pDevice) {
         g_pOldModel = g_pModel;
 
@@ -274,7 +293,8 @@ void SearchSignaturesWidget::search() {
     }
 }
 
-void SearchSignaturesWidget::loadSignatures(QString sFileName) {
+void SearchSignaturesWidget::loadSignatures(QString sFileName)
+{
     int nNumberOfSignatures = 0;
 
     g_listSignatureRecords.clear();
@@ -291,7 +311,8 @@ void SearchSignaturesWidget::loadSignatures(QString sFileName) {
     ui->labelInfo->setText(QString("%1: %2").arg(tr("Signatures"), QString::number(nNumberOfSignatures)));
 }
 
-void SearchSignaturesWidget::on_comboBoxFile_currentIndexChanged(int index) {
+void SearchSignaturesWidget::on_comboBoxFile_currentIndexChanged(int index)
+{
     Q_UNUSED(index)
 
     QString sFileName = ui->comboBoxFile->currentData().toString();
@@ -299,7 +320,8 @@ void SearchSignaturesWidget::on_comboBoxFile_currentIndexChanged(int index) {
     loadSignatures(sFileName);
 }
 
-void SearchSignaturesWidget::registerShortcuts(bool bState) {
+void SearchSignaturesWidget::registerShortcuts(bool bState)
+{
     if (bState) {
         if (!shortCuts[SC_COPYNAME]) shortCuts[SC_COPYNAME] = new QShortcut(getShortcuts()->getShortcut(X_ID_SIGNATURES_COPY_NAME), this, SLOT(_copyName()));
         if (!shortCuts[SC_COPYSIGNATURE]) shortCuts[SC_COPYSIGNATURE] = new QShortcut(getShortcuts()->getShortcut(X_ID_SIGNATURES_COPY_SIGNATURE), this, SLOT(_copySignature()));

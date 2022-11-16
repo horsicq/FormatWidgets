@@ -22,7 +22,8 @@
 
 #include "ui_dialogprocessdata.h"
 
-DialogProcessData::DialogProcessData(QWidget *pParent, ProcessData *pProcessData) : XDialogProcess(pParent) {
+DialogProcessData::DialogProcessData(QWidget *pParent, ProcessData *pProcessData) : XDialogProcess(pParent)
+{
     this->g_pProcessData = pProcessData;
 
     pProcessData->setPdStruct(getPdStruct());
@@ -38,7 +39,8 @@ DialogProcessData::DialogProcessData(QWidget *pParent, ProcessData *pProcessData
     g_pThread->start();
 }
 
-DialogProcessData::~DialogProcessData() {
+DialogProcessData::~DialogProcessData()
+{
     stop();
     waitForFinished();
 

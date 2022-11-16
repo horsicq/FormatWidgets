@@ -22,17 +22,20 @@
 
 #include "ui_dialogmach.h"
 
-DialogMACH::DialogMACH(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogMACH) {
+DialogMACH::DialogMACH(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogMACH)
+{
     ui->setupUi(this);
 
     setWindowFlags(Qt::Window);
 }
 
-DialogMACH::~DialogMACH() {
+DialogMACH::~DialogMACH()
+{
     delete ui;
 }
 
-void DialogMACH::setData(QIODevice *pDevice, FW_DEF::OPTIONS options) {
+void DialogMACH::setData(QIODevice *pDevice, FW_DEF::OPTIONS options)
+{
     if (options.sTitle != "") {
         setWindowTitle(options.sTitle);
     }
@@ -41,7 +44,8 @@ void DialogMACH::setData(QIODevice *pDevice, FW_DEF::OPTIONS options) {
     ui->widget->reload();
 }
 
-void DialogMACH::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions) {
+void DialogMACH::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
+{
     ui->widget->setGlobal(pShortcuts, pXOptions);
     XShortcutsDialog::setGlobal(pShortcuts, pXOptions);
 }

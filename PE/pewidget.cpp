@@ -22,7 +22,8 @@
 
 #include "ui_pewidget.h"
 
-PEWidget::PEWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::PEWidget) {
+PEWidget::PEWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::PEWidget)
+{
     ui->setupUi(this);
 
     memset(g_subDevice, 0, sizeof g_subDevice);
@@ -41,16 +42,19 @@ PEWidget::PEWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::PEWidge
 #endif
 }
 
-PEWidget::PEWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) : PEWidget(pParent) {
+PEWidget::PEWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) : PEWidget(pParent)
+{
     PEWidget::setData(pDevice, options, 0, 0, 0);
     PEWidget::reload();
 }
 
-PEWidget::~PEWidget() {
+PEWidget::~PEWidget()
+{
     delete ui;
 }
 
-void PEWidget::clear() {
+void PEWidget::clear()
+{
     PEWidget::reset();
 
     memset(g_lineEdit_IMAGE_DOS_HEADER, 0, sizeof g_lineEdit_IMAGE_DOS_HEADER);
@@ -78,11 +82,13 @@ void PEWidget::clear() {
     ui->treeWidgetNavi->clear();
 }
 
-void PEWidget::cleanup() {
+void PEWidget::cleanup()
+{
     PEWidget::clear();
 }
 
-void PEWidget::reload() {
+void PEWidget::reload()
+{
     PEWidget::clear();
 
     ui->checkBoxReadonly->setEnabled(!isReadonly());
@@ -219,7 +225,8 @@ void PEWidget::reload() {
     }
 }
 
-FormatWidget::SV PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset) {
+FormatWidget::SV PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
+{
     Q_UNUSED(nVtype)
     Q_UNUSED(nPosition)
     Q_UNUSED(nOffset)
@@ -1132,7 +1139,8 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, in
     return result;
 }
 
-void PEWidget::setReadonly(bool bState) {
+void PEWidget::setReadonly(bool bState)
+{
     setLineEditsReadOnly(g_lineEdit_IMAGE_DOS_HEADER, N_IMAGE_DOS_HEADER::__data_size, bState);
     setLineEditsReadOnly(g_lineEdit_IMAGE_NT_HEADERS, N_IMAGE_NT_HEADERS::__data_size, bState);
     setLineEditsReadOnly(g_lineEdit_IMAGE_FILE_HEADER, N_IMAGE_FILE_HEADER::__data_size, bState);
@@ -1171,7 +1179,8 @@ void PEWidget::setReadonly(bool bState) {
     ui->widgetHex_TLS->setReadonly(bState);
 }
 
-void PEWidget::blockSignals(bool bState) {
+void PEWidget::blockSignals(bool bState)
+{
     _blockSignals((QObject **)g_lineEdit_IMAGE_DOS_HEADER, N_IMAGE_DOS_HEADER::__data_size, bState);
     _blockSignals((QObject **)g_lineEdit_IMAGE_NT_HEADERS, N_IMAGE_NT_HEADERS::__data_size, bState);
     _blockSignals((QObject **)g_lineEdit_IMAGE_FILE_HEADER, N_IMAGE_FILE_HEADER::__data_size, bState);
@@ -1194,7 +1203,8 @@ void PEWidget::blockSignals(bool bState) {
     _blockSignals((QObject **)g_dateTimeEdit, __TD_size, bState);
 }
 
-void PEWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurrent, QTreeWidgetItem *pItemPrevious) {
+void PEWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurrent, QTreeWidgetItem *pItemPrevious)
+{
     Q_UNUSED(pItemPrevious)
 
     if (pItemCurrent) {
@@ -1205,7 +1215,8 @@ void PEWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurren
     }
 }
 
-void PEWidget::widgetValueChanged(quint64 nValue) {
+void PEWidget::widgetValueChanged(quint64 nValue)
+{
     QWidget *pWidget = qobject_cast<QWidget *>(sender());
     int nStype = pWidget->property("STYPE").toInt();
     int nNdata = pWidget->property("NDATA").toInt();
@@ -1295,7 +1306,8 @@ void PEWidget::widgetValueChanged(quint64 nValue) {
     }
 }
 
-void PEWidget::widgetAction() {
+void PEWidget::widgetAction()
+{
     QWidget *pWidget = qobject_cast<QWidget *>(sender());
     int nStype = pWidget->property("STYPE").toInt();
     int nNdata = pWidget->property("NDATA").toInt();
@@ -1316,47 +1328,58 @@ void PEWidget::widgetAction() {
     }
 }
 
-void PEWidget::on_checkBoxReadonly_toggled(bool bChecked) {
+void PEWidget::on_checkBoxReadonly_toggled(bool bChecked)
+{
     setReadonly(bChecked);
 }
 
-void PEWidget::editSectionHeader() {
+void PEWidget::editSectionHeader()
+{
     showSectionHeader(SPE::TYPE_IMAGE_SECTION_HEADER, ui->tableView_Sections);
 }
 
-void PEWidget::sectionHex() {
+void PEWidget::sectionHex()
+{
     showSectionHex(ui->tableView_Sections);
 }
 
-void PEWidget::sectionDisasm() {
+void PEWidget::sectionDisasm()
+{
     showSectionDisasm(ui->tableView_Sections);
 }
 
-void PEWidget::sectionEntropy() {
+void PEWidget::sectionEntropy()
+{
     showSectionEntropy(ui->tableView_Sections);
 }
 
-void PEWidget::sectionDump() {
+void PEWidget::sectionDump()
+{
     dumpSection(ui->tableView_Sections);
 }
 
-void PEWidget::resourceHex() {
+void PEWidget::resourceHex()
+{
     showSectionHex(ui->tableView_Resources);
 }
 
-void PEWidget::resourceDisasm() {
+void PEWidget::resourceDisasm()
+{
     showSectionDisasm(ui->tableView_Resources);
 }
 
-void PEWidget::resourceEntropy() {
+void PEWidget::resourceEntropy()
+{
     showSectionEntropy(ui->tableView_Resources);
 }
 
-void PEWidget::resourceDump() {
+void PEWidget::resourceDump()
+{
     dumpSection(ui->tableView_Resources);
 }
 
-void PEWidget::reloadData() {
+void PEWidget::reloadData()
+{
     int nType = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_TYPE).toInt();
     qint64 nDataOffset = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET).toLongLong();
     qint64 nDataSize = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_SIZE).toLongLong();
@@ -2513,7 +2536,8 @@ void PEWidget::reloadData() {
     addInit(sInit);
 }
 
-void PEWidget::on_tableView_Sections_customContextMenuRequested(const QPoint &pos) {
+void PEWidget::on_tableView_Sections_customContextMenuRequested(const QPoint &pos)
+{
     int nRow = ui->tableView_Sections->currentIndex().row();
 
     if (nRow != -1) {
@@ -2549,7 +2573,8 @@ void PEWidget::on_tableView_Sections_customContextMenuRequested(const QPoint &po
     }
 }
 
-void PEWidget::loadImportLibrary(int nRow) {
+void PEWidget::loadImportLibrary(int nRow)
+{
     XPE pe(getDevice(), getOptions().bIsImage, getOptions().nImageBase);
 
     if (pe.isValid()) {
@@ -2563,7 +2588,8 @@ void PEWidget::loadImportLibrary(int nRow) {
     }
 }
 
-void PEWidget::loadRelocs(int nRow) {
+void PEWidget::loadRelocs(int nRow)
+{
     QModelIndex index = ui->tableView_Relocs->model()->index(nRow, 0);
 
     qint64 nOffset = ui->tableView_Relocs->model()->data(index, Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET).toLongLong();
@@ -2581,15 +2607,18 @@ void PEWidget::loadRelocs(int nRow) {
     }
 }
 
-void PEWidget::loadSection(int nRow) {
+void PEWidget::loadSection(int nRow)
+{
     loadHexSubdeviceByTableView(nRow, SPE::TYPE_SECTIONS, ui->widgetHex_Section, ui->tableView_Sections, &g_subDevice[SPE::TYPE_SECTIONS]);
 }
 
-void PEWidget::loadException(int nRow) {
+void PEWidget::loadException(int nRow)
+{
     loadHexSubdeviceByTableView(nRow, SPE::TYPE_EXCEPTION, ui->widgetHex_Exception, ui->tableView_Exceptions, &g_subDevice[SPE::TYPE_EXCEPTION]);
 }
 
-void PEWidget::loadDirectory(int nRow) {
+void PEWidget::loadDirectory(int nRow)
+{
     qint64 nOffset = ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->item(nRow, 0)->data(Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET).toLongLong();
     qint64 nSize = ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->item(nRow, 0)->data(Qt::UserRole + FW_DEF::SECTION_DATA_SIZE).toLongLong();
     XADDR nAddress = ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->item(nRow, 0)->data(Qt::UserRole + FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
@@ -2597,11 +2626,13 @@ void PEWidget::loadDirectory(int nRow) {
     loadHexSubdevice(nOffset, nSize, nAddress, &g_subDevice[SPE::TYPE_IMAGE_DIRECTORY_ENTRIES], ui->widgetHex_IMAGE_DIRECTORY_ENTRIES);
 }
 
-void PEWidget::loadDebug(int nRow) {
+void PEWidget::loadDebug(int nRow)
+{
     loadHexSubdeviceByTableView(nRow, SPE::TYPE_DEBUG, ui->widgetHex_Debug, ui->tableView_Debug, &g_subDevice[SPE::TYPE_DEBUG]);
 }
 
-void PEWidget::loadDelayImport(int nRow) {
+void PEWidget::loadDelayImport(int nRow)
+{
     XPE pe(getDevice(), getOptions().bIsImage, getOptions().nImageBase);
 
     if (pe.isValid()) {
@@ -2615,7 +2646,8 @@ void PEWidget::loadDelayImport(int nRow) {
     }
 }
 
-void PEWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget) {
+void PEWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
+{
     XBinary::MODE mode = XPE::getMode(getDevice(), getOptions().bIsImage, getOptions().nImageBase);
 
     pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET, getColumnWidth(this, CW_UINT16, mode));
@@ -2678,7 +2710,8 @@ void PEWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget) {
     }
 }
 
-QString PEWidget::typeIdToString(int nType) {
+QString PEWidget::typeIdToString(int nType)
+{
     QString sResult = tr("Unknown");
 
     switch (nType) {
@@ -2708,27 +2741,32 @@ QString PEWidget::typeIdToString(int nType) {
     return sResult;
 }
 
-void PEWidget::_showInDisasmWindowAddress(XADDR nAddress) {
+void PEWidget::_showInDisasmWindowAddress(XADDR nAddress)
+{
     setTreeItem(ui->treeWidgetNavi, SPE::TYPE_DISASM);
     ui->widgetDisasm->goToAddress(nAddress);
 }
 
-void PEWidget::_showInDisasmWindowOffset(qint64 nOffset) {
+void PEWidget::_showInDisasmWindowOffset(qint64 nOffset)
+{
     setTreeItem(ui->treeWidgetNavi, SPE::TYPE_DISASM);
     ui->widgetDisasm->goToOffset(nOffset);
 }
 
-void PEWidget::_showInMemoryMapWindowOffset(qint64 nOffset) {
+void PEWidget::_showInMemoryMapWindowOffset(qint64 nOffset)
+{
     setTreeItem(ui->treeWidgetNavi, SPE::TYPE_MEMORYMAP);
     ui->widgetMemoryMap->goToOffset(nOffset);
 }
 
-void PEWidget::_showInHexWindow(qint64 nOffset, qint64 nSize) {
+void PEWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
+{
     setTreeItem(ui->treeWidgetNavi, SPE::TYPE_HEX);
     ui->widgetHex->setSelection(nOffset, nSize);
 }
 
-bool PEWidget::createSectionTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nNumberOfRecords) {
+bool PEWidget::createSectionTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nNumberOfRecords)
+{
     qint32 nSymbolWidth = XLineEditHEX::getSymbolWidth(this);
 
     QStringList slHeader;
@@ -2774,18 +2812,21 @@ bool PEWidget::createSectionTable(int nType, QTableWidget *pTableWidget, const F
     return true;
 }
 
-void PEWidget::on_pushButtonReload_clicked() {
+void PEWidget::on_pushButtonReload_clicked()
+{
     ui->pushButtonReload->setEnabled(false);
     reload();
 
     QTimer::singleShot(1000, this, SLOT(enableButton()));
 }
 
-void PEWidget::enableButton() {
+void PEWidget::enableButton()
+{
     ui->pushButtonReload->setEnabled(true);
 }
 
-void PEWidget::on_tableWidget_IMAGE_DIRECTORY_ENTRIES_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn) {
+void PEWidget::on_tableWidget_IMAGE_DIRECTORY_ENTRIES_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
     Q_UNUSED(nCurrentColumn)
     Q_UNUSED(nPreviousRow)
     Q_UNUSED(nPreviousColumn)
@@ -2795,7 +2836,8 @@ void PEWidget::on_tableWidget_IMAGE_DIRECTORY_ENTRIES_currentCellChanged(int nCu
     }
 }
 
-void PEWidget::on_tableWidget_IMAGE_DOS_HEADER_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn) {
+void PEWidget::on_tableWidget_IMAGE_DOS_HEADER_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
     Q_UNUSED(nCurrentRow)
     Q_UNUSED(nCurrentColumn)
     Q_UNUSED(nPreviousRow)
@@ -2804,7 +2846,8 @@ void PEWidget::on_tableWidget_IMAGE_DOS_HEADER_currentCellChanged(int nCurrentRo
     setHeaderTableSelection(ui->widgetHex_IMAGE_DOS_HEADER, ui->tableWidget_IMAGE_DOS_HEADER);
 }
 
-void PEWidget::on_tableWidget_IMAGE_NT_HEADERS_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn) {
+void PEWidget::on_tableWidget_IMAGE_NT_HEADERS_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
     Q_UNUSED(nCurrentRow)
     Q_UNUSED(nCurrentColumn)
     Q_UNUSED(nPreviousRow)
@@ -2813,7 +2856,8 @@ void PEWidget::on_tableWidget_IMAGE_NT_HEADERS_currentCellChanged(int nCurrentRo
     setHeaderTableSelection(ui->widgetHex_IMAGE_NT_HEADERS, ui->tableWidget_IMAGE_NT_HEADERS);
 }
 
-void PEWidget::on_tableWidget_IMAGE_FILE_HEADER_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn) {
+void PEWidget::on_tableWidget_IMAGE_FILE_HEADER_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
     Q_UNUSED(nCurrentRow)
     Q_UNUSED(nCurrentColumn)
     Q_UNUSED(nPreviousRow)
@@ -2822,7 +2866,8 @@ void PEWidget::on_tableWidget_IMAGE_FILE_HEADER_currentCellChanged(int nCurrentR
     setHeaderTableSelection(ui->widgetHex_IMAGE_FILE_HEADER, ui->tableWidget_IMAGE_FILE_HEADER);
 }
 
-void PEWidget::on_tableWidget_IMAGE_OPTIONAL_HEADER_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn) {
+void PEWidget::on_tableWidget_IMAGE_OPTIONAL_HEADER_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
     Q_UNUSED(nCurrentRow)
     Q_UNUSED(nCurrentColumn)
     Q_UNUSED(nPreviousRow)
@@ -2831,7 +2876,8 @@ void PEWidget::on_tableWidget_IMAGE_OPTIONAL_HEADER_currentCellChanged(int nCurr
     setHeaderTableSelection(ui->widgetHex_IMAGE_OPTIONAL_HEADER, ui->tableWidget_IMAGE_OPTIONAL_HEADER);
 }
 
-void PEWidget::on_tableWidget_LoadConfig_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn) {
+void PEWidget::on_tableWidget_LoadConfig_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
     Q_UNUSED(nCurrentRow)
     Q_UNUSED(nCurrentColumn)
     Q_UNUSED(nPreviousRow)
@@ -2840,7 +2886,8 @@ void PEWidget::on_tableWidget_LoadConfig_currentCellChanged(int nCurrentRow, int
     setHeaderTableSelection(ui->widgetHex_LoadConfig, ui->tableWidget_LoadConfig);
 }
 
-void PEWidget::on_tableWidget_NetHeader_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn) {
+void PEWidget::on_tableWidget_NetHeader_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
     Q_UNUSED(nCurrentRow)
     Q_UNUSED(nCurrentColumn)
     Q_UNUSED(nPreviousRow)
@@ -2849,7 +2896,8 @@ void PEWidget::on_tableWidget_NetHeader_currentCellChanged(int nCurrentRow, int 
     setHeaderTableSelection(ui->widgetHex_NetHeader, ui->tableWidget_NetHeader);
 }
 
-void PEWidget::on_tableWidget_TLS_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn) {
+void PEWidget::on_tableWidget_TLS_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
     Q_UNUSED(nCurrentRow)
     Q_UNUSED(nCurrentColumn)
     Q_UNUSED(nPreviousRow)
@@ -2858,47 +2906,58 @@ void PEWidget::on_tableWidget_TLS_currentCellChanged(int nCurrentRow, int nCurre
     setHeaderTableSelection(ui->widgetHex_TLS, ui->tableWidget_TLS);
 }
 
-void PEWidget::editImportHeader() {
+void PEWidget::editImportHeader()
+{
     showSectionHeader(SPE::TYPE_IMPORT, ui->tableView_ImportLibraries);
 }
 
-void PEWidget::editDebugHeader() {
+void PEWidget::editDebugHeader()
+{
     showSectionHeader(SPE::TYPE_DEBUG, ui->tableView_Debug);
 }
 
-void PEWidget::editRelocsHeader() {
+void PEWidget::editRelocsHeader()
+{
     showSectionHeader(SPE::TYPE_RELOCS, ui->tableView_Relocs);
 }
 
-void PEWidget::editExceptionHeader() {
+void PEWidget::editExceptionHeader()
+{
     showSectionHeader(SPE::TYPE_EXCEPTION, ui->tableView_Exceptions);
 }
 
-void PEWidget::editDelayImportHeader() {
+void PEWidget::editDelayImportHeader()
+{
     showSectionHeader(SPE::TYPE_DELAYIMPORT, ui->tableView_DelayImportLibraries);
 }
 
-void PEWidget::editBoundImportHeader() {
+void PEWidget::editBoundImportHeader()
+{
     showSectionHeader(SPE::TYPE_BOUNDIMPORT, ui->tableView_BoundImport);
 }
 
-void PEWidget::exportFunctionHex() {
+void PEWidget::exportFunctionHex()
+{
     showSectionHex(ui->tableView_ExportFunctions);
 }
 
-void PEWidget::exportFunctionDisasm() {
+void PEWidget::exportFunctionDisasm()
+{
     showSectionDisasm(ui->tableView_ExportFunctions);
 }
 
-void PEWidget::exportFunctionDemangle() {
+void PEWidget::exportFunctionDemangle()
+{
     showTableViewDemangle(ui->tableView_ExportFunctions, N_IMAGE_EXPORT_FUNCTION::Name + 1);
 }
 
-void PEWidget::importFunctionDemangle() {
+void PEWidget::importFunctionDemangle()
+{
     showTableViewDemangle(ui->tableView_ImportFunctions, N_IMAGE_IMPORT_FUNCTION::Hint + 2);
 }
 
-void PEWidget::showSectionHeader(int nType, QTableView *pTableView) {
+void PEWidget::showSectionHeader(int nType, QTableView *pTableView)
+{
     int nRow = pTableView->currentIndex().row();
 
     if (nRow != -1) {
@@ -2923,13 +2982,15 @@ void PEWidget::showSectionHeader(int nType, QTableView *pTableView) {
     }
 }
 
-void PEWidget::on_tableView_Sections_doubleClicked(const QModelIndex &index) {
+void PEWidget::on_tableView_Sections_doubleClicked(const QModelIndex &index)
+{
     Q_UNUSED(index)
 
     editSectionHeader();
 }
 
-void PEWidget::on_tableView_ImportLibraries_customContextMenuRequested(const QPoint &pos) {
+void PEWidget::on_tableView_ImportLibraries_customContextMenuRequested(const QPoint &pos)
+{
     int nRow = ui->tableView_ImportLibraries->currentIndex().row();
 
     if (nRow != -1) {
@@ -2943,14 +3004,16 @@ void PEWidget::on_tableView_ImportLibraries_customContextMenuRequested(const QPo
     }
 }
 
-void PEWidget::onTableView_Sections_currentRowChanged(const QModelIndex &current, const QModelIndex &previous) {
+void PEWidget::onTableView_Sections_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
     Q_UNUSED(current)
     Q_UNUSED(previous)
 
     loadHexSubdeviceByTableView(current.row(), SPE::TYPE_SECTIONS, ui->widgetHex_Section, ui->tableView_Sections, &g_subDevice[SPE::TYPE_SECTIONS]);
 }
 
-void PEWidget::onTableView_ImportLibraries_currentRowChanged(const QModelIndex &current, const QModelIndex &previous) {
+void PEWidget::onTableView_ImportLibraries_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
     Q_UNUSED(previous)
 
     int nRow = current.row();
@@ -2960,13 +3023,15 @@ void PEWidget::onTableView_ImportLibraries_currentRowChanged(const QModelIndex &
     }
 }
 
-void PEWidget::on_tableView_ImportLibraries_doubleClicked(const QModelIndex &index) {
+void PEWidget::on_tableView_ImportLibraries_doubleClicked(const QModelIndex &index)
+{
     Q_UNUSED(index)
 
     editImportHeader();
 }
 
-void PEWidget::on_tableView_Relocs_customContextMenuRequested(const QPoint &pos) {
+void PEWidget::on_tableView_Relocs_customContextMenuRequested(const QPoint &pos)
+{
     int nRow = ui->tableView_Relocs->currentIndex().row();
 
     if (nRow != -1) {
@@ -2980,7 +3045,8 @@ void PEWidget::on_tableView_Relocs_customContextMenuRequested(const QPoint &pos)
     }
 }
 
-void PEWidget::onTableView_Relocs_currentRowChanged(const QModelIndex &current, const QModelIndex &previous) {
+void PEWidget::onTableView_Relocs_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
     Q_UNUSED(previous)
 
     int nRow = current.row();
@@ -2990,13 +3056,15 @@ void PEWidget::onTableView_Relocs_currentRowChanged(const QModelIndex &current, 
     }
 }
 
-void PEWidget::on_tableView_Relocs_doubleClicked(const QModelIndex &index) {
+void PEWidget::on_tableView_Relocs_doubleClicked(const QModelIndex &index)
+{
     Q_UNUSED(index)
 
     editRelocsHeader();
 }
 
-void PEWidget::on_tableView_Debug_customContextMenuRequested(const QPoint &pos) {
+void PEWidget::on_tableView_Debug_customContextMenuRequested(const QPoint &pos)
+{
     int nRow = ui->tableView_Debug->currentIndex().row();
 
     if (nRow != -1) {
@@ -3010,7 +3078,8 @@ void PEWidget::on_tableView_Debug_customContextMenuRequested(const QPoint &pos) 
     }
 }
 
-void PEWidget::onTableView_Debug_currentRowChanged(const QModelIndex &current, const QModelIndex &previous) {
+void PEWidget::onTableView_Debug_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
     Q_UNUSED(previous)
 
     int nRow = current.row();
@@ -3020,13 +3089,15 @@ void PEWidget::onTableView_Debug_currentRowChanged(const QModelIndex &current, c
     }
 }
 
-void PEWidget::on_tableView_Debug_doubleClicked(const QModelIndex &index) {
+void PEWidget::on_tableView_Debug_doubleClicked(const QModelIndex &index)
+{
     Q_UNUSED(index)
 
     editDebugHeader();
 }
 
-void PEWidget::on_tableView_Resources_customContextMenuRequested(const QPoint &pos) {
+void PEWidget::on_tableView_Resources_customContextMenuRequested(const QPoint &pos)
+{
     int nRow = ui->tableView_Resources->currentIndex().row();
 
     if (nRow != -1) {
@@ -3060,13 +3131,15 @@ void PEWidget::on_tableView_Resources_customContextMenuRequested(const QPoint &p
     }
 }
 
-void PEWidget::onTableView_Resources_currentRowChanged(const QModelIndex &current, const QModelIndex &previous) {
+void PEWidget::onTableView_Resources_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
     Q_UNUSED(previous)
 
     loadHexSubdeviceByTableView(current.row(), SPE::TYPE_RESOURCES, ui->widgetHex_Resources, ui->tableView_Resources, &g_subDevice[SPE::TYPE_RESOURCES]);
 }
 
-void PEWidget::on_tableView_Exceptions_customContextMenuRequested(const QPoint &pos) {
+void PEWidget::on_tableView_Exceptions_customContextMenuRequested(const QPoint &pos)
+{
     int nRow = ui->tableView_Exceptions->currentIndex().row();
 
     if (nRow != -1) {
@@ -3080,7 +3153,8 @@ void PEWidget::on_tableView_Exceptions_customContextMenuRequested(const QPoint &
     }
 }
 
-void PEWidget::onTableView_Exceptions_currentRowChanged(const QModelIndex &current, const QModelIndex &previous) {
+void PEWidget::onTableView_Exceptions_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
     Q_UNUSED(previous)
 
     int nRow = current.row();
@@ -3090,13 +3164,15 @@ void PEWidget::onTableView_Exceptions_currentRowChanged(const QModelIndex &curre
     }
 }
 
-void PEWidget::on_tableView_Exceptions_doubleClicked(const QModelIndex &index) {
+void PEWidget::on_tableView_Exceptions_doubleClicked(const QModelIndex &index)
+{
     Q_UNUSED(index)
 
     editExceptionHeader();
 }
 
-void PEWidget::on_tableView_DelayImportLibraries_customContextMenuRequested(const QPoint &pos) {
+void PEWidget::on_tableView_DelayImportLibraries_customContextMenuRequested(const QPoint &pos)
+{
     int nRow = ui->tableView_DelayImportLibraries->currentIndex().row();
 
     if (nRow != -1) {
@@ -3110,7 +3186,8 @@ void PEWidget::on_tableView_DelayImportLibraries_customContextMenuRequested(cons
     }
 }
 
-void PEWidget::onTableView_DelayImportLibraries_currentRowChanged(const QModelIndex &current, const QModelIndex &previous) {
+void PEWidget::onTableView_DelayImportLibraries_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
     Q_UNUSED(previous)
 
     int nRow = current.row();
@@ -3120,13 +3197,15 @@ void PEWidget::onTableView_DelayImportLibraries_currentRowChanged(const QModelIn
     }
 }
 
-void PEWidget::on_tableView_DelayImportLibraries_doubleClicked(const QModelIndex &index) {
+void PEWidget::on_tableView_DelayImportLibraries_doubleClicked(const QModelIndex &index)
+{
     Q_UNUSED(index)
 
     editDelayImportHeader();
 }
 
-void PEWidget::on_tableView_BoundImport_customContextMenuRequested(const QPoint &pos) {
+void PEWidget::on_tableView_BoundImport_customContextMenuRequested(const QPoint &pos)
+{
     int nRow = ui->tableView_BoundImport->currentIndex().row();
 
     if (nRow != -1) {
@@ -3140,13 +3219,15 @@ void PEWidget::on_tableView_BoundImport_customContextMenuRequested(const QPoint 
     }
 }
 
-void PEWidget::on_tableView_BoundImport_doubleClicked(const QModelIndex &index) {
+void PEWidget::on_tableView_BoundImport_doubleClicked(const QModelIndex &index)
+{
     Q_UNUSED(index)
 
     editBoundImportHeader();
 }
 
-void PEWidget::onTreeView_Resources_currentRowChanged(const QModelIndex &current, const QModelIndex &previous) {
+void PEWidget::onTreeView_Resources_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
     Q_UNUSED(previous)
 
     if (current.row() != -1) {
@@ -3168,7 +3249,8 @@ void PEWidget::onTreeView_Resources_currentRowChanged(const QModelIndex &current
     }
 }
 
-void PEWidget::onTreeView_Certificate_currentRowChanged(const QModelIndex &current, const QModelIndex &previous) {
+void PEWidget::onTreeView_Certificate_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
     Q_UNUSED(previous)
 
     if (current.row() != -1) {
@@ -3179,7 +3261,8 @@ void PEWidget::onTreeView_Certificate_currentRowChanged(const QModelIndex &curre
     }
 }
 
-void PEWidget::on_tableView_ExportFunctions_customContextMenuRequested(const QPoint &pos) {
+void PEWidget::on_tableView_ExportFunctions_customContextMenuRequested(const QPoint &pos)
+{
     int nRow = ui->tableView_ExportFunctions->currentIndex().row();
 
     if (nRow != -1) {
@@ -3201,31 +3284,38 @@ void PEWidget::on_tableView_ExportFunctions_customContextMenuRequested(const QPo
     }
 }
 
-void PEWidget::on_pushButtonHex_clicked() {
+void PEWidget::on_pushButtonHex_clicked()
+{
     setTreeItem(ui->treeWidgetNavi, SPE::TYPE_HEX);
 }
 
-void PEWidget::on_pushButtonStrings_clicked() {
+void PEWidget::on_pushButtonStrings_clicked()
+{
     setTreeItem(ui->treeWidgetNavi, SPE::TYPE_STRINGS);
 }
 
-void PEWidget::on_pushButtonMemoryMap_clicked() {
+void PEWidget::on_pushButtonMemoryMap_clicked()
+{
     setTreeItem(ui->treeWidgetNavi, SPE::TYPE_MEMORYMAP);
 }
 
-void PEWidget::on_pushButtonEntropy_clicked() {
+void PEWidget::on_pushButtonEntropy_clicked()
+{
     setTreeItem(ui->treeWidgetNavi, SPE::TYPE_ENTROPY);
 }
 
-void PEWidget::on_pushButtonHeuristicScan_clicked() {
+void PEWidget::on_pushButtonHeuristicScan_clicked()
+{
     setTreeItem(ui->treeWidgetNavi, SPE::TYPE_HEURISTICSCAN);
 }
 
-void PEWidget::on_pushButtonDisasm_clicked() {
+void PEWidget::on_pushButtonDisasm_clicked()
+{
     setTreeItem(ui->treeWidgetNavi, SPE::TYPE_DISASM);
 }
 
-void PEWidget::on_tableWidget_Net_Metadata_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn) {
+void PEWidget::on_tableWidget_Net_Metadata_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
+{
     Q_UNUSED(nCurrentRow)
     Q_UNUSED(nCurrentColumn)
     Q_UNUSED(nPreviousRow)
@@ -3234,19 +3324,22 @@ void PEWidget::on_tableWidget_Net_Metadata_currentCellChanged(int nCurrentRow, i
     setHeaderTableSelection(ui->widgetHex_Net_Metadata, ui->tableWidget_Net_Metadata);
 }
 
-void PEWidget::on_toolButtonPrev_clicked() {
+void PEWidget::on_toolButtonPrev_clicked()
+{
     setAddPageEnabled(false);
     ui->treeWidgetNavi->setCurrentItem(getPrevPage());
     setAddPageEnabled(true);
 }
 
-void PEWidget::on_toolButtonNext_clicked() {
+void PEWidget::on_toolButtonNext_clicked()
+{
     setAddPageEnabled(false);
     ui->treeWidgetNavi->setCurrentItem(getNextPage());
     setAddPageEnabled(true);
 }
 
-void PEWidget::on_checkBoxExportShowValid_stateChanged(int nState) {
+void PEWidget::on_checkBoxExportShowValid_stateChanged(int nState)
+{
     Q_UNUSED(nState)
 
     XPE pe(getDevice(), getOptions().bIsImage, getOptions().nImageBase);
@@ -3258,7 +3351,8 @@ void PEWidget::on_checkBoxExportShowValid_stateChanged(int nState) {
     }
 }
 
-void PEWidget::on_tableView_ImportFunctions_customContextMenuRequested(const QPoint &pos) {
+void PEWidget::on_tableView_ImportFunctions_customContextMenuRequested(const QPoint &pos)
+{
     int nRow = ui->tableView_ImportFunctions->currentIndex().row();
 
     if (nRow != -1) {
@@ -3272,7 +3366,8 @@ void PEWidget::on_tableView_ImportFunctions_customContextMenuRequested(const QPo
     }
 }
 
-void PEWidget::on_pushButtonCertificateCheck_clicked() {
+void PEWidget::on_pushButtonCertificateCheck_clicked()
+{
     XPE pe(getDevice(), getOptions().bIsImage, getOptions().nImageBase);
 
     if (pe.isValid()) {
@@ -3282,13 +3377,15 @@ void PEWidget::on_pushButtonCertificateCheck_clicked() {
     }
 }
 
-void PEWidget::on_checkBox_ManifestFormat_stateChanged(int nState) {
+void PEWidget::on_checkBox_ManifestFormat_stateChanged(int nState)
+{
     Q_UNUSED(nState)
 
     formatXML();
 }
 
-void PEWidget::formatXML() {
+void PEWidget::formatXML()
+{
     if (getDevice()) {
         XPE pe(getDevice(), getOptions().bIsImage, getOptions().nImageBase);
 
@@ -3306,7 +3403,8 @@ void PEWidget::formatXML() {
     }
 }
 
-void PEWidget::on_tableWidget_IMAGE_DIRECTORY_ENTRIES_customContextMenuRequested(const QPoint &pos) {
+void PEWidget::on_tableWidget_IMAGE_DIRECTORY_ENTRIES_customContextMenuRequested(const QPoint &pos)
+{
     int nRow = ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->currentIndex().row();
 
     if (nRow != -1) {
@@ -3332,19 +3430,23 @@ void PEWidget::on_tableWidget_IMAGE_DIRECTORY_ENTRIES_customContextMenuRequested
     }
 }
 
-void PEWidget::editDirectoryHeader() {
+void PEWidget::editDirectoryHeader()
+{
     showSectionHeader(SPE::TYPE_IMAGE_DIRECTORY_ENTRIES, ui->tableWidget_IMAGE_DIRECTORY_ENTRIES);
 }
 
-void PEWidget::directoryHex() {
+void PEWidget::directoryHex()
+{
     showSectionHex(ui->tableWidget_IMAGE_DIRECTORY_ENTRIES);
 }
 
-void PEWidget::directoryEntropy() {
+void PEWidget::directoryEntropy()
+{
     showSectionEntropy(ui->tableWidget_IMAGE_DIRECTORY_ENTRIES);
 }
 
-void PEWidget::on_tableView_TLSCallbacks_customContextMenuRequested(const QPoint &pos) {
+void PEWidget::on_tableView_TLSCallbacks_customContextMenuRequested(const QPoint &pos)
+{
     int nRow = ui->tableView_TLSCallbacks->currentIndex().row();
 
     if (nRow != -1) {
@@ -3358,15 +3460,18 @@ void PEWidget::on_tableView_TLSCallbacks_customContextMenuRequested(const QPoint
     }
 }
 
-void PEWidget::disasmTLSCallback() {
+void PEWidget::disasmTLSCallback()
+{
     showSectionDisasm(ui->tableView_TLSCallbacks);
 }
 
-void PEWidget::on_pushButtonSaveSections_clicked() {
+void PEWidget::on_pushButtonSaveSections_clicked()
+{
     XShortcutsWidget::saveModel(ui->tableView_Sections->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(tr("Sections"))));
 }
 
-void PEWidget::on_tableView_Resources_StringTable_customContextMenuRequested(const QPoint &pos) {
+void PEWidget::on_tableView_Resources_StringTable_customContextMenuRequested(const QPoint &pos)
+{
     int nRow = ui->tableView_Resources_StringTable->currentIndex().row();
 
     if (nRow != -1) {
@@ -3380,18 +3485,22 @@ void PEWidget::on_tableView_Resources_StringTable_customContextMenuRequested(con
     }
 }
 
-void PEWidget::stringTableHex() {
+void PEWidget::stringTableHex()
+{
     showSectionHex(ui->tableView_Resources_StringTable);
 }
 
-void PEWidget::on_pushButtonSave_Debug_clicked() {
+void PEWidget::on_pushButtonSave_Debug_clicked()
+{
     XShortcutsWidget::saveModel(ui->tableView_Debug->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Debug"))));
 }
 
-void PEWidget::on_pushButtonSave_Exception_clicked() {
+void PEWidget::on_pushButtonSave_Exception_clicked()
+{
     XShortcutsWidget::saveModel(ui->tableView_Exceptions->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Exceptions"))));
 }
 
-void PEWidget::on_pushButtonSave_IMAGE_DIRECTORY_ENTRIES_clicked() {
+void PEWidget::on_pushButtonSave_IMAGE_DIRECTORY_ENTRIES_clicked()
+{
     saveHeaderTable(ui->tableWidget_IMAGE_DIRECTORY_ENTRIES, XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("IMAGE_DIRECTORY_ENTRIES"))));
 }

@@ -20,7 +20,8 @@
  */
 #include "multisearch.h"
 
-MultiSearch::MultiSearch(QObject *pParent) : QObject(pParent) {
+MultiSearch::MultiSearch(QObject *pParent) : QObject(pParent)
+{
     g_options = {};
     g_ppModel = nullptr;
     g_nFreeIndex = -1;
@@ -28,11 +29,13 @@ MultiSearch::MultiSearch(QObject *pParent) : QObject(pParent) {
     g_pSemaphore = new QSemaphore(N_MAXNUMBEROFTHREADS);
 }
 
-MultiSearch::~MultiSearch() {
+MultiSearch::~MultiSearch()
+{
     delete g_pSemaphore;
 }
 
-void MultiSearch::setSearchData(QIODevice *pDevice, QList<XBinary::MS_RECORD> *pListRecords, OPTIONS options, TYPE type, XBinary::PDSTRUCT *pPdStruct) {
+void MultiSearch::setSearchData(QIODevice *pDevice, QList<XBinary::MS_RECORD> *pListRecords, OPTIONS options, TYPE type, XBinary::PDSTRUCT *pPdStruct)
+{
     this->g_pDevice = pDevice;
     this->g_pListRecords = pListRecords;
 
@@ -41,7 +44,8 @@ void MultiSearch::setSearchData(QIODevice *pDevice, QList<XBinary::MS_RECORD> *p
     g_pPdStruct = pPdStruct;
 }
 
-void MultiSearch::setModelData(QList<XBinary::MS_RECORD> *pListRecords, QStandardItemModel **ppModel, OPTIONS options, TYPE type, XBinary::PDSTRUCT *pPdStruct) {
+void MultiSearch::setModelData(QList<XBinary::MS_RECORD> *pListRecords, QStandardItemModel **ppModel, OPTIONS options, TYPE type, XBinary::PDSTRUCT *pPdStruct)
+{
     this->g_pListRecords = pListRecords;
     this->g_ppModel = ppModel;
 
@@ -50,7 +54,8 @@ void MultiSearch::setModelData(QList<XBinary::MS_RECORD> *pListRecords, QStandar
     g_pPdStruct = pPdStruct;
 }
 
-QList<MultiSearch::SIGNATURE_RECORD> MultiSearch::loadSignaturesFromFile(QString sFileName) {
+QList<MultiSearch::SIGNATURE_RECORD> MultiSearch::loadSignaturesFromFile(QString sFileName)
+{
     QList<SIGNATURE_RECORD> listResult;
 
     QFile file;
@@ -83,7 +88,8 @@ QList<MultiSearch::SIGNATURE_RECORD> MultiSearch::loadSignaturesFromFile(QString
     return listResult;
 }
 
-MultiSearch::SIGNATURE_RECORD MultiSearch::createSignature(QString sName, QString sSignature) {
+MultiSearch::SIGNATURE_RECORD MultiSearch::createSignature(QString sName, QString sSignature)
+{
     MultiSearch::SIGNATURE_RECORD result = {};
 
     result.bIsBigEndian = false;
@@ -95,7 +101,8 @@ MultiSearch::SIGNATURE_RECORD MultiSearch::createSignature(QString sName, QStrin
     return result;
 }
 
-void MultiSearch::processSignature(MultiSearch::SIGNATURE_RECORD signatureRecord) {
+void MultiSearch::processSignature(MultiSearch::SIGNATURE_RECORD signatureRecord)
+{
     //#ifdef QT_DEBUG
     //    QElapsedTimer timer;
     //    timer.start();
@@ -122,7 +129,8 @@ void MultiSearch::processSignature(MultiSearch::SIGNATURE_RECORD signatureRecord
     //#endif
 }
 
-void MultiSearch::processSearch() {
+void MultiSearch::processSearch()
+{
     QElapsedTimer scanTimer;
     scanTimer.start();
 
@@ -216,7 +224,8 @@ void MultiSearch::processSearch() {
     emit completed(scanTimer.elapsed());
 }
 
-void MultiSearch::processModel() {
+void MultiSearch::processModel()
+{
     QElapsedTimer scanTimer;
     scanTimer.start();
 
