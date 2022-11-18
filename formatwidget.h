@@ -180,6 +180,7 @@ public:
     void initHexViewWidget(XHexViewWidget *pWidget);
     void initMultiDisasmWidget(XMultiDisasmWidget *pWidget);
     void initHexView(XHexView *pWidget);
+    void initDisasmView(XDisasmView *pWidget);
     void initToolsWidget(ToolsWidget *pWidget);
     void initExtractorWidget(XExtractorWidget *pWidget);
 

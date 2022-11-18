@@ -22,7 +22,8 @@
 
 #include "ui_machofatwidget.h"
 
-MACHOFATWidget::MACHOFATWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::MACHOFATWidget)
+MACHOFATWidget::MACHOFATWidget(QWidget *pParent)
+    : FormatWidget(pParent), ui(new Ui::MACHOFATWidget)
 {
     ui->setupUi(this);
 }

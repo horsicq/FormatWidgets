@@ -22,7 +22,8 @@
 
 #include "ui_nesectionheaderwidget.h"
 
-NESectionHeaderWidget::NESectionHeaderWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::NESectionHeaderWidget)
+NESectionHeaderWidget::NESectionHeaderWidget(QWidget *pParent)
+    : FormatWidget(pParent), ui(new Ui::NESectionHeaderWidget)
 {
     ui->setupUi(this);
 }

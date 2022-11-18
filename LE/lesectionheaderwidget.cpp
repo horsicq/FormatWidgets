@@ -22,7 +22,8 @@
 
 #include "ui_lesectionheaderwidget.h"
 
-LESectionHeaderWidget::LESectionHeaderWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::LESectionHeaderWidget)
+LESectionHeaderWidget::LESectionHeaderWidget(QWidget *pParent)
+    : FormatWidget(pParent), ui(new Ui::LESectionHeaderWidget)
 {
     ui->setupUi(this);
 }

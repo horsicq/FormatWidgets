@@ -22,7 +22,8 @@
 
 #include "ui_machwidget.h"
 
-MACHWidget::MACHWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::MACHWidget)
+MACHWidget::MACHWidget(QWidget *pParent)
+    : FormatWidget(pParent), ui(new Ui::MACHWidget)
 {
     ui->setupUi(this);
 
@@ -31,7 +32,8 @@ MACHWidget::MACHWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::MAC
     initWidget();
 }
 
-MACHWidget::MACHWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) : MACHWidget(pParent)
+MACHWidget::MACHWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent)
+    : MACHWidget(pParent)
 {
     MACHWidget::setData(pDevice, options, 0, 0, 0);
     MACHWidget::reload();

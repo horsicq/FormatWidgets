@@ -22,7 +22,8 @@
 
 #include "ui_lewidget.h"
 
-LEWidget::LEWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::LEWidget)
+LEWidget::LEWidget(QWidget *pParent)
+    : FormatWidget(pParent), ui(new Ui::LEWidget)
 {
     ui->setupUi(this);
 
@@ -31,7 +32,8 @@ LEWidget::LEWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::LEWidge
     initWidget();
 }
 
-LEWidget::LEWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) : LEWidget(pParent)
+LEWidget::LEWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent)
+    : LEWidget(pParent)
 {
     LEWidget::setData(pDevice, options, 0, 0, 0);
     LEWidget::reload();

@@ -22,7 +22,8 @@
 
 #include "ui_dexsectionheaderwidget.h"
 
-DEXSectionHeaderWidget::DEXSectionHeaderWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::DEXSectionHeaderWidget)
+DEXSectionHeaderWidget::DEXSectionHeaderWidget(QWidget *pParent)
+    : FormatWidget(pParent), ui(new Ui::DEXSectionHeaderWidget)
 {
     ui->setupUi(this);
 }

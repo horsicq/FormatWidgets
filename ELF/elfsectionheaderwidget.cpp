@@ -22,7 +22,8 @@
 
 #include "ui_elfsectionheaderwidget.h"
 
-ELFSectionHeaderWidget::ELFSectionHeaderWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::ELFSectionHeaderWidget)
+ELFSectionHeaderWidget::ELFSectionHeaderWidget(QWidget *pParent)
+    : FormatWidget(pParent), ui(new Ui::ELFSectionHeaderWidget)
 {
     ui->setupUi(this);
 }

@@ -22,14 +22,16 @@
 
 #include "ui_binarywidget.h"
 
-BinaryWidget::BinaryWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::BinaryWidget)
+BinaryWidget::BinaryWidget(QWidget *pParent)
+    : FormatWidget(pParent), ui(new Ui::BinaryWidget)
 {
     ui->setupUi(this);
 
     initWidget();
 }
 
-BinaryWidget::BinaryWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) : BinaryWidget(pParent)
+BinaryWidget::BinaryWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent)
+    : BinaryWidget(pParent)
 {
     ui->setupUi(this);
 

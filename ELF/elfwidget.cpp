@@ -22,7 +22,8 @@
 
 #include "ui_elfwidget.h"
 
-ELFWidget::ELFWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::ELFWidget)
+ELFWidget::ELFWidget(QWidget *pParent)
+    : FormatWidget(pParent), ui(new Ui::ELFWidget)
 {
     ui->setupUi(this);
 
@@ -31,7 +32,8 @@ ELFWidget::ELFWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::ELFWi
     initWidget();
 }
 
-ELFWidget::ELFWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) : ELFWidget(pParent)
+ELFWidget::ELFWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent)
+    : ELFWidget(pParent)
 {
     ELFWidget::setData(pDevice, options, 0, 0, 0);
     ELFWidget::reload();

@@ -22,7 +22,8 @@
 
 #include "ui_newidget.h"
 
-NEWidget::NEWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::NEWidget)
+NEWidget::NEWidget(QWidget *pParent)
+    : FormatWidget(pParent), ui(new Ui::NEWidget)
 {
     ui->setupUi(this);
 
@@ -31,7 +32,8 @@ NEWidget::NEWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::NEWidge
     initWidget();
 }
 
-NEWidget::NEWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) : NEWidget(pParent)
+NEWidget::NEWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent)
+    : NEWidget(pParent)
 {
     NEWidget::setData(pDevice, options, 0, 0, 0);
     NEWidget::reload();

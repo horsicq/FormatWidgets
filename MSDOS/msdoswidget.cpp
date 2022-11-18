@@ -22,7 +22,8 @@
 
 #include "ui_msdoswidget.h"
 
-MSDOSWidget::MSDOSWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::MSDOSWidget)
+MSDOSWidget::MSDOSWidget(QWidget *pParent)
+    : FormatWidget(pParent), ui(new Ui::MSDOSWidget)
 {
     ui->setupUi(this);
 
@@ -31,7 +32,8 @@ MSDOSWidget::MSDOSWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::M
     initWidget();
 }
 
-MSDOSWidget::MSDOSWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) : MSDOSWidget(pParent)
+MSDOSWidget::MSDOSWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent)
+    : MSDOSWidget(pParent)
 {
     MSDOSWidget::setData(pDevice, options, 0, 0, 0);
     MSDOSWidget::reload();

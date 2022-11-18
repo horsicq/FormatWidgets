@@ -22,7 +22,8 @@
 
 #include "ui_dialogpdf.h"
 
-DialogPDF::DialogPDF(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogPDF)
+DialogPDF::DialogPDF(QWidget *pParent)
+    : XShortcutsDialog(pParent), ui(new Ui::DialogPDF)
 {
     ui->setupUi(this);
 

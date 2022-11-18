@@ -22,7 +22,8 @@
 
 #include "ui_searchsignatureswidget.h"
 
-SearchSignaturesWidget::SearchSignaturesWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui::SearchSignaturesWidget)
+SearchSignaturesWidget::SearchSignaturesWidget(QWidget *pParent)
+    : XShortcutsWidget(pParent), ui(new Ui::SearchSignaturesWidget)
 {
     ui->setupUi(this);
     g_pDevice = nullptr;

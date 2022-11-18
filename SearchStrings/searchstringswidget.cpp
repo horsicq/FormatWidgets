@@ -22,7 +22,8 @@
 
 #include "ui_searchstringswidget.h"
 
-SearchStringsWidget::SearchStringsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui::SearchStringsWidget)
+SearchStringsWidget::SearchStringsWidget(QWidget *pParent)
+    : XShortcutsWidget(pParent), ui(new Ui::SearchStringsWidget)
 {
     ui->setupUi(this);
     g_pDevice = nullptr;

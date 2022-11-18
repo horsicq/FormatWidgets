@@ -22,14 +22,16 @@
 
 #include "ui_pdfwidget.h"
 
-PDFWidget::PDFWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::PDFWidget)
+PDFWidget::PDFWidget(QWidget *pParent)
+    : FormatWidget(pParent), ui(new Ui::PDFWidget)
 {
     ui->setupUi(this);
 
     initWidget();
 }
 
-PDFWidget::PDFWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) : PDFWidget(pParent)
+PDFWidget::PDFWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent)
+    : PDFWidget(pParent)
 {
     PDFWidget::setData(pDevice, options, 0, 0, 0);
     PDFWidget::reload();

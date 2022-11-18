@@ -22,7 +22,8 @@
 
 #include "ui_formatswidget.h"
 
-FormatsWidget::FormatsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui::FormatsWidget)
+FormatsWidget::FormatsWidget(QWidget *pParent)
+    : XShortcutsWidget(pParent), ui(new Ui::FormatsWidget)
 {
     ui->setupUi(this);
 

@@ -20,7 +20,8 @@
  */
 #include "dialogmultisearchprocess.h"
 
-DialogMultiSearchProcess::DialogMultiSearchProcess(QWidget *pParent) : XDialogProcess(pParent)
+DialogMultiSearchProcess::DialogMultiSearchProcess(QWidget *pParent)
+    : XDialogProcess(pParent)
 {
     g_type = MultiSearch::TYPE_STRINGS;
 

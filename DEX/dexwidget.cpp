@@ -22,7 +22,8 @@
 
 #include "ui_dexwidget.h"
 
-DEXWidget::DEXWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::DEXWidget)
+DEXWidget::DEXWidget(QWidget *pParent)
+    : FormatWidget(pParent), ui(new Ui::DEXWidget)
 {
     ui->setupUi(this);
 
@@ -34,7 +35,8 @@ DEXWidget::DEXWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::DEXWi
     initWidget();
 }
 
-DEXWidget::DEXWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) : DEXWidget(pParent)
+DEXWidget::DEXWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent)
+    : DEXWidget(pParent)
 {
     DEXWidget::setData(pDevice, options, 0, 0, 0);
     DEXWidget::reload();

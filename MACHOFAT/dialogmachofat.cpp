@@ -22,7 +22,8 @@
 
 #include "ui_dialogmachofat.h"
 
-DialogMACHOFAT::DialogMACHOFAT(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogMACHOFAT)
+DialogMACHOFAT::DialogMACHOFAT(QWidget *pParent)
+    : XShortcutsDialog(pParent), ui(new Ui::DialogMACHOFAT)
 {
     ui->setupUi(this);
 

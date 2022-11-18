@@ -20,7 +20,8 @@
  */
 #include "multisearch.h"
 
-MultiSearch::MultiSearch(QObject *pParent) : QObject(pParent)
+MultiSearch::MultiSearch(QObject *pParent)
+    : QObject(pParent)
 {
     g_options = {};
     g_ppModel = nullptr;

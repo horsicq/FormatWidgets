@@ -20,7 +20,8 @@
  */
 #include "formatwidget.h"
 
-FormatWidget::FormatWidget(QWidget *pParent) : XShortcutsWidget(pParent)
+FormatWidget::FormatWidget(QWidget *pParent)
+    : XShortcutsWidget(pParent)
 {
     g_pDevice = nullptr;
     g_pBackupDevice = nullptr;
@@ -35,7 +36,8 @@ FormatWidget::FormatWidget(QWidget *pParent) : XShortcutsWidget(pParent)
     g_colEnabled = QWidget::palette().color(QPalette::BrightText);
 }
 
-FormatWidget::FormatWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent) : FormatWidget(pParent)
+FormatWidget::FormatWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent)
+    : FormatWidget(pParent)
 {
     FormatWidget::setData(pDevice, options, nNumber, nOffset, nType);
 }
@@ -857,6 +859,11 @@ void FormatWidget::initHexView(XHexView *pWidget)
     connect(pWidget, SIGNAL(showOffsetDisasm(qint64)), this, SLOT(showInDisasmWindowOffset(qint64)));
     connect(pWidget, SIGNAL(showOffsetMemoryMap(qint64)), this, SLOT(showInMemoryMapWindowOffset(qint64)));
     connect(pWidget, SIGNAL(showOffsetMainHex(qint64, qint64)), this, SLOT(showInHexWindow(qint64, qint64)));
+}
+
+void FormatWidget::initDisasmView(XDisasmView *pWidget)
+{
+    connect(pWidget, SIGNAL(dataChanged()), this, SLOT(setEdited()));
 }
 
 void FormatWidget::initToolsWidget(ToolsWidget *pWidget)

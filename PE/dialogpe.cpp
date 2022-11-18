@@ -22,7 +22,8 @@
 
 #include "ui_dialogpe.h"
 
-DialogPE::DialogPE(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogPE)
+DialogPE::DialogPE(QWidget *pParent)
+    : XShortcutsDialog(pParent), ui(new Ui::DialogPE)
 {
     ui->setupUi(this);
 

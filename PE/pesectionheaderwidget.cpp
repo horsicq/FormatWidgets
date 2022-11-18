@@ -22,7 +22,8 @@
 
 #include "ui_pesectionheaderwidget.h"
 
-PESectionHeaderWidget::PESectionHeaderWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::PESectionHeaderWidget)
+PESectionHeaderWidget::PESectionHeaderWidget(QWidget *pParent)
+    : FormatWidget(pParent), ui(new Ui::PESectionHeaderWidget)
 {
     ui->setupUi(this);
 }

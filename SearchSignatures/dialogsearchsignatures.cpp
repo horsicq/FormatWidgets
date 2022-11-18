@@ -22,7 +22,8 @@
 
 #include "ui_dialogsearchsignatures.h"
 
-DialogSearchSignatures::DialogSearchSignatures(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogSearchSignatures)
+DialogSearchSignatures::DialogSearchSignatures(QWidget *pParent)
+    : XShortcutsDialog(pParent), ui(new Ui::DialogSearchSignatures)
 {
     ui->setupUi(this);
 

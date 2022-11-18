@@ -22,7 +22,8 @@
 
 #include "ui_machsectionheaderwidget.h"
 
-MACHSectionHeaderWidget::MACHSectionHeaderWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::MACHSectionHeaderWidget)
+MACHSectionHeaderWidget::MACHSectionHeaderWidget(QWidget *pParent)
+    : FormatWidget(pParent), ui(new Ui::MACHSectionHeaderWidget)
 {
     ui->setupUi(this);
 }

@@ -22,7 +22,8 @@
 
 #include "ui_toolswidget.h"
 
-ToolsWidget::ToolsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui::ToolsWidget)
+ToolsWidget::ToolsWidget(QWidget *pParent)
+    : XShortcutsWidget(pParent), ui(new Ui::ToolsWidget)
 {
     ui->setupUi(this);
 

@@ -22,7 +22,8 @@
 
 #include "ui_searchsignaturesoptionswidget.h"
 
-SearchSignaturesOptionsWidget::SearchSignaturesOptionsWidget(QWidget *pParent) : QWidget(pParent), ui(new Ui::SearchSignaturesOptionsWidget)
+SearchSignaturesOptionsWidget::SearchSignaturesOptionsWidget(QWidget *pParent)
+    : QWidget(pParent), ui(new Ui::SearchSignaturesOptionsWidget)
 {
     ui->setupUi(this);
 

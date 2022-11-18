@@ -148,7 +148,7 @@
      </widget>
      <widget class="QStackedWidget" name="stackedWidgetInfo">
       <property name="currentIndex">
-       <number>34</number>
+       <number>13</number>
       </property>
       <widget class="QWidget" name="page_Info">
        <layout class="QVBoxLayout" name="verticalLayout_43">
@@ -362,6 +362,25 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="page_Tools">
+       <layout class="QVBoxLayout" name="verticalLayout_27XX">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QWidget" name="widgetTools" native="true"/>
+        </item>
+       </layout>
+      </widget>
       <widget class="QWidget" name="page_IMAGE_DOS_HEADER">
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <property name="leftMargin">
@@ -401,7 +420,39 @@
             <number>24</number>
            </attribute>
           </widget>
-          <widget class="ToolsWidget" name="widgetHex_IMAGE_DOS_HEADER" native="true"/>
+          <widget class="ToolsWidget" name="widgetHex_IMAGE_DOS_HEADER" native="true">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="page_DosStub">
+       <layout class="QVBoxLayout" name="verticalLayout_45">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QSplitter" name="splitter_14">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <widget class="XDisasmView" name="widgetDisasm_DosStub" native="true"/>
+          <widget class="ToolsWidget" name="widgetHex_DosStub" native="true"/>
          </widget>
         </item>
        </layout>
@@ -2058,7 +2109,14 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="ToolsWidget" name="widgetHex_Overlay" native="true"/>
+         <widget class="ToolsWidget" name="widgetHex_Overlay" native="true">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -2143,6 +2201,12 @@
    <class>XExtractorWidget</class>
    <extends>QWidget</extends>
    <header>xextractorwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>XDisasmView</class>
+   <extends>QWidget</extends>
+   <header>xdisasmview.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -22,13 +22,15 @@
 
 #include "ui_pewidget.h"
 
-PEWidget::PEWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::PEWidget)
+PEWidget::PEWidget(QWidget *pParent)
+    : FormatWidget(pParent), ui(new Ui::PEWidget)
 {
     ui->setupUi(this);
 
     memset(g_subDevice, 0, sizeof g_subDevice);
 
     initWidget();
+    initDisasmView(ui->widgetDisasm_DosStub);
 
     ui->groupBoxHash32->setTitle(QString("%1 32").arg(tr("Hash")));
     ui->groupBoxHash64->setTitle(QString("%1 64").arg(tr("Hash")));
@@ -42,7 +44,8 @@ PEWidget::PEWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::PEWidge
 #endif
 }
 
-PEWidget::PEWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) : PEWidget(pParent)
+PEWidget::PEWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent)
+    : PEWidget(pParent)
 {
     PEWidget::setData(pDevice, options, 0, 0, 0);
     PEWidget::reload();
@@ -111,7 +114,13 @@ void PEWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_ENTROPY, tr("Entropy")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_HEURISTICSCAN, tr("Heuristic scan")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_EXTRACTOR, tr("Extractor")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_TOOLS, tr("Tools")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_IMAGE_DOS_HEADER, "IMAGE_DOS_HEADER"));
+
+        if (pe.isDosStubPresent()) {
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_DOS_STUB, "Dos stub"));
+        }
+
         QTreeWidgetItem *pNtHeaders = createNewItem(SPE::TYPE_IMAGE_NT_HEADERS, "IMAGE_NT_HEADERS");
         ui->treeWidgetNavi->addTopLevelItem(pNtHeaders);
         pNtHeaders->addChild(createNewItem(SPE::TYPE_IMAGE_FILE_HEADER, "IMAGE_FILE_HEADER"));
@@ -1161,6 +1170,8 @@ void PEWidget::setReadonly(bool bState)
     ui->widgetHex->setReadonly(bState);
     ui->widgetStrings->setReadonly(bState);
     ui->widgetDisasm->setReadonly(bState);
+    ui->widgetHex_DosStub->setReadonly(bState);
+    ui->widgetDisasm_DosStub->setReadonly(bState);
     ui->widgetHex_Section->setReadonly(bState);
     ui->widgetHex_Overlay->setReadonly(bState);
     ui->widgetHex_Resources->setReadonly(bState);
@@ -1468,6 +1479,10 @@ void PEWidget::reloadData()
 
                 ui->widgetExtractor->setData(getDevice(), extractorOptions, true);
             }
+        } else if (nType == SPE::TYPE_TOOLS) {
+            if (!isInitPresent(sInit)) {
+                // TODO
+            }
         } else if (nType == SPE::TYPE_IMAGE_DOS_HEADER) {
             if (!isInitPresent(sInit)) {
                 createHeaderTable(SPE::TYPE_IMAGE_DOS_HEADER, ui->tableWidget_IMAGE_DOS_HEADER, N_IMAGE_DOS_HEADER::records, g_lineEdit_IMAGE_DOS_HEADER,
@@ -1524,6 +1539,25 @@ void PEWidget::reloadData()
                 loadHexSubdevice(nOffset, nSize, nAddress, &g_subDevice[SPE::TYPE_IMAGE_DOS_HEADER], ui->widgetHex_IMAGE_DOS_HEADER);
 
                 blockSignals(false);
+            }
+        } else if (nType == SPE::TYPE_DOS_STUB) {
+            if (!isInitPresent(sInit)) {
+                qint64 nOffset = pe.getDosStubOffset();
+                qint64 nSize = pe.getDosStubSize();
+                qint64 nAddress = pe.offsetToRelAddress(nOffset);
+
+                loadHexSubdevice(nOffset, nSize, nAddress, &g_subDevice[SPE::TYPE_DOS_STUB], ui->widgetHex_DosStub);
+
+                XBinary binary(g_subDevice[SPE::TYPE_DOS_STUB], true, nAddress);
+                binary.setFileType(XBinary::FT_REGION);
+                binary.setArch("8086");
+
+                XDisasmView::OPTIONS options = {};
+                options.nInitAddress = -1;  // TODO Check MSDOS
+                options.memoryMapRegion = binary.getMemoryMap();
+
+                ui->widgetDisasm_DosStub->setData(g_subDevice[SPE::TYPE_DOS_STUB], options);
+                ui->widgetDisasm_DosStub->setBackupDevice(getBackupDevice());
             }
         } else if (nType == SPE::TYPE_IMAGE_NT_HEADERS) {
             if (!isInitPresent(sInit)) {
