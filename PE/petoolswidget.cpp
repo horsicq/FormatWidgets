@@ -22,10 +22,13 @@
 #include "ui_petoolswidget.h"
 
 PEToolsWidget::PEToolsWidget(QWidget *pParent) :
-    FormatWidget(pParent),
+    XShortcutsWidget(pParent),
     ui(new Ui::PEToolsWidget)
 {
     ui->setupUi(this);
+
+    g_pPE = nullptr;
+    g_bReadonly = true;
 }
 
 PEToolsWidget::~PEToolsWidget()
@@ -35,5 +38,22 @@ PEToolsWidget::~PEToolsWidget()
 
 void PEToolsWidget::setData(XPE *pPE)
 {
-    // TODO
+    g_pPE = pPE;
+}
+
+void PEToolsWidget::reload()
+{
+    if (g_pPE) {
+        // TODO
+    }
+}
+
+void PEToolsWidget::setReadonly(bool bState)
+{
+    g_bReadonly = bState;
+}
+
+void PEToolsWidget::registerShortcuts(bool bState)
+{
+    Q_UNUSED(bState)
 }

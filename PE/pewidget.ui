@@ -148,7 +148,7 @@
      </widget>
      <widget class="QStackedWidget" name="stackedWidgetInfo">
       <property name="currentIndex">
-       <number>13</number>
+       <number>11</number>
       </property>
       <widget class="QWidget" name="page_Info">
        <layout class="QVBoxLayout" name="verticalLayout_43">
@@ -377,7 +377,7 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QWidget" name="widgetTools" native="true"/>
+         <widget class="PEToolsWidget" name="widgetTools" native="true"/>
         </item>
        </layout>
       </widget>
@@ -2207,6 +2207,12 @@
    <class>XDisasmView</class>
    <extends>QWidget</extends>
    <header>xdisasmview.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>PEToolsWidget</class>
+   <extends>QWidget</extends>
+   <header>petoolswidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

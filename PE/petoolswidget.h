@@ -21,14 +21,14 @@
 #ifndef PETOOLSWIDGET_H
 #define PETOOLSWIDGET_H
 
-#include "../formatwidget.h"
+#include "xshortcutswidget.h"
 #include "xpe.h"
 
 namespace Ui {
 class PEToolsWidget;
 }
 
-class PEToolsWidget : public FormatWidget
+class PEToolsWidget : public XShortcutsWidget
 {
     Q_OBJECT
 
@@ -36,8 +36,17 @@ public:
     explicit PEToolsWidget(QWidget *pParent = nullptr);
     ~PEToolsWidget();
 
+    void setData(XPE *pPE);
+    void reload();
+    void setReadonly(bool bState);
+
+protected:
+    virtual void registerShortcuts(bool bState);
+
 private:
     Ui::PEToolsWidget *ui;
+    XPE *g_pPE;
+    bool g_bReadonly;
 };
 
 #endif // PETOOLSWIDGET_H

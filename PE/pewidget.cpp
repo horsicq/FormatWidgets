@@ -1188,6 +1188,8 @@ void PEWidget::setReadonly(bool bState)
     ui->widgetHex_IMAGE_NT_HEADERS->setReadonly(bState);
     ui->widgetHex_IMAGE_OPTIONAL_HEADER->setReadonly(bState);
     ui->widgetHex_TLS->setReadonly(bState);
+
+    ui->widgetTools->setReadonly(bState);
 }
 
 void PEWidget::blockSignals(bool bState)
@@ -1481,7 +1483,8 @@ void PEWidget::reloadData()
             }
         } else if (nType == SPE::TYPE_TOOLS) {
             if (!isInitPresent(sInit)) {
-                // TODO
+                ui->widgetTools->setData(&pe);
+                ui->widgetTools->reload();
             }
         } else if (nType == SPE::TYPE_IMAGE_DOS_HEADER) {
             if (!isInitPresent(sInit)) {
