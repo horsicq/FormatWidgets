@@ -151,6 +151,7 @@ public:
     void showSectionEntropy(QTableView *pTableView);
     void showSectionDisasm(QTableView *pTableView);
     void dumpSection(QTableView *pTableView);
+    void dumpAll(QTableView *pTableView);
     qint64 getTableViewItemSize(QTableView *pTableView);
 
     void showTableViewDemangle(QTableView *pTableView, int nColumn);

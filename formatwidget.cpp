@@ -523,6 +523,11 @@ void FormatWidget::dumpSection(QTableView *pTableView)
     }
 }
 
+void FormatWidget::dumpAll(QTableView *pTableView)
+{
+    // TODO
+}
+
 qint64 FormatWidget::getTableViewItemSize(QTableView *pTableView)
 {
     qint64 nResult = 0;
