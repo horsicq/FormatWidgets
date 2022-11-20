@@ -3,6 +3,7 @@ DEPENDPATH += $$PWD
 
 HEADERS += \
     $$PWD/pesectionheaderwidget.h \
+    $$PWD/petoolswidget.h \
     $$PWD/pewidget.h \
     $$PWD/pe_defs.h \
     $$PWD/dialogpe.h \
@@ -10,6 +11,7 @@ HEADERS += \
 
 SOURCES += \
     $$PWD/pesectionheaderwidget.cpp \
+    $$PWD/petoolswidget.cpp \
     $$PWD/pewidget.cpp \
     $$PWD/pe_defs.cpp \
     $$PWD/dialogpe.cpp \
@@ -17,6 +19,7 @@ SOURCES += \
 
 FORMS += \
     $$PWD/pesectionheaderwidget.ui \
+    $$PWD/petoolswidget.ui \
     $$PWD/pewidget.ui \
     $$PWD/dialogpe.ui
 
@@ -24,3 +27,6 @@ FORMS += \
     XCONFIG += formatwidget
     include($$PWD/../formatwidget.pri)
 }
+
+DISTFILES += \
+    $$PWD/pewidget.cmake

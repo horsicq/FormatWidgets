@@ -12,4 +12,6 @@ set(PEWIDGET_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/pe_defs.cpp
     ${CMAKE_CURRENT_LIST_DIR}/dialogpe.cpp
     ${CMAKE_CURRENT_LIST_DIR}/peprocessdata.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/petoolswidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/petoolswidget.ui
     )
