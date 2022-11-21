@@ -28,3 +28,6 @@ FORMS += \
     XCONFIG += xdialogprocess
     include($$PWD/../../FormatDialogs/xdialogprocess.pri)
 }
+
+DISTFILES += \
+    $$PWD/multisearch.cmake
