@@ -20,8 +20,7 @@
  */
 #include "multisearch.h"
 
-MultiSearch::MultiSearch(QObject *pParent)
-    : QObject(pParent)
+MultiSearch::MultiSearch(QObject *pParent) : QObject(pParent)
 {
     g_options = {};
     g_ppModel = nullptr;
@@ -115,8 +114,7 @@ void MultiSearch::processSignature(MultiSearch::SIGNATURE_RECORD signatureRecord
     binary.setReadWriteMutex(&g_mutex);
     binary.setDevice(g_pDevice);
 
-    QList<XBinary::MS_RECORD> listResult =
-        binary.multiSearch_signature(&(g_options.memoryMap), 0, binary.getSize(), N_MAX, signatureRecord.sSignature, signatureRecord.sName, g_pPdStruct);
+    QList<XBinary::MS_RECORD> listResult = binary.multiSearch_signature(&(g_options.memoryMap), 0, binary.getSize(), N_MAX, signatureRecord.sSignature, signatureRecord.sName, g_pPdStruct);
 
     g_pListRecords->append(listResult);
 

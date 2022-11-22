@@ -33,6 +33,7 @@
 #include "dialogmemorymap.h"
 #include "dialogmime.h"
 #include "dialogmsdos.h"
+#include "dialogbinary.h"
 #include "dialogmultidisasm.h"
 #include "dialogne.h"
 #include "dialogpe.h"
@@ -113,6 +114,7 @@ private slots:
     void on_pushButtonDEX_clicked();
     void on_pushButtonZIP_clicked();
     void on_pushButtonMACHOFAT_clicked();
+    void on_pushButtonBinary_clicked();
 
     void showMSDOS(SMSDOS::TYPE type);
     void showLE(SLE::TYPE type);
@@ -121,6 +123,7 @@ private slots:
     void showELF(SELF::TYPE type);
     void showMACH(SMACH::TYPE type);
     void showDEX(SDEX::TYPE type);
+    void showBinary(SBINARY::TYPE type);
 
     XBinary::FT getCurrentFileType();
 

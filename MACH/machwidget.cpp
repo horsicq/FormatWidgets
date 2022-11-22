@@ -22,8 +22,7 @@
 
 #include "ui_machwidget.h"
 
-MACHWidget::MACHWidget(QWidget *pParent)
-    : FormatWidget(pParent), ui(new Ui::MACHWidget)
+MACHWidget::MACHWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::MACHWidget)
 {
     ui->setupUi(this);
 
@@ -32,8 +31,7 @@ MACHWidget::MACHWidget(QWidget *pParent)
     initWidget();
 }
 
-MACHWidget::MACHWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent)
-    : MACHWidget(pParent)
+MACHWidget::MACHWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) : MACHWidget(pParent)
 {
     MACHWidget::setData(pDevice, options, 0, 0, 0);
     MACHWidget::reload();
@@ -212,9 +210,8 @@ void MACHWidget::reload()
             }
 
             if (mach.isCommandPresent(XMACH_DEF::S_LC_UUID, &listCommandRecords)) {
-                QTreeWidgetItem *pItemUuid = createNewItem(SMACH::TYPE_mach_uuid, QString("LC_UUID"),
-                                                           mach.getCommandRecordOffset(XMACH_DEF::S_LC_UUID, 0,
-                                                                                       &listCommandRecords));  // TODO rename
+                QTreeWidgetItem *pItemUuid = createNewItem(SMACH::TYPE_mach_uuid, QString("LC_UUID"), mach.getCommandRecordOffset(XMACH_DEF::S_LC_UUID, 0,
+                                                                                                                                  &listCommandRecords));  // TODO rename
 
                 pItemCommands->addChild(pItemUuid);
             }
@@ -335,9 +332,8 @@ void MACHWidget::reload()
             }
 
             if (mach.isCommandPresent(XMACH_DEF::S_LC_RPATH, &listCommandRecords)) {
-                QTreeWidgetItem *pItemRPath = createNewItem(SMACH::TYPE_mach_rpath, QString("LC_RPATH"),
-                                                            mach.getCommandRecordOffset(XMACH_DEF::S_LC_RPATH, 0,
-                                                                                        &listCommandRecords));  // TODO rename
+                QTreeWidgetItem *pItemRPath = createNewItem(SMACH::TYPE_mach_rpath, QString("LC_RPATH"), mach.getCommandRecordOffset(XMACH_DEF::S_LC_RPATH, 0,
+                                                                                                                                     &listCommandRecords));  // TODO rename
 
                 pItemCommands->addChild(pItemRPath);
             }
@@ -351,17 +347,17 @@ void MACHWidget::reload()
             }
 
             if (mach.isCommandPresent(XMACH_DEF::S_LC_ENCRYPTION_INFO, &listCommandRecords)) {
-                QTreeWidgetItem *pItemEncryptionInfo = createNewItem(SMACH::TYPE_mach_encryption_info, QString("LC_ENCRYPTION_INFO"),
-                                                                     mach.getCommandRecordOffset(XMACH_DEF::S_LC_ENCRYPTION_INFO, 0, &listCommandRecords),
-                                                                     mach.get_encryption_info_command_size());  // TODO rename
+                QTreeWidgetItem *pItemEncryptionInfo =
+                    createNewItem(SMACH::TYPE_mach_encryption_info, QString("LC_ENCRYPTION_INFO"), mach.getCommandRecordOffset(XMACH_DEF::S_LC_ENCRYPTION_INFO, 0, &listCommandRecords),
+                                  mach.get_encryption_info_command_size());  // TODO rename
 
                 pItemCommands->addChild(pItemEncryptionInfo);
             }
 
             if (mach.isCommandPresent(XMACH_DEF::S_LC_ENCRYPTION_INFO_64, &listCommandRecords)) {
-                QTreeWidgetItem *pItemEncryptionInfo = createNewItem(SMACH::TYPE_mach_encryption_info, QString("LC_ENCRYPTION_INFO_64"),
-                                                                     mach.getCommandRecordOffset(XMACH_DEF::S_LC_ENCRYPTION_INFO_64, 0, &listCommandRecords),
-                                                                     mach.get_encryption_info_command_64_size());  // TODO rename
+                QTreeWidgetItem *pItemEncryptionInfo =
+                    createNewItem(SMACH::TYPE_mach_encryption_info, QString("LC_ENCRYPTION_INFO_64"), mach.getCommandRecordOffset(XMACH_DEF::S_LC_ENCRYPTION_INFO_64, 0, &listCommandRecords),
+                                  mach.get_encryption_info_command_64_size());  // TODO rename
 
                 pItemCommands->addChild(pItemEncryptionInfo);
             }
@@ -419,9 +415,8 @@ void MACHWidget::reload()
             }
 
             if (mach.isCommandPresent(XMACH_DEF::S_LC_MAIN, &listCommandRecords)) {
-                QTreeWidgetItem *pItemMain = createNewItem(SMACH::TYPE_mach_main, QString("LC_MAIN"),
-                                                           mach.getCommandRecordOffset(XMACH_DEF::S_LC_MAIN, 0,
-                                                                                       &listCommandRecords));  // TODO rename
+                QTreeWidgetItem *pItemMain = createNewItem(SMACH::TYPE_mach_main, QString("LC_MAIN"), mach.getCommandRecordOffset(XMACH_DEF::S_LC_MAIN, 0,
+                                                                                                                                  &listCommandRecords));  // TODO rename
 
                 pItemCommands->addChild(pItemMain);
             }
@@ -1723,16 +1718,14 @@ void MACHWidget::reloadData()
                     createHeaderTable(SMACH::TYPE_mach_header, ui->tableWidget_mach_header, N_mach_header::records64, g_lineEdit_mach_header, N_mach_header::__data_size, 0);
                 }
 
-                g_comboBox[CB_mach_header_magic] =
-                    createComboBox(ui->tableWidget_mach_header, XMACH::getHeaderMagicsS(), SMACH::TYPE_mach_header, N_mach_header::magic, XComboBoxEx::CBTYPE_LIST);
+                g_comboBox[CB_mach_header_magic] = createComboBox(ui->tableWidget_mach_header, XMACH::getHeaderMagicsS(), SMACH::TYPE_mach_header, N_mach_header::magic, XComboBoxEx::CBTYPE_LIST);
                 g_comboBox[CB_mach_header_cputype] =
                     createComboBox(ui->tableWidget_mach_header, XMACH::getHeaderCpuTypesS(), SMACH::TYPE_mach_header, N_mach_header::cputype, XComboBoxEx::CBTYPE_LIST);
-                g_comboBox[CB_mach_header_cpusubtype] = createComboBox(ui->tableWidget_mach_header, XMACH::getHeaderCpuSubTypesS(mach.getHeader_cputype()), SMACH::TYPE_mach_header,
-                                                                       N_mach_header::cpusubtype, XComboBoxEx::CBTYPE_LIST);
+                g_comboBox[CB_mach_header_cpusubtype] =
+                    createComboBox(ui->tableWidget_mach_header, XMACH::getHeaderCpuSubTypesS(mach.getHeader_cputype()), SMACH::TYPE_mach_header, N_mach_header::cpusubtype, XComboBoxEx::CBTYPE_LIST);
                 g_comboBox[CB_mach_header_filetype] =
                     createComboBox(ui->tableWidget_mach_header, XMACH::getHeaderFileTypesS(), SMACH::TYPE_mach_header, N_mach_header::filetype, XComboBoxEx::CBTYPE_LIST);
-                g_comboBox[CB_mach_header_flags] =
-                    createComboBox(ui->tableWidget_mach_header, XMACH::getHeaderFlagsS(), SMACH::TYPE_mach_header, N_mach_header::flags, XComboBoxEx::CBTYPE_FLAGS);
+                g_comboBox[CB_mach_header_flags] = createComboBox(ui->tableWidget_mach_header, XMACH::getHeaderFlagsS(), SMACH::TYPE_mach_header, N_mach_header::flags, XComboBoxEx::CBTYPE_FLAGS);
 
                 blockSignals(true);
 
@@ -1767,8 +1760,7 @@ void MACHWidget::reloadData()
 
                 ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_mach_commands], ui->tableView_commands, nullptr, true);
 
-                connect(ui->tableView_commands->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
-                        SLOT(onTableView_commands_currentRowChanged(QModelIndex, QModelIndex)));
+                connect(ui->tableView_commands->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this, SLOT(onTableView_commands_currentRowChanged(QModelIndex, QModelIndex)));
 
                 if (tvModel[SMACH::TYPE_mach_commands]->rowCount()) {
                     ui->tableView_commands->setCurrentIndex(ui->tableView_commands->model()->index(0, 0));
@@ -1780,8 +1772,7 @@ void MACHWidget::reloadData()
 
                 ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_mach_segments], ui->tableView_segments, nullptr, false);
 
-                connect(ui->tableView_segments->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
-                        SLOT(onTableView_segments_currentRowChanged(QModelIndex, QModelIndex)));
+                connect(ui->tableView_segments->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this, SLOT(onTableView_segments_currentRowChanged(QModelIndex, QModelIndex)));
 
                 if (tvModel[SMACH::TYPE_mach_segments]->rowCount()) {
                     ui->tableView_segments->setCurrentIndex(ui->tableView_segments->model()->index(0, 0));
@@ -1793,8 +1784,7 @@ void MACHWidget::reloadData()
 
                 ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_mach_sections], ui->tableView_sections, nullptr, false);
 
-                connect(ui->tableView_sections->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
-                        SLOT(onTableView_sections_currentRowChanged(QModelIndex, QModelIndex)));
+                connect(ui->tableView_sections->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this, SLOT(onTableView_sections_currentRowChanged(QModelIndex, QModelIndex)));
 
                 if (tvModel[SMACH::TYPE_mach_sections]->rowCount()) {
                     ui->tableView_sections->setCurrentIndex(ui->tableView_sections->model()->index(0, 0));
@@ -1806,8 +1796,7 @@ void MACHWidget::reloadData()
 
                 ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_mach_libraries], ui->tableView_libraries, nullptr, true);
 
-                connect(ui->tableView_libraries->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
-                        SLOT(onTableView_libraries_currentRowChanged(QModelIndex, QModelIndex)));
+                connect(ui->tableView_libraries->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this, SLOT(onTableView_libraries_currentRowChanged(QModelIndex, QModelIndex)));
 
                 if (tvModel[SMACH::TYPE_mach_libraries]->rowCount()) {
                     ui->tableView_libraries->setCurrentIndex(ui->tableView_libraries->model()->index(0, 0));
@@ -1858,8 +1847,7 @@ void MACHWidget::reloadData()
 
                 ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_mach_IDFVMLIB], ui->tableView_IDFVMLIB, nullptr, true);
 
-                connect(ui->tableView_IDFVMLIB->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
-                        SLOT(onTableView_IDFVMLIB_currentRowChanged(QModelIndex, QModelIndex)));
+                connect(ui->tableView_IDFVMLIB->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this, SLOT(onTableView_IDFVMLIB_currentRowChanged(QModelIndex, QModelIndex)));
 
                 if (tvModel[SMACH::TYPE_mach_IDFVMLIB]->rowCount()) {
                     ui->tableView_IDFVMLIB->setCurrentIndex(ui->tableView_IDFVMLIB->model()->index(0, 0));
@@ -1867,15 +1855,13 @@ void MACHWidget::reloadData()
             }
         } else if (nType == SMACH::TYPE_mach_dyld_info_only) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SMACH::TYPE_mach_dyld_info_only, ui->tableWidget_dyld_info_only, N_mach_dyld_info::records, g_lineEdit_mach_dyld_info_only,
-                                  N_mach_dyld_info::__data_size, 0, nDataOffset);
+                createHeaderTable(SMACH::TYPE_mach_dyld_info_only, ui->tableWidget_dyld_info_only, N_mach_dyld_info::records, g_lineEdit_mach_dyld_info_only, N_mach_dyld_info::__data_size, 0,
+                                  nDataOffset);
 
                 g_invWidget[INV_rebase_off] = createInvWidget(ui->tableWidget_dyld_info_only, SMACH::TYPE_mach_dyld_info_only, N_mach_dyld_info::rebase_off, InvWidget::TYPE_HEX);
                 g_invWidget[INV_bind_off] = createInvWidget(ui->tableWidget_dyld_info_only, SMACH::TYPE_mach_dyld_info_only, N_mach_dyld_info::bind_off, InvWidget::TYPE_HEX);
-                g_invWidget[INV_weak_bind_off] =
-                    createInvWidget(ui->tableWidget_dyld_info_only, SMACH::TYPE_mach_dyld_info_only, N_mach_dyld_info::weak_bind_off, InvWidget::TYPE_HEX);
-                g_invWidget[INV_lazy_bind_off] =
-                    createInvWidget(ui->tableWidget_dyld_info_only, SMACH::TYPE_mach_dyld_info_only, N_mach_dyld_info::lazy_bind_off, InvWidget::TYPE_HEX);
+                g_invWidget[INV_weak_bind_off] = createInvWidget(ui->tableWidget_dyld_info_only, SMACH::TYPE_mach_dyld_info_only, N_mach_dyld_info::weak_bind_off, InvWidget::TYPE_HEX);
+                g_invWidget[INV_lazy_bind_off] = createInvWidget(ui->tableWidget_dyld_info_only, SMACH::TYPE_mach_dyld_info_only, N_mach_dyld_info::lazy_bind_off, InvWidget::TYPE_HEX);
                 g_invWidget[INV_export_off] = createInvWidget(ui->tableWidget_dyld_info_only, SMACH::TYPE_mach_dyld_info_only, N_mach_dyld_info::export_off, InvWidget::TYPE_HEX);
 
                 blockSignals(true);
@@ -1964,8 +1950,7 @@ void MACHWidget::reloadData()
             }
         } else if (nType == SMACH::TYPE_mach_dysymtab) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SMACH::TYPE_mach_dysymtab, ui->tableWidget_dysymtab, N_mach_dysymtab::records, g_lineEdit_mach_dysymtab, N_mach_dysymtab::__data_size, 0,
-                                  nDataOffset);
+                createHeaderTable(SMACH::TYPE_mach_dysymtab, ui->tableWidget_dysymtab, N_mach_dysymtab::records, g_lineEdit_mach_dysymtab, N_mach_dysymtab::__data_size, 0, nDataOffset);
 
                 g_invWidget[INV_tocoff] = createInvWidget(ui->tableWidget_dysymtab, SMACH::TYPE_mach_dysymtab, N_mach_dysymtab::tocoff, InvWidget::TYPE_HEX);
                 g_invWidget[INV_modtaboff] = createInvWidget(ui->tableWidget_dysymtab, SMACH::TYPE_mach_dysymtab, N_mach_dysymtab::modtaboff, InvWidget::TYPE_HEX);
@@ -2013,8 +1998,7 @@ void MACHWidget::reloadData()
             }
         } else if (nType == SMACH::TYPE_mach_version_min) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SMACH::TYPE_mach_version_min, ui->tableWidget_version_min, N_mach_version_min::records, g_lineEdit_mach_version_min,
-                                  N_mach_version_min::__data_size, 0, nDataOffset);
+                createHeaderTable(SMACH::TYPE_mach_version_min, ui->tableWidget_version_min, N_mach_version_min::records, g_lineEdit_mach_version_min, N_mach_version_min::__data_size, 0, nDataOffset);
 
                 blockSignals(true);
 
@@ -2035,8 +2019,8 @@ void MACHWidget::reloadData()
             }
         } else if (nType == SMACH::TYPE_mach_build_version) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SMACH::TYPE_mach_build_version, ui->tableWidget_build_version, N_mach_build_version::records, g_lineEdit_mach_build_version,
-                                  N_mach_build_version::__data_size, 0, nDataOffset);
+                createHeaderTable(SMACH::TYPE_mach_build_version, ui->tableWidget_build_version, N_mach_build_version::records, g_lineEdit_mach_build_version, N_mach_build_version::__data_size, 0,
+                                  nDataOffset);
 
                 blockSignals(true);
 
@@ -2059,8 +2043,8 @@ void MACHWidget::reloadData()
             }
         } else if (nType == SMACH::TYPE_mach_source_version) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SMACH::TYPE_mach_source_version, ui->tableWidget_source_version, N_mach_source_version::records, g_lineEdit_mach_source_version,
-                                  N_mach_source_version::__data_size, 0, nDataOffset);
+                createHeaderTable(SMACH::TYPE_mach_source_version, ui->tableWidget_source_version, N_mach_source_version::records, g_lineEdit_mach_source_version, N_mach_source_version::__data_size,
+                                  0, nDataOffset);
 
                 blockSignals(true);
 
@@ -2081,8 +2065,7 @@ void MACHWidget::reloadData()
                     createHeaderTable(SMACH::TYPE_mach_encryption_info, ui->tableWidget_encryption_info, N_mach_encryption_info::records64, g_lineEdit_mach_encryption_info,
                                       N_mach_encryption_info::__data_size, 0, nDataOffset);
 
-                    g_invWidget[INV_cryptoff] =
-                        createInvWidget(ui->tableWidget_encryption_info, SMACH::TYPE_mach_encryption_info, N_mach_encryption_info::cryptoff, InvWidget::TYPE_HEX);
+                    g_invWidget[INV_cryptoff] = createInvWidget(ui->tableWidget_encryption_info, SMACH::TYPE_mach_encryption_info, N_mach_encryption_info::cryptoff, InvWidget::TYPE_HEX);
 
                     blockSignals(true);
 
@@ -2098,8 +2081,7 @@ void MACHWidget::reloadData()
                     createHeaderTable(SMACH::TYPE_mach_encryption_info, ui->tableWidget_encryption_info, N_mach_encryption_info::records32, g_lineEdit_mach_encryption_info,
                                       N_mach_encryption_info::__data_size - 1, 0, nDataOffset);
 
-                    g_invWidget[INV_cryptoff] =
-                        createInvWidget(ui->tableWidget_encryption_info, SMACH::TYPE_mach_encryption_info, N_mach_encryption_info::cryptoff, InvWidget::TYPE_HEX);
+                    g_invWidget[INV_cryptoff] = createInvWidget(ui->tableWidget_encryption_info, SMACH::TYPE_mach_encryption_info, N_mach_encryption_info::cryptoff, InvWidget::TYPE_HEX);
 
                     blockSignals(true);
 
@@ -2121,11 +2103,10 @@ void MACHWidget::reloadData()
             }
         } else if (nType == SMACH::TYPE_mach_function_starts) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SMACH::TYPE_mach_function_starts, ui->tableWidget_function_starts, N_mach_linkedit_data::records, g_lineEdit_mach_function_starts,
-                                  N_mach_linkedit_data::__data_size, 0, nDataOffset);
+                createHeaderTable(SMACH::TYPE_mach_function_starts, ui->tableWidget_function_starts, N_mach_linkedit_data::records, g_lineEdit_mach_function_starts, N_mach_linkedit_data::__data_size,
+                                  0, nDataOffset);
 
-                g_invWidget[INV_FUNCTION_STARTS_dataoff] =
-                    createInvWidget(ui->tableWidget_function_starts, SMACH::TYPE_mach_function_starts, N_mach_linkedit_data::dataoff, InvWidget::TYPE_HEX);
+                g_invWidget[INV_FUNCTION_STARTS_dataoff] = createInvWidget(ui->tableWidget_function_starts, SMACH::TYPE_mach_function_starts, N_mach_linkedit_data::dataoff, InvWidget::TYPE_HEX);
 
                 blockSignals(true);
 
@@ -2145,11 +2126,10 @@ void MACHWidget::reloadData()
             }
         } else if (nType == SMACH::TYPE_mach_data_in_code) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SMACH::TYPE_mach_data_in_code, ui->tableWidget_data_in_code, N_mach_linkedit_data::records, g_lineEdit_mach_data_in_code,
-                                  N_mach_linkedit_data::__data_size, 0, nDataOffset);
+                createHeaderTable(SMACH::TYPE_mach_data_in_code, ui->tableWidget_data_in_code, N_mach_linkedit_data::records, g_lineEdit_mach_data_in_code, N_mach_linkedit_data::__data_size, 0,
+                                  nDataOffset);
 
-                g_invWidget[INV_DATA_IN_CODE_dataoff] =
-                    createInvWidget(ui->tableWidget_data_in_code, SMACH::TYPE_mach_data_in_code, N_mach_linkedit_data::dataoff, InvWidget::TYPE_HEX);
+                g_invWidget[INV_DATA_IN_CODE_dataoff] = createInvWidget(ui->tableWidget_data_in_code, SMACH::TYPE_mach_data_in_code, N_mach_linkedit_data::dataoff, InvWidget::TYPE_HEX);
 
                 blockSignals(true);
 
@@ -2169,11 +2149,10 @@ void MACHWidget::reloadData()
             }
         } else if (nType == SMACH::TYPE_mach_code_signature) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SMACH::TYPE_mach_code_signature, ui->tableWidget_code_signature, N_mach_linkedit_data::records, g_lineEdit_mach_code_signature,
-                                  N_mach_linkedit_data::__data_size, 0, nDataOffset);
+                createHeaderTable(SMACH::TYPE_mach_code_signature, ui->tableWidget_code_signature, N_mach_linkedit_data::records, g_lineEdit_mach_code_signature, N_mach_linkedit_data::__data_size, 0,
+                                  nDataOffset);
 
-                g_invWidget[INV_CODE_SIGNATURE_dataoff] =
-                    createInvWidget(ui->tableWidget_code_signature, SMACH::TYPE_mach_code_signature, N_mach_linkedit_data::dataoff, InvWidget::TYPE_HEX);
+                g_invWidget[INV_CODE_SIGNATURE_dataoff] = createInvWidget(ui->tableWidget_code_signature, SMACH::TYPE_mach_code_signature, N_mach_linkedit_data::dataoff, InvWidget::TYPE_HEX);
 
                 blockSignals(true);
 
@@ -2193,8 +2172,7 @@ void MACHWidget::reloadData()
             }
         } else if (nType == SMACH::TYPE_mach_SuperBlob) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SMACH::TYPE_mach_SuperBlob, ui->tableWidget_SuperBlob, N_mach_SuperBlob::records, g_lineEdit_mach_SuperBlob, N_mach_SuperBlob::__data_size, 0,
-                                  nDataOffset);
+                createHeaderTable(SMACH::TYPE_mach_SuperBlob, ui->tableWidget_SuperBlob, N_mach_SuperBlob::records, g_lineEdit_mach_SuperBlob, N_mach_SuperBlob::__data_size, 0, nDataOffset);
 
                 blockSignals(true);
 
@@ -2235,8 +2213,7 @@ void MACHWidget::reloadData()
             }
         } else if (nType == SMACH::TYPE_mach_unix_thread) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SMACH::TYPE_mach_unix_thread, ui->tableWidget_unix_thread, N_mach_unix_thread::records, g_lineEdit_mach_unix_thread,
-                                  N_mach_unix_thread::__data_size, 0, nDataOffset);
+                createHeaderTable(SMACH::TYPE_mach_unix_thread, ui->tableWidget_unix_thread, N_mach_unix_thread::records, g_lineEdit_mach_unix_thread, N_mach_unix_thread::__data_size, 0, nDataOffset);
 
                 blockSignals(true);
 
@@ -2411,8 +2388,8 @@ void MACHWidget::reloadData()
             }
         } else if (nType == SMACH::TYPE_mach_unix_thread_m68k_32) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SMACH::TYPE_mach_unix_thread_m68k_32, ui->tableWidget_unix_thread_m68k_32, N_mach_unix_thread_m68k_32::records,
-                                  g_lineEdit_mach_unix_thread_m68k_32, N_mach_unix_thread_m68k_32::__data_size, 0, nDataOffset);
+                createHeaderTable(SMACH::TYPE_mach_unix_thread_m68k_32, ui->tableWidget_unix_thread_m68k_32, N_mach_unix_thread_m68k_32::records, g_lineEdit_mach_unix_thread_m68k_32,
+                                  N_mach_unix_thread_m68k_32::__data_size, 0, nDataOffset);
 
                 blockSignals(true);
 
@@ -2921,8 +2898,7 @@ void MACHWidget::onTableView_weak_libraries_currentRowChanged(const QModelIndex 
     Q_UNUSED(current)
     Q_UNUSED(previous)
 
-    loadHexSubdeviceByTableView(current.row(), SMACH::TYPE_mach_weak_libraries, ui->widgetHex_weak_libraries, ui->tableView_weak_libraries,
-                                &g_subDevice[SMACH::TYPE_mach_weak_libraries]);
+    loadHexSubdeviceByTableView(current.row(), SMACH::TYPE_mach_weak_libraries, ui->widgetHex_weak_libraries, ui->tableView_weak_libraries, &g_subDevice[SMACH::TYPE_mach_weak_libraries]);
 }
 
 void MACHWidget::onTableView_id_library_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)

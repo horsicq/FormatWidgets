@@ -22,8 +22,7 @@
 
 #include "ui_formatswidget.h"
 
-FormatsWidget::FormatsWidget(QWidget *pParent)
-    : XShortcutsWidget(pParent), ui(new Ui::FormatsWidget)
+FormatsWidget::FormatsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui::FormatsWidget)
 {
     ui->setupUi(this);
 
@@ -594,6 +593,28 @@ void FormatsWidget::showDEX(SDEX::TYPE type)
     }
 }
 
+void FormatsWidget::showBinary(SBINARY::TYPE type)
+{
+    QFile file;
+    file.setFileName(g_sFileName);
+
+    if (XBinary::tryToOpen(&file)) {
+        FW_DEF::OPTIONS options = {};
+
+        options.nStartType = type;
+        options.nImageBase = -1;
+
+        DialogBinary dialogBinary(this);
+
+        dialogBinary.setData(&file, options);
+        dialogBinary.setGlobal(getShortcuts(), getGlobalOptions());
+
+        dialogBinary.exec();
+
+        file.close();
+    }
+}
+
 XBinary::FT FormatsWidget::getCurrentFileType()
 {
     XBinary::FT fileType = (XBinary::FT)(ui->comboBoxFileType->currentData().toInt());
@@ -685,6 +706,11 @@ void FormatsWidget::on_pushButtonMACHOFAT_clicked()
     }
 }
 
+void FormatsWidget::on_pushButtonBinary_clicked()
+{
+    showBinary(SBINARY::TYPE_HEX);
+}
+
 FormatsWidget::SE FormatsWidget::getScanEngine(FormatsWidget::SE seIndex)
 {
     SE tabResult = seIndex;
@@ -695,9 +721,9 @@ FormatsWidget::SE FormatsWidget::getScanEngine(FormatsWidget::SE seIndex)
         XBinary::FT fileType = getCurrentFileType();
 
         // TODO !!!
-        if ((fileType == XBinary::FT_DEX) || (fileType == XBinary::FT_ELF32) || (fileType == XBinary::FT_ELF64) || (fileType == XBinary::FT_MACHO32) ||
-            (fileType == XBinary::FT_MACHO64) || (fileType == XBinary::FT_MACHOFAT) || (fileType == XBinary::FT_ZIP) || (fileType == XBinary::FT_JAR) ||
-            (fileType == XBinary::FT_APK) || (fileType == XBinary::FT_APKS) || (fileType == XBinary::FT_IPA)) {
+        if ((fileType == XBinary::FT_DEX) || (fileType == XBinary::FT_ELF32) || (fileType == XBinary::FT_ELF64) || (fileType == XBinary::FT_MACHO32) || (fileType == XBinary::FT_MACHO64) ||
+            (fileType == XBinary::FT_MACHOFAT) || (fileType == XBinary::FT_ZIP) || (fileType == XBinary::FT_JAR) || (fileType == XBinary::FT_APK) || (fileType == XBinary::FT_APKS) ||
+            (fileType == XBinary::FT_IPA)) {
             tabResult = SE_NFD;
         }
     }

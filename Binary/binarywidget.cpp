@@ -22,16 +22,14 @@
 
 #include "ui_binarywidget.h"
 
-BinaryWidget::BinaryWidget(QWidget *pParent)
-    : FormatWidget(pParent), ui(new Ui::BinaryWidget)
+BinaryWidget::BinaryWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::BinaryWidget)
 {
     ui->setupUi(this);
 
     initWidget();
 }
 
-BinaryWidget::BinaryWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent)
-    : BinaryWidget(pParent)
+BinaryWidget::BinaryWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) : BinaryWidget(pParent)
 {
     ui->setupUi(this);
 
@@ -83,6 +81,7 @@ void BinaryWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_MEMORYMAP, tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_ENTROPY, tr("Entropy")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_HEURISTICSCAN, tr("Heuristic scan")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_EXTRACTOR, tr("Extractor")));
 
         ui->treeWidgetNavi->expandAll();
 
@@ -236,6 +235,13 @@ void BinaryWidget::reloadData()
         } else if (nType == SBINARY::TYPE_HEURISTICSCAN) {
             if (!isInitPresent(sInit)) {
                 ui->widgetHeuristicScan->setData(getDevice(), true, binary.getFileType());
+            }
+        } else if (nType == SBINARY::TYPE_EXTRACTOR) {
+            if (!isInitPresent(sInit)) {
+                XExtractor::OPTIONS extractorOptions = XExtractor::getDefaultOptions();
+                extractorOptions.bMenu_Hex = true;
+
+                ui->widgetExtractor->setData(getDevice(), extractorOptions, true);
             }
         }
 

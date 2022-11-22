@@ -22,8 +22,7 @@
 
 #include "ui_msdoswidget.h"
 
-MSDOSWidget::MSDOSWidget(QWidget *pParent)
-    : FormatWidget(pParent), ui(new Ui::MSDOSWidget)
+MSDOSWidget::MSDOSWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::MSDOSWidget)
 {
     ui->setupUi(this);
 
@@ -32,8 +31,7 @@ MSDOSWidget::MSDOSWidget(QWidget *pParent)
     initWidget();
 }
 
-MSDOSWidget::MSDOSWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent)
-    : MSDOSWidget(pParent)
+MSDOSWidget::MSDOSWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) : MSDOSWidget(pParent)
 {
     MSDOSWidget::setData(pDevice, options, 0, 0, 0);
     MSDOSWidget::reload();
@@ -337,8 +335,7 @@ void MSDOSWidget::reloadData()
         } else if (nType == SMSDOS::TYPE_DOS_HEADER) {
             if (!isInitPresent(sInit)) {
                 createHeaderTable(SMSDOS::TYPE_DOS_HEADER, ui->tableWidget_DOS_HEADER, N_DOS_HEADER::records, g_lineEdit_DOS_HEADER, N_DOS_HEADER::__data_size, 0);
-                g_comboBox[CB_DOS_HEADER_e_magic] =
-                    createComboBox(ui->tableWidget_DOS_HEADER, XMSDOS::getImageMagicsS(), SMSDOS::TYPE_DOS_HEADER, N_DOS_HEADER::e_magic, XComboBoxEx::CBTYPE_LIST);
+                g_comboBox[CB_DOS_HEADER_e_magic] = createComboBox(ui->tableWidget_DOS_HEADER, XMSDOS::getImageMagicsS(), SMSDOS::TYPE_DOS_HEADER, N_DOS_HEADER::e_magic, XComboBoxEx::CBTYPE_LIST);
 
                 blockSignals(true);
 

@@ -20,8 +20,7 @@
  */
 #include "machprocessdata.h"
 
-MACHProcessData::MACHProcessData(int nType, QStandardItemModel **ppModel, XMACH *pXMACH, qint64 nOffset, qint64 nSize)
-    : ProcessData()
+MACHProcessData::MACHProcessData(int nType, QStandardItemModel **ppModel, XMACH *pXMACH, qint64 nOffset, qint64 nSize) : ProcessData()
 {
     this->g_nType = nType;
     this->g_ppModel = ppModel;
@@ -424,8 +423,8 @@ void MACHProcessData::_process()
 
             incValue();
         }
-    } else if ((g_nType == SMACH::TYPE_DYLD_INFO_rebase) || (g_nType == SMACH::TYPE_DYLD_INFO_bind) || (g_nType == SMACH::TYPE_DYLD_INFO_export) ||
-               (g_nType == SMACH::TYPE_DYLD_INFO_lazy_bind) || (g_nType == SMACH::TYPE_DYLD_INFO_weak_bind)) {
+    } else if ((g_nType == SMACH::TYPE_DYLD_INFO_rebase) || (g_nType == SMACH::TYPE_DYLD_INFO_bind) || (g_nType == SMACH::TYPE_DYLD_INFO_export) || (g_nType == SMACH::TYPE_DYLD_INFO_lazy_bind) ||
+               (g_nType == SMACH::TYPE_DYLD_INFO_weak_bind)) {
         QList<QString> listLabels;
         listLabels.append("");
         listLabels.append(tr("Offset"));
@@ -719,8 +718,8 @@ void MACHProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
         pTableView->setColumnWidth(1, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
         pTableView->setColumnWidth(2, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
         pTableView->setColumnWidth(3, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-    } else if ((g_nType == SMACH::TYPE_DYLD_INFO_bind) || (g_nType == SMACH::TYPE_DYLD_INFO_export) || (g_nType == SMACH::TYPE_DYLD_INFO_lazy_bind) ||
-               (g_nType == SMACH::TYPE_DYLD_INFO_rebase) || (g_nType == SMACH::TYPE_DYLD_INFO_weak_bind)) {
+    } else if ((g_nType == SMACH::TYPE_DYLD_INFO_bind) || (g_nType == SMACH::TYPE_DYLD_INFO_export) || (g_nType == SMACH::TYPE_DYLD_INFO_lazy_bind) || (g_nType == SMACH::TYPE_DYLD_INFO_rebase) ||
+               (g_nType == SMACH::TYPE_DYLD_INFO_weak_bind)) {
         pTableView->setColumnWidth(0, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT16, mode));
         pTableView->setColumnWidth(1, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
         pTableView->setColumnWidth(2, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_STRINGLONG, mode));

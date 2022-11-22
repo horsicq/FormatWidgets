@@ -19,11 +19,10 @@
  * SOFTWARE.
  */
 #include "petoolswidget.h"
+
 #include "ui_petoolswidget.h"
 
-PEToolsWidget::PEToolsWidget(QWidget *pParent) :
-    XShortcutsWidget(pParent),
-    ui(new Ui::PEToolsWidget)
+PEToolsWidget::PEToolsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui::PEToolsWidget)
 {
     ui->setupUi(this);
 
@@ -56,4 +55,36 @@ void PEToolsWidget::setReadonly(bool bState)
 void PEToolsWidget::registerShortcuts(bool bState)
 {
     Q_UNUSED(bState)
+}
+
+void PEToolsWidget::on_pushButtonDosStubAdd_clicked()
+{
+}
+
+void PEToolsWidget::on_pushButtonDosStubRemove_clicked()
+{
+}
+
+void PEToolsWidget::on_pushButtonDosStubReplace_clicked()
+{
+}
+
+void PEToolsWidget::on_pushButtonDosStubDump_clicked()
+{
+}
+
+void PEToolsWidget::on_pushButtonOverlayAdd_clicked()
+{
+}
+
+void PEToolsWidget::on_pushButtonOverlayRemove_clicked()
+{
+}
+
+void PEToolsWidget::on_pushButtonOverlayReplace_clicked()
+{
+}
+
+void PEToolsWidget::on_pushButtonOverlayDump_clicked()
+{
 }

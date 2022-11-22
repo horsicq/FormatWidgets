@@ -20,8 +20,7 @@
  */
 #include "formatwidget.h"
 
-FormatWidget::FormatWidget(QWidget *pParent)
-    : XShortcutsWidget(pParent)
+FormatWidget::FormatWidget(QWidget *pParent) : XShortcutsWidget(pParent)
 {
     g_pDevice = nullptr;
     g_pBackupDevice = nullptr;
@@ -36,8 +35,7 @@ FormatWidget::FormatWidget(QWidget *pParent)
     g_colEnabled = QWidget::palette().color(QPalette::BrightText);
 }
 
-FormatWidget::FormatWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent)
-    : FormatWidget(pParent)
+FormatWidget::FormatWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent) : FormatWidget(pParent)
 {
     FormatWidget::setData(pDevice, options, nNumber, nOffset, nType);
 }
@@ -1189,8 +1187,7 @@ void FormatWidget::registerShortcuts(bool bState)
     Q_UNUSED(bState)
 }
 
-bool FormatWidget::createHeaderTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nNumberOfRecords, int nPosition,
-                                     qint64 nOffset)
+bool FormatWidget::createHeaderTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nNumberOfRecords, int nPosition, qint64 nOffset)
 {
     pTableWidget->setColumnCount(6);
     pTableWidget->setRowCount(nNumberOfRecords);
@@ -1453,8 +1450,7 @@ void FormatWidget::_deleteSubdevices(SubDevice **ppSubdevices, qint32 nCount)
     }
 }
 
-XComboBoxEx *FormatWidget::createComboBox(QTableWidget *pTableWidget, QMap<quint64, QString> mapData, int nType, int nData, XComboBoxEx::CBTYPE cbtype, quint64 nMask,
-                                          int nExtraData)
+XComboBoxEx *FormatWidget::createComboBox(QTableWidget *pTableWidget, QMap<quint64, QString> mapData, int nType, int nData, XComboBoxEx::CBTYPE cbtype, quint64 nMask, int nExtraData)
 {
     XComboBoxEx *result = new XComboBoxEx(this);
     result->setData(mapData, cbtype, nMask);

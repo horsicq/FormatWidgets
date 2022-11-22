@@ -22,8 +22,7 @@
 
 #include "ui_dialogmsdos.h"
 
-DialogMSDOS::DialogMSDOS(QWidget *pParent)
-    : XShortcutsDialog(pParent), ui(new Ui::DialogMSDOS)
+DialogMSDOS::DialogMSDOS(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogMSDOS)
 {
     ui->setupUi(this);
 

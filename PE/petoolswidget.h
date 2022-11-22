@@ -21,15 +21,14 @@
 #ifndef PETOOLSWIDGET_H
 #define PETOOLSWIDGET_H
 
-#include "xshortcutswidget.h"
 #include "xpe.h"
+#include "xshortcutswidget.h"
 
 namespace Ui {
 class PEToolsWidget;
 }
 
-class PEToolsWidget : public XShortcutsWidget
-{
+class PEToolsWidget : public XShortcutsWidget {
     Q_OBJECT
 
 public:
@@ -43,10 +42,20 @@ public:
 protected:
     virtual void registerShortcuts(bool bState);
 
+private slots:
+    void on_pushButtonDosStubAdd_clicked();
+    void on_pushButtonDosStubRemove_clicked();
+    void on_pushButtonDosStubReplace_clicked();
+    void on_pushButtonDosStubDump_clicked();
+    void on_pushButtonOverlayAdd_clicked();
+    void on_pushButtonOverlayRemove_clicked();
+    void on_pushButtonOverlayReplace_clicked();
+    void on_pushButtonOverlayDump_clicked();
+
 private:
     Ui::PEToolsWidget *ui;
     XPE *g_pPE;
     bool g_bReadonly;
 };
 
-#endif // PETOOLSWIDGET_H
+#endif  // PETOOLSWIDGET_H

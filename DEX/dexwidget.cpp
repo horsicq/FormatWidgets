@@ -22,8 +22,7 @@
 
 #include "ui_dexwidget.h"
 
-DEXWidget::DEXWidget(QWidget *pParent)
-    : FormatWidget(pParent), ui(new Ui::DEXWidget)
+DEXWidget::DEXWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::DEXWidget)
 {
     ui->setupUi(this);
 
@@ -35,8 +34,7 @@ DEXWidget::DEXWidget(QWidget *pParent)
     initWidget();
 }
 
-DEXWidget::DEXWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent)
-    : DEXWidget(pParent)
+DEXWidget::DEXWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) : DEXWidget(pParent)
 {
     DEXWidget::setData(pDevice, options, 0, 0, 0);
     DEXWidget::reload();
@@ -422,10 +420,8 @@ void DEXWidget::reloadData()
                 createHeaderTable(SDEX::TYPE_HEADER, ui->tableWidget_Header, N_DEX_HEADER::records, g_lineEdit_HEADER, N_DEX_HEADER::__data_size, 0);
 
                 g_comboBox[CB_Dex_Header_magic] = createComboBox(ui->tableWidget_Header, XDEX::getHeaderMagics(), SDEX::TYPE_HEADER, N_DEX_HEADER::magic, XComboBoxEx::CBTYPE_LIST);
-                g_comboBox[CB_Dex_Header_version] =
-                    createComboBox(ui->tableWidget_Header, XDEX::getHeaderVersions(), SDEX::TYPE_HEADER, N_DEX_HEADER::version, XComboBoxEx::CBTYPE_LIST);
-                g_comboBox[CB_Dex_Header_endian_tag] =
-                    createComboBox(ui->tableWidget_Header, XDEX::getHeaderEndianTags(), SDEX::TYPE_HEADER, N_DEX_HEADER::endian_tag, XComboBoxEx::CBTYPE_LIST);
+                g_comboBox[CB_Dex_Header_version] = createComboBox(ui->tableWidget_Header, XDEX::getHeaderVersions(), SDEX::TYPE_HEADER, N_DEX_HEADER::version, XComboBoxEx::CBTYPE_LIST);
+                g_comboBox[CB_Dex_Header_endian_tag] = createComboBox(ui->tableWidget_Header, XDEX::getHeaderEndianTags(), SDEX::TYPE_HEADER, N_DEX_HEADER::endian_tag, XComboBoxEx::CBTYPE_LIST);
 
                 g_invWidget[INV_link] = createInvWidget(ui->tableWidget_Header, SDEX::TYPE_HEADER, N_DEX_HEADER::link_off, InvWidget::TYPE_HEX);
                 g_invWidget[INV_map] = createInvWidget(ui->tableWidget_Header, SDEX::TYPE_HEADER, N_DEX_HEADER::map_off, InvWidget::TYPE_HEX);

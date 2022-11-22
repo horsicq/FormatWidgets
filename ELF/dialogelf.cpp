@@ -22,8 +22,7 @@
 
 #include "ui_dialogelf.h"
 
-DialogELF::DialogELF(QWidget *pParent)
-    : XShortcutsDialog(pParent), ui(new Ui::DialogELF)
+DialogELF::DialogELF(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogELF)
 {
     ui->setupUi(this);
 

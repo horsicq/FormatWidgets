@@ -22,8 +22,7 @@
 
 #include "ui_dialogdex.h"
 
-DialogDEX::DialogDEX(QWidget *pParent)
-    : XShortcutsDialog(pParent), ui(new Ui::DialogDEX)
+DialogDEX::DialogDEX(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogDEX)
 {
     ui->setupUi(this);
 

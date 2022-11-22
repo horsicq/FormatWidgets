@@ -22,14 +22,12 @@
 
 #include "ui_dexsectionheaderwidget.h"
 
-DEXSectionHeaderWidget::DEXSectionHeaderWidget(QWidget *pParent)
-    : FormatWidget(pParent), ui(new Ui::DEXSectionHeaderWidget)
+DEXSectionHeaderWidget::DEXSectionHeaderWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::DEXSectionHeaderWidget)
 {
     ui->setupUi(this);
 }
 
-DEXSectionHeaderWidget::DEXSectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent)
-    : DEXSectionHeaderWidget(pParent)
+DEXSectionHeaderWidget::DEXSectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent) : DEXSectionHeaderWidget(pParent)
 {
     DEXSectionHeaderWidget::setData(pDevice, options, nNumber, nOffset, nType);
 

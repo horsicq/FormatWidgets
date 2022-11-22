@@ -20,8 +20,7 @@
  */
 #include "dexprocessdata.h"
 
-DEXProcessData::DEXProcessData(int nType, QStandardItemModel **ppModel, XDEX *pDEX, qint64 nOffset, qint64 nSize)
-    : ProcessData()
+DEXProcessData::DEXProcessData(int nType, QStandardItemModel **ppModel, XDEX *pDEX, qint64 nOffset, qint64 nSize) : ProcessData()
 {
     this->g_nType = nType;
     this->g_ppModel = ppModel;

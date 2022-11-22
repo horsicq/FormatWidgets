@@ -149,6 +149,9 @@ private slots:
     void on_pushButtonSave_Debug_clicked();
     void on_pushButtonSave_Exception_clicked();
     void on_pushButtonSave_IMAGE_DIRECTORY_ENTRIES_clicked();
+    void on_pushButtonExtractAllIcons_Resources_clicked();
+    void on_pushButtonDumpAll_Resources_clicked();
+    void on_pushButtonSave_Resources_clicked();
 
 private:
     enum CB {

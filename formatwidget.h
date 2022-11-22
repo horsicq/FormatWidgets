@@ -102,8 +102,7 @@ public:
     qint32 getType();
     bool isReadonly();
     QTreeWidgetItem *createNewItem(int nType, QString sTitle, qint64 nOffset = 0, qint64 nSize = 0, qint64 nExtraOffset = 0, qint64 nExtraSize = 0);
-    bool createHeaderTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nNumberOfRecords, int nPosition = 0,
-                           qint64 nOffset = 0);
+    bool createHeaderTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nNumberOfRecords, int nPosition = 0, qint64 nOffset = 0);
     bool createListTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nNumberOfRecords);
     void addComment(QTableWidget *pTableWidget, int nRow, int nColumn, QString sComment);
     void updateTableRecord(QTableWidget *pTableWidget, int nRow, qint64 nOffset, qint64 nSize);
@@ -119,8 +118,7 @@ public:
     void _deleteObjects(QObject **ppObjects, qint32 nCount);
     void _deleteSubdevices(SubDevice **ppSubdevices, qint32 nCount);
 
-    XComboBoxEx *createComboBox(QTableWidget *pTableWidget, QMap<quint64, QString> mapData, int nType, int nData, XComboBoxEx::CBTYPE cbtype, quint64 nMask = 0,
-                                int nExtraData = -1);
+    XComboBoxEx *createComboBox(QTableWidget *pTableWidget, QMap<quint64, QString> mapData, int nType, int nData, XComboBoxEx::CBTYPE cbtype, quint64 nMask = 0, int nExtraData = -1);
     InvWidget *createInvWidget(QTableWidget *pTableWidget, int nType, int nData, InvWidget::TYPE widgetType);
     XDateTimeEditX *createTimeDateEdit(QTableWidget *pTableWidget, int nType, int nData, XDateTimeEditX::DT_TYPE dtType);
     QPushButton *createPushButton(QTableWidget *pTableWidget, int nType, int nData, QString sText);
@@ -143,8 +141,7 @@ public:
 
     void setItemEnable(QTableWidgetItem *pItem, bool bState);
     void setLineEdit(XLineEditHEX *pLineEdit, qint32 nMaxLength, QString sText, qint64 nOffset);
-    void ajustTableView(ProcessData *pProcessData, QStandardItemModel **ppModel, QTableView *pTableView, QSortFilterProxyModel *pProxyModel = nullptr,
-                        bool bStretchLastSection = true);
+    void ajustTableView(ProcessData *pProcessData, QStandardItemModel **ppModel, QTableView *pTableView, QSortFilterProxyModel *pProxyModel = nullptr, bool bStretchLastSection = true);
     void ajustTreeView(ProcessData *pProcessData, QStandardItemModel **ppModel, QTreeView *pTreeView);
     void ajustDialogModel(ProcessData *pProcessData, QStandardItemModel **ppModel, QString sTitle);
     void showSectionHex(QTableView *pTableView);
