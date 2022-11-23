@@ -167,10 +167,13 @@ void BinaryWidget::reloadData()
 
     XBinary binary(getDevice(), getOptions().bIsImage, getOptions().nImageBase);
 
+    QSet<XBinary::FT> stFT = binary.getFileTypes(true);
+    XBinary::FT fileType = binary._getPrefFileType(&stFT);
+
     if (binary.isValid()) {
         if (nType == SBINARY::TYPE_INFO) {
             if (!isInitPresent(sInit)) {
-                ui->widgetInfo->setData(getDevice(), binary.getFileType(), "Info", true);
+                ui->widgetInfo->setData(getDevice(), fileType, "Info", true);
             }
         } else if (nType == SBINARY::TYPE_VIRUSTOTAL) {
             if (!isInitPresent(sInit)) {
@@ -203,7 +206,7 @@ void BinaryWidget::reloadData()
             }
         } else if (nType == SBINARY::TYPE_HASH) {
             if (!isInitPresent(sInit)) {
-                ui->widgetHash->setData(getDevice(), binary.getFileType(), 0, -1, true);
+                ui->widgetHash->setData(getDevice(), fileType, 0, -1, true);
             }
         } else if (nType == SBINARY::TYPE_STRINGS) {
             if (!isInitPresent(sInit)) {
@@ -226,15 +229,15 @@ void BinaryWidget::reloadData()
             }
         } else if (nType == SBINARY::TYPE_MEMORYMAP) {
             if (!isInitPresent(sInit)) {
-                ui->widgetMemoryMap->setData(getDevice(), binary.getFileType());
+                ui->widgetMemoryMap->setData(getDevice(), fileType);
             }
         } else if (nType == SBINARY::TYPE_ENTROPY) {
             if (!isInitPresent(sInit)) {
-                ui->widgetEntropy->setData(getDevice(), 0, getDevice()->size(), binary.getFileType(), true);
+                ui->widgetEntropy->setData(getDevice(), 0, getDevice()->size(), fileType, true);
             }
         } else if (nType == SBINARY::TYPE_HEURISTICSCAN) {
             if (!isInitPresent(sInit)) {
-                ui->widgetHeuristicScan->setData(getDevice(), true, binary.getFileType());
+                ui->widgetHeuristicScan->setData(getDevice(), true, fileType);
             }
         } else if (nType == SBINARY::TYPE_EXTRACTOR) {
             if (!isInitPresent(sInit)) {

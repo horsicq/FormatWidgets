@@ -152,6 +152,8 @@ private slots:
     void on_pushButtonExtractAllIcons_Resources_clicked();
     void on_pushButtonDumpAll_Resources_clicked();
     void on_pushButtonSave_Resources_clicked();
+    void on_pushButtonDump_Overlay_clicked();
+    void on_pushButtonDump_DosStub_clicked();
 
 private:
     enum CB {

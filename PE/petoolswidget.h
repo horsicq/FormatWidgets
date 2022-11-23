@@ -23,6 +23,7 @@
 
 #include "xpe.h"
 #include "xshortcutswidget.h"
+#include "dialogdumpprocess.h"
 
 namespace Ui {
 class PEToolsWidget;
@@ -35,9 +36,13 @@ public:
     explicit PEToolsWidget(QWidget *pParent = nullptr);
     ~PEToolsWidget();
 
-    void setData(XPE *pPE);
+    void setData(QIODevice *pDevice, bool bIsImage = false, XADDR nModuleAddress = -1);
     void reload();
     void setReadonly(bool bState);
+
+    static void dumpRegion(QWidget *pParent, QIODevice *pDevice, qint64 nOffset, qint64 nSize, QString sName);
+    static void dumpOverlay(QWidget *pParent, QIODevice *pDevice, bool bIsImage = false, XADDR nModuleAddress = -1);
+    static void dumpDosStub(QWidget *pParent, QIODevice *pDevice, bool bIsImage = false, XADDR nModuleAddress = -1);
 
 protected:
     virtual void registerShortcuts(bool bState);
@@ -52,9 +57,14 @@ private slots:
     void on_pushButtonOverlayReplace_clicked();
     void on_pushButtonOverlayDump_clicked();
 
+signals:
+    void dataChanged();
+
 private:
     Ui::PEToolsWidget *ui;
-    XPE *g_pPE;
+    QIODevice *g_pDevice;
+    bool g_bIsImage;
+    XADDR g_nModuleAddress;
     bool g_bReadonly;
 };
 

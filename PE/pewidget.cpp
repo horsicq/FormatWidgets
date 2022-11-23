@@ -30,6 +30,7 @@ PEWidget::PEWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::PEWidge
 
     initWidget();
     initDisasmView(ui->widgetDisasm_DosStub);
+    connect(ui->widgetTools, SIGNAL(dataChanged()), this, SLOT(setEdited()));
 
     ui->groupBoxHash32->setTitle(QString("%1 32").arg(tr("Hash")));
     ui->groupBoxHash64->setTitle(QString("%1 64").arg(tr("Hash")));
@@ -1464,8 +1465,7 @@ void PEWidget::reloadData()
             }
         } else if (nType == SPE::TYPE_TOOLS) {
             if (!isInitPresent(sInit)) {
-                ui->widgetTools->setData(&pe);
-                ui->widgetTools->reload();
+                ui->widgetTools->setData(getDevice(), getOptions().bIsImage, getOptions().nImageBase);
             }
         } else if (nType == SPE::TYPE_IMAGE_DOS_HEADER) {
             if (!isInitPresent(sInit)) {
@@ -3455,4 +3455,14 @@ void PEWidget::on_pushButtonDumpAll_Resources_clicked()
 void PEWidget::on_pushButtonSave_Resources_clicked()
 {
     XShortcutsWidget::saveModel(ui->tableView_Resources->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Resources"))));
+}
+
+void PEWidget::on_pushButtonDump_Overlay_clicked()
+{
+    PEToolsWidget::dumpOverlay(this,getDevice(), getOptions().bIsImage, getOptions().nImageBase);
+}
+
+void PEWidget::on_pushButtonDump_DosStub_clicked()
+{
+    PEToolsWidget::dumpDosStub(this,getDevice(), getOptions().bIsImage, getOptions().nImageBase);
 }
