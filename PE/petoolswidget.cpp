@@ -132,25 +132,17 @@ void PEToolsWidget::on_pushButtonDosStubAdd_clicked()
                 }
             }
         }
-
-        emit dataChanged();
     }
 }
 
 void PEToolsWidget::on_pushButtonDosStubRemove_clicked()
 {
-    QString sFileName = XShortcutsWidget::getOpenFileName(XBinary::getDeviceDirectory(g_pDevice));
+    XPE pe(g_pDevice, g_bIsImage, g_nModuleAddress);
 
-    if (!sFileName.isEmpty()) {
-        XPE pe(g_pDevice, g_bIsImage, g_nModuleAddress);
-
-        if (pe.isValid()) {
-            if (pe.removeDosStub()) {
-                emit dataChanged();
-            }
+    if (pe.isValid()) {
+        if (pe.removeDosStub()) {
+            emit dataChanged();
         }
-
-        emit dataChanged();
     }
 }
 
@@ -176,15 +168,11 @@ void PEToolsWidget::on_pushButtonOverlayAdd_clicked()
 
 void PEToolsWidget::on_pushButtonOverlayRemove_clicked()
 {
-    QString sFileName = XShortcutsWidget::getOpenFileName(XBinary::getDeviceDirectory(g_pDevice));
+    XPE pe(g_pDevice, g_bIsImage, g_nModuleAddress);
 
-    if (!sFileName.isEmpty()) {
-        XPE pe(g_pDevice, g_bIsImage, g_nModuleAddress);
-
-        if (pe.isValid()) {
-            if (pe.removeOverlay()) {
-                emit dataChanged();
-            }
+    if (pe.isValid()) {
+        if (pe.removeOverlay()) {
+            emit dataChanged();
         }
     }
 }
