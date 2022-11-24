@@ -21,9 +21,9 @@
 #ifndef PETOOLSWIDGET_H
 #define PETOOLSWIDGET_H
 
+#include "dialogdumpprocess.h"
 #include "xpe.h"
 #include "xshortcutswidget.h"
-#include "dialogdumpprocess.h"
 
 namespace Ui {
 class PEToolsWidget;
@@ -50,11 +50,9 @@ protected:
 private slots:
     void on_pushButtonDosStubAdd_clicked();
     void on_pushButtonDosStubRemove_clicked();
-    void on_pushButtonDosStubReplace_clicked();
     void on_pushButtonDosStubDump_clicked();
     void on_pushButtonOverlayAdd_clicked();
     void on_pushButtonOverlayRemove_clicked();
-    void on_pushButtonOverlayReplace_clicked();
     void on_pushButtonOverlayDump_clicked();
 
 signals:

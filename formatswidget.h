@@ -22,6 +22,7 @@
 #define FORMATSWIDGET_H
 
 #include "dialogarchive.h"
+#include "dialogbinary.h"
 #include "dialogdex.h"
 #include "dialogelf.h"
 #include "dialogentropy.h"
@@ -33,7 +34,6 @@
 #include "dialogmemorymap.h"
 #include "dialogmime.h"
 #include "dialogmsdos.h"
-#include "dialogbinary.h"
 #include "dialogmultidisasm.h"
 #include "dialogne.h"
 #include "dialogpe.h"

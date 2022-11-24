@@ -425,12 +425,17 @@ void ELFWidget::reloadData()
                 }
 
                 g_comboBox[CB_Elf_Ehdr_mag] = createComboBox(ui->tableWidget_Elf_Ehdr, XELF::getIndentMagS(), SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::ei_mag, XComboBoxEx::CBTYPE_LIST);
-                g_comboBox[CB_Elf_Ehdr_iclass] = createComboBox(ui->tableWidget_Elf_Ehdr, XELF::getIndentClassesS(), SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::ei_class, XComboBoxEx::CBTYPE_LIST);
-                g_comboBox[CB_Elf_Ehdr_idata] = createComboBox(ui->tableWidget_Elf_Ehdr, XELF::getIndentDatasS(), SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::ei_data, XComboBoxEx::CBTYPE_LIST);
-                g_comboBox[CB_Elf_Ehdr_iversion] = createComboBox(ui->tableWidget_Elf_Ehdr, XELF::getIndentVersionsS(), SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::ei_version, XComboBoxEx::CBTYPE_LIST);
-                g_comboBox[CB_Elf_Ehdr_iosabi] = createComboBox(ui->tableWidget_Elf_Ehdr, XELF::getIndentOsabisS(), SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::ei_osabi, XComboBoxEx::CBTYPE_LIST);
+                g_comboBox[CB_Elf_Ehdr_iclass] =
+                    createComboBox(ui->tableWidget_Elf_Ehdr, XELF::getIndentClassesS(), SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::ei_class, XComboBoxEx::CBTYPE_LIST);
+                g_comboBox[CB_Elf_Ehdr_idata] =
+                    createComboBox(ui->tableWidget_Elf_Ehdr, XELF::getIndentDatasS(), SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::ei_data, XComboBoxEx::CBTYPE_LIST);
+                g_comboBox[CB_Elf_Ehdr_iversion] =
+                    createComboBox(ui->tableWidget_Elf_Ehdr, XELF::getIndentVersionsS(), SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::ei_version, XComboBoxEx::CBTYPE_LIST);
+                g_comboBox[CB_Elf_Ehdr_iosabi] =
+                    createComboBox(ui->tableWidget_Elf_Ehdr, XELF::getIndentOsabisS(), SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::ei_osabi, XComboBoxEx::CBTYPE_LIST);
                 g_comboBox[CB_Elf_Ehdr_type] = createComboBox(ui->tableWidget_Elf_Ehdr, XELF::getTypesS(), SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::e_type, XComboBoxEx::CBTYPE_LIST);
-                g_comboBox[CB_Elf_Ehdr_machine] = createComboBox(ui->tableWidget_Elf_Ehdr, XELF::getMachinesS(), SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::e_machine, XComboBoxEx::CBTYPE_LIST);
+                g_comboBox[CB_Elf_Ehdr_machine] =
+                    createComboBox(ui->tableWidget_Elf_Ehdr, XELF::getMachinesS(), SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::e_machine, XComboBoxEx::CBTYPE_LIST);
 
                 g_invWidget[INV_Elf_e_entry] = createInvWidget(ui->tableWidget_Elf_Ehdr, SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::e_entry, InvWidget::TYPE_HEX);
                 g_invWidget[INV_Elf_e_phoff] = createInvWidget(ui->tableWidget_Elf_Ehdr, SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::e_phoff, InvWidget::TYPE_HEX);
@@ -521,7 +526,8 @@ void ELFWidget::reloadData()
 
                 ajustTableView(&elfProcessData, &g_tvModel[SELF::TYPE_Elf_Shdr], ui->tableView_Elf_Shdr, nullptr, false);
 
-                connect(ui->tableView_Elf_Shdr->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this, SLOT(onTableView_Elf_Shdr_currentRowChanged(QModelIndex, QModelIndex)));
+                connect(ui->tableView_Elf_Shdr->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
+                        SLOT(onTableView_Elf_Shdr_currentRowChanged(QModelIndex, QModelIndex)));
 
                 if (g_tvModel[SELF::TYPE_Elf_Shdr]->rowCount()) {
                     ui->tableView_Elf_Shdr->setCurrentIndex(ui->tableView_Elf_Shdr->model()->index(0, 0));
@@ -533,7 +539,8 @@ void ELFWidget::reloadData()
 
                 ajustTableView(&elfProcessData, &g_tvModel[SELF::TYPE_Elf_Phdr], ui->tableView_Elf_Phdr, nullptr, false);
 
-                connect(ui->tableView_Elf_Phdr->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this, SLOT(onTableView_Elf_Phdr_currentRowChanged(QModelIndex, QModelIndex)));
+                connect(ui->tableView_Elf_Phdr->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
+                        SLOT(onTableView_Elf_Phdr_currentRowChanged(QModelIndex, QModelIndex)));
 
                 if (g_tvModel[SELF::TYPE_Elf_Phdr]->rowCount()) {
                     ui->tableView_Elf_Phdr->setCurrentIndex(ui->tableView_Elf_Phdr->model()->index(0, 0));
@@ -541,7 +548,8 @@ void ELFWidget::reloadData()
             }
         } else if (nType == SELF::TYPE_Elf_DynamicArrayTags) {
             if (!isInitPresent(sInit)) {
-                ELFProcessData elfProcessData(SELF::TYPE_Elf_DynamicArrayTags, &g_tvModel[SELF::TYPE_Elf_DynamicArrayTags], &elf, nDataOffset, nDataSize, nDataExtraOffset, nDataExtraSize);
+                ELFProcessData elfProcessData(SELF::TYPE_Elf_DynamicArrayTags, &g_tvModel[SELF::TYPE_Elf_DynamicArrayTags], &elf, nDataOffset, nDataSize, nDataExtraOffset,
+                                              nDataExtraSize);
 
                 ajustTableView(&elfProcessData, &g_tvModel[SELF::TYPE_Elf_DynamicArrayTags], ui->tableView_DynamicArrayTags);
 
@@ -558,7 +566,8 @@ void ELFWidget::reloadData()
 
                 ajustTableView(&elfProcessData, &g_tvModel[SELF::TYPE_LIBRARIES], ui->tableView_Libraries);
 
-                connect(ui->tableView_Libraries->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this, SLOT(onTableView_Libraries_currentRowChanged(QModelIndex, QModelIndex)));
+                connect(ui->tableView_Libraries->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
+                        SLOT(onTableView_Libraries_currentRowChanged(QModelIndex, QModelIndex)));
 
                 if (g_tvModel[SELF::TYPE_LIBRARIES]->rowCount()) {
                     ui->tableView_Libraries->setCurrentIndex(ui->tableView_Libraries->model()->index(0, 0));
@@ -582,7 +591,8 @@ void ELFWidget::reloadData()
 
                 ajustTableView(&elfProcessData, &g_tvModel[SELF::TYPE_NOTES], ui->tableView_Notes);
 
-                connect(ui->tableView_Notes->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this, SLOT(onTableView_Notes_currentRowChanged(QModelIndex, QModelIndex)));
+                connect(ui->tableView_Notes->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
+                        SLOT(onTableView_Notes_currentRowChanged(QModelIndex, QModelIndex)));
 
                 if (g_tvModel[SELF::TYPE_NOTES]->rowCount()) {
                     ui->tableView_Notes->setCurrentIndex(ui->tableView_Notes->model()->index(0, 0));
@@ -636,29 +646,29 @@ void ELFWidget::addDatasets(XELF *pElf, QTreeWidgetItem *pParent, QList<XBinary:
 
     for (qint32 i = 0; i < nNumberOfRecords; i++) {
         if (pListDataSets->at(i).nType == XELF::DS_INTERPRETER) {
-            pParent->addChild(createNewItem(SELF::TYPE_INTERPRETER, pListDataSets->at(i).sName, pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize, pListDataSets->at(i).nStringTableOffset,
-                                            pListDataSets->at(i).nStringTableSize));
+            pParent->addChild(createNewItem(SELF::TYPE_INTERPRETER, pListDataSets->at(i).sName, pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
+                                            pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
         } else if (pListDataSets->at(i).nType == XELF::DS_LIBRARIES) {
-            pParent->addChild(createNewItem(SELF::TYPE_LIBRARIES, pListDataSets->at(i).sName, pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize, pListDataSets->at(i).nStringTableOffset,
-                                            pListDataSets->at(i).nStringTableSize));
+            pParent->addChild(createNewItem(SELF::TYPE_LIBRARIES, pListDataSets->at(i).sName, pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
+                                            pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
         } else if (pListDataSets->at(i).nType == XELF::DS_STRINGTABLE) {
-            pParent->addChild(createNewItem(SELF::TYPE_STRINGTABLE, pListDataSets->at(i).sName, pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize, pListDataSets->at(i).nStringTableOffset,
-                                            pListDataSets->at(i).nStringTableSize));
+            pParent->addChild(createNewItem(SELF::TYPE_STRINGTABLE, pListDataSets->at(i).sName, pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
+                                            pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
         } else if (pListDataSets->at(i).nType == XELF::DS_SYMBOLTABLE) {
-            pParent->addChild(createNewItem(SELF::TYPE_SYMBOLTABLE, pListDataSets->at(i).sName, pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize, pListDataSets->at(i).nStringTableOffset,
-                                            pListDataSets->at(i).nStringTableSize));
+            pParent->addChild(createNewItem(SELF::TYPE_SYMBOLTABLE, pListDataSets->at(i).sName, pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
+                                            pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
         } else if (pListDataSets->at(i).nType == XELF::DS_RUNPATH) {
-            pParent->addChild(createNewItem(SELF::TYPE_RUNPATH, pListDataSets->at(i).sName, pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize, pListDataSets->at(i).nStringTableOffset,
-                                            pListDataSets->at(i).nStringTableSize));
+            pParent->addChild(createNewItem(SELF::TYPE_RUNPATH, pListDataSets->at(i).sName, pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
+                                            pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
         } else if (pListDataSets->at(i).nType == XELF::DS_NOTES) {
-            pParent->addChild(createNewItem(SELF::TYPE_NOTES, pListDataSets->at(i).sName, pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize, pListDataSets->at(i).nStringTableOffset,
-                                            pListDataSets->at(i).nStringTableSize));
+            pParent->addChild(createNewItem(SELF::TYPE_NOTES, pListDataSets->at(i).sName, pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
+                                            pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
         } else if (pListDataSets->at(i).nType == XELF::DS_RELA) {
-            pParent->addChild(createNewItem(SELF::TYPE_Elf_Rela, pListDataSets->at(i).sName, pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize, pListDataSets->at(i).nStringTableOffset,
-                                            pListDataSets->at(i).nStringTableSize));
+            pParent->addChild(createNewItem(SELF::TYPE_Elf_Rela, pListDataSets->at(i).sName, pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
+                                            pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
         } else if (pListDataSets->at(i).nType == XELF::DS_REL) {
-            pParent->addChild(createNewItem(SELF::TYPE_Elf_Rel, pListDataSets->at(i).sName, pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize, pListDataSets->at(i).nStringTableOffset,
-                                            pListDataSets->at(i).nStringTableSize));
+            pParent->addChild(createNewItem(SELF::TYPE_Elf_Rel, pListDataSets->at(i).sName, pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
+                                            pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
         } else if (pListDataSets->at(i).nType == XELF::DS_DYNAMICTAGS) {
             QTreeWidgetItem *pDynamicTags = createNewItem(SELF::TYPE_Elf_DynamicArrayTags, pListDataSets->at(i).sName, pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
                                                           pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize);

@@ -721,9 +721,9 @@ FormatsWidget::SE FormatsWidget::getScanEngine(FormatsWidget::SE seIndex)
         XBinary::FT fileType = getCurrentFileType();
 
         // TODO !!!
-        if ((fileType == XBinary::FT_DEX) || (fileType == XBinary::FT_ELF32) || (fileType == XBinary::FT_ELF64) || (fileType == XBinary::FT_MACHO32) || (fileType == XBinary::FT_MACHO64) ||
-            (fileType == XBinary::FT_MACHOFAT) || (fileType == XBinary::FT_ZIP) || (fileType == XBinary::FT_JAR) || (fileType == XBinary::FT_APK) || (fileType == XBinary::FT_APKS) ||
-            (fileType == XBinary::FT_IPA)) {
+        if ((fileType == XBinary::FT_DEX) || (fileType == XBinary::FT_ELF32) || (fileType == XBinary::FT_ELF64) || (fileType == XBinary::FT_MACHO32) ||
+            (fileType == XBinary::FT_MACHO64) || (fileType == XBinary::FT_MACHOFAT) || (fileType == XBinary::FT_ZIP) || (fileType == XBinary::FT_JAR) ||
+            (fileType == XBinary::FT_APK) || (fileType == XBinary::FT_APKS) || (fileType == XBinary::FT_IPA)) {
             tabResult = SE_NFD;
         }
     }

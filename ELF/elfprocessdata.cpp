@@ -20,7 +20,8 @@
  */
 #include "elfprocessdata.h"
 
-ELFProcessData::ELFProcessData(int nType, QStandardItemModel **ppModel, XELF *pELF, qint64 nOffset, qint64 nSize, qint64 nStringTableOffset, qint64 nStringTableSize) : ProcessData()
+ELFProcessData::ELFProcessData(int nType, QStandardItemModel **ppModel, XELF *pELF, qint64 nOffset, qint64 nSize, qint64 nStringTableOffset, qint64 nStringTableSize)
+    : ProcessData()
 {
     this->g_nType = nType;
     this->g_ppModel = ppModel;
@@ -100,7 +101,9 @@ void ELFProcessData::_process()
                 (*g_ppModel)->setItem(i, N_Elf_Shdr::sh_info + 1, new QStandardItem(XBinary::valueToHex(listSectionHeaders64.at(i).sh_info)));
                 (*g_ppModel)->setItem(i, N_Elf_Shdr::sh_addralign + 1, new QStandardItem(XBinary::valueToHex(listSectionHeaders64.at(i).sh_addralign)));
                 (*g_ppModel)->setItem(i, N_Elf_Shdr::sh_entsize + 1, new QStandardItem(XBinary::valueToHex(listSectionHeaders64.at(i).sh_entsize)));
-                (*g_ppModel)->setItem(i, N_Elf_Shdr::sh_entsize + 2, new QStandardItem(g_pELF->getStringFromIndex(osStringTable.nOffset, osStringTable.nSize, listSectionHeaders64.at(i).sh_name)));
+                (*g_ppModel)
+                    ->setItem(i, N_Elf_Shdr::sh_entsize + 2,
+                              new QStandardItem(g_pELF->getStringFromIndex(osStringTable.nOffset, osStringTable.nSize, listSectionHeaders64.at(i).sh_name)));
                 (*g_ppModel)->setItem(i, N_Elf_Shdr::sh_entsize + 3, new QStandardItem(mapTypes.value(listSectionHeaders64.at(i).sh_type)));
             } else {
                 QStandardItem *pItem = new QStandardItem(QString::number(i));
@@ -128,7 +131,9 @@ void ELFProcessData::_process()
                 (*g_ppModel)->setItem(i, N_Elf_Shdr::sh_info + 1, new QStandardItem(XBinary::valueToHex(listSectionHeaders32.at(i).sh_info)));
                 (*g_ppModel)->setItem(i, N_Elf_Shdr::sh_addralign + 1, new QStandardItem(XBinary::valueToHex(listSectionHeaders32.at(i).sh_addralign)));
                 (*g_ppModel)->setItem(i, N_Elf_Shdr::sh_entsize + 1, new QStandardItem(XBinary::valueToHex(listSectionHeaders32.at(i).sh_entsize)));
-                (*g_ppModel)->setItem(i, N_Elf_Shdr::sh_entsize + 2, new QStandardItem(g_pELF->getStringFromIndex(osStringTable.nOffset, osStringTable.nSize, listSectionHeaders32.at(i).sh_name)));
+                (*g_ppModel)
+                    ->setItem(i, N_Elf_Shdr::sh_entsize + 2,
+                              new QStandardItem(g_pELF->getStringFromIndex(osStringTable.nOffset, osStringTable.nSize, listSectionHeaders32.at(i).sh_name)));
                 (*g_ppModel)->setItem(i, N_Elf_Shdr::sh_entsize + 3, new QStandardItem(mapTypes.value(listSectionHeaders32.at(i).sh_type)));
             }
 

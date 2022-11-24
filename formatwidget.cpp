@@ -523,7 +523,35 @@ void FormatWidget::dumpSection(QTableView *pTableView)
 
 void FormatWidget::dumpAll(QTableView *pTableView)
 {
-    // TODO
+    QString sDirectory = QFileDialog::getExistingDirectory(this, tr("Dump all"), XBinary::getDeviceDirectory(g_pDevice));
+
+    if (!sDirectory.isEmpty()) {
+        qint32 nNumberOfRecords = pTableView->model()->rowCount();
+
+        if (nNumberOfRecords) {
+            QList<DumpProcess::RECORD> listRecords;
+
+            for (qint32 i = 0; i < nNumberOfRecords; i++) {
+                QModelIndex index = pTableView->model()->index(i, 0);
+
+                DumpProcess::RECORD record = {};
+
+                record.nOffset = pTableView->model()->data(index, Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET).toLongLong();
+                record.nSize = pTableView->model()->data(index, Qt::UserRole + FW_DEF::SECTION_DATA_SIZE).toLongLong();
+                record.sFileName = pTableView->model()->data(index, Qt::UserRole + FW_DEF::SECTION_DATA_NAME).toString();
+
+                record.sFileName = sDirectory + QDir::separator() + QFileInfo(record.sFileName).fileName();
+
+                listRecords.append(record);
+            }
+
+            DialogDumpProcess dd(this);
+
+            dd.setData(g_pDevice, listRecords, DumpProcess::DT_OFFSET);
+
+            dd.showDialogDelay(1000);
+        }
+    }
 }
 
 qint64 FormatWidget::getTableViewItemSize(QTableView *pTableView)
@@ -1187,7 +1215,8 @@ void FormatWidget::registerShortcuts(bool bState)
     Q_UNUSED(bState)
 }
 
-bool FormatWidget::createHeaderTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nNumberOfRecords, int nPosition, qint64 nOffset)
+bool FormatWidget::createHeaderTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nNumberOfRecords, int nPosition,
+                                     qint64 nOffset)
 {
     pTableWidget->setColumnCount(6);
     pTableWidget->setRowCount(nNumberOfRecords);
@@ -1450,7 +1479,8 @@ void FormatWidget::_deleteSubdevices(SubDevice **ppSubdevices, qint32 nCount)
     }
 }
 
-XComboBoxEx *FormatWidget::createComboBox(QTableWidget *pTableWidget, QMap<quint64, QString> mapData, int nType, int nData, XComboBoxEx::CBTYPE cbtype, quint64 nMask, int nExtraData)
+XComboBoxEx *FormatWidget::createComboBox(QTableWidget *pTableWidget, QMap<quint64, QString> mapData, int nType, int nData, XComboBoxEx::CBTYPE cbtype, quint64 nMask,
+                                          int nExtraData)
 {
     XComboBoxEx *result = new XComboBoxEx(this);
     result->setData(mapData, cbtype, nMask);

@@ -71,7 +71,7 @@ void PEProcessData::_process()
             sName.resize(qMin(sName.length(), XPE_DEF::S_IMAGE_SIZEOF_SHORT_NAME));
             pItemName->setText(sName);
 
-            pItemNumber->setData(QString("%1_%2_%3").arg(tr("Section"), QString::number(i), sName), Qt::UserRole + FW_DEF::SECTION_DATA_NAME);
+            pItemNumber->setData(QString("%1_%2_%3.bin").arg(tr("Section"), QString::number(i), sName), Qt::UserRole + FW_DEF::SECTION_DATA_NAME);
 
             (*g_ppModel)->setItem(i, N_IMAGE_SECTION_HEADER::Name + 1, pItemName);
 
@@ -113,8 +113,9 @@ void PEProcessData::_process()
             (*g_ppModel)->setItem(i, N_IMAGE_RELOCS::VirtualAddress + 1, new QStandardItem(XBinary::valueToHex(listRelocsHeaders.at(i).baseRelocation.VirtualAddress)));
             (*g_ppModel)->setItem(i, N_IMAGE_RELOCS::SizeOfBlock + 1, new QStandardItem(XBinary::valueToHex(listRelocsHeaders.at(i).baseRelocation.SizeOfBlock)));
             (*g_ppModel)->setItem(i, N_IMAGE_RELOCS::SizeOfBlock + 2, new QStandardItem(QString::number(listRelocsHeaders.at(i).nCount)));
-            (*g_ppModel)->setItem(i, N_IMAGE_RELOCS::SizeOfBlock + 3,
-                                  new QStandardItem(g_pPE->getMemoryRecordInfoByRelAddress(listRelocsHeaders.at(i).baseRelocation.VirtualAddress)));  // Comment
+            (*g_ppModel)
+                ->setItem(i, N_IMAGE_RELOCS::SizeOfBlock + 3,
+                          new QStandardItem(g_pPE->getMemoryRecordInfoByRelAddress(listRelocsHeaders.at(i).baseRelocation.VirtualAddress)));  // Comment
 
             incValue();
         }
@@ -364,7 +365,8 @@ void PEProcessData::_process()
             (*g_ppModel)->setItem(i, N_IMAGE_BOUNDIMPORT::TimeDateStamp + 1, new QStandardItem(XBinary::valueToHex(listBoundImportPositions.at(i).descriptor.TimeDateStamp)));
             (*g_ppModel)->setItem(i, N_IMAGE_BOUNDIMPORT::OffsetModuleName + 1, new QStandardItem(XBinary::valueToHex(listBoundImportPositions.at(i).descriptor.OffsetModuleName)));
             (*g_ppModel)
-                ->setItem(i, N_IMAGE_BOUNDIMPORT::NumberOfModuleForwarderRefs + 1, new QStandardItem(XBinary::valueToHex(listBoundImportPositions.at(i).descriptor.NumberOfModuleForwarderRefs)));
+                ->setItem(i, N_IMAGE_BOUNDIMPORT::NumberOfModuleForwarderRefs + 1,
+                          new QStandardItem(XBinary::valueToHex(listBoundImportPositions.at(i).descriptor.NumberOfModuleForwarderRefs)));
             (*g_ppModel)
                 ->setItem(i, N_IMAGE_BOUNDIMPORT::NumberOfModuleForwarderRefs + 2,
                           new QStandardItem(XBinary::valueToTimeString(listBoundImportPositions.at(i).descriptor.TimeDateStamp, XBinary::DT_TYPE_POSIX)));
@@ -595,7 +597,7 @@ void PEProcessData::_process()
                 QString sResID2 = XPE::resourceIdNameToString(listResources.at(i).irin[1], 1);
                 QString sResID3 = XPE::resourceIdNameToString(listResources.at(i).irin[2], 2);
 
-                pItemNumber->setData(QString("%1_%2_%3").arg(sResID1, sResID2, sResID3), Qt::UserRole + FW_DEF::SECTION_DATA_NAME);
+                pItemNumber->setData(QString("%1_%2_%3.bin").arg(sResID1, sResID2, sResID3), Qt::UserRole + FW_DEF::SECTION_DATA_NAME);
 
                 (*g_ppModel)->setItem(i, 0, pItemNumber);
 

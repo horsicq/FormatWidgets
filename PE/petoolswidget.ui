@@ -49,13 +49,6 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButtonDosStubReplace">
-          <property name="text">
-           <string>Replace</string>
-          </property>
-         </widget>
-        </item>
-        <item>
          <widget class="QPushButton" name="pushButtonDosStubDump">
           <property name="text">
            <string>Dump</string>
@@ -111,13 +104,6 @@
          <widget class="QPushButton" name="pushButtonOverlayRemove">
           <property name="text">
            <string>Remove</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="pushButtonOverlayReplace">
-          <property name="text">
-           <string>Replace</string>
           </property>
          </widget>
         </item>

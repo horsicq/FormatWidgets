@@ -49,7 +49,7 @@ void PEToolsWidget::setData(QIODevice *pDevice, bool bIsImage, XADDR nModuleAddr
 void PEToolsWidget::reload()
 {
     if (g_pDevice) {
-        XPE pe(g_pDevice,g_bIsImage,g_nModuleAddress);
+        XPE pe(g_pDevice, g_bIsImage, g_nModuleAddress);
 
         if (pe.isValid()) {
             bool bIsDosStubPresent = pe.isDosStubPresent();
@@ -57,12 +57,10 @@ void PEToolsWidget::reload()
 
             ui->pushButtonDosStubAdd->setEnabled((!bIsDosStubPresent) && (!g_bReadonly));
             ui->pushButtonDosStubRemove->setEnabled(bIsDosStubPresent && (!g_bReadonly));
-            ui->pushButtonDosStubReplace->setEnabled(bIsDosStubPresent && (!g_bReadonly));
             ui->pushButtonDosStubDump->setEnabled(bIsDosStubPresent);
 
             ui->pushButtonOverlayAdd->setEnabled((!bIsOverlayPresent) && (!g_bReadonly));
             ui->pushButtonOverlayRemove->setEnabled(bIsOverlayPresent && (!g_bReadonly));
-            ui->pushButtonOverlayReplace->setEnabled(bIsOverlayPresent && (!g_bReadonly));
             ui->pushButtonOverlayDump->setEnabled(bIsOverlayPresent);
         }
     }
@@ -93,7 +91,7 @@ void PEToolsWidget::dumpRegion(QWidget *pParent, QIODevice *pDevice, qint64 nOff
 
 void PEToolsWidget::dumpOverlay(QWidget *pParent, QIODevice *pDevice, bool bIsImage, XADDR nModuleAddress)
 {
-    XPE pe(pDevice,bIsImage,nModuleAddress);
+    XPE pe(pDevice, bIsImage, nModuleAddress);
 
     if (pe.isValid()) {
         qint64 nOffset = pe.getOverlayOffset();
@@ -105,7 +103,7 @@ void PEToolsWidget::dumpOverlay(QWidget *pParent, QIODevice *pDevice, bool bIsIm
 
 void PEToolsWidget::dumpDosStub(QWidget *pParent, QIODevice *pDevice, bool bIsImage, XADDR nModuleAddress)
 {
-    XPE pe(pDevice,bIsImage,nModuleAddress);
+    XPE pe(pDevice, bIsImage, nModuleAddress);
 
     if (pe.isValid()) {
         qint64 nOffset = pe.getDosStubOffset();
@@ -122,14 +120,38 @@ void PEToolsWidget::registerShortcuts(bool bState)
 
 void PEToolsWidget::on_pushButtonDosStubAdd_clicked()
 {
+    QString sFileName = XShortcutsWidget::getOpenFileName(XBinary::getDeviceDirectory(g_pDevice));
+
+    if (!sFileName.isEmpty()) {
+        if (!sFileName.isEmpty()) {
+            XPE pe(g_pDevice, g_bIsImage, g_nModuleAddress);
+
+            if (pe.isValid()) {
+                if (pe.addDosStub(sFileName)) {
+                    emit dataChanged();
+                }
+            }
+        }
+
+        emit dataChanged();
+    }
 }
 
 void PEToolsWidget::on_pushButtonDosStubRemove_clicked()
 {
-}
+    QString sFileName = XShortcutsWidget::getOpenFileName(XBinary::getDeviceDirectory(g_pDevice));
 
-void PEToolsWidget::on_pushButtonDosStubReplace_clicked()
-{
+    if (!sFileName.isEmpty()) {
+        XPE pe(g_pDevice, g_bIsImage, g_nModuleAddress);
+
+        if (pe.isValid()) {
+            if (pe.removeDosStub()) {
+                emit dataChanged();
+            }
+        }
+
+        emit dataChanged();
+    }
 }
 
 void PEToolsWidget::on_pushButtonDosStubDump_clicked()
@@ -139,14 +161,32 @@ void PEToolsWidget::on_pushButtonDosStubDump_clicked()
 
 void PEToolsWidget::on_pushButtonOverlayAdd_clicked()
 {
+    QString sFileName = XShortcutsWidget::getOpenFileName(XBinary::getDeviceDirectory(g_pDevice));
+
+    if (!sFileName.isEmpty()) {
+        XPE pe(g_pDevice, g_bIsImage, g_nModuleAddress);
+
+        if (pe.isValid()) {
+            if (pe.addOverlay(sFileName)) {
+                emit dataChanged();
+            }
+        }
+    }
 }
 
 void PEToolsWidget::on_pushButtonOverlayRemove_clicked()
 {
-}
+    QString sFileName = XShortcutsWidget::getOpenFileName(XBinary::getDeviceDirectory(g_pDevice));
 
-void PEToolsWidget::on_pushButtonOverlayReplace_clicked()
-{
+    if (!sFileName.isEmpty()) {
+        XPE pe(g_pDevice, g_bIsImage, g_nModuleAddress);
+
+        if (pe.isValid()) {
+            if (pe.removeOverlay()) {
+                emit dataChanged();
+            }
+        }
+    }
 }
 
 void PEToolsWidget::on_pushButtonOverlayDump_clicked()

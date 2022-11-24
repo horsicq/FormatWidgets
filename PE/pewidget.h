@@ -143,7 +143,7 @@ private slots:
     void directoryEntropy();
     void on_tableView_TLSCallbacks_customContextMenuRequested(const QPoint &pos);
     void disasmTLSCallback();
-    void on_pushButtonSaveSections_clicked();
+    void on_pushButtonSave_Sections_clicked();
     void on_tableView_Resources_StringTable_customContextMenuRequested(const QPoint &pos);
     void stringTableHex();
     void on_pushButtonSave_Debug_clicked();
@@ -154,6 +154,7 @@ private slots:
     void on_pushButtonSave_Resources_clicked();
     void on_pushButtonDump_Overlay_clicked();
     void on_pushButtonDump_DosStub_clicked();
+    void on_pushButtonDumpAll_Sections_clicked();
 
 private:
     enum CB {
