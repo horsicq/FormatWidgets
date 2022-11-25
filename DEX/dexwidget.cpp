@@ -302,6 +302,12 @@ FormatWidget::SV DEXWidget::_setValue(QVariant vValue, int nStype, int nNdata, i
 
 void DEXWidget::setReadonly(bool bState)
 {
+    if (ui->checkBoxReadonly->isChecked() != bState) {
+        const bool bBlocked1 = ui->checkBoxReadonly->blockSignals(true);
+        ui->checkBoxReadonly->setChecked(bState);
+        ui->checkBoxReadonly->blockSignals(bBlocked1);
+    }
+
     setLineEditsReadOnly(g_lineEdit_HEADER, N_DEX_HEADER::__data_size, bState);
     setComboBoxesReadOnly(g_comboBox, __CB_size, bState);
 

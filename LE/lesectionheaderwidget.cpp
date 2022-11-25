@@ -59,7 +59,11 @@ FormatWidget::SV LESectionHeaderWidget::_setValue(QVariant vValue, int nStype, i
 
 void LESectionHeaderWidget::setReadonly(bool bState)
 {
-    Q_UNUSED(bState)
+    if (ui->checkBoxReadonly->isChecked() != bState) {
+        const bool bBlocked1 = ui->checkBoxReadonly->blockSignals(true);
+        ui->checkBoxReadonly->setChecked(bState);
+        ui->checkBoxReadonly->blockSignals(bBlocked1);
+    }
 }
 
 void LESectionHeaderWidget::blockSignals(bool bState)

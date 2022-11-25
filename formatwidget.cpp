@@ -1123,6 +1123,19 @@ void FormatWidget::setEdited()
     //    emit changed();
 }
 
+void FormatWidget::allReload()
+{
+    // TODO save treeview position
+    bool bIsReadOnly = isReadonly();
+
+    reset();
+    reload();
+
+    reloadData();
+
+    setReadonly(bIsReadOnly);
+}
+
 void FormatWidget::showHex(qint64 nOffset, qint64 nSize)
 {
     XHexView::OPTIONS hexOptions = {};

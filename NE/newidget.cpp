@@ -388,6 +388,12 @@ FormatWidget::SV NEWidget::_setValue(QVariant vValue, int nStype, int nNdata, in
 
 void NEWidget::setReadonly(bool bState)
 {
+    if (ui->checkBoxReadonly->isChecked() != bState) {
+        const bool bBlocked1 = ui->checkBoxReadonly->blockSignals(true);
+        ui->checkBoxReadonly->setChecked(bState);
+        ui->checkBoxReadonly->blockSignals(bBlocked1);
+    }
+
     setLineEditsReadOnly(g_lineEdit_DOS_HEADER, N_NE_DOS_HEADER::__data_size, bState);
     setLineEditsReadOnly(g_lineEdit_OS2_HEADER, N_OS2_HEADER::__data_size, bState);
 

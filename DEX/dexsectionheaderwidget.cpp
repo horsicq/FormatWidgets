@@ -130,6 +130,12 @@ FormatWidget::SV DEXSectionHeaderWidget::_setValue(QVariant vValue, int nStype, 
 }
 void DEXSectionHeaderWidget::setReadonly(bool bState)
 {
+    if (ui->checkBoxReadonly->isChecked() != bState) {
+        const bool bBlocked1 = ui->checkBoxReadonly->blockSignals(true);
+        ui->checkBoxReadonly->setChecked(bState);
+        ui->checkBoxReadonly->blockSignals(bBlocked1);
+    }
+
     setLineEditsReadOnly(g_ppLinedEdit, g_nLineEditSize, bState);
 
     setComboBoxesReadOnly(g_ppComboBox, g_nComboBoxSize, bState);

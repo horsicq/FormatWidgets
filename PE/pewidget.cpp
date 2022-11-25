@@ -30,7 +30,7 @@ PEWidget::PEWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::PEWidge
 
     initWidget();
     initDisasmView(ui->widgetDisasm_DosStub);
-    connect(ui->widgetTools, SIGNAL(dataChanged()), this, SLOT(setEdited()));
+    connect(ui->widgetTools, SIGNAL(dataChanged()), this, SLOT(allReload()));
 
     ui->groupBoxHash32->setTitle(QString("%1 32").arg(tr("Hash")));
     ui->groupBoxHash64->setTitle(QString("%1 64").arg(tr("Hash")));
@@ -231,6 +231,12 @@ void PEWidget::reload()
 
         setDisasmInitAddress(pe.getEntryPointAddress());  // Optimize
     }
+}
+
+void PEWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
+{
+    ui->widgetTools->setGlobal(pShortcuts, pXOptions);
+    FormatWidget::setGlobal(pShortcuts, pXOptions);
 }
 
 FormatWidget::SV PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
@@ -1149,6 +1155,12 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, in
 
 void PEWidget::setReadonly(bool bState)
 {
+    if (ui->checkBoxReadonly->isChecked() != bState) {
+        const bool bBlocked1 = ui->checkBoxReadonly->blockSignals(true);
+        ui->checkBoxReadonly->setChecked(bState);
+        ui->checkBoxReadonly->blockSignals(bBlocked1);
+    }
+
     setLineEditsReadOnly(g_lineEdit_IMAGE_DOS_HEADER, N_IMAGE_DOS_HEADER::__data_size, bState);
     setLineEditsReadOnly(g_lineEdit_IMAGE_NT_HEADERS, N_IMAGE_NT_HEADERS::__data_size, bState);
     setLineEditsReadOnly(g_lineEdit_IMAGE_FILE_HEADER, N_IMAGE_FILE_HEADER::__data_size, bState);

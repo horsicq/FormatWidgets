@@ -59,7 +59,11 @@ FormatWidget::SV NESectionHeaderWidget::_setValue(QVariant vValue, int nStype, i
 
 void NESectionHeaderWidget::setReadonly(bool bState)
 {
-    Q_UNUSED(bState)
+    if (ui->checkBoxReadonly->isChecked() != bState) {
+        const bool bBlocked1 = ui->checkBoxReadonly->blockSignals(true);
+        ui->checkBoxReadonly->setChecked(bState);
+        ui->checkBoxReadonly->blockSignals(bBlocked1);
+    }
 }
 
 void NESectionHeaderWidget::blockSignals(bool bState)

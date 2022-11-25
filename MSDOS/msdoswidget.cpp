@@ -187,6 +187,12 @@ FormatWidget::SV MSDOSWidget::_setValue(QVariant vValue, int nStype, int nNdata,
 
 void MSDOSWidget::setReadonly(bool bState)
 {
+    if (ui->checkBoxReadonly->isChecked() != bState) {
+        const bool bBlocked1 = ui->checkBoxReadonly->blockSignals(true);
+        ui->checkBoxReadonly->setChecked(bState);
+        ui->checkBoxReadonly->blockSignals(bBlocked1);
+    }
+
     setLineEditsReadOnly(g_lineEdit_DOS_HEADER, N_DOS_HEADER::__data_size, bState);
 
     setComboBoxesReadOnly(g_comboBox, __CB_size, bState);

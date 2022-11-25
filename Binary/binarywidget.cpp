@@ -116,6 +116,12 @@ FormatWidget::SV BinaryWidget::_setValue(QVariant vValue, int nStype, int nNdata
 
 void BinaryWidget::setReadonly(bool bState)
 {
+    if (ui->checkBoxReadonly->isChecked() != bState) {
+        const bool bBlocked1 = ui->checkBoxReadonly->blockSignals(true);
+        ui->checkBoxReadonly->setChecked(bState);
+        ui->checkBoxReadonly->blockSignals(bBlocked1);
+    }
+
     ui->widgetHex->setReadonly(bState);
     ui->widgetDisasm->setReadonly(bState);
     ui->widgetStrings->setReadonly(bState);

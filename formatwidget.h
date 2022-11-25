@@ -234,6 +234,7 @@ public slots:
     void hexValueChanged(quint64 nValue);
     void textValueChanged(QString sText);
     void setEdited();
+    void allReload();
     void showHex(qint64 nOffset, qint64 nSize);
     void showInDisasmWindowAddress(XADDR nAddress);
     void showInDisasmWindowOffset(qint64 nOffset);

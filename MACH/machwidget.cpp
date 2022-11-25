@@ -1364,6 +1364,12 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
 
 void MACHWidget::setReadonly(bool bState)
 {
+    if (ui->checkBoxReadonly->isChecked() != bState) {
+        const bool bBlocked1 = ui->checkBoxReadonly->blockSignals(true);
+        ui->checkBoxReadonly->setChecked(bState);
+        ui->checkBoxReadonly->blockSignals(bBlocked1);
+    }
+
     setLineEditsReadOnly(g_lineEdit_mach_header, N_mach_header::__data_size, bState);
     setLineEditsReadOnly(g_lineEdit_mach_dyld_info_only, N_mach_dyld_info::__data_size, bState);
     setLineEditsReadOnly(g_lineEdit_mach_uuid, N_mach_uuid::__data_size, bState);

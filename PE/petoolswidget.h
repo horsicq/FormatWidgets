@@ -39,6 +39,7 @@ public:
     void setData(QIODevice *pDevice, bool bIsImage = false, XADDR nModuleAddress = -1);
     void reload();
     void setReadonly(bool bState);
+    bool saveBackup();
 
     static void dumpRegion(QWidget *pParent, QIODevice *pDevice, qint64 nOffset, qint64 nSize, QString sName);
     static void dumpOverlay(QWidget *pParent, QIODevice *pDevice, bool bIsImage = false, XADDR nModuleAddress = -1);

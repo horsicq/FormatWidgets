@@ -292,6 +292,12 @@ FormatWidget::SV ELFWidget::_setValue(QVariant vValue, int nStype, int nNdata, i
 
 void ELFWidget::setReadonly(bool bState)
 {
+    if (ui->checkBoxReadonly->isChecked() != bState) {
+        const bool bBlocked1 = ui->checkBoxReadonly->blockSignals(true);
+        ui->checkBoxReadonly->setChecked(bState);
+        ui->checkBoxReadonly->blockSignals(bBlocked1);
+    }
+
     setLineEditsReadOnly(g_lineEdit_Elf_Ehdr, N_Elf_Ehdr::__data_size, bState);
     setLineEditsReadOnly(g_lineEdit_Elf_Interpreter, N_ELF_INTERPRETER::__data_size, bState);
     setLineEditsReadOnly(g_lineEdit_Elf_RunPath, N_ELF_RUNPATH::__data_size, bState);
