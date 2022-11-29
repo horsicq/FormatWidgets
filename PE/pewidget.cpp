@@ -3554,7 +3554,11 @@ void PEWidget::on_pushButtonSave_IMAGE_DIRECTORY_ENTRIES_clicked()
 
 void PEWidget::on_pushButtonExtractAllIcons_Resources_clicked()
 {
-    // TODO
+    QString sDirectory = QFileDialog::getExistingDirectory(this, tr("Dump all"), XBinary::getDeviceDirectory(getDevice()));
+
+    if (!sDirectory.isEmpty()) {
+        // TODO
+    }
 }
 
 void PEWidget::on_pushButtonDumpAll_Resources_clicked()
