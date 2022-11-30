@@ -58,7 +58,8 @@ void DEXProcessData::_process()
 
             (*g_ppModel)->setItem(i, 0, pItem);
             (*g_ppModel)->setItem(i, 1, new QStandardItem(XBinary::valueToHex(listMapItems.at(i).nType)));
-            (*g_ppModel)->setItem(i, N_DEX_MAP_ITEM::type + 2, new QStandardItem(mapTypes.value(listMapItems.at(i).nType, XBinary::valueToHex(listMapItems.at(i).nType))));
+            (*g_ppModel)
+                ->setItem(i, N_DEX_MAP_ITEM::type + 2, new QStandardItem(mapTypes.value(listMapItems.at(i).nType, XBinary::valueToHex(listMapItems.at(i).nType))));
             (*g_ppModel)->setItem(i, N_DEX_MAP_ITEM::count + 2, new QStandardItem(XBinary::valueToHex(listMapItems.at(i).nCount)));
             (*g_ppModel)->setItem(i, N_DEX_MAP_ITEM::offset + 2, new QStandardItem(XBinary::valueToHex(listMapItems.at(i).nOffset)));
 

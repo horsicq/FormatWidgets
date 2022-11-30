@@ -440,7 +440,8 @@ void ELFWidget::reloadData()
                     createComboBox(ui->tableWidget_Elf_Ehdr, XELF::getIndentVersionsS(), SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::ei_version, XComboBoxEx::CBTYPE_LIST);
                 g_comboBox[CB_Elf_Ehdr_iosabi] =
                     createComboBox(ui->tableWidget_Elf_Ehdr, XELF::getIndentOsabisS(), SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::ei_osabi, XComboBoxEx::CBTYPE_LIST);
-                g_comboBox[CB_Elf_Ehdr_type] = createComboBox(ui->tableWidget_Elf_Ehdr, XELF::getTypesS(), SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::e_type, XComboBoxEx::CBTYPE_LIST);
+                g_comboBox[CB_Elf_Ehdr_type] =
+                    createComboBox(ui->tableWidget_Elf_Ehdr, XELF::getTypesS(), SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::e_type, XComboBoxEx::CBTYPE_LIST);
                 g_comboBox[CB_Elf_Ehdr_machine] =
                     createComboBox(ui->tableWidget_Elf_Ehdr, XELF::getMachinesS(), SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::e_machine, XComboBoxEx::CBTYPE_LIST);
 
@@ -555,8 +556,8 @@ void ELFWidget::reloadData()
             }
         } else if (nType == SELF::TYPE_Elf_DynamicArrayTags) {
             if (!isInitPresent(sInit)) {
-                ELFProcessData elfProcessData(SELF::TYPE_Elf_DynamicArrayTags, &g_tvModel[SELF::TYPE_Elf_DynamicArrayTags], &elf, nDataOffset, nDataSize, nDataExtraOffset,
-                                              nDataExtraSize);
+                ELFProcessData elfProcessData(SELF::TYPE_Elf_DynamicArrayTags, &g_tvModel[SELF::TYPE_Elf_DynamicArrayTags], &elf, nDataOffset, nDataSize,
+                                              nDataExtraOffset, nDataExtraSize);
 
                 ajustTableView(&elfProcessData, &g_tvModel[SELF::TYPE_Elf_DynamicArrayTags], ui->tableView_DynamicArrayTags);
 
@@ -582,7 +583,8 @@ void ELFWidget::reloadData()
             }
         } else if (nType == SELF::TYPE_INTERPRETER) {
             if (!isInitPresent(sInit)) {
-                createListTable(SELF::TYPE_INTERPRETER, ui->tableWidget_Interpreter, N_ELF_INTERPRETER::records, g_lineEdit_Elf_Interpreter, N_ELF_INTERPRETER::__data_size);
+                createListTable(SELF::TYPE_INTERPRETER, ui->tableWidget_Interpreter, N_ELF_INTERPRETER::records, g_lineEdit_Elf_Interpreter,
+                                N_ELF_INTERPRETER::__data_size);
 
                 blockSignals(true);
 

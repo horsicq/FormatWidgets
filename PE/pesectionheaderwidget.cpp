@@ -542,7 +542,8 @@ void PESectionHeaderWidget::reloadData()
             g_ppInvWidget[N_IMAGE_IMPORT::INV_Name]->setAddressAndSize(&pe, pe.getBaseAddress() + idh.Name, 0);
             g_ppInvWidget[N_IMAGE_IMPORT::INV_FirstThunk]->setAddressAndSize(&pe, pe.getBaseAddress() + idh.FirstThunk, 0);
 
-            addComment(ui->tableWidget, N_IMAGE_IMPORT::OriginalFirstThunk, HEADER_COLUMN_COMMENT, pe.getMemoryRecordInfoByRelAddress(&memoryMap, idh.OriginalFirstThunk));
+            addComment(ui->tableWidget, N_IMAGE_IMPORT::OriginalFirstThunk, HEADER_COLUMN_COMMENT,
+                       pe.getMemoryRecordInfoByRelAddress(&memoryMap, idh.OriginalFirstThunk));
             addComment(ui->tableWidget, N_IMAGE_IMPORT::Name, HEADER_COLUMN_COMMENT, pe.read_ansiString(pe.relAddressToOffset(&memoryMap, idh.Name)));
             addComment(ui->tableWidget, N_IMAGE_IMPORT::FirstThunk, HEADER_COLUMN_COMMENT, pe.getMemoryRecordInfoByRelAddress(&memoryMap, idh.FirstThunk));
 

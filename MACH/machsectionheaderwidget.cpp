@@ -748,7 +748,8 @@ void MACHSectionHeaderWidget::reloadData()
         bool bIsBigEndian = mach.isBigEndian();
 
         if (nType == SMACH::TYPE_mach_commands) {
-            createHeaderTable(SMACH::TYPE_mach_commands, ui->tableWidget, N_mach_commands::records, g_ppLinedEdit, N_mach_commands::__data_size, getNumber(), getOffset());
+            createHeaderTable(SMACH::TYPE_mach_commands, ui->tableWidget, N_mach_commands::records, g_ppLinedEdit, N_mach_commands::__data_size, getNumber(),
+                              getOffset());
             g_ppComboBox[N_mach_commands::CB_CMD] =
                 createComboBox(ui->tableWidget, XMACH::getLoadCommandTypesS(), SMACH::TYPE_mach_commands, N_mach_commands::cmd, XComboBoxEx::CBTYPE_LIST);
 
@@ -896,10 +897,12 @@ void MACHSectionHeaderWidget::reloadData()
             if (bIs64) {
                 g_ppComboBox[N_mach_sections64_E::CB_flag0] = createComboBox(ui->tableWidget, XMACH::getSectionFlagsTypesS(), SMACH::TYPE_mach_sections,
                                                                              N_mach_sections64_E::flags_0, XComboBoxEx::CBTYPE_ELIST, XMACH_DEF::S_SECTION_TYPE);
-                g_ppComboBox[N_mach_sections64_E::CB_flag1] = createComboBox(ui->tableWidget, XMACH::getSectionAttributesSysS(), SMACH::TYPE_mach_sections,
-                                                                             N_mach_sections64_E::flags_1, XComboBoxEx::CBTYPE_ELIST, XMACH_DEF::S_SECTION_ATTRIBUTES_SYS);
-                g_ppComboBox[N_mach_sections64_E::CB_flag2] = createComboBox(ui->tableWidget, XMACH::getSectionAttributesUsrS(), SMACH::TYPE_mach_sections,
-                                                                             N_mach_sections64_E::flags_2, XComboBoxEx::CBTYPE_ELIST, XMACH_DEF::S_SECTION_ATTRIBUTES_USR);
+                g_ppComboBox[N_mach_sections64_E::CB_flag1] =
+                    createComboBox(ui->tableWidget, XMACH::getSectionAttributesSysS(), SMACH::TYPE_mach_sections, N_mach_sections64_E::flags_1, XComboBoxEx::CBTYPE_ELIST,
+                                   XMACH_DEF::S_SECTION_ATTRIBUTES_SYS);
+                g_ppComboBox[N_mach_sections64_E::CB_flag2] =
+                    createComboBox(ui->tableWidget, XMACH::getSectionAttributesUsrS(), SMACH::TYPE_mach_sections, N_mach_sections64_E::flags_2, XComboBoxEx::CBTYPE_ELIST,
+                                   XMACH_DEF::S_SECTION_ATTRIBUTES_USR);
 
                 XMACH_DEF::section_64 section = mach._read_section_64(nHeaderOffset, bIsBigEndian);
 
@@ -922,10 +925,12 @@ void MACHSectionHeaderWidget::reloadData()
             } else {
                 g_ppComboBox[N_mach_sections32_E::CB_flag0] = createComboBox(ui->tableWidget, XMACH::getSectionFlagsTypesS(), SMACH::TYPE_mach_sections,
                                                                              N_mach_sections32_E::flags_0, XComboBoxEx::CBTYPE_ELIST, XMACH_DEF::S_SECTION_TYPE);
-                g_ppComboBox[N_mach_sections32_E::CB_flag1] = createComboBox(ui->tableWidget, XMACH::getSectionAttributesSysS(), SMACH::TYPE_mach_sections,
-                                                                             N_mach_sections32_E::flags_1, XComboBoxEx::CBTYPE_ELIST, XMACH_DEF::S_SECTION_ATTRIBUTES_SYS);
-                g_ppComboBox[N_mach_sections32_E::CB_flag2] = createComboBox(ui->tableWidget, XMACH::getSectionAttributesUsrS(), SMACH::TYPE_mach_sections,
-                                                                             N_mach_sections32_E::flags_2, XComboBoxEx::CBTYPE_ELIST, XMACH_DEF::S_SECTION_ATTRIBUTES_USR);
+                g_ppComboBox[N_mach_sections32_E::CB_flag1] =
+                    createComboBox(ui->tableWidget, XMACH::getSectionAttributesSysS(), SMACH::TYPE_mach_sections, N_mach_sections32_E::flags_1, XComboBoxEx::CBTYPE_ELIST,
+                                   XMACH_DEF::S_SECTION_ATTRIBUTES_SYS);
+                g_ppComboBox[N_mach_sections32_E::CB_flag2] =
+                    createComboBox(ui->tableWidget, XMACH::getSectionAttributesUsrS(), SMACH::TYPE_mach_sections, N_mach_sections32_E::flags_2, XComboBoxEx::CBTYPE_ELIST,
+                                   XMACH_DEF::S_SECTION_ATTRIBUTES_USR);
 
                 XMACH_DEF::section section = mach._read_section(nHeaderOffset, bIsBigEndian);
 
@@ -972,7 +977,8 @@ void MACHSectionHeaderWidget::reloadData()
                 g_ppLinedEdit[N_mach_nlist::n_desc]->setValue(nlist.n_desc);
                 g_ppLinedEdit[N_mach_nlist::n_value]->setValue(nlist.n_value);
 
-                addComment(ui->tableWidget, N_mach_nlist::n_strx, HEADER_COLUMN_COMMENT, mach.getStringFromIndex(osStringTable.nOffset, osStringTable.nSize, nlist.n_strx));
+                addComment(ui->tableWidget, N_mach_nlist::n_strx, HEADER_COLUMN_COMMENT,
+                           mach.getStringFromIndex(osStringTable.nOffset, osStringTable.nSize, nlist.n_strx));
             } else {
                 XMACH_DEF::nlist nlist = mach._read_nlist(nHeaderOffset);
 
@@ -982,7 +988,8 @@ void MACHSectionHeaderWidget::reloadData()
                 g_ppLinedEdit[N_mach_nlist::n_desc]->setValue(nlist.n_desc);
                 g_ppLinedEdit[N_mach_nlist::n_value]->setValue(nlist.n_value);
 
-                addComment(ui->tableWidget, N_mach_nlist::n_strx, HEADER_COLUMN_COMMENT, mach.getStringFromIndex(osStringTable.nOffset, osStringTable.nSize, nlist.n_strx));
+                addComment(ui->tableWidget, N_mach_nlist::n_strx, HEADER_COLUMN_COMMENT,
+                           mach.getStringFromIndex(osStringTable.nOffset, osStringTable.nSize, nlist.n_strx));
             }
 
             qint64 nOffset = nHeaderOffset;
@@ -1086,8 +1093,8 @@ void MACHSectionHeaderWidget::reloadData()
 
             blockSignals(false);
         } else if (nType == SMACH::TYPE_DYSYMTAB_toc) {
-            createHeaderTable(SMACH::TYPE_DYSYMTAB_toc, ui->tableWidget, N_mach_table_of_contents::records, g_ppLinedEdit, N_mach_table_of_contents::__data_size, getNumber(),
-                              getOffset());
+            createHeaderTable(SMACH::TYPE_DYSYMTAB_toc, ui->tableWidget, N_mach_table_of_contents::records, g_ppLinedEdit, N_mach_table_of_contents::__data_size,
+                              getNumber(), getOffset());
 
             blockSignals(true);
 
@@ -1127,7 +1134,8 @@ void MACHSectionHeaderWidget::reloadData()
 
             blockSignals(false);
         } else if ((nType == SMACH::TYPE_DYSYMTAB_indirectsyms) || (nType == SMACH::TYPE_DYSYMTAB_extrefsyms)) {
-            createHeaderTable(SMACH::TYPE_DYSYMTAB_indirectsyms, ui->tableWidget, N_mach_value::records, g_ppLinedEdit, N_mach_value::__data_size, getNumber(), getOffset());
+            createHeaderTable(SMACH::TYPE_DYSYMTAB_indirectsyms, ui->tableWidget, N_mach_value::records, g_ppLinedEdit, N_mach_value::__data_size, getNumber(),
+                              getOffset());
 
             blockSignals(true);
 

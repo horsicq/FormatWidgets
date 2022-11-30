@@ -630,10 +630,12 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
                 case SMACH::TYPE_mach_function_starts:
                     switch (nNdata) {
                         case N_mach_linkedit_data::dataoff:
-                            g_invWidget[INV_FUNCTION_STARTS_dataoff]->setOffsetAndSize(&mach, nValue, mach.get_linkedit_data(XMACH_DEF::S_LC_FUNCTION_STARTS).datasize, true);
+                            g_invWidget[INV_FUNCTION_STARTS_dataoff]->setOffsetAndSize(&mach, nValue, mach.get_linkedit_data(XMACH_DEF::S_LC_FUNCTION_STARTS).datasize,
+                                                                                       true);
                             break;
                         case N_mach_linkedit_data::datasize:
-                            g_invWidget[INV_FUNCTION_STARTS_dataoff]->setOffsetAndSize(&mach, mach.get_linkedit_data(XMACH_DEF::S_LC_FUNCTION_STARTS).dataoff, nValue, true);
+                            g_invWidget[INV_FUNCTION_STARTS_dataoff]->setOffsetAndSize(&mach, mach.get_linkedit_data(XMACH_DEF::S_LC_FUNCTION_STARTS).dataoff, nValue,
+                                                                                       true);
                             break;
                     }
                     break;
@@ -641,10 +643,12 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
                 case SMACH::TYPE_mach_code_signature:
                     switch (nNdata) {
                         case N_mach_linkedit_data::dataoff:
-                            g_invWidget[INV_CODE_SIGNATURE_dataoff]->setOffsetAndSize(&mach, nValue, mach.get_linkedit_data(XMACH_DEF::S_LC_CODE_SIGNATURE).datasize, true);
+                            g_invWidget[INV_CODE_SIGNATURE_dataoff]->setOffsetAndSize(&mach, nValue, mach.get_linkedit_data(XMACH_DEF::S_LC_CODE_SIGNATURE).datasize,
+                                                                                      true);
                             break;
                         case N_mach_linkedit_data::datasize:
-                            g_invWidget[INV_CODE_SIGNATURE_dataoff]->setOffsetAndSize(&mach, mach.get_linkedit_data(XMACH_DEF::S_LC_CODE_SIGNATURE).dataoff, nValue, true);
+                            g_invWidget[INV_CODE_SIGNATURE_dataoff]->setOffsetAndSize(&mach, mach.get_linkedit_data(XMACH_DEF::S_LC_CODE_SIGNATURE).dataoff, nValue,
+                                                                                      true);
                             break;
                     }
                     break;
@@ -1317,7 +1321,8 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
                 case SMACH::TYPE_mach_version_min:
                     switch (nNdata) {
                         case N_mach_version_min::version:
-                            addComment(ui->tableWidget_version_min, N_mach_version_min::version, HEADER_COLUMN_COMMENT, XBinary::fullVersionDwordToString((quint32)nValue));
+                            addComment(ui->tableWidget_version_min, N_mach_version_min::version, HEADER_COLUMN_COMMENT,
+                                       XBinary::fullVersionDwordToString((quint32)nValue));
                             break;
                         case N_mach_version_min::sdk:
                             addComment(ui->tableWidget_version_min, N_mach_version_min::sdk, HEADER_COLUMN_COMMENT, XBinary::fullVersionDwordToString((quint32)nValue));
@@ -1329,10 +1334,12 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
                 case SMACH::TYPE_mach_build_version:
                     switch (nNdata) {
                         case N_mach_build_version::minos:
-                            addComment(ui->tableWidget_build_version, N_mach_build_version::minos, HEADER_COLUMN_COMMENT, XBinary::fullVersionDwordToString((quint32)nValue));
+                            addComment(ui->tableWidget_build_version, N_mach_build_version::minos, HEADER_COLUMN_COMMENT,
+                                       XBinary::fullVersionDwordToString((quint32)nValue));
                             break;
                         case N_mach_build_version::sdk:
-                            addComment(ui->tableWidget_build_version, N_mach_build_version::sdk, HEADER_COLUMN_COMMENT, XBinary::fullVersionDwordToString((quint32)nValue));
+                            addComment(ui->tableWidget_build_version, N_mach_build_version::sdk, HEADER_COLUMN_COMMENT,
+                                       XBinary::fullVersionDwordToString((quint32)nValue));
                             break;
                     }
 
@@ -1722,10 +1729,11 @@ void MACHWidget::reloadData()
         } else if (nType == SMACH::TYPE_mach_header) {
             if (!isInitPresent(sInit)) {
                 if (!mach.is64()) {
-                    createHeaderTable(SMACH::TYPE_mach_header, ui->tableWidget_mach_header, N_mach_header::records32, g_lineEdit_mach_header, N_mach_header::__data_size - 1,
-                                      0);
+                    createHeaderTable(SMACH::TYPE_mach_header, ui->tableWidget_mach_header, N_mach_header::records32, g_lineEdit_mach_header,
+                                      N_mach_header::__data_size - 1, 0);
                 } else {
-                    createHeaderTable(SMACH::TYPE_mach_header, ui->tableWidget_mach_header, N_mach_header::records64, g_lineEdit_mach_header, N_mach_header::__data_size, 0);
+                    createHeaderTable(SMACH::TYPE_mach_header, ui->tableWidget_mach_header, N_mach_header::records64, g_lineEdit_mach_header, N_mach_header::__data_size,
+                                      0);
                 }
 
                 g_comboBox[CB_mach_header_magic] =
@@ -1877,7 +1885,8 @@ void MACHWidget::reloadData()
 
                 g_invWidget[INV_rebase_off] =
                     createInvWidget(ui->tableWidget_dyld_info_only, SMACH::TYPE_mach_dyld_info_only, N_mach_dyld_info::rebase_off, InvWidget::TYPE_HEX);
-                g_invWidget[INV_bind_off] = createInvWidget(ui->tableWidget_dyld_info_only, SMACH::TYPE_mach_dyld_info_only, N_mach_dyld_info::bind_off, InvWidget::TYPE_HEX);
+                g_invWidget[INV_bind_off] =
+                    createInvWidget(ui->tableWidget_dyld_info_only, SMACH::TYPE_mach_dyld_info_only, N_mach_dyld_info::bind_off, InvWidget::TYPE_HEX);
                 g_invWidget[INV_weak_bind_off] =
                     createInvWidget(ui->tableWidget_dyld_info_only, SMACH::TYPE_mach_dyld_info_only, N_mach_dyld_info::weak_bind_off, InvWidget::TYPE_HEX);
                 g_invWidget[INV_lazy_bind_off] =
@@ -1945,7 +1954,8 @@ void MACHWidget::reloadData()
             }
         } else if (nType == SMACH::TYPE_mach_symtab) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SMACH::TYPE_mach_symtab, ui->tableWidget_symtab, N_mach_symtab::records, g_lineEdit_mach_symtab, N_mach_symtab::__data_size, 0, nDataOffset);
+                createHeaderTable(SMACH::TYPE_mach_symtab, ui->tableWidget_symtab, N_mach_symtab::records, g_lineEdit_mach_symtab, N_mach_symtab::__data_size, 0,
+                                  nDataOffset);
 
                 g_invWidget[INV_symoff] = createInvWidget(ui->tableWidget_symtab, SMACH::TYPE_mach_symtab, N_mach_symtab::symoff, InvWidget::TYPE_HEX);
                 g_invWidget[INV_stroff] = createInvWidget(ui->tableWidget_symtab, SMACH::TYPE_mach_symtab, N_mach_symtab::stroff, InvWidget::TYPE_HEX);
@@ -1971,13 +1981,14 @@ void MACHWidget::reloadData()
             }
         } else if (nType == SMACH::TYPE_mach_dysymtab) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SMACH::TYPE_mach_dysymtab, ui->tableWidget_dysymtab, N_mach_dysymtab::records, g_lineEdit_mach_dysymtab, N_mach_dysymtab::__data_size, 0,
-                                  nDataOffset);
+                createHeaderTable(SMACH::TYPE_mach_dysymtab, ui->tableWidget_dysymtab, N_mach_dysymtab::records, g_lineEdit_mach_dysymtab, N_mach_dysymtab::__data_size,
+                                  0, nDataOffset);
 
                 g_invWidget[INV_tocoff] = createInvWidget(ui->tableWidget_dysymtab, SMACH::TYPE_mach_dysymtab, N_mach_dysymtab::tocoff, InvWidget::TYPE_HEX);
                 g_invWidget[INV_modtaboff] = createInvWidget(ui->tableWidget_dysymtab, SMACH::TYPE_mach_dysymtab, N_mach_dysymtab::modtaboff, InvWidget::TYPE_HEX);
                 g_invWidget[INV_extrefsymoff] = createInvWidget(ui->tableWidget_dysymtab, SMACH::TYPE_mach_dysymtab, N_mach_dysymtab::extrefsymoff, InvWidget::TYPE_HEX);
-                g_invWidget[INV_indirectsymoff] = createInvWidget(ui->tableWidget_dysymtab, SMACH::TYPE_mach_dysymtab, N_mach_dysymtab::indirectsymoff, InvWidget::TYPE_HEX);
+                g_invWidget[INV_indirectsymoff] =
+                    createInvWidget(ui->tableWidget_dysymtab, SMACH::TYPE_mach_dysymtab, N_mach_dysymtab::indirectsymoff, InvWidget::TYPE_HEX);
                 g_invWidget[INV_extreloff] = createInvWidget(ui->tableWidget_dysymtab, SMACH::TYPE_mach_dysymtab, N_mach_dysymtab::extreloff, InvWidget::TYPE_HEX);
                 g_invWidget[INV_locreloff] = createInvWidget(ui->tableWidget_dysymtab, SMACH::TYPE_mach_dysymtab, N_mach_dysymtab::locreloff, InvWidget::TYPE_HEX);
 
@@ -2085,8 +2096,8 @@ void MACHWidget::reloadData()
         } else if (nType == SMACH::TYPE_mach_encryption_info) {
             if (!isInitPresent(sInit)) {
                 if (nDataSize == mach.get_encryption_info_command_64_size()) {
-                    createHeaderTable(SMACH::TYPE_mach_encryption_info, ui->tableWidget_encryption_info, N_mach_encryption_info::records64, g_lineEdit_mach_encryption_info,
-                                      N_mach_encryption_info::__data_size, 0, nDataOffset);
+                    createHeaderTable(SMACH::TYPE_mach_encryption_info, ui->tableWidget_encryption_info, N_mach_encryption_info::records64,
+                                      g_lineEdit_mach_encryption_info, N_mach_encryption_info::__data_size, 0, nDataOffset);
 
                     g_invWidget[INV_cryptoff] =
                         createInvWidget(ui->tableWidget_encryption_info, SMACH::TYPE_mach_encryption_info, N_mach_encryption_info::cryptoff, InvWidget::TYPE_HEX);
@@ -2102,8 +2113,8 @@ void MACHWidget::reloadData()
 
                     g_invWidget[INV_cryptoff]->setOffsetAndSize(&mach, encryption_info.cryptoff, encryption_info.cryptsize, true);
                 } else {
-                    createHeaderTable(SMACH::TYPE_mach_encryption_info, ui->tableWidget_encryption_info, N_mach_encryption_info::records32, g_lineEdit_mach_encryption_info,
-                                      N_mach_encryption_info::__data_size - 1, 0, nDataOffset);
+                    createHeaderTable(SMACH::TYPE_mach_encryption_info, ui->tableWidget_encryption_info, N_mach_encryption_info::records32,
+                                      g_lineEdit_mach_encryption_info, N_mach_encryption_info::__data_size - 1, 0, nDataOffset);
 
                     g_invWidget[INV_cryptoff] =
                         createInvWidget(ui->tableWidget_encryption_info, SMACH::TYPE_mach_encryption_info, N_mach_encryption_info::cryptoff, InvWidget::TYPE_HEX);
@@ -2200,8 +2211,8 @@ void MACHWidget::reloadData()
             }
         } else if (nType == SMACH::TYPE_mach_SuperBlob) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SMACH::TYPE_mach_SuperBlob, ui->tableWidget_SuperBlob, N_mach_SuperBlob::records, g_lineEdit_mach_SuperBlob, N_mach_SuperBlob::__data_size,
-                                  0, nDataOffset);
+                createHeaderTable(SMACH::TYPE_mach_SuperBlob, ui->tableWidget_SuperBlob, N_mach_SuperBlob::records, g_lineEdit_mach_SuperBlob,
+                                  N_mach_SuperBlob::__data_size, 0, nDataOffset);
 
                 blockSignals(true);
 
@@ -2937,7 +2948,8 @@ void MACHWidget::onTableView_id_library_currentRowChanged(const QModelIndex &cur
     Q_UNUSED(current)
     Q_UNUSED(previous)
 
-    loadHexSubdeviceByTableView(current.row(), SMACH::TYPE_mach_id_library, ui->widgetHex_id_library, ui->tableView_id_library, &g_subDevice[SMACH::TYPE_mach_id_library]);
+    loadHexSubdeviceByTableView(current.row(), SMACH::TYPE_mach_id_library, ui->widgetHex_id_library, ui->tableView_id_library,
+                                &g_subDevice[SMACH::TYPE_mach_id_library]);
 }
 
 void MACHWidget::onTableView_LOADFVMLIB_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
@@ -2945,7 +2957,8 @@ void MACHWidget::onTableView_LOADFVMLIB_currentRowChanged(const QModelIndex &cur
     Q_UNUSED(current)
     Q_UNUSED(previous)
 
-    loadHexSubdeviceByTableView(current.row(), SMACH::TYPE_mach_LOADFVMLIB, ui->widgetHex_LOADFVMLIB, ui->tableView_LOADFVMLIB, &g_subDevice[SMACH::TYPE_mach_LOADFVMLIB]);
+    loadHexSubdeviceByTableView(current.row(), SMACH::TYPE_mach_LOADFVMLIB, ui->widgetHex_LOADFVMLIB, ui->tableView_LOADFVMLIB,
+                                &g_subDevice[SMACH::TYPE_mach_LOADFVMLIB]);
 }
 
 void MACHWidget::onTableView_IDFVMLIB_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)

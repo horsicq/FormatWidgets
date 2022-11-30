@@ -300,7 +300,8 @@ void PEProcessData::_process()
             (*g_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT::ImportAddressTableRVA + 1, new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).ImportAddressTableRVA)));
             (*g_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT::ImportNameTableRVA + 1, new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).ImportNameTableRVA)));
             (*g_ppModel)
-                ->setItem(i, N_IMAGE_DELAYIMPORT::BoundImportAddressTableRVA + 1, new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).BoundImportAddressTableRVA)));
+                ->setItem(i, N_IMAGE_DELAYIMPORT::BoundImportAddressTableRVA + 1,
+                          new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).BoundImportAddressTableRVA)));
             (*g_ppModel)
                 ->setItem(i, N_IMAGE_DELAYIMPORT::UnloadInformationTableRVA + 1, new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).UnloadInformationTableRVA)));
             (*g_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT::TimeDateStamp + 1, new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).TimeDateStamp)));
@@ -365,9 +366,11 @@ void PEProcessData::_process()
             pItem->setData(i, Qt::DisplayRole);
 
             (*g_ppModel)->setItem(i, 0, pItem);
-            (*g_ppModel)->setItem(i, N_IMAGE_BOUNDIMPORT::TimeDateStamp + 1, new QStandardItem(XBinary::valueToHex(listBoundImportPositions.at(i).descriptor.TimeDateStamp)));
             (*g_ppModel)
-                ->setItem(i, N_IMAGE_BOUNDIMPORT::OffsetModuleName + 1, new QStandardItem(XBinary::valueToHex(listBoundImportPositions.at(i).descriptor.OffsetModuleName)));
+                ->setItem(i, N_IMAGE_BOUNDIMPORT::TimeDateStamp + 1, new QStandardItem(XBinary::valueToHex(listBoundImportPositions.at(i).descriptor.TimeDateStamp)));
+            (*g_ppModel)
+                ->setItem(i, N_IMAGE_BOUNDIMPORT::OffsetModuleName + 1,
+                          new QStandardItem(XBinary::valueToHex(listBoundImportPositions.at(i).descriptor.OffsetModuleName)));
             (*g_ppModel)
                 ->setItem(i, N_IMAGE_BOUNDIMPORT::NumberOfModuleForwarderRefs + 1,
                           new QStandardItem(XBinary::valueToHex(listBoundImportPositions.at(i).descriptor.NumberOfModuleForwarderRefs)));

@@ -711,13 +711,15 @@ void DEXWidget::on_pushButtonSave_FIELD_ID_ITEM_clicked()
 void DEXWidget::on_pushButtonSave_CLASS_DEF_ITEM_clicked()
 {
     if (g_pFilterTypes) {
-        XShortcutsWidget::saveModel(ui->tableView_CLASS_DEF_ITEM->model(), XBinary::getResultFileName(getBackupDevice(), QString("%1.txt").arg(QString("CLASS_DEF_ITEM"))));
+        XShortcutsWidget::saveModel(ui->tableView_CLASS_DEF_ITEM->model(),
+                                    XBinary::getResultFileName(getBackupDevice(), QString("%1.txt").arg(QString("CLASS_DEF_ITEM"))));
     }
 }
 
 void DEXWidget::on_pushButtonSave_METHOD_ID_ITEM_clicked()
 {
     if (g_pFilterTypes) {
-        XShortcutsWidget::saveModel(ui->tableView_METHOD_ID_ITEM->model(), XBinary::getResultFileName(getBackupDevice(), QString("%1.txt").arg(QString("METHOD_ID_ITEM"))));
+        XShortcutsWidget::saveModel(ui->tableView_METHOD_ID_ITEM->model(),
+                                    XBinary::getResultFileName(getBackupDevice(), QString("%1.txt").arg(QString("METHOD_ID_ITEM"))));
     }
 }

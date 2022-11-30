@@ -491,8 +491,9 @@ void MACHProcessData::_process()
             (*g_ppModel)->setItem(i, N_mach_table_of_contents::symbol_index + 1, new QStandardItem(XBinary::valueToHex(listRecords.at(i).toc.symbol_index)));
             (*g_ppModel)->setItem(i, N_mach_table_of_contents::module_index + 1, new QStandardItem(XBinary::valueToHex(listRecords.at(i).toc.module_index)));
             (*g_ppModel)
-                ->setItem(i, N_mach_table_of_contents::module_index + 2,
-                          new QStandardItem(g_pXMACH->getIndexSymbolName(listRecords.at(i).toc.symbol_index, &listNlistRecords, osStringTable.nOffset, osStringTable.nSize)));
+                ->setItem(
+                    i, N_mach_table_of_contents::module_index + 2,
+                    new QStandardItem(g_pXMACH->getIndexSymbolName(listRecords.at(i).toc.symbol_index, &listNlistRecords, osStringTable.nOffset, osStringTable.nSize)));
 
             incValue();
         }

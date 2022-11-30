@@ -374,7 +374,8 @@ void SearchStringsWidget::_editString()
             if (bSuccess) {
                 emit dataChanged();
             } else {
-                QMessageBox::critical(XOptions::getMainWidget(this), tr("Error"), tr("Cannot save file") + QString(": %1").arg(XBinary::getBackupFileName(getBackupDevice())));
+                QMessageBox::critical(XOptions::getMainWidget(this), tr("Error"),
+                                      tr("Cannot save file") + QString(": %1").arg(XBinary::getBackupFileName(getBackupDevice())));
             }
         }
     }
