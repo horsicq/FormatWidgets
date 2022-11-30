@@ -393,7 +393,8 @@ void FormatWidget::setLineEdit(XLineEditHEX *pLineEdit, qint32 nMaxLength, QStri
     pLineEdit->setProperty("OFFSET", nOffset);
 }
 
-void FormatWidget::ajustTableView(ProcessData *pProcessData, QStandardItemModel **ppModel, QTableView *pTableView, QSortFilterProxyModel *pProxyModel, bool bStretchLastSection)
+void FormatWidget::ajustTableView(ProcessData *pProcessData, QStandardItemModel **ppModel, QTableView *pTableView, QSortFilterProxyModel *pProxyModel,
+                                  bool bStretchLastSection)
 {
     QAbstractItemModel *pOldModel = 0;
 
@@ -1228,8 +1229,8 @@ void FormatWidget::registerShortcuts(bool bState)
     Q_UNUSED(bState)
 }
 
-bool FormatWidget::createHeaderTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nNumberOfRecords, int nPosition,
-                                     qint64 nOffset)
+bool FormatWidget::createHeaderTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nNumberOfRecords,
+                                     int nPosition, qint64 nOffset)
 {
     pTableWidget->setColumnCount(6);
     pTableWidget->setRowCount(nNumberOfRecords);

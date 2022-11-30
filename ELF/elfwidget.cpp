@@ -430,7 +430,8 @@ void ELFWidget::reloadData()
                     createHeaderTable(SELF::TYPE_Elf_Ehdr, ui->tableWidget_Elf_Ehdr, N_Elf_Ehdr::records32, g_lineEdit_Elf_Ehdr, N_Elf_Ehdr::__data_size, 0);
                 }
 
-                g_comboBox[CB_Elf_Ehdr_mag] = createComboBox(ui->tableWidget_Elf_Ehdr, XELF::getIndentMagS(), SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::ei_mag, XComboBoxEx::CBTYPE_LIST);
+                g_comboBox[CB_Elf_Ehdr_mag] =
+                    createComboBox(ui->tableWidget_Elf_Ehdr, XELF::getIndentMagS(), SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::ei_mag, XComboBoxEx::CBTYPE_LIST);
                 g_comboBox[CB_Elf_Ehdr_iclass] =
                     createComboBox(ui->tableWidget_Elf_Ehdr, XELF::getIndentClassesS(), SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::ei_class, XComboBoxEx::CBTYPE_LIST);
                 g_comboBox[CB_Elf_Ehdr_idata] =
@@ -676,8 +677,8 @@ void ELFWidget::addDatasets(XELF *pElf, QTreeWidgetItem *pParent, QList<XBinary:
             pParent->addChild(createNewItem(SELF::TYPE_Elf_Rel, pListDataSets->at(i).sName, pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
                                             pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
         } else if (pListDataSets->at(i).nType == XELF::DS_DYNAMICTAGS) {
-            QTreeWidgetItem *pDynamicTags = createNewItem(SELF::TYPE_Elf_DynamicArrayTags, pListDataSets->at(i).sName, pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
-                                                          pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize);
+            QTreeWidgetItem *pDynamicTags = createNewItem(SELF::TYPE_Elf_DynamicArrayTags, pListDataSets->at(i).sName, pListDataSets->at(i).nOffset,
+                                                          pListDataSets->at(i).nSize, pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize);
 
             pParent->addChild(pDynamicTags);
 

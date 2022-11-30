@@ -161,8 +161,10 @@ const FW_DEF::HEADER_RECORD records32[] = {
     {GlobalFlagsSet, "GlobalFlagsSet", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32, GlobalFlagsSet), 4, "DWORD", FW_DEF::VAL_TYPE_DATA},
     {CriticalSectionDefaultTimeout, "CriticalSectionDefaultTimeout", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32, CriticalSectionDefaultTimeout), 4, "DWORD",
      FW_DEF::VAL_TYPE_DATA},
-    {DeCommitFreeBlockThreshold, "DeCommitFreeBlockThreshold", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32, DeCommitFreeBlockThreshold), 4, "DWORD", FW_DEF::VAL_TYPE_DATA},
-    {DeCommitTotalFreeThreshold, "DeCommitTotalFreeThreshold", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32, DeCommitTotalFreeThreshold), 4, "DWORD", FW_DEF::VAL_TYPE_DATA},
+    {DeCommitFreeBlockThreshold, "DeCommitFreeBlockThreshold", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32, DeCommitFreeBlockThreshold), 4, "DWORD",
+     FW_DEF::VAL_TYPE_DATA},
+    {DeCommitTotalFreeThreshold, "DeCommitTotalFreeThreshold", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32, DeCommitTotalFreeThreshold), 4, "DWORD",
+     FW_DEF::VAL_TYPE_DATA},
     {LockPrefixTable, "LockPrefixTable", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32, LockPrefixTable), 4, "DWORD", FW_DEF::VAL_TYPE_DATA},
     {MaximumAllocationSize, "MaximumAllocationSize", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32, MaximumAllocationSize), 4, "DWORD", FW_DEF::VAL_TYPE_DATA},
     {VirtualMemoryThreshold, "VirtualMemoryThreshold", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32, VirtualMemoryThreshold), 4, "DWORD", FW_DEF::VAL_TYPE_DATA},
@@ -258,8 +260,10 @@ const FW_DEF::HEADER_RECORD records64[] = {
      FW_DEF::VAL_TYPE_ADDRESS},
     {GuardAddressTakenIatEntryCount, "GuardAddressTakenIatEntryCount", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, GuardAddressTakenIatEntryCount), 8, "ULONGLONG",
      FW_DEF::VAL_TYPE_DATA},
-    {GuardLongJumpTargetTable, "GuardLongJumpTargetTable", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, GuardLongJumpTargetTable), 8, "ULONGLONG", FW_DEF::VAL_TYPE_ADDRESS},
-    {GuardLongJumpTargetCount, "GuardLongJumpTargetCount", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, GuardLongJumpTargetCount), 8, "ULONGLONG", FW_DEF::VAL_TYPE_DATA},
+    {GuardLongJumpTargetTable, "GuardLongJumpTargetTable", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, GuardLongJumpTargetTable), 8, "ULONGLONG",
+     FW_DEF::VAL_TYPE_ADDRESS},
+    {GuardLongJumpTargetCount, "GuardLongJumpTargetCount", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, GuardLongJumpTargetCount), 8, "ULONGLONG",
+     FW_DEF::VAL_TYPE_DATA},
     {DynamicValueRelocTable, "DynamicValueRelocTable", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, DynamicValueRelocTable), 8, "ULONGLONG", FW_DEF::VAL_TYPE_ADDRESS},
     {CHPEMetadataPointer, "CHPEMetadataPointer", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, CHPEMetadataPointer), 8, "ULONGLONG", FW_DEF::VAL_TYPE_ADDRESS},
     {GuardRFFailureRoutine, "GuardRFFailureRoutine", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, GuardRFFailureRoutine), 8, "ULONGLONG", FW_DEF::VAL_TYPE_ADDRESS},
@@ -276,17 +280,20 @@ const FW_DEF::HEADER_RECORD records64[] = {
     {Reserved3, "Reserved3", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, Reserved3), 4, "DWORD", FW_DEF::VAL_TYPE_DATA},
     {EnclaveConfigurationPointer, "EnclaveConfigurationPointer", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, EnclaveConfigurationPointer), 8, "ULONGLONG",
      FW_DEF::VAL_TYPE_ADDRESS},
-    {VolatileMetadataPointer, "VolatileMetadataPointer", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, VolatileMetadataPointer), 8, "ULONGLONG", FW_DEF::VAL_TYPE_ADDRESS},
-    {GuardEHContinuationTable, "GuardEHContinuationTable", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, GuardEHContinuationTable), 8, "ULONGLONG", FW_DEF::VAL_TYPE_ADDRESS},
-    {GuardEHContinuationCount, "GuardEHContinuationCount", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, GuardEHContinuationCount), 8, "ULONGLONG", FW_DEF::VAL_TYPE_ADDRESS},
+    {VolatileMetadataPointer, "VolatileMetadataPointer", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, VolatileMetadataPointer), 8, "ULONGLONG",
+     FW_DEF::VAL_TYPE_ADDRESS},
+    {GuardEHContinuationTable, "GuardEHContinuationTable", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, GuardEHContinuationTable), 8, "ULONGLONG",
+     FW_DEF::VAL_TYPE_ADDRESS},
+    {GuardEHContinuationCount, "GuardEHContinuationCount", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, GuardEHContinuationCount), 8, "ULONGLONG",
+     FW_DEF::VAL_TYPE_ADDRESS},
     {GuardXFGCheckFunctionPointer, "GuardXFGCheckFunctionPointer", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, GuardXFGCheckFunctionPointer), 8, "ULONGLONG",
      FW_DEF::VAL_TYPE_ADDRESS},
     {GuardXFGDispatchFunctionPointer, "GuardXFGDispatchFunctionPointer", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, GuardXFGDispatchFunctionPointer), 8, "ULONGLONG",
      FW_DEF::VAL_TYPE_ADDRESS},
     {GuardXFGTableDispatchFunctionPointer, "GuardXFGTableDispatchFunctionPointer", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, GuardXFGTableDispatchFunctionPointer), 8,
      "ULONGLONG", FW_DEF::VAL_TYPE_ADDRESS},
-    {CastGuardOsDeterminedFailureMode, "CastGuardOsDeterminedFailureMode", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, CastGuardOsDeterminedFailureMode), 8, "ULONGLONG",
-     FW_DEF::VAL_TYPE_ADDRESS},
+    {CastGuardOsDeterminedFailureMode, "CastGuardOsDeterminedFailureMode", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, CastGuardOsDeterminedFailureMode), 8,
+     "ULONGLONG", FW_DEF::VAL_TYPE_ADDRESS},
     {GuardMemcpyFunctionPointer, "GuardMemcpyFunctionPointer", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, GuardMemcpyFunctionPointer), 8, "ULONGLONG",
      FW_DEF::VAL_TYPE_ADDRESS},
 };
@@ -356,10 +363,12 @@ const FW_DEF::HEADER_RECORD records[] = {
 }
 
 namespace N_IMAGE_IMPORT_FUNCTION {
-const FW_DEF::HEADER_RECORD records32[] = {
-    {Thunk, "Thunk", 0, 4, "DWORD", FW_DEF::VAL_TYPE_RELADDRESS}, {Ordinal, "Ordinal", 0, 4, "DWORD", FW_DEF::VAL_TYPE_DATA}, {Hint, "Hint", 0, 2, "WORD", FW_DEF::VAL_TYPE_DATA}};
-const FW_DEF::HEADER_RECORD records64[] = {
-    {Thunk, "Thunk", 0, 8, "QWORD", FW_DEF::VAL_TYPE_RELADDRESS}, {Ordinal, "Ordinal", 0, 8, "QWORD", FW_DEF::VAL_TYPE_DATA}, {Hint, "Hint", 0, 2, "WORD", FW_DEF::VAL_TYPE_DATA}};
+const FW_DEF::HEADER_RECORD records32[] = {{Thunk, "Thunk", 0, 4, "DWORD", FW_DEF::VAL_TYPE_RELADDRESS},
+                                           {Ordinal, "Ordinal", 0, 4, "DWORD", FW_DEF::VAL_TYPE_DATA},
+                                           {Hint, "Hint", 0, 2, "WORD", FW_DEF::VAL_TYPE_DATA}};
+const FW_DEF::HEADER_RECORD records64[] = {{Thunk, "Thunk", 0, 8, "QWORD", FW_DEF::VAL_TYPE_RELADDRESS},
+                                           {Ordinal, "Ordinal", 0, 8, "QWORD", FW_DEF::VAL_TYPE_DATA},
+                                           {Hint, "Hint", 0, 2, "WORD", FW_DEF::VAL_TYPE_DATA}};
 }  // namespace N_IMAGE_IMPORT_FUNCTION
 
 namespace N_IMAGE_DELAYIMPORT_FUNCTION {
@@ -412,7 +421,8 @@ const FW_DEF::HEADER_RECORD records[] = {
     {ImportNameTableRVA, "ImportNameTableRVA", offsetof(XPE_DEF::S_IMAGE_DELAYLOAD_DESCRIPTOR, ImportNameTableRVA), 4, "DWORD", FW_DEF::VAL_TYPE_RELADDRESS},
     {BoundImportAddressTableRVA, "BoundImportAddressTableRVA", offsetof(XPE_DEF::S_IMAGE_DELAYLOAD_DESCRIPTOR, BoundImportAddressTableRVA), 4, "DWORD",
      FW_DEF::VAL_TYPE_RELADDRESS},
-    {UnloadInformationTableRVA, "UnloadInformationTableRVA", offsetof(XPE_DEF::S_IMAGE_DELAYLOAD_DESCRIPTOR, UnloadInformationTableRVA), 4, "DWORD", FW_DEF::VAL_TYPE_RELADDRESS},
+    {UnloadInformationTableRVA, "UnloadInformationTableRVA", offsetof(XPE_DEF::S_IMAGE_DELAYLOAD_DESCRIPTOR, UnloadInformationTableRVA), 4, "DWORD",
+     FW_DEF::VAL_TYPE_RELADDRESS},
     {TimeDateStamp, "TimeDateStamp", offsetof(XPE_DEF::S_IMAGE_DELAYLOAD_DESCRIPTOR, TimeDateStamp), 4, "DWORD", FW_DEF::VAL_TYPE_UNIXTIME},
 };
 }

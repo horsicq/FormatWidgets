@@ -521,7 +521,8 @@ void PESectionHeaderWidget::reloadData()
         } else if (nType == SPE::TYPE_IMPORT) {
             createHeaderTable(SPE::TYPE_IMPORT, ui->tableWidget, N_IMAGE_IMPORT::records, g_ppLinedEdit, N_IMAGE_IMPORT::__data_size, getNumber());
 
-            g_ppInvWidget[N_IMAGE_IMPORT::INV_OriginalFirstThunk] = createInvWidget(ui->tableWidget, SPE::TYPE_IMPORT, N_IMAGE_IMPORT::OriginalFirstThunk, InvWidget::TYPE_HEX);
+            g_ppInvWidget[N_IMAGE_IMPORT::INV_OriginalFirstThunk] =
+                createInvWidget(ui->tableWidget, SPE::TYPE_IMPORT, N_IMAGE_IMPORT::OriginalFirstThunk, InvWidget::TYPE_HEX);
             g_ppInvWidget[N_IMAGE_IMPORT::INV_Name] = createInvWidget(ui->tableWidget, SPE::TYPE_IMPORT, N_IMAGE_IMPORT::Name, InvWidget::TYPE_HEX);
             g_ppInvWidget[N_IMAGE_IMPORT::INV_FirstThunk] = createInvWidget(ui->tableWidget, SPE::TYPE_IMPORT, N_IMAGE_IMPORT::FirstThunk, InvWidget::TYPE_HEX);
 
@@ -660,7 +661,8 @@ void PESectionHeaderWidget::reloadData()
 
             blockSignals(false);
         } else if (nType == SPE::TYPE_IMAGE_DIRECTORY_ENTRIES) {
-            createHeaderTable(SPE::TYPE_IMAGE_DIRECTORY_ENTRIES, ui->tableWidget, N_IMAGE_DATA_DIRECTORY::records, g_ppLinedEdit, N_IMAGE_DATA_DIRECTORY::__data_size, getNumber());
+            createHeaderTable(SPE::TYPE_IMAGE_DIRECTORY_ENTRIES, ui->tableWidget, N_IMAGE_DATA_DIRECTORY::records, g_ppLinedEdit, N_IMAGE_DATA_DIRECTORY::__data_size,
+                              getNumber());
 
             blockSignals(true);
 

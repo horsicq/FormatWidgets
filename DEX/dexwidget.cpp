@@ -425,7 +425,8 @@ void DEXWidget::reloadData()
             if (!isInitPresent(sInit)) {
                 createHeaderTable(SDEX::TYPE_HEADER, ui->tableWidget_Header, N_DEX_HEADER::records, g_lineEdit_HEADER, N_DEX_HEADER::__data_size, 0);
 
-                g_comboBox[CB_Dex_Header_magic] = createComboBox(ui->tableWidget_Header, XDEX::getHeaderMagics(), SDEX::TYPE_HEADER, N_DEX_HEADER::magic, XComboBoxEx::CBTYPE_LIST);
+                g_comboBox[CB_Dex_Header_magic] =
+                    createComboBox(ui->tableWidget_Header, XDEX::getHeaderMagics(), SDEX::TYPE_HEADER, N_DEX_HEADER::magic, XComboBoxEx::CBTYPE_LIST);
                 g_comboBox[CB_Dex_Header_version] =
                     createComboBox(ui->tableWidget_Header, XDEX::getHeaderVersions(), SDEX::TYPE_HEADER, N_DEX_HEADER::version, XComboBoxEx::CBTYPE_LIST);
                 g_comboBox[CB_Dex_Header_endian_tag] =

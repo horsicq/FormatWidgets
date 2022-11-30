@@ -1722,7 +1722,8 @@ void MACHWidget::reloadData()
         } else if (nType == SMACH::TYPE_mach_header) {
             if (!isInitPresent(sInit)) {
                 if (!mach.is64()) {
-                    createHeaderTable(SMACH::TYPE_mach_header, ui->tableWidget_mach_header, N_mach_header::records32, g_lineEdit_mach_header, N_mach_header::__data_size - 1, 0);
+                    createHeaderTable(SMACH::TYPE_mach_header, ui->tableWidget_mach_header, N_mach_header::records32, g_lineEdit_mach_header, N_mach_header::__data_size - 1,
+                                      0);
                 } else {
                     createHeaderTable(SMACH::TYPE_mach_header, ui->tableWidget_mach_header, N_mach_header::records64, g_lineEdit_mach_header, N_mach_header::__data_size, 0);
                 }
@@ -1731,8 +1732,8 @@ void MACHWidget::reloadData()
                     createComboBox(ui->tableWidget_mach_header, XMACH::getHeaderMagicsS(), SMACH::TYPE_mach_header, N_mach_header::magic, XComboBoxEx::CBTYPE_LIST);
                 g_comboBox[CB_mach_header_cputype] =
                     createComboBox(ui->tableWidget_mach_header, XMACH::getHeaderCpuTypesS(), SMACH::TYPE_mach_header, N_mach_header::cputype, XComboBoxEx::CBTYPE_LIST);
-                g_comboBox[CB_mach_header_cpusubtype] = createComboBox(ui->tableWidget_mach_header, XMACH::getHeaderCpuSubTypesS(mach.getHeader_cputype()), SMACH::TYPE_mach_header,
-                                                                       N_mach_header::cpusubtype, XComboBoxEx::CBTYPE_LIST);
+                g_comboBox[CB_mach_header_cpusubtype] = createComboBox(ui->tableWidget_mach_header, XMACH::getHeaderCpuSubTypesS(mach.getHeader_cputype()),
+                                                                       SMACH::TYPE_mach_header, N_mach_header::cpusubtype, XComboBoxEx::CBTYPE_LIST);
                 g_comboBox[CB_mach_header_filetype] =
                     createComboBox(ui->tableWidget_mach_header, XMACH::getHeaderFileTypesS(), SMACH::TYPE_mach_header, N_mach_header::filetype, XComboBoxEx::CBTYPE_LIST);
                 g_comboBox[CB_mach_header_flags] =
@@ -1874,13 +1875,15 @@ void MACHWidget::reloadData()
                 createHeaderTable(SMACH::TYPE_mach_dyld_info_only, ui->tableWidget_dyld_info_only, N_mach_dyld_info::records, g_lineEdit_mach_dyld_info_only,
                                   N_mach_dyld_info::__data_size, 0, nDataOffset);
 
-                g_invWidget[INV_rebase_off] = createInvWidget(ui->tableWidget_dyld_info_only, SMACH::TYPE_mach_dyld_info_only, N_mach_dyld_info::rebase_off, InvWidget::TYPE_HEX);
+                g_invWidget[INV_rebase_off] =
+                    createInvWidget(ui->tableWidget_dyld_info_only, SMACH::TYPE_mach_dyld_info_only, N_mach_dyld_info::rebase_off, InvWidget::TYPE_HEX);
                 g_invWidget[INV_bind_off] = createInvWidget(ui->tableWidget_dyld_info_only, SMACH::TYPE_mach_dyld_info_only, N_mach_dyld_info::bind_off, InvWidget::TYPE_HEX);
                 g_invWidget[INV_weak_bind_off] =
                     createInvWidget(ui->tableWidget_dyld_info_only, SMACH::TYPE_mach_dyld_info_only, N_mach_dyld_info::weak_bind_off, InvWidget::TYPE_HEX);
                 g_invWidget[INV_lazy_bind_off] =
                     createInvWidget(ui->tableWidget_dyld_info_only, SMACH::TYPE_mach_dyld_info_only, N_mach_dyld_info::lazy_bind_off, InvWidget::TYPE_HEX);
-                g_invWidget[INV_export_off] = createInvWidget(ui->tableWidget_dyld_info_only, SMACH::TYPE_mach_dyld_info_only, N_mach_dyld_info::export_off, InvWidget::TYPE_HEX);
+                g_invWidget[INV_export_off] =
+                    createInvWidget(ui->tableWidget_dyld_info_only, SMACH::TYPE_mach_dyld_info_only, N_mach_dyld_info::export_off, InvWidget::TYPE_HEX);
 
                 blockSignals(true);
 
@@ -2197,8 +2200,8 @@ void MACHWidget::reloadData()
             }
         } else if (nType == SMACH::TYPE_mach_SuperBlob) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SMACH::TYPE_mach_SuperBlob, ui->tableWidget_SuperBlob, N_mach_SuperBlob::records, g_lineEdit_mach_SuperBlob, N_mach_SuperBlob::__data_size, 0,
-                                  nDataOffset);
+                createHeaderTable(SMACH::TYPE_mach_SuperBlob, ui->tableWidget_SuperBlob, N_mach_SuperBlob::records, g_lineEdit_mach_SuperBlob, N_mach_SuperBlob::__data_size,
+                                  0, nDataOffset);
 
                 blockSignals(true);
 
@@ -2258,8 +2261,8 @@ void MACHWidget::reloadData()
             }
         } else if (nType == SMACH::TYPE_mach_unix_thread_x86_32) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SMACH::TYPE_mach_unix_thread_x86_32, ui->tableWidget_unix_thread_x86_32, N_mach_unix_thread_x86_32::records, g_lineEdit_mach_unix_thread_x86_32,
-                                  N_mach_unix_thread_x86_32::__data_size, 0, nDataOffset);
+                createHeaderTable(SMACH::TYPE_mach_unix_thread_x86_32, ui->tableWidget_unix_thread_x86_32, N_mach_unix_thread_x86_32::records,
+                                  g_lineEdit_mach_unix_thread_x86_32, N_mach_unix_thread_x86_32::__data_size, 0, nDataOffset);
 
                 blockSignals(true);
 
@@ -2291,8 +2294,8 @@ void MACHWidget::reloadData()
             }
         } else if (nType == SMACH::TYPE_mach_unix_thread_x86_64) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SMACH::TYPE_mach_unix_thread_x86_64, ui->tableWidget_unix_thread_x86_64, N_mach_unix_thread_x86_64::records, g_lineEdit_mach_unix_thread_x86_64,
-                                  N_mach_unix_thread_x86_64::__data_size, 0, nDataOffset);
+                createHeaderTable(SMACH::TYPE_mach_unix_thread_x86_64, ui->tableWidget_unix_thread_x86_64, N_mach_unix_thread_x86_64::records,
+                                  g_lineEdit_mach_unix_thread_x86_64, N_mach_unix_thread_x86_64::__data_size, 0, nDataOffset);
 
                 blockSignals(true);
 
@@ -2329,8 +2332,8 @@ void MACHWidget::reloadData()
             }
         } else if (nType == SMACH::TYPE_mach_unix_thread_arm_32) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SMACH::TYPE_mach_unix_thread_arm_32, ui->tableWidget_unix_thread_arm_32, N_mach_unix_thread_arm_32::records, g_lineEdit_mach_unix_thread_arm_32,
-                                  N_mach_unix_thread_arm_32::__data_size, 0, nDataOffset);
+                createHeaderTable(SMACH::TYPE_mach_unix_thread_arm_32, ui->tableWidget_unix_thread_arm_32, N_mach_unix_thread_arm_32::records,
+                                  g_lineEdit_mach_unix_thread_arm_32, N_mach_unix_thread_arm_32::__data_size, 0, nDataOffset);
 
                 blockSignals(true);
 
@@ -2363,8 +2366,8 @@ void MACHWidget::reloadData()
             }
         } else if (nType == SMACH::TYPE_mach_unix_thread_arm_64) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SMACH::TYPE_mach_unix_thread_arm_64, ui->tableWidget_unix_thread_arm_64, N_mach_unix_thread_arm_64::records, g_lineEdit_mach_unix_thread_arm_64,
-                                  N_mach_unix_thread_arm_64::__data_size, 0, nDataOffset);
+                createHeaderTable(SMACH::TYPE_mach_unix_thread_arm_64, ui->tableWidget_unix_thread_arm_64, N_mach_unix_thread_arm_64::records,
+                                  g_lineEdit_mach_unix_thread_arm_64, N_mach_unix_thread_arm_64::__data_size, 0, nDataOffset);
 
                 blockSignals(true);
 
@@ -2451,8 +2454,8 @@ void MACHWidget::reloadData()
             }
         } else if (nType == SMACH::TYPE_mach_unix_thread_ppc_32) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SMACH::TYPE_mach_unix_thread_ppc_32, ui->tableWidget_unix_thread_ppc_32, N_mach_unix_thread_ppc_32::records, g_lineEdit_mach_unix_thread_ppc_32,
-                                  N_mach_unix_thread_ppc_32::__data_size, 0, nDataOffset);
+                createHeaderTable(SMACH::TYPE_mach_unix_thread_ppc_32, ui->tableWidget_unix_thread_ppc_32, N_mach_unix_thread_ppc_32::records,
+                                  g_lineEdit_mach_unix_thread_ppc_32, N_mach_unix_thread_ppc_32::__data_size, 0, nDataOffset);
 
                 blockSignals(true);
 

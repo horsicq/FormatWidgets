@@ -223,7 +223,8 @@ FormatWidget::SV MACHSectionHeaderWidget::_setValue(QVariant vValue, int nStype,
                     switch (nNdata) {
                         case N_mach_nlist::n_strx:
                             XBinary::OFFSETSIZE osStringTable = mach.getStringTableOffsetSize();
-                            addComment(ui->tableWidget, N_mach_nlist::n_strx, HEADER_COLUMN_COMMENT, mach.getStringFromIndex(osStringTable.nOffset, osStringTable.nSize, nValue));
+                            addComment(ui->tableWidget, N_mach_nlist::n_strx, HEADER_COLUMN_COMMENT,
+                                       mach.getStringFromIndex(osStringTable.nOffset, osStringTable.nSize, nValue));
                             break;
                     }
 
@@ -953,8 +954,8 @@ void MACHSectionHeaderWidget::reloadData()
 
             blockSignals(false);
         } else if (nType == SMACH::TYPE_SYMBOLTABLE) {
-            createHeaderTable(SMACH::TYPE_SYMBOLTABLE, ui->tableWidget, bIs64 ? (N_mach_nlist::records64) : (N_mach_nlist::records32), g_ppLinedEdit, N_mach_nlist::__data_size,
-                              getNumber(), getOffset());
+            createHeaderTable(SMACH::TYPE_SYMBOLTABLE, ui->tableWidget, bIs64 ? (N_mach_nlist::records64) : (N_mach_nlist::records32), g_ppLinedEdit,
+                              N_mach_nlist::__data_size, getNumber(), getOffset());
 
             blockSignals(true);
 
@@ -1025,9 +1026,11 @@ void MACHSectionHeaderWidget::reloadData()
             blockSignals(false);
         } else if (nType == SMACH::TYPE_DYSYMTAB_modtab) {
             if (bIs64) {
-                createHeaderTable(SMACH::TYPE_DYSYMTAB_modtab, ui->tableWidget, N_mach_modtab64::records, g_ppLinedEdit, N_mach_modtab64::__data_size, getNumber(), getOffset());
+                createHeaderTable(SMACH::TYPE_DYSYMTAB_modtab, ui->tableWidget, N_mach_modtab64::records, g_ppLinedEdit, N_mach_modtab64::__data_size, getNumber(),
+                                  getOffset());
             } else {
-                createHeaderTable(SMACH::TYPE_DYSYMTAB_modtab, ui->tableWidget, N_mach_modtab32::records, g_ppLinedEdit, N_mach_modtab32::__data_size, getNumber(), getOffset());
+                createHeaderTable(SMACH::TYPE_DYSYMTAB_modtab, ui->tableWidget, N_mach_modtab32::records, g_ppLinedEdit, N_mach_modtab32::__data_size, getNumber(),
+                                  getOffset());
             }
 
             blockSignals(true);

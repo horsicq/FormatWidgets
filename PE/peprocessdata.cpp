@@ -263,8 +263,9 @@ void PEProcessData::_process()
             (*g_ppModel)->setItem(i, N_IMAGE_EXCEPTIONS::BeginAddress + 1, new QStandardItem(XBinary::valueToHex(listRFE.at(i).BeginAddress)));
             (*g_ppModel)->setItem(i, N_IMAGE_EXCEPTIONS::EndAddress + 1, new QStandardItem(XBinary::valueToHex(listRFE.at(i).EndAddress)));
             (*g_ppModel)->setItem(i, N_IMAGE_EXCEPTIONS::UnwindInfoAddress + 1, new QStandardItem(XBinary::valueToHex(listRFE.at(i).UnwindInfoAddress)));
-            (*g_ppModel)->setItem(i, N_IMAGE_EXCEPTIONS::UnwindInfoAddress + 2,
-                                  new QStandardItem(g_pPE->getMemoryRecordInfoByRelAddress(listRFE.at(i).BeginAddress)));  // Comment
+            (*g_ppModel)
+                ->setItem(i, N_IMAGE_EXCEPTIONS::UnwindInfoAddress + 2,
+                          new QStandardItem(g_pPE->getMemoryRecordInfoByRelAddress(listRFE.at(i).BeginAddress)));  // Comment
 
             incValue();
         }
@@ -298,8 +299,10 @@ void PEProcessData::_process()
             (*g_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT::ModuleHandleRVA + 1, new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).ModuleHandleRVA)));
             (*g_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT::ImportAddressTableRVA + 1, new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).ImportAddressTableRVA)));
             (*g_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT::ImportNameTableRVA + 1, new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).ImportNameTableRVA)));
-            (*g_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT::BoundImportAddressTableRVA + 1, new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).BoundImportAddressTableRVA)));
-            (*g_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT::UnloadInformationTableRVA + 1, new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).UnloadInformationTableRVA)));
+            (*g_ppModel)
+                ->setItem(i, N_IMAGE_DELAYIMPORT::BoundImportAddressTableRVA + 1, new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).BoundImportAddressTableRVA)));
+            (*g_ppModel)
+                ->setItem(i, N_IMAGE_DELAYIMPORT::UnloadInformationTableRVA + 1, new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).UnloadInformationTableRVA)));
             (*g_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT::TimeDateStamp + 1, new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).TimeDateStamp)));
             (*g_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT::TimeDateStamp + 2, new QStandardItem(sLibraryName));
 
@@ -363,7 +366,8 @@ void PEProcessData::_process()
 
             (*g_ppModel)->setItem(i, 0, pItem);
             (*g_ppModel)->setItem(i, N_IMAGE_BOUNDIMPORT::TimeDateStamp + 1, new QStandardItem(XBinary::valueToHex(listBoundImportPositions.at(i).descriptor.TimeDateStamp)));
-            (*g_ppModel)->setItem(i, N_IMAGE_BOUNDIMPORT::OffsetModuleName + 1, new QStandardItem(XBinary::valueToHex(listBoundImportPositions.at(i).descriptor.OffsetModuleName)));
+            (*g_ppModel)
+                ->setItem(i, N_IMAGE_BOUNDIMPORT::OffsetModuleName + 1, new QStandardItem(XBinary::valueToHex(listBoundImportPositions.at(i).descriptor.OffsetModuleName)));
             (*g_ppModel)
                 ->setItem(i, N_IMAGE_BOUNDIMPORT::NumberOfModuleForwarderRefs + 1,
                           new QStandardItem(XBinary::valueToHex(listBoundImportPositions.at(i).descriptor.NumberOfModuleForwarderRefs)));
