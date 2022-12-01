@@ -79,6 +79,8 @@ void PEWidget::clear()
 
     resetWidget();
 
+    ui->widgetTools->setData(0);
+
     ui->checkBoxReadonly->setChecked(true);
 
     ui->treeWidgetNavi->clear();
