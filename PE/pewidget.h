@@ -156,6 +156,7 @@ private slots:
     void on_pushButtonDump_Overlay_clicked();
     void on_pushButtonDump_DosStub_clicked();
     void on_pushButtonDumpAll_Sections_clicked();
+    void on_pushButtonSave_IMAGE_DOS_HEADER_clicked();
 
 private:
     enum CB {

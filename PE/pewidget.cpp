@@ -3627,3 +3627,8 @@ void PEWidget::on_pushButtonDumpAll_Sections_clicked()
 {
     dumpAll(ui->tableView_Sections);
 }
+
+void PEWidget::on_pushButtonSave_IMAGE_DOS_HEADER_clicked()
+{
+    saveHeaderTable(ui->tableWidget_IMAGE_DOS_HEADER, XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("IMAGE_DOS_HEADER"))));
+}
