@@ -78,6 +78,21 @@ void FormatsWidget::adjustView()
     XShortcutsWidget::adjustView();
 }
 
+void FormatsWidget::setAdvanced(bool bState)
+{
+    if (bState) {
+        ui->stackedWidgetTools->show();
+        ui->stackedWidgetMain->show();
+        ui->groupBoxBaseAddress->show();
+        ui->groupBoxEntryPoint->show();
+    } else {
+        ui->stackedWidgetTools->hide();
+        ui->stackedWidgetMain->hide();
+        ui->groupBoxBaseAddress->hide();
+        ui->groupBoxEntryPoint->hide();
+    }
+}
+
 FormatsWidget::~FormatsWidget()
 {
     delete ui;
