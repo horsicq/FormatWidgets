@@ -80,6 +80,8 @@ void PEWidget::clear()
     resetWidget();
 
     ui->widgetTools->setData(0);
+    XDisasmView::OPTIONS options = {};
+    ui->widgetDisasm_DosStub->setData(0,options);
 
     ui->checkBoxReadonly->setChecked(true);
 
@@ -134,7 +136,10 @@ void PEWidget::reload()
         }
 
         if (pe.getFileHeader_NumberOfSections()) {
-            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_SECTIONS, tr("Sections")));
+            QTreeWidgetItem *pItemSections = createNewItem(SPE::TYPE_SECTIONS, tr("Sections"));
+            ui->treeWidgetNavi->addTopLevelItem(pItemSections);
+
+            pItemSections->addChild(createNewItem(SPE::TYPE_SECTIONS_INFO, tr("Info")));
         }
 
         if (pe.isExportPresent()) {
@@ -2027,6 +2032,11 @@ void PEWidget::reloadData()
 
                 connect(ui->treeView_Resources->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTreeView_Resources_currentRowChanged(QModelIndex, QModelIndex)));
+
+                QList<XPE::RESOURCE_RECORD> listResources = pe.getResources();
+
+                ui->pushButtonExtractAllCursors_Resources->setEnabled(pe.isResourceGroupCursorsPresent(&listResources));
+                ui->pushButtonExtractAllIcons_Resources->setEnabled(pe.isResourceGroupIconsPresent(&listResources));
             }
         } else if (nType == SPE::TYPE_RESOURCES_STRINGTABLE) {
             if (!isInitPresent(sInit)) {
@@ -3596,10 +3606,19 @@ void PEWidget::on_pushButtonSave_IMAGE_DIRECTORY_ENTRIES_clicked()
 
 void PEWidget::on_pushButtonExtractAllIcons_Resources_clicked()
 {
-    QString sDirectory = QFileDialog::getExistingDirectory(this, tr("Dump all"), XBinary::getDeviceDirectory(getDevice()));
+    QString sDirectory = QFileDialog::getExistingDirectory(this, tr("Extract all icons"), XBinary::getDeviceDirectory(getDevice()));
 
     if (!sDirectory.isEmpty()) {
-        // TODO
+        XFormats::saveAllPEIconsToDirectory(getDevice(),sDirectory);
+    }
+}
+
+void PEWidget::on_pushButtonExtractAllCursors_Resources_clicked()
+{
+    QString sDirectory = QFileDialog::getExistingDirectory(this, tr("Extract all cursors"), XBinary::getDeviceDirectory(getDevice()));
+
+    if (!sDirectory.isEmpty()) {
+        XFormats::saveAllPECursorsToDirectory(getDevice(),sDirectory);
     }
 }
 
