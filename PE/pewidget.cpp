@@ -1930,6 +1930,15 @@ void PEWidget::reloadData()
                     ui->tableView_Sections->setCurrentIndex(ui->tableView_Sections->model()->index(0, 0));
                 }
             }
+        } else if (nType == SPE::TYPE_SECTIONS_INFO) {
+            if (!isInitPresent(sInit)) {
+                PEProcessData peProcessDataTree(SPE::TYPE_SECTIONS_INFO, &g_tvModel[SPE::TYPE_SECTIONS_INFO], &pe, 0, 0, 0, true);
+
+                ajustTreeView(&peProcessDataTree, &g_tvModel[SPE::TYPE_SECTIONS_INFO], ui->treeView_Sections_Info);
+
+//                connect(ui->treeView_Sections_Info->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
+//                        SLOT(onTreeView_Sections_Info_currentRowChanged(QModelIndex, QModelIndex)));
+            }
         } else if (nType == SPE::TYPE_EXPORT) {
             if (!isInitPresent(sInit)) {
                 createHeaderTable(SPE::TYPE_EXPORT, ui->tableWidget_ExportHeader, N_IMAGE_EXPORT::records, g_lineEdit_EXPORT, N_IMAGE_EXPORT::__data_size, 0);
@@ -2012,26 +2021,30 @@ void PEWidget::reloadData()
         } else if (nType == SPE::TYPE_RESOURCES) {
             if (!isInitPresent(sInit)) {
                 // Table
-                PEProcessData peProcessData(SPE::TYPE_RESOURCES, &g_tvModel[SPE::TYPE_RESOURCES], &pe, 0, 0, 0, false);
+                {
+                    PEProcessData peProcessData(SPE::TYPE_RESOURCES, &g_tvModel[SPE::TYPE_RESOURCES], &pe, 0, 0, 0, false);
 
-                ajustTableView(&peProcessData, &g_tvModel[SPE::TYPE_RESOURCES], ui->tableView_Resources, nullptr, false);
+                    ajustTableView(&peProcessData, &g_tvModel[SPE::TYPE_RESOURCES], ui->tableView_Resources, nullptr, false);
 
-                connect(ui->tableView_Resources->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
-                        SLOT(onTableView_Resources_currentRowChanged(QModelIndex, QModelIndex)));
+                    connect(ui->tableView_Resources->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
+                            SLOT(onTableView_Resources_currentRowChanged(QModelIndex, QModelIndex)));
 
-                if (g_tvModel[SPE::TYPE_RESOURCES]->rowCount()) {
-                    ui->tableView_Resources->setCurrentIndex(ui->tableView_Resources->model()->index(0, 0));
+                    if (g_tvModel[SPE::TYPE_RESOURCES]->rowCount()) {
+                        ui->tableView_Resources->setCurrentIndex(ui->tableView_Resources->model()->index(0, 0));
+                    }
                 }
 
                 // Tree
-                createListTable(SPE::TYPE_RESOURCES, ui->tableWidget_Resources, N_IMAGE_RESOURCES::records, g_lineEdit_Resources, N_IMAGE_RESOURCES::__data_size);
+                {
+                    createListTable(SPE::TYPE_RESOURCES, ui->tableWidget_Resources, N_IMAGE_RESOURCES::records, g_lineEdit_Resources, N_IMAGE_RESOURCES::__data_size);
 
-                PEProcessData peProcessDataTree(SPE::TYPE_RESOURCES, &g_tvModel[SPE::TYPE_RESOURCES_TREE], &pe, 0, 0, 0, true);
+                    PEProcessData peProcessDataTree(SPE::TYPE_RESOURCES, &g_tvModel[SPE::TYPE_RESOURCES_TREE], &pe, 0, 0, 0, true);
 
-                ajustTreeView(&peProcessDataTree, &g_tvModel[SPE::TYPE_RESOURCES_TREE], ui->treeView_Resources);
+                    ajustTreeView(&peProcessDataTree, &g_tvModel[SPE::TYPE_RESOURCES_TREE], ui->treeView_Resources);
 
-                connect(ui->treeView_Resources->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
-                        SLOT(onTreeView_Resources_currentRowChanged(QModelIndex, QModelIndex)));
+                    connect(ui->treeView_Resources->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
+                            SLOT(onTreeView_Resources_currentRowChanged(QModelIndex, QModelIndex)));
+                }
 
                 QList<XPE::RESOURCE_RECORD> listResources = pe.getResources();
 

@@ -46,7 +46,7 @@ void DEXProcessData::_process()
 
         setMaximum(nNumberOfMapItems);
 
-        setHeader(*g_ppModel, &listLabels);
+        setTableHeader(*g_ppModel, &listLabels);
 
         QMap<quint64, QString> mapTypes = XDEX::getTypesS();
 
@@ -83,7 +83,7 @@ void DEXProcessData::_process()
 
         setMaximum(nNumberOfIds);
 
-        setHeader(*g_ppModel, &listLabels);
+        setTableHeader(*g_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfIds) && (isRun()); i++) {
             QStandardItem *pItem = new QStandardItem(QString::number(i));
@@ -119,7 +119,7 @@ void DEXProcessData::_process()
 
         setMaximum(nNumberOfIds);
 
-        setHeader(*g_ppModel, &listLabels);
+        setTableHeader(*g_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfIds) && (isRun()); i++) {
             QString sString = g_pDEX->getTypeItemIdString(listTypeItemIds.at(i), &mapItemStrings, baData.data(), nDataSize, nDataOffset);
@@ -159,7 +159,7 @@ void DEXProcessData::_process()
 
         setMaximum(nNumberOfIds);
 
-        setHeader(*g_ppModel, &listLabels);
+        setTableHeader(*g_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfIds) && (isRun()); i++) {
             //            QString
@@ -205,7 +205,7 @@ void DEXProcessData::_process()
 
         setMaximum(nNumberOfIds);
 
-        setHeader(*g_ppModel, &listLabels);
+        setTableHeader(*g_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfIds) && (isRun()); i++) {
             QStandardItem *pItem = new QStandardItem(QString::number(i));
@@ -245,7 +245,7 @@ void DEXProcessData::_process()
 
         setMaximum(nNumberOfIds);
 
-        setHeader(*g_ppModel, &listLabels);
+        setTableHeader(*g_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfIds) && (isRun()); i++) {
             QStandardItem *pItem = new QStandardItem(QString::number(i));
@@ -278,7 +278,7 @@ void DEXProcessData::_process()
 
         setMaximum(nNumberOfDefs);
 
-        setHeader(*g_ppModel, &listLabels);
+        setTableHeader(*g_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfDefs) && (isRun()); i++) {
             QStandardItem *pItem = new QStandardItem(QString::number(i));

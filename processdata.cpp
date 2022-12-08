@@ -46,6 +46,20 @@ bool ProcessData::isRun()
     return !(g_pPdStruct->bIsStop);
 }
 
+void ProcessData::setModelTextAlignment(QStandardItemModel *pModel, qint32 nColumn, Qt::Alignment flag)
+{
+    qint32 nNumberOfRows = pModel->rowCount();
+
+    for (qint32 i = 0; i < nNumberOfRows; i++) {
+        pModel->item(i, nColumn)->setTextAlignment(flag);
+    }
+}
+
+XBinary::PDSTRUCT *ProcessData::getPdStruct()
+{
+    return g_pPdStruct;
+}
+
 void ProcessData::ajustTreeView(QWidget *pWidget, QTreeView *pTreeView)
 {
     Q_UNUSED(pWidget)
@@ -64,13 +78,18 @@ QList<QString> ProcessData::getStructList(const FW_DEF::HEADER_RECORD *pRecords,
     return listResult;
 }
 
-void ProcessData::setHeader(QStandardItemModel *pModel, QList<QString> *pListStrings)
+void ProcessData::setTableHeader(QStandardItemModel *pModel, QList<QString> *pListStrings)
 {
     int nNumberOfRecords = pListStrings->count();
 
     for (qint32 i = 0; i < nNumberOfRecords; i++) {
         pModel->setHeaderData(i, Qt::Horizontal, pListStrings->at(i));
     }
+}
+
+void ProcessData::setTreeHeader(QStandardItemModel *pModel, QList<QString> *pListStrings)
+{
+    pModel->setHorizontalHeaderLabels(*pListStrings);
 }
 
 void ProcessData::process()

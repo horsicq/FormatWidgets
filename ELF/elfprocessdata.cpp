@@ -68,7 +68,7 @@ void ELFProcessData::_process()
 
         setMaximum(nNumberOfSections);
 
-        setHeader(*g_ppModel, &listLabels);
+        setTableHeader(*g_ppModel, &listLabels);
 
         quint32 nMainStringSection = g_pELF->getSectionStringTable();
 
@@ -172,7 +172,7 @@ void ELFProcessData::_process()
 
         setMaximum(nNumberOfPrograms);
 
-        setHeader(*g_ppModel, &listLabels);
+        setTableHeader(*g_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfPrograms) && (isRun()); i++) {
             if (bIs64) {
@@ -243,7 +243,7 @@ void ELFProcessData::_process()
 
             setMaximum(nNumberOfSymbols);
 
-            setHeader(*g_ppModel, &listLabels);
+            setTableHeader(*g_ppModel, &listLabels);
 
             for (qint32 i = 0; (i < nNumberOfSymbols) && (isRun()); i++) {
                 QStandardItem *pItem = new QStandardItem;
@@ -288,7 +288,7 @@ void ELFProcessData::_process()
 
             setMaximum(nNumberOfSymbols);
 
-            setHeader(*g_ppModel, &listLabels);
+            setTableHeader(*g_ppModel, &listLabels);
 
             for (qint32 i = 0; (i < nNumberOfSymbols) && (isRun()); i++) {
                 QStandardItem *pItem = new QStandardItem;
@@ -340,7 +340,7 @@ void ELFProcessData::_process()
 
         setMaximum(nNumberOfTags);
 
-        setHeader(*g_ppModel, &listLabels);
+        setTableHeader(*g_ppModel, &listLabels);
 
         QMap<quint64, QString> mapTags = g_pELF->getDynamicTagsS();
 
@@ -381,7 +381,7 @@ void ELFProcessData::_process()
 
         setMaximum(nNumberOfNotes);
 
-        setHeader(*g_ppModel, &listLabels);
+        setTableHeader(*g_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfNotes) && (isRun()); i++) {
             QStandardItem *pItem = new QStandardItem(QString::number(i));
@@ -411,7 +411,7 @@ void ELFProcessData::_process()
 
         setMaximum(nNumberOfLibraries);
 
-        setHeader(*g_ppModel, &listLabels);
+        setTableHeader(*g_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfLibraries) && (isRun()); i++) {
             QStandardItem *pItem = new QStandardItem(QString::number(i));
@@ -456,7 +456,7 @@ void ELFProcessData::_process()
 
         setMaximum(nNumberOfRels);
 
-        setHeader(*g_ppModel, &listLabels);
+        setTableHeader(*g_ppModel, &listLabels);
 
         QMap<quint64, QString> mapTypes;
 
@@ -533,7 +533,7 @@ void ELFProcessData::_process()
 
         setMaximum(nNumberOfRels);
 
-        setHeader(*g_ppModel, &listLabels);
+        setTableHeader(*g_ppModel, &listLabels);
 
         QMap<quint64, QString> mapTypes;
 

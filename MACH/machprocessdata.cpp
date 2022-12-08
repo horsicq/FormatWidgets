@@ -48,7 +48,7 @@ void MACHProcessData::_process()
 
         setMaximum(nNumberOfRecords);
 
-        setHeader(*g_ppModel, &listLabels);
+        setTableHeader(*g_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfRecords) && (isRun()); i++) {
             QStandardItem *pItem = new QStandardItem;
@@ -87,7 +87,7 @@ void MACHProcessData::_process()
 
         setMaximum(nNumberOfRecords);
 
-        setHeader(*g_ppModel, &listLabels);
+        setTableHeader(*g_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfRecords) && (isRun()); i++) {
             QStandardItem *pItem = new QStandardItem;
@@ -125,7 +125,7 @@ void MACHProcessData::_process()
 
         setMaximum(nNumberOfRecords);
 
-        setHeader(*g_ppModel, &listLabels);
+        setTableHeader(*g_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfRecords) && (isRun()); i++) {
             QStandardItem *pItem = new QStandardItem;
@@ -161,7 +161,7 @@ void MACHProcessData::_process()
 
         setMaximum(nNumberOfRecords);
 
-        setHeader(*g_ppModel, &listLabels);
+        setTableHeader(*g_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfRecords) && (isRun()); i++) {
             QStandardItem *pItem = new QStandardItem;
@@ -234,7 +234,7 @@ void MACHProcessData::_process()
 
         setMaximum(nNumberOfRecords);
 
-        setHeader(*g_ppModel, &listLabels);
+        setTableHeader(*g_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfRecords) && (isRun()); i++) {
             QStandardItem *pItem = new QStandardItem;
@@ -314,7 +314,7 @@ void MACHProcessData::_process()
 
         setMaximum(nNumberOfRecords);
 
-        setHeader(*g_ppModel, &listLabels);
+        setTableHeader(*g_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfRecords) && (isRun()); i++) {
             QStandardItem *pItem = new QStandardItem;
@@ -364,7 +364,7 @@ void MACHProcessData::_process()
 
         setMaximum(nNumberOfRecords);
 
-        setHeader(*g_ppModel, &listLabels);
+        setTableHeader(*g_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfRecords) && (isRun()); i++) {
             QStandardItem *pItem = new QStandardItem;
@@ -408,7 +408,7 @@ void MACHProcessData::_process()
 
         setMaximum(nNumberOfRecords);
 
-        setHeader(*g_ppModel, &listLabels);
+        setTableHeader(*g_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfRecords) && (isRun()); i++) {
             QStandardItem *pItem = new QStandardItem;
@@ -451,7 +451,7 @@ void MACHProcessData::_process()
 
         setMaximum(nNumberOfRecords);
 
-        setHeader(*g_ppModel, &listLabels);
+        setTableHeader(*g_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfRecords) && (isRun()); i++) {
             QStandardItem *pItem = new QStandardItem;
@@ -481,7 +481,7 @@ void MACHProcessData::_process()
 
         setMaximum(nNumberOfRecords);
 
-        setHeader(*g_ppModel, &listLabels);
+        setTableHeader(*g_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfRecords) && (isRun()); i++) {
             QStandardItem *pItem = new QStandardItem;
@@ -515,7 +515,7 @@ void MACHProcessData::_process()
 
         setMaximum(nNumberOfRecords);
 
-        setHeader(*g_ppModel, &listLabels);
+        setTableHeader(*g_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfRecords) && (isRun()); i++) {
             QStandardItem *pItem = new QStandardItem;
@@ -575,7 +575,7 @@ void MACHProcessData::_process()
 
         setMaximum(nNumberOfRecords);
 
-        setHeader(*g_ppModel, &listLabels);
+        setTableHeader(*g_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfRecords) && (isRun()); i++) {
             QStandardItem *pItem = new QStandardItem;
@@ -607,7 +607,7 @@ void MACHProcessData::_process()
 
         setMaximum(nNumberOfRecords);
 
-        setHeader(*g_ppModel, &listLabels);
+        setTableHeader(*g_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfRecords) && (isRun()); i++) {
             QStandardItem *pItem = new QStandardItem;
@@ -641,7 +641,7 @@ void MACHProcessData::_process()
 
         setMaximum(nNumberOfRecords);
 
-        setHeader(*g_ppModel, &listLabels);
+        setTableHeader(*g_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfRecords) && (isRun()); i++) {
             QStandardItem *pItem = new QStandardItem;

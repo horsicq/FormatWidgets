@@ -41,11 +41,14 @@ public:
     void setMaximum(quint64 nMaximum);
     void incValue();
     bool isRun();
+    void setModelTextAlignment(QStandardItemModel *pModel, qint32 nColumn, Qt::Alignment flag);
+    XBinary::PDSTRUCT *getPdStruct();
     virtual void _process() = 0;
     virtual void ajustTableView(QWidget *pWidget, QTableView *pTableView) = 0;
     virtual void ajustTreeView(QWidget *pWidget, QTreeView *pTreeView);
     static QList<QString> getStructList(const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount);
-    static void setHeader(QStandardItemModel *pModel, QList<QString> *pListStrings);
+    static void setTableHeader(QStandardItemModel *pModel, QList<QString> *pListStrings);
+    static void setTreeHeader(QStandardItemModel *pModel, QList<QString> *pListStrings);
 
 public slots:
     void process();

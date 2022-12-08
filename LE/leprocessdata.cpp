@@ -44,7 +44,7 @@ void LEProcessData::_process()
 
         setMaximum(nNumberOfObjects);
 
-        setHeader(*g_ppModel, &listLabels);
+        setTableHeader(*g_ppModel, &listLabels);
 
         for (qint32 i = 0; i < nNumberOfObjects; i++) {
             QStandardItem *pItemNumber = new QStandardItem;

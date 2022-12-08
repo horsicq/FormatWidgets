@@ -48,7 +48,7 @@ void PEProcessData::_process()
 
         setMaximum(nNumberOfRecords);
 
-        setHeader(*g_ppModel, &listLabels);
+        setTableHeader(*g_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfRecords) && (isRun()); i++) {
             QStandardItem *pItemNumber = new QStandardItem;
@@ -87,6 +87,106 @@ void PEProcessData::_process()
 
             incValue();
         }
+
+        setModelTextAlignment(*g_ppModel, 2, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 3, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 4, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 5, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 6, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 7, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 8, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 9, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 10, Qt::AlignRight | Qt::AlignVCenter);
+    } else if (g_nType == SPE::TYPE_SECTIONS_INFO) {
+        // TODO
+        *g_ppModel = new QStandardItemModel;
+
+        QList<QString> listLabels;
+        listLabels.append(tr("Name"));
+        listLabels.append(tr("Relative address"));
+        listLabels.append(tr("Virtual size"));
+        listLabels.append(tr("File offset"));
+        listLabels.append(tr("Size"));
+        listLabels.append(tr("Flags"));
+        listLabels.append(tr("Info"));
+
+        setTreeHeader(*g_ppModel, &listLabels);
+
+        QList<XPE_DEF::IMAGE_SECTION_HEADER> listSectionHeaders = g_pPE->getSectionHeaders();
+        QList<XPE::SECTION_RECORD> listSectionRecords = g_pPE->getSectionRecords(&listSectionHeaders,false);
+        XBinary::_MEMORY_MAP memoryMap = g_pPE->getMemoryMap();
+
+        qint32 nNumberOfSections = listSectionRecords.count();
+
+        setMaximum(nNumberOfSections + 2);
+
+        QStandardItem *pItemNameHeader = nullptr;
+        QStandardItem *pItemNameOverlay = nullptr;
+
+        QList<QStandardItem *> listItemNameSections;
+
+        {
+            pItemNameHeader = new QStandardItem("");
+
+            QList<QStandardItem *> listItems;
+            listItems.append(pItemNameHeader);
+
+            listItems.append(new QStandardItem(XBinary::valueToHex((quint32)0)));
+            listItems.append(new QStandardItem(XBinary::valueToHex(g_pPE->getOptionalHeader_SizeOfHeaders())));
+            listItems.append(new QStandardItem(XBinary::valueToHex((quint32)0)));
+            listItems.append(new QStandardItem(XBinary::valueToHex(S_ALIGN_UP32(g_pPE->getOptionalHeader_SizeOfHeaders(),g_pPE->getOptionalHeader_SectionAlignment()))));
+            listItems.append(new QStandardItem(""));
+            listItems.append(new QStandardItem(tr("Header"))); // Info
+
+            (*g_ppModel)->appendRow(listItems);
+
+            incValue();
+        }
+
+        for (qint32 i = 0; i < nNumberOfSections; i++) {
+            QStandardItem *pItemName = new QStandardItem(listSectionRecords.at(i).sName);
+
+            QList<QStandardItem *> listItems;
+            listItems.append(pItemName);
+
+            listItems.append(new QStandardItem(XBinary::valueToHex(listSectionHeaders.at(i).PointerToRawData)));
+            listItems.append(new QStandardItem(XBinary::valueToHex(listSectionHeaders.at(i).SizeOfRawData)));
+            listItems.append(new QStandardItem(XBinary::valueToHex(listSectionHeaders.at(i).VirtualAddress)));
+            listItems.append(new QStandardItem(XBinary::valueToHex(listSectionHeaders.at(i).Misc.VirtualSize)));
+            listItems.append(new QStandardItem(XPE::sectionCharacteristicToString(listSectionHeaders.at(i).Characteristics)));
+            listItems.append(new QStandardItem("")); // Info
+
+            (*g_ppModel)->appendRow(listItems);
+
+            listItemNameSections.append(pItemName);
+
+            incValue();
+        }
+
+        if (g_pPE->isOverlayPresent(&memoryMap)) {
+            pItemNameOverlay = new QStandardItem("");
+
+            QList<QStandardItem *> listItems;
+            listItems.append(pItemNameOverlay);
+
+            listItems.append(new QStandardItem((quint32)(g_pPE->getOverlayOffset(&memoryMap))));
+            listItems.append(new QStandardItem((quint32)(g_pPE->getOverlaySize(&memoryMap))));
+            listItems.append(new QStandardItem(""));
+            listItems.append(new QStandardItem(""));
+            listItems.append(new QStandardItem(""));
+            listItems.append(new QStandardItem(tr("Overlay"))); // Info
+
+            (*g_ppModel)->appendRow(listItems);
+
+            incValue();
+        }
+
+        // TODO
+
+        setModelTextAlignment(*g_ppModel, 1, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 2, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 3, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 4, Qt::AlignRight | Qt::AlignVCenter);
     } else if (g_nType == SPE::TYPE_RELOCS) {
         QList<QString> listLabels;
         listLabels.append("");
@@ -102,7 +202,7 @@ void PEProcessData::_process()
 
         setMaximum(nNumberOfRecords);
 
-        setHeader(*g_ppModel, &listLabels);
+        setTableHeader(*g_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfRecords) && (isRun()); i++) {
             QStandardItem *pItem = new QStandardItem;
@@ -134,7 +234,7 @@ void PEProcessData::_process()
 
         setMaximum(nNumberOfRelocs);
 
-        setHeader(*g_ppModel, &listLabels);
+        setTableHeader(*g_ppModel, &listLabels);
 
         QMap<quint64, QString> mapTypes = g_pPE->getImageRelBasedS();
 
@@ -169,7 +269,7 @@ void PEProcessData::_process()
 
         setMaximum(nNumberOfIDs);
 
-        setHeader(*g_ppModel, &listLabels);
+        setTableHeader(*g_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfIDs) && (isRun()); i++) {
             QStandardItem *pItem = new QStandardItem;
@@ -199,7 +299,7 @@ void PEProcessData::_process()
 
         setMaximum(nNumberOfIPs);
 
-        setHeader(*g_ppModel, &listLabels);
+        setTableHeader(*g_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfIPs) && (isRun()); i++) {
             QStandardItem *pItem = new QStandardItem;
@@ -247,7 +347,7 @@ void PEProcessData::_process()
 
         setMaximum(nNumberOfRFEs);
 
-        setHeader(*g_ppModel, &listLabels);
+        setTableHeader(*g_ppModel, &listLabels);
 
         XBinary::_MEMORY_MAP memoryMap = g_pPE->getMemoryMap();
 
@@ -283,7 +383,7 @@ void PEProcessData::_process()
 
         setMaximum(nNumberOfDelayImports);
 
-        setHeader(*g_ppModel, &listLabels);
+        setTableHeader(*g_ppModel, &listLabels);
 
         XBinary::_MEMORY_MAP memoryMap = g_pPE->getMemoryMap();
 
@@ -325,7 +425,7 @@ void PEProcessData::_process()
 
         setMaximum(nNumberOfPositions);
 
-        setHeader(*g_ppModel, &listLabels);
+        setTableHeader(*g_ppModel, &listLabels);
 
         XBinary::_MEMORY_MAP memoryMap = g_pPE->getMemoryMap();
 
@@ -359,7 +459,7 @@ void PEProcessData::_process()
 
         setMaximum(nNumberOfPositions);
 
-        setHeader(*g_ppModel, &listLabels);
+        setTableHeader(*g_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfPositions) && (isRun()); i++) {
             QStandardItem *pItem = new QStandardItem;
@@ -394,7 +494,7 @@ void PEProcessData::_process()
 
         setMaximum(nNumberOfDebugs);
 
-        setHeader(*g_ppModel, &listLabels);
+        setTableHeader(*g_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfDebugs) && (isRun()); i++) {
             QStandardItem *pItem = new QStandardItem;
@@ -428,7 +528,7 @@ void PEProcessData::_process()
 
         setMaximum(nNumberOfRecords);
 
-        setHeader(*g_ppModel, &listLabels);
+        setTableHeader(*g_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfRecords) && (isRun()); i++) {
             XADDR nAddress = listCallbacks.at(i);
@@ -463,7 +563,7 @@ void PEProcessData::_process()
 
         setMaximum(nNumberOfDIPs);
 
-        setHeader(*g_ppModel, &listLabels);
+        setTableHeader(*g_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfDIPs) && (isRun()); i++) {
             QStandardItem *pItem = new QStandardItem;
@@ -590,7 +690,7 @@ void PEProcessData::_process()
 
             setMaximum(nNumberOfRecords);
 
-            setHeader(*g_ppModel, &listLabels);
+            setTableHeader(*g_ppModel, &listLabels);
 
             for (qint32 i = 0; (i < nNumberOfRecords) && (isRun()); i++) {
                 QStandardItem *pItemNumber = new QStandardItem;
@@ -639,7 +739,7 @@ void PEProcessData::_process()
 
         setMaximum(nNumberOfRecords);
 
-        setHeader(*g_ppModel, &listLabels);
+        setTableHeader(*g_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfRecords) && (isRun()); i++) {
             QStandardItem *pItem = new QStandardItem;
@@ -729,7 +829,7 @@ void PEProcessData::_process()
 
         setMaximum(nNumberOfRecords);
 
-        setHeader(*g_ppModel, &listLabels);
+        setTableHeader(*g_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfRecords) && (isRun()); i++) {
             QStandardItem *pItemNumber = new QStandardItem;
@@ -741,7 +841,7 @@ void PEProcessData::_process()
             (*g_ppModel)->setItem(i, 1, new QStandardItem(XBinary::valueToHex(listRichSignatures.at(i).nId)));
             (*g_ppModel)->setItem(i, 2, new QStandardItem(QString::number(listRichSignatures.at(i).nVersion)));
             (*g_ppModel)->setItem(i, 3, new QStandardItem(QString::number(listRichSignatures.at(i).nCount)));
-            (*g_ppModel)->setItem(i, 4, new QStandardItem(SpecAbstract::getMsRichString(listRichSignatures.at(i).nId, listRichSignatures.at(i).nVersion)));
+            (*g_ppModel)->setItem(i, 4, new QStandardItem(SpecAbstract::getMsRichString(listRichSignatures.at(i).nId, listRichSignatures.at(i).nVersion, getPdStruct())));
 
             incValue();
         }

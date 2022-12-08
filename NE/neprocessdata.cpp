@@ -47,7 +47,7 @@ void NEProcessData::_process()
 
         setMaximum(nNumberOfSegments);
 
-        setHeader(*g_ppModel, &listLabels);
+        setTableHeader(*g_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfSegments) && (isRun()); i++) {
             QStandardItem *pItem = new QStandardItem(QString::number(i));
