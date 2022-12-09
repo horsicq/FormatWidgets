@@ -51,7 +51,11 @@ void ProcessData::setModelTextAlignment(QStandardItemModel *pModel, qint32 nColu
     qint32 nNumberOfRows = pModel->rowCount();
 
     for (qint32 i = 0; i < nNumberOfRows; i++) {
-        pModel->item(i, nColumn)->setTextAlignment(flag);
+        QStandardItem *pItem = pModel->item(i, nColumn);
+
+        if (pItem) {
+            pItem->setTextAlignment(flag);
+        }
     }
 }
 

@@ -176,7 +176,7 @@ bool SearchStringsWidget::isReadonly()
 void SearchStringsWidget::on_pushButtonSave_clicked()
 {
     if (g_pFilter) {
-        XShortcutsWidget::saveModel(g_pFilter, XBinary::getResultFileName(g_pDevice, QString("%1.txt").arg(tr("Strings"))));
+        XShortcutsWidget::saveTableModel(g_pFilter, XBinary::getResultFileName(g_pDevice, QString("%1.txt").arg(tr("Strings"))));
     }
 }
 

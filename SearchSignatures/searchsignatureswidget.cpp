@@ -124,7 +124,7 @@ void SearchSignaturesWidget::adjustView()
 void SearchSignaturesWidget::on_pushButtonSave_clicked()
 {
     if (g_pModel) {
-        XShortcutsWidget::saveModel(g_pModel, XBinary::getResultFileName(g_pDevice, QString("%1.txt").arg(tr("Signatures"))));
+        XShortcutsWidget::saveTableModel(g_pModel, XBinary::getResultFileName(g_pDevice, QString("%1.txt").arg(tr("Signatures"))));
     }
 }
 

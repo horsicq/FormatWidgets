@@ -1238,22 +1238,22 @@ void ELFWidget::on_toolButtonNext_clicked()
 
 void ELFWidget::on_pushButtonSaveSections_clicked()
 {
-    XShortcutsWidget::saveModel(ui->tableView_Elf_Shdr->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(tr("Sections"))));
+    XShortcutsWidget::saveTableModel(ui->tableView_Elf_Shdr->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(tr("Sections"))));
 }
 
 void ELFWidget::on_pushButtonSavePrograms_clicked()
 {
-    XShortcutsWidget::saveModel(ui->tableView_Elf_Phdr->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Programs"))));
+    XShortcutsWidget::saveTableModel(ui->tableView_Elf_Phdr->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Programs"))));
 }
 
 void ELFWidget::on_pushButtonSave_Rela_clicked()
 {
-    XShortcutsWidget::saveModel(ui->tableView_Rela->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Rela"))));
+    XShortcutsWidget::saveTableModel(ui->tableView_Rela->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Rela"))));
 }
 
 void ELFWidget::on_pushButtonSave_Rel_clicked()
 {
-    XShortcutsWidget::saveModel(ui->tableView_Rel->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Rel"))));
+    XShortcutsWidget::saveTableModel(ui->tableView_Rel->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Rel"))));
 }
 
 void ELFWidget::on_pushButtonSave_Elf_Ehdr_clicked()

@@ -3579,7 +3579,7 @@ void PEWidget::disasmTLSCallback()
 
 void PEWidget::on_pushButtonSave_Sections_clicked()
 {
-    XShortcutsWidget::saveModel(ui->tableView_Sections->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(tr("Sections"))));
+    XShortcutsWidget::saveTableModel(ui->tableView_Sections->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(tr("Sections"))));
 }
 
 void PEWidget::on_tableView_Resources_StringTable_customContextMenuRequested(const QPoint &pos)
@@ -3604,12 +3604,12 @@ void PEWidget::stringTableHex()
 
 void PEWidget::on_pushButtonSave_Debug_clicked()
 {
-    XShortcutsWidget::saveModel(ui->tableView_Debug->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Debug"))));
+    XShortcutsWidget::saveTableModel(ui->tableView_Debug->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Debug"))));
 }
 
 void PEWidget::on_pushButtonSave_Exception_clicked()
 {
-    XShortcutsWidget::saveModel(ui->tableView_Exceptions->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Exceptions"))));
+    XShortcutsWidget::saveTableModel(ui->tableView_Exceptions->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Exceptions"))));
 }
 
 void PEWidget::on_pushButtonSave_IMAGE_DIRECTORY_ENTRIES_clicked()
@@ -3642,7 +3642,7 @@ void PEWidget::on_pushButtonDumpAll_Resources_clicked()
 
 void PEWidget::on_pushButtonSave_Resources_clicked()
 {
-    XShortcutsWidget::saveModel(ui->tableView_Resources->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Resources"))));
+    XShortcutsWidget::saveTableModel(ui->tableView_Resources->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Resources"))));
 }
 
 void PEWidget::on_pushButtonDump_Overlay_clicked()
@@ -3663,4 +3663,34 @@ void PEWidget::on_pushButtonDumpAll_Sections_clicked()
 void PEWidget::on_pushButtonSave_IMAGE_DOS_HEADER_clicked()
 {
     saveHeaderTable(ui->tableWidget_IMAGE_DOS_HEADER, XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("IMAGE_DOS_HEADER"))));
+}
+
+void PEWidget::on_pushButtonSave_IMAGE_OPTIONAL_HEADER_clicked()
+{
+    saveHeaderTable(ui->tableWidget_IMAGE_OPTIONAL_HEADER, XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("IMAGE_OPTIONAL_HEADER"))));
+}
+
+void PEWidget::on_pushButtonSave_IMAGE_NT_HEADERS_clicked()
+{
+    saveHeaderTable(ui->tableWidget_IMAGE_NT_HEADERS, XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("IMAGE_NT_HEADERS"))));
+}
+
+void PEWidget::on_pushButtonSave_IMAGE_FILE_HEADER_clicked()
+{
+    saveHeaderTable(ui->tableWidget_IMAGE_FILE_HEADER, XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("IMAGE_FILE_HEADER"))));
+}
+
+void PEWidget::on_pushButtonSave_BoundImport_clicked()
+{
+    XShortcutsWidget::saveTableModel(ui->tableView_BoundImport->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("BoundImport"))));
+}
+
+void PEWidget::on_pushButtonSave_Certificate_clicked()
+{
+    XShortcutsWidget::saveTreeModel(ui->treeView_Certificate->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Certificate"))));
+}
+
+void PEWidget::on_pushButtonSave_Sections_Info_clicked()
+{
+    XShortcutsWidget::saveTreeModel(ui->treeView_Sections_Info->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Sections_Info"))));
 }

@@ -1030,7 +1030,7 @@ void FormatWidget::saveHeaderTable(QTableWidget *pTableWidget, QString sFileName
     if (!sFileName.isEmpty()) {
         QStandardItemModel *pModel = getHeaderTableModel(pTableWidget);
 
-        if (!XOptions::saveModel(pModel, sFileName)) {
+        if (!XOptions::saveTableModel(pModel, sFileName)) {
             QMessageBox::critical(XOptions::getMainWidget(this), tr("Error"), QString("%1: %2").arg(tr("Cannot save file"), sFileName));
         }
 
@@ -1259,6 +1259,7 @@ bool FormatWidget::createHeaderTable(int nType, QTableWidget *pTableWidget, cons
             pItemOffset->setText(XBinary::valueToHex((quint16)pRecords[i].nOffset));
         }
 
+        pItemOffset->setTextAlignment(Qt::AlignRight);
         pTableWidget->setItem(i, HEADER_COLUMN_OFFSET, pItemOffset);
 
         QTableWidgetItem *pItemType = new QTableWidgetItem;

@@ -158,6 +158,12 @@ private slots:
     void on_pushButtonDump_DosStub_clicked();
     void on_pushButtonDumpAll_Sections_clicked();
     void on_pushButtonSave_IMAGE_DOS_HEADER_clicked();
+    void on_pushButtonSave_IMAGE_OPTIONAL_HEADER_clicked();
+    void on_pushButtonSave_IMAGE_NT_HEADERS_clicked();
+    void on_pushButtonSave_IMAGE_FILE_HEADER_clicked();
+    void on_pushButtonSave_BoundImport_clicked();
+    void on_pushButtonSave_Certificate_clicked();
+    void on_pushButtonSave_Sections_Info_clicked();
 
 private:
     enum CB {

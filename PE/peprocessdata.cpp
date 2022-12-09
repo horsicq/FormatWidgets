@@ -132,9 +132,9 @@ void PEProcessData::_process()
             listItems.append(pItemNameHeader);
 
             listItems.append(new QStandardItem(XBinary::valueToHex((quint32)0)));
-            listItems.append(new QStandardItem(XBinary::valueToHex(g_pPE->getOptionalHeader_SizeOfHeaders())));
-            listItems.append(new QStandardItem(XBinary::valueToHex((quint32)0)));
             listItems.append(new QStandardItem(XBinary::valueToHex(S_ALIGN_UP32(g_pPE->getOptionalHeader_SizeOfHeaders(),g_pPE->getOptionalHeader_SectionAlignment()))));
+            listItems.append(new QStandardItem(XBinary::valueToHex((quint32)0)));
+            listItems.append(new QStandardItem(XBinary::valueToHex(g_pPE->getOptionalHeader_SizeOfHeaders())));
             listItems.append(new QStandardItem(""));
             listItems.append(new QStandardItem(tr("Header"))); // Info
 
@@ -149,10 +149,10 @@ void PEProcessData::_process()
             QList<QStandardItem *> listItems;
             listItems.append(pItemName);
 
-            listItems.append(new QStandardItem(XBinary::valueToHex(listSectionHeaders.at(i).PointerToRawData)));
-            listItems.append(new QStandardItem(XBinary::valueToHex(listSectionHeaders.at(i).SizeOfRawData)));
             listItems.append(new QStandardItem(XBinary::valueToHex(listSectionHeaders.at(i).VirtualAddress)));
             listItems.append(new QStandardItem(XBinary::valueToHex(listSectionHeaders.at(i).Misc.VirtualSize)));
+            listItems.append(new QStandardItem(XBinary::valueToHex(listSectionHeaders.at(i).PointerToRawData)));
+            listItems.append(new QStandardItem(XBinary::valueToHex(listSectionHeaders.at(i).SizeOfRawData)));
             listItems.append(new QStandardItem(XPE::sectionCharacteristicToString(listSectionHeaders.at(i).Characteristics)));
             listItems.append(new QStandardItem("")); // Info
 
@@ -169,10 +169,10 @@ void PEProcessData::_process()
             QList<QStandardItem *> listItems;
             listItems.append(pItemNameOverlay);
 
-            listItems.append(new QStandardItem((quint32)(g_pPE->getOverlayOffset(&memoryMap))));
-            listItems.append(new QStandardItem((quint32)(g_pPE->getOverlaySize(&memoryMap))));
             listItems.append(new QStandardItem(""));
             listItems.append(new QStandardItem(""));
+            listItems.append(new QStandardItem(XBinary::valueToHex((quint32)(g_pPE->getOverlayOffset(&memoryMap)))));
+            listItems.append(new QStandardItem(XBinary::valueToHex((quint32)(g_pPE->getOverlaySize(&memoryMap)))));
             listItems.append(new QStandardItem(""));
             listItems.append(new QStandardItem(tr("Overlay"))); // Info
 
@@ -213,12 +213,16 @@ void PEProcessData::_process()
             (*g_ppModel)->setItem(i, N_IMAGE_RELOCS::VirtualAddress + 1, new QStandardItem(XBinary::valueToHex(listRelocsHeaders.at(i).baseRelocation.VirtualAddress)));
             (*g_ppModel)->setItem(i, N_IMAGE_RELOCS::SizeOfBlock + 1, new QStandardItem(XBinary::valueToHex(listRelocsHeaders.at(i).baseRelocation.SizeOfBlock)));
             (*g_ppModel)->setItem(i, N_IMAGE_RELOCS::SizeOfBlock + 2, new QStandardItem(QString::number(listRelocsHeaders.at(i).nCount)));
-            (*g_ppModel)
-                ->setItem(i, N_IMAGE_RELOCS::SizeOfBlock + 3,
-                          new QStandardItem(g_pPE->getMemoryRecordInfoByRelAddress(listRelocsHeaders.at(i).baseRelocation.VirtualAddress)));  // Comment
+            (*g_ppModel)->setItem(i, N_IMAGE_RELOCS::SizeOfBlock + 3, new QStandardItem(g_pPE->getMemoryRecordInfoByRelAddress(listRelocsHeaders.at(i).baseRelocation.VirtualAddress)));  // Comment
 
             incValue();
         }
+
+        setModelTextAlignment(*g_ppModel, 0, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 1, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 2, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 3, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 4, Qt::AlignRight | Qt::AlignVCenter);
     } else if (g_nType == SPE::TYPE_RELOCS_POSITION) {
         QList<QString> listLabels;
         listLabels.append("");
@@ -248,6 +252,12 @@ void PEProcessData::_process()
 
             incValue();
         }
+
+        setModelTextAlignment(*g_ppModel, 0, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 1, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 2, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 3, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 4, Qt::AlignRight | Qt::AlignVCenter);
     } else if (g_nType == SPE::TYPE_IMPORT) {
         QList<QString> listLabels;
         listLabels.append("");
@@ -285,6 +295,15 @@ void PEProcessData::_process()
 
             incValue();
         }
+
+        setModelTextAlignment(*g_ppModel, 0, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 1, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 2, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 3, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 4, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 5, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 6, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 7, Qt::AlignRight | Qt::AlignVCenter);
     } else if (g_nType == SPE::TYPE_IMPORT_FUNCTION) {
         QList<QString> listLabels;
         listLabels.append("");
@@ -333,6 +352,11 @@ void PEProcessData::_process()
 
             incValue();
         }
+
+        setModelTextAlignment(*g_ppModel, 0, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 1, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 2, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 3, Qt::AlignRight | Qt::AlignVCenter);
     } else if (g_nType == SPE::TYPE_EXCEPTION) {
         QList<QString> listLabels;
         listLabels.append("");
@@ -369,6 +393,12 @@ void PEProcessData::_process()
 
             incValue();
         }
+
+        setModelTextAlignment(*g_ppModel, 0, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 1, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 2, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 3, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 4, Qt::AlignRight | Qt::AlignVCenter);
     } else if (g_nType == SPE::TYPE_DELAYIMPORT) {
         QList<QString> listLabels;
         listLabels.append("");
@@ -409,6 +439,16 @@ void PEProcessData::_process()
 
             incValue();
         }
+
+        setModelTextAlignment(*g_ppModel, 0, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 1, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 2, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 3, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 4, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 5, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 6, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 7, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 8, Qt::AlignRight | Qt::AlignVCenter);
     } else if (g_nType == SPE::TYPE_EXPORT_FUNCTION) {
         QList<QString> listLabels;
         // No need number
@@ -444,6 +484,10 @@ void PEProcessData::_process()
 
             incValue();
         }
+
+        setModelTextAlignment(*g_ppModel, 0, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 1, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 2, Qt::AlignRight | Qt::AlignVCenter);
     } else if (g_nType == SPE::TYPE_BOUNDIMPORT) {
         QList<QString> listLabels;
         listLabels.append("");
@@ -481,6 +525,11 @@ void PEProcessData::_process()
 
             incValue();
         }
+
+        setModelTextAlignment(*g_ppModel, 0, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 1, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 2, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 3, Qt::AlignRight | Qt::AlignVCenter);
     } else if (g_nType == SPE::TYPE_DEBUG) {
         QList<QString> listLabels;
         listLabels.append("");
@@ -514,6 +563,16 @@ void PEProcessData::_process()
 
             incValue();
         }
+
+        setModelTextAlignment(*g_ppModel, 0, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 1, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 2, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 3, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 4, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 5, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 6, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 7, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 8, Qt::AlignRight | Qt::AlignVCenter);
     } else if (g_nType == SPE::TYPE_TLSCALLBACKS) {
         QList<QString> listLabels;
         listLabels.append("");
@@ -549,6 +608,10 @@ void PEProcessData::_process()
 
             incValue();
         }
+
+        setModelTextAlignment(*g_ppModel, 0, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 1, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 2, Qt::AlignRight | Qt::AlignVCenter);
     } else if (g_nType == SPE::TYPE_DELAYIMPORT_FUNCTION) {
         QList<QString> listLabels;
         listLabels.append("");
@@ -605,6 +668,9 @@ void PEProcessData::_process()
 
             incValue();
         }
+
+        setModelTextAlignment(*g_ppModel, 0, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 3, Qt::AlignRight | Qt::AlignVCenter);
     } else if (g_nType == SPE::TYPE_RESOURCES) {
         if (g_varInfo.toBool()) {
             XPE::RESOURCE_HEADER rh = g_pPE->getResourceHeader();
@@ -723,6 +789,10 @@ void PEProcessData::_process()
 
                 incValue();
             }
+
+            setModelTextAlignment(*g_ppModel, 4, Qt::AlignRight | Qt::AlignVCenter);
+            setModelTextAlignment(*g_ppModel, 5, Qt::AlignRight | Qt::AlignVCenter);
+            setModelTextAlignment(*g_ppModel, 6, Qt::AlignRight | Qt::AlignVCenter);
         }
     } else if (g_nType == SPE::TYPE_RESOURCES_STRINGTABLE) {
         QList<QString> listLabels;
@@ -845,6 +915,11 @@ void PEProcessData::_process()
 
             incValue();
         }
+
+        setModelTextAlignment(*g_ppModel, 0, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 1, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 2, Qt::AlignRight | Qt::AlignVCenter);
+        setModelTextAlignment(*g_ppModel, 3, Qt::AlignRight | Qt::AlignVCenter);
     }
 }
 
