@@ -3704,3 +3704,14 @@ void PEWidget::on_pushButtonSave_DelayImportFunctions_clicked()
 {
     XShortcutsWidget::saveTableModel(ui->tableView_DelayImportFunctions->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("DelayImportFunctions"))));
 }
+
+void PEWidget::on_pushButtonSave_ImportLibraries_clicked()
+{
+    XShortcutsWidget::saveTableModel(ui->tableView_ImportLibraries->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("ImportLibraries"))));
+}
+
+void PEWidget::on_pushButtonSave_ImportFunctions_clicked()
+{
+    XShortcutsWidget::saveTableModel(ui->tableView_ImportFunctions->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("ImportFunctions"))));
+}
+
