@@ -81,7 +81,7 @@ void PEWidget::clear()
 
     ui->widgetTools->setData(0);
     XDisasmView::OPTIONS options = {};
-    ui->widgetDisasm_DosStub->setData(0,options);
+    ui->widgetDisasm_DosStub->setData(0, options);
 
     ui->checkBoxReadonly->setChecked(true);
 
@@ -1936,8 +1936,8 @@ void PEWidget::reloadData()
 
                 ajustTreeView(&peProcessDataTree, &g_tvModel[SPE::TYPE_SECTIONS_INFO], ui->treeView_Sections_Info);
 
-//                connect(ui->treeView_Sections_Info->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
-//                        SLOT(onTreeView_Sections_Info_currentRowChanged(QModelIndex, QModelIndex)));
+                //                connect(ui->treeView_Sections_Info->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
+                //                        SLOT(onTreeView_Sections_Info_currentRowChanged(QModelIndex, QModelIndex)));
             }
         } else if (nType == SPE::TYPE_EXPORT) {
             if (!isInitPresent(sInit)) {
@@ -3622,7 +3622,7 @@ void PEWidget::on_pushButtonExtractAllIcons_Resources_clicked()
     QString sDirectory = QFileDialog::getExistingDirectory(this, tr("Extract all icons"), XBinary::getDeviceDirectory(getDevice()));
 
     if (!sDirectory.isEmpty()) {
-        XFormats::saveAllPEIconsToDirectory(getDevice(),sDirectory);
+        XFormats::saveAllPEIconsToDirectory(getDevice(), sDirectory);
     }
 }
 
@@ -3631,7 +3631,7 @@ void PEWidget::on_pushButtonExtractAllCursors_Resources_clicked()
     QString sDirectory = QFileDialog::getExistingDirectory(this, tr("Extract all cursors"), XBinary::getDeviceDirectory(getDevice()));
 
     if (!sDirectory.isEmpty()) {
-        XFormats::saveAllPECursorsToDirectory(getDevice(),sDirectory);
+        XFormats::saveAllPECursorsToDirectory(getDevice(), sDirectory);
     }
 }
 
@@ -3697,12 +3697,14 @@ void PEWidget::on_pushButtonSave_Sections_Info_clicked()
 
 void PEWidget::on_pushButtonSave_DelayImportLibraries_clicked()
 {
-    XShortcutsWidget::saveTableModel(ui->tableView_DelayImportLibraries->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("DelayImportLibraries"))));
+    XShortcutsWidget::saveTableModel(ui->tableView_DelayImportLibraries->model(),
+                                     XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("DelayImportLibraries"))));
 }
 
 void PEWidget::on_pushButtonSave_DelayImportFunctions_clicked()
 {
-    XShortcutsWidget::saveTableModel(ui->tableView_DelayImportFunctions->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("DelayImportFunctions"))));
+    XShortcutsWidget::saveTableModel(ui->tableView_DelayImportFunctions->model(),
+                                     XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("DelayImportFunctions"))));
 }
 
 void PEWidget::on_pushButtonSave_ImportLibraries_clicked()
@@ -3715,3 +3717,7 @@ void PEWidget::on_pushButtonSave_ImportFunctions_clicked()
     XShortcutsWidget::saveTableModel(ui->tableView_ImportFunctions->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("ImportFunctions"))));
 }
 
+void PEWidget::on_pushButtonSave_RICH_clicked()
+{
+    XShortcutsWidget::saveTableModel(ui->tableView_RICH->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("RICH"))));
+}

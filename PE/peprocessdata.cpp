@@ -71,7 +71,8 @@ void PEProcessData::_process()
             sName.resize(qMin(sName.length(), XPE_DEF::S_IMAGE_SIZEOF_SHORT_NAME));
             pItemName->setText(sName);
 
-            pItemNumber->setData(QString("%1_%2_%3.bin").arg(tr("Section"), QString::number(i), XBinary::convertFileNameSymbols(sName)), Qt::UserRole + FW_DEF::SECTION_DATA_NAME);
+            pItemNumber->setData(QString("%1_%2_%3.bin").arg(tr("Section"), QString::number(i), XBinary::convertFileNameSymbols(sName)),
+                                 Qt::UserRole + FW_DEF::SECTION_DATA_NAME);
 
             (*g_ppModel)->setItem(i, N_IMAGE_SECTION_HEADER::Name + 1, pItemName);
 
@@ -113,7 +114,7 @@ void PEProcessData::_process()
         setTreeHeader(*g_ppModel, &listLabels);
 
         QList<XPE_DEF::IMAGE_SECTION_HEADER> listSectionHeaders = g_pPE->getSectionHeaders();
-        QList<XPE::SECTION_RECORD> listSectionRecords = g_pPE->getSectionRecords(&listSectionHeaders,false);
+        QList<XPE::SECTION_RECORD> listSectionRecords = g_pPE->getSectionRecords(&listSectionHeaders, false);
         XBinary::_MEMORY_MAP memoryMap = g_pPE->getMemoryMap();
 
         qint32 nNumberOfSections = listSectionRecords.count();
@@ -132,11 +133,11 @@ void PEProcessData::_process()
             listItems.append(pItemNameHeader);
 
             listItems.append(new QStandardItem(XBinary::valueToHex((quint32)0)));
-            listItems.append(new QStandardItem(XBinary::valueToHex(S_ALIGN_UP32(g_pPE->getOptionalHeader_SizeOfHeaders(),g_pPE->getOptionalHeader_SectionAlignment()))));
+            listItems.append(new QStandardItem(XBinary::valueToHex(S_ALIGN_UP32(g_pPE->getOptionalHeader_SizeOfHeaders(), g_pPE->getOptionalHeader_SectionAlignment()))));
             listItems.append(new QStandardItem(XBinary::valueToHex((quint32)0)));
             listItems.append(new QStandardItem(XBinary::valueToHex(g_pPE->getOptionalHeader_SizeOfHeaders())));
             listItems.append(new QStandardItem(""));
-            listItems.append(new QStandardItem(tr("Header"))); // Info
+            listItems.append(new QStandardItem(tr("Header")));  // Info
 
             (*g_ppModel)->appendRow(listItems);
 
@@ -154,7 +155,7 @@ void PEProcessData::_process()
             listItems.append(new QStandardItem(XBinary::valueToHex(listSectionHeaders.at(i).PointerToRawData)));
             listItems.append(new QStandardItem(XBinary::valueToHex(listSectionHeaders.at(i).SizeOfRawData)));
             listItems.append(new QStandardItem(XPE::sectionCharacteristicToString(listSectionHeaders.at(i).Characteristics)));
-            listItems.append(new QStandardItem("")); // Info
+            listItems.append(new QStandardItem(""));  // Info
 
             (*g_ppModel)->appendRow(listItems);
 
@@ -174,7 +175,7 @@ void PEProcessData::_process()
             listItems.append(new QStandardItem(XBinary::valueToHex((quint32)(g_pPE->getOverlayOffset(&memoryMap)))));
             listItems.append(new QStandardItem(XBinary::valueToHex((quint32)(g_pPE->getOverlaySize(&memoryMap)))));
             listItems.append(new QStandardItem(""));
-            listItems.append(new QStandardItem(tr("Overlay"))); // Info
+            listItems.append(new QStandardItem(tr("Overlay")));  // Info
 
             (*g_ppModel)->appendRow(listItems);
 
@@ -213,7 +214,9 @@ void PEProcessData::_process()
             (*g_ppModel)->setItem(i, N_IMAGE_RELOCS::VirtualAddress + 1, new QStandardItem(XBinary::valueToHex(listRelocsHeaders.at(i).baseRelocation.VirtualAddress)));
             (*g_ppModel)->setItem(i, N_IMAGE_RELOCS::SizeOfBlock + 1, new QStandardItem(XBinary::valueToHex(listRelocsHeaders.at(i).baseRelocation.SizeOfBlock)));
             (*g_ppModel)->setItem(i, N_IMAGE_RELOCS::SizeOfBlock + 2, new QStandardItem(QString::number(listRelocsHeaders.at(i).nCount)));
-            (*g_ppModel)->setItem(i, N_IMAGE_RELOCS::SizeOfBlock + 3, new QStandardItem(g_pPE->getMemoryRecordInfoByRelAddress(listRelocsHeaders.at(i).baseRelocation.VirtualAddress)));  // Comment
+            (*g_ppModel)
+                ->setItem(i, N_IMAGE_RELOCS::SizeOfBlock + 3,
+                          new QStandardItem(g_pPE->getMemoryRecordInfoByRelAddress(listRelocsHeaders.at(i).baseRelocation.VirtualAddress)));  // Comment
 
             incValue();
         }
@@ -770,7 +773,7 @@ void PEProcessData::_process()
                 QString sResID2 = XPE::resourceIdNameToString(listResources.at(i).irin[1], 1);
                 QString sResID3 = XPE::resourceIdNameToString(listResources.at(i).irin[2], 2);
 
-//                pItemNumber->setData(QString("%1_%2_%3.bin").arg(sResID1, sResID2, sResID3), Qt::UserRole + FW_DEF::SECTION_DATA_NAME);
+                //                pItemNumber->setData(QString("%1_%2_%3.bin").arg(sResID1, sResID2, sResID3), Qt::UserRole + FW_DEF::SECTION_DATA_NAME);
 
                 QString sResName = XBinary::convertFileNameSymbols(g_pPE->resourceRecordToString(listResources.at(i)));
 
