@@ -3694,3 +3694,13 @@ void PEWidget::on_pushButtonSave_Sections_Info_clicked()
 {
     XShortcutsWidget::saveTreeModel(ui->treeView_Sections_Info->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Sections_Info"))));
 }
+
+void PEWidget::on_pushButtonSave_DelayImportLibraries_clicked()
+{
+    XShortcutsWidget::saveTableModel(ui->tableView_DelayImportLibraries->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("DelayImportLibraries"))));
+}
+
+void PEWidget::on_pushButtonSave_DelayImportFunctions_clicked()
+{
+    XShortcutsWidget::saveTableModel(ui->tableView_DelayImportFunctions->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("DelayImportFunctions"))));
+}

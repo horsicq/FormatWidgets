@@ -164,6 +164,8 @@ private slots:
     void on_pushButtonSave_BoundImport_clicked();
     void on_pushButtonSave_Certificate_clicked();
     void on_pushButtonSave_Sections_Info_clicked();
+    void on_pushButtonSave_DelayImportLibraries_clicked();
+    void on_pushButtonSave_DelayImportFunctions_clicked();
 
 private:
     enum CB {
