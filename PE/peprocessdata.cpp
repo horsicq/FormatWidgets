@@ -160,6 +160,8 @@ void PEProcessData::_process()
                 colText = QColor(globalColor);
             }
 
+            strRecord.sType = XFormats::translateType(strRecord.sType);
+
             QStandardItem *pItemNumber = new QStandardItem(QString::number(i));
 
             QStandardItem *pItemName = new QStandardItem(listSectionRecords.at(i).sName);
