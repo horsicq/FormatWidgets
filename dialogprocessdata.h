@@ -32,7 +32,7 @@ class DialogProcessData : public XDialogProcess {
     Q_OBJECT
 
 public:
-    explicit DialogProcessData(QWidget *pParent, ProcessData *pProcessData);
+    explicit DialogProcessData(QWidget *pParent, ProcessData *pProcessData, XOptions *pOptions);
     ~DialogProcessData();
 
 private:

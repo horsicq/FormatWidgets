@@ -38,6 +38,8 @@ public:
     explicit ProcessData();
 
     void setPdStruct(XBinary::PDSTRUCT *pPdStruct);
+    void setOptions(XOptions *pOptions);
+    XOptions *getOptions();
     void setMaximum(quint64 nMaximum);
     void incValue();
     bool isRun();
@@ -58,6 +60,7 @@ signals:
     void completed(qint64 nElapsed);
 
 private:
+    XOptions *g_pOptions;
     XBinary::PDSTRUCT *g_pPdStruct;
     qint32 g_nFreeIndex;
 };

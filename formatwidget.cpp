@@ -405,7 +405,7 @@ void FormatWidget::ajustTableView(ProcessData *pProcessData, QStandardItemModel 
         pOldModel = pTableView->model();
     }
 
-    DialogProcessData dialogProcessData(this, pProcessData);
+    DialogProcessData dialogProcessData(this, pProcessData, getGlobalOptions());
 
     dialogProcessData.showDialogDelay(1000);
 
@@ -438,7 +438,7 @@ void FormatWidget::ajustTreeView(ProcessData *pProcessData, QStandardItemModel *
 {
     QAbstractItemModel *pOldModel = pTreeView->model();
 
-    DialogProcessData dialogProcessData(this, pProcessData);
+    DialogProcessData dialogProcessData(this, pProcessData, getGlobalOptions());
 
     dialogProcessData.showDialogDelay(1000);
 
@@ -451,7 +451,7 @@ void FormatWidget::ajustTreeView(ProcessData *pProcessData, QStandardItemModel *
 
 void FormatWidget::ajustDialogModel(ProcessData *pProcessData, QStandardItemModel **ppModel, QString sTitle)
 {
-    DialogProcessData dialogProcessData(this, pProcessData);
+    DialogProcessData dialogProcessData(this, pProcessData, getGlobalOptions());
 
     dialogProcessData.showDialogDelay(1000);
 

@@ -3721,3 +3721,28 @@ void PEWidget::on_pushButtonSave_RICH_clicked()
 {
     XShortcutsWidget::saveTableModel(ui->tableView_RICH->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("RICH"))));
 }
+
+void PEWidget::on_pushButtonSave_Relocs_clicked()
+{
+    XShortcutsWidget::saveTableModel(ui->tableView_Relocs->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Relocs"))));
+}
+
+void PEWidget::on_pushButtonSave_RelocsPositions_clicked()
+{
+    XShortcutsWidget::saveTableModel(ui->tableView_RelocsPositions->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("RelocsPositions"))));
+}
+
+void PEWidget::on_pushButtonSave_LoadConfig_clicked()
+{
+    saveHeaderTable(ui->tableWidget_LoadConfig, XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("LoadConfig"))));
+}
+
+void PEWidget::on_pushButtonExpand_Sections_Info_clicked()
+{
+    ui->treeView_Sections_Info->expandAll();
+}
+
+void PEWidget::on_pushButtonCollapse_Sections_Info_clicked()
+{
+    ui->treeView_Sections_Info->collapseAll();
+}

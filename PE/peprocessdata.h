@@ -33,6 +33,7 @@ public:
 
     virtual void _process();
     virtual void ajustTableView(QWidget *pWidget, QTableView *pTableView);
+    virtual void ajustTreeView(QWidget *pWidget, QTreeView *pTreeView);
     void handleCertRecord(QStandardItem *pParent, XPE::CERT_RECORD certRecord);
 
 private:

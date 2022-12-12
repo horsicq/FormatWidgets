@@ -22,11 +22,12 @@
 
 #include "ui_dialogprocessdata.h"
 
-DialogProcessData::DialogProcessData(QWidget *pParent, ProcessData *pProcessData) : XDialogProcess(pParent)
+DialogProcessData::DialogProcessData(QWidget *pParent, ProcessData *pProcessData, XOptions *pOptions) : XDialogProcess(pParent)
 {
     this->g_pProcessData = pProcessData;
 
     pProcessData->setPdStruct(getPdStruct());
+    pProcessData->setOptions(pOptions);
 
     g_pThread = new QThread;
 

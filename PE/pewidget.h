@@ -169,6 +169,11 @@ private slots:
     void on_pushButtonSave_ImportLibraries_clicked();
     void on_pushButtonSave_ImportFunctions_clicked();
     void on_pushButtonSave_RICH_clicked();
+    void on_pushButtonSave_Relocs_clicked();
+    void on_pushButtonSave_RelocsPositions_clicked();
+    void on_pushButtonSave_LoadConfig_clicked();
+    void on_pushButtonExpand_Sections_Info_clicked();
+    void on_pushButtonCollapse_Sections_Info_clicked();
 
 private:
     enum CB {

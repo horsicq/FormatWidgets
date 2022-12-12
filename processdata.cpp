@@ -23,12 +23,23 @@
 ProcessData::ProcessData()
 {
     g_pPdStruct = nullptr;
+    g_pOptions = nullptr;
     g_nFreeIndex = -1;
 }
 
 void ProcessData::setPdStruct(XBinary::PDSTRUCT *pPdStruct)
 {
     g_pPdStruct = pPdStruct;
+}
+
+void ProcessData::setOptions(XOptions *pOptions)
+{
+    g_pOptions = pOptions;
+}
+
+XOptions *ProcessData::getOptions()
+{
+    return g_pOptions;
 }
 
 void ProcessData::setMaximum(quint64 nMaximum)
@@ -55,6 +66,13 @@ void ProcessData::setModelTextAlignment(QStandardItemModel *pModel, qint32 nColu
 
         if (pItem) {
             pItem->setTextAlignment(flag);
+
+            QModelIndex index = pModel->index(i, 0);
+            qint32 _nNumberOfRows = pModel->rowCount(index);
+
+            for (qint32 j = 0; j < _nNumberOfRows; j++) {
+                pModel->setData(pModel->index(j,nColumn,index), (qint32)flag, Qt::TextAlignmentRole);
+            }
         }
     }
 }
