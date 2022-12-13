@@ -786,7 +786,6 @@ void PEProcessData::_process()
 
         setModelTextAlignment(*g_ppModel, 0, Qt::AlignRight | Qt::AlignVCenter);
         setModelTextAlignment(*g_ppModel, 1, Qt::AlignRight | Qt::AlignVCenter);
-        setModelTextAlignment(*g_ppModel, 2, Qt::AlignRight | Qt::AlignVCenter);
     } else if (g_nType == SPE::TYPE_DELAYIMPORT_FUNCTION) {
         QList<QString> listLabels;
         listLabels.append("");

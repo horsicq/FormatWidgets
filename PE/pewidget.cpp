@@ -2681,6 +2681,8 @@ void PEWidget::on_tableView_Sections_customContextMenuRequested(const QPoint &po
         actionDump.setEnabled(bIsEnable);
         contextMenu.addAction(&actionDump);
 
+        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this,ui->tableView_Sections));
+
         contextMenu.exec(ui->tableView_Sections->viewport()->mapToGlobal(pos));
     }
 }
@@ -3112,6 +3114,8 @@ void PEWidget::on_tableView_ImportLibraries_customContextMenuRequested(const QPo
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editImportHeader()));
         contextMenu.addAction(&actionEdit);
 
+        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this,ui->tableView_ImportLibraries));
+
         contextMenu.exec(ui->tableView_ImportLibraries->viewport()->mapToGlobal(pos));
     }
 }
@@ -3153,6 +3157,8 @@ void PEWidget::on_tableView_Relocs_customContextMenuRequested(const QPoint &pos)
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editRelocsHeader()));
         contextMenu.addAction(&actionEdit);
 
+        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this,ui->tableView_Relocs));
+
         contextMenu.exec(ui->tableView_Relocs->viewport()->mapToGlobal(pos));
     }
 }
@@ -3185,6 +3191,8 @@ void PEWidget::on_tableView_Debug_customContextMenuRequested(const QPoint &pos)
         QAction actionEdit(tr("Edit"), this);
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editDebugHeader()));
         contextMenu.addAction(&actionEdit);
+
+        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this,ui->tableView_Debug));
 
         contextMenu.exec(ui->tableView_Debug->viewport()->mapToGlobal(pos));
     }
@@ -3239,6 +3247,8 @@ void PEWidget::on_tableView_Resources_customContextMenuRequested(const QPoint &p
 
         // TODO Add scan
 
+        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this,ui->tableView_Resources));
+
         contextMenu.exec(ui->tableView_Resources->viewport()->mapToGlobal(pos));
     }
 }
@@ -3260,6 +3270,8 @@ void PEWidget::on_tableView_Exceptions_customContextMenuRequested(const QPoint &
         QAction actionEdit(tr("Edit"), this);
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editExceptionHeader()));
         contextMenu.addAction(&actionEdit);
+
+        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this,ui->tableView_Exceptions));
 
         contextMenu.exec(ui->tableView_Exceptions->viewport()->mapToGlobal(pos));
     }
@@ -3293,6 +3305,8 @@ void PEWidget::on_tableView_DelayImportLibraries_customContextMenuRequested(cons
         QAction actionEdit(tr("Edit"), this);
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editDelayImportHeader()));
         contextMenu.addAction(&actionEdit);
+
+        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this,ui->tableView_DelayImportLibraries));
 
         contextMenu.exec(ui->tableView_DelayImportLibraries->viewport()->mapToGlobal(pos));
     }
@@ -3392,6 +3406,8 @@ void PEWidget::on_tableView_ExportFunctions_customContextMenuRequested(const QPo
         connect(&actionDemangle, SIGNAL(triggered()), this, SLOT(exportFunctionDemangle()));
         contextMenu.addAction(&actionDemangle);
 
+        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this,ui->tableView_ExportFunctions));
+
         contextMenu.exec(ui->tableView_ExportFunctions->viewport()->mapToGlobal(pos));
     }
 }
@@ -3474,6 +3490,8 @@ void PEWidget::on_tableView_ImportFunctions_customContextMenuRequested(const QPo
         connect(&actionDemangle, SIGNAL(triggered()), this, SLOT(importFunctionDemangle()));
         contextMenu.addAction(&actionDemangle);
 
+        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this,ui->tableView_ImportFunctions));
+
         contextMenu.exec(ui->tableView_ImportFunctions->viewport()->mapToGlobal(pos));
     }
 }
@@ -3538,6 +3556,8 @@ void PEWidget::on_tableWidget_IMAGE_DIRECTORY_ENTRIES_customContextMenuRequested
         actionEntropy.setEnabled(bIsEnable);
         contextMenu.addAction(&actionEntropy);
 
+        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this,ui->tableWidget_IMAGE_DIRECTORY_ENTRIES));
+
         contextMenu.exec(ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->viewport()->mapToGlobal(pos));
     }
 }
@@ -3568,6 +3588,8 @@ void PEWidget::on_tableView_TLSCallbacks_customContextMenuRequested(const QPoint
         connect(&actionDisasm, SIGNAL(triggered()), this, SLOT(disasmTLSCallback()));
         contextMenu.addAction(&actionDisasm);
 
+        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this,ui->tableView_TLSCallbacks));
+
         contextMenu.exec(ui->tableView_TLSCallbacks->viewport()->mapToGlobal(pos));
     }
 }
@@ -3592,6 +3614,8 @@ void PEWidget::on_tableView_Resources_StringTable_customContextMenuRequested(con
         QAction actionHex(tr("Hex"), this);
         connect(&actionHex, SIGNAL(triggered()), this, SLOT(stringTableHex()));
         contextMenu.addAction(&actionHex);
+
+        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this,ui->tableView_Resources_StringTable));
 
         contextMenu.exec(ui->tableView_Resources_StringTable->viewport()->mapToGlobal(pos));
     }
@@ -3745,4 +3769,106 @@ void PEWidget::on_pushButtonExpand_Sections_Info_clicked()
 void PEWidget::on_pushButtonCollapse_Sections_Info_clicked()
 {
     ui->treeView_Sections_Info->collapseAll();
+}
+
+void PEWidget::on_treeView_Certificate_customContextMenuRequested(const QPoint &pos)
+{
+    int nRow = ui->treeView_Certificate->currentIndex().row();
+
+    if (nRow != -1) {
+        QMenu contextMenu(this);
+        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this,ui->treeView_Certificate));
+
+        contextMenu.exec(ui->treeView_Certificate->viewport()->mapToGlobal(pos));
+    }
+}
+
+void PEWidget::on_tableView_DelayImportFunctions_customContextMenuRequested(const QPoint &pos)
+{
+    int nRow = ui->tableView_DelayImportFunctions->currentIndex().row();
+
+    if (nRow != -1) {
+        QMenu contextMenu(this);
+        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this,ui->tableView_DelayImportFunctions));
+
+        contextMenu.exec(ui->tableView_DelayImportFunctions->viewport()->mapToGlobal(pos));
+    }
+}
+
+void PEWidget::on_tableView_RICH_customContextMenuRequested(const QPoint &pos)
+{
+    int nRow = ui->tableView_RICH->currentIndex().row();
+
+    if (nRow != -1) {
+        QMenu contextMenu(this);
+        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this,ui->tableView_RICH));
+
+        contextMenu.exec(ui->tableView_RICH->viewport()->mapToGlobal(pos));
+    }
+}
+
+void PEWidget::on_tableView_RelocsPositions_customContextMenuRequested(const QPoint &pos)
+{
+    int nRow = ui->tableView_RelocsPositions->currentIndex().row();
+
+    if (nRow != -1) {
+        QMenu contextMenu(this);
+        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this,ui->tableView_RelocsPositions));
+
+        contextMenu.exec(ui->tableView_RelocsPositions->viewport()->mapToGlobal(pos));
+    }
+}
+
+void PEWidget::on_treeView_Resources_customContextMenuRequested(const QPoint &pos)
+{
+    int nRow = ui->treeView_Resources->currentIndex().row();
+
+    if (nRow != -1) {
+        QMenu contextMenu(this);
+        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this,ui->treeView_Resources));
+
+        contextMenu.exec(ui->treeView_Resources->viewport()->mapToGlobal(pos));
+    }
+}
+
+void PEWidget::on_treeView_Sections_Info_customContextMenuRequested(const QPoint &pos)
+{
+    int nRow = ui->treeView_Sections_Info->currentIndex().row();
+
+    if (nRow != -1) {
+        QMenu contextMenu(this);
+        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this,ui->treeView_Sections_Info));
+
+        contextMenu.exec(ui->treeView_Sections_Info->viewport()->mapToGlobal(pos));
+    }
+}
+
+void PEWidget::on_pushButtonSave_TLSCallbacks_clicked()
+{
+    XShortcutsWidget::saveTableModel(ui->tableView_TLSCallbacks->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("TLSCallbacks"))));
+}
+
+void PEWidget::on_pushButtonSave_TLS_clicked()
+{
+    saveHeaderTable(ui->tableWidget_TLS, XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("TLS"))));
+}
+
+void PEWidget::on_pushButtonSave_Resources_Version_Header_clicked()
+{
+    saveHeaderTable(ui->tableWidget_Resources_Version, XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Resources_Version_Header"))));
+}
+
+void PEWidget::on_pushButtonSave_Resources_Version_clicked()
+{
+    XShortcutsWidget::saveTextEdit(ui->textEditResources_Version, XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Resources_Version"))));
+}
+
+void PEWidget::on_pushButtonSave_Resources_StringTable_clicked()
+{
+    XShortcutsWidget::saveTableModel(ui->tableView_Resources_StringTable->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Resources_StringTable"))));
+}
+
+void PEWidget::on_pushButtonSave_Manifest_clicked()
+{
+    XShortcutsWidget::saveTextEdit(ui->textEditResources_Manifest, XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Resources_Manifest"))));
 }

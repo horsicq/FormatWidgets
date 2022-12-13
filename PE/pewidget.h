@@ -174,6 +174,18 @@ private slots:
     void on_pushButtonSave_LoadConfig_clicked();
     void on_pushButtonExpand_Sections_Info_clicked();
     void on_pushButtonCollapse_Sections_Info_clicked();
+    void on_treeView_Certificate_customContextMenuRequested(const QPoint &pos);
+    void on_tableView_DelayImportFunctions_customContextMenuRequested(const QPoint &pos);
+    void on_tableView_RICH_customContextMenuRequested(const QPoint &pos);
+    void on_tableView_RelocsPositions_customContextMenuRequested(const QPoint &pos);
+    void on_treeView_Resources_customContextMenuRequested(const QPoint &pos);
+    void on_treeView_Sections_Info_customContextMenuRequested(const QPoint &pos);
+    void on_pushButtonSave_TLSCallbacks_clicked();
+    void on_pushButtonSave_TLS_clicked();
+    void on_pushButtonSave_Resources_Version_Header_clicked();
+    void on_pushButtonSave_Resources_Version_clicked();
+    void on_pushButtonSave_Resources_StringTable_clicked();
+    void on_pushButtonSave_Manifest_clicked();
 
 private:
     enum CB {
