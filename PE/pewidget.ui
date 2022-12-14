@@ -148,7 +148,7 @@
      </widget>
      <widget class="QStackedWidget" name="stackedWidgetInfo">
       <property name="currentIndex">
-       <number>28</number>
+       <number>36</number>
       </property>
       <widget class="QWidget" name="page_Info">
        <layout class="QVBoxLayout" name="verticalLayout_43">
@@ -1063,7 +1063,7 @@
        </layout>
       </widget>
       <widget class="QWidget" name="page_Export">
-       <layout class="QVBoxLayout" name="verticalLayout_34">
+       <layout class="QVBoxLayout" name="verticalLayout_60">
         <property name="leftMargin">
          <number>0</number>
         </property>
@@ -1081,36 +1081,73 @@
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <widget class="QTableWidget" name="tableWidget_ExportHeader">
-           <property name="contextMenuPolicy">
-            <enum>Qt::CustomContextMenu</enum>
-           </property>
-           <property name="editTriggers">
-            <set>QAbstractItemView::NoEditTriggers</set>
-           </property>
-           <property name="selectionMode">
-            <enum>QAbstractItemView::SingleSelection</enum>
-           </property>
-           <property name="selectionBehavior">
-            <enum>QAbstractItemView::SelectRows</enum>
-           </property>
-           <property name="sortingEnabled">
-            <bool>false</bool>
-           </property>
-           <attribute name="horizontalHeaderVisible">
-            <bool>false</bool>
-           </attribute>
-           <attribute name="verticalHeaderVisible">
-            <bool>false</bool>
-           </attribute>
-           <attribute name="verticalHeaderDefaultSectionSize">
-            <number>24</number>
-           </attribute>
-          </widget>
-          <widget class="QWidget" name="layoutWidget_X1">
+          <widget class="QWidget" name="">
            <layout class="QVBoxLayout" name="verticalLayout_8">
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_3">
+              <item>
+               <spacer name="horizontalSpacer_31">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButtonSave_ExportHeader">
+                <property name="text">
+                 <string>Save</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QTableWidget" name="tableWidget_ExportHeader">
+              <property name="contextMenuPolicy">
+               <enum>Qt::CustomContextMenu</enum>
+              </property>
+              <property name="editTriggers">
+               <set>QAbstractItemView::NoEditTriggers</set>
+              </property>
+              <property name="selectionMode">
+               <enum>QAbstractItemView::SingleSelection</enum>
+              </property>
+              <property name="selectionBehavior">
+               <enum>QAbstractItemView::SelectRows</enum>
+              </property>
+              <property name="sortingEnabled">
+               <bool>false</bool>
+              </property>
+              <attribute name="horizontalHeaderVisible">
+               <bool>false</bool>
+              </attribute>
+              <attribute name="verticalHeaderVisible">
+               <bool>false</bool>
+              </attribute>
+              <attribute name="verticalHeaderDefaultSectionSize">
+               <number>24</number>
+              </attribute>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="">
+           <layout class="QVBoxLayout" name="verticalLayout_34">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_31">
+              <item>
+               <widget class="QCheckBox" name="checkBoxExportShowValid">
+                <property name="text">
+                 <string>Show valid</string>
+                </property>
+               </widget>
+              </item>
               <item>
                <spacer name="horizontalSpacer_3">
                 <property name="orientation">
@@ -1125,9 +1162,9 @@
                </spacer>
               </item>
               <item>
-               <widget class="QCheckBox" name="checkBoxExportShowValid">
+               <widget class="QPushButton" name="pushButtonSave_ExportFunctions">
                 <property name="text">
-                 <string>Show valid</string>
+                 <string>Save</string>
                 </property>
                </widget>
               </item>
@@ -1688,7 +1725,7 @@
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <widget class="QWidget" name="">
+          <widget class="QWidget" name="layoutWidget">
            <layout class="QVBoxLayout" name="verticalLayout_21">
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_28">
@@ -1738,7 +1775,7 @@
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="">
+          <widget class="QWidget" name="layoutWidget">
            <layout class="QVBoxLayout" name="verticalLayout_57">
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_29">
@@ -2156,7 +2193,7 @@
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <widget class="QWidget" name="">
+          <widget class="QWidget" name="layoutWidget">
            <layout class="QVBoxLayout" name="verticalLayout_14">
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_27">
@@ -2560,7 +2597,7 @@
        </layout>
       </widget>
       <widget class="QWidget" name="page_NetHeader">
-       <layout class="QVBoxLayout" name="verticalLayout_20">
+       <layout class="QVBoxLayout" name="verticalLayout_61">
         <property name="leftMargin">
          <number>0</number>
         </property>
@@ -2578,28 +2615,58 @@
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <widget class="QTableWidget" name="tableWidget_NetHeader">
-           <property name="contextMenuPolicy">
-            <enum>Qt::CustomContextMenu</enum>
-           </property>
-           <property name="editTriggers">
-            <set>QAbstractItemView::NoEditTriggers</set>
-           </property>
-           <property name="selectionMode">
-            <enum>QAbstractItemView::SingleSelection</enum>
-           </property>
-           <property name="selectionBehavior">
-            <enum>QAbstractItemView::SelectRows</enum>
-           </property>
-           <attribute name="horizontalHeaderVisible">
-            <bool>false</bool>
-           </attribute>
-           <attribute name="verticalHeaderVisible">
-            <bool>false</bool>
-           </attribute>
-           <attribute name="verticalHeaderDefaultSectionSize">
-            <number>24</number>
-           </attribute>
+          <widget class="QWidget" name="">
+           <layout class="QVBoxLayout" name="verticalLayout_20">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_32">
+              <item>
+               <spacer name="horizontalSpacer_32">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButtonSave_NetHeader">
+                <property name="text">
+                 <string>Save</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QTableWidget" name="tableWidget_NetHeader">
+              <property name="contextMenuPolicy">
+               <enum>Qt::CustomContextMenu</enum>
+              </property>
+              <property name="editTriggers">
+               <set>QAbstractItemView::NoEditTriggers</set>
+              </property>
+              <property name="selectionMode">
+               <enum>QAbstractItemView::SingleSelection</enum>
+              </property>
+              <property name="selectionBehavior">
+               <enum>QAbstractItemView::SelectRows</enum>
+              </property>
+              <attribute name="horizontalHeaderVisible">
+               <bool>false</bool>
+              </attribute>
+              <attribute name="verticalHeaderVisible">
+               <bool>false</bool>
+              </attribute>
+              <attribute name="verticalHeaderDefaultSectionSize">
+               <number>24</number>
+              </attribute>
+             </widget>
+            </item>
+           </layout>
           </widget>
           <widget class="ToolsWidget" name="widgetHex_NetHeader" native="true"/>
          </widget>
@@ -2607,7 +2674,7 @@
        </layout>
       </widget>
       <widget class="QWidget" name="page_Net_Metadata">
-       <layout class="QVBoxLayout" name="verticalLayout_27">
+       <layout class="QVBoxLayout" name="verticalLayout_62">
         <property name="leftMargin">
          <number>0</number>
         </property>
@@ -2625,25 +2692,55 @@
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <widget class="QTableWidget" name="tableWidget_Net_Metadata">
-           <property name="editTriggers">
-            <set>QAbstractItemView::NoEditTriggers</set>
-           </property>
-           <property name="selectionMode">
-            <enum>QAbstractItemView::SingleSelection</enum>
-           </property>
-           <property name="selectionBehavior">
-            <enum>QAbstractItemView::SelectRows</enum>
-           </property>
-           <attribute name="horizontalHeaderVisible">
-            <bool>false</bool>
-           </attribute>
-           <attribute name="verticalHeaderVisible">
-            <bool>false</bool>
-           </attribute>
-           <attribute name="verticalHeaderDefaultSectionSize">
-            <number>24</number>
-           </attribute>
+          <widget class="QWidget" name="">
+           <layout class="QVBoxLayout" name="verticalLayout_27">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_33">
+              <item>
+               <spacer name="horizontalSpacer_33">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButtonSave_Net_Metadata">
+                <property name="text">
+                 <string>Save</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QTableWidget" name="tableWidget_Net_Metadata">
+              <property name="editTriggers">
+               <set>QAbstractItemView::NoEditTriggers</set>
+              </property>
+              <property name="selectionMode">
+               <enum>QAbstractItemView::SingleSelection</enum>
+              </property>
+              <property name="selectionBehavior">
+               <enum>QAbstractItemView::SelectRows</enum>
+              </property>
+              <attribute name="horizontalHeaderVisible">
+               <bool>false</bool>
+              </attribute>
+              <attribute name="verticalHeaderVisible">
+               <bool>false</bool>
+              </attribute>
+              <attribute name="verticalHeaderDefaultSectionSize">
+               <number>24</number>
+              </attribute>
+             </widget>
+            </item>
+           </layout>
           </widget>
           <widget class="ToolsWidget" name="widgetHex_Net_Metadata" native="true"/>
          </widget>

@@ -186,6 +186,10 @@ private slots:
     void on_pushButtonSave_Resources_Version_clicked();
     void on_pushButtonSave_Resources_StringTable_clicked();
     void on_pushButtonSave_Manifest_clicked();
+    void on_pushButtonSave_ExportHeader_clicked();
+    void on_pushButtonSave_ExportFunctions_clicked();
+    void on_pushButtonSave_NetHeader_clicked();
+    void on_pushButtonSave_Net_Metadata_clicked();
 
 private:
     enum CB {

@@ -3872,3 +3872,23 @@ void PEWidget::on_pushButtonSave_Manifest_clicked()
 {
     XShortcutsWidget::saveTextEdit(ui->textEditResources_Manifest, XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Resources_Manifest"))));
 }
+
+void PEWidget::on_pushButtonSave_ExportHeader_clicked()
+{
+    saveHeaderTable(ui->tableWidget_ExportHeader, XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("ExportHeader"))));
+}
+
+void PEWidget::on_pushButtonSave_ExportFunctions_clicked()
+{
+    XShortcutsWidget::saveTableModel(ui->tableView_ExportFunctions->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("ExportFunctions"))));
+}
+
+void PEWidget::on_pushButtonSave_NetHeader_clicked()
+{
+    saveHeaderTable(ui->tableWidget_NetHeader, XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("NetHeader"))));
+}
+
+void PEWidget::on_pushButtonSave_Net_Metadata_clicked()
+{
+    saveHeaderTable(ui->tableWidget_Net_Metadata, XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Net_Metadata"))));
+}
