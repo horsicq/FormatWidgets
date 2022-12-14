@@ -154,6 +154,12 @@ void MultiSearch::processSearch()
         ssOptions.bLinks = g_options.bLinks;
 
         *g_pListRecords = binary.multiSearch_allStrings(0, g_pDevice->size(), ssOptions, g_pPdStruct);
+    } else if (g_type == TYPE_VALUES) {
+        XBinary binary(g_pDevice);
+
+        connect(&binary, SIGNAL(errorMessage(QString)), this, SIGNAL(errorMessage(QString)));
+
+        *g_pListRecords = binary.multiSearch_value(0, g_pDevice->size(), N_MAX, g_options.varValue, g_options.valueType, g_options.bIsBigEndian, g_pPdStruct);
     } else if (g_type == TYPE_SIGNATURES) {
 #ifdef QT_DEBUG
         QElapsedTimer timer;
@@ -233,6 +239,48 @@ void MultiSearch::processModel()
     XBinary::setPdStructInit(g_pPdStruct, g_nFreeIndex, 0);
 
     if (g_type == TYPE_STRINGS) {
+        qint32 nNumberOfRecords = g_pListRecords->count();
+        *g_ppModel = new QStandardItemModel(nNumberOfRecords, 4);  // TODO Check maximum
+
+        XADDR nBaseAddress = g_options.memoryMap.nModuleAddress;
+
+        XBinary::MODE modeAddress = XBinary::getWidthModeFromSize(nBaseAddress + g_options.memoryMap.nRawSize);
+
+        XBinary::setPdStructTotal(g_pPdStruct, g_nFreeIndex, nNumberOfRecords);
+
+        (*g_ppModel)->setHeaderData(0, Qt::Horizontal, nBaseAddress ? (tr("Address")) : (tr("Offset")));
+        (*g_ppModel)->setHeaderData(1, Qt::Horizontal, tr("Size"));
+        (*g_ppModel)->setHeaderData(2, Qt::Horizontal, tr("Type"));
+        (*g_ppModel)->setHeaderData(3, Qt::Horizontal, tr("String"));
+
+        for (qint32 i = 0; (i < nNumberOfRecords) && (!(g_pPdStruct->bIsStop)); i++) {
+            XBinary::MS_RECORD record = g_pListRecords->at(i);
+
+            QStandardItem *pTypeAddress = new QStandardItem;
+            pTypeAddress->setText(XBinary::valueToHex(modeAddress, record.nOffset + nBaseAddress));
+            pTypeAddress->setData(record.nOffset, Qt::UserRole + USERROLE_OFFSET);
+            pTypeAddress->setData(record.nSize, Qt::UserRole + USERROLE_SIZE);
+            pTypeAddress->setData(record.recordType, Qt::UserRole + USERROLE_TYPE);
+            pTypeAddress->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+            (*g_ppModel)->setItem(i, 0, pTypeAddress);
+
+            QStandardItem *pTypeSize = new QStandardItem;
+            pTypeSize->setText(XBinary::valueToHexEx(record.sString.size()));
+            pTypeSize->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+            (*g_ppModel)->setItem(i, 1, pTypeSize);
+
+            QStandardItem *pTypeItem = new QStandardItem;
+
+            pTypeItem->setText(XBinary::msRecordTypeIdToString(record.recordType));
+
+            pTypeItem->setTextAlignment(Qt::AlignLeft);
+            (*g_ppModel)->setItem(i, 2, pTypeItem);
+            (*g_ppModel)->setItem(i, 3, new QStandardItem(record.sString));
+
+            XBinary::setPdStructCurrent(g_pPdStruct, g_nFreeIndex, i);
+        }
+    } else if (g_type == TYPE_VALUES) {
+        // TODO rewrite
         qint32 nNumberOfRecords = g_pListRecords->count();
         *g_ppModel = new QStandardItemModel(nNumberOfRecords, 4);  // TODO Check maximum
 

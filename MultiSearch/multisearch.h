@@ -29,7 +29,7 @@
 #include <QtConcurrent>
 #include <QtConcurrentMap>
 
-#include "xbinary.h"
+#include "xformats.h"
 
 class MultiSearch : public QObject {
     Q_OBJECT
@@ -37,7 +37,8 @@ class MultiSearch : public QObject {
 public:
     enum TYPE {
         TYPE_STRINGS = 0,
-        TYPE_SIGNATURES
+        TYPE_SIGNATURES,
+        TYPE_VALUES
     };
 
     enum USERROLE {
@@ -69,6 +70,8 @@ public:
         bool bIsBigEndian;
         qint32 nMinLenght;
         QList<SIGNATURE_RECORD> *pListSignatureRecords;
+        QVariant varValue;
+        XBinary::VT valueType;
         bool bMenu_Hex;
     };
 

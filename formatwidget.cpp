@@ -766,6 +766,19 @@ void FormatWidget::initWidget()
             }
         }
     }
+    {
+        QList<SearchValuesWidget *> listWidgets = this->findChildren<SearchValuesWidget *>();
+
+        qint32 nNumberOfWidgets = listWidgets.count();
+
+        for (qint32 i = 0; i < nNumberOfWidgets; i++) {
+            SearchValuesWidget *pChild = dynamic_cast<SearchValuesWidget *>(listWidgets.at(i));
+
+            if (pChild) {
+                initSearchValuesWidget(pChild);
+            }
+        }
+    }
     //    {
     //        QList<ToolsWidget *> listWidgets=this->findChildren<ToolsWidget
     //        *>();
@@ -870,6 +883,12 @@ void FormatWidget::initSearchStringsWidget(SearchStringsWidget *pWidget)
 void FormatWidget::initSearchSignaturesWidget(SearchSignaturesWidget *pWidget)
 {
     connect(pWidget, SIGNAL(showHex(qint64, qint64)), this, SLOT(showInHexWindow(qint64, qint64)));
+}
+
+void FormatWidget::initSearchValuesWidget(SearchValuesWidget *pWidget)
+{
+    connect(pWidget, SIGNAL(showHex(qint64, qint64)), this, SLOT(showInHexWindow(qint64, qint64)));
+    // TODO Disasm
 }
 
 void FormatWidget::initHexViewWidget(XHexViewWidget *pWidget)

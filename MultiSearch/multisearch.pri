@@ -11,9 +11,6 @@ SOURCES += \
     $$PWD/dialogmultisearchprocess.cpp \
     $$PWD/multisearch.cpp
 
-FORMS += \
-    $$PWD/dialogmultisearchprocess.ui
-
 !contains(XCONFIG, xoptions) {
     XCONFIG += xoptions
     include($$PWD/../../XOptions/xoptions.pri)

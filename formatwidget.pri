@@ -68,6 +68,11 @@ FORMS += \
     include($$PWD/SearchSignatures/searchsignatureswidget.pri)
 }
 
+!contains(XCONFIG, searchvalueswidget) {
+    XCONFIG += searchvalueswidget
+    include($$PWD/SearchValues/searchvalueswidget.pri)
+}
+
 !contains(XCONFIG, xmemorymapwidget) {
     XCONFIG += xmemorymapwidget
     include($$PWD/../XMemoryMapWidget/xmemorymapwidget.pri)

@@ -66,6 +66,8 @@ void DialogMultiSearchProcess::processSearch(QIODevice *pDevice, QList<XBinary::
         setWindowTitle(tr("Search strings"));
     } else if (type == MultiSearch::TYPE_SIGNATURES) {
         setWindowTitle(tr("Search signatures"));
+    } else if (type == MultiSearch::TYPE_VALUES) {
+        setWindowTitle(tr("Search values"));
     }
 
     g_pHandleSearch->setSearchData(pDevice, pListRecords, options, type, getPdStruct());
