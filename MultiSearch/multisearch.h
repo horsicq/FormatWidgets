@@ -72,7 +72,7 @@ public:
         QList<SIGNATURE_RECORD> *pListSignatureRecords;
         QVariant varValue;
         XBinary::VT valueType;
-        bool bMenu_Hex;
+        bool bMenu_Hex; // TODO remove
     };
 
     const int N_MAX = 100000;

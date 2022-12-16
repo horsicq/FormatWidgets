@@ -59,6 +59,27 @@
       </widget>
      </item>
      <item>
+      <widget class="QPushButton" name="pushButtonSearchString">
+       <property name="text">
+        <string>String</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButtonSearchSignature">
+       <property name="text">
+        <string>Signature</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButtonSearchValue">
+       <property name="text">
+        <string>Value</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <spacer name="horizontalSpacer_2">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>

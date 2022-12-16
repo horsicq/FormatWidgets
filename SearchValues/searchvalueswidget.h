@@ -32,6 +32,7 @@
 
 #include "dialogmultisearchprocess.h"
 #include "xshortcutswidget.h"
+#include "dialogsearch.h"
 
 namespace Ui {
 class SearchValuesWidget;
@@ -66,6 +67,12 @@ private slots:
     void search();
     void deleteOldModel();
     void adjust();
+    void on_pushButtonSearchString_clicked();
+    void on_pushButtonSearchSignature_clicked();
+    void on_pushButtonSearchValue_clicked();
+
+private:
+    void _search(DialogSearch::SEARCHMODE mode);
 
 protected:
     virtual void registerShortcuts(bool bState);

@@ -18,5 +18,10 @@ FORMS += \
     include($$PWD/../MultiSearch/multisearch.pri)
 }
 
+!contains(XCONFIG, dialogsearch) {
+    XCONFIG += dialogsearch
+    include($$PWD/../../FormatDialogs/dialogsearch.pri)
+}
+
 DISTFILES += \
     $$PWD/searchvalueswidget.cmake

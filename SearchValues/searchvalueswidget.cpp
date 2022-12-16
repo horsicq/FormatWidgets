@@ -172,3 +172,68 @@ void SearchValuesWidget::adjust()
 {
 
 }
+
+void SearchValuesWidget::on_pushButtonSearchString_clicked()
+{
+    _search(DialogSearch::SEARCHMODE_STRING);
+}
+
+void SearchValuesWidget::on_pushButtonSearchSignature_clicked()
+{
+    _search(DialogSearch::SEARCHMODE_SIGNATURE);
+}
+
+void SearchValuesWidget::on_pushButtonSearchValue_clicked()
+{
+    _search(DialogSearch::SEARCHMODE_VALUE);
+}
+
+void SearchValuesWidget::_search(DialogSearch::SEARCHMODE mode)
+{
+    if (g_pDevice) {
+        XBinary::SEARCHDATA searchData = {};
+        DialogSearch::OPTIONS options = {};
+
+        DialogSearch dialogSearch(this, getDevice(), &searchData, mode, options);
+
+        if (dialogSearch.exec() == QDialog::Accepted)  // TODO use status
+        {
+            g_pOldModel = g_pModel;
+
+            ui->tableViewResult->setModel(nullptr);
+
+            XBinary::FT fileType = (XBinary::FT)(ui->comboBoxType->currentData().toInt());
+
+            MultiSearch::OPTIONS options = {};
+
+            options.bIsBigEndian = searchData.bIsBigEndian;
+            options.varValue = searchData.varValue;
+            options.valueType = searchData.valueType;
+            options.memoryMap = XFormats::getMemoryMap(fileType, g_pDevice);
+
+            QList<XBinary::MS_RECORD> listRecords;
+
+            QWidget *pParent = XOptions::getMainWidget(this);
+
+            DialogMultiSearchProcess dsp(pParent);
+            dsp.processSearch(g_pDevice, &listRecords, options, MultiSearch::TYPE_VALUES);
+            dsp.showDialogDelay(1000);
+
+            DialogMultiSearchProcess dmp(pParent);
+            dmp.processModel(&listRecords, &g_pModel, options, MultiSearch::TYPE_VALUES);
+            dmp.showDialogDelay(1000);
+
+            ui->tableViewResult->setModel(g_pModel);
+
+            ui->tableViewResult->setColumnWidth(0, 120);  // TODO
+            ui->tableViewResult->setColumnWidth(1, 120);  // TODO
+            ui->tableViewResult->setColumnWidth(2, 120);  // TODO
+
+            QFuture<void> future = deleteOldStandardModel(&g_pOldModel);
+
+            g_watcher.setFuture(future);
+
+            // TODO nothing found
+        }
+    }
+}

@@ -26,7 +26,6 @@ SearchSignaturesWidget::SearchSignaturesWidget(QWidget *pParent) : XShortcutsWid
 {
     ui->setupUi(this);
     g_pDevice = nullptr;
-    g_pFilter = new QSortFilterProxyModel(this);
     g_pModel = nullptr;
     g_bInit = false;
 
@@ -252,7 +251,6 @@ void SearchSignaturesWidget::search()
     if (g_pDevice) {
         g_pOldModel = g_pModel;
 
-        g_pFilter->setSourceModel(nullptr);
         ui->tableViewResult->setModel(nullptr);
 
         XBinary::FT fileType = (XBinary::FT)(ui->comboBoxType->currentData().toInt());
@@ -271,14 +269,13 @@ void SearchSignaturesWidget::search()
 
         DialogMultiSearchProcess dsp(pParent);
         dsp.processSearch(g_pDevice, &listRecords, options, MultiSearch::TYPE_SIGNATURES);
-        dsp.exec();
+        dsp.showDialogDelay(1000);
 
         DialogMultiSearchProcess dmp(pParent);
         dmp.processModel(&listRecords, &g_pModel, options, MultiSearch::TYPE_SIGNATURES);
-        dmp.exec();
+        dmp.showDialogDelay(1000);
 
-        g_pFilter->setSourceModel(g_pModel);
-        ui->tableViewResult->setModel(g_pFilter);
+        ui->tableViewResult->setModel(g_pModel);
 
         ui->tableViewResult->setColumnWidth(0, 120);  // TODO
         ui->tableViewResult->setColumnWidth(1, 120);  // TODO

@@ -92,7 +92,6 @@ signals:
 private:
     Ui::SearchSignaturesWidget *ui;
     QIODevice *g_pDevice;
-    QSortFilterProxyModel *g_pFilter;
     QStandardItemModel *g_pModel;
     bool g_bInit;
     QStandardItemModel *g_pOldModel;
