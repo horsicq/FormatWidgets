@@ -145,7 +145,6 @@ void SearchValuesWidget::_hex()
 void SearchValuesWidget::search()
 {
     if (g_pDevice) {
-
     }
 }
 
@@ -157,7 +156,7 @@ void SearchValuesWidget::deleteOldModel()
 void SearchValuesWidget::registerShortcuts(bool bState)
 {
     if (bState) {
-       // if (!shortCuts[SC_COPYSTRING]) shortCuts[SC_COPYSTRING] = new QShortcut(getShortcuts()->getShortcut(X_ID_STRINGS_COPY_STRING), this, SLOT(_copyString()));
+        // if (!shortCuts[SC_COPYSTRING]) shortCuts[SC_COPYSTRING] = new QShortcut(getShortcuts()->getShortcut(X_ID_STRINGS_COPY_STRING), this, SLOT(_copyString()));
     } else {
         for (qint32 i = 0; i < __SC_SIZE; i++) {
             if (shortCuts[i]) {
@@ -170,7 +169,6 @@ void SearchValuesWidget::registerShortcuts(bool bState)
 
 void SearchValuesWidget::adjust()
 {
-
 }
 
 void SearchValuesWidget::on_pushButtonSearchString_clicked()

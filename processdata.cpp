@@ -71,7 +71,7 @@ void ProcessData::setModelTextAlignment(QStandardItemModel *pModel, qint32 nColu
             qint32 _nNumberOfRows = pModel->rowCount(index);
 
             for (qint32 j = 0; j < _nNumberOfRows; j++) {
-                pModel->setData(pModel->index(j,nColumn,index), (qint32)flag, Qt::TextAlignmentRole);
+                pModel->setData(pModel->index(j, nColumn, index), (qint32)flag, Qt::TextAlignmentRole);
             }
         }
     }

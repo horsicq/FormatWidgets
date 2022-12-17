@@ -118,7 +118,7 @@ void PEProcessData::_process()
         QList<XPE::SECTION_RECORD> listSectionRecords = g_pPE->getSectionRecords(&listSectionHeaders, false);
         XBinary::_MEMORY_MAP memoryMap = g_pPE->getMemoryMap();
 
-        QList<QString> listStrDb = XInfoDB::loadStrDB(getOptions()->getInfoPath(),XInfoDB::STRDB_PESECTIONS);
+        QList<QString> listStrDb = XInfoDB::loadStrDB(getOptions()->getInfoPath(), XInfoDB::STRDB_PESECTIONS);
 
         qint32 nNumberOfSections = listSectionRecords.count();
 
@@ -149,7 +149,7 @@ void PEProcessData::_process()
         }
 
         for (qint32 i = 0; i < nNumberOfSections; i++) {
-            XInfoDB::STRRECORD strRecord = XInfoDB::handleStringDB(&listStrDb,listSectionRecords.at(i).sName,true);
+            XInfoDB::STRRECORD strRecord = XInfoDB::handleStringDB(&listStrDb, listSectionRecords.at(i).sName, true);
             Qt::GlobalColor globalColor = XFormats::typeToColor(strRecord.sType);
 
             QColor colText;
@@ -335,14 +335,13 @@ void PEProcessData::_process()
                 bIsHeader = XBinary::isRelAddressInHeader(&memoryMap, nRelAddress);
             }
 
-
             if ((nSection != -1) || (bIsHeader)) {
                 QList<QStandardItem *> listItems;
                 listItems.append(new QStandardItem(""));
                 listItems.append(new QStandardItem(sValue));
                 listItems.append(new QStandardItem(XBinary::valueToHex((quint32)(nRelAddress))));
                 listItems.append(new QStandardItem(XBinary::valueToHex((quint32)(mapRegionSizes.key(sValue)))));
-                listItems.append(new QStandardItem(XBinary::valueToHex((quint32)(g_pPE->relAddressToOffset(&memoryMap,nRelAddress)))));
+                listItems.append(new QStandardItem(XBinary::valueToHex((quint32)(g_pPE->relAddressToOffset(&memoryMap, nRelAddress)))));
                 listItems.append(new QStandardItem(XBinary::valueToHex((quint32)(mapRegionSizes.key(sValue)))));
                 listItems.append(new QStandardItem(""));
                 listItems.append(new QStandardItem(""));  // Info
