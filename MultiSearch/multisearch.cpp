@@ -287,37 +287,50 @@ void MultiSearch::processModel()
         XADDR nBaseAddress = g_options.memoryMap.nModuleAddress;
 
         XBinary::MODE modeAddress = XBinary::getWidthModeFromSize(nBaseAddress + g_options.memoryMap.nRawSize);
+        XBinary::MODE modeOffset = XBinary::getWidthModeFromSize(g_options.memoryMap.nRawSize);
 
         XBinary::setPdStructTotal(g_pPdStruct, g_nFreeIndex, nNumberOfRecords);
 
-        (*g_ppModel)->setHeaderData(0, Qt::Horizontal, nBaseAddress ? (tr("Address")) : (tr("Offset")));
-        (*g_ppModel)->setHeaderData(1, Qt::Horizontal, tr("Size"));
-        (*g_ppModel)->setHeaderData(2, Qt::Horizontal, tr("Type"));
-        (*g_ppModel)->setHeaderData(3, Qt::Horizontal, tr("String"));
+        (*g_ppModel)->setHeaderData(0, Qt::Horizontal, tr("Address"));
+        (*g_ppModel)->setHeaderData(1, Qt::Horizontal, tr("Offset"));
+        (*g_ppModel)->setHeaderData(2, Qt::Horizontal, "");
+        (*g_ppModel)->setHeaderData(3, Qt::Horizontal, tr("Value"));
 
         for (qint32 i = 0; (i < nNumberOfRecords) && (!(g_pPdStruct->bIsStop)); i++) {
             XBinary::MS_RECORD record = g_pListRecords->at(i);
 
-            QStandardItem *pTypeAddress = new QStandardItem;
-            pTypeAddress->setText(XBinary::valueToHex(modeAddress, record.nOffset + nBaseAddress));
-            pTypeAddress->setData(record.nOffset, Qt::UserRole + USERROLE_OFFSET);
-            pTypeAddress->setData(record.nSize, Qt::UserRole + USERROLE_SIZE);
-            pTypeAddress->setData(record.recordType, Qt::UserRole + USERROLE_TYPE);
-            pTypeAddress->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
-            (*g_ppModel)->setItem(i, 0, pTypeAddress);
+            XADDR nAddress = XBinary::offsetToAddress(&(g_options.memoryMap), record.nOffset);
+            QString sSectionName = XBinary::getMemoryRecordByOffset(&(g_options.memoryMap),record.nOffset).sName;
 
-            QStandardItem *pTypeSize = new QStandardItem;
-            pTypeSize->setText(XBinary::valueToHexEx(record.sString.size()));
-            pTypeSize->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
-            (*g_ppModel)->setItem(i, 1, pTypeSize);
+            {
+                QStandardItem *pItem = new QStandardItem;
 
-            QStandardItem *pTypeItem = new QStandardItem;
-
-            pTypeItem->setText(XBinary::msRecordTypeIdToString(record.recordType));
-
-            pTypeItem->setTextAlignment(Qt::AlignLeft);
-            (*g_ppModel)->setItem(i, 2, pTypeItem);
-            (*g_ppModel)->setItem(i, 3, new QStandardItem(record.sString));
+                if (nAddress != -1) {
+                    pItem->setText(XBinary::valueToHex(modeAddress, nAddress));
+                }
+                // TODO mb more
+                pItem->setData(record.nOffset, Qt::UserRole + USERROLE_OFFSET);
+                pItem->setData(record.nSize, Qt::UserRole + USERROLE_SIZE);
+                pItem->setData(record.recordType, Qt::UserRole + USERROLE_TYPE);
+                pItem->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+                (*g_ppModel)->setItem(i, 0, pItem);
+            }
+            {
+                QStandardItem *pItem = new QStandardItem;
+                pItem->setText(XBinary::valueToHex(modeOffset, record.nOffset));
+                pItem->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+                (*g_ppModel)->setItem(i, 1, pItem);
+            }
+            {
+                QStandardItem *pItem = new QStandardItem;
+                pItem->setText(sSectionName);
+                (*g_ppModel)->setItem(i, 2, pItem);
+            }
+            {
+                QStandardItem *pItem = new QStandardItem;
+                pItem->setText(record.sString);
+                (*g_ppModel)->setItem(i, 3, pItem);
+            }
 
             XBinary::setPdStructCurrent(g_pPdStruct, g_nFreeIndex, i);
         }
@@ -326,6 +339,7 @@ void MultiSearch::processModel()
         *g_ppModel = new QStandardItemModel(nNumberOfRecords, 3);  // TODO Check maximum
 
         XBinary::MODE modeAddress = XBinary::getWidthModeFromMemoryMap(&(g_options.memoryMap));
+        XBinary::MODE modeOffset = XBinary::getWidthModeFromSize(g_options.memoryMap.nRawSize);
 
         XBinary::setPdStructTotal(g_pPdStruct, g_nFreeIndex, nNumberOfRecords);
 
@@ -349,7 +363,7 @@ void MultiSearch::processModel()
             (*g_ppModel)->setItem(i, 0, pTypeAddress);
 
             QStandardItem *pTypeOffset = new QStandardItem;
-            pTypeOffset->setText((XBinary::valueToHex(modeAddress, record.nOffset)));
+            pTypeOffset->setText((XBinary::valueToHex(modeOffset, record.nOffset)));
             pTypeOffset->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
 
             (*g_ppModel)->setItem(i, 1, pTypeOffset);

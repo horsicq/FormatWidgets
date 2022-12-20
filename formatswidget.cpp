@@ -294,6 +294,8 @@ void FormatsWidget::reload()
             if (machofat.isValid()) {
                 ui->lineEditEntryPoint->setValue(machofat.getEntryPointAddress());
             }
+        } else {
+            ui->stackedWidgetMain->setCurrentIndex(TABINFO_BINARY);
         }
 
         file.close();

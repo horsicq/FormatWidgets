@@ -30,6 +30,7 @@
 #include "xbinary.h"
 #include "xlineedithex.h"
 #include "xoptions.h"
+#include "staticscan.h"
 
 class ProcessData : public QObject {
     Q_OBJECT

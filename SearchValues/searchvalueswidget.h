@@ -54,22 +54,17 @@ public:
     void setData(QIODevice *pDevice, XBinary::FT fileType);
     QIODevice *getDevice();
 
-    void reload();
-    bool getInitStatus();
+    void searchValue(QVariant varValue, XBinary::VT valueType, bool bIsBigEndian);
 
 private slots:
     void on_pushButtonSave_clicked();
     void on_tableViewResult_customContextMenuRequested(const QPoint &pos);
-    void _copyString();
-    void _copyOffset();
-    void _copySize();
-    void _hex();
     void search();
     void deleteOldModel();
-    void adjust();
     void on_pushButtonSearchString_clicked();
     void on_pushButtonSearchSignature_clicked();
     void on_pushButtonSearchValue_clicked();
+    void on_pushButtonSearch_clicked();
 
 private:
     void _search(DialogSearch::SEARCHMODE mode);
@@ -86,11 +81,13 @@ private:
     Ui::SearchValuesWidget *ui;
     QIODevice *g_pDevice;
     QStandardItemModel *g_pModel;
-    bool g_bInit;
     QStandardItemModel *g_pOldModel;
     QFutureWatcher<void> g_watcher;
     QShortcut *shortCuts[__SC_SIZE];
-    bool g_bIsReadonly;
+
+    QVariant g_varValue;
+    XBinary::VT g_valueType;
+    bool g_bIsBigEndian;
 };
 
 #endif  // SEARCHVALUESWIDGET_H

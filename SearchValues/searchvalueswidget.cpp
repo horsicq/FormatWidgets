@@ -28,8 +28,9 @@ SearchValuesWidget::SearchValuesWidget(QWidget *pParent) : XShortcutsWidget(pPar
     g_pDevice = nullptr;
 
     g_pModel = nullptr;
-    g_bInit = false;
-    g_bIsReadonly = true;
+    g_varValue = 0;
+    g_valueType = XBinary::VT_UNKNOWN;
+    g_bIsBigEndian = false;
 
     memset(shortCuts, 0, sizeof shortCuts);
 
@@ -57,14 +58,15 @@ QIODevice *SearchValuesWidget::getDevice()
     return g_pDevice;
 }
 
-void SearchValuesWidget::reload()
+void SearchValuesWidget::searchValue(QVariant varValue, XBinary::VT valueType, bool bIsBigEndian)
 {
-    search();
-}
+    g_varValue = varValue;
+    g_valueType = valueType;
+    g_bIsBigEndian = bIsBigEndian;
 
-bool SearchValuesWidget::getInitStatus()
-{
-    return g_bInit;
+    ui->labelSearchValue->setText(QString("%1: %2").arg(XBinary::valueTypeToString(valueType), XBinary::getValueString(varValue, valueType)));
+
+    search();
 }
 
 void SearchValuesWidget::on_pushButtonSave_clicked()
@@ -79,72 +81,51 @@ void SearchValuesWidget::on_tableViewResult_customContextMenuRequested(const QPo
     QMenu contextMenu(this);
 
     // TODO
+    contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this, ui->tableViewResult));
 
     contextMenu.exec(ui->tableViewResult->viewport()->mapToGlobal(pos));
 }
 
-void SearchValuesWidget::_copyString()
-{
-    qint32 nRow = ui->tableViewResult->currentIndex().row();
-
-    if ((nRow != -1) && (g_pModel)) {
-        QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(3);
-
-        QString sString = ui->tableViewResult->model()->data(index).toString();
-
-        QApplication::clipboard()->setText(sString);
-    }
-}
-
-void SearchValuesWidget::_copyOffset()
-{
-    int nRow = ui->tableViewResult->currentIndex().row();
-
-    if ((nRow != -1) && (g_pModel)) {
-        QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(0);
-
-        QString sString = ui->tableViewResult->model()->data(index).toString();
-
-        QApplication::clipboard()->setText(sString);
-    }
-}
-
-void SearchValuesWidget::_copySize()
-{
-    int nRow = ui->tableViewResult->currentIndex().row();
-
-    if ((nRow != -1) && (g_pModel)) {
-        QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(1);
-
-        QString sString = ui->tableViewResult->model()->data(index).toString();
-
-        QApplication::clipboard()->setText(sString);
-    }
-}
-
-void SearchValuesWidget::_hex()
-{
-    int nRow = ui->tableViewResult->currentIndex().row();
-
-    if ((nRow != -1) && (g_pModel)) {
-        QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(0);
-
-        qint64 nOffset = ui->tableViewResult->model()->data(index, Qt::UserRole + MultiSearch::USERROLE_OFFSET).toLongLong();
-        qint64 nSize = ui->tableViewResult->model()->data(index, Qt::UserRole + MultiSearch::USERROLE_SIZE).toLongLong();
-
-        XIODevice *pSubDevice = dynamic_cast<XIODevice *>(g_pDevice);
-
-        if (pSubDevice) {
-            nOffset += pSubDevice->getInitOffset();
-        }
-
-        emit showHex(nOffset, nSize);
-    }
-}
-
 void SearchValuesWidget::search()
 {
-    if (g_pDevice) {
+    if (g_pDevice && (g_valueType != XBinary::VT_UNKNOWN)) {
+
+        g_pOldModel = g_pModel;
+
+        ui->tableViewResult->setModel(nullptr);
+
+        XBinary::FT fileType = (XBinary::FT)(ui->comboBoxType->currentData().toInt());
+
+        MultiSearch::OPTIONS options = {};
+
+        options.bIsBigEndian = g_bIsBigEndian;
+        options.varValue = g_varValue;
+        options.valueType = g_valueType;
+        options.memoryMap = XFormats::getMemoryMap(fileType, g_pDevice);
+
+        QList<XBinary::MS_RECORD> listRecords;
+
+        QWidget *pParent = XOptions::getMainWidget(this);
+
+        DialogMultiSearchProcess dsp(pParent);
+        dsp.processSearch(g_pDevice, &listRecords, options, MultiSearch::TYPE_VALUES);
+        dsp.showDialogDelay(1000);
+
+        DialogMultiSearchProcess dmp(pParent);
+        dmp.processModel(&listRecords, &g_pModel, options, MultiSearch::TYPE_VALUES);
+        dmp.showDialogDelay(1000);
+
+        ui->tableViewResult->setModel(g_pModel);
+
+        ui->tableViewResult->setColumnWidth(0, 120);  // TODO
+        ui->tableViewResult->setColumnWidth(1, 120);  // TODO
+        ui->tableViewResult->setColumnWidth(2, 120);  // TODO
+
+        QFuture<void> future = deleteOldStandardModel(&g_pOldModel);
+
+        g_watcher.setFuture(future);
+
+        // TODO nothing found
     }
 }
 
@@ -167,10 +148,6 @@ void SearchValuesWidget::registerShortcuts(bool bState)
     }
 }
 
-void SearchValuesWidget::adjust()
-{
-}
-
 void SearchValuesWidget::on_pushButtonSearchString_clicked()
 {
     _search(DialogSearch::SEARCHMODE_STRING);
@@ -189,49 +166,19 @@ void SearchValuesWidget::on_pushButtonSearchValue_clicked()
 void SearchValuesWidget::_search(DialogSearch::SEARCHMODE mode)
 {
     if (g_pDevice) {
-        XBinary::SEARCHDATA searchData = {};
         DialogSearch::OPTIONS options = {};
+        XBinary::SEARCHDATA searchData;
 
         DialogSearch dialogSearch(this, getDevice(), &searchData, mode, options);
 
         if (dialogSearch.exec() == QDialog::Accepted)  // TODO use status
         {
-            g_pOldModel = g_pModel;
-
-            ui->tableViewResult->setModel(nullptr);
-
-            XBinary::FT fileType = (XBinary::FT)(ui->comboBoxType->currentData().toInt());
-
-            MultiSearch::OPTIONS options = {};
-
-            options.bIsBigEndian = searchData.bIsBigEndian;
-            options.varValue = searchData.varValue;
-            options.valueType = searchData.valueType;
-            options.memoryMap = XFormats::getMemoryMap(fileType, g_pDevice);
-
-            QList<XBinary::MS_RECORD> listRecords;
-
-            QWidget *pParent = XOptions::getMainWidget(this);
-
-            DialogMultiSearchProcess dsp(pParent);
-            dsp.processSearch(g_pDevice, &listRecords, options, MultiSearch::TYPE_VALUES);
-            dsp.showDialogDelay(1000);
-
-            DialogMultiSearchProcess dmp(pParent);
-            dmp.processModel(&listRecords, &g_pModel, options, MultiSearch::TYPE_VALUES);
-            dmp.showDialogDelay(1000);
-
-            ui->tableViewResult->setModel(g_pModel);
-
-            ui->tableViewResult->setColumnWidth(0, 120);  // TODO
-            ui->tableViewResult->setColumnWidth(1, 120);  // TODO
-            ui->tableViewResult->setColumnWidth(2, 120);  // TODO
-
-            QFuture<void> future = deleteOldStandardModel(&g_pOldModel);
-
-            g_watcher.setFuture(future);
-
-            // TODO nothing found
+            searchValue(searchData.varValue, searchData.valueType, searchData.bIsBigEndian);
         }
     }
+}
+
+void SearchValuesWidget::on_pushButtonSearch_clicked()
+{
+    search();
 }

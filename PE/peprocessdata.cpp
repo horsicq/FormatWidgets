@@ -916,6 +916,9 @@ void PEProcessData::_process()
             listLabels.append(tr("Address"));
             listLabels.append(tr("Offset"));
             listLabels.append(tr("Size"));
+            listLabels.append("");
+
+            SpecAbstract::SCAN_OPTIONS options = {};
 
             QList<XPE::RESOURCE_RECORD> listResources = g_pPE->getResources();
 
@@ -955,6 +958,10 @@ void PEProcessData::_process()
                 (*g_ppModel)->setItem(i, 4, new QStandardItem(XBinary::valueToHexEx(listResources.at(i).nAddress)));
                 (*g_ppModel)->setItem(i, 5, new QStandardItem(XBinary::valueToHexEx(listResources.at(i).nOffset)));
                 (*g_ppModel)->setItem(i, 6, new QStandardItem(XBinary::valueToHexEx(listResources.at(i).nSize)));
+
+                SpecAbstract::SCAN_RESULT scanResult = StaticScan::processSubdevice(g_pPE->getDevice(), listResources.at(i).nOffset, listResources.at(i).nSize, &options, getPdStruct());
+
+                (*g_ppModel)->setItem(i, 7, new QStandardItem(SpecAbstract::createShortResultString(scanResult)));
 
                 incValue();
             }

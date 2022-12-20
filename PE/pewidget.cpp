@@ -2029,7 +2029,7 @@ void PEWidget::reloadData()
                 {
                     PEProcessData peProcessData(SPE::TYPE_RESOURCES, &g_tvModel[SPE::TYPE_RESOURCES], &pe, 0, 0, 0, false);
 
-                    ajustTableView(&peProcessData, &g_tvModel[SPE::TYPE_RESOURCES], ui->tableView_Resources, nullptr, false);
+                    ajustTableView(&peProcessData, &g_tvModel[SPE::TYPE_RESOURCES], ui->tableView_Resources, nullptr, true);
 
                     connect(ui->tableView_Resources->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                             SLOT(onTableView_Resources_currentRowChanged(QModelIndex, QModelIndex)));
