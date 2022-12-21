@@ -37,6 +37,7 @@ enum TYPE {
     TYPE_ENTROPY,
     TYPE_HEURISTICSCAN,
     TYPE_EXTRACTOR,
+    TYPE_SEARCH,
     __TYPE_size
 };
 }  // namespace SBINARY

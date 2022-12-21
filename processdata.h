@@ -44,7 +44,9 @@ public:
     void setMaximum(quint64 nMaximum);
     void incValue();
     bool isRun();
-    void setModelTextAlignment(QStandardItemModel *pModel, qint32 nColumn, Qt::Alignment flag);
+    void setModelTextAlignment(QAbstractItemModel *pModel, qint32 nColumn, Qt::Alignment flag);
+    void setTableViewAdjust(QTableView *pTableView, qint32 nColumn, Qt::Alignment flag, qint32 nWidth);
+    void setTreeViewAdjust(QTreeView *pTreeView, qint32 nColumn, Qt::Alignment flag, qint32 nWidth);
     XBinary::PDSTRUCT *getPdStruct();
     virtual void _process() = 0;
     virtual void ajustTableView(QWidget *pWidget, QTableView *pTableView) = 0;

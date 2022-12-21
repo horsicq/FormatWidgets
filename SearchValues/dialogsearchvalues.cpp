@@ -36,9 +36,9 @@ DialogSearchValues::~DialogSearchValues()
     delete ui;
 }
 
-void DialogSearchValues::setData(QIODevice *pDevice, XBinary::FT fileType)
+void DialogSearchValues::setData(QIODevice *pDevice, SearchValuesWidget::OPTIONS options)
 {
-    ui->widgetSearchValues->setData(pDevice, fileType);
+    ui->widgetSearchValues->setData(pDevice, options);
 }
 
 void DialogSearchValues::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)

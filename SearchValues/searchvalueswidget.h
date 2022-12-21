@@ -48,10 +48,16 @@ class SearchValuesWidget : public XShortcutsWidget {
     };
 
 public:
+    struct OPTIONS {
+        XBinary::FT fileType;
+        bool bMenu_Hex;
+        bool bMenu_Disasm;
+    };
+
     explicit SearchValuesWidget(QWidget *pParent = nullptr);
     ~SearchValuesWidget();
 
-    void setData(QIODevice *pDevice, XBinary::FT fileType);
+    void setData(QIODevice *pDevice, OPTIONS options);
     QIODevice *getDevice();
 
     void searchValue(QVariant varValue, XBinary::VT valueType, bool bIsBigEndian);
@@ -65,6 +71,8 @@ private slots:
     void on_pushButtonSearchSignature_clicked();
     void on_pushButtonSearchValue_clicked();
     void on_pushButtonSearch_clicked();
+    void _hex();
+    void _disasm();
 
 private:
     void _search(DialogSearch::SEARCHMODE mode);
@@ -74,12 +82,12 @@ protected:
 
 signals:
     void showHex(qint64 nOffset, qint64 nSize);
-    void showDemangle(QString sString);
-    void dataChanged();
+    void showDisasm(qint64 nOffset);
 
 private:
     Ui::SearchValuesWidget *ui;
     QIODevice *g_pDevice;
+    OPTIONS g_options;
     QStandardItemModel *g_pModel;
     QStandardItemModel *g_pOldModel;
     QFutureWatcher<void> g_watcher;

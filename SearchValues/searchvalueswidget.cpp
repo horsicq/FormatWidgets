@@ -44,12 +44,13 @@ SearchValuesWidget::~SearchValuesWidget()
     delete ui;
 }
 
-void SearchValuesWidget::setData(QIODevice *pDevice, XBinary::FT fileType)
+void SearchValuesWidget::setData(QIODevice *pDevice, OPTIONS options)
 {
     this->g_pDevice = pDevice;
+    this->g_options = options;
 
     if (pDevice) {
-        XFormats::setFileTypeComboBox(fileType, g_pDevice, ui->comboBoxType);
+        XFormats::setFileTypeComboBox(options.fileType, g_pDevice, ui->comboBoxType);
     }
 }
 
@@ -80,7 +81,28 @@ void SearchValuesWidget::on_tableViewResult_customContextMenuRequested(const QPo
 {
     QMenu contextMenu(this);
 
-    // TODO
+    QMenu menuFollowIn(tr("Follow in"), this);
+
+    QAction actionHex(tr("Hex"), this);
+    QAction actionDisasm(tr("Disasm"), this);
+
+    if (g_options.bMenu_Hex) {
+        actionHex.setShortcut(getShortcuts()->getShortcut(X_ID_FIND_FOLLOWIN_HEX));
+        connect(&actionHex, SIGNAL(triggered()), this, SLOT(_hex()));
+
+        menuFollowIn.addAction(&actionHex);
+    }
+
+    if (g_options.bMenu_Disasm) {
+        actionDisasm.setShortcut(getShortcuts()->getShortcut(X_ID_FIND_FOLLOWIN_DISASM));
+        connect(&actionDisasm, SIGNAL(triggered()), this, SLOT(_disasm()));
+        menuFollowIn.addAction(&actionDisasm);
+    }
+
+    if (g_options.bMenu_Hex || g_options.bMenu_Disasm) {
+        contextMenu.addMenu(&menuFollowIn);
+    }
+
     contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this, ui->tableViewResult));
 
     contextMenu.exec(ui->tableViewResult->viewport()->mapToGlobal(pos));
@@ -181,4 +203,31 @@ void SearchValuesWidget::_search(DialogSearch::SEARCHMODE mode)
 void SearchValuesWidget::on_pushButtonSearch_clicked()
 {
     search();
+}
+
+void SearchValuesWidget::_hex()
+{
+    int nRow = ui->tableViewResult->currentIndex().row();
+
+    if ((nRow != -1) && (g_pModel)) {
+        QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(0);
+
+        qint64 nOffset = ui->tableViewResult->model()->data(index, Qt::UserRole + MultiSearch::USERROLE_OFFSET).toLongLong();
+        qint64 nSize = ui->tableViewResult->model()->data(index, Qt::UserRole + MultiSearch::USERROLE_SIZE).toLongLong();
+
+        emit showHex(nOffset, nSize);
+    }
+}
+
+void SearchValuesWidget::_disasm()
+{
+    int nRow = ui->tableViewResult->currentIndex().row();
+
+    if ((nRow != -1) && (g_pModel)) {
+        QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(0);
+
+        qint64 nOffset = ui->tableViewResult->model()->data(index, Qt::UserRole + MultiSearch::USERROLE_OFFSET).toLongLong();
+
+        emit showDisasm(nOffset);
+    }
 }

@@ -1509,7 +1509,11 @@ void PEWidget::reloadData()
             }
         } else if (nType == SPE::TYPE_SEARCH) {
             if (!isInitPresent(sInit)) {
-                ui->widgetSearch->setData(getDevice(), pe.getFileType());
+                SearchValuesWidget::OPTIONS options = {};
+                options.fileType = pe.getFileType();
+                options.bMenu_Hex = true;
+                options.bMenu_Disasm = true;
+                ui->widgetSearch->setData(getDevice(), options);
             }
         } else if (nType == SPE::TYPE_TOOLS) {
             if (!isInitPresent(sInit)) {

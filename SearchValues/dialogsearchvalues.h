@@ -34,7 +34,7 @@ class DialogSearchValues : public XShortcutsDialog {
 public:
     explicit DialogSearchValues(QWidget *pParent);
     ~DialogSearchValues();
-    void setData(QIODevice *pDevice, XBinary::FT fileType);
+    void setData(QIODevice *pDevice, SearchValuesWidget::OPTIONS options);
     void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
 
 signals:

@@ -82,6 +82,7 @@ void BinaryWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_ENTROPY, tr("Entropy")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_HEURISTICSCAN, tr("Heuristic scan")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_EXTRACTOR, tr("Extractor")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_SEARCH, tr("Search")));
 
         ui->treeWidgetNavi->expandAll();
 
@@ -251,6 +252,15 @@ void BinaryWidget::reloadData()
                 extractorOptions.bMenu_Hex = true;
 
                 ui->widgetExtractor->setData(getDevice(), extractorOptions, true);
+            }
+        } else if (nType == SBINARY::TYPE_SEARCH) {
+            if (!isInitPresent(sInit)) {
+                SearchValuesWidget::OPTIONS options = {};
+                options.fileType = binary.getFileType();
+                options.bMenu_Hex = true;
+                options.bMenu_Disasm = true;
+
+                ui->widgetSearch->setData(getDevice(), options);
             }
         }
 

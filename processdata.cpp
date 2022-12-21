@@ -57,24 +57,37 @@ bool ProcessData::isRun()
     return !(g_pPdStruct->bIsStop);
 }
 
-void ProcessData::setModelTextAlignment(QStandardItemModel *pModel, qint32 nColumn, Qt::Alignment flag)
+void ProcessData::setModelTextAlignment(QAbstractItemModel *pModel, qint32 nColumn, Qt::Alignment flag)
 {
     qint32 nNumberOfRows = pModel->rowCount();
 
+    pModel->setHeaderData(nColumn, Qt::Horizontal, (qint32)flag, Qt::TextAlignmentRole);
+
     for (qint32 i = 0; i < nNumberOfRows; i++) {
-        QStandardItem *pItem = pModel->item(i, nColumn);
+        //QStandardItem *pItem = pModel->item(i, nColumn);
+        pModel->setData(pModel->index(i, nColumn), (qint32)flag, Qt::TextAlignmentRole);
 
-        if (pItem) {
-            pItem->setTextAlignment(flag);
+        QModelIndex index = pModel->index(i, 0);
+        qint32 _nNumberOfRows = pModel->rowCount(index);
 
-            QModelIndex index = pModel->index(i, 0);
-            qint32 _nNumberOfRows = pModel->rowCount(index);
-
-            for (qint32 j = 0; j < _nNumberOfRows; j++) {
-                pModel->setData(pModel->index(j, nColumn, index), (qint32)flag, Qt::TextAlignmentRole);
-            }
+        for (qint32 j = 0; j < _nNumberOfRows; j++) {
+            pModel->setData(pModel->index(j, nColumn, index), (qint32)flag, Qt::TextAlignmentRole);
         }
     }
+}
+
+void ProcessData::setTableViewAdjust(QTableView *pTableView, qint32 nColumn, Qt::Alignment flag, qint32 nWidth)
+{
+    setModelTextAlignment(pTableView->model(), nColumn, flag);
+
+    pTableView->setColumnWidth(nColumn, nWidth);
+}
+
+void ProcessData::setTreeViewAdjust(QTreeView *pTreeView, qint32 nColumn, Qt::Alignment flag, qint32 nWidth)
+{
+    setModelTextAlignment(pTreeView->model(), nColumn, flag);
+
+    pTreeView->setColumnWidth(nColumn, nWidth);
 }
 
 XBinary::PDSTRUCT *ProcessData::getPdStruct()

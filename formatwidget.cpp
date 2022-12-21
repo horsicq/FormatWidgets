@@ -888,7 +888,7 @@ void FormatWidget::initSearchSignaturesWidget(SearchSignaturesWidget *pWidget)
 void FormatWidget::initSearchValuesWidget(SearchValuesWidget *pWidget)
 {
     connect(pWidget, SIGNAL(showHex(qint64, qint64)), this, SLOT(showInHexWindow(qint64, qint64)));
-    // TODO Disasm
+    connect(pWidget, SIGNAL(showDisasm(qint64)), this, SLOT(showInDisasmWindowOffset(qint64)));
 }
 
 void FormatWidget::initHexViewWidget(XHexViewWidget *pWidget)
