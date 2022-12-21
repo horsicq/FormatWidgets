@@ -152,7 +152,6 @@ public:
     void dumpSection(QTableView *pTableView);
     void dumpAll(QTableView *pTableView);
     qint64 getTableViewItemSize(QTableView *pTableView);
-
     void showTableViewDemangle(QTableView *pTableView, int nColumn);
 
     static bool _setTreeItem(QTreeWidget *pTree, QTreeWidgetItem *pItem, int nID);
@@ -180,6 +179,7 @@ public:
     void initSearchValuesWidget(SearchValuesWidget *pWidget);
     void initHexViewWidget(XHexViewWidget *pWidget);
     void initMultiDisasmWidget(XMultiDisasmWidget *pWidget);
+    void initMemoryMapWidget(XMemoryMapWidget *pWidget);
     void initHexView(XHexView *pWidget);
     void initDisasmView(XDisasmView *pWidget);
     void initToolsWidget(ToolsWidget *pWidget);
@@ -225,6 +225,7 @@ protected:
     virtual void _showInDisasmWindowOffset(qint64 nOffset);
     virtual void _showInMemoryMapWindowOffset(qint64 nOffset);
     virtual void _showInHexWindow(qint64 nOffset, qint64 nSize);
+    virtual void _findValue(quint64 nValue, bool bIsBigEndian);
 
 signals:
     void changed();
@@ -241,6 +242,7 @@ public slots:
     void showInMemoryMapWindowOffset(qint64 nOffset);
     void showInHexWindow(qint64 nOffset, qint64 nSize);
     void showInHexWindow(qint64 nOffset);
+    void findValue(quint64 nValue, bool bIsBigEndian);
     void showEntropy(qint64 nOffset, qint64 nSize);
     void dumpRegion(qint64 nOffset, qint64 nSize, QString sName);
     void showDemangle(QString sString);

@@ -840,6 +840,7 @@ void PEProcessData::_process()
             listLabels.append("");
 
             SpecAbstract::SCAN_OPTIONS options = {};
+            options.initFilePart = XBinary::FILEPART_RESOURCE;
 
             QList<XPE::RESOURCE_RECORD> listResources = g_pPE->getResources();
 
@@ -1058,7 +1059,7 @@ void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
         setTableViewAdjust(pTableView, 1, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
         setTableViewAdjust(pTableView, 2, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
         setTableViewAdjust(pTableView, 3, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTableViewAdjust(pTableView, 4, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_STRINGMID, mode));
+        setTableViewAdjust(pTableView, 4, Qt::AlignLeft | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_STRINGMID, mode));
     } else if (g_nType == SPE::TYPE_DELAYIMPORT) {
         setTableViewAdjust(pTableView, 0, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT16, mode));
         setTableViewAdjust(pTableView, 1, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));

@@ -741,6 +741,19 @@ void FormatWidget::initWidget()
         }
     }
     {
+        QList<XMemoryMapWidget *> listWidgets = this->findChildren<XMemoryMapWidget *>();
+
+        qint32 nNumberOfWidgets = listWidgets.count();
+
+        for (qint32 i = 0; i < nNumberOfWidgets; i++) {
+            XMemoryMapWidget *pChild = dynamic_cast<XMemoryMapWidget *>(listWidgets.at(i));
+
+            if (pChild) {
+                initMemoryMapWidget(pChild);
+            }
+        }
+    }
+    {
         QList<SearchSignaturesWidget *> listWidgets = this->findChildren<SearchSignaturesWidget *>();
 
         qint32 nNumberOfWidgets = listWidgets.count();
@@ -902,6 +915,11 @@ void FormatWidget::initMultiDisasmWidget(XMultiDisasmWidget *pWidget)
 {
     connect(pWidget, SIGNAL(dataChanged()), this, SLOT(setEdited()));
     connect(pWidget, SIGNAL(showOffsetHex(qint64)), this, SLOT(showInHexWindow(qint64)));
+}
+
+void FormatWidget::initMemoryMapWidget(XMemoryMapWidget *pWidget)
+{
+    connect(pWidget, SIGNAL(findValue(quint64, bool)), this, SLOT(findValue(quint64, bool)));
 }
 
 void FormatWidget::initHexView(XHexView *pWidget)
@@ -1090,6 +1108,15 @@ void FormatWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
 #endif
 }
 
+void FormatWidget::_findValue(quint64 nValue, bool bIsBigEndian)
+{
+    Q_UNUSED(nValue)
+    Q_UNUSED(bIsBigEndian)
+#ifdef QT_DEBUG
+    qDebug("TODO _findValue");
+#endif
+}
+
 // void FormatWidget::resizeToolsWidget(QWidget *pParent,ToolsWidget
 // *pToolWidget)
 //{
@@ -1197,6 +1224,11 @@ void FormatWidget::showInHexWindow(qint64 nOffset, qint64 nSize)
 void FormatWidget::showInHexWindow(qint64 nOffset)
 {
     _showInHexWindow(nOffset, 1);
+}
+
+void FormatWidget::findValue(quint64 nValue, bool bIsBigEndian)
+{
+    _findValue(nValue, bIsBigEndian);
 }
 
 void FormatWidget::showEntropy(qint64 nOffset, qint64 nSize)

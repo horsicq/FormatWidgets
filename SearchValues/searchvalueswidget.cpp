@@ -59,7 +59,7 @@ QIODevice *SearchValuesWidget::getDevice()
     return g_pDevice;
 }
 
-void SearchValuesWidget::searchValue(QVariant varValue, XBinary::VT valueType, bool bIsBigEndian)
+void SearchValuesWidget::findValue(QVariant varValue, XBinary::VT valueType, bool bIsBigEndian)
 {
     g_varValue = varValue;
     g_valueType = valueType;
@@ -68,6 +68,14 @@ void SearchValuesWidget::searchValue(QVariant varValue, XBinary::VT valueType, b
     ui->labelSearchValue->setText(QString("%1: %2").arg(XBinary::valueTypeToString(valueType), XBinary::getValueString(varValue, valueType)));
 
     search();
+}
+
+void SearchValuesWidget::findValue(quint64 nValue, bool bIsBigEndian)
+{
+    QVariant varValue = nValue;
+    XBinary::VT valueType = XBinary::getValueType(nValue);
+
+    findValue(varValue, valueType, bIsBigEndian);
 }
 
 void SearchValuesWidget::on_pushButtonSave_clicked()
@@ -195,7 +203,7 @@ void SearchValuesWidget::_search(DialogSearch::SEARCHMODE mode)
 
         if (dialogSearch.exec() == QDialog::Accepted)  // TODO use status
         {
-            searchValue(searchData.varValue, searchData.valueType, searchData.bIsBigEndian);
+            findValue(searchData.varValue, searchData.valueType, searchData.bIsBigEndian);
         }
     }
 }

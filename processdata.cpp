@@ -59,19 +59,27 @@ bool ProcessData::isRun()
 
 void ProcessData::setModelTextAlignment(QAbstractItemModel *pModel, qint32 nColumn, Qt::Alignment flag)
 {
-    qint32 nNumberOfRows = pModel->rowCount();
+    QStandardItemModel *_pModel = dynamic_cast<QStandardItemModel *>(pModel);
 
-    pModel->setHeaderData(nColumn, Qt::Horizontal, (qint32)flag, Qt::TextAlignmentRole);
+    if (_pModel) {
+        qint32 nNumberOfRows = _pModel->rowCount();
 
-    for (qint32 i = 0; i < nNumberOfRows; i++) {
-        //QStandardItem *pItem = pModel->item(i, nColumn);
-        pModel->setData(pModel->index(i, nColumn), (qint32)flag, Qt::TextAlignmentRole);
+        _pModel->setHeaderData(nColumn, Qt::Horizontal, (qint32)flag, Qt::TextAlignmentRole);
 
-        QModelIndex index = pModel->index(i, 0);
-        qint32 _nNumberOfRows = pModel->rowCount(index);
+        for (qint32 i = 0; i < nNumberOfRows; i++) {
+            QStandardItem *pItem = _pModel->item(i, nColumn);
 
-        for (qint32 j = 0; j < _nNumberOfRows; j++) {
-            pModel->setData(pModel->index(j, nColumn, index), (qint32)flag, Qt::TextAlignmentRole);
+            if (pItem) {
+                pItem->setTextAlignment(flag);
+                //pModel->setData(pModel->index(i, nColumn), (qint32)flag, Qt::TextAlignmentRole);
+
+                QModelIndex index = _pModel->index(i, 0);
+                qint32 _nNumberOfRows = _pModel->rowCount(index);
+
+                for (qint32 j = 0; j < _nNumberOfRows; j++) {
+                    _pModel->setData(_pModel->index(j, nColumn, index), (qint32)flag, Qt::TextAlignmentRole);
+                }
+            }
         }
     }
 }
