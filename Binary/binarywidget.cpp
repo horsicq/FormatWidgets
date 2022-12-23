@@ -202,7 +202,7 @@ void BinaryWidget::reloadData()
         } else if (nType == SBINARY::TYPE_DISASM) {
             if (!isInitPresent(sInit)) {
                 XMultiDisasmWidget::OPTIONS options = {};
-                options.fileType = binary.getFileType();
+                options.fileType = fileType;
                 options.nInitAddress = getDisasmInitAddress();
                 options.bMenu_Hex = true;
 
