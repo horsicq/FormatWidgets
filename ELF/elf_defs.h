@@ -36,6 +36,8 @@ enum TYPE {
     TYPE_MEMORYMAP,
     TYPE_ENTROPY,
     TYPE_HEURISTICSCAN,
+    TYPE_EXTRACTOR,
+    TYPE_SEARCH,
     TYPE_Elf_Ehdr,
     TYPE_Elf_Shdr,
     TYPE_Elf_Phdr,

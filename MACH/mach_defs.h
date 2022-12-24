@@ -36,6 +36,8 @@ enum TYPE {
     TYPE_MEMORYMAP,
     TYPE_ENTROPY,
     TYPE_HEURISTICSCAN,
+    TYPE_EXTRACTOR,
+    TYPE_SEARCH,
     TYPE_mach_header,
     TYPE_mach_commands,
     TYPE_mach_segments,

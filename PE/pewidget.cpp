@@ -1513,6 +1513,7 @@ void PEWidget::reloadData()
                 options.fileType = pe.getFileType();
                 options.bMenu_Hex = true;
                 options.bMenu_Disasm = true;
+
                 ui->widgetSearch->setData(getDevice(), options);
             }
         } else if (nType == SPE::TYPE_TOOLS) {
