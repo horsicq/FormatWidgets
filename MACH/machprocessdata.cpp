@@ -662,6 +662,7 @@ void MACHProcessData::_process()
 
 void MACHProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
 {
+    // TODO Sizes
     XBinary::MODE mode = g_pXMACH->getMode();
 
     if (g_nType == SMACH::TYPE_mach_commands) {
