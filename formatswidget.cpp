@@ -81,12 +81,12 @@ void FormatsWidget::adjustView()
 void FormatsWidget::setAdvanced(bool bState)
 {
     if (bState) {
-        ui->stackedWidgetTools->show();
+        ui->groupBoxTools->show();
         ui->stackedWidgetMain->show();
         ui->groupBoxBaseAddress->show();
         ui->groupBoxEntryPoint->show();
     } else {
-        ui->stackedWidgetTools->hide();
+        ui->groupBoxTools->hide();
         ui->stackedWidgetMain->hide();
         ui->groupBoxBaseAddress->hide();
         ui->groupBoxEntryPoint->hide();
