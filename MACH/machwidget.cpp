@@ -1651,6 +1651,12 @@ void MACHWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
     ui->widgetHex->setSelection(nOffset, nSize);
 }
 
+void MACHWidget::_findValue(quint64 nValue, bool bIsBigEndian)
+{
+    setTreeItem(ui->treeWidgetNavi, SMACH::TYPE_SEARCH);
+    ui->widgetSearch->findValue(nValue, bIsBigEndian);
+}
+
 void MACHWidget::reloadData()
 {
     qint32 nType = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_TYPE).toInt();
@@ -1731,6 +1737,7 @@ void MACHWidget::reloadData()
         } else if (nType == SMACH::TYPE_EXTRACTOR) {
             if (!isInitPresent(sInit)) {
                 XExtractor::OPTIONS extractorOptions = XExtractor::getDefaultOptions();
+                extractorOptions.fileType = mach.getFileType();
                 extractorOptions.bMenu_Hex = true;
 
                 ui->widgetExtractor->setData(getDevice(), extractorOptions, true);

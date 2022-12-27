@@ -427,6 +427,7 @@ void ELFWidget::reloadData()
         } else if (nType == SELF::TYPE_EXTRACTOR) {
             if (!isInitPresent(sInit)) {
                 XExtractor::OPTIONS extractorOptions = XExtractor::getDefaultOptions();
+                extractorOptions.fileType = elf.getFileType();
                 extractorOptions.bMenu_Hex = true;
 
                 ui->widgetExtractor->setData(getDevice(), extractorOptions, true);
@@ -991,6 +992,12 @@ void ELFWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
 {
     setTreeItem(ui->treeWidgetNavi, SELF::TYPE_HEX);
     ui->widgetHex->setSelection(nOffset, nSize);
+}
+
+void ELFWidget::_findValue(quint64 nValue, bool bIsBigEndian)
+{
+    setTreeItem(ui->treeWidgetNavi, SELF::TYPE_SEARCH);
+    ui->widgetSearch->findValue(nValue, bIsBigEndian);
 }
 
 void ELFWidget::on_tableView_Elf_Shdr_doubleClicked(const QModelIndex &index)

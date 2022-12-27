@@ -51,6 +51,7 @@ protected:
     virtual QString typeIdToString(int nType);
     virtual void _showInMemoryMapWindowOffset(qint64 nOffset);
     virtual void _showInHexWindow(qint64 nOffset, qint64 nSize);
+    virtual void _findValue(quint64 nValue, bool bIsBigEndian);
 
 private slots:
     virtual void reloadData();

@@ -87,6 +87,8 @@ void DEXWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_MEMORYMAP, tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_ENTROPY, tr("Entropy")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_HEURISTICSCAN, tr("Heuristic scan")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_EXTRACTOR, tr("Extractor")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_SEARCH, tr("Search")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_HEADER, "Header"));
 
         QList<XDEX_DEF::MAP_ITEM> listMapItems = dex.getMapItems();
@@ -356,6 +358,12 @@ void DEXWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
     ui->widgetHex->setSelection(nOffset, nSize);
 }
 
+void DEXWidget::_findValue(quint64 nValue, bool bIsBigEndian)
+{
+    setTreeItem(ui->treeWidgetNavi, SDEX::TYPE_SEARCH);
+    ui->widgetSearch->findValue(nValue, bIsBigEndian);
+}
+
 void DEXWidget::reloadData()
 {
     qint32 nType = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_TYPE).toInt();
@@ -420,6 +428,23 @@ void DEXWidget::reloadData()
         } else if (nType == SDEX::TYPE_HEURISTICSCAN) {
             if (!isInitPresent(sInit)) {
                 ui->widgetHeuristicScan->setData(getDevice(), true, XBinary::FT_DEX);
+            }
+        } else if (nType == SDEX::TYPE_EXTRACTOR) {
+            if (!isInitPresent(sInit)) {
+                XExtractor::OPTIONS extractorOptions = XExtractor::getDefaultOptions();
+                extractorOptions.fileType = dex.getFileType();
+                extractorOptions.bMenu_Hex = true;
+
+                ui->widgetExtractor->setData(getDevice(), extractorOptions, true);
+            }
+        } else if (nType == SDEX::TYPE_SEARCH) {
+            if (!isInitPresent(sInit)) {
+                SearchValuesWidget::OPTIONS options = {};
+                options.fileType = dex.getFileType();
+                options.bMenu_Hex = true;
+                options.bMenu_Disasm = true;
+
+                ui->widgetSearch->setData(getDevice(), options);
             }
         } else if (nType == SDEX::TYPE_HEADER) {
             if (!isInitPresent(sInit)) {

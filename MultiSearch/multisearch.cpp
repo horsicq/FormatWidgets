@@ -261,24 +261,28 @@ void MultiSearch::processModel()
             pTypeAddress->setData(record.nOffset, Qt::UserRole + USERROLE_OFFSET);
             pTypeAddress->setData(record.nSize, Qt::UserRole + USERROLE_SIZE);
             pTypeAddress->setData(record.recordType, Qt::UserRole + USERROLE_TYPE);
-            pTypeAddress->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+
             (*g_ppModel)->setItem(i, 0, pTypeAddress);
 
             QStandardItem *pTypeSize = new QStandardItem;
             pTypeSize->setText(XBinary::valueToHexEx(record.sString.size()));
-            pTypeSize->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+
             (*g_ppModel)->setItem(i, 1, pTypeSize);
 
             QStandardItem *pTypeItem = new QStandardItem;
 
             pTypeItem->setText(XBinary::msRecordTypeIdToString(record.recordType));
 
-            pTypeItem->setTextAlignment(Qt::AlignLeft);
             (*g_ppModel)->setItem(i, 2, pTypeItem);
             (*g_ppModel)->setItem(i, 3, new QStandardItem(record.sString));
 
             XBinary::setPdStructCurrent(g_pPdStruct, g_nFreeIndex, i);
         }
+
+        XOptions::setModelTextAlignment((*g_ppModel), 0, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment((*g_ppModel), 1, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment((*g_ppModel), 2, Qt::AlignLeft | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment((*g_ppModel), 3, Qt::AlignLeft | Qt::AlignVCenter);
     } else if (g_type == TYPE_VALUES) {
         // TODO rewrite
         qint32 nNumberOfRecords = g_pListRecords->count();
@@ -291,8 +295,8 @@ void MultiSearch::processModel()
 
         XBinary::setPdStructTotal(g_pPdStruct, g_nFreeIndex, nNumberOfRecords);
 
-        (*g_ppModel)->setHeaderData(0, Qt::Horizontal, tr("Address"));
-        (*g_ppModel)->setHeaderData(1, Qt::Horizontal, tr("Offset"));
+        (*g_ppModel)->setHeaderData(0, Qt::Horizontal, tr("Offset"));
+        (*g_ppModel)->setHeaderData(1, Qt::Horizontal, tr("Address"));
         (*g_ppModel)->setHeaderData(2, Qt::Horizontal, "");
         (*g_ppModel)->setHeaderData(3, Qt::Horizontal, tr("Value"));
 
@@ -304,21 +308,20 @@ void MultiSearch::processModel()
 
             {
                 QStandardItem *pItem = new QStandardItem;
-
-                if (nAddress != -1) {
-                    pItem->setText(XBinary::valueToHex(modeAddress, nAddress));
-                }
+                pItem->setText(XBinary::valueToHex(modeOffset, record.nOffset));
                 // TODO mb more
                 pItem->setData(record.nOffset, Qt::UserRole + USERROLE_OFFSET);
                 pItem->setData(record.nSize, Qt::UserRole + USERROLE_SIZE);
                 pItem->setData(record.recordType, Qt::UserRole + USERROLE_TYPE);
-                pItem->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
                 (*g_ppModel)->setItem(i, 0, pItem);
             }
             {
                 QStandardItem *pItem = new QStandardItem;
-                pItem->setText(XBinary::valueToHex(modeOffset, record.nOffset));
-                pItem->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+
+                if (nAddress != -1) {
+                    pItem->setText(XBinary::valueToHex(modeAddress, nAddress));
+                }
+
                 (*g_ppModel)->setItem(i, 1, pItem);
             }
             {
@@ -334,6 +337,11 @@ void MultiSearch::processModel()
 
             XBinary::setPdStructCurrent(g_pPdStruct, g_nFreeIndex, i);
         }
+
+        XOptions::setModelTextAlignment((*g_ppModel), 0, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment((*g_ppModel), 1, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment((*g_ppModel), 2, Qt::AlignLeft | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment((*g_ppModel), 3, Qt::AlignLeft | Qt::AlignVCenter);
     } else if (g_type == TYPE_SIGNATURES) {
         qint32 nNumberOfRecords = g_pListRecords->count();
         *g_ppModel = new QStandardItemModel(nNumberOfRecords, 3);  // TODO Check maximum
@@ -343,8 +351,8 @@ void MultiSearch::processModel()
 
         XBinary::setPdStructTotal(g_pPdStruct, g_nFreeIndex, nNumberOfRecords);
 
-        (*g_ppModel)->setHeaderData(0, Qt::Horizontal, tr("Address"));
-        (*g_ppModel)->setHeaderData(1, Qt::Horizontal, tr("Offset"));
+        (*g_ppModel)->setHeaderData(0, Qt::Horizontal, tr("Offset"));
+        (*g_ppModel)->setHeaderData(1, Qt::Horizontal, tr("Address"));
         (*g_ppModel)->setHeaderData(2, Qt::Horizontal, tr("Name"));
 
         for (qint32 i = 0; (i < nNumberOfRecords) && (!(g_pPdStruct->bIsStop)); i++) {
@@ -352,32 +360,43 @@ void MultiSearch::processModel()
 
             XADDR nAddress = XBinary::offsetToAddress(&(g_options.memoryMap), record.nOffset);
 
-            QStandardItem *pTypeAddress = new QStandardItem;
-            pTypeAddress->setText(XBinary::valueToHex(modeAddress, nAddress));
-            pTypeAddress->setData(record.nOffset, Qt::UserRole + USERROLE_OFFSET);
-            pTypeAddress->setData(record.nSize, Qt::UserRole + USERROLE_SIZE);
-            pTypeAddress->setData(record.sString, Qt::UserRole + USERROLE_STRING);
-            pTypeAddress->setData(record.sInfo, Qt::UserRole + USERROLE_INFO);
-            pTypeAddress->setData(nAddress, Qt::UserRole + USERROLE_ADDRESS);
-            pTypeAddress->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
-            (*g_ppModel)->setItem(i, 0, pTypeAddress);
+            {
+                QStandardItem *pItem = new QStandardItem;
+                pItem->setText((XBinary::valueToHex(modeOffset, record.nOffset)));
 
-            QStandardItem *pTypeOffset = new QStandardItem;
-            pTypeOffset->setText((XBinary::valueToHex(modeOffset, record.nOffset)));
-            pTypeOffset->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+                pItem->setData(record.nOffset, Qt::UserRole + USERROLE_OFFSET);
+                pItem->setData(record.nSize, Qt::UserRole + USERROLE_SIZE);
+                pItem->setData(record.sString, Qt::UserRole + USERROLE_STRING);
+                pItem->setData(record.sInfo, Qt::UserRole + USERROLE_INFO);
+                pItem->setData(nAddress, Qt::UserRole + USERROLE_ADDRESS);
 
-            (*g_ppModel)->setItem(i, 1, pTypeOffset);
-
-            QString sName = record.sInfo;
-
-            if (sName == "") {
-                sName = record.sString;
+                (*g_ppModel)->setItem(i, 1, pItem);
             }
+            {
+                QStandardItem *pItem = new QStandardItem;
 
-            (*g_ppModel)->setItem(i, 2, new QStandardItem(sName));
+                if (nAddress != -1) {
+                    pItem->setText(XBinary::valueToHex(modeAddress, nAddress));
+                }
 
-            XBinary::setPdStructCurrent(g_pPdStruct, g_nFreeIndex, i);
+                (*g_ppModel)->setItem(i, 0, pItem);
+            }
+            {
+                QString sName = record.sInfo;
+
+                if (sName == "") {
+                    sName = record.sString;
+                }
+
+                (*g_ppModel)->setItem(i, 2, new QStandardItem(sName));
+
+                XBinary::setPdStructCurrent(g_pPdStruct, g_nFreeIndex, i);
+            }
         }
+
+        XOptions::setModelTextAlignment((*g_ppModel), 0, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment((*g_ppModel), 1, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment((*g_ppModel), 2, Qt::AlignLeft | Qt::AlignVCenter);
     }
 
     XBinary::setPdStructFinished(g_pPdStruct, g_nFreeIndex);

@@ -30,6 +30,7 @@
 #include <QtConcurrentMap>
 
 #include "xformats.h"
+#include "xoptions.h"
 
 class MultiSearch : public QObject {
     Q_OBJECT

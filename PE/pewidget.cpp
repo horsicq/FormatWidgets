@@ -1503,6 +1503,7 @@ void PEWidget::reloadData()
         } else if (nType == SPE::TYPE_EXTRACTOR) {
             if (!isInitPresent(sInit)) {
                 XExtractor::OPTIONS extractorOptions = XExtractor::getDefaultOptions();
+                extractorOptions.fileType = pe.getFileType();
                 extractorOptions.bMenu_Hex = true;
 
                 ui->widgetExtractor->setData(getDevice(), extractorOptions, true);

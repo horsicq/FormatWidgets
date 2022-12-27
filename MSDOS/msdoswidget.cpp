@@ -84,6 +84,8 @@ void MSDOSWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_MEMORYMAP, tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_ENTROPY, tr("Entropy")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_HEURISTICSCAN, tr("Heuristic scan")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_EXTRACTOR, tr("Extractor")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_SEARCH, tr("Search")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_DOS_HEADER, "DOS_HEADER"));
 
         if (msdos.isOverlayPresent()) {
@@ -258,6 +260,12 @@ void MSDOSWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
     ui->widgetHex->setSelection(nOffset, nSize);
 }
 
+void MSDOSWidget::_findValue(quint64 nValue, bool bIsBigEndian)
+{
+    setTreeItem(ui->treeWidgetNavi, SMSDOS::TYPE_SEARCH);
+    ui->widgetSearch->findValue(nValue, bIsBigEndian);
+}
+
 void MSDOSWidget::reloadData()
 {
     int nType = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_TYPE).toInt();
@@ -337,6 +345,23 @@ void MSDOSWidget::reloadData()
         } else if (nType == SMSDOS::TYPE_HEURISTICSCAN) {
             if (!isInitPresent(sInit)) {
                 ui->widgetHeuristicScan->setData(getDevice(), true, msdos.getFileType());
+            }
+        } else if (nType == SMSDOS::TYPE_EXTRACTOR) {
+            if (!isInitPresent(sInit)) {
+                XExtractor::OPTIONS extractorOptions = XExtractor::getDefaultOptions();
+                extractorOptions.fileType = msdos.getFileType();
+                extractorOptions.bMenu_Hex = true;
+
+                ui->widgetExtractor->setData(getDevice(), extractorOptions, true);
+            }
+        } else if (nType == SMSDOS::TYPE_SEARCH) {
+            if (!isInitPresent(sInit)) {
+                SearchValuesWidget::OPTIONS options = {};
+                options.fileType = msdos.getFileType();
+                options.bMenu_Hex = true;
+                options.bMenu_Disasm = true;
+
+                ui->widgetSearch->setData(getDevice(), options);
             }
         } else if (nType == SMSDOS::TYPE_DOS_HEADER) {
             if (!isInitPresent(sInit)) {

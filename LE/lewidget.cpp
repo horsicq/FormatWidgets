@@ -471,6 +471,15 @@ void LEWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
     ui->widgetHex->setSelection(nOffset, nSize);
 }
 
+void LEWidget::_findValue(quint64 nValue, bool bIsBigEndian)
+{
+//    setTreeItem(ui->treeWidgetNavi, SLE::TYPE_SEARCH);
+//    ui->widgetSearch->findValue(nValue, bIsBigEndian);
+#ifdef QT_DEBUG
+    qDebug("TODO: _findValue");
+#endif
+}
+
 void LEWidget::reloadData()
 {
     qint32 nType = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_TYPE).toInt();

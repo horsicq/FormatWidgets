@@ -1310,7 +1310,7 @@ bool FormatWidget::createHeaderTable(int nType, QTableWidget *pTableWidget, cons
             pItemOffset->setText(XBinary::valueToHex((quint16)pRecords[i].nOffset));
         }
 
-        pItemOffset->setTextAlignment(Qt::AlignRight);
+        pItemOffset->setTextAlignment(Qt::AlignRight); // TODO
         pTableWidget->setItem(i, HEADER_COLUMN_OFFSET, pItemOffset);
 
         QTableWidgetItem *pItemType = new QTableWidgetItem;
