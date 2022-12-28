@@ -242,7 +242,11 @@ void BinaryWidget::reloadData()
             }
         } else if (nType == SBINARY::TYPE_MEMORYMAP) {
             if (!isInitPresent(sInit)) {
-                ui->widgetMemoryMap->setData(getDevice(), fileType);
+                XMemoryMapWidget::OPTIONS options = {};
+                options.fileType = fileType;
+                options.bIsSearchEnable = true;
+
+                ui->widgetMemoryMap->setData(getDevice(), options);
             }
         } else if (nType == SBINARY::TYPE_ENTROPY) {
             if (!isInitPresent(sInit)) {

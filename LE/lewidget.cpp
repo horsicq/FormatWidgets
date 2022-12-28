@@ -550,7 +550,11 @@ void LEWidget::reloadData()
             }
         } else if (nType == SLE::TYPE_MEMORYMAP) {
             if (!isInitPresent(sInit)) {
-                ui->widgetMemoryMap->setData(getDevice(), le.getFileType());
+                XMemoryMapWidget::OPTIONS options = {};
+                options.fileType = le.getFileType();
+                options.bIsSearchEnable = true;
+
+                ui->widgetMemoryMap->setData(getDevice(), options);
             }
         } else if (nType == SLE::TYPE_ENTROPY) {
             if (!isInitPresent(sInit)) {
@@ -813,6 +817,8 @@ void LEWidget::on_tableView_Objects_customContextMenuRequested(const QPoint &pos
         //        connect(&actionEntropy,SIGNAL(triggered()),this,SLOT(sectionEntropy()));
         actionEntropy.setEnabled(bIsEnable);
         contextMenu.addAction(&actionEntropy);
+
+        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this, ui->tableView_Objects));
 
         contextMenu.exec(ui->tableView_Objects->viewport()->mapToGlobal(pos));
     }

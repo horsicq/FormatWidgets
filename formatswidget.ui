@@ -368,6 +368,13 @@
         </property>
        </widget>
       </item>
+      <item row="1" column="4">
+       <widget class="QPushButton" name="pushButtonSearch">
+        <property name="text">
+         <string>Search</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
@@ -1942,7 +1949,7 @@
       <widget class="QGroupBox" name="groupBoxMode">
        <property name="maximumSize">
         <size>
-         <width>70</width>
+         <width>90</width>
          <height>16777215</height>
         </size>
        </property>

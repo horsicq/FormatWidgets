@@ -550,7 +550,11 @@ void NEWidget::reloadData()
             }
         } else if (nType == SNE::TYPE_MEMORYMAP) {
             if (!isInitPresent(sInit)) {
-                ui->widgetMemoryMap->setData(getDevice(), ne.getFileType());
+                XMemoryMapWidget::OPTIONS options = {};
+                options.fileType = ne.getFileType();
+                options.bIsSearchEnable = true;
+
+                ui->widgetMemoryMap->setData(getDevice(), options);
             }
         } else if (nType == SNE::TYPE_ENTROPY) {
             if (!isInitPresent(sInit)) {

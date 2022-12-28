@@ -414,7 +414,11 @@ void ELFWidget::reloadData()
             }
         } else if (nType == SELF::TYPE_MEMORYMAP) {
             if (!isInitPresent(sInit)) {
-                ui->widgetMemoryMap->setData(getDevice(), elf.getFileType());
+                XMemoryMapWidget::OPTIONS options = {};
+                options.fileType = elf.getFileType();
+                options.bIsSearchEnable = true;
+
+                ui->widgetMemoryMap->setData(getDevice(), options);
             }
         } else if (nType == SELF::TYPE_ENTROPY) {
             if (!isInitPresent(sInit)) {
@@ -897,6 +901,8 @@ void ELFWidget::on_tableView_SymbolTable_customContextMenuRequested(const QPoint
         contextMenu.addAction(&actionEdit);
         contextMenu.addAction(&actionDemangle);
 
+        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this, ui->tableView_SymbolTable));
+
         contextMenu.exec(ui->tableView_SymbolTable->viewport()->mapToGlobal(pos));
     }
 }
@@ -1040,6 +1046,8 @@ void ELFWidget::on_tableView_Elf_Shdr_customContextMenuRequested(const QPoint &p
         actionDump.setEnabled(bIsEnable);
         contextMenu.addAction(&actionDump);
 
+        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this, ui->tableView_Elf_Shdr));
+
         contextMenu.exec(ui->tableView_Elf_Shdr->viewport()->mapToGlobal(pos));
     }
 }
@@ -1131,6 +1139,8 @@ void ELFWidget::on_tableView_Elf_Phdr_customContextMenuRequested(const QPoint &p
         actionDump.setEnabled(bIsEnable);
         contextMenu.addAction(&actionDump);
 
+        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this, ui->tableView_Elf_Phdr));
+
         contextMenu.exec(ui->tableView_Elf_Phdr->viewport()->mapToGlobal(pos));
     }
 }
@@ -1152,6 +1162,8 @@ void ELFWidget::on_tableView_DynamicArrayTags_customContextMenuRequested(const Q
         QAction actionEdit(tr("Edit"), this);
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editDynamicArrayTag()));
         contextMenu.addAction(&actionEdit);
+
+        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this, ui->tableView_DynamicArrayTags));
 
         contextMenu.exec(ui->tableView_DynamicArrayTags->viewport()->mapToGlobal(pos));
     }
@@ -1180,6 +1192,8 @@ void ELFWidget::on_tableView_Rela_customContextMenuRequested(const QPoint &pos)
         QAction actionEdit(tr("Edit"), this);
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editRelaHeaderTag()));
         contextMenu.addAction(&actionEdit);
+
+        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this, ui->tableView_Rela));
 
         contextMenu.exec(ui->tableView_Rela->viewport()->mapToGlobal(pos));
     }
@@ -1212,6 +1226,8 @@ void ELFWidget::on_tableView_Rel_customContextMenuRequested(const QPoint &pos)
         QAction actionEdit(tr("Edit"), this);
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editRelHeaderTag()));
         contextMenu.addAction(&actionEdit);
+
+        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this, ui->tableView_Rel));
 
         contextMenu.exec(ui->tableView_Rel->viewport()->mapToGlobal(pos));
     }

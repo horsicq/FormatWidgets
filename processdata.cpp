@@ -61,6 +61,17 @@ void ProcessData::setTableViewAdjust(QTableView *pTableView, qint32 nColumn, Qt:
 {
     XOptions::setModelTextAlignment(pTableView->model(), nColumn, flag);
 
+    QFont font = pTableView->font();
+    font.setBold(true);
+
+    const QFontMetricsF fm(font);
+
+    QString sTitle = pTableView->model()->headerData(nColumn, Qt::Horizontal, Qt::DisplayRole).toString();
+
+    qreal rWidth = fm.boundingRect(sTitle + "  ").width();
+
+    nWidth = qMax(nWidth, (qint32)(rWidth));
+
     pTableView->setColumnWidth(nColumn, nWidth);
 }
 

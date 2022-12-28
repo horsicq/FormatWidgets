@@ -376,7 +376,10 @@ void FormatsWidget::on_pushButtonMemoryMap_clicked()
         file.setFileName(g_sFileName);
 
         if (file.open(QIODevice::ReadOnly)) {
-            DialogMemoryMap dialogMemoryMap(this, &file, getCurrentFileType());
+            XMemoryMapWidget::OPTIONS options = {};
+            options.fileType = getCurrentFileType();
+
+            DialogMemoryMap dialogMemoryMap(this, &file, options);
             dialogMemoryMap.setGlobal(getShortcuts(), getGlobalOptions());
 
             dialogMemoryMap.exec();
@@ -968,6 +971,28 @@ void FormatsWidget::on_pushButtonExtractor_clicked()
             dialogExtractor.setGlobal(getShortcuts(), getGlobalOptions());
 
             dialogExtractor.exec();
+
+            file.close();
+        }
+    }
+}
+
+void FormatsWidget::on_pushButtonSearch_clicked()
+{
+    QString sFileName = g_sFileName;
+
+    if (sFileName != "") {
+        QFile file;
+        file.setFileName(sFileName);
+
+        if (file.open(QIODevice::ReadOnly)) {
+            SearchValuesWidget::OPTIONS options = {};
+
+            DialogSearchValues dialogSearchValues(this);
+            dialogSearchValues.setData(&file, options);
+            dialogSearchValues.setGlobal(getShortcuts(), getGlobalOptions());
+
+            dialogSearchValues.exec();
 
             file.close();
         }

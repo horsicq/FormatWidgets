@@ -419,7 +419,11 @@ void DEXWidget::reloadData()
             }
         } else if (nType == SDEX::TYPE_MEMORYMAP) {
             if (!isInitPresent(sInit)) {
-                ui->widgetMemoryMap->setData(getDevice(), dex.getFileType());
+                XMemoryMapWidget::OPTIONS options = {};
+                options.fileType = dex.getFileType();
+                options.bIsSearchEnable = true;
+
+                ui->widgetMemoryMap->setData(getDevice(), options);
             }
         } else if (nType == SDEX::TYPE_ENTROPY) {
             if (!isInitPresent(sInit)) {

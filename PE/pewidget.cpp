@@ -1489,7 +1489,11 @@ void PEWidget::reloadData()
             }
         } else if (nType == SPE::TYPE_MEMORYMAP) {
             if (!isInitPresent(sInit)) {
-                ui->widgetMemoryMap->setData(getDevice(), pe.getFileType());
+                XMemoryMapWidget::OPTIONS options = {};
+                options.fileType = pe.getFileType();
+                options.bIsSearchEnable = true;
+
+                ui->widgetMemoryMap->setData(getDevice(), options);
             }
         } else if (nType == SPE::TYPE_ENTROPY) {
             if (!isInitPresent(sInit)) {
@@ -3357,6 +3361,8 @@ void PEWidget::on_tableView_BoundImport_customContextMenuRequested(const QPoint 
         QAction actionEdit(tr("Edit"), this);
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editBoundImportHeader()));
         contextMenu.addAction(&actionEdit);
+
+        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this, ui->tableView_BoundImport));
 
         contextMenu.exec(ui->tableView_BoundImport->viewport()->mapToGlobal(pos));
     }

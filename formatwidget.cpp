@@ -880,7 +880,9 @@ void FormatWidget::resetWidget()
             XMemoryMapWidget *pChild = dynamic_cast<XMemoryMapWidget *>(listWidgets.at(i));
 
             if (pChild) {
-                pChild->setData(0, XBinary::FT_UNKNOWN);
+                XMemoryMapWidget::OPTIONS options = {};
+
+                pChild->setData(0, options);
             }
         }
     }
@@ -1345,6 +1347,8 @@ bool FormatWidget::createHeaderTable(int nType, QTableWidget *pTableWidget, cons
     pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_COMMENT, QHeaderView::Stretch);
 
     adjustHeaderTable(nType, pTableWidget);
+
+    pTableWidget->resizeColumnToContents(HEADER_COLUMN_NAME);
 
     return true;
 }

@@ -1724,7 +1724,11 @@ void MACHWidget::reloadData()
             }
         } else if (nType == SMACH::TYPE_MEMORYMAP) {
             if (!isInitPresent(sInit)) {
-                ui->widgetMemoryMap->setData(getDevice(), mach.getFileType());
+                XMemoryMapWidget::OPTIONS options = {};
+                options.fileType = mach.getFileType();
+                options.bIsSearchEnable = true;
+
+                ui->widgetMemoryMap->setData(getDevice(), options);
             }
         } else if (nType == SMACH::TYPE_ENTROPY) {
             if (!isInitPresent(sInit)) {
@@ -3011,6 +3015,8 @@ void MACHWidget::on_tableView_commands_customContextMenuRequested(const QPoint &
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editCommandHeader()));
         contextMenu.addAction(&actionEdit);
 
+        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this, ui->tableView_commands));
+
         contextMenu.exec(ui->tableView_commands->viewport()->mapToGlobal(pos));
     }
 }
@@ -3048,6 +3054,8 @@ void MACHWidget::on_tableView_segments_customContextMenuRequested(const QPoint &
         connect(&actionEntropy, SIGNAL(triggered()), this, SLOT(segmentEntropy()));
         actionEntropy.setEnabled(bIsEnable);
         contextMenu.addAction(&actionEntropy);
+
+        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this, ui->tableView_segments));
 
         contextMenu.exec(ui->tableView_segments->viewport()->mapToGlobal(pos));
     }
@@ -3087,6 +3095,8 @@ void MACHWidget::on_tableView_sections_customContextMenuRequested(const QPoint &
         actionEntropy.setEnabled(bIsEnable);
         contextMenu.addAction(&actionEntropy);
 
+        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this, ui->tableView_sections));
+
         contextMenu.exec(ui->tableView_sections->viewport()->mapToGlobal(pos));
     }
 }
@@ -3107,6 +3117,8 @@ void MACHWidget::on_tableView_libraries_customContextMenuRequested(const QPoint 
         QAction actionEdit(tr("Edit"), this);
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editLibraryHeader()));
         contextMenu.addAction(&actionEdit);
+
+        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this, ui->tableView_libraries));
 
         contextMenu.exec(ui->tableView_libraries->viewport()->mapToGlobal(pos));
     }
@@ -3129,6 +3141,8 @@ void MACHWidget::on_tableView_weak_libraries_customContextMenuRequested(const QP
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editWeakLibraryHeader()));
         contextMenu.addAction(&actionEdit);
 
+        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this, ui->tableView_weak_libraries));
+
         contextMenu.exec(ui->tableView_weak_libraries->viewport()->mapToGlobal(pos));
     }
 }
@@ -3149,6 +3163,8 @@ void MACHWidget::on_tableView_id_library_customContextMenuRequested(const QPoint
         QAction actionEdit(tr("Edit"), this);
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editIdLibraryHeader()));
         contextMenu.addAction(&actionEdit);
+
+        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this, ui->tableView_id_library));
 
         contextMenu.exec(ui->tableView_id_library->viewport()->mapToGlobal(pos));
     }
@@ -3171,6 +3187,8 @@ void MACHWidget::on_tableView_LOADFVMLIB_customContextMenuRequested(const QPoint
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editLOADFVMLIBHeader()));
         contextMenu.addAction(&actionEdit);
 
+        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this, ui->tableView_LOADFVMLIB));
+
         contextMenu.exec(ui->tableView_LOADFVMLIB->viewport()->mapToGlobal(pos));
     }
 }
@@ -3191,6 +3209,8 @@ void MACHWidget::on_tableView_IDFVMLIB_customContextMenuRequested(const QPoint &
         QAction actionEdit(tr("Edit"), this);
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editIDFVMLIBHeader()));
         contextMenu.addAction(&actionEdit);
+
+        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this, ui->tableView_IDFVMLIB));
 
         contextMenu.exec(ui->tableView_IDFVMLIB->viewport()->mapToGlobal(pos));
     }
@@ -3217,6 +3237,8 @@ void MACHWidget::on_tableView_SymbolTable_customContextMenuRequested(const QPoin
 
         contextMenu.addAction(&actionEdit);
         contextMenu.addAction(&actionDemangle);
+
+        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this, ui->tableView_SymbolTable));
 
         contextMenu.exec(ui->tableView_SymbolTable->viewport()->mapToGlobal(pos));
     }
@@ -3248,6 +3270,8 @@ void MACHWidget::on_tableView_Functions_customContextMenuRequested(const QPoint 
         contextMenu.addAction(&actionDisasm);
         contextMenu.addAction(&actionDemangle);
 
+        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this, ui->tableView_Functions));
+
         contextMenu.exec(ui->tableView_Functions->viewport()->mapToGlobal(pos));
     }
 }
@@ -3274,6 +3298,8 @@ void MACHWidget::on_tableView_data_in_code_entry_customContextMenuRequested(cons
         contextMenu.addAction(&actionEdit);
         contextMenu.addAction(&actionHex);
 
+        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this, ui->tableView_data_in_code_entry));
+
         contextMenu.exec(ui->tableView_data_in_code_entry->viewport()->mapToGlobal(pos));
     }
 }
@@ -3295,6 +3321,8 @@ void MACHWidget::on_tableView_DYSYMTAB_modtab_customContextMenuRequested(const Q
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editModTabHeader()));
 
         contextMenu.addAction(&actionEdit);
+
+        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this, ui->tableView_DYSYMTAB_modtab));
 
         contextMenu.exec(ui->tableView_DYSYMTAB_modtab->viewport()->mapToGlobal(pos));
     }
@@ -3322,6 +3350,8 @@ void MACHWidget::on_tableView_DYSYMTAB_toc_customContextMenuRequested(const QPoi
         contextMenu.addAction(&actionEdit);
         contextMenu.addAction(&actionDemangle);
 
+        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this, ui->tableView_DYSYMTAB_toc));
+
         contextMenu.exec(ui->tableView_DYSYMTAB_toc->viewport()->mapToGlobal(pos));
     }
 }
@@ -3344,6 +3374,8 @@ void MACHWidget::on_tableView_DYSYMTAB_extrel_customContextMenuRequested(const Q
 
         contextMenu.addAction(&actionEdit);
 
+        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this, ui->tableView_DYSYMTAB_extrel));
+
         contextMenu.exec(ui->tableView_DYSYMTAB_extrel->viewport()->mapToGlobal(pos));
     }
 }
@@ -3365,6 +3397,8 @@ void MACHWidget::on_tableView_DYSYMTAB_locrel_customContextMenuRequested(const Q
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editLocrelHeader()));
 
         contextMenu.addAction(&actionEdit);
+
+        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this, ui->tableView_DYSYMTAB_locrel));
 
         contextMenu.exec(ui->tableView_DYSYMTAB_locrel->viewport()->mapToGlobal(pos));
     }
@@ -3392,6 +3426,8 @@ void MACHWidget::on_tableView_DYSYMTAB_indirectsyms_customContextMenuRequested(c
         contextMenu.addAction(&actionEdit);
         contextMenu.addAction(&actionDemangle);
 
+        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this, ui->tableView_DYSYMTAB_indirectsyms));
+
         contextMenu.exec(ui->tableView_DYSYMTAB_indirectsyms->viewport()->mapToGlobal(pos));
     }
 }
@@ -3417,6 +3453,8 @@ void MACHWidget::on_tableView_DYSYMTAB_extrefsyms_customContextMenuRequested(con
 
         contextMenu.addAction(&actionEdit);
         contextMenu.addAction(&actionDemangle);
+
+        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this, ui->tableView_DYSYMTAB_extrefsyms));
 
         contextMenu.exec(ui->tableView_DYSYMTAB_extrefsyms->viewport()->mapToGlobal(pos));
     }

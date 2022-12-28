@@ -336,7 +336,11 @@ void MSDOSWidget::reloadData()
             }
         } else if (nType == SMSDOS::TYPE_MEMORYMAP) {
             if (!isInitPresent(sInit)) {
-                ui->widgetMemoryMap->setData(getDevice(), msdos.getFileType());
+                XMemoryMapWidget::OPTIONS options = {};
+                options.fileType = msdos.getFileType();
+                options.bIsSearchEnable = true;
+
+                ui->widgetMemoryMap->setData(getDevice(), options);
             }
         } else if (nType == SMSDOS::TYPE_ENTROPY) {
             if (!isInitPresent(sInit)) {

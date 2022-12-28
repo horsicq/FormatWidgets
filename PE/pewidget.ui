@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>799</width>
-    <height>369</height>
+    <width>956</width>
+    <height>455</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -2950,6 +2950,12 @@
    <header>xlineedithex.h</header>
   </customwidget>
   <customwidget>
+   <class>XFileInfoWidget</class>
+   <extends>QWidget</extends>
+   <header>xfileinfowidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>SearchStringsWidget</class>
    <extends>QWidget</extends>
    <header>searchstringswidget.h</header>
@@ -3001,12 +3007,6 @@
    <class>XHashWidget</class>
    <extends>QWidget</extends>
    <header>xhashwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>XFileInfoWidget</class>
-   <extends>QWidget</extends>
-   <header>xfileinfowidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
