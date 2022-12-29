@@ -57,31 +57,6 @@ bool ProcessData::isRun()
     return !(g_pPdStruct->bIsStop);
 }
 
-void ProcessData::setTableViewAdjust(QTableView *pTableView, qint32 nColumn, Qt::Alignment flag, qint32 nWidth)
-{
-    XOptions::setModelTextAlignment(pTableView->model(), nColumn, flag);
-
-    QFont font = pTableView->font();
-    font.setBold(true);
-
-    const QFontMetricsF fm(font);
-
-    QString sTitle = pTableView->model()->headerData(nColumn, Qt::Horizontal, Qt::DisplayRole).toString();
-
-    qreal rWidth = fm.boundingRect(sTitle + "  ").width();
-
-    nWidth = qMax(nWidth, (qint32)(rWidth));
-
-    pTableView->setColumnWidth(nColumn, nWidth);
-}
-
-void ProcessData::setTreeViewAdjust(QTreeView *pTreeView, qint32 nColumn, Qt::Alignment flag, qint32 nWidth)
-{
-    XOptions::setModelTextAlignment(pTreeView->model(), nColumn, flag);
-
-    pTreeView->setColumnWidth(nColumn, nWidth);
-}
-
 XBinary::PDSTRUCT *ProcessData::getPdStruct()
 {
     return g_pPdStruct;
@@ -117,6 +92,11 @@ void ProcessData::setTableHeader(QStandardItemModel *pModel, QList<QString> *pLi
 void ProcessData::setTreeHeader(QStandardItemModel *pModel, QList<QString> *pListStrings)
 {
     pModel->setHorizontalHeaderLabels(*pListStrings);
+}
+
+void ProcessData::adjustModel(QStandardItemModel *pModel)
+{
+    Q_UNUSED(pModel)
 }
 
 void ProcessData::process()

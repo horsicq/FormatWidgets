@@ -44,15 +44,14 @@ public:
     void setMaximum(quint64 nMaximum);
     void incValue();
     bool isRun();
-    void setTableViewAdjust(QTableView *pTableView, qint32 nColumn, Qt::Alignment flag, qint32 nWidth);
-    void setTreeViewAdjust(QTreeView *pTreeView, qint32 nColumn, Qt::Alignment flag, qint32 nWidth);
     XBinary::PDSTRUCT *getPdStruct();
     virtual void _process() = 0;
-    virtual void ajustTableView(QWidget *pWidget, QTableView *pTableView) = 0;
-    virtual void ajustTreeView(QWidget *pWidget, QTreeView *pTreeView);
+    virtual void ajustTableView(QWidget *pWidget, QTableView *pTableView) = 0; // TODO remove pWidget use pTableView
+    virtual void ajustTreeView(QWidget *pWidget, QTreeView *pTreeView); // TODO remove pWidget use pTableView
     static QList<QString> getStructList(const FW_DEF::HEADER_RECORD *pRecords, int nRecordCount);
     static void setTableHeader(QStandardItemModel *pModel, QList<QString> *pListStrings);
     static void setTreeHeader(QStandardItemModel *pModel, QList<QString> *pListStrings);
+    virtual void adjustModel(QStandardItemModel *pModel);
 
 public slots:
     void process();

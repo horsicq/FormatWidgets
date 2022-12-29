@@ -239,7 +239,18 @@ void FormatsWidget::reload()
 
                 ui->pushButtonPEOverlay->setEnabled(pe.isOverlayPresent());
 
-                ui->lineEditPETimeDateStamp->setText(XBinary::valueToTimeString(pe.getFileHeader_TimeDateStamp(), XBinary::DT_TYPE_POSIX));
+                quint32 nNetID = pe.getNetId();
+
+                if (nNetID) {
+                    ui->groupBoxPETimeDateStamp->setTitle(QString(".NET ID"));
+                    ui->lineEditPETimeDateStamp->setValue(nNetID);
+                    ui->lineEditPETimeDateStamp->setValidatorMode(HEXValidator::MODE_HEX);
+                } else {
+                    ui->groupBoxPETimeDateStamp->setTitle(tr("Time date stamp"));
+                    ui->lineEditPETimeDateStamp->setText(XBinary::valueToTimeString(pe.getFileHeader_TimeDateStamp(), XBinary::DT_TYPE_POSIX));
+                    ui->lineEditPETimeDateStamp->setValidatorMode(HEXValidator::MODE_TEXT);
+                }
+
                 ui->lineEditPESizeOfImage->setValue(pe.getOptionalHeader_SizeOfImage());
             }
         } else if ((fileType == XBinary::FT_ELF32) || (fileType == XBinary::FT_ELF64)) {

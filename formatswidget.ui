@@ -390,7 +390,7 @@
       <enum>QFrame::NoFrame</enum>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>8</number>
      </property>
      <widget class="QWidget" name="pageBinary">
       <layout class="QVBoxLayout" name="verticalLayout_21">
@@ -1096,7 +1096,7 @@
                 <number>0</number>
                </property>
                <item>
-                <widget class="QLineEdit" name="lineEditPETimeDateStamp">
+                <widget class="XLineEditHEX" name="lineEditPETimeDateStamp">
                  <property name="minimumSize">
                   <size>
                    <width>150</width>

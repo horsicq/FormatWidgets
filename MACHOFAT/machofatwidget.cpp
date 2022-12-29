@@ -72,8 +72,7 @@ void MACHOFATWidget::reload()
     XMACHOFat machofat(getDevice());
 
     if (machofat.isValid()) {
-        XBinary::PDSTRUCT pdStruct = {};
-        XBinary::_pdStructInit(&pdStruct);
+        XBinary::PDSTRUCT pdStruct = XBinary::createPdStruct();
 
         QList<XArchive::RECORD> listRecords = machofat.getRecords(-1, &pdStruct);
 

@@ -377,7 +377,7 @@ void PEProcessData::_process()
         }
     } else if (g_nType == SPE::TYPE_RELOCS_POSITION) {
         QList<QString> listLabels;
-        listLabels.append("");
+        listLabels.append("#");
         listLabels.append(getStructList(N_IMAGE_RELOCS_POSITION::records, N_IMAGE_RELOCS_POSITION::__data_size));
         listLabels.append(tr("Type"));
         listLabels.append(tr("Address"));
@@ -1011,6 +1011,8 @@ void PEProcessData::_process()
             incValue();
         }
     }
+
+    adjustModel(*g_ppModel);
 }
 
 void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
@@ -1018,106 +1020,106 @@ void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
     XBinary::MODE mode = g_pPE->getMode();
 
     if (g_nType == SPE::TYPE_SECTIONS) {
-        setTableViewAdjust(pTableView, 0, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT16, mode));
-        setTableViewAdjust(pTableView, 1, Qt::AlignLeft | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTableViewAdjust(pTableView, 2, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTableViewAdjust(pTableView, 3, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTableViewAdjust(pTableView, 4, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTableViewAdjust(pTableView, 5, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTableViewAdjust(pTableView, 6, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTableViewAdjust(pTableView, 7, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTableViewAdjust(pTableView, 8, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTableViewAdjust(pTableView, 9, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTableViewAdjust(pTableView, 10, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 0, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT16, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 1, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 2, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 3, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 4, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 5, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 6, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 7, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 8, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 9, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 10, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
     } else if (g_nType == SPE::TYPE_RELOCS) {
-        setTableViewAdjust(pTableView, 0, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT16, mode));
-        setTableViewAdjust(pTableView, 1, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTableViewAdjust(pTableView, 2, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTableViewAdjust(pTableView, 3, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTableViewAdjust(pTableView, 4, Qt::AlignLeft | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_STRINGMID, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 0, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT16, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 1, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 2, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 3, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 4, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_STRINGMID, mode));
     } else if (g_nType == SPE::TYPE_RELOCS_POSITION) {
-        setTableViewAdjust(pTableView, 0, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT16, mode));
-        setTableViewAdjust(pTableView, 1, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTableViewAdjust(pTableView, 2, Qt::AlignLeft | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINTMODE, mode));
-        setTableViewAdjust(pTableView, 3, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINTMODE, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 0, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT16, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 1, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 2, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINTMODE, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 3, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINTMODE, mode));
     } else if (g_nType == SPE::TYPE_IMPORT) {
-        setTableViewAdjust(pTableView, 0, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT16, mode));
-        setTableViewAdjust(pTableView, 1, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTableViewAdjust(pTableView, 2, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTableViewAdjust(pTableView, 3, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTableViewAdjust(pTableView, 4, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTableViewAdjust(pTableView, 5, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTableViewAdjust(pTableView, 6, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTableViewAdjust(pTableView, 7, Qt::AlignLeft | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_STRINGMID, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 0, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT16, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 1, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 2, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 3, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 4, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 5, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 6, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 7, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_STRINGMID, mode));
     } else if (g_nType == SPE::TYPE_IMPORT_FUNCTION) {
-        setTableViewAdjust(pTableView, 0, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT16, mode));
-        setTableViewAdjust(pTableView, 1, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINTMODE, mode));
-        setTableViewAdjust(pTableView, 2, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINTMODE, mode));
-        setTableViewAdjust(pTableView, 3, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT16, mode));
-        setTableViewAdjust(pTableView, 4, Qt::AlignLeft | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_STRINGLONG, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 0, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT16, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 1, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINTMODE, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 2, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINTMODE, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 3, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT16, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 4, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_STRINGLONG, mode));
     } else if (g_nType == SPE::TYPE_EXCEPTION) {
-        setTableViewAdjust(pTableView, 0, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT16, mode));
-        setTableViewAdjust(pTableView, 1, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTableViewAdjust(pTableView, 2, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTableViewAdjust(pTableView, 3, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTableViewAdjust(pTableView, 4, Qt::AlignLeft | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_STRINGMID, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 0, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT16, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 1, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 2, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 3, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 4, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_STRINGMID, mode));
     } else if (g_nType == SPE::TYPE_DELAYIMPORT) {
-        setTableViewAdjust(pTableView, 0, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT16, mode));
-        setTableViewAdjust(pTableView, 1, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTableViewAdjust(pTableView, 2, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTableViewAdjust(pTableView, 3, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTableViewAdjust(pTableView, 4, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTableViewAdjust(pTableView, 5, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTableViewAdjust(pTableView, 6, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTableViewAdjust(pTableView, 7, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTableViewAdjust(pTableView, 8, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTableViewAdjust(pTableView, 9, Qt::AlignLeft | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_STRINGMID, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 0, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT16, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 1, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 2, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 3, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 4, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 5, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 6, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 7, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 8, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 9, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_STRINGMID, mode));
     } else if (g_nType == SPE::TYPE_EXPORT_FUNCTION) {
-        setTableViewAdjust(pTableView, 0, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT16, mode));
-        setTableViewAdjust(pTableView, 1, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTableViewAdjust(pTableView, 2, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTableViewAdjust(pTableView, 3, Qt::AlignLeft | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_STRINGLONG, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 0, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT16, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 1, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 2, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 3, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_STRINGLONG, mode));
     } else if (g_nType == SPE::TYPE_BOUNDIMPORT) {
-        setTableViewAdjust(pTableView, 0, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT16, mode));
-        setTableViewAdjust(pTableView, 1, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTableViewAdjust(pTableView, 2, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTableViewAdjust(pTableView, 3, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTableViewAdjust(pTableView, 4, Qt::AlignLeft | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINTMODE, mode));
-        setTableViewAdjust(pTableView, 5, Qt::AlignLeft | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_STRINGLONG, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 0, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT16, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 1, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 2, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 3, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 4, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINTMODE, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 5, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_STRINGLONG, mode));
     } else if (g_nType == SPE::TYPE_DEBUG) {
-        setTableViewAdjust(pTableView, 0, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT16, mode));
-        setTableViewAdjust(pTableView, 1, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTableViewAdjust(pTableView, 2, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTableViewAdjust(pTableView, 3, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTableViewAdjust(pTableView, 4, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTableViewAdjust(pTableView, 5, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTableViewAdjust(pTableView, 6, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTableViewAdjust(pTableView, 7, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTableViewAdjust(pTableView, 8, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 0, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT16, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 1, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 2, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 3, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 4, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 5, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 6, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 7, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 8, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
     } else if (g_nType == SPE::TYPE_DELAYIMPORT_FUNCTION) {
-        setTableViewAdjust(pTableView, 0, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT16, mode));
-        setTableViewAdjust(pTableView, 1, Qt::AlignLeft | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINTMODE, mode));
-        setTableViewAdjust(pTableView, 2, Qt::AlignLeft | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINTMODE, mode));
-        setTableViewAdjust(pTableView, 3, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINTMODE, mode));
-        setTableViewAdjust(pTableView, 4, Qt::AlignLeft | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINTMODE, mode));
-        setTableViewAdjust(pTableView, 5, Qt::AlignLeft | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT16, mode));
-        setTableViewAdjust(pTableView, 6, Qt::AlignLeft | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_STRINGMID, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 0, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT16, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 1, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINTMODE, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 2, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINTMODE, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 3, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINTMODE, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 4, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINTMODE, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 5, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT16, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 6, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_STRINGMID, mode));
     } else if (g_nType == SPE::TYPE_TLSCALLBACKS) {
-        setTableViewAdjust(pTableView, 0, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT16, mode));
-        setTableViewAdjust(pTableView, 1, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINTMODE, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 0, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT16, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 1, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINTMODE, mode));
     } else if (g_nType == SPE::TYPE_RESOURCES) {
-        setTableViewAdjust(pTableView, 0, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT16, mode));
-        setTableViewAdjust(pTableView, 1, Qt::AlignLeft | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_STRINGSHORT, mode));
-        setTableViewAdjust(pTableView, 2, Qt::AlignLeft | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_STRINGSHORT, mode));
-        setTableViewAdjust(pTableView, 3, Qt::AlignLeft | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTableViewAdjust(pTableView, 4, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINTMODE, mode));
-        setTableViewAdjust(pTableView, 5, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTableViewAdjust(pTableView, 6, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 0, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT16, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 1, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_STRINGSHORT, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 2, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_STRINGSHORT, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 3, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 4, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINTMODE, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 5, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 6, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
     } else if (g_nType == SPE::TYPE_RICH) {
-        setTableViewAdjust(pTableView, 0, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTableViewAdjust(pTableView, 1, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTableViewAdjust(pTableView, 2, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTableViewAdjust(pTableView, 3, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 0, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 1, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 2, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 3, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
     }
 }
 
@@ -1126,13 +1128,13 @@ void PEProcessData::ajustTreeView(QWidget *pWidget, QTreeView *pTreeView)
     XBinary::MODE mode = g_pPE->getMode();
 
     if (g_nType == SPE::TYPE_SECTIONS_INFO) {
-        setTreeViewAdjust(pTreeView, 0, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT16, mode));
-        setTreeViewAdjust(pTreeView, 1, Qt::AlignLeft | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTreeViewAdjust(pTreeView, 2, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTreeViewAdjust(pTreeView, 3, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTreeViewAdjust(pTreeView, 4, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTreeViewAdjust(pTreeView, 5, Qt::AlignRight | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        setTreeViewAdjust(pTreeView, 6, Qt::AlignLeft | Qt::AlignVCenter, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
+        XOptions::setTreeViewHeaderWidth(pTreeView, 0, FormatWidget::getColumnWidth(pTreeView, FormatWidget::CW_UINT16, mode));
+        XOptions::setTreeViewHeaderWidth(pTreeView, 1, FormatWidget::getColumnWidth(pTreeView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTreeViewHeaderWidth(pTreeView, 2, FormatWidget::getColumnWidth(pTreeView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTreeViewHeaderWidth(pTreeView, 3, FormatWidget::getColumnWidth(pTreeView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTreeViewHeaderWidth(pTreeView, 4, FormatWidget::getColumnWidth(pTreeView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTreeViewHeaderWidth(pTreeView, 5, FormatWidget::getColumnWidth(pTreeView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTreeViewHeaderWidth(pTreeView, 6, FormatWidget::getColumnWidth(pTreeView, FormatWidget::CW_UINT32, mode));
     }
 }
 
@@ -1167,5 +1169,119 @@ void PEProcessData::handleCertRecord(QStandardItem *pParent, XPE::CERT_RECORD ce
         handleCertRecord(pRecord, certRecord.listRecords.at(i));
 
         pParent->appendRow(pRecord);
+    }
+}
+
+void PEProcessData::adjustModel(QStandardItemModel *pModel)
+{
+    if (g_nType == SPE::TYPE_SECTIONS) {
+        XOptions::setModelTextAlignment(pModel, 0, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 1, Qt::AlignLeft | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 2, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 3, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 4, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 5, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 6, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 7, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 8, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 9, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 10, Qt::AlignRight | Qt::AlignVCenter);
+    } else if (g_nType == SPE::TYPE_SECTIONS_INFO) {
+        XOptions::setModelTextAlignment(pModel, 0, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 1, Qt::AlignLeft | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 2, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 3, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 4, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 5, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 6, Qt::AlignLeft | Qt::AlignVCenter);
+    } else if (g_nType == SPE::TYPE_RELOCS) {
+        XOptions::setModelTextAlignment(pModel, 0, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 1, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 2, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 3, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 4, Qt::AlignLeft | Qt::AlignVCenter);
+    } else if (g_nType == SPE::TYPE_RELOCS_POSITION) {
+        XOptions::setModelTextAlignment(pModel, 0, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 1, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 2, Qt::AlignLeft | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 3, Qt::AlignRight | Qt::AlignVCenter);
+    } else if (g_nType == SPE::TYPE_IMPORT) {
+        XOptions::setModelTextAlignment(pModel, 0, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 1, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 2, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 3, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 4, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 5, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 6, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 7, Qt::AlignLeft | Qt::AlignVCenter);
+    } else if (g_nType == SPE::TYPE_IMPORT_FUNCTION) {
+        XOptions::setModelTextAlignment(pModel, 0, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 1, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 2, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 3, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 4, Qt::AlignLeft | Qt::AlignVCenter);
+    } else if (g_nType == SPE::TYPE_EXCEPTION) {
+        XOptions::setModelTextAlignment(pModel, 0, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 1, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 2, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 3, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 4, Qt::AlignLeft | Qt::AlignVCenter);
+    } else if (g_nType == SPE::TYPE_DELAYIMPORT) {
+        XOptions::setModelTextAlignment(pModel, 0, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 1, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 2, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 3, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 4, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 5, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 6, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 7, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 8, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 9, Qt::AlignLeft | Qt::AlignVCenter);
+    } else if (g_nType == SPE::TYPE_EXPORT_FUNCTION) {
+        XOptions::setModelTextAlignment(pModel, 0, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 1, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 2, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 3, Qt::AlignLeft | Qt::AlignVCenter);
+    } else if (g_nType == SPE::TYPE_BOUNDIMPORT) {
+        XOptions::setModelTextAlignment(pModel, 0, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 1, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 2, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 3, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 4, Qt::AlignLeft | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 5, Qt::AlignLeft | Qt::AlignVCenter);
+    } else if (g_nType == SPE::TYPE_DEBUG) {
+        XOptions::setModelTextAlignment(pModel, 0, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 1, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 2, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 3, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 4, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 5, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 6, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 7, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 8, Qt::AlignRight | Qt::AlignVCenter);
+    } else if (g_nType == SPE::TYPE_DELAYIMPORT_FUNCTION) {
+        XOptions::setModelTextAlignment(pModel, 0, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 1, Qt::AlignLeft | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 2, Qt::AlignLeft | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 3, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 4, Qt::AlignLeft | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 5, Qt::AlignLeft | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 6, Qt::AlignLeft | Qt::AlignVCenter);
+    } else if (g_nType == SPE::TYPE_TLSCALLBACKS) {
+        XOptions::setModelTextAlignment(pModel, 0, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 1, Qt::AlignRight | Qt::AlignVCenter);
+    } else if (g_nType == SPE::TYPE_RESOURCES) {
+        XOptions::setModelTextAlignment(pModel, 0, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 1, Qt::AlignLeft | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 2, Qt::AlignLeft | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 3, Qt::AlignLeft | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 4, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 5, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 6, Qt::AlignRight | Qt::AlignVCenter);
+    } else if (g_nType == SPE::TYPE_RICH) {
+        XOptions::setModelTextAlignment(pModel, 0, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 1, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 2, Qt::AlignRight | Qt::AlignVCenter);
+        XOptions::setModelTextAlignment(pModel, 3, Qt::AlignRight | Qt::AlignVCenter);
     }
 }
