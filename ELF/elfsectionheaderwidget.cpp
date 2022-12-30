@@ -610,7 +610,7 @@ void ELFSectionHeaderWidget::reloadData()
             qint64 nSize = elf.getShdrSize();
             qint64 nAddress = elf.offsetToRelAddress(nOffset);
 
-            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex);
+            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex, false, false, false);
 
             blockSignals(false);
         } else if (nType == SELF::TYPE_Elf_Phdr) {
@@ -664,7 +664,7 @@ void ELFSectionHeaderWidget::reloadData()
             qint64 nSize = elf.getPhdrSize();
             qint64 nAddress = elf.offsetToRelAddress(nOffset);
 
-            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex);
+            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex, false, false, false);
 
             blockSignals(false);
         } else if (nType == SELF::TYPE_Elf_DynamicArrayTags) {
@@ -688,7 +688,7 @@ void ELFSectionHeaderWidget::reloadData()
             qint64 nSize = elf.getDynamicArraySize();
             qint64 nAddress = elf.offsetToRelAddress(nOffset);
 
-            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex);
+            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex, false, false, false);
 
             blockSignals(false);
         } else if (nType == SELF::TYPE_SYMBOLTABLE) {
@@ -728,7 +728,7 @@ void ELFSectionHeaderWidget::reloadData()
             qint64 nSize = elf.getSymSize();
             qint64 nAddress = elf.offsetToRelAddress(nOffset);
 
-            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex);
+            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex, false, false, false);
 
             blockSignals(false);
         } else if (nType == SELF::TYPE_Elf_Rela) {
@@ -758,7 +758,7 @@ void ELFSectionHeaderWidget::reloadData()
             qint64 nSize = elf.getSymSize();
             qint64 nAddress = elf.offsetToRelAddress(nOffset);
 
-            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex);
+            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex, false, false, false);
 
             blockSignals(false);
         } else if (nType == SELF::TYPE_Elf_Rel) {
@@ -786,7 +786,7 @@ void ELFSectionHeaderWidget::reloadData()
             qint64 nSize = elf.getSymSize();
             qint64 nAddress = elf.offsetToRelAddress(nOffset);
 
-            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex);
+            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex, false, false, false);
 
             blockSignals(false);
         }

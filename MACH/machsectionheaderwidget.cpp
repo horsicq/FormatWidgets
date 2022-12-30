@@ -768,7 +768,7 @@ void MACHSectionHeaderWidget::reloadData()
             qint64 nSize = mach.getCommandHeaderSize();
             qint64 nAddress = mach.offsetToRelAddress(nOffset);
 
-            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex);
+            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex, false, false, false);
 
             blockSignals(false);
         } else if ((nType == SMACH::TYPE_mach_libraries) || (nType == SMACH::TYPE_mach_weak_libraries) || (nType == SMACH::TYPE_mach_id_library)) {
@@ -798,7 +798,7 @@ void MACHSectionHeaderWidget::reloadData()
             qint64 nSize = cr.nSize;
             qint64 nAddress = mach.offsetToRelAddress(nOffset);
 
-            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex);
+            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex, false, false, false);
 
             blockSignals(false);
         } else if ((nType == SMACH::TYPE_mach_LOADFVMLIB) || (nType == SMACH::TYPE_mach_IDFVMLIB)) {
@@ -827,7 +827,7 @@ void MACHSectionHeaderWidget::reloadData()
             qint64 nSize = cr.nSize;
             qint64 nAddress = mach.offsetToRelAddress(nOffset);
 
-            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex);
+            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex, false, false, false);
 
             blockSignals(false);
         } else if (nType == SMACH::TYPE_mach_segments) {
@@ -878,7 +878,7 @@ void MACHSectionHeaderWidget::reloadData()
             qint64 nSize = mach.getSegmentHeaderSize();
             qint64 nAddress = mach.offsetToRelAddress(nOffset);
 
-            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex);
+            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex, false, false, false);
 
             blockSignals(false);
         } else if (nType == SMACH::TYPE_mach_sections) {
@@ -955,7 +955,7 @@ void MACHSectionHeaderWidget::reloadData()
             qint64 nSize = mach.getSectionHeaderSize();
             qint64 nAddress = mach.offsetToRelAddress(nOffset);
 
-            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex);
+            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex, false, false, false);
 
             blockSignals(false);
         } else if (nType == SMACH::TYPE_SYMBOLTABLE) {
@@ -1003,7 +1003,7 @@ void MACHSectionHeaderWidget::reloadData()
 
             qint64 nAddress = mach.offsetToRelAddress(nOffset);
 
-            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex);
+            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex, false, false, false);
 
             blockSignals(false);
         } else if (nType == SMACH::TYPE_DICE) {
@@ -1028,7 +1028,7 @@ void MACHSectionHeaderWidget::reloadData()
             qint64 nSize = mach.get_data_in_code_entry_size();
             qint64 nAddress = mach.offsetToRelAddress(nOffset);
 
-            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex);
+            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex, false, false, false);
 
             blockSignals(false);
         } else if (nType == SMACH::TYPE_DYSYMTAB_modtab) {
@@ -1089,7 +1089,7 @@ void MACHSectionHeaderWidget::reloadData()
 
             qint64 nAddress = mach.offsetToRelAddress(nOffset);
 
-            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex);
+            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex, false, false, false);
 
             blockSignals(false);
         } else if (nType == SMACH::TYPE_DYSYMTAB_toc) {
@@ -1111,7 +1111,7 @@ void MACHSectionHeaderWidget::reloadData()
             qint64 nSize = mach.get_dylib_table_of_contents_size();
             qint64 nAddress = mach.offsetToRelAddress(nOffset);
 
-            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex);
+            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex, false, false, false);
 
             blockSignals(false);
         } else if ((nType == SMACH::TYPE_DYSYMTAB_extrel) || (nType == SMACH::TYPE_DYSYMTAB_locrel)) {
@@ -1130,7 +1130,7 @@ void MACHSectionHeaderWidget::reloadData()
             qint64 nSize = mach.get_relocation_info_size();
             qint64 nAddress = mach.offsetToRelAddress(nOffset);
 
-            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex);
+            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex, false, false, false);
 
             blockSignals(false);
         } else if ((nType == SMACH::TYPE_DYSYMTAB_indirectsyms) || (nType == SMACH::TYPE_DYSYMTAB_extrefsyms)) {
@@ -1153,7 +1153,7 @@ void MACHSectionHeaderWidget::reloadData()
             qint64 nSize = mach.get_value32_size();
             qint64 nAddress = mach.offsetToRelAddress(nOffset);
 
-            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex);
+            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex, false, false, false);
 
             blockSignals(false);
         }

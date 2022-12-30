@@ -282,7 +282,7 @@ bool FormatWidget::isEdited()
     return bResult;
 }
 
-bool FormatWidget::loadHexSubdevice(qint64 nOffset, qint64 nSize, XADDR nAddress, SubDevice **ppSubDevice, ToolsWidget *pToolsWidget, bool bOffset, bool bDisasm)
+bool FormatWidget::loadHexSubdevice(qint64 nOffset, qint64 nSize, XADDR nAddress, SubDevice **ppSubDevice, ToolsWidget *pToolsWidget, bool bOffset, bool bDisasm, bool bFollow)
 {
     if (*ppSubDevice) {
         (*ppSubDevice)->close();
@@ -309,12 +309,12 @@ bool FormatWidget::loadHexSubdevice(qint64 nOffset, qint64 nSize, XADDR nAddress
     hexOptions.nImageBase = nAddress;
     hexOptions.bOffset = bOffset;
 
-    pToolsWidget->setData((*ppSubDevice), hexOptions, getBackupDevice(), bDisasm);
+    pToolsWidget->setData((*ppSubDevice), hexOptions, getBackupDevice(), bDisasm, bFollow);
 
     return true;
 }
 
-bool FormatWidget::loadHexSubdeviceByTableView(int nRow, int nType, ToolsWidget *pToolsWidget, QTableView *pTableView, SubDevice **ppSubDevice)
+bool FormatWidget::loadHexSubdeviceByTableView(int nRow, int nType, ToolsWidget *pToolsWidget, QTableView *pTableView, SubDevice **ppSubDevice, bool bOffset, bool bDisasm, bool bFollow)
 {
     Q_UNUSED(nType)
 
@@ -327,7 +327,7 @@ bool FormatWidget::loadHexSubdeviceByTableView(int nRow, int nType, ToolsWidget 
         qint64 nSize = pTableView->model()->data(index, Qt::UserRole + FW_DEF::SECTION_DATA_SIZE).toLongLong();
         XADDR nAddress = pTableView->model()->data(index, Qt::UserRole + FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
 
-        bResult = loadHexSubdevice(nOffset, nSize, nAddress, ppSubDevice, pToolsWidget);
+        bResult = loadHexSubdevice(nOffset, nSize, nAddress, ppSubDevice, pToolsWidget, bOffset, bDisasm, bFollow);
     }
 
     return bResult;

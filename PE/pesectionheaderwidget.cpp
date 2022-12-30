@@ -515,7 +515,7 @@ void PESectionHeaderWidget::reloadData()
             qint64 nSize = pe.getSectionHeaderSize();
             qint64 nAddress = pe.offsetToRelAddress(nOffset);
 
-            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex);
+            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex, false, false, false);
 
             blockSignals(false);
         } else if (nType == SPE::TYPE_IMPORT) {
@@ -551,7 +551,7 @@ void PESectionHeaderWidget::reloadData()
             qint64 nSize = pe.getImportDescriptorSize();
             qint64 nAddress = pe.offsetToRelAddress(nOffset);
 
-            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex);
+            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex, false, false, false);
 
             blockSignals(false);
         } else if (nType == SPE::TYPE_DEBUG) {
@@ -577,7 +577,7 @@ void PESectionHeaderWidget::reloadData()
             qint64 nSize = pe.getDebugHeaderSize();
             qint64 nAddress = pe.offsetToRelAddress(nOffset);
 
-            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex);
+            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex, false, false, false);
 
             blockSignals(false);
         } else if (nType == SPE::TYPE_RELOCS) {
@@ -596,7 +596,7 @@ void PESectionHeaderWidget::reloadData()
             qint64 nSize = nSizeOfBlock;
             qint64 nAddress = pe.offsetToRelAddress(nOffset);
 
-            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex);
+            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex, false, false, false);
 
             blockSignals(false);
         } else if (nType == SPE::TYPE_EXCEPTION) {
@@ -615,7 +615,7 @@ void PESectionHeaderWidget::reloadData()
             qint64 nSize = pe.getExceptionRecordSize();
             qint64 nAddress = pe.offsetToRelAddress(nOffset);
 
-            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex);
+            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex, false, false, false);
 
             blockSignals(false);
         } else if (nType == SPE::TYPE_DELAYIMPORT) {
@@ -639,7 +639,7 @@ void PESectionHeaderWidget::reloadData()
             qint64 nSize = pe.getDelayImportRecordSize();
             qint64 nAddress = pe.offsetToRelAddress(nOffset);
 
-            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex);
+            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex, false, false, false);
 
             blockSignals(false);
         } else if (nType == SPE::TYPE_BOUNDIMPORT) {
@@ -658,7 +658,7 @@ void PESectionHeaderWidget::reloadData()
             qint64 nSize = pe.getBoundImportRecordSize();
             qint64 nAddress = pe.offsetToRelAddress(nOffset);
 
-            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex);
+            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex, false, false, false);
 
             blockSignals(false);
         } else if (nType == SPE::TYPE_IMAGE_DIRECTORY_ENTRIES) {
@@ -677,7 +677,7 @@ void PESectionHeaderWidget::reloadData()
             qint64 nSize = pe.getDataDirectoryHeaderSize();
             qint64 nAddress = pe.offsetToRelAddress(nOffset);
 
-            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex);
+            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex, false, false, false);
 
             blockSignals(false);
         }
