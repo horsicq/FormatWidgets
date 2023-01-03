@@ -293,7 +293,7 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, in
                             g_dateTimeEdit[TD_IMAGE_FILE_HEADER_TimeDateStamp]->setValue(nValue);
                             break;
                         case N_IMAGE_FILE_HEADER::PointerToSymbolTable:
-                            g_invWidget[INV_IMAGE_FILE_HEADER_PointerToSymbolTable]->setAddressAndSize(&pe, pe.getBaseAddress() + (quint32)nValue, 0);
+                            g_invWidget[INV_IMAGE_FILE_HEADER_PointerToSymbolTable]->setAddressAndSize(&pe, (quint32)nValue, 0);
                             break;
                         case N_IMAGE_FILE_HEADER::Characteristics:
                             g_comboBox[CB_IMAGE_FILE_HEADER_Characteristics]->setValue(nValue);
@@ -1657,7 +1657,7 @@ void PEWidget::reloadData()
                 addComment(ui->tableWidget_IMAGE_FILE_HEADER, N_IMAGE_FILE_HEADER::SizeOfOptionalHeader, HEADER_COLUMN_COMMENT,
                            XBinary::bytesCountToString(fileheader.SizeOfOptionalHeader));
 
-                g_invWidget[INV_IMAGE_FILE_HEADER_PointerToSymbolTable]->setAddressAndSize(&pe, pe.getBaseAddress() + fileheader.PointerToSymbolTable, 0);
+                g_invWidget[INV_IMAGE_FILE_HEADER_PointerToSymbolTable]->setOffsetAndSize(&pe, fileheader.PointerToSymbolTable, 0); // TODO Check addresses
 
                 qint64 nOffset = pe.getFileHeaderOffset();
                 qint64 nSize = pe.getFileHeaderSize();
