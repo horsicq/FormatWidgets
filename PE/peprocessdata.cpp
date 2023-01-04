@@ -89,7 +89,7 @@ void PEProcessData::_process()
             incValue();
         }
     } else if (g_nType == SPE::TYPE_SECTIONS_INFO) {
-        // TODO
+
         *g_ppModel = new QStandardItemModel;
 
         QList<QString> listLabels;
@@ -105,7 +105,7 @@ void PEProcessData::_process()
         setTreeHeader(*g_ppModel, &listLabels);
 
         QList<XPE_DEF::IMAGE_SECTION_HEADER> listSectionHeaders = g_pPE->getSectionHeaders();
-        QList<XPE::SECTION_RECORD> listSectionRecords = g_pPE->getSectionRecords(&listSectionHeaders, false);
+        QList<XPE::SECTION_RECORD> listSectionRecords = g_pPE->getSectionRecords(&listSectionHeaders);
         XBinary::_MEMORY_MAP memoryMap = g_pPE->getMemoryMap();
 
         QList<QString> listStrDb = XInfoDB::loadStrDB(getOptions()->getInfoPath(), XInfoDB::STRDB_PESECTIONS);
@@ -316,7 +316,14 @@ void PEProcessData::_process()
             iter.next();
 
             qint64 nRelAddress = iter.key();
-            QString sValue = iter.value();
+            qint64 nOffset = g_pPE->relAddressToOffset(&memoryMap, nRelAddress);
+            QString sOffset;
+
+            if (nOffset != -1) {
+                sOffset = XBinary::valueToHex((quint32)(nOffset));
+            }
+
+            QString sName = iter.value();
 
             qint32 nSection = XBinary::relAddressToLoadSection(&memoryMap, nRelAddress);
             bool bIsHeader = false;
@@ -328,11 +335,11 @@ void PEProcessData::_process()
             if ((nSection != -1) || (bIsHeader)) {
                 QList<QStandardItem *> listItems;
                 listItems.append(new QStandardItem(""));
-                listItems.append(new QStandardItem(sValue));
+                listItems.append(new QStandardItem(sName));
                 listItems.append(new QStandardItem(XBinary::valueToHex((quint32)(nRelAddress))));
-                listItems.append(new QStandardItem(XBinary::valueToHex((quint32)(mapRegionSizes.key(sValue)))));
-                listItems.append(new QStandardItem(XBinary::valueToHex((quint32)(g_pPE->relAddressToOffset(&memoryMap, nRelAddress)))));
-                listItems.append(new QStandardItem(XBinary::valueToHex((quint32)(mapRegionSizes.key(sValue)))));
+                listItems.append(new QStandardItem(XBinary::valueToHex((quint32)(mapRegionSizes.key(sName)))));
+                listItems.append(new QStandardItem(sOffset));
+                listItems.append(new QStandardItem(XBinary::valueToHex((quint32)(mapRegionSizes.key(sName)))));
                 listItems.append(new QStandardItem(""));
                 listItems.append(new QStandardItem(""));  // Info
 
