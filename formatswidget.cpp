@@ -166,15 +166,12 @@ void FormatsWidget::reload()
             if (com.isValid()) {
                 ui->lineEditEntryPoint->setValue((quint16)com.getEntryPointAddress());
             }
-        } else if (fileType == XBinary::FT_ZIP) {
-            // TODO Set name on button
-            ui->stackedWidgetMain->setCurrentIndex(TABINFO_ZIP);
+        } else if ((fileType == XBinary::FT_ZIP) || (fileType == XBinary::FT_MACHOFAT) || (fileType == XBinary::FT_AR) || (fileType == XBinary::FT_GZIP) || (fileType == XBinary::FT_ZLIB)) {
+            // TODO APK
 
-            XZip xzip(&file);
+            ui->stackedWidgetMain->setCurrentIndex(TABINFO_ARCHIVE);
 
-            if (xzip.isValid()) {
-                ui->lineEditEntryPoint->setValue(xzip.getEntryPointAddress());
-            }
+            ui->lineEditEntryPoint->setValue(0);
         } else if (fileType == XBinary::FT_DEX) {
             ui->stackedWidgetMain->setCurrentIndex(TABINFO_DEX);
 
@@ -296,14 +293,6 @@ void FormatsWidget::reload()
                 ui->lineEditMACHSections->setValue((quint16)listSectionRecords.count());
                 ui->lineEditMACHSegments->setValue((quint16)listSegmentRecords.count());
                 ui->lineEditMACHLibraries->setValue((quint16)listLibraryRecords.count());
-            }
-        } else if (fileType == XBinary::FT_MACHOFAT) {
-            ui->stackedWidgetMain->setCurrentIndex(TABINFO_MACHOFAT);
-
-            XMACHOFat machofat(&file);
-
-            if (machofat.isValid()) {
-                ui->lineEditEntryPoint->setValue(machofat.getEntryPointAddress());
             }
         } else {
             ui->stackedWidgetMain->setCurrentIndex(TABINFO_BINARY);
@@ -705,7 +694,7 @@ void FormatsWidget::on_pushButtonDEX_clicked()
     showDEX(SDEX::TYPE_HEADER);
 }
 
-void FormatsWidget::on_pushButtonZIP_clicked()
+void FormatsWidget::on_pushButtonArchive_clicked()
 {
     DialogArchive dialogArchive(this);
 
@@ -715,26 +704,6 @@ void FormatsWidget::on_pushButtonZIP_clicked()
     dialogArchive.setGlobal(getShortcuts(), getGlobalOptions());
 
     dialogArchive.exec();
-}
-
-void FormatsWidget::on_pushButtonMACHOFAT_clicked()
-{
-    QFile file;
-    file.setFileName(g_sFileName);
-
-    if (XBinary::tryToOpen(&file)) {
-        DialogMACHOFAT dialogMACHOFAT(this);
-
-        FW_DEF::OPTIONS options = {};
-        options.nImageBase = -1;
-
-        dialogMACHOFAT.setData(&file, options);
-        dialogMACHOFAT.setGlobal(getShortcuts(), getGlobalOptions());
-
-        dialogMACHOFAT.exec();
-
-        file.close();
-    }
 }
 
 void FormatsWidget::on_pushButtonBinary_clicked()

@@ -55,8 +55,7 @@ class FormatsWidget : public XShortcutsWidget {
 
     enum TABINFO {
         TABINFO_BINARY = 0,
-        TABINFO_MACHOFAT,
-        TABINFO_ZIP,
+        TABINFO_ARCHIVE,
         TABINFO_COM,
         TABINFO_DEX,
         TABINFO_NE,
@@ -113,8 +112,7 @@ private slots:
     void on_pushButtonMACHCommands_clicked();
     void on_pushButtonMACHLibraries_clicked();
     void on_pushButtonDEX_clicked();
-    void on_pushButtonZIP_clicked();
-    void on_pushButtonMACHOFAT_clicked();
+    void on_pushButtonArchive_clicked();
     void on_pushButtonBinary_clicked();
 
     void showMSDOS(SMSDOS::TYPE type);

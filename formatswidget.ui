@@ -363,7 +363,7 @@
       <enum>QFrame::NoFrame</enum>
      </property>
      <property name="currentIndex">
-      <number>8</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="pageBinary">
       <layout class="QVBoxLayout" name="verticalLayout_21">
@@ -439,81 +439,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="pageMACHOFAT">
-      <layout class="QVBoxLayout" name="verticalLayout_24">
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-       <item>
-        <widget class="QGroupBox" name="groupBoxMACHOFAT">
-         <property name="title">
-          <string/>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_16">
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
-           <number>0</number>
-          </property>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_24">
-            <item>
-             <widget class="QPushButton" name="pushButtonMACHOFAT">
-              <property name="text">
-               <string notr="true">Mach-O FAT</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer_15">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <spacer name="verticalSpacer_4">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>41</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="pageZIP">
+     <widget class="QWidget" name="pageArchive">
       <layout class="QVBoxLayout" name="verticalLayout_28">
        <property name="leftMargin">
         <number>0</number>
@@ -528,7 +454,7 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QGroupBox" name="groupBoxZIP">
+        <widget class="QGroupBox" name="groupBoxArchive">
          <property name="title">
           <string/>
          </property>
@@ -548,7 +474,7 @@
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_23">
             <item>
-             <widget class="QPushButton" name="pushButtonZIP">
+             <widget class="QPushButton" name="pushButtonArchive">
               <property name="enabled">
                <bool>true</bool>
               </property>
