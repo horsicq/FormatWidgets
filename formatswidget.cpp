@@ -169,6 +169,7 @@ void FormatsWidget::reload()
         } else if ((fileType == XBinary::FT_ZIP) || (fileType == XBinary::FT_MACHOFAT) || (fileType == XBinary::FT_AR) || (fileType == XBinary::FT_GZIP) || (fileType == XBinary::FT_ZLIB)) {
             // TODO APK
 
+            ui->pushButtonArchive->setText(XFormats::getFileFormatInfo(fileType, &file).sString);
             ui->stackedWidgetMain->setCurrentIndex(TABINFO_ARCHIVE);
 
             ui->lineEditEntryPoint->setValue(0);
@@ -976,5 +977,19 @@ void FormatsWidget::on_pushButtonSearch_clicked()
 
             file.close();
         }
+    }
+}
+
+void FormatsWidget::on_pushButtonUnpack_clicked()
+{
+    QString sInitDirectory = QFileInfo(g_sFileName).absolutePath();
+    QString sDirectoryName = QFileDialog::getExistingDirectory(this, tr("Open directory") + QString("..."), sInitDirectory, QFileDialog::ShowDirsOnly);
+
+    if (!sDirectoryName.isEmpty()) {
+        DialogUnpackFile dialogUnpackFile(this);
+
+        dialogUnpackFile.setData(g_sFileName, sDirectoryName);
+
+        dialogUnpackFile.showDialogDelay(1000);
     }
 }

@@ -496,6 +496,13 @@
               </property>
              </spacer>
             </item>
+            <item>
+             <widget class="QPushButton" name="pushButtonUnpack">
+              <property name="text">
+               <string>Unpack</string>
+              </property>
+             </widget>
+            </item>
            </layout>
           </item>
           <item>

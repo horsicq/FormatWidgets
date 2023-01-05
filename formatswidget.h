@@ -142,6 +142,7 @@ private slots:
     void on_pushButtonHash_clicked();
     void on_pushButtonExtractor_clicked();
     void on_pushButtonSearch_clicked();
+    void on_pushButtonUnpack_clicked();
 
 protected:
     virtual void registerShortcuts(bool bState);
