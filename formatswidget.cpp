@@ -166,7 +166,12 @@ void FormatsWidget::reload()
             if (com.isValid()) {
                 ui->lineEditEntryPoint->setValue((quint16)com.getEntryPointAddress());
             }
-        } else if ((fileType == XBinary::FT_ZIP) || (fileType == XBinary::FT_MACHOFAT) || (fileType == XBinary::FT_AR) || (fileType == XBinary::FT_GZIP) || (fileType == XBinary::FT_ZLIB)) {
+        } else if ((fileType == XBinary::FT_ZIP) ||
+                   (fileType == XBinary::FT_MACHOFAT) ||
+                   (fileType == XBinary::FT_AR) ||
+                   (fileType == XBinary::FT_GZIP) ||
+                   (fileType == XBinary::FT_ZLIB) ||
+                   (fileType == XBinary::FT_LHA)) {
             // TODO APK
 
             ui->pushButtonArchive->setText(XFormats::getFileFormatInfo(fileType, &file).sString);
@@ -697,14 +702,7 @@ void FormatsWidget::on_pushButtonDEX_clicked()
 
 void FormatsWidget::on_pushButtonArchive_clicked()
 {
-    DialogArchive dialogArchive(this);
-
-    FW_DEF::OPTIONS options = {};
-
-    dialogArchive.setFileName(g_sFileName, options, QSet<XBinary::FT>());
-    dialogArchive.setGlobal(getShortcuts(), getGlobalOptions());
-
-    dialogArchive.exec();
+    showBinary(SBINARY::TYPE_HEX);
 }
 
 void FormatsWidget::on_pushButtonBinary_clicked()
@@ -992,4 +990,16 @@ void FormatsWidget::on_pushButtonUnpack_clicked()
 
         dialogUnpackFile.showDialogDelay(1000);
     }
+}
+
+void FormatsWidget::on_pushButtonFiles_clicked()
+{
+    DialogArchive dialogArchive(this);
+
+    FW_DEF::OPTIONS options = {};
+
+    dialogArchive.setFileName(g_sFileName, options, QSet<XBinary::FT>());
+    dialogArchive.setGlobal(getShortcuts(), getGlobalOptions());
+
+    dialogArchive.exec();
 }
