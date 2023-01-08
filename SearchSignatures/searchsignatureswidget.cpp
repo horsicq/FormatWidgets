@@ -136,7 +136,7 @@ void SearchSignaturesWidget::on_tableViewResult_customContextMenuRequested(const
 {
     QMenu contextMenu(this);
 
-    QMenu menuCopy(tr("Copy"), this); // TODO obsolete
+    QMenu menuCopy(tr("Copy"), this);  // TODO obsolete
     QMenu menuFollowIn(tr("Follow in"), this);
 
     QAction actionCopyName(tr("Name"), this);

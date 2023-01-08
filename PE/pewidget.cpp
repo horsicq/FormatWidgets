@@ -1657,7 +1657,7 @@ void PEWidget::reloadData()
                 addComment(ui->tableWidget_IMAGE_FILE_HEADER, N_IMAGE_FILE_HEADER::SizeOfOptionalHeader, HEADER_COLUMN_COMMENT,
                            XBinary::bytesCountToString(fileheader.SizeOfOptionalHeader));
 
-                g_invWidget[INV_IMAGE_FILE_HEADER_PointerToSymbolTable]->setOffsetAndSize(&pe, fileheader.PointerToSymbolTable, 0); // TODO Check addresses
+                g_invWidget[INV_IMAGE_FILE_HEADER_PointerToSymbolTable]->setOffsetAndSize(&pe, fileheader.PointerToSymbolTable, 0);  // TODO Check addresses
 
                 qint64 nOffset = pe.getFileHeaderOffset();
                 qint64 nSize = pe.getFileHeaderSize();

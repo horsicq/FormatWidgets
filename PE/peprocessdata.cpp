@@ -89,7 +89,6 @@ void PEProcessData::_process()
             incValue();
         }
     } else if (g_nType == SPE::TYPE_SECTIONS_INFO) {
-
         *g_ppModel = new QStandardItemModel;
 
         QList<QString> listLabels;
@@ -889,7 +888,8 @@ void PEProcessData::_process()
                 options.varInfo = listResources.at(i).irin[0].nID;
                 options.initFilePart = XBinary::FILEPART_RESOURCE;
 
-                SpecAbstract::SCAN_RESULT scanResult = StaticScan::processSubdevice(g_pPE->getDevice(), listResources.at(i).nOffset, listResources.at(i).nSize, &options, getPdStruct());
+                SpecAbstract::SCAN_RESULT scanResult =
+                    StaticScan::processSubdevice(g_pPE->getDevice(), listResources.at(i).nOffset, listResources.at(i).nSize, &options, getPdStruct());
 
                 (*g_ppModel)->setItem(i, 7, new QStandardItem(SpecAbstract::createShortResultString(scanResult)));
 

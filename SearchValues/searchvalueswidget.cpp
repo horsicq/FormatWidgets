@@ -119,7 +119,6 @@ void SearchValuesWidget::on_tableViewResult_customContextMenuRequested(const QPo
 void SearchValuesWidget::search()
 {
     if (g_pDevice && (g_valueType != XBinary::VT_UNKNOWN)) {
-
         g_pOldModel = g_pModel;
 
         ui->tableViewResult->setModel(nullptr);

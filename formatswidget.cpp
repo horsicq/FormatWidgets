@@ -166,12 +166,8 @@ void FormatsWidget::reload()
             if (com.isValid()) {
                 ui->lineEditEntryPoint->setValue((quint16)com.getEntryPointAddress());
             }
-        } else if ((fileType == XBinary::FT_ZIP) ||
-                   (fileType == XBinary::FT_MACHOFAT) ||
-                   (fileType == XBinary::FT_AR) ||
-                   (fileType == XBinary::FT_GZIP) ||
-                   (fileType == XBinary::FT_ZLIB) ||
-                   (fileType == XBinary::FT_LHA)) {
+        } else if ((fileType == XBinary::FT_ZIP) || (fileType == XBinary::FT_MACHOFAT) || (fileType == XBinary::FT_AR) || (fileType == XBinary::FT_GZIP) ||
+                   (fileType == XBinary::FT_ZLIB) || (fileType == XBinary::FT_LHA)) {
             // TODO APK
 
             ui->pushButtonArchive->setText(XFormats::getFileFormatInfo(fileType, &file).sString);

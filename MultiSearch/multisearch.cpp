@@ -304,7 +304,7 @@ void MultiSearch::processModel()
             XBinary::MS_RECORD record = g_pListRecords->at(i);
 
             XADDR nAddress = XBinary::offsetToAddress(&(g_options.memoryMap), record.nOffset);
-            QString sSectionName = XBinary::getMemoryRecordByOffset(&(g_options.memoryMap),record.nOffset).sName;
+            QString sSectionName = XBinary::getMemoryRecordByOffset(&(g_options.memoryMap), record.nOffset).sName;
 
             {
                 QStandardItem *pItem = new QStandardItem;
