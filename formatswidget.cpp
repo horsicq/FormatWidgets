@@ -44,7 +44,7 @@ FormatsWidget::FormatsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(n
     ui->comboBoxScanEngine->blockSignals(bBlocked1);
 }
 
-void FormatsWidget::setFileName(QString sFileName, bool bScan)
+void FormatsWidget::setName(QString sFileName, bool bScan)
 {
     this->g_sFileName = sFileName;
     this->g_bScan = bScan;
