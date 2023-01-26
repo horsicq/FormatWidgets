@@ -3,6 +3,7 @@ include_directories(${CMAKE_CURRENT_LIST_DIR})
 include(${CMAKE_CURRENT_LIST_DIR}/../XCppfilt/xcppfilt.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/SearchSignatures/searchsignatureswidget.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/SearchStrings/searchstringswidget.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/SearchValues/searchvalueswidget.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../Controls/xlineedithex.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../Controls/xcomboboxex.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../Controls/xdatetimeeditx.cmake)
@@ -27,6 +28,7 @@ set(FORMATWIDGET_SOURCES
     ${XCPPFILT_SOURCES}
     ${SEARCHSIGNATURESWIDGET_SOURCES}
     ${SEARCHSTRINGSWIDGET_SOURCES}
+    ${SEARCHVALUESWIDGET_SOURCES}
     ${XLINEEDITHEX_SOURCES}
     ${XCOMBOBOXEX_SOURCES}
     ${XDATETIMEEDITX_SOURCES}

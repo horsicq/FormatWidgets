@@ -44,8 +44,6 @@ BinaryWidget::~BinaryWidget()
 
 void BinaryWidget::clear()
 {
-    setTreeItem(ui->treeWidgetNavi, 0);
-
     BinaryWidget::reset();
 
     resetWidget();

@@ -617,7 +617,7 @@
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <widget class="QWidget" name="layoutWidget">
+          <widget class="QWidget" name="layoutWidget_2">
            <layout class="QVBoxLayout" name="verticalLayout_2">
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_16">
@@ -691,7 +691,7 @@
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <widget class="QWidget" name="layoutWidget">
+          <widget class="QWidget" name="layoutWidget_3">
            <layout class="QVBoxLayout" name="verticalLayout_5">
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_14">
@@ -1100,7 +1100,7 @@
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <widget class="QWidget" name="layoutWidget">
+          <widget class="QWidget" name="layoutWidget_4">
            <layout class="QVBoxLayout" name="verticalLayout_8">
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -1156,7 +1156,7 @@
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="layoutWidget">
+          <widget class="QWidget" name="layoutWidget_5">
            <layout class="QVBoxLayout" name="verticalLayout_34">
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_31">
@@ -1251,7 +1251,7 @@
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <widget class="QWidget" name="layoutWidget">
+          <widget class="QWidget" name="layoutWidget_6">
            <layout class="QVBoxLayout" name="verticalLayout_30">
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -1381,7 +1381,7 @@
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="layoutWidget">
+          <widget class="QWidget" name="layoutWidget_7">
            <layout class="QVBoxLayout" name="verticalLayout_35">
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_21">
@@ -1744,7 +1744,7 @@
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <widget class="QWidget" name="layoutWidget">
+          <widget class="QWidget" name="layoutWidget_8">
            <layout class="QVBoxLayout" name="verticalLayout_21">
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_28">
@@ -1794,7 +1794,7 @@
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="layoutWidget">
+          <widget class="QWidget" name="layoutWidget_9">
            <layout class="QVBoxLayout" name="verticalLayout_57">
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_29">
@@ -1990,7 +1990,7 @@
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <widget class="QWidget" name="layoutWidget">
+          <widget class="QWidget" name="layoutWidget_10">
            <layout class="QVBoxLayout" name="verticalLayout_10">
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_23">
@@ -2046,7 +2046,7 @@
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="layoutWidget">
+          <widget class="QWidget" name="layoutWidget_11">
            <layout class="QVBoxLayout" name="verticalLayout_53">
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_24">
@@ -2212,7 +2212,7 @@
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <widget class="QWidget" name="layoutWidget">
+          <widget class="QWidget" name="layoutWidget_12">
            <layout class="QVBoxLayout" name="verticalLayout_14">
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_27">
@@ -2357,7 +2357,7 @@
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <widget class="QWidget" name="layoutWidget">
+          <widget class="QWidget" name="layoutWidget_13">
            <layout class="QVBoxLayout" name="verticalLayout_15">
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_25">
@@ -2499,7 +2499,7 @@
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <widget class="QWidget" name="layoutWidget">
+          <widget class="QWidget" name="layoutWidget_14">
            <layout class="QVBoxLayout" name="verticalLayout_18">
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_20">
@@ -2555,7 +2555,7 @@
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="layoutWidget">
+          <widget class="QWidget" name="layoutWidget_15">
            <layout class="QVBoxLayout" name="verticalLayout_50">
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_19">
@@ -2634,7 +2634,7 @@
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <widget class="QWidget" name="layoutWidget">
+          <widget class="QWidget" name="layoutWidget_16">
            <layout class="QVBoxLayout" name="verticalLayout_20">
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_32">
@@ -2711,7 +2711,7 @@
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <widget class="QWidget" name="layoutWidget">
+          <widget class="QWidget" name="layoutWidget_17">
            <layout class="QVBoxLayout" name="verticalLayout_27">
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_33">
@@ -2811,7 +2811,7 @@
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <widget class="QWidget" name="layoutWidget_X3">
+          <widget class="QWidget" name="layoutWidget_18">
            <layout class="QVBoxLayout" name="verticalLayout_36">
             <item>
              <widget class="QWidget" name="widgetCertificateCheck" native="true">

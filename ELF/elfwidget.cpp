@@ -44,8 +44,6 @@ ELFWidget::~ELFWidget()
 
 void ELFWidget::clear()
 {
-    setTreeItem(ui->treeWidgetNavi, 0);
-
     ELFWidget::reset();
 
     memset(g_lineEdit_Elf_Ehdr, 0, sizeof g_lineEdit_Elf_Ehdr);
@@ -66,6 +64,7 @@ void ELFWidget::clear()
 
 void ELFWidget::cleanup()
 {
+    ELFWidget::clear();
 }
 
 void ELFWidget::reload()
