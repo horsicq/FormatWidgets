@@ -115,7 +115,7 @@ qint64 ToolsWidget::getStartAddress()
 
 void ToolsWidget::setSelection(qint64 nOffset, qint64 nSize)
 {
-    ui->widgetHex->setSelection(nOffset, nSize);
+    ui->widgetHex->setDeviceSelection(nOffset, nSize);
 }
 
 ToolsWidget::~ToolsWidget()
