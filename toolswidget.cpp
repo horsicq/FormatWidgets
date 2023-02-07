@@ -28,11 +28,11 @@ ToolsWidget::ToolsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new U
 
     g_pDevice = nullptr;
 
-    connect(ui->widgetHex, SIGNAL(dataChanged()), this, SIGNAL(dataChanged()));
+    connect(ui->widgetHex, SIGNAL(dataChanged(qint64, qint64)), this, SIGNAL(dataChanged(qint64, qint64)));
     connect(ui->widgetHex, SIGNAL(showOffsetDisasm(qint64)), this, SLOT(_showDisasm(qint64)));
     connect(ui->widgetHex, SIGNAL(showOffsetMemoryMap(qint64)), this, SLOT(_showMemoryMap(qint64)));
     connect(ui->widgetHex, SIGNAL(showOffsetMainHex(qint64, qint64)), this, SLOT(_showHex(qint64, qint64)));
-    connect(ui->widgetStrings, SIGNAL(dataChanged()), this, SIGNAL(dataChanged()));
+    connect(ui->widgetStrings, SIGNAL(dataChanged(qint64, qint64)), this, SIGNAL(dataChanged(qint64, qint64)));
     connect(ui->widgetStrings, SIGNAL(showHex(qint64, qint64)), this, SLOT(_showHex(qint64, qint64)));
     connect(ui->widgetStrings, SIGNAL(showDemangle(QString)), this, SIGNAL(showDemangle(QString)));
 }
@@ -80,9 +80,9 @@ void ToolsWidget::setBackupDevice(QIODevice *pDevice)
     ui->widgetHex->setBackupDevice(pDevice);
 }
 
-void ToolsWidget::setEdited()
+void ToolsWidget::setEdited(qint64 nDeviceOffset, qint64 nDeviceSize)
 {
-    ui->widgetHex->setEdited();
+    ui->widgetHex->setEdited(nDeviceOffset, nDeviceSize);
 
     //    emit changed();
 }

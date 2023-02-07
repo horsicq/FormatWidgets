@@ -1,4 +1,4 @@
-/* Copyright (c) 2017-2022 hors<horsicq@gmail.com>
+/* Copyright (c) 2017-2023 hors<horsicq@gmail.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -40,7 +40,7 @@ public:
     void setWidget(FormatWidget *pWidget);
     void setData(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, QString sTitle, qint32 nType);  // TODO remove
     void setData(QString sTitle);
-    void setEdited();
+    void setEdited(qint64 nDeviceOffset, qint64 nDeviceSize);
     virtual void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
 
 signals:

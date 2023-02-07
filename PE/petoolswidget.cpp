@@ -141,13 +141,13 @@ void PEToolsWidget::on_pushButtonDosStubAdd_clicked()
 
                 if (pe.isValid()) {
                     if (pe.addDosStub(sFileName)) {
-                        emit dataChanged();
+                        emit dataChanged(0, g_pDevice->size());
                     }
                 }
             }
         }
 
-        void reload();
+        reload();
     }
 }
 
@@ -158,11 +158,11 @@ void PEToolsWidget::on_pushButtonDosStubRemove_clicked()
 
         if (pe.isValid()) {
             if (pe.removeDosStub()) {
-                emit dataChanged();
+                emit dataChanged(0, g_pDevice->size());
             }
         }
 
-        void reload();
+        reload();
     }
 }
 
@@ -181,7 +181,7 @@ void PEToolsWidget::on_pushButtonOverlayAdd_clicked()
 
             if (pe.isValid()) {
                 if (pe.addOverlay(sFileName)) {
-                    emit dataChanged();
+                    emit dataChanged(0, g_pDevice->size());
                 }
             }
         }
@@ -197,11 +197,11 @@ void PEToolsWidget::on_pushButtonOverlayRemove_clicked()
 
         if (pe.isValid()) {
             if (pe.removeOverlay()) {
-                emit dataChanged();
+                emit dataChanged(0, g_pDevice->size());
             }
         }
 
-        void reload();
+        reload();
     }
 }
 

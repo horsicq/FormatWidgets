@@ -40,14 +40,14 @@ public:
     void setData(QIODevice *pDevice, FW_DEF::OPTIONS options, QIODevice *pBackupDevice, bool bDisasm, bool bFollow);
     void setDevice(QIODevice *pDevice);
     void setBackupDevice(QIODevice *pDevice);
-    void setEdited();
+    void setEdited(qint64 nDeviceOffset, qint64 nDeviceSize);
     void setReadonly(bool bState);
     void reload();
     qint64 getStartAddress();
     void setSelection(qint64 nOffset, qint64 nSize);
 
 signals:
-    void dataChanged();
+    void dataChanged(qint64 nDeviceOffset, qint64 nDeviceSize);
     void showOffsetHex(qint64 nOffset, qint64 nSize);
     void showOffsetDisasm(qint64 nOffset);
     void showOffsetMemoryMap(qint64 nOffset);

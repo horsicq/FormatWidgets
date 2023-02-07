@@ -60,9 +60,9 @@ void DialogSectionHeader::setData(QString sTitle)
     g_pWidget->reload();
 }
 
-void DialogSectionHeader::setEdited()
+void DialogSectionHeader::setEdited(qint64 nDeviceOffset, qint64 nDeviceSize)
 {
-    g_pWidget->setEdited();
+    g_pWidget->setEdited(nDeviceOffset, nDeviceSize);
 }
 
 void DialogSectionHeader::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)

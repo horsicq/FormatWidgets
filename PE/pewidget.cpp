@@ -30,7 +30,7 @@ PEWidget::PEWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::PEWidge
 
     initWidget();
     initDisasmView(ui->widgetDisasm_DosStub);
-    connect(ui->widgetTools, SIGNAL(dataChanged()), this, SLOT(allReload()));
+    connect(ui->widgetTools, SIGNAL(dataChanged(qint64, qint64)), this, SLOT(allReload(qint64, qint64)));
 
     ui->groupBoxHash32->setTitle(QString("%1 32").arg(tr("Hash")));
     ui->groupBoxHash64->setTitle(QString("%1 64").arg(tr("Hash")));

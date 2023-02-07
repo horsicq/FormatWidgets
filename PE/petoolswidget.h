@@ -57,7 +57,7 @@ private slots:
     void on_pushButtonOverlayDump_clicked();
 
 signals:
-    void dataChanged();
+    void dataChanged(qint64 nDeviceOffset, qint64 nDeviceSize);
 
 private:
     Ui::PEToolsWidget *ui;

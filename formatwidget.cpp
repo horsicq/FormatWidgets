@@ -892,7 +892,7 @@ void FormatWidget::resetWidget()
 
 void FormatWidget::initSearchStringsWidget(SearchStringsWidget *pWidget)
 {
-    connect(pWidget, SIGNAL(dataChanged()), this, SLOT(setEdited()));
+    connect(pWidget, SIGNAL(dataChanged(qint64, qint64)), this, SLOT(setEdited(qint64, qint64)));
     connect(pWidget, SIGNAL(showHex(qint64, qint64)), this, SLOT(showInHexWindow(qint64, qint64)));
     connect(pWidget, SIGNAL(showDemangle(QString)), this, SLOT(showDemangle(QString)));
 }
@@ -910,14 +910,14 @@ void FormatWidget::initSearchValuesWidget(SearchValuesWidget *pWidget)
 
 void FormatWidget::initHexViewWidget(XHexViewWidget *pWidget)
 {
-    connect(pWidget, SIGNAL(dataChanged()), this, SLOT(setEdited()));
+    connect(pWidget, SIGNAL(dataChanged(qint64, qint64)), this, SLOT(setEdited(qint64, qint64)));
     connect(pWidget, SIGNAL(showOffsetDisasm(qint64)), this, SLOT(showInDisasmWindowOffset(qint64)));
     connect(pWidget, SIGNAL(showOffsetMemoryMap(qint64)), this, SLOT(showInMemoryMapWindowOffset(qint64)));
 }
 
 void FormatWidget::initMultiDisasmWidget(XMultiDisasmWidget *pWidget)
 {
-    connect(pWidget, SIGNAL(dataChanged()), this, SLOT(setEdited()));
+    connect(pWidget, SIGNAL(dataChanged(qint64, qint64)), this, SLOT(setEdited(qint64, qint64)));
     connect(pWidget, SIGNAL(showOffsetHex(qint64)), this, SLOT(showInHexWindow(qint64)));
 }
 
@@ -928,7 +928,7 @@ void FormatWidget::initMemoryMapWidget(XMemoryMapWidget *pWidget)
 
 void FormatWidget::initHexView(XHexView *pWidget)
 {
-    connect(pWidget, SIGNAL(dataChanged()), this, SLOT(setEdited()));
+    connect(pWidget, SIGNAL(dataChanged(qint64, qint64)), this, SLOT(setEdited(qint64, qint64)));
     connect(pWidget, SIGNAL(showOffsetDisasm(qint64)), this, SLOT(showInDisasmWindowOffset(qint64)));
     connect(pWidget, SIGNAL(showOffsetMemoryMap(qint64)), this, SLOT(showInMemoryMapWindowOffset(qint64)));
     connect(pWidget, SIGNAL(showOffsetMainHex(qint64, qint64)), this, SLOT(showInHexWindow(qint64, qint64)));
@@ -936,12 +936,12 @@ void FormatWidget::initHexView(XHexView *pWidget)
 
 void FormatWidget::initDisasmView(XDisasmView *pWidget)
 {
-    connect(pWidget, SIGNAL(dataChanged()), this, SLOT(setEdited()));
+    connect(pWidget, SIGNAL(dataChanged(qint64, qint64)), this, SLOT(setEdited(qint64, qint64)));
 }
 
 void FormatWidget::initToolsWidget(ToolsWidget *pWidget)
 {
-    connect(pWidget, SIGNAL(dataChanged()), this, SLOT(setEdited()));
+    connect(pWidget, SIGNAL(dataChanged(qint64, qint64)), this, SLOT(setEdited(qint64, qint64)));
     connect(pWidget, SIGNAL(showOffsetHex(qint64, qint64)), this, SLOT(showInHexWindow(qint64, qint64)));
     connect(pWidget, SIGNAL(showOffsetDisasm(qint64)), this, SLOT(showInDisasmWindowOffset(qint64)));
     connect(pWidget, SIGNAL(showOffsetMemoryMap(qint64)), this, SLOT(showInMemoryMapWindowOffset(qint64)));
@@ -1156,7 +1156,7 @@ void FormatWidget::textValueChanged(QString sText)
     setValue(sText, nStype, nNdata, nVtype, nPosition, nOffset);
 }
 
-void FormatWidget::setEdited()
+void FormatWidget::setEdited(qint64 nDeviceOffset, qint64 nDeviceSize)
 {
 #ifdef QT_DEBUG
     qDebug("void FormatWidget::setEdited()");
@@ -1174,7 +1174,7 @@ void FormatWidget::setEdited()
     //    emit changed();
 }
 
-void FormatWidget::allReload()
+void FormatWidget::allReload(qint64 nDeviceOffset, qint64 nDeviceSize)
 {
     // TODO save treeview position
     bool bIsReadOnly = isReadonly();
@@ -1314,7 +1314,7 @@ bool FormatWidget::createHeaderTable(int nType, QTableWidget *pTableWidget, cons
             pItemOffset->setText(XBinary::valueToHex((quint16)pRecords[i].nOffset));
         }
 
-        pItemOffset->setTextAlignment(Qt::AlignRight);  // TODO
+        pItemOffset->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);  // TODO
         pTableWidget->setItem(i, HEADER_COLUMN_OFFSET, pItemOffset);
 
         QTableWidgetItem *pItemType = new QTableWidgetItem;
