@@ -32,6 +32,7 @@ public:
 
     virtual void _process();
     virtual void ajustTableView(QWidget *pWidget, QTableView *pTableView);
+    virtual void adjustModel(QStandardItemModel *pModel);
 
 private:
     int g_nType;
