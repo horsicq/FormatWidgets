@@ -575,6 +575,8 @@ void ELFProcessData::_process()
             incValue();
         }
     }
+
+    adjustModel(*g_ppModel);
 }
 
 void ELFProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)

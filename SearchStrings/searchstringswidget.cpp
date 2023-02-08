@@ -201,34 +201,10 @@ void SearchStringsWidget::on_tableViewResult_customContextMenuRequested(const QP
 {
     QMenu contextMenu(this);
 
-    QMenu menuCopy(tr("Copy"), this);
     QMenu menuFollowIn(tr("Follow in"), this);
     QMenu menuEdit(tr("Edit"), this);
 
-    QAction actionCopyString(tr("String"), this);
-    actionCopyString.setShortcut(getShortcuts()->getShortcut(X_ID_STRINGS_COPY_STRING));
-    connect(&actionCopyString, SIGNAL(triggered()), this, SLOT(_copyString()));
-    menuCopy.addAction(&actionCopyString);
-
-    QString sCopyString;
-
-    if (g_options.nBaseAddress) {
-        sCopyString = tr("Address");
-    } else {
-        sCopyString = tr("Offset");
-    }
-
-    QAction actionCopyOffset(sCopyString, this);
-    actionCopyOffset.setShortcut(getShortcuts()->getShortcut(X_ID_STRINGS_COPY_OFFSET));
-    connect(&actionCopyOffset, SIGNAL(triggered()), this, SLOT(_copyOffset()));
-    menuCopy.addAction(&actionCopyOffset);
-
-    QAction actionCopySize(tr("Size"), this);
-    actionCopySize.setShortcut(getShortcuts()->getShortcut(X_ID_STRINGS_COPY_SIZE));
-    connect(&actionCopySize, SIGNAL(triggered()), this, SLOT(_copySize()));
-    menuCopy.addAction(&actionCopySize);
-
-    contextMenu.addMenu(&menuCopy);
+    contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this, ui->tableViewResult));
 
     QAction actionHex(tr("Hex"), this);
     QAction actionDemangle(tr("Demangle"), this);
@@ -263,44 +239,44 @@ void SearchStringsWidget::on_tableViewResult_customContextMenuRequested(const QP
     contextMenu.exec(ui->tableViewResult->viewport()->mapToGlobal(pos));
 }
 
-void SearchStringsWidget::_copyString()
-{
-    qint32 nRow = ui->tableViewResult->currentIndex().row();
+//void SearchStringsWidget::_copyString()
+//{
+//    qint32 nRow = ui->tableViewResult->currentIndex().row();
 
-    if ((nRow != -1) && (g_pModel)) {
-        QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(3);
+//    if ((nRow != -1) && (g_pModel)) {
+//        QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(3);
 
-        QString sString = ui->tableViewResult->model()->data(index).toString();
+//        QString sString = ui->tableViewResult->model()->data(index).toString();
 
-        QApplication::clipboard()->setText(sString);
-    }
-}
+//        QApplication::clipboard()->setText(sString);
+//    }
+//}
 
-void SearchStringsWidget::_copyOffset()
-{
-    int nRow = ui->tableViewResult->currentIndex().row();
+//void SearchStringsWidget::_copyOffset()
+//{
+//    int nRow = ui->tableViewResult->currentIndex().row();
 
-    if ((nRow != -1) && (g_pModel)) {
-        QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(0);
+//    if ((nRow != -1) && (g_pModel)) {
+//        QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(0);
 
-        QString sString = ui->tableViewResult->model()->data(index).toString();
+//        QString sString = ui->tableViewResult->model()->data(index).toString();
 
-        QApplication::clipboard()->setText(sString);
-    }
-}
+//        QApplication::clipboard()->setText(sString);
+//    }
+//}
 
-void SearchStringsWidget::_copySize()
-{
-    int nRow = ui->tableViewResult->currentIndex().row();
+//void SearchStringsWidget::_copySize()
+//{
+//    int nRow = ui->tableViewResult->currentIndex().row();
 
-    if ((nRow != -1) && (g_pModel)) {
-        QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(1);
+//    if ((nRow != -1) && (g_pModel)) {
+//        QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(1);
 
-        QString sString = ui->tableViewResult->model()->data(index).toString();
+//        QString sString = ui->tableViewResult->model()->data(index).toString();
 
-        QApplication::clipboard()->setText(sString);
-    }
-}
+//        QApplication::clipboard()->setText(sString);
+//    }
+//}
 
 void SearchStringsWidget::_hex()
 {
@@ -454,9 +430,6 @@ void SearchStringsWidget::deleteOldModel()
 void SearchStringsWidget::registerShortcuts(bool bState)
 {
     if (bState) {
-        if (!shortCuts[SC_COPYSTRING]) shortCuts[SC_COPYSTRING] = new QShortcut(getShortcuts()->getShortcut(X_ID_STRINGS_COPY_STRING), this, SLOT(_copyString()));
-        if (!shortCuts[SC_COPYOFFSET]) shortCuts[SC_COPYOFFSET] = new QShortcut(getShortcuts()->getShortcut(X_ID_STRINGS_COPY_OFFSET), this, SLOT(_copyOffset()));
-        if (!shortCuts[SC_COPYSIZE]) shortCuts[SC_COPYSIZE] = new QShortcut(getShortcuts()->getShortcut(X_ID_STRINGS_COPY_SIZE), this, SLOT(_copySize()));
         if (!shortCuts[SC_HEX]) shortCuts[SC_HEX] = new QShortcut(getShortcuts()->getShortcut(X_ID_STRINGS_FOLLOWIN_HEX), this, SLOT(_hex()));
         if (!shortCuts[SC_DEMANGLE]) shortCuts[SC_DEMANGLE] = new QShortcut(getShortcuts()->getShortcut(X_ID_STRINGS_DEMANGLE), this, SLOT(_demangle()));
         if (!shortCuts[SC_EDITSTRING]) shortCuts[SC_EDITSTRING] = new QShortcut(getShortcuts()->getShortcut(X_ID_STRINGS_EDIT_STRING), this, SLOT(_editString()));
