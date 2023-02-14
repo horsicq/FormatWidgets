@@ -1,4 +1,4 @@
-/* Copyright (c) 2017-2022 hors<horsicq@gmail.com>
+/* Copyright (c) 2017-2023 hors<horsicq@gmail.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,6 +34,7 @@ class DialogSearchStrings : public XShortcutsDialog {
 public:
     explicit DialogSearchStrings(QWidget *pParent);
     ~DialogSearchStrings();
+
     void setData(QIODevice *pDevice, SearchStringsWidget::OPTIONS options, bool bAuto = false);
     void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
 
