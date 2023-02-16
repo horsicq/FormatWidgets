@@ -31,6 +31,7 @@
 
 #include "xformats.h"
 #include "xoptions.h"
+#include "xinfodb.h"
 
 class MultiSearch : public QObject {
     Q_OBJECT
@@ -39,7 +40,8 @@ public:
     enum TYPE {
         TYPE_STRINGS = 0,
         TYPE_SIGNATURES,
-        TYPE_VALUES
+        TYPE_VALUES,
+        TYPE_STRINGS_XINFODB
     };
 
     enum USERROLE {
@@ -82,6 +84,7 @@ public:
     explicit MultiSearch(QObject *pParent = nullptr);
     ~MultiSearch();
     void setSearchData(QIODevice *pDevice, QList<XBinary::MS_RECORD> *pListRecords, OPTIONS options, TYPE type, XBinary::PDSTRUCT *pPdStruct);
+    void setSearchData(QIODevice *pDevice, OPTIONS options, TYPE type, XBinary::PDSTRUCT *pPdStruct);
     void setModelData(QList<XBinary::MS_RECORD> *pListRecords, QStandardItemModel **ppModel, OPTIONS options, TYPE type, XBinary::PDSTRUCT *pPdStruct);
 
     static QList<SIGNATURE_RECORD> loadSignaturesFromFile(QString sFileName);

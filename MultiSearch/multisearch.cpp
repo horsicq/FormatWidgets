@@ -44,6 +44,15 @@ void MultiSearch::setSearchData(QIODevice *pDevice, QList<XBinary::MS_RECORD> *p
     g_pPdStruct = pPdStruct;
 }
 
+void MultiSearch::setSearchData(QIODevice *pDevice, OPTIONS options, TYPE type, XBinary::PDSTRUCT *pPdStruct)
+{
+    this->g_pDevice = pDevice;
+
+    g_options = options;
+    g_type = type;
+    g_pPdStruct = pPdStruct;
+}
+
 void MultiSearch::setModelData(QList<XBinary::MS_RECORD> *pListRecords, QStandardItemModel **ppModel, OPTIONS options, TYPE type, XBinary::PDSTRUCT *pPdStruct)
 {
     this->g_pListRecords = pListRecords;
@@ -137,7 +146,7 @@ void MultiSearch::processSearch()
     g_nFreeIndex = XBinary::getFreeIndex(g_pPdStruct);
     XBinary::setPdStructInit(g_pPdStruct, g_nFreeIndex, 0);
 
-    if (g_type == TYPE_STRINGS) {
+    if ((g_type == TYPE_STRINGS) || (g_type == TYPE_STRINGS_XINFODB)) {
         XBinary binary(g_pDevice);
 
         connect(&binary, SIGNAL(errorMessage(QString)), this, SIGNAL(errorMessage(QString)));
