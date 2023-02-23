@@ -26,5 +26,7 @@ SOURCES += \
     include($$PWD/../../FormatDialogs/xdialogprocess.pri)
 }
 
+
+
 DISTFILES += \
     $$PWD/multisearch.cmake
