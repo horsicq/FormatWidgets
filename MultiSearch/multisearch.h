@@ -31,7 +31,7 @@
 
 #include "xformats.h"
 #include "xoptions.h"
-//#include "xinfodb.h"
+// #include "xinfodb.h"
 
 class MultiSearch : public QObject {
     Q_OBJECT

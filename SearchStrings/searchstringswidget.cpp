@@ -239,9 +239,9 @@ void SearchStringsWidget::on_tableViewResult_customContextMenuRequested(const QP
     contextMenu.exec(ui->tableViewResult->viewport()->mapToGlobal(pos));
 }
 
-//void SearchStringsWidget::_copyString()
+// void SearchStringsWidget::_copyString()
 //{
-//    qint32 nRow = ui->tableViewResult->currentIndex().row();
+//     qint32 nRow = ui->tableViewResult->currentIndex().row();
 
 //    if ((nRow != -1) && (g_pModel)) {
 //        QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(3);
@@ -252,9 +252,9 @@ void SearchStringsWidget::on_tableViewResult_customContextMenuRequested(const QP
 //    }
 //}
 
-//void SearchStringsWidget::_copyOffset()
+// void SearchStringsWidget::_copyOffset()
 //{
-//    int nRow = ui->tableViewResult->currentIndex().row();
+//     int nRow = ui->tableViewResult->currentIndex().row();
 
 //    if ((nRow != -1) && (g_pModel)) {
 //        QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(0);
@@ -265,9 +265,9 @@ void SearchStringsWidget::on_tableViewResult_customContextMenuRequested(const QP
 //    }
 //}
 
-//void SearchStringsWidget::_copySize()
+// void SearchStringsWidget::_copySize()
 //{
-//    int nRow = ui->tableViewResult->currentIndex().row();
+//     int nRow = ui->tableViewResult->currentIndex().row();
 
 //    if ((nRow != -1) && (g_pModel)) {
 //        QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(1);

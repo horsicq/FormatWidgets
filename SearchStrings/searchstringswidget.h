@@ -84,9 +84,9 @@ private slots:
     void on_lineEditFilter_textChanged(const QString &sText);
     void filter(QString sString);
     void on_tableViewResult_customContextMenuRequested(const QPoint &pos);
-//    void _copyString();
-//    void _copyOffset();
-//    void _copySize();
+    //    void _copyString();
+    //    void _copyOffset();
+    //    void _copySize();
     void _hex();
     void _demangle();
     void _editString();

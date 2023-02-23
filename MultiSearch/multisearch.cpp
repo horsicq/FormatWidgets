@@ -112,10 +112,10 @@ MultiSearch::SIGNATURE_RECORD MultiSearch::createSignature(QString sName, QStrin
 
 void MultiSearch::processSignature(MultiSearch::SIGNATURE_RECORD signatureRecord)
 {
-    //#ifdef QT_DEBUG
-    //    QElapsedTimer timer;
-    //    timer.start();
-    //#endif
+    // #ifdef QT_DEBUG
+    //     QElapsedTimer timer;
+    //     timer.start();
+    // #endif
     g_pSemaphore->acquire();
 
     XBinary binary;
@@ -132,10 +132,10 @@ void MultiSearch::processSignature(MultiSearch::SIGNATURE_RECORD signatureRecord
     XBinary::setPdStructCurrent(g_pPdStruct, g_nFreeIndex, signatureRecord.nNumber);
 
     g_pSemaphore->release();
-    //#ifdef QT_DEBUG
-    //    qDebug("%lld
-    //    %s",timer.elapsed(),signatureRecord.sName.toLatin1().data());
-    //#endif
+    // #ifdef QT_DEBUG
+    //     qDebug("%lld
+    //     %s",timer.elapsed(),signatureRecord.sName.toLatin1().data());
+    // #endif
 }
 
 void MultiSearch::processSearch()
