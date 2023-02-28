@@ -50,7 +50,13 @@ void ToolsWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS options, QIODevice
         hexOptions.bMenu_MainHex = true;
     }
 
-    hexOptions.bIsOffsetTitle = options.bOffset;
+    if (options.bOffset) {
+        hexOptions.addressMode = XDeviceTableView::MODE_OFFSET;
+    } else {
+        hexOptions.addressMode = XDeviceTableView::MODE_ADDRESS;
+    }
+
+    //hexOptions.bIsOffsetTitle = options.bOffset;
 
     //    ui->widgetHex->enableReadOnly(false);
 

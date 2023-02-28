@@ -30,7 +30,7 @@ struct OPTIONS {
     qint64 nImageBase;  // TODO default_const
     // TODO Last directory
     int nStartType;
-    bool bOffset;        // Show Offset title no Address
+    bool bOffset;        // Show Offset title no Address TODO remove make auto if Address != nOffset
     QString sTitle;      // For dialogs
     bool bFilter;        // For Archive_widget
     bool bNoWindowOpen;  // For Archive_widget
