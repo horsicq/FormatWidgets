@@ -1130,7 +1130,7 @@ void FormatWidget::_findValue(quint64 nValue, bool bIsBigEndian)
 //     pToolWidget->setMaximumHeight(_nMaxHeight);
 // }
 
-void FormatWidget::hexValueChanged(quint64 nValue)
+void FormatWidget::valueChangedSlot(QVariant varValue)
 {
     XLineEditHEX *pLineEdit = qobject_cast<XLineEditHEX *>(sender());
 
@@ -1140,20 +1140,7 @@ void FormatWidget::hexValueChanged(quint64 nValue)
     int nPosition = pLineEdit->property("POSITION").toInt();
     qint64 nOffset = pLineEdit->property("OFFSET").toLongLong();
 
-    setValue(nValue, nStype, nNdata, nVtype, nPosition, nOffset);
-}
-
-void FormatWidget::textValueChanged(QString sText)
-{
-    XLineEditHEX *pLineEdit = qobject_cast<XLineEditHEX *>(sender());
-
-    int nStype = pLineEdit->property("STYPE").toInt();
-    int nNdata = pLineEdit->property("NDATA").toInt();
-    int nVtype = pLineEdit->property("VTYPE").toInt();
-    int nPosition = pLineEdit->property("POSITION").toInt();
-    qint64 nOffset = pLineEdit->property("OFFSET").toLongLong();
-
-    setValue(sText, nStype, nNdata, nVtype, nPosition, nOffset);
+    setValue(varValue, nStype, nNdata, nVtype, nPosition, nOffset);
 }
 
 void FormatWidget::setEdited(qint64 nDeviceOffset, qint64 nDeviceSize)
@@ -1328,14 +1315,12 @@ bool FormatWidget::createHeaderTable(int nType, QTableWidget *pTableWidget, cons
         ppLineEdits[i]->setProperty("OFFSET", nOffset);
 
         if ((pRecords[i].vtype == FW_DEF::VAL_TYPE_TEXT) || (pRecords[i].vtype == FW_DEF::VAL_TYPE_UUID)) {
-            connect(ppLineEdits[i], SIGNAL(valueChanged(QString)), this, SLOT(textValueChanged(QString)));
-
             if (pRecords[i].nSize != -1) {
                 ppLineEdits[i]->setMaxLength(pRecords[i].nSize);
             }
-        } else {
-            connect(ppLineEdits[i], SIGNAL(valueChanged(quint64)), this, SLOT(hexValueChanged(quint64)));
         }
+
+        connect(ppLineEdits[i], SIGNAL(valueChanged(QVariant)), this, SLOT(valueChangedSlot(QVariant)));
 
         pTableWidget->setCellWidget(i, HEADER_COLUMN_VALUE, ppLineEdits[i]);
 
@@ -1390,10 +1375,11 @@ bool FormatWidget::createListTable(int nType, QTableWidget *pTableWidget, const 
 
         if (pRecords[i].nOffset != -1) {
             if ((pRecords[i].vtype == FW_DEF::VAL_TYPE_TEXT) || (pRecords[i].vtype == FW_DEF::VAL_TYPE_UUID)) {
-                connect(ppLineEdits[i], SIGNAL(valueChanged(QString)), this, SLOT(textValueChanged(QString)));
-            } else {
-                connect(ppLineEdits[i], SIGNAL(valueChanged(quint64)), this, SLOT(hexValueChanged(quint64)));
+                if (pRecords[i].nSize != -1) {
+                    ppLineEdits[i]->setMaxLength(pRecords[i].nSize);
+                }
             }
+            connect(ppLineEdits[i], SIGNAL(valueChanged(QVariant)), this, SLOT(valueChangedSlot(QVariant)));
         } else {
             ppLineEdits[i]->setReadOnly(true);
         }

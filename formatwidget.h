@@ -234,8 +234,7 @@ signals:
     void closeApp();
 
 public slots:
-    void hexValueChanged(quint64 nValue);
-    void textValueChanged(QString sText);
+    void valueChangedSlot(QVariant varValue);
     void setEdited(qint64 nDeviceOffset, qint64 nDeviceSize);
     void allReload(qint64 nDeviceOffset, qint64 nDeviceSize);
     void showHex(qint64 nOffset, qint64 nSize);
