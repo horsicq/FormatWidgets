@@ -56,7 +56,7 @@ void ToolsWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS options, QIODevice
         hexOptions.addressMode = XDeviceTableView::MODE_ADDRESS;
     }
 
-    //hexOptions.bIsOffsetTitle = options.bOffset;
+    // hexOptions.bIsOffsetTitle = options.bOffset;
 
     //    ui->widgetHex->enableReadOnly(false);
 
