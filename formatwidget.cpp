@@ -409,7 +409,7 @@ void FormatWidget::ajustTableView(ProcessData *pProcessData, QStandardItemModel 
 
     DialogProcessData dialogProcessData(this, pProcessData, getGlobalOptions());
 
-    dialogProcessData.showDialogDelay(1000);
+    dialogProcessData.showDialogDelay();
 
     bool bSort = pTableView->isSortingEnabled();
 
@@ -442,7 +442,7 @@ void FormatWidget::ajustTreeView(ProcessData *pProcessData, QStandardItemModel *
 
     DialogProcessData dialogProcessData(this, pProcessData, getGlobalOptions());
 
-    dialogProcessData.showDialogDelay(1000);
+    dialogProcessData.showDialogDelay();
 
     pTreeView->setModel(*ppModel);
 
@@ -455,7 +455,7 @@ void FormatWidget::ajustDialogModel(ProcessData *pProcessData, QStandardItemMode
 {
     DialogProcessData dialogProcessData(this, pProcessData, getGlobalOptions());
 
-    dialogProcessData.showDialogDelay(1000);
+    dialogProcessData.showDialogDelay();
 
     DialogModelInfo dialogModelInfo(this);
 
@@ -552,7 +552,7 @@ void FormatWidget::dumpAll(QTableView *pTableView)
 
             dd.setData(g_pDevice, listRecords, DumpProcess::DT_OFFSET);
 
-            dd.showDialogDelay(1000);
+            dd.showDialogDelay();
         }
     }
 }
@@ -1243,7 +1243,7 @@ void FormatWidget::dumpRegion(qint64 nOffset, qint64 nSize, QString sName)
     if (!sFileName.isEmpty()) {
         DialogDumpProcess dd(this, getDevice(), nOffset, nSize, sFileName, DumpProcess::DT_OFFSET);
 
-        dd.showDialogDelay(1000);
+        dd.showDialogDelay();
     }
 }
 

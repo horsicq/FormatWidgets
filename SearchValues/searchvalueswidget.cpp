@@ -138,11 +138,11 @@ void SearchValuesWidget::search()
 
         DialogMultiSearchProcess dsp(pParent);
         dsp.processSearch(g_pDevice, &listRecords, options, MultiSearch::TYPE_VALUES);
-        dsp.showDialogDelay(1000);
+        dsp.showDialogDelay();
 
         DialogMultiSearchProcess dmp(pParent);
         dmp.processModel(&listRecords, &g_pModel, options, MultiSearch::TYPE_VALUES);
-        dmp.showDialogDelay(1000);
+        dmp.showDialogDelay();
 
         ui->tableViewResult->setModel(g_pModel);
 

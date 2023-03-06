@@ -1,4 +1,4 @@
-/* Copyright (c) 2019-2022 hors<horsicq@gmail.com>
+/* Copyright (c) 2019-2023 hors<horsicq@gmail.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -269,11 +269,11 @@ void SearchSignaturesWidget::search()
 
         DialogMultiSearchProcess dsp(pParent);
         dsp.processSearch(g_pDevice, &listRecords, options, MultiSearch::TYPE_SIGNATURES);
-        dsp.showDialogDelay(1000);
+        dsp.showDialogDelay();
 
         DialogMultiSearchProcess dmp(pParent);
         dmp.processModel(&listRecords, &g_pModel, options, MultiSearch::TYPE_SIGNATURES);
-        dmp.showDialogDelay(1000);
+        dmp.showDialogDelay();
 
         ui->tableViewResult->setModel(g_pModel);
 

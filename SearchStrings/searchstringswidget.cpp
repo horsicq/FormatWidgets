@@ -394,11 +394,11 @@ void SearchStringsWidget::search()
 
             DialogMultiSearchProcess dsp(pParent);
             dsp.processSearch(g_pDevice, &listRecords, options, MultiSearch::TYPE_STRINGS);
-            dsp.showDialogDelay(1000);
+            dsp.showDialogDelay();
 
             DialogMultiSearchProcess dmp(pParent);
             dmp.processModel(&listRecords, &g_pModel, options, MultiSearch::TYPE_STRINGS);
-            dmp.showDialogDelay(1000);
+            dmp.showDialogDelay();
 
             g_pFilter->setSourceModel(g_pModel);
             ui->tableViewResult->setModel(g_pFilter);

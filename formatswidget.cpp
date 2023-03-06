@@ -984,7 +984,7 @@ void FormatsWidget::on_pushButtonUnpack_clicked()
 
         dialogUnpackFile.setData(g_sFileName, sDirectoryName);
 
-        dialogUnpackFile.showDialogDelay(1000);
+        dialogUnpackFile.showDialogDelay();
     }
 }
 
