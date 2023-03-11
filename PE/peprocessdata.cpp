@@ -1278,13 +1278,15 @@ void PEProcessData::adjustModel(QStandardItemModel *pModel)
         XOptions::setModelTextAlignment(pModel, 0, Qt::AlignRight | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 1, Qt::AlignRight | Qt::AlignVCenter);
     } else if (g_nType == SPE::TYPE_RESOURCES) {
-        XOptions::setModelTextAlignment(pModel, 0, Qt::AlignRight | Qt::AlignVCenter);
-        XOptions::setModelTextAlignment(pModel, 1, Qt::AlignLeft | Qt::AlignVCenter);
-        XOptions::setModelTextAlignment(pModel, 2, Qt::AlignLeft | Qt::AlignVCenter);
-        XOptions::setModelTextAlignment(pModel, 3, Qt::AlignLeft | Qt::AlignVCenter);
-        XOptions::setModelTextAlignment(pModel, 4, Qt::AlignRight | Qt::AlignVCenter);
-        XOptions::setModelTextAlignment(pModel, 5, Qt::AlignRight | Qt::AlignVCenter);
-        XOptions::setModelTextAlignment(pModel, 6, Qt::AlignRight | Qt::AlignVCenter);
+        if (!g_varInfo.toBool()) {
+            XOptions::setModelTextAlignment(pModel, 0, Qt::AlignRight | Qt::AlignVCenter);
+            XOptions::setModelTextAlignment(pModel, 1, Qt::AlignLeft | Qt::AlignVCenter);
+            XOptions::setModelTextAlignment(pModel, 2, Qt::AlignLeft | Qt::AlignVCenter);
+            XOptions::setModelTextAlignment(pModel, 3, Qt::AlignLeft | Qt::AlignVCenter);
+            XOptions::setModelTextAlignment(pModel, 4, Qt::AlignRight | Qt::AlignVCenter);
+            XOptions::setModelTextAlignment(pModel, 5, Qt::AlignRight | Qt::AlignVCenter);
+            XOptions::setModelTextAlignment(pModel, 6, Qt::AlignRight | Qt::AlignVCenter);
+        }
     } else if (g_nType == SPE::TYPE_RICH) {
         XOptions::setModelTextAlignment(pModel, 0, Qt::AlignRight | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 1, Qt::AlignRight | Qt::AlignVCenter);
