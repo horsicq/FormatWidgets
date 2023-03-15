@@ -379,7 +379,7 @@ void MultiSearch::processModel()
                 pItem->setData(record.sInfo, Qt::UserRole + USERROLE_INFO);
                 pItem->setData(nAddress, Qt::UserRole + USERROLE_ADDRESS);
 
-                (*g_ppModel)->setItem(i, 1, pItem);
+                (*g_ppModel)->setItem(i, 0, pItem);
             }
             {
                 QStandardItem *pItem = new QStandardItem;
@@ -388,7 +388,7 @@ void MultiSearch::processModel()
                     pItem->setText(XBinary::valueToHex(modeAddress, nAddress));
                 }
 
-                (*g_ppModel)->setItem(i, 0, pItem);
+                (*g_ppModel)->setItem(i, 1, pItem);
             }
             {
                 QString sName = record.sInfo;
