@@ -118,6 +118,11 @@ FORMS += \
     include($$PWD/../XExtractorWidget/xextractorwidget.pri)
 }
 
+!contains(XCONFIG, xvisualizationwidget) {
+    XCONFIG += xvisualizationwidget
+    include($$PWD/../XVisualizationWidget/xvisualizationwidget.pri)
+}
+
 DISTFILES += \
     $$PWD/LICENSE \
     $$PWD/README.md \
