@@ -80,6 +80,7 @@ void DEXWidget::reload()
         setFileType(dex.getFileType());
 
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_INFO, tr("Info")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_VISUALIZATION, tr("Visualization")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_VIRUSTOTAL, "VirusTotal"));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_HEX, tr("Hex")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_HASH, tr("Hash")));
@@ -384,6 +385,11 @@ void DEXWidget::reloadData()
         if (nType == SDEX::TYPE_INFO) {
             if (!isInitPresent(sInit)) {
                 ui->widgetInfo->setData(getDevice(), dex.getFileType(), "Info", true);
+            }
+        } else if (nType == SDEX::TYPE_VISUALIZATION) {
+            if (!isInitPresent(sInit)) {
+                // TODO
+//                ui->widgetVisualization->setData(getDevice());
             }
         } else if (nType == SDEX::TYPE_VIRUSTOTAL) {
             if (!isInitPresent(sInit)) {

@@ -77,6 +77,7 @@ void LEWidget::reload()
         setFileType(le.getFileType());
 
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_INFO, tr("Info")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_VISUALIZATION, tr("Visualization")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_VIRUSTOTAL, "VirusTotal"));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_HEX, tr("Hex")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_DISASM, tr("Disasm")));
@@ -496,6 +497,11 @@ void LEWidget::reloadData()
         if (nType == SLE::TYPE_INFO) {
             if (!isInitPresent(sInit)) {
                 ui->widgetInfo->setData(getDevice(), le.getFileType(), "Info", true);
+            }
+        } else if (nType == SLE::TYPE_VISUALIZATION) {
+            if (!isInitPresent(sInit)) {
+                // TODO
+//                ui->widgetVisualization->setData(getDevice());
             }
         } else if (nType == SLE::TYPE_VIRUSTOTAL) {
             if (!isInitPresent(sInit)) {

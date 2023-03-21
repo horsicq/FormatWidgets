@@ -79,6 +79,7 @@ void ELFWidget::reload()
         setFileType(elf.getFileType());
 
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_INFO, tr("Info")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_VISUALIZATION, tr("Visualization")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_VIRUSTOTAL, "VirusTotal"));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_HEX, tr("Hex")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_DISASM, tr("Disasm")));
@@ -358,6 +359,11 @@ void ELFWidget::reloadData()
         if (nType == SELF::TYPE_INFO) {
             if (!isInitPresent(sInit)) {
                 ui->widgetInfo->setData(getDevice(), elf.getFileType(), "Info", true);
+            }
+        } else if (nType == SELF::TYPE_VISUALIZATION) {
+            if (!isInitPresent(sInit)) {
+                // TODO
+//                ui->widgetVisualization->setData(getDevice());
             }
         } else if (nType == SELF::TYPE_VIRUSTOTAL) {
             if (!isInitPresent(sInit)) {

@@ -27,6 +27,7 @@
 namespace SDEX {
 enum TYPE {
     TYPE_INFO = 0,
+    TYPE_VISUALIZATION,
     TYPE_VIRUSTOTAL,
     TYPE_HEX,
     TYPE_HASH,

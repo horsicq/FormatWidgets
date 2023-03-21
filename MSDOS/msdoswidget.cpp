@@ -1,4 +1,4 @@
-/* Copyright (c) 2017-2022 hors<horsicq@gmail.com>
+/* Copyright (c) 2017-2023 hors<horsicq@gmail.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -75,6 +75,7 @@ void MSDOSWidget::reload()
         setFileType(msdos.getFileType());
 
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_INFO, tr("Info")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_VISUALIZATION, tr("Visualization")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_VIRUSTOTAL, "VirusTotal"));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_HEX, tr("Hex")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_DISASM, tr("Disasm")));
@@ -284,6 +285,11 @@ void MSDOSWidget::reloadData()
         if (nType == SMSDOS::TYPE_INFO) {
             if (!isInitPresent(sInit)) {
                 ui->widgetInfo->setData(getDevice(), msdos.getFileType(), "Info", true);
+            }
+        } else if (nType == SMSDOS::TYPE_VISUALIZATION) {
+            if (!isInitPresent(sInit)) {
+                // TODO
+//                ui->widgetVisualization->setData(getDevice());
             }
         } else if (nType == SMSDOS::TYPE_VIRUSTOTAL) {
             if (!isInitPresent(sInit)) {

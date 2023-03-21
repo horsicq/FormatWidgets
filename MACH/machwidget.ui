@@ -163,6 +163,8 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="page_Visualization">
+      </widget>
       <widget class="QWidget" name="page_VirusTotal">
        <layout class="QVBoxLayout" name="verticalLayout_55_2">
         <property name="leftMargin">

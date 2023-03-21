@@ -107,6 +107,7 @@ void PEWidget::reload()
         setFileType(pe.getFileType());
 
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_INFO, tr("Info")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_VISUALIZATION, tr("Visualization")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_VIRUSTOTAL, "VirusTotal"));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_HEX, tr("Hex")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_DISASM, tr("Disasm")));
@@ -1435,6 +1436,10 @@ void PEWidget::reloadData()
         if (nType == SPE::TYPE_INFO) {
             if (!isInitPresent(sInit)) {
                 ui->widgetInfo->setData(getDevice(), pe.getFileType(), "Info", true);
+            }
+        } else if (nType == SPE::TYPE_VISUALIZATION) {
+            if (!isInitPresent(sInit)) {
+                ui->widgetVisualization->setData(getDevice(), pe.getFileType(), true);
             }
         } else if (nType == SPE::TYPE_VIRUSTOTAL) {
             if (!isInitPresent(sInit)) {

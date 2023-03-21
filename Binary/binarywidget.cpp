@@ -70,6 +70,7 @@ void BinaryWidget::reload()
         setFileType(binary.getFileType());
 
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_INFO, tr("Info")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_VISUALIZATION, tr("Visualization")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_VIRUSTOTAL, "VirusTotal"));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_HEX, tr("Hex")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_DISASM, tr("Disasm")));
@@ -185,6 +186,11 @@ void BinaryWidget::reloadData()
         if (nType == SBINARY::TYPE_INFO) {
             if (!isInitPresent(sInit)) {
                 ui->widgetInfo->setData(getDevice(), fileType, "Info", true);
+            }
+        } else if (nType == SBINARY::TYPE_VISUALIZATION) {
+            if (!isInitPresent(sInit)) {
+                // TODO
+//                ui->widgetVisualization->setData(getDevice());
             }
         } else if (nType == SBINARY::TYPE_VIRUSTOTAL) {
             if (!isInitPresent(sInit)) {
