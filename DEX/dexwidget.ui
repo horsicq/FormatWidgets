@@ -103,7 +103,7 @@
      </widget>
      <widget class="QStackedWidget" name="stackedWidgetInfo">
       <property name="currentIndex">
-       <number>13</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="page_Info">
        <layout class="QVBoxLayout" name="verticalLayout_16">
@@ -125,6 +125,23 @@
        </layout>
       </widget>
       <widget class="QWidget" name="page_Visualization">
+       <layout class="QVBoxLayout" name="verticalLayout_19">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="XVisualizationWidget" name="widgetVisualization" native="true"/>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="page_VirusTotal">
        <layout class="QVBoxLayout" name="verticalLayout_16_2">
@@ -840,15 +857,21 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>ToolsWidget</class>
+   <class>XFileInfoWidget</class>
    <extends>QWidget</extends>
-   <header>toolswidget.h</header>
+   <header>xfileinfowidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>SearchStringsWidget</class>
    <extends>QWidget</extends>
    <header>searchstringswidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ToolsWidget</class>
+   <extends>QWidget</extends>
+   <header>toolswidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
@@ -882,12 +905,6 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>XFileInfoWidget</class>
-   <extends>QWidget</extends>
-   <header>xfileinfowidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>XVirusTotalWidget</class>
    <extends>QWidget</extends>
    <header>xvirustotalwidget.h</header>
@@ -903,6 +920,12 @@
    <class>SearchValuesWidget</class>
    <extends>QWidget</extends>
    <header>searchvalueswidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>XVisualizationWidget</class>
+   <extends>QWidget</extends>
+   <header>xvisualizationwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

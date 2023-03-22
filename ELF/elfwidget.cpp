@@ -362,8 +362,7 @@ void ELFWidget::reloadData()
             }
         } else if (nType == SELF::TYPE_VISUALIZATION) {
             if (!isInitPresent(sInit)) {
-                // TODO
-//                ui->widgetVisualization->setData(getDevice());
+                ui->widgetVisualization->setData(getDevice(), elf.getFileType(), true);
             }
         } else if (nType == SELF::TYPE_VIRUSTOTAL) {
             if (!isInitPresent(sInit)) {

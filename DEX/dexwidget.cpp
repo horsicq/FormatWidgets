@@ -388,8 +388,7 @@ void DEXWidget::reloadData()
             }
         } else if (nType == SDEX::TYPE_VISUALIZATION) {
             if (!isInitPresent(sInit)) {
-                // TODO
-//                ui->widgetVisualization->setData(getDevice());
+                ui->widgetVisualization->setData(getDevice(), dex.getFileType(), true);
             }
         } else if (nType == SDEX::TYPE_VIRUSTOTAL) {
             if (!isInitPresent(sInit)) {

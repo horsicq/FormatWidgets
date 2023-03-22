@@ -1677,8 +1677,7 @@ void MACHWidget::reloadData()
             }
         } else if (nType == SMACH::TYPE_VISUALIZATION) {
             if (!isInitPresent(sInit)) {
-                // TODO
-//                ui->widgetVisualization->setData(getDevice());
+                ui->widgetVisualization->setData(getDevice(), mach.getFileType(), true);
             }
         } else if (nType == SMACH::TYPE_VIRUSTOTAL) {
             if (!isInitPresent(sInit)) {

@@ -189,8 +189,7 @@ void BinaryWidget::reloadData()
             }
         } else if (nType == SBINARY::TYPE_VISUALIZATION) {
             if (!isInitPresent(sInit)) {
-                // TODO
-//                ui->widgetVisualization->setData(getDevice());
+                ui->widgetVisualization->setData(getDevice(), fileType, true);
             }
         } else if (nType == SBINARY::TYPE_VIRUSTOTAL) {
             if (!isInitPresent(sInit)) {

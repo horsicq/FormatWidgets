@@ -500,8 +500,7 @@ void LEWidget::reloadData()
             }
         } else if (nType == SLE::TYPE_VISUALIZATION) {
             if (!isInitPresent(sInit)) {
-                // TODO
-//                ui->widgetVisualization->setData(getDevice());
+                ui->widgetVisualization->setData(getDevice(), le.getFileType(), true);
             }
         } else if (nType == SLE::TYPE_VIRUSTOTAL) {
             if (!isInitPresent(sInit)) {

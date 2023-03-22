@@ -501,8 +501,7 @@ void NEWidget::reloadData()
             }
         } else if (nType == SNE::TYPE_VISUALIZATION) {
             if (!isInitPresent(sInit)) {
-                // TODO
-//                ui->widgetVisualization->setData(getDevice());
+                ui->widgetVisualization->setData(getDevice(), ne.getFileType(), true);
             }
         } else if (nType == SNE::TYPE_VIRUSTOTAL) {
             if (!isInitPresent(sInit)) {

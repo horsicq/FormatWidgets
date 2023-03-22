@@ -164,6 +164,23 @@
        </layout>
       </widget>
       <widget class="QWidget" name="page_Visualization">
+       <layout class="QVBoxLayout" name="verticalLayout_13">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="XVisualizationWidget" name="widgetVisualization" native="true"/>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="page_VirusTotal">
        <layout class="QVBoxLayout" name="verticalLayout_12_2">
@@ -450,15 +467,21 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>ToolsWidget</class>
+   <class>XFileInfoWidget</class>
    <extends>QWidget</extends>
-   <header>toolswidget.h</header>
+   <header>xfileinfowidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>SearchStringsWidget</class>
    <extends>QWidget</extends>
    <header>searchstringswidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ToolsWidget</class>
+   <extends>QWidget</extends>
+   <header>toolswidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
@@ -492,21 +515,15 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>XHashWidget</class>
-   <extends>QWidget</extends>
-   <header>xhashwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>SearchSignaturesWidget</class>
    <extends>QWidget</extends>
    <header>searchsignatureswidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>XFileInfoWidget</class>
+   <class>XHashWidget</class>
    <extends>QWidget</extends>
-   <header>xfileinfowidget.h</header>
+   <header>xhashwidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
@@ -525,6 +542,12 @@
    <class>SearchValuesWidget</class>
    <extends>QWidget</extends>
    <header>searchvalueswidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>XVisualizationWidget</class>
+   <extends>QWidget</extends>
+   <header>xvisualizationwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
