@@ -115,7 +115,7 @@ private:
     bool g_bInit;
     QStandardItemModel *g_pOldModel;
     QFutureWatcher<void> g_watcher;
-    QShortcut *shortCuts[__SC_SIZE];
+    QShortcut *g_shortCuts[__SC_SIZE];
     bool g_bIsReadonly;
 };
 

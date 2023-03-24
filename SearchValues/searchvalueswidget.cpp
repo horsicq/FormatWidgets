@@ -32,7 +32,7 @@ SearchValuesWidget::SearchValuesWidget(QWidget *pParent) : XShortcutsWidget(pPar
     g_valueType = XBinary::VT_UNKNOWN;
     g_bIsBigEndian = false;
 
-    memset(shortCuts, 0, sizeof shortCuts);
+    memset(g_shortCuts, 0, sizeof g_shortCuts);
 
     ui->tableViewResult->installEventFilter(this);
 }
@@ -169,9 +169,9 @@ void SearchValuesWidget::registerShortcuts(bool bState)
         // if (!shortCuts[SC_COPYSTRING]) shortCuts[SC_COPYSTRING] = new QShortcut(getShortcuts()->getShortcut(X_ID_STRINGS_COPY_STRING), this, SLOT(_copyString()));
     } else {
         for (qint32 i = 0; i < __SC_SIZE; i++) {
-            if (shortCuts[i]) {
-                delete shortCuts[i];
-                shortCuts[i] = nullptr;
+            if (g_shortCuts[i]) {
+                delete g_shortCuts[i];
+                g_shortCuts[i] = nullptr;
             }
         }
     }

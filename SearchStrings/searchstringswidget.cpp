@@ -46,7 +46,7 @@ SearchStringsWidget::SearchStringsWidget(QWidget *pParent) : XShortcutsWidget(pP
     ui->spinBoxMinLength->setMinimum(2);
     ui->spinBoxMinLength->setValue(5);
 
-    memset(shortCuts, 0, sizeof shortCuts);
+    memset(g_shortCuts, 0, sizeof g_shortCuts);
 
 #if (QT_VERSION_MAJOR < 6) || defined(QT_CORE5COMPAT_LIB)
     ui->comboBoxANSICodec->addItem("");
@@ -430,14 +430,14 @@ void SearchStringsWidget::deleteOldModel()
 void SearchStringsWidget::registerShortcuts(bool bState)
 {
     if (bState) {
-        if (!shortCuts[SC_HEX]) shortCuts[SC_HEX] = new QShortcut(getShortcuts()->getShortcut(X_ID_STRINGS_FOLLOWIN_HEX), this, SLOT(_hex()));
-        if (!shortCuts[SC_DEMANGLE]) shortCuts[SC_DEMANGLE] = new QShortcut(getShortcuts()->getShortcut(X_ID_STRINGS_DEMANGLE), this, SLOT(_demangle()));
-        if (!shortCuts[SC_EDITSTRING]) shortCuts[SC_EDITSTRING] = new QShortcut(getShortcuts()->getShortcut(X_ID_STRINGS_EDIT_STRING), this, SLOT(_editString()));
+        if (!g_shortCuts[SC_HEX]) g_shortCuts[SC_HEX] = new QShortcut(getShortcuts()->getShortcut(X_ID_STRINGS_FOLLOWIN_HEX), this, SLOT(_hex()));
+        if (!g_shortCuts[SC_DEMANGLE]) g_shortCuts[SC_DEMANGLE] = new QShortcut(getShortcuts()->getShortcut(X_ID_STRINGS_DEMANGLE), this, SLOT(_demangle()));
+        if (!g_shortCuts[SC_EDITSTRING]) g_shortCuts[SC_EDITSTRING] = new QShortcut(getShortcuts()->getShortcut(X_ID_STRINGS_EDIT_STRING), this, SLOT(_editString()));
     } else {
         for (qint32 i = 0; i < __SC_SIZE; i++) {
-            if (shortCuts[i]) {
-                delete shortCuts[i];
-                shortCuts[i] = nullptr;
+            if (g_shortCuts[i]) {
+                delete g_shortCuts[i];
+                g_shortCuts[i] = nullptr;
             }
         }
     }

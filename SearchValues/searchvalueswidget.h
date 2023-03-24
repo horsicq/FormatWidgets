@@ -92,7 +92,7 @@ private:
     QStandardItemModel *g_pModel;
     QStandardItemModel *g_pOldModel;
     QFutureWatcher<void> g_watcher;
-    QShortcut *shortCuts[__SC_SIZE];
+    QShortcut *g_shortCuts[__SC_SIZE];
 
     QVariant g_varValue;
     XBinary::VT g_valueType;
