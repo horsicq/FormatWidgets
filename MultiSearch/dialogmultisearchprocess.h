@@ -21,10 +21,8 @@
 #ifndef DIALOGMULTISEARCHSPROCESS_H
 #define DIALOGMULTISEARCHSPROCESS_H
 
-#include <QDialog>
 #include <QIODevice>
 #include <QMessageBox>
-#include <QThread>
 
 #include "multisearch.h"
 #include "xdialogprocess.h"
