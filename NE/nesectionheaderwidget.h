@@ -1,4 +1,4 @@
-/* Copyright (c) 2017-2022 hors<horsicq@gmail.com>
+/* Copyright (c) 2017-2023 hors<horsicq@gmail.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -40,6 +40,7 @@ public:
     NESectionHeaderWidget(QWidget *pParent = nullptr);
     NESectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent = nullptr);
     ~NESectionHeaderWidget();
+
     virtual void clear();
     virtual void reload();
 
