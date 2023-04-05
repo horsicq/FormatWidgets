@@ -361,7 +361,7 @@ void FormatsWidget::on_pushButtonHexEntryPoint_clicked()
             //        hexOptions.sBackupFileName=XBinary::getBackupName(&file);
             hexOptions.nStartSelectionOffset = XFormats::getEntryPointOffset(getCurrentFileType(), &file);
 
-            DialogHexView dialogHex(this, &file, hexOptions, &file);
+            DialogHexView dialogHex(this, &file, hexOptions, nullptr, &file); // TODO XINfoDB
             dialogHex.setGlobal(getShortcuts(), getGlobalOptions());
 
             dialogHex.exec();
@@ -877,7 +877,7 @@ void FormatsWidget::on_pushButtonHex_clicked()
         if (XBinary::tryToOpen(&file)) {
             XHexView::OPTIONS hexOptions = {};
 
-            DialogHexView dialogHex(this, &file, hexOptions, &file);
+            DialogHexView dialogHex(this, &file, hexOptions, nullptr, &file);  // TODO XINfoDB
             dialogHex.setGlobal(getShortcuts(), getGlobalOptions());
 
             dialogHex.exec();

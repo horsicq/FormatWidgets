@@ -239,7 +239,7 @@ void SearchSignaturesWidget::_hex()
         XIODevice *pSubDevice = dynamic_cast<XIODevice *>(g_pDevice);
 
         if (pSubDevice) {
-            nOffset += pSubDevice->getInitOffset();
+            nOffset += pSubDevice->getInitLocation();
         }
 
         emit showHex(nOffset, nSize);

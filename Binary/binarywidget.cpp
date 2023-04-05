@@ -201,7 +201,7 @@ void BinaryWidget::reloadData()
                 options.bMenu_Disasm = true;
                 options.bMenu_MemoryMap = true;
 
-                ui->widgetHex->setData(getDevice(), options);
+                ui->widgetHex->setData(getDevice(), options, getXInfoDB());
                 ui->widgetHex->setBackupDevice(getBackupDevice());
                 //                ui->widgetHex->setBackupFileName(getOptions().sBackupFileName);
                 //                ui->widgetHex->enableReadOnly(false);

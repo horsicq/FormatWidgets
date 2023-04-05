@@ -35,6 +35,7 @@ class DialogELF : public XShortcutsDialog {
 public:
     explicit DialogELF(QWidget *pParent = nullptr);
     ~DialogELF();
+
     void setData(QIODevice *pDevice, FW_DEF::OPTIONS options);
     void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
 
