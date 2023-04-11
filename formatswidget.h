@@ -115,6 +115,9 @@ private slots:
     void on_pushButtonArchive_clicked();
     void on_pushButtonBinary_clicked();
 
+    void showType(SBINARY::TYPE type);
+    static qint32 convertType(XBinary::FT fileType, SBINARY::TYPE type);
+
     void showMSDOS(SMSDOS::TYPE type);
     void showLE(SLE::TYPE type);
     void showNE(SNE::TYPE type);

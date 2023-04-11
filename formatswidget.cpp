@@ -152,6 +152,12 @@ void FormatsWidget::reload()
         ui->lineEditMode->setText(XBinary::modeIdToString(memoryMap.mode));
         ui->lineEditType->setText(memoryMap.sType);
 
+        if (fileType == XBinary::FT_DEX) {
+            ui->pushButtonDisasm->show();
+        } else {
+            ui->pushButtonDisasm->hide();
+        }
+
         if (fileType == XBinary::FT_BINARY) {
             XBinary binary(&file);
 
@@ -329,25 +335,7 @@ void FormatsWidget::scan()
 
 void FormatsWidget::on_pushButtonDisasm_clicked()
 {
-    if (g_sFileName != "") {
-        QFile file;
-        file.setFileName(g_sFileName);
-
-        if (file.open(QIODevice::ReadOnly)) {
-            DialogMultiDisasm dialogDisasm(this);  // TODO File_Type
-
-            XMultiDisasmWidget::OPTIONS options = {};
-            options.fileType = getCurrentFileType();
-            options.nInitAddress = ui->lineEditEntryPoint->getValue();
-
-            dialogDisasm.setData(&file, options);
-            dialogDisasm.setGlobal(getShortcuts(), getGlobalOptions());
-
-            dialogDisasm.exec();
-
-            file.close();
-        }
-    }
+    showType(SBINARY::TYPE_DISASM);
 }
 
 void FormatsWidget::on_pushButtonHexEntryPoint_clicked()
@@ -373,22 +361,7 @@ void FormatsWidget::on_pushButtonHexEntryPoint_clicked()
 
 void FormatsWidget::on_pushButtonMemoryMap_clicked()
 {
-    if (g_sFileName != "") {
-        QFile file;
-        file.setFileName(g_sFileName);
-
-        if (file.open(QIODevice::ReadOnly)) {
-            XMemoryMapWidget::OPTIONS options = {};
-            options.fileType = getCurrentFileType();
-
-            DialogMemoryMap dialogMemoryMap(this, &file, options);
-            dialogMemoryMap.setGlobal(getShortcuts(), getGlobalOptions());
-
-            dialogMemoryMap.exec();
-
-            file.close();
-        }
-    }
+    showType(SBINARY::TYPE_MEMORYMAP);
 }
 
 void FormatsWidget::on_pushButtonPEExport_clicked()
@@ -706,6 +679,139 @@ void FormatsWidget::on_pushButtonBinary_clicked()
     showBinary(SBINARY::TYPE_HEX);
 }
 
+void FormatsWidget::showType(SBINARY::TYPE type)
+{
+    XBinary::FT fileType = getCurrentFileType();
+    qint32 nCurrentType = convertType(fileType, type);
+
+    if (fileType == XBinary::FT_MSDOS) {
+        showMSDOS((SMSDOS::TYPE)nCurrentType);
+    } else if ((fileType == XBinary::FT_LE) || (fileType == XBinary::FT_LX)) {
+        showLE((SLE::TYPE)nCurrentType);
+    } else if (fileType == XBinary::FT_NE) {
+        showNE((SNE::TYPE)nCurrentType);
+    } else if ((fileType == XBinary::FT_PE32) || (fileType == XBinary::FT_PE64)) {
+        showPE((SPE::TYPE)nCurrentType);
+    } else if ((fileType == XBinary::FT_ELF32) || (fileType == XBinary::FT_ELF64)) {
+        showELF((SELF::TYPE)nCurrentType);
+    } else if ((fileType == XBinary::FT_MACHO32) || (fileType == XBinary::FT_MACHO64)) {
+        showMACH((SMACH::TYPE)nCurrentType);
+    } else if (fileType == XBinary::FT_DEX) {
+        showDEX((SDEX::TYPE)nCurrentType);
+    } else {
+        showBinary(type);
+    }
+}
+
+qint32 FormatsWidget::convertType(XBinary::FT fileType, SBINARY::TYPE type)
+{
+    qint32 nResult = 0;
+
+    if (fileType == XBinary::FT_MSDOS) {
+        if (type == SBINARY::TYPE_INFO) nResult = SMSDOS::TYPE_INFO;
+        else if (type == SBINARY::TYPE_VISUALIZATION) nResult = SMSDOS::TYPE_VISUALIZATION;
+        else if (type == SBINARY::TYPE_VIRUSTOTAL) nResult = SMSDOS::TYPE_VIRUSTOTAL;
+        else if (type == SBINARY::TYPE_HEX) nResult = SMSDOS::TYPE_HEX;
+        else if (type == SBINARY::TYPE_DISASM) nResult = SMSDOS::TYPE_DISASM;
+        else if (type == SBINARY::TYPE_HASH) nResult = SMSDOS::TYPE_HASH;
+        else if (type == SBINARY::TYPE_STRINGS) nResult = SMSDOS::TYPE_STRINGS;
+        else if (type == SBINARY::TYPE_SIGNATURES) nResult = SMSDOS::TYPE_SIGNATURES;
+        else if (type == SBINARY::TYPE_MEMORYMAP) nResult = SMSDOS::TYPE_MEMORYMAP;
+        else if (type == SBINARY::TYPE_ENTROPY) nResult = SMSDOS::TYPE_ENTROPY;
+        else if (type == SBINARY::TYPE_HEURISTICSCAN) nResult = SMSDOS::TYPE_HEURISTICSCAN;
+        else if (type == SBINARY::TYPE_EXTRACTOR) nResult = SMSDOS::TYPE_EXTRACTOR;
+        else if (type == SBINARY::TYPE_SEARCH) nResult = SMSDOS::TYPE_SEARCH;
+    } else if ((fileType == XBinary::FT_LE) || (fileType == XBinary::FT_LX)) {
+        if (type == SBINARY::TYPE_INFO) nResult = SLE::TYPE_INFO;
+        else if (type == SBINARY::TYPE_VISUALIZATION) nResult = SLE::TYPE_VISUALIZATION;
+        else if (type == SBINARY::TYPE_VIRUSTOTAL) nResult = SLE::TYPE_VIRUSTOTAL;
+        else if (type == SBINARY::TYPE_HEX) nResult = SLE::TYPE_HEX;
+        else if (type == SBINARY::TYPE_DISASM) nResult = SLE::TYPE_DISASM;
+        else if (type == SBINARY::TYPE_HASH) nResult = SLE::TYPE_HASH;
+        else if (type == SBINARY::TYPE_STRINGS) nResult = SLE::TYPE_STRINGS;
+        else if (type == SBINARY::TYPE_SIGNATURES) nResult = SLE::TYPE_SIGNATURES;
+        else if (type == SBINARY::TYPE_MEMORYMAP) nResult = SLE::TYPE_MEMORYMAP;
+        else if (type == SBINARY::TYPE_ENTROPY) nResult = SLE::TYPE_ENTROPY;
+        else if (type == SBINARY::TYPE_HEURISTICSCAN) nResult = SLE::TYPE_HEURISTICSCAN;
+//        else if (type == SBINARY::TYPE_EXTRACTOR) nResult = SLE::TYPE_EXTRACTOR;
+//        else if (type == SBINARY::TYPE_SEARCH) nResult = SLE::TYPE_SEARCH;
+    } else if (fileType == XBinary::FT_NE) {
+        if (type == SBINARY::TYPE_INFO) nResult = SNE::TYPE_INFO;
+        else if (type == SBINARY::TYPE_VISUALIZATION) nResult = SNE::TYPE_VISUALIZATION;
+        else if (type == SBINARY::TYPE_VIRUSTOTAL) nResult = SNE::TYPE_VIRUSTOTAL;
+        else if (type == SBINARY::TYPE_HEX) nResult = SNE::TYPE_HEX;
+        else if (type == SBINARY::TYPE_DISASM) nResult = SNE::TYPE_DISASM;
+        else if (type == SBINARY::TYPE_HASH) nResult = SNE::TYPE_HASH;
+        else if (type == SBINARY::TYPE_STRINGS) nResult = SNE::TYPE_STRINGS;
+        else if (type == SBINARY::TYPE_SIGNATURES) nResult = SNE::TYPE_SIGNATURES;
+        else if (type == SBINARY::TYPE_MEMORYMAP) nResult = SNE::TYPE_MEMORYMAP;
+        else if (type == SBINARY::TYPE_ENTROPY) nResult = SNE::TYPE_ENTROPY;
+        else if (type == SBINARY::TYPE_HEURISTICSCAN) nResult = SNE::TYPE_HEURISTICSCAN;
+//        else if (type == SBINARY::TYPE_EXTRACTOR) nResult = SNE::TYPE_EXTRACTOR;
+//        else if (type == SBINARY::TYPE_SEARCH) nResult = SNE::TYPE_SEARCH;
+    } else if ((fileType == XBinary::FT_PE32) || (fileType == XBinary::FT_PE64)) {
+        if (type == SBINARY::TYPE_INFO) nResult = SPE::TYPE_INFO;
+        else if (type == SBINARY::TYPE_VISUALIZATION) nResult = SPE::TYPE_VISUALIZATION;
+        else if (type == SBINARY::TYPE_VIRUSTOTAL) nResult = SPE::TYPE_VIRUSTOTAL;
+        else if (type == SBINARY::TYPE_HEX) nResult = SPE::TYPE_HEX;
+        else if (type == SBINARY::TYPE_DISASM) nResult = SPE::TYPE_DISASM;
+        else if (type == SBINARY::TYPE_HASH) nResult = SPE::TYPE_HASH;
+        else if (type == SBINARY::TYPE_STRINGS) nResult = SPE::TYPE_STRINGS;
+        else if (type == SBINARY::TYPE_SIGNATURES) nResult = SPE::TYPE_SIGNATURES;
+        else if (type == SBINARY::TYPE_MEMORYMAP) nResult = SPE::TYPE_MEMORYMAP;
+        else if (type == SBINARY::TYPE_ENTROPY) nResult = SPE::TYPE_ENTROPY;
+        else if (type == SBINARY::TYPE_HEURISTICSCAN) nResult = SPE::TYPE_HEURISTICSCAN;
+        else if (type == SBINARY::TYPE_EXTRACTOR) nResult = SPE::TYPE_EXTRACTOR;
+        else if (type == SBINARY::TYPE_SEARCH) nResult = SPE::TYPE_SEARCH;
+    } else if ((fileType == XBinary::FT_ELF32) || (fileType == XBinary::FT_ELF64)) {
+        if (type == SBINARY::TYPE_INFO) nResult = SELF::TYPE_INFO;
+        else if (type == SBINARY::TYPE_VISUALIZATION) nResult = SELF::TYPE_VISUALIZATION;
+        else if (type == SBINARY::TYPE_VIRUSTOTAL) nResult = SELF::TYPE_VIRUSTOTAL;
+        else if (type == SBINARY::TYPE_HEX) nResult = SELF::TYPE_HEX;
+        else if (type == SBINARY::TYPE_DISASM) nResult = SELF::TYPE_DISASM;
+        else if (type == SBINARY::TYPE_HASH) nResult = SELF::TYPE_HASH;
+        else if (type == SBINARY::TYPE_STRINGS) nResult = SELF::TYPE_STRINGS;
+        else if (type == SBINARY::TYPE_SIGNATURES) nResult = SELF::TYPE_SIGNATURES;
+        else if (type == SBINARY::TYPE_MEMORYMAP) nResult = SELF::TYPE_MEMORYMAP;
+        else if (type == SBINARY::TYPE_ENTROPY) nResult = SELF::TYPE_ENTROPY;
+        else if (type == SBINARY::TYPE_HEURISTICSCAN) nResult = SELF::TYPE_HEURISTICSCAN;
+        else if (type == SBINARY::TYPE_EXTRACTOR) nResult = SELF::TYPE_EXTRACTOR;
+        else if (type == SBINARY::TYPE_SEARCH) nResult = SELF::TYPE_SEARCH;
+    } else if ((fileType == XBinary::FT_MACHO32) || (fileType == XBinary::FT_MACHO64)) {
+        if (type == SBINARY::TYPE_INFO) nResult = SMACH::TYPE_INFO;
+        else if (type == SBINARY::TYPE_VISUALIZATION) nResult = SMACH::TYPE_VISUALIZATION;
+        else if (type == SBINARY::TYPE_VIRUSTOTAL) nResult = SMACH::TYPE_VIRUSTOTAL;
+        else if (type == SBINARY::TYPE_HEX) nResult = SMACH::TYPE_HEX;
+        else if (type == SBINARY::TYPE_DISASM) nResult = SMACH::TYPE_DISASM;
+        else if (type == SBINARY::TYPE_HASH) nResult = SMACH::TYPE_HASH;
+        else if (type == SBINARY::TYPE_STRINGS) nResult = SMACH::TYPE_STRINGS;
+        else if (type == SBINARY::TYPE_SIGNATURES) nResult = SMACH::TYPE_SIGNATURES;
+        else if (type == SBINARY::TYPE_MEMORYMAP) nResult = SMACH::TYPE_MEMORYMAP;
+        else if (type == SBINARY::TYPE_ENTROPY) nResult = SMACH::TYPE_ENTROPY;
+        else if (type == SBINARY::TYPE_HEURISTICSCAN) nResult = SMACH::TYPE_HEURISTICSCAN;
+        else if (type == SBINARY::TYPE_EXTRACTOR) nResult = SMACH::TYPE_EXTRACTOR;
+        else if (type == SBINARY::TYPE_SEARCH) nResult = SMACH::TYPE_SEARCH;
+    } else if (fileType == XBinary::FT_DEX) {
+        if (type == SBINARY::TYPE_INFO) nResult = SDEX::TYPE_INFO;
+        else if (type == SBINARY::TYPE_VISUALIZATION) nResult = SDEX::TYPE_VISUALIZATION;
+        else if (type == SBINARY::TYPE_VIRUSTOTAL) nResult = SDEX::TYPE_VIRUSTOTAL;
+        else if (type == SBINARY::TYPE_HEX) nResult = SDEX::TYPE_HEX;
+//        else if (type == SBINARY::TYPE_DISASM) nResult = SDEX::TYPE_DISASM;
+        else if (type == SBINARY::TYPE_HASH) nResult = SDEX::TYPE_HASH;
+        else if (type == SBINARY::TYPE_STRINGS) nResult = SDEX::TYPE_STRINGS;
+//        else if (type == SBINARY::TYPE_SIGNATURES) nResult = SDEX::TYPE_SIGNATURES;
+        else if (type == SBINARY::TYPE_MEMORYMAP) nResult = SDEX::TYPE_MEMORYMAP;
+        else if (type == SBINARY::TYPE_ENTROPY) nResult = SDEX::TYPE_ENTROPY;
+        else if (type == SBINARY::TYPE_HEURISTICSCAN) nResult = SDEX::TYPE_HEURISTICSCAN;
+        else if (type == SBINARY::TYPE_EXTRACTOR) nResult = SDEX::TYPE_EXTRACTOR;
+        else if (type == SBINARY::TYPE_SEARCH) nResult = SDEX::TYPE_SEARCH;
+    } else {
+        nResult = type;
+    }
+
+    return nResult;
+}
+
 FormatsWidget::SE FormatsWidget::getScanEngine(FormatsWidget::SE seIndex)
 {
     SE tabResult = seIndex;
@@ -760,23 +866,7 @@ void FormatsWidget::registerShortcuts(bool bState)
 
 void FormatsWidget::on_pushButtonFileInfo_clicked()
 {
-    QString sFileName = g_sFileName;
-
-    if (sFileName != "") {
-        QFile file;
-        file.setFileName(sFileName);
-
-        if (file.open(QIODevice::ReadOnly)) {
-            DialogXFileInfo dialogFileInfo(this);
-            dialogFileInfo.setGlobal(getShortcuts(), getGlobalOptions());
-
-            dialogFileInfo.setData(&file, XBinary::FT_UNKNOWN, "Info", true);
-
-            dialogFileInfo.exec();
-
-            file.close();
-        }
-    }
+    showType(SBINARY::TYPE_INFO);
 }
 
 void FormatsWidget::on_pushButtonMIME_clicked()
@@ -800,111 +890,27 @@ void FormatsWidget::on_pushButtonMIME_clicked()
 
 void FormatsWidget::on_pushButtonHash_clicked()
 {
-    QString sFileName = g_sFileName;
-
-    if (sFileName != "") {
-        QFile file;
-        file.setFileName(sFileName);
-
-        if (file.open(QIODevice::ReadOnly)) {
-            DialogHash dialogHash(this);
-            dialogHash.setData(&file, XBinary::FT_UNKNOWN);
-            dialogHash.setGlobal(getShortcuts(), getGlobalOptions());
-
-            dialogHash.exec();
-
-            file.close();
-        }
-    }
+    showType(SBINARY::TYPE_HASH);
 }
 
 void FormatsWidget::on_pushButtonStrings_clicked()
 {
-    QString sFileName = g_sFileName;
-
-    if (sFileName != "") {
-        QFile file;
-        file.setFileName(sFileName);
-
-        if (file.open(QIODevice::ReadOnly)) {
-            SearchStringsWidget::OPTIONS stringsOptions = {};
-            stringsOptions.bAnsi = true;
-            stringsOptions.bUTF8 = false;
-            stringsOptions.bUnicode = true;
-            stringsOptions.bCStrings = false;
-
-            DialogSearchStrings dialogSearchStrings(this);
-            dialogSearchStrings.setData(&file, stringsOptions, true);
-            dialogSearchStrings.setGlobal(getShortcuts(), getGlobalOptions());
-
-            dialogSearchStrings.exec();
-
-            file.close();
-        }
-    }
+    showType(SBINARY::TYPE_STRINGS);
 }
 
 void FormatsWidget::on_pushButtonSignatures_clicked()
 {
-    QString sFileName = g_sFileName;
-
-    if (sFileName != "") {
-        QFile file;
-        file.setFileName(sFileName);
-
-        if (file.open(QIODevice::ReadOnly)) {
-            SearchSignaturesWidget::OPTIONS signaturesOptions = {};
-
-            DialogSearchSignatures dialogSearchSignatures(this);
-            dialogSearchSignatures.setData(&file, XBinary::FT_UNKNOWN, signaturesOptions);
-            dialogSearchSignatures.setGlobal(getShortcuts(), getGlobalOptions());
-
-            dialogSearchSignatures.exec();
-
-            file.close();
-        }
-    }
+    showType(SBINARY::TYPE_SIGNATURES);
 }
 
 void FormatsWidget::on_pushButtonHex_clicked()
 {
-    QString sFileName = g_sFileName;
-
-    if (sFileName != "") {
-        QFile file;
-        file.setFileName(sFileName);
-
-        if (XBinary::tryToOpen(&file)) {
-            XHexView::OPTIONS hexOptions = {};
-
-            DialogHexView dialogHex(this, &file, hexOptions, nullptr, &file);  // TODO XINfoDB
-            dialogHex.setGlobal(getShortcuts(), getGlobalOptions());
-
-            dialogHex.exec();
-
-            file.close();
-        }
-    }
+    showType(SBINARY::TYPE_HEX);
 }
 
 void FormatsWidget::on_pushButtonEntropy_clicked()
 {
-    QString sFileName = g_sFileName;
-
-    if (sFileName != "") {
-        QFile file;
-        file.setFileName(sFileName);
-
-        if (file.open(QIODevice::ReadOnly)) {
-            DialogEntropy dialogEntropy(this);
-            dialogEntropy.setData(&file);
-            dialogEntropy.setGlobal(getShortcuts(), getGlobalOptions());
-
-            dialogEntropy.exec();
-
-            file.close();
-        }
-    }
+    showType(SBINARY::TYPE_ENTROPY);
 }
 
 void FormatsWidget::on_pushButtonVirusTotal_clicked()
@@ -934,44 +940,12 @@ void FormatsWidget::on_pushButtonVirusTotal_clicked()
 
 void FormatsWidget::on_pushButtonExtractor_clicked()
 {
-    QString sFileName = g_sFileName;
-
-    if (sFileName != "") {
-        QFile file;
-        file.setFileName(sFileName);
-
-        if (file.open(QIODevice::ReadOnly)) {
-            DialogXExtractor dialogExtractor(this);
-            dialogExtractor.setData(&file);
-            dialogExtractor.setGlobal(getShortcuts(), getGlobalOptions());
-
-            dialogExtractor.exec();
-
-            file.close();
-        }
-    }
+    showType(SBINARY::TYPE_EXTRACTOR);
 }
 
 void FormatsWidget::on_pushButtonSearch_clicked()
 {
-    QString sFileName = g_sFileName;
-
-    if (sFileName != "") {
-        QFile file;
-        file.setFileName(sFileName);
-
-        if (file.open(QIODevice::ReadOnly)) {
-            SearchValuesWidget::OPTIONS options = {};
-
-            DialogSearchValues dialogSearchValues(this);
-            dialogSearchValues.setData(&file, options);
-            dialogSearchValues.setGlobal(getShortcuts(), getGlobalOptions());
-
-            dialogSearchValues.exec();
-
-            file.close();
-        }
-    }
+    showType(SBINARY::TYPE_SEARCH);
 }
 
 void FormatsWidget::on_pushButtonUnpack_clicked()

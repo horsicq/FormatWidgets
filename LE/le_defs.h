@@ -26,6 +26,8 @@
 
 namespace SLE {
 enum TYPE {
+    // TODO EXTRACTOR
+    // TODO SEARCH
     TYPE_INFO = 0,
     TYPE_VISUALIZATION,
     TYPE_VIRUSTOTAL,
