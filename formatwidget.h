@@ -114,7 +114,6 @@ public:
     void setComboBoxesReadOnly(XComboBoxEx **ppComboBoxes, int nCount, bool bState);
     void setPushButtonReadOnly(QPushButton **ppPushButtons, int nCount, bool bState);
     void setDateTimeEditReadOnly(XDateTimeEditX **ppDateTimeEdits, int nCount, bool bState);
-
     void _deleteObjects(QObject **ppObjects, qint32 nCount);
     void _deleteSubdevices(SubDevice **ppSubdevices, qint32 nCount);
 
