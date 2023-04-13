@@ -89,6 +89,8 @@ void NEWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_MEMORYMAP, tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_ENTROPY, tr("Entropy")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_HEURISTICSCAN, tr("Heuristic scan")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_EXTRACTOR, tr("Extractor")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_SEARCH, tr("Search")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_DOS_HEADER, "DOS_HEADER"));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_OS2_HEADER, "OS2_HEADER"));
 
@@ -568,6 +570,23 @@ void NEWidget::reloadData()
         } else if (nType == SNE::TYPE_HEURISTICSCAN) {
             if (!isInitPresent(sInit)) {
                 ui->widgetHeuristicScan->setData(getDevice(), true, ne.getFileType());
+            }
+        } else if (nType == SNE::TYPE_EXTRACTOR) {
+            if (!isInitPresent(sInit)) {
+                XExtractor::OPTIONS extractorOptions = XExtractor::getDefaultOptions();
+                extractorOptions.fileType = ne.getFileType();
+                extractorOptions.bMenu_Hex = true;
+
+                ui->widgetExtractor->setData(getDevice(), extractorOptions, true);
+            }
+        } else if (nType == SNE::TYPE_SEARCH) {
+            if (!isInitPresent(sInit)) {
+                SearchValuesWidget::OPTIONS options = {};
+                options.fileType = ne.getFileType();
+                options.bMenu_Hex = true;
+                options.bMenu_Disasm = true;
+
+                ui->widgetSearch->setData(getDevice(), options);
             }
         } else if (nType == SNE::TYPE_DOS_HEADER) {
             if (!isInitPresent(sInit)) {

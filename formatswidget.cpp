@@ -733,8 +733,8 @@ qint32 FormatsWidget::convertType(XBinary::FT fileType, SBINARY::TYPE type)
         else if (type == SBINARY::TYPE_MEMORYMAP) nResult = SLE::TYPE_MEMORYMAP;
         else if (type == SBINARY::TYPE_ENTROPY) nResult = SLE::TYPE_ENTROPY;
         else if (type == SBINARY::TYPE_HEURISTICSCAN) nResult = SLE::TYPE_HEURISTICSCAN;
-//        else if (type == SBINARY::TYPE_EXTRACTOR) nResult = SLE::TYPE_EXTRACTOR;
-//        else if (type == SBINARY::TYPE_SEARCH) nResult = SLE::TYPE_SEARCH;
+        else if (type == SBINARY::TYPE_EXTRACTOR) nResult = SLE::TYPE_EXTRACTOR;
+        else if (type == SBINARY::TYPE_SEARCH) nResult = SLE::TYPE_SEARCH;
     } else if (fileType == XBinary::FT_NE) {
         if (type == SBINARY::TYPE_INFO) nResult = SNE::TYPE_INFO;
         else if (type == SBINARY::TYPE_VISUALIZATION) nResult = SNE::TYPE_VISUALIZATION;
@@ -747,8 +747,8 @@ qint32 FormatsWidget::convertType(XBinary::FT fileType, SBINARY::TYPE type)
         else if (type == SBINARY::TYPE_MEMORYMAP) nResult = SNE::TYPE_MEMORYMAP;
         else if (type == SBINARY::TYPE_ENTROPY) nResult = SNE::TYPE_ENTROPY;
         else if (type == SBINARY::TYPE_HEURISTICSCAN) nResult = SNE::TYPE_HEURISTICSCAN;
-//        else if (type == SBINARY::TYPE_EXTRACTOR) nResult = SNE::TYPE_EXTRACTOR;
-//        else if (type == SBINARY::TYPE_SEARCH) nResult = SNE::TYPE_SEARCH;
+        else if (type == SBINARY::TYPE_EXTRACTOR) nResult = SNE::TYPE_EXTRACTOR;
+        else if (type == SBINARY::TYPE_SEARCH) nResult = SNE::TYPE_SEARCH;
     } else if ((fileType == XBinary::FT_PE32) || (fileType == XBinary::FT_PE64)) {
         if (type == SBINARY::TYPE_INFO) nResult = SPE::TYPE_INFO;
         else if (type == SBINARY::TYPE_VISUALIZATION) nResult = SPE::TYPE_VISUALIZATION;
@@ -799,7 +799,7 @@ qint32 FormatsWidget::convertType(XBinary::FT fileType, SBINARY::TYPE type)
 //        else if (type == SBINARY::TYPE_DISASM) nResult = SDEX::TYPE_DISASM;
         else if (type == SBINARY::TYPE_HASH) nResult = SDEX::TYPE_HASH;
         else if (type == SBINARY::TYPE_STRINGS) nResult = SDEX::TYPE_STRINGS;
-//        else if (type == SBINARY::TYPE_SIGNATURES) nResult = SDEX::TYPE_SIGNATURES;
+        else if (type == SBINARY::TYPE_SIGNATURES) nResult = SDEX::TYPE_SIGNATURES;
         else if (type == SBINARY::TYPE_MEMORYMAP) nResult = SDEX::TYPE_MEMORYMAP;
         else if (type == SBINARY::TYPE_ENTROPY) nResult = SDEX::TYPE_ENTROPY;
         else if (type == SBINARY::TYPE_HEURISTICSCAN) nResult = SDEX::TYPE_HEURISTICSCAN;

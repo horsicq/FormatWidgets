@@ -85,6 +85,7 @@ void DEXWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_HEX, tr("Hex")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_HASH, tr("Hash")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_STRINGS, tr("Strings")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_SIGNATURES, tr("Signatures")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_MEMORYMAP, tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_ENTROPY, tr("Entropy")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_HEURISTICSCAN, tr("Heuristic scan")));
@@ -421,6 +422,13 @@ void DEXWidget::reloadData()
                 stringsOptions.bCStrings = false;
 
                 ui->widgetStrings->setData(getDevice(), stringsOptions, true);
+            }
+        } else if (nType == SDEX::TYPE_SIGNATURES) {
+            if (!isInitPresent(sInit)) {
+                SearchSignaturesWidget::OPTIONS signaturesOptions = {};
+                signaturesOptions.bMenu_Hex = true;
+
+                ui->widgetSignatures->setData(getDevice(), dex.getFileType(), signaturesOptions, false);
             }
         } else if (nType == SDEX::TYPE_MEMORYMAP) {
             if (!isInitPresent(sInit)) {
