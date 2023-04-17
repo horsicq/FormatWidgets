@@ -29,6 +29,7 @@ class LEProcessData : public ProcessData {
 
 public:
     explicit LEProcessData(int nType, QStandardItemModel **ppModel, XLE *pLE, qint64 nOffset, qint64 nSize);
+
     virtual void _process();
     virtual void ajustTableView(QWidget *pWidget, QTableView *pTableView);
 
