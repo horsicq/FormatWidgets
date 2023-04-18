@@ -869,7 +869,7 @@ void FormatWidget::resetWidget()
             if (pChild) {
                 XMultiDisasmWidget::OPTIONS options = {};
 
-                pChild->setData(0, options, 0);
+                pChild->setData(0, options, nullptr);
             }
         }
     }
@@ -884,7 +884,7 @@ void FormatWidget::resetWidget()
             if (pChild) {
                 XMemoryMapWidget::OPTIONS options = {};
 
-                pChild->setData(0, options);
+                pChild->setData(0, options, nullptr);
             }
         }
     }

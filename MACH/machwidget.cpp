@@ -1733,7 +1733,7 @@ void MACHWidget::reloadData()
                 options.fileType = mach.getFileType();
                 options.bIsSearchEnable = true;
 
-                ui->widgetMemoryMap->setData(getDevice(), options);
+                ui->widgetMemoryMap->setData(getDevice(), options, getXInfoDB());
             }
         } else if (nType == SMACH::TYPE_ENTROPY) {
             if (!isInitPresent(sInit)) {

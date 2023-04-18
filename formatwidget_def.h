@@ -25,7 +25,6 @@
 
 namespace FW_DEF {
 struct OPTIONS {
-    // TODO More
     bool bIsImage;
     qint64 nImageBase;  // TODO default_const
     // TODO Last directory

@@ -422,7 +422,7 @@ void ELFWidget::reloadData()
                 options.fileType = elf.getFileType();
                 options.bIsSearchEnable = true;
 
-                ui->widgetMemoryMap->setData(getDevice(), options);
+                ui->widgetMemoryMap->setData(getDevice(), options, getXInfoDB());
             }
         } else if (nType == SELF::TYPE_ENTROPY) {
             if (!isInitPresent(sInit)) {

@@ -561,7 +561,7 @@ void NEWidget::reloadData()
                 options.fileType = ne.getFileType();
                 options.bIsSearchEnable = true;
 
-                ui->widgetMemoryMap->setData(getDevice(), options);
+                ui->widgetMemoryMap->setData(getDevice(), options, getXInfoDB());
             }
         } else if (nType == SNE::TYPE_ENTROPY) {
             if (!isInitPresent(sInit)) {

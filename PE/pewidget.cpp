@@ -1498,7 +1498,7 @@ void PEWidget::reloadData()
                 options.fileType = pe.getFileType();
                 options.bIsSearchEnable = true;
 
-                ui->widgetMemoryMap->setData(getDevice(), options);
+                ui->widgetMemoryMap->setData(getDevice(), options, getXInfoDB());
             }
         } else if (nType == SPE::TYPE_ENTROPY) {
             if (!isInitPresent(sInit)) {

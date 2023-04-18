@@ -345,7 +345,7 @@ void MSDOSWidget::reloadData()
                 options.fileType = msdos.getFileType();
                 options.bIsSearchEnable = true;
 
-                ui->widgetMemoryMap->setData(getDevice(), options);
+                ui->widgetMemoryMap->setData(getDevice(), options, getXInfoDB());
             }
         } else if (nType == SMSDOS::TYPE_ENTROPY) {
             if (!isInitPresent(sInit)) {

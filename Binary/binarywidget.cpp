@@ -249,7 +249,7 @@ void BinaryWidget::reloadData()
                 options.fileType = fileType;
                 options.bIsSearchEnable = true;
 
-                ui->widgetMemoryMap->setData(getDevice(), options);
+                ui->widgetMemoryMap->setData(getDevice(), options, getXInfoDB());
             }
         } else if (nType == SBINARY::TYPE_ENTROPY) {
             if (!isInitPresent(sInit)) {

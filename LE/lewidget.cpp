@@ -561,7 +561,7 @@ void LEWidget::reloadData()
                 options.fileType = le.getFileType();
                 options.bIsSearchEnable = true;
 
-                ui->widgetMemoryMap->setData(getDevice(), options);
+                ui->widgetMemoryMap->setData(getDevice(), options, getXInfoDB());
             }
         } else if (nType == SLE::TYPE_ENTROPY) {
             if (!isInitPresent(sInit)) {

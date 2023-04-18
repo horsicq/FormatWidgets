@@ -436,7 +436,7 @@ void DEXWidget::reloadData()
                 options.fileType = dex.getFileType();
                 options.bIsSearchEnable = true;
 
-                ui->widgetMemoryMap->setData(getDevice(), options);
+                ui->widgetMemoryMap->setData(getDevice(), options, getXInfoDB());
             }
         } else if (nType == SDEX::TYPE_ENTROPY) {
             if (!isInitPresent(sInit)) {
