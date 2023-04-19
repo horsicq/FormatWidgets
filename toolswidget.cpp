@@ -37,7 +37,7 @@ ToolsWidget::ToolsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new U
     connect(ui->widgetStrings, SIGNAL(showDemangle(QString)), this, SIGNAL(showDemangle(QString)));
 }
 
-void ToolsWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS options, QIODevice *pBackupDevice, bool bDisasm, bool bFollow)
+void ToolsWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS options, QIODevice *pBackupDevice, bool bDisasm, bool bFollow, XInfoDB *pXInfoDB)
 {
     g_pDevice = pDevice;
 
@@ -61,6 +61,7 @@ void ToolsWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS options, QIODevice
     //    ui->widgetHex->enableReadOnly(false);
 
     ui->widgetHex->setData(pDevice, hexOptions);
+    ui->widgetHex->setXInfoDB(pXInfoDB);
     ui->widgetHex->setBackupDevice(pBackupDevice);
 
     g_stringsOptions = {};
@@ -76,9 +77,10 @@ void ToolsWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS options, QIODevice
     reload();
 }
 
-void ToolsWidget::setDevice(QIODevice *pDevice)
+void ToolsWidget::resetWidget()
 {
-    ui->widgetHex->setDevice(pDevice);
+    ui->widgetHex->setDevice(nullptr);
+    ui->widgetHex->setXInfoDB(nullptr);
 }
 
 void ToolsWidget::setBackupDevice(QIODevice *pDevice)

@@ -310,7 +310,7 @@ bool FormatWidget::loadHexSubdevice(qint64 nOffset, qint64 nSize, XADDR nAddress
     hexOptions.nImageBase = nAddress;
     hexOptions.bOffset = bOffset;
 
-    pToolsWidget->setData((*ppSubDevice), hexOptions, getBackupDevice(), bDisasm, bFollow);
+    pToolsWidget->setData((*ppSubDevice), hexOptions, getBackupDevice(), bDisasm, bFollow, getXInfoDB());
 
     return true;
 }
@@ -854,7 +854,7 @@ void FormatWidget::resetWidget()
             ToolsWidget *pChild = dynamic_cast<ToolsWidget *>(listWidgets.at(i));
 
             if (pChild) {
-                pChild->setDevice(0);
+                pChild->resetWidget();
             }
         }
     }
