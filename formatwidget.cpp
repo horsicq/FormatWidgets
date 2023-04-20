@@ -298,7 +298,7 @@ bool FormatWidget::loadHexSubdevice(qint64 nOffset, qint64 nSize, XADDR nAddress
         nSize = 0;
     }
 
-    if (nAddress == -1) {
+    if (nAddress == (XADDR)-1) {
         nAddress = nOffset;
     }
 
@@ -1145,6 +1145,9 @@ void FormatWidget::valueChangedSlot(QVariant varValue)
 
 void FormatWidget::setEdited(qint64 nDeviceOffset, qint64 nDeviceSize)
 {
+    Q_UNUSED(nDeviceOffset)
+    Q_UNUSED(nDeviceSize)
+
 #ifdef QT_DEBUG
     qDebug("void FormatWidget::setEdited()");
 #endif
@@ -1163,6 +1166,8 @@ void FormatWidget::setEdited(qint64 nDeviceOffset, qint64 nDeviceSize)
 
 void FormatWidget::allReload(qint64 nDeviceOffset, qint64 nDeviceSize)
 {
+    Q_UNUSED(nDeviceOffset)
+    Q_UNUSED(nDeviceSize)
     // TODO save treeview position
     bool bIsReadOnly = isReadonly();
 
