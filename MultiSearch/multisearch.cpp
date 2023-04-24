@@ -327,7 +327,7 @@ void MultiSearch::processModel()
             {
                 QStandardItem *pItem = new QStandardItem;
 
-                if (nAddress != -1) {
+                if (nAddress != (XADDR)-1) {
                     pItem->setText(XBinary::valueToHex(modeAddress, nAddress));
                 }
 
@@ -384,7 +384,7 @@ void MultiSearch::processModel()
             {
                 QStandardItem *pItem = new QStandardItem;
 
-                if (nAddress != -1) {
+                if (nAddress != (XADDR)-1) {
                     pItem->setText(XBinary::valueToHex(modeAddress, nAddress));
                 }
 
