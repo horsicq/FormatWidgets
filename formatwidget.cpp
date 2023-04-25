@@ -841,7 +841,7 @@ void FormatWidget::resetWidget()
             XHexViewWidget *pChild = dynamic_cast<XHexViewWidget *>(listWidgets.at(i));
 
             if (pChild) {
-                pChild->setDevice(0);
+                pChild->setDevice(nullptr);
             }
         }
     }
@@ -869,7 +869,7 @@ void FormatWidget::resetWidget()
             if (pChild) {
                 XMultiDisasmWidget::OPTIONS options = {};
 
-                pChild->setData(0, options, nullptr);
+                pChild->setData(nullptr, options, nullptr);
             }
         }
     }
@@ -884,7 +884,7 @@ void FormatWidget::resetWidget()
             if (pChild) {
                 XMemoryMapWidget::OPTIONS options = {};
 
-                pChild->setData(0, options, nullptr);
+                pChild->setData(nullptr, options, nullptr);
             }
         }
     }
