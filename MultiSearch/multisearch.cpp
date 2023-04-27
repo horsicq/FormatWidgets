@@ -253,7 +253,7 @@ void MultiSearch::processModel()
 
         XADDR nBaseAddress = g_options.memoryMap.nModuleAddress;
 
-        XBinary::MODE modeAddress = XBinary::getWidthModeFromSize(nBaseAddress + g_options.memoryMap.nRawSize);
+        XBinary::MODE modeAddress = XBinary::getWidthModeFromSize(nBaseAddress + g_options.memoryMap.nBinarySize);
 
         XBinary::setPdStructTotal(g_pPdStruct, g_nFreeIndex, nNumberOfRecords);
 
@@ -299,8 +299,8 @@ void MultiSearch::processModel()
 
         XADDR nBaseAddress = g_options.memoryMap.nModuleAddress;
 
-        XBinary::MODE modeAddress = XBinary::getWidthModeFromSize(nBaseAddress + g_options.memoryMap.nRawSize);
-        XBinary::MODE modeOffset = XBinary::getWidthModeFromSize(g_options.memoryMap.nRawSize);
+        XBinary::MODE modeAddress = XBinary::getWidthModeFromSize(nBaseAddress + g_options.memoryMap.nBinarySize);
+        XBinary::MODE modeOffset = XBinary::getWidthModeFromSize(g_options.memoryMap.nBinarySize);
 
         XBinary::setPdStructTotal(g_pPdStruct, g_nFreeIndex, nNumberOfRecords);
 
@@ -356,7 +356,7 @@ void MultiSearch::processModel()
         *g_ppModel = new QStandardItemModel(nNumberOfRecords, 3);  // TODO Check maximum
 
         XBinary::MODE modeAddress = XBinary::getWidthModeFromMemoryMap(&(g_options.memoryMap));
-        XBinary::MODE modeOffset = XBinary::getWidthModeFromSize(g_options.memoryMap.nRawSize);
+        XBinary::MODE modeOffset = XBinary::getWidthModeFromSize(g_options.memoryMap.nBinarySize);
 
         XBinary::setPdStructTotal(g_pPdStruct, g_nFreeIndex, nNumberOfRecords);
 
