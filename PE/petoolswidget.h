@@ -41,7 +41,7 @@ public:
     void setReadonly(bool bState);
     bool saveBackup();
 
-    static void dumpRegion(QWidget *pParent, QIODevice *pDevice, qint64 nOffset, qint64 nSize, QString sName);
+    static void dumpRegion(QWidget *pParent, QIODevice *pDevice, qint64 nOffset, qint64 nSize, const QString &sName);
     static void dumpOverlay(QWidget *pParent, QIODevice *pDevice, bool bIsImage = false, XADDR nModuleAddress = -1);
     static void dumpDosStub(QWidget *pParent, QIODevice *pDevice, bool bIsImage = false, XADDR nModuleAddress = -1);
 

@@ -85,7 +85,7 @@ bool PEToolsWidget::saveBackup()
     return bResult;
 }
 
-void PEToolsWidget::dumpRegion(QWidget *pParent, QIODevice *pDevice, qint64 nOffset, qint64 nSize, QString sName)
+void PEToolsWidget::dumpRegion(QWidget *pParent, QIODevice *pDevice, qint64 nOffset, qint64 nSize, const QString &sName)
 {
     if (sName == "") {
         sName = tr("Dump");
