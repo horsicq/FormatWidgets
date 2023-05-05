@@ -63,7 +63,7 @@ void MultiSearch::setModelData(QList<XBinary::MS_RECORD> *pListRecords, QStandar
     g_pPdStruct = pPdStruct;
 }
 
-QList<MultiSearch::SIGNATURE_RECORD> MultiSearch::loadSignaturesFromFile(QString sFileName)
+QList<MultiSearch::SIGNATURE_RECORD> MultiSearch::loadSignaturesFromFile(const QString &sFileName)
 {
     QList<SIGNATURE_RECORD> listResult;
 

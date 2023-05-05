@@ -87,7 +87,7 @@ public:
     void setSearchData(QIODevice *pDevice, OPTIONS options, TYPE type, XBinary::PDSTRUCT *pPdStruct);
     void setModelData(QList<XBinary::MS_RECORD> *pListRecords, QStandardItemModel **ppModel, OPTIONS options, TYPE type, XBinary::PDSTRUCT *pPdStruct);
 
-    static QList<SIGNATURE_RECORD> loadSignaturesFromFile(QString sFileName);
+    static QList<SIGNATURE_RECORD> loadSignaturesFromFile(const QString &sFileName);
     static SIGNATURE_RECORD createSignature(QString sName, QString sSignature);
     void processSignature(SIGNATURE_RECORD signatureRecord);
 
