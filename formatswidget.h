@@ -76,7 +76,7 @@ public:
     explicit FormatsWidget(QWidget *pParent = nullptr);
     ~FormatsWidget();
 
-    void setName(QString sFileName, bool bScan);
+    void setName(const QString &sFileName, bool bScan);
     void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
     void adjustView();
     void setAdvanced(bool bState);
