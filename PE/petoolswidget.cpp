@@ -87,11 +87,12 @@ bool PEToolsWidget::saveBackup()
 
 void PEToolsWidget::dumpRegion(QWidget *pParent, QIODevice *pDevice, qint64 nOffset, qint64 nSize, const QString &sName)
 {
-    if (sName == "") {
-        sName = tr("Dump");
+    QString _sName = sName;
+    if (_sName == "") {
+        _sName = tr("Dump");
     }
 
-    QString sSaveFileName = XBinary::getResultFileName(pDevice, QString("%1.bin").arg(sName));
+    QString sSaveFileName = XBinary::getResultFileName(pDevice, QString("%1.bin").arg(_sName));
     QString sFileName = QFileDialog::getSaveFileName(pParent, tr("Save dump"), sSaveFileName, QString("%1 (*.bin)").arg(tr("Raw data")));
 
     if (!sFileName.isEmpty()) {

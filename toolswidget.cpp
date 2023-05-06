@@ -60,8 +60,7 @@ void ToolsWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS options, QIODevice
 
     //    ui->widgetHex->enableReadOnly(false);
 
-    ui->widgetHex->setData(pDevice, hexOptions);
-    ui->widgetHex->setXInfoDB(pXInfoDB);
+    ui->widgetHex->setData(pDevice, hexOptions, true, pXInfoDB);
     ui->widgetHex->setBackupDevice(pBackupDevice);
 
     g_stringsOptions = {};

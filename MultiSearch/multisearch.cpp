@@ -97,7 +97,7 @@ QList<MultiSearch::SIGNATURE_RECORD> MultiSearch::loadSignaturesFromFile(const Q
     return listResult;
 }
 
-MultiSearch::SIGNATURE_RECORD MultiSearch::createSignature(QString sName, QString sSignature)
+MultiSearch::SIGNATURE_RECORD MultiSearch::createSignature(const QString &sName, const QString &sSignature)
 {
     MultiSearch::SIGNATURE_RECORD result = {};
 

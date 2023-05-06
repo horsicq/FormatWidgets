@@ -88,7 +88,7 @@ public:
     void setModelData(QList<XBinary::MS_RECORD> *pListRecords, QStandardItemModel **ppModel, OPTIONS options, TYPE type, XBinary::PDSTRUCT *pPdStruct);
 
     static QList<SIGNATURE_RECORD> loadSignaturesFromFile(const QString &sFileName);
-    static SIGNATURE_RECORD createSignature(QString sName, QString sSignature);
+    static SIGNATURE_RECORD createSignature(const QString &sName, const QString &sSignature);
     void processSignature(SIGNATURE_RECORD signatureRecord);
 
 signals:
