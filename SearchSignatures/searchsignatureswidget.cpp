@@ -291,7 +291,7 @@ void SearchSignaturesWidget::search()
     }
 }
 
-void SearchSignaturesWidget::loadSignatures(QString sFileName)
+void SearchSignaturesWidget::loadSignatures(const QString &sFileName)
 {
     int nNumberOfSignatures = 0;
 

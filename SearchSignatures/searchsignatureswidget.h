@@ -80,7 +80,7 @@ private slots:
     void _copySignature();
     void _hex();
     void search();
-    void loadSignatures(QString sFileName);
+    void loadSignatures(const QString &sFileName);
     void on_comboBoxFile_currentIndexChanged(int index);
 
 protected:
