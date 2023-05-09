@@ -190,7 +190,7 @@ void SearchStringsWidget::on_lineEditFilter_textChanged(const QString &sText)
     filter(sText);
 }
 
-void SearchStringsWidget::filter(QString sString)
+void SearchStringsWidget::filter(const QString &sString)
 {
     g_pFilter->setFilterFixedString(sString);
     g_pFilter->setFilterCaseSensitivity(Qt::CaseInsensitive);
