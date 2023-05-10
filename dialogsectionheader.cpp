@@ -45,7 +45,7 @@ void DialogSectionHeader::setWidget(FormatWidget *pWidget)
     connect(pWidget, SIGNAL(changed()), this, SIGNAL(changed()));
 }
 
-void DialogSectionHeader::setData(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, QString sTitle, qint32 nType)
+void DialogSectionHeader::setData(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, const QString &sTitle, qint32 nType)
 {
     setWindowTitle(sTitle);
 

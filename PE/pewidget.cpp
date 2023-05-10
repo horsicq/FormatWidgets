@@ -1604,6 +1604,7 @@ void PEWidget::reloadData()
                 options.memoryMapRegion = binary.getMemoryMap();
 
                 ui->widgetDisasm_DosStub->setData(g_subDevice[SPE::TYPE_DOS_STUB], options);
+                ui->widgetDisasm_DosStub->setXInfoDB(getXInfoDB());
                 ui->widgetDisasm_DosStub->setBackupDevice(getBackupDevice());
             }
         } else if (nType == SPE::TYPE_IMAGE_NT_HEADERS) {
