@@ -39,7 +39,7 @@ public:
     explicit DialogModelInfo(QWidget *pParent = nullptr);
     ~DialogModelInfo();
 
-    void setData(QIODevice *pDevice, QString sTitle, QStandardItemModel *pModel);
+    void setData(QIODevice *pDevice, const QString &sTitle, QStandardItemModel *pModel);
 
 private slots:
     void on_pushButtonOK_clicked();

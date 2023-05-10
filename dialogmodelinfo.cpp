@@ -34,7 +34,7 @@ DialogModelInfo::~DialogModelInfo()
     delete ui;
 }
 
-void DialogModelInfo::setData(QIODevice *pDevice, QString sTitle, QStandardItemModel *pModel)
+void DialogModelInfo::setData(QIODevice *pDevice, const QString &sTitle, QStandardItemModel *pModel)
 {
     g_pDevice = pDevice;
     g_sTitle = sTitle;
