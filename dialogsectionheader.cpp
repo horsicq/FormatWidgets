@@ -53,7 +53,7 @@ void DialogSectionHeader::setData(QIODevice *pDevice, FW_DEF::OPTIONS options, q
     g_pWidget->reload();
 }
 
-void DialogSectionHeader::setData(QString sTitle)
+void DialogSectionHeader::setData(const QString &sTitle)
 {
     setWindowTitle(sTitle);
 
