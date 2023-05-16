@@ -125,7 +125,7 @@ void FormatWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 
     setData(options, nNumber, nOffset, nType);
 }
 
-void FormatWidget::setData(QString sFileName, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType)
+void FormatWidget::setData(const QString &sFileName, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType)
 {
     g_sFileName = sFileName;
 
