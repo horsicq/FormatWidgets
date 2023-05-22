@@ -1996,6 +1996,7 @@
      </property>
      <widget class="DIE_Widget" name="pageScanDIE"/>
      <widget class="NFD_Widget" name="pageScanNFD"/>
+     <widget class="YARA_Widget" name="pageScanYARA"/>
     </widget>
    </item>
   </layout>
@@ -2016,6 +2017,12 @@
    <class>NFD_Widget</class>
    <extends>QWidget</extends>
    <header>nfd_widget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>YARA_Widget</class>
+   <extends>QWidget</extends>
+   <header>yara_widget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

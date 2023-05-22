@@ -31,15 +31,18 @@ FormatsWidget::FormatsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(n
     ui->comboBoxScanEngine->addItem(tr("Automatic"), SE_AUTO);
     ui->comboBoxScanEngine->addItem(QString("Detect It Easy(DiE)"), SE_DIE);
     ui->comboBoxScanEngine->addItem(QString("Nauz File Detector(NFD)"), SE_NFD);
+    ui->comboBoxScanEngine->addItem(QString("Yara"), SE_YARA);
 
     ui->stackedWidgetMain->setCurrentIndex(TABINFO_BINARY);
 
     adjustScanTab(SE_AUTO);
 
-    connect(ui->pageScanNFD, SIGNAL(scanStarted()), this, SLOT(onScanStarted()));
-    connect(ui->pageScanNFD, SIGNAL(scanFinished()), this, SLOT(onScanFinished()));
     connect(ui->pageScanDIE, SIGNAL(scanStarted()), this, SLOT(onScanStarted()));
     connect(ui->pageScanDIE, SIGNAL(scanFinished()), this, SLOT(onScanFinished()));
+    connect(ui->pageScanNFD, SIGNAL(scanStarted()), this, SLOT(onScanStarted()));
+    connect(ui->pageScanNFD, SIGNAL(scanFinished()), this, SLOT(onScanFinished()));
+    connect(ui->pageScanYARA, SIGNAL(scanStarted()), this, SLOT(onScanStarted()));
+    connect(ui->pageScanYARA, SIGNAL(scanFinished()), this, SLOT(onScanFinished()));
 
     ui->comboBoxScanEngine->blockSignals(bBlocked1);
 }
@@ -58,6 +61,7 @@ void FormatsWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
 {
     ui->pageScanDIE->setGlobal(pShortcuts, pXOptions);
     ui->pageScanNFD->setGlobal(pShortcuts, pXOptions);
+    ui->pageScanYARA->setGlobal(pShortcuts, pXOptions);
 
     XShortcutsWidget::setGlobal(pShortcuts, pXOptions);
 }
@@ -70,10 +74,13 @@ void FormatsWidget::adjustView()
         ui->comboBoxScanEngine->setCurrentIndex(SE_DIE);
     } else if (sScanEngine == "nfd") {
         ui->comboBoxScanEngine->setCurrentIndex(SE_NFD);
+    } else if (sScanEngine == "yara") {
+        ui->comboBoxScanEngine->setCurrentIndex(SE_YARA);
     }
 
     ui->pageScanDIE->adjustView();
     ui->pageScanNFD->adjustView();
+    ui->pageScanYARA->adjustView();
 
     XShortcutsWidget::adjustView();
 }
@@ -327,10 +334,10 @@ void FormatsWidget::scan()
             ui->pageScanDIE->setData(g_sFileName, g_bScan, getCurrentFileType());
         } else if (nIndex == SE_NFD) {
             ui->pageScanNFD->setData(g_sFileName, g_bScan, getCurrentFileType());
+        } else if (nIndex == SE_YARA) {
+            ui->pageScanYARA->setData(g_sFileName, g_bScan);
         }
     }
-
-    // TODO YARA
 }
 
 void FormatsWidget::on_pushButtonDisasm_clicked()
@@ -928,6 +935,8 @@ void FormatsWidget::adjustScanTab(FormatsWidget::SE seIndex)
         ui->stackedWidgetScan->setCurrentIndex(0);
     } else if (seIndex == SE_NFD) {
         ui->stackedWidgetScan->setCurrentIndex(1);
+    } else if (seIndex == SE_YARA) {
+        ui->stackedWidgetScan->setCurrentIndex(2);
     }
 }
 

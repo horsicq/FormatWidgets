@@ -69,7 +69,8 @@ class FormatsWidget : public XShortcutsWidget {
     enum SE {
         SE_AUTO = 0,
         SE_DIE,
-        SE_NFD
+        SE_NFD,
+        SE_YARA
     };
 
 public:

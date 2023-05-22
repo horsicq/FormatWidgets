@@ -120,7 +120,7 @@ public:
                                 int nExtraData = -1);
     InvWidget *createInvWidget(QTableWidget *pTableWidget, int nType, int nData, InvWidget::TYPE widgetType);
     XDateTimeEditX *createTimeDateEdit(QTableWidget *pTableWidget, int nType, int nData, XDateTimeEditX::DT_TYPE dtType);
-    QPushButton *createPushButton(QTableWidget *pTableWidget, int nType, int nData, QString sText);
+    QPushButton *createPushButton(QTableWidget *pTableWidget, int nType, int nData, const QString &sText);
 
     void setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset);
 
