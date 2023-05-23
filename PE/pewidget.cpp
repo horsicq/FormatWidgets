@@ -116,7 +116,7 @@ void PEWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_SIGNATURES, tr("Signatures")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_MEMORYMAP, tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_ENTROPY, tr("Entropy")));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_HEURISTICSCAN, tr("Heuristic scan")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_NFDSCAN, tr("Heuristic scan")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_EXTRACTOR, tr("Extractor")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_SEARCH, tr("Search")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_TOOLS, tr("Tools")));
@@ -1505,7 +1505,7 @@ void PEWidget::reloadData()
                 ui->widgetEntropy->setData(getDevice(), 0, getDevice()->size(), pe.getFileType(),
                                            true);  // TODO save last directory
             }
-        } else if (nType == SPE::TYPE_HEURISTICSCAN) {
+        } else if (nType == SPE::TYPE_NFDSCAN) {
             if (!isInitPresent(sInit)) {
                 ui->widgetHeuristicScan->setData(getDevice(), true, pe.getFileType());
             }
@@ -3463,7 +3463,7 @@ void PEWidget::on_pushButtonEntropy_clicked()
 
 void PEWidget::on_pushButtonHeuristicScan_clicked()
 {
-    setTreeItem(ui->treeWidgetNavi, SPE::TYPE_HEURISTICSCAN);
+    setTreeItem(ui->treeWidgetNavi, SPE::TYPE_NFDSCAN);
 }
 
 void PEWidget::on_pushButtonDisasm_clicked()

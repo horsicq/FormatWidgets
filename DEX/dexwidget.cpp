@@ -88,7 +88,7 @@ void DEXWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_SIGNATURES, tr("Signatures")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_MEMORYMAP, tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_ENTROPY, tr("Entropy")));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_HEURISTICSCAN, tr("Heuristic scan")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_NFDSCAN, tr("Heuristic scan")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_EXTRACTOR, tr("Extractor")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_SEARCH, tr("Search")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_HEADER, "Header"));
@@ -442,7 +442,7 @@ void DEXWidget::reloadData()
             if (!isInitPresent(sInit)) {
                 ui->widgetEntropy->setData(getDevice(), 0, getDevice()->size(), dex.getFileType(), true);
             }
-        } else if (nType == SDEX::TYPE_HEURISTICSCAN) {
+        } else if (nType == SDEX::TYPE_NFDSCAN) {
             if (!isInitPresent(sInit)) {
                 ui->widgetHeuristicScan->setData(getDevice(), true, XBinary::FT_DEX);
             }

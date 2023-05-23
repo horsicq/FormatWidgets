@@ -88,7 +88,7 @@ void ELFWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_SIGNATURES, tr("Signatures")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_MEMORYMAP, tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_ENTROPY, tr("Entropy")));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_HEURISTICSCAN, tr("Heuristic scan")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_NFDSCAN, tr("Heuristic scan")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_EXTRACTOR, tr("Extractor")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_SEARCH, tr("Search")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_Elf_Ehdr, "Elf_Ehdr"));
@@ -428,7 +428,7 @@ void ELFWidget::reloadData()
             if (!isInitPresent(sInit)) {
                 ui->widgetEntropy->setData(getDevice(), 0, getDevice()->size(), elf.getFileType(), true);
             }
-        } else if (nType == SELF::TYPE_HEURISTICSCAN) {
+        } else if (nType == SELF::TYPE_NFDSCAN) {
             if (!isInitPresent(sInit)) {
                 ui->widgetHeuristicScan->setData(getDevice(), true, elf.getFileType());
             }
@@ -1264,7 +1264,7 @@ void ELFWidget::on_pushButtonEntropy_clicked()
 
 void ELFWidget::on_pushButtonHeuristicScan_clicked()
 {
-    setTreeItem(ui->treeWidgetNavi, SELF::TYPE_HEURISTICSCAN);
+    setTreeItem(ui->treeWidgetNavi, SELF::TYPE_NFDSCAN);
 }
 
 void ELFWidget::on_toolButtonPrev_clicked()

@@ -88,7 +88,7 @@ void NEWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_SIGNATURES, tr("Signatures")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_MEMORYMAP, tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_ENTROPY, tr("Entropy")));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_HEURISTICSCAN, tr("Heuristic scan")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_NFDSCAN, tr("Heuristic scan")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_EXTRACTOR, tr("Extractor")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_SEARCH, tr("Search")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_DOS_HEADER, "DOS_HEADER"));
@@ -567,7 +567,7 @@ void NEWidget::reloadData()
             if (!isInitPresent(sInit)) {
                 ui->widgetEntropy->setData(getDevice(), 0, getDevice()->size(), ne.getFileType(), true);
             }
-        } else if (nType == SNE::TYPE_HEURISTICSCAN) {
+        } else if (nType == SNE::TYPE_NFDSCAN) {
             if (!isInitPresent(sInit)) {
                 ui->widgetHeuristicScan->setData(getDevice(), true, ne.getFileType());
             }
@@ -872,7 +872,7 @@ void NEWidget::on_pushButtonEntropy_clicked()
 
 void NEWidget::on_pushButtonHeuristicScan_clicked()
 {
-    setTreeItem(ui->treeWidgetNavi, SNE::TYPE_HEURISTICSCAN);
+    setTreeItem(ui->treeWidgetNavi, SNE::TYPE_NFDSCAN);
 }
 
 void NEWidget::onTableView_SEGMENTS_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)

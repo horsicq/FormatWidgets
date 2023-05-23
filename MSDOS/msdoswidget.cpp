@@ -84,7 +84,7 @@ void MSDOSWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_SIGNATURES, tr("Signatures")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_MEMORYMAP, tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_ENTROPY, tr("Entropy")));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_HEURISTICSCAN, tr("Heuristic scan")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_NFDSCAN, tr("Heuristic scan")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_EXTRACTOR, tr("Extractor")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_SEARCH, tr("Search")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_DOS_HEADER, "DOS_HEADER"));
@@ -351,7 +351,7 @@ void MSDOSWidget::reloadData()
             if (!isInitPresent(sInit)) {
                 ui->widgetEntropy->setData(getDevice(), 0, getDevice()->size(), msdos.getFileType(), true);
             }
-        } else if (nType == SMSDOS::TYPE_HEURISTICSCAN) {
+        } else if (nType == SMSDOS::TYPE_NFDSCAN) {
             if (!isInitPresent(sInit)) {
                 ui->widgetHeuristicScan->setData(getDevice(), true, msdos.getFileType());
             }
@@ -520,5 +520,5 @@ void MSDOSWidget::on_pushButtonEntropy_clicked()
 
 void MSDOSWidget::on_pushButtonHeuristicScan_clicked()
 {
-    setTreeItem(ui->treeWidgetNavi, SMSDOS::TYPE_HEURISTICSCAN);
+    setTreeItem(ui->treeWidgetNavi, SMSDOS::TYPE_NFDSCAN);
 }

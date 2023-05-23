@@ -735,8 +735,8 @@ qint32 FormatsWidget::convertType(XBinary::FT fileType, SBINARY::TYPE type)
             nResult = SMSDOS::TYPE_MEMORYMAP;
         else if (type == SBINARY::TYPE_ENTROPY)
             nResult = SMSDOS::TYPE_ENTROPY;
-        else if (type == SBINARY::TYPE_HEURISTICSCAN)
-            nResult = SMSDOS::TYPE_HEURISTICSCAN;
+        else if (type == SBINARY::TYPE_NFDSCAN)
+            nResult = SMSDOS::TYPE_NFDSCAN;
         else if (type == SBINARY::TYPE_EXTRACTOR)
             nResult = SMSDOS::TYPE_EXTRACTOR;
         else if (type == SBINARY::TYPE_SEARCH)
@@ -762,8 +762,8 @@ qint32 FormatsWidget::convertType(XBinary::FT fileType, SBINARY::TYPE type)
             nResult = SLE::TYPE_MEMORYMAP;
         else if (type == SBINARY::TYPE_ENTROPY)
             nResult = SLE::TYPE_ENTROPY;
-        else if (type == SBINARY::TYPE_HEURISTICSCAN)
-            nResult = SLE::TYPE_HEURISTICSCAN;
+        else if (type == SBINARY::TYPE_NFDSCAN)
+            nResult = SLE::TYPE_NFDSCAN;
         else if (type == SBINARY::TYPE_EXTRACTOR)
             nResult = SLE::TYPE_EXTRACTOR;
         else if (type == SBINARY::TYPE_SEARCH)
@@ -789,8 +789,8 @@ qint32 FormatsWidget::convertType(XBinary::FT fileType, SBINARY::TYPE type)
             nResult = SNE::TYPE_MEMORYMAP;
         else if (type == SBINARY::TYPE_ENTROPY)
             nResult = SNE::TYPE_ENTROPY;
-        else if (type == SBINARY::TYPE_HEURISTICSCAN)
-            nResult = SNE::TYPE_HEURISTICSCAN;
+        else if (type == SBINARY::TYPE_NFDSCAN)
+            nResult = SNE::TYPE_NFDSCAN;
         else if (type == SBINARY::TYPE_EXTRACTOR)
             nResult = SNE::TYPE_EXTRACTOR;
         else if (type == SBINARY::TYPE_SEARCH)
@@ -816,8 +816,8 @@ qint32 FormatsWidget::convertType(XBinary::FT fileType, SBINARY::TYPE type)
             nResult = SPE::TYPE_MEMORYMAP;
         else if (type == SBINARY::TYPE_ENTROPY)
             nResult = SPE::TYPE_ENTROPY;
-        else if (type == SBINARY::TYPE_HEURISTICSCAN)
-            nResult = SPE::TYPE_HEURISTICSCAN;
+        else if (type == SBINARY::TYPE_NFDSCAN)
+            nResult = SPE::TYPE_NFDSCAN;
         else if (type == SBINARY::TYPE_EXTRACTOR)
             nResult = SPE::TYPE_EXTRACTOR;
         else if (type == SBINARY::TYPE_SEARCH)
@@ -843,8 +843,8 @@ qint32 FormatsWidget::convertType(XBinary::FT fileType, SBINARY::TYPE type)
             nResult = SELF::TYPE_MEMORYMAP;
         else if (type == SBINARY::TYPE_ENTROPY)
             nResult = SELF::TYPE_ENTROPY;
-        else if (type == SBINARY::TYPE_HEURISTICSCAN)
-            nResult = SELF::TYPE_HEURISTICSCAN;
+        else if (type == SBINARY::TYPE_NFDSCAN)
+            nResult = SELF::TYPE_NFDSCAN;
         else if (type == SBINARY::TYPE_EXTRACTOR)
             nResult = SELF::TYPE_EXTRACTOR;
         else if (type == SBINARY::TYPE_SEARCH)
@@ -870,8 +870,8 @@ qint32 FormatsWidget::convertType(XBinary::FT fileType, SBINARY::TYPE type)
             nResult = SMACH::TYPE_MEMORYMAP;
         else if (type == SBINARY::TYPE_ENTROPY)
             nResult = SMACH::TYPE_ENTROPY;
-        else if (type == SBINARY::TYPE_HEURISTICSCAN)
-            nResult = SMACH::TYPE_HEURISTICSCAN;
+        else if (type == SBINARY::TYPE_NFDSCAN)
+            nResult = SMACH::TYPE_NFDSCAN;
         else if (type == SBINARY::TYPE_EXTRACTOR)
             nResult = SMACH::TYPE_EXTRACTOR;
         else if (type == SBINARY::TYPE_SEARCH)
@@ -896,8 +896,8 @@ qint32 FormatsWidget::convertType(XBinary::FT fileType, SBINARY::TYPE type)
             nResult = SDEX::TYPE_MEMORYMAP;
         else if (type == SBINARY::TYPE_ENTROPY)
             nResult = SDEX::TYPE_ENTROPY;
-        else if (type == SBINARY::TYPE_HEURISTICSCAN)
-            nResult = SDEX::TYPE_HEURISTICSCAN;
+        else if (type == SBINARY::TYPE_NFDSCAN)
+            nResult = SDEX::TYPE_NFDSCAN;
         else if (type == SBINARY::TYPE_EXTRACTOR)
             nResult = SDEX::TYPE_EXTRACTOR;
         else if (type == SBINARY::TYPE_SEARCH)

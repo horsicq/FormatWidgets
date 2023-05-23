@@ -9,8 +9,10 @@ include(${CMAKE_CURRENT_LIST_DIR}/MACHOFAT/machofatwidget.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/MSDOS/msdoswidget.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/NE/newidget.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/PE/pewidget.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/../XOptions/xoptionswidget.cmake)
 
 set(ALLFORMATWIDGETS_SOURCES
+    ${XOPTIONSWIDGET_SOURCES}
     ${BINARYWIDGET_SOURCES}
     ${DEXWIDGET_SOURCES}
     ${ELFWIDGET_SOURCES}

@@ -358,7 +358,7 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="HeurWidget" name="widgetHeuristicScan" native="true"/>
+         <widget class="NFDWidgetAdvanced" name="widgetHeuristicScan" native="true"/>
         </item>
        </layout>
       </widget>
@@ -2993,9 +2993,9 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>HeurWidget</class>
+   <class>NFDWidgetAdvanced</class>
    <extends>QWidget</extends>
-   <header>heurwidget.h</header>
+   <header>nfdwidgetadvanced.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

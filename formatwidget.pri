@@ -83,9 +83,9 @@ FORMS += \
     include($$PWD/../XEntropyWidget/xentropywidget.pri)
 }
 
-!contains(XCONFIG, heurwidget) {
-    XCONFIG += heurwidget
-    include($$PWD/../StaticScan/heurwidget.pri)
+!contains(XCONFIG, nfd_widget) {
+    XCONFIG += nfd_widget
+    include($$PWD/../nfd_widget/nfd_widget.pri)
 }
 
 !contains(XCONFIG, xhashwidget) {
@@ -121,6 +121,11 @@ FORMS += \
 !contains(XCONFIG, xvisualizationwidget) {
     XCONFIG += xvisualizationwidget
     include($$PWD/../XVisualizationWidget/xvisualizationwidget.pri)
+}
+
+!contains(XCONFIG, xoptionswidget) {
+    XCONFIG += xoptionswidget
+    include($$PWD/../XOptions/xoptionswidget.pri)
 }
 
 DISTFILES += \

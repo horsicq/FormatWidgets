@@ -48,6 +48,11 @@ contains(XCONFIG, use_dex) {
     }
 }
 
+!contains(XCONFIG, xoptionswidget) {
+    XCONFIG += xoptionswidget
+    include($$PWD/../XOptions/xoptionswidget.pri)
+}
+
 DISTFILES += \
     $$PWD/LICENSE \
     $$PWD/README.md \

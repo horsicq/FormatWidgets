@@ -108,7 +108,7 @@ void MACHWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_SIGNATURES, tr("Signatures")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_MEMORYMAP, tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_ENTROPY, tr("Entropy")));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_HEURISTICSCAN, tr("Heuristic scan")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_NFDSCAN, tr("Heuristic scan")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_EXTRACTOR, tr("Extractor")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_SEARCH, tr("Search")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_mach_header, mach.is64() ? ("mach_header_64") : ("mach_header")));
@@ -1739,7 +1739,7 @@ void MACHWidget::reloadData()
             if (!isInitPresent(sInit)) {
                 ui->widgetEntropy->setData(getDevice(), 0, getDevice()->size(), mach.getFileType(), true);
             }
-        } else if (nType == SMACH::TYPE_HEURISTICSCAN) {
+        } else if (nType == SMACH::TYPE_NFDSCAN) {
             if (!isInitPresent(sInit)) {
                 ui->widgetHeuristicScan->setData(getDevice(), true, mach.getFileType());
             }
@@ -3708,5 +3708,5 @@ void MACHWidget::on_pushButtonEntropy_clicked()
 
 void MACHWidget::on_pushButtonHeuristicScan_clicked()
 {
-    setTreeItem(ui->treeWidgetNavi, SMACH::TYPE_HEURISTICSCAN);
+    setTreeItem(ui->treeWidgetNavi, SMACH::TYPE_NFDSCAN);
 }

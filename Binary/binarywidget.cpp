@@ -79,7 +79,7 @@ void BinaryWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_SIGNATURES, tr("Signatures")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_MEMORYMAP, tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_ENTROPY, tr("Entropy")));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_HEURISTICSCAN, tr("Heuristic scan")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_NFDSCAN, tr("Heuristic scan")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_EXTRACTOR, tr("Extractor")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_SEARCH, tr("Search")));
 
@@ -255,7 +255,7 @@ void BinaryWidget::reloadData()
             if (!isInitPresent(sInit)) {
                 ui->widgetEntropy->setData(getDevice(), 0, getDevice()->size(), fileType, true);
             }
-        } else if (nType == SBINARY::TYPE_HEURISTICSCAN) {
+        } else if (nType == SBINARY::TYPE_NFDSCAN) {
             if (!isInitPresent(sInit)) {
                 ui->widgetHeuristicScan->setData(getDevice(), true, fileType);
             }
@@ -346,7 +346,7 @@ void BinaryWidget::on_pushButtonEntropy_clicked()
 
 void BinaryWidget::on_pushButtonHeuristicScan_clicked()
 {
-    setTreeItem(ui->treeWidgetNavi, SBINARY::TYPE_HEURISTICSCAN);
+    setTreeItem(ui->treeWidgetNavi, SBINARY::TYPE_NFDSCAN);
 }
 
 void BinaryWidget::on_pushButtonMemoryMap_clicked()

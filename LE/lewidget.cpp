@@ -86,7 +86,7 @@ void LEWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_SIGNATURES, tr("Signatures")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_MEMORYMAP, tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_ENTROPY, tr("Entropy")));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_HEURISTICSCAN, tr("Heuristic scan")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_NFDSCAN, tr("Heuristic scan")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_EXTRACTOR, tr("Extractor")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_SEARCH, tr("Search")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_DOS_HEADER, "DOS_HEADER"));
@@ -567,7 +567,7 @@ void LEWidget::reloadData()
             if (!isInitPresent(sInit)) {
                 ui->widgetEntropy->setData(getDevice(), 0, getDevice()->size(), le.getFileType(), true);
             }
-        } else if (nType == SLE::TYPE_HEURISTICSCAN) {
+        } else if (nType == SLE::TYPE_NFDSCAN) {
             if (!isInitPresent(sInit)) {
                 ui->widgetHeuristicScan->setData(getDevice(), true, le.getFileType());
             }
@@ -904,5 +904,5 @@ void LEWidget::on_pushButtonEntropy_clicked()
 
 void LEWidget::on_pushButtonHeuristicScan_clicked()
 {
-    setTreeItem(ui->treeWidgetNavi, SLE::TYPE_HEURISTICSCAN);
+    setTreeItem(ui->treeWidgetNavi, SLE::TYPE_NFDSCAN);
 }
