@@ -243,7 +243,7 @@ public slots:
     void showInHexWindow(qint64 nOffset);
     void findValue(quint64 nValue, bool bIsBigEndian);
     void showEntropy(qint64 nOffset, qint64 nSize);
-    void dumpRegion(qint64 nOffset, qint64 nSize, QString sName);
+    void dumpRegion(qint64 nOffset, qint64 nSize, const QString &sName);
     void showDemangle(QString sString);
     bool saveBackup();
 

@@ -1236,13 +1236,15 @@ void FormatWidget::showEntropy(qint64 nOffset, qint64 nSize)
     dialogEntropy.exec();
 }
 
-void FormatWidget::dumpRegion(qint64 nOffset, qint64 nSize, QString sName)
+void FormatWidget::dumpRegion(qint64 nOffset, qint64 nSize, const QString &sName)
 {
-    if (sName == "") {
-        sName = tr("Dump");
+    QString _sName = sName;
+
+    if (_sName == "") {
+        _sName = tr("Dump");
     }
 
-    QString sSaveFileName = XBinary::getResultFileName(getDevice(), QString("%1.bin").arg(sName));
+    QString sSaveFileName = XBinary::getResultFileName(getDevice(), QString("%1.bin").arg(_sName));
     QString sFileName = QFileDialog::getSaveFileName(this, tr("Save dump"), sSaveFileName, QString("%1 (*.bin)").arg(tr("Raw data")));
 
     if (!sFileName.isEmpty()) {
