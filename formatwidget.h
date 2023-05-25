@@ -145,7 +145,7 @@ public:
     void ajustTableView(ProcessData *pProcessData, QStandardItemModel **ppModel, QTableView *pTableView, QSortFilterProxyModel *pProxyModel = nullptr,
                         bool bStretchLastSection = true);
     void ajustTreeView(ProcessData *pProcessData, QStandardItemModel **ppModel, QTreeView *pTreeView);
-    void ajustDialogModel(ProcessData *pProcessData, QStandardItemModel **ppModel, QString sTitle);
+    void ajustDialogModel(ProcessData *pProcessData, QStandardItemModel **ppModel, const QString &sTitle);
     void showSectionHex(QTableView *pTableView);
     void showSectionEntropy(QTableView *pTableView);
     void showSectionDisasm(QTableView *pTableView);
