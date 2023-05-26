@@ -634,7 +634,7 @@ QString FormatWidget::getInitString(QTreeWidgetItem *pItem)
     return sResult;
 }
 
-void FormatWidget::addInit(QString sString)
+void FormatWidget::addInit(const QString &sString)
 {
     g_mapInit.insert(sString.section("-", 0, 0), sString);
 }
