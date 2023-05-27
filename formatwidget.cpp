@@ -639,7 +639,7 @@ void FormatWidget::addInit(const QString &sString)
     g_mapInit.insert(sString.section("-", 0, 0), sString);
 }
 
-bool FormatWidget::isInitPresent(QString sString)
+bool FormatWidget::isInitPresent(const QString &sString)
 {
     return (g_mapInit.value(sString.section("-", 0, 0)) == sString);
 }

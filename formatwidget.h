@@ -163,7 +163,7 @@ public:
     void reset();
     QString getInitString(QTreeWidgetItem *pItem);
     void addInit(const QString &sString);
-    bool isInitPresent(QString sString);
+    bool isInitPresent(const QString &sString);
 
     void addPage(QTreeWidgetItem *pItem);
     void setAddPageEnabled(bool bEnable);
