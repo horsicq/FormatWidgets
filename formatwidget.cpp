@@ -1064,15 +1064,15 @@ QStandardItemModel *FormatWidget::getHeaderTableModel(QTableWidget *pTableWidget
     return pResult;
 }
 
-void FormatWidget::saveHeaderTable(QTableWidget *pTableWidget, QString sFileName)
+void FormatWidget::saveHeaderTable(QTableWidget *pTableWidget, const QString &sFileName)
 {
-    sFileName = QFileDialog::getSaveFileName(this, tr("Save"), sFileName, QString("%1 (*.txt);;%2 (*)").arg(tr("Text files"), tr("All files")));
+    QString _sFileName = QFileDialog::getSaveFileName(this, tr("Save"), sFileName, QString("%1 (*.txt);;%2 (*)").arg(tr("Text files"), tr("All files")));
 
-    if (!sFileName.isEmpty()) {
+    if (!_sFileName.isEmpty()) {
         QStandardItemModel *pModel = getHeaderTableModel(pTableWidget);
 
-        if (!XOptions::saveTableModel(pModel, sFileName)) {
-            QMessageBox::critical(XOptions::getMainWidget(this), tr("Error"), QString("%1: %2").arg(tr("Cannot save file"), sFileName));
+        if (!XOptions::saveTableModel(pModel, _sFileName)) {
+            QMessageBox::critical(XOptions::getMainWidget(this), tr("Error"), QString("%1: %2").arg(tr("Cannot save file"), _sFileName));
         }
 
         delete pModel;

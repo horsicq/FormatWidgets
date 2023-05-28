@@ -204,7 +204,7 @@ public:
     XADDR getDisasmInitAddress();
 
     QStandardItemModel *getHeaderTableModel(QTableWidget *pTableWidget);
-    void saveHeaderTable(QTableWidget *pTableWidget, QString sFileName);
+    void saveHeaderTable(QTableWidget *pTableWidget, const QString &sFileName);
 
 protected:
     enum SV {
