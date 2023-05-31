@@ -106,9 +106,14 @@ void PEWidget::reload()
 
         setFileType(pe.getFileType());
 
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_INFO, tr("Info")));
+        QTreeWidgetItem *pItemInfo = createNewItem(SPE::TYPE_INFO, tr("Info"));
+        ui->treeWidgetNavi->addTopLevelItem(pItemInfo);
+        pItemInfo->addChild(createNewItem(SPE::TYPE_NFDSCAN, "Nauz File Detector(NFD)"));
+        pItemInfo->addChild(createNewItem(SPE::TYPE_DIESCAN, "Detect It Easy(DiE)"));
+        pItemInfo->addChild(createNewItem(SPE::TYPE_YARASCAN, "YARA"));
+        pItemInfo->addChild(createNewItem(SPE::TYPE_VIRUSTOTAL, "VirusTotal"));
+
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_VISUALIZATION, tr("Visualization")));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_VIRUSTOTAL, "VirusTotal"));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_HEX, tr("Hex")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_DISASM, tr("Disasm")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_HASH, tr("Hash")));
@@ -116,7 +121,6 @@ void PEWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_SIGNATURES, tr("Signatures")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_MEMORYMAP, tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_ENTROPY, tr("Entropy")));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_NFDSCAN, tr("Heuristic scan")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_EXTRACTOR, tr("Extractor")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_SEARCH, tr("Search")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_TOOLS, tr("Tools")));
@@ -1508,6 +1512,14 @@ void PEWidget::reloadData()
         } else if (nType == SPE::TYPE_NFDSCAN) {
             if (!isInitPresent(sInit)) {
                 ui->widgetHeuristicScan->setData(getDevice(), true, pe.getFileType());
+            }
+        } else if (nType == SPE::TYPE_DIESCAN) {
+            if (!isInitPresent(sInit)) {
+                ui->widgetDIEScan->setData(getDevice(), true, pe.getFileType());
+            }
+        } else if (nType == SPE::TYPE_YARASCAN) {
+            if (!isInitPresent(sInit)) {
+                ui->widgetYARAScan->setData(XBinary::getDeviceFileName(getDevice()), true);
             }
         } else if (nType == SPE::TYPE_EXTRACTOR) {
             if (!isInitPresent(sInit)) {

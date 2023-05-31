@@ -39,6 +39,8 @@ enum TYPE {
     TYPE_NFDSCAN,
     TYPE_EXTRACTOR,
     TYPE_SEARCH,
+    TYPE_DIESCAN,
+    TYPE_YARASCAN,
     TYPE_Elf_Ehdr,
     TYPE_Elf_Shdr,
     TYPE_Elf_Phdr,

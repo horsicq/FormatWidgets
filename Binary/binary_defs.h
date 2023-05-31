@@ -39,6 +39,8 @@ enum TYPE {
     TYPE_NFDSCAN,
     TYPE_EXTRACTOR,
     TYPE_SEARCH,
+    TYPE_DIESCAN,
+    TYPE_YARASCAN,
     __TYPE_size
 };
 }  // namespace SBINARY

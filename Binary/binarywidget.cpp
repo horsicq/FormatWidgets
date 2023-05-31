@@ -69,9 +69,14 @@ void BinaryWidget::reload()
     if (binary.isValid()) {
         setFileType(binary.getFileType());
 
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_INFO, tr("Info")));
+        QTreeWidgetItem *pItemInfo = createNewItem(SBINARY::TYPE_INFO, tr("Info"));
+        ui->treeWidgetNavi->addTopLevelItem(pItemInfo);
+        pItemInfo->addChild(createNewItem(SBINARY::TYPE_NFDSCAN, "Nauz File Detector(NFD)"));
+        pItemInfo->addChild(createNewItem(SBINARY::TYPE_DIESCAN, "Detect It Easy(DiE)"));
+        pItemInfo->addChild(createNewItem(SBINARY::TYPE_YARASCAN, "YARA"));
+        pItemInfo->addChild(createNewItem(SBINARY::TYPE_VIRUSTOTAL, "VirusTotal"));
+
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_VISUALIZATION, tr("Visualization")));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_VIRUSTOTAL, "VirusTotal"));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_HEX, tr("Hex")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_DISASM, tr("Disasm")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_HASH, tr("Hash")));
@@ -79,7 +84,6 @@ void BinaryWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_SIGNATURES, tr("Signatures")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_MEMORYMAP, tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_ENTROPY, tr("Entropy")));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_NFDSCAN, tr("Heuristic scan")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_EXTRACTOR, tr("Extractor")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_SEARCH, tr("Search")));
 
@@ -258,6 +262,14 @@ void BinaryWidget::reloadData()
         } else if (nType == SBINARY::TYPE_NFDSCAN) {
             if (!isInitPresent(sInit)) {
                 ui->widgetHeuristicScan->setData(getDevice(), true, fileType);
+            }
+        } else if (nType == SBINARY::TYPE_DIESCAN) {
+            if (!isInitPresent(sInit)) {
+                ui->widgetDIEScan->setData(getDevice(), true, fileType);
+            }
+        } else if (nType == SBINARY::TYPE_YARASCAN) {
+            if (!isInitPresent(sInit)) {
+                ui->widgetYARAScan->setData(XBinary::getDeviceFileName(getDevice()), true);
             }
         } else if (nType == SBINARY::TYPE_EXTRACTOR) {
             if (!isInitPresent(sInit)) {

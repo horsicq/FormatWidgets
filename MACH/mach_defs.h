@@ -39,6 +39,8 @@ enum TYPE {
     TYPE_NFDSCAN,
     TYPE_EXTRACTOR,
     TYPE_SEARCH,
+    TYPE_DIESCAN,
+    TYPE_YARASCAN,
     TYPE_mach_header,
     TYPE_mach_commands,
     TYPE_mach_segments,

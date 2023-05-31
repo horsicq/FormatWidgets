@@ -78,9 +78,14 @@ void ELFWidget::reload()
     if (elf.isValid()) {
         setFileType(elf.getFileType());
 
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_INFO, tr("Info")));
+        QTreeWidgetItem *pItemInfo = createNewItem(SELF::TYPE_INFO, tr("Info"));
+        ui->treeWidgetNavi->addTopLevelItem(pItemInfo);
+        pItemInfo->addChild(createNewItem(SELF::TYPE_NFDSCAN, "Nauz File Detector(NFD)"));
+        pItemInfo->addChild(createNewItem(SELF::TYPE_DIESCAN, "Detect It Easy(DiE)"));
+        pItemInfo->addChild(createNewItem(SELF::TYPE_YARASCAN, "YARA"));
+        pItemInfo->addChild(createNewItem(SELF::TYPE_VIRUSTOTAL, "VirusTotal"));
+
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_VISUALIZATION, tr("Visualization")));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_VIRUSTOTAL, "VirusTotal"));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_HEX, tr("Hex")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_DISASM, tr("Disasm")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_HASH, tr("Hash")));
@@ -88,7 +93,6 @@ void ELFWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_SIGNATURES, tr("Signatures")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_MEMORYMAP, tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_ENTROPY, tr("Entropy")));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_NFDSCAN, tr("Heuristic scan")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_EXTRACTOR, tr("Extractor")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_SEARCH, tr("Search")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_Elf_Ehdr, "Elf_Ehdr"));
@@ -431,6 +435,14 @@ void ELFWidget::reloadData()
         } else if (nType == SELF::TYPE_NFDSCAN) {
             if (!isInitPresent(sInit)) {
                 ui->widgetHeuristicScan->setData(getDevice(), true, elf.getFileType());
+            }
+        } else if (nType == SELF::TYPE_DIESCAN) {
+            if (!isInitPresent(sInit)) {
+                ui->widgetDIEScan->setData(getDevice(), true, elf.getFileType());
+            }
+        } else if (nType == SELF::TYPE_YARASCAN) {
+            if (!isInitPresent(sInit)) {
+                ui->widgetYARAScan->setData(XBinary::getDeviceFileName(getDevice()), true);
             }
         } else if (nType == SELF::TYPE_EXTRACTOR) {
             if (!isInitPresent(sInit)) {

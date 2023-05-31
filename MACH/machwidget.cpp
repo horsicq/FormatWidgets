@@ -98,9 +98,14 @@ void MACHWidget::reload()
     if (mach.isValid()) {
         setFileType(mach.getFileType());
 
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_INFO, tr("Info")));
+        QTreeWidgetItem *pItemInfo = createNewItem(SMACH::TYPE_INFO, tr("Info"));
+        ui->treeWidgetNavi->addTopLevelItem(pItemInfo);
+        pItemInfo->addChild(createNewItem(SMACH::TYPE_NFDSCAN, "Nauz File Detector(NFD)"));
+        pItemInfo->addChild(createNewItem(SMACH::TYPE_DIESCAN, "Detect It Easy(DiE)"));
+        pItemInfo->addChild(createNewItem(SMACH::TYPE_YARASCAN, "YARA"));
+        pItemInfo->addChild(createNewItem(SMACH::TYPE_VIRUSTOTAL, "VirusTotal"));
+
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_VISUALIZATION, tr("Visualization")));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_VIRUSTOTAL, "VirusTotal"));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_HEX, tr("Hex")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_DISASM, tr("Disasm")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_HASH, tr("Hash")));
@@ -108,7 +113,6 @@ void MACHWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_SIGNATURES, tr("Signatures")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_MEMORYMAP, tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_ENTROPY, tr("Entropy")));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_NFDSCAN, tr("Heuristic scan")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_EXTRACTOR, tr("Extractor")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_SEARCH, tr("Search")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_mach_header, mach.is64() ? ("mach_header_64") : ("mach_header")));
@@ -1742,6 +1746,14 @@ void MACHWidget::reloadData()
         } else if (nType == SMACH::TYPE_NFDSCAN) {
             if (!isInitPresent(sInit)) {
                 ui->widgetHeuristicScan->setData(getDevice(), true, mach.getFileType());
+            }
+        } else if (nType == SMACH::TYPE_DIESCAN) {
+            if (!isInitPresent(sInit)) {
+                ui->widgetDIEScan->setData(getDevice(), true, mach.getFileType());
+            }
+        } else if (nType == SMACH::TYPE_YARASCAN) {
+            if (!isInitPresent(sInit)) {
+                ui->widgetYARAScan->setData(XBinary::getDeviceFileName(getDevice()), true);
             }
         } else if (nType == SMACH::TYPE_EXTRACTOR) {
             if (!isInitPresent(sInit)) {

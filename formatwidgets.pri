@@ -68,21 +68,6 @@ FORMS += \
     include($$PWD/DEX/dexwidget.pri)
 }
 
-!contains(XCONFIG, die_widget) {
-    XCONFIG += die_widget
-    include($$PWD/../die_widget/die_widget.pri)
-}
-
-!contains(XCONFIG, nfd_widget) {
-    XCONFIG += nfd_widget
-    include($$PWD/../nfd_widget/nfd_widget.pri)
-}
-
-!contains(XCONFIG, yara_widget) {
-    XCONFIG += yara_widget
-    include($$PWD/../yara_widget/yara_widget.pri)
-}
-
 !contains(XCONFIG, archive_widget) {
     XCONFIG += archive_widget
     include($$PWD/../archive_widget/archive_widget.pri)

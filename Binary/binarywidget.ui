@@ -388,6 +388,44 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="page_DIEScan">
+       <layout class="QVBoxLayout" name="verticalLayout_5dd">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="DIEWidgetAdvanced" name="widgetDIEScan" native="true"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="page_YARAScan">
+       <layout class="QVBoxLayout" name="verticalLayout_6dd">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="YARAWidgetAdvanced" name="widgetYARAScan" native="true"/>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </widget>
    </item>
@@ -470,6 +508,18 @@
    <class>XVisualizationWidget</class>
    <extends>QWidget</extends>
    <header>xvisualizationwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>DIEWidgetAdvanced</class>
+   <extends>QWidget</extends>
+   <header>diewidgetadvanced.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>YARAWidgetAdvanced</class>
+   <extends>QWidget</extends>
+   <header>yarawidgetadvanced.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

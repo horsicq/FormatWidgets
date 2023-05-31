@@ -10,7 +10,9 @@ include(${CMAKE_CURRENT_LIST_DIR}/../Controls/xdatetimeeditx.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../XHexView/xhexview.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../XMemoryMapWidget/xmemorymapwidget.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../XEntropyWidget/xentropywidget.cmake)
-include(${CMAKE_CURRENT_LIST_DIR}/../nfd_widget/heurwidget.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/../nfd_widget/nfd_widget.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/../yara_widget/yara_widget.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/../die_widget/die_widget.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../XHashWidget/xhashwidget.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../XDisasmView/xdisasmview.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../XDemangleWidget/xdemanglewidget.cmake)
@@ -37,7 +39,9 @@ set(FORMATWIDGET_SOURCES
     ${XHEXVIEW_SOURCES}
     ${XMEMORYMAPWIDGET_SOURCES}
     ${XENTROPYWIDGET_SOURCES}
-    ${HEURWIDGET_SOURCES}
+    ${NFD_WIDGET_SOURCES}
+    ${YARA_WIDGET_SOURCES}
+    ${DIE_WIDGET_SOURCES}
     ${XHASHWIDGET_SOURCES}
     ${XDISASMVIEW_SOURCES}
     ${XDEMANGLEWIDGET_SOURCES}

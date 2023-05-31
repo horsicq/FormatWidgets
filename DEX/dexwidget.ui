@@ -333,6 +333,44 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="page_DIEScan">
+       <layout class="QVBoxLayout" name="verticalLayout_5dd">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="DIEWidgetAdvanced" name="widgetDIEScan" native="true"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="page_YARAScan">
+       <layout class="QVBoxLayout" name="verticalLayout_6dd">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="YARAWidgetAdvanced" name="widgetYARAScan" native="true"/>
+        </item>
+       </layout>
+      </widget>
       <widget class="QWidget" name="page_Header">
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <property name="leftMargin">

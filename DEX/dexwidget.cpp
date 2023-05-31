@@ -79,16 +79,20 @@ void DEXWidget::reload()
     if (dex.isValid()) {
         setFileType(dex.getFileType());
 
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_INFO, tr("Info")));
+        QTreeWidgetItem *pItemInfo = createNewItem(SDEX::TYPE_INFO, tr("Info"));
+        ui->treeWidgetNavi->addTopLevelItem(pItemInfo);
+        pItemInfo->addChild(createNewItem(SDEX::TYPE_NFDSCAN, "Nauz File Detector(NFD)"));
+        pItemInfo->addChild(createNewItem(SDEX::TYPE_DIESCAN, "Detect It Easy(DiE)"));
+        pItemInfo->addChild(createNewItem(SDEX::TYPE_YARASCAN, "YARA"));
+        pItemInfo->addChild(createNewItem(SDEX::TYPE_VIRUSTOTAL, "VirusTotal"));
+
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_VISUALIZATION, tr("Visualization")));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_VIRUSTOTAL, "VirusTotal"));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_HEX, tr("Hex")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_HASH, tr("Hash")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_STRINGS, tr("Strings")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_SIGNATURES, tr("Signatures")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_MEMORYMAP, tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_ENTROPY, tr("Entropy")));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_NFDSCAN, tr("Heuristic scan")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_EXTRACTOR, tr("Extractor")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_SEARCH, tr("Search")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_HEADER, "Header"));
@@ -444,7 +448,15 @@ void DEXWidget::reloadData()
             }
         } else if (nType == SDEX::TYPE_NFDSCAN) {
             if (!isInitPresent(sInit)) {
-                ui->widgetHeuristicScan->setData(getDevice(), true, XBinary::FT_DEX);
+                ui->widgetHeuristicScan->setData(getDevice(), true, dex.getFileType());
+            }
+        } else if (nType == SDEX::TYPE_DIESCAN) {
+            if (!isInitPresent(sInit)) {
+                ui->widgetDIEScan->setData(getDevice(), true, dex.getFileType());
+            }
+        } else if (nType == SDEX::TYPE_YARASCAN) {
+            if (!isInitPresent(sInit)) {
+                ui->widgetYARAScan->setData(XBinary::getDeviceFileName(getDevice()), true);
             }
         } else if (nType == SDEX::TYPE_EXTRACTOR) {
             if (!isInitPresent(sInit)) {

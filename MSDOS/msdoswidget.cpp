@@ -74,9 +74,14 @@ void MSDOSWidget::reload()
     if (msdos.isValid()) {
         setFileType(msdos.getFileType());
 
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_INFO, tr("Info")));
+        QTreeWidgetItem *pItemInfo = createNewItem(SMSDOS::TYPE_INFO, tr("Info"));
+        ui->treeWidgetNavi->addTopLevelItem(pItemInfo);
+        pItemInfo->addChild(createNewItem(SMSDOS::TYPE_NFDSCAN, "Nauz File Detector(NFD)"));
+        pItemInfo->addChild(createNewItem(SMSDOS::TYPE_DIESCAN, "Detect It Easy(DiE)"));
+        pItemInfo->addChild(createNewItem(SMSDOS::TYPE_YARASCAN, "YARA"));
+        pItemInfo->addChild(createNewItem(SMSDOS::TYPE_VIRUSTOTAL, "VirusTotal"));
+
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_VISUALIZATION, tr("Visualization")));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_VIRUSTOTAL, "VirusTotal"));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_HEX, tr("Hex")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_DISASM, tr("Disasm")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_HASH, tr("Hash")));
@@ -84,7 +89,6 @@ void MSDOSWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_SIGNATURES, tr("Signatures")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_MEMORYMAP, tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_ENTROPY, tr("Entropy")));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_NFDSCAN, tr("Heuristic scan")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_EXTRACTOR, tr("Extractor")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_SEARCH, tr("Search")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_DOS_HEADER, "DOS_HEADER"));
@@ -354,6 +358,14 @@ void MSDOSWidget::reloadData()
         } else if (nType == SMSDOS::TYPE_NFDSCAN) {
             if (!isInitPresent(sInit)) {
                 ui->widgetHeuristicScan->setData(getDevice(), true, msdos.getFileType());
+            }
+        } else if (nType == SMSDOS::TYPE_DIESCAN) {
+            if (!isInitPresent(sInit)) {
+                ui->widgetDIEScan->setData(getDevice(), true, msdos.getFileType());
+            }
+        } else if (nType == SMSDOS::TYPE_YARASCAN) {
+            if (!isInitPresent(sInit)) {
+                ui->widgetYARAScan->setData(XBinary::getDeviceFileName(getDevice()), true);
             }
         } else if (nType == SMSDOS::TYPE_EXTRACTOR) {
             if (!isInitPresent(sInit)) {
