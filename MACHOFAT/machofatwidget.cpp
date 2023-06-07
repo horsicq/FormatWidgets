@@ -90,6 +90,9 @@ void MACHOFATWidget::reload()
 
                 pMachWidget->setBackupDevice(getDevice());
 
+                XInfoDB *pXInfoDB = getXInfoDB();
+                pMachWidget->setXInfoDB(pXInfoDB);
+
                 ui->stackedWidget->addWidget(pMachWidget);
 
                 g_listDevices.append(pSubDevice);
