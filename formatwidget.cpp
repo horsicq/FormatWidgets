@@ -826,6 +826,19 @@ void FormatWidget::initWidget()
             if (pChild) {
                 initExtractorWidget(pChild);
             }
+        } 
+    }
+    {
+        QList<YARAWidgetAdvanced *> listWidgets = this->findChildren<YARAWidgetAdvanced *>();
+
+        qint32 nNumberOfWidgets = listWidgets.count();
+
+        for (qint32 i = 0; i < nNumberOfWidgets; i++) {
+            YARAWidgetAdvanced *pChild = dynamic_cast<YARAWidgetAdvanced *>(listWidgets.at(i));
+
+            if (pChild) {
+                initYaraWidget(pChild);
+            }
         }
     }
 }
@@ -953,6 +966,11 @@ void FormatWidget::initToolsWidget(ToolsWidget *pWidget)
 void FormatWidget::initExtractorWidget(XExtractorWidget *pWidget)
 {
     connect(pWidget, SIGNAL(showOffsetHex(qint64, qint64)), this, SLOT(showInHexWindow(qint64, qint64)));
+}
+
+void FormatWidget::initYaraWidget(YARAWidgetAdvanced *pWidget)
+{
+    connect(pWidget, SIGNAL(showHex(qint64, qint64)), this, SLOT(showInHexWindow(qint64, qint64)));
 }
 
 qint32 FormatWidget::getColumnWidth(QWidget *pParent, FormatWidget::CW cw, XBinary::MODE mode)

@@ -45,6 +45,7 @@
 #include "xmultidisasmwidget.h"
 #include "xoptions.h"
 #include "xshortcutsdialog.h"
+#include "yarawidgetadvanced.h"
 
 class FormatWidget : public XShortcutsWidget {
     Q_OBJECT
@@ -184,6 +185,7 @@ public:
     void initDisasmView(XDisasmView *pWidget);
     void initToolsWidget(ToolsWidget *pWidget);
     void initExtractorWidget(XExtractorWidget *pWidget);
+    void initYaraWidget(YARAWidgetAdvanced *pWidget);
 
     enum CW {
         CW_UINT8 = 0,
