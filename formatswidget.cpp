@@ -52,7 +52,7 @@ void FormatsWidget::setName(const QString &sFileName, bool bScan)
     this->g_sFileName = sFileName;
     this->g_bScan = bScan;
 
-    XFormats::setFileTypeComboBox(g_sFileName, ui->comboBoxFileType);
+    XFormats::setFileTypeComboBox(XBinary::FT_UNKNOWN, g_sFileName, ui->comboBoxFileType);
 
     reload();
 }
