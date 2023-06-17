@@ -826,7 +826,7 @@ void FormatWidget::initWidget()
             if (pChild) {
                 initExtractorWidget(pChild);
             }
-        } 
+        }
     }
     {
         QList<YARAWidgetAdvanced *> listWidgets = this->findChildren<YARAWidgetAdvanced *>();

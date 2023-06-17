@@ -1013,7 +1013,10 @@ void PEProcessData::_process()
             (*g_ppModel)->setItem(i, 1, new QStandardItem(XBinary::valueToHex(listRichSignatures.at(i).nId)));
             (*g_ppModel)->setItem(i, 2, new QStandardItem(QString::number(listRichSignatures.at(i).nVersion)));
             (*g_ppModel)->setItem(i, 3, new QStandardItem(QString::number(listRichSignatures.at(i).nCount)));
-            (*g_ppModel)->setItem(i, 4, new QStandardItem(SpecAbstract::getMsRichString(listRichSignatures.at(i).nId, listRichSignatures.at(i).nVersion, listRichSignatures.at(i).nCount, getPdStruct())));
+            (*g_ppModel)
+                ->setItem(i, 4,
+                          new QStandardItem(SpecAbstract::getMsRichString(listRichSignatures.at(i).nId, listRichSignatures.at(i).nVersion,
+                                                                          listRichSignatures.at(i).nCount, getPdStruct())));
 
             incValue();
         }
