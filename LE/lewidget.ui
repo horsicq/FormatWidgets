@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>733</width>
-    <height>248</height>
+    <width>891</width>
+    <height>247</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -123,16 +123,10 @@
      </property>
      <widget class="QTreeWidget" name="treeWidgetNavi">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>250</width>
-        <height>16777215</height>
-       </size>
       </property>
       <attribute name="headerVisible">
        <bool>false</bool>
@@ -551,7 +545,7 @@
             <bool>false</bool>
            </property>
            <attribute name="horizontalHeaderDefaultSectionSize">
-            <number>39</number>
+            <number>41</number>
            </attribute>
            <attribute name="verticalHeaderVisible">
             <bool>false</bool>
@@ -646,18 +640,6 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>XMultiDisasmWidget</class>
-   <extends>QWidget</extends>
-   <header>xmultidisasmwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>SearchSignaturesWidget</class>
-   <extends>QWidget</extends>
-   <header>searchsignatureswidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>XHashWidget</class>
    <extends>QWidget</extends>
    <header>xhashwidget.h</header>
@@ -670,9 +652,43 @@
    <container>1</container>
   </customwidget>
   <customwidget>
+   <class>XExtractorWidget</class>
+   <extends>QWidget</extends>
+   <header>xextractorwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SearchValuesWidget</class>
+   <extends>QWidget</extends>
+   <header>searchvalueswidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>XVisualizationWidget</class>
    <extends>QWidget</extends>
    <header>xvisualizationwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SearchSignaturesWidget</class>
+   <extends>QWidget</extends>
+   <header>searchsignatureswidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>DIEWidgetAdvanced</class>
+   <extends>QWidget</extends>
+   <header>diewidgetadvanced.h</header>
+  </customwidget>
+  <customwidget>
+   <class>YARAWidgetAdvanced</class>
+   <extends>QWidget</extends>
+   <header>yarawidgetadvanced.h</header>
+  </customwidget>
+  <customwidget>
+   <class>XMultiDisasmWidget</class>
+   <extends>QWidget</extends>
+   <header>xmultidisasmwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

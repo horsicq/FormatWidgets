@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>956</width>
-    <height>455</height>
+    <width>997</width>
+    <height>454</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -126,16 +126,10 @@
      </property>
      <widget class="QTreeWidget" name="treeWidgetNavi">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>250</width>
-        <height>16777215</height>
-       </size>
       </property>
       <attribute name="headerVisible">
        <bool>false</bool>
@@ -3002,11 +2996,6 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>XLineEditHEX</class>
-   <extends>QLineEdit</extends>
-   <header>xlineedithex.h</header>
-  </customwidget>
-  <customwidget>
    <class>XFileInfoWidget</class>
    <extends>QWidget</extends>
    <header>xfileinfowidget.h</header>
@@ -3049,18 +3038,6 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>XMultiDisasmWidget</class>
-   <extends>QWidget</extends>
-   <header>xmultidisasmwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>SearchSignaturesWidget</class>
-   <extends>QWidget</extends>
-   <header>searchsignatureswidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>XHashWidget</class>
    <extends>QWidget</extends>
    <header>xhashwidget.h</header>
@@ -3079,18 +3056,6 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>XDisasmView</class>
-   <extends>QWidget</extends>
-   <header>xdisasmview.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>PEToolsWidget</class>
-   <extends>QWidget</extends>
-   <header>petoolswidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>SearchValuesWidget</class>
    <extends>QWidget</extends>
    <header>searchvalueswidget.h</header>
@@ -3100,6 +3065,45 @@
    <class>XVisualizationWidget</class>
    <extends>QWidget</extends>
    <header>xvisualizationwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SearchSignaturesWidget</class>
+   <extends>QWidget</extends>
+   <header>searchsignatureswidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>DIEWidgetAdvanced</class>
+   <extends>QWidget</extends>
+   <header>diewidgetadvanced.h</header>
+  </customwidget>
+  <customwidget>
+   <class>YARAWidgetAdvanced</class>
+   <extends>QWidget</extends>
+   <header>yarawidgetadvanced.h</header>
+  </customwidget>
+  <customwidget>
+   <class>XMultiDisasmWidget</class>
+   <extends>QWidget</extends>
+   <header>xmultidisasmwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>XLineEditHEX</class>
+   <extends>QLineEdit</extends>
+   <header>xlineedithex.h</header>
+  </customwidget>
+  <customwidget>
+   <class>XDisasmView</class>
+   <extends>QWidget</extends>
+   <header>xdisasmview.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>PEToolsWidget</class>
+   <extends>QWidget</extends>
+   <header>petoolswidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
