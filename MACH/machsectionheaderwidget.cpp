@@ -191,30 +191,22 @@ FormatWidget::SV MACHSectionHeaderWidget::_setValue(QVariant vValue, int nStype,
             switch (nStype) {
                 case SMACH::TYPE_mach_commands:
                     switch (nNdata) {
-                        case N_mach_commands::cmd:
-                            g_ppComboBox[N_mach_commands::CB_CMD]->setValue(nValue);
-                            break;
+                        case N_mach_commands::cmd: g_ppComboBox[N_mach_commands::CB_CMD]->setValue(nValue); break;
                     }
 
                     break;
 
                 case SMACH::TYPE_mach_segments:
                     switch (nNdata) {
-                        case N_mach_segments::initprot:
-                            g_ppComboBox[N_mach_segments::CB_initprot]->setValue(nValue);
-                            break;
-                        case N_mach_segments::maxprot:
-                            g_ppComboBox[N_mach_segments::CB_maxprot]->setValue(nValue);
-                            break;
+                        case N_mach_segments::initprot: g_ppComboBox[N_mach_segments::CB_initprot]->setValue(nValue); break;
+                        case N_mach_segments::maxprot: g_ppComboBox[N_mach_segments::CB_maxprot]->setValue(nValue); break;
                     }
 
                     break;
 
                 case SMACH::TYPE_DICE:
                     switch (nNdata) {
-                        case N_mach_data_in_code_entry::kind:
-                            g_ppComboBox[N_mach_data_in_code_entry::CB_kind]->setValue(nValue);
-                            break;
+                        case N_mach_data_in_code_entry::kind: g_ppComboBox[N_mach_data_in_code_entry::CB_kind]->setValue(nValue); break;
                     }
 
                     break;
@@ -232,9 +224,7 @@ FormatWidget::SV MACHSectionHeaderWidget::_setValue(QVariant vValue, int nStype,
 
                 case SMACH::TYPE_DYSYMTAB_indirectsyms:
                     switch (nNdata) {
-                        case N_mach_value::value:
-                            addComment(ui->tableWidget, N_mach_value::value, HEADER_COLUMN_COMMENT, mach.getIndexSymbolName(nValue));
-                            break;
+                        case N_mach_value::value: addComment(ui->tableWidget, N_mach_value::value, HEADER_COLUMN_COMMENT, mach.getIndexSymbolName(nValue)); break;
                     }
 
                     break;
@@ -252,12 +242,8 @@ FormatWidget::SV MACHSectionHeaderWidget::_setValue(QVariant vValue, int nStype,
             switch (nStype) {
                 case SMACH::TYPE_mach_commands:
                     switch (nNdata) {
-                        case N_mach_commands::cmd:
-                            mach._setCommand_cmd(nOffset, nValue);
-                            break;
-                        case N_mach_commands::cmdsize:
-                            mach._setCommand_cmdsize(nOffset, nValue);
-                            break;
+                        case N_mach_commands::cmd: mach._setCommand_cmd(nOffset, nValue); break;
+                        case N_mach_commands::cmdsize: mach._setCommand_cmdsize(nOffset, nValue); break;
                     }
 
                     break;
@@ -266,18 +252,10 @@ FormatWidget::SV MACHSectionHeaderWidget::_setValue(QVariant vValue, int nStype,
                 case SMACH::TYPE_mach_weak_libraries:
                 case SMACH::TYPE_mach_id_library:
                     switch (nNdata) {
-                        case N_mach_library::timestamp:
-                            mach._setLibraryRecord_timestamp(nOffset, nValue);
-                            break;
-                        case N_mach_library::current_version:
-                            mach._setLibraryRecord_current_version(nOffset, nValue);
-                            break;
-                        case N_mach_library::compatibility_version:
-                            mach._setLibraryRecord_compatibility_version(nOffset, nValue);
-                            break;
-                        case N_mach_library::name:
-                            mach._setLibraryRecord_name(nOffset, sValue);
-                            break;
+                        case N_mach_library::timestamp: mach._setLibraryRecord_timestamp(nOffset, nValue); break;
+                        case N_mach_library::current_version: mach._setLibraryRecord_current_version(nOffset, nValue); break;
+                        case N_mach_library::compatibility_version: mach._setLibraryRecord_compatibility_version(nOffset, nValue); break;
+                        case N_mach_library::name: mach._setLibraryRecord_name(nOffset, sValue); break;
                     }
 
                     break;
@@ -285,15 +263,9 @@ FormatWidget::SV MACHSectionHeaderWidget::_setValue(QVariant vValue, int nStype,
                 case SMACH::TYPE_mach_LOADFVMLIB:
                 case SMACH::TYPE_mach_IDFVMLIB:
                     switch (nNdata) {
-                        case N_mach_fmv_library::minor_version:
-                            mach._setFvmLibraryRecord_minor_version(nOffset, nValue);
-                            break;
-                        case N_mach_fmv_library::header_addr:
-                            mach._setFvmLibraryRecord_header_addr(nOffset, nValue);
-                            break;
-                        case N_mach_fmv_library::name:
-                            mach._setLibraryRecord_name(nOffset, sValue);
-                            break;
+                        case N_mach_fmv_library::minor_version: mach._setFvmLibraryRecord_minor_version(nOffset, nValue); break;
+                        case N_mach_fmv_library::header_addr: mach._setFvmLibraryRecord_header_addr(nOffset, nValue); break;
+                        case N_mach_fmv_library::name: mach._setLibraryRecord_name(nOffset, sValue); break;
                     }
 
                     break;
@@ -301,63 +273,27 @@ FormatWidget::SV MACHSectionHeaderWidget::_setValue(QVariant vValue, int nStype,
                 case SMACH::TYPE_mach_segments:
                     if (mach.is64()) {
                         switch (nNdata) {
-                            case N_mach_segments::segname:
-                                mach._setSegment64_segname(nOffset, sValue);
-                                break;
-                            case N_mach_segments::vmaddr:
-                                mach._setSegment64_vmaddr(nOffset, nValue);
-                                break;
-                            case N_mach_segments::vmsize:
-                                mach._setSegment64_vmsize(nOffset, nValue);
-                                break;
-                            case N_mach_segments::fileoff:
-                                mach._setSegment64_fileoff(nOffset, nValue);
-                                break;
-                            case N_mach_segments::filesize:
-                                mach._setSegment64_filesize(nOffset, nValue);
-                                break;
-                            case N_mach_segments::maxprot:
-                                mach._setSegment64_maxprot(nOffset, nValue);
-                                break;
-                            case N_mach_segments::initprot:
-                                mach._setSegment64_initprot(nOffset, nValue);
-                                break;
-                            case N_mach_segments::nsects:
-                                mach._setSegment64_nsects(nOffset, nValue);
-                                break;
-                            case N_mach_segments::flags:
-                                mach._setSegment64_flags(nOffset, nValue);
-                                break;
+                            case N_mach_segments::segname: mach._setSegment64_segname(nOffset, sValue); break;
+                            case N_mach_segments::vmaddr: mach._setSegment64_vmaddr(nOffset, nValue); break;
+                            case N_mach_segments::vmsize: mach._setSegment64_vmsize(nOffset, nValue); break;
+                            case N_mach_segments::fileoff: mach._setSegment64_fileoff(nOffset, nValue); break;
+                            case N_mach_segments::filesize: mach._setSegment64_filesize(nOffset, nValue); break;
+                            case N_mach_segments::maxprot: mach._setSegment64_maxprot(nOffset, nValue); break;
+                            case N_mach_segments::initprot: mach._setSegment64_initprot(nOffset, nValue); break;
+                            case N_mach_segments::nsects: mach._setSegment64_nsects(nOffset, nValue); break;
+                            case N_mach_segments::flags: mach._setSegment64_flags(nOffset, nValue); break;
                         }
                     } else {
                         switch (nNdata) {
-                            case N_mach_segments::segname:
-                                mach._setSegment32_segname(nOffset, sValue);
-                                break;
-                            case N_mach_segments::vmaddr:
-                                mach._setSegment32_vmaddr(nOffset, nValue);
-                                break;
-                            case N_mach_segments::vmsize:
-                                mach._setSegment32_vmsize(nOffset, nValue);
-                                break;
-                            case N_mach_segments::fileoff:
-                                mach._setSegment32_fileoff(nOffset, nValue);
-                                break;
-                            case N_mach_segments::filesize:
-                                mach._setSegment32_filesize(nOffset, nValue);
-                                break;
-                            case N_mach_segments::maxprot:
-                                mach._setSegment32_maxprot(nOffset, nValue);
-                                break;
-                            case N_mach_segments::initprot:
-                                mach._setSegment32_initprot(nOffset, nValue);
-                                break;
-                            case N_mach_segments::nsects:
-                                mach._setSegment32_nsects(nOffset, nValue);
-                                break;
-                            case N_mach_segments::flags:
-                                mach._setSegment32_flags(nOffset, nValue);
-                                break;
+                            case N_mach_segments::segname: mach._setSegment32_segname(nOffset, sValue); break;
+                            case N_mach_segments::vmaddr: mach._setSegment32_vmaddr(nOffset, nValue); break;
+                            case N_mach_segments::vmsize: mach._setSegment32_vmsize(nOffset, nValue); break;
+                            case N_mach_segments::fileoff: mach._setSegment32_fileoff(nOffset, nValue); break;
+                            case N_mach_segments::filesize: mach._setSegment32_filesize(nOffset, nValue); break;
+                            case N_mach_segments::maxprot: mach._setSegment32_maxprot(nOffset, nValue); break;
+                            case N_mach_segments::initprot: mach._setSegment32_initprot(nOffset, nValue); break;
+                            case N_mach_segments::nsects: mach._setSegment32_nsects(nOffset, nValue); break;
+                            case N_mach_segments::flags: mach._setSegment32_flags(nOffset, nValue); break;
                         }
                     }
 
@@ -366,78 +302,32 @@ FormatWidget::SV MACHSectionHeaderWidget::_setValue(QVariant vValue, int nStype,
                 case SMACH::TYPE_mach_sections:
                     if (mach.is64()) {
                         switch (nNdata) {
-                            case N_mach_sections64_E::sectname:
-                                mach._setSection64_sectname(nOffset, sValue);
-                                break;
-                            case N_mach_sections64_E::segname:
-                                mach._setSection64_segname(nOffset, sValue);
-                                break;
-                            case N_mach_sections64_E::addr:
-                                mach._setSection64_addr(nOffset, nValue);
-                                break;
-                            case N_mach_sections64_E::size:
-                                mach._setSection64_size(nOffset, nValue);
-                                break;
-                            case N_mach_sections64_E::offset:
-                                mach._setSection64_offset(nOffset, nValue);
-                                break;
-                            case N_mach_sections64_E::align:
-                                mach._setSection64_align(nOffset, nValue);
-                                break;
-                            case N_mach_sections64_E::reloff:
-                                mach._setSection64_reloff(nOffset, nValue);
-                                break;
-                            case N_mach_sections64_E::nreloc:
-                                mach._setSection64_nreloc(nOffset, nValue);
-                                break;
-                            case N_mach_sections64_E::flags_0:
-                                mach._setSection64_flags(nOffset, nValue);
-                                break;
-                            case N_mach_sections64_E::reserved1:
-                                mach._setSection64_reserved1(nOffset, nValue);
-                                break;
-                            case N_mach_sections64_E::reserved2:
-                                mach._setSection64_reserved2(nOffset, nValue);
-                                break;
-                            case N_mach_sections64_E::reserved3:
-                                mach._setSection64_reserved3(nOffset, nValue);
-                                break;
+                            case N_mach_sections64_E::sectname: mach._setSection64_sectname(nOffset, sValue); break;
+                            case N_mach_sections64_E::segname: mach._setSection64_segname(nOffset, sValue); break;
+                            case N_mach_sections64_E::addr: mach._setSection64_addr(nOffset, nValue); break;
+                            case N_mach_sections64_E::size: mach._setSection64_size(nOffset, nValue); break;
+                            case N_mach_sections64_E::offset: mach._setSection64_offset(nOffset, nValue); break;
+                            case N_mach_sections64_E::align: mach._setSection64_align(nOffset, nValue); break;
+                            case N_mach_sections64_E::reloff: mach._setSection64_reloff(nOffset, nValue); break;
+                            case N_mach_sections64_E::nreloc: mach._setSection64_nreloc(nOffset, nValue); break;
+                            case N_mach_sections64_E::flags_0: mach._setSection64_flags(nOffset, nValue); break;
+                            case N_mach_sections64_E::reserved1: mach._setSection64_reserved1(nOffset, nValue); break;
+                            case N_mach_sections64_E::reserved2: mach._setSection64_reserved2(nOffset, nValue); break;
+                            case N_mach_sections64_E::reserved3: mach._setSection64_reserved3(nOffset, nValue); break;
                         }
                     } else {
                         switch (nNdata) {
-                            case N_mach_sections32_E::sectname:
-                                mach._setSection32_sectname(nOffset, sValue);
-                                break;
-                            case N_mach_sections32_E::segname:
-                                mach._setSection32_segname(nOffset, sValue);
-                                break;
-                            case N_mach_sections32_E::addr:
-                                mach._setSection32_addr(nOffset, nValue);
-                                break;
-                            case N_mach_sections32_E::size:
-                                mach._setSection32_size(nOffset, nValue);
-                                break;
-                            case N_mach_sections32_E::offset:
-                                mach._setSection32_offset(nOffset, nValue);
-                                break;
-                            case N_mach_sections32_E::align:
-                                mach._setSection32_align(nOffset, nValue);
-                                break;
-                            case N_mach_sections32_E::reloff:
-                                mach._setSection32_reloff(nOffset, nValue);
-                                break;
-                            case N_mach_sections32_E::nreloc:
-                                mach._setSection32_nreloc(nOffset, nValue);
-                                break;
-                            case N_mach_sections32_E::flags_0:
-                                mach._setSection32_flags(nOffset, nValue);
-                                break;
-                            case N_mach_sections32_E::reserved1:
-                                mach._setSection32_reserved1(nOffset, nValue);
-                                break;
-                            case N_mach_sections32_E::reserved2:
-                                mach._setSection32_reserved2(nOffset, nValue);
-                                break;
+                            case N_mach_sections32_E::sectname: mach._setSection32_sectname(nOffset, sValue); break;
+                            case N_mach_sections32_E::segname: mach._setSection32_segname(nOffset, sValue); break;
+                            case N_mach_sections32_E::addr: mach._setSection32_addr(nOffset, nValue); break;
+                            case N_mach_sections32_E::size: mach._setSection32_size(nOffset, nValue); break;
+                            case N_mach_sections32_E::offset: mach._setSection32_offset(nOffset, nValue); break;
+                            case N_mach_sections32_E::align: mach._setSection32_align(nOffset, nValue); break;
+                            case N_mach_sections32_E::reloff: mach._setSection32_reloff(nOffset, nValue); break;
+                            case N_mach_sections32_E::nreloc: mach._setSection32_nreloc(nOffset, nValue); break;
+                            case N_mach_sections32_E::flags_0: mach._setSection32_flags(nOffset, nValue); break;
+                            case N_mach_sections32_E::reserved1: mach._setSection32_reserved1(nOffset, nValue); break;
+                            case N_mach_sections32_E::reserved2: mach._setSection32_reserved2(nOffset, nValue); break;
                         }
                     }
 
@@ -446,39 +336,19 @@ FormatWidget::SV MACHSectionHeaderWidget::_setValue(QVariant vValue, int nStype,
                 case SMACH::TYPE_SYMBOLTABLE:
                     if (mach.is64()) {
                         switch (nNdata) {
-                            case N_mach_nlist::n_strx:
-                                mach._set_nlist_64_n_strx(nOffset, nValue);
-                                break;
-                            case N_mach_nlist::n_type:
-                                mach._set_nlist_64_n_type(nOffset, nValue);
-                                break;
-                            case N_mach_nlist::n_sect:
-                                mach._set_nlist_64_n_sect(nOffset, nValue);
-                                break;
-                            case N_mach_nlist::n_desc:
-                                mach._set_nlist_64_n_desc(nOffset, nValue);
-                                break;
-                            case N_mach_nlist::n_value:
-                                mach._set_nlist_64_n_value(nOffset, nValue);
-                                break;
+                            case N_mach_nlist::n_strx: mach._set_nlist_64_n_strx(nOffset, nValue); break;
+                            case N_mach_nlist::n_type: mach._set_nlist_64_n_type(nOffset, nValue); break;
+                            case N_mach_nlist::n_sect: mach._set_nlist_64_n_sect(nOffset, nValue); break;
+                            case N_mach_nlist::n_desc: mach._set_nlist_64_n_desc(nOffset, nValue); break;
+                            case N_mach_nlist::n_value: mach._set_nlist_64_n_value(nOffset, nValue); break;
                         }
                     } else {
                         switch (nNdata) {
-                            case N_mach_nlist::n_strx:
-                                mach._set_nlist_n_strx(nOffset, nValue);
-                                break;
-                            case N_mach_nlist::n_type:
-                                mach._set_nlist_n_type(nOffset, nValue);
-                                break;
-                            case N_mach_nlist::n_sect:
-                                mach._set_nlist_n_sect(nOffset, nValue);
-                                break;
-                            case N_mach_nlist::n_desc:
-                                mach._set_nlist_n_desc(nOffset, nValue);
-                                break;
-                            case N_mach_nlist::n_value:
-                                mach._set_nlist_n_value(nOffset, nValue);
-                                break;
+                            case N_mach_nlist::n_strx: mach._set_nlist_n_strx(nOffset, nValue); break;
+                            case N_mach_nlist::n_type: mach._set_nlist_n_type(nOffset, nValue); break;
+                            case N_mach_nlist::n_sect: mach._set_nlist_n_sect(nOffset, nValue); break;
+                            case N_mach_nlist::n_desc: mach._set_nlist_n_desc(nOffset, nValue); break;
+                            case N_mach_nlist::n_value: mach._set_nlist_n_value(nOffset, nValue); break;
                         }
                     }
 
@@ -486,15 +356,9 @@ FormatWidget::SV MACHSectionHeaderWidget::_setValue(QVariant vValue, int nStype,
 
                 case SMACH::TYPE_DICE:
                     switch (nNdata) {
-                        case N_mach_data_in_code_entry::offset:
-                            mach._set_data_in_code_entry_offset(nOffset, nValue);
-                            break;
-                        case N_mach_data_in_code_entry::length:
-                            mach._set_data_in_code_entry_length(nOffset, nValue);
-                            break;
-                        case N_mach_data_in_code_entry::kind:
-                            mach._set_data_in_code_entry_kind(nOffset, nValue);
-                            break;
+                        case N_mach_data_in_code_entry::offset: mach._set_data_in_code_entry_offset(nOffset, nValue); break;
+                        case N_mach_data_in_code_entry::length: mach._set_data_in_code_entry_length(nOffset, nValue); break;
+                        case N_mach_data_in_code_entry::kind: mach._set_data_in_code_entry_kind(nOffset, nValue); break;
                     }
 
                     break;
@@ -502,87 +366,35 @@ FormatWidget::SV MACHSectionHeaderWidget::_setValue(QVariant vValue, int nStype,
                 case SMACH::TYPE_DYSYMTAB_modtab:
                     if (mach.is64()) {
                         switch (nNdata) {
-                            case N_mach_modtab64::module_name:
-                                mach._set_dylib_module_64_module_name(nOffset, nValue);
-                                break;
-                            case N_mach_modtab64::iextdefsym:
-                                mach._set_dylib_module_64_iextdefsym(nOffset, nValue);
-                                break;
-                            case N_mach_modtab64::nextdefsym:
-                                mach._set_dylib_module_64_nextdefsym(nOffset, nValue);
-                                break;
-                            case N_mach_modtab64::irefsym:
-                                mach._set_dylib_module_64_irefsym(nOffset, nValue);
-                                break;
-                            case N_mach_modtab64::nrefsym:
-                                mach._set_dylib_module_64_nrefsym(nOffset, nValue);
-                                break;
-                            case N_mach_modtab64::ilocalsym:
-                                mach._set_dylib_module_64_ilocalsym(nOffset, nValue);
-                                break;
-                            case N_mach_modtab64::nlocalsym:
-                                mach._set_dylib_module_64_nlocalsym(nOffset, nValue);
-                                break;
-                            case N_mach_modtab64::iextrel:
-                                mach._set_dylib_module_64_iextrel(nOffset, nValue);
-                                break;
-                            case N_mach_modtab64::nextrel:
-                                mach._set_dylib_module_64_nextrel(nOffset, nValue);
-                                break;
-                            case N_mach_modtab64::iinit_iterm:
-                                mach._set_dylib_module_64_iinit_iterm(nOffset, nValue);
-                                break;
-                            case N_mach_modtab64::ninit_nterm:
-                                mach._set_dylib_module_64_ninit_nterm(nOffset, nValue);
-                                break;
-                            case N_mach_modtab64::objc_module_info_size:
-                                mach._set_dylib_module_64_objc_module_info_size(nOffset, nValue);
-                                break;
-                            case N_mach_modtab64::objc_module_info_addr:
-                                mach._set_dylib_module_64_objc_module_info_addr(nOffset, nValue);
-                                break;
+                            case N_mach_modtab64::module_name: mach._set_dylib_module_64_module_name(nOffset, nValue); break;
+                            case N_mach_modtab64::iextdefsym: mach._set_dylib_module_64_iextdefsym(nOffset, nValue); break;
+                            case N_mach_modtab64::nextdefsym: mach._set_dylib_module_64_nextdefsym(nOffset, nValue); break;
+                            case N_mach_modtab64::irefsym: mach._set_dylib_module_64_irefsym(nOffset, nValue); break;
+                            case N_mach_modtab64::nrefsym: mach._set_dylib_module_64_nrefsym(nOffset, nValue); break;
+                            case N_mach_modtab64::ilocalsym: mach._set_dylib_module_64_ilocalsym(nOffset, nValue); break;
+                            case N_mach_modtab64::nlocalsym: mach._set_dylib_module_64_nlocalsym(nOffset, nValue); break;
+                            case N_mach_modtab64::iextrel: mach._set_dylib_module_64_iextrel(nOffset, nValue); break;
+                            case N_mach_modtab64::nextrel: mach._set_dylib_module_64_nextrel(nOffset, nValue); break;
+                            case N_mach_modtab64::iinit_iterm: mach._set_dylib_module_64_iinit_iterm(nOffset, nValue); break;
+                            case N_mach_modtab64::ninit_nterm: mach._set_dylib_module_64_ninit_nterm(nOffset, nValue); break;
+                            case N_mach_modtab64::objc_module_info_size: mach._set_dylib_module_64_objc_module_info_size(nOffset, nValue); break;
+                            case N_mach_modtab64::objc_module_info_addr: mach._set_dylib_module_64_objc_module_info_addr(nOffset, nValue); break;
                         }
                     } else {
                         switch (nNdata) {
-                            case N_mach_modtab32::module_name:
-                                mach._set_dylib_module_module_name(nOffset, nValue);
-                                break;
-                            case N_mach_modtab32::iextdefsym:
-                                mach._set_dylib_module_iextdefsym(nOffset, nValue);
-                                break;
-                            case N_mach_modtab32::nextdefsym:
-                                mach._set_dylib_module_nextdefsym(nOffset, nValue);
-                                break;
-                            case N_mach_modtab32::irefsym:
-                                mach._set_dylib_module_irefsym(nOffset, nValue);
-                                break;
-                            case N_mach_modtab32::nrefsym:
-                                mach._set_dylib_module_nrefsym(nOffset, nValue);
-                                break;
-                            case N_mach_modtab32::ilocalsym:
-                                mach._set_dylib_module_ilocalsym(nOffset, nValue);
-                                break;
-                            case N_mach_modtab32::nlocalsym:
-                                mach._set_dylib_module_nlocalsym(nOffset, nValue);
-                                break;
-                            case N_mach_modtab32::iextrel:
-                                mach._set_dylib_module_iextrel(nOffset, nValue);
-                                break;
-                            case N_mach_modtab32::nextrel:
-                                mach._set_dylib_module_nextrel(nOffset, nValue);
-                                break;
-                            case N_mach_modtab32::iinit_iterm:
-                                mach._set_dylib_module_iinit_iterm(nOffset, nValue);
-                                break;
-                            case N_mach_modtab32::ninit_nterm:
-                                mach._set_dylib_module_ninit_nterm(nOffset, nValue);
-                                break;
-                            case N_mach_modtab32::objc_module_info_addr:
-                                mach._set_dylib_module_objc_module_info_addr(nOffset, nValue);
-                                break;
-                            case N_mach_modtab32::objc_module_info_size:
-                                mach._set_dylib_module_objc_module_info_size(nOffset, nValue);
-                                break;
+                            case N_mach_modtab32::module_name: mach._set_dylib_module_module_name(nOffset, nValue); break;
+                            case N_mach_modtab32::iextdefsym: mach._set_dylib_module_iextdefsym(nOffset, nValue); break;
+                            case N_mach_modtab32::nextdefsym: mach._set_dylib_module_nextdefsym(nOffset, nValue); break;
+                            case N_mach_modtab32::irefsym: mach._set_dylib_module_irefsym(nOffset, nValue); break;
+                            case N_mach_modtab32::nrefsym: mach._set_dylib_module_nrefsym(nOffset, nValue); break;
+                            case N_mach_modtab32::ilocalsym: mach._set_dylib_module_ilocalsym(nOffset, nValue); break;
+                            case N_mach_modtab32::nlocalsym: mach._set_dylib_module_nlocalsym(nOffset, nValue); break;
+                            case N_mach_modtab32::iextrel: mach._set_dylib_module_iextrel(nOffset, nValue); break;
+                            case N_mach_modtab32::nextrel: mach._set_dylib_module_nextrel(nOffset, nValue); break;
+                            case N_mach_modtab32::iinit_iterm: mach._set_dylib_module_iinit_iterm(nOffset, nValue); break;
+                            case N_mach_modtab32::ninit_nterm: mach._set_dylib_module_ninit_nterm(nOffset, nValue); break;
+                            case N_mach_modtab32::objc_module_info_addr: mach._set_dylib_module_objc_module_info_addr(nOffset, nValue); break;
+                            case N_mach_modtab32::objc_module_info_size: mach._set_dylib_module_objc_module_info_size(nOffset, nValue); break;
                         }
                     }
 
@@ -590,12 +402,8 @@ FormatWidget::SV MACHSectionHeaderWidget::_setValue(QVariant vValue, int nStype,
 
                 case SMACH::TYPE_DYSYMTAB_toc:
                     switch (nNdata) {
-                        case N_mach_table_of_contents::symbol_index:
-                            mach._set_dylib_table_of_contents_symbol_index(nOffset, nValue);
-                            break;
-                        case N_mach_table_of_contents::module_index:
-                            mach._set_dylib_table_of_contents_module_index(nOffset, nValue);
-                            break;
+                        case N_mach_table_of_contents::symbol_index: mach._set_dylib_table_of_contents_symbol_index(nOffset, nValue); break;
+                        case N_mach_table_of_contents::module_index: mach._set_dylib_table_of_contents_module_index(nOffset, nValue); break;
                     }
 
                     break;
@@ -603,12 +411,8 @@ FormatWidget::SV MACHSectionHeaderWidget::_setValue(QVariant vValue, int nStype,
                 case SMACH::TYPE_DYSYMTAB_extrel:
                 case SMACH::TYPE_DYSYMTAB_locrel:
                     switch (nNdata) {
-                        case N_mach_relocs::r_address:
-                            mach._set_relocation_info_r_address(nOffset, nValue);
-                            break;
-                        case N_mach_relocs::value:
-                            mach._set_relocation_info_value(nOffset, nValue);
-                            break;
+                        case N_mach_relocs::r_address: mach._set_relocation_info_r_address(nOffset, nValue); break;
+                        case N_mach_relocs::value: mach._set_relocation_info_value(nOffset, nValue); break;
                     }
 
                     break;
@@ -616,9 +420,7 @@ FormatWidget::SV MACHSectionHeaderWidget::_setValue(QVariant vValue, int nStype,
                 case SMACH::TYPE_DYSYMTAB_indirectsyms:
                 case SMACH::TYPE_DYSYMTAB_extrefsyms:
                     switch (nNdata) {
-                        case N_mach_value::value:
-                            mach.write_uint32(nOffset, nValue, mach.isBigEndian());
-                            break;
+                        case N_mach_value::value: mach.write_uint32(nOffset, nValue, mach.isBigEndian()); break;
                     }
 
                     break;
@@ -1174,28 +976,20 @@ void MACHSectionHeaderWidget::widgetValueChanged(quint64 nValue)
         switch (nStype) {
             case SMACH::TYPE_mach_commands:
                 switch (nNdata) {
-                    case N_mach_commands::cmd:
-                        g_ppLinedEdit[N_mach_commands::cmd]->setValue((quint32)nValue);
-                        break;
+                    case N_mach_commands::cmd: g_ppLinedEdit[N_mach_commands::cmd]->setValue((quint32)nValue); break;
                 }
                 break;
 
             case SMACH::TYPE_mach_segments:
                 switch (nNdata) {
-                    case N_mach_segments::initprot:
-                        g_ppLinedEdit[N_mach_segments::initprot]->setValue((quint32)nValue);
-                        break;
-                    case N_mach_segments::maxprot:
-                        g_ppLinedEdit[N_mach_segments::maxprot]->setValue((quint32)nValue);
-                        break;
+                    case N_mach_segments::initprot: g_ppLinedEdit[N_mach_segments::initprot]->setValue((quint32)nValue); break;
+                    case N_mach_segments::maxprot: g_ppLinedEdit[N_mach_segments::maxprot]->setValue((quint32)nValue); break;
                 }
                 break;
 
             case SMACH::TYPE_DICE:
                 switch (nNdata) {
-                    case N_mach_data_in_code_entry::kind:
-                        g_ppLinedEdit[N_mach_data_in_code_entry::kind]->setValue(nValue);
-                        break;
+                    case N_mach_data_in_code_entry::kind: g_ppLinedEdit[N_mach_data_in_code_entry::kind]->setValue(nValue); break;
                 }
 
                 break;

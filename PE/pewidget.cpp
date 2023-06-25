@@ -272,45 +272,31 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, in
             switch (nStype) {
                 case SPE::TYPE_IMAGE_DOS_HEADER:
                     switch (nNdata) {
-                        case N_IMAGE_DOS_HEADER::e_magic:
-                            g_comboBox[CB_IMAGE_DOS_HEADER_e_magic]->setValue(nValue);
-                            break;
-                        case N_IMAGE_DOS_HEADER::e_lfanew:
-                            g_invWidget[INV_IMAGE_DOS_HEADER_e_lfanew]->setOffsetAndSize(&pe, (quint32)nValue, 0);
-                            break;
+                        case N_IMAGE_DOS_HEADER::e_magic: g_comboBox[CB_IMAGE_DOS_HEADER_e_magic]->setValue(nValue); break;
+                        case N_IMAGE_DOS_HEADER::e_lfanew: g_invWidget[INV_IMAGE_DOS_HEADER_e_lfanew]->setOffsetAndSize(&pe, (quint32)nValue, 0); break;
                     }
                     break;
 
                 case SPE::TYPE_IMAGE_NT_HEADERS:
                     switch (nNdata) {
-                        case N_IMAGE_NT_HEADERS::Signature:
-                            g_comboBox[CB_IMAGE_NT_HEADERS_Signature]->setValue(nValue);
-                            break;
+                        case N_IMAGE_NT_HEADERS::Signature: g_comboBox[CB_IMAGE_NT_HEADERS_Signature]->setValue(nValue); break;
                     }
                     break;
 
                 case SPE::TYPE_IMAGE_FILE_HEADER:
                     switch (nNdata) {
-                        case N_IMAGE_FILE_HEADER::Machine:
-                            g_comboBox[CB_IMAGE_FILE_HEADER_Machine]->setValue(nValue);
-                            break;
-                        case N_IMAGE_FILE_HEADER::TimeDateStamp:
-                            g_dateTimeEdit[TD_IMAGE_FILE_HEADER_TimeDateStamp]->setValue(nValue);
-                            break;
+                        case N_IMAGE_FILE_HEADER::Machine: g_comboBox[CB_IMAGE_FILE_HEADER_Machine]->setValue(nValue); break;
+                        case N_IMAGE_FILE_HEADER::TimeDateStamp: g_dateTimeEdit[TD_IMAGE_FILE_HEADER_TimeDateStamp]->setValue(nValue); break;
                         case N_IMAGE_FILE_HEADER::PointerToSymbolTable:
                             g_invWidget[INV_IMAGE_FILE_HEADER_PointerToSymbolTable]->setAddressAndSize(&pe, (quint32)nValue, 0);
                             break;
-                        case N_IMAGE_FILE_HEADER::Characteristics:
-                            g_comboBox[CB_IMAGE_FILE_HEADER_Characteristics]->setValue(nValue);
-                            break;
+                        case N_IMAGE_FILE_HEADER::Characteristics: g_comboBox[CB_IMAGE_FILE_HEADER_Characteristics]->setValue(nValue); break;
                     }
                     break;
 
                 case SPE::TYPE_IMAGE_OPTIONAL_HEADER:
                     switch (nNdata) {
-                        case N_IMAGE_OPTIONAL_HEADER::Magic:
-                            g_comboBox[CB_IMAGE_OPTIONAL_HEADER_Magic]->setValue(nValue);
-                            break;
+                        case N_IMAGE_OPTIONAL_HEADER::Magic: g_comboBox[CB_IMAGE_OPTIONAL_HEADER_Magic]->setValue(nValue); break;
                         case N_IMAGE_OPTIONAL_HEADER::AddressOfEntryPoint:
                             g_invWidget[INV_IMAGE_OPTIONAL_HEADER_AddressOfEntryPoint]->setAddressAndSize(&pe, pe.getBaseAddress() + (quint32)nValue, 0);
                             break;
@@ -320,12 +306,8 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, in
                         case N_IMAGE_OPTIONAL_HEADER::BaseOfData:
                             g_invWidget[INV_IMAGE_OPTIONAL_HEADER_BaseOfData]->setAddressAndSize(&pe, pe.getBaseAddress() + (quint32)nValue, 0);
                             break;
-                        case N_IMAGE_OPTIONAL_HEADER::Subsystem:
-                            g_comboBox[CB_IMAGE_OPTIONAL_HEADER_Subsystem]->setValue(nValue);
-                            break;
-                        case N_IMAGE_OPTIONAL_HEADER::DllCharacteristics:
-                            g_comboBox[CB_IMAGE_OPTIONAL_HEADER_DllCharacteristics]->setValue(nValue);
-                            break;
+                        case N_IMAGE_OPTIONAL_HEADER::Subsystem: g_comboBox[CB_IMAGE_OPTIONAL_HEADER_Subsystem]->setValue(nValue); break;
+                        case N_IMAGE_OPTIONAL_HEADER::DllCharacteristics: g_comboBox[CB_IMAGE_OPTIONAL_HEADER_DllCharacteristics]->setValue(nValue); break;
                         case N_IMAGE_OPTIONAL_HEADER::MajorOperatingSystemVersion:
                         case N_IMAGE_OPTIONAL_HEADER::MinorOperatingSystemVersion:
                         case N_IMAGE_OPTIONAL_HEADER::OperatingSystemVersion:
@@ -337,12 +319,8 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, in
 
                 case SPE::TYPE_EXPORT:
                     switch (nNdata) {
-                        case N_IMAGE_EXPORT::TimeDateStamp:
-                            g_dateTimeEdit[TD_IMAGE_EXPORT_TimeDateStamp]->setValue(nValue);
-                            break;
-                        case N_IMAGE_EXPORT::Name:
-                            g_invWidget[INV_IMAGE_EXPORT_Name]->setAddressAndSize(&pe, pe.getBaseAddress() + (quint32)nValue, 0);
-                            break;
+                        case N_IMAGE_EXPORT::TimeDateStamp: g_dateTimeEdit[TD_IMAGE_EXPORT_TimeDateStamp]->setValue(nValue); break;
+                        case N_IMAGE_EXPORT::Name: g_invWidget[INV_IMAGE_EXPORT_Name]->setAddressAndSize(&pe, pe.getBaseAddress() + (quint32)nValue, 0); break;
                         case N_IMAGE_EXPORT::AddressOfFunctions:
                             g_invWidget[INV_IMAGE_EXPORT_AddressOfFunctions]->setAddressAndSize(&pe, pe.getBaseAddress() + (quint32)nValue, 0);
                             break;
@@ -357,54 +335,32 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, in
 
                 case SPE::TYPE_TLS:
                     switch (nNdata) {
-                        case N_IMAGE_TLS::StartAddressOfRawData:
-                            g_invWidget[INV_IMAGE_TLS_StartAddressOfRawData]->setAddressAndSize(&pe, (quint64)nValue, 0);
-                            break;
-                        case N_IMAGE_TLS::EndAddressOfRawData:
-                            g_invWidget[INV_IMAGE_TLS_EndAddressOfRawData]->setAddressAndSize(&pe, (quint64)nValue, 0);
-                            break;
-                        case N_IMAGE_TLS::AddressOfIndex:
-                            g_invWidget[INV_IMAGE_TLS_AddressOfIndex]->setAddressAndSize(&pe, (quint64)nValue, 0);
-                            break;
-                        case N_IMAGE_TLS::AddressOfCallBacks:
-                            g_invWidget[INV_IMAGE_TLS_AddressOfCallBacks]->setAddressAndSize(&pe, (quint64)nValue, 0);
-                            break;
+                        case N_IMAGE_TLS::StartAddressOfRawData: g_invWidget[INV_IMAGE_TLS_StartAddressOfRawData]->setAddressAndSize(&pe, (quint64)nValue, 0); break;
+                        case N_IMAGE_TLS::EndAddressOfRawData: g_invWidget[INV_IMAGE_TLS_EndAddressOfRawData]->setAddressAndSize(&pe, (quint64)nValue, 0); break;
+                        case N_IMAGE_TLS::AddressOfIndex: g_invWidget[INV_IMAGE_TLS_AddressOfIndex]->setAddressAndSize(&pe, (quint64)nValue, 0); break;
+                        case N_IMAGE_TLS::AddressOfCallBacks: g_invWidget[INV_IMAGE_TLS_AddressOfCallBacks]->setAddressAndSize(&pe, (quint64)nValue, 0); break;
                     }
                     break;
 
                 case SPE::TYPE_NETHEADER:
                     switch (nNdata) {
-                        case N_IMAGE_NETHEADER::Flags:
-                            g_comboBox[CB_IMAGE_NETHEADER_FLAGS]->setValue((quint32)nValue);
-                            break;
+                        case N_IMAGE_NETHEADER::Flags: g_comboBox[CB_IMAGE_NETHEADER_FLAGS]->setValue((quint32)nValue); break;
                     }
                     break;
 
                 case SPE::TYPE_RESOURCES_VERSION:
                     switch (nNdata) {
-                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwSignature:
-                            g_comboBox[CB_RESOURCES_VERSION_dwSignature]->setValue((quint32)nValue);
-                            break;
-                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileFlags:
-                            g_comboBox[CB_RESOURCES_VERSION_dwFileFlags]->setValue((quint32)nValue);
-                            break;
-                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileOS:
-                            g_comboBox[CB_RESOURCES_VERSION_dwFileOS]->setValue((quint32)nValue);
-                            break;
-                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileType:
-                            g_comboBox[CB_RESOURCES_VERSION_dwFileType]->setValue((quint32)nValue);
-                            break;
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwSignature: g_comboBox[CB_RESOURCES_VERSION_dwSignature]->setValue((quint32)nValue); break;
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileFlags: g_comboBox[CB_RESOURCES_VERSION_dwFileFlags]->setValue((quint32)nValue); break;
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileOS: g_comboBox[CB_RESOURCES_VERSION_dwFileOS]->setValue((quint32)nValue); break;
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileType: g_comboBox[CB_RESOURCES_VERSION_dwFileType]->setValue((quint32)nValue); break;
                     }
                     break;
 
                 case SPE::TYPE_LOADCONFIG:
                     switch (nNdata) {
-                        case N_IMAGE_LOADCONFIG::SecurityCookie:
-                            g_invWidget[INV_IMAGE_LOADCONFIG_SecurityCookie]->setAddressAndSize(&pe, (quint64)nValue, 0);
-                            break;
-                        case N_IMAGE_LOADCONFIG::SEHandlerTable:
-                            g_invWidget[INV_IMAGE_LOADCONFIG_SEHandlerTable]->setAddressAndSize(&pe, (quint64)nValue, 0);
-                            break;
+                        case N_IMAGE_LOADCONFIG::SecurityCookie: g_invWidget[INV_IMAGE_LOADCONFIG_SecurityCookie]->setAddressAndSize(&pe, (quint64)nValue, 0); break;
+                        case N_IMAGE_LOADCONFIG::SEHandlerTable: g_invWidget[INV_IMAGE_LOADCONFIG_SEHandlerTable]->setAddressAndSize(&pe, (quint64)nValue, 0); break;
                         case N_IMAGE_LOADCONFIG::GuardCFCheckFunctionPointer:
                             g_invWidget[INV_IMAGE_LOADCONFIG_GuardCFCheckFunctionPointer]->setAddressAndSize(&pe, (quint64)nValue, 0);
                             break;
@@ -421,99 +377,37 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, in
             switch (nStype) {
                 case SPE::TYPE_IMAGE_DOS_HEADER:
                     switch (nNdata) {
-                        case N_IMAGE_DOS_HEADER::e_magic:
-                            pe.set_e_magic((quint16)nValue);
-                            break;
-                        case N_IMAGE_DOS_HEADER::e_cblp:
-                            pe.set_e_cblp((quint16)nValue);
-                            break;
-                        case N_IMAGE_DOS_HEADER::e_cp:
-                            pe.set_e_cp((quint16)nValue);
-                            break;
-                        case N_IMAGE_DOS_HEADER::e_crlc:
-                            pe.set_e_crlc((quint16)nValue);
-                            break;
-                        case N_IMAGE_DOS_HEADER::e_cparhdr:
-                            pe.set_e_cparhdr((quint16)nValue);
-                            break;
-                        case N_IMAGE_DOS_HEADER::e_minalloc:
-                            pe.set_e_minalloc((quint16)nValue);
-                            break;
-                        case N_IMAGE_DOS_HEADER::e_maxalloc:
-                            pe.set_e_maxalloc((quint16)nValue);
-                            break;
-                        case N_IMAGE_DOS_HEADER::e_ss:
-                            pe.set_e_ss((quint16)nValue);
-                            break;
-                        case N_IMAGE_DOS_HEADER::e_sp:
-                            pe.set_e_sp((quint16)nValue);
-                            break;
-                        case N_IMAGE_DOS_HEADER::e_csum:
-                            pe.set_e_csum((quint16)nValue);
-                            break;
-                        case N_IMAGE_DOS_HEADER::e_ip:
-                            pe.set_e_ip((quint16)nValue);
-                            break;
-                        case N_IMAGE_DOS_HEADER::e_cs:
-                            pe.set_e_cs((quint16)nValue);
-                            break;
-                        case N_IMAGE_DOS_HEADER::e_lfarlc:
-                            pe.set_e_lfarlc((quint16)nValue);
-                            break;
-                        case N_IMAGE_DOS_HEADER::e_ovno:
-                            pe.set_e_ovno((quint16)nValue);
-                            break;
-                        case N_IMAGE_DOS_HEADER::e_res_0:
-                            pe.set_e_res(0, (quint16)nValue);
-                            break;
-                        case N_IMAGE_DOS_HEADER::e_res_1:
-                            pe.set_e_res(1, (quint16)nValue);
-                            break;
-                        case N_IMAGE_DOS_HEADER::e_res_2:
-                            pe.set_e_res(2, (quint16)nValue);
-                            break;
-                        case N_IMAGE_DOS_HEADER::e_res_3:
-                            pe.set_e_res(3, (quint16)nValue);
-                            break;
-                        case N_IMAGE_DOS_HEADER::e_oemid:
-                            pe.set_e_oemid((quint16)nValue);
-                            break;
-                        case N_IMAGE_DOS_HEADER::e_oeminfo:
-                            pe.set_e_oeminfo((quint16)nValue);
-                            break;
-                        case N_IMAGE_DOS_HEADER::e_res2_0:
-                            pe.set_e_res2(0, (quint16)nValue);
-                            break;
-                        case N_IMAGE_DOS_HEADER::e_res2_1:
-                            pe.set_e_res2(1, (quint16)nValue);
-                            break;
-                        case N_IMAGE_DOS_HEADER::e_res2_2:
-                            pe.set_e_res2(2, (quint16)nValue);
-                            break;
-                        case N_IMAGE_DOS_HEADER::e_res2_3:
-                            pe.set_e_res2(3, (quint16)nValue);
-                            break;
-                        case N_IMAGE_DOS_HEADER::e_res2_4:
-                            pe.set_e_res2(4, (quint16)nValue);
-                            break;
-                        case N_IMAGE_DOS_HEADER::e_res2_5:
-                            pe.set_e_res2(5, (quint16)nValue);
-                            break;
-                        case N_IMAGE_DOS_HEADER::e_res2_6:
-                            pe.set_e_res2(6, (quint16)nValue);
-                            break;
-                        case N_IMAGE_DOS_HEADER::e_res2_7:
-                            pe.set_e_res2(7, (quint16)nValue);
-                            break;
-                        case N_IMAGE_DOS_HEADER::e_res2_8:
-                            pe.set_e_res2(8, (quint16)nValue);
-                            break;
-                        case N_IMAGE_DOS_HEADER::e_res2_9:
-                            pe.set_e_res2(9, (quint16)nValue);
-                            break;
-                        case N_IMAGE_DOS_HEADER::e_lfanew:
-                            pe.set_e_lfanew((quint32)nValue);
-                            break;
+                        case N_IMAGE_DOS_HEADER::e_magic: pe.set_e_magic((quint16)nValue); break;
+                        case N_IMAGE_DOS_HEADER::e_cblp: pe.set_e_cblp((quint16)nValue); break;
+                        case N_IMAGE_DOS_HEADER::e_cp: pe.set_e_cp((quint16)nValue); break;
+                        case N_IMAGE_DOS_HEADER::e_crlc: pe.set_e_crlc((quint16)nValue); break;
+                        case N_IMAGE_DOS_HEADER::e_cparhdr: pe.set_e_cparhdr((quint16)nValue); break;
+                        case N_IMAGE_DOS_HEADER::e_minalloc: pe.set_e_minalloc((quint16)nValue); break;
+                        case N_IMAGE_DOS_HEADER::e_maxalloc: pe.set_e_maxalloc((quint16)nValue); break;
+                        case N_IMAGE_DOS_HEADER::e_ss: pe.set_e_ss((quint16)nValue); break;
+                        case N_IMAGE_DOS_HEADER::e_sp: pe.set_e_sp((quint16)nValue); break;
+                        case N_IMAGE_DOS_HEADER::e_csum: pe.set_e_csum((quint16)nValue); break;
+                        case N_IMAGE_DOS_HEADER::e_ip: pe.set_e_ip((quint16)nValue); break;
+                        case N_IMAGE_DOS_HEADER::e_cs: pe.set_e_cs((quint16)nValue); break;
+                        case N_IMAGE_DOS_HEADER::e_lfarlc: pe.set_e_lfarlc((quint16)nValue); break;
+                        case N_IMAGE_DOS_HEADER::e_ovno: pe.set_e_ovno((quint16)nValue); break;
+                        case N_IMAGE_DOS_HEADER::e_res_0: pe.set_e_res(0, (quint16)nValue); break;
+                        case N_IMAGE_DOS_HEADER::e_res_1: pe.set_e_res(1, (quint16)nValue); break;
+                        case N_IMAGE_DOS_HEADER::e_res_2: pe.set_e_res(2, (quint16)nValue); break;
+                        case N_IMAGE_DOS_HEADER::e_res_3: pe.set_e_res(3, (quint16)nValue); break;
+                        case N_IMAGE_DOS_HEADER::e_oemid: pe.set_e_oemid((quint16)nValue); break;
+                        case N_IMAGE_DOS_HEADER::e_oeminfo: pe.set_e_oeminfo((quint16)nValue); break;
+                        case N_IMAGE_DOS_HEADER::e_res2_0: pe.set_e_res2(0, (quint16)nValue); break;
+                        case N_IMAGE_DOS_HEADER::e_res2_1: pe.set_e_res2(1, (quint16)nValue); break;
+                        case N_IMAGE_DOS_HEADER::e_res2_2: pe.set_e_res2(2, (quint16)nValue); break;
+                        case N_IMAGE_DOS_HEADER::e_res2_3: pe.set_e_res2(3, (quint16)nValue); break;
+                        case N_IMAGE_DOS_HEADER::e_res2_4: pe.set_e_res2(4, (quint16)nValue); break;
+                        case N_IMAGE_DOS_HEADER::e_res2_5: pe.set_e_res2(5, (quint16)nValue); break;
+                        case N_IMAGE_DOS_HEADER::e_res2_6: pe.set_e_res2(6, (quint16)nValue); break;
+                        case N_IMAGE_DOS_HEADER::e_res2_7: pe.set_e_res2(7, (quint16)nValue); break;
+                        case N_IMAGE_DOS_HEADER::e_res2_8: pe.set_e_res2(8, (quint16)nValue); break;
+                        case N_IMAGE_DOS_HEADER::e_res2_9: pe.set_e_res2(9, (quint16)nValue); break;
+                        case N_IMAGE_DOS_HEADER::e_lfanew: pe.set_e_lfanew((quint32)nValue); break;
                     }
 
                     ui->widgetHex_IMAGE_DOS_HEADER->reload();
@@ -521,9 +415,7 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, in
 
                 case SPE::TYPE_IMAGE_NT_HEADERS:
                     switch (nNdata) {
-                        case N_IMAGE_NT_HEADERS::Signature:
-                            pe.setNtHeaders_Signature((quint32)nValue);
-                            break;
+                        case N_IMAGE_NT_HEADERS::Signature: pe.setNtHeaders_Signature((quint32)nValue); break;
                     }
 
                     ui->widgetHex_IMAGE_NT_HEADERS->reload();
@@ -531,27 +423,13 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, in
 
                 case SPE::TYPE_IMAGE_FILE_HEADER:
                     switch (nNdata) {
-                        case N_IMAGE_FILE_HEADER::Machine:
-                            pe.setFileHeader_Machine((quint16)nValue);
-                            break;
-                        case N_IMAGE_FILE_HEADER::NumberOfSections:
-                            pe.setFileHeader_NumberOfSections((quint16)nValue);
-                            break;
-                        case N_IMAGE_FILE_HEADER::TimeDateStamp:
-                            pe.setFileHeader_TimeDateStamp((quint32)nValue);
-                            break;
-                        case N_IMAGE_FILE_HEADER::PointerToSymbolTable:
-                            pe.setFileHeader_PointerToSymbolTable((quint32)nValue);
-                            break;
-                        case N_IMAGE_FILE_HEADER::NumberOfSymbols:
-                            pe.setFileHeader_NumberOfSymbols((quint32)nValue);
-                            break;
-                        case N_IMAGE_FILE_HEADER::SizeOfOptionalHeader:
-                            pe.setFileHeader_SizeOfOptionalHeader((quint16)nValue);
-                            break;
-                        case N_IMAGE_FILE_HEADER::Characteristics:
-                            pe.setFileHeader_Characteristics((quint16)nValue);
-                            break;
+                        case N_IMAGE_FILE_HEADER::Machine: pe.setFileHeader_Machine((quint16)nValue); break;
+                        case N_IMAGE_FILE_HEADER::NumberOfSections: pe.setFileHeader_NumberOfSections((quint16)nValue); break;
+                        case N_IMAGE_FILE_HEADER::TimeDateStamp: pe.setFileHeader_TimeDateStamp((quint32)nValue); break;
+                        case N_IMAGE_FILE_HEADER::PointerToSymbolTable: pe.setFileHeader_PointerToSymbolTable((quint32)nValue); break;
+                        case N_IMAGE_FILE_HEADER::NumberOfSymbols: pe.setFileHeader_NumberOfSymbols((quint32)nValue); break;
+                        case N_IMAGE_FILE_HEADER::SizeOfOptionalHeader: pe.setFileHeader_SizeOfOptionalHeader((quint16)nValue); break;
+                        case N_IMAGE_FILE_HEADER::Characteristics: pe.setFileHeader_Characteristics((quint16)nValue); break;
                     }
 
                     ui->widgetHex_IMAGE_FILE_HEADER->reload();
@@ -559,100 +437,38 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, in
 
                 case SPE::TYPE_IMAGE_OPTIONAL_HEADER:
                     switch (nNdata) {
-                        case N_IMAGE_OPTIONAL_HEADER::Magic:
-                            pe.setOptionalHeader_Magic((quint16)nValue);
-                            break;
-                        case N_IMAGE_OPTIONAL_HEADER::MajorLinkerVersion:
-                            pe.setOptionalHeader_MajorLinkerVersion((quint8)nValue);
-                            break;
-                        case N_IMAGE_OPTIONAL_HEADER::MinorLinkerVersion:
-                            pe.setOptionalHeader_MinorLinkerVersion((quint8)nValue);
-                            break;
-                        case N_IMAGE_OPTIONAL_HEADER::SizeOfCode:
-                            pe.setOptionalHeader_SizeOfCode((quint32)nValue);
-                            break;
-                        case N_IMAGE_OPTIONAL_HEADER::SizeOfInitializedData:
-                            pe.setOptionalHeader_SizeOfInitializedData((quint32)nValue);
-                            break;
-                        case N_IMAGE_OPTIONAL_HEADER::SizeOfUninitializedData:
-                            pe.setOptionalHeader_SizeOfUninitializedData((quint32)nValue);
-                            break;
-                        case N_IMAGE_OPTIONAL_HEADER::AddressOfEntryPoint:
-                            pe.setOptionalHeader_AddressOfEntryPoint((quint32)nValue);
-                            break;
-                        case N_IMAGE_OPTIONAL_HEADER::BaseOfCode:
-                            pe.setOptionalHeader_BaseOfCode((quint32)nValue);
-                            break;
-                        case N_IMAGE_OPTIONAL_HEADER::BaseOfData:
-                            pe.setOptionalHeader_BaseOfData((quint32)nValue);
-                            break;
-                        case N_IMAGE_OPTIONAL_HEADER::ImageBase:
-                            pe.setOptionalHeader_ImageBase((quint64)nValue);
-                            break;
-                        case N_IMAGE_OPTIONAL_HEADER::SectionAlignment:
-                            pe.setOptionalHeader_SectionAlignment((quint32)nValue);
-                            break;
-                        case N_IMAGE_OPTIONAL_HEADER::FileAlignment:
-                            pe.setOptionalHeader_FileAlignment((quint32)nValue);
-                            break;
-                        case N_IMAGE_OPTIONAL_HEADER::MajorOperatingSystemVersion:
-                            pe.setOptionalHeader_MajorOperatingSystemVersion((quint16)nValue);
-                            break;
-                        case N_IMAGE_OPTIONAL_HEADER::MinorOperatingSystemVersion:
-                            pe.setOptionalHeader_MinorOperatingSystemVersion((quint16)nValue);
-                            break;
-                        case N_IMAGE_OPTIONAL_HEADER::MajorImageVersion:
-                            pe.setOptionalHeader_MajorImageVersion((quint16)nValue);
-                            break;
-                        case N_IMAGE_OPTIONAL_HEADER::MinorImageVersion:
-                            pe.setOptionalHeader_MinorImageVersion((quint16)nValue);
-                            break;
-                        case N_IMAGE_OPTIONAL_HEADER::MajorSubsystemVersion:
-                            pe.setOptionalHeader_MajorSubsystemVersion((quint16)nValue);
-                            break;
-                        case N_IMAGE_OPTIONAL_HEADER::MinorSubsystemVersion:
-                            pe.setOptionalHeader_MinorSubsystemVersion((quint16)nValue);
-                            break;
-                        case N_IMAGE_OPTIONAL_HEADER::Win32VersionValue:
-                            pe.setOptionalHeader_Win32VersionValue((quint16)nValue);
-                            break;
-                        case N_IMAGE_OPTIONAL_HEADER::SizeOfImage:
-                            pe.setOptionalHeader_SizeOfImage((quint32)nValue);
-                            break;
-                        case N_IMAGE_OPTIONAL_HEADER::SizeOfHeaders:
-                            pe.setOptionalHeader_SizeOfHeaders((quint32)nValue);
-                            break;
-                        case N_IMAGE_OPTIONAL_HEADER::CheckSum:
-                            pe.setOptionalHeader_CheckSum((quint32)nValue);
-                            break;
-                        case N_IMAGE_OPTIONAL_HEADER::Subsystem:
-                            pe.setOptionalHeader_Subsystem((quint16)nValue);
-                            break;
-                        case N_IMAGE_OPTIONAL_HEADER::DllCharacteristics:
-                            pe.setOptionalHeader_DllCharacteristics((quint16)nValue);
-                            break;
-                        case N_IMAGE_OPTIONAL_HEADER::SizeOfStackReserve:
-                            pe.setOptionalHeader_SizeOfStackReserve((quint64)nValue);
-                            break;
-                        case N_IMAGE_OPTIONAL_HEADER::SizeOfStackCommit:
-                            pe.setOptionalHeader_SizeOfStackCommit((quint64)nValue);
-                            break;
-                        case N_IMAGE_OPTIONAL_HEADER::SizeOfHeapReserve:
-                            pe.setOptionalHeader_SizeOfHeapReserve((quint64)nValue);
-                            break;
-                        case N_IMAGE_OPTIONAL_HEADER::SizeOfHeapCommit:
-                            pe.setOptionalHeader_SizeOfHeapCommit((quint64)nValue);
-                            break;
-                        case N_IMAGE_OPTIONAL_HEADER::LoaderFlags:
-                            pe.setOptionalHeader_LoaderFlags((quint32)nValue);
-                            break;
-                        case N_IMAGE_OPTIONAL_HEADER::NumberOfRvaAndSizes:
-                            pe.setOptionalHeader_NumberOfRvaAndSizes((quint32)nValue);
-                            break;
+                        case N_IMAGE_OPTIONAL_HEADER::Magic: pe.setOptionalHeader_Magic((quint16)nValue); break;
+                        case N_IMAGE_OPTIONAL_HEADER::MajorLinkerVersion: pe.setOptionalHeader_MajorLinkerVersion((quint8)nValue); break;
+                        case N_IMAGE_OPTIONAL_HEADER::MinorLinkerVersion: pe.setOptionalHeader_MinorLinkerVersion((quint8)nValue); break;
+                        case N_IMAGE_OPTIONAL_HEADER::SizeOfCode: pe.setOptionalHeader_SizeOfCode((quint32)nValue); break;
+                        case N_IMAGE_OPTIONAL_HEADER::SizeOfInitializedData: pe.setOptionalHeader_SizeOfInitializedData((quint32)nValue); break;
+                        case N_IMAGE_OPTIONAL_HEADER::SizeOfUninitializedData: pe.setOptionalHeader_SizeOfUninitializedData((quint32)nValue); break;
+                        case N_IMAGE_OPTIONAL_HEADER::AddressOfEntryPoint: pe.setOptionalHeader_AddressOfEntryPoint((quint32)nValue); break;
+                        case N_IMAGE_OPTIONAL_HEADER::BaseOfCode: pe.setOptionalHeader_BaseOfCode((quint32)nValue); break;
+                        case N_IMAGE_OPTIONAL_HEADER::BaseOfData: pe.setOptionalHeader_BaseOfData((quint32)nValue); break;
+                        case N_IMAGE_OPTIONAL_HEADER::ImageBase: pe.setOptionalHeader_ImageBase((quint64)nValue); break;
+                        case N_IMAGE_OPTIONAL_HEADER::SectionAlignment: pe.setOptionalHeader_SectionAlignment((quint32)nValue); break;
+                        case N_IMAGE_OPTIONAL_HEADER::FileAlignment: pe.setOptionalHeader_FileAlignment((quint32)nValue); break;
+                        case N_IMAGE_OPTIONAL_HEADER::MajorOperatingSystemVersion: pe.setOptionalHeader_MajorOperatingSystemVersion((quint16)nValue); break;
+                        case N_IMAGE_OPTIONAL_HEADER::MinorOperatingSystemVersion: pe.setOptionalHeader_MinorOperatingSystemVersion((quint16)nValue); break;
+                        case N_IMAGE_OPTIONAL_HEADER::MajorImageVersion: pe.setOptionalHeader_MajorImageVersion((quint16)nValue); break;
+                        case N_IMAGE_OPTIONAL_HEADER::MinorImageVersion: pe.setOptionalHeader_MinorImageVersion((quint16)nValue); break;
+                        case N_IMAGE_OPTIONAL_HEADER::MajorSubsystemVersion: pe.setOptionalHeader_MajorSubsystemVersion((quint16)nValue); break;
+                        case N_IMAGE_OPTIONAL_HEADER::MinorSubsystemVersion: pe.setOptionalHeader_MinorSubsystemVersion((quint16)nValue); break;
+                        case N_IMAGE_OPTIONAL_HEADER::Win32VersionValue: pe.setOptionalHeader_Win32VersionValue((quint16)nValue); break;
+                        case N_IMAGE_OPTIONAL_HEADER::SizeOfImage: pe.setOptionalHeader_SizeOfImage((quint32)nValue); break;
+                        case N_IMAGE_OPTIONAL_HEADER::SizeOfHeaders: pe.setOptionalHeader_SizeOfHeaders((quint32)nValue); break;
+                        case N_IMAGE_OPTIONAL_HEADER::CheckSum: pe.setOptionalHeader_CheckSum((quint32)nValue); break;
+                        case N_IMAGE_OPTIONAL_HEADER::Subsystem: pe.setOptionalHeader_Subsystem((quint16)nValue); break;
+                        case N_IMAGE_OPTIONAL_HEADER::DllCharacteristics: pe.setOptionalHeader_DllCharacteristics((quint16)nValue); break;
+                        case N_IMAGE_OPTIONAL_HEADER::SizeOfStackReserve: pe.setOptionalHeader_SizeOfStackReserve((quint64)nValue); break;
+                        case N_IMAGE_OPTIONAL_HEADER::SizeOfStackCommit: pe.setOptionalHeader_SizeOfStackCommit((quint64)nValue); break;
+                        case N_IMAGE_OPTIONAL_HEADER::SizeOfHeapReserve: pe.setOptionalHeader_SizeOfHeapReserve((quint64)nValue); break;
+                        case N_IMAGE_OPTIONAL_HEADER::SizeOfHeapCommit: pe.setOptionalHeader_SizeOfHeapCommit((quint64)nValue); break;
+                        case N_IMAGE_OPTIONAL_HEADER::LoaderFlags: pe.setOptionalHeader_LoaderFlags((quint32)nValue); break;
+                        case N_IMAGE_OPTIONAL_HEADER::NumberOfRvaAndSizes: pe.setOptionalHeader_NumberOfRvaAndSizes((quint32)nValue); break;
                         // Extra
-                        case N_IMAGE_OPTIONAL_HEADER::OperatingSystemVersion:
-                            pe.setOperatingSystemVersion((quint32)nValue);
-                            break;
+                        case N_IMAGE_OPTIONAL_HEADER::OperatingSystemVersion: pe.setOperatingSystemVersion((quint32)nValue); break;
                     }
 
                     ui->widgetHex_IMAGE_OPTIONAL_HEADER->reload();
@@ -660,62 +476,28 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, in
 
                 case SPE::TYPE_EXPORT:
                     switch (nNdata) {
-                        case N_IMAGE_EXPORT::Characteristics:
-                            pe.setExportDirectory_Characteristics((quint32)nValue);
-                            break;
-                        case N_IMAGE_EXPORT::TimeDateStamp:
-                            pe.setExportDirectory_TimeDateStamp((quint32)nValue);
-                            break;
-                        case N_IMAGE_EXPORT::MajorVersion:
-                            pe.setExportDirectory_MajorVersion((quint16)nValue);
-                            break;
-                        case N_IMAGE_EXPORT::MinorVersion:
-                            pe.setExportDirectory_MinorVersion((quint16)nValue);
-                            break;
-                        case N_IMAGE_EXPORT::Name:
-                            pe.setExportDirectory_Name((quint32)nValue);
-                            break;
-                        case N_IMAGE_EXPORT::Base:
-                            pe.setExportDirectory_Base((quint32)nValue);
-                            break;
-                        case N_IMAGE_EXPORT::NumberOfFunctions:
-                            pe.setExportDirectory_NumberOfFunctions((quint32)nValue);
-                            break;
-                        case N_IMAGE_EXPORT::NumberOfNames:
-                            pe.setExportDirectory_NumberOfNames((quint32)nValue);
-                            break;
-                        case N_IMAGE_EXPORT::AddressOfFunctions:
-                            pe.setExportDirectory_AddressOfFunctions((quint32)nValue);
-                            break;
-                        case N_IMAGE_EXPORT::AddressOfNames:
-                            pe.setExportDirectory_AddressOfNames((quint32)nValue);
-                            break;
-                        case N_IMAGE_EXPORT::AddressOfNameOrdinals:
-                            pe.setExportDirectory_AddressOfNameOrdinals((quint32)nValue);
-                            break;
+                        case N_IMAGE_EXPORT::Characteristics: pe.setExportDirectory_Characteristics((quint32)nValue); break;
+                        case N_IMAGE_EXPORT::TimeDateStamp: pe.setExportDirectory_TimeDateStamp((quint32)nValue); break;
+                        case N_IMAGE_EXPORT::MajorVersion: pe.setExportDirectory_MajorVersion((quint16)nValue); break;
+                        case N_IMAGE_EXPORT::MinorVersion: pe.setExportDirectory_MinorVersion((quint16)nValue); break;
+                        case N_IMAGE_EXPORT::Name: pe.setExportDirectory_Name((quint32)nValue); break;
+                        case N_IMAGE_EXPORT::Base: pe.setExportDirectory_Base((quint32)nValue); break;
+                        case N_IMAGE_EXPORT::NumberOfFunctions: pe.setExportDirectory_NumberOfFunctions((quint32)nValue); break;
+                        case N_IMAGE_EXPORT::NumberOfNames: pe.setExportDirectory_NumberOfNames((quint32)nValue); break;
+                        case N_IMAGE_EXPORT::AddressOfFunctions: pe.setExportDirectory_AddressOfFunctions((quint32)nValue); break;
+                        case N_IMAGE_EXPORT::AddressOfNames: pe.setExportDirectory_AddressOfNames((quint32)nValue); break;
+                        case N_IMAGE_EXPORT::AddressOfNameOrdinals: pe.setExportDirectory_AddressOfNameOrdinals((quint32)nValue); break;
                     }
                     break;
 
                 case SPE::TYPE_TLS:
                     switch (nNdata) {
-                        case N_IMAGE_TLS::StartAddressOfRawData:
-                            pe.setTLS_StartAddressOfRawData((quint64)nValue);
-                            break;
-                        case N_IMAGE_TLS::EndAddressOfRawData:
-                            pe.setTLS_EndAddressOfRawData((quint64)nValue);
-                            break;
-                        case N_IMAGE_TLS::AddressOfIndex:
-                            pe.setTLS_AddressOfIndex((quint64)nValue);
-                            break;
-                        case N_IMAGE_TLS::AddressOfCallBacks:
-                            pe.setTLS_AddressOfCallBacks((quint64)nValue);
-                            break;
-                        case N_IMAGE_TLS::SizeOfZeroFill:
-                            pe.setTLS_SizeOfZeroFill((quint32)nValue);
-                            break;
-                        case N_IMAGE_TLS::Characteristics:
-                            pe.setTLS_Characteristics((quint32)nValue);
-                            break;
+                        case N_IMAGE_TLS::StartAddressOfRawData: pe.setTLS_StartAddressOfRawData((quint64)nValue); break;
+                        case N_IMAGE_TLS::EndAddressOfRawData: pe.setTLS_EndAddressOfRawData((quint64)nValue); break;
+                        case N_IMAGE_TLS::AddressOfIndex: pe.setTLS_AddressOfIndex((quint64)nValue); break;
+                        case N_IMAGE_TLS::AddressOfCallBacks: pe.setTLS_AddressOfCallBacks((quint64)nValue); break;
+                        case N_IMAGE_TLS::SizeOfZeroFill: pe.setTLS_SizeOfZeroFill((quint32)nValue); break;
+                        case N_IMAGE_TLS::Characteristics: pe.setTLS_Characteristics((quint32)nValue); break;
                     }
 
                     ui->widgetHex_TLS->reload();
@@ -723,107 +505,43 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, in
 
                 case SPE::TYPE_RESOURCES_VERSION:
                     switch (nNdata) {
-                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwSignature:
-                            pe.setFixedFileInfo_dwSignature((quint32)nValue);
-                            break;
-                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwStrucVersion:
-                            pe.setFixedFileInfo_dwStrucVersion((quint32)nValue);
-                            break;
-                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileVersionMS:
-                            pe.setFixedFileInfo_dwFileVersionMS((quint32)nValue);
-                            break;
-                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileVersionLS:
-                            pe.setFixedFileInfo_dwFileVersionLS((quint32)nValue);
-                            break;
-                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwProductVersionMS:
-                            pe.setFixedFileInfo_dwProductVersionMS((quint32)nValue);
-                            break;
-                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwProductVersionLS:
-                            pe.setFixedFileInfo_dwProductVersionLS((quint32)nValue);
-                            break;
-                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileFlagsMask:
-                            pe.setFixedFileInfo_dwFileFlagsMask((quint32)nValue);
-                            break;
-                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileFlags:
-                            pe.setFixedFileInfo_dwFileFlags((quint32)nValue);
-                            break;
-                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileOS:
-                            pe.setFixedFileInfo_dwFileOS((quint32)nValue);
-                            break;
-                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileType:
-                            pe.setFixedFileInfo_dwFileType((quint32)nValue);
-                            break;
-                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileSubtype:
-                            pe.setFixedFileInfo_dwFileSubtype((quint32)nValue);
-                            break;
-                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileDateMS:
-                            pe.setFixedFileInfo_dwFileDateMS((quint32)nValue);
-                            break;
-                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileDateLS:
-                            pe.setFixedFileInfo_dwFileDateLS((quint32)nValue);
-                            break;
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwSignature: pe.setFixedFileInfo_dwSignature((quint32)nValue); break;
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwStrucVersion: pe.setFixedFileInfo_dwStrucVersion((quint32)nValue); break;
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileVersionMS: pe.setFixedFileInfo_dwFileVersionMS((quint32)nValue); break;
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileVersionLS: pe.setFixedFileInfo_dwFileVersionLS((quint32)nValue); break;
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwProductVersionMS: pe.setFixedFileInfo_dwProductVersionMS((quint32)nValue); break;
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwProductVersionLS: pe.setFixedFileInfo_dwProductVersionLS((quint32)nValue); break;
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileFlagsMask: pe.setFixedFileInfo_dwFileFlagsMask((quint32)nValue); break;
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileFlags: pe.setFixedFileInfo_dwFileFlags((quint32)nValue); break;
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileOS: pe.setFixedFileInfo_dwFileOS((quint32)nValue); break;
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileType: pe.setFixedFileInfo_dwFileType((quint32)nValue); break;
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileSubtype: pe.setFixedFileInfo_dwFileSubtype((quint32)nValue); break;
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileDateMS: pe.setFixedFileInfo_dwFileDateMS((quint32)nValue); break;
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileDateLS: pe.setFixedFileInfo_dwFileDateLS((quint32)nValue); break;
                     }
                     break;
 
                 case SPE::TYPE_NETHEADER:
                     switch (nNdata) {
-                        case N_IMAGE_NETHEADER::cb:
-                            pe.setNetHeader_cb((quint32)nValue);
-                            break;
-                        case N_IMAGE_NETHEADER::MinorRuntimeVersion:
-                            pe.setNetHeader_MinorRuntimeVersion((quint16)nValue);
-                            break;
-                        case N_IMAGE_NETHEADER::MajorRuntimeVersion:
-                            pe.setNetHeader_MajorRuntimeVersion((quint16)nValue);
-                            break;
-                        case N_IMAGE_NETHEADER::MetaData_Address:
-                            pe.setNetHeader_MetaData_Address((quint32)nValue);
-                            break;
-                        case N_IMAGE_NETHEADER::MetaData_Size:
-                            pe.setNetHeader_MetaData_Size((quint32)nValue);
-                            break;
-                        case N_IMAGE_NETHEADER::Flags:
-                            pe.setNetHeader_Flags((quint32)nValue);
-                            break;
-                        case N_IMAGE_NETHEADER::EntryPoint:
-                            pe.setNetHeader_EntryPoint((quint32)nValue);
-                            break;
-                        case N_IMAGE_NETHEADER::Resources_Address:
-                            pe.setNetHeader_Resources_Address((quint32)nValue);
-                            break;
-                        case N_IMAGE_NETHEADER::Resources_Size:
-                            pe.setNetHeader_Resources_Size((quint32)nValue);
-                            break;
-                        case N_IMAGE_NETHEADER::StrongNameSignature_Address:
-                            pe.setNetHeader_StrongNameSignature_Address((quint32)nValue);
-                            break;
-                        case N_IMAGE_NETHEADER::StrongNameSignature_Size:
-                            pe.setNetHeader_StrongNameSignature_Size((quint32)nValue);
-                            break;
-                        case N_IMAGE_NETHEADER::CodeManagerTable_Address:
-                            pe.setNetHeader_CodeManagerTable_Address((quint32)nValue);
-                            break;
-                        case N_IMAGE_NETHEADER::CodeManagerTable_Size:
-                            pe.setNetHeader_CodeManagerTable_Size((quint32)nValue);
-                            break;
-                        case N_IMAGE_NETHEADER::VTableFixups_Address:
-                            pe.setNetHeader_VTableFixups_Address((quint32)nValue);
-                            break;
-                        case N_IMAGE_NETHEADER::VTableFixups_Size:
-                            pe.setNetHeader_VTableFixups_Size((quint32)nValue);
-                            break;
-                        case N_IMAGE_NETHEADER::ExportAddressTableJumps_Address:
-                            pe.setNetHeader_ExportAddressTableJumps_Address((quint32)nValue);
-                            break;
-                        case N_IMAGE_NETHEADER::ExportAddressTableJumps_Size:
-                            pe.setNetHeader_ExportAddressTableJumps_Size((quint32)nValue);
-                            break;
-                        case N_IMAGE_NETHEADER::ManagedNativeHeader_Address:
-                            pe.setNetHeader_ManagedNativeHeader_Address((quint32)nValue);
-                            break;
-                        case N_IMAGE_NETHEADER::ManagedNativeHeader_Size:
-                            pe.setNetHeader_ManagedNativeHeader_Size((quint32)nValue);
-                            break;
+                        case N_IMAGE_NETHEADER::cb: pe.setNetHeader_cb((quint32)nValue); break;
+                        case N_IMAGE_NETHEADER::MinorRuntimeVersion: pe.setNetHeader_MinorRuntimeVersion((quint16)nValue); break;
+                        case N_IMAGE_NETHEADER::MajorRuntimeVersion: pe.setNetHeader_MajorRuntimeVersion((quint16)nValue); break;
+                        case N_IMAGE_NETHEADER::MetaData_Address: pe.setNetHeader_MetaData_Address((quint32)nValue); break;
+                        case N_IMAGE_NETHEADER::MetaData_Size: pe.setNetHeader_MetaData_Size((quint32)nValue); break;
+                        case N_IMAGE_NETHEADER::Flags: pe.setNetHeader_Flags((quint32)nValue); break;
+                        case N_IMAGE_NETHEADER::EntryPoint: pe.setNetHeader_EntryPoint((quint32)nValue); break;
+                        case N_IMAGE_NETHEADER::Resources_Address: pe.setNetHeader_Resources_Address((quint32)nValue); break;
+                        case N_IMAGE_NETHEADER::Resources_Size: pe.setNetHeader_Resources_Size((quint32)nValue); break;
+                        case N_IMAGE_NETHEADER::StrongNameSignature_Address: pe.setNetHeader_StrongNameSignature_Address((quint32)nValue); break;
+                        case N_IMAGE_NETHEADER::StrongNameSignature_Size: pe.setNetHeader_StrongNameSignature_Size((quint32)nValue); break;
+                        case N_IMAGE_NETHEADER::CodeManagerTable_Address: pe.setNetHeader_CodeManagerTable_Address((quint32)nValue); break;
+                        case N_IMAGE_NETHEADER::CodeManagerTable_Size: pe.setNetHeader_CodeManagerTable_Size((quint32)nValue); break;
+                        case N_IMAGE_NETHEADER::VTableFixups_Address: pe.setNetHeader_VTableFixups_Address((quint32)nValue); break;
+                        case N_IMAGE_NETHEADER::VTableFixups_Size: pe.setNetHeader_VTableFixups_Size((quint32)nValue); break;
+                        case N_IMAGE_NETHEADER::ExportAddressTableJumps_Address: pe.setNetHeader_ExportAddressTableJumps_Address((quint32)nValue); break;
+                        case N_IMAGE_NETHEADER::ExportAddressTableJumps_Size: pe.setNetHeader_ExportAddressTableJumps_Size((quint32)nValue); break;
+                        case N_IMAGE_NETHEADER::ManagedNativeHeader_Address: pe.setNetHeader_ManagedNativeHeader_Address((quint32)nValue); break;
+                        case N_IMAGE_NETHEADER::ManagedNativeHeader_Size: pe.setNetHeader_ManagedNativeHeader_Size((quint32)nValue); break;
                     }
 
                     ui->widgetHex_NetHeader->reload();
@@ -831,30 +549,14 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, in
 
                 case SPE::TYPE_NET_METADATA:
                     switch (nNdata) {
-                        case N_IMAGE_NET_METADATA::Signature:
-                            pe.setMetadataHeader_Signature((quint32)nValue);
-                            break;
-                        case N_IMAGE_NET_METADATA::MajorVersion:
-                            pe.setMetadataHeader_MajorVersion((quint16)nValue);
-                            break;
-                        case N_IMAGE_NET_METADATA::MinorVersion:
-                            pe.setMetadataHeader_MinorVersion((quint16)nValue);
-                            break;
-                        case N_IMAGE_NET_METADATA::Reserved:
-                            pe.setMetadataHeader_Reserved((quint32)nValue);
-                            break;
-                        case N_IMAGE_NET_METADATA::VersionStringLength:
-                            pe.setMetadataHeader_VersionStringLength((quint32)nValue);
-                            break;  // TODO reload!!!
-                        case N_IMAGE_NET_METADATA::Version:
-                            pe.setMetadataHeader_Version(sValue);
-                            break;
-                        case N_IMAGE_NET_METADATA::Flags:
-                            pe.setMetadataHeader_Flags((quint16)nValue);
-                            break;
-                        case N_IMAGE_NET_METADATA::Streams:
-                            pe.setMetadataHeader_Streams((quint16)nValue);
-                            break;
+                        case N_IMAGE_NET_METADATA::Signature: pe.setMetadataHeader_Signature((quint32)nValue); break;
+                        case N_IMAGE_NET_METADATA::MajorVersion: pe.setMetadataHeader_MajorVersion((quint16)nValue); break;
+                        case N_IMAGE_NET_METADATA::MinorVersion: pe.setMetadataHeader_MinorVersion((quint16)nValue); break;
+                        case N_IMAGE_NET_METADATA::Reserved: pe.setMetadataHeader_Reserved((quint32)nValue); break;
+                        case N_IMAGE_NET_METADATA::VersionStringLength: pe.setMetadataHeader_VersionStringLength((quint32)nValue); break;  // TODO reload!!!
+                        case N_IMAGE_NET_METADATA::Version: pe.setMetadataHeader_Version(sValue); break;
+                        case N_IMAGE_NET_METADATA::Flags: pe.setMetadataHeader_Flags((quint16)nValue); break;
+                        case N_IMAGE_NET_METADATA::Streams: pe.setMetadataHeader_Streams((quint16)nValue); break;
                     }
 
                     ui->widgetHex_Net_Metadata->reload();
@@ -862,159 +564,59 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue, int nStype, int nNdata, in
 
                 case SPE::TYPE_LOADCONFIG:
                     switch (nNdata) {
-                        case N_IMAGE_LOADCONFIG::Size:
-                            pe.setLoadConfig_Size((quint32)nValue);
-                            break;
-                        case N_IMAGE_LOADCONFIG::TimeDateStamp:
-                            pe.setLoadConfig_TimeDateStamp((quint32)nValue);
-                            break;
-                        case N_IMAGE_LOADCONFIG::MinorVersion:
-                            pe.setLoadConfig_MinorVersion((quint16)nValue);
-                            break;
-                        case N_IMAGE_LOADCONFIG::MajorVersion:
-                            pe.setLoadConfig_MajorVersion((quint16)nValue);
-                            break;
-                        case N_IMAGE_LOADCONFIG::GlobalFlagsClear:
-                            pe.setLoadConfig_GlobalFlagsClear((quint32)nValue);
-                            break;
-                        case N_IMAGE_LOADCONFIG::GlobalFlagsSet:
-                            pe.setLoadConfig_GlobalFlagsSet((quint32)nValue);
-                            break;
-                        case N_IMAGE_LOADCONFIG::CriticalSectionDefaultTimeout:
-                            pe.setLoadConfig_CriticalSectionDefaultTimeout((quint32)nValue);
-                            break;
-                        case N_IMAGE_LOADCONFIG::DeCommitFreeBlockThreshold:
-                            pe.setLoadConfig_DeCommitFreeBlockThreshold((quint64)nValue);
-                            break;
-                        case N_IMAGE_LOADCONFIG::DeCommitTotalFreeThreshold:
-                            pe.setLoadConfig_DeCommitTotalFreeThreshold((quint64)nValue);
-                            break;
-                        case N_IMAGE_LOADCONFIG::LockPrefixTable:
-                            pe.setLoadConfig_LockPrefixTable((quint64)nValue);
-                            break;
-                        case N_IMAGE_LOADCONFIG::MaximumAllocationSize:
-                            pe.setLoadConfig_MaximumAllocationSize((quint64)nValue);
-                            break;
-                        case N_IMAGE_LOADCONFIG::VirtualMemoryThreshold:
-                            pe.setLoadConfig_VirtualMemoryThreshold((quint64)nValue);
-                            break;
-                        case N_IMAGE_LOADCONFIG::ProcessAffinityMask:
-                            pe.setLoadConfig_ProcessAffinityMask((quint64)nValue);
-                            break;
-                        case N_IMAGE_LOADCONFIG::CSDVersion:
-                            pe.setLoadConfig_CSDVersion((quint16)nValue);
-                            break;
-                        case N_IMAGE_LOADCONFIG::DependentLoadFlags:
-                            pe.setLoadConfig_DependentLoadFlags((quint16)nValue);
-                            break;
-                        case N_IMAGE_LOADCONFIG::EditList:
-                            pe.setLoadConfig_EditList((quint64)nValue);
-                            break;
-                        case N_IMAGE_LOADCONFIG::SecurityCookie:
-                            pe.setLoadConfig_SecurityCookie((quint64)nValue);
-                            break;
-                        case N_IMAGE_LOADCONFIG::SEHandlerTable:
-                            pe.setLoadConfig_SEHandlerTable((quint64)nValue);
-                            break;
-                        case N_IMAGE_LOADCONFIG::SEHandlerCount:
-                            pe.setLoadConfig_SEHandlerCount((quint64)nValue);
-                            break;
-                        case N_IMAGE_LOADCONFIG::GuardCFCheckFunctionPointer:
-                            pe.setLoadConfig_GuardCFCheckFunctionPointer((quint64)nValue);
-                            break;
-                        case N_IMAGE_LOADCONFIG::GuardCFDispatchFunctionPointer:
-                            pe.setLoadConfig_GuardCFDispatchFunctionPointer((quint64)nValue);
-                            break;
-                        case N_IMAGE_LOADCONFIG::GuardCFFunctionTable:
-                            pe.setLoadConfig_GuardCFFunctionTable((quint64)nValue);
-                            break;
-                        case N_IMAGE_LOADCONFIG::GuardCFFunctionCount:
-                            pe.setLoadConfig_GuardCFFunctionCount((quint64)nValue);
-                            break;
-                        case N_IMAGE_LOADCONFIG::GuardFlags:
-                            pe.setLoadConfig_GuardFlags((quint32)nValue);
-                            break;
-                        case N_IMAGE_LOADCONFIG::CodeIntegrity_Flags:
-                            pe.setLoadConfig_CodeIntegrity_Flags((quint16)nValue);
-                            break;
-                        case N_IMAGE_LOADCONFIG::CodeIntegrity_Catalog:
-                            pe.setLoadConfig_CodeIntegrity_Catalog((quint16)nValue);
-                            break;
-                        case N_IMAGE_LOADCONFIG::CodeIntegrity_CatalogOffset:
-                            pe.setLoadConfig_CodeIntegrity_CatalogOffset((quint32)nValue);
-                            break;
-                        case N_IMAGE_LOADCONFIG::CodeIntegrity_Reserved:
-                            pe.setLoadConfig_CodeIntegrity_Reserved((quint32)nValue);
-                            break;
-                        case N_IMAGE_LOADCONFIG::GuardAddressTakenIatEntryTable:
-                            pe.setLoadConfig_GuardAddressTakenIatEntryTable((quint64)nValue);
-                            break;
-                        case N_IMAGE_LOADCONFIG::GuardAddressTakenIatEntryCount:
-                            pe.setLoadConfig_GuardAddressTakenIatEntryCount((quint64)nValue);
-                            break;
-                        case N_IMAGE_LOADCONFIG::GuardLongJumpTargetTable:
-                            pe.setLoadConfig_GuardLongJumpTargetTable((quint64)nValue);
-                            break;
-                        case N_IMAGE_LOADCONFIG::GuardLongJumpTargetCount:
-                            pe.setLoadConfig_GuardLongJumpTargetCount((quint64)nValue);
-                            break;
-                        case N_IMAGE_LOADCONFIG::DynamicValueRelocTable:
-                            pe.setLoadConfig_DynamicValueRelocTable((quint64)nValue);
-                            break;
-                        case N_IMAGE_LOADCONFIG::CHPEMetadataPointer:
-                            pe.setLoadConfig_CHPEMetadataPointer((quint64)nValue);
-                            break;
-                        case N_IMAGE_LOADCONFIG::GuardRFFailureRoutine:
-                            pe.setLoadConfig_GuardRFFailureRoutine((quint64)nValue);
-                            break;
-                        case N_IMAGE_LOADCONFIG::GuardRFFailureRoutineFunctionPointer:
-                            pe.setLoadConfig_GuardRFFailureRoutineFunctionPointer((quint64)nValue);
-                            break;
-                        case N_IMAGE_LOADCONFIG::DynamicValueRelocTableOffset:
-                            pe.setLoadConfig_DynamicValueRelocTableOffset((quint32)nValue);
-                            break;
-                        case N_IMAGE_LOADCONFIG::DynamicValueRelocTableSection:
-                            pe.setLoadConfig_DynamicValueRelocTableSection((quint16)nValue);
-                            break;
-                        case N_IMAGE_LOADCONFIG::Reserved2:
-                            pe.setLoadConfig_Reserved2((quint16)nValue);
-                            break;
+                        case N_IMAGE_LOADCONFIG::Size: pe.setLoadConfig_Size((quint32)nValue); break;
+                        case N_IMAGE_LOADCONFIG::TimeDateStamp: pe.setLoadConfig_TimeDateStamp((quint32)nValue); break;
+                        case N_IMAGE_LOADCONFIG::MinorVersion: pe.setLoadConfig_MinorVersion((quint16)nValue); break;
+                        case N_IMAGE_LOADCONFIG::MajorVersion: pe.setLoadConfig_MajorVersion((quint16)nValue); break;
+                        case N_IMAGE_LOADCONFIG::GlobalFlagsClear: pe.setLoadConfig_GlobalFlagsClear((quint32)nValue); break;
+                        case N_IMAGE_LOADCONFIG::GlobalFlagsSet: pe.setLoadConfig_GlobalFlagsSet((quint32)nValue); break;
+                        case N_IMAGE_LOADCONFIG::CriticalSectionDefaultTimeout: pe.setLoadConfig_CriticalSectionDefaultTimeout((quint32)nValue); break;
+                        case N_IMAGE_LOADCONFIG::DeCommitFreeBlockThreshold: pe.setLoadConfig_DeCommitFreeBlockThreshold((quint64)nValue); break;
+                        case N_IMAGE_LOADCONFIG::DeCommitTotalFreeThreshold: pe.setLoadConfig_DeCommitTotalFreeThreshold((quint64)nValue); break;
+                        case N_IMAGE_LOADCONFIG::LockPrefixTable: pe.setLoadConfig_LockPrefixTable((quint64)nValue); break;
+                        case N_IMAGE_LOADCONFIG::MaximumAllocationSize: pe.setLoadConfig_MaximumAllocationSize((quint64)nValue); break;
+                        case N_IMAGE_LOADCONFIG::VirtualMemoryThreshold: pe.setLoadConfig_VirtualMemoryThreshold((quint64)nValue); break;
+                        case N_IMAGE_LOADCONFIG::ProcessAffinityMask: pe.setLoadConfig_ProcessAffinityMask((quint64)nValue); break;
+                        case N_IMAGE_LOADCONFIG::CSDVersion: pe.setLoadConfig_CSDVersion((quint16)nValue); break;
+                        case N_IMAGE_LOADCONFIG::DependentLoadFlags: pe.setLoadConfig_DependentLoadFlags((quint16)nValue); break;
+                        case N_IMAGE_LOADCONFIG::EditList: pe.setLoadConfig_EditList((quint64)nValue); break;
+                        case N_IMAGE_LOADCONFIG::SecurityCookie: pe.setLoadConfig_SecurityCookie((quint64)nValue); break;
+                        case N_IMAGE_LOADCONFIG::SEHandlerTable: pe.setLoadConfig_SEHandlerTable((quint64)nValue); break;
+                        case N_IMAGE_LOADCONFIG::SEHandlerCount: pe.setLoadConfig_SEHandlerCount((quint64)nValue); break;
+                        case N_IMAGE_LOADCONFIG::GuardCFCheckFunctionPointer: pe.setLoadConfig_GuardCFCheckFunctionPointer((quint64)nValue); break;
+                        case N_IMAGE_LOADCONFIG::GuardCFDispatchFunctionPointer: pe.setLoadConfig_GuardCFDispatchFunctionPointer((quint64)nValue); break;
+                        case N_IMAGE_LOADCONFIG::GuardCFFunctionTable: pe.setLoadConfig_GuardCFFunctionTable((quint64)nValue); break;
+                        case N_IMAGE_LOADCONFIG::GuardCFFunctionCount: pe.setLoadConfig_GuardCFFunctionCount((quint64)nValue); break;
+                        case N_IMAGE_LOADCONFIG::GuardFlags: pe.setLoadConfig_GuardFlags((quint32)nValue); break;
+                        case N_IMAGE_LOADCONFIG::CodeIntegrity_Flags: pe.setLoadConfig_CodeIntegrity_Flags((quint16)nValue); break;
+                        case N_IMAGE_LOADCONFIG::CodeIntegrity_Catalog: pe.setLoadConfig_CodeIntegrity_Catalog((quint16)nValue); break;
+                        case N_IMAGE_LOADCONFIG::CodeIntegrity_CatalogOffset: pe.setLoadConfig_CodeIntegrity_CatalogOffset((quint32)nValue); break;
+                        case N_IMAGE_LOADCONFIG::CodeIntegrity_Reserved: pe.setLoadConfig_CodeIntegrity_Reserved((quint32)nValue); break;
+                        case N_IMAGE_LOADCONFIG::GuardAddressTakenIatEntryTable: pe.setLoadConfig_GuardAddressTakenIatEntryTable((quint64)nValue); break;
+                        case N_IMAGE_LOADCONFIG::GuardAddressTakenIatEntryCount: pe.setLoadConfig_GuardAddressTakenIatEntryCount((quint64)nValue); break;
+                        case N_IMAGE_LOADCONFIG::GuardLongJumpTargetTable: pe.setLoadConfig_GuardLongJumpTargetTable((quint64)nValue); break;
+                        case N_IMAGE_LOADCONFIG::GuardLongJumpTargetCount: pe.setLoadConfig_GuardLongJumpTargetCount((quint64)nValue); break;
+                        case N_IMAGE_LOADCONFIG::DynamicValueRelocTable: pe.setLoadConfig_DynamicValueRelocTable((quint64)nValue); break;
+                        case N_IMAGE_LOADCONFIG::CHPEMetadataPointer: pe.setLoadConfig_CHPEMetadataPointer((quint64)nValue); break;
+                        case N_IMAGE_LOADCONFIG::GuardRFFailureRoutine: pe.setLoadConfig_GuardRFFailureRoutine((quint64)nValue); break;
+                        case N_IMAGE_LOADCONFIG::GuardRFFailureRoutineFunctionPointer: pe.setLoadConfig_GuardRFFailureRoutineFunctionPointer((quint64)nValue); break;
+                        case N_IMAGE_LOADCONFIG::DynamicValueRelocTableOffset: pe.setLoadConfig_DynamicValueRelocTableOffset((quint32)nValue); break;
+                        case N_IMAGE_LOADCONFIG::DynamicValueRelocTableSection: pe.setLoadConfig_DynamicValueRelocTableSection((quint16)nValue); break;
+                        case N_IMAGE_LOADCONFIG::Reserved2: pe.setLoadConfig_Reserved2((quint16)nValue); break;
                         case N_IMAGE_LOADCONFIG::GuardRFVerifyStackPointerFunctionPointer:
                             pe.setLoadConfig_GuardRFVerifyStackPointerFunctionPointer((quint64)nValue);
                             break;
-                        case N_IMAGE_LOADCONFIG::HotPatchTableOffset:
-                            pe.setLoadConfig_HotPatchTableOffset((quint32)nValue);
-                            break;
-                        case N_IMAGE_LOADCONFIG::Reserved3:
-                            pe.setLoadConfig_Reserved3((quint32)nValue);
-                            break;
-                        case N_IMAGE_LOADCONFIG::EnclaveConfigurationPointer:
-                            pe.setLoadConfig_EnclaveConfigurationPointer((quint64)nValue);
-                            break;
-                        case N_IMAGE_LOADCONFIG::VolatileMetadataPointer:
-                            pe.setLoadConfig_VolatileMetadataPointer((quint64)nValue);
-                            break;
-                        case N_IMAGE_LOADCONFIG::GuardEHContinuationTable:
-                            pe.setLoadConfig_GuardEHContinuationTable((quint64)nValue);
-                            break;
-                        case N_IMAGE_LOADCONFIG::GuardEHContinuationCount:
-                            pe.setLoadConfig_GuardEHContinuationCount((quint64)nValue);
-                            break;
-                        case N_IMAGE_LOADCONFIG::GuardXFGCheckFunctionPointer:
-                            pe.setLoadConfig_GuardXFGCheckFunctionPointer((quint64)nValue);
-                            break;
-                        case N_IMAGE_LOADCONFIG::GuardXFGDispatchFunctionPointer:
-                            pe.setLoadConfig_GuardXFGDispatchFunctionPointer((quint64)nValue);
-                            break;
-                        case N_IMAGE_LOADCONFIG::GuardXFGTableDispatchFunctionPointer:
-                            pe.setLoadConfig_GuardXFGTableDispatchFunctionPointer((quint64)nValue);
-                            break;
-                        case N_IMAGE_LOADCONFIG::CastGuardOsDeterminedFailureMode:
-                            pe.setLoadConfig_CastGuardOsDeterminedFailureMode((quint64)nValue);
-                            break;
-                        case N_IMAGE_LOADCONFIG::GuardMemcpyFunctionPointer:
-                            pe.setLoadConfig_GuardMemcpyFunctionPointer((quint64)nValue);
-                            break;
+                        case N_IMAGE_LOADCONFIG::HotPatchTableOffset: pe.setLoadConfig_HotPatchTableOffset((quint32)nValue); break;
+                        case N_IMAGE_LOADCONFIG::Reserved3: pe.setLoadConfig_Reserved3((quint32)nValue); break;
+                        case N_IMAGE_LOADCONFIG::EnclaveConfigurationPointer: pe.setLoadConfig_EnclaveConfigurationPointer((quint64)nValue); break;
+                        case N_IMAGE_LOADCONFIG::VolatileMetadataPointer: pe.setLoadConfig_VolatileMetadataPointer((quint64)nValue); break;
+                        case N_IMAGE_LOADCONFIG::GuardEHContinuationTable: pe.setLoadConfig_GuardEHContinuationTable((quint64)nValue); break;
+                        case N_IMAGE_LOADCONFIG::GuardEHContinuationCount: pe.setLoadConfig_GuardEHContinuationCount((quint64)nValue); break;
+                        case N_IMAGE_LOADCONFIG::GuardXFGCheckFunctionPointer: pe.setLoadConfig_GuardXFGCheckFunctionPointer((quint64)nValue); break;
+                        case N_IMAGE_LOADCONFIG::GuardXFGDispatchFunctionPointer: pe.setLoadConfig_GuardXFGDispatchFunctionPointer((quint64)nValue); break;
+                        case N_IMAGE_LOADCONFIG::GuardXFGTableDispatchFunctionPointer: pe.setLoadConfig_GuardXFGTableDispatchFunctionPointer((quint64)nValue); break;
+                        case N_IMAGE_LOADCONFIG::CastGuardOsDeterminedFailureMode: pe.setLoadConfig_CastGuardOsDeterminedFailureMode((quint64)nValue); break;
+                        case N_IMAGE_LOADCONFIG::GuardMemcpyFunctionPointer: pe.setLoadConfig_GuardMemcpyFunctionPointer((quint64)nValue); break;
                     }
                     ui->widgetHex_LoadConfig->reload();
                     break;
@@ -1268,42 +870,28 @@ void PEWidget::widgetValueChanged(quint64 nValue)
     switch (nStype) {
         case SPE::TYPE_IMAGE_DOS_HEADER:
             switch (nNdata) {
-                case N_IMAGE_DOS_HEADER::e_magic:
-                    g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_magic]->setValue((quint16)nValue);
-                    break;
+                case N_IMAGE_DOS_HEADER::e_magic: g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_magic]->setValue((quint16)nValue); break;
             }
             break;
 
         case SPE::TYPE_IMAGE_NT_HEADERS:
             switch (nNdata) {
-                case N_IMAGE_NT_HEADERS::Signature:
-                    g_lineEdit_IMAGE_NT_HEADERS[N_IMAGE_NT_HEADERS::Signature]->setValue((quint32)nValue);
-                    break;
+                case N_IMAGE_NT_HEADERS::Signature: g_lineEdit_IMAGE_NT_HEADERS[N_IMAGE_NT_HEADERS::Signature]->setValue((quint32)nValue); break;
             }
             break;
 
         case SPE::TYPE_IMAGE_FILE_HEADER:
             switch (nNdata) {
-                case N_IMAGE_FILE_HEADER::Machine:
-                    g_lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::Machine]->setValue((quint16)nValue);
-                    break;
-                case N_IMAGE_FILE_HEADER::TimeDateStamp:
-                    g_lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::TimeDateStamp]->setValue((quint32)nValue);
-                    break;
-                case N_IMAGE_FILE_HEADER::Characteristics:
-                    g_lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::Characteristics]->setValue((quint16)nValue);
-                    break;
+                case N_IMAGE_FILE_HEADER::Machine: g_lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::Machine]->setValue((quint16)nValue); break;
+                case N_IMAGE_FILE_HEADER::TimeDateStamp: g_lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::TimeDateStamp]->setValue((quint32)nValue); break;
+                case N_IMAGE_FILE_HEADER::Characteristics: g_lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::Characteristics]->setValue((quint16)nValue); break;
             }
             break;
 
         case SPE::TYPE_IMAGE_OPTIONAL_HEADER:
             switch (nNdata) {
-                case N_IMAGE_OPTIONAL_HEADER::Magic:
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::Magic]->setValue((quint16)nValue);
-                    break;
-                case N_IMAGE_OPTIONAL_HEADER::Subsystem:
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::Subsystem]->setValue((quint16)nValue);
-                    break;
+                case N_IMAGE_OPTIONAL_HEADER::Magic: g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::Magic]->setValue((quint16)nValue); break;
+                case N_IMAGE_OPTIONAL_HEADER::Subsystem: g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::Subsystem]->setValue((quint16)nValue); break;
                 case N_IMAGE_OPTIONAL_HEADER::DllCharacteristics:
                     g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::DllCharacteristics]->setValue((quint16)nValue);
                     break;
@@ -1317,17 +905,13 @@ void PEWidget::widgetValueChanged(quint64 nValue)
 
         case SPE::TYPE_EXPORT:
             switch (nNdata) {
-                case N_IMAGE_EXPORT::TimeDateStamp:
-                    g_dateTimeEdit[TD_IMAGE_EXPORT_TimeDateStamp]->setValue(nValue);
-                    break;
+                case N_IMAGE_EXPORT::TimeDateStamp: g_dateTimeEdit[TD_IMAGE_EXPORT_TimeDateStamp]->setValue(nValue); break;
             }
             break;
 
         case SPE::TYPE_NETHEADER:
             switch (nNdata) {
-                case N_IMAGE_NETHEADER::Flags:
-                    g_lineEdit_NetHeader[N_IMAGE_NETHEADER::Flags]->setValue((quint32)nValue);
-                    break;
+                case N_IMAGE_NETHEADER::Flags: g_lineEdit_NetHeader[N_IMAGE_NETHEADER::Flags]->setValue((quint32)nValue); break;
             }
             break;
 
@@ -2862,27 +2446,13 @@ QString PEWidget::typeIdToString(int nType)
     QString sResult = tr("Unknown");
 
     switch (nType) {
-        case SPE::TYPE_IMAGE_SECTION_HEADER:
-            sResult = QString("Section %1").arg(tr("Header"));
-            break;
-        case SPE::TYPE_IMPORT:
-            sResult = QString("Import %1").arg(tr("Header"));
-            break;
-        case SPE::TYPE_DEBUG:
-            sResult = QString("Debug %1").arg(tr("Header"));
-            break;
-        case SPE::TYPE_EXCEPTION:
-            sResult = QString("Exception %1").arg(tr("Header"));
-            break;
-        case SPE::TYPE_RELOCS:
-            sResult = QString("Relocs %1").arg(tr("Header"));
-            break;
-        case SPE::TYPE_DELAYIMPORT:
-            sResult = QString("Delay import %1").arg(tr("Header"));
-            break;
-        case SPE::TYPE_BOUNDIMPORT:
-            sResult = QString("Bound import %1").arg(tr("Header"));
-            break;
+        case SPE::TYPE_IMAGE_SECTION_HEADER: sResult = QString("Section %1").arg(tr("Header")); break;
+        case SPE::TYPE_IMPORT: sResult = QString("Import %1").arg(tr("Header")); break;
+        case SPE::TYPE_DEBUG: sResult = QString("Debug %1").arg(tr("Header")); break;
+        case SPE::TYPE_EXCEPTION: sResult = QString("Exception %1").arg(tr("Header")); break;
+        case SPE::TYPE_RELOCS: sResult = QString("Relocs %1").arg(tr("Header")); break;
+        case SPE::TYPE_DELAYIMPORT: sResult = QString("Delay import %1").arg(tr("Header")); break;
+        case SPE::TYPE_BOUNDIMPORT: sResult = QString("Bound import %1").arg(tr("Header")); break;
     }
 
     return sResult;
@@ -2936,8 +2506,7 @@ bool PEWidget::createSectionTable(int nType, QTableWidget *pTableWidget, const F
             slHeader.append("");
             break;
 
-        default:
-            pTableWidget->setColumnCount(nNumberOfRecords);
+        default: pTableWidget->setColumnCount(nNumberOfRecords);
     }
 
     pTableWidget->setRowCount(0);
@@ -2957,9 +2526,7 @@ bool PEWidget::createSectionTable(int nType, QTableWidget *pTableWidget, const F
     pTableWidget->horizontalHeader()->setVisible(true);
 
     switch (nType) {
-        case SPE::TYPE_IMAGE_DIRECTORY_ENTRIES:
-            pTableWidget->horizontalHeader()->setSectionResizeMode(5, QHeaderView::Stretch);
-            break;
+        case SPE::TYPE_IMAGE_DIRECTORY_ENTRIES: pTableWidget->horizontalHeader()->setSectionResizeMode(5, QHeaderView::Stretch); break;
     }
 
     return true;

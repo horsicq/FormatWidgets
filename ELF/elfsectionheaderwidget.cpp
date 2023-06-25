@@ -153,12 +153,8 @@ FormatWidget::SV ELFSectionHeaderWidget::_setValue(QVariant vValue, int nStype, 
                                 addComment(ui->tableWidget, N_Elf_Shdr::sh_name, HEADER_COLUMN_COMMENT,
                                            elf.getStringFromIndex(g_nStringTableOffset, g_nStringTableSize, nValue));
                                 break;
-                            case N_Elf_Shdr::sh_type:
-                                g_ppComboBox[N_Elf_Shdr::CB_TYPE]->setValue(nValue);
-                                break;
-                            case N_Elf_Shdr::sh_flags:
-                                g_ppComboBox[N_Elf_Shdr::CB_FLAGS]->setValue(nValue);
-                                break;
+                            case N_Elf_Shdr::sh_type: g_ppComboBox[N_Elf_Shdr::CB_TYPE]->setValue(nValue); break;
+                            case N_Elf_Shdr::sh_flags: g_ppComboBox[N_Elf_Shdr::CB_FLAGS]->setValue(nValue); break;
                         }
                     } else {
                         switch (nNdata) {
@@ -166,12 +162,8 @@ FormatWidget::SV ELFSectionHeaderWidget::_setValue(QVariant vValue, int nStype, 
                                 addComment(ui->tableWidget, N_Elf_Shdr::sh_name, HEADER_COLUMN_COMMENT,
                                            elf.getStringFromIndex(g_nStringTableOffset, g_nStringTableSize, nValue));
                                 break;
-                            case N_Elf_Shdr::sh_type:
-                                g_ppComboBox[N_Elf_Shdr::CB_TYPE]->setValue(nValue);
-                                break;
-                            case N_Elf_Shdr::sh_flags:
-                                g_ppComboBox[N_Elf_Shdr::CB_FLAGS]->setValue(nValue);
-                                break;
+                            case N_Elf_Shdr::sh_type: g_ppComboBox[N_Elf_Shdr::CB_TYPE]->setValue(nValue); break;
+                            case N_Elf_Shdr::sh_flags: g_ppComboBox[N_Elf_Shdr::CB_FLAGS]->setValue(nValue); break;
                         }
                     }
 
@@ -180,21 +172,13 @@ FormatWidget::SV ELFSectionHeaderWidget::_setValue(QVariant vValue, int nStype, 
                 case SELF::TYPE_Elf_Phdr:
                     if (elf.is64()) {
                         switch (nNdata) {
-                            case N_Elf_Phdr64::p_type:
-                                g_ppComboBox[N_Elf_Phdr64::CB_TYPE]->setValue(nValue);
-                                break;
-                            case N_Elf_Phdr64::p_flags:
-                                g_ppComboBox[N_Elf_Phdr64::CB_FLAGS]->setValue(nValue);
-                                break;
+                            case N_Elf_Phdr64::p_type: g_ppComboBox[N_Elf_Phdr64::CB_TYPE]->setValue(nValue); break;
+                            case N_Elf_Phdr64::p_flags: g_ppComboBox[N_Elf_Phdr64::CB_FLAGS]->setValue(nValue); break;
                         }
                     } else {
                         switch (nNdata) {
-                            case N_Elf_Phdr32::p_type:
-                                g_ppComboBox[N_Elf_Phdr32::CB_TYPE]->setValue(nValue);
-                                break;
-                            case N_Elf_Phdr32::p_flags:
-                                g_ppComboBox[N_Elf_Phdr32::CB_FLAGS]->setValue(nValue);
-                                break;
+                            case N_Elf_Phdr32::p_type: g_ppComboBox[N_Elf_Phdr32::CB_TYPE]->setValue(nValue); break;
+                            case N_Elf_Phdr32::p_flags: g_ppComboBox[N_Elf_Phdr32::CB_FLAGS]->setValue(nValue); break;
                         }
                     }
 
@@ -202,9 +186,7 @@ FormatWidget::SV ELFSectionHeaderWidget::_setValue(QVariant vValue, int nStype, 
 
                 case SELF::TYPE_Elf_DynamicArrayTags:
                     switch (nNdata) {
-                        case N_Elf_DynamicArrayTags::d_tag:
-                            g_ppComboBox[N_Elf_DynamicArrayTags::CB_TAG]->setValue(nValue);
-                            break;
+                        case N_Elf_DynamicArrayTags::d_tag: g_ppComboBox[N_Elf_DynamicArrayTags::CB_TAG]->setValue(nValue); break;
                     }
 
                     break;
@@ -233,69 +215,29 @@ FormatWidget::SV ELFSectionHeaderWidget::_setValue(QVariant vValue, int nStype, 
                 case SELF::TYPE_Elf_Shdr:
                     if (elf.is64()) {
                         switch (nNdata) {
-                            case N_Elf_Shdr::sh_name:
-                                elf.setElf64_Shdr_name((quint32)nPosition, (quint32)nValue);
-                                break;
-                            case N_Elf_Shdr::sh_type:
-                                elf.setElf64_Shdr_type((quint32)nPosition, (quint32)nValue);
-                                break;
-                            case N_Elf_Shdr::sh_flags:
-                                elf.setElf64_Shdr_flags((quint64)nPosition, (quint32)nValue);
-                                break;
-                            case N_Elf_Shdr::sh_addr:
-                                elf.setElf64_Shdr_addr((quint64)nPosition, (quint32)nValue);
-                                break;
-                            case N_Elf_Shdr::sh_offset:
-                                elf.setElf64_Shdr_offset((quint64)nPosition, (quint32)nValue);
-                                break;
-                            case N_Elf_Shdr::sh_size:
-                                elf.setElf64_Shdr_size((quint64)nPosition, (quint32)nValue);
-                                break;
-                            case N_Elf_Shdr::sh_link:
-                                elf.setElf64_Shdr_link((quint32)nPosition, (quint32)nValue);
-                                break;
-                            case N_Elf_Shdr::sh_info:
-                                elf.setElf64_Shdr_info((quint32)nPosition, (quint32)nValue);
-                                break;
-                            case N_Elf_Shdr::sh_addralign:
-                                elf.setElf64_Shdr_addralign((quint64)nPosition, (quint32)nValue);
-                                break;
-                            case N_Elf_Shdr::sh_entsize:
-                                elf.setElf64_Shdr_entsize((quint64)nPosition, (quint32)nValue);
-                                break;
+                            case N_Elf_Shdr::sh_name: elf.setElf64_Shdr_name((quint32)nPosition, (quint32)nValue); break;
+                            case N_Elf_Shdr::sh_type: elf.setElf64_Shdr_type((quint32)nPosition, (quint32)nValue); break;
+                            case N_Elf_Shdr::sh_flags: elf.setElf64_Shdr_flags((quint64)nPosition, (quint32)nValue); break;
+                            case N_Elf_Shdr::sh_addr: elf.setElf64_Shdr_addr((quint64)nPosition, (quint32)nValue); break;
+                            case N_Elf_Shdr::sh_offset: elf.setElf64_Shdr_offset((quint64)nPosition, (quint32)nValue); break;
+                            case N_Elf_Shdr::sh_size: elf.setElf64_Shdr_size((quint64)nPosition, (quint32)nValue); break;
+                            case N_Elf_Shdr::sh_link: elf.setElf64_Shdr_link((quint32)nPosition, (quint32)nValue); break;
+                            case N_Elf_Shdr::sh_info: elf.setElf64_Shdr_info((quint32)nPosition, (quint32)nValue); break;
+                            case N_Elf_Shdr::sh_addralign: elf.setElf64_Shdr_addralign((quint64)nPosition, (quint32)nValue); break;
+                            case N_Elf_Shdr::sh_entsize: elf.setElf64_Shdr_entsize((quint64)nPosition, (quint32)nValue); break;
                         }
                     } else {
                         switch (nNdata) {
-                            case N_Elf_Shdr::sh_name:
-                                elf.setElf32_Shdr_name((quint32)nPosition, (quint32)nValue);
-                                break;
-                            case N_Elf_Shdr::sh_type:
-                                elf.setElf32_Shdr_type((quint32)nPosition, (quint32)nValue);
-                                break;
-                            case N_Elf_Shdr::sh_flags:
-                                elf.setElf32_Shdr_flags((quint32)nPosition, (quint32)nValue);
-                                break;
-                            case N_Elf_Shdr::sh_addr:
-                                elf.setElf32_Shdr_addr((quint32)nPosition, (quint32)nValue);
-                                break;
-                            case N_Elf_Shdr::sh_offset:
-                                elf.setElf32_Shdr_offset((quint32)nPosition, (quint32)nValue);
-                                break;
-                            case N_Elf_Shdr::sh_size:
-                                elf.setElf32_Shdr_size((quint32)nPosition, (quint32)nValue);
-                                break;
-                            case N_Elf_Shdr::sh_link:
-                                elf.setElf32_Shdr_link((quint32)nPosition, (quint32)nValue);
-                                break;
-                            case N_Elf_Shdr::sh_info:
-                                elf.setElf32_Shdr_info((quint32)nPosition, (quint32)nValue);
-                                break;
-                            case N_Elf_Shdr::sh_addralign:
-                                elf.setElf32_Shdr_addralign((quint32)nPosition, (quint32)nValue);
-                                break;
-                            case N_Elf_Shdr::sh_entsize:
-                                elf.setElf32_Shdr_entsize((quint32)nPosition, (quint32)nValue);
-                                break;
+                            case N_Elf_Shdr::sh_name: elf.setElf32_Shdr_name((quint32)nPosition, (quint32)nValue); break;
+                            case N_Elf_Shdr::sh_type: elf.setElf32_Shdr_type((quint32)nPosition, (quint32)nValue); break;
+                            case N_Elf_Shdr::sh_flags: elf.setElf32_Shdr_flags((quint32)nPosition, (quint32)nValue); break;
+                            case N_Elf_Shdr::sh_addr: elf.setElf32_Shdr_addr((quint32)nPosition, (quint32)nValue); break;
+                            case N_Elf_Shdr::sh_offset: elf.setElf32_Shdr_offset((quint32)nPosition, (quint32)nValue); break;
+                            case N_Elf_Shdr::sh_size: elf.setElf32_Shdr_size((quint32)nPosition, (quint32)nValue); break;
+                            case N_Elf_Shdr::sh_link: elf.setElf32_Shdr_link((quint32)nPosition, (quint32)nValue); break;
+                            case N_Elf_Shdr::sh_info: elf.setElf32_Shdr_info((quint32)nPosition, (quint32)nValue); break;
+                            case N_Elf_Shdr::sh_addralign: elf.setElf32_Shdr_addralign((quint32)nPosition, (quint32)nValue); break;
+                            case N_Elf_Shdr::sh_entsize: elf.setElf32_Shdr_entsize((quint32)nPosition, (quint32)nValue); break;
                         }
                     }
 
@@ -304,57 +246,25 @@ FormatWidget::SV ELFSectionHeaderWidget::_setValue(QVariant vValue, int nStype, 
                 case SELF::TYPE_Elf_Phdr:
                     if (elf.is64()) {
                         switch (nNdata) {
-                            case N_Elf_Phdr64::p_type:
-                                elf.setElf64_Phdr_type((quint32)nPosition, (quint32)nValue);
-                                break;
-                            case N_Elf_Phdr64::p_flags:
-                                elf.setElf64_Phdr_flags((quint32)nPosition, (quint32)nValue);
-                                break;
-                            case N_Elf_Phdr64::p_offset:
-                                elf.setElf64_Phdr_offset((quint64)nPosition, (quint32)nValue);
-                                break;
-                            case N_Elf_Phdr64::p_vaddr:
-                                elf.setElf64_Phdr_vaddr((quint64)nPosition, (quint32)nValue);
-                                break;
-                            case N_Elf_Phdr64::p_paddr:
-                                elf.setElf64_Phdr_paddr((quint64)nPosition, (quint32)nValue);
-                                break;
-                            case N_Elf_Phdr64::p_filesz:
-                                elf.setElf64_Phdr_filesz((quint64)nPosition, (quint32)nValue);
-                                break;
-                            case N_Elf_Phdr64::p_memsz:
-                                elf.setElf64_Phdr_memsz((quint64)nPosition, (quint32)nValue);
-                                break;
-                            case N_Elf_Phdr64::p_align:
-                                elf.setElf64_Phdr_align((quint64)nPosition, (quint32)nValue);
-                                break;
+                            case N_Elf_Phdr64::p_type: elf.setElf64_Phdr_type((quint32)nPosition, (quint32)nValue); break;
+                            case N_Elf_Phdr64::p_flags: elf.setElf64_Phdr_flags((quint32)nPosition, (quint32)nValue); break;
+                            case N_Elf_Phdr64::p_offset: elf.setElf64_Phdr_offset((quint64)nPosition, (quint32)nValue); break;
+                            case N_Elf_Phdr64::p_vaddr: elf.setElf64_Phdr_vaddr((quint64)nPosition, (quint32)nValue); break;
+                            case N_Elf_Phdr64::p_paddr: elf.setElf64_Phdr_paddr((quint64)nPosition, (quint32)nValue); break;
+                            case N_Elf_Phdr64::p_filesz: elf.setElf64_Phdr_filesz((quint64)nPosition, (quint32)nValue); break;
+                            case N_Elf_Phdr64::p_memsz: elf.setElf64_Phdr_memsz((quint64)nPosition, (quint32)nValue); break;
+                            case N_Elf_Phdr64::p_align: elf.setElf64_Phdr_align((quint64)nPosition, (quint32)nValue); break;
                         }
                     } else {
                         switch (nNdata) {
-                            case N_Elf_Phdr32::p_type:
-                                elf.setElf32_Phdr_type((quint32)nPosition, (quint32)nValue);
-                                break;
-                            case N_Elf_Phdr32::p_offset:
-                                elf.setElf32_Phdr_offset((quint32)nPosition, (quint32)nValue);
-                                break;
-                            case N_Elf_Phdr32::p_vaddr:
-                                elf.setElf32_Phdr_vaddr((quint32)nPosition, (quint32)nValue);
-                                break;
-                            case N_Elf_Phdr32::p_paddr:
-                                elf.setElf32_Phdr_paddr((quint32)nPosition, (quint32)nValue);
-                                break;
-                            case N_Elf_Phdr32::p_filesz:
-                                elf.setElf32_Phdr_filesz((quint32)nPosition, (quint32)nValue);
-                                break;
-                            case N_Elf_Phdr32::p_memsz:
-                                elf.setElf32_Phdr_memsz((quint32)nPosition, (quint32)nValue);
-                                break;
-                            case N_Elf_Phdr32::p_flags:
-                                elf.setElf32_Phdr_flags((quint32)nPosition, (quint32)nValue);
-                                break;
-                            case N_Elf_Phdr32::p_align:
-                                elf.setElf32_Phdr_align((quint32)nPosition, (quint32)nValue);
-                                break;
+                            case N_Elf_Phdr32::p_type: elf.setElf32_Phdr_type((quint32)nPosition, (quint32)nValue); break;
+                            case N_Elf_Phdr32::p_offset: elf.setElf32_Phdr_offset((quint32)nPosition, (quint32)nValue); break;
+                            case N_Elf_Phdr32::p_vaddr: elf.setElf32_Phdr_vaddr((quint32)nPosition, (quint32)nValue); break;
+                            case N_Elf_Phdr32::p_paddr: elf.setElf32_Phdr_paddr((quint32)nPosition, (quint32)nValue); break;
+                            case N_Elf_Phdr32::p_filesz: elf.setElf32_Phdr_filesz((quint32)nPosition, (quint32)nValue); break;
+                            case N_Elf_Phdr32::p_memsz: elf.setElf32_Phdr_memsz((quint32)nPosition, (quint32)nValue); break;
+                            case N_Elf_Phdr32::p_flags: elf.setElf32_Phdr_flags((quint32)nPosition, (quint32)nValue); break;
+                            case N_Elf_Phdr32::p_align: elf.setElf32_Phdr_align((quint32)nPosition, (quint32)nValue); break;
                         }
                     }
 
@@ -362,12 +272,8 @@ FormatWidget::SV ELFSectionHeaderWidget::_setValue(QVariant vValue, int nStype, 
 
                 case SELF::TYPE_Elf_DynamicArrayTags:
                     switch (nNdata) {
-                        case N_Elf_DynamicArrayTags::d_tag:
-                            elf.setDynamicArrayTag(nOffset, nValue);
-                            break;
-                        case N_Elf_DynamicArrayTags::d_value:
-                            elf.setDynamicArrayValue(nOffset, nValue);
-                            break;
+                        case N_Elf_DynamicArrayTags::d_tag: elf.setDynamicArrayTag(nOffset, nValue); break;
+                        case N_Elf_DynamicArrayTags::d_value: elf.setDynamicArrayValue(nOffset, nValue); break;
                     }
 
                     break;
@@ -375,45 +281,21 @@ FormatWidget::SV ELFSectionHeaderWidget::_setValue(QVariant vValue, int nStype, 
                 case SELF::TYPE_SYMBOLTABLE:
                     if (elf.is64()) {
                         switch (nNdata) {
-                            case N_Elf64_Sym::st_name:
-                                elf.setElf64_Sym_st_name(nOffset, (quint32)nValue, elf.isBigEndian());
-                                break;
-                            case N_Elf64_Sym::st_info:
-                                elf.setElf64_Sym_st_info(nOffset, (quint8)nValue);
-                                break;
-                            case N_Elf64_Sym::st_other:
-                                elf.setElf64_Sym_st_other(nOffset, (quint8)nValue);
-                                break;
-                            case N_Elf64_Sym::st_shndx:
-                                elf.setElf64_Sym_st_shndx(nOffset, (quint16)nValue, elf.isBigEndian());
-                                break;
-                            case N_Elf64_Sym::st_value:
-                                elf.setElf64_Sym_st_value(nOffset, (quint64)nValue, elf.isBigEndian());
-                                break;
-                            case N_Elf64_Sym::st_size:
-                                elf.setElf64_Sym_st_size(nOffset, (quint64)nValue, elf.isBigEndian());
-                                break;
+                            case N_Elf64_Sym::st_name: elf.setElf64_Sym_st_name(nOffset, (quint32)nValue, elf.isBigEndian()); break;
+                            case N_Elf64_Sym::st_info: elf.setElf64_Sym_st_info(nOffset, (quint8)nValue); break;
+                            case N_Elf64_Sym::st_other: elf.setElf64_Sym_st_other(nOffset, (quint8)nValue); break;
+                            case N_Elf64_Sym::st_shndx: elf.setElf64_Sym_st_shndx(nOffset, (quint16)nValue, elf.isBigEndian()); break;
+                            case N_Elf64_Sym::st_value: elf.setElf64_Sym_st_value(nOffset, (quint64)nValue, elf.isBigEndian()); break;
+                            case N_Elf64_Sym::st_size: elf.setElf64_Sym_st_size(nOffset, (quint64)nValue, elf.isBigEndian()); break;
                         }
                     } else {
                         switch (nNdata) {
-                            case N_Elf32_Sym::st_name:
-                                elf.setElf32_Sym_st_name(nOffset, (quint32)nValue, elf.isBigEndian());
-                                break;
-                            case N_Elf32_Sym::st_value:
-                                elf.setElf32_Sym_st_value(nOffset, (quint32)nValue, elf.isBigEndian());
-                                break;
-                            case N_Elf32_Sym::st_size:
-                                elf.setElf32_Sym_st_size(nOffset, (quint32)nValue, elf.isBigEndian());
-                                break;
-                            case N_Elf32_Sym::st_info:
-                                elf.setElf32_Sym_st_info(nOffset, (quint8)nValue);
-                                break;
-                            case N_Elf32_Sym::st_other:
-                                elf.setElf32_Sym_st_other(nOffset, (quint8)nValue);
-                                break;
-                            case N_Elf32_Sym::st_shndx:
-                                elf.setElf32_Sym_st_shndx(nOffset, (quint16)nValue, elf.isBigEndian());
-                                break;
+                            case N_Elf32_Sym::st_name: elf.setElf32_Sym_st_name(nOffset, (quint32)nValue, elf.isBigEndian()); break;
+                            case N_Elf32_Sym::st_value: elf.setElf32_Sym_st_value(nOffset, (quint32)nValue, elf.isBigEndian()); break;
+                            case N_Elf32_Sym::st_size: elf.setElf32_Sym_st_size(nOffset, (quint32)nValue, elf.isBigEndian()); break;
+                            case N_Elf32_Sym::st_info: elf.setElf32_Sym_st_info(nOffset, (quint8)nValue); break;
+                            case N_Elf32_Sym::st_other: elf.setElf32_Sym_st_other(nOffset, (quint8)nValue); break;
+                            case N_Elf32_Sym::st_shndx: elf.setElf32_Sym_st_shndx(nOffset, (quint16)nValue, elf.isBigEndian()); break;
                         }
                     }
 
@@ -422,27 +304,15 @@ FormatWidget::SV ELFSectionHeaderWidget::_setValue(QVariant vValue, int nStype, 
                 case SELF::TYPE_Elf_Rela:
                     if (elf.is64()) {
                         switch (nNdata) {
-                            case N_Elf_Rela::r_offset:
-                                elf.setElf64_Rela_r_offset(nOffset, (quint32)nValue, elf.isBigEndian());
-                                break;
-                            case N_Elf_Rela::r_info:
-                                elf.setElf64_Rela_r_info(nOffset, (quint32)nValue, elf.isBigEndian());
-                                break;
-                            case N_Elf_Rela::r_addend:
-                                elf.setElf64_Rela_r_addend(nOffset, (quint32)nValue, elf.isBigEndian());
-                                break;
+                            case N_Elf_Rela::r_offset: elf.setElf64_Rela_r_offset(nOffset, (quint32)nValue, elf.isBigEndian()); break;
+                            case N_Elf_Rela::r_info: elf.setElf64_Rela_r_info(nOffset, (quint32)nValue, elf.isBigEndian()); break;
+                            case N_Elf_Rela::r_addend: elf.setElf64_Rela_r_addend(nOffset, (quint32)nValue, elf.isBigEndian()); break;
                         }
                     } else {
                         switch (nNdata) {
-                            case N_Elf_Rela::r_offset:
-                                elf.setElf32_Rela_r_offset(nOffset, (quint64)nValue, elf.isBigEndian());
-                                break;
-                            case N_Elf_Rela::r_info:
-                                elf.setElf32_Rela_r_info(nOffset, (quint64)nValue, elf.isBigEndian());
-                                break;
-                            case N_Elf_Rela::r_addend:
-                                elf.setElf32_Rela_r_addend(nOffset, (quint64)nValue, elf.isBigEndian());
-                                break;
+                            case N_Elf_Rela::r_offset: elf.setElf32_Rela_r_offset(nOffset, (quint64)nValue, elf.isBigEndian()); break;
+                            case N_Elf_Rela::r_info: elf.setElf32_Rela_r_info(nOffset, (quint64)nValue, elf.isBigEndian()); break;
+                            case N_Elf_Rela::r_addend: elf.setElf32_Rela_r_addend(nOffset, (quint64)nValue, elf.isBigEndian()); break;
                         }
                     }
 
@@ -451,21 +321,13 @@ FormatWidget::SV ELFSectionHeaderWidget::_setValue(QVariant vValue, int nStype, 
                 case SELF::TYPE_Elf_Rel:
                     if (elf.is64()) {
                         switch (nNdata) {
-                            case N_Elf_Rel::r_offset:
-                                elf.setElf64_Rel_r_offset(nOffset, (quint32)nValue, elf.isBigEndian());
-                                break;
-                            case N_Elf_Rel::r_info:
-                                elf.setElf64_Rel_r_info(nOffset, (quint32)nValue, elf.isBigEndian());
-                                break;
+                            case N_Elf_Rel::r_offset: elf.setElf64_Rel_r_offset(nOffset, (quint32)nValue, elf.isBigEndian()); break;
+                            case N_Elf_Rel::r_info: elf.setElf64_Rel_r_info(nOffset, (quint32)nValue, elf.isBigEndian()); break;
                         }
                     } else {
                         switch (nNdata) {
-                            case N_Elf_Rel::r_offset:
-                                elf.setElf32_Rel_r_offset(nOffset, (quint64)nValue, elf.isBigEndian());
-                                break;
-                            case N_Elf_Rel::r_info:
-                                elf.setElf32_Rel_r_info(nOffset, (quint64)nValue, elf.isBigEndian());
-                                break;
+                            case N_Elf_Rel::r_offset: elf.setElf32_Rel_r_offset(nOffset, (quint64)nValue, elf.isBigEndian()); break;
+                            case N_Elf_Rel::r_info: elf.setElf32_Rel_r_info(nOffset, (quint64)nValue, elf.isBigEndian()); break;
                         }
                     }
 
@@ -810,21 +672,13 @@ void ELFSectionHeaderWidget::widgetValueChanged(quint64 nValue)
             case SELF::TYPE_Elf_Shdr:
                 if (bIs64) {
                     switch (nNdata) {
-                        case N_Elf_Shdr::sh_type:
-                            g_ppLinedEdit[N_Elf_Shdr::sh_type]->setValue((quint32)nValue);
-                            break;
-                        case N_Elf_Shdr::sh_flags:
-                            g_ppLinedEdit[N_Elf_Shdr::sh_flags]->setValue((quint64)nValue);
-                            break;
+                        case N_Elf_Shdr::sh_type: g_ppLinedEdit[N_Elf_Shdr::sh_type]->setValue((quint32)nValue); break;
+                        case N_Elf_Shdr::sh_flags: g_ppLinedEdit[N_Elf_Shdr::sh_flags]->setValue((quint64)nValue); break;
                     }
                 } else {
                     switch (nNdata) {
-                        case N_Elf_Shdr::sh_type:
-                            g_ppLinedEdit[N_Elf_Shdr::sh_type]->setValue((quint32)nValue);
-                            break;
-                        case N_Elf_Shdr::sh_flags:
-                            g_ppLinedEdit[N_Elf_Shdr::sh_flags]->setValue((quint32)nValue);
-                            break;
+                        case N_Elf_Shdr::sh_type: g_ppLinedEdit[N_Elf_Shdr::sh_type]->setValue((quint32)nValue); break;
+                        case N_Elf_Shdr::sh_flags: g_ppLinedEdit[N_Elf_Shdr::sh_flags]->setValue((quint32)nValue); break;
                     }
                 }
                 break;
@@ -832,21 +686,13 @@ void ELFSectionHeaderWidget::widgetValueChanged(quint64 nValue)
             case SELF::TYPE_Elf_Phdr:
                 if (bIs64) {
                     switch (nNdata) {
-                        case N_Elf_Phdr64::p_type:
-                            g_ppLinedEdit[N_Elf_Phdr64::p_type]->setValue((quint32)nValue);
-                            break;
-                        case N_Elf_Phdr64::p_flags:
-                            g_ppLinedEdit[N_Elf_Phdr64::p_flags]->setValue((quint32)nValue);
-                            break;
+                        case N_Elf_Phdr64::p_type: g_ppLinedEdit[N_Elf_Phdr64::p_type]->setValue((quint32)nValue); break;
+                        case N_Elf_Phdr64::p_flags: g_ppLinedEdit[N_Elf_Phdr64::p_flags]->setValue((quint32)nValue); break;
                     }
                 } else {
                     switch (nNdata) {
-                        case N_Elf_Phdr32::p_type:
-                            g_ppLinedEdit[N_Elf_Phdr32::p_type]->setValue((quint32)nValue);
-                            break;
-                        case N_Elf_Phdr32::p_flags:
-                            g_ppLinedEdit[N_Elf_Phdr32::p_flags]->setValue((quint32)nValue);
-                            break;
+                        case N_Elf_Phdr32::p_type: g_ppLinedEdit[N_Elf_Phdr32::p_type]->setValue((quint32)nValue); break;
+                        case N_Elf_Phdr32::p_flags: g_ppLinedEdit[N_Elf_Phdr32::p_flags]->setValue((quint32)nValue); break;
                     }
                 }
 
@@ -855,9 +701,7 @@ void ELFSectionHeaderWidget::widgetValueChanged(quint64 nValue)
             case SELF::TYPE_Elf_DynamicArrayTags:
 
                 switch (nNdata) {
-                    case N_Elf_DynamicArrayTags::d_tag:
-                        g_ppLinedEdit[N_Elf_DynamicArrayTags::d_tag]->setValue(bIs64 ? ((qint64)nValue) : ((qint32)nValue));
-                        break;
+                    case N_Elf_DynamicArrayTags::d_tag: g_ppLinedEdit[N_Elf_DynamicArrayTags::d_tag]->setValue(bIs64 ? ((qint64)nValue) : ((qint32)nValue)); break;
                 }
 
                 break;

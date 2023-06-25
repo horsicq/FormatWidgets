@@ -150,33 +150,15 @@ FormatWidget::SV ELFWidget::_setValue(QVariant vValue, int nStype, int nNdata, i
             switch (nStype) {
                 case SELF::TYPE_Elf_Ehdr:
                     switch (nNdata) {
-                        case N_Elf_Ehdr::ei_class:
-                            g_comboBox[CB_Elf_Ehdr_iclass]->setValue(nValue);
-                            break;
-                        case N_Elf_Ehdr::ei_data:
-                            g_comboBox[CB_Elf_Ehdr_idata]->setValue(nValue);
-                            break;
-                        case N_Elf_Ehdr::ei_version:
-                            g_comboBox[CB_Elf_Ehdr_iversion]->setValue(nValue);
-                            break;
-                        case N_Elf_Ehdr::ei_osabi:
-                            g_comboBox[CB_Elf_Ehdr_iosabi]->setValue(nValue);
-                            break;
-                        case N_Elf_Ehdr::e_type:
-                            g_comboBox[CB_Elf_Ehdr_type]->setValue(nValue);
-                            break;
-                        case N_Elf_Ehdr::e_machine:
-                            g_comboBox[CB_Elf_Ehdr_machine]->setValue(nValue);
-                            break;
-                        case N_Elf_Ehdr::e_entry:
-                            g_invWidget[INV_Elf_e_entry]->setAddressAndSize(&elf, elf.is64() ? ((quint64)nValue) : ((quint32)nValue), 0);
-                            break;
-                        case N_Elf_Ehdr::e_phoff:
-                            g_invWidget[INV_Elf_e_phoff]->setOffsetAndSize(&elf, elf.is64() ? ((quint64)nValue) : ((quint32)nValue), 0);
-                            break;
-                        case N_Elf_Ehdr::e_shoff:
-                            g_invWidget[INV_Elf_e_shoff]->setOffsetAndSize(&elf, elf.is64() ? ((quint64)nValue) : ((quint32)nValue), 0);
-                            break;
+                        case N_Elf_Ehdr::ei_class: g_comboBox[CB_Elf_Ehdr_iclass]->setValue(nValue); break;
+                        case N_Elf_Ehdr::ei_data: g_comboBox[CB_Elf_Ehdr_idata]->setValue(nValue); break;
+                        case N_Elf_Ehdr::ei_version: g_comboBox[CB_Elf_Ehdr_iversion]->setValue(nValue); break;
+                        case N_Elf_Ehdr::ei_osabi: g_comboBox[CB_Elf_Ehdr_iosabi]->setValue(nValue); break;
+                        case N_Elf_Ehdr::e_type: g_comboBox[CB_Elf_Ehdr_type]->setValue(nValue); break;
+                        case N_Elf_Ehdr::e_machine: g_comboBox[CB_Elf_Ehdr_machine]->setValue(nValue); break;
+                        case N_Elf_Ehdr::e_entry: g_invWidget[INV_Elf_e_entry]->setAddressAndSize(&elf, elf.is64() ? ((quint64)nValue) : ((quint32)nValue), 0); break;
+                        case N_Elf_Ehdr::e_phoff: g_invWidget[INV_Elf_e_phoff]->setOffsetAndSize(&elf, elf.is64() ? ((quint64)nValue) : ((quint32)nValue), 0); break;
+                        case N_Elf_Ehdr::e_shoff: g_invWidget[INV_Elf_e_shoff]->setOffsetAndSize(&elf, elf.is64() ? ((quint64)nValue) : ((quint32)nValue), 0); break;
                     }
                     break;
             }
@@ -184,84 +166,32 @@ FormatWidget::SV ELFWidget::_setValue(QVariant vValue, int nStype, int nNdata, i
             switch (nStype) {
                 case SELF::TYPE_Elf_Ehdr:
                     switch (nNdata) {
-                        case N_Elf_Ehdr::ei_mag:
-                            elf.setIdent_mag((quint32)nValue, 0);
-                            break;
-                        case N_Elf_Ehdr::ei_class:
-                            elf.setIdent_class((quint8)nValue);
-                            break;
-                        case N_Elf_Ehdr::ei_data:
-                            elf.setIdent_data((quint8)nValue);
-                            break;
-                        case N_Elf_Ehdr::ei_version:
-                            elf.setIdent_version((quint8)nValue);
-                            break;
-                        case N_Elf_Ehdr::ei_osabi:
-                            elf.setIdent_osabi((quint8)nValue);
-                            break;
-                        case N_Elf_Ehdr::ei_abiversion:
-                            elf.setIdent_abiversion((quint8)nValue);
-                            break;
-                        case N_Elf_Ehdr::ei_pad_0:
-                            elf.setIdent_pad((quint8)nValue, 0);
-                            break;
-                        case N_Elf_Ehdr::ei_pad_1:
-                            elf.setIdent_pad((quint8)nValue, 1);
-                            break;
-                        case N_Elf_Ehdr::ei_pad_2:
-                            elf.setIdent_pad((quint8)nValue, 2);
-                            break;
-                        case N_Elf_Ehdr::ei_pad_3:
-                            elf.setIdent_pad((quint8)nValue, 3);
-                            break;
-                        case N_Elf_Ehdr::ei_pad_4:
-                            elf.setIdent_pad((quint8)nValue, 4);
-                            break;
-                        case N_Elf_Ehdr::ei_pad_5:
-                            elf.setIdent_pad((quint8)nValue, 5);
-                            break;
-                        case N_Elf_Ehdr::ei_pad_6:
-                            elf.setIdent_pad((quint8)nValue, 6);
-                            break;
-                        case N_Elf_Ehdr::e_type:
-                            (bIs64 ? (elf.setHdr64_type((quint16)nValue)) : (elf.setHdr32_type((quint16)nValue)));
-                            break;
-                        case N_Elf_Ehdr::e_machine:
-                            (bIs64 ? (elf.setHdr64_machine((quint16)nValue)) : (elf.setHdr32_machine((quint16)nValue)));
-                            break;
-                        case N_Elf_Ehdr::e_version:
-                            (bIs64 ? (elf.setHdr64_version((quint32)nValue)) : (elf.setHdr32_version((quint32)nValue)));
-                            break;
-                        case N_Elf_Ehdr::e_entry:
-                            (bIs64 ? (elf.setHdr64_entry((quint64)nValue)) : (elf.setHdr32_entry((quint32)nValue)));
-                            break;
-                        case N_Elf_Ehdr::e_phoff:
-                            (bIs64 ? (elf.setHdr64_phoff((quint64)nValue)) : (elf.setHdr32_phoff((quint32)nValue)));
-                            break;
-                        case N_Elf_Ehdr::e_shoff:
-                            (bIs64 ? (elf.setHdr64_shoff((quint64)nValue)) : (elf.setHdr32_shoff((quint32)nValue)));
-                            break;
-                        case N_Elf_Ehdr::e_flags:
-                            (bIs64 ? (elf.setHdr64_flags((quint32)nValue)) : (elf.setHdr32_flags((quint32)nValue)));
-                            break;
-                        case N_Elf_Ehdr::e_ehsize:
-                            (bIs64 ? (elf.setHdr64_ehsize((quint16)nValue)) : (elf.setHdr32_ehsize((quint16)nValue)));
-                            break;
-                        case N_Elf_Ehdr::e_phentsize:
-                            (bIs64 ? (elf.setHdr64_phentsize((quint16)nValue)) : (elf.setHdr32_phentsize((quint16)nValue)));
-                            break;
-                        case N_Elf_Ehdr::e_phnum:
-                            (bIs64 ? (elf.setHdr64_phnum((quint16)nValue)) : (elf.setHdr32_phnum((quint16)nValue)));
-                            break;
-                        case N_Elf_Ehdr::e_shentsize:
-                            (bIs64 ? (elf.setHdr64_shentsize((quint16)nValue)) : (elf.setHdr32_shentsize((quint16)nValue)));
-                            break;
-                        case N_Elf_Ehdr::e_shnum:
-                            (bIs64 ? (elf.setHdr64_shnum((quint16)nValue)) : (elf.setHdr32_shnum((quint16)nValue)));
-                            break;
-                        case N_Elf_Ehdr::e_shstrndx:
-                            (bIs64 ? (elf.setHdr64_shstrndx((quint16)nValue)) : (elf.setHdr32_shstrndx((quint16)nValue)));
-                            break;
+                        case N_Elf_Ehdr::ei_mag: elf.setIdent_mag((quint32)nValue, 0); break;
+                        case N_Elf_Ehdr::ei_class: elf.setIdent_class((quint8)nValue); break;
+                        case N_Elf_Ehdr::ei_data: elf.setIdent_data((quint8)nValue); break;
+                        case N_Elf_Ehdr::ei_version: elf.setIdent_version((quint8)nValue); break;
+                        case N_Elf_Ehdr::ei_osabi: elf.setIdent_osabi((quint8)nValue); break;
+                        case N_Elf_Ehdr::ei_abiversion: elf.setIdent_abiversion((quint8)nValue); break;
+                        case N_Elf_Ehdr::ei_pad_0: elf.setIdent_pad((quint8)nValue, 0); break;
+                        case N_Elf_Ehdr::ei_pad_1: elf.setIdent_pad((quint8)nValue, 1); break;
+                        case N_Elf_Ehdr::ei_pad_2: elf.setIdent_pad((quint8)nValue, 2); break;
+                        case N_Elf_Ehdr::ei_pad_3: elf.setIdent_pad((quint8)nValue, 3); break;
+                        case N_Elf_Ehdr::ei_pad_4: elf.setIdent_pad((quint8)nValue, 4); break;
+                        case N_Elf_Ehdr::ei_pad_5: elf.setIdent_pad((quint8)nValue, 5); break;
+                        case N_Elf_Ehdr::ei_pad_6: elf.setIdent_pad((quint8)nValue, 6); break;
+                        case N_Elf_Ehdr::e_type: (bIs64 ? (elf.setHdr64_type((quint16)nValue)) : (elf.setHdr32_type((quint16)nValue))); break;
+                        case N_Elf_Ehdr::e_machine: (bIs64 ? (elf.setHdr64_machine((quint16)nValue)) : (elf.setHdr32_machine((quint16)nValue))); break;
+                        case N_Elf_Ehdr::e_version: (bIs64 ? (elf.setHdr64_version((quint32)nValue)) : (elf.setHdr32_version((quint32)nValue))); break;
+                        case N_Elf_Ehdr::e_entry: (bIs64 ? (elf.setHdr64_entry((quint64)nValue)) : (elf.setHdr32_entry((quint32)nValue))); break;
+                        case N_Elf_Ehdr::e_phoff: (bIs64 ? (elf.setHdr64_phoff((quint64)nValue)) : (elf.setHdr32_phoff((quint32)nValue))); break;
+                        case N_Elf_Ehdr::e_shoff: (bIs64 ? (elf.setHdr64_shoff((quint64)nValue)) : (elf.setHdr32_shoff((quint32)nValue))); break;
+                        case N_Elf_Ehdr::e_flags: (bIs64 ? (elf.setHdr64_flags((quint32)nValue)) : (elf.setHdr32_flags((quint32)nValue))); break;
+                        case N_Elf_Ehdr::e_ehsize: (bIs64 ? (elf.setHdr64_ehsize((quint16)nValue)) : (elf.setHdr32_ehsize((quint16)nValue))); break;
+                        case N_Elf_Ehdr::e_phentsize: (bIs64 ? (elf.setHdr64_phentsize((quint16)nValue)) : (elf.setHdr32_phentsize((quint16)nValue))); break;
+                        case N_Elf_Ehdr::e_phnum: (bIs64 ? (elf.setHdr64_phnum((quint16)nValue)) : (elf.setHdr32_phnum((quint16)nValue))); break;
+                        case N_Elf_Ehdr::e_shentsize: (bIs64 ? (elf.setHdr64_shentsize((quint16)nValue)) : (elf.setHdr32_shentsize((quint16)nValue))); break;
+                        case N_Elf_Ehdr::e_shnum: (bIs64 ? (elf.setHdr64_shnum((quint16)nValue)) : (elf.setHdr32_shnum((quint16)nValue))); break;
+                        case N_Elf_Ehdr::e_shstrndx: (bIs64 ? (elf.setHdr64_shstrndx((quint16)nValue)) : (elf.setHdr32_shstrndx((quint16)nValue))); break;
                     }
 
                     ui->widgetHex_Elf_Ehdr->reload();
@@ -270,18 +200,14 @@ FormatWidget::SV ELFWidget::_setValue(QVariant vValue, int nStype, int nNdata, i
 
                 case SELF::TYPE_INTERPRETER:
                     switch (nNdata) {
-                        case N_ELF_INTERPRETER::interpreter:
-                            elf.write_ansiString(nOffset, sValue);
-                            break;
+                        case N_ELF_INTERPRETER::interpreter: elf.write_ansiString(nOffset, sValue); break;
                     }
 
                     break;
 
                 case SELF::TYPE_RUNPATH:
                     switch (nNdata) {
-                        case N_ELF_RUNPATH::runpath:
-                            elf.write_ansiString(nOffset, sValue);
-                            break;
+                        case N_ELF_RUNPATH::runpath: elf.write_ansiString(nOffset, sValue); break;
                     }
 
                     break;
@@ -743,24 +669,12 @@ void ELFWidget::widgetValueChanged(quint64 nValue)
     switch (nStype) {
         case SELF::TYPE_Elf_Ehdr:
             switch (nNdata) {
-                case N_Elf_Ehdr::ei_class:
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_class]->setValue((quint8)nValue);
-                    break;
-                case N_Elf_Ehdr::ei_data:
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_data]->setValue((quint8)nValue);
-                    break;
-                case N_Elf_Ehdr::ei_version:
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_version]->setValue((quint8)nValue);
-                    break;
-                case N_Elf_Ehdr::ei_osabi:
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_osabi]->setValue((quint8)nValue);
-                    break;
-                case N_Elf_Ehdr::e_type:
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_type]->setValue((quint16)nValue);
-                    break;
-                case N_Elf_Ehdr::e_machine:
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_machine]->setValue((quint16)nValue);
-                    break;
+                case N_Elf_Ehdr::ei_class: g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_class]->setValue((quint8)nValue); break;
+                case N_Elf_Ehdr::ei_data: g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_data]->setValue((quint8)nValue); break;
+                case N_Elf_Ehdr::ei_version: g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_version]->setValue((quint8)nValue); break;
+                case N_Elf_Ehdr::ei_osabi: g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_osabi]->setValue((quint8)nValue); break;
+                case N_Elf_Ehdr::e_type: g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_type]->setValue((quint16)nValue); break;
+                case N_Elf_Ehdr::e_machine: g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_machine]->setValue((quint16)nValue); break;
             }
 
             break;
@@ -969,24 +883,12 @@ QString ELFWidget::typeIdToString(int nType)
     QString sResult = tr("Unknown");
 
     switch (nType) {
-        case SELF::TYPE_Elf_Shdr:
-            sResult = QString("Section %1").arg(tr("Header"));
-            break;
-        case SELF::TYPE_Elf_Phdr:
-            sResult = QString("Program %1").arg(tr("Header"));
-            break;
-        case SELF::TYPE_SYMBOLTABLE:
-            sResult = QString("Symbol %1").arg(tr("Header"));
-            break;
-        case SELF::TYPE_Elf_DynamicArrayTags:
-            sResult = QString("Tag");
-            break;
-        case SELF::TYPE_Elf_Rela:
-            sResult = QString("Relocation A");
-            break;
-        case SELF::TYPE_Elf_Rel:
-            sResult = QString("Relocation");
-            break;
+        case SELF::TYPE_Elf_Shdr: sResult = QString("Section %1").arg(tr("Header")); break;
+        case SELF::TYPE_Elf_Phdr: sResult = QString("Program %1").arg(tr("Header")); break;
+        case SELF::TYPE_SYMBOLTABLE: sResult = QString("Symbol %1").arg(tr("Header")); break;
+        case SELF::TYPE_Elf_DynamicArrayTags: sResult = QString("Tag"); break;
+        case SELF::TYPE_Elf_Rela: sResult = QString("Relocation A"); break;
+        case SELF::TYPE_Elf_Rel: sResult = QString("Relocation"); break;
     }
 
     return sResult;

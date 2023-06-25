@@ -507,38 +507,20 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
             switch (nStype) {
                 case SMACH::TYPE_mach_header:
                     switch (nNdata) {
-                        case N_mach_header::magic:
-                            g_comboBox[CB_mach_header_magic]->setValue(nValue);
-                            break;
-                        case N_mach_header::cputype:
-                            g_comboBox[CB_mach_header_cputype]->setValue(nValue);
-                            break;
-                        case N_mach_header::cpusubtype:
-                            g_comboBox[CB_mach_header_cpusubtype]->setValue(nValue);
-                            break;
-                        case N_mach_header::filetype:
-                            g_comboBox[CB_mach_header_filetype]->setValue(nValue);
-                            break;
-                        case N_mach_header::flags:
-                            g_comboBox[CB_mach_header_flags]->setValue(nValue);
-                            break;
+                        case N_mach_header::magic: g_comboBox[CB_mach_header_magic]->setValue(nValue); break;
+                        case N_mach_header::cputype: g_comboBox[CB_mach_header_cputype]->setValue(nValue); break;
+                        case N_mach_header::cpusubtype: g_comboBox[CB_mach_header_cpusubtype]->setValue(nValue); break;
+                        case N_mach_header::filetype: g_comboBox[CB_mach_header_filetype]->setValue(nValue); break;
+                        case N_mach_header::flags: g_comboBox[CB_mach_header_flags]->setValue(nValue); break;
                     }
                     break;
 
                 case SMACH::TYPE_mach_dyld_info_only:
                     switch (nNdata) {
-                        case N_mach_dyld_info::rebase_off:
-                            g_invWidget[INV_rebase_off]->setOffsetAndSize(&mach, nValue, mach.get_dyld_info().rebase_size, true);
-                            break;
-                        case N_mach_dyld_info::rebase_size:
-                            g_invWidget[INV_rebase_off]->setOffsetAndSize(&mach, mach.get_dyld_info().rebase_off, nValue, true);
-                            break;
-                        case N_mach_dyld_info::bind_off:
-                            g_invWidget[INV_bind_off]->setOffsetAndSize(&mach, nValue, mach.get_dyld_info().bind_size, true);
-                            break;
-                        case N_mach_dyld_info::bind_size:
-                            g_invWidget[INV_bind_off]->setOffsetAndSize(&mach, mach.get_dyld_info().bind_off, nValue, true);
-                            break;
+                        case N_mach_dyld_info::rebase_off: g_invWidget[INV_rebase_off]->setOffsetAndSize(&mach, nValue, mach.get_dyld_info().rebase_size, true); break;
+                        case N_mach_dyld_info::rebase_size: g_invWidget[INV_rebase_off]->setOffsetAndSize(&mach, mach.get_dyld_info().rebase_off, nValue, true); break;
+                        case N_mach_dyld_info::bind_off: g_invWidget[INV_bind_off]->setOffsetAndSize(&mach, nValue, mach.get_dyld_info().bind_size, true); break;
+                        case N_mach_dyld_info::bind_size: g_invWidget[INV_bind_off]->setOffsetAndSize(&mach, mach.get_dyld_info().bind_off, nValue, true); break;
                         case N_mach_dyld_info::weak_bind_off:
                             g_invWidget[INV_weak_bind_off]->setOffsetAndSize(&mach, nValue, mach.get_dyld_info().weak_bind_size, true);
                             break;
@@ -551,12 +533,8 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
                         case N_mach_dyld_info::lazy_bind_size:
                             g_invWidget[INV_lazy_bind_off]->setOffsetAndSize(&mach, mach.get_dyld_info().lazy_bind_off, nValue, true);
                             break;
-                        case N_mach_dyld_info::export_off:
-                            g_invWidget[INV_export_off]->setOffsetAndSize(&mach, nValue, mach.get_dyld_info().export_size, true);
-                            break;
-                        case N_mach_dyld_info::export_size:
-                            g_invWidget[INV_export_off]->setOffsetAndSize(&mach, mach.get_dyld_info().export_off, nValue, true);
-                            break;
+                        case N_mach_dyld_info::export_off: g_invWidget[INV_export_off]->setOffsetAndSize(&mach, nValue, mach.get_dyld_info().export_size, true); break;
+                        case N_mach_dyld_info::export_size: g_invWidget[INV_export_off]->setOffsetAndSize(&mach, mach.get_dyld_info().export_off, nValue, true); break;
                     }
                     break;
 
@@ -568,35 +546,19 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
                         case N_mach_symtab::nsyms:
                             g_invWidget[INV_symoff]->setOffsetAndSize(&mach, mach.get_symtab().symoff, nValue * mach.get_nlist_MODE_size(), true);
                             break;
-                        case N_mach_symtab::stroff:
-                            g_invWidget[INV_stroff]->setOffsetAndSize(&mach, nValue, mach.get_symtab().strsize, true);
-                            break;
-                        case N_mach_symtab::strsize:
-                            g_invWidget[INV_stroff]->setOffsetAndSize(&mach, mach.get_symtab().stroff, nValue, true);
-                            break;
+                        case N_mach_symtab::stroff: g_invWidget[INV_stroff]->setOffsetAndSize(&mach, nValue, mach.get_symtab().strsize, true); break;
+                        case N_mach_symtab::strsize: g_invWidget[INV_stroff]->setOffsetAndSize(&mach, mach.get_symtab().stroff, nValue, true); break;
                     }
                     break;
 
                 case SMACH::TYPE_mach_dysymtab:
                     switch (nNdata) {
-                        case N_mach_dysymtab::tocoff:
-                            g_invWidget[INV_tocoff]->setOffsetAndSize(&mach, nValue, 0, true);
-                            break;  // TODO Size
-                        case N_mach_dysymtab::modtaboff:
-                            g_invWidget[INV_modtaboff]->setOffsetAndSize(&mach, nValue, 0, true);
-                            break;  // TODO Size
-                        case N_mach_dysymtab::extrefsymoff:
-                            g_invWidget[INV_extrefsymoff]->setOffsetAndSize(&mach, nValue, 0, true);
-                            break;  // TODO Size
-                        case N_mach_dysymtab::indirectsymoff:
-                            g_invWidget[INV_indirectsymoff]->setOffsetAndSize(&mach, nValue, 0, true);
-                            break;  // TODO Size
-                        case N_mach_dysymtab::extreloff:
-                            g_invWidget[INV_extreloff]->setOffsetAndSize(&mach, nValue, 0, true);
-                            break;  // TODO Size
-                        case N_mach_dysymtab::locreloff:
-                            g_invWidget[INV_locreloff]->setOffsetAndSize(&mach, nValue, 0, true);
-                            break;  // TODO Size
+                        case N_mach_dysymtab::tocoff: g_invWidget[INV_tocoff]->setOffsetAndSize(&mach, nValue, 0, true); break;                  // TODO Size
+                        case N_mach_dysymtab::modtaboff: g_invWidget[INV_modtaboff]->setOffsetAndSize(&mach, nValue, 0, true); break;            // TODO Size
+                        case N_mach_dysymtab::extrefsymoff: g_invWidget[INV_extrefsymoff]->setOffsetAndSize(&mach, nValue, 0, true); break;      // TODO Size
+                        case N_mach_dysymtab::indirectsymoff: g_invWidget[INV_indirectsymoff]->setOffsetAndSize(&mach, nValue, 0, true); break;  // TODO Size
+                        case N_mach_dysymtab::extreloff: g_invWidget[INV_extreloff]->setOffsetAndSize(&mach, nValue, 0, true); break;            // TODO Size
+                        case N_mach_dysymtab::locreloff: g_invWidget[INV_locreloff]->setOffsetAndSize(&mach, nValue, 0, true); break;            // TODO Size
                     }
                     break;
 
@@ -662,9 +624,7 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
 
                 case SMACH::TYPE_mach_main:
                     switch (nNdata) {
-                        case N_mach_main::entryoff:
-                            g_invWidget[INV_MAIN_entryoff]->setOffsetAndSize(&mach, nValue, 0, true);
-                            break;
+                        case N_mach_main::entryoff: g_invWidget[INV_MAIN_entryoff]->setOffsetAndSize(&mach, nValue, 0, true); break;
                     }
                     break;
             }
@@ -672,30 +632,14 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
             switch (nStype) {
                 case SMACH::TYPE_mach_header:
                     switch (nNdata) {
-                        case N_mach_header::magic:
-                            mach.setHeader_magic((quint32)nValue);
-                            break;
-                        case N_mach_header::cputype:
-                            mach.setHeader_cputype((qint32)nValue);
-                            break;
-                        case N_mach_header::cpusubtype:
-                            mach.setHeader_cpusubtype((qint32)nValue);
-                            break;
-                        case N_mach_header::filetype:
-                            mach.setHeader_filetype((quint32)nValue);
-                            break;
-                        case N_mach_header::ncmds:
-                            mach.setHeader_ncmds((quint32)nValue);
-                            break;
-                        case N_mach_header::sizeofcmds:
-                            mach.setHeader_sizeofcmds((quint32)nValue);
-                            break;
-                        case N_mach_header::flags:
-                            mach.setHeader_flags((quint32)nValue);
-                            break;
-                        case N_mach_header::reserved:
-                            mach.setHeader_reserved((quint32)nValue);
-                            break;
+                        case N_mach_header::magic: mach.setHeader_magic((quint32)nValue); break;
+                        case N_mach_header::cputype: mach.setHeader_cputype((qint32)nValue); break;
+                        case N_mach_header::cpusubtype: mach.setHeader_cpusubtype((qint32)nValue); break;
+                        case N_mach_header::filetype: mach.setHeader_filetype((quint32)nValue); break;
+                        case N_mach_header::ncmds: mach.setHeader_ncmds((quint32)nValue); break;
+                        case N_mach_header::sizeofcmds: mach.setHeader_sizeofcmds((quint32)nValue); break;
+                        case N_mach_header::flags: mach.setHeader_flags((quint32)nValue); break;
+                        case N_mach_header::reserved: mach.setHeader_reserved((quint32)nValue); break;
                     }
 
                     ui->widgetHex_mach_header->reload();
@@ -704,36 +648,16 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
 
                 case SMACH::TYPE_mach_dyld_info_only:
                     switch (nNdata) {
-                        case N_mach_dyld_info::rebase_off:
-                            mach._set_dyld_info_command_rebase_off(nOffset, nValue);
-                            break;
-                        case N_mach_dyld_info::rebase_size:
-                            mach._set_dyld_info_command_rebase_size(nOffset, nValue);
-                            break;
-                        case N_mach_dyld_info::bind_off:
-                            mach._set_dyld_info_command_bind_off(nOffset, nValue);
-                            break;
-                        case N_mach_dyld_info::bind_size:
-                            mach._set_dyld_info_command_bind_size(nOffset, nValue);
-                            break;
-                        case N_mach_dyld_info::weak_bind_off:
-                            mach._set_dyld_info_command_weak_bind_off(nOffset, nValue);
-                            break;
-                        case N_mach_dyld_info::weak_bind_size:
-                            mach._set_dyld_info_command_weak_bind_size(nOffset, nValue);
-                            break;
-                        case N_mach_dyld_info::lazy_bind_off:
-                            mach._set_dyld_info_command_lazy_bind_off(nOffset, nValue);
-                            break;
-                        case N_mach_dyld_info::lazy_bind_size:
-                            mach._set_dyld_info_command_lazy_bind_size(nOffset, nValue);
-                            break;
-                        case N_mach_dyld_info::export_off:
-                            mach._set_dyld_info_command_export_off(nOffset, nValue);
-                            break;
-                        case N_mach_dyld_info::export_size:
-                            mach._set_dyld_info_command_export_size(nOffset, nValue);
-                            break;
+                        case N_mach_dyld_info::rebase_off: mach._set_dyld_info_command_rebase_off(nOffset, nValue); break;
+                        case N_mach_dyld_info::rebase_size: mach._set_dyld_info_command_rebase_size(nOffset, nValue); break;
+                        case N_mach_dyld_info::bind_off: mach._set_dyld_info_command_bind_off(nOffset, nValue); break;
+                        case N_mach_dyld_info::bind_size: mach._set_dyld_info_command_bind_size(nOffset, nValue); break;
+                        case N_mach_dyld_info::weak_bind_off: mach._set_dyld_info_command_weak_bind_off(nOffset, nValue); break;
+                        case N_mach_dyld_info::weak_bind_size: mach._set_dyld_info_command_weak_bind_size(nOffset, nValue); break;
+                        case N_mach_dyld_info::lazy_bind_off: mach._set_dyld_info_command_lazy_bind_off(nOffset, nValue); break;
+                        case N_mach_dyld_info::lazy_bind_size: mach._set_dyld_info_command_lazy_bind_size(nOffset, nValue); break;
+                        case N_mach_dyld_info::export_off: mach._set_dyld_info_command_export_off(nOffset, nValue); break;
+                        case N_mach_dyld_info::export_size: mach._set_dyld_info_command_export_size(nOffset, nValue); break;
                     }
 
                     ui->widgetHex_dyld_info_only->reload();
@@ -742,36 +666,28 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
 
                 case SMACH::TYPE_mach_uuid:
                     switch (nNdata) {
-                        case N_mach_uuid::uuid:
-                            mach.setModuleUUID(sValue);
-                            break;
+                        case N_mach_uuid::uuid: mach.setModuleUUID(sValue); break;
                     }
 
                     break;
 
                 case SMACH::TYPE_mach_dylinker:
                     switch (nNdata) {
-                        case N_mach_dylinker::dylinker:
-                            mach.setLoadDylinker(sValue);
-                            break;
+                        case N_mach_dylinker::dylinker: mach.setLoadDylinker(sValue); break;
                     }
 
                     break;
 
                 case SMACH::TYPE_mach_rpath:
                     switch (nNdata) {
-                        case N_mach_rpath::path:
-                            mach.setRPath(sValue);
-                            break;
+                        case N_mach_rpath::path: mach.setRPath(sValue); break;
                     }
 
                     break;
 
                 case SMACH::TYPE_mach_source_version:
                     switch (nNdata) {
-                        case N_mach_source_version::version:
-                            mach.setSourceVersion(nValue);
-                            break;
+                        case N_mach_source_version::version: mach.setSourceVersion(nValue); break;
                     }
 
                     ui->widgetHex_source_version->reload();
@@ -780,18 +696,10 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
 
                 case SMACH::TYPE_mach_symtab:
                     switch (nNdata) {
-                        case N_mach_symtab::symoff:
-                            mach._set_symtab_command_symoff(nOffset, nValue);
-                            break;
-                        case N_mach_symtab::nsyms:
-                            mach._set_symtab_command_nsyms(nOffset, nValue);
-                            break;
-                        case N_mach_symtab::stroff:
-                            mach._set_symtab_command_stroff(nOffset, nValue);
-                            break;
-                        case N_mach_symtab::strsize:
-                            mach._set_symtab_command_strsize(nOffset, nValue);
-                            break;
+                        case N_mach_symtab::symoff: mach._set_symtab_command_symoff(nOffset, nValue); break;
+                        case N_mach_symtab::nsyms: mach._set_symtab_command_nsyms(nOffset, nValue); break;
+                        case N_mach_symtab::stroff: mach._set_symtab_command_stroff(nOffset, nValue); break;
+                        case N_mach_symtab::strsize: mach._set_symtab_command_strsize(nOffset, nValue); break;
                     }
 
                     ui->widgetHex_symtab->reload();
@@ -800,60 +708,24 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
 
                 case SMACH::TYPE_mach_dysymtab:
                     switch (nNdata) {
-                        case N_mach_dysymtab::ilocalsym:
-                            mach._set_dysymtab_command_ilocalsym(nOffset, nValue);
-                            break;
-                        case N_mach_dysymtab::nlocalsym:
-                            mach._set_dysymtab_command_nlocalsym(nOffset, nValue);
-                            break;
-                        case N_mach_dysymtab::iextdefsym:
-                            mach._set_dysymtab_command_iextdefsym(nOffset, nValue);
-                            break;
-                        case N_mach_dysymtab::nextdefsym:
-                            mach._set_dysymtab_command_nextdefsym(nOffset, nValue);
-                            break;
-                        case N_mach_dysymtab::iundefsym:
-                            mach._set_dysymtab_command_iundefsym(nOffset, nValue);
-                            break;
-                        case N_mach_dysymtab::nundefsym:
-                            mach._set_dysymtab_command_nundefsym(nOffset, nValue);
-                            break;
-                        case N_mach_dysymtab::tocoff:
-                            mach._set_dysymtab_command_tocoff(nOffset, nValue);
-                            break;
-                        case N_mach_dysymtab::ntoc:
-                            mach._set_dysymtab_command_ntoc(nOffset, nValue);
-                            break;
-                        case N_mach_dysymtab::modtaboff:
-                            mach._set_dysymtab_command_modtaboff(nOffset, nValue);
-                            break;
-                        case N_mach_dysymtab::nmodtab:
-                            mach._set_dysymtab_command_nmodtab(nOffset, nValue);
-                            break;
-                        case N_mach_dysymtab::extrefsymoff:
-                            mach._set_dysymtab_command_extrefsymoff(nOffset, nValue);
-                            break;
-                        case N_mach_dysymtab::nextrefsyms:
-                            mach._set_dysymtab_command_nextrefsyms(nOffset, nValue);
-                            break;
-                        case N_mach_dysymtab::indirectsymoff:
-                            mach._set_dysymtab_command_indirectsymoff(nOffset, nValue);
-                            break;
-                        case N_mach_dysymtab::nindirectsyms:
-                            mach._set_dysymtab_command_nindirectsyms(nOffset, nValue);
-                            break;
-                        case N_mach_dysymtab::extreloff:
-                            mach._set_dysymtab_command_extreloff(nOffset, nValue);
-                            break;
-                        case N_mach_dysymtab::nextrel:
-                            mach._set_dysymtab_command_nextrel(nOffset, nValue);
-                            break;
-                        case N_mach_dysymtab::locreloff:
-                            mach._set_dysymtab_command_locreloff(nOffset, nValue);
-                            break;
-                        case N_mach_dysymtab::nlocrel:
-                            mach._set_dysymtab_command_nlocrel(nOffset, nValue);
-                            break;
+                        case N_mach_dysymtab::ilocalsym: mach._set_dysymtab_command_ilocalsym(nOffset, nValue); break;
+                        case N_mach_dysymtab::nlocalsym: mach._set_dysymtab_command_nlocalsym(nOffset, nValue); break;
+                        case N_mach_dysymtab::iextdefsym: mach._set_dysymtab_command_iextdefsym(nOffset, nValue); break;
+                        case N_mach_dysymtab::nextdefsym: mach._set_dysymtab_command_nextdefsym(nOffset, nValue); break;
+                        case N_mach_dysymtab::iundefsym: mach._set_dysymtab_command_iundefsym(nOffset, nValue); break;
+                        case N_mach_dysymtab::nundefsym: mach._set_dysymtab_command_nundefsym(nOffset, nValue); break;
+                        case N_mach_dysymtab::tocoff: mach._set_dysymtab_command_tocoff(nOffset, nValue); break;
+                        case N_mach_dysymtab::ntoc: mach._set_dysymtab_command_ntoc(nOffset, nValue); break;
+                        case N_mach_dysymtab::modtaboff: mach._set_dysymtab_command_modtaboff(nOffset, nValue); break;
+                        case N_mach_dysymtab::nmodtab: mach._set_dysymtab_command_nmodtab(nOffset, nValue); break;
+                        case N_mach_dysymtab::extrefsymoff: mach._set_dysymtab_command_extrefsymoff(nOffset, nValue); break;
+                        case N_mach_dysymtab::nextrefsyms: mach._set_dysymtab_command_nextrefsyms(nOffset, nValue); break;
+                        case N_mach_dysymtab::indirectsymoff: mach._set_dysymtab_command_indirectsymoff(nOffset, nValue); break;
+                        case N_mach_dysymtab::nindirectsyms: mach._set_dysymtab_command_nindirectsyms(nOffset, nValue); break;
+                        case N_mach_dysymtab::extreloff: mach._set_dysymtab_command_extreloff(nOffset, nValue); break;
+                        case N_mach_dysymtab::nextrel: mach._set_dysymtab_command_nextrel(nOffset, nValue); break;
+                        case N_mach_dysymtab::locreloff: mach._set_dysymtab_command_locreloff(nOffset, nValue); break;
+                        case N_mach_dysymtab::nlocrel: mach._set_dysymtab_command_nlocrel(nOffset, nValue); break;
                     }
 
                     ui->widgetHex_dysymtab->reload();
@@ -862,12 +734,8 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
 
                 case SMACH::TYPE_mach_version_min:
                     switch (nNdata) {
-                        case N_mach_version_min::version:
-                            mach._set_version_min_command_version(nOffset, nValue);
-                            break;
-                        case N_mach_version_min::sdk:
-                            mach._set_version_min_command_sdk(nOffset, nValue);
-                            break;
+                        case N_mach_version_min::version: mach._set_version_min_command_version(nOffset, nValue); break;
+                        case N_mach_version_min::sdk: mach._set_version_min_command_sdk(nOffset, nValue); break;
                     }
 
                     ui->widgetHex_version_min->reload();
@@ -876,18 +744,10 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
 
                 case SMACH::TYPE_mach_build_version:
                     switch (nNdata) {
-                        case N_mach_build_version::platform:
-                            mach._set_build_version_command_platform(nOffset, nValue);
-                            break;
-                        case N_mach_build_version::minos:
-                            mach._set_build_version_command_minos(nOffset, nValue);
-                            break;
-                        case N_mach_build_version::sdk:
-                            mach._set_build_version_command_sdk(nOffset, nValue);
-                            break;
-                        case N_mach_build_version::ntools:
-                            mach._set_build_version_command_ntools(nOffset, nValue);
-                            break;
+                        case N_mach_build_version::platform: mach._set_build_version_command_platform(nOffset, nValue); break;
+                        case N_mach_build_version::minos: mach._set_build_version_command_minos(nOffset, nValue); break;
+                        case N_mach_build_version::sdk: mach._set_build_version_command_sdk(nOffset, nValue); break;
+                        case N_mach_build_version::ntools: mach._set_build_version_command_ntools(nOffset, nValue); break;
                     }
 
                     ui->widgetHex_build_version->reload();
@@ -896,18 +756,10 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
 
                 case SMACH::TYPE_mach_encryption_info:
                     switch (nNdata) {
-                        case N_mach_encryption_info::cryptoff:
-                            mach._set_encryption_info_command_64_cryptoff(nOffset, nValue);
-                            break;
-                        case N_mach_encryption_info::cryptsize:
-                            mach._set_encryption_info_command_64_cryptsize(nOffset, nValue);
-                            break;
-                        case N_mach_encryption_info::cryptid:
-                            mach._set_encryption_info_command_64_cryptid(nOffset, nValue);
-                            break;
-                        case N_mach_encryption_info::pad:
-                            mach._set_encryption_info_command_64_pad(nOffset, nValue);
-                            break;
+                        case N_mach_encryption_info::cryptoff: mach._set_encryption_info_command_64_cryptoff(nOffset, nValue); break;
+                        case N_mach_encryption_info::cryptsize: mach._set_encryption_info_command_64_cryptsize(nOffset, nValue); break;
+                        case N_mach_encryption_info::cryptid: mach._set_encryption_info_command_64_cryptid(nOffset, nValue); break;
+                        case N_mach_encryption_info::pad: mach._set_encryption_info_command_64_pad(nOffset, nValue); break;
                     }
 
                     ui->widgetHex_encryption_info->reload();
@@ -916,12 +768,8 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
 
                 case SMACH::TYPE_mach_function_starts:
                     switch (nNdata) {
-                        case N_mach_linkedit_data::dataoff:
-                            mach._set_linkedit_data_command_dataoff(nOffset, nValue);
-                            break;
-                        case N_mach_linkedit_data::datasize:
-                            mach._set_linkedit_data_command_datasize(nOffset, nValue);
-                            break;
+                        case N_mach_linkedit_data::dataoff: mach._set_linkedit_data_command_dataoff(nOffset, nValue); break;
+                        case N_mach_linkedit_data::datasize: mach._set_linkedit_data_command_datasize(nOffset, nValue); break;
                     }
 
                     ui->widgetHex_function_starts->reload();
@@ -930,12 +778,8 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
 
                 case SMACH::TYPE_mach_data_in_code:
                     switch (nNdata) {
-                        case N_mach_linkedit_data::dataoff:
-                            mach._set_linkedit_data_command_dataoff(nOffset, nValue);
-                            break;
-                        case N_mach_linkedit_data::datasize:
-                            mach._set_linkedit_data_command_datasize(nOffset, nValue);
-                            break;
+                        case N_mach_linkedit_data::dataoff: mach._set_linkedit_data_command_dataoff(nOffset, nValue); break;
+                        case N_mach_linkedit_data::datasize: mach._set_linkedit_data_command_datasize(nOffset, nValue); break;
                     }
 
                     ui->widgetHex_data_in_code->reload();
@@ -944,12 +788,8 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
 
                 case SMACH::TYPE_mach_code_signature:
                     switch (nNdata) {
-                        case N_mach_linkedit_data::dataoff:
-                            mach._set_linkedit_data_command_dataoff(nOffset, nValue);
-                            break;
-                        case N_mach_linkedit_data::datasize:
-                            mach._set_linkedit_data_command_datasize(nOffset, nValue);
-                            break;
+                        case N_mach_linkedit_data::dataoff: mach._set_linkedit_data_command_dataoff(nOffset, nValue); break;
+                        case N_mach_linkedit_data::datasize: mach._set_linkedit_data_command_datasize(nOffset, nValue); break;
                     }
 
                     ui->widgetHex_code_signature->reload();
@@ -958,15 +798,9 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
 
                 case SMACH::TYPE_mach_SuperBlob:
                     switch (nNdata) {
-                        case N_mach_SuperBlob::magic:
-                            mach._set_SC_SuperBlob_magic(nOffset, nValue);
-                            break;
-                        case N_mach_SuperBlob::length:
-                            mach._set_SC_SuperBlob_length(nOffset, nValue);
-                            break;
-                        case N_mach_SuperBlob::count:
-                            mach._set_SC_SuperBlob_count(nOffset, nValue);
-                            break;
+                        case N_mach_SuperBlob::magic: mach._set_SC_SuperBlob_magic(nOffset, nValue); break;
+                        case N_mach_SuperBlob::length: mach._set_SC_SuperBlob_length(nOffset, nValue); break;
+                        case N_mach_SuperBlob::count: mach._set_SC_SuperBlob_count(nOffset, nValue); break;
                     }
 
                     ui->widgetHex_SuperBlob->reload();
@@ -975,12 +809,8 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
 
                 case SMACH::TYPE_mach_main:
                     switch (nNdata) {
-                        case N_mach_main::entryoff:
-                            mach._set_entry_point_command_entryoff(nOffset, nValue);
-                            break;
-                        case N_mach_main::stacksize:
-                            mach._set_entry_point_command_stacksize(nOffset, nValue);
-                            break;
+                        case N_mach_main::entryoff: mach._set_entry_point_command_entryoff(nOffset, nValue); break;
+                        case N_mach_main::stacksize: mach._set_entry_point_command_stacksize(nOffset, nValue); break;
                     }
 
                     ui->widgetHex_main->reload();
@@ -989,12 +819,8 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
 
                 case SMACH::TYPE_mach_unix_thread:
                     switch (nNdata) {
-                        case N_mach_unix_thread::flavor:
-                            mach._set_unix_thread_command_flavor(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread::count:
-                            mach._set_unix_thread_command_count(nOffset, nValue);
-                            break;
+                        case N_mach_unix_thread::flavor: mach._set_unix_thread_command_flavor(nOffset, nValue); break;
+                        case N_mach_unix_thread::count: mach._set_unix_thread_command_count(nOffset, nValue); break;
                     }
 
                     ui->widgetHex_unix_thread->reload();
@@ -1003,54 +829,22 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
 
                 case SMACH::TYPE_mach_unix_thread_x86_32:
                     switch (nNdata) {
-                        case N_mach_unix_thread_x86_32::eax:
-                            mach._set_x86_thread_state32_t_eax(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_x86_32::ebx:
-                            mach._set_x86_thread_state32_t_ebx(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_x86_32::ecx:
-                            mach._set_x86_thread_state32_t_ecx(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_x86_32::edx:
-                            mach._set_x86_thread_state32_t_edx(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_x86_32::edi:
-                            mach._set_x86_thread_state32_t_edi(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_x86_32::esi:
-                            mach._set_x86_thread_state32_t_esi(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_x86_32::ebp:
-                            mach._set_x86_thread_state32_t_ebp(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_x86_32::esp:
-                            mach._set_x86_thread_state32_t_esp(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_x86_32::ss:
-                            mach._set_x86_thread_state32_t_ss(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_x86_32::eflags:
-                            mach._set_x86_thread_state32_t_eflags(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_x86_32::eip:
-                            mach._set_x86_thread_state32_t_eip(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_x86_32::cs:
-                            mach._set_x86_thread_state32_t_cs(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_x86_32::ds:
-                            mach._set_x86_thread_state32_t_ds(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_x86_32::es:
-                            mach._set_x86_thread_state32_t_es(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_x86_32::fs:
-                            mach._set_x86_thread_state32_t_fs(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_x86_32::gs:
-                            mach._set_x86_thread_state32_t_gs(nOffset, nValue);
-                            break;
+                        case N_mach_unix_thread_x86_32::eax: mach._set_x86_thread_state32_t_eax(nOffset, nValue); break;
+                        case N_mach_unix_thread_x86_32::ebx: mach._set_x86_thread_state32_t_ebx(nOffset, nValue); break;
+                        case N_mach_unix_thread_x86_32::ecx: mach._set_x86_thread_state32_t_ecx(nOffset, nValue); break;
+                        case N_mach_unix_thread_x86_32::edx: mach._set_x86_thread_state32_t_edx(nOffset, nValue); break;
+                        case N_mach_unix_thread_x86_32::edi: mach._set_x86_thread_state32_t_edi(nOffset, nValue); break;
+                        case N_mach_unix_thread_x86_32::esi: mach._set_x86_thread_state32_t_esi(nOffset, nValue); break;
+                        case N_mach_unix_thread_x86_32::ebp: mach._set_x86_thread_state32_t_ebp(nOffset, nValue); break;
+                        case N_mach_unix_thread_x86_32::esp: mach._set_x86_thread_state32_t_esp(nOffset, nValue); break;
+                        case N_mach_unix_thread_x86_32::ss: mach._set_x86_thread_state32_t_ss(nOffset, nValue); break;
+                        case N_mach_unix_thread_x86_32::eflags: mach._set_x86_thread_state32_t_eflags(nOffset, nValue); break;
+                        case N_mach_unix_thread_x86_32::eip: mach._set_x86_thread_state32_t_eip(nOffset, nValue); break;
+                        case N_mach_unix_thread_x86_32::cs: mach._set_x86_thread_state32_t_cs(nOffset, nValue); break;
+                        case N_mach_unix_thread_x86_32::ds: mach._set_x86_thread_state32_t_ds(nOffset, nValue); break;
+                        case N_mach_unix_thread_x86_32::es: mach._set_x86_thread_state32_t_es(nOffset, nValue); break;
+                        case N_mach_unix_thread_x86_32::fs: mach._set_x86_thread_state32_t_fs(nOffset, nValue); break;
+                        case N_mach_unix_thread_x86_32::gs: mach._set_x86_thread_state32_t_gs(nOffset, nValue); break;
                     }
 
                     ui->widgetHex_unix_thread_x86_32->reload();
@@ -1059,69 +853,27 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
 
                 case SMACH::TYPE_mach_unix_thread_x86_64:
                     switch (nNdata) {
-                        case N_mach_unix_thread_x86_64::rax:
-                            mach._set_x86_thread_state64_t_rax(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_x86_64::rbx:
-                            mach._set_x86_thread_state64_t_rbx(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_x86_64::rcx:
-                            mach._set_x86_thread_state64_t_rcx(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_x86_64::rdx:
-                            mach._set_x86_thread_state64_t_rdx(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_x86_64::rdi:
-                            mach._set_x86_thread_state64_t_rdi(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_x86_64::rsi:
-                            mach._set_x86_thread_state64_t_rsi(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_x86_64::rbp:
-                            mach._set_x86_thread_state64_t_rbp(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_x86_64::rsp:
-                            mach._set_x86_thread_state64_t_rsp(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_x86_64::r8:
-                            mach._set_x86_thread_state64_t_r8(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_x86_64::r9:
-                            mach._set_x86_thread_state64_t_r9(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_x86_64::r10:
-                            mach._set_x86_thread_state64_t_r10(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_x86_64::r11:
-                            mach._set_x86_thread_state64_t_r11(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_x86_64::r12:
-                            mach._set_x86_thread_state64_t_r12(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_x86_64::r13:
-                            mach._set_x86_thread_state64_t_r13(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_x86_64::r14:
-                            mach._set_x86_thread_state64_t_r14(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_x86_64::r15:
-                            mach._set_x86_thread_state64_t_r15(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_x86_64::rip:
-                            mach._set_x86_thread_state64_t_rip(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_x86_64::rflags:
-                            mach._set_x86_thread_state64_t_rflags(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_x86_64::cs:
-                            mach._set_x86_thread_state64_t_cs(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_x86_64::fs:
-                            mach._set_x86_thread_state64_t_fs(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_x86_64::gs:
-                            mach._set_x86_thread_state64_t_gs(nOffset, nValue);
-                            break;
+                        case N_mach_unix_thread_x86_64::rax: mach._set_x86_thread_state64_t_rax(nOffset, nValue); break;
+                        case N_mach_unix_thread_x86_64::rbx: mach._set_x86_thread_state64_t_rbx(nOffset, nValue); break;
+                        case N_mach_unix_thread_x86_64::rcx: mach._set_x86_thread_state64_t_rcx(nOffset, nValue); break;
+                        case N_mach_unix_thread_x86_64::rdx: mach._set_x86_thread_state64_t_rdx(nOffset, nValue); break;
+                        case N_mach_unix_thread_x86_64::rdi: mach._set_x86_thread_state64_t_rdi(nOffset, nValue); break;
+                        case N_mach_unix_thread_x86_64::rsi: mach._set_x86_thread_state64_t_rsi(nOffset, nValue); break;
+                        case N_mach_unix_thread_x86_64::rbp: mach._set_x86_thread_state64_t_rbp(nOffset, nValue); break;
+                        case N_mach_unix_thread_x86_64::rsp: mach._set_x86_thread_state64_t_rsp(nOffset, nValue); break;
+                        case N_mach_unix_thread_x86_64::r8: mach._set_x86_thread_state64_t_r8(nOffset, nValue); break;
+                        case N_mach_unix_thread_x86_64::r9: mach._set_x86_thread_state64_t_r9(nOffset, nValue); break;
+                        case N_mach_unix_thread_x86_64::r10: mach._set_x86_thread_state64_t_r10(nOffset, nValue); break;
+                        case N_mach_unix_thread_x86_64::r11: mach._set_x86_thread_state64_t_r11(nOffset, nValue); break;
+                        case N_mach_unix_thread_x86_64::r12: mach._set_x86_thread_state64_t_r12(nOffset, nValue); break;
+                        case N_mach_unix_thread_x86_64::r13: mach._set_x86_thread_state64_t_r13(nOffset, nValue); break;
+                        case N_mach_unix_thread_x86_64::r14: mach._set_x86_thread_state64_t_r14(nOffset, nValue); break;
+                        case N_mach_unix_thread_x86_64::r15: mach._set_x86_thread_state64_t_r15(nOffset, nValue); break;
+                        case N_mach_unix_thread_x86_64::rip: mach._set_x86_thread_state64_t_rip(nOffset, nValue); break;
+                        case N_mach_unix_thread_x86_64::rflags: mach._set_x86_thread_state64_t_rflags(nOffset, nValue); break;
+                        case N_mach_unix_thread_x86_64::cs: mach._set_x86_thread_state64_t_cs(nOffset, nValue); break;
+                        case N_mach_unix_thread_x86_64::fs: mach._set_x86_thread_state64_t_fs(nOffset, nValue); break;
+                        case N_mach_unix_thread_x86_64::gs: mach._set_x86_thread_state64_t_gs(nOffset, nValue); break;
                     }
 
                     ui->widgetHex_unix_thread_x86_64->reload();
@@ -1142,21 +894,11 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
                         case N_mach_unix_thread_arm_32::r9:
                         case N_mach_unix_thread_arm_32::r10:
                         case N_mach_unix_thread_arm_32::r11:
-                        case N_mach_unix_thread_arm_32::r12:
-                            mach._set_arm_thread_state32_t_r(nOffset, nValue, nNdata - N_mach_unix_thread_arm_32::r0);
-                            break;
-                        case N_mach_unix_thread_arm_32::sp:
-                            mach._set_arm_thread_state32_t_sp(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_arm_32::lr:
-                            mach._set_arm_thread_state32_t_lr(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_arm_32::pc:
-                            mach._set_arm_thread_state32_t_pc(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_arm_32::cpsr:
-                            mach._set_arm_thread_state32_t_cpsr(nOffset, nValue);
-                            break;
+                        case N_mach_unix_thread_arm_32::r12: mach._set_arm_thread_state32_t_r(nOffset, nValue, nNdata - N_mach_unix_thread_arm_32::r0); break;
+                        case N_mach_unix_thread_arm_32::sp: mach._set_arm_thread_state32_t_sp(nOffset, nValue); break;
+                        case N_mach_unix_thread_arm_32::lr: mach._set_arm_thread_state32_t_lr(nOffset, nValue); break;
+                        case N_mach_unix_thread_arm_32::pc: mach._set_arm_thread_state32_t_pc(nOffset, nValue); break;
+                        case N_mach_unix_thread_arm_32::cpsr: mach._set_arm_thread_state32_t_cpsr(nOffset, nValue); break;
                     }
 
                     ui->widgetHex_unix_thread_arm_32->reload();
@@ -1193,27 +935,13 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
                         case N_mach_unix_thread_arm_64::x25:
                         case N_mach_unix_thread_arm_64::x26:
                         case N_mach_unix_thread_arm_64::x27:
-                        case N_mach_unix_thread_arm_64::x28:
-                            mach._set_arm_thread_state64_t_x(nOffset, nValue, nNdata - N_mach_unix_thread_arm_64::x0);
-                            break;
-                        case N_mach_unix_thread_arm_64::fp:
-                            mach._set_arm_thread_state64_t_fp(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_arm_64::lr:
-                            mach._set_arm_thread_state64_t_lr(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_arm_64::sp:
-                            mach._set_arm_thread_state64_t_sp(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_arm_64::pc:
-                            mach._set_arm_thread_state64_t_pc(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_arm_64::cpsr:
-                            mach._set_arm_thread_state64_t_cpsr(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_arm_64::pad:
-                            mach._set_arm_thread_state64_t_pad(nOffset, nValue);
-                            break;
+                        case N_mach_unix_thread_arm_64::x28: mach._set_arm_thread_state64_t_x(nOffset, nValue, nNdata - N_mach_unix_thread_arm_64::x0); break;
+                        case N_mach_unix_thread_arm_64::fp: mach._set_arm_thread_state64_t_fp(nOffset, nValue); break;
+                        case N_mach_unix_thread_arm_64::lr: mach._set_arm_thread_state64_t_lr(nOffset, nValue); break;
+                        case N_mach_unix_thread_arm_64::sp: mach._set_arm_thread_state64_t_sp(nOffset, nValue); break;
+                        case N_mach_unix_thread_arm_64::pc: mach._set_arm_thread_state64_t_pc(nOffset, nValue); break;
+                        case N_mach_unix_thread_arm_64::cpsr: mach._set_arm_thread_state64_t_cpsr(nOffset, nValue); break;
+                        case N_mach_unix_thread_arm_64::pad: mach._set_arm_thread_state64_t_pad(nOffset, nValue); break;
                     }
 
                     ui->widgetHex_unix_thread_arm_64->reload();
@@ -1229,9 +957,7 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
                         case N_mach_unix_thread_m68k_32::dreg4:
                         case N_mach_unix_thread_m68k_32::dreg5:
                         case N_mach_unix_thread_m68k_32::dreg6:
-                        case N_mach_unix_thread_m68k_32::dreg7:
-                            mach._set_m68k_thread_state32_t_dreg(nOffset, nValue, nNdata - N_mach_unix_thread_m68k_32::dreg0);
-                            break;
+                        case N_mach_unix_thread_m68k_32::dreg7: mach._set_m68k_thread_state32_t_dreg(nOffset, nValue, nNdata - N_mach_unix_thread_m68k_32::dreg0); break;
                         case N_mach_unix_thread_m68k_32::areg0:
                         case N_mach_unix_thread_m68k_32::areg1:
                         case N_mach_unix_thread_m68k_32::areg2:
@@ -1239,18 +965,10 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
                         case N_mach_unix_thread_m68k_32::areg4:
                         case N_mach_unix_thread_m68k_32::areg5:
                         case N_mach_unix_thread_m68k_32::areg6:
-                        case N_mach_unix_thread_m68k_32::areg7:
-                            mach._set_m68k_thread_state32_t_areg(nOffset, nValue, nNdata - N_mach_unix_thread_m68k_32::areg0);
-                            break;
-                        case N_mach_unix_thread_m68k_32::pad0:
-                            mach._set_m68k_thread_state32_t_pad0(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_m68k_32::sr:
-                            mach._set_m68k_thread_state32_t_sr(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_m68k_32::pc:
-                            mach._set_m68k_thread_state32_t_pc(nOffset, nValue);
-                            break;
+                        case N_mach_unix_thread_m68k_32::areg7: mach._set_m68k_thread_state32_t_areg(nOffset, nValue, nNdata - N_mach_unix_thread_m68k_32::areg0); break;
+                        case N_mach_unix_thread_m68k_32::pad0: mach._set_m68k_thread_state32_t_pad0(nOffset, nValue); break;
+                        case N_mach_unix_thread_m68k_32::sr: mach._set_m68k_thread_state32_t_sr(nOffset, nValue); break;
+                        case N_mach_unix_thread_m68k_32::pc: mach._set_m68k_thread_state32_t_pc(nOffset, nValue); break;
                     }
 
                     ui->widgetHex_unix_thread_arm_32->reload();
@@ -1259,12 +977,8 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
 
                 case SMACH::TYPE_mach_unix_thread_ppc_32:
                     switch (nNdata) {
-                        case N_mach_unix_thread_ppc_32::srr0:
-                            mach._set_ppc_thread_state32_t_srr0(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_ppc_32::srr1:
-                            mach._set_ppc_thread_state32_t_srr1(nOffset, nValue);
-                            break;
+                        case N_mach_unix_thread_ppc_32::srr0: mach._set_ppc_thread_state32_t_srr0(nOffset, nValue); break;
+                        case N_mach_unix_thread_ppc_32::srr1: mach._set_ppc_thread_state32_t_srr1(nOffset, nValue); break;
                         case N_mach_unix_thread_ppc_32::r0:
                         case N_mach_unix_thread_ppc_32::r1:
                         case N_mach_unix_thread_ppc_32::r2:
@@ -1296,27 +1010,13 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
                         case N_mach_unix_thread_ppc_32::r28:
                         case N_mach_unix_thread_ppc_32::r29:
                         case N_mach_unix_thread_ppc_32::r30:
-                        case N_mach_unix_thread_ppc_32::r31:
-                            mach._set_ppc_thread_state32_t_r(nOffset, nValue, nNdata - N_mach_unix_thread_ppc_32::r0);
-                            break;
-                        case N_mach_unix_thread_ppc_32::ct:
-                            mach._set_ppc_thread_state32_t_ct(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_ppc_32::xer:
-                            mach._set_ppc_thread_state32_t_xer(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_ppc_32::lr:
-                            mach._set_ppc_thread_state32_t_lr(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_ppc_32::ctr:
-                            mach._set_ppc_thread_state32_t_ctr(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_ppc_32::mq:
-                            mach._set_ppc_thread_state32_t_mq(nOffset, nValue);
-                            break;
-                        case N_mach_unix_thread_ppc_32::vrsave:
-                            mach._set_ppc_thread_state32_t_vrsave(nOffset, nValue);
-                            break;
+                        case N_mach_unix_thread_ppc_32::r31: mach._set_ppc_thread_state32_t_r(nOffset, nValue, nNdata - N_mach_unix_thread_ppc_32::r0); break;
+                        case N_mach_unix_thread_ppc_32::ct: mach._set_ppc_thread_state32_t_ct(nOffset, nValue); break;
+                        case N_mach_unix_thread_ppc_32::xer: mach._set_ppc_thread_state32_t_xer(nOffset, nValue); break;
+                        case N_mach_unix_thread_ppc_32::lr: mach._set_ppc_thread_state32_t_lr(nOffset, nValue); break;
+                        case N_mach_unix_thread_ppc_32::ctr: mach._set_ppc_thread_state32_t_ctr(nOffset, nValue); break;
+                        case N_mach_unix_thread_ppc_32::mq: mach._set_ppc_thread_state32_t_mq(nOffset, nValue); break;
+                        case N_mach_unix_thread_ppc_32::vrsave: mach._set_ppc_thread_state32_t_vrsave(nOffset, nValue); break;
                     }
 
                     ui->widgetHex_unix_thread_ppc_32->reload();
@@ -1358,12 +1058,8 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, int nStype, int nNdata, 
             switch (nStype) {
                 case SMACH::TYPE_mach_header:
                     switch (nNdata) {
-                        case N_mach_header::magic:
-                            result = SV_RELOAD;
-                            break;
-                        case N_mach_header::cputype:
-                            result = SV_RELOADDATA;
-                            break;
+                        case N_mach_header::magic: result = SV_RELOAD; break;
+                        case N_mach_header::cputype: result = SV_RELOADDATA; break;
                     }
 
                     break;
@@ -1582,51 +1278,21 @@ QString MACHWidget::typeIdToString(int nType)
     QString sResult = tr("Unknown");
 
     switch (nType) {
-        case SMACH::TYPE_mach_commands:
-            sResult = QString("Command %1").arg(tr("Header"));
-            break;
-        case SMACH::TYPE_mach_segments:
-            sResult = QString("Segment %1").arg(tr("Header"));
-            break;
-        case SMACH::TYPE_mach_sections:
-            sResult = QString("Section %1").arg(tr("Header"));
-            break;
-        case SMACH::TYPE_mach_libraries:
-            sResult = QString("Library %1").arg(tr("Header"));
-            break;
-        case SMACH::TYPE_mach_weak_libraries:
-            sResult = QString("Library %1").arg(tr("Header"));
-            break;
-        case SMACH::TYPE_mach_id_library:
-            sResult = QString("Library %1").arg(tr("Header"));
-            break;
-        case SMACH::TYPE_SYMBOLTABLE:
-            sResult = QString("Symbol %1").arg(tr("Header"));
-            break;
-        case SMACH::TYPE_DICE:
-            sResult = QString("DICE %1").arg(tr("Header"));
-            break;
-        case SMACH::TYPE_DYSYMTAB_modtab:
-            sResult = QString("MODTAB %1").arg(tr("Header"));
-            break;
-        case SMACH::TYPE_DYSYMTAB_toc:
-            sResult = QString("TOC %1").arg(tr("Header"));
-            break;
-        case SMACH::TYPE_DYSYMTAB_extrel:
-            sResult = QString("Reloc %1").arg(tr("Header"));
-            break;
-        case SMACH::TYPE_DYSYMTAB_locrel:
-            sResult = QString("Reloc %1").arg(tr("Header"));
-            break;
-        case SMACH::TYPE_DYSYMTAB_indirectsyms:
-            sResult = QString("Indirect symbol %1").arg(tr("Header"));
-            break;
-        case SMACH::TYPE_mach_IDFVMLIB:
-            sResult = QString("IDFVMLIB %1").arg(tr("Header"));
-            break;
-        case SMACH::TYPE_mach_LOADFVMLIB:
-            sResult = QString("IDFVMLIB %1").arg(tr("Header"));
-            break;
+        case SMACH::TYPE_mach_commands: sResult = QString("Command %1").arg(tr("Header")); break;
+        case SMACH::TYPE_mach_segments: sResult = QString("Segment %1").arg(tr("Header")); break;
+        case SMACH::TYPE_mach_sections: sResult = QString("Section %1").arg(tr("Header")); break;
+        case SMACH::TYPE_mach_libraries: sResult = QString("Library %1").arg(tr("Header")); break;
+        case SMACH::TYPE_mach_weak_libraries: sResult = QString("Library %1").arg(tr("Header")); break;
+        case SMACH::TYPE_mach_id_library: sResult = QString("Library %1").arg(tr("Header")); break;
+        case SMACH::TYPE_SYMBOLTABLE: sResult = QString("Symbol %1").arg(tr("Header")); break;
+        case SMACH::TYPE_DICE: sResult = QString("DICE %1").arg(tr("Header")); break;
+        case SMACH::TYPE_DYSYMTAB_modtab: sResult = QString("MODTAB %1").arg(tr("Header")); break;
+        case SMACH::TYPE_DYSYMTAB_toc: sResult = QString("TOC %1").arg(tr("Header")); break;
+        case SMACH::TYPE_DYSYMTAB_extrel: sResult = QString("Reloc %1").arg(tr("Header")); break;
+        case SMACH::TYPE_DYSYMTAB_locrel: sResult = QString("Reloc %1").arg(tr("Header")); break;
+        case SMACH::TYPE_DYSYMTAB_indirectsyms: sResult = QString("Indirect symbol %1").arg(tr("Header")); break;
+        case SMACH::TYPE_mach_IDFVMLIB: sResult = QString("IDFVMLIB %1").arg(tr("Header")); break;
+        case SMACH::TYPE_mach_LOADFVMLIB: sResult = QString("IDFVMLIB %1").arg(tr("Header")); break;
     }
 
     return sResult;
@@ -2696,18 +2362,10 @@ void MACHWidget::widgetValueChanged(quint64 nValue)
     switch (nStype) {
         case SMACH::TYPE_mach_header:
             switch (nNdata) {
-                case N_mach_header::magic:
-                    g_lineEdit_mach_header[N_mach_header::magic]->setValue((quint32)nValue);
-                    break;
-                case N_mach_header::cputype:
-                    g_lineEdit_mach_header[N_mach_header::cputype]->setValue((quint32)nValue);
-                    break;
-                case N_mach_header::filetype:
-                    g_lineEdit_mach_header[N_mach_header::filetype]->setValue((quint32)nValue);
-                    break;
-                case N_mach_header::flags:
-                    g_lineEdit_mach_header[N_mach_header::flags]->setValue((quint32)nValue);
-                    break;
+                case N_mach_header::magic: g_lineEdit_mach_header[N_mach_header::magic]->setValue((quint32)nValue); break;
+                case N_mach_header::cputype: g_lineEdit_mach_header[N_mach_header::cputype]->setValue((quint32)nValue); break;
+                case N_mach_header::filetype: g_lineEdit_mach_header[N_mach_header::filetype]->setValue((quint32)nValue); break;
+                case N_mach_header::flags: g_lineEdit_mach_header[N_mach_header::flags]->setValue((quint32)nValue); break;
             }
 
             break;

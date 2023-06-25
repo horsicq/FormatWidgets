@@ -155,24 +155,12 @@ FormatWidget::SV DEXWidget::_setValue(QVariant vValue, int nStype, int nNdata, i
             switch (nStype) {
                 case SDEX::TYPE_HEADER:
                     switch (nNdata) {
-                        case N_DEX_HEADER::magic:
-                            g_comboBox[CB_Dex_Header_magic]->setValue(nValue);
-                            break;
-                        case N_DEX_HEADER::version:
-                            g_comboBox[CB_Dex_Header_version]->setValue(nValue);
-                            break;
-                        case N_DEX_HEADER::endian_tag:
-                            g_comboBox[CB_Dex_Header_endian_tag]->setValue(nValue);
-                            break;
-                        case N_DEX_HEADER::link_size:
-                            g_invWidget[INV_link]->setOffsetAndSize(&dex, dex.getHeader_link_off(), (quint32)nValue);
-                            break;
-                        case N_DEX_HEADER::link_off:
-                            g_invWidget[INV_link]->setOffsetAndSize(&dex, (quint32)nValue, dex.getHeader_link_size());
-                            break;
-                        case N_DEX_HEADER::map_off:
-                            g_invWidget[INV_map]->setOffsetAndSize(&dex, (quint32)nValue, 0);
-                            break;
+                        case N_DEX_HEADER::magic: g_comboBox[CB_Dex_Header_magic]->setValue(nValue); break;
+                        case N_DEX_HEADER::version: g_comboBox[CB_Dex_Header_version]->setValue(nValue); break;
+                        case N_DEX_HEADER::endian_tag: g_comboBox[CB_Dex_Header_endian_tag]->setValue(nValue); break;
+                        case N_DEX_HEADER::link_size: g_invWidget[INV_link]->setOffsetAndSize(&dex, dex.getHeader_link_off(), (quint32)nValue); break;
+                        case N_DEX_HEADER::link_off: g_invWidget[INV_link]->setOffsetAndSize(&dex, (quint32)nValue, dex.getHeader_link_size()); break;
+                        case N_DEX_HEADER::map_off: g_invWidget[INV_map]->setOffsetAndSize(&dex, (quint32)nValue, 0); break;
                         case N_DEX_HEADER::string_ids_size:
                             g_invWidget[INV_string_ids]->setOffsetAndSize(&dex, dex.getHeader_string_ids_off(), (quint32)nValue * sizeof(XDEX_DEF::STRING_ITEM_ID));
                             break;
@@ -209,12 +197,8 @@ FormatWidget::SV DEXWidget::_setValue(QVariant vValue, int nStype, int nNdata, i
                         case N_DEX_HEADER::class_defs_off:
                             g_invWidget[INV_class_defs]->setOffsetAndSize(&dex, (quint32)nValue, dex.getHeader_class_defs_size() * sizeof(XDEX_DEF::CLASS_ITEM_DEF));
                             break;
-                        case N_DEX_HEADER::data_size:
-                            g_invWidget[INV_data]->setOffsetAndSize(&dex, dex.getHeader_data_off(), (quint32)nValue);
-                            break;
-                        case N_DEX_HEADER::data_off:
-                            g_invWidget[INV_data]->setOffsetAndSize(&dex, (quint32)nValue, dex.getHeader_data_size());
-                            break;
+                        case N_DEX_HEADER::data_size: g_invWidget[INV_data]->setOffsetAndSize(&dex, dex.getHeader_data_off(), (quint32)nValue); break;
+                        case N_DEX_HEADER::data_off: g_invWidget[INV_data]->setOffsetAndSize(&dex, (quint32)nValue, dex.getHeader_data_size()); break;
                     }
 
                     break;
@@ -223,75 +207,29 @@ FormatWidget::SV DEXWidget::_setValue(QVariant vValue, int nStype, int nNdata, i
             switch (nStype) {
                 case SDEX::TYPE_HEADER:
                     switch (nNdata) {
-                        case N_DEX_HEADER::magic:
-                            dex.setHeader_magic((quint32)nValue);
-                            break;
-                        case N_DEX_HEADER::version:
-                            dex.setHeader_version((quint32)nValue);
-                            break;
-                        case N_DEX_HEADER::checksum:
-                            dex.setHeader_checksum((quint32)nValue);
-                            break;
-                        case N_DEX_HEADER::file_size:
-                            dex.setHeader_file_size((quint32)nValue);
-                            break;
-                        case N_DEX_HEADER::header_size:
-                            dex.setHeader_header_size((quint32)nValue);
-                            break;
-                        case N_DEX_HEADER::endian_tag:
-                            dex.setHeader_endian_tag((quint32)nValue);
-                            break;
-                        case N_DEX_HEADER::link_size:
-                            dex.setHeader_link_size((quint32)nValue);
-                            break;
-                        case N_DEX_HEADER::link_off:
-                            dex.setHeader_link_off((quint32)nValue);
-                            break;
-                        case N_DEX_HEADER::map_off:
-                            dex.setHeader_map_off((quint32)nValue);
-                            break;
-                        case N_DEX_HEADER::string_ids_size:
-                            dex.setHeader_string_ids_size((quint32)nValue);
-                            break;
-                        case N_DEX_HEADER::string_ids_off:
-                            dex.setHeader_string_ids_off((quint32)nValue);
-                            break;
-                        case N_DEX_HEADER::type_ids_size:
-                            dex.setHeader_type_ids_size((quint32)nValue);
-                            break;
-                        case N_DEX_HEADER::type_ids_off:
-                            dex.setHeader_type_ids_off((quint32)nValue);
-                            break;
-                        case N_DEX_HEADER::proto_ids_size:
-                            dex.setHeader_proto_ids_size((quint32)nValue);
-                            break;
-                        case N_DEX_HEADER::proto_ids_off:
-                            dex.setHeader_proto_ids_off((quint32)nValue);
-                            break;
-                        case N_DEX_HEADER::field_ids_size:
-                            dex.setHeader_field_ids_size((quint32)nValue);
-                            break;
-                        case N_DEX_HEADER::field_ids_off:
-                            dex.setHeader_field_ids_off((quint32)nValue);
-                            break;
-                        case N_DEX_HEADER::method_ids_size:
-                            dex.setHeader_method_ids_size((quint32)nValue);
-                            break;
-                        case N_DEX_HEADER::method_ids_off:
-                            dex.setHeader_method_ids_off((quint32)nValue);
-                            break;
-                        case N_DEX_HEADER::class_defs_size:
-                            dex.setHeader_class_defs_size((quint32)nValue);
-                            break;
-                        case N_DEX_HEADER::class_defs_off:
-                            dex.setHeader_class_defs_off((quint32)nValue);
-                            break;
-                        case N_DEX_HEADER::data_size:
-                            dex.setHeader_data_size((quint32)nValue);
-                            break;
-                        case N_DEX_HEADER::data_off:
-                            dex.setHeader_data_off((quint32)nValue);
-                            break;
+                        case N_DEX_HEADER::magic: dex.setHeader_magic((quint32)nValue); break;
+                        case N_DEX_HEADER::version: dex.setHeader_version((quint32)nValue); break;
+                        case N_DEX_HEADER::checksum: dex.setHeader_checksum((quint32)nValue); break;
+                        case N_DEX_HEADER::file_size: dex.setHeader_file_size((quint32)nValue); break;
+                        case N_DEX_HEADER::header_size: dex.setHeader_header_size((quint32)nValue); break;
+                        case N_DEX_HEADER::endian_tag: dex.setHeader_endian_tag((quint32)nValue); break;
+                        case N_DEX_HEADER::link_size: dex.setHeader_link_size((quint32)nValue); break;
+                        case N_DEX_HEADER::link_off: dex.setHeader_link_off((quint32)nValue); break;
+                        case N_DEX_HEADER::map_off: dex.setHeader_map_off((quint32)nValue); break;
+                        case N_DEX_HEADER::string_ids_size: dex.setHeader_string_ids_size((quint32)nValue); break;
+                        case N_DEX_HEADER::string_ids_off: dex.setHeader_string_ids_off((quint32)nValue); break;
+                        case N_DEX_HEADER::type_ids_size: dex.setHeader_type_ids_size((quint32)nValue); break;
+                        case N_DEX_HEADER::type_ids_off: dex.setHeader_type_ids_off((quint32)nValue); break;
+                        case N_DEX_HEADER::proto_ids_size: dex.setHeader_proto_ids_size((quint32)nValue); break;
+                        case N_DEX_HEADER::proto_ids_off: dex.setHeader_proto_ids_off((quint32)nValue); break;
+                        case N_DEX_HEADER::field_ids_size: dex.setHeader_field_ids_size((quint32)nValue); break;
+                        case N_DEX_HEADER::field_ids_off: dex.setHeader_field_ids_off((quint32)nValue); break;
+                        case N_DEX_HEADER::method_ids_size: dex.setHeader_method_ids_size((quint32)nValue); break;
+                        case N_DEX_HEADER::method_ids_off: dex.setHeader_method_ids_off((quint32)nValue); break;
+                        case N_DEX_HEADER::class_defs_size: dex.setHeader_class_defs_size((quint32)nValue); break;
+                        case N_DEX_HEADER::class_defs_off: dex.setHeader_class_defs_off((quint32)nValue); break;
+                        case N_DEX_HEADER::data_size: dex.setHeader_data_size((quint32)nValue); break;
+                        case N_DEX_HEADER::data_off: dex.setHeader_data_off((quint32)nValue); break;
                     }
 
                     ui->widgetHex_Header->reload();
@@ -649,9 +587,7 @@ void DEXWidget::widgetValueChanged(quint64 nValue)
     switch (nStype) {
         case SDEX::TYPE_HEADER:
             switch (nNdata) {
-                case N_DEX_HEADER::magic:
-                    g_lineEdit_HEADER[N_DEX_HEADER::magic]->setValue((quint32)nValue);
-                    break;
+                case N_DEX_HEADER::magic: g_lineEdit_HEADER[N_DEX_HEADER::magic]->setValue((quint32)nValue); break;
             }
 
             break;

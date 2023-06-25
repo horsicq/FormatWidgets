@@ -981,51 +981,24 @@ qint32 FormatWidget::getColumnWidth(QWidget *pParent, FormatWidget::CW cw, XBina
 
     if (cw == CW_UINTMODE) {
         switch (mode) {
-            case XBinary::MODE_16:
-                cw = CW_UINT16;
-                break;
-            case XBinary::MODE_32:
-                cw = CW_UINT32;
-                break;
-            case XBinary::MODE_64:
-                cw = CW_UINT64;
-                break;
-            default:
-                cw = CW_UINT32;
+            case XBinary::MODE_16: cw = CW_UINT16; break;
+            case XBinary::MODE_32: cw = CW_UINT32; break;
+            case XBinary::MODE_64: cw = CW_UINT64; break;
+            default: cw = CW_UINT32;
         }
     }
 
     switch (cw) {
-        case CW_UINT8:
-            nResult = 2 * nSymbolWidth;
-            break;
-        case CW_UINT16:
-            nResult = 4 * nSymbolWidth;
-            break;
-        case CW_UINT32:
-            nResult = 8 * nSymbolWidth;
-            break;
-        case CW_UINT64:
-            nResult = 14 * nSymbolWidth;
-            break;
-        case CW_TYPE:
-            nResult = 8 * nSymbolWidth;
-            break;
-        case CW_STRINGSHORT:
-            nResult = 10 * nSymbolWidth;
-            break;
-        case CW_STRINGSHORT2:
-            nResult = 15 * nSymbolWidth;
-            break;
-        case CW_STRINGMID:
-            nResult = 25 * nSymbolWidth;
-            break;
-        case CW_STRINGLONG:
-            nResult = 50 * nSymbolWidth;
-            break;
-        default:
-            nResult = 8 * nSymbolWidth;
-            break;
+        case CW_UINT8: nResult = 2 * nSymbolWidth; break;
+        case CW_UINT16: nResult = 4 * nSymbolWidth; break;
+        case CW_UINT32: nResult = 8 * nSymbolWidth; break;
+        case CW_UINT64: nResult = 14 * nSymbolWidth; break;
+        case CW_TYPE: nResult = 8 * nSymbolWidth; break;
+        case CW_STRINGSHORT: nResult = 10 * nSymbolWidth; break;
+        case CW_STRINGSHORT2: nResult = 15 * nSymbolWidth; break;
+        case CW_STRINGMID: nResult = 25 * nSymbolWidth; break;
+        case CW_STRINGLONG: nResult = 50 * nSymbolWidth; break;
+        default: nResult = 8 * nSymbolWidth; break;
     }
 
     return nResult;

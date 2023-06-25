@@ -172,9 +172,7 @@ FormatWidget::SV PESectionHeaderWidget::_setValue(QVariant vValue, int nStype, i
                         case N_IMAGE_IMPORT::OriginalFirstThunk:
                             g_ppInvWidget[N_IMAGE_IMPORT::INV_OriginalFirstThunk]->setAddressAndSize(&pe, pe.getBaseAddress() + (quint32)nValue, 0);
                             break;
-                        case N_IMAGE_IMPORT::Name:
-                            g_ppInvWidget[N_IMAGE_IMPORT::INV_Name]->setAddressAndSize(&pe, pe.getBaseAddress() + (quint32)nValue, 0);
-                            break;
+                        case N_IMAGE_IMPORT::Name: g_ppInvWidget[N_IMAGE_IMPORT::INV_Name]->setAddressAndSize(&pe, pe.getBaseAddress() + (quint32)nValue, 0); break;
                         case N_IMAGE_IMPORT::FirstThunk:
                             g_ppInvWidget[N_IMAGE_IMPORT::INV_FirstThunk]->setAddressAndSize(&pe, pe.getBaseAddress() + (quint32)nValue, 0);
                             break;
@@ -183,9 +181,7 @@ FormatWidget::SV PESectionHeaderWidget::_setValue(QVariant vValue, int nStype, i
 
                 case SPE::TYPE_DEBUG:
                     switch (nNdata) {
-                        case N_IMAGE_DEBUG::Type:
-                            g_ppComboBox[N_IMAGE_DEBUG::CB_TYPE]->setValue((quint32)nValue);
-                            break;
+                        case N_IMAGE_DEBUG::Type: g_ppComboBox[N_IMAGE_DEBUG::CB_TYPE]->setValue((quint32)nValue); break;
                     }
                     break;
             }
@@ -193,164 +189,82 @@ FormatWidget::SV PESectionHeaderWidget::_setValue(QVariant vValue, int nStype, i
             switch (nStype) {
                 case SPE::TYPE_IMAGE_SECTION_HEADER:
                     switch (nNdata) {
-                        case N_IMAGE_SECTION_HEADER::Name:
-                            pe.setSection_NameAsString((quint32)nPosition, sValue);
-                            break;
-                        case N_IMAGE_SECTION_HEADER::VirtualSize:
-                            pe.setSection_VirtualSize((quint32)nPosition, (quint32)nValue);
-                            break;
-                        case N_IMAGE_SECTION_HEADER::VirtualAddress:
-                            pe.setSection_VirtualAddress((quint32)nPosition, (quint32)nValue);
-                            break;
-                        case N_IMAGE_SECTION_HEADER::SizeOfRawData:
-                            pe.setSection_SizeOfRawData((quint32)nPosition, (quint32)nValue);
-                            break;
-                        case N_IMAGE_SECTION_HEADER::PointerToRawData:
-                            pe.setSection_PointerToRawData((quint32)nPosition, (quint32)nValue);
-                            break;
-                        case N_IMAGE_SECTION_HEADER::PointerToRelocations:
-                            pe.setSection_PointerToRelocations((quint32)nPosition, (quint32)nValue);
-                            break;
-                        case N_IMAGE_SECTION_HEADER::PointerToLinenumbers:
-                            pe.setSection_PointerToLinenumbers((quint32)nPosition, (quint32)nValue);
-                            break;
-                        case N_IMAGE_SECTION_HEADER::NumberOfRelocations:
-                            pe.setSection_NumberOfRelocations((quint32)nPosition, (quint16)nValue);
-                            break;
-                        case N_IMAGE_SECTION_HEADER::NumberOfLinenumbers:
-                            pe.setSection_NumberOfLinenumbers((quint32)nPosition, (quint16)nValue);
-                            break;
-                        case N_IMAGE_SECTION_HEADER::Characteristics:
-                            pe.setSection_Characteristics((quint32)nPosition, (quint32)nValue);
-                            break;
+                        case N_IMAGE_SECTION_HEADER::Name: pe.setSection_NameAsString((quint32)nPosition, sValue); break;
+                        case N_IMAGE_SECTION_HEADER::VirtualSize: pe.setSection_VirtualSize((quint32)nPosition, (quint32)nValue); break;
+                        case N_IMAGE_SECTION_HEADER::VirtualAddress: pe.setSection_VirtualAddress((quint32)nPosition, (quint32)nValue); break;
+                        case N_IMAGE_SECTION_HEADER::SizeOfRawData: pe.setSection_SizeOfRawData((quint32)nPosition, (quint32)nValue); break;
+                        case N_IMAGE_SECTION_HEADER::PointerToRawData: pe.setSection_PointerToRawData((quint32)nPosition, (quint32)nValue); break;
+                        case N_IMAGE_SECTION_HEADER::PointerToRelocations: pe.setSection_PointerToRelocations((quint32)nPosition, (quint32)nValue); break;
+                        case N_IMAGE_SECTION_HEADER::PointerToLinenumbers: pe.setSection_PointerToLinenumbers((quint32)nPosition, (quint32)nValue); break;
+                        case N_IMAGE_SECTION_HEADER::NumberOfRelocations: pe.setSection_NumberOfRelocations((quint32)nPosition, (quint16)nValue); break;
+                        case N_IMAGE_SECTION_HEADER::NumberOfLinenumbers: pe.setSection_NumberOfLinenumbers((quint32)nPosition, (quint16)nValue); break;
+                        case N_IMAGE_SECTION_HEADER::Characteristics: pe.setSection_Characteristics((quint32)nPosition, (quint32)nValue); break;
                     }
                     break;
 
                 case SPE::TYPE_IMPORT:
                     switch (nNdata) {
-                        case N_IMAGE_IMPORT::OriginalFirstThunk:
-                            pe.setImportDescriptor_OriginalFirstThunk(nPosition, (quint32)nValue);
-                            break;
-                        case N_IMAGE_IMPORT::TimeDateStamp:
-                            pe.setImportDescriptor_TimeDateStamp(nPosition, (quint32)nValue);
-                            break;
-                        case N_IMAGE_IMPORT::ForwarderChain:
-                            pe.setImportDescriptor_ForwarderChain(nPosition, (quint32)nValue);
-                            break;
-                        case N_IMAGE_IMPORT::Name:
-                            pe.setImportDescriptor_Name(nPosition, (quint32)nValue);
-                            break;
-                        case N_IMAGE_IMPORT::FirstThunk:
-                            pe.setImportDescriptor_FirstThunk(nPosition, (quint32)nValue);
-                            break;
+                        case N_IMAGE_IMPORT::OriginalFirstThunk: pe.setImportDescriptor_OriginalFirstThunk(nPosition, (quint32)nValue); break;
+                        case N_IMAGE_IMPORT::TimeDateStamp: pe.setImportDescriptor_TimeDateStamp(nPosition, (quint32)nValue); break;
+                        case N_IMAGE_IMPORT::ForwarderChain: pe.setImportDescriptor_ForwarderChain(nPosition, (quint32)nValue); break;
+                        case N_IMAGE_IMPORT::Name: pe.setImportDescriptor_Name(nPosition, (quint32)nValue); break;
+                        case N_IMAGE_IMPORT::FirstThunk: pe.setImportDescriptor_FirstThunk(nPosition, (quint32)nValue); break;
                     }
                     break;
 
                 case SPE::TYPE_DEBUG:
                     switch (nNdata) {
-                        case N_IMAGE_DEBUG::Characteristics:
-                            pe.setDebugHeader_Characteristics(nPosition, (quint32)nValue);
-                            break;
-                        case N_IMAGE_DEBUG::TimeDateStamp:
-                            pe.setDebugHeader_TimeDateStamp(nPosition, (quint32)nValue);
-                            break;
-                        case N_IMAGE_DEBUG::MajorVersion:
-                            pe.setDebugHeader_MajorVersion(nPosition, (quint16)nValue);
-                            break;
-                        case N_IMAGE_DEBUG::MinorVersion:
-                            pe.setDebugHeader_MinorVersion(nPosition, (quint16)nValue);
-                            break;
-                        case N_IMAGE_DEBUG::Type:
-                            pe.setDebugHeader_Type(nPosition, (quint32)nValue);
-                            break;
-                        case N_IMAGE_DEBUG::SizeOfData:
-                            pe.setDebugHeader_SizeOfData(nPosition, (quint32)nValue);
-                            break;
-                        case N_IMAGE_DEBUG::AddressOfRawData:
-                            pe.setDebugHeader_AddressOfRawData(nPosition, (quint32)nValue);
-                            break;
-                        case N_IMAGE_DEBUG::PointerToRawData:
-                            pe.setDebugHeader_PointerToRawData(nPosition, (quint32)nValue);
-                            break;
+                        case N_IMAGE_DEBUG::Characteristics: pe.setDebugHeader_Characteristics(nPosition, (quint32)nValue); break;
+                        case N_IMAGE_DEBUG::TimeDateStamp: pe.setDebugHeader_TimeDateStamp(nPosition, (quint32)nValue); break;
+                        case N_IMAGE_DEBUG::MajorVersion: pe.setDebugHeader_MajorVersion(nPosition, (quint16)nValue); break;
+                        case N_IMAGE_DEBUG::MinorVersion: pe.setDebugHeader_MinorVersion(nPosition, (quint16)nValue); break;
+                        case N_IMAGE_DEBUG::Type: pe.setDebugHeader_Type(nPosition, (quint32)nValue); break;
+                        case N_IMAGE_DEBUG::SizeOfData: pe.setDebugHeader_SizeOfData(nPosition, (quint32)nValue); break;
+                        case N_IMAGE_DEBUG::AddressOfRawData: pe.setDebugHeader_AddressOfRawData(nPosition, (quint32)nValue); break;
+                        case N_IMAGE_DEBUG::PointerToRawData: pe.setDebugHeader_PointerToRawData(nPosition, (quint32)nValue); break;
                     }
                     break;
 
                 case SPE::TYPE_RELOCS:
                     switch (nNdata) {
-                        case N_IMAGE_RELOCS::VirtualAddress:
-                            pe.setRelocsVirtualAddress(nPosition, (quint32)nValue);
-                            break;
-                        case N_IMAGE_RELOCS::SizeOfBlock:
-                            pe.setRelocsSizeOfBlock(nPosition, (quint32)nValue);
-                            break;
+                        case N_IMAGE_RELOCS::VirtualAddress: pe.setRelocsVirtualAddress(nPosition, (quint32)nValue); break;
+                        case N_IMAGE_RELOCS::SizeOfBlock: pe.setRelocsSizeOfBlock(nPosition, (quint32)nValue); break;
                     }
                     break;
 
                 case SPE::TYPE_EXCEPTION:
                     switch (nNdata) {
-                        case N_IMAGE_EXCEPTIONS::BeginAddress:
-                            pe.setException_BeginAddress(nPosition, (quint32)nValue);
-                            break;
-                        case N_IMAGE_EXCEPTIONS::EndAddress:
-                            pe.setException_EndAddress(nPosition, (quint32)nValue);
-                            break;
-                        case N_IMAGE_EXCEPTIONS::UnwindInfoAddress:
-                            pe.setException_UnwindInfoAddress(nPosition, (quint16)nValue);
-                            break;
+                        case N_IMAGE_EXCEPTIONS::BeginAddress: pe.setException_BeginAddress(nPosition, (quint32)nValue); break;
+                        case N_IMAGE_EXCEPTIONS::EndAddress: pe.setException_EndAddress(nPosition, (quint32)nValue); break;
+                        case N_IMAGE_EXCEPTIONS::UnwindInfoAddress: pe.setException_UnwindInfoAddress(nPosition, (quint16)nValue); break;
                     }
                     break;
 
                 case SPE::TYPE_DELAYIMPORT:
                     switch (nNdata) {
-                        case N_IMAGE_DELAYIMPORT::AllAttributes:
-                            pe.setDelayImport_AllAttributes(nPosition, (quint32)nValue);
-                            break;
-                        case N_IMAGE_DELAYIMPORT::DllNameRVA:
-                            pe.setDelayImport_DllNameRVA(nPosition, (quint32)nValue);
-                            break;
-                        case N_IMAGE_DELAYIMPORT::ModuleHandleRVA:
-                            pe.setDelayImport_ModuleHandleRVA(nPosition, (quint32)nValue);
-                            break;
-                        case N_IMAGE_DELAYIMPORT::ImportAddressTableRVA:
-                            pe.setDelayImport_ImportAddressTableRVA(nPosition, (quint32)nValue);
-                            break;
-                        case N_IMAGE_DELAYIMPORT::ImportNameTableRVA:
-                            pe.setDelayImport_ImportNameTableRVA(nPosition, (quint32)nValue);
-                            break;
-                        case N_IMAGE_DELAYIMPORT::BoundImportAddressTableRVA:
-                            pe.setDelayImport_BoundImportAddressTableRVA(nPosition, (quint32)nValue);
-                            break;
-                        case N_IMAGE_DELAYIMPORT::UnloadInformationTableRVA:
-                            pe.setDelayImport_UnloadInformationTableRVA(nPosition, (quint32)nValue);
-                            break;
-                        case N_IMAGE_DELAYIMPORT::TimeDateStamp:
-                            pe.setDelayImport_TimeDateStamp(nPosition, (quint32)nValue);
-                            break;
+                        case N_IMAGE_DELAYIMPORT::AllAttributes: pe.setDelayImport_AllAttributes(nPosition, (quint32)nValue); break;
+                        case N_IMAGE_DELAYIMPORT::DllNameRVA: pe.setDelayImport_DllNameRVA(nPosition, (quint32)nValue); break;
+                        case N_IMAGE_DELAYIMPORT::ModuleHandleRVA: pe.setDelayImport_ModuleHandleRVA(nPosition, (quint32)nValue); break;
+                        case N_IMAGE_DELAYIMPORT::ImportAddressTableRVA: pe.setDelayImport_ImportAddressTableRVA(nPosition, (quint32)nValue); break;
+                        case N_IMAGE_DELAYIMPORT::ImportNameTableRVA: pe.setDelayImport_ImportNameTableRVA(nPosition, (quint32)nValue); break;
+                        case N_IMAGE_DELAYIMPORT::BoundImportAddressTableRVA: pe.setDelayImport_BoundImportAddressTableRVA(nPosition, (quint32)nValue); break;
+                        case N_IMAGE_DELAYIMPORT::UnloadInformationTableRVA: pe.setDelayImport_UnloadInformationTableRVA(nPosition, (quint32)nValue); break;
+                        case N_IMAGE_DELAYIMPORT::TimeDateStamp: pe.setDelayImport_TimeDateStamp(nPosition, (quint32)nValue); break;
                     }
                     break;
 
                 case SPE::TYPE_BOUNDIMPORT:
                     switch (nNdata) {
-                        case N_IMAGE_BOUNDIMPORT::TimeDateStamp:
-                            pe.setBoundImport_TimeDateStamp(nPosition, (quint32)nValue);
-                            break;
-                        case N_IMAGE_BOUNDIMPORT::OffsetModuleName:
-                            pe.setBoundImport_OffsetModuleName(nPosition, (quint16)nValue);
-                            break;
-                        case N_IMAGE_BOUNDIMPORT::NumberOfModuleForwarderRefs:
-                            pe.setBoundImport_NumberOfModuleForwarderRefs(nPosition, (quint16)nValue);
-                            break;
+                        case N_IMAGE_BOUNDIMPORT::TimeDateStamp: pe.setBoundImport_TimeDateStamp(nPosition, (quint32)nValue); break;
+                        case N_IMAGE_BOUNDIMPORT::OffsetModuleName: pe.setBoundImport_OffsetModuleName(nPosition, (quint16)nValue); break;
+                        case N_IMAGE_BOUNDIMPORT::NumberOfModuleForwarderRefs: pe.setBoundImport_NumberOfModuleForwarderRefs(nPosition, (quint16)nValue); break;
                     }
                     break;
 
                 case SPE::TYPE_IMAGE_DIRECTORY_ENTRIES:
                     switch (nNdata) {
-                        case N_IMAGE_DATA_DIRECTORY::Address:
-                            pe.setOptionalHeader_DataDirectory_VirtualAddress(nPosition, (quint32)nValue);
-                            break;
-                        case N_IMAGE_DATA_DIRECTORY::Size:
-                            pe.setOptionalHeader_DataDirectory_Size(nPosition, (quint32)nValue);
-                            break;
+                        case N_IMAGE_DATA_DIRECTORY::Address: pe.setOptionalHeader_DataDirectory_VirtualAddress(nPosition, (quint32)nValue); break;
+                        case N_IMAGE_DATA_DIRECTORY::Size: pe.setOptionalHeader_DataDirectory_Size(nPosition, (quint32)nValue); break;
                     }
                     break;
             }
@@ -706,9 +620,7 @@ void PESectionHeaderWidget::widgetValueChanged(quint64 nValue)
 
         case SPE::TYPE_DEBUG:
             switch (nNdata) {
-                case N_IMAGE_DEBUG::Type:
-                    g_ppLinedEdit[N_IMAGE_DEBUG::Type]->setValue((quint32)nValue);
-                    break;
+                case N_IMAGE_DEBUG::Type: g_ppLinedEdit[N_IMAGE_DEBUG::Type]->setValue((quint32)nValue); break;
             }
             break;
     }
