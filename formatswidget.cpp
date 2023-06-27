@@ -715,193 +715,103 @@ qint32 FormatsWidget::convertType(XBinary::FT fileType, SBINARY::TYPE type)
     qint32 nResult = 0;
 
     if (fileType == XBinary::FT_MSDOS) {
-        if (type == SBINARY::TYPE_INFO)
-            nResult = SMSDOS::TYPE_INFO;
-        else if (type == SBINARY::TYPE_VISUALIZATION)
-            nResult = SMSDOS::TYPE_VISUALIZATION;
-        else if (type == SBINARY::TYPE_VIRUSTOTAL)
-            nResult = SMSDOS::TYPE_VIRUSTOTAL;
-        else if (type == SBINARY::TYPE_HEX)
-            nResult = SMSDOS::TYPE_HEX;
-        else if (type == SBINARY::TYPE_DISASM)
-            nResult = SMSDOS::TYPE_DISASM;
-        else if (type == SBINARY::TYPE_HASH)
-            nResult = SMSDOS::TYPE_HASH;
-        else if (type == SBINARY::TYPE_STRINGS)
-            nResult = SMSDOS::TYPE_STRINGS;
-        else if (type == SBINARY::TYPE_SIGNATURES)
-            nResult = SMSDOS::TYPE_SIGNATURES;
-        else if (type == SBINARY::TYPE_MEMORYMAP)
-            nResult = SMSDOS::TYPE_MEMORYMAP;
-        else if (type == SBINARY::TYPE_ENTROPY)
-            nResult = SMSDOS::TYPE_ENTROPY;
-        else if (type == SBINARY::TYPE_NFDSCAN)
-            nResult = SMSDOS::TYPE_NFDSCAN;
-        else if (type == SBINARY::TYPE_EXTRACTOR)
-            nResult = SMSDOS::TYPE_EXTRACTOR;
-        else if (type == SBINARY::TYPE_SEARCH)
-            nResult = SMSDOS::TYPE_SEARCH;
+        if (type == SBINARY::TYPE_INFO) nResult = SMSDOS::TYPE_INFO;
+        else if (type == SBINARY::TYPE_VISUALIZATION) nResult = SMSDOS::TYPE_VISUALIZATION;
+        else if (type == SBINARY::TYPE_VIRUSTOTAL) nResult = SMSDOS::TYPE_VIRUSTOTAL;
+        else if (type == SBINARY::TYPE_HEX) nResult = SMSDOS::TYPE_HEX;
+        else if (type == SBINARY::TYPE_DISASM) nResult = SMSDOS::TYPE_DISASM;
+        else if (type == SBINARY::TYPE_HASH) nResult = SMSDOS::TYPE_HASH;
+        else if (type == SBINARY::TYPE_STRINGS) nResult = SMSDOS::TYPE_STRINGS;
+        else if (type == SBINARY::TYPE_SIGNATURES) nResult = SMSDOS::TYPE_SIGNATURES;
+        else if (type == SBINARY::TYPE_MEMORYMAP) nResult = SMSDOS::TYPE_MEMORYMAP;
+        else if (type == SBINARY::TYPE_ENTROPY) nResult = SMSDOS::TYPE_ENTROPY;
+        else if (type == SBINARY::TYPE_NFDSCAN) nResult = SMSDOS::TYPE_NFDSCAN;
+        else if (type == SBINARY::TYPE_EXTRACTOR) nResult = SMSDOS::TYPE_EXTRACTOR;
+        else if (type == SBINARY::TYPE_SEARCH) nResult = SMSDOS::TYPE_SEARCH;
     } else if ((fileType == XBinary::FT_LE) || (fileType == XBinary::FT_LX)) {
-        if (type == SBINARY::TYPE_INFO)
-            nResult = SLE::TYPE_INFO;
-        else if (type == SBINARY::TYPE_VISUALIZATION)
-            nResult = SLE::TYPE_VISUALIZATION;
-        else if (type == SBINARY::TYPE_VIRUSTOTAL)
-            nResult = SLE::TYPE_VIRUSTOTAL;
-        else if (type == SBINARY::TYPE_HEX)
-            nResult = SLE::TYPE_HEX;
-        else if (type == SBINARY::TYPE_DISASM)
-            nResult = SLE::TYPE_DISASM;
-        else if (type == SBINARY::TYPE_HASH)
-            nResult = SLE::TYPE_HASH;
-        else if (type == SBINARY::TYPE_STRINGS)
-            nResult = SLE::TYPE_STRINGS;
-        else if (type == SBINARY::TYPE_SIGNATURES)
-            nResult = SLE::TYPE_SIGNATURES;
-        else if (type == SBINARY::TYPE_MEMORYMAP)
-            nResult = SLE::TYPE_MEMORYMAP;
-        else if (type == SBINARY::TYPE_ENTROPY)
-            nResult = SLE::TYPE_ENTROPY;
-        else if (type == SBINARY::TYPE_NFDSCAN)
-            nResult = SLE::TYPE_NFDSCAN;
-        else if (type == SBINARY::TYPE_EXTRACTOR)
-            nResult = SLE::TYPE_EXTRACTOR;
-        else if (type == SBINARY::TYPE_SEARCH)
-            nResult = SLE::TYPE_SEARCH;
+        if (type == SBINARY::TYPE_INFO) nResult = SLE::TYPE_INFO;
+        else if (type == SBINARY::TYPE_VISUALIZATION) nResult = SLE::TYPE_VISUALIZATION;
+        else if (type == SBINARY::TYPE_VIRUSTOTAL) nResult = SLE::TYPE_VIRUSTOTAL;
+        else if (type == SBINARY::TYPE_HEX) nResult = SLE::TYPE_HEX;
+        else if (type == SBINARY::TYPE_DISASM) nResult = SLE::TYPE_DISASM;
+        else if (type == SBINARY::TYPE_HASH) nResult = SLE::TYPE_HASH;
+        else if (type == SBINARY::TYPE_STRINGS) nResult = SLE::TYPE_STRINGS;
+        else if (type == SBINARY::TYPE_SIGNATURES) nResult = SLE::TYPE_SIGNATURES;
+        else if (type == SBINARY::TYPE_MEMORYMAP) nResult = SLE::TYPE_MEMORYMAP;
+        else if (type == SBINARY::TYPE_ENTROPY) nResult = SLE::TYPE_ENTROPY;
+        else if (type == SBINARY::TYPE_NFDSCAN) nResult = SLE::TYPE_NFDSCAN;
+        else if (type == SBINARY::TYPE_EXTRACTOR) nResult = SLE::TYPE_EXTRACTOR;
+        else if (type == SBINARY::TYPE_SEARCH) nResult = SLE::TYPE_SEARCH;
     } else if (fileType == XBinary::FT_NE) {
-        if (type == SBINARY::TYPE_INFO)
-            nResult = SNE::TYPE_INFO;
-        else if (type == SBINARY::TYPE_VISUALIZATION)
-            nResult = SNE::TYPE_VISUALIZATION;
-        else if (type == SBINARY::TYPE_VIRUSTOTAL)
-            nResult = SNE::TYPE_VIRUSTOTAL;
-        else if (type == SBINARY::TYPE_HEX)
-            nResult = SNE::TYPE_HEX;
-        else if (type == SBINARY::TYPE_DISASM)
-            nResult = SNE::TYPE_DISASM;
-        else if (type == SBINARY::TYPE_HASH)
-            nResult = SNE::TYPE_HASH;
-        else if (type == SBINARY::TYPE_STRINGS)
-            nResult = SNE::TYPE_STRINGS;
-        else if (type == SBINARY::TYPE_SIGNATURES)
-            nResult = SNE::TYPE_SIGNATURES;
-        else if (type == SBINARY::TYPE_MEMORYMAP)
-            nResult = SNE::TYPE_MEMORYMAP;
-        else if (type == SBINARY::TYPE_ENTROPY)
-            nResult = SNE::TYPE_ENTROPY;
-        else if (type == SBINARY::TYPE_NFDSCAN)
-            nResult = SNE::TYPE_NFDSCAN;
-        else if (type == SBINARY::TYPE_EXTRACTOR)
-            nResult = SNE::TYPE_EXTRACTOR;
-        else if (type == SBINARY::TYPE_SEARCH)
-            nResult = SNE::TYPE_SEARCH;
+        if (type == SBINARY::TYPE_INFO) nResult = SNE::TYPE_INFO;
+        else if (type == SBINARY::TYPE_VISUALIZATION) nResult = SNE::TYPE_VISUALIZATION;
+        else if (type == SBINARY::TYPE_VIRUSTOTAL) nResult = SNE::TYPE_VIRUSTOTAL;
+        else if (type == SBINARY::TYPE_HEX) nResult = SNE::TYPE_HEX;
+        else if (type == SBINARY::TYPE_DISASM) nResult = SNE::TYPE_DISASM;
+        else if (type == SBINARY::TYPE_HASH) nResult = SNE::TYPE_HASH;
+        else if (type == SBINARY::TYPE_STRINGS) nResult = SNE::TYPE_STRINGS;
+        else if (type == SBINARY::TYPE_SIGNATURES) nResult = SNE::TYPE_SIGNATURES;
+        else if (type == SBINARY::TYPE_MEMORYMAP) nResult = SNE::TYPE_MEMORYMAP;
+        else if (type == SBINARY::TYPE_ENTROPY) nResult = SNE::TYPE_ENTROPY;
+        else if (type == SBINARY::TYPE_NFDSCAN) nResult = SNE::TYPE_NFDSCAN;
+        else if (type == SBINARY::TYPE_EXTRACTOR) nResult = SNE::TYPE_EXTRACTOR;
+        else if (type == SBINARY::TYPE_SEARCH) nResult = SNE::TYPE_SEARCH;
     } else if ((fileType == XBinary::FT_PE32) || (fileType == XBinary::FT_PE64)) {
-        if (type == SBINARY::TYPE_INFO)
-            nResult = SPE::TYPE_INFO;
-        else if (type == SBINARY::TYPE_VISUALIZATION)
-            nResult = SPE::TYPE_VISUALIZATION;
-        else if (type == SBINARY::TYPE_VIRUSTOTAL)
-            nResult = SPE::TYPE_VIRUSTOTAL;
-        else if (type == SBINARY::TYPE_HEX)
-            nResult = SPE::TYPE_HEX;
-        else if (type == SBINARY::TYPE_DISASM)
-            nResult = SPE::TYPE_DISASM;
-        else if (type == SBINARY::TYPE_HASH)
-            nResult = SPE::TYPE_HASH;
-        else if (type == SBINARY::TYPE_STRINGS)
-            nResult = SPE::TYPE_STRINGS;
-        else if (type == SBINARY::TYPE_SIGNATURES)
-            nResult = SPE::TYPE_SIGNATURES;
-        else if (type == SBINARY::TYPE_MEMORYMAP)
-            nResult = SPE::TYPE_MEMORYMAP;
-        else if (type == SBINARY::TYPE_ENTROPY)
-            nResult = SPE::TYPE_ENTROPY;
-        else if (type == SBINARY::TYPE_NFDSCAN)
-            nResult = SPE::TYPE_NFDSCAN;
-        else if (type == SBINARY::TYPE_EXTRACTOR)
-            nResult = SPE::TYPE_EXTRACTOR;
-        else if (type == SBINARY::TYPE_SEARCH)
-            nResult = SPE::TYPE_SEARCH;
+        if (type == SBINARY::TYPE_INFO) nResult = SPE::TYPE_INFO;
+        else if (type == SBINARY::TYPE_VISUALIZATION) nResult = SPE::TYPE_VISUALIZATION;
+        else if (type == SBINARY::TYPE_VIRUSTOTAL) nResult = SPE::TYPE_VIRUSTOTAL;
+        else if (type == SBINARY::TYPE_HEX) nResult = SPE::TYPE_HEX;
+        else if (type == SBINARY::TYPE_DISASM) nResult = SPE::TYPE_DISASM;
+        else if (type == SBINARY::TYPE_HASH) nResult = SPE::TYPE_HASH;
+        else if (type == SBINARY::TYPE_STRINGS) nResult = SPE::TYPE_STRINGS;
+        else if (type == SBINARY::TYPE_SIGNATURES) nResult = SPE::TYPE_SIGNATURES;
+        else if (type == SBINARY::TYPE_MEMORYMAP) nResult = SPE::TYPE_MEMORYMAP;
+        else if (type == SBINARY::TYPE_ENTROPY) nResult = SPE::TYPE_ENTROPY;
+        else if (type == SBINARY::TYPE_NFDSCAN) nResult = SPE::TYPE_NFDSCAN;
+        else if (type == SBINARY::TYPE_EXTRACTOR) nResult = SPE::TYPE_EXTRACTOR;
+        else if (type == SBINARY::TYPE_SEARCH) nResult = SPE::TYPE_SEARCH;
     } else if ((fileType == XBinary::FT_ELF32) || (fileType == XBinary::FT_ELF64)) {
-        if (type == SBINARY::TYPE_INFO)
-            nResult = SELF::TYPE_INFO;
-        else if (type == SBINARY::TYPE_VISUALIZATION)
-            nResult = SELF::TYPE_VISUALIZATION;
-        else if (type == SBINARY::TYPE_VIRUSTOTAL)
-            nResult = SELF::TYPE_VIRUSTOTAL;
-        else if (type == SBINARY::TYPE_HEX)
-            nResult = SELF::TYPE_HEX;
-        else if (type == SBINARY::TYPE_DISASM)
-            nResult = SELF::TYPE_DISASM;
-        else if (type == SBINARY::TYPE_HASH)
-            nResult = SELF::TYPE_HASH;
-        else if (type == SBINARY::TYPE_STRINGS)
-            nResult = SELF::TYPE_STRINGS;
-        else if (type == SBINARY::TYPE_SIGNATURES)
-            nResult = SELF::TYPE_SIGNATURES;
-        else if (type == SBINARY::TYPE_MEMORYMAP)
-            nResult = SELF::TYPE_MEMORYMAP;
-        else if (type == SBINARY::TYPE_ENTROPY)
-            nResult = SELF::TYPE_ENTROPY;
-        else if (type == SBINARY::TYPE_NFDSCAN)
-            nResult = SELF::TYPE_NFDSCAN;
-        else if (type == SBINARY::TYPE_EXTRACTOR)
-            nResult = SELF::TYPE_EXTRACTOR;
-        else if (type == SBINARY::TYPE_SEARCH)
-            nResult = SELF::TYPE_SEARCH;
+        if (type == SBINARY::TYPE_INFO) nResult = SELF::TYPE_INFO;
+        else if (type == SBINARY::TYPE_VISUALIZATION) nResult = SELF::TYPE_VISUALIZATION;
+        else if (type == SBINARY::TYPE_VIRUSTOTAL) nResult = SELF::TYPE_VIRUSTOTAL;
+        else if (type == SBINARY::TYPE_HEX) nResult = SELF::TYPE_HEX;
+        else if (type == SBINARY::TYPE_DISASM) nResult = SELF::TYPE_DISASM;
+        else if (type == SBINARY::TYPE_HASH) nResult = SELF::TYPE_HASH;
+        else if (type == SBINARY::TYPE_STRINGS) nResult = SELF::TYPE_STRINGS;
+        else if (type == SBINARY::TYPE_SIGNATURES) nResult = SELF::TYPE_SIGNATURES;
+        else if (type == SBINARY::TYPE_MEMORYMAP) nResult = SELF::TYPE_MEMORYMAP;
+        else if (type == SBINARY::TYPE_ENTROPY) nResult = SELF::TYPE_ENTROPY;
+        else if (type == SBINARY::TYPE_NFDSCAN) nResult = SELF::TYPE_NFDSCAN;
+        else if (type == SBINARY::TYPE_EXTRACTOR) nResult = SELF::TYPE_EXTRACTOR;
+        else if (type == SBINARY::TYPE_SEARCH) nResult = SELF::TYPE_SEARCH;
     } else if ((fileType == XBinary::FT_MACHO32) || (fileType == XBinary::FT_MACHO64)) {
-        if (type == SBINARY::TYPE_INFO)
-            nResult = SMACH::TYPE_INFO;
-        else if (type == SBINARY::TYPE_VISUALIZATION)
-            nResult = SMACH::TYPE_VISUALIZATION;
-        else if (type == SBINARY::TYPE_VIRUSTOTAL)
-            nResult = SMACH::TYPE_VIRUSTOTAL;
-        else if (type == SBINARY::TYPE_HEX)
-            nResult = SMACH::TYPE_HEX;
-        else if (type == SBINARY::TYPE_DISASM)
-            nResult = SMACH::TYPE_DISASM;
-        else if (type == SBINARY::TYPE_HASH)
-            nResult = SMACH::TYPE_HASH;
-        else if (type == SBINARY::TYPE_STRINGS)
-            nResult = SMACH::TYPE_STRINGS;
-        else if (type == SBINARY::TYPE_SIGNATURES)
-            nResult = SMACH::TYPE_SIGNATURES;
-        else if (type == SBINARY::TYPE_MEMORYMAP)
-            nResult = SMACH::TYPE_MEMORYMAP;
-        else if (type == SBINARY::TYPE_ENTROPY)
-            nResult = SMACH::TYPE_ENTROPY;
-        else if (type == SBINARY::TYPE_NFDSCAN)
-            nResult = SMACH::TYPE_NFDSCAN;
-        else if (type == SBINARY::TYPE_EXTRACTOR)
-            nResult = SMACH::TYPE_EXTRACTOR;
-        else if (type == SBINARY::TYPE_SEARCH)
-            nResult = SMACH::TYPE_SEARCH;
+        if (type == SBINARY::TYPE_INFO) nResult = SMACH::TYPE_INFO;
+        else if (type == SBINARY::TYPE_VISUALIZATION) nResult = SMACH::TYPE_VISUALIZATION;
+        else if (type == SBINARY::TYPE_VIRUSTOTAL) nResult = SMACH::TYPE_VIRUSTOTAL;
+        else if (type == SBINARY::TYPE_HEX) nResult = SMACH::TYPE_HEX;
+        else if (type == SBINARY::TYPE_DISASM) nResult = SMACH::TYPE_DISASM;
+        else if (type == SBINARY::TYPE_HASH) nResult = SMACH::TYPE_HASH;
+        else if (type == SBINARY::TYPE_STRINGS) nResult = SMACH::TYPE_STRINGS;
+        else if (type == SBINARY::TYPE_SIGNATURES) nResult = SMACH::TYPE_SIGNATURES;
+        else if (type == SBINARY::TYPE_MEMORYMAP) nResult = SMACH::TYPE_MEMORYMAP;
+        else if (type == SBINARY::TYPE_ENTROPY) nResult = SMACH::TYPE_ENTROPY;
+        else if (type == SBINARY::TYPE_NFDSCAN) nResult = SMACH::TYPE_NFDSCAN;
+        else if (type == SBINARY::TYPE_EXTRACTOR) nResult = SMACH::TYPE_EXTRACTOR;
+        else if (type == SBINARY::TYPE_SEARCH) nResult = SMACH::TYPE_SEARCH;
     } else if (fileType == XBinary::FT_DEX) {
-        if (type == SBINARY::TYPE_INFO)
-            nResult = SDEX::TYPE_INFO;
-        else if (type == SBINARY::TYPE_VISUALIZATION)
-            nResult = SDEX::TYPE_VISUALIZATION;
-        else if (type == SBINARY::TYPE_VIRUSTOTAL)
-            nResult = SDEX::TYPE_VIRUSTOTAL;
-        else if (type == SBINARY::TYPE_HEX)
-            nResult = SDEX::TYPE_HEX;
+        if (type == SBINARY::TYPE_INFO) nResult = SDEX::TYPE_INFO;
+        else if (type == SBINARY::TYPE_VISUALIZATION) nResult = SDEX::TYPE_VISUALIZATION;
+        else if (type == SBINARY::TYPE_VIRUSTOTAL) nResult = SDEX::TYPE_VIRUSTOTAL;
+        else if (type == SBINARY::TYPE_HEX) nResult = SDEX::TYPE_HEX;
         //        else if (type == SBINARY::TYPE_DISASM) nResult = SDEX::TYPE_DISASM;
-        else if (type == SBINARY::TYPE_HASH)
-            nResult = SDEX::TYPE_HASH;
-        else if (type == SBINARY::TYPE_STRINGS)
-            nResult = SDEX::TYPE_STRINGS;
-        else if (type == SBINARY::TYPE_SIGNATURES)
-            nResult = SDEX::TYPE_SIGNATURES;
-        else if (type == SBINARY::TYPE_MEMORYMAP)
-            nResult = SDEX::TYPE_MEMORYMAP;
-        else if (type == SBINARY::TYPE_ENTROPY)
-            nResult = SDEX::TYPE_ENTROPY;
-        else if (type == SBINARY::TYPE_NFDSCAN)
-            nResult = SDEX::TYPE_NFDSCAN;
-        else if (type == SBINARY::TYPE_EXTRACTOR)
-            nResult = SDEX::TYPE_EXTRACTOR;
-        else if (type == SBINARY::TYPE_SEARCH)
-            nResult = SDEX::TYPE_SEARCH;
+        else if (type == SBINARY::TYPE_HASH) nResult = SDEX::TYPE_HASH;
+        else if (type == SBINARY::TYPE_STRINGS) nResult = SDEX::TYPE_STRINGS;
+        else if (type == SBINARY::TYPE_SIGNATURES) nResult = SDEX::TYPE_SIGNATURES;
+        else if (type == SBINARY::TYPE_MEMORYMAP) nResult = SDEX::TYPE_MEMORYMAP;
+        else if (type == SBINARY::TYPE_ENTROPY) nResult = SDEX::TYPE_ENTROPY;
+        else if (type == SBINARY::TYPE_NFDSCAN) nResult = SDEX::TYPE_NFDSCAN;
+        else if (type == SBINARY::TYPE_EXTRACTOR) nResult = SDEX::TYPE_EXTRACTOR;
+        else if (type == SBINARY::TYPE_SEARCH) nResult = SDEX::TYPE_SEARCH;
     } else {
         nResult = type;
     }

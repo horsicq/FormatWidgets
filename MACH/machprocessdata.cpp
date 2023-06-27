@@ -432,16 +432,11 @@ void MACHProcessData::_process()
 
         XMACH::OPCODE_TYPE opcodeType = XMACH::OPCODE_TYPE_UNKNOWN;
 
-        if (g_nType == SMACH::TYPE_DYLD_INFO_rebase)
-            opcodeType = XMACH::OPCODE_TYPE_REBASE;
-        else if (g_nType == SMACH::TYPE_DYLD_INFO_bind)
-            opcodeType = XMACH::OPCODE_TYPE_BIND;
-        else if (g_nType == SMACH::TYPE_DYLD_INFO_export)
-            opcodeType = XMACH::OPCODE_TYPE_EXPORT;
-        else if (g_nType == SMACH::TYPE_DYLD_INFO_lazy_bind)
-            opcodeType = XMACH::OPCODE_TYPE_LAZY_BIND;
-        else if (g_nType == SMACH::TYPE_DYLD_INFO_weak_bind)
-            opcodeType = XMACH::OPCODE_TYPE_WEAK_BIND;
+        if (g_nType == SMACH::TYPE_DYLD_INFO_rebase) opcodeType = XMACH::OPCODE_TYPE_REBASE;
+        else if (g_nType == SMACH::TYPE_DYLD_INFO_bind) opcodeType = XMACH::OPCODE_TYPE_BIND;
+        else if (g_nType == SMACH::TYPE_DYLD_INFO_export) opcodeType = XMACH::OPCODE_TYPE_EXPORT;
+        else if (g_nType == SMACH::TYPE_DYLD_INFO_lazy_bind) opcodeType = XMACH::OPCODE_TYPE_LAZY_BIND;
+        else if (g_nType == SMACH::TYPE_DYLD_INFO_weak_bind) opcodeType = XMACH::OPCODE_TYPE_WEAK_BIND;
 
         QList<XBinary::OPCODE> listRecords = g_pXMACH->getOpcodes(g_nOffset, g_nOffset, g_nSize, opcodeType);
 
