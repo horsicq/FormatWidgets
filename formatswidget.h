@@ -87,8 +87,7 @@ private slots:
     void on_comboBoxScanEngine_currentIndexChanged(int nIndex);
     void reload();
     void scan();
-    void on_pushButtonDisasm_clicked();
-    void on_pushButtonHexEntryPoint_clicked();
+    void on_pushButtonEntryPoint_clicked();
     void on_pushButtonMemoryMap_clicked();
     void on_pushButtonPE_clicked();
     void on_pushButtonPEExport_clicked();
@@ -148,6 +147,8 @@ private slots:
     void on_pushButtonSearch_clicked();
     void on_pushButtonUnpack_clicked();
     void on_pushButtonFiles_clicked();
+    void on_pushButtonYARA_clicked();
+    void on_pushButtonDisasm_clicked();
 
 protected:
     virtual void registerShortcuts(bool bState);

@@ -159,12 +159,6 @@ void FormatsWidget::reload()
         ui->lineEditMode->setText(XBinary::modeIdToString(memoryMap.mode));
         ui->lineEditType->setText(memoryMap.sType);
 
-        if (fileType == XBinary::FT_DEX) {
-            ui->pushButtonDisasm->show();
-        } else {
-            ui->pushButtonDisasm->hide();
-        }
-
         if (fileType == XBinary::FT_BINARY) {
             XBinary binary(&file);
 
@@ -340,29 +334,14 @@ void FormatsWidget::scan()
     }
 }
 
-void FormatsWidget::on_pushButtonDisasm_clicked()
+void FormatsWidget::on_pushButtonEntryPoint_clicked()
 {
-    showType(SBINARY::TYPE_DISASM);
-}
+    XBinary::FT fileType = getCurrentFileType();
 
-void FormatsWidget::on_pushButtonHexEntryPoint_clicked()
-{
-    if (g_sFileName != "") {
-        QFile file;
-        file.setFileName(g_sFileName);
-
-        if (XBinary::tryToOpen(&file)) {
-            XHexView::OPTIONS hexOptions = {};
-            //        hexOptions.sBackupFileName=XBinary::getBackupName(&file);
-            hexOptions.nStartSelectionOffset = XFormats::getEntryPointOffset(getCurrentFileType(), &file);
-
-            DialogHexView dialogHex(this, &file, hexOptions, nullptr, &file);  // TODO XINfoDB
-            dialogHex.setGlobal(getShortcuts(), getGlobalOptions());
-
-            dialogHex.exec();
-
-            file.close();
-        }
+    if (fileType == XBinary::FT_DEX) {
+        showType(SBINARY::TYPE_HEX);
+    } else {
+        showType(SBINARY::TYPE_DISASM);
     }
 }
 
@@ -924,25 +903,21 @@ void FormatsWidget::on_pushButtonEntropy_clicked()
 
 void FormatsWidget::on_pushButtonVirusTotal_clicked()
 {
-    QString sFileName = g_sFileName;
+    if (getGlobalOptions()->getVirusTotalApiKey() != "") {
+        showType(SBINARY::TYPE_VIRUSTOTAL);
+    } else {
+        QString sFileName = g_sFileName;
 
-    if (sFileName != "") {
-        QFile file;
-        file.setFileName(sFileName);
+        if (sFileName != "") {
+            QFile file;
+            file.setFileName(sFileName);
 
-        if (file.open(QIODevice::ReadOnly)) {
-            if (getGlobalOptions()->getVirusTotalApiKey() != "") {
-                DialogXVirusTotal dialogVirusTotal(this);
-                dialogVirusTotal.setGlobal(getShortcuts(), getGlobalOptions());
-                dialogVirusTotal.setData(&file);
-
-                dialogVirusTotal.exec();
-            } else {
+            if (file.open(QIODevice::ReadOnly)) {
                 QString sMD5 = XBinary::getHash(XBinary::HASH_MD5, &file);
                 XVirusTotalWidget::showInBrowser(sMD5);
-            }
 
-            file.close();
+                file.close();
+            }
         }
     }
 }
@@ -982,3 +957,14 @@ void FormatsWidget::on_pushButtonFiles_clicked()
 
     dialogArchive.exec();
 }
+
+void FormatsWidget::on_pushButtonYARA_clicked()
+{
+    showType(SBINARY::TYPE_YARASCAN);
+}
+
+void FormatsWidget::on_pushButtonDisasm_clicked()
+{
+    showType(SBINARY::TYPE_DISASM);
+}
+

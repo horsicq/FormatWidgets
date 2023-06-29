@@ -216,7 +216,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButtonHexEntryPoint">
+         <widget class="QPushButton" name="pushButtonEntryPoint">
           <property name="maximumSize">
            <size>
             <width>30</width>
@@ -251,6 +251,20 @@
       <property name="bottomMargin">
        <number>0</number>
       </property>
+      <item row="1" column="7">
+       <widget class="QPushButton" name="pushButtonYARA">
+        <property name="text">
+         <string notr="true">YARA</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="3">
+       <widget class="QPushButton" name="pushButtonSearch">
+        <property name="text">
+         <string>Search</string>
+        </property>
+       </widget>
+      </item>
       <item row="0" column="0">
        <widget class="QPushButton" name="pushButtonFileInfo">
         <property name="text">
@@ -271,6 +285,62 @@
         </property>
        </spacer>
       </item>
+      <item row="0" column="7">
+       <widget class="QPushButton" name="pushButtonVirusTotal">
+        <property name="text">
+         <string notr="true">VirusTotal</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="5">
+       <widget class="QPushButton" name="pushButtonStrings">
+        <property name="text">
+         <string>Strings</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="6">
+       <widget class="QPushButton" name="pushButtonExtractor">
+        <property name="text">
+         <string>Extractor</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="5">
+       <widget class="QPushButton" name="pushButtonEntropy">
+        <property name="text">
+         <string>Entropy</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QPushButton" name="pushButtonMIME">
+        <property name="text">
+         <string notr="true">MIME</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="6">
+       <widget class="QPushButton" name="pushButtonSignatures">
+        <property name="text">
+         <string>Signatures</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="4">
+       <widget class="QPushButton" name="pushButtonHex">
+        <property name="text">
+         <string>Hex</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="4">
+       <widget class="QPushButton" name="pushButtonHash">
+        <property name="text">
+         <string>Hash</string>
+        </property>
+       </widget>
+      </item>
       <item row="0" column="2">
        <widget class="QPushButton" name="pushButtonMemoryMap">
         <property name="text">
@@ -282,69 +352,6 @@
        <widget class="QPushButton" name="pushButtonDisasm">
         <property name="text">
          <string>Disasm</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="4">
-       <widget class="QPushButton" name="pushButtonHex">
-        <property name="text">
-         <string>Hex</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="5">
-       <widget class="QPushButton" name="pushButtonStrings">
-        <property name="text">
-         <string>Strings</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="6">
-       <widget class="QPushButton" name="pushButtonSignatures">
-        <property name="text">
-         <string>Signatures</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="7">
-       <widget class="QPushButton" name="pushButtonVirusTotal">
-        <property name="text">
-         <string notr="true">VirusTotal</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QPushButton" name="pushButtonMIME">
-        <property name="text">
-         <string notr="true">MIME</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="5">
-       <widget class="QPushButton" name="pushButtonHash">
-        <property name="text">
-         <string>Hash</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="6">
-       <widget class="QPushButton" name="pushButtonEntropy">
-        <property name="text">
-         <string>Entropy</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="7">
-       <widget class="QPushButton" name="pushButtonExtractor">
-        <property name="text">
-         <string>Extractor</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="4">
-       <widget class="QPushButton" name="pushButtonSearch">
-        <property name="text">
-         <string>Search</string>
         </property>
        </widget>
       </item>
