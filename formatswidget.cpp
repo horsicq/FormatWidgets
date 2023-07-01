@@ -967,4 +967,3 @@ void FormatsWidget::on_pushButtonDisasm_clicked()
 {
     showType(SBINARY::TYPE_DISASM);
 }
-

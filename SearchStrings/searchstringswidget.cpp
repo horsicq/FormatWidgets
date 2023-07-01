@@ -82,7 +82,7 @@ void SearchStringsWidget::setData(QIODevice *pDevice, OPTIONS options, bool bAut
 
     g_bInit = false;
 
-//    qint64 nSize = pDevice->size();
+    //    qint64 nSize = pDevice->size();
 
     ui->tableViewResult->setModel(nullptr);
 
@@ -92,13 +92,13 @@ void SearchStringsWidget::setData(QIODevice *pDevice, OPTIONS options, bool bAut
         g_options.nBaseAddress = 0;
     }
 
-//    qint32 nAddressWidth = 8;
+    //    qint32 nAddressWidth = 8;
 
-//    if (nSize + g_options.nBaseAddress > 0xFFFFFFFF) {
-//        nAddressWidth = 16;
-//    } else {
-//        nAddressWidth = 8;
-//    }
+    //    if (nSize + g_options.nBaseAddress > 0xFFFFFFFF) {
+    //        nAddressWidth = 16;
+    //    } else {
+    //        nAddressWidth = 8;
+    //    }
 
     //    QString sInfo=QString("0x%1 - 0x%2 ( 0x%3
     //    )").arg(g_options.nBaseAddress,nAddressWidth,16,QChar('0'))
