@@ -327,6 +327,8 @@ void NEWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
 
 void NEWidget::_findValue(quint64 nValue, bool bIsBigEndian)
 {
+    Q_UNUSED(nValue)
+    Q_UNUSED(bIsBigEndian)
 //    setTreeItem(ui->treeWidgetNavi, SNE::TYPE_SEARCH);
 //    ui->widgetSearch->findValue(nValue, bIsBigEndian);
 #ifdef QT_DEBUG

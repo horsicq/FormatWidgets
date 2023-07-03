@@ -1027,6 +1027,8 @@ void PEProcessData::_process()
 
 void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
 {
+    Q_UNUSED(pWidget)
+
     XBinary::MODE mode = g_pPE->getMode();
 
     if (g_nType == SPE::TYPE_SECTIONS) {
@@ -1135,6 +1137,7 @@ void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
 
 void PEProcessData::ajustTreeView(QWidget *pWidget, QTreeView *pTreeView)
 {
+    Q_UNUSED(pWidget)
     XBinary::MODE mode = g_pPE->getMode();
 
     if (g_nType == SPE::TYPE_SECTIONS_INFO) {
