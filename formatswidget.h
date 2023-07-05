@@ -128,7 +128,6 @@ private slots:
     void showBinary(SBINARY::TYPE type);
 
     XBinary::FT getCurrentFileType();
-
     SE getScanEngine(SE seIndex);
     void adjustScanTab(SE seIndex);
 
