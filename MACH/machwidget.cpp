@@ -482,9 +482,9 @@ void MACHWidget::reload()
 
         ui->treeWidgetNavi->expandAll();
 
-        setTreeItem(ui->treeWidgetNavi, getOptions().nStartType);
-
         setDisasmInitAddress(mach.getEntryPointAddress());  // Optimize
+
+        setTreeItem(ui->treeWidgetNavi, getOptions().nStartType);
     }
 }
 
@@ -3317,9 +3317,9 @@ void MACHWidget::showSectionHeader(int nType, QTableView *pTableView)
         MACHSectionHeaderWidget *pSectionHeaderWidget = new MACHSectionHeaderWidget(getDevice(), getOptions(), (quint32)nRow, nOffset, nType, this);
 
         DialogSectionHeader dsh(this);
-        dsh.setWidget(pSectionHeaderWidget);
-        dsh.setData(typeIdToString(nType));
         dsh.setGlobal(getShortcuts(), getGlobalOptions());
+        dsh.setWidget(pSectionHeaderWidget);
+        dsh.setData(typeIdToString(nType));  
 
         connect(&dsh, SIGNAL(changed()), this, SLOT(setEdited()));
 

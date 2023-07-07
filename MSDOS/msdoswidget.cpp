@@ -99,9 +99,9 @@ void MSDOSWidget::reload()
 
         ui->treeWidgetNavi->expandAll();
 
-        setTreeItem(ui->treeWidgetNavi, getOptions().nStartType);
-
         setDisasmInitAddress(msdos.getEntryPointAddress());  // Optimize
+
+        setTreeItem(ui->treeWidgetNavi, getOptions().nStartType);
     }
 }
 

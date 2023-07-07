@@ -240,9 +240,9 @@ void PEWidget::reload()
 
         ui->treeWidgetNavi->expandAll();
 
-        setTreeItem(ui->treeWidgetNavi, getOptions().nStartType);
-
         setDisasmInitAddress(pe.getEntryPointAddress());  // Optimize
+
+        setTreeItem(ui->treeWidgetNavi, getOptions().nStartType);  
     }
 }
 
@@ -2688,9 +2688,9 @@ void PEWidget::showSectionHeader(int nType, QTableView *pTableView)
         PESectionHeaderWidget *pSectionHeaderWidget = new PESectionHeaderWidget(getDevice(), getOptions(), (quint32)nRow, nOffset, nType, this);
 
         DialogSectionHeader dsh(this);
+        dsh.setGlobal(getShortcuts(), getGlobalOptions());
         dsh.setWidget(pSectionHeaderWidget);
         dsh.setData(typeIdToString(nType));
-        dsh.setGlobal(getShortcuts(), getGlobalOptions());
 
         connect(&dsh, SIGNAL(changed()), this, SLOT(setEdited()));
 

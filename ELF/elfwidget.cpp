@@ -123,9 +123,9 @@ void ELFWidget::reload()
 
         ui->treeWidgetNavi->expandAll();
 
-        setTreeItem(ui->treeWidgetNavi, getOptions().nStartType);
-
         setDisasmInitAddress(elf.getEntryPointAddress());
+
+        setTreeItem(ui->treeWidgetNavi, getOptions().nStartType);
     }
 }
 
@@ -864,9 +864,9 @@ void ELFWidget::showSectionHeader(int nType, QTableView *pTableView)
         pSectionHeaderWidget->setStringTable(nStringTableOffset, nStringTableSize);
 
         DialogSectionHeader dsh(this);
+        dsh.setGlobal(getShortcuts(), getGlobalOptions());
         dsh.setWidget(pSectionHeaderWidget);
         dsh.setData(typeIdToString(nType));
-        dsh.setGlobal(getShortcuts(), getGlobalOptions());
 
         connect(&dsh, SIGNAL(changed()), this, SLOT(setEdited()));
 

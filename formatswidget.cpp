@@ -432,9 +432,8 @@ void FormatsWidget::showMSDOS(SMSDOS::TYPE type)
         options.nImageBase = -1;
 
         DialogMSDOS dialogMSDOS(this);
-
-        dialogMSDOS.setData(&file, options);
         dialogMSDOS.setGlobal(getShortcuts(), getGlobalOptions());
+        dialogMSDOS.setData(&file, options);
 
         dialogMSDOS.exec();
 
@@ -454,9 +453,8 @@ void FormatsWidget::showLE(SLE::TYPE type)
         options.nImageBase = -1;
 
         DialogLE dialogLE(this);
-
-        dialogLE.setData(&file, options);
         dialogLE.setGlobal(getShortcuts(), getGlobalOptions());
+        dialogLE.setData(&file, options);
 
         dialogLE.exec();
 
@@ -476,9 +474,8 @@ void FormatsWidget::showNE(SNE::TYPE type)
         options.nImageBase = -1;
 
         DialogNE dialogNE(this);
-
-        dialogNE.setData(&file, options);
         dialogNE.setGlobal(getShortcuts(), getGlobalOptions());
+        dialogNE.setData(&file, options);
 
         dialogNE.exec();
 
@@ -498,9 +495,8 @@ void FormatsWidget::showPE(SPE::TYPE type)
         options.nImageBase = -1;
 
         DialogPE dialogPE(this);
-
-        dialogPE.setData(&file, options);
         dialogPE.setGlobal(getShortcuts(), getGlobalOptions());
+        dialogPE.setData(&file, options);
 
         dialogPE.exec();
 
@@ -520,9 +516,8 @@ void FormatsWidget::showELF(SELF::TYPE type)
         options.nImageBase = -1;
 
         DialogELF dialogELF(this);
-
-        dialogELF.setData(&file, options);
         dialogELF.setGlobal(getShortcuts(), getGlobalOptions());
+        dialogELF.setData(&file, options);
 
         dialogELF.exec();
 
@@ -542,9 +537,8 @@ void FormatsWidget::showMACH(SMACH::TYPE type)
         options.nImageBase = -1;
 
         DialogMACH dialogMACH(this);
-
-        dialogMACH.setData(&file, options);
         dialogMACH.setGlobal(getShortcuts(), getGlobalOptions());
+        dialogMACH.setData(&file, options);
 
         dialogMACH.exec();
 
@@ -564,9 +558,8 @@ void FormatsWidget::showDEX(SDEX::TYPE type)
         options.nImageBase = -1;
 
         DialogDEX dialogDEX(this);
-
-        dialogDEX.setData(&file, options);
         dialogDEX.setGlobal(getShortcuts(), getGlobalOptions());
+        dialogDEX.setData(&file, options);
 
         dialogDEX.exec();
 
@@ -586,9 +579,8 @@ void FormatsWidget::showBinary(SBINARY::TYPE type)
         options.nImageBase = -1;
 
         DialogBinary dialogBinary(this);
-
-        dialogBinary.setData(&file, options);
         dialogBinary.setGlobal(getShortcuts(), getGlobalOptions());
+        dialogBinary.setData(&file, options);
 
         dialogBinary.exec();
 
@@ -956,11 +948,11 @@ void FormatsWidget::on_pushButtonUnpack_clicked()
 void FormatsWidget::on_pushButtonFiles_clicked()
 {
     DialogArchive dialogArchive(this);
+    dialogArchive.setGlobal(getShortcuts(), getGlobalOptions());
 
     FW_DEF::OPTIONS options = {};
 
     dialogArchive.setFileName(g_sFileName, options, QSet<XBinary::FT>());
-    dialogArchive.setGlobal(getShortcuts(), getGlobalOptions());
 
     dialogArchive.exec();
 }
@@ -974,3 +966,9 @@ void FormatsWidget::on_pushButtonDisasm_clicked()
 {
     showType(SBINARY::TYPE_DISASM);
 }
+
+void FormatsWidget::on_pushButtonVisualisation_clicked()
+{
+    showType(SBINARY::TYPE_VISUALIZATION);
+}
+

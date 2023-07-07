@@ -89,9 +89,9 @@ void BinaryWidget::reload()
 
         ui->treeWidgetNavi->expandAll();
 
-        setTreeItem(ui->treeWidgetNavi, getOptions().nStartType);
-
         setDisasmInitAddress(binary.getEntryPointAddress());
+
+        setTreeItem(ui->treeWidgetNavi, getOptions().nStartType);
     }
 }
 

@@ -103,9 +103,9 @@ void LEWidget::reload()
 
         ui->treeWidgetNavi->expandAll();
 
-        setTreeItem(ui->treeWidgetNavi, getOptions().nStartType);
-
         setDisasmInitAddress(le.getEntryPointAddress());  // Optimize
+
+        setTreeItem(ui->treeWidgetNavi, getOptions().nStartType);  
     }
 }
 
