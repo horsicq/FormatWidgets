@@ -971,4 +971,3 @@ void FormatsWidget::on_pushButtonVisualisation_clicked()
 {
     showType(SBINARY::TYPE_VISUALIZATION);
 }
-

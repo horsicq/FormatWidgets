@@ -3319,7 +3319,7 @@ void MACHWidget::showSectionHeader(int nType, QTableView *pTableView)
         DialogSectionHeader dsh(this);
         dsh.setGlobal(getShortcuts(), getGlobalOptions());
         dsh.setWidget(pSectionHeaderWidget);
-        dsh.setData(typeIdToString(nType));  
+        dsh.setData(typeIdToString(nType));
 
         connect(&dsh, SIGNAL(changed()), this, SLOT(setEdited()));
 

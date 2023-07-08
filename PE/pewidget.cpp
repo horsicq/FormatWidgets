@@ -242,7 +242,7 @@ void PEWidget::reload()
 
         setDisasmInitAddress(pe.getEntryPointAddress());  // Optimize
 
-        setTreeItem(ui->treeWidgetNavi, getOptions().nStartType);  
+        setTreeItem(ui->treeWidgetNavi, getOptions().nStartType);
     }
 }
 

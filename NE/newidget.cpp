@@ -112,7 +112,7 @@ void NEWidget::reload()
 
         setDisasmInitAddress(ne.getEntryPointAddress());  // Optimize
 
-        setTreeItem(ui->treeWidgetNavi, getOptions().nStartType); 
+        setTreeItem(ui->treeWidgetNavi, getOptions().nStartType);
     }
 }
 
