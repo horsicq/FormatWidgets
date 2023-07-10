@@ -832,6 +832,7 @@ void FormatsWidget::onScanStarted()
 {
     ui->stackedWidgetMain->setEnabled(false);
     ui->groupBoxFileType->setEnabled(false);
+    ui->groupBoxTools->setEnabled(false);
     ui->groupBoxScanEngine->setEnabled(false);
     ui->groupBoxEntryPoint->setEnabled(false);
     ui->groupBoxBaseAddress->setEnabled(false);
@@ -841,6 +842,7 @@ void FormatsWidget::onScanFinished()
 {
     ui->stackedWidgetMain->setEnabled(true);
     ui->groupBoxFileType->setEnabled(true);
+    ui->groupBoxTools->setEnabled(true);
     ui->groupBoxScanEngine->setEnabled(true);
     ui->groupBoxEntryPoint->setEnabled(true);
     ui->groupBoxBaseAddress->setEnabled(true);
