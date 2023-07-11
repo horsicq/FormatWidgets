@@ -114,10 +114,8 @@ private slots:
     void on_pushButtonDEX_clicked();
     void on_pushButtonArchive_clicked();
     void on_pushButtonBinary_clicked();
-
     void showType(SBINARY::TYPE type);
     static qint32 convertType(XBinary::FT fileType, SBINARY::TYPE type);
-
     void showMSDOS(SMSDOS::TYPE type);
     void showLE(SLE::TYPE type);
     void showNE(SNE::TYPE type);
@@ -126,14 +124,11 @@ private slots:
     void showMACH(SMACH::TYPE type);
     void showDEX(SDEX::TYPE type);
     void showBinary(SBINARY::TYPE type);
-
     XBinary::FT getCurrentFileType();
     SE getScanEngine(SE seIndex);
     void adjustScanTab(SE seIndex);
-
     void onScanStarted();
     void onScanFinished();
-
     void on_pushButtonFileInfo_clicked();
     void on_pushButtonMIME_clicked();
     void on_pushButtonStrings_clicked();
