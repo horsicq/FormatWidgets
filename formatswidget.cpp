@@ -31,7 +31,9 @@ FormatsWidget::FormatsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(n
     ui->comboBoxScanEngine->addItem(tr("Automatic"), SE_AUTO);
     ui->comboBoxScanEngine->addItem(QString("Detect It Easy(DiE)"), SE_DIE);
     ui->comboBoxScanEngine->addItem(QString("Nauz File Detector(NFD)"), SE_NFD);
+#ifdef USE_YARA
     ui->comboBoxScanEngine->addItem(QString("Yara"), SE_YARA);
+#endif
 
     ui->stackedWidgetMain->setCurrentIndex(TABINFO_BINARY);
 
@@ -45,6 +47,10 @@ FormatsWidget::FormatsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(n
     connect(ui->pageScanYARA, SIGNAL(scanFinished()), this, SLOT(onScanFinished()));
 
     ui->comboBoxScanEngine->blockSignals(bBlocked1);
+
+#ifndef USE_YARA
+    ui->pushButtonYARA->hide();
+#endif
 }
 
 void FormatsWidget::setName(const QString &sFileName, bool bScan)
@@ -74,8 +80,10 @@ void FormatsWidget::adjustView()
         ui->comboBoxScanEngine->setCurrentIndex(SE_DIE);
     } else if (sScanEngine == "nfd") {
         ui->comboBoxScanEngine->setCurrentIndex(SE_NFD);
+#ifdef USE_YARA
     } else if (sScanEngine == "yara") {
         ui->comboBoxScanEngine->setCurrentIndex(SE_YARA);
+#endif
     }
 
     ui->pageScanDIE->adjustView();
@@ -328,8 +336,10 @@ void FormatsWidget::scan()
             ui->pageScanDIE->setData(g_sFileName, g_bScan, getCurrentFileType());
         } else if (nIndex == SE_NFD) {
             ui->pageScanNFD->setData(g_sFileName, g_bScan, getCurrentFileType());
+#ifdef USE_YARA
         } else if (nIndex == SE_YARA) {
             ui->pageScanYARA->setData(g_sFileName, g_bScan);
+#endif
         }
     }
 }
@@ -699,7 +709,9 @@ qint32 FormatsWidget::convertType(XBinary::FT fileType, SBINARY::TYPE type)
         else if (type == SBINARY::TYPE_NFDSCAN) nResult = SMSDOS::TYPE_NFDSCAN;
         else if (type == SBINARY::TYPE_EXTRACTOR) nResult = SMSDOS::TYPE_EXTRACTOR;
         else if (type == SBINARY::TYPE_SEARCH) nResult = SMSDOS::TYPE_SEARCH;
+#ifdef USE_YARA
         else if (type == SBINARY::TYPE_YARASCAN) nResult = SMSDOS::TYPE_YARASCAN;
+#endif
     } else if ((fileType == XBinary::FT_LE) || (fileType == XBinary::FT_LX)) {
         if (type == SBINARY::TYPE_INFO) nResult = SLE::TYPE_INFO;
         else if (type == SBINARY::TYPE_VISUALIZATION) nResult = SLE::TYPE_VISUALIZATION;
@@ -714,7 +726,9 @@ qint32 FormatsWidget::convertType(XBinary::FT fileType, SBINARY::TYPE type)
         else if (type == SBINARY::TYPE_NFDSCAN) nResult = SLE::TYPE_NFDSCAN;
         else if (type == SBINARY::TYPE_EXTRACTOR) nResult = SLE::TYPE_EXTRACTOR;
         else if (type == SBINARY::TYPE_SEARCH) nResult = SLE::TYPE_SEARCH;
+#ifdef USE_YARA
         else if (type == SBINARY::TYPE_YARASCAN) nResult = SLE::TYPE_YARASCAN;
+#endif
     } else if (fileType == XBinary::FT_NE) {
         if (type == SBINARY::TYPE_INFO) nResult = SNE::TYPE_INFO;
         else if (type == SBINARY::TYPE_VISUALIZATION) nResult = SNE::TYPE_VISUALIZATION;
@@ -729,7 +743,9 @@ qint32 FormatsWidget::convertType(XBinary::FT fileType, SBINARY::TYPE type)
         else if (type == SBINARY::TYPE_NFDSCAN) nResult = SNE::TYPE_NFDSCAN;
         else if (type == SBINARY::TYPE_EXTRACTOR) nResult = SNE::TYPE_EXTRACTOR;
         else if (type == SBINARY::TYPE_SEARCH) nResult = SNE::TYPE_SEARCH;
+#ifdef USE_YARA
         else if (type == SBINARY::TYPE_YARASCAN) nResult = SNE::TYPE_YARASCAN;
+#endif
     } else if ((fileType == XBinary::FT_PE32) || (fileType == XBinary::FT_PE64)) {
         if (type == SBINARY::TYPE_INFO) nResult = SPE::TYPE_INFO;
         else if (type == SBINARY::TYPE_VISUALIZATION) nResult = SPE::TYPE_VISUALIZATION;
@@ -744,7 +760,9 @@ qint32 FormatsWidget::convertType(XBinary::FT fileType, SBINARY::TYPE type)
         else if (type == SBINARY::TYPE_NFDSCAN) nResult = SPE::TYPE_NFDSCAN;
         else if (type == SBINARY::TYPE_EXTRACTOR) nResult = SPE::TYPE_EXTRACTOR;
         else if (type == SBINARY::TYPE_SEARCH) nResult = SPE::TYPE_SEARCH;
+#ifdef USE_YARA
         else if (type == SBINARY::TYPE_YARASCAN) nResult = SPE::TYPE_YARASCAN;
+#endif
     } else if ((fileType == XBinary::FT_ELF32) || (fileType == XBinary::FT_ELF64)) {
         if (type == SBINARY::TYPE_INFO) nResult = SELF::TYPE_INFO;
         else if (type == SBINARY::TYPE_VISUALIZATION) nResult = SELF::TYPE_VISUALIZATION;
@@ -759,7 +777,9 @@ qint32 FormatsWidget::convertType(XBinary::FT fileType, SBINARY::TYPE type)
         else if (type == SBINARY::TYPE_NFDSCAN) nResult = SELF::TYPE_NFDSCAN;
         else if (type == SBINARY::TYPE_EXTRACTOR) nResult = SELF::TYPE_EXTRACTOR;
         else if (type == SBINARY::TYPE_SEARCH) nResult = SELF::TYPE_SEARCH;
+#ifdef USE_YARA
         else if (type == SBINARY::TYPE_YARASCAN) nResult = SELF::TYPE_YARASCAN;
+#endif
     } else if ((fileType == XBinary::FT_MACHO32) || (fileType == XBinary::FT_MACHO64)) {
         if (type == SBINARY::TYPE_INFO) nResult = SMACH::TYPE_INFO;
         else if (type == SBINARY::TYPE_VISUALIZATION) nResult = SMACH::TYPE_VISUALIZATION;
@@ -774,7 +794,9 @@ qint32 FormatsWidget::convertType(XBinary::FT fileType, SBINARY::TYPE type)
         else if (type == SBINARY::TYPE_NFDSCAN) nResult = SMACH::TYPE_NFDSCAN;
         else if (type == SBINARY::TYPE_EXTRACTOR) nResult = SMACH::TYPE_EXTRACTOR;
         else if (type == SBINARY::TYPE_SEARCH) nResult = SMACH::TYPE_SEARCH;
+#ifdef USE_YARA
         else if (type == SBINARY::TYPE_YARASCAN) nResult = SMACH::TYPE_YARASCAN;
+#endif
     } else if (fileType == XBinary::FT_DEX) {
         if (type == SBINARY::TYPE_INFO) nResult = SDEX::TYPE_INFO;
         else if (type == SBINARY::TYPE_VISUALIZATION) nResult = SDEX::TYPE_VISUALIZATION;
@@ -789,7 +811,9 @@ qint32 FormatsWidget::convertType(XBinary::FT fileType, SBINARY::TYPE type)
         else if (type == SBINARY::TYPE_NFDSCAN) nResult = SDEX::TYPE_NFDSCAN;
         else if (type == SBINARY::TYPE_EXTRACTOR) nResult = SDEX::TYPE_EXTRACTOR;
         else if (type == SBINARY::TYPE_SEARCH) nResult = SDEX::TYPE_SEARCH;
+#ifdef USE_YARA
         else if (type == SBINARY::TYPE_YARASCAN) nResult = SDEX::TYPE_YARASCAN;
+#endif
     } else {
         nResult = type;
     }
@@ -823,8 +847,10 @@ void FormatsWidget::adjustScanTab(FormatsWidget::SE seIndex)
         ui->stackedWidgetScan->setCurrentIndex(0);
     } else if (seIndex == SE_NFD) {
         ui->stackedWidgetScan->setCurrentIndex(1);
+#ifdef USE_YARA
     } else if (seIndex == SE_YARA) {
         ui->stackedWidgetScan->setCurrentIndex(2);
+#endif
     }
 }
 
@@ -961,7 +987,9 @@ void FormatsWidget::on_pushButtonFiles_clicked()
 
 void FormatsWidget::on_pushButtonYARA_clicked()
 {
+#ifdef USE_YARA
     showType(SBINARY::TYPE_YARASCAN);
+#endif
 }
 
 void FormatsWidget::on_pushButtonDisasm_clicked()

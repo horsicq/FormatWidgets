@@ -78,7 +78,9 @@ void MSDOSWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(pItemInfo);
         pItemInfo->addChild(createNewItem(SMSDOS::TYPE_NFDSCAN, "Nauz File Detector(NFD)"));
         pItemInfo->addChild(createNewItem(SMSDOS::TYPE_DIESCAN, "Detect It Easy(DiE)"));
+#ifdef USE_YARA
         pItemInfo->addChild(createNewItem(SMSDOS::TYPE_YARASCAN, "YARA"));
+#endif
         pItemInfo->addChild(createNewItem(SMSDOS::TYPE_VIRUSTOTAL, "VirusTotal"));
 
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_VISUALIZATION, tr("Visualization")));
@@ -333,10 +335,12 @@ void MSDOSWidget::reloadData()
             if (!isInitPresent(sInit)) {
                 ui->widgetDIEScan->setData(getDevice(), true, msdos.getFileType());
             }
+#ifdef USE_YARA
         } else if (nType == SMSDOS::TYPE_YARASCAN) {
             if (!isInitPresent(sInit)) {
                 ui->widgetYARAScan->setData(XBinary::getDeviceFileName(getDevice()), true);
             }
+#endif
         } else if (nType == SMSDOS::TYPE_EXTRACTOR) {
             if (!isInitPresent(sInit)) {
                 XExtractor::OPTIONS extractorOptions = XExtractor::getDefaultOptions();

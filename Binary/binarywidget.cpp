@@ -73,7 +73,9 @@ void BinaryWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(pItemInfo);
         pItemInfo->addChild(createNewItem(SBINARY::TYPE_NFDSCAN, "Nauz File Detector(NFD)"));
         pItemInfo->addChild(createNewItem(SBINARY::TYPE_DIESCAN, "Detect It Easy(DiE)"));
+#ifdef USE_YARA
         pItemInfo->addChild(createNewItem(SBINARY::TYPE_YARASCAN, "YARA"));
+#endif
         pItemInfo->addChild(createNewItem(SBINARY::TYPE_VIRUSTOTAL, "VirusTotal"));
 
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_VISUALIZATION, tr("Visualization")));
@@ -267,10 +269,12 @@ void BinaryWidget::reloadData()
             if (!isInitPresent(sInit)) {
                 ui->widgetDIEScan->setData(getDevice(), true, fileType);
             }
+#ifdef USE_YARA
         } else if (nType == SBINARY::TYPE_YARASCAN) {
             if (!isInitPresent(sInit)) {
                 ui->widgetYARAScan->setData(XBinary::getDeviceFileName(getDevice()), true);
             }
+#endif
         } else if (nType == SBINARY::TYPE_EXTRACTOR) {
             if (!isInitPresent(sInit)) {
                 XExtractor::OPTIONS extractorOptions = XExtractor::getDefaultOptions();

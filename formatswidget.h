@@ -70,7 +70,9 @@ class FormatsWidget : public XShortcutsWidget {
         SE_AUTO = 0,
         SE_DIE,
         SE_NFD,
+#ifdef USE_YARA
         SE_YARA
+#endif
     };
 
 public:
