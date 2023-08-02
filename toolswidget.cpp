@@ -51,9 +51,9 @@ void ToolsWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS options, QIODevice
     }
 
     if (options.bOffset) {
-        hexOptions.addressMode = XDeviceTableView::MODE_OFFSET;
+        hexOptions.addressMode = XDeviceTableView::LOCMODE_OFFSET;
     } else {
-        hexOptions.addressMode = XDeviceTableView::MODE_ADDRESS;
+        hexOptions.addressMode = XDeviceTableView::LOCMODE_ADDRESS;
     }
 
     // hexOptions.bIsOffsetTitle = options.bOffset;

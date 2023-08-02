@@ -214,7 +214,7 @@ void SearchValuesWidget::on_pushButtonSearch_clicked()
 
 void SearchValuesWidget::_hex()
 {
-    int nRow = ui->tableViewResult->currentIndex().row();
+    qint32 nRow = ui->tableViewResult->currentIndex().row();
 
     if ((nRow != -1) && (g_pModel)) {
         QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(0);
@@ -228,7 +228,7 @@ void SearchValuesWidget::_hex()
 
 void SearchValuesWidget::_disasm()
 {
-    int nRow = ui->tableViewResult->currentIndex().row();
+    qint32 nRow = ui->tableViewResult->currentIndex().row();
 
     if ((nRow != -1) && (g_pModel)) {
         QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(0);
