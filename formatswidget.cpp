@@ -997,7 +997,7 @@ void FormatsWidget::on_pushButtonDisasm_clicked()
     showType(SBINARY::TYPE_DISASM);
 }
 
-void FormatsWidget::on_pushButtonVisualisation_clicked()
+void FormatsWidget::on_pushButtonVisualization_clicked()
 {
     showType(SBINARY::TYPE_VISUALIZATION);
 }

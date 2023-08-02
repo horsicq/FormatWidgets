@@ -145,7 +145,7 @@ private slots:
     void on_pushButtonFiles_clicked();
     void on_pushButtonYARA_clicked();
     void on_pushButtonDisasm_clicked();
-    void on_pushButtonVisualisation_clicked();
+    void on_pushButtonVisualization_clicked();
 
 protected:
     virtual void registerShortcuts(bool bState);
