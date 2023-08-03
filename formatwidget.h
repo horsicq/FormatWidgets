@@ -246,7 +246,7 @@ public slots:
     void findValue(quint64 nValue, bool bIsBigEndian);
     void showEntropy(qint64 nOffset, qint64 nSize);
     void dumpRegion(qint64 nOffset, qint64 nSize, const QString &sName);
-    void showDemangle(QString sString);
+    void showDemangle(const QString &sString);
     bool saveBackup();
 
 protected:

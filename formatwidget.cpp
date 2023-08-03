@@ -1245,7 +1245,7 @@ void FormatWidget::dumpRegion(qint64 nOffset, qint64 nSize, const QString &sName
     }
 }
 
-void FormatWidget::showDemangle(QString sString)
+void FormatWidget::showDemangle(const QString &sString)
 {
     DialogDemangle dialogDemangle(this, sString);
 

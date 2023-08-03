@@ -57,7 +57,7 @@ public slots:
     void process();
 
 signals:
-    void errorMessage(QString sText);
+    void errorMessage(const QString &sText);
     void completed(qint64 nElapsed);
 
 private:
