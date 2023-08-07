@@ -51,7 +51,7 @@ signals:
     void showOffsetHex(qint64 nOffset, qint64 nSize);
     void showOffsetDisasm(qint64 nOffset);
     void showOffsetMemoryMap(qint64 nOffset);
-    void showDemangle(QString sString);
+    void showDemangle(const QString &sString);
 
 private slots:
     void on_tabWidgetMain_currentChanged(int nIndex);
