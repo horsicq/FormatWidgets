@@ -1040,7 +1040,8 @@ void PEWidget::reloadData()
                 XHexView::OPTIONS options = {};
                 options.bMenu_Disasm = true;
                 options.bMenu_MemoryMap = true;
-                ui->widgetHex->setData(getDevice(), options, getXInfoDB());
+                ui->widgetHex->setXInfoDB(getXInfoDB());
+                ui->widgetHex->setData(getDevice(), options);
                 ui->widgetHex->setBackupDevice(getBackupDevice());
                 // TODO save directory
                 // ui->widgetHex->enableReadOnly(false);
@@ -1054,7 +1055,8 @@ void PEWidget::reloadData()
                 options.nInitAddress = getDisasmInitAddress();
                 options.bMenu_Hex = true;
 
-                ui->widgetDisasm->setData(getDevice(), options, getXInfoDB());
+                ui->widgetDisasm->setXInfoDB(getXInfoDB());
+                ui->widgetDisasm->setData(getDevice(), options);
                 ui->widgetDisasm->setBackupDevice(getBackupDevice());
 
                 setDisasmInitAddress(-1);

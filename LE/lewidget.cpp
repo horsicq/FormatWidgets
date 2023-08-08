@@ -357,7 +357,8 @@ void LEWidget::reloadData()
                 XHexView::OPTIONS options = {};
                 options.bMenu_Disasm = true;
                 options.bMenu_MemoryMap = true;
-                ui->widgetHex->setData(getDevice(), options, getXInfoDB());
+                ui->widgetHex->setXInfoDB(getXInfoDB());
+                ui->widgetHex->setData(getDevice(), options);
                 ui->widgetHex->setBackupDevice(getBackupDevice());
                 //                ui->widgetHex->setBackupFileName(getOptions().sBackupFileName);
                 //                ui->widgetHex->enableReadOnly(false);
@@ -370,8 +371,8 @@ void LEWidget::reloadData()
                 options.fileType = le.getFileType();
                 options.nInitAddress = getDisasmInitAddress();
                 options.bMenu_Hex = true;
-
-                ui->widgetDisasm->setData(getDevice(), options, getXInfoDB());
+                ui->widgetDisasm->setXInfoDB(getXInfoDB());
+                ui->widgetDisasm->setData(getDevice(), options);
                 ui->widgetDisasm->setBackupDevice(getBackupDevice());
 
                 setDisasmInitAddress(-1);

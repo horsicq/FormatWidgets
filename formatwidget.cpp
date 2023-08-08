@@ -882,7 +882,8 @@ void FormatWidget::resetWidget()
             if (pChild) {
                 XMultiDisasmWidget::OPTIONS options = {};
 
-                pChild->setData(nullptr, options, nullptr);
+                pChild->setXInfoDB(nullptr);
+                pChild->setData(nullptr, options);
             }
         }
     }

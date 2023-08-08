@@ -97,7 +97,7 @@ void BinaryWidget::reload()
     }
 }
 
-FormatWidget::SV BinaryWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
+FormatWidget::SV BinaryWidget::_setValue(QVariant vValue, qint32 nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
 {
     Q_UNUSED(vValue)
     Q_UNUSED(nStype)
@@ -206,8 +206,8 @@ void BinaryWidget::reloadData()
                 XHexView::OPTIONS options = {};
                 options.bMenu_Disasm = true;
                 options.bMenu_MemoryMap = true;
-
-                ui->widgetHex->setData(getDevice(), options, getXInfoDB());
+                ui->widgetHex->setXInfoDB(getXInfoDB());
+                ui->widgetHex->setData(getDevice(), options);
                 ui->widgetHex->setBackupDevice(getBackupDevice());
                 //                ui->widgetHex->setBackupFileName(getOptions().sBackupFileName);
                 //                ui->widgetHex->enableReadOnly(false);
@@ -220,8 +220,8 @@ void BinaryWidget::reloadData()
                 options.fileType = fileType;
                 options.nInitAddress = getDisasmInitAddress();
                 options.bMenu_Hex = true;
-
-                ui->widgetDisasm->setData(getDevice(), options, getXInfoDB());
+                ui->widgetDisasm->setXInfoDB(getXInfoDB());
+                ui->widgetDisasm->setData(getDevice(), options);
                 ui->widgetDisasm->setBackupDevice(getBackupDevice());
 
                 setDisasmInitAddress(-1);
