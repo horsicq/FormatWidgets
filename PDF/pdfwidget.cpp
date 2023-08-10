@@ -66,15 +66,24 @@ void PDFWidget::reload()
 
         setFileType(pdf.getFileType());
 
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPDF::TYPE_INFO, tr("Info")));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPDF::TYPE_VIRUSTOTAL, "VirusTotal"));
+        QTreeWidgetItem *pItemInfo = createNewItem(SPDF::TYPE_INFO, tr("Info"));
+        ui->treeWidgetNavi->addTopLevelItem(pItemInfo);
+        pItemInfo->addChild(createNewItem(SPDF::TYPE_NFDSCAN, "Nauz File Detector(NFD)"));
+        pItemInfo->addChild(createNewItem(SPDF::TYPE_DIESCAN, "Detect It Easy(DiE)"));
+#ifdef USE_YARA
+        pItemInfo->addChild(createNewItem(SPDF::TYPE_YARASCAN, "YARA"));
+#endif
+        pItemInfo->addChild(createNewItem(SPDF::TYPE_VIRUSTOTAL, "VirusTotal"));
+
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPDF::TYPE_VISUALIZATION, tr("Visualization")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPDF::TYPE_HEX, tr("Hex")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPDF::TYPE_HASH, tr("Hash")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPDF::TYPE_STRINGS, tr("Strings")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPDF::TYPE_SIGNATURES, tr("Signatures")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPDF::TYPE_MEMORYMAP, tr("Memory map")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPDF::TYPE_ENTROPY, tr("Entropy")));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPDF::TYPE_HEURISTICSCAN, tr("Heuristic scan")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPDF::TYPE_EXTRACTOR, tr("Extractor")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPDF::TYPE_SEARCH, tr("Search")));
 
         pdf.getInfo();
 
@@ -116,6 +125,10 @@ void PDFWidget::reloadData()
             if (!isInitPresent(sInit)) {
                 ui->widgetInfo->setData(getDevice(), pdf.getFileType(), "Info", true);
             }
+        } else if (nType == SPDF::TYPE_VISUALIZATION) {
+            if (!isInitPresent(sInit)) {
+                ui->widgetVisualization->setData(getDevice(), pdf.getFileType(), true);
+            }
         } else if (nType == SPDF::TYPE_VIRUSTOTAL) {
             if (!isInitPresent(sInit)) {
                 ui->widgetVirusTotal->setData(getDevice());
@@ -123,10 +136,12 @@ void PDFWidget::reloadData()
         } else if (nType == SPDF::TYPE_HEX) {
             if (!isInitPresent(sInit)) {
                 XHexView::OPTIONS options = {};
-                options.bMenu_Disasm = true;
+                //                options.bMenu_Disasm=true; // TODO
                 options.bMenu_MemoryMap = true;
+                ui->widgetHex->setXInfoDB(getXInfoDB());
                 ui->widgetHex->setData(getDevice(), options);
-                // TODO save directory
+                ui->widgetHex->setBackupDevice(getBackupDevice());
+                //                ui->widgetHex->setBackupFileName(getOptions().sBackupFileName);
                 //                ui->widgetHex->enableReadOnly(false);
 
                 ui->widgetHex->reload();
@@ -143,7 +158,7 @@ void PDFWidget::reloadData()
                 stringsOptions.bAnsi = true;
                 stringsOptions.bUTF8 = false;
                 stringsOptions.bUnicode = true;
-                stringsOptions.bCStrings = true;
+                stringsOptions.bCStrings = false;
 
                 ui->widgetStrings->setData(getDevice(), stringsOptions, true);
             }
@@ -156,16 +171,46 @@ void PDFWidget::reloadData()
             }
         } else if (nType == SPDF::TYPE_MEMORYMAP) {
             if (!isInitPresent(sInit)) {
-                ui->widgetMemoryMap->setData(getDevice(), pdf.getFileType());
+                XMemoryMapWidget::OPTIONS options = {};
+                options.fileType = pdf.getFileType();
+                options.bIsSearchEnable = true;
+
+                ui->widgetMemoryMap->setData(getDevice(), options, getXInfoDB());
             }
         } else if (nType == SPDF::TYPE_ENTROPY) {
             if (!isInitPresent(sInit)) {
-                ui->widgetEntropy->setData(getDevice(), 0, getDevice()->size(), pdf.getFileType(),
-                                           true);  // TODO save last directory
+                ui->widgetEntropy->setData(getDevice(), 0, getDevice()->size(), pdf.getFileType(), true);
             }
-        } else if (nType == SPDF::TYPE_HEURISTICSCAN) {
+        } else if (nType == SPDF::TYPE_NFDSCAN) {
             if (!isInitPresent(sInit)) {
                 ui->widgetHeuristicScan->setData(getDevice(), true, pdf.getFileType());
+            }
+        } else if (nType == SPDF::TYPE_DIESCAN) {
+            if (!isInitPresent(sInit)) {
+                ui->widgetDIEScan->setData(getDevice(), true, pdf.getFileType());
+            }
+#ifdef USE_YARA
+        } else if (nType == SPDF::TYPE_YARASCAN) {
+            if (!isInitPresent(sInit)) {
+                ui->widgetYARAScan->setData(XBinary::getDeviceFileName(getDevice()), true);
+            }
+#endif
+        } else if (nType == SPDF::TYPE_EXTRACTOR) {
+            if (!isInitPresent(sInit)) {
+                XExtractor::OPTIONS extractorOptions = XExtractor::getDefaultOptions();
+                extractorOptions.fileType = pdf.getFileType();
+                extractorOptions.bMenu_Hex = true;
+
+                ui->widgetExtractor->setData(getDevice(), extractorOptions, true);
+            }
+        } else if (nType == SPDF::TYPE_SEARCH) {
+            if (!isInitPresent(sInit)) {
+                SearchValuesWidget::OPTIONS options = {};
+                options.fileType = pdf.getFileType();
+                options.bMenu_Hex = true;
+                options.bMenu_Disasm = true;
+
+                ui->widgetSearch->setData(getDevice(), options);
             }
         }
 

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>761</width>
-    <height>206</height>
+    <width>889</width>
+    <height>211</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -137,8 +137,8 @@
       </column>
      </widget>
      <widget class="QStackedWidget" name="stackedWidgetInfo">
-      <widget class="QWidget" name="page_Info">
-       <layout class="QVBoxLayout" name="verticalLayout_12">
+     <widget class="QWidget" name="page_Info">
+       <layout class="QVBoxLayout" name="verticalLayout_16">
         <property name="leftMargin">
          <number>0</number>
         </property>
@@ -156,8 +156,27 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="page_Visualization">
+       <layout class="QVBoxLayout" name="verticalLayout_19">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="XVisualizationWidget" name="widgetVisualization" native="true"/>
+        </item>
+       </layout>
+      </widget>
       <widget class="QWidget" name="page_VirusTotal">
-       <layout class="QVBoxLayout" name="verticalLayout_24_2">
+       <layout class="QVBoxLayout" name="verticalLayout_16_2">
         <property name="leftMargin">
          <number>0</number>
         </property>
@@ -177,9 +196,6 @@
       </widget>
       <widget class="QWidget" name="page_HEX">
        <layout class="QVBoxLayout" name="verticalLayout_2">
-        <property name="spacing">
-         <number>0</number>
-        </property>
         <property name="leftMargin">
          <number>0</number>
         </property>
@@ -198,7 +214,7 @@
        </layout>
       </widget>
       <widget class="QWidget" name="page_Hash">
-       <layout class="QVBoxLayout" name="verticalLayout_10">
+       <layout class="QVBoxLayout" name="verticalLayout_15">
         <property name="leftMargin">
          <number>0</number>
         </property>
@@ -217,7 +233,7 @@
        </layout>
       </widget>
       <widget class="QWidget" name="page_Strings">
-       <layout class="QVBoxLayout" name="verticalLayout_5">
+       <layout class="QVBoxLayout" name="verticalLayout_8">
         <property name="leftMargin">
          <number>0</number>
         </property>
@@ -236,7 +252,7 @@
        </layout>
       </widget>
       <widget class="QWidget" name="page_Signatures">
-       <layout class="QVBoxLayout" name="verticalLayout_11">
+       <layout class="QVBoxLayout" name="verticalLayout_20DD">
         <property name="leftMargin">
          <number>0</number>
         </property>
@@ -254,8 +270,8 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="page_MemoryMap">
-       <layout class="QVBoxLayout" name="verticalLayout_6">
+      <widget class="QWidget" name="pageMemoryMap">
+       <layout class="QVBoxLayout" name="verticalLayout_14">
         <property name="leftMargin">
          <number>0</number>
         </property>
@@ -274,7 +290,7 @@
        </layout>
       </widget>
       <widget class="QWidget" name="page_Entropy">
-       <layout class="QVBoxLayout" name="verticalLayout_7">
+       <layout class="QVBoxLayout" name="verticalLayout_17">
         <property name="leftMargin">
          <number>0</number>
         </property>
@@ -293,7 +309,7 @@
        </layout>
       </widget>
       <widget class="QWidget" name="page_HeuristicScan">
-       <layout class="QVBoxLayout" name="verticalLayout_8">
+       <layout class="QVBoxLayout" name="verticalLayout_18">
         <property name="leftMargin">
          <number>0</number>
         </property>
@@ -307,7 +323,83 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="HeurWidget" name="widgetHeuristicScan" native="true"/>
+         <widget class="NFDWidgetAdvanced" name="widgetHeuristicScan" native="true"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="page_Extractor">
+       <layout class="QVBoxLayout" name="verticalLayout_26XX">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="XExtractorWidget" name="widgetExtractor" native="true"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="page_Search">
+       <layout class="QVBoxLayout" name="verticalLayout_63">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="SearchValuesWidget" name="widgetSearch" native="true"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="page_DIEScan">
+       <layout class="QVBoxLayout" name="verticalLayout_5dd">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="DIEWidgetAdvanced" name="widgetDIEScan" native="true"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="page_YARAScan">
+       <layout class="QVBoxLayout" name="verticalLayout_6dd">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="YARAWidgetAdvanced" name="widgetYARAScan" native="true"/>
         </item>
        </layout>
       </widget>
@@ -318,9 +410,21 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>XFileInfoWidget</class>
+   <extends>QWidget</extends>
+   <header>xfileinfowidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>SearchStringsWidget</class>
    <extends>QWidget</extends>
    <header>searchstringswidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ToolsWidget</class>
+   <extends>QWidget</extends>
+   <header>toolswidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
@@ -330,9 +434,9 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>HeurWidget</class>
+   <class>NFDWidgetAdvanced</class>
    <extends>QWidget</extends>
-   <header>heurwidget.h</header>
+   <header>nfdwidgetadvanced.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
@@ -354,22 +458,44 @@
    <container>1</container>
   </customwidget>
   <customwidget>
+   <class>XVirusTotalWidget</class>
+   <extends>QWidget</extends>
+   <header>xvirustotalwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>XExtractorWidget</class>
+   <extends>QWidget</extends>
+   <header>xextractorwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SearchValuesWidget</class>
+   <extends>QWidget</extends>
+   <header>searchvalueswidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>XVisualizationWidget</class>
+   <extends>QWidget</extends>
+   <header>xvisualizationwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>SearchSignaturesWidget</class>
    <extends>QWidget</extends>
    <header>searchsignatureswidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>XFileInfoWidget</class>
+   <class>DIEWidgetAdvanced</class>
    <extends>QWidget</extends>
-   <header>xfileinfowidget.h</header>
-   <container>1</container>
+   <header>diewidgetadvanced.h</header>
   </customwidget>
   <customwidget>
-   <class>XVirusTotalWidget</class>
+   <class>YARAWidgetAdvanced</class>
    <extends>QWidget</extends>
-   <header>xvirustotalwidget.h</header>
-   <container>1</container>
+   <header>yarawidgetadvanced.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

@@ -27,6 +27,7 @@
 namespace SPDF {
 enum TYPE {
     TYPE_INFO = 0,
+    TYPE_VISUALIZATION,
     TYPE_VIRUSTOTAL,
     TYPE_HEX,
     TYPE_HASH,
@@ -34,7 +35,11 @@ enum TYPE {
     TYPE_SIGNATURES,
     TYPE_MEMORYMAP,
     TYPE_ENTROPY,
-    TYPE_HEURISTICSCAN,
+    TYPE_NFDSCAN,
+    TYPE_EXTRACTOR,
+    TYPE_SEARCH,
+    TYPE_DIESCAN,
+    TYPE_YARASCAN,
     __TYPE_size
 };
 }  // namespace SPDF
