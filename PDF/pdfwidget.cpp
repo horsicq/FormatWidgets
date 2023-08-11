@@ -220,6 +220,24 @@ void PDFWidget::reloadData()
     addInit(sInit);
 }
 
+void PDFWidget::_showInMemoryMapWindowOffset(qint64 nOffset)
+{
+    setTreeItem(ui->treeWidgetNavi, SPDF::TYPE_MEMORYMAP);
+    ui->widgetMemoryMap->goToOffset(nOffset);
+}
+
+void PDFWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
+{
+    setTreeItem(ui->treeWidgetNavi, SPDF::TYPE_HEX);
+    ui->widgetHex->setSelection(nOffset, nSize);
+}
+
+void PDFWidget::_findValue(quint64 nValue, bool bIsBigEndian)
+{
+    setTreeItem(ui->treeWidgetNavi, SPDF::TYPE_SEARCH);
+    ui->widgetSearch->findValue(nValue, bIsBigEndian);
+}
+
 void PDFWidget::on_checkBoxReadonly_toggled(bool bChecked)
 {
     setReadonly(bChecked);

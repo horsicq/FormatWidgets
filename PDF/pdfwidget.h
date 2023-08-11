@@ -45,6 +45,9 @@ protected:
     virtual void setReadonly(bool bState);
     virtual void blockSignals(bool bState);
     virtual void reloadData();
+    virtual void _showInMemoryMapWindowOffset(qint64 nOffset);
+    virtual void _showInHexWindow(qint64 nOffset, qint64 nSize);
+    virtual void _findValue(quint64 nValue, bool bIsBigEndian);
 
 private slots:
     void on_checkBoxReadonly_toggled(bool bChecked);
