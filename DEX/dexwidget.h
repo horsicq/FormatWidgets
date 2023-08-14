@@ -48,7 +48,7 @@ protected:
     virtual void setReadonly(bool bState);
     virtual void blockSignals(bool bState);
     virtual void adjustHeaderTable(int nType, QTableWidget *pTableWidget);
-    virtual QString typeIdToString(int nType);
+    virtual QString typeIdToString(qint32 nType);
     virtual void _showInMemoryMapWindowOffset(qint64 nOffset);
     virtual void _showInHexWindow(qint64 nOffset, qint64 nSize);
     virtual void _findValue(quint64 nValue, bool bIsBigEndian);

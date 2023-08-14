@@ -285,7 +285,7 @@ void DEXWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
     }
 }
 
-QString DEXWidget::typeIdToString(int nType)
+QString DEXWidget::typeIdToString(qint32 nType)
 {
     Q_UNUSED(nType)
 
