@@ -390,7 +390,7 @@ void PEProcessData::_process()
 
         QList<XPE::RELOCS_POSITION> listRelocsPositions = g_pPE->getRelocsPositions(g_nOffset);
 
-        int nNumberOfRelocs = listRelocsPositions.count();
+        qint32 nNumberOfRelocs = listRelocsPositions.count();
 
         *g_ppModel = new QStandardItemModel(nNumberOfRelocs, listLabels.count());
 
