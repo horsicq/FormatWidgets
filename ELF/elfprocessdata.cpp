@@ -519,7 +519,7 @@ void ELFProcessData::_process()
         QList<XELF_DEF::Elf64_Rel> listRel64;
         QList<XELF_DEF::Elf32_Rel> listRel32;
 
-        int nNumberOfRels = 0;
+        qint32 nNumberOfRels = 0;
 
         if (bIs64) {
             listRel64 = g_pELF->getElf64_RelList(g_nOffset, g_nSize);
