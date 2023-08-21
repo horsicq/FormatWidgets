@@ -28,7 +28,7 @@ class DEXProcessData : public ProcessData {
     Q_OBJECT
 
 public:
-    explicit DEXProcessData(int nType, QStandardItemModel **ppModel, XDEX *pDEX, qint64 nOffset, qint64 nSize);
+    explicit DEXProcessData(qint32 nType, QStandardItemModel **ppModel, XDEX *pDEX, qint64 nOffset, qint64 nSize);
 
     virtual void _process();
     virtual void ajustTableView(QWidget *pWidget, QTableView *pTableView);
