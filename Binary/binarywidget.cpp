@@ -29,7 +29,7 @@ BinaryWidget::BinaryWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui:
     initWidget();
 }
 
-BinaryWidget::BinaryWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent) : BinaryWidget(pParent)
+BinaryWidget::BinaryWidget(QIODevice *pDevice, const FW_DEF::OPTIONS &options, QWidget *pParent) : BinaryWidget(pParent)
 {
     ui->setupUi(this);
 
