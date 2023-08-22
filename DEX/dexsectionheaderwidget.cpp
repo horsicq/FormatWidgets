@@ -102,7 +102,7 @@ void DEXSectionHeaderWidget::setStringTable(qint64 nStringTableOffset, qint64 nS
     this->g_nStringTableSize = nStringTableSize;
 }
 
-FormatWidget::SV DEXSectionHeaderWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
+FormatWidget::SV DEXSectionHeaderWidget::_setValue(QVariant vValue, qint32 nStype, qint32 nNdata, int nVtype, int nPosition, qint64 nOffset)
 {
     Q_UNUSED(vValue)
     Q_UNUSED(nStype)

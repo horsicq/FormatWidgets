@@ -42,7 +42,7 @@ public:
     void setStringTable(qint64 nStringTableOffset, qint64 nStringTableSize);
 
 protected:
-    virtual SV _setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset);
+    virtual SV _setValue(QVariant vValue, qint32 nStype, qint32 nNdata, int nVtype, int nPosition, qint64 nOffset);
     virtual void setReadonly(bool bState);
     virtual void blockSignals(bool bState);
     virtual void adjustHeaderTable(int nType, QTableWidget *pTableWidget);
@@ -51,7 +51,6 @@ private slots:
     void on_checkBoxReadonly_toggled(bool bChecked);
     void reloadData();
     void widgetValueChanged(quint64 nValue);
-
     void on_tableWidget_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn);
 
 private:
