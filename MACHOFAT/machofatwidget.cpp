@@ -101,7 +101,7 @@ void MACHOFATWidget::reload()
     }
 }
 
-FormatWidget::SV MACHOFATWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
+FormatWidget::SV MACHOFATWidget::_setValue(QVariant vValue, qint32 nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
 {
     Q_UNUSED(vValue)
     Q_UNUSED(nStype)
