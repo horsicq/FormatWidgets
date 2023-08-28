@@ -58,7 +58,7 @@ private slots:
 private:
     Ui::ELFSectionHeaderWidget *ui;
     XLineEditHEX **g_ppLinedEdit;
-    int g_nLineEditSize;
+    qint32 g_nLineEditSize;
     XComboBoxEx **g_ppComboBox;
     int g_nComboBoxSize;
     InvWidget **g_ppInvWidget;
