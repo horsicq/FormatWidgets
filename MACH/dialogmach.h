@@ -36,7 +36,7 @@ public:
     explicit DialogMACH(QWidget *pParent = nullptr);
     ~DialogMACH();
 
-    void setData(QIODevice *pDevice, FW_DEF::OPTIONS options);
+    void setData(QIODevice *pDevice, const FW_DEF::OPTIONS &options);
     void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
 
 private:
