@@ -307,7 +307,7 @@ void MSDOSWidget::reloadData()
                 stringsOptions.bUnicode = true;
                 stringsOptions.bCStrings = false;
 
-                ui->widgetStrings->setData(getDevice(), stringsOptions, true);
+                ui->widgetStrings->setData(getDevice(), msdos.getFileType(), stringsOptions, true);
             }
         } else if (nType == SMSDOS::TYPE_SIGNATURES) {
             if (!isInitPresent(sInit)) {

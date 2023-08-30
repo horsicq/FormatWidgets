@@ -36,9 +36,9 @@ DialogSearchStrings::~DialogSearchStrings()
     delete ui;
 }
 
-void DialogSearchStrings::setData(QIODevice *pDevice, SearchStringsWidget::OPTIONS options, bool bAuto)
+void DialogSearchStrings::setData(QIODevice *pDevice, XBinary::FT fileType, SearchStringsWidget::OPTIONS options, bool bAuto)
 {
-    ui->widgetSearchStrings->setData(pDevice, options, bAuto);
+    ui->widgetSearchStrings->setData(pDevice, fileType, options, bAuto);
 
     if (options.sTitle != "") {
         setWindowTitle(options.sTitle);

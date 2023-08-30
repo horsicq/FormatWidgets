@@ -35,7 +35,7 @@ public:
     explicit DialogSearchStrings(QWidget *pParent);
     ~DialogSearchStrings();
 
-    void setData(QIODevice *pDevice, SearchStringsWidget::OPTIONS options, bool bAuto = false);
+    void setData(QIODevice *pDevice, XBinary::FT fileType, SearchStringsWidget::OPTIONS options, bool bAuto = false);
     void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
 
 signals:

@@ -70,9 +70,11 @@ SearchStringsWidget::~SearchStringsWidget()
     delete ui;
 }
 
-void SearchStringsWidget::setData(QIODevice *pDevice, OPTIONS options, bool bAuto)
+void SearchStringsWidget::setData(QIODevice *pDevice, XBinary::FT fileType, OPTIONS options, bool bAuto)
 {
     this->g_pDevice = pDevice;
+
+    XFormats::setFileTypeComboBox(fileType, g_pDevice, ui->comboBoxType);
 
     ui->checkBoxAnsi->setChecked(options.bAnsi);
     ui->checkBoxUTF8->setChecked(options.bUTF8);
@@ -231,7 +233,6 @@ void SearchStringsWidget::on_tableViewResult_customContextMenuRequested(const QP
     connect(&actionEditString, SIGNAL(triggered()), this, SLOT(_editString()));
 
     menuEdit.addAction(&actionEditString);
-
     menuEdit.setEnabled(!isReadonly());
 
     contextMenu.addMenu(&menuEdit);
@@ -283,7 +284,7 @@ void SearchStringsWidget::_hex()
     int nRow = ui->tableViewResult->currentIndex().row();
 
     if ((nRow != -1) && (g_pModel)) {
-        QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(0);
+        QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(MultiSearch::COLUMN_STRING_NUMBER);
 
         qint64 nOffset = ui->tableViewResult->model()->data(index, Qt::UserRole + MultiSearch::USERROLE_OFFSET).toLongLong();
         qint64 nSize = ui->tableViewResult->model()->data(index, Qt::UserRole + MultiSearch::USERROLE_SIZE).toLongLong();
@@ -303,7 +304,7 @@ void SearchStringsWidget::_demangle()
     int nRow = ui->tableViewResult->currentIndex().row();
 
     if ((nRow != -1) && (g_pModel)) {
-        QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(3);
+        QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(MultiSearch::COLUMN_STRING_VALUE);
 
         QString sString = ui->tableViewResult->model()->data(index).toString();
 
@@ -314,19 +315,20 @@ void SearchStringsWidget::_demangle()
 void SearchStringsWidget::_editString()
 {
     if (!isReadonly()) {
-        QModelIndex index0 = ui->tableViewResult->selectionModel()->selectedIndexes().at(0);
-        QModelIndex index1 = ui->tableViewResult->selectionModel()->selectedIndexes().at(1);
-        QModelIndex index2 = ui->tableViewResult->selectionModel()->selectedIndexes().at(2);
-        QModelIndex index3 = ui->tableViewResult->selectionModel()->selectedIndexes().at(3);
+        QModelIndex indexNumber = ui->tableViewResult->selectionModel()->selectedIndexes().at(MultiSearch::COLUMN_STRING_NUMBER);
+        //QModelIndex indexOffset = ui->tableViewResult->selectionModel()->selectedIndexes().at(MultiSearch::COLUMN_STRING_OFFSET);
+        QModelIndex indexSize = ui->tableViewResult->selectionModel()->selectedIndexes().at(MultiSearch::COLUMN_STRING_SIZE);
+        QModelIndex indexType = ui->tableViewResult->selectionModel()->selectedIndexes().at(MultiSearch::COLUMN_STRING_TYPE);
+        QModelIndex indexValue = ui->tableViewResult->selectionModel()->selectedIndexes().at(MultiSearch::COLUMN_STRING_VALUE);
 
         DialogEditString::DATA_STRUCT dataStruct = {};
 
-        dataStruct.nOffset = ui->tableViewResult->model()->data(index0, Qt::UserRole + MultiSearch::USERROLE_OFFSET).toLongLong();
-        dataStruct.nSize = ui->tableViewResult->model()->data(index0, Qt::UserRole + MultiSearch::USERROLE_SIZE).toLongLong();
-        dataStruct.recordType = (XBinary::MS_RECORD_TYPE)(ui->tableViewResult->model()->data(index0, Qt::UserRole + MultiSearch::USERROLE_TYPE).toLongLong());
+        dataStruct.nOffset = ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + MultiSearch::USERROLE_OFFSET).toLongLong();
+        dataStruct.nSize = ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + MultiSearch::USERROLE_SIZE).toLongLong();
+        dataStruct.recordType = (XBinary::MS_RECORD_TYPE)(ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + MultiSearch::USERROLE_TYPE).toLongLong());
         dataStruct.bIsCStrings = false;
 
-        dataStruct.sString = ui->tableViewResult->model()->data(index3).toString();
+        dataStruct.sString = ui->tableViewResult->model()->data(indexValue).toString();
 
         DialogEditString dialogEditString(this, g_pDevice, &dataStruct);
 
@@ -336,12 +338,12 @@ void SearchStringsWidget::_editString()
 
             if (saveBackup()) {
                 if (XBinary::write_array(g_pDevice, dataStruct.nOffset, XBinary::getStringData(dataStruct.recordType, dataStruct.sString, dataStruct.bIsCStrings))) {
-                    ui->tableViewResult->model()->setData(index0, dataStruct.nSize, Qt::UserRole + MultiSearch::USERROLE_SIZE);
-                    ui->tableViewResult->model()->setData(index0, dataStruct.recordType, Qt::UserRole + MultiSearch::USERROLE_TYPE);
+                    ui->tableViewResult->model()->setData(indexNumber, dataStruct.nSize, Qt::UserRole + MultiSearch::USERROLE_SIZE);
+                    ui->tableViewResult->model()->setData(indexNumber, dataStruct.recordType, Qt::UserRole + MultiSearch::USERROLE_TYPE);
 
-                    ui->tableViewResult->model()->setData(index1, XBinary::valueToHexEx(dataStruct.sString.size()), Qt::DisplayRole);
-                    ui->tableViewResult->model()->setData(index2, XBinary::msRecordTypeIdToString(dataStruct.recordType), Qt::DisplayRole);
-                    ui->tableViewResult->model()->setData(index3, dataStruct.sString, Qt::DisplayRole);
+                    ui->tableViewResult->model()->setData(indexSize, XBinary::valueToHexEx(dataStruct.sString.size()), Qt::DisplayRole);
+                    ui->tableViewResult->model()->setData(indexType, XBinary::msRecordTypeIdToString(dataStruct.recordType), Qt::DisplayRole);
+                    ui->tableViewResult->model()->setData(indexValue, dataStruct.sString, Qt::DisplayRole);
 
                     bSuccess = true;
                 }
@@ -370,7 +372,10 @@ void SearchStringsWidget::search()
         g_options.nMinLenght = ui->spinBoxMinLength->value();
         g_options.bLinks = ui->checkBoxLinks->isChecked();
 
-        if (g_options.bAnsi || g_options.bUnicode) {
+        if (g_options.bAnsi || g_options.bUnicode || g_options.bUTF8) {
+
+            XBinary::FT fileType = (XBinary::FT)(ui->comboBoxType->currentData().toInt());
+
             MultiSearch::OPTIONS options = {};
 
             options.bAnsi = g_options.bAnsi;
@@ -381,7 +386,12 @@ void SearchStringsWidget::search()
             options.bLinks = g_options.bLinks;
             options.bMenu_Hex = g_options.bMenu_Hex;
             options.nMinLenght = g_options.nMinLenght;
-            options.memoryMap = XBinary(g_pDevice, true, g_options.nBaseAddress).getMemoryMap();
+
+            if (fileType == XBinary::FT_REGION) {
+                options.memoryMap = XBinary(g_pDevice, true, g_options.nBaseAddress).getMemoryMap();
+            } else {
+                options.memoryMap = XFormats::getMemoryMap(fileType, g_pDevice);
+            }
 
             g_pOldModel = g_pModel;
 
@@ -403,9 +413,12 @@ void SearchStringsWidget::search()
             g_pFilter->setSourceModel(g_pModel);
             ui->tableViewResult->setModel(g_pFilter);
 
-            ui->tableViewResult->setColumnWidth(0, 120);  // TODO
-            ui->tableViewResult->setColumnWidth(1, 80);   // TODO
-            ui->tableViewResult->setColumnWidth(2, 30);   // TODO
+            ui->tableViewResult->setColumnWidth(MultiSearch::COLUMN_STRING_NUMBER, 80);   // TODO
+            ui->tableViewResult->setColumnWidth(MultiSearch::COLUMN_STRING_OFFSET, 120);  // TODO
+            ui->tableViewResult->setColumnWidth(MultiSearch::COLUMN_STRING_ADDRESS, 120);  // TODO
+            ui->tableViewResult->setColumnWidth(MultiSearch::COLUMN_STRING_REGION, 120);  // TODO
+            ui->tableViewResult->setColumnWidth(MultiSearch::COLUMN_STRING_SIZE, 80);   // TODO
+            ui->tableViewResult->setColumnWidth(MultiSearch::COLUMN_STRING_TYPE, 30);   // TODO
 
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
             QFuture<void> future = QtConcurrent::run(&SearchStringsWidget::deleteOldModel, this);

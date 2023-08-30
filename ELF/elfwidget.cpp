@@ -339,7 +339,7 @@ void ELFWidget::reloadData()
                 stringsOptions.bUnicode = true;
                 stringsOptions.bCStrings = false;
 
-                ui->widgetStrings->setData(getDevice(), stringsOptions, true);
+                ui->widgetStrings->setData(getDevice(), elf.getFileType(), stringsOptions, true);
             }
         } else if (nType == SELF::TYPE_SIGNATURES) {
             if (!isInitPresent(sInit)) {

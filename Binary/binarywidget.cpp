@@ -240,7 +240,7 @@ void BinaryWidget::reloadData()
                 stringsOptions.bUnicode = true;
                 stringsOptions.bCStrings = false;
 
-                ui->widgetStrings->setData(getDevice(), stringsOptions, true);
+                ui->widgetStrings->setData(getDevice(), fileType, stringsOptions, true);
             }
         } else if (nType == SBINARY::TYPE_SIGNATURES) {
             if (!isInitPresent(sInit)) {

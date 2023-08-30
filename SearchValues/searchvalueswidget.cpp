@@ -146,9 +146,10 @@ void SearchValuesWidget::search()
 
         ui->tableViewResult->setModel(g_pModel);
 
-        ui->tableViewResult->setColumnWidth(0, 120);  // TODO
-        ui->tableViewResult->setColumnWidth(1, 120);  // TODO
-        ui->tableViewResult->setColumnWidth(2, 120);  // TODO
+        ui->tableViewResult->setColumnWidth(MultiSearch::COLUMN_VALUE_NUMBER, 80);
+        ui->tableViewResult->setColumnWidth(MultiSearch::COLUMN_VALUE_OFFSET, 120);  // TODO
+        ui->tableViewResult->setColumnWidth(MultiSearch::COLUMN_VALUE_ADDRESS, 120);  // TODO
+        ui->tableViewResult->setColumnWidth(MultiSearch::COLUMN_VALUE_REGION, 120);  // TODO
 
         QFuture<void> future = deleteOldStandardModel(&g_pOldModel);
 
@@ -217,7 +218,7 @@ void SearchValuesWidget::_hex()
     qint32 nRow = ui->tableViewResult->currentIndex().row();
 
     if ((nRow != -1) && (g_pModel)) {
-        QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(0);
+        QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(MultiSearch::COLUMN_VALUE_NUMBER);
 
         qint64 nOffset = ui->tableViewResult->model()->data(index, Qt::UserRole + MultiSearch::USERROLE_OFFSET).toLongLong();
         qint64 nSize = ui->tableViewResult->model()->data(index, Qt::UserRole + MultiSearch::USERROLE_SIZE).toLongLong();
@@ -231,7 +232,7 @@ void SearchValuesWidget::_disasm()
     qint32 nRow = ui->tableViewResult->currentIndex().row();
 
     if ((nRow != -1) && (g_pModel)) {
-        QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(0);
+        QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(MultiSearch::COLUMN_VALUE_NUMBER);
 
         qint64 nOffset = ui->tableViewResult->model()->data(index, Qt::UserRole + MultiSearch::USERROLE_OFFSET).toLongLong();
 

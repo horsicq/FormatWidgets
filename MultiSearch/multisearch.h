@@ -44,6 +44,26 @@ public:
         TYPE_STRINGS_XINFODB
     };
 
+    enum COLUMN_STRING {
+        COLUMN_STRING_NUMBER,
+        COLUMN_STRING_OFFSET,
+        COLUMN_STRING_ADDRESS,
+        COLUMN_STRING_REGION,
+        COLUMN_STRING_SIZE,
+        COLUMN_STRING_TYPE,
+        COLUMN_STRING_VALUE,
+        __COLUMN_STRING_SIZE
+    };
+
+    enum COLUMN_VALUE {
+        COLUMN_VALUE_NUMBER,
+        COLUMN_VALUE_OFFSET,
+        COLUMN_VALUE_ADDRESS,
+        COLUMN_VALUE_REGION,
+        COLUMN_VALUE_VALUE,
+        __COLUMN_VALUE_SIZE
+    };
+
     enum USERROLE {
         USERROLE_SIZE = 0,
         USERROLE_OFFSET,
@@ -83,8 +103,8 @@ public:
 
     explicit MultiSearch(QObject *pParent = nullptr);
     ~MultiSearch();
+
     void setSearchData(QIODevice *pDevice, QList<XBinary::MS_RECORD> *pListRecords, OPTIONS options, TYPE type, XBinary::PDSTRUCT *pPdStruct);
-    void setSearchData(QIODevice *pDevice, OPTIONS options, TYPE type, XBinary::PDSTRUCT *pPdStruct);
     void setModelData(QList<XBinary::MS_RECORD> *pListRecords, QStandardItemModel **ppModel, OPTIONS options, TYPE type, XBinary::PDSTRUCT *pPdStruct);
 
     static QList<SIGNATURE_RECORD> loadSignaturesFromFile(const QString &sFileName);
