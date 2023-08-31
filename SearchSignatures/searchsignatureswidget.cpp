@@ -309,9 +309,9 @@ void SearchSignaturesWidget::loadSignatures(const QString &sFileName)
     ui->labelInfo->setText(QString("%1: %2").arg(tr("Signatures"), QString::number(nNumberOfSignatures)));
 }
 
-void SearchSignaturesWidget::on_comboBoxFile_currentIndexChanged(int index)
+void SearchSignaturesWidget::on_comboBoxFile_currentIndexChanged(int nIndex)
 {
-    Q_UNUSED(index)
+    Q_UNUSED(nIndex)
 
     QString sFileName = ui->comboBoxFile->currentData().toString();
 

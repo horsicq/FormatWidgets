@@ -81,7 +81,7 @@ private slots:
     void _hex();
     void search();
     void loadSignatures(const QString &sFileName);
-    void on_comboBoxFile_currentIndexChanged(int index);
+    void on_comboBoxFile_currentIndexChanged(int nIndex);
 
 protected:
     virtual void registerShortcuts(bool bState);

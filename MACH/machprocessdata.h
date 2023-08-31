@@ -33,7 +33,7 @@ public:
     virtual void ajustTableView(QWidget *pWidget, QTableView *pTableView);
 
 private:
-    int g_nType;
+    qint32 g_nType;
     XMACH *g_pXMACH;
     QStandardItemModel **g_ppModel;
     qint64 g_nOffset;
