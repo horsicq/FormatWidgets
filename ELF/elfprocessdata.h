@@ -35,7 +35,7 @@ public:
     virtual void adjustModel(QStandardItemModel *pModel);
 
 private:
-    int g_nType;
+    qint32 g_nType;
     XELF *g_pELF;
     QStandardItemModel **g_ppModel;
     qint64 g_nOffset;
