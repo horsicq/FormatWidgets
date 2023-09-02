@@ -98,7 +98,7 @@ public:
         bool bMenu_Hex;  // TODO remove
     };
 
-    const int N_MAX = 100000;
+    const qint32 N_MAX = 100000;
     const int N_MAXNUMBEROFTHREADS = 8;
 
     explicit MultiSearch(QObject *pParent = nullptr);
