@@ -316,7 +316,7 @@ void SearchStringsWidget::_editString()
 {
     if (!isReadonly()) {
         QModelIndex indexNumber = ui->tableViewResult->selectionModel()->selectedIndexes().at(MultiSearch::COLUMN_STRING_NUMBER);
-        //QModelIndex indexOffset = ui->tableViewResult->selectionModel()->selectedIndexes().at(MultiSearch::COLUMN_STRING_OFFSET);
+        // QModelIndex indexOffset = ui->tableViewResult->selectionModel()->selectedIndexes().at(MultiSearch::COLUMN_STRING_OFFSET);
         QModelIndex indexSize = ui->tableViewResult->selectionModel()->selectedIndexes().at(MultiSearch::COLUMN_STRING_SIZE);
         QModelIndex indexType = ui->tableViewResult->selectionModel()->selectedIndexes().at(MultiSearch::COLUMN_STRING_TYPE);
         QModelIndex indexValue = ui->tableViewResult->selectionModel()->selectedIndexes().at(MultiSearch::COLUMN_STRING_VALUE);
@@ -373,7 +373,6 @@ void SearchStringsWidget::search()
         g_options.bLinks = ui->checkBoxLinks->isChecked();
 
         if (g_options.bAnsi || g_options.bUnicode || g_options.bUTF8) {
-
             XBinary::FT fileType = (XBinary::FT)(ui->comboBoxType->currentData().toInt());
 
             MultiSearch::OPTIONS options = {};
@@ -413,12 +412,12 @@ void SearchStringsWidget::search()
             g_pFilter->setSourceModel(g_pModel);
             ui->tableViewResult->setModel(g_pFilter);
 
-            ui->tableViewResult->setColumnWidth(MultiSearch::COLUMN_STRING_NUMBER, 80);   // TODO
-            ui->tableViewResult->setColumnWidth(MultiSearch::COLUMN_STRING_OFFSET, 120);  // TODO
+            ui->tableViewResult->setColumnWidth(MultiSearch::COLUMN_STRING_NUMBER, 80);    // TODO
+            ui->tableViewResult->setColumnWidth(MultiSearch::COLUMN_STRING_OFFSET, 120);   // TODO
             ui->tableViewResult->setColumnWidth(MultiSearch::COLUMN_STRING_ADDRESS, 120);  // TODO
-            ui->tableViewResult->setColumnWidth(MultiSearch::COLUMN_STRING_REGION, 120);  // TODO
-            ui->tableViewResult->setColumnWidth(MultiSearch::COLUMN_STRING_SIZE, 80);   // TODO
-            ui->tableViewResult->setColumnWidth(MultiSearch::COLUMN_STRING_TYPE, 30);   // TODO
+            ui->tableViewResult->setColumnWidth(MultiSearch::COLUMN_STRING_REGION, 120);   // TODO
+            ui->tableViewResult->setColumnWidth(MultiSearch::COLUMN_STRING_SIZE, 80);      // TODO
+            ui->tableViewResult->setColumnWidth(MultiSearch::COLUMN_STRING_TYPE, 30);      // TODO
 
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
             QFuture<void> future = QtConcurrent::run(&SearchStringsWidget::deleteOldModel, this);

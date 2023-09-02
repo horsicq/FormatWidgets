@@ -147,9 +147,9 @@ void SearchValuesWidget::search()
         ui->tableViewResult->setModel(g_pModel);
 
         ui->tableViewResult->setColumnWidth(MultiSearch::COLUMN_VALUE_NUMBER, 80);
-        ui->tableViewResult->setColumnWidth(MultiSearch::COLUMN_VALUE_OFFSET, 120);  // TODO
+        ui->tableViewResult->setColumnWidth(MultiSearch::COLUMN_VALUE_OFFSET, 120);   // TODO
         ui->tableViewResult->setColumnWidth(MultiSearch::COLUMN_VALUE_ADDRESS, 120);  // TODO
-        ui->tableViewResult->setColumnWidth(MultiSearch::COLUMN_VALUE_REGION, 120);  // TODO
+        ui->tableViewResult->setColumnWidth(MultiSearch::COLUMN_VALUE_REGION, 120);   // TODO
 
         QFuture<void> future = deleteOldStandardModel(&g_pOldModel);
 

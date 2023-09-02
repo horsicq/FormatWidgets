@@ -159,7 +159,8 @@ void MultiSearch::processSearch()
 
         connect(&binary, SIGNAL(errorMessage(QString)), this, SIGNAL(errorMessage(QString)));
 
-        *g_pListRecords = binary.multiSearch_value(&(g_options.memoryMap), 0, g_pDevice->size(), N_MAX, g_options.varValue, g_options.valueType, g_options.bIsBigEndian, g_pPdStruct);
+        *g_pListRecords =
+            binary.multiSearch_value(&(g_options.memoryMap), 0, g_pDevice->size(), N_MAX, g_options.varValue, g_options.valueType, g_options.bIsBigEndian, g_pPdStruct);
     } else if (g_type == TYPE_SIGNATURES) {
 #ifdef QT_DEBUG
         QElapsedTimer timer;
@@ -242,7 +243,7 @@ void MultiSearch::processModel()
         qint32 nNumberOfRecords = g_pListRecords->count();
         *g_ppModel = new QStandardItemModel(nNumberOfRecords, __COLUMN_STRING_SIZE);  // TODO Check maximum
 
-//        XADDR nBaseAddress = g_options.memoryMap.nModuleAddress;
+        //        XADDR nBaseAddress = g_options.memoryMap.nModuleAddress;
 
         XBinary::MODE modeAddress = XBinary::getWidthModeFromSize(g_options.memoryMap.nModuleAddress + g_options.memoryMap.nImageSize);
         XBinary::MODE modeOffset = XBinary::getWidthModeFromSize(g_options.memoryMap.nBinarySize);
