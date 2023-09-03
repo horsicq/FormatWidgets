@@ -35,6 +35,7 @@ public:
     PESectionHeaderWidget(QWidget *pParent = nullptr);
     PESectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent = nullptr);
     ~PESectionHeaderWidget();
+
     virtual void clear();
     virtual void cleanup();
     virtual void reload();
@@ -56,7 +57,7 @@ private slots:
 private:
     Ui::PESectionHeaderWidget *ui;
     XLineEditHEX **g_ppLinedEdit;
-    int g_nLineEditSize;
+    qint32 g_nLineEditSize;
     XComboBoxEx **g_ppComboBox;
     int g_nComboBoxSize;
     InvWidget **g_ppInvWidget;
