@@ -315,7 +315,7 @@ void MultiSearch::processModel()
     } else if (g_type == TYPE_VALUES) {
         // TODO rewrite
         qint32 nNumberOfRecords = g_pListRecords->count();
-        *g_ppModel = new QStandardItemModel(nNumberOfRecords, __COLUMN_STRING_SIZE);  // TODO Check maximum
+        *g_ppModel = new QStandardItemModel(nNumberOfRecords, __COLUMN_VALUE_SIZE);  // TODO Check maximum
 
         XBinary::MODE modeAddress = XBinary::getWidthModeFromSize(g_options.memoryMap.nModuleAddress + g_options.memoryMap.nImageSize);
         XBinary::MODE modeOffset = XBinary::getWidthModeFromSize(g_options.memoryMap.nBinarySize);
