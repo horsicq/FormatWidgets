@@ -258,7 +258,7 @@ void FormatsWidget::reload()
                 if (nNetID) {
                     ui->groupBoxPETimeDateStamp->setTitle(QString(".NET ID"));
                     ui->lineEditPETimeDateStamp->setValue(nNetID);
-                    ui->lineEditPETimeDateStamp->setValidatorMode(HEXValidator::MODE_HEX);
+                    ui->lineEditPETimeDateStamp->setValidatorMode(HEXValidator::MODE_HEX_32);
                 } else {
                     ui->groupBoxPETimeDateStamp->setTitle(tr("Time date stamp"));
                     ui->lineEditPETimeDateStamp->setText(XBinary::valueToTimeString(pe.getFileHeader_TimeDateStamp(), XBinary::DT_TYPE_POSIX));
