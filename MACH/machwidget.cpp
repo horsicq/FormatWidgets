@@ -1959,7 +1959,11 @@ void MACHWidget::reloadData()
                 g_lineEdit_mach_main[N_mach_main::entryoff]->setValue(entry_point.entryoff);
                 g_lineEdit_mach_main[N_mach_main::stacksize]->setValue(entry_point.stacksize);
 
-                g_invWidget[INV_MAIN_entryoff]->setOffsetAndSize(&mach, entry_point.entryoff, 0, true);
+                XBinary::_MEMORY_MAP memoryMap = mach.getMemoryMap();
+
+                XADDR nAddress = XBinary::offsetToAddress(&memoryMap, entry_point.entryoff);
+
+                g_invWidget[INV_MAIN_entryoff]->setAddressAndSize(&mach, nAddress, 0, true);
 
                 qint64 nOffset = nDataOffset;
                 qint64 nSize = mach.get_entry_point_command_size();

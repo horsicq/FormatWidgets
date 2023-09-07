@@ -45,6 +45,7 @@ InvWidget::InvWidget(QWidget *pParent, TYPE type) : XShortcutsWidget(pParent)
     setLayout(pLayot);
 
     g_nOffset = 0;
+    g_nAddress = 0;
     g_nSize = 0;
 }
 

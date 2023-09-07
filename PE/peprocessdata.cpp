@@ -40,6 +40,8 @@ void PEProcessData::_process()
         listLabels.append("#");
         listLabels.append(getStructList(N_IMAGE_SECTION_HEADER::records, N_IMAGE_SECTION_HEADER::__data_size));
 
+        XBinary::_MEMORY_MAP memoryMap = g_pPE->getMemoryMap();
+
         QList<XPE_DEF::IMAGE_SECTION_HEADER> listSections = g_pPE->getSectionHeaders();
 
         qint32 nNumberOfRecords = listSections.count();
@@ -54,7 +56,7 @@ void PEProcessData::_process()
             QStandardItem *pItemNumber = new QStandardItem;
             pItemNumber->setData(i, Qt::DisplayRole);
 
-            pItemNumber->setData(listSections.at(i).VirtualAddress, Qt::UserRole + FW_DEF::SECTION_DATA_ADDRESS);
+            pItemNumber->setData(memoryMap.nModuleAddress + listSections.at(i).VirtualAddress, Qt::UserRole + FW_DEF::SECTION_DATA_ADDRESS);
 
             if (g_pPE->isImage()) {
                 pItemNumber->setData(listSections.at(i).Misc.VirtualSize, Qt::UserRole + FW_DEF::SECTION_DATA_SIZE);
