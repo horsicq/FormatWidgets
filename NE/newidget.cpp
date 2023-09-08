@@ -292,7 +292,7 @@ void NEWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
     }
 }
 
-QString NEWidget::typeIdToString(int nType)
+QString NEWidget::typeIdToString(qint32 nType)
 {
     Q_UNUSED(nType)
 
