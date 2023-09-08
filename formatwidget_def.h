@@ -28,7 +28,7 @@ struct OPTIONS {
     bool bIsImage;
     qint64 nImageBase;  // TODO default_const
     // TODO Last directory
-    int nStartType;
+    qint32 nStartType;
     bool bOffset;        // Show Offset title no Address TODO remove make auto if Address != nOffset
     QString sTitle;      // For dialogs
     bool bFilter;        // For Archive_widget
