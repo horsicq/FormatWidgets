@@ -2310,7 +2310,7 @@ void PEWidget::on_tableView_Sections_customContextMenuRequested(const QPoint &po
     }
 }
 
-void PEWidget::loadImportLibrary(int nRow)
+void PEWidget::loadImportLibrary(qint32 nRow)
 {
     XPE pe(getDevice(), getOptions().bIsImage, getOptions().nImageBase);
 
