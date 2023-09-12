@@ -1275,7 +1275,7 @@ void MACHWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
     }
 }
 
-QString MACHWidget::typeIdToString(int nType)
+QString MACHWidget::typeIdToString(qint32 nType)
 {
     QString sResult = tr("Unknown");
 
