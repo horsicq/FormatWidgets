@@ -257,7 +257,7 @@ void ELFWidget::blockSignals(bool bState)
     _blockSignals((QObject **)g_comboBox, __CB_size, bState);
 }
 
-void ELFWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
+void ELFWidget::adjustHeaderTable(qint32 nType, QTableWidget *pTableWidget)
 {
     XBinary::MODE mode = XELF::getMode(getDevice(), getOptions().bIsImage, getOptions().nImageBase);
 
