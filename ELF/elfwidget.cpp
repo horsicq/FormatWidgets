@@ -882,7 +882,7 @@ void ELFWidget::showSectionHeader(int nType, QTableView *pTableView)
     }
 }
 
-QString ELFWidget::typeIdToString(int nType)
+QString ELFWidget::typeIdToString(qint32 nType)
 {
     QString sResult = tr("Unknown");
 
