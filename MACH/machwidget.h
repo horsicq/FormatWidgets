@@ -158,7 +158,7 @@ private slots:
     void editIndirectSymbolHeader();
     void editExtRefSymbolHeader();
     void diceHex();
-    void showSectionHeader(int nType, QTableView *pTableView);
+    void showSectionHeader(qint32 nType, QTableView *pTableView);
 
     void symbolDemangle();
     void indirectsymsDemangle();

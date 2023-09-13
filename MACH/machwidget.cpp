@@ -3314,7 +3314,7 @@ void MACHWidget::diceHex()
     showSectionHex(ui->tableView_data_in_code_entry);
 }
 
-void MACHWidget::showSectionHeader(int nType, QTableView *pTableView)
+void MACHWidget::showSectionHeader(qint32 nType, QTableView *pTableView)
 {
     qint32 nRow = pTableView->currentIndex().row();
 
