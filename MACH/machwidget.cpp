@@ -1174,7 +1174,7 @@ void MACHWidget::blockSignals(bool bState)
     _blockSignals((QObject **)g_comboBox, __CB_size, bState);
 }
 
-void MACHWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
+void MACHWidget::adjustHeaderTable(qint32 nType, QTableWidget *pTableWidget)
 {
     XBinary::MODE mode = XMACH::getMode(getDevice(), getOptions().bIsImage, getOptions().nImageBase);
 
