@@ -148,7 +148,7 @@ void DEXSectionHeaderWidget::blockSignals(bool bState)
     _blockSignals((QObject **)g_ppComboBox, g_nComboBoxSize, bState);
 }
 
-void DEXSectionHeaderWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
+void DEXSectionHeaderWidget::adjustHeaderTable(qint32 nType, QTableWidget *pTableWidget)
 {
     Q_UNUSED(nType)
     Q_UNUSED(pTableWidget)
