@@ -47,7 +47,7 @@ protected:
     virtual SV _setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset);
     virtual void setReadonly(bool bState);
     virtual void blockSignals(bool bState);
-    virtual void adjustHeaderTable(int nType, QTableWidget *pTableWidget);
+    virtual void adjustHeaderTable(qint32 nType, QTableWidget *pTableWidget);
     virtual QString typeIdToString(qint32 nType);
     virtual void _showInMemoryMapWindowOffset(qint64 nOffset);
     virtual void _showInHexWindow(qint64 nOffset, qint64 nSize);

@@ -269,7 +269,7 @@ void DEXWidget::blockSignals(bool bState)
     _blockSignals((QObject **)g_comboBox, __CB_size, bState);
 }
 
-void DEXWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
+void DEXWidget::adjustHeaderTable(qint32 nType, QTableWidget *pTableWidget)
 {
     XBinary::MODE mode = XDEX::getMode(getDevice());
 
