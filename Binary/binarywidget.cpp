@@ -138,7 +138,7 @@ void BinaryWidget::blockSignals(bool bState)
     Q_UNUSED(bState)
 }
 
-void BinaryWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
+void BinaryWidget::adjustHeaderTable(qint32 nType, QTableWidget *pTableWidget)
 {
     Q_UNUSED(nType)
     Q_UNUSED(pTableWidget)
