@@ -63,7 +63,7 @@ private slots:
     void on_checkBoxReadonly_toggled(bool bChecked);
     void on_pushButtonReload_clicked();
     void enableButton();
-    void loadShdr(int nRow);
+    void loadShdr(qint32 nRow);
     void loadPhdr(int nRow);
     void loadNote(int nRow);
     void on_tableWidget_Elf_Ehdr_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn);

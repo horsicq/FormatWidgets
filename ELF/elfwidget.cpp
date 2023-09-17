@@ -715,7 +715,7 @@ void ELFWidget::enableButton()
     ui->pushButtonReload->setEnabled(true);
 }
 
-void ELFWidget::loadShdr(int nRow)
+void ELFWidget::loadShdr(qint32 nRow)
 {
     if (nRow != -1) {
         QModelIndex index = ui->tableView_Elf_Shdr->model()->index(nRow, 0);
