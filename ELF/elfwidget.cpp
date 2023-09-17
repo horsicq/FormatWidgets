@@ -741,7 +741,7 @@ void ELFWidget::loadPhdr(qint32 nRow)
     }
 }
 
-void ELFWidget::loadNote(int nRow)
+void ELFWidget::loadNote(qint32 nRow)
 {
     if (nRow != -1) {
         QModelIndex index = ui->tableView_Notes->model()->index(nRow, 0);
