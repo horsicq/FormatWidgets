@@ -64,7 +64,7 @@ private slots:
     void on_pushButtonReload_clicked();
     void enableButton();
     void loadShdr(qint32 nRow);
-    void loadPhdr(int nRow);
+    void loadPhdr(qint32 nRow);
     void loadNote(int nRow);
     void on_tableWidget_Elf_Ehdr_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn);
     void editSectionHeader();

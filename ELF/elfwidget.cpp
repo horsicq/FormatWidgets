@@ -728,7 +728,7 @@ void ELFWidget::loadShdr(qint32 nRow)
     }
 }
 
-void ELFWidget::loadPhdr(int nRow)
+void ELFWidget::loadPhdr(qint32 nRow)
 {
     if (nRow != -1) {
         QModelIndex index = ui->tableView_Elf_Phdr->model()->index(nRow, 0);
