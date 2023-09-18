@@ -58,7 +58,7 @@ private:
     XLineEditHEX **g_ppLinedEdit;
     qint32 g_nLineEditSize;
     XComboBoxEx **g_ppComboBox;
-    int g_nComboBoxSize;
+    qint32 g_nComboBoxSize;
     InvWidget **g_ppInvWidget;
     int g_nInvWidgetSize;
     SubDevice *g_pSubDevice;
