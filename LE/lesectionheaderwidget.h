@@ -47,7 +47,7 @@ protected:
     virtual SV _setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset);
     virtual void setReadonly(bool bState);
     virtual void blockSignals(bool bState);
-    virtual void adjustHeaderTable(int nType, QTableWidget *pTableWidget);
+    virtual void adjustHeaderTable(qint32 nType, QTableWidget *pTableWidget);
 
 private slots:
     void on_checkBoxReadonly_toggled(bool bChecked);

@@ -71,7 +71,7 @@ void LESectionHeaderWidget::blockSignals(bool bState)
     Q_UNUSED(bState)
 }
 
-void LESectionHeaderWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
+void LESectionHeaderWidget::adjustHeaderTable(qint32 nType, QTableWidget *pTableWidget)
 {
     Q_UNUSED(nType)
     Q_UNUSED(pTableWidget)
