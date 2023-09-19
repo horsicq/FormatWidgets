@@ -196,7 +196,7 @@ void SearchStringsWidget::filter(const QString &sString)
 {
     g_pFilter->setFilterFixedString(sString);
     g_pFilter->setFilterCaseSensitivity(Qt::CaseInsensitive);
-    g_pFilter->setFilterKeyColumn(3);
+    g_pFilter->setFilterKeyColumn(MultiSearch::COLUMN_STRING_VALUE);
 }
 
 void SearchStringsWidget::on_tableViewResult_customContextMenuRequested(const QPoint &pos)
