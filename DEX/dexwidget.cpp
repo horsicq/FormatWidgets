@@ -565,7 +565,7 @@ void DEXWidget::reloadData()
     addInit(sInit);
 }
 
-bool DEXWidget::createSectionTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pHeaderRecord, int nNumberOfRecords)
+bool DEXWidget::createSectionTable(qint32 nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pHeaderRecord, int nNumberOfRecords)
 {
     Q_UNUSED(nType)
 
