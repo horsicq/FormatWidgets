@@ -81,7 +81,7 @@ private slots:
     void on_tableView_SymbolTable_customContextMenuRequested(const QPoint &pos);
     void editSymbolHeader();
     void symbolDemangle();
-    void showSectionHeader(int nType, QTableView *pTableView);
+    void showSectionHeader(qint32 nType, QTableView *pTableView);
     void on_tableView_Elf_Shdr_doubleClicked(const QModelIndex &index);
     void on_tableView_Elf_Shdr_customContextMenuRequested(const QPoint &pos);
     void on_tableView_SymbolTable_doubleClicked(const QModelIndex &index);

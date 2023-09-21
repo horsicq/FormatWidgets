@@ -851,7 +851,7 @@ void ELFWidget::symbolDemangle()
     showTableViewDemangle(ui->tableView_SymbolTable, N_Elf64_Sym::st_size + 2);
 }
 
-void ELFWidget::showSectionHeader(int nType, QTableView *pTableView)
+void ELFWidget::showSectionHeader(qint32 nType, QTableView *pTableView)
 {
     qint32 nRow = pTableView->currentIndex().row();
 
