@@ -1464,7 +1464,7 @@ void FormatWidget::updateTableRecord(QTableWidget *pTableWidget, int nRow, qint6
 //    return true;
 //}
 
-bool FormatWidget::createSectionTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nNumberOfRecords)
+bool FormatWidget::createSectionTable(qint32 nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nNumberOfRecords)
 {
     Q_UNUSED(nType)
 
