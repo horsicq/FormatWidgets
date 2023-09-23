@@ -72,7 +72,7 @@ private slots:
     void resourceDump();
     void reloadData();
     void loadImportLibrary(qint32 nRow);
-    void loadRelocs(int nRow);
+    void loadRelocs(qint32 nRow);
     void loadSection(int nRow);
     void loadException(int nRow);
     void loadDirectory(int nRow);

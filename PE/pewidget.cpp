@@ -2325,7 +2325,7 @@ void PEWidget::loadImportLibrary(qint32 nRow)
     }
 }
 
-void PEWidget::loadRelocs(int nRow)
+void PEWidget::loadRelocs(qint32 nRow)
 {
     QModelIndex index = ui->tableView_Relocs->model()->index(nRow, 0);
 
