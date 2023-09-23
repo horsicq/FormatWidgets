@@ -2344,7 +2344,7 @@ void PEWidget::loadRelocs(qint32 nRow)
     }
 }
 
-void PEWidget::loadSection(int nRow)
+void PEWidget::loadSection(qint32 nRow)
 {
     loadHexSubdeviceByTableView(nRow, SPE::TYPE_SECTIONS, ui->widgetHex_Section, ui->tableView_Sections, &g_subDevice[SPE::TYPE_SECTIONS]);
 }
