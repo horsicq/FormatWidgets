@@ -34,11 +34,11 @@ DialogMultiSearchProcess::DialogMultiSearchProcess(QWidget *pParent) : XDialogPr
 
     connect(g_pThreadSearch, SIGNAL(started()), g_pHandleSearch, SLOT(processSearch()));
     connect(g_pHandleSearch, SIGNAL(completed(qint64)), this, SLOT(onCompleted(qint64)));
-    connect(g_pHandleSearch, SIGNAL(errorMessage(QString)), this, SLOT(errorMessage(QString)));
+    connect(g_pHandleSearch, SIGNAL(errorMessage(QString)), this, SLOT(errorMessageSlot(QString)));
 
     connect(g_pThreadModel, SIGNAL(started()), g_pHandleModel, SLOT(processModel()));
     connect(g_pHandleModel, SIGNAL(completed(qint64)), this, SLOT(onCompleted(qint64)));
-    connect(g_pHandleModel, SIGNAL(errorMessage(QString)), this, SLOT(errorMessage(QString)));
+    connect(g_pHandleModel, SIGNAL(errorMessage(QString)), this, SLOT(errorMessageSlot(QString)));
 }
 
 DialogMultiSearchProcess::~DialogMultiSearchProcess()
