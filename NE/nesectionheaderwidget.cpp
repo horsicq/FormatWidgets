@@ -71,7 +71,7 @@ void NESectionHeaderWidget::blockSignals(bool bState)
     Q_UNUSED(bState)
 }
 
-void NESectionHeaderWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
+void NESectionHeaderWidget::adjustHeaderTable(qint32 nType, QTableWidget *pTableWidget)
 {
     Q_UNUSED(nType)
     Q_UNUSED(pTableWidget)
