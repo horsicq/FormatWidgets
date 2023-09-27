@@ -1557,7 +1557,7 @@ XComboBoxEx *FormatWidget::createComboBox(QTableWidget *pTableWidget, QMap<quint
         result->setProperty("NDATA", nExtraData);
     }
 
-    connect(result, SIGNAL(valueChanged(quint64)), this, SLOT(widgetValueChanged(quint64)));
+    connect(result, SIGNAL(valueChanged(quint64)), this, SLOT(widgetValueChanged(quint64))); // TODO Check widgetValueChanged
 
     pTableWidget->setCellWidget(nData, HEADER_COLUMN_INFO, result);
 
@@ -1587,7 +1587,7 @@ XDateTimeEditX *FormatWidget::createTimeDateEdit(QTableWidget *pTableWidget, int
     result->setProperty("STYPE", nType);
     result->setProperty("NDATA", nData);
 
-    connect(result, SIGNAL(valueChanged(quint64)), this, SLOT(widgetValueChanged(quint64)));
+    connect(result, SIGNAL(valueChanged(quint64)), this, SLOT(widgetValueChanged(quint64))); // TODO Check widgetValueChanged
 
     pTableWidget->setCellWidget(nData, HEADER_COLUMN_INFO, result);
 
