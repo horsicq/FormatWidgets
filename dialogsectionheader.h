@@ -44,7 +44,7 @@ public:
     virtual void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
 
 signals:
-    void changed();
+    void dataChanged(qint64 nDataOffset, qint64 nDataSize);
 
 private:
     Ui::DialogSectionHeader *ui;

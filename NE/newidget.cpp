@@ -273,7 +273,7 @@ void NEWidget::blockSignals(bool bState)
     _blockSignals((QObject **)g_comboBox, __CB_size, bState);
 }
 
-void NEWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
+void NEWidget::adjustHeaderTable(qint32 nType, QTableWidget *pTableWidget)
 {
     // TODO like MACH !!!
     Q_UNUSED(nType);
@@ -287,7 +287,6 @@ void NEWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
 
     switch (nType) {
         case SNE::TYPE_DOS_HEADER: pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, nSymbolWidth * 15); break;
-
         case SNE::TYPE_OS2_HEADER: pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, nSymbolWidth * 27); break;
     }
 }

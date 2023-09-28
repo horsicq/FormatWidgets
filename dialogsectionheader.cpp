@@ -42,7 +42,7 @@ void DialogSectionHeader::setWidget(FormatWidget *pWidget)
 
     ui->WidgetLayout->addWidget(pWidget);
 
-    connect(pWidget, SIGNAL(changed()), this, SIGNAL(changed()));
+    connect(pWidget, SIGNAL(dataChanged(qint64, qint64)), this, SIGNAL(dataChanged(qint64, qint64)));
 }
 
 void DialogSectionHeader::setData(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, const QString &sTitle, qint32 nType)

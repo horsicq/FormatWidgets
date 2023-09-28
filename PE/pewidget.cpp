@@ -2698,7 +2698,7 @@ void PEWidget::showSectionHeader(int nType, QTableView *pTableView)
         dsh.setWidget(pSectionHeaderWidget);
         dsh.setData(typeIdToString(nType));
 
-        connect(&dsh, SIGNAL(changed()), this, SLOT(setEdited()));
+        connect(&dsh, SIGNAL(dataChanged(qint64, qint64)), this, SLOT(setEdited(qint64, qint64)));
 
         dsh.exec();
 

@@ -230,7 +230,7 @@ protected:
     virtual void _findValue(quint64 nValue, bool bIsBigEndian);
 
 signals:
-    void changed();
+    void dataChanged(qint64 nDataOffset, qint64 nDataSize);
     void closeApp();
 
 public slots:
