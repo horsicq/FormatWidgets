@@ -29,7 +29,7 @@ class PEProcessData : public ProcessData {
     Q_OBJECT
 
 public:
-    explicit PEProcessData(int nType, QStandardItemModel **ppModel, XPE *pPE, qint32 nNumber, qint64 nOffset, qint64 nSize, QVariant varInfo = QVariant());
+    explicit PEProcessData(qint32 nType, QStandardItemModel **ppModel, XPE *pPE, qint32 nNumber, qint64 nOffset, qint64 nSize, QVariant varInfo = QVariant());
 
     virtual void _process();
     virtual void ajustTableView(QWidget *pWidget, QTableView *pTableView);

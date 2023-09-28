@@ -20,7 +20,7 @@
  */
 #include "peprocessdata.h"
 
-PEProcessData::PEProcessData(int nType, QStandardItemModel **ppModel, XPE *pPE, qint32 nNumber, qint64 nOffset, qint64 nSize, QVariant varInfo) : ProcessData()
+PEProcessData::PEProcessData(qint32 nType, QStandardItemModel **ppModel, XPE *pPE, qint32 nNumber, qint64 nOffset, qint64 nSize, QVariant varInfo) : ProcessData()
 {
     this->g_nType = nType;
     this->g_ppModel = ppModel;
