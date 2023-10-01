@@ -53,7 +53,7 @@ struct HEADER_RECORD {
     qint32 nData;
     QString sName;
     qint32 nOffset;
-    int nSize;
+    qint32 nSize;
     QString sType;
     VAL_TYPE vtype;
 };
