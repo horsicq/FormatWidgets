@@ -52,7 +52,7 @@ enum VAL_TYPE {
 struct HEADER_RECORD {
     qint32 nData;
     QString sName;
-    int nOffset;
+    qint32 nOffset;
     int nSize;
     QString sType;
     VAL_TYPE vtype;
