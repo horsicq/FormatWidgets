@@ -2349,7 +2349,7 @@ void PEWidget::loadSection(qint32 nRow)
     loadHexSubdeviceByTableView(nRow, SPE::TYPE_SECTIONS, ui->widgetHex_Section, ui->tableView_Sections, &g_subDevice[SPE::TYPE_SECTIONS]);
 }
 
-void PEWidget::loadException(int nRow)
+void PEWidget::loadException(qint32 nRow)
 {
     loadHexSubdeviceByTableView(nRow, SPE::TYPE_EXCEPTION, ui->widgetHex_Exception, ui->tableView_Exceptions, &g_subDevice[SPE::TYPE_EXCEPTION]);
 }

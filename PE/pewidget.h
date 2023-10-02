@@ -74,7 +74,7 @@ private slots:
     void loadImportLibrary(qint32 nRow);
     void loadRelocs(qint32 nRow);
     void loadSection(qint32 nRow);
-    void loadException(int nRow);
+    void loadException(qint32 nRow);
     void loadDirectory(int nRow);
     void loadDebug(int nRow);
     void loadDelayImport(int nRow);
