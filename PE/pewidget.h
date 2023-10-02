@@ -49,7 +49,7 @@ protected:
     virtual void setReadonly(bool bState);
     virtual void blockSignals(bool bState);
     virtual void adjustHeaderTable(int nType, QTableWidget *pTableWidget);
-    virtual QString typeIdToString(int nType);
+    virtual QString typeIdToString(qint32 nType);
     virtual void _showInDisasmWindowAddress(XADDR nAddress);
     virtual void _showInDisasmWindowOffset(qint64 nOffset);
     virtual void _showInMemoryMapWindowOffset(qint64 nOffset);

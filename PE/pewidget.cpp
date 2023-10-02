@@ -2447,7 +2447,7 @@ void PEWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
     }
 }
 
-QString PEWidget::typeIdToString(int nType)
+QString PEWidget::typeIdToString(qint32 nType)
 {
     QString sResult = tr("Unknown");
 
