@@ -99,7 +99,7 @@ public:
     };
 
     const qint32 N_MAX = 100000;
-    const int N_MAXNUMBEROFTHREADS = 8;
+    const qint32 N_MAXNUMBEROFTHREADS = 8;
 
     explicit MultiSearch(QObject *pParent = nullptr);
     ~MultiSearch();
