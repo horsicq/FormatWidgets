@@ -75,7 +75,7 @@ private slots:
     void loadRelocs(qint32 nRow);
     void loadSection(qint32 nRow);
     void loadException(qint32 nRow);
-    void loadDirectory(int nRow);
+    void loadDirectory(qint32 nRow);
     void loadDebug(int nRow);
     void loadDelayImport(int nRow);
     bool createSectionTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nNumberOfRecords);

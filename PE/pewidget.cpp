@@ -2354,7 +2354,7 @@ void PEWidget::loadException(qint32 nRow)
     loadHexSubdeviceByTableView(nRow, SPE::TYPE_EXCEPTION, ui->widgetHex_Exception, ui->tableView_Exceptions, &g_subDevice[SPE::TYPE_EXCEPTION]);
 }
 
-void PEWidget::loadDirectory(int nRow)
+void PEWidget::loadDirectory(qint32 nRow)
 {
     qint64 nOffset = ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->item(nRow, 0)->data(Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET).toLongLong();
     qint64 nSize = ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->item(nRow, 0)->data(Qt::UserRole + FW_DEF::SECTION_DATA_SIZE).toLongLong();
