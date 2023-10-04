@@ -117,6 +117,7 @@ private slots:
     void on_pushButtonSave_Rela_clicked();
     void on_pushButtonSave_Rel_clicked();
     void on_pushButtonSave_Elf_Ehdr_clicked();
+    void on_pushButtonSave_SymbolTable_clicked();
 
 private:
     // TODO rename

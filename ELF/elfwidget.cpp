@@ -99,7 +99,7 @@ void ELFWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_SEARCH, tr("Search")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_Elf_Ehdr, "Elf_Ehdr"));
 
-        QList<XELF_DEF::Elf_Shdr> listSectionHeaders = elf.getElf_ShdrList();
+        QList<XELF_DEF::Elf_Shdr> listSectionHeaders = elf.getElf_ShdrList(-1);
 
         if (listSectionHeaders.count()) {
             QTreeWidgetItem *pItemSections = createNewItem(SELF::TYPE_Elf_Shdr, tr("Sections"));
@@ -1223,3 +1223,9 @@ void ELFWidget::on_pushButtonSave_Elf_Ehdr_clicked()
 {
     saveHeaderTable(ui->tableWidget_Elf_Ehdr, XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Elf_Ehdr"))));
 }
+
+void ELFWidget::on_pushButtonSave_SymbolTable_clicked()
+{
+    XShortcutsWidget::saveTableModel(ui->tableView_SymbolTable->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("SymbolTable"))));
+}
+

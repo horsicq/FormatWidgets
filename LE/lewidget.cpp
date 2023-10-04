@@ -281,7 +281,7 @@ void LEWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
     pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, nSymbolWidth * 15);
 }
 
-QString LEWidget::typeIdToString(int nType)
+QString LEWidget::typeIdToString(qint32 nType)
 {
     Q_UNUSED(nType)
 

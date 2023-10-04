@@ -57,10 +57,10 @@ void ELFProcessData::_process()
         qint32 nNumberOfSections = 0;
 
         if (bIs64) {
-            listSectionHeaders64 = g_pELF->getElf64_ShdrList();
+            listSectionHeaders64 = g_pELF->getElf64_ShdrList(-1);
             nNumberOfSections = listSectionHeaders64.count();
         } else {
-            listSectionHeaders32 = g_pELF->getElf32_ShdrList();
+            listSectionHeaders32 = g_pELF->getElf32_ShdrList(-1);
             nNumberOfSections = listSectionHeaders32.count();
         }
 
