@@ -1228,4 +1228,3 @@ void ELFWidget::on_pushButtonSave_SymbolTable_clicked()
 {
     XShortcutsWidget::saveTableModel(ui->tableView_SymbolTable->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("SymbolTable"))));
 }
-
