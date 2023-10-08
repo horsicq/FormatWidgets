@@ -61,7 +61,7 @@ private:
     XComboBoxEx **g_ppComboBox;
     qint32 g_nComboBoxSize;
     InvWidget **g_ppInvWidget;
-    int g_nInvWidgetSize;
+    qint32 g_nInvWidgetSize;
     SubDevice *g_pSubDevice;
 };
 
