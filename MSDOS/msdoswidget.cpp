@@ -202,7 +202,7 @@ void MSDOSWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
     pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, nSymbolWidth * 16);   // TODO
 }
 
-QString MSDOSWidget::typeIdToString(int nType)
+QString MSDOSWidget::typeIdToString(qint32 nType)
 {
     Q_UNUSED(nType)
 
