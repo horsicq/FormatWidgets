@@ -188,7 +188,7 @@ void MSDOSWidget::blockSignals(bool bState)
     _blockSignals((QObject **)g_comboBox, __CB_size, bState);
 }
 
-void MSDOSWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
+void MSDOSWidget::adjustHeaderTable(qint32 nType, QTableWidget *pTableWidget)
 {
     // TODO like MACH !!!
     Q_UNUSED(nType);
