@@ -110,7 +110,7 @@ public:
     //    bool createDirectoryTable(int type,QTableWidget *pTableWidget,const
     //    DIRECTORY_ENTRY_RECORD *pRecords,int nRecordCount);
     bool createSectionTable(qint32 nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nNumberOfRecords);
-    void setLineEditsReadOnly(XLineEditHEX **ppLineEdits, int nCount, bool bState);
+    void setLineEditsReadOnly(XLineEditHEX **ppLineEdits, qint32 nCount, bool bState);
     void setComboBoxesReadOnly(XComboBoxEx **ppComboBoxes, int nCount, bool bState);
     void setPushButtonReadOnly(QPushButton **ppPushButtons, int nCount, bool bState);
     void setDateTimeEditReadOnly(XDateTimeEditX **ppDateTimeEdits, int nCount, bool bState);
