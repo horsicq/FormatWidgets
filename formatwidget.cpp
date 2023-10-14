@@ -1492,7 +1492,7 @@ void FormatWidget::setLineEditsReadOnly(XLineEditHEX **ppLineEdits, qint32 nCoun
     }
 }
 
-void FormatWidget::setComboBoxesReadOnly(XComboBoxEx **ppComboBoxes, int nCount, bool bState)
+void FormatWidget::setComboBoxesReadOnly(XComboBoxEx **ppComboBoxes, qint32 nCount, bool bState)
 {
     for (qint32 i = 0; i < nCount; i++) {
         if (ppComboBoxes[i]) {
