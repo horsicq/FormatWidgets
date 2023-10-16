@@ -46,6 +46,8 @@ FormatsWidget::FormatsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(n
     connect(ui->pageScanYARA, SIGNAL(scanStarted()), this, SLOT(onScanStarted()));
     connect(ui->pageScanYARA, SIGNAL(scanFinished()), this, SLOT(onScanFinished()));
 
+    connect(ui->pageScanYARA, SIGNAL(showInfo()), this, SLOT(_showYaraInfo()));
+
     ui->comboBoxScanEngine->blockSignals(bBlocked1);
 
 #ifndef USE_YARA
@@ -338,7 +340,9 @@ void FormatsWidget::scan()
             ui->pageScanNFD->setData(g_sFileName, g_bScan, getCurrentFileType());
 #ifdef USE_YARA
         } else if (nIndex == SE_YARA) {
-            ui->pageScanYARA->setData(g_sFileName, g_bScan);
+            YARA_Widget::OPTIONS options = {};
+            options.bHandleInfo = true;
+            ui->pageScanYARA->setData(g_sFileName, options, g_bScan);
 #endif
         }
     }
@@ -1000,4 +1004,9 @@ void FormatsWidget::on_pushButtonDisasm_clicked()
 void FormatsWidget::on_pushButtonVisualization_clicked()
 {
     showType(SBINARY::TYPE_VISUALIZATION);
+}
+
+void FormatsWidget::_showYaraInfo()
+{
+    showType(SBINARY::TYPE_YARASCAN);
 }

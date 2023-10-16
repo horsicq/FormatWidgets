@@ -28,6 +28,10 @@ include(${CMAKE_CURRENT_LIST_DIR}/../XExtractorWidget/xextractorwidget.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../XVisualizationWidget/xvisualizationwidget.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../XOptions/xoptionswidget.cmake)
 
+if(WITH_YARA)
+  include(${CMAKE_CURRENT_LIST_DIR}/../XYara/xyara.cmake)
+endif()
+
 set(FORMATWIDGET_SOURCES
     ${XCPPFILT_SOURCES}
     ${SEARCHSIGNATURESWIDGET_SOURCES}
@@ -68,3 +72,9 @@ set(FORMATWIDGET_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/toolswidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/toolswidget.ui
     )
+
+if(WITH_YARA)
+  set(FORMATWIDGET_SOURCES
+    ${XYARA_SOURCES}
+    }
+endif()

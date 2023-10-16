@@ -222,7 +222,7 @@ protected:
     virtual void reloadData() = 0;
     virtual void adjustHeaderTable(int nType, QTableWidget *pTableWidget);
     virtual void adjustListTable(int nType, QTableWidget *pTableWidget);
-    virtual QString typeIdToString(int nType);
+    virtual QString typeIdToString(qint32 nType);
     virtual void _showInDisasmWindowAddress(XADDR nAddress);
     virtual void _showInDisasmWindowOffset(qint64 nOffset);
     virtual void _showInMemoryMapWindowOffset(qint64 nOffset);
