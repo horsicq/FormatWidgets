@@ -13,6 +13,10 @@ DEPENDPATH += $$PWD
     XCONFIG += use_archive
 }
 
+!contains(XCONFIG, use_yara) {
+    XCONFIG += use_yara
+}
+
 HEADERS += \
     $$PWD/dialogmodelinfo.h \
     $$PWD/dialogprocessdata.h \

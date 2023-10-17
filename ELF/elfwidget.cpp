@@ -131,7 +131,7 @@ void ELFWidget::reload()
     }
 }
 
-FormatWidget::SV ELFWidget::_setValue(QVariant vValue, int nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
+FormatWidget::SV ELFWidget::_setValue(QVariant vValue, qint32 nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
 {
     Q_UNUSED(nVtype)
     Q_UNUSED(nPosition)
