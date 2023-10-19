@@ -2363,7 +2363,7 @@ void PEWidget::loadDirectory(qint32 nRow)
     loadHexSubdevice(nOffset, nSize, nAddress, &g_subDevice[SPE::TYPE_IMAGE_DIRECTORY_ENTRIES], ui->widgetHex_IMAGE_DIRECTORY_ENTRIES);
 }
 
-void PEWidget::loadDebug(int nRow)
+void PEWidget::loadDebug(qint32 nRow)
 {
     loadHexSubdeviceByTableView(nRow, SPE::TYPE_DEBUG, ui->widgetHex_Debug, ui->tableView_Debug, &g_subDevice[SPE::TYPE_DEBUG]);
 }
