@@ -111,7 +111,7 @@ void LEWidget::reload()
     }
 }
 
-FormatWidget::SV LEWidget::_setValue(QVariant vValue, qint32 nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
+FormatWidget::SV LEWidget::_setValue(QVariant vValue, qint32 nStype, qint32 nNdata, int nVtype, int nPosition, qint64 nOffset)
 {
     Q_UNUSED(nVtype)
     Q_UNUSED(nPosition)
