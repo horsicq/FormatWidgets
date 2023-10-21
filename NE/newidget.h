@@ -43,7 +43,7 @@ public:
     virtual void reload();
 
 protected:
-    virtual SV _setValue(QVariant vValue, int nStype, int nNdata, int nVtype, qint32 nPosition, qint64 nOffset);
+    virtual SV _setValue(QVariant vValue, int nStype, int nNdata, qint32 nVtype, qint32 nPosition, qint64 nOffset);
     virtual void setReadonly(bool bState);
     virtual void blockSignals(bool bState);
     virtual void adjustHeaderTable(qint32 nType, QTableWidget *pTableWidget);
