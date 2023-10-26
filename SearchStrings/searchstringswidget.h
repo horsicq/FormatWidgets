@@ -96,6 +96,9 @@ private slots:
     void on_checkBoxUTF8_stateChanged(int nArg);
     void on_checkBoxUnicode_stateChanged(int nArg);
     void adjust();
+    void on_tableViewSelection(const QItemSelection &itemSelected, const QItemSelection &itemDeselected);
+    void on_tableViewResult_clicked(const QModelIndex &index);
+    void viewSelection();
 
 protected:
     virtual void registerShortcuts(bool bState);
@@ -104,6 +107,7 @@ signals:
     void showHex(qint64 nOffset, qint64 nSize);
     void showDemangle(const QString &sString);
     void dataChanged(qint64 nDeviceOffset, qint64 nDeviceSize);
+    void currentAddressChanged(XADDR nAddress, qint64 nSize);
 
 private:
     Ui::SearchStringsWidget *ui;

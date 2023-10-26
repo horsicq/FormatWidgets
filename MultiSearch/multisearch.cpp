@@ -265,6 +265,7 @@ void MultiSearch::processModel()
                 QStandardItem *pTypeNumber = new QStandardItem;
                 pTypeNumber->setText(QString::number(i));
                 pTypeNumber->setData(record.nOffset, Qt::UserRole + USERROLE_OFFSET);
+                pTypeNumber->setData(record.nAddress, Qt::UserRole + USERROLE_ADDRESS);
                 pTypeNumber->setData(record.nSize, Qt::UserRole + USERROLE_SIZE);
                 pTypeNumber->setData(record.recordType, Qt::UserRole + USERROLE_TYPE);
                 (*g_ppModel)->setItem(i, COLUMN_STRING_NUMBER, pTypeNumber);
