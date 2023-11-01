@@ -102,7 +102,7 @@ public:
     qint32 getType();
     bool isReadonly();
     QTreeWidgetItem *createNewItem(qint32 nType, const QString &sTitle, qint64 nOffset = 0, qint64 nSize = 0, qint64 nExtraOffset = 0, qint64 nExtraSize = 0);
-    bool createHeaderTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nNumberOfRecords,
+    bool createHeaderTable(qint32 nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nNumberOfRecords,
                            int nPosition = 0, qint64 nOffset = 0);
     bool createListTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, int nNumberOfRecords);
     void addComment(QTableWidget *pTableWidget, int nRow, int nColumn, const QString &sComment);
