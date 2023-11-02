@@ -2368,7 +2368,7 @@ void PEWidget::loadDebug(qint32 nRow)
     loadHexSubdeviceByTableView(nRow, SPE::TYPE_DEBUG, ui->widgetHex_Debug, ui->tableView_Debug, &g_subDevice[SPE::TYPE_DEBUG]);
 }
 
-void PEWidget::loadDelayImport(int nRow)
+void PEWidget::loadDelayImport(qint32 nRow)
 {
     XPE pe(getDevice(), getOptions().bIsImage, getOptions().nImageBase);
 
