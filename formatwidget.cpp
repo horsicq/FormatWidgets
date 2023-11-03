@@ -1501,7 +1501,7 @@ void FormatWidget::setComboBoxesReadOnly(XComboBoxEx **ppComboBoxes, qint32 nCou
     }
 }
 
-void FormatWidget::setPushButtonReadOnly(QPushButton **ppPushButtons, int nCount, bool bState)
+void FormatWidget::setPushButtonReadOnly(QPushButton **ppPushButtons, qint32 nCount, bool bState)
 {
     for (qint32 i = 0; i < nCount; i++) {
         if (ppPushButtons[i]) {

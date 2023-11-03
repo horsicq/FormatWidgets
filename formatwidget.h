@@ -112,7 +112,7 @@ public:
     bool createSectionTable(qint32 nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nNumberOfRecords);
     void setLineEditsReadOnly(XLineEditHEX **ppLineEdits, qint32 nCount, bool bState);
     void setComboBoxesReadOnly(XComboBoxEx **ppComboBoxes, qint32 nCount, bool bState);
-    void setPushButtonReadOnly(QPushButton **ppPushButtons, int nCount, bool bState);
+    void setPushButtonReadOnly(QPushButton **ppPushButtons, qint32 nCount, bool bState);
     void setDateTimeEditReadOnly(XDateTimeEditX **ppDateTimeEdits, int nCount, bool bState);
     void _deleteObjects(QObject **ppObjects, qint32 nCount);
     void _deleteSubdevices(SubDevice **ppSubdevices, qint32 nCount);
