@@ -113,7 +113,7 @@ public:
     void setLineEditsReadOnly(XLineEditHEX **ppLineEdits, qint32 nCount, bool bState);
     void setComboBoxesReadOnly(XComboBoxEx **ppComboBoxes, qint32 nCount, bool bState);
     void setPushButtonReadOnly(QPushButton **ppPushButtons, qint32 nCount, bool bState);
-    void setDateTimeEditReadOnly(XDateTimeEditX **ppDateTimeEdits, int nCount, bool bState);
+    void setDateTimeEditReadOnly(XDateTimeEditX **ppDateTimeEdits, qint32 nCount, bool bState);
     void _deleteObjects(QObject **ppObjects, qint32 nCount);
     void _deleteSubdevices(SubDevice **ppSubdevices, qint32 nCount);
 
