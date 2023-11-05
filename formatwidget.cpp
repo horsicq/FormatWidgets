@@ -233,7 +233,7 @@ QTreeWidgetItem *FormatWidget::createNewItem(qint32 nType, const QString &sTitle
     return pResult;
 }
 
-void FormatWidget::setValue(QVariant vValue, int nStype, int nNdata, int nVtype, qint32 nPosition, qint64 nOffset)
+void FormatWidget::setValue(QVariant vValue, qint32 nStype, int nNdata, int nVtype, qint32 nPosition, qint64 nOffset)
 {
     if (saveBackup()) {
         SV sv = _setValue(vValue, nStype, nNdata, nVtype, nPosition, nOffset);
