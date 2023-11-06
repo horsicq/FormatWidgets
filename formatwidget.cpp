@@ -254,7 +254,7 @@ void FormatWidget::setValue(QVariant vValue, qint32 nStype, int nNdata, int nVty
     }
 }
 
-void FormatWidget::adjustHeaderTable(int nType, QTableWidget *pTableWidget)
+void FormatWidget::adjustHeaderTable(qint32 nType, QTableWidget *pTableWidget)
 {
     Q_UNUSED(nType)
     Q_UNUSED(pTableWidget)

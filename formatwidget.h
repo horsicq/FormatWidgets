@@ -220,7 +220,7 @@ protected:
     virtual void setReadonly(bool bState) = 0;
     virtual void blockSignals(bool bState) = 0;
     virtual void reloadData() = 0;
-    virtual void adjustHeaderTable(int nType, QTableWidget *pTableWidget);
+    virtual void adjustHeaderTable(qint32 nType, QTableWidget *pTableWidget);
     virtual void adjustListTable(qint32 nType, QTableWidget *pTableWidget);
     virtual QString typeIdToString(qint32 nType);
     virtual void _showInDisasmWindowAddress(XADDR nAddress);
