@@ -216,7 +216,7 @@ protected:
         SV_RELOADDATA
     };
 
-    virtual SV _setValue(QVariant vValue, qint32 nStype, qint32 nNdata, qint32 nVtype, int nPosition, qint64 nOffset) = 0;
+    virtual SV _setValue(QVariant vValue, qint32 nStype, qint32 nNdata, qint32 nVtype, qint32 nPosition, qint64 nOffset) = 0;
     virtual void setReadonly(bool bState) = 0;
     virtual void blockSignals(bool bState) = 0;
     virtual void reloadData() = 0;
