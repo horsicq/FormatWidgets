@@ -156,7 +156,7 @@ public:
     void showTableViewDemangle(QTableView *pTableView, int nColumn);
 
     static bool _setTreeItem(QTreeWidget *pTree, QTreeWidgetItem *pItem, int nID);
-    static void setTreeItem(QTreeWidget *pTree, int nID);
+    static void setTreeItem(QTreeWidget *pTree, qint32 nID);
     virtual void clear() = 0;
     virtual void cleanup() = 0;
     virtual void reload() = 0;
