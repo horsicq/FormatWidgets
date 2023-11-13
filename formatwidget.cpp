@@ -571,7 +571,7 @@ qint64 FormatWidget::getTableViewItemSize(QTableView *pTableView)
     return nResult;
 }
 
-void FormatWidget::showTableViewDemangle(QTableView *pTableView, int nColumn)
+void FormatWidget::showTableViewDemangle(QTableView *pTableView, qint32 nColumn)
 {
     int nRow = pTableView->currentIndex().row();
 
@@ -1464,7 +1464,7 @@ void FormatWidget::updateTableRecord(QTableWidget *pTableWidget, int nRow, qint6
 //    return true;
 //}
 
-bool FormatWidget::createSectionTable(qint32 nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nNumberOfRecords)
+bool FormatWidget::createSectionTable(qint32 nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, qint32 nNumberOfRecords)
 {
     Q_UNUSED(nType)
 

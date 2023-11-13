@@ -109,7 +109,7 @@ public:
     void updateTableRecord(QTableWidget *pTableWidget, int nRow, qint64 nOffset, qint64 nSize);
     //    bool createDirectoryTable(int type,QTableWidget *pTableWidget,const
     //    DIRECTORY_ENTRY_RECORD *pRecords,int nRecordCount);
-    bool createSectionTable(qint32 nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nNumberOfRecords);
+    bool createSectionTable(qint32 nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, qint32 nNumberOfRecords);
     void setLineEditsReadOnly(XLineEditHEX **ppLineEdits, qint32 nCount, bool bState);
     void setComboBoxesReadOnly(XComboBoxEx **ppComboBoxes, qint32 nCount, bool bState);
     void setPushButtonReadOnly(QPushButton **ppPushButtons, qint32 nCount, bool bState);
@@ -153,7 +153,7 @@ public:
     void dumpSection(QTableView *pTableView);
     void dumpAll(QTableView *pTableView);
     qint64 getTableViewItemSize(QTableView *pTableView);
-    void showTableViewDemangle(QTableView *pTableView, int nColumn);
+    void showTableViewDemangle(QTableView *pTableView, qint32 nColumn);
 
     static bool _setTreeItem(QTreeWidget *pTree, QTreeWidgetItem *pItem, int nID);
     static void setTreeItem(QTreeWidget *pTree, qint32 nID);
