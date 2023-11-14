@@ -1398,7 +1398,7 @@ void FormatWidget::addComment(QTableWidget *pTableWidget, int nRow, int nColumn,
     pTableWidget->item(nRow, nColumn)->setText(sComment);
 }
 
-void FormatWidget::updateTableRecord(QTableWidget *pTableWidget, int nRow, qint64 nOffset, qint64 nSize)
+void FormatWidget::updateTableRecord(QTableWidget *pTableWidget, qint32 nRow, qint64 nOffset, qint64 nSize)
 {
     pTableWidget->item(nRow, HEADER_COLUMN_NAME)->setData(Qt::UserRole + HEADER_DATA_OFFSET, nOffset);
     pTableWidget->item(nRow, HEADER_COLUMN_NAME)->setData(Qt::UserRole + HEADER_DATA_SIZE, nSize);
