@@ -1594,7 +1594,7 @@ XDateTimeEditX *FormatWidget::createTimeDateEdit(QTableWidget *pTableWidget, qin
     return result;
 }
 
-QPushButton *FormatWidget::createPushButton(QTableWidget *pTableWidget, qint32 nType, int nData, const QString &sText)
+QPushButton *FormatWidget::createPushButton(QTableWidget *pTableWidget, qint32 nType, qint32 nData, const QString &sText)
 {
     QPushButton *pPushButton = new QPushButton(this);
 
