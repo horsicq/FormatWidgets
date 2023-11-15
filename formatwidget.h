@@ -120,7 +120,7 @@ public:
     XComboBoxEx *createComboBox(QTableWidget *pTableWidget, QMap<quint64, QString> mapData, int nType, int nData, XComboBoxEx::CBTYPE cbtype, quint64 nMask = 0,
                                 int nExtraData = -1);
     InvWidget *createInvWidget(QTableWidget *pTableWidget, qint32 nType, int nData, InvWidget::TYPE widgetType);
-    XDateTimeEditX *createTimeDateEdit(QTableWidget *pTableWidget, int nType, int nData, XDateTimeEditX::DT_TYPE dtType);
+    XDateTimeEditX *createTimeDateEdit(QTableWidget *pTableWidget, qint32 nType, int nData, XDateTimeEditX::DT_TYPE dtType);
     QPushButton *createPushButton(QTableWidget *pTableWidget, int nType, int nData, const QString &sText);
 
     void setValue(QVariant vValue, qint32 nStype, qint32 nNdata, int nVtype, qint32 nPosition, qint64 nOffset);
