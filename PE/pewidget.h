@@ -99,7 +99,7 @@ private slots:
     void exportFunctionDisasm();
     void exportFunctionDemangle();
     void importFunctionDemangle();
-    void showSectionHeader(int nType, QTableView *pTableView);
+    void showSectionHeader(qint32 nType, QTableView *pTableView);
     void on_tableView_Sections_customContextMenuRequested(const QPoint &pos);
     void on_tableView_Sections_doubleClicked(const QModelIndex &index);
     void onTableView_Sections_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
