@@ -155,7 +155,7 @@ public:
     qint64 getTableViewItemSize(QTableView *pTableView);
     void showTableViewDemangle(QTableView *pTableView, qint32 nColumn);
 
-    static bool _setTreeItem(QTreeWidget *pTree, QTreeWidgetItem *pItem, int nID);
+    static bool _setTreeItem(QTreeWidget *pTree, QTreeWidgetItem *pItem, qint32 nID);
     static void setTreeItem(QTreeWidget *pTree, qint32 nID);
     virtual void clear() = 0;
     virtual void cleanup() = 0;
