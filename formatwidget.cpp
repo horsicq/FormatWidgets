@@ -335,7 +335,7 @@ bool FormatWidget::loadHexSubdeviceByTableView(qint32 nRow, int nType, ToolsWidg
     return bResult;
 }
 
-bool FormatWidget::setHexSubdeviceByTableView(int nRow, int nType, ToolsWidget *pToolsWidget, QTableView *pTableView)
+bool FormatWidget::setHexSubdeviceByTableView(qint32 nRow, int nType, ToolsWidget *pToolsWidget, QTableView *pTableView)
 {
     Q_UNUSED(nType)
 
