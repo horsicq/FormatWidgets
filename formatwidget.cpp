@@ -315,7 +315,7 @@ bool FormatWidget::loadHexSubdevice(qint64 nOffset, qint64 nSize, XADDR nAddress
     return true;
 }
 
-bool FormatWidget::loadHexSubdeviceByTableView(qint32 nRow, int nType, ToolsWidget *pToolsWidget, QTableView *pTableView, SubDevice **ppSubDevice, bool bOffset,
+bool FormatWidget::loadHexSubdeviceByTableView(qint32 nRow, qint32 nType, ToolsWidget *pToolsWidget, QTableView *pTableView, SubDevice **ppSubDevice, bool bOffset,
                                                bool bDisasm, bool bFollow)
 {
     Q_UNUSED(nType)

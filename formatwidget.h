@@ -132,7 +132,7 @@ public:
 
     bool loadHexSubdevice(qint64 nOffset, qint64 nSize, XADDR nAddress, SubDevice **ppSubDevice, ToolsWidget *pToolsWidget, bool bOffset = false, bool bDisasm = true,
                           bool bFollow = true);
-    bool loadHexSubdeviceByTableView(qint32 nRow, int nType, ToolsWidget *pToolsWidget, QTableView *pTableView, SubDevice **ppSubDevice, bool bOffset = false,
+    bool loadHexSubdeviceByTableView(qint32 nRow, qint32 nType, ToolsWidget *pToolsWidget, QTableView *pTableView, SubDevice **ppSubDevice, bool bOffset = false,
                                      bool bDisasm = true, bool bFollow = true);
     bool setHexSubdeviceByTableView(qint32 nRow, int nType, ToolsWidget *pToolsWidget, QTableView *pTableView);
 
