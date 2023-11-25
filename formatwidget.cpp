@@ -1346,7 +1346,7 @@ bool FormatWidget::createHeaderTable(qint32 nType, QTableWidget *pTableWidget, c
     return true;
 }
 
-bool FormatWidget::createListTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, qint32 nNumberOfRecords)
+bool FormatWidget::createListTable(qint32 nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, qint32 nNumberOfRecords)
 {
     pTableWidget->setColumnCount(2);
     pTableWidget->setRowCount(nNumberOfRecords);
