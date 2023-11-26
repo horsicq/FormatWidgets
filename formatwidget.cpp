@@ -1579,7 +1579,7 @@ InvWidget *FormatWidget::createInvWidget(QTableWidget *pTableWidget, qint32 nTyp
     return pResult;
 }
 
-XDateTimeEditX *FormatWidget::createTimeDateEdit(QTableWidget *pTableWidget, qint32 nType, int nData, XDateTimeEditX::DT_TYPE dtType)
+XDateTimeEditX *FormatWidget::createTimeDateEdit(QTableWidget *pTableWidget, qint32 nType, qint32 nData, XDateTimeEditX::DT_TYPE dtType)
 {
     XDateTimeEditX *result = new XDateTimeEditX(this);
     result->setType(dtType);
