@@ -134,7 +134,7 @@ public:
                           bool bFollow = true);
     bool loadHexSubdeviceByTableView(qint32 nRow, qint32 nType, ToolsWidget *pToolsWidget, QTableView *pTableView, SubDevice **ppSubDevice, bool bOffset = false,
                                      bool bDisasm = true, bool bFollow = true);
-    bool setHexSubdeviceByTableView(qint32 nRow, int nType, ToolsWidget *pToolsWidget, QTableView *pTableView);
+    bool setHexSubdeviceByTableView(qint32 nRow, qint32 nType, ToolsWidget *pToolsWidget, QTableView *pTableView);
 
     void setHeaderTableSelection(ToolsWidget *pToolWidget, QTableWidget *pTableWidget);
 
