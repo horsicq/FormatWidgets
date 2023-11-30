@@ -408,16 +408,16 @@ void PESectionHeaderWidget::reloadData()
             QString sName = QString((char *)ish.Name);
             sName.resize(qMin(sName.length(), XPE_DEF::S_IMAGE_SIZEOF_SHORT_NAME));
 
-            g_ppLinedEdit[N_IMAGE_SECTION_HEADER::Name]->setStringValue(sName, XPE_DEF::S_IMAGE_SIZEOF_SHORT_NAME);  // TODO Check
-            g_ppLinedEdit[N_IMAGE_SECTION_HEADER::VirtualSize]->setValue(ish.Misc.VirtualSize);
-            g_ppLinedEdit[N_IMAGE_SECTION_HEADER::VirtualAddress]->setValue(ish.VirtualAddress);
-            g_ppLinedEdit[N_IMAGE_SECTION_HEADER::SizeOfRawData]->setValue(ish.SizeOfRawData);
-            g_ppLinedEdit[N_IMAGE_SECTION_HEADER::PointerToRawData]->setValue(ish.PointerToRawData);
-            g_ppLinedEdit[N_IMAGE_SECTION_HEADER::PointerToRelocations]->setValue(ish.PointerToRelocations);
-            g_ppLinedEdit[N_IMAGE_SECTION_HEADER::PointerToLinenumbers]->setValue(ish.PointerToLinenumbers);
-            g_ppLinedEdit[N_IMAGE_SECTION_HEADER::NumberOfRelocations]->setValue(ish.NumberOfRelocations);
-            g_ppLinedEdit[N_IMAGE_SECTION_HEADER::NumberOfLinenumbers]->setValue(ish.NumberOfLinenumbers);
-            g_ppLinedEdit[N_IMAGE_SECTION_HEADER::Characteristics]->setValue(ish.Characteristics);
+            g_ppLinedEdit[N_IMAGE_SECTION_HEADER::Name]->setValue_String(sName, XPE_DEF::S_IMAGE_SIZEOF_SHORT_NAME);  // TODO Check
+            g_ppLinedEdit[N_IMAGE_SECTION_HEADER::VirtualSize]->setValue_uint32(ish.Misc.VirtualSize);
+            g_ppLinedEdit[N_IMAGE_SECTION_HEADER::VirtualAddress]->setValue_uint32(ish.VirtualAddress);
+            g_ppLinedEdit[N_IMAGE_SECTION_HEADER::SizeOfRawData]->setValue_uint32(ish.SizeOfRawData);
+            g_ppLinedEdit[N_IMAGE_SECTION_HEADER::PointerToRawData]->setValue_uint32(ish.PointerToRawData);
+            g_ppLinedEdit[N_IMAGE_SECTION_HEADER::PointerToRelocations]->setValue_uint32(ish.PointerToRelocations);
+            g_ppLinedEdit[N_IMAGE_SECTION_HEADER::PointerToLinenumbers]->setValue_uint32(ish.PointerToLinenumbers);
+            g_ppLinedEdit[N_IMAGE_SECTION_HEADER::NumberOfRelocations]->setValue_uint16(ish.NumberOfRelocations);
+            g_ppLinedEdit[N_IMAGE_SECTION_HEADER::NumberOfLinenumbers]->setValue_uint16(ish.NumberOfLinenumbers);
+            g_ppLinedEdit[N_IMAGE_SECTION_HEADER::Characteristics]->setValue_uint32(ish.Characteristics);
 
             g_ppComboBox[N_IMAGE_SECTION_HEADER::CB_CHARACTERISTICS]->setValue(ish.Characteristics);
             g_ppComboBox[N_IMAGE_SECTION_HEADER::CB_ALIGH]->setValue(ish.Characteristics);

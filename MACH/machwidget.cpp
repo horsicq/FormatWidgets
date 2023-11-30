@@ -1645,7 +1645,7 @@ void MACHWidget::reloadData()
 
                 blockSignals(true);
 
-                g_lineEdit_mach_uuid[N_mach_uuid::uuid]->setUUID(mach.getModuleUUID());
+                g_lineEdit_mach_uuid[N_mach_uuid::uuid]->setValue_UUID(mach.getModuleUUID());
 
                 blockSignals(false);
             }
@@ -1655,7 +1655,7 @@ void MACHWidget::reloadData()
 
                 blockSignals(true);
 
-                g_lineEdit_mach_dylinker[N_mach_dylinker::dylinker]->setStringValue(mach.getLoadDylinker());  // TODO Max Size!!!
+                g_lineEdit_mach_dylinker[N_mach_dylinker::dylinker]->setValue_String(mach.getLoadDylinker());  // TODO Max Size!!!
 
                 blockSignals(false);
             }
@@ -1665,7 +1665,7 @@ void MACHWidget::reloadData()
 
                 blockSignals(true);
 
-                g_lineEdit_mach_rpath[N_mach_rpath::path]->setStringValue(mach.getRPath());  // TODO Max Size!!!
+                g_lineEdit_mach_rpath[N_mach_rpath::path]->setValue_String(mach.getRPath());  // TODO Max Size!!!
 
                 blockSignals(false);
             }

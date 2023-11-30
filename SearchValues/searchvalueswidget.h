@@ -74,6 +74,9 @@ private slots:
     void on_pushButtonSearch_clicked();
     void _hex();
     void _disasm();
+    void viewSelection();
+    void on_tableViewSelection(const QItemSelection &itemSelected, const QItemSelection &itemDeselected);
+    void on_tableViewResult_clicked(const QModelIndex &index);
 
 private:
     void _search(DialogSearch::SEARCHMODE mode);
@@ -84,6 +87,7 @@ protected:
 signals:
     void showHex(qint64 nOffset, qint64 nSize);
     void showDisasm(qint64 nOffset);
+    void currentAddressChanged(XADDR nAddress, qint64 nSize);
 
 private:
     Ui::SearchValuesWidget *ui;

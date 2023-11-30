@@ -391,7 +391,7 @@ void FormatWidget::setItemEnable(QTableWidgetItem *pItem, bool bState)
 void FormatWidget::setLineEdit(XLineEditHEX *pLineEdit, qint32 nMaxLength, const QString &sText, qint64 nOffset)
 {
     pLineEdit->setMaxLength(nMaxLength);
-    pLineEdit->setText(sText);
+    pLineEdit->setValue_String(sText);
     pLineEdit->setProperty("OFFSET", nOffset);
 }
 

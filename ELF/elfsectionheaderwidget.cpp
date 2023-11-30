@@ -451,16 +451,16 @@ void ELFSectionHeaderWidget::reloadData()
             } else {
                 XELF_DEF::Elf32_Shdr shdr32 = elf.getElf32_Shdr(getNumber());
 
-                g_ppLinedEdit[N_Elf_Shdr::sh_name]->setValue(shdr32.sh_name);
-                g_ppLinedEdit[N_Elf_Shdr::sh_type]->setValue(shdr32.sh_type);
-                g_ppLinedEdit[N_Elf_Shdr::sh_flags]->setValue(shdr32.sh_flags);
-                g_ppLinedEdit[N_Elf_Shdr::sh_addr]->setValue(shdr32.sh_addr);
-                g_ppLinedEdit[N_Elf_Shdr::sh_offset]->setValue(shdr32.sh_offset);
-                g_ppLinedEdit[N_Elf_Shdr::sh_size]->setValue(shdr32.sh_size);
-                g_ppLinedEdit[N_Elf_Shdr::sh_link]->setValue(shdr32.sh_link);
-                g_ppLinedEdit[N_Elf_Shdr::sh_info]->setValue(shdr32.sh_info);
-                g_ppLinedEdit[N_Elf_Shdr::sh_addralign]->setValue(shdr32.sh_addralign);
-                g_ppLinedEdit[N_Elf_Shdr::sh_entsize]->setValue(shdr32.sh_entsize);
+                g_ppLinedEdit[N_Elf_Shdr::sh_name]->setValue_uint32(shdr32.sh_name);
+                g_ppLinedEdit[N_Elf_Shdr::sh_type]->setValue_uint32(shdr32.sh_type);
+                g_ppLinedEdit[N_Elf_Shdr::sh_flags]->setValue_uint32(shdr32.sh_flags);
+                g_ppLinedEdit[N_Elf_Shdr::sh_addr]->setValue_uint32(shdr32.sh_addr);
+                g_ppLinedEdit[N_Elf_Shdr::sh_offset]->setValue_uint32(shdr32.sh_offset);
+                g_ppLinedEdit[N_Elf_Shdr::sh_size]->setValue_uint32(shdr32.sh_size);
+                g_ppLinedEdit[N_Elf_Shdr::sh_link]->setValue_uint32(shdr32.sh_link);
+                g_ppLinedEdit[N_Elf_Shdr::sh_info]->setValue_uint32(shdr32.sh_info);
+                g_ppLinedEdit[N_Elf_Shdr::sh_addralign]->setValue_uint32(shdr32.sh_addralign);
+                g_ppLinedEdit[N_Elf_Shdr::sh_entsize]->setValue_uint32(shdr32.sh_entsize);
 
                 g_ppComboBox[N_Elf_Shdr::CB_TYPE]->setValue(shdr32.sh_type);
                 g_ppComboBox[N_Elf_Shdr::CB_FLAGS]->setValue(shdr32.sh_flags);

@@ -586,7 +586,7 @@ void MACHSectionHeaderWidget::reloadData()
             g_ppLinedEdit[N_mach_library::timestamp]->setValue((quint32)lr.timestamp);
             g_ppLinedEdit[N_mach_library::current_version]->setValue((quint32)lr.current_version);
             g_ppLinedEdit[N_mach_library::compatibility_version]->setValue((quint32)lr.compatibility_version);
-            g_ppLinedEdit[N_mach_library::name]->setStringValue(lr.sFullName, lr.nMaxStringSize);
+            g_ppLinedEdit[N_mach_library::name]->setValue_String(lr.sFullName, lr.nMaxStringSize);
 
             if (lr.nMaxStringSize) {
                 QTableWidgetItem *pItem = ui->tableWidget->item(N_mach_library::name, 0);
@@ -615,7 +615,7 @@ void MACHSectionHeaderWidget::reloadData()
 
             g_ppLinedEdit[N_mach_fmv_library::minor_version]->setValue((quint32)lr.minor_version);
             g_ppLinedEdit[N_mach_fmv_library::header_addr]->setValue((quint32)lr.header_addr);
-            g_ppLinedEdit[N_mach_fmv_library::name]->setStringValue(lr.sFullName, lr.nMaxStringSize);
+            g_ppLinedEdit[N_mach_fmv_library::name]->setValue_String(lr.sFullName, lr.nMaxStringSize);
 
             if (lr.nMaxStringSize) {
                 QTableWidgetItem *pItem = ui->tableWidget->item(N_mach_fmv_library::name, 0);
@@ -647,7 +647,7 @@ void MACHSectionHeaderWidget::reloadData()
             if (bIs64) {
                 XMACH_DEF::segment_command_64 segment = mach._read_segment_command_64(nHeaderOffset, bIsBigEndian);
 
-                g_ppLinedEdit[N_mach_segments::segname]->setStringValue(segment.segname);
+                g_ppLinedEdit[N_mach_segments::segname]->setValue_String(segment.segname);
                 g_ppLinedEdit[N_mach_segments::vmaddr]->setValue(segment.vmaddr);
                 g_ppLinedEdit[N_mach_segments::vmsize]->setValue(segment.vmsize);
                 g_ppLinedEdit[N_mach_segments::fileoff]->setValue(segment.fileoff);
@@ -662,7 +662,7 @@ void MACHSectionHeaderWidget::reloadData()
             } else {
                 XMACH_DEF::segment_command segment = mach._read_segment_command(nHeaderOffset, bIsBigEndian);
 
-                g_ppLinedEdit[N_mach_segments::segname]->setStringValue(segment.segname);
+                g_ppLinedEdit[N_mach_segments::segname]->setValue_String(segment.segname);
                 g_ppLinedEdit[N_mach_segments::vmaddr]->setValue(segment.vmaddr);
                 g_ppLinedEdit[N_mach_segments::vmsize]->setValue(segment.vmsize);
                 g_ppLinedEdit[N_mach_segments::fileoff]->setValue(segment.fileoff);
@@ -708,8 +708,8 @@ void MACHSectionHeaderWidget::reloadData()
 
                 XMACH_DEF::section_64 section = mach._read_section_64(nHeaderOffset, bIsBigEndian);
 
-                g_ppLinedEdit[N_mach_sections64_E::sectname]->setStringValue(section.sectname);
-                g_ppLinedEdit[N_mach_sections64_E::segname]->setStringValue(section.segname);
+                g_ppLinedEdit[N_mach_sections64_E::sectname]->setValue_String(section.sectname);
+                g_ppLinedEdit[N_mach_sections64_E::segname]->setValue_String(section.segname);
                 g_ppLinedEdit[N_mach_sections64_E::addr]->setValue(section.addr);
                 g_ppLinedEdit[N_mach_sections64_E::size]->setValue(section.size);
                 g_ppLinedEdit[N_mach_sections64_E::offset]->setValue(section.offset);
@@ -736,8 +736,8 @@ void MACHSectionHeaderWidget::reloadData()
 
                 XMACH_DEF::section section = mach._read_section(nHeaderOffset, bIsBigEndian);
 
-                g_ppLinedEdit[N_mach_sections32_E::sectname]->setStringValue(section.sectname);
-                g_ppLinedEdit[N_mach_sections32_E::segname]->setStringValue(section.segname);
+                g_ppLinedEdit[N_mach_sections32_E::sectname]->setValue_String(section.sectname);
+                g_ppLinedEdit[N_mach_sections32_E::segname]->setValue_String(section.segname);
                 g_ppLinedEdit[N_mach_sections32_E::addr]->setValue(section.addr);
                 g_ppLinedEdit[N_mach_sections32_E::size]->setValue(section.size);
                 g_ppLinedEdit[N_mach_sections32_E::offset]->setValue(section.offset);
@@ -849,35 +849,35 @@ void MACHSectionHeaderWidget::reloadData()
             if (bIs64) {
                 XMACH_DEF::dylib_module_64 record = mach._read_dylib_module_64(nHeaderOffset);
 
-                g_ppLinedEdit[N_mach_modtab64::module_name]->setValue(record.module_name);
-                g_ppLinedEdit[N_mach_modtab64::iextdefsym]->setValue(record.iextdefsym);
-                g_ppLinedEdit[N_mach_modtab64::nextdefsym]->setValue(record.nextdefsym);
-                g_ppLinedEdit[N_mach_modtab64::irefsym]->setValue(record.irefsym);
-                g_ppLinedEdit[N_mach_modtab64::nrefsym]->setValue(record.nrefsym);
-                g_ppLinedEdit[N_mach_modtab64::ilocalsym]->setValue(record.ilocalsym);
-                g_ppLinedEdit[N_mach_modtab64::nlocalsym]->setValue(record.nlocalsym);
-                g_ppLinedEdit[N_mach_modtab64::iextrel]->setValue(record.iextrel);
-                g_ppLinedEdit[N_mach_modtab64::nextrel]->setValue(record.nextrel);
-                g_ppLinedEdit[N_mach_modtab64::iinit_iterm]->setValue(record.iinit_iterm);
-                g_ppLinedEdit[N_mach_modtab64::ninit_nterm]->setValue(record.ninit_nterm);
-                g_ppLinedEdit[N_mach_modtab64::objc_module_info_size]->setValue(record.objc_module_info_size);
-                g_ppLinedEdit[N_mach_modtab64::objc_module_info_addr]->setValue(record.objc_module_info_addr);
+                g_ppLinedEdit[N_mach_modtab64::module_name]->setValue_uint32(record.module_name);
+                g_ppLinedEdit[N_mach_modtab64::iextdefsym]->setValue_uint32(record.iextdefsym);
+                g_ppLinedEdit[N_mach_modtab64::nextdefsym]->setValue_uint32(record.nextdefsym);
+                g_ppLinedEdit[N_mach_modtab64::irefsym]->setValue_uint32(record.irefsym);
+                g_ppLinedEdit[N_mach_modtab64::nrefsym]->setValue_uint32(record.nrefsym);
+                g_ppLinedEdit[N_mach_modtab64::ilocalsym]->setValue_uint32(record.ilocalsym);
+                g_ppLinedEdit[N_mach_modtab64::nlocalsym]->setValue_uint32(record.nlocalsym);
+                g_ppLinedEdit[N_mach_modtab64::iextrel]->setValue_uint32(record.iextrel);
+                g_ppLinedEdit[N_mach_modtab64::nextrel]->setValue_uint32(record.nextrel);
+                g_ppLinedEdit[N_mach_modtab64::iinit_iterm]->setValue_uint32(record.iinit_iterm);
+                g_ppLinedEdit[N_mach_modtab64::ninit_nterm]->setValue_uint32(record.ninit_nterm);
+                g_ppLinedEdit[N_mach_modtab64::objc_module_info_size]->setValue_uint32(record.objc_module_info_size);
+                g_ppLinedEdit[N_mach_modtab64::objc_module_info_addr]->setValue_uint64(record.objc_module_info_addr);
             } else {
                 XMACH_DEF::dylib_module record = mach._read_dylib_module(nHeaderOffset);
 
-                g_ppLinedEdit[N_mach_modtab32::module_name]->setValue(record.module_name);
-                g_ppLinedEdit[N_mach_modtab32::iextdefsym]->setValue(record.iextdefsym);
-                g_ppLinedEdit[N_mach_modtab32::nextdefsym]->setValue(record.nextdefsym);
-                g_ppLinedEdit[N_mach_modtab32::irefsym]->setValue(record.irefsym);
-                g_ppLinedEdit[N_mach_modtab32::nrefsym]->setValue(record.nrefsym);
-                g_ppLinedEdit[N_mach_modtab32::ilocalsym]->setValue(record.ilocalsym);
-                g_ppLinedEdit[N_mach_modtab32::nlocalsym]->setValue(record.nlocalsym);
-                g_ppLinedEdit[N_mach_modtab32::iextrel]->setValue(record.iextrel);
-                g_ppLinedEdit[N_mach_modtab32::nextrel]->setValue(record.nextrel);
-                g_ppLinedEdit[N_mach_modtab32::iinit_iterm]->setValue(record.iinit_iterm);
-                g_ppLinedEdit[N_mach_modtab32::ninit_nterm]->setValue(record.ninit_nterm);
-                g_ppLinedEdit[N_mach_modtab32::objc_module_info_addr]->setValue(record.objc_module_info_addr);
-                g_ppLinedEdit[N_mach_modtab32::objc_module_info_size]->setValue(record.objc_module_info_size);
+                g_ppLinedEdit[N_mach_modtab32::module_name]->setValue_uint32(record.module_name);
+                g_ppLinedEdit[N_mach_modtab32::iextdefsym]->setValue_uint32(record.iextdefsym);
+                g_ppLinedEdit[N_mach_modtab32::nextdefsym]->setValue_uint32(record.nextdefsym);
+                g_ppLinedEdit[N_mach_modtab32::irefsym]->setValue_uint32(record.irefsym);
+                g_ppLinedEdit[N_mach_modtab32::nrefsym]->setValue_uint32(record.nrefsym);
+                g_ppLinedEdit[N_mach_modtab32::ilocalsym]->setValue_uint32(record.ilocalsym);
+                g_ppLinedEdit[N_mach_modtab32::nlocalsym]->setValue_uint32(record.nlocalsym);
+                g_ppLinedEdit[N_mach_modtab32::iextrel]->setValue_uint32(record.iextrel);
+                g_ppLinedEdit[N_mach_modtab32::nextrel]->setValue_uint32(record.nextrel);
+                g_ppLinedEdit[N_mach_modtab32::iinit_iterm]->setValue_uint32(record.iinit_iterm);
+                g_ppLinedEdit[N_mach_modtab32::ninit_nterm]->setValue_uint32(record.ninit_nterm);
+                g_ppLinedEdit[N_mach_modtab32::objc_module_info_addr]->setValue_uint32(record.objc_module_info_addr);
+                g_ppLinedEdit[N_mach_modtab32::objc_module_info_size]->setValue_uint32(record.objc_module_info_size);
             }
 
             qint64 nOffset = nHeaderOffset;
@@ -904,8 +904,8 @@ void MACHSectionHeaderWidget::reloadData()
 
             XMACH_DEF::dylib_table_of_contents toc = mach._read_dylib_table_of_contents(nHeaderOffset);
 
-            g_ppLinedEdit[N_mach_table_of_contents::symbol_index]->setValue(toc.symbol_index);
-            g_ppLinedEdit[N_mach_table_of_contents::module_index]->setValue(toc.module_index);
+            g_ppLinedEdit[N_mach_table_of_contents::symbol_index]->setValue_uint32(toc.symbol_index);
+            g_ppLinedEdit[N_mach_table_of_contents::module_index]->setValue_uint32(toc.module_index);
 
             addComment(ui->tableWidget, N_mach_table_of_contents::symbol_index, HEADER_COLUMN_COMMENT, mach.getIndexSymbolName(toc.symbol_index));
 
@@ -925,8 +925,8 @@ void MACHSectionHeaderWidget::reloadData()
 
             XMACH_DEF::relocation_info reloc = mach._read_relocation_info(nHeaderOffset);
 
-            g_ppLinedEdit[N_mach_relocs::r_address]->setValue(reloc.r_address);
-            g_ppLinedEdit[N_mach_relocs::value]->setValue(reloc.s.value);
+            g_ppLinedEdit[N_mach_relocs::r_address]->setValue_uint32(reloc.r_address);
+            g_ppLinedEdit[N_mach_relocs::value]->setValue_uint32(reloc.s.value);
 
             qint64 nOffset = nHeaderOffset;
             qint64 nSize = mach.get_relocation_info_size();
@@ -945,7 +945,7 @@ void MACHSectionHeaderWidget::reloadData()
 
             quint32 nValue = mach.read_uint32(nHeaderOffset, mach.isBigEndian());
 
-            g_ppLinedEdit[N_mach_value::value]->setValue(nValue);
+            g_ppLinedEdit[N_mach_value::value]->setValue_uint32(nValue);
 
             if (nType == SMACH::TYPE_DYSYMTAB_indirectsyms) {
                 addComment(ui->tableWidget, N_mach_value::value, HEADER_COLUMN_COMMENT, mach.getIndexSymbolName(nValue));
@@ -976,20 +976,20 @@ void MACHSectionHeaderWidget::widgetValueChanged(quint64 nValue)
         switch (nStype) {
             case SMACH::TYPE_mach_commands:
                 switch (nNdata) {
-                    case N_mach_commands::cmd: g_ppLinedEdit[N_mach_commands::cmd]->setValue((quint32)nValue); break;
+                    case N_mach_commands::cmd: g_ppLinedEdit[N_mach_commands::cmd]->setValue_uint32((quint32)nValue); break;
                 }
                 break;
 
             case SMACH::TYPE_mach_segments:
                 switch (nNdata) {
-                    case N_mach_segments::initprot: g_ppLinedEdit[N_mach_segments::initprot]->setValue((quint32)nValue); break;
-                    case N_mach_segments::maxprot: g_ppLinedEdit[N_mach_segments::maxprot]->setValue((quint32)nValue); break;
+                    case N_mach_segments::initprot: g_ppLinedEdit[N_mach_segments::initprot]->setValue_uint32((quint32)nValue); break;
+                    case N_mach_segments::maxprot: g_ppLinedEdit[N_mach_segments::maxprot]->setValue_uint32((quint32)nValue); break;
                 }
                 break;
 
             case SMACH::TYPE_DICE:
                 switch (nNdata) {
-                    case N_mach_data_in_code_entry::kind: g_ppLinedEdit[N_mach_data_in_code_entry::kind]->setValue(nValue); break;
+                    case N_mach_data_in_code_entry::kind: g_ppLinedEdit[N_mach_data_in_code_entry::kind]->setValue_uint64(nValue); break;
                 }
 
                 break;
@@ -1001,7 +1001,7 @@ void MACHSectionHeaderWidget::widgetValueChanged(quint64 nValue)
                         case N_mach_sections64_E::flags_0:
                         case N_mach_sections64_E::flags_1:
                         case N_mach_sections64_E::flags_2:
-                            g_ppLinedEdit[N_mach_sections64_E::flags_0]->setValue((quint32)nValue);
+                            g_ppLinedEdit[N_mach_sections64_E::flags_0]->setValue_uint32((quint32)nValue);
                             g_ppComboBox[N_mach_sections64_E::CB_flag0]->setValue(nValue);
                             g_ppComboBox[N_mach_sections64_E::CB_flag1]->setValue(nValue);
                             g_ppComboBox[N_mach_sections64_E::CB_flag2]->setValue(nValue);
@@ -1012,7 +1012,7 @@ void MACHSectionHeaderWidget::widgetValueChanged(quint64 nValue)
                         case N_mach_sections32_E::flags_0:
                         case N_mach_sections32_E::flags_1:
                         case N_mach_sections32_E::flags_2:
-                            g_ppLinedEdit[N_mach_sections32_E::flags_0]->setValue((quint32)nValue);
+                            g_ppLinedEdit[N_mach_sections32_E::flags_0]->setValue_uint32((quint32)nValue);
                             g_ppComboBox[N_mach_sections32_E::CB_flag0]->setValue(nValue);
                             g_ppComboBox[N_mach_sections32_E::CB_flag1]->setValue(nValue);
                             g_ppComboBox[N_mach_sections32_E::CB_flag2]->setValue(nValue);

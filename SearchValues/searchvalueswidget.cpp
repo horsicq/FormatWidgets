@@ -155,6 +155,8 @@ void SearchValuesWidget::search()
 
         g_watcher.setFuture(future);
 
+        connect(ui->tableViewResult->selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)), this,
+                SLOT(on_tableViewSelection(QItemSelection, QItemSelection)));
         // TODO nothing found
     }
 }
@@ -239,3 +241,36 @@ void SearchValuesWidget::_disasm()
         emit showDisasm(nOffset);
     }
 }
+
+void SearchValuesWidget::viewSelection()
+{
+    QItemSelectionModel *pSelectionModel = ui->tableViewResult->selectionModel();
+
+    if (pSelectionModel) {
+        QModelIndexList listIndexes = pSelectionModel->selectedIndexes();
+
+        if (listIndexes.count()) {
+            QModelIndex indexNumber = listIndexes.at(MultiSearch::COLUMN_VALUE_NUMBER);
+            XADDR nVirtualAddress = ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + MultiSearch::USERROLE_ADDRESS).toULongLong();
+            qint64 nSize = ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + MultiSearch::USERROLE_SIZE).toLongLong();
+
+            emit currentAddressChanged(nVirtualAddress, nSize);
+        }
+    }
+}
+
+void SearchValuesWidget::on_tableViewSelection(const QItemSelection &itemSelected, const QItemSelection &itemDeselected)
+{
+    Q_UNUSED(itemSelected)
+    Q_UNUSED(itemDeselected)
+
+    viewSelection();
+}
+
+void SearchValuesWidget::on_tableViewResult_clicked(const QModelIndex &index)
+{
+    Q_UNUSED(index)
+
+    viewSelection();
+}
+

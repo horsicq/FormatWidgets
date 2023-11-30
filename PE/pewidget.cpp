@@ -2221,7 +2221,7 @@ void PEWidget::reloadData()
                 g_lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::MinorVersion]->setValue(header.nMinorVersion);
                 g_lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::Reserved]->setValue(header.nReserved);
                 g_lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::VersionStringLength]->setValue(header.nVersionStringLength);
-                g_lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::Version]->setStringValue(header.sVersion, header.nVersionStringLength);
+                g_lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::Version]->setValue_String(header.sVersion, header.nVersionStringLength);
                 g_lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::Flags]->setValue(header.nFlags);
                 g_lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::Streams]->setValue(header.nStreams);
 
@@ -2978,9 +2978,9 @@ void PEWidget::onTreeView_Resources_currentRowChanged(const QModelIndex &current
         qint64 nSize = ui->treeView_Resources->model()->data(current, Qt::UserRole + FW_DEF::SECTION_DATA_SIZE).toLongLong();
         XADDR nAddress = ui->treeView_Resources->model()->data(current, Qt::UserRole + FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
 
-        g_lineEdit_Resources[N_IMAGE_RESOURCES::ID1]->setStringValue(sID1);
-        g_lineEdit_Resources[N_IMAGE_RESOURCES::ID2]->setStringValue(sID2);
-        g_lineEdit_Resources[N_IMAGE_RESOURCES::ID3]->setStringValue(sID3);
+        g_lineEdit_Resources[N_IMAGE_RESOURCES::ID1]->setValue_String(sID1);
+        g_lineEdit_Resources[N_IMAGE_RESOURCES::ID2]->setValue_String(sID2);
+        g_lineEdit_Resources[N_IMAGE_RESOURCES::ID3]->setValue_String(sID3);
         g_lineEdit_Resources[N_IMAGE_RESOURCES::ADDRESS]->setValue((quint32)nAddress);
         g_lineEdit_Resources[N_IMAGE_RESOURCES::OFFSET]->setValue((quint32)nOffset);
         g_lineEdit_Resources[N_IMAGE_RESOURCES::SIZE]->setValue((quint32)nSize);

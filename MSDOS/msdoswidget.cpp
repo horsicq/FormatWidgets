@@ -417,7 +417,7 @@ void MSDOSWidget::widgetValueChanged(quint64 nValue)
     switch (nStype) {
         case SMSDOS::TYPE_DOS_HEADER:
             switch (nNdata) {
-                case N_DOS_HEADER::e_magic: g_lineEdit_DOS_HEADER[N_DOS_HEADER::e_magic]->setValue((quint16)nValue); break;
+                case N_DOS_HEADER::e_magic: g_lineEdit_DOS_HEADER[N_DOS_HEADER::e_magic]->setValue_uint16((quint16)nValue); break;
             }
 
             break;
