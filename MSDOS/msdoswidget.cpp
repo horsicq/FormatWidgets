@@ -369,20 +369,20 @@ void MSDOSWidget::reloadData()
 
                 XMSDOS_DEF::IMAGE_DOS_HEADEREX msdosheaderex = msdos.getDosHeaderEx();
 
-                g_lineEdit_DOS_HEADER[N_DOS_HEADER::e_magic]->setValue(msdosheaderex.e_magic);
-                g_lineEdit_DOS_HEADER[N_DOS_HEADER::e_cblp]->setValue(msdosheaderex.e_cblp);
-                g_lineEdit_DOS_HEADER[N_DOS_HEADER::e_cp]->setValue(msdosheaderex.e_cp);
-                g_lineEdit_DOS_HEADER[N_DOS_HEADER::e_crlc]->setValue(msdosheaderex.e_crlc);
-                g_lineEdit_DOS_HEADER[N_DOS_HEADER::e_cparhdr]->setValue(msdosheaderex.e_cparhdr);
-                g_lineEdit_DOS_HEADER[N_DOS_HEADER::e_minalloc]->setValue(msdosheaderex.e_minalloc);
-                g_lineEdit_DOS_HEADER[N_DOS_HEADER::e_maxalloc]->setValue(msdosheaderex.e_maxalloc);
-                g_lineEdit_DOS_HEADER[N_DOS_HEADER::e_ss]->setValue(msdosheaderex.e_ss);
-                g_lineEdit_DOS_HEADER[N_DOS_HEADER::e_sp]->setValue(msdosheaderex.e_sp);
-                g_lineEdit_DOS_HEADER[N_DOS_HEADER::e_csum]->setValue(msdosheaderex.e_csum);
-                g_lineEdit_DOS_HEADER[N_DOS_HEADER::e_ip]->setValue(msdosheaderex.e_ip);
-                g_lineEdit_DOS_HEADER[N_DOS_HEADER::e_cs]->setValue(msdosheaderex.e_cs);
-                g_lineEdit_DOS_HEADER[N_DOS_HEADER::e_lfarlc]->setValue(msdosheaderex.e_lfarlc);
-                g_lineEdit_DOS_HEADER[N_DOS_HEADER::e_ovno]->setValue(msdosheaderex.e_ovno);
+                g_lineEdit_DOS_HEADER[N_DOS_HEADER::e_magic]->setValue_uint16(msdosheaderex.e_magic);
+                g_lineEdit_DOS_HEADER[N_DOS_HEADER::e_cblp]->setValue_uint16(msdosheaderex.e_cblp);
+                g_lineEdit_DOS_HEADER[N_DOS_HEADER::e_cp]->setValue_uint16(msdosheaderex.e_cp);
+                g_lineEdit_DOS_HEADER[N_DOS_HEADER::e_crlc]->setValue_uint16(msdosheaderex.e_crlc);
+                g_lineEdit_DOS_HEADER[N_DOS_HEADER::e_cparhdr]->setValue_uint16(msdosheaderex.e_cparhdr);
+                g_lineEdit_DOS_HEADER[N_DOS_HEADER::e_minalloc]->setValue_uint16(msdosheaderex.e_minalloc);
+                g_lineEdit_DOS_HEADER[N_DOS_HEADER::e_maxalloc]->setValue_uint16(msdosheaderex.e_maxalloc);
+                g_lineEdit_DOS_HEADER[N_DOS_HEADER::e_ss]->setValue_uint16(msdosheaderex.e_ss);
+                g_lineEdit_DOS_HEADER[N_DOS_HEADER::e_sp]->setValue_uint16(msdosheaderex.e_sp);
+                g_lineEdit_DOS_HEADER[N_DOS_HEADER::e_csum]->setValue_uint16(msdosheaderex.e_csum);
+                g_lineEdit_DOS_HEADER[N_DOS_HEADER::e_ip]->setValue_uint16(msdosheaderex.e_ip);
+                g_lineEdit_DOS_HEADER[N_DOS_HEADER::e_cs]->setValue_uint16(msdosheaderex.e_cs);
+                g_lineEdit_DOS_HEADER[N_DOS_HEADER::e_lfarlc]->setValue_uint16(msdosheaderex.e_lfarlc);
+                g_lineEdit_DOS_HEADER[N_DOS_HEADER::e_ovno]->setValue_uint16(msdosheaderex.e_ovno);
 
                 g_comboBox[CB_DOS_HEADER_e_magic]->setValue(msdosheaderex.e_magic);
 

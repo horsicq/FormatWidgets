@@ -105,7 +105,7 @@ public:
     bool createHeaderTable(qint32 nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, qint32 nNumberOfRecords,
                            qint32 nPosition = 0, qint64 nOffset = 0);
     bool createListTable(qint32 nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, qint32 nNumberOfRecords);
-    void addComment(QTableWidget *pTableWidget, qint32 nRow, int nColumn, const QString &sComment);
+    void addComment(QTableWidget *pTableWidget, qint32 nRow, qint32 nColumn, const QString &sComment);
     void updateTableRecord(QTableWidget *pTableWidget, qint32 nRow, qint64 nOffset, qint64 nSize);
     //    bool createDirectoryTable(int type,QTableWidget *pTableWidget,const
     //    DIRECTORY_ENTRY_RECORD *pRecords,int nRecordCount);
