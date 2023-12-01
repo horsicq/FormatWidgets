@@ -420,7 +420,7 @@ void ELFWidget::reloadData()
 
                 blockSignals(true);
 
-                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_mag]->setValue(elf.getIdent_mag_LE());
+                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_mag]->setValue_uint32(elf.getIdent_mag_LE());
                 g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_class]->setValue(elf.getIdent_class());
                 g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_data]->setValue(elf.getIdent_data());
                 g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_version]->setValue(elf.getIdent_version());

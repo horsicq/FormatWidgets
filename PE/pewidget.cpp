@@ -1220,7 +1220,7 @@ void PEWidget::reloadData()
 
                 quint32 nSignature = pe.getNtHeaders_Signature();
 
-                g_lineEdit_IMAGE_NT_HEADERS[N_IMAGE_NT_HEADERS::Signature]->setValue(nSignature);
+                g_lineEdit_IMAGE_NT_HEADERS[N_IMAGE_NT_HEADERS::Signature]->setValue_uint32(nSignature);
                 g_comboBox[CB_IMAGE_NT_HEADERS_Signature]->setValue(nSignature);
 
                 qint64 nOffset = pe.getNtHeadersOffset();
@@ -1250,13 +1250,13 @@ void PEWidget::reloadData()
 
                 XPE_DEF::IMAGE_FILE_HEADER fileheader = pe.getFileHeader();
 
-                g_lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::Machine]->setValue(fileheader.Machine);
-                g_lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::NumberOfSections]->setValue(fileheader.NumberOfSections);
-                g_lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::TimeDateStamp]->setValue(fileheader.TimeDateStamp);
-                g_lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::PointerToSymbolTable]->setValue(fileheader.PointerToSymbolTable);
-                g_lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::NumberOfSymbols]->setValue(fileheader.NumberOfSymbols);
-                g_lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::SizeOfOptionalHeader]->setValue(fileheader.SizeOfOptionalHeader);
-                g_lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::Characteristics]->setValue(fileheader.Characteristics);
+                g_lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::Machine]->setValue_uint16(fileheader.Machine);
+                g_lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::NumberOfSections]->setValue_uint16(fileheader.NumberOfSections);
+                g_lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::TimeDateStamp]->setValue_uint32(fileheader.TimeDateStamp);
+                g_lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::PointerToSymbolTable]->setValue_uint32(fileheader.PointerToSymbolTable);
+                g_lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::NumberOfSymbols]->setValue_uint32(fileheader.NumberOfSymbols);
+                g_lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::SizeOfOptionalHeader]->setValue_uint16(fileheader.SizeOfOptionalHeader);
+                g_lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::Characteristics]->setValue_uint16(fileheader.Characteristics);
 
                 g_comboBox[CB_IMAGE_FILE_HEADER_Machine]->setValue(fileheader.Machine);
                 g_comboBox[CB_IMAGE_FILE_HEADER_Characteristics]->setValue(fileheader.Characteristics);

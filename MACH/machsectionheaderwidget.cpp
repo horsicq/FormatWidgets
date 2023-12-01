@@ -738,15 +738,15 @@ void MACHSectionHeaderWidget::reloadData()
 
                 g_ppLinedEdit[N_mach_sections32_E::sectname]->setValue_String(section.sectname);
                 g_ppLinedEdit[N_mach_sections32_E::segname]->setValue_String(section.segname);
-                g_ppLinedEdit[N_mach_sections32_E::addr]->setValue(section.addr);
-                g_ppLinedEdit[N_mach_sections32_E::size]->setValue(section.size);
-                g_ppLinedEdit[N_mach_sections32_E::offset]->setValue(section.offset);
-                g_ppLinedEdit[N_mach_sections32_E::align]->setValue(section.align);
-                g_ppLinedEdit[N_mach_sections32_E::reloff]->setValue(section.reloff);
-                g_ppLinedEdit[N_mach_sections32_E::nreloc]->setValue(section.nreloc);
-                g_ppLinedEdit[N_mach_sections32_E::flags_0]->setValue(section.flags);
-                g_ppLinedEdit[N_mach_sections32_E::reserved1]->setValue(section.reserved1);
-                g_ppLinedEdit[N_mach_sections32_E::reserved2]->setValue(section.reserved2);
+                g_ppLinedEdit[N_mach_sections32_E::addr]->setValue_uint32(section.addr);
+                g_ppLinedEdit[N_mach_sections32_E::size]->setValue_uint32(section.size);
+                g_ppLinedEdit[N_mach_sections32_E::offset]->setValue_uint32(section.offset);
+                g_ppLinedEdit[N_mach_sections32_E::align]->setValue_uint32(section.align);
+                g_ppLinedEdit[N_mach_sections32_E::reloff]->setValue_uint32(section.reloff);
+                g_ppLinedEdit[N_mach_sections32_E::nreloc]->setValue_uint32(section.nreloc);
+                g_ppLinedEdit[N_mach_sections32_E::flags_0]->setValue_uint32(section.flags);
+                g_ppLinedEdit[N_mach_sections32_E::reserved1]->setValue_uint32(section.reserved1);
+                g_ppLinedEdit[N_mach_sections32_E::reserved2]->setValue_uint32(section.reserved2);
 
                 g_ppComboBox[N_mach_sections32_E::CB_flag0]->setValue(section.flags);
                 g_ppComboBox[N_mach_sections32_E::CB_flag1]->setValue(section.flags);

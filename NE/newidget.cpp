@@ -480,22 +480,22 @@ void NEWidget::reloadData()
                 g_lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_cs]->setValue(msdosheaderex.e_cs);
                 g_lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_lfarlc]->setValue(msdosheaderex.e_lfarlc);
                 g_lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_ovno]->setValue(msdosheaderex.e_ovno);
-                g_lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res_0]->setValue(msdosheaderex.e_res[0]);
-                g_lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res_1]->setValue(msdosheaderex.e_res[1]);
-                g_lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res_2]->setValue(msdosheaderex.e_res[2]);
-                g_lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res_3]->setValue(msdosheaderex.e_res[3]);
+                g_lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res_0]->setValue_uint16(msdosheaderex.e_res[0]);
+                g_lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res_1]->setValue_uint16(msdosheaderex.e_res[1]);
+                g_lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res_2]->setValue_uint16(msdosheaderex.e_res[2]);
+                g_lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res_3]->setValue_uint16(msdosheaderex.e_res[3]);
                 g_lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_oemid]->setValue(msdosheaderex.e_oemid);
                 g_lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_oeminfo]->setValue(msdosheaderex.e_oeminfo);
-                g_lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res2_0]->setValue(msdosheaderex.e_res2[0]);
-                g_lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res2_1]->setValue(msdosheaderex.e_res2[1]);
-                g_lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res2_2]->setValue(msdosheaderex.e_res2[2]);
-                g_lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res2_3]->setValue(msdosheaderex.e_res2[3]);
-                g_lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res2_4]->setValue(msdosheaderex.e_res2[4]);
-                g_lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res2_5]->setValue(msdosheaderex.e_res2[5]);
-                g_lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res2_6]->setValue(msdosheaderex.e_res2[6]);
-                g_lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res2_7]->setValue(msdosheaderex.e_res2[7]);
-                g_lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res2_8]->setValue(msdosheaderex.e_res2[8]);
-                g_lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res2_9]->setValue(msdosheaderex.e_res2[9]);
+                g_lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res2_0]->setValue_uint16(msdosheaderex.e_res2[0]);
+                g_lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res2_1]->setValue_uint16(msdosheaderex.e_res2[1]);
+                g_lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res2_2]->setValue_uint16(msdosheaderex.e_res2[2]);
+                g_lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res2_3]->setValue_uint16(msdosheaderex.e_res2[3]);
+                g_lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res2_4]->setValue_uint16(msdosheaderex.e_res2[4]);
+                g_lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res2_5]->setValue_uint16(msdosheaderex.e_res2[5]);
+                g_lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res2_6]->setValue_uint16(msdosheaderex.e_res2[6]);
+                g_lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res2_7]->setValue_uint16(msdosheaderex.e_res2[7]);
+                g_lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res2_8]->setValue_uint16(msdosheaderex.e_res2[8]);
+                g_lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_res2_9]->setValue_uint16(msdosheaderex.e_res2[9]);
                 g_lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_lfanew]->setValue(msdosheaderex.e_lfanew);
 
                 g_comboBox[CB_DOS_HEADER_e_magic]->setValue(msdosheaderex.e_magic);
@@ -621,16 +621,16 @@ void NEWidget::widgetValueChanged(quint64 nValue)
     switch (nStype) {
         case SNE::TYPE_DOS_HEADER:
             switch (nNdata) {
-                case N_NE_DOS_HEADER::e_magic: g_lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_magic]->setValue((quint16)nValue); break;
+                case N_NE_DOS_HEADER::e_magic: g_lineEdit_DOS_HEADER[N_NE_DOS_HEADER::e_magic]->setValue_uint16((quint16)nValue); break;
             }
 
             break;
         case SNE::TYPE_OS2_HEADER:
             switch (nNdata) {
-                case N_OS2_HEADER::ne_magic: g_lineEdit_OS2_HEADER[N_OS2_HEADER::ne_magic]->setValue((quint16)nValue); break;
-                case N_OS2_HEADER::ne_flags: g_lineEdit_OS2_HEADER[N_OS2_HEADER::ne_flags]->setValue((quint16)nValue); break;
-                case N_OS2_HEADER::ne_exetyp: g_lineEdit_OS2_HEADER[N_OS2_HEADER::ne_exetyp]->setValue((quint16)nValue); break;
-                case N_OS2_HEADER::ne_flagsothers: g_lineEdit_OS2_HEADER[N_OS2_HEADER::ne_flagsothers]->setValue((quint16)nValue); break;
+                case N_OS2_HEADER::ne_magic: g_lineEdit_OS2_HEADER[N_OS2_HEADER::ne_magic]->setValue_uint16((quint16)nValue); break;
+                case N_OS2_HEADER::ne_flags: g_lineEdit_OS2_HEADER[N_OS2_HEADER::ne_flags]->setValue_uint16((quint16)nValue); break;
+                case N_OS2_HEADER::ne_exetyp: g_lineEdit_OS2_HEADER[N_OS2_HEADER::ne_exetyp]->setValue_uint16((quint16)nValue); break;
+                case N_OS2_HEADER::ne_flagsothers: g_lineEdit_OS2_HEADER[N_OS2_HEADER::ne_flagsothers]->setValue_uint16((quint16)nValue); break;
             }
 
             break;

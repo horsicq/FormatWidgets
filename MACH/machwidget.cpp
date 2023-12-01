@@ -1466,16 +1466,16 @@ void MACHWidget::reloadData()
 
                 blockSignals(true);
 
-                g_lineEdit_mach_header[N_mach_header::magic]->setValue(mach.getHeader_magic());
-                g_lineEdit_mach_header[N_mach_header::cputype]->setValue(mach.getHeader_cputype());
-                g_lineEdit_mach_header[N_mach_header::cpusubtype]->setValue(mach.getHeader_cpusubtype());
-                g_lineEdit_mach_header[N_mach_header::filetype]->setValue(mach.getHeader_filetype());
-                g_lineEdit_mach_header[N_mach_header::ncmds]->setValue(mach.getHeader_ncmds());
-                g_lineEdit_mach_header[N_mach_header::sizeofcmds]->setValue(mach.getHeader_sizeofcmds());
-                g_lineEdit_mach_header[N_mach_header::flags]->setValue(mach.getHeader_flags());
+                g_lineEdit_mach_header[N_mach_header::magic]->setValue_uint32(mach.getHeader_magic());
+                g_lineEdit_mach_header[N_mach_header::cputype]->setValue_uint32(mach.getHeader_cputype());
+                g_lineEdit_mach_header[N_mach_header::cpusubtype]->setValue_uint32(mach.getHeader_cpusubtype());
+                g_lineEdit_mach_header[N_mach_header::filetype]->setValue_uint32(mach.getHeader_filetype());
+                g_lineEdit_mach_header[N_mach_header::ncmds]->setValue_uint32(mach.getHeader_ncmds());
+                g_lineEdit_mach_header[N_mach_header::sizeofcmds]->setValue_uint32(mach.getHeader_sizeofcmds());
+                g_lineEdit_mach_header[N_mach_header::flags]->setValue_uint32(mach.getHeader_flags());
 
                 if (mach.is64()) {
-                    g_lineEdit_mach_header[N_mach_header::reserved]->setValue(mach.getHeader_reserved());
+                    g_lineEdit_mach_header[N_mach_header::reserved]->setValue_uint32(mach.getHeader_reserved());
                 }
 
                 g_comboBox[CB_mach_header_magic]->setValue(mach.getHeader_magic());
@@ -2033,27 +2033,27 @@ void MACHWidget::reloadData()
 
                 XMACH_DEF::x86_thread_state64_t state = mach._read_x86_thread_state64_t(nDataOffset);
 
-                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rax]->setValue(state.rax);
-                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rbx]->setValue(state.rbx);
-                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rcx]->setValue(state.rcx);
-                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rdx]->setValue(state.rdx);
-                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rdi]->setValue(state.rdi);
-                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rsi]->setValue(state.rsi);
-                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rbp]->setValue(state.rbp);
-                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rsp]->setValue(state.rsp);
-                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::r8]->setValue(state.r8);
-                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::r9]->setValue(state.r9);
-                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::r10]->setValue(state.r10);
-                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::r11]->setValue(state.r11);
-                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::r12]->setValue(state.r12);
-                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::r13]->setValue(state.r13);
-                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::r14]->setValue(state.r14);
-                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::r15]->setValue(state.r15);
-                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rip]->setValue(state.rip);
-                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rflags]->setValue(state.rflags);
-                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::cs]->setValue(state.cs);
-                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::fs]->setValue(state.fs);
-                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::gs]->setValue(state.gs);
+                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rax]->setValue_uint64(state.rax);
+                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rbx]->setValue_uint64(state.rbx);
+                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rcx]->setValue_uint64(state.rcx);
+                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rdx]->setValue_uint64(state.rdx);
+                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rdi]->setValue_uint64(state.rdi);
+                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rsi]->setValue_uint64(state.rsi);
+                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rbp]->setValue_uint64(state.rbp);
+                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rsp]->setValue_uint64(state.rsp);
+                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::r8]->setValue_uint64(state.r8);
+                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::r9]->setValue_uint64(state.r9);
+                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::r10]->setValue_uint64(state.r10);
+                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::r11]->setValue_uint64(state.r11);
+                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::r12]->setValue_uint64(state.r12);
+                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::r13]->setValue_uint64(state.r13);
+                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::r14]->setValue_uint64(state.r14);
+                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::r15]->setValue_uint64(state.r15);
+                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rip]->setValue_uint64(state.rip);
+                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rflags]->setValue_uint64(state.rflags);
+                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::cs]->setValue_uint64(state.cs);
+                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::fs]->setValue_uint64(state.fs);
+                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::gs]->setValue_uint64(state.gs);
 
                 qint64 nOffset = nDataOffset;
                 qint64 nSize = mach.get_x86_thread_state64_t_size();
