@@ -273,4 +273,3 @@ void SearchValuesWidget::on_tableViewResult_clicked(const QModelIndex &index)
 
     viewSelection();
 }
-
