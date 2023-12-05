@@ -21,12 +21,8 @@
 #ifndef DIALOGMULTISEARCHSPROCESS_H
 #define DIALOGMULTISEARCHSPROCESS_H
 
-#include <QIODevice>
-#include <QMessageBox>
-
 #include "multisearch.h"
 #include "xdialogprocess.h"
-#include "xoptions.h"
 
 class DialogMultiSearchProcess : public XDialogProcess {
     Q_OBJECT

@@ -453,37 +453,37 @@ void LEWidget::reloadData()
 
                 XMSDOS_DEF::IMAGE_DOS_HEADEREX msdosheaderex = le.getDosHeaderEx();
 
-                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_magic]->setValue(msdosheaderex.e_magic);
-                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_cblp]->setValue(msdosheaderex.e_cblp);
-                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_cp]->setValue(msdosheaderex.e_cp);
-                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_crlc]->setValue(msdosheaderex.e_crlc);
-                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_cparhdr]->setValue(msdosheaderex.e_cparhdr);
-                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_minalloc]->setValue(msdosheaderex.e_minalloc);
-                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_maxalloc]->setValue(msdosheaderex.e_maxalloc);
-                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_ss]->setValue(msdosheaderex.e_ss);
-                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_sp]->setValue(msdosheaderex.e_sp);
-                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_csum]->setValue(msdosheaderex.e_csum);
-                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_ip]->setValue(msdosheaderex.e_ip);
-                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_cs]->setValue(msdosheaderex.e_cs);
-                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_lfarlc]->setValue(msdosheaderex.e_lfarlc);
-                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_ovno]->setValue(msdosheaderex.e_ovno);
-                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_res_0]->setValue(msdosheaderex.e_res[0]);
-                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_res_1]->setValue(msdosheaderex.e_res[1]);
-                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_res_2]->setValue(msdosheaderex.e_res[2]);
-                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_res_3]->setValue(msdosheaderex.e_res[3]);
-                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_oemid]->setValue(msdosheaderex.e_oemid);
-                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_oeminfo]->setValue(msdosheaderex.e_oeminfo);
-                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_res2_0]->setValue(msdosheaderex.e_res2[0]);
-                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_res2_1]->setValue(msdosheaderex.e_res2[1]);
-                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_res2_2]->setValue(msdosheaderex.e_res2[2]);
-                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_res2_3]->setValue(msdosheaderex.e_res2[3]);
-                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_res2_4]->setValue(msdosheaderex.e_res2[4]);
-                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_res2_5]->setValue(msdosheaderex.e_res2[5]);
-                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_res2_6]->setValue(msdosheaderex.e_res2[6]);
-                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_res2_7]->setValue(msdosheaderex.e_res2[7]);
-                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_res2_8]->setValue(msdosheaderex.e_res2[8]);
-                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_res2_9]->setValue(msdosheaderex.e_res2[9]);
-                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_lfanew]->setValue(msdosheaderex.e_lfanew);
+                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_magic]->setValue_uint16(msdosheaderex.e_magic);
+                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_cblp]->setValue_uint16(msdosheaderex.e_cblp);
+                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_cp]->setValue_uint16(msdosheaderex.e_cp);
+                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_crlc]->setValue_uint16(msdosheaderex.e_crlc);
+                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_cparhdr]->setValue_uint16(msdosheaderex.e_cparhdr);
+                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_minalloc]->setValue_uint16(msdosheaderex.e_minalloc);
+                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_maxalloc]->setValue_uint16(msdosheaderex.e_maxalloc);
+                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_ss]->setValue_uint16(msdosheaderex.e_ss);
+                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_sp]->setValue_uint16(msdosheaderex.e_sp);
+                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_csum]->setValue_uint16(msdosheaderex.e_csum);
+                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_ip]->setValue_uint16(msdosheaderex.e_ip);
+                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_cs]->setValue_uint16(msdosheaderex.e_cs);
+                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_lfarlc]->setValue_uint16(msdosheaderex.e_lfarlc);
+                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_ovno]->setValue_uint16(msdosheaderex.e_ovno);
+                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_res_0]->setValue_uint16(msdosheaderex.e_res[0]);
+                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_res_1]->setValue_uint16(msdosheaderex.e_res[1]);
+                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_res_2]->setValue_uint16(msdosheaderex.e_res[2]);
+                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_res_3]->setValue_uint16(msdosheaderex.e_res[3]);
+                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_oemid]->setValue_uint16(msdosheaderex.e_oemid);
+                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_oeminfo]->setValue_uint16(msdosheaderex.e_oeminfo);
+                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_res2_0]->setValue_uint16(msdosheaderex.e_res2[0]);
+                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_res2_1]->setValue_uint16(msdosheaderex.e_res2[1]);
+                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_res2_2]->setValue_uint16(msdosheaderex.e_res2[2]);
+                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_res2_3]->setValue_uint16(msdosheaderex.e_res2[3]);
+                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_res2_4]->setValue_uint16(msdosheaderex.e_res2[4]);
+                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_res2_5]->setValue_uint16(msdosheaderex.e_res2[5]);
+                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_res2_6]->setValue_uint16(msdosheaderex.e_res2[6]);
+                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_res2_7]->setValue_uint16(msdosheaderex.e_res2[7]);
+                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_res2_8]->setValue_uint16(msdosheaderex.e_res2[8]);
+                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_res2_9]->setValue_uint16(msdosheaderex.e_res2[9]);
+                g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_lfanew]->setValue_uint32(msdosheaderex.e_lfanew);
 
                 g_comboBox[CB_DOS_HEADER_e_magic]->setValue(msdosheaderex.e_magic);
 
@@ -510,52 +510,52 @@ void LEWidget::reloadData()
 
                 XLE_DEF::IMAGE_VXD_HEADER vxdheader = le.getImageVxdHeader();
 
-                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_magic]->setValue(vxdheader.e32_magic);
-                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_border]->setValue(vxdheader.e32_border);
-                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_worder]->setValue(vxdheader.e32_worder);
-                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_level]->setValue(vxdheader.e32_level);
-                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_cpu]->setValue(vxdheader.e32_cpu);
-                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_os]->setValue(vxdheader.e32_os);
-                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_ver]->setValue(vxdheader.e32_ver);
-                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_mflags]->setValue(vxdheader.e32_mflags);
-                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_mpages]->setValue(vxdheader.e32_mpages);
-                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_startobj]->setValue(vxdheader.e32_startobj);
-                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_eip]->setValue(vxdheader.e32_eip);
-                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_stackobj]->setValue(vxdheader.e32_stackobj);
-                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_esp]->setValue(vxdheader.e32_esp);
-                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_pagesize]->setValue(vxdheader.e32_pagesize);
-                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_lastpagesize]->setValue(vxdheader.e32_lastpagesize);
-                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_fixupsize]->setValue(vxdheader.e32_fixupsize);
-                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_fixupsum]->setValue(vxdheader.e32_fixupsum);
-                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_ldrsize]->setValue(vxdheader.e32_ldrsize);
-                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_ldrsum]->setValue(vxdheader.e32_ldrsum);
-                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_objtab]->setValue(vxdheader.e32_objtab);
-                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_objcnt]->setValue(vxdheader.e32_objcnt);
-                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_objmap]->setValue(vxdheader.e32_objmap);
-                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_itermap]->setValue(vxdheader.e32_itermap);
-                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_rsrctab]->setValue(vxdheader.e32_rsrctab);
-                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_rsrccnt]->setValue(vxdheader.e32_rsrccnt);
-                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_restab]->setValue(vxdheader.e32_restab);
-                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_enttab]->setValue(vxdheader.e32_enttab);
-                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_dirtab]->setValue(vxdheader.e32_dirtab);
-                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_dircnt]->setValue(vxdheader.e32_dircnt);
-                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_fpagetab]->setValue(vxdheader.e32_fpagetab);
-                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_frectab]->setValue(vxdheader.e32_frectab);
-                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_impmod]->setValue(vxdheader.e32_impmod);
-                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_impmodcnt]->setValue(vxdheader.e32_impmodcnt);
-                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_impproc]->setValue(vxdheader.e32_impproc);
-                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_pagesum]->setValue(vxdheader.e32_pagesum);
-                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_datapage]->setValue(vxdheader.e32_datapage);
-                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_preload]->setValue(vxdheader.e32_preload);
-                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_nrestab]->setValue(vxdheader.e32_nrestab);
-                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_cbnrestab]->setValue(vxdheader.e32_cbnrestab);
-                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_nressum]->setValue(vxdheader.e32_nressum);
-                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_autodata]->setValue(vxdheader.e32_autodata);
-                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_debuginfo]->setValue(vxdheader.e32_debuginfo);
-                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_debuglen]->setValue(vxdheader.e32_debuglen);
-                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_instpreload]->setValue(vxdheader.e32_instpreload);
-                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_instdemand]->setValue(vxdheader.e32_instdemand);
-                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_heapsize]->setValue(vxdheader.e32_heapsize);
+                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_magic]->setValue_uint16(vxdheader.e32_magic);
+                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_border]->setValue_uint8(vxdheader.e32_border);
+                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_worder]->setValue_uint8(vxdheader.e32_worder);
+                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_level]->setValue_uint32(vxdheader.e32_level);
+                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_cpu]->setValue_uint16(vxdheader.e32_cpu);
+                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_os]->setValue_uint16(vxdheader.e32_os);
+                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_ver]->setValue_uint32(vxdheader.e32_ver);
+                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_mflags]->setValue_uint32(vxdheader.e32_mflags);
+                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_mpages]->setValue_uint32(vxdheader.e32_mpages);
+                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_startobj]->setValue_uint32(vxdheader.e32_startobj);
+                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_eip]->setValue_uint32(vxdheader.e32_eip);
+                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_stackobj]->setValue_uint32(vxdheader.e32_stackobj);
+                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_esp]->setValue_uint32(vxdheader.e32_esp);
+                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_pagesize]->setValue_uint32(vxdheader.e32_pagesize);
+                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_lastpagesize]->setValue_uint32(vxdheader.e32_lastpagesize);
+                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_fixupsize]->setValue_uint32(vxdheader.e32_fixupsize);
+                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_fixupsum]->setValue_uint32(vxdheader.e32_fixupsum);
+                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_ldrsize]->setValue_uint32(vxdheader.e32_ldrsize);
+                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_ldrsum]->setValue_uint32(vxdheader.e32_ldrsum);
+                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_objtab]->setValue_uint32(vxdheader.e32_objtab);
+                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_objcnt]->setValue_uint32(vxdheader.e32_objcnt);
+                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_objmap]->setValue_uint32(vxdheader.e32_objmap);
+                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_itermap]->setValue_uint32(vxdheader.e32_itermap);
+                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_rsrctab]->setValue_uint32(vxdheader.e32_rsrctab);
+                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_rsrccnt]->setValue_uint32(vxdheader.e32_rsrccnt);
+                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_restab]->setValue_uint32(vxdheader.e32_restab);
+                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_enttab]->setValue_uint32(vxdheader.e32_enttab);
+                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_dirtab]->setValue_uint32(vxdheader.e32_dirtab);
+                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_dircnt]->setValue_uint32(vxdheader.e32_dircnt);
+                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_fpagetab]->setValue_uint32(vxdheader.e32_fpagetab);
+                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_frectab]->setValue_uint32(vxdheader.e32_frectab);
+                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_impmod]->setValue_uint32(vxdheader.e32_impmod);
+                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_impmodcnt]->setValue_uint32(vxdheader.e32_impmodcnt);
+                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_impproc]->setValue_uint32(vxdheader.e32_impproc);
+                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_pagesum]->setValue_uint32(vxdheader.e32_pagesum);
+                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_datapage]->setValue_uint32(vxdheader.e32_datapage);
+                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_preload]->setValue_uint32(vxdheader.e32_preload);
+                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_nrestab]->setValue_uint32(vxdheader.e32_nrestab);
+                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_cbnrestab]->setValue_uint32(vxdheader.e32_cbnrestab);
+                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_nressum]->setValue_uint32(vxdheader.e32_nressum);
+                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_autodata]->setValue_uint32(vxdheader.e32_autodata);
+                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_debuginfo]->setValue_uint32(vxdheader.e32_debuginfo);
+                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_debuglen]->setValue_uint32(vxdheader.e32_debuglen);
+                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_instpreload]->setValue_uint32(vxdheader.e32_instpreload);
+                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_instdemand]->setValue_uint32(vxdheader.e32_instdemand);
+                g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_heapsize]->setValue_uint32(vxdheader.e32_heapsize);
 
                 g_comboBox[CB_VXD_HEADER_e32_magic]->setValue(vxdheader.e32_magic);
                 g_comboBox[CB_VXD_HEADER_e32_cpu]->setValue(vxdheader.e32_cpu);
@@ -603,14 +603,14 @@ void LEWidget::widgetValueChanged(quint64 nValue)
     switch (nStype) {
         case SLE::TYPE_DOS_HEADER:
             switch (nNdata) {
-                case N_LE_DOS_HEADER::e_magic: g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_magic]->setValue((quint16)nValue); break;
+                case N_LE_DOS_HEADER::e_magic: g_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_magic]->setValue_uint16((quint16)nValue); break;
             }
             break;
         case SLE::TYPE_VXD_HEADER:
             switch (nNdata) {
-                case N_VXD_HEADER::e32_magic: g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_magic]->setValue((quint16)nValue); break;
-                case N_VXD_HEADER::e32_cpu: g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_cpu]->setValue((quint16)nValue); break;
-                case N_VXD_HEADER::e32_os: g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_os]->setValue((quint16)nValue); break;
+                case N_VXD_HEADER::e32_magic: g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_magic]->setValue_uint16((quint16)nValue); break;
+                case N_VXD_HEADER::e32_cpu: g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_cpu]->setValue_uint16((quint16)nValue); break;
+                case N_VXD_HEADER::e32_os: g_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_os]->setValue_uint16((quint16)nValue); break;
             }
             break;
     }

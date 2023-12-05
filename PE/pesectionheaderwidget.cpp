@@ -446,11 +446,11 @@ void PESectionHeaderWidget::reloadData()
 
             XPE_DEF::IMAGE_IMPORT_DESCRIPTOR idh = pe.getImportDescriptor(getNumber());
 
-            g_ppLinedEdit[N_IMAGE_IMPORT::OriginalFirstThunk]->setValue(idh.OriginalFirstThunk);
-            g_ppLinedEdit[N_IMAGE_IMPORT::TimeDateStamp]->setValue(idh.TimeDateStamp);
-            g_ppLinedEdit[N_IMAGE_IMPORT::ForwarderChain]->setValue(idh.ForwarderChain);
-            g_ppLinedEdit[N_IMAGE_IMPORT::Name]->setValue(idh.Name);
-            g_ppLinedEdit[N_IMAGE_IMPORT::FirstThunk]->setValue(idh.FirstThunk);
+            g_ppLinedEdit[N_IMAGE_IMPORT::OriginalFirstThunk]->setValue_uint32(idh.OriginalFirstThunk);
+            g_ppLinedEdit[N_IMAGE_IMPORT::TimeDateStamp]->setValue_uint32(idh.TimeDateStamp);
+            g_ppLinedEdit[N_IMAGE_IMPORT::ForwarderChain]->setValue_uint32(idh.ForwarderChain);
+            g_ppLinedEdit[N_IMAGE_IMPORT::Name]->setValue_uint32(idh.Name);
+            g_ppLinedEdit[N_IMAGE_IMPORT::FirstThunk]->setValue_uint32(idh.FirstThunk);
 
             g_ppInvWidget[N_IMAGE_IMPORT::INV_OriginalFirstThunk]->setAddressAndSize(&pe, pe.getBaseAddress() + idh.OriginalFirstThunk, 0);
             g_ppInvWidget[N_IMAGE_IMPORT::INV_Name]->setAddressAndSize(&pe, pe.getBaseAddress() + idh.Name, 0);
@@ -476,14 +476,14 @@ void PESectionHeaderWidget::reloadData()
 
             XPE_DEF::S_IMAGE_DEBUG_DIRECTORY idd = pe.getDebugHeader(getNumber());
 
-            g_ppLinedEdit[N_IMAGE_DEBUG::Characteristics]->setValue(idd.Characteristics);
-            g_ppLinedEdit[N_IMAGE_DEBUG::TimeDateStamp]->setValue(idd.TimeDateStamp);
-            g_ppLinedEdit[N_IMAGE_DEBUG::MajorVersion]->setValue(idd.MajorVersion);
-            g_ppLinedEdit[N_IMAGE_DEBUG::MinorVersion]->setValue(idd.MinorVersion);
-            g_ppLinedEdit[N_IMAGE_DEBUG::Type]->setValue(idd.Type);
-            g_ppLinedEdit[N_IMAGE_DEBUG::SizeOfData]->setValue(idd.SizeOfData);
-            g_ppLinedEdit[N_IMAGE_DEBUG::AddressOfRawData]->setValue(idd.AddressOfRawData);
-            g_ppLinedEdit[N_IMAGE_DEBUG::PointerToRawData]->setValue(idd.PointerToRawData);
+            g_ppLinedEdit[N_IMAGE_DEBUG::Characteristics]->setValue_uint32(idd.Characteristics);
+            g_ppLinedEdit[N_IMAGE_DEBUG::TimeDateStamp]->setValue_uint32(idd.TimeDateStamp);
+            g_ppLinedEdit[N_IMAGE_DEBUG::MajorVersion]->setValue_uint16(idd.MajorVersion);
+            g_ppLinedEdit[N_IMAGE_DEBUG::MinorVersion]->setValue_uint16(idd.MinorVersion);
+            g_ppLinedEdit[N_IMAGE_DEBUG::Type]->setValue_uint32(idd.Type);
+            g_ppLinedEdit[N_IMAGE_DEBUG::SizeOfData]->setValue_uint32(idd.SizeOfData);
+            g_ppLinedEdit[N_IMAGE_DEBUG::AddressOfRawData]->setValue_uint32(idd.AddressOfRawData);
+            g_ppLinedEdit[N_IMAGE_DEBUG::PointerToRawData]->setValue_uint32(idd.PointerToRawData);
 
             g_ppComboBox[N_IMAGE_DEBUG::CB_TYPE]->setValue(idd.Type);
 
@@ -504,8 +504,8 @@ void PESectionHeaderWidget::reloadData()
             quint32 nVirtualAddress = pe.getRelocsVirtualAddress(nOffset);
             quint32 nSizeOfBlock = pe.getRelocsSizeOfBlock(nOffset);
 
-            g_ppLinedEdit[N_IMAGE_RELOCS::VirtualAddress]->setValue(nVirtualAddress);
-            g_ppLinedEdit[N_IMAGE_RELOCS::SizeOfBlock]->setValue(nSizeOfBlock);
+            g_ppLinedEdit[N_IMAGE_RELOCS::VirtualAddress]->setValue_uint32(nVirtualAddress);
+            g_ppLinedEdit[N_IMAGE_RELOCS::SizeOfBlock]->setValue_uint32(nSizeOfBlock);
 
             qint64 nSize = nSizeOfBlock;
             qint64 nAddress = pe.offsetToRelAddress(nOffset);
@@ -522,9 +522,9 @@ void PESectionHeaderWidget::reloadData()
 
             XPE_DEF::S_IMAGE_RUNTIME_FUNCTION_ENTRY exception = pe._read_IMAGE_RUNTIME_FUNCTION_ENTRY(nOffset);
 
-            g_ppLinedEdit[N_IMAGE_EXCEPTIONS::BeginAddress]->setValue(exception.BeginAddress);
-            g_ppLinedEdit[N_IMAGE_EXCEPTIONS::EndAddress]->setValue(exception.EndAddress);
-            g_ppLinedEdit[N_IMAGE_EXCEPTIONS::UnwindInfoAddress]->setValue(exception.UnwindInfoAddress);
+            g_ppLinedEdit[N_IMAGE_EXCEPTIONS::BeginAddress]->setValue_uint32(exception.BeginAddress);
+            g_ppLinedEdit[N_IMAGE_EXCEPTIONS::EndAddress]->setValue_uint32(exception.EndAddress);
+            g_ppLinedEdit[N_IMAGE_EXCEPTIONS::UnwindInfoAddress]->setValue_uint32(exception.UnwindInfoAddress);
 
             qint64 nSize = pe.getExceptionRecordSize();
             qint64 nAddress = pe.offsetToRelAddress(nOffset);
@@ -541,14 +541,14 @@ void PESectionHeaderWidget::reloadData()
 
             XPE_DEF::S_IMAGE_DELAYLOAD_DESCRIPTOR delayImport = pe._read_IMAGE_DELAYLOAD_DESCRIPTOR(nOffset);
 
-            g_ppLinedEdit[N_IMAGE_DELAYIMPORT::AllAttributes]->setValue(delayImport.AllAttributes);
-            g_ppLinedEdit[N_IMAGE_DELAYIMPORT::DllNameRVA]->setValue(delayImport.DllNameRVA);
-            g_ppLinedEdit[N_IMAGE_DELAYIMPORT::ModuleHandleRVA]->setValue(delayImport.ModuleHandleRVA);
-            g_ppLinedEdit[N_IMAGE_DELAYIMPORT::ImportAddressTableRVA]->setValue(delayImport.ImportAddressTableRVA);
-            g_ppLinedEdit[N_IMAGE_DELAYIMPORT::ImportNameTableRVA]->setValue(delayImport.ImportNameTableRVA);
-            g_ppLinedEdit[N_IMAGE_DELAYIMPORT::BoundImportAddressTableRVA]->setValue(delayImport.BoundImportAddressTableRVA);
-            g_ppLinedEdit[N_IMAGE_DELAYIMPORT::UnloadInformationTableRVA]->setValue(delayImport.UnloadInformationTableRVA);
-            g_ppLinedEdit[N_IMAGE_DELAYIMPORT::TimeDateStamp]->setValue(delayImport.TimeDateStamp);
+            g_ppLinedEdit[N_IMAGE_DELAYIMPORT::AllAttributes]->setValue_uint32(delayImport.AllAttributes);
+            g_ppLinedEdit[N_IMAGE_DELAYIMPORT::DllNameRVA]->setValue_uint32(delayImport.DllNameRVA);
+            g_ppLinedEdit[N_IMAGE_DELAYIMPORT::ModuleHandleRVA]->setValue_uint32(delayImport.ModuleHandleRVA);
+            g_ppLinedEdit[N_IMAGE_DELAYIMPORT::ImportAddressTableRVA]->setValue_uint32(delayImport.ImportAddressTableRVA);
+            g_ppLinedEdit[N_IMAGE_DELAYIMPORT::ImportNameTableRVA]->setValue_uint32(delayImport.ImportNameTableRVA);
+            g_ppLinedEdit[N_IMAGE_DELAYIMPORT::BoundImportAddressTableRVA]->setValue_uint32(delayImport.BoundImportAddressTableRVA);
+            g_ppLinedEdit[N_IMAGE_DELAYIMPORT::UnloadInformationTableRVA]->setValue_uint32(delayImport.UnloadInformationTableRVA);
+            g_ppLinedEdit[N_IMAGE_DELAYIMPORT::TimeDateStamp]->setValue_uint32(delayImport.TimeDateStamp);
 
             qint64 nSize = pe.getDelayImportRecordSize();
             qint64 nAddress = pe.offsetToRelAddress(nOffset);
@@ -565,9 +565,9 @@ void PESectionHeaderWidget::reloadData()
 
             XPE_DEF::IMAGE_BOUND_IMPORT_DESCRIPTOR boundImport = pe._read_IMAGE_BOUND_IMPORT_DESCRIPTOR(nOffset);
 
-            g_ppLinedEdit[N_IMAGE_BOUNDIMPORT::TimeDateStamp]->setValue(boundImport.TimeDateStamp);
-            g_ppLinedEdit[N_IMAGE_BOUNDIMPORT::OffsetModuleName]->setValue(boundImport.OffsetModuleName);
-            g_ppLinedEdit[N_IMAGE_BOUNDIMPORT::NumberOfModuleForwarderRefs]->setValue(boundImport.NumberOfModuleForwarderRefs);
+            g_ppLinedEdit[N_IMAGE_BOUNDIMPORT::TimeDateStamp]->setValue_uint32(boundImport.TimeDateStamp);
+            g_ppLinedEdit[N_IMAGE_BOUNDIMPORT::OffsetModuleName]->setValue_uint16(boundImport.OffsetModuleName);
+            g_ppLinedEdit[N_IMAGE_BOUNDIMPORT::NumberOfModuleForwarderRefs]->setValue_uint16(boundImport.NumberOfModuleForwarderRefs);
 
             qint64 nSize = pe.getBoundImportRecordSize();
             qint64 nAddress = pe.offsetToRelAddress(nOffset);
@@ -585,8 +585,8 @@ void PESectionHeaderWidget::reloadData()
 
             XPE_DEF::IMAGE_DATA_DIRECTORY dataDirectory = pe.read_IMAGE_DATA_DIRECTORY(nOffset);
 
-            g_ppLinedEdit[N_IMAGE_DATA_DIRECTORY::Address]->setValue(dataDirectory.VirtualAddress);
-            g_ppLinedEdit[N_IMAGE_DATA_DIRECTORY::Size]->setValue(dataDirectory.Size);
+            g_ppLinedEdit[N_IMAGE_DATA_DIRECTORY::Address]->setValue_uint32(dataDirectory.VirtualAddress);
+            g_ppLinedEdit[N_IMAGE_DATA_DIRECTORY::Size]->setValue_uint32(dataDirectory.Size);
 
             qint64 nSize = pe.getDataDirectoryHeaderSize();
             qint64 nAddress = pe.offsetToRelAddress(nOffset);
@@ -611,7 +611,7 @@ void PESectionHeaderWidget::widgetValueChanged(quint64 nValue)
             switch (nNdata) {
                 case N_IMAGE_SECTION_HEADER::Characteristics:
                 case N_IMAGE_SECTION_HEADER::Characteristics + 1:
-                    g_ppLinedEdit[N_IMAGE_SECTION_HEADER::Characteristics]->setValue((quint32)nValue);
+                    g_ppLinedEdit[N_IMAGE_SECTION_HEADER::Characteristics]->setValue_uint32((quint32)nValue);
                     g_ppComboBox[N_IMAGE_SECTION_HEADER::CB_CHARACTERISTICS]->setValue(nValue);
                     g_ppComboBox[N_IMAGE_SECTION_HEADER::CB_ALIGH]->setValue(nValue);
                     break;
@@ -620,7 +620,7 @@ void PESectionHeaderWidget::widgetValueChanged(quint64 nValue)
 
         case SPE::TYPE_DEBUG:
             switch (nNdata) {
-                case N_IMAGE_DEBUG::Type: g_ppLinedEdit[N_IMAGE_DEBUG::Type]->setValue((quint32)nValue); break;
+                case N_IMAGE_DEBUG::Type: g_ppLinedEdit[N_IMAGE_DEBUG::Type]->setValue_uint32((quint32)nValue); break;
             }
             break;
     }

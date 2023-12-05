@@ -433,16 +433,16 @@ void ELFSectionHeaderWidget::reloadData()
             if (bIs64) {
                 XELF_DEF::Elf64_Shdr shdr64 = elf.getElf64_Shdr(getNumber());
 
-                g_ppLinedEdit[N_Elf_Shdr::sh_name]->setValue(shdr64.sh_name);
-                g_ppLinedEdit[N_Elf_Shdr::sh_type]->setValue(shdr64.sh_type);
-                g_ppLinedEdit[N_Elf_Shdr::sh_flags]->setValue(shdr64.sh_flags);
-                g_ppLinedEdit[N_Elf_Shdr::sh_addr]->setValue(shdr64.sh_addr);
-                g_ppLinedEdit[N_Elf_Shdr::sh_offset]->setValue(shdr64.sh_offset);
-                g_ppLinedEdit[N_Elf_Shdr::sh_size]->setValue(shdr64.sh_size);
-                g_ppLinedEdit[N_Elf_Shdr::sh_link]->setValue(shdr64.sh_link);
-                g_ppLinedEdit[N_Elf_Shdr::sh_info]->setValue(shdr64.sh_info);
-                g_ppLinedEdit[N_Elf_Shdr::sh_addralign]->setValue(shdr64.sh_addralign);
-                g_ppLinedEdit[N_Elf_Shdr::sh_entsize]->setValue(shdr64.sh_entsize);
+                g_ppLinedEdit[N_Elf_Shdr::sh_name]->setValue_uint32(shdr64.sh_name);
+                g_ppLinedEdit[N_Elf_Shdr::sh_type]->setValue_uint32(shdr64.sh_type);
+                g_ppLinedEdit[N_Elf_Shdr::sh_flags]->setValue_uint64(shdr64.sh_flags);
+                g_ppLinedEdit[N_Elf_Shdr::sh_addr]->setValue_uint64(shdr64.sh_addr);
+                g_ppLinedEdit[N_Elf_Shdr::sh_offset]->setValue_uint64(shdr64.sh_offset);
+                g_ppLinedEdit[N_Elf_Shdr::sh_size]->setValue_uint64(shdr64.sh_size);
+                g_ppLinedEdit[N_Elf_Shdr::sh_link]->setValue_uint32(shdr64.sh_link);
+                g_ppLinedEdit[N_Elf_Shdr::sh_info]->setValue_uint32(shdr64.sh_info);
+                g_ppLinedEdit[N_Elf_Shdr::sh_addralign]->setValue_uint64(shdr64.sh_addralign);
+                g_ppLinedEdit[N_Elf_Shdr::sh_entsize]->setValue_uint64(shdr64.sh_entsize);
 
                 g_ppComboBox[N_Elf_Shdr::CB_TYPE]->setValue(shdr64.sh_type);
                 g_ppComboBox[N_Elf_Shdr::CB_FLAGS]->setValue(shdr64.sh_flags);
@@ -509,14 +509,14 @@ void ELFSectionHeaderWidget::reloadData()
             } else {
                 XELF_DEF::Elf32_Phdr phdr32 = elf.getElf32_Phdr(getNumber());
 
-                g_ppLinedEdit[N_Elf_Phdr32::p_type]->setValue(phdr32.p_type);
-                g_ppLinedEdit[N_Elf_Phdr32::p_offset]->setValue(phdr32.p_offset);
-                g_ppLinedEdit[N_Elf_Phdr32::p_vaddr]->setValue(phdr32.p_vaddr);
-                g_ppLinedEdit[N_Elf_Phdr32::p_paddr]->setValue(phdr32.p_paddr);
-                g_ppLinedEdit[N_Elf_Phdr32::p_filesz]->setValue(phdr32.p_filesz);
-                g_ppLinedEdit[N_Elf_Phdr32::p_memsz]->setValue(phdr32.p_memsz);
-                g_ppLinedEdit[N_Elf_Phdr32::p_flags]->setValue(phdr32.p_flags);
-                g_ppLinedEdit[N_Elf_Phdr32::p_align]->setValue(phdr32.p_align);
+                g_ppLinedEdit[N_Elf_Phdr32::p_type]->setValue_uint32(phdr32.p_type);
+                g_ppLinedEdit[N_Elf_Phdr32::p_offset]->setValue_uint32(phdr32.p_offset);
+                g_ppLinedEdit[N_Elf_Phdr32::p_vaddr]->setValue_uint32(phdr32.p_vaddr);
+                g_ppLinedEdit[N_Elf_Phdr32::p_paddr]->setValue_uint32(phdr32.p_paddr);
+                g_ppLinedEdit[N_Elf_Phdr32::p_filesz]->setValue_uint32(phdr32.p_filesz);
+                g_ppLinedEdit[N_Elf_Phdr32::p_memsz]->setValue_uint32(phdr32.p_memsz);
+                g_ppLinedEdit[N_Elf_Phdr32::p_flags]->setValue_uint32(phdr32.p_flags);
+                g_ppLinedEdit[N_Elf_Phdr32::p_align]->setValue_uint32(phdr32.p_align);
 
                 g_ppComboBox[N_Elf_Phdr32::CB_TYPE]->setValue(phdr32.p_type);
                 g_ppComboBox[N_Elf_Phdr32::CB_FLAGS]->setValue(phdr32.p_flags);
