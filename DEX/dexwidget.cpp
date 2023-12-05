@@ -592,7 +592,7 @@ void DEXWidget::widgetValueChanged(quint64 nValue)
     switch (nStype) {
         case SDEX::TYPE_HEADER:
             switch (nNdata) {
-                case N_DEX_HEADER::magic: g_lineEdit_HEADER[N_DEX_HEADER::magic]->setValue((quint32)nValue); break;
+                case N_DEX_HEADER::magic: g_lineEdit_HEADER[N_DEX_HEADER::magic]->setValue_uint32((quint32)nValue); break;
             }
 
             break;
