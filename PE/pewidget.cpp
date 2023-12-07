@@ -872,36 +872,36 @@ void PEWidget::widgetValueChanged(quint64 nValue)
     switch (nStype) {
         case SPE::TYPE_IMAGE_DOS_HEADER:
             switch (nNdata) {
-                case N_IMAGE_DOS_HEADER::e_magic: g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_magic]->setValue((quint16)nValue); break;
+                case N_IMAGE_DOS_HEADER::e_magic: g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_magic]->setValue_uint16((quint16)nValue); break;
             }
             break;
 
         case SPE::TYPE_IMAGE_NT_HEADERS:
             switch (nNdata) {
-                case N_IMAGE_NT_HEADERS::Signature: g_lineEdit_IMAGE_NT_HEADERS[N_IMAGE_NT_HEADERS::Signature]->setValue((quint32)nValue); break;
+                case N_IMAGE_NT_HEADERS::Signature: g_lineEdit_IMAGE_NT_HEADERS[N_IMAGE_NT_HEADERS::Signature]->setValue_uint32((quint32)nValue); break;
             }
             break;
 
         case SPE::TYPE_IMAGE_FILE_HEADER:
             switch (nNdata) {
-                case N_IMAGE_FILE_HEADER::Machine: g_lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::Machine]->setValue((quint16)nValue); break;
-                case N_IMAGE_FILE_HEADER::TimeDateStamp: g_lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::TimeDateStamp]->setValue((quint32)nValue); break;
-                case N_IMAGE_FILE_HEADER::Characteristics: g_lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::Characteristics]->setValue((quint16)nValue); break;
+                case N_IMAGE_FILE_HEADER::Machine: g_lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::Machine]->setValue_uint16((quint16)nValue); break;
+                case N_IMAGE_FILE_HEADER::TimeDateStamp: g_lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::TimeDateStamp]->setValue_uint32((quint32)nValue); break;
+                case N_IMAGE_FILE_HEADER::Characteristics: g_lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::Characteristics]->setValue_uint16((quint16)nValue); break;
             }
             break;
 
         case SPE::TYPE_IMAGE_OPTIONAL_HEADER:
             switch (nNdata) {
-                case N_IMAGE_OPTIONAL_HEADER::Magic: g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::Magic]->setValue((quint16)nValue); break;
-                case N_IMAGE_OPTIONAL_HEADER::Subsystem: g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::Subsystem]->setValue((quint16)nValue); break;
+                case N_IMAGE_OPTIONAL_HEADER::Magic: g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::Magic]->setValue_uint16((quint16)nValue); break;
+                case N_IMAGE_OPTIONAL_HEADER::Subsystem: g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::Subsystem]->setValue_uint16((quint16)nValue); break;
                 case N_IMAGE_OPTIONAL_HEADER::DllCharacteristics:
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::DllCharacteristics]->setValue((quint16)nValue);
+                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::DllCharacteristics]->setValue_uint16((quint16)nValue);
                     break;
                 // Extra
                 case N_IMAGE_OPTIONAL_HEADER::OperatingSystemVersion:
                     XBinary::XDWORD xdword = XBinary::make_xdword((quint32)nValue);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MajorOperatingSystemVersion]->setValue((quint16)xdword.nValue1);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MinorOperatingSystemVersion]->setValue((quint16)xdword.nValue2);
+                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MajorOperatingSystemVersion]->setValue_uint16((quint16)xdword.nValue1);
+                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MinorOperatingSystemVersion]->setValue_uint16((quint16)xdword.nValue2);
             }
             break;
 
@@ -913,23 +913,23 @@ void PEWidget::widgetValueChanged(quint64 nValue)
 
         case SPE::TYPE_NETHEADER:
             switch (nNdata) {
-                case N_IMAGE_NETHEADER::Flags: g_lineEdit_NetHeader[N_IMAGE_NETHEADER::Flags]->setValue((quint32)nValue); break;
+                case N_IMAGE_NETHEADER::Flags: g_lineEdit_NetHeader[N_IMAGE_NETHEADER::Flags]->setValue_uint32((quint32)nValue); break;
             }
             break;
 
         case SPE::TYPE_RESOURCES_VERSION:
             switch (nNdata) {
                 case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwSignature:
-                    g_lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwSignature]->setValue((quint32)nValue);
+                    g_lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwSignature]->setValue_uint32((quint32)nValue);
                     break;
                 case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileFlags:
-                    g_lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileFlags]->setValue((quint32)nValue);
+                    g_lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileFlags]->setValue_uint32((quint32)nValue);
                     break;
                 case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileOS:
-                    g_lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileOS]->setValue((quint32)nValue);
+                    g_lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileOS]->setValue_uint32((quint32)nValue);
                     break;
                 case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileType:
-                    g_lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileType]->setValue((quint32)nValue);
+                    g_lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileType]->setValue_uint32((quint32)nValue);
                     break;
             }
             break;
@@ -1145,37 +1145,37 @@ void PEWidget::reloadData()
 
                 XMSDOS_DEF::IMAGE_DOS_HEADEREX msdosheaderex = pe.getDosHeaderEx();
 
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_magic]->setValue(msdosheaderex.e_magic);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_cblp]->setValue(msdosheaderex.e_cblp);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_cp]->setValue(msdosheaderex.e_cp);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_crlc]->setValue(msdosheaderex.e_crlc);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_cparhdr]->setValue(msdosheaderex.e_cparhdr);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_minalloc]->setValue(msdosheaderex.e_minalloc);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_maxalloc]->setValue(msdosheaderex.e_maxalloc);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_ss]->setValue(msdosheaderex.e_ss);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_sp]->setValue(msdosheaderex.e_sp);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_csum]->setValue(msdosheaderex.e_csum);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_ip]->setValue(msdosheaderex.e_ip);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_cs]->setValue(msdosheaderex.e_cs);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_lfarlc]->setValue(msdosheaderex.e_lfarlc);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_ovno]->setValue(msdosheaderex.e_ovno);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res_0]->setValue(msdosheaderex.e_res[0]);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res_1]->setValue(msdosheaderex.e_res[1]);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res_2]->setValue(msdosheaderex.e_res[2]);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res_3]->setValue(msdosheaderex.e_res[3]);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_oemid]->setValue(msdosheaderex.e_oemid);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_oeminfo]->setValue(msdosheaderex.e_oeminfo);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res2_0]->setValue(msdosheaderex.e_res2[0]);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res2_1]->setValue(msdosheaderex.e_res2[1]);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res2_2]->setValue(msdosheaderex.e_res2[2]);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res2_3]->setValue(msdosheaderex.e_res2[3]);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res2_4]->setValue(msdosheaderex.e_res2[4]);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res2_5]->setValue(msdosheaderex.e_res2[5]);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res2_6]->setValue(msdosheaderex.e_res2[6]);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res2_7]->setValue(msdosheaderex.e_res2[7]);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res2_8]->setValue(msdosheaderex.e_res2[8]);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res2_9]->setValue(msdosheaderex.e_res2[9]);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_lfanew]->setValue(msdosheaderex.e_lfanew);
+                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_magic]->setValue_uint16(msdosheaderex.e_magic);
+                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_cblp]->setValue_uint16(msdosheaderex.e_cblp);
+                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_cp]->setValue_uint16(msdosheaderex.e_cp);
+                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_crlc]->setValue_uint16(msdosheaderex.e_crlc);
+                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_cparhdr]->setValue_uint16(msdosheaderex.e_cparhdr);
+                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_minalloc]->setValue_uint16(msdosheaderex.e_minalloc);
+                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_maxalloc]->setValue_uint16(msdosheaderex.e_maxalloc);
+                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_ss]->setValue_uint16(msdosheaderex.e_ss);
+                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_sp]->setValue_uint16(msdosheaderex.e_sp);
+                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_csum]->setValue_uint16(msdosheaderex.e_csum);
+                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_ip]->setValue_uint16(msdosheaderex.e_ip);
+                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_cs]->setValue_uint16(msdosheaderex.e_cs);
+                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_lfarlc]->setValue_uint16(msdosheaderex.e_lfarlc);
+                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_ovno]->setValue_uint16(msdosheaderex.e_ovno);
+                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res_0]->setValue_uint16(msdosheaderex.e_res[0]);
+                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res_1]->setValue_uint16(msdosheaderex.e_res[1]);
+                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res_2]->setValue_uint16(msdosheaderex.e_res[2]);
+                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res_3]->setValue_uint16(msdosheaderex.e_res[3]);
+                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_oemid]->setValue_uint16(msdosheaderex.e_oemid);
+                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_oeminfo]->setValue_uint16(msdosheaderex.e_oeminfo);
+                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res2_0]->setValue_uint16(msdosheaderex.e_res2[0]);
+                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res2_1]->setValue_uint16(msdosheaderex.e_res2[1]);
+                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res2_2]->setValue_uint16(msdosheaderex.e_res2[2]);
+                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res2_3]->setValue_uint16(msdosheaderex.e_res2[3]);
+                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res2_4]->setValue_uint16(msdosheaderex.e_res2[4]);
+                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res2_5]->setValue_uint16(msdosheaderex.e_res2[5]);
+                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res2_6]->setValue_uint16(msdosheaderex.e_res2[6]);
+                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res2_7]->setValue_uint16(msdosheaderex.e_res2[7]);
+                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res2_8]->setValue_uint16(msdosheaderex.e_res2[8]);
+                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res2_9]->setValue_uint16(msdosheaderex.e_res2[9]);
+                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_lfanew]->setValue_uint32(msdosheaderex.e_lfanew);
 
                 g_comboBox[CB_IMAGE_DOS_HEADER_e_magic]->setValue(msdosheaderex.e_magic);
 
@@ -2981,9 +2981,9 @@ void PEWidget::onTreeView_Resources_currentRowChanged(const QModelIndex &current
         g_lineEdit_Resources[N_IMAGE_RESOURCES::ID1]->setValue_String(sID1);
         g_lineEdit_Resources[N_IMAGE_RESOURCES::ID2]->setValue_String(sID2);
         g_lineEdit_Resources[N_IMAGE_RESOURCES::ID3]->setValue_String(sID3);
-        g_lineEdit_Resources[N_IMAGE_RESOURCES::ADDRESS]->setValue((quint32)nAddress);
-        g_lineEdit_Resources[N_IMAGE_RESOURCES::OFFSET]->setValue((quint32)nOffset);
-        g_lineEdit_Resources[N_IMAGE_RESOURCES::SIZE]->setValue((quint32)nSize);
+        g_lineEdit_Resources[N_IMAGE_RESOURCES::ADDRESS]->setValue_uint32((quint32)nAddress);
+        g_lineEdit_Resources[N_IMAGE_RESOURCES::OFFSET]->setValue_uint32((quint32)nOffset);
+        g_lineEdit_Resources[N_IMAGE_RESOURCES::SIZE]->setValue_uint32((quint32)nSize);
 
         loadHexSubdevice(nOffset, nSize, nAddress, &g_subDevice[SPE::TYPE_RESOURCES], ui->widgetHex_Resources);
     }
