@@ -421,33 +421,33 @@ void ELFWidget::reloadData()
                 blockSignals(true);
 
                 g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_mag]->setValue_uint32(elf.getIdent_mag_LE());
-                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_class]->setValue(elf.getIdent_class());
-                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_data]->setValue(elf.getIdent_data());
-                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_version]->setValue(elf.getIdent_version());
-                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_osabi]->setValue(elf.getIdent_osabi());
-                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_abiversion]->setValue(elf.getIdent_abiversion());
-                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_0]->setValue(elf.getIdent_pad(0));
-                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_1]->setValue(elf.getIdent_pad(1));
-                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_2]->setValue(elf.getIdent_pad(2));
-                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_3]->setValue(elf.getIdent_pad(3));
-                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_4]->setValue(elf.getIdent_pad(4));
-                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_5]->setValue(elf.getIdent_pad(5));
-                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_6]->setValue(elf.getIdent_pad(6));
+                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_class]->setValue_uint8(elf.getIdent_class());
+                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_data]->setValue_uint8(elf.getIdent_data());
+                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_version]->setValue_uint8(elf.getIdent_version());
+                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_osabi]->setValue_uint8(elf.getIdent_osabi());
+                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_abiversion]->setValue_uint8(elf.getIdent_abiversion());
+                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_0]->setValue_uint8(elf.getIdent_pad(0));
+                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_1]->setValue_uint8(elf.getIdent_pad(1));
+                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_2]->setValue_uint8(elf.getIdent_pad(2));
+                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_3]->setValue_uint8(elf.getIdent_pad(3));
+                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_4]->setValue_uint8(elf.getIdent_pad(4));
+                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_5]->setValue_uint8(elf.getIdent_pad(5));
+                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_6]->setValue_uint8(elf.getIdent_pad(6));
 
                 if (elf.is64()) {
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_type]->setValue(elf.getHdr64_type());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_machine]->setValue(elf.getHdr64_machine());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_version]->setValue(elf.getHdr64_version());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_entry]->setValue(elf.getHdr64_entry());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_phoff]->setValue(elf.getHdr64_phoff());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shoff]->setValue(elf.getHdr64_shoff());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_flags]->setValue(elf.getHdr64_flags());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_ehsize]->setValue(elf.getHdr64_ehsize());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_phentsize]->setValue(elf.getHdr64_phentsize());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_phnum]->setValue(elf.getHdr64_phnum());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shentsize]->setValue(elf.getHdr64_shentsize());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shnum]->setValue(elf.getHdr64_shnum());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shstrndx]->setValue(elf.getHdr64_shstrndx());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_type]->setValue_uint16(elf.getHdr64_type());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_machine]->setValue_uint16(elf.getHdr64_machine());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_version]->setValue_uint32(elf.getHdr64_version());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_entry]->setValue_uint64(elf.getHdr64_entry());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_phoff]->setValue_uint64(elf.getHdr64_phoff());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shoff]->setValue_uint64(elf.getHdr64_shoff());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_flags]->setValue_uint32(elf.getHdr64_flags());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_ehsize]->setValue_uint16(elf.getHdr64_ehsize());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_phentsize]->setValue_uint16(elf.getHdr64_phentsize());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_phnum]->setValue_uint16(elf.getHdr64_phnum());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shentsize]->setValue_uint16(elf.getHdr64_shentsize());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shnum]->setValue_uint16(elf.getHdr64_shnum());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shstrndx]->setValue_uint16(elf.getHdr64_shstrndx());
 
                     g_comboBox[CB_Elf_Ehdr_type]->setValue(elf.getHdr64_type());
                     g_comboBox[CB_Elf_Ehdr_machine]->setValue(elf.getHdr64_machine());
@@ -456,7 +456,7 @@ void ELFWidget::reloadData()
                     g_invWidget[INV_Elf_e_phoff]->setOffsetAndSize(&elf, elf.getHdr64_phoff(), 0);  // TODO Size
                     g_invWidget[INV_Elf_e_shoff]->setOffsetAndSize(&elf, elf.getHdr64_shoff(), 0);  // TODO Size
                 } else {
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_type]->setValue_uint32(elf.getHdr32_type());
+                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_type]->setValue_uint16(elf.getHdr32_type());
                     g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_machine]->setValue_uint16(elf.getHdr32_machine());
                     g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_version]->setValue_uint32(elf.getHdr32_version());
                     g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_entry]->setValue_uint32(elf.getHdr32_entry());
