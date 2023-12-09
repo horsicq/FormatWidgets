@@ -663,14 +663,14 @@ void MACHSectionHeaderWidget::reloadData()
                 XMACH_DEF::segment_command segment = mach._read_segment_command(nHeaderOffset, bIsBigEndian);
 
                 g_ppLinedEdit[N_mach_segments::segname]->setValue_String(segment.segname);
-                g_ppLinedEdit[N_mach_segments::vmaddr]->setValue(segment.vmaddr);
-                g_ppLinedEdit[N_mach_segments::vmsize]->setValue(segment.vmsize);
-                g_ppLinedEdit[N_mach_segments::fileoff]->setValue(segment.fileoff);
-                g_ppLinedEdit[N_mach_segments::filesize]->setValue(segment.filesize);
-                g_ppLinedEdit[N_mach_segments::maxprot]->setValue(segment.maxprot);
-                g_ppLinedEdit[N_mach_segments::initprot]->setValue(segment.initprot);
-                g_ppLinedEdit[N_mach_segments::nsects]->setValue(segment.nsects);
-                g_ppLinedEdit[N_mach_segments::flags]->setValue(segment.flags);
+                g_ppLinedEdit[N_mach_segments::vmaddr]->setValue_uint32(segment.vmaddr);
+                g_ppLinedEdit[N_mach_segments::vmsize]->setValue_uint32(segment.vmsize);
+                g_ppLinedEdit[N_mach_segments::fileoff]->setValue_uint32(segment.fileoff);
+                g_ppLinedEdit[N_mach_segments::filesize]->setValue_uint32(segment.filesize);
+                g_ppLinedEdit[N_mach_segments::maxprot]->setValue_uint32(segment.maxprot);
+                g_ppLinedEdit[N_mach_segments::initprot]->setValue_uint32(segment.initprot);
+                g_ppLinedEdit[N_mach_segments::nsects]->setValue_uint32(segment.nsects);
+                g_ppLinedEdit[N_mach_segments::flags]->setValue_uint32(segment.flags);
 
                 g_ppComboBox[N_mach_segments::CB_initprot]->setValue(segment.initprot);
                 g_ppComboBox[N_mach_segments::CB_maxprot]->setValue(segment.maxprot);
@@ -710,16 +710,16 @@ void MACHSectionHeaderWidget::reloadData()
 
                 g_ppLinedEdit[N_mach_sections64_E::sectname]->setValue_String(section.sectname);
                 g_ppLinedEdit[N_mach_sections64_E::segname]->setValue_String(section.segname);
-                g_ppLinedEdit[N_mach_sections64_E::addr]->setValue(section.addr);
-                g_ppLinedEdit[N_mach_sections64_E::size]->setValue(section.size);
-                g_ppLinedEdit[N_mach_sections64_E::offset]->setValue(section.offset);
-                g_ppLinedEdit[N_mach_sections64_E::align]->setValue(section.align);
-                g_ppLinedEdit[N_mach_sections64_E::reloff]->setValue(section.reloff);
-                g_ppLinedEdit[N_mach_sections64_E::nreloc]->setValue(section.nreloc);
-                g_ppLinedEdit[N_mach_sections64_E::flags_0]->setValue(section.flags);
-                g_ppLinedEdit[N_mach_sections64_E::reserved1]->setValue(section.reserved1);
-                g_ppLinedEdit[N_mach_sections64_E::reserved2]->setValue(section.reserved2);
-                g_ppLinedEdit[N_mach_sections64_E::reserved3]->setValue(section.reserved3);
+                g_ppLinedEdit[N_mach_sections64_E::addr]->setValue_uint64(section.addr);
+                g_ppLinedEdit[N_mach_sections64_E::size]->setValue_uint64(section.size);
+                g_ppLinedEdit[N_mach_sections64_E::offset]->setValue_uint32(section.offset);
+                g_ppLinedEdit[N_mach_sections64_E::align]->setValue_uint32(section.align);
+                g_ppLinedEdit[N_mach_sections64_E::reloff]->setValue_uint32(section.reloff);
+                g_ppLinedEdit[N_mach_sections64_E::nreloc]->setValue_uint32(section.nreloc);
+                g_ppLinedEdit[N_mach_sections64_E::flags_0]->setValue_uint32(section.flags);
+                g_ppLinedEdit[N_mach_sections64_E::reserved1]->setValue_uint32(section.reserved1);
+                g_ppLinedEdit[N_mach_sections64_E::reserved2]->setValue_uint32(section.reserved2);
+                g_ppLinedEdit[N_mach_sections64_E::reserved3]->setValue_uint32(section.reserved3);
 
                 g_ppComboBox[N_mach_sections64_E::CB_flag0]->setValue(section.flags);
                 g_ppComboBox[N_mach_sections64_E::CB_flag1]->setValue(section.flags);

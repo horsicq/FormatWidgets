@@ -495,14 +495,14 @@ void ELFSectionHeaderWidget::reloadData()
             if (bIs64) {
                 XELF_DEF::Elf64_Phdr phdr64 = elf.getElf64_Phdr(getNumber());
 
-                g_ppLinedEdit[N_Elf_Phdr64::p_type]->setValue(phdr64.p_type);
-                g_ppLinedEdit[N_Elf_Phdr64::p_flags]->setValue(phdr64.p_flags);
-                g_ppLinedEdit[N_Elf_Phdr64::p_offset]->setValue(phdr64.p_offset);
-                g_ppLinedEdit[N_Elf_Phdr64::p_vaddr]->setValue(phdr64.p_vaddr);
-                g_ppLinedEdit[N_Elf_Phdr64::p_paddr]->setValue(phdr64.p_paddr);
-                g_ppLinedEdit[N_Elf_Phdr64::p_filesz]->setValue(phdr64.p_filesz);
-                g_ppLinedEdit[N_Elf_Phdr64::p_memsz]->setValue(phdr64.p_memsz);
-                g_ppLinedEdit[N_Elf_Phdr64::p_align]->setValue(phdr64.p_align);
+                g_ppLinedEdit[N_Elf_Phdr64::p_type]->setValue_uint32(phdr64.p_type);
+                g_ppLinedEdit[N_Elf_Phdr64::p_flags]->setValue_uint32(phdr64.p_flags);
+                g_ppLinedEdit[N_Elf_Phdr64::p_offset]->setValue_uint64(phdr64.p_offset);
+                g_ppLinedEdit[N_Elf_Phdr64::p_vaddr]->setValue_uint64(phdr64.p_vaddr);
+                g_ppLinedEdit[N_Elf_Phdr64::p_paddr]->setValue_uint64(phdr64.p_paddr);
+                g_ppLinedEdit[N_Elf_Phdr64::p_filesz]->setValue_uint64(phdr64.p_filesz);
+                g_ppLinedEdit[N_Elf_Phdr64::p_memsz]->setValue_uint64(phdr64.p_memsz);
+                g_ppLinedEdit[N_Elf_Phdr64::p_align]->setValue_uint64(phdr64.p_align);
 
                 g_ppComboBox[N_Elf_Phdr32::CB_TYPE]->setValue(phdr64.p_type);
                 g_ppComboBox[N_Elf_Phdr32::CB_FLAGS]->setValue(phdr64.p_flags);
@@ -542,8 +542,13 @@ void ELFSectionHeaderWidget::reloadData()
             qint64 nTag = elf.getDynamicArrayTag(nOffset);
             qint64 nValue = elf.getDynamicArrayValue(nOffset);
 
-            g_ppLinedEdit[N_Elf_DynamicArrayTags::d_tag]->setValue(bIs64 ? ((qint64)nTag) : ((qint32)nTag));
-            g_ppLinedEdit[N_Elf_DynamicArrayTags::d_value]->setValue(bIs64 ? ((qint64)nValue) : ((qint32)nValue));
+            if (bIs64) {
+                g_ppLinedEdit[N_Elf_DynamicArrayTags::d_tag]->setValue_uint64((qint64)nTag);
+                g_ppLinedEdit[N_Elf_DynamicArrayTags::d_value]->setValue_uint64((qint64)nValue);
+            } else {
+                g_ppLinedEdit[N_Elf_DynamicArrayTags::d_tag]->setValue_uint32((qint32)nTag);
+                g_ppLinedEdit[N_Elf_DynamicArrayTags::d_value]->setValue_uint32((qint32)nValue);
+            }
 
             g_ppComboBox[N_Elf_DynamicArrayTags::CB_TAG]->setValue(nTag);
 
@@ -566,7 +571,7 @@ void ELFSectionHeaderWidget::reloadData()
             if (bIs64) {
                 XELF_DEF::Elf64_Sym sym64 = elf._readElf64_Sym(nOffset, bIsBigEndian);
 
-                g_ppLinedEdit[N_Elf64_Sym::st_name]->setValue(sym64.st_name);
+                g_ppLinedEdit[N_Elf64_Sym::st_name]->setValue_uint32(sym64.st_name);
                 g_ppLinedEdit[N_Elf64_Sym::st_info]->setValue(sym64.st_info);
                 g_ppLinedEdit[N_Elf64_Sym::st_other]->setValue(sym64.st_other);
                 g_ppLinedEdit[N_Elf64_Sym::st_shndx]->setValue(sym64.st_shndx);
@@ -577,7 +582,7 @@ void ELFSectionHeaderWidget::reloadData()
             } else {
                 XELF_DEF::Elf32_Sym sym32 = elf._readElf32_Sym(nOffset, bIsBigEndian);
 
-                g_ppLinedEdit[N_Elf32_Sym::st_name]->setValue(sym32.st_name);
+                g_ppLinedEdit[N_Elf32_Sym::st_name]->setValue_uint32(sym32.st_name);
                 g_ppLinedEdit[N_Elf32_Sym::st_value]->setValue(sym32.st_value);
                 g_ppLinedEdit[N_Elf32_Sym::st_size]->setValue(sym32.st_size);
                 g_ppLinedEdit[N_Elf32_Sym::st_info]->setValue(sym32.st_info);
@@ -636,13 +641,13 @@ void ELFSectionHeaderWidget::reloadData()
             if (bIs64) {
                 XELF_DEF::Elf64_Rel rel64 = elf._readElf64_Rel(nOffset, bIsBigEndian);
 
-                g_ppLinedEdit[N_Elf_Rel::r_offset]->setValue(rel64.r_offset);
-                g_ppLinedEdit[N_Elf_Rel::r_info]->setValue(rel64.r_info);
+                g_ppLinedEdit[N_Elf_Rel::r_offset]->setValue_uint64(rel64.r_offset);
+                g_ppLinedEdit[N_Elf_Rel::r_info]->setValue_uint64(rel64.r_info);
             } else {
                 XELF_DEF::Elf32_Rel rel32 = elf._readElf32_Rel(nOffset, bIsBigEndian);
 
-                g_ppLinedEdit[N_Elf_Rel::r_offset]->setValue(rel32.r_offset);
-                g_ppLinedEdit[N_Elf_Rel::r_info]->setValue(rel32.r_info);
+                g_ppLinedEdit[N_Elf_Rel::r_offset]->setValue_uint32(rel32.r_offset);
+                g_ppLinedEdit[N_Elf_Rel::r_info]->setValue_uint32(rel32.r_info);
             }
 
             qint64 nSize = elf.getSymSize();
@@ -672,13 +677,13 @@ void ELFSectionHeaderWidget::widgetValueChanged(quint64 nValue)
             case SELF::TYPE_Elf_Shdr:
                 if (bIs64) {
                     switch (nNdata) {
-                        case N_Elf_Shdr::sh_type: g_ppLinedEdit[N_Elf_Shdr::sh_type]->setValue((quint32)nValue); break;
-                        case N_Elf_Shdr::sh_flags: g_ppLinedEdit[N_Elf_Shdr::sh_flags]->setValue((quint64)nValue); break;
+                        case N_Elf_Shdr::sh_type: g_ppLinedEdit[N_Elf_Shdr::sh_type]->setValue_uint32((quint32)nValue); break;
+                        case N_Elf_Shdr::sh_flags: g_ppLinedEdit[N_Elf_Shdr::sh_flags]->setValue_uint64((quint64)nValue); break;
                     }
                 } else {
                     switch (nNdata) {
-                        case N_Elf_Shdr::sh_type: g_ppLinedEdit[N_Elf_Shdr::sh_type]->setValue((quint32)nValue); break;
-                        case N_Elf_Shdr::sh_flags: g_ppLinedEdit[N_Elf_Shdr::sh_flags]->setValue((quint32)nValue); break;
+                        case N_Elf_Shdr::sh_type: g_ppLinedEdit[N_Elf_Shdr::sh_type]->setValue_uint32((quint32)nValue); break;
+                        case N_Elf_Shdr::sh_flags: g_ppLinedEdit[N_Elf_Shdr::sh_flags]->setValue_uint32((quint32)nValue); break;
                     }
                 }
                 break;
@@ -686,22 +691,27 @@ void ELFSectionHeaderWidget::widgetValueChanged(quint64 nValue)
             case SELF::TYPE_Elf_Phdr:
                 if (bIs64) {
                     switch (nNdata) {
-                        case N_Elf_Phdr64::p_type: g_ppLinedEdit[N_Elf_Phdr64::p_type]->setValue((quint32)nValue); break;
-                        case N_Elf_Phdr64::p_flags: g_ppLinedEdit[N_Elf_Phdr64::p_flags]->setValue((quint32)nValue); break;
+                        case N_Elf_Phdr64::p_type: g_ppLinedEdit[N_Elf_Phdr64::p_type]->setValue_uint32((quint32)nValue); break;
+                        case N_Elf_Phdr64::p_flags: g_ppLinedEdit[N_Elf_Phdr64::p_flags]->setValue_uint32((quint32)nValue); break;
                     }
                 } else {
                     switch (nNdata) {
-                        case N_Elf_Phdr32::p_type: g_ppLinedEdit[N_Elf_Phdr32::p_type]->setValue((quint32)nValue); break;
-                        case N_Elf_Phdr32::p_flags: g_ppLinedEdit[N_Elf_Phdr32::p_flags]->setValue((quint32)nValue); break;
+                        case N_Elf_Phdr32::p_type: g_ppLinedEdit[N_Elf_Phdr32::p_type]->setValue_uint32((quint32)nValue); break;
+                        case N_Elf_Phdr32::p_flags: g_ppLinedEdit[N_Elf_Phdr32::p_flags]->setValue_uint32((quint32)nValue); break;
                     }
                 }
 
                 break;
 
             case SELF::TYPE_Elf_DynamicArrayTags:
-
-                switch (nNdata) {
-                    case N_Elf_DynamicArrayTags::d_tag: g_ppLinedEdit[N_Elf_DynamicArrayTags::d_tag]->setValue(bIs64 ? ((qint64)nValue) : ((qint32)nValue)); break;
+                if (bIs64) {
+                    switch (nNdata) {
+                        case N_Elf_DynamicArrayTags::d_tag: g_ppLinedEdit[N_Elf_DynamicArrayTags::d_tag]->setValue_uint64((qint64)nValue); break;
+                    }
+                } else {
+                    switch (nNdata) {
+                        case N_Elf_DynamicArrayTags::d_tag: g_ppLinedEdit[N_Elf_DynamicArrayTags::d_tag]->setValue_uint32((qint32)nValue); break;
+                    }
                 }
 
                 break;
