@@ -561,8 +561,8 @@ void MACHSectionHeaderWidget::reloadData()
 
             XMACH::COMMAND_RECORD cr = mach._readLoadCommand(nHeaderOffset, bIsBigEndian);
 
-            g_ppLinedEdit[N_mach_commands::cmd]->setValue((quint32)cr.nType);
-            g_ppLinedEdit[N_mach_commands::cmdsize]->setValue((quint32)cr.nSize);
+            g_ppLinedEdit[N_mach_commands::cmd]->setValue_uint32((quint32)cr.nType);
+            g_ppLinedEdit[N_mach_commands::cmdsize]->setValue_uint32((quint32)cr.nSize);
 
             g_ppComboBox[N_mach_commands::CB_CMD]->setValue(cr.nType);
 
@@ -583,9 +583,9 @@ void MACHSectionHeaderWidget::reloadData()
             XMACH::LIBRARY_RECORD lr = mach._readLibraryRecord(nHeaderOffset, bIsBigEndian);
             XMACH::COMMAND_RECORD cr = mach._readLoadCommand(nHeaderOffset, bIsBigEndian);
 
-            g_ppLinedEdit[N_mach_library::timestamp]->setValue((quint32)lr.timestamp);
-            g_ppLinedEdit[N_mach_library::current_version]->setValue((quint32)lr.current_version);
-            g_ppLinedEdit[N_mach_library::compatibility_version]->setValue((quint32)lr.compatibility_version);
+            g_ppLinedEdit[N_mach_library::timestamp]->setValue_uint32((quint32)lr.timestamp);
+            g_ppLinedEdit[N_mach_library::current_version]->setValue_uint32((quint32)lr.current_version);
+            g_ppLinedEdit[N_mach_library::compatibility_version]->setValue_uint32((quint32)lr.compatibility_version);
             g_ppLinedEdit[N_mach_library::name]->setValue_String(lr.sFullName, lr.nMaxStringSize);
 
             if (lr.nMaxStringSize) {
@@ -613,8 +613,8 @@ void MACHSectionHeaderWidget::reloadData()
             XMACH::FVM_LIBRARY_RECORD lr = mach._readFvmLibraryRecord(nHeaderOffset, bIsBigEndian);
             XMACH::COMMAND_RECORD cr = mach._readLoadCommand(nHeaderOffset, bIsBigEndian);
 
-            g_ppLinedEdit[N_mach_fmv_library::minor_version]->setValue((quint32)lr.minor_version);
-            g_ppLinedEdit[N_mach_fmv_library::header_addr]->setValue((quint32)lr.header_addr);
+            g_ppLinedEdit[N_mach_fmv_library::minor_version]->setValue_uint32((quint32)lr.minor_version);
+            g_ppLinedEdit[N_mach_fmv_library::header_addr]->setValue_uint32((quint32)lr.header_addr);
             g_ppLinedEdit[N_mach_fmv_library::name]->setValue_String(lr.sFullName, lr.nMaxStringSize);
 
             if (lr.nMaxStringSize) {
@@ -648,14 +648,14 @@ void MACHSectionHeaderWidget::reloadData()
                 XMACH_DEF::segment_command_64 segment = mach._read_segment_command_64(nHeaderOffset, bIsBigEndian);
 
                 g_ppLinedEdit[N_mach_segments::segname]->setValue_String(segment.segname);
-                g_ppLinedEdit[N_mach_segments::vmaddr]->setValue(segment.vmaddr);
-                g_ppLinedEdit[N_mach_segments::vmsize]->setValue(segment.vmsize);
-                g_ppLinedEdit[N_mach_segments::fileoff]->setValue(segment.fileoff);
-                g_ppLinedEdit[N_mach_segments::filesize]->setValue(segment.filesize);
-                g_ppLinedEdit[N_mach_segments::maxprot]->setValue(segment.maxprot);
-                g_ppLinedEdit[N_mach_segments::initprot]->setValue(segment.initprot);
-                g_ppLinedEdit[N_mach_segments::nsects]->setValue(segment.nsects);
-                g_ppLinedEdit[N_mach_segments::flags]->setValue(segment.flags);
+                g_ppLinedEdit[N_mach_segments::vmaddr]->setValue_uint64(segment.vmaddr);
+                g_ppLinedEdit[N_mach_segments::vmsize]->setValue_uint64(segment.vmsize);
+                g_ppLinedEdit[N_mach_segments::fileoff]->setValue_uint64(segment.fileoff);
+                g_ppLinedEdit[N_mach_segments::filesize]->setValue_uint64(segment.filesize);
+                g_ppLinedEdit[N_mach_segments::maxprot]->setValue_uint32(segment.maxprot);
+                g_ppLinedEdit[N_mach_segments::initprot]->setValue_uint32(segment.initprot);
+                g_ppLinedEdit[N_mach_segments::nsects]->setValue_uint32(segment.nsects);
+                g_ppLinedEdit[N_mach_segments::flags]->setValue_uint32(segment.flags);
 
                 g_ppComboBox[N_mach_segments::CB_initprot]->setValue(segment.initprot);
                 g_ppComboBox[N_mach_segments::CB_maxprot]->setValue(segment.maxprot);
