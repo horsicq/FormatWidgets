@@ -133,7 +133,7 @@ void ELFSectionHeaderWidget::setStringTable(qint64 nStringTableOffset, qint64 nS
     this->g_nStringTableSize = nStringTableSize;
 }
 
-FormatWidget::SV ELFSectionHeaderWidget::_setValue(QVariant vValue, qint32 nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
+FormatWidget::SV ELFSectionHeaderWidget::_setValue(QVariant vValue, qint32 nStype, qint32 nNdata, int nVtype, int nPosition, qint64 nOffset)
 {
     Q_UNUSED(nVtype)
 

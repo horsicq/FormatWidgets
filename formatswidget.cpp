@@ -132,7 +132,7 @@ void FormatsWidget::reload()
     file.setFileName(g_sFileName);
 
     if (file.open(QIODevice::ReadOnly)) {
-        ui->lineEditFileSize->setText(XBinary::bytesCountToString(file.size()));
+        ui->lineEditFileSize->setValue_uint64(file.size(), XLineEditHEX::_MODE_SIZE);
 
         XBinary::_MEMORY_MAP memoryMap = XFormats::getMemoryMap(fileType, &file);
 
