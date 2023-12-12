@@ -572,22 +572,22 @@ void ELFSectionHeaderWidget::reloadData()
                 XELF_DEF::Elf64_Sym sym64 = elf._readElf64_Sym(nOffset, bIsBigEndian);
 
                 g_ppLinedEdit[N_Elf64_Sym::st_name]->setValue_uint32(sym64.st_name);
-                g_ppLinedEdit[N_Elf64_Sym::st_info]->setValue(sym64.st_info);
-                g_ppLinedEdit[N_Elf64_Sym::st_other]->setValue(sym64.st_other);
-                g_ppLinedEdit[N_Elf64_Sym::st_shndx]->setValue(sym64.st_shndx);
-                g_ppLinedEdit[N_Elf64_Sym::st_value]->setValue(sym64.st_value);
-                g_ppLinedEdit[N_Elf64_Sym::st_size]->setValue(sym64.st_size);
+                g_ppLinedEdit[N_Elf64_Sym::st_info]->setValue_uint8(sym64.st_info);
+                g_ppLinedEdit[N_Elf64_Sym::st_other]->setValue_uint8(sym64.st_other);
+                g_ppLinedEdit[N_Elf64_Sym::st_shndx]->setValue_uint16(sym64.st_shndx);
+                g_ppLinedEdit[N_Elf64_Sym::st_value]->setValue_uint64(sym64.st_value);
+                g_ppLinedEdit[N_Elf64_Sym::st_size]->setValue_uint64(sym64.st_size);
 
                 addComment(ui->tableWidget, N_Elf64_Sym::st_name, HEADER_COLUMN_COMMENT, elf.getStringFromIndex(g_nStringTableOffset, g_nStringTableSize, sym64.st_name));
             } else {
                 XELF_DEF::Elf32_Sym sym32 = elf._readElf32_Sym(nOffset, bIsBigEndian);
 
                 g_ppLinedEdit[N_Elf32_Sym::st_name]->setValue_uint32(sym32.st_name);
-                g_ppLinedEdit[N_Elf32_Sym::st_value]->setValue(sym32.st_value);
-                g_ppLinedEdit[N_Elf32_Sym::st_size]->setValue(sym32.st_size);
-                g_ppLinedEdit[N_Elf32_Sym::st_info]->setValue(sym32.st_info);
-                g_ppLinedEdit[N_Elf32_Sym::st_other]->setValue(sym32.st_other);
-                g_ppLinedEdit[N_Elf32_Sym::st_shndx]->setValue(sym32.st_shndx);
+                g_ppLinedEdit[N_Elf32_Sym::st_value]->setValue_uint32(sym32.st_value);
+                g_ppLinedEdit[N_Elf32_Sym::st_size]->setValue_uint32(sym32.st_size);
+                g_ppLinedEdit[N_Elf32_Sym::st_info]->setValue_uint8(sym32.st_info);
+                g_ppLinedEdit[N_Elf32_Sym::st_other]->setValue_uint8(sym32.st_other);
+                g_ppLinedEdit[N_Elf32_Sym::st_shndx]->setValue_uint16(sym32.st_shndx);
 
                 addComment(ui->tableWidget, N_Elf32_Sym::st_name, HEADER_COLUMN_COMMENT, elf.getStringFromIndex(g_nStringTableOffset, g_nStringTableSize, sym32.st_name));
             }
@@ -611,15 +611,15 @@ void ELFSectionHeaderWidget::reloadData()
             if (bIs64) {
                 XELF_DEF::Elf64_Rela rela64 = elf._readElf64_Rela(nOffset, bIsBigEndian);
 
-                g_ppLinedEdit[N_Elf_Rela::r_offset]->setValue(rela64.r_offset);
-                g_ppLinedEdit[N_Elf_Rela::r_info]->setValue(rela64.r_info);
-                g_ppLinedEdit[N_Elf_Rela::r_addend]->setValue(rela64.r_addend);
+                g_ppLinedEdit[N_Elf_Rela::r_offset]->setValue_uint64(rela64.r_offset);
+                g_ppLinedEdit[N_Elf_Rela::r_info]->setValue_uint64(rela64.r_info);
+                g_ppLinedEdit[N_Elf_Rela::r_addend]->setValue_int64(rela64.r_addend);
             } else {
                 XELF_DEF::Elf32_Rela rela32 = elf._readElf32_Rela(nOffset, bIsBigEndian);
 
-                g_ppLinedEdit[N_Elf_Rela::r_offset]->setValue(rela32.r_offset);
-                g_ppLinedEdit[N_Elf_Rela::r_info]->setValue(rela32.r_info);
-                g_ppLinedEdit[N_Elf_Rela::r_addend]->setValue(rela32.r_addend);
+                g_ppLinedEdit[N_Elf_Rela::r_offset]->setValue_uint32(rela32.r_offset);
+                g_ppLinedEdit[N_Elf_Rela::r_info]->setValue_uint32(rela32.r_info);
+                g_ppLinedEdit[N_Elf_Rela::r_addend]->setValue_int32(rela32.r_addend);
             }
 
             qint64 nSize = elf.getSymSize();

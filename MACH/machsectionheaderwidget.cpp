@@ -773,22 +773,22 @@ void MACHSectionHeaderWidget::reloadData()
             if (bIs64) {
                 XMACH_DEF::nlist_64 nlist = mach._read_nlist_64(nHeaderOffset);
 
-                g_ppLinedEdit[N_mach_nlist::n_strx]->setValue(nlist.n_strx);
-                g_ppLinedEdit[N_mach_nlist::n_type]->setValue(nlist.n_type);
-                g_ppLinedEdit[N_mach_nlist::n_sect]->setValue(nlist.n_sect);
-                g_ppLinedEdit[N_mach_nlist::n_desc]->setValue(nlist.n_desc);
-                g_ppLinedEdit[N_mach_nlist::n_value]->setValue(nlist.n_value);
+                g_ppLinedEdit[N_mach_nlist::n_strx]->setValue_uint32(nlist.n_strx);
+                g_ppLinedEdit[N_mach_nlist::n_type]->setValue_uint8(nlist.n_type);
+                g_ppLinedEdit[N_mach_nlist::n_sect]->setValue_uint8(nlist.n_sect);
+                g_ppLinedEdit[N_mach_nlist::n_desc]->setValue_uint16(nlist.n_desc);
+                g_ppLinedEdit[N_mach_nlist::n_value]->setValue_uint64(nlist.n_value);
 
                 addComment(ui->tableWidget, N_mach_nlist::n_strx, HEADER_COLUMN_COMMENT,
                            mach.getStringFromIndex(osStringTable.nOffset, osStringTable.nSize, nlist.n_strx));
             } else {
                 XMACH_DEF::nlist nlist = mach._read_nlist(nHeaderOffset);
 
-                g_ppLinedEdit[N_mach_nlist::n_strx]->setValue(nlist.n_strx);
-                g_ppLinedEdit[N_mach_nlist::n_type]->setValue(nlist.n_type);
-                g_ppLinedEdit[N_mach_nlist::n_sect]->setValue(nlist.n_sect);
-                g_ppLinedEdit[N_mach_nlist::n_desc]->setValue(nlist.n_desc);
-                g_ppLinedEdit[N_mach_nlist::n_value]->setValue(nlist.n_value);
+                g_ppLinedEdit[N_mach_nlist::n_strx]->setValue_uint32(nlist.n_strx);
+                g_ppLinedEdit[N_mach_nlist::n_type]->setValue_uint8(nlist.n_type);
+                g_ppLinedEdit[N_mach_nlist::n_sect]->setValue_uint8(nlist.n_sect);
+                g_ppLinedEdit[N_mach_nlist::n_desc]->setValue_uint16(nlist.n_desc);
+                g_ppLinedEdit[N_mach_nlist::n_value]->setValue_uint32(nlist.n_value);
 
                 addComment(ui->tableWidget, N_mach_nlist::n_strx, HEADER_COLUMN_COMMENT,
                            mach.getStringFromIndex(osStringTable.nOffset, osStringTable.nSize, nlist.n_strx));
@@ -820,9 +820,9 @@ void MACHSectionHeaderWidget::reloadData()
 
             XMACH_DEF::data_in_code_entry dice = mach._read_data_in_code_entry(nHeaderOffset);
 
-            g_ppLinedEdit[N_mach_data_in_code_entry::offset]->setValue(dice.offset);
-            g_ppLinedEdit[N_mach_data_in_code_entry::length]->setValue(dice.length);
-            g_ppLinedEdit[N_mach_data_in_code_entry::kind]->setValue(dice.kind);
+            g_ppLinedEdit[N_mach_data_in_code_entry::offset]->setValue_uint32(dice.offset);
+            g_ppLinedEdit[N_mach_data_in_code_entry::length]->setValue_uint16(dice.length);
+            g_ppLinedEdit[N_mach_data_in_code_entry::kind]->setValue_uint16(dice.kind);
 
             g_ppComboBox[N_mach_data_in_code_entry::CB_kind]->setValue(dice.kind);
 
