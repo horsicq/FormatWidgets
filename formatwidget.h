@@ -117,7 +117,7 @@ public:
     void _deleteObjects(QObject **ppObjects, qint32 nCount);
     void _deleteSubdevices(SubDevice **ppSubdevices, qint32 nCount);
 
-    XComboBoxEx *createComboBox(QTableWidget *pTableWidget, QMap<quint64, QString> mapData, int nType, int nData, XComboBoxEx::CBTYPE cbtype, quint64 nMask = 0,
+    XComboBoxEx *createComboBox(QTableWidget *pTableWidget, QMap<quint64, QString> mapData, qint32 nType, int nData, XComboBoxEx::CBTYPE cbtype, quint64 nMask = 0,
                                 int nExtraData = -1);
     InvWidget *createInvWidget(QTableWidget *pTableWidget, qint32 nType, qint32 nData, InvWidget::TYPE widgetType);
     XDateTimeEditX *createTimeDateEdit(QTableWidget *pTableWidget, qint32 nType, qint32 nData, XDateTimeEditX::DT_TYPE dtType);
