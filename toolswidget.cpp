@@ -103,7 +103,7 @@ void ToolsWidget::setReadonly(bool bState)
 
 void ToolsWidget::reload()
 {
-    int nIndex = ui->tabWidgetMain->currentIndex();
+    qint32 nIndex = ui->tabWidgetMain->currentIndex();
 
     if (nIndex == 0)  // Hex
     {
