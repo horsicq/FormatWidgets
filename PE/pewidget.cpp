@@ -1920,7 +1920,8 @@ void PEWidget::reloadData()
                     if (nRecordSize > N_IMAGE_LOADCONFIG::TimeDateStamp) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::TimeDateStamp]->setValue_uint32(lc64.TimeDateStamp);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::MinorVersion) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::MinorVersion]->setValue_uint16(lc64.MinorVersion);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::MajorVersion) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::MajorVersion]->setValue_uint16(lc64.MajorVersion);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::GlobalFlagsClear) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GlobalFlagsClear]->setValue_uint32(lc64.GlobalFlagsClear);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::GlobalFlagsClear)
+                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GlobalFlagsClear]->setValue_uint32(lc64.GlobalFlagsClear);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GlobalFlagsSet) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GlobalFlagsSet]->setValue_uint32(lc64.GlobalFlagsSet);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::CriticalSectionDefaultTimeout)
                         g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CriticalSectionDefaultTimeout]->setValue_uint32(lc64.CriticalSectionDefaultTimeout);
@@ -1928,7 +1929,8 @@ void PEWidget::reloadData()
                         g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DeCommitFreeBlockThreshold]->setValue_uint64(lc64.DeCommitFreeBlockThreshold);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::DeCommitTotalFreeThreshold)
                         g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DeCommitTotalFreeThreshold]->setValue_uint64(lc64.DeCommitTotalFreeThreshold);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::LockPrefixTable) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::LockPrefixTable]->setValue_uint64(lc64.LockPrefixTable);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::LockPrefixTable)
+                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::LockPrefixTable]->setValue_uint64(lc64.LockPrefixTable);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::MaximumAllocationSize)
                         g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::MaximumAllocationSize]->setValue_uint64(lc64.MaximumAllocationSize);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::VirtualMemoryThreshold)
@@ -1982,7 +1984,8 @@ void PEWidget::reloadData()
                         g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DynamicValueRelocTableSection]->setValue_uint16(lc64.DynamicValueRelocTableSection);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::Reserved2) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::Reserved2]->setValue_uint16(lc64.Reserved2);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardRFVerifyStackPointerFunctionPointer)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardRFVerifyStackPointerFunctionPointer]->setValue_uint64(lc64.GuardRFVerifyStackPointerFunctionPointer);
+                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardRFVerifyStackPointerFunctionPointer]->setValue_uint64(
+                            lc64.GuardRFVerifyStackPointerFunctionPointer);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::HotPatchTableOffset)
                         g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::HotPatchTableOffset]->setValue_uint32(lc64.HotPatchTableOffset);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::Reserved3) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::Reserved3]->setValue_uint32(lc64.Reserved3);
@@ -2028,7 +2031,8 @@ void PEWidget::reloadData()
                     if (nRecordSize > N_IMAGE_LOADCONFIG::TimeDateStamp) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::TimeDateStamp]->setValue_uint32(lc32.TimeDateStamp);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::MinorVersion) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::MinorVersion]->setValue_uint16(lc32.MinorVersion);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::MajorVersion) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::MajorVersion]->setValue_uint16(lc32.MajorVersion);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::GlobalFlagsClear) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GlobalFlagsClear]->setValue_uint32(lc32.GlobalFlagsClear);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::GlobalFlagsClear)
+                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GlobalFlagsClear]->setValue_uint32(lc32.GlobalFlagsClear);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GlobalFlagsSet) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GlobalFlagsSet]->setValue_uint32(lc32.GlobalFlagsSet);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::CriticalSectionDefaultTimeout)
                         g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CriticalSectionDefaultTimeout]->setValue_uint32(lc32.CriticalSectionDefaultTimeout);
@@ -2036,7 +2040,8 @@ void PEWidget::reloadData()
                         g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DeCommitFreeBlockThreshold]->setValue_uint32(lc32.DeCommitFreeBlockThreshold);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::DeCommitTotalFreeThreshold)
                         g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DeCommitTotalFreeThreshold]->setValue_uint32(lc32.DeCommitTotalFreeThreshold);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::LockPrefixTable) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::LockPrefixTable]->setValue_uint32(lc32.LockPrefixTable);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::LockPrefixTable)
+                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::LockPrefixTable]->setValue_uint32(lc32.LockPrefixTable);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::MaximumAllocationSize)
                         g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::MaximumAllocationSize]->setValue_uint32(lc32.MaximumAllocationSize);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::VirtualMemoryThreshold)
@@ -2091,7 +2096,8 @@ void PEWidget::reloadData()
                         g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DynamicValueRelocTableSection]->setValue_uint16(lc32.DynamicValueRelocTableSection);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::Reserved2) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::Reserved2]->setValue_uint16(lc32.Reserved2);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardRFVerifyStackPointerFunctionPointer)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardRFVerifyStackPointerFunctionPointer]->setValue_uint32(lc32.GuardRFVerifyStackPointerFunctionPointer);
+                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardRFVerifyStackPointerFunctionPointer]->setValue_uint32(
+                            lc32.GuardRFVerifyStackPointerFunctionPointer);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::HotPatchTableOffset)
                         g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::HotPatchTableOffset]->setValue_uint32(lc32.HotPatchTableOffset);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::Reserved3) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::Reserved3]->setValue_uint32(lc32.Reserved3);
