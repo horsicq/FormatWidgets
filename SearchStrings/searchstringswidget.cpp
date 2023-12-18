@@ -389,7 +389,7 @@ void SearchStringsWidget::search()
             if (fileType == XBinary::FT_REGION) {
                 options.memoryMap = XBinary(g_pDevice, true, g_options.nBaseAddress).getMemoryMap();
             } else {
-                options.memoryMap = XFormats::getMemoryMap(fileType, g_pDevice);
+                options.memoryMap = XFormats::getMemoryMap(fileType, XBinary::MAPMODE_UNKNOWN, g_pDevice);
             }
 
             g_pOldModel = g_pModel;

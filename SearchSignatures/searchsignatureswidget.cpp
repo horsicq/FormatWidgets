@@ -258,7 +258,7 @@ void SearchSignaturesWidget::search()
         MultiSearch::OPTIONS options = {};
 
         options.bMenu_Hex = g_options.bMenu_Hex;
-        options.memoryMap = XFormats::getMemoryMap(fileType, g_pDevice);
+        options.memoryMap = XFormats::getMemoryMap(fileType, XBinary::MAPMODE_UNKNOWN, g_pDevice);
         options.bSignature = true;
         options.bIsBigEndian = (ui->comboBoxEndianness->currentData().toBool());
         options.pListSignatureRecords = &g_listSignatureRecords;

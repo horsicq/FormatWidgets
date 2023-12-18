@@ -130,7 +130,7 @@ void SearchValuesWidget::search()
         options.bIsBigEndian = g_bIsBigEndian;
         options.varValue = g_varValue;
         options.valueType = g_valueType;
-        options.memoryMap = XFormats::getMemoryMap(fileType, g_pDevice);
+        options.memoryMap = XFormats::getMemoryMap(fileType, XBinary::MAPMODE_UNKNOWN, g_pDevice);
 
         QList<XBinary::MS_RECORD> listRecords;
 

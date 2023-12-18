@@ -134,7 +134,7 @@ void FormatsWidget::reload()
     if (file.open(QIODevice::ReadOnly)) {
         ui->lineEditFileSize->setValue_uint64(file.size(), XLineEditHEX::_MODE_SIZE);
 
-        XBinary::_MEMORY_MAP memoryMap = XFormats::getMemoryMap(fileType, &file);
+        XBinary::_MEMORY_MAP memoryMap = XFormats::getMemoryMap(fileType, XBinary::MAPMODE_UNKNOWN, &file);
 
         XBinary::MODE mode = memoryMap.mode;
 
