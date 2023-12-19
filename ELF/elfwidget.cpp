@@ -111,7 +111,7 @@ void ELFWidget::reload()
             addDatasets(&elf, pItemSections, &listDataSets);
         }
 
-        QList<XELF_DEF::Elf_Phdr> listProgramHeaders = elf.getElf_PhdrList();
+        QList<XELF_DEF::Elf_Phdr> listProgramHeaders = elf.getElf_PhdrList(-1);
 
         if (listProgramHeaders.count()) {
             QTreeWidgetItem *pItemPrograms = createNewItem(SELF::TYPE_Elf_Phdr, "Programs");  // mn TODO tr
@@ -131,7 +131,7 @@ void ELFWidget::reload()
     }
 }
 
-FormatWidget::SV ELFWidget::_setValue(QVariant vValue, qint32 nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
+FormatWidget::SV ELFWidget::_setValue(QVariant vValue, qint32 nStype, qint32 nNdata, int nVtype, int nPosition, qint64 nOffset)
 {
     Q_UNUSED(nVtype)
     Q_UNUSED(nPosition)

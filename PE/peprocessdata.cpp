@@ -40,7 +40,7 @@ void PEProcessData::_process()
         listLabels.append("#");
         listLabels.append(getStructList(N_IMAGE_SECTION_HEADER::records, N_IMAGE_SECTION_HEADER::__data_size));
 
-        XBinary::_MEMORY_MAP memoryMap = g_pPE->getMemoryMap();
+        XBinary::_MEMORY_MAP memoryMap = g_pPE->getMemoryMap(XBinary::MAPMODE_UNKNOWN, getPdStruct());
 
         QList<XPE_DEF::IMAGE_SECTION_HEADER> listSections = g_pPE->getSectionHeaders();
 
@@ -107,7 +107,7 @@ void PEProcessData::_process()
 
         QList<XPE_DEF::IMAGE_SECTION_HEADER> listSectionHeaders = g_pPE->getSectionHeaders();
         QList<XPE::SECTION_RECORD> listSectionRecords = g_pPE->getSectionRecords(&listSectionHeaders);
-        XBinary::_MEMORY_MAP memoryMap = g_pPE->getMemoryMap();
+        XBinary::_MEMORY_MAP memoryMap = g_pPE->getMemoryMap(XBinary::MAPMODE_UNKNOWN, getPdStruct());
 
         QList<QString> listStrDb = XInfoDB::loadStrDB(getOptions()->getInfoPath(), XInfoDB::STRDB_PESECTIONS);
 
@@ -419,7 +419,7 @@ void PEProcessData::_process()
         listLabels.append(tr("Hash"));
         listLabels.append(tr("Name"));
 
-        XBinary::_MEMORY_MAP memoryMap = g_pPE->getMemoryMap();
+        XBinary::_MEMORY_MAP memoryMap = g_pPE->getMemoryMap(XBinary::MAPMODE_UNKNOWN, getPdStruct());
 
         QList<XPE::IMPORT_HEADER> listImport = g_pPE->getImports(&memoryMap);
 
@@ -513,7 +513,7 @@ void PEProcessData::_process()
 
         setTableHeader(*g_ppModel, &listLabels);
 
-        XBinary::_MEMORY_MAP memoryMap = g_pPE->getMemoryMap();
+        XBinary::_MEMORY_MAP memoryMap = g_pPE->getMemoryMap(XBinary::MAPMODE_UNKNOWN, getPdStruct());
 
         for (qint32 i = 0; (i < nNumberOfRFEs) && (isRun()); i++) {
             QStandardItem *pItem = new QStandardItem;
@@ -549,7 +549,7 @@ void PEProcessData::_process()
 
         setTableHeader(*g_ppModel, &listLabels);
 
-        XBinary::_MEMORY_MAP memoryMap = g_pPE->getMemoryMap();
+        XBinary::_MEMORY_MAP memoryMap = g_pPE->getMemoryMap(XBinary::MAPMODE_UNKNOWN, getPdStruct());
 
         for (qint32 i = 0; (i < nNumberOfDelayImports) && (isRun()); i++) {
             QString sLibraryName = g_pPE->read_ansiString(g_pPE->relAddressToOffset(&memoryMap, listDelayImport.at(i).DllNameRVA));
@@ -591,7 +591,7 @@ void PEProcessData::_process()
 
         setTableHeader(*g_ppModel, &listLabels);
 
-        XBinary::_MEMORY_MAP memoryMap = g_pPE->getMemoryMap();
+        XBinary::_MEMORY_MAP memoryMap = g_pPE->getMemoryMap(XBinary::MAPMODE_UNKNOWN, getPdStruct());
 
         for (qint32 i = 0; (i < nNumberOfPositions) && (isRun()); i++) {
             QStandardItem *pItem = new QStandardItem;

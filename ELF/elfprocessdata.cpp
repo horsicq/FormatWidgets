@@ -161,10 +161,10 @@ void ELFProcessData::_process()
         qint32 nNumberOfPrograms = 0;
 
         if (bIs64) {
-            listPrograms64 = g_pELF->getElf64_PhdrList();
+            listPrograms64 = g_pELF->getElf64_PhdrList(1000);
             nNumberOfPrograms = listPrograms64.count();
         } else {
-            listPrograms32 = g_pELF->getElf32_PhdrList();
+            listPrograms32 = g_pELF->getElf32_PhdrList(1000);
             nNumberOfPrograms = listPrograms32.count();
         }
 
