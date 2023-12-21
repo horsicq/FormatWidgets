@@ -75,6 +75,7 @@ void SearchStringsWidget::setData(QIODevice *pDevice, XBinary::FT fileType, OPTI
     this->g_pDevice = pDevice;
 
     XFormats::setFileTypeComboBox(fileType, g_pDevice, ui->comboBoxType);
+    XFormats::setMapModeComboBox(fileType, pDevice, false, -1, ui->comboBoxMapMode);
 
     ui->checkBoxAnsi->setChecked(options.bAnsi);
     ui->checkBoxUTF8->setChecked(options.bUTF8);
@@ -84,8 +85,6 @@ void SearchStringsWidget::setData(QIODevice *pDevice, XBinary::FT fileType, OPTI
 
     g_bInit = false;
 
-    //    qint64 nSize = pDevice->size();
-
     ui->tableViewResult->setModel(nullptr);
 
     g_options = options;
@@ -93,20 +92,6 @@ void SearchStringsWidget::setData(QIODevice *pDevice, XBinary::FT fileType, OPTI
     if (g_options.nBaseAddress == -1) {
         g_options.nBaseAddress = 0;
     }
-
-    //    qint32 nAddressWidth = 8;
-
-    //    if (nSize + g_options.nBaseAddress > 0xFFFFFFFF) {
-    //        nAddressWidth = 16;
-    //    } else {
-    //        nAddressWidth = 8;
-    //    }
-
-    //    QString sInfo=QString("0x%1 - 0x%2 ( 0x%3
-    //    )").arg(g_options.nBaseAddress,nAddressWidth,16,QChar('0'))
-    //                  .arg(g_options.nBaseAddress+nSize-1,nAddressWidth,16,QChar('0'))
-    //                  .arg(nSize,8,16,QChar('0'));
-    //    ui->labelInfo->setText(sInfo);
 
     if (bAuto) {
         search();
@@ -240,45 +225,6 @@ void SearchStringsWidget::on_tableViewResult_customContextMenuRequested(const QP
     contextMenu.exec(ui->tableViewResult->viewport()->mapToGlobal(pos));
 }
 
-// void SearchStringsWidget::_copyString()
-//{
-//     qint32 nRow = ui->tableViewResult->currentIndex().row();
-
-//    if ((nRow != -1) && (g_pModel)) {
-//        QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(3);
-
-//        QString sString = ui->tableViewResult->model()->data(index).toString();
-
-//        QApplication::clipboard()->setText(sString);
-//    }
-//}
-
-// void SearchStringsWidget::_copyOffset()
-//{
-//     int nRow = ui->tableViewResult->currentIndex().row();
-
-//    if ((nRow != -1) && (g_pModel)) {
-//        QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(0);
-
-//        QString sString = ui->tableViewResult->model()->data(index).toString();
-
-//        QApplication::clipboard()->setText(sString);
-//    }
-//}
-
-// void SearchStringsWidget::_copySize()
-//{
-//     int nRow = ui->tableViewResult->currentIndex().row();
-
-//    if ((nRow != -1) && (g_pModel)) {
-//        QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(1);
-
-//        QString sString = ui->tableViewResult->model()->data(index).toString();
-
-//        QApplication::clipboard()->setText(sString);
-//    }
-//}
-
 void SearchStringsWidget::_hex()
 {
     int nRow = ui->tableViewResult->currentIndex().row();
@@ -374,6 +320,7 @@ void SearchStringsWidget::search()
 
         if (g_options.bAnsi || g_options.bUnicode || g_options.bUTF8) {
             XBinary::FT fileType = (XBinary::FT)(ui->comboBoxType->currentData().toInt());
+            XBinary::MAPMODE mapMode = (XBinary::MAPMODE)(ui->comboBoxMapMode->currentData().toInt());
 
             MultiSearch::OPTIONS options = {};
 
@@ -389,7 +336,7 @@ void SearchStringsWidget::search()
             if (fileType == XBinary::FT_REGION) {
                 options.memoryMap = XBinary(g_pDevice, true, g_options.nBaseAddress).getMemoryMap();
             } else {
-                options.memoryMap = XFormats::getMemoryMap(fileType, XBinary::MAPMODE_UNKNOWN, g_pDevice);
+                options.memoryMap = XFormats::getMemoryMap(fileType, mapMode, g_pDevice);
             }
 
             g_pOldModel = g_pModel;
@@ -520,3 +467,4 @@ void SearchStringsWidget::viewSelection()
         }
     }
 }
+

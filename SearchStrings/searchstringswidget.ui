@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>741</width>
-    <height>379</height>
+    <width>839</width>
+    <height>364</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -32,14 +32,14 @@
       <widget class="QGroupBox" name="groupBoxType">
        <property name="minimumSize">
         <size>
-         <width>120</width>
+         <width>240</width>
          <height>0</height>
         </size>
        </property>
        <property name="title">
         <string>Type</string>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_3">
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
         <property name="leftMargin">
          <number>0</number>
         </property>
@@ -54,6 +54,9 @@
         </property>
         <item>
          <widget class="QComboBox" name="comboBoxType"/>
+        </item>
+        <item>
+         <widget class="QComboBox" name="comboBoxMapMode"/>
         </item>
        </layout>
       </widget>
