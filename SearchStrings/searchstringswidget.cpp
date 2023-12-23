@@ -467,4 +467,3 @@ void SearchStringsWidget::viewSelection()
         }
     }
 }
-
