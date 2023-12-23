@@ -263,7 +263,7 @@ void MultiSearch::processModel()
 
             {
                 QStandardItem *pTypeNumber = new QStandardItem;
-                pTypeNumber->setText(QString::number(i));
+                pTypeNumber->setData(i, Qt::DisplayRole);
                 pTypeNumber->setData(record.nOffset, Qt::UserRole + USERROLE_OFFSET);
                 pTypeNumber->setData(record.nAddress, Qt::UserRole + USERROLE_ADDRESS);
                 pTypeNumber->setData(record.nSize, Qt::UserRole + USERROLE_SIZE);
@@ -334,7 +334,7 @@ void MultiSearch::processModel()
 
             {
                 QStandardItem *pItem = new QStandardItem;
-                pItem->setText(QString::number(i));
+                pItem->setData(i, Qt::DisplayRole);
                 // TODO mb more
                 pItem->setData(record.nAddress, Qt::UserRole + USERROLE_ADDRESS);
                 pItem->setData(record.nOffset, Qt::UserRole + USERROLE_OFFSET);

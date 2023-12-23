@@ -247,7 +247,7 @@ void ELFProcessData::_process()
 
             for (qint32 i = 0; (i < nNumberOfSymbols) && (isRun()); i++) {
                 QStandardItem *pItem = new QStandardItem;
-                pItem->setText(QString::number(i));
+                pItem->setData(i, Qt::DisplayRole);
                 pItem->setTextAlignment(Qt::AlignRight);
 
                 pItem->setData(g_nOffset + i * sizeof(XELF_DEF::Elf64_Sym), Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET);
@@ -292,7 +292,7 @@ void ELFProcessData::_process()
 
             for (qint32 i = 0; (i < nNumberOfSymbols) && (isRun()); i++) {
                 QStandardItem *pItem = new QStandardItem;
-                pItem->setText(QString::number(i));
+                pItem->setData(i, Qt::DisplayRole);
                 pItem->setTextAlignment(Qt::AlignRight);
 
                 pItem->setData(g_nOffset + i * sizeof(XELF_DEF::Elf32_Sym), Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET);
