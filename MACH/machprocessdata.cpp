@@ -111,7 +111,7 @@ void MACHProcessData::_process()
         listLabels.append("");
         listLabels.append(getStructList(N_mach_fmv_library::records, N_mach_fmv_library::__data_size));
 
-        int nType = XMACH_DEF::S_LC_LOADFVMLIB;
+        qint32 nType = XMACH_DEF::S_LC_LOADFVMLIB;
 
         if (g_nType == SMACH::TYPE_mach_IDFVMLIB) {
             nType = XMACH_DEF::S_LC_IDFVMLIB;
