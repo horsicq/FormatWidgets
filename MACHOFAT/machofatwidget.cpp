@@ -76,7 +76,7 @@ void MACHOFATWidget::reload()
 
         QList<XArchive::RECORD> listRecords = machofat.getRecords(-1, &pdStruct);
 
-        int nNumberOfRecords = listRecords.count();
+        qint32 nNumberOfRecords = listRecords.count();
 
         for (qint32 i = 0; i < nNumberOfRecords; i++) {
             SubDevice *pSubDevice = new SubDevice(getDevice(), listRecords.at(i).nDataOffset, listRecords.at(i).nUncompressedSize);
