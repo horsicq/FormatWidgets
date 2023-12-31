@@ -466,7 +466,7 @@ void FormatWidget::ajustDialogModel(ProcessData *pProcessData, QStandardItemMode
 
 void FormatWidget::showSectionHex(QTableView *pTableView)
 {
-    int nRow = pTableView->currentIndex().row();
+    qint32 nRow = pTableView->currentIndex().row();
 
     if (nRow != -1) {
         QModelIndex index = pTableView->selectionModel()->selectedIndexes().at(0);
