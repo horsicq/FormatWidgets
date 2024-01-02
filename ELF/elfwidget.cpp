@@ -80,10 +80,10 @@ void ELFWidget::reload()
 
         QTreeWidgetItem *pItemInfo = createNewItem(SELF::TYPE_INFO, tr("Info"));
         ui->treeWidgetNavi->addTopLevelItem(pItemInfo);
-        pItemInfo->addChild(createNewItem(SELF::TYPE_NFDSCAN, "Nauz File Detector(NFD)"));
-        pItemInfo->addChild(createNewItem(SELF::TYPE_DIESCAN, "Detect It Easy(DiE)"));
+        pItemInfo->addChild(createNewItem(SELF::TYPE_NFDSCAN, "Nauz File Detector (NFD)"));
+        pItemInfo->addChild(createNewItem(SELF::TYPE_DIESCAN, "Detect It Easy (DiE)"));
 #ifdef USE_YARA
-        pItemInfo->addChild(createNewItem(SELF::TYPE_YARASCAN, "YARA"));
+        pItemInfo->addChild(createNewItem(SELF::TYPE_YARASCAN, "Yara rules"));
 #endif
         pItemInfo->addChild(createNewItem(SELF::TYPE_VIRUSTOTAL, "VirusTotal"));
 

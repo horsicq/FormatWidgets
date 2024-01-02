@@ -81,10 +81,10 @@ void DEXWidget::reload()
 
         QTreeWidgetItem *pItemInfo = createNewItem(SDEX::TYPE_INFO, tr("Info"));
         ui->treeWidgetNavi->addTopLevelItem(pItemInfo);
-        pItemInfo->addChild(createNewItem(SDEX::TYPE_NFDSCAN, "Nauz File Detector(NFD)"));
-        pItemInfo->addChild(createNewItem(SDEX::TYPE_DIESCAN, "Detect It Easy(DiE)"));
+        pItemInfo->addChild(createNewItem(SDEX::TYPE_NFDSCAN, "Nauz File Detector (NFD)"));
+        pItemInfo->addChild(createNewItem(SDEX::TYPE_DIESCAN, "Detect It Easy (DiE)"));
 #ifdef USE_YARA
-        pItemInfo->addChild(createNewItem(SDEX::TYPE_YARASCAN, "YARA"));
+        pItemInfo->addChild(createNewItem(SDEX::TYPE_YARASCAN, "Yara rules"));
 #endif
         pItemInfo->addChild(createNewItem(SDEX::TYPE_VIRUSTOTAL, "VirusTotal"));
 

@@ -76,10 +76,10 @@ void MSDOSWidget::reload()
 
         QTreeWidgetItem *pItemInfo = createNewItem(SMSDOS::TYPE_INFO, tr("Info"));
         ui->treeWidgetNavi->addTopLevelItem(pItemInfo);
-        pItemInfo->addChild(createNewItem(SMSDOS::TYPE_NFDSCAN, "Nauz File Detector(NFD)"));
-        pItemInfo->addChild(createNewItem(SMSDOS::TYPE_DIESCAN, "Detect It Easy(DiE)"));
+        pItemInfo->addChild(createNewItem(SMSDOS::TYPE_NFDSCAN, "Nauz File Detector (NFD)"));
+        pItemInfo->addChild(createNewItem(SMSDOS::TYPE_DIESCAN, "Detect It Easy (DiE)"));
 #ifdef USE_YARA
-        pItemInfo->addChild(createNewItem(SMSDOS::TYPE_YARASCAN, "YARA"));
+        pItemInfo->addChild(createNewItem(SMSDOS::TYPE_YARASCAN, "Yara rules"));
 #endif
         pItemInfo->addChild(createNewItem(SMSDOS::TYPE_VIRUSTOTAL, "VirusTotal"));
 

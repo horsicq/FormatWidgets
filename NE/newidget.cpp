@@ -83,7 +83,7 @@ void NEWidget::reload()
         pItemInfo->addChild(createNewItem(SNE::TYPE_NFDSCAN, "Nauz File Detector(NFD)"));
         pItemInfo->addChild(createNewItem(SNE::TYPE_DIESCAN, "Detect It Easy(DiE)"));
 #ifdef USE_YARA
-        pItemInfo->addChild(createNewItem(SNE::TYPE_YARASCAN, "YARA"));
+        pItemInfo->addChild(createNewItem(SNE::TYPE_YARASCAN, "Yara rules"));
 #endif
         pItemInfo->addChild(createNewItem(SNE::TYPE_VIRUSTOTAL, "VirusTotal"));
 

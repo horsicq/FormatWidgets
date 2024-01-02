@@ -70,10 +70,10 @@ void BinaryWidget::reload()
 
         QTreeWidgetItem *pItemInfo = createNewItem(SBINARY::TYPE_INFO, tr("Info"));
         ui->treeWidgetNavi->addTopLevelItem(pItemInfo);
-        pItemInfo->addChild(createNewItem(SBINARY::TYPE_NFDSCAN, "Nauz File Detector(NFD)"));
-        pItemInfo->addChild(createNewItem(SBINARY::TYPE_DIESCAN, "Detect It Easy(DiE)"));
+        pItemInfo->addChild(createNewItem(SBINARY::TYPE_NFDSCAN, "Nauz File Detector (NFD)"));
+        pItemInfo->addChild(createNewItem(SBINARY::TYPE_DIESCAN, "Detect It Easy (DiE)"));
 #ifdef USE_YARA
-        pItemInfo->addChild(createNewItem(SBINARY::TYPE_YARASCAN, "YARA"));
+        pItemInfo->addChild(createNewItem(SBINARY::TYPE_YARASCAN, "Yara rules"));
 #endif
         pItemInfo->addChild(createNewItem(SBINARY::TYPE_VIRUSTOTAL, "VirusTotal"));
 

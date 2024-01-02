@@ -78,10 +78,10 @@ void LEWidget::reload()
 
         QTreeWidgetItem *pItemInfo = createNewItem(SLE::TYPE_INFO, tr("Info"));
         ui->treeWidgetNavi->addTopLevelItem(pItemInfo);
-        pItemInfo->addChild(createNewItem(SLE::TYPE_NFDSCAN, "Nauz File Detector(NFD)"));
-        pItemInfo->addChild(createNewItem(SLE::TYPE_DIESCAN, "Detect It Easy(DiE)"));
+        pItemInfo->addChild(createNewItem(SLE::TYPE_NFDSCAN, "Nauz File Detector (NFD)"));
+        pItemInfo->addChild(createNewItem(SLE::TYPE_DIESCAN, "Detect It Easy (DiE)"));
 #ifdef USE_YARA
-        pItemInfo->addChild(createNewItem(SLE::TYPE_YARASCAN, "YARA"));
+        pItemInfo->addChild(createNewItem(SLE::TYPE_YARASCAN, "Yara rules"));
 #endif
         pItemInfo->addChild(createNewItem(SLE::TYPE_VIRUSTOTAL, "VirusTotal"));
 

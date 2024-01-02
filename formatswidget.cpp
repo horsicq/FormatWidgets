@@ -29,10 +29,10 @@ FormatsWidget::FormatsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(n
     const bool bBlocked1 = ui->comboBoxScanEngine->blockSignals(true);
 
     ui->comboBoxScanEngine->addItem(tr("Automatic"), SE_AUTO);
-    ui->comboBoxScanEngine->addItem(QString("Detect It Easy(DiE)"), SE_DIE);
-    ui->comboBoxScanEngine->addItem(QString("Nauz File Detector(NFD)"), SE_NFD);
+    ui->comboBoxScanEngine->addItem(QString("Detect It Easy (DiE)"), SE_DIE);
+    ui->comboBoxScanEngine->addItem(QString("Nauz File Detector (NFD)"), SE_NFD);
 #ifdef USE_YARA
-    ui->comboBoxScanEngine->addItem(QString("Yara"), SE_YARA);
+    ui->comboBoxScanEngine->addItem(QString("Yara rules"), SE_YARA);
 #endif
 
     ui->stackedWidgetMain->setCurrentIndex(TABINFO_BINARY);
