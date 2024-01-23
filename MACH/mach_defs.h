@@ -72,6 +72,8 @@ enum TYPE {
     TYPE_mach_unix_thread_arm_64,
     TYPE_mach_unix_thread_m68k_32,
     TYPE_mach_unix_thread_ppc_32,
+    TYPE_mach_dyld_chained_fixups,
+    TYPE_mach_dyld_exports_trie,
     TYPE_STRINGTABLE,
     TYPE_SYMBOLTABLE,
     TYPE_FUNCTIONS,

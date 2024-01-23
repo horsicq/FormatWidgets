@@ -1908,6 +1908,10 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="page_dyld_chained_fixups">
+      </widget>
+      <widget class="QWidget" name="page_dyld_exports_trie">
+      </widget>
       <widget class="QWidget" name="page_StringTable">
        <layout class="QVBoxLayout" name="verticalLayout_36">
         <property name="leftMargin">

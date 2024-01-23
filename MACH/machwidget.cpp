@@ -480,6 +480,34 @@ void MACHWidget::reload()
                     pItemUnixThread->addChild(pItem);
                 }
             }
+
+            if (mach.isCommandPresent(XMACH_DEF::S_LC_DYLD_CHAINED_FIXUPS, &listCommandRecords)) {
+                qint64 _nOffset = mach.getCommandRecordOffset(XMACH_DEF::S_LC_DYLD_CHAINED_FIXUPS, 0, &listCommandRecords);
+
+                QTreeWidgetItem *pItemChainedFixups = createNewItem(SMACH::TYPE_mach_dyld_chained_fixups, QString("LC_DYLD_CHAINED_FIXUPS"), _nOffset);  // TODO rename
+
+                pItemCommands->addChild(pItemChainedFixups);
+
+                XMACH_DEF::linkedit_data_command linkedit_data = mach._read_linkedit_data_command(_nOffset);
+
+                if (mach.isOffsetValid(linkedit_data.dataoff) && (linkedit_data.datasize)) {
+                    // TODO
+                }
+            }
+
+            if (mach.isCommandPresent(XMACH_DEF::S_LC_DYLD_EXPORTS_TRIE, &listCommandRecords)) {
+                qint64 _nOffset = mach.getCommandRecordOffset(XMACH_DEF::S_LC_DYLD_EXPORTS_TRIE, 0, &listCommandRecords);
+
+                QTreeWidgetItem *pItemExportsTrie = createNewItem(SMACH::TYPE_mach_dyld_chained_fixups, QString("LC_DYLD_EXPORTS_TRIE"), _nOffset);  // TODO rename
+
+                pItemCommands->addChild(pItemExportsTrie);
+
+                XMACH_DEF::linkedit_data_command linkedit_data = mach._read_linkedit_data_command(_nOffset);
+
+                if (mach.isOffsetValid(linkedit_data.dataoff) && (linkedit_data.datasize)) {
+                    // TODO
+                }
+            }
         }
 
         ui->treeWidgetNavi->expandAll();
@@ -1228,6 +1256,16 @@ void MACHWidget::adjustHeaderTable(qint32 nType, QTableWidget *pTableWidget)
             pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, getColumnWidth(this, CW_STRINGSHORT, mode));
             break;
         case SMACH::TYPE_mach_code_signature:
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME, getColumnWidth(this, CW_STRINGSHORT, mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE, getColumnWidth(this, CW_UINT32, mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, getColumnWidth(this, CW_STRINGSHORT, mode));
+            break;
+        case SMACH::TYPE_mach_dyld_chained_fixups:
+            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME, getColumnWidth(this, CW_STRINGSHORT, mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE, getColumnWidth(this, CW_UINT32, mode));
+            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, getColumnWidth(this, CW_STRINGSHORT, mode));
+            break;
+        case SMACH::TYPE_mach_dyld_exports_trie:
             pTableWidget->setColumnWidth(HEADER_COLUMN_NAME, getColumnWidth(this, CW_STRINGSHORT, mode));
             pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE, getColumnWidth(this, CW_UINT32, mode));
             pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, getColumnWidth(this, CW_STRINGSHORT, mode));
