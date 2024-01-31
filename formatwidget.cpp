@@ -619,6 +619,7 @@ void FormatWidget::setTreeItem(QTreeWidget *pTree, qint32 nID)
 void FormatWidget::reset()
 {
     g_mapInit.clear();
+    g_listPages.clear();
 }
 
 QString FormatWidget::getInitString(QTreeWidgetItem *pItem)
