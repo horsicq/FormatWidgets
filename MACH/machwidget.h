@@ -200,6 +200,8 @@ private:
         INV_FUNCTION_STARTS_dataoff,
         INV_DATA_IN_CODE_dataoff,
         INV_CODE_SIGNATURE_dataoff,
+        INV_CHAINED_FIXUPS_dataoff,
+        INV_EXPORTS_TREE_dataoff,
         INV_MAIN_entryoff,
         __INV_size
     };
@@ -220,6 +222,8 @@ private:
     XLineEditHEX *g_lineEdit_mach_function_starts[N_mach_linkedit_data::__data_size];
     XLineEditHEX *g_lineEdit_mach_data_in_code[N_mach_linkedit_data::__data_size];
     XLineEditHEX *g_lineEdit_mach_code_signature[N_mach_linkedit_data::__data_size];
+    XLineEditHEX *g_lineEdit_mach_dyld_chained_fixups[N_mach_linkedit_data::__data_size];
+    XLineEditHEX *g_lineEdit_mach_dyld_exports_trie[N_mach_linkedit_data::__data_size];
     XLineEditHEX *g_lineEdit_mach_SuperBlob[N_mach_SuperBlob::__data_size];
     XLineEditHEX *g_lineEdit_mach_main[N_mach_main::__data_size];
     XLineEditHEX *g_lineEdit_mach_unix_thread[N_mach_unix_thread::__data_size];
