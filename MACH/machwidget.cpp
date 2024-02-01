@@ -60,6 +60,8 @@ void MACHWidget::clear()
     memset(g_lineEdit_mach_function_starts, 0, sizeof g_lineEdit_mach_function_starts);
     memset(g_lineEdit_mach_data_in_code, 0, sizeof g_lineEdit_mach_data_in_code);
     memset(g_lineEdit_mach_code_signature, 0, sizeof g_lineEdit_mach_code_signature);
+    memset(g_lineEdit_mach_dyld_chained_fixups, 0, sizeof g_lineEdit_mach_dyld_chained_fixups);
+    memset(g_lineEdit_mach_dyld_exports_trie, 0, sizeof g_lineEdit_mach_dyld_exports_trie);
     memset(g_lineEdit_mach_SuperBlob, 0, sizeof g_lineEdit_mach_SuperBlob);
     memset(g_lineEdit_mach_main, 0, sizeof g_lineEdit_mach_main);
     memset(g_lineEdit_mach_unix_thread, 0, sizeof g_lineEdit_mach_unix_thread);
@@ -498,7 +500,7 @@ void MACHWidget::reload()
             if (mach.isCommandPresent(XMACH_DEF::S_LC_DYLD_EXPORTS_TRIE, &listCommandRecords)) {
                 qint64 _nOffset = mach.getCommandRecordOffset(XMACH_DEF::S_LC_DYLD_EXPORTS_TRIE, 0, &listCommandRecords);
 
-                QTreeWidgetItem *pItemExportsTrie = createNewItem(SMACH::TYPE_mach_dyld_chained_fixups, QString("LC_DYLD_EXPORTS_TRIE"), _nOffset);  // TODO rename
+                QTreeWidgetItem *pItemExportsTrie = createNewItem(SMACH::TYPE_mach_dyld_exports_trie, QString("LC_DYLD_EXPORTS_TRIE"), _nOffset);  // TODO rename
 
                 pItemCommands->addChild(pItemExportsTrie);
 
@@ -647,6 +649,32 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, qint32 nStype, qint32 nN
                             break;
                         case N_mach_linkedit_data::datasize:
                             g_invWidget[INV_CODE_SIGNATURE_dataoff]->setOffsetAndSize(&mach, mach.get_linkedit_data(XMACH_DEF::S_LC_CODE_SIGNATURE).dataoff, nValue,
+                                                                                      true);
+                            break;
+                    }
+                    break;
+
+                case SMACH::TYPE_mach_dyld_chained_fixups:
+                    switch (nNdata) {
+                        case N_mach_linkedit_data::dataoff:
+                            g_invWidget[INV_CHAINED_FIXUPS_dataoff]->setOffsetAndSize(&mach, nValue, mach.get_linkedit_data(XMACH_DEF::S_LC_DYLD_CHAINED_FIXUPS).datasize,
+                                                                                      true);
+                            break;
+                        case N_mach_linkedit_data::datasize:
+                            g_invWidget[INV_CHAINED_FIXUPS_dataoff]->setOffsetAndSize(&mach, mach.get_linkedit_data(XMACH_DEF::S_LC_DYLD_CHAINED_FIXUPS).dataoff, nValue,
+                                                                                      true);
+                            break;
+                    }
+                    break;
+
+                case SMACH::TYPE_mach_dyld_exports_trie:
+                    switch (nNdata) {
+                        case N_mach_linkedit_data::dataoff:
+                            g_invWidget[INV_EXPORTS_TREE_dataoff]->setOffsetAndSize(&mach, nValue, mach.get_linkedit_data(XMACH_DEF::S_LC_DYLD_EXPORTS_TRIE).datasize,
+                                                                                      true);
+                            break;
+                        case N_mach_linkedit_data::datasize:
+                            g_invWidget[INV_EXPORTS_TREE_dataoff]->setOffsetAndSize(&mach, mach.get_linkedit_data(XMACH_DEF::S_LC_DYLD_EXPORTS_TRIE).dataoff, nValue,
                                                                                       true);
                             break;
                     }
@@ -823,6 +851,26 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, qint32 nStype, qint32 nN
                     }
 
                     ui->widgetHex_code_signature->reload();
+
+                    break;
+
+                case SMACH::TYPE_mach_dyld_chained_fixups:
+                    switch (nNdata) {
+                        case N_mach_linkedit_data::dataoff: mach._set_linkedit_data_command_dataoff(nOffset, nValue); break;
+                        case N_mach_linkedit_data::datasize: mach._set_linkedit_data_command_datasize(nOffset, nValue); break;
+                    }
+
+                    ui->widgetHex_dyld_chained_fixups->reload();
+
+                    break;
+
+                case SMACH::TYPE_mach_dyld_exports_trie:
+                    switch (nNdata) {
+                        case N_mach_linkedit_data::dataoff: mach._set_linkedit_data_command_dataoff(nOffset, nValue); break;
+                        case N_mach_linkedit_data::datasize: mach._set_linkedit_data_command_datasize(nOffset, nValue); break;
+                    }
+
+                    ui->widgetHex_dyld_exports_trie->reload();
 
                     break;
 
@@ -1124,6 +1172,8 @@ void MACHWidget::setReadonly(bool bState)
     setLineEditsReadOnly(g_lineEdit_mach_function_starts, N_mach_linkedit_data::__data_size, bState);
     setLineEditsReadOnly(g_lineEdit_mach_data_in_code, N_mach_linkedit_data::__data_size, bState);
     setLineEditsReadOnly(g_lineEdit_mach_code_signature, N_mach_linkedit_data::__data_size, bState);
+    setLineEditsReadOnly(g_lineEdit_mach_dyld_chained_fixups, N_mach_linkedit_data::__data_size, bState);
+    setLineEditsReadOnly(g_lineEdit_mach_dyld_exports_trie, N_mach_linkedit_data::__data_size, bState);
     setLineEditsReadOnly(g_lineEdit_mach_SuperBlob, N_mach_SuperBlob::__data_size, bState);
     setLineEditsReadOnly(g_lineEdit_mach_main, N_mach_main::__data_size, bState);
     setLineEditsReadOnly(g_lineEdit_mach_unix_thread, N_mach_unix_thread::__data_size, bState);
@@ -1190,6 +1240,8 @@ void MACHWidget::blockSignals(bool bState)
     _blockSignals((QObject **)g_lineEdit_mach_function_starts, N_mach_linkedit_data::__data_size, bState);
     _blockSignals((QObject **)g_lineEdit_mach_data_in_code, N_mach_linkedit_data::__data_size, bState);
     _blockSignals((QObject **)g_lineEdit_mach_code_signature, N_mach_linkedit_data::__data_size, bState);
+    _blockSignals((QObject **)g_lineEdit_mach_dyld_chained_fixups, N_mach_linkedit_data::__data_size, bState);
+    _blockSignals((QObject **)g_lineEdit_mach_dyld_exports_trie, N_mach_linkedit_data::__data_size, bState);
     _blockSignals((QObject **)g_lineEdit_mach_SuperBlob, N_mach_SuperBlob::__data_size, bState);
     _blockSignals((QObject **)g_lineEdit_mach_main, N_mach_main::__data_size, bState);
     _blockSignals((QObject **)g_lineEdit_mach_unix_thread, N_mach_unix_thread::__data_size, bState);
@@ -1961,6 +2013,54 @@ void MACHWidget::reloadData()
                 qint64 nSize = mach.get_linkedit_data_command_size();
 
                 loadHexSubdevice(nOffset, nSize, nOffset, &g_subDevice[SMACH::TYPE_mach_code_signature], ui->widgetHex_code_signature);
+
+                blockSignals(false);
+            }
+        } else if (nType == SMACH::TYPE_mach_dyld_chained_fixups) {
+            if (!isInitPresent(sInit)) {
+                createHeaderTable(SMACH::TYPE_mach_dyld_chained_fixups, ui->tableWidget_dyld_chained_fixups, N_mach_linkedit_data::records, g_lineEdit_mach_dyld_chained_fixups,
+                                  N_mach_linkedit_data::__data_size, 0, nDataOffset);
+
+                g_invWidget[INV_CHAINED_FIXUPS_dataoff] =
+                    createInvWidget(ui->tableWidget_dyld_chained_fixups, SMACH::TYPE_mach_dyld_chained_fixups, N_mach_linkedit_data::dataoff, InvWidget::TYPE_HEX);
+
+                blockSignals(true);
+
+                XMACH_DEF::linkedit_data_command linkedit_data = mach._read_linkedit_data_command(nDataOffset);
+
+                g_lineEdit_mach_dyld_chained_fixups[N_mach_linkedit_data::dataoff]->setValue_uint32(linkedit_data.dataoff);
+                g_lineEdit_mach_dyld_chained_fixups[N_mach_linkedit_data::datasize]->setValue_uint32(linkedit_data.datasize);
+
+                g_invWidget[INV_CHAINED_FIXUPS_dataoff]->setOffsetAndSize(&mach, linkedit_data.dataoff, linkedit_data.datasize, true);
+
+                qint64 nOffset = nDataOffset;
+                qint64 nSize = mach.get_linkedit_data_command_size();
+
+                loadHexSubdevice(nOffset, nSize, nOffset, &g_subDevice[SMACH::TYPE_mach_dyld_chained_fixups], ui->widgetHex_dyld_chained_fixups);
+
+                blockSignals(false);
+            }
+        } else if (nType == SMACH::TYPE_mach_dyld_exports_trie) {
+            if (!isInitPresent(sInit)) {
+                createHeaderTable(SMACH::TYPE_mach_dyld_exports_trie, ui->tableWidget_dyld_exports_trie, N_mach_linkedit_data::records, g_lineEdit_mach_dyld_exports_trie,
+                                  N_mach_linkedit_data::__data_size, 0, nDataOffset);
+
+                g_invWidget[INV_EXPORTS_TREE_dataoff] =
+                    createInvWidget(ui->tableWidget_dyld_exports_trie, SMACH::TYPE_mach_dyld_exports_trie, N_mach_linkedit_data::dataoff, InvWidget::TYPE_HEX);
+
+                blockSignals(true);
+
+                XMACH_DEF::linkedit_data_command linkedit_data = mach._read_linkedit_data_command(nDataOffset);
+
+                g_lineEdit_mach_dyld_exports_trie[N_mach_linkedit_data::dataoff]->setValue_uint32(linkedit_data.dataoff);
+                g_lineEdit_mach_dyld_exports_trie[N_mach_linkedit_data::datasize]->setValue_uint32(linkedit_data.datasize);
+
+                g_invWidget[INV_EXPORTS_TREE_dataoff]->setOffsetAndSize(&mach, linkedit_data.dataoff, linkedit_data.datasize, true);
+
+                qint64 nOffset = nDataOffset;
+                qint64 nSize = mach.get_linkedit_data_command_size();
+
+                loadHexSubdevice(nOffset, nSize, nOffset, &g_subDevice[SMACH::TYPE_mach_dyld_exports_trie], ui->widgetHex_dyld_exports_trie);
 
                 blockSignals(false);
             }
