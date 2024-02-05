@@ -93,6 +93,9 @@ void BinaryWidget::reload()
         setDisasmInitAddress(binary.getEntryPointAddress());
 
         setTreeItem(ui->treeWidgetNavi, getOptions().nStartType);
+
+        QSet<XBinary::FT> stFT = XFormats::getFileTypes(getDevice(), true);
+        setFileType(binary._getPrefFileType(&stFT));
     }
 }
 
@@ -184,17 +187,14 @@ void BinaryWidget::reloadData()
 
     XBinary binary(getDevice(), getOptions().bIsImage, getOptions().nImageBase);
 
-    QSet<XBinary::FT> stFT = binary.getFileTypes(true);
-    XBinary::FT fileType = binary._getPrefFileType(&stFT);
-
     if (binary.isValid()) {
         if (nType == SBINARY::TYPE_INFO) {
             if (!isInitPresent(sInit)) {
-                ui->widgetInfo->setData(getDevice(), fileType, "Info", true);
+                ui->widgetInfo->setData(getDevice(), getFileType(), "Info", true);
             }
         } else if (nType == SBINARY::TYPE_VISUALIZATION) {
             if (!isInitPresent(sInit)) {
-                ui->widgetVisualization->setData(getDevice(), fileType, true);
+                ui->widgetVisualization->setData(getDevice(), getFileType(), true);
             }
         } else if (nType == SBINARY::TYPE_VIRUSTOTAL) {
             if (!isInitPresent(sInit)) {
@@ -216,7 +216,7 @@ void BinaryWidget::reloadData()
         } else if (nType == SBINARY::TYPE_DISASM) {
             if (!isInitPresent(sInit)) {
                 XMultiDisasmWidget::OPTIONS options = {};
-                options.fileType = fileType;
+                options.fileType = getFileType();
                 options.nInitAddress = getDisasmInitAddress();
                 options.bMenu_Hex = true;
                 ui->widgetDisasm->setXInfoDB(getXInfoDB());
@@ -227,7 +227,7 @@ void BinaryWidget::reloadData()
             }
         } else if (nType == SBINARY::TYPE_HASH) {
             if (!isInitPresent(sInit)) {
-                ui->widgetHash->setData(getDevice(), fileType, 0, -1, true);
+                ui->widgetHash->setData(getDevice(), getFileType(), 0, -1, true);
             }
         } else if (nType == SBINARY::TYPE_STRINGS) {
             if (!isInitPresent(sInit)) {
@@ -239,7 +239,7 @@ void BinaryWidget::reloadData()
                 stringsOptions.bUnicode = true;
                 stringsOptions.bCStrings = false;
 
-                ui->widgetStrings->setData(getDevice(), fileType, stringsOptions, true);
+                ui->widgetStrings->setData(getDevice(), getFileType(), stringsOptions, true);
             }
         } else if (nType == SBINARY::TYPE_SIGNATURES) {
             if (!isInitPresent(sInit)) {
@@ -251,22 +251,22 @@ void BinaryWidget::reloadData()
         } else if (nType == SBINARY::TYPE_MEMORYMAP) {
             if (!isInitPresent(sInit)) {
                 XMemoryMapWidget::OPTIONS options = {};
-                options.fileType = fileType;
+                options.fileType = getFileType();
                 options.bIsSearchEnable = true;
 
                 ui->widgetMemoryMap->setData(getDevice(), options, getXInfoDB());
             }
         } else if (nType == SBINARY::TYPE_ENTROPY) {
             if (!isInitPresent(sInit)) {
-                ui->widgetEntropy->setData(getDevice(), 0, getDevice()->size(), fileType, true);
+                ui->widgetEntropy->setData(getDevice(), 0, getDevice()->size(), getFileType(), true);
             }
         } else if (nType == SBINARY::TYPE_NFDSCAN) {
             if (!isInitPresent(sInit)) {
-                ui->widgetHeuristicScan->setData(getDevice(), true, fileType);
+                ui->widgetHeuristicScan->setData(getDevice(), true, getFileType());
             }
         } else if (nType == SBINARY::TYPE_DIESCAN) {
             if (!isInitPresent(sInit)) {
-                ui->widgetDIEScan->setData(getDevice(), true, fileType);
+                ui->widgetDIEScan->setData(getDevice(), true, getFileType());
             }
 #ifdef USE_YARA
         } else if (nType == SBINARY::TYPE_YARASCAN) {
@@ -277,7 +277,7 @@ void BinaryWidget::reloadData()
         } else if (nType == SBINARY::TYPE_EXTRACTOR) {
             if (!isInitPresent(sInit)) {
                 XExtractor::OPTIONS extractorOptions = XExtractor::getDefaultOptions();
-                extractorOptions.fileType = fileType;
+                extractorOptions.fileType = getFileType();
                 extractorOptions.bMenu_Hex = true;
 
                 ui->widgetExtractor->setData(getDevice(), extractorOptions, true);

@@ -164,7 +164,7 @@ void FormatsWidget::reload()
             ui->lineEditBaseAddress->setValue_uint64((quint64)memoryMap.nModuleAddress);
         }
 
-        ui->lineEditEndianness->setText(XBinary::endiannessToString(memoryMap.bIsBigEndian));
+        ui->lineEditEndianness->setText(XBinary::endiannessToString(memoryMap.endian));
         ui->lineEditArch->setText(memoryMap.sArch);
         ui->lineEditMode->setText(XBinary::modeIdToString(memoryMap.mode));
         ui->lineEditType->setText(memoryMap.sType);
@@ -184,8 +184,7 @@ void FormatsWidget::reload()
                 ui->lineEditEntryPoint->setValue_uint16((quint16)com.getEntryPointAddress());
             }
         } else if ((fileType == XBinary::FT_ZIP) || (fileType == XBinary::FT_MACHOFAT) || (fileType == XBinary::FT_AR) || (fileType == XBinary::FT_GZIP) ||
-                   (fileType == XBinary::FT_ZLIB) || (fileType == XBinary::FT_LHA)) {
-            // TODO APK
+                   (fileType == XBinary::FT_ZLIB) || (fileType == XBinary::FT_LHA) || (fileType == XBinary::FT_JAR) ||  (fileType == XBinary::FT_APK) || (fileType == XBinary::FT_IPA) || (fileType == XBinary::FT_APKS)) {
 
             ui->pushButtonArchive->setText(XFormats::getFileFormatInfo(fileType, &file).sString);
             ui->stackedWidgetMain->setCurrentIndex(TABINFO_ARCHIVE);
