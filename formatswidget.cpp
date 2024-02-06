@@ -164,7 +164,7 @@ void FormatsWidget::reload()
             ui->lineEditBaseAddress->setValue_uint64((quint64)memoryMap.nModuleAddress);
         }
 
-        ui->lineEditEndianness->setText(XBinary::endiannessToString(memoryMap.endian));
+        ui->lineEditEndianness->setText(XBinary::endianToString(memoryMap.endian));
         ui->lineEditArch->setText(memoryMap.sArch);
         ui->lineEditMode->setText(XBinary::modeIdToString(memoryMap.mode));
         ui->lineEditType->setText(memoryMap.sType);
@@ -187,6 +187,25 @@ void FormatsWidget::reload()
                    (fileType == XBinary::FT_ZLIB) || (fileType == XBinary::FT_LHA) || (fileType == XBinary::FT_JAR) ||  (fileType == XBinary::FT_APK) || (fileType == XBinary::FT_IPA) || (fileType == XBinary::FT_APKS)) {
 
             ui->pushButtonArchive->setText(XFormats::getFileFormatInfo(fileType, &file).sString);
+
+            bool bMANIFESTMF = false;
+
+            if ((fileType == XBinary::FT_JAR) ||  (fileType == XBinary::FT_APK)) {
+                XZip xzip(&file);
+
+                if (xzip.isValid()) {
+                    if (xzip.isArchiveRecordPresent("META-INF/MANIFEST.MF")) {
+                        bMANIFESTMF = true;
+                    }
+                }
+            }
+
+            if (bMANIFESTMF) {
+                ui->pushButtonMANIFESTMF->show();
+            } else {
+                ui->pushButtonMANIFESTMF->hide();
+            }
+
             ui->stackedWidgetMain->setCurrentIndex(TABINFO_ARCHIVE);
 
             ui->lineEditEntryPoint->setValue_uint32(0);
@@ -1018,4 +1037,13 @@ void FormatsWidget::on_pushButtonVisualization_clicked()
 void FormatsWidget::_showYaraInfo()
 {
     showType(SBINARY::TYPE_YARASCAN);
+}
+
+void FormatsWidget::on_pushButtonMANIFESTMF_clicked()
+{
+    DialogTextInfo dialogTextInfo(this);
+
+    dialogTextInfo.setArchive(g_sFileName, "META-INF/MANIFEST.MF");
+
+    dialogTextInfo.exec();
 }

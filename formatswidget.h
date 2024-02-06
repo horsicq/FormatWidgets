@@ -147,6 +147,7 @@ private slots:
     void on_pushButtonDisasm_clicked();
     void on_pushButtonVisualization_clicked();
     void _showYaraInfo();
+    void on_pushButtonMANIFESTMF_clicked();
 
 protected:
     virtual void registerShortcuts(bool bState);
