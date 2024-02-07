@@ -148,6 +148,7 @@ private slots:
     void on_pushButtonVisualization_clicked();
     void _showYaraInfo();
     void on_pushButtonMANIFESTMF_clicked();
+    void on_pushButtonAndroidManifest_clicked();
 
 protected:
     virtual void registerShortcuts(bool bState);

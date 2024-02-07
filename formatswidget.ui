@@ -505,6 +505,13 @@
              </widget>
             </item>
             <item>
+             <widget class="QPushButton" name="pushButtonAndroidManifest">
+              <property name="text">
+               <string notr="true">AndroidManifest.xml</string>
+              </property>
+             </widget>
+            </item>
+            <item>
              <spacer name="horizontalSpacer_5">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>

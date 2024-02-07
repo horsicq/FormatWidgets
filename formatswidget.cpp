@@ -189,6 +189,7 @@ void FormatsWidget::reload()
             ui->pushButtonArchive->setText(XFormats::getFileFormatInfo(fileType, &file).sString);
 
             bool bMANIFESTMF = false;
+            bool bAndroidManifest = false;
 
             if ((fileType == XBinary::FT_JAR) ||  (fileType == XBinary::FT_APK)) {
                 XZip xzip(&file);
@@ -197,6 +198,12 @@ void FormatsWidget::reload()
                     if (xzip.isArchiveRecordPresent("META-INF/MANIFEST.MF")) {
                         bMANIFESTMF = true;
                     }
+
+                    if (fileType == XBinary::FT_APK) {
+                        if (xzip.isArchiveRecordPresent("AndroidManifest.xml")) {
+                            bAndroidManifest = true;
+                        }
+                    }
                 }
             }
 
@@ -204,6 +211,12 @@ void FormatsWidget::reload()
                 ui->pushButtonMANIFESTMF->show();
             } else {
                 ui->pushButtonMANIFESTMF->hide();
+            }
+
+            if (bAndroidManifest) {
+                ui->pushButtonAndroidManifest->show();
+            } else {
+                ui->pushButtonAndroidManifest->hide();
             }
 
             ui->stackedWidgetMain->setCurrentIndex(TABINFO_ARCHIVE);
@@ -1044,6 +1057,19 @@ void FormatsWidget::on_pushButtonMANIFESTMF_clicked()
     DialogTextInfo dialogTextInfo(this);
 
     dialogTextInfo.setArchive(g_sFileName, "META-INF/MANIFEST.MF");
+
+    dialogTextInfo.exec();
+}
+
+void FormatsWidget::on_pushButtonAndroidManifest_clicked()
+{
+    DialogTextInfo dialogTextInfo(this);
+
+    QByteArray baData = XArchives::decompress(g_sFileName, "AndroidManifest.xml");
+    if (baData.size() > 0) {
+        QString sAndroidManifest = XAndroidBinary::getDecoded(&baData);
+        dialogTextInfo.setText(sAndroidManifest);
+    }
 
     dialogTextInfo.exec();
 }
