@@ -184,14 +184,14 @@ void FormatsWidget::reload()
                 ui->lineEditEntryPoint->setValue_uint16((quint16)com.getEntryPointAddress());
             }
         } else if ((fileType == XBinary::FT_ZIP) || (fileType == XBinary::FT_MACHOFAT) || (fileType == XBinary::FT_AR) || (fileType == XBinary::FT_GZIP) ||
-                   (fileType == XBinary::FT_ZLIB) || (fileType == XBinary::FT_LHA) || (fileType == XBinary::FT_JAR) ||  (fileType == XBinary::FT_APK) || (fileType == XBinary::FT_IPA) || (fileType == XBinary::FT_APKS)) {
-
+                   (fileType == XBinary::FT_ZLIB) || (fileType == XBinary::FT_LHA) || (fileType == XBinary::FT_JAR) || (fileType == XBinary::FT_APK) ||
+                   (fileType == XBinary::FT_IPA) || (fileType == XBinary::FT_APKS)) {
             ui->pushButtonArchive->setText(XFormats::getFileFormatInfo(fileType, &file).sString);
 
             bool bMANIFESTMF = false;
             bool bAndroidManifest = false;
 
-            if ((fileType == XBinary::FT_JAR) ||  (fileType == XBinary::FT_APK)) {
+            if ((fileType == XBinary::FT_JAR) || (fileType == XBinary::FT_APK)) {
                 XZip xzip(&file);
 
                 if (xzip.isValid()) {

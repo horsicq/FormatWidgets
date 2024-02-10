@@ -671,11 +671,11 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, qint32 nStype, qint32 nN
                     switch (nNdata) {
                         case N_mach_linkedit_data::dataoff:
                             g_invWidget[INV_EXPORTS_TREE_dataoff]->setOffsetAndSize(&mach, nValue, mach.get_linkedit_data(XMACH_DEF::S_LC_DYLD_EXPORTS_TRIE).datasize,
-                                                                                      true);
+                                                                                    true);
                             break;
                         case N_mach_linkedit_data::datasize:
                             g_invWidget[INV_EXPORTS_TREE_dataoff]->setOffsetAndSize(&mach, mach.get_linkedit_data(XMACH_DEF::S_LC_DYLD_EXPORTS_TRIE).dataoff, nValue,
-                                                                                      true);
+                                                                                    true);
                             break;
                     }
                     break;
@@ -2018,8 +2018,8 @@ void MACHWidget::reloadData()
             }
         } else if (nType == SMACH::TYPE_mach_dyld_chained_fixups) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SMACH::TYPE_mach_dyld_chained_fixups, ui->tableWidget_dyld_chained_fixups, N_mach_linkedit_data::records, g_lineEdit_mach_dyld_chained_fixups,
-                                  N_mach_linkedit_data::__data_size, 0, nDataOffset);
+                createHeaderTable(SMACH::TYPE_mach_dyld_chained_fixups, ui->tableWidget_dyld_chained_fixups, N_mach_linkedit_data::records,
+                                  g_lineEdit_mach_dyld_chained_fixups, N_mach_linkedit_data::__data_size, 0, nDataOffset);
 
                 g_invWidget[INV_CHAINED_FIXUPS_dataoff] =
                     createInvWidget(ui->tableWidget_dyld_chained_fixups, SMACH::TYPE_mach_dyld_chained_fixups, N_mach_linkedit_data::dataoff, InvWidget::TYPE_HEX);
