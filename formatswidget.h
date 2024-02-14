@@ -66,15 +66,6 @@ class FormatsWidget : public XShortcutsWidget {
         TABINFO_MACH,
     };
 
-    enum SE {
-        SE_AUTO = 0,
-        SE_DIE,
-        SE_NFD,
-#ifdef USE_YARA
-        SE_YARA
-#endif
-    };
-
 public:
     explicit FormatsWidget(QWidget *pParent = nullptr);
     ~FormatsWidget();
@@ -127,8 +118,8 @@ private slots:
     void showDEX(SDEX::TYPE type);
     void showBinary(SBINARY::TYPE type);
     XBinary::FT getCurrentFileType();
-    SE getScanEngine(SE seIndex);
-    void adjustScanTab(SE seIndex);
+    QString getScanEngine(const QString &sDefault);
+    void adjustScanTab(const QString &sIndex);
     void onScanStarted();
     void onScanFinished();
     void on_pushButtonFileInfo_clicked();

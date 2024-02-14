@@ -26,18 +26,7 @@ FormatsWidget::FormatsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(n
 {
     ui->setupUi(this);
 
-    const bool bBlocked1 = ui->comboBoxScanEngine->blockSignals(true);
-
-    ui->comboBoxScanEngine->addItem(tr("Automatic"), SE_AUTO);
-    ui->comboBoxScanEngine->addItem(QString("Detect It Easy (DiE)"), SE_DIE);
-    ui->comboBoxScanEngine->addItem(QString("Nauz File Detector (NFD)"), SE_NFD);
-#ifdef USE_YARA
-    ui->comboBoxScanEngine->addItem(QString("Yara rules"), SE_YARA);
-#endif
-
     ui->stackedWidgetMain->setCurrentIndex(TABINFO_BINARY);
-
-    adjustScanTab(SE_AUTO);
 
     connect(ui->pageScanDIE, SIGNAL(scanStarted()), this, SLOT(onScanStarted()));
     connect(ui->pageScanDIE, SIGNAL(scanFinished()), this, SLOT(onScanFinished()));
@@ -47,8 +36,6 @@ FormatsWidget::FormatsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(n
     connect(ui->pageScanYARA, SIGNAL(scanFinished()), this, SLOT(onScanFinished()));
 
     connect(ui->pageScanYARA, SIGNAL(showInfo()), this, SLOT(_showYaraInfo()));
-
-    ui->comboBoxScanEngine->blockSignals(bBlocked1);
 
 #ifndef USE_YARA
     ui->pushButtonYARA->hide();
@@ -67,6 +54,9 @@ void FormatsWidget::setName(const QString &sFileName, bool bScan)
 
 void FormatsWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
 {
+    pXOptions->setComboBox(ui->comboBoxScanEngine, XOptions::ID_SCAN_ENGINE);
+    adjustScanTab("auto");
+
     ui->pageScanDIE->setGlobal(pShortcuts, pXOptions);
     ui->pageScanNFD->setGlobal(pShortcuts, pXOptions);
     ui->pageScanYARA->setGlobal(pShortcuts, pXOptions);
@@ -77,14 +67,15 @@ void FormatsWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
 void FormatsWidget::adjustView()
 {
     QString sScanEngine = getGlobalOptions()->getScanEngine();
+    sScanEngine = getScanEngine(sScanEngine);
 
     if (sScanEngine == "die") {
-        ui->comboBoxScanEngine->setCurrentIndex(SE_DIE);
+        ui->comboBoxScanEngine->setCurrentIndex(0);
     } else if (sScanEngine == "nfd") {
-        ui->comboBoxScanEngine->setCurrentIndex(SE_NFD);
+        ui->comboBoxScanEngine->setCurrentIndex(1);
 #ifdef USE_YARA
     } else if (sScanEngine == "yara") {
-        ui->comboBoxScanEngine->setCurrentIndex(SE_YARA);
+        ui->comboBoxScanEngine->setCurrentIndex(2);
 #endif
     }
 
@@ -124,7 +115,7 @@ void FormatsWidget::on_comboBoxFileType_currentIndexChanged(int nIndex)
 
 void FormatsWidget::reload()
 {
-    adjustScanTab(getScanEngine((SE)ui->comboBoxScanEngine->currentIndex()));
+    adjustScanTab(getScanEngine(ui->comboBoxScanEngine->currentData().toString()));
 
     XBinary::FT fileType = getCurrentFileType();
 
@@ -358,19 +349,19 @@ void FormatsWidget::reload()
 
 void FormatsWidget::scan()
 {
-    int nIndex = ui->comboBoxScanEngine->currentIndex();
+    QString sData = ui->comboBoxScanEngine->currentData().toString();
 
-    nIndex = getScanEngine((SE)nIndex);
+    sData = getScanEngine(sData);
 
-    adjustScanTab((SE)nIndex);
+    adjustScanTab(sData);
 
     if (g_sFileName != "") {
-        if (nIndex == SE_DIE) {
+        if (sData == "die") {
             ui->pageScanDIE->setData(g_sFileName, g_bScan, getCurrentFileType());
-        } else if (nIndex == SE_NFD) {
+        } else if (sData == "nfd") {
             ui->pageScanNFD->setData(g_sFileName, g_bScan, getCurrentFileType());
 #ifdef USE_YARA
-        } else if (nIndex == SE_YARA) {
+        } else if (sData == "yara") {
             YARA_Widget::OPTIONS options = {};
             options.bHandleInfo = true;
             ui->pageScanYARA->setData(g_sFileName, options, g_bScan);
@@ -672,7 +663,9 @@ void FormatsWidget::on_pushButtonELFPrograms_clicked()
 
 void FormatsWidget::on_comboBoxScanEngine_currentIndexChanged(int nIndex)
 {
-    adjustScanTab(getScanEngine((SE)nIndex));
+    Q_UNUSED(nIndex)
+
+    adjustScanTab(getScanEngine(ui->comboBoxScanEngine->currentData().toString()));
 
     scan();
 }
@@ -856,12 +849,12 @@ qint32 FormatsWidget::convertType(XBinary::FT fileType, SBINARY::TYPE type)
     return nResult;
 }
 
-FormatsWidget::SE FormatsWidget::getScanEngine(FormatsWidget::SE seIndex)
+QString FormatsWidget::getScanEngine(const QString &sDefault)
 {
-    SE tabResult = seIndex;
+    QString sResult = sDefault;
 
-    if (seIndex == SE_AUTO) {
-        tabResult = SE_DIE;
+    if (sDefault == "auto") {
+        sResult = "die";
 
         XBinary::FT fileType = getCurrentFileType();
 
@@ -869,21 +862,21 @@ FormatsWidget::SE FormatsWidget::getScanEngine(FormatsWidget::SE seIndex)
         if ((fileType == XBinary::FT_DEX) || (fileType == XBinary::FT_ELF32) || (fileType == XBinary::FT_ELF64) || (fileType == XBinary::FT_MACHO32) ||
             (fileType == XBinary::FT_MACHO64) || (fileType == XBinary::FT_MACHOFAT) || (fileType == XBinary::FT_ZIP) || (fileType == XBinary::FT_JAR) ||
             (fileType == XBinary::FT_APK) || (fileType == XBinary::FT_APKS) || (fileType == XBinary::FT_IPA)) {
-            tabResult = SE_NFD;
+            sResult = "nfd";
         }
     }
 
-    return tabResult;
+    return sResult;
 }
 
-void FormatsWidget::adjustScanTab(FormatsWidget::SE seIndex)
+void FormatsWidget::adjustScanTab(const QString &sIndex)
 {
-    if (seIndex == SE_DIE) {
+    if (sIndex == "die") {
         ui->stackedWidgetScan->setCurrentIndex(0);
-    } else if (seIndex == SE_NFD) {
+    } else if (sIndex == "nfd") {
         ui->stackedWidgetScan->setCurrentIndex(1);
 #ifdef USE_YARA
-    } else if (seIndex == SE_YARA) {
+    } else if (sIndex == "yara") {
         ui->stackedWidgetScan->setCurrentIndex(2);
 #endif
     }
