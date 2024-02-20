@@ -2500,7 +2500,7 @@ void PEWidget::_findValue(quint64 nValue, bool bIsBigEndian)
     ui->widgetSearch->findValue(nValue, bIsBigEndian);
 }
 
-bool PEWidget::createSectionTable(int nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nNumberOfRecords)
+bool PEWidget::createSectionTable(qint32 nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nNumberOfRecords)
 {
     qint32 nSymbolWidth = XLineEditHEX::getSymbolWidth(this);
 
