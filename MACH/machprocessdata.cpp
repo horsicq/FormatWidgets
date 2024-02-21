@@ -402,7 +402,7 @@ void MACHProcessData::_process()
 
         QList<XMACH::DICE_RECORD> listRecords = g_pXMACH->getDiceRecords(g_nOffset, g_nSize);
 
-        int nNumberOfRecords = listRecords.count();
+        qint32 nNumberOfRecords = listRecords.count();
 
         *g_ppModel = new QStandardItemModel(nNumberOfRecords, listLabels.count());
 
