@@ -552,7 +552,7 @@ void FormatWidget::dumpAll(QTableView *pTableView)
 
             DialogDumpProcess dd(this);
 
-            dd.setData(g_pDevice, listRecords, DumpProcess::DT_DUMP_OFFSET, sJsonFileName);
+            dd.setData(g_pDevice, listRecords, DumpProcess::DT_DUMP_DEVICE_OFFSET, sJsonFileName);
 
             dd.showDialogDelay();
         }
@@ -1244,7 +1244,7 @@ void FormatWidget::dumpRegion(qint64 nOffset, qint64 nSize, const QString &sName
 
     if (!sFileName.isEmpty()) {
         DialogDumpProcess dd(this);
-        dd.setData(getDevice(), nOffset, nSize, sFileName, DumpProcess::DT_DUMP_OFFSET);
+        dd.setData(getDevice(), nOffset, nSize, sFileName, DumpProcess::DT_DUMP_DEVICE_OFFSET);
 
         dd.showDialogDelay();
     }

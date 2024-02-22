@@ -97,7 +97,7 @@ void PEToolsWidget::dumpRegion(QWidget *pParent, QIODevice *pDevice, qint64 nOff
 
     if (!sFileName.isEmpty()) {
         DialogDumpProcess dd(pParent);
-        dd.setData(pDevice, nOffset, nSize, sFileName, DumpProcess::DT_DUMP_OFFSET);
+        dd.setData(pDevice, nOffset, nSize, sFileName, DumpProcess::DT_DUMP_DEVICE_OFFSET);
 
         dd.showDialogDelay();
     }
