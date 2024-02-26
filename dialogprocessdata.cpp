@@ -20,8 +20,6 @@
  */
 #include "dialogprocessdata.h"
 
-#include "ui_dialogprocessdata.h"
-
 DialogProcessData::DialogProcessData(QWidget *pParent, ProcessData *pProcessData, XOptions *pOptions) : XDialogProcess(pParent)
 {
     this->g_pProcessData = pProcessData;

@@ -38,7 +38,6 @@ SOURCES += \
 
 FORMS += \
     $$PWD/dialogmodelinfo.ui \
-    $$PWD/dialogprocessdata.ui \
     $$PWD/toolswidget.ui \
     $$PWD/dialogsectionheader.ui
 
