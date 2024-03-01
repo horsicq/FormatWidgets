@@ -61,13 +61,20 @@ set(FORMATWIDGET_SOURCES
     ${XYARA_SOURCES}
     ${STATICSCAN_SOURCES}
     ${CMAKE_CURRENT_LIST_DIR}/dialogmodelinfo.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/dialogmodelinfo.h
     ${CMAKE_CURRENT_LIST_DIR}/dialogmodelinfo.ui
     ${CMAKE_CURRENT_LIST_DIR}/dialogprocessdata.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/dialogprocessdata.h
     ${CMAKE_CURRENT_LIST_DIR}/dialogsectionheader.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/dialogsectionheader.h
     ${CMAKE_CURRENT_LIST_DIR}/dialogsectionheader.ui
     ${CMAKE_CURRENT_LIST_DIR}/formatwidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/formatwidget.h
     ${CMAKE_CURRENT_LIST_DIR}/invwidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/invwidget.h
     ${CMAKE_CURRENT_LIST_DIR}/processdata.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/processdata.h
     ${CMAKE_CURRENT_LIST_DIR}/toolswidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/toolswidget.h
     ${CMAKE_CURRENT_LIST_DIR}/toolswidget.ui
     )
