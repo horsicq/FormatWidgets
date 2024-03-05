@@ -21,8 +21,6 @@
 #ifndef DIALOGLE_H
 #define DIALOGLE_H
 
-#include <QDialog>
-
 #include "lewidget.h"
 
 namespace Ui {
