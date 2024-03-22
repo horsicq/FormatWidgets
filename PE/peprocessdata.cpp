@@ -140,7 +140,7 @@ void PEProcessData::_process()
         }
 
         for (qint32 i = 0; i < nNumberOfSections; i++) {
-            XInfoDB::STRRECORD strRecord = XInfoDB::handleStringDB(&listStrDb, listSectionRecords.at(i).sName, true);
+            XInfoDB::STRRECORD strRecord = XInfoDB::handleStringDB(&listStrDb, XInfoDB::STRDB_PESECTIONS, listSectionRecords.at(i).sName, true);
             Qt::GlobalColor globalColor = XFormats::typeToColor(strRecord.sType);
 
             QColor colText;
@@ -350,6 +350,40 @@ void PEProcessData::_process()
                     pItemNumberHeader->appendRow(listItems);
                 }
             }
+        }
+    } else if (g_nType == SPE::TYPE_IMPORT_INFO) {
+        *g_ppModel = new QStandardItemModel;
+
+        QList<QString> listLabels;
+        listLabels.append("#");
+        listLabels.append(tr("Name"));
+        listLabels.append(tr("Tags"));
+        listLabels.append(tr("Description"));
+
+        setTreeHeader(*g_ppModel, &listLabels);
+        XBinary::_MEMORY_MAP memoryMap = g_pPE->getMemoryMap(XBinary::MAPMODE_UNKNOWN, getPdStruct());
+
+        QList<XPE::IMPORT_HEADER> listImports = g_pPE->getImports(&memoryMap, getPdStruct());
+
+        qint32 nNumberOfImports = listImports.count();
+        setMaximum(nNumberOfImports);
+
+        for (qint32 i = 0; i < nNumberOfImports; i++) {
+
+            QList<QStandardItem *> listItems;
+
+            XInfoDB::STRRECORD strRecord;
+
+            QStandardItem *pItemNumber = new QStandardItem(QString::number(i));
+
+            listItems.append(pItemNumber);
+            listItems.append(new QStandardItem(listImports.at(i).sName));
+            listItems.append(new QStandardItem(strRecord.sTags));
+            listItems.append(new QStandardItem(strRecord.sDescription));
+
+            (*g_ppModel)->appendRow(listItems);
+
+            incValue();
         }
     } else if (g_nType == SPE::TYPE_RELOCS) {
         QList<QString> listLabels;
@@ -1150,6 +1184,10 @@ void PEProcessData::ajustTreeView(QWidget *pWidget, QTreeView *pTreeView)
         XOptions::setTreeViewHeaderWidth(pTreeView, 4, FormatWidget::getColumnWidth(pTreeView, FormatWidget::CW_UINT32, mode));
         XOptions::setTreeViewHeaderWidth(pTreeView, 5, FormatWidget::getColumnWidth(pTreeView, FormatWidget::CW_UINT32, mode));
         XOptions::setTreeViewHeaderWidth(pTreeView, 6, FormatWidget::getColumnWidth(pTreeView, FormatWidget::CW_UINT32, mode));
+    } else if (g_nType == SPE::TYPE_IMPORT_INFO) {
+        XOptions::setTreeViewHeaderWidth(pTreeView, 0, FormatWidget::getColumnWidth(pTreeView, FormatWidget::CW_UINT16, mode));
+        XOptions::setTreeViewHeaderWidth(pTreeView, 1, FormatWidget::getColumnWidth(pTreeView, FormatWidget::CW_STRINGMID, mode));
+        XOptions::setTreeViewHeaderWidth(pTreeView, 2, FormatWidget::getColumnWidth(pTreeView, FormatWidget::CW_STRINGSHORT2, mode));
     }
 }
 

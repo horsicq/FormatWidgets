@@ -191,6 +191,10 @@ private slots:
     void on_pushButtonSave_ExportFunctions_clicked();
     void on_pushButtonSave_NetHeader_clicked();
     void on_pushButtonSave_Net_Metadata_clicked();
+    void on_pushButtonSave_Import_Info_clicked();
+    void on_pushButtonExpand_Import_Info_clicked();
+    void on_pushButtonCollapse_Import_Info_clicked();
+    void on_treeView_Import_Info_customContextMenuRequested(const QPoint &pos);
 
 private:
     enum CB {

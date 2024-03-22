@@ -155,7 +155,10 @@ void PEWidget::reload()
         }
 
         if (pe.isImportPresent()) {
-            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_IMPORT, tr("Import")));
+            QTreeWidgetItem *pItemImport = createNewItem(SPE::TYPE_IMPORT, tr("Import"));
+            ui->treeWidgetNavi->addTopLevelItem(pItemImport);
+
+            pItemImport->addChild(createNewItem(SPE::TYPE_IMPORT_INFO, tr("Info")));
         }
 
         if (pe.isResourcesPresent()) {
@@ -1640,6 +1643,15 @@ void PEWidget::reloadData()
                 if (g_tvModel[SPE::TYPE_IMPORT]->rowCount()) {
                     ui->tableView_ImportLibraries->setCurrentIndex(ui->tableView_ImportLibraries->model()->index(0, 0));
                 }
+            }
+        } else if (nType == SPE::TYPE_IMPORT_INFO) {
+            if (!isInitPresent(sInit)) {
+                PEProcessData peProcessDataTree(SPE::TYPE_IMPORT_INFO, &g_tvModel[SPE::TYPE_IMPORT_INFO], &pe, 0, 0, 0, true);
+
+                ajustTreeView(&peProcessDataTree, &g_tvModel[SPE::TYPE_IMPORT_INFO], ui->treeView_Import_Info);
+
+                //                connect(ui->treeView_Sections_Info->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
+                //                        SLOT(onTreeView_Sections_Info_currentRowChanged(QModelIndex, QModelIndex)));
             }
         } else if (nType == SPE::TYPE_RESOURCES) {
             if (!isInitPresent(sInit)) {
@@ -3513,3 +3525,31 @@ void PEWidget::on_pushButtonSave_Net_Metadata_clicked()
 {
     saveHeaderTable(ui->tableWidget_Net_Metadata, XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Net_Metadata"))));
 }
+
+void PEWidget::on_pushButtonSave_Import_Info_clicked()
+{
+    XShortcutsWidget::saveTreeModel(ui->treeView_Import_Info->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Import_Info"))));
+}
+
+void PEWidget::on_pushButtonExpand_Import_Info_clicked()
+{
+    ui->treeView_Import_Info->expandAll();
+}
+
+void PEWidget::on_pushButtonCollapse_Import_Info_clicked()
+{
+    ui->treeView_Import_Info->collapseAll();
+}
+
+void PEWidget::on_treeView_Import_Info_customContextMenuRequested(const QPoint &pos)
+{
+    int nRow = ui->treeView_Import_Info->currentIndex().row();
+
+    if (nRow != -1) {
+        QMenu contextMenu(this);
+        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this, ui->treeView_Import_Info));
+
+        contextMenu.exec(ui->treeView_Import_Info->viewport()->mapToGlobal(pos));
+    }
+}
+
