@@ -369,7 +369,6 @@ void PEProcessData::_process()
         setMaximum(nNumberOfImports);
 
         for (qint32 i = 0; i < nNumberOfImports; i++) {
-
             QList<QStandardItem *> listItems;
 
             XInfoDB::STRRECORD strRecord;

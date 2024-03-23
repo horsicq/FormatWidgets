@@ -3552,4 +3552,3 @@ void PEWidget::on_treeView_Import_Info_customContextMenuRequested(const QPoint &
         contextMenu.exec(ui->treeView_Import_Info->viewport()->mapToGlobal(pos));
     }
 }
-
