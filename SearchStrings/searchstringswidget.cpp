@@ -61,6 +61,9 @@ SearchStringsWidget::SearchStringsWidget(QWidget *pParent) : XShortcutsWidget(pP
 #endif
 
     ui->tableViewResult->installEventFilter(this);
+
+    setReadonly(true);
+    setReadonlyVisible(false);
 }
 
 SearchStringsWidget::~SearchStringsWidget()
@@ -73,6 +76,8 @@ SearchStringsWidget::~SearchStringsWidget()
 void SearchStringsWidget::setData(QIODevice *pDevice, XBinary::FT fileType, OPTIONS options, bool bAuto)
 {
     this->g_pDevice = pDevice;
+
+    ui->checkBoxReadonly->setEnabled(pDevice->isWritable());
 
     XFormats::setFileTypeComboBox(fileType, g_pDevice, ui->comboBoxType);
     XFormats::setMapModeComboBox(fileType, pDevice, false, -1, ui->comboBoxMapMode);
@@ -153,11 +158,22 @@ bool SearchStringsWidget::saveBackup()
 void SearchStringsWidget::setReadonly(bool bState)
 {
     g_bIsReadonly = bState;
+
+    ui->checkBoxReadonly->setChecked(bState);
 }
 
 bool SearchStringsWidget::isReadonly()
 {
     return g_bIsReadonly;
+}
+
+void SearchStringsWidget::setReadonlyVisible(bool bState)
+{
+    if (bState) {
+        ui->checkBoxReadonly->show();
+    } else {
+        ui->checkBoxReadonly->hide();
+    }
 }
 
 void SearchStringsWidget::on_pushButtonSave_clicked()
@@ -466,4 +482,9 @@ void SearchStringsWidget::viewSelection()
             emit currentAddressChanged(nVirtualAddress, nSize);
         }
     }
+}
+
+void SearchStringsWidget::on_checkBoxReadonly_toggled(bool bChecked)
+{
+    setReadonly(bChecked);
 }

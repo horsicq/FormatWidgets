@@ -30,6 +30,9 @@ DialogSearchStrings::DialogSearchStrings(QWidget *pParent) : XShortcutsDialog(pP
 
     connect(ui->widgetSearchStrings, SIGNAL(showHex(qint64, qint64)), this, SIGNAL(showHex(qint64, qint64)));
     connect(ui->widgetSearchStrings, SIGNAL(currentAddressChanged(XADDR, qint64)), this, SIGNAL(currentAddressChanged(XADDR, qint64)));
+
+    ui->widgetSearchStrings->setReadonly(true);
+    ui->widgetSearchStrings->setReadonlyVisible(true);
 }
 
 DialogSearchStrings::~DialogSearchStrings()

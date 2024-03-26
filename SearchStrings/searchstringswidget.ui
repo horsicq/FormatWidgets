@@ -181,6 +181,13 @@
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="QCheckBox" name="checkBoxReadonly">
+       <property name="text">
+        <string>Read only</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item>
