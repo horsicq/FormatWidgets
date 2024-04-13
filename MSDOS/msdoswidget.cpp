@@ -408,11 +408,13 @@ void MSDOSWidget::reloadData()
     addInit(sInit);
 }
 
-void MSDOSWidget::widgetValueChanged(quint64 nValue)
+void MSDOSWidget::widgetValueChanged(QVariant vValue)
 {
     QWidget *pWidget = qobject_cast<QWidget *>(sender());
     int nStype = pWidget->property("STYPE").toInt();
     int nNdata = pWidget->property("NDATA").toInt();
+
+    quint64 nValue = vValue.toULongLong();
 
     switch (nStype) {
         case SMSDOS::TYPE_DOS_HEADER:

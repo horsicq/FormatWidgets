@@ -866,11 +866,13 @@ void PEWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurren
     }
 }
 
-void PEWidget::widgetValueChanged(quint64 nValue)
+void PEWidget::widgetValueChanged(QVariant vValue)
 {
     QWidget *pWidget = qobject_cast<QWidget *>(sender());
     int nStype = pWidget->property("STYPE").toInt();
     int nNdata = pWidget->property("NDATA").toInt();
+
+    quint64 nValue = vValue.toULongLong();
 
     switch (nStype) {
         case SPE::TYPE_IMAGE_DOS_HEADER:

@@ -1,4 +1,4 @@
-/* Copyright (c) 2017-2023 hors<horsicq@gmail.com>
+/* Copyright (c) 2017-2024 hors<horsicq@gmail.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -594,11 +594,13 @@ void LEWidget::reloadData()
     addInit(sInit);
 }
 
-void LEWidget::widgetValueChanged(quint64 nValue)
+void LEWidget::widgetValueChanged(QVariant vValue)
 {
     QWidget *pWidget = qobject_cast<QWidget *>(sender());
     qint32 nStype = pWidget->property("STYPE").toInt();
     qint32 nNdata = pWidget->property("NDATA").toInt();
+
+    quint64 nValue = vValue.toULongLong();
 
     switch (nStype) {
         case SLE::TYPE_DOS_HEADER:

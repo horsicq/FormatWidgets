@@ -299,9 +299,9 @@ void BinaryWidget::reloadData()
     addInit(sInit);
 }
 
-void BinaryWidget::widgetValueChanged(quint64 nValue)
+void BinaryWidget::widgetValueChanged(QVariant vValue)
 {
-    Q_UNUSED(nValue)
+    Q_UNUSED(vValue)
     //    QWidget *pWidget=qobject_cast<QWidget *>(sender());
     //    int nStype=pWidget->property("STYPE").toInt();
     //    int nNdata=pWidget->property("NDATA").toInt();

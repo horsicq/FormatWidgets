@@ -583,11 +583,13 @@ bool DEXWidget::createSectionTable(qint32 nType, QTableWidget *pTableWidget, con
     return true;
 }
 
-void DEXWidget::widgetValueChanged(quint64 nValue)
+void DEXWidget::widgetValueChanged(QVariant vValue)
 {
     QWidget *pWidget = qobject_cast<QWidget *>(sender());
     qint32 nStype = pWidget->property("STYPE").toInt();
     qint32 nNdata = pWidget->property("NDATA").toInt();
+
+    quint64 nValue = vValue.toULongLong();
 
     switch (nStype) {
         case SDEX::TYPE_HEADER:

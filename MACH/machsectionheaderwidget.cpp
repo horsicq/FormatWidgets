@@ -964,13 +964,15 @@ void MACHSectionHeaderWidget::reloadData()
     }
 }
 
-void MACHSectionHeaderWidget::widgetValueChanged(quint64 nValue)
+void MACHSectionHeaderWidget::widgetValueChanged(QVariant vValue)
 {
     QWidget *pWidget = qobject_cast<QWidget *>(sender());
     int nStype = pWidget->property("STYPE").toInt();
     int nNdata = pWidget->property("NDATA").toInt();
 
     XMACH mach(getDevice(), getOptions().bIsImage, getOptions().nImageBase);
+
+    quint64 nValue = vValue.toULongLong();
 
     if (mach.isValid()) {
         switch (nStype) {

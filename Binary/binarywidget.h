@@ -53,7 +53,7 @@ protected:
 
 private slots:
     virtual void reloadData();
-    void widgetValueChanged(quint64 nValue);
+    void widgetValueChanged(QVariant vValue);
     void on_checkBoxReadonly_toggled(bool bChecked);
     void on_pushButtonReload_clicked();
     void enableButton();

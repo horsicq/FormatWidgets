@@ -170,9 +170,9 @@ void DEXSectionHeaderWidget::reloadData()
     }
 }
 
-void DEXSectionHeaderWidget::widgetValueChanged(quint64 nValue)
+void DEXSectionHeaderWidget::widgetValueChanged(QVariant vValue)
 {
-    Q_UNUSED(nValue)
+    Q_UNUSED(vValue)
 
     XDEX dex(getDevice());
 

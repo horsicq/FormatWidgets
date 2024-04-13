@@ -612,11 +612,13 @@ void NEWidget::reloadData()
     addInit(sInit);
 }
 
-void NEWidget::widgetValueChanged(quint64 nValue)
+void NEWidget::widgetValueChanged(QVariant vValue)
 {
     QWidget *pWidget = qobject_cast<QWidget *>(sender());
     qint32 nStype = pWidget->property("STYPE").toInt();
     qint32 nNdata = pWidget->property("NDATA").toInt();
+
+    quint64 nValue = vValue.toULongLong();
 
     switch (nStype) {
         case SNE::TYPE_DOS_HEADER:

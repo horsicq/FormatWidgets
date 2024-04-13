@@ -662,7 +662,7 @@ void ELFSectionHeaderWidget::reloadData()
     }
 }
 
-void ELFSectionHeaderWidget::widgetValueChanged(quint64 nValue)
+void ELFSectionHeaderWidget::widgetValueChanged(QVariant vValue)
 {
     QWidget *pWidget = qobject_cast<QWidget *>(sender());
     qint32 nStype = pWidget->property("STYPE").toInt();
@@ -672,6 +672,8 @@ void ELFSectionHeaderWidget::widgetValueChanged(quint64 nValue)
 
     if (elf.isValid()) {
         bool bIs64 = elf.is64();
+
+        quint64 nValue = vValue.toULongLong();
 
         switch (nStype) {
             case SELF::TYPE_Elf_Shdr:

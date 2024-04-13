@@ -2500,11 +2500,13 @@ void MACHWidget::reloadData()
     addInit(sInit);
 }
 
-void MACHWidget::widgetValueChanged(quint64 nValue)
+void MACHWidget::widgetValueChanged(QVariant vValue)
 {
     QWidget *pWidget = qobject_cast<QWidget *>(sender());
     qint32 nStype = pWidget->property("STYPE").toInt();
     qint32 nNdata = pWidget->property("NDATA").toInt();
+
+    quint64 nValue = vValue.toULongLong();
 
     switch (nStype) {
         case SMACH::TYPE_mach_header:

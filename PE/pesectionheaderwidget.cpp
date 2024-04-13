@@ -600,11 +600,13 @@ void PESectionHeaderWidget::reloadData()
     }
 }
 
-void PESectionHeaderWidget::widgetValueChanged(quint64 nValue)
+void PESectionHeaderWidget::widgetValueChanged(QVariant vValue)
 {
     QWidget *pWidget = qobject_cast<QWidget *>(sender());
     int nStype = pWidget->property("STYPE").toInt();
     int nNdata = pWidget->property("NDATA").toInt();
+
+    quint64 nValue = vValue.toULongLong();
 
     switch (nStype) {
         case SPE::TYPE_IMAGE_SECTION_HEADER:
