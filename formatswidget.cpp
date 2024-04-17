@@ -174,7 +174,7 @@ void FormatsWidget::reload()
             if (com.isValid()) {
                 ui->lineEditEntryPoint->setValue_uint16((quint16)com.getEntryPointAddress());
             }
-        } else if ((fileType == XBinary::FT_ZIP) || (fileType == XBinary::FT_MACHOFAT) || (fileType == XBinary::FT_AR) || (fileType == XBinary::FT_GZIP) ||
+        } else if ((fileType == XBinary::FT_ZIP) || (fileType == XBinary::FT_MACHOFAT) || (fileType == XBinary::FT_AR) || (fileType == XBinary::FT_TAR) || (fileType == XBinary::FT_GZIP) || (fileType == XBinary::FT_TARGZ) || (fileType == XBinary::FT_NPM) ||
                    (fileType == XBinary::FT_ZLIB) || (fileType == XBinary::FT_LHA) || (fileType == XBinary::FT_JAR) || (fileType == XBinary::FT_APK) ||
                    (fileType == XBinary::FT_IPA) || (fileType == XBinary::FT_APKS)) {
             ui->pushButtonArchive->setText(XFormats::getFileFormatInfo(fileType, &file).sString);
@@ -1018,7 +1018,7 @@ void FormatsWidget::on_pushButtonFiles_clicked()
 
     FW_DEF::OPTIONS options = {};
 
-    dialogArchive.setFileName(g_sFileName, options, QSet<XBinary::FT>());
+    dialogArchive.setFileName(g_sFileName, options, QSet<XBinary::FT>()); // TODO Set current FT
 
     dialogArchive.exec();
 }
