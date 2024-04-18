@@ -47,9 +47,7 @@ void SearchSignaturesWidget::setData(QIODevice *pDevice, XBinary::FT fileType, O
     g_bInit = false;
 
     XFormats::setFileTypeComboBox(fileType, g_pDevice, ui->comboBoxType);
-
-    // TODO get endianness XFormats;
-    XFormats::setEndiannessComboBox(ui->comboBoxEndianness, false);
+    XFormats::setEndiannessComboBox(ui->comboBoxEndianness, XBinary::ENDIAN_LITTLE);
 
     ui->tableViewResult->setModel(nullptr);
 
@@ -260,7 +258,7 @@ void SearchSignaturesWidget::search()
         options.bMenu_Hex = g_options.bMenu_Hex;
         options.memoryMap = XFormats::getMemoryMap(fileType, XBinary::MAPMODE_UNKNOWN, g_pDevice);
         options.bSignature = true;
-        options.bIsBigEndian = (ui->comboBoxEndianness->currentData().toBool());
+        options.endian = (XBinary::ENDIAN)(ui->comboBoxEndianness->currentData().toUInt());
         options.pListSignatureRecords = &g_listSignatureRecords;
 
         QList<XBinary::MS_RECORD> listRecords;

@@ -237,10 +237,10 @@ void MSDOSWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
     ui->widgetHex->setSelection(nOffset, nSize);
 }
 
-void MSDOSWidget::_findValue(quint64 nValue, bool bIsBigEndian)
+void MSDOSWidget::_findValue(quint64 nValue, XBinary::ENDIAN endian)
 {
     setTreeItem(ui->treeWidgetNavi, SMSDOS::TYPE_SEARCH);
-    ui->widgetSearch->findValue(nValue, bIsBigEndian);
+    ui->widgetSearch->findValue(nValue, endian);
 }
 
 void MSDOSWidget::reloadData()

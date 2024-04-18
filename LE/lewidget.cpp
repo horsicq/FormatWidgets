@@ -316,10 +316,10 @@ void LEWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
     ui->widgetHex->setSelection(nOffset, nSize);
 }
 
-void LEWidget::_findValue(quint64 nValue, bool bIsBigEndian)
+void LEWidget::_findValue(quint64 nValue, XBinary::ENDIAN endian)
 {
     Q_UNUSED(nValue)
-    Q_UNUSED(bIsBigEndian)
+    Q_UNUSED(endian)
 //    setTreeItem(ui->treeWidgetNavi, SLE::TYPE_SEARCH);
 //    ui->widgetSearch->findValue(nValue, bIsBigEndian);
 #ifdef QT_DEBUG

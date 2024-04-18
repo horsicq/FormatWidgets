@@ -171,10 +171,10 @@ void BinaryWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
     ui->widgetHex->setSelection(nOffset, nSize);
 }
 
-void BinaryWidget::_findValue(quint64 nValue, bool bIsBigEndian)
+void BinaryWidget::_findValue(quint64 nValue, XBinary::ENDIAN endian)
 {
     setTreeItem(ui->treeWidgetNavi, SBINARY::TYPE_SEARCH);
-    ui->widgetSearch->findValue(nValue, bIsBigEndian);
+    ui->widgetSearch->findValue(nValue, endian);
 }
 
 void BinaryWidget::reloadData()

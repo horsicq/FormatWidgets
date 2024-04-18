@@ -30,7 +30,7 @@ SearchValuesWidget::SearchValuesWidget(QWidget *pParent) : XShortcutsWidget(pPar
     g_pModel = nullptr;
     g_varValue = 0;
     g_valueType = XBinary::VT_UNKNOWN;
-    g_bIsBigEndian = false;
+    g_endian = XBinary::ENDIAN_LITTLE;
 
     memset(g_shortCuts, 0, sizeof g_shortCuts);
 
@@ -59,23 +59,23 @@ QIODevice *SearchValuesWidget::getDevice()
     return g_pDevice;
 }
 
-void SearchValuesWidget::findValue(QVariant varValue, XBinary::VT valueType, bool bIsBigEndian)
+void SearchValuesWidget::findValue(QVariant varValue, XBinary::VT valueType, XBinary::ENDIAN endian)
 {
     g_varValue = varValue;
     g_valueType = valueType;
-    g_bIsBigEndian = bIsBigEndian;
+    g_endian = endian;
 
     ui->labelSearchValue->setText(QString("%1: %2").arg(XBinary::valueTypeToString(valueType), XBinary::getValueString(varValue, valueType)));
 
     search();
 }
 
-void SearchValuesWidget::findValue(quint64 nValue, bool bIsBigEndian)
+void SearchValuesWidget::findValue(quint64 nValue, XBinary::ENDIAN endian)
 {
     QVariant varValue = nValue;
     XBinary::VT valueType = XBinary::getValueType(nValue);
 
-    findValue(varValue, valueType, bIsBigEndian);
+    findValue(varValue, valueType, endian);
 }
 
 void SearchValuesWidget::on_pushButtonSave_clicked()
@@ -127,7 +127,7 @@ void SearchValuesWidget::search()
 
         MultiSearch::OPTIONS options = {};
 
-        options.bIsBigEndian = g_bIsBigEndian;
+        options.endian = g_endian;
         options.varValue = g_varValue;
         options.valueType = g_valueType;
         options.memoryMap = XFormats::getMemoryMap(fileType, XBinary::MAPMODE_UNKNOWN, g_pDevice);
@@ -205,7 +205,7 @@ void SearchValuesWidget::_search(DialogSearch::SEARCHMODE mode)
 
         if (dialogSearch.exec() == QDialog::Accepted)  // TODO use status
         {
-            findValue(searchData.varValue, searchData.valueType, searchData.bIsBigEndian);
+            findValue(searchData.varValue, searchData.valueType, searchData.endian);
         }
     }
 }

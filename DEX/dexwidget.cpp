@@ -304,10 +304,10 @@ void DEXWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
     ui->widgetHex->setSelection(nOffset, nSize);
 }
 
-void DEXWidget::_findValue(quint64 nValue, bool bIsBigEndian)
+void DEXWidget::_findValue(quint64 nValue, XBinary::ENDIAN endian)
 {
     setTreeItem(ui->treeWidgetNavi, SDEX::TYPE_SEARCH);
-    ui->widgetSearch->findValue(nValue, bIsBigEndian);
+    ui->widgetSearch->findValue(nValue, endian);
 }
 
 void DEXWidget::reloadData()

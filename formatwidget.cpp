@@ -940,7 +940,7 @@ void FormatWidget::initMultiDisasmWidget(XMultiDisasmWidget *pWidget)
 
 void FormatWidget::initMemoryMapWidget(XMemoryMapWidget *pWidget)
 {
-    connect(pWidget, SIGNAL(findValue(quint64, bool)), this, SLOT(findValue(quint64, bool)));
+    connect(pWidget, SIGNAL(findValue(quint64, XBinary::ENDIAN)), this, SLOT(findValue(quint64, XBinary::ENDIAN)));
 }
 
 void FormatWidget::initHexView(XHexView *pWidget)
@@ -1107,10 +1107,10 @@ void FormatWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
 #endif
 }
 
-void FormatWidget::_findValue(quint64 nValue, bool bIsBigEndian)
+void FormatWidget::_findValue(quint64 nValue, XBinary::ENDIAN endian)
 {
     Q_UNUSED(nValue)
-    Q_UNUSED(bIsBigEndian)
+    Q_UNUSED(endian)
 #ifdef QT_DEBUG
     qDebug("TODO _findValue");
 #endif
@@ -1217,9 +1217,9 @@ void FormatWidget::showInHexWindow(qint64 nOffset)
     _showInHexWindow(nOffset, 1);
 }
 
-void FormatWidget::findValue(quint64 nValue, bool bIsBigEndian)
+void FormatWidget::findValue(quint64 nValue, XBinary::ENDIAN endian)
 {
-    _findValue(nValue, bIsBigEndian);
+    _findValue(nValue, endian);
 }
 
 void FormatWidget::showEntropy(qint64 nOffset, qint64 nSize)

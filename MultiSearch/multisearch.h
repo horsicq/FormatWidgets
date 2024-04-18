@@ -76,8 +76,7 @@ public:
     struct SIGNATURE_RECORD {
         qint32 nNumber;
         QString sName;
-        bool bIsBigEndian;
-        bool bIsLittleEndian;
+        XBinary::ENDIAN endian;
         QString sSignature;
     };
 
@@ -90,7 +89,7 @@ public:
         QString sANSICodec;
         bool bLinks;
         bool bSignature;
-        bool bIsBigEndian;
+        XBinary::ENDIAN endian;
         qint32 nMinLenght;
         QList<SIGNATURE_RECORD> *pListSignatureRecords;
         QVariant varValue;

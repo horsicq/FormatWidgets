@@ -924,10 +924,10 @@ void ELFWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
     ui->widgetHex->setSelection(nOffset, nSize);
 }
 
-void ELFWidget::_findValue(quint64 nValue, bool bIsBigEndian)
+void ELFWidget::_findValue(quint64 nValue, XBinary::ENDIAN endian)
 {
     setTreeItem(ui->treeWidgetNavi, SELF::TYPE_SEARCH);
-    ui->widgetSearch->findValue(nValue, bIsBigEndian);
+    ui->widgetSearch->findValue(nValue, endian);
 }
 
 void ELFWidget::on_tableView_Elf_Shdr_doubleClicked(const QModelIndex &index)

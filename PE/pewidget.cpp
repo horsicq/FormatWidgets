@@ -2508,10 +2508,10 @@ void PEWidget::_showInHexWindow(qint64 nOffset, qint64 nSize)
     ui->widgetHex->setSelection(nOffset, nSize);
 }
 
-void PEWidget::_findValue(quint64 nValue, bool bIsBigEndian)
+void PEWidget::_findValue(quint64 nValue, XBinary::ENDIAN endian)
 {
     setTreeItem(ui->treeWidgetNavi, SPE::TYPE_SEARCH);
-    ui->widgetSearch->findValue(nValue, bIsBigEndian);
+    ui->widgetSearch->findValue(nValue, endian);
 }
 
 bool PEWidget::createSectionTable(qint32 nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, int nNumberOfRecords)

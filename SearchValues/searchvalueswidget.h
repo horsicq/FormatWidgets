@@ -60,8 +60,8 @@ public:
     void setData(QIODevice *pDevice, OPTIONS options);
     QIODevice *getDevice();
 
-    void findValue(QVariant varValue, XBinary::VT valueType, bool bIsBigEndian);
-    void findValue(quint64 nValue, bool bIsBigEndian);
+    void findValue(QVariant varValue, XBinary::VT valueType, XBinary::ENDIAN endian);
+    void findValue(quint64 nValue, XBinary::ENDIAN endian);
 
 private slots:
     void on_pushButtonSave_clicked();
@@ -100,7 +100,7 @@ private:
 
     QVariant g_varValue;
     XBinary::VT g_valueType;
-    bool g_bIsBigEndian;
+    XBinary::ENDIAN g_endian;
 };
 
 #endif  // SEARCHVALUESWIDGET_H

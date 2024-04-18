@@ -227,7 +227,7 @@ protected:
     virtual void _showInDisasmWindowOffset(qint64 nOffset);
     virtual void _showInMemoryMapWindowOffset(qint64 nOffset);
     virtual void _showInHexWindow(qint64 nOffset, qint64 nSize);
-    virtual void _findValue(quint64 nValue, bool bIsBigEndian);
+    virtual void _findValue(quint64 nValue, XBinary::ENDIAN endian);
 
 signals:
     void dataChanged(qint64 nDataOffset, qint64 nDataSize);
@@ -243,7 +243,7 @@ public slots:
     void showInMemoryMapWindowOffset(qint64 nOffset);
     void showInHexWindow(qint64 nOffset, qint64 nSize);
     void showInHexWindow(qint64 nOffset);
-    void findValue(quint64 nValue, bool bIsBigEndian);
+    void findValue(quint64 nValue, XBinary::ENDIAN endian);
     void showEntropy(qint64 nOffset, qint64 nSize);
     void dumpRegion(qint64 nOffset, qint64 nSize, const QString &sName);
     void showDemangle(const QString &sString);

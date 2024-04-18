@@ -75,8 +75,13 @@ QList<MultiSearch::SIGNATURE_RECORD> MultiSearch::loadSignaturesFromFile(const Q
 
                 QString sEndianness = sLine.section(";", 1, 1);
 
-                record.bIsBigEndian = (sEndianness == "BE");
-                record.bIsLittleEndian = (sEndianness == "LE");
+                if (sEndianness == "BE") {
+                    record.endian = XBinary::ENDIAN_BIG;
+                } else if (sEndianness == "LE") {
+                    record.endian = XBinary::ENDIAN_LITTLE;
+                } else {
+                    record.endian = XBinary::ENDIAN_UNKNOWN;
+                }
 
                 listResult.append(record);
             }
@@ -92,8 +97,7 @@ MultiSearch::SIGNATURE_RECORD MultiSearch::createSignature(const QString &sName,
 {
     MultiSearch::SIGNATURE_RECORD result = {};
 
-    result.bIsBigEndian = false;
-    result.bIsLittleEndian = true;
+    result.endian = XBinary::ENDIAN_LITTLE;
     result.nNumber = 0;
     result.sName = sName;
     result.sSignature = sSignature;
@@ -160,7 +164,7 @@ void MultiSearch::processSearch()
         connect(&binary, SIGNAL(errorMessage(QString)), this, SIGNAL(errorMessage(QString)));
 
         *g_pListRecords =
-            binary.multiSearch_value(&(g_options.memoryMap), 0, g_pDevice->size(), N_MAX, g_options.varValue, g_options.valueType, g_options.bIsBigEndian, g_pPdStruct);
+            binary.multiSearch_value(&(g_options.memoryMap), 0, g_pDevice->size(), N_MAX, g_options.varValue, g_options.valueType, (g_options.endian == XBinary::ENDIAN_BIG), g_pPdStruct);
     } else if (g_type == TYPE_SIGNATURES) {
 #ifdef QT_DEBUG
         QElapsedTimer timer;
@@ -177,11 +181,9 @@ void MultiSearch::processSearch()
 
             bool bSuccess = false;
 
-            if ((signatureRecord.bIsBigEndian) && (g_options.bIsBigEndian)) {
+            if ((signatureRecord.endian == g_options.endian)) {
                 bSuccess = true;
-            } else if ((signatureRecord.bIsLittleEndian) && (!g_options.bIsBigEndian)) {
-                bSuccess = true;
-            } else if ((!signatureRecord.bIsLittleEndian) && (!signatureRecord.bIsBigEndian)) {
+            } else if (signatureRecord.endian == XBinary::ENDIAN_UNKNOWN) {
                 bSuccess = true;
             }
 
