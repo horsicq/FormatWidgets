@@ -163,8 +163,8 @@ void MultiSearch::processSearch()
 
         connect(&binary, SIGNAL(errorMessage(QString)), this, SIGNAL(errorMessage(QString)));
 
-        *g_pListRecords =
-            binary.multiSearch_value(&(g_options.memoryMap), 0, g_pDevice->size(), N_MAX, g_options.varValue, g_options.valueType, (g_options.endian == XBinary::ENDIAN_BIG), g_pPdStruct);
+        *g_pListRecords = binary.multiSearch_value(&(g_options.memoryMap), 0, g_pDevice->size(), N_MAX, g_options.varValue, g_options.valueType,
+                                                   (g_options.endian == XBinary::ENDIAN_BIG), g_pPdStruct);
     } else if (g_type == TYPE_SIGNATURES) {
 #ifdef QT_DEBUG
         QElapsedTimer timer;
