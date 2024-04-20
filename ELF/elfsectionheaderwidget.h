@@ -47,11 +47,11 @@ protected:
     virtual void setReadonly(bool bState);
     virtual void blockSignals(bool bState);
     virtual void adjustHeaderTable(qint32 nType, QTableWidget *pTableWidget);
+    virtual void _widgetValueChanged(QVariant vValue);
 
 private slots:
     void on_checkBoxReadonly_toggled(bool bChecked);
     void reloadData();
-    void widgetValueChanged(QVariant vValue);
     void on_tableWidget_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn);
     void on_pushButtonSaveHeader_clicked();
 

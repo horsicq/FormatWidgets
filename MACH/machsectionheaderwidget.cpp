@@ -964,7 +964,7 @@ void MACHSectionHeaderWidget::reloadData()
     }
 }
 
-void MACHSectionHeaderWidget::widgetValueChanged(QVariant vValue)
+void MACHSectionHeaderWidget::_widgetValueChanged(QVariant vValue)
 {
     QWidget *pWidget = qobject_cast<QWidget *>(sender());
     int nStype = pWidget->property("STYPE").toInt();

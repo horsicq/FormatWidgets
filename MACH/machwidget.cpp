@@ -2500,7 +2500,7 @@ void MACHWidget::reloadData()
     addInit(sInit);
 }
 
-void MACHWidget::widgetValueChanged(QVariant vValue)
+void MACHWidget::_widgetValueChanged(QVariant vValue)
 {
     QWidget *pWidget = qobject_cast<QWidget *>(sender());
     qint32 nStype = pWidget->property("STYPE").toInt();

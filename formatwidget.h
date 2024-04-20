@@ -120,7 +120,7 @@ public:
     XComboBoxEx *createComboBox(QTableWidget *pTableWidget, QMap<quint64, QString> mapData, qint32 nType, int nData, XComboBoxEx::CBTYPE cbtype, quint64 nMask = 0,
                                 int nExtraData = -1);
     InvWidget *createInvWidget(QTableWidget *pTableWidget, qint32 nType, qint32 nData, InvWidget::TYPE widgetType);
-    XDateTimeEditX *createTimeDateEdit(QTableWidget *pTableWidget, qint32 nType, qint32 nData, XDateTimeEditX::DT_TYPE dtType);
+    XDateTimeEditX *createTimeDateEdit(QTableWidget *pTableWidget, qint32 nType, qint32 nData);
     QPushButton *createPushButton(QTableWidget *pTableWidget, qint32 nType, qint32 nData, const QString &sText);
 
     void setValue(QVariant vValue, qint32 nStype, qint32 nNdata, qint32 nVtype, qint32 nPosition, qint64 nOffset);
@@ -228,6 +228,7 @@ protected:
     virtual void _showInMemoryMapWindowOffset(qint64 nOffset);
     virtual void _showInHexWindow(qint64 nOffset, qint64 nSize);
     virtual void _findValue(quint64 nValue, XBinary::ENDIAN endian);
+    virtual void _widgetValueChanged(QVariant vValue);
 
 signals:
     void dataChanged(qint64 nDataOffset, qint64 nDataSize);
@@ -243,6 +244,7 @@ public slots:
     void showInMemoryMapWindowOffset(qint64 nOffset);
     void showInHexWindow(qint64 nOffset, qint64 nSize);
     void showInHexWindow(qint64 nOffset);
+    void widgetValueChanged(QVariant vValue);
     void findValue(quint64 nValue, XBinary::ENDIAN endian);
     void showEntropy(qint64 nOffset, qint64 nSize);
     void dumpRegion(qint64 nOffset, qint64 nSize, const QString &sName);

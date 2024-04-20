@@ -600,7 +600,7 @@ void PESectionHeaderWidget::reloadData()
     }
 }
 
-void PESectionHeaderWidget::widgetValueChanged(QVariant vValue)
+void PESectionHeaderWidget::_widgetValueChanged(QVariant vValue)
 {
     QWidget *pWidget = qobject_cast<QWidget *>(sender());
     int nStype = pWidget->property("STYPE").toInt();

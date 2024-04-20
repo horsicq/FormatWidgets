@@ -299,7 +299,7 @@ void BinaryWidget::reloadData()
     addInit(sInit);
 }
 
-void BinaryWidget::widgetValueChanged(QVariant vValue)
+void BinaryWidget::_widgetValueChanged(QVariant vValue)
 {
     Q_UNUSED(vValue)
     //    QWidget *pWidget=qobject_cast<QWidget *>(sender());

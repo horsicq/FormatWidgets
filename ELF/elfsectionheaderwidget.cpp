@@ -662,7 +662,7 @@ void ELFSectionHeaderWidget::reloadData()
     }
 }
 
-void ELFSectionHeaderWidget::widgetValueChanged(QVariant vValue)
+void ELFSectionHeaderWidget::_widgetValueChanged(QVariant vValue)
 {
     QWidget *pWidget = qobject_cast<QWidget *>(sender());
     qint32 nStype = pWidget->property("STYPE").toInt();

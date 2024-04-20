@@ -594,7 +594,7 @@ void LEWidget::reloadData()
     addInit(sInit);
 }
 
-void LEWidget::widgetValueChanged(QVariant vValue)
+void LEWidget::_widgetValueChanged(QVariant vValue)
 {
     QWidget *pWidget = qobject_cast<QWidget *>(sender());
     qint32 nStype = pWidget->property("STYPE").toInt();

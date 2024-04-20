@@ -291,7 +291,7 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue, qint32 nStype, qint32 nNda
                 case SPE::TYPE_IMAGE_FILE_HEADER:
                     switch (nNdata) {
                         case N_IMAGE_FILE_HEADER::Machine: g_comboBox[CB_IMAGE_FILE_HEADER_Machine]->setValue(nValue); break;
-                        case N_IMAGE_FILE_HEADER::TimeDateStamp: g_dateTimeEdit[TD_IMAGE_FILE_HEADER_TimeDateStamp]->setValue(nValue); break;
+                        case N_IMAGE_FILE_HEADER::TimeDateStamp: g_dateTimeEdit[TD_IMAGE_FILE_HEADER_TimeDateStamp]->setValue(nValue, XDateTimeEditX::DT_TYPE_POSIX); break;
                         case N_IMAGE_FILE_HEADER::PointerToSymbolTable:
                             g_invWidget[INV_IMAGE_FILE_HEADER_PointerToSymbolTable]->setAddressAndSize(&pe, (quint32)nValue, 0);
                             break;
@@ -324,7 +324,7 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue, qint32 nStype, qint32 nNda
 
                 case SPE::TYPE_EXPORT:
                     switch (nNdata) {
-                        case N_IMAGE_EXPORT::TimeDateStamp: g_dateTimeEdit[TD_IMAGE_EXPORT_TimeDateStamp]->setValue(nValue); break;
+                        case N_IMAGE_EXPORT::TimeDateStamp: g_dateTimeEdit[TD_IMAGE_EXPORT_TimeDateStamp]->setValue(nValue, XDateTimeEditX::DT_TYPE_POSIX); break;
                         case N_IMAGE_EXPORT::Name: g_invWidget[INV_IMAGE_EXPORT_Name]->setAddressAndSize(&pe, pe.getBaseAddress() + (quint32)nValue, 0); break;
                         case N_IMAGE_EXPORT::AddressOfFunctions:
                             g_invWidget[INV_IMAGE_EXPORT_AddressOfFunctions]->setAddressAndSize(&pe, pe.getBaseAddress() + (quint32)nValue, 0);
@@ -866,7 +866,7 @@ void PEWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurren
     }
 }
 
-void PEWidget::widgetValueChanged(QVariant vValue)
+void PEWidget::_widgetValueChanged(QVariant vValue)
 {
     QWidget *pWidget = qobject_cast<QWidget *>(sender());
     int nStype = pWidget->property("STYPE").toInt();
@@ -912,7 +912,7 @@ void PEWidget::widgetValueChanged(QVariant vValue)
 
         case SPE::TYPE_EXPORT:
             switch (nNdata) {
-                case N_IMAGE_EXPORT::TimeDateStamp: g_dateTimeEdit[TD_IMAGE_EXPORT_TimeDateStamp]->setValue(nValue); break;
+                case N_IMAGE_EXPORT::TimeDateStamp: g_dateTimeEdit[TD_IMAGE_EXPORT_TimeDateStamp]->setValue(nValue, XDateTimeEditX::DT_TYPE_POSIX); break;
             }
             break;
 
@@ -1247,7 +1247,7 @@ void PEWidget::reloadData()
                                    N_IMAGE_FILE_HEADER::Characteristics, XComboBoxEx::CBTYPE_FLAGS);
 
                 g_dateTimeEdit[TD_IMAGE_FILE_HEADER_TimeDateStamp] =
-                    createTimeDateEdit(ui->tableWidget_IMAGE_FILE_HEADER, SPE::TYPE_IMAGE_FILE_HEADER, N_IMAGE_FILE_HEADER::TimeDateStamp, XDateTimeEditX::DT_TYPE_POSIX);
+                    createTimeDateEdit(ui->tableWidget_IMAGE_FILE_HEADER, SPE::TYPE_IMAGE_FILE_HEADER, N_IMAGE_FILE_HEADER::TimeDateStamp);
                 g_invWidget[INV_IMAGE_FILE_HEADER_PointerToSymbolTable] =
                     createInvWidget(ui->tableWidget_IMAGE_FILE_HEADER, SPE::TYPE_IMAGE_FILE_HEADER, N_IMAGE_FILE_HEADER::PointerToSymbolTable, InvWidget::TYPE_HEX);
 
@@ -1265,7 +1265,7 @@ void PEWidget::reloadData()
 
                 g_comboBox[CB_IMAGE_FILE_HEADER_Machine]->setValue(fileheader.Machine);
                 g_comboBox[CB_IMAGE_FILE_HEADER_Characteristics]->setValue(fileheader.Characteristics);
-                g_dateTimeEdit[TD_IMAGE_FILE_HEADER_TimeDateStamp]->setValue(fileheader.TimeDateStamp);
+                g_dateTimeEdit[TD_IMAGE_FILE_HEADER_TimeDateStamp]->setValue(fileheader.TimeDateStamp, XDateTimeEditX::DT_TYPE_POSIX);
 
                 addComment(ui->tableWidget_IMAGE_FILE_HEADER, N_IMAGE_FILE_HEADER::SizeOfOptionalHeader, HEADER_COLUMN_COMMENT,
                            XBinary::bytesCountToString(fileheader.SizeOfOptionalHeader));
@@ -1580,7 +1580,7 @@ void PEWidget::reloadData()
                     createInvWidget(ui->tableWidget_ExportHeader, SPE::TYPE_EXPORT, N_IMAGE_EXPORT::AddressOfNames, InvWidget::TYPE_HEX);
 
                 g_dateTimeEdit[TD_IMAGE_EXPORT_TimeDateStamp] =
-                    createTimeDateEdit(ui->tableWidget_ExportHeader, SPE::TYPE_EXPORT, N_IMAGE_EXPORT::TimeDateStamp, XDateTimeEditX::DT_TYPE_POSIX);
+                    createTimeDateEdit(ui->tableWidget_ExportHeader, SPE::TYPE_EXPORT, N_IMAGE_EXPORT::TimeDateStamp);
 
                 blockSignals(true);
 
@@ -1598,7 +1598,7 @@ void PEWidget::reloadData()
                 g_lineEdit_EXPORT[N_IMAGE_EXPORT::AddressOfNames]->setValue_uint32(eh.directory.AddressOfNames);
                 g_lineEdit_EXPORT[N_IMAGE_EXPORT::AddressOfNameOrdinals]->setValue_uint32(eh.directory.AddressOfNameOrdinals);
 
-                g_dateTimeEdit[TD_IMAGE_EXPORT_TimeDateStamp]->setValue(eh.directory.TimeDateStamp);
+                g_dateTimeEdit[TD_IMAGE_EXPORT_TimeDateStamp]->setValue(eh.directory.TimeDateStamp, XDateTimeEditX::DT_TYPE_POSIX);
 
                 g_invWidget[INV_IMAGE_EXPORT_Name]->setAddressAndSize(&pe, pe.getBaseAddress() + eh.directory.Name, 0);
                 g_invWidget[INV_IMAGE_EXPORT_AddressOfFunctions]->setAddressAndSize(&pe, pe.getBaseAddress() + eh.directory.AddressOfFunctions, 0);

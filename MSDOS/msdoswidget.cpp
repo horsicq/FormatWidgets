@@ -408,7 +408,7 @@ void MSDOSWidget::reloadData()
     addInit(sInit);
 }
 
-void MSDOSWidget::widgetValueChanged(QVariant vValue)
+void MSDOSWidget::_widgetValueChanged(QVariant vValue)
 {
     QWidget *pWidget = qobject_cast<QWidget *>(sender());
     int nStype = pWidget->property("STYPE").toInt();

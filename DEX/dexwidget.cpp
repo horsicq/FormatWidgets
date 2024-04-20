@@ -583,7 +583,7 @@ bool DEXWidget::createSectionTable(qint32 nType, QTableWidget *pTableWidget, con
     return true;
 }
 
-void DEXWidget::widgetValueChanged(QVariant vValue)
+void DEXWidget::_widgetValueChanged(QVariant vValue)
 {
     QWidget *pWidget = qobject_cast<QWidget *>(sender());
     qint32 nStype = pWidget->property("STYPE").toInt();

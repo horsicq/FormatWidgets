@@ -170,7 +170,7 @@ void DEXSectionHeaderWidget::reloadData()
     }
 }
 
-void DEXSectionHeaderWidget::widgetValueChanged(QVariant vValue)
+void DEXSectionHeaderWidget::_widgetValueChanged(QVariant vValue)
 {
     Q_UNUSED(vValue)
 

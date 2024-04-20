@@ -1116,6 +1116,14 @@ void FormatWidget::_findValue(quint64 nValue, XBinary::ENDIAN endian)
 #endif
 }
 
+void FormatWidget::_widgetValueChanged(QVariant vValue)
+{
+    Q_UNUSED(vValue)
+#ifdef QT_DEBUG
+    qDebug("TODO _widgetValueChanged");
+#endif
+}
+
 // void FormatWidget::resizeToolsWidget(QWidget *pParent,ToolsWidget
 // *pToolWidget)
 //{
@@ -1215,6 +1223,11 @@ void FormatWidget::showInHexWindow(qint64 nOffset, qint64 nSize)
 void FormatWidget::showInHexWindow(qint64 nOffset)
 {
     _showInHexWindow(nOffset, 1);
+}
+
+void FormatWidget::widgetValueChanged(QVariant vValue)
+{
+    _widgetValueChanged(vValue);
 }
 
 void FormatWidget::findValue(quint64 nValue, XBinary::ENDIAN endian)
@@ -1583,15 +1596,14 @@ InvWidget *FormatWidget::createInvWidget(QTableWidget *pTableWidget, qint32 nTyp
     return pResult;
 }
 
-XDateTimeEditX *FormatWidget::createTimeDateEdit(QTableWidget *pTableWidget, qint32 nType, qint32 nData, XDateTimeEditX::DT_TYPE dtType)
+XDateTimeEditX *FormatWidget::createTimeDateEdit(QTableWidget *pTableWidget, qint32 nType, qint32 nData)
 {
     XDateTimeEditX *result = new XDateTimeEditX(this);
-    result->setType(dtType);
 
     result->setProperty("STYPE", nType);
     result->setProperty("NDATA", nData);
 
-    connect(result, SIGNAL(valueChanged(QVariant)), this, SLOT(widgetValueChanged(QVariant)));  // TODO Check widgetValueChanged
+    connect(result, SIGNAL(valueChanged(QVariant)), this, SLOT(widgetValueChange(QVariant)));  // TODO Check widgetValueChanged
 
     pTableWidget->setCellWidget(nData, HEADER_COLUMN_INFO, result);
 

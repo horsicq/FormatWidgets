@@ -664,7 +664,7 @@ void ELFWidget::addDatasets(XELF *pElf, QTreeWidgetItem *pParent, QList<XBinary:
     }
 }
 
-void ELFWidget::widgetValueChanged(QVariant vValue)
+void ELFWidget::_widgetValueChanged(QVariant vValue)
 {
     QWidget *pWidget = qobject_cast<QWidget *>(sender());
     qint32 nStype = pWidget->property("STYPE").toInt();

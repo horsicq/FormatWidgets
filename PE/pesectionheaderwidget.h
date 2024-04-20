@@ -47,11 +47,11 @@ protected:
     virtual void blockSignals(bool bState);
     virtual void adjustHeaderTable(qint32 nType, QTableWidget *pTableWidget);
     virtual void _showInHexWindow(qint64 nOffset, qint64 nSize);
+    virtual void _widgetValueChanged(QVariant vValue);
 
 private slots:
     void on_checkBoxReadonly_toggled(bool bChecked);
     void reloadData();
-    void widgetValueChanged(QVariant vValue);
     void on_tableWidget_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn);
 
 private:

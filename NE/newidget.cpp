@@ -612,7 +612,7 @@ void NEWidget::reloadData()
     addInit(sInit);
 }
 
-void NEWidget::widgetValueChanged(QVariant vValue)
+void NEWidget::_widgetValueChanged(QVariant vValue)
 {
     QWidget *pWidget = qobject_cast<QWidget *>(sender());
     qint32 nStype = pWidget->property("STYPE").toInt();

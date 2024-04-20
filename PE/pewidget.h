@@ -55,10 +55,10 @@ protected:
     virtual void _showInMemoryMapWindowOffset(qint64 nOffset);
     virtual void _showInHexWindow(qint64 nOffset, qint64 nSize);
     virtual void _findValue(quint64 nValue, XBinary::ENDIAN endian);
+    virtual void _widgetValueChanged(QVariant vValue);
 
 private slots:
     void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurrent, QTreeWidgetItem *pItemPrevious);
-    void widgetValueChanged(QVariant vValue);
     void widgetAction();
     void on_checkBoxReadonly_toggled(bool bChecked);
     void editSectionHeader();
