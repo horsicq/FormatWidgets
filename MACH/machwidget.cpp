@@ -1136,7 +1136,7 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, qint32 nStype, qint32 nN
             switch (nStype) {
                 case SMACH::TYPE_mach_header:
                     switch (nNdata) {
-                        case N_mach_header::magic: result = SV_RELOAD; break;
+                        case N_mach_header::magic: result = SV_RELOADALL; break;
                         case N_mach_header::cputype: result = SV_RELOADDATA; break;
                     }
 
@@ -1420,7 +1420,7 @@ void MACHWidget::_findValue(quint64 nValue, XBinary::ENDIAN endian)
     ui->widgetSearch->findValue(nValue, endian);
 }
 
-void MACHWidget::reloadData()
+void MACHWidget::reloadData(bool bSaveSelection)
 {
     qint32 nType = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_TYPE).toInt();
     qint64 nDataOffset = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET).toLongLong();
@@ -1450,6 +1450,11 @@ void MACHWidget::reloadData()
                 XHexView::OPTIONS options = {};
                 options.bMenu_Disasm = true;
                 options.bMenu_MemoryMap = true;
+
+                if (bSaveSelection) {
+                    options.nStartSelectionOffset = -1;
+                }
+
                 ui->widgetHex->setXInfoDB(getXInfoDB());
                 ui->widgetHex->setData(getDevice(), options);
                 ui->widgetHex->setBackupDevice(getBackupDevice());
@@ -2526,7 +2531,7 @@ void MACHWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurr
     Q_UNUSED(pItemPrevious)
 
     if (pItemCurrent) {
-        reloadData();
+        reloadData(false);
         addPage(pItemCurrent);
         ui->toolButtonPrev->setEnabled(isPrevPageAvailable());
         ui->toolButtonNext->setEnabled(isNextPageAvailable());
@@ -3474,7 +3479,7 @@ void MACHWidget::showSectionHeader(qint32 nType, QTableView *pTableView)
 
         dsh.exec();
 
-        reloadData();
+        reloadData(true);
 
         pTableView->setCurrentIndex(pTableView->model()->index(nRow, 0));
     }

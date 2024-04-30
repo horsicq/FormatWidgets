@@ -337,7 +337,7 @@ void NEWidget::_findValue(quint64 nValue, XBinary::ENDIAN endian)
 #endif
 }
 
-void NEWidget::reloadData()
+void NEWidget::reloadData(bool bSaveSelection)
 {
     int nType = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_TYPE).toInt();
     //    qint64
@@ -369,6 +369,11 @@ void NEWidget::reloadData()
                 XHexView::OPTIONS options = {};
                 options.bMenu_Disasm = true;
                 options.bMenu_MemoryMap = true;
+
+                if (bSaveSelection) {
+                    options.nStartSelectionOffset = -1;
+                }
+
                 ui->widgetHex->setXInfoDB(getXInfoDB());
                 ui->widgetHex->setData(getDevice(), options);
                 ui->widgetHex->setBackupDevice(getBackupDevice());
@@ -644,7 +649,7 @@ void NEWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurren
     Q_UNUSED(pItemPrevious)
 
     if (pItemCurrent) {
-        reloadData();
+        reloadData(false);
         addPage(pItemCurrent);
         ui->toolButtonPrev->setEnabled(isPrevPageAvailable());
         ui->toolButtonNext->setEnabled(isNextPageAvailable());

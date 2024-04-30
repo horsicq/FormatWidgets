@@ -165,7 +165,7 @@ void MACHSectionHeaderWidget::reload()
 
     ui->checkBoxReadonly->setEnabled(!isReadonly());
 
-    reloadData();
+    reloadData(false);
 }
 
 void MACHSectionHeaderWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
@@ -539,7 +539,7 @@ void MACHSectionHeaderWidget::on_checkBoxReadonly_toggled(bool bChecked)
     setReadonly(bChecked);
 }
 
-void MACHSectionHeaderWidget::reloadData()
+void MACHSectionHeaderWidget::reloadData(bool bSaveSelection)
 {
     int nType = getType();
 

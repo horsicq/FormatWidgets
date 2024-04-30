@@ -133,7 +133,7 @@ void MACHOFATWidget::blockSignals(bool bState)
     Q_UNUSED(bState)
 }
 
-void MACHOFATWidget::reloadData()
+void MACHOFATWidget::reloadData(bool bSaveSelection)
 {
 }
 

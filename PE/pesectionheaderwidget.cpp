@@ -127,7 +127,7 @@ void PESectionHeaderWidget::reload()
 
     ui->checkBoxReadonly->setEnabled(!isReadonly());
 
-    reloadData();
+    reloadData(false);
 }
 
 void PESectionHeaderWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
@@ -380,7 +380,7 @@ void PESectionHeaderWidget::on_checkBoxReadonly_toggled(bool bChecked)
     setReadonly(bChecked);
 }
 
-void PESectionHeaderWidget::reloadData()
+void PESectionHeaderWidget::reloadData(bool bSaveSelection)
 {
     qint32 nType = getType();
 

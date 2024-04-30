@@ -50,7 +50,7 @@ protected:
 
 private slots:
     void on_checkBoxReadonly_toggled(bool bChecked);
-    void reloadData();
+    void reloadData(bool bSaveSelection);
     void on_tableWidget_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn);
 
 private:

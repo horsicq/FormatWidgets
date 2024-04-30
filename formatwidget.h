@@ -1,4 +1,4 @@
-/* Copyright (c) 2017-2023 hors<horsicq@gmail.com>
+/* Copyright (c) 2017-2024 hors<horsicq@gmail.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -212,14 +212,14 @@ protected:
     enum SV {
         SV_NONE = 0,
         SV_EDITED,
-        SV_RELOAD,
+        SV_RELOADALL,
         SV_RELOADDATA
     };
 
     virtual SV _setValue(QVariant vValue, qint32 nStype, qint32 nNdata, qint32 nVtype, qint32 nPosition, qint64 nOffset) = 0;
     virtual void setReadonly(bool bState) = 0;
     virtual void blockSignals(bool bState) = 0;
-    virtual void reloadData() = 0;
+    virtual void reloadData(bool bSaveSelection) = 0;
     virtual void adjustHeaderTable(qint32 nType, QTableWidget *pTableWidget);
     virtual void adjustListTable(qint32 nType, QTableWidget *pTableWidget);
     virtual QString typeIdToString(qint32 nType);

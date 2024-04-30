@@ -118,7 +118,7 @@ void ELFSectionHeaderWidget::reload()
 
     ui->checkBoxReadonly->setEnabled(!isReadonly());
 
-    reloadData();
+    reloadData(false);
 }
 
 void ELFSectionHeaderWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
@@ -411,7 +411,7 @@ void ELFSectionHeaderWidget::on_checkBoxReadonly_toggled(bool bChecked)
     setReadonly(bChecked);
 }
 
-void ELFSectionHeaderWidget::reloadData()
+void ELFSectionHeaderWidget::reloadData(bool bSaveSelection)
 {
     qint32 nType = getType();
 

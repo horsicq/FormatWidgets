@@ -44,7 +44,7 @@ protected:
     virtual void blockSignals(bool bState);
 
 private slots:
-    void reloadData();
+    void reloadData(bool bSaveSelection);
     void on_comboBoxFilePart_currentIndexChanged(int nIndex);
 
 private:

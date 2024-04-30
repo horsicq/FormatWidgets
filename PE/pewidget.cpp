@@ -861,7 +861,7 @@ void PEWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurren
     Q_UNUSED(pItemPrevious)
 
     if (pItemCurrent) {
-        reloadData();
+        reloadData(false);
         addPage(pItemCurrent);
         ui->toolButtonPrev->setEnabled(isPrevPageAvailable());
         ui->toolButtonNext->setEnabled(isNextPageAvailable());
@@ -1015,7 +1015,7 @@ void PEWidget::resourceDump()
     dumpSection(ui->tableView_Resources);
 }
 
-void PEWidget::reloadData()
+void PEWidget::reloadData(bool bSaveSelection)
 {
     int nType = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_TYPE).toInt();
     qint64 nDataOffset = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET).toLongLong();
@@ -1047,6 +1047,11 @@ void PEWidget::reloadData()
                 XHexView::OPTIONS options = {};
                 options.bMenu_Disasm = true;
                 options.bMenu_MemoryMap = true;
+
+                if (bSaveSelection) {
+                    options.nStartSelectionOffset = -1;
+                }
+
                 ui->widgetHex->setXInfoDB(getXInfoDB());
                 ui->widgetHex->setData(getDevice(), options);
                 ui->widgetHex->setBackupDevice(getBackupDevice());
@@ -2723,7 +2728,7 @@ void PEWidget::showSectionHeader(qint32 nType, QTableView *pTableView)
 
         dsh.exec();
 
-        reloadData();
+        reloadData(true);
 
         pTableView->setCurrentIndex(pTableView->model()->index(nRow, 0));
     }

@@ -239,13 +239,13 @@ void FormatWidget::setValue(QVariant vValue, qint32 nStype, qint32 nNdata, qint3
         SV sv = _setValue(vValue, nStype, nNdata, nVtype, nPosition, nOffset);
         if (sv == SV_EDITED) {
             reset();
-        } else if (sv == SV_RELOAD) {
-            reset();
-            reload();
-            reloadData();
         } else if (sv == SV_RELOADDATA) {
             reset();
-            reloadData();
+            reloadData(true);
+        } else if (sv == SV_RELOADALL) {
+            reset();
+            reload();
+            reloadData(false);
         }
 
         emit dataChanged(nOffset, 1);  // TODO Check size
@@ -476,7 +476,7 @@ void FormatWidget::showSectionHex(QTableView *pTableView)
 
         showInHexWindow(nOffset, nSize);
 
-        reloadData();
+        reloadData(true); // TODO Check
 
         pTableView->setCurrentIndex(pTableView->model()->index(nRow, 0));
     }
@@ -1155,7 +1155,7 @@ void FormatWidget::setEdited(qint64 nDeviceOffset, qint64 nDeviceSize)
     qDebug("void FormatWidget::setEdited()");
 #endif
     reset();
-    reloadData();
+    reloadData(true);
 
     //    reset();
 
@@ -1177,7 +1177,7 @@ void FormatWidget::allReload(qint64 nDeviceOffset, qint64 nDeviceSize)
     reset();
     reload();
 
-    reloadData();
+    reloadData(false);
 
     setReadonly(bIsReadOnly);
 }
@@ -1197,7 +1197,7 @@ void FormatWidget::showHex(qint64 nOffset, qint64 nSize)
 
     dialogHexView.exec();
 
-    reloadData();
+    reloadData(true); // TODO Check
 }
 
 void FormatWidget::showInDisasmWindowAddress(XADDR nAddress)

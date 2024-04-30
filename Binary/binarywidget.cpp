@@ -177,7 +177,7 @@ void BinaryWidget::_findValue(quint64 nValue, XBinary::ENDIAN endian)
     ui->widgetSearch->findValue(nValue, endian);
 }
 
-void BinaryWidget::reloadData()
+void BinaryWidget::reloadData(bool bSaveSelection)
 {
     qint32 nType = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_TYPE).toInt();
 
@@ -205,6 +205,11 @@ void BinaryWidget::reloadData()
                 XHexView::OPTIONS options = {};
                 options.bMenu_Disasm = true;
                 options.bMenu_MemoryMap = true;
+
+                if (bSaveSelection) {
+                    options.nStartSelectionOffset = -1;
+                }
+
                 ui->widgetHex->setXInfoDB(getXInfoDB());
                 ui->widgetHex->setData(getDevice(), options);
                 ui->widgetHex->setBackupDevice(getBackupDevice());
@@ -374,7 +379,7 @@ void BinaryWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCu
     Q_UNUSED(pItemPrevious)
 
     if (pItemCurrent) {
-        reloadData();
+        reloadData(false);
         addPage(pItemCurrent);
         ui->toolButtonPrev->setEnabled(isPrevPageAvailable());
         ui->toolButtonNext->setEnabled(isNextPageAvailable());

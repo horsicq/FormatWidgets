@@ -57,7 +57,7 @@ protected:
     virtual void _widgetValueChanged(QVariant vValue);
 
 private slots:
-    virtual void reloadData();
+    virtual void reloadData(bool bSaveSelection);
     void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurrent, QTreeWidgetItem *pItemPrevious);
     void on_checkBoxReadonly_toggled(bool bChecked);
     void on_pushButtonReload_clicked();

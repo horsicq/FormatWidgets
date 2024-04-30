@@ -55,7 +55,7 @@ protected:
     virtual void _widgetValueChanged(QVariant vValue);
 
 private slots:
-    virtual void reloadData();
+    virtual void reloadData(bool bSaveSelection);
     void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurrent, QTreeWidgetItem *pItemPrevious);
     void on_checkBoxReadonly_toggled(bool bChecked);
     bool createSectionTable(qint32 nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pHeaderRecord, qint32 nNumberOfRecords);

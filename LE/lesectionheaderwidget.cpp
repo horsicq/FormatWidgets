@@ -82,7 +82,7 @@ void LESectionHeaderWidget::on_checkBoxReadonly_toggled(bool bChecked)
     Q_UNUSED(bChecked)
 }
 
-void LESectionHeaderWidget::reloadData()
+void LESectionHeaderWidget::reloadData(bool bSaveSelection)
 {
 }
 

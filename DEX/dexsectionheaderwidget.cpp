@@ -93,7 +93,7 @@ void DEXSectionHeaderWidget::reload()
 
     ui->checkBoxReadonly->setEnabled(!isReadonly());
 
-    reloadData();
+    reloadData(false);
 }
 
 void DEXSectionHeaderWidget::setStringTable(qint64 nStringTableOffset, qint64 nStringTableSize)
@@ -159,7 +159,7 @@ void DEXSectionHeaderWidget::on_checkBoxReadonly_toggled(bool bChecked)
     setReadonly(bChecked);
 }
 
-void DEXSectionHeaderWidget::reloadData()
+void DEXSectionHeaderWidget::reloadData(bool bSaveSelection)
 {
     XDEX dex(getDevice());
 

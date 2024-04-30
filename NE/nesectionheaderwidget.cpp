@@ -82,7 +82,7 @@ void NESectionHeaderWidget::on_checkBoxReadonly_toggled(bool bChecked)
     Q_UNUSED(bChecked)
 }
 
-void NESectionHeaderWidget::reloadData()
+void NESectionHeaderWidget::reloadData(bool bSaveSelection)
 {
 }
 

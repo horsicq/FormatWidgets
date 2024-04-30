@@ -70,7 +70,7 @@ private slots:
     void resourceDisasm();
     void resourceEntropy();
     void resourceDump();
-    void reloadData();
+    void reloadData(bool bSaveSelection);
     void loadImportLibrary(qint32 nRow);
     void loadRelocs(qint32 nRow);
     void loadSection(qint32 nRow);
