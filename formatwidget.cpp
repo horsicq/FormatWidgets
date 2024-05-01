@@ -476,7 +476,7 @@ void FormatWidget::showSectionHex(QTableView *pTableView)
 
         showInHexWindow(nOffset, nSize);
 
-        reloadData(true); // TODO Check
+        reloadData(true);  // TODO Check
 
         pTableView->setCurrentIndex(pTableView->model()->index(nRow, 0));
     }
@@ -1197,7 +1197,7 @@ void FormatWidget::showHex(qint64 nOffset, qint64 nSize)
 
     dialogHexView.exec();
 
-    reloadData(true); // TODO Check
+    reloadData(true);  // TODO Check
 }
 
 void FormatWidget::showInDisasmWindowAddress(XADDR nAddress)
