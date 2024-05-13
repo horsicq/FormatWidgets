@@ -175,7 +175,7 @@ QIODevice *FormatWidget::getBackupDevice()
 
 void FormatWidget::setFileType(XBinary::FT fileType)
 {
-    g_fileType = fileType;
+    g_fileType = fileType; 
 }
 
 XBinary::FT FormatWidget::getFileType()

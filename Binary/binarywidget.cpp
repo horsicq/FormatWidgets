@@ -66,7 +66,8 @@ void BinaryWidget::reload()
     XBinary binary(getDevice(), getOptions().bIsImage, getOptions().nImageBase);
 
     if (binary.isValid()) {
-        setFileType(binary.getFileType());
+        QSet<XBinary::FT> stFT = XFormats::getFileTypes(getDevice(), true);
+        setFileType(binary._getPrefFileType(&stFT));
 
         QTreeWidgetItem *pItemInfo = createNewItem(SBINARY::TYPE_INFO, tr("Info"));
         ui->treeWidgetNavi->addTopLevelItem(pItemInfo);
@@ -93,9 +94,6 @@ void BinaryWidget::reload()
         setDisasmInitAddress(binary.getEntryPointAddress());
 
         setTreeItem(ui->treeWidgetNavi, getOptions().nStartType);
-
-        QSet<XBinary::FT> stFT = XFormats::getFileTypes(getDevice(), true);
-        setFileType(binary._getPrefFileType(&stFT));
     }
 }
 
