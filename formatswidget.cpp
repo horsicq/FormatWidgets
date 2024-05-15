@@ -47,7 +47,7 @@ void FormatsWidget::setName(const QString &sFileName, bool bScan)
     this->g_sFileName = sFileName;
     this->g_bScan = bScan;
 
-    XFormats::setFileTypeComboBox(XBinary::FT_UNKNOWN, g_sFileName, ui->comboBoxFileType);
+    XFormats::setFileTypeComboBox(XBinary::FT_UNKNOWN, g_sFileName, ui->comboBoxFileType, XBinary::TL_OPTION_ALL);
 
     reload();
 }
@@ -177,7 +177,7 @@ void FormatsWidget::reload()
         } else if ((fileType == XBinary::FT_ZIP) || (fileType == XBinary::FT_MACHOFAT) || (fileType == XBinary::FT_AR) || (fileType == XBinary::FT_TAR) ||
                    (fileType == XBinary::FT_GZIP) || (fileType == XBinary::FT_TARGZ) || (fileType == XBinary::FT_NPM) || (fileType == XBinary::FT_ZLIB) ||
                    (fileType == XBinary::FT_LHA) || (fileType == XBinary::FT_JAR) || (fileType == XBinary::FT_APK) || (fileType == XBinary::FT_IPA) ||
-                   (fileType == XBinary::FT_APKS)) {
+                   (fileType == XBinary::FT_APKS || (fileType == XBinary::FT_MACHOFAT))) {
             ui->pushButtonArchive->setText(XFormats::getFileFormatInfo(fileType, &file).sString);
 
             bool bMANIFESTMF = false;
@@ -860,7 +860,7 @@ QString FormatsWidget::getScanEngine(const QString &sDefault)
         XBinary::FT fileType = getCurrentFileType();
 
         // TODO !!!
-        if ((fileType == XBinary::FT_DEX) || (fileType == XBinary::FT_ELF32) || (fileType == XBinary::FT_ELF64) || (fileType == XBinary::FT_MACHO32) ||
+        if ((fileType == XBinary::FT_DEX) || (fileType == XBinary::FT_MACHO32) ||
             (fileType == XBinary::FT_MACHO64) || (fileType == XBinary::FT_MACHOFAT) || (fileType == XBinary::FT_ZIP) || (fileType == XBinary::FT_JAR) ||
             (fileType == XBinary::FT_APK) || (fileType == XBinary::FT_APKS) || (fileType == XBinary::FT_IPA)) {
             sResult = "nfd";

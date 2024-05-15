@@ -63,7 +63,6 @@ private slots:
     void on_pushButtonDisasm_clicked();
     void on_pushButtonStrings_clicked();
     void on_pushButtonEntropy_clicked();
-    void on_pushButtonHeuristicScan_clicked();
     void on_pushButtonMemoryMap_clicked();
     void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurrent, QTreeWidgetItem *pItemPrevious);
 

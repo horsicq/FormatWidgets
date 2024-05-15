@@ -73,7 +73,6 @@ private slots:
     void on_pushButtonStrings_clicked();
     void on_pushButtonMemoryMap_clicked();
     void on_pushButtonEntropy_clicked();
-    void on_pushButtonHeuristicScan_clicked();
 
 private:
     enum CB {

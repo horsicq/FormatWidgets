@@ -3529,8 +3529,3 @@ void MACHWidget::on_pushButtonEntropy_clicked()
 {
     setTreeItem(ui->treeWidgetNavi, SMACH::TYPE_ENTROPY);
 }
-
-void MACHWidget::on_pushButtonHeuristicScan_clicked()
-{
-    setTreeItem(ui->treeWidgetNavi, SMACH::TYPE_NFDSCAN);
-}

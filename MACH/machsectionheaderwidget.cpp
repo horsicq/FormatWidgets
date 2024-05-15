@@ -561,10 +561,10 @@ void MACHSectionHeaderWidget::reloadData(bool bSaveSelection)
 
             XMACH::COMMAND_RECORD cr = mach._readLoadCommand(nHeaderOffset, bIsBigEndian);
 
-            g_ppLinedEdit[N_mach_commands::cmd]->setValue_uint32((quint32)cr.nType);
+            g_ppLinedEdit[N_mach_commands::cmd]->setValue_uint32((quint32)cr.nId);
             g_ppLinedEdit[N_mach_commands::cmdsize]->setValue_uint32((quint32)cr.nSize);
 
-            g_ppComboBox[N_mach_commands::CB_CMD]->setValue(cr.nType);
+            g_ppComboBox[N_mach_commands::CB_CMD]->setValue(cr.nId);
 
             qint64 nOffset = nHeaderOffset;
             qint64 nSize = mach.getCommandHeaderSize();

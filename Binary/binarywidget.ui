@@ -98,13 +98,6 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButtonHeuristicScan">
-       <property name="text">
-        <string>Heuristic scan</string>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QCheckBox" name="checkBoxReadonly">
        <property name="text">
         <string>Readonly</string>
@@ -469,18 +462,6 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>XMultiDisasmWidget</class>
-   <extends>QWidget</extends>
-   <header>xmultidisasmwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>SearchSignaturesWidget</class>
-   <extends>QWidget</extends>
-   <header>searchsignatureswidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>XHashWidget</class>
    <extends>QWidget</extends>
    <header>xhashwidget.h</header>
@@ -511,6 +492,12 @@
    <container>1</container>
   </customwidget>
   <customwidget>
+   <class>SearchSignaturesWidget</class>
+   <extends>QWidget</extends>
+   <header>searchsignatureswidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>DIEWidgetAdvanced</class>
    <extends>QWidget</extends>
    <header>diewidgetadvanced.h</header>
@@ -520,6 +507,12 @@
    <class>YARAWidgetAdvanced</class>
    <extends>QWidget</extends>
    <header>yarawidgetadvanced.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>XMultiDisasmWidget</class>
+   <extends>QWidget</extends>
+   <header>xmultidisasmwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

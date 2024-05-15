@@ -755,8 +755,3 @@ void LEWidget::on_pushButtonEntropy_clicked()
 {
     setTreeItem(ui->treeWidgetNavi, SLE::TYPE_ENTROPY);
 }
-
-void LEWidget::on_pushButtonHeuristicScan_clicked()
-{
-    setTreeItem(ui->treeWidgetNavi, SLE::TYPE_NFDSCAN);
-}

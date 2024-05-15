@@ -129,7 +129,7 @@ void FormatWidget::setData(const QString &sFileName, FW_DEF::OPTIONS options, qu
 {
     g_sFileName = sFileName;
 
-    QFile *pFile = new QFile(sFileName);
+    QFile *pFile = new QFile(sFileName); // TODO delete !!!
 
     XBinary::tryToOpen(pFile);
 
@@ -1603,7 +1603,7 @@ XDateTimeEditX *FormatWidget::createTimeDateEdit(QTableWidget *pTableWidget, qin
     result->setProperty("STYPE", nType);
     result->setProperty("NDATA", nData);
 
-    connect(result, SIGNAL(valueChanged(QVariant)), this, SLOT(widgetValueChange(QVariant)));  // TODO Check widgetValueChanged
+    connect(result, SIGNAL(valueChanged(QVariant)), this, SLOT(widgetValueChanged(QVariant)));  // TODO Check widgetValueChanged
 
     pTableWidget->setCellWidget(nData, HEADER_COLUMN_INFO, result);
 

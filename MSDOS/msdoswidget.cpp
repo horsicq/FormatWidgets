@@ -509,8 +509,3 @@ void MSDOSWidget::on_pushButtonEntropy_clicked()
 {
     setTreeItem(ui->treeWidgetNavi, SMSDOS::TYPE_ENTROPY);
 }
-
-void MSDOSWidget::on_pushButtonHeuristicScan_clicked()
-{
-    setTreeItem(ui->treeWidgetNavi, SMSDOS::TYPE_NFDSCAN);
-}

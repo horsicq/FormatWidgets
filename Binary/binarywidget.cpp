@@ -362,11 +362,6 @@ void BinaryWidget::on_pushButtonEntropy_clicked()
     setTreeItem(ui->treeWidgetNavi, SBINARY::TYPE_ENTROPY);
 }
 
-void BinaryWidget::on_pushButtonHeuristicScan_clicked()
-{
-    setTreeItem(ui->treeWidgetNavi, SBINARY::TYPE_NFDSCAN);
-}
-
 void BinaryWidget::on_pushButtonMemoryMap_clicked()
 {
     setTreeItem(ui->treeWidgetNavi, SBINARY::TYPE_MEMORYMAP);

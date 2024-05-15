@@ -98,13 +98,6 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButtonHeuristicScan">
-       <property name="text">
-        <string>Heuristic scan</string>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QCheckBox" name="checkBoxReadonly">
        <property name="text">
         <string>Readonly</string>
@@ -1274,11 +1267,13 @@
    <class>DIEWidgetAdvanced</class>
    <extends>QWidget</extends>
    <header>diewidgetadvanced.h</header>
+   <container>1</container>
   </customwidget>
   <customwidget>
    <class>YARAWidgetAdvanced</class>
    <extends>QWidget</extends>
    <header>yarawidgetadvanced.h</header>
+   <container>1</container>
   </customwidget>
   <customwidget>
    <class>XMultiDisasmWidget</class>

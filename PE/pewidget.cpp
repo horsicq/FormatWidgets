@@ -3072,11 +3072,6 @@ void PEWidget::on_pushButtonEntropy_clicked()
     setTreeItem(ui->treeWidgetNavi, SPE::TYPE_ENTROPY);
 }
 
-void PEWidget::on_pushButtonHeuristicScan_clicked()
-{
-    setTreeItem(ui->treeWidgetNavi, SPE::TYPE_NFDSCAN);
-}
-
 void PEWidget::on_pushButtonDisasm_clicked()
 {
     setTreeItem(ui->treeWidgetNavi, SPE::TYPE_DISASM);

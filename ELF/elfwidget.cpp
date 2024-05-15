@@ -1187,11 +1187,6 @@ void ELFWidget::on_pushButtonEntropy_clicked()
     setTreeItem(ui->treeWidgetNavi, SELF::TYPE_ENTROPY);
 }
 
-void ELFWidget::on_pushButtonHeuristicScan_clicked()
-{
-    setTreeItem(ui->treeWidgetNavi, SELF::TYPE_NFDSCAN);
-}
-
 void ELFWidget::on_toolButtonPrev_clicked()
 {
     setAddPageEnabled(false);
