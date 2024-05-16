@@ -129,7 +129,7 @@ void FormatWidget::setData(const QString &sFileName, FW_DEF::OPTIONS options, qu
 {
     g_sFileName = sFileName;
 
-    QFile *pFile = new QFile(sFileName); // TODO delete !!!
+    QFile *pFile = new QFile(sFileName);  // TODO delete !!!
 
     XBinary::tryToOpen(pFile);
 
@@ -175,7 +175,7 @@ QIODevice *FormatWidget::getBackupDevice()
 
 void FormatWidget::setFileType(XBinary::FT fileType)
 {
-    g_fileType = fileType; 
+    g_fileType = fileType;
 }
 
 XBinary::FT FormatWidget::getFileType()
