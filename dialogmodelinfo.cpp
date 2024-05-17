@@ -26,6 +26,8 @@ DialogModelInfo::DialogModelInfo(QWidget *pParent) : QDialog(pParent), ui(new Ui
 {
     ui->setupUi(this);
 
+    setWindowFlags(Qt::Window);
+
     g_pDevice = nullptr;
 }
 
