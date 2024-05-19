@@ -342,7 +342,7 @@ void ELFProcessData::_process()
 
         setTableHeader(*g_ppModel, &listLabels);
 
-        QMap<quint64, QString> mapTags = g_pELF->getDynamicTagsS();
+        QMap<quint64, QString> mapTags = g_pELF->getDynamicTagsS(g_pELF->getArch());
 
         for (qint32 i = 0; (i < nNumberOfTags) && (isRun()); i++) {
             QStandardItem *pItem = new QStandardItem(QString::number(i));

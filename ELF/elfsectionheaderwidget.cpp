@@ -533,7 +533,7 @@ void ELFSectionHeaderWidget::reloadData(bool bSaveSelection)
             createHeaderTable(SELF::TYPE_Elf_DynamicArrayTags, ui->tableWidget, bIs64 ? (N_Elf_DynamicArrayTags::records64) : (N_Elf_DynamicArrayTags::records32),
                               g_ppLinedEdit, N_Elf_DynamicArrayTags::__data_size, getNumber(), getOffset());
             g_ppComboBox[N_Elf_DynamicArrayTags::CB_TAG] =
-                createComboBox(ui->tableWidget, XELF::getDynamicTagsS(), SELF::TYPE_Elf_DynamicArrayTags, N_Elf_DynamicArrayTags::d_tag, XComboBoxEx::CBTYPE_LIST);
+                createComboBox(ui->tableWidget, XELF::getDynamicTagsS(elf.getArch()), SELF::TYPE_Elf_DynamicArrayTags, N_Elf_DynamicArrayTags::d_tag, XComboBoxEx::CBTYPE_LIST);
 
             blockSignals(true);
 
