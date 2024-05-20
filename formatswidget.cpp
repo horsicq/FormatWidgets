@@ -1019,7 +1019,7 @@ void FormatsWidget::on_pushButtonFiles_clicked()
 
     FW_DEF::OPTIONS options = {};
 
-    dialogArchive.setFileName(g_sFileName, options, QSet<XBinary::FT>());  // TODO Set current FT
+    dialogArchive.setFileName(g_sFileName, getCurrentFileType(), options, QSet<XBinary::FT>());  // TODO Set current FT
 
     dialogArchive.exec();
 }

@@ -49,7 +49,7 @@ void ELFProcessData::_process()
         listLabels.append(tr("Name"));
         listLabels.append(tr("Type"));
 
-        QMap<quint64, QString> mapTypes = XELF::getSectionTypesS();
+        QMap<quint64, QString> mapTypes = XELF::getSectionTypesS(g_pELF->getArch());
 
         QList<XELF_DEF::Elf64_Shdr> listSectionHeaders64;
         QList<XELF_DEF::Elf32_Shdr> listSectionHeaders32;
