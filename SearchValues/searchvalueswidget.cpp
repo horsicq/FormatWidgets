@@ -51,6 +51,7 @@ void SearchValuesWidget::setData(QIODevice *pDevice, OPTIONS options)
 
     if (pDevice) {
         XFormats::setFileTypeComboBox(options.fileType, g_pDevice, ui->comboBoxType);
+        XFormats::setMapModeComboBox(options.fileType, g_pDevice, false, -1, ui->comboBoxMapMode);
     }
 }
 
@@ -124,13 +125,14 @@ void SearchValuesWidget::search()
         ui->tableViewResult->setModel(nullptr);
 
         XBinary::FT fileType = (XBinary::FT)(ui->comboBoxType->currentData().toInt());
+        XBinary::MAPMODE mapMode = (XBinary::MAPMODE)(ui->comboBoxMapMode->currentData().toInt());
 
         MultiSearch::OPTIONS options = {};
 
         options.endian = g_endian;
         options.varValue = g_varValue;
         options.valueType = g_valueType;
-        options.memoryMap = XFormats::getMemoryMap(fileType, XBinary::MAPMODE_UNKNOWN, g_pDevice);
+        options.memoryMap = XFormats::getMemoryMap(fileType, mapMode, g_pDevice);
 
         QList<XBinary::MS_RECORD> listRecords;
 
@@ -202,6 +204,8 @@ void SearchValuesWidget::_search(DialogSearch::SEARCHMODE mode)
         XBinary::SEARCHDATA searchData;
 
         DialogSearch dialogSearch(this, getDevice(), &searchData, mode, options);
+
+        XOptions::_adjustStayOnTop(&dialogSearch, true);
 
         if (dialogSearch.exec() == QDialog::Accepted)  // TODO use status
         {
