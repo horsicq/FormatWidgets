@@ -43,6 +43,7 @@
 #include "xlineedithex.h"
 #include "xmemorymapwidget.h"
 #include "xmultidisasmwidget.h"
+#include "xvisualizationwidget.h"
 #include "xoptions.h"
 #include "xshortcutsdialog.h"
 #include "yarawidgetadvanced.h"

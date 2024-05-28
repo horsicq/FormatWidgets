@@ -905,6 +905,19 @@ void FormatWidget::resetWidget()
             }
         }
     }
+    {
+        QList<XVisualizationWidget *> listWidgets = this->findChildren<XVisualizationWidget *>();
+
+        qint32 nNumberOfWidgets = listWidgets.count();
+
+        for (qint32 i = 0; i < nNumberOfWidgets; i++) {
+            XVisualizationWidget *pChild = dynamic_cast<XVisualizationWidget *>(listWidgets.at(i));
+
+            if (pChild) {
+                pChild->setData(nullptr, XBinary::FT_UNKNOWN, true);
+            }
+        }
+    }
 }
 
 void FormatWidget::initSearchStringsWidget(SearchStringsWidget *pWidget)
