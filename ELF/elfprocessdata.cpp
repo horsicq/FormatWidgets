@@ -153,7 +153,7 @@ void ELFProcessData::_process()
 
         listLabels.append(tr("Type"));
 
-        QMap<quint64, QString> mapProgramTypes = XELF::getProgramTypesS(g_pELF->getIdent_osabi());
+        QMap<quint64, QString> mapProgramTypes = XELF::getProgramTypesS(g_pELF->getIdent_osabi(), g_pELF->getArch());
 
         QList<XELF_DEF::Elf64_Phdr> listPrograms64;
         QList<XELF_DEF::Elf32_Phdr> listPrograms32;
