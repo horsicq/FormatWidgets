@@ -177,7 +177,7 @@ void FormatsWidget::reload()
         } else if ((fileType == XBinary::FT_ZIP) || (fileType == XBinary::FT_MACHOFAT) || (fileType == XBinary::FT_AR) || (fileType == XBinary::FT_TAR) ||
                    (fileType == XBinary::FT_GZIP) || (fileType == XBinary::FT_TARGZ) || (fileType == XBinary::FT_NPM) || (fileType == XBinary::FT_ZLIB) ||
                    (fileType == XBinary::FT_LHA) || (fileType == XBinary::FT_JAR) || (fileType == XBinary::FT_APK) || (fileType == XBinary::FT_IPA) ||
-                   (fileType == XBinary::FT_APKS || (fileType == XBinary::FT_MACHOFAT))) {
+                   (fileType == XBinary::FT_APKS) || (fileType == XBinary::FT_MACHOFAT) || (fileType == XBinary::FT_AR)) {
             ui->pushButtonArchive->setText(XFormats::getFileFormatInfo(fileType, &file).sString);
 
             bool bMANIFESTMF = false;
