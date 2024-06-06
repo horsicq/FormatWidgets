@@ -230,8 +230,14 @@ void PEWidget::reload()
                 qint32 nNumberOfStreams = cliInfo.metaData.listStreams.count();
 
                 for (qint32 i = 0; i < nNumberOfStreams; i++) {
-                    pNetMetadata->addChild(createNewItem(SPE::TYPE_NET_METADATA_STREAM, cliInfo.metaData.listStreams.at(i).sName,
-                                                         cliInfo.metaData.listStreams.at(i).nOffset, cliInfo.metaData.listStreams.at(i).nSize));
+                    QTreeWidgetItem *pNetMetadataStream = createNewItem(SPE::TYPE_NET_METADATA_STREAM, cliInfo.metaData.listStreams.at(i).sName,
+                                                                        cliInfo.metaData.listStreams.at(i).nOffset, cliInfo.metaData.listStreams.at(i).nSize);
+                    pNetMetadata->addChild(pNetMetadataStream);
+
+                    if (cliInfo.metaData.listStreams.at(i).sName == "#~") {
+                        QTreeWidgetItem *pNetMetadataTable = createNewItem(SPE::TYPE_NET_METADATA_TABLE, tr("Metadata table"), cliInfo.metaData.listStreams.at(i).nOffset, cliInfo.metaData.listStreams.at(i).nSize);
+                        pNetMetadataStream->addChild(pNetMetadataTable);
+                    }
                 }
             }
 
@@ -2271,6 +2277,25 @@ void PEWidget::reloadData(bool bSaveSelection)
 
                 loadHexSubdevice(nOffset, nSize, nAddress, &g_subDevice[SPE::TYPE_NET_METADATA_STREAM], ui->widgetHex_Net_Metadata_Stream);
             }
+        } else if (nType == SPE::TYPE_NET_METADATA_TABLE) {
+            if (!isInitPresent(sInit)) {
+                PEProcessData peProcessData(SPE::TYPE_NET_METADATA_TABLE, &g_tvModel[SPE::TYPE_NET_METADATA_TABLE], &pe, 0, 0, 0);
+
+                ajustTableView(&peProcessData, &g_tvModel[SPE::TYPE_NET_METADATA_TABLE], ui->tableView_Net_Metadata_Table, nullptr, false);
+
+                connect(ui->tableView_Net_Metadata_Table->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
+                        SLOT(onTableView_Net_Metadata_Table_currentRowChanged(QModelIndex, QModelIndex)));
+
+                if (g_tvModel[SPE::TYPE_NET_METADATA_TABLE]->rowCount()) {
+                    ui->tableView_Net_Metadata_Table->setCurrentIndex(ui->tableView_Net_Metadata_Table->model()->index(0, 0));
+                }
+
+                qint64 nOffset = nDataOffset;
+                qint64 nSize = nDataSize;
+                qint64 nAddress = pe.offsetToRelAddress(nOffset);
+
+                loadHexSubdevice(nOffset, nSize, nAddress, &g_subDevice[SPE::TYPE_NET_METADATA_TABLE], ui->widgetHex_Net_Metadata_Table);
+            }
         } else if (nType == SPE::TYPE_CERTIFICATE) {
             if (!isInitPresent(sInit)) {
                 // TODO
@@ -2764,6 +2789,14 @@ void PEWidget::onTableView_Sections_currentRowChanged(const QModelIndex &current
     Q_UNUSED(previous)
 
     loadHexSubdeviceByTableView(current.row(), SPE::TYPE_SECTIONS, ui->widgetHex_Section, ui->tableView_Sections, &g_subDevice[SPE::TYPE_SECTIONS]);
+}
+
+void PEWidget::onTableView_Net_Metadata_Table_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
+{
+    Q_UNUSED(current)
+    Q_UNUSED(previous)
+
+    setHexSubdeviceByTableView(current.row(), SPE::TYPE_NET_METADATA_TABLE, ui->widgetHex_Net_Metadata_Table, ui->tableView_Net_Metadata_Table);
 }
 
 void PEWidget::onTableView_ImportLibraries_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)

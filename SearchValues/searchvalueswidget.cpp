@@ -51,7 +51,7 @@ void SearchValuesWidget::setData(QIODevice *pDevice, OPTIONS options)
 
     if (pDevice) {
         XFormats::setFileTypeComboBox(options.fileType, g_pDevice, ui->comboBoxType);
-        XFormats::setMapModeComboBox(options.fileType, g_pDevice, false, -1, ui->comboBoxMapMode);
+        XFormats::getMapModesList(options.fileType, ui->comboBoxMapMode);
     }
 }
 
@@ -277,3 +277,12 @@ void SearchValuesWidget::on_tableViewResult_clicked(const QModelIndex &index)
 
     viewSelection();
 }
+
+void SearchValuesWidget::on_comboBoxType_currentIndexChanged(int index)
+{
+    Q_UNUSED(index)
+
+    XBinary::FT fileType = (XBinary::FT)(ui->comboBoxType->currentData().toInt());
+    XFormats::getMapModesList(fileType, ui->comboBoxMapMode);
+}
+

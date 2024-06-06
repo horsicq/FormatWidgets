@@ -99,6 +99,8 @@ private slots:
     void viewSelection();
     void on_checkBoxReadonly_toggled(bool bChecked);
 
+    void on_comboBoxType_currentIndexChanged(int index);
+
 protected:
     virtual void registerShortcuts(bool bState);
 

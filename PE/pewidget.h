@@ -103,6 +103,7 @@ private slots:
     void on_tableView_Sections_customContextMenuRequested(const QPoint &pos);
     void on_tableView_Sections_doubleClicked(const QModelIndex &index);
     void onTableView_Sections_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
+    void onTableView_Net_Metadata_Table_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
     void on_tableView_ImportLibraries_customContextMenuRequested(const QPoint &pos);
     void onTableView_ImportLibraries_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
     void on_tableView_ImportLibraries_doubleClicked(const QModelIndex &index);

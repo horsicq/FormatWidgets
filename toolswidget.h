@@ -44,7 +44,7 @@ public:
     void setReadonly(bool bState);
     void reload();
     qint64 getStartAddress();
-    void setSelection(qint64 nOffset, qint64 nSize);
+    void setSelection(qint64 nOffset, qint64 nSize, bool bGoto);
 
 signals:
     void dataChanged(qint64 nDeviceOffset, qint64 nDeviceSize);

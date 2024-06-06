@@ -347,7 +347,7 @@ bool FormatWidget::setHexSubdeviceByTableView(qint32 nRow, qint32 nType, ToolsWi
         qint64 nOffset = pTableView->model()->data(index, Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET).toLongLong();
         qint64 nSize = pTableView->model()->data(index, Qt::UserRole + FW_DEF::SECTION_DATA_SIZE).toLongLong();
 
-        pToolsWidget->setSelection(nOffset, nSize);
+        pToolsWidget->setSelection(nOffset, nSize, true);
         bResult = true;
     }
 
@@ -366,7 +366,7 @@ void FormatWidget::setHeaderTableSelection(ToolsWidget *pToolWidget, QTableWidge
             //            qint64
             //            nAddress=pToolWidget->getStartAddress()+nOffset;
 
-            pToolWidget->setSelection(nOffset, nSize);
+            pToolWidget->setSelection(nOffset, nSize, false);
         }
     }
 }

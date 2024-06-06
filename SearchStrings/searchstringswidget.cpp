@@ -80,7 +80,7 @@ void SearchStringsWidget::setData(QIODevice *pDevice, XBinary::FT fileType, OPTI
     ui->checkBoxReadonly->setEnabled(pDevice->isWritable());
 
     XFormats::setFileTypeComboBox(fileType, g_pDevice, ui->comboBoxType);
-    XFormats::setMapModeComboBox(fileType, pDevice, false, -1, ui->comboBoxMapMode);
+    XFormats::getMapModesList(fileType, ui->comboBoxMapMode);
 
     ui->checkBoxAnsi->setChecked(options.bAnsi);
     ui->checkBoxUTF8->setChecked(options.bUTF8);
@@ -488,3 +488,12 @@ void SearchStringsWidget::on_checkBoxReadonly_toggled(bool bChecked)
 {
     setReadonly(bChecked);
 }
+
+void SearchStringsWidget::on_comboBoxType_currentIndexChanged(int index)
+{
+    Q_UNUSED(index)
+
+    XBinary::FT fileType = (XBinary::FT)(ui->comboBoxType->currentData().toInt());
+    XFormats::getMapModesList(fileType, ui->comboBoxMapMode);
+}
+
