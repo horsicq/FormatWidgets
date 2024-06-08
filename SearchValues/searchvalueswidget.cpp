@@ -285,4 +285,3 @@ void SearchValuesWidget::on_comboBoxType_currentIndexChanged(int index)
     XBinary::FT fileType = (XBinary::FT)(ui->comboBoxType->currentData().toInt());
     XFormats::getMapModesList(fileType, ui->comboBoxMapMode);
 }
-

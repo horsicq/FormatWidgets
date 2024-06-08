@@ -938,7 +938,7 @@ void PEProcessData::_process()
         listLabels.append(tr("Language"));
         listLabels.append(tr("String"));
 
-        QList<XPE::RESOURCE_STRINGTABLE_RECORD> listSTR = g_pPE->getResourceStringTableRecords(); // TODO pdsStruct
+        QList<XPE::RESOURCE_STRINGTABLE_RECORD> listSTR = g_pPE->getResourceStringTableRecords();  // TODO pdsStruct
 
         int nNumberOfRecords = listSTR.count();
 
@@ -1062,7 +1062,7 @@ void PEProcessData::_process()
         listLabels.append(tr("Count"));
         listLabels.append(tr("Sorted"));
 
-        XPE::CLI_INFO cliInfo = g_pPE->getCliInfo(true); // TODO pdStruct
+        XPE::CLI_INFO cliInfo = g_pPE->getCliInfo(true);  // TODO pdStruct
         QList<XPE::CLI_METADATA_RECORD> listMetaDataTables = g_pPE->getCliMetadataRecords(&cliInfo, getPdStruct());
 
         qint32 nNumberOfRecords = listMetaDataTables.count();

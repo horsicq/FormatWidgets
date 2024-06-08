@@ -235,7 +235,8 @@ void PEWidget::reload()
                     pNetMetadata->addChild(pNetMetadataStream);
 
                     if (cliInfo.metaData.listStreams.at(i).sName == "#~") {
-                        QTreeWidgetItem *pNetMetadataTable = createNewItem(SPE::TYPE_NET_METADATA_TABLE, tr("Metadata table"), cliInfo.metaData.listStreams.at(i).nOffset, cliInfo.metaData.listStreams.at(i).nSize);
+                        QTreeWidgetItem *pNetMetadataTable = createNewItem(SPE::TYPE_NET_METADATA_TABLE, tr("Metadata table"), cliInfo.metaData.listStreams.at(i).nOffset,
+                                                                           cliInfo.metaData.listStreams.at(i).nSize);
                         pNetMetadataStream->addChild(pNetMetadataTable);
                     }
                 }
