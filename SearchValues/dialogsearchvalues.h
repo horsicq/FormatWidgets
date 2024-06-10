@@ -39,7 +39,7 @@ public:
 
 signals:
     void showHex(qint64 nOffset, qint64 nSize);
-    void currentAddressChanged(XADDR nAddress, qint64 nSize);
+    void currentAddressChanged(XADDR nAddress, qint64 nSize); // TODO currentLocationChanged
 
 private slots:
     void on_pushButtonClose_clicked();
