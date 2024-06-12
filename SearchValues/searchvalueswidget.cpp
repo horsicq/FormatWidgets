@@ -256,9 +256,14 @@ void SearchValuesWidget::viewSelection()
         if (listIndexes.count()) {
             QModelIndex indexNumber = listIndexes.at(MultiSearch::COLUMN_VALUE_NUMBER);
             XADDR nVirtualAddress = ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + MultiSearch::USERROLE_ADDRESS).toULongLong();
+            qint64 nOffset = ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + MultiSearch::USERROLE_OFFSET).toULongLong();
             qint64 nSize = ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + MultiSearch::USERROLE_SIZE).toLongLong();
 
-            emit currentAddressChanged(nVirtualAddress, nSize);
+            if (nVirtualAddress != -1) {
+                emit currentLocationChanged(nVirtualAddress, XBinary::LT_ADDRESS, nSize);
+            } else if (nOffset != -1) {
+                emit currentLocationChanged(nOffset, XBinary::LT_OFFSET, nSize);
+            }
         }
     }
 }

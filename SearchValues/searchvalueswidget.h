@@ -89,7 +89,7 @@ protected:
 signals:
     void showHex(qint64 nOffset, qint64 nSize);
     void showDisasm(qint64 nOffset);
-    void currentAddressChanged(XADDR nAddress, qint64 nSize); // TODO currentLocationChanged
+    void currentLocationChanged(quint64 nLocation, qint32 nLocationType, qint64 nSize);
 
 private:
     Ui::SearchValuesWidget *ui;
