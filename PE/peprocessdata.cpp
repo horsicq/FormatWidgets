@@ -175,7 +175,7 @@ void PEProcessData::_process()
             incValue();
         }
 
-        if (g_pPE->isOverlayPresent(&memoryMap)) {
+        if (g_pPE->isOverlayPresent(&memoryMap, getPdStruct())) {
             pItemOverlay = new QStandardItem("");
 
             QList<QStandardItem *> listItems;
@@ -183,8 +183,8 @@ void PEProcessData::_process()
             listItems.append(new QStandardItem(""));
             listItems.append(new QStandardItem(""));
             listItems.append(new QStandardItem(""));
-            listItems.append(new QStandardItem(XBinary::valueToHex((quint32)(g_pPE->getOverlayOffset(&memoryMap)))));
-            listItems.append(new QStandardItem(XBinary::valueToHex((quint32)(g_pPE->getOverlaySize(&memoryMap)))));
+            listItems.append(new QStandardItem(XBinary::valueToHex((quint32)(g_pPE->getOverlayOffset(&memoryMap, getPdStruct())))));
+            listItems.append(new QStandardItem(XBinary::valueToHex((quint32)(g_pPE->getOverlaySize(&memoryMap, getPdStruct())))));
             listItems.append(new QStandardItem(""));
             listItems.append(new QStandardItem(tr("Overlay")));  // Info
 
