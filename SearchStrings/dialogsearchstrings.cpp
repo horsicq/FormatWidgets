@@ -32,7 +32,6 @@ DialogSearchStrings::DialogSearchStrings(QWidget *pParent) : XShortcutsDialog(pP
     connect(ui->widgetSearchStrings, SIGNAL(currentLocationChanged(quint64, qint32, qint64)), this, SIGNAL(currentLocationChanged(quint64, qint32, qint64)));
 
     ui->widgetSearchStrings->setReadonly(true);
-    ui->widgetSearchStrings->setReadonlyVisible(true);
 }
 
 DialogSearchStrings::~DialogSearchStrings()

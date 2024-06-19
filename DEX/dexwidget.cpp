@@ -369,7 +369,7 @@ void DEXWidget::reloadData(bool bSaveSelection)
                 stringsOptions.bAnsi = true;
                 stringsOptions.bUTF8 = false;
                 stringsOptions.bUnicode = true;
-                stringsOptions.bCStrings = false;
+                stringsOptions.bNullTerminated = false;
 
                 ui->widgetStrings->setData(getDevice(), dex.getFileType(), stringsOptions, true);
             }

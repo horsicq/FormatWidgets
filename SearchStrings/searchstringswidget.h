@@ -54,10 +54,11 @@ public:
         bool bAnsi;
         bool bUTF8;
         bool bUnicode;
-        bool bCStrings;
+        bool bNullTerminated;
         QString sANSICodec;
         qint32 nMinLenght;
         bool bLinks;
+        QString sMask;
         bool bMenu_Hex;
         bool bMenu_Demangle;
         QString sTitle;  // For dialog
@@ -77,7 +78,6 @@ public:
     bool saveBackup();
     void setReadonly(bool bState);
     bool isReadonly();
-    void setReadonlyVisible(bool bState);
 
 private slots:
     void on_pushButtonSave_clicked();
@@ -97,9 +97,8 @@ private slots:
     void on_tableViewSelection(const QItemSelection &itemSelected, const QItemSelection &itemDeselected);
     void on_tableViewResult_clicked(const QModelIndex &index);
     void viewSelection();
-    void on_checkBoxReadonly_toggled(bool bChecked);
-
     void on_comboBoxType_currentIndexChanged(int index);
+    void on_lineEditMask_textChanged(const QString &sText);
 
 protected:
     virtual void registerShortcuts(bool bState);

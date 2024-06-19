@@ -92,6 +92,8 @@ void FormatWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
 
 void FormatWidget::adjustView()
 {
+    XShortcutsWidget::adjustView();
+
     QList<XShortcutsWidget *> listWidgets = this->findChildren<XShortcutsWidget *>();
 
     qint32 nNumberOfWidgets = listWidgets.count();

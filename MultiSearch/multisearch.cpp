@@ -153,9 +153,10 @@ void MultiSearch::processSearch()
         ssOptions.bAnsi = g_options.bAnsi;
         ssOptions.bUTF8 = g_options.bUTF8;
         ssOptions.bUnicode = g_options.bUnicode;
-        ssOptions.bCStrings = g_options.bCStrings;
+        ssOptions.bNullTerminated = g_options.bNullTerminated;
         ssOptions.sANSICodec = g_options.sANSICodec;
         ssOptions.bLinks = g_options.bLinks;
+        ssOptions.sMask = g_options.sMask;
 
         *g_pListRecords = binary.multiSearch_allStrings(&(g_options.memoryMap), 0, g_pDevice->size(), ssOptions, g_pPdStruct);
     } else if (g_type == TYPE_VALUES) {

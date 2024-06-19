@@ -85,10 +85,10 @@ public:
         bool bAnsi;     // TODO
         bool bUTF8;     // TODO
         bool bUnicode;  // TODO
-        bool bCStrings;
+        bool bNullTerminated;
         QString sANSICodec;
         bool bLinks;
-        bool bSignature;
+        QString sMask;
         XBinary::ENDIAN endian;
         qint32 nMinLenght;
         QList<SIGNATURE_RECORD> *pListSignatureRecords;

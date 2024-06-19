@@ -115,6 +115,7 @@ void SearchSignaturesWidget::adjust()
 
 void SearchSignaturesWidget::adjustView()
 {
+    XShortcutsWidget::adjustView();
     adjust();
 }
 
@@ -257,7 +258,6 @@ void SearchSignaturesWidget::search()
 
         options.bMenu_Hex = g_options.bMenu_Hex;
         options.memoryMap = XFormats::getMemoryMap(fileType, XBinary::MAPMODE_UNKNOWN, g_pDevice);
-        options.bSignature = true;
         options.endian = (XBinary::ENDIAN)(ui->comboBoxEndianness->currentData().toUInt());
         options.pListSignatureRecords = &g_listSignatureRecords;
 

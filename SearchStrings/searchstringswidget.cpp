@@ -36,12 +36,12 @@ SearchStringsWidget::SearchStringsWidget(QWidget *pParent) : XShortcutsWidget(pP
 
     g_options = {};
 
-    ui->checkBoxCStrings->setEnabled(false);
+    ui->checkBoxNullTerminated->setEnabled(false);
 
     ui->checkBoxAnsi->setChecked(true);
     ui->checkBoxUTF8->setChecked(false);
     ui->checkBoxUnicode->setChecked(true);
-    ui->checkBoxCStrings->setChecked(false);
+    ui->checkBoxNullTerminated->setChecked(false);
 
     ui->spinBoxMinLength->setMinimum(2);
     ui->spinBoxMinLength->setValue(5);
@@ -63,7 +63,6 @@ SearchStringsWidget::SearchStringsWidget(QWidget *pParent) : XShortcutsWidget(pP
     ui->tableViewResult->installEventFilter(this);
 
     setReadonly(true);
-    setReadonlyVisible(false);
 }
 
 SearchStringsWidget::~SearchStringsWidget()
@@ -77,7 +76,7 @@ void SearchStringsWidget::setData(QIODevice *pDevice, XBinary::FT fileType, OPTI
 {
     this->g_pDevice = pDevice;
 
-    ui->checkBoxReadonly->setEnabled(pDevice->isWritable());
+    g_bIsReadonly = !(pDevice->isWritable());
 
     XFormats::setFileTypeComboBox(fileType, g_pDevice, ui->comboBoxType);
     XFormats::getMapModesList(fileType, ui->comboBoxMapMode);
@@ -85,7 +84,7 @@ void SearchStringsWidget::setData(QIODevice *pDevice, XBinary::FT fileType, OPTI
     ui->checkBoxAnsi->setChecked(options.bAnsi);
     ui->checkBoxUTF8->setChecked(options.bUTF8);
     ui->checkBoxUnicode->setChecked(options.bUnicode);
-    ui->checkBoxCStrings->setChecked(options.bCStrings);
+    ui->checkBoxNullTerminated->setChecked(options.bNullTerminated);
     ui->checkBoxLinks->setChecked(options.bLinks);
 
     g_bInit = false;
@@ -158,22 +157,11 @@ bool SearchStringsWidget::saveBackup()
 void SearchStringsWidget::setReadonly(bool bState)
 {
     g_bIsReadonly = bState;
-
-    ui->checkBoxReadonly->setChecked(bState);
 }
 
 bool SearchStringsWidget::isReadonly()
 {
     return g_bIsReadonly;
-}
-
-void SearchStringsWidget::setReadonlyVisible(bool bState)
-{
-    if (bState) {
-        ui->checkBoxReadonly->show();
-    } else {
-        ui->checkBoxReadonly->hide();
-    }
 }
 
 void SearchStringsWidget::on_pushButtonSave_clicked()
@@ -288,7 +276,7 @@ void SearchStringsWidget::_editString()
         dataStruct.nOffset = ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + MultiSearch::USERROLE_OFFSET).toLongLong();
         dataStruct.nSize = ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + MultiSearch::USERROLE_SIZE).toLongLong();
         dataStruct.recordType = (XBinary::MS_RECORD_TYPE)(ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + MultiSearch::USERROLE_TYPE).toLongLong());
-        dataStruct.bIsCStrings = false;
+        dataStruct.bIsNullTerminated = false;
 
         dataStruct.sString = ui->tableViewResult->model()->data(indexValue).toString();
 
@@ -299,7 +287,7 @@ void SearchStringsWidget::_editString()
             bool bSuccess = false;
 
             if (saveBackup()) {
-                if (XBinary::write_array(g_pDevice, dataStruct.nOffset, XBinary::getStringData(dataStruct.recordType, dataStruct.sString, dataStruct.bIsCStrings))) {
+                if (XBinary::write_array(g_pDevice, dataStruct.nOffset, XBinary::getStringData(dataStruct.recordType, dataStruct.sString, dataStruct.bIsNullTerminated))) {
                     ui->tableViewResult->model()->setData(indexNumber, dataStruct.nSize, Qt::UserRole + MultiSearch::USERROLE_SIZE);
                     ui->tableViewResult->model()->setData(indexNumber, dataStruct.recordType, Qt::UserRole + MultiSearch::USERROLE_TYPE);
 
@@ -329,10 +317,11 @@ void SearchStringsWidget::search()
         g_options.bAnsi = ui->checkBoxAnsi->isChecked();
         g_options.bUTF8 = ui->checkBoxUTF8->isChecked();
         g_options.bUnicode = ui->checkBoxUnicode->isChecked();
-        g_options.bCStrings = ui->checkBoxCStrings->isChecked();
+        g_options.bNullTerminated = ui->checkBoxNullTerminated->isChecked();
         g_options.sANSICodec = ui->comboBoxANSICodec->currentText();
         g_options.nMinLenght = ui->spinBoxMinLength->value();
         g_options.bLinks = ui->checkBoxLinks->isChecked();
+        g_options.sMask = ui->lineEditMask->text().trimmed();
 
         if (g_options.bAnsi || g_options.bUnicode || g_options.bUTF8) {
             XBinary::FT fileType = (XBinary::FT)(ui->comboBoxType->currentData().toInt());
@@ -343,11 +332,12 @@ void SearchStringsWidget::search()
             options.bAnsi = g_options.bAnsi;
             options.bUTF8 = g_options.bUTF8;
             options.bUnicode = g_options.bUnicode;
-            options.bCStrings = g_options.bCStrings;
+            options.bNullTerminated = g_options.bNullTerminated;
             options.sANSICodec = g_options.sANSICodec;
             options.bLinks = g_options.bLinks;
             options.bMenu_Hex = g_options.bMenu_Hex;
             options.nMinLenght = g_options.nMinLenght;
+            options.sMask = g_options.sMask;
 
             if (fileType == XBinary::FT_REGION) {
                 options.memoryMap = XBinary(g_pDevice, true, g_options.nBaseAddress).getMemoryMap();
@@ -449,7 +439,7 @@ void SearchStringsWidget::adjust()
 
     ui->comboBoxANSICodec->setEnabled(bIsANSI);
 
-    ui->checkBoxCStrings->setEnabled(bIsANSI | bIsUTF8 | bIsUnicode);
+    ui->checkBoxNullTerminated->setEnabled(bIsANSI | bIsUTF8 | bIsUnicode);
 }
 
 void SearchStringsWidget::on_tableViewSelection(const QItemSelection &itemSelected, const QItemSelection &itemDeselected)
@@ -489,15 +479,15 @@ void SearchStringsWidget::viewSelection()
     }
 }
 
-void SearchStringsWidget::on_checkBoxReadonly_toggled(bool bChecked)
-{
-    setReadonly(bChecked);
-}
-
 void SearchStringsWidget::on_comboBoxType_currentIndexChanged(int index)
 {
     Q_UNUSED(index)
 
     XBinary::FT fileType = (XBinary::FT)(ui->comboBoxType->currentData().toInt());
     XFormats::getMapModesList(fileType, ui->comboBoxMapMode);
+}
+
+void SearchStringsWidget::on_lineEditMask_textChanged(const QString &sText)
+{
+    ui->pushButtonSearch->setEnabled(XBinary::isRegExpValid(sText.trimmed()));
 }
