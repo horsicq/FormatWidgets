@@ -41,16 +41,16 @@
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <property name="leftMargin">
-         <number>0</number>
+         <number>2</number>
         </property>
         <property name="topMargin">
-         <number>0</number>
+         <number>2</number>
         </property>
         <property name="rightMargin">
-         <number>0</number>
+         <number>2</number>
         </property>
         <property name="bottomMargin">
-         <number>0</number>
+         <number>2</number>
         </property>
         <item>
          <widget class="QComboBox" name="comboBoxType"/>
@@ -63,6 +63,12 @@
      </item>
      <item>
       <widget class="QPushButton" name="pushButtonSearchString">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="text">
         <string>String</string>
        </property>
@@ -70,6 +76,12 @@
      </item>
      <item>
       <widget class="QPushButton" name="pushButtonSearchSignature">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="text">
         <string>Signature</string>
        </property>
@@ -77,6 +89,12 @@
      </item>
      <item>
       <widget class="QPushButton" name="pushButtonSearchValue">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="text">
         <string>Value</string>
        </property>
@@ -97,6 +115,12 @@
      </item>
      <item>
       <widget class="QPushButton" name="pushButtonSave">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="text">
         <string>Save</string>
        </property>
@@ -104,6 +128,12 @@
      </item>
      <item>
       <widget class="QPushButton" name="pushButtonSearch">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="text">
         <string>Search</string>
        </property>
