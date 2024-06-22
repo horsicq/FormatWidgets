@@ -44,16 +44,16 @@
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
         <property name="leftMargin">
-         <number>0</number>
+         <number>2</number>
         </property>
         <property name="topMargin">
-         <number>0</number>
+         <number>2</number>
         </property>
         <property name="rightMargin">
-         <number>0</number>
+         <number>2</number>
         </property>
         <property name="bottomMargin">
-         <number>0</number>
+         <number>2</number>
         </property>
         <item>
          <widget class="QComboBox" name="comboBoxFileType"/>
@@ -83,16 +83,16 @@
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_18">
         <property name="leftMargin">
-         <number>0</number>
+         <number>2</number>
         </property>
         <property name="topMargin">
-         <number>0</number>
+         <number>2</number>
         </property>
         <property name="rightMargin">
-         <number>0</number>
+         <number>2</number>
         </property>
         <property name="bottomMargin">
-         <number>0</number>
+         <number>2</number>
         </property>
         <item>
          <widget class="XLineEditHEX" name="lineEditFileSize">
@@ -148,16 +148,16 @@
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_3">
         <property name="leftMargin">
-         <number>0</number>
+         <number>2</number>
         </property>
         <property name="topMargin">
-         <number>0</number>
+         <number>2</number>
         </property>
         <property name="rightMargin">
-         <number>0</number>
+         <number>2</number>
         </property>
         <property name="bottomMargin">
-         <number>0</number>
+         <number>2</number>
         </property>
         <item>
          <widget class="XLineEditHEX" name="lineEditBaseAddress">
@@ -194,16 +194,16 @@
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <property name="leftMargin">
-         <number>0</number>
+         <number>2</number>
         </property>
         <property name="topMargin">
-         <number>0</number>
+         <number>2</number>
         </property>
         <property name="rightMargin">
-         <number>0</number>
+         <number>2</number>
         </property>
         <property name="bottomMargin">
-         <number>0</number>
+         <number>2</number>
         </property>
         <item>
          <widget class="XLineEditHEX" name="lineEditEntryPoint">
@@ -377,7 +377,7 @@
       <enum>QFrame::NoFrame</enum>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>7</number>
      </property>
      <widget class="QWidget" name="pageBinary">
       <layout class="QVBoxLayout" name="verticalLayout_21">
@@ -969,16 +969,16 @@
               </property>
               <layout class="QHBoxLayout" name="horizontalLayout_5">
                <property name="leftMargin">
-                <number>0</number>
+                <number>2</number>
                </property>
                <property name="topMargin">
-                <number>0</number>
+                <number>2</number>
                </property>
                <property name="rightMargin">
-                <number>0</number>
+                <number>2</number>
                </property>
                <property name="bottomMargin">
-                <number>0</number>
+                <number>2</number>
                </property>
                <item>
                 <widget class="XLineEditHEX" name="lineEditPESections">
@@ -1025,16 +1025,16 @@
               </property>
               <layout class="QHBoxLayout" name="horizontalLayout_40">
                <property name="leftMargin">
-                <number>0</number>
+                <number>2</number>
                </property>
                <property name="topMargin">
-                <number>0</number>
+                <number>2</number>
                </property>
                <property name="rightMargin">
-                <number>0</number>
+                <number>2</number>
                </property>
                <property name="bottomMargin">
-                <number>0</number>
+                <number>2</number>
                </property>
                <item>
                 <widget class="XLineEditHEX" name="lineEditPETimeDateStamp">
@@ -1062,16 +1062,16 @@
               </property>
               <layout class="QHBoxLayout" name="horizontalLayout_41">
                <property name="leftMargin">
-                <number>0</number>
+                <number>2</number>
                </property>
                <property name="topMargin">
-                <number>0</number>
+                <number>2</number>
                </property>
                <property name="rightMargin">
-                <number>0</number>
+                <number>2</number>
                </property>
                <property name="bottomMargin">
-                <number>0</number>
+                <number>2</number>
                </property>
                <item>
                 <widget class="XLineEditHEX" name="lineEditPESizeOfImage">
@@ -1138,16 +1138,16 @@
               </property>
               <layout class="QHBoxLayout" name="horizontalLayout_19">
                <property name="leftMargin">
-                <number>0</number>
+                <number>2</number>
                </property>
                <property name="topMargin">
-                <number>0</number>
+                <number>2</number>
                </property>
                <property name="rightMargin">
-                <number>0</number>
+                <number>2</number>
                </property>
                <property name="bottomMargin">
-                <number>0</number>
+                <number>2</number>
                </property>
                <item>
                 <widget class="QPushButton" name="pushButtonPEManifest">
@@ -1254,16 +1254,16 @@
               </property>
               <layout class="QHBoxLayout" name="horizontalLayout_16">
                <property name="leftMargin">
-                <number>0</number>
+                <number>2</number>
                </property>
                <property name="topMargin">
-                <number>0</number>
+                <number>2</number>
                </property>
                <property name="rightMargin">
-                <number>0</number>
+                <number>2</number>
                </property>
                <property name="bottomMargin">
-                <number>0</number>
+                <number>2</number>
                </property>
                <item>
                 <widget class="XLineEditHEX" name="lineEditELFPrograms">
@@ -1316,16 +1316,16 @@
               </property>
               <layout class="QHBoxLayout" name="horizontalLayout_13">
                <property name="leftMargin">
-                <number>0</number>
+                <number>2</number>
                </property>
                <property name="topMargin">
-                <number>0</number>
+                <number>2</number>
                </property>
                <property name="rightMargin">
-                <number>0</number>
+                <number>2</number>
                </property>
                <property name="bottomMargin">
-                <number>0</number>
+                <number>2</number>
                </property>
                <item>
                 <widget class="XLineEditHEX" name="lineEditELFSections">
@@ -1508,16 +1508,16 @@
               </property>
               <layout class="QHBoxLayout" name="horizontalLayout_21">
                <property name="leftMargin">
-                <number>0</number>
+                <number>2</number>
                </property>
                <property name="topMargin">
-                <number>0</number>
+                <number>2</number>
                </property>
                <property name="rightMargin">
-                <number>0</number>
+                <number>2</number>
                </property>
                <property name="bottomMargin">
-                <number>0</number>
+                <number>2</number>
                </property>
                <item>
                 <widget class="XLineEditHEX" name="lineEditMACHCommands">
@@ -1570,16 +1570,16 @@
               </property>
               <layout class="QHBoxLayout" name="horizontalLayout_17">
                <property name="leftMargin">
-                <number>0</number>
+                <number>2</number>
                </property>
                <property name="topMargin">
-                <number>0</number>
+                <number>2</number>
                </property>
                <property name="rightMargin">
-                <number>0</number>
+                <number>2</number>
                </property>
                <property name="bottomMargin">
-                <number>0</number>
+                <number>2</number>
                </property>
                <item>
                 <widget class="XLineEditHEX" name="lineEditMACHSegments">
@@ -1632,16 +1632,16 @@
               </property>
               <layout class="QHBoxLayout" name="horizontalLayout_15">
                <property name="leftMargin">
-                <number>0</number>
+                <number>2</number>
                </property>
                <property name="topMargin">
-                <number>0</number>
+                <number>2</number>
                </property>
                <property name="rightMargin">
-                <number>0</number>
+                <number>2</number>
                </property>
                <property name="bottomMargin">
-                <number>0</number>
+                <number>2</number>
                </property>
                <item>
                 <widget class="XLineEditHEX" name="lineEditMACHSections">
@@ -1733,16 +1733,16 @@
               </property>
               <layout class="QHBoxLayout" name="horizontalLayout_22">
                <property name="leftMargin">
-                <number>0</number>
+                <number>2</number>
                </property>
                <property name="topMargin">
-                <number>0</number>
+                <number>2</number>
                </property>
                <property name="rightMargin">
-                <number>0</number>
+                <number>2</number>
                </property>
                <property name="bottomMargin">
-                <number>0</number>
+                <number>2</number>
                </property>
                <item>
                 <widget class="XLineEditHEX" name="lineEditMACHLibraries">
@@ -1822,16 +1822,16 @@
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_9">
         <property name="leftMargin">
-         <number>0</number>
+         <number>2</number>
         </property>
         <property name="topMargin">
-         <number>0</number>
+         <number>2</number>
         </property>
         <property name="rightMargin">
-         <number>0</number>
+         <number>2</number>
         </property>
         <property name="bottomMargin">
-         <number>0</number>
+         <number>2</number>
         </property>
         <item>
          <widget class="QComboBox" name="comboBoxScanEngine">
@@ -1862,16 +1862,16 @@
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_12">
         <property name="leftMargin">
-         <number>0</number>
+         <number>2</number>
         </property>
         <property name="topMargin">
-         <number>0</number>
+         <number>2</number>
         </property>
         <property name="rightMargin">
-         <number>0</number>
+         <number>2</number>
         </property>
         <property name="bottomMargin">
-         <number>0</number>
+         <number>2</number>
         </property>
         <item>
          <widget class="QLineEdit" name="lineEditEndianness">
@@ -1902,16 +1902,16 @@
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_11">
         <property name="leftMargin">
-         <number>0</number>
+         <number>2</number>
         </property>
         <property name="topMargin">
-         <number>0</number>
+         <number>2</number>
         </property>
         <property name="rightMargin">
-         <number>0</number>
+         <number>2</number>
         </property>
         <property name="bottomMargin">
-         <number>0</number>
+         <number>2</number>
         </property>
         <item>
          <widget class="QLineEdit" name="lineEditMode">
@@ -1942,16 +1942,16 @@
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_10">
         <property name="leftMargin">
-         <number>0</number>
+         <number>2</number>
         </property>
         <property name="topMargin">
-         <number>0</number>
+         <number>2</number>
         </property>
         <property name="rightMargin">
-         <number>0</number>
+         <number>2</number>
         </property>
         <property name="bottomMargin">
-         <number>0</number>
+         <number>2</number>
         </property>
         <item>
          <widget class="QLineEdit" name="lineEditArch">
@@ -1982,16 +1982,16 @@
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_13">
         <property name="leftMargin">
-         <number>0</number>
+         <number>2</number>
         </property>
         <property name="topMargin">
-         <number>0</number>
+         <number>2</number>
         </property>
         <property name="rightMargin">
-         <number>0</number>
+         <number>2</number>
         </property>
         <property name="bottomMargin">
-         <number>0</number>
+         <number>2</number>
         </property>
         <item>
          <widget class="QLineEdit" name="lineEditType">
