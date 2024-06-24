@@ -45,6 +45,7 @@ public:
     void reload();
     qint64 getStartAddress();
     void setSelection(qint64 nOffset, qint64 nSize, bool bGoto);
+    virtual void adjustView();
 
 signals:
     void dataChanged(qint64 nDeviceOffset, qint64 nDeviceSize);

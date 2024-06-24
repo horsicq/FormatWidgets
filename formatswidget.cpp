@@ -82,8 +82,6 @@ void FormatsWidget::adjustView()
     ui->pageScanDIE->adjustView();
     ui->pageScanNFD->adjustView();
     ui->pageScanYARA->adjustView();
-
-    XShortcutsWidget::adjustView();
 }
 
 void FormatsWidget::setAdvanced(bool bState)

@@ -78,6 +78,7 @@ public:
     bool saveBackup();
     void setReadonly(bool bState);
     bool isReadonly();
+    virtual void adjustView();
 
 private slots:
     void on_pushButtonSave_clicked();

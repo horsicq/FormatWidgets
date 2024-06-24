@@ -130,6 +130,11 @@ void ToolsWidget::setSelection(qint64 nOffset, qint64 nSize, bool bGoto)
     }
 }
 
+void ToolsWidget::adjustView()
+{
+    // TODO
+}
+
 ToolsWidget::~ToolsWidget()
 {
     delete ui;

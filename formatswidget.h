@@ -72,7 +72,7 @@ public:
 
     void setName(const QString &sFileName, bool bScan);
     void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
-    void adjustView();
+    virtual void adjustView();
     void setAdvanced(bool bState);
 
 private slots:

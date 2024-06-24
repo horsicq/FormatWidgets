@@ -62,6 +62,7 @@ public:
 
     void findValue(QVariant varValue, XBinary::VT valueType, XBinary::ENDIAN endian);
     void findValue(quint64 nValue, XBinary::ENDIAN endian);
+    virtual void adjustView();
 
 private slots:
     void on_pushButtonSave_clicked();

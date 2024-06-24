@@ -39,7 +39,7 @@ public:
     virtual void clear();
     virtual void cleanup();
     virtual void reload();
-    void adjustView();
+    virtual void adjustView();
 
 protected:
     virtual SV _setValue(QVariant vValue, qint32 nStype, qint32 nNdata, qint32 nVtype, qint32 nPosition, qint64 nOffset);

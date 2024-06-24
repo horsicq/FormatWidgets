@@ -117,7 +117,7 @@ void PEWidget::reload()
 
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_VISUALIZATION, tr("Visualization"), ""));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_HEX, tr("Hex"), ""));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_DISASM, tr("Disasm"), ""));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_DISASM, tr("Disasm"), "://icons/DisassemblyWindow.16.16.png"));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_HASH, tr("Hash"), ""));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_STRINGS, tr("Strings"), ""));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_SIGNATURES, tr("Signatures"), ""));
@@ -3084,31 +3084,6 @@ void PEWidget::on_tableView_ExportFunctions_customContextMenuRequested(const QPo
 
         contextMenu.exec(ui->tableView_ExportFunctions->viewport()->mapToGlobal(pos));
     }
-}
-
-void PEWidget::on_pushButtonHex_clicked()
-{
-    setTreeItem(ui->treeWidgetNavi, SPE::TYPE_HEX);
-}
-
-void PEWidget::on_pushButtonStrings_clicked()
-{
-    setTreeItem(ui->treeWidgetNavi, SPE::TYPE_STRINGS);
-}
-
-void PEWidget::on_pushButtonMemoryMap_clicked()
-{
-    setTreeItem(ui->treeWidgetNavi, SPE::TYPE_MEMORYMAP);
-}
-
-void PEWidget::on_pushButtonEntropy_clicked()
-{
-    setTreeItem(ui->treeWidgetNavi, SPE::TYPE_ENTROPY);
-}
-
-void PEWidget::on_pushButtonDisasm_clicked()
-{
-    setTreeItem(ui->treeWidgetNavi, SPE::TYPE_DISASM);
 }
 
 void PEWidget::on_tableWidget_Net_Metadata_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)

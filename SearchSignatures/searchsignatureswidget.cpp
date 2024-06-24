@@ -115,7 +115,6 @@ void SearchSignaturesWidget::adjust()
 
 void SearchSignaturesWidget::adjustView()
 {
-    XShortcutsWidget::adjustView();
     adjust();
 }
 

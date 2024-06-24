@@ -87,7 +87,7 @@ void LEWidget::reload()
 
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_VISUALIZATION, tr("Visualization"), ""));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_HEX, tr("Hex"), ""));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_DISASM, tr("Disasm"), ""));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_DISASM, tr("Disasm"), "://icons/DisassemblyWindow.16.16.png"));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_HASH, tr("Hash"), ""));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_STRINGS, tr("Strings"), ""));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_SIGNATURES, tr("Signatures"), ""));

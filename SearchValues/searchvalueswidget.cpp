@@ -79,6 +79,10 @@ void SearchValuesWidget::findValue(quint64 nValue, XBinary::ENDIAN endian)
     findValue(varValue, valueType, endian);
 }
 
+void SearchValuesWidget::adjustView()
+{
+}
+
 void SearchValuesWidget::on_pushButtonSave_clicked()
 {
     if (g_pModel) {

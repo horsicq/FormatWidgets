@@ -111,7 +111,7 @@ void MACHWidget::reload()
 
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_VISUALIZATION, tr("Visualization"), ""));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_HEX, tr("Hex"), ""));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_DISASM, tr("Disasm"), ""));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_DISASM, tr("Disasm"), "://icons/DisassemblyWindow.16.16.png"));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_HASH, tr("Hash"), ""));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_STRINGS, tr("Strings"), ""));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_SIGNATURES, tr("Signatures"), ""));

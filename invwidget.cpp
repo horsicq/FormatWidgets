@@ -114,6 +114,11 @@ void InvWidget::_setEnabled(bool bState)
     }
 }
 
+void InvWidget::adjustView()
+{
+    // TODO
+}
+
 void InvWidget::showHexSlot()
 {
     emit showHex(g_nOffset, g_nSize);

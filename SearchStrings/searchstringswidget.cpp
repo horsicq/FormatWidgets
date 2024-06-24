@@ -164,6 +164,10 @@ bool SearchStringsWidget::isReadonly()
     return g_bIsReadonly;
 }
 
+void SearchStringsWidget::adjustView()
+{
+}
+
 void SearchStringsWidget::on_pushButtonSave_clicked()
 {
     if (g_pFilter) {

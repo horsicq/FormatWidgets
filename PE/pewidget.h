@@ -126,11 +126,6 @@ private slots:
     void onTreeView_Resources_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
     void onTreeView_Certificate_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
     void on_tableView_ExportFunctions_customContextMenuRequested(const QPoint &pos);
-    void on_pushButtonHex_clicked();
-    void on_pushButtonStrings_clicked();
-    void on_pushButtonMemoryMap_clicked();
-    void on_pushButtonEntropy_clicked();
-    void on_pushButtonDisasm_clicked();
     void on_tableWidget_Net_Metadata_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn);
     void on_toolButtonPrev_clicked();
     void on_toolButtonNext_clicked();
