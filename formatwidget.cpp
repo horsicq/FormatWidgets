@@ -220,7 +220,7 @@ bool FormatWidget::isReadonly()
     return g_bIsReadonly;
 }
 
-QTreeWidgetItem *FormatWidget::createNewItem(qint32 nType, const QString &sTitle, qint64 nOffset, qint64 nSize, qint64 nExtraOffset, qint64 nExtraSize)
+QTreeWidgetItem *FormatWidget::createNewItem(qint32 nType, const QString &sTitle, const QString &sIconName, qint64 nOffset, qint64 nSize, qint64 nExtraOffset, qint64 nExtraSize)
 {
     QTreeWidgetItem *pResult = new QTreeWidgetItem;
 
@@ -231,6 +231,16 @@ QTreeWidgetItem *FormatWidget::createNewItem(qint32 nType, const QString &sTitle
     pResult->setData(0, Qt::UserRole + FW_DEF::SECTION_DATA_EXTRAOFFSET, nExtraOffset);
     pResult->setData(0, Qt::UserRole + FW_DEF::SECTION_DATA_EXTRASIZE, nExtraSize);
     pResult->setData(0, Qt::UserRole + FW_DEF::SECTION_DATA_NAME, sTitle);
+
+    QIcon icon;
+
+    if ((sIconName != "") && QFile::exists(sIconName)) {
+        icon.addFile(sIconName, QSize(), QIcon::Normal, QIcon::Off);
+    } else {
+        icon = QIcon::fromTheme(QStringLiteral(""));
+    }
+
+    pResult->setIcon(0, icon);
 
     return pResult;
 }

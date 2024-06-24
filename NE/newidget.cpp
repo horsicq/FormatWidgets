@@ -78,36 +78,36 @@ void NEWidget::reload()
     if (ne.isValid()) {
         setFileType(ne.getFileType());
 
-        QTreeWidgetItem *pItemInfo = createNewItem(SNE::TYPE_INFO, tr("Info"));
+        QTreeWidgetItem *pItemInfo = createNewItem(SNE::TYPE_INFO, tr("Info"), "");
         ui->treeWidgetNavi->addTopLevelItem(pItemInfo);
-        pItemInfo->addChild(createNewItem(SNE::TYPE_NFDSCAN, "Nauz File Detector(NFD)"));
-        pItemInfo->addChild(createNewItem(SNE::TYPE_DIESCAN, "Detect It Easy(DiE)"));
+        pItemInfo->addChild(createNewItem(SNE::TYPE_NFDSCAN, "Nauz File Detector(NFD)", ""));
+        pItemInfo->addChild(createNewItem(SNE::TYPE_DIESCAN, "Detect It Easy(DiE)", ""));
 #ifdef USE_YARA
-        pItemInfo->addChild(createNewItem(SNE::TYPE_YARASCAN, "Yara rules"));
+        pItemInfo->addChild(createNewItem(SNE::TYPE_YARASCAN, "Yara rules", ""));
 #endif
-        pItemInfo->addChild(createNewItem(SNE::TYPE_VIRUSTOTAL, "VirusTotal"));
+        pItemInfo->addChild(createNewItem(SNE::TYPE_VIRUSTOTAL, "VirusTotal", ""));
 
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_VISUALIZATION, tr("Visualization")));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_HEX, tr("Hex")));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_DISASM, tr("Disasm")));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_HASH, tr("Hash")));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_STRINGS, tr("Strings")));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_SIGNATURES, tr("Signatures")));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_MEMORYMAP, tr("Memory map")));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_ENTROPY, tr("Entropy")));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_EXTRACTOR, tr("Extractor")));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_SEARCH, tr("Search")));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_DOS_HEADER, "DOS_HEADER"));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_OS2_HEADER, "OS2_HEADER"));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_VISUALIZATION, tr("Visualization"), ""));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_HEX, tr("Hex"), ""));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_DISASM, tr("Disasm"), ""));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_HASH, tr("Hash"), ""));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_STRINGS, tr("Strings"), ""));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_SIGNATURES, tr("Signatures"), ""));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_MEMORYMAP, tr("Memory map"), ""));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_ENTROPY, tr("Entropy"), ""));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_EXTRACTOR, tr("Extractor"), ""));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_SEARCH, tr("Search"), ""));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_DOS_HEADER, "DOS_HEADER", ""));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_OS2_HEADER, "OS2_HEADER", ""));
 
         QList<XNE_DEF::NE_SEGMENT> listSegments = ne.getSegmentList();
 
         if (listSegments.count()) {
-            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_SEGMENTS, tr("Segments")));
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_SEGMENTS, tr("Segments"), ""));
         }
 
         if (ne.isOverlayPresent()) {
-            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_OVERLAY, tr("Overlay")));
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_OVERLAY, tr("Overlay"), ""));
         }
 
         ui->treeWidgetNavi->expandAll();

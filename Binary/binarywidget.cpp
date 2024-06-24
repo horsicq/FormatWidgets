@@ -69,31 +69,40 @@ void BinaryWidget::reload()
         QSet<XBinary::FT> stFT = XFormats::getFileTypes(getDevice(), true);
         setFileType(binary._getPrefFileType(&stFT));
 
-        QTreeWidgetItem *pItemInfo = createNewItem(SBINARY::TYPE_INFO, tr("Info"));
+        QTreeWidgetItem *pItemInfo = createNewItem(SBINARY::TYPE_INFO, tr("Info"), "");
         ui->treeWidgetNavi->addTopLevelItem(pItemInfo);
-        pItemInfo->addChild(createNewItem(SBINARY::TYPE_NFDSCAN, "Nauz File Detector (NFD)"));
-        pItemInfo->addChild(createNewItem(SBINARY::TYPE_DIESCAN, "Detect It Easy (DiE)"));
+        pItemInfo->addChild(createNewItem(SBINARY::TYPE_NFDSCAN, "Nauz File Detector (NFD)", ""));
+        pItemInfo->addChild(createNewItem(SBINARY::TYPE_DIESCAN, "Detect It Easy (DiE)", ""));
 #ifdef USE_YARA
-        pItemInfo->addChild(createNewItem(SBINARY::TYPE_YARASCAN, "Yara rules"));
+        pItemInfo->addChild(createNewItem(SBINARY::TYPE_YARASCAN, "Yara rules", ""));
 #endif
-        pItemInfo->addChild(createNewItem(SBINARY::TYPE_VIRUSTOTAL, "VirusTotal"));
+        pItemInfo->addChild(createNewItem(SBINARY::TYPE_VIRUSTOTAL, "VirusTotal", ""));
 
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_VISUALIZATION, tr("Visualization")));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_HEX, tr("Hex")));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_DISASM, tr("Disasm")));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_HASH, tr("Hash")));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_STRINGS, tr("Strings")));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_SIGNATURES, tr("Signatures")));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_MEMORYMAP, tr("Memory map")));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_ENTROPY, tr("Entropy")));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_EXTRACTOR, tr("Extractor")));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_SEARCH, tr("Search")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_VISUALIZATION, tr("Visualization"), ""));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_HEX, tr("Hex"), ""));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_DISASM, tr("Disasm"), "://icons/DisassemblyWindow.16.16.png"));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_HASH, tr("Hash"), ""));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_STRINGS, tr("Strings"), ""));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_SIGNATURES, tr("Signatures"), ""));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_MEMORYMAP, tr("Memory map"), ""));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_ENTROPY, tr("Entropy"), ""));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_EXTRACTOR, tr("Extractor"), ""));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_SEARCH, tr("Search"), ""));
 
         ui->treeWidgetNavi->expandAll();
 
         setDisasmInitAddress(binary.getEntryPointAddress());
 
         setTreeItem(ui->treeWidgetNavi, getOptions().nStartType);
+    }
+}
+
+void BinaryWidget::adjustView()
+{
+    XOptions *pOptions = getGlobalOptions();
+
+    if (pOptions) {
+        pOptions->adjustWidget(this, XOptions::ID_VIEW_FONT_CONTROLS);
     }
 }
 
@@ -340,31 +349,6 @@ void BinaryWidget::on_toolButtonNext_clicked()
     setAddPageEnabled(false);
     ui->treeWidgetNavi->setCurrentItem(getNextPage());
     setAddPageEnabled(true);
-}
-
-void BinaryWidget::on_pushButtonHex_clicked()
-{
-    setTreeItem(ui->treeWidgetNavi, SBINARY::TYPE_HEX);
-}
-
-void BinaryWidget::on_pushButtonDisasm_clicked()
-{
-    setTreeItem(ui->treeWidgetNavi, SBINARY::TYPE_DISASM);
-}
-
-void BinaryWidget::on_pushButtonStrings_clicked()
-{
-    setTreeItem(ui->treeWidgetNavi, SBINARY::TYPE_STRINGS);
-}
-
-void BinaryWidget::on_pushButtonEntropy_clicked()
-{
-    setTreeItem(ui->treeWidgetNavi, SBINARY::TYPE_ENTROPY);
-}
-
-void BinaryWidget::on_pushButtonMemoryMap_clicked()
-{
-    setTreeItem(ui->treeWidgetNavi, SBINARY::TYPE_MEMORYMAP);
 }
 
 void BinaryWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurrent, QTreeWidgetItem *pItemPrevious)

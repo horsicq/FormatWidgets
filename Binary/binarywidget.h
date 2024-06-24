@@ -39,6 +39,7 @@ public:
     virtual void clear();
     virtual void cleanup();
     virtual void reload();
+    void adjustView();
 
 protected:
     virtual SV _setValue(QVariant vValue, qint32 nStype, qint32 nNdata, qint32 nVtype, qint32 nPosition, qint64 nOffset);
@@ -59,11 +60,6 @@ private slots:
     void enableButton();
     void on_toolButtonPrev_clicked();
     void on_toolButtonNext_clicked();
-    void on_pushButtonHex_clicked();
-    void on_pushButtonDisasm_clicked();
-    void on_pushButtonStrings_clicked();
-    void on_pushButtonEntropy_clicked();
-    void on_pushButtonMemoryMap_clicked();
     void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurrent, QTreeWidgetItem *pItemPrevious);
 
 private:
