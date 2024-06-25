@@ -36,8 +36,13 @@ public:
     explicit DialogMACH(QWidget *pParent = nullptr);
     ~DialogMACH();
 
+    virtual void adjustView() {}
+
     void setData(QIODevice *pDevice, const FW_DEF::OPTIONS &options);
     void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
+
+protected:
+    virtual void registerShortcuts(bool bState) { Q_UNUSED(bState) }
 
 private:
     Ui::DialogMACH *ui;

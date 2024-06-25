@@ -22,7 +22,7 @@
 
 #include "ui_searchsignaturesoptionswidget.h"
 
-SearchSignaturesOptionsWidget::SearchSignaturesOptionsWidget(QWidget *pParent) : QWidget(pParent), ui(new Ui::SearchSignaturesOptionsWidget)
+SearchSignaturesOptionsWidget::SearchSignaturesOptionsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui::SearchSignaturesOptionsWidget)
 {
     ui->setupUi(this);
 
@@ -41,6 +41,11 @@ void SearchSignaturesOptionsWidget::setOptions(XOptions *pOptions)
     g_pOptions = pOptions;
 
     reload();
+}
+
+void SearchSignaturesOptionsWidget::adjustView()
+{
+    // TODO
 }
 
 void SearchSignaturesOptionsWidget::save()
@@ -68,4 +73,9 @@ void SearchSignaturesOptionsWidget::on_toolButtonSearchSignaturesPath_clicked()
     if (!sDirectoryName.isEmpty()) {
         ui->lineEditSearchSignaturesPath->setText(sDirectoryName);
     }
+}
+
+void SearchSignaturesOptionsWidget::registerShortcuts(bool bState)
+{
+    Q_UNUSED(bState)
 }

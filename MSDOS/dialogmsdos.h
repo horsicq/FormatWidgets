@@ -36,8 +36,13 @@ public:
     explicit DialogMSDOS(QWidget *pParent = nullptr);
     ~DialogMSDOS();
 
+    virtual void adjustView() {}
+
     void setData(QIODevice *pDevice, FW_DEF::OPTIONS options);
     void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
+
+protected:
+    virtual void registerShortcuts(bool bState) { Q_UNUSED(bState) }
 
 private:
     Ui::DialogMSDOS *ui;

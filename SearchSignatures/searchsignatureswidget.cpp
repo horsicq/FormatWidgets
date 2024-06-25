@@ -61,7 +61,7 @@ void SearchSignaturesWidget::setData(QIODevice *pDevice, XBinary::FT fileType, O
 void SearchSignaturesWidget::setOptions(SearchSignaturesWidget::OPTIONS options)
 {
     g_options = options;
-    adjust();
+    adjustView();
 }
 
 SearchSignaturesWidget::OPTIONS SearchSignaturesWidget::getOptions()
@@ -108,14 +108,9 @@ bool SearchSignaturesWidget::getInitStatus()
     return g_bInit;
 }
 
-void SearchSignaturesWidget::adjust()
-{
-    updateSignaturesPath();
-}
-
 void SearchSignaturesWidget::adjustView()
 {
-    adjust();
+    updateSignaturesPath();
 }
 
 void SearchSignaturesWidget::on_pushButtonSave_clicked()

@@ -84,7 +84,7 @@ void MSDOSWidget::reload()
         pItemInfo->addChild(createNewItem(SMSDOS::TYPE_VIRUSTOTAL, "VirusTotal", ""));
 
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_VISUALIZATION, tr("Visualization"), ""));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_HEX, tr("Hex"), ""));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_HEX, tr("Hex"), "://icons/Binary.16.16.png"));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_DISASM, tr("Disasm"), "://icons/DisassemblyWindow.16.16.png"));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_HASH, tr("Hash"), ""));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_STRINGS, tr("Strings"), ""));

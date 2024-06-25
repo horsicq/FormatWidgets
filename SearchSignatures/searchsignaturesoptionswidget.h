@@ -21,7 +21,7 @@
 #ifndef SEARCHSIGNATURESOPTIONSWIDGET_H
 #define SEARCHSIGNATURESOPTIONSWIDGET_H
 
-#include <QWidget>
+#include "xshortcutswidget.h"
 
 #include "xbinary.h"
 #include "xoptions.h"
@@ -30,7 +30,7 @@ namespace Ui {
 class SearchSignaturesOptionsWidget;
 }
 
-class SearchSignaturesOptionsWidget : public QWidget {
+class SearchSignaturesOptionsWidget : public XShortcutsWidget {
     Q_OBJECT
 
 public:
@@ -38,7 +38,7 @@ public:
     ~SearchSignaturesOptionsWidget();
 
     void setOptions(XOptions *pOptions);
-
+    virtual void adjustView();
     static void setDefaultValues(XOptions *pOptions);
 
 public slots:
@@ -47,6 +47,9 @@ public slots:
 
 private slots:
     void on_toolButtonSearchSignaturesPath_clicked();
+
+protected:
+    virtual void registerShortcuts(bool bState);
 
 private:
     Ui::SearchSignaturesOptionsWidget *ui;

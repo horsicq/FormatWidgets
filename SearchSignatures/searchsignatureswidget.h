@@ -67,7 +67,6 @@ public:
 
     void reload();
     bool getInitStatus();
-    void adjust();
     virtual void adjustView();
 
 private slots:

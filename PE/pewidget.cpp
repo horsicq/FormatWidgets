@@ -116,7 +116,7 @@ void PEWidget::reload()
         pItemInfo->addChild(createNewItem(SPE::TYPE_VIRUSTOTAL, "VirusTotal", ""));
 
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_VISUALIZATION, tr("Visualization"), ""));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_HEX, tr("Hex"), ""));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_HEX, tr("Hex"), "://icons/Binary.16.16.png"));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_DISASM, tr("Disasm"), "://icons/DisassemblyWindow.16.16.png"));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_HASH, tr("Hash"), ""));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_STRINGS, tr("Strings"), ""));

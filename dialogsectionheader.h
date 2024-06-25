@@ -43,8 +43,13 @@ public:
     void setEdited(qint64 nDeviceOffset, qint64 nDeviceSize);
     virtual void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
 
+    virtual void adjustView();
+
 signals:
     void dataChanged(qint64 nDataOffset, qint64 nDataSize);
+
+protected:
+    virtual void registerShortcuts(bool bState) { Q_UNUSED(bState)}
 
 private:
     Ui::DialogSectionHeader *ui;
