@@ -25,8 +25,6 @@
 DialogBinary::DialogBinary(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogBinary)
 {
     ui->setupUi(this);
-
-    setWindowFlags(Qt::Window);
 }
 
 DialogBinary::~DialogBinary()

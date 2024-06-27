@@ -25,8 +25,6 @@
 DialogLE::DialogLE(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogLE)
 {
     ui->setupUi(this);
-
-    setWindowFlags(Qt::Window);
 }
 
 DialogLE::~DialogLE()

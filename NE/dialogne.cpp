@@ -25,8 +25,6 @@
 DialogNE::DialogNE(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogNE)
 {
     ui->setupUi(this);
-
-    setWindowFlags(Qt::Window);
 }
 
 DialogNE::~DialogNE()

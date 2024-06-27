@@ -25,8 +25,6 @@
 DialogMACHOFAT::DialogMACHOFAT(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogMACHOFAT)
 {
     ui->setupUi(this);
-
-    setWindowFlags(Qt::Window);
 }
 
 DialogMACHOFAT::~DialogMACHOFAT()

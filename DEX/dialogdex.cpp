@@ -25,8 +25,6 @@
 DialogDEX::DialogDEX(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogDEX)
 {
     ui->setupUi(this);
-
-    setWindowFlags(Qt::Window);
 }
 
 DialogDEX::~DialogDEX()

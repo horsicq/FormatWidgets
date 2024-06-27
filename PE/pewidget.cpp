@@ -99,6 +99,9 @@ void PEWidget::reload()
 
     ui->checkBoxReadonly->setEnabled(!isReadonly());
 
+    QString sGeneral = "://icons/BreakpointDisabled.16.16.png";
+    QString sSpecific = "://icons/BreakpointEnabled.16.16.png";
+
     XPE pe(getDevice(), getOptions().bIsImage, getOptions().nImageBase);
 
     if (pe.isValid()) {
@@ -106,136 +109,136 @@ void PEWidget::reload()
 
         setFileType(pe.getFileType());
 
-        QTreeWidgetItem *pItemInfo = createNewItem(SPE::TYPE_INFO, tr("Info"), "");
+        QTreeWidgetItem *pItemInfo = createNewItem(SPE::TYPE_INFO, tr("Info"), sGeneral);
         ui->treeWidgetNavi->addTopLevelItem(pItemInfo);
-        pItemInfo->addChild(createNewItem(SPE::TYPE_NFDSCAN, "Nauz File Detector (NFD)", ""));
-        pItemInfo->addChild(createNewItem(SPE::TYPE_DIESCAN, "Detect It Easy (DiE)", ""));
+        pItemInfo->addChild(createNewItem(SPE::TYPE_NFDSCAN, "Nauz File Detector (NFD)", sGeneral));
+        pItemInfo->addChild(createNewItem(SPE::TYPE_DIESCAN, "Detect It Easy (DiE)", sGeneral));
 #ifdef USE_YARA
-        pItemInfo->addChild(createNewItem(SPE::TYPE_YARASCAN, "Yara rules", ""));
+        pItemInfo->addChild(createNewItem(SPE::TYPE_YARASCAN, "Yara rules", sGeneral));
 #endif
-        pItemInfo->addChild(createNewItem(SPE::TYPE_VIRUSTOTAL, "VirusTotal", ""));
+        pItemInfo->addChild(createNewItem(SPE::TYPE_VIRUSTOTAL, "VirusTotal", sGeneral));
 
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_VISUALIZATION, tr("Visualization"), ""));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_VISUALIZATION, tr("Visualization"), sGeneral));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_HEX, tr("Hex"), "://icons/Binary.16.16.png"));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_DISASM, tr("Disasm"), "://icons/DisassemblyWindow.16.16.png"));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_HASH, tr("Hash"), ""));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_STRINGS, tr("Strings"), ""));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_SIGNATURES, tr("Signatures"), ""));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_MEMORYMAP, tr("Memory map"), ""));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_ENTROPY, tr("Entropy"), ""));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_EXTRACTOR, tr("Extractor"), ""));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_SEARCH, tr("Search"), ""));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_TOOLS, tr("Tools"), ""));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_IMAGE_DOS_HEADER, "IMAGE_DOS_HEADER", ""));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_HASH, tr("Hash"), sGeneral));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_STRINGS, tr("Strings"), sGeneral));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_SIGNATURES, tr("Signatures"), sGeneral));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_MEMORYMAP, tr("Memory map"), sGeneral));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_ENTROPY, tr("Entropy"), sGeneral));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_EXTRACTOR, tr("Extractor"), sGeneral));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_SEARCH, tr("Search"), sGeneral));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_TOOLS, tr("Tools"), sSpecific));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_IMAGE_DOS_HEADER, "IMAGE_DOS_HEADER", sSpecific));
 
         if (pe.isDosStubPresent()) {
-            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_DOS_STUB, "Dos stub", ""));
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_DOS_STUB, "Dos stub", sSpecific));
         }
 
-        QTreeWidgetItem *pNtHeaders = createNewItem(SPE::TYPE_IMAGE_NT_HEADERS, "IMAGE_NT_HEADERS", "");
+        QTreeWidgetItem *pNtHeaders = createNewItem(SPE::TYPE_IMAGE_NT_HEADERS, "IMAGE_NT_HEADERS", sSpecific);
         ui->treeWidgetNavi->addTopLevelItem(pNtHeaders);
-        pNtHeaders->addChild(createNewItem(SPE::TYPE_IMAGE_FILE_HEADER, "IMAGE_FILE_HEADER", ""));
-        QTreeWidgetItem *pOptionalHeader = createNewItem(SPE::TYPE_IMAGE_OPTIONAL_HEADER, "IMAGE_OPTIONAL_HEADER", "");
+        pNtHeaders->addChild(createNewItem(SPE::TYPE_IMAGE_FILE_HEADER, "IMAGE_FILE_HEADER", sSpecific));
+        QTreeWidgetItem *pOptionalHeader = createNewItem(SPE::TYPE_IMAGE_OPTIONAL_HEADER, "IMAGE_OPTIONAL_HEADER", sSpecific);
         pNtHeaders->addChild(pOptionalHeader);
-        pOptionalHeader->addChild(createNewItem(SPE::TYPE_IMAGE_DIRECTORY_ENTRIES, "IMAGE_DIRECTORY_ENTRIES", ""));
+        pOptionalHeader->addChild(createNewItem(SPE::TYPE_IMAGE_DIRECTORY_ENTRIES, "IMAGE_DIRECTORY_ENTRIES", sSpecific));
 
         if (pe.isRichSignaturePresent()) {
-            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_RICH, QString("Rich %1").arg(tr("Signature")), ""));
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_RICH, QString("Rich %1").arg(tr("Signature")), sSpecific));
         }
 
         if (pe.getFileHeader_NumberOfSections()) {
-            QTreeWidgetItem *pItemSections = createNewItem(SPE::TYPE_SECTIONS, tr("Sections"), "");
+            QTreeWidgetItem *pItemSections = createNewItem(SPE::TYPE_SECTIONS, tr("Sections"), sSpecific);
             ui->treeWidgetNavi->addTopLevelItem(pItemSections);
 
-            pItemSections->addChild(createNewItem(SPE::TYPE_SECTIONS_INFO, tr("Info"), ""));
+            pItemSections->addChild(createNewItem(SPE::TYPE_SECTIONS_INFO, tr("Info"), sSpecific));
         }
 
         if (pe.isExportPresent()) {
-            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_EXPORT, tr("Export"), ""));
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_EXPORT, tr("Export"), sSpecific));
         }
 
         if (pe.isImportPresent()) {
-            QTreeWidgetItem *pItemImport = createNewItem(SPE::TYPE_IMPORT, tr("Import"), "");
+            QTreeWidgetItem *pItemImport = createNewItem(SPE::TYPE_IMPORT, tr("Import"), sSpecific);
             ui->treeWidgetNavi->addTopLevelItem(pItemImport);
 
-            pItemImport->addChild(createNewItem(SPE::TYPE_IMPORT_INFO, tr("Info"), ""));
+            pItemImport->addChild(createNewItem(SPE::TYPE_IMPORT_INFO, tr("Info"), sSpecific));
         }
 
         if (pe.isResourcesPresent()) {
-            QTreeWidgetItem *pResources = createNewItem(SPE::TYPE_RESOURCES, tr("Resources"), "");
+            QTreeWidgetItem *pResources = createNewItem(SPE::TYPE_RESOURCES, tr("Resources"), sSpecific);
 
             ui->treeWidgetNavi->addTopLevelItem(pResources);
 
             if (pe.isResourceStringTablePresent()) {
-                pResources->addChild(createNewItem(SPE::TYPE_RESOURCES_STRINGTABLE, tr("String table"), ""));
+                pResources->addChild(createNewItem(SPE::TYPE_RESOURCES_STRINGTABLE, tr("String table"), sSpecific));
             }
 
             if (pe.isResourceVersionPresent()) {
-                pResources->addChild(createNewItem(SPE::TYPE_RESOURCES_VERSION, tr("Version"), ""));
+                pResources->addChild(createNewItem(SPE::TYPE_RESOURCES_VERSION, tr("Version"), sSpecific));
             }
 
             if (pe.isResourceManifestPresent()) {
-                pResources->addChild(createNewItem(SPE::TYPE_RESOURCES_MANIFEST, tr("Manifest"), ""));
+                pResources->addChild(createNewItem(SPE::TYPE_RESOURCES_MANIFEST, tr("Manifest"), sSpecific));
             }
         }
 
         if (pe.isExceptionPresent()) {
-            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_EXCEPTION, tr("Exceptions"), ""));
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_EXCEPTION, tr("Exceptions"), sSpecific));
         }
 
         if (pe.isSignPresent()) {
-            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_CERTIFICATE, tr("Certificate"), ""));
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_CERTIFICATE, tr("Certificate"), sSpecific));
         }
 
         if (pe.isRelocsPresent()) {
-            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_RELOCS, tr("Relocs"), ""));
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_RELOCS, tr("Relocs"), sSpecific));
         }
 
         if (pe.isDebugPresent()) {
-            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_DEBUG, tr("Debug"), ""));
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_DEBUG, tr("Debug"), sSpecific));
         }
 
         if (pe.isTLSPresent()) {
-            QTreeWidgetItem *pTLS = createNewItem(SPE::TYPE_TLS, QString("TLS"), "");
+            QTreeWidgetItem *pTLS = createNewItem(SPE::TYPE_TLS, QString("TLS"), sSpecific);
 
             ui->treeWidgetNavi->addTopLevelItem(pTLS);
 
             if (pe.isTLSCallbacksPresent(&memoryMap)) {
-                pTLS->addChild(createNewItem(SPE::TYPE_TLSCALLBACKS, QString("TLS %1").arg(tr("Callbacks")), ""));
+                pTLS->addChild(createNewItem(SPE::TYPE_TLSCALLBACKS, QString("TLS %1").arg(tr("Callbacks")), sSpecific));
             }
         }
 
         if (pe.isLoadConfigPresent()) {
-            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_LOADCONFIG, tr("Load config"), ""));
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_LOADCONFIG, tr("Load config"), sSpecific));
         }
 
         if (pe.isBoundImportPresent()) {
-            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_BOUNDIMPORT, tr("Bound import"), ""));
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_BOUNDIMPORT, tr("Bound import"), sSpecific));
         }
 
         if (pe.isDelayImportPresent()) {
-            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_DELAYIMPORT, tr("Delay import"), ""));
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_DELAYIMPORT, tr("Delay import"), sSpecific));
         }
 
         if (pe.isNETPresent()) {
-            QTreeWidgetItem *pNetHeader = createNewItem(SPE::TYPE_NETHEADER, QString(".NET"), "");
+            QTreeWidgetItem *pNetHeader = createNewItem(SPE::TYPE_NETHEADER, QString(".NET"), sSpecific);
             ui->treeWidgetNavi->addTopLevelItem(pNetHeader);
 
             XPE::CLI_INFO cliInfo = pe.getCliInfo(true);
 
             if (pe.isNetMetadataPresent(&cliInfo, &memoryMap)) {
-                QTreeWidgetItem *pNetMetadata = createNewItem(SPE::TYPE_NET_METADATA, tr("Metadata"), "");
+                QTreeWidgetItem *pNetMetadata = createNewItem(SPE::TYPE_NET_METADATA, tr("Metadata"), sSpecific);
                 pNetHeader->addChild(pNetMetadata);
 
                 qint32 nNumberOfStreams = cliInfo.metaData.listStreams.count();
 
                 for (qint32 i = 0; i < nNumberOfStreams; i++) {
-                    QTreeWidgetItem *pNetMetadataStream = createNewItem(SPE::TYPE_NET_METADATA_STREAM, cliInfo.metaData.listStreams.at(i).sName, "",
+                    QTreeWidgetItem *pNetMetadataStream = createNewItem(SPE::TYPE_NET_METADATA_STREAM, cliInfo.metaData.listStreams.at(i).sName, sSpecific,
                                                                         cliInfo.metaData.listStreams.at(i).nOffset, cliInfo.metaData.listStreams.at(i).nSize);
                     pNetMetadata->addChild(pNetMetadataStream);
 
                     if (cliInfo.metaData.listStreams.at(i).sName == "#~") {
-                        QTreeWidgetItem *pNetMetadataTable = createNewItem(SPE::TYPE_NET_METADATA_TABLE, tr("Metadata table"), "", cliInfo.metaData.listStreams.at(i).nOffset,
+                        QTreeWidgetItem *pNetMetadataTable = createNewItem(SPE::TYPE_NET_METADATA_TABLE, tr("Metadata table"), sSpecific, cliInfo.metaData.listStreams.at(i).nOffset,
                                                                            cliInfo.metaData.listStreams.at(i).nSize);
                         pNetMetadataStream->addChild(pNetMetadataTable);
                     }
@@ -247,7 +250,7 @@ void PEWidget::reload()
         }
 
         if (pe.isOverlayPresent()) {
-            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_OVERLAY, tr("Overlay"), ""));
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_OVERLAY, tr("Overlay"), sSpecific));
         }
 
         ui->treeWidgetNavi->expandAll();

@@ -25,8 +25,6 @@
 DialogMACH::DialogMACH(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogMACH)
 {
     ui->setupUi(this);
-
-    setWindowFlags(Qt::Window);
 }
 
 DialogMACH::~DialogMACH()

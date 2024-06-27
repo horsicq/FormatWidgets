@@ -25,8 +25,6 @@
 DialogPE::DialogPE(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogPE)
 {
     ui->setupUi(this);
-
-    setWindowFlags(Qt::Window);
 }
 
 DialogPE::~DialogPE()

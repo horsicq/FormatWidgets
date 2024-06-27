@@ -320,6 +320,7 @@ bool FormatWidget::loadHexSubdevice(qint64 nOffset, qint64 nSize, XADDR nAddress
     hexOptions.nImageBase = nAddress;
     hexOptions.bOffset = bOffset;
 
+    pToolsWidget->setGlobal(getShortcuts(), getGlobalOptions());
     pToolsWidget->setData((*ppSubDevice), hexOptions, getBackupDevice(), bDisasm, bFollow, getXInfoDB());
 
     return true;
@@ -1607,6 +1608,8 @@ XComboBoxEx *FormatWidget::createComboBox(QTableWidget *pTableWidget, QMap<quint
 InvWidget *FormatWidget::createInvWidget(QTableWidget *pTableWidget, qint32 nType, qint32 nData, InvWidget::TYPE widgetType)
 {
     InvWidget *pResult = new InvWidget(this, widgetType);
+
+    pResult->setGlobal(getShortcuts(), getGlobalOptions());
 
     pResult->setProperty("STYPE", nType);
     pResult->setProperty("NDATA", nData);

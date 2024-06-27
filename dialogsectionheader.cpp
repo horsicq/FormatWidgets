@@ -27,8 +27,6 @@ DialogSectionHeader::DialogSectionHeader(QWidget *pParent) : XShortcutsDialog(pP
     ui->setupUi(this);
 
     this->g_pWidget = nullptr;
-
-    setWindowFlags(Qt::Window);
 }
 
 DialogSectionHeader::~DialogSectionHeader()

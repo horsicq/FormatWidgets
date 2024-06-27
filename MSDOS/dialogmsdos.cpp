@@ -25,8 +25,6 @@
 DialogMSDOS::DialogMSDOS(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogMSDOS)
 {
     ui->setupUi(this);
-
-    setWindowFlags(Qt::Window);
 }
 
 DialogMSDOS::~DialogMSDOS()

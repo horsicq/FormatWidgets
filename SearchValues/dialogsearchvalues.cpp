@@ -26,8 +26,6 @@ DialogSearchValues::DialogSearchValues(QWidget *pParent) : XShortcutsDialog(pPar
 {
     ui->setupUi(this);
 
-    setWindowFlags(Qt::Window);
-
     connect(ui->widgetSearchValues, SIGNAL(showHex(qint64, qint64)), this, SIGNAL(showHex(qint64, qint64)));
     connect(ui->widgetSearchValues, SIGNAL(currentLocationChanged(quint64, qint32, qint64)), this, SIGNAL(currentLocationChanged(quint64, qint32, qint64)));
 }

@@ -132,7 +132,8 @@ void ToolsWidget::setSelection(qint64 nOffset, qint64 nSize, bool bGoto)
 
 void ToolsWidget::adjustView()
 {
-    // TODO
+    ui->widgetHex->adjustView();
+    ui->widgetStrings->adjustView();
 }
 
 ToolsWidget::~ToolsWidget()

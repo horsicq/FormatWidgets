@@ -42,7 +42,7 @@ public:
     virtual void clear();
     virtual void cleanup();
     virtual void reload();
-    void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
+    void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions); // Important
 
 protected:
     virtual SV _setValue(QVariant vValue, qint32 nStype, qint32 nNdata, qint32 nVtype, int nPosition, qint64 nOffset);

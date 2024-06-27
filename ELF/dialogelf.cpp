@@ -25,8 +25,6 @@
 DialogELF::DialogELF(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogELF)
 {
     ui->setupUi(this);
-
-    setWindowFlags(Qt::Window);
 }
 
 DialogELF::~DialogELF()

@@ -21,7 +21,7 @@
 #ifndef DIALOGMODELINFO_H
 #define DIALOGMODELINFO_H
 
-#include <QDialog>
+#include "xshortcutsdialog.h"
 #include <QFileDialog>
 #include <QStandardItemModel>
 
@@ -32,18 +32,22 @@ namespace Ui {
 class DialogModelInfo;
 }
 
-class DialogModelInfo : public QDialog {
+class DialogModelInfo : public XShortcutsDialog {
     Q_OBJECT
 
 public:
     explicit DialogModelInfo(QWidget *pParent = nullptr);
     ~DialogModelInfo();
 
+    virtual void adjustView() {}
     void setData(QIODevice *pDevice, const QString &sTitle, QStandardItemModel *pModel);
 
 private slots:
     void on_pushButtonOK_clicked();
     void on_pushButtonSave_clicked();
+
+protected:
+    virtual void registerShortcuts(bool bState) { Q_UNUSED(bState) }
 
 private:
     Ui::DialogModelInfo *ui;
