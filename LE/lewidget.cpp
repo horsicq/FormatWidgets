@@ -76,31 +76,31 @@ void LEWidget::reload()
     if (le.isValid()) {
         setFileType(le.getFileType());
 
-        QTreeWidgetItem *pItemInfo = createNewItem(SLE::TYPE_INFO, tr("Info"), "");
+        QTreeWidgetItem *pItemInfo = createNewItem(SLE::TYPE_INFO, tr("Info"), ICONTYPE_INFO);
         ui->treeWidgetNavi->addTopLevelItem(pItemInfo);
-        pItemInfo->addChild(createNewItem(SLE::TYPE_NFDSCAN, "Nauz File Detector (NFD)", ""));
-        pItemInfo->addChild(createNewItem(SLE::TYPE_DIESCAN, "Detect It Easy (DiE)", ""));
+        pItemInfo->addChild(createNewItem(SLE::TYPE_NFDSCAN, "Nauz File Detector (NFD)"));
+        pItemInfo->addChild(createNewItem(SLE::TYPE_DIESCAN, "Detect It Easy (DiE)"));
 #ifdef USE_YARA
-        pItemInfo->addChild(createNewItem(SLE::TYPE_YARASCAN, "Yara rules", ""));
+        pItemInfo->addChild(createNewItem(SLE::TYPE_YARASCAN, "Yara rules"));
 #endif
-        pItemInfo->addChild(createNewItem(SLE::TYPE_VIRUSTOTAL, "VirusTotal", ""));
+        pItemInfo->addChild(createNewItem(SLE::TYPE_VIRUSTOTAL, "VirusTotal"));
 
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_VISUALIZATION, tr("Visualization"), ""));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_HEX, tr("Hex"), "://icons/Binary.16.16.png"));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_DISASM, tr("Disasm"), "://icons/DisassemblyWindow.16.16.png"));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_HASH, tr("Hash"), ""));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_STRINGS, tr("Strings"), ""));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_SIGNATURES, tr("Signatures"), ""));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_MEMORYMAP, tr("Memory map"), ""));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_ENTROPY, tr("Entropy"), ""));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_EXTRACTOR, tr("Extractor"), ""));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_SEARCH, tr("Search"), ""));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_DOS_HEADER, "DOS_HEADER", ""));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_VXD_HEADER, "VXD_HEADER", ""));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_OBJECTS, "Objects", ""));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_VISUALIZATION, tr("Visualization"), ICONTYPE_VISUALIZATION));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_HEX, tr("Hex"), ICONTYPE_HEX));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_DISASM, tr("Disasm"), ICONTYPE_DISASM));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_HASH, tr("Hash"), ICONTYPE_HASH));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_STRINGS, tr("Strings"), ICONTYPE_STRINGS));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_SIGNATURES, tr("Signatures"), ICONTYPE_SIGNATURES));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_MEMORYMAP, tr("Memory map"), ICONTYPE_MEMORYMAP));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_ENTROPY, tr("Entropy"), ICONTYPE_ENTROPY));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_EXTRACTOR, tr("Extractor"), ICONTYPE_EXTRACTOR));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_SEARCH, tr("Search"), ICONTYPE_SEARCH));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_DOS_HEADER, "DOS_HEADER"));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_VXD_HEADER, "VXD_HEADER"));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_OBJECTS, "Objects"));
 
         if (le.isOverlayPresent()) {
-            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_OVERLAY, tr("Overlay"), ""));
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_OVERLAY, tr("Overlay"), ICONTYPE_OVERLAY));
         }
 
         ui->treeWidgetNavi->expandAll();

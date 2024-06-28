@@ -218,7 +218,7 @@ bool FormatWidget::isReadonly()
     return g_bIsReadonly;
 }
 
-QTreeWidgetItem *FormatWidget::createNewItem(qint32 nType, const QString &sTitle, const QString &sIconName, qint64 nOffset, qint64 nSize, qint64 nExtraOffset, qint64 nExtraSize)
+QTreeWidgetItem *FormatWidget::createNewItem(qint32 nType, const QString &sTitle, ICONTYPE iconType, qint64 nOffset, qint64 nSize, qint64 nExtraOffset, qint64 nExtraSize)
 {
     QTreeWidgetItem *pResult = new QTreeWidgetItem;
 
@@ -230,15 +230,47 @@ QTreeWidgetItem *FormatWidget::createNewItem(qint32 nType, const QString &sTitle
     pResult->setData(0, Qt::UserRole + FW_DEF::SECTION_DATA_EXTRASIZE, nExtraSize);
     pResult->setData(0, Qt::UserRole + FW_DEF::SECTION_DATA_NAME, sTitle);
 
-    QIcon icon;
+    QString sIconName;
 
-    if ((sIconName != "") && QFile::exists(sIconName)) {
-        icon.addFile(sIconName, QSize(), QIcon::Normal, QIcon::Off);
+    if (iconType == ICONTYPE_UNKNOWN) {
+        sIconName = "://icons/BreakpointDisabled.16.16.png";
+    } else if (iconType == ICONTYPE_GENERIC) {
+        sIconName = "://icons/BreakpointEnabled.16.16.png";
+    } else if (iconType == ICONTYPE_HEX) {
+        sIconName = "://icons/Binary.16.16.png";
+    } else if (iconType == ICONTYPE_DISASM) {
+        sIconName = "://icons/DisassemblyWindow.16.16.png";
+    } else if (iconType == ICONTYPE_ENTROPY) {
+        sIconName = "://icons/BreakpointEnabled.16.16.png";
+    } else if (iconType == ICONTYPE_STRINGS) {
+        sIconName = "://icons/BreakpointEnabled.16.16.png";
+    } else if (iconType == ICONTYPE_SIGNATURES) {
+        sIconName = "://icons/BreakpointEnabled.16.16.png";
+    } else if (iconType == ICONTYPE_MEMORYMAP) {
+        sIconName = "://icons/BreakpointEnabled.16.16.png";
+    } else if (iconType == ICONTYPE_INFO) {
+        sIconName = "://icons/BreakpointEnabled.16.16.png";
+    } else if (iconType == ICONTYPE_HASH) {
+        sIconName = "://icons/BreakpointEnabled.16.16.png";
+    } else if (iconType == ICONTYPE_VISUALIZATION) {
+        sIconName = "://icons/BreakpointEnabled.16.16.png";
+    } else if (iconType == ICONTYPE_SEARCH) {
+        sIconName = "://icons/BreakpointEnabled.16.16.png";
+    } else if (iconType == ICONTYPE_OVERLAY) {
+        sIconName = "://icons/BreakpointEnabled.16.16.png";
+    } else if (iconType == ICONTYPE_EXTRACTOR) {
+        sIconName = "://icons/BreakpointEnabled.16.16.png";
     } else {
-        icon = QIcon::fromTheme(QStringLiteral(""));
+        sIconName = "://icons/BreakpointDisabled.16.16.png";
     }
 
-    pResult->setIcon(0, icon);
+    if (sIconName != "") {
+        if (QFile::exists(sIconName)) {
+            QIcon icon;
+            icon.addFile(sIconName, QSize(), QIcon::Normal, QIcon::Off);
+            pResult->setIcon(0, icon);
+        }
+    }
 
     return pResult;
 }
@@ -627,6 +659,8 @@ void FormatWidget::setTreeItem(QTreeWidget *pTree, qint32 nID)
             break;
         }
     }
+
+    XOptions::adjustTreeWidgetSize(pTree, 100);
 }
 
 void FormatWidget::reset()

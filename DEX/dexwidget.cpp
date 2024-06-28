@@ -79,55 +79,55 @@ void DEXWidget::reload()
     if (dex.isValid()) {
         setFileType(dex.getFileType());
 
-        QTreeWidgetItem *pItemInfo = createNewItem(SDEX::TYPE_INFO, tr("Info"), "");
+        QTreeWidgetItem *pItemInfo = createNewItem(SDEX::TYPE_INFO, tr("Info"), ICONTYPE_INFO);
         ui->treeWidgetNavi->addTopLevelItem(pItemInfo);
-        pItemInfo->addChild(createNewItem(SDEX::TYPE_NFDSCAN, "Nauz File Detector (NFD)", ""));
-        pItemInfo->addChild(createNewItem(SDEX::TYPE_DIESCAN, "Detect It Easy (DiE)", ""));
+        pItemInfo->addChild(createNewItem(SDEX::TYPE_NFDSCAN, "Nauz File Detector (NFD)"));
+        pItemInfo->addChild(createNewItem(SDEX::TYPE_DIESCAN, "Detect It Easy (DiE)"));
 #ifdef USE_YARA
-        pItemInfo->addChild(createNewItem(SDEX::TYPE_YARASCAN, "Yara rules", ""));
+        pItemInfo->addChild(createNewItem(SDEX::TYPE_YARASCAN, "Yara rules"));
 #endif
-        pItemInfo->addChild(createNewItem(SDEX::TYPE_VIRUSTOTAL, "VirusTotal", ""));
+        pItemInfo->addChild(createNewItem(SDEX::TYPE_VIRUSTOTAL, "VirusTotal"));
 
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_VISUALIZATION, tr("Visualization"), ""));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_HEX, tr("Hex"), "://icons/Binary.16.16.png"));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_HASH, tr("Hash"), ""));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_STRINGS, tr("Strings"), ""));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_SIGNATURES, tr("Signatures"), ""));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_MEMORYMAP, tr("Memory map"), ""));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_ENTROPY, tr("Entropy"), ""));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_EXTRACTOR, tr("Extractor"), ""));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_SEARCH, tr("Search"), ""));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_HEADER, "Header", ""));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_VISUALIZATION, tr("Visualization"), ICONTYPE_VISUALIZATION));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_HEX, tr("Hex"), ICONTYPE_HEX));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_HASH, tr("Hash"), ICONTYPE_HASH));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_STRINGS, tr("Strings"), ICONTYPE_STRINGS));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_SIGNATURES, tr("Signatures"), ICONTYPE_SIGNATURES));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_MEMORYMAP, tr("Memory map"), ICONTYPE_MEMORYMAP));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_ENTROPY, tr("Entropy"), ICONTYPE_ENTROPY));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_EXTRACTOR, tr("Extractor"), ICONTYPE_EXTRACTOR));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_SEARCH, tr("Search"), ICONTYPE_SEARCH));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_HEADER, "Header"));
 
         QList<XDEX_DEF::MAP_ITEM> listMapItems = dex.getMapItems();
 
         if (listMapItems.count()) {
-            QTreeWidgetItem *pItemMapItems = createNewItem(SDEX::TYPE_MAPITEMS, "Map items", "");
+            QTreeWidgetItem *pItemMapItems = createNewItem(SDEX::TYPE_MAPITEMS, "Map items");
 
             ui->treeWidgetNavi->addTopLevelItem(pItemMapItems);
 
             if (dex.isMapItemPresent(XDEX_DEF::TYPE_STRING_ID_ITEM, &listMapItems)) {
-                pItemMapItems->addChild(createNewItem(SDEX::TYPE_STRING_ID_ITEM, "STRING_ID_ITEM", ""));
+                pItemMapItems->addChild(createNewItem(SDEX::TYPE_STRING_ID_ITEM, "STRING_ID_ITEM"));
             }
 
             if (dex.isMapItemPresent(XDEX_DEF::TYPE_TYPE_ID_ITEM, &listMapItems)) {
-                pItemMapItems->addChild(createNewItem(SDEX::TYPE_TYPE_ID_ITEM, "TYPE_ID_ITEM", ""));
+                pItemMapItems->addChild(createNewItem(SDEX::TYPE_TYPE_ID_ITEM, "TYPE_ID_ITEM"));
             }
 
             if (dex.isMapItemPresent(XDEX_DEF::TYPE_PROTO_ID_ITEM, &listMapItems)) {
-                pItemMapItems->addChild(createNewItem(SDEX::TYPE_PROTO_ID_ITEM, "PROTO_ID_ITEM", ""));
+                pItemMapItems->addChild(createNewItem(SDEX::TYPE_PROTO_ID_ITEM, "PROTO_ID_ITEM"));
             }
 
             if (dex.isMapItemPresent(XDEX_DEF::TYPE_FIELD_ID_ITEM, &listMapItems)) {
-                pItemMapItems->addChild(createNewItem(SDEX::TYPE_FIELD_ID_ITEM, "TYPE_FIELD_ID_ITEM", ""));
+                pItemMapItems->addChild(createNewItem(SDEX::TYPE_FIELD_ID_ITEM, "TYPE_FIELD_ID_ITEM"));
             }
 
             if (dex.isMapItemPresent(XDEX_DEF::TYPE_METHOD_ID_ITEM, &listMapItems)) {
-                pItemMapItems->addChild(createNewItem(SDEX::TYPE_METHOD_ID_ITEM, "TYPE_METHOD_ID_ITEM", ""));
+                pItemMapItems->addChild(createNewItem(SDEX::TYPE_METHOD_ID_ITEM, "TYPE_METHOD_ID_ITEM"));
             }
 
             if (dex.isMapItemPresent(XDEX_DEF::TYPE_CLASS_DEF_ITEM, &listMapItems)) {
-                pItemMapItems->addChild(createNewItem(SDEX::TYPE_CLASS_DEF_ITEM, "TYPE_CLASS_DEF_ITEM", ""));
+                pItemMapItems->addChild(createNewItem(SDEX::TYPE_CLASS_DEF_ITEM, "TYPE_CLASS_DEF_ITEM"));
             }
         }
 

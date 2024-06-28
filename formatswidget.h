@@ -137,6 +137,7 @@ private slots:
     void on_pushButtonYARA_clicked();
     void on_pushButtonDisasm_clicked();
     void on_pushButtonVisualization_clicked();
+    void _showNfdInfo();
     void _showYaraInfo();
     void on_pushButtonMANIFESTMF_clicked();
     void on_pushButtonAndroidManifest_clicked();

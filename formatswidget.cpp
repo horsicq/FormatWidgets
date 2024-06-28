@@ -35,6 +35,7 @@ FormatsWidget::FormatsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(n
     connect(ui->pageScanYARA, SIGNAL(scanStarted()), this, SLOT(onScanStarted()));
     connect(ui->pageScanYARA, SIGNAL(scanFinished()), this, SLOT(onScanFinished()));
 
+    connect(ui->pageScanNFD, SIGNAL(showInfo()), this, SLOT(_showNfdInfo()));
     connect(ui->pageScanYARA, SIGNAL(showInfo()), this, SLOT(_showYaraInfo()));
 
 #ifndef USE_YARA
@@ -1037,6 +1038,11 @@ void FormatsWidget::on_pushButtonDisasm_clicked()
 void FormatsWidget::on_pushButtonVisualization_clicked()
 {
     showType(SBINARY::TYPE_VISUALIZATION);
+}
+
+void FormatsWidget::_showNfdInfo()
+{
+    showType(SBINARY::TYPE_NFDSCAN);
 }
 
 void FormatsWidget::_showYaraInfo()

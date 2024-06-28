@@ -69,25 +69,25 @@ void BinaryWidget::reload()
         QSet<XBinary::FT> stFT = XFormats::getFileTypes(getDevice(), true);
         setFileType(binary._getPrefFileType(&stFT));
 
-        QTreeWidgetItem *pItemInfo = createNewItem(SBINARY::TYPE_INFO, tr("Info"), "");
+        QTreeWidgetItem *pItemInfo = createNewItem(SBINARY::TYPE_INFO, tr("Info"), ICONTYPE_INFO);
         ui->treeWidgetNavi->addTopLevelItem(pItemInfo);
-        pItemInfo->addChild(createNewItem(SBINARY::TYPE_NFDSCAN, "Nauz File Detector (NFD)", ""));
-        pItemInfo->addChild(createNewItem(SBINARY::TYPE_DIESCAN, "Detect It Easy (DiE)", ""));
+        pItemInfo->addChild(createNewItem(SBINARY::TYPE_NFDSCAN, "Nauz File Detector (NFD)"));
+        pItemInfo->addChild(createNewItem(SBINARY::TYPE_DIESCAN, "Detect It Easy (DiE)"));
 #ifdef USE_YARA
-        pItemInfo->addChild(createNewItem(SBINARY::TYPE_YARASCAN, "Yara rules", ""));
+        pItemInfo->addChild(createNewItem(SBINARY::TYPE_YARASCAN, "Yara rules"));
 #endif
-        pItemInfo->addChild(createNewItem(SBINARY::TYPE_VIRUSTOTAL, "VirusTotal", ""));
+        pItemInfo->addChild(createNewItem(SBINARY::TYPE_VIRUSTOTAL, "VirusTotal"));
 
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_VISUALIZATION, tr("Visualization"), ""));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_HEX, tr("Hex"), "://icons/Binary.16.16.png"));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_DISASM, tr("Disasm"), "://icons/DisassemblyWindow.16.16.png"));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_HASH, tr("Hash"), ""));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_STRINGS, tr("Strings"), ""));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_SIGNATURES, tr("Signatures"), ""));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_MEMORYMAP, tr("Memory map"), ""));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_ENTROPY, tr("Entropy"), ""));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_EXTRACTOR, tr("Extractor"), ""));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_SEARCH, tr("Search"), ""));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_VISUALIZATION, tr("Visualization"), ICONTYPE_VISUALIZATION));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_HEX, tr("Hex"), ICONTYPE_HEX));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_DISASM, tr("Disasm"), ICONTYPE_DISASM));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_HASH, tr("Hash"), ICONTYPE_HASH));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_STRINGS, tr("Strings"), ICONTYPE_STRINGS));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_SIGNATURES, tr("Signatures"), ICONTYPE_SIGNATURES));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_MEMORYMAP, tr("Memory map"), ICONTYPE_MEMORYMAP));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_ENTROPY, tr("Entropy"), ICONTYPE_ENTROPY));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_EXTRACTOR, tr("Extractor"), ICONTYPE_EXTRACTOR));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SBINARY::TYPE_SEARCH, tr("Search"), ICONTYPE_SEARCH));
 
         ui->treeWidgetNavi->expandAll();
 

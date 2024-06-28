@@ -78,31 +78,31 @@ void ELFWidget::reload()
     if (elf.isValid()) {
         setFileType(elf.getFileType());
 
-        QTreeWidgetItem *pItemInfo = createNewItem(SELF::TYPE_INFO, tr("Info"), "");
+        QTreeWidgetItem *pItemInfo = createNewItem(SELF::TYPE_INFO, tr("Info"), ICONTYPE_INFO);
         ui->treeWidgetNavi->addTopLevelItem(pItemInfo);
-        pItemInfo->addChild(createNewItem(SELF::TYPE_NFDSCAN, "Nauz File Detector (NFD)", ""));
-        pItemInfo->addChild(createNewItem(SELF::TYPE_DIESCAN, "Detect It Easy (DiE)", ""));
+        pItemInfo->addChild(createNewItem(SELF::TYPE_NFDSCAN, "Nauz File Detector (NFD)"));
+        pItemInfo->addChild(createNewItem(SELF::TYPE_DIESCAN, "Detect It Easy (DiE)"));
 #ifdef USE_YARA
-        pItemInfo->addChild(createNewItem(SELF::TYPE_YARASCAN, "Yara rules", ""));
+        pItemInfo->addChild(createNewItem(SELF::TYPE_YARASCAN, "Yara rules"));
 #endif
-        pItemInfo->addChild(createNewItem(SELF::TYPE_VIRUSTOTAL, "VirusTotal", ""));
+        pItemInfo->addChild(createNewItem(SELF::TYPE_VIRUSTOTAL, "VirusTotal"));
 
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_VISUALIZATION, tr("Visualization"), ""));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_HEX, tr("Hex"), "://icons/Binary.16.16.png"));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_DISASM, tr("Disasm"), "://icons/DisassemblyWindow.16.16.png"));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_HASH, tr("Hash"), ""));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_STRINGS, tr("Strings"), ""));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_SIGNATURES, tr("Signatures"), ""));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_MEMORYMAP, tr("Memory map"), ""));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_ENTROPY, tr("Entropy"), ""));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_EXTRACTOR, tr("Extractor"), ""));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_SEARCH, tr("Search"), ""));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_Elf_Ehdr, "Elf_Ehdr", ""));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_VISUALIZATION, tr("Visualization"), ICONTYPE_VISUALIZATION));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_HEX, tr("Hex"), ICONTYPE_HEX));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_DISASM, tr("Disasm"), ICONTYPE_DISASM));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_HASH, tr("Hash"), ICONTYPE_HASH));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_STRINGS, tr("Strings"), ICONTYPE_STRINGS));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_SIGNATURES, tr("Signatures"), ICONTYPE_SIGNATURES));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_MEMORYMAP, tr("Memory map"), ICONTYPE_MEMORYMAP));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_ENTROPY, tr("Entropy"), ICONTYPE_ENTROPY));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_EXTRACTOR, tr("Extractor"), ICONTYPE_EXTRACTOR));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_SEARCH, tr("Search"), ICONTYPE_SEARCH));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SELF::TYPE_Elf_Ehdr, "Elf_Ehdr"));
 
         QList<XELF_DEF::Elf_Shdr> listSectionHeaders = elf.getElf_ShdrList(-1);
 
         if (listSectionHeaders.count()) {
-            QTreeWidgetItem *pItemSections = createNewItem(SELF::TYPE_Elf_Shdr, tr("Sections"), "");
+            QTreeWidgetItem *pItemSections = createNewItem(SELF::TYPE_Elf_Shdr, tr("Sections"));
 
             ui->treeWidgetNavi->addTopLevelItem(pItemSections);
 
@@ -114,7 +114,7 @@ void ELFWidget::reload()
         QList<XELF_DEF::Elf_Phdr> listProgramHeaders = elf.getElf_PhdrList(-1);
 
         if (listProgramHeaders.count()) {
-            QTreeWidgetItem *pItemPrograms = createNewItem(SELF::TYPE_Elf_Phdr, "Programs", "");  // mn TODO tr
+            QTreeWidgetItem *pItemPrograms = createNewItem(SELF::TYPE_Elf_Phdr, "Programs");  // mn TODO tr
 
             ui->treeWidgetNavi->addTopLevelItem(pItemPrograms);
 
@@ -629,31 +629,31 @@ void ELFWidget::addDatasets(XELF *pElf, QTreeWidgetItem *pParent, QList<XBinary:
 
     for (qint32 i = 0; i < nNumberOfRecords; i++) {
         if (pListDataSets->at(i).nType == XELF::DS_INTERPRETER) {
-            pParent->addChild(createNewItem(SELF::TYPE_INTERPRETER, pListDataSets->at(i).sName, "", pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
+            pParent->addChild(createNewItem(SELF::TYPE_INTERPRETER, pListDataSets->at(i).sName, ICONTYPE_UNKNOWN, pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
                                             pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
         } else if (pListDataSets->at(i).nType == XELF::DS_LIBRARIES) {
-            pParent->addChild(createNewItem(SELF::TYPE_LIBRARIES, pListDataSets->at(i).sName, "", pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
+            pParent->addChild(createNewItem(SELF::TYPE_LIBRARIES, pListDataSets->at(i).sName, ICONTYPE_UNKNOWN, pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
                                             pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
         } else if (pListDataSets->at(i).nType == XELF::DS_STRINGTABLE) {
-            pParent->addChild(createNewItem(SELF::TYPE_STRINGTABLE, pListDataSets->at(i).sName, "", pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
+            pParent->addChild(createNewItem(SELF::TYPE_STRINGTABLE, pListDataSets->at(i).sName, ICONTYPE_UNKNOWN, pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
                                             pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
         } else if (pListDataSets->at(i).nType == XELF::DS_SYMBOLTABLE) {
-            pParent->addChild(createNewItem(SELF::TYPE_SYMBOLTABLE, pListDataSets->at(i).sName, "", pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
+            pParent->addChild(createNewItem(SELF::TYPE_SYMBOLTABLE, pListDataSets->at(i).sName, ICONTYPE_UNKNOWN, pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
                                             pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
         } else if (pListDataSets->at(i).nType == XELF::DS_RUNPATH) {
-            pParent->addChild(createNewItem(SELF::TYPE_RUNPATH, pListDataSets->at(i).sName, "", pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
+            pParent->addChild(createNewItem(SELF::TYPE_RUNPATH, pListDataSets->at(i).sName, ICONTYPE_UNKNOWN, pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
                                             pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
         } else if (pListDataSets->at(i).nType == XELF::DS_NOTES) {
-            pParent->addChild(createNewItem(SELF::TYPE_NOTES, pListDataSets->at(i).sName, "", pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
+            pParent->addChild(createNewItem(SELF::TYPE_NOTES, pListDataSets->at(i).sName, ICONTYPE_UNKNOWN, pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
                                             pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
         } else if (pListDataSets->at(i).nType == XELF::DS_RELA) {
-            pParent->addChild(createNewItem(SELF::TYPE_Elf_Rela, pListDataSets->at(i).sName, "", pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
+            pParent->addChild(createNewItem(SELF::TYPE_Elf_Rela, pListDataSets->at(i).sName, ICONTYPE_UNKNOWN, pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
                                             pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
         } else if (pListDataSets->at(i).nType == XELF::DS_REL) {
-            pParent->addChild(createNewItem(SELF::TYPE_Elf_Rel, pListDataSets->at(i).sName, "", pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
+            pParent->addChild(createNewItem(SELF::TYPE_Elf_Rel, pListDataSets->at(i).sName, ICONTYPE_UNKNOWN, pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
                                             pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
         } else if (pListDataSets->at(i).nType == XELF::DS_DYNAMICTAGS) {
-            QTreeWidgetItem *pDynamicTags = createNewItem(SELF::TYPE_Elf_DynamicArrayTags, pListDataSets->at(i).sName, "", pListDataSets->at(i).nOffset,
+            QTreeWidgetItem *pDynamicTags = createNewItem(SELF::TYPE_Elf_DynamicArrayTags, pListDataSets->at(i).sName, ICONTYPE_UNKNOWN, pListDataSets->at(i).nOffset,
                                                           pListDataSets->at(i).nSize, pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize);
 
             pParent->addChild(pDynamicTags);
