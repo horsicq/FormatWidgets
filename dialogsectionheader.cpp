@@ -72,5 +72,4 @@ void DialogSectionHeader::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
 
 void DialogSectionHeader::adjustView()
 {
-
 }

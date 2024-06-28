@@ -291,7 +291,8 @@ void SearchStringsWidget::_editString()
             bool bSuccess = false;
 
             if (saveBackup()) {
-                if (XBinary::write_array(g_pDevice, dataStruct.nOffset, XBinary::getStringData(dataStruct.recordType, dataStruct.sString, dataStruct.bIsNullTerminated))) {
+                if (XBinary::write_array(g_pDevice, dataStruct.nOffset,
+                                         XBinary::getStringData(dataStruct.recordType, dataStruct.sString, dataStruct.bIsNullTerminated))) {
                     ui->tableViewResult->model()->setData(indexNumber, dataStruct.nSize, Qt::UserRole + MultiSearch::USERROLE_SIZE);
                     ui->tableViewResult->model()->setData(indexNumber, dataStruct.recordType, Qt::UserRole + MultiSearch::USERROLE_TYPE);
 

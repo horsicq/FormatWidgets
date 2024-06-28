@@ -629,17 +629,17 @@ void ELFWidget::addDatasets(XELF *pElf, QTreeWidgetItem *pParent, QList<XBinary:
 
     for (qint32 i = 0; i < nNumberOfRecords; i++) {
         if (pListDataSets->at(i).nType == XELF::DS_INTERPRETER) {
-            pParent->addChild(createNewItem(SELF::TYPE_INTERPRETER, pListDataSets->at(i).sName, ICONTYPE_UNKNOWN, pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
-                                            pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
+            pParent->addChild(createNewItem(SELF::TYPE_INTERPRETER, pListDataSets->at(i).sName, ICONTYPE_UNKNOWN, pListDataSets->at(i).nOffset,
+                                            pListDataSets->at(i).nSize, pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
         } else if (pListDataSets->at(i).nType == XELF::DS_LIBRARIES) {
             pParent->addChild(createNewItem(SELF::TYPE_LIBRARIES, pListDataSets->at(i).sName, ICONTYPE_UNKNOWN, pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
                                             pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
         } else if (pListDataSets->at(i).nType == XELF::DS_STRINGTABLE) {
-            pParent->addChild(createNewItem(SELF::TYPE_STRINGTABLE, pListDataSets->at(i).sName, ICONTYPE_UNKNOWN, pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
-                                            pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
+            pParent->addChild(createNewItem(SELF::TYPE_STRINGTABLE, pListDataSets->at(i).sName, ICONTYPE_UNKNOWN, pListDataSets->at(i).nOffset,
+                                            pListDataSets->at(i).nSize, pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
         } else if (pListDataSets->at(i).nType == XELF::DS_SYMBOLTABLE) {
-            pParent->addChild(createNewItem(SELF::TYPE_SYMBOLTABLE, pListDataSets->at(i).sName, ICONTYPE_UNKNOWN, pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
-                                            pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
+            pParent->addChild(createNewItem(SELF::TYPE_SYMBOLTABLE, pListDataSets->at(i).sName, ICONTYPE_UNKNOWN, pListDataSets->at(i).nOffset,
+                                            pListDataSets->at(i).nSize, pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
         } else if (pListDataSets->at(i).nType == XELF::DS_RUNPATH) {
             pParent->addChild(createNewItem(SELF::TYPE_RUNPATH, pListDataSets->at(i).sName, ICONTYPE_UNKNOWN, pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
                                             pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));

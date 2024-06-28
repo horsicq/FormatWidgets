@@ -87,7 +87,6 @@ bool PEToolsWidget::saveBackup()
 
 void PEToolsWidget::adjustView()
 {
-
 }
 
 void PEToolsWidget::dumpRegion(QWidget *pParent, QIODevice *pDevice, qint64 nOffset, qint64 nSize, const QString &sName)

@@ -39,7 +39,9 @@ public:
     explicit DialogModelInfo(QWidget *pParent = nullptr);
     ~DialogModelInfo();
 
-    virtual void adjustView() {}
+    virtual void adjustView()
+    {
+    }
     void setData(QIODevice *pDevice, const QString &sTitle, QStandardItemModel *pModel);
 
 private slots:
@@ -47,7 +49,10 @@ private slots:
     void on_pushButtonSave_clicked();
 
 protected:
-    virtual void registerShortcuts(bool bState) { Q_UNUSED(bState) }
+    virtual void registerShortcuts(bool bState)
+    {
+        Q_UNUSED(bState)
+    }
 
 private:
     Ui::DialogModelInfo *ui;

@@ -38,7 +38,9 @@ public:
     void setData(QIODevice *pDevice, XBinary::FT fileType, SearchStringsWidget::OPTIONS options, bool bAuto = false);
     void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
 
-    virtual void adjustView() {}
+    virtual void adjustView()
+    {
+    }
 
 signals:
     void showHex(qint64 nOffset, qint64 nSize);
@@ -48,7 +50,10 @@ private slots:
     void on_pushButtonClose_clicked();
 
 protected:
-    virtual void registerShortcuts(bool bState) { Q_UNUSED(bState) }
+    virtual void registerShortcuts(bool bState)
+    {
+        Q_UNUSED(bState)
+    }
 
 private:
     Ui::DialogSearchStrings *ui;

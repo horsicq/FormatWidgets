@@ -42,7 +42,7 @@ public:
     virtual void clear();
     virtual void cleanup();
     virtual void reload();
-    void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions); // Important
+    void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);  // Important
     virtual void adjustView();
 
 protected:

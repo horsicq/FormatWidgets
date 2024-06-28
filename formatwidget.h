@@ -119,7 +119,8 @@ public:
     qint64 getOffset();
     qint32 getType();
     bool isReadonly();
-    QTreeWidgetItem *createNewItem(qint32 nType, const QString &sTitle, ICONTYPE iconType = ICONTYPE_UNKNOWN, qint64 nOffset = 0, qint64 nSize = 0, qint64 nExtraOffset = 0, qint64 nExtraSize = 0);
+    QTreeWidgetItem *createNewItem(qint32 nType, const QString &sTitle, ICONTYPE iconType = ICONTYPE_UNKNOWN, qint64 nOffset = 0, qint64 nSize = 0,
+                                   qint64 nExtraOffset = 0, qint64 nExtraSize = 0);
     bool createHeaderTable(qint32 nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, qint32 nNumberOfRecords,
                            qint32 nPosition = 0, qint64 nOffset = 0);
     bool createListTable(qint32 nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, qint32 nNumberOfRecords);
