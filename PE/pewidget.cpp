@@ -266,7 +266,9 @@ void PEWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
 
 void PEWidget::adjustView()
 {
-    getGlobalOptions()->adjustTreeWidget(ui->treeWidgetNavi, XOptions::ID_VIEW_FONT_TREEVIEWS);
+    FormatWidget::adjustView();
+
+    getGlobalOptions()->adjustTreeWidget(ui->treeWidgetNavi, XOptions::ID_VIEW_FONT_TREEVIEWS, true);
 }
 
 FormatWidget::SV PEWidget::_setValue(QVariant vValue, qint32 nStype, qint32 nNdata, qint32 nVtype, int nPosition, qint64 nOffset)
