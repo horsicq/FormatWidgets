@@ -43,7 +43,6 @@ public:
     virtual void cleanup();
     virtual void reload();
     void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);  // Important
-    virtual void adjustView();
 
 protected:
     virtual SV _setValue(QVariant vValue, qint32 nStype, qint32 nNdata, qint32 nVtype, int nPosition, qint64 nOffset);

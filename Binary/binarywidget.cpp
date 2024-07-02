@@ -97,15 +97,6 @@ void BinaryWidget::reload()
     }
 }
 
-void BinaryWidget::adjustView()
-{
-    XOptions *pOptions = getGlobalOptions();
-
-    if (pOptions) {
-        pOptions->adjustWidget(this, XOptions::ID_VIEW_FONT_CONTROLS);
-    }
-}
-
 FormatWidget::SV BinaryWidget::_setValue(QVariant vValue, qint32 nStype, qint32 nNdata, qint32 nVtype, qint32 nPosition, qint64 nOffset)
 {
     Q_UNUSED(vValue)

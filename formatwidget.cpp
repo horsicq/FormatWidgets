@@ -63,17 +63,7 @@ XInfoDB *FormatWidget::getXInfoDB()
 
 void FormatWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
 {
-    QList<XShortcutsWidget *> listWidgets = this->findChildren<XShortcutsWidget *>();
-
-    qint32 nNumberOfWidgets = listWidgets.count();
-
-    for (qint32 i = 0; i < nNumberOfWidgets; i++) {
-        XShortcutsWidget *pChild = dynamic_cast<XShortcutsWidget *>(listWidgets.at(i));
-
-        if (pChild) {
-            pChild->setGlobal(pShortcuts, pXOptions);
-        }
-    }
+    FormatWidget::setGlobalChildren(this, pShortcuts, pXOptions);
 
     QList<XShortcutstScrollArea *> listAreas = this->findChildren<XShortcutstScrollArea *>();
 
@@ -92,27 +82,71 @@ void FormatWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
 
 void FormatWidget::adjustView()
 {
-    QList<XShortcutsWidget *> listWidgets = this->findChildren<XShortcutsWidget *>();
+    getGlobalOptions()->adjustWidget(this, XOptions::ID_VIEW_FONT_CONTROLS);
 
-    qint32 nNumberOfWidgets = listWidgets.count();
+    {
+        QList<QTreeWidget *> listWidgets = this->findChildren<QTreeWidget *>();
 
-    for (qint32 i = 0; i < nNumberOfWidgets; i++) {
-        XShortcutsWidget *pChild = dynamic_cast<XShortcutsWidget *>(listWidgets.at(i));
+        qint32 nNumberOfWidgets= listWidgets.count();
 
-        if (pChild) {
-            pChild->adjustView();
+        for (qint32 i = 0; i < nNumberOfWidgets; i++) {
+            QTreeWidget *pChild = dynamic_cast<QTreeWidget *>(listWidgets.at(i));
+
+            if (pChild) {
+                getGlobalOptions()->adjustTreeWidget(pChild, XOptions::ID_VIEW_FONT_TREEVIEWS, true);
+            }
         }
     }
+    {
+        QList<QTreeView *> listWidgets = this->findChildren<QTreeView *>();
 
-    QList<XShortcutstScrollArea *> listAreas = this->findChildren<XShortcutstScrollArea *>();
+        qint32 nNumberOfWidgets= listWidgets.count();
 
-    qint32 nNumberOfAreas = listAreas.count();
+        for (qint32 i = 0; i < nNumberOfWidgets; i++) {
+            QTreeView *pChild = dynamic_cast<QTreeView *>(listWidgets.at(i));
 
-    for (qint32 i = 0; i < nNumberOfAreas; i++) {
-        XShortcutstScrollArea *pChild = dynamic_cast<XShortcutstScrollArea *>(listAreas.at(i));
+            if (pChild) {
+                getGlobalOptions()->adjustTreeView(pChild, XOptions::ID_VIEW_FONT_TREEVIEWS);
+            }
+        }
+    }
+    {
+        QList<QTableWidget *> listWidgets = this->findChildren<QTableWidget *>();
 
-        if (pChild) {
-            pChild->adjustView();
+        qint32 nNumberOfWidgets= listWidgets.count();
+
+        for (qint32 i = 0; i < nNumberOfWidgets; i++) {
+            QTableWidget *pChild = dynamic_cast<QTableWidget *>(listWidgets.at(i));
+
+            if (pChild) {
+                getGlobalOptions()->adjustTableWidget(pChild, XOptions::ID_VIEW_FONT_TABLEVIEWS);
+            }
+        }
+    }
+    {
+        QList<QTableView *> listWidgets = this->findChildren<QTableView *>();
+
+        qint32 nNumberOfWidgets= listWidgets.count();
+
+        for (qint32 i = 0; i < nNumberOfWidgets; i++) {
+            QTableView *pChild = dynamic_cast<QTableView *>(listWidgets.at(i));
+
+            if (pChild) {
+                getGlobalOptions()->adjustTableView(pChild, XOptions::ID_VIEW_FONT_TABLEVIEWS);
+            }
+        }
+    }
+    {
+        QList<QTextEdit *> listWidgets = this->findChildren<QTextEdit *>();
+
+        qint32 nNumberOfWidgets= listWidgets.count();
+
+        for (qint32 i = 0; i < nNumberOfWidgets; i++) {
+            QTextEdit *pChild = dynamic_cast<QTextEdit *>(listWidgets.at(i));
+
+            if (pChild) {
+                getGlobalOptions()->adjustWidget(pChild, XOptions::ID_VIEW_FONT_TEXTEDITS);
+            }
         }
     }
 }
