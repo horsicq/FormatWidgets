@@ -63,26 +63,15 @@ XInfoDB *FormatWidget::getXInfoDB()
 
 void FormatWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
 {
-    FormatWidget::setGlobalChildren(this, pShortcuts, pXOptions);
-
-    QList<XShortcutstScrollArea *> listAreas = this->findChildren<XShortcutstScrollArea *>();
-
-    qint32 nNumberOfAreas = listAreas.count();
-
-    for (qint32 i = 0; i < nNumberOfAreas; i++) {
-        XShortcutstScrollArea *pChild = dynamic_cast<XShortcutstScrollArea *>(listAreas.at(i));
-
-        if (pChild) {
-            pChild->setGlobal(pShortcuts, pXOptions);
-        }
-    }
-
+    XShortcutsWidget::setGlobalChildren(this, pShortcuts, pXOptions);
+    XShortcutstScrollArea::setGlobalChildren(this, pShortcuts, pXOptions);
     XShortcutsWidget::setGlobal(pShortcuts, pXOptions);
 }
 
 void FormatWidget::adjustView()
 {
     getGlobalOptions()->adjustWidget(this, XOptions::ID_VIEW_FONT_CONTROLS);
+    XShortcutstScrollArea::adjustViewChildren(this);
 
     {
         QList<QTreeWidget *> listWidgets = this->findChildren<QTreeWidget *>();
@@ -149,6 +138,20 @@ void FormatWidget::adjustView()
             }
         }
     }
+    {
+        QList<QPlainTextEdit *> listWidgets = this->findChildren<QPlainTextEdit *>();
+
+        qint32 nNumberOfWidgets= listWidgets.count();
+
+        for (qint32 i = 0; i < nNumberOfWidgets; i++) {
+            QPlainTextEdit *pChild = dynamic_cast<QPlainTextEdit *>(listWidgets.at(i));
+
+            if (pChild) {
+                getGlobalOptions()->adjustWidget(pChild, XOptions::ID_VIEW_FONT_TEXTEDITS);
+            }
+        }
+    }
+
 }
 
 void FormatWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType)
@@ -485,7 +488,7 @@ void FormatWidget::ajustTableView(ProcessData *pProcessData, QStandardItemModel 
     }
 
     DialogProcessData dialogProcessData(this, pProcessData, getGlobalOptions());
-
+    dialogProcessData.setGlobal(getShortcuts(), getGlobalOptions());
     dialogProcessData.showDialogDelay();
 
     bool bSort = pTableView->isSortingEnabled();
@@ -518,7 +521,7 @@ void FormatWidget::ajustTreeView(ProcessData *pProcessData, QStandardItemModel *
     QAbstractItemModel *pOldModel = pTreeView->model();
 
     DialogProcessData dialogProcessData(this, pProcessData, getGlobalOptions());
-
+    dialogProcessData.setGlobal(getShortcuts(), getGlobalOptions());
     dialogProcessData.showDialogDelay();
 
     pTreeView->setModel(*ppModel);
@@ -531,10 +534,12 @@ void FormatWidget::ajustTreeView(ProcessData *pProcessData, QStandardItemModel *
 void FormatWidget::ajustDialogModel(ProcessData *pProcessData, QStandardItemModel **ppModel, const QString &sTitle)
 {
     DialogProcessData dialogProcessData(this, pProcessData, getGlobalOptions());
+    dialogProcessData.setGlobal(getShortcuts(), getGlobalOptions());
 
     dialogProcessData.showDialogDelay();
 
     DialogModelInfo dialogModelInfo(this);
+    dialogModelInfo.setGlobal(getShortcuts(), getGlobalOptions());
 
     dialogModelInfo.setData(getDevice(), sTitle, *ppModel);
 
@@ -628,7 +633,7 @@ void FormatWidget::dumpAll(QTableView *pTableView)
             QString sJsonFileName = XBinary::getDeviceFileName(g_pDevice) + ".patch.json";
 
             DialogDumpProcess dd(this);
-
+            dd.setGlobal(getShortcuts(), getGlobalOptions());
             dd.setData(g_pDevice, listRecords, DumpProcess::DT_DUMP_DEVICE_OFFSET, sJsonFileName);
 
             dd.showDialogDelay();
@@ -1330,6 +1335,7 @@ void FormatWidget::findValue(quint64 nValue, XBinary::ENDIAN endian)
 void FormatWidget::showEntropy(qint64 nOffset, qint64 nSize)
 {
     DialogEntropy dialogEntropy(this);
+    dialogEntropy.setGlobal(getShortcuts(), getGlobalOptions());
 
     dialogEntropy.setData(getDevice(), nOffset, nSize);
 
@@ -1349,6 +1355,7 @@ void FormatWidget::dumpRegion(qint64 nOffset, qint64 nSize, const QString &sName
 
     if (!sFileName.isEmpty()) {
         DialogDumpProcess dd(this);
+        dd.setGlobal(getShortcuts(), getGlobalOptions());
         dd.setData(getDevice(), nOffset, nSize, sFileName, DumpProcess::DT_DUMP_DEVICE_OFFSET);
 
         dd.showDialogDelay();
@@ -1358,6 +1365,7 @@ void FormatWidget::dumpRegion(qint64 nOffset, qint64 nSize, const QString &sName
 void FormatWidget::showDemangle(const QString &sString)
 {
     DialogDemangle dialogDemangle(this, sString);
+    dialogDemangle.setGlobal(getShortcuts(), getGlobalOptions());
 
     dialogDemangle.exec();
 }

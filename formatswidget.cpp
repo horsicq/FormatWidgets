@@ -1004,7 +1004,7 @@ void FormatsWidget::on_pushButtonUnpack_clicked()
 
     if (!sDirectoryName.isEmpty()) {
         DialogUnpackFile dialogUnpackFile(this);
-
+        dialogUnpackFile.setGlobal(getShortcuts(), getGlobalOptions());
         dialogUnpackFile.setData(g_sFileName, sDirectoryName);
 
         dialogUnpackFile.showDialogDelay();

@@ -360,10 +360,12 @@ void SearchStringsWidget::search()
             QWidget *pParent = XOptions::getMainWidget(this);
 
             DialogMultiSearchProcess dsp(pParent);
+            dsp.setGlobal(getShortcuts(), getGlobalOptions());
             dsp.processSearch(g_pDevice, &listRecords, options, MultiSearch::TYPE_STRINGS);
             dsp.showDialogDelay();
 
             DialogMultiSearchProcess dmp(pParent);
+            dmp.setGlobal(getShortcuts(), getGlobalOptions());
             dmp.processModel(&listRecords, &g_pModel, options, MultiSearch::TYPE_STRINGS);
             dmp.showDialogDelay();
 
