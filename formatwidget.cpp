@@ -76,7 +76,7 @@ void FormatWidget::adjustView()
     {
         QList<QTreeWidget *> listWidgets = this->findChildren<QTreeWidget *>();
 
-        qint32 nNumberOfWidgets= listWidgets.count();
+        qint32 nNumberOfWidgets = listWidgets.count();
 
         for (qint32 i = 0; i < nNumberOfWidgets; i++) {
             QTreeWidget *pChild = dynamic_cast<QTreeWidget *>(listWidgets.at(i));
@@ -89,7 +89,7 @@ void FormatWidget::adjustView()
     {
         QList<QTreeView *> listWidgets = this->findChildren<QTreeView *>();
 
-        qint32 nNumberOfWidgets= listWidgets.count();
+        qint32 nNumberOfWidgets = listWidgets.count();
 
         for (qint32 i = 0; i < nNumberOfWidgets; i++) {
             QTreeView *pChild = dynamic_cast<QTreeView *>(listWidgets.at(i));
@@ -102,7 +102,7 @@ void FormatWidget::adjustView()
     {
         QList<QTableWidget *> listWidgets = this->findChildren<QTableWidget *>();
 
-        qint32 nNumberOfWidgets= listWidgets.count();
+        qint32 nNumberOfWidgets = listWidgets.count();
 
         for (qint32 i = 0; i < nNumberOfWidgets; i++) {
             QTableWidget *pChild = dynamic_cast<QTableWidget *>(listWidgets.at(i));
@@ -115,7 +115,7 @@ void FormatWidget::adjustView()
     {
         QList<QTableView *> listWidgets = this->findChildren<QTableView *>();
 
-        qint32 nNumberOfWidgets= listWidgets.count();
+        qint32 nNumberOfWidgets = listWidgets.count();
 
         for (qint32 i = 0; i < nNumberOfWidgets; i++) {
             QTableView *pChild = dynamic_cast<QTableView *>(listWidgets.at(i));
@@ -128,7 +128,7 @@ void FormatWidget::adjustView()
     {
         QList<QTextEdit *> listWidgets = this->findChildren<QTextEdit *>();
 
-        qint32 nNumberOfWidgets= listWidgets.count();
+        qint32 nNumberOfWidgets = listWidgets.count();
 
         for (qint32 i = 0; i < nNumberOfWidgets; i++) {
             QTextEdit *pChild = dynamic_cast<QTextEdit *>(listWidgets.at(i));
@@ -141,7 +141,7 @@ void FormatWidget::adjustView()
     {
         QList<QPlainTextEdit *> listWidgets = this->findChildren<QPlainTextEdit *>();
 
-        qint32 nNumberOfWidgets= listWidgets.count();
+        qint32 nNumberOfWidgets = listWidgets.count();
 
         for (qint32 i = 0; i < nNumberOfWidgets; i++) {
             QPlainTextEdit *pChild = dynamic_cast<QPlainTextEdit *>(listWidgets.at(i));
@@ -151,7 +151,6 @@ void FormatWidget::adjustView()
             }
         }
     }
-
 }
 
 void FormatWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType)
