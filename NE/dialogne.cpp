@@ -22,7 +22,7 @@
 
 #include "ui_dialogne.h"
 
-DialogNE::DialogNE(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogNE)
+DialogNE::DialogNE(QWidget *pParent) : XShortcutsDialog(pParent, true), ui(new Ui::DialogNE)
 {
     ui->setupUi(this);
 }

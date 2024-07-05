@@ -913,9 +913,12 @@ void PEWidget::_widgetValueChanged(QVariant vValue)
                     break;
                 // Extra
                 case N_IMAGE_OPTIONAL_HEADER::OperatingSystemVersion:
-                    XBinary::XDWORD xdword = XBinary::make_xdword((quint32)nValue);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MajorOperatingSystemVersion]->setValue_uint16((quint16)xdword.nValue1);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MinorOperatingSystemVersion]->setValue_uint16((quint16)xdword.nValue2);
+                    {
+                        // TODO set correct
+                        XBinary::XDWORD xdword = XBinary::make_xdword((quint32)nValue);
+                        g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MajorOperatingSystemVersion]->setValue_uint16((quint16)xdword.nValue1);
+                        g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MinorOperatingSystemVersion]->setValue_uint16((quint16)xdword.nValue2);
+                    }
             }
             break;
 

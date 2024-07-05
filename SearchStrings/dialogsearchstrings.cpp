@@ -22,7 +22,7 @@
 
 #include "ui_dialogsearchstrings.h"
 
-DialogSearchStrings::DialogSearchStrings(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogSearchStrings)
+DialogSearchStrings::DialogSearchStrings(QWidget *pParent) : XShortcutsDialog(pParent, true), ui(new Ui::DialogSearchStrings)
 {
     ui->setupUi(this);
 

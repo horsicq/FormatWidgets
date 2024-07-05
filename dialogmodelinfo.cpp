@@ -22,7 +22,7 @@
 
 #include "ui_dialogmodelinfo.h"
 
-DialogModelInfo::DialogModelInfo(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogModelInfo)
+DialogModelInfo::DialogModelInfo(QWidget *pParent) : XShortcutsDialog(pParent, true), ui(new Ui::DialogModelInfo)
 {
     ui->setupUi(this);
 

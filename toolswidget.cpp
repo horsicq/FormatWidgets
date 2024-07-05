@@ -145,6 +145,8 @@ void ToolsWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
 {
     ui->widgetHex->setGlobal(pShortcuts, pXOptions);
     ui->widgetStrings->setGlobal(pShortcuts, pXOptions);
+
+    XShortcutsWidget::setGlobal(pShortcuts, pXOptions);
 }
 
 void ToolsWidget::on_tabWidgetMain_currentChanged(int nIndex)

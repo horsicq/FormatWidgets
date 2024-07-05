@@ -22,7 +22,7 @@
 
 #include "ui_dialogsectionheader.h"
 
-DialogSectionHeader::DialogSectionHeader(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogSectionHeader)
+DialogSectionHeader::DialogSectionHeader(QWidget *pParent) : XShortcutsDialog(pParent, false), ui(new Ui::DialogSectionHeader)
 {
     ui->setupUi(this);
 

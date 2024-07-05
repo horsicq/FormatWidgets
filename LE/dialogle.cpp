@@ -22,7 +22,7 @@
 
 #include "ui_dialogle.h"
 
-DialogLE::DialogLE(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogLE)
+DialogLE::DialogLE(QWidget *pParent) : XShortcutsDialog(pParent, true), ui(new Ui::DialogLE)
 {
     ui->setupUi(this);
 }

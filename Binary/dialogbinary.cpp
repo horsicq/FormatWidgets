@@ -22,7 +22,7 @@
 
 #include "ui_dialogbinary.h"
 
-DialogBinary::DialogBinary(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogBinary)
+DialogBinary::DialogBinary(QWidget *pParent) : XShortcutsDialog(pParent, true), ui(new Ui::DialogBinary)
 {
     ui->setupUi(this);
 }

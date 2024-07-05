@@ -22,7 +22,7 @@
 
 #include "ui_dialogmach.h"
 
-DialogMACH::DialogMACH(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogMACH)
+DialogMACH::DialogMACH(QWidget *pParent) : XShortcutsDialog(pParent, true), ui(new Ui::DialogMACH)
 {
     ui->setupUi(this);
 }
