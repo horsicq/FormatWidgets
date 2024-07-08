@@ -44,3 +44,8 @@ void DialogBinary::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
 
     XShortcutsDialog::setGlobal(pShortcuts, pXOptions);
 }
+
+void DialogBinary::registerShortcuts(bool bState)
+{
+    Q_UNUSED(bState)
+}
