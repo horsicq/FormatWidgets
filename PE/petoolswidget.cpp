@@ -127,7 +127,7 @@ void PEToolsWidget::dumpDosStub(QWidget *pParent, QIODevice *pDevice, bool bIsIm
         qint64 nOffset = pe.getDosStubOffset();
         qint64 nSize = pe.getDosStubSize();
 
-        dumpRegion(pParent, pDevice, nOffset, nSize, QString("DosStub"));
+        dumpRegion(pParent, pDevice, nOffset, nSize, QString("DOSStub"));
     }
 }
 

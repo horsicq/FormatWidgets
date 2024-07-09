@@ -919,11 +919,11 @@ void PEProcessData::_process()
                 (*g_ppModel)->setItem(i, 5, new QStandardItem(XBinary::valueToHexEx(listResources.at(i).nOffset)));
                 (*g_ppModel)->setItem(i, 6, new QStandardItem(XBinary::valueToHexEx(listResources.at(i).nSize)));
 
-                SpecAbstract::SCAN_OPTIONS options = {};
+                XBinary::SCAN_OPTIONS options = {};
                 options.varInfo = listResources.at(i).irin[0].nID;
                 options.initFilePart = XBinary::FILEPART_RESOURCE;
 
-                SpecAbstract::SCAN_RESULT scanResult =
+                XBinary::SCAN_RESULT scanResult =
                     StaticScan::processSubdevice(g_pPE->getDevice(), listResources.at(i).nOffset, listResources.at(i).nSize, &options, getPdStruct());
 
                 (*g_ppModel)->setItem(i, 7, new QStandardItem(SpecAbstract::createShortResultString(scanResult)));

@@ -129,7 +129,7 @@ void PEWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_IMAGE_DOS_HEADER, "IMAGE_DOS_HEADER"));
 
         if (pe.isDosStubPresent()) {
-            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_DOS_STUB, "Dos stub"));
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_DOS_STUB, "DOS stub"));
         }
 
         QTreeWidgetItem *pNtHeaders = createNewItem(SPE::TYPE_IMAGE_NT_HEADERS, "IMAGE_NT_HEADERS");
