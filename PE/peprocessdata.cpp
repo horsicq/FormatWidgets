@@ -141,7 +141,7 @@ void PEProcessData::_process()
 
         for (qint32 i = 0; i < nNumberOfSections; i++) {
             XInfoDB::STRRECORD strRecord = XInfoDB::handleStringDB(&listStrDb, XInfoDB::STRDB_PESECTIONS, listSectionRecords.at(i).sName, true);
-            Qt::GlobalColor globalColor = XFormats::typeToColor(strRecord.sType);
+            Qt::GlobalColor globalColor = XScanEngine::typeToColor(strRecord.sType);
 
             QColor colText;
 
@@ -151,7 +151,7 @@ void PEProcessData::_process()
                 colText = QColor(globalColor);
             }
 
-            strRecord.sType = XFormats::translateType(strRecord.sType);
+            strRecord.sType = XScanEngine::translateType(strRecord.sType);
 
             QStandardItem *pItemNumber = new QStandardItem(QString::number(i));
 
@@ -919,12 +919,12 @@ void PEProcessData::_process()
                 (*g_ppModel)->setItem(i, 5, new QStandardItem(XBinary::valueToHexEx(listResources.at(i).nOffset)));
                 (*g_ppModel)->setItem(i, 6, new QStandardItem(XBinary::valueToHexEx(listResources.at(i).nSize)));
 
-                XBinary::SCAN_OPTIONS options = {};
+                XScanEngine::SCAN_OPTIONS options = {};
                 options.varInfo = listResources.at(i).irin[0].nID;
                 options.initFilePart = XBinary::FILEPART_RESOURCE;
 
-                XBinary::SCAN_RESULT scanResult =
-                    StaticScan::processSubdevice(g_pPE->getDevice(), listResources.at(i).nOffset, listResources.at(i).nSize, &options, getPdStruct());
+                XScanEngine::SCAN_RESULT scanResult =
+                    SpecAbstract().scanSubdevice(g_pPE->getDevice(), listResources.at(i).nOffset, listResources.at(i).nSize, &options, getPdStruct());
 
                 (*g_ppModel)->setItem(i, 7, new QStandardItem(SpecAbstract::createShortResultString(scanResult)));
 
