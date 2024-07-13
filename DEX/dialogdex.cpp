@@ -32,6 +32,11 @@ DialogDEX::~DialogDEX()
     delete ui;
 }
 
+void DialogDEX::adjustView()
+{
+
+}
+
 void DialogDEX::setData(QIODevice *pDevice, FW_DEF::OPTIONS options)
 {
     if (options.sTitle != "") {
