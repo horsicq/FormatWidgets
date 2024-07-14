@@ -36,9 +36,7 @@ public:
     explicit DialogBinary(QWidget *pParent = nullptr);
     ~DialogBinary();
 
-    virtual void adjustView()
-    {
-    }
+    virtual void adjustView();
 
     void setData(QIODevice *pDevice, FW_DEF::OPTIONS options);
     void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);

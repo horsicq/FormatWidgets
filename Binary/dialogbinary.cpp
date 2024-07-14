@@ -32,6 +32,11 @@ DialogBinary::~DialogBinary()
     delete ui;
 }
 
+void DialogBinary::adjustView()
+{
+
+}
+
 void DialogBinary::setData(QIODevice *pDevice, FW_DEF::OPTIONS options)
 {
     ui->widget->setData(pDevice, options, 0, 0, 0);
