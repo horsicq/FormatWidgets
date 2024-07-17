@@ -52,3 +52,8 @@ void DialogDEX::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
     ui->widget->setGlobal(pShortcuts, pXOptions);
     XShortcutsDialog::setGlobal(pShortcuts, pXOptions);
 }
+
+void DialogDEX::registerShortcuts(bool bState)
+{
+    Q_UNUSED(bState)
+}

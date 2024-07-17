@@ -42,10 +42,7 @@ public:
     void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
 
 protected:
-    virtual void registerShortcuts(bool bState)
-    {
-        Q_UNUSED(bState)
-    }
+    virtual void registerShortcuts(bool bState);
 
 private:
     Ui::DialogDEX *ui;
