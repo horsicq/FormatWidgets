@@ -36,9 +36,7 @@ public:
     ~DialogSearchValues();
     void setData(QIODevice *pDevice, SearchValuesWidget::OPTIONS options);
     void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
-    virtual void adjustView()
-    {
-    }
+    virtual void adjustView();
 
 signals:
     void showHex(qint64 nOffset, qint64 nSize);
