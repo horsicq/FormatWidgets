@@ -100,7 +100,7 @@
      </widget>
      <widget class="QStackedWidget" name="stackedWidgetInfo">
       <property name="currentIndex">
-       <number>43</number>
+       <number>23</number>
       </property>
       <widget class="QWidget" name="page_Info">
        <layout class="QVBoxLayout" name="verticalLayout_43">
@@ -922,6 +922,13 @@
          <layout class="QVBoxLayout" name="verticalLayout">
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_6">
+            <item>
+             <widget class="QCheckBox" name="checkBoxSectionsStringTable">
+              <property name="text">
+               <string>String table</string>
+              </property>
+             </widget>
+            </item>
             <item>
              <spacer name="horizontalSpacer_6">
               <property name="orientation">

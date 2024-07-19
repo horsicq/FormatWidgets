@@ -190,6 +190,7 @@ private slots:
     void on_pushButtonExpand_Import_Info_clicked();
     void on_pushButtonCollapse_Import_Info_clicked();
     void on_treeView_Import_Info_customContextMenuRequested(const QPoint &pos);
+    void on_checkBoxSectionsStringTable_stateChanged(int nState);
 
 private:
     enum CB {

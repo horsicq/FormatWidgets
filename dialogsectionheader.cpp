@@ -37,6 +37,7 @@ DialogSectionHeader::~DialogSectionHeader()
 void DialogSectionHeader::setWidget(FormatWidget *pWidget)
 {
     this->g_pWidget = pWidget;
+    pWidget->setGlobal(getShortcuts(), getGlobalOptions());
 
     ui->WidgetLayout->addWidget(pWidget);
 

@@ -42,6 +42,8 @@ void PEProcessData::_process()
 
         XBinary::_MEMORY_MAP memoryMap = g_pPE->getMemoryMap(XBinary::MAPMODE_UNKNOWN, getPdStruct());
 
+        XBinary::OFFSETSIZE osStringTable = g_pPE->getStringTable();
+
         QList<XPE_DEF::IMAGE_SECTION_HEADER> listSections = g_pPE->getSectionHeaders();  // TODO pdsStruct
 
         qint32 nNumberOfRecords = listSections.count();
@@ -71,6 +73,11 @@ void PEProcessData::_process()
             QStandardItem *pItemName = new QStandardItem();
             QString sName = QString((char *)listSections.at(i).Name);
             sName.resize(qMin(sName.length(), XPE_DEF::S_IMAGE_SIZEOF_SHORT_NAME));
+
+            if (g_varInfo.toBool()) {
+                sName = g_pPE->convertSectionName(sName, &osStringTable);
+            }
+
             pItemName->setText(sName);
 
             pItemNumber->setData(QString("%1_%2_%3.bin").arg(tr("Section"), QString::number(i), XBinary::convertFileNameSymbols(sName)),
@@ -1100,7 +1107,7 @@ void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
 
     if (g_nType == SPE::TYPE_SECTIONS) {
         XOptions::setTableViewHeaderWidth(pTableView, 0, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT16, mode));
-        XOptions::setTableViewHeaderWidth(pTableView, 1, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 1, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_STRINGSHORT2, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 2, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 3, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 4, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));

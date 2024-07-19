@@ -32,6 +32,11 @@ DialogPE::~DialogPE()
     delete ui;
 }
 
+void DialogPE::adjustView()
+{
+
+}
+
 void DialogPE::setData(QIODevice *pDevice, FW_DEF::OPTIONS options)
 {
     if (options.sTitle != "") {
@@ -46,4 +51,9 @@ void DialogPE::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
 {
     ui->widget->setGlobal(pShortcuts, pXOptions);
     XShortcutsDialog::setGlobal(pShortcuts, pXOptions);
+}
+
+void DialogPE::registerShortcuts(bool bState)
+{
+     Q_UNUSED(bState)
 }

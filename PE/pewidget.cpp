@@ -1563,7 +1563,15 @@ void PEWidget::reloadData(bool bSaveSelection)
             }
         } else if (nType == SPE::TYPE_SECTIONS) {
             if (!isInitPresent(sInit)) {
-                PEProcessData peProcessData(SPE::TYPE_SECTIONS, &g_tvModel[SPE::TYPE_SECTIONS], &pe, 0, 0, 0);
+                XBinary::OFFSETSIZE osStringTable = pe.getStringTable();
+
+                if (pe.isOffsetAndSizeValid(osStringTable.nOffset, osStringTable.nSize)) {
+                    ui->checkBoxSectionsStringTable->show();
+                } else {
+                    ui->checkBoxSectionsStringTable->hide();
+                }
+
+                PEProcessData peProcessData(SPE::TYPE_SECTIONS, &g_tvModel[SPE::TYPE_SECTIONS], &pe, 0, 0, 0, false);
 
                 ajustTableView(&peProcessData, &g_tvModel[SPE::TYPE_SECTIONS], ui->tableView_Sections, nullptr, false);
 
@@ -3566,3 +3574,20 @@ void PEWidget::on_treeView_Import_Info_customContextMenuRequested(const QPoint &
         contextMenu.exec(ui->treeView_Import_Info->viewport()->mapToGlobal(pos));
     }
 }
+
+void PEWidget::on_checkBoxSectionsStringTable_stateChanged(int nState)
+{
+    Q_UNUSED(nState)
+
+    XPE pe(getDevice(), getOptions().bIsImage, getOptions().nImageBase);
+
+    if (pe.isValid()) {
+        PEProcessData peProcessData(SPE::TYPE_SECTIONS, &g_tvModel[SPE::TYPE_SECTIONS], &pe, 0, 0, 0, ui->checkBoxSectionsStringTable->isChecked());
+
+        ajustTableView(&peProcessData, &g_tvModel[SPE::TYPE_SECTIONS], ui->tableView_Sections, nullptr, false);
+
+        connect(ui->tableView_Sections->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
+                SLOT(onTableView_Sections_currentRowChanged(QModelIndex, QModelIndex)));
+    }
+}
+
