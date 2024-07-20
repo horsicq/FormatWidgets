@@ -34,7 +34,6 @@ DialogBinary::~DialogBinary()
 
 void DialogBinary::adjustView()
 {
-
 }
 
 void DialogBinary::setData(QIODevice *pDevice, FW_DEF::OPTIONS options)

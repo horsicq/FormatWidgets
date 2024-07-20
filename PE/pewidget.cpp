@@ -3590,4 +3590,3 @@ void PEWidget::on_checkBoxSectionsStringTable_stateChanged(int nState)
                 SLOT(onTableView_Sections_currentRowChanged(QModelIndex, QModelIndex)));
     }
 }
-

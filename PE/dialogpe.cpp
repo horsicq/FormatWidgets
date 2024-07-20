@@ -34,7 +34,6 @@ DialogPE::~DialogPE()
 
 void DialogPE::adjustView()
 {
-
 }
 
 void DialogPE::setData(QIODevice *pDevice, FW_DEF::OPTIONS options)
@@ -55,5 +54,5 @@ void DialogPE::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
 
 void DialogPE::registerShortcuts(bool bState)
 {
-     Q_UNUSED(bState)
+    Q_UNUSED(bState)
 }

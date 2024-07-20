@@ -34,7 +34,6 @@ DialogDEX::~DialogDEX()
 
 void DialogDEX::adjustView()
 {
-
 }
 
 void DialogDEX::setData(QIODevice *pDevice, FW_DEF::OPTIONS options)
