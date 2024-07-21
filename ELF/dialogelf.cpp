@@ -32,6 +32,11 @@ DialogELF::~DialogELF()
     delete ui;
 }
 
+void DialogELF::adjustView()
+{
+
+}
+
 void DialogELF::setData(QIODevice *pDevice, FW_DEF::OPTIONS options)
 {
     if (options.sTitle != "") {
