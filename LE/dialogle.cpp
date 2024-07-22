@@ -51,3 +51,8 @@ void DialogLE::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
     ui->widget->setGlobal(pShortcuts, pXOptions);
     XShortcutsDialog::setGlobal(pShortcuts, pXOptions);
 }
+
+void DialogLE::registerShortcuts(bool bState)
+{
+    Q_UNUSED(bState)
+}

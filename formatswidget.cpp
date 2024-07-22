@@ -232,6 +232,12 @@ void FormatsWidget::reload()
         {
             ui->stackedWidgetMain->setCurrentIndex(TABINFO_LE);
 
+            if (fileType == XBinary::FT_LE) {
+                ui->pushButtonLE->setText("LE");
+            } else if (fileType == XBinary::FT_LX) {
+                ui->pushButtonLE->setText("LX");
+            }
+
             XLE le(&file);
 
             if (le.isValid()) {
