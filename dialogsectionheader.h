@@ -49,10 +49,7 @@ signals:
     void dataChanged(qint64 nDataOffset, qint64 nDataSize);
 
 protected:
-    virtual void registerShortcuts(bool bState)
-    {
-        Q_UNUSED(bState)
-    }
+    virtual void registerShortcuts(bool bState);
 
 private:
     Ui::DialogSectionHeader *ui;

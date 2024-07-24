@@ -74,3 +74,8 @@ void DialogSectionHeader::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
 void DialogSectionHeader::adjustView()
 {
 }
+
+void DialogSectionHeader::registerShortcuts(bool bState)
+{
+    Q_UNUSED(bState)
+}
