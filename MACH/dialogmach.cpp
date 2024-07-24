@@ -32,6 +32,11 @@ DialogMACH::~DialogMACH()
     delete ui;
 }
 
+void DialogMACH::adjustView()
+{
+
+}
+
 void DialogMACH::setData(QIODevice *pDevice, const FW_DEF::OPTIONS &options)
 {
     if (options.sTitle != "") {
