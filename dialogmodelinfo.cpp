@@ -36,7 +36,6 @@ DialogModelInfo::~DialogModelInfo()
 
 void DialogModelInfo::adjustView()
 {
-
 }
 
 void DialogModelInfo::setData(QIODevice *pDevice, const QString &sTitle, QStandardItemModel *pModel)

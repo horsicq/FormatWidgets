@@ -34,7 +34,6 @@ DialogELF::~DialogELF()
 
 void DialogELF::adjustView()
 {
-
 }
 
 void DialogELF::setData(QIODevice *pDevice, FW_DEF::OPTIONS options)
