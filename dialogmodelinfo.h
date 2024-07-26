@@ -39,9 +39,7 @@ public:
     explicit DialogModelInfo(QWidget *pParent = nullptr);
     ~DialogModelInfo();
 
-    virtual void adjustView()
-    {
-    }
+    virtual void adjustView();
     void setData(QIODevice *pDevice, const QString &sTitle, QStandardItemModel *pModel);
 
 private slots:
