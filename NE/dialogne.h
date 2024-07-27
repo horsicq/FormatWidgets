@@ -36,9 +36,7 @@ public:
     explicit DialogNE(QWidget *pParent = nullptr);
     ~DialogNE();
 
-    virtual void adjustView()
-    {
-    }
+    virtual void adjustView();
 
     void setData(QIODevice *pDevice, FW_DEF::OPTIONS options);
     void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);

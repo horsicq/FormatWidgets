@@ -32,6 +32,11 @@ DialogNE::~DialogNE()
     delete ui;
 }
 
+void DialogNE::adjustView()
+{
+
+}
+
 void DialogNE::setData(QIODevice *pDevice, FW_DEF::OPTIONS options)
 {
     if (options.sTitle != "") {
