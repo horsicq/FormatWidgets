@@ -1663,7 +1663,7 @@ XComboBoxEx *FormatWidget::createComboBox(QTableWidget *pTableWidget, QMap<quint
                                           int nExtraData)
 {
     XComboBoxEx *result = new XComboBoxEx(this);
-    result->setData(mapData, cbtype, nMask);
+    result->setData(mapData, cbtype, nMask, tr("Flags"));
 
     result->setProperty("STYPE", nType);
 

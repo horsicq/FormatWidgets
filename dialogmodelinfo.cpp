@@ -69,3 +69,8 @@ void DialogModelInfo::on_pushButtonSave_clicked()
         XOptions::saveTextEdit(ui->textEdit, sFileName);
     }
 }
+
+void DialogModelInfo::registerShortcuts(bool bState)
+{
+    Q_UNUSED(bState)
+}

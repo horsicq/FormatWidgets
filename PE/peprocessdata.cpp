@@ -926,14 +926,17 @@ void PEProcessData::_process()
                 (*g_ppModel)->setItem(i, 5, new QStandardItem(XBinary::valueToHexEx(listResources.at(i).nOffset)));
                 (*g_ppModel)->setItem(i, 6, new QStandardItem(XBinary::valueToHexEx(listResources.at(i).nSize)));
 
-                XScanEngine::SCAN_OPTIONS options = {};
-                options.varInfo = listResources.at(i).irin[0].nID;
-                options.initFilePart = XBinary::FILEPART_RESOURCE;
+                XScanEngine::SCAN_OPTIONS scanOptions = {};
+                scanOptions.bShowType = true;
+                scanOptions.bShowVersion = true;
+                scanOptions.bShowInfo = true;
+                scanOptions.varInfo = listResources.at(i).irin[0].nID;
+                scanOptions.initFilePart = XBinary::FILEPART_RESOURCE;
 
                 XScanEngine::SCAN_RESULT scanResult =
-                    SpecAbstract().scanSubdevice(g_pPE->getDevice(), listResources.at(i).nOffset, listResources.at(i).nSize, &options, getPdStruct());
+                    SpecAbstract().scanSubdevice(g_pPE->getDevice(), listResources.at(i).nOffset, listResources.at(i).nSize, &scanOptions, getPdStruct());
 
-                (*g_ppModel)->setItem(i, 7, new QStandardItem(SpecAbstract::createShortResultString(scanResult)));
+                (*g_ppModel)->setItem(i, 7, new QStandardItem(XScanEngine::createShortResultString(&scanOptions, scanResult)));
 
                 incValue();
             }
