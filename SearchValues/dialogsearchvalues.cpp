@@ -54,3 +54,8 @@ void DialogSearchValues::on_pushButtonClose_clicked()
 {
     this->close();
 }
+
+void DialogSearchValues::registerShortcuts(bool bState)
+{
+    Q_UNUSED(bState)
+}
