@@ -38,9 +38,7 @@ public:
     void setData(QIODevice *pDevice, XBinary::FT fileType, SearchStringsWidget::OPTIONS options, bool bAuto = false);
     void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
 
-    virtual void adjustView()
-    {
-    }
+    virtual void adjustView();
 
 signals:
     void showHex(qint64 nOffset, qint64 nSize);
