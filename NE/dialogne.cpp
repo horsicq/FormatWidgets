@@ -34,7 +34,6 @@ DialogNE::~DialogNE()
 
 void DialogNE::adjustView()
 {
-
 }
 
 void DialogNE::setData(QIODevice *pDevice, FW_DEF::OPTIONS options)
@@ -51,4 +50,9 @@ void DialogNE::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
 {
     ui->widget->setGlobal(pShortcuts, pXOptions);
     XShortcutsDialog::setGlobal(pShortcuts, pXOptions);
+}
+
+void DialogNE::registerShortcuts(bool bState)
+{
+    Q_UNUSED(bState)
 }

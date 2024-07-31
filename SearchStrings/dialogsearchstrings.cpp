@@ -54,7 +54,6 @@ void DialogSearchStrings::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
 
 void DialogSearchStrings::adjustView()
 {
-
 }
 
 void DialogSearchStrings::on_pushButtonClose_clicked()
