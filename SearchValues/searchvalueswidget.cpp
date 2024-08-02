@@ -265,7 +265,7 @@ void SearchValuesWidget::viewSelection()
             qint64 nOffset = ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + MultiSearch::USERROLE_OFFSET).toULongLong();
             qint64 nSize = ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + MultiSearch::USERROLE_SIZE).toLongLong();
 
-            if (nVirtualAddress != -1) {
+            if (nVirtualAddress != (XADDR)-1) {
                 emit currentLocationChanged(nVirtualAddress, XBinary::LT_ADDRESS, nSize);
             } else if (nOffset != -1) {
                 emit currentLocationChanged(nOffset, XBinary::LT_OFFSET, nSize);
