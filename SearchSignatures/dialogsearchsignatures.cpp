@@ -54,3 +54,8 @@ void DialogSearchSignatures::on_pushButtonClose_clicked()
 {
     this->close();
 }
+
+void DialogSearchSignatures::registerShortcuts(bool bState)
+{
+    Q_UNUSED(bState)
+}
