@@ -51,3 +51,8 @@ void DialogMACH::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
     ui->widget->setGlobal(pShortcuts, pXOptions);
     XShortcutsDialog::setGlobal(pShortcuts, pXOptions);
 }
+
+void DialogMACH::registerShortcuts(bool bState)
+{
+    Q_UNUSED(bState)
+}
