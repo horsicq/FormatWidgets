@@ -32,6 +32,11 @@ DialogMSDOS::~DialogMSDOS()
     delete ui;
 }
 
+void DialogMSDOS::adjustView()
+{
+
+}
+
 void DialogMSDOS::setData(QIODevice *pDevice, FW_DEF::OPTIONS options)
 {
     if (options.sTitle != "") {
