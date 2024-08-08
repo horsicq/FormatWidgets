@@ -863,8 +863,7 @@ QString FormatsWidget::getScanEngine(const QString &sDefault)
 
         // TODO !!!
         if ((fileType == XBinary::FT_DEX) || (fileType == XBinary::FT_MACHO32) || (fileType == XBinary::FT_MACHO64) || (fileType == XBinary::FT_MACHOFAT) ||
-            (fileType == XBinary::FT_JAR) || (fileType == XBinary::FT_APK) || (fileType == XBinary::FT_APKS) ||
-            (fileType == XBinary::FT_IPA)) {
+            (fileType == XBinary::FT_JAR) || (fileType == XBinary::FT_APK) || (fileType == XBinary::FT_APKS) || (fileType == XBinary::FT_IPA)) {
             sResult = "nfd";
         }
     }

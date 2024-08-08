@@ -34,7 +34,6 @@ DialogMSDOS::~DialogMSDOS()
 
 void DialogMSDOS::adjustView()
 {
-
 }
 
 void DialogMSDOS::setData(QIODevice *pDevice, FW_DEF::OPTIONS options)
