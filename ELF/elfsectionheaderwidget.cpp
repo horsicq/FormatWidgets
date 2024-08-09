@@ -413,6 +413,8 @@ void ELFSectionHeaderWidget::on_checkBoxReadonly_toggled(bool bChecked)
 
 void ELFSectionHeaderWidget::reloadData(bool bSaveSelection)
 {
+    Q_UNUSED(bSaveSelection)
+
     qint32 nType = getType();
 
     XELF elf(getDevice(), getOptions().bIsImage, getOptions().nImageBase);
