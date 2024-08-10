@@ -541,6 +541,8 @@ void MACHSectionHeaderWidget::on_checkBoxReadonly_toggled(bool bChecked)
 
 void MACHSectionHeaderWidget::reloadData(bool bSaveSelection)
 {
+    Q_UNUSED(bSaveSelection)
+
     int nType = getType();
 
     XMACH mach(getDevice(), getOptions().bIsImage, getOptions().nImageBase);
