@@ -135,6 +135,7 @@ void MACHOFATWidget::blockSignals(bool bState)
 
 void MACHOFATWidget::reloadData(bool bSaveSelection)
 {
+    Q_UNUSED(bSaveSelection)
 }
 
 void MACHOFATWidget::on_comboBoxFilePart_currentIndexChanged(int nIndex)
