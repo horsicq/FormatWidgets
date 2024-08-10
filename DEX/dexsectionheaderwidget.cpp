@@ -161,6 +161,8 @@ void DEXSectionHeaderWidget::on_checkBoxReadonly_toggled(bool bChecked)
 
 void DEXSectionHeaderWidget::reloadData(bool bSaveSelection)
 {
+    Q_UNUSED(bSaveSelection)
+
     XDEX dex(getDevice());
 
     if (dex.isValid()) {
