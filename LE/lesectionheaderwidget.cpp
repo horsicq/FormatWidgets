@@ -84,6 +84,7 @@ void LESectionHeaderWidget::on_checkBoxReadonly_toggled(bool bChecked)
 
 void LESectionHeaderWidget::reloadData(bool bSaveSelection)
 {
+    Q_UNUSED(bSaveSelection)
 }
 
 void LESectionHeaderWidget::on_tableWidget_Section_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
