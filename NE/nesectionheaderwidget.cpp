@@ -84,6 +84,7 @@ void NESectionHeaderWidget::on_checkBoxReadonly_toggled(bool bChecked)
 
 void NESectionHeaderWidget::reloadData(bool bSaveSelection)
 {
+    Q_UNUSED(bSaveSelection)
 }
 
 void NESectionHeaderWidget::on_tableWidget_Section_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
