@@ -1659,7 +1659,7 @@ void FormatWidget::_deleteSubdevices(SubDevice **ppSubdevices, qint32 nCount)
     }
 }
 
-XComboBoxEx *FormatWidget::createComboBox(QTableWidget *pTableWidget, QMap<quint64, QString> mapData, qint32 nType, int nData, XComboBoxEx::CBTYPE cbtype, quint64 nMask,
+XComboBoxEx *FormatWidget::createComboBox(QTableWidget *pTableWidget, QMap<quint64, QString> mapData, qint32 nType, qint32 nData, XComboBoxEx::CBTYPE cbtype, quint64 nMask,
                                           int nExtraData)
 {
     XComboBoxEx *result = new XComboBoxEx(this);

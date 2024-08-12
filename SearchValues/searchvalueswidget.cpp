@@ -210,6 +210,7 @@ void SearchValuesWidget::_search(DialogSearch::SEARCHMODE mode)
         XBinary::SEARCHDATA searchData;
 
         DialogSearch dialogSearch(this, getDevice(), &searchData, mode, options);
+        dialogSearch.setGlobal(getShortcuts(), getGlobalOptions());
 
         XOptions::_adjustStayOnTop(&dialogSearch, true);
 
