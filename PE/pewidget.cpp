@@ -264,7 +264,7 @@ void PEWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
     FormatWidget::setGlobal(pShortcuts, pXOptions);
 }
 
-FormatWidget::SV PEWidget::_setValue(QVariant vValue, qint32 nStype, qint32 nNdata, qint32 nVtype, int nPosition, qint64 nOffset)
+FormatWidget::SV PEWidget::_setValue(QVariant vValue, qint32 nStype, qint32 nNdata, qint32 nVtype, qint32 nPosition, qint64 nOffset)
 {
     Q_UNUSED(nVtype)
     Q_UNUSED(nPosition)
@@ -1053,7 +1053,7 @@ void PEWidget::reloadData(bool bSaveSelection)
             }
         } else if (nType == SPE::TYPE_HEX) {
             if (!isInitPresent(sInit)) {
-                XHexView::OPTIONS options = {};
+                XHexViewWidget::OPTIONS options = {};
                 options.bMenu_Disasm = true;
                 options.bMenu_MemoryMap = true;
 

@@ -1454,9 +1454,10 @@ void MACHWidget::reloadData(bool bSaveSelection)
             }
         } else if (nType == SMACH::TYPE_HEX) {
             if (!isInitPresent(sInit)) {
-                XHexView::OPTIONS options = {};
+                XHexViewWidget::OPTIONS options = {};
                 options.bMenu_Disasm = true;
                 options.bMenu_MemoryMap = true;
+                options.fileType = mach.getFileType();
 
                 if (bSaveSelection) {
                     options.nStartSelectionOffset = -1;

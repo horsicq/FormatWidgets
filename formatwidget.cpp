@@ -1233,10 +1233,10 @@ void FormatWidget::valueChangedSlot(QVariant varValue)
 {
     XLineEditHEX *pLineEdit = qobject_cast<XLineEditHEX *>(sender());
 
-    int nStype = pLineEdit->property("STYPE").toInt();
-    int nNdata = pLineEdit->property("NDATA").toInt();
-    int nVtype = pLineEdit->property("VTYPE").toInt();
-    int nPosition = pLineEdit->property("POSITION").toInt();
+    qint32 nStype = pLineEdit->property("STYPE").toInt();
+    qint32 nNdata = pLineEdit->property("NDATA").toInt();
+    qint32 nVtype = pLineEdit->property("VTYPE").toInt();
+    qint32 nPosition = pLineEdit->property("POSITION").toInt();
     qint64 nOffset = pLineEdit->property("OFFSET").toLongLong();
 
     setValue(varValue, nStype, nNdata, nVtype, nPosition, nOffset);
@@ -1280,14 +1280,16 @@ void FormatWidget::allReload(qint64 nDeviceOffset, qint64 nDeviceSize)
 
 void FormatWidget::showHex(qint64 nOffset, qint64 nSize)
 {
-    XHexView::OPTIONS hexOptions = {};
+    XHexViewWidget::OPTIONS hexOptions = {};
 
     hexOptions.nStartAddress = 0;
     hexOptions.nStartSelectionOffset = nOffset;
     hexOptions.nSizeOfSelection = nSize;
 
-    DialogHexView dialogHexView(this, getDevice(), hexOptions, getXInfoDB());
+    DialogHexView dialogHexView(this);
     dialogHexView.setGlobal(getShortcuts(), getGlobalOptions());
+    dialogHexView.setData(getDevice(), hexOptions);
+    dialogHexView.setXInfoDB(getXInfoDB());
 
     connect(&dialogHexView, SIGNAL(editState(bool)), this, SLOT(setEdited(bool)));
 

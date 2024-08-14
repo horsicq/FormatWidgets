@@ -174,7 +174,7 @@ void MACHSectionHeaderWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOpti
     XShortcutsWidget::setGlobal(pShortcuts, pXOptions);
 }
 
-FormatWidget::SV MACHSectionHeaderWidget::_setValue(QVariant vValue, qint32 nStype, int nNdata, int nVtype, int nPosition, qint64 nOffset)
+FormatWidget::SV MACHSectionHeaderWidget::_setValue(QVariant vValue, qint32 nStype, qint32 nNdata, qint32 nVtype, qint32 nPosition, qint64 nOffset)
 {
     Q_UNUSED(nVtype)
     Q_UNUSED(nPosition)

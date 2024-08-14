@@ -341,9 +341,10 @@ void DEXWidget::reloadData(bool bSaveSelection)
             }
         } else if (nType == SDEX::TYPE_HEX) {
             if (!isInitPresent(sInit)) {
-                XHexView::OPTIONS options = {};
+                XHexViewWidget::OPTIONS options = {};
                 //                options.bMenu_Disasm=true; // TODO
                 options.bMenu_MemoryMap = true;
+                options.fileType = dex.getFileType();
 
                 if (bSaveSelection) {
                     options.nStartSelectionOffset = -1;

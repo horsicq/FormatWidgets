@@ -354,9 +354,10 @@ void LEWidget::reloadData(bool bSaveSelection)
             }
         } else if (nType == SLE::TYPE_HEX) {
             if (!isInitPresent(sInit)) {
-                XHexView::OPTIONS options = {};
+                XHexViewWidget::OPTIONS options = {};
                 options.bMenu_Disasm = true;
                 options.bMenu_MemoryMap = true;
+                options.fileType = le.getFileType();
 
                 if (bSaveSelection) {
                     options.nStartSelectionOffset = -1;

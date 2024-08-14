@@ -69,6 +69,8 @@ void DialogSectionHeader::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
     if (g_pWidget) {
         g_pWidget->setGlobal(pShortcuts, pXOptions);
     }
+
+    XShortcutsDialog::setGlobal(pShortcuts, pXOptions);
 }
 
 void DialogSectionHeader::adjustView()
