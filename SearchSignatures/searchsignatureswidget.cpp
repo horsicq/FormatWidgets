@@ -221,7 +221,7 @@ void SearchSignaturesWidget::_copyOffset()
 
 void SearchSignaturesWidget::_hex()
 {
-    int nRow = ui->tableViewResult->currentIndex().row();
+    qint32 nRow = ui->tableViewResult->currentIndex().row();
 
     if ((nRow != -1) && (g_pModel)) {
         QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(0);
@@ -287,7 +287,7 @@ void SearchSignaturesWidget::search()
 
 void SearchSignaturesWidget::loadSignatures(const QString &sFileName)
 {
-    int nNumberOfSignatures = 0;
+    qint32 nNumberOfSignatures = 0;
 
     g_listSignatureRecords.clear();
 

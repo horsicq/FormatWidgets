@@ -235,7 +235,7 @@ void SearchStringsWidget::on_tableViewResult_customContextMenuRequested(const QP
 
 void SearchStringsWidget::_hex()
 {
-    int nRow = ui->tableViewResult->currentIndex().row();
+    qint32 nRow = ui->tableViewResult->currentIndex().row();
 
     if ((nRow != -1) && (g_pModel)) {
         QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(MultiSearch::COLUMN_STRING_NUMBER);
@@ -255,7 +255,7 @@ void SearchStringsWidget::_hex()
 
 void SearchStringsWidget::_demangle()
 {
-    int nRow = ui->tableViewResult->currentIndex().row();
+    qint32 nRow = ui->tableViewResult->currentIndex().row();
 
     if ((nRow != -1) && (g_pModel)) {
         QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(MultiSearch::COLUMN_STRING_VALUE);
