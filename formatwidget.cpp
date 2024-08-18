@@ -565,7 +565,7 @@ void FormatWidget::showSectionHex(QTableView *pTableView)
 
 void FormatWidget::showSectionEntropy(QTableView *pTableView)
 {
-    int nRow = pTableView->currentIndex().row();
+    qint32 nRow = pTableView->currentIndex().row();
 
     if (nRow != -1) {
         QModelIndex index = pTableView->selectionModel()->selectedIndexes().at(0);
@@ -579,7 +579,7 @@ void FormatWidget::showSectionEntropy(QTableView *pTableView)
 
 void FormatWidget::showSectionDisasm(QTableView *pTableView)
 {
-    int nRow = pTableView->currentIndex().row();
+    qint32 nRow = pTableView->currentIndex().row();
 
     if (nRow != -1) {
         QModelIndex index = pTableView->selectionModel()->selectedIndexes().at(0);
