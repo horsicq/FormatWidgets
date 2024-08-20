@@ -644,7 +644,7 @@ qint64 FormatWidget::getTableViewItemSize(QTableView *pTableView)
 {
     qint64 nResult = 0;
 
-    int nRow = pTableView->currentIndex().row();
+    qint32 nRow = pTableView->currentIndex().row();
 
     if (nRow != -1) {
         QModelIndex index = pTableView->selectionModel()->selectedIndexes().at(0);
@@ -656,7 +656,7 @@ qint64 FormatWidget::getTableViewItemSize(QTableView *pTableView)
 
 void FormatWidget::showTableViewDemangle(QTableView *pTableView, qint32 nColumn)
 {
-    int nRow = pTableView->currentIndex().row();
+    qint32 nRow = pTableView->currentIndex().row();
 
     if (nRow != -1) {
         QModelIndex index = pTableView->selectionModel()->selectedIndexes().at(nColumn);

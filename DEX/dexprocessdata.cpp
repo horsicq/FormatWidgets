@@ -111,7 +111,7 @@ void DEXProcessData::_process()
 
         QList<XDEX_DEF::TYPE_ITEM_ID> listTypeItemIds = g_pDEX->getList_TYPE_ITEM_ID(&listMapItems, getPdStruct());
 
-        XDEX_DEF::MAP_ITEM mapItemStrings = g_pDEX->getMapItem(XDEX_DEF::TYPE_STRING_ID_ITEM, &listMapItems);
+        XDEX_DEF::MAP_ITEM mapItemStrings = g_pDEX->getMapItem(XDEX_DEF::TYPE_STRING_ID_ITEM, &listMapItems, getPdStruct());
 
         qint32 nNumberOfIds = listTypeItemIds.count();
 
@@ -142,7 +142,7 @@ void DEXProcessData::_process()
         listLabels.append("return_type");
 
         QList<XDEX_DEF::MAP_ITEM> listMapItems = g_pDEX->getMapItems(getPdStruct());
-        XDEX_DEF::MAP_ITEM mapItemString = g_pDEX->getMapItem(XDEX_DEF::TYPE_STRING_ID_ITEM, &listMapItems);
+        XDEX_DEF::MAP_ITEM mapItemString = g_pDEX->getMapItem(XDEX_DEF::TYPE_STRING_ID_ITEM, &listMapItems, getPdStruct());
 
         QList<XDEX_DEF::STRING_ITEM_ID> listStringID = g_pDEX->getList_STRING_ITEM_ID(&listMapItems, getPdStruct());
         QList<XDEX_DEF::TYPE_ITEM_ID> listItemID = g_pDEX->getList_TYPE_ITEM_ID(&listMapItems, getPdStruct());
