@@ -690,7 +690,7 @@ bool FormatWidget::_setTreeItem(QTreeWidget *pTree, QTreeWidgetItem *pItem, qint
 
 void FormatWidget::setTreeItem(QTreeWidget *pTree, qint32 nID)
 {
-    int nNumberOfItems = pTree->topLevelItemCount();
+    qint32 nNumberOfItems = pTree->topLevelItemCount();
 
     for (qint32 i = 0; i < nNumberOfItems; i++) {
         if (_setTreeItem(pTree, pTree->topLevelItem(i), nID)) {
@@ -711,7 +711,7 @@ QString FormatWidget::getInitString(QTreeWidgetItem *pItem)
 {
     QString sResult;
 
-    int nType = pItem->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_TYPE).toInt();
+    qint32 nType = pItem->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_TYPE).toInt();
     qint64 nDataOffset = pItem->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET).toLongLong();
     qint64 nDataSize = pItem->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_SIZE).toLongLong();
 
@@ -1077,7 +1077,7 @@ qint32 FormatWidget::getColumnWidth(QWidget *pParent, FormatWidget::CW cw, XBina
 {
     qint32 nResult = 0;
 
-    int nSymbolWidth = XLineEditHEX::getSymbolWidth(pParent);
+    qint32 nSymbolWidth = XLineEditHEX::getSymbolWidth(pParent);
 
     if (cw == CW_UINTMODE) {
         switch (mode) {
@@ -1116,8 +1116,8 @@ XADDR FormatWidget::getDisasmInitAddress()
 
 QStandardItemModel *FormatWidget::getHeaderTableModel(QTableWidget *pTableWidget)
 {
-    int nNumberOfColumns = pTableWidget->columnCount();
-    int nNumberOfRows = pTableWidget->rowCount();
+    qint32 nNumberOfColumns = pTableWidget->columnCount();
+    qint32 nNumberOfRows = pTableWidget->rowCount();
 
     QStandardItemModel *pResult = new QStandardItemModel(nNumberOfRows, nNumberOfColumns);
 
