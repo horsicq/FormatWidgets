@@ -1389,7 +1389,7 @@ void FormatWidget::registerShortcuts(bool bState)
 }
 
 bool FormatWidget::createHeaderTable(qint32 nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, qint32 nNumberOfRecords,
-                                     int nPosition, qint64 nOffset)
+                                     qint32 nPosition, qint64 nOffset)
 {
     pTableWidget->setColumnCount(6);
     pTableWidget->setRowCount(nNumberOfRecords);
