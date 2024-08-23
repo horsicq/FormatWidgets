@@ -193,7 +193,7 @@ void MSDOSWidget::adjustHeaderTable(qint32 nType, QTableWidget *pTableWidget)
     // TODO like MACH !!!
     Q_UNUSED(nType);
 
-    int nSymbolWidth = XLineEditHEX::getSymbolWidth(this);
+    qint32 nSymbolWidth = XLineEditHEX::getSymbolWidth(this);
 
     pTableWidget->setColumnWidth(HEADER_COLUMN_NAME, nSymbolWidth * 12);   // TODO
     pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET, nSymbolWidth * 4);  // TODO
@@ -245,7 +245,7 @@ void MSDOSWidget::_findValue(quint64 nValue, XBinary::ENDIAN endian)
 
 void MSDOSWidget::reloadData(bool bSaveSelection)
 {
-    int nType = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_TYPE).toInt();
+    qint32 nType = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_TYPE).toInt();
     //    qint64
     //    nDataOffset=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
     //    qint64
