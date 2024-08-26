@@ -1532,7 +1532,7 @@ void FormatWidget::updateTableRecord(QTableWidget *pTableWidget, qint32 nRow, qi
 //    pTableWidget->setColumnCount(4);
 //    pTableWidget->setRowCount(nRecordCount);
 
-//    int nSymbolWidth=getSymbolWidth();
+//    qint32 nSymbolWidth=getSymbolWidth();
 
 //    pTableWidget->setColumnWidth(0,nSymbolWidth*3);
 //    pTableWidget->setColumnWidth(1,nSymbolWidth*12);
