@@ -156,6 +156,12 @@
        <property name="title">
         <string notr="true">RegExp</string>
        </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+       <property name="checked">
+        <bool>false</bool>
+       </property>
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <property name="leftMargin">
          <number>2</number>
@@ -196,7 +202,7 @@
       <number>0</number>
      </property>
      <item>
-      <widget class="QGroupBox" name="groupBoxFilter_2">
+      <widget class="QGroupBox" name="groupANSICodec">
        <property name="title">
         <string>Code page</string>
        </property>

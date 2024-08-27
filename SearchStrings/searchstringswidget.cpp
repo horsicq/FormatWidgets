@@ -63,6 +63,8 @@ SearchStringsWidget::SearchStringsWidget(QWidget *pParent) : XShortcutsWidget(pP
     ui->tableViewResult->installEventFilter(this);
 
     setReadonly(true);
+
+    ui->groupBoxMask->setChecked(false);
 }
 
 SearchStringsWidget::~SearchStringsWidget()
