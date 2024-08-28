@@ -183,12 +183,14 @@ void FormatsWidget::reload()
                 XZip xzip(&file);
 
                 if (xzip.isValid()) {
-                    if (xzip.isArchiveRecordPresent("META-INF/MANIFEST.MF")) {
+                    QList<XArchive::RECORD> listRecords = xzip.getRecords(-1, nullptr);
+
+                    if (xzip.isArchiveRecordPresent("META-INF/MANIFEST.MF", &listRecords)) {
                         bMANIFESTMF = true;
                     }
 
                     if (fileType == XBinary::FT_APK) {
-                        if (xzip.isArchiveRecordPresent("AndroidManifest.xml")) {
+                        if (xzip.isArchiveRecordPresent("AndroidManifest.xml", &listRecords)) {
                             bAndroidManifest = true;
                         }
                     }
