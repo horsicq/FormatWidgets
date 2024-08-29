@@ -82,7 +82,7 @@ QList<QString> ProcessData::getStructList(const FW_DEF::HEADER_RECORD *pRecords,
 
 void ProcessData::setTableHeader(QStandardItemModel *pModel, QList<QString> *pListStrings)
 {
-    int nNumberOfRecords = pListStrings->count();
+    qint32 nNumberOfRecords = pListStrings->count();
 
     for (qint32 i = 0; i < nNumberOfRecords; i++) {
         pModel->setHeaderData(i, Qt::Horizontal, pListStrings->at(i));

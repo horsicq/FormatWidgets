@@ -1088,7 +1088,7 @@ void PEProcessData::_process()
             pItemNumber->setData(listMetaDataTables.at(i).nNumber, Qt::DisplayRole);
 
             pItemNumber->setData(listMetaDataTables.at(i).nTableSize, Qt::UserRole + FW_DEF::SECTION_DATA_SIZE);
-            pItemNumber->setData(listMetaDataTables.at(i).nTableOffset - cliInfo.metaData.osTables.nOffset, Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET);
+            pItemNumber->setData(listMetaDataTables.at(i).nTableOffset - cliInfo.metaData.osMetadata.nOffset, Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET);
 
             (*g_ppModel)->setItem(i, 0, pItemNumber);
             (*g_ppModel)->setItem(i, 1, new QStandardItem(listMetaDataTables.at(i).sId));
