@@ -139,6 +139,7 @@ private slots:
     void on_pushButtonVisualization_clicked();
     void _showNfdInfo();
     void _showYaraInfo();
+    void _currentFileType(qint32 nFT);
     void on_pushButtonMANIFESTMF_clicked();
     void on_pushButtonAndroidManifest_clicked();
 

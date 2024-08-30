@@ -38,6 +38,9 @@ FormatsWidget::FormatsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(n
     connect(ui->pageScanNFD, SIGNAL(showInfo()), this, SLOT(_showNfdInfo()));
     connect(ui->pageScanYARA, SIGNAL(showInfo()), this, SLOT(_showYaraInfo()));
 
+    connect(ui->pageScanDIE, SIGNAL(currentFileType(qint32)), this, SLOT(_currentFileType(qint32)));
+    connect(ui->pageScanNFD, SIGNAL(currentFileType(qint32)), this, SLOT(_currentFileType(qint32)));
+
 #ifndef USE_YARA
     ui->pushButtonYARA->hide();
 #endif
@@ -631,9 +634,7 @@ void FormatsWidget::showBinary(SBINARY::TYPE type)
 
 XBinary::FT FormatsWidget::getCurrentFileType()
 {
-    XBinary::FT fileType = (XBinary::FT)(ui->comboBoxFileType->currentData().toInt());
-
-    return fileType;
+    return (XBinary::FT)(ui->comboBoxFileType->currentData().toInt());
 }
 
 void FormatsWidget::on_pushButtonMSDOSOverlay_clicked()
@@ -1052,6 +1053,11 @@ void FormatsWidget::_showNfdInfo()
 void FormatsWidget::_showYaraInfo()
 {
     showType(SBINARY::TYPE_YARASCAN);
+}
+
+void FormatsWidget::_currentFileType(qint32 nFT)
+{
+    XFormats::setCurrentFileTypeComboBox(ui->comboBoxFileType, (XBinary::FT)nFT);
 }
 
 void FormatsWidget::on_pushButtonMANIFESTMF_clicked()
