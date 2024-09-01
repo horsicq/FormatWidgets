@@ -118,7 +118,7 @@ void NEWidget::reload()
     }
 }
 
-FormatWidget::SV NEWidget::_setValue(QVariant vValue, int nStype, qint32 nNdata, qint32 nVtype, qint32 nPosition, qint64 nOffset)
+FormatWidget::SV NEWidget::_setValue(QVariant vValue, qint32 nStype, qint32 nNdata, qint32 nVtype, qint32 nPosition, qint64 nOffset)
 {
     Q_UNUSED(nVtype)
     Q_UNUSED(nPosition)
@@ -339,7 +339,7 @@ void NEWidget::_findValue(quint64 nValue, XBinary::ENDIAN endian)
 
 void NEWidget::reloadData(bool bSaveSelection)
 {
-    int nType = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_TYPE).toInt();
+    qint32 nType = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_TYPE).toInt();
     //    qint64
     //    nDataOffset=ui->treeWidgetNavi->currentItem()->data(0,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET).toLongLong();
     //    qint64
