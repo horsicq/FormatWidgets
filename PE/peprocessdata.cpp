@@ -467,7 +467,7 @@ void PEProcessData::_process()
 
         QList<XPE::IMAGE_IMPORT_DESCRIPTOR_EX> listID = g_pPE->getImportDescriptorsEx(&memoryMap);  // TODO pdsStruct
 
-        int nNumberOfIDs = listID.count();
+        qint32 nNumberOfIDs = listID.count();
 
         *g_ppModel = new QStandardItemModel(nNumberOfIDs, listLabels.count());
 
@@ -497,7 +497,7 @@ void PEProcessData::_process()
 
         QList<XPE::IMPORT_POSITION> listImportPositions = g_pPE->getImportPositions(g_nNumber);  // TODO pdsStruct
 
-        int nNumberOfIPs = listImportPositions.count();
+        qint32 nNumberOfIPs = listImportPositions.count();
 
         *g_ppModel = new QStandardItemModel(nNumberOfIPs, listLabels.count());
 
