@@ -440,7 +440,7 @@ void MACHProcessData::_process()
 
         QList<XBinary::OPCODE> listRecords = g_pXMACH->getOpcodes(g_nOffset, g_nOffset, g_nSize, opcodeType);
 
-        int nNumberOfRecords = listRecords.count();
+        qint32 nNumberOfRecords = listRecords.count();
 
         *g_ppModel = new QStandardItemModel(nNumberOfRecords, listLabels.count());
 
@@ -470,7 +470,7 @@ void MACHProcessData::_process()
         QList<XMACH::NLIST_RECORD> listNlistRecords = g_pXMACH->getNlistRecords();
         XBinary::OFFSETSIZE osStringTable = g_pXMACH->getStringTableOffsetSize();
 
-        int nNumberOfRecords = listRecords.count();
+        qint32 nNumberOfRecords = listRecords.count();
 
         *g_ppModel = new QStandardItemModel(nNumberOfRecords, listLabels.count());
 
