@@ -543,7 +543,7 @@ void MACHSectionHeaderWidget::reloadData(bool bSaveSelection)
 {
     Q_UNUSED(bSaveSelection)
 
-    int nType = getType();
+    qint32 nType = getType();
 
     XMACH mach(getDevice(), getOptions().bIsImage, getOptions().nImageBase);
 
@@ -969,8 +969,8 @@ void MACHSectionHeaderWidget::reloadData(bool bSaveSelection)
 void MACHSectionHeaderWidget::_widgetValueChanged(QVariant vValue)
 {
     QWidget *pWidget = qobject_cast<QWidget *>(sender());
-    int nStype = pWidget->property("STYPE").toInt();
-    int nNdata = pWidget->property("NDATA").toInt();
+    qint32 nStype = pWidget->property("STYPE").toInt();
+    qint32 nNdata = pWidget->property("NDATA").toInt();
 
     XMACH mach(getDevice(), getOptions().bIsImage, getOptions().nImageBase);
 
