@@ -927,6 +927,8 @@ void PEProcessData::_process()
                 (*g_ppModel)->setItem(i, 6, new QStandardItem(XBinary::valueToHexEx(listResources.at(i).nSize)));
 
                 XScanEngine::SCAN_OPTIONS scanOptions = {};
+                scanOptions.bUseCustomDatabase = true;
+                scanOptions.bUseExtraDatabase = true;
                 scanOptions.bShowType = true;
                 scanOptions.bShowVersion = true;
                 scanOptions.bShowInfo = true;
