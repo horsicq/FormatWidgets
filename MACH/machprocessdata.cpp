@@ -596,7 +596,7 @@ void MACHProcessData::_process()
         QList<XMACH::NLIST_RECORD> listNlistRecords = g_pXMACH->getNlistRecords();
         XBinary::OFFSETSIZE osStringTable = g_pXMACH->getStringTableOffsetSize();
 
-        int nNumberOfRecords = listRecords.count();
+        qint32 nNumberOfRecords = listRecords.count();
 
         *g_ppModel = new QStandardItemModel(nNumberOfRecords, listLabels.count());
 
@@ -630,7 +630,7 @@ void MACHProcessData::_process()
             listRecords = g_pXMACH->get_locrel_list();
         }
 
-        int nNumberOfRecords = listRecords.count();
+        qint32 nNumberOfRecords = listRecords.count();
 
         *g_ppModel = new QStandardItemModel(nNumberOfRecords, listLabels.count());
 
