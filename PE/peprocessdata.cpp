@@ -545,7 +545,7 @@ void PEProcessData::_process()
 
         QList<XPE_DEF::S_IMAGE_RUNTIME_FUNCTION_ENTRY> listRFE = g_pPE->getExceptionsList();  // TODO pdsStruct
 
-        int nNumberOfRFEs = listRFE.count();
+        qint32 nNumberOfRFEs = listRFE.count();
 
         *g_ppModel = new QStandardItemModel(nNumberOfRFEs, listLabels.count());
 
@@ -581,7 +581,7 @@ void PEProcessData::_process()
 
         QList<XPE_DEF::S_IMAGE_DELAYLOAD_DESCRIPTOR> listDelayImport = g_pPE->getDelayImportsList();  // TODO pdsStruct
 
-        int nNumberOfDelayImports = listDelayImport.count();
+        qint32 nNumberOfDelayImports = listDelayImport.count();
 
         *g_ppModel = new QStandardItemModel(nNumberOfDelayImports, listLabels.count());
 
@@ -657,7 +657,7 @@ void PEProcessData::_process()
 
         QList<XPE::BOUND_IMPORT_POSITION> listBoundImportPositions = g_pPE->getBoundImportPositions();  // TODO pdsStruct
 
-        int nNumberOfPositions = listBoundImportPositions.count();
+        qint32 nNumberOfPositions = listBoundImportPositions.count();
 
         *g_ppModel = new QStandardItemModel(nNumberOfPositions, listLabels.count());
 
