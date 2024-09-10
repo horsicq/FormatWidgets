@@ -2746,7 +2746,7 @@ void PEWidget::importFunctionDemangle()
 
 void PEWidget::showSectionHeader(qint32 nType, QTableView *pTableView)
 {
-    int nRow = pTableView->currentIndex().row();
+    qint32 nRow = pTableView->currentIndex().row();
 
     if (nRow != -1) {
         QModelIndex index = pTableView->selectionModel()->selectedIndexes().at(0);
@@ -2779,7 +2779,7 @@ void PEWidget::on_tableView_Sections_doubleClicked(const QModelIndex &index)
 
 void PEWidget::on_tableView_ImportLibraries_customContextMenuRequested(const QPoint &pos)
 {
-    int nRow = ui->tableView_ImportLibraries->currentIndex().row();
+    qint32 nRow = ui->tableView_ImportLibraries->currentIndex().row();
 
     if (nRow != -1) {
         QMenu contextMenu(this);
@@ -2814,7 +2814,7 @@ void PEWidget::onTableView_ImportLibraries_currentRowChanged(const QModelIndex &
 {
     Q_UNUSED(previous)
 
-    int nRow = current.row();
+    qint32 nRow = current.row();
 
     if (nRow != -1) {
         loadImportLibrary(nRow);

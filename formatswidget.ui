@@ -1858,7 +1858,7 @@
         <string>Endianness</string>
        </property>
        <property name="alignment">
-        <set>Qt::AlignCenter</set>
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_12">
         <property name="leftMargin">
@@ -1898,7 +1898,7 @@
         <string>Mode</string>
        </property>
        <property name="alignment">
-        <set>Qt::AlignCenter</set>
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_11">
         <property name="leftMargin">
@@ -1938,7 +1938,7 @@
         <string>Architecture</string>
        </property>
        <property name="alignment">
-        <set>Qt::AlignCenter</set>
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_10">
         <property name="leftMargin">
@@ -1978,7 +1978,7 @@
         <string>Type</string>
        </property>
        <property name="alignment">
-        <set>Qt::AlignCenter</set>
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_13">
         <property name="leftMargin">
