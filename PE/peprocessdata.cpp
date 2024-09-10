@@ -887,7 +887,7 @@ void PEProcessData::_process()
             listLabels.append(tr("Size"));
             listLabels.append("");
 
-            QList<XPE::RESOURCE_RECORD> listResources = g_pPE->getResources();  // TODO pdsStruct
+            QList<XPE::RESOURCE_RECORD> listResources = g_pPE->getResources(10000, getPdStruct());
 
             qint32 nNumberOfRecords = listResources.count();
 

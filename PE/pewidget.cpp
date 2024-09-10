@@ -166,15 +166,17 @@ void PEWidget::reload()
 
             ui->treeWidgetNavi->addTopLevelItem(pResources);
 
-            if (pe.isResourceStringTablePresent()) {
+            QList<XPE::RESOURCE_RECORD> listResources = pe.getResources(&memoryMap, 10000);
+
+            if (pe.isResourceStringTablePresent(&listResources)) {
                 pResources->addChild(createNewItem(SPE::TYPE_RESOURCES_STRINGTABLE, tr("String table")));
             }
 
-            if (pe.isResourceVersionPresent()) {
+            if (pe.isResourceVersionPresent(&listResources)) {
                 pResources->addChild(createNewItem(SPE::TYPE_RESOURCES_VERSION, tr("Version")));
             }
 
-            if (pe.isResourceManifestPresent()) {
+            if (pe.isResourceManifestPresent(&listResources)) {
                 pResources->addChild(createNewItem(SPE::TYPE_RESOURCES_MANIFEST, tr("Manifest")));
             }
         }
@@ -1706,7 +1708,7 @@ void PEWidget::reloadData(bool bSaveSelection)
                             SLOT(onTreeView_Resources_currentRowChanged(QModelIndex, QModelIndex)));
                 }
 
-                QList<XPE::RESOURCE_RECORD> listResources = pe.getResources();
+                QList<XPE::RESOURCE_RECORD> listResources = pe.getResources(10000);
 
                 ui->pushButtonExtractAllCursors_Resources->setEnabled(pe.isResourceGroupCursorsPresent(&listResources));
                 ui->pushButtonExtractAllIcons_Resources->setEnabled(pe.isResourceGroupIconsPresent(&listResources));

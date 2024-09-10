@@ -269,6 +269,7 @@ void FormatsWidget::reload()
                 }
 
                 bool bIsResourcesPresent = pe.isResourcesPresent();
+                QList<XPE::RESOURCE_RECORD> listResources = pe.getResources(10000);
 
                 ui->lineEditPESections->setValue_uint16(pe.getFileHeader_NumberOfSections());
                 ui->groupBoxPESections->setEnabled(pe.isSectionsTablePresent());
@@ -280,8 +281,8 @@ void FormatsWidget::reload()
                 ui->pushButtonPETLS->setEnabled(pe.isTLSPresent());
 
                 ui->groupBoxPEResources->setEnabled(bIsResourcesPresent);
-                ui->pushButtonPEManifest->setEnabled(pe.isResourceManifestPresent());
-                ui->pushButtonPEVersion->setEnabled(pe.isResourceVersionPresent());
+                ui->pushButtonPEManifest->setEnabled(pe.isResourceManifestPresent(&listResources));
+                ui->pushButtonPEVersion->setEnabled(pe.isResourceVersionPresent(&listResources));
 
                 ui->pushButtonPEOverlay->setEnabled(pe.isOverlayPresent());
 
