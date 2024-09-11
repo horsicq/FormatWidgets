@@ -623,7 +623,7 @@ void PEProcessData::_process()
 
         XPE::EXPORT_HEADER eh = g_pPE->getExport(bFilter);  // TODO pdsStruct
 
-        int nNumberOfPositions = eh.listPositions.count();
+        qint32 nNumberOfPositions = eh.listPositions.count();
 
         *g_ppModel = new QStandardItemModel(nNumberOfPositions, listLabels.count());
 
@@ -692,7 +692,7 @@ void PEProcessData::_process()
 
         QList<XPE_DEF::S_IMAGE_DEBUG_DIRECTORY> listDebug = g_pPE->getDebugList();  // TODO pdsStruct
 
-        int nNumberOfDebugs = listDebug.count();
+        qint32 nNumberOfDebugs = listDebug.count();
 
         *g_ppModel = new QStandardItemModel(nNumberOfDebugs, listLabels.count());
 
@@ -726,7 +726,7 @@ void PEProcessData::_process()
 
         QList<XADDR> listCallbacks = g_pPE->getTLS_CallbacksList();  // TODO pdsStruct
 
-        int nNumberOfRecords = listCallbacks.count();
+        qint32 nNumberOfRecords = listCallbacks.count();
 
         *g_ppModel = new QStandardItemModel(nNumberOfRecords, listLabels.count());
 
@@ -761,7 +761,7 @@ void PEProcessData::_process()
 
         QList<XPE::DELAYIMPORT_POSITION> listDIP = g_pPE->getDelayImportPositions(g_nNumber);  // TODO pdsStruct
 
-        int nNumberOfDIPs = listDIP.count();
+        qint32 nNumberOfDIPs = listDIP.count();
 
         *g_ppModel = new QStandardItemModel(nNumberOfDIPs, listLabels.count());
 
@@ -815,7 +815,7 @@ void PEProcessData::_process()
 
             *g_ppModel = new QStandardItemModel;
 
-            int nNumberOfPositions = rh.listPositions.count();
+            qint32 nNumberOfPositions = rh.listPositions.count();
 
             if (nNumberOfPositions) {
                 QStandardItem *pRoot = new QStandardItem();
@@ -832,7 +832,7 @@ void PEProcessData::_process()
 
                     pRoot->appendRow(pPos);
 
-                    int nNumberOfPositions = pos.listPositions.count();
+                    qint32 nNumberOfPositions = pos.listPositions.count();
 
                     for (qint32 j = 0; (j < nNumberOfPositions) && (isRun()); j++) {
                         XPE::RESOURCE_POSITION subpos = rh.listPositions.at(i).listPositions.at(j);
