@@ -2832,7 +2832,7 @@ void PEWidget::on_tableView_ImportLibraries_doubleClicked(const QModelIndex &ind
 
 void PEWidget::on_tableView_Relocs_customContextMenuRequested(const QPoint &pos)
 {
-    int nRow = ui->tableView_Relocs->currentIndex().row();
+    qint32 nRow = ui->tableView_Relocs->currentIndex().row();
 
     if (nRow != -1) {
         QMenu contextMenu(this);
@@ -2851,7 +2851,7 @@ void PEWidget::onTableView_Relocs_currentRowChanged(const QModelIndex &current, 
 {
     Q_UNUSED(previous)
 
-    int nRow = current.row();
+    qint32 nRow = current.row();
 
     if (nRow != -1) {
         loadRelocs(nRow);
@@ -2867,7 +2867,7 @@ void PEWidget::on_tableView_Relocs_doubleClicked(const QModelIndex &index)
 
 void PEWidget::on_tableView_Debug_customContextMenuRequested(const QPoint &pos)
 {
-    int nRow = ui->tableView_Debug->currentIndex().row();
+    qint32 nRow = ui->tableView_Debug->currentIndex().row();
 
     if (nRow != -1) {
         QMenu contextMenu(this);
