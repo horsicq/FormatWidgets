@@ -44,7 +44,7 @@ void PEProcessData::_process()
 
         XBinary::OFFSETSIZE osStringTable = g_pPE->getStringTable();
 
-        QList<XPE_DEF::IMAGE_SECTION_HEADER> listSections = g_pPE->getSectionHeaders();  // TODO pdsStruct
+        QList<XPE_DEF::IMAGE_SECTION_HEADER> listSections = g_pPE->getSectionHeaders(getPdStruct());  // TODO pdsStruct
 
         qint32 nNumberOfRecords = listSections.count();
 
@@ -112,7 +112,7 @@ void PEProcessData::_process()
 
         setTreeHeader(*g_ppModel, &listLabels);
 
-        QList<XPE_DEF::IMAGE_SECTION_HEADER> listSectionHeaders = g_pPE->getSectionHeaders();
+        QList<XPE_DEF::IMAGE_SECTION_HEADER> listSectionHeaders = g_pPE->getSectionHeaders(getPdStruct());
         QList<XPE::SECTION_RECORD> listSectionRecords = g_pPE->getSectionRecords(&listSectionHeaders);
         XBinary::_MEMORY_MAP memoryMap = g_pPE->getMemoryMap(XBinary::MAPMODE_UNKNOWN, getPdStruct());
 
