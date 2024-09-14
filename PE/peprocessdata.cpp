@@ -843,7 +843,7 @@ void PEProcessData::_process()
 
                         pPos->appendRow(pSubPos);
 
-                        int nNumberOfSubPositions = subpos.listPositions.count();
+                        qint32 nNumberOfSubPositions = subpos.listPositions.count();
 
                         for (qint32 k = 0; (k < nNumberOfSubPositions) && (isRun()); k++) {
                             XPE::RESOURCE_POSITION record1 = rh.listPositions.at(i);
@@ -952,7 +952,7 @@ void PEProcessData::_process()
 
         QList<XPE::RESOURCE_STRINGTABLE_RECORD> listSTR = g_pPE->getResourceStringTableRecords();  // TODO pdsStruct
 
-        int nNumberOfRecords = listSTR.count();
+        qint32 nNumberOfRecords = listSTR.count();
 
         *g_ppModel = new QStandardItemModel(nNumberOfRecords, listLabels.count());
 
@@ -985,7 +985,7 @@ void PEProcessData::_process()
         QList<XPE::CERT> listCert = g_pPE->getCertList(ddSecurity.VirtualAddress, ddSecurity.Size);
 
         if (listCert.count()) {
-            int nNumberOfCerts = listCert.count();
+            qint32 nNumberOfCerts = listCert.count();
 
             for (qint32 i = 0; (i < nNumberOfCerts) && (isRun()); i++) {
                 QStandardItem *pRoot = new QStandardItem;
