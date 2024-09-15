@@ -113,7 +113,7 @@ void PEProcessData::_process()
         setTreeHeader(*g_ppModel, &listLabels);
 
         QList<XPE_DEF::IMAGE_SECTION_HEADER> listSectionHeaders = g_pPE->getSectionHeaders(getPdStruct());
-        QList<XPE::SECTION_RECORD> listSectionRecords = g_pPE->getSectionRecords(&listSectionHeaders);
+        QList<XPE::SECTION_RECORD> listSectionRecords = g_pPE->getSectionRecords(&listSectionHeaders, getPdStruct());
         XBinary::_MEMORY_MAP memoryMap = g_pPE->getMemoryMap(XBinary::MAPMODE_UNKNOWN, getPdStruct());
 
         QList<QString> listStrDb = XInfoDB::loadStrDB(getOptions()->getInfoPath(), XInfoDB::STRDB_PESECTIONS);
