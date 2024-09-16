@@ -398,7 +398,7 @@ void PEProcessData::_process()
         listLabels.append("");
         listLabels.append("");
 
-        QList<XPE::RELOCS_HEADER> listRelocsHeaders = g_pPE->getRelocsHeaders();  // TODO pdsStruct
+        QList<XPE::RELOCS_HEADER> listRelocsHeaders = g_pPE->getRelocsHeaders(getPdStruct());
 
         qint32 nNumberOfRecords = listRelocsHeaders.count();
 

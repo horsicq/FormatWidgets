@@ -1028,7 +1028,7 @@ void PEWidget::resourceDump()
 
 void PEWidget::reloadData(bool bSaveSelection)
 {
-    int nType = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_TYPE).toInt();
+    qint32 nType = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_TYPE).toInt();
     qint64 nDataOffset = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET).toLongLong();
     qint64 nDataSize = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_SIZE).toLongLong();
 
@@ -2337,7 +2337,7 @@ void PEWidget::reloadData(bool bSaveSelection)
 
 void PEWidget::on_tableView_Sections_customContextMenuRequested(const QPoint &pos)
 {
-    int nRow = ui->tableView_Sections->currentIndex().row();
+    qint32 nRow = ui->tableView_Sections->currentIndex().row();
 
     if (nRow != -1) {
         bool bIsEnable = getTableViewItemSize(ui->tableView_Sections);
