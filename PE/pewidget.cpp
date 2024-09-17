@@ -2886,7 +2886,7 @@ void PEWidget::onTableView_Debug_currentRowChanged(const QModelIndex &current, c
 {
     Q_UNUSED(previous)
 
-    int nRow = current.row();
+    qint32 nRow = current.row();
 
     if (nRow != -1) {
         loadDebug(nRow);
@@ -2902,7 +2902,7 @@ void PEWidget::on_tableView_Debug_doubleClicked(const QModelIndex &index)
 
 void PEWidget::on_tableView_Resources_customContextMenuRequested(const QPoint &pos)
 {
-    int nRow = ui->tableView_Resources->currentIndex().row();
+    qint32 nRow = ui->tableView_Resources->currentIndex().row();
 
     if (nRow != -1) {
         bool bIsEnable = getTableViewItemSize(ui->tableView_Resources);
