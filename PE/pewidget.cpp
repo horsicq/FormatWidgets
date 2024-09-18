@@ -2946,7 +2946,7 @@ void PEWidget::onTableView_Resources_currentRowChanged(const QModelIndex &curren
 
 void PEWidget::on_tableView_Exceptions_customContextMenuRequested(const QPoint &pos)
 {
-    int nRow = ui->tableView_Exceptions->currentIndex().row();
+    qint32 nRow = ui->tableView_Exceptions->currentIndex().row();
 
     if (nRow != -1) {
         QMenu contextMenu(this);
@@ -2965,7 +2965,7 @@ void PEWidget::onTableView_Exceptions_currentRowChanged(const QModelIndex &curre
 {
     Q_UNUSED(previous)
 
-    int nRow = current.row();
+    qint32 nRow = current.row();
 
     if (nRow != -1) {
         loadException(nRow);
