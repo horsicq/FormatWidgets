@@ -3016,7 +3016,7 @@ void PEWidget::on_tableView_DelayImportLibraries_doubleClicked(const QModelIndex
 
 void PEWidget::on_tableView_BoundImport_customContextMenuRequested(const QPoint &pos)
 {
-    int nRow = ui->tableView_BoundImport->currentIndex().row();
+    qint32 nRow = ui->tableView_BoundImport->currentIndex().row();
 
     if (nRow != -1) {
         QMenu contextMenu(this);
@@ -3075,7 +3075,7 @@ void PEWidget::onTreeView_Certificate_currentRowChanged(const QModelIndex &curre
 
 void PEWidget::on_tableView_ExportFunctions_customContextMenuRequested(const QPoint &pos)
 {
-    int nRow = ui->tableView_ExportFunctions->currentIndex().row();
+    qint32 nRow = ui->tableView_ExportFunctions->currentIndex().row();
 
     if (nRow != -1) {
         QMenu contextMenu(this);
