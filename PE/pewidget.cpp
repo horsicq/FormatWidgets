@@ -2981,7 +2981,7 @@ void PEWidget::on_tableView_Exceptions_doubleClicked(const QModelIndex &index)
 
 void PEWidget::on_tableView_DelayImportLibraries_customContextMenuRequested(const QPoint &pos)
 {
-    int nRow = ui->tableView_DelayImportLibraries->currentIndex().row();
+    qint32 nRow = ui->tableView_DelayImportLibraries->currentIndex().row();
 
     if (nRow != -1) {
         QMenu contextMenu(this);
@@ -3000,7 +3000,7 @@ void PEWidget::onTableView_DelayImportLibraries_currentRowChanged(const QModelIn
 {
     Q_UNUSED(previous)
 
-    int nRow = current.row();
+    qint32 nRow = current.row();
 
     if (nRow != -1) {
         loadDelayImport(nRow);
