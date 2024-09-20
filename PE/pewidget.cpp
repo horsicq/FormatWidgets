@@ -3262,7 +3262,7 @@ void PEWidget::on_pushButtonSave_Sections_clicked()
 
 void PEWidget::on_tableView_Resources_StringTable_customContextMenuRequested(const QPoint &pos)
 {
-    int nRow = ui->tableView_Resources_StringTable->currentIndex().row();
+    qint32 nRow = ui->tableView_Resources_StringTable->currentIndex().row();
 
     if (nRow != -1) {
         QMenu contextMenu(this);
@@ -3429,7 +3429,7 @@ void PEWidget::on_pushButtonCollapse_Sections_Info_clicked()
 
 void PEWidget::on_treeView_Certificate_customContextMenuRequested(const QPoint &pos)
 {
-    int nRow = ui->treeView_Certificate->currentIndex().row();
+    qint32 nRow = ui->treeView_Certificate->currentIndex().row();
 
     if (nRow != -1) {
         QMenu contextMenu(this);
