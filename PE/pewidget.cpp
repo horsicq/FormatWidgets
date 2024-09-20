@@ -3137,7 +3137,7 @@ void PEWidget::on_checkBoxExportShowValid_stateChanged(int nState)
 
 void PEWidget::on_tableView_ImportFunctions_customContextMenuRequested(const QPoint &pos)
 {
-    int nRow = ui->tableView_ImportFunctions->currentIndex().row();
+    qint32 nRow = ui->tableView_ImportFunctions->currentIndex().row();
 
     if (nRow != -1) {
         QMenu contextMenu(this);
@@ -3191,7 +3191,7 @@ void PEWidget::formatXML()
 
 void PEWidget::on_tableWidget_IMAGE_DIRECTORY_ENTRIES_customContextMenuRequested(const QPoint &pos)
 {
-    int nRow = ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->currentIndex().row();
+    qint32 nRow = ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->currentIndex().row();
 
     if (nRow != -1) {
         bool bIsEnable = getTableViewItemSize(ui->tableWidget_IMAGE_DIRECTORY_ENTRIES);
@@ -3235,7 +3235,7 @@ void PEWidget::directoryEntropy()
 
 void PEWidget::on_tableView_TLSCallbacks_customContextMenuRequested(const QPoint &pos)
 {
-    int nRow = ui->tableView_TLSCallbacks->currentIndex().row();
+    qint32 nRow = ui->tableView_TLSCallbacks->currentIndex().row();
 
     if (nRow != -1) {
         QMenu contextMenu(this);
