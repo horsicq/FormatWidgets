@@ -3441,7 +3441,7 @@ void PEWidget::on_treeView_Certificate_customContextMenuRequested(const QPoint &
 
 void PEWidget::on_tableView_DelayImportFunctions_customContextMenuRequested(const QPoint &pos)
 {
-    int nRow = ui->tableView_DelayImportFunctions->currentIndex().row();
+    qint32 nRow = ui->tableView_DelayImportFunctions->currentIndex().row();
 
     if (nRow != -1) {
         QMenu contextMenu(this);
@@ -3453,7 +3453,7 @@ void PEWidget::on_tableView_DelayImportFunctions_customContextMenuRequested(cons
 
 void PEWidget::on_tableView_RICH_customContextMenuRequested(const QPoint &pos)
 {
-    int nRow = ui->tableView_RICH->currentIndex().row();
+    qint32 nRow = ui->tableView_RICH->currentIndex().row();
 
     if (nRow != -1) {
         QMenu contextMenu(this);
