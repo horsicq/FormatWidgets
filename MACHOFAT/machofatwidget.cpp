@@ -117,7 +117,7 @@ void MACHOFATWidget::setReadonly(bool bState)
 {
     Q_UNUSED(bState)
     //    // TODO Check
-    //    int nNumberOfRecords=g_listDevices.count();
+    //    qint32 nNumberOfRecords=g_listDevices.count();
 
     //    for(qint32 i=0;i<nNumberOfRecords;i++)
     //    {
