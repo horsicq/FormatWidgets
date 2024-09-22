@@ -3465,7 +3465,7 @@ void PEWidget::on_tableView_RICH_customContextMenuRequested(const QPoint &pos)
 
 void PEWidget::on_tableView_RelocsPositions_customContextMenuRequested(const QPoint &pos)
 {
-    int nRow = ui->tableView_RelocsPositions->currentIndex().row();
+    qint32 nRow = ui->tableView_RelocsPositions->currentIndex().row();
 
     if (nRow != -1) {
         QMenu contextMenu(this);
@@ -3477,7 +3477,7 @@ void PEWidget::on_tableView_RelocsPositions_customContextMenuRequested(const QPo
 
 void PEWidget::on_treeView_Resources_customContextMenuRequested(const QPoint &pos)
 {
-    int nRow = ui->treeView_Resources->currentIndex().row();
+    qint32 nRow = ui->treeView_Resources->currentIndex().row();
 
     if (nRow != -1) {
         QMenu contextMenu(this);
