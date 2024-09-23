@@ -995,7 +995,7 @@ void PEProcessData::_process()
                 pRoot->setData(listCert.at(i).record.dwLength, Qt::UserRole + FW_DEF::SECTION_DATA_SIZE);
                 pRoot->setData(listCert.at(i).nOffset, Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET);
 
-                int nNumberOfRecords = listCert.at(i).certRecord.listRecords.count();
+                qint32 nNumberOfRecords = listCert.at(i).certRecord.listRecords.count();
 
                 for (qint32 j = 0; (j < nNumberOfRecords) && (isRun()); j++) {
                     QStandardItem *pRecord = new QStandardItem;
