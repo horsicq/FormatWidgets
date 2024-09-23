@@ -3489,7 +3489,7 @@ void PEWidget::on_treeView_Resources_customContextMenuRequested(const QPoint &po
 
 void PEWidget::on_treeView_Sections_Info_customContextMenuRequested(const QPoint &pos)
 {
-    int nRow = ui->treeView_Sections_Info->currentIndex().row();
+    qint32 nRow = ui->treeView_Sections_Info->currentIndex().row();
 
     if (nRow != -1) {
         QMenu contextMenu(this);
@@ -3567,7 +3567,7 @@ void PEWidget::on_pushButtonCollapse_Import_Info_clicked()
 
 void PEWidget::on_treeView_Import_Info_customContextMenuRequested(const QPoint &pos)
 {
-    int nRow = ui->treeView_Import_Info->currentIndex().row();
+    qint32 nRow = ui->treeView_Import_Info->currentIndex().row();
 
     if (nRow != -1) {
         QMenu contextMenu(this);
