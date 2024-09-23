@@ -605,8 +605,8 @@ void PESectionHeaderWidget::reloadData(bool bSaveSelection)
 void PESectionHeaderWidget::_widgetValueChanged(QVariant vValue)
 {
     QWidget *pWidget = qobject_cast<QWidget *>(sender());
-    int nStype = pWidget->property("STYPE").toInt();
-    int nNdata = pWidget->property("NDATA").toInt();
+    qint32 nStype = pWidget->property("STYPE").toInt();
+    qint32 nNdata = pWidget->property("NDATA").toInt();
 
     quint64 nValue = vValue.toULongLong();
 
