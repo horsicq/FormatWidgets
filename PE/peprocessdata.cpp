@@ -1262,7 +1262,7 @@ void PEProcessData::handleCertRecord(QStandardItem *pParent, XPE::CERT_RECORD ce
     pParent->setData(certRecord.certTag.nHeaderSize + certRecord.certTag.nSize, Qt::UserRole + FW_DEF::SECTION_DATA_SIZE);
     pParent->setData(certRecord.certTag.nOffset, Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET);
 
-    int nNumberOfRecords = certRecord.listRecords.count();
+    qint32 nNumberOfRecords = certRecord.listRecords.count();
 
     for (qint32 i = 0; (i < nNumberOfRecords) && (isRun()); i++) {
         QStandardItem *pRecord = new QStandardItem;
