@@ -45,7 +45,7 @@ void DialogModelInfo::setData(QIODevice *pDevice, const QString &sTitle, QStanda
 
     setWindowTitle(sTitle);
 
-    int nNumberOfRecords = pModel->rowCount();
+    qint32 nNumberOfRecords = pModel->rowCount();
 
     // TODO columns
     for (qint32 i = 0; i < nNumberOfRecords; i++) {
