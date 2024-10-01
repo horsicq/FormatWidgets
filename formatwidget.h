@@ -78,23 +78,6 @@ public:
         DIRECTORY_COLUMN_SIZE
     };
 
-    enum ICONTYPE {
-        ICONTYPE_UNKNOWN = 0,
-        ICONTYPE_GENERIC,
-        ICONTYPE_INFO,
-        ICONTYPE_HEX,
-        ICONTYPE_DISASM,
-        ICONTYPE_ENTROPY,
-        ICONTYPE_HASH,
-        ICONTYPE_STRINGS,
-        ICONTYPE_SIGNATURES,
-        ICONTYPE_MEMORYMAP,
-        ICONTYPE_VISUALIZATION,
-        ICONTYPE_EXTRACTOR,
-        ICONTYPE_SEARCH,
-        ICONTYPE_OVERLAY
-    };
-
     FormatWidget(QWidget *pParent = nullptr);
     FormatWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent);
     ~FormatWidget();
@@ -119,7 +102,7 @@ public:
     qint64 getOffset();
     qint32 getType();
     bool isReadonly();
-    QTreeWidgetItem *createNewItem(qint32 nType, const QString &sTitle, ICONTYPE iconType = ICONTYPE_UNKNOWN, qint64 nOffset = 0, qint64 nSize = 0,
+    QTreeWidgetItem *createNewItem(qint32 nType, const QString &sTitle, XOptions::ICONTYPE iconType = XOptions::ICONTYPE_GENERIC, qint64 nOffset = 0, qint64 nSize = 0,
                                    qint64 nExtraOffset = 0, qint64 nExtraSize = 0);
     bool createHeaderTable(qint32 nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, qint32 nNumberOfRecords,
                            qint32 nPosition = 0, qint64 nOffset = 0);

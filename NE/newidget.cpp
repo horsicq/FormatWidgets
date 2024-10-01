@@ -78,25 +78,25 @@ void NEWidget::reload()
     if (ne.isValid()) {
         setFileType(ne.getFileType());
 
-        QTreeWidgetItem *pItemInfo = createNewItem(SNE::TYPE_INFO, tr("Info"), ICONTYPE_INFO);
+        QTreeWidgetItem *pItemInfo = createNewItem(SNE::TYPE_INFO, tr("Info"), XOptions::ICONTYPE_INFO);
         ui->treeWidgetNavi->addTopLevelItem(pItemInfo);
-        pItemInfo->addChild(createNewItem(SNE::TYPE_NFDSCAN, "Nauz File Detector (NFD)"));
-        pItemInfo->addChild(createNewItem(SNE::TYPE_DIESCAN, "Detect It Easy (DiE)"));
+        pItemInfo->addChild(createNewItem(SNE::TYPE_NFDSCAN, "Nauz File Detector (NFD)", XOptions::ICONTYPE_NFD));
+        pItemInfo->addChild(createNewItem(SNE::TYPE_DIESCAN, "Detect It Easy (DiE)", XOptions::ICONTYPE_DIE));
 #ifdef USE_YARA
-        pItemInfo->addChild(createNewItem(SNE::TYPE_YARASCAN, "Yara rules"));
+        pItemInfo->addChild(createNewItem(SNE::TYPE_YARASCAN, "Yara rules", XOptions::ICONTYPE_YARA));
 #endif
-        pItemInfo->addChild(createNewItem(SNE::TYPE_VIRUSTOTAL, "VirusTotal"));
+        pItemInfo->addChild(createNewItem(SNE::TYPE_VIRUSTOTAL, "VirusTotal", XOptions::ICONTYPE_VIRUSTOTAL));
 
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_VISUALIZATION, tr("Visualization"), ICONTYPE_VISUALIZATION));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_HEX, tr("Hex"), ICONTYPE_HEX));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_DISASM, tr("Disasm"), ICONTYPE_DISASM));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_HASH, tr("Hash"), ICONTYPE_HASH));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_STRINGS, tr("Strings"), ICONTYPE_STRINGS));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_SIGNATURES, tr("Signatures"), ICONTYPE_SIGNATURES));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_MEMORYMAP, tr("Memory map"), ICONTYPE_MEMORYMAP));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_ENTROPY, tr("Entropy"), ICONTYPE_ENTROPY));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_EXTRACTOR, tr("Extractor"), ICONTYPE_EXTRACTOR));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_SEARCH, tr("Search"), ICONTYPE_SEARCH));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_VISUALIZATION, tr("Visualization"), XOptions::ICONTYPE_VISUALIZATION));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_HEX, tr("Hex"), XOptions::ICONTYPE_HEX));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_DISASM, tr("Disasm"), XOptions::ICONTYPE_DISASM));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_HASH, tr("Hash"), XOptions::ICONTYPE_HASH));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_STRINGS, tr("Strings"), XOptions::ICONTYPE_STRING));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_SIGNATURES, tr("Signatures"), XOptions::ICONTYPE_SIGNATURE));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_MEMORYMAP, tr("Memory map"), XOptions::ICONTYPE_MEMORYMAP));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_ENTROPY, tr("Entropy"), XOptions::ICONTYPE_ENTROPY));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_EXTRACTOR, tr("Extractor"), XOptions::ICONTYPE_EXTRACTOR));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_SEARCH, tr("Search"), XOptions::ICONTYPE_SEARCH));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_DOS_HEADER, "DOS_HEADER"));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_OS2_HEADER, "OS2_HEADER"));
 
@@ -107,7 +107,7 @@ void NEWidget::reload()
         }
 
         if (ne.isOverlayPresent()) {
-            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_OVERLAY, tr("Overlay"), ICONTYPE_OVERLAY));
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_OVERLAY, tr("Overlay"), XOptions::ICONTYPE_OVERLAY));
         }
 
         ui->treeWidgetNavi->expandAll();

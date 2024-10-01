@@ -26,9 +26,14 @@ SearchValuesWidget::SearchValuesWidget(QWidget *pParent) : XShortcutsWidget(pPar
 {
     ui->setupUi(this);
     g_pDevice = nullptr;
+    g_options = {};
+    g_pOldModel = nullptr;
 
-    //XOptions::addToolButtonIcon(ui->toolButtonSearch, ":/icons/Refresh.16.16.png");
-    XOptions::addToolButtonIcon(ui->toolButtonSave, ":/icons/Save.16.16.png");
+    XOptions::adjustToolButton(ui->toolButtonSearch, XOptions::ICONTYPE_SEARCH);
+    XOptions::adjustToolButton(ui->toolButtonSave, XOptions::ICONTYPE_SAVE);
+    XOptions::adjustToolButton(ui->toolButtonSearchSignature, XOptions::ICONTYPE_SIGNATURE);
+    XOptions::adjustToolButton(ui->toolButtonSearchString, XOptions::ICONTYPE_STRING);
+    XOptions::adjustToolButton(ui->toolButtonSearchValue, XOptions::ICONTYPE_VALUE);
 
     ui->comboBoxType->setToolTip(tr("Type"));
     ui->comboBoxMapMode->setToolTip(tr("Mode"));
@@ -105,27 +110,20 @@ void SearchValuesWidget::on_toolButtonSave_clicked()
 void SearchValuesWidget::on_tableViewResult_customContextMenuRequested(const QPoint &pos)
 {
     QMenu contextMenu(this);
-
-    QMenu menuFollowIn(tr("Follow in"), this);
-
-    QAction actionHex(tr("Hex"), this);
-    QAction actionDisasm(tr("Disasm"), this);
-
-    if (g_options.bMenu_Hex) {
-        actionHex.setShortcut(getShortcuts()->getShortcut(X_ID_FIND_FOLLOWIN_HEX));
-        connect(&actionHex, SIGNAL(triggered()), this, SLOT(_hex()));
-
-        menuFollowIn.addAction(&actionHex);
-    }
-
-    if (g_options.bMenu_Disasm) {
-        actionDisasm.setShortcut(getShortcuts()->getShortcut(X_ID_FIND_FOLLOWIN_DISASM));
-        connect(&actionDisasm, SIGNAL(triggered()), this, SLOT(_disasm()));
-        menuFollowIn.addAction(&actionDisasm);
-    }
+    QMenu menuFollowIn(this);
+    QAction actionHex(this);
+    QAction actionDisasm(this);
 
     if (g_options.bMenu_Hex || g_options.bMenu_Disasm) {
-        contextMenu.addMenu(&menuFollowIn);
+        getShortcuts()->adjustMenu(&contextMenu, &menuFollowIn, XShortcuts::GROUPID_FOLLOWIN);
+
+        if (g_options.bMenu_Hex) {
+            getShortcuts()->adjustAction(&menuFollowIn, &actionHex, X_ID_FIND_FOLLOWIN_HEX, this, SLOT(_hex()));
+        }
+
+        if (g_options.bMenu_Disasm) {
+            getShortcuts()->adjustAction(&menuFollowIn, &actionDisasm, X_ID_FIND_FOLLOWIN_DISASM, this, SLOT(_disasm()));
+        }
     }
 
     contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this, ui->tableViewResult));

@@ -216,7 +216,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButtonEntryPoint">
+         <widget class="QToolButton" name="toolButtonEntryPoint">
           <property name="maximumSize">
            <size>
             <width>30</width>
@@ -251,24 +251,43 @@
       <property name="bottomMargin">
        <number>0</number>
       </property>
-      <item row="1" column="7">
-       <widget class="QPushButton" name="pushButtonYARA">
+      <item row="0" column="2">
+       <widget class="QToolButton" name="toolButtonMemoryMap">
         <property name="text">
-         <string notr="true">YARA</string>
+         <string>Memory map</string>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextBesideIcon</enum>
         </property>
        </widget>
       </item>
       <item row="1" column="3">
-       <widget class="QPushButton" name="pushButtonSearch">
+       <widget class="QToolButton" name="toolButtonSearch">
         <property name="text">
          <string>Search</string>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextBesideIcon</enum>
         </property>
        </widget>
       </item>
       <item row="0" column="0">
-       <widget class="QPushButton" name="pushButtonFileInfo">
+       <widget class="QToolButton" name="toolButtonFileInfo">
         <property name="text">
          <string>File info</string>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextBesideIcon</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="7">
+       <widget class="QToolButton" name="toolButtonVirusTotal">
+        <property name="text">
+         <string notr="true">VirusTotal</string>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextBesideIcon</enum>
         </property>
        </widget>
       </item>
@@ -285,80 +304,103 @@
         </property>
        </spacer>
       </item>
-      <item row="0" column="7">
-       <widget class="QPushButton" name="pushButtonVirusTotal">
-        <property name="text">
-         <string notr="true">VirusTotal</string>
-        </property>
-       </widget>
-      </item>
       <item row="0" column="5">
-       <widget class="QPushButton" name="pushButtonStrings">
+       <widget class="QToolButton" name="toolButtonStrings">
         <property name="text">
          <string>Strings</string>
         </property>
-       </widget>
-      </item>
-      <item row="1" column="6">
-       <widget class="QPushButton" name="pushButtonExtractor">
-        <property name="text">
-         <string>Extractor</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="5">
-       <widget class="QPushButton" name="pushButtonEntropy">
-        <property name="text">
-         <string>Entropy</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QPushButton" name="pushButtonMIME">
-        <property name="text">
-         <string notr="true">MIME</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="6">
-       <widget class="QPushButton" name="pushButtonSignatures">
-        <property name="text">
-         <string>Signatures</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="4">
-       <widget class="QPushButton" name="pushButtonHex">
-        <property name="text">
-         <string>Hex</string>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextBesideIcon</enum>
         </property>
        </widget>
       </item>
       <item row="1" column="4">
-       <widget class="QPushButton" name="pushButtonHash">
+       <widget class="QToolButton" name="toolButtonHash">
         <property name="text">
          <string>Hash</string>
         </property>
-       </widget>
-      </item>
-      <item row="0" column="2">
-       <widget class="QPushButton" name="pushButtonMemoryMap">
-        <property name="text">
-         <string>Memory map</string>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextBesideIcon</enum>
         </property>
        </widget>
       </item>
       <item row="0" column="3">
-       <widget class="QPushButton" name="pushButtonDisasm">
+       <widget class="QToolButton" name="toolButtonDisasm">
         <property name="text">
          <string>Disasm</string>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextBesideIcon</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="5">
+       <widget class="QToolButton" name="toolButtonEntropy">
+        <property name="text">
+         <string>Entropy</string>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextBesideIcon</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="6">
+       <widget class="QToolButton" name="toolButtonExtractor">
+        <property name="text">
+         <string>Extractor</string>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextBesideIcon</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="6">
+       <widget class="QToolButton" name="toolButtonSignatures">
+        <property name="text">
+         <string>Signatures</string>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextBesideIcon</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QToolButton" name="toolButtonMIME">
+        <property name="text">
+         <string notr="true">MIME</string>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextBesideIcon</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="7">
+       <widget class="QToolButton" name="toolButtonYARA">
+        <property name="text">
+         <string notr="true">YARA</string>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextBesideIcon</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="4">
+       <widget class="QToolButton" name="toolButtonHex">
+        <property name="text">
+         <string>Hex</string>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextBesideIcon</enum>
         </property>
        </widget>
       </item>
       <item row="1" column="2">
-       <widget class="QPushButton" name="pushButtonVisualization">
+       <widget class="QToolButton" name="toolButtonVisualization">
         <property name="text">
          <string>Visualization</string>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextBesideIcon</enum>
         </property>
        </widget>
       </item>
@@ -377,7 +419,7 @@
       <enum>QFrame::NoFrame</enum>
      </property>
      <property name="currentIndex">
-      <number>5</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="pageBinary">
       <layout class="QVBoxLayout" name="verticalLayout_21">
@@ -414,7 +456,7 @@
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_27">
             <item>
-             <widget class="QPushButton" name="pushButtonBinary">
+             <widget class="QToolButton" name="toolButtonBinary">
               <property name="text">
                <string notr="true">Binary</string>
               </property>
@@ -488,7 +530,7 @@
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_23">
             <item>
-             <widget class="QPushButton" name="pushButtonArchive">
+             <widget class="QToolButton" name="toolButtonArchive">
               <property name="enabled">
                <bool>true</bool>
               </property>
@@ -498,14 +540,14 @@
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButtonMANIFESTMF">
+             <widget class="QToolButton" name="toolButtonMANIFESTMF">
               <property name="text">
                <string notr="true">MANIFEST.MF</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButtonAndroidManifest">
+             <widget class="QToolButton" name="toolButtonAndroidManifest">
               <property name="text">
                <string notr="true">AndroidManifest.xml</string>
               </property>
@@ -525,14 +567,14 @@
              </spacer>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButtonFiles">
+             <widget class="QToolButton" name="toolButtonFiles">
               <property name="text">
                <string>Files</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButtonUnpack">
+             <widget class="QToolButton" name="toolButtonUnpack">
               <property name="text">
                <string>Unpack</string>
               </property>
@@ -594,7 +636,7 @@
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_20">
             <item>
-             <widget class="QPushButton" name="pushButtonDEX">
+             <widget class="QToolButton" name="toolButtonDEX">
               <property name="text">
                <string notr="true">DEX</string>
               </property>
@@ -668,7 +710,7 @@
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_11">
             <item>
-             <widget class="QPushButton" name="pushButtonNE">
+             <widget class="QToolButton" name="toolButtonNE">
               <property name="text">
                <string notr="true">NE</string>
               </property>
@@ -742,7 +784,7 @@
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_12">
             <item>
-             <widget class="QPushButton" name="pushButtonLE">
+             <widget class="QToolButton" name="toolButtonLE">
               <property name="text">
                <string notr="true">LE</string>
               </property>
@@ -816,7 +858,7 @@
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_8">
             <item>
-             <widget class="QPushButton" name="pushButtonMSDOS">
+             <widget class="QToolButton" name="toolButtonMSDOS">
               <property name="text">
                <string notr="true">MSDOS</string>
               </property>
@@ -836,7 +878,7 @@
              </spacer>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButtonMSDOSOverlay">
+             <widget class="QToolButton" name="toolButtonMSDOSOverlay">
               <property name="text">
                <string>Overlay</string>
               </property>
@@ -897,7 +939,7 @@
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_4">
             <item>
-             <widget class="QPushButton" name="pushButtonPE">
+             <widget class="QToolButton" name="toolButtonPE">
               <property name="text">
                <string notr="true">PE</string>
               </property>
@@ -917,42 +959,42 @@
              </spacer>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButtonPEExport">
+             <widget class="QToolButton" name="toolButtonPEExport">
               <property name="text">
                <string>Export</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButtonPEImport">
+             <widget class="QToolButton" name="toolButtonPEImport">
               <property name="text">
                <string>Import</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButtonPEResources">
+             <widget class="QToolButton" name="toolButtonPEResources">
               <property name="text">
                <string>Resources</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButtonPENET">
+             <widget class="QToolButton" name="toolButtonPENET">
               <property name="text">
                <string notr="true">.NET</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButtonPETLS">
+             <widget class="QToolButton" name="toolButtonPETLS">
               <property name="text">
                <string notr="true">TLS</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButtonPEOverlay">
+             <widget class="QToolButton" name="toolButtonPEOverlay">
               <property name="text">
                <string>Overlay</string>
               </property>
@@ -997,7 +1039,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QPushButton" name="pushButtonPESections">
+                <widget class="QToolButton" name="toolButtonPESections">
                  <property name="minimumSize">
                   <size>
                    <width>30</width>
@@ -1150,14 +1192,14 @@
                 <number>2</number>
                </property>
                <item>
-                <widget class="QPushButton" name="pushButtonPEManifest">
+                <widget class="QToolButton" name="toolButtonPEManifest">
                  <property name="text">
                   <string>Manifest</string>
                  </property>
                 </widget>
                </item>
                <item>
-                <widget class="QPushButton" name="pushButtonPEVersion">
+                <widget class="QToolButton" name="toolButtonPEVersion">
                  <property name="text">
                   <string>Version</string>
                  </property>
@@ -1224,7 +1266,7 @@
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_9">
             <item>
-             <widget class="QPushButton" name="pushButtonELF">
+             <widget class="QToolButton" name="toolButtonELF">
               <property name="text">
                <string notr="true">ELF</string>
               </property>
@@ -1288,7 +1330,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QPushButton" name="pushButtonELFPrograms">
+                <widget class="QToolButton" name="toolButtonELFPrograms">
                  <property name="minimumSize">
                   <size>
                    <width>30</width>
@@ -1350,7 +1392,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QPushButton" name="pushButtonELFSections">
+                <widget class="QToolButton" name="toolButtonELFSections">
                  <property name="minimumSize">
                   <size>
                    <width>30</width>
@@ -1478,7 +1520,7 @@
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_10">
             <item>
-             <widget class="QPushButton" name="pushButtonMACH">
+             <widget class="QToolButton" name="toolButtonMACH">
               <property name="text">
                <string notr="true">Mach-O</string>
               </property>
@@ -1542,7 +1584,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QPushButton" name="pushButtonMACHCommands">
+                <widget class="QToolButton" name="toolButtonMACHCommands">
                  <property name="minimumSize">
                   <size>
                    <width>30</width>
@@ -1604,7 +1646,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QPushButton" name="pushButtonMACHSegments">
+                <widget class="QToolButton" name="toolButtonMACHSegments">
                  <property name="minimumSize">
                   <size>
                    <width>30</width>
@@ -1666,7 +1708,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QPushButton" name="pushButtonMACHSections">
+                <widget class="QToolButton" name="toolButtonMACHSections">
                  <property name="minimumSize">
                   <size>
                    <width>30</width>
@@ -1767,7 +1809,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QPushButton" name="pushButtonMACHLibraries">
+                <widget class="QToolButton" name="toolButtonMACHLibraries">
                  <property name="minimumSize">
                   <size>
                    <width>30</width>

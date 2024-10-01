@@ -79,24 +79,24 @@ void DEXWidget::reload()
     if (dex.isValid()) {
         setFileType(dex.getFileType());
 
-        QTreeWidgetItem *pItemInfo = createNewItem(SDEX::TYPE_INFO, tr("Info"), ICONTYPE_INFO);
+        QTreeWidgetItem *pItemInfo = createNewItem(SDEX::TYPE_INFO, tr("Info"), XOptions::ICONTYPE_INFO);
         ui->treeWidgetNavi->addTopLevelItem(pItemInfo);
-        pItemInfo->addChild(createNewItem(SDEX::TYPE_NFDSCAN, "Nauz File Detector (NFD)"));
-        pItemInfo->addChild(createNewItem(SDEX::TYPE_DIESCAN, "Detect It Easy (DiE)"));
+        pItemInfo->addChild(createNewItem(SDEX::TYPE_NFDSCAN, "Nauz File Detector (NFD)", XOptions::ICONTYPE_NFD));
+        pItemInfo->addChild(createNewItem(SDEX::TYPE_DIESCAN, "Detect It Easy (DiE)", XOptions::ICONTYPE_DIE));
 #ifdef USE_YARA
-        pItemInfo->addChild(createNewItem(SDEX::TYPE_YARASCAN, "Yara rules"));
+        pItemInfo->addChild(createNewItem(SDEX::TYPE_YARASCAN, "Yara rules", XOptions::ICONTYPE_YARA));
 #endif
-        pItemInfo->addChild(createNewItem(SDEX::TYPE_VIRUSTOTAL, "VirusTotal"));
+        pItemInfo->addChild(createNewItem(SDEX::TYPE_VIRUSTOTAL, "VirusTotal", XOptions::ICONTYPE_VIRUSTOTAL));
 
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_VISUALIZATION, tr("Visualization"), ICONTYPE_VISUALIZATION));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_HEX, tr("Hex"), ICONTYPE_HEX));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_HASH, tr("Hash"), ICONTYPE_HASH));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_STRINGS, tr("Strings"), ICONTYPE_STRINGS));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_SIGNATURES, tr("Signatures"), ICONTYPE_SIGNATURES));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_MEMORYMAP, tr("Memory map"), ICONTYPE_MEMORYMAP));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_ENTROPY, tr("Entropy"), ICONTYPE_ENTROPY));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_EXTRACTOR, tr("Extractor"), ICONTYPE_EXTRACTOR));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_SEARCH, tr("Search"), ICONTYPE_SEARCH));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_VISUALIZATION, tr("Visualization"), XOptions::ICONTYPE_VISUALIZATION));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_HEX, tr("Hex"), XOptions::ICONTYPE_HEX));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_HASH, tr("Hash"), XOptions::ICONTYPE_HASH));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_STRINGS, tr("Strings"), XOptions::ICONTYPE_STRING));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_SIGNATURES, tr("Signatures"), XOptions::ICONTYPE_SIGNATURE));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_MEMORYMAP, tr("Memory map"), XOptions::ICONTYPE_MEMORYMAP));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_ENTROPY, tr("Entropy"), XOptions::ICONTYPE_ENTROPY));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_EXTRACTOR, tr("Extractor"), XOptions::ICONTYPE_EXTRACTOR));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_SEARCH, tr("Search"), XOptions::ICONTYPE_SEARCH));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_HEADER, "Header"));
 
         QList<XDEX_DEF::MAP_ITEM> listMapItems = dex.getMapItems();

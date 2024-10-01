@@ -100,25 +100,25 @@ void MACHWidget::reload()
     if (mach.isValid()) {
         setFileType(mach.getFileType());
 
-        QTreeWidgetItem *pItemInfo = createNewItem(SMACH::TYPE_INFO, tr("Info"), ICONTYPE_INFO);
+        QTreeWidgetItem *pItemInfo = createNewItem(SMACH::TYPE_INFO, tr("Info"), XOptions::ICONTYPE_INFO);
         ui->treeWidgetNavi->addTopLevelItem(pItemInfo);
-        pItemInfo->addChild(createNewItem(SMACH::TYPE_NFDSCAN, "Nauz File Detector (NFD)"));
-        pItemInfo->addChild(createNewItem(SMACH::TYPE_DIESCAN, "Detect It Easy (DiE)"));
+        pItemInfo->addChild(createNewItem(SMACH::TYPE_NFDSCAN, "Nauz File Detector (NFD)", XOptions::ICONTYPE_NFD));
+        pItemInfo->addChild(createNewItem(SMACH::TYPE_DIESCAN, "Detect It Easy (DiE)", XOptions::ICONTYPE_DIE));
 #ifdef USE_YARA
-        pItemInfo->addChild(createNewItem(SMACH::TYPE_YARASCAN, "Yara rules"));
+        pItemInfo->addChild(createNewItem(SMACH::TYPE_YARASCAN, "Yara rules", XOptions::ICONTYPE_YARA));
 #endif
-        pItemInfo->addChild(createNewItem(SMACH::TYPE_VIRUSTOTAL, "VirusTotal"));
+        pItemInfo->addChild(createNewItem(SMACH::TYPE_VIRUSTOTAL, "VirusTotal", XOptions::ICONTYPE_VIRUSTOTAL));
 
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_VISUALIZATION, tr("Visualization"), ICONTYPE_VISUALIZATION));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_HEX, tr("Hex"), ICONTYPE_HEX));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_DISASM, tr("Disasm"), ICONTYPE_DISASM));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_HASH, tr("Hash"), ICONTYPE_HASH));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_STRINGS, tr("Strings"), ICONTYPE_STRINGS));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_SIGNATURES, tr("Signatures"), ICONTYPE_SIGNATURES));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_MEMORYMAP, tr("Memory map"), ICONTYPE_MEMORYMAP));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_ENTROPY, tr("Entropy"), ICONTYPE_ENTROPY));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_EXTRACTOR, tr("Extractor"), ICONTYPE_EXTRACTOR));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_SEARCH, tr("Search"), ICONTYPE_SEARCH));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_VISUALIZATION, tr("Visualization"), XOptions::ICONTYPE_VISUALIZATION));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_HEX, tr("Hex"), XOptions::ICONTYPE_HEX));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_DISASM, tr("Disasm"), XOptions::ICONTYPE_DISASM));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_HASH, tr("Hash"), XOptions::ICONTYPE_HASH));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_STRINGS, tr("Strings"), XOptions::ICONTYPE_STRING));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_SIGNATURES, tr("Signatures"), XOptions::ICONTYPE_SIGNATURE));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_MEMORYMAP, tr("Memory map"), XOptions::ICONTYPE_MEMORYMAP));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_ENTROPY, tr("Entropy"), XOptions::ICONTYPE_ENTROPY));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_EXTRACTOR, tr("Extractor"), XOptions::ICONTYPE_EXTRACTOR));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_SEARCH, tr("Search"), XOptions::ICONTYPE_SEARCH));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_mach_header, mach.is64() ? ("mach_header_64") : ("mach_header")));
 
         QList<XMACH::COMMAND_RECORD> listCommandRecords = mach.getCommandRecords();
@@ -178,42 +178,42 @@ void MACHWidget::reload()
             if (mach.isCommandPresent(XMACH_DEF::S_LC_DYLD_INFO_ONLY, &listCommandRecords)) {
                 qint64 _nOffset = mach.getCommandRecordOffset(XMACH_DEF::S_LC_DYLD_INFO_ONLY, 0, &listCommandRecords);
 
-                QTreeWidgetItem *pItemDyldInfo = createNewItem(SMACH::TYPE_mach_dyld_info_only, QString("LC_DYLD_INFO_ONLY"), ICONTYPE_UNKNOWN, _nOffset);  // TODO rename
+                QTreeWidgetItem *pItemDyldInfo = createNewItem(SMACH::TYPE_mach_dyld_info_only, QString("LC_DYLD_INFO_ONLY"), XOptions::ICONTYPE_GENERIC, _nOffset);  // TODO rename
 
                 pItemCommands->addChild(pItemDyldInfo);
 
                 XMACH_DEF::dyld_info_command dyld_info = mach._read_dyld_info_command(_nOffset);
 
                 if (mach.isOffsetValid(dyld_info.rebase_off) && (dyld_info.rebase_size)) {
-                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_DYLD_INFO_rebase, tr("Rebase"), ICONTYPE_UNKNOWN, dyld_info.rebase_off,
+                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_DYLD_INFO_rebase, tr("Rebase"), XOptions::ICONTYPE_GENERIC, dyld_info.rebase_off,
                                                            dyld_info.rebase_size);  // TODO rename
 
                     pItemDyldInfo->addChild(pItem);
                 }
 
                 if (mach.isOffsetValid(dyld_info.bind_off) && (dyld_info.bind_size)) {
-                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_DYLD_INFO_bind, tr("Binding"), ICONTYPE_UNKNOWN, dyld_info.bind_off,
+                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_DYLD_INFO_bind, tr("Binding"), XOptions::ICONTYPE_GENERIC, dyld_info.bind_off,
                                                            dyld_info.bind_size);  // TODO rename
 
                     pItemDyldInfo->addChild(pItem);
                 }
 
                 if (mach.isOffsetValid(dyld_info.weak_bind_off) && (dyld_info.weak_bind_size)) {
-                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_DYLD_INFO_weak_bind, tr("Weak binding"), ICONTYPE_UNKNOWN, dyld_info.weak_bind_off,
+                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_DYLD_INFO_weak_bind, tr("Weak binding"), XOptions::ICONTYPE_GENERIC, dyld_info.weak_bind_off,
                                                            dyld_info.weak_bind_size);  // TODO rename
 
                     pItemDyldInfo->addChild(pItem);
                 }
 
                 if (mach.isOffsetValid(dyld_info.lazy_bind_off) && (dyld_info.lazy_bind_size)) {
-                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_DYLD_INFO_lazy_bind, tr("Lazy binding"), ICONTYPE_UNKNOWN, dyld_info.lazy_bind_off,
+                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_DYLD_INFO_lazy_bind, tr("Lazy binding"), XOptions::ICONTYPE_GENERIC, dyld_info.lazy_bind_off,
                                                            dyld_info.lazy_bind_size);  // TODO rename
 
                     pItemDyldInfo->addChild(pItem);
                 }
 
                 if (mach.isOffsetValid(dyld_info.export_off) && (dyld_info.export_size)) {
-                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_DYLD_INFO_export, tr("Export"), ICONTYPE_UNKNOWN, dyld_info.export_off,
+                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_DYLD_INFO_export, tr("Export"), XOptions::ICONTYPE_GENERIC, dyld_info.export_off,
                                                            dyld_info.export_size);  // TODO rename
 
                     pItemDyldInfo->addChild(pItem);
@@ -221,7 +221,7 @@ void MACHWidget::reload()
             }
 
             if (mach.isCommandPresent(XMACH_DEF::S_LC_UUID, &listCommandRecords)) {
-                QTreeWidgetItem *pItemUuid = createNewItem(SMACH::TYPE_mach_uuid, QString("LC_UUID"), ICONTYPE_UNKNOWN,
+                QTreeWidgetItem *pItemUuid = createNewItem(SMACH::TYPE_mach_uuid, QString("LC_UUID"), XOptions::ICONTYPE_GENERIC,
                                                            mach.getCommandRecordOffset(XMACH_DEF::S_LC_UUID, 0,
                                                                                        &listCommandRecords));  // TODO rename
 
@@ -231,7 +231,7 @@ void MACHWidget::reload()
             if (mach.isCommandPresent(XMACH_DEF::S_LC_SYMTAB, &listCommandRecords)) {
                 qint64 _nOffset = mach.getCommandRecordOffset(XMACH_DEF::S_LC_SYMTAB, 0, &listCommandRecords);
 
-                QTreeWidgetItem *pItemSymtab = createNewItem(SMACH::TYPE_mach_symtab, QString("LC_SYMTAB"), ICONTYPE_UNKNOWN,
+                QTreeWidgetItem *pItemSymtab = createNewItem(SMACH::TYPE_mach_symtab, QString("LC_SYMTAB"), XOptions::ICONTYPE_GENERIC,
                                                              _nOffset);  // TODO rename
 
                 pItemCommands->addChild(pItemSymtab);
@@ -239,13 +239,13 @@ void MACHWidget::reload()
                 XMACH_DEF::symtab_command symtab = mach._read_symtab_command(_nOffset);
 
                 if (mach.isOffsetValid(symtab.stroff) && (symtab.strsize)) {
-                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_STRINGTABLE, tr("String table"), ICONTYPE_UNKNOWN, symtab.stroff, symtab.strsize);  // TODO rename
+                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_STRINGTABLE, tr("String table"), XOptions::ICONTYPE_GENERIC, symtab.stroff, symtab.strsize);  // TODO rename
 
                     pItemSymtab->addChild(pItem);
                 }
 
                 if (mach.isOffsetValid(symtab.symoff) && (symtab.nsyms)) {
-                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_SYMBOLTABLE, tr("Symbol table"), ICONTYPE_UNKNOWN, symtab.symoff, symtab.nsyms);  // TODO rename
+                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_SYMBOLTABLE, tr("Symbol table"), XOptions::ICONTYPE_GENERIC, symtab.symoff, symtab.nsyms);  // TODO rename
 
                     pItemSymtab->addChild(pItem);
                 }
@@ -254,7 +254,7 @@ void MACHWidget::reload()
             if (mach.isCommandPresent(XMACH_DEF::S_LC_DYSYMTAB, &listCommandRecords)) {
                 qint64 _nOffset = mach.getCommandRecordOffset(XMACH_DEF::S_LC_DYSYMTAB, 0, &listCommandRecords);
 
-                QTreeWidgetItem *pItemDysymtab = createNewItem(SMACH::TYPE_mach_dysymtab, QString("LC_DYSYMTAB"), ICONTYPE_UNKNOWN,
+                QTreeWidgetItem *pItemDysymtab = createNewItem(SMACH::TYPE_mach_dysymtab, QString("LC_DYSYMTAB"), XOptions::ICONTYPE_GENERIC,
                                                                _nOffset);  // TODO rename
 
                 pItemCommands->addChild(pItemDysymtab);
@@ -263,34 +263,34 @@ void MACHWidget::reload()
 
                 if (mach.isOffsetValid(dysymtab.tocoff) && (dysymtab.ntoc)) {
                     QTreeWidgetItem *pItem =
-                        createNewItem(SMACH::TYPE_DYSYMTAB_toc, tr("Table of contents"), ICONTYPE_UNKNOWN, dysymtab.tocoff, dysymtab.ntoc);  // TODO rename
+                        createNewItem(SMACH::TYPE_DYSYMTAB_toc, tr("Table of contents"), XOptions::ICONTYPE_GENERIC, dysymtab.tocoff, dysymtab.ntoc);  // TODO rename
 
                     pItemDysymtab->addChild(pItem);
                 }
 
                 if (mach.isOffsetValid(dysymtab.modtaboff) && (dysymtab.nmodtab)) {
                     QTreeWidgetItem *pItem =
-                        createNewItem(SMACH::TYPE_DYSYMTAB_modtab, tr("Modules"), ICONTYPE_UNKNOWN, dysymtab.modtaboff, dysymtab.nmodtab);  // TODO rename
+                        createNewItem(SMACH::TYPE_DYSYMTAB_modtab, tr("Modules"), XOptions::ICONTYPE_GENERIC, dysymtab.modtaboff, dysymtab.nmodtab);  // TODO rename
 
                     pItemDysymtab->addChild(pItem);
                 }
 
                 if (mach.isOffsetValid(dysymtab.extrefsymoff) && (dysymtab.nextrefsyms)) {
-                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_DYSYMTAB_extrefsyms, tr("External references"), ICONTYPE_UNKNOWN, dysymtab.extrefsymoff,
+                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_DYSYMTAB_extrefsyms, tr("External references"), XOptions::ICONTYPE_GENERIC, dysymtab.extrefsymoff,
                                                            dysymtab.nextrefsyms);  // TODO rename
 
                     pItemDysymtab->addChild(pItem);
                 }
 
                 if (mach.isOffsetValid(dysymtab.indirectsymoff) && (dysymtab.nindirectsyms)) {
-                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_DYSYMTAB_indirectsyms, tr("Indirect symbols"), ICONTYPE_UNKNOWN, dysymtab.indirectsymoff,
+                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_DYSYMTAB_indirectsyms, tr("Indirect symbols"), XOptions::ICONTYPE_GENERIC, dysymtab.indirectsymoff,
                                                            dysymtab.nindirectsyms);  // TODO rename
 
                     pItemDysymtab->addChild(pItem);
                 }
 
                 if (mach.isOffsetValid(dysymtab.extreloff) && (dysymtab.nextrel)) {
-                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_DYSYMTAB_extrel, QString("External relocation"), ICONTYPE_UNKNOWN, dysymtab.extreloff,
+                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_DYSYMTAB_extrel, QString("External relocation"), XOptions::ICONTYPE_GENERIC, dysymtab.extreloff,
                                                            dysymtab.nextrel);  // TODO rename
 
                     pItemDysymtab->addChild(pItem);
@@ -298,32 +298,32 @@ void MACHWidget::reload()
 
                 if (mach.isOffsetValid(dysymtab.locreloff) && (dysymtab.nlocrel)) {
                     QTreeWidgetItem *pItem =
-                        createNewItem(SMACH::TYPE_DYSYMTAB_locrel, tr("Local relocation"), ICONTYPE_UNKNOWN, dysymtab.locreloff, dysymtab.nlocrel);  // TODO rename
+                        createNewItem(SMACH::TYPE_DYSYMTAB_locrel, tr("Local relocation"), XOptions::ICONTYPE_GENERIC, dysymtab.locreloff, dysymtab.nlocrel);  // TODO rename
 
                     pItemDysymtab->addChild(pItem);
                 }
             }
 
             if (mach.isCommandPresent(XMACH_DEF::S_LC_VERSION_MIN_MACOSX, &listCommandRecords)) {
-                QTreeWidgetItem *pItemVersionMin = createNewItem(SMACH::TYPE_mach_version_min, QString("LC_VERSION_MIN_MACOSX"), ICONTYPE_UNKNOWN,
+                QTreeWidgetItem *pItemVersionMin = createNewItem(SMACH::TYPE_mach_version_min, QString("LC_VERSION_MIN_MACOSX"), XOptions::ICONTYPE_GENERIC,
                                                                  mach.getCommandRecordOffset(XMACH_DEF::S_LC_VERSION_MIN_MACOSX, 0,
                                                                                              &listCommandRecords));  // TODO rename
 
                 pItemCommands->addChild(pItemVersionMin);
             } else if (mach.isCommandPresent(XMACH_DEF::S_LC_VERSION_MIN_IPHONEOS, &listCommandRecords)) {
-                QTreeWidgetItem *pItemVersionMin = createNewItem(SMACH::TYPE_mach_version_min, QString("LC_VERSION_MIN_IPHONEOS"), ICONTYPE_UNKNOWN,
+                QTreeWidgetItem *pItemVersionMin = createNewItem(SMACH::TYPE_mach_version_min, QString("LC_VERSION_MIN_IPHONEOS"), XOptions::ICONTYPE_GENERIC,
                                                                  mach.getCommandRecordOffset(XMACH_DEF::S_LC_VERSION_MIN_IPHONEOS, 0,
                                                                                              &listCommandRecords));  // TODO rename
 
                 pItemCommands->addChild(pItemVersionMin);
             } else if (mach.isCommandPresent(XMACH_DEF::S_LC_VERSION_MIN_TVOS, &listCommandRecords)) {
-                QTreeWidgetItem *pItemVersionMin = createNewItem(SMACH::TYPE_mach_version_min, QString("LC_VERSION_MIN_TVOS"), ICONTYPE_UNKNOWN,
+                QTreeWidgetItem *pItemVersionMin = createNewItem(SMACH::TYPE_mach_version_min, QString("LC_VERSION_MIN_TVOS"), XOptions::ICONTYPE_GENERIC,
                                                                  mach.getCommandRecordOffset(XMACH_DEF::S_LC_VERSION_MIN_TVOS, 0,
                                                                                              &listCommandRecords));  // TODO rename
 
                 pItemCommands->addChild(pItemVersionMin);
             } else if (mach.isCommandPresent(XMACH_DEF::S_LC_VERSION_MIN_WATCHOS, &listCommandRecords)) {
-                QTreeWidgetItem *pItemVersionMin = createNewItem(SMACH::TYPE_mach_version_min, QString("LC_VERSION_MIN_WATCHOS"), ICONTYPE_UNKNOWN,
+                QTreeWidgetItem *pItemVersionMin = createNewItem(SMACH::TYPE_mach_version_min, QString("LC_VERSION_MIN_WATCHOS"), XOptions::ICONTYPE_GENERIC,
                                                                  mach.getCommandRecordOffset(XMACH_DEF::S_LC_VERSION_MIN_WATCHOS, 0,
                                                                                              &listCommandRecords));  // TODO rename
 
@@ -331,7 +331,7 @@ void MACHWidget::reload()
             }
 
             if (mach.isCommandPresent(XMACH_DEF::S_LC_BUILD_VERSION, &listCommandRecords)) {
-                QTreeWidgetItem *pItemBuildVersion = createNewItem(SMACH::TYPE_mach_build_version, QString("LC_BUILD_VERSION"), ICONTYPE_UNKNOWN,
+                QTreeWidgetItem *pItemBuildVersion = createNewItem(SMACH::TYPE_mach_build_version, QString("LC_BUILD_VERSION"), XOptions::ICONTYPE_GENERIC,
                                                                    mach.getCommandRecordOffset(XMACH_DEF::S_LC_BUILD_VERSION, 0,
                                                                                                &listCommandRecords));  // TODO rename
 
@@ -339,7 +339,7 @@ void MACHWidget::reload()
             }
 
             if (mach.isCommandPresent(XMACH_DEF::S_LC_LOAD_DYLINKER, &listCommandRecords)) {
-                QTreeWidgetItem *pItemDylinker = createNewItem(SMACH::TYPE_mach_dylinker, QString("LC_LOAD_DYLINKER"), ICONTYPE_UNKNOWN,
+                QTreeWidgetItem *pItemDylinker = createNewItem(SMACH::TYPE_mach_dylinker, QString("LC_LOAD_DYLINKER"), XOptions::ICONTYPE_GENERIC,
                                                                mach.getCommandRecordOffset(XMACH_DEF::S_LC_LOAD_DYLINKER, 0,
                                                                                            &listCommandRecords));  // TODO rename
 
@@ -347,7 +347,7 @@ void MACHWidget::reload()
             }
 
             if (mach.isCommandPresent(XMACH_DEF::S_LC_RPATH, &listCommandRecords)) {
-                QTreeWidgetItem *pItemRPath = createNewItem(SMACH::TYPE_mach_rpath, QString("LC_RPATH"), ICONTYPE_UNKNOWN,
+                QTreeWidgetItem *pItemRPath = createNewItem(SMACH::TYPE_mach_rpath, QString("LC_RPATH"), XOptions::ICONTYPE_GENERIC,
                                                             mach.getCommandRecordOffset(XMACH_DEF::S_LC_RPATH, 0,
                                                                                         &listCommandRecords));  // TODO rename
 
@@ -355,7 +355,7 @@ void MACHWidget::reload()
             }
 
             if (mach.isCommandPresent(XMACH_DEF::S_LC_SOURCE_VERSION, &listCommandRecords)) {
-                QTreeWidgetItem *pItemSourceVersion = createNewItem(SMACH::TYPE_mach_source_version, QString("LC_SOURCE_VERSION"), ICONTYPE_UNKNOWN,
+                QTreeWidgetItem *pItemSourceVersion = createNewItem(SMACH::TYPE_mach_source_version, QString("LC_SOURCE_VERSION"), XOptions::ICONTYPE_GENERIC,
                                                                     mach.getCommandRecordOffset(XMACH_DEF::S_LC_SOURCE_VERSION, 0,
                                                                                                 &listCommandRecords));  // TODO rename
 
@@ -363,7 +363,7 @@ void MACHWidget::reload()
             }
 
             if (mach.isCommandPresent(XMACH_DEF::S_LC_ENCRYPTION_INFO, &listCommandRecords)) {
-                QTreeWidgetItem *pItemEncryptionInfo = createNewItem(SMACH::TYPE_mach_encryption_info, QString("LC_ENCRYPTION_INFO"), ICONTYPE_UNKNOWN,
+                QTreeWidgetItem *pItemEncryptionInfo = createNewItem(SMACH::TYPE_mach_encryption_info, QString("LC_ENCRYPTION_INFO"), XOptions::ICONTYPE_GENERIC,
                                                                      mach.getCommandRecordOffset(XMACH_DEF::S_LC_ENCRYPTION_INFO, 0, &listCommandRecords),
                                                                      mach.get_encryption_info_command_size());  // TODO rename
 
@@ -371,7 +371,7 @@ void MACHWidget::reload()
             }
 
             if (mach.isCommandPresent(XMACH_DEF::S_LC_ENCRYPTION_INFO_64, &listCommandRecords)) {
-                QTreeWidgetItem *pItemEncryptionInfo = createNewItem(SMACH::TYPE_mach_encryption_info, QString("LC_ENCRYPTION_INFO_64"), ICONTYPE_UNKNOWN,
+                QTreeWidgetItem *pItemEncryptionInfo = createNewItem(SMACH::TYPE_mach_encryption_info, QString("LC_ENCRYPTION_INFO_64"), XOptions::ICONTYPE_GENERIC,
                                                                      mach.getCommandRecordOffset(XMACH_DEF::S_LC_ENCRYPTION_INFO_64, 0, &listCommandRecords),
                                                                      mach.get_encryption_info_command_64_size());  // TODO rename
 
@@ -382,14 +382,14 @@ void MACHWidget::reload()
                 qint64 _nOffset = mach.getCommandRecordOffset(XMACH_DEF::S_LC_FUNCTION_STARTS, 0, &listCommandRecords);
 
                 QTreeWidgetItem *pItemFunctionStarts =
-                    createNewItem(SMACH::TYPE_mach_function_starts, QString("LC_FUNCTION_STARTS"), ICONTYPE_UNKNOWN, _nOffset);  // TODO rename
+                    createNewItem(SMACH::TYPE_mach_function_starts, QString("LC_FUNCTION_STARTS"), XOptions::ICONTYPE_GENERIC, _nOffset);  // TODO rename
 
                 pItemCommands->addChild(pItemFunctionStarts);
 
                 XMACH_DEF::linkedit_data_command linkedit_data = mach._read_linkedit_data_command(_nOffset);
 
                 if (mach.isOffsetValid(linkedit_data.dataoff) && (linkedit_data.datasize)) {
-                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_FUNCTIONS, tr("Functions"), ICONTYPE_UNKNOWN, linkedit_data.dataoff,
+                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_FUNCTIONS, tr("Functions"), XOptions::ICONTYPE_GENERIC, linkedit_data.dataoff,
                                                            linkedit_data.datasize);  // TODO rename
 
                     pItemFunctionStarts->addChild(pItem);
@@ -399,7 +399,7 @@ void MACHWidget::reload()
             if (mach.isCommandPresent(XMACH_DEF::S_LC_DATA_IN_CODE, &listCommandRecords)) {
                 qint64 _nOffset = mach.getCommandRecordOffset(XMACH_DEF::S_LC_DATA_IN_CODE, 0, &listCommandRecords);
 
-                QTreeWidgetItem *pItemDataInCode = createNewItem(SMACH::TYPE_mach_data_in_code, QString("LC_DATA_IN_CODE"), ICONTYPE_UNKNOWN,
+                QTreeWidgetItem *pItemDataInCode = createNewItem(SMACH::TYPE_mach_data_in_code, QString("LC_DATA_IN_CODE"), XOptions::ICONTYPE_GENERIC,
                                                                  _nOffset);  // TODO rename
 
                 pItemCommands->addChild(pItemDataInCode);
@@ -407,7 +407,7 @@ void MACHWidget::reload()
                 XMACH_DEF::linkedit_data_command linkedit_data = mach._read_linkedit_data_command(_nOffset);
 
                 if (mach.isOffsetValid(linkedit_data.dataoff) && (linkedit_data.datasize)) {
-                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_DICE, tr("Data in code"), ICONTYPE_UNKNOWN, linkedit_data.dataoff,
+                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_DICE, tr("Data in code"), XOptions::ICONTYPE_GENERIC, linkedit_data.dataoff,
                                                            linkedit_data.datasize);  // TODO rename
 
                     pItemDataInCode->addChild(pItem);
@@ -418,14 +418,14 @@ void MACHWidget::reload()
                 qint64 _nOffset = mach.getCommandRecordOffset(XMACH_DEF::S_LC_CODE_SIGNATURE, 0, &listCommandRecords);
 
                 QTreeWidgetItem *pItemCodeSignature =
-                    createNewItem(SMACH::TYPE_mach_code_signature, QString("LC_CODE_SIGNATURE"), ICONTYPE_UNKNOWN, _nOffset);  // TODO rename
+                    createNewItem(SMACH::TYPE_mach_code_signature, QString("LC_CODE_SIGNATURE"), XOptions::ICONTYPE_GENERIC, _nOffset);  // TODO rename
 
                 pItemCommands->addChild(pItemCodeSignature);
 
                 XMACH_DEF::linkedit_data_command linkedit_data = mach._read_linkedit_data_command(_nOffset);
 
                 if (mach.isOffsetValid(linkedit_data.dataoff) && (linkedit_data.datasize)) {
-                    QTreeWidgetItem *pItemSuperBlob = createNewItem(SMACH::TYPE_mach_SuperBlob, QString("__SC_SuperBlob"), ICONTYPE_UNKNOWN,
+                    QTreeWidgetItem *pItemSuperBlob = createNewItem(SMACH::TYPE_mach_SuperBlob, QString("__SC_SuperBlob"), XOptions::ICONTYPE_GENERIC,
                                                                     linkedit_data.dataoff);  // TODO rename
 
                     pItemCodeSignature->addChild(pItemSuperBlob);
@@ -433,7 +433,7 @@ void MACHWidget::reload()
             }
 
             if (mach.isCommandPresent(XMACH_DEF::S_LC_MAIN, &listCommandRecords)) {
-                QTreeWidgetItem *pItemMain = createNewItem(SMACH::TYPE_mach_main, QString("LC_MAIN"), ICONTYPE_UNKNOWN,
+                QTreeWidgetItem *pItemMain = createNewItem(SMACH::TYPE_mach_main, QString("LC_MAIN"), XOptions::ICONTYPE_GENERIC,
                                                            mach.getCommandRecordOffset(XMACH_DEF::S_LC_MAIN, 0,
                                                                                        &listCommandRecords));  // TODO rename
 
@@ -443,7 +443,7 @@ void MACHWidget::reload()
             if (mach.isCommandPresent(XMACH_DEF::S_LC_UNIXTHREAD, &listCommandRecords)) {
                 qint64 _nOffset = mach.getCommandRecordOffset(XMACH_DEF::S_LC_UNIXTHREAD, 0, &listCommandRecords);
 
-                QTreeWidgetItem *pItemUnixThread = createNewItem(SMACH::TYPE_mach_unix_thread, QString("LC_UNIXTHREAD"), ICONTYPE_UNKNOWN,
+                QTreeWidgetItem *pItemUnixThread = createNewItem(SMACH::TYPE_mach_unix_thread, QString("LC_UNIXTHREAD"), XOptions::ICONTYPE_GENERIC,
                                                                  _nOffset);  // TODO rename
 
                 pItemCommands->addChild(pItemUnixThread);
@@ -456,32 +456,32 @@ void MACHWidget::reload()
                 _nOffset += sizeof(XMACH_DEF::unix_thread_command);
 
                 if (nMachine == XMACH_DEF::S_CPU_TYPE_I386) {
-                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_mach_unix_thread_x86_32, QString("x86_thread_state32_t"), ICONTYPE_UNKNOWN,
+                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_mach_unix_thread_x86_32, QString("x86_thread_state32_t"), XOptions::ICONTYPE_GENERIC,
                                                            _nOffset);  // TODO rename
 
                     pItemUnixThread->addChild(pItem);
                 } else if (nMachine == XMACH_DEF::S_CPU_TYPE_X86_64) {
-                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_mach_unix_thread_x86_64, QString("x86_thread_state64_t"), ICONTYPE_UNKNOWN,
+                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_mach_unix_thread_x86_64, QString("x86_thread_state64_t"), XOptions::ICONTYPE_GENERIC,
                                                            _nOffset);  // TODO rename
 
                     pItemUnixThread->addChild(pItem);
                 } else if (nMachine == XMACH_DEF::S_CPU_TYPE_ARM) {
-                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_mach_unix_thread_arm_32, QString("arm_thread_state32_t"), ICONTYPE_UNKNOWN,
+                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_mach_unix_thread_arm_32, QString("arm_thread_state32_t"), XOptions::ICONTYPE_GENERIC,
                                                            _nOffset);  // TODO rename
 
                     pItemUnixThread->addChild(pItem);
                 } else if (nMachine == XMACH_DEF::S_CPU_TYPE_ARM64) {
-                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_mach_unix_thread_arm_64, QString("arm_thread_state64_t"), ICONTYPE_UNKNOWN,
+                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_mach_unix_thread_arm_64, QString("arm_thread_state64_t"), XOptions::ICONTYPE_GENERIC,
                                                            _nOffset);  // TODO rename
 
                     pItemUnixThread->addChild(pItem);
                 } else if (nMachine == XMACH_DEF::S_CPU_TYPE_MC680x0) {
-                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_mach_unix_thread_m68k_32, QString("m68k_thread_state32_t"), ICONTYPE_UNKNOWN,
+                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_mach_unix_thread_m68k_32, QString("m68k_thread_state32_t"), XOptions::ICONTYPE_GENERIC,
                                                            _nOffset);  // TODO rename
 
                     pItemUnixThread->addChild(pItem);
                 } else if (nMachine == XMACH_DEF::S_CPU_TYPE_POWERPC) {
-                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_mach_unix_thread_ppc_32, QString("ppc_thread_state32_t"), ICONTYPE_UNKNOWN,
+                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_mach_unix_thread_ppc_32, QString("ppc_thread_state32_t"), XOptions::ICONTYPE_GENERIC,
                                                            _nOffset);  // TODO rename
 
                     pItemUnixThread->addChild(pItem);
@@ -492,7 +492,7 @@ void MACHWidget::reload()
                 qint64 _nOffset = mach.getCommandRecordOffset(XMACH_DEF::S_LC_DYLD_CHAINED_FIXUPS, 0, &listCommandRecords);
 
                 QTreeWidgetItem *pItemChainedFixups =
-                    createNewItem(SMACH::TYPE_mach_dyld_chained_fixups, QString("LC_DYLD_CHAINED_FIXUPS"), ICONTYPE_UNKNOWN, _nOffset);  // TODO rename
+                    createNewItem(SMACH::TYPE_mach_dyld_chained_fixups, QString("LC_DYLD_CHAINED_FIXUPS"), XOptions::ICONTYPE_GENERIC, _nOffset);  // TODO rename
 
                 pItemCommands->addChild(pItemChainedFixups);
 
@@ -507,7 +507,7 @@ void MACHWidget::reload()
                 qint64 _nOffset = mach.getCommandRecordOffset(XMACH_DEF::S_LC_DYLD_EXPORTS_TRIE, 0, &listCommandRecords);
 
                 QTreeWidgetItem *pItemExportsTrie =
-                    createNewItem(SMACH::TYPE_mach_dyld_exports_trie, QString("LC_DYLD_EXPORTS_TRIE"), ICONTYPE_UNKNOWN, _nOffset);  // TODO rename
+                    createNewItem(SMACH::TYPE_mach_dyld_exports_trie, QString("LC_DYLD_EXPORTS_TRIE"), XOptions::ICONTYPE_GENERIC, _nOffset);  // TODO rename
 
                 pItemCommands->addChild(pItemExportsTrie);
 

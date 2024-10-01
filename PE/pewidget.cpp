@@ -106,25 +106,25 @@ void PEWidget::reload()
 
         setFileType(pe.getFileType());
 
-        QTreeWidgetItem *pItemInfo = createNewItem(SPE::TYPE_INFO, tr("Info"), ICONTYPE_INFO);
+        QTreeWidgetItem *pItemInfo = createNewItem(SPE::TYPE_INFO, tr("Info"), XOptions::ICONTYPE_INFO);
         ui->treeWidgetNavi->addTopLevelItem(pItemInfo);
-        pItemInfo->addChild(createNewItem(SPE::TYPE_NFDSCAN, "Nauz File Detector (NFD)"));
-        pItemInfo->addChild(createNewItem(SPE::TYPE_DIESCAN, "Detect It Easy (DiE)"));
+        pItemInfo->addChild(createNewItem(SPE::TYPE_NFDSCAN, "Nauz File Detector (NFD)", XOptions::ICONTYPE_NFD));
+        pItemInfo->addChild(createNewItem(SPE::TYPE_DIESCAN, "Detect It Easy (DiE)", XOptions::ICONTYPE_DIE));
 #ifdef USE_YARA
-        pItemInfo->addChild(createNewItem(SPE::TYPE_YARASCAN, "Yara rules"));
+        pItemInfo->addChild(createNewItem(SPE::TYPE_YARASCAN, "Yara rules", XOptions::ICONTYPE_YARA));
 #endif
-        pItemInfo->addChild(createNewItem(SPE::TYPE_VIRUSTOTAL, "VirusTotal"));
+        pItemInfo->addChild(createNewItem(SPE::TYPE_VIRUSTOTAL, "VirusTotal", XOptions::ICONTYPE_VIRUSTOTAL));
 
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_VISUALIZATION, tr("Visualization"), ICONTYPE_VISUALIZATION));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_HEX, tr("Hex"), ICONTYPE_HEX));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_DISASM, tr("Disasm"), ICONTYPE_DISASM));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_HASH, tr("Hash"), ICONTYPE_HASH));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_STRINGS, tr("Strings"), ICONTYPE_STRINGS));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_SIGNATURES, tr("Signatures"), ICONTYPE_SIGNATURES));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_MEMORYMAP, tr("Memory map"), ICONTYPE_MEMORYMAP));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_ENTROPY, tr("Entropy"), ICONTYPE_ENTROPY));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_EXTRACTOR, tr("Extractor"), ICONTYPE_EXTRACTOR));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_SEARCH, tr("Search"), ICONTYPE_SEARCH));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_VISUALIZATION, tr("Visualization"), XOptions::ICONTYPE_VISUALIZATION));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_HEX, tr("Hex"), XOptions::ICONTYPE_HEX));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_DISASM, tr("Disasm"), XOptions::ICONTYPE_DISASM));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_HASH, tr("Hash"), XOptions::ICONTYPE_HASH));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_STRINGS, tr("Strings"), XOptions::ICONTYPE_STRING));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_SIGNATURES, tr("Signatures"), XOptions::ICONTYPE_SIGNATURE));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_MEMORYMAP, tr("Memory map"), XOptions::ICONTYPE_MEMORYMAP));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_ENTROPY, tr("Entropy"), XOptions::ICONTYPE_ENTROPY));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_EXTRACTOR, tr("Extractor"), XOptions::ICONTYPE_EXTRACTOR));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_SEARCH, tr("Search"), XOptions::ICONTYPE_SEARCH));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_TOOLS, tr("Tools")));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_IMAGE_DOS_HEADER, "IMAGE_DOS_HEADER"));
 
@@ -232,12 +232,12 @@ void PEWidget::reload()
                 qint32 nNumberOfStreams = cliInfo.metaData.listStreams.count();
 
                 for (qint32 i = 0; i < nNumberOfStreams; i++) {
-                    QTreeWidgetItem *pNetMetadataStream = createNewItem(SPE::TYPE_NET_METADATA_STREAM, cliInfo.metaData.listStreams.at(i).sName, ICONTYPE_UNKNOWN,
+                    QTreeWidgetItem *pNetMetadataStream = createNewItem(SPE::TYPE_NET_METADATA_STREAM, cliInfo.metaData.listStreams.at(i).sName, XOptions::ICONTYPE_GENERIC,
                                                                         cliInfo.metaData.listStreams.at(i).nOffset, cliInfo.metaData.listStreams.at(i).nSize);
                     pNetMetadata->addChild(pNetMetadataStream);
 
                     if ((cliInfo.metaData.listStreams.at(i).sName == "#~") || (cliInfo.metaData.listStreams.at(i).sName == "#-")) {
-                        QTreeWidgetItem *pNetMetadataTable = createNewItem(SPE::TYPE_NET_METADATA_TABLE, tr("Metadata table"), ICONTYPE_UNKNOWN,
+                        QTreeWidgetItem *pNetMetadataTable = createNewItem(SPE::TYPE_NET_METADATA_TABLE, tr("Metadata table"), XOptions::ICONTYPE_GENERIC,
                                                                            cliInfo.metaData.listStreams.at(i).nOffset, cliInfo.metaData.listStreams.at(i).nSize);
                         pNetMetadataStream->addChild(pNetMetadataTable);
                     }
@@ -249,7 +249,7 @@ void PEWidget::reload()
         }
 
         if (pe.isOverlayPresent()) {
-            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_OVERLAY, tr("Overlay"), ICONTYPE_OVERLAY));
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_OVERLAY, tr("Overlay"), XOptions::ICONTYPE_OVERLAY));
         }
 
         ui->treeWidgetNavi->expandAll();

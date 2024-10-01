@@ -26,6 +26,113 @@ FormatsWidget::FormatsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(n
 {
     ui->setupUi(this);
 
+    XOptions::adjustToolButton(ui->toolButtonEntryPoint, XOptions::ICONTYPE_ENTRY, Qt::ToolButtonIconOnly);
+    XOptions::adjustToolButton(ui->toolButtonMemoryMap, XOptions::ICONTYPE_MEMORYMAP);
+    XOptions::adjustToolButton(ui->toolButtonPEExport, XOptions::ICONTYPE_GENERIC);
+    XOptions::adjustToolButton(ui->toolButtonPEImport, XOptions::ICONTYPE_GENERIC);
+    XOptions::adjustToolButton(ui->toolButtonPEResources, XOptions::ICONTYPE_GENERIC);
+    XOptions::adjustToolButton(ui->toolButtonPEOverlay, XOptions::ICONTYPE_OVERLAY);
+    XOptions::adjustToolButton(ui->toolButtonPE, XOptions::ICONTYPE_INFO);
+    XOptions::adjustToolButton(ui->toolButtonPESections, XOptions::ICONTYPE_ENTRY, Qt::ToolButtonIconOnly);
+    XOptions::adjustToolButton(ui->toolButtonPEManifest, XOptions::ICONTYPE_GENERIC);
+    XOptions::adjustToolButton(ui->toolButtonPEVersion, XOptions::ICONTYPE_GENERIC);
+    XOptions::adjustToolButton(ui->toolButtonPENET, XOptions::ICONTYPE_GENERIC);
+    XOptions::adjustToolButton(ui->toolButtonPETLS, XOptions::ICONTYPE_GENERIC);
+    XOptions::adjustToolButton(ui->toolButtonMACH, XOptions::ICONTYPE_INFO);
+    XOptions::adjustToolButton(ui->toolButtonMACHSegments, XOptions::ICONTYPE_ENTRY, Qt::ToolButtonIconOnly);
+    XOptions::adjustToolButton(ui->toolButtonMACHSections, XOptions::ICONTYPE_ENTRY, Qt::ToolButtonIconOnly);
+    XOptions::adjustToolButton(ui->toolButtonMACHCommands, XOptions::ICONTYPE_ENTRY, Qt::ToolButtonIconOnly);
+    XOptions::adjustToolButton(ui->toolButtonMACHLibraries, XOptions::ICONTYPE_ENTRY, Qt::ToolButtonIconOnly);
+    XOptions::adjustToolButton(ui->toolButtonDEX, XOptions::ICONTYPE_INFO);
+    XOptions::adjustToolButton(ui->toolButtonArchive, XOptions::ICONTYPE_INFO);
+    XOptions::adjustToolButton(ui->toolButtonBinary, XOptions::ICONTYPE_INFO);
+    XOptions::adjustToolButton(ui->toolButtonMSDOSOverlay, XOptions::ICONTYPE_OVERLAY);
+    XOptions::adjustToolButton(ui->toolButtonMSDOS, XOptions::ICONTYPE_INFO);
+    XOptions::adjustToolButton(ui->toolButtonELF, XOptions::ICONTYPE_INFO);
+    XOptions::adjustToolButton(ui->toolButtonELFSections, XOptions::ICONTYPE_ENTRY, Qt::ToolButtonIconOnly);
+    XOptions::adjustToolButton(ui->toolButtonELFPrograms, XOptions::ICONTYPE_ENTRY, Qt::ToolButtonIconOnly);
+    XOptions::adjustToolButton(ui->toolButtonLE, XOptions::ICONTYPE_INFO);
+    XOptions::adjustToolButton(ui->toolButtonNE, XOptions::ICONTYPE_INFO);
+    XOptions::adjustToolButton(ui->toolButtonAndroidManifest, XOptions::ICONTYPE_GENERIC);
+    XOptions::adjustToolButton(ui->toolButtonMANIFESTMF, XOptions::ICONTYPE_GENERIC);
+    XOptions::adjustToolButton(ui->toolButtonDisasm, XOptions::ICONTYPE_DISASM);
+    XOptions::adjustToolButton(ui->toolButtonHex, XOptions::ICONTYPE_HEX);
+    XOptions::adjustToolButton(ui->toolButtonStrings, XOptions::ICONTYPE_STRING);
+    XOptions::adjustToolButton(ui->toolButtonEntropy, XOptions::ICONTYPE_ENTROPY);
+    XOptions::adjustToolButton(ui->toolButtonHash, XOptions::ICONTYPE_HASH);
+    XOptions::adjustToolButton(ui->toolButtonSearch, XOptions::ICONTYPE_SEARCH);
+    XOptions::adjustToolButton(ui->toolButtonSignatures, XOptions::ICONTYPE_SIGNATURE);
+    XOptions::adjustToolButton(ui->toolButtonMemoryMap, XOptions::ICONTYPE_MEMORYMAP);
+    XOptions::adjustToolButton(ui->toolButtonVisualization, XOptions::ICONTYPE_VISUALIZATION);
+    XOptions::adjustToolButton(ui->toolButtonMIME, XOptions::ICONTYPE_MIME);
+    XOptions::adjustToolButton(ui->toolButtonYARA, XOptions::ICONTYPE_YARA);
+    XOptions::adjustToolButton(ui->toolButtonExtractor, XOptions::ICONTYPE_EXTRACTOR);
+    XOptions::adjustToolButton(ui->toolButtonFileInfo, XOptions::ICONTYPE_INFO);
+    XOptions::adjustToolButton(ui->toolButtonFiles, XOptions::ICONTYPE_FILE);
+    XOptions::adjustToolButton(ui->toolButtonVirusTotal, XOptions::ICONTYPE_VIRUSTOTAL);
+
+    ui->comboBoxFileType->setToolTip(tr("Type"));
+    ui->comboBoxScanEngine->setToolTip(tr("Scan engine"));
+    ui->toolButtonEntryPoint->setToolTip(tr("Entry point"));
+    ui->toolButtonMemoryMap->setToolTip(tr("Memory map"));
+    ui->toolButtonPEExport->setToolTip(tr("Export"));
+    ui->toolButtonPEImport->setToolTip(tr("Import"));
+    ui->toolButtonPEResources->setToolTip(tr("Resources"));
+    ui->toolButtonPEOverlay->setToolTip(tr("Overlay"));
+    ui->toolButtonPE->setToolTip(QString("PE"));
+    ui->toolButtonPESections->setToolTip(tr("Sections"));
+    ui->toolButtonPEManifest->setToolTip(tr("Manifest"));
+    ui->toolButtonPEVersion->setToolTip(tr("Version"));
+    ui->toolButtonPENET->setToolTip(QString(".NET"));
+    ui->toolButtonPETLS->setToolTip(QString("TLS"));
+    ui->toolButtonMACH->setToolTip(QString("MACH"));
+    ui->toolButtonMACHSegments->setToolTip(tr("Segments"));
+    ui->toolButtonMACHSections->setToolTip(tr("Sections"));
+    ui->toolButtonMACHCommands->setToolTip(QString("Commands"));
+    ui->toolButtonMACHLibraries->setToolTip(tr("Libraries"));
+    ui->toolButtonDEX->setToolTip(QString("DEX"));
+    ui->toolButtonArchive->setToolTip(tr("Archive"));
+    ui->toolButtonBinary->setToolTip(tr("Binary"));
+    ui->toolButtonMSDOSOverlay->setToolTip(tr("Overlay"));
+    ui->toolButtonMSDOS->setToolTip(QString("MSDOS"));
+    ui->toolButtonELF->setToolTip(QString("ELF"));
+    ui->toolButtonELFSections->setToolTip(tr("Sections"));
+    ui->toolButtonELFPrograms->setToolTip(QString("Programs"));
+    ui->toolButtonLE->setToolTip(QString("LE"));
+    ui->toolButtonNE->setToolTip(QString("NE"));
+    ui->toolButtonAndroidManifest->setToolTip(QString("AndroidManifest"));
+    ui->toolButtonMANIFESTMF->setToolTip(QString("MANIFEST.MF"));
+    ui->toolButtonDisasm->setToolTip(tr("Disasm"));
+    ui->toolButtonHex->setToolTip(tr("Hex"));
+    ui->toolButtonStrings->setToolTip(tr("Strings"));
+    ui->toolButtonEntropy->setToolTip(tr("Entropy"));
+    ui->toolButtonHash->setToolTip(tr("Hash"));
+    ui->toolButtonSearch->setToolTip(tr("Search"));
+    ui->toolButtonSignatures->setToolTip(tr("Signatures"));
+    ui->toolButtonMemoryMap->setToolTip(tr("Memory map"));
+    ui->toolButtonVisualization->setToolTip(tr("Visualization"));
+    ui->toolButtonMIME->setToolTip(QString("MIME"));
+    ui->toolButtonYARA->setToolTip(QString("YARA"));
+    ui->toolButtonExtractor->setToolTip(tr("Extractor"));
+    ui->toolButtonFileInfo->setToolTip(tr("File info"));
+    ui->toolButtonFiles->setToolTip(tr("Files"));
+    ui->toolButtonVirusTotal->setToolTip(QString("VirusTotal"));
+    ui->lineEditArch->setToolTip(tr("Architecture"));
+    ui->lineEditBaseAddress->setToolTip(tr("Base address"));
+    ui->lineEditEndianness->setToolTip(tr("Endianness"));
+    ui->lineEditEntryPoint->setToolTip(tr("Entry point"));
+    ui->lineEditFileSize->setToolTip(tr("File size"));
+    ui->lineEditPESections->setToolTip(tr("Sections"));
+    ui->lineEditType->setToolTip(tr("Type"));
+    ui->lineEditELFPrograms->setToolTip(QString("Programs"));
+    ui->lineEditELFSections->setToolTip(tr("Sections"));
+    ui->lineEditMACHCommands->setToolTip(QString("Commands"));
+    ui->lineEditMACHSections->setToolTip(tr("Sections"));
+    ui->lineEditMACHSegments->setToolTip(tr("Segments"));
+    ui->lineEditMACHLibraries->setToolTip(tr("Libraries"));
+    ui->lineEditPETimeDateStamp->setToolTip(tr("Time date stamp"));
+    ui->lineEditPESizeOfImage->setToolTip(tr("Size of image"));
+
     ui->stackedWidgetMain->setCurrentIndex(TABINFO_BINARY);
 
     connect(ui->pageScanDIE, SIGNAL(scanStarted()), this, SLOT(onScanStarted()));
@@ -42,7 +149,7 @@ FormatsWidget::FormatsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(n
     connect(ui->pageScanNFD, SIGNAL(currentFileType(qint32)), this, SLOT(_currentFileType(qint32)));
 
 #ifndef USE_YARA
-    ui->pushButtonYARA->hide();
+    ui->toolButtonYARA->hide();
 #endif
 }
 
@@ -177,7 +284,7 @@ void FormatsWidget::reload()
                 ui->lineEditEntryPoint->setValue_uint16((quint16)com.getEntryPointAddress());
             }
         } else if (XArchives::getArchiveOpenValidFileTypes().contains(fileType)) {
-            ui->pushButtonArchive->setText(XFormats::getFileFormatInfo(fileType, &file).sString);
+            ui->toolButtonArchive->setText(XFormats::getFileFormatInfo(fileType, &file).sString);
 
             bool bMANIFESTMF = false;
             bool bAndroidManifest = false;
@@ -201,15 +308,15 @@ void FormatsWidget::reload()
             }
 
             if (bMANIFESTMF) {
-                ui->pushButtonMANIFESTMF->show();
+                ui->toolButtonMANIFESTMF->show();
             } else {
-                ui->pushButtonMANIFESTMF->hide();
+                ui->toolButtonMANIFESTMF->hide();
             }
 
             if (bAndroidManifest) {
-                ui->pushButtonAndroidManifest->show();
+                ui->toolButtonAndroidManifest->show();
             } else {
-                ui->pushButtonAndroidManifest->hide();
+                ui->toolButtonAndroidManifest->hide();
             }
 
             ui->stackedWidgetMain->setCurrentIndex(TABINFO_ARCHIVE);
@@ -231,16 +338,16 @@ void FormatsWidget::reload()
             if (msdos.isValid()) {
                 ui->lineEditEntryPoint->setValue_uint32((quint32)msdos.getEntryPointAddress());
 
-                ui->pushButtonMSDOSOverlay->setEnabled(msdos.isOverlayPresent());
+                ui->toolButtonMSDOSOverlay->setEnabled(msdos.isOverlayPresent());
             }
         } else if ((fileType == XBinary::FT_LE) || (fileType == XBinary::FT_LX))  // mb TODO LX
         {
             ui->stackedWidgetMain->setCurrentIndex(TABINFO_LE);
 
             if (fileType == XBinary::FT_LE) {
-                ui->pushButtonLE->setText("LE");
+                ui->toolButtonLE->setText("LE");
             } else if (fileType == XBinary::FT_LX) {
-                ui->pushButtonLE->setText("LX");
+                ui->toolButtonLE->setText("LX");
             }
 
             XLE le(&file);
@@ -274,17 +381,17 @@ void FormatsWidget::reload()
                 ui->lineEditPESections->setValue_uint16(pe.getFileHeader_NumberOfSections());
                 ui->groupBoxPESections->setEnabled(pe.isSectionsTablePresent());
 
-                ui->pushButtonPEExport->setEnabled(pe.isExportPresent());
-                ui->pushButtonPEImport->setEnabled(pe.isImportPresent());
-                ui->pushButtonPEResources->setEnabled(bIsResourcesPresent);
-                ui->pushButtonPENET->setEnabled(pe.isNETPresent());
-                ui->pushButtonPETLS->setEnabled(pe.isTLSPresent());
+                ui->toolButtonPEExport->setEnabled(pe.isExportPresent());
+                ui->toolButtonPEImport->setEnabled(pe.isImportPresent());
+                ui->toolButtonPEResources->setEnabled(bIsResourcesPresent);
+                ui->toolButtonPENET->setEnabled(pe.isNETPresent());
+                ui->toolButtonPETLS->setEnabled(pe.isTLSPresent());
 
                 ui->groupBoxPEResources->setEnabled(bIsResourcesPresent);
-                ui->pushButtonPEManifest->setEnabled(pe.isResourceManifestPresent(&listResources));
-                ui->pushButtonPEVersion->setEnabled(pe.isResourceVersionPresent(&listResources));
+                ui->toolButtonPEManifest->setEnabled(pe.isResourceManifestPresent(&listResources));
+                ui->toolButtonPEVersion->setEnabled(pe.isResourceVersionPresent(&listResources));
 
-                ui->pushButtonPEOverlay->setEnabled(pe.isOverlayPresent());
+                ui->toolButtonPEOverlay->setEnabled(pe.isOverlayPresent());
 
                 quint32 nNetID = pe.getNetId();
 
@@ -379,7 +486,7 @@ void FormatsWidget::scan()
     }
 }
 
-void FormatsWidget::on_pushButtonEntryPoint_clicked()
+void FormatsWidget::on_toolButtonEntryPoint_clicked()
 {
     XBinary::FT fileType = getCurrentFileType();
 
@@ -390,77 +497,77 @@ void FormatsWidget::on_pushButtonEntryPoint_clicked()
     }
 }
 
-void FormatsWidget::on_pushButtonMemoryMap_clicked()
+void FormatsWidget::on_toolButtonMemoryMap_clicked()
 {
     showType(SBINARY::TYPE_MEMORYMAP);
 }
 
-void FormatsWidget::on_pushButtonPEExport_clicked()
+void FormatsWidget::on_toolButtonPEExport_clicked()
 {
     showPE(SPE::TYPE_EXPORT);
 }
 
-void FormatsWidget::on_pushButtonPEImport_clicked()
+void FormatsWidget::on_toolButtonPEImport_clicked()
 {
     showPE(SPE::TYPE_IMPORT);
 }
 
-void FormatsWidget::on_pushButtonPEResources_clicked()
+void FormatsWidget::on_toolButtonPEResources_clicked()
 {
     showPE(SPE::TYPE_RESOURCES);
 }
 
-void FormatsWidget::on_pushButtonPEOverlay_clicked()
+void FormatsWidget::on_toolButtonPEOverlay_clicked()
 {
     showPE(SPE::TYPE_OVERLAY);
 }
 
-void FormatsWidget::on_pushButtonPE_clicked()
+void FormatsWidget::on_toolButtonPE_clicked()
 {
     showPE(SPE::TYPE_IMAGE_FILE_HEADER);
 }
 
-void FormatsWidget::on_pushButtonPESections_clicked()
+void FormatsWidget::on_toolButtonPESections_clicked()
 {
     showPE(SPE::TYPE_SECTIONS);
 }
 
-void FormatsWidget::on_pushButtonPEManifest_clicked()
+void FormatsWidget::on_toolButtonPEManifest_clicked()
 {
     showPE(SPE::TYPE_RESOURCES_MANIFEST);
 }
 
-void FormatsWidget::on_pushButtonPEVersion_clicked()
+void FormatsWidget::on_toolButtonPEVersion_clicked()
 {
     showPE(SPE::TYPE_RESOURCES_VERSION);
 }
 
-void FormatsWidget::on_pushButtonPENET_clicked()
+void FormatsWidget::on_toolButtonPENET_clicked()
 {
     showPE(SPE::TYPE_NETHEADER);
 }
 
-void FormatsWidget::on_pushButtonMACH_clicked()
+void FormatsWidget::on_toolButtonMACH_clicked()
 {
     showMACH(SMACH::TYPE_mach_header);
 }
 
-void FormatsWidget::on_pushButtonMACHSegments_clicked()
+void FormatsWidget::on_toolButtonMACHSegments_clicked()
 {
     showMACH(SMACH::TYPE_mach_segments);
 }
 
-void FormatsWidget::on_pushButtonMACHSections_clicked()
+void FormatsWidget::on_toolButtonMACHSections_clicked()
 {
     showMACH(SMACH::TYPE_mach_sections);
 }
 
-void FormatsWidget::on_pushButtonMACHCommands_clicked()
+void FormatsWidget::on_toolButtonMACHCommands_clicked()
 {
     showMACH(SMACH::TYPE_mach_commands);
 }
 
-void FormatsWidget::on_pushButtonMACHLibraries_clicked()
+void FormatsWidget::on_toolButtonMACHLibraries_clicked()
 {
     showMACH(SMACH::TYPE_mach_libraries);
 }
@@ -638,32 +745,32 @@ XBinary::FT FormatsWidget::getCurrentFileType()
     return (XBinary::FT)(ui->comboBoxFileType->currentData().toInt());
 }
 
-void FormatsWidget::on_pushButtonMSDOSOverlay_clicked()
+void FormatsWidget::on_toolButtonMSDOSOverlay_clicked()
 {
     showMSDOS(SMSDOS::TYPE_OVERLAY);
 }
 
-void FormatsWidget::on_pushButtonMSDOS_clicked()
+void FormatsWidget::on_toolButtonMSDOS_clicked()
 {
     showMSDOS(SMSDOS::TYPE_DOS_HEADER);
 }
 
-void FormatsWidget::on_pushButtonPETLS_clicked()
+void FormatsWidget::on_toolButtonPETLS_clicked()
 {
     showPE(SPE::TYPE_TLS);
 }
 
-void FormatsWidget::on_pushButtonELF_clicked()
+void FormatsWidget::on_toolButtonELF_clicked()
 {
     showELF(SELF::TYPE_Elf_Ehdr);
 }
 
-void FormatsWidget::on_pushButtonELFSections_clicked()
+void FormatsWidget::on_toolButtonELFSections_clicked()
 {
     showELF(SELF::TYPE_Elf_Shdr);
 }
 
-void FormatsWidget::on_pushButtonELFPrograms_clicked()
+void FormatsWidget::on_toolButtonELFPrograms_clicked()
 {
     showELF(SELF::TYPE_Elf_Phdr);
 }
@@ -677,27 +784,27 @@ void FormatsWidget::on_comboBoxScanEngine_currentIndexChanged(int nIndex)
     scan();
 }
 
-void FormatsWidget::on_pushButtonLE_clicked()
+void FormatsWidget::on_toolButtonLE_clicked()
 {
     showLE(SLE::TYPE_VXD_HEADER);
 }
 
-void FormatsWidget::on_pushButtonNE_clicked()
+void FormatsWidget::on_toolButtonNE_clicked()
 {
     showNE(SNE::TYPE_OS2_HEADER);
 }
 
-void FormatsWidget::on_pushButtonDEX_clicked()
+void FormatsWidget::on_toolButtonDEX_clicked()
 {
     showDEX(SDEX::TYPE_HEADER);
 }
 
-void FormatsWidget::on_pushButtonArchive_clicked()
+void FormatsWidget::on_toolButtonArchive_clicked()
 {
     showBinary(SBINARY::TYPE_HEX);
 }
 
-void FormatsWidget::on_pushButtonBinary_clicked()
+void FormatsWidget::on_toolButtonBinary_clicked()
 {
     showBinary(SBINARY::TYPE_HEX);
 }
@@ -923,12 +1030,12 @@ void FormatsWidget::registerShortcuts(bool bState)
     Q_UNUSED(bState)
 }
 
-void FormatsWidget::on_pushButtonFileInfo_clicked()
+void FormatsWidget::on_toolButtonFileInfo_clicked()
 {
     showType(SBINARY::TYPE_INFO);
 }
 
-void FormatsWidget::on_pushButtonMIME_clicked()
+void FormatsWidget::on_toolButtonMIME_clicked()
 {
     QString sFileName = g_sFileName;
 
@@ -947,32 +1054,32 @@ void FormatsWidget::on_pushButtonMIME_clicked()
     }
 }
 
-void FormatsWidget::on_pushButtonHash_clicked()
+void FormatsWidget::on_toolButtonHash_clicked()
 {
     showType(SBINARY::TYPE_HASH);
 }
 
-void FormatsWidget::on_pushButtonStrings_clicked()
+void FormatsWidget::on_toolButtonStrings_clicked()
 {
     showType(SBINARY::TYPE_STRINGS);
 }
 
-void FormatsWidget::on_pushButtonSignatures_clicked()
+void FormatsWidget::on_toolButtonSignatures_clicked()
 {
     showType(SBINARY::TYPE_SIGNATURES);
 }
 
-void FormatsWidget::on_pushButtonHex_clicked()
+void FormatsWidget::on_toolButtonHex_clicked()
 {
     showType(SBINARY::TYPE_HEX);
 }
 
-void FormatsWidget::on_pushButtonEntropy_clicked()
+void FormatsWidget::on_toolButtonEntropy_clicked()
 {
     showType(SBINARY::TYPE_ENTROPY);
 }
 
-void FormatsWidget::on_pushButtonVirusTotal_clicked()
+void FormatsWidget::on_toolButtonVirusTotal_clicked()
 {
     if (getGlobalOptions()->getVirusTotalApiKey() != "") {
         showType(SBINARY::TYPE_VIRUSTOTAL);
@@ -993,17 +1100,17 @@ void FormatsWidget::on_pushButtonVirusTotal_clicked()
     }
 }
 
-void FormatsWidget::on_pushButtonExtractor_clicked()
+void FormatsWidget::on_toolButtonExtractor_clicked()
 {
     showType(SBINARY::TYPE_EXTRACTOR);
 }
 
-void FormatsWidget::on_pushButtonSearch_clicked()
+void FormatsWidget::on_toolButtonSearch_clicked()
 {
     showType(SBINARY::TYPE_SEARCH);
 }
 
-void FormatsWidget::on_pushButtonUnpack_clicked()
+void FormatsWidget::on_toolButtonUnpack_clicked()
 {
     QString sInitDirectory = QFileInfo(g_sFileName).absolutePath();
     QString sDirectoryName = QFileDialog::getExistingDirectory(this, tr("Open directory") + QString("..."), sInitDirectory, QFileDialog::ShowDirsOnly);
@@ -1017,7 +1124,7 @@ void FormatsWidget::on_pushButtonUnpack_clicked()
     }
 }
 
-void FormatsWidget::on_pushButtonFiles_clicked()
+void FormatsWidget::on_toolButtonFiles_clicked()
 {
     DialogArchive dialogArchive(this);
     dialogArchive.setGlobal(getShortcuts(), getGlobalOptions());
@@ -1029,19 +1136,19 @@ void FormatsWidget::on_pushButtonFiles_clicked()
     dialogArchive.exec();
 }
 
-void FormatsWidget::on_pushButtonYARA_clicked()
+void FormatsWidget::on_toolButtonYARA_clicked()
 {
 #ifdef USE_YARA
     showType(SBINARY::TYPE_YARASCAN);
 #endif
 }
 
-void FormatsWidget::on_pushButtonDisasm_clicked()
+void FormatsWidget::on_toolButtonDisasm_clicked()
 {
     showType(SBINARY::TYPE_DISASM);
 }
 
-void FormatsWidget::on_pushButtonVisualization_clicked()
+void FormatsWidget::on_toolButtonVisualization_clicked()
 {
     showType(SBINARY::TYPE_VISUALIZATION);
 }
@@ -1061,7 +1168,7 @@ void FormatsWidget::_currentFileType(qint32 nFT)
     XFormats::setCurrentFileTypeComboBox(ui->comboBoxFileType, (XBinary::FT)nFT);
 }
 
-void FormatsWidget::on_pushButtonMANIFESTMF_clicked()
+void FormatsWidget::on_toolButtonMANIFESTMF_clicked()
 {
     DialogTextInfo dialogTextInfo(this);
 
@@ -1070,7 +1177,7 @@ void FormatsWidget::on_pushButtonMANIFESTMF_clicked()
     dialogTextInfo.exec();
 }
 
-void FormatsWidget::on_pushButtonAndroidManifest_clicked()
+void FormatsWidget::on_toolButtonAndroidManifest_clicked()
 {
     DialogTextInfo dialogTextInfo(this);
 
