@@ -27,6 +27,18 @@ SearchValuesWidget::SearchValuesWidget(QWidget *pParent) : XShortcutsWidget(pPar
     ui->setupUi(this);
     g_pDevice = nullptr;
 
+    //XOptions::addToolButtonIcon(ui->toolButtonSearch, ":/icons/Refresh.16.16.png");
+    XOptions::addToolButtonIcon(ui->toolButtonSave, ":/icons/Save.16.16.png");
+
+    ui->comboBoxType->setToolTip(tr("Type"));
+    ui->comboBoxMapMode->setToolTip(tr("Mode"));
+    ui->toolButtonSearchString->setToolTip(tr("Search string"));
+    ui->toolButtonSearchSignature->setToolTip(tr("Search signature"));
+    ui->toolButtonSearchValue->setToolTip(tr("Search value"));
+    ui->toolButtonSearch->setToolTip(tr("Search"));
+    ui->toolButtonSave->setToolTip(tr("Save"));
+    ui->tableViewResult->setToolTip(tr("Result"));
+
     g_pModel = nullptr;
     g_varValue = 0;
     g_valueType = XBinary::VT_UNKNOWN;
@@ -83,7 +95,7 @@ void SearchValuesWidget::adjustView()
 {
 }
 
-void SearchValuesWidget::on_pushButtonSave_clicked()
+void SearchValuesWidget::on_toolButtonSave_clicked()
 {
     if (g_pModel) {
         XShortcutsWidget::saveTableModel(g_pModel, XBinary::getResultFileName(g_pDevice, QString("%1.txt").arg(tr("Values"))));
@@ -188,17 +200,17 @@ void SearchValuesWidget::registerShortcuts(bool bState)
     }
 }
 
-void SearchValuesWidget::on_pushButtonSearchString_clicked()
+void SearchValuesWidget::on_toolButtonSearchString_clicked()
 {
     _search(DialogSearch::SEARCHMODE_STRING);
 }
 
-void SearchValuesWidget::on_pushButtonSearchSignature_clicked()
+void SearchValuesWidget::on_toolButtonSearchSignature_clicked()
 {
     _search(DialogSearch::SEARCHMODE_SIGNATURE);
 }
 
-void SearchValuesWidget::on_pushButtonSearchValue_clicked()
+void SearchValuesWidget::on_toolButtonSearchValue_clicked()
 {
     _search(DialogSearch::SEARCHMODE_VALUE);
 }
@@ -221,7 +233,7 @@ void SearchValuesWidget::_search(DialogSearch::SEARCHMODE mode)
     }
 }
 
-void SearchValuesWidget::on_pushButtonSearch_clicked()
+void SearchValuesWidget::on_toolButtonSearch_clicked()
 {
     search();
 }

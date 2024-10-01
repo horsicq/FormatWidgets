@@ -65,14 +65,14 @@ public:
     virtual void adjustView();
 
 private slots:
-    void on_pushButtonSave_clicked();
+    void on_toolButtonSave_clicked();
     void on_tableViewResult_customContextMenuRequested(const QPoint &pos);
     void search();
     void deleteOldModel();
-    void on_pushButtonSearchString_clicked();
-    void on_pushButtonSearchSignature_clicked();
-    void on_pushButtonSearchValue_clicked();
-    void on_pushButtonSearch_clicked();
+    void on_toolButtonSearchString_clicked();
+    void on_toolButtonSearchSignature_clicked();
+    void on_toolButtonSearchValue_clicked();
+    void on_toolButtonSearch_clicked();
     void _hex();
     void _disasm();
     void viewSelection();
