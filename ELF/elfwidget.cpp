@@ -341,7 +341,7 @@ void ELFWidget::reloadData(bool bSaveSelection)
                 stringsOptions.bMenu_Hex = true;
                 stringsOptions.bMenu_Demangle = true;
                 stringsOptions.bAnsi = true;
-                stringsOptions.bUTF8 = false;
+                // stringsOptions.bUTF8 = false;
                 stringsOptions.bUnicode = true;
                 stringsOptions.bNullTerminated = false;
 
@@ -834,14 +834,11 @@ void ELFWidget::on_tableView_SymbolTable_customContextMenuRequested(const QPoint
     if (nRow != -1) {
         QMenu contextMenu(this);
 
-        QAction actionEdit(tr("Edit"), this);
-        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editSymbolHeader()));
+        QAction actionEdit(this);
+        QAction actionDemangle(this);
 
-        QAction actionDemangle(tr("Demangle"), this);
-        connect(&actionDemangle, SIGNAL(triggered()), this, SLOT(symbolDemangle()));
-
-        contextMenu.addAction(&actionEdit);
-        contextMenu.addAction(&actionDemangle);
+        getShortcuts()->adjustAction(&contextMenu, &actionEdit, X_ID_TABLE_EDIT, this, SLOT(editSymbolHeader()));
+        getShortcuts()->adjustAction(&contextMenu, &actionDemangle, X_ID_TABLE_DEMANGLE, this, SLOT(symbolDemangle()));
 
         contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this, ui->tableView_SymbolTable));
 
@@ -948,33 +945,26 @@ void ELFWidget::on_tableView_Elf_Shdr_customContextMenuRequested(const QPoint &p
     qint32 nRow = ui->tableView_Elf_Shdr->currentIndex().row();
 
     if (nRow != -1) {
-        bool bIsEnable = getTableViewItemSize(ui->tableView_Elf_Shdr);
-
         QMenu contextMenu(this);
 
-        QAction actionEdit(tr("Edit"), this);
-        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editSectionHeader()));
-        contextMenu.addAction(&actionEdit);
+        QAction actionEdit(this);
+        QAction actionHex(this);
+        QAction actionDisasm(this);
+        QAction actionEntropy(this);
+        QAction actionDump(this);
 
-        QAction actionHex(QString("Hex"), this);
-        connect(&actionHex, SIGNAL(triggered()), this, SLOT(sectionHex()));
-        actionHex.setEnabled(bIsEnable);
-        contextMenu.addAction(&actionHex);
+        getShortcuts()->adjustAction(&contextMenu, &actionEdit, X_ID_TABLE_EDIT, this, SLOT(editSectionHeader()));
+        getShortcuts()->adjustAction(&contextMenu, &actionHex, X_ID_TABLE_HEX, this, SLOT(sectionHex()));
+        getShortcuts()->adjustAction(&contextMenu, &actionDisasm, X_ID_TABLE_DISASM, this, SLOT(sectionDisasm()));
+        getShortcuts()->adjustAction(&contextMenu, &actionEntropy, X_ID_TABLE_ENTROPY, this, SLOT(sectionEntropy()));
+        getShortcuts()->adjustAction(&contextMenu, &actionDump, X_ID_TABLE_DUMPTOFILE, this, SLOT(sectionDump()));
 
-        QAction actionDisasm(tr("Disasm"), this);
-        connect(&actionDisasm, SIGNAL(triggered()), this, SLOT(sectionDisasm()));
-        actionDisasm.setEnabled(bIsEnable);
-        contextMenu.addAction(&actionDisasm);
-
-        QAction actionEntropy(tr("Entropy"), this);
-        connect(&actionEntropy, SIGNAL(triggered()), this, SLOT(sectionEntropy()));
-        actionEntropy.setEnabled(bIsEnable);
-        contextMenu.addAction(&actionEntropy);
-
-        QAction actionDump(tr("Dump to file"), this);
-        connect(&actionDump, SIGNAL(triggered()), this, SLOT(sectionDump()));
-        actionDump.setEnabled(bIsEnable);
-        contextMenu.addAction(&actionDump);
+        if (!getTableViewItemSize(ui->tableView_Elf_Shdr)) {
+            actionHex.setEnabled(false);
+            actionDisasm.setEnabled(false);
+            actionEntropy.setEnabled(false);
+            actionDump.setEnabled(false);
+        }
 
         contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this, ui->tableView_Elf_Shdr));
 
@@ -1041,33 +1031,26 @@ void ELFWidget::on_tableView_Elf_Phdr_customContextMenuRequested(const QPoint &p
     qint32 nRow = ui->tableView_Elf_Phdr->currentIndex().row();
 
     if (nRow != -1) {
-        bool bIsEnable = getTableViewItemSize(ui->tableView_Elf_Phdr);
-
         QMenu contextMenu(this);
 
-        QAction actionEdit(tr("Edit"), this);
-        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editProgramHeader()));
-        contextMenu.addAction(&actionEdit);
+        QAction actionEdit(this);
+        QAction actionHex(this);
+        QAction actionDisasm(this);
+        QAction actionEntropy(this);
+        QAction actionDump(this);
 
-        QAction actionHex(QString("Hex"), this);
-        connect(&actionHex, SIGNAL(triggered()), this, SLOT(programHex()));
-        actionHex.setEnabled(bIsEnable);
-        contextMenu.addAction(&actionHex);
+        getShortcuts()->adjustAction(&contextMenu, &actionEdit, X_ID_TABLE_EDIT, this, SLOT(editProgramHeader()));
+        getShortcuts()->adjustAction(&contextMenu, &actionHex, X_ID_TABLE_HEX, this, SLOT(programHex()));
+        getShortcuts()->adjustAction(&contextMenu, &actionDisasm, X_ID_TABLE_DISASM, this, SLOT(programDisasm()));
+        getShortcuts()->adjustAction(&contextMenu, &actionEntropy, X_ID_TABLE_ENTROPY, this, SLOT(programEntropy()));
+        getShortcuts()->adjustAction(&contextMenu, &actionDump, X_ID_TABLE_DUMPTOFILE, this, SLOT(programDump()));
 
-        QAction actionDisasm(tr("Disasm"), this);
-        connect(&actionDisasm, SIGNAL(triggered()), this, SLOT(programDisasm()));
-        actionDisasm.setEnabled(bIsEnable);
-        contextMenu.addAction(&actionDisasm);
-
-        QAction actionEntropy(tr("Entropy"), this);
-        connect(&actionEntropy, SIGNAL(triggered()), this, SLOT(programEntropy()));
-        actionEntropy.setEnabled(bIsEnable);
-        contextMenu.addAction(&actionEntropy);
-
-        QAction actionDump(tr("Dump to file"), this);
-        connect(&actionDump, SIGNAL(triggered()), this, SLOT(programDump()));
-        actionDump.setEnabled(bIsEnable);
-        contextMenu.addAction(&actionDump);
+        if (!getTableViewItemSize(ui->tableView_Elf_Phdr)) {
+            actionHex.setEnabled(false);
+            actionDisasm.setEnabled(false);
+            actionEntropy.setEnabled(false);
+            actionDump.setEnabled(false);
+        }
 
         contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this, ui->tableView_Elf_Phdr));
 
@@ -1089,9 +1072,9 @@ void ELFWidget::on_tableView_DynamicArrayTags_customContextMenuRequested(const Q
     if (nRow != -1) {
         QMenu contextMenu(this);
 
-        QAction actionEdit(tr("Edit"), this);
-        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editDynamicArrayTag()));
-        contextMenu.addAction(&actionEdit);
+        QAction actionEdit(this);
+
+        getShortcuts()->adjustAction(&contextMenu, &actionEdit, X_ID_TABLE_EDIT, this, SLOT(editDynamicArrayTag()));
 
         contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this, ui->tableView_DynamicArrayTags));
 
@@ -1119,9 +1102,9 @@ void ELFWidget::on_tableView_Rela_customContextMenuRequested(const QPoint &pos)
     if (nRow != -1) {
         QMenu contextMenu(this);
 
-        QAction actionEdit(tr("Edit"), this);
-        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editRelaHeaderTag()));
-        contextMenu.addAction(&actionEdit);
+        QAction actionEdit(this);
+
+        getShortcuts()->adjustAction(&contextMenu, &actionEdit, X_ID_TABLE_EDIT, this, SLOT(editRelaHeaderTag()));
 
         contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this, ui->tableView_Rela));
 
@@ -1153,39 +1136,14 @@ void ELFWidget::on_tableView_Rel_customContextMenuRequested(const QPoint &pos)
     if (nRow != -1) {
         QMenu contextMenu(this);
 
-        QAction actionEdit(tr("Edit"), this);
-        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editRelHeaderTag()));
-        contextMenu.addAction(&actionEdit);
+        QAction actionEdit(this);
+
+        getShortcuts()->adjustAction(&contextMenu, &actionEdit, X_ID_TABLE_EDIT, this, SLOT(editRelHeaderTag()));
 
         contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this, ui->tableView_Rel));
 
         contextMenu.exec(ui->tableView_Rel->viewport()->mapToGlobal(pos));
     }
-}
-
-void ELFWidget::on_pushButtonHex_clicked()
-{
-    setTreeItem(ui->treeWidgetNavi, SELF::TYPE_HEX);
-}
-
-void ELFWidget::on_pushButtonDisasm_clicked()
-{
-    setTreeItem(ui->treeWidgetNavi, SELF::TYPE_DISASM);
-}
-
-void ELFWidget::on_pushButtonStrings_clicked()
-{
-    setTreeItem(ui->treeWidgetNavi, SELF::TYPE_STRINGS);
-}
-
-void ELFWidget::on_pushButtonMemoryMap_clicked()
-{
-    setTreeItem(ui->treeWidgetNavi, SELF::TYPE_MEMORYMAP);
-}
-
-void ELFWidget::on_pushButtonEntropy_clicked()
-{
-    setTreeItem(ui->treeWidgetNavi, SELF::TYPE_ENTROPY);
 }
 
 void ELFWidget::on_toolButtonPrev_clicked()

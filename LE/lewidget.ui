@@ -66,34 +66,6 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButtonHex">
-       <property name="text">
-        <string>Hex</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pushButtonDisasm">
-       <property name="text">
-        <string>Disasm</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pushButtonStrings">
-       <property name="text">
-        <string>Strings</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pushButtonMemoryMap">
-       <property name="text">
-        <string>Memory map</string>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QPushButton" name="pushButtonEntropy">
        <property name="text">
         <string>Entropy</string>
@@ -538,7 +510,7 @@
             <bool>false</bool>
            </property>
            <attribute name="horizontalHeaderDefaultSectionSize">
-            <number>41</number>
+            <number>57</number>
            </attribute>
            <attribute name="verticalHeaderVisible">
             <bool>false</bool>

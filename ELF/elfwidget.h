@@ -102,12 +102,6 @@ private slots:
     void editRelaHeaderTag();
     void editRelHeaderTag();
 
-    void on_pushButtonHex_clicked();
-    void on_pushButtonDisasm_clicked();
-    void on_pushButtonStrings_clicked();
-    void on_pushButtonMemoryMap_clicked();
-    void on_pushButtonEntropy_clicked();
-
     void on_toolButtonPrev_clicked();
     void on_toolButtonNext_clicked();
 

@@ -82,11 +82,11 @@ public:
 
     struct OPTIONS {
         XBinary::_MEMORY_MAP memoryMap;
-        bool bAnsi;     // TODO
-        bool bUTF8;     // TODO
-        bool bUnicode;  // TODO
+        bool bAnsi;
+        //bool bUTF8;     // TODO
+        bool bUnicode;
         bool bNullTerminated;
-        QString sANSICodec;
+        // QString sANSICodec;
         bool bLinks;
         QString sMask;
         XBinary::ENDIAN endian;

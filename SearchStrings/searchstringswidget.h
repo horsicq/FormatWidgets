@@ -52,10 +52,10 @@ public:
     struct OPTIONS {
         qint64 nBaseAddress;
         bool bAnsi;
-        bool bUTF8;
+        // bool bUTF8;
         bool bUnicode;
         bool bNullTerminated;
-        QString sANSICodec;
+        // QString sANSICodec;
         qint32 nMinLenght;
         bool bLinks;
         QString sMask;
@@ -81,8 +81,8 @@ public:
     virtual void adjustView();
 
 private slots:
-    void on_pushButtonSave_clicked();
-    void on_pushButtonSearch_clicked();
+    void on_toolButtonSave_clicked();
+    void on_toolButtonSearch_clicked();
     void on_lineEditFilter_textChanged(const QString &sText);
     void filter(const QString &sString);
     void on_tableViewResult_customContextMenuRequested(const QPoint &pos);
@@ -100,6 +100,7 @@ private slots:
     void viewSelection();
     void on_comboBoxType_currentIndexChanged(int index);
     void on_lineEditMask_textChanged(const QString &sText);
+    void on_checkBoxRegExp_stateChanged(int nArg);
 
 protected:
     virtual void registerShortcuts(bool bState);

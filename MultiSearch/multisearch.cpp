@@ -151,10 +151,10 @@ void MultiSearch::processSearch()
         ssOptions.nMinLenght = g_options.nMinLenght;
         ssOptions.nMaxLenght = 256;
         ssOptions.bAnsi = g_options.bAnsi;
-        ssOptions.bUTF8 = g_options.bUTF8;
+        //ssOptions.bUTF8 = g_options.bUTF8;
         ssOptions.bUnicode = g_options.bUnicode;
         ssOptions.bNullTerminated = g_options.bNullTerminated;
-        ssOptions.sANSICodec = g_options.sANSICodec;
+        // ssOptions.sANSICodec = g_options.sANSICodec;
         ssOptions.bLinks = g_options.bLinks;
         ssOptions.sMask = g_options.sMask;
 

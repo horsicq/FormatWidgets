@@ -1490,7 +1490,7 @@ void MACHWidget::reloadData(bool bSaveSelection)
                 stringsOptions.bMenu_Hex = true;
                 stringsOptions.bMenu_Demangle = true;
                 stringsOptions.bAnsi = true;
-                stringsOptions.bUTF8 = false;
+                // stringsOptions.bUTF8 = false;
                 stringsOptions.bUnicode = true;
                 stringsOptions.bNullTerminated = false;
 
@@ -3511,29 +3511,4 @@ void MACHWidget::tocDemangle()
 void MACHWidget::extrefsymsDemangle()
 {
     showTableViewDemangle(ui->tableView_DYSYMTAB_extrefsyms, 3);
-}
-
-void MACHWidget::on_pushButtonHex_clicked()
-{
-    setTreeItem(ui->treeWidgetNavi, SMACH::TYPE_HEX);
-}
-
-void MACHWidget::on_pushButtonDisasm_clicked()
-{
-    setTreeItem(ui->treeWidgetNavi, SMACH::TYPE_DISASM);
-}
-
-void MACHWidget::on_pushButtonStrings_clicked()
-{
-    setTreeItem(ui->treeWidgetNavi, SMACH::TYPE_STRINGS);
-}
-
-void MACHWidget::on_pushButtonMemoryMap_clicked()
-{
-    setTreeItem(ui->treeWidgetNavi, SMACH::TYPE_MEMORYMAP);
-}
-
-void MACHWidget::on_pushButtonEntropy_clicked()
-{
-    setTreeItem(ui->treeWidgetNavi, SMACH::TYPE_ENTROPY);
 }

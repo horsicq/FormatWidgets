@@ -65,11 +65,6 @@ private slots:
     void on_tableWidget_OS2_HEADER_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn);
     void on_toolButtonPrev_clicked();
     void on_toolButtonNext_clicked();
-    void on_pushButtonHex_clicked();
-    void on_pushButtonDisasm_clicked();
-    void on_pushButtonStrings_clicked();
-    void on_pushButtonMemoryMap_clicked();
-    void on_pushButtonEntropy_clicked();
     void onTableView_SEGMENTS_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
 
 private:

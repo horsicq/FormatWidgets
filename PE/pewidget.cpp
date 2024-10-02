@@ -1094,7 +1094,7 @@ void PEWidget::reloadData(bool bSaveSelection)
                 stringsOptions.bMenu_Hex = true;
                 stringsOptions.bMenu_Demangle = true;
                 stringsOptions.bAnsi = true;
-                stringsOptions.bUTF8 = false;
+                // stringsOptions.bUTF8 = false;
                 stringsOptions.bUnicode = true;
                 stringsOptions.bNullTerminated = false;
 
@@ -2340,33 +2340,26 @@ void PEWidget::on_tableView_Sections_customContextMenuRequested(const QPoint &po
     qint32 nRow = ui->tableView_Sections->currentIndex().row();
 
     if (nRow != -1) {
-        bool bIsEnable = getTableViewItemSize(ui->tableView_Sections);
-
         QMenu contextMenu(this);
 
-        QAction actionEdit(tr("Edit"), this);
-        connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editSectionHeader()));
-        contextMenu.addAction(&actionEdit);
+        QAction actionEdit(this);
+        QAction actionHex(this);
+        QAction actionDisasm(this);
+        QAction actionEntropy(this);
+        QAction actionDump(this);
 
-        QAction actionHex(tr("Hex"), this);
-        connect(&actionHex, SIGNAL(triggered()), this, SLOT(sectionHex()));
-        actionHex.setEnabled(bIsEnable);
-        contextMenu.addAction(&actionHex);
+        getShortcuts()->adjustAction(&contextMenu, &actionEdit, X_ID_TABLE_EDIT, this, SLOT(editSectionHeader()));
+        getShortcuts()->adjustAction(&contextMenu, &actionHex, X_ID_TABLE_HEX, this, SLOT(sectionHex()));
+        getShortcuts()->adjustAction(&contextMenu, &actionDisasm, X_ID_TABLE_DISASM, this, SLOT(sectionDisasm()));
+        getShortcuts()->adjustAction(&contextMenu, &actionEntropy, X_ID_TABLE_ENTROPY, this, SLOT(sectionEntropy()));
+        getShortcuts()->adjustAction(&contextMenu, &actionDump, X_ID_TABLE_DUMPTOFILE, this, SLOT(sectionDump()));
 
-        QAction actionDisasm(tr("Disasm"), this);
-        connect(&actionDisasm, SIGNAL(triggered()), this, SLOT(sectionDisasm()));
-        actionDisasm.setEnabled(bIsEnable);
-        contextMenu.addAction(&actionDisasm);
-
-        QAction actionEntropy(tr("Entropy"), this);
-        connect(&actionEntropy, SIGNAL(triggered()), this, SLOT(sectionEntropy()));
-        actionEntropy.setEnabled(bIsEnable);
-        contextMenu.addAction(&actionEntropy);
-
-        QAction actionDump(tr("Dump to file"), this);
-        connect(&actionDump, SIGNAL(triggered()), this, SLOT(sectionDump()));
-        actionDump.setEnabled(bIsEnable);
-        contextMenu.addAction(&actionDump);
+        if (!getTableViewItemSize(ui->tableView_Sections)) {
+            actionHex.setEnabled(false);
+            actionDisasm.setEnabled(false);
+            actionEntropy.setEnabled(false);
+            actionDump.setEnabled(false);
+        }
 
         contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this, ui->tableView_Sections));
 

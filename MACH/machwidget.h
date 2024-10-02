@@ -165,12 +165,6 @@ private slots:
     void tocDemangle();
     void extrefsymsDemangle();
 
-    void on_pushButtonHex_clicked();
-    void on_pushButtonDisasm_clicked();
-    void on_pushButtonStrings_clicked();
-    void on_pushButtonMemoryMap_clicked();
-    void on_pushButtonEntropy_clicked();
-
 private:
     enum CB {
         CB_mach_header_magic = 0,

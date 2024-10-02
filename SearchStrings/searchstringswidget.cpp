@@ -25,6 +25,25 @@
 SearchStringsWidget::SearchStringsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui::SearchStringsWidget)
 {
     ui->setupUi(this);
+
+    XOptions::adjustToolButton(ui->toolButtonSave, XOptions::ICONTYPE_SAVE);
+    XOptions::adjustToolButton(ui->toolButtonSearch, XOptions::ICONTYPE_SEARCH);
+
+    ui->toolButtonSave->setToolTip(tr("Save"));
+    ui->toolButtonSearch->setToolTip(tr("Search"));
+    ui->comboBoxType->setToolTip(tr("Type"));
+    ui->comboBoxMapMode->setToolTip(tr("Mode"));
+    ui->checkBoxAnsi->setToolTip(QString("ANSI"));
+    // ui->checkBoxUTF8->setToolTip(tr("UTF-8"));
+    ui->checkBoxUnicode->setToolTip(QString("Unicode"));
+    ui->checkBoxNullTerminated->setToolTip(tr("Null-terminated"));
+    ui->checkBoxLinks->setToolTip(tr("Links"));
+    ui->lineEditFilter->setToolTip(tr("Filter"));
+    ui->lineEditMask->setToolTip(tr("Mask"));
+    ui->checkBoxRegExp->setToolTip(tr("Regular expression"));
+    ui->spinBoxMinLength->setToolTip(tr("Min length"));
+    ui->tableViewResult->setToolTip(tr("Result"));
+
     g_pDevice = nullptr;
     g_pBackupDevice = nullptr;
     g_pFilter = new QSortFilterProxyModel(this);
@@ -38,8 +57,10 @@ SearchStringsWidget::SearchStringsWidget(QWidget *pParent) : XShortcutsWidget(pP
 
     ui->checkBoxNullTerminated->setEnabled(false);
 
+    ui->lineEditMask->setEnabled(false);
+
     ui->checkBoxAnsi->setChecked(true);
-    ui->checkBoxUTF8->setChecked(false);
+    // ui->checkBoxUTF8->setChecked(false);
     ui->checkBoxUnicode->setChecked(true);
     ui->checkBoxNullTerminated->setChecked(false);
 
@@ -48,23 +69,21 @@ SearchStringsWidget::SearchStringsWidget(QWidget *pParent) : XShortcutsWidget(pP
 
     memset(g_shortCuts, 0, sizeof g_shortCuts);
 
-#if (QT_VERSION_MAJOR < 6) || defined(QT_CORE5COMPAT_LIB)
-    ui->comboBoxANSICodec->addItem("");
+// #if (QT_VERSION_MAJOR < 6) || defined(QT_CORE5COMPAT_LIB)
+//     ui->comboBoxANSICodec->addItem("");
 
-    QList<QString> listCodePages = XOptions::getCodePages(false);
+//     QList<QString> listCodePages = XOptions::getCodePages(false);
 
-    qint32 nNumberOfRecords = listCodePages.count();
+//     qint32 nNumberOfRecords = listCodePages.count();
 
-    for (qint32 i = 0; i < nNumberOfRecords; i++) {
-        ui->comboBoxANSICodec->addItem(listCodePages.at(i));
-    }
-#endif
+//     for (qint32 i = 0; i < nNumberOfRecords; i++) {
+//         ui->comboBoxANSICodec->addItem(listCodePages.at(i));
+//     }
+// #endif
 
     ui->tableViewResult->installEventFilter(this);
 
     setReadonly(true);
-
-    ui->groupBoxMask->setChecked(false);
 }
 
 SearchStringsWidget::~SearchStringsWidget()
@@ -84,7 +103,7 @@ void SearchStringsWidget::setData(QIODevice *pDevice, XBinary::FT fileType, OPTI
     XFormats::getMapModesList(fileType, ui->comboBoxMapMode);
 
     ui->checkBoxAnsi->setChecked(options.bAnsi);
-    ui->checkBoxUTF8->setChecked(options.bUTF8);
+    // ui->checkBoxUTF8->setChecked(options.bUTF8);
     ui->checkBoxUnicode->setChecked(options.bUnicode);
     ui->checkBoxNullTerminated->setChecked(options.bNullTerminated);
     ui->checkBoxLinks->setChecked(options.bLinks);
@@ -170,14 +189,14 @@ void SearchStringsWidget::adjustView()
 {
 }
 
-void SearchStringsWidget::on_pushButtonSave_clicked()
+void SearchStringsWidget::on_toolButtonSave_clicked()
 {
     if (g_pFilter) {
         XShortcutsWidget::saveTableModel(g_pFilter, XBinary::getResultFileName(g_pDevice, QString("%1.txt").arg(tr("Strings"))));
     }
 }
 
-void SearchStringsWidget::on_pushButtonSearch_clicked()
+void SearchStringsWidget::on_toolButtonSearch_clicked()
 {
     search();
 }
@@ -322,25 +341,25 @@ void SearchStringsWidget::search()
         ui->lineEditFilter->clear();
 
         g_options.bAnsi = ui->checkBoxAnsi->isChecked();
-        g_options.bUTF8 = ui->checkBoxUTF8->isChecked();
+        // g_options.bUTF8 = ui->checkBoxUTF8->isChecked();
         g_options.bUnicode = ui->checkBoxUnicode->isChecked();
         g_options.bNullTerminated = ui->checkBoxNullTerminated->isChecked();
-        g_options.sANSICodec = ui->comboBoxANSICodec->currentText();
+        // g_options.sANSICodec = ui->comboBoxANSICodec->currentText();
         g_options.nMinLenght = ui->spinBoxMinLength->value();
         g_options.bLinks = ui->checkBoxLinks->isChecked();
         g_options.sMask = ui->lineEditMask->text().trimmed();
 
-        if (g_options.bAnsi || g_options.bUnicode || g_options.bUTF8) {
+        if (g_options.bAnsi || g_options.bUnicode) {
             XBinary::FT fileType = (XBinary::FT)(ui->comboBoxType->currentData().toInt());
             XBinary::MAPMODE mapMode = (XBinary::MAPMODE)(ui->comboBoxMapMode->currentData().toInt());
 
             MultiSearch::OPTIONS options = {};
 
             options.bAnsi = g_options.bAnsi;
-            options.bUTF8 = g_options.bUTF8;
+            // options.bUTF8 = g_options.bUTF8;
             options.bUnicode = g_options.bUnicode;
             options.bNullTerminated = g_options.bNullTerminated;
-            options.sANSICodec = g_options.sANSICodec;
+            // options.sANSICodec = g_options.sANSICodec;
             options.bLinks = g_options.bLinks;
             options.bMenu_Hex = g_options.bMenu_Hex;
             options.nMinLenght = g_options.nMinLenght;
@@ -443,12 +462,12 @@ void SearchStringsWidget::on_checkBoxUnicode_stateChanged(int nArg)
 void SearchStringsWidget::adjust()
 {
     bool bIsANSI = ui->checkBoxAnsi->isChecked();
-    bool bIsUTF8 = ui->checkBoxUTF8->isChecked();
+    // bool bIsUTF8 = ui->checkBoxUTF8->isChecked();
     bool bIsUnicode = ui->checkBoxUnicode->isChecked();
 
-    ui->comboBoxANSICodec->setEnabled(bIsANSI);
+    // ui->comboBoxANSICodec->setEnabled(bIsANSI);
 
-    ui->checkBoxNullTerminated->setEnabled(bIsANSI | bIsUTF8 | bIsUnicode);
+    ui->checkBoxNullTerminated->setEnabled(bIsANSI | bIsUnicode);
 }
 
 void SearchStringsWidget::on_tableViewSelection(const QItemSelection &itemSelected, const QItemSelection &itemDeselected)
@@ -498,5 +517,13 @@ void SearchStringsWidget::on_comboBoxType_currentIndexChanged(int index)
 
 void SearchStringsWidget::on_lineEditMask_textChanged(const QString &sText)
 {
-    ui->pushButtonSearch->setEnabled(XBinary::isRegExpValid(sText.trimmed()));
+    ui->toolButtonSearch->setEnabled(XBinary::isRegExpValid(sText.trimmed()));
 }
+
+void SearchStringsWidget::on_checkBoxRegExp_stateChanged(int nArg)
+{
+    Q_UNUSED(nArg)
+
+    ui->lineEditMask->setEnabled(ui->checkBoxRegExp->isChecked());
+}
+

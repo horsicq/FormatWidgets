@@ -309,7 +309,7 @@ void MSDOSWidget::reloadData(bool bSaveSelection)
                 stringsOptions.bMenu_Hex = true;
                 stringsOptions.bMenu_Demangle = true;
                 stringsOptions.bAnsi = true;
-                stringsOptions.bUTF8 = false;
+                // stringsOptions.bUTF8 = false;
                 stringsOptions.bUnicode = true;
                 stringsOptions.bNullTerminated = false;
 
@@ -486,27 +486,3 @@ void MSDOSWidget::on_toolButtonNext_clicked()
     setAddPageEnabled(true);
 }
 
-void MSDOSWidget::on_pushButtonHex_clicked()
-{
-    setTreeItem(ui->treeWidgetNavi, SMSDOS::TYPE_HEX);
-}
-
-void MSDOSWidget::on_pushButtonDisasm_clicked()
-{
-    setTreeItem(ui->treeWidgetNavi, SMSDOS::TYPE_DISASM);
-}
-
-void MSDOSWidget::on_pushButtonStrings_clicked()
-{
-    setTreeItem(ui->treeWidgetNavi, SMSDOS::TYPE_STRINGS);
-}
-
-void MSDOSWidget::on_pushButtonMemoryMap_clicked()
-{
-    setTreeItem(ui->treeWidgetNavi, SMSDOS::TYPE_MEMORYMAP);
-}
-
-void MSDOSWidget::on_pushButtonEntropy_clicked()
-{
-    setTreeItem(ui->treeWidgetNavi, SMSDOS::TYPE_ENTROPY);
-}

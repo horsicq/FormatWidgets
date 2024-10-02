@@ -393,7 +393,7 @@ void LEWidget::reloadData(bool bSaveSelection)
                 stringsOptions.bMenu_Hex = true;
                 stringsOptions.bMenu_Demangle = true;
                 stringsOptions.bAnsi = true;
-                stringsOptions.bUTF8 = false;
+                // stringsOptions.bUTF8 = false;
                 stringsOptions.bUnicode = true;
                 stringsOptions.bNullTerminated = false;
 
@@ -730,29 +730,4 @@ void LEWidget::on_toolButtonNext_clicked()
     setAddPageEnabled(false);
     ui->treeWidgetNavi->setCurrentItem(getNextPage());
     setAddPageEnabled(true);
-}
-
-void LEWidget::on_pushButtonHex_clicked()
-{
-    setTreeItem(ui->treeWidgetNavi, SLE::TYPE_HEX);
-}
-
-void LEWidget::on_pushButtonDisasm_clicked()
-{
-    setTreeItem(ui->treeWidgetNavi, SLE::TYPE_DISASM);
-}
-
-void LEWidget::on_pushButtonStrings_clicked()
-{
-    setTreeItem(ui->treeWidgetNavi, SLE::TYPE_STRINGS);
-}
-
-void LEWidget::on_pushButtonMemoryMap_clicked()
-{
-    setTreeItem(ui->treeWidgetNavi, SLE::TYPE_MEMORYMAP);
-}
-
-void LEWidget::on_pushButtonEntropy_clicked()
-{
-    setTreeItem(ui->treeWidgetNavi, SLE::TYPE_ENTROPY);
 }
