@@ -69,17 +69,17 @@ SearchStringsWidget::SearchStringsWidget(QWidget *pParent) : XShortcutsWidget(pP
 
     memset(g_shortCuts, 0, sizeof g_shortCuts);
 
-// #if (QT_VERSION_MAJOR < 6) || defined(QT_CORE5COMPAT_LIB)
-//     ui->comboBoxANSICodec->addItem("");
+    // #if (QT_VERSION_MAJOR < 6) || defined(QT_CORE5COMPAT_LIB)
+    //     ui->comboBoxANSICodec->addItem("");
 
-//     QList<QString> listCodePages = XOptions::getCodePages(false);
+    //     QList<QString> listCodePages = XOptions::getCodePages(false);
 
-//     qint32 nNumberOfRecords = listCodePages.count();
+    //     qint32 nNumberOfRecords = listCodePages.count();
 
-//     for (qint32 i = 0; i < nNumberOfRecords; i++) {
-//         ui->comboBoxANSICodec->addItem(listCodePages.at(i));
-//     }
-// #endif
+    //     for (qint32 i = 0; i < nNumberOfRecords; i++) {
+    //         ui->comboBoxANSICodec->addItem(listCodePages.at(i));
+    //     }
+    // #endif
 
     ui->tableViewResult->installEventFilter(this);
 
@@ -507,9 +507,9 @@ void SearchStringsWidget::viewSelection()
     }
 }
 
-void SearchStringsWidget::on_comboBoxType_currentIndexChanged(int index)
+void SearchStringsWidget::on_comboBoxType_currentIndexChanged(int nIndex)
 {
-    Q_UNUSED(index)
+    Q_UNUSED(nIndex)
 
     XBinary::FT fileType = (XBinary::FT)(ui->comboBoxType->currentData().toInt());
     XFormats::getMapModesList(fileType, ui->comboBoxMapMode);
@@ -526,4 +526,3 @@ void SearchStringsWidget::on_checkBoxRegExp_stateChanged(int nArg)
 
     ui->lineEditMask->setEnabled(ui->checkBoxRegExp->isChecked());
 }
-

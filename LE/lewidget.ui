@@ -32,7 +32,7 @@
       <enum>QLayout::SetDefaultConstraint</enum>
      </property>
      <item>
-      <widget class="QPushButton" name="pushButtonReload">
+      <widget class="QToolButton" name="toolButtonReload">
        <property name="text">
         <string>Reload</string>
        </property>
@@ -64,13 +64,6 @@
         </size>
        </property>
       </spacer>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pushButtonEntropy">
-       <property name="text">
-        <string>Entropy</string>
-       </property>
-      </widget>
      </item>
      <item>
       <widget class="QCheckBox" name="checkBoxReadonly">

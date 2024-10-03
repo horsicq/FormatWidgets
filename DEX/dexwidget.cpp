@@ -26,10 +26,19 @@ DEXWidget::DEXWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::DEXWi
 {
     ui->setupUi(this);
 
+    XOptions::adjustToolButton(ui->toolButtonReload, XOptions::ICONTYPE_RELOAD);
+    XOptions::adjustToolButton(ui->toolButtonNext, XOptions::ICONTYPE_FORWARDS, Qt::ToolButtonIconOnly);
+    XOptions::adjustToolButton(ui->toolButtonPrev, XOptions::ICONTYPE_BACKWARDS, Qt::ToolButtonIconOnly);
+
+    ui->toolButtonReload->setToolTip(tr("Reload"));
+    ui->toolButtonNext->setToolTip(tr("Next visited"));
+    ui->toolButtonPrev->setToolTip(tr("Previous visited"));
+    ui->checkBoxReadonly->setToolTip(tr("Readonly"));
+
     memset(g_subDevice, 0, sizeof g_subDevice);
 
-    g_pFilterStrings = new QSortFilterProxyModel(this);
-    g_pFilterTypes = new QSortFilterProxyModel(this);
+    g_pFilterStrings = new QSortFilterProxyModel(this); // TODO remove
+    g_pFilterTypes = new QSortFilterProxyModel(this); // TODO remove
 
     initWidget();
 }
@@ -624,9 +633,9 @@ void DEXWidget::on_checkBoxReadonly_toggled(bool bChecked)
     setReadonly(bChecked);
 }
 
-void DEXWidget::on_pushButtonReload_clicked()
+void DEXWidget::on_toolButtonReload_clicked()
 {
-    ui->pushButtonReload->setEnabled(false);
+    ui->toolButtonReload->setEnabled(false);
     reload();
 
     QTimer::singleShot(1000, this, SLOT(enableButton()));
@@ -634,7 +643,7 @@ void DEXWidget::on_pushButtonReload_clicked()
 
 void DEXWidget::enableButton()
 {
-    ui->pushButtonReload->setEnabled(true);
+    ui->toolButtonReload->setEnabled(true);
 }
 
 void DEXWidget::on_tableWidget_Header_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)

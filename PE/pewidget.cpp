@@ -26,6 +26,15 @@ PEWidget::PEWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::PEWidge
 {
     ui->setupUi(this);
 
+    XOptions::adjustToolButton(ui->toolButtonReload, XOptions::ICONTYPE_RELOAD);
+    XOptions::adjustToolButton(ui->toolButtonNext, XOptions::ICONTYPE_FORWARDS, Qt::ToolButtonIconOnly);
+    XOptions::adjustToolButton(ui->toolButtonPrev, XOptions::ICONTYPE_BACKWARDS, Qt::ToolButtonIconOnly);
+
+    ui->toolButtonReload->setToolTip(tr("Reload"));
+    ui->toolButtonNext->setToolTip(tr("Next visited"));
+    ui->toolButtonPrev->setToolTip(tr("Previous visited"));
+    ui->checkBoxReadonly->setToolTip(tr("Readonly"));
+
     memset(g_subDevice, 0, sizeof g_subDevice);
 
     initWidget();
@@ -232,8 +241,9 @@ void PEWidget::reload()
                 qint32 nNumberOfStreams = cliInfo.metaData.listStreams.count();
 
                 for (qint32 i = 0; i < nNumberOfStreams; i++) {
-                    QTreeWidgetItem *pNetMetadataStream = createNewItem(SPE::TYPE_NET_METADATA_STREAM, cliInfo.metaData.listStreams.at(i).sName, XOptions::ICONTYPE_GENERIC,
-                                                                        cliInfo.metaData.listStreams.at(i).nOffset, cliInfo.metaData.listStreams.at(i).nSize);
+                    QTreeWidgetItem *pNetMetadataStream =
+                        createNewItem(SPE::TYPE_NET_METADATA_STREAM, cliInfo.metaData.listStreams.at(i).sName, XOptions::ICONTYPE_GENERIC,
+                                      cliInfo.metaData.listStreams.at(i).nOffset, cliInfo.metaData.listStreams.at(i).nSize);
                     pNetMetadata->addChild(pNetMetadataStream);
 
                     if ((cliInfo.metaData.listStreams.at(i).sName == "#~") || (cliInfo.metaData.listStreams.at(i).sName == "#-")) {
@@ -2595,9 +2605,9 @@ bool PEWidget::createSectionTable(qint32 nType, QTableWidget *pTableWidget, cons
     return true;
 }
 
-void PEWidget::on_pushButtonReload_clicked()
+void PEWidget::on_toolButtonReload_clicked()
 {
-    ui->pushButtonReload->setEnabled(false);
+    ui->toolButtonReload->setEnabled(false);
     reload();
 
     QTimer::singleShot(1000, this, SLOT(enableButton()));
@@ -2605,7 +2615,7 @@ void PEWidget::on_pushButtonReload_clicked()
 
 void PEWidget::enableButton()
 {
-    ui->pushButtonReload->setEnabled(true);
+    ui->toolButtonReload->setEnabled(true);
 }
 
 void PEWidget::on_tableWidget_IMAGE_DIRECTORY_ENTRIES_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)

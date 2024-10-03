@@ -300,9 +300,9 @@ void SearchValuesWidget::on_tableViewResult_clicked(const QModelIndex &index)
     viewSelection();
 }
 
-void SearchValuesWidget::on_comboBoxType_currentIndexChanged(int index)
+void SearchValuesWidget::on_comboBoxType_currentIndexChanged(int nIndex)
 {
-    Q_UNUSED(index)
+    Q_UNUSED(nIndex)
 
     XBinary::FT fileType = (XBinary::FT)(ui->comboBoxType->currentData().toInt());
     XFormats::getMapModesList(fileType, ui->comboBoxMapMode);

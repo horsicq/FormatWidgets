@@ -59,7 +59,7 @@ private slots:
     void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurrent, QTreeWidgetItem *pItemPrevious);
     void on_checkBoxReadonly_toggled(bool bChecked);
     bool createSectionTable(qint32 nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pHeaderRecord, qint32 nNumberOfRecords);
-    void on_pushButtonReload_clicked();
+    void on_toolButtonReload_clicked();
     void enableButton();
     void on_tableWidget_Header_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn);
     void on_lineEditFilterStrings_textChanged(const QString &sString);

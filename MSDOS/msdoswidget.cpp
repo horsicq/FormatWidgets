@@ -26,6 +26,15 @@ MSDOSWidget::MSDOSWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::M
 {
     ui->setupUi(this);
 
+    XOptions::adjustToolButton(ui->toolButtonReload, XOptions::ICONTYPE_RELOAD);
+    XOptions::adjustToolButton(ui->toolButtonNext, XOptions::ICONTYPE_FORWARDS, Qt::ToolButtonIconOnly);
+    XOptions::adjustToolButton(ui->toolButtonPrev, XOptions::ICONTYPE_BACKWARDS, Qt::ToolButtonIconOnly);
+
+    ui->toolButtonReload->setToolTip(tr("Reload"));
+    ui->toolButtonNext->setToolTip(tr("Next visited"));
+    ui->toolButtonPrev->setToolTip(tr("Previous visited"));
+    ui->checkBoxReadonly->setToolTip(tr("Readonly"));
+
     memset(g_subDevice, 0, sizeof g_subDevice);
 
     initWidget();
@@ -449,9 +458,9 @@ void MSDOSWidget::on_checkBoxReadonly_toggled(bool bChecked)
     setReadonly(bChecked);
 }
 
-void MSDOSWidget::on_pushButtonReload_clicked()
+void MSDOSWidget::on_toolButtonReload_clicked()
 {
-    ui->pushButtonReload->setEnabled(false);
+    ui->toolButtonReload->setEnabled(false);
     reload();
 
     QTimer::singleShot(1000, this, SLOT(enableButton()));
@@ -459,7 +468,7 @@ void MSDOSWidget::on_pushButtonReload_clicked()
 
 void MSDOSWidget::enableButton()
 {
-    ui->pushButtonReload->setEnabled(true);
+    ui->toolButtonReload->setEnabled(true);
 }
 
 void MSDOSWidget::on_tableWidget_DOS_HEADER_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)
@@ -485,4 +494,3 @@ void MSDOSWidget::on_toolButtonNext_clicked()
     ui->treeWidgetNavi->setCurrentItem(getNextPage());
     setAddPageEnabled(true);
 }
-

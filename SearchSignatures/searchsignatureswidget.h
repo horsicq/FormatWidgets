@@ -70,8 +70,8 @@ public:
     virtual void adjustView();
 
 private slots:
-    void on_pushButtonSave_clicked();
-    void on_pushButtonSearch_clicked();
+    void on_toolButtonSave_clicked();
+    void on_toolButtonSearch_clicked();
     void on_tableViewResult_customContextMenuRequested(const QPoint &pos);
     void _copyAddress();
     void _copyOffset();

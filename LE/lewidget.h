@@ -59,7 +59,7 @@ private slots:
     virtual void reloadData(bool bSaveSelection);
     void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent, QTreeWidgetItem *pPrevious);
     void on_checkBoxReadonly_toggled(bool bChecked);
-    void on_pushButtonReload_clicked();
+    void on_toolButtonReload_clicked();
     void enableButton();
     void on_tableWidget_DOS_HEADER_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn);
     void on_tableWidget_VXD_HEADER_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn);

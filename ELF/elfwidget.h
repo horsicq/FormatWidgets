@@ -61,7 +61,7 @@ private slots:
     void addDatasets(XELF *pElf, QTreeWidgetItem *pParent, QList<XBinary::DATASET> *pListDataSets);
     void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurrent, QTreeWidgetItem *pItemPrevious);
     void on_checkBoxReadonly_toggled(bool bChecked);
-    void on_pushButtonReload_clicked();
+    void on_toolButtonReload_clicked();
     void enableButton();
     void loadShdr(qint32 nRow);
     void loadPhdr(qint32 nRow);

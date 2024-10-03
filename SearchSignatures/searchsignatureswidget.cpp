@@ -25,6 +25,18 @@
 SearchSignaturesWidget::SearchSignaturesWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui::SearchSignaturesWidget)
 {
     ui->setupUi(this);
+
+    XOptions::adjustToolButton(ui->toolButtonSave, XOptions::ICONTYPE_SAVE);
+    XOptions::adjustToolButton(ui->toolButtonSearch, XOptions::ICONTYPE_SEARCH);
+
+    ui->toolButtonSave->setToolTip(tr("Save"));
+    ui->toolButtonSearch->setToolTip(tr("Search"));
+    ui->comboBoxFile->setToolTip(tr("File"));
+    ui->comboBoxType->setToolTip(tr("Type"));
+    ui->comboBoxEndianness->setToolTip(tr("Endianness"));
+    ui->labelInfo->setToolTip(tr("Info"));
+    ui->tableViewResult->setToolTip(tr("Result"));
+
     g_pDevice = nullptr;
     g_pModel = nullptr;
     g_bInit = false;
@@ -113,14 +125,14 @@ void SearchSignaturesWidget::adjustView()
     updateSignaturesPath();
 }
 
-void SearchSignaturesWidget::on_pushButtonSave_clicked()
+void SearchSignaturesWidget::on_toolButtonSave_clicked()
 {
     if (g_pModel) {
         XShortcutsWidget::saveTableModel(g_pModel, XBinary::getResultFileName(g_pDevice, QString("%1.txt").arg(tr("Signatures"))));
     }
 }
 
-void SearchSignaturesWidget::on_pushButtonSearch_clicked()
+void SearchSignaturesWidget::on_toolButtonSearch_clicked()
 {
     search();
 }

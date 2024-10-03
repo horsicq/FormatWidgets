@@ -26,6 +26,15 @@ MACHWidget::MACHWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::MAC
 {
     ui->setupUi(this);
 
+    XOptions::adjustToolButton(ui->toolButtonReload, XOptions::ICONTYPE_RELOAD);
+    XOptions::adjustToolButton(ui->toolButtonNext, XOptions::ICONTYPE_FORWARDS, Qt::ToolButtonIconOnly);
+    XOptions::adjustToolButton(ui->toolButtonPrev, XOptions::ICONTYPE_BACKWARDS, Qt::ToolButtonIconOnly);
+
+    ui->toolButtonReload->setToolTip(tr("Reload"));
+    ui->toolButtonNext->setToolTip(tr("Next visited"));
+    ui->toolButtonPrev->setToolTip(tr("Previous visited"));
+    ui->checkBoxReadonly->setToolTip(tr("Readonly"));
+
     memset(g_subDevice, 0, sizeof g_subDevice);
 
     initWidget();
@@ -178,7 +187,8 @@ void MACHWidget::reload()
             if (mach.isCommandPresent(XMACH_DEF::S_LC_DYLD_INFO_ONLY, &listCommandRecords)) {
                 qint64 _nOffset = mach.getCommandRecordOffset(XMACH_DEF::S_LC_DYLD_INFO_ONLY, 0, &listCommandRecords);
 
-                QTreeWidgetItem *pItemDyldInfo = createNewItem(SMACH::TYPE_mach_dyld_info_only, QString("LC_DYLD_INFO_ONLY"), XOptions::ICONTYPE_GENERIC, _nOffset);  // TODO rename
+                QTreeWidgetItem *pItemDyldInfo =
+                    createNewItem(SMACH::TYPE_mach_dyld_info_only, QString("LC_DYLD_INFO_ONLY"), XOptions::ICONTYPE_GENERIC, _nOffset);  // TODO rename
 
                 pItemCommands->addChild(pItemDyldInfo);
 
@@ -239,13 +249,15 @@ void MACHWidget::reload()
                 XMACH_DEF::symtab_command symtab = mach._read_symtab_command(_nOffset);
 
                 if (mach.isOffsetValid(symtab.stroff) && (symtab.strsize)) {
-                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_STRINGTABLE, tr("String table"), XOptions::ICONTYPE_GENERIC, symtab.stroff, symtab.strsize);  // TODO rename
+                    QTreeWidgetItem *pItem =
+                        createNewItem(SMACH::TYPE_STRINGTABLE, tr("String table"), XOptions::ICONTYPE_GENERIC, symtab.stroff, symtab.strsize);  // TODO rename
 
                     pItemSymtab->addChild(pItem);
                 }
 
                 if (mach.isOffsetValid(symtab.symoff) && (symtab.nsyms)) {
-                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_SYMBOLTABLE, tr("Symbol table"), XOptions::ICONTYPE_GENERIC, symtab.symoff, symtab.nsyms);  // TODO rename
+                    QTreeWidgetItem *pItem =
+                        createNewItem(SMACH::TYPE_SYMBOLTABLE, tr("Symbol table"), XOptions::ICONTYPE_GENERIC, symtab.symoff, symtab.nsyms);  // TODO rename
 
                     pItemSymtab->addChild(pItem);
                 }
@@ -297,8 +309,8 @@ void MACHWidget::reload()
                 }
 
                 if (mach.isOffsetValid(dysymtab.locreloff) && (dysymtab.nlocrel)) {
-                    QTreeWidgetItem *pItem =
-                        createNewItem(SMACH::TYPE_DYSYMTAB_locrel, tr("Local relocation"), XOptions::ICONTYPE_GENERIC, dysymtab.locreloff, dysymtab.nlocrel);  // TODO rename
+                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_DYSYMTAB_locrel, tr("Local relocation"), XOptions::ICONTYPE_GENERIC, dysymtab.locreloff,
+                                                           dysymtab.nlocrel);  // TODO rename
 
                     pItemDysymtab->addChild(pItem);
                 }
@@ -2551,9 +2563,9 @@ void MACHWidget::on_checkBoxReadonly_toggled(bool bChecked)
     setReadonly(bChecked);
 }
 
-void MACHWidget::on_pushButtonReload_clicked()
+void MACHWidget::on_toolButtonReload_clicked()
 {
-    ui->pushButtonReload->setEnabled(false);
+    ui->toolButtonReload->setEnabled(false);
     reload();
 
     QTimer::singleShot(1000, this, SLOT(enableButton()));
@@ -2561,7 +2573,7 @@ void MACHWidget::on_pushButtonReload_clicked()
 
 void MACHWidget::enableButton()
 {
-    ui->pushButtonReload->setEnabled(true);
+    ui->toolButtonReload->setEnabled(true);
 }
 
 void MACHWidget::on_tableWidget_mach_header_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn)

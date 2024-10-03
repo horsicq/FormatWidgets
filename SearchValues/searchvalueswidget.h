@@ -79,7 +79,7 @@ private slots:
     void on_tableViewSelection(const QItemSelection &itemSelected, const QItemSelection &itemDeselected);
     void on_tableViewResult_clicked(const QModelIndex &index);
 
-    void on_comboBoxType_currentIndexChanged(int index);
+    void on_comboBoxType_currentIndexChanged(int nIndex);
 
 private:
     void _search(DialogSearch::SEARCHMODE mode);

@@ -32,7 +32,7 @@
       <enum>QLayout::SetDefaultConstraint</enum>
      </property>
      <item>
-      <widget class="QPushButton" name="pushButtonReload">
+      <widget class="QToolButton" name="toolButtonReload">
        <property name="text">
         <string>Reload</string>
        </property>
@@ -989,11 +989,13 @@
    <class>DIEWidgetAdvanced</class>
    <extends>QWidget</extends>
    <header>diewidgetadvanced.h</header>
+   <container>1</container>
   </customwidget>
   <customwidget>
    <class>YARAWidgetAdvanced</class>
    <extends>QWidget</extends>
    <header>yarawidgetadvanced.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

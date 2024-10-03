@@ -98,7 +98,7 @@ private slots:
     void on_tableViewSelection(const QItemSelection &itemSelected, const QItemSelection &itemDeselected);
     void on_tableViewResult_clicked(const QModelIndex &index);
     void viewSelection();
-    void on_comboBoxType_currentIndexChanged(int index);
+    void on_comboBoxType_currentIndexChanged(int nIndex);
     void on_lineEditMask_textChanged(const QString &sText);
     void on_checkBoxRegExp_stateChanged(int nArg);
 

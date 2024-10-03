@@ -83,7 +83,7 @@ public:
     struct OPTIONS {
         XBinary::_MEMORY_MAP memoryMap;
         bool bAnsi;
-        //bool bUTF8;     // TODO
+        // bool bUTF8;     // TODO
         bool bUnicode;
         bool bNullTerminated;
         // QString sANSICodec;

@@ -29,7 +29,7 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QPushButton" name="pushButtonReload">
+      <widget class="QToolButton" name="toolButtonReload">
        <property name="text">
         <string>Reload</string>
        </property>

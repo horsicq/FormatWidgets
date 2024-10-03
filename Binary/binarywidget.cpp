@@ -26,6 +26,15 @@ BinaryWidget::BinaryWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui:
 {
     ui->setupUi(this);
 
+    XOptions::adjustToolButton(ui->toolButtonReload, XOptions::ICONTYPE_RELOAD);
+    XOptions::adjustToolButton(ui->toolButtonNext, XOptions::ICONTYPE_FORWARDS, Qt::ToolButtonIconOnly);
+    XOptions::adjustToolButton(ui->toolButtonPrev, XOptions::ICONTYPE_BACKWARDS, Qt::ToolButtonIconOnly);
+
+    ui->toolButtonReload->setToolTip(tr("Reload"));
+    ui->toolButtonNext->setToolTip(tr("Next visited"));
+    ui->toolButtonPrev->setToolTip(tr("Previous visited"));
+    ui->checkBoxReadonly->setToolTip(tr("Readonly"));
+
     initWidget();
 }
 
@@ -316,9 +325,9 @@ void BinaryWidget::on_checkBoxReadonly_toggled(bool bChecked)
     setReadonly(bChecked);
 }
 
-void BinaryWidget::on_pushButtonReload_clicked()
+void BinaryWidget::on_toolButtonReload_clicked()
 {
-    ui->pushButtonReload->setEnabled(false);
+    ui->toolButtonReload->setEnabled(false);
     reload();
 
     QTimer::singleShot(1000, this, SLOT(enableButton()));
@@ -326,7 +335,7 @@ void BinaryWidget::on_pushButtonReload_clicked()
 
 void BinaryWidget::enableButton()
 {
-    ui->pushButtonReload->setEnabled(true);
+    ui->toolButtonReload->setEnabled(true);
 }
 
 void BinaryWidget::on_toolButtonPrev_clicked()

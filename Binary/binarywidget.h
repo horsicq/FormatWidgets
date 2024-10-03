@@ -55,7 +55,7 @@ protected:
 private slots:
     virtual void reloadData(bool bSaveSelection);
     void on_checkBoxReadonly_toggled(bool bChecked);
-    void on_pushButtonReload_clicked();
+    void on_toolButtonReload_clicked();
     void enableButton();
     void on_toolButtonPrev_clicked();
     void on_toolButtonNext_clicked();

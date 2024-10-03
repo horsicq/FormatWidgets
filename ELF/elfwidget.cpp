@@ -26,6 +26,15 @@ ELFWidget::ELFWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::ELFWi
 {
     ui->setupUi(this);
 
+    XOptions::adjustToolButton(ui->toolButtonReload, XOptions::ICONTYPE_RELOAD);
+    XOptions::adjustToolButton(ui->toolButtonNext, XOptions::ICONTYPE_FORWARDS, Qt::ToolButtonIconOnly);
+    XOptions::adjustToolButton(ui->toolButtonPrev, XOptions::ICONTYPE_BACKWARDS, Qt::ToolButtonIconOnly);
+
+    ui->toolButtonReload->setToolTip(tr("Reload"));
+    ui->toolButtonNext->setToolTip(tr("Next visited"));
+    ui->toolButtonPrev->setToolTip(tr("Previous visited"));
+    ui->checkBoxReadonly->setToolTip(tr("Readonly"));
+
     memset(g_subDevice, 0, sizeof g_subDevice);
 
     initWidget();
@@ -633,8 +642,8 @@ void ELFWidget::addDatasets(XELF *pElf, QTreeWidgetItem *pParent, QList<XBinary:
             pParent->addChild(createNewItem(SELF::TYPE_INTERPRETER, pListDataSets->at(i).sName, XOptions::ICONTYPE_GENERIC, pListDataSets->at(i).nOffset,
                                             pListDataSets->at(i).nSize, pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
         } else if (pListDataSets->at(i).nType == XELF::DS_LIBRARIES) {
-            pParent->addChild(createNewItem(SELF::TYPE_LIBRARIES, pListDataSets->at(i).sName, XOptions::ICONTYPE_GENERIC, pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
-                                            pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
+            pParent->addChild(createNewItem(SELF::TYPE_LIBRARIES, pListDataSets->at(i).sName, XOptions::ICONTYPE_GENERIC, pListDataSets->at(i).nOffset,
+                                            pListDataSets->at(i).nSize, pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
         } else if (pListDataSets->at(i).nType == XELF::DS_STRINGTABLE) {
             pParent->addChild(createNewItem(SELF::TYPE_STRINGTABLE, pListDataSets->at(i).sName, XOptions::ICONTYPE_GENERIC, pListDataSets->at(i).nOffset,
                                             pListDataSets->at(i).nSize, pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
@@ -642,20 +651,21 @@ void ELFWidget::addDatasets(XELF *pElf, QTreeWidgetItem *pParent, QList<XBinary:
             pParent->addChild(createNewItem(SELF::TYPE_SYMBOLTABLE, pListDataSets->at(i).sName, XOptions::ICONTYPE_GENERIC, pListDataSets->at(i).nOffset,
                                             pListDataSets->at(i).nSize, pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
         } else if (pListDataSets->at(i).nType == XELF::DS_RUNPATH) {
-            pParent->addChild(createNewItem(SELF::TYPE_RUNPATH, pListDataSets->at(i).sName, XOptions::ICONTYPE_GENERIC, pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
-                                            pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
+            pParent->addChild(createNewItem(SELF::TYPE_RUNPATH, pListDataSets->at(i).sName, XOptions::ICONTYPE_GENERIC, pListDataSets->at(i).nOffset,
+                                            pListDataSets->at(i).nSize, pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
         } else if (pListDataSets->at(i).nType == XELF::DS_NOTES) {
-            pParent->addChild(createNewItem(SELF::TYPE_NOTES, pListDataSets->at(i).sName, XOptions::ICONTYPE_GENERIC, pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
-                                            pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
+            pParent->addChild(createNewItem(SELF::TYPE_NOTES, pListDataSets->at(i).sName, XOptions::ICONTYPE_GENERIC, pListDataSets->at(i).nOffset,
+                                            pListDataSets->at(i).nSize, pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
         } else if (pListDataSets->at(i).nType == XELF::DS_RELA) {
-            pParent->addChild(createNewItem(SELF::TYPE_Elf_Rela, pListDataSets->at(i).sName, XOptions::ICONTYPE_GENERIC, pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
-                                            pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
+            pParent->addChild(createNewItem(SELF::TYPE_Elf_Rela, pListDataSets->at(i).sName, XOptions::ICONTYPE_GENERIC, pListDataSets->at(i).nOffset,
+                                            pListDataSets->at(i).nSize, pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
         } else if (pListDataSets->at(i).nType == XELF::DS_REL) {
-            pParent->addChild(createNewItem(SELF::TYPE_Elf_Rel, pListDataSets->at(i).sName, XOptions::ICONTYPE_GENERIC, pListDataSets->at(i).nOffset, pListDataSets->at(i).nSize,
-                                            pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
+            pParent->addChild(createNewItem(SELF::TYPE_Elf_Rel, pListDataSets->at(i).sName, XOptions::ICONTYPE_GENERIC, pListDataSets->at(i).nOffset,
+                                            pListDataSets->at(i).nSize, pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
         } else if (pListDataSets->at(i).nType == XELF::DS_DYNAMICTAGS) {
-            QTreeWidgetItem *pDynamicTags = createNewItem(SELF::TYPE_Elf_DynamicArrayTags, pListDataSets->at(i).sName, XOptions::ICONTYPE_GENERIC, pListDataSets->at(i).nOffset,
-                                                          pListDataSets->at(i).nSize, pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize);
+            QTreeWidgetItem *pDynamicTags =
+                createNewItem(SELF::TYPE_Elf_DynamicArrayTags, pListDataSets->at(i).sName, XOptions::ICONTYPE_GENERIC, pListDataSets->at(i).nOffset,
+                              pListDataSets->at(i).nSize, pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize);
 
             pParent->addChild(pDynamicTags);
 
@@ -710,9 +720,9 @@ void ELFWidget::on_checkBoxReadonly_toggled(bool bChecked)
     setReadonly(bChecked);
 }
 
-void ELFWidget::on_pushButtonReload_clicked()
+void ELFWidget::on_toolButtonReload_clicked()
 {
-    ui->pushButtonReload->setEnabled(false);
+    ui->toolButtonReload->setEnabled(false);
     reload();
 
     QTimer::singleShot(1000, this, SLOT(enableButton()));
@@ -720,7 +730,7 @@ void ELFWidget::on_pushButtonReload_clicked()
 
 void ELFWidget::enableButton()
 {
-    ui->pushButtonReload->setEnabled(true);
+    ui->toolButtonReload->setEnabled(true);
 }
 
 void ELFWidget::loadShdr(qint32 nRow)
