@@ -46,6 +46,11 @@ FORMS += \
     include($$PWD/../Controls/xlineedithex.pri)
 }
 
+!contains(XCONFIG, xtableview) {
+    XCONFIG += xtableview
+    include($$PWD/../Controls/xtableview.pri)
+}
+
 !contains(XCONFIG, xcomboboxex) {
     XCONFIG += xcomboboxex
     include($$PWD/../Controls/xcomboboxex.pri)

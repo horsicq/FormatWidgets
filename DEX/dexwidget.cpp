@@ -37,8 +37,8 @@ DEXWidget::DEXWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::DEXWi
 
     memset(g_subDevice, 0, sizeof g_subDevice);
 
-    g_pFilterStrings = new QSortFilterProxyModel(this); // TODO remove
-    g_pFilterTypes = new QSortFilterProxyModel(this); // TODO remove
+    g_pFilterStrings = new QSortFilterProxyModel(this);  // TODO remove
+    g_pFilterTypes = new QSortFilterProxyModel(this);    // TODO remove
 
     initWidget();
 }

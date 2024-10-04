@@ -445,12 +445,12 @@ void SearchStringsWidget::on_checkBoxAnsi_stateChanged(int nArg)
     adjust();
 }
 
-void SearchStringsWidget::on_checkBoxUTF8_stateChanged(int nArg)
-{
-    Q_UNUSED(nArg)
+// void SearchStringsWidget::on_checkBoxUTF8_stateChanged(int nArg)
+// {
+//     Q_UNUSED(nArg)
 
-    adjust();
-}
+//     adjust();
+// }
 
 void SearchStringsWidget::on_checkBoxUnicode_stateChanged(int nArg)
 {

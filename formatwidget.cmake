@@ -6,6 +6,7 @@ include(${CMAKE_CURRENT_LIST_DIR}/SearchStrings/searchstringswidget.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/SearchValues/searchvalueswidget.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../Controls/xlineedithex.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../Controls/xcomboboxex.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/../Controls/xtableview.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../Controls/xdatetimeeditx.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../XHexView/xhexview.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../XMemoryMapWidget/xmemorymapwidget.cmake)
@@ -36,6 +37,7 @@ set(FORMATWIDGET_SOURCES
     ${SEARCHVALUESWIDGET_SOURCES}
     ${XLINEEDITHEX_SOURCES}
     ${XCOMBOBOXEX_SOURCES}
+    ${XTABLEVIEW_SOURCES}
     ${XDATETIMEEDITX_SOURCES}
     ${XHEXVIEW_SOURCES}
     ${XMEMORYMAPWIDGET_SOURCES}
