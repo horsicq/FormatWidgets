@@ -27,8 +27,8 @@ ELFWidget::ELFWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::ELFWi
     ui->setupUi(this);
 
     XOptions::adjustToolButton(ui->toolButtonReload, XOptions::ICONTYPE_RELOAD);
-    XOptions::adjustToolButton(ui->toolButtonNext, XOptions::ICONTYPE_FORWARDS, Qt::ToolButtonIconOnly);
-    XOptions::adjustToolButton(ui->toolButtonPrev, XOptions::ICONTYPE_BACKWARDS, Qt::ToolButtonIconOnly);
+    XOptions::adjustToolButton(ui->toolButtonNext, XOptions::ICONTYPE_FORWARD, Qt::ToolButtonIconOnly);
+    XOptions::adjustToolButton(ui->toolButtonPrev, XOptions::ICONTYPE_BACKWARD, Qt::ToolButtonIconOnly);
 
     ui->toolButtonReload->setToolTip(tr("Reload"));
     ui->toolButtonNext->setToolTip(tr("Next visited"));
