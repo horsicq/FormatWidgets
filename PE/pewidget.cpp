@@ -153,7 +153,7 @@ void PEWidget::reload()
         }
 
         if (pe.getFileHeader_NumberOfSections()) {
-            QTreeWidgetItem *pItemSections = createNewItem(SPE::TYPE_SECTIONS, tr("Sections"));
+            QTreeWidgetItem *pItemSections = createNewItem(SPE::TYPE_SECTIONS, tr("Sections"), XOptions::ICONTYPE_SECTION);
             ui->treeWidgetNavi->addTopLevelItem(pItemSections);
 
             pItemSections->addChild(createNewItem(SPE::TYPE_SECTIONS_INFO, tr("Info"), XOptions::ICONTYPE_INFO));
@@ -191,19 +191,19 @@ void PEWidget::reload()
         }
 
         if (pe.isExceptionPresent()) {
-            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_EXCEPTION, tr("Exceptions")));
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_EXCEPTION, tr("Exceptions"), XOptions::ICONTYPE_EXCEPTION));
         }
 
         if (pe.isSignPresent()) {
-            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_CERTIFICATE, tr("Certificate")));
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_CERTIFICATE, tr("Certificate"), XOptions::ICONTYPE_CERTIFICATE));
         }
 
         if (pe.isRelocsPresent()) {
-            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_RELOCS, tr("Relocs")));
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_RELOCS, tr("Relocs"), XOptions::ICONTYPE_RELOC));
         }
 
         if (pe.isDebugPresent()) {
-            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_DEBUG, tr("Debug")));
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_DEBUG, tr("Debug"), XOptions::ICONTYPE_DEBUG));
         }
 
         if (pe.isTLSPresent()) {
