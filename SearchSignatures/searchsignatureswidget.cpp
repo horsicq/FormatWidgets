@@ -43,13 +43,11 @@ SearchSignaturesWidget::SearchSignaturesWidget(QWidget *pParent) : XShortcutsWid
 
     memset(shortCuts, 0, sizeof shortCuts);
 
-    ui->tableViewResult->installEventFilter(this);
+    // ui->tableViewResult->installEventFilter(this);
 }
 
 SearchSignaturesWidget::~SearchSignaturesWidget()
 {
-    g_watcher.waitForFinished();
-
     delete ui;
 }
 
@@ -61,7 +59,7 @@ void SearchSignaturesWidget::setData(QIODevice *pDevice, XBinary::FT fileType, O
     XFormats::setFileTypeComboBox(fileType, g_pDevice, ui->comboBoxType);
     XFormats::setEndiannessComboBox(ui->comboBoxEndianness, XBinary::ENDIAN_LITTLE);
 
-    ui->tableViewResult->setModel(nullptr);
+    //ui->tableViewResult->setModel(nullptr);
 
     setOptions(options);
 
@@ -127,9 +125,7 @@ void SearchSignaturesWidget::adjustView()
 
 void SearchSignaturesWidget::on_toolButtonSave_clicked()
 {
-    if (g_pModel) {
-        XShortcutsWidget::saveTableModel(g_pModel, XBinary::getResultFileName(g_pDevice, QString("%1.txt").arg(tr("Signatures"))));
-    }
+    XShortcutsWidget::saveTableModel(ui->tableViewResult->getProxyModel(), XBinary::getResultFileName(g_pDevice, QString("%1.txt").arg(tr("Signatures"))));
 }
 
 void SearchSignaturesWidget::on_toolButtonSearch_clicked()
@@ -254,9 +250,7 @@ void SearchSignaturesWidget::_hex()
 void SearchSignaturesWidget::search()
 {
     if (g_pDevice) {
-        g_pOldModel = g_pModel;
-
-        ui->tableViewResult->setModel(nullptr);
+        //ui->tableViewResult->setModel(nullptr);
 
         XBinary::FT fileType = (XBinary::FT)(ui->comboBoxType->currentData().toInt());
 
@@ -281,17 +275,11 @@ void SearchSignaturesWidget::search()
         dmp.processModel(&listRecords, &g_pModel, options, MultiSearch::TYPE_SIGNATURES);
         dmp.showDialogDelay();
 
-        ui->tableViewResult->setModel(g_pModel);
+        ui->tableViewResult->setCustomModel(g_pModel, true);
 
         ui->tableViewResult->setColumnWidth(0, 120);  // TODO
         ui->tableViewResult->setColumnWidth(1, 120);  // TODO
         ui->tableViewResult->setColumnWidth(2, 120);  // TODO
-
-        QFuture<void> future = deleteOldStandardModel(&g_pOldModel);
-
-        g_watcher.setFuture(future);
-
-        //            watcher.waitForFinished();
 
         g_bInit = true;
     }

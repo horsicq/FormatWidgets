@@ -38,7 +38,6 @@ SearchStringsWidget::SearchStringsWidget(QWidget *pParent) : XShortcutsWidget(pP
     ui->checkBoxUnicode->setToolTip(QString("Unicode"));
     ui->checkBoxNullTerminated->setToolTip(tr("Null-terminated"));
     ui->checkBoxLinks->setToolTip(tr("Links"));
-    ui->lineEditFilter->setToolTip(tr("Filter"));
     ui->lineEditMask->setToolTip(tr("Mask"));
     ui->checkBoxRegExp->setToolTip(tr("Regular expression"));
     ui->spinBoxMinLength->setToolTip(tr("Min length"));
@@ -46,10 +45,8 @@ SearchStringsWidget::SearchStringsWidget(QWidget *pParent) : XShortcutsWidget(pP
 
     g_pDevice = nullptr;
     g_pBackupDevice = nullptr;
-    g_pFilter = new QSortFilterProxyModel(this);
 
     g_options.nBaseAddress = 0;
-    g_pModel = nullptr;
     g_bInit = false;
     g_bIsReadonly = true;
 
@@ -81,15 +78,13 @@ SearchStringsWidget::SearchStringsWidget(QWidget *pParent) : XShortcutsWidget(pP
     //     }
     // #endif
 
-    ui->tableViewResult->installEventFilter(this);
+    // ui->tableViewResult->installEventFilter(this);
 
     setReadonly(true);
 }
 
 SearchStringsWidget::~SearchStringsWidget()
 {
-    g_watcher.waitForFinished();
-
     delete ui;
 }
 
@@ -110,7 +105,7 @@ void SearchStringsWidget::setData(QIODevice *pDevice, XBinary::FT fileType, OPTI
 
     g_bInit = false;
 
-    ui->tableViewResult->setModel(nullptr);
+    // ui->tableViewResult->setModel(nullptr);
 
     g_options = options;
 
@@ -191,26 +186,12 @@ void SearchStringsWidget::adjustView()
 
 void SearchStringsWidget::on_toolButtonSave_clicked()
 {
-    if (g_pFilter) {
-        XShortcutsWidget::saveTableModel(g_pFilter, XBinary::getResultFileName(g_pDevice, QString("%1.txt").arg(tr("Strings"))));
-    }
+    XShortcutsWidget::saveTableModel(ui->tableViewResult->getProxyModel(), XBinary::getResultFileName(g_pDevice, QString("%1.txt").arg(tr("Strings"))));
 }
 
 void SearchStringsWidget::on_toolButtonSearch_clicked()
 {
     search();
-}
-
-void SearchStringsWidget::on_lineEditFilter_textChanged(const QString &sText)
-{
-    filter(sText);
-}
-
-void SearchStringsWidget::filter(const QString &sString)
-{
-    g_pFilter->setFilterFixedString(sString);
-    g_pFilter->setFilterCaseSensitivity(Qt::CaseInsensitive);
-    g_pFilter->setFilterKeyColumn(MultiSearch::COLUMN_STRING_VALUE);
 }
 
 void SearchStringsWidget::on_tableViewResult_customContextMenuRequested(const QPoint &pos)
@@ -338,8 +319,6 @@ void SearchStringsWidget::_editString()
 void SearchStringsWidget::search()
 {
     if (g_pDevice) {
-        ui->lineEditFilter->clear();
-
         g_options.bAnsi = ui->checkBoxAnsi->isChecked();
         // g_options.bUTF8 = ui->checkBoxUTF8->isChecked();
         g_options.bUnicode = ui->checkBoxUnicode->isChecked();
@@ -371,11 +350,6 @@ void SearchStringsWidget::search()
                 options.memoryMap = XFormats::getMemoryMap(fileType, mapMode, g_pDevice);
             }
 
-            g_pOldModel = g_pModel;
-
-            g_pFilter->setSourceModel(nullptr);
-            ui->tableViewResult->setModel(nullptr);
-
             QList<XBinary::MS_RECORD> listRecords;
 
             QWidget *pParent = XOptions::getMainWidget(this);
@@ -390,8 +364,7 @@ void SearchStringsWidget::search()
             dmp.processModel(&listRecords, &g_pModel, options, MultiSearch::TYPE_STRINGS);
             dmp.showDialogDelay();
 
-            g_pFilter->setSourceModel(g_pModel);
-            ui->tableViewResult->setModel(g_pFilter);
+            ui->tableViewResult->setCustomModel(g_pModel, true);
 
             ui->tableViewResult->setColumnWidth(MultiSearch::COLUMN_STRING_NUMBER, 80);    // TODO
             ui->tableViewResult->setColumnWidth(MultiSearch::COLUMN_STRING_OFFSET, 120);   // TODO
@@ -400,26 +373,12 @@ void SearchStringsWidget::search()
             ui->tableViewResult->setColumnWidth(MultiSearch::COLUMN_STRING_SIZE, 80);      // TODO
             ui->tableViewResult->setColumnWidth(MultiSearch::COLUMN_STRING_TYPE, 30);      // TODO
 
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-            QFuture<void> future = QtConcurrent::run(&SearchStringsWidget::deleteOldModel, this);
-#else
-            QFuture<void> future = QtConcurrent::run(this, &SearchStringsWidget::deleteOldModel);
-#endif
-
-            g_watcher.setFuture(future);
-
-            //            watcher.waitForFinished();
             connect(ui->tableViewResult->selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)), this,
                     SLOT(on_tableViewSelection(QItemSelection, QItemSelection)));
         }
 
         g_bInit = true;
     }
-}
-
-void SearchStringsWidget::deleteOldModel()
-{
-    delete g_pOldModel;
 }
 
 void SearchStringsWidget::registerShortcuts(bool bState)

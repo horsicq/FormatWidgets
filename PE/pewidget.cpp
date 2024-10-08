@@ -134,7 +134,7 @@ void PEWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_ENTROPY, tr("Entropy"), XOptions::ICONTYPE_ENTROPY));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_EXTRACTOR, tr("Extractor"), XOptions::ICONTYPE_EXTRACTOR));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_SEARCH, tr("Search"), XOptions::ICONTYPE_SEARCH));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_TOOLS, tr("Tools")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_TOOLS, tr("Tools"), XOptions::ICONTYPE_TOOL));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_IMAGE_DOS_HEADER, "IMAGE_DOS_HEADER"));
 
         if (pe.isDosStubPresent()) {
@@ -156,37 +156,37 @@ void PEWidget::reload()
             QTreeWidgetItem *pItemSections = createNewItem(SPE::TYPE_SECTIONS, tr("Sections"));
             ui->treeWidgetNavi->addTopLevelItem(pItemSections);
 
-            pItemSections->addChild(createNewItem(SPE::TYPE_SECTIONS_INFO, tr("Info")));
+            pItemSections->addChild(createNewItem(SPE::TYPE_SECTIONS_INFO, tr("Info"), XOptions::ICONTYPE_INFO));
         }
 
         if (pe.isExportPresent()) {
-            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_EXPORT, tr("Export")));
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_EXPORT, tr("Export"), XOptions::ICONTYPE_EXPORT));
         }
 
         if (pe.isImportPresent()) {
-            QTreeWidgetItem *pItemImport = createNewItem(SPE::TYPE_IMPORT, tr("Import"));
+            QTreeWidgetItem *pItemImport = createNewItem(SPE::TYPE_IMPORT, tr("Import"), XOptions::ICONTYPE_IMPORT);
             ui->treeWidgetNavi->addTopLevelItem(pItemImport);
 
-            pItemImport->addChild(createNewItem(SPE::TYPE_IMPORT_INFO, tr("Info")));
+            pItemImport->addChild(createNewItem(SPE::TYPE_IMPORT_INFO, tr("Info"), XOptions::ICONTYPE_INFO));
         }
 
         if (pe.isResourcesPresent()) {
-            QTreeWidgetItem *pResources = createNewItem(SPE::TYPE_RESOURCES, tr("Resources"));
+            QTreeWidgetItem *pResources = createNewItem(SPE::TYPE_RESOURCES, tr("Resources"), XOptions::ICONTYPE_RESOURCE);
 
             ui->treeWidgetNavi->addTopLevelItem(pResources);
 
             QList<XPE::RESOURCE_RECORD> listResources = pe.getResources(&memoryMap, 10000);
 
             if (pe.isResourceStringTablePresent(&listResources)) {
-                pResources->addChild(createNewItem(SPE::TYPE_RESOURCES_STRINGTABLE, tr("String table")));
+                pResources->addChild(createNewItem(SPE::TYPE_RESOURCES_STRINGTABLE, tr("String table"), XOptions::ICONTYPE_STRING));
             }
 
             if (pe.isResourceVersionPresent(&listResources)) {
-                pResources->addChild(createNewItem(SPE::TYPE_RESOURCES_VERSION, tr("Version")));
+                pResources->addChild(createNewItem(SPE::TYPE_RESOURCES_VERSION, tr("Version"), XOptions::ICONTYPE_VERSION));
             }
 
             if (pe.isResourceManifestPresent(&listResources)) {
-                pResources->addChild(createNewItem(SPE::TYPE_RESOURCES_MANIFEST, tr("Manifest")));
+                pResources->addChild(createNewItem(SPE::TYPE_RESOURCES_MANIFEST, tr("Manifest"), XOptions::ICONTYPE_MANIFEST));
             }
         }
 
@@ -207,7 +207,7 @@ void PEWidget::reload()
         }
 
         if (pe.isTLSPresent()) {
-            QTreeWidgetItem *pTLS = createNewItem(SPE::TYPE_TLS, QString("TLS"));
+            QTreeWidgetItem *pTLS = createNewItem(SPE::TYPE_TLS, QString("TLS"), XOptions::ICONTYPE_TLS);
 
             ui->treeWidgetNavi->addTopLevelItem(pTLS);
 
@@ -229,7 +229,7 @@ void PEWidget::reload()
         }
 
         if (pe.isNETPresent()) {
-            QTreeWidgetItem *pNetHeader = createNewItem(SPE::TYPE_NETHEADER, QString(".NET"));
+            QTreeWidgetItem *pNetHeader = createNewItem(SPE::TYPE_NETHEADER, QString(".NET"), XOptions::ICONTYPE_DOTNET);
             ui->treeWidgetNavi->addTopLevelItem(pNetHeader);
 
             XPE::CLI_INFO cliInfo = pe.getCliInfo(true);
@@ -1571,7 +1571,7 @@ void PEWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 PEProcessData peProcessData(SPE::TYPE_RICH, &g_tvModel[SPE::TYPE_RICH], &pe, 0, 0, 0);
 
-                ajustTableView(&peProcessData, &g_tvModel[SPE::TYPE_RICH], ui->tableView_RICH, nullptr, true);
+                ajustTableView(&peProcessData, &g_tvModel[SPE::TYPE_RICH], ui->tableView_RICH, true);
             }
         } else if (nType == SPE::TYPE_SECTIONS) {
             if (!isInitPresent(sInit)) {
@@ -1585,7 +1585,7 @@ void PEWidget::reloadData(bool bSaveSelection)
 
                 PEProcessData peProcessData(SPE::TYPE_SECTIONS, &g_tvModel[SPE::TYPE_SECTIONS], &pe, 0, 0, 0, false);
 
-                ajustTableView(&peProcessData, &g_tvModel[SPE::TYPE_SECTIONS], ui->tableView_Sections, nullptr, false);
+                ajustTableView(&peProcessData, &g_tvModel[SPE::TYPE_SECTIONS], ui->tableView_Sections, false);
 
                 connect(ui->tableView_Sections->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_Sections_currentRowChanged(QModelIndex, QModelIndex)));
@@ -1696,7 +1696,7 @@ void PEWidget::reloadData(bool bSaveSelection)
                 {
                     PEProcessData peProcessData(SPE::TYPE_RESOURCES, &g_tvModel[SPE::TYPE_RESOURCES], &pe, 0, 0, 0, false);
 
-                    ajustTableView(&peProcessData, &g_tvModel[SPE::TYPE_RESOURCES], ui->tableView_Resources, nullptr, true);
+                    ajustTableView(&peProcessData, &g_tvModel[SPE::TYPE_RESOURCES], ui->tableView_Resources, true);
 
                     connect(ui->tableView_Resources->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                             SLOT(onTableView_Resources_currentRowChanged(QModelIndex, QModelIndex)));
@@ -1727,7 +1727,7 @@ void PEWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 PEProcessData peProcessData(SPE::TYPE_RESOURCES_STRINGTABLE, &g_tvModel[SPE::TYPE_RESOURCES_STRINGTABLE], &pe, 0, 0, 0, false);
 
-                ajustTableView(&peProcessData, &g_tvModel[SPE::TYPE_RESOURCES_STRINGTABLE], ui->tableView_Resources_StringTable, nullptr, true);
+                ajustTableView(&peProcessData, &g_tvModel[SPE::TYPE_RESOURCES_STRINGTABLE], ui->tableView_Resources_StringTable, true);
 
                 //                connect(ui->tableView_Resources_StringTable->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_Resources_StringTable_currentRowChanged(QModelIndex,QModelIndex)));
 
@@ -1810,7 +1810,7 @@ void PEWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 PEProcessData peProcessData(SPE::TYPE_EXCEPTION, &g_tvModel[SPE::TYPE_EXCEPTION], &pe, 0, 0, 0);
 
-                ajustTableView(&peProcessData, &g_tvModel[SPE::TYPE_EXCEPTION], ui->tableView_Exceptions, nullptr, false);
+                ajustTableView(&peProcessData, &g_tvModel[SPE::TYPE_EXCEPTION], ui->tableView_Exceptions, false);
 
                 connect(ui->tableView_Exceptions->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_Exceptions_currentRowChanged(QModelIndex, QModelIndex)));
@@ -1823,7 +1823,7 @@ void PEWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 PEProcessData peProcessData(SPE::TYPE_RELOCS, &g_tvModel[SPE::TYPE_RELOCS], &pe, 0, 0, 0);
 
-                ajustTableView(&peProcessData, &g_tvModel[SPE::TYPE_RELOCS], ui->tableView_Relocs, nullptr, false);
+                ajustTableView(&peProcessData, &g_tvModel[SPE::TYPE_RELOCS], ui->tableView_Relocs, false);
 
                 connect(ui->tableView_Relocs->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_Relocs_currentRowChanged(QModelIndex, QModelIndex)));
@@ -1836,7 +1836,7 @@ void PEWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 PEProcessData peProcessData(SPE::TYPE_DEBUG, &g_tvModel[SPE::TYPE_DEBUG], &pe, 0, 0, 0);
 
-                ajustTableView(&peProcessData, &g_tvModel[SPE::TYPE_DEBUG], ui->tableView_Debug, nullptr, false);
+                ajustTableView(&peProcessData, &g_tvModel[SPE::TYPE_DEBUG], ui->tableView_Debug, false);
 
                 connect(ui->tableView_Debug->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_Debug_currentRowChanged(QModelIndex, QModelIndex)));
@@ -1919,7 +1919,7 @@ void PEWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 PEProcessData peProcessData(SPE::TYPE_TLSCALLBACKS, &g_tvModel[SPE::TYPE_TLSCALLBACKS], &pe, 0, 0, 0);
 
-                ajustTableView(&peProcessData, &g_tvModel[SPE::TYPE_TLSCALLBACKS], ui->tableView_TLSCallbacks, nullptr, true);
+                ajustTableView(&peProcessData, &g_tvModel[SPE::TYPE_TLSCALLBACKS], ui->tableView_TLSCallbacks, true);
 
                 // connect(ui->tableView_Sections->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_Sections_currentRowChanged(QModelIndex,QModelIndex)));
 
@@ -2304,7 +2304,7 @@ void PEWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 PEProcessData peProcessData(SPE::TYPE_NET_METADATA_TABLE, &g_tvModel[SPE::TYPE_NET_METADATA_TABLE], &pe, 0, 0, 0);
 
-                ajustTableView(&peProcessData, &g_tvModel[SPE::TYPE_NET_METADATA_TABLE], ui->tableView_Net_Metadata_Table, nullptr, false);
+                ajustTableView(&peProcessData, &g_tvModel[SPE::TYPE_NET_METADATA_TABLE], ui->tableView_Net_Metadata_Table, false);
 
                 connect(ui->tableView_Net_Metadata_Table->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_Net_Metadata_Table_currentRowChanged(QModelIndex, QModelIndex)));
@@ -2403,7 +2403,7 @@ void PEWidget::loadRelocs(qint32 nRow)
     if (pe.isValid()) {
         PEProcessData peProcessData(SPE::TYPE_RELOCS_POSITION, &g_tvModel[SPE::TYPE_RELOCS_POSITION], &pe, 0, nOffset, 0);
 
-        ajustTableView(&peProcessData, &g_tvModel[SPE::TYPE_RELOCS_POSITION], ui->tableView_RelocsPositions, nullptr, false);
+        ajustTableView(&peProcessData, &g_tvModel[SPE::TYPE_RELOCS_POSITION], ui->tableView_RelocsPositions, false);
 
         if (g_tvModel[SPE::TYPE_RELOCS_POSITION]->rowCount()) {
             ui->tableView_RelocsPositions->setCurrentIndex(ui->tableView_RelocsPositions->model()->index(0, 0));
@@ -3260,7 +3260,7 @@ void PEWidget::disasmTLSCallback()
 
 void PEWidget::on_pushButtonSave_Sections_clicked()
 {
-    XShortcutsWidget::saveTableModel(ui->tableView_Sections->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(tr("Sections"))));
+    XShortcutsWidget::saveTableModel(ui->tableView_Sections->getProxyModel(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(tr("Sections"))));
 }
 
 void PEWidget::on_tableView_Resources_StringTable_customContextMenuRequested(const QPoint &pos)
@@ -3287,12 +3287,12 @@ void PEWidget::stringTableHex()
 
 void PEWidget::on_pushButtonSave_Debug_clicked()
 {
-    XShortcutsWidget::saveTableModel(ui->tableView_Debug->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Debug"))));
+    XShortcutsWidget::saveTableModel(ui->tableView_Debug->getProxyModel(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Debug"))));
 }
 
 void PEWidget::on_pushButtonSave_Exception_clicked()
 {
-    XShortcutsWidget::saveTableModel(ui->tableView_Exceptions->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Exceptions"))));
+    XShortcutsWidget::saveTableModel(ui->tableView_Exceptions->getProxyModel(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Exceptions"))));
 }
 
 void PEWidget::on_pushButtonSave_IMAGE_DIRECTORY_ENTRIES_clicked()
@@ -3325,7 +3325,7 @@ void PEWidget::on_pushButtonDumpAll_Resources_clicked()
 
 void PEWidget::on_pushButtonSave_Resources_clicked()
 {
-    XShortcutsWidget::saveTableModel(ui->tableView_Resources->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Resources"))));
+    XShortcutsWidget::saveTableModel(ui->tableView_Resources->getProxyModel(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Resources"))));
 }
 
 void PEWidget::on_pushButtonDump_Overlay_clicked()
@@ -3365,7 +3365,7 @@ void PEWidget::on_pushButtonSave_IMAGE_FILE_HEADER_clicked()
 
 void PEWidget::on_pushButtonSave_BoundImport_clicked()
 {
-    XShortcutsWidget::saveTableModel(ui->tableView_BoundImport->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("BoundImport"))));
+    XShortcutsWidget::saveTableModel(ui->tableView_BoundImport->getProxyModel(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("BoundImport"))));
 }
 
 void PEWidget::on_pushButtonSave_Certificate_clicked()
@@ -3380,39 +3380,39 @@ void PEWidget::on_pushButtonSave_Sections_Info_clicked()
 
 void PEWidget::on_pushButtonSave_DelayImportLibraries_clicked()
 {
-    XShortcutsWidget::saveTableModel(ui->tableView_DelayImportLibraries->model(),
+    XShortcutsWidget::saveTableModel(ui->tableView_DelayImportLibraries->getProxyModel(),
                                      XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("DelayImportLibraries"))));
 }
 
 void PEWidget::on_pushButtonSave_DelayImportFunctions_clicked()
 {
-    XShortcutsWidget::saveTableModel(ui->tableView_DelayImportFunctions->model(),
+    XShortcutsWidget::saveTableModel(ui->tableView_DelayImportFunctions->getProxyModel(),
                                      XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("DelayImportFunctions"))));
 }
 
 void PEWidget::on_pushButtonSave_ImportLibraries_clicked()
 {
-    XShortcutsWidget::saveTableModel(ui->tableView_ImportLibraries->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("ImportLibraries"))));
+    XShortcutsWidget::saveTableModel(ui->tableView_ImportLibraries->getProxyModel(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("ImportLibraries"))));
 }
 
 void PEWidget::on_pushButtonSave_ImportFunctions_clicked()
 {
-    XShortcutsWidget::saveTableModel(ui->tableView_ImportFunctions->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("ImportFunctions"))));
+    XShortcutsWidget::saveTableModel(ui->tableView_ImportFunctions->getProxyModel(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("ImportFunctions"))));
 }
 
 void PEWidget::on_pushButtonSave_RICH_clicked()
 {
-    XShortcutsWidget::saveTableModel(ui->tableView_RICH->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("RICH"))));
+    XShortcutsWidget::saveTableModel(ui->tableView_RICH->getProxyModel(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("RICH"))));
 }
 
 void PEWidget::on_pushButtonSave_Relocs_clicked()
 {
-    XShortcutsWidget::saveTableModel(ui->tableView_Relocs->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Relocs"))));
+    XShortcutsWidget::saveTableModel(ui->tableView_Relocs->getProxyModel(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Relocs"))));
 }
 
 void PEWidget::on_pushButtonSave_RelocsPositions_clicked()
 {
-    XShortcutsWidget::saveTableModel(ui->tableView_RelocsPositions->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("RelocsPositions"))));
+    XShortcutsWidget::saveTableModel(ui->tableView_RelocsPositions->getProxyModel(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("RelocsPositions"))));
 }
 
 void PEWidget::on_pushButtonSave_LoadConfig_clicked()
@@ -3504,7 +3504,7 @@ void PEWidget::on_treeView_Sections_Info_customContextMenuRequested(const QPoint
 
 void PEWidget::on_pushButtonSave_TLSCallbacks_clicked()
 {
-    XShortcutsWidget::saveTableModel(ui->tableView_TLSCallbacks->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("TLSCallbacks"))));
+    XShortcutsWidget::saveTableModel(ui->tableView_TLSCallbacks->getProxyModel(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("TLSCallbacks"))));
 }
 
 void PEWidget::on_pushButtonSave_TLS_clicked()
@@ -3524,7 +3524,7 @@ void PEWidget::on_pushButtonSave_Resources_Version_clicked()
 
 void PEWidget::on_pushButtonSave_Resources_StringTable_clicked()
 {
-    XShortcutsWidget::saveTableModel(ui->tableView_Resources_StringTable->model(),
+    XShortcutsWidget::saveTableModel(ui->tableView_Resources_StringTable->getProxyModel(),
                                      XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Resources_StringTable"))));
 }
 
@@ -3540,7 +3540,7 @@ void PEWidget::on_pushButtonSave_ExportHeader_clicked()
 
 void PEWidget::on_pushButtonSave_ExportFunctions_clicked()
 {
-    XShortcutsWidget::saveTableModel(ui->tableView_ExportFunctions->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("ExportFunctions"))));
+    XShortcutsWidget::saveTableModel(ui->tableView_ExportFunctions->getProxyModel(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("ExportFunctions"))));
 }
 
 void PEWidget::on_pushButtonSave_NetHeader_clicked()
@@ -3589,7 +3589,7 @@ void PEWidget::on_checkBoxSectionsStringTable_stateChanged(int nState)
     if (pe.isValid()) {
         PEProcessData peProcessData(SPE::TYPE_SECTIONS, &g_tvModel[SPE::TYPE_SECTIONS], &pe, 0, 0, 0, ui->checkBoxSectionsStringTable->isChecked());
 
-        ajustTableView(&peProcessData, &g_tvModel[SPE::TYPE_SECTIONS], ui->tableView_Sections, nullptr, false);
+        ajustTableView(&peProcessData, &g_tvModel[SPE::TYPE_SECTIONS], ui->tableView_Sections, false);
 
         connect(ui->tableView_Sections->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                 SLOT(onTableView_Sections_currentRowChanged(QModelIndex, QModelIndex)));

@@ -435,18 +435,9 @@ void FormatWidget::setLineEdit(XLineEditHEX *pLineEdit, qint32 nMaxLength, const
     pLineEdit->setProperty("OFFSET", nOffset);
 }
 
-void FormatWidget::ajustTableView(ProcessData *pProcessData, QStandardItemModel **ppModel, QTableView *pTableView, QSortFilterProxyModel *pProxyModel,
+void FormatWidget::ajustTableView(ProcessData *pProcessData, QStandardItemModel **ppModel, XTableView *pTableView,
                                   bool bStretchLastSection)
 {
-    QAbstractItemModel *pOldModel = 0;
-
-    if (pProxyModel) {
-        pOldModel = pProxyModel->sourceModel();
-        pProxyModel->setSourceModel(0);
-    } else {
-        pOldModel = pTableView->model();
-    }
-
     DialogProcessData dialogProcessData(this, pProcessData, getGlobalOptions());
     dialogProcessData.setGlobal(getShortcuts(), getGlobalOptions());
     dialogProcessData.showDialogDelay();
@@ -457,12 +448,7 @@ void FormatWidget::ajustTableView(ProcessData *pProcessData, QStandardItemModel 
         pTableView->setSortingEnabled(false);
     }
 
-    if (pProxyModel) {
-        pProxyModel->setSourceModel(*ppModel);
-        pTableView->setModel(pProxyModel);
-    } else {
-        pTableView->setModel(*ppModel);
-    }
+    pTableView->setCustomModel(*ppModel, true);
 
     pProcessData->ajustTableView(this, pTableView);
 
@@ -472,8 +458,6 @@ void FormatWidget::ajustTableView(ProcessData *pProcessData, QStandardItemModel 
     }
 
     pTableView->horizontalHeader()->setStretchLastSection(bStretchLastSection);
-
-    deleteOldAbstractModel(&pOldModel);
 }
 
 void FormatWidget::ajustTreeView(ProcessData *pProcessData, QStandardItemModel **ppModel, QTreeView *pTreeView)

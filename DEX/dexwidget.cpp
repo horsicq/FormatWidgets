@@ -37,9 +37,6 @@ DEXWidget::DEXWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::DEXWi
 
     memset(g_subDevice, 0, sizeof g_subDevice);
 
-    g_pFilterStrings = new QSortFilterProxyModel(this);  // TODO remove
-    g_pFilterTypes = new QSortFilterProxyModel(this);    // TODO remove
-
     initWidget();
 }
 
@@ -516,7 +513,7 @@ void DEXWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 DEXProcessData dexProcessData(SDEX::TYPE_STRING_ID_ITEM, &g_tvModel[SDEX::TYPE_STRING_ID_ITEM], &dex, nDataOffset, nDataSize);
 
-                ajustTableView(&dexProcessData, &g_tvModel[SDEX::TYPE_STRING_ID_ITEM], ui->tableView_STRING_ID_ITEM, g_pFilterStrings);
+                ajustTableView(&dexProcessData, &g_tvModel[SDEX::TYPE_STRING_ID_ITEM], ui->tableView_STRING_ID_ITEM);
 
                 if (g_tvModel[SDEX::TYPE_STRING_ID_ITEM]->rowCount()) {
                     ui->tableView_STRING_ID_ITEM->setCurrentIndex(ui->tableView_STRING_ID_ITEM->model()->index(0, 0));
@@ -526,7 +523,7 @@ void DEXWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 DEXProcessData dexProcessData(SDEX::TYPE_TYPE_ID_ITEM, &g_tvModel[SDEX::TYPE_TYPE_ID_ITEM], &dex, nDataOffset, nDataSize);
 
-                ajustTableView(&dexProcessData, &g_tvModel[SDEX::TYPE_TYPE_ID_ITEM], ui->tableView_TYPE_ID_ITEM, g_pFilterTypes);
+                ajustTableView(&dexProcessData, &g_tvModel[SDEX::TYPE_TYPE_ID_ITEM], ui->tableView_TYPE_ID_ITEM);
 
                 if (g_tvModel[SDEX::TYPE_TYPE_ID_ITEM]->rowCount()) {
                     ui->tableView_TYPE_ID_ITEM->setCurrentIndex(ui->tableView_TYPE_ID_ITEM->model()->index(0, 0));
@@ -566,7 +563,7 @@ void DEXWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 DEXProcessData dexProcessData(SDEX::TYPE_CLASS_DEF_ITEM, &g_tvModel[SDEX::TYPE_CLASS_DEF_ITEM], &dex, nDataOffset, nDataSize);
 
-                ajustTableView(&dexProcessData, &g_tvModel[SDEX::TYPE_CLASS_DEF_ITEM], ui->tableView_CLASS_DEF_ITEM, nullptr, false);
+                ajustTableView(&dexProcessData, &g_tvModel[SDEX::TYPE_CLASS_DEF_ITEM], ui->tableView_CLASS_DEF_ITEM, false);
 
                 if (g_tvModel[SDEX::TYPE_CLASS_DEF_ITEM]->rowCount()) {
                     ui->tableView_CLASS_DEF_ITEM->setCurrentIndex(ui->tableView_CLASS_DEF_ITEM->model()->index(0, 0));
@@ -656,28 +653,6 @@ void DEXWidget::on_tableWidget_Header_currentCellChanged(int nCurrentRow, int nC
     setHeaderTableSelection(ui->widgetHex_Header, ui->tableWidget_Header);
 }
 
-void DEXWidget::on_lineEditFilterStrings_textChanged(const QString &sString)
-{
-#if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
-    g_pFilterStrings->setFilterRegularExpression(sString);
-#else
-    g_pFilterStrings->setFilterRegExp(sString);
-#endif
-    g_pFilterStrings->setFilterCaseSensitivity(Qt::CaseInsensitive);
-    g_pFilterStrings->setFilterKeyColumn(3);
-}
-
-void DEXWidget::on_lineEditFilterTypes_textChanged(const QString &sString)
-{
-#if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
-    g_pFilterTypes->setFilterRegularExpression(sString);
-#else
-    g_pFilterTypes->setFilterRegExp(sString);
-#endif
-    g_pFilterTypes->setFilterCaseSensitivity(Qt::CaseInsensitive);
-    g_pFilterTypes->setFilterKeyColumn(3);
-}
-
 void DEXWidget::on_toolButtonPrev_clicked()
 {
     setAddPageEnabled(false);
@@ -694,46 +669,34 @@ void DEXWidget::on_toolButtonNext_clicked()
 
 void DEXWidget::on_pushButtonSave_STRING_ID_ITEM_clicked()
 {
-    if (g_pFilterStrings) {
-        XShortcutsWidget::saveTableModel(g_pFilterStrings, XBinary::getResultFileName(getBackupDevice(), QString("%1.txt").arg(QString("STRING_ID_ITEM"))));
-    }
+    XShortcutsWidget::saveTableModel(ui->tableView_STRING_ID_ITEM->getProxyModel(), XBinary::getResultFileName(getBackupDevice(), QString("%1.txt").arg(QString("STRING_ID_ITEM"))));
 }
 
 void DEXWidget::on_pushButtonSave_TYPE_ID_ITEM_clicked()
 {
-    if (g_pFilterTypes) {
-        XShortcutsWidget::saveTableModel(g_pFilterTypes, XBinary::getResultFileName(getBackupDevice(), QString("%1.txt").arg(QString("TYPE_ID_ITEM"))));
-    }
+    XShortcutsWidget::saveTableModel(ui->tableView_TYPE_ID_ITEM->getProxyModel(), XBinary::getResultFileName(getBackupDevice(), QString("%1.txt").arg(QString("TYPE_ID_ITEM"))));
 }
 
 void DEXWidget::on_pushButtonSave_PROTO_ID_ITEM_clicked()
 {
-    if (g_pFilterTypes) {
-        XShortcutsWidget::saveTableModel(ui->tableView_PROTO_ID_ITEM->model(),
-                                         XBinary::getResultFileName(getBackupDevice(), QString("%1.txt").arg(QString("PROTO_ID_ITEM"))));
-    }
+    XShortcutsWidget::saveTableModel(ui->tableView_PROTO_ID_ITEM->getProxyModel(),
+                                     XBinary::getResultFileName(getBackupDevice(), QString("%1.txt").arg(QString("PROTO_ID_ITEM"))));
 }
 
 void DEXWidget::on_pushButtonSave_FIELD_ID_ITEM_clicked()
 {
-    if (g_pFilterTypes) {
-        XShortcutsWidget::saveTableModel(ui->tableView_FIELD_ID_ITEM->model(),
-                                         XBinary::getResultFileName(getBackupDevice(), QString("%1.txt").arg(QString("FIELD_ID_ITEM"))));
-    }
+    XShortcutsWidget::saveTableModel(ui->tableView_FIELD_ID_ITEM->getProxyModel(),
+                                     XBinary::getResultFileName(getBackupDevice(), QString("%1.txt").arg(QString("FIELD_ID_ITEM"))));
 }
 
 void DEXWidget::on_pushButtonSave_CLASS_DEF_ITEM_clicked()
 {
-    if (g_pFilterTypes) {
-        XShortcutsWidget::saveTableModel(ui->tableView_CLASS_DEF_ITEM->model(),
-                                         XBinary::getResultFileName(getBackupDevice(), QString("%1.txt").arg(QString("CLASS_DEF_ITEM"))));
-    }
+    XShortcutsWidget::saveTableModel(ui->tableView_CLASS_DEF_ITEM->getProxyModel(),
+                                     XBinary::getResultFileName(getBackupDevice(), QString("%1.txt").arg(QString("CLASS_DEF_ITEM"))));
 }
 
 void DEXWidget::on_pushButtonSave_METHOD_ID_ITEM_clicked()
 {
-    if (g_pFilterTypes) {
-        XShortcutsWidget::saveTableModel(ui->tableView_METHOD_ID_ITEM->model(),
-                                         XBinary::getResultFileName(getBackupDevice(), QString("%1.txt").arg(QString("METHOD_ID_ITEM"))));
-    }
+    XShortcutsWidget::saveTableModel(ui->tableView_METHOD_ID_ITEM->getProxyModel(),
+                                     XBinary::getResultFileName(getBackupDevice(), QString("%1.txt").arg(QString("METHOD_ID_ITEM"))));
 }

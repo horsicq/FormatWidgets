@@ -1610,7 +1610,7 @@ void MACHWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 MACHProcessData machProcessData(SMACH::TYPE_mach_commands, &tvModel[SMACH::TYPE_mach_commands], &mach, 0, 0);
 
-                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_mach_commands], ui->tableView_commands, nullptr, true);
+                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_mach_commands], ui->tableView_commands, true);
 
                 connect(ui->tableView_commands->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_commands_currentRowChanged(QModelIndex, QModelIndex)));
@@ -1623,7 +1623,7 @@ void MACHWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 MACHProcessData machProcessData(SMACH::TYPE_mach_segments, &tvModel[SMACH::TYPE_mach_segments], &mach, 0, 0);
 
-                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_mach_segments], ui->tableView_segments, nullptr, false);
+                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_mach_segments], ui->tableView_segments, false);
 
                 connect(ui->tableView_segments->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_segments_currentRowChanged(QModelIndex, QModelIndex)));
@@ -1636,7 +1636,7 @@ void MACHWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 MACHProcessData machProcessData(SMACH::TYPE_mach_sections, &tvModel[SMACH::TYPE_mach_sections], &mach, 0, 0);
 
-                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_mach_sections], ui->tableView_sections, nullptr, false);
+                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_mach_sections], ui->tableView_sections, false);
 
                 connect(ui->tableView_sections->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_sections_currentRowChanged(QModelIndex, QModelIndex)));
@@ -1649,7 +1649,7 @@ void MACHWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 MACHProcessData machProcessData(SMACH::TYPE_mach_libraries, &tvModel[SMACH::TYPE_mach_libraries], &mach, 0, 0);
 
-                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_mach_libraries], ui->tableView_libraries, nullptr, true);
+                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_mach_libraries], ui->tableView_libraries, true);
 
                 connect(ui->tableView_libraries->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_libraries_currentRowChanged(QModelIndex, QModelIndex)));
@@ -1662,7 +1662,7 @@ void MACHWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 MACHProcessData machProcessData(SMACH::TYPE_mach_weak_libraries, &tvModel[SMACH::TYPE_mach_weak_libraries], &mach, 0, 0);
 
-                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_mach_weak_libraries], ui->tableView_weak_libraries, nullptr, true);
+                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_mach_weak_libraries], ui->tableView_weak_libraries, true);
 
                 connect(ui->tableView_weak_libraries->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_weak_libraries_currentRowChanged(QModelIndex, QModelIndex)));
@@ -1675,7 +1675,7 @@ void MACHWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 MACHProcessData machProcessData(SMACH::TYPE_mach_id_library, &tvModel[SMACH::TYPE_mach_id_library], &mach, 0, 0);
 
-                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_mach_id_library], ui->tableView_id_library, nullptr, true);
+                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_mach_id_library], ui->tableView_id_library, true);
 
                 connect(ui->tableView_id_library->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_id_library_currentRowChanged(QModelIndex, QModelIndex)));
@@ -1688,7 +1688,7 @@ void MACHWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 MACHProcessData machProcessData(SMACH::TYPE_mach_LOADFVMLIB, &tvModel[SMACH::TYPE_mach_LOADFVMLIB], &mach, 0, 0);
 
-                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_mach_LOADFVMLIB], ui->tableView_LOADFVMLIB, nullptr, true);
+                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_mach_LOADFVMLIB], ui->tableView_LOADFVMLIB, true);
 
                 connect(ui->tableView_LOADFVMLIB->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_LOADFVMLIB_currentRowChanged(QModelIndex, QModelIndex)));
@@ -1701,7 +1701,7 @@ void MACHWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 MACHProcessData machProcessData(SMACH::TYPE_mach_IDFVMLIB, &tvModel[SMACH::TYPE_mach_IDFVMLIB], &mach, 0, 0);
 
-                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_mach_IDFVMLIB], ui->tableView_IDFVMLIB, nullptr, true);
+                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_mach_IDFVMLIB], ui->tableView_IDFVMLIB, true);
 
                 connect(ui->tableView_IDFVMLIB->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_IDFVMLIB_currentRowChanged(QModelIndex, QModelIndex)));
@@ -2412,25 +2412,25 @@ void MACHWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 MACHProcessData machProcessData(SMACH::TYPE_SYMBOLTABLE, &tvModel[SMACH::TYPE_SYMBOLTABLE], &mach, nDataOffset, nDataSize);
 
-                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_SYMBOLTABLE], ui->tableView_SymbolTable, nullptr, true);
+                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_SYMBOLTABLE], ui->tableView_SymbolTable, true);
             }
         } else if (nType == SMACH::TYPE_FUNCTIONS) {
             if (!isInitPresent(sInit)) {
                 MACHProcessData machProcessData(SMACH::TYPE_FUNCTIONS, &tvModel[SMACH::TYPE_FUNCTIONS], &mach, nDataOffset, nDataSize);
 
-                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_FUNCTIONS], ui->tableView_Functions, nullptr, false);
+                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_FUNCTIONS], ui->tableView_Functions, false);
             }
         } else if (nType == SMACH::TYPE_DICE) {
             if (!isInitPresent(sInit)) {
                 MACHProcessData machProcessData(SMACH::TYPE_DICE, &tvModel[SMACH::TYPE_DICE], &mach, nDataOffset, nDataSize);
 
-                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_DICE], ui->tableView_data_in_code_entry, nullptr, false);
+                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_DICE], ui->tableView_data_in_code_entry, false);
             }
         } else if (nType == SMACH::TYPE_DYLD_INFO_rebase) {
             if (!isInitPresent(sInit)) {
                 MACHProcessData machProcessData(SMACH::TYPE_DYLD_INFO_rebase, &tvModel[SMACH::TYPE_DYLD_INFO_rebase], &mach, nDataOffset, nDataSize);
 
-                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_DYLD_INFO_rebase], ui->tableView_DYLD_INFO_rebase, nullptr, true);
+                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_DYLD_INFO_rebase], ui->tableView_DYLD_INFO_rebase, true);
 
                 connect(ui->tableView_DYLD_INFO_rebase->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_DYLD_INFO_rebase_currentRowChanged(QModelIndex, QModelIndex)));
@@ -2441,7 +2441,7 @@ void MACHWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 MACHProcessData machProcessData(SMACH::TYPE_DYLD_INFO_bind, &tvModel[SMACH::TYPE_DYLD_INFO_bind], &mach, nDataOffset, nDataSize);
 
-                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_DYLD_INFO_bind], ui->tableView_DYLD_INFO_bind, nullptr, true);
+                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_DYLD_INFO_bind], ui->tableView_DYLD_INFO_bind, true);
 
                 connect(ui->tableView_DYLD_INFO_bind->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_DYLD_INFO_bind_currentRowChanged(QModelIndex, QModelIndex)));
@@ -2452,7 +2452,7 @@ void MACHWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 MACHProcessData machProcessData(SMACH::TYPE_DYLD_INFO_weak_bind, &tvModel[SMACH::TYPE_DYLD_INFO_weak_bind], &mach, nDataOffset, nDataSize);
 
-                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_DYLD_INFO_weak_bind], ui->tableView_DYLD_INFO_weak_bind, nullptr, true);
+                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_DYLD_INFO_weak_bind], ui->tableView_DYLD_INFO_weak_bind, true);
 
                 connect(ui->tableView_DYLD_INFO_weak_bind->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_DYLD_INFO_weak_bind_currentRowChanged(QModelIndex, QModelIndex)));
@@ -2463,7 +2463,7 @@ void MACHWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 MACHProcessData machProcessData(SMACH::TYPE_DYLD_INFO_lazy_bind, &tvModel[SMACH::TYPE_DYLD_INFO_lazy_bind], &mach, nDataOffset, nDataSize);
 
-                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_DYLD_INFO_lazy_bind], ui->tableView_DYLD_INFO_lazy_bind, nullptr, true);
+                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_DYLD_INFO_lazy_bind], ui->tableView_DYLD_INFO_lazy_bind, true);
 
                 connect(ui->tableView_DYLD_INFO_lazy_bind->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_DYLD_INFO_lazy_bind_currentRowChanged(QModelIndex, QModelIndex)));
@@ -2474,7 +2474,7 @@ void MACHWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 MACHProcessData machProcessData(SMACH::TYPE_DYLD_INFO_export, &tvModel[SMACH::TYPE_DYLD_INFO_export], &mach, nDataOffset, nDataSize);
 
-                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_DYLD_INFO_export], ui->tableView_DYLD_INFO_export, nullptr, true);
+                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_DYLD_INFO_export], ui->tableView_DYLD_INFO_export, true);
 
                 connect(ui->tableView_DYLD_INFO_export->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_DYLD_INFO_export_currentRowChanged(QModelIndex, QModelIndex)));
@@ -2485,37 +2485,37 @@ void MACHWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 MACHProcessData machProcessData(SMACH::TYPE_DYSYMTAB_toc, &tvModel[SMACH::TYPE_DYSYMTAB_toc], &mach, nDataOffset, nDataSize);
 
-                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_DYSYMTAB_toc], ui->tableView_DYSYMTAB_toc, nullptr, false);
+                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_DYSYMTAB_toc], ui->tableView_DYSYMTAB_toc, false);
             }
         } else if (nType == SMACH::TYPE_DYSYMTAB_modtab) {
             if (!isInitPresent(sInit)) {
                 MACHProcessData machProcessData(SMACH::TYPE_DYSYMTAB_modtab, &tvModel[SMACH::TYPE_DYSYMTAB_modtab], &mach, nDataOffset, nDataSize);
 
-                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_DYSYMTAB_modtab], ui->tableView_DYSYMTAB_modtab, nullptr, false);
+                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_DYSYMTAB_modtab], ui->tableView_DYSYMTAB_modtab, false);
             }
         } else if (nType == SMACH::TYPE_DYSYMTAB_extrefsyms) {
             if (!isInitPresent(sInit)) {
                 MACHProcessData machProcessData(SMACH::TYPE_DYSYMTAB_extrefsyms, &tvModel[SMACH::TYPE_DYSYMTAB_extrefsyms], &mach, nDataOffset, nDataSize);
 
-                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_DYSYMTAB_extrefsyms], ui->tableView_DYSYMTAB_extrefsyms, nullptr, false);
+                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_DYSYMTAB_extrefsyms], ui->tableView_DYSYMTAB_extrefsyms, false);
             }
         } else if (nType == SMACH::TYPE_DYSYMTAB_indirectsyms) {
             if (!isInitPresent(sInit)) {
                 MACHProcessData machProcessData(SMACH::TYPE_DYSYMTAB_indirectsyms, &tvModel[SMACH::TYPE_DYSYMTAB_indirectsyms], &mach, nDataOffset, nDataSize);
 
-                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_DYSYMTAB_indirectsyms], ui->tableView_DYSYMTAB_indirectsyms, nullptr, true);
+                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_DYSYMTAB_indirectsyms], ui->tableView_DYSYMTAB_indirectsyms, true);
             }
         } else if (nType == SMACH::TYPE_DYSYMTAB_extrel) {
             if (!isInitPresent(sInit)) {
                 MACHProcessData machProcessData(SMACH::TYPE_DYSYMTAB_extrel, &tvModel[SMACH::TYPE_DYSYMTAB_extrel], &mach, nDataOffset, nDataSize);
 
-                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_DYSYMTAB_extrel], ui->tableView_DYSYMTAB_extrel, nullptr, false);
+                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_DYSYMTAB_extrel], ui->tableView_DYSYMTAB_extrel, false);
             }
         } else if (nType == SMACH::TYPE_DYSYMTAB_locrel) {
             if (!isInitPresent(sInit)) {
                 MACHProcessData machProcessData(SMACH::TYPE_DYSYMTAB_locrel, &tvModel[SMACH::TYPE_DYSYMTAB_locrel], &mach, nDataOffset, nDataSize);
 
-                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_DYSYMTAB_locrel], ui->tableView_DYSYMTAB_locrel, nullptr, false);
+                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_DYSYMTAB_locrel], ui->tableView_DYSYMTAB_locrel, false);
             }
         }
 

@@ -498,7 +498,7 @@
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <widget class="QTableView" name="tableView_SEGMENTS">
+          <widget class="XTableView" name="tableView_SEGMENTS">
            <property name="contextMenuPolicy">
             <enum>Qt::CustomContextMenu</enum>
            </property>
@@ -659,6 +659,11 @@
    <extends>QWidget</extends>
    <header>xmultidisasmwidget.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>XTableView</class>
+   <extends>QTableView</extends>
+   <header>xtableview.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

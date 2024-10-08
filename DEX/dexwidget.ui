@@ -97,7 +97,7 @@
      </widget>
      <widget class="QStackedWidget" name="stackedWidgetInfo">
       <property name="currentIndex">
-       <number>1</number>
+       <number>17</number>
       </property>
       <widget class="QWidget" name="page_Info">
        <layout class="QVBoxLayout" name="verticalLayout_16">
@@ -424,7 +424,7 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QTableView" name="tableView_MapItems">
+         <widget class="XTableView" name="tableView_MapItems">
           <property name="contextMenuPolicy">
            <enum>Qt::CustomContextMenu</enum>
           </property>
@@ -470,37 +470,17 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
-           <widget class="QGroupBox" name="groupBoxFilterStrings">
-            <property name="minimumSize">
+           <spacer name="horizontalSpacer_7">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
              <size>
-              <width>200</width>
-              <height>0</height>
+              <width>40</width>
+              <height>20</height>
              </size>
             </property>
-            <property name="title">
-             <string>Filter</string>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout_5">
-             <property name="spacing">
-              <number>0</number>
-             </property>
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
-              <number>0</number>
-             </property>
-             <item>
-              <widget class="QLineEdit" name="lineEditFilterStrings"/>
-             </item>
-            </layout>
-           </widget>
+           </spacer>
           </item>
           <item>
            <widget class="QPushButton" name="pushButtonSave_STRING_ID_ITEM">
@@ -512,7 +492,7 @@
          </layout>
         </item>
         <item>
-         <widget class="QTableView" name="tableView_STRING_ID_ITEM">
+         <widget class="XTableView" name="tableView_STRING_ID_ITEM">
           <property name="contextMenuPolicy">
            <enum>Qt::CustomContextMenu</enum>
           </property>
@@ -558,37 +538,17 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_3">
           <item>
-           <widget class="QGroupBox" name="groupBoxFilterTypes">
-            <property name="minimumSize">
+           <spacer name="horizontalSpacer_6">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
              <size>
-              <width>200</width>
-              <height>0</height>
+              <width>40</width>
+              <height>20</height>
              </size>
             </property>
-            <property name="title">
-             <string>Filter</string>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout_6">
-             <property name="spacing">
-              <number>0</number>
-             </property>
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
-              <number>0</number>
-             </property>
-             <item>
-              <widget class="QLineEdit" name="lineEditFilterTypes"/>
-             </item>
-            </layout>
-           </widget>
+           </spacer>
           </item>
           <item>
            <widget class="QPushButton" name="pushButtonSave_TYPE_ID_ITEM">
@@ -600,7 +560,7 @@
          </layout>
         </item>
         <item>
-         <widget class="QTableView" name="tableView_TYPE_ID_ITEM">
+         <widget class="XTableView" name="tableView_TYPE_ID_ITEM">
           <property name="contextMenuPolicy">
            <enum>Qt::CustomContextMenu</enum>
           </property>
@@ -668,7 +628,7 @@
          </layout>
         </item>
         <item>
-         <widget class="QTableView" name="tableView_PROTO_ID_ITEM">
+         <widget class="XTableView" name="tableView_PROTO_ID_ITEM">
           <property name="contextMenuPolicy">
            <enum>Qt::CustomContextMenu</enum>
           </property>
@@ -736,7 +696,7 @@
          </layout>
         </item>
         <item>
-         <widget class="QTableView" name="tableView_FIELD_ID_ITEM">
+         <widget class="XTableView" name="tableView_FIELD_ID_ITEM">
           <property name="contextMenuPolicy">
            <enum>Qt::CustomContextMenu</enum>
           </property>
@@ -804,7 +764,7 @@
          </layout>
         </item>
         <item>
-         <widget class="QTableView" name="tableView_METHOD_ID_ITEM">
+         <widget class="XTableView" name="tableView_METHOD_ID_ITEM">
           <property name="contextMenuPolicy">
            <enum>Qt::CustomContextMenu</enum>
           </property>
@@ -872,7 +832,7 @@
          </layout>
         </item>
         <item>
-         <widget class="QTableView" name="tableView_CLASS_DEF_ITEM">
+         <widget class="XTableView" name="tableView_CLASS_DEF_ITEM">
           <property name="contextMenuPolicy">
            <enum>Qt::CustomContextMenu</enum>
           </property>
@@ -996,6 +956,11 @@
    <extends>QWidget</extends>
    <header>yarawidgetadvanced.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>XTableView</class>
+   <extends>QTableView</extends>
+   <header>xtableview.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

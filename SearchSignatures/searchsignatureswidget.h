@@ -93,8 +93,8 @@ private:
     QIODevice *g_pDevice;
     QStandardItemModel *g_pModel;
     bool g_bInit;
-    QStandardItemModel *g_pOldModel;
-    QFutureWatcher<void> g_watcher;
+    // QStandardItemModel *g_pOldModel;
+    // QFutureWatcher<void> g_watcher;
     QList<MultiSearch::SIGNATURE_RECORD> g_listSignatureRecords;
     OPTIONS g_options;
     QShortcut *shortCuts[__SC_SIZE];

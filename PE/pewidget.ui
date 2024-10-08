@@ -100,7 +100,7 @@
      </widget>
      <widget class="QStackedWidget" name="stackedWidgetInfo">
       <property name="currentIndex">
-       <number>23</number>
+       <number>43</number>
       </property>
       <widget class="QWidget" name="page_Info">
        <layout class="QVBoxLayout" name="verticalLayout_43">
@@ -872,7 +872,7 @@
          </layout>
         </item>
         <item>
-         <widget class="QTableView" name="tableView_RICH">
+         <widget class="XTableView" name="tableView_RICH">
           <property name="contextMenuPolicy">
            <enum>Qt::CustomContextMenu</enum>
           </property>
@@ -959,7 +959,7 @@
            </layout>
           </item>
           <item>
-           <widget class="QTableView" name="tableView_Sections">
+           <widget class="XTableView" name="tableView_Sections">
             <property name="contextMenuPolicy">
              <enum>Qt::CustomContextMenu</enum>
             </property>
@@ -1206,7 +1206,7 @@
              </layout>
             </item>
             <item>
-             <widget class="QTableView" name="tableView_ExportFunctions">
+             <widget class="XTableView" name="tableView_ExportFunctions">
               <property name="contextMenuPolicy">
                <enum>Qt::CustomContextMenu</enum>
               </property>
@@ -1368,7 +1368,7 @@
              </layout>
             </item>
             <item>
-             <widget class="QTableView" name="tableView_ImportLibraries">
+             <widget class="XTableView" name="tableView_ImportLibraries">
               <property name="contextMenuPolicy">
                <enum>Qt::CustomContextMenu</enum>
               </property>
@@ -1424,7 +1424,7 @@
              </layout>
             </item>
             <item>
-             <widget class="QTableView" name="tableView_ImportFunctions">
+             <widget class="XTableView" name="tableView_ImportFunctions">
               <property name="contextMenuPolicy">
                <enum>Qt::CustomContextMenu</enum>
               </property>
@@ -1637,7 +1637,7 @@
               </layout>
              </item>
              <item>
-              <widget class="QTableView" name="tableView_Resources">
+              <widget class="XTableView" name="tableView_Resources">
                <property name="contextMenuPolicy">
                 <enum>Qt::CustomContextMenu</enum>
                </property>
@@ -1801,7 +1801,7 @@
            </layout>
           </item>
           <item>
-           <widget class="QTableView" name="tableView_Resources_StringTable">
+           <widget class="XTableView" name="tableView_Resources_StringTable">
             <property name="contextMenuPolicy">
              <enum>Qt::CustomContextMenu</enum>
             </property>
@@ -2040,7 +2040,7 @@
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <widget class="QTableView" name="tableView_Exceptions">
+          <widget class="XTableView" name="tableView_Exceptions">
            <property name="contextMenuPolicy">
             <enum>Qt::CustomContextMenu</enum>
            </property>
@@ -2127,7 +2127,7 @@
              </layout>
             </item>
             <item>
-             <widget class="QTableView" name="tableView_Relocs">
+             <widget class="XTableView" name="tableView_Relocs">
               <property name="contextMenuPolicy">
                <enum>Qt::CustomContextMenu</enum>
               </property>
@@ -2183,7 +2183,7 @@
              </layout>
             </item>
             <item>
-             <widget class="QTableView" name="tableView_RelocsPositions">
+             <widget class="XTableView" name="tableView_RelocsPositions">
               <property name="contextMenuPolicy">
                <enum>Qt::CustomContextMenu</enum>
               </property>
@@ -2262,7 +2262,7 @@
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <widget class="QTableView" name="tableView_Debug">
+          <widget class="XTableView" name="tableView_Debug">
            <property name="contextMenuPolicy">
             <enum>Qt::CustomContextMenu</enum>
            </property>
@@ -2416,7 +2416,7 @@
          </layout>
         </item>
         <item>
-         <widget class="QTableView" name="tableView_TLSCallbacks">
+         <widget class="XTableView" name="tableView_TLSCallbacks">
           <property name="contextMenuPolicy">
            <enum>Qt::CustomContextMenu</enum>
           </property>
@@ -2561,7 +2561,7 @@
          </layout>
         </item>
         <item>
-         <widget class="QTableView" name="tableView_BoundImport">
+         <widget class="XTableView" name="tableView_BoundImport">
           <property name="contextMenuPolicy">
            <enum>Qt::CustomContextMenu</enum>
           </property>
@@ -2636,7 +2636,7 @@
              </layout>
             </item>
             <item>
-             <widget class="QTableView" name="tableView_DelayImportLibraries">
+             <widget class="XTableView" name="tableView_DelayImportLibraries">
               <property name="contextMenuPolicy">
                <enum>Qt::CustomContextMenu</enum>
               </property>
@@ -2692,7 +2692,7 @@
              </layout>
             </item>
             <item>
-             <widget class="QTableView" name="tableView_DelayImportFunctions">
+             <widget class="XTableView" name="tableView_DelayImportFunctions">
               <property name="contextMenuPolicy">
                <enum>Qt::CustomContextMenu</enum>
               </property>
@@ -2921,7 +2921,7 @@
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <widget class="QTableView" name="tableView_Net_Metadata_Table">
+          <widget class="XTableView" name="tableView_Net_Metadata_Table">
            <property name="contextMenuPolicy">
             <enum>Qt::CustomContextMenu</enum>
            </property>
@@ -3209,6 +3209,11 @@
    <extends>QWidget</extends>
    <header>xmultidisasmwidget.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>XTableView</class>
+   <extends>QTableView</extends>
+   <header>xtableview.h</header>
   </customwidget>
   <customwidget>
    <class>XLineEditHEX</class>

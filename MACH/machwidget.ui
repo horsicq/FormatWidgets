@@ -447,7 +447,7 @@
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <widget class="QTableView" name="tableView_commands">
+          <widget class="XTableView" name="tableView_commands">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
              <horstretch>0</horstretch>
@@ -516,7 +516,7 @@
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <widget class="QTableView" name="tableView_segments">
+          <widget class="XTableView" name="tableView_segments">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
              <horstretch>0</horstretch>
@@ -572,7 +572,7 @@
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <widget class="QTableView" name="tableView_sections">
+          <widget class="XTableView" name="tableView_sections">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
              <horstretch>0</horstretch>
@@ -628,7 +628,7 @@
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <widget class="QTableView" name="tableView_libraries">
+          <widget class="XTableView" name="tableView_libraries">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
              <horstretch>0</horstretch>
@@ -684,7 +684,7 @@
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <widget class="QTableView" name="tableView_weak_libraries">
+          <widget class="XTableView" name="tableView_weak_libraries">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
              <horstretch>0</horstretch>
@@ -740,7 +740,7 @@
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <widget class="QTableView" name="tableView_id_library">
+          <widget class="XTableView" name="tableView_id_library">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
              <horstretch>0</horstretch>
@@ -796,7 +796,7 @@
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <widget class="QTableView" name="tableView_LOADFVMLIB">
+          <widget class="XTableView" name="tableView_LOADFVMLIB">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
              <horstretch>0</horstretch>
@@ -852,7 +852,7 @@
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <widget class="QTableView" name="tableView_IDFVMLIB">
+          <widget class="XTableView" name="tableView_IDFVMLIB">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
              <horstretch>0</horstretch>
@@ -2019,7 +2019,7 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QTableView" name="tableView_SymbolTable">
+         <widget class="XTableView" name="tableView_SymbolTable">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
             <horstretch>0</horstretch>
@@ -2069,7 +2069,7 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QTableView" name="tableView_Functions">
+         <widget class="XTableView" name="tableView_Functions">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
             <horstretch>0</horstretch>
@@ -2119,7 +2119,7 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QTableView" name="tableView_data_in_code_entry">
+         <widget class="XTableView" name="tableView_data_in_code_entry">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
             <horstretch>0</horstretch>
@@ -2173,7 +2173,7 @@
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <widget class="QTableView" name="tableView_DYLD_INFO_rebase">
+          <widget class="XTableView" name="tableView_DYLD_INFO_rebase">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
              <horstretch>0</horstretch>
@@ -2229,7 +2229,7 @@
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <widget class="QTableView" name="tableView_DYLD_INFO_bind">
+          <widget class="XTableView" name="tableView_DYLD_INFO_bind">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
              <horstretch>0</horstretch>
@@ -2285,7 +2285,7 @@
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <widget class="QTableView" name="tableView_DYLD_INFO_weak_bind">
+          <widget class="XTableView" name="tableView_DYLD_INFO_weak_bind">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
              <horstretch>0</horstretch>
@@ -2341,7 +2341,7 @@
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <widget class="QTableView" name="tableView_DYLD_INFO_lazy_bind">
+          <widget class="XTableView" name="tableView_DYLD_INFO_lazy_bind">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
              <horstretch>0</horstretch>
@@ -2397,7 +2397,7 @@
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
-          <widget class="QTableView" name="tableView_DYLD_INFO_export">
+          <widget class="XTableView" name="tableView_DYLD_INFO_export">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
              <horstretch>0</horstretch>
@@ -2449,7 +2449,7 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QTableView" name="tableView_DYSYMTAB_toc">
+         <widget class="XTableView" name="tableView_DYSYMTAB_toc">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
             <horstretch>0</horstretch>
@@ -2499,7 +2499,7 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QTableView" name="tableView_DYSYMTAB_modtab">
+         <widget class="XTableView" name="tableView_DYSYMTAB_modtab">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
             <horstretch>0</horstretch>
@@ -2549,7 +2549,7 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QTableView" name="tableView_DYSYMTAB_extrefsyms">
+         <widget class="XTableView" name="tableView_DYSYMTAB_extrefsyms">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
             <horstretch>0</horstretch>
@@ -2599,7 +2599,7 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QTableView" name="tableView_DYSYMTAB_indirectsyms">
+         <widget class="XTableView" name="tableView_DYSYMTAB_indirectsyms">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
             <horstretch>0</horstretch>
@@ -2649,7 +2649,7 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QTableView" name="tableView_DYSYMTAB_extrel">
+         <widget class="XTableView" name="tableView_DYSYMTAB_extrel">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
             <horstretch>0</horstretch>
@@ -2699,7 +2699,7 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QTableView" name="tableView_DYSYMTAB_locrel">
+         <widget class="XTableView" name="tableView_DYSYMTAB_locrel">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
             <horstretch>0</horstretch>
@@ -2835,6 +2835,11 @@
    <extends>QWidget</extends>
    <header>xmultidisasmwidget.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>XTableView</class>
+   <extends>QTableView</extends>
+   <header>xtableview.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

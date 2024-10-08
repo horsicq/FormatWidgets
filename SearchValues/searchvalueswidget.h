@@ -68,7 +68,6 @@ private slots:
     void on_toolButtonSave_clicked();
     void on_tableViewResult_customContextMenuRequested(const QPoint &pos);
     void search();
-    void deleteOldModel();
     void on_toolButtonSearchString_clicked();
     void on_toolButtonSearchSignature_clicked();
     void on_toolButtonSearchValue_clicked();
@@ -97,8 +96,8 @@ private:
     QIODevice *g_pDevice;
     OPTIONS g_options;
     QStandardItemModel *g_pModel;
-    QStandardItemModel *g_pOldModel;
-    QFutureWatcher<void> g_watcher;
+    // QStandardItemModel *g_pOldModel;
+    // QFutureWatcher<void> g_watcher;
     QShortcut *g_shortCuts[__SC_SIZE];
 
     QVariant g_varValue;

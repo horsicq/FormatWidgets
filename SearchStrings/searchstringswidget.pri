@@ -23,5 +23,10 @@ FORMS += \
     include($$PWD/../../FormatDialogs/dialogeditstring.pri)
 }
 
+!contains(XCONFIG, xtableview) {
+    XCONFIG += xtableview
+    include($$PWD/../../Controls/xtableview.pri)
+}
+
 DISTFILES += \
     $$PWD/searchstringswidget.cmake

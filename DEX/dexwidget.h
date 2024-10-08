@@ -62,8 +62,6 @@ private slots:
     void on_toolButtonReload_clicked();
     void enableButton();
     void on_tableWidget_Header_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn);
-    void on_lineEditFilterStrings_textChanged(const QString &sString);
-    void on_lineEditFilterTypes_textChanged(const QString &sString);
     void on_toolButtonPrev_clicked();
     void on_toolButtonNext_clicked();
     void on_pushButtonSave_STRING_ID_ITEM_clicked();
@@ -104,9 +102,6 @@ private:
 
     SubDevice *g_subDevice[SDEX::__TYPE_size];
     QStandardItemModel *g_tvModel[SDEX::__TYPE_size];
-
-    QSortFilterProxyModel *g_pFilterStrings;
-    QSortFilterProxyModel *g_pFilterTypes;
 };
 
 #endif  // DEXWIDGET_H

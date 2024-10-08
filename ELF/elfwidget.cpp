@@ -516,7 +516,7 @@ void ELFWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 ELFProcessData elfProcessData(SELF::TYPE_Elf_Shdr, &g_tvModel[SELF::TYPE_Elf_Shdr], &elf, nDataOffset, nDataSize, nDataExtraOffset, nDataExtraSize);
 
-                ajustTableView(&elfProcessData, &g_tvModel[SELF::TYPE_Elf_Shdr], ui->tableView_Elf_Shdr, nullptr, false);
+                ajustTableView(&elfProcessData, &g_tvModel[SELF::TYPE_Elf_Shdr], ui->tableView_Elf_Shdr, false);
 
                 connect(ui->tableView_Elf_Shdr->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_Elf_Shdr_currentRowChanged(QModelIndex, QModelIndex)));
@@ -529,7 +529,7 @@ void ELFWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 ELFProcessData elfProcessData(SELF::TYPE_Elf_Phdr, &g_tvModel[SELF::TYPE_Elf_Phdr], &elf, nDataOffset, nDataSize, nDataExtraOffset, nDataExtraSize);
 
-                ajustTableView(&elfProcessData, &g_tvModel[SELF::TYPE_Elf_Phdr], ui->tableView_Elf_Phdr, nullptr, false);
+                ajustTableView(&elfProcessData, &g_tvModel[SELF::TYPE_Elf_Phdr], ui->tableView_Elf_Phdr, false);
 
                 connect(ui->tableView_Elf_Phdr->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_Elf_Phdr_currentRowChanged(QModelIndex, QModelIndex)));
@@ -611,19 +611,19 @@ void ELFWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 ELFProcessData elfProcessData(SELF::TYPE_SYMBOLTABLE, &g_tvModel[SELF::TYPE_SYMBOLTABLE], &elf, nDataOffset, nDataSize, nDataExtraOffset, nDataExtraSize);
 
-                ajustTableView(&elfProcessData, &g_tvModel[SELF::TYPE_SYMBOLTABLE], ui->tableView_SymbolTable, nullptr, false);
+                ajustTableView(&elfProcessData, &g_tvModel[SELF::TYPE_SYMBOLTABLE], ui->tableView_SymbolTable, false);
             }
         } else if (nType == SELF::TYPE_Elf_Rela) {
             if (!isInitPresent(sInit)) {
                 ELFProcessData elfProcessData(SELF::TYPE_Elf_Rela, &g_tvModel[SELF::TYPE_Elf_Rela], &elf, nDataOffset, nDataSize, nDataExtraOffset, nDataExtraSize);
 
-                ajustTableView(&elfProcessData, &g_tvModel[SELF::TYPE_Elf_Rela], ui->tableView_Rela, nullptr, false);
+                ajustTableView(&elfProcessData, &g_tvModel[SELF::TYPE_Elf_Rela], ui->tableView_Rela, false);
             }
         } else if (nType == SELF::TYPE_Elf_Rel) {
             if (!isInitPresent(sInit)) {
                 ELFProcessData elfProcessData(SELF::TYPE_Elf_Rel, &g_tvModel[SELF::TYPE_Elf_Rel], &elf, nDataOffset, nDataSize, nDataExtraOffset, nDataExtraSize);
 
-                ajustTableView(&elfProcessData, &g_tvModel[SELF::TYPE_Elf_Rel], ui->tableView_Rel, nullptr, false);
+                ajustTableView(&elfProcessData, &g_tvModel[SELF::TYPE_Elf_Rel], ui->tableView_Rel, false);
             }
         }
 
@@ -1172,22 +1172,22 @@ void ELFWidget::on_toolButtonNext_clicked()
 
 void ELFWidget::on_pushButtonSaveSections_clicked()
 {
-    XShortcutsWidget::saveTableModel(ui->tableView_Elf_Shdr->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(tr("Sections"))));
+    XShortcutsWidget::saveTableModel(ui->tableView_Elf_Shdr->getProxyModel(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(tr("Sections"))));
 }
 
 void ELFWidget::on_pushButtonSavePrograms_clicked()
 {
-    XShortcutsWidget::saveTableModel(ui->tableView_Elf_Phdr->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Programs"))));
+    XShortcutsWidget::saveTableModel(ui->tableView_Elf_Phdr->getProxyModel(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Programs"))));
 }
 
 void ELFWidget::on_pushButtonSave_Rela_clicked()
 {
-    XShortcutsWidget::saveTableModel(ui->tableView_Rela->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Rela"))));
+    XShortcutsWidget::saveTableModel(ui->tableView_Rela->getProxyModel(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Rela"))));
 }
 
 void ELFWidget::on_pushButtonSave_Rel_clicked()
 {
-    XShortcutsWidget::saveTableModel(ui->tableView_Rel->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Rel"))));
+    XShortcutsWidget::saveTableModel(ui->tableView_Rel->getProxyModel(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("Rel"))));
 }
 
 void ELFWidget::on_pushButtonSave_Elf_Ehdr_clicked()
@@ -1197,5 +1197,5 @@ void ELFWidget::on_pushButtonSave_Elf_Ehdr_clicked()
 
 void ELFWidget::on_pushButtonSave_SymbolTable_clicked()
 {
-    XShortcutsWidget::saveTableModel(ui->tableView_SymbolTable->model(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("SymbolTable"))));
+    XShortcutsWidget::saveTableModel(ui->tableView_SymbolTable->getProxyModel(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("SymbolTable"))));
 }

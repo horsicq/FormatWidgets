@@ -27,7 +27,6 @@ SearchValuesWidget::SearchValuesWidget(QWidget *pParent) : XShortcutsWidget(pPar
     ui->setupUi(this);
     g_pDevice = nullptr;
     g_options = {};
-    g_pOldModel = nullptr;
 
     XOptions::adjustToolButton(ui->toolButtonSearch, XOptions::ICONTYPE_SEARCH);
     XOptions::adjustToolButton(ui->toolButtonSave, XOptions::ICONTYPE_SAVE);
@@ -51,13 +50,11 @@ SearchValuesWidget::SearchValuesWidget(QWidget *pParent) : XShortcutsWidget(pPar
 
     memset(g_shortCuts, 0, sizeof g_shortCuts);
 
-    ui->tableViewResult->installEventFilter(this);
+    // ui->tableViewResult->installEventFilter(this);
 }
 
 SearchValuesWidget::~SearchValuesWidget()
 {
-    g_watcher.waitForFinished();
-
     delete ui;
 }
 
@@ -102,9 +99,7 @@ void SearchValuesWidget::adjustView()
 
 void SearchValuesWidget::on_toolButtonSave_clicked()
 {
-    if (g_pModel) {
-        XShortcutsWidget::saveTableModel(g_pModel, XBinary::getResultFileName(g_pDevice, QString("%1.txt").arg(tr("Values"))));
-    }
+    XShortcutsWidget::saveTableModel(ui->tableViewResult->getProxyModel(), XBinary::getResultFileName(g_pDevice, QString("%1.txt").arg(tr("Values"))));
 }
 
 void SearchValuesWidget::on_tableViewResult_customContextMenuRequested(const QPoint &pos)
@@ -134,9 +129,8 @@ void SearchValuesWidget::on_tableViewResult_customContextMenuRequested(const QPo
 void SearchValuesWidget::search()
 {
     if (g_pDevice && (g_valueType != XBinary::VT_UNKNOWN)) {
-        g_pOldModel = g_pModel;
 
-        ui->tableViewResult->setModel(nullptr);
+        // ui->tableViewResult->setModel(nullptr);
 
         XBinary::FT fileType = (XBinary::FT)(ui->comboBoxType->currentData().toInt());
         XBinary::MAPMODE mapMode = (XBinary::MAPMODE)(ui->comboBoxMapMode->currentData().toInt());
@@ -162,26 +156,17 @@ void SearchValuesWidget::search()
         dmp.processModel(&listRecords, &g_pModel, options, MultiSearch::TYPE_VALUES);
         dmp.showDialogDelay();
 
-        ui->tableViewResult->setModel(g_pModel);
+        ui->tableViewResult->setCustomModel(g_pModel, true);
 
         ui->tableViewResult->setColumnWidth(MultiSearch::COLUMN_VALUE_NUMBER, 80);
         ui->tableViewResult->setColumnWidth(MultiSearch::COLUMN_VALUE_OFFSET, 120);   // TODO
         ui->tableViewResult->setColumnWidth(MultiSearch::COLUMN_VALUE_ADDRESS, 120);  // TODO
         ui->tableViewResult->setColumnWidth(MultiSearch::COLUMN_VALUE_REGION, 120);   // TODO
 
-        QFuture<void> future = deleteOldStandardModel(&g_pOldModel);
-
-        g_watcher.setFuture(future);
-
         connect(ui->tableViewResult->selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)), this,
                 SLOT(on_tableViewSelection(QItemSelection, QItemSelection)));
         // TODO nothing found
     }
-}
-
-void SearchValuesWidget::deleteOldModel()
-{
-    delete g_pOldModel;
 }
 
 void SearchValuesWidget::registerShortcuts(bool bState)

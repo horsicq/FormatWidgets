@@ -587,7 +587,7 @@ void LEWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 LEProcessData leProcessData(SLE::TYPE_OBJECTS, &g_tvModel[SLE::TYPE_OBJECTS], &le, nDataOffset, nDataSize);
 
-                ajustTableView(&leProcessData, &g_tvModel[SLE::TYPE_OBJECTS], ui->tableView_Objects, nullptr, false);
+                ajustTableView(&leProcessData, &g_tvModel[SLE::TYPE_OBJECTS], ui->tableView_Objects, false);
 
                 connect(ui->tableView_Objects->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_Objects_currentRowChanged(QModelIndex, QModelIndex)));

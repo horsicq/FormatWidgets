@@ -83,14 +83,11 @@ public:
 private slots:
     void on_toolButtonSave_clicked();
     void on_toolButtonSearch_clicked();
-    void on_lineEditFilter_textChanged(const QString &sText);
-    void filter(const QString &sString);
     void on_tableViewResult_customContextMenuRequested(const QPoint &pos);
     void _hex();
     void _demangle();
     void _editString();
     void search();
-    void deleteOldModel();
     void on_checkBoxAnsi_stateChanged(int nArg);
     // void on_checkBoxUTF8_stateChanged(int nArg);
     void on_checkBoxUnicode_stateChanged(int nArg);
@@ -115,12 +112,9 @@ private:
     Ui::SearchStringsWidget *ui;
     QIODevice *g_pDevice;
     QIODevice *g_pBackupDevice;
-    QSortFilterProxyModel *g_pFilter;
     SearchStringsWidget::OPTIONS g_options;
     QStandardItemModel *g_pModel;
     bool g_bInit;
-    QStandardItemModel *g_pOldModel;
-    QFutureWatcher<void> g_watcher;
     QShortcut *g_shortCuts[__SC_SIZE];
     bool g_bIsReadonly;
 };

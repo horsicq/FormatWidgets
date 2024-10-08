@@ -47,6 +47,7 @@
 #include "xoptions.h"
 #include "xshortcutsdialog.h"
 #include "yarawidgetadvanced.h"
+#include "xtableview.h"
 
 class FormatWidget : public XShortcutsWidget {
     Q_OBJECT
@@ -145,8 +146,8 @@ public:
 
     void setItemEnable(QTableWidgetItem *pItem, bool bState);
     void setLineEdit(XLineEditHEX *pLineEdit, qint32 nMaxLength, const QString &sText, qint64 nOffset);
-    void ajustTableView(ProcessData *pProcessData, QStandardItemModel **ppModel, QTableView *pTableView, QSortFilterProxyModel *pProxyModel = nullptr,
-                        bool bStretchLastSection = true);  // TODO remove ProxyModel
+    void ajustTableView(ProcessData *pProcessData, QStandardItemModel **ppModel, XTableView *pTableView,
+                        bool bStretchLastSection = true);
     void ajustTreeView(ProcessData *pProcessData, QStandardItemModel **ppModel, QTreeView *pTreeView);
     void ajustDialogModel(ProcessData *pProcessData, QStandardItemModel **ppModel, const QString &sTitle);
     void showSectionHex(QTableView *pTableView);

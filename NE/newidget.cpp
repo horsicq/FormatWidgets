@@ -604,7 +604,7 @@ void NEWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 NEProcessData neProcessData(SNE::TYPE_SEGMENTS, &g_tvModel[SNE::TYPE_SEGMENTS], &ne, 0, 0);
 
-                ajustTableView(&neProcessData, &g_tvModel[SNE::TYPE_SEGMENTS], ui->tableView_SEGMENTS, nullptr, false);
+                ajustTableView(&neProcessData, &g_tvModel[SNE::TYPE_SEGMENTS], ui->tableView_SEGMENTS, false);
 
                 connect(ui->tableView_SEGMENTS->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_SEGMENTS_currentRowChanged(QModelIndex, QModelIndex)));
