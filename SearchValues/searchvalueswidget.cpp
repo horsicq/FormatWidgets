@@ -129,7 +129,6 @@ void SearchValuesWidget::on_tableViewResult_customContextMenuRequested(const QPo
 void SearchValuesWidget::search()
 {
     if (g_pDevice && (g_valueType != XBinary::VT_UNKNOWN)) {
-
         // ui->tableViewResult->setModel(nullptr);
 
         XBinary::FT fileType = (XBinary::FT)(ui->comboBoxType->currentData().toInt());

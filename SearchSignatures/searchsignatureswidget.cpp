@@ -59,7 +59,7 @@ void SearchSignaturesWidget::setData(QIODevice *pDevice, XBinary::FT fileType, O
     XFormats::setFileTypeComboBox(fileType, g_pDevice, ui->comboBoxType);
     XFormats::setEndiannessComboBox(ui->comboBoxEndianness, XBinary::ENDIAN_LITTLE);
 
-    //ui->tableViewResult->setModel(nullptr);
+    // ui->tableViewResult->setModel(nullptr);
 
     setOptions(options);
 
@@ -250,7 +250,7 @@ void SearchSignaturesWidget::_hex()
 void SearchSignaturesWidget::search()
 {
     if (g_pDevice) {
-        //ui->tableViewResult->setModel(nullptr);
+        // ui->tableViewResult->setModel(nullptr);
 
         XBinary::FT fileType = (XBinary::FT)(ui->comboBoxType->currentData().toInt());
 

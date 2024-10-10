@@ -146,8 +146,7 @@ public:
 
     void setItemEnable(QTableWidgetItem *pItem, bool bState);
     void setLineEdit(XLineEditHEX *pLineEdit, qint32 nMaxLength, const QString &sText, qint64 nOffset);
-    void ajustTableView(ProcessData *pProcessData, QStandardItemModel **ppModel, XTableView *pTableView,
-                        bool bStretchLastSection = true);
+    void ajustTableView(ProcessData *pProcessData, QStandardItemModel **ppModel, XTableView *pTableView, bool bStretchLastSection = true);
     void ajustTreeView(ProcessData *pProcessData, QStandardItemModel **ppModel, QTreeView *pTreeView);
     void ajustDialogModel(ProcessData *pProcessData, QStandardItemModel **ppModel, const QString &sTitle);
     void showSectionHex(QTableView *pTableView);

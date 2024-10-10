@@ -669,12 +669,14 @@ void DEXWidget::on_toolButtonNext_clicked()
 
 void DEXWidget::on_pushButtonSave_STRING_ID_ITEM_clicked()
 {
-    XShortcutsWidget::saveTableModel(ui->tableView_STRING_ID_ITEM->getProxyModel(), XBinary::getResultFileName(getBackupDevice(), QString("%1.txt").arg(QString("STRING_ID_ITEM"))));
+    XShortcutsWidget::saveTableModel(ui->tableView_STRING_ID_ITEM->getProxyModel(),
+                                     XBinary::getResultFileName(getBackupDevice(), QString("%1.txt").arg(QString("STRING_ID_ITEM"))));
 }
 
 void DEXWidget::on_pushButtonSave_TYPE_ID_ITEM_clicked()
 {
-    XShortcutsWidget::saveTableModel(ui->tableView_TYPE_ID_ITEM->getProxyModel(), XBinary::getResultFileName(getBackupDevice(), QString("%1.txt").arg(QString("TYPE_ID_ITEM"))));
+    XShortcutsWidget::saveTableModel(ui->tableView_TYPE_ID_ITEM->getProxyModel(),
+                                     XBinary::getResultFileName(getBackupDevice(), QString("%1.txt").arg(QString("TYPE_ID_ITEM"))));
 }
 
 void DEXWidget::on_pushButtonSave_PROTO_ID_ITEM_clicked()

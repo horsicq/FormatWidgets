@@ -435,8 +435,7 @@ void FormatWidget::setLineEdit(XLineEditHEX *pLineEdit, qint32 nMaxLength, const
     pLineEdit->setProperty("OFFSET", nOffset);
 }
 
-void FormatWidget::ajustTableView(ProcessData *pProcessData, QStandardItemModel **ppModel, XTableView *pTableView,
-                                  bool bStretchLastSection)
+void FormatWidget::ajustTableView(ProcessData *pProcessData, QStandardItemModel **ppModel, XTableView *pTableView, bool bStretchLastSection)
 {
     DialogProcessData dialogProcessData(this, pProcessData, getGlobalOptions());
     dialogProcessData.setGlobal(getShortcuts(), getGlobalOptions());

@@ -3392,12 +3392,14 @@ void PEWidget::on_pushButtonSave_DelayImportFunctions_clicked()
 
 void PEWidget::on_pushButtonSave_ImportLibraries_clicked()
 {
-    XShortcutsWidget::saveTableModel(ui->tableView_ImportLibraries->getProxyModel(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("ImportLibraries"))));
+    XShortcutsWidget::saveTableModel(ui->tableView_ImportLibraries->getProxyModel(),
+                                     XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("ImportLibraries"))));
 }
 
 void PEWidget::on_pushButtonSave_ImportFunctions_clicked()
 {
-    XShortcutsWidget::saveTableModel(ui->tableView_ImportFunctions->getProxyModel(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("ImportFunctions"))));
+    XShortcutsWidget::saveTableModel(ui->tableView_ImportFunctions->getProxyModel(),
+                                     XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("ImportFunctions"))));
 }
 
 void PEWidget::on_pushButtonSave_RICH_clicked()
@@ -3412,7 +3414,8 @@ void PEWidget::on_pushButtonSave_Relocs_clicked()
 
 void PEWidget::on_pushButtonSave_RelocsPositions_clicked()
 {
-    XShortcutsWidget::saveTableModel(ui->tableView_RelocsPositions->getProxyModel(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("RelocsPositions"))));
+    XShortcutsWidget::saveTableModel(ui->tableView_RelocsPositions->getProxyModel(),
+                                     XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("RelocsPositions"))));
 }
 
 void PEWidget::on_pushButtonSave_LoadConfig_clicked()
@@ -3504,7 +3507,8 @@ void PEWidget::on_treeView_Sections_Info_customContextMenuRequested(const QPoint
 
 void PEWidget::on_pushButtonSave_TLSCallbacks_clicked()
 {
-    XShortcutsWidget::saveTableModel(ui->tableView_TLSCallbacks->getProxyModel(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("TLSCallbacks"))));
+    XShortcutsWidget::saveTableModel(ui->tableView_TLSCallbacks->getProxyModel(),
+                                     XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("TLSCallbacks"))));
 }
 
 void PEWidget::on_pushButtonSave_TLS_clicked()
@@ -3540,7 +3544,8 @@ void PEWidget::on_pushButtonSave_ExportHeader_clicked()
 
 void PEWidget::on_pushButtonSave_ExportFunctions_clicked()
 {
-    XShortcutsWidget::saveTableModel(ui->tableView_ExportFunctions->getProxyModel(), XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("ExportFunctions"))));
+    XShortcutsWidget::saveTableModel(ui->tableView_ExportFunctions->getProxyModel(),
+                                     XBinary::getResultFileName(getDevice(), QString("%1.txt").arg(QString("ExportFunctions"))));
 }
 
 void PEWidget::on_pushButtonSave_NetHeader_clicked()
