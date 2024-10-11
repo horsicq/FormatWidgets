@@ -128,7 +128,7 @@ void MACHWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_ENTROPY, tr("Entropy"), XOptions::ICONTYPE_ENTROPY));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_EXTRACTOR, tr("Extractor"), XOptions::ICONTYPE_EXTRACTOR));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_SEARCH, tr("Search"), XOptions::ICONTYPE_SEARCH));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_mach_header, mach.is64() ? ("mach_header_64") : ("mach_header")));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMACH::TYPE_mach_header, mach.is64() ? ("mach_header_64") : ("mach_header"), XOptions::ICONTYPE_HEADER));
 
         QList<XMACH::COMMAND_RECORD> listCommandRecords = mach.getCommandRecords();
 
