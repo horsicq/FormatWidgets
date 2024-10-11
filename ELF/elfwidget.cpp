@@ -111,7 +111,7 @@ void ELFWidget::reload()
         QList<XELF_DEF::Elf_Shdr> listSectionHeaders = elf.getElf_ShdrList(-1);
 
         if (listSectionHeaders.count()) {
-            QTreeWidgetItem *pItemSections = createNewItem(SELF::TYPE_Elf_Shdr, tr("Sections"));
+            QTreeWidgetItem *pItemSections = createNewItem(SELF::TYPE_Elf_Shdr, tr("Sections"), XOptions::ICONTYPE_SECTION);
 
             ui->treeWidgetNavi->addTopLevelItem(pItemSections);
 
@@ -123,7 +123,7 @@ void ELFWidget::reload()
         QList<XELF_DEF::Elf_Phdr> listProgramHeaders = elf.getElf_PhdrList(-1);
 
         if (listProgramHeaders.count()) {
-            QTreeWidgetItem *pItemPrograms = createNewItem(SELF::TYPE_Elf_Phdr, "Programs");  // mn TODO tr
+            QTreeWidgetItem *pItemPrograms = createNewItem(SELF::TYPE_Elf_Phdr, "Programs", XOptions::ICONTYPE_SEGMENT);  // mn TODO tr
 
             ui->treeWidgetNavi->addTopLevelItem(pItemPrograms);
 

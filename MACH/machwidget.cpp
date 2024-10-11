@@ -140,7 +140,7 @@ void MACHWidget::reload()
             QList<XMACH::SEGMENT_RECORD> listSegmentRecords = mach.getSegmentRecords(&listCommandRecords);
 
             if (listSegmentRecords.count()) {
-                QTreeWidgetItem *pItemSegments = createNewItem(SMACH::TYPE_mach_segments, tr("Segments"));  // TODO rename
+                QTreeWidgetItem *pItemSegments = createNewItem(SMACH::TYPE_mach_segments, tr("Segments"), XOptions::ICONTYPE_SEGMENT);
 
                 pItemCommands->addChild(pItemSegments);
 
@@ -148,7 +148,7 @@ void MACHWidget::reload()
 
                 if (listSectionRecords.count()) {
                     QTreeWidgetItem *pItemSections = createNewItem(SMACH::TYPE_mach_sections,
-                                                                   tr("Sections"));  // TODO rename
+                                                                   tr("Sections"), XOptions::ICONTYPE_SECTION);
 
                     pItemSegments->addChild(pItemSections);
                 }
