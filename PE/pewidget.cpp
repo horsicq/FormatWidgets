@@ -135,21 +135,21 @@ void PEWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_EXTRACTOR, tr("Extractor"), XOptions::ICONTYPE_EXTRACTOR));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_SEARCH, tr("Search"), XOptions::ICONTYPE_SEARCH));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_TOOLS, tr("Tools"), XOptions::ICONTYPE_TOOL));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_IMAGE_DOS_HEADER, "IMAGE_DOS_HEADER"));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_IMAGE_DOS_HEADER, "IMAGE_DOS_HEADER", XOptions::ICONTYPE_HEADER));
 
         if (pe.isDosStubPresent()) {
             ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_DOS_STUB, "DOS stub"));
         }
 
-        QTreeWidgetItem *pNtHeaders = createNewItem(SPE::TYPE_IMAGE_NT_HEADERS, "IMAGE_NT_HEADERS");
+        QTreeWidgetItem *pNtHeaders = createNewItem(SPE::TYPE_IMAGE_NT_HEADERS, "IMAGE_NT_HEADERS", XOptions::ICONTYPE_HEADER);
         ui->treeWidgetNavi->addTopLevelItem(pNtHeaders);
-        pNtHeaders->addChild(createNewItem(SPE::TYPE_IMAGE_FILE_HEADER, "IMAGE_FILE_HEADER"));
-        QTreeWidgetItem *pOptionalHeader = createNewItem(SPE::TYPE_IMAGE_OPTIONAL_HEADER, "IMAGE_OPTIONAL_HEADER");
+        pNtHeaders->addChild(createNewItem(SPE::TYPE_IMAGE_FILE_HEADER, "IMAGE_FILE_HEADER", XOptions::ICONTYPE_HEADER));
+        QTreeWidgetItem *pOptionalHeader = createNewItem(SPE::TYPE_IMAGE_OPTIONAL_HEADER, "IMAGE_OPTIONAL_HEADER", XOptions::ICONTYPE_HEADER);
         pNtHeaders->addChild(pOptionalHeader);
-        pOptionalHeader->addChild(createNewItem(SPE::TYPE_IMAGE_DIRECTORY_ENTRIES, "IMAGE_DIRECTORY_ENTRIES"));
+        pOptionalHeader->addChild(createNewItem(SPE::TYPE_IMAGE_DIRECTORY_ENTRIES, "IMAGE_DIRECTORY_ENTRIES", XOptions::ICONTYPE_TABLE));
 
         if (pe.isRichSignaturePresent()) {
-            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_RICH, QString("Rich %1").arg(tr("Signature"))));
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_RICH, QString("Rich %1").arg(tr("Signature")), XOptions::ICONTYPE_LIST));
         }
 
         if (pe.getFileHeader_NumberOfSections()) {
@@ -217,15 +217,15 @@ void PEWidget::reload()
         }
 
         if (pe.isLoadConfigPresent()) {
-            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_LOADCONFIG, tr("Load config")));
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_LOADCONFIG, tr("Load config"), XOptions::ICONTYPE_TABLE));
         }
 
         if (pe.isBoundImportPresent()) {
-            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_BOUNDIMPORT, tr("Bound import")));
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_BOUNDIMPORT, tr("Bound import"), XOptions::ICONTYPE_IMPORT));
         }
 
         if (pe.isDelayImportPresent()) {
-            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_DELAYIMPORT, tr("Delay import")));
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_DELAYIMPORT, tr("Delay import"), XOptions::ICONTYPE_IMPORT));
         }
 
         if (pe.isNETPresent()) {
@@ -235,7 +235,7 @@ void PEWidget::reload()
             XPE::CLI_INFO cliInfo = pe.getCliInfo(true);
 
             if (pe.isNetMetadataPresent(&cliInfo, &memoryMap)) {
-                QTreeWidgetItem *pNetMetadata = createNewItem(SPE::TYPE_NET_METADATA, tr("Metadata"));
+                QTreeWidgetItem *pNetMetadata = createNewItem(SPE::TYPE_NET_METADATA, tr("Metadata"), XOptions::ICONTYPE_TABLE);
                 pNetHeader->addChild(pNetMetadata);
 
                 qint32 nNumberOfStreams = cliInfo.metaData.listStreams.count();
@@ -247,7 +247,7 @@ void PEWidget::reload()
                     pNetMetadata->addChild(pNetMetadataStream);
 
                     if ((cliInfo.metaData.listStreams.at(i).sName == "#~") || (cliInfo.metaData.listStreams.at(i).sName == "#-")) {
-                        QTreeWidgetItem *pNetMetadataTable = createNewItem(SPE::TYPE_NET_METADATA_TABLE, tr("Metadata table"), XOptions::ICONTYPE_GENERIC,
+                        QTreeWidgetItem *pNetMetadataTable = createNewItem(SPE::TYPE_NET_METADATA_TABLE, tr("Metadata table"), XOptions::ICONTYPE_TABLE,
                                                                            cliInfo.metaData.listStreams.at(i).nOffset, cliInfo.metaData.listStreams.at(i).nSize);
                         pNetMetadataStream->addChild(pNetMetadataTable);
                     }
