@@ -103,7 +103,7 @@ void DEXWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_ENTROPY, tr("Entropy"), XOptions::ICONTYPE_ENTROPY));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_EXTRACTOR, tr("Extractor"), XOptions::ICONTYPE_EXTRACTOR));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_SEARCH, tr("Search"), XOptions::ICONTYPE_SEARCH));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_HEADER, "Header"));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SDEX::TYPE_HEADER, "Header", XOptions::ICONTYPE_HEADER));
 
         QList<XDEX_DEF::MAP_ITEM> listMapItems = dex.getMapItems();
 

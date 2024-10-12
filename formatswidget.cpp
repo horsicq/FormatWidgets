@@ -28,16 +28,16 @@ FormatsWidget::FormatsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(n
 
     XOptions::adjustToolButton(ui->toolButtonEntryPoint, XOptions::ICONTYPE_ENTRY, Qt::ToolButtonIconOnly);
     XOptions::adjustToolButton(ui->toolButtonMemoryMap, XOptions::ICONTYPE_MEMORYMAP);
-    XOptions::adjustToolButton(ui->toolButtonPEExport, XOptions::ICONTYPE_GENERIC);
-    XOptions::adjustToolButton(ui->toolButtonPEImport, XOptions::ICONTYPE_GENERIC);
-    XOptions::adjustToolButton(ui->toolButtonPEResources, XOptions::ICONTYPE_GENERIC);
+    XOptions::adjustToolButton(ui->toolButtonPEExport, XOptions::ICONTYPE_EXPORT);
+    XOptions::adjustToolButton(ui->toolButtonPEImport, XOptions::ICONTYPE_IMPORT);
+    XOptions::adjustToolButton(ui->toolButtonPEResources, XOptions::ICONTYPE_RESOURCE);
     XOptions::adjustToolButton(ui->toolButtonPEOverlay, XOptions::ICONTYPE_OVERLAY);
     XOptions::adjustToolButton(ui->toolButtonPE, XOptions::ICONTYPE_INFO);
     XOptions::adjustToolButton(ui->toolButtonPESections, XOptions::ICONTYPE_ENTRY, Qt::ToolButtonIconOnly);
-    XOptions::adjustToolButton(ui->toolButtonPEManifest, XOptions::ICONTYPE_GENERIC);
-    XOptions::adjustToolButton(ui->toolButtonPEVersion, XOptions::ICONTYPE_GENERIC);
-    XOptions::adjustToolButton(ui->toolButtonPENET, XOptions::ICONTYPE_GENERIC);
-    XOptions::adjustToolButton(ui->toolButtonPETLS, XOptions::ICONTYPE_GENERIC);
+    XOptions::adjustToolButton(ui->toolButtonPEManifest, XOptions::ICONTYPE_MANIFEST);
+    XOptions::adjustToolButton(ui->toolButtonPEVersion, XOptions::ICONTYPE_VERSION);
+    XOptions::adjustToolButton(ui->toolButtonPENET, XOptions::ICONTYPE_DOTNET);
+    XOptions::adjustToolButton(ui->toolButtonPETLS, XOptions::ICONTYPE_TLS);
     XOptions::adjustToolButton(ui->toolButtonMACH, XOptions::ICONTYPE_INFO);
     XOptions::adjustToolButton(ui->toolButtonMACHSegments, XOptions::ICONTYPE_ENTRY, Qt::ToolButtonIconOnly);
     XOptions::adjustToolButton(ui->toolButtonMACHSections, XOptions::ICONTYPE_ENTRY, Qt::ToolButtonIconOnly);
@@ -53,8 +53,8 @@ FormatsWidget::FormatsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(n
     XOptions::adjustToolButton(ui->toolButtonELFPrograms, XOptions::ICONTYPE_ENTRY, Qt::ToolButtonIconOnly);
     XOptions::adjustToolButton(ui->toolButtonLE, XOptions::ICONTYPE_INFO);
     XOptions::adjustToolButton(ui->toolButtonNE, XOptions::ICONTYPE_INFO);
-    XOptions::adjustToolButton(ui->toolButtonAndroidManifest, XOptions::ICONTYPE_GENERIC);
-    XOptions::adjustToolButton(ui->toolButtonMANIFESTMF, XOptions::ICONTYPE_GENERIC);
+    XOptions::adjustToolButton(ui->toolButtonAndroidManifest, XOptions::ICONTYPE_MANIFEST);
+    XOptions::adjustToolButton(ui->toolButtonMANIFESTMF, XOptions::ICONTYPE_MANIFEST);
     XOptions::adjustToolButton(ui->toolButtonDisasm, XOptions::ICONTYPE_DISASM);
     XOptions::adjustToolButton(ui->toolButtonHex, XOptions::ICONTYPE_HEX);
     XOptions::adjustToolButton(ui->toolButtonStrings, XOptions::ICONTYPE_STRING);
