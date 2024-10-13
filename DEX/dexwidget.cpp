@@ -108,32 +108,32 @@ void DEXWidget::reload()
         QList<XDEX_DEF::MAP_ITEM> listMapItems = dex.getMapItems();
 
         if (listMapItems.count()) {
-            QTreeWidgetItem *pItemMapItems = createNewItem(SDEX::TYPE_MAPITEMS, "Map items");
+            QTreeWidgetItem *pItemMapItems = createNewItem(SDEX::TYPE_MAPITEMS, "Map items", XOptions::ICONTYPE_LIST);
 
             ui->treeWidgetNavi->addTopLevelItem(pItemMapItems);
 
             if (dex.isMapItemPresent(XDEX_DEF::TYPE_STRING_ID_ITEM, &listMapItems)) {
-                pItemMapItems->addChild(createNewItem(SDEX::TYPE_STRING_ID_ITEM, "STRING_ID_ITEM"));
+                pItemMapItems->addChild(createNewItem(SDEX::TYPE_STRING_ID_ITEM, "STRING_ID_ITEM", XOptions::ICONTYPE_STRING));
             }
 
             if (dex.isMapItemPresent(XDEX_DEF::TYPE_TYPE_ID_ITEM, &listMapItems)) {
-                pItemMapItems->addChild(createNewItem(SDEX::TYPE_TYPE_ID_ITEM, "TYPE_ID_ITEM"));
+                pItemMapItems->addChild(createNewItem(SDEX::TYPE_TYPE_ID_ITEM, "TYPE_ID_ITEM", XOptions::ICONTYPE_LIST));
             }
 
             if (dex.isMapItemPresent(XDEX_DEF::TYPE_PROTO_ID_ITEM, &listMapItems)) {
-                pItemMapItems->addChild(createNewItem(SDEX::TYPE_PROTO_ID_ITEM, "PROTO_ID_ITEM"));
+                pItemMapItems->addChild(createNewItem(SDEX::TYPE_PROTO_ID_ITEM, "PROTO_ID_ITEM", XOptions::ICONTYPE_LIST));
             }
 
             if (dex.isMapItemPresent(XDEX_DEF::TYPE_FIELD_ID_ITEM, &listMapItems)) {
-                pItemMapItems->addChild(createNewItem(SDEX::TYPE_FIELD_ID_ITEM, "TYPE_FIELD_ID_ITEM"));
+                pItemMapItems->addChild(createNewItem(SDEX::TYPE_FIELD_ID_ITEM, "TYPE_FIELD_ID_ITEM", XOptions::ICONTYPE_LIST));
             }
 
             if (dex.isMapItemPresent(XDEX_DEF::TYPE_METHOD_ID_ITEM, &listMapItems)) {
-                pItemMapItems->addChild(createNewItem(SDEX::TYPE_METHOD_ID_ITEM, "TYPE_METHOD_ID_ITEM"));
+                pItemMapItems->addChild(createNewItem(SDEX::TYPE_METHOD_ID_ITEM, "TYPE_METHOD_ID_ITEM", XOptions::ICONTYPE_LIST));
             }
 
             if (dex.isMapItemPresent(XDEX_DEF::TYPE_CLASS_DEF_ITEM, &listMapItems)) {
-                pItemMapItems->addChild(createNewItem(SDEX::TYPE_CLASS_DEF_ITEM, "TYPE_CLASS_DEF_ITEM"));
+                pItemMapItems->addChild(createNewItem(SDEX::TYPE_CLASS_DEF_ITEM, "TYPE_CLASS_DEF_ITEM", XOptions::ICONTYPE_LIST));
             }
         }
 
