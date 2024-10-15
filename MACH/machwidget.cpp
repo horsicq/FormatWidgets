@@ -133,7 +133,7 @@ void MACHWidget::reload()
         QList<XMACH::COMMAND_RECORD> listCommandRecords = mach.getCommandRecords();
 
         if (listCommandRecords.count()) {
-            QTreeWidgetItem *pItemCommands = createNewItem(SMACH::TYPE_mach_commands, tr("Commands"));
+            QTreeWidgetItem *pItemCommands = createNewItem(SMACH::TYPE_mach_commands, tr("Commands"), XOptions::ICONTYPE_LIST);
 
             ui->treeWidgetNavi->addTopLevelItem(pItemCommands);
 
