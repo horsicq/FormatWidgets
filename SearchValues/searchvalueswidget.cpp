@@ -108,6 +108,7 @@ void SearchValuesWidget::on_tableViewResult_customContextMenuRequested(const QPo
     QMenu menuFollowIn(this);
     QAction actionHex(this);
     QAction actionDisasm(this);
+    QMenu menuCopy(this);
 
     if (g_options.bMenu_Hex || g_options.bMenu_Disasm) {
         getShortcuts()->adjustMenu(&contextMenu, &menuFollowIn, XShortcuts::GROUPID_FOLLOWIN);
@@ -121,7 +122,7 @@ void SearchValuesWidget::on_tableViewResult_customContextMenuRequested(const QPo
         }
     }
 
-    contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this, ui->tableViewResult));
+    getShortcuts()->adjustRowCopyMenu(&contextMenu, &menuCopy, ui->tableViewResult);
 
     contextMenu.exec(ui->tableViewResult->viewport()->mapToGlobal(pos));
 }

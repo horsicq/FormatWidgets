@@ -200,8 +200,9 @@ void SearchStringsWidget::on_tableViewResult_customContextMenuRequested(const QP
 
     QMenu menuFollowIn(tr("Follow in"), this);
     QMenu menuEdit(tr("Edit"), this);
+    QMenu menuCopy(this);
 
-    contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this, ui->tableViewResult));
+    getShortcuts()->adjustRowCopyMenu(&contextMenu, &menuCopy, ui->tableViewResult);
 
     QAction actionHex(tr("Hex"), this);
     QAction actionDemangle(tr("Demangle"), this);

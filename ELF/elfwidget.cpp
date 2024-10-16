@@ -850,7 +850,9 @@ void ELFWidget::on_tableView_SymbolTable_customContextMenuRequested(const QPoint
         getShortcuts()->adjustAction(&contextMenu, &actionEdit, X_ID_TABLE_EDIT, this, SLOT(editSymbolHeader()));
         getShortcuts()->adjustAction(&contextMenu, &actionDemangle, X_ID_TABLE_DEMANGLE, this, SLOT(symbolDemangle()));
 
-        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this, ui->tableView_SymbolTable));
+        QMenu menuCopy(this);
+
+        getShortcuts()->adjustRowCopyMenu(&contextMenu, &menuCopy, ui->tableView_SymbolTable);
 
         contextMenu.exec(ui->tableView_SymbolTable->viewport()->mapToGlobal(pos));
     }
@@ -976,7 +978,9 @@ void ELFWidget::on_tableView_Elf_Shdr_customContextMenuRequested(const QPoint &p
             actionDump.setEnabled(false);
         }
 
-        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this, ui->tableView_Elf_Shdr));
+        QMenu menuCopy(this);
+
+        getShortcuts()->adjustRowCopyMenu(&contextMenu, &menuCopy, ui->tableView_Elf_Shdr);
 
         contextMenu.exec(ui->tableView_Elf_Shdr->viewport()->mapToGlobal(pos));
     }
@@ -1062,7 +1066,9 @@ void ELFWidget::on_tableView_Elf_Phdr_customContextMenuRequested(const QPoint &p
             actionDump.setEnabled(false);
         }
 
-        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this, ui->tableView_Elf_Phdr));
+        QMenu menuCopy(this);
+
+        getShortcuts()->adjustRowCopyMenu(&contextMenu, &menuCopy, ui->tableView_Elf_Phdr);
 
         contextMenu.exec(ui->tableView_Elf_Phdr->viewport()->mapToGlobal(pos));
     }
@@ -1086,7 +1092,9 @@ void ELFWidget::on_tableView_DynamicArrayTags_customContextMenuRequested(const Q
 
         getShortcuts()->adjustAction(&contextMenu, &actionEdit, X_ID_TABLE_EDIT, this, SLOT(editDynamicArrayTag()));
 
-        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this, ui->tableView_DynamicArrayTags));
+        QMenu menuCopy(this);
+
+        getShortcuts()->adjustRowCopyMenu(&contextMenu, &menuCopy, ui->tableView_DynamicArrayTags);
 
         contextMenu.exec(ui->tableView_DynamicArrayTags->viewport()->mapToGlobal(pos));
     }
@@ -1116,7 +1124,9 @@ void ELFWidget::on_tableView_Rela_customContextMenuRequested(const QPoint &pos)
 
         getShortcuts()->adjustAction(&contextMenu, &actionEdit, X_ID_TABLE_EDIT, this, SLOT(editRelaHeaderTag()));
 
-        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this, ui->tableView_Rela));
+        QMenu menuCopy(this);
+
+        getShortcuts()->adjustRowCopyMenu(&contextMenu, &menuCopy, ui->tableView_Rela);
 
         contextMenu.exec(ui->tableView_Rela->viewport()->mapToGlobal(pos));
     }
@@ -1150,7 +1160,9 @@ void ELFWidget::on_tableView_Rel_customContextMenuRequested(const QPoint &pos)
 
         getShortcuts()->adjustAction(&contextMenu, &actionEdit, X_ID_TABLE_EDIT, this, SLOT(editRelHeaderTag()));
 
-        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this, ui->tableView_Rel));
+        QMenu menuCopy(this);
+
+        getShortcuts()->adjustRowCopyMenu(&contextMenu, &menuCopy, ui->tableView_Rel);
 
         contextMenu.exec(ui->tableView_Rel->viewport()->mapToGlobal(pos));
     }

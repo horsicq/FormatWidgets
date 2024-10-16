@@ -706,7 +706,9 @@ void LEWidget::on_tableView_Objects_customContextMenuRequested(const QPoint &pos
         actionEntropy.setEnabled(bIsEnable);
         contextMenu.addAction(&actionEntropy);
 
-        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this, ui->tableView_Objects));
+        QMenu menuCopy(this);
+
+        getShortcuts()->adjustRowCopyMenu(&contextMenu, &menuCopy, ui->tableView_Objects);
 
         contextMenu.exec(ui->tableView_Objects->viewport()->mapToGlobal(pos));
     }

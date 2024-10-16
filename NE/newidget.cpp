@@ -106,8 +106,8 @@ void NEWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_ENTROPY, tr("Entropy"), XOptions::ICONTYPE_ENTROPY));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_EXTRACTOR, tr("Extractor"), XOptions::ICONTYPE_EXTRACTOR));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_SEARCH, tr("Search"), XOptions::ICONTYPE_SEARCH));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_DOS_HEADER, "DOS_HEADER"));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_OS2_HEADER, "OS2_HEADER"));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_DOS_HEADER, "DOS_HEADER", XOptions::ICONTYPE_HEADER));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_OS2_HEADER, "OS2_HEADER", XOptions::ICONTYPE_HEADER));
 
         QList<XNE_DEF::NE_SEGMENT> listSegments = ne.getSegmentList();
 
