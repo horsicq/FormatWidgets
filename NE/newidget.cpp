@@ -112,7 +112,7 @@ void NEWidget::reload()
         QList<XNE_DEF::NE_SEGMENT> listSegments = ne.getSegmentList();
 
         if (listSegments.count()) {
-            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_SEGMENTS, tr("Segments")));
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SNE::TYPE_SEGMENTS, tr("Segments"),XOptions::ICONTYPE_SEGMENT));
         }
 
         if (ne.isOverlayPresent()) {

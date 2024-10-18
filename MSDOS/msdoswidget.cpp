@@ -494,3 +494,16 @@ void MSDOSWidget::on_toolButtonNext_clicked()
     ui->treeWidgetNavi->setCurrentItem(getNextPage());
     setAddPageEnabled(true);
 }
+
+void MSDOSWidget::on_pushButtonDump_Overlay_clicked()
+{
+    XMSDOS msdos(getDevice(), getOptions().bIsImage, getOptions().nImageBase);
+
+    if (msdos.isValid()) {
+        qint64 nOffset = msdos.getOverlayOffset();
+        qint64 nSize = msdos.getOverlaySize();
+
+        dumpRegion(nOffset, nSize, tr("Overlay"));
+    }
+}
+

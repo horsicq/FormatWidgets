@@ -135,7 +135,7 @@ void SearchSignaturesWidget::on_toolButtonSearch_clicked()
 
 void SearchSignaturesWidget::on_tableViewResult_customContextMenuRequested(const QPoint &pos)
 {
-    QMenu contextMenu(this);
+    QMenu contextMenu(this); // TODO
 
     QMenu menuCopy(tr("Copy"), this);  // TODO obsolete
     QMenu menuFollowIn(tr("Follow in"), this);

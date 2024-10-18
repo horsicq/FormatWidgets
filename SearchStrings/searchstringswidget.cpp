@@ -196,7 +196,7 @@ void SearchStringsWidget::on_toolButtonSearch_clicked()
 
 void SearchStringsWidget::on_tableViewResult_customContextMenuRequested(const QPoint &pos)
 {
-    QMenu contextMenu(this);
+    QMenu contextMenu(this); // TODO
 
     QMenu menuFollowIn(tr("Follow in"), this);
     QMenu menuEdit(tr("Edit"), this);

@@ -96,6 +96,9 @@
       </column>
      </widget>
      <widget class="QStackedWidget" name="stackedWidgetInfo">
+      <property name="currentIndex">
+       <number>16</number>
+      </property>
       <widget class="QWidget" name="page_Info">
        <layout class="QVBoxLayout" name="verticalLayout_12">
         <property name="leftMargin">
@@ -446,7 +449,38 @@
          <number>1</number>
         </property>
         <item>
-         <widget class="ToolsWidget" name="widgetHex_OVERLAY" native="true"/>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButtonDump_Overlay">
+            <property name="text">
+             <string>Dump</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="ToolsWidget" name="widgetHex_OVERLAY" native="true">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>

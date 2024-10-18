@@ -2350,7 +2350,7 @@ void PEWidget::on_tableView_Sections_customContextMenuRequested(const QPoint &po
     qint32 nRow = ui->tableView_Sections->currentIndex().row();
 
     if (nRow != -1) {
-        QMenu contextMenu(this);
+        QMenu contextMenu(this); // TODO
 
         QAction actionEdit(this);
         QAction actionHex(this);
@@ -2789,7 +2789,7 @@ void PEWidget::on_tableView_ImportLibraries_customContextMenuRequested(const QPo
     qint32 nRow = ui->tableView_ImportLibraries->currentIndex().row();
 
     if (nRow != -1) {
-        QMenu contextMenu(this);
+        QMenu contextMenu(this); // TODO
 
         QAction actionEdit(tr("Edit"), this);
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editImportHeader()));
@@ -2842,7 +2842,7 @@ void PEWidget::on_tableView_Relocs_customContextMenuRequested(const QPoint &pos)
     qint32 nRow = ui->tableView_Relocs->currentIndex().row();
 
     if (nRow != -1) {
-        QMenu contextMenu(this);
+        QMenu contextMenu(this); // TODO
 
         QAction actionEdit(tr("Edit"), this);
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editRelocsHeader()));
@@ -2879,7 +2879,7 @@ void PEWidget::on_tableView_Debug_customContextMenuRequested(const QPoint &pos)
     qint32 nRow = ui->tableView_Debug->currentIndex().row();
 
     if (nRow != -1) {
-        QMenu contextMenu(this);
+        QMenu contextMenu(this); // TODO
 
         QAction actionEdit(tr("Edit"), this);
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editDebugHeader()));
@@ -2918,7 +2918,7 @@ void PEWidget::on_tableView_Resources_customContextMenuRequested(const QPoint &p
     if (nRow != -1) {
         bool bIsEnable = getTableViewItemSize(ui->tableView_Resources);
 
-        QMenu contextMenu(this);
+        QMenu contextMenu(this); // TODO
 
         QAction actionHex(tr("Hex"), this);
         connect(&actionHex, SIGNAL(triggered()), this, SLOT(resourceHex()));
@@ -2962,7 +2962,7 @@ void PEWidget::on_tableView_Exceptions_customContextMenuRequested(const QPoint &
     qint32 nRow = ui->tableView_Exceptions->currentIndex().row();
 
     if (nRow != -1) {
-        QMenu contextMenu(this);
+        QMenu contextMenu(this); // TODO
 
         QAction actionEdit(tr("Edit"), this);
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editExceptionHeader()));
@@ -2999,7 +2999,7 @@ void PEWidget::on_tableView_DelayImportLibraries_customContextMenuRequested(cons
     qint32 nRow = ui->tableView_DelayImportLibraries->currentIndex().row();
 
     if (nRow != -1) {
-        QMenu contextMenu(this);
+        QMenu contextMenu(this); // TODO
 
         QAction actionEdit(tr("Edit"), this);
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editDelayImportHeader()));
@@ -3036,7 +3036,7 @@ void PEWidget::on_tableView_BoundImport_customContextMenuRequested(const QPoint 
     qint32 nRow = ui->tableView_BoundImport->currentIndex().row();
 
     if (nRow != -1) {
-        QMenu contextMenu(this);
+        QMenu contextMenu(this); // TODO
 
         QAction actionEdit(tr("Edit"), this);
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editBoundImportHeader()));
@@ -3097,7 +3097,7 @@ void PEWidget::on_tableView_ExportFunctions_customContextMenuRequested(const QPo
     qint32 nRow = ui->tableView_ExportFunctions->currentIndex().row();
 
     if (nRow != -1) {
-        QMenu contextMenu(this);
+        QMenu contextMenu(this); // TODO
 
         QAction actionHex(tr("Hex"), this);
         connect(&actionHex, SIGNAL(triggered()), this, SLOT(exportFunctionHex()));
@@ -3161,7 +3161,7 @@ void PEWidget::on_tableView_ImportFunctions_customContextMenuRequested(const QPo
     qint32 nRow = ui->tableView_ImportFunctions->currentIndex().row();
 
     if (nRow != -1) {
-        QMenu contextMenu(this);
+        QMenu contextMenu(this); // TODO
 
         QAction actionDemangle(tr("Demangle"), this);
         connect(&actionDemangle, SIGNAL(triggered()), this, SLOT(importFunctionDemangle()));
@@ -3219,7 +3219,7 @@ void PEWidget::on_tableWidget_IMAGE_DIRECTORY_ENTRIES_customContextMenuRequested
     if (nRow != -1) {
         bool bIsEnable = getTableViewItemSize(ui->tableWidget_IMAGE_DIRECTORY_ENTRIES);
 
-        QMenu contextMenu(this);
+        QMenu contextMenu(this); // TODO
 
         QAction actionEdit(tr("Edit"), this);
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editDirectoryHeader()));
@@ -3263,7 +3263,7 @@ void PEWidget::on_tableView_TLSCallbacks_customContextMenuRequested(const QPoint
     qint32 nRow = ui->tableView_TLSCallbacks->currentIndex().row();
 
     if (nRow != -1) {
-        QMenu contextMenu(this);
+        QMenu contextMenu(this); // TODO
 
         QAction actionDisasm(tr("Disasm"), this);
         connect(&actionDisasm, SIGNAL(triggered()), this, SLOT(disasmTLSCallback()));
@@ -3292,7 +3292,7 @@ void PEWidget::on_tableView_Resources_StringTable_customContextMenuRequested(con
     qint32 nRow = ui->tableView_Resources_StringTable->currentIndex().row();
 
     if (nRow != -1) {
-        QMenu contextMenu(this);
+        QMenu contextMenu(this); // TODO
 
         QAction actionHex(tr("Hex"), this);
         connect(&actionHex, SIGNAL(triggered()), this, SLOT(stringTableHex()));
@@ -3464,7 +3464,7 @@ void PEWidget::on_treeView_Certificate_customContextMenuRequested(const QPoint &
     qint32 nRow = ui->treeView_Certificate->currentIndex().row();
 
     if (nRow != -1) {
-        QMenu contextMenu(this);
+        QMenu contextMenu(this); // TODO
         QMenu menuCopy(this);
 
         getShortcuts()->adjustRowCopyMenu(&contextMenu, &menuCopy, ui->treeView_Certificate);
@@ -3478,7 +3478,7 @@ void PEWidget::on_tableView_DelayImportFunctions_customContextMenuRequested(cons
     qint32 nRow = ui->tableView_DelayImportFunctions->currentIndex().row();
 
     if (nRow != -1) {
-        QMenu contextMenu(this);
+        QMenu contextMenu(this); // TODO
         QMenu menuCopy(this);
 
         getShortcuts()->adjustRowCopyMenu(&contextMenu, &menuCopy, ui->tableView_DelayImportFunctions);
@@ -3492,7 +3492,7 @@ void PEWidget::on_tableView_RICH_customContextMenuRequested(const QPoint &pos)
     qint32 nRow = ui->tableView_RICH->currentIndex().row();
 
     if (nRow != -1) {
-        QMenu contextMenu(this);
+        QMenu contextMenu(this); // TODO
         QMenu menuCopy(this);
 
         getShortcuts()->adjustRowCopyMenu(&contextMenu, &menuCopy, ui->tableView_RICH);
@@ -3506,7 +3506,7 @@ void PEWidget::on_tableView_RelocsPositions_customContextMenuRequested(const QPo
     qint32 nRow = ui->tableView_RelocsPositions->currentIndex().row();
 
     if (nRow != -1) {
-        QMenu contextMenu(this);
+        QMenu contextMenu(this); // TODO
         QMenu menuCopy(this);
 
         getShortcuts()->adjustRowCopyMenu(&contextMenu, &menuCopy, ui->tableView_RelocsPositions);
@@ -3520,7 +3520,7 @@ void PEWidget::on_treeView_Resources_customContextMenuRequested(const QPoint &po
     qint32 nRow = ui->treeView_Resources->currentIndex().row();
 
     if (nRow != -1) {
-        QMenu contextMenu(this);
+        QMenu contextMenu(this); // TODO
         QMenu menuCopy(this);
 
         getShortcuts()->adjustRowCopyMenu(&contextMenu, &menuCopy, ui->tableView_Resources);
@@ -3534,7 +3534,7 @@ void PEWidget::on_treeView_Sections_Info_customContextMenuRequested(const QPoint
     qint32 nRow = ui->treeView_Sections_Info->currentIndex().row();
 
     if (nRow != -1) {
-        QMenu contextMenu(this);
+        QMenu contextMenu(this); // TODO
         QMenu menuCopy(this);
 
         getShortcuts()->adjustRowCopyMenu(&contextMenu, &menuCopy, ui->treeView_Sections_Info);
@@ -3616,7 +3616,7 @@ void PEWidget::on_treeView_Import_Info_customContextMenuRequested(const QPoint &
     qint32 nRow = ui->treeView_Import_Info->currentIndex().row();
 
     if (nRow != -1) {
-        QMenu contextMenu(this);
+        QMenu contextMenu(this); // TODO
         QMenu menuCopy(this);
 
         getShortcuts()->adjustRowCopyMenu(&contextMenu, &menuCopy, ui->treeView_Import_Info);

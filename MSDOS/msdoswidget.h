@@ -62,6 +62,7 @@ private slots:
     void on_tableWidget_DOS_HEADER_currentCellChanged(int nCurrentRow, int nCurrentColumn, int nPreviousRow, int nPreviousColumn);
     void on_toolButtonPrev_clicked();
     void on_toolButtonNext_clicked();
+    void on_pushButtonDump_Overlay_clicked();
 
 private:
     enum CB {
