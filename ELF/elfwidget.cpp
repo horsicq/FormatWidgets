@@ -966,10 +966,10 @@ void ELFWidget::on_tableView_Elf_Shdr_customContextMenuRequested(const QPoint &p
         QAction actionDump(this);
 
         getShortcuts()->adjustAction(&contextMenu, &actionEdit, X_ID_TABLE_EDIT, this, SLOT(editSectionHeader()));
-        getShortcuts()->adjustAction(&contextMenu, &actionHex, X_ID_TABLE_HEX, this, SLOT(sectionHex()));
-        getShortcuts()->adjustAction(&contextMenu, &actionDisasm, X_ID_TABLE_DISASM, this, SLOT(sectionDisasm()));
-        getShortcuts()->adjustAction(&contextMenu, &actionEntropy, X_ID_TABLE_ENTROPY, this, SLOT(sectionEntropy()));
-        getShortcuts()->adjustAction(&contextMenu, &actionDump, X_ID_TABLE_DUMPTOFILE, this, SLOT(sectionDump()));
+        getShortcuts()->adjustAction(&contextMenu, &actionHex, X_ID_SELECTION_HEX, this, SLOT(sectionHex()));
+        getShortcuts()->adjustAction(&contextMenu, &actionDisasm, X_ID_SELECTION_DISASM, this, SLOT(sectionDisasm()));
+        getShortcuts()->adjustAction(&contextMenu, &actionEntropy, X_ID_SELECTION_ENTROPY, this, SLOT(sectionEntropy()));
+        getShortcuts()->adjustAction(&contextMenu, &actionDump, X_ID_SELECTION_DUMPTOFILE, this, SLOT(sectionDump()));
 
         if (!getTableViewItemSize(ui->tableView_Elf_Shdr)) {
             actionHex.setEnabled(false);
@@ -1054,10 +1054,10 @@ void ELFWidget::on_tableView_Elf_Phdr_customContextMenuRequested(const QPoint &p
         QAction actionDump(this);
 
         getShortcuts()->adjustAction(&contextMenu, &actionEdit, X_ID_TABLE_EDIT, this, SLOT(editProgramHeader()));
-        getShortcuts()->adjustAction(&contextMenu, &actionHex, X_ID_TABLE_HEX, this, SLOT(programHex()));
-        getShortcuts()->adjustAction(&contextMenu, &actionDisasm, X_ID_TABLE_DISASM, this, SLOT(programDisasm()));
-        getShortcuts()->adjustAction(&contextMenu, &actionEntropy, X_ID_TABLE_ENTROPY, this, SLOT(programEntropy()));
-        getShortcuts()->adjustAction(&contextMenu, &actionDump, X_ID_TABLE_DUMPTOFILE, this, SLOT(programDump()));
+        getShortcuts()->adjustAction(&contextMenu, &actionHex, X_ID_SELECTION_HEX, this, SLOT(programHex()));
+        getShortcuts()->adjustAction(&contextMenu, &actionDisasm, X_ID_SELECTION_DISASM, this, SLOT(programDisasm()));
+        getShortcuts()->adjustAction(&contextMenu, &actionEntropy, X_ID_SELECTION_ENTROPY, this, SLOT(programEntropy()));
+        getShortcuts()->adjustAction(&contextMenu, &actionDump, X_ID_SELECTION_DUMPTOFILE, this, SLOT(programDump()));
 
         if (!getTableViewItemSize(ui->tableView_Elf_Phdr)) {
             actionHex.setEnabled(false);

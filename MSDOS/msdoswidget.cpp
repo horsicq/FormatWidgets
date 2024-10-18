@@ -102,7 +102,7 @@ void MSDOSWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_ENTROPY, tr("Entropy"), XOptions::ICONTYPE_ENTROPY));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_EXTRACTOR, tr("Extractor"), XOptions::ICONTYPE_EXTRACTOR));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_SEARCH, tr("Search"), XOptions::ICONTYPE_SEARCH));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_DOS_HEADER, "DOS_HEADER"));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_DOS_HEADER, "DOS_HEADER", XOptions::ICONTYPE_HEADER));
 
         if (msdos.isOverlayPresent()) {
             ui->treeWidgetNavi->addTopLevelItem(createNewItem(SMSDOS::TYPE_OVERLAY, tr("Overlay"), XOptions::ICONTYPE_OVERLAY));
