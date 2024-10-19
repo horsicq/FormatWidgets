@@ -147,8 +147,7 @@ void MACHWidget::reload()
                 QList<XMACH::SECTION_RECORD> listSectionRecords = mach.getSectionRecords(&listCommandRecords);
 
                 if (listSectionRecords.count()) {
-                    QTreeWidgetItem *pItemSections = createNewItem(SMACH::TYPE_mach_sections,
-                                                                   tr("Sections"), XOptions::ICONTYPE_SECTION);
+                    QTreeWidgetItem *pItemSections = createNewItem(SMACH::TYPE_mach_sections, tr("Sections"), XOptions::ICONTYPE_SECTION);
 
                     pItemSegments->addChild(pItemSections);
                 }
@@ -2858,7 +2857,7 @@ void MACHWidget::on_tableView_commands_customContextMenuRequested(const QPoint &
     qint32 nRow = ui->tableView_commands->currentIndex().row();
 
     if (nRow != -1) {
-        QMenu contextMenu(this); // TODO
+        QMenu contextMenu(this);  // TODO
 
         QAction actionEdit(tr("Edit"), this);
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editCommandHeader()));
@@ -2885,7 +2884,7 @@ void MACHWidget::on_tableView_segments_customContextMenuRequested(const QPoint &
     if (nRow != -1) {
         bool bIsEnable = getTableViewItemSize(ui->tableView_segments);
 
-        QMenu contextMenu(this); // TODO
+        QMenu contextMenu(this);  // TODO
 
         QAction actionEdit(tr("Edit"), this);
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editSegmentHeader()));
@@ -2926,7 +2925,7 @@ void MACHWidget::on_tableView_sections_customContextMenuRequested(const QPoint &
     if (nRow != -1) {
         bool bIsEnable = getTableViewItemSize(ui->tableView_sections);
 
-        QMenu contextMenu(this); // TODO
+        QMenu contextMenu(this);  // TODO
 
         QAction actionEdit(tr("Edit"), this);
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editSectionHeader()));
@@ -2966,7 +2965,7 @@ void MACHWidget::on_tableView_libraries_customContextMenuRequested(const QPoint 
     qint32 nRow = ui->tableView_libraries->currentIndex().row();
 
     if (nRow != -1) {
-        QMenu contextMenu(this); // TODO
+        QMenu contextMenu(this);  // TODO
 
         QAction actionEdit(tr("Edit"), this);
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editLibraryHeader()));
@@ -2991,7 +2990,7 @@ void MACHWidget::on_tableView_weak_libraries_customContextMenuRequested(const QP
     qint32 nRow = ui->tableView_weak_libraries->currentIndex().row();
 
     if (nRow != -1) {
-        QMenu contextMenu(this); // TODO
+        QMenu contextMenu(this);  // TODO
 
         QAction actionEdit(tr("Edit"), this);
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editWeakLibraryHeader()));
@@ -3016,7 +3015,7 @@ void MACHWidget::on_tableView_id_library_customContextMenuRequested(const QPoint
     qint32 nRow = ui->tableView_id_library->currentIndex().row();
 
     if (nRow != -1) {
-        QMenu contextMenu(this); // TODO
+        QMenu contextMenu(this);  // TODO
 
         QAction actionEdit(tr("Edit"), this);
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editIdLibraryHeader()));
@@ -3041,7 +3040,7 @@ void MACHWidget::on_tableView_LOADFVMLIB_customContextMenuRequested(const QPoint
     qint32 nRow = ui->tableView_LOADFVMLIB->currentIndex().row();
 
     if (nRow != -1) {
-        QMenu contextMenu(this); // TODO
+        QMenu contextMenu(this);  // TODO
 
         QAction actionEdit(tr("Edit"), this);
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editLOADFVMLIBHeader()));
@@ -3066,7 +3065,7 @@ void MACHWidget::on_tableView_IDFVMLIB_customContextMenuRequested(const QPoint &
     qint32 nRow = ui->tableView_IDFVMLIB->currentIndex().row();
 
     if (nRow != -1) {
-        QMenu contextMenu(this); // TODO
+        QMenu contextMenu(this);  // TODO
 
         QAction actionEdit(tr("Edit"), this);
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editIDFVMLIBHeader()));
@@ -3091,7 +3090,7 @@ void MACHWidget::on_tableView_SymbolTable_customContextMenuRequested(const QPoin
     qint32 nRow = ui->tableView_SymbolTable->currentIndex().row();
 
     if (nRow != -1) {
-        QMenu contextMenu(this); // TODO
+        QMenu contextMenu(this);  // TODO
 
         QAction actionEdit(tr("Edit"), this);
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editSymbolHeader()));
@@ -3121,7 +3120,7 @@ void MACHWidget::on_tableView_Functions_customContextMenuRequested(const QPoint 
     qint32 nRow = ui->tableView_Functions->currentIndex().row();
 
     if (nRow != -1) {
-        QMenu contextMenu(this); // TODO
+        QMenu contextMenu(this);  // TODO
 
         QAction actionHex(tr("Hex"), this);
         connect(&actionHex, SIGNAL(triggered()), this, SLOT(functionHex()));
@@ -3155,7 +3154,7 @@ void MACHWidget::on_tableView_data_in_code_entry_customContextMenuRequested(cons
     qint32 nRow = ui->tableView_data_in_code_entry->currentIndex().row();
 
     if (nRow != -1) {
-        QMenu contextMenu(this); // TODO
+        QMenu contextMenu(this);  // TODO
 
         QAction actionEdit(tr("Edit"), this);
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editDiceHeader()));
@@ -3185,7 +3184,7 @@ void MACHWidget::on_tableView_DYSYMTAB_modtab_customContextMenuRequested(const Q
     qint32 nRow = ui->tableView_DYSYMTAB_modtab->currentIndex().row();
 
     if (nRow != -1) {
-        QMenu contextMenu(this); // TODO
+        QMenu contextMenu(this);  // TODO
 
         QAction actionEdit(tr("Edit"), this);
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editModTabHeader()));
@@ -3211,7 +3210,7 @@ void MACHWidget::on_tableView_DYSYMTAB_toc_customContextMenuRequested(const QPoi
     qint32 nRow = ui->tableView_DYSYMTAB_toc->currentIndex().row();
 
     if (nRow != -1) {
-        QMenu contextMenu(this); // TODO
+        QMenu contextMenu(this);  // TODO
 
         QAction actionEdit(tr("Edit"), this);
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editTocHeader()));
@@ -3241,7 +3240,7 @@ void MACHWidget::on_tableView_DYSYMTAB_extrel_customContextMenuRequested(const Q
     qint32 nRow = ui->tableView_DYSYMTAB_extrel->currentIndex().row();
 
     if (nRow != -1) {
-        QMenu contextMenu(this); // TODO
+        QMenu contextMenu(this);  // TODO
 
         QAction actionEdit(tr("Edit"), this);
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editExtrelHeader()));
@@ -3267,7 +3266,7 @@ void MACHWidget::on_tableView_DYSYMTAB_locrel_customContextMenuRequested(const Q
     qint32 nRow = ui->tableView_DYSYMTAB_locrel->currentIndex().row();
 
     if (nRow != -1) {
-        QMenu contextMenu(this); // TODO
+        QMenu contextMenu(this);  // TODO
 
         QAction actionEdit(tr("Edit"), this);
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editLocrelHeader()));
@@ -3293,7 +3292,7 @@ void MACHWidget::on_tableView_DYSYMTAB_indirectsyms_customContextMenuRequested(c
     qint32 nRow = ui->tableView_DYSYMTAB_indirectsyms->currentIndex().row();
 
     if (nRow != -1) {
-        QMenu contextMenu(this); // TODO
+        QMenu contextMenu(this);  // TODO
 
         QAction actionEdit(tr("Edit"), this);
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editIndirectSymbolHeader()));
@@ -3323,7 +3322,7 @@ void MACHWidget::on_tableView_DYSYMTAB_extrefsyms_customContextMenuRequested(con
     qint32 nRow = ui->tableView_DYSYMTAB_extrefsyms->currentIndex().row();
 
     if (nRow != -1) {
-        QMenu contextMenu(this); // TODO
+        QMenu contextMenu(this);  // TODO
 
         QAction actionEdit(tr("Edit"), this);
         connect(&actionEdit, SIGNAL(triggered()), this, SLOT(editExtRefSymbolHeader()));

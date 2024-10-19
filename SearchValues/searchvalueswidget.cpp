@@ -104,7 +104,7 @@ void SearchValuesWidget::on_toolButtonSave_clicked()
 
 void SearchValuesWidget::on_tableViewResult_customContextMenuRequested(const QPoint &pos)
 {
-    QMenu contextMenu(this); // TODO
+    QMenu contextMenu(this);  // TODO
     QMenu menuFollowIn(this);
     QAction actionHex(this);
     QAction actionDisasm(this);

@@ -690,7 +690,7 @@ void LEWidget::on_tableView_Objects_customContextMenuRequested(const QPoint &pos
     if (nRow != -1) {
         bool bIsEnable = getTableViewItemSize(ui->tableView_Objects);
 
-        QMenu contextMenu(this); // TODO
+        QMenu contextMenu(this);  // TODO
 
         QAction actionEdit(tr("Edit"), this);
         //        connect(&actionEdit,SIGNAL(triggered()),this,SLOT(editSectionHeader()));

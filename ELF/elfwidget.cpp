@@ -842,7 +842,7 @@ void ELFWidget::on_tableView_SymbolTable_customContextMenuRequested(const QPoint
     qint32 nRow = ui->tableView_SymbolTable->currentIndex().row();
 
     if (nRow != -1) {
-        QMenu contextMenu(this); // TODO // TODO
+        QMenu contextMenu(this);  // TODO // TODO
 
         QAction actionEdit(this);
         QAction actionDemangle(this);
@@ -957,7 +957,7 @@ void ELFWidget::on_tableView_Elf_Shdr_customContextMenuRequested(const QPoint &p
     qint32 nRow = ui->tableView_Elf_Shdr->currentIndex().row();
 
     if (nRow != -1) {
-        QMenu contextMenu(this); // TODO // TODO
+        QMenu contextMenu(this);  // TODO // TODO
 
         QAction actionEdit(this);
         QAction actionHex(this);
@@ -1045,7 +1045,7 @@ void ELFWidget::on_tableView_Elf_Phdr_customContextMenuRequested(const QPoint &p
     qint32 nRow = ui->tableView_Elf_Phdr->currentIndex().row();
 
     if (nRow != -1) {
-        QMenu contextMenu(this); // TODO // TODO
+        QMenu contextMenu(this);  // TODO // TODO
 
         QAction actionEdit(this);
         QAction actionHex(this);
@@ -1086,7 +1086,7 @@ void ELFWidget::on_tableView_DynamicArrayTags_customContextMenuRequested(const Q
     qint32 nRow = ui->tableView_DynamicArrayTags->currentIndex().row();
 
     if (nRow != -1) {
-        QMenu contextMenu(this); // TODO // TODO
+        QMenu contextMenu(this);  // TODO // TODO
 
         QAction actionEdit(this);
 
@@ -1118,7 +1118,7 @@ void ELFWidget::on_tableView_Rela_customContextMenuRequested(const QPoint &pos)
     qint32 nRow = ui->tableView_Rela->currentIndex().row();
 
     if (nRow != -1) {
-        QMenu contextMenu(this); // TODO // TODO
+        QMenu contextMenu(this);  // TODO // TODO
 
         QAction actionEdit(this);
 
@@ -1154,7 +1154,7 @@ void ELFWidget::on_tableView_Rel_customContextMenuRequested(const QPoint &pos)
     qint32 nRow = ui->tableView_Rel->currentIndex().row();
 
     if (nRow != -1) {
-        QMenu contextMenu(this); // TODO // TODO
+        QMenu contextMenu(this);  // TODO // TODO
 
         QAction actionEdit(this);
 

@@ -506,4 +506,3 @@ void MSDOSWidget::on_pushButtonDump_Overlay_clicked()
         dumpRegion(nOffset, nSize, tr("Overlay"));
     }
 }
-
