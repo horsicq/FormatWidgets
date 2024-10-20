@@ -154,25 +154,25 @@ void MACHWidget::reload()
             }
 
             if (mach.isCommandPresent(XMACH_DEF::S_LC_ID_DYLIB, &listCommandRecords)) {
-                QTreeWidgetItem *pItemIdDylib = createNewItem(SMACH::TYPE_mach_id_library, QString("LC_ID_DYLIB"));
+                QTreeWidgetItem *pItemIdDylib = createNewItem(SMACH::TYPE_mach_id_library, QString("LC_ID_DYLIB"), XOptions::ICONTYPE_LIBRARY);
 
                 pItemCommands->addChild(pItemIdDylib);
             }
 
             if (mach.isCommandPresent(XMACH_DEF::S_LC_LOAD_DYLIB, &listCommandRecords)) {
-                QTreeWidgetItem *pItemLoadDylib = createNewItem(SMACH::TYPE_mach_libraries, QString("LC_LOAD_DYLIB"));
+                QTreeWidgetItem *pItemLoadDylib = createNewItem(SMACH::TYPE_mach_libraries, QString("LC_LOAD_DYLIB"), XOptions::ICONTYPE_LIBRARY);
 
                 pItemCommands->addChild(pItemLoadDylib);
             }
 
             if (mach.isCommandPresent(XMACH_DEF::S_LC_LOADFVMLIB, &listCommandRecords)) {
-                QTreeWidgetItem *pLoadFVMLib = createNewItem(SMACH::TYPE_mach_LOADFVMLIB, QString("LC_LOADFVMLIB"));
+                QTreeWidgetItem *pLoadFVMLib = createNewItem(SMACH::TYPE_mach_LOADFVMLIB, QString("LC_LOADFVMLIB"), XOptions::ICONTYPE_LIBRARY);
 
                 pItemCommands->addChild(pLoadFVMLib);
             }
 
             if (mach.isCommandPresent(XMACH_DEF::S_LC_IDFVMLIB, &listCommandRecords)) {
-                QTreeWidgetItem *pIdFMVLib = createNewItem(SMACH::TYPE_mach_IDFVMLIB, QString("LC_IDFVMLIB"));
+                QTreeWidgetItem *pIdFMVLib = createNewItem(SMACH::TYPE_mach_IDFVMLIB, QString("LC_IDFVMLIB"), XOptions::ICONTYPE_LIBRARY);
 
                 pItemCommands->addChild(pIdFMVLib);
             }
