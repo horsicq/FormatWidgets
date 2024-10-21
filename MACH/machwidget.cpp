@@ -178,7 +178,7 @@ void MACHWidget::reload()
             }
 
             if (mach.isCommandPresent(XMACH_DEF::S_LC_LOAD_WEAK_DYLIB, &listCommandRecords)) {
-                QTreeWidgetItem *pItemLibraries = createNewItem(SMACH::TYPE_mach_weak_libraries, QString("LC_LOAD_WEAK_DYLIB"));
+                QTreeWidgetItem *pItemLibraries = createNewItem(SMACH::TYPE_mach_weak_libraries, QString("LC_LOAD_WEAK_DYLIB"), XOptions::ICONTYPE_LIBRARY);
 
                 pItemCommands->addChild(pItemLibraries);
             }
@@ -187,42 +187,42 @@ void MACHWidget::reload()
                 qint64 _nOffset = mach.getCommandRecordOffset(XMACH_DEF::S_LC_DYLD_INFO_ONLY, 0, &listCommandRecords);
 
                 QTreeWidgetItem *pItemDyldInfo =
-                    createNewItem(SMACH::TYPE_mach_dyld_info_only, QString("LC_DYLD_INFO_ONLY"), XOptions::ICONTYPE_GENERIC, _nOffset);  // TODO rename
+                    createNewItem(SMACH::TYPE_mach_dyld_info_only, QString("LC_DYLD_INFO_ONLY"), XOptions::ICONTYPE_TABLE, _nOffset);  // TODO rename
 
                 pItemCommands->addChild(pItemDyldInfo);
 
                 XMACH_DEF::dyld_info_command dyld_info = mach._read_dyld_info_command(_nOffset);
 
                 if (mach.isOffsetValid(dyld_info.rebase_off) && (dyld_info.rebase_size)) {
-                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_DYLD_INFO_rebase, tr("Rebase"), XOptions::ICONTYPE_GENERIC, dyld_info.rebase_off,
+                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_DYLD_INFO_rebase, tr("Rebase"), XOptions::ICONTYPE_TABLE, dyld_info.rebase_off,
                                                            dyld_info.rebase_size);  // TODO rename
 
                     pItemDyldInfo->addChild(pItem);
                 }
 
                 if (mach.isOffsetValid(dyld_info.bind_off) && (dyld_info.bind_size)) {
-                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_DYLD_INFO_bind, tr("Binding"), XOptions::ICONTYPE_GENERIC, dyld_info.bind_off,
+                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_DYLD_INFO_bind, tr("Binding"), XOptions::ICONTYPE_TABLE, dyld_info.bind_off,
                                                            dyld_info.bind_size);  // TODO rename
 
                     pItemDyldInfo->addChild(pItem);
                 }
 
                 if (mach.isOffsetValid(dyld_info.weak_bind_off) && (dyld_info.weak_bind_size)) {
-                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_DYLD_INFO_weak_bind, tr("Weak binding"), XOptions::ICONTYPE_GENERIC, dyld_info.weak_bind_off,
+                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_DYLD_INFO_weak_bind, tr("Weak binding"), XOptions::ICONTYPE_TABLE, dyld_info.weak_bind_off,
                                                            dyld_info.weak_bind_size);  // TODO rename
 
                     pItemDyldInfo->addChild(pItem);
                 }
 
                 if (mach.isOffsetValid(dyld_info.lazy_bind_off) && (dyld_info.lazy_bind_size)) {
-                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_DYLD_INFO_lazy_bind, tr("Lazy binding"), XOptions::ICONTYPE_GENERIC, dyld_info.lazy_bind_off,
+                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_DYLD_INFO_lazy_bind, tr("Lazy binding"), XOptions::ICONTYPE_TABLE, dyld_info.lazy_bind_off,
                                                            dyld_info.lazy_bind_size);  // TODO rename
 
                     pItemDyldInfo->addChild(pItem);
                 }
 
                 if (mach.isOffsetValid(dyld_info.export_off) && (dyld_info.export_size)) {
-                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_DYLD_INFO_export, tr("Export"), XOptions::ICONTYPE_GENERIC, dyld_info.export_off,
+                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_DYLD_INFO_export, tr("Export"), XOptions::ICONTYPE_EXPORT, dyld_info.export_off,
                                                            dyld_info.export_size);  // TODO rename
 
                     pItemDyldInfo->addChild(pItem);
@@ -230,7 +230,7 @@ void MACHWidget::reload()
             }
 
             if (mach.isCommandPresent(XMACH_DEF::S_LC_UUID, &listCommandRecords)) {
-                QTreeWidgetItem *pItemUuid = createNewItem(SMACH::TYPE_mach_uuid, QString("LC_UUID"), XOptions::ICONTYPE_GENERIC,
+                QTreeWidgetItem *pItemUuid = createNewItem(SMACH::TYPE_mach_uuid, QString("LC_UUID"), XOptions::ICONTYPE_TABLE,
                                                            mach.getCommandRecordOffset(XMACH_DEF::S_LC_UUID, 0,
                                                                                        &listCommandRecords));  // TODO rename
 
@@ -240,7 +240,7 @@ void MACHWidget::reload()
             if (mach.isCommandPresent(XMACH_DEF::S_LC_SYMTAB, &listCommandRecords)) {
                 qint64 _nOffset = mach.getCommandRecordOffset(XMACH_DEF::S_LC_SYMTAB, 0, &listCommandRecords);
 
-                QTreeWidgetItem *pItemSymtab = createNewItem(SMACH::TYPE_mach_symtab, QString("LC_SYMTAB"), XOptions::ICONTYPE_GENERIC,
+                QTreeWidgetItem *pItemSymtab = createNewItem(SMACH::TYPE_mach_symtab, QString("LC_SYMTAB"), XOptions::ICONTYPE_TABLE,
                                                              _nOffset);  // TODO rename
 
                 pItemCommands->addChild(pItemSymtab);
@@ -249,14 +249,14 @@ void MACHWidget::reload()
 
                 if (mach.isOffsetValid(symtab.stroff) && (symtab.strsize)) {
                     QTreeWidgetItem *pItem =
-                        createNewItem(SMACH::TYPE_STRINGTABLE, tr("String table"), XOptions::ICONTYPE_GENERIC, symtab.stroff, symtab.strsize);  // TODO rename
+                        createNewItem(SMACH::TYPE_STRINGTABLE, tr("String table"), XOptions::ICONTYPE_STRING, symtab.stroff, symtab.strsize);  // TODO rename
 
                     pItemSymtab->addChild(pItem);
                 }
 
                 if (mach.isOffsetValid(symtab.symoff) && (symtab.nsyms)) {
                     QTreeWidgetItem *pItem =
-                        createNewItem(SMACH::TYPE_SYMBOLTABLE, tr("Symbol table"), XOptions::ICONTYPE_GENERIC, symtab.symoff, symtab.nsyms);  // TODO rename
+                        createNewItem(SMACH::TYPE_SYMBOLTABLE, tr("Symbol table"), XOptions::ICONTYPE_SYMBOL, symtab.symoff, symtab.nsyms);  // TODO rename
 
                     pItemSymtab->addChild(pItem);
                 }
@@ -265,7 +265,7 @@ void MACHWidget::reload()
             if (mach.isCommandPresent(XMACH_DEF::S_LC_DYSYMTAB, &listCommandRecords)) {
                 qint64 _nOffset = mach.getCommandRecordOffset(XMACH_DEF::S_LC_DYSYMTAB, 0, &listCommandRecords);
 
-                QTreeWidgetItem *pItemDysymtab = createNewItem(SMACH::TYPE_mach_dysymtab, QString("LC_DYSYMTAB"), XOptions::ICONTYPE_GENERIC,
+                QTreeWidgetItem *pItemDysymtab = createNewItem(SMACH::TYPE_mach_dysymtab, QString("LC_DYSYMTAB"), XOptions::ICONTYPE_SYMBOL,
                                                                _nOffset);  // TODO rename
 
                 pItemCommands->addChild(pItemDysymtab);
@@ -274,41 +274,41 @@ void MACHWidget::reload()
 
                 if (mach.isOffsetValid(dysymtab.tocoff) && (dysymtab.ntoc)) {
                     QTreeWidgetItem *pItem =
-                        createNewItem(SMACH::TYPE_DYSYMTAB_toc, tr("Table of contents"), XOptions::ICONTYPE_GENERIC, dysymtab.tocoff, dysymtab.ntoc);  // TODO rename
+                        createNewItem(SMACH::TYPE_DYSYMTAB_toc, tr("Table of contents"), XOptions::ICONTYPE_TABLE, dysymtab.tocoff, dysymtab.ntoc);  // TODO rename
 
                     pItemDysymtab->addChild(pItem);
                 }
 
                 if (mach.isOffsetValid(dysymtab.modtaboff) && (dysymtab.nmodtab)) {
                     QTreeWidgetItem *pItem =
-                        createNewItem(SMACH::TYPE_DYSYMTAB_modtab, tr("Modules"), XOptions::ICONTYPE_GENERIC, dysymtab.modtaboff, dysymtab.nmodtab);  // TODO rename
+                        createNewItem(SMACH::TYPE_DYSYMTAB_modtab, tr("Modules"), XOptions::ICONTYPE_LIST, dysymtab.modtaboff, dysymtab.nmodtab);  // TODO rename
 
                     pItemDysymtab->addChild(pItem);
                 }
 
                 if (mach.isOffsetValid(dysymtab.extrefsymoff) && (dysymtab.nextrefsyms)) {
-                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_DYSYMTAB_extrefsyms, tr("External references"), XOptions::ICONTYPE_GENERIC, dysymtab.extrefsymoff,
+                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_DYSYMTAB_extrefsyms, tr("External references"), XOptions::ICONTYPE_SYMBOL, dysymtab.extrefsymoff,
                                                            dysymtab.nextrefsyms);  // TODO rename
 
                     pItemDysymtab->addChild(pItem);
                 }
 
                 if (mach.isOffsetValid(dysymtab.indirectsymoff) && (dysymtab.nindirectsyms)) {
-                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_DYSYMTAB_indirectsyms, tr("Indirect symbols"), XOptions::ICONTYPE_GENERIC, dysymtab.indirectsymoff,
+                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_DYSYMTAB_indirectsyms, tr("Indirect symbols"), XOptions::ICONTYPE_SYMBOL, dysymtab.indirectsymoff,
                                                            dysymtab.nindirectsyms);  // TODO rename
 
                     pItemDysymtab->addChild(pItem);
                 }
 
                 if (mach.isOffsetValid(dysymtab.extreloff) && (dysymtab.nextrel)) {
-                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_DYSYMTAB_extrel, QString("External relocation"), XOptions::ICONTYPE_GENERIC, dysymtab.extreloff,
+                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_DYSYMTAB_extrel, QString("External relocation"), XOptions::ICONTYPE_RELOC, dysymtab.extreloff,
                                                            dysymtab.nextrel);  // TODO rename
 
                     pItemDysymtab->addChild(pItem);
                 }
 
                 if (mach.isOffsetValid(dysymtab.locreloff) && (dysymtab.nlocrel)) {
-                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_DYSYMTAB_locrel, tr("Local relocation"), XOptions::ICONTYPE_GENERIC, dysymtab.locreloff,
+                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_DYSYMTAB_locrel, tr("Local relocation"), XOptions::ICONTYPE_RELOC, dysymtab.locreloff,
                                                            dysymtab.nlocrel);  // TODO rename
 
                     pItemDysymtab->addChild(pItem);
