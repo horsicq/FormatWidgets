@@ -316,25 +316,25 @@ void MACHWidget::reload()
             }
 
             if (mach.isCommandPresent(XMACH_DEF::S_LC_VERSION_MIN_MACOSX, &listCommandRecords)) {
-                QTreeWidgetItem *pItemVersionMin = createNewItem(SMACH::TYPE_mach_version_min, QString("LC_VERSION_MIN_MACOSX"), XOptions::ICONTYPE_GENERIC,
+                QTreeWidgetItem *pItemVersionMin = createNewItem(SMACH::TYPE_mach_version_min, QString("LC_VERSION_MIN_MACOSX"), XOptions::ICONTYPE_VERSION,
                                                                  mach.getCommandRecordOffset(XMACH_DEF::S_LC_VERSION_MIN_MACOSX, 0,
                                                                                              &listCommandRecords));  // TODO rename
 
                 pItemCommands->addChild(pItemVersionMin);
             } else if (mach.isCommandPresent(XMACH_DEF::S_LC_VERSION_MIN_IPHONEOS, &listCommandRecords)) {
-                QTreeWidgetItem *pItemVersionMin = createNewItem(SMACH::TYPE_mach_version_min, QString("LC_VERSION_MIN_IPHONEOS"), XOptions::ICONTYPE_GENERIC,
+                QTreeWidgetItem *pItemVersionMin = createNewItem(SMACH::TYPE_mach_version_min, QString("LC_VERSION_MIN_IPHONEOS"), XOptions::ICONTYPE_VERSION,
                                                                  mach.getCommandRecordOffset(XMACH_DEF::S_LC_VERSION_MIN_IPHONEOS, 0,
                                                                                              &listCommandRecords));  // TODO rename
 
                 pItemCommands->addChild(pItemVersionMin);
             } else if (mach.isCommandPresent(XMACH_DEF::S_LC_VERSION_MIN_TVOS, &listCommandRecords)) {
-                QTreeWidgetItem *pItemVersionMin = createNewItem(SMACH::TYPE_mach_version_min, QString("LC_VERSION_MIN_TVOS"), XOptions::ICONTYPE_GENERIC,
+                QTreeWidgetItem *pItemVersionMin = createNewItem(SMACH::TYPE_mach_version_min, QString("LC_VERSION_MIN_TVOS"), XOptions::ICONTYPE_VERSION,
                                                                  mach.getCommandRecordOffset(XMACH_DEF::S_LC_VERSION_MIN_TVOS, 0,
                                                                                              &listCommandRecords));  // TODO rename
 
                 pItemCommands->addChild(pItemVersionMin);
             } else if (mach.isCommandPresent(XMACH_DEF::S_LC_VERSION_MIN_WATCHOS, &listCommandRecords)) {
-                QTreeWidgetItem *pItemVersionMin = createNewItem(SMACH::TYPE_mach_version_min, QString("LC_VERSION_MIN_WATCHOS"), XOptions::ICONTYPE_GENERIC,
+                QTreeWidgetItem *pItemVersionMin = createNewItem(SMACH::TYPE_mach_version_min, QString("LC_VERSION_MIN_WATCHOS"), XOptions::ICONTYPE_VERSION,
                                                                  mach.getCommandRecordOffset(XMACH_DEF::S_LC_VERSION_MIN_WATCHOS, 0,
                                                                                              &listCommandRecords));  // TODO rename
 
@@ -342,7 +342,7 @@ void MACHWidget::reload()
             }
 
             if (mach.isCommandPresent(XMACH_DEF::S_LC_BUILD_VERSION, &listCommandRecords)) {
-                QTreeWidgetItem *pItemBuildVersion = createNewItem(SMACH::TYPE_mach_build_version, QString("LC_BUILD_VERSION"), XOptions::ICONTYPE_GENERIC,
+                QTreeWidgetItem *pItemBuildVersion = createNewItem(SMACH::TYPE_mach_build_version, QString("LC_BUILD_VERSION"), XOptions::ICONTYPE_VERSION,
                                                                    mach.getCommandRecordOffset(XMACH_DEF::S_LC_BUILD_VERSION, 0,
                                                                                                &listCommandRecords));  // TODO rename
 
@@ -350,7 +350,7 @@ void MACHWidget::reload()
             }
 
             if (mach.isCommandPresent(XMACH_DEF::S_LC_LOAD_DYLINKER, &listCommandRecords)) {
-                QTreeWidgetItem *pItemDylinker = createNewItem(SMACH::TYPE_mach_dylinker, QString("LC_LOAD_DYLINKER"), XOptions::ICONTYPE_GENERIC,
+                QTreeWidgetItem *pItemDylinker = createNewItem(SMACH::TYPE_mach_dylinker, QString("LC_LOAD_DYLINKER"), XOptions::ICONTYPE_LIST,
                                                                mach.getCommandRecordOffset(XMACH_DEF::S_LC_LOAD_DYLINKER, 0,
                                                                                            &listCommandRecords));  // TODO rename
 
@@ -358,7 +358,7 @@ void MACHWidget::reload()
             }
 
             if (mach.isCommandPresent(XMACH_DEF::S_LC_RPATH, &listCommandRecords)) {
-                QTreeWidgetItem *pItemRPath = createNewItem(SMACH::TYPE_mach_rpath, QString("LC_RPATH"), XOptions::ICONTYPE_GENERIC,
+                QTreeWidgetItem *pItemRPath = createNewItem(SMACH::TYPE_mach_rpath, QString("LC_RPATH"), XOptions::ICONTYPE_LIST,
                                                             mach.getCommandRecordOffset(XMACH_DEF::S_LC_RPATH, 0,
                                                                                         &listCommandRecords));  // TODO rename
 
@@ -366,7 +366,7 @@ void MACHWidget::reload()
             }
 
             if (mach.isCommandPresent(XMACH_DEF::S_LC_SOURCE_VERSION, &listCommandRecords)) {
-                QTreeWidgetItem *pItemSourceVersion = createNewItem(SMACH::TYPE_mach_source_version, QString("LC_SOURCE_VERSION"), XOptions::ICONTYPE_GENERIC,
+                QTreeWidgetItem *pItemSourceVersion = createNewItem(SMACH::TYPE_mach_source_version, QString("LC_SOURCE_VERSION"), XOptions::ICONTYPE_VERSION,
                                                                     mach.getCommandRecordOffset(XMACH_DEF::S_LC_SOURCE_VERSION, 0,
                                                                                                 &listCommandRecords));  // TODO rename
 
@@ -374,7 +374,7 @@ void MACHWidget::reload()
             }
 
             if (mach.isCommandPresent(XMACH_DEF::S_LC_ENCRYPTION_INFO, &listCommandRecords)) {
-                QTreeWidgetItem *pItemEncryptionInfo = createNewItem(SMACH::TYPE_mach_encryption_info, QString("LC_ENCRYPTION_INFO"), XOptions::ICONTYPE_GENERIC,
+                QTreeWidgetItem *pItemEncryptionInfo = createNewItem(SMACH::TYPE_mach_encryption_info, QString("LC_ENCRYPTION_INFO"), XOptions::ICONTYPE_INFO,
                                                                      mach.getCommandRecordOffset(XMACH_DEF::S_LC_ENCRYPTION_INFO, 0, &listCommandRecords),
                                                                      mach.get_encryption_info_command_size());  // TODO rename
 
@@ -382,7 +382,7 @@ void MACHWidget::reload()
             }
 
             if (mach.isCommandPresent(XMACH_DEF::S_LC_ENCRYPTION_INFO_64, &listCommandRecords)) {
-                QTreeWidgetItem *pItemEncryptionInfo = createNewItem(SMACH::TYPE_mach_encryption_info, QString("LC_ENCRYPTION_INFO_64"), XOptions::ICONTYPE_GENERIC,
+                QTreeWidgetItem *pItemEncryptionInfo = createNewItem(SMACH::TYPE_mach_encryption_info, QString("LC_ENCRYPTION_INFO_64"), XOptions::ICONTYPE_INFO,
                                                                      mach.getCommandRecordOffset(XMACH_DEF::S_LC_ENCRYPTION_INFO_64, 0, &listCommandRecords),
                                                                      mach.get_encryption_info_command_64_size());  // TODO rename
 
@@ -393,14 +393,14 @@ void MACHWidget::reload()
                 qint64 _nOffset = mach.getCommandRecordOffset(XMACH_DEF::S_LC_FUNCTION_STARTS, 0, &listCommandRecords);
 
                 QTreeWidgetItem *pItemFunctionStarts =
-                    createNewItem(SMACH::TYPE_mach_function_starts, QString("LC_FUNCTION_STARTS"), XOptions::ICONTYPE_GENERIC, _nOffset);  // TODO rename
+                    createNewItem(SMACH::TYPE_mach_function_starts, QString("LC_FUNCTION_STARTS"), XOptions::ICONTYPE_LIST, _nOffset);  // TODO rename
 
                 pItemCommands->addChild(pItemFunctionStarts);
 
                 XMACH_DEF::linkedit_data_command linkedit_data = mach._read_linkedit_data_command(_nOffset);
 
                 if (mach.isOffsetValid(linkedit_data.dataoff) && (linkedit_data.datasize)) {
-                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_FUNCTIONS, tr("Functions"), XOptions::ICONTYPE_GENERIC, linkedit_data.dataoff,
+                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_FUNCTIONS, tr("Functions"), XOptions::ICONTYPE_LIST, linkedit_data.dataoff,
                                                            linkedit_data.datasize);  // TODO rename
 
                     pItemFunctionStarts->addChild(pItem);
@@ -410,7 +410,7 @@ void MACHWidget::reload()
             if (mach.isCommandPresent(XMACH_DEF::S_LC_DATA_IN_CODE, &listCommandRecords)) {
                 qint64 _nOffset = mach.getCommandRecordOffset(XMACH_DEF::S_LC_DATA_IN_CODE, 0, &listCommandRecords);
 
-                QTreeWidgetItem *pItemDataInCode = createNewItem(SMACH::TYPE_mach_data_in_code, QString("LC_DATA_IN_CODE"), XOptions::ICONTYPE_GENERIC,
+                QTreeWidgetItem *pItemDataInCode = createNewItem(SMACH::TYPE_mach_data_in_code, QString("LC_DATA_IN_CODE"), XOptions::ICONTYPE_DATA,
                                                                  _nOffset);  // TODO rename
 
                 pItemCommands->addChild(pItemDataInCode);
@@ -418,7 +418,7 @@ void MACHWidget::reload()
                 XMACH_DEF::linkedit_data_command linkedit_data = mach._read_linkedit_data_command(_nOffset);
 
                 if (mach.isOffsetValid(linkedit_data.dataoff) && (linkedit_data.datasize)) {
-                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_DICE, tr("Data in code"), XOptions::ICONTYPE_GENERIC, linkedit_data.dataoff,
+                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_DICE, tr("Data in code"), XOptions::ICONTYPE_DATA, linkedit_data.dataoff,
                                                            linkedit_data.datasize);  // TODO rename
 
                     pItemDataInCode->addChild(pItem);
