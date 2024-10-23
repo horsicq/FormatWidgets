@@ -467,32 +467,32 @@ void MACHWidget::reload()
                 _nOffset += sizeof(XMACH_DEF::unix_thread_command);
 
                 if (nMachine == XMACH_DEF::S_CPU_TYPE_I386) {
-                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_mach_unix_thread_x86_32, QString("x86_thread_state32_t"), XOptions::ICONTYPE_GENERIC,
+                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_mach_unix_thread_x86_32, QString("x86_thread_state32_t"), XOptions::ICONTYPE_ENTRY,
                                                            _nOffset);  // TODO rename
 
                     pItemUnixThread->addChild(pItem);
                 } else if (nMachine == XMACH_DEF::S_CPU_TYPE_X86_64) {
-                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_mach_unix_thread_x86_64, QString("x86_thread_state64_t"), XOptions::ICONTYPE_GENERIC,
+                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_mach_unix_thread_x86_64, QString("x86_thread_state64_t"), XOptions::ICONTYPE_ENTRY,
                                                            _nOffset);  // TODO rename
 
                     pItemUnixThread->addChild(pItem);
                 } else if (nMachine == XMACH_DEF::S_CPU_TYPE_ARM) {
-                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_mach_unix_thread_arm_32, QString("arm_thread_state32_t"), XOptions::ICONTYPE_GENERIC,
+                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_mach_unix_thread_arm_32, QString("arm_thread_state32_t"), XOptions::ICONTYPE_ENTRY,
                                                            _nOffset);  // TODO rename
 
                     pItemUnixThread->addChild(pItem);
                 } else if (nMachine == XMACH_DEF::S_CPU_TYPE_ARM64) {
-                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_mach_unix_thread_arm_64, QString("arm_thread_state64_t"), XOptions::ICONTYPE_GENERIC,
+                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_mach_unix_thread_arm_64, QString("arm_thread_state64_t"), XOptions::ICONTYPE_ENTRY,
                                                            _nOffset);  // TODO rename
 
                     pItemUnixThread->addChild(pItem);
                 } else if (nMachine == XMACH_DEF::S_CPU_TYPE_MC680x0) {
-                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_mach_unix_thread_m68k_32, QString("m68k_thread_state32_t"), XOptions::ICONTYPE_GENERIC,
+                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_mach_unix_thread_m68k_32, QString("m68k_thread_state32_t"), XOptions::ICONTYPE_ENTRY,
                                                            _nOffset);  // TODO rename
 
                     pItemUnixThread->addChild(pItem);
                 } else if (nMachine == XMACH_DEF::S_CPU_TYPE_POWERPC) {
-                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_mach_unix_thread_ppc_32, QString("ppc_thread_state32_t"), XOptions::ICONTYPE_GENERIC,
+                    QTreeWidgetItem *pItem = createNewItem(SMACH::TYPE_mach_unix_thread_ppc_32, QString("ppc_thread_state32_t"), XOptions::ICONTYPE_ENTRY,
                                                            _nOffset);  // TODO rename
 
                     pItemUnixThread->addChild(pItem);
