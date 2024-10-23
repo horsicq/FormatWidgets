@@ -444,7 +444,7 @@ void MACHWidget::reload()
             }
 
             if (mach.isCommandPresent(XMACH_DEF::S_LC_MAIN, &listCommandRecords)) {
-                QTreeWidgetItem *pItemMain = createNewItem(SMACH::TYPE_mach_main, QString("LC_MAIN"), XOptions::ICONTYPE_GENERIC,
+                QTreeWidgetItem *pItemMain = createNewItem(SMACH::TYPE_mach_main, QString("LC_MAIN"), XOptions::ICONTYPE_ENTRY,
                                                            mach.getCommandRecordOffset(XMACH_DEF::S_LC_MAIN, 0,
                                                                                        &listCommandRecords));  // TODO rename
 
@@ -454,7 +454,7 @@ void MACHWidget::reload()
             if (mach.isCommandPresent(XMACH_DEF::S_LC_UNIXTHREAD, &listCommandRecords)) {
                 qint64 _nOffset = mach.getCommandRecordOffset(XMACH_DEF::S_LC_UNIXTHREAD, 0, &listCommandRecords);
 
-                QTreeWidgetItem *pItemUnixThread = createNewItem(SMACH::TYPE_mach_unix_thread, QString("LC_UNIXTHREAD"), XOptions::ICONTYPE_GENERIC,
+                QTreeWidgetItem *pItemUnixThread = createNewItem(SMACH::TYPE_mach_unix_thread, QString("LC_UNIXTHREAD"), XOptions::ICONTYPE_ENTRY,
                                                                  _nOffset);  // TODO rename
 
                 pItemCommands->addChild(pItemUnixThread);
@@ -503,7 +503,7 @@ void MACHWidget::reload()
                 qint64 _nOffset = mach.getCommandRecordOffset(XMACH_DEF::S_LC_DYLD_CHAINED_FIXUPS, 0, &listCommandRecords);
 
                 QTreeWidgetItem *pItemChainedFixups =
-                    createNewItem(SMACH::TYPE_mach_dyld_chained_fixups, QString("LC_DYLD_CHAINED_FIXUPS"), XOptions::ICONTYPE_GENERIC, _nOffset);  // TODO rename
+                    createNewItem(SMACH::TYPE_mach_dyld_chained_fixups, QString("LC_DYLD_CHAINED_FIXUPS"), XOptions::ICONTYPE_LIST, _nOffset);  // TODO rename
 
                 pItemCommands->addChild(pItemChainedFixups);
 
@@ -518,7 +518,7 @@ void MACHWidget::reload()
                 qint64 _nOffset = mach.getCommandRecordOffset(XMACH_DEF::S_LC_DYLD_EXPORTS_TRIE, 0, &listCommandRecords);
 
                 QTreeWidgetItem *pItemExportsTrie =
-                    createNewItem(SMACH::TYPE_mach_dyld_exports_trie, QString("LC_DYLD_EXPORTS_TRIE"), XOptions::ICONTYPE_GENERIC, _nOffset);  // TODO rename
+                    createNewItem(SMACH::TYPE_mach_dyld_exports_trie, QString("LC_DYLD_EXPORTS_TRIE"), XOptions::ICONTYPE_EXPORT, _nOffset);  // TODO rename
 
                 pItemCommands->addChild(pItemExportsTrie);
 
