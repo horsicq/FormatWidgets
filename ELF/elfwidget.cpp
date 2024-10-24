@@ -657,10 +657,10 @@ void ELFWidget::addDatasets(XELF *pElf, QTreeWidgetItem *pParent, QList<XBinary:
             pParent->addChild(createNewItem(SELF::TYPE_NOTES, pListDataSets->at(i).sName, XOptions::ICONTYPE_GENERIC, pListDataSets->at(i).nOffset,
                                             pListDataSets->at(i).nSize, pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
         } else if (pListDataSets->at(i).nType == XELF::DS_RELA) {
-            pParent->addChild(createNewItem(SELF::TYPE_Elf_Rela, pListDataSets->at(i).sName, XOptions::ICONTYPE_GENERIC, pListDataSets->at(i).nOffset,
+            pParent->addChild(createNewItem(SELF::TYPE_Elf_Rela, pListDataSets->at(i).sName, XOptions::ICONTYPE_RELOC, pListDataSets->at(i).nOffset,
                                             pListDataSets->at(i).nSize, pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
         } else if (pListDataSets->at(i).nType == XELF::DS_REL) {
-            pParent->addChild(createNewItem(SELF::TYPE_Elf_Rel, pListDataSets->at(i).sName, XOptions::ICONTYPE_GENERIC, pListDataSets->at(i).nOffset,
+            pParent->addChild(createNewItem(SELF::TYPE_Elf_Rel, pListDataSets->at(i).sName, XOptions::ICONTYPE_RELOC, pListDataSets->at(i).nOffset,
                                             pListDataSets->at(i).nSize, pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
         } else if (pListDataSets->at(i).nType == XELF::DS_DYNAMICTAGS) {
             QTreeWidgetItem *pDynamicTags =
