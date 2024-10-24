@@ -242,7 +242,7 @@ void PEWidget::reload()
 
                 for (qint32 i = 0; i < nNumberOfStreams; i++) {
                     QTreeWidgetItem *pNetMetadataStream =
-                        createNewItem(SPE::TYPE_NET_METADATA_STREAM, cliInfo.metaData.listStreams.at(i).sName, XOptions::ICONTYPE_GENERIC,
+                        createNewItem(SPE::TYPE_NET_METADATA_STREAM, cliInfo.metaData.listStreams.at(i).sName, XOptions::ICONTYPE_METADATA,
                                       cliInfo.metaData.listStreams.at(i).nOffset, cliInfo.metaData.listStreams.at(i).nSize);
                     pNetMetadata->addChild(pNetMetadataStream);
 
