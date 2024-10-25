@@ -2359,10 +2359,10 @@ void PEWidget::on_tableView_Sections_customContextMenuRequested(const QPoint &po
         QAction actionDump(this);
 
         getShortcuts()->adjustAction(&contextMenu, &actionEdit, X_ID_TABLE_EDIT, this, SLOT(editSectionHeader()));
-        getShortcuts()->adjustAction(&contextMenu, &actionHex, X_ID_SELECTION_HEX, this, SLOT(sectionHex()));
-        getShortcuts()->adjustAction(&contextMenu, &actionDisasm, X_ID_SELECTION_DISASM, this, SLOT(sectionDisasm()));
-        getShortcuts()->adjustAction(&contextMenu, &actionEntropy, X_ID_SELECTION_ENTROPY, this, SLOT(sectionEntropy()));
-        getShortcuts()->adjustAction(&contextMenu, &actionDump, X_ID_SELECTION_DUMPTOFILE, this, SLOT(sectionDump()));
+        getShortcuts()->adjustAction(&contextMenu, &actionHex, X_ID_TABLE_SELECTION_HEX, this, SLOT(sectionHex()));
+        getShortcuts()->adjustAction(&contextMenu, &actionDisasm, X_ID_TABLE_SELECTION_DISASM, this, SLOT(sectionDisasm()));
+        getShortcuts()->adjustAction(&contextMenu, &actionEntropy, X_ID_TABLE_SELECTION_ENTROPY, this, SLOT(sectionEntropy()));
+        getShortcuts()->adjustAction(&contextMenu, &actionDump, X_ID_TABLE_SELECTION_DUMPTOFILE, this, SLOT(sectionDump()));
 
         if (!getTableViewItemSize(ui->tableView_Sections)) {
             actionHex.setEnabled(false);
