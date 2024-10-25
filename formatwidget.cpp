@@ -165,7 +165,7 @@ void FormatWidget::setData(const QString &sFileName, FW_DEF::OPTIONS options, qu
 {
     g_sFileName = sFileName;
 
-    QFile *pFile = new QFile(sFileName);  // TODO delete !!!
+    QFile *pFile = new QFile(sFileName);  // TODO delete !!! or use global
 
     XBinary::tryToOpen(pFile);
 
