@@ -104,27 +104,25 @@ void SearchValuesWidget::on_toolButtonSave_clicked()
 
 void SearchValuesWidget::on_tableViewResult_customContextMenuRequested(const QPoint &pos)
 {
-    QMenu contextMenu(this);  // TODO
-    QMenu menuFollowIn(this);
-    QAction actionHex(this);
-    QAction actionDisasm(this);
-    QMenu menuCopy(this);
+    QMenu contextMenu(this);
 
-    if (g_options.bMenu_Hex || g_options.bMenu_Disasm) {
-        getShortcuts()->adjustMenu(&contextMenu, &menuFollowIn, XShortcuts::GROUPID_FOLLOWIN);
+    QList<XShortcuts::MENUITEM> listMenuItems;
 
-        if (g_options.bMenu_Hex) {
-            getShortcuts()->adjustAction(&menuFollowIn, &actionHex, X_ID_FIND_FOLLOWIN_HEX, this, SLOT(_hex()));
-        }
+    getShortcuts()->_addMenuItem_CopyRow(&listMenuItems, ui->tableViewResult);
 
-        if (g_options.bMenu_Disasm) {
-            getShortcuts()->adjustAction(&menuFollowIn, &actionDisasm, X_ID_FIND_FOLLOWIN_DISASM, this, SLOT(_disasm()));
-        }
+    if (g_options.bMenu_Hex) {
+        getShortcuts()->_addMenuItem(&listMenuItems, X_ID_TABLE_FOLLOWIN_HEX, this, SLOT(_hex()), XShortcuts::GROUPID_FOLLOWIN);
     }
 
-    getShortcuts()->adjustRowCopyMenu(&contextMenu, &menuCopy, ui->tableViewResult);
+    if (g_options.bMenu_Disasm) {
+        getShortcuts()->_addMenuItem(&listMenuItems, X_ID_TABLE_FOLLOWIN_DISASM, this, SLOT(_disasm()), XShortcuts::GROUPID_FOLLOWIN);
+    }
+
+    QList<QObject *> listObjects = getShortcuts()->adjustContextMenu(&contextMenu, &listMenuItems);
 
     contextMenu.exec(ui->tableViewResult->viewport()->mapToGlobal(pos));
+
+    XOptions::deleteQObjectList(&listObjects);
 }
 
 void SearchValuesWidget::search()
