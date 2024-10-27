@@ -639,7 +639,7 @@ void ELFWidget::addDatasets(XELF *pElf, QTreeWidgetItem *pParent, QList<XBinary:
 
     for (qint32 i = 0; i < nNumberOfRecords; i++) {
         if (pListDataSets->at(i).nType == XELF::DS_INTERPRETER) {
-            pParent->addChild(createNewItem(SELF::TYPE_INTERPRETER, pListDataSets->at(i).sName, XOptions::ICONTYPE_GENERIC, pListDataSets->at(i).nOffset,
+            pParent->addChild(createNewItem(SELF::TYPE_INTERPRETER, pListDataSets->at(i).sName, XOptions::ICONTYPE_PATH, pListDataSets->at(i).nOffset,
                                             pListDataSets->at(i).nSize, pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
         } else if (pListDataSets->at(i).nType == XELF::DS_LIBRARIES) {
             pParent->addChild(createNewItem(SELF::TYPE_LIBRARIES, pListDataSets->at(i).sName, XOptions::ICONTYPE_LIBRARY, pListDataSets->at(i).nOffset,
@@ -651,10 +651,10 @@ void ELFWidget::addDatasets(XELF *pElf, QTreeWidgetItem *pParent, QList<XBinary:
             pParent->addChild(createNewItem(SELF::TYPE_SYMBOLTABLE, pListDataSets->at(i).sName, XOptions::ICONTYPE_SYMBOL, pListDataSets->at(i).nOffset,
                                             pListDataSets->at(i).nSize, pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
         } else if (pListDataSets->at(i).nType == XELF::DS_RUNPATH) {
-            pParent->addChild(createNewItem(SELF::TYPE_RUNPATH, pListDataSets->at(i).sName, XOptions::ICONTYPE_GENERIC, pListDataSets->at(i).nOffset,
+            pParent->addChild(createNewItem(SELF::TYPE_RUNPATH, pListDataSets->at(i).sName, XOptions::ICONTYPE_PATH, pListDataSets->at(i).nOffset,
                                             pListDataSets->at(i).nSize, pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
         } else if (pListDataSets->at(i).nType == XELF::DS_NOTES) {
-            pParent->addChild(createNewItem(SELF::TYPE_NOTES, pListDataSets->at(i).sName, XOptions::ICONTYPE_GENERIC, pListDataSets->at(i).nOffset,
+            pParent->addChild(createNewItem(SELF::TYPE_NOTES, pListDataSets->at(i).sName, XOptions::ICONTYPE_NOTE, pListDataSets->at(i).nOffset,
                                             pListDataSets->at(i).nSize, pListDataSets->at(i).nStringTableOffset, pListDataSets->at(i).nStringTableSize));
         } else if (pListDataSets->at(i).nType == XELF::DS_RELA) {
             pParent->addChild(createNewItem(SELF::TYPE_Elf_Rela, pListDataSets->at(i).sName, XOptions::ICONTYPE_RELOC, pListDataSets->at(i).nOffset,
