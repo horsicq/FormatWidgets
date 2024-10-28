@@ -1464,6 +1464,7 @@ void MACHWidget::reloadData(bool bSaveSelection)
                 ui->widgetVirusTotal->setData(getDevice());
             }
         } else if (nType == SMACH::TYPE_HEX) {
+            ui->widgetHex->setWidgetFocus();
             if (!isInitPresent(sInit)) {
                 XHexViewWidget::OPTIONS options = {};
                 options.bMenu_Disasm = true;
@@ -1480,6 +1481,7 @@ void MACHWidget::reloadData(bool bSaveSelection)
                 //                ui->widgetHex->enableReadOnly(false);
             }
         } else if (nType == SMACH::TYPE_DISASM) {
+            ui->widgetDisasm->setWidgetFocus();
             if (!isInitPresent(sInit)) {
                 XMultiDisasmWidget::OPTIONS options = {};
                 options.fileType = mach.getFileType();

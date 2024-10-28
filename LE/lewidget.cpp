@@ -362,6 +362,7 @@ void LEWidget::reloadData(bool bSaveSelection)
                 ui->widgetVirusTotal->setData(getDevice());
             }
         } else if (nType == SLE::TYPE_HEX) {
+            ui->widgetHex->setWidgetFocus();
             if (!isInitPresent(sInit)) {
                 XHexViewWidget::OPTIONS options = {};
                 options.bMenu_Disasm = true;
@@ -381,6 +382,7 @@ void LEWidget::reloadData(bool bSaveSelection)
                 ui->widgetHex->reload();
             }
         } else if (nType == SLE::TYPE_DISASM) {
+            ui->widgetDisasm->setWidgetFocus();
             if (!isInitPresent(sInit)) {
                 XMultiDisasmWidget::OPTIONS options = {};
                 options.fileType = le.getFileType();

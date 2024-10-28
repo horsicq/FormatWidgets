@@ -310,6 +310,7 @@ void ELFWidget::reloadData(bool bSaveSelection)
                 ui->widgetVirusTotal->setData(getDevice());
             }
         } else if (nType == SELF::TYPE_HEX) {
+            ui->widgetHex->setWidgetFocus();
             if (!isInitPresent(sInit)) {
                 XHexViewWidget::OPTIONS options = {};
                 options.bMenu_Disasm = true;
@@ -329,6 +330,7 @@ void ELFWidget::reloadData(bool bSaveSelection)
                 ui->widgetHex->reload();
             }
         } else if (nType == SELF::TYPE_DISASM) {
+            ui->widgetDisasm->setWidgetFocus();
             if (!isInitPresent(sInit)) {
                 XMultiDisasmWidget::OPTIONS options = {};
                 options.fileType = elf.getFileType();

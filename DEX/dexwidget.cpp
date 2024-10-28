@@ -346,6 +346,7 @@ void DEXWidget::reloadData(bool bSaveSelection)
                 ui->widgetVirusTotal->setData(getDevice());
             }
         } else if (nType == SDEX::TYPE_HEX) {
+            ui->widgetHex->setWidgetFocus();
             if (!isInitPresent(sInit)) {
                 XHexViewWidget::OPTIONS options = {};
                 //                options.bMenu_Disasm=true; // TODO

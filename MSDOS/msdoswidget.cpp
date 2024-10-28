@@ -280,6 +280,7 @@ void MSDOSWidget::reloadData(bool bSaveSelection)
                 ui->widgetVirusTotal->setData(getDevice());
             }
         } else if (nType == SMSDOS::TYPE_HEX) {
+            ui->widgetHex->setWidgetFocus();
             if (!isInitPresent(sInit)) {
                 XHexViewWidget::OPTIONS options = {};
                 options.bMenu_Disasm = true;
@@ -297,6 +298,7 @@ void MSDOSWidget::reloadData(bool bSaveSelection)
                 //                ui->widgetHex->enableReadOnly(false);
             }
         } else if (nType == SMSDOS::TYPE_DISASM) {
+            ui->widgetDisasm->setWidgetFocus();
             if (!isInitPresent(sInit)) {
                 XMultiDisasmWidget::OPTIONS options = {};
                 options.fileType = msdos.getFileType();
