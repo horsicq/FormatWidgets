@@ -284,20 +284,7 @@ void NEWidget::blockSignals(bool bState)
 
 void NEWidget::adjustHeaderTable(qint32 nType, QTableWidget *pTableWidget)
 {
-    // TODO like MACH !!!
-    Q_UNUSED(nType);
-
-    qint32 nSymbolWidth = XLineEditHEX::getSymbolWidth(this);
-
-    pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_NAME, QHeaderView::ResizeToContents);
-    pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_OFFSET, QHeaderView::ResizeToContents);
-    pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_TYPE, QHeaderView::ResizeToContents);
-    pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE, nSymbolWidth * 12);
-
-    switch (nType) {
-        case SNE::TYPE_DOS_HEADER: pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, nSymbolWidth * 15); break;
-        case SNE::TYPE_OS2_HEADER: pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, nSymbolWidth * 27); break;
-    }
+    FormatWidget::adjustHeaderTable(nType, pTableWidget);
 }
 
 QString NEWidget::typeIdToString(qint32 nType)
@@ -606,7 +593,7 @@ void NEWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 NEProcessData neProcessData(SNE::TYPE_SEGMENTS, &g_tvModel[SNE::TYPE_SEGMENTS], &ne, 0, 0);
 
-                ajustTableView(&neProcessData, &g_tvModel[SNE::TYPE_SEGMENTS], ui->tableView_SEGMENTS, false);
+                ajustTableView(nType, &neProcessData, &g_tvModel[SNE::TYPE_SEGMENTS], ui->tableView_SEGMENTS, false);
 
                 connect(ui->tableView_SEGMENTS->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_SEGMENTS_currentRowChanged(QModelIndex, QModelIndex)));

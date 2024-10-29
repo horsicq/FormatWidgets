@@ -62,9 +62,20 @@ XBinary::PDSTRUCT *ProcessData::getPdStruct()
     return g_pPdStruct;
 }
 
-void ProcessData::ajustTreeView(QWidget *pWidget, QTreeView *pTreeView)
+void ProcessData::ajustTableView(qint32 nType, QTableView *pTableView)
 {
-    Q_UNUSED(pWidget)
+    Q_UNUSED(nType)
+
+    qint32 nNumberOfColumns = pTableView->model()->columnCount();
+
+    for (qint32 i = 0; i < nNumberOfColumns; i++) {
+        XOptions::setTableViewHeaderWidth(pTableView, i, 120); // TODO
+    }
+}
+
+void ProcessData::ajustTreeView(qint32 nType, QTreeView *pTreeView)
+{
+    Q_UNUSED(nType)
 
     pTreeView->expand(pTreeView->model()->index(0, 0));
 }

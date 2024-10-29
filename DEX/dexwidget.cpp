@@ -277,18 +277,7 @@ void DEXWidget::blockSignals(bool bState)
 
 void DEXWidget::adjustHeaderTable(qint32 nType, QTableWidget *pTableWidget)
 {
-    XBinary::MODE mode = XDEX::getMode(getDevice());
-
-    pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET, getColumnWidth(this, CW_UINT16, mode));
-    pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE, getColumnWidth(this, CW_TYPE, mode));
-
-    switch (nType) {
-        case SDEX::TYPE_HEADER:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME, getColumnWidth(this, CW_STRINGSHORT, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE, getColumnWidth(this, CW_UINT32, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, getColumnWidth(this, CW_STRINGSHORT2, mode));
-            break;
-    }
+    FormatWidget::adjustHeaderTable(nType, pTableWidget);
 }
 
 QString DEXWidget::typeIdToString(qint32 nType)
@@ -504,7 +493,7 @@ void DEXWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 DEXProcessData dexProcessData(SDEX::TYPE_MAPITEMS, &g_tvModel[SDEX::TYPE_MAPITEMS], &dex, nDataOffset, nDataSize);
 
-                ajustTableView(&dexProcessData, &g_tvModel[SDEX::TYPE_MAPITEMS], ui->tableView_MapItems);
+                ajustTableView(nType, &dexProcessData, &g_tvModel[SDEX::TYPE_MAPITEMS], ui->tableView_MapItems);
 
                 if (g_tvModel[SDEX::TYPE_MAPITEMS]->rowCount()) {
                     ui->tableView_MapItems->setCurrentIndex(ui->tableView_MapItems->model()->index(0, 0));
@@ -514,7 +503,7 @@ void DEXWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 DEXProcessData dexProcessData(SDEX::TYPE_STRING_ID_ITEM, &g_tvModel[SDEX::TYPE_STRING_ID_ITEM], &dex, nDataOffset, nDataSize);
 
-                ajustTableView(&dexProcessData, &g_tvModel[SDEX::TYPE_STRING_ID_ITEM], ui->tableView_STRING_ID_ITEM);
+                ajustTableView(nType, &dexProcessData, &g_tvModel[SDEX::TYPE_STRING_ID_ITEM], ui->tableView_STRING_ID_ITEM);
 
                 if (g_tvModel[SDEX::TYPE_STRING_ID_ITEM]->rowCount()) {
                     ui->tableView_STRING_ID_ITEM->setCurrentIndex(ui->tableView_STRING_ID_ITEM->model()->index(0, 0));
@@ -524,7 +513,7 @@ void DEXWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 DEXProcessData dexProcessData(SDEX::TYPE_TYPE_ID_ITEM, &g_tvModel[SDEX::TYPE_TYPE_ID_ITEM], &dex, nDataOffset, nDataSize);
 
-                ajustTableView(&dexProcessData, &g_tvModel[SDEX::TYPE_TYPE_ID_ITEM], ui->tableView_TYPE_ID_ITEM);
+                ajustTableView(nType, &dexProcessData, &g_tvModel[SDEX::TYPE_TYPE_ID_ITEM], ui->tableView_TYPE_ID_ITEM);
 
                 if (g_tvModel[SDEX::TYPE_TYPE_ID_ITEM]->rowCount()) {
                     ui->tableView_TYPE_ID_ITEM->setCurrentIndex(ui->tableView_TYPE_ID_ITEM->model()->index(0, 0));
@@ -534,7 +523,7 @@ void DEXWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 DEXProcessData dexProcessData(SDEX::TYPE_PROTO_ID_ITEM, &g_tvModel[SDEX::TYPE_PROTO_ID_ITEM], &dex, nDataOffset, nDataSize);
 
-                ajustTableView(&dexProcessData, &g_tvModel[SDEX::TYPE_PROTO_ID_ITEM], ui->tableView_PROTO_ID_ITEM);
+                ajustTableView(nType, &dexProcessData, &g_tvModel[SDEX::TYPE_PROTO_ID_ITEM], ui->tableView_PROTO_ID_ITEM);
 
                 if (g_tvModel[SDEX::TYPE_PROTO_ID_ITEM]->rowCount()) {
                     ui->tableView_PROTO_ID_ITEM->setCurrentIndex(ui->tableView_PROTO_ID_ITEM->model()->index(0, 0));
@@ -544,7 +533,7 @@ void DEXWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 DEXProcessData dexProcessData(SDEX::TYPE_FIELD_ID_ITEM, &g_tvModel[SDEX::TYPE_FIELD_ID_ITEM], &dex, nDataOffset, nDataSize);
 
-                ajustTableView(&dexProcessData, &g_tvModel[SDEX::TYPE_FIELD_ID_ITEM], ui->tableView_FIELD_ID_ITEM);
+                ajustTableView(nType, &dexProcessData, &g_tvModel[SDEX::TYPE_FIELD_ID_ITEM], ui->tableView_FIELD_ID_ITEM);
 
                 if (g_tvModel[SDEX::TYPE_FIELD_ID_ITEM]->rowCount()) {
                     ui->tableView_FIELD_ID_ITEM->setCurrentIndex(ui->tableView_FIELD_ID_ITEM->model()->index(0, 0));
@@ -554,7 +543,7 @@ void DEXWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 DEXProcessData dexProcessData(SDEX::TYPE_METHOD_ID_ITEM, &g_tvModel[SDEX::TYPE_METHOD_ID_ITEM], &dex, nDataOffset, nDataSize);
 
-                ajustTableView(&dexProcessData, &g_tvModel[SDEX::TYPE_METHOD_ID_ITEM], ui->tableView_METHOD_ID_ITEM);
+                ajustTableView(nType, &dexProcessData, &g_tvModel[SDEX::TYPE_METHOD_ID_ITEM], ui->tableView_METHOD_ID_ITEM);
 
                 if (g_tvModel[SDEX::TYPE_METHOD_ID_ITEM]->rowCount()) {
                     ui->tableView_METHOD_ID_ITEM->setCurrentIndex(ui->tableView_METHOD_ID_ITEM->model()->index(0, 0));
@@ -564,7 +553,7 @@ void DEXWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 DEXProcessData dexProcessData(SDEX::TYPE_CLASS_DEF_ITEM, &g_tvModel[SDEX::TYPE_CLASS_DEF_ITEM], &dex, nDataOffset, nDataSize);
 
-                ajustTableView(&dexProcessData, &g_tvModel[SDEX::TYPE_CLASS_DEF_ITEM], ui->tableView_CLASS_DEF_ITEM, false);
+                ajustTableView(nType, &dexProcessData, &g_tvModel[SDEX::TYPE_CLASS_DEF_ITEM], ui->tableView_CLASS_DEF_ITEM, false);
 
                 if (g_tvModel[SDEX::TYPE_CLASS_DEF_ITEM]->rowCount()) {
                     ui->tableView_CLASS_DEF_ITEM->setCurrentIndex(ui->tableView_CLASS_DEF_ITEM->model()->index(0, 0));

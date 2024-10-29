@@ -1274,113 +1274,7 @@ void MACHWidget::blockSignals(bool bState)
 
 void MACHWidget::adjustHeaderTable(qint32 nType, QTableWidget *pTableWidget)
 {
-    XBinary::MODE mode = XMACH::getMode(getDevice(), getOptions().bIsImage, getOptions().nImageBase);
-
-    pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET, getColumnWidth(this, CW_UINT16, mode));
-    pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE, getColumnWidth(this, CW_TYPE, mode));
-
-    switch (nType) {
-        case SMACH::TYPE_mach_header:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME, getColumnWidth(this, CW_STRINGSHORT, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE, getColumnWidth(this, CW_UINT32, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, getColumnWidth(this, CW_STRINGMID, mode));
-            break;
-        case SMACH::TYPE_mach_dyld_info_only:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME, getColumnWidth(this, CW_STRINGSHORT, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE, getColumnWidth(this, CW_UINT32, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, getColumnWidth(this, CW_STRINGSHORT, mode));
-            break;
-        case SMACH::TYPE_mach_source_version:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME, getColumnWidth(this, CW_STRINGSHORT, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE, getColumnWidth(this, CW_UINT64, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, getColumnWidth(this, CW_STRINGSHORT, mode));
-            break;
-        case SMACH::TYPE_mach_symtab:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME, getColumnWidth(this, CW_STRINGSHORT, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE, getColumnWidth(this, CW_UINT32, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, getColumnWidth(this, CW_STRINGSHORT, mode));
-            break;
-        case SMACH::TYPE_mach_dysymtab:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME, getColumnWidth(this, CW_STRINGSHORT, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE, getColumnWidth(this, CW_UINT32, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, getColumnWidth(this, CW_STRINGSHORT, mode));
-            break;
-        case SMACH::TYPE_mach_version_min:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME, getColumnWidth(this, CW_STRINGSHORT, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE, getColumnWidth(this, CW_UINT32, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, getColumnWidth(this, CW_STRINGSHORT, mode));
-            break;
-        case SMACH::TYPE_mach_encryption_info:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME, getColumnWidth(this, CW_STRINGSHORT, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE, getColumnWidth(this, CW_UINT32, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, getColumnWidth(this, CW_STRINGSHORT, mode));
-            break;
-        case SMACH::TYPE_mach_function_starts:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME, getColumnWidth(this, CW_STRINGSHORT, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE, getColumnWidth(this, CW_UINT32, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, getColumnWidth(this, CW_STRINGSHORT, mode));
-            break;
-        case SMACH::TYPE_mach_data_in_code:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME, getColumnWidth(this, CW_STRINGSHORT, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE, getColumnWidth(this, CW_UINT32, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, getColumnWidth(this, CW_STRINGSHORT, mode));
-            break;
-        case SMACH::TYPE_mach_code_signature:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME, getColumnWidth(this, CW_STRINGSHORT, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE, getColumnWidth(this, CW_UINT32, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, getColumnWidth(this, CW_STRINGSHORT, mode));
-            break;
-        case SMACH::TYPE_mach_dyld_chained_fixups:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME, getColumnWidth(this, CW_STRINGSHORT, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE, getColumnWidth(this, CW_UINT32, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, getColumnWidth(this, CW_STRINGSHORT, mode));
-            break;
-        case SMACH::TYPE_mach_dyld_exports_trie:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME, getColumnWidth(this, CW_STRINGSHORT, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE, getColumnWidth(this, CW_UINT32, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, getColumnWidth(this, CW_STRINGSHORT, mode));
-            break;
-        case SMACH::TYPE_mach_main:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME, getColumnWidth(this, CW_STRINGSHORT, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE, getColumnWidth(this, CW_UINT64, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, getColumnWidth(this, CW_STRINGSHORT, mode));
-            break;
-        case SMACH::TYPE_mach_unix_thread:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME, getColumnWidth(this, CW_STRINGSHORT, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE, getColumnWidth(this, CW_UINT32, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, getColumnWidth(this, CW_STRINGSHORT, mode));
-            break;
-        case SMACH::TYPE_mach_unix_thread_x86_32:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME, getColumnWidth(this, CW_STRINGSHORT, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE, getColumnWidth(this, CW_UINT32, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, getColumnWidth(this, CW_STRINGSHORT, mode));
-            break;
-        case SMACH::TYPE_mach_unix_thread_x86_64:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME, getColumnWidth(this, CW_STRINGSHORT, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE, getColumnWidth(this, CW_UINT64, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, getColumnWidth(this, CW_STRINGSHORT, mode));
-            break;
-        case SMACH::TYPE_mach_unix_thread_arm_32:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME, getColumnWidth(this, CW_STRINGSHORT, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE, getColumnWidth(this, CW_UINT32, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, getColumnWidth(this, CW_STRINGSHORT, mode));
-            break;
-        case SMACH::TYPE_mach_unix_thread_arm_64:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME, getColumnWidth(this, CW_STRINGSHORT, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE, getColumnWidth(this, CW_UINT64, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, getColumnWidth(this, CW_STRINGSHORT, mode));
-            break;
-        case SMACH::TYPE_mach_unix_thread_m68k_32:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME, getColumnWidth(this, CW_STRINGSHORT, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE, getColumnWidth(this, CW_UINT32, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, getColumnWidth(this, CW_STRINGSHORT, mode));
-            break;
-        case SMACH::TYPE_mach_unix_thread_ppc_32:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME, getColumnWidth(this, CW_STRINGSHORT, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE, getColumnWidth(this, CW_UINT32, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, getColumnWidth(this, CW_STRINGSHORT, mode));
-            break;
-    }
+    FormatWidget::adjustHeaderTable(nType, pTableWidget);
 }
 
 QString MACHWidget::typeIdToString(qint32 nType)
@@ -1611,7 +1505,7 @@ void MACHWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 MACHProcessData machProcessData(SMACH::TYPE_mach_commands, &tvModel[SMACH::TYPE_mach_commands], &mach, 0, 0);
 
-                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_mach_commands], ui->tableView_commands, true);
+                ajustTableView(nType, &machProcessData, &tvModel[SMACH::TYPE_mach_commands], ui->tableView_commands, true);
 
                 connect(ui->tableView_commands->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_commands_currentRowChanged(QModelIndex, QModelIndex)));
@@ -1624,7 +1518,7 @@ void MACHWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 MACHProcessData machProcessData(SMACH::TYPE_mach_segments, &tvModel[SMACH::TYPE_mach_segments], &mach, 0, 0);
 
-                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_mach_segments], ui->tableView_segments, false);
+                ajustTableView(nType, &machProcessData, &tvModel[SMACH::TYPE_mach_segments], ui->tableView_segments, false);
 
                 connect(ui->tableView_segments->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_segments_currentRowChanged(QModelIndex, QModelIndex)));
@@ -1637,7 +1531,7 @@ void MACHWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 MACHProcessData machProcessData(SMACH::TYPE_mach_sections, &tvModel[SMACH::TYPE_mach_sections], &mach, 0, 0);
 
-                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_mach_sections], ui->tableView_sections, false);
+                ajustTableView(nType, &machProcessData, &tvModel[SMACH::TYPE_mach_sections], ui->tableView_sections, false);
 
                 connect(ui->tableView_sections->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_sections_currentRowChanged(QModelIndex, QModelIndex)));
@@ -1650,7 +1544,7 @@ void MACHWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 MACHProcessData machProcessData(SMACH::TYPE_mach_libraries, &tvModel[SMACH::TYPE_mach_libraries], &mach, 0, 0);
 
-                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_mach_libraries], ui->tableView_libraries, true);
+                ajustTableView(nType, &machProcessData, &tvModel[SMACH::TYPE_mach_libraries], ui->tableView_libraries, true);
 
                 connect(ui->tableView_libraries->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_libraries_currentRowChanged(QModelIndex, QModelIndex)));
@@ -1663,7 +1557,7 @@ void MACHWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 MACHProcessData machProcessData(SMACH::TYPE_mach_weak_libraries, &tvModel[SMACH::TYPE_mach_weak_libraries], &mach, 0, 0);
 
-                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_mach_weak_libraries], ui->tableView_weak_libraries, true);
+                ajustTableView(nType, &machProcessData, &tvModel[SMACH::TYPE_mach_weak_libraries], ui->tableView_weak_libraries, true);
 
                 connect(ui->tableView_weak_libraries->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_weak_libraries_currentRowChanged(QModelIndex, QModelIndex)));
@@ -1676,7 +1570,7 @@ void MACHWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 MACHProcessData machProcessData(SMACH::TYPE_mach_id_library, &tvModel[SMACH::TYPE_mach_id_library], &mach, 0, 0);
 
-                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_mach_id_library], ui->tableView_id_library, true);
+                ajustTableView(nType, &machProcessData, &tvModel[SMACH::TYPE_mach_id_library], ui->tableView_id_library, true);
 
                 connect(ui->tableView_id_library->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_id_library_currentRowChanged(QModelIndex, QModelIndex)));
@@ -1689,7 +1583,7 @@ void MACHWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 MACHProcessData machProcessData(SMACH::TYPE_mach_LOADFVMLIB, &tvModel[SMACH::TYPE_mach_LOADFVMLIB], &mach, 0, 0);
 
-                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_mach_LOADFVMLIB], ui->tableView_LOADFVMLIB, true);
+                ajustTableView(nType, &machProcessData, &tvModel[SMACH::TYPE_mach_LOADFVMLIB], ui->tableView_LOADFVMLIB, true);
 
                 connect(ui->tableView_LOADFVMLIB->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_LOADFVMLIB_currentRowChanged(QModelIndex, QModelIndex)));
@@ -1702,7 +1596,7 @@ void MACHWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 MACHProcessData machProcessData(SMACH::TYPE_mach_IDFVMLIB, &tvModel[SMACH::TYPE_mach_IDFVMLIB], &mach, 0, 0);
 
-                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_mach_IDFVMLIB], ui->tableView_IDFVMLIB, true);
+                ajustTableView(nType, &machProcessData, &tvModel[SMACH::TYPE_mach_IDFVMLIB], ui->tableView_IDFVMLIB, true);
 
                 connect(ui->tableView_IDFVMLIB->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_IDFVMLIB_currentRowChanged(QModelIndex, QModelIndex)));
@@ -2413,25 +2307,25 @@ void MACHWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 MACHProcessData machProcessData(SMACH::TYPE_SYMBOLTABLE, &tvModel[SMACH::TYPE_SYMBOLTABLE], &mach, nDataOffset, nDataSize);
 
-                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_SYMBOLTABLE], ui->tableView_SymbolTable, true);
+                ajustTableView(nType, &machProcessData, &tvModel[SMACH::TYPE_SYMBOLTABLE], ui->tableView_SymbolTable, true);
             }
         } else if (nType == SMACH::TYPE_FUNCTIONS) {
             if (!isInitPresent(sInit)) {
                 MACHProcessData machProcessData(SMACH::TYPE_FUNCTIONS, &tvModel[SMACH::TYPE_FUNCTIONS], &mach, nDataOffset, nDataSize);
 
-                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_FUNCTIONS], ui->tableView_Functions, false);
+                ajustTableView(nType, &machProcessData, &tvModel[SMACH::TYPE_FUNCTIONS], ui->tableView_Functions, false);
             }
         } else if (nType == SMACH::TYPE_DICE) {
             if (!isInitPresent(sInit)) {
                 MACHProcessData machProcessData(SMACH::TYPE_DICE, &tvModel[SMACH::TYPE_DICE], &mach, nDataOffset, nDataSize);
 
-                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_DICE], ui->tableView_data_in_code_entry, false);
+                ajustTableView(nType, &machProcessData, &tvModel[SMACH::TYPE_DICE], ui->tableView_data_in_code_entry, false);
             }
         } else if (nType == SMACH::TYPE_DYLD_INFO_rebase) {
             if (!isInitPresent(sInit)) {
                 MACHProcessData machProcessData(SMACH::TYPE_DYLD_INFO_rebase, &tvModel[SMACH::TYPE_DYLD_INFO_rebase], &mach, nDataOffset, nDataSize);
 
-                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_DYLD_INFO_rebase], ui->tableView_DYLD_INFO_rebase, true);
+                ajustTableView(nType, &machProcessData, &tvModel[SMACH::TYPE_DYLD_INFO_rebase], ui->tableView_DYLD_INFO_rebase, true);
 
                 connect(ui->tableView_DYLD_INFO_rebase->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_DYLD_INFO_rebase_currentRowChanged(QModelIndex, QModelIndex)));
@@ -2442,7 +2336,7 @@ void MACHWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 MACHProcessData machProcessData(SMACH::TYPE_DYLD_INFO_bind, &tvModel[SMACH::TYPE_DYLD_INFO_bind], &mach, nDataOffset, nDataSize);
 
-                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_DYLD_INFO_bind], ui->tableView_DYLD_INFO_bind, true);
+                ajustTableView(nType, &machProcessData, &tvModel[SMACH::TYPE_DYLD_INFO_bind], ui->tableView_DYLD_INFO_bind, true);
 
                 connect(ui->tableView_DYLD_INFO_bind->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_DYLD_INFO_bind_currentRowChanged(QModelIndex, QModelIndex)));
@@ -2453,7 +2347,7 @@ void MACHWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 MACHProcessData machProcessData(SMACH::TYPE_DYLD_INFO_weak_bind, &tvModel[SMACH::TYPE_DYLD_INFO_weak_bind], &mach, nDataOffset, nDataSize);
 
-                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_DYLD_INFO_weak_bind], ui->tableView_DYLD_INFO_weak_bind, true);
+                ajustTableView(nType, &machProcessData, &tvModel[SMACH::TYPE_DYLD_INFO_weak_bind], ui->tableView_DYLD_INFO_weak_bind, true);
 
                 connect(ui->tableView_DYLD_INFO_weak_bind->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_DYLD_INFO_weak_bind_currentRowChanged(QModelIndex, QModelIndex)));
@@ -2464,7 +2358,7 @@ void MACHWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 MACHProcessData machProcessData(SMACH::TYPE_DYLD_INFO_lazy_bind, &tvModel[SMACH::TYPE_DYLD_INFO_lazy_bind], &mach, nDataOffset, nDataSize);
 
-                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_DYLD_INFO_lazy_bind], ui->tableView_DYLD_INFO_lazy_bind, true);
+                ajustTableView(nType, &machProcessData, &tvModel[SMACH::TYPE_DYLD_INFO_lazy_bind], ui->tableView_DYLD_INFO_lazy_bind, true);
 
                 connect(ui->tableView_DYLD_INFO_lazy_bind->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_DYLD_INFO_lazy_bind_currentRowChanged(QModelIndex, QModelIndex)));
@@ -2475,7 +2369,7 @@ void MACHWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 MACHProcessData machProcessData(SMACH::TYPE_DYLD_INFO_export, &tvModel[SMACH::TYPE_DYLD_INFO_export], &mach, nDataOffset, nDataSize);
 
-                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_DYLD_INFO_export], ui->tableView_DYLD_INFO_export, true);
+                ajustTableView(nType, &machProcessData, &tvModel[SMACH::TYPE_DYLD_INFO_export], ui->tableView_DYLD_INFO_export, true);
 
                 connect(ui->tableView_DYLD_INFO_export->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_DYLD_INFO_export_currentRowChanged(QModelIndex, QModelIndex)));
@@ -2486,37 +2380,37 @@ void MACHWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 MACHProcessData machProcessData(SMACH::TYPE_DYSYMTAB_toc, &tvModel[SMACH::TYPE_DYSYMTAB_toc], &mach, nDataOffset, nDataSize);
 
-                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_DYSYMTAB_toc], ui->tableView_DYSYMTAB_toc, false);
+                ajustTableView(nType, &machProcessData, &tvModel[SMACH::TYPE_DYSYMTAB_toc], ui->tableView_DYSYMTAB_toc, false);
             }
         } else if (nType == SMACH::TYPE_DYSYMTAB_modtab) {
             if (!isInitPresent(sInit)) {
                 MACHProcessData machProcessData(SMACH::TYPE_DYSYMTAB_modtab, &tvModel[SMACH::TYPE_DYSYMTAB_modtab], &mach, nDataOffset, nDataSize);
 
-                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_DYSYMTAB_modtab], ui->tableView_DYSYMTAB_modtab, false);
+                ajustTableView(nType, &machProcessData, &tvModel[SMACH::TYPE_DYSYMTAB_modtab], ui->tableView_DYSYMTAB_modtab, false);
             }
         } else if (nType == SMACH::TYPE_DYSYMTAB_extrefsyms) {
             if (!isInitPresent(sInit)) {
                 MACHProcessData machProcessData(SMACH::TYPE_DYSYMTAB_extrefsyms, &tvModel[SMACH::TYPE_DYSYMTAB_extrefsyms], &mach, nDataOffset, nDataSize);
 
-                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_DYSYMTAB_extrefsyms], ui->tableView_DYSYMTAB_extrefsyms, false);
+                ajustTableView(nType, &machProcessData, &tvModel[SMACH::TYPE_DYSYMTAB_extrefsyms], ui->tableView_DYSYMTAB_extrefsyms, false);
             }
         } else if (nType == SMACH::TYPE_DYSYMTAB_indirectsyms) {
             if (!isInitPresent(sInit)) {
                 MACHProcessData machProcessData(SMACH::TYPE_DYSYMTAB_indirectsyms, &tvModel[SMACH::TYPE_DYSYMTAB_indirectsyms], &mach, nDataOffset, nDataSize);
 
-                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_DYSYMTAB_indirectsyms], ui->tableView_DYSYMTAB_indirectsyms, true);
+                ajustTableView(nType, &machProcessData, &tvModel[SMACH::TYPE_DYSYMTAB_indirectsyms], ui->tableView_DYSYMTAB_indirectsyms, true);
             }
         } else if (nType == SMACH::TYPE_DYSYMTAB_extrel) {
             if (!isInitPresent(sInit)) {
                 MACHProcessData machProcessData(SMACH::TYPE_DYSYMTAB_extrel, &tvModel[SMACH::TYPE_DYSYMTAB_extrel], &mach, nDataOffset, nDataSize);
 
-                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_DYSYMTAB_extrel], ui->tableView_DYSYMTAB_extrel, false);
+                ajustTableView(nType, &machProcessData, &tvModel[SMACH::TYPE_DYSYMTAB_extrel], ui->tableView_DYSYMTAB_extrel, false);
             }
         } else if (nType == SMACH::TYPE_DYSYMTAB_locrel) {
             if (!isInitPresent(sInit)) {
                 MACHProcessData machProcessData(SMACH::TYPE_DYSYMTAB_locrel, &tvModel[SMACH::TYPE_DYSYMTAB_locrel], &mach, nDataOffset, nDataSize);
 
-                ajustTableView(&machProcessData, &tvModel[SMACH::TYPE_DYSYMTAB_locrel], ui->tableView_DYSYMTAB_locrel, false);
+                ajustTableView(nType, &machProcessData, &tvModel[SMACH::TYPE_DYSYMTAB_locrel], ui->tableView_DYSYMTAB_locrel, false);
             }
         }
 

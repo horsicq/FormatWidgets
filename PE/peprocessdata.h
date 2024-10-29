@@ -32,8 +32,8 @@ public:
     explicit PEProcessData(qint32 nType, QStandardItemModel **ppModel, XPE *pPE, qint32 nNumber, qint64 nOffset, qint64 nSize, QVariant varInfo = QVariant());
 
     virtual void _process();
-    virtual void ajustTableView(QWidget *pWidget, QTableView *pTableView);
-    virtual void ajustTreeView(QWidget *pWidget, QTreeView *pTreeView);
+    virtual void ajustTableView(qint32 nType, QTableView *pTableView);
+    virtual void ajustTreeView(qint32 nType, QTreeView *pTreeView);
     void handleCertRecord(QStandardItem *pParent, XPE::CERT_RECORD certRecord);
     virtual void adjustModel(QStandardItemModel *pModel);
 

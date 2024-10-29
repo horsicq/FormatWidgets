@@ -149,9 +149,7 @@ void BinaryWidget::blockSignals(bool bState)
 
 void BinaryWidget::adjustHeaderTable(qint32 nType, QTableWidget *pTableWidget)
 {
-    Q_UNUSED(nType)
-    Q_UNUSED(pTableWidget)
-    //    qint32 nSymbolWidth=getSymbolWidth();
+    FormatWidget::adjustHeaderTable(nType, pTableWidget);
 }
 
 void BinaryWidget::_showInDisasmWindowAddress(XADDR nAddress)

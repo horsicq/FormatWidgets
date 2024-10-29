@@ -278,16 +278,7 @@ void LEWidget::blockSignals(bool bState)
 
 void LEWidget::adjustHeaderTable(qint32 nType, QTableWidget *pTableWidget)
 {
-    // TODO like MACH !!!
-    Q_UNUSED(nType)
-
-    qint32 nSymbolWidth = XLineEditHEX::getSymbolWidth(this);
-
-    pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_NAME, QHeaderView::ResizeToContents);
-    pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_OFFSET, QHeaderView::ResizeToContents);
-    pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_TYPE, QHeaderView::ResizeToContents);
-    pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE, nSymbolWidth * 12);
-    pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, nSymbolWidth * 15);
+    FormatWidget::adjustHeaderTable(nType, pTableWidget);
 }
 
 QString LEWidget::typeIdToString(qint32 nType)
@@ -589,7 +580,7 @@ void LEWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 LEProcessData leProcessData(SLE::TYPE_OBJECTS, &g_tvModel[SLE::TYPE_OBJECTS], &le, nDataOffset, nDataSize);
 
-                ajustTableView(&leProcessData, &g_tvModel[SLE::TYPE_OBJECTS], ui->tableView_Objects, false);
+                ajustTableView(nType, &leProcessData, &g_tvModel[SLE::TYPE_OBJECTS], ui->tableView_Objects, false);
 
                 connect(ui->tableView_Objects->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_Objects_currentRowChanged(QModelIndex, QModelIndex)));

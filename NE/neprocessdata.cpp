@@ -68,8 +68,8 @@ void NEProcessData::_process()
     }
 }
 
-void NEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
+void NEProcessData::ajustTableView(qint32 nType, QTableView *pTableView)
 {
-    Q_UNUSED(pWidget)
+    Q_UNUSED(nType)
     Q_UNUSED(pTableView)
 }

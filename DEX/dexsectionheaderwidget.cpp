@@ -150,8 +150,7 @@ void DEXSectionHeaderWidget::blockSignals(bool bState)
 
 void DEXSectionHeaderWidget::adjustHeaderTable(qint32 nType, QTableWidget *pTableWidget)
 {
-    Q_UNUSED(nType)
-    Q_UNUSED(pTableWidget)
+    FormatWidget::adjustHeaderTable(nType, pTableWidget);
 }
 
 void DEXSectionHeaderWidget::on_checkBoxReadonly_toggled(bool bChecked)

@@ -73,8 +73,7 @@ void LESectionHeaderWidget::blockSignals(bool bState)
 
 void LESectionHeaderWidget::adjustHeaderTable(qint32 nType, QTableWidget *pTableWidget)
 {
-    Q_UNUSED(nType)
-    Q_UNUSED(pTableWidget)
+    FormatWidget::adjustHeaderTable(nType, pTableWidget);
 }
 
 void LESectionHeaderWidget::on_checkBoxReadonly_toggled(bool bChecked)

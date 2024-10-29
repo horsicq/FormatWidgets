@@ -1104,13 +1104,11 @@ void PEProcessData::_process()
     adjustModel(*g_ppModel);
 }
 
-void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
+void PEProcessData::ajustTableView(qint32 nType, QTableView *pTableView)
 {
-    Q_UNUSED(pWidget)
-
     XBinary::MODE mode = g_pPE->getMode();
 
-    if (g_nType == SPE::TYPE_SECTIONS) {
+    if (nType == SPE::TYPE_SECTIONS) {
         XOptions::setTableViewHeaderWidth(pTableView, 0, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT16, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 1, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_STRINGSHORT2, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 2, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
@@ -1122,18 +1120,18 @@ void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
         XOptions::setTableViewHeaderWidth(pTableView, 8, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 9, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 10, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
-    } else if (g_nType == SPE::TYPE_RELOCS) {
+    } else if (nType == SPE::TYPE_RELOCS) {
         XOptions::setTableViewHeaderWidth(pTableView, 0, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT16, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 1, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 2, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 3, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 4, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_STRINGMID, mode));
-    } else if (g_nType == SPE::TYPE_RELOCS_POSITION) {
+    } else if (nType == SPE::TYPE_RELOCS_POSITION) {
         XOptions::setTableViewHeaderWidth(pTableView, 0, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT16, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 1, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 2, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINTMODE, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 3, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINTMODE, mode));
-    } else if (g_nType == SPE::TYPE_IMPORT) {
+    } else if (nType == SPE::TYPE_IMPORT) {
         XOptions::setTableViewHeaderWidth(pTableView, 0, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT16, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 1, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 2, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
@@ -1142,19 +1140,19 @@ void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
         XOptions::setTableViewHeaderWidth(pTableView, 5, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 6, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 7, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_STRINGMID, mode));
-    } else if (g_nType == SPE::TYPE_IMPORT_FUNCTION) {
+    } else if (nType == SPE::TYPE_IMPORT_FUNCTION) {
         XOptions::setTableViewHeaderWidth(pTableView, 0, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT16, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 1, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINTMODE, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 2, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINTMODE, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 3, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT16, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 4, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_STRINGLONG, mode));
-    } else if (g_nType == SPE::TYPE_EXCEPTION) {
+    } else if (nType == SPE::TYPE_EXCEPTION) {
         XOptions::setTableViewHeaderWidth(pTableView, 0, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT16, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 1, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 2, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 3, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 4, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_STRINGMID, mode));
-    } else if (g_nType == SPE::TYPE_DELAYIMPORT) {
+    } else if (nType == SPE::TYPE_DELAYIMPORT) {
         XOptions::setTableViewHeaderWidth(pTableView, 0, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT16, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 1, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 2, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
@@ -1165,19 +1163,19 @@ void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
         XOptions::setTableViewHeaderWidth(pTableView, 7, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 8, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 9, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_STRINGMID, mode));
-    } else if (g_nType == SPE::TYPE_EXPORT_FUNCTION) {
+    } else if (nType == SPE::TYPE_EXPORT_FUNCTION) {
         XOptions::setTableViewHeaderWidth(pTableView, 0, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT16, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 1, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 2, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 3, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_STRINGLONG, mode));
-    } else if (g_nType == SPE::TYPE_BOUNDIMPORT) {
+    } else if (nType == SPE::TYPE_BOUNDIMPORT) {
         XOptions::setTableViewHeaderWidth(pTableView, 0, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT16, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 1, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 2, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 3, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 4, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINTMODE, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 5, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_STRINGLONG, mode));
-    } else if (g_nType == SPE::TYPE_DEBUG) {
+    } else if (nType == SPE::TYPE_DEBUG) {
         XOptions::setTableViewHeaderWidth(pTableView, 0, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT16, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 1, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 2, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
@@ -1187,7 +1185,7 @@ void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
         XOptions::setTableViewHeaderWidth(pTableView, 6, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 7, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 8, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
-    } else if (g_nType == SPE::TYPE_DELAYIMPORT_FUNCTION) {
+    } else if (nType == SPE::TYPE_DELAYIMPORT_FUNCTION) {
         XOptions::setTableViewHeaderWidth(pTableView, 0, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT16, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 1, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINTMODE, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 2, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINTMODE, mode));
@@ -1195,10 +1193,10 @@ void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
         XOptions::setTableViewHeaderWidth(pTableView, 4, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINTMODE, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 5, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT16, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 6, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_STRINGMID, mode));
-    } else if (g_nType == SPE::TYPE_TLSCALLBACKS) {
+    } else if (nType == SPE::TYPE_TLSCALLBACKS) {
         XOptions::setTableViewHeaderWidth(pTableView, 0, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT16, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 1, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINTMODE, mode));
-    } else if (g_nType == SPE::TYPE_RESOURCES) {
+    } else if (nType == SPE::TYPE_RESOURCES) {
         XOptions::setTableViewHeaderWidth(pTableView, 0, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT16, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 1, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_STRINGSHORT, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 2, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_STRINGSHORT, mode));
@@ -1206,25 +1204,26 @@ void PEProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
         XOptions::setTableViewHeaderWidth(pTableView, 4, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINTMODE, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 5, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 6, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
-    } else if (g_nType == SPE::TYPE_RICH) {
+    } else if (nType == SPE::TYPE_RICH) {
         XOptions::setTableViewHeaderWidth(pTableView, 0, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 1, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 2, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 3, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
-    } else if (g_nType == SPE::TYPE_NET_METADATA_TABLE) {
+    } else if (nType == SPE::TYPE_NET_METADATA_TABLE) {
         XOptions::setTableViewHeaderWidth(pTableView, 0, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT16, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 1, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_STRINGSHORT2, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 2, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 3, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_STRINGSHORT, mode));
+    } else {
+        ProcessData::ajustTableView(nType, pTableView);
     }
 }
 
-void PEProcessData::ajustTreeView(QWidget *pWidget, QTreeView *pTreeView)
+void PEProcessData::ajustTreeView(qint32 nType, QTreeView *pTreeView)
 {
-    Q_UNUSED(pWidget)
     XBinary::MODE mode = g_pPE->getMode();
 
-    if (g_nType == SPE::TYPE_SECTIONS_INFO) {
+    if (nType == SPE::TYPE_SECTIONS_INFO) {
         XOptions::setTreeViewHeaderWidth(pTreeView, 0, FormatWidget::getColumnWidth(pTreeView, FormatWidget::CW_UINT16, mode));
         XOptions::setTreeViewHeaderWidth(pTreeView, 1, FormatWidget::getColumnWidth(pTreeView, FormatWidget::CW_UINT32, mode));
         XOptions::setTreeViewHeaderWidth(pTreeView, 2, FormatWidget::getColumnWidth(pTreeView, FormatWidget::CW_UINT32, mode));
@@ -1232,7 +1231,7 @@ void PEProcessData::ajustTreeView(QWidget *pWidget, QTreeView *pTreeView)
         XOptions::setTreeViewHeaderWidth(pTreeView, 4, FormatWidget::getColumnWidth(pTreeView, FormatWidget::CW_UINT32, mode));
         XOptions::setTreeViewHeaderWidth(pTreeView, 5, FormatWidget::getColumnWidth(pTreeView, FormatWidget::CW_UINT32, mode));
         XOptions::setTreeViewHeaderWidth(pTreeView, 6, FormatWidget::getColumnWidth(pTreeView, FormatWidget::CW_UINT32, mode));
-    } else if (g_nType == SPE::TYPE_IMPORT_INFO) {
+    } else if (nType == SPE::TYPE_IMPORT_INFO) {
         XOptions::setTreeViewHeaderWidth(pTreeView, 0, FormatWidget::getColumnWidth(pTreeView, FormatWidget::CW_UINT16, mode));
         XOptions::setTreeViewHeaderWidth(pTreeView, 1, FormatWidget::getColumnWidth(pTreeView, FormatWidget::CW_STRINGMID, mode));
         XOptions::setTreeViewHeaderWidth(pTreeView, 2, FormatWidget::getColumnWidth(pTreeView, FormatWidget::CW_STRINGSHORT2, mode));

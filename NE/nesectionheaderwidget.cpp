@@ -73,8 +73,7 @@ void NESectionHeaderWidget::blockSignals(bool bState)
 
 void NESectionHeaderWidget::adjustHeaderTable(qint32 nType, QTableWidget *pTableWidget)
 {
-    Q_UNUSED(nType)
-    Q_UNUSED(pTableWidget)
+    FormatWidget::adjustHeaderTable(nType, pTableWidget);
 }
 
 void NESectionHeaderWidget::on_checkBoxReadonly_toggled(bool bChecked)

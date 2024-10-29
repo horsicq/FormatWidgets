@@ -138,7 +138,7 @@ void PEWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_IMAGE_DOS_HEADER, "IMAGE_DOS_HEADER", XOptions::ICONTYPE_HEADER));
 
         if (pe.isDosStubPresent()) {
-            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_DOS_STUB, "DOS stub"));
+            ui->treeWidgetNavi->addTopLevelItem(createNewItem(SPE::TYPE_DOS_STUB, "DOS stub", XOptions::ICONTYPE_CODE));
         }
 
         QTreeWidgetItem *pNtHeaders = createNewItem(SPE::TYPE_IMAGE_NT_HEADERS, "IMAGE_NT_HEADERS", XOptions::ICONTYPE_HEADER);
@@ -1573,7 +1573,7 @@ void PEWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 PEProcessData peProcessData(SPE::TYPE_RICH, &g_tvModel[SPE::TYPE_RICH], &pe, 0, 0, 0);
 
-                ajustTableView(&peProcessData, &g_tvModel[SPE::TYPE_RICH], ui->tableView_RICH, true);
+                ajustTableView(nType, &peProcessData, &g_tvModel[SPE::TYPE_RICH], ui->tableView_RICH, true);
             }
         } else if (nType == SPE::TYPE_SECTIONS) {
             if (!isInitPresent(sInit)) {
@@ -1587,7 +1587,7 @@ void PEWidget::reloadData(bool bSaveSelection)
 
                 PEProcessData peProcessData(SPE::TYPE_SECTIONS, &g_tvModel[SPE::TYPE_SECTIONS], &pe, 0, 0, 0, false);
 
-                ajustTableView(&peProcessData, &g_tvModel[SPE::TYPE_SECTIONS], ui->tableView_Sections, false);
+                ajustTableView(nType, &peProcessData, &g_tvModel[SPE::TYPE_SECTIONS], ui->tableView_Sections, false);
 
                 connect(ui->tableView_Sections->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_Sections_currentRowChanged(QModelIndex, QModelIndex)));
@@ -1600,7 +1600,7 @@ void PEWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 PEProcessData peProcessDataTree(SPE::TYPE_SECTIONS_INFO, &g_tvModel[SPE::TYPE_SECTIONS_INFO], &pe, 0, 0, 0, true);
 
-                ajustTreeView(&peProcessDataTree, &g_tvModel[SPE::TYPE_SECTIONS_INFO], ui->treeView_Sections_Info);
+                ajustTreeView(nType, &peProcessDataTree, &g_tvModel[SPE::TYPE_SECTIONS_INFO], ui->treeView_Sections_Info);
 
                 //                connect(ui->treeView_Sections_Info->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                 //                        SLOT(onTreeView_Sections_Info_currentRowChanged(QModelIndex, QModelIndex)));
@@ -1658,7 +1658,7 @@ void PEWidget::reloadData(bool bSaveSelection)
 
                 PEProcessData peProcessData(SPE::TYPE_EXPORT_FUNCTION, &g_tvModel[SPE::TYPE_EXPORT_FUNCTION], &pe, 0, 0, 0, ui->checkBoxExportShowValid->isChecked());
 
-                ajustTableView(&peProcessData, &g_tvModel[SPE::TYPE_EXPORT_FUNCTION], ui->tableView_ExportFunctions);
+                ajustTableView(nType, &peProcessData, &g_tvModel[SPE::TYPE_EXPORT_FUNCTION], ui->tableView_ExportFunctions);
 
                 if (g_tvModel[SPE::TYPE_EXPORT_FUNCTION]->rowCount()) {
                     ui->tableView_ExportFunctions->setCurrentIndex(ui->tableView_ExportFunctions->model()->index(0, 0));
@@ -1674,7 +1674,7 @@ void PEWidget::reloadData(bool bSaveSelection)
 
                 PEProcessData peProcessData(SPE::TYPE_IMPORT, &g_tvModel[SPE::TYPE_IMPORT], &pe, 0, 0, 0);
 
-                ajustTableView(&peProcessData, &g_tvModel[SPE::TYPE_IMPORT], ui->tableView_ImportLibraries);
+                ajustTableView(nType, &peProcessData, &g_tvModel[SPE::TYPE_IMPORT], ui->tableView_ImportLibraries);
 
                 connect(ui->tableView_ImportLibraries->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_ImportLibraries_currentRowChanged(QModelIndex, QModelIndex)));
@@ -1687,7 +1687,7 @@ void PEWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 PEProcessData peProcessDataTree(SPE::TYPE_IMPORT_INFO, &g_tvModel[SPE::TYPE_IMPORT_INFO], &pe, 0, 0, 0, true);
 
-                ajustTreeView(&peProcessDataTree, &g_tvModel[SPE::TYPE_IMPORT_INFO], ui->treeView_Import_Info);
+                ajustTreeView(nType, &peProcessDataTree, &g_tvModel[SPE::TYPE_IMPORT_INFO], ui->treeView_Import_Info);
 
                 //                connect(ui->treeView_Sections_Info->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                 //                        SLOT(onTreeView_Sections_Info_currentRowChanged(QModelIndex, QModelIndex)));
@@ -1698,7 +1698,7 @@ void PEWidget::reloadData(bool bSaveSelection)
                 {
                     PEProcessData peProcessData(SPE::TYPE_RESOURCES, &g_tvModel[SPE::TYPE_RESOURCES], &pe, 0, 0, 0, false);
 
-                    ajustTableView(&peProcessData, &g_tvModel[SPE::TYPE_RESOURCES], ui->tableView_Resources, true);
+                    ajustTableView(nType, &peProcessData, &g_tvModel[SPE::TYPE_RESOURCES], ui->tableView_Resources, true);
 
                     connect(ui->tableView_Resources->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                             SLOT(onTableView_Resources_currentRowChanged(QModelIndex, QModelIndex)));
@@ -1714,7 +1714,7 @@ void PEWidget::reloadData(bool bSaveSelection)
 
                     PEProcessData peProcessDataTree(SPE::TYPE_RESOURCES, &g_tvModel[SPE::TYPE_RESOURCES_TREE], &pe, 0, 0, 0, true);
 
-                    ajustTreeView(&peProcessDataTree, &g_tvModel[SPE::TYPE_RESOURCES_TREE], ui->treeView_Resources);
+                    ajustTreeView(nType, &peProcessDataTree, &g_tvModel[SPE::TYPE_RESOURCES_TREE], ui->treeView_Resources);
 
                     connect(ui->treeView_Resources->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                             SLOT(onTreeView_Resources_currentRowChanged(QModelIndex, QModelIndex)));
@@ -1729,7 +1729,7 @@ void PEWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 PEProcessData peProcessData(SPE::TYPE_RESOURCES_STRINGTABLE, &g_tvModel[SPE::TYPE_RESOURCES_STRINGTABLE], &pe, 0, 0, 0, false);
 
-                ajustTableView(&peProcessData, &g_tvModel[SPE::TYPE_RESOURCES_STRINGTABLE], ui->tableView_Resources_StringTable, true);
+                ajustTableView(nType, &peProcessData, &g_tvModel[SPE::TYPE_RESOURCES_STRINGTABLE], ui->tableView_Resources_StringTable, true);
 
                 //                connect(ui->tableView_Resources_StringTable->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_Resources_StringTable_currentRowChanged(QModelIndex,QModelIndex)));
 
@@ -1812,7 +1812,7 @@ void PEWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 PEProcessData peProcessData(SPE::TYPE_EXCEPTION, &g_tvModel[SPE::TYPE_EXCEPTION], &pe, 0, 0, 0);
 
-                ajustTableView(&peProcessData, &g_tvModel[SPE::TYPE_EXCEPTION], ui->tableView_Exceptions, false);
+                ajustTableView(nType, &peProcessData, &g_tvModel[SPE::TYPE_EXCEPTION], ui->tableView_Exceptions, false);
 
                 connect(ui->tableView_Exceptions->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_Exceptions_currentRowChanged(QModelIndex, QModelIndex)));
@@ -1825,7 +1825,7 @@ void PEWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 PEProcessData peProcessData(SPE::TYPE_RELOCS, &g_tvModel[SPE::TYPE_RELOCS], &pe, 0, 0, 0);
 
-                ajustTableView(&peProcessData, &g_tvModel[SPE::TYPE_RELOCS], ui->tableView_Relocs, false);
+                ajustTableView(nType, &peProcessData, &g_tvModel[SPE::TYPE_RELOCS], ui->tableView_Relocs, false);
 
                 connect(ui->tableView_Relocs->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_Relocs_currentRowChanged(QModelIndex, QModelIndex)));
@@ -1838,7 +1838,7 @@ void PEWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 PEProcessData peProcessData(SPE::TYPE_DEBUG, &g_tvModel[SPE::TYPE_DEBUG], &pe, 0, 0, 0);
 
-                ajustTableView(&peProcessData, &g_tvModel[SPE::TYPE_DEBUG], ui->tableView_Debug, false);
+                ajustTableView(nType, &peProcessData, &g_tvModel[SPE::TYPE_DEBUG], ui->tableView_Debug, false);
 
                 connect(ui->tableView_Debug->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_Debug_currentRowChanged(QModelIndex, QModelIndex)));
@@ -1921,7 +1921,7 @@ void PEWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 PEProcessData peProcessData(SPE::TYPE_TLSCALLBACKS, &g_tvModel[SPE::TYPE_TLSCALLBACKS], &pe, 0, 0, 0);
 
-                ajustTableView(&peProcessData, &g_tvModel[SPE::TYPE_TLSCALLBACKS], ui->tableView_TLSCallbacks, true);
+                ajustTableView(nType, &peProcessData, &g_tvModel[SPE::TYPE_TLSCALLBACKS], ui->tableView_TLSCallbacks, true);
 
                 // connect(ui->tableView_Sections->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_Sections_currentRowChanged(QModelIndex,QModelIndex)));
 
@@ -2202,7 +2202,7 @@ void PEWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 PEProcessData peProcessData(SPE::TYPE_BOUNDIMPORT, &g_tvModel[SPE::TYPE_BOUNDIMPORT], &pe, 0, 0, 0);
 
-                ajustTableView(&peProcessData, &g_tvModel[SPE::TYPE_BOUNDIMPORT], ui->tableView_BoundImport);
+                ajustTableView(nType, &peProcessData, &g_tvModel[SPE::TYPE_BOUNDIMPORT], ui->tableView_BoundImport);
 
                 if (g_tvModel[SPE::TYPE_BOUNDIMPORT]->rowCount()) {
                     ui->tableView_BoundImport->setCurrentIndex(ui->tableView_BoundImport->model()->index(0, 0));
@@ -2212,7 +2212,7 @@ void PEWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 PEProcessData peProcessData(SPE::TYPE_DELAYIMPORT, &g_tvModel[SPE::TYPE_DELAYIMPORT], &pe, 0, 0, 0);
 
-                ajustTableView(&peProcessData, &g_tvModel[SPE::TYPE_DELAYIMPORT], ui->tableView_DelayImportLibraries);
+                ajustTableView(nType, &peProcessData, &g_tvModel[SPE::TYPE_DELAYIMPORT], ui->tableView_DelayImportLibraries);
 
                 connect(ui->tableView_DelayImportLibraries->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_DelayImportLibraries_currentRowChanged(QModelIndex, QModelIndex)));
@@ -2306,7 +2306,7 @@ void PEWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 PEProcessData peProcessData(SPE::TYPE_NET_METADATA_TABLE, &g_tvModel[SPE::TYPE_NET_METADATA_TABLE], &pe, 0, 0, 0);
 
-                ajustTableView(&peProcessData, &g_tvModel[SPE::TYPE_NET_METADATA_TABLE], ui->tableView_Net_Metadata_Table, false);
+                ajustTableView(nType, &peProcessData, &g_tvModel[SPE::TYPE_NET_METADATA_TABLE], ui->tableView_Net_Metadata_Table, false);
 
                 connect(ui->tableView_Net_Metadata_Table->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_Net_Metadata_Table_currentRowChanged(QModelIndex, QModelIndex)));
@@ -2327,7 +2327,7 @@ void PEWidget::reloadData(bool bSaveSelection)
 
                 PEProcessData peProcessData(SPE::TYPE_CERTIFICATE, &g_tvModel[SPE::TYPE_CERTIFICATE], &pe, 0, 0, 0);
 
-                ajustTreeView(&peProcessData, &g_tvModel[SPE::TYPE_CERTIFICATE], ui->treeView_Certificate);
+                ajustTreeView(nType, &peProcessData, &g_tvModel[SPE::TYPE_CERTIFICATE], ui->treeView_Certificate);
 
                 connect(ui->treeView_Certificate->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTreeView_Certificate_currentRowChanged(QModelIndex, QModelIndex)));
@@ -2388,7 +2388,7 @@ void PEWidget::loadImportLibrary(qint32 nRow)
     if (pe.isValid()) {
         PEProcessData peProcessData(SPE::TYPE_IMPORT_FUNCTION, &g_tvModel[SPE::TYPE_IMPORT_FUNCTION], &pe, nRow, 0, 0);
 
-        ajustTableView(&peProcessData, &g_tvModel[SPE::TYPE_IMPORT_FUNCTION], ui->tableView_ImportFunctions);
+        ajustTableView(SPE::TYPE_IMPORT_FUNCTION, &peProcessData, &g_tvModel[SPE::TYPE_IMPORT_FUNCTION], ui->tableView_ImportFunctions);
 
         if (g_tvModel[SPE::TYPE_IMPORT_FUNCTION]->rowCount()) {
             ui->tableView_ImportFunctions->setCurrentIndex(ui->tableView_ImportFunctions->model()->index(0, 0));
@@ -2407,7 +2407,7 @@ void PEWidget::loadRelocs(qint32 nRow)
     if (pe.isValid()) {
         PEProcessData peProcessData(SPE::TYPE_RELOCS_POSITION, &g_tvModel[SPE::TYPE_RELOCS_POSITION], &pe, 0, nOffset, 0);
 
-        ajustTableView(&peProcessData, &g_tvModel[SPE::TYPE_RELOCS_POSITION], ui->tableView_RelocsPositions, false);
+        ajustTableView(SPE::TYPE_RELOCS_POSITION, &peProcessData, &g_tvModel[SPE::TYPE_RELOCS_POSITION], ui->tableView_RelocsPositions, false);
 
         if (g_tvModel[SPE::TYPE_RELOCS_POSITION]->rowCount()) {
             ui->tableView_RelocsPositions->setCurrentIndex(ui->tableView_RelocsPositions->model()->index(0, 0));
@@ -2446,7 +2446,7 @@ void PEWidget::loadDelayImport(qint32 nRow)
     if (pe.isValid()) {
         PEProcessData peProcessData(SPE::TYPE_DELAYIMPORT_FUNCTION, &g_tvModel[SPE::TYPE_DELAYIMPORT_FUNCTION], &pe, nRow, 0, 0);
 
-        ajustTableView(&peProcessData, &g_tvModel[SPE::TYPE_DELAYIMPORT_FUNCTION], ui->tableView_DelayImportFunctions);
+        ajustTableView(SPE::TYPE_DELAYIMPORT_FUNCTION, &peProcessData, &g_tvModel[SPE::TYPE_DELAYIMPORT_FUNCTION], ui->tableView_DelayImportFunctions);
 
         if (g_tvModel[SPE::TYPE_DELAYIMPORT]->rowCount()) {
             ui->tableView_DelayImportFunctions->setCurrentIndex(ui->tableView_DelayImportFunctions->model()->index(0, 0));
@@ -2456,66 +2456,7 @@ void PEWidget::loadDelayImport(qint32 nRow)
 
 void PEWidget::adjustHeaderTable(qint32 nType, QTableWidget *pTableWidget)
 {
-    XBinary::MODE mode = XPE::getMode(getDevice(), getOptions().bIsImage, getOptions().nImageBase);
-
-    pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET, getColumnWidth(this, CW_UINT16, mode));
-    pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE, getColumnWidth(this, CW_TYPE, mode));
-
-    switch (nType) {
-        case SPE::TYPE_IMAGE_DOS_HEADER:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME, getColumnWidth(this, CW_STRINGSHORT, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE, getColumnWidth(this, CW_UINT32, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, getColumnWidth(this, CW_STRINGMID, mode));
-            break;
-
-        case SPE::TYPE_IMAGE_NT_HEADERS:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME, getColumnWidth(this, CW_STRINGSHORT, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE, getColumnWidth(this, CW_UINT32, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, getColumnWidth(this, CW_STRINGMID, mode));
-            break;
-
-        case SPE::TYPE_IMAGE_FILE_HEADER:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME, getColumnWidth(this, CW_STRINGMID, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE, getColumnWidth(this, CW_UINT32, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, getColumnWidth(this, CW_STRINGMID, mode));
-            break;
-
-        case SPE::TYPE_IMAGE_OPTIONAL_HEADER:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME, getColumnWidth(this, CW_STRINGMID, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE, getColumnWidth(this, CW_UINTMODE, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, getColumnWidth(this, CW_STRINGMID, mode));
-            break;
-
-        case SPE::TYPE_EXPORT:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME, getColumnWidth(this, CW_STRINGMID, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE, getColumnWidth(this, CW_UINTMODE, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, getColumnWidth(this, CW_STRINGMID, mode));
-            break;
-
-        case SPE::TYPE_TLS:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME, getColumnWidth(this, CW_STRINGMID, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE, getColumnWidth(this, CW_UINTMODE, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, getColumnWidth(this, CW_STRINGMID, mode));
-            break;
-
-        case SPE::TYPE_LOADCONFIG:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME, getColumnWidth(this, CW_STRINGMID, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE, getColumnWidth(this, CW_UINTMODE, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, getColumnWidth(this, CW_STRINGMID, mode));
-            break;
-
-        case SPE::TYPE_NETHEADER:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME, getColumnWidth(this, CW_STRINGSHORT, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE, getColumnWidth(this, CW_UINT32, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, getColumnWidth(this, CW_STRINGMID, mode));
-            break;
-
-        case SPE::TYPE_RESOURCES_VERSION:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME, getColumnWidth(this, CW_STRINGMID, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE, getColumnWidth(this, CW_UINT32, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, getColumnWidth(this, CW_STRINGMID, mode));
-            break;
-    }
+    FormatWidget::adjustHeaderTable(nType, pTableWidget);
 }
 
 QString PEWidget::typeIdToString(qint32 nType)
@@ -3154,7 +3095,7 @@ void PEWidget::on_checkBoxExportShowValid_stateChanged(int nState)
     if (pe.isValid()) {
         PEProcessData peProcessData(SPE::TYPE_EXPORT_FUNCTION, &g_tvModel[SPE::TYPE_EXPORT_FUNCTION], &pe, 0, 0, 0, ui->checkBoxExportShowValid->isChecked());
 
-        ajustTableView(&peProcessData, &g_tvModel[SPE::TYPE_EXPORT_FUNCTION], ui->tableView_ExportFunctions);
+        ajustTableView(SPE::TYPE_EXPORT_FUNCTION, &peProcessData, &g_tvModel[SPE::TYPE_EXPORT_FUNCTION], ui->tableView_ExportFunctions);
     }
 }
 
@@ -3635,7 +3576,7 @@ void PEWidget::on_checkBoxSectionsStringTable_stateChanged(int nState)
     if (pe.isValid()) {
         PEProcessData peProcessData(SPE::TYPE_SECTIONS, &g_tvModel[SPE::TYPE_SECTIONS], &pe, 0, 0, 0, ui->checkBoxSectionsStringTable->isChecked());
 
-        ajustTableView(&peProcessData, &g_tvModel[SPE::TYPE_SECTIONS], ui->tableView_Sections, false);
+        ajustTableView(SPE::TYPE_SECTIONS, &peProcessData, &g_tvModel[SPE::TYPE_SECTIONS], ui->tableView_Sections, false);
 
         connect(ui->tableView_Sections->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                 SLOT(onTableView_Sections_currentRowChanged(QModelIndex, QModelIndex)));

@@ -199,16 +199,7 @@ void MSDOSWidget::blockSignals(bool bState)
 
 void MSDOSWidget::adjustHeaderTable(qint32 nType, QTableWidget *pTableWidget)
 {
-    // TODO like MACH !!!
-    Q_UNUSED(nType);
-
-    qint32 nSymbolWidth = XLineEditHEX::getSymbolWidth(this);
-
-    pTableWidget->setColumnWidth(HEADER_COLUMN_NAME, nSymbolWidth * 12);   // TODO
-    pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET, nSymbolWidth * 4);  // TODO
-    pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE, nSymbolWidth * 6);    // TODO
-    pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE, nSymbolWidth * 8);   // TODO
-    pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, nSymbolWidth * 16);   // TODO
+    FormatWidget::adjustHeaderTable(nType, pTableWidget);
 }
 
 QString MSDOSWidget::typeIdToString(qint32 nType)

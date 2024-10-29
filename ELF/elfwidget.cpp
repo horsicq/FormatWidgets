@@ -268,18 +268,7 @@ void ELFWidget::blockSignals(bool bState)
 
 void ELFWidget::adjustHeaderTable(qint32 nType, QTableWidget *pTableWidget)
 {
-    XBinary::MODE mode = XELF::getMode(getDevice(), getOptions().bIsImage, getOptions().nImageBase);
-
-    pTableWidget->setColumnWidth(HEADER_COLUMN_OFFSET, getColumnWidth(this, CW_UINT16, mode));
-    pTableWidget->setColumnWidth(HEADER_COLUMN_TYPE, getColumnWidth(this, CW_TYPE, mode));
-
-    switch (nType) {
-        case SELF::TYPE_Elf_Ehdr:
-            pTableWidget->setColumnWidth(HEADER_COLUMN_NAME, getColumnWidth(this, CW_STRINGSHORT, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE, getColumnWidth(this, CW_UINTMODE, mode));
-            pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, getColumnWidth(this, CW_STRINGMID, mode));
-            break;
-    }
+    FormatWidget::adjustHeaderTable(nType, pTableWidget);
 }
 
 void ELFWidget::reloadData(bool bSaveSelection)
@@ -518,7 +507,7 @@ void ELFWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 ELFProcessData elfProcessData(SELF::TYPE_Elf_Shdr, &g_tvModel[SELF::TYPE_Elf_Shdr], &elf, nDataOffset, nDataSize, nDataExtraOffset, nDataExtraSize);
 
-                ajustTableView(&elfProcessData, &g_tvModel[SELF::TYPE_Elf_Shdr], ui->tableView_Elf_Shdr, false);
+                ajustTableView(nType, &elfProcessData, &g_tvModel[SELF::TYPE_Elf_Shdr], ui->tableView_Elf_Shdr, false);
 
                 connect(ui->tableView_Elf_Shdr->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_Elf_Shdr_currentRowChanged(QModelIndex, QModelIndex)));
@@ -531,7 +520,7 @@ void ELFWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 ELFProcessData elfProcessData(SELF::TYPE_Elf_Phdr, &g_tvModel[SELF::TYPE_Elf_Phdr], &elf, nDataOffset, nDataSize, nDataExtraOffset, nDataExtraSize);
 
-                ajustTableView(&elfProcessData, &g_tvModel[SELF::TYPE_Elf_Phdr], ui->tableView_Elf_Phdr, false);
+                ajustTableView(nType, &elfProcessData, &g_tvModel[SELF::TYPE_Elf_Phdr], ui->tableView_Elf_Phdr, false);
 
                 connect(ui->tableView_Elf_Phdr->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_Elf_Phdr_currentRowChanged(QModelIndex, QModelIndex)));
@@ -545,7 +534,7 @@ void ELFWidget::reloadData(bool bSaveSelection)
                 ELFProcessData elfProcessData(SELF::TYPE_Elf_DynamicArrayTags, &g_tvModel[SELF::TYPE_Elf_DynamicArrayTags], &elf, nDataOffset, nDataSize,
                                               nDataExtraOffset, nDataExtraSize);
 
-                ajustTableView(&elfProcessData, &g_tvModel[SELF::TYPE_Elf_DynamicArrayTags], ui->tableView_DynamicArrayTags);
+                ajustTableView(nType, &elfProcessData, &g_tvModel[SELF::TYPE_Elf_DynamicArrayTags], ui->tableView_DynamicArrayTags);
 
                 connect(ui->tableView_DynamicArrayTags->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_DynamicArrayTags_currentRowChanged(QModelIndex, QModelIndex)));
@@ -558,7 +547,7 @@ void ELFWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 ELFProcessData elfProcessData(SELF::TYPE_LIBRARIES, &g_tvModel[SELF::TYPE_LIBRARIES], &elf, nDataOffset, nDataSize, nDataExtraOffset, nDataExtraSize);
 
-                ajustTableView(&elfProcessData, &g_tvModel[SELF::TYPE_LIBRARIES], ui->tableView_Libraries);
+                ajustTableView(nType, &elfProcessData, &g_tvModel[SELF::TYPE_LIBRARIES], ui->tableView_Libraries);
 
                 connect(ui->tableView_Libraries->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_Libraries_currentRowChanged(QModelIndex, QModelIndex)));
@@ -584,7 +573,7 @@ void ELFWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 ELFProcessData elfProcessData(SELF::TYPE_NOTES, &g_tvModel[SELF::TYPE_NOTES], &elf, nDataOffset, nDataSize, nDataExtraOffset, nDataExtraSize);
 
-                ajustTableView(&elfProcessData, &g_tvModel[SELF::TYPE_NOTES], ui->tableView_Notes);
+                ajustTableView(nType, &elfProcessData, &g_tvModel[SELF::TYPE_NOTES], ui->tableView_Notes);
 
                 connect(ui->tableView_Notes->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_Notes_currentRowChanged(QModelIndex, QModelIndex)));
@@ -613,19 +602,19 @@ void ELFWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 ELFProcessData elfProcessData(SELF::TYPE_SYMBOLTABLE, &g_tvModel[SELF::TYPE_SYMBOLTABLE], &elf, nDataOffset, nDataSize, nDataExtraOffset, nDataExtraSize);
 
-                ajustTableView(&elfProcessData, &g_tvModel[SELF::TYPE_SYMBOLTABLE], ui->tableView_SymbolTable, false);
+                ajustTableView(nType, &elfProcessData, &g_tvModel[SELF::TYPE_SYMBOLTABLE], ui->tableView_SymbolTable, false);
             }
         } else if (nType == SELF::TYPE_Elf_Rela) {
             if (!isInitPresent(sInit)) {
                 ELFProcessData elfProcessData(SELF::TYPE_Elf_Rela, &g_tvModel[SELF::TYPE_Elf_Rela], &elf, nDataOffset, nDataSize, nDataExtraOffset, nDataExtraSize);
 
-                ajustTableView(&elfProcessData, &g_tvModel[SELF::TYPE_Elf_Rela], ui->tableView_Rela, false);
+                ajustTableView(nType, &elfProcessData, &g_tvModel[SELF::TYPE_Elf_Rela], ui->tableView_Rela, false);
             }
         } else if (nType == SELF::TYPE_Elf_Rel) {
             if (!isInitPresent(sInit)) {
                 ELFProcessData elfProcessData(SELF::TYPE_Elf_Rel, &g_tvModel[SELF::TYPE_Elf_Rel], &elf, nDataOffset, nDataSize, nDataExtraOffset, nDataExtraSize);
 
-                ajustTableView(&elfProcessData, &g_tvModel[SELF::TYPE_Elf_Rel], ui->tableView_Rel, false);
+                ajustTableView(nType, &elfProcessData, &g_tvModel[SELF::TYPE_Elf_Rel], ui->tableView_Rel, false);
             }
         }
 

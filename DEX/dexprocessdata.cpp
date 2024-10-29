@@ -299,54 +299,54 @@ void DEXProcessData::_process()
     }
 }
 
-void DEXProcessData::ajustTableView(QWidget *pWidget, QTableView *pTableView)
+void DEXProcessData::ajustTableView(qint32 nType, QTableView *pTableView)
 {
     XBinary::MODE mode = g_pDEX->getMode();
 
-    if (g_nType == SDEX::TYPE_MAPITEMS) {
-        pTableView->setColumnWidth(0, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT16, mode));
-        pTableView->setColumnWidth(1, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT16, mode));
-        pTableView->setColumnWidth(2, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_STRINGMID, mode));
-        pTableView->setColumnWidth(3, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        pTableView->setColumnWidth(4, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-    } else if (g_nType == SDEX::TYPE_STRING_ID_ITEM) {
-        pTableView->setColumnWidth(0, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT16, mode));
-        pTableView->setColumnWidth(1, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        pTableView->setColumnWidth(2, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        pTableView->setColumnWidth(3, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_STRINGLONG, mode));
-    } else if (g_nType == SDEX::TYPE_TYPE_ID_ITEM) {
-        pTableView->setColumnWidth(0, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT16, mode));
-        pTableView->setColumnWidth(1, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        pTableView->setColumnWidth(2, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        pTableView->setColumnWidth(3, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_STRINGLONG, mode));
-    } else if (g_nType == SDEX::TYPE_PROTO_ID_ITEM) {
-        pTableView->setColumnWidth(0, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT16, mode));
-        pTableView->setColumnWidth(1, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        pTableView->setColumnWidth(2, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        pTableView->setColumnWidth(3, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        pTableView->setColumnWidth(4, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-    } else if (g_nType == SDEX::TYPE_FIELD_ID_ITEM) {
-        pTableView->setColumnWidth(0, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT16, mode));
-        pTableView->setColumnWidth(1, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        pTableView->setColumnWidth(2, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        pTableView->setColumnWidth(3, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        pTableView->setColumnWidth(4, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-    } else if (g_nType == SDEX::TYPE_METHOD_ID_ITEM) {
-        pTableView->setColumnWidth(0, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT16, mode));
-        pTableView->setColumnWidth(1, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        pTableView->setColumnWidth(2, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        pTableView->setColumnWidth(3, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        pTableView->setColumnWidth(4, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-    } else if (g_nType == SDEX::TYPE_CLASS_DEF_ITEM) {
-        pTableView->setColumnWidth(0, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT16, mode));
-        pTableView->setColumnWidth(1, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        pTableView->setColumnWidth(2, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        pTableView->setColumnWidth(3, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        pTableView->setColumnWidth(4, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        pTableView->setColumnWidth(5, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        pTableView->setColumnWidth(6, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        pTableView->setColumnWidth(7, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        pTableView->setColumnWidth(8, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
-        pTableView->setColumnWidth(9, FormatWidget::getColumnWidth(pWidget, FormatWidget::CW_UINT32, mode));
+    if (nType == SDEX::TYPE_MAPITEMS) {
+        XOptions::setTableViewHeaderWidth(pTableView, 0, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT16, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 1, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT16, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 2, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_STRINGMID, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 3, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 4, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+    } else if (nType == SDEX::TYPE_STRING_ID_ITEM) {
+        XOptions::setTableViewHeaderWidth(pTableView, 0, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT16, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 1, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 2, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 3, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_STRINGLONG, mode));
+    } else if (nType == SDEX::TYPE_TYPE_ID_ITEM) {
+        XOptions::setTableViewHeaderWidth(pTableView, 0, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT16, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 1, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 2, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 3, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_STRINGLONG, mode));
+    } else if (nType == SDEX::TYPE_PROTO_ID_ITEM) {
+        XOptions::setTableViewHeaderWidth(pTableView, 0, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT16, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 1, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 2, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 3, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 4, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+    } else if (nType == SDEX::TYPE_FIELD_ID_ITEM) {
+        XOptions::setTableViewHeaderWidth(pTableView, 0, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT16, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 1, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 2, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 3, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 4, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+    } else if (nType == SDEX::TYPE_METHOD_ID_ITEM) {
+        XOptions::setTableViewHeaderWidth(pTableView, 0, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT16, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 1, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 2, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 3, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 4, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+    } else if (nType == SDEX::TYPE_CLASS_DEF_ITEM) {
+        XOptions::setTableViewHeaderWidth(pTableView, 0, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT16, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 1, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 2, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 3, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 4, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 5, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 6, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 7, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 8, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
+        XOptions::setTableViewHeaderWidth(pTableView, 9, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
     }
 }

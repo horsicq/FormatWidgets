@@ -31,7 +31,7 @@ public:
     explicit DEXProcessData(qint32 nType, QStandardItemModel **ppModel, XDEX *pDEX, qint64 nOffset, qint64 nSize);
 
     virtual void _process();
-    virtual void ajustTableView(QWidget *pWidget, QTableView *pTableView);
+    virtual void ajustTableView(qint32 nType, QTableView *pTableView);
 
 private:
     qint32 g_nType;

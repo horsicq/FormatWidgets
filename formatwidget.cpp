@@ -296,7 +296,14 @@ void FormatWidget::setValue(QVariant vValue, qint32 nStype, qint32 nNdata, qint3
 void FormatWidget::adjustHeaderTable(qint32 nType, QTableWidget *pTableWidget)
 {
     Q_UNUSED(nType)
-    Q_UNUSED(pTableWidget)
+
+    qint32 nSymbolWidth = XLineEditHEX::getSymbolWidth(this);
+
+    pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_NAME, QHeaderView::ResizeToContents);
+    pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_OFFSET, QHeaderView::ResizeToContents);
+    pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_TYPE, QHeaderView::ResizeToContents);
+    pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE, nSymbolWidth * 12);
+    pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, nSymbolWidth * 20);
 }
 
 void FormatWidget::adjustListTable(qint32 nType, QTableWidget *pTableWidget)
@@ -435,7 +442,7 @@ void FormatWidget::setLineEdit(XLineEditHEX *pLineEdit, qint32 nMaxLength, const
     pLineEdit->setProperty("OFFSET", nOffset);
 }
 
-void FormatWidget::ajustTableView(ProcessData *pProcessData, QStandardItemModel **ppModel, XTableView *pTableView, bool bStretchLastSection)
+void FormatWidget::ajustTableView(qint32 nType, ProcessData *pProcessData, QStandardItemModel **ppModel, XTableView *pTableView, bool bStretchLastSection)
 {
     DialogProcessData dialogProcessData(this, pProcessData, getGlobalOptions());
     dialogProcessData.setGlobal(getShortcuts(), getGlobalOptions());
@@ -449,7 +456,7 @@ void FormatWidget::ajustTableView(ProcessData *pProcessData, QStandardItemModel 
 
     pTableView->setCustomModel(*ppModel, true);
 
-    pProcessData->ajustTableView(this, pTableView);
+    pProcessData->ajustTableView(nType, pTableView);
 
     if (bSort) {
         pTableView->setSortingEnabled(true);
@@ -459,7 +466,7 @@ void FormatWidget::ajustTableView(ProcessData *pProcessData, QStandardItemModel 
     pTableView->horizontalHeader()->setStretchLastSection(bStretchLastSection);
 }
 
-void FormatWidget::ajustTreeView(ProcessData *pProcessData, QStandardItemModel **ppModel, QTreeView *pTreeView)
+void FormatWidget::ajustTreeView(qint32 nType, ProcessData *pProcessData, QStandardItemModel **ppModel, QTreeView *pTreeView)
 {
     QAbstractItemModel *pOldModel = pTreeView->model();
 
@@ -469,7 +476,7 @@ void FormatWidget::ajustTreeView(ProcessData *pProcessData, QStandardItemModel *
 
     pTreeView->setModel(*ppModel);
 
-    pProcessData->ajustTreeView(this, pTreeView);
+    pProcessData->ajustTreeView(nType, pTreeView);
 
     deleteOldAbstractModel(&pOldModel);
 }
