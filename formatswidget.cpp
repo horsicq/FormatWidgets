@@ -152,7 +152,7 @@ FormatsWidget::FormatsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(n
     ui->toolButtonYARA->hide();
 #endif
 
-    enableControls(false)
+    enableControls(false);
 }
 
 void FormatsWidget::setFileName(const QString &sFileName, bool bScan)
