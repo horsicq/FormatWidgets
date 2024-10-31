@@ -70,7 +70,7 @@ public:
     explicit FormatsWidget(QWidget *pParent = nullptr);
     ~FormatsWidget();
 
-    void setName(const QString &sFileName, bool bScan);
+    void setFileName(const QString &sFileName, bool bScan);
     void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
     virtual void adjustView();
     void setAdvanced(bool bState);
@@ -80,6 +80,7 @@ private slots:
     void on_comboBoxScanEngine_currentIndexChanged(int nIndex);
     void reload();
     void scan();
+    void enableControls(bool bState);
     void on_toolButtonEntryPoint_clicked();
     void on_toolButtonMemoryMap_clicked();
     void on_toolButtonPE_clicked();

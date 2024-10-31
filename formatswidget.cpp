@@ -151,12 +151,16 @@ FormatsWidget::FormatsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(n
 #ifndef USE_YARA
     ui->toolButtonYARA->hide();
 #endif
+
+    enableControls(false)
 }
 
-void FormatsWidget::setName(const QString &sFileName, bool bScan)
+void FormatsWidget::setFileName(const QString &sFileName, bool bScan)
 {
     this->g_sFileName = sFileName;
     this->g_bScan = bScan;
+
+    enableControls(sFileName != "");
 
     XFormats::setFileTypeComboBox(XBinary::FT_UNKNOWN, g_sFileName, ui->comboBoxFileType, XBinary::TL_OPTION_ALL);
 
@@ -484,6 +488,11 @@ void FormatsWidget::scan()
 #endif
         }
     }
+}
+
+void FormatsWidget::enableControls(bool bState)
+{
+    ui->groupBoxTools->setEnabled(bState);
 }
 
 void FormatsWidget::on_toolButtonEntryPoint_clicked()
