@@ -493,6 +493,17 @@ void FormatsWidget::scan()
 void FormatsWidget::enableControls(bool bState)
 {
     ui->groupBoxTools->setEnabled(bState);
+    ui->stackedWidgetMain->setEnabled(bState);
+    ui->groupBoxBaseAddress->setEnabled(bState);
+    ui->groupBoxEntryPoint->setEnabled(bState);
+    ui->stackedWidgetScan->setEnabled(bState);
+    ui->groupBoxFileSize->setEnabled(bState);
+    ui->groupBoxFileType->setEnabled(bState);
+    ui->groupBoxArch->setEnabled(bState);
+    ui->groupBoxEndianness->setEnabled(bState);
+    ui->groupBoxMode->setEnabled(bState);
+    ui->groupBoxType->setEnabled(bState);
+    ui->groupBoxScanEngine->setEnabled(bState);
 }
 
 void FormatsWidget::on_toolButtonEntryPoint_clicked()

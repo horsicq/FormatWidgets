@@ -69,7 +69,7 @@ void ProcessData::ajustTableView(qint32 nType, QTableView *pTableView)
     qint32 nNumberOfColumns = pTableView->model()->columnCount();
 
     for (qint32 i = 0; i < nNumberOfColumns; i++) {
-        XOptions::setTableViewHeaderWidth(pTableView, i, 120); // TODO
+        XOptions::setTableViewHeaderWidth(pTableView, i, 120);  // TODO
     }
 }
 
