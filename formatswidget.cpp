@@ -1185,7 +1185,7 @@ void FormatsWidget::_showYaraInfo()
 
 void FormatsWidget::_currentFileType(qint32 nFT)
 {
-    XFormats::setCurrentFileTypeComboBox(ui->comboBoxFileType, (XBinary::FT)nFT);
+    XFormats::setComboBoxCurrent(ui->comboBoxFileType, (XBinary::FT)nFT);
 }
 
 void FormatsWidget::on_toolButtonMANIFESTMF_clicked()
