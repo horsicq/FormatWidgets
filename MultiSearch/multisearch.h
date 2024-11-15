@@ -27,7 +27,7 @@
 #include <QSemaphore>
 #include <QStandardItemModel>
 #include <QtConcurrent>
-#include <QtConcurrentMap>
+// #include <QtConcurrentMap>
 
 #include "xformats.h"
 #include "xoptions.h"
