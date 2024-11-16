@@ -29,7 +29,6 @@
 #include <QMenu>
 #include <QSortFilterProxyModel>
 #include <QStandardItemModel>
-#include <QtConcurrent>
 
 #include "dialogmultisearchprocess.h"
 #include "xformats.h"
