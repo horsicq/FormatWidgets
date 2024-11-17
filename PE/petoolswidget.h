@@ -57,9 +57,6 @@ private slots:
     void on_pushButtonOverlayRemove_clicked();
     void on_pushButtonOverlayDump_clicked();
 
-signals:
-    void dataChanged(qint64 nDeviceOffset, qint64 nDeviceSize);
-
 private:
     Ui::PEToolsWidget *ui;
     QIODevice *g_pDevice;

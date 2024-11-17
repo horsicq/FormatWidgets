@@ -233,7 +233,6 @@ protected:
     virtual void _widgetValueChanged(QVariant vValue);
 
 signals:
-    void dataChanged(qint64 nDataOffset, qint64 nDataSize);
     void closeApp();
 
 public slots:

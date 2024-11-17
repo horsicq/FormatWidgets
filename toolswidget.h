@@ -48,7 +48,6 @@ public:
     virtual void adjustView();
 
 signals:
-    void dataChanged(qint64 nDeviceOffset, qint64 nDeviceSize);
     void showOffsetHex(qint64 nOffset, qint64 nSize);
     void showOffsetDisasm(qint64 nOffset);
     void showOffsetMemoryMap(qint64 nOffset);
