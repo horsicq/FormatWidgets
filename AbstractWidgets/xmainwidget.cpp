@@ -26,6 +26,8 @@ XMainWidget::XMainWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::X
     ui->setupUi(this);
 
     g_fileType = XBinary::FT_UNKNOWN;
+
+    ui->widgetHex->hide();
 }
 
 XMainWidget::XMainWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent)
@@ -209,10 +211,16 @@ XShortcutsWidget *XMainWidget::createWidget(const FW_DEF::CWOPTIONS &cwOptions)
         XHashWidget *_pWidget = new XHashWidget(cwOptions.pParent);
         _pWidget->setData(cwOptions.pDevice, cwOptions.fileType, 0, -1, true);
         pResult = _pWidget;
-    // } else if (cwOptions.nType == FW_DEF::TYPE_STRINGS) {
-    //     XStringsWidget *_pWidget = new XStringsWidget(cwOptions.pParent);
-    //     _pWidget->setData(cwOptions.pDevice, cwOptions.fileType);
-    //     pResult = _pWidget;
+    } else if (cwOptions.nType == FW_DEF::TYPE_STRINGS) {
+        SearchStringsWidget *_pWidget = new SearchStringsWidget(cwOptions.pParent);
+        SearchStringsWidget::OPTIONS stringsOptions = {};
+        stringsOptions.bMenu_Hex = true;
+        stringsOptions.bMenu_Demangle = true;
+        stringsOptions.bAnsi = true;
+        stringsOptions.bUnicode = true;
+        stringsOptions.bNullTerminated = false;
+        _pWidget->setData(cwOptions.pDevice, cwOptions.fileType, stringsOptions, true);
+        pResult = _pWidget;
     // } else if (cwOptions.nType == FW_DEF::TYPE_SIGNATURES) {
     //     XSignaturesWidget *_pWidget = new XSignaturesWidget(cwOptions.pParent);
     //     _pWidget->setData(cwOptions.pDevice, cwOptions.fileType);
@@ -285,9 +293,17 @@ void XMainWidget::on_toolButtonGlobalHex_toggled(bool bChecked)
 {
     if (bChecked) {
         ui->widgetHex->show();
-        QSize _size = ui->widgetHex->size();
-        _size.setWidth(50);
-        ui->widgetHex->resize(_size);
+        QList<qint32> listSizes = ui->splitterHex->sizes();
+
+        qint32 nWidgetSize = 0;
+        nWidgetSize += ui->widgetHex->getColumnWidth(0);
+        nWidgetSize += ui->widgetHex->getColumnWidth(1);
+        nWidgetSize += ui->widgetHex->getColumnWidth(2);
+        nWidgetSize += ui->widgetHex->getMapWidth();
+        nWidgetSize += 20;
+        listSizes[0] -= nWidgetSize;
+        listSizes[1] += nWidgetSize;
+        ui->splitterHex->setSizes(listSizes);
     } else {
         ui->widgetHex->hide();
     }

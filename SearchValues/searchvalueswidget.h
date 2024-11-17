@@ -88,7 +88,6 @@ protected:
 signals:
     void showHex(qint64 nOffset, qint64 nSize);
     void showDisasm(qint64 nOffset);
-    void currentLocationChanged(quint64 nLocation, qint32 nLocationType, qint64 nSize);
 
 private:
     Ui::SearchValuesWidget *ui;

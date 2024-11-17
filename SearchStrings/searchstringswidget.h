@@ -104,8 +104,6 @@ protected:
 signals:
     void showHex(qint64 nOffset, qint64 nSize);
     void showDemangle(const QString &sString);
-    void dataChanged(qint64 nDeviceOffset, qint64 nDeviceSize);
-    void currentLocationChanged(quint64 nLocation, qint32 nLocationType, qint64 nSize);
 
 private:
     Ui::SearchStringsWidget *ui;

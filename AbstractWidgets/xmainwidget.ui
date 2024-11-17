@@ -79,7 +79,7 @@
     </layout>
    </item>
    <item>
-    <widget class="QSplitter" name="splitter_2">
+    <widget class="QSplitter" name="splitterNavi">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
@@ -99,7 +99,7 @@
        </property>
       </column>
      </widget>
-     <widget class="QSplitter" name="splitter">
+     <widget class="QSplitter" name="splitterHex">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
