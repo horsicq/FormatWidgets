@@ -348,7 +348,6 @@ void DEXWidget::reloadData(bool bSaveSelection)
 
                 ui->widgetHex->setXInfoDB(getXInfoDB());
                 ui->widgetHex->setData(getDevice(), options);
-                ui->widgetHex->setBackupDevice(getBackupDevice());
                 //                ui->widgetHex->setBackupFileName(getOptions().sBackupFileName);
                 //                ui->widgetHex->enableReadOnly(false);
 
@@ -660,35 +659,35 @@ void DEXWidget::on_toolButtonNext_clicked()
 void DEXWidget::on_pushButtonSave_STRING_ID_ITEM_clicked()
 {
     XShortcutsWidget::saveTableModel(ui->tableView_STRING_ID_ITEM->getProxyModel(),
-                                     XBinary::getResultFileName(getBackupDevice(), QString("%1.txt").arg(QString("STRING_ID_ITEM"))));
+                                     XBinary::getResultFileName(XBinary::getBackupDevice(getDevice()), QString("%1.txt").arg(QString("STRING_ID_ITEM"))));
 }
 
 void DEXWidget::on_pushButtonSave_TYPE_ID_ITEM_clicked()
 {
     XShortcutsWidget::saveTableModel(ui->tableView_TYPE_ID_ITEM->getProxyModel(),
-                                     XBinary::getResultFileName(getBackupDevice(), QString("%1.txt").arg(QString("TYPE_ID_ITEM"))));
+                                     XBinary::getResultFileName(XBinary::getBackupDevice(getDevice()), QString("%1.txt").arg(QString("TYPE_ID_ITEM"))));
 }
 
 void DEXWidget::on_pushButtonSave_PROTO_ID_ITEM_clicked()
 {
     XShortcutsWidget::saveTableModel(ui->tableView_PROTO_ID_ITEM->getProxyModel(),
-                                     XBinary::getResultFileName(getBackupDevice(), QString("%1.txt").arg(QString("PROTO_ID_ITEM"))));
+                                     XBinary::getResultFileName(XBinary::getBackupDevice(getDevice()), QString("%1.txt").arg(QString("PROTO_ID_ITEM"))));
 }
 
 void DEXWidget::on_pushButtonSave_FIELD_ID_ITEM_clicked()
 {
     XShortcutsWidget::saveTableModel(ui->tableView_FIELD_ID_ITEM->getProxyModel(),
-                                     XBinary::getResultFileName(getBackupDevice(), QString("%1.txt").arg(QString("FIELD_ID_ITEM"))));
+                                     XBinary::getResultFileName(XBinary::getBackupDevice(getDevice()), QString("%1.txt").arg(QString("FIELD_ID_ITEM"))));
 }
 
 void DEXWidget::on_pushButtonSave_CLASS_DEF_ITEM_clicked()
 {
     XShortcutsWidget::saveTableModel(ui->tableView_CLASS_DEF_ITEM->getProxyModel(),
-                                     XBinary::getResultFileName(getBackupDevice(), QString("%1.txt").arg(QString("CLASS_DEF_ITEM"))));
+                                     XBinary::getResultFileName(XBinary::getBackupDevice(getDevice()), QString("%1.txt").arg(QString("CLASS_DEF_ITEM"))));
 }
 
 void DEXWidget::on_pushButtonSave_METHOD_ID_ITEM_clicked()
 {
     XShortcutsWidget::saveTableModel(ui->tableView_METHOD_ID_ITEM->getProxyModel(),
-                                     XBinary::getResultFileName(getBackupDevice(), QString("%1.txt").arg(QString("METHOD_ID_ITEM"))));
+                                     XBinary::getResultFileName(XBinary::getBackupDevice(getDevice()), QString("%1.txt").arg(QString("METHOD_ID_ITEM"))));
 }

@@ -1076,7 +1076,6 @@ void PEWidget::reloadData(bool bSaveSelection)
 
                 ui->widgetHex->setXInfoDB(getXInfoDB());
                 ui->widgetHex->setData(getDevice(), options);
-                ui->widgetHex->setBackupDevice(getBackupDevice());
                 // TODO save directory
                 // ui->widgetHex->enableReadOnly(false);
 
@@ -1092,7 +1091,6 @@ void PEWidget::reloadData(bool bSaveSelection)
 
                 ui->widgetDisasm->setXInfoDB(getXInfoDB());
                 ui->widgetDisasm->setData(getDevice(), options);
-                ui->widgetDisasm->setBackupDevice(getBackupDevice());
 
                 setDisasmInitAddress(-1);
             }
@@ -1242,7 +1240,6 @@ void PEWidget::reloadData(bool bSaveSelection)
 
                 ui->widgetDisasm_DosStub->setData(g_subDevice[SPE::TYPE_DOS_STUB], options);
                 ui->widgetDisasm_DosStub->setXInfoDB(getXInfoDB());
-                ui->widgetDisasm_DosStub->setBackupDevice(getBackupDevice());
             }
         } else if (nType == SPE::TYPE_IMAGE_NT_HEADERS) {
             if (!isInitPresent(sInit)) {

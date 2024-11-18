@@ -76,4 +76,7 @@ set(ABSTRACTWIDGETS_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/xmainwidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/xmainwidget.h
     ${CMAKE_CURRENT_LIST_DIR}/xmainwidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/MACH/mach_headerwidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/MACH/mach_headerwidget.h
+    ${CMAKE_CURRENT_LIST_DIR}/MACH/mach_headerwidget.ui
 )

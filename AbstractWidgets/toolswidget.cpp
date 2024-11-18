@@ -62,7 +62,6 @@ void ToolsWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS options, QIODevice
 
     ui->widgetHex->setXInfoDB(pXInfoDB);
     ui->widgetHex->setData(pDevice, hexOptions, true);
-    ui->widgetHex->setBackupDevice(pBackupDevice);
 
     g_stringsOptions = {};
     g_stringsOptions.nBaseAddress = options.nImageBase;
@@ -81,11 +80,6 @@ void ToolsWidget::resetWidget()
 {
     ui->widgetHex->setDevice(nullptr);
     ui->widgetHex->setXInfoDB(nullptr);
-}
-
-void ToolsWidget::setBackupDevice(QIODevice *pDevice)
-{
-    ui->widgetHex->setBackupDevice(pDevice);
 }
 
 void ToolsWidget::setEdited(qint64 nDeviceOffset, qint64 nDeviceSize)

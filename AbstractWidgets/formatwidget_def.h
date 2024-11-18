@@ -46,6 +46,10 @@ struct CWOPTIONS {
     qint32 nType;
     XShortcuts *pShortcuts;
     XOptions *pOptions;
+    qint64 nDataOffset; // TODO location
+    qint64 nDataSize;
+    XBinary::ENDIAN endian;
+    XBinary::MODE mode;
 };
 
 enum TYPE {
@@ -64,7 +68,8 @@ enum TYPE {
     TYPE_SEARCH,
     TYPE_DIESCAN,
     TYPE_YARASCAN,
-    TYPE_TOOLS
+    TYPE_TOOLS,
+    TYPE_MACH_mach_header,
 };
 
 enum VAL_TYPE {
@@ -81,13 +86,19 @@ enum VAL_TYPE {
     VAL_TYPE_UUID
 };
 
+enum INFO {
+    INFO_NONE = 0,
+    INFO_COMBOBOX,
+};
+
 struct HEADER_RECORD {
-    qint32 nData;
+    qint32 nPosition;
     QString sName;
     qint32 nOffset;
     qint32 nSize;
     QString sType;
     VAL_TYPE vtype;
+    INFO info;
 };
 
 enum SECTION_DATA {
@@ -107,6 +118,17 @@ enum SECTION_DATA {
     SECTION_DATA_VALUE1,
     SECTION_DATA_VALUE2,
     SECTION_DATA_VALUE3
+};
+
+enum WIDGET_DATA {
+    WIDGET_DATA_TYPE = 0,
+    WIDGET_DATA_OFFSET,
+    WIDGET_DATA_SIZE,
+    WIDGET_DATA_MODE,
+    WIDGET_DATA_ENDIAN,
+    WIDGET_DATA_EXTRAOFFSET,
+    WIDGET_DATA_EXTRASIZE,
+    WIDGET_DATA_NAME,
 };
 }  // namespace FW_DEF
 

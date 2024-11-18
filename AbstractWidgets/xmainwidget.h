@@ -22,6 +22,7 @@
 #define XMAINWIDGET_H
 
 #include "formatwidget.h"
+#include "MACH/mach_headerwidget.h"
 
 namespace Ui {
 class XMainWidget;
@@ -45,6 +46,7 @@ public:
     virtual void reloadData(bool bSaveSelection);
 
     static void _addBaseItems(QTreeWidget *pTreeWidget, XBinary::FT fileType);
+    static void _addSpecItems(QTreeWidget *pTreeWidget, QIODevice *pDevice, XBinary::FT fileType);
     static XShortcutsWidget *createWidget(const FW_DEF::CWOPTIONS &cwOptions);
 
 private slots:

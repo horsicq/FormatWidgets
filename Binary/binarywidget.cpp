@@ -219,7 +219,6 @@ void BinaryWidget::reloadData(bool bSaveSelection)
 
                 ui->widgetHex->setXInfoDB(getXInfoDB());
                 ui->widgetHex->setData(getDevice(), options);
-                ui->widgetHex->setBackupDevice(getBackupDevice());
                 //                ui->widgetHex->setBackupFileName(getOptions().sBackupFileName);
                 //                ui->widgetHex->enableReadOnly(false);
 
@@ -234,7 +233,6 @@ void BinaryWidget::reloadData(bool bSaveSelection)
                 options.bMenu_Hex = true;
                 ui->widgetDisasm->setXInfoDB(getXInfoDB());
                 ui->widgetDisasm->setData(getDevice(), options);
-                ui->widgetDisasm->setBackupDevice(getBackupDevice());
 
                 setDisasmInitAddress(-1);
             }

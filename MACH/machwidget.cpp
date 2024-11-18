@@ -1371,7 +1371,6 @@ void MACHWidget::reloadData(bool bSaveSelection)
 
                 ui->widgetHex->setXInfoDB(getXInfoDB());
                 ui->widgetHex->setData(getDevice(), options);
-                ui->widgetHex->setBackupDevice(getBackupDevice());
                 //                ui->widgetHex->enableReadOnly(false);
             }
         } else if (nType == SMACH::TYPE_DISASM) {
@@ -1383,7 +1382,6 @@ void MACHWidget::reloadData(bool bSaveSelection)
                 options.bMenu_Hex = true;
                 ui->widgetDisasm->setXInfoDB(getXInfoDB());
                 ui->widgetDisasm->setData(getDevice(), options);
-                ui->widgetDisasm->setBackupDevice(getBackupDevice());
 
                 setDisasmInitAddress(-1);
             }

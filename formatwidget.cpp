@@ -23,7 +23,6 @@
 FormatWidget::FormatWidget(QWidget *pParent) : XShortcutsWidget(pParent)
 {
     g_pDevice = nullptr;
-    g_pBackupDevice = nullptr;
     g_bIsReadonly = false;
     g_fwOptions = {};
     g_bAddPageEnable = true;
@@ -191,24 +190,6 @@ void FormatWidget::setData(FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOff
     setOptions(options);
 }
 
-void FormatWidget::setBackupDevice(QIODevice *pDevice)
-{
-    g_pBackupDevice = pDevice;
-}
-
-QIODevice *FormatWidget::getBackupDevice()
-{
-    QIODevice *pResult = nullptr;
-
-    if (g_pBackupDevice) {
-        pResult = g_pBackupDevice;
-    } else {
-        pResult = g_pDevice;
-    }
-
-    return pResult;
-}
-
 void FormatWidget::setFileType(XBinary::FT fileType)
 {
     g_fileType = fileType;
@@ -289,7 +270,7 @@ void FormatWidget::setValue(QVariant vValue, qint32 nStype, qint32 nNdata, qint3
 
         emit dataChanged(nOffset, 1);  // TODO Check size
     } else {
-        QMessageBox::critical(XOptions::getMainWidget(this), tr("Error"), tr("Cannot save file") + QString(": %1").arg(XBinary::getBackupFileName(getBackupDevice())));
+        QMessageBox::critical(XOptions::getMainWidget(this), tr("Error"), tr("Cannot save file") + QString(": %1").arg(XBinary::getBackupFileName(XBinary::getBackupDevice(getDevice()))));
     }
 }
 
@@ -323,7 +304,7 @@ bool FormatWidget::isEdited()
 {
     bool bResult = false;
 
-    bResult = XBinary::isBackupPresent(getBackupDevice());
+    bResult = XBinary::isBackupPresent(XBinary::getBackupDevice(getDevice()));
 
     return bResult;
 }
@@ -357,7 +338,7 @@ bool FormatWidget::loadHexSubdevice(qint64 nOffset, qint64 nSize, XADDR nAddress
     hexOptions.bOffset = bOffset;
 
     pToolsWidget->setGlobal(getShortcuts(), getGlobalOptions());
-    pToolsWidget->setData((*ppSubDevice), hexOptions, getBackupDevice(), bDisasm, bFollow, getXInfoDB());
+    pToolsWidget->setData((*ppSubDevice), hexOptions, bDisasm, bFollow, getXInfoDB());
 
     return true;
 }
@@ -1328,7 +1309,7 @@ bool FormatWidget::saveBackup()
 
     if ((getGlobalOptions()->isSaveBackup()) && (!isEdited())) {
         // Save backup
-        bResult = XBinary::saveBackup(getBackupDevice());
+        bResult = XBinary::saveBackup(XBinary::getBackupDevice(getDevice()));
     }
 
     return bResult;

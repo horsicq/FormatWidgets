@@ -88,8 +88,6 @@ void MACHOFATWidget::reload()
 
                 pMachWidget->setGlobal(getShortcuts(), getGlobalOptions());
 
-                pMachWidget->setBackupDevice(getDevice());
-
                 XInfoDB *pXInfoDB = getXInfoDB();
                 pMachWidget->setXInfoDB(pXInfoDB);
 

@@ -60,6 +60,7 @@ public:
     enum HEADER_COLUMN {
         HEADER_COLUMN_NAME = 0,
         HEADER_COLUMN_OFFSET,
+        HEADER_COLUMN_SIZE,
         HEADER_COLUMN_TYPE,
         HEADER_COLUMN_VALUE,
         HEADER_COLUMN_INFO,
@@ -83,6 +84,17 @@ public:
         DIRECTORY_COLUMN_SIZE
     };
 
+    struct RECWIDGET {
+        qint32 nPosition;
+        qint64 nOffset;
+        qint64 nSize;
+        FW_DEF::VAL_TYPE vtype;
+        XBinary::ENDIAN endian;
+        XLineEditHEX *pLineEdit;
+        XComboBoxEx *pComboBox;
+        QTableWidgetItem *pComment;
+    };
+
     FormatWidget(QWidget *pParent = nullptr);
     FormatWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent);
     ~FormatWidget();
@@ -97,6 +109,8 @@ public:
     void setData(FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType);
     void setBackupDevice(QIODevice *pDevice);
     QIODevice *getBackupDevice();
+    void setCwOptions(FW_DEF::CWOPTIONS cwOptions);
+    FW_DEF::CWOPTIONS *getCwOptions();
 
     void setFileType(XBinary::FT fileType);
     XBinary::FT getFileType();
@@ -107,10 +121,9 @@ public:
     qint64 getOffset();
     qint32 getType();
     bool isReadonly();
-    static QTreeWidgetItem *createNewItem(qint32 nType, const QString &sTitle, XOptions::ICONTYPE iconType = XOptions::ICONTYPE_GENERIC, qint64 nOffset = 0,
-                                          qint64 nSize = 0, qint64 nExtraOffset = 0, qint64 nExtraSize = 0);
-    bool createHeaderTable(qint32 nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, qint32 nNumberOfRecords,
-                           qint32 nPosition = 0, qint64 nOffset = 0);
+    static QTreeWidgetItem *createNewItem(qint32 nType, const QString &sTitle, XOptions::ICONTYPE iconType, qint64 nOffset,
+                                          qint64 nSize, qint64 nExtraOffset, qint64 nExtraSize, XBinary::MODE mode, XBinary::ENDIAN endian);
+    bool createHeaderTable(QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, QList<RECWIDGET> *pListRecWidget, qint32 nNumberOfRecords, qint64 nOffset, XBinary::ENDIAN endian);
     bool createListTable(qint32 nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, qint32 nNumberOfRecords);
     void addComment(QTableWidget *pTableWidget, qint32 nRow, qint32 nColumn, const QString &sComment);
     void updateTableRecord(QTableWidget *pTableWidget, qint32 nRow, qint64 nOffset, qint64 nSize);
@@ -126,6 +139,7 @@ public:
 
     XComboBoxEx *createComboBox(QTableWidget *pTableWidget, QMap<quint64, QString> mapData, qint32 nType, qint32 nData, XComboBoxEx::CBTYPE cbtype, quint64 nMask = 0,
                                 qint32 nExtraData = -1);
+    void adjustComboBox(QList<RECWIDGET> *pListRecWidget, const QMap<quint64, QString> &mapData, qint32 nPosition, XComboBoxEx::CBTYPE cbtype, quint64 nMask);
     // InvWidget *createInvWidget(QTableWidget *pTableWidget, qint32 nType, qint32 nData, InvWidget::TYPE widgetType);
     XDateTimeEditX *createTimeDateEdit(QTableWidget *pTableWidget, qint32 nType, qint32 nData);
     QPushButton *createPushButton(QTableWidget *pTableWidget, qint32 nType, qint32 nData, const QString &sText);
@@ -163,9 +177,9 @@ public:
 
     static bool _setTreeItem(QTreeWidget *pTree, QTreeWidgetItem *pItem, qint32 nID);
     static void setTreeItem(QTreeWidget *pTree, qint32 nID);
-    virtual void clear() = 0;
+    virtual void clear();
     virtual void cleanup() = 0;
-    virtual void reload() = 0;
+    virtual void reload();
 
     void reset();
     QString getInitString(QTreeWidgetItem *pItem);
@@ -192,6 +206,8 @@ public:
     void initToolsWidget(ToolsWidget *pWidget);
     void initExtractorWidget(XExtractorWidget *pWidget);
     void initYaraWidget(YARAWidgetAdvanced *pWidget);
+
+    void updateRecWidgets(QIODevice *pDevice, QList<RECWIDGET> *pListRecWidget);
 
     enum CW {
         CW_UINT8 = 0,
@@ -226,7 +242,7 @@ protected:
     virtual void setReadonly(bool bState) = 0;
     virtual void blockSignals(bool bState) = 0;
     virtual void reloadData(bool bSaveSelection) = 0;
-    virtual void adjustHeaderTable(qint32 nType, QTableWidget *pTableWidget);
+    void adjustHeaderTable(QTableWidget *pTableWidget);
     virtual void adjustListTable(qint32 nType, QTableWidget *pTableWidget);
     virtual QString typeIdToString(qint32 nType);
     virtual void _showInDisasmWindowAddress(XADDR nAddress);
@@ -278,6 +294,7 @@ private:
     QMap<QString, QString> g_mapInit;
     XInfoDB *g_pXInfoDB;
     XADDR g_nDisamInitAddress;
+    FW_DEF::CWOPTIONS g_cwOptions;
 };
 
 #endif  // FORMATWIDGET_H
