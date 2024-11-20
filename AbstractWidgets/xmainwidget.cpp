@@ -27,9 +27,11 @@ XMainWidget::XMainWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::X
 
     g_fileType = XBinary::FT_UNKNOWN;
 
+    ui->widgetHex->setProperty("TYPE", FW_DEF::TYPE_GLOBALHEX);
     ui->widgetHex->hide();
 
     connect(ui->widgetHex, SIGNAL(dataChanged(qint64, qint64)), this, SLOT(dataChangedSlot(qint64, qint64)));
+    connect(ui->widgetHex, SIGNAL(currentLocationChanged(quint64,qint32,qint64)), this, SLOT(currentLocationChangedSlot(quint64,qint32,qint64)));
 }
 
 XMainWidget::XMainWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent)
@@ -95,6 +97,9 @@ void XMainWidget::reload()
 
 FormatWidget::SV XMainWidget::_setValue(QVariant vValue, qint32 nPosition)
 {
+    Q_UNUSED(vValue)
+    Q_UNUSED(nPosition)
+
     return SV_NONE;
 }
 
@@ -113,6 +118,23 @@ void XMainWidget::setReadonly(bool bState)
             pWidget->setReadonly(bState);
         }
     }
+
+    ui->widgetHex->setReadonly(bState);
+}
+
+void XMainWidget::adjustView()
+{
+    qint32 nNumberOfWidgets = ui->stackedWidgetMain->count();
+
+    for (qint32 i = 0; i < nNumberOfWidgets; i++) {
+        XShortcutsWidget *pWidget = dynamic_cast<XShortcutsWidget *>(ui->stackedWidgetMain->widget(i));
+
+        if (pWidget) {
+            pWidget->adjustView();
+        }
+    }
+
+    ui->widgetHex->adjustView();
 }
 
 void XMainWidget::reloadData(bool bSaveSelection)
@@ -120,13 +142,11 @@ void XMainWidget::reloadData(bool bSaveSelection)
     FW_DEF::CWOPTIONS cwOptions = {};
     cwOptions.pParent = this;
     cwOptions.fileType = g_fileType;
-    cwOptions.nType = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::WIDGET_DATA_TYPE).toInt();
+    cwOptions._type = (FW_DEF::TYPE)(ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::WIDGET_DATA_TYPE).toInt());
     cwOptions.pDevice = getDevice();
     cwOptions.bIsImage = getOptions().bIsImage;
     cwOptions.nImageBase = getOptions().nImageBase;
     cwOptions.pXInfoDB = getXInfoDB();
-    cwOptions.pShortcuts = getShortcuts();
-    cwOptions.pOptions = getGlobalOptions();
     cwOptions.endian = (XBinary::ENDIAN)(ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::WIDGET_DATA_ENDIAN).toLongLong());
     cwOptions.mode = (XBinary::MODE)(ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::WIDGET_DATA_MODE).toLongLong());
     cwOptions.nDataOffset = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::WIDGET_DATA_OFFSET).toLongLong();
@@ -149,10 +169,12 @@ void XMainWidget::reloadData(bool bSaveSelection)
         XShortcutsWidget *pWidget = createWidget(cwOptions);
 
         if (pWidget) {
+            pWidget->setGlobal(getShortcuts(), getGlobalOptions());
             pWidget->setReadonly(isReadonly());
-            connect(pWidget, SIGNAL(currentLocationChanged(quint64,qint32,qint64)), ui->widgetHex, SLOT(currentLocationChangedSlot(quint64,qint32,qint64)));
+            connect(pWidget, SIGNAL(currentLocationChanged(quint64,qint32,qint64)), this, SLOT(currentLocationChangedSlot(quint64,qint32,qint64)));
             connect(pWidget, SIGNAL(dataChanged(qint64, qint64)), this, SLOT(dataChangedSlot(qint64, qint64)));
             pWidget->setProperty("uid", sUID);
+            pWidget->setProperty("TYPE", cwOptions._type);
             qint32 nPosition = ui->stackedWidgetMain->addWidget(pWidget);
             ui->stackedWidgetMain->setCurrentIndex(nPosition);
             addInit(sUID);
@@ -188,7 +210,30 @@ void XMainWidget::_addBaseItems(QTreeWidget *pTreeWidget, XBinary::FT fileType)
 
 void XMainWidget::_addSpecItems(QTreeWidget *pTreeWidget, QIODevice *pDevice, XBinary::FT fileType, bool bIsImage, XADDR nImageBase)
 {
-    if ((fileType == XBinary::FT_MACHO) || (fileType == XBinary::FT_MACHO32) || (fileType == XBinary::FT_MACHO64)) {
+    if ((fileType == XBinary::FT_ELF) || (fileType == XBinary::FT_ELF32) || (fileType == XBinary::FT_ELF64)) {
+        XELF elf(pDevice, bIsImage, nImageBase);
+
+        if (elf.isValid()) {
+            XBinary::ENDIAN endian=elf.getEndian();
+            XBinary::MODE mode=elf.getMode();
+            bool bIs64 = elf.is64();
+
+            {
+                QString sTitle;
+                qint64 nDataSize = 0;
+
+                if (bIs64) {
+                    sTitle = "Elf64_Ehdr";
+                    nDataSize = sizeof(XELF_DEF::Elf64_Ehdr);
+                } else {
+                    sTitle = "Elf32_Ehdr";
+                    nDataSize = sizeof(XELF_DEF::Elf32_Ehdr);
+                }
+
+                pTreeWidget->addTopLevelItem(createNewItem(FW_DEF::TYPE_ELF_elf_ehdr, sTitle, XOptions::ICONTYPE_HEADER, 0, nDataSize, 0, 0, mode, endian));
+            }
+        }
+    } else if ((fileType == XBinary::FT_MACHO) || (fileType == XBinary::FT_MACHO32) || (fileType == XBinary::FT_MACHO64)) {
         XMACH mach(pDevice, bIsImage, nImageBase);
 
         if (mach.isValid()) {
@@ -218,38 +263,38 @@ XShortcutsWidget *XMainWidget::createWidget(const FW_DEF::CWOPTIONS &cwOptions)
 {
     XShortcutsWidget *pResult = nullptr;
 
-    if (cwOptions.nType == FW_DEF::TYPE_INFO) {
+    if (cwOptions._type == FW_DEF::TYPE_INFO) {
         XFileInfoWidget *_pWidget = new XFileInfoWidget(cwOptions.pParent);
         _pWidget->setData(cwOptions.pDevice, cwOptions.fileType, "Info", true);
         pResult = _pWidget;
-    } else if (cwOptions.nType == FW_DEF::TYPE_NFDSCAN) {
+    } else if (cwOptions._type == FW_DEF::TYPE_NFDSCAN) {
         NFDWidgetAdvanced *_pWidget = new NFDWidgetAdvanced(cwOptions.pParent);
         _pWidget->setData(cwOptions.pDevice, true, cwOptions.fileType);
         pResult = _pWidget;
-    } else if (cwOptions.nType == FW_DEF::TYPE_DIESCAN) {
+    } else if (cwOptions._type == FW_DEF::TYPE_DIESCAN) {
         DIEWidgetAdvanced *_pWidget = new DIEWidgetAdvanced(cwOptions.pParent);
         _pWidget->setData(cwOptions.pDevice, true, cwOptions.fileType);
         pResult = _pWidget;
     }
 #ifdef USE_YARA
-    else if (cwOptions.nType == FW_DEF::TYPE_YARASCAN) {
+    else if (cwOptions._type == FW_DEF::TYPE_YARASCAN) {
         YARAWidgetAdvanced *_pWidget = new YARAWidgetAdvanced(cwOptions.pParent);
         _pWidget->setData(XBinary::getDeviceFileName(cwOptions.pDevice), true);
         pResult = _pWidget;
 #endif
-    } else if (cwOptions.nType == FW_DEF::TYPE_VIRUSTOTAL) {
+    } else if (cwOptions._type == FW_DEF::TYPE_VIRUSTOTAL) {
         XVirusTotalWidget *_pWidget = new XVirusTotalWidget(cwOptions.pParent);
         _pWidget->setData(cwOptions.pDevice);
         pResult = _pWidget;
-    } else if (cwOptions.nType == FW_DEF::TYPE_VISUALIZATION) {
+    } else if (cwOptions._type == FW_DEF::TYPE_VISUALIZATION) {
         XVisualizationWidget *_pWidget = new XVisualizationWidget(cwOptions.pParent);
         _pWidget->setData(cwOptions.pDevice, cwOptions.fileType, true);
         pResult = _pWidget;
-    // } else if (cwOptions.nType == FW_DEF::TYPE_HEX) {
+    // } else if (cwOptions._type == FW_DEF::TYPE_HEX) {
     //     XHexViewWidget *_pWidget = new XHexViewWidget(cwOptions.pParent);
     //     _pWidget->setData(cwOptions.pDevice, cwOptions.fileType);
     //     pResult = _pWidget;
-    } else if (cwOptions.nType == FW_DEF::TYPE_DISASM) {
+    } else if (cwOptions._type == FW_DEF::TYPE_DISASM) {
         XMultiDisasmWidget *_pWidget = new XMultiDisasmWidget(cwOptions.pParent);
         XMultiDisasmWidget::OPTIONS options = {};
         options.fileType = cwOptions.fileType;
@@ -261,11 +306,11 @@ XShortcutsWidget *XMainWidget::createWidget(const FW_DEF::CWOPTIONS &cwOptions)
 
         _pWidget->setData(cwOptions.pDevice, options);
         pResult = _pWidget;
-    } else if (cwOptions.nType == FW_DEF::TYPE_HASH) {
+    } else if (cwOptions._type == FW_DEF::TYPE_HASH) {
         XHashWidget *_pWidget = new XHashWidget(cwOptions.pParent);
         _pWidget->setData(cwOptions.pDevice, cwOptions.fileType, cwOptions.nDataOffset, cwOptions.nDataSize, true);
         pResult = _pWidget;
-    } else if (cwOptions.nType == FW_DEF::TYPE_STRINGS) {
+    } else if (cwOptions._type == FW_DEF::TYPE_STRINGS) {
         SearchStringsWidget *_pWidget = new SearchStringsWidget(cwOptions.pParent);
         SearchStringsWidget::OPTIONS stringsOptions = {};
         stringsOptions.bMenu_Hex = true;
@@ -275,26 +320,29 @@ XShortcutsWidget *XMainWidget::createWidget(const FW_DEF::CWOPTIONS &cwOptions)
         stringsOptions.bNullTerminated = false;
         _pWidget->setData(cwOptions.pDevice, cwOptions.fileType, stringsOptions, true);
         pResult = _pWidget;
-    // } else if (cwOptions.nType == FW_DEF::TYPE_SIGNATURES) {
+    // } else if (cwOptions._type == FW_DEF::TYPE_SIGNATURES) {
     //     XSignaturesWidget *_pWidget = new XSignaturesWidget(cwOptions.pParent);
     //     _pWidget->setData(cwOptions.pDevice, cwOptions.fileType);
     //     pResult = _pWidget;
-    // } else if (cwOptions.nType == FW_DEF::TYPE_MEMORYMAP) {
-    //     XMemoryMapWidget *_pWidget = new XMemoryMapWidget(cwOptions.pParent);
-    //     _pWidget->setData(cwOptions.pDevice, cwOptions.fileType);
-    //     pResult = _pWidget;
-    } else if (cwOptions.nType == FW_DEF::TYPE_ENTROPY) {
+    } else if (cwOptions._type == FW_DEF::TYPE_MEMORYMAP) {
+        XMemoryMapWidget *_pWidget = new XMemoryMapWidget(cwOptions.pParent);
+        XMemoryMapWidget::OPTIONS options = {};
+        options.fileType = cwOptions.fileType;
+        options.bIsSearchEnable = true;
+        _pWidget->setData(cwOptions.pDevice, options, cwOptions.pXInfoDB);
+        pResult = _pWidget;
+    } else if (cwOptions._type == FW_DEF::TYPE_ENTROPY) {
         XEntropyWidget *_pWidget = new XEntropyWidget(cwOptions.pParent);
         _pWidget->setData(cwOptions.pDevice, cwOptions.nDataOffset, cwOptions.nDataSize, cwOptions.fileType, true);
         pResult = _pWidget;
-    } else if (cwOptions.nType == FW_DEF::TYPE_EXTRACTOR) {
+    } else if (cwOptions._type == FW_DEF::TYPE_EXTRACTOR) {
         XExtractorWidget *_pWidget = new XExtractorWidget(cwOptions.pParent);
         XExtractor::OPTIONS extractorOptions = XExtractor::getDefaultOptions();
         extractorOptions.fileType = cwOptions.fileType;
         extractorOptions.bMenu_Hex = true;
         _pWidget->setData(cwOptions.pDevice, extractorOptions, true);
         pResult = _pWidget;
-    } else if (cwOptions.nType == FW_DEF::TYPE_SEARCH) {
+    } else if (cwOptions._type == FW_DEF::TYPE_SEARCH) {
         SearchValuesWidget *_pWidget = new SearchValuesWidget(cwOptions.pParent);
         SearchValuesWidget::OPTIONS options = {};
         options.fileType = cwOptions.fileType;
@@ -302,14 +350,14 @@ XShortcutsWidget *XMainWidget::createWidget(const FW_DEF::CWOPTIONS &cwOptions)
         options.bMenu_Disasm = true;
         _pWidget->setData(cwOptions.pDevice, options);
         pResult = _pWidget;
-    } else if (cwOptions.nType == FW_DEF::TYPE_MACH_mach_header) {
+    } else if (cwOptions._type == FW_DEF::TYPE_ELF_elf_ehdr) {
+        elf_ehdrWidget *_pWidget = new elf_ehdrWidget(cwOptions.pParent);
+        _pWidget->setCwOptions(cwOptions);
+        pResult = _pWidget;
+    } else if (cwOptions._type == FW_DEF::TYPE_MACH_mach_header) {
         mach_headerWidget *_pWidget = new mach_headerWidget(cwOptions.pParent);
         _pWidget->setCwOptions(cwOptions);
         pResult = _pWidget;
-    }
-
-    if (pResult) {
-        pResult->setGlobal(cwOptions.pShortcuts, cwOptions.pOptions);
     }
 
     return pResult;
@@ -369,6 +417,8 @@ void XMainWidget::on_toolButtonGlobalHex_toggled(bool bChecked)
         listSizes[0] -= nWidgetSize;
         listSizes[1] += nWidgetSize;
         ui->splitterHex->setSizes(listSizes);
+        ui->splitterHex->setStretchFactor(0, 8);
+        ui->splitterHex->setStretchFactor(0, 1);
     } else {
         ui->widgetHex->hide();
     }
@@ -383,6 +433,30 @@ void XMainWidget::on_checkBoxReadonly_stateChanged(int nArg)
 
 void XMainWidget::dataChangedSlot(qint64 nOffset, qint64 nSize)
 {
-    qDebug("dataChangedSlot %016llX %016llX", nOffset, nSize);
+    Q_UNUSED(nOffset)
+    Q_UNUSED(nSize)
+
+    FW_DEF::TYPE _type = (FW_DEF::TYPE)(sender()->property("TYPE").toInt());
+
+    if (_type == FW_DEF::TYPE_GLOBALHEX) {
+        XShortcutsWidget *pWidget = dynamic_cast<XShortcutsWidget *>(ui->stackedWidgetMain->currentWidget());
+        if (pWidget) {
+            FW_DEF::TYPE _typeRecv = (FW_DEF::TYPE)(pWidget->property("TYPE").toInt());
+
+            if (_typeRecv == FW_DEF::TYPE_MACH_mach_header) {
+                pWidget->reloadData(true);
+            }
+        }
+    } else {
+        ui->widgetHex->reloadData(true);
+    }
+}
+
+void XMainWidget::currentLocationChangedSlot(quint64 nLocation, qint32 nLocationType, qint64 nSize)
+{
+    FW_DEF::TYPE _type = (FW_DEF::TYPE)(sender()->property("TYPE").toInt());
+    if (_type != FW_DEF::TYPE_GLOBALHEX) {
+        ui->widgetHex->currentLocationChangedSlot(nLocation, nLocationType, nSize);
+    }
 }
 

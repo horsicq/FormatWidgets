@@ -40,24 +40,9 @@ struct OPTIONS {
     bool bNoWindowOpen;  // For Archive_widget
 };
 
-struct CWOPTIONS {
-    QWidget *pParent;
-    XBinary::FT fileType;
-    QIODevice *pDevice;
-    bool bIsImage;
-    qint64 nImageBase;
-    XInfoDB *pXInfoDB;
-    qint32 nType;
-    XShortcuts *pShortcuts;
-    XOptions *pOptions;
-    qint64 nDataOffset; // TODO location
-    qint64 nDataSize;
-    XBinary::ENDIAN endian;
-    XBinary::MODE mode;
-};
-
 enum TYPE {
-    TYPE_INFO = 0,
+    TYPE_GLOBALHEX = 0,
+    TYPE_INFO,
     TYPE_VISUALIZATION,
     TYPE_VIRUSTOTAL,
     TYPE_HEX,
@@ -73,7 +58,22 @@ enum TYPE {
     TYPE_DIESCAN,
     TYPE_YARASCAN,
     TYPE_TOOLS,
+    TYPE_ELF_elf_ehdr,
     TYPE_MACH_mach_header,
+};
+
+struct CWOPTIONS {
+    QWidget *pParent;
+    XBinary::FT fileType;
+    QIODevice *pDevice;
+    bool bIsImage;
+    qint64 nImageBase;
+    XInfoDB *pXInfoDB;
+    TYPE _type;
+    qint64 nDataOffset; // TODO location
+    qint64 nDataSize;
+    XBinary::ENDIAN endian;
+    XBinary::MODE mode;
 };
 
 enum VAL_TYPE {

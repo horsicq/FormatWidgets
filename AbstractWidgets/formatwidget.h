@@ -175,8 +175,11 @@ public:
     static bool _setTreeItem(QTreeWidget *pTree, QTreeWidgetItem *pItem, qint32 nID);
     static void setTreeItem(QTreeWidget *pTree, qint32 nID);
     virtual void clear();
-    virtual void cleanup() = 0;
+    virtual void cleanup();
     virtual void reload();
+    virtual void setReadonly(bool bState);
+
+    QList<RECWIDGET> *getListRecWidgets();
 
     void reset();
     QString getInitString(QTreeWidgetItem *pItem);
@@ -205,6 +208,7 @@ public:
     void initYaraWidget(YARAWidgetAdvanced *pWidget);
 
     void updateRecWidgets(QIODevice *pDevice, QList<RECWIDGET> *pListRecWidget);
+    void _adjustRecWidget(RECWIDGET *pRecWidget, QVariant varValue);
 
     enum CW {
         CW_UINT8 = 0,
@@ -285,6 +289,7 @@ private:
     XInfoDB *g_pXInfoDB;
     XADDR g_nDisamInitAddress;
     FW_DEF::CWOPTIONS g_cwOptions;
+    QList<RECWIDGET> listRecWidget;
 };
 
 #endif  // FORMATWIDGET_H

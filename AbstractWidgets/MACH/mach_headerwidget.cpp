@@ -68,85 +68,54 @@ mach_headerWidget::~mach_headerWidget()
     delete ui;
 }
 
-void mach_headerWidget::cleanup()
-{
-    qint32 nNumberOfRecords = listRecWidget.count();
-
-    for (qint32 i = 0; i < nNumberOfRecords; i++) {
-        RECWIDGET recWidget = listRecWidget.at(i);
-
-        if (recWidget.pLineEdit) {
-            delete recWidget.pLineEdit;
-        }
-
-        if (recWidget.pComboBox) {
-            delete recWidget.pComboBox;
-        }
-
-        if (recWidget.pComment) {
-            delete recWidget.pComment;
-        }
-    }
-
-    listRecWidget.clear();
-}
-
 FormatWidget::SV mach_headerWidget::_setValue(QVariant vValue, qint32 nPosition)
 {
-    if (nPosition < listRecWidget.count()) {
-        RECWIDGET recWidget = listRecWidget.at(nPosition);
-    }
+    Q_UNUSED(vValue)
+    Q_UNUSED(nPosition)
 
     return SV_NONE;
 }
 
-void mach_headerWidget::setReadonly(bool bState)
-{
-    qint32 nNumberOfRecords = listRecWidget.count();
-
-    for (qint32 i = 0; i < nNumberOfRecords; i++) {
-        RECWIDGET recWidget = listRecWidget.at(i);
-
-        if (recWidget.pLineEdit) {
-            recWidget.pLineEdit->setReadOnly(bState);
-        }
-
-        if (recWidget.pComboBox) {
-            recWidget.pComboBox->setReadOnly(bState);
-        }
-    }
-}
-
 void mach_headerWidget::reloadData(bool bSaveSelection)
 {
-    Q_UNUSED(bSaveSelection)
+    qint32 nCurrentRow = 0;
+
+    if (bSaveSelection) {
+        nCurrentRow = ui->tableWidgetMain->currentRow();
+    }
 
     cleanup();
 
     XMACH mach(getCwOptions()->pDevice, getCwOptions()->bIsImage, getCwOptions()->nImageBase);
 
     if (mach.isValid()) {
-        if (getCwOptions()->mode==XBinary::MODE_64)
-        {
-            createHeaderTable(ui->tableWidget_mach_header, _mach_headerWidget::records64, &listRecWidget, _mach_headerWidget::__data_size,
+        if (getCwOptions()->mode==XBinary::MODE_64) {
+            createHeaderTable(ui->tableWidgetMain, _mach_headerWidget::records64, getListRecWidgets(), _mach_headerWidget::__data_size,
                               getCwOptions()->nDataOffset, getCwOptions()->endian);
         } else if (getCwOptions()->mode==XBinary::MODE_32){
-            createHeaderTable(ui->tableWidget_mach_header, _mach_headerWidget::records32, &listRecWidget,
+            createHeaderTable(ui->tableWidgetMain, _mach_headerWidget::records32, getListRecWidgets(),
                               _mach_headerWidget::__data_size - 1, getCwOptions()->nDataOffset, getCwOptions()->endian);
         }
 
-        adjustComboBox(&listRecWidget, XMACH::getHeaderMagicsS(), _mach_headerWidget::magic, XComboBoxEx::CBTYPE_LIST, 0);
-        adjustComboBox(&listRecWidget, XMACH::getHeaderCpuTypesS(), _mach_headerWidget::cputype, XComboBoxEx::CBTYPE_LIST, 0);
-        adjustComboBox(&listRecWidget, XMACH::getHeaderCpuSubTypesS(mach.getHeader_cputype()), _mach_headerWidget::cpusubtype, XComboBoxEx::CBTYPE_LIST, 0);
-        adjustComboBox(&listRecWidget, XMACH::getHeaderFileTypesS(), _mach_headerWidget::filetype, XComboBoxEx::CBTYPE_LIST, 0);
-        adjustComboBox(&listRecWidget, XMACH::getHeaderFlagsS(), _mach_headerWidget::flags, XComboBoxEx::CBTYPE_FLAGS, 0);
+        adjustComboBox(getListRecWidgets(), XMACH::getHeaderMagicsS(), _mach_headerWidget::magic, XComboBoxEx::CBTYPE_LIST, 0);
+        adjustComboBox(getListRecWidgets(), XMACH::getHeaderCpuTypesS(), _mach_headerWidget::cputype, XComboBoxEx::CBTYPE_LIST, 0);
+        adjustComboBox(getListRecWidgets(), XMACH::getHeaderCpuSubTypesS(mach.getHeader_cputype()), _mach_headerWidget::cpusubtype, XComboBoxEx::CBTYPE_LIST, 0);
+        adjustComboBox(getListRecWidgets(), XMACH::getHeaderFileTypesS(), _mach_headerWidget::filetype, XComboBoxEx::CBTYPE_LIST, 0);
+        adjustComboBox(getListRecWidgets(), XMACH::getHeaderFlagsS(), _mach_headerWidget::flags, XComboBoxEx::CBTYPE_FLAGS, 0);
 
-        updateRecWidgets(getCwOptions()->pDevice, &listRecWidget);
+        updateRecWidgets(getCwOptions()->pDevice, getListRecWidgets());
     }
+
+    ui->tableWidgetMain->setCurrentCell(nCurrentRow, 0);
 }
 
-void mach_headerWidget::on_tableWidget_mach_header_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
+void mach_headerWidget::on_tableWidgetMain_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
 {
-    setHeaderTableSelection(ui->tableWidget_mach_header);
+    Q_UNUSED(currentRow)
+    Q_UNUSED(currentColumn)
+    Q_UNUSED(previousRow)
+    Q_UNUSED(previousColumn)
+
+    setHeaderTableSelection(ui->tableWidgetMain);
 }
 

@@ -22,6 +22,7 @@
 #define XMAINWIDGET_H
 
 #include "formatwidget.h"
+#include "ELF/elf_ehdr.h"
 #include "MACH/mach_headerwidget.h"
 
 namespace Ui {
@@ -42,6 +43,7 @@ public:
 
     virtual SV _setValue(QVariant vValue, qint32 nPosition);
     virtual void setReadonly(bool bState);
+    virtual void adjustView();
     virtual void reloadData(bool bSaveSelection);
 
     static void _addBaseItems(QTreeWidget *pTreeWidget, XBinary::FT fileType);
@@ -57,6 +59,7 @@ private slots:
     void on_toolButtonGlobalHex_toggled(bool bChecked);
     void on_checkBoxReadonly_stateChanged(int nArg);
     void dataChangedSlot(qint64 nOffset, qint64 nSize);
+    void currentLocationChangedSlot(quint64 nLocation, qint32 nLocationType, qint64 nSize);
 
 private:
     Ui::XMainWidget *ui;

@@ -151,6 +151,21 @@ void FormatWidget::adjustView()
             }
         }
     }
+    {
+        qint32 nNumberOfRecords = listRecWidget.count();
+
+        for (qint32 i = 0; i < nNumberOfRecords; i++) {
+            RECWIDGET recWidget = listRecWidget.at(i);
+
+            if (recWidget.pLineEdit) {
+                getGlobalOptions()->adjustWidget(recWidget.pLineEdit, XOptions::ID_VIEW_FONT_TABLEVIEWS);
+            }
+
+            if (recWidget.pComboBox) {
+                getGlobalOptions()->adjustWidget(recWidget.pComboBox, XOptions::ID_VIEW_FONT_TABLEVIEWS);
+            }
+        }
+    }
 }
 
 void FormatWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType)
@@ -273,19 +288,40 @@ QTreeWidgetItem *FormatWidget::createNewItem(qint32 nType, const QString &sTitle
 void FormatWidget::setValue(QVariant vValue, qint32 nPosition, qint64 nOffset, qint64 nSize)
 {
     if (XBinary::saveBackup(XBinary::getBackupDevice(getDevice()))) {
-        SV sv = _setValue(vValue, nPosition);
-        // if (sv == SV_EDITED) {
-        //     reset();
-        // } else if (sv == SV_RELOADDATA) {
-        //     reset();
-        //     reloadData(true);
-        // } else if (sv == SV_RELOADALL) {
-        //     reset();
-        //     reload();
-        //     reloadData(false);
-        // }
+        if (nPosition < listRecWidget.count()) {
+            RECWIDGET recWidget = listRecWidget.at(nPosition);
 
-        emit dataChanged(nOffset, nSize);
+            qDebug("vValue = %X", vValue.toUInt());
+
+            XBinary binary(getDevice());
+            if ((recWidget.vtype == FW_DEF::VAL_TYPE_DATA) || (recWidget.vtype == FW_DEF::VAL_TYPE_SIZE)) {
+                if (recWidget.nSize == 1) {
+                    binary.write_uint8(recWidget.nOffset, vValue.toUInt());
+                } else if (recWidget.nSize == 2) {
+                    binary.write_uint16(recWidget.nOffset, vValue.toUInt(), (recWidget.endian == XBinary::ENDIAN_BIG));
+                } else if (recWidget.nSize == 4) {
+                    binary.write_uint32(recWidget.nOffset, vValue.toUInt(), (recWidget.endian == XBinary::ENDIAN_BIG));
+                } else if (recWidget.nSize == 8) {
+                    binary.write_uint64(recWidget.nOffset, vValue.toULongLong(), (recWidget.endian == XBinary::ENDIAN_BIG));
+                }
+            }
+
+            _adjustRecWidget(&recWidget, vValue);
+
+            SV sv = _setValue(vValue, nPosition);
+            // if (sv == SV_EDITED) {
+            //     reset();
+            // } else if (sv == SV_RELOADDATA) {
+            //     reset();
+            //     reloadData(true);
+            // } else if (sv == SV_RELOADALL) {
+            //     reset();
+            //     reload();
+            //     reloadData(false);
+            // }
+
+            emit dataChanged(nOffset, nSize);
+        }
     } else {
         QMessageBox::critical(XOptions::getMainWidget(this), tr("Error"), tr("Cannot save file") + QString(": %1").arg(XBinary::getBackupFileName(XBinary::getBackupDevice(getDevice()))));
     }
@@ -657,9 +693,56 @@ void FormatWidget::clear()
 
 }
 
+void FormatWidget::cleanup()
+{
+    qint32 nNumberOfRecords = listRecWidget.count();
+
+    for (qint32 i = 0; i < nNumberOfRecords; i++) {
+        RECWIDGET recWidget = listRecWidget.at(i);
+
+        if (recWidget.pLineEdit) {
+            delete recWidget.pLineEdit;
+        }
+
+        if (recWidget.pComboBox) {
+            delete recWidget.pComboBox;
+        }
+
+        if (recWidget.pComment) {
+            delete recWidget.pComment;
+        }
+    }
+
+    listRecWidget.clear();
+}
+
 void FormatWidget::reload()
 {
 
+}
+
+void FormatWidget::setReadonly(bool bState)
+{
+    qint32 nNumberOfRecords = listRecWidget.count();
+
+    for (qint32 i = 0; i < nNumberOfRecords; i++) {
+        RECWIDGET recWidget = listRecWidget.at(i);
+
+        if (recWidget.pLineEdit) {
+            recWidget.pLineEdit->setReadOnly(bState);
+        }
+
+        if (recWidget.pComboBox) {
+            recWidget.pComboBox->setReadOnly(bState);
+        }
+    }
+
+    XShortcutsWidget::setReadonly(bState);
+}
+
+QList<FormatWidget::RECWIDGET> *FormatWidget::getListRecWidgets()
+{
+    return &listRecWidget;
 }
 
 void FormatWidget::reset()
@@ -1043,32 +1126,57 @@ void FormatWidget::updateRecWidgets(QIODevice *pDevice, QList<RECWIDGET> *pListR
     for (qint32 i = 0; i < nNumberOfRecords; i++) {
         RECWIDGET recWidget = pListRecWidget->at(i);
 
-        QString sComment;
-
-        const bool bBlockLineEdit = recWidget.pLineEdit->blockSignals(true);
-        bool bComboBox = false;
-        if (recWidget.pComboBox) bComboBox = recWidget.pComboBox->blockSignals(true);
+        QVariant varValue;
 
         if ((recWidget.vtype == FW_DEF::VAL_TYPE_DATA) || (recWidget.vtype == FW_DEF::VAL_TYPE_SIZE)) {
-            if (recWidget.nSize == 4) {
-                quint32 nValue = binary.read_uint32(recWidget.nOffset, (recWidget.endian == XBinary::ENDIAN_BIG));
-                recWidget.pLineEdit->setValue_uint32(nValue, XLineEditHEX::_MODE_HEX);
-                if (recWidget.pComboBox) recWidget.pComboBox->setValue(nValue);
-                if (recWidget.vtype == FW_DEF::VAL_TYPE_SIZE) sComment = XBinary::bytesCountToString(nValue);
+            if (recWidget.nSize == 1) {
+                varValue = binary.read_uint8(recWidget.nOffset);
+            } else if (recWidget.nSize == 2) {
+                varValue = binary.read_uint16(recWidget.nOffset, (recWidget.endian == XBinary::ENDIAN_BIG));
+            } else if (recWidget.nSize == 4) {
+                varValue = binary.read_uint32(recWidget.nOffset, (recWidget.endian == XBinary::ENDIAN_BIG));
+            } else if (recWidget.nSize == 8) {
+                varValue = binary.read_uint64(recWidget.nOffset, (recWidget.endian == XBinary::ENDIAN_BIG));
             }
         }
 
-        if (recWidget.pComboBox) {
-            sComment = recWidget.pComboBox->getDescription();
-        }
-
-        if (sComment != "") {
-            recWidget.pComment->setText(sComment);
-        }
-
-        recWidget.pLineEdit->blockSignals(bBlockLineEdit);
-        if (recWidget.pComboBox) recWidget.pComboBox->blockSignals(bComboBox);
+        _adjustRecWidget(&recWidget, varValue);
     }
+}
+
+void FormatWidget::_adjustRecWidget(RECWIDGET *pRecWidget, QVariant varValue)
+{
+    QString sComment;
+
+    const bool bBlockLineEdit = pRecWidget->pLineEdit->blockSignals(true);
+    bool bComboBox = false;
+    if (pRecWidget->pComboBox) bComboBox = pRecWidget->pComboBox->blockSignals(true);
+
+    if ((pRecWidget->vtype == FW_DEF::VAL_TYPE_DATA) || (pRecWidget->vtype == FW_DEF::VAL_TYPE_SIZE)) {
+        if (pRecWidget->nSize == 1) {
+            pRecWidget->pLineEdit->setValue_uint8(varValue.toUInt(), XLineEditHEX::_MODE_HEX);
+        } else if (pRecWidget->nSize == 2) {
+            pRecWidget->pLineEdit->setValue_uint16(varValue.toUInt(), XLineEditHEX::_MODE_HEX);
+        } else if (pRecWidget->nSize == 4) {
+            pRecWidget->pLineEdit->setValue_uint32(varValue.toUInt(), XLineEditHEX::_MODE_HEX);
+        } else if (pRecWidget->nSize == 8) {
+            pRecWidget->pLineEdit->setValue_uint64(varValue.toULongLong(), XLineEditHEX::_MODE_HEX);
+        }
+    }
+
+    if (pRecWidget->pComboBox) pRecWidget->pComboBox->setValue(varValue);
+    if (pRecWidget->vtype == FW_DEF::VAL_TYPE_SIZE) sComment = XBinary::bytesCountToString(varValue.toULongLong());
+
+    if (pRecWidget->pComboBox) {
+        sComment = pRecWidget->pComboBox->getDescription();
+    }
+
+    if (sComment != "") {
+        pRecWidget->pComment->setText(sComment);
+    }
+
+    pRecWidget->pLineEdit->blockSignals(bBlockLineEdit);
+    if (pRecWidget->pComboBox) pRecWidget->pComboBox->blockSignals(bComboBox);
 }
 
 qint32 FormatWidget::getColumnWidth(QWidget *pParent, FormatWidget::CW cw, XBinary::MODE mode)
@@ -1372,6 +1480,8 @@ void FormatWidget::registerShortcuts(bool bState)
 
 bool FormatWidget::createHeaderTable(QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, QList<RECWIDGET> *pListRecWidget, qint32 nNumberOfRecords, qint64 nOffset, XBinary::ENDIAN endian)
 {
+    pTableWidget->clear();
+
     QStringList slHeader;
     slHeader.append(tr("Name"));
     slHeader.append(tr("Offset"));
@@ -1443,7 +1553,7 @@ bool FormatWidget::createHeaderTable(QTableWidget *pTableWidget, const FW_DEF::H
         }
 
         if (pRecords[i].info == FW_DEF::INFO_COMBOBOX) {
-            recWidget.pComboBox = new XComboBoxEx();
+            recWidget.pComboBox = new XComboBoxEx(pTableWidget);
             recWidget.pComboBox->setProperty("POSITION", recWidget.nPosition);
             recWidget.pComboBox->setProperty("OFFSET", recWidget.nOffset);
             recWidget.pComboBox->setProperty("SIZE", recWidget.nSize);

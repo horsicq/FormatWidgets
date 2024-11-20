@@ -34,19 +34,16 @@ class mach_headerWidget : public FormatWidget
 public:
     explicit mach_headerWidget(QWidget *pParent = nullptr);
     ~mach_headerWidget();
-
-protected:
-    virtual void cleanup();
-    virtual SV _setValue(QVariant vValue, qint32 nPosition);
-    virtual void setReadonly(bool bState);
     virtual void reloadData(bool bSaveSelection);
 
+protected:
+    virtual SV _setValue(QVariant vValue, qint32 nPosition);
+
 private slots:
-    void on_tableWidget_mach_header_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
+    void on_tableWidgetMain_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
 
 private:
     Ui::mach_headerWidget *ui;
-    QList<RECWIDGET> listRecWidget;
 };
 
 #endif // MACH_HEADERWIDGET_H
