@@ -23,8 +23,6 @@
 FormatWidget::FormatWidget(QWidget *pParent) : XShortcutsWidget(pParent)
 {
     g_pDevice = nullptr;
-    g_pBackupDevice = nullptr;
-    g_bIsReadonly = false;
     g_fwOptions = {};
     g_bAddPageEnable = true;
     g_nPageIndex = 0;  // TODO Check
@@ -33,6 +31,8 @@ FormatWidget::FormatWidget(QWidget *pParent) : XShortcutsWidget(pParent)
 
     g_colDisabled = QWidget::palette().color(QPalette::Window);
     g_colEnabled = QWidget::palette().color(QPalette::BrightText);
+
+    setReadonly(true);
 }
 
 FormatWidget::FormatWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent) : FormatWidget(pParent)
@@ -156,7 +156,6 @@ void FormatWidget::adjustView()
 void FormatWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType)
 {
     g_pDevice = pDevice;
-    g_bIsReadonly = !(pDevice->isWritable());
 
     setData(options, nNumber, nOffset, nType);
 }
@@ -191,27 +190,17 @@ void FormatWidget::setData(FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOff
     setOptions(options);
 }
 
-void FormatWidget::setBackupDevice(QIODevice *pDevice)
-{
-    g_pBackupDevice = pDevice;
-}
-
-QIODevice *FormatWidget::getBackupDevice()
-{
-    QIODevice *pResult = nullptr;
-
-    if (g_pBackupDevice) {
-        pResult = g_pBackupDevice;
-    } else {
-        pResult = g_pDevice;
-    }
-
-    return pResult;
-}
-
 void FormatWidget::setCwOptions(FW_DEF::CWOPTIONS cwOptions)
 {
     g_cwOptions = cwOptions;
+
+    FW_DEF::OPTIONS formatOptions = {};
+
+    formatOptions.bIsImage = cwOptions.bIsImage;
+    formatOptions.nImageBase = cwOptions.nImageBase;
+    formatOptions.fileType = cwOptions.fileType;
+
+    setData(cwOptions.pDevice, formatOptions, 0, 0, 0);
 
     reloadData(false);
 }
@@ -261,11 +250,6 @@ qint32 FormatWidget::getType()
     return g_nType;
 }
 
-bool FormatWidget::isReadonly()
-{
-    return g_bIsReadonly;
-}
-
 QTreeWidgetItem *FormatWidget::createNewItem(qint32 nType, const QString &sTitle, XOptions::ICONTYPE iconType, qint64 nOffset, qint64 nSize, qint64 nExtraOffset,
                                              qint64 nExtraSize, XBinary::MODE mode, XBinary::ENDIAN endian)
 {
@@ -286,24 +270,24 @@ QTreeWidgetItem *FormatWidget::createNewItem(qint32 nType, const QString &sTitle
     return pResult;
 }
 
-void FormatWidget::setValue(QVariant vValue, qint32 nStype, qint32 nNdata, qint32 nVtype, qint32 nPosition, qint64 nOffset)
+void FormatWidget::setValue(QVariant vValue, qint32 nPosition, qint64 nOffset, qint64 nSize)
 {
-    if (saveBackup()) {
-        SV sv = _setValue(vValue, nStype, nNdata, nVtype, nPosition, nOffset);
-        if (sv == SV_EDITED) {
-            reset();
-        } else if (sv == SV_RELOADDATA) {
-            reset();
-            reloadData(true);
-        } else if (sv == SV_RELOADALL) {
-            reset();
-            reload();
-            reloadData(false);
-        }
+    if (XBinary::saveBackup(XBinary::getBackupDevice(getDevice()))) {
+        SV sv = _setValue(vValue, nPosition);
+        // if (sv == SV_EDITED) {
+        //     reset();
+        // } else if (sv == SV_RELOADDATA) {
+        //     reset();
+        //     reloadData(true);
+        // } else if (sv == SV_RELOADALL) {
+        //     reset();
+        //     reload();
+        //     reloadData(false);
+        // }
 
-        emit dataChanged(nOffset, 1);  // TODO Check size
+        emit dataChanged(nOffset, nSize);
     } else {
-        QMessageBox::critical(XOptions::getMainWidget(this), tr("Error"), tr("Cannot save file") + QString(": %1").arg(XBinary::getBackupFileName(getBackupDevice())));
+        QMessageBox::critical(XOptions::getMainWidget(this), tr("Error"), tr("Cannot save file") + QString(": %1").arg(XBinary::getBackupFileName(XBinary::getBackupDevice(getDevice()))));
     }
 }
 
@@ -330,15 +314,6 @@ QString FormatWidget::typeIdToString(qint32 nType)
     Q_UNUSED(nType)
 
     return "";
-}
-
-bool FormatWidget::isEdited()
-{
-    bool bResult = false;
-
-    bResult = XBinary::isBackupPresent(getBackupDevice());
-
-    return bResult;
 }
 
 bool FormatWidget::loadHexSubdevice(qint64 nOffset, qint64 nSize, XADDR nAddress, SubDevice **ppSubDevice, ToolsWidget *pToolsWidget, bool bOffset, bool bDisasm,
@@ -370,7 +345,7 @@ bool FormatWidget::loadHexSubdevice(qint64 nOffset, qint64 nSize, XADDR nAddress
     hexOptions.bOffset = bOffset;
 
     pToolsWidget->setGlobal(getShortcuts(), getGlobalOptions());
-    pToolsWidget->setData((*ppSubDevice), hexOptions, getBackupDevice(), bDisasm, bFollow, getXInfoDB());
+    pToolsWidget->setData((*ppSubDevice), hexOptions, bDisasm, bFollow, getXInfoDB());
 
     return true;
 }
@@ -428,6 +403,18 @@ void FormatWidget::setHeaderTableSelection(ToolsWidget *pToolWidget, QTableWidge
 
             pToolWidget->setSelection(nOffset, nSize, false);
         }
+    }
+}
+
+void FormatWidget::setHeaderTableSelection(QTableWidget *pTableWidget)
+{
+    qint32 nCurrentRow = pTableWidget->currentRow();
+
+    if (nCurrentRow != -1) {
+        qint64 nOffset = pTableWidget->item(nCurrentRow, 0)->data(Qt::UserRole + HEADER_DATA_OFFSET).toULongLong();
+        qint64 nSize = pTableWidget->item(nCurrentRow, 0)->data(Qt::UserRole + HEADER_DATA_SIZE).toULongLong();
+
+        emit currentLocationChanged(nOffset, XBinary::LT_OFFSET, nSize);
     }
 }
 
@@ -1243,8 +1230,10 @@ void FormatWidget::_widgetValueChanged(QVariant vValue)
 void FormatWidget::valueChangedSlot(QVariant varValue)
 {
     qint32 nPosition = sender()->property("POSITION").toInt();
+    qint64 nOffset = sender()->property("OFFSET").toInt();
+    qint64 nSize = sender()->property("SIZE").toInt();
 
-    //setValue(varValue, 0, 0, 0, nPosition, 0);
+    setValue(varValue, nPosition, nOffset, nSize);
 }
 
 void FormatWidget::setEdited(qint64 nDeviceOffset, qint64 nDeviceSize)
@@ -1376,18 +1365,6 @@ void FormatWidget::showDemangle(const QString &sString)
     dialogDemangle.exec();
 }
 
-bool FormatWidget::saveBackup()
-{
-    bool bResult = true;
-
-    if ((getGlobalOptions()->isSaveBackup()) && (!isEdited())) {
-        // Save backup
-        bResult = XBinary::saveBackup(getBackupDevice());
-    }
-
-    return bResult;
-}
-
 void FormatWidget::registerShortcuts(bool bState)
 {
     Q_UNUSED(bState)
@@ -1447,7 +1424,9 @@ bool FormatWidget::createHeaderTable(QTableWidget *pTableWidget, const FW_DEF::H
         pTableWidget->setItem(i, HEADER_COLUMN_TYPE, pItemType);
 
         recWidget.pLineEdit = new XLineEditHEX();
-        recWidget.pLineEdit->setProperty("POSITION", pRecords[i].nPosition);
+        recWidget.pLineEdit->setProperty("POSITION", recWidget.nPosition);
+        recWidget.pLineEdit->setProperty("OFFSET", recWidget.nOffset);
+        recWidget.pLineEdit->setProperty("SIZE", recWidget.nSize);
 
         if ((pRecords[i].vtype == FW_DEF::VAL_TYPE_TEXT) || (pRecords[i].vtype == FW_DEF::VAL_TYPE_UUID)) {
             if (pRecords[i].nSize != -1) {
@@ -1465,7 +1444,9 @@ bool FormatWidget::createHeaderTable(QTableWidget *pTableWidget, const FW_DEF::H
 
         if (pRecords[i].info == FW_DEF::INFO_COMBOBOX) {
             recWidget.pComboBox = new XComboBoxEx();
-            recWidget.pComboBox->setProperty("POSITION", pRecords[i].nPosition);
+            recWidget.pComboBox->setProperty("POSITION", recWidget.nPosition);
+            recWidget.pComboBox->setProperty("OFFSET", recWidget.nOffset);
+            recWidget.pComboBox->setProperty("SIZE", recWidget.nSize);
 
             connect(recWidget.pComboBox, SIGNAL(valueChanged(QVariant)), this, SLOT(valueChangedSlot(QVariant)));
 

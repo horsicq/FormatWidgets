@@ -91,19 +91,30 @@ void mach_headerWidget::cleanup()
     listRecWidget.clear();
 }
 
-FormatWidget::SV mach_headerWidget::_setValue(QVariant vValue, qint32 nStype, qint32 nNdata, qint32 nVtype, qint32 nPosition, qint64 nOffset)
+FormatWidget::SV mach_headerWidget::_setValue(QVariant vValue, qint32 nPosition)
 {
+    if (nPosition < listRecWidget.count()) {
+        RECWIDGET recWidget = listRecWidget.at(nPosition);
+    }
+
     return SV_NONE;
 }
 
 void mach_headerWidget::setReadonly(bool bState)
 {
+    qint32 nNumberOfRecords = listRecWidget.count();
 
-}
+    for (qint32 i = 0; i < nNumberOfRecords; i++) {
+        RECWIDGET recWidget = listRecWidget.at(i);
 
-void mach_headerWidget::blockSignals(bool bState)
-{
+        if (recWidget.pLineEdit) {
+            recWidget.pLineEdit->setReadOnly(bState);
+        }
 
+        if (recWidget.pComboBox) {
+            recWidget.pComboBox->setReadOnly(bState);
+        }
+    }
 }
 
 void mach_headerWidget::reloadData(bool bSaveSelection)
@@ -112,7 +123,7 @@ void mach_headerWidget::reloadData(bool bSaveSelection)
 
     cleanup();
 
-    XMACH mach(getCwOptions()->pDevice); // TODO ImageBase
+    XMACH mach(getCwOptions()->pDevice, getCwOptions()->bIsImage, getCwOptions()->nImageBase);
 
     if (mach.isValid()) {
         if (getCwOptions()->mode==XBinary::MODE_64)
@@ -133,3 +144,9 @@ void mach_headerWidget::reloadData(bool bSaveSelection)
         updateRecWidgets(getCwOptions()->pDevice, &listRecWidget);
     }
 }
+
+void mach_headerWidget::on_tableWidget_mach_header_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
+{
+    setHeaderTableSelection(ui->tableWidget_mach_header);
+}
+

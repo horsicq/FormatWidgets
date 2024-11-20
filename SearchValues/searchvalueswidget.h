@@ -62,6 +62,7 @@ public:
     void findValue(QVariant varValue, XBinary::VT valueType, XBinary::ENDIAN endian);
     void findValue(quint64 nValue, XBinary::ENDIAN endian);
     virtual void adjustView();
+    virtual void reloadData(bool bSaveSelection);
 
 private slots:
     void on_toolButtonSave_clicked();
@@ -76,7 +77,6 @@ private slots:
     void viewSelection();
     void on_tableViewSelection(const QItemSelection &itemSelected, const QItemSelection &itemDeselected);
     void on_tableViewResult_clicked(const QModelIndex &index);
-
     void on_comboBoxType_currentIndexChanged(int nIndex);
 
 private:

@@ -44,12 +44,9 @@ SearchStringsWidget::SearchStringsWidget(QWidget *pParent) : XShortcutsWidget(pP
     ui->tableViewResult->setToolTip(tr("Result"));
 
     g_pDevice = nullptr;
-    g_pBackupDevice = nullptr;
 
     g_options.nBaseAddress = 0;
     g_bInit = false;
-    g_bIsReadonly = true;
-
     g_options = {};
 
     ui->checkBoxNullTerminated->setEnabled(false);
@@ -92,8 +89,6 @@ void SearchStringsWidget::setData(QIODevice *pDevice, XBinary::FT fileType, OPTI
 {
     this->g_pDevice = pDevice;
 
-    g_bIsReadonly = !(pDevice->isWritable());
-
     XFormats::setFileTypeComboBox(fileType, g_pDevice, ui->comboBoxType);
     XFormats::getMapModesList(fileType, ui->comboBoxMapMode);
 
@@ -118,27 +113,9 @@ void SearchStringsWidget::setData(QIODevice *pDevice, XBinary::FT fileType, OPTI
     }
 }
 
-void SearchStringsWidget::setBackupDevice(QIODevice *pDevice)
-{
-    g_pBackupDevice = pDevice;
-}
-
 QIODevice *SearchStringsWidget::getDevice()
 {
     return g_pDevice;
-}
-
-QIODevice *SearchStringsWidget::getBackupDevice()
-{
-    QIODevice *pResult = nullptr;
-
-    if (g_pBackupDevice) {
-        pResult = g_pBackupDevice;
-    } else {
-        pResult = g_pDevice;
-    }
-
-    return pResult;
 }
 
 void SearchStringsWidget::reload()
@@ -151,37 +128,15 @@ bool SearchStringsWidget::getInitStatus()
     return g_bInit;
 }
 
-bool SearchStringsWidget::isEdited()
-{
-    bool bResult = XBinary::isBackupPresent(getBackupDevice());
-
-    return bResult;
-}
-
-bool SearchStringsWidget::saveBackup()
-{
-    bool bResult = true;
-
-    if ((getGlobalOptions()->isSaveBackup()) && (!isEdited())) {
-        // Save backup
-        bResult = XBinary::saveBackup(getBackupDevice());
-    }
-
-    return bResult;
-}
-
-void SearchStringsWidget::setReadonly(bool bState)
-{
-    g_bIsReadonly = bState;
-}
-
-bool SearchStringsWidget::isReadonly()
-{
-    return g_bIsReadonly;
-}
-
 void SearchStringsWidget::adjustView()
 {
+}
+
+void SearchStringsWidget::reloadData(bool bSaveSelection)
+{
+    if (!bSaveSelection) {
+        search();
+    }
 }
 
 void SearchStringsWidget::on_toolButtonSave_clicked()
@@ -293,7 +248,7 @@ void SearchStringsWidget::_editString()
         {
             bool bSuccess = false;
 
-            if (saveBackup()) {
+            if (XBinary::saveBackup(XBinary::getBackupDevice(getDevice()))) {
                 if (XBinary::write_array(g_pDevice, dataStruct.nOffset,
                                          XBinary::getStringData(dataStruct.recordType, dataStruct.sString, dataStruct.bIsNullTerminated))) {
                     ui->tableViewResult->model()->setData(indexNumber, dataStruct.nSize, Qt::UserRole + MultiSearch::USERROLE_SIZE);
@@ -311,7 +266,7 @@ void SearchStringsWidget::_editString()
                 emit dataChanged(dataStruct.nOffset, dataStruct.nSize);
             } else {
                 QMessageBox::critical(XOptions::getMainWidget(this), tr("Error"),
-                                      tr("Cannot save file") + QString(": %1").arg(XBinary::getBackupFileName(getBackupDevice())));
+                                      tr("Cannot save file") + QString(": %1").arg(XBinary::getBackupFileName(XBinary::getBackupDevice(getDevice()))));
             }
         }
     }
@@ -458,10 +413,10 @@ void SearchStringsWidget::viewSelection()
             qint64 nOffset = ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + MultiSearch::USERROLE_OFFSET).toULongLong();
             qint64 nSize = ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + MultiSearch::USERROLE_SIZE).toLongLong();
 
-            if (nVirtualAddress != (XADDR)-1) {
-                emit currentLocationChanged(nVirtualAddress, XBinary::LT_ADDRESS, nSize);
-            } else if (nOffset != -1) {
+            if (nOffset != -1) {
                 emit currentLocationChanged(nOffset, XBinary::LT_OFFSET, nSize);
+            } else if (nVirtualAddress != (XADDR)-1) {
+                emit currentLocationChanged(nVirtualAddress, XBinary::LT_ADDRESS, nSize);
             }
         }
     }

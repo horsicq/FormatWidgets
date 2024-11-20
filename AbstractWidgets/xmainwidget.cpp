@@ -28,6 +28,8 @@ XMainWidget::XMainWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::X
     g_fileType = XBinary::FT_UNKNOWN;
 
     ui->widgetHex->hide();
+
+    connect(ui->widgetHex, SIGNAL(dataChanged(qint64, qint64)), this, SLOT(dataChangedSlot(qint64, qint64)));
 }
 
 XMainWidget::XMainWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent)
@@ -67,7 +69,7 @@ void XMainWidget::reload()
 {
     XMainWidget::clear();
 
-    ui->checkBoxReadonly->setEnabled(!isReadonly());
+    ui->checkBoxReadonly->setEnabled(getDevice()->isWritable());
 
     g_fileType = getOptions().fileType;
 
@@ -78,30 +80,39 @@ void XMainWidget::reload()
     setFileType(g_fileType);
 
     XHexView::OPTIONS options = {};
+    options.memoryMapRegion = XFormats::getMemoryMap(g_fileType, XBinary::MAPMODE_UNKNOWN, getDevice(), getOptions().bIsImage, getOptions().nImageBase);
+    ui->widgetHex->setXInfoDB(getXInfoDB());
     ui->widgetHex->setData(getDevice(), options, true);
     ui->widgetHex->setBytesProLine(8);
 
     _addBaseItems(ui->treeWidgetNavi, g_fileType);
-    _addSpecItems(ui->treeWidgetNavi, getDevice(), g_fileType);
+    _addSpecItems(ui->treeWidgetNavi, getDevice(), g_fileType, getOptions().bIsImage, getOptions().nImageBase);
 
     ui->treeWidgetNavi->expandAll();
-
-    setDisasmInitAddress(0);  // Optimize
 
     setTreeItem(ui->treeWidgetNavi, getOptions().nStartType);
 }
 
-FormatWidget::SV XMainWidget::_setValue(QVariant vValue, qint32 nStype, qint32 nNdata, qint32 nVtype, qint32 nPosition, qint64 nOffset)
+FormatWidget::SV XMainWidget::_setValue(QVariant vValue, qint32 nPosition)
 {
     return SV_NONE;
 }
 
 void XMainWidget::setReadonly(bool bState)
 {
-}
+    XShortcutsWidget::setReadonly(bState);
 
-void XMainWidget::blockSignals(bool bState)
-{
+    ui->checkBoxReadonly->setChecked(bState);
+
+    qint32 nNumberOfWidgets = ui->stackedWidgetMain->count();
+
+    for (qint32 i = 0; i < nNumberOfWidgets; i++) {
+        XShortcutsWidget *pWidget = dynamic_cast<XShortcutsWidget *>(ui->stackedWidgetMain->widget(i));
+
+        if (pWidget) {
+            pWidget->setReadonly(bState);
+        }
+    }
 }
 
 void XMainWidget::reloadData(bool bSaveSelection)
@@ -111,6 +122,9 @@ void XMainWidget::reloadData(bool bSaveSelection)
     cwOptions.fileType = g_fileType;
     cwOptions.nType = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::WIDGET_DATA_TYPE).toInt();
     cwOptions.pDevice = getDevice();
+    cwOptions.bIsImage = getOptions().bIsImage;
+    cwOptions.nImageBase = getOptions().nImageBase;
+    cwOptions.pXInfoDB = getXInfoDB();
     cwOptions.pShortcuts = getShortcuts();
     cwOptions.pOptions = getGlobalOptions();
     cwOptions.endian = (XBinary::ENDIAN)(ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::WIDGET_DATA_ENDIAN).toLongLong());
@@ -135,6 +149,9 @@ void XMainWidget::reloadData(bool bSaveSelection)
         XShortcutsWidget *pWidget = createWidget(cwOptions);
 
         if (pWidget) {
+            pWidget->setReadonly(isReadonly());
+            connect(pWidget, SIGNAL(currentLocationChanged(quint64,qint32,qint64)), ui->widgetHex, SLOT(currentLocationChangedSlot(quint64,qint32,qint64)));
+            connect(pWidget, SIGNAL(dataChanged(qint64, qint64)), this, SLOT(dataChangedSlot(qint64, qint64)));
             pWidget->setProperty("uid", sUID);
             qint32 nPosition = ui->stackedWidgetMain->addWidget(pWidget);
             ui->stackedWidgetMain->setCurrentIndex(nPosition);
@@ -145,34 +162,34 @@ void XMainWidget::reloadData(bool bSaveSelection)
 
 void XMainWidget::_addBaseItems(QTreeWidget *pTreeWidget, XBinary::FT fileType)
 {
-    QTreeWidgetItem *pItemInfo = createNewItem(FW_DEF::TYPE_INFO, tr("Info"), XOptions::ICONTYPE_INFO, 0, 0, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN);
+    QTreeWidgetItem *pItemInfo = createNewItem(FW_DEF::TYPE_INFO, tr("Info"), XOptions::ICONTYPE_INFO, 0, -1, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN);
     pTreeWidget->addTopLevelItem(pItemInfo);
-    pItemInfo->addChild(createNewItem(FW_DEF::TYPE_NFDSCAN, "Nauz File Detector (NFD)", XOptions::ICONTYPE_NFD, 0, 0, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
-    pItemInfo->addChild(createNewItem(FW_DEF::TYPE_DIESCAN, "Detect It Easy (DiE)", XOptions::ICONTYPE_DIE, 0, 0, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
+    pItemInfo->addChild(createNewItem(FW_DEF::TYPE_NFDSCAN, "Nauz File Detector (NFD)", XOptions::ICONTYPE_NFD, 0, -1, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
+    pItemInfo->addChild(createNewItem(FW_DEF::TYPE_DIESCAN, "Detect It Easy (DiE)", XOptions::ICONTYPE_DIE, 0, -1, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
 #ifdef USE_YARA
-    pItemInfo->addChild(createNewItem(FW_DEF::TYPE_YARASCAN, "Yara rules", XOptions::ICONTYPE_YARA, 0, 0, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
+    pItemInfo->addChild(createNewItem(FW_DEF::TYPE_YARASCAN, "Yara rules", XOptions::ICONTYPE_YARA, 0, -1, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
 #endif
-    pTreeWidget->addTopLevelItem(createNewItem(FW_DEF::TYPE_VIRUSTOTAL, "VirusTotal", XOptions::ICONTYPE_VIRUSTOTAL, 0, 0, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
-    pTreeWidget->addTopLevelItem(createNewItem(FW_DEF::TYPE_VISUALIZATION, tr("Visualization"), XOptions::ICONTYPE_VISUALIZATION, 0, 0, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
-    pTreeWidget->addTopLevelItem(createNewItem(FW_DEF::TYPE_HEX, tr("Hex"), XOptions::ICONTYPE_HEX, 0, 0, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
+    pTreeWidget->addTopLevelItem(createNewItem(FW_DEF::TYPE_VIRUSTOTAL, "VirusTotal", XOptions::ICONTYPE_VIRUSTOTAL, 0, -1, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
+    pTreeWidget->addTopLevelItem(createNewItem(FW_DEF::TYPE_VISUALIZATION, tr("Visualization"), XOptions::ICONTYPE_VISUALIZATION, 0, -1, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
+    pTreeWidget->addTopLevelItem(createNewItem(FW_DEF::TYPE_HEX, tr("Hex"), XOptions::ICONTYPE_HEX, 0, -1, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
 
     if (fileType != XBinary::FT_DEX) {
-        pTreeWidget->addTopLevelItem(createNewItem(FW_DEF::TYPE_DISASM, tr("Disasm"), XOptions::ICONTYPE_DISASM, 0, 0, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
+        pTreeWidget->addTopLevelItem(createNewItem(FW_DEF::TYPE_DISASM, tr("Disasm"), XOptions::ICONTYPE_DISASM, 0, -1, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
     }
 
-    pTreeWidget->addTopLevelItem(createNewItem(FW_DEF::TYPE_HASH, tr("Hash"), XOptions::ICONTYPE_HASH, 0, 0, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
-    pTreeWidget->addTopLevelItem(createNewItem(FW_DEF::TYPE_STRINGS, tr("Strings"), XOptions::ICONTYPE_STRING, 0, 0, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
-    pTreeWidget->addTopLevelItem(createNewItem(FW_DEF::TYPE_SIGNATURES, tr("Signatures"), XOptions::ICONTYPE_SIGNATURE, 0, 0, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
-    pTreeWidget->addTopLevelItem(createNewItem(FW_DEF::TYPE_MEMORYMAP, tr("Memory map"), XOptions::ICONTYPE_MEMORYMAP, 0, 0, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
-    pTreeWidget->addTopLevelItem(createNewItem(FW_DEF::TYPE_ENTROPY, tr("Entropy"), XOptions::ICONTYPE_ENTROPY, 0, 0, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
-    pTreeWidget->addTopLevelItem(createNewItem(FW_DEF::TYPE_EXTRACTOR, tr("Extractor"), XOptions::ICONTYPE_EXTRACTOR, 0, 0, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
-    pTreeWidget->addTopLevelItem(createNewItem(FW_DEF::TYPE_SEARCH, tr("Search"), XOptions::ICONTYPE_SEARCH, 0, 0, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
+    pTreeWidget->addTopLevelItem(createNewItem(FW_DEF::TYPE_HASH, tr("Hash"), XOptions::ICONTYPE_HASH, 0, -1, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
+    pTreeWidget->addTopLevelItem(createNewItem(FW_DEF::TYPE_STRINGS, tr("Strings"), XOptions::ICONTYPE_STRING, 0, -1, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
+    pTreeWidget->addTopLevelItem(createNewItem(FW_DEF::TYPE_SIGNATURES, tr("Signatures"), XOptions::ICONTYPE_SIGNATURE, 0, -1, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
+    pTreeWidget->addTopLevelItem(createNewItem(FW_DEF::TYPE_MEMORYMAP, tr("Memory map"), XOptions::ICONTYPE_MEMORYMAP, 0, -1, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
+    pTreeWidget->addTopLevelItem(createNewItem(FW_DEF::TYPE_ENTROPY, tr("Entropy"), XOptions::ICONTYPE_ENTROPY, 0, -1, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
+    pTreeWidget->addTopLevelItem(createNewItem(FW_DEF::TYPE_EXTRACTOR, tr("Extractor"), XOptions::ICONTYPE_EXTRACTOR, 0, -1, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
+    pTreeWidget->addTopLevelItem(createNewItem(FW_DEF::TYPE_SEARCH, tr("Search"), XOptions::ICONTYPE_SEARCH, 0, -1, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
 }
 
-void XMainWidget::_addSpecItems(QTreeWidget *pTreeWidget, QIODevice *pDevice, XBinary::FT fileType)
+void XMainWidget::_addSpecItems(QTreeWidget *pTreeWidget, QIODevice *pDevice, XBinary::FT fileType, bool bIsImage, XADDR nImageBase)
 {
     if ((fileType == XBinary::FT_MACHO) || (fileType == XBinary::FT_MACHO32) || (fileType == XBinary::FT_MACHO64)) {
-        XMACH mach(pDevice);
+        XMACH mach(pDevice, bIsImage, nImageBase);
 
         if (mach.isValid()) {
             XBinary::ENDIAN endian=mach.getEndian();
@@ -232,13 +249,21 @@ XShortcutsWidget *XMainWidget::createWidget(const FW_DEF::CWOPTIONS &cwOptions)
     //     XHexViewWidget *_pWidget = new XHexViewWidget(cwOptions.pParent);
     //     _pWidget->setData(cwOptions.pDevice, cwOptions.fileType);
     //     pResult = _pWidget;
-    // } else if (cwOptions.nType == FW_DEF::TYPE_DISASM) {
-    //     XDisasmWidget *_pWidget = new XDisasmWidget(cwOptions.pParent);
-    //     _pWidget->setData(cwOptions.pDevice, cwOptions.fileType);
-    //     pResult = _pWidget;
+    } else if (cwOptions.nType == FW_DEF::TYPE_DISASM) {
+        XMultiDisasmWidget *_pWidget = new XMultiDisasmWidget(cwOptions.pParent);
+        XMultiDisasmWidget::OPTIONS options = {};
+        options.fileType = cwOptions.fileType;
+        options.nInitAddress = XFormats::getEntryPointAddress(cwOptions.fileType, cwOptions.pDevice, cwOptions.bIsImage, cwOptions.nImageBase);
+        options.bMenu_Hex = true;
+
+        _pWidget->setXInfoDB(cwOptions.pXInfoDB);
+        _pWidget->setData(cwOptions.pDevice, options);
+
+        _pWidget->setData(cwOptions.pDevice, options);
+        pResult = _pWidget;
     } else if (cwOptions.nType == FW_DEF::TYPE_HASH) {
         XHashWidget *_pWidget = new XHashWidget(cwOptions.pParent);
-        _pWidget->setData(cwOptions.pDevice, cwOptions.fileType, 0, -1, true);
+        _pWidget->setData(cwOptions.pDevice, cwOptions.fileType, cwOptions.nDataOffset, cwOptions.nDataSize, true);
         pResult = _pWidget;
     } else if (cwOptions.nType == FW_DEF::TYPE_STRINGS) {
         SearchStringsWidget *_pWidget = new SearchStringsWidget(cwOptions.pParent);
@@ -258,18 +283,25 @@ XShortcutsWidget *XMainWidget::createWidget(const FW_DEF::CWOPTIONS &cwOptions)
     //     XMemoryMapWidget *_pWidget = new XMemoryMapWidget(cwOptions.pParent);
     //     _pWidget->setData(cwOptions.pDevice, cwOptions.fileType);
     //     pResult = _pWidget;
-    // } else if (cwOptions.nType == FW_DEF::TYPE_ENTROPY) {
-    //     XEntropyWidget *_pWidget = new XEntropyWidget(cwOptions.pParent);
-    //     _pWidget->setData(cwOptions.pDevice, cwOptions.fileType);
-    //     pResult = _pWidget;
-    // } else if (cwOptions.nType == FW_DEF::TYPE_EXTRACTOR) {
-    //     XExtractorWidget *_pWidget = new XExtractorWidget(cwOptions.pParent);
-    //     _pWidget->setData(cwOptions.pDevice, cwOptions.fileType);
-    //     pResult = _pWidget;
-    // } else if (cwOptions.nType == FW_DEF::TYPE_SEARCH) {
-    //     XSearchWidget *_pWidget = new XSearchWidget(cwOptions.pParent);
-    //     _pWidget->setData(cwOptions.pDevice, cwOptions.fileType);
-    //     pResult = _pWidget;
+    } else if (cwOptions.nType == FW_DEF::TYPE_ENTROPY) {
+        XEntropyWidget *_pWidget = new XEntropyWidget(cwOptions.pParent);
+        _pWidget->setData(cwOptions.pDevice, cwOptions.nDataOffset, cwOptions.nDataSize, cwOptions.fileType, true);
+        pResult = _pWidget;
+    } else if (cwOptions.nType == FW_DEF::TYPE_EXTRACTOR) {
+        XExtractorWidget *_pWidget = new XExtractorWidget(cwOptions.pParent);
+        XExtractor::OPTIONS extractorOptions = XExtractor::getDefaultOptions();
+        extractorOptions.fileType = cwOptions.fileType;
+        extractorOptions.bMenu_Hex = true;
+        _pWidget->setData(cwOptions.pDevice, extractorOptions, true);
+        pResult = _pWidget;
+    } else if (cwOptions.nType == FW_DEF::TYPE_SEARCH) {
+        SearchValuesWidget *_pWidget = new SearchValuesWidget(cwOptions.pParent);
+        SearchValuesWidget::OPTIONS options = {};
+        options.fileType = cwOptions.fileType;
+        options.bMenu_Hex = true;
+        options.bMenu_Disasm = true;
+        _pWidget->setData(cwOptions.pDevice, options);
+        pResult = _pWidget;
     } else if (cwOptions.nType == FW_DEF::TYPE_MACH_mach_header) {
         mach_headerWidget *_pWidget = new mach_headerWidget(cwOptions.pParent);
         _pWidget->setCwOptions(cwOptions);
@@ -340,5 +372,17 @@ void XMainWidget::on_toolButtonGlobalHex_toggled(bool bChecked)
     } else {
         ui->widgetHex->hide();
     }
+}
+
+void XMainWidget::on_checkBoxReadonly_stateChanged(int nArg)
+{
+    Q_UNUSED(nArg)
+
+    setReadonly(ui->checkBoxReadonly->isChecked());
+}
+
+void XMainWidget::dataChangedSlot(qint64 nOffset, qint64 nSize)
+{
+    qDebug("dataChangedSlot %016llX %016llX", nOffset, nSize);
 }
 

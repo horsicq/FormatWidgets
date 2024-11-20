@@ -25,6 +25,7 @@
 #include "xbinary.h"
 #include "xshortcuts.h"
 #include "xoptions.h"
+#include "xinfodb.h"
 
 namespace FW_DEF {
 struct OPTIONS {
@@ -43,6 +44,9 @@ struct CWOPTIONS {
     QWidget *pParent;
     XBinary::FT fileType;
     QIODevice *pDevice;
+    bool bIsImage;
+    qint64 nImageBase;
+    XInfoDB *pXInfoDB;
     qint32 nType;
     XShortcuts *pShortcuts;
     XOptions *pOptions;

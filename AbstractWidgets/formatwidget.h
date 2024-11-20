@@ -52,6 +52,7 @@
 #include "diewidgetadvanced.h"
 #include "xvirustotalwidget.h"
 #include "xhashwidget.h"
+#include "xentropywidget.h"
 
 class FormatWidget : public XShortcutsWidget {
     Q_OBJECT
@@ -107,8 +108,6 @@ public:
     void setData(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType);
     void setData(const QString &sFileName, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType);
     void setData(FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType);
-    void setBackupDevice(QIODevice *pDevice);
-    QIODevice *getBackupDevice();
     void setCwOptions(FW_DEF::CWOPTIONS cwOptions);
     FW_DEF::CWOPTIONS *getCwOptions();
 
@@ -120,7 +119,6 @@ public:
     quint32 getNumber();
     qint64 getOffset();
     qint32 getType();
-    bool isReadonly();
     static QTreeWidgetItem *createNewItem(qint32 nType, const QString &sTitle, XOptions::ICONTYPE iconType, qint64 nOffset,
                                           qint64 nSize, qint64 nExtraOffset, qint64 nExtraSize, XBinary::MODE mode, XBinary::ENDIAN endian);
     bool createHeaderTable(QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, QList<RECWIDGET> *pListRecWidget, qint32 nNumberOfRecords, qint64 nOffset, XBinary::ENDIAN endian);
@@ -144,9 +142,7 @@ public:
     XDateTimeEditX *createTimeDateEdit(QTableWidget *pTableWidget, qint32 nType, qint32 nData);
     QPushButton *createPushButton(QTableWidget *pTableWidget, qint32 nType, qint32 nData, const QString &sText);
 
-    void setValue(QVariant vValue, qint32 nStype, qint32 nNdata, qint32 nVtype, qint32 nPosition, qint64 nOffset);
-
-    bool isEdited();
+    void setValue(QVariant vValue, qint32 nPosition, qint64 nOffset, qint64 nSize);
 
     //    QPushButton *createHexButton(QTableWidget *pTableWidget,int nType,int
     //    nData);
@@ -157,7 +153,8 @@ public:
                                      bool bDisasm = true, bool bFollow = true);
     bool setHexSubdeviceByTableView(qint32 nRow, qint32 nType, ToolsWidget *pToolsWidget, QTableView *pTableView);
 
-    void setHeaderTableSelection(ToolsWidget *pToolWidget, QTableWidget *pTableWidget);
+    void setHeaderTableSelection(ToolsWidget *pToolWidget, QTableWidget *pTableWidget); // TODO remove
+    void setHeaderTableSelection(QTableWidget *pTableWidget);
 
     QColor getEnabledColor();
     QColor getDisabledColor();
@@ -224,8 +221,8 @@ public:
 
     static qint32 getColumnWidth(QWidget *pParent, CW cw, XBinary::MODE mode);
 
-    void setDisasmInitAddress(XADDR nDisasmInitAddress);
-    XADDR getDisasmInitAddress();
+    void setDisasmInitAddress(XADDR nDisasmInitAddress); // TODO remove
+    XADDR getDisasmInitAddress(); // TODO remove
 
     QStandardItemModel *getHeaderTableModel(QTableWidget *pTableWidget);
     void saveHeaderTable(QTableWidget *pTableWidget, const QString &sFileName);
@@ -238,10 +235,7 @@ protected:
         SV_RELOADDATA
     };
 
-    virtual SV _setValue(QVariant vValue, qint32 nStype, qint32 nNdata, qint32 nVtype, qint32 nPosition, qint64 nOffset) = 0;
-    virtual void setReadonly(bool bState) = 0;
-    virtual void blockSignals(bool bState) = 0;
-    virtual void reloadData(bool bSaveSelection) = 0;
+    virtual SV _setValue(QVariant vValue, qint32 nPosition) = 0;
     void adjustHeaderTable(QTableWidget *pTableWidget);
     virtual void adjustListTable(qint32 nType, QTableWidget *pTableWidget);
     virtual QString typeIdToString(qint32 nType);
@@ -253,7 +247,6 @@ protected:
     virtual void _widgetValueChanged(QVariant vValue);
 
 signals:
-    void dataChanged(qint64 nDataOffset, qint64 nDataSize);
     void closeApp();
 
 public slots:
@@ -271,7 +264,6 @@ public slots:
     void showEntropy(qint64 nOffset, qint64 nSize);
     void dumpRegion(qint64 nOffset, qint64 nSize, const QString &sName);
     void showDemangle(const QString &sString);
-    bool saveBackup();
 
 protected:
     virtual void registerShortcuts(bool bState);
@@ -279,12 +271,10 @@ protected:
 private:
     QIODevice *g_pDevice;
     QString g_sFileName;
-    QIODevice *g_pBackupDevice;
     FW_DEF::OPTIONS g_fwOptions;
     quint32 g_nNumber;
     qint64 g_nOffset;
     quint32 g_nType;
-    bool g_bIsReadonly;
     QColor g_colEnabled;
     QColor g_colDisabled;
     XBinary::FT g_fileType;

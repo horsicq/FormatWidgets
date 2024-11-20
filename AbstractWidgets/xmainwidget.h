@@ -40,13 +40,12 @@ public:
     virtual void cleanup();
     virtual void reload();
 
-    virtual SV _setValue(QVariant vValue, qint32 nStype, qint32 nNdata, qint32 nVtype, qint32 nPosition, qint64 nOffset);
+    virtual SV _setValue(QVariant vValue, qint32 nPosition);
     virtual void setReadonly(bool bState);
-    virtual void blockSignals(bool bState);
     virtual void reloadData(bool bSaveSelection);
 
     static void _addBaseItems(QTreeWidget *pTreeWidget, XBinary::FT fileType);
-    static void _addSpecItems(QTreeWidget *pTreeWidget, QIODevice *pDevice, XBinary::FT fileType);
+    static void _addSpecItems(QTreeWidget *pTreeWidget, QIODevice *pDevice, XBinary::FT fileType, bool bIsImage, XADDR nImageBase);
     static XShortcutsWidget *createWidget(const FW_DEF::CWOPTIONS &cwOptions);
 
 private slots:
@@ -56,6 +55,8 @@ private slots:
     void on_toolButtonPrev_clicked();
     void on_toolButtonNext_clicked();
     void on_toolButtonGlobalHex_toggled(bool bChecked);
+    void on_checkBoxReadonly_stateChanged(int nArg);
+    void dataChangedSlot(qint64 nOffset, qint64 nSize);
 
 private:
     Ui::XMainWidget *ui;

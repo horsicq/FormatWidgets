@@ -37,10 +37,12 @@ public:
 
 protected:
     virtual void cleanup();
-    virtual SV _setValue(QVariant vValue, qint32 nStype, qint32 nNdata, qint32 nVtype, qint32 nPosition, qint64 nOffset);
+    virtual SV _setValue(QVariant vValue, qint32 nPosition);
     virtual void setReadonly(bool bState);
-    virtual void blockSignals(bool bState);
     virtual void reloadData(bool bSaveSelection);
+
+private slots:
+    void on_tableWidget_mach_header_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
 
 private:
     Ui::mach_headerWidget *ui;

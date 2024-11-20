@@ -67,6 +67,7 @@ public:
     void reload();
     bool getInitStatus();
     virtual void adjustView();
+    virtual void reloadData(bool bSaveSelection);
 
 private slots:
     void on_toolButtonSave_clicked();

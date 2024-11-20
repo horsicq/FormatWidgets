@@ -67,17 +67,12 @@ public:
     ~SearchStringsWidget();
 
     void setData(QIODevice *pDevice, XBinary::FT fileType, SearchStringsWidget::OPTIONS options, bool bAuto = false);
-    void setBackupDevice(QIODevice *pDevice);
     QIODevice *getDevice();
-    QIODevice *getBackupDevice();
 
     void reload();
     bool getInitStatus();
-    bool isEdited();
-    bool saveBackup();
-    void setReadonly(bool bState);
-    bool isReadonly();
     virtual void adjustView();
+    virtual void reloadData(bool bSaveSelection);
 
 private slots:
     void on_toolButtonSave_clicked();
@@ -108,12 +103,10 @@ signals:
 private:
     Ui::SearchStringsWidget *ui;
     QIODevice *g_pDevice;
-    QIODevice *g_pBackupDevice;
     SearchStringsWidget::OPTIONS g_options;
     QStandardItemModel *g_pModel;
     bool g_bInit;
     QShortcut *g_shortCuts[__SC_SIZE];
-    bool g_bIsReadonly;
 };
 
 #endif  // SEARCHSTRINGSWIDGET_H

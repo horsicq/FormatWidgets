@@ -97,6 +97,13 @@ void SearchValuesWidget::adjustView()
 {
 }
 
+void SearchValuesWidget::reloadData(bool bSaveSelection)
+{
+    if (!bSaveSelection) {
+        search();
+    }
+}
+
 void SearchValuesWidget::on_toolButtonSave_clicked()
 {
     XShortcutsWidget::saveTableModel(ui->tableViewResult->getProxyModel(), XBinary::getResultFileName(g_pDevice, QString("%1.txt").arg(tr("Values"))));
@@ -259,10 +266,10 @@ void SearchValuesWidget::viewSelection()
             qint64 nOffset = ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + MultiSearch::USERROLE_OFFSET).toULongLong();
             qint64 nSize = ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + MultiSearch::USERROLE_SIZE).toLongLong();
 
-            if (nVirtualAddress != (XADDR)-1) {
-                emit currentLocationChanged(nVirtualAddress, XBinary::LT_ADDRESS, nSize);
-            } else if (nOffset != -1) {
+            if (nOffset != -1) {
                 emit currentLocationChanged(nOffset, XBinary::LT_OFFSET, nSize);
+            } else if (nVirtualAddress != (XADDR)-1) {
+                emit currentLocationChanged(nVirtualAddress, XBinary::LT_ADDRESS, nSize);
             }
         }
     }

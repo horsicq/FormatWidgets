@@ -123,6 +123,13 @@ void SearchSignaturesWidget::adjustView()
     updateSignaturesPath();
 }
 
+void SearchSignaturesWidget::reloadData(bool bSaveSelection)
+{
+    if (!bSaveSelection) {
+        search();
+    }
+}
+
 void SearchSignaturesWidget::on_toolButtonSave_clicked()
 {
     XShortcutsWidget::saveTableModel(ui->tableViewResult->getProxyModel(), XBinary::getResultFileName(g_pDevice, QString("%1.txt").arg(tr("Signatures"))));
