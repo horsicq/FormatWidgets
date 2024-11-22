@@ -77,13 +77,14 @@ set(ABSTRACTWIDGETS_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/xmainwidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/xmainwidget.h
     ${CMAKE_CURRENT_LIST_DIR}/xmainwidget.ui
-    ${CMAKE_CURRENT_LIST_DIR}/ELF/elf_ehdr.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/ELF/elf_ehdr.h
-    ${CMAKE_CURRENT_LIST_DIR}/ELF/elf_ehdr.ui
-    ${CMAKE_CURRENT_LIST_DIR}/MACH/mach_headerwidget.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/MACH/mach_headerwidget.h
-    ${CMAKE_CURRENT_LIST_DIR}/MACH/mach_headerwidget.ui
-    ${CMAKE_CURRENT_LIST_DIR}/Generic/tableheaderwidget.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/Generic/tableheaderwidget.h
-    ${CMAKE_CURRENT_LIST_DIR}/Generic/tableheaderwidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/genericheaderwidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/genericheaderwidget.h
+    ${CMAKE_CURRENT_LIST_DIR}/genericheaderwidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/generictablewidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/generictablewidget.h
+    ${CMAKE_CURRENT_LIST_DIR}/generictablewidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ELF/elf_defs.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/ELF/elf_defs.h
+    ${CMAKE_CURRENT_LIST_DIR}/MACH/mach_defs.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/MACH/mach_defs.h
 )

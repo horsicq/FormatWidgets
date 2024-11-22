@@ -40,6 +40,7 @@ public:
     void setOptions(XOptions *pOptions);
     virtual void adjustView();
     static void setDefaultValues(XOptions *pOptions);
+    virtual void reloadData(bool bSaveSelection);
 
 public slots:
     void save();

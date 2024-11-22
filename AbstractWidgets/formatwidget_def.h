@@ -62,14 +62,21 @@ enum TYPE {
     TYPE_MACH_mach_header,
 };
 
+enum WIDGETMODE {
+    WIDGETMODE_UNKNOWN = 0,
+    WIDGETMODE_HEADER,
+    WIDGETMODE_TABLE
+};
+
 struct CWOPTIONS {
+    TYPE _type;
+    WIDGETMODE widgetMode;
     QWidget *pParent;
     XBinary::FT fileType;
     QIODevice *pDevice;
     bool bIsImage;
     qint64 nImageBase;
     XInfoDB *pXInfoDB;
-    TYPE _type;
     qint64 nDataOffset; // TODO location
     qint64 nDataSize;
     XBinary::ENDIAN endian;
@@ -90,10 +97,6 @@ enum VAL_TYPE {
     VAL_TYPE_UUID
 };
 
-enum INFO {
-    INFO_NONE = 0,
-    INFO_COMBOBOX,
-};
 
 struct HEADER_RECORD {
     qint32 nPosition;
@@ -102,7 +105,6 @@ struct HEADER_RECORD {
     qint32 nSize;
     QString sType;
     VAL_TYPE vtype;
-    INFO info;
 };
 
 enum SECTION_DATA {
@@ -126,6 +128,7 @@ enum SECTION_DATA {
 
 enum WIDGET_DATA {
     WIDGET_DATA_TYPE = 0,
+    WIDGET_DATA_WIDGETMODE,
     WIDGET_DATA_OFFSET,
     WIDGET_DATA_SIZE,
     WIDGET_DATA_MODE,

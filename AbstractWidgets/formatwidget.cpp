@@ -265,13 +265,14 @@ qint32 FormatWidget::getType()
     return g_nType;
 }
 
-QTreeWidgetItem *FormatWidget::createNewItem(qint32 nType, const QString &sTitle, XOptions::ICONTYPE iconType, qint64 nOffset, qint64 nSize, qint64 nExtraOffset,
+QTreeWidgetItem *FormatWidget::createNewItem(FW_DEF::TYPE type, FW_DEF::WIDGETMODE widgetMode, const QString &sTitle, XOptions::ICONTYPE iconType, qint64 nOffset, qint64 nSize, qint64 nExtraOffset,
                                              qint64 nExtraSize, XBinary::MODE mode, XBinary::ENDIAN endian)
 {
     QTreeWidgetItem *pResult = new QTreeWidgetItem;
 
     pResult->setText(0, sTitle);
-    pResult->setData(0, Qt::UserRole + FW_DEF::WIDGET_DATA_TYPE, nType);
+    pResult->setData(0, Qt::UserRole + FW_DEF::WIDGET_DATA_TYPE, type);
+    pResult->setData(0, Qt::UserRole + FW_DEF::WIDGET_DATA_WIDGETMODE, widgetMode);
     pResult->setData(0, Qt::UserRole + FW_DEF::WIDGET_DATA_OFFSET, nOffset);
     pResult->setData(0, Qt::UserRole + FW_DEF::WIDGET_DATA_SIZE, nSize);
     pResult->setData(0, Qt::UserRole + FW_DEF::WIDGET_DATA_EXTRAOFFSET, nExtraOffset);
@@ -294,7 +295,8 @@ void FormatWidget::setValue(QVariant vValue, qint32 nPosition, qint64 nOffset, q
             qDebug("vValue = %X", vValue.toUInt());
 
             XBinary binary(getDevice());
-            if ((recWidget.vtype == FW_DEF::VAL_TYPE_DATA) || (recWidget.vtype == FW_DEF::VAL_TYPE_SIZE)) {
+            if ((recWidget.vtype == FW_DEF::VAL_TYPE_DATA) || (recWidget.vtype == FW_DEF::VAL_TYPE_SIZE) ||
+                (recWidget.vtype == FW_DEF::VAL_TYPE_ADDRESS) || (recWidget.vtype == FW_DEF::VAL_TYPE_OFFSET)) {
                 if (recWidget.nSize == 1) {
                     binary.write_uint8(recWidget.nOffset, vValue.toUInt());
                 } else if (recWidget.nSize == 2) {
@@ -1128,7 +1130,8 @@ void FormatWidget::updateRecWidgets(QIODevice *pDevice, QList<RECWIDGET> *pListR
 
         QVariant varValue;
 
-        if ((recWidget.vtype == FW_DEF::VAL_TYPE_DATA) || (recWidget.vtype == FW_DEF::VAL_TYPE_SIZE)) {
+        if ((recWidget.vtype == FW_DEF::VAL_TYPE_DATA) || (recWidget.vtype == FW_DEF::VAL_TYPE_SIZE) ||
+            (recWidget.vtype == FW_DEF::VAL_TYPE_ADDRESS) || (recWidget.vtype == FW_DEF::VAL_TYPE_OFFSET)) {
             if (recWidget.nSize == 1) {
                 varValue = binary.read_uint8(recWidget.nOffset);
             } else if (recWidget.nSize == 2) {
@@ -1152,7 +1155,8 @@ void FormatWidget::_adjustRecWidget(RECWIDGET *pRecWidget, QVariant varValue)
     bool bComboBox = false;
     if (pRecWidget->pComboBox) bComboBox = pRecWidget->pComboBox->blockSignals(true);
 
-    if ((pRecWidget->vtype == FW_DEF::VAL_TYPE_DATA) || (pRecWidget->vtype == FW_DEF::VAL_TYPE_SIZE)) {
+    if ((pRecWidget->vtype == FW_DEF::VAL_TYPE_DATA) || (pRecWidget->vtype == FW_DEF::VAL_TYPE_SIZE) ||
+        (pRecWidget->vtype == FW_DEF::VAL_TYPE_ADDRESS) || (pRecWidget->vtype == FW_DEF::VAL_TYPE_OFFSET)) {
         if (pRecWidget->nSize == 1) {
             pRecWidget->pLineEdit->setValue_uint8(varValue.toUInt(), XLineEditHEX::_MODE_HEX);
         } else if (pRecWidget->nSize == 2) {
@@ -1576,17 +1580,6 @@ bool FormatWidget::createHeaderTable(QTableWidget *pTableWidget, const FW_DEF::H
             recWidget.pLineEdit->setEnabled(false);
         }
 
-        if (pRecords[i].info == FW_DEF::INFO_COMBOBOX) {
-            recWidget.pComboBox = new XComboBoxEx(pTableWidget);
-            recWidget.pComboBox->setProperty("POSITION", recWidget.nPosition);
-            recWidget.pComboBox->setProperty("OFFSET", recWidget.nOffset);
-            recWidget.pComboBox->setProperty("SIZE", recWidget.nSize);
-
-            connect(recWidget.pComboBox, SIGNAL(valueChanged(QVariant)), this, SLOT(valueChangedSlot(QVariant)));
-
-            pTableWidget->setCellWidget(i, HEADER_COLUMN_INFO, recWidget.pComboBox);
-        }
-
         recWidget.pComment = new QTableWidgetItem;
 
         pTableWidget->setItem(i, HEADER_COLUMN_COMMENT, recWidget.pComment);
@@ -1828,10 +1821,18 @@ XComboBoxEx *FormatWidget::createComboBox(QTableWidget *pTableWidget, QMap<quint
     return result;
 }
 
-void FormatWidget::adjustComboBox(QList<RECWIDGET> *pListRecWidget, const QMap<quint64, QString> &mapData, qint32 nPosition, XComboBoxEx::CBTYPE cbtype, quint64 nMask)
+void FormatWidget::adjustComboBox(QTableWidget *pTableWidget, QList<RECWIDGET> *pListRecWidget, const QMap<quint64, QString> &mapData, qint32 nPosition, XComboBoxEx::CBTYPE cbtype, quint64 nMask)
 {
     if (nPosition < pListRecWidget->count()) {
+        (*pListRecWidget)[nPosition].pComboBox = new XComboBoxEx(pTableWidget);
+        pListRecWidget->at(nPosition).pComboBox->setProperty("POSITION", pListRecWidget->at(nPosition).nPosition);
+        pListRecWidget->at(nPosition).pComboBox->setProperty("OFFSET", pListRecWidget->at(nPosition).nOffset);
+        pListRecWidget->at(nPosition).pComboBox->setProperty("SIZE", pListRecWidget->at(nPosition).nSize);
         pListRecWidget->at(nPosition).pComboBox->setData(mapData, cbtype, nMask, tr("Flags"));
+
+        connect(pListRecWidget->at(nPosition).pComboBox, SIGNAL(valueChanged(QVariant)), this, SLOT(valueChangedSlot(QVariant)));
+
+        pTableWidget->setCellWidget(nPosition, HEADER_COLUMN_INFO, pListRecWidget->at(nPosition).pComboBox);
     }
 }
 

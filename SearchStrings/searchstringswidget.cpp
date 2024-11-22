@@ -134,9 +134,8 @@ void SearchStringsWidget::adjustView()
 
 void SearchStringsWidget::reloadData(bool bSaveSelection)
 {
-    if (!bSaveSelection) {
-        search();
-    }
+    Q_UNUSED(bSaveSelection)
+    search();
 }
 
 void SearchStringsWidget::on_toolButtonSave_clicked()

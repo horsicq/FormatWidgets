@@ -54,6 +54,13 @@
 #include "xhashwidget.h"
 #include "xentropywidget.h"
 
+#include "ELF/elf_defs.h"
+// #include "PE/pe_defs.h"
+#include "MACH/mach_defs.h"
+// #include "MSDOS/msdos_defs.h"
+// #include "NE/ne_defs.h"
+// #include "LE/le_defs.h"
+
 class FormatWidget : public XShortcutsWidget {
     Q_OBJECT
 
@@ -119,7 +126,7 @@ public:
     quint32 getNumber();
     qint64 getOffset();
     qint32 getType();
-    static QTreeWidgetItem *createNewItem(qint32 nType, const QString &sTitle, XOptions::ICONTYPE iconType, qint64 nOffset,
+    static QTreeWidgetItem *createNewItem(FW_DEF::TYPE type, FW_DEF::WIDGETMODE widgetMode, const QString &sTitle, XOptions::ICONTYPE iconType, qint64 nOffset,
                                           qint64 nSize, qint64 nExtraOffset, qint64 nExtraSize, XBinary::MODE mode, XBinary::ENDIAN endian);
     bool createHeaderTable(QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, QList<RECWIDGET> *pListRecWidget, qint32 nNumberOfRecords, qint64 nOffset, XBinary::ENDIAN endian);
     bool createListTable(qint32 nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, qint32 nNumberOfRecords);
@@ -137,7 +144,7 @@ public:
 
     XComboBoxEx *createComboBox(QTableWidget *pTableWidget, QMap<quint64, QString> mapData, qint32 nType, qint32 nData, XComboBoxEx::CBTYPE cbtype, quint64 nMask = 0,
                                 qint32 nExtraData = -1);
-    void adjustComboBox(QList<RECWIDGET> *pListRecWidget, const QMap<quint64, QString> &mapData, qint32 nPosition, XComboBoxEx::CBTYPE cbtype, quint64 nMask);
+    void adjustComboBox(QTableWidget *pTableWidget, QList<RECWIDGET> *pListRecWidget, const QMap<quint64, QString> &mapData, qint32 nPosition, XComboBoxEx::CBTYPE cbtype, quint64 nMask);
     // InvWidget *createInvWidget(QTableWidget *pTableWidget, qint32 nType, qint32 nData, InvWidget::TYPE widgetType);
     XDateTimeEditX *createTimeDateEdit(QTableWidget *pTableWidget, qint32 nType, qint32 nData);
     QPushButton *createPushButton(QTableWidget *pTableWidget, qint32 nType, qint32 nData, const QString &sText);

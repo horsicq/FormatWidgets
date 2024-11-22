@@ -99,9 +99,8 @@ void SearchValuesWidget::adjustView()
 
 void SearchValuesWidget::reloadData(bool bSaveSelection)
 {
-    if (!bSaveSelection) {
-        search();
-    }
+    Q_UNUSED(bSaveSelection)
+    search();
 }
 
 void SearchValuesWidget::on_toolButtonSave_clicked()

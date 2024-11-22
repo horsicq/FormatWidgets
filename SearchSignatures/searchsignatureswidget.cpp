@@ -125,9 +125,8 @@ void SearchSignaturesWidget::adjustView()
 
 void SearchSignaturesWidget::reloadData(bool bSaveSelection)
 {
-    if (!bSaveSelection) {
-        search();
-    }
+    Q_UNUSED(bSaveSelection)
+    search();
 }
 
 void SearchSignaturesWidget::on_toolButtonSave_clicked()

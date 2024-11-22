@@ -22,8 +22,8 @@
 #define XMAINWIDGET_H
 
 #include "formatwidget.h"
-#include "ELF/elf_ehdr.h"
-#include "MACH/mach_headerwidget.h"
+#include "genericheaderwidget.h"
+#include "generictablewidget.h"
 
 namespace Ui {
 class XMainWidget;
