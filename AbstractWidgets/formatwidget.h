@@ -249,6 +249,7 @@ protected:
     virtual void _showInHexWindow(qint64 nOffset, qint64 nSize);
     virtual void _findValue(quint64 nValue, XBinary::ENDIAN endian);
     virtual void _widgetValueChanged(QVariant vValue);
+    virtual void contextMenuTableHeader(const QPoint &pos, QTableWidget *pTableWidget, QList<RECWIDGET> *pListRecWidget, FW_DEF::CWOPTIONS *pCwOptions);
 
 signals:
     void closeApp();
@@ -268,6 +269,7 @@ public slots:
     void showEntropy(qint64 nOffset, qint64 nSize);
     void dumpRegion(qint64 nOffset, qint64 nSize, const QString &sName);
     void showDemangle(const QString &sString);
+    void _reload();
 
 protected:
     virtual void registerShortcuts(bool bState);

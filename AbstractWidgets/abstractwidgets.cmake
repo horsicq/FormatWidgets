@@ -1,4 +1,5 @@
 include_directories(${CMAKE_CURRENT_LIST_DIR})
+include_directories(${CMAKE_CURRENT_LIST_DIR}/Generic)
 
 include(${CMAKE_CURRENT_LIST_DIR}/../../XCppfilt/xcppfilt.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../SearchSignatures/searchsignatureswidget.cmake)
@@ -82,4 +83,7 @@ set(ABSTRACTWIDGETS_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/MACH/mach_headerwidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/MACH/mach_headerwidget.h
     ${CMAKE_CURRENT_LIST_DIR}/MACH/mach_headerwidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/Generic/tableheaderwidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Generic/tableheaderwidget.h
+    ${CMAKE_CURRENT_LIST_DIR}/Generic/tableheaderwidget.ui
 )

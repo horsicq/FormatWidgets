@@ -115,6 +115,9 @@ elf_ehdrWidget::elf_ehdrWidget(QWidget *pParent) :
     ui(new Ui::elf_ehdrWidget)
 {
     ui->setupUi(this);
+
+    ui->widgetHeader->setData(ui->tableWidgetMain, getListRecWidgets(), getCwOptions());
+    connect(ui->widgetHeader, SIGNAL(reload()), this, SLOT(_reload()));
 }
 
 elf_ehdrWidget::~elf_ehdrWidget()

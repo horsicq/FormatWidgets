@@ -61,6 +61,9 @@ mach_headerWidget::mach_headerWidget(QWidget *pParent) :
     ui(new Ui::mach_headerWidget)
 {
     ui->setupUi(this);
+
+    ui->widgetHeader->setData(ui->tableWidgetMain, getListRecWidgets(), getCwOptions());
+    connect(ui->widgetHeader, SIGNAL(reload()), this, SLOT(_reload()));
 }
 
 mach_headerWidget::~mach_headerWidget()
@@ -117,5 +120,10 @@ void mach_headerWidget::on_tableWidgetMain_currentCellChanged(int currentRow, in
     Q_UNUSED(previousColumn)
 
     setHeaderTableSelection(ui->tableWidgetMain);
+}
+
+void mach_headerWidget::on_tableWidgetMain_customContextMenuRequested(const QPoint &pos)
+{
+    contextMenuTableHeader(pos, ui->tableWidgetMain, getListRecWidgets(), getCwOptions());
 }
 

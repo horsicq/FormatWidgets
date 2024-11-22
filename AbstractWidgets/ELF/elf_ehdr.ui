@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>elf_ehdrWidget</class>
- <widget class="QWidget" name="mach_headerWidget">
+ <widget class="QWidget" name="elf_ehdrWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -29,6 +29,16 @@
    <property name="bottomMargin">
     <number>0</number>
    </property>
+   <item>
+    <widget class="TableHeaderWidget" name="widgetHeader" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>25</height>
+      </size>
+     </property>
+    </widget>
+   </item>
    <item>
     <widget class="QTableWidget" name="tableWidgetMain">
      <property name="contextMenuPolicy">
@@ -59,6 +69,14 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>TableHeaderWidget</class>
+   <extends>QWidget</extends>
+   <header>tableheaderwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

@@ -1326,6 +1326,25 @@ void FormatWidget::_widgetValueChanged(QVariant vValue)
 #endif
 }
 
+void FormatWidget::contextMenuTableHeader(const QPoint &pos, QTableWidget *pTableWidget, QList<RECWIDGET> *pListRecWidget, FW_DEF::CWOPTIONS *pCwOptions)
+{
+    qint32 nRow = pTableWidget->currentIndex().row();
+
+    if (nRow != -1) {
+        QMenu contextMenu(this);
+
+        QList<XShortcuts::MENUITEM> listMenuItems;
+
+        getShortcuts()->_addMenuItem_CopyRow(&listMenuItems, pTableWidget);
+
+        QList<QObject *> listObjects = getShortcuts()->adjustContextMenu(&contextMenu, &listMenuItems);
+
+        contextMenu.exec(pTableWidget->viewport()->mapToGlobal(pos));
+
+        XOptions::deleteQObjectList(&listObjects);
+    }
+}
+
 // void FormatWidget::resizeToolsWidget(QWidget *pParent,ToolsWidget
 // *pToolWidget)
 //{
@@ -1471,6 +1490,11 @@ void FormatWidget::showDemangle(const QString &sString)
     dialogDemangle.setGlobal(getShortcuts(), getGlobalOptions());
 
     dialogDemangle.exec();
+}
+
+void FormatWidget::_reload()
+{
+    reloadData(true);
 }
 
 void FormatWidget::registerShortcuts(bool bState)

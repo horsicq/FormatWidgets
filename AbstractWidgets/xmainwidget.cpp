@@ -25,6 +25,17 @@ XMainWidget::XMainWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::X
 {
     ui->setupUi(this);
 
+    XOptions::adjustToolButton(ui->toolButtonReload, XOptions::ICONTYPE_RELOAD);
+    XOptions::adjustToolButton(ui->toolButtonNext, XOptions::ICONTYPE_FORWARD, Qt::ToolButtonIconOnly);
+    XOptions::adjustToolButton(ui->toolButtonPrev, XOptions::ICONTYPE_BACKWARD, Qt::ToolButtonIconOnly);
+    XOptions::adjustToolButton(ui->toolButtonGlobalHex, XOptions::ICONTYPE_HEX);
+
+    ui->toolButtonReload->setToolTip(tr("Reload"));
+    ui->toolButtonNext->setToolTip(tr("Next visited"));
+    ui->toolButtonPrev->setToolTip(tr("Previous visited"));
+    ui->toolButtonGlobalHex->setToolTip(tr("Hex"));
+    ui->checkBoxReadonly->setToolTip(tr("Readonly"));
+
     g_fileType = XBinary::FT_UNKNOWN;
 
     ui->widgetHex->setProperty("TYPE", FW_DEF::TYPE_GLOBALHEX);
@@ -290,20 +301,22 @@ XShortcutsWidget *XMainWidget::createWidget(const FW_DEF::CWOPTIONS &cwOptions)
         XVisualizationWidget *_pWidget = new XVisualizationWidget(cwOptions.pParent);
         _pWidget->setData(cwOptions.pDevice, cwOptions.fileType, true);
         pResult = _pWidget;
-    // } else if (cwOptions._type == FW_DEF::TYPE_HEX) {
-    //     XHexViewWidget *_pWidget = new XHexViewWidget(cwOptions.pParent);
-    //     _pWidget->setData(cwOptions.pDevice, cwOptions.fileType);
-    //     pResult = _pWidget;
+    } else if (cwOptions._type == FW_DEF::TYPE_HEX) {
+        XHexViewWidget *_pWidget = new XHexViewWidget(cwOptions.pParent);
+        XHexViewWidget::OPTIONS options = {};
+        options.fileType = cwOptions.fileType;
+        options.bMenu_Disasm = true;
+        options.bMenu_MemoryMap = true;
+        _pWidget->setXInfoDB(cwOptions.pXInfoDB);
+        _pWidget->setData(cwOptions.pDevice, options);
+        pResult = _pWidget;
     } else if (cwOptions._type == FW_DEF::TYPE_DISASM) {
         XMultiDisasmWidget *_pWidget = new XMultiDisasmWidget(cwOptions.pParent);
         XMultiDisasmWidget::OPTIONS options = {};
         options.fileType = cwOptions.fileType;
         options.nInitAddress = XFormats::getEntryPointAddress(cwOptions.fileType, cwOptions.pDevice, cwOptions.bIsImage, cwOptions.nImageBase);
         options.bMenu_Hex = true;
-
         _pWidget->setXInfoDB(cwOptions.pXInfoDB);
-        _pWidget->setData(cwOptions.pDevice, options);
-
         _pWidget->setData(cwOptions.pDevice, options);
         pResult = _pWidget;
     } else if (cwOptions._type == FW_DEF::TYPE_HASH) {
@@ -320,10 +333,12 @@ XShortcutsWidget *XMainWidget::createWidget(const FW_DEF::CWOPTIONS &cwOptions)
         stringsOptions.bNullTerminated = false;
         _pWidget->setData(cwOptions.pDevice, cwOptions.fileType, stringsOptions, true);
         pResult = _pWidget;
-    // } else if (cwOptions._type == FW_DEF::TYPE_SIGNATURES) {
-    //     XSignaturesWidget *_pWidget = new XSignaturesWidget(cwOptions.pParent);
-    //     _pWidget->setData(cwOptions.pDevice, cwOptions.fileType);
-    //     pResult = _pWidget;
+    } else if (cwOptions._type == FW_DEF::TYPE_SIGNATURES) {
+        SearchSignaturesWidget *_pWidget = new SearchSignaturesWidget(cwOptions.pParent);
+        SearchSignaturesWidget::OPTIONS signaturesOptions = {};
+        signaturesOptions.bMenu_Hex = true;
+        _pWidget->setData(cwOptions.pDevice, cwOptions.fileType, signaturesOptions, false);
+        pResult = _pWidget;
     } else if (cwOptions._type == FW_DEF::TYPE_MEMORYMAP) {
         XMemoryMapWidget *_pWidget = new XMemoryMapWidget(cwOptions.pParent);
         XMemoryMapWidget::OPTIONS options = {};

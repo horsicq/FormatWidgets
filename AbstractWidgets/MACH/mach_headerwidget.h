@@ -41,6 +41,7 @@ protected:
 
 private slots:
     void on_tableWidgetMain_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
+    void on_tableWidgetMain_customContextMenuRequested(const QPoint &pos);
 
 private:
     Ui::mach_headerWidget *ui;
