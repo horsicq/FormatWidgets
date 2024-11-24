@@ -21,9 +21,7 @@
 #include "tableheaderwidget.h"
 #include "ui_tableheaderwidget.h"
 
-TableHeaderWidget::TableHeaderWidget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::TableHeaderWidget)
+TableHeaderWidget::TableHeaderWidget(QWidget *parent) : QWidget(parent), ui(new Ui::TableHeaderWidget)
 {
     ui->setupUi(this);
 }
@@ -35,13 +33,12 @@ TableHeaderWidget::~TableHeaderWidget()
 
 void TableHeaderWidget::setData(QTableWidget *pTableWidget, QList<FormatWidget::RECWIDGET> *pListRecWidget, FW_DEF::CWOPTIONS *pCwOptions)
 {
-    g_pTableWidget=pTableWidget;
-    g_pListRecWidget=pListRecWidget;
-    g_pCwOptions=pCwOptions;
+    g_pTableWidget = pTableWidget;
+    g_pListRecWidget = pListRecWidget;
+    g_pCwOptions = pCwOptions;
 }
 
 void TableHeaderWidget::on_toolButtonTableReload_clicked()
 {
     emit reload();
 }
-

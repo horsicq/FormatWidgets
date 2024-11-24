@@ -77,7 +77,7 @@ struct CWOPTIONS {
     bool bIsImage;
     qint64 nImageBase;
     XInfoDB *pXInfoDB;
-    qint64 nDataOffset; // TODO location
+    qint64 nDataOffset;  // TODO location
     qint64 nDataSize;
     XBinary::ENDIAN endian;
     XBinary::MODE mode;
@@ -96,7 +96,6 @@ enum VAL_TYPE {
     VAL_TYPE_UNIXTIME,  // TODO
     VAL_TYPE_UUID
 };
-
 
 struct HEADER_RECORD {
     qint32 nPosition;

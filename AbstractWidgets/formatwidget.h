@@ -128,7 +128,8 @@ public:
     qint32 getType();
     static QTreeWidgetItem *createNewItem(FW_DEF::TYPE type, FW_DEF::WIDGETMODE widgetMode, const QString &sTitle, XOptions::ICONTYPE iconType, qint64 nOffset,
                                           qint64 nSize, qint64 nExtraOffset, qint64 nExtraSize, XBinary::MODE mode, XBinary::ENDIAN endian);
-    bool createHeaderTable(QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, QList<RECWIDGET> *pListRecWidget, qint32 nNumberOfRecords, qint64 nOffset, XBinary::ENDIAN endian);
+    bool createHeaderTable(QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, QList<RECWIDGET> *pListRecWidget, qint32 nNumberOfRecords, qint64 nOffset,
+                           XBinary::ENDIAN endian);
     bool createListTable(qint32 nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, qint32 nNumberOfRecords);
     void addComment(QTableWidget *pTableWidget, qint32 nRow, qint32 nColumn, const QString &sComment);
     void updateTableRecord(QTableWidget *pTableWidget, qint32 nRow, qint64 nOffset, qint64 nSize);
@@ -144,7 +145,8 @@ public:
 
     XComboBoxEx *createComboBox(QTableWidget *pTableWidget, QMap<quint64, QString> mapData, qint32 nType, qint32 nData, XComboBoxEx::CBTYPE cbtype, quint64 nMask = 0,
                                 qint32 nExtraData = -1);
-    void adjustComboBox(QTableWidget *pTableWidget, QList<RECWIDGET> *pListRecWidget, const QMap<quint64, QString> &mapData, qint32 nPosition, XComboBoxEx::CBTYPE cbtype, quint64 nMask);
+    void adjustComboBox(QTableWidget *pTableWidget, QList<RECWIDGET> *pListRecWidget, const QMap<quint64, QString> &mapData, qint32 nPosition, XComboBoxEx::CBTYPE cbtype,
+                        quint64 nMask);
     // InvWidget *createInvWidget(QTableWidget *pTableWidget, qint32 nType, qint32 nData, InvWidget::TYPE widgetType);
     XDateTimeEditX *createTimeDateEdit(QTableWidget *pTableWidget, qint32 nType, qint32 nData);
     QPushButton *createPushButton(QTableWidget *pTableWidget, qint32 nType, qint32 nData, const QString &sText);
@@ -160,7 +162,7 @@ public:
                                      bool bDisasm = true, bool bFollow = true);
     bool setHexSubdeviceByTableView(qint32 nRow, qint32 nType, ToolsWidget *pToolsWidget, QTableView *pTableView);
 
-    void setHeaderTableSelection(ToolsWidget *pToolWidget, QTableWidget *pTableWidget); // TODO remove
+    void setHeaderTableSelection(ToolsWidget *pToolWidget, QTableWidget *pTableWidget);  // TODO remove
     void setHeaderTableSelection(QTableWidget *pTableWidget);
 
     QColor getEnabledColor();
@@ -232,8 +234,8 @@ public:
 
     static qint32 getColumnWidth(QWidget *pParent, CW cw, XBinary::MODE mode);
 
-    void setDisasmInitAddress(XADDR nDisasmInitAddress); // TODO remove
-    XADDR getDisasmInitAddress(); // TODO remove
+    void setDisasmInitAddress(XADDR nDisasmInitAddress);  // TODO remove
+    XADDR getDisasmInitAddress();                         // TODO remove
 
     QStandardItemModel *getHeaderTableModel(QTableWidget *pTableWidget);
     void saveHeaderTable(QTableWidget *pTableWidget, const QString &sFileName);

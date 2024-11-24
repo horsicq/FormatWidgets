@@ -270,7 +270,8 @@ void FormatWidget::setValue(QVariant vValue, qint32 nStype, qint32 nNdata, qint3
 
         emit dataChanged(nOffset, 1);  // TODO Check size
     } else {
-        QMessageBox::critical(XOptions::getMainWidget(this), tr("Error"), tr("Cannot save file") + QString(": %1").arg(XBinary::getBackupFileName(XBinary::getBackupDevice(getDevice()))));
+        QMessageBox::critical(XOptions::getMainWidget(this), tr("Error"),
+                              tr("Cannot save file") + QString(": %1").arg(XBinary::getBackupFileName(XBinary::getBackupDevice(getDevice()))));
     }
 }
 

@@ -21,9 +21,7 @@
 #include "generictablewidget.h"
 #include "ui_generictablewidget.h"
 
-GenericTableWidget::GenericTableWidget(QWidget *pParent) :
-    FormatWidget(pParent),
-    ui(new Ui::GenericTableWidget)
+GenericTableWidget::GenericTableWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::GenericTableWidget)
 {
     ui->setupUi(this);
 }
@@ -55,25 +53,24 @@ void GenericTableWidget::reloadData(bool bSaveSelection)
     qint32 nNumberOfRecords = 0;
 
     if (getCwOptions()->_type == FW_DEF::TYPE_MACH_mach_header) {
-        if (getCwOptions()->mode==XBinary::MODE_64) {
+        if (getCwOptions()->mode == XBinary::MODE_64) {
             pRecords = N_mach_header::records64;
             nNumberOfRecords = N_mach_header::__data_size;
-        } else if (getCwOptions()->mode==XBinary::MODE_32){
+        } else if (getCwOptions()->mode == XBinary::MODE_32) {
             pRecords = N_mach_header::records32;
             nNumberOfRecords = N_mach_header::__data_size - 1;
         }
     } else if (getCwOptions()->_type == FW_DEF::TYPE_ELF_elf_ehdr) {
-        if (getCwOptions()->mode==XBinary::MODE_64) {
+        if (getCwOptions()->mode == XBinary::MODE_64) {
             pRecords = N_Elf_Ehdr::records64;
             nNumberOfRecords = N_Elf_Ehdr::__data_size;
-        } else if (getCwOptions()->mode==XBinary::MODE_32){
+        } else if (getCwOptions()->mode == XBinary::MODE_32) {
             pRecords = N_Elf_Ehdr::records32;
             nNumberOfRecords = N_Elf_Ehdr::__data_size;
         }
     }
 
-    createHeaderTable(ui->tableWidgetMain, pRecords, getListRecWidgets(),
-                      nNumberOfRecords, getCwOptions()->nDataOffset, getCwOptions()->endian);
+    createHeaderTable(ui->tableWidgetMain, pRecords, getListRecWidgets(), nNumberOfRecords, getCwOptions()->nDataOffset, getCwOptions()->endian);
 
     if (getCwOptions()->_type == FW_DEF::TYPE_MACH_mach_header) {
         XBinary binary(getDevice());
@@ -114,4 +111,3 @@ void GenericTableWidget::on_tableWidgetMain_customContextMenuRequested(const QPo
 {
     contextMenuTableHeader(pos, ui->tableWidgetMain, getListRecWidgets(), getCwOptions());
 }
-

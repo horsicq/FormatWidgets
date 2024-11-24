@@ -27,8 +27,7 @@ namespace Ui {
 class TableHeaderWidget;
 }
 
-class TableHeaderWidget : public QWidget
-{
+class TableHeaderWidget : public QWidget {
     Q_OBJECT
 
 public:
@@ -50,4 +49,4 @@ private:
     FW_DEF::CWOPTIONS *g_pCwOptions;
 };
 
-#endif // TABLEHEADERWIDGET_H
+#endif  // TABLEHEADERWIDGET_H

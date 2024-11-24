@@ -27,8 +27,7 @@ namespace Ui {
 class GenericTableWidget;
 }
 
-class GenericTableWidget : public FormatWidget
-{
+class GenericTableWidget : public FormatWidget {
     Q_OBJECT
 
 public:
@@ -47,4 +46,4 @@ private:
     Ui::GenericTableWidget *ui;
 };
 
-#endif // MACH_TABLEWIDGET_H
+#endif  // MACH_TABLEWIDGET_H

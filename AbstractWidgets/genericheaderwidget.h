@@ -27,8 +27,7 @@ namespace Ui {
 class GenericHeaderWidget;
 }
 
-class GenericHeaderWidget : public FormatWidget
-{
+class GenericHeaderWidget : public FormatWidget {
     Q_OBJECT
 
 public:
@@ -47,4 +46,4 @@ private:
     Ui::GenericHeaderWidget *ui;
 };
 
-#endif // MACH_HEADERWIDGET_H
+#endif  // MACH_HEADERWIDGET_H

@@ -265,8 +265,8 @@ qint32 FormatWidget::getType()
     return g_nType;
 }
 
-QTreeWidgetItem *FormatWidget::createNewItem(FW_DEF::TYPE type, FW_DEF::WIDGETMODE widgetMode, const QString &sTitle, XOptions::ICONTYPE iconType, qint64 nOffset, qint64 nSize, qint64 nExtraOffset,
-                                             qint64 nExtraSize, XBinary::MODE mode, XBinary::ENDIAN endian)
+QTreeWidgetItem *FormatWidget::createNewItem(FW_DEF::TYPE type, FW_DEF::WIDGETMODE widgetMode, const QString &sTitle, XOptions::ICONTYPE iconType, qint64 nOffset,
+                                             qint64 nSize, qint64 nExtraOffset, qint64 nExtraSize, XBinary::MODE mode, XBinary::ENDIAN endian)
 {
     QTreeWidgetItem *pResult = new QTreeWidgetItem;
 
@@ -295,8 +295,8 @@ void FormatWidget::setValue(QVariant vValue, qint32 nPosition, qint64 nOffset, q
             qDebug("vValue = %X", vValue.toUInt());
 
             XBinary binary(getDevice());
-            if ((recWidget.vtype == FW_DEF::VAL_TYPE_DATA) || (recWidget.vtype == FW_DEF::VAL_TYPE_SIZE) ||
-                (recWidget.vtype == FW_DEF::VAL_TYPE_ADDRESS) || (recWidget.vtype == FW_DEF::VAL_TYPE_OFFSET)) {
+            if ((recWidget.vtype == FW_DEF::VAL_TYPE_DATA) || (recWidget.vtype == FW_DEF::VAL_TYPE_SIZE) || (recWidget.vtype == FW_DEF::VAL_TYPE_ADDRESS) ||
+                (recWidget.vtype == FW_DEF::VAL_TYPE_OFFSET)) {
                 if (recWidget.nSize == 1) {
                     binary.write_uint8(recWidget.nOffset, vValue.toUInt());
                 } else if (recWidget.nSize == 2) {
@@ -325,7 +325,8 @@ void FormatWidget::setValue(QVariant vValue, qint32 nPosition, qint64 nOffset, q
             emit dataChanged(nOffset, nSize);
         }
     } else {
-        QMessageBox::critical(XOptions::getMainWidget(this), tr("Error"), tr("Cannot save file") + QString(": %1").arg(XBinary::getBackupFileName(XBinary::getBackupDevice(getDevice()))));
+        QMessageBox::critical(XOptions::getMainWidget(this), tr("Error"),
+                              tr("Cannot save file") + QString(": %1").arg(XBinary::getBackupFileName(XBinary::getBackupDevice(getDevice()))));
     }
 }
 
@@ -692,7 +693,6 @@ void FormatWidget::setTreeItem(QTreeWidget *pTree, qint32 nID)
 
 void FormatWidget::clear()
 {
-
 }
 
 void FormatWidget::cleanup()
@@ -720,7 +720,6 @@ void FormatWidget::cleanup()
 
 void FormatWidget::reload()
 {
-
 }
 
 void FormatWidget::setReadonly(bool bState)
@@ -1130,8 +1129,8 @@ void FormatWidget::updateRecWidgets(QIODevice *pDevice, QList<RECWIDGET> *pListR
 
         QVariant varValue;
 
-        if ((recWidget.vtype == FW_DEF::VAL_TYPE_DATA) || (recWidget.vtype == FW_DEF::VAL_TYPE_SIZE) ||
-            (recWidget.vtype == FW_DEF::VAL_TYPE_ADDRESS) || (recWidget.vtype == FW_DEF::VAL_TYPE_OFFSET)) {
+        if ((recWidget.vtype == FW_DEF::VAL_TYPE_DATA) || (recWidget.vtype == FW_DEF::VAL_TYPE_SIZE) || (recWidget.vtype == FW_DEF::VAL_TYPE_ADDRESS) ||
+            (recWidget.vtype == FW_DEF::VAL_TYPE_OFFSET)) {
             if (recWidget.nSize == 1) {
                 varValue = binary.read_uint8(recWidget.nOffset);
             } else if (recWidget.nSize == 2) {
@@ -1155,8 +1154,8 @@ void FormatWidget::_adjustRecWidget(RECWIDGET *pRecWidget, QVariant varValue)
     bool bComboBox = false;
     if (pRecWidget->pComboBox) bComboBox = pRecWidget->pComboBox->blockSignals(true);
 
-    if ((pRecWidget->vtype == FW_DEF::VAL_TYPE_DATA) || (pRecWidget->vtype == FW_DEF::VAL_TYPE_SIZE) ||
-        (pRecWidget->vtype == FW_DEF::VAL_TYPE_ADDRESS) || (pRecWidget->vtype == FW_DEF::VAL_TYPE_OFFSET)) {
+    if ((pRecWidget->vtype == FW_DEF::VAL_TYPE_DATA) || (pRecWidget->vtype == FW_DEF::VAL_TYPE_SIZE) || (pRecWidget->vtype == FW_DEF::VAL_TYPE_ADDRESS) ||
+        (pRecWidget->vtype == FW_DEF::VAL_TYPE_OFFSET)) {
         if (pRecWidget->nSize == 1) {
             pRecWidget->pLineEdit->setValue_uint8(varValue.toUInt(), XLineEditHEX::_MODE_HEX);
         } else if (pRecWidget->nSize == 2) {
@@ -1506,7 +1505,8 @@ void FormatWidget::registerShortcuts(bool bState)
     Q_UNUSED(bState)
 }
 
-bool FormatWidget::createHeaderTable(QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, QList<RECWIDGET> *pListRecWidget, qint32 nNumberOfRecords, qint64 nOffset, XBinary::ENDIAN endian)
+bool FormatWidget::createHeaderTable(QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, QList<RECWIDGET> *pListRecWidget, qint32 nNumberOfRecords,
+                                     qint64 nOffset, XBinary::ENDIAN endian)
 {
     pTableWidget->clear();
 
@@ -1821,7 +1821,8 @@ XComboBoxEx *FormatWidget::createComboBox(QTableWidget *pTableWidget, QMap<quint
     return result;
 }
 
-void FormatWidget::adjustComboBox(QTableWidget *pTableWidget, QList<RECWIDGET> *pListRecWidget, const QMap<quint64, QString> &mapData, qint32 nPosition, XComboBoxEx::CBTYPE cbtype, quint64 nMask)
+void FormatWidget::adjustComboBox(QTableWidget *pTableWidget, QList<RECWIDGET> *pListRecWidget, const QMap<quint64, QString> &mapData, qint32 nPosition,
+                                  XComboBoxEx::CBTYPE cbtype, quint64 nMask)
 {
     if (nPosition < pListRecWidget->count()) {
         (*pListRecWidget)[nPosition].pComboBox = new XComboBoxEx(pTableWidget);
