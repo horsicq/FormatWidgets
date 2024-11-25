@@ -41,6 +41,7 @@ public:
     void setReadonly(bool bState);
     bool saveBackup();
     virtual void adjustView();
+    virtual void reloadData(bool bSaveSelection);
 
     static void dumpRegion(QWidget *pParent, QIODevice *pDevice, qint64 nOffset, qint64 nSize, const QString &sName);
     static void dumpOverlay(QWidget *pParent, QIODevice *pDevice, bool bIsImage = false, XADDR nModuleAddress = -1);

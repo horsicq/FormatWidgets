@@ -44,6 +44,7 @@ public:
     void setAddressAndSize(XBinary *pBinary, XADDR nAddress, qint64 nSize, bool bNotNull = false);
     void _setEnabled(bool bState);
     virtual void adjustView();
+    virtual void reloadData(bool bSaveSelection);
 
 private slots:
     void showHexSlot();

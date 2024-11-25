@@ -130,6 +130,13 @@ void ToolsWidget::adjustView()
     ui->widgetStrings->adjustView();
 }
 
+void ToolsWidget::reloadData(bool bSaveSelection)
+{
+    Q_UNUSED(bSaveSelection)
+
+    reload();
+}
+
 ToolsWidget::~ToolsWidget()
 {
     delete ui;

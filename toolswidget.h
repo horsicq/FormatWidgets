@@ -45,6 +45,7 @@ public:
     qint64 getStartAddress();
     void setSelection(qint64 nOffset, qint64 nSize, bool bGoto);
     virtual void adjustView();
+    virtual void reloadData(bool bSaveSelection);
 
 signals:
     void showOffsetHex(qint64 nOffset, qint64 nSize);

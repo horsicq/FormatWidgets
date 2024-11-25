@@ -89,6 +89,12 @@ void PEToolsWidget::adjustView()
 {
 }
 
+void PEToolsWidget::reloadData(bool bSaveSelection)
+{
+    Q_UNUSED(bSaveSelection)
+    reload();
+}
+
 void PEToolsWidget::dumpRegion(QWidget *pParent, QIODevice *pDevice, qint64 nOffset, qint64 nSize, const QString &sName)
 {
     QString _sName = sName;

@@ -214,6 +214,13 @@ void FormatsWidget::setAdvanced(bool bState)
     }
 }
 
+void FormatsWidget::reloadData(bool bSaveSelection)
+{
+    Q_UNUSED(bSaveSelection)
+
+    reload();
+}
+
 FormatsWidget::~FormatsWidget()
 {
     delete ui;

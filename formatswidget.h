@@ -74,6 +74,7 @@ public:
     void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
     virtual void adjustView();
     void setAdvanced(bool bState);
+    virtual void reloadData(bool bSaveSelection);
 
 private slots:
     void on_comboBoxFileType_currentIndexChanged(int nIndex);
