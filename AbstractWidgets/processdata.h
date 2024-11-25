@@ -26,7 +26,7 @@
 #include <QTableView>
 #include <QTreeView>
 
-#include "formatwidget_def.h"
+#include "formatwidget.h"
 #include "xbinary.h"
 #include "xlineedithex.h"
 #include "xoptions.h"
@@ -37,21 +37,7 @@ class ProcessData : public QObject {
 
 public:
     explicit ProcessData();
-
-    void setPdStruct(XBinary::PDSTRUCT *pPdStruct);
-    void setOptions(XOptions *pOptions);
-    XOptions *getOptions();
-    void setMaximum(quint64 nMaximum);
-    void incValue();
-    bool isRun();
-    XBinary::PDSTRUCT *getPdStruct();
-    virtual void _process() = 0;
-    virtual void ajustTableView(qint32 nType, QTableView *pTableView);
-    virtual void ajustTreeView(qint32 nType, QTreeView *pTreeView);
-    static QList<QString> getStructList(const FW_DEF::HEADER_RECORD *pRecords, qint32 nRecordCount);
-    static void setTableHeader(QStandardItemModel *pModel, QList<QString> *pListStrings);
-    static void setTreeHeader(QStandardItemModel *pModel, QList<QString> *pListStrings);
-    virtual void adjustModel(QStandardItemModel *pModel);
+    void setData(QStandardItemModel **ppModel, QList<FW_DEF::HEADER_RECORD> *pListHeaderRecords, FW_DEF::CWOPTIONS *pCwOptions, XBinary::PDSTRUCT *pPdStruct);
 
 public slots:
     void process();
@@ -61,7 +47,9 @@ signals:
     void completed(qint64 nElapsed);
 
 private:
-    XOptions *g_pOptions;
+    QStandardItemModel **g_ppModel;
+    QList<FW_DEF::HEADER_RECORD> *g_pListHeaderRecords;
+    FW_DEF::CWOPTIONS *g_pCwOptions;
     XBinary::PDSTRUCT *g_pPdStruct;
     qint32 g_nFreeIndex;
 };

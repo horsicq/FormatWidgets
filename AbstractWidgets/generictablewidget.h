@@ -21,7 +21,7 @@
 #ifndef MACH_TABLEWIDGET_H
 #define MACH_TABLEWIDGET_H
 
-#include "formatwidget.h"
+#include "dialogprocessdata.h"
 
 namespace Ui {
 class GenericTableWidget;
@@ -39,11 +39,13 @@ protected:
     virtual SV _setValue(QVariant vValue, qint32 nPosition);
 
 private slots:
-    void on_tableWidgetMain_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
-    void on_tableWidgetMain_customContextMenuRequested(const QPoint &pos);
+    void on_tableViewMain_customContextMenuRequested(const QPoint &pos);
+    void onTableView_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
+    void on_tableViewMain_clicked(const QModelIndex &index);
 
 private:
     Ui::GenericTableWidget *ui;
+    QStandardItemModel *g_pModel;
 };
 
 #endif  // MACH_TABLEWIDGET_H

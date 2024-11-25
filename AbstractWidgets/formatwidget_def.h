@@ -60,6 +60,7 @@ enum TYPE {
     TYPE_TOOLS,
     TYPE_ELF_elf_ehdr,
     TYPE_MACH_mach_header,
+    TYPE_MACH_commands,
 };
 
 enum WIDGETMODE {
@@ -79,6 +80,8 @@ struct CWOPTIONS {
     XInfoDB *pXInfoDB;
     qint64 nDataOffset;  // TODO location
     qint64 nDataSize;
+    QVariant var1;
+    QVariant var2;
     XBinary::ENDIAN endian;
     XBinary::MODE mode;
 };
@@ -94,7 +97,9 @@ enum VAL_TYPE {
     VAL_TYPE_TEXT,
     VAL_TYPE_LABEL,
     VAL_TYPE_UNIXTIME,  // TODO
-    VAL_TYPE_UUID
+    VAL_TYPE_UUID,
+    VAL_TYPE_NUMBER,
+    VAL_TYPE_INFO
 };
 
 struct HEADER_RECORD {
@@ -104,6 +109,13 @@ struct HEADER_RECORD {
     qint32 nSize;
     QString sType;
     VAL_TYPE vtype;
+};
+
+enum TABLEDATA {
+    TABLEDATA_HEADEROFFSET = 0,
+    TABLEDATA_HEADERSIZE,
+    TABLEDATA_DATAOFFSET,
+    TABLEDATA_DATASIZE,
 };
 
 enum SECTION_DATA {
@@ -132,8 +144,8 @@ enum WIDGET_DATA {
     WIDGET_DATA_SIZE,
     WIDGET_DATA_MODE,
     WIDGET_DATA_ENDIAN,
-    WIDGET_DATA_EXTRAOFFSET,
-    WIDGET_DATA_EXTRASIZE,
+    WIDGET_DATA_VAR1,
+    WIDGET_DATA_VAR2,
     WIDGET_DATA_NAME,
 };
 }  // namespace FW_DEF

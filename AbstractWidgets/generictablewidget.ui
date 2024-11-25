@@ -58,7 +58,7 @@
     </layout>
    </item>
    <item>
-    <widget class="QTableWidget" name="tableWidgetMain">
+    <widget class="XTableView" name="tableViewMain">
      <property name="contextMenuPolicy">
       <enum>Qt::CustomContextMenu</enum>
      </property>
@@ -71,11 +71,11 @@
      <property name="selectionBehavior">
       <enum>QAbstractItemView::SelectRows</enum>
      </property>
-     <attribute name="horizontalHeaderStretchLastSection">
-      <bool>true</bool>
-     </attribute>
      <attribute name="verticalHeaderVisible">
       <bool>false</bool>
+     </attribute>
+     <attribute name="verticalHeaderCascadingSectionResizes">
+      <bool>true</bool>
      </attribute>
      <attribute name="verticalHeaderMinimumSectionSize">
       <number>20</number>
@@ -83,10 +83,20 @@
      <attribute name="verticalHeaderDefaultSectionSize">
       <number>20</number>
      </attribute>
+     <attribute name="verticalHeaderStretchLastSection">
+      <bool>false</bool>
+     </attribute>
     </widget>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>XTableView</class>
+   <extends>QTableView</extends>
+   <header>xtableview.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

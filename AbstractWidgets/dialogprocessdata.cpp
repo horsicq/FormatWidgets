@@ -20,20 +20,16 @@
  */
 #include "dialogprocessdata.h"
 
-DialogProcessData::DialogProcessData(QWidget *pParent, ProcessData *pProcessData, XOptions *pOptions) : XDialogProcess(pParent)
+DialogProcessData::DialogProcessData(QWidget *pParent) : XDialogProcess(pParent)
 {
-    this->g_pProcessData = pProcessData;
-
-    pProcessData->setPdStruct(getPdStruct());
-    pProcessData->setOptions(pOptions);
-
+    g_pProcessData = new ProcessData;
     g_pThread = new QThread;
 
-    pProcessData->moveToThread(g_pThread);
+    g_pProcessData->moveToThread(g_pThread);
 
-    connect(g_pThread, SIGNAL(started()), pProcessData, SLOT(process()));
-    connect(pProcessData, SIGNAL(completed(qint64)), this, SLOT(onCompleted(qint64)));
-    connect(pProcessData, SIGNAL(errorMessage(QString)), this, SLOT(errorMessageSlot(QString)));
+    connect(g_pThread, SIGNAL(started()), g_pProcessData, SLOT(process()));
+    connect(g_pProcessData, SIGNAL(completed(qint64)), this, SLOT(onCompleted(qint64)));
+    connect(g_pProcessData, SIGNAL(errorMessage(QString)), this, SLOT(errorMessageSlot(QString)));
 
     g_pThread->start();
 }
@@ -47,4 +43,11 @@ DialogProcessData::~DialogProcessData()
     g_pThread->wait();
 
     delete g_pThread;
+    delete g_pProcessData;
+}
+
+void DialogProcessData::setData(QStandardItemModel **ppModel, QList<FW_DEF::HEADER_RECORD> *pListHeaderRecords, FW_DEF::CWOPTIONS *pCwOptions)
+{
+    g_pProcessData->setData(ppModel, pListHeaderRecords, pCwOptions, getPdStruct());
+    g_pThread->start();
 }

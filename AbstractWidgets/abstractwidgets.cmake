@@ -83,8 +83,8 @@ set(ABSTRACTWIDGETS_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/generictablewidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/generictablewidget.h
     ${CMAKE_CURRENT_LIST_DIR}/generictablewidget.ui
-    ${CMAKE_CURRENT_LIST_DIR}/ELF/elf_defs.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/ELF/elf_defs.h
-    ${CMAKE_CURRENT_LIST_DIR}/MACH/mach_defs.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/MACH/mach_defs.h
+    ${CMAKE_CURRENT_LIST_DIR}/Specific/elf_defs.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Specific/elf_defs.h
+    ${CMAKE_CURRENT_LIST_DIR}/Specific/mach_defs.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Specific/mach_defs.h
 )

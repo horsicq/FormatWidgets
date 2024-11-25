@@ -32,7 +32,6 @@
 #include "dialoghexview.h"
 #include "dialogmodelinfo.h"
 #include "dialogmultidisasm.h"
-#include "dialogprocessdata.h"
 #include "formatwidget_def.h"
 #include "toolswidget.h"
 #include "xcomboboxex.h"
@@ -54,9 +53,9 @@
 #include "xhashwidget.h"
 #include "xentropywidget.h"
 
-#include "ELF/elf_defs.h"
+#include "Specific/elf_defs.h"
 // #include "PE/pe_defs.h"
-#include "MACH/mach_defs.h"
+#include "Specific/mach_defs.h"
 // #include "MSDOS/msdos_defs.h"
 // #include "NE/ne_defs.h"
 // #include "LE/le_defs.h"
@@ -115,7 +114,7 @@ public:
     void setData(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType);
     void setData(const QString &sFileName, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType);
     void setData(FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType);
-    void setCwOptions(FW_DEF::CWOPTIONS cwOptions);
+    void setCwOptions(FW_DEF::CWOPTIONS cwOptions, bool bReload);
     FW_DEF::CWOPTIONS *getCwOptions();
 
     void setFileType(XBinary::FT fileType);
@@ -127,8 +126,12 @@ public:
     qint64 getOffset();
     qint32 getType();
     static QTreeWidgetItem *createNewItem(FW_DEF::TYPE type, FW_DEF::WIDGETMODE widgetMode, const QString &sTitle, XOptions::ICONTYPE iconType, qint64 nOffset,
-                                          qint64 nSize, qint64 nExtraOffset, qint64 nExtraSize, XBinary::MODE mode, XBinary::ENDIAN endian);
-    bool createHeaderTable(QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, QList<RECWIDGET> *pListRecWidget, qint32 nNumberOfRecords, qint64 nOffset,
+                                          qint64 nSize, QVariant var1, QVariant var2, XBinary::MODE mode, XBinary::ENDIAN endian);
+
+    static QList<FW_DEF::HEADER_RECORD> getHeaderRecords(const FW_DEF::CWOPTIONS *pCwOptions);
+    static qint32 getHeaderSize(QList<FW_DEF::HEADER_RECORD> *pListHeaderRecords);
+
+    bool createHeaderTable(QTableWidget *pTableWidget, const QList<FW_DEF::HEADER_RECORD> *pListHeaderRecords, QList<RECWIDGET> *pListRecWidget, qint64 nOffset,
                            XBinary::ENDIAN endian);
     bool createListTable(qint32 nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, qint32 nNumberOfRecords);
     void addComment(QTableWidget *pTableWidget, qint32 nRow, qint32 nColumn, const QString &sComment);
@@ -162,17 +165,14 @@ public:
                                      bool bDisasm = true, bool bFollow = true);
     bool setHexSubdeviceByTableView(qint32 nRow, qint32 nType, ToolsWidget *pToolsWidget, QTableView *pTableView);
 
-    void setHeaderTableSelection(ToolsWidget *pToolWidget, QTableWidget *pTableWidget);  // TODO remove
-    void setHeaderTableSelection(QTableWidget *pTableWidget);
+    void setHeaderSelection(QTableWidget *pTableWidget);
+    void setTableSelection(QTableView *pTableView);
 
     QColor getEnabledColor();
     QColor getDisabledColor();
 
     void setItemEnable(QTableWidgetItem *pItem, bool bState);
     void setLineEdit(XLineEditHEX *pLineEdit, qint32 nMaxLength, const QString &sText, qint64 nOffset);
-    void ajustTableView(qint32 nType, ProcessData *pProcessData, QStandardItemModel **ppModel, XTableView *pTableView, bool bStretchLastSection = true);
-    void ajustTreeView(qint32 nType, ProcessData *pProcessData, QStandardItemModel **ppModel, QTreeView *pTreeView);
-    void ajustDialogModel(ProcessData *pProcessData, QStandardItemModel **ppModel, const QString &sTitle);
     void showSectionHex(QTableView *pTableView);
     void showSectionEntropy(QTableView *pTableView);
     void showSectionDisasm(QTableView *pTableView);
@@ -219,6 +219,9 @@ public:
     void updateRecWidgets(QIODevice *pDevice, QList<RECWIDGET> *pListRecWidget);
     void _adjustRecWidget(RECWIDGET *pRecWidget, QVariant varValue);
 
+    static QVariant _readVariant(XBinary *pBinary, qint64 nOffset, qint64 nSize, FW_DEF::VAL_TYPE vtype, bool bIsBigEndian);
+    static QString _valueToString(const QVariant &var, qint64 nSize, FW_DEF::VAL_TYPE vtype);
+
     enum CW {
         CW_UINT8 = 0,
         CW_UINT16,
@@ -249,7 +252,8 @@ protected:
     };
 
     virtual SV _setValue(QVariant vValue, qint32 nPosition) = 0;
-    void adjustHeaderTable(QTableWidget *pTableWidget);
+    void adjustGenericHeader(QTableWidget *pTableWidget);
+    void adjustGenericTable(QTableView *pTableView, QList<FW_DEF::HEADER_RECORD> *pListHeaderRecords);
     virtual void adjustListTable(qint32 nType, QTableWidget *pTableWidget);
     virtual QString typeIdToString(qint32 nType);
     virtual void _showInDisasmWindowAddress(XADDR nAddress);
@@ -258,7 +262,8 @@ protected:
     virtual void _showInHexWindow(qint64 nOffset, qint64 nSize);
     virtual void _findValue(quint64 nValue, XBinary::ENDIAN endian);
     virtual void _widgetValueChanged(QVariant vValue);
-    virtual void contextMenuTableHeader(const QPoint &pos, QTableWidget *pTableWidget, QList<RECWIDGET> *pListRecWidget, FW_DEF::CWOPTIONS *pCwOptions);
+    void contextMenuGenericHeaderWidget(const QPoint &pos, QTableWidget *pTableWidget, QList<RECWIDGET> *pListRecWidget, FW_DEF::CWOPTIONS *pCwOptions);
+    void contextMenuGenericTableWidget(const QPoint &pos, QTableView *pTableView, QList<RECWIDGET> *pListRecWidget, FW_DEF::CWOPTIONS *pCwOptions);
 
 signals:
     void closeApp();

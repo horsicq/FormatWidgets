@@ -32,8 +32,9 @@ class DialogProcessData : public XDialogProcess {
     Q_OBJECT
 
 public:
-    explicit DialogProcessData(QWidget *pParent, ProcessData *pProcessData, XOptions *pOptions);
+    explicit DialogProcessData(QWidget *pParent);
     ~DialogProcessData();
+    void setData(QStandardItemModel **ppModel, QList<FW_DEF::HEADER_RECORD> *pListHeaderRecords, FW_DEF::CWOPTIONS *pCwOptions);
 
 private:
     ProcessData *g_pProcessData;

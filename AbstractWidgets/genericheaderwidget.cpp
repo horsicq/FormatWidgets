@@ -49,28 +49,9 @@ void GenericHeaderWidget::reloadData(bool bSaveSelection)
 
     cleanup();
 
-    const FW_DEF::HEADER_RECORD *pRecords = 0;
-    qint32 nNumberOfRecords = 0;
+    QList<FW_DEF::HEADER_RECORD> listHeaderRecords = getHeaderRecords(getCwOptions());
 
-    if (getCwOptions()->_type == FW_DEF::TYPE_MACH_mach_header) {
-        if (getCwOptions()->mode == XBinary::MODE_64) {
-            pRecords = N_mach_header::records64;
-            nNumberOfRecords = N_mach_header::__data_size;
-        } else if (getCwOptions()->mode == XBinary::MODE_32) {
-            pRecords = N_mach_header::records32;
-            nNumberOfRecords = N_mach_header::__data_size - 1;
-        }
-    } else if (getCwOptions()->_type == FW_DEF::TYPE_ELF_elf_ehdr) {
-        if (getCwOptions()->mode == XBinary::MODE_64) {
-            pRecords = N_Elf_Ehdr::records64;
-            nNumberOfRecords = N_Elf_Ehdr::__data_size;
-        } else if (getCwOptions()->mode == XBinary::MODE_32) {
-            pRecords = N_Elf_Ehdr::records32;
-            nNumberOfRecords = N_Elf_Ehdr::__data_size;
-        }
-    }
-
-    createHeaderTable(ui->tableWidgetMain, pRecords, getListRecWidgets(), nNumberOfRecords, getCwOptions()->nDataOffset, getCwOptions()->endian);
+    createHeaderTable(ui->tableWidgetMain, &listHeaderRecords, getListRecWidgets(), getCwOptions()->nDataOffset, getCwOptions()->endian);
 
     if (getCwOptions()->_type == FW_DEF::TYPE_MACH_mach_header) {
         XBinary binary(getDevice());
@@ -104,10 +85,10 @@ void GenericHeaderWidget::on_tableWidgetMain_currentCellChanged(int currentRow, 
     Q_UNUSED(previousRow)
     Q_UNUSED(previousColumn)
 
-    setHeaderTableSelection(ui->tableWidgetMain);
+    setHeaderSelection(ui->tableWidgetMain);
 }
 
 void GenericHeaderWidget::on_tableWidgetMain_customContextMenuRequested(const QPoint &pos)
 {
-    contextMenuTableHeader(pos, ui->tableWidgetMain, getListRecWidgets(), getCwOptions());
+    contextMenuGenericHeaderWidget(pos, ui->tableWidgetMain, getListRecWidgets(), getCwOptions());
 }

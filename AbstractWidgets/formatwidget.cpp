@@ -32,7 +32,7 @@ FormatWidget::FormatWidget(QWidget *pParent) : XShortcutsWidget(pParent)
     g_colDisabled = QWidget::palette().color(QPalette::Window);
     g_colEnabled = QWidget::palette().color(QPalette::BrightText);
 
-    setReadonly(true);
+    FormatWidget::setReadonly(true);
 }
 
 FormatWidget::FormatWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent) : FormatWidget(pParent)
@@ -205,7 +205,7 @@ void FormatWidget::setData(FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOff
     setOptions(options);
 }
 
-void FormatWidget::setCwOptions(FW_DEF::CWOPTIONS cwOptions)
+void FormatWidget::setCwOptions(FW_DEF::CWOPTIONS cwOptions, bool bReload)
 {
     g_cwOptions = cwOptions;
 
@@ -217,7 +217,9 @@ void FormatWidget::setCwOptions(FW_DEF::CWOPTIONS cwOptions)
 
     setData(cwOptions.pDevice, formatOptions, 0, 0, 0);
 
-    reloadData(false);
+    if (bReload) {
+         reloadData(false);
+    }
 }
 
 FW_DEF::CWOPTIONS *FormatWidget::getCwOptions()
@@ -266,7 +268,7 @@ qint32 FormatWidget::getType()
 }
 
 QTreeWidgetItem *FormatWidget::createNewItem(FW_DEF::TYPE type, FW_DEF::WIDGETMODE widgetMode, const QString &sTitle, XOptions::ICONTYPE iconType, qint64 nOffset,
-                                             qint64 nSize, qint64 nExtraOffset, qint64 nExtraSize, XBinary::MODE mode, XBinary::ENDIAN endian)
+                                             qint64 nSize, QVariant var1, QVariant var2, XBinary::MODE mode, XBinary::ENDIAN endian)
 {
     QTreeWidgetItem *pResult = new QTreeWidgetItem;
 
@@ -275,8 +277,8 @@ QTreeWidgetItem *FormatWidget::createNewItem(FW_DEF::TYPE type, FW_DEF::WIDGETMO
     pResult->setData(0, Qt::UserRole + FW_DEF::WIDGET_DATA_WIDGETMODE, widgetMode);
     pResult->setData(0, Qt::UserRole + FW_DEF::WIDGET_DATA_OFFSET, nOffset);
     pResult->setData(0, Qt::UserRole + FW_DEF::WIDGET_DATA_SIZE, nSize);
-    pResult->setData(0, Qt::UserRole + FW_DEF::WIDGET_DATA_EXTRAOFFSET, nExtraOffset);
-    pResult->setData(0, Qt::UserRole + FW_DEF::WIDGET_DATA_EXTRASIZE, nExtraSize);
+    pResult->setData(0, Qt::UserRole + FW_DEF::WIDGET_DATA_VAR1, var1);
+    pResult->setData(0, Qt::UserRole + FW_DEF::WIDGET_DATA_VAR2, var2);
     pResult->setData(0, Qt::UserRole + FW_DEF::WIDGET_DATA_NAME, sTitle);
     pResult->setData(0, Qt::UserRole + FW_DEF::WIDGET_DATA_MODE, mode);
     pResult->setData(0, Qt::UserRole + FW_DEF::WIDGET_DATA_ENDIAN, endian);
@@ -286,15 +288,63 @@ QTreeWidgetItem *FormatWidget::createNewItem(FW_DEF::TYPE type, FW_DEF::WIDGETMO
     return pResult;
 }
 
+QList<FW_DEF::HEADER_RECORD> FormatWidget::getHeaderRecords(const FW_DEF::CWOPTIONS *pCwOptions)
+{
+    QList<FW_DEF::HEADER_RECORD> listResult;
+
+    const FW_DEF::HEADER_RECORD *pRecords = 0;
+    qint32 nNumberOfRecords = 0;
+
+    if (pCwOptions->_type == FW_DEF::TYPE_MACH_mach_header) {
+        if (pCwOptions->mode == XBinary::MODE_64) {
+            pRecords = N_mach_header::records64;
+            nNumberOfRecords = N_mach_header::__data_size;
+        } else if (pCwOptions->mode == XBinary::MODE_32) {
+            pRecords = N_mach_header::records32;
+            nNumberOfRecords = N_mach_header::__data_size - 1;
+        }
+    } else if (pCwOptions->_type == FW_DEF::TYPE_MACH_commands) {
+        pRecords = N_mach_commands::records;
+        nNumberOfRecords = N_mach_commands::__data_size;
+    } else if (pCwOptions->_type == FW_DEF::TYPE_ELF_elf_ehdr) {
+        if (pCwOptions->mode == XBinary::MODE_64) {
+            pRecords = N_Elf_Ehdr::records64;
+            nNumberOfRecords = N_Elf_Ehdr::__data_size;
+        } else if (pCwOptions->mode == XBinary::MODE_32) {
+            pRecords = N_Elf_Ehdr::records32;
+            nNumberOfRecords = N_Elf_Ehdr::__data_size;
+        }
+    }
+
+    for (qint32 i = 0; i < nNumberOfRecords; i++) {
+        FW_DEF::HEADER_RECORD record = pRecords[i];
+
+        listResult.append(record);
+    }
+
+    return listResult;
+}
+
+qint32 FormatWidget::getHeaderSize(QList<FW_DEF::HEADER_RECORD> *pListHeaderRecords)
+{
+    qint32 nResult = 0;
+    qint32 nNumberOfRecords = pListHeaderRecords->count();
+
+    for (qint32 i = 0; i < nNumberOfRecords; i++) {
+        FW_DEF::HEADER_RECORD record = pListHeaderRecords->at(i);
+        nResult += record.nSize;
+    }
+
+    return nResult;
+}
+
 void FormatWidget::setValue(QVariant vValue, qint32 nPosition, qint64 nOffset, qint64 nSize)
 {
     if (XBinary::saveBackup(XBinary::getBackupDevice(getDevice()))) {
         if (nPosition < listRecWidget.count()) {
             RECWIDGET recWidget = listRecWidget.at(nPosition);
 
-            qDebug("vValue = %X", vValue.toUInt());
-
-            XBinary binary(getDevice());
+            XBinary binary(getDevice(), getOptions().bIsImage, getOptions().nImageBase);
             if ((recWidget.vtype == FW_DEF::VAL_TYPE_DATA) || (recWidget.vtype == FW_DEF::VAL_TYPE_SIZE) || (recWidget.vtype == FW_DEF::VAL_TYPE_ADDRESS) ||
                 (recWidget.vtype == FW_DEF::VAL_TYPE_OFFSET)) {
                 if (recWidget.nSize == 1) {
@@ -330,9 +380,9 @@ void FormatWidget::setValue(QVariant vValue, qint32 nPosition, qint64 nOffset, q
     }
 }
 
-void FormatWidget::adjustHeaderTable(QTableWidget *pTableWidget)
+void FormatWidget::adjustGenericHeader(QTableWidget *pTableWidget)
 {
-    qint32 nSymbolWidth = XLineEditHEX::getSymbolWidth(this);
+    qint32 nSymbolWidth = XLineEditHEX::getSymbolWidth(pTableWidget);
 
     pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_NAME, QHeaderView::ResizeToContents);
     pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_OFFSET, QHeaderView::ResizeToContents);
@@ -340,6 +390,45 @@ void FormatWidget::adjustHeaderTable(QTableWidget *pTableWidget)
     pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_TYPE, QHeaderView::ResizeToContents);
     pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE, nSymbolWidth * 12);
     pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, nSymbolWidth * 20);
+    pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_COMMENT, QHeaderView::Stretch);
+}
+
+void FormatWidget::adjustGenericTable(QTableView *pTableView, QList<FW_DEF::HEADER_RECORD> *pListHeaderRecords)
+{
+    QFontMetrics fm(pTableView->font());
+
+    // qint32 nSymbolWidth = fm.boundingRect("W").width();
+
+    qint32 nNumberOfRecords = pListHeaderRecords->count();
+
+    for (qint32 i = 0; i < nNumberOfRecords; i++) {
+        qint32 nWidth = 200;
+
+        if ((pListHeaderRecords->at(i).vtype == FW_DEF::VAL_TYPE_DATA) || (pListHeaderRecords->at(i).vtype == FW_DEF::VAL_TYPE_SIZE) || (pListHeaderRecords->at(i).vtype == FW_DEF::VAL_TYPE_ADDRESS) ||
+            (pListHeaderRecords->at(i).vtype == FW_DEF::VAL_TYPE_OFFSET)) {
+            if (pListHeaderRecords->at(i).nSize == 1) {
+                nWidth = fm.boundingRect(" 00 ").width();
+            } else if (pListHeaderRecords->at(i).nSize == 2) {
+                nWidth = fm.boundingRect(" 0000 ").width();
+            } else if (pListHeaderRecords->at(i).nSize == 4) {
+                nWidth = fm.boundingRect(" 00000000 ").width();
+            } else if (pListHeaderRecords->at(i).nSize == 8) {
+                nWidth = fm.boundingRect(" 0000000000000000 ").width();
+            }
+        } else if (FW_DEF::VAL_TYPE_NUMBER) {
+            nWidth = fm.boundingRect(" 000").width();
+        }
+
+        if (i == (nNumberOfRecords - 1)) {
+            if (pListHeaderRecords->at(i).vtype == FW_DEF::VAL_TYPE_INFO) {
+                pTableView->horizontalHeader()->setSectionResizeMode(i, QHeaderView::Stretch);
+            }
+        }
+
+        pTableView->setColumnWidth(i, nWidth);
+    }
+
+    // return fm.boundingRect("W").width();  // TODO Check
 }
 
 void FormatWidget::adjustListTable(qint32 nType, QTableWidget *pTableWidget)
@@ -428,24 +517,7 @@ bool FormatWidget::setHexSubdeviceByTableView(qint32 nRow, qint32 nType, ToolsWi
     return bResult;
 }
 
-void FormatWidget::setHeaderTableSelection(ToolsWidget *pToolWidget, QTableWidget *pTableWidget)
-{
-    qint32 nCurrentRow = pTableWidget->currentRow();
-
-    if (nCurrentRow != -1) {
-        qint32 nOffset = pTableWidget->item(nCurrentRow, 0)->data(Qt::UserRole + HEADER_DATA_OFFSET).toInt();
-        qint64 nSize = pTableWidget->item(nCurrentRow, 0)->data(Qt::UserRole + HEADER_DATA_SIZE).toInt();
-
-        if (nOffset != -1) {
-            //            qint64
-            //            nAddress=pToolWidget->getStartAddress()+nOffset;
-
-            pToolWidget->setSelection(nOffset, nSize, false);
-        }
-    }
-}
-
-void FormatWidget::setHeaderTableSelection(QTableWidget *pTableWidget)
+void FormatWidget::setHeaderSelection(QTableWidget *pTableWidget)
 {
     qint32 nCurrentRow = pTableWidget->currentRow();
 
@@ -454,6 +526,22 @@ void FormatWidget::setHeaderTableSelection(QTableWidget *pTableWidget)
         qint64 nSize = pTableWidget->item(nCurrentRow, 0)->data(Qt::UserRole + HEADER_DATA_SIZE).toULongLong();
 
         emit currentLocationChanged(nOffset, XBinary::LT_OFFSET, nSize);
+    }
+}
+
+void FormatWidget::setTableSelection(QTableView *pTableView)
+{
+    qint32 nRow = pTableView->currentIndex().row();
+
+    if (nRow != -1) {
+        QModelIndex index = pTableView->model()->index(nRow, 0);
+
+        qint64 nOffset = pTableView->model()->data(index, Qt::UserRole + FW_DEF::TABLEDATA_DATAOFFSET).toLongLong();
+        qint64 nSize = pTableView->model()->data(index, Qt::UserRole + FW_DEF::TABLEDATA_DATASIZE).toLongLong();
+
+        if (nOffset != -1) {
+            emit currentLocationChanged(nOffset, XBinary::LT_OFFSET, nSize);
+        }
     }
 }
 
@@ -481,59 +569,6 @@ void FormatWidget::setLineEdit(XLineEditHEX *pLineEdit, qint32 nMaxLength, const
     pLineEdit->setProperty("OFFSET", nOffset);
 }
 
-void FormatWidget::ajustTableView(qint32 nType, ProcessData *pProcessData, QStandardItemModel **ppModel, XTableView *pTableView, bool bStretchLastSection)
-{
-    DialogProcessData dialogProcessData(this, pProcessData, getGlobalOptions());
-    dialogProcessData.setGlobal(getShortcuts(), getGlobalOptions());
-    dialogProcessData.showDialogDelay();
-
-    bool bSort = pTableView->isSortingEnabled();
-
-    if (bSort) {
-        pTableView->setSortingEnabled(false);
-    }
-
-    pTableView->setCustomModel(*ppModel, true);
-
-    pProcessData->ajustTableView(nType, pTableView);
-
-    if (bSort) {
-        pTableView->setSortingEnabled(true);
-        pTableView->sortByColumn(0, Qt::AscendingOrder);
-    }
-
-    pTableView->horizontalHeader()->setStretchLastSection(bStretchLastSection);
-}
-
-void FormatWidget::ajustTreeView(qint32 nType, ProcessData *pProcessData, QStandardItemModel **ppModel, QTreeView *pTreeView)
-{
-    QAbstractItemModel *pOldModel = pTreeView->model();
-
-    DialogProcessData dialogProcessData(this, pProcessData, getGlobalOptions());
-    dialogProcessData.setGlobal(getShortcuts(), getGlobalOptions());
-    dialogProcessData.showDialogDelay();
-
-    pTreeView->setModel(*ppModel);
-
-    pProcessData->ajustTreeView(nType, pTreeView);
-
-    deleteOldAbstractModel(&pOldModel);
-}
-
-void FormatWidget::ajustDialogModel(ProcessData *pProcessData, QStandardItemModel **ppModel, const QString &sTitle)
-{
-    DialogProcessData dialogProcessData(this, pProcessData, getGlobalOptions());
-    dialogProcessData.setGlobal(getShortcuts(), getGlobalOptions());
-
-    dialogProcessData.showDialogDelay();
-
-    DialogModelInfo dialogModelInfo(this);
-    dialogModelInfo.setGlobal(getShortcuts(), getGlobalOptions());
-
-    dialogModelInfo.setData(getDevice(), sTitle, *ppModel);
-
-    dialogModelInfo.exec();
-}
 
 void FormatWidget::showSectionHex(QTableView *pTableView)
 {
@@ -1120,27 +1155,14 @@ void FormatWidget::initYaraWidget(YARAWidgetAdvanced *pWidget)
 
 void FormatWidget::updateRecWidgets(QIODevice *pDevice, QList<RECWIDGET> *pListRecWidget)
 {
-    XBinary binary(pDevice);
+    XBinary binary(pDevice, getOptions().bIsImage, getOptions().nImageBase);
 
     qint32 nNumberOfRecords = pListRecWidget->count();
 
     for (qint32 i = 0; i < nNumberOfRecords; i++) {
         RECWIDGET recWidget = pListRecWidget->at(i);
 
-        QVariant varValue;
-
-        if ((recWidget.vtype == FW_DEF::VAL_TYPE_DATA) || (recWidget.vtype == FW_DEF::VAL_TYPE_SIZE) || (recWidget.vtype == FW_DEF::VAL_TYPE_ADDRESS) ||
-            (recWidget.vtype == FW_DEF::VAL_TYPE_OFFSET)) {
-            if (recWidget.nSize == 1) {
-                varValue = binary.read_uint8(recWidget.nOffset);
-            } else if (recWidget.nSize == 2) {
-                varValue = binary.read_uint16(recWidget.nOffset, (recWidget.endian == XBinary::ENDIAN_BIG));
-            } else if (recWidget.nSize == 4) {
-                varValue = binary.read_uint32(recWidget.nOffset, (recWidget.endian == XBinary::ENDIAN_BIG));
-            } else if (recWidget.nSize == 8) {
-                varValue = binary.read_uint64(recWidget.nOffset, (recWidget.endian == XBinary::ENDIAN_BIG));
-            }
-        }
+        QVariant varValue = _readVariant(&binary, recWidget.nOffset, recWidget.nSize, recWidget.vtype, (recWidget.endian == XBinary::ENDIAN_BIG));
 
         _adjustRecWidget(&recWidget, varValue);
     }
@@ -1180,6 +1202,46 @@ void FormatWidget::_adjustRecWidget(RECWIDGET *pRecWidget, QVariant varValue)
 
     pRecWidget->pLineEdit->blockSignals(bBlockLineEdit);
     if (pRecWidget->pComboBox) pRecWidget->pComboBox->blockSignals(bComboBox);
+}
+
+QVariant FormatWidget::_readVariant(XBinary *pBinary, qint64 nOffset, qint64 nSize, FW_DEF::VAL_TYPE vtype, bool bIsBigEndian)
+{
+    QVariant varResult;
+
+    if ((vtype == FW_DEF::VAL_TYPE_DATA) || (vtype == FW_DEF::VAL_TYPE_SIZE) || (vtype == FW_DEF::VAL_TYPE_ADDRESS) ||
+        (vtype == FW_DEF::VAL_TYPE_OFFSET)) {
+        if (nSize == 1) {
+            varResult = pBinary->read_uint8(nOffset);
+        } else if (nSize == 2) {
+            varResult = pBinary->read_uint16(nOffset, bIsBigEndian);
+        } else if (nSize == 4) {
+            varResult = pBinary->read_uint32(nOffset, bIsBigEndian);
+        } else if (nSize == 8) {
+            varResult = pBinary->read_uint64(nOffset, bIsBigEndian);
+        }
+    }
+
+    return varResult;
+}
+
+QString FormatWidget::_valueToString(const QVariant &var, qint64 nSize, FW_DEF::VAL_TYPE vtype)
+{
+    QString sResult;
+
+    if ((vtype == FW_DEF::VAL_TYPE_DATA) || (vtype == FW_DEF::VAL_TYPE_SIZE) || (vtype == FW_DEF::VAL_TYPE_ADDRESS) ||
+        (vtype == FW_DEF::VAL_TYPE_OFFSET)) {
+        if (nSize == 1) {
+            sResult = QString("%1").arg(var.toUInt(), 2, 16, QChar('0'));
+        } else if (nSize == 2) {
+            sResult = QString("%1").arg(var.toUInt(), 4, 16, QChar('0'));
+        } else if (nSize == 4) {
+            sResult = QString("%1").arg(var.toUInt(), 8, 16, QChar('0'));
+        } else if (nSize == 8) {
+            sResult = QString("%1").arg(var.toULongLong(), 16, 16, QChar('0'));
+        }
+    }
+
+    return sResult;
 }
 
 qint32 FormatWidget::getColumnWidth(QWidget *pParent, FormatWidget::CW cw, XBinary::MODE mode)
@@ -1329,7 +1391,7 @@ void FormatWidget::_widgetValueChanged(QVariant vValue)
 #endif
 }
 
-void FormatWidget::contextMenuTableHeader(const QPoint &pos, QTableWidget *pTableWidget, QList<RECWIDGET> *pListRecWidget, FW_DEF::CWOPTIONS *pCwOptions)
+void FormatWidget::contextMenuGenericHeaderWidget(const QPoint &pos, QTableWidget *pTableWidget, QList<RECWIDGET> *pListRecWidget, FW_DEF::CWOPTIONS *pCwOptions)
 {
     qint32 nRow = pTableWidget->currentIndex().row();
 
@@ -1343,6 +1405,25 @@ void FormatWidget::contextMenuTableHeader(const QPoint &pos, QTableWidget *pTabl
         QList<QObject *> listObjects = getShortcuts()->adjustContextMenu(&contextMenu, &listMenuItems);
 
         contextMenu.exec(pTableWidget->viewport()->mapToGlobal(pos));
+
+        XOptions::deleteQObjectList(&listObjects);
+    }
+}
+
+void FormatWidget::contextMenuGenericTableWidget(const QPoint &pos, QTableView *pTableView, QList<RECWIDGET> *pListRecWidget, FW_DEF::CWOPTIONS *pCwOptions)
+{
+    qint32 nRow = pTableView->currentIndex().row();
+
+    if (nRow != -1) {
+        QMenu contextMenu(this);
+
+        QList<XShortcuts::MENUITEM> listMenuItems;
+
+        getShortcuts()->_addMenuItem_CopyRow(&listMenuItems, pTableView);
+
+        QList<QObject *> listObjects = getShortcuts()->adjustContextMenu(&contextMenu, &listMenuItems);
+
+        contextMenu.exec(pTableView->viewport()->mapToGlobal(pos));
 
         XOptions::deleteQObjectList(&listObjects);
     }
@@ -1505,9 +1586,11 @@ void FormatWidget::registerShortcuts(bool bState)
     Q_UNUSED(bState)
 }
 
-bool FormatWidget::createHeaderTable(QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, QList<RECWIDGET> *pListRecWidget, qint32 nNumberOfRecords,
+bool FormatWidget::createHeaderTable(QTableWidget *pTableWidget, const QList<FW_DEF::HEADER_RECORD> *pListHeaderRecords, QList<RECWIDGET> *pListRecWidget,
                                      qint64 nOffset, XBinary::ENDIAN endian)
 {
+    qint32 nNumberOfRecords = pListHeaderRecords->count();
+
     pTableWidget->clear();
 
     QStringList slHeader;
@@ -1528,21 +1611,21 @@ bool FormatWidget::createHeaderTable(QTableWidget *pTableWidget, const FW_DEF::H
     for (qint32 i = 0; i < nNumberOfRecords; i++) {
         RECWIDGET recWidget = {};
         recWidget.endian = endian;
-        recWidget.nOffset = nOffset + pRecords[i].nOffset;
-        recWidget.nSize = pRecords[i].nSize;
-        recWidget.nPosition = pRecords[i].nPosition;
-        recWidget.vtype = pRecords[i].vtype;
+        recWidget.nOffset = nOffset + pListHeaderRecords->at(i).nOffset;
+        recWidget.nSize = pListHeaderRecords->at(i).nSize;
+        recWidget.nPosition = pListHeaderRecords->at(i).nPosition;
+        recWidget.vtype = pListHeaderRecords->at(i).vtype;
 
         QTableWidgetItem *pItemName = new QTableWidgetItem;
-        pItemName->setText(pRecords[i].sName);
-        pItemName->setData(Qt::UserRole + HEADER_DATA_OFFSET, nOffset + pRecords[i].nOffset);
-        pItemName->setData(Qt::UserRole + HEADER_DATA_SIZE, pRecords[i].nSize);
+        pItemName->setText(pListHeaderRecords->at(i).sName);
+        pItemName->setData(Qt::UserRole + HEADER_DATA_OFFSET, nOffset + pListHeaderRecords->at(i).nOffset);
+        pItemName->setData(Qt::UserRole + HEADER_DATA_SIZE, pListHeaderRecords->at(i).nSize);
         pTableWidget->setItem(i, HEADER_COLUMN_NAME, pItemName);
 
         QTableWidgetItem *pItemOffset = new QTableWidgetItem;
 
-        if (pRecords[i].nOffset != -1) {
-            pItemOffset->setText(XBinary::valueToHex((quint16)pRecords[i].nOffset));
+        if (pListHeaderRecords->at(i).nOffset != -1) {
+            pItemOffset->setText(XBinary::valueToHex((quint16)pListHeaderRecords->at(i).nOffset));
         }
 
         pItemOffset->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);  // TODO
@@ -1550,15 +1633,15 @@ bool FormatWidget::createHeaderTable(QTableWidget *pTableWidget, const FW_DEF::H
 
         QTableWidgetItem *pItemSize = new QTableWidgetItem;
 
-        if (pRecords[i].nSize != 0) {
-            pItemSize->setText(XBinary::valueToHex((quint16)pRecords[i].nSize));
+        if (pListHeaderRecords->at(i).nSize != 0) {
+            pItemSize->setText(XBinary::valueToHex((quint16)pListHeaderRecords->at(i).nSize));
         }
 
         pItemSize->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);  // TODO
         pTableWidget->setItem(i, HEADER_COLUMN_SIZE, pItemSize);
 
         QTableWidgetItem *pItemType = new QTableWidgetItem;
-        pItemType->setText(pRecords[i].sType);
+        pItemType->setText(pListHeaderRecords->at(i).sType);
         pTableWidget->setItem(i, HEADER_COLUMN_TYPE, pItemType);
 
         recWidget.pLineEdit = new XLineEditHEX();
@@ -1566,9 +1649,9 @@ bool FormatWidget::createHeaderTable(QTableWidget *pTableWidget, const FW_DEF::H
         recWidget.pLineEdit->setProperty("OFFSET", recWidget.nOffset);
         recWidget.pLineEdit->setProperty("SIZE", recWidget.nSize);
 
-        if ((pRecords[i].vtype == FW_DEF::VAL_TYPE_TEXT) || (pRecords[i].vtype == FW_DEF::VAL_TYPE_UUID)) {
-            if (pRecords[i].nSize != -1) {
-                recWidget.pLineEdit->setMaxLength(pRecords[i].nSize);
+        if ((pListHeaderRecords->at(i).vtype == FW_DEF::VAL_TYPE_TEXT) || (pListHeaderRecords->at(i).vtype == FW_DEF::VAL_TYPE_UUID)) {
+            if (pListHeaderRecords->at(i).nSize != -1) {
+                recWidget.pLineEdit->setMaxLength(pListHeaderRecords->at(i).nSize);
             }
         }
 
@@ -1576,7 +1659,7 @@ bool FormatWidget::createHeaderTable(QTableWidget *pTableWidget, const FW_DEF::H
 
         pTableWidget->setCellWidget(i, HEADER_COLUMN_VALUE, recWidget.pLineEdit);
 
-        if (pRecords[i].nSize == 0) {
+        if (pListHeaderRecords->at(i).nSize == 0) {
             recWidget.pLineEdit->setEnabled(false);
         }
 
@@ -1587,13 +1670,9 @@ bool FormatWidget::createHeaderTable(QTableWidget *pTableWidget, const FW_DEF::H
         pListRecWidget->append(recWidget);
     }
 
-    pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_COMMENT, QHeaderView::Stretch);
+    adjustGenericHeader(pTableWidget);
 
-    adjustHeaderTable(pTableWidget);
-
-    pTableWidget->resizeColumnToContents(HEADER_COLUMN_NAME);
-
-    //    XOptions::setTableWidgetHeaderAlignment(pTableWidget, HEADER_COLUMN_NAME, Qt::AlignLeft | Qt::AlignVCenter);
+   //    XOptions::setTableWidgetHeaderAlignment(pTableWidget, HEADER_COLUMN_NAME, Qt::AlignLeft | Qt::AlignVCenter);
     //    XOptions::setTableWidgetHeaderAlignment(pTableWidget, HEADER_COLUMN_OFFSET, Qt::AlignRight | Qt::AlignVCenter);
     //    XOptions::setTableWidgetHeaderAlignment(pTableWidget, HEADER_COLUMN_TYPE, Qt::AlignLeft | Qt::AlignVCenter);
     //    XOptions::setTableWidgetHeaderAlignment(pTableWidget, HEADER_COLUMN_VALUE, Qt::AlignRight | Qt::AlignVCenter);

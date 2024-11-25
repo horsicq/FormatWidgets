@@ -2675,7 +2675,6 @@ void MACHWidget::on_toolButtonNext_clicked()
 
 void MACHWidget::onTableView_commands_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
 {
-    Q_UNUSED(current)
     Q_UNUSED(previous)
 
     loadHexSubdeviceByTableView(current.row(), SMACH::TYPE_mach_commands, ui->widgetHex_commands, ui->tableView_commands, &g_subDevice[SMACH::TYPE_mach_commands]);
@@ -2683,7 +2682,6 @@ void MACHWidget::onTableView_commands_currentRowChanged(const QModelIndex &curre
 
 void MACHWidget::onTableView_segments_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
 {
-    Q_UNUSED(current)
     Q_UNUSED(previous)
 
     loadHexSubdeviceByTableView(current.row(), SMACH::TYPE_mach_segments, ui->widgetHex_segments, ui->tableView_segments, &g_subDevice[SMACH::TYPE_mach_segments]);
@@ -2691,7 +2689,6 @@ void MACHWidget::onTableView_segments_currentRowChanged(const QModelIndex &curre
 
 void MACHWidget::onTableView_sections_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
 {
-    Q_UNUSED(current)
     Q_UNUSED(previous)
 
     loadHexSubdeviceByTableView(current.row(), SMACH::TYPE_mach_sections, ui->widgetHex_sections, ui->tableView_sections, &g_subDevice[SMACH::TYPE_mach_sections]);
