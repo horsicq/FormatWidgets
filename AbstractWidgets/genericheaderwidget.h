@@ -41,6 +41,8 @@ protected:
 private slots:
     void on_tableWidgetMain_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     void on_tableWidgetMain_customContextMenuRequested(const QPoint &pos);
+    void on_toolButtonTableReload_clicked();
+    void on_toolButtonTableSave_clicked();
 
 private:
     Ui::GenericHeaderWidget *ui;

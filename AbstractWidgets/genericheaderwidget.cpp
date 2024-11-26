@@ -92,3 +92,13 @@ void GenericHeaderWidget::on_tableWidgetMain_customContextMenuRequested(const QP
 {
     contextMenuGenericHeaderWidget(pos, ui->tableWidgetMain, getListRecWidgets(), getCwOptions());
 }
+
+void GenericHeaderWidget::on_toolButtonTableReload_clicked()
+{
+    reloadData(true);
+}
+
+void GenericHeaderWidget::on_toolButtonTableSave_clicked()
+{
+
+}

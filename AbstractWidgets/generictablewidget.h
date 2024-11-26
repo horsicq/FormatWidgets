@@ -42,6 +42,8 @@ private slots:
     void on_tableViewMain_customContextMenuRequested(const QPoint &pos);
     void onTableView_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
     void on_tableViewMain_clicked(const QModelIndex &index);
+    void on_toolButtonTableReload_clicked();
+    void on_toolButtonTableSave_clicked();
 
 private:
     Ui::GenericTableWidget *ui;

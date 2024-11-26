@@ -91,3 +91,12 @@ void GenericTableWidget::on_tableViewMain_clicked(const QModelIndex &index)
     setTableSelection(ui->tableViewMain);
 }
 
+void GenericTableWidget::on_toolButtonTableReload_clicked()
+{
+    reloadData(true);
+}
+
+void GenericTableWidget::on_toolButtonTableSave_clicked()
+{
+
+}
