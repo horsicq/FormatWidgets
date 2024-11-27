@@ -89,6 +89,7 @@ void ProcessData::process()
             {
                 QStandardItem *pItem = new QStandardItem;
                 pItem->setData(i, Qt::DisplayRole);
+                pItem->setData(g_pCwOptions->_type, Qt::UserRole + FW_DEF::TABLEDATA_TYPE);
                 pItem->setData(listCommands.at(i).nStructOffset, Qt::UserRole + FW_DEF::TABLEDATA_HEADEROFFSET);
                 pItem->setData(nHeaderSize, Qt::UserRole + FW_DEF::TABLEDATA_HEADERSIZE);
                 pItem->setData(listCommands.at(i).nStructOffset, Qt::UserRole + FW_DEF::TABLEDATA_DATAOFFSET);
@@ -123,7 +124,7 @@ void ProcessData::process()
         for (qint32 i = 0; (i < nNumberOfRows) && (!(g_pPdStruct->bIsStop)); i++) {
             {
                 QStandardItem *pItem = new QStandardItem;
-                pItem->setData(0, Qt::DisplayRole);
+                pItem->setData(i, Qt::DisplayRole);
                 pItem->setData(_nOffset, Qt::UserRole + FW_DEF::TABLEDATA_HEADEROFFSET);
                 pItem->setData(nHeaderSize, Qt::UserRole + FW_DEF::TABLEDATA_HEADERSIZE);
                 pItem->setData(_nOffset, Qt::UserRole + FW_DEF::TABLEDATA_DATAOFFSET);

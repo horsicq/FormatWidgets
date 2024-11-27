@@ -32,6 +32,7 @@
 #include "dialoghexview.h"
 #include "dialogmodelinfo.h"
 #include "dialogmultidisasm.h"
+#include "dialogwidget.h"
 #include "formatwidget_def.h"
 #include "toolswidget.h"
 #include "xcomboboxex.h"
@@ -191,7 +192,10 @@ public:
     QList<RECWIDGET> *getListRecWidgets();
 
     void reset();
-    QString getInitString(QTreeWidgetItem *pItem);
+    static QString getInitStringFromCwOptions(FW_DEF::CWOPTIONS *pCwOptions);
+    static QString _getInitString(FW_DEF::TYPE _type, qint64 nDataOffset, qint64 nDataSize);
+
+
     void addInit(const QString &sString);
     bool isInitPresent(const QString &sString);
 
@@ -267,6 +271,7 @@ protected:
 
 signals:
     void closeApp();
+    void showCwWidget(QString sInitString, bool nNewWindow);
 
 public slots:
     void valueChangedSlot(QVariant varValue);
@@ -284,6 +289,7 @@ public slots:
     void dumpRegion(qint64 nOffset, qint64 nSize, const QString &sName);
     void showDemangle(const QString &sString);
     void _reload();
+    void editRecord();
 
 protected:
     virtual void registerShortcuts(bool bState);

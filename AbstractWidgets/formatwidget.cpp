@@ -787,15 +787,16 @@ void FormatWidget::reset()
     g_listPages.clear();
 }
 
-QString FormatWidget::getInitString(QTreeWidgetItem *pItem)
+QString FormatWidget::getInitStringFromCwOptions(FW_DEF::CWOPTIONS *pCwOptions)
+{
+    return _getInitString(pCwOptions->_type, pCwOptions->nDataOffset, pCwOptions->nDataSize);
+}
+
+QString FormatWidget::_getInitString(FW_DEF::TYPE _type, qint64 nDataOffset, qint64 nDataSize)
 {
     QString sResult;
 
-    qint32 nType = pItem->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_TYPE).toInt();
-    qint64 nDataOffset = pItem->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET).toLongLong();
-    qint64 nDataSize = pItem->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_SIZE).toLongLong();
-
-    sResult = QString("%1-%2-%3").arg(QString::number(nType), QString::number(nDataOffset), QString::number(nDataSize));
+    sResult = QString("%1#%2#%3").arg(QString::number((qint32)_type), QString::number(nDataOffset), QString::number(nDataSize));
 
     return sResult;
 }
@@ -1415,9 +1416,29 @@ void FormatWidget::contextMenuGenericTableWidget(const QPoint &pos, QTableView *
     qint32 nRow = pTableView->currentIndex().row();
 
     if (nRow != -1) {
+        QModelIndex index = pTableView->model()->index(nRow, 0);
+
+        FW_DEF::TYPE _type = (FW_DEF::TYPE)(pTableView->model()->data(index, Qt::UserRole + FW_DEF::TABLEDATA_TYPE).toInt());
+        qint64 nDataOffset = (pTableView->model()->data(index, Qt::UserRole + FW_DEF::WIDGET_DATA_OFFSET).toLongLong());
+        qint64 nDataSize = (pTableView->model()->data(index, Qt::UserRole + FW_DEF::WIDGET_DATA_SIZE).toLongLong());
+
+        QString sTypeString = _getInitString(_type, nDataOffset, nDataSize);
+
         QMenu contextMenu(this);
 
         QList<XShortcuts::MENUITEM> listMenuItems;
+
+        {
+            XShortcuts::MENUITEM menuItem = {};
+            menuItem.nShortcutId = X_ID_TABLE_EDIT;
+            menuItem.pRecv = this;
+            menuItem.pMethod = SLOT(editRecord());
+            menuItem.nSubgroups = XShortcuts::GROUPID_NONE;
+            menuItem.sPropertyName = "INITSTRING";
+            menuItem.varProperty = sTypeString;
+
+            listMenuItems.append(menuItem);
+        }
 
         getShortcuts()->_addMenuItem_CopyRow(&listMenuItems, pTableView);
 
@@ -1579,6 +1600,13 @@ void FormatWidget::showDemangle(const QString &sString)
 void FormatWidget::_reload()
 {
     reloadData(true);
+}
+
+void FormatWidget::editRecord()
+{
+    QString sInitString = (sender()->property("INITSTRING").toString());
+
+    emit showCwWidget(sInitString, true);
 }
 
 void FormatWidget::registerShortcuts(bool bState)

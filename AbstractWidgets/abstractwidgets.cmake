@@ -30,6 +30,7 @@ include(${CMAKE_CURRENT_LIST_DIR}/../../XExtractorWidget/xextractorwidget.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../../XVisualizationWidget/xvisualizationwidget.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../../XOptions/xoptionswidget.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../../XYara/xyara.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/../../FormatDialogs/dialogwidget.cmake)
 
 set(ABSTRACTWIDGETS_SOURCES
     ${XCPPFILT_SOURCES}
@@ -61,6 +62,7 @@ set(ABSTRACTWIDGETS_SOURCES
         ${XVISUALIZATIONWIDGET_SOURCES}
         ${XOPTIONSWIDGET_SOURCES}
         ${XYARA_SOURCES}
+        ${DIALOGWIDGET_SOURCES}
     ${CMAKE_CURRENT_LIST_DIR}/dialogprocessdata.cpp
     ${CMAKE_CURRENT_LIST_DIR}/dialogprocessdata.h
     ${CMAKE_CURRENT_LIST_DIR}/dialogmodelinfo.cpp

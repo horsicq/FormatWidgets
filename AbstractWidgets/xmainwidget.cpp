@@ -103,7 +103,13 @@ void XMainWidget::reload()
 
     ui->treeWidgetNavi->expandAll();
 
-    setTreeItem(ui->treeWidgetNavi, getOptions().nStartType);
+    ui->treeWidgetNavi->setCurrentIndex(ui->treeWidgetNavi->model()->index(0, 0));
+
+    if (ui->treeWidgetNavi->currentItem()) {
+        XMainWidget::reloadData(false);
+    }
+
+    // setTreeItem(ui->treeWidgetNavi, getOptions().nStartType);
 }
 
 FormatWidget::SV XMainWidget::_setValue(QVariant vValue, qint32 nPosition)
@@ -150,6 +156,8 @@ void XMainWidget::adjustView()
 
 void XMainWidget::reloadData(bool bSaveSelection)
 {
+    Q_UNUSED(bSaveSelection)
+
     FW_DEF::CWOPTIONS cwOptions = {};
     cwOptions.pParent = this;
     cwOptions.fileType = g_fileType;
@@ -166,15 +174,15 @@ void XMainWidget::reloadData(bool bSaveSelection)
     cwOptions.var1 = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::WIDGET_DATA_VAR1);
     cwOptions.var2 = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::WIDGET_DATA_VAR2);
 
-    QString sUID = getInitString(ui->treeWidgetNavi->currentItem());
+    QString sInitString = getInitStringFromCwOptions(&cwOptions);
 
-    if (isInitPresent(sUID)) {
+    if (isInitPresent(sInitString)) {
         qint32 nNumberOfWidgets = ui->stackedWidgetMain->count();
 
         for (qint32 i = 0; i < nNumberOfWidgets; i++) {
             QWidget *pWidget = ui->stackedWidgetMain->widget(i);
 
-            if (pWidget->property("uid").toString() == sUID) {
+            if (pWidget->property("INITSTRING").toString() == sInitString) {
                 ui->stackedWidgetMain->setCurrentIndex(i);
                 break;
             }
@@ -187,13 +195,18 @@ void XMainWidget::reloadData(bool bSaveSelection)
             pWidget->setReadonly(isReadonly());
             connect(pWidget, SIGNAL(currentLocationChanged(quint64, qint32, qint64)), this, SLOT(currentLocationChangedSlot(quint64, qint32, qint64)));
             connect(pWidget, SIGNAL(dataChanged(qint64, qint64)), this, SLOT(dataChangedSlot(qint64, qint64)));
-            pWidget->setProperty("uid", sUID);
+
+            if ((cwOptions.widgetMode == FW_DEF::WIDGETMODE_HEADER) || (cwOptions.widgetMode == FW_DEF::WIDGETMODE_TABLE)) {
+                connect(pWidget, SIGNAL(showCwWidget(QString, bool)), this, SLOT(showCwWidgetSlot(QString, bool)));
+            }
+
+            pWidget->setProperty("INITSTRING", sInitString);
             pWidget->setProperty("TYPE", cwOptions._type);
             pWidget->setProperty("WIDGETMODE", cwOptions.widgetMode);
             pWidget->reloadData(false);
             qint32 nPosition = ui->stackedWidgetMain->addWidget(pWidget);
             ui->stackedWidgetMain->setCurrentIndex(nPosition);
-            addInit(sUID);
+            addInit(sInitString);
         }
     }
 }
@@ -503,5 +516,48 @@ void XMainWidget::currentLocationChangedSlot(quint64 nLocation, qint32 nLocation
     FW_DEF::TYPE _type = (FW_DEF::TYPE)(sender()->property("TYPE").toInt());
     if (_type != FW_DEF::TYPE_GLOBALHEX) {
         ui->widgetHex->currentLocationChangedSlot(nLocation, nLocationType, nSize);
+    }
+}
+
+void XMainWidget::showCwWidgetSlot(QString sInitString, bool bNewWindow)
+{
+    FW_DEF::CWOPTIONS cwOptions = {};
+    cwOptions.pParent = this;
+    cwOptions.fileType = g_fileType;
+    cwOptions._type = (FW_DEF::TYPE)(ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::WIDGET_DATA_TYPE).toInt());
+    cwOptions.widgetMode = FW_DEF::WIDGETMODE_HEADER;
+    cwOptions.pDevice = getDevice();
+    cwOptions.bIsImage = getOptions().bIsImage;
+    cwOptions.nImageBase = getOptions().nImageBase;
+    cwOptions.pXInfoDB = getXInfoDB();
+    cwOptions.endian = (XBinary::ENDIAN)(ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::WIDGET_DATA_ENDIAN).toLongLong());
+    cwOptions.mode = (XBinary::MODE)(ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::WIDGET_DATA_MODE).toLongLong());
+    cwOptions.nDataOffset = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::WIDGET_DATA_OFFSET).toLongLong();
+    cwOptions.nDataSize = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::WIDGET_DATA_SIZE).toLongLong();
+    cwOptions.var1 = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::WIDGET_DATA_VAR1);
+    cwOptions.var2 = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::WIDGET_DATA_VAR2);
+
+    XShortcutsWidget *pWidget = createWidget(cwOptions);
+
+    if (pWidget) {
+        pWidget->setGlobal(getShortcuts(), getGlobalOptions());
+        pWidget->setReadonly(isReadonly());
+        connect(pWidget, SIGNAL(currentLocationChanged(quint64, qint32, qint64)), this, SLOT(currentLocationChangedSlot(quint64, qint32, qint64)));
+        connect(pWidget, SIGNAL(dataChanged(qint64, qint64)), this, SLOT(dataChangedSlot(qint64, qint64)));
+
+        if ((cwOptions.widgetMode == FW_DEF::WIDGETMODE_HEADER) || (cwOptions.widgetMode == FW_DEF::WIDGETMODE_TABLE)) {
+            connect(pWidget, SIGNAL(showCwWidget(QString, bool)), this, SLOT(showCwWidgetSlot(QString, bool)));
+        }
+
+        pWidget->setProperty("INITSTRING", sInitString);
+        pWidget->setProperty("TYPE", cwOptions._type);
+        pWidget->setProperty("WIDGETMODE", cwOptions.widgetMode);
+        pWidget->reloadData(false);
+
+        DialogWidget dialogWidget(this);
+        dialogWidget.setModal(true);
+        dialogWidget.addWidget(pWidget);
+
+        dialogWidget.exec();
     }
 }

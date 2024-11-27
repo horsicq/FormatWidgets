@@ -60,6 +60,7 @@ private slots:
     void on_checkBoxReadonly_stateChanged(int nArg);
     void dataChangedSlot(qint64 nOffset, qint64 nSize);
     void currentLocationChangedSlot(quint64 nLocation, qint32 nLocationType, qint64 nSize);
+    void showCwWidgetSlot(QString sInitString, bool bNewWindow);
 
 private:
     Ui::XMainWidget *ui;

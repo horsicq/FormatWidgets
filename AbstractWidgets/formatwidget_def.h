@@ -32,7 +32,6 @@ struct OPTIONS {
     bool bIsImage;
     qint64 nImageBase;  // TODO default_const
     // TODO Last directory
-    qint32 nStartType;
     XBinary::FT fileType;
     bool bOffset;        // Show Offset title no Address TODO remove make auto if Address != nOffset
     QString sTitle;      // For dialogs
@@ -112,7 +111,8 @@ struct HEADER_RECORD {
 };
 
 enum TABLEDATA {
-    TABLEDATA_HEADEROFFSET = 0,
+    TABLEDATA_TYPE = 0,
+    TABLEDATA_HEADEROFFSET,
     TABLEDATA_HEADERSIZE,
     TABLEDATA_DATAOFFSET,
     TABLEDATA_DATASIZE,
