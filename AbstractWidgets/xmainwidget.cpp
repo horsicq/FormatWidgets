@@ -36,13 +36,11 @@ XMainWidget::XMainWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::X
     ui->toolButtonGlobalHex->setToolTip(tr("Hex"));
     ui->checkBoxReadonly->setToolTip(tr("Readonly"));
 
-    g_fileType = XBinary::FT_UNKNOWN;
+    ui->widgetGlobalHex->setProperty("TYPE", FW_DEF::TYPE_GLOBALHEX);
+    ui->widgetGlobalHex->hide();
 
-    ui->widgetHex->setProperty("TYPE", FW_DEF::TYPE_GLOBALHEX);
-    ui->widgetHex->hide();
-
-    connect(ui->widgetHex, SIGNAL(dataChanged(qint64, qint64)), this, SLOT(dataChangedSlot(qint64, qint64)));
-    connect(ui->widgetHex, SIGNAL(currentLocationChanged(quint64, qint32, qint64)), this, SLOT(currentLocationChangedSlot(quint64, qint32, qint64)));
+    connect(ui->widgetGlobalHex, SIGNAL(dataChanged(qint64, qint64)), this, SLOT(dataChangedSlot(qint64, qint64)));
+    connect(ui->widgetGlobalHex, SIGNAL(currentLocationChanged(quint64, qint32, qint64)), this, SLOT(currentLocationChangedSlot(quint64, qint32, qint64)));
 }
 
 XMainWidget::XMainWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent)
@@ -84,22 +82,27 @@ void XMainWidget::reload()
 
     ui->checkBoxReadonly->setEnabled(getDevice()->isWritable());
 
-    g_fileType = getOptions().fileType;
+    XBinary::FT fileType = getOptions().fileType;
 
     if (getOptions().fileType == XBinary::FT_UNKNOWN) {
-        g_fileType = XBinary::getPrefFileType(getDevice());
+        fileType = XBinary::getPrefFileType(getDevice());
     }
 
-    setFileType(g_fileType);
+    setFileType(fileType);
+
+    XBinary::_MEMORY_MAP _memoryMap = XFormats::getMemoryMap(fileType, XBinary::MAPMODE_UNKNOWN, getDevice(), getOptions().bIsImage, getOptions().nImageBase);
+
+    setMode(_memoryMap.mode);
+    setEndian(_memoryMap.endian);
 
     XHexView::OPTIONS options = {};
-    options.memoryMapRegion = XFormats::getMemoryMap(g_fileType, XBinary::MAPMODE_UNKNOWN, getDevice(), getOptions().bIsImage, getOptions().nImageBase);
-    ui->widgetHex->setXInfoDB(getXInfoDB());
-    ui->widgetHex->setData(getDevice(), options, true);
-    ui->widgetHex->setBytesProLine(8);
+    options.memoryMapRegion = _memoryMap;
+    ui->widgetGlobalHex->setXInfoDB(getXInfoDB());
+    ui->widgetGlobalHex->setData(getDevice(), options, true);
+    ui->widgetGlobalHex->setBytesProLine(8);
 
-    _addBaseItems(ui->treeWidgetNavi, g_fileType);
-    _addSpecItems(ui->treeWidgetNavi, getDevice(), g_fileType, getOptions().bIsImage, getOptions().nImageBase);
+    _addBaseItems(ui->treeWidgetNavi, fileType);
+    _addSpecItems(ui->treeWidgetNavi, getDevice(), fileType, getOptions().bIsImage, getOptions().nImageBase);
 
     ui->treeWidgetNavi->expandAll();
 
@@ -136,7 +139,7 @@ void XMainWidget::setReadonly(bool bState)
         }
     }
 
-    ui->widgetHex->setReadonly(bState);
+    ui->widgetGlobalHex->setReadonly(bState);
 }
 
 void XMainWidget::adjustView()
@@ -151,7 +154,7 @@ void XMainWidget::adjustView()
         }
     }
 
-    ui->widgetHex->adjustView();
+    ui->widgetGlobalHex->adjustView();
 }
 
 void XMainWidget::reloadData(bool bSaveSelection)
@@ -160,7 +163,7 @@ void XMainWidget::reloadData(bool bSaveSelection)
 
     FW_DEF::CWOPTIONS cwOptions = {};
     cwOptions.pParent = this;
-    cwOptions.fileType = g_fileType;
+    cwOptions.fileType = getFileType();
     cwOptions._type = (FW_DEF::TYPE)(ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::WIDGET_DATA_TYPE).toInt());
     cwOptions.widgetMode = (FW_DEF::WIDGETMODE)(ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::WIDGET_DATA_WIDGETMODE).toInt());
     cwOptions.pDevice = getDevice();
@@ -311,6 +314,26 @@ void XMainWidget::_addSpecItems(QTreeWidget *pTreeWidget, QIODevice *pDevice, XB
                     createNewItem(FW_DEF::TYPE_MACH_commands, FW_DEF::WIDGETMODE_TABLE, tr("Commands"), XOptions::ICONTYPE_TABLE, nCommandOffset, nCommandSize, nCommandCount, 0, mode, endian));
             }
         }
+    } else if (fileType == XBinary::FT_MSDOS) {
+        XMSDOS msdos(pDevice, bIsImage, nImageBase);
+
+        if (msdos.isValid()) {
+            XBinary::ENDIAN endian = msdos.getEndian();
+            XBinary::MODE mode = msdos.getMode();
+
+            {
+                pTreeWidget->addTopLevelItem(
+                    createNewItem(FW_DEF::TYPE_MSDOS_EXE_file, FW_DEF::WIDGETMODE_HEADER, "EXE_file", XOptions::ICONTYPE_HEADER, 0, sizeof(XMSDOS_DEF::EXE_file), 0, 0, mode, endian));
+            }
+        }
+    } else if ((fileType == XBinary::FT_PE) || (fileType == XBinary::FT_PE32) || (fileType == XBinary::FT_PE64)) {
+        XPE pe(pDevice, bIsImage, nImageBase);
+
+        if (pe.isValid()) {
+            XBinary::ENDIAN endian = pe.getEndian();
+            XBinary::MODE mode = pe.getMode();
+            bool bIs64 = pe.is64();
+        }
     }
 }
 
@@ -409,7 +432,7 @@ XShortcutsWidget *XMainWidget::createWidget(const FW_DEF::CWOPTIONS &cwOptions)
         options.bMenu_Disasm = true;
         _pWidget->setData(cwOptions.pDevice, options);
         pResult = _pWidget;
-    } else if (cwOptions.widgetMode == FW_DEF::WIDGETMODE_HEADER) {
+    } else if ((cwOptions.widgetMode == FW_DEF::WIDGETMODE_HEADER) || (cwOptions.widgetMode == FW_DEF::WIDGETMODE_DIALOG_HEADER)) {
         GenericHeaderWidget *_pWidget = new GenericHeaderWidget(cwOptions.pParent);
         _pWidget->setCwOptions(cwOptions, false);
         pResult = _pWidget;
@@ -464,14 +487,14 @@ void XMainWidget::on_toolButtonNext_clicked()
 void XMainWidget::on_toolButtonGlobalHex_toggled(bool bChecked)
 {
     if (bChecked) {
-        ui->widgetHex->show();
+        ui->widgetGlobalHex->show();
         QList<qint32> listSizes = ui->splitterHex->sizes();
 
         qint32 nWidgetSize = 0;
-        nWidgetSize += ui->widgetHex->getColumnWidth(0);
-        nWidgetSize += ui->widgetHex->getColumnWidth(1);
-        nWidgetSize += ui->widgetHex->getColumnWidth(2);
-        nWidgetSize += ui->widgetHex->getMapWidth();
+        nWidgetSize += ui->widgetGlobalHex->getColumnWidth(0);
+        nWidgetSize += ui->widgetGlobalHex->getColumnWidth(1);
+        nWidgetSize += ui->widgetGlobalHex->getColumnWidth(2);
+        nWidgetSize += ui->widgetGlobalHex->getMapWidth();
         nWidgetSize += 20;
         listSizes[0] -= nWidgetSize;
         listSizes[1] += nWidgetSize;
@@ -479,7 +502,7 @@ void XMainWidget::on_toolButtonGlobalHex_toggled(bool bChecked)
         ui->splitterHex->setStretchFactor(0, 8);
         ui->splitterHex->setStretchFactor(0, 1);
     } else {
-        ui->widgetHex->hide();
+        ui->widgetGlobalHex->hide();
     }
 }
 
@@ -495,9 +518,18 @@ void XMainWidget::dataChangedSlot(qint64 nOffset, qint64 nSize)
     Q_UNUSED(nOffset)
     Q_UNUSED(nSize)
 
-    FW_DEF::TYPE _type = (FW_DEF::TYPE)(sender()->property("TYPE").toInt());
+    FW_DEF::TYPE _typeSend = (FW_DEF::TYPE)(sender()->property("TYPE").toInt());
+    FW_DEF::WIDGETMODE _widgetModeSend = (FW_DEF::WIDGETMODE)(sender()->property("WIDGETMODE").toInt());
+    bool bIsWidgetReload = false;
 
-    if (_type == FW_DEF::TYPE_GLOBALHEX) {
+    if (_typeSend == FW_DEF::TYPE_GLOBALHEX) {
+        bIsWidgetReload = true;
+    } else {
+        ui->widgetGlobalHex->reloadData(true);
+        bIsWidgetReload = (_widgetModeSend ==FW_DEF::WIDGETMODE_DIALOG_HEADER);
+    }
+
+    if (bIsWidgetReload) {
         XShortcutsWidget *pWidget = dynamic_cast<XShortcutsWidget *>(ui->stackedWidgetMain->currentWidget());
         if (pWidget) {
             FW_DEF::WIDGETMODE _widgetModeRecv = (FW_DEF::WIDGETMODE)(pWidget->property("WIDGETMODE").toInt());
@@ -506,8 +538,6 @@ void XMainWidget::dataChangedSlot(qint64 nOffset, qint64 nSize)
                 pWidget->reloadData(true);
             }
         }
-    } else {
-        ui->widgetHex->reloadData(true);
     }
 }
 
@@ -515,7 +545,7 @@ void XMainWidget::currentLocationChangedSlot(quint64 nLocation, qint32 nLocation
 {
     FW_DEF::TYPE _type = (FW_DEF::TYPE)(sender()->property("TYPE").toInt());
     if (_type != FW_DEF::TYPE_GLOBALHEX) {
-        ui->widgetHex->currentLocationChangedSlot(nLocation, nLocationType, nSize);
+        ui->widgetGlobalHex->currentLocationChangedSlot(nLocation, nLocationType, nSize);
     }
 }
 
@@ -523,19 +553,17 @@ void XMainWidget::showCwWidgetSlot(QString sInitString, bool bNewWindow)
 {
     FW_DEF::CWOPTIONS cwOptions = {};
     cwOptions.pParent = this;
-    cwOptions.fileType = g_fileType;
-    cwOptions._type = (FW_DEF::TYPE)(ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::WIDGET_DATA_TYPE).toInt());
-    cwOptions.widgetMode = FW_DEF::WIDGETMODE_HEADER;
+    cwOptions.fileType = getFileType();
+    cwOptions._type = _getTypeFromInitString(sInitString);
+    cwOptions.widgetMode = FW_DEF::WIDGETMODE_DIALOG_HEADER;
     cwOptions.pDevice = getDevice();
     cwOptions.bIsImage = getOptions().bIsImage;
     cwOptions.nImageBase = getOptions().nImageBase;
     cwOptions.pXInfoDB = getXInfoDB();
-    cwOptions.endian = (XBinary::ENDIAN)(ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::WIDGET_DATA_ENDIAN).toLongLong());
-    cwOptions.mode = (XBinary::MODE)(ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::WIDGET_DATA_MODE).toLongLong());
-    cwOptions.nDataOffset = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::WIDGET_DATA_OFFSET).toLongLong();
-    cwOptions.nDataSize = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::WIDGET_DATA_SIZE).toLongLong();
-    cwOptions.var1 = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::WIDGET_DATA_VAR1);
-    cwOptions.var2 = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::WIDGET_DATA_VAR2);
+    cwOptions.endian = getEndian();
+    cwOptions.mode = getMode();
+    cwOptions.nDataOffset = _getDataOffsetFromInitString(sInitString);
+    cwOptions.nDataSize = _getDataSizeFromInitString(sInitString);
 
     XShortcutsWidget *pWidget = createWidget(cwOptions);
 
@@ -555,6 +583,7 @@ void XMainWidget::showCwWidgetSlot(QString sInitString, bool bNewWindow)
         pWidget->reloadData(false);
 
         DialogWidget dialogWidget(this);
+        dialogWidget.setGlobal(getShortcuts(), getGlobalOptions());
         dialogWidget.setModal(true);
         dialogWidget.addWidget(pWidget);
 

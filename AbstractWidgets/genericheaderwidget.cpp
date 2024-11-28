@@ -62,6 +62,24 @@ void GenericHeaderWidget::reloadData(bool bSaveSelection)
         adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getHeaderCpuSubTypesS(_cputype), N_mach_header::cpusubtype, XComboBoxEx::CBTYPE_LIST, 0);
         adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getHeaderFileTypesS(), N_mach_header::filetype, XComboBoxEx::CBTYPE_LIST, 0);
         adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getHeaderFlagsS(), N_mach_header::flags, XComboBoxEx::CBTYPE_FLAGS, 0);
+    } else if (getCwOptions()->_type == FW_DEF::TYPE_MACH_commands) {
+        adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getLoadCommandTypesS(), N_mach_commands::cmd, XComboBoxEx::CBTYPE_LIST, 0);
+    } else if (getCwOptions()->_type == FW_DEF::TYPE_MACH_segments) {
+        adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getLoadCommandTypesS(), N_mach_segments::cmd, XComboBoxEx::CBTYPE_LIST, 0);
+        adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getVMProtectionsS(), N_mach_segments::initprot, XComboBoxEx::CBTYPE_FLAGS, 0);
+        adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getVMProtectionsS(), N_mach_segments::maxprot, XComboBoxEx::CBTYPE_FLAGS, 0);
+    // } else if (getCwOptions()->_type == FW_DEF::TYPE_MACH_section) {
+    //     adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getSectionTypesS(), N_mach_section::flags, XComboBoxEx::CBTYPE_FLAGS, 0);
+    // } else if (getCwOptions()->_type == FW_DEF::TYPE_MACH_dyld_info_command) {
+    //     adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getCommandsS(), N_mach_dyld_info_command::cmd, XComboBoxEx::CBTYPE_LIST, 0);
+    // } else if (getCwOptions()->_type == FW_DEF::TYPE_MACH_uuid_command) {
+    //     adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getCommandsS(), N_mach_uuid_command::cmd, XComboBoxEx::CBTYPE_LIST, 0);
+    // } else if (getCwOptions()->_type == FW_DEF::TYPE_MACH_dylib_command) {
+    //     adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getCommandsS(), N_mach_dylib_command::cmd, XComboBoxEx::CBTYPE_LIST, 0);
+    // } else if (getCwOptions()->_type == FW_DEF::TYPE_MACH_routines_command) {
+    //     adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getCommandsS(), N_mach_routines_command::cmd, XComboBoxEx::CBTYPE_LIST, 0);
+    // } else if (getCwOptions()->_type == FW_DEF::TYPE_MACH_routines_command_64) {
+    //     adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getCommandsS(), N_mach_routines_command_64::cmd, XComboBoxEx::CBTYPE_LIST, 0);
     } else if (getCwOptions()->_type == FW_DEF::TYPE_ELF_elf_ehdr) {
         // adjustComboBox(getListRecWidgets(), XELF::getHeaderMagicsS(), _elf_ehdrWidget::ei_mag, XComboBoxEx::CBTYPE_LIST, 0);
         // adjustComboBox(getListRecWidgets(), XELF::getHeaderClassesS(), _elf_ehdrWidget::ei_class, XComboBoxEx::CBTYPE_LIST, 0);

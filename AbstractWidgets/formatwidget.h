@@ -34,7 +34,6 @@
 #include "dialogmultidisasm.h"
 #include "dialogwidget.h"
 #include "formatwidget_def.h"
-#include "toolswidget.h"
 #include "xcomboboxex.h"
 #include "xdatetimeeditx.h"
 #include "xextractorwidget.h"
@@ -55,11 +54,11 @@
 #include "xentropywidget.h"
 
 #include "Specific/elf_defs.h"
-// #include "PE/pe_defs.h"
+// #include "Specific/pe_defs.h"
 #include "Specific/mach_defs.h"
-// #include "MSDOS/msdos_defs.h"
-// #include "NE/ne_defs.h"
-// #include "LE/le_defs.h"
+#include "Specific/msdos_defs.h"
+// #include "Specific/ne_defs.h"
+// #include "vLE/le_defs.h"
 
 class FormatWidget : public XShortcutsWidget {
     Q_OBJECT
@@ -120,6 +119,11 @@ public:
 
     void setFileType(XBinary::FT fileType);
     XBinary::FT getFileType();
+    void setMode( XBinary::MODE mode);
+    XBinary::MODE getMode();
+    void setEndian(XBinary::ENDIAN endian);
+    XBinary::ENDIAN getEndian();
+
     QIODevice *getDevice();
     virtual void setOptions(FW_DEF::OPTIONS options);  // TODO for all Widgets
     FW_DEF::OPTIONS getOptions();
@@ -160,12 +164,6 @@ public:
     //    QPushButton *createHexButton(QTableWidget *pTableWidget,int nType,int
     //    nData);
 
-    bool loadHexSubdevice(qint64 nOffset, qint64 nSize, XADDR nAddress, SubDevice **ppSubDevice, ToolsWidget *pToolsWidget, bool bOffset = false, bool bDisasm = true,
-                          bool bFollow = true);
-    bool loadHexSubdeviceByTableView(qint32 nRow, qint32 nType, ToolsWidget *pToolsWidget, QTableView *pTableView, SubDevice **ppSubDevice, bool bOffset = false,
-                                     bool bDisasm = true, bool bFollow = true);
-    bool setHexSubdeviceByTableView(qint32 nRow, qint32 nType, ToolsWidget *pToolsWidget, QTableView *pTableView);
-
     void setHeaderSelection(QTableWidget *pTableWidget);
     void setTableSelection(QTableView *pTableView);
 
@@ -194,7 +192,9 @@ public:
     void reset();
     static QString getInitStringFromCwOptions(FW_DEF::CWOPTIONS *pCwOptions);
     static QString _getInitString(FW_DEF::TYPE _type, qint64 nDataOffset, qint64 nDataSize);
-
+    static FW_DEF::TYPE _getTypeFromInitString(const QString &sInitString);
+    static qint64 _getDataOffsetFromInitString(const QString &sInitString);
+    static qint64 _getDataSizeFromInitString(const QString &sInitString);
 
     void addInit(const QString &sString);
     bool isInitPresent(const QString &sString);
@@ -216,7 +216,6 @@ public:
     void initMemoryMapWidget(XMemoryMapWidget *pWidget);
     void initHexView(XHexView *pWidget);
     void initDisasmView(XDisasmView *pWidget);
-    void initToolsWidget(ToolsWidget *pWidget);
     void initExtractorWidget(XExtractorWidget *pWidget);
     void initYaraWidget(YARAWidgetAdvanced *pWidget);
 
@@ -256,8 +255,8 @@ protected:
     };
 
     virtual SV _setValue(QVariant vValue, qint32 nPosition) = 0;
-    void adjustGenericHeader(QTableWidget *pTableWidget);
-    void adjustGenericTable(QTableView *pTableView, QList<FW_DEF::HEADER_RECORD> *pListHeaderRecords);
+    void adjustGenericHeader(QTableWidget *pTableWidget, const QList<FW_DEF::HEADER_RECORD> *pListHeaderRecords);
+    void adjustGenericTable(QTableView *pTableView, const QList<FW_DEF::HEADER_RECORD> *pListHeaderRecords);
     virtual void adjustListTable(qint32 nType, QTableWidget *pTableWidget);
     virtual QString typeIdToString(qint32 nType);
     virtual void _showInDisasmWindowAddress(XADDR nAddress);
@@ -304,6 +303,8 @@ private:
     QColor g_colEnabled;
     QColor g_colDisabled;
     XBinary::FT g_fileType;
+    XBinary::MODE g_mode;
+    XBinary::ENDIAN g_endian;
     QList<QTreeWidgetItem *> g_listPages;
     qint32 g_nPageIndex;
     bool g_bAddPageEnable;

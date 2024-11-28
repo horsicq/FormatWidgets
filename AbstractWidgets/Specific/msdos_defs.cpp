@@ -20,19 +20,20 @@
  */
 #include "msdos_defs.h"
 
-namespace N_DOS_HEADER {
-const FW_DEF::HEADER_RECORD records[] = {{e_magic, "e_magic", offsetof(XMSDOS_DEF::IMAGE_DOS_HEADEREX, e_magic), 2, "WORD", FW_DEF::VAL_TYPE_DATA},
-                                         {e_cblp, "e_cblp", offsetof(XMSDOS_DEF::IMAGE_DOS_HEADEREX, e_cblp), 2, "WORD", FW_DEF::VAL_TYPE_DATA},
-                                         {e_cp, "e_cp", offsetof(XMSDOS_DEF::IMAGE_DOS_HEADEREX, e_cp), 2, "WORD", FW_DEF::VAL_TYPE_DATA},
-                                         {e_crlc, "e_crlc", offsetof(XMSDOS_DEF::IMAGE_DOS_HEADEREX, e_crlc), 2, "WORD", FW_DEF::VAL_TYPE_DATA},
-                                         {e_cparhdr, "e_cparhdr", offsetof(XMSDOS_DEF::IMAGE_DOS_HEADEREX, e_cparhdr), 2, "WORD", FW_DEF::VAL_TYPE_DATA},
-                                         {e_minalloc, "e_minalloc", offsetof(XMSDOS_DEF::IMAGE_DOS_HEADEREX, e_minalloc), 2, "WORD", FW_DEF::VAL_TYPE_DATA},
-                                         {e_maxalloc, "e_maxalloc", offsetof(XMSDOS_DEF::IMAGE_DOS_HEADEREX, e_maxalloc), 2, "WORD", FW_DEF::VAL_TYPE_DATA},
-                                         {e_ss, "e_ss", offsetof(XMSDOS_DEF::IMAGE_DOS_HEADEREX, e_ss), 2, "WORD", FW_DEF::VAL_TYPE_DATA},
-                                         {e_sp, "e_sp", offsetof(XMSDOS_DEF::IMAGE_DOS_HEADEREX, e_sp), 2, "WORD", FW_DEF::VAL_TYPE_DATA},
-                                         {e_csum, "e_csum", offsetof(XMSDOS_DEF::IMAGE_DOS_HEADEREX, e_csum), 2, "WORD", FW_DEF::VAL_TYPE_DATA},
-                                         {e_ip, "e_ip", offsetof(XMSDOS_DEF::IMAGE_DOS_HEADEREX, e_ip), 2, "WORD", FW_DEF::VAL_TYPE_DATA},
-                                         {e_cs, "e_cs", offsetof(XMSDOS_DEF::IMAGE_DOS_HEADEREX, e_cs), 2, "WORD", FW_DEF::VAL_TYPE_DATA},
-                                         {e_lfarlc, "e_lfarlc", offsetof(XMSDOS_DEF::IMAGE_DOS_HEADEREX, e_lfarlc), 2, "WORD", FW_DEF::VAL_TYPE_DATA},
-                                         {e_ovno, "e_ovno", offsetof(XMSDOS_DEF::IMAGE_DOS_HEADEREX, e_ovno), 2, "WORD", FW_DEF::VAL_TYPE_DATA}};
+namespace N_Exe_file {
+const FW_DEF::HEADER_RECORD records[] = {{exe_signature, "exe_signature", offsetof(XMSDOS_DEF::EXE_file, exe_signature), 2, "WORD", FW_DEF::VAL_TYPE_DATA},
+                                         {exe_len_mod_512, "exe_len_mod_512", offsetof(XMSDOS_DEF::EXE_file, exe_len_mod_512), 2, "WORD", FW_DEF::VAL_TYPE_DATA},
+                                         {exe_pages, "exe_pages", offsetof(XMSDOS_DEF::EXE_file, exe_pages), 2, "WORD", FW_DEF::VAL_TYPE_DATA},
+                                         {exe_rle_count, "exe_rle_count", offsetof(XMSDOS_DEF::EXE_file, exe_rle_count), 2, "WORD", FW_DEF::VAL_TYPE_DATA},
+                                         {exe_par_dir, "exe_par_dir", offsetof(XMSDOS_DEF::EXE_file, exe_par_dir), 2, "WORD", FW_DEF::VAL_TYPE_DATA},
+                                         {exe_min_BSS, "exe_min_BSS", offsetof(XMSDOS_DEF::EXE_file, exe_min_BSS), 2, "WORD", FW_DEF::VAL_TYPE_DATA},
+                                         {exe_max_BSS, "exe_max_BSS", offsetof(XMSDOS_DEF::EXE_file, exe_max_BSS), 2, "WORD", FW_DEF::VAL_TYPE_DATA},
+                                         {exe_SS, "exe_SS", offsetof(XMSDOS_DEF::EXE_file, exe_SS), 2, "WORD", FW_DEF::VAL_TYPE_DATA},
+                                         {exe_SP, "exe_SP", offsetof(XMSDOS_DEF::EXE_file, exe_SP), 2, "WORD", FW_DEF::VAL_TYPE_DATA},
+                                         {exe_chksum, "exe_chksum", offsetof(XMSDOS_DEF::EXE_file, exe_chksum), 2, "WORD", FW_DEF::VAL_TYPE_DATA},
+                                         {exe_IP, "exe_IP", offsetof(XMSDOS_DEF::EXE_file, exe_IP), 2, "WORD", FW_DEF::VAL_TYPE_DATA},
+                                         {exe_CS, "exe_CS", offsetof(XMSDOS_DEF::EXE_file, exe_CS), 2, "WORD", FW_DEF::VAL_TYPE_DATA},
+                                         {exe_rle_table, "exe_rle_table", offsetof(XMSDOS_DEF::EXE_file, exe_rle_table), 2, "WORD", FW_DEF::VAL_TYPE_DATA},
+                                         {exe_iov, "exe_iov", offsetof(XMSDOS_DEF::EXE_file, exe_iov), 2, "WORD", FW_DEF::VAL_TYPE_DATA},
+                                         {exe_sym_tab, "exe_sym_tab", offsetof(XMSDOS_DEF::EXE_file, exe_sym_tab), 4, "DWORD", FW_DEF::VAL_TYPE_DATA}};
 }

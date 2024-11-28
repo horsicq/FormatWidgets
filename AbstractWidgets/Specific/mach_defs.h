@@ -61,7 +61,9 @@ enum INV {
 
 namespace N_mach_segments {
 enum DATA {
-    segname = 0,
+    cmd = 0,
+    cmdsize,
+    segname,
     vmaddr,
     vmsize,
     fileoff,

@@ -86,10 +86,16 @@ void ProcessData::process()
         (*g_ppModel) = new QStandardItemModel(nNumberOfRows, nNumberOfColumns);
 
         for (qint32 i = 0; (i < nNumberOfRows) && (!(g_pPdStruct->bIsStop)); i++) {
+            FW_DEF::TYPE _type = g_pCwOptions->_type;
+
+            if ((listCommands.at(i).nId == XMACH_DEF::S_LC_SEGMENT) || (listCommands.at(i).nId == XMACH_DEF::S_LC_SEGMENT_64)) {
+                _type = FW_DEF::TYPE_MACH_segments;
+            }
+
             {
                 QStandardItem *pItem = new QStandardItem;
                 pItem->setData(i, Qt::DisplayRole);
-                pItem->setData(g_pCwOptions->_type, Qt::UserRole + FW_DEF::TABLEDATA_TYPE);
+                pItem->setData(_type, Qt::UserRole + FW_DEF::TABLEDATA_TYPE);
                 pItem->setData(listCommands.at(i).nStructOffset, Qt::UserRole + FW_DEF::TABLEDATA_HEADEROFFSET);
                 pItem->setData(nHeaderSize, Qt::UserRole + FW_DEF::TABLEDATA_HEADERSIZE);
                 pItem->setData(listCommands.at(i).nStructOffset, Qt::UserRole + FW_DEF::TABLEDATA_DATAOFFSET);

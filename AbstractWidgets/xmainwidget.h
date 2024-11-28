@@ -64,7 +64,6 @@ private slots:
 
 private:
     Ui::XMainWidget *ui;
-    XBinary::FT g_fileType;
 };
 
 #endif  // XMAINWIDGET_H

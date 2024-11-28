@@ -52,6 +52,8 @@ const FW_DEF::HEADER_RECORD records[] = {
 
 namespace N_mach_segments {
 const FW_DEF::HEADER_RECORD records32[] = {
+    {cmd, "cmd", offsetof(XMACH_DEF::load_command, cmd), 4, "uint32", FW_DEF::VAL_TYPE_DATA},
+    {cmdsize, "cmdsize", offsetof(XMACH_DEF::load_command, cmdsize), 4, "uint32", FW_DEF::VAL_TYPE_SIZE},
     {segname, "segname", offsetof(XMACH_DEF::segment_command, segname), 16, "char[16]", FW_DEF::VAL_TYPE_TEXT},
     {vmaddr, "vmaddr", offsetof(XMACH_DEF::segment_command, vmaddr), 4, "uint32", FW_DEF::VAL_TYPE_ADDRESS},
     {vmsize, "vmsize", offsetof(XMACH_DEF::segment_command, vmsize), 4, "uint32", FW_DEF::VAL_TYPE_SIZE},
@@ -64,6 +66,8 @@ const FW_DEF::HEADER_RECORD records32[] = {
 };
 
 const FW_DEF::HEADER_RECORD records64[] = {
+    {cmd, "cmd", offsetof(XMACH_DEF::load_command, cmd), 4, "uint32", FW_DEF::VAL_TYPE_DATA},
+    {cmdsize, "cmdsize", offsetof(XMACH_DEF::load_command, cmdsize), 4, "uint32", FW_DEF::VAL_TYPE_SIZE},
     {segname, "segname", offsetof(XMACH_DEF::segment_command_64, segname), 16, "char[16]", FW_DEF::VAL_TYPE_TEXT},
     {vmaddr, "vmaddr", offsetof(XMACH_DEF::segment_command_64, vmaddr), 8, "uint64", FW_DEF::VAL_TYPE_ADDRESS},
     {vmsize, "vmsize", offsetof(XMACH_DEF::segment_command_64, vmsize), 8, "uint64", FW_DEF::VAL_TYPE_SIZE},

@@ -73,9 +73,6 @@ set(ABSTRACTWIDGETS_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/formatwidget_def.h
     ${CMAKE_CURRENT_LIST_DIR}/processdata.cpp
     ${CMAKE_CURRENT_LIST_DIR}/processdata.h
-    ${CMAKE_CURRENT_LIST_DIR}/toolswidget.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/toolswidget.h
-    ${CMAKE_CURRENT_LIST_DIR}/toolswidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/xmainwidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/xmainwidget.h
     ${CMAKE_CURRENT_LIST_DIR}/xmainwidget.ui
@@ -89,4 +86,8 @@ set(ABSTRACTWIDGETS_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/Specific/elf_defs.h
     ${CMAKE_CURRENT_LIST_DIR}/Specific/mach_defs.cpp
     ${CMAKE_CURRENT_LIST_DIR}/Specific/mach_defs.h
+    ${CMAKE_CURRENT_LIST_DIR}/Specific/msdos_defs.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Specific/msdos_defs.h
+    ${CMAKE_CURRENT_LIST_DIR}/Specific/pe_defs.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Specific/pe_defs.h
 )

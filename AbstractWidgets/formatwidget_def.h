@@ -57,15 +57,18 @@ enum TYPE {
     TYPE_DIESCAN,
     TYPE_YARASCAN,
     TYPE_TOOLS,
+    TYPE_MSDOS_EXE_file,
     TYPE_ELF_elf_ehdr,
     TYPE_MACH_mach_header,
     TYPE_MACH_commands,
+    TYPE_MACH_segments
 };
 
 enum WIDGETMODE {
     WIDGETMODE_UNKNOWN = 0,
     WIDGETMODE_HEADER,
-    WIDGETMODE_TABLE
+    WIDGETMODE_TABLE,
+    WIDGETMODE_DIALOG_HEADER
 };
 
 struct CWOPTIONS {

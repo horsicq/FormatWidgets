@@ -21,48 +21,25 @@
 #ifndef MSDOS_DEFS_H
 #define MSDOS_DEFS_H
 
-#include "../formatwidget.h"
-#include "xmsdos.h"
+#include "../formatwidget_def.h"
 
-namespace SMSDOS {
-enum TYPE {
-    TYPE_INFO = 0,
-    TYPE_VISUALIZATION,
-    TYPE_VIRUSTOTAL,
-    TYPE_HEX,
-    TYPE_DISASM,
-    TYPE_HASH,
-    TYPE_STRINGS,
-    TYPE_SIGNATURES,
-    TYPE_MEMORYMAP,
-    TYPE_ENTROPY,
-    TYPE_NFDSCAN,
-    TYPE_EXTRACTOR,
-    TYPE_SEARCH,
-    TYPE_DIESCAN,
-    TYPE_YARASCAN,
-    TYPE_DOS_HEADER,
-    TYPE_OVERLAY,
-    __TYPE_size
-};
-}  // namespace SMSDOS
-
-namespace N_DOS_HEADER {
+namespace N_Exe_file {
 enum DATA {
-    e_magic = 0,
-    e_cblp,
-    e_cp,
-    e_crlc,
-    e_cparhdr,
-    e_minalloc,
-    e_maxalloc,
-    e_ss,
-    e_sp,
-    e_csum,
-    e_ip,
-    e_cs,
-    e_lfarlc,
-    e_ovno,
+    exe_signature = 0,
+    exe_len_mod_512,
+    exe_pages,
+    exe_rle_count,
+    exe_par_dir,
+    exe_min_BSS,
+    exe_max_BSS,
+    exe_SS,
+    exe_SP,
+    exe_chksum,
+    exe_IP,
+    exe_CS,
+    exe_rle_table,
+    exe_iov,
+    exe_sym_tab,
     __data_size
 };
 
