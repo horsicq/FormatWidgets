@@ -21,20 +21,40 @@
 #ifndef XMAINWIDGET_H
 #define XMAINWIDGET_H
 
-#include "formatwidget.h"
-#include "genericheaderwidget.h"
-#include "generictablewidget.h"
+#include "xgenericheaderwidget.h"
+#include "xgenerictablewidget.h"
+#include "xformatwidget.h"
+#include "dialogdemangle.h"
+#include "dialogentropy.h"
+#include "dialoghexview.h"
+#include "dialogmultidisasm.h"
+#include "dialogwidget.h"
+#include "xextractorwidget.h"
+#include "xfileinfowidget.h"
+#include "xhexviewwidget.h"
+#include "xmemorymapwidget.h"
+#include "xmultidisasmwidget.h"
+#include "xoptions.h"
+#include "xshortcutsdialog.h"
+#include "xtableview.h"
+#include "xvisualizationwidget.h"
+#include "yarawidgetadvanced.h"
+#include "nfdwidgetadvanced.h"
+#include "diewidgetadvanced.h"
+#include "xvirustotalwidget.h"
+#include "xhashwidget.h"
+#include "xentropywidget.h"
 
 namespace Ui {
 class XMainWidget;
 }
 
-class XMainWidget : public FormatWidget {
+class XMainWidget : public XFormatWidget {
     Q_OBJECT
 
 public:
     explicit XMainWidget(QWidget *pParent = nullptr);
-    XMainWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent = nullptr);
+    XMainWidget(QIODevice *pDevice, XFW_DEF::OPTIONS options, QWidget *pParent = nullptr);
     ~XMainWidget();
 
     virtual void clear();
@@ -48,7 +68,7 @@ public:
 
     static void _addBaseItems(QTreeWidget *pTreeWidget, XBinary::FT fileType);
     static void _addSpecItems(QTreeWidget *pTreeWidget, QIODevice *pDevice, XBinary::FT fileType, bool bIsImage, XADDR nImageBase);
-    static XShortcutsWidget *createWidget(const FW_DEF::CWOPTIONS &cwOptions);
+    static XShortcutsWidget *createWidget(const XFW_DEF::CWOPTIONS &cwOptions);
 
 private slots:
     void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurrent, QTreeWidgetItem *pItemPrevious);
