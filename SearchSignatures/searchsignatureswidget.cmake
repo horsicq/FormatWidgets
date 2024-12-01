@@ -1,8 +1,12 @@
 include_directories(${CMAKE_CURRENT_LIST_DIR})
 
-include(${CMAKE_CURRENT_LIST_DIR}/../MultiSearch/multisearch.cmake)
+if (NOT DEFINED MULTISEARCH_SOURCES)
+    include(${CMAKE_CURRENT_LIST_DIR}/../MultiSearch/multisearch.cmake)
+    set(SEARCHSIGNATURESWIDGET_SOURCES ${SEARCHSIGNATURESWIDGET_SOURCES} ${MULTISEARCH_SOURCES})
+endif()
 
 set(SEARCHSIGNATURESWIDGET_SOURCES
+    ${SEARCHSIGNATURESWIDGET_SOURCES}
     ${MULTISEARCH_SOURCES}
     ${CMAKE_CURRENT_LIST_DIR}/dialogsearchsignatures.cpp
     ${CMAKE_CURRENT_LIST_DIR}/dialogsearchsignatures.h
