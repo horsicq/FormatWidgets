@@ -44,7 +44,7 @@ enum DATA {
 };
 
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
-}  // namespace X_DOS_HEADER
+}  // namespace X_Exe_file
 
 namespace X_IMAGE_DOS_HEADER {
 enum DATA {

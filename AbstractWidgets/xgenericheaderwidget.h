@@ -34,6 +34,7 @@ public:
     explicit XGenericHeaderWidget(QWidget *pParent = nullptr);
     ~XGenericHeaderWidget();
     virtual void reloadData(bool bSaveSelection);
+    virtual void adjustView();
 
 protected:
     virtual SV _setValue(QVariant vValue, qint32 nPosition);

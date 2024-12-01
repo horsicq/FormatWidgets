@@ -59,7 +59,7 @@ enum DATA {
 };
 
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
-}  // namespace N_OS2_HEADER
+}  // namespace X_OS2_HEADER
 
 namespace X_NE_SEGMENT {
 enum DATA {
@@ -71,6 +71,6 @@ enum DATA {
 };
 
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
-}  // namespace N_NE_SEGMENT
+}  // namespace X_NE_SEGMENT
 
 #endif  // XNE_DEFS_H

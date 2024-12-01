@@ -34,6 +34,7 @@ public:
     explicit XGenericTableWidget(QWidget *pParent = nullptr);
     ~XGenericTableWidget();
     virtual void reloadData(bool bSaveSelection);
+    virtual void adjustView();
 
 protected:
     virtual SV _setValue(QVariant vValue, qint32 nPosition);

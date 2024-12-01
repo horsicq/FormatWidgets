@@ -66,9 +66,15 @@ void XGenericTableWidget::reloadData(bool bSaveSelection)
 
     adjustGenericTable(ui->tableViewMain, &listHeaderRecords);
 
-    //ui->tableViewMain->resizeColumnsToContents();
+    // ui->tableViewMain->resizeColumnsToContents();
     QModelIndex index = ui->tableViewMain->model()->index(nRow, 0);
     ui->tableViewMain->setCurrentIndex(index);
+}
+
+void XGenericTableWidget::adjustView()
+{
+    XFormatWidget::adjustView();
+    getGlobalOptions()->adjustWidget(ui->tableViewMain, XOptions::ID_VIEW_FONT_TABLEVIEWS);
 }
 
 void XGenericTableWidget::on_tableViewMain_customContextMenuRequested(const QPoint &pos)
@@ -98,5 +104,4 @@ void XGenericTableWidget::on_toolButtonTableReload_clicked()
 
 void XGenericTableWidget::on_toolButtonTableSave_clicked()
 {
-
 }

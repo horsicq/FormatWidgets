@@ -98,7 +98,7 @@ public:
 
     void setFileType(XBinary::FT fileType);
     XBinary::FT getFileType();
-    void setMode( XBinary::MODE mode);
+    void setMode(XBinary::MODE mode);
     XBinary::MODE getMode();
     void setEndian(XBinary::ENDIAN endian);
     XBinary::ENDIAN getEndian();

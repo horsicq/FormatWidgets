@@ -141,7 +141,7 @@ void XFormatWidget::setCwOptions(XFW_DEF::CWOPTIONS cwOptions, bool bReload)
     setData(cwOptions.pDevice, formatOptions, 0, 0, 0);
 
     if (bReload) {
-         reloadData(false);
+        reloadData(false);
     }
 }
 
@@ -211,7 +211,7 @@ qint32 XFormatWidget::getType()
 }
 
 QTreeWidgetItem *XFormatWidget::createNewItem(XFW_DEF::TYPE type, XFW_DEF::WIDGETMODE widgetMode, const QString &sTitle, XOptions::ICONTYPE iconType, qint64 nOffset,
-                                             qint64 nSize, QVariant var1, QVariant var2, XBinary::MODE mode, XBinary::ENDIAN endian)
+                                              qint64 nSize, QVariant var1, QVariant var2, XBinary::MODE mode, XBinary::ENDIAN endian)
 {
     QTreeWidgetItem *pResult = new QTreeWidgetItem;
 
@@ -352,6 +352,7 @@ void XFormatWidget::adjustGenericHeader(QTableWidget *pTableWidget, const QList<
 
 void XFormatWidget::adjustGenericTable(QTableView *pTableView, const QList<XFW_DEF::HEADER_RECORD> *pListHeaderRecords)
 {
+    // QString sFontName = pTableView->font().toString();
     QFontMetrics fm(pTableView->font());
 
     // qint32 nSymbolWidth = fm.boundingRect("W").width();
@@ -361,8 +362,8 @@ void XFormatWidget::adjustGenericTable(QTableView *pTableView, const QList<XFW_D
     for (qint32 i = 0; i < nNumberOfRecords; i++) {
         qint32 nWidth = 200;
 
-        if ((pListHeaderRecords->at(i).vtype == XFW_DEF::VAL_TYPE_DATA) || (pListHeaderRecords->at(i).vtype == XFW_DEF::VAL_TYPE_SIZE) || (pListHeaderRecords->at(i).vtype == XFW_DEF::VAL_TYPE_ADDRESS) ||
-            (pListHeaderRecords->at(i).vtype == XFW_DEF::VAL_TYPE_OFFSET)) {
+        if ((pListHeaderRecords->at(i).vtype == XFW_DEF::VAL_TYPE_DATA) || (pListHeaderRecords->at(i).vtype == XFW_DEF::VAL_TYPE_SIZE) ||
+            (pListHeaderRecords->at(i).vtype == XFW_DEF::VAL_TYPE_ADDRESS) || (pListHeaderRecords->at(i).vtype == XFW_DEF::VAL_TYPE_OFFSET)) {
             if (pListHeaderRecords->at(i).nSize == 1) {
                 nWidth = fm.boundingRect(" 00 ").width();
             } else if (pListHeaderRecords->at(i).nSize == 2) {
@@ -452,7 +453,6 @@ void XFormatWidget::setLineEdit(XLineEditHEX *pLineEdit, qint32 nMaxLength, cons
     pLineEdit->setValue_String(sText);
     pLineEdit->setProperty("OFFSET", nOffset);
 }
-
 
 void XFormatWidget::showSectionHex(QTableView *pTableView)
 {
@@ -801,8 +801,7 @@ QVariant XFormatWidget::_readVariant(XBinary *pBinary, qint64 nOffset, qint64 nS
 {
     QVariant varResult;
 
-    if ((vtype == XFW_DEF::VAL_TYPE_DATA) || (vtype == XFW_DEF::VAL_TYPE_SIZE) || (vtype == XFW_DEF::VAL_TYPE_ADDRESS) ||
-        (vtype == XFW_DEF::VAL_TYPE_OFFSET)) {
+    if ((vtype == XFW_DEF::VAL_TYPE_DATA) || (vtype == XFW_DEF::VAL_TYPE_SIZE) || (vtype == XFW_DEF::VAL_TYPE_ADDRESS) || (vtype == XFW_DEF::VAL_TYPE_OFFSET)) {
         if (nSize == 1) {
             varResult = pBinary->read_uint8(nOffset);
         } else if (nSize == 2) {
@@ -821,8 +820,7 @@ QString XFormatWidget::_valueToString(const QVariant &var, qint64 nSize, XFW_DEF
 {
     QString sResult;
 
-    if ((vtype == XFW_DEF::VAL_TYPE_DATA) || (vtype == XFW_DEF::VAL_TYPE_SIZE) || (vtype == XFW_DEF::VAL_TYPE_ADDRESS) ||
-        (vtype == XFW_DEF::VAL_TYPE_OFFSET)) {
+    if ((vtype == XFW_DEF::VAL_TYPE_DATA) || (vtype == XFW_DEF::VAL_TYPE_SIZE) || (vtype == XFW_DEF::VAL_TYPE_ADDRESS) || (vtype == XFW_DEF::VAL_TYPE_OFFSET)) {
         if (nSize == 1) {
             sResult = QString("%1").arg(var.toUInt(), 2, 16, QChar('0'));
         } else if (nSize == 2) {
@@ -1197,7 +1195,7 @@ void XFormatWidget::registerShortcuts(bool bState)
 }
 
 bool XFormatWidget::createHeaderTable(QTableWidget *pTableWidget, const QList<XFW_DEF::HEADER_RECORD> *pListHeaderRecords, QList<RECWIDGET> *pListRecWidget,
-                                     qint64 nOffset, XBinary::ENDIAN endian)
+                                      qint64 nOffset, XBinary::ENDIAN endian)
 {
     qint32 nNumberOfRecords = pListHeaderRecords->count();
 
@@ -1256,7 +1254,6 @@ bool XFormatWidget::createHeaderTable(QTableWidget *pTableWidget, const QList<XF
 
         if ((recWidget.vtype == XFW_DEF::VAL_TYPE_DATA) || (recWidget.vtype == XFW_DEF::VAL_TYPE_SIZE) || (recWidget.vtype == XFW_DEF::VAL_TYPE_ADDRESS) ||
             (recWidget.vtype == XFW_DEF::VAL_TYPE_OFFSET)) {
-
             recWidget.pLineEdit = new XLineEditHEX();
             recWidget.pLineEdit->setProperty("POSITION", recWidget.nPosition);
             recWidget.pLineEdit->setProperty("OFFSET", recWidget.nOffset);
@@ -1286,7 +1283,7 @@ bool XFormatWidget::createHeaderTable(QTableWidget *pTableWidget, const QList<XF
 
     adjustGenericHeader(pTableWidget, pListHeaderRecords);
 
-   //    XOptions::setTableWidgetHeaderAlignment(pTableWidget, HEADER_COLUMN_NAME, Qt::AlignLeft | Qt::AlignVCenter);
+    //    XOptions::setTableWidgetHeaderAlignment(pTableWidget, HEADER_COLUMN_NAME, Qt::AlignLeft | Qt::AlignVCenter);
     //    XOptions::setTableWidgetHeaderAlignment(pTableWidget, HEADER_COLUMN_OFFSET, Qt::AlignRight | Qt::AlignVCenter);
     //    XOptions::setTableWidgetHeaderAlignment(pTableWidget, HEADER_COLUMN_TYPE, Qt::AlignLeft | Qt::AlignVCenter);
     //    XOptions::setTableWidgetHeaderAlignment(pTableWidget, HEADER_COLUMN_VALUE, Qt::AlignRight | Qt::AlignVCenter);
@@ -1494,7 +1491,7 @@ void XFormatWidget::_deleteSubdevices(SubDevice **ppSubdevices, qint32 nCount)
 }
 
 XComboBoxEx *XFormatWidget::createComboBox(QTableWidget *pTableWidget, QMap<quint64, QString> mapData, qint32 nType, qint32 nData, XComboBoxEx::CBTYPE cbtype,
-                                          quint64 nMask, qint32 nExtraData)
+                                           quint64 nMask, qint32 nExtraData)
 {
     XComboBoxEx *result = new XComboBoxEx(this);
     result->setData(mapData, cbtype, nMask, tr("Flags"));
@@ -1515,7 +1512,7 @@ XComboBoxEx *XFormatWidget::createComboBox(QTableWidget *pTableWidget, QMap<quin
 }
 
 void XFormatWidget::adjustComboBox(QTableWidget *pTableWidget, QList<RECWIDGET> *pListRecWidget, const QMap<quint64, QString> &mapData, qint32 nPosition,
-                                  XComboBoxEx::CBTYPE cbtype, quint64 nMask)
+                                   XComboBoxEx::CBTYPE cbtype, quint64 nMask)
 {
     if (nPosition < pListRecWidget->count()) {
         (*pListRecWidget)[nPosition].pComboBox = new XComboBoxEx(pTableWidget);

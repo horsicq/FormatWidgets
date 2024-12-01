@@ -69,6 +69,8 @@ void XMainWidget::clear()
     }
 
     ui->treeWidgetNavi->clear();
+
+    XFormatWidget::reset();
 }
 
 void XMainWidget::cleanup()
@@ -125,7 +127,7 @@ XFormatWidget::SV XMainWidget::_setValue(QVariant vValue, qint32 nPosition)
 
 void XMainWidget::setReadonly(bool bState)
 {
-    XShortcutsWidget::setReadonly(bState);
+    XFormatWidget::setReadonly(bState);
 
     ui->checkBoxReadonly->setChecked(bState);
 
@@ -185,7 +187,7 @@ void XMainWidget::reloadData(bool bSaveSelection)
         for (qint32 i = 0; i < nNumberOfWidgets; i++) {
             QWidget *pWidget = ui->stackedWidgetMain->widget(i);
 
-            //qDebug("pWidget->property(\"INITSTRING\").toString()=%s", pWidget->property("INITSTRING").toString().toLatin1().data());
+            // qDebug("pWidget->property(\"INITSTRING\").toString()=%s", pWidget->property("INITSTRING").toString().toLatin1().data());
 
             if (pWidget->property("INITSTRING").toString() == sInitString) {
                 ui->stackedWidgetMain->setCurrentIndex(i);
@@ -235,8 +237,8 @@ void XMainWidget::_addBaseItems(QTreeWidget *pTreeWidget, XBinary::FT fileType)
 #endif
     pTreeWidget->addTopLevelItem(createNewItem(XFW_DEF::TYPE_VIRUSTOTAL, XFW_DEF::WIDGETMODE_UNKNOWN, "VirusTotal", XOptions::ICONTYPE_VIRUSTOTAL, 0, -1, 0, 0,
                                                XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
-    pTreeWidget->addTopLevelItem(createNewItem(XFW_DEF::TYPE_VISUALIZATION, XFW_DEF::WIDGETMODE_UNKNOWN, tr("Visualization"), XOptions::ICONTYPE_VISUALIZATION, 0, -1, 0, 0,
-                                               XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
+    pTreeWidget->addTopLevelItem(createNewItem(XFW_DEF::TYPE_VISUALIZATION, XFW_DEF::WIDGETMODE_UNKNOWN, tr("Visualization"), XOptions::ICONTYPE_VISUALIZATION, 0, -1, 0,
+                                               0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
     pTreeWidget->addTopLevelItem(
         createNewItem(XFW_DEF::TYPE_HEX, XFW_DEF::WIDGETMODE_UNKNOWN, tr("Hex"), XOptions::ICONTYPE_HEX, 0, -1, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
 
@@ -316,8 +318,8 @@ void XMainWidget::_addSpecItems(QTreeWidget *pTreeWidget, QIODevice *pDevice, XB
                 qint32 nCommandSize = mach.getHeader_sizeofcmds();
                 qint32 nCommandCount = mach.getHeader_ncmds();
 
-                pTreeWidget->addTopLevelItem(
-                    createNewItem(XFW_DEF::TYPE_MACH_commands, XFW_DEF::WIDGETMODE_TABLE, tr("Commands"), XOptions::ICONTYPE_TABLE, nCommandOffset, nCommandSize, nCommandCount, 0, mode, endian));
+                pTreeWidget->addTopLevelItem(createNewItem(XFW_DEF::TYPE_MACH_commands, XFW_DEF::WIDGETMODE_TABLE, tr("Commands"), XOptions::ICONTYPE_TABLE,
+                                                           nCommandOffset, nCommandSize, nCommandCount, 0, mode, endian));
             }
         }
     } else if (fileType == XBinary::FT_MSDOS) {
@@ -328,8 +330,8 @@ void XMainWidget::_addSpecItems(QTreeWidget *pTreeWidget, QIODevice *pDevice, XB
             XBinary::MODE mode = msdos.getMode();
 
             {
-                pTreeWidget->addTopLevelItem(
-                    createNewItem(XFW_DEF::TYPE_MSDOS_EXE_file, XFW_DEF::WIDGETMODE_HEADER, "EXE_file", XOptions::ICONTYPE_HEADER, 0, sizeof(XMSDOS_DEF::EXE_file), 0, 0, mode, endian));
+                pTreeWidget->addTopLevelItem(createNewItem(XFW_DEF::TYPE_MSDOS_EXE_file, XFW_DEF::WIDGETMODE_HEADER, "EXE_file", XOptions::ICONTYPE_HEADER, 0,
+                                                           sizeof(XMSDOS_DEF::EXE_file), 0, 0, mode, endian));
             }
         }
     } else if ((fileType == XBinary::FT_PE) || (fileType == XBinary::FT_PE32) || (fileType == XBinary::FT_PE64)) {
@@ -341,8 +343,8 @@ void XMainWidget::_addSpecItems(QTreeWidget *pTreeWidget, QIODevice *pDevice, XB
             bool bIs64 = pe.is64();
 
             {
-                pTreeWidget->addTopLevelItem(
-                    createNewItem(XFW_DEF::TYPE_MSDOS_IMAGE_DOS_HEADER, XFW_DEF::WIDGETMODE_HEADER, "IMAGE_DOS_HEADER", XOptions::ICONTYPE_HEADER, 0, sizeof(XMSDOS_DEF::IMAGE_DOS_HEADEREX), 0, 0, mode, endian));
+                pTreeWidget->addTopLevelItem(createNewItem(XFW_DEF::TYPE_MSDOS_IMAGE_DOS_HEADER, XFW_DEF::WIDGETMODE_HEADER, "IMAGE_DOS_HEADER",
+                                                           XOptions::ICONTYPE_HEADER, 0, sizeof(XMSDOS_DEF::IMAGE_DOS_HEADEREX), 0, 0, mode, endian));
             }
         }
     }
@@ -537,7 +539,7 @@ void XMainWidget::dataChangedSlot(qint64 nOffset, qint64 nSize)
         bIsWidgetReload = true;
     } else {
         ui->widgetGlobalHex->reloadData(true);
-        bIsWidgetReload = (_widgetModeSend ==XFW_DEF::WIDGETMODE_DIALOG_HEADER);
+        bIsWidgetReload = (_widgetModeSend == XFW_DEF::WIDGETMODE_DIALOG_HEADER);
     }
 
     if (bIsWidgetReload) {

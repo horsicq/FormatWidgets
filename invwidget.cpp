@@ -122,7 +122,6 @@ void InvWidget::adjustView()
 void InvWidget::reloadData(bool bSaveSelection)
 {
     Q_UNUSED(bSaveSelection)
-
 }
 
 void InvWidget::showHexSlot()

@@ -53,7 +53,7 @@ enum DATA {
 };
 
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
-}  // namespace N_DEX_HEADER
+}  // namespace X_DEX_HEADER
 
 namespace X_DEX_MAP_ITEM {
 enum DATA {
@@ -64,7 +64,7 @@ enum DATA {
 };
 
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
-}  // namespace N_DEX_MAP_ITEM
+}  // namespace X_DEX_MAP_ITEM
 
 namespace X_DEX_STRING {
 enum DATA {
@@ -73,7 +73,7 @@ enum DATA {
 };
 
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
-}  // namespace N_DEX_STRING
+}  // namespace X_DEX_STRING
 
 namespace X_DEX_STRING_ID {
 enum DATA {
@@ -82,7 +82,7 @@ enum DATA {
 };
 
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
-}  // namespace N_DEX_STRING_ID
+}  // namespace X_DEX_STRING_ID
 
 namespace X_DEX_TYPE_ID {
 enum DATA {
@@ -91,7 +91,7 @@ enum DATA {
 };
 
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
-}  // namespace N_DEX_TYPE_ID
+}  // namespace X_DEX_TYPE_ID
 
 namespace X_DEX_PROTO_ID {
 enum DATA {
@@ -102,7 +102,7 @@ enum DATA {
 };
 
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
-}  // namespace N_DEX_PROTO_ID
+}  // namespace X_DEX_PROTO_ID
 
 namespace X_DEX_FIELD_ID {
 enum DATA {
@@ -113,7 +113,7 @@ enum DATA {
 };
 
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
-}  // namespace N_DEX_FIELD_ID
+}  // namespace X_DEX_FIELD_ID
 
 namespace X_DEX_METHOD_ID {
 enum DATA {
@@ -124,7 +124,7 @@ enum DATA {
 };
 
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
-}  // namespace N_DEX_METHOD_ID
+}  // namespace X_DEX_METHOD_ID
 
 namespace X_DEX_CLASS_ITEM_DEF {
 enum DATA {
@@ -140,6 +140,6 @@ enum DATA {
 };
 
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
-}  // namespace N_DEX_CLASS_ITEM_DEF
+}  // namespace X_DEX_CLASS_ITEM_DEF
 
 #endif  // XDEX_DEFS_H

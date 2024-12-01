@@ -47,7 +47,7 @@ void XProcessData::process()
     g_pListHeaderRecords->clear();
 
     {
-        XFW_DEF::HEADER_RECORD record={};
+        XFW_DEF::HEADER_RECORD record = {};
         record.nPosition = -1;
         record.sName = QString("#");
         record.vtype = XFW_DEF::VAL_TYPE_NUMBER;
@@ -60,7 +60,7 @@ void XProcessData::process()
     g_pListHeaderRecords->append(listHeaderRecords);
 
     if (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_commands) {
-        XFW_DEF::HEADER_RECORD record={};
+        XFW_DEF::HEADER_RECORD record = {};
         record.nPosition = -1;
         record.sName = tr("Info");
         record.vtype = XFW_DEF::VAL_TYPE_INFO;
@@ -77,8 +77,9 @@ void XProcessData::process()
 
         QMap<quint64, QString> mapLC = mach.getLoadCommandTypesS();
 
-        QList<XMACH::COMMAND_RECORD> listCommands=mach._getCommandRecords(g_pCwOptions->nDataOffset, g_pCwOptions->nDataSize, g_pCwOptions->var1.toInt(),
-                                                                         (g_pCwOptions->mode == XBinary::MODE_64), (g_pCwOptions->endian == XBinary::ENDIAN_BIG), 0, g_pPdStruct);
+        QList<XMACH::COMMAND_RECORD> listCommands =
+            mach._getCommandRecords(g_pCwOptions->nDataOffset, g_pCwOptions->nDataSize, g_pCwOptions->var1.toInt(), (g_pCwOptions->mode == XBinary::MODE_64),
+                                    (g_pCwOptions->endian == XBinary::ENDIAN_BIG), 0, g_pPdStruct);
 
         nNumberOfRows = listCommands.count();
         XBinary::setPdStructTotal(g_pPdStruct, g_nFreeIndex, nNumberOfRows);
@@ -138,10 +139,11 @@ void XProcessData::process()
                 (*g_ppModel)->setItem(i, 0, pItem);
             }
 
-            for (qint32 j = 0; j < nNumberOfHeaderRecords; j ++) {
+            for (qint32 j = 0; j < nNumberOfHeaderRecords; j++) {
                 QVariant var = XFormatWidget::_readVariant(&binary, _nOffset + g_pListHeaderRecords->at(j).nOffset, g_pListHeaderRecords->at(j).nSize,
-                                                          g_pListHeaderRecords->at(j).vtype, (g_pCwOptions->endian == XBinary::ENDIAN_BIG));
-                (*g_ppModel)->setItem(i, j + 1, new QStandardItem(XFormatWidget::_valueToString(var, g_pListHeaderRecords->at(j).nSize, g_pListHeaderRecords->at(j).vtype)));
+                                                           g_pListHeaderRecords->at(j).vtype, (g_pCwOptions->endian == XBinary::ENDIAN_BIG));
+                (*g_ppModel)
+                    ->setItem(i, j + 1, new QStandardItem(XFormatWidget::_valueToString(var, g_pListHeaderRecords->at(j).nSize, g_pListHeaderRecords->at(j).vtype)));
             }
 
             _nOffset += nHeaderSize;

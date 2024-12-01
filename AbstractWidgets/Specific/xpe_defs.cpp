@@ -213,7 +213,8 @@ const XFW_DEF::HEADER_RECORD records64[] = {
      XFW_DEF::VAL_TYPE_DATA},
     {LockPrefixTable, "LockPrefixTable", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, LockPrefixTable), 8, "ULONGLONG", XFW_DEF::VAL_TYPE_DATA},
     {MaximumAllocationSize, "MaximumAllocationSize", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, MaximumAllocationSize), 8, "ULONGLONG", XFW_DEF::VAL_TYPE_DATA},
-    {VirtualMemoryThreshold, "VirtualMemoryThreshold", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, VirtualMemoryThreshold), 8, "ULONGLONG", XFW_DEF::VAL_TYPE_DATA},
+    {VirtualMemoryThreshold, "VirtualMemoryThreshold", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, VirtualMemoryThreshold), 8, "ULONGLONG",
+     XFW_DEF::VAL_TYPE_DATA},
     {ProcessAffinityMask, "ProcessAffinityMask", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, ProcessAffinityMask), 8, "ULONGLONG", XFW_DEF::VAL_TYPE_DATA},
     {CSDVersion, "CSDVersion", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, CSDVersion), 2, "WORD", XFW_DEF::VAL_TYPE_DATA},
     {DependentLoadFlags, "DependentLoadFlags", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, DependentLoadFlags), 2, "WORD", XFW_DEF::VAL_TYPE_DATA},
@@ -244,7 +245,8 @@ const XFW_DEF::HEADER_RECORD records64[] = {
     {DynamicValueRelocTable, "DynamicValueRelocTable", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, DynamicValueRelocTable), 8, "ULONGLONG",
      XFW_DEF::VAL_TYPE_ADDRESS},
     {CHPEMetadataPointer, "CHPEMetadataPointer", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, CHPEMetadataPointer), 8, "ULONGLONG", XFW_DEF::VAL_TYPE_ADDRESS},
-    {GuardRFFailureRoutine, "GuardRFFailureRoutine", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, GuardRFFailureRoutine), 8, "ULONGLONG", XFW_DEF::VAL_TYPE_ADDRESS},
+    {GuardRFFailureRoutine, "GuardRFFailureRoutine", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, GuardRFFailureRoutine), 8, "ULONGLONG",
+     XFW_DEF::VAL_TYPE_ADDRESS},
     {GuardRFFailureRoutineFunctionPointer, "GuardRFFailureRoutineFunctionPointer",
      offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, GuardRFFailureRoutineFunctionPointer), 8, "ULONGLONG", XFW_DEF::VAL_TYPE_ADDRESS},
     {DynamicValueRelocTableOffset, "DynamicValueRelocTableOffset", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, DynamicValueRelocTableOffset), 4, "DWORD",
@@ -327,8 +329,8 @@ const XFW_DEF::HEADER_RECORD records[] = {
 
 namespace X_IMAGE_EXPORT_FUNCTION {
 const XFW_DEF::HEADER_RECORD records[] = {{Ordinal, "Ordinal", 0, 2, "WORD", XFW_DEF::VAL_TYPE_DATA},
-                                         {RVA, "RVA", 0, 4, "DWORD", XFW_DEF::VAL_TYPE_RELADDRESS},
-                                         {Name, QObject::tr("Name"), 0, 4, "SZCHAR", XFW_DEF::VAL_TYPE_RELADDRESS}};
+                                          {RVA, "RVA", 0, 4, "DWORD", XFW_DEF::VAL_TYPE_RELADDRESS},
+                                          {Name, QObject::tr("Name"), 0, 4, "SZCHAR", XFW_DEF::VAL_TYPE_RELADDRESS}};
 }
 
 namespace X_IMAGE_IMPORT {
@@ -342,24 +344,24 @@ const XFW_DEF::HEADER_RECORD records[] = {
 
 namespace X_IMAGE_IMPORT_FUNCTION {
 const XFW_DEF::HEADER_RECORD records32[] = {{Thunk, "Thunk", 0, 4, "DWORD", XFW_DEF::VAL_TYPE_RELADDRESS},
-                                           {Ordinal, "Ordinal", 0, 4, "DWORD", XFW_DEF::VAL_TYPE_DATA},
-                                           {Hint, "Hint", 0, 2, "WORD", XFW_DEF::VAL_TYPE_DATA}};
+                                            {Ordinal, "Ordinal", 0, 4, "DWORD", XFW_DEF::VAL_TYPE_DATA},
+                                            {Hint, "Hint", 0, 2, "WORD", XFW_DEF::VAL_TYPE_DATA}};
 const XFW_DEF::HEADER_RECORD records64[] = {{Thunk, "Thunk", 0, 8, "QWORD", XFW_DEF::VAL_TYPE_RELADDRESS},
-                                           {Ordinal, "Ordinal", 0, 8, "QWORD", XFW_DEF::VAL_TYPE_DATA},
-                                           {Hint, "Hint", 0, 2, "WORD", XFW_DEF::VAL_TYPE_DATA}};
+                                            {Ordinal, "Ordinal", 0, 8, "QWORD", XFW_DEF::VAL_TYPE_DATA},
+                                            {Hint, "Hint", 0, 2, "WORD", XFW_DEF::VAL_TYPE_DATA}};
 }  // namespace X_IMAGE_IMPORT_FUNCTION
 
 namespace X_IMAGE_DELAYIMPORT_FUNCTION {
 const XFW_DEF::HEADER_RECORD records32[] = {{AddressThunk, "AddressThunk", 0, 4, "DWORD", XFW_DEF::VAL_TYPE_RELADDRESS},
-                                           {BoundThunk, "BoundThunk", 0, 4, "DWORD", XFW_DEF::VAL_TYPE_RELADDRESS},
-                                           {NameThunk, "NameThunk", 0, 4, "DWORD", XFW_DEF::VAL_TYPE_RELADDRESS},
-                                           {Ordinal, "Ordinal", 0, 4, "DWORD", XFW_DEF::VAL_TYPE_DATA},
-                                           {Hint, "Hint", 0, 2, "WORD", XFW_DEF::VAL_TYPE_DATA}};
+                                            {BoundThunk, "BoundThunk", 0, 4, "DWORD", XFW_DEF::VAL_TYPE_RELADDRESS},
+                                            {NameThunk, "NameThunk", 0, 4, "DWORD", XFW_DEF::VAL_TYPE_RELADDRESS},
+                                            {Ordinal, "Ordinal", 0, 4, "DWORD", XFW_DEF::VAL_TYPE_DATA},
+                                            {Hint, "Hint", 0, 2, "WORD", XFW_DEF::VAL_TYPE_DATA}};
 const XFW_DEF::HEADER_RECORD records64[] = {{AddressThunk, "AddressThunk", 0, 8, "QWORD", XFW_DEF::VAL_TYPE_RELADDRESS},
-                                           {BoundThunk, "BoundThunk", 0, 8, "DWORD", XFW_DEF::VAL_TYPE_RELADDRESS},
-                                           {NameThunk, "NameThunk", 0, 8, "QWORD", XFW_DEF::VAL_TYPE_RELADDRESS},
-                                           {Ordinal, "Ordinal", 0, 8, "QWORD", XFW_DEF::VAL_TYPE_DATA},
-                                           {Hint, "Hint", 0, 2, "WORD", XFW_DEF::VAL_TYPE_DATA}};
+                                            {BoundThunk, "BoundThunk", 0, 8, "DWORD", XFW_DEF::VAL_TYPE_RELADDRESS},
+                                            {NameThunk, "NameThunk", 0, 8, "QWORD", XFW_DEF::VAL_TYPE_RELADDRESS},
+                                            {Ordinal, "Ordinal", 0, 8, "QWORD", XFW_DEF::VAL_TYPE_DATA},
+                                            {Hint, "Hint", 0, 2, "WORD", XFW_DEF::VAL_TYPE_DATA}};
 }  // namespace X_IMAGE_DELAYIMPORT_FUNCTION
 
 namespace X_IMAGE_BOUNDIMPORT {

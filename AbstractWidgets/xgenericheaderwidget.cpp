@@ -68,18 +68,18 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
         adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getLoadCommandTypesS(), X_mach_segments::cmd, XComboBoxEx::CBTYPE_LIST, 0);
         adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getVMProtectionsS(), X_mach_segments::initprot, XComboBoxEx::CBTYPE_FLAGS, 0);
         adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getVMProtectionsS(), X_mach_segments::maxprot, XComboBoxEx::CBTYPE_FLAGS, 0);
-    // } else if (getCwOptions()->_type == FW_DEF::TYPE_MACH_section) {
-    //     adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getSectionTypesS(), N_mach_section::flags, XComboBoxEx::CBTYPE_FLAGS, 0);
-    // } else if (getCwOptions()->_type == FW_DEF::TYPE_MACH_dyld_info_command) {
-    //     adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getCommandsS(), N_mach_dyld_info_command::cmd, XComboBoxEx::CBTYPE_LIST, 0);
-    // } else if (getCwOptions()->_type == FW_DEF::TYPE_MACH_uuid_command) {
-    //     adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getCommandsS(), N_mach_uuid_command::cmd, XComboBoxEx::CBTYPE_LIST, 0);
-    // } else if (getCwOptions()->_type == FW_DEF::TYPE_MACH_dylib_command) {
-    //     adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getCommandsS(), N_mach_dylib_command::cmd, XComboBoxEx::CBTYPE_LIST, 0);
-    // } else if (getCwOptions()->_type == FW_DEF::TYPE_MACH_routines_command) {
-    //     adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getCommandsS(), N_mach_routines_command::cmd, XComboBoxEx::CBTYPE_LIST, 0);
-    // } else if (getCwOptions()->_type == FW_DEF::TYPE_MACH_routines_command_64) {
-    //     adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getCommandsS(), N_mach_routines_command_64::cmd, XComboBoxEx::CBTYPE_LIST, 0);
+        // } else if (getCwOptions()->_type == FW_DEF::TYPE_MACH_section) {
+        //     adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getSectionTypesS(), N_mach_section::flags, XComboBoxEx::CBTYPE_FLAGS, 0);
+        // } else if (getCwOptions()->_type == FW_DEF::TYPE_MACH_dyld_info_command) {
+        //     adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getCommandsS(), N_mach_dyld_info_command::cmd, XComboBoxEx::CBTYPE_LIST, 0);
+        // } else if (getCwOptions()->_type == FW_DEF::TYPE_MACH_uuid_command) {
+        //     adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getCommandsS(), N_mach_uuid_command::cmd, XComboBoxEx::CBTYPE_LIST, 0);
+        // } else if (getCwOptions()->_type == FW_DEF::TYPE_MACH_dylib_command) {
+        //     adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getCommandsS(), N_mach_dylib_command::cmd, XComboBoxEx::CBTYPE_LIST, 0);
+        // } else if (getCwOptions()->_type == FW_DEF::TYPE_MACH_routines_command) {
+        //     adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getCommandsS(), N_mach_routines_command::cmd, XComboBoxEx::CBTYPE_LIST, 0);
+        // } else if (getCwOptions()->_type == FW_DEF::TYPE_MACH_routines_command_64) {
+        //     adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getCommandsS(), N_mach_routines_command_64::cmd, XComboBoxEx::CBTYPE_LIST, 0);
     } else if (getCwOptions()->_type == XFW_DEF::TYPE_ELF_elf_ehdr) {
         // adjustComboBox(getListRecWidgets(), XELF::getHeaderMagicsS(), _elf_ehdrWidget::ei_mag, XComboBoxEx::CBTYPE_LIST, 0);
         // adjustComboBox(getListRecWidgets(), XELF::getHeaderClassesS(), _elf_ehdrWidget::ei_class, XComboBoxEx::CBTYPE_LIST, 0);
@@ -94,6 +94,12 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
     updateRecWidgets(getCwOptions()->pDevice, getListRecWidgets());
 
     ui->tableWidgetMain->setCurrentCell(nCurrentRow, 0);
+}
+
+void XGenericHeaderWidget::adjustView()
+{
+    XFormatWidget::adjustView();
+    getGlobalOptions()->adjustWidget(ui->tableWidgetMain, XOptions::ID_VIEW_FONT_TABLEVIEWS);
 }
 
 void XGenericHeaderWidget::on_tableWidgetMain_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
@@ -118,5 +124,4 @@ void XGenericHeaderWidget::on_toolButtonTableReload_clicked()
 
 void XGenericHeaderWidget::on_toolButtonTableSave_clicked()
 {
-
 }

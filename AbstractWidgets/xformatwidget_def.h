@@ -150,6 +150,6 @@ enum WIDGET_DATA {
     WIDGET_DATA_VAR2,
     WIDGET_DATA_NAME,
 };
-}  // namespace FW_DEF
+}  // namespace XFW_DEF
 
 #endif  // XFORMATWIDGET_DEF_H
