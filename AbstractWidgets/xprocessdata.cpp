@@ -59,7 +59,7 @@ void XProcessData::process()
 
     g_pListHeaderRecords->append(listHeaderRecords);
 
-    if (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_commands) {
+    if (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_command) {
         XFW_DEF::HEADER_RECORD record = {};
         record.nPosition = -1;
         record.sName = tr("Info");
@@ -72,10 +72,10 @@ void XProcessData::process()
     qint32 nNumberOfColumns = g_pListHeaderRecords->count();
     qint32 nNumberOfRows = 0;
 
-    if (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_commands) {
+    if (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_command) {
         XMACH mach(g_pCwOptions->pDevice, g_pCwOptions->bIsImage, g_pCwOptions->nImageBase);
 
-        QMap<quint64, QString> mapLC = mach.getLoadCommandTypesS();
+        QMap<quint64, QString> mapLC = mach.getLoadCommandTypes();
 
         QList<XMACH::COMMAND_RECORD> listCommands =
             mach._getCommandRecords(g_pCwOptions->nDataOffset, g_pCwOptions->nDataSize, g_pCwOptions->var1.toInt(), (g_pCwOptions->mode == XBinary::MODE_64),
@@ -87,26 +87,23 @@ void XProcessData::process()
         (*g_ppModel) = new QStandardItemModel(nNumberOfRows, nNumberOfColumns);
 
         for (qint32 i = 0; (i < nNumberOfRows) && (!(g_pPdStruct->bIsStop)); i++) {
-            XFW_DEF::TYPE _type = g_pCwOptions->_type;
-
-            if ((listCommands.at(i).nId == XMACH_DEF::S_LC_SEGMENT) || (listCommands.at(i).nId == XMACH_DEF::S_LC_SEGMENT_64)) {
-                _type = XFW_DEF::TYPE_MACH_segments;
-            }
+            XFW_DEF::TYPE _type = XFormatWidget::MACH_commandIdToType(listCommands.at(i).nId);
 
             {
                 QStandardItem *pItem = new QStandardItem;
                 pItem->setData(i, Qt::DisplayRole);
-                pItem->setData(_type, Qt::UserRole + XFW_DEF::TABLEDATA_TYPE);
-                pItem->setData(listCommands.at(i).nStructOffset, Qt::UserRole + XFW_DEF::TABLEDATA_HEADEROFFSET);
-                pItem->setData(nHeaderSize, Qt::UserRole + XFW_DEF::TABLEDATA_HEADERSIZE);
-                pItem->setData(listCommands.at(i).nStructOffset, Qt::UserRole + XFW_DEF::TABLEDATA_DATAOFFSET);
-                pItem->setData(listCommands.at(i).nSize + nHeaderSize, Qt::UserRole + XFW_DEF::TABLEDATA_DATASIZE);
+                pItem->setData(_type, Qt::UserRole + (qint32)(XFW_DEF::TABLEDATA_TYPE));
+                pItem->setData(listCommands.at(i).nStructOffset, Qt::UserRole + (qint32)(XFW_DEF::TABLEDATA_HEADEROFFSET));
+                pItem->setData(nHeaderSize, Qt::UserRole + (qint32)(XFW_DEF::TABLEDATA_HEADERSIZE));
+                pItem->setData(listCommands.at(i).nStructOffset, Qt::UserRole + (qint32)(XFW_DEF::TABLEDATA_DATAOFFSET));
+                pItem->setData(listCommands.at(i).nSize, Qt::UserRole + (qint32)(XFW_DEF::TABLEDATA_DATASIZE));
+                pItem->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
                 (*g_ppModel)->setItem(i, 0, pItem);
             }
             {
-                (*g_ppModel)->setItem(i, X_mach_commands::cmd + 1, new QStandardItem(XBinary::valueToHex((quint32)listCommands.at(i).nId)));
-                (*g_ppModel)->setItem(i, X_mach_commands::cmdsize + 1, new QStandardItem(XBinary::valueToHex((quint32)listCommands.at(i).nSize)));
-                (*g_ppModel)->setItem(i, X_mach_commands::cmdsize + 2, new QStandardItem(mapLC.value(listCommands.at(i).nId)));
+                XFormatWidget::setItemToModel((*g_ppModel), i, X_mach_commands::cmd + 1, listCommands.at(i).nId, g_pListHeaderRecords->at(X_mach_commands::cmd + 1).nSize, g_pListHeaderRecords->at(X_mach_commands::cmd + 1).vtype);
+                XFormatWidget::setItemToModel((*g_ppModel), i, X_mach_commands::cmdsize + 1, listCommands.at(i).nSize, g_pListHeaderRecords->at(X_mach_commands::cmdsize + 1).nSize, g_pListHeaderRecords->at(X_mach_commands::cmdsize + 1).vtype);
+                XFormatWidget::setItemToModel((*g_ppModel), i, X_mach_commands::cmdsize + 2, mapLC.value(listCommands.at(i).nId), g_pListHeaderRecords->at(X_mach_commands::cmdsize + 2).nSize, g_pListHeaderRecords->at(X_mach_commands::cmdsize + 2).vtype);
             }
 
             XBinary::setPdStructCurrent(g_pPdStruct, g_nFreeIndex, i);
@@ -132,18 +129,18 @@ void XProcessData::process()
             {
                 QStandardItem *pItem = new QStandardItem;
                 pItem->setData(i, Qt::DisplayRole);
-                pItem->setData(_nOffset, Qt::UserRole + XFW_DEF::TABLEDATA_HEADEROFFSET);
-                pItem->setData(nHeaderSize, Qt::UserRole + XFW_DEF::TABLEDATA_HEADERSIZE);
-                pItem->setData(_nOffset, Qt::UserRole + XFW_DEF::TABLEDATA_DATAOFFSET);
-                pItem->setData(nHeaderSize, Qt::UserRole + XFW_DEF::TABLEDATA_DATASIZE);
+                pItem->setData(_nOffset, Qt::UserRole + (qint32)(XFW_DEF::TABLEDATA_HEADEROFFSET));
+                pItem->setData(nHeaderSize, Qt::UserRole + (qint32)(XFW_DEF::TABLEDATA_HEADERSIZE));
+                pItem->setData(_nOffset, Qt::UserRole + (qint32)(XFW_DEF::TABLEDATA_DATAOFFSET));
+                pItem->setData(nHeaderSize, Qt::UserRole + (qint32)(XFW_DEF::TABLEDATA_DATASIZE));
+                pItem->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
                 (*g_ppModel)->setItem(i, 0, pItem);
             }
 
             for (qint32 j = 0; j < nNumberOfHeaderRecords; j++) {
                 QVariant var = XFormatWidget::_readVariant(&binary, _nOffset + g_pListHeaderRecords->at(j).nOffset, g_pListHeaderRecords->at(j).nSize,
                                                            g_pListHeaderRecords->at(j).vtype, (g_pCwOptions->endian == XBinary::ENDIAN_BIG));
-                (*g_ppModel)
-                    ->setItem(i, j + 1, new QStandardItem(XFormatWidget::_valueToString(var, g_pListHeaderRecords->at(j).nSize, g_pListHeaderRecords->at(j).vtype)));
+                XFormatWidget::setItemToModel((*g_ppModel), i, j + 1, var, g_pListHeaderRecords->at(j).nSize, g_pListHeaderRecords->at(j).vtype);
             }
 
             _nOffset += nHeaderSize;

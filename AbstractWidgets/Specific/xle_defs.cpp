@@ -20,7 +20,7 @@
  */
 #include "xle_defs.h"
 
-namespace N_VXD_HEADER {
+namespace X_VXD_HEADER {
 const XFW_DEF::HEADER_RECORD records[] = {
     {e32_magic, "e32_magic", offsetof(XLE_DEF::IMAGE_VXD_HEADER, e32_magic), 2, "WORD", XFW_DEF::VAL_TYPE_DATA},
     {e32_border, "e32_border", offsetof(XLE_DEF::IMAGE_VXD_HEADER, e32_border), 1, "BYTE", XFW_DEF::VAL_TYPE_DATA},
@@ -71,7 +71,7 @@ const XFW_DEF::HEADER_RECORD records[] = {
 };
 }
 
-namespace N_O32_OBJ {
+namespace X_O32_OBJ {
 const XFW_DEF::HEADER_RECORD records[] = {
     {o32_size, "o32_size", offsetof(XLE_DEF::o32_obj, o32_size), 4, "DWORD", XFW_DEF::VAL_TYPE_SIZE},
     {o32_base, "o32_base", offsetof(XLE_DEF::o32_obj, o32_base), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA},

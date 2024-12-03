@@ -61,8 +61,30 @@ enum TYPE {
     TYPE_MSDOS_IMAGE_DOS_HEADER,
     TYPE_ELF_elf_ehdr,
     TYPE_MACH_mach_header,
-    TYPE_MACH_commands,
-    TYPE_MACH_segments
+    TYPE_MACH_command,
+    TYPE_MACH_segment,
+    TYPE_MACH_dylib,
+    TYPE_MACH_rpath,
+    TYPE_MACH_sub_umbrella,
+    TYPE_MACH_sub_client,
+    TYPE_MACH_sub_library,
+    TYPE_MACH_symtab,
+    TYPE_MACH_dysymtab,
+    TYPE_MACH_segment_split_info,
+    TYPE_MACH_atom_info,
+    TYPE_MACH_function_starts,
+    TYPE_MACH_dyld_exports_trie,
+    TYPE_MACH_dyld_chained_fixups,
+    TYPE_MACH_encryption_info,
+    TYPE_MACH_dyld_info,
+    TYPE_MACH_version_min,
+    TYPE_MACH_uuid,
+    TYPE_MACH_build_version,
+    TYPE_MACH_main,
+    TYPE_MACH_fileset_entry,
+    TYPE_MACH_source_version,
+    TYPE_MACH_dylinker,
+    TYPE_MACH_data_in_code
 };
 
 enum WIDGETMODE {

@@ -222,6 +222,23 @@ void XMainWidget::reloadData(bool bSaveSelection)
     }
 }
 
+void XMainWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
+{
+    XFormatWidget::setGlobal(pShortcuts, pXOptions);
+
+    ui->widgetGlobalHex->setGlobal(pShortcuts, pXOptions);
+
+    qint32 nNumberOfWidgets = ui->stackedWidgetMain->count();
+
+    for (qint32 i = 0; i < nNumberOfWidgets; i++) {
+        XShortcutsWidget *pWidget = dynamic_cast<XShortcutsWidget *>(ui->stackedWidgetMain->widget(i));
+
+        if (pWidget) {
+            pWidget->setGlobal(pShortcuts, pXOptions);
+        }
+    }
+}
+
 void XMainWidget::_addBaseItems(QTreeWidget *pTreeWidget, XBinary::FT fileType)
 {
     QTreeWidgetItem *pItemInfo =
@@ -261,93 +278,6 @@ void XMainWidget::_addBaseItems(QTreeWidget *pTreeWidget, XBinary::FT fileType)
                                                XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
     pTreeWidget->addTopLevelItem(createNewItem(XFW_DEF::TYPE_SEARCH, XFW_DEF::WIDGETMODE_UNKNOWN, tr("Search"), XOptions::ICONTYPE_SEARCH, 0, -1, 0, 0,
                                                XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
-}
-
-void XMainWidget::_addSpecItems(QTreeWidget *pTreeWidget, QIODevice *pDevice, XBinary::FT fileType, bool bIsImage, XADDR nImageBase)
-{
-    if ((fileType == XBinary::FT_ELF) || (fileType == XBinary::FT_ELF32) || (fileType == XBinary::FT_ELF64)) {
-        XELF elf(pDevice, bIsImage, nImageBase);
-
-        if (elf.isValid()) {
-            XBinary::ENDIAN endian = elf.getEndian();
-            XBinary::MODE mode = elf.getMode();
-            bool bIs64 = elf.is64();
-
-            {
-                QString sTitle;
-                qint64 nDataSize = 0;
-
-                if (bIs64) {
-                    sTitle = "Elf64_Ehdr";
-                    nDataSize = sizeof(XELF_DEF::Elf64_Ehdr);
-                } else {
-                    sTitle = "Elf32_Ehdr";
-                    nDataSize = sizeof(XELF_DEF::Elf32_Ehdr);
-                }
-
-                pTreeWidget->addTopLevelItem(
-                    createNewItem(XFW_DEF::TYPE_ELF_elf_ehdr, XFW_DEF::WIDGETMODE_HEADER, sTitle, XOptions::ICONTYPE_HEADER, 0, nDataSize, 0, 0, mode, endian));
-            }
-        }
-    } else if ((fileType == XBinary::FT_MACHO) || (fileType == XBinary::FT_MACHO32) || (fileType == XBinary::FT_MACHO64)) {
-        XMACH mach(pDevice, bIsImage, nImageBase);
-
-        if (mach.isValid()) {
-            XBinary::ENDIAN endian = mach.getEndian();
-            XBinary::MODE mode = mach.getMode();
-            bool bIs64 = mach.is64();
-
-            {
-                QString sTitle;
-                qint64 nDataSize = 0;
-
-                if (bIs64) {
-                    sTitle = "mach_header_64";
-                    nDataSize = sizeof(XMACH_DEF::mach_header_64);
-                } else {
-                    sTitle = "mach_header";
-                    nDataSize = sizeof(XMACH_DEF::mach_header);
-                }
-
-                pTreeWidget->addTopLevelItem(
-                    createNewItem(XFW_DEF::TYPE_MACH_mach_header, XFW_DEF::WIDGETMODE_HEADER, sTitle, XOptions::ICONTYPE_HEADER, 0, nDataSize, 0, 0, mode, endian));
-            }
-
-            {
-                qint32 nCommandOffset = mach.getHeaderSize();
-                qint32 nCommandSize = mach.getHeader_sizeofcmds();
-                qint32 nCommandCount = mach.getHeader_ncmds();
-
-                pTreeWidget->addTopLevelItem(createNewItem(XFW_DEF::TYPE_MACH_commands, XFW_DEF::WIDGETMODE_TABLE, tr("Commands"), XOptions::ICONTYPE_TABLE,
-                                                           nCommandOffset, nCommandSize, nCommandCount, 0, mode, endian));
-            }
-        }
-    } else if (fileType == XBinary::FT_MSDOS) {
-        XMSDOS msdos(pDevice, bIsImage, nImageBase);
-
-        if (msdos.isValid()) {
-            XBinary::ENDIAN endian = msdos.getEndian();
-            XBinary::MODE mode = msdos.getMode();
-
-            {
-                pTreeWidget->addTopLevelItem(createNewItem(XFW_DEF::TYPE_MSDOS_EXE_file, XFW_DEF::WIDGETMODE_HEADER, "EXE_file", XOptions::ICONTYPE_HEADER, 0,
-                                                           sizeof(XMSDOS_DEF::EXE_file), 0, 0, mode, endian));
-            }
-        }
-    } else if ((fileType == XBinary::FT_PE) || (fileType == XBinary::FT_PE32) || (fileType == XBinary::FT_PE64)) {
-        XPE pe(pDevice, bIsImage, nImageBase);
-
-        if (pe.isValid()) {
-            XBinary::ENDIAN endian = pe.getEndian();
-            XBinary::MODE mode = pe.getMode();
-            bool bIs64 = pe.is64();
-
-            {
-                pTreeWidget->addTopLevelItem(createNewItem(XFW_DEF::TYPE_MSDOS_IMAGE_DOS_HEADER, XFW_DEF::WIDGETMODE_HEADER, "IMAGE_DOS_HEADER",
-                                                           XOptions::ICONTYPE_HEADER, 0, sizeof(XMSDOS_DEF::IMAGE_DOS_HEADEREX), 0, 0, mode, endian));
-            }
-        }
-    }
 }
 
 XShortcutsWidget *XMainWidget::createWidget(const XFW_DEF::CWOPTIONS &cwOptions)

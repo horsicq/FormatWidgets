@@ -65,9 +65,9 @@ public:
     virtual void setReadonly(bool bState);
     virtual void adjustView();
     virtual void reloadData(bool bSaveSelection);
+    virtual void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
 
     static void _addBaseItems(QTreeWidget *pTreeWidget, XBinary::FT fileType);
-    static void _addSpecItems(QTreeWidget *pTreeWidget, QIODevice *pDevice, XBinary::FT fileType, bool bIsImage, XADDR nImageBase);
     static XShortcutsWidget *createWidget(const XFW_DEF::CWOPTIONS &cwOptions);
 
 private slots:

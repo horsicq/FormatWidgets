@@ -23,7 +23,7 @@
 
 #include "../xformatwidget_def.h"
 
-namespace N_VXD_HEADER {
+namespace X_VXD_HEADER {
 enum DATA {
     e32_magic = 0,
     e32_border,
@@ -77,7 +77,7 @@ enum DATA {
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace N_VXD_HEADER
 
-namespace N_O32_OBJ {
+namespace X_O32_OBJ {
 enum DATA {
     o32_size = 0,
     o32_base,

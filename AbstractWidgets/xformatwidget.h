@@ -187,7 +187,7 @@ public:
     void _adjustRecWidget(RECWIDGET *pRecWidget, QVariant varValue);
 
     static QVariant _readVariant(XBinary *pBinary, qint64 nOffset, qint64 nSize, XFW_DEF::VAL_TYPE vtype, bool bIsBigEndian);
-    static QString _valueToString(const QVariant &var, qint64 nSize, XFW_DEF::VAL_TYPE vtype);
+    static void setItemToModel(QStandardItemModel *pModel, qint32 nRow, qint32 nColumn, const QVariant &var, qint64 nSize, XFW_DEF::VAL_TYPE vtype);
 
     enum CW {
         CW_UINT8 = 0,
@@ -210,6 +210,9 @@ public:
     QStandardItemModel *getHeaderTableModel(QTableWidget *pTableWidget);
     void saveHeaderTable(QTableWidget *pTableWidget, const QString &sFileName);
 
+    static void _addSpecItems(QTreeWidget *pTreeWidget, QIODevice *pDevice, XBinary::FT fileType, bool bIsImage, XADDR nImageBase);
+    static XFW_DEF::TYPE MACH_commandIdToType(qint32 nCommandId);
+
 protected:
     enum SV {
         SV_NONE = 0,
@@ -231,6 +234,7 @@ protected:
     virtual void _widgetValueChanged(QVariant vValue);
     void contextMenuGenericHeaderWidget(const QPoint &pos, QTableWidget *pTableWidget, QList<RECWIDGET> *pListRecWidget, XFW_DEF::CWOPTIONS *pCwOptions);
     void contextMenuGenericTableWidget(const QPoint &pos, QTableView *pTableView, QList<RECWIDGET> *pListRecWidget, XFW_DEF::CWOPTIONS *pCwOptions);
+    void tableView_doubleClicked(QTableView *pTableView, const QModelIndex &index);
 
 signals:
     void closeApp();

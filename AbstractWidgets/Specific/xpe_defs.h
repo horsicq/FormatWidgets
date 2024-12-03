@@ -164,14 +164,6 @@ extern const XFW_DEF::HEADER_RECORD records64[__data_size];
 }  // namespace X_IMAGE_LOADCONFIG
 
 namespace X_IMAGE_DATA_DIRECTORY {
-enum CB {
-    __CB_size
-};
-
-enum INV {
-    __INV_size
-};
-
 enum DATA {
     Address = 0,
     Size,
@@ -197,18 +189,6 @@ enum DATA {
 };
 
 extern const XFW_DEF::HEADER_RECORD records[__data_size + 1];
-
-enum CB {
-    CB_CHARACTERISTICS = 0,
-    CB_ALIGH,
-    __CB_size
-};
-
-enum INV {
-    INV_VirtualAddress,
-    INV_PointerToRawData,
-    __INV_size
-};
 }  // namespace X_IMAGE_SECTION_HEADER
 
 namespace X_IMAGE_EXPORT {
@@ -258,14 +238,6 @@ enum DATA {
 };
 
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
-
-enum CB {
-    CB_TYPE = 0,
-    __CB_size
-};
-enum INV {
-    __INV_size
-};
 }  // namespace X_IMAGE_DEBUG
 
 namespace X_IMAGE_EXPORT_FUNCTION {
@@ -290,16 +262,6 @@ enum DATA {
 };
 
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
-
-enum CB {
-    __CB_size
-};
-enum INV {
-    INV_OriginalFirstThunk = 0,
-    INV_Name,
-    INV_FirstThunk,
-    __INV_size
-};
 }  // namespace X_IMAGE_IMPORT
 
 namespace X_IMAGE_DELAYIMPORT {
@@ -316,13 +278,6 @@ enum DATA {
 };
 
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
-
-enum CB {
-    __CB_size
-};
-enum INV {
-    __INV_size
-};
 }  // namespace X_IMAGE_DELAYIMPORT
 
 namespace X_IMAGE_BOUNDIMPORT {
@@ -334,13 +289,6 @@ enum DATA {
 };
 
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
-
-enum CB {
-    __CB_size
-};
-enum INV {
-    __INV_size
-};
 }  // namespace X_IMAGE_BOUNDIMPORT
 
 namespace X_IMAGE_IMPORT_FUNCTION {
@@ -377,13 +325,6 @@ enum DATA {
 };
 
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
-
-enum CB {
-    __CB_size
-};
-enum INV {
-    __INV_size
-};
 }  // namespace X_IMAGE_RELOCS
 
 namespace X_IMAGE_NETHEADER {
@@ -439,12 +380,6 @@ enum DATA {
 
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
 
-enum CB {
-    __CB_size
-};
-enum INV {
-    __INV_size
-};
 }  // namespace X_IMAGE_EXCEPTIONS
 
 namespace X_IMAGE_RELOCS_POSITION {

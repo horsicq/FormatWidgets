@@ -45,6 +45,7 @@ private slots:
     void on_tableViewMain_clicked(const QModelIndex &index);
     void on_toolButtonTableReload_clicked();
     void on_toolButtonTableSave_clicked();
+    void on_tableViewMain_doubleClicked(const QModelIndex &index);
 
 private:
     Ui::XGenericTableWidget *ui;

@@ -105,3 +105,8 @@ void XGenericTableWidget::on_toolButtonTableReload_clicked()
 void XGenericTableWidget::on_toolButtonTableSave_clicked()
 {
 }
+
+void XGenericTableWidget::on_tableViewMain_doubleClicked(const QModelIndex &index)
+{
+    tableView_doubleClicked(ui->tableViewMain, index);
+}
