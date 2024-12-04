@@ -1,7 +1,11 @@
 include_directories(${CMAKE_CURRENT_LIST_DIR})
 include_directories(${CMAKE_CURRENT_LIST_DIR}/Generic)
 
-include(${CMAKE_CURRENT_LIST_DIR}/abstractwidgets.cmake)
+if (NOT DEFINED ABSTRACTWIDGETS_SOURCES)
+    include(${CMAKE_CURRENT_LIST_DIR}/abstractwidgets.cmake)
+    set(XFORMATWIDGET_SOURCES ${XFORMATWIDGET_SOURCES} ${ABSTRACTWIDGETS_SOURCES})
+endif()
+
 include(${CMAKE_CURRENT_LIST_DIR}/../../XCppfilt/xcppfilt.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../SearchSignatures/searchsignatureswidget.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../SearchStrings/searchstringswidget.cmake)
@@ -34,6 +38,7 @@ include(${CMAKE_CURRENT_LIST_DIR}/../../XYara/xyara.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../../FormatDialogs/dialogwidget.cmake)
 
 set(XFORMATWIDGET_SOURCES
+    ${XFORMATWIDGET_SOURCES}
     ${ABSTRACTWIDGETS_SOURCES}
     ${XCPPFILT_SOURCES}
     ${SEARCHSIGNATURESWIDGET_SOURCES}

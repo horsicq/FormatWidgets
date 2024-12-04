@@ -26,4 +26,12 @@ set(ABSTRACTWIDGETS_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/Specific/xmsdos_defs.h
     ${CMAKE_CURRENT_LIST_DIR}/Specific/xpe_defs.cpp
     ${CMAKE_CURRENT_LIST_DIR}/Specific/xpe_defs.h
+    ${CMAKE_CURRENT_LIST_DIR}/Specific/xdex_defs.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Specific/xdex_defs.h
+    ${CMAKE_CURRENT_LIST_DIR}/Specific/xle_defs.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Specific/xle_defs.h
+    ${CMAKE_CURRENT_LIST_DIR}/Specific/xne_defs.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Specific/xne_defs.h
+    ${CMAKE_CURRENT_LIST_DIR}/Specific/xpdf_defs.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Specific/xpdf_defs.h
 )

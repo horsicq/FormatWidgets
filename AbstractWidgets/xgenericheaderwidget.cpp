@@ -76,7 +76,9 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
         (getCwOptions()->_type == XFW_DEF::TYPE_MACH_fileset_entry) ||
         (getCwOptions()->_type == XFW_DEF::TYPE_MACH_source_version) ||
         (getCwOptions()->_type == XFW_DEF::TYPE_MACH_dylinker) ||
-        (getCwOptions()->_type == XFW_DEF::TYPE_MACH_data_in_code)) {
+        (getCwOptions()->_type == XFW_DEF::TYPE_MACH_data_in_code) ||
+        (getCwOptions()->_type == XFW_DEF::TYPE_MACH_code_signature) ||
+        (getCwOptions()->_type == XFW_DEF::TYPE_MACH_routines)){
         adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getLoadCommandTypesS(), X_mach_commands::cmd, XComboBoxEx::CBTYPE_LIST, 0);
     }
 

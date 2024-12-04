@@ -74,7 +74,7 @@ public:
         qint32 nPosition;
         qint64 nOffset;
         qint64 nSize;
-        XFW_DEF::VAL_TYPE vtype;
+        qint32 vtype;
         XBinary::ENDIAN endian;
         XLineEditHEX *pLineEdit;
         XComboBoxEx *pComboBox;
@@ -186,8 +186,8 @@ public:
     void updateRecWidgets(QIODevice *pDevice, QList<RECWIDGET> *pListRecWidget);
     void _adjustRecWidget(RECWIDGET *pRecWidget, QVariant varValue);
 
-    static QVariant _readVariant(XBinary *pBinary, qint64 nOffset, qint64 nSize, XFW_DEF::VAL_TYPE vtype, bool bIsBigEndian);
-    static void setItemToModel(QStandardItemModel *pModel, qint32 nRow, qint32 nColumn, const QVariant &var, qint64 nSize, XFW_DEF::VAL_TYPE vtype);
+    static QVariant _readVariant(XBinary *pBinary, qint64 nOffset, qint64 nSize, qint32 vtype, bool bIsBigEndian);
+    static void setItemToModel(QStandardItemModel *pModel, qint32 nRow, qint32 nColumn, const QVariant &var, qint64 nSize, qint32 vtype);
 
     enum CW {
         CW_UINT8 = 0,

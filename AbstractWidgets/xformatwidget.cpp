@@ -301,6 +301,14 @@ QList<XFW_DEF::HEADER_RECORD> XFormatWidget::getHeaderRecords(const XFW_DEF::CWO
             pRecords = X_mach_encryption_info::records32;
             nNumberOfRecords = X_mach_encryption_info::__data_size;
         }
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_routines) {
+        if (pCwOptions->mode == XBinary::MODE_64) {
+            pRecords = X_mach_routines::records64;
+            nNumberOfRecords = X_mach_routines::__data_size;
+        } else if (pCwOptions->mode == XBinary::MODE_32) {
+            pRecords = X_mach_routines::records32;
+            nNumberOfRecords = X_mach_routines::__data_size;
+        }
     } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_dyld_info) {
         pRecords = X_mach_dyld_info::records;
         nNumberOfRecords = X_mach_dyld_info::__data_size;
@@ -326,6 +334,9 @@ QList<XFW_DEF::HEADER_RECORD> XFormatWidget::getHeaderRecords(const XFW_DEF::CWO
         pRecords = X_mach_dylinker::records;
         nNumberOfRecords = X_mach_dylinker::__data_size;
     } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_data_in_code) {
+        pRecords = X_mach_linkedit_data::records;
+        nNumberOfRecords = X_mach_linkedit_data::__data_size;
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_code_signature) {
         pRecords = X_mach_linkedit_data::records;
         nNumberOfRecords = X_mach_linkedit_data::__data_size;
     } else if (pCwOptions->_type == XFW_DEF::TYPE_ELF_elf_ehdr) {
@@ -373,8 +384,7 @@ void XFormatWidget::setValue(QVariant vValue, qint32 nPosition, qint64 nOffset, 
             RECWIDGET recWidget = listRecWidget.at(nPosition);
 
             XBinary binary(getDevice(), getOptions().bIsImage, getOptions().nImageBase);
-            if ((recWidget.vtype == XFW_DEF::VAL_TYPE_DATA) || (recWidget.vtype == XFW_DEF::VAL_TYPE_SIZE) || (recWidget.vtype == XFW_DEF::VAL_TYPE_ADDRESS) ||
-                (recWidget.vtype == XFW_DEF::VAL_TYPE_OFFSET)) {
+            if (recWidget.vtype & XFW_DEF::VAL_TYPE_INT_) {
                 if (recWidget.nSize == 1) {
                     binary.write_uint8(recWidget.nOffset, vValue.toUInt());
                 } else if (recWidget.nSize == 2) {
@@ -410,13 +420,26 @@ void XFormatWidget::setValue(QVariant vValue, qint32 nPosition, qint64 nOffset, 
 
 void XFormatWidget::adjustGenericHeader(QTableWidget *pTableWidget, const QList<XFW_DEF::HEADER_RECORD> *pListHeaderRecords)
 {
-    qint32 nSymbolWidth = XLineEditHEX::getSymbolWidth(pTableWidget);
+    qint32 nNumberOfRecords = pListHeaderRecords->count();
+
+    qint32 nValueWidthInSymbols = 2;
+
+    for (qint32 i = 0; i < nNumberOfRecords; i++) {
+        XFW_DEF::HEADER_RECORD record = pListHeaderRecords->at(i);
+
+        if (record.vtype & XFW_DEF::VAL_TYPE_INT_) {
+            nValueWidthInSymbols = qMax(nValueWidthInSymbols, record.nSize * 2);
+        }
+    }
+
+    qint32 nValueWidth = XOptions::getControlWidth(pTableWidget, nValueWidthInSymbols);
+    qint32 nSymbolWidth = XOptions::getCharWidth(pTableWidget);
 
     pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_NAME, QHeaderView::ResizeToContents);
     pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_OFFSET, QHeaderView::ResizeToContents);
     pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_SIZE, QHeaderView::ResizeToContents);
     pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_TYPE, QHeaderView::ResizeToContents);
-    pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE, nSymbolWidth * 12);
+    pTableWidget->setColumnWidth(HEADER_COLUMN_VALUE, nValueWidth);
     pTableWidget->setColumnWidth(HEADER_COLUMN_INFO, nSymbolWidth * 20);
     pTableWidget->horizontalHeader()->setSectionResizeMode(HEADER_COLUMN_COMMENT, QHeaderView::Stretch);
 }
@@ -430,8 +453,7 @@ void XFormatWidget::adjustGenericTable(QTableView *pTableView, const QList<XFW_D
     for (qint32 i = 0; i < nNumberOfRecords; i++) {
         qint32 nWidth = 200;
 
-        if ((pListHeaderRecords->at(i).vtype == XFW_DEF::VAL_TYPE_DATA) || (pListHeaderRecords->at(i).vtype == XFW_DEF::VAL_TYPE_SIZE) ||
-            (pListHeaderRecords->at(i).vtype == XFW_DEF::VAL_TYPE_ADDRESS) || (pListHeaderRecords->at(i).vtype == XFW_DEF::VAL_TYPE_OFFSET)) {
+        if (pListHeaderRecords->at(i).vtype & XFW_DEF::VAL_TYPE_INT_) {
             if (pListHeaderRecords->at(i).nSize == 1) {
                 nWidth = XOptions::getControlWidth(pTableView, 2);
             } else if (pListHeaderRecords->at(i).nSize == 2) {
@@ -441,12 +463,12 @@ void XFormatWidget::adjustGenericTable(QTableView *pTableView, const QList<XFW_D
             } else if (pListHeaderRecords->at(i).nSize == 8) {
                 nWidth = XOptions::getControlWidth(pTableView, 16);
             }
-        } else if (XFW_DEF::VAL_TYPE_NUMBER) {
+        } else if (pListHeaderRecords->at(i).vtype & XFW_DEF::VAL_TYPE_NUMBER_) {
             nWidth = XOptions::getControlWidth(pTableView, 2);
         }
 
         if (i == (nNumberOfRecords - 1)) {
-            if (pListHeaderRecords->at(i).vtype == XFW_DEF::VAL_TYPE_INFO) {
+            if (pListHeaderRecords->at(i).vtype & XFW_DEF::VAL_TYPE_INFO_) {
                 pTableView->horizontalHeader()->setSectionResizeMode(i, QHeaderView::Stretch);
             }
         }
@@ -836,8 +858,7 @@ void XFormatWidget::_adjustRecWidget(RECWIDGET *pRecWidget, QVariant varValue)
     if (pRecWidget->pComboBox) bBlockComboBox = pRecWidget->pComboBox->blockSignals(true);
 
     if (pRecWidget->pLineEdit) {
-        if ((pRecWidget->vtype == XFW_DEF::VAL_TYPE_DATA) || (pRecWidget->vtype == XFW_DEF::VAL_TYPE_SIZE) || (pRecWidget->vtype == XFW_DEF::VAL_TYPE_ADDRESS) ||
-            (pRecWidget->vtype == XFW_DEF::VAL_TYPE_OFFSET)) {
+        if (pRecWidget->vtype & XFW_DEF::VAL_TYPE_INT_) {
             if (pRecWidget->nSize == 1) {
                 pRecWidget->pLineEdit->setValue_uint8(varValue.toUInt(), XLineEditHEX::_MODE_HEX);
             } else if (pRecWidget->nSize == 2) {
@@ -851,7 +872,7 @@ void XFormatWidget::_adjustRecWidget(RECWIDGET *pRecWidget, QVariant varValue)
     }
 
     if (pRecWidget->pComboBox) pRecWidget->pComboBox->setValue(varValue);
-    if (pRecWidget->vtype == XFW_DEF::VAL_TYPE_SIZE) sComment = XBinary::bytesCountToString(varValue.toULongLong());
+    if (pRecWidget->vtype & XFW_DEF::VAL_TYPE_SIZE_) sComment = XBinary::bytesCountToString(varValue.toULongLong());
 
     if (pRecWidget->pComboBox) {
         sComment = pRecWidget->pComboBox->getDescription();
@@ -865,11 +886,11 @@ void XFormatWidget::_adjustRecWidget(RECWIDGET *pRecWidget, QVariant varValue)
     if (pRecWidget->pComboBox) pRecWidget->pComboBox->blockSignals(bBlockComboBox);
 }
 
-QVariant XFormatWidget::_readVariant(XBinary *pBinary, qint64 nOffset, qint64 nSize, XFW_DEF::VAL_TYPE vtype, bool bIsBigEndian)
+QVariant XFormatWidget::_readVariant(XBinary *pBinary, qint64 nOffset, qint64 nSize, qint32 vtype, bool bIsBigEndian)
 {
     QVariant varResult;
 
-    if ((vtype == XFW_DEF::VAL_TYPE_DATA) || (vtype == XFW_DEF::VAL_TYPE_SIZE) || (vtype == XFW_DEF::VAL_TYPE_ADDRESS) || (vtype == XFW_DEF::VAL_TYPE_OFFSET)) {
+    if (vtype & XFW_DEF::VAL_TYPE_INT_) {
         if (nSize == 1) {
             varResult = pBinary->read_uint8(nOffset);
         } else if (nSize == 2) {
@@ -884,11 +905,11 @@ QVariant XFormatWidget::_readVariant(XBinary *pBinary, qint64 nOffset, qint64 nS
     return varResult;
 }
 
-void XFormatWidget::setItemToModel(QStandardItemModel *pModel, qint32 nRow, qint32 nColumn, const QVariant &var, qint64 nSize, XFW_DEF::VAL_TYPE vtype)
+void XFormatWidget::setItemToModel(QStandardItemModel *pModel, qint32 nRow, qint32 nColumn, const QVariant &var, qint64 nSize, qint32 vtype)
 {
     QStandardItem *pItem = new QStandardItem;
 
-    if ((vtype == XFW_DEF::VAL_TYPE_DATA) || (vtype == XFW_DEF::VAL_TYPE_SIZE) || (vtype == XFW_DEF::VAL_TYPE_ADDRESS) || (vtype == XFW_DEF::VAL_TYPE_OFFSET)) {
+    if (vtype & XFW_DEF::VAL_TYPE_INT_) {
         QString sString;
 
         if (nSize == 1) {
@@ -1174,7 +1195,10 @@ XFW_DEF::TYPE XFormatWidget::MACH_commandIdToType(qint32 nCommandId)
     } else if ( nCommandId == XMACH_DEF::S_LC_DATA_IN_CODE) {
         result = XFW_DEF::TYPE_MACH_data_in_code;
     } else if ( nCommandId == XMACH_DEF::S_LC_CODE_SIGNATURE) {
-        result = XFW_DEF::TYPE_MACH_data_in_code;
+        result = XFW_DEF::TYPE_MACH_code_signature;
+    } else if ((nCommandId == XMACH_DEF::S_LC_ROUTINES) ||
+               (nCommandId == XMACH_DEF::S_LC_ROUTINES_64) ){
+        result = XFW_DEF::TYPE_MACH_routines;
     } else {
         result = XFW_DEF::TYPE_MACH_command;
     }
@@ -1515,8 +1539,7 @@ bool XFormatWidget::createHeaderTable(QTableWidget *pTableWidget, const QList<XF
         pItemType->setText(pListHeaderRecords->at(i).sType);
         pTableWidget->setItem(i, HEADER_COLUMN_TYPE, pItemType);
 
-        if ((recWidget.vtype == XFW_DEF::VAL_TYPE_DATA) || (recWidget.vtype == XFW_DEF::VAL_TYPE_SIZE) || (recWidget.vtype == XFW_DEF::VAL_TYPE_ADDRESS) ||
-            (recWidget.vtype == XFW_DEF::VAL_TYPE_OFFSET)) {
+        if (recWidget.vtype & XFW_DEF::VAL_TYPE_INT_) {
             recWidget.pLineEdit = new XLineEditHEX();
             recWidget.pLineEdit->setProperty("POSITION", recWidget.nPosition);
             recWidget.pLineEdit->setProperty("OFFSET", recWidget.nOffset);
@@ -1578,12 +1601,12 @@ bool XFormatWidget::createListTable(qint32 nType, QTableWidget *pTableWidget, co
         ppLineEdits[i]->setProperty("STYPE", nType);
         ppLineEdits[i]->setProperty("NDATA", pRecords[i].nPosition);
 
-        if (pRecords[i].vtype == XFW_DEF::VAL_TYPE_TEXT) {
+        if (pRecords[i].vtype & XFW_DEF::VAL_TYPE_TEXT_) {
             ppLineEdits[i]->setAlignment(Qt::AlignLeft);
         }
 
         if (pRecords[i].nOffset != -1) {
-            if ((pRecords[i].vtype == XFW_DEF::VAL_TYPE_TEXT) || (pRecords[i].vtype == XFW_DEF::VAL_TYPE_UUID)) {
+            if (pRecords[i].vtype & XFW_DEF::VAL_TYPE_ARRAY_) {
                 if (pRecords[i].nSize != -1) {
                     ppLineEdits[i]->setMaxLength(pRecords[i].nSize);
                 }

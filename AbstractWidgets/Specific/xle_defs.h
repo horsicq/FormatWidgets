@@ -75,7 +75,7 @@ enum DATA {
 };
 
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
-}  // namespace N_VXD_HEADER
+}  // namespace X_VXD_HEADER
 
 namespace X_O32_OBJ {
 enum DATA {

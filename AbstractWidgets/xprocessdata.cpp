@@ -50,7 +50,7 @@ void XProcessData::process()
         XFW_DEF::HEADER_RECORD record = {};
         record.nPosition = -1;
         record.sName = QString("#");
-        record.vtype = XFW_DEF::VAL_TYPE_NUMBER;
+        record.vtype = XFW_DEF::VAL_TYPE_NUMBER_;
 
         g_pListHeaderRecords->append(record);
     }
@@ -63,7 +63,7 @@ void XProcessData::process()
         XFW_DEF::HEADER_RECORD record = {};
         record.nPosition = -1;
         record.sName = tr("Info");
-        record.vtype = XFW_DEF::VAL_TYPE_INFO;
+        record.vtype = XFW_DEF::VAL_TYPE_INFO_;
 
         g_pListHeaderRecords->append(record);
     }

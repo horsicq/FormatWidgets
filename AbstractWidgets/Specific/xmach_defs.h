@@ -407,6 +407,25 @@ enum DATA {
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace X_mach_unix_thread
 
+namespace X_mach_routines {
+enum DATA {
+    cmd = 0,
+    cmdsize,
+    init_address,
+    init_module,
+    reserved1,
+    reserved2,
+    reserved3,
+    reserved4,
+    reserved5,
+    reserved6,
+    __data_size
+};
+
+extern const XFW_DEF::HEADER_RECORD records32[__data_size];
+extern const XFW_DEF::HEADER_RECORD records64[__data_size];
+}  // namespace X_mach_routines
+
 namespace X_mach_unix_thread_x86_32 {
 enum DATA {
     eax,

@@ -84,7 +84,9 @@ enum TYPE {
     TYPE_MACH_fileset_entry,
     TYPE_MACH_source_version,
     TYPE_MACH_dylinker,
-    TYPE_MACH_data_in_code
+    TYPE_MACH_data_in_code,
+    TYPE_MACH_code_signature,
+    TYPE_MACH_routines
 };
 
 enum WIDGETMODE {
@@ -112,17 +114,17 @@ struct CWOPTIONS {
 };
 
 enum VAL_TYPE {
-    VAL_TYPE_UNKNOWN = 0,
-    VAL_TYPE_DATA,
-    VAL_TYPE_ARRAY,
-    VAL_TYPE_RELADDRESS,
-    VAL_TYPE_ADDRESS,
-    VAL_TYPE_OFFSET,
-    VAL_TYPE_SIZE,
-    VAL_TYPE_TEXT,
-    VAL_TYPE_UUID,
-    VAL_TYPE_NUMBER,
-    VAL_TYPE_INFO
+    VAL_TYPE_UNKNOWN_ = 0,
+    VAL_TYPE_INT_ =  1 << 0,
+    VAL_TYPE_ARRAY_ = 1 << 1,
+    VAL_TYPE_RELADDRESS_ = 1 << 2,
+    VAL_TYPE_ADDRESS_ = 1 << 3,
+    VAL_TYPE_OFFSET_ = 1 << 4,
+    VAL_TYPE_SIZE_ = 1 << 5,
+    VAL_TYPE_TEXT_ = 1 << 6,
+    VAL_TYPE_UUID_ = 1 << 7,
+    VAL_TYPE_NUMBER_ = 1 << 8,
+    VAL_TYPE_INFO_ = 1 << 9
 };
 
 struct HEADER_RECORD {
@@ -131,7 +133,7 @@ struct HEADER_RECORD {
     qint32 nOffset;
     qint32 nSize;
     QString sType;
-    VAL_TYPE vtype;
+    qint32 vtype;
 };
 
 enum TABLEDATA {
