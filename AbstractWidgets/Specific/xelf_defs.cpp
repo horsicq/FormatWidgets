@@ -151,7 +151,7 @@ const XFW_DEF::HEADER_RECORD records[] = {
 
 namespace X_ELF_INTERPRETER {
 const XFW_DEF::HEADER_RECORD records[] = {
-    {interpreter, QObject::tr("Interpreter"), 0, -1, "Ansi string", XFW_DEF::VAL_TYPE_ARRAY_ | XFW_DEF::VAL_TYPE_TEXT_},
+    {interpreter, QObject::tr("Interpreter"), 0, -1, "Ansi string", XFW_DEF::VAL_TYPE_ARRAY_ | XFW_DEF::VAL_TYPE_ANSI},
 };
 }
 
@@ -164,7 +164,7 @@ const XFW_DEF::HEADER_RECORD records[] = {
 
 namespace X_ELF_RUNPATH {
 const XFW_DEF::HEADER_RECORD records[] = {
-    {runpath, "runpath", 0, -1, "Ansi string", XFW_DEF::VAL_TYPE_ARRAY_ | XFW_DEF::VAL_TYPE_TEXT_},
+    {runpath, "runpath", 0, -1, "Ansi string", XFW_DEF::VAL_TYPE_ARRAY_ | XFW_DEF::VAL_TYPE_ANSI},
 };
 }
 

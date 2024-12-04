@@ -57,36 +57,38 @@ enum TYPE {
     TYPE_DIESCAN,
     TYPE_YARASCAN,
     TYPE_TOOLS,
+    TYPE_GENERIC_STRINGTABLE_ANSI,
     TYPE_MSDOS_EXE_file,
     TYPE_MSDOS_IMAGE_DOS_HEADER,
     TYPE_ELF_elf_ehdr,
     TYPE_MACH_mach_header,
     TYPE_MACH_command,
-    TYPE_MACH_segment,
-    TYPE_MACH_dylib,
-    TYPE_MACH_rpath,
-    TYPE_MACH_sub_umbrella,
-    TYPE_MACH_sub_client,
-    TYPE_MACH_sub_library,
-    TYPE_MACH_symtab,
-    TYPE_MACH_dysymtab,
-    TYPE_MACH_segment_split_info,
-    TYPE_MACH_atom_info,
-    TYPE_MACH_function_starts,
-    TYPE_MACH_dyld_exports_trie,
-    TYPE_MACH_dyld_chained_fixups,
-    TYPE_MACH_encryption_info,
-    TYPE_MACH_dyld_info,
-    TYPE_MACH_version_min,
-    TYPE_MACH_uuid,
-    TYPE_MACH_build_version,
-    TYPE_MACH_main,
-    TYPE_MACH_fileset_entry,
-    TYPE_MACH_source_version,
-    TYPE_MACH_dylinker,
-    TYPE_MACH_data_in_code,
-    TYPE_MACH_code_signature,
-    TYPE_MACH_routines
+    TYPE_MACH_command_segment,
+    TYPE_MACH_command_dylib,
+    TYPE_MACH_command_rpath,
+    TYPE_MACH_command_sub_umbrella,
+    TYPE_MACH_command_sub_client,
+    TYPE_MACH_command_sub_library,
+    TYPE_MACH_command_symtab,
+    TYPE_MACH_command_dysymtab,
+    TYPE_MACH_command_segment_split_info,
+    TYPE_MACH_command_atom_info,
+    TYPE_MACH_command_function_starts,
+    TYPE_MACH_command_dyld_exports_trie,
+    TYPE_MACH_command_dyld_chained_fixups,
+    TYPE_MACH_command_encryption_info,
+    TYPE_MACH_command_dyld_info,
+    TYPE_MACH_command_version_min,
+    TYPE_MACH_command_uuid,
+    TYPE_MACH_command_build_version,
+    TYPE_MACH_command_main,
+    TYPE_MACH_command_fileset_entry,
+    TYPE_MACH_command_source_version,
+    TYPE_MACH_command_dylinker,
+    TYPE_MACH_command_data_in_code,
+    TYPE_MACH_command_code_signature,
+    TYPE_MACH_command_routines,
+    TYPE_MACH_SymbolTable,
 };
 
 enum WIDGETMODE {
@@ -107,6 +109,7 @@ struct CWOPTIONS {
     XInfoDB *pXInfoDB;
     qint64 nDataOffset;  // TODO location
     qint64 nDataSize;
+    qint64 nDataCount;
     QVariant var1;
     QVariant var2;
     XBinary::ENDIAN endian;
@@ -121,10 +124,10 @@ enum VAL_TYPE {
     VAL_TYPE_ADDRESS_ = 1 << 3,
     VAL_TYPE_OFFSET_ = 1 << 4,
     VAL_TYPE_SIZE_ = 1 << 5,
-    VAL_TYPE_TEXT_ = 1 << 6,
+    VAL_TYPE_ANSI = 1 << 6,
     VAL_TYPE_UUID_ = 1 << 7,
     VAL_TYPE_NUMBER_ = 1 << 8,
-    VAL_TYPE_INFO_ = 1 << 9
+    VAL_TYPE_STRING = 1 << 8,
 };
 
 struct HEADER_RECORD {
@@ -142,6 +145,7 @@ enum TABLEDATA {
     TABLEDATA_HEADERSIZE,
     TABLEDATA_DATAOFFSET,
     TABLEDATA_DATASIZE,
+    TABLEDATA_DATACOUNT
 };
 
 enum SECTION_DATA {
@@ -168,6 +172,7 @@ enum WIDGET_DATA {
     WIDGET_DATA_WIDGETMODE,
     WIDGET_DATA_OFFSET,
     WIDGET_DATA_SIZE,
+    WIDGET_DATA_COUNT,
     WIDGET_DATA_MODE,
     WIDGET_DATA_ENDIAN,
     WIDGET_DATA_VAR1,

@@ -176,6 +176,7 @@ void XMainWidget::reloadData(bool bSaveSelection)
     cwOptions.mode = (XBinary::MODE)(ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + XFW_DEF::WIDGET_DATA_MODE).toLongLong());
     cwOptions.nDataOffset = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + XFW_DEF::WIDGET_DATA_OFFSET).toLongLong();
     cwOptions.nDataSize = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + XFW_DEF::WIDGET_DATA_SIZE).toLongLong();
+    cwOptions.nDataCount = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + XFW_DEF::WIDGET_DATA_COUNT).toLongLong();
     cwOptions.var1 = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + XFW_DEF::WIDGET_DATA_VAR1);
     cwOptions.var2 = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + XFW_DEF::WIDGET_DATA_VAR2);
 
@@ -242,41 +243,41 @@ void XMainWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
 void XMainWidget::_addBaseItems(QTreeWidget *pTreeWidget, XBinary::FT fileType)
 {
     QTreeWidgetItem *pItemInfo =
-        createNewItem(XFW_DEF::TYPE_INFO, XFW_DEF::WIDGETMODE_UNKNOWN, tr("Info"), XOptions::ICONTYPE_INFO, 0, -1, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN);
+        createNewItem(XFW_DEF::TYPE_INFO, XFW_DEF::WIDGETMODE_UNKNOWN, tr("Info"), XOptions::ICONTYPE_INFO, 0, -1, 0, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN);
     pTreeWidget->addTopLevelItem(pItemInfo);
-    pItemInfo->addChild(createNewItem(XFW_DEF::TYPE_NFDSCAN, XFW_DEF::WIDGETMODE_UNKNOWN, "Nauz File Detector (NFD)", XOptions::ICONTYPE_NFD, 0, -1, 0, 0,
+    pItemInfo->addChild(createNewItem(XFW_DEF::TYPE_NFDSCAN, XFW_DEF::WIDGETMODE_UNKNOWN, "Nauz File Detector (NFD)", XOptions::ICONTYPE_NFD, 0, -1, 0, 0, 0,
                                       XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
-    pItemInfo->addChild(createNewItem(XFW_DEF::TYPE_DIESCAN, XFW_DEF::WIDGETMODE_UNKNOWN, "Detect It Easy (DiE)", XOptions::ICONTYPE_DIE, 0, -1, 0, 0,
+    pItemInfo->addChild(createNewItem(XFW_DEF::TYPE_DIESCAN, XFW_DEF::WIDGETMODE_UNKNOWN, "Detect It Easy (DiE)", XOptions::ICONTYPE_DIE, 0, -1, 0, 0, 0,
                                       XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
 #ifdef USE_YARA
-    pItemInfo->addChild(createNewItem(XFW_DEF::TYPE_YARASCAN, XFW_DEF::WIDGETMODE_UNKNOWN, "Yara rules", XOptions::ICONTYPE_YARA, 0, -1, 0, 0, XBinary::MODE_UNKNOWN,
+    pItemInfo->addChild(createNewItem(XFW_DEF::TYPE_YARASCAN, XFW_DEF::WIDGETMODE_UNKNOWN, "Yara rules", XOptions::ICONTYPE_YARA, 0, -1, 0, 0, 0, XBinary::MODE_UNKNOWN,
                                       XBinary::ENDIAN_UNKNOWN));
 #endif
-    pTreeWidget->addTopLevelItem(createNewItem(XFW_DEF::TYPE_VIRUSTOTAL, XFW_DEF::WIDGETMODE_UNKNOWN, "VirusTotal", XOptions::ICONTYPE_VIRUSTOTAL, 0, -1, 0, 0,
+    pTreeWidget->addTopLevelItem(createNewItem(XFW_DEF::TYPE_VIRUSTOTAL, XFW_DEF::WIDGETMODE_UNKNOWN, "VirusTotal", XOptions::ICONTYPE_VIRUSTOTAL, 0, -1, 0, 0, 0,
                                                XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
-    pTreeWidget->addTopLevelItem(createNewItem(XFW_DEF::TYPE_VISUALIZATION, XFW_DEF::WIDGETMODE_UNKNOWN, tr("Visualization"), XOptions::ICONTYPE_VISUALIZATION, 0, -1, 0,
+    pTreeWidget->addTopLevelItem(createNewItem(XFW_DEF::TYPE_VISUALIZATION, XFW_DEF::WIDGETMODE_UNKNOWN, tr("Visualization"), XOptions::ICONTYPE_VISUALIZATION, 0, -1, 0, 0,
                                                0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
     pTreeWidget->addTopLevelItem(
-        createNewItem(XFW_DEF::TYPE_HEX, XFW_DEF::WIDGETMODE_UNKNOWN, tr("Hex"), XOptions::ICONTYPE_HEX, 0, -1, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
+        createNewItem(XFW_DEF::TYPE_HEX, XFW_DEF::WIDGETMODE_UNKNOWN, tr("Hex"), XOptions::ICONTYPE_HEX, 0, -1, 0, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
 
     if (fileType != XBinary::FT_DEX) {
-        pTreeWidget->addTopLevelItem(createNewItem(XFW_DEF::TYPE_DISASM, XFW_DEF::WIDGETMODE_UNKNOWN, tr("Disasm"), XOptions::ICONTYPE_DISASM, 0, -1, 0, 0,
+        pTreeWidget->addTopLevelItem(createNewItem(XFW_DEF::TYPE_DISASM, XFW_DEF::WIDGETMODE_UNKNOWN, tr("Disasm"), XOptions::ICONTYPE_DISASM, 0, -1, 0, 0, 0,
                                                    XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
     }
 
     pTreeWidget->addTopLevelItem(
-        createNewItem(XFW_DEF::TYPE_HASH, XFW_DEF::WIDGETMODE_UNKNOWN, tr("Hash"), XOptions::ICONTYPE_HASH, 0, -1, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
-    pTreeWidget->addTopLevelItem(createNewItem(XFW_DEF::TYPE_STRINGS, XFW_DEF::WIDGETMODE_UNKNOWN, tr("Strings"), XOptions::ICONTYPE_STRING, 0, -1, 0, 0,
+        createNewItem(XFW_DEF::TYPE_HASH, XFW_DEF::WIDGETMODE_UNKNOWN, tr("Hash"), XOptions::ICONTYPE_HASH, 0, -1, 0, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
+    pTreeWidget->addTopLevelItem(createNewItem(XFW_DEF::TYPE_STRINGS, XFW_DEF::WIDGETMODE_UNKNOWN, tr("Strings"), XOptions::ICONTYPE_STRING, 0, -1, 0, 0, 0,
                                                XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
-    pTreeWidget->addTopLevelItem(createNewItem(XFW_DEF::TYPE_SIGNATURES, XFW_DEF::WIDGETMODE_UNKNOWN, tr("Signatures"), XOptions::ICONTYPE_SIGNATURE, 0, -1, 0, 0,
+    pTreeWidget->addTopLevelItem(createNewItem(XFW_DEF::TYPE_SIGNATURES, XFW_DEF::WIDGETMODE_UNKNOWN, tr("Signatures"), XOptions::ICONTYPE_SIGNATURE, 0, -1, 0, 0, 0,
                                                XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
-    pTreeWidget->addTopLevelItem(createNewItem(XFW_DEF::TYPE_MEMORYMAP, XFW_DEF::WIDGETMODE_UNKNOWN, tr("Memory map"), XOptions::ICONTYPE_MEMORYMAP, 0, -1, 0, 0,
+    pTreeWidget->addTopLevelItem(createNewItem(XFW_DEF::TYPE_MEMORYMAP, XFW_DEF::WIDGETMODE_UNKNOWN, tr("Memory map"), XOptions::ICONTYPE_MEMORYMAP, 0, -1, 0, 0, 0,
                                                XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
-    pTreeWidget->addTopLevelItem(createNewItem(XFW_DEF::TYPE_ENTROPY, XFW_DEF::WIDGETMODE_UNKNOWN, tr("Entropy"), XOptions::ICONTYPE_ENTROPY, 0, -1, 0, 0,
+    pTreeWidget->addTopLevelItem(createNewItem(XFW_DEF::TYPE_ENTROPY, XFW_DEF::WIDGETMODE_UNKNOWN, tr("Entropy"), XOptions::ICONTYPE_ENTROPY, 0, -1, 0, 0, 0,
                                                XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
-    pTreeWidget->addTopLevelItem(createNewItem(XFW_DEF::TYPE_EXTRACTOR, XFW_DEF::WIDGETMODE_UNKNOWN, tr("Extractor"), XOptions::ICONTYPE_EXTRACTOR, 0, -1, 0, 0,
+    pTreeWidget->addTopLevelItem(createNewItem(XFW_DEF::TYPE_EXTRACTOR, XFW_DEF::WIDGETMODE_UNKNOWN, tr("Extractor"), XOptions::ICONTYPE_EXTRACTOR, 0, -1, 0, 0, 0,
                                                XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
-    pTreeWidget->addTopLevelItem(createNewItem(XFW_DEF::TYPE_SEARCH, XFW_DEF::WIDGETMODE_UNKNOWN, tr("Search"), XOptions::ICONTYPE_SEARCH, 0, -1, 0, 0,
+    pTreeWidget->addTopLevelItem(createNewItem(XFW_DEF::TYPE_SEARCH, XFW_DEF::WIDGETMODE_UNKNOWN, tr("Search"), XOptions::ICONTYPE_SEARCH, 0, -1, 0, 0, 0,
                                                XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
 }
 
@@ -507,6 +508,7 @@ void XMainWidget::showCwWidgetSlot(QString sInitString, bool bNewWindow)
     cwOptions.mode = getMode();
     cwOptions.nDataOffset = _getDataOffsetFromInitString(sInitString);
     cwOptions.nDataSize = _getDataSizeFromInitString(sInitString);
+    cwOptions.nDataCount = _getDataCountFromInitString(sInitString);
 
     XShortcutsWidget *pWidget = createWidget(cwOptions);
 

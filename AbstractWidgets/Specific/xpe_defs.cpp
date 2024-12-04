@@ -288,7 +288,7 @@ const XFW_DEF::HEADER_RECORD records[] = {
 
 namespace X_IMAGE_SECTION_HEADER {
 const XFW_DEF::HEADER_RECORD records[] = {
-    {Name, QObject::tr("Name"), offsetof(XPE_DEF::IMAGE_SECTION_HEADER, Name), 8, "BYTE[8]", XFW_DEF::VAL_TYPE_ARRAY_ | XFW_DEF::VAL_TYPE_TEXT_},
+    {Name, QObject::tr("Name"), offsetof(XPE_DEF::IMAGE_SECTION_HEADER, Name), 8, "BYTE[8]", XFW_DEF::VAL_TYPE_ARRAY_ | XFW_DEF::VAL_TYPE_ANSI | XFW_DEF::VAL_TYPE_STRING},
     {VirtualSize, "VirtualSize", offsetof(XPE_DEF::IMAGE_SECTION_HEADER, Misc.VirtualSize), 4, "DWORD", XFW_DEF::VAL_TYPE_INT_ | XFW_DEF::VAL_TYPE_SIZE_},
     {VirtualAddress, "VirtualAddress", offsetof(XPE_DEF::IMAGE_SECTION_HEADER, VirtualAddress), 4, "DWORD", XFW_DEF::VAL_TYPE_INT_ | XFW_DEF::VAL_TYPE_RELADDRESS_},
     {SizeOfRawData, "SizeOfRawData", offsetof(XPE_DEF::IMAGE_SECTION_HEADER, SizeOfRawData), 4, "DWORD", XFW_DEF::VAL_TYPE_INT_ | XFW_DEF::VAL_TYPE_SIZE_},
@@ -451,7 +451,7 @@ const XFW_DEF::HEADER_RECORD records[] = {
     {MinorVersion, "MinorVersion", 6, 2, "WORD", XFW_DEF::VAL_TYPE_INT_},
     {Reserved, "Reserved", 8, 4, "DWORD", XFW_DEF::VAL_TYPE_INT_},
     {VersionStringLength, "VersionStringLength", 12, 4, "DWORD", XFW_DEF::VAL_TYPE_INT_ | XFW_DEF::VAL_TYPE_SIZE_},
-    {Version, "Version", 16, 1, "TEXT", XFW_DEF::VAL_TYPE_ARRAY_ | XFW_DEF::VAL_TYPE_TEXT_},
+    {Version, "Version", 16, 1, "TEXT", XFW_DEF::VAL_TYPE_ARRAY_ | XFW_DEF::VAL_TYPE_ANSI | XFW_DEF::VAL_TYPE_STRING},
     {Flags, "Flags", -1, 2, "WORD", XFW_DEF::VAL_TYPE_INT_},
     {Streams, "Streams", -1, 2, "WORD", XFW_DEF::VAL_TYPE_INT_},
 };

@@ -110,7 +110,7 @@ public:
     qint64 getOffset();
     qint32 getType();
     static QTreeWidgetItem *createNewItem(XFW_DEF::TYPE type, XFW_DEF::WIDGETMODE widgetMode, const QString &sTitle, XOptions::ICONTYPE iconType, qint64 nOffset,
-                                          qint64 nSize, QVariant var1, QVariant var2, XBinary::MODE mode, XBinary::ENDIAN endian);
+                                          qint64 nSize, qint64 nCount, QVariant var1, QVariant var2, XBinary::MODE mode, XBinary::ENDIAN endian);
 
     static QList<XFW_DEF::HEADER_RECORD> getHeaderRecords(const XFW_DEF::CWOPTIONS *pCwOptions);
     static qint32 getHeaderSize(QList<XFW_DEF::HEADER_RECORD> *pListHeaderRecords);
@@ -168,10 +168,11 @@ public:
 
     void reset();
     static QString getInitStringFromCwOptions(XFW_DEF::CWOPTIONS *pCwOptions);
-    static QString _getInitString(XFW_DEF::TYPE _type, qint64 nDataOffset, qint64 nDataSize);
+    static QString _getInitString(XFW_DEF::TYPE _type, qint64 nDataOffset, qint64 nDataSize, qint64 nDataCount);
     static XFW_DEF::TYPE _getTypeFromInitString(const QString &sInitString);
     static qint64 _getDataOffsetFromInitString(const QString &sInitString);
     static qint64 _getDataSizeFromInitString(const QString &sInitString);
+    static qint64 _getDataCountFromInitString(const QString &sInitString);
 
     void addInit(const QString &sString);
     bool isInitPresent(const QString &sString);
@@ -187,7 +188,8 @@ public:
     void _adjustRecWidget(RECWIDGET *pRecWidget, QVariant varValue);
 
     static QVariant _readVariant(XBinary *pBinary, qint64 nOffset, qint64 nSize, qint32 vtype, bool bIsBigEndian);
-    static void setItemToModel(QStandardItemModel *pModel, qint32 nRow, qint32 nColumn, const QVariant &var, qint64 nSize, qint32 vtype);
+    static QStandardItem *setItemToModel(QStandardItemModel *pModel, qint32 nRow, qint32 nColumn, const QVariant &var, qint64 nSize, qint32 vtype);
+    static QStandardItem *setItemToModelData(QStandardItemModel *pModel, qint32 nRow, qint32 nColumn, const QVariant &var, qint64 nSize, qint32 vtype, XFW_DEF::TYPE type, qint64 nHeaderOffset, qint64 nHeaderSize, qint64 nDataOffset, qint64 nDataSize, qint64 nDataCount);
 
     enum CW {
         CW_UINT8 = 0,
@@ -255,7 +257,7 @@ public slots:
     void dumpRegion(qint64 nOffset, qint64 nSize, const QString &sName);
     void showDemangle(const QString &sString);
     void _reload();
-    void editRecord();
+    void showTableRecord();
 
 protected:
     virtual void registerShortcuts(bool bState);

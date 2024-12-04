@@ -211,7 +211,7 @@ qint32 XFormatWidget::getType()
 }
 
 QTreeWidgetItem *XFormatWidget::createNewItem(XFW_DEF::TYPE type, XFW_DEF::WIDGETMODE widgetMode, const QString &sTitle, XOptions::ICONTYPE iconType, qint64 nOffset,
-                                              qint64 nSize, QVariant var1, QVariant var2, XBinary::MODE mode, XBinary::ENDIAN endian)
+                                              qint64 nSize, qint64 nCount, QVariant var1, QVariant var2, XBinary::MODE mode, XBinary::ENDIAN endian)
 {
     QTreeWidgetItem *pResult = new QTreeWidgetItem;
 
@@ -220,6 +220,7 @@ QTreeWidgetItem *XFormatWidget::createNewItem(XFW_DEF::TYPE type, XFW_DEF::WIDGE
     pResult->setData(0, Qt::UserRole + XFW_DEF::WIDGET_DATA_WIDGETMODE, widgetMode);
     pResult->setData(0, Qt::UserRole + XFW_DEF::WIDGET_DATA_OFFSET, nOffset);
     pResult->setData(0, Qt::UserRole + XFW_DEF::WIDGET_DATA_SIZE, nSize);
+    pResult->setData(0, Qt::UserRole + XFW_DEF::WIDGET_DATA_COUNT, nCount);
     pResult->setData(0, Qt::UserRole + XFW_DEF::WIDGET_DATA_VAR1, var1);
     pResult->setData(0, Qt::UserRole + XFW_DEF::WIDGET_DATA_VAR2, var2);
     pResult->setData(0, Qt::UserRole + XFW_DEF::WIDGET_DATA_NAME, sTitle);
@@ -249,7 +250,7 @@ QList<XFW_DEF::HEADER_RECORD> XFormatWidget::getHeaderRecords(const XFW_DEF::CWO
     } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_command) {
         pRecords = X_mach_commands::records;
         nNumberOfRecords = X_mach_commands::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_segment) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_command_segment) {
         if (pCwOptions->mode == XBinary::MODE_64) {
             pRecords = X_mach_segments::records64;
             nNumberOfRecords = X_mach_segments::__data_size;
@@ -257,43 +258,43 @@ QList<XFW_DEF::HEADER_RECORD> XFormatWidget::getHeaderRecords(const XFW_DEF::CWO
             pRecords = X_mach_segments::records32;
             nNumberOfRecords = X_mach_segments::__data_size;
         }
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_dylib) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_command_dylib) {
         pRecords = X_mach_dylib::records;
         nNumberOfRecords = X_mach_dylib::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_rpath) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_command_rpath) {
         pRecords = X_mach_rpath::records;
         nNumberOfRecords = X_mach_rpath::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_sub_umbrella) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_command_sub_umbrella) {
         pRecords = X_mach_sub_umbrella::records;
         nNumberOfRecords = X_mach_sub_umbrella::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_sub_client) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_command_sub_client) {
         pRecords = X_mach_sub_client::records;
         nNumberOfRecords = X_mach_sub_client::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_sub_library) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_command_sub_library) {
         pRecords = X_mach_sub_library::records;
         nNumberOfRecords = X_mach_sub_library::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_symtab) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_command_symtab) {
         pRecords = X_mach_symtab::records;
         nNumberOfRecords = X_mach_symtab::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_dysymtab) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_command_dysymtab) {
         pRecords = X_mach_dysymtab::records;
         nNumberOfRecords = X_mach_dysymtab::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_segment_split_info) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_command_segment_split_info) {
         pRecords = X_mach_linkedit_data::records;
         nNumberOfRecords = X_mach_linkedit_data::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_atom_info) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_command_atom_info) {
         pRecords = X_mach_linkedit_data::records;
         nNumberOfRecords = X_mach_linkedit_data::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_function_starts) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_command_function_starts) {
         pRecords = X_mach_linkedit_data::records;
         nNumberOfRecords = X_mach_linkedit_data::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_dyld_exports_trie) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_command_dyld_exports_trie) {
         pRecords = X_mach_linkedit_data::records;
         nNumberOfRecords = X_mach_linkedit_data::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_dyld_chained_fixups) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_command_dyld_chained_fixups) {
         pRecords = X_mach_linkedit_data::records;
         nNumberOfRecords = X_mach_linkedit_data::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_encryption_info) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_command_encryption_info) {
         if (pCwOptions->mode == XBinary::MODE_64) {
             pRecords = X_mach_encryption_info::records64;
             nNumberOfRecords = X_mach_encryption_info::__data_size;
@@ -301,7 +302,7 @@ QList<XFW_DEF::HEADER_RECORD> XFormatWidget::getHeaderRecords(const XFW_DEF::CWO
             pRecords = X_mach_encryption_info::records32;
             nNumberOfRecords = X_mach_encryption_info::__data_size;
         }
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_routines) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_command_routines) {
         if (pCwOptions->mode == XBinary::MODE_64) {
             pRecords = X_mach_routines::records64;
             nNumberOfRecords = X_mach_routines::__data_size;
@@ -309,36 +310,44 @@ QList<XFW_DEF::HEADER_RECORD> XFormatWidget::getHeaderRecords(const XFW_DEF::CWO
             pRecords = X_mach_routines::records32;
             nNumberOfRecords = X_mach_routines::__data_size;
         }
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_dyld_info) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_command_dyld_info) {
         pRecords = X_mach_dyld_info::records;
         nNumberOfRecords = X_mach_dyld_info::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_version_min) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_command_version_min) {
         pRecords = X_mach_version_min::records;
         nNumberOfRecords = X_mach_version_min::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_uuid) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_command_uuid) {
         pRecords = X_mach_uuid::records;
         nNumberOfRecords = X_mach_uuid::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_build_version) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_command_build_version) {
         pRecords = X_mach_build_version::records;
         nNumberOfRecords = X_mach_build_version::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_main) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_command_main) {
         pRecords = X_mach_entry_point::records;
         nNumberOfRecords = X_mach_entry_point::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_fileset_entry) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_command_fileset_entry) {
         pRecords = X_mach_fileset_entry::records;
         nNumberOfRecords = X_mach_fileset_entry::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_source_version) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_command_source_version) {
         pRecords = X_mach_source_version::records;
         nNumberOfRecords = X_mach_source_version::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_dylinker) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_command_dylinker) {
         pRecords = X_mach_dylinker::records;
         nNumberOfRecords = X_mach_dylinker::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_data_in_code) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_command_data_in_code) {
         pRecords = X_mach_linkedit_data::records;
         nNumberOfRecords = X_mach_linkedit_data::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_code_signature) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_command_code_signature) {
         pRecords = X_mach_linkedit_data::records;
         nNumberOfRecords = X_mach_linkedit_data::__data_size;
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_SymbolTable) {
+        if (pCwOptions->mode == XBinary::MODE_64) {
+            pRecords = X_mach_nlist::records64;
+            nNumberOfRecords = X_mach_nlist::__data_size;
+        } else if (pCwOptions->mode == XBinary::MODE_32) {
+            pRecords = X_mach_nlist::records32;
+            nNumberOfRecords = X_mach_nlist::__data_size;
+        }
     } else if (pCwOptions->_type == XFW_DEF::TYPE_ELF_elf_ehdr) {
         if (pCwOptions->mode == XBinary::MODE_64) {
             pRecords = X_Elf_Ehdr::records64;
@@ -464,11 +473,11 @@ void XFormatWidget::adjustGenericTable(QTableView *pTableView, const QList<XFW_D
                 nWidth = XOptions::getControlWidth(pTableView, 16);
             }
         } else if (pListHeaderRecords->at(i).vtype & XFW_DEF::VAL_TYPE_NUMBER_) {
-            nWidth = XOptions::getControlWidth(pTableView, 2);
+            nWidth = XOptions::getControlWidth(pTableView, 4);
         }
 
         if (i == (nNumberOfRecords - 1)) {
-            if (pListHeaderRecords->at(i).vtype & XFW_DEF::VAL_TYPE_INFO_) {
+            if (pListHeaderRecords->at(i).vtype & XFW_DEF::VAL_TYPE_STRING) {
                 pTableView->horizontalHeader()->setSectionResizeMode(i, QHeaderView::Stretch);
             }
         }
@@ -736,14 +745,14 @@ void XFormatWidget::reset()
 
 QString XFormatWidget::getInitStringFromCwOptions(XFW_DEF::CWOPTIONS *pCwOptions)
 {
-    return _getInitString(pCwOptions->_type, pCwOptions->nDataOffset, pCwOptions->nDataSize);
+    return _getInitString(pCwOptions->_type, pCwOptions->nDataOffset, pCwOptions->nDataSize, pCwOptions->nDataCount);
 }
 
-QString XFormatWidget::_getInitString(XFW_DEF::TYPE _type, qint64 nDataOffset, qint64 nDataSize)
+QString XFormatWidget::_getInitString(XFW_DEF::TYPE _type, qint64 nDataOffset, qint64 nDataSize, qint64 nDataCount)
 {
     QString sResult;
 
-    sResult = QString("%1#%2#%3").arg(QString::number((qint32)_type), QString::number(nDataOffset), QString::number(nDataSize));
+    sResult = QString("%1#%2#%3#%4").arg(QString::number((qint32)_type), QString::number(nDataOffset), QString::number(nDataSize), QString::number(nDataCount));
 
     return sResult;
 }
@@ -765,6 +774,13 @@ qint64 XFormatWidget::_getDataOffsetFromInitString(const QString &sInitString)
 qint64 XFormatWidget::_getDataSizeFromInitString(const QString &sInitString)
 {
     QString sString = sInitString.section("#", 2, 2);
+
+    return sString.toLongLong();
+}
+
+qint64 XFormatWidget::_getDataCountFromInitString(const QString &sInitString)
+{
+    QString sString = sInitString.section("#", 3, 3);
 
     return sString.toLongLong();
 }
@@ -905,9 +921,9 @@ QVariant XFormatWidget::_readVariant(XBinary *pBinary, qint64 nOffset, qint64 nS
     return varResult;
 }
 
-void XFormatWidget::setItemToModel(QStandardItemModel *pModel, qint32 nRow, qint32 nColumn, const QVariant &var, qint64 nSize, qint32 vtype)
+QStandardItem *XFormatWidget::setItemToModel(QStandardItemModel *pModel, qint32 nRow, qint32 nColumn, const QVariant &var, qint64 nSize, qint32 vtype)
 {
-    QStandardItem *pItem = new QStandardItem;
+    QStandardItem *pResult = new QStandardItem;
 
     if (vtype & XFW_DEF::VAL_TYPE_INT_) {
         QString sString;
@@ -921,14 +937,35 @@ void XFormatWidget::setItemToModel(QStandardItemModel *pModel, qint32 nRow, qint
         } else if (nSize == 8) {
             sString = QString("%1").arg(var.toULongLong(), 16, 16, QChar('0'));
         }
-        pItem->setText(sString);
-        pItem->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+        pResult->setText(sString);
+        pResult->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+    } else if (vtype & XFW_DEF::VAL_TYPE_NUMBER_) {
+        pResult->setData(var.toULongLong(), Qt::DisplayRole);
+        pResult->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
     } else {
-        pItem->setText(var.toString());
-        pItem->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+        pResult->setText(var.toString());
+        pResult->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
     }
 
-    pModel->setItem(nRow, nColumn, pItem);
+    pModel->setItem(nRow, nColumn, pResult);
+
+    return pResult;
+}
+
+QStandardItem *XFormatWidget::setItemToModelData(QStandardItemModel *pModel, qint32 nRow, qint32 nColumn, const QVariant &var, qint64 nSize, qint32 vtype, XFW_DEF::TYPE type, qint64 nHeaderOffset, qint64 nHeaderSize, qint64 nDataOffset, qint64 nDataSize, qint64 nDataCount)
+{
+    QStandardItem *pResult = setItemToModel(pModel, nRow, nColumn, var, nSize, vtype);
+
+    if (pResult) {
+        pResult->setData(type, Qt::UserRole + (qint32)(XFW_DEF::TABLEDATA_TYPE));
+        pResult->setData(nHeaderOffset, Qt::UserRole + (qint32)(XFW_DEF::TABLEDATA_HEADEROFFSET));
+        pResult->setData(nHeaderSize, Qt::UserRole + (qint32)(XFW_DEF::TABLEDATA_HEADERSIZE));
+        pResult->setData(nDataOffset, Qt::UserRole + (qint32)(XFW_DEF::TABLEDATA_DATAOFFSET));
+        pResult->setData(nDataSize, Qt::UserRole + (qint32)(XFW_DEF::TABLEDATA_DATASIZE));
+        pResult->setData(nDataCount, Qt::UserRole + (qint32)(XFW_DEF::TABLEDATA_DATACOUNT));
+    }
+
+    return pResult;
 }
 
 qint32 XFormatWidget::getColumnWidth(QWidget *pParent, XFormatWidget::CW cw, XBinary::MODE mode)
@@ -1051,7 +1088,7 @@ void XFormatWidget::_addSpecItems(QTreeWidget *pTreeWidget, QIODevice *pDevice, 
                 }
 
                 pTreeWidget->addTopLevelItem(
-                    createNewItem(XFW_DEF::TYPE_ELF_elf_ehdr, XFW_DEF::WIDGETMODE_HEADER, sTitle, XOptions::ICONTYPE_HEADER, 0, nDataSize, 0, 0, mode, endian));
+                    createNewItem(XFW_DEF::TYPE_ELF_elf_ehdr, XFW_DEF::WIDGETMODE_HEADER, sTitle, XOptions::ICONTYPE_HEADER, 0, nDataSize, 0, 0, 0, mode, endian));
             }
         }
     } else if ((fileType == XBinary::FT_MACHO) || (fileType == XBinary::FT_MACHO32) || (fileType == XBinary::FT_MACHO64)) {
@@ -1075,7 +1112,7 @@ void XFormatWidget::_addSpecItems(QTreeWidget *pTreeWidget, QIODevice *pDevice, 
                 }
 
                 pTreeWidget->addTopLevelItem(
-                    createNewItem(XFW_DEF::TYPE_MACH_mach_header, XFW_DEF::WIDGETMODE_HEADER, sTitle, XOptions::ICONTYPE_HEADER, 0, nDataSize, 0, 0, mode, endian));
+                    createNewItem(XFW_DEF::TYPE_MACH_mach_header, XFW_DEF::WIDGETMODE_HEADER, sTitle, XOptions::ICONTYPE_HEADER, 0, nDataSize, 0, 0, 0, mode, endian));
             }
 
             {
@@ -1084,7 +1121,7 @@ void XFormatWidget::_addSpecItems(QTreeWidget *pTreeWidget, QIODevice *pDevice, 
                 qint32 nCommandCount = mach.getHeader_ncmds();
 
                 QTreeWidgetItem *pItemCommands = createNewItem(XFW_DEF::TYPE_MACH_command, XFW_DEF::WIDGETMODE_TABLE, tr("Commands"), XOptions::ICONTYPE_TABLE,
-                                                               nCommandOffset, nCommandSize, nCommandCount, 0, mode, endian);
+                                                               nCommandOffset, nCommandSize, nCommandCount, 0, 0, mode, endian);
 
                 pTreeWidget->addTopLevelItem(pItemCommands);
 
@@ -1098,10 +1135,23 @@ void XFormatWidget::_addSpecItems(QTreeWidget *pTreeWidget, QIODevice *pDevice, 
                     XMACH::COMMAND_RECORD record = listCommands.at(i);
 
                     QTreeWidgetItem *pItemCommand = createNewItem(MACH_commandIdToType(record.nId), XFW_DEF::WIDGETMODE_HEADER, mapLC.value(record.nId), XOptions::ICONTYPE_HEADER,
-                                                                 record.nStructOffset, record.nSize, 0, 0, mode, endian);
+                                                                 record.nStructOffset, record.nSize, 0, 0, 0, mode, endian);
 
                     pItemCommands->addChild(pItemCommand);
 
+                    if (record.nId == XMACH_DEF::S_LC_SYMTAB) {
+                        XMACH_DEF::symtab_command _command = mach._read_symtab_command(record.nStructOffset);
+
+                        if (_command.symoff && _command.nsyms) {
+                            QTreeWidgetItem *pItem = createNewItem(XFW_DEF::TYPE_MACH_SymbolTable, XFW_DEF::WIDGETMODE_TABLE, tr("Symbol table"), XOptions::ICONTYPE_TABLE, _command.symoff, 0, _command.nsyms, _command.stroff, _command.strsize, mode, endian);
+                            pItemCommand->addChild(pItem);
+                        }
+
+                        if (_command.symoff && _command.nsyms) {
+                            QTreeWidgetItem *pItem = createNewItem(XFW_DEF::TYPE_GENERIC_STRINGTABLE_ANSI, XFW_DEF::WIDGETMODE_TABLE, tr("String table"), XOptions::ICONTYPE_TABLE, _command.stroff, _command.strsize, 0, 0, 0, mode, endian);
+                            pItemCommand->addChild(pItem);
+                        }
+                    }
                 }
             }
         }
@@ -1114,7 +1164,7 @@ void XFormatWidget::_addSpecItems(QTreeWidget *pTreeWidget, QIODevice *pDevice, 
 
             {
                 pTreeWidget->addTopLevelItem(createNewItem(XFW_DEF::TYPE_MSDOS_EXE_file, XFW_DEF::WIDGETMODE_HEADER, "EXE_file", XOptions::ICONTYPE_HEADER, 0,
-                                                           sizeof(XMSDOS_DEF::EXE_file), 0, 0, mode, endian));
+                                                           sizeof(XMSDOS_DEF::EXE_file), 0, 0, 0, mode, endian));
             }
         }
     } else if ((fileType == XBinary::FT_PE) || (fileType == XBinary::FT_PE32) || (fileType == XBinary::FT_PE64)) {
@@ -1127,7 +1177,7 @@ void XFormatWidget::_addSpecItems(QTreeWidget *pTreeWidget, QIODevice *pDevice, 
 
             {
                 pTreeWidget->addTopLevelItem(createNewItem(XFW_DEF::TYPE_MSDOS_IMAGE_DOS_HEADER, XFW_DEF::WIDGETMODE_HEADER, "IMAGE_DOS_HEADER",
-                                                           XOptions::ICONTYPE_HEADER, 0, sizeof(XMSDOS_DEF::IMAGE_DOS_HEADEREX), 0, 0, mode, endian));
+                                                           XOptions::ICONTYPE_HEADER, 0, sizeof(XMSDOS_DEF::IMAGE_DOS_HEADEREX), 0, 0, 0, mode, endian));
             }
         }
     }
@@ -1143,62 +1193,62 @@ XFW_DEF::TYPE XFormatWidget::MACH_commandIdToType(qint32 nCommandId)
         (nCommandId == XMACH_DEF::S_LC_LOAD_WEAK_DYLIB) ||
         (nCommandId == XMACH_DEF::S_LC_REEXPORT_DYLIB) ||
         (nCommandId == XMACH_DEF::S_LC_LOAD_UPWARD_DYLIB)) {
-        result = XFW_DEF::TYPE_MACH_dylib;
+        result = XFW_DEF::TYPE_MACH_command_dylib;
     } else if ( nCommandId == XMACH_DEF::S_LC_RPATH) {
-        result = XFW_DEF::TYPE_MACH_rpath;
+        result = XFW_DEF::TYPE_MACH_command_rpath;
     } else if ( nCommandId == XMACH_DEF::S_LC_SUB_UMBRELLA) {
-        result = XFW_DEF::TYPE_MACH_sub_umbrella;
+        result = XFW_DEF::TYPE_MACH_command_sub_umbrella;
     } else if ( nCommandId == XMACH_DEF::S_LC_SUB_CLIENT) {
-        result = XFW_DEF::TYPE_MACH_sub_client;
+        result = XFW_DEF::TYPE_MACH_command_sub_client;
     } else if ( nCommandId == XMACH_DEF::S_LC_SUB_LIBRARY) {
-        result = XFW_DEF::TYPE_MACH_sub_library;
+        result = XFW_DEF::TYPE_MACH_command_sub_library;
     } else if ( nCommandId == XMACH_DEF::S_LC_SYMTAB) {
-        result = XFW_DEF::TYPE_MACH_symtab;
+        result = XFW_DEF::TYPE_MACH_command_symtab;
     } else if ( nCommandId == XMACH_DEF::S_LC_DYSYMTAB) {
-        result = XFW_DEF::TYPE_MACH_dysymtab;
+        result = XFW_DEF::TYPE_MACH_command_dysymtab;
     } else if ( nCommandId == XMACH_DEF::S_LC_SEGMENT_SPLIT_INFO) {
-        result = XFW_DEF::TYPE_MACH_segment_split_info;
+        result = XFW_DEF::TYPE_MACH_command_segment_split_info;
     } else if ( nCommandId == XMACH_DEF::S_LC_ATOM_INFO) {
-        result = XFW_DEF::TYPE_MACH_atom_info;
+        result = XFW_DEF::TYPE_MACH_command_atom_info;
     } else if ( nCommandId == XMACH_DEF::S_LC_FUNCTION_STARTS) {
-        result = XFW_DEF::TYPE_MACH_function_starts;
+        result = XFW_DEF::TYPE_MACH_command_function_starts;
     } else if ( nCommandId == XMACH_DEF::S_LC_DYLD_EXPORTS_TRIE) {
-        result = XFW_DEF::TYPE_MACH_dyld_exports_trie;
+        result = XFW_DEF::TYPE_MACH_command_dyld_exports_trie;
     } else if ( nCommandId == XMACH_DEF::S_LC_DYLD_CHAINED_FIXUPS) {
-        result = XFW_DEF::TYPE_MACH_dyld_chained_fixups;
+        result = XFW_DEF::TYPE_MACH_command_dyld_chained_fixups;
     } else if ((nCommandId == XMACH_DEF::S_LC_ENCRYPTION_INFO) ||
                (nCommandId == XMACH_DEF::S_LC_ENCRYPTION_INFO_64) ){
-        result = XFW_DEF::TYPE_MACH_encryption_info;
+        result = XFW_DEF::TYPE_MACH_command_encryption_info;
     } else if ( (nCommandId == XMACH_DEF::S_LC_DYLD_INFO) ||
                (nCommandId == XMACH_DEF::S_LC_DYLD_INFO_ONLY)) {
-        result = XFW_DEF::TYPE_MACH_dyld_info;
+        result = XFW_DEF::TYPE_MACH_command_dyld_info;
     } else if ( (nCommandId == XMACH_DEF::S_LC_VERSION_MIN_MACOSX) ||
                (nCommandId == XMACH_DEF::S_LC_VERSION_MIN_IPHONEOS) ||
                (nCommandId == XMACH_DEF::S_LC_VERSION_MIN_TVOS) ||
                (nCommandId == XMACH_DEF::S_LC_VERSION_MIN_WATCHOS)) {
-        result = XFW_DEF::TYPE_MACH_version_min;
+        result = XFW_DEF::TYPE_MACH_command_version_min;
     } else if ( nCommandId == XMACH_DEF::S_LC_UUID) {
-        result = XFW_DEF::TYPE_MACH_uuid;
+        result = XFW_DEF::TYPE_MACH_command_uuid;
     } else if ( nCommandId == XMACH_DEF::S_LC_BUILD_VERSION) {
-        result = XFW_DEF::TYPE_MACH_build_version;
+        result = XFW_DEF::TYPE_MACH_command_build_version;
     } else if ( nCommandId == XMACH_DEF::S_LC_MAIN) {
-        result = XFW_DEF::TYPE_MACH_main;
+        result = XFW_DEF::TYPE_MACH_command_main;
     } else if ( (nCommandId == XMACH_DEF::S_LC_SEGMENT) ||
                (nCommandId == XMACH_DEF::S_LC_SEGMENT_64)) {
-        result = XFW_DEF::TYPE_MACH_segment;
+        result = XFW_DEF::TYPE_MACH_command_segment;
     } else if ( nCommandId == XMACH_DEF::S_LC_FILESET_ENTRY) {
-        result = XFW_DEF::TYPE_MACH_fileset_entry;
+        result = XFW_DEF::TYPE_MACH_command_fileset_entry;
     } else if ( nCommandId == XMACH_DEF::S_LC_SOURCE_VERSION) {
-        result = XFW_DEF::TYPE_MACH_source_version;
+        result = XFW_DEF::TYPE_MACH_command_source_version;
     } else if ( nCommandId == XMACH_DEF::S_LC_LOAD_DYLINKER) {
-        result = XFW_DEF::TYPE_MACH_dylinker;
+        result = XFW_DEF::TYPE_MACH_command_dylinker;
     } else if ( nCommandId == XMACH_DEF::S_LC_DATA_IN_CODE) {
-        result = XFW_DEF::TYPE_MACH_data_in_code;
+        result = XFW_DEF::TYPE_MACH_command_data_in_code;
     } else if ( nCommandId == XMACH_DEF::S_LC_CODE_SIGNATURE) {
-        result = XFW_DEF::TYPE_MACH_code_signature;
+        result = XFW_DEF::TYPE_MACH_command_code_signature;
     } else if ((nCommandId == XMACH_DEF::S_LC_ROUTINES) ||
                (nCommandId == XMACH_DEF::S_LC_ROUTINES_64) ){
-        result = XFW_DEF::TYPE_MACH_routines;
+        result = XFW_DEF::TYPE_MACH_command_routines;
     } else {
         result = XFW_DEF::TYPE_MACH_command;
     }
@@ -1285,8 +1335,9 @@ void XFormatWidget::contextMenuGenericTableWidget(const QPoint &pos, QTableView 
         XFW_DEF::TYPE _type = (XFW_DEF::TYPE)(pTableView->model()->data(index, Qt::UserRole + XFW_DEF::TABLEDATA_TYPE).toInt());
         qint64 nDataOffset = (pTableView->model()->data(index, Qt::UserRole + XFW_DEF::TABLEDATA_DATAOFFSET).toLongLong());
         qint64 nDataSize = (pTableView->model()->data(index, Qt::UserRole + XFW_DEF::TABLEDATA_DATASIZE).toLongLong());
+        qint64 nDataCount = (pTableView->model()->data(index, Qt::UserRole + XFW_DEF::TABLEDATA_DATACOUNT).toLongLong());
 
-        QString sTypeString = _getInitString(_type, nDataOffset, nDataSize);
+        QString sTypeString = _getInitString(_type, nDataOffset, nDataSize, nDataCount);
 
         QMenu contextMenu(this);
 
@@ -1294,9 +1345,9 @@ void XFormatWidget::contextMenuGenericTableWidget(const QPoint &pos, QTableView 
 
         {
             XShortcuts::MENUITEM menuItem = {};
-            menuItem.nShortcutId = X_ID_TABLE_EDIT;
+            menuItem.nShortcutId = XShortcuts::X_ID_TABLE_SHOW;
             menuItem.pRecv = this;
-            menuItem.pMethod = SLOT(editRecord());
+            menuItem.pMethod = SLOT(showTableRecord());
             menuItem.nSubgroups = XShortcuts::GROUPID_NONE;
             menuItem.sPropertyName = "INITSTRING";
             menuItem.varProperty = sTypeString;
@@ -1321,8 +1372,9 @@ void XFormatWidget::tableView_doubleClicked(QTableView *pTableView, const QModel
     XFW_DEF::TYPE _type = (XFW_DEF::TYPE)(pTableView->model()->data(_index, Qt::UserRole + XFW_DEF::TABLEDATA_TYPE).toInt());
     qint64 nDataOffset = (pTableView->model()->data(_index, Qt::UserRole + XFW_DEF::TABLEDATA_DATAOFFSET).toLongLong());
     qint64 nDataSize = (pTableView->model()->data(_index, Qt::UserRole + XFW_DEF::TABLEDATA_DATASIZE).toLongLong());
+    qint64 nDataCount = (pTableView->model()->data(index, Qt::UserRole + XFW_DEF::TABLEDATA_DATACOUNT).toLongLong());
 
-    QString sTypeString = _getInitString(_type, nDataOffset, nDataSize);
+    QString sTypeString = _getInitString(_type, nDataOffset, nDataSize, nDataCount);
 
     emit showCwWidget(sTypeString, true);
 }
@@ -1469,7 +1521,7 @@ void XFormatWidget::_reload()
     reloadData(true);
 }
 
-void XFormatWidget::editRecord()
+void XFormatWidget::showTableRecord()
 {
     QString sInitString = (sender()->property("INITSTRING").toString());
 
@@ -1601,7 +1653,7 @@ bool XFormatWidget::createListTable(qint32 nType, QTableWidget *pTableWidget, co
         ppLineEdits[i]->setProperty("STYPE", nType);
         ppLineEdits[i]->setProperty("NDATA", pRecords[i].nPosition);
 
-        if (pRecords[i].vtype & XFW_DEF::VAL_TYPE_TEXT_) {
+        if (pRecords[i].vtype & XFW_DEF::VAL_TYPE_ANSI) {
             ppLineEdits[i]->setAlignment(Qt::AlignLeft);
         }
 
