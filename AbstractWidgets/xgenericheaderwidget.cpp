@@ -106,6 +106,8 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
         //     adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getCommandsS(), N_mach_routines_command::cmd, XComboBoxEx::CBTYPE_LIST, 0);
         // } else if (getCwOptions()->_type == FW_DEF::TYPE_MACH_routines_command_64) {
         //     adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getCommandsS(), N_mach_routines_command_64::cmd, XComboBoxEx::CBTYPE_LIST, 0);
+    } else if (getCwOptions()->_type == XFW_DEF::TYPE_MACH_command_build_version) {
+        adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getPlatformS(), X_mach_build_version::platform, XComboBoxEx::CBTYPE_LIST, 0);
     } else if (getCwOptions()->_type == XFW_DEF::TYPE_ELF_elf_ehdr) {
         // adjustComboBox(getListRecWidgets(), XELF::getHeaderMagicsS(), _elf_ehdrWidget::ei_mag, XComboBoxEx::CBTYPE_LIST, 0);
         // adjustComboBox(getListRecWidgets(), XELF::getHeaderClassesS(), _elf_ehdrWidget::ei_class, XComboBoxEx::CBTYPE_LIST, 0);

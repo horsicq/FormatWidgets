@@ -348,6 +348,9 @@ QList<XFW_DEF::HEADER_RECORD> XFormatWidget::getHeaderRecords(const XFW_DEF::CWO
             pRecords = X_mach_nlist::records32;
             nNumberOfRecords = X_mach_nlist::__data_size;
         }
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_dyld_chained_fixups_header) {
+        pRecords = X_mach_dyld_chained_fixups_header::records;
+        nNumberOfRecords = X_mach_dyld_chained_fixups_header::__data_size;
     } else if (pCwOptions->_type == XFW_DEF::TYPE_ELF_elf_ehdr) {
         if (pCwOptions->mode == XBinary::MODE_64) {
             pRecords = X_Elf_Ehdr::records64;
@@ -393,7 +396,7 @@ void XFormatWidget::setValue(QVariant vValue, qint32 nPosition, qint64 nOffset, 
             RECWIDGET recWidget = listRecWidget.at(nPosition);
 
             XBinary binary(getDevice(), getOptions().bIsImage, getOptions().nImageBase);
-            if (recWidget.vtype & XFW_DEF::VAL_TYPE_INT_) {
+            if (recWidget.vtype & XFW_DEF::VAL_TYPE_DATA_INT) {
                 if (recWidget.nSize == 1) {
                     binary.write_uint8(recWidget.nOffset, vValue.toUInt());
                 } else if (recWidget.nSize == 2) {
@@ -436,7 +439,7 @@ void XFormatWidget::adjustGenericHeader(QTableWidget *pTableWidget, const QList<
     for (qint32 i = 0; i < nNumberOfRecords; i++) {
         XFW_DEF::HEADER_RECORD record = pListHeaderRecords->at(i);
 
-        if (record.vtype & XFW_DEF::VAL_TYPE_INT_) {
+        if (record.vtype & XFW_DEF::VAL_TYPE_DATA_INT) {
             nValueWidthInSymbols = qMax(nValueWidthInSymbols, record.nSize * 2);
         }
     }
@@ -462,7 +465,7 @@ void XFormatWidget::adjustGenericTable(QTableView *pTableView, const QList<XFW_D
     for (qint32 i = 0; i < nNumberOfRecords; i++) {
         qint32 nWidth = 200;
 
-        if (pListHeaderRecords->at(i).vtype & XFW_DEF::VAL_TYPE_INT_) {
+        if (pListHeaderRecords->at(i).vtype & XFW_DEF::VAL_TYPE_DATA_INT) {
             if (pListHeaderRecords->at(i).nSize == 1) {
                 nWidth = XOptions::getControlWidth(pTableView, 2);
             } else if (pListHeaderRecords->at(i).nSize == 2) {
@@ -472,8 +475,10 @@ void XFormatWidget::adjustGenericTable(QTableView *pTableView, const QList<XFW_D
             } else if (pListHeaderRecords->at(i).nSize == 8) {
                 nWidth = XOptions::getControlWidth(pTableView, 16);
             }
-        } else if (pListHeaderRecords->at(i).vtype & XFW_DEF::VAL_TYPE_NUMBER_) {
+        } else if (pListHeaderRecords->at(i).vtype & XFW_DEF::VAL_TYPE_COUNT) {
             nWidth = XOptions::getControlWidth(pTableView, 4);
+        } else if (pListHeaderRecords->at(i).vtype & XFW_DEF::VAL_TYPE_HEX) {
+            nWidth = XOptions::getControlWidth(pTableView, 8);
         }
 
         if (i == (nNumberOfRecords - 1)) {
@@ -874,7 +879,7 @@ void XFormatWidget::_adjustRecWidget(RECWIDGET *pRecWidget, QVariant varValue)
     if (pRecWidget->pComboBox) bBlockComboBox = pRecWidget->pComboBox->blockSignals(true);
 
     if (pRecWidget->pLineEdit) {
-        if (pRecWidget->vtype & XFW_DEF::VAL_TYPE_INT_) {
+        if (pRecWidget->vtype & XFW_DEF::VAL_TYPE_DATA_INT) {
             if (pRecWidget->nSize == 1) {
                 pRecWidget->pLineEdit->setValue_uint8(varValue.toUInt(), XLineEditHEX::_MODE_HEX);
             } else if (pRecWidget->nSize == 2) {
@@ -888,10 +893,11 @@ void XFormatWidget::_adjustRecWidget(RECWIDGET *pRecWidget, QVariant varValue)
     }
 
     if (pRecWidget->pComboBox) pRecWidget->pComboBox->setValue(varValue);
-    if (pRecWidget->vtype & XFW_DEF::VAL_TYPE_SIZE_) sComment = XBinary::bytesCountToString(varValue.toULongLong());
+    if (pRecWidget->vtype & XFW_DEF::VAL_TYPE_SIZE) sComment = XBinary::appendText(sComment, XBinary::bytesCountToString(varValue.toULongLong()), ", ");
+    if (pRecWidget->vtype & XFW_DEF::VAL_TYPE_COUNT) sComment = XBinary::appendText(sComment, QString("%1").arg(varValue.toULongLong()), ", ");
 
     if (pRecWidget->pComboBox) {
-        sComment = pRecWidget->pComboBox->getDescription();
+        sComment = XBinary::appendText(sComment, pRecWidget->pComboBox->getDescription(), ", ");
     }
 
     if (sComment != "") {
@@ -906,7 +912,7 @@ QVariant XFormatWidget::_readVariant(XBinary *pBinary, qint64 nOffset, qint64 nS
 {
     QVariant varResult;
 
-    if (vtype & XFW_DEF::VAL_TYPE_INT_) {
+    if (vtype & XFW_DEF::VAL_TYPE_DATA_INT) {
         if (nSize == 1) {
             varResult = pBinary->read_uint8(nOffset);
         } else if (nSize == 2) {
@@ -925,7 +931,7 @@ QStandardItem *XFormatWidget::setItemToModel(QStandardItemModel *pModel, qint32 
 {
     QStandardItem *pResult = new QStandardItem;
 
-    if (vtype & XFW_DEF::VAL_TYPE_INT_) {
+    if (vtype & XFW_DEF::VAL_TYPE_DATA_INT) {
         QString sString;
 
         if (nSize == 1) {
@@ -939,8 +945,12 @@ QStandardItem *XFormatWidget::setItemToModel(QStandardItemModel *pModel, qint32 
         }
         pResult->setText(sString);
         pResult->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
-    } else if (vtype & XFW_DEF::VAL_TYPE_NUMBER_) {
+    } else if (vtype & XFW_DEF::VAL_TYPE_COUNT) {
         pResult->setData(var.toULongLong(), Qt::DisplayRole);
+        pResult->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+    } else if (vtype & XFW_DEF::VAL_TYPE_HEX) {
+        QString sString = QString("%1").arg(var.toULongLong(), 8, 16, QChar('0'));
+        pResult->setText(sString);
         pResult->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
     } else {
         pResult->setText(var.toString());
@@ -1149,6 +1159,13 @@ void XFormatWidget::_addSpecItems(QTreeWidget *pTreeWidget, QIODevice *pDevice, 
 
                         if (_command.symoff && _command.nsyms) {
                             QTreeWidgetItem *pItem = createNewItem(XFW_DEF::TYPE_GENERIC_STRINGTABLE_ANSI, XFW_DEF::WIDGETMODE_TABLE, tr("String table"), XOptions::ICONTYPE_TABLE, _command.stroff, _command.strsize, 0, 0, 0, mode, endian);
+                            pItemCommand->addChild(pItem);
+                        }
+                    } else if (record.nId == XMACH_DEF::S_LC_DYLD_CHAINED_FIXUPS) {
+                        XMACH_DEF::linkedit_data_command _command = mach._read_linkedit_data_command(record.nStructOffset);
+
+                        if (_command.dataoff && _command.datasize) {
+                            QTreeWidgetItem *pItem = createNewItem(XFW_DEF::TYPE_MACH_dyld_chained_fixups_header, XFW_DEF::WIDGETMODE_HEADER, "dyld_chained_fixups_header", XOptions::ICONTYPE_TABLE, _command.dataoff, _command.datasize, 0, 0, 0, mode, endian);
                             pItemCommand->addChild(pItem);
                         }
                     }
@@ -1591,7 +1608,7 @@ bool XFormatWidget::createHeaderTable(QTableWidget *pTableWidget, const QList<XF
         pItemType->setText(pListHeaderRecords->at(i).sType);
         pTableWidget->setItem(i, HEADER_COLUMN_TYPE, pItemType);
 
-        if (recWidget.vtype & XFW_DEF::VAL_TYPE_INT_) {
+        if (recWidget.vtype & XFW_DEF::VAL_TYPE_DATA_INT) {
             recWidget.pLineEdit = new XLineEditHEX();
             recWidget.pLineEdit->setProperty("POSITION", recWidget.nPosition);
             recWidget.pLineEdit->setProperty("OFFSET", recWidget.nOffset);
@@ -1658,7 +1675,7 @@ bool XFormatWidget::createListTable(qint32 nType, QTableWidget *pTableWidget, co
         }
 
         if (pRecords[i].nOffset != -1) {
-            if (pRecords[i].vtype & XFW_DEF::VAL_TYPE_ARRAY_) {
+            if (pRecords[i].vtype & XFW_DEF::VAL_TYPE_DATA_ARRAY) {
                 if (pRecords[i].nSize != -1) {
                     ppLineEdits[i]->setMaxLength(pRecords[i].nSize);
                 }

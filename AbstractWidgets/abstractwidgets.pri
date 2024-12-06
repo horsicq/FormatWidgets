@@ -21,6 +21,7 @@ HEADERS += \
     $$PWD/xgenericheaderwidget.h \
     $$PWD/xgenerictablewidget.h \
     $$PWD/xmainwidget.h \
+    $$PWD/xmainwidgetadvanced.h \
     $$PWD/xprocessdata.h
 
 SOURCES += \
@@ -37,6 +38,7 @@ SOURCES += \
     $$PWD/xgenericheaderwidget.cpp \
     $$PWD/xgenerictablewidget.cpp \
     $$PWD/xmainwidget.cpp \
+    $$PWD/xmainwidgetadvanced.cpp \
     $$PWD/xprocessdata.cpp
 
 DISTFILES += \

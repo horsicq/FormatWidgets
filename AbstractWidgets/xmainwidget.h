@@ -25,25 +25,10 @@
 #include "xgenerictablewidget.h"
 #include "xformatwidget.h"
 #include "dialogdemangle.h"
-#include "dialogentropy.h"
-#include "dialoghexview.h"
-#include "dialogmultidisasm.h"
 #include "dialogwidget.h"
-#include "xextractorwidget.h"
-#include "xfileinfowidget.h"
-#include "xhexviewwidget.h"
-#include "xmemorymapwidget.h"
-#include "xmultidisasmwidget.h"
 #include "xoptions.h"
 #include "xshortcutsdialog.h"
 #include "xtableview.h"
-#include "xvisualizationwidget.h"
-#include "yarawidgetadvanced.h"
-#include "nfdwidgetadvanced.h"
-#include "diewidgetadvanced.h"
-#include "xvirustotalwidget.h"
-#include "xhashwidget.h"
-#include "xentropywidget.h"
 
 namespace Ui {
 class XMainWidget;
@@ -67,8 +52,8 @@ public:
     virtual void reloadData(bool bSaveSelection);
     virtual void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
 
-    static void _addBaseItems(QTreeWidget *pTreeWidget, XBinary::FT fileType);
-    static XShortcutsWidget *createWidget(const XFW_DEF::CWOPTIONS &cwOptions);
+    virtual void _addBaseItems(QTreeWidget *pTreeWidget, XBinary::FT fileType);
+    virtual XShortcutsWidget *createWidget(const XFW_DEF::CWOPTIONS &cwOptions);
 
 private slots:
     void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurrent, QTreeWidgetItem *pItemPrevious);

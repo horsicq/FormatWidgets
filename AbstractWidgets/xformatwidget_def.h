@@ -89,6 +89,7 @@ enum TYPE {
     TYPE_MACH_command_code_signature,
     TYPE_MACH_command_routines,
     TYPE_MACH_SymbolTable,
+    TYPE_MACH_dyld_chained_fixups_header
 };
 
 enum WIDGETMODE {
@@ -118,16 +119,17 @@ struct CWOPTIONS {
 
 enum VAL_TYPE {
     VAL_TYPE_UNKNOWN_ = 0,
-    VAL_TYPE_INT_ =  1 << 0,
-    VAL_TYPE_ARRAY_ = 1 << 1,
+    VAL_TYPE_DATA_INT =  1 << 0,
+    VAL_TYPE_DATA_ARRAY = 1 << 1,
     VAL_TYPE_RELADDRESS_ = 1 << 2,
     VAL_TYPE_ADDRESS_ = 1 << 3,
     VAL_TYPE_OFFSET_ = 1 << 4,
-    VAL_TYPE_SIZE_ = 1 << 5,
+    VAL_TYPE_SIZE = 1 << 5,
     VAL_TYPE_ANSI = 1 << 6,
     VAL_TYPE_UUID_ = 1 << 7,
-    VAL_TYPE_NUMBER_ = 1 << 8,
-    VAL_TYPE_STRING = 1 << 8,
+    VAL_TYPE_COUNT = 1 << 8,
+    VAL_TYPE_HEX = 1 << 9,
+    VAL_TYPE_STRING = 1 << 10,
 };
 
 struct HEADER_RECORD {

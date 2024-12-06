@@ -11,6 +11,8 @@ set(ABSTRACTWIDGETS_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/xprocessdata.h
     ${CMAKE_CURRENT_LIST_DIR}/xmainwidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/xmainwidget.h
+    ${CMAKE_CURRENT_LIST_DIR}/xmainwidgetadvanced.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/xmainwidgetadvanced.h
     ${CMAKE_CURRENT_LIST_DIR}/xmainwidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/xgenericheaderwidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/xgenericheaderwidget.h

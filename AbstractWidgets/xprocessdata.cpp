@@ -50,7 +50,7 @@ void XProcessData::process()
         XFW_DEF::HEADER_RECORD record = {};
         record.nPosition = -1;
         record.sName = QString("#");
-        record.vtype = XFW_DEF::VAL_TYPE_NUMBER_;
+        record.vtype = XFW_DEF::VAL_TYPE_COUNT;
 
         g_pListHeaderRecords->append(record);
     }
@@ -64,7 +64,7 @@ void XProcessData::process()
             XFW_DEF::HEADER_RECORD record = {};
             record.nPosition = -1;
             record.sName = tr("Position");
-            record.vtype = XFW_DEF::VAL_TYPE_NUMBER_;
+            record.vtype = XFW_DEF::VAL_TYPE_HEX;
 
             g_pListHeaderRecords->append(record);
         }
@@ -118,31 +118,25 @@ void XProcessData::process()
             XBinary::setPdStructCurrent(g_pPdStruct, g_nFreeIndex, i);
         }
     } else if (g_pCwOptions->_type == XFW_DEF::TYPE_GENERIC_STRINGTABLE_ANSI) {
-        // XBinary binary(g_pCwOptions->pDevice, g_pCwOptions->bIsImage, g_pCwOptions->nImageBase);
+        XBinary binary(g_pCwOptions->pDevice, g_pCwOptions->bIsImage, g_pCwOptions->nImageBase);
 
+        qint64 _nOffset = g_pCwOptions->nDataOffset;
+        qint64 _nSize = g_pCwOptions->nDataSize;
 
+        QList<XBinary::STRINGTABLE_RECORD> listSTrecords = binary.getStringTable_ANSI(_nOffset, _nSize, g_pPdStruct);
 
-        // XBinary::setPdStructTotal(g_pPdStruct, g_nFreeIndex, nDA);
+        nNumberOfRows = listSTrecords.count();
 
-        // (*g_ppModel) = new QStandardItemModel(nNumberOfRows, nNumberOfColumns);
+        XBinary::setPdStructTotal(g_pPdStruct, g_nFreeIndex, nNumberOfRows);
+        (*g_ppModel) = new QStandardItemModel(nNumberOfRows, nNumberOfColumns);
 
-        // qint64 _nOffset = g_pCwOptions->nDataOffset;
+        for (qint32 i = 0; (i < nNumberOfRows) && (!(g_pPdStruct->bIsStop)); i++) {
+            XFormatWidget::setItemToModelData((*g_ppModel), i, 0, i, 0, g_pListHeaderRecords->at(0).vtype, g_pCwOptions->_type, listSTrecords.at(i).nOffsetFromStart + _nOffset, listSTrecords.at(i).nSizeInBytes, listSTrecords.at(i).nOffsetFromStart + _nOffset, listSTrecords.at(i).nSizeInBytes, 0);
+            XFormatWidget::setItemToModel((*g_ppModel), i, 1, listSTrecords.at(i).nOffsetFromStart, 0, g_pListHeaderRecords->at(1).vtype);
+            XFormatWidget::setItemToModel((*g_ppModel), i, 2, listSTrecords.at(i).sString, listSTrecords.at(i).nSizeInBytes, g_pListHeaderRecords->at(2).vtype);
 
-        // for (qint32 i = 0; (i < nNumberOfRows) && (!(g_pPdStruct->bIsStop)); i++) {
-        //     for (qint32 j = 0; j < nNumberOfHeaderRecords; j++) {
-        //         QVariant var = XFormatWidget::_readVariant(&binary, _nOffset + g_pListHeaderRecords->at(j).nOffset, g_pListHeaderRecords->at(j).nSize,
-        //                                                    g_pListHeaderRecords->at(j).vtype, (g_pCwOptions->endian == XBinary::ENDIAN_BIG));
-        //         if (j == 0) {
-        //             XFormatWidget::setItemToModelData((*g_ppModel), i, j, i, 0, g_pListHeaderRecords->at(j).vtype, g_pCwOptions->_type, _nOffset, nHeaderSize, _nOffset, nHeaderSize, 0);
-        //         } else {
-        //             XFormatWidget::setItemToModel((*g_ppModel), i, j , var, g_pListHeaderRecords->at(j).nSize, g_pListHeaderRecords->at(j).vtype);
-        //         }
-        //     }
-
-        //     _nOffset += nHeaderSize;
-
-        //     XBinary::setPdStructCurrent(g_pPdStruct, g_nFreeIndex, i);
-        // }
+            XBinary::setPdStructCurrent(g_pPdStruct, g_nFreeIndex, i);
+        }
     } else {
         XBinary binary(g_pCwOptions->pDevice, g_pCwOptions->bIsImage, g_pCwOptions->nImageBase);
 

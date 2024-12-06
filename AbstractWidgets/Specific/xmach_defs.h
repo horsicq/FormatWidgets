@@ -762,4 +762,30 @@ enum DATA {
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace X_mach_BlobIndex
 
+namespace X_mach_dyld_chained_fixups_header {
+enum DATA {
+    fixups_version,
+    starts_offset,
+    imports_offset,
+    symbols_offset,
+    imports_count,
+    imports_format,
+    symbols_format,
+    __data_size
+};
+
+extern const XFW_DEF::HEADER_RECORD records[__data_size];
+}  // namespace X_mach_dyld_chained_fixups
+
+// namespace X_mach_dyld_chained_starts_in_image {
+
+// enum DATA {
+//     offset,
+//     count,
+//     __data_size
+// };
+
+// extern const XFW_DEF::HEADER_RECORD records[__data_size];
+// }  // namespace X_mach_dyld_chained_starts_in_image
+
 #endif  // XMACH_DEFS_H
