@@ -1,11 +1,6 @@
 INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
 
-FORMS += \
-    $$PWD/xgenericheaderwidget.ui \
-    $$PWD/xgenerictablewidget.ui \
-    $$PWD/xmainwidget.ui
-
 HEADERS += \
     $$PWD/Specific/xdex_defs.h \
     $$PWD/Specific/xelf_defs.h \
@@ -15,6 +10,8 @@ HEADERS += \
     $$PWD/Specific/xne_defs.h \
     $$PWD/Specific/xpdf_defs.h \
     $$PWD/Specific/xpe_defs.h \
+    $$PWD/dialogxmainwidget.h \
+    $$PWD/dialogsetgenericwidget.h \
     $$PWD/xdialogprocessdata.h \
     $$PWD/xformatwidget.h \
     $$PWD/xformatwidget_def.h \
@@ -33,6 +30,8 @@ SOURCES += \
     $$PWD/Specific/xne_defs.cpp \
     $$PWD/Specific/xpdf_defs.cpp \
     $$PWD/Specific/xpe_defs.cpp \
+    $$PWD/dialogxmainwidget.cpp \
+    $$PWD/dialogsetgenericwidget.cpp \
     $$PWD/xdialogprocessdata.cpp \
     $$PWD/xformatwidget.cpp \
     $$PWD/xgenericheaderwidget.cpp \
@@ -40,6 +39,14 @@ SOURCES += \
     $$PWD/xmainwidget.cpp \
     $$PWD/xmainwidgetadvanced.cpp \
     $$PWD/xprocessdata.cpp
+    
+FORMS += \
+    $$PWD/dialogsetgenericwidget.ui \
+    $$PWD/dialogxmainwidget.ui \
+    $$PWD/xgenericheaderwidget.ui \
+    $$PWD/xgenerictablewidget.ui \
+    $$PWD/xmainwidget.ui
 
 DISTFILES += \
     $$PWD/xformatwidget.cmake
+    

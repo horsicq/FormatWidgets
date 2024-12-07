@@ -2,38 +2,44 @@ include_directories(${CMAKE_CURRENT_LIST_DIR})
 include_directories(${CMAKE_CURRENT_LIST_DIR}/Generic)
 
 set(ABSTRACTWIDGETS_SOURCES
+    ${CMAKE_CURRENT_LIST_DIR}/Specific/xdex_defs.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Specific/xdex_defs.h
+    ${CMAKE_CURRENT_LIST_DIR}/Specific/xelf_defs.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Specific/xelf_defs.h
+    ${CMAKE_CURRENT_LIST_DIR}/Specific/xle_defs.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Specific/xle_defs.h
+    ${CMAKE_CURRENT_LIST_DIR}/Specific/xmach_defs.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Specific/xmach_defs.h
+    ${CMAKE_CURRENT_LIST_DIR}/Specific/xmsdos_defs.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Specific/xmsdos_defs.h
+    ${CMAKE_CURRENT_LIST_DIR}/Specific/xne_defs.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Specific/xne_defs.h
+    ${CMAKE_CURRENT_LIST_DIR}/Specific/xpdf_defs.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Specific/xpdf_defs.h
+    ${CMAKE_CURRENT_LIST_DIR}/Specific/xpe_defs.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Specific/xpe_defs.h
+    ${CMAKE_CURRENT_LIST_DIR}/dialogxmainwidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/dialogxmainwidget.h
+    ${CMAKE_CURRENT_LIST_DIR}/dialogxmainwidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/dialogsetgenericwidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/dialogsetgenericwidget.h
+    ${CMAKE_CURRENT_LIST_DIR}/dialogsetgenericwidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/xdialogprocessdata.cpp
     ${CMAKE_CURRENT_LIST_DIR}/xdialogprocessdata.h
     ${CMAKE_CURRENT_LIST_DIR}/xformatwidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/xformatwidget.h
     ${CMAKE_CURRENT_LIST_DIR}/xformatwidget_def.h
-    ${CMAKE_CURRENT_LIST_DIR}/xprocessdata.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/xprocessdata.h
-    ${CMAKE_CURRENT_LIST_DIR}/xmainwidget.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/xmainwidget.h
-    ${CMAKE_CURRENT_LIST_DIR}/xmainwidgetadvanced.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/xmainwidgetadvanced.h
-    ${CMAKE_CURRENT_LIST_DIR}/xmainwidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/xgenericheaderwidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/xgenericheaderwidget.h
     ${CMAKE_CURRENT_LIST_DIR}/xgenericheaderwidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/xgenerictablewidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/xgenerictablewidget.h
     ${CMAKE_CURRENT_LIST_DIR}/xgenerictablewidget.ui
-    ${CMAKE_CURRENT_LIST_DIR}/Specific/xelf_defs.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/Specific/xelf_defs.h
-    ${CMAKE_CURRENT_LIST_DIR}/Specific/xmach_defs.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/Specific/xmach_defs.h
-    ${CMAKE_CURRENT_LIST_DIR}/Specific/xmsdos_defs.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/Specific/xmsdos_defs.h
-    ${CMAKE_CURRENT_LIST_DIR}/Specific/xpe_defs.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/Specific/xpe_defs.h
-    ${CMAKE_CURRENT_LIST_DIR}/Specific/xdex_defs.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/Specific/xdex_defs.h
-    ${CMAKE_CURRENT_LIST_DIR}/Specific/xle_defs.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/Specific/xle_defs.h
-    ${CMAKE_CURRENT_LIST_DIR}/Specific/xne_defs.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/Specific/xne_defs.h
-    ${CMAKE_CURRENT_LIST_DIR}/Specific/xpdf_defs.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/Specific/xpdf_defs.h
+    ${CMAKE_CURRENT_LIST_DIR}/xmainwidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/xmainwidget.h
+    ${CMAKE_CURRENT_LIST_DIR}/xmainwidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/xmainwidgetadvanced.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/xmainwidgetadvanced.h
+    ${CMAKE_CURRENT_LIST_DIR}/xprocessdata.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/xprocessdata.h
 )
