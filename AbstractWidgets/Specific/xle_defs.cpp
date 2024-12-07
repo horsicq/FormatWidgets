@@ -82,4 +82,4 @@ const XFW_DEF::HEADER_RECORD records[] = {
 };
 
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
-}  // namespace N_O32_OBJ
+}  // namespace X_O32_OBJ

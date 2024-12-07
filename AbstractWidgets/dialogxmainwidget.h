@@ -27,8 +27,7 @@ namespace Ui {
 class DialogXMainWidget;
 }
 
-class DialogXMainWidget : public XShortcutsDialog
-{
+class DialogXMainWidget : public XShortcutsDialog {
     Q_OBJECT
 
 public:
@@ -45,4 +44,4 @@ private:
     Ui::DialogXMainWidget *ui;
 };
 
-#endif // DIALOGXMAINWIDGET_H
+#endif  // DIALOGXMAINWIDGET_H

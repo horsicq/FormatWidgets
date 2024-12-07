@@ -962,7 +962,8 @@ QStandardItem *XFormatWidget::setItemToModel(QStandardItemModel *pModel, qint32 
     return pResult;
 }
 
-QStandardItem *XFormatWidget::setItemToModelData(QStandardItemModel *pModel, qint32 nRow, qint32 nColumn, const QVariant &var, qint64 nSize, qint32 vtype, XFW_DEF::TYPE type, qint64 nHeaderOffset, qint64 nHeaderSize, qint64 nDataOffset, qint64 nDataSize, qint64 nDataCount)
+QStandardItem *XFormatWidget::setItemToModelData(QStandardItemModel *pModel, qint32 nRow, qint32 nColumn, const QVariant &var, qint64 nSize, qint32 vtype,
+                                                 XFW_DEF::TYPE type, qint64 nHeaderOffset, qint64 nHeaderSize, qint64 nDataOffset, qint64 nDataSize, qint64 nDataCount)
 {
     QStandardItem *pResult = setItemToModel(pModel, nRow, nColumn, var, nSize, vtype);
 
@@ -1144,8 +1145,8 @@ void XFormatWidget::_addSpecItems(QTreeWidget *pTreeWidget, QIODevice *pDevice, 
                 for (qint32 i = 0; i < nNumberOfCommands; i++) {
                     XMACH::COMMAND_RECORD record = listCommands.at(i);
 
-                    QTreeWidgetItem *pItemCommand = createNewItem(MACH_commandIdToType(record.nId), XFW_DEF::WIDGETMODE_HEADER, mapLC.value(record.nId), XOptions::ICONTYPE_HEADER,
-                                                                 record.nStructOffset, record.nSize, 0, 0, 0, mode, endian);
+                    QTreeWidgetItem *pItemCommand = createNewItem(MACH_commandIdToType(record.nId), XFW_DEF::WIDGETMODE_HEADER, mapLC.value(record.nId),
+                                                                  XOptions::ICONTYPE_HEADER, record.nStructOffset, record.nSize, 0, 0, 0, mode, endian);
 
                     pItemCommands->addChild(pItemCommand);
 
@@ -1153,19 +1154,24 @@ void XFormatWidget::_addSpecItems(QTreeWidget *pTreeWidget, QIODevice *pDevice, 
                         XMACH_DEF::symtab_command _command = mach._read_symtab_command(record.nStructOffset);
 
                         if (_command.symoff && _command.nsyms) {
-                            QTreeWidgetItem *pItem = createNewItem(XFW_DEF::TYPE_MACH_SymbolTable, XFW_DEF::WIDGETMODE_TABLE, tr("Symbol table"), XOptions::ICONTYPE_TABLE, _command.symoff, 0, _command.nsyms, _command.stroff, _command.strsize, mode, endian);
+                            QTreeWidgetItem *pItem =
+                                createNewItem(XFW_DEF::TYPE_MACH_SymbolTable, XFW_DEF::WIDGETMODE_TABLE, tr("Symbol table"), XOptions::ICONTYPE_TABLE, _command.symoff, 0,
+                                              _command.nsyms, _command.stroff, _command.strsize, mode, endian);
                             pItemCommand->addChild(pItem);
                         }
 
                         if (_command.symoff && _command.nsyms) {
-                            QTreeWidgetItem *pItem = createNewItem(XFW_DEF::TYPE_GENERIC_STRINGTABLE_ANSI, XFW_DEF::WIDGETMODE_TABLE, tr("String table"), XOptions::ICONTYPE_TABLE, _command.stroff, _command.strsize, 0, 0, 0, mode, endian);
+                            QTreeWidgetItem *pItem = createNewItem(XFW_DEF::TYPE_GENERIC_STRINGTABLE_ANSI, XFW_DEF::WIDGETMODE_TABLE, tr("String table"),
+                                                                   XOptions::ICONTYPE_TABLE, _command.stroff, _command.strsize, 0, 0, 0, mode, endian);
                             pItemCommand->addChild(pItem);
                         }
                     } else if (record.nId == XMACH_DEF::S_LC_DYLD_CHAINED_FIXUPS) {
                         XMACH_DEF::linkedit_data_command _command = mach._read_linkedit_data_command(record.nStructOffset);
 
                         if (_command.dataoff && _command.datasize) {
-                            QTreeWidgetItem *pItem = createNewItem(XFW_DEF::TYPE_MACH_dyld_chained_fixups_header, XFW_DEF::WIDGETMODE_HEADER, "dyld_chained_fixups_header", XOptions::ICONTYPE_TABLE, _command.dataoff, _command.datasize, 0, 0, 0, mode, endian);
+                            QTreeWidgetItem *pItem =
+                                createNewItem(XFW_DEF::TYPE_MACH_dyld_chained_fixups_header, XFW_DEF::WIDGETMODE_HEADER, "dyld_chained_fixups_header",
+                                              XOptions::ICONTYPE_TABLE, _command.dataoff, _command.datasize, 0, 0, 0, mode, endian);
                             pItemCommand->addChild(pItem);
                         }
                     }
@@ -1205,66 +1211,57 @@ XFW_DEF::TYPE XFormatWidget::MACH_commandIdToType(qint32 nCommandId)
     XFW_DEF::TYPE result = XFW_DEF::TYPE_MACH_command;
 
     // https://github.com/apple-oss-distributions/dyld/blob/main/mach_o/Header.cpp
-    if ((nCommandId == XMACH_DEF::S_LC_ID_DYLIB) ||
-        (nCommandId == XMACH_DEF::S_LC_LOAD_DYLIB) ||
-        (nCommandId == XMACH_DEF::S_LC_LOAD_WEAK_DYLIB) ||
-        (nCommandId == XMACH_DEF::S_LC_REEXPORT_DYLIB) ||
-        (nCommandId == XMACH_DEF::S_LC_LOAD_UPWARD_DYLIB)) {
+    if ((nCommandId == XMACH_DEF::S_LC_ID_DYLIB) || (nCommandId == XMACH_DEF::S_LC_LOAD_DYLIB) || (nCommandId == XMACH_DEF::S_LC_LOAD_WEAK_DYLIB) ||
+        (nCommandId == XMACH_DEF::S_LC_REEXPORT_DYLIB) || (nCommandId == XMACH_DEF::S_LC_LOAD_UPWARD_DYLIB)) {
         result = XFW_DEF::TYPE_MACH_command_dylib;
-    } else if ( nCommandId == XMACH_DEF::S_LC_RPATH) {
+    } else if (nCommandId == XMACH_DEF::S_LC_RPATH) {
         result = XFW_DEF::TYPE_MACH_command_rpath;
-    } else if ( nCommandId == XMACH_DEF::S_LC_SUB_UMBRELLA) {
+    } else if (nCommandId == XMACH_DEF::S_LC_SUB_UMBRELLA) {
         result = XFW_DEF::TYPE_MACH_command_sub_umbrella;
-    } else if ( nCommandId == XMACH_DEF::S_LC_SUB_CLIENT) {
+    } else if (nCommandId == XMACH_DEF::S_LC_SUB_CLIENT) {
         result = XFW_DEF::TYPE_MACH_command_sub_client;
-    } else if ( nCommandId == XMACH_DEF::S_LC_SUB_LIBRARY) {
+    } else if (nCommandId == XMACH_DEF::S_LC_SUB_LIBRARY) {
         result = XFW_DEF::TYPE_MACH_command_sub_library;
-    } else if ( nCommandId == XMACH_DEF::S_LC_SYMTAB) {
+    } else if (nCommandId == XMACH_DEF::S_LC_SYMTAB) {
         result = XFW_DEF::TYPE_MACH_command_symtab;
-    } else if ( nCommandId == XMACH_DEF::S_LC_DYSYMTAB) {
+    } else if (nCommandId == XMACH_DEF::S_LC_DYSYMTAB) {
         result = XFW_DEF::TYPE_MACH_command_dysymtab;
-    } else if ( nCommandId == XMACH_DEF::S_LC_SEGMENT_SPLIT_INFO) {
+    } else if (nCommandId == XMACH_DEF::S_LC_SEGMENT_SPLIT_INFO) {
         result = XFW_DEF::TYPE_MACH_command_segment_split_info;
-    } else if ( nCommandId == XMACH_DEF::S_LC_ATOM_INFO) {
+    } else if (nCommandId == XMACH_DEF::S_LC_ATOM_INFO) {
         result = XFW_DEF::TYPE_MACH_command_atom_info;
-    } else if ( nCommandId == XMACH_DEF::S_LC_FUNCTION_STARTS) {
+    } else if (nCommandId == XMACH_DEF::S_LC_FUNCTION_STARTS) {
         result = XFW_DEF::TYPE_MACH_command_function_starts;
-    } else if ( nCommandId == XMACH_DEF::S_LC_DYLD_EXPORTS_TRIE) {
+    } else if (nCommandId == XMACH_DEF::S_LC_DYLD_EXPORTS_TRIE) {
         result = XFW_DEF::TYPE_MACH_command_dyld_exports_trie;
-    } else if ( nCommandId == XMACH_DEF::S_LC_DYLD_CHAINED_FIXUPS) {
+    } else if (nCommandId == XMACH_DEF::S_LC_DYLD_CHAINED_FIXUPS) {
         result = XFW_DEF::TYPE_MACH_command_dyld_chained_fixups;
-    } else if ((nCommandId == XMACH_DEF::S_LC_ENCRYPTION_INFO) ||
-               (nCommandId == XMACH_DEF::S_LC_ENCRYPTION_INFO_64) ){
+    } else if ((nCommandId == XMACH_DEF::S_LC_ENCRYPTION_INFO) || (nCommandId == XMACH_DEF::S_LC_ENCRYPTION_INFO_64)) {
         result = XFW_DEF::TYPE_MACH_command_encryption_info;
-    } else if ( (nCommandId == XMACH_DEF::S_LC_DYLD_INFO) ||
-               (nCommandId == XMACH_DEF::S_LC_DYLD_INFO_ONLY)) {
+    } else if ((nCommandId == XMACH_DEF::S_LC_DYLD_INFO) || (nCommandId == XMACH_DEF::S_LC_DYLD_INFO_ONLY)) {
         result = XFW_DEF::TYPE_MACH_command_dyld_info;
-    } else if ( (nCommandId == XMACH_DEF::S_LC_VERSION_MIN_MACOSX) ||
-               (nCommandId == XMACH_DEF::S_LC_VERSION_MIN_IPHONEOS) ||
-               (nCommandId == XMACH_DEF::S_LC_VERSION_MIN_TVOS) ||
-               (nCommandId == XMACH_DEF::S_LC_VERSION_MIN_WATCHOS)) {
+    } else if ((nCommandId == XMACH_DEF::S_LC_VERSION_MIN_MACOSX) || (nCommandId == XMACH_DEF::S_LC_VERSION_MIN_IPHONEOS) ||
+               (nCommandId == XMACH_DEF::S_LC_VERSION_MIN_TVOS) || (nCommandId == XMACH_DEF::S_LC_VERSION_MIN_WATCHOS)) {
         result = XFW_DEF::TYPE_MACH_command_version_min;
-    } else if ( nCommandId == XMACH_DEF::S_LC_UUID) {
+    } else if (nCommandId == XMACH_DEF::S_LC_UUID) {
         result = XFW_DEF::TYPE_MACH_command_uuid;
-    } else if ( nCommandId == XMACH_DEF::S_LC_BUILD_VERSION) {
+    } else if (nCommandId == XMACH_DEF::S_LC_BUILD_VERSION) {
         result = XFW_DEF::TYPE_MACH_command_build_version;
-    } else if ( nCommandId == XMACH_DEF::S_LC_MAIN) {
+    } else if (nCommandId == XMACH_DEF::S_LC_MAIN) {
         result = XFW_DEF::TYPE_MACH_command_main;
-    } else if ( (nCommandId == XMACH_DEF::S_LC_SEGMENT) ||
-               (nCommandId == XMACH_DEF::S_LC_SEGMENT_64)) {
+    } else if ((nCommandId == XMACH_DEF::S_LC_SEGMENT) || (nCommandId == XMACH_DEF::S_LC_SEGMENT_64)) {
         result = XFW_DEF::TYPE_MACH_command_segment;
-    } else if ( nCommandId == XMACH_DEF::S_LC_FILESET_ENTRY) {
+    } else if (nCommandId == XMACH_DEF::S_LC_FILESET_ENTRY) {
         result = XFW_DEF::TYPE_MACH_command_fileset_entry;
-    } else if ( nCommandId == XMACH_DEF::S_LC_SOURCE_VERSION) {
+    } else if (nCommandId == XMACH_DEF::S_LC_SOURCE_VERSION) {
         result = XFW_DEF::TYPE_MACH_command_source_version;
-    } else if ( nCommandId == XMACH_DEF::S_LC_LOAD_DYLINKER) {
+    } else if (nCommandId == XMACH_DEF::S_LC_LOAD_DYLINKER) {
         result = XFW_DEF::TYPE_MACH_command_dylinker;
-    } else if ( nCommandId == XMACH_DEF::S_LC_DATA_IN_CODE) {
+    } else if (nCommandId == XMACH_DEF::S_LC_DATA_IN_CODE) {
         result = XFW_DEF::TYPE_MACH_command_data_in_code;
-    } else if ( nCommandId == XMACH_DEF::S_LC_CODE_SIGNATURE) {
+    } else if (nCommandId == XMACH_DEF::S_LC_CODE_SIGNATURE) {
         result = XFW_DEF::TYPE_MACH_command_code_signature;
-    } else if ((nCommandId == XMACH_DEF::S_LC_ROUTINES) ||
-               (nCommandId == XMACH_DEF::S_LC_ROUTINES_64) ){
+    } else if ((nCommandId == XMACH_DEF::S_LC_ROUTINES) || (nCommandId == XMACH_DEF::S_LC_ROUTINES_64)) {
         result = XFW_DEF::TYPE_MACH_command_routines;
     } else {
         result = XFW_DEF::TYPE_MACH_command;

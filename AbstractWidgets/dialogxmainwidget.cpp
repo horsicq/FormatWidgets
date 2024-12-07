@@ -21,9 +21,7 @@
 #include "dialogxmainwidget.h"
 #include "ui_dialogxmainwidget.h"
 
-DialogXMainWidget::DialogXMainWidget(QWidget *pParent) :
-    XShortcutsDialog(pParent),
-    ui(new Ui::DialogXMainWidget)
+DialogXMainWidget::DialogXMainWidget(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogXMainWidget)
 {
     ui->setupUi(this);
 }
@@ -35,7 +33,6 @@ DialogXMainWidget::~DialogXMainWidget()
 
 void DialogXMainWidget::adjustView()
 {
-
 }
 
 void DialogXMainWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)

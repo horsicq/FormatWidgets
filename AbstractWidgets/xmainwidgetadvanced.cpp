@@ -20,16 +20,14 @@
  */
 #include "xmainwidgetadvanced.h"
 
-XMainWidgetAdvanced::XMainWidgetAdvanced(QWidget *pParent)
-    : XMainWidget(pParent)
+XMainWidgetAdvanced::XMainWidgetAdvanced(QWidget *pParent) : XMainWidget(pParent)
 {
-
 }
 
 void XMainWidgetAdvanced::_addBaseItems(QTreeWidget *pTreeWidget, XBinary::FT fileType)
 {
-    QTreeWidgetItem *pItemInfo =
-        createNewItem(XFW_DEF::TYPE_INFO, XFW_DEF::WIDGETMODE_UNKNOWN, tr("Info"), XOptions::ICONTYPE_INFO, 0, -1, 0, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN);
+    QTreeWidgetItem *pItemInfo = createNewItem(XFW_DEF::TYPE_INFO, XFW_DEF::WIDGETMODE_UNKNOWN, tr("Info"), XOptions::ICONTYPE_INFO, 0, -1, 0, 0, 0,
+                                               XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN);
     pTreeWidget->addTopLevelItem(pItemInfo);
     pItemInfo->addChild(createNewItem(XFW_DEF::TYPE_NFDSCAN, XFW_DEF::WIDGETMODE_UNKNOWN, "Nauz File Detector (NFD)", XOptions::ICONTYPE_NFD, 0, -1, 0, 0, 0,
                                       XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
@@ -41,8 +39,8 @@ void XMainWidgetAdvanced::_addBaseItems(QTreeWidget *pTreeWidget, XBinary::FT fi
 #endif
     pTreeWidget->addTopLevelItem(createNewItem(XFW_DEF::TYPE_VIRUSTOTAL, XFW_DEF::WIDGETMODE_UNKNOWN, "VirusTotal", XOptions::ICONTYPE_VIRUSTOTAL, 0, -1, 0, 0, 0,
                                                XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
-    pTreeWidget->addTopLevelItem(createNewItem(XFW_DEF::TYPE_VISUALIZATION, XFW_DEF::WIDGETMODE_UNKNOWN, tr("Visualization"), XOptions::ICONTYPE_VISUALIZATION, 0, -1, 0, 0,
-                                               0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
+    pTreeWidget->addTopLevelItem(createNewItem(XFW_DEF::TYPE_VISUALIZATION, XFW_DEF::WIDGETMODE_UNKNOWN, tr("Visualization"), XOptions::ICONTYPE_VISUALIZATION, 0, -1, 0,
+                                               0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
     pTreeWidget->addTopLevelItem(
         createNewItem(XFW_DEF::TYPE_HEX, XFW_DEF::WIDGETMODE_UNKNOWN, tr("Hex"), XOptions::ICONTYPE_HEX, 0, -1, 0, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
 
@@ -51,8 +49,8 @@ void XMainWidgetAdvanced::_addBaseItems(QTreeWidget *pTreeWidget, XBinary::FT fi
                                                    XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
     }
 
-    pTreeWidget->addTopLevelItem(
-        createNewItem(XFW_DEF::TYPE_HASH, XFW_DEF::WIDGETMODE_UNKNOWN, tr("Hash"), XOptions::ICONTYPE_HASH, 0, -1, 0, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
+    pTreeWidget->addTopLevelItem(createNewItem(XFW_DEF::TYPE_HASH, XFW_DEF::WIDGETMODE_UNKNOWN, tr("Hash"), XOptions::ICONTYPE_HASH, 0, -1, 0, 0, 0,
+                                               XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
     pTreeWidget->addTopLevelItem(createNewItem(XFW_DEF::TYPE_STRINGS, XFW_DEF::WIDGETMODE_UNKNOWN, tr("Strings"), XOptions::ICONTYPE_STRING, 0, -1, 0, 0, 0,
                                                XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
     pTreeWidget->addTopLevelItem(createNewItem(XFW_DEF::TYPE_SIGNATURES, XFW_DEF::WIDGETMODE_UNKNOWN, tr("Signatures"), XOptions::ICONTYPE_SIGNATURE, 0, -1, 0, 0, 0,

@@ -89,6 +89,6 @@ enum DATA {
 };
 
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
-}  // namespace N_O32_OBJ
+}  // namespace X_O32_OBJ
 
 #endif  // XLE_DEFS_H

@@ -68,7 +68,8 @@ const XFW_DEF::HEADER_RECORD records32[] = {
 const XFW_DEF::HEADER_RECORD records64[] = {
     {cmd, "cmd", offsetof(XMACH_DEF::segment_command_64, cmd), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT},
     {cmdsize, "cmdsize", offsetof(XMACH_DEF::segment_command_64, cmdsize), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE},
-    {segname, "segname", offsetof(XMACH_DEF::segment_command_64, segname), 16, "char[16]", XFW_DEF::VAL_TYPE_DATA_ARRAY | XFW_DEF::VAL_TYPE_ANSI | XFW_DEF::VAL_TYPE_STRING},
+    {segname, "segname", offsetof(XMACH_DEF::segment_command_64, segname), 16, "char[16]",
+     XFW_DEF::VAL_TYPE_DATA_ARRAY | XFW_DEF::VAL_TYPE_ANSI | XFW_DEF::VAL_TYPE_STRING},
     {vmaddr, "vmaddr", offsetof(XMACH_DEF::segment_command_64, vmaddr), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_ADDRESS_},
     {vmsize, "vmsize", offsetof(XMACH_DEF::segment_command_64, vmsize), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE},
     {fileoff, "fileoff", offsetof(XMACH_DEF::segment_command_64, fileoff), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET_},
@@ -380,7 +381,7 @@ const XFW_DEF::HEADER_RECORD records64[] = {
     {reserved5, "reserved5", offsetof(XMACH_DEF::routines_command_64, reserved5), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT},
     {reserved6, "reserved6", offsetof(XMACH_DEF::routines_command_64, reserved6), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT},
 };
-}
+}  // namespace X_mach_routines
 
 namespace X_mach_unix_thread_x86_32 {
 const XFW_DEF::HEADER_RECORD records[] = {
@@ -603,8 +604,10 @@ const XFW_DEF::HEADER_RECORD records[] = {
     {nextrel, "nextrel", offsetof(XMACH_DEF::dylib_module, nextrel), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT},
     {iinit_iterm, "iinit_iterm", offsetof(XMACH_DEF::dylib_module, iinit_iterm), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT},
     {ninit_nterm, "ninit_nterm", offsetof(XMACH_DEF::dylib_module, ninit_nterm), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT},
-    {objc_module_info_addr, "objc_module_info_addr", offsetof(XMACH_DEF::dylib_module, objc_module_info_addr), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_ADDRESS_},
-    {objc_module_info_size, "objc_module_info_size", offsetof(XMACH_DEF::dylib_module, objc_module_info_size), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE},
+    {objc_module_info_addr, "objc_module_info_addr", offsetof(XMACH_DEF::dylib_module, objc_module_info_addr), 4, "uint32",
+     XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_ADDRESS_},
+    {objc_module_info_size, "objc_module_info_size", offsetof(XMACH_DEF::dylib_module, objc_module_info_size), 4, "uint32",
+     XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE},
 };
 }
 
@@ -621,8 +624,10 @@ const XFW_DEF::HEADER_RECORD records[] = {
     {nextrel, "nextrel", offsetof(XMACH_DEF::dylib_module, nextrel), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT},
     {iinit_iterm, "iinit_iterm", offsetof(XMACH_DEF::dylib_module, iinit_iterm), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT},
     {ninit_nterm, "ninit_nterm", offsetof(XMACH_DEF::dylib_module, ninit_nterm), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT},
-    {objc_module_info_addr, "objc_module_info_addr", offsetof(XMACH_DEF::dylib_module, objc_module_info_addr), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_ADDRESS_},
-    {objc_module_info_size, "objc_module_info_size", offsetof(XMACH_DEF::dylib_module, objc_module_info_size), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE},
+    {objc_module_info_addr, "objc_module_info_addr", offsetof(XMACH_DEF::dylib_module, objc_module_info_addr), 4, "uint32",
+     XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_ADDRESS_},
+    {objc_module_info_size, "objc_module_info_size", offsetof(XMACH_DEF::dylib_module, objc_module_info_size), 8, "uint64",
+     XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE},
 };
 }
 
@@ -694,6 +699,7 @@ const XFW_DEF::HEADER_RECORD records[] = {
 // namespace X_mach_dyld_chained_starts_in_image {
 // const XFW_DEF::HEADER_RECORD records[] = {
 //     {seg_count, "seg_count", offsetof(XMACH_DEF::dyld_chained_starts_in_image, seg_count), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT},
-//     {seg_info_offset, "seg_info_offset", offsetof(XMACH_DEF::dyld_chained_starts_in_image, seg_info_offset), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET_},
+//     {seg_info_offset, "seg_info_offset", offsetof(XMACH_DEF::dyld_chained_starts_in_image, seg_info_offset), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT |
+//     XFW_DEF::VAL_TYPE_OFFSET_},
 // };
 // }

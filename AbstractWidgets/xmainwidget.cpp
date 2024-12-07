@@ -242,7 +242,6 @@ void XMainWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
 
 void XMainWidget::_addBaseItems(QTreeWidget *pTreeWidget, XBinary::FT fileType)
 {
-
 }
 
 XShortcutsWidget *XMainWidget::createWidget(const XFW_DEF::CWOPTIONS &cwOptions)

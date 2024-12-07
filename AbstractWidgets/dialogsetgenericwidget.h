@@ -28,8 +28,7 @@ namespace Ui {
 class DialogSetGenericWidget;
 }
 
-class DialogSetGenericWidget : public XShortcutsDialog
-{
+class DialogSetGenericWidget : public XShortcutsDialog {
     Q_OBJECT
 
 public:
@@ -45,4 +44,4 @@ private:
     Ui::DialogSetGenericWidget *ui;
 };
 
-#endif // DIALOGSETGENERICWIDGET_H
+#endif  // DIALOGSETGENERICWIDGET_H

@@ -379,7 +379,7 @@ enum DATA {
 };
 
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
-}  // namespace X_mach_main
+}  // namespace X_mach_entry_point
 
 namespace X_mach_fileset_entry {
 enum DATA {
@@ -775,7 +775,7 @@ enum DATA {
 };
 
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
-}  // namespace X_mach_dyld_chained_fixups
+}  // namespace X_mach_dyld_chained_fixups_header
 
 // namespace X_mach_dyld_chained_starts_in_image {
 

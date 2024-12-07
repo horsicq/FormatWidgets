@@ -21,9 +21,7 @@
 #include "dialogsetgenericwidget.h"
 #include "ui_dialogsetgenericwidget.h"
 
-DialogSetGenericWidget::DialogSetGenericWidget(QWidget *parent) :
-    XShortcutsDialog(parent),
-    ui(new Ui::DialogSetGenericWidget)
+DialogSetGenericWidget::DialogSetGenericWidget(QWidget *parent) : XShortcutsDialog(parent), ui(new Ui::DialogSetGenericWidget)
 {
     ui->setupUi(this);
 }
@@ -35,7 +33,6 @@ DialogSetGenericWidget::~DialogSetGenericWidget()
 
 void DialogSetGenericWidget::adjustView()
 {
-
 }
 
 void DialogSetGenericWidget::registerShortcuts(bool bState)

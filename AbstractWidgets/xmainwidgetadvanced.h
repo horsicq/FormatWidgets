@@ -35,8 +35,7 @@
 #include "xhashwidget.h"
 #include "xentropywidget.h"
 
-class XMainWidgetAdvanced : public XMainWidget
-{
+class XMainWidgetAdvanced : public XMainWidget {
     Q_OBJECT
 public:
     explicit XMainWidgetAdvanced(QWidget *pParent = nullptr);
@@ -47,4 +46,4 @@ public:
 signals:
 };
 
-#endif // XMAINWIDGETADVANCED_H
+#endif  // XMAINWIDGETADVANCED_H
