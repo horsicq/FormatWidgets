@@ -130,6 +130,8 @@ bool SearchStringsWidget::getInitStatus()
 
 void SearchStringsWidget::adjustView()
 {
+    getGlobalOptions()->adjustWidget(this, XOptions::ID_VIEW_FONT_CONTROLS);
+    getGlobalOptions()->adjustWidget(ui->tableViewResult, XOptions::ID_VIEW_FONT_TABLEVIEWS);
 }
 
 void SearchStringsWidget::reloadData(bool bSaveSelection)

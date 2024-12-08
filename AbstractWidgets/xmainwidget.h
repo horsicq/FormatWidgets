@@ -39,7 +39,6 @@ class XMainWidget : public XFormatWidget {
 
 public:
     explicit XMainWidget(QWidget *pParent = nullptr);
-    XMainWidget(QIODevice *pDevice, XFW_DEF::OPTIONS options, QWidget *pParent = nullptr);
     ~XMainWidget();
 
     virtual void clear();

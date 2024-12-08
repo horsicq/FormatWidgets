@@ -121,6 +121,9 @@ bool SearchSignaturesWidget::getInitStatus()
 void SearchSignaturesWidget::adjustView()
 {
     updateSignaturesPath();
+
+    getGlobalOptions()->adjustWidget(this, XOptions::ID_VIEW_FONT_CONTROLS);
+    getGlobalOptions()->adjustWidget(ui->tableViewResult, XOptions::ID_VIEW_FONT_TABLEVIEWS);
 }
 
 void SearchSignaturesWidget::reloadData(bool bSaveSelection)

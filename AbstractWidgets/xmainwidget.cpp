@@ -43,12 +43,6 @@ XMainWidget::XMainWidget(QWidget *pParent) : XFormatWidget(pParent), ui(new Ui::
     connect(ui->widgetGlobalHex, SIGNAL(currentLocationChanged(quint64, qint32, qint64)), this, SLOT(currentLocationChangedSlot(quint64, qint32, qint64)));
 }
 
-XMainWidget::XMainWidget(QIODevice *pDevice, XFW_DEF::OPTIONS options, QWidget *pParent)
-{
-    XMainWidget::setData(pDevice, options, 0, 0, 0);
-    XMainWidget::reload();
-}
-
 XMainWidget::~XMainWidget()
 {
     delete ui;
@@ -106,6 +100,18 @@ void XMainWidget::reload()
     _addBaseItems(ui->treeWidgetNavi, fileType);
     _addSpecItems(ui->treeWidgetNavi, getDevice(), fileType, getOptions().bIsImage, getOptions().nImageBase);
 
+    {
+        QList<qint32> listSizes = ui->splitterNavi->sizes();
+
+        qint32 nWidgetSize = 0;
+        nWidgetSize += 200;
+        listSizes[0] = nWidgetSize;
+        listSizes[1] += nWidgetSize;
+        ui->splitterNavi->setSizes(listSizes);
+        ui->splitterNavi->setStretchFactor(0, 1);
+        ui->splitterNavi->setStretchFactor(0, 8);
+    }
+
     ui->treeWidgetNavi->expandAll();
 
     ui->treeWidgetNavi->setCurrentIndex(ui->treeWidgetNavi->model()->index(0, 0));
@@ -146,6 +152,9 @@ void XMainWidget::setReadonly(bool bState)
 
 void XMainWidget::adjustView()
 {
+    getGlobalOptions()->adjustWidget(this, XOptions::ID_VIEW_FONT_CONTROLS);
+    getGlobalOptions()->adjustWidget(ui->treeWidgetNavi, XOptions::ID_VIEW_FONT_TREEVIEWS);
+
     qint32 nNumberOfWidgets = ui->stackedWidgetMain->count();
 
     for (qint32 i = 0; i < nNumberOfWidgets; i++) {

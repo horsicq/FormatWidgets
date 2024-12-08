@@ -95,6 +95,8 @@ void SearchValuesWidget::findValue(quint64 nValue, XBinary::ENDIAN endian)
 
 void SearchValuesWidget::adjustView()
 {
+    getGlobalOptions()->adjustWidget(this, XOptions::ID_VIEW_FONT_CONTROLS);
+    getGlobalOptions()->adjustWidget(ui->tableViewResult, XOptions::ID_VIEW_FONT_TABLEVIEWS);
 }
 
 void SearchValuesWidget::reloadData(bool bSaveSelection)

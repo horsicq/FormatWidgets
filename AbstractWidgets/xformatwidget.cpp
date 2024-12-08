@@ -210,10 +210,12 @@ qint32 XFormatWidget::getType()
     return g_nType;
 }
 
-QTreeWidgetItem *XFormatWidget::createNewItem(XFW_DEF::TYPE type, XFW_DEF::WIDGETMODE widgetMode, const QString &sTitle, XOptions::ICONTYPE iconType, qint64 nOffset,
+QTreeWidgetItem *XFormatWidget::createNewItem(XFW_DEF::TYPE type, XFW_DEF::WIDGETMODE widgetMode, XOptions::ICONTYPE iconType, qint64 nOffset,
                                               qint64 nSize, qint64 nCount, QVariant var1, QVariant var2, XBinary::MODE mode, XBinary::ENDIAN endian)
 {
     QTreeWidgetItem *pResult = new QTreeWidgetItem;
+
+    QString sTitle = getTypeTitle(type, mode, endian);
 
     pResult->setText(0, sTitle);
     pResult->setData(0, Qt::UserRole + XFW_DEF::WIDGET_DATA_TYPE, type);
@@ -230,6 +232,143 @@ QTreeWidgetItem *XFormatWidget::createNewItem(XFW_DEF::TYPE type, XFW_DEF::WIDGE
     XOptions::adjustTreeWidgetItem(pResult, iconType);
 
     return pResult;
+}
+
+QString XFormatWidget::getTypeTitle(XFW_DEF::TYPE type, XBinary::MODE mode, XBinary::ENDIAN endian)
+{
+    Q_UNUSED(endian)
+
+    QString sResult;
+
+    if (type == XFW_DEF::TYPE_INFO) {
+        sResult = tr("Info");
+    } else if (type == XFW_DEF::TYPE_VISUALIZATION) {
+        sResult = tr("Visualization");
+    } else if (type == XFW_DEF::TYPE_VIRUSTOTAL) {
+        sResult = QString("VirusTotal");
+    } else if (type == XFW_DEF::TYPE_HEX) {
+        sResult = tr("Hex");
+    } else if (type == XFW_DEF::TYPE_DISASM) {
+        sResult = tr("Disasm");
+    } else if (type == XFW_DEF::TYPE_HASH) {
+        sResult = tr("Hash");
+    } else if (type == XFW_DEF::TYPE_STRINGS) {
+        sResult = tr("Strings");
+    } else if (type == XFW_DEF::TYPE_SIGNATURES) {
+        sResult = tr("Signatures");
+    } else if (type == XFW_DEF::TYPE_MEMORYMAP) {
+        sResult = tr("Memory map");
+    } else if (type == XFW_DEF::TYPE_ENTROPY) {
+        sResult = tr("Entropy");
+    } else if (type == XFW_DEF::TYPE_NFDSCAN) {
+        sResult = QString("Nauz File Detector (NFD)");
+    } else if (type == XFW_DEF::TYPE_EXTRACTOR) {
+        sResult = tr("Extractor");
+    } else if (type == XFW_DEF::TYPE_SEARCH) {
+        sResult = tr("Search");
+    } else if (type == XFW_DEF::TYPE_DIESCAN) {
+        sResult = QString("Detect It Easy (DiE)");
+    } else if (type == XFW_DEF::TYPE_YARASCAN) {
+        sResult = QString("Yara rules");
+    } else if (type == XFW_DEF::TYPE_TOOLS) {
+        sResult = tr("Tools");
+    } else if (type == XFW_DEF::TYPE_GENERIC_STRINGTABLE_ANSI) {
+        sResult = tr("String table");
+    } else if (type == XFW_DEF::TYPE_ELF_elf_ehdr) {
+        if (mode == XBinary::MODE_64) {
+            sResult = QString("elf_ehdr_64");
+        } else if (mode == XBinary::MODE_32) {
+            sResult = QString("elf_ehdr");
+        }
+    } else if (type == XFW_DEF::TYPE_MSDOS_EXE_file) {
+        sResult = QString("EXE_file");
+    } else if (type == XFW_DEF::TYPE_MSDOS_IMAGE_DOS_HEADER) {
+        sResult = QString("IMAGE_DOS_HEADER");
+    } else if (type == XFW_DEF::TYPE_MACH_mach_header) {
+        if (mode == XBinary::MODE_64) {
+            sResult = QString("mach_header_64");
+        } else if (mode == XBinary::MODE_32) {
+            sResult = QString("mach_header");
+        }
+    } else if (type == XFW_DEF::TYPE_MACH_command) {
+        sResult = QString("command");
+    } else if (type == XFW_DEF::TYPE_MACH_command_segment) {
+        if (mode == XBinary::MODE_64) {
+            sResult = QString("segment_command_64");
+        } else if (mode == XBinary::MODE_32) {
+            sResult = QString("segment_command");
+        }
+    } else if (type == XFW_DEF::TYPE_MACH_command_dylib) {
+        sResult = QString("dylib_command");
+    } else if (type == XFW_DEF::TYPE_MACH_command_rpath) {
+        sResult = QString("rpath_command");
+    } else if (type == XFW_DEF::TYPE_MACH_command_sub_umbrella) {
+        sResult = QString("sub_umbrella_command");
+    } else if (type == XFW_DEF::TYPE_MACH_command_sub_client) {
+        sResult = QString("sub_client_command");
+    } else if (type == XFW_DEF::TYPE_MACH_command_sub_library) {
+        sResult = QString("sub_library_command");
+    } else if (type == XFW_DEF::TYPE_MACH_command_symtab) {
+        sResult = QString("symtab_command");
+    } else if (type == XFW_DEF::TYPE_MACH_command_dysymtab) {
+        sResult = QString("dysymtab_command");
+    } else if (type == XFW_DEF::TYPE_MACH_command_segment_split_info) {
+        sResult = QString("segment_split_info_command");
+    } else if (type == XFW_DEF::TYPE_MACH_command_atom_info) {
+        sResult = QString("atom_info_command");
+    } else if (type == XFW_DEF::TYPE_MACH_command_function_starts) {
+        sResult = QString("function_starts_command");
+    } else if (type == XFW_DEF::TYPE_MACH_command_dyld_exports_trie) {
+        sResult = QString("dyld_exports_trie_command");
+    } else if (type == XFW_DEF::TYPE_MACH_command_dyld_chained_fixups) {
+        sResult = QString("dyld_chained_fixups_command");
+    } else if (type == XFW_DEF::TYPE_MACH_command_encryption_info) {
+        if (mode == XBinary::MODE_64) {
+            sResult = QString("encryption_info_command_64");
+        } else if (mode == XBinary::MODE_32) {
+            sResult = QString("encryption_info_command");
+        }
+    } else if (type == XFW_DEF::TYPE_MACH_command_routines) {
+        if (mode == XBinary::MODE_64) {
+            sResult = QString("routines_command_64");
+        } else if (mode == XBinary::MODE_32) {
+            sResult = QString("routines_command");
+        }
+    } else if (type == XFW_DEF::TYPE_MACH_command_dyld_info) {
+        sResult = QString("dyld_info_command");
+    } else if (type == XFW_DEF::TYPE_MACH_command_version_min) {
+        sResult = QString("version_min_command");
+    } else if (type == XFW_DEF::TYPE_MACH_command_uuid) {
+        sResult = QString("uuid_command");
+    } else if (type == XFW_DEF::TYPE_MACH_command_build_version) {
+        sResult = QString("build_version_command");
+    } else if (type == XFW_DEF::TYPE_MACH_command_main) {
+        sResult = QString("main_command");
+    } else if (type == XFW_DEF::TYPE_MACH_command_fileset_entry) {
+        sResult = QString("fileset_entry_command");
+    } else if (type == XFW_DEF::TYPE_MACH_command_source_version) {
+        sResult = QString("source_version_command");
+    } else if (type == XFW_DEF::TYPE_MACH_command_dylinker) {
+        sResult = QString("dylinker_command");
+    } else if (type == XFW_DEF::TYPE_MACH_command_data_in_code) {
+        sResult = QString("data_in_code_command");
+    } else if (type == XFW_DEF::TYPE_MACH_command_code_signature) {
+        sResult = QString("code_signature_command");
+    } else if (type == XFW_DEF::TYPE_MACH_command_routines) {
+        sResult = QString("routines_command");
+    } else if (type == XFW_DEF::TYPE_MACH_SymbolTable) {
+        sResult = tr("Symbol table");
+    } else if (type == XFW_DEF::TYPE_MACH_dyld_chained_fixups_header) {
+        sResult = QString("dyld_chained_fixups_header");
+    }
+
+#ifdef QT_DEBUG
+    if (sResult == "") {
+        qDebug("Check getTypeTitle!!!");
+    }
+#endif
+
+    return sResult;
 }
 
 QList<XFW_DEF::HEADER_RECORD> XFormatWidget::getHeaderRecords(const XFW_DEF::CWOPTIONS *pCwOptions)
@@ -1091,15 +1230,13 @@ void XFormatWidget::_addSpecItems(QTreeWidget *pTreeWidget, QIODevice *pDevice, 
                 qint64 nDataSize = 0;
 
                 if (bIs64) {
-                    sTitle = "Elf64_Ehdr";
                     nDataSize = sizeof(XELF_DEF::Elf64_Ehdr);
                 } else {
-                    sTitle = "Elf32_Ehdr";
                     nDataSize = sizeof(XELF_DEF::Elf32_Ehdr);
                 }
 
                 pTreeWidget->addTopLevelItem(
-                    createNewItem(XFW_DEF::TYPE_ELF_elf_ehdr, XFW_DEF::WIDGETMODE_HEADER, sTitle, XOptions::ICONTYPE_HEADER, 0, nDataSize, 0, 0, 0, mode, endian));
+                    createNewItem(XFW_DEF::TYPE_ELF_elf_ehdr, XFW_DEF::WIDGETMODE_HEADER, XOptions::ICONTYPE_HEADER, 0, nDataSize, 0, 0, 0, mode, endian));
             }
         }
     } else if ((fileType == XBinary::FT_MACHO) || (fileType == XBinary::FT_MACHO32) || (fileType == XBinary::FT_MACHO64)) {
@@ -1108,22 +1245,18 @@ void XFormatWidget::_addSpecItems(QTreeWidget *pTreeWidget, QIODevice *pDevice, 
         if (mach.isValid()) {
             XBinary::ENDIAN endian = mach.getEndian();
             XBinary::MODE mode = mach.getMode();
-            bool bIs64 = mach.is64();
 
             {
-                QString sTitle;
                 qint64 nDataSize = 0;
 
-                if (bIs64) {
-                    sTitle = "mach_header_64";
+                if (mode == XBinary::MODE_64) {
                     nDataSize = sizeof(XMACH_DEF::mach_header_64);
-                } else {
-                    sTitle = "mach_header";
+                } else if (mode == XBinary::MODE_32) {
                     nDataSize = sizeof(XMACH_DEF::mach_header);
                 }
 
                 pTreeWidget->addTopLevelItem(
-                    createNewItem(XFW_DEF::TYPE_MACH_mach_header, XFW_DEF::WIDGETMODE_HEADER, sTitle, XOptions::ICONTYPE_HEADER, 0, nDataSize, 0, 0, 0, mode, endian));
+                    createNewItem(XFW_DEF::TYPE_MACH_mach_header, XFW_DEF::WIDGETMODE_HEADER, XOptions::ICONTYPE_HEADER, 0, nDataSize, 0, 0, 0, mode, endian));
             }
 
             {
@@ -1131,7 +1264,7 @@ void XFormatWidget::_addSpecItems(QTreeWidget *pTreeWidget, QIODevice *pDevice, 
                 qint32 nCommandSize = mach.getHeader_sizeofcmds();
                 qint32 nCommandCount = mach.getHeader_ncmds();
 
-                QTreeWidgetItem *pItemCommands = createNewItem(XFW_DEF::TYPE_MACH_command, XFW_DEF::WIDGETMODE_TABLE, tr("Commands"), XOptions::ICONTYPE_TABLE,
+                QTreeWidgetItem *pItemCommands = createNewItem(XFW_DEF::TYPE_MACH_command, XFW_DEF::WIDGETMODE_TABLE, XOptions::ICONTYPE_TABLE,
                                                                nCommandOffset, nCommandSize, nCommandCount, 0, 0, mode, endian);
 
                 pTreeWidget->addTopLevelItem(pItemCommands);
@@ -1145,7 +1278,7 @@ void XFormatWidget::_addSpecItems(QTreeWidget *pTreeWidget, QIODevice *pDevice, 
                 for (qint32 i = 0; i < nNumberOfCommands; i++) {
                     XMACH::COMMAND_RECORD record = listCommands.at(i);
 
-                    QTreeWidgetItem *pItemCommand = createNewItem(MACH_commandIdToType(record.nId), XFW_DEF::WIDGETMODE_HEADER, mapLC.value(record.nId),
+                    QTreeWidgetItem *pItemCommand = createNewItem(MACH_commandIdToType(record.nId), XFW_DEF::WIDGETMODE_HEADER,
                                                                   XOptions::ICONTYPE_HEADER, record.nStructOffset, record.nSize, 0, 0, 0, mode, endian);
 
                     pItemCommands->addChild(pItemCommand);
@@ -1155,13 +1288,13 @@ void XFormatWidget::_addSpecItems(QTreeWidget *pTreeWidget, QIODevice *pDevice, 
 
                         if (_command.symoff && _command.nsyms) {
                             QTreeWidgetItem *pItem =
-                                createNewItem(XFW_DEF::TYPE_MACH_SymbolTable, XFW_DEF::WIDGETMODE_TABLE, tr("Symbol table"), XOptions::ICONTYPE_TABLE, _command.symoff, 0,
+                                createNewItem(XFW_DEF::TYPE_MACH_SymbolTable, XFW_DEF::WIDGETMODE_TABLE, XOptions::ICONTYPE_TABLE, _command.symoff, 0,
                                               _command.nsyms, _command.stroff, _command.strsize, mode, endian);
                             pItemCommand->addChild(pItem);
                         }
 
                         if (_command.symoff && _command.nsyms) {
-                            QTreeWidgetItem *pItem = createNewItem(XFW_DEF::TYPE_GENERIC_STRINGTABLE_ANSI, XFW_DEF::WIDGETMODE_TABLE, tr("String table"),
+                            QTreeWidgetItem *pItem = createNewItem(XFW_DEF::TYPE_GENERIC_STRINGTABLE_ANSI, XFW_DEF::WIDGETMODE_TABLE,
                                                                    XOptions::ICONTYPE_TABLE, _command.stroff, _command.strsize, 0, 0, 0, mode, endian);
                             pItemCommand->addChild(pItem);
                         }
@@ -1170,7 +1303,7 @@ void XFormatWidget::_addSpecItems(QTreeWidget *pTreeWidget, QIODevice *pDevice, 
 
                         if (_command.dataoff && _command.datasize) {
                             QTreeWidgetItem *pItem =
-                                createNewItem(XFW_DEF::TYPE_MACH_dyld_chained_fixups_header, XFW_DEF::WIDGETMODE_HEADER, "dyld_chained_fixups_header",
+                                createNewItem(XFW_DEF::TYPE_MACH_dyld_chained_fixups_header, XFW_DEF::WIDGETMODE_HEADER,
                                               XOptions::ICONTYPE_TABLE, _command.dataoff, _command.datasize, 0, 0, 0, mode, endian);
                             pItemCommand->addChild(pItem);
                         }
@@ -1186,7 +1319,7 @@ void XFormatWidget::_addSpecItems(QTreeWidget *pTreeWidget, QIODevice *pDevice, 
             XBinary::MODE mode = msdos.getMode();
 
             {
-                pTreeWidget->addTopLevelItem(createNewItem(XFW_DEF::TYPE_MSDOS_EXE_file, XFW_DEF::WIDGETMODE_HEADER, "EXE_file", XOptions::ICONTYPE_HEADER, 0,
+                pTreeWidget->addTopLevelItem(createNewItem(XFW_DEF::TYPE_MSDOS_EXE_file, XFW_DEF::WIDGETMODE_HEADER, XOptions::ICONTYPE_HEADER, 0,
                                                            sizeof(XMSDOS_DEF::EXE_file), 0, 0, 0, mode, endian));
             }
         }
@@ -1199,7 +1332,7 @@ void XFormatWidget::_addSpecItems(QTreeWidget *pTreeWidget, QIODevice *pDevice, 
             bool bIs64 = pe.is64();
 
             {
-                pTreeWidget->addTopLevelItem(createNewItem(XFW_DEF::TYPE_MSDOS_IMAGE_DOS_HEADER, XFW_DEF::WIDGETMODE_HEADER, "IMAGE_DOS_HEADER",
+                pTreeWidget->addTopLevelItem(createNewItem(XFW_DEF::TYPE_MSDOS_IMAGE_DOS_HEADER, XFW_DEF::WIDGETMODE_HEADER,
                                                            XOptions::ICONTYPE_HEADER, 0, sizeof(XMSDOS_DEF::IMAGE_DOS_HEADEREX), 0, 0, 0, mode, endian));
             }
         }

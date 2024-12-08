@@ -48,6 +48,7 @@ void DialogSearchValues::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
 
 void DialogSearchValues::adjustView()
 {
+    ui->widgetSearchValues->adjustView();
 }
 
 void DialogSearchValues::on_pushButtonClose_clicked()
