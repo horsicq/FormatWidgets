@@ -53,23 +53,24 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
 
     createHeaderTable(ui->tableWidgetMain, &listHeaderRecords, getListRecWidgets(), getCwOptions()->nDataOffset, getCwOptions()->endian);
 
-    if ((getCwOptions()->_type == XFW_DEF::TYPE_MACH_command) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_command_segment) ||
-        (getCwOptions()->_type == XFW_DEF::TYPE_MACH_command_dylib) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_command_rpath) ||
-        (getCwOptions()->_type == XFW_DEF::TYPE_MACH_command_sub_umbrella) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_command_sub_client) ||
-        (getCwOptions()->_type == XFW_DEF::TYPE_MACH_command_sub_library) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_command_symtab) ||
-        (getCwOptions()->_type == XFW_DEF::TYPE_MACH_command_dysymtab) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_command_segment_split_info) ||
-        (getCwOptions()->_type == XFW_DEF::TYPE_MACH_command_atom_info) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_command_function_starts) ||
-        (getCwOptions()->_type == XFW_DEF::TYPE_MACH_command_dyld_exports_trie) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_command_dyld_chained_fixups) ||
-        (getCwOptions()->_type == XFW_DEF::TYPE_MACH_command_encryption_info) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_command_dyld_info) ||
-        (getCwOptions()->_type == XFW_DEF::TYPE_MACH_command_version_min) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_command_uuid) ||
-        (getCwOptions()->_type == XFW_DEF::TYPE_MACH_command_build_version) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_command_main) ||
-        (getCwOptions()->_type == XFW_DEF::TYPE_MACH_command_fileset_entry) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_command_source_version) ||
-        (getCwOptions()->_type == XFW_DEF::TYPE_MACH_command_dylinker) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_command_data_in_code) ||
-        (getCwOptions()->_type == XFW_DEF::TYPE_MACH_command_code_signature) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_command_routines)) {
-        adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getLoadCommandTypesS(), X_mach_commands::cmd, XComboBoxEx::CBTYPE_LIST, 0);
+    if ((getCwOptions()->_type == XFW_DEF::TYPE_load_command) || (getCwOptions()->_type == XFW_DEF::TYPE_segment_command) ||
+            (getCwOptions()->_type == XFW_DEF::TYPE_segment_command_64) ||
+        (getCwOptions()->_type == XFW_DEF::TYPE_load_command_dylib) || (getCwOptions()->_type == XFW_DEF::TYPE_load_command_rpath) ||
+        (getCwOptions()->_type == XFW_DEF::TYPE_load_command_sub_umbrella) || (getCwOptions()->_type == XFW_DEF::TYPE_load_command_sub_client) ||
+        (getCwOptions()->_type == XFW_DEF::TYPE_load_command_sub_library) || (getCwOptions()->_type == XFW_DEF::TYPE_load_command_symtab) ||
+        (getCwOptions()->_type == XFW_DEF::TYPE_load_command_dysymtab) || (getCwOptions()->_type == XFW_DEF::TYPE_load_command_segment_split_info) ||
+        (getCwOptions()->_type == XFW_DEF::TYPE_load_command_atom_info) || (getCwOptions()->_type == XFW_DEF::TYPE_load_command_function_starts) ||
+        (getCwOptions()->_type == XFW_DEF::TYPE_load_command_dyld_exports_trie) || (getCwOptions()->_type == XFW_DEF::TYPE_load_command_dyld_chained_fixups) ||
+        (getCwOptions()->_type == XFW_DEF::TYPE_load_command_encryption_info) || (getCwOptions()->_type == XFW_DEF::TYPE_load_command_dyld_info) ||
+        (getCwOptions()->_type == XFW_DEF::TYPE_load_command_version_min) || (getCwOptions()->_type == XFW_DEF::TYPE_load_command_uuid) ||
+        (getCwOptions()->_type == XFW_DEF::TYPE_load_command_build_version) || (getCwOptions()->_type == XFW_DEF::TYPE_load_command_main) ||
+        (getCwOptions()->_type == XFW_DEF::TYPE_load_command_fileset_entry) || (getCwOptions()->_type == XFW_DEF::TYPE_load_command_source_version) ||
+        (getCwOptions()->_type == XFW_DEF::TYPE_load_command_dylinker) || (getCwOptions()->_type == XFW_DEF::TYPE_load_command_data_in_code) ||
+        (getCwOptions()->_type == XFW_DEF::TYPE_load_command_code_signature) || (getCwOptions()->_type == XFW_DEF::TYPE_load_command_routines)) {
+        adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getLoadCommandTypesS(), X_load_commands::cmd, XComboBoxEx::CBTYPE_LIST, 0);
     }
 
-    if (getCwOptions()->_type == XFW_DEF::TYPE_MACH_mach_header) {
+    if ((getCwOptions()->_type == XFW_DEF::TYPE_mach_header) || (getCwOptions()->_type == XFW_DEF::TYPE_mach_header_64)) {
         XBinary binary(getDevice());
         quint32 _cputype = binary.read_int32(getCwOptions()->nDataOffset + offsetof(XMACH_DEF::mach_header, cputype), (getCwOptions()->endian == XBinary::ENDIAN_BIG));
 
@@ -78,9 +79,9 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
         adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getHeaderCpuSubTypesS(_cputype), X_mach_header::cpusubtype, XComboBoxEx::CBTYPE_LIST, 0);
         adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getHeaderFileTypesS(), X_mach_header::filetype, XComboBoxEx::CBTYPE_LIST, 0);
         adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getHeaderFlagsS(), X_mach_header::flags, XComboBoxEx::CBTYPE_FLAGS, 0);
-    } else if (getCwOptions()->_type == XFW_DEF::TYPE_MACH_command_segment) {
-        adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getVMProtectionsS(), X_mach_segments::initprot, XComboBoxEx::CBTYPE_FLAGS, 0);
-        adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getVMProtectionsS(), X_mach_segments::maxprot, XComboBoxEx::CBTYPE_FLAGS, 0);
+    } else if ((getCwOptions()->_type == XFW_DEF::TYPE_segment_command) || (getCwOptions()->_type == XFW_DEF::TYPE_segment_command_64)) {
+        adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getVMProtectionsS(), X_segment_command::initprot, XComboBoxEx::CBTYPE_FLAGS, 0);
+        adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getVMProtectionsS(), X_segment_command::maxprot, XComboBoxEx::CBTYPE_FLAGS, 0);
         // } else if (getCwOptions()->_type == FW_DEF::TYPE_MACH_section) {
         //     adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getSectionTypesS(), N_mach_section::flags, XComboBoxEx::CBTYPE_FLAGS, 0);
         // } else if (getCwOptions()->_type == FW_DEF::TYPE_MACH_dyld_info_command) {
@@ -93,9 +94,9 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
         //     adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getCommandsS(), N_mach_routines_command::cmd, XComboBoxEx::CBTYPE_LIST, 0);
         // } else if (getCwOptions()->_type == FW_DEF::TYPE_MACH_routines_command_64) {
         //     adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getCommandsS(), N_mach_routines_command_64::cmd, XComboBoxEx::CBTYPE_LIST, 0);
-    } else if (getCwOptions()->_type == XFW_DEF::TYPE_MACH_command_build_version) {
+    } else if (getCwOptions()->_type == XFW_DEF::TYPE_load_command_build_version) {
         adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getPlatformS(), X_mach_build_version::platform, XComboBoxEx::CBTYPE_LIST, 0);
-    } else if (getCwOptions()->_type == XFW_DEF::TYPE_ELF_elf_ehdr) {
+    } else if ((getCwOptions()->_type == XFW_DEF::TYPE_Elf32_Ehdr) || (getCwOptions()->_type == XFW_DEF::TYPE_Elf64_Ehdr)) {
         // adjustComboBox(getListRecWidgets(), XELF::getHeaderMagicsS(), _elf_ehdrWidget::ei_mag, XComboBoxEx::CBTYPE_LIST, 0);
         // adjustComboBox(getListRecWidgets(), XELF::getHeaderClassesS(), _elf_ehdrWidget::ei_class, XComboBoxEx::CBTYPE_LIST, 0);
         // adjustComboBox(getListRecWidgets(), XELF::getHeaderDataS(), _elf_ehdrWidget::ei_data, XComboBoxEx::CBTYPE_LIST, 0);

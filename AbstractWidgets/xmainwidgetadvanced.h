@@ -23,7 +23,6 @@
 
 #include "xmainwidget.h"
 #include "xextractorwidget.h"
-#include "xfileinfowidget.h"
 #include "xhexviewwidget.h"
 #include "xmemorymapwidget.h"
 #include "xmultidisasmwidget.h"
@@ -40,7 +39,7 @@ class XMainWidgetAdvanced : public XMainWidget {
 public:
     explicit XMainWidgetAdvanced(QWidget *pParent = nullptr);
 
-    virtual void _addBaseItems(QTreeWidget *pTreeWidget, XBinary::FT fileType);
+    virtual QTreeWidgetItem *_addBaseItems(QTreeWidget *pTreeWidget, XBinary::FT fileType);
     virtual XShortcutsWidget *createWidget(const XFW_DEF::CWOPTIONS &cwOptions);
 
 signals:

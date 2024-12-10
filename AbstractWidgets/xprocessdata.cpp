@@ -76,7 +76,7 @@ void XProcessData::process()
 
             g_pListHeaderRecords->append(record);
         }
-    } else if (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_command) {
+    } else if (g_pCwOptions->_type == XFW_DEF::TYPE_load_command) {
         XFW_DEF::HEADER_RECORD record = {};
         record.nPosition = -1;
         record.sName = tr("Info");
@@ -93,7 +93,7 @@ void XProcessData::process()
         nHeaderSize = 1;
     }
 
-    if (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_command) {
+    if (g_pCwOptions->_type == XFW_DEF::TYPE_load_command) {
         XMACH mach(g_pCwOptions->pDevice, g_pCwOptions->bIsImage, g_pCwOptions->nImageBase);
 
         QMap<quint64, QString> mapLC = mach.getLoadCommandTypes();
@@ -108,16 +108,16 @@ void XProcessData::process()
         (*g_ppModel) = new QStandardItemModel(nNumberOfRows, nNumberOfColumns);
 
         for (qint32 i = 0; (i < nNumberOfRows) && (!(g_pPdStruct->bIsStop)); i++) {
-            XFW_DEF::TYPE _type = XFormatWidget::MACH_commandIdToType(listCommands.at(i).nId);
+            XFW_DEF::TYPE _type = XFormatWidget::load_commandIdToType(listCommands.at(i).nId);
 
             XFormatWidget::setItemToModelData((*g_ppModel), i, 0, i, 0, g_pListHeaderRecords->at(0).vtype, _type, listCommands.at(i).nStructOffset, nHeaderSize,
                                               listCommands.at(i).nStructOffset, listCommands.at(i).nSize, 0);
-            XFormatWidget::setItemToModel((*g_ppModel), i, X_mach_commands::cmd + 1, listCommands.at(i).nId, g_pListHeaderRecords->at(X_mach_commands::cmd + 1).nSize,
-                                          g_pListHeaderRecords->at(X_mach_commands::cmd + 1).vtype);
-            XFormatWidget::setItemToModel((*g_ppModel), i, X_mach_commands::cmdsize + 1, listCommands.at(i).nSize,
-                                          g_pListHeaderRecords->at(X_mach_commands::cmdsize + 1).nSize, g_pListHeaderRecords->at(X_mach_commands::cmdsize + 1).vtype);
-            XFormatWidget::setItemToModel((*g_ppModel), i, X_mach_commands::cmdsize + 2, mapLC.value(listCommands.at(i).nId),
-                                          g_pListHeaderRecords->at(X_mach_commands::cmdsize + 2).nSize, g_pListHeaderRecords->at(X_mach_commands::cmdsize + 2).vtype);
+            XFormatWidget::setItemToModel((*g_ppModel), i, X_load_commands::cmd + 1, listCommands.at(i).nId, g_pListHeaderRecords->at(X_load_commands::cmd + 1).nSize,
+                                          g_pListHeaderRecords->at(X_load_commands::cmd + 1).vtype);
+            XFormatWidget::setItemToModel((*g_ppModel), i, X_load_commands::cmdsize + 1, listCommands.at(i).nSize,
+                                          g_pListHeaderRecords->at(X_load_commands::cmdsize + 1).nSize, g_pListHeaderRecords->at(X_load_commands::cmdsize + 1).vtype);
+            XFormatWidget::setItemToModel((*g_ppModel), i, X_load_commands::cmdsize + 2, mapLC.value(listCommands.at(i).nId),
+                                          g_pListHeaderRecords->at(X_load_commands::cmdsize + 2).nSize, g_pListHeaderRecords->at(X_load_commands::cmdsize + 2).vtype);
 
             XBinary::setPdStructCurrent(g_pPdStruct, g_nFreeIndex, i);
         }

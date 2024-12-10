@@ -40,7 +40,7 @@ extern const XFW_DEF::HEADER_RECORD records32[__data_size - 1];
 extern const XFW_DEF::HEADER_RECORD records64[__data_size];
 }  // namespace X_mach_header
 
-namespace X_mach_commands {
+namespace X_load_commands {
 enum DATA {
     cmd = 0,
     cmdsize,
@@ -48,9 +48,9 @@ enum DATA {
 };
 
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
-}  // namespace X_mach_commands
+}  // namespace X_load_commands
 
-namespace X_mach_segments {
+namespace X_segment_command {
 enum DATA {
     cmd = 0,
     cmdsize,

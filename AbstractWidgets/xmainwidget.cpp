@@ -25,6 +25,8 @@ XMainWidget::XMainWidget(QWidget *pParent) : XFormatWidget(pParent), ui(new Ui::
 {
     ui->setupUi(this);
 
+    g_bGlobalHexEnable = false;
+
     XOptions::adjustToolButton(ui->toolButtonReload, XOptions::ICONTYPE_RELOAD);
     XOptions::adjustToolButton(ui->toolButtonNext, XOptions::ICONTYPE_FORWARD, Qt::ToolButtonIconOnly);
     XOptions::adjustToolButton(ui->toolButtonPrev, XOptions::ICONTYPE_BACKWARD, Qt::ToolButtonIconOnly);
@@ -39,13 +41,27 @@ XMainWidget::XMainWidget(QWidget *pParent) : XFormatWidget(pParent), ui(new Ui::
     ui->widgetGlobalHex->setProperty("TYPE", XFW_DEF::TYPE_GLOBALHEX);
     ui->widgetGlobalHex->hide();
 
-    connect(ui->widgetGlobalHex, SIGNAL(dataChanged(qint64, qint64)), this, SLOT(dataChangedSlot(qint64, qint64)));
-    connect(ui->widgetGlobalHex, SIGNAL(currentLocationChanged(quint64, qint32, qint64)), this, SLOT(currentLocationChangedSlot(quint64, qint32, qint64)));
+    ui->toolButtonGlobalHex->hide();
 }
 
 XMainWidget::~XMainWidget()
 {
     delete ui;
+}
+
+void XMainWidget::setGlobalHexEnable(bool bState)
+{
+    g_bGlobalHexEnable = bState;
+
+    if (bState) {
+        ui->toolButtonGlobalHex->show();
+        connect(ui->widgetGlobalHex, SIGNAL(dataChanged(qint64, qint64)), this, SLOT(dataChangedSlot(qint64, qint64)));
+        connect(ui->widgetGlobalHex, SIGNAL(currentLocationChanged(quint64, qint32, qint64)), this, SLOT(currentLocationChangedSlot(quint64, qint32, qint64)));
+    } else {
+        ui->toolButtonGlobalHex->hide();
+        disconnect(ui->widgetGlobalHex, SIGNAL(dataChanged(qint64, qint64)), this, SLOT(dataChangedSlot(qint64, qint64)));
+        disconnect(ui->widgetGlobalHex, SIGNAL(currentLocationChanged(quint64, qint32, qint64)), this, SLOT(currentLocationChangedSlot(quint64, qint32, qint64)));
+    }
 }
 
 void XMainWidget::clear()
@@ -91,25 +107,24 @@ void XMainWidget::reload()
     setMode(_memoryMap.mode);
     setEndian(_memoryMap.endian);
 
-    XHexView::OPTIONS options = {};
+    XHexView::OPTIONS options = {}; // TODO move toEnable
     options.memoryMapRegion = _memoryMap;
     ui->widgetGlobalHex->setXInfoDB(getXInfoDB());
     ui->widgetGlobalHex->setData(getDevice(), options, true);
     ui->widgetGlobalHex->setBytesProLine(8);
 
-    _addBaseItems(ui->treeWidgetNavi, fileType);
-    _addSpecItems(ui->treeWidgetNavi, getDevice(), fileType, getOptions().bIsImage, getOptions().nImageBase);
+    QTreeWidgetItem *pItem = _addBaseItems(ui->treeWidgetNavi, fileType);
+    _addFileType(pItem, getDevice(), 0, getDevice()->size(), fileType, getOptions().bIsImage, getOptions().nImageBase);
 
     {
         QList<qint32> listSizes = ui->splitterNavi->sizes();
 
-        qint32 nWidgetSize = 0;
-        nWidgetSize += 200;
-        listSizes[0] = nWidgetSize;
-        listSizes[1] += nWidgetSize;
+        // qint32 nWidgetSize = listSizes[0] + listSizes[1];
+        listSizes[0] = 250;
+        listSizes[1] = 250;
         ui->splitterNavi->setSizes(listSizes);
-        ui->splitterNavi->setStretchFactor(0, 1);
-        ui->splitterNavi->setStretchFactor(0, 8);
+        ui->splitterNavi->setStretchFactor(0, 0);
+        ui->splitterNavi->setStretchFactor(1, 1);
     }
 
     ui->treeWidgetNavi->expandAll();
@@ -165,7 +180,9 @@ void XMainWidget::adjustView()
         }
     }
 
-    ui->widgetGlobalHex->adjustView();
+    if (g_bGlobalHexEnable) {
+        ui->widgetGlobalHex->adjustView();
+    }
 }
 
 void XMainWidget::reloadData(bool bSaveSelection)
@@ -249,8 +266,16 @@ void XMainWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
     }
 }
 
-void XMainWidget::_addBaseItems(QTreeWidget *pTreeWidget, XBinary::FT fileType)
+QTreeWidgetItem *XMainWidget::_addBaseItems(QTreeWidget *pTreeWidget, XBinary::FT fileType)
 {
+    Q_UNUSED(fileType)
+
+    QTreeWidgetItem *pResult = createNewItem(XFW_DEF::TYPE_INFO, XFW_DEF::WIDGETMODE_UNKNOWN, XOptions::ICONTYPE_INFO, 0, -1, 0, 0, 0,
+                                               XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN);
+
+    pTreeWidget->addTopLevelItem(pResult);
+
+    return pResult;
 }
 
 XShortcutsWidget *XMainWidget::createWidget(const XFW_DEF::CWOPTIONS &cwOptions)
@@ -324,8 +349,8 @@ void XMainWidget::on_toolButtonGlobalHex_toggled(bool bChecked)
         listSizes[0] -= nWidgetSize;
         listSizes[1] += nWidgetSize;
         ui->splitterHex->setSizes(listSizes);
-        ui->splitterHex->setStretchFactor(0, 8);
         ui->splitterHex->setStretchFactor(0, 1);
+        ui->splitterHex->setStretchFactor(1, 0);
     } else {
         ui->widgetGlobalHex->hide();
     }
@@ -370,7 +395,9 @@ void XMainWidget::currentLocationChangedSlot(quint64 nLocation, qint32 nLocation
 {
     XFW_DEF::TYPE _type = (XFW_DEF::TYPE)(sender()->property("TYPE").toInt());
     if (_type != XFW_DEF::TYPE_GLOBALHEX) {
-        ui->widgetGlobalHex->currentLocationChangedSlot(nLocation, nLocationType, nSize);
+        if (g_bGlobalHexEnable) {
+            ui->widgetGlobalHex->currentLocationChangedSlot(nLocation, nLocationType, nSize);
+        }
     }
 }
 

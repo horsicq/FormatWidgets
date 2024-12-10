@@ -110,7 +110,7 @@ public:
     qint64 getOffset();
     qint32 getType();
     static QTreeWidgetItem *createNewItem(XFW_DEF::TYPE type, XFW_DEF::WIDGETMODE widgetMode, XOptions::ICONTYPE iconType, qint64 nOffset,
-                                          qint64 nSize, qint64 nCount, QVariant var1, QVariant var2, XBinary::MODE mode, XBinary::ENDIAN endian);
+                                          qint64 nSize, qint64 nCount, QVariant var1, QVariant var2, XBinary::MODE mode, XBinary::ENDIAN endian, QString sTitle = "");
     static QString getTypeTitle(XFW_DEF::TYPE type, XBinary::MODE mode, XBinary::ENDIAN endian);
 
     static QList<XFW_DEF::HEADER_RECORD> getHeaderRecords(const XFW_DEF::CWOPTIONS *pCwOptions);
@@ -214,8 +214,28 @@ public:
     QStandardItemModel *getHeaderTableModel(QTableWidget *pTableWidget);
     void saveHeaderTable(QTableWidget *pTableWidget, const QString &sFileName);
 
-    static void _addSpecItems(QTreeWidget *pTreeWidget, QIODevice *pDevice, XBinary::FT fileType, bool bIsImage, XADDR nImageBase);
-    static XFW_DEF::TYPE MACH_commandIdToType(qint32 nCommandId);
+    static void _addFileType(QTreeWidgetItem *pTreeWidgetItem, QIODevice *pDevice, qint64 nOffset, qint64 nSize, XBinary::FT fileType, bool bIsImage, XADDR nImageBase);
+
+    struct SPSTRUCT {
+        QTreeWidgetItem *pTreeWidgetItem;
+        QIODevice *pDevice;
+        qint64 nOffset;
+        qint64 nSize;
+        XBinary::FT fileType;
+        bool bIsImage;
+        XADDR nImageBase;
+        qint64 nStructOffset;
+        qint64 nStructSize;
+        qint32 nStructCount;
+        XFW_DEF::TYPE type;
+        XFW_DEF::WIDGETMODE widgetMode;
+        XBinary::MODE mode;
+        XBinary::ENDIAN endian;
+        QString sTitle;
+    };
+
+    static void _addStruct(const SPSTRUCT &spStruct);
+    static XFW_DEF::TYPE load_commandIdToType(qint32 nCommandId);
 
 protected:
     enum SV {

@@ -29,6 +29,7 @@
 #include "xoptions.h"
 #include "xshortcutsdialog.h"
 #include "xtableview.h"
+#include "xfileinfowidget.h"
 
 namespace Ui {
 class XMainWidget;
@@ -41,6 +42,8 @@ public:
     explicit XMainWidget(QWidget *pParent = nullptr);
     ~XMainWidget();
 
+    void setGlobalHexEnable(bool bState);
+
     virtual void clear();
     virtual void cleanup();
     virtual void reload();
@@ -51,7 +54,7 @@ public:
     virtual void reloadData(bool bSaveSelection);
     virtual void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
 
-    virtual void _addBaseItems(QTreeWidget *pTreeWidget, XBinary::FT fileType);
+    virtual QTreeWidgetItem *_addBaseItems(QTreeWidget *pTreeWidget, XBinary::FT fileType);
     virtual XShortcutsWidget *createWidget(const XFW_DEF::CWOPTIONS &cwOptions);
 
 private slots:
@@ -66,8 +69,10 @@ private slots:
     void currentLocationChangedSlot(quint64 nLocation, qint32 nLocationType, qint64 nSize);
     void showCwWidgetSlot(QString sInitString, bool bNewWindow);
 
+
 private:
     Ui::XMainWidget *ui;
+    bool g_bGlobalHexEnable;
 };
 
 #endif  // XMAINWIDGET_H

@@ -43,14 +43,14 @@ const XFW_DEF::HEADER_RECORD records64[] = {
 };
 }  // namespace X_mach_header
 
-namespace X_mach_commands {
+namespace X_load_commands {
 const XFW_DEF::HEADER_RECORD records[] = {
     {cmd, "cmd", offsetof(XMACH_DEF::load_command, cmd), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT},
     {cmdsize, "cmdsize", offsetof(XMACH_DEF::load_command, cmdsize), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE},
 };
-}
+}  // namespace X_load_commands
 
-namespace X_mach_segments {
+namespace X_segment_command {
 const XFW_DEF::HEADER_RECORD records32[] = {
     {cmd, "cmd", offsetof(XMACH_DEF::segment_command, cmd), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT},
     {cmdsize, "cmdsize", offsetof(XMACH_DEF::segment_command, cmdsize), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE},
@@ -79,7 +79,7 @@ const XFW_DEF::HEADER_RECORD records64[] = {
     {nsects, "nsects", offsetof(XMACH_DEF::segment_command_64, nsects), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_COUNT},
     {flags, "flags", offsetof(XMACH_DEF::segment_command_64, flags), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT},
 };
-}  // namespace X_mach_segments
+}  // namespace X_segment_command
 
 namespace X_mach_sections32 {
 const XFW_DEF::HEADER_RECORD records[] = {
