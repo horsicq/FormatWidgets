@@ -152,7 +152,7 @@ enum DATA {
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace X_mach_sections64_E
 
-namespace X_mach_dylib {
+namespace X_dylib_command {
 enum DATA {
     cmd = 0,
     cmdsize,
@@ -164,7 +164,7 @@ enum DATA {
 };
 
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
-}  // namespace X_mach_dylib
+}  // namespace X_dylib_command
 
 namespace X_mach_fmv_library {
 enum DATA {
@@ -177,7 +177,7 @@ enum DATA {
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace X_mach_fmv_library
 
-namespace X_mach_dyld_info {
+namespace X_dyld_info_command {
 enum DATA {
     cmd = 0,
     cmdsize,
@@ -197,7 +197,7 @@ enum DATA {
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace X_mach_dyld_info
 
-namespace X_mach_uuid {
+namespace X_uuid_command {
 enum DATA {
     cmd = 0,
     cmdsize,
@@ -208,7 +208,7 @@ enum DATA {
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace X_mach_uuid
 
-namespace X_mach_dylinker {
+namespace X_dylinker_command {
 enum DATA {
     cmd = 0,
     cmdsize,
@@ -219,7 +219,7 @@ enum DATA {
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace X_mach_dylinker
 
-namespace X_mach_rpath {
+namespace X_rpath_command {
 enum DATA {
     cmd = 0,
     cmdsize,
@@ -230,7 +230,7 @@ enum DATA {
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace X_mach_rpath
 
-namespace X_mach_symtab {
+namespace X_symtab_command {
 enum DATA {
     cmd = 0,
     cmdsize,
@@ -244,7 +244,7 @@ enum DATA {
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace X_mach_symtab
 
-namespace X_mach_sub_umbrella {
+namespace X_sub_umbrella_command {
 enum DATA {
     cmd = 0,
     cmdsize,
@@ -253,9 +253,9 @@ enum DATA {
 };
 
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
-}  // namespace X_mach_sub_umbrella
+}  // namespace X_sub_umbrella_command
 
-namespace X_mach_sub_client {
+namespace X_sub_client_command {
 enum DATA {
     cmd = 0,
     cmdsize,
@@ -266,7 +266,7 @@ enum DATA {
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace X_mach_sub_client
 
-namespace X_mach_sub_library {
+namespace X_sub_library_command {
 enum DATA {
     cmd = 0,
     cmdsize,
@@ -277,7 +277,7 @@ enum DATA {
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace X_mach_sub_library
 
-namespace X_mach_dysymtab {
+namespace X_dysymtab_command {
 enum DATA {
     cmd = 0,
     cmdsize,
@@ -305,7 +305,7 @@ enum DATA {
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace X_mach_dysymtab
 
-namespace X_mach_version_min {
+namespace X_version_min_command {
 enum DATA {
     cmd = 0,
     cmdsize,
@@ -317,7 +317,7 @@ enum DATA {
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace X_mach_version_min
 
-namespace X_mach_build_version {
+namespace X_build_version_command {
 enum DATA {
     cmd = 0,
     cmdsize,
@@ -331,7 +331,7 @@ enum DATA {
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace X_mach_build_version
 
-namespace X_mach_source_version {
+namespace X_source_version_command {
 enum DATA {
     cmd = 0,
     cmdsize,
@@ -342,7 +342,7 @@ enum DATA {
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace X_mach_source_version
 
-namespace X_mach_encryption_info {
+namespace X_encryption_info_command {
 enum DATA {
     cmd = 0,
     cmdsize,
@@ -357,7 +357,7 @@ extern const XFW_DEF::HEADER_RECORD records32[__data_size - 1];
 extern const XFW_DEF::HEADER_RECORD records64[__data_size];
 }  // namespace X_mach_encryption_info
 
-namespace X_mach_linkedit_data {
+namespace X_linkedit_data_command {
 enum DATA {
     cmd = 0,
     cmdsize,
@@ -369,7 +369,7 @@ enum DATA {
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace X_mach_linkedit_data
 
-namespace X_mach_entry_point {
+namespace X_entry_point_command {
 enum DATA {
     cmd = 0,
     cmdsize,
@@ -381,7 +381,7 @@ enum DATA {
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace X_mach_entry_point
 
-namespace X_mach_fileset_entry {
+namespace X_fileset_entry_command {
 enum DATA {
     cmd = 0,
     cmdsize,
@@ -395,7 +395,7 @@ enum DATA {
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace X_mach_fileset_entry
 
-namespace X_mach_unix_thread {
+namespace X_unix_thread_command {
 enum DATA {
     cmd = 0,
     cmdsize,
@@ -407,7 +407,7 @@ enum DATA {
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace X_mach_unix_thread
 
-namespace X_mach_routines {
+namespace X_routines_command {
 enum DATA {
     cmd = 0,
     cmdsize,
@@ -621,7 +621,7 @@ enum DATA {
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace X_mach_unix_thread_m68k_32
 
-namespace X_mach_nlist {
+namespace X_nlist {
 enum DATA {
     n_strx,
     n_type,

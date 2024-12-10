@@ -104,6 +104,7 @@ void XGenericTableWidget::on_toolButtonTableReload_clicked()
 
 void XGenericTableWidget::on_toolButtonTableSave_clicked()
 {
+    saveModel(g_pModel, getTypeTitle(getCwOptions()));
 }
 
 void XGenericTableWidget::on_tableViewMain_doubleClicked(const QModelIndex &index)

@@ -26,6 +26,7 @@
 #include <QPushButton>
 #include <QTableWidget>
 #include <QTreeWidgetItem>
+#include <QHBoxLayout>
 
 #include "xformatwidget_def.h"
 #include "xcomboboxex.h"
@@ -77,7 +78,8 @@ public:
         qint32 vtype;
         XBinary::ENDIAN endian;
         XLineEditHEX *pLineEdit;
-        XComboBoxEx *pComboBox;
+        QWidget *pWidget;
+        QTableWidgetItem *pValue;
         QTableWidgetItem *pComment;
     };
 
@@ -112,6 +114,7 @@ public:
     static QTreeWidgetItem *createNewItem(XFW_DEF::TYPE type, XFW_DEF::WIDGETMODE widgetMode, XOptions::ICONTYPE iconType, qint64 nOffset,
                                           qint64 nSize, qint64 nCount, QVariant var1, QVariant var2, XBinary::MODE mode, XBinary::ENDIAN endian, QString sTitle = "");
     static QString getTypeTitle(XFW_DEF::TYPE type, XBinary::MODE mode, XBinary::ENDIAN endian);
+    static QString getTypeTitle(const XFW_DEF::CWOPTIONS *pCwOptions);
 
     static QList<XFW_DEF::HEADER_RECORD> getHeaderRecords(const XFW_DEF::CWOPTIONS *pCwOptions);
     static qint32 getHeaderSize(QList<XFW_DEF::HEADER_RECORD> *pListHeaderRecords);
@@ -119,21 +122,8 @@ public:
     bool createHeaderTable(QTableWidget *pTableWidget, const QList<XFW_DEF::HEADER_RECORD> *pListHeaderRecords, QList<RECWIDGET> *pListRecWidget, qint64 nOffset,
                            XBinary::ENDIAN endian);
     bool createListTable(qint32 nType, QTableWidget *pTableWidget, const XFW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, qint32 nNumberOfRecords);
-    void addComment(QTableWidget *pTableWidget, qint32 nRow, qint32 nColumn, const QString &sComment);
-    void updateTableRecord(QTableWidget *pTableWidget, qint32 nRow, qint64 nOffset, qint64 nSize);
-    //    bool createDirectoryTable(int type,QTableWidget *pTableWidget,const
-    //    DIRECTORY_ENTRY_RECORD *pRecords,int nRecordCount);
-    bool createSectionTable(qint32 nType, QTableWidget *pTableWidget, const XFW_DEF::HEADER_RECORD *pRecords, qint32 nNumberOfRecords);
-    void setLineEditsReadOnly(XLineEditHEX **ppLineEdits, qint32 nCount, bool bState);
-    void setComboBoxesReadOnly(XComboBoxEx **ppComboBoxes, qint32 nCount, bool bState);
-    void setPushButtonReadOnly(QPushButton **ppPushButtons, qint32 nCount, bool bState);
-    void setDateTimeEditReadOnly(XDateTimeEditX **ppDateTimeEdits, qint32 nCount, bool bState);
-    void _deleteObjects(QObject **ppObjects, qint32 nCount);
-    void _deleteSubdevices(SubDevice **ppSubdevices, qint32 nCount);
 
-    XComboBoxEx *createComboBox(QTableWidget *pTableWidget, QMap<quint64, QString> mapData, qint32 nType, qint32 nData, XComboBoxEx::CBTYPE cbtype, quint64 nMask = 0,
-                                qint32 nExtraData = -1);
-    void adjustComboBox(QTableWidget *pTableWidget, QList<RECWIDGET> *pListRecWidget, const QMap<quint64, QString> &mapData, qint32 nPosition, XComboBoxEx::CBTYPE cbtype,
+    void addComboBox(QTableWidget *pTableWidget, QList<RECWIDGET> *pListRecWidget, const QMap<quint64, QString> &mapData, qint32 nPosition, XComboBoxEx::CBTYPE cbtype,
                         quint64 nMask);
     // InvWidget *createInvWidget(QTableWidget *pTableWidget, qint32 nType, qint32 nData, InvWidget::TYPE widgetType);
     XDateTimeEditX *createTimeDateEdit(QTableWidget *pTableWidget, qint32 nType, qint32 nData);
@@ -214,6 +204,8 @@ public:
     QStandardItemModel *getHeaderTableModel(QTableWidget *pTableWidget);
     void saveHeaderTable(QTableWidget *pTableWidget, const QString &sFileName);
 
+    void saveModel(QAbstractItemModel *pModel, const QString &sFileName);
+
     static void _addFileType(QTreeWidgetItem *pTreeWidgetItem, QIODevice *pDevice, qint64 nOffset, qint64 nSize, XBinary::FT fileType, bool bIsImage, XADDR nImageBase);
 
     struct SPSTRUCT {
@@ -227,6 +219,8 @@ public:
         qint64 nStructOffset;
         qint64 nStructSize;
         qint32 nStructCount;
+        QVariant var1;
+        QVariant var2;
         XFW_DEF::TYPE type;
         XFW_DEF::WIDGETMODE widgetMode;
         XBinary::MODE mode;

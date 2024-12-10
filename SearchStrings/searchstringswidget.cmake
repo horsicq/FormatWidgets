@@ -1,10 +1,15 @@
 include_directories(${CMAKE_CURRENT_LIST_DIR})
 
-include(${CMAKE_CURRENT_LIST_DIR}/../MultiSearch/multisearch.cmake)
+if (NOT DEFINED MULTISEARCH_SOURCES)
+    include(${CMAKE_CURRENT_LIST_DIR}/../MultiSearch/multisearch.cmake)
+    set(SEARCHVALUESWIDGET_SOURCES ${SEARCHVALUESWIDGET_SOURCES} ${MULTISEARCH_SOURCES})
+endif()
+
 include(${CMAKE_CURRENT_LIST_DIR}/../../FormatDialogs/dialogeditstring.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../../Controls/xtableview.cmake)
 
 set(SEARCHSTRINGSWIDGET_SOURCES
+    ${SEARCHVALUESWIDGET_SOURCES}
     ${MULTISEARCH_SOURCES}
     ${DIALOGEDITSTRING_SOURCES}
     ${XTABLEVIEW_SOURCES}

@@ -179,6 +179,7 @@ void XProcessData::process()
     }
 
     for (qint32 i = 0; i < nNumberOfColumns; i++) {
+        //(*g_ppModel)->setHeaderData(i, Qt::Horizontal, (qint32)(Qt::AlignRight | Qt::AlignVCenter), Qt::TextAlignmentRole);
         (*g_ppModel)->setHorizontalHeaderItem(i, new QStandardItem(g_pListHeaderRecords->at(i).sName));
     }
 
