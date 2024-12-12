@@ -2,22 +2,22 @@ include_directories(${CMAKE_CURRENT_LIST_DIR})
 include_directories(${CMAKE_CURRENT_LIST_DIR}/Generic)
 
 set(ABSTRACTWIDGETS_SOURCES
-    ${CMAKE_CURRENT_LIST_DIR}/Specific/xdex_defs.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/Specific/xdex_defs.h
-    ${CMAKE_CURRENT_LIST_DIR}/Specific/xelf_defs.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/Specific/xelf_defs.h
-    ${CMAKE_CURRENT_LIST_DIR}/Specific/xle_defs.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/Specific/xle_defs.h
-    ${CMAKE_CURRENT_LIST_DIR}/Specific/xmach_defs.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/Specific/xmach_defs.h
-    ${CMAKE_CURRENT_LIST_DIR}/Specific/xmsdos_defs.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/Specific/xmsdos_defs.h
-    ${CMAKE_CURRENT_LIST_DIR}/Specific/xne_defs.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/Specific/xne_defs.h
-    ${CMAKE_CURRENT_LIST_DIR}/Specific/xpdf_defs.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/Specific/xpdf_defs.h
-    ${CMAKE_CURRENT_LIST_DIR}/Specific/xpe_defs.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/Specific/xpe_defs.h
+    ${CMAKE_CURRENT_LIST_DIR}/Structs/xdex_defs.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Structs/xdex_defs.h
+    ${CMAKE_CURRENT_LIST_DIR}/Structs/xelf_defs.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Structs/xelf_defs.h
+    ${CMAKE_CURRENT_LIST_DIR}/Structs/xle_defs.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Structs/xle_defs.h
+    ${CMAKE_CURRENT_LIST_DIR}/Structs/xmach_defs.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Structs/xmach_defs.h
+    ${CMAKE_CURRENT_LIST_DIR}/Structs/xmsdos_defs.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Structs/xmsdos_defs.h
+    ${CMAKE_CURRENT_LIST_DIR}/Structs/xne_defs.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Structs/xne_defs.h
+    ${CMAKE_CURRENT_LIST_DIR}/Structs/xpdf_defs.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Structs/xpdf_defs.h
+    ${CMAKE_CURRENT_LIST_DIR}/Structs/xpe_defs.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Structs/xpe_defs.h
     ${CMAKE_CURRENT_LIST_DIR}/dialogxmainwidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/dialogxmainwidget.h
     ${CMAKE_CURRENT_LIST_DIR}/dialogxmainwidget.ui

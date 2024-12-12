@@ -85,10 +85,6 @@ private:
 protected:
     virtual void registerShortcuts(bool bState);
 
-signals:
-    void showHex(qint64 nOffset, qint64 nSize);
-    void showDisasm(qint64 nOffset);
-
 private:
     Ui::SearchValuesWidget *ui;
     QIODevice *g_pDevice;

@@ -97,6 +97,7 @@ enum TYPE {
     TYPE_nlist,
     TYPE_nlist_64,
     TYPE_MACH_dyld_chained_fixups_header,
+    TYPE_SC_SuperBlob,
     TYPE_MACH_END
 };
 
@@ -130,14 +131,15 @@ enum VAL_TYPE {
     VAL_TYPE_DATA_INT = 1 << 0,
     VAL_TYPE_DATA_ARRAY = 1 << 1,
     VAL_TYPE_RELADDRESS_ = 1 << 2,
-    VAL_TYPE_ADDRESS_ = 1 << 3,
-    VAL_TYPE_OFFSET_ = 1 << 4,
+    VAL_TYPE_ADDRESS = 1 << 3,
+    VAL_TYPE_OFFSET = 1 << 4,
     VAL_TYPE_SIZE = 1 << 5,
     VAL_TYPE_ANSI = 1 << 6,
     VAL_TYPE_UUID_ = 1 << 7,
     VAL_TYPE_COUNT = 1 << 8,
     VAL_TYPE_HEX = 1 << 9,
     VAL_TYPE_STRING = 1 << 10,
+    VAL_TYPE_CODE = 1 << 11,
 };
 
 struct HEADER_RECORD {

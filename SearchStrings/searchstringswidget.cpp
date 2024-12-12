@@ -208,7 +208,7 @@ void SearchStringsWidget::_hex()
             nOffset += pSubDevice->getInitLocation();
         }
 
-        emit showHex(nOffset, nSize);
+        emit followLocation(nOffset, XBinary::LT_OFFSET, nSize, XOptions::WIDGETTYPE_HEX);
     }
 }
 

@@ -30,6 +30,7 @@
 #include "xshortcutsdialog.h"
 #include "xtableview.h"
 #include "xfileinfowidget.h"
+#include "xhexviewwidget.h"
 
 namespace Ui {
 class XMainWidget;
@@ -56,6 +57,9 @@ public:
 
     virtual QTreeWidgetItem *_addBaseItems(QTreeWidget *pTreeWidget, XBinary::FT fileType);
     virtual XShortcutsWidget *createWidget(const XFW_DEF::CWOPTIONS &cwOptions);
+    QTreeWidget *getTreeWidgetNavi();
+    XShortcutsWidget *getCurrentWidget();
+    XHexView *getGlobalHexView();
 
 private slots:
     void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurrent, QTreeWidgetItem *pItemPrevious);
@@ -68,7 +72,6 @@ private slots:
     void dataChangedSlot(qint64 nOffset, qint64 nSize);
     void currentLocationChangedSlot(quint64 nLocation, qint32 nLocationType, qint64 nSize);
     void showCwWidgetSlot(QString sInitString, bool bNewWindow);
-
 
 private:
     Ui::XMainWidget *ui;

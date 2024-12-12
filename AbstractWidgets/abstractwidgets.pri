@@ -2,14 +2,15 @@ INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
 
 HEADERS += \
-    $$PWD/Specific/xdex_defs.h \
-    $$PWD/Specific/xelf_defs.h \
-    $$PWD/Specific/xle_defs.h \
-    $$PWD/Specific/xmach_defs.h \
-    $$PWD/Specific/xmsdos_defs.h \
-    $$PWD/Specific/xne_defs.h \
-    $$PWD/Specific/xpdf_defs.h \
-    $$PWD/Specific/xpe_defs.h \
+    $$PWD/Structs/generic_defs.h \
+    $$PWD/Structs/xdex_defs.h \
+    $$PWD/Structs/xelf_defs.h \
+    $$PWD/Structs/xle_defs.h \
+    $$PWD/Structs/xmach_defs.h \
+    $$PWD/Structs/xmsdos_defs.h \
+    $$PWD/Structs/xne_defs.h \
+    $$PWD/Structs/xpdf_defs.h \
+    $$PWD/Structs/xpe_defs.h \
     $$PWD/dialogxmainwidget.h \
     $$PWD/dialogsetgenericwidget.h \
     $$PWD/xdialogprocessdata.h \
@@ -22,14 +23,15 @@ HEADERS += \
     $$PWD/xprocessdata.h
 
 SOURCES += \
-    $$PWD/Specific/xdex_defs.cpp \
-    $$PWD/Specific/xelf_defs.cpp \
-    $$PWD/Specific/xle_defs.cpp \
-    $$PWD/Specific/xmach_defs.cpp \
-    $$PWD/Specific/xmsdos_defs.cpp \
-    $$PWD/Specific/xne_defs.cpp \
-    $$PWD/Specific/xpdf_defs.cpp \
-    $$PWD/Specific/xpe_defs.cpp \
+    $$PWD/Structs/generic_defs.cpp \
+    $$PWD/Structs/xdex_defs.cpp \
+    $$PWD/Structs/xelf_defs.cpp \
+    $$PWD/Structs/xle_defs.cpp \
+    $$PWD/Structs/xmach_defs.cpp \
+    $$PWD/Structs/xmsdos_defs.cpp \
+    $$PWD/Structs/xne_defs.cpp \
+    $$PWD/Structs/xpdf_defs.cpp \
+    $$PWD/Structs/xpe_defs.cpp \
     $$PWD/dialogxmainwidget.cpp \
     $$PWD/dialogsetgenericwidget.cpp \
     $$PWD/xdialogprocessdata.cpp \

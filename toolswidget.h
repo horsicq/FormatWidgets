@@ -55,9 +55,6 @@ signals:
 
 private slots:
     void on_tabWidgetMain_currentChanged(int nIndex);
-    void _showHex(qint64 nOffset, qint64 nSize);
-    void _showDisasm(qint64 nOffset);
-    void _showMemoryMap(qint64 nOffset);
 
 protected:
     virtual void registerShortcuts(bool bState);

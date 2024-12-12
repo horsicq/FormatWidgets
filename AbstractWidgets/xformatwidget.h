@@ -33,12 +33,18 @@
 #include "xdatetimeeditx.h"
 #include "xlineedithex.h"
 #include "xshortcutswidget.h"
-#include "Specific/xelf_defs.h"
-// #include "Specific/pe_defs.h"
-#include "Specific/xmach_defs.h"
-#include "Specific/xmsdos_defs.h"
-// #include "Specific/ne_defs.h"
-// #include "vLE/le_defs.h"
+
+#include "Structs/generic_defs.h"
+#include "Structs/generic_defs.h"
+#include "Structs/xdex_defs.h"
+#include "Structs/xelf_defs.h"
+#include "Structs/xle_defs.h"
+#include "Structs/xmach_defs.h"
+#include "Structs/xmsdos_defs.h"
+#include "Structs/xpdf_defs.h"
+#include "Structs/xpdf_defs.h"
+#include "Structs/xne_defs.h"
+#include "Structs/xpe_defs.h"
 
 class XFormatWidget : public XShortcutsWidget {
     Q_OBJECT
@@ -75,7 +81,7 @@ public:
         qint32 nPosition;
         qint64 nOffset;
         qint64 nSize;
-        qint32 vtype;
+        qint32 nVType;
         XBinary::ENDIAN endian;
         XLineEditHEX *pLineEdit;
         QWidget *pWidget;
@@ -125,6 +131,7 @@ public:
 
     void addComboBox(QTableWidget *pTableWidget, QList<RECWIDGET> *pListRecWidget, const QMap<quint64, QString> &mapData, qint32 nPosition, XComboBoxEx::CBTYPE cbtype,
                         quint64 nMask);
+    void _adjustCellWidget(QList<RECWIDGET> *pListRecWidget, QTableWidget *pTableWidget, qint32 nRow, qint32 nColumn);
     // InvWidget *createInvWidget(QTableWidget *pTableWidget, qint32 nType, qint32 nData, InvWidget::TYPE widgetType);
     XDateTimeEditX *createTimeDateEdit(QTableWidget *pTableWidget, qint32 nType, qint32 nData);
     QPushButton *createPushButton(QTableWidget *pTableWidget, qint32 nType, qint32 nData, const QString &sText);
@@ -142,7 +149,6 @@ public:
 
     void setItemEnable(QTableWidgetItem *pItem, bool bState);
     void setLineEdit(XLineEditHEX *pLineEdit, qint32 nMaxLength, const QString &sText, qint64 nOffset);
-    void showSectionHex(QTableView *pTableView);
     void dumpSection(QTableView *pTableView);
     void dumpAll(QTableView *pTableView);
     qint64 getTableViewItemSize(QTableView *pTableView);
@@ -244,15 +250,12 @@ protected:
     void adjustGenericTable(QTableView *pTableView, const QList<XFW_DEF::HEADER_RECORD> *pListHeaderRecords);
     virtual void adjustListTable(qint32 nType, QTableWidget *pTableWidget);
     virtual QString typeIdToString(qint32 nType);
-    virtual void _showInDisasmWindowAddress(XADDR nAddress);
-    virtual void _showInDisasmWindowOffset(qint64 nOffset);
-    virtual void _showInMemoryMapWindowOffset(qint64 nOffset);
-    virtual void _showInHexWindow(qint64 nOffset, qint64 nSize);
     virtual void _findValue(quint64 nValue, XBinary::ENDIAN endian);
     virtual void _widgetValueChanged(QVariant vValue);
     void contextMenuGenericHeaderWidget(const QPoint &pos, QTableWidget *pTableWidget, QList<RECWIDGET> *pListRecWidget, XFW_DEF::CWOPTIONS *pCwOptions);
     void contextMenuGenericTableWidget(const QPoint &pos, QTableView *pTableView, QList<RECWIDGET> *pListRecWidget, XFW_DEF::CWOPTIONS *pCwOptions);
     void tableView_doubleClicked(QTableView *pTableView, const QModelIndex &index);
+    virtual void _followLocation(quint64 nLocation, qint32 nLocationType, qint64 nSize, qint32 nWidgetType);
 
 signals:
     void closeApp();
@@ -263,17 +266,13 @@ public slots:
     void setEdited(qint64 nDeviceOffset, qint64 nDeviceSize);
     void allReload(qint64 nDeviceOffset, qint64 nDeviceSize);
     // void showHex(qint64 nOffset, qint64 nSize);
-    void showInDisasmWindowAddress(XADDR nAddress);
-    void showInDisasmWindowOffset(qint64 nOffset);
-    void showInMemoryMapWindowOffset(qint64 nOffset);
-    void showInHexWindow(qint64 nOffset, qint64 nSize);
-    void showInHexWindow(qint64 nOffset);
     void widgetValueChanged(QVariant vValue);
     void findValue(quint64 nValue, XBinary::ENDIAN endian);
     void dumpRegion(qint64 nOffset, qint64 nSize, const QString &sName);
     void showDemangle(const QString &sString);
     void _reload();
     void showTableRecord();
+    void followLocationSlot(quint64 nLocation, qint32 nLocationType, qint64 nSize, qint32 nWidgetType);
 
 protected:
     virtual void registerShortcuts(bool bState);

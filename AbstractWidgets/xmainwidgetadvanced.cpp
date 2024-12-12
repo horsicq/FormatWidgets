@@ -22,6 +22,7 @@
 
 XMainWidgetAdvanced::XMainWidgetAdvanced(QWidget *pParent) : XMainWidget(pParent)
 {
+    setGlobalHexEnable(true);
 }
 
 QTreeWidgetItem *XMainWidgetAdvanced::_addBaseItems(QTreeWidget *pTreeWidget, XBinary::FT fileType)
@@ -166,4 +167,24 @@ XShortcutsWidget *XMainWidgetAdvanced::createWidget(const XFW_DEF::CWOPTIONS &cw
     }
 
     return pResult;
+}
+
+void XMainWidgetAdvanced::_followLocation(quint64 nLocation, qint32 nLocationType, qint64 nSize, qint32 nWidgetType)
+{
+    if (nWidgetType == XOptions::WIDGETTYPE_HEX) {
+        if (getGlobalHexView()->isEnabled()) {
+            getGlobalHexView()->setLocation(nLocation, nLocationType, nSize);
+        } else {
+            setTreeItem(getTreeWidgetNavi(), XFW_DEF::TYPE_HEX);
+            getCurrentWidget()->setLocation(nLocation, nLocationType, nSize);
+        }
+    } else if (nWidgetType == XOptions::WIDGETTYPE_DISASM) {
+        setTreeItem(getTreeWidgetNavi(), XFW_DEF::TYPE_DISASM);
+        getCurrentWidget()->setLocation(nLocation, nLocationType, nSize);
+    } else if (nWidgetType == XOptions::WIDGETTYPE_MEMORYMAP) {
+        setTreeItem(getTreeWidgetNavi(), XFW_DEF::TYPE_MEMORYMAP);
+        getCurrentWidget()->setLocation(nLocation, nLocationType, nSize);
+    } else {
+        XMainWidget::_followLocation(nLocation, nLocationType, nSize, nWidgetType);
+    }
 }

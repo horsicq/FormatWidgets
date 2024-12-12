@@ -238,11 +238,7 @@ public slots:
     void setEdited(qint64 nDeviceOffset, qint64 nDeviceSize);
     void allReload(qint64 nDeviceOffset, qint64 nDeviceSize);
     void showHex(qint64 nOffset, qint64 nSize);
-    void showInDisasmWindowAddress(XADDR nAddress);
-    void showInDisasmWindowOffset(qint64 nOffset);
-    void showInMemoryMapWindowOffset(qint64 nOffset);
-    void showInHexWindow(qint64 nOffset, qint64 nSize);
-    void showInHexWindow(qint64 nOffset);
+    void followLocationSlot(quint64 nLocation, qint32 nLocationType, qint64 nSize, qint32 nWidgetType);
     void widgetValueChanged(QVariant vValue);
     void findValue(quint64 nValue, XBinary::ENDIAN endian);
     void showEntropy(qint64 nOffset, qint64 nSize);

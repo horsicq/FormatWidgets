@@ -237,7 +237,7 @@ void SearchValuesWidget::_hex()
         qint64 nOffset = ui->tableViewResult->model()->data(index, Qt::UserRole + MultiSearch::USERROLE_OFFSET).toLongLong();
         qint64 nSize = ui->tableViewResult->model()->data(index, Qt::UserRole + MultiSearch::USERROLE_SIZE).toLongLong();
 
-        emit showHex(nOffset, nSize);
+        emit followLocation(nOffset, XBinary::LT_OFFSET, nSize, XOptions::WIDGETTYPE_HEX);
     }
 }
 
@@ -250,7 +250,7 @@ void SearchValuesWidget::_disasm()
 
         qint64 nOffset = ui->tableViewResult->model()->data(index, Qt::UserRole + MultiSearch::USERROLE_OFFSET).toLongLong();
 
-        emit showDisasm(nOffset);
+        emit followLocation(nOffset, XBinary::LT_OFFSET, 0, XOptions::WIDGETTYPE_DISASM);
     }
 }
 

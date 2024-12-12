@@ -29,11 +29,9 @@ ToolsWidget::ToolsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new U
     g_pDevice = nullptr;
 
     connect(ui->widgetHex, SIGNAL(dataChanged(qint64, qint64)), this, SIGNAL(dataChanged(qint64, qint64)));
-    connect(ui->widgetHex, SIGNAL(showOffsetDisasm(qint64)), this, SLOT(_showDisasm(qint64)));
-    connect(ui->widgetHex, SIGNAL(showOffsetMemoryMap(qint64)), this, SLOT(_showMemoryMap(qint64)));
-    connect(ui->widgetHex, SIGNAL(showOffsetMainHex(qint64, qint64)), this, SLOT(_showHex(qint64, qint64)));
+    connect(ui->widgetHex, SIGNAL(followLocation(quint64, qint32, qint64, qint32)), this, SIGNAL(followLocation(quint64, qint32, qint64, qint32)));
     connect(ui->widgetStrings, SIGNAL(dataChanged(qint64, qint64)), this, SIGNAL(dataChanged(qint64, qint64)));
-    connect(ui->widgetStrings, SIGNAL(showHex(qint64, qint64)), this, SLOT(_showHex(qint64, qint64)));
+    connect(ui->widgetStrings, SIGNAL(followLocation(quint64, qint32, qint64, qint32)), this, SIGNAL(followLocation(quint64, qint32, qint64, qint32)));
     connect(ui->widgetStrings, SIGNAL(showDemangle(QString)), this, SIGNAL(showDemangle(QString)));
 }
 
@@ -154,42 +152,6 @@ void ToolsWidget::on_tabWidgetMain_currentChanged(int nIndex)
 {
     Q_UNUSED(nIndex)
     reload();
-}
-
-void ToolsWidget::_showHex(qint64 nOffset, qint64 nSize)
-{
-    //    XIODevice *pSubDevice=dynamic_cast<XIODevice *>(getDevice());
-
-    //    if(pSubDevice)
-    //    {
-    //        nOffset+=pSubDevice->getInitOffset();
-    //    }
-
-    emit showOffsetHex(nOffset, nSize);
-}
-
-void ToolsWidget::_showDisasm(qint64 nOffset)
-{
-    //    XIODevice *pSubDevice=dynamic_cast<XIODevice *>(getDevice());
-
-    //    if(pSubDevice)
-    //    {
-    //        nOffset+=pSubDevice->getInitOffset();
-    //    }
-
-    emit showOffsetDisasm(nOffset);
-}
-
-void ToolsWidget::_showMemoryMap(qint64 nOffset)
-{
-    //    XIODevice *pSubDevice=dynamic_cast<XIODevice *>(getDevice());
-
-    //    if(pSubDevice)
-    //    {
-    //        nOffset+=pSubDevice->getInitOffset();
-    //    }
-
-    emit showOffsetMemoryMap(nOffset);
 }
 
 void ToolsWidget::registerShortcuts(bool bState)

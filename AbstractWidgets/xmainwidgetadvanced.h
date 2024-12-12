@@ -42,7 +42,8 @@ public:
     virtual QTreeWidgetItem *_addBaseItems(QTreeWidget *pTreeWidget, XBinary::FT fileType);
     virtual XShortcutsWidget *createWidget(const XFW_DEF::CWOPTIONS &cwOptions);
 
-signals:
+protected:
+    virtual void _followLocation(quint64 nLocation, qint32 nLocationType, qint64 nSize, qint32 nWidgetType);
 };
 
 #endif  // XMAINWIDGETADVANCED_H

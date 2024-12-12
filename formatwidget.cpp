@@ -488,7 +488,7 @@ void FormatWidget::showSectionHex(QTableView *pTableView)
         qint64 nOffset = pTableView->model()->data(index, Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET).toLongLong();
         qint64 nSize = pTableView->model()->data(index, Qt::UserRole + FW_DEF::SECTION_DATA_SIZE).toLongLong();
 
-        showInHexWindow(nOffset, nSize);
+        followLocationSlot(nOffset, XBinary::LT_OFFSET, nSize, XOptions::WIDGETTYPE_HEX);
 
         reloadData(true);  // TODO Check
 
@@ -519,7 +519,7 @@ void FormatWidget::showSectionDisasm(QTableView *pTableView)
 
         XADDR nAddress = pTableView->model()->data(index, Qt::UserRole + FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
 
-        showInDisasmWindowAddress(nAddress);
+        followLocationSlot(nAddress, XBinary::LT_ADDRESS, 0, XOptions::WIDGETTYPE_DISASM);
     }
 }
 
@@ -939,58 +939,54 @@ void FormatWidget::resetWidget()
 void FormatWidget::initSearchStringsWidget(SearchStringsWidget *pWidget)
 {
     connect(pWidget, SIGNAL(dataChanged(qint64, qint64)), this, SLOT(setEdited(qint64, qint64)));
-    connect(pWidget, SIGNAL(showHex(qint64, qint64)), this, SLOT(showInHexWindow(qint64, qint64)));
     connect(pWidget, SIGNAL(showDemangle(QString)), this, SLOT(showDemangle(QString)));
+    connect(pWidget, SIGNAL(followLocation(quint64, qint32, qint64, qint32)), this, SLOT(followLocationSlot(quint64, qint32, qint64, qint32)));
 }
 
 void FormatWidget::initSearchSignaturesWidget(SearchSignaturesWidget *pWidget)
 {
-    connect(pWidget, SIGNAL(showHex(qint64, qint64)), this, SLOT(showInHexWindow(qint64, qint64)));
+    connect(pWidget, SIGNAL(followLocation(quint64, qint32, qint64, qint32)), this, SLOT(followLocationSlot(quint64, qint32, qint64, qint32)));
 }
 
 void FormatWidget::initSearchValuesWidget(SearchValuesWidget *pWidget)
 {
-    connect(pWidget, SIGNAL(showHex(qint64, qint64)), this, SLOT(showInHexWindow(qint64, qint64)));
-    connect(pWidget, SIGNAL(showDisasm(qint64)), this, SLOT(showInDisasmWindowOffset(qint64)));
+    connect(pWidget, SIGNAL(followLocation(quint64, qint32, qint64, qint32)), this, SLOT(followLocationSlot(quint64, qint32, qint64, qint32)));
 }
 
 void FormatWidget::initHexViewWidget(XHexViewWidget *pWidget)
 {
     connect(pWidget, SIGNAL(dataChanged(qint64, qint64)), this, SLOT(setEdited(qint64, qint64)));
-    connect(pWidget, SIGNAL(showOffsetDisasm(qint64)), this, SLOT(showInDisasmWindowOffset(qint64)));
-    connect(pWidget, SIGNAL(showOffsetMemoryMap(qint64)), this, SLOT(showInMemoryMapWindowOffset(qint64)));
+    connect(pWidget, SIGNAL(followLocation(quint64, qint32, qint64, qint32)), this, SLOT(followLocationSlot(quint64, qint32, qint64, qint32)));
 }
 
 void FormatWidget::initMultiDisasmWidget(XMultiDisasmWidget *pWidget)
 {
     connect(pWidget, SIGNAL(dataChanged(qint64, qint64)), this, SLOT(setEdited(qint64, qint64)));
-    connect(pWidget, SIGNAL(showOffsetHex(qint64)), this, SLOT(showInHexWindow(qint64)));
+    connect(pWidget, SIGNAL(followLocation(quint64, qint32, qint64, qint32)), this, SLOT(followLocationSlot(quint64, qint32, qint64, qint32)));
 }
 
 void FormatWidget::initMemoryMapWidget(XMemoryMapWidget *pWidget)
 {
     connect(pWidget, SIGNAL(findValue(quint64, XBinary::ENDIAN)), this, SLOT(findValue(quint64, XBinary::ENDIAN)));
+    connect(pWidget, SIGNAL(followLocation(quint64, qint32, qint64, qint32)), this, SLOT(followLocationSlot(quint64, qint32, qint64, qint32)));
 }
 
 void FormatWidget::initHexView(XHexView *pWidget)
 {
     connect(pWidget, SIGNAL(dataChanged(qint64, qint64)), this, SLOT(setEdited(qint64, qint64)));
-    connect(pWidget, SIGNAL(showOffsetDisasm(qint64)), this, SLOT(showInDisasmWindowOffset(qint64)));
-    connect(pWidget, SIGNAL(showOffsetMemoryMap(qint64)), this, SLOT(showInMemoryMapWindowOffset(qint64)));
-    connect(pWidget, SIGNAL(showOffsetMainHex(qint64, qint64)), this, SLOT(showInHexWindow(qint64, qint64)));
+    connect(pWidget, SIGNAL(followLocation(quint64, qint32, qint64, qint32)), this, SLOT(followLocationSlot(quint64, qint32, qint64, qint32)));
 }
 
 void FormatWidget::initDisasmView(XDisasmView *pWidget)
 {
     connect(pWidget, SIGNAL(dataChanged(qint64, qint64)), this, SLOT(setEdited(qint64, qint64)));
+    connect(pWidget, SIGNAL(followLocation(quint64, qint32, qint64, qint32)), this, SLOT(followLocationSlot(quint64, qint32, qint64, qint32)));
 }
 
 void FormatWidget::initToolsWidget(ToolsWidget *pWidget)
 {
     connect(pWidget, SIGNAL(dataChanged(qint64, qint64)), this, SLOT(setEdited(qint64, qint64)));
-    connect(pWidget, SIGNAL(showOffsetHex(qint64, qint64)), this, SLOT(showInHexWindow(qint64, qint64)));
-    connect(pWidget, SIGNAL(showOffsetDisasm(qint64)), this, SLOT(showInDisasmWindowOffset(qint64)));
-    connect(pWidget, SIGNAL(showOffsetMemoryMap(qint64)), this, SLOT(showInMemoryMapWindowOffset(qint64)));
+    connect(pWidget, SIGNAL(followLocation(quint64, qint32, qint64, qint32)), this, SLOT(followLocationSlot(quint64, qint32, qint64, qint32)));
     connect(pWidget, SIGNAL(showDemangle(QString)), this, SLOT(showDemangle(QString)));
 
     pWidget->resize(pWidget->width(), 150);  // TODO Check
@@ -998,12 +994,12 @@ void FormatWidget::initToolsWidget(ToolsWidget *pWidget)
 
 void FormatWidget::initExtractorWidget(XExtractorWidget *pWidget)
 {
-    connect(pWidget, SIGNAL(showOffsetHex(qint64, qint64)), this, SLOT(showInHexWindow(qint64, qint64)));
+    connect(pWidget, SIGNAL(followLocation(quint64, qint32, qint64, qint32)), this, SLOT(followLocationSlot(quint64, qint32, qint64, qint32)));
 }
 
 void FormatWidget::initYaraWidget(YARAWidgetAdvanced *pWidget)
 {
-    connect(pWidget, SIGNAL(showHex(qint64, qint64)), this, SLOT(showInHexWindow(qint64, qint64)));
+    connect(pWidget, SIGNAL(followLocation(quint64, qint32, qint64, qint32)), this, SLOT(followLocationSlot(quint64, qint32, qint64, qint32)));
 }
 
 qint32 FormatWidget::getColumnWidth(QWidget *pParent, FormatWidget::CW cw, XBinary::MODE mode)
@@ -1231,29 +1227,19 @@ void FormatWidget::showHex(qint64 nOffset, qint64 nSize)
     reloadData(true);  // TODO Check
 }
 
-void FormatWidget::showInDisasmWindowAddress(XADDR nAddress)
+void FormatWidget::followLocationSlot(quint64 nLocation, qint32 nLocationType, qint64 nSize, qint32 nWidgetType)
 {
-    _showInDisasmWindowAddress(nAddress);
-}
-
-void FormatWidget::showInDisasmWindowOffset(qint64 nOffset)
-{
-    _showInDisasmWindowOffset(nOffset);
-}
-
-void FormatWidget::showInMemoryMapWindowOffset(qint64 nOffset)
-{
-    _showInMemoryMapWindowOffset(nOffset);
-}
-
-void FormatWidget::showInHexWindow(qint64 nOffset, qint64 nSize)
-{
-    _showInHexWindow(nOffset, nSize);
-}
-
-void FormatWidget::showInHexWindow(qint64 nOffset)
-{
-    _showInHexWindow(nOffset, 1);
+    if (nLocationType == XBinary::LT_OFFSET) {
+        if (nWidgetType == XOptions::WIDGETTYPE_DISASM) {
+            _showInDisasmWindowOffset(nLocation);
+        } else if (nWidgetType == XOptions::WIDGETTYPE_MEMORYMAP) {
+            _showInMemoryMapWindowOffset(nLocation);
+        } else if (nWidgetType == XOptions::WIDGETTYPE_HEX) {
+            _showInHexWindow(nLocation, nSize);
+        }
+    } else if (nLocationType == XBinary::LT_ADDRESS) {
+        _showInDisasmWindowAddress(nLocation);
+    }
 }
 
 void FormatWidget::widgetValueChanged(QVariant vValue)
@@ -1624,8 +1610,7 @@ InvWidget *FormatWidget::createInvWidget(QTableWidget *pTableWidget, qint32 nTyp
     pResult->setProperty("STYPE", nType);
     pResult->setProperty("NDATA", nData);
 
-    connect(pResult, SIGNAL(showHex(qint64, qint64)), this, SLOT(showInHexWindow(qint64, qint64)));
-    connect(pResult, SIGNAL(showDisasm(XADDR)), this, SLOT(showInDisasmWindowAddress(XADDR)));
+    connect(pResult, SIGNAL(followLocation(quint64, qint32, qint64, qint32)), this, SLOT(followLocationSlot(quint64, qint32, qint64, qint32)));
 
     pTableWidget->setCellWidget(nData, HEADER_COLUMN_INFO, pResult);
 
