@@ -82,6 +82,7 @@ public:
         qint64 nOffset;
         qint64 nSize;
         qint32 nVType;
+        qint32 nSubPosition;
         XBinary::ENDIAN endian;
         XLineEditHEX *pLineEdit;
         QWidget *pWidget;
@@ -151,8 +152,6 @@ public:
     void setLineEdit(XLineEditHEX *pLineEdit, qint32 nMaxLength, const QString &sText, qint64 nOffset);
     void dumpSection(QTableView *pTableView);
     void dumpAll(QTableView *pTableView);
-    qint64 getTableViewItemSize(QTableView *pTableView);
-    void showTableViewDemangle(QTableView *pTableView, qint32 nColumn);
 
     static bool _setTreeItem(QTreeWidget *pTree, QTreeWidgetItem *pItem, qint32 nID);
     static void setTreeItem(QTreeWidget *pTree, qint32 nID);
@@ -250,7 +249,6 @@ protected:
     void adjustGenericTable(QTableView *pTableView, const QList<XFW_DEF::HEADER_RECORD> *pListHeaderRecords);
     virtual void adjustListTable(qint32 nType, QTableWidget *pTableWidget);
     virtual QString typeIdToString(qint32 nType);
-    virtual void _findValue(quint64 nValue, XBinary::ENDIAN endian);
     virtual void _widgetValueChanged(QVariant vValue);
     void contextMenuGenericHeaderWidget(const QPoint &pos, QTableWidget *pTableWidget, QList<RECWIDGET> *pListRecWidget, XFW_DEF::CWOPTIONS *pCwOptions);
     void contextMenuGenericTableWidget(const QPoint &pos, QTableView *pTableView, QList<RECWIDGET> *pListRecWidget, XFW_DEF::CWOPTIONS *pCwOptions);
@@ -267,12 +265,14 @@ public slots:
     void allReload(qint64 nDeviceOffset, qint64 nDeviceSize);
     // void showHex(qint64 nOffset, qint64 nSize);
     void widgetValueChanged(QVariant vValue);
-    void findValue(quint64 nValue, XBinary::ENDIAN endian);
+
     void dumpRegion(qint64 nOffset, qint64 nSize, const QString &sName);
-    void showDemangle(const QString &sString);
     void _reload();
     void showTableRecord();
     void followLocationSlot(quint64 nLocation, qint32 nLocationType, qint64 nSize, qint32 nWidgetType);
+
+private slots:
+    void onToolButtonClicked();
 
 protected:
     virtual void registerShortcuts(bool bState);

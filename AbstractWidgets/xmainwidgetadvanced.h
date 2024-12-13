@@ -42,6 +42,10 @@ public:
     virtual QTreeWidgetItem *_addBaseItems(QTreeWidget *pTreeWidget, XBinary::FT fileType);
     virtual XShortcutsWidget *createWidget(const XFW_DEF::CWOPTIONS &cwOptions);
 
+private slots:
+    void showDemangleSlot(const QString &sString);
+    void findValue(quint64 nValue, XBinary::ENDIAN endian);
+
 protected:
     virtual void _followLocation(quint64 nLocation, qint32 nLocationType, qint64 nSize, qint32 nWidgetType);
 };

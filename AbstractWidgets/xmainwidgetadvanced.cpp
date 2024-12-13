@@ -129,6 +129,9 @@ XShortcutsWidget *XMainWidgetAdvanced::createWidget(const XFW_DEF::CWOPTIONS &cw
         stringsOptions.bUnicode = true;
         stringsOptions.bNullTerminated = false;
         _pWidget->setData(cwOptions.pDevice, cwOptions.fileType, stringsOptions, false);
+
+        connect(_pWidget, SIGNAL(showDemangle(QString)), this, SLOT(showDemangleSlot(QString)));
+
         pResult = _pWidget;
     } else if (cwOptions._type == XFW_DEF::TYPE_SIGNATURES) {
         SearchSignaturesWidget *_pWidget = new SearchSignaturesWidget(cwOptions.pParent);
@@ -142,6 +145,9 @@ XShortcutsWidget *XMainWidgetAdvanced::createWidget(const XFW_DEF::CWOPTIONS &cw
         options.fileType = cwOptions.fileType;
         options.bIsSearchEnable = true;
         _pWidget->setData(cwOptions.pDevice, options, cwOptions.pXInfoDB);
+
+        connect(_pWidget, SIGNAL(findValue(quint64, XBinary::ENDIAN)), this, SLOT(findValue(quint64, XBinary::ENDIAN)));
+
         pResult = _pWidget;
     } else if (cwOptions._type == XFW_DEF::TYPE_ENTROPY) {
         XEntropyWidget *_pWidget = new XEntropyWidget(cwOptions.pParent);
@@ -167,6 +173,24 @@ XShortcutsWidget *XMainWidgetAdvanced::createWidget(const XFW_DEF::CWOPTIONS &cw
     }
 
     return pResult;
+}
+
+void XMainWidgetAdvanced::showDemangleSlot(const QString &sString)
+{
+    DialogDemangle dialogDemangle(this, sString);
+    dialogDemangle.setGlobal(getShortcuts(), getGlobalOptions());
+
+    dialogDemangle.exec();
+}
+
+void XMainWidgetAdvanced::findValue(quint64 nValue, XBinary::ENDIAN endian)
+{
+    setTreeItem(getTreeWidgetNavi(), XFW_DEF::TYPE_SEARCH);
+    SearchValuesWidget *pWidget = dynamic_cast<SearchValuesWidget *>(getCurrentWidget());
+
+    if (pWidget) {
+        pWidget->findValue(nValue, endian);
+    }
 }
 
 void XMainWidgetAdvanced::_followLocation(quint64 nLocation, qint32 nLocationType, qint64 nSize, qint32 nWidgetType)

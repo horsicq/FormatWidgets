@@ -22,8 +22,8 @@
 #define XDEX_DEFS_H
 
 #include "../xformatwidget_def.h"
-
-namespace X_DEX_HEADER {
+namespace XTYPE_DEX {
+namespace X_HEADER {
 enum DATA {
     magic = 0,
     version,
@@ -141,5 +141,5 @@ enum DATA {
 
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace X_DEX_CLASS_ITEM_DEF
-
+}
 #endif  // XDEX_DEFS_H

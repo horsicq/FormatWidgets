@@ -58,14 +58,18 @@ enum TYPE {
     TYPE_YARASCAN,
     TYPE_TOOLS,
     TYPE_GENERIC_STRINGTABLE_ANSI,
+    TYPE_MSDOS_START,
     TYPE_MSDOS_EXE_file,
     TYPE_MSDOS_IMAGE_DOS_HEADER,
+    TYPE_MSDOS_END,
+    TYPE_ELF_START,
     TYPE_Elf32_Ehdr,
     TYPE_Elf64_Ehdr,
+    TYPE_ELF_END,
     TYPE_MACH_START,
-    TYPE_mach_header,
-    TYPE_mach_header_64,
-    TYPE_load_command,
+    TYPE_MACH_mach_header,
+    TYPE_MACH_mach_header_64,
+    TYPE_MACH_load_command,
     TYPE_segment_command,
     TYPE_segment_command_64,
     TYPE_dylib_command,
@@ -94,11 +98,28 @@ enum TYPE {
     TYPE_code_signature_command,
     TYPE_routines_command,
     TYPE_routines_command_64,
-    TYPE_nlist,
-    TYPE_nlist_64,
+    TYPE_MACH_nlist,
+    TYPE_MACH_nlist_64,
     TYPE_MACH_dyld_chained_fixups_header,
-    TYPE_SC_SuperBlob,
-    TYPE_MACH_END
+    TYPE_MACH_SC_SuperBlob,
+    TYPE_MACH_section,
+    TYPE_MACH_section_64,
+    TYPE_MACH_END,
+    TYPE_NE_START,
+    TYPE_NE_IMAGE_DOS_HEADER,
+    TYPE_NE_END,
+    TYPE_LE_START,
+    TYPE_LE_IMAGE_DOS_HEADER,
+    TYPE_LE_END,
+    TYPE_LX_START,
+    TYPE_LX_IMAGE_DOS_HEADER,
+    TYPE_LX_END,
+    TYPE_PE_START,
+    TYPE_PE_IMAGE_DOS_HEADER,
+    TYPE_PE_END,
+    TYPE_DEX_START,
+    TYPE_DEX_HEADER,
+    TYPE_DEX_END,
 };
 
 enum WIDGETMODE {
@@ -149,6 +170,7 @@ struct HEADER_RECORD {
     qint32 nSize;
     QString sType;
     qint32 vtype;
+    qint32 nSubPosition;
 };
 
 enum TABLEDATA {

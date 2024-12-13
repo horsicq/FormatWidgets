@@ -53,7 +53,7 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
 
     createHeaderTable(ui->tableWidgetMain, &listHeaderRecords, getListRecWidgets(), getCwOptions()->nDataOffset, getCwOptions()->endian);
 
-    if ((getCwOptions()->_type == XFW_DEF::TYPE_load_command) ||
+    if ((getCwOptions()->_type == XFW_DEF::TYPE_MACH_load_command) ||
         (getCwOptions()->_type == XFW_DEF::TYPE_segment_command) ||
         (getCwOptions()->_type == XFW_DEF::TYPE_segment_command_64) ||
         (getCwOptions()->_type == XFW_DEF::TYPE_dylib_command) ||
@@ -85,7 +85,7 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
         addComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getLoadCommandTypesS(), XTYPE_MACH::X_load_commands::cmd, XComboBoxEx::CBTYPE_LIST, 0);
     }
 
-    if ((getCwOptions()->_type == XFW_DEF::TYPE_mach_header) || (getCwOptions()->_type == XFW_DEF::TYPE_mach_header_64)) {
+    if ((getCwOptions()->_type == XFW_DEF::TYPE_MACH_mach_header) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_mach_header_64)) {
         XBinary binary(getDevice());
         quint32 _cputype = binary.read_int32(getCwOptions()->nDataOffset + offsetof(XMACH_DEF::mach_header, cputype), (getCwOptions()->endian == XBinary::ENDIAN_BIG));
 

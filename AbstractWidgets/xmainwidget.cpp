@@ -40,6 +40,7 @@ XMainWidget::XMainWidget(QWidget *pParent) : XFormatWidget(pParent), ui(new Ui::
 
     ui->widgetGlobalHex->setProperty("TYPE", XFW_DEF::TYPE_GLOBALHEX);
     ui->widgetGlobalHex->hide();
+    ui->widgetGlobalHex->setEnabled(false);
 
     ui->toolButtonGlobalHex->hide();
 }
@@ -97,7 +98,7 @@ void XMainWidget::reload()
     XBinary::FT fileType = getOptions().fileType;
 
     if (getOptions().fileType == XBinary::FT_UNKNOWN) {
-        fileType = XBinary::getPrefFileType(getDevice());
+        fileType = XBinary::getPrefFileType(getDevice(), true);
     }
 
     setFileType(fileType);
@@ -445,6 +446,7 @@ void XMainWidget::showCwWidgetSlot(QString sInitString, bool bNewWindow)
         pWidget->setReadonly(isReadonly());
         connect(pWidget, SIGNAL(currentLocationChanged(quint64, qint32, qint64)), this, SLOT(currentLocationChangedSlot(quint64, qint32, qint64)));
         connect(pWidget, SIGNAL(dataChanged(qint64, qint64)), this, SLOT(dataChangedSlot(qint64, qint64)));
+        connect(pWidget, SIGNAL(followLocation(quint64, qint32, qint64, qint32)), this, SLOT(followLocationSlot(quint64, qint32, qint64, qint32)));
 
         if ((cwOptions.widgetMode == XFW_DEF::WIDGETMODE_HEADER) || (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_TABLE)) {
             connect(pWidget, SIGNAL(showCwWidget(QString, bool)), this, SLOT(showCwWidgetSlot(QString, bool)));

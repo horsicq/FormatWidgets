@@ -76,7 +76,7 @@ void XProcessData::process()
 
             g_pListHeaderRecords->append(record);
         }
-    } else if (g_pCwOptions->_type == XFW_DEF::TYPE_load_command) {
+    } else if (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_load_command) {
         XFW_DEF::HEADER_RECORD record = {};
         record.nPosition = -1;
         record.sName = tr("Info");
@@ -93,7 +93,7 @@ void XProcessData::process()
         nHeaderSize = 1;
     }
 
-    if (g_pCwOptions->_type == XFW_DEF::TYPE_load_command) {
+    if (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_load_command) {
         XMACH mach(g_pCwOptions->pDevice, g_pCwOptions->bIsImage, g_pCwOptions->nImageBase);
 
         QMap<quint64, QString> mapLC = mach.getLoadCommandTypes();

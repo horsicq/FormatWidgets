@@ -70,7 +70,7 @@ extern const XFW_DEF::HEADER_RECORD records32[__data_size];
 extern const XFW_DEF::HEADER_RECORD records64[__data_size];
 }  // namespace X_mach_segments
 
-namespace X_mach_sections32 {
+namespace X_section {
 enum DATA {
     sectname = 0,
     segname,
@@ -87,30 +87,9 @@ enum DATA {
 };
 
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
-}  // namespace X_mach_sections32
+}  // namespace X_section
 
-namespace X_mach_sections32_E {
-enum DATA {
-    sectname = 0,
-    segname,
-    addr,
-    size,
-    offset,
-    align,
-    reloff,
-    nreloc,
-    flags_0,
-    flags_1,
-    flags_2,
-    reserved1,
-    reserved2,
-    __data_size
-};
-
-extern const XFW_DEF::HEADER_RECORD records[__data_size];
-}  // namespace X_mach_sections32_E
-
-namespace X_mach_sections64 {
+namespace X_section_64 {
 enum DATA {
     sectname = 0,
     segname,
@@ -128,29 +107,7 @@ enum DATA {
 };
 
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
-}  // namespace X_mach_sections64
-
-namespace X_mach_sections64_E {
-enum DATA {
-    sectname = 0,
-    segname,
-    addr,
-    size,
-    offset,
-    align,
-    reloff,
-    nreloc,
-    flags_0,
-    flags_1,
-    flags_2,
-    reserved1,
-    reserved2,
-    reserved3,
-    __data_size
-};
-
-extern const XFW_DEF::HEADER_RECORD records[__data_size];
-}  // namespace X_mach_sections64_E
+}  // namespace X_section_64
 
 namespace X_dylib_command {
 enum DATA {
@@ -762,7 +719,7 @@ enum DATA {
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace X_mach_BlobIndex
 
-namespace X_mach_dyld_chained_fixups_header {
+namespace X_dyld_chained_fixups_header {
 enum DATA {
     fixups_version,
     starts_offset,
