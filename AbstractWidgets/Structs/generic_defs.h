@@ -29,6 +29,6 @@ enum DATA {
     cmdsize,
     __data_size
 };
-}
+}  // namespace XGENERIC
 
 #endif  // GENERIC_DEFS_H

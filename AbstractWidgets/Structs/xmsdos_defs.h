@@ -74,6 +74,6 @@ enum DATA {
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace X_IMAGE_DOS_HEADER
 
-} // namespace XTYPE_MSDOS
+}  // namespace XTYPE_MSDOS
 
 #endif  // XMSDOS_DEFS_H

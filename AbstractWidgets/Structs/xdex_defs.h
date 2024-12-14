@@ -53,7 +53,7 @@ enum DATA {
 };
 
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
-}  // namespace X_DEX_HEADER
+}  // namespace X_HEADER
 
 namespace X_DEX_MAP_ITEM {
 enum DATA {
@@ -141,5 +141,5 @@ enum DATA {
 
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace X_DEX_CLASS_ITEM_DEF
-}
+}  // namespace XTYPE_DEX
 #endif  // XDEX_DEFS_H

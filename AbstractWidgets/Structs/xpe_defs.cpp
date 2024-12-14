@@ -77,7 +77,8 @@ const XFW_DEF::HEADER_RECORD records32[] = {
      XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, -1},
     {SizeOfHeapReserve, "SizeOfHeapReserve", offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER32, SizeOfHeapReserve), 4, "DWORD",
      XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, -1},
-    {SizeOfHeapCommit, "SizeOfHeapCommit", offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER32, SizeOfHeapCommit), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, -1},
+    {SizeOfHeapCommit, "SizeOfHeapCommit", offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER32, SizeOfHeapCommit), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE,
+     -1},
     {LoaderFlags, "LoaderFlags", offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER32, LoaderFlags), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {NumberOfRvaAndSizes, "NumberOfRvaAndSizes", offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER32, NumberOfRvaAndSizes), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
 };
@@ -130,7 +131,8 @@ const XFW_DEF::HEADER_RECORD records32[] = {
      XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_ADDRESS, -1},
     {EndAddressOfRawData, "EndAddressOfRawData", offsetof(XPE_DEF::S_IMAGE_TLS_DIRECTORY32, EndAddressOfRawData), 4, "DWORD",
      XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_ADDRESS, -1},
-    {AddressOfIndex, "AddressOfIndex", offsetof(XPE_DEF::S_IMAGE_TLS_DIRECTORY32, AddressOfIndex), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_ADDRESS, -1},
+    {AddressOfIndex, "AddressOfIndex", offsetof(XPE_DEF::S_IMAGE_TLS_DIRECTORY32, AddressOfIndex), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_ADDRESS,
+     -1},
     {AddressOfCallBacks, "AddressOfCallBacks", offsetof(XPE_DEF::S_IMAGE_TLS_DIRECTORY32, AddressOfCallBacks), 4, "DWORD",
      XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_ADDRESS, -1},
     {SizeOfZeroFill, "SizeOfZeroFill", offsetof(XPE_DEF::S_IMAGE_TLS_DIRECTORY32, SizeOfZeroFill), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, -1},
@@ -141,8 +143,8 @@ const XFW_DEF::HEADER_RECORD records64[] = {
      XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_ADDRESS, -1},
     {EndAddressOfRawData, "EndAddressOfRawData", offsetof(XPE_DEF::S_IMAGE_TLS_DIRECTORY64, EndAddressOfRawData), 8, "ULONGLONG",
      XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_ADDRESS, -1},
-    {AddressOfIndex, "AddressOfIndex", offsetof(XPE_DEF::S_IMAGE_TLS_DIRECTORY64, AddressOfIndex), 8, "ULONGLONG",
-     XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_ADDRESS, -1},
+    {AddressOfIndex, "AddressOfIndex", offsetof(XPE_DEF::S_IMAGE_TLS_DIRECTORY64, AddressOfIndex), 8, "ULONGLONG", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_ADDRESS,
+     -1},
     {AddressOfCallBacks, "AddressOfCallBacks", offsetof(XPE_DEF::S_IMAGE_TLS_DIRECTORY64, AddressOfCallBacks), 8, "ULONGLONG",
      XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_ADDRESS, -1},
     {SizeOfZeroFill, "SizeOfZeroFill", offsetof(XPE_DEF::S_IMAGE_TLS_DIRECTORY64, SizeOfZeroFill), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, -1},
@@ -165,14 +167,15 @@ const XFW_DEF::HEADER_RECORD records32[] = {
     {DeCommitTotalFreeThreshold, "DeCommitTotalFreeThreshold", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32, DeCommitTotalFreeThreshold), 4, "DWORD",
      XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {LockPrefixTable, "LockPrefixTable", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32, LockPrefixTable), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-    {MaximumAllocationSize, "MaximumAllocationSize", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32, MaximumAllocationSize), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-    {VirtualMemoryThreshold, "VirtualMemoryThreshold", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32, VirtualMemoryThreshold), 4, "DWORD",
-     XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {MaximumAllocationSize, "MaximumAllocationSize", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32, MaximumAllocationSize), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT,
+     -1},
+    {VirtualMemoryThreshold, "VirtualMemoryThreshold", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32, VirtualMemoryThreshold), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT,
+     -1},
     {ProcessAffinityMask, "ProcessAffinityMask", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32, ProcessAffinityMask), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {CSDVersion, "CSDVersion", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32, CSDVersion), 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {DependentLoadFlags, "DependentLoadFlags", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32, DependentLoadFlags), 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-    {VirtualMemoryThreshold, "EditList", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32, EditList), 4, "DWORD",
-     XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_ADDRESS, -1},
+    {VirtualMemoryThreshold, "EditList", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32, EditList), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_ADDRESS,
+     -1},
     {VirtualMemoryThreshold, "SecurityCookie", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32, SecurityCookie), 4, "DWORD",
      XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_ADDRESS, -1},
     {VirtualMemoryThreshold, "SEHandlerTable", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32, SEHandlerTable), 4, "DWORD",
@@ -213,7 +216,8 @@ const XFW_DEF::HEADER_RECORD records32[] = {
      XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {Reserved2, "Reserved2", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32, Reserved2), 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {GuardRFVerifyStackPointerFunctionPointer, "GuardRFVerifyStackPointerFunctionPointer",
-     offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32, GuardRFVerifyStackPointerFunctionPointer), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_ADDRESS, -1},
+     offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32, GuardRFVerifyStackPointerFunctionPointer), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_ADDRESS,
+     -1},
     {HotPatchTableOffset, "HotPatchTableOffset", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32, HotPatchTableOffset), 4, "DWORD",
      XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET, -1},
     {Reserved3, "Reserved3", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32, Reserved3), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
@@ -270,7 +274,8 @@ const XFW_DEF::HEADER_RECORD records64[] = {
      XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_ADDRESS, -1},
     {GuardCFFunctionTable, "GuardCFFunctionTable", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, GuardCFFunctionTable), 8, "ULONGLONG",
      XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_ADDRESS, -1},
-    {GuardCFFunctionCount, "GuardCFFunctionCount", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, GuardCFFunctionCount), 8, "ULONGLONG", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {GuardCFFunctionCount, "GuardCFFunctionCount", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, GuardCFFunctionCount), 8, "ULONGLONG", XFW_DEF::VAL_TYPE_DATA_INT,
+     -1},
     {GuardFlags, "GuardFlags", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, GuardFlags), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {CodeIntegrity_Flags, "CodeIntegrity_Flags", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, CodeIntegrity) + 0, 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {CodeIntegrity_Catalog, "CodeIntegrity_Catalog", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, CodeIntegrity) + 2, 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
@@ -292,15 +297,16 @@ const XFW_DEF::HEADER_RECORD records64[] = {
     {GuardRFFailureRoutine, "GuardRFFailureRoutine", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, GuardRFFailureRoutine), 8, "ULONGLONG",
      XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_ADDRESS, -1},
     {GuardRFFailureRoutineFunctionPointer, "GuardRFFailureRoutineFunctionPointer",
-     offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, GuardRFFailureRoutineFunctionPointer), 8, "ULONGLONG", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_ADDRESS, -1},
+     offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, GuardRFFailureRoutineFunctionPointer), 8, "ULONGLONG", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_ADDRESS,
+     -1},
     {DynamicValueRelocTableOffset, "DynamicValueRelocTableOffset", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, DynamicValueRelocTableOffset), 4, "DWORD",
      XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET, -1},
     {DynamicValueRelocTableSection, "DynamicValueRelocTableSection", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, DynamicValueRelocTableSection), 2, "WORD",
      XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {Reserved2, "Reserved2", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, Reserved2), 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {GuardRFVerifyStackPointerFunctionPointer, "GuardRFVerifyStackPointerFunctionPointer",
-     offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, GuardRFVerifyStackPointerFunctionPointer), 8, "ULONGLONG",
-     XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_ADDRESS, -1},
+     offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, GuardRFVerifyStackPointerFunctionPointer), 8, "ULONGLONG", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_ADDRESS,
+     -1},
     {HotPatchTableOffset, "HotPatchTableOffset", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, HotPatchTableOffset), 4, "DWORD",
      XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET, -1},
     {Reserved3, "Reserved3", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, Reserved3), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
@@ -317,7 +323,8 @@ const XFW_DEF::HEADER_RECORD records64[] = {
     {GuardXFGDispatchFunctionPointer, "GuardXFGDispatchFunctionPointer", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, GuardXFGDispatchFunctionPointer), 8,
      "ULONGLONG", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_ADDRESS, -1},
     {GuardXFGTableDispatchFunctionPointer, "GuardXFGTableDispatchFunctionPointer",
-     offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, GuardXFGTableDispatchFunctionPointer), 8, "ULONGLONG", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_ADDRESS, -1},
+     offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, GuardXFGTableDispatchFunctionPointer), 8, "ULONGLONG", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_ADDRESS,
+     -1},
     {CastGuardOsDeterminedFailureMode, "CastGuardOsDeterminedFailureMode", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, CastGuardOsDeterminedFailureMode), 8,
      "ULONGLONG", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_ADDRESS, -1},
     {GuardMemcpyFunctionPointer, "GuardMemcpyFunctionPointer", offsetof(XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64, GuardMemcpyFunctionPointer), 8, "ULONGLONG",
@@ -337,9 +344,11 @@ const XFW_DEF::HEADER_RECORD records[] = {
     {Name, QObject::tr("Name"), offsetof(XPE_DEF::IMAGE_SECTION_HEADER, Name), 8, "BYTE[8]",
      XFW_DEF::VAL_TYPE_DATA_ARRAY | XFW_DEF::VAL_TYPE_ANSI | XFW_DEF::VAL_TYPE_STRING, -1},
     {VirtualSize, "VirtualSize", offsetof(XPE_DEF::IMAGE_SECTION_HEADER, Misc.VirtualSize), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, -1},
-    {VirtualAddress, "VirtualAddress", offsetof(XPE_DEF::IMAGE_SECTION_HEADER, VirtualAddress), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_RELADDRESS_, -1},
+    {VirtualAddress, "VirtualAddress", offsetof(XPE_DEF::IMAGE_SECTION_HEADER, VirtualAddress), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_RELADDRESS_,
+     -1},
     {SizeOfRawData, "SizeOfRawData", offsetof(XPE_DEF::IMAGE_SECTION_HEADER, SizeOfRawData), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, -1},
-    {PointerToRawData, "PointerToRawData", offsetof(XPE_DEF::IMAGE_SECTION_HEADER, PointerToRawData), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET, -1},
+    {PointerToRawData, "PointerToRawData", offsetof(XPE_DEF::IMAGE_SECTION_HEADER, PointerToRawData), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET,
+     -1},
     {PointerToRelocations, "PointerToRelocations", offsetof(XPE_DEF::IMAGE_SECTION_HEADER, PointerToRelocations), 4, "DWORD",
      XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET, -1},
     {PointerToLinenumbers, "PointerToLinenumbers", offsetof(XPE_DEF::IMAGE_SECTION_HEADER, PointerToLinenumbers), 4, "DWORD",
@@ -374,17 +383,19 @@ const XFW_DEF::HEADER_RECORD records[] = {
     {NumberOfNames, "NumberOfNames", offsetof(XPE_DEF::IMAGE_EXPORT_DIRECTORY, NumberOfNames), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {AddressOfFunctions, "AddressOfFunctions", offsetof(XPE_DEF::IMAGE_EXPORT_DIRECTORY, AddressOfFunctions), 4, "DWORD",
      XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_RELADDRESS_, -1},
-    {AddressOfNames, "AddressOfNames", offsetof(XPE_DEF::IMAGE_EXPORT_DIRECTORY, AddressOfNames), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_RELADDRESS_, -1},
+    {AddressOfNames, "AddressOfNames", offsetof(XPE_DEF::IMAGE_EXPORT_DIRECTORY, AddressOfNames), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_RELADDRESS_,
+     -1},
     {AddressOfNameOrdinals, "AddressOfNameOrdinals", offsetof(XPE_DEF::IMAGE_EXPORT_DIRECTORY, AddressOfNameOrdinals), 4, "DWORD",
      XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_RELADDRESS_, -1},
 };
 }
 
 namespace X_IMAGE_EXPORT_FUNCTION {
-const XFW_DEF::HEADER_RECORD records[] = {{Ordinal, "Ordinal", 0, 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-                                          {RVA, "RVA", 0, 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_RELADDRESS_, -1},
-                                          {Name, QObject::tr("Name"), 0, 4, "SZCHAR", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_RELADDRESS_, -1},
-                                         };
+const XFW_DEF::HEADER_RECORD records[] = {
+    {Ordinal, "Ordinal", 0, 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {RVA, "RVA", 0, 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_RELADDRESS_, -1},
+    {Name, QObject::tr("Name"), 0, 4, "SZCHAR", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_RELADDRESS_, -1},
+};
 }
 
 namespace X_IMAGE_IMPORT {
@@ -392,8 +403,8 @@ const XFW_DEF::HEADER_RECORD records[] = {
     {OriginalFirstThunk, "OriginalFirstThunk", offsetof(XPE_DEF::IMAGE_IMPORT_DESCRIPTOR, OriginalFirstThunk), 4, "DWORD",
      XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_RELADDRESS_, -1},
     {TimeDateStamp, "TimeDateStamp", offsetof(XPE_DEF::IMAGE_IMPORT_DESCRIPTOR, TimeDateStamp), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-    {ForwarderChain, "ForwarderChain", offsetof(XPE_DEF::IMAGE_IMPORT_DESCRIPTOR, ForwarderChain), 4, "DWORD",
-     XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_RELADDRESS_, -1},
+    {ForwarderChain, "ForwarderChain", offsetof(XPE_DEF::IMAGE_IMPORT_DESCRIPTOR, ForwarderChain), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_RELADDRESS_,
+     -1},
     {Name, QObject::tr("Name"), offsetof(XPE_DEF::IMAGE_IMPORT_DESCRIPTOR, Name), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_RELADDRESS_, -1},
     {FirstThunk, "FirstThunk", offsetof(XPE_DEF::IMAGE_IMPORT_DESCRIPTOR, FirstThunk), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_RELADDRESS_, -1},
 };
@@ -405,25 +416,28 @@ const XFW_DEF::HEADER_RECORD records32[] = {
     {Ordinal, "Ordinal", 0, 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {Hint, "Hint", 0, 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
 };
-const XFW_DEF::HEADER_RECORD records64[] = {{Thunk, "Thunk", 0, 8, "QWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_RELADDRESS_, -1},
-                                            {Ordinal, "Ordinal", 0, 8, "QWORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-                                            {Hint, "Hint", 0, 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-                                           };
+const XFW_DEF::HEADER_RECORD records64[] = {
+    {Thunk, "Thunk", 0, 8, "QWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_RELADDRESS_, -1},
+    {Ordinal, "Ordinal", 0, 8, "QWORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {Hint, "Hint", 0, 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+};
 }  // namespace X_IMAGE_IMPORT_FUNCTION
 
 namespace X_IMAGE_DELAYIMPORT_FUNCTION {
-const XFW_DEF::HEADER_RECORD records32[] = {{AddressThunk, "AddressThunk", 0, 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_RELADDRESS_, -1},
-                                            {BoundThunk, "BoundThunk", 0, 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_RELADDRESS_, -1},
-                                            {NameThunk, "NameThunk", 0, 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_RELADDRESS_, -1},
-                                            {Ordinal, "Ordinal", 0, 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-                                            {Hint, "Hint", 0, 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-                                           };
-const XFW_DEF::HEADER_RECORD records64[] = {{AddressThunk, "AddressThunk", 0, 8, "QWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_RELADDRESS_, -1},
-                                            {BoundThunk, "BoundThunk", 0, 8, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_RELADDRESS_, -1},
-                                            {NameThunk, "NameThunk", 0, 8, "QWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_RELADDRESS_, -1},
-                                            {Ordinal, "Ordinal", 0, 8, "QWORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-                                            {Hint, "Hint", 0, 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-                                           };
+const XFW_DEF::HEADER_RECORD records32[] = {
+    {AddressThunk, "AddressThunk", 0, 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_RELADDRESS_, -1},
+    {BoundThunk, "BoundThunk", 0, 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_RELADDRESS_, -1},
+    {NameThunk, "NameThunk", 0, 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_RELADDRESS_, -1},
+    {Ordinal, "Ordinal", 0, 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {Hint, "Hint", 0, 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+};
+const XFW_DEF::HEADER_RECORD records64[] = {
+    {AddressThunk, "AddressThunk", 0, 8, "QWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_RELADDRESS_, -1},
+    {BoundThunk, "BoundThunk", 0, 8, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_RELADDRESS_, -1},
+    {NameThunk, "NameThunk", 0, 8, "QWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_RELADDRESS_, -1},
+    {Ordinal, "Ordinal", 0, 8, "QWORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {Hint, "Hint", 0, 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+};
 }  // namespace X_IMAGE_DELAYIMPORT_FUNCTION
 
 namespace X_IMAGE_BOUNDIMPORT {

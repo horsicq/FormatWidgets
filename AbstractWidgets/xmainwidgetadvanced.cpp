@@ -29,40 +29,40 @@ QTreeWidgetItem *XMainWidgetAdvanced::_addBaseItems(QTreeWidget *pTreeWidget, XB
 {
     QTreeWidgetItem *pResult = XMainWidget::_addBaseItems(pTreeWidget, fileType);
 
-    pResult->addChild(createNewItem(XFW_DEF::TYPE_NFDSCAN, XFW_DEF::WIDGETMODE_UNKNOWN, XOptions::ICONTYPE_NFD, 0, -1, 0, 0, 0,
-                                      XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
-    pResult->addChild(createNewItem(XFW_DEF::TYPE_DIESCAN, XFW_DEF::WIDGETMODE_UNKNOWN, XOptions::ICONTYPE_DIE, 0, -1, 0, 0, 0,
-                                      XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
+    pResult->addChild(
+        createNewItem(XFW_DEF::TYPE_NFDSCAN, XFW_DEF::WIDGETMODE_UNKNOWN, XOptions::ICONTYPE_NFD, 0, -1, 0, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
+    pResult->addChild(
+        createNewItem(XFW_DEF::TYPE_DIESCAN, XFW_DEF::WIDGETMODE_UNKNOWN, XOptions::ICONTYPE_DIE, 0, -1, 0, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
 #ifdef USE_YARA
-    pResult->addChild(createNewItem(XFW_DEF::TYPE_YARASCAN, XFW_DEF::WIDGETMODE_UNKNOWN, XOptions::ICONTYPE_YARA, 0, -1, 0, 0, 0, XBinary::MODE_UNKNOWN,
-                                      XBinary::ENDIAN_UNKNOWN));
+    pResult->addChild(
+        createNewItem(XFW_DEF::TYPE_YARASCAN, XFW_DEF::WIDGETMODE_UNKNOWN, XOptions::ICONTYPE_YARA, 0, -1, 0, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
 #endif
-    pResult->addChild(createNewItem(XFW_DEF::TYPE_VIRUSTOTAL, XFW_DEF::WIDGETMODE_UNKNOWN, XOptions::ICONTYPE_VIRUSTOTAL, 0, -1, 0, 0, 0,
-                                               XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
-    pResult->addChild(createNewItem(XFW_DEF::TYPE_VISUALIZATION, XFW_DEF::WIDGETMODE_UNKNOWN, XOptions::ICONTYPE_VISUALIZATION, 0, -1, 0,
-                                               0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
+    pResult->addChild(createNewItem(XFW_DEF::TYPE_VIRUSTOTAL, XFW_DEF::WIDGETMODE_UNKNOWN, XOptions::ICONTYPE_VIRUSTOTAL, 0, -1, 0, 0, 0, XBinary::MODE_UNKNOWN,
+                                    XBinary::ENDIAN_UNKNOWN));
+    pResult->addChild(createNewItem(XFW_DEF::TYPE_VISUALIZATION, XFW_DEF::WIDGETMODE_UNKNOWN, XOptions::ICONTYPE_VISUALIZATION, 0, -1, 0, 0, 0, XBinary::MODE_UNKNOWN,
+                                    XBinary::ENDIAN_UNKNOWN));
     pResult->addChild(
         createNewItem(XFW_DEF::TYPE_HEX, XFW_DEF::WIDGETMODE_UNKNOWN, XOptions::ICONTYPE_HEX, 0, -1, 0, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
 
     if (fileType != XBinary::FT_DEX) {
-        pResult->addChild(createNewItem(XFW_DEF::TYPE_DISASM, XFW_DEF::WIDGETMODE_UNKNOWN, XOptions::ICONTYPE_DISASM, 0, -1, 0, 0, 0,
-                                                   XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
+        pResult->addChild(
+            createNewItem(XFW_DEF::TYPE_DISASM, XFW_DEF::WIDGETMODE_UNKNOWN, XOptions::ICONTYPE_DISASM, 0, -1, 0, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
     }
 
-    pResult->addChild(createNewItem(XFW_DEF::TYPE_HASH, XFW_DEF::WIDGETMODE_UNKNOWN, XOptions::ICONTYPE_HASH, 0, -1, 0, 0, 0,
-                                               XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
-    pResult->addChild(createNewItem(XFW_DEF::TYPE_STRINGS, XFW_DEF::WIDGETMODE_UNKNOWN, XOptions::ICONTYPE_STRING, 0, -1, 0, 0, 0,
-                                               XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
-    pResult->addChild(createNewItem(XFW_DEF::TYPE_SIGNATURES, XFW_DEF::WIDGETMODE_UNKNOWN, XOptions::ICONTYPE_SIGNATURE, 0, -1, 0, 0, 0,
-                                               XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
-    pResult->addChild(createNewItem(XFW_DEF::TYPE_MEMORYMAP, XFW_DEF::WIDGETMODE_UNKNOWN, XOptions::ICONTYPE_MEMORYMAP, 0, -1, 0, 0, 0,
-                                               XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
-    pResult->addChild(createNewItem(XFW_DEF::TYPE_ENTROPY, XFW_DEF::WIDGETMODE_UNKNOWN, XOptions::ICONTYPE_ENTROPY, 0, -1, 0, 0, 0,
-                                               XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
-    pResult->addChild(createNewItem(XFW_DEF::TYPE_EXTRACTOR, XFW_DEF::WIDGETMODE_UNKNOWN, XOptions::ICONTYPE_EXTRACTOR, 0, -1, 0, 0, 0,
-                                               XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
-    pResult->addChild(createNewItem(XFW_DEF::TYPE_SEARCH, XFW_DEF::WIDGETMODE_UNKNOWN, XOptions::ICONTYPE_SEARCH, 0, -1, 0, 0, 0,
-                                               XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
+    pResult->addChild(
+        createNewItem(XFW_DEF::TYPE_HASH, XFW_DEF::WIDGETMODE_UNKNOWN, XOptions::ICONTYPE_HASH, 0, -1, 0, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
+    pResult->addChild(
+        createNewItem(XFW_DEF::TYPE_STRINGS, XFW_DEF::WIDGETMODE_UNKNOWN, XOptions::ICONTYPE_STRING, 0, -1, 0, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
+    pResult->addChild(createNewItem(XFW_DEF::TYPE_SIGNATURES, XFW_DEF::WIDGETMODE_UNKNOWN, XOptions::ICONTYPE_SIGNATURE, 0, -1, 0, 0, 0, XBinary::MODE_UNKNOWN,
+                                    XBinary::ENDIAN_UNKNOWN));
+    pResult->addChild(createNewItem(XFW_DEF::TYPE_MEMORYMAP, XFW_DEF::WIDGETMODE_UNKNOWN, XOptions::ICONTYPE_MEMORYMAP, 0, -1, 0, 0, 0, XBinary::MODE_UNKNOWN,
+                                    XBinary::ENDIAN_UNKNOWN));
+    pResult->addChild(
+        createNewItem(XFW_DEF::TYPE_ENTROPY, XFW_DEF::WIDGETMODE_UNKNOWN, XOptions::ICONTYPE_ENTROPY, 0, -1, 0, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
+    pResult->addChild(createNewItem(XFW_DEF::TYPE_EXTRACTOR, XFW_DEF::WIDGETMODE_UNKNOWN, XOptions::ICONTYPE_EXTRACTOR, 0, -1, 0, 0, 0, XBinary::MODE_UNKNOWN,
+                                    XBinary::ENDIAN_UNKNOWN));
+    pResult->addChild(
+        createNewItem(XFW_DEF::TYPE_SEARCH, XFW_DEF::WIDGETMODE_UNKNOWN, XOptions::ICONTYPE_SEARCH, 0, -1, 0, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN));
 
     return pResult;
 }

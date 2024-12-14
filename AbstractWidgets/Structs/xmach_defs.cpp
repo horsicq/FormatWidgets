@@ -55,7 +55,8 @@ namespace X_segment_command {
 const XFW_DEF::HEADER_RECORD records32[] = {
     {cmd, "cmd", offsetof(XMACH_DEF::segment_command, cmd), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {cmdsize, "cmdsize", offsetof(XMACH_DEF::segment_command, cmdsize), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, -1},
-    {segname, "segname", offsetof(XMACH_DEF::segment_command, segname), 16, "char[16]", XFW_DEF::VAL_TYPE_DATA_ARRAY | XFW_DEF::VAL_TYPE_ANSI | XFW_DEF::VAL_TYPE_STRING, -1},
+    {segname, "segname", offsetof(XMACH_DEF::segment_command, segname), 16, "char[16]", XFW_DEF::VAL_TYPE_DATA_ARRAY | XFW_DEF::VAL_TYPE_ANSI | XFW_DEF::VAL_TYPE_STRING,
+     -1},
     {vmaddr, "vmaddr", offsetof(XMACH_DEF::segment_command, vmaddr), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_ADDRESS | XFW_DEF::VAL_TYPE_CODE, -1},
     {vmsize, "vmsize", offsetof(XMACH_DEF::segment_command, vmsize), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, -1},
     {fileoff, "fileoff", offsetof(XMACH_DEF::segment_command, fileoff), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET, -1},
@@ -99,7 +100,8 @@ const XFW_DEF::HEADER_RECORD records[] = {
 }
 namespace X_section_64 {
 const XFW_DEF::HEADER_RECORD records[] = {
-    {sectname, "sectname", offsetof(XMACH_DEF::section_64, sectname), 16, "char[16]", XFW_DEF::VAL_TYPE_DATA_ARRAY | XFW_DEF::VAL_TYPE_ANSI | XFW_DEF::VAL_TYPE_STRING, -1},
+    {sectname, "sectname", offsetof(XMACH_DEF::section_64, sectname), 16, "char[16]", XFW_DEF::VAL_TYPE_DATA_ARRAY | XFW_DEF::VAL_TYPE_ANSI | XFW_DEF::VAL_TYPE_STRING,
+     -1},
     {segname, "segname", offsetof(XMACH_DEF::section_64, segname), 16, "char[16]", XFW_DEF::VAL_TYPE_DATA_ARRAY | XFW_DEF::VAL_TYPE_ANSI | XFW_DEF::VAL_TYPE_STRING, -1},
     {addr, "addr", offsetof(XMACH_DEF::section_64, addr), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_ADDRESS, -1},
     {size, "size", offsetof(XMACH_DEF::section_64, size), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, -1},
@@ -280,7 +282,7 @@ const XFW_DEF::HEADER_RECORD records64[] = {
     {cryptid, "cryptid", offsetof(XMACH_DEF::encryption_info_command_64, cryptid), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {pad, "pad", offsetof(XMACH_DEF::encryption_info_command_64, pad), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
 };
-}  // namespace X_mach_encryption_info
+}  // namespace X_encryption_info_command
 namespace X_linkedit_data_command {
 const XFW_DEF::HEADER_RECORD records[] = {
     {cmd, "cmd", offsetof(XMACH_DEF::linkedit_data_command, cmd), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
@@ -344,7 +346,7 @@ const XFW_DEF::HEADER_RECORD records64[] = {
     {reserved5, "reserved5", offsetof(XMACH_DEF::routines_command_64, reserved5), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {reserved6, "reserved6", offsetof(XMACH_DEF::routines_command_64, reserved6), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT, -1},
 };
-}  // namespace X_mach_routines
+}  // namespace X_routines_command
 
 namespace X_mach_unix_thread_x86_32 {
 const XFW_DEF::HEADER_RECORD records[] = {
@@ -544,7 +546,7 @@ const XFW_DEF::HEADER_RECORD records64[] = {
     {n_desc, "n_desc", offsetof(XMACH_DEF::nlist_64, n_desc), 2, "uint16", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {n_value, "n_value", offsetof(XMACH_DEF::nlist_64, n_value), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT, -1},
 };
-}  // namespace X_mach_nlist
+}  // namespace X_nlist
 
 namespace X_mach_data_in_code_entry {
 const XFW_DEF::HEADER_RECORD records[] = {
@@ -650,10 +652,14 @@ const XFW_DEF::HEADER_RECORD records[] = {
 namespace X_dyld_chained_fixups_header {
 const XFW_DEF::HEADER_RECORD records[] = {
     {fixups_version, "fixups_version", offsetof(XMACH_DEF::dyld_chained_fixups_header, fixups_version), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-    {starts_offset, "starts_offset", offsetof(XMACH_DEF::dyld_chained_fixups_header, starts_offset), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET, -1},
-    {imports_offset, "imports_offset", offsetof(XMACH_DEF::dyld_chained_fixups_header, imports_offset), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET, -1},
-    {symbols_offset, "symbols_offset", offsetof(XMACH_DEF::dyld_chained_fixups_header, symbols_offset), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET, -1},
-    {imports_count, "imports_count", offsetof(XMACH_DEF::dyld_chained_fixups_header, imports_count), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_COUNT, -1},
+    {starts_offset, "starts_offset", offsetof(XMACH_DEF::dyld_chained_fixups_header, starts_offset), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET,
+     -1},
+    {imports_offset, "imports_offset", offsetof(XMACH_DEF::dyld_chained_fixups_header, imports_offset), 4, "uint32",
+     XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET, -1},
+    {symbols_offset, "symbols_offset", offsetof(XMACH_DEF::dyld_chained_fixups_header, symbols_offset), 4, "uint32",
+     XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET, -1},
+    {imports_count, "imports_count", offsetof(XMACH_DEF::dyld_chained_fixups_header, imports_count), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_COUNT,
+     -1},
     {imports_format, "imports_format", offsetof(XMACH_DEF::dyld_chained_fixups_header, imports_format), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {symbols_format, "symbols_format", offsetof(XMACH_DEF::dyld_chained_fixups_header, symbols_format), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
 };
@@ -667,4 +673,4 @@ const XFW_DEF::HEADER_RECORD records[] = {
 // };
 // }
 
-} // namespace XTYPE_MACH
+}  // namespace XTYPE_MACH

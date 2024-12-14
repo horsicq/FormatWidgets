@@ -118,8 +118,8 @@ public:
     quint32 getNumber();
     qint64 getOffset();
     qint32 getType();
-    static QTreeWidgetItem *createNewItem(XFW_DEF::TYPE type, XFW_DEF::WIDGETMODE widgetMode, XOptions::ICONTYPE iconType, qint64 nOffset,
-                                          qint64 nSize, qint64 nCount, QVariant var1, QVariant var2, XBinary::MODE mode, XBinary::ENDIAN endian, QString sTitle = "");
+    static QTreeWidgetItem *createNewItem(XFW_DEF::TYPE type, XFW_DEF::WIDGETMODE widgetMode, XOptions::ICONTYPE iconType, qint64 nOffset, qint64 nSize, qint64 nCount,
+                                          QVariant var1, QVariant var2, XBinary::MODE mode, XBinary::ENDIAN endian, QString sTitle = "");
     static QString getTypeTitle(XFW_DEF::TYPE type, XBinary::MODE mode, XBinary::ENDIAN endian);
     static QString getTypeTitle(const XFW_DEF::CWOPTIONS *pCwOptions);
 
@@ -131,7 +131,7 @@ public:
     bool createListTable(qint32 nType, QTableWidget *pTableWidget, const XFW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, qint32 nNumberOfRecords);
 
     void addComboBox(QTableWidget *pTableWidget, QList<RECWIDGET> *pListRecWidget, const QMap<quint64, QString> &mapData, qint32 nPosition, XComboBoxEx::CBTYPE cbtype,
-                        quint64 nMask);
+                     quint64 nMask);
     void _adjustCellWidget(QList<RECWIDGET> *pListRecWidget, QTableWidget *pTableWidget, qint32 nRow, qint32 nColumn);
     // InvWidget *createInvWidget(QTableWidget *pTableWidget, qint32 nType, qint32 nData, InvWidget::TYPE widgetType);
     XDateTimeEditX *createTimeDateEdit(QTableWidget *pTableWidget, qint32 nType, qint32 nData);

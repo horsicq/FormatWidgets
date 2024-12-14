@@ -112,12 +112,15 @@ void XProcessData::process()
 
             XFormatWidget::setItemToModelData((*g_ppModel), i, 0, i, 0, g_pListHeaderRecords->at(0).vtype, _type, listCommands.at(i).nStructOffset, nHeaderSize,
                                               listCommands.at(i).nStructOffset, listCommands.at(i).nSize, 0);
-            XFormatWidget::setItemToModel((*g_ppModel), i, XTYPE_MACH::X_load_commands::cmd + 1, listCommands.at(i).nId, g_pListHeaderRecords->at(XTYPE_MACH::X_load_commands::cmd + 1).nSize,
+            XFormatWidget::setItemToModel((*g_ppModel), i, XTYPE_MACH::X_load_commands::cmd + 1, listCommands.at(i).nId,
+                                          g_pListHeaderRecords->at(XTYPE_MACH::X_load_commands::cmd + 1).nSize,
                                           g_pListHeaderRecords->at(XTYPE_MACH::X_load_commands::cmd + 1).vtype);
             XFormatWidget::setItemToModel((*g_ppModel), i, XTYPE_MACH::X_load_commands::cmdsize + 1, listCommands.at(i).nSize,
-                                          g_pListHeaderRecords->at(XTYPE_MACH::X_load_commands::cmdsize + 1).nSize, g_pListHeaderRecords->at(XTYPE_MACH::X_load_commands::cmdsize + 1).vtype);
+                                          g_pListHeaderRecords->at(XTYPE_MACH::X_load_commands::cmdsize + 1).nSize,
+                                          g_pListHeaderRecords->at(XTYPE_MACH::X_load_commands::cmdsize + 1).vtype);
             XFormatWidget::setItemToModel((*g_ppModel), i, XTYPE_MACH::X_load_commands::cmdsize + 2, mapLC.value(listCommands.at(i).nId),
-                                          g_pListHeaderRecords->at(XTYPE_MACH::X_load_commands::cmdsize + 2).nSize, g_pListHeaderRecords->at(XTYPE_MACH::X_load_commands::cmdsize + 2).vtype);
+                                          g_pListHeaderRecords->at(XTYPE_MACH::X_load_commands::cmdsize + 2).nSize,
+                                          g_pListHeaderRecords->at(XTYPE_MACH::X_load_commands::cmdsize + 2).vtype);
 
             XBinary::setPdStructCurrent(g_pPdStruct, g_nFreeIndex, i);
         }

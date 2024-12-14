@@ -23,21 +23,22 @@
 namespace XTYPE_MSDOS {
 
 namespace X_Exe_file {
-const XFW_DEF::HEADER_RECORD records[] = {{exe_signature, "exe_signature", offsetof(XMSDOS_DEF::EXE_file, exe_signature), 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-                                          {exe_len_mod_512, "exe_len_mod_512", offsetof(XMSDOS_DEF::EXE_file, exe_len_mod_512), 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-                                          {exe_pages, "exe_pages", offsetof(XMSDOS_DEF::EXE_file, exe_pages), 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-                                          {exe_rle_count, "exe_rle_count", offsetof(XMSDOS_DEF::EXE_file, exe_rle_count), 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-                                          {exe_par_dir, "exe_par_dir", offsetof(XMSDOS_DEF::EXE_file, exe_par_dir), 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-                                          {exe_min_BSS, "exe_min_BSS", offsetof(XMSDOS_DEF::EXE_file, exe_min_BSS), 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-                                          {exe_max_BSS, "exe_max_BSS", offsetof(XMSDOS_DEF::EXE_file, exe_max_BSS), 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-                                          {exe_SS, "exe_SS", offsetof(XMSDOS_DEF::EXE_file, exe_SS), 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-                                          {exe_SP, "exe_SP", offsetof(XMSDOS_DEF::EXE_file, exe_SP), 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-                                          {exe_chksum, "exe_chksum", offsetof(XMSDOS_DEF::EXE_file, exe_chksum), 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-                                          {exe_IP, "exe_IP", offsetof(XMSDOS_DEF::EXE_file, exe_IP), 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-                                          {exe_CS, "exe_CS", offsetof(XMSDOS_DEF::EXE_file, exe_CS), 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-                                          {exe_rle_table, "exe_rle_table", offsetof(XMSDOS_DEF::EXE_file, exe_rle_table), 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-                                          {exe_iov, "exe_iov", offsetof(XMSDOS_DEF::EXE_file, exe_iov), 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-                                          {exe_sym_tab, "exe_sym_tab", offsetof(XMSDOS_DEF::EXE_file, exe_sym_tab), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT}};
+const XFW_DEF::HEADER_RECORD records[] = {
+    {exe_signature, "exe_signature", offsetof(XMSDOS_DEF::EXE_file, exe_signature), 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {exe_len_mod_512, "exe_len_mod_512", offsetof(XMSDOS_DEF::EXE_file, exe_len_mod_512), 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {exe_pages, "exe_pages", offsetof(XMSDOS_DEF::EXE_file, exe_pages), 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {exe_rle_count, "exe_rle_count", offsetof(XMSDOS_DEF::EXE_file, exe_rle_count), 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {exe_par_dir, "exe_par_dir", offsetof(XMSDOS_DEF::EXE_file, exe_par_dir), 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {exe_min_BSS, "exe_min_BSS", offsetof(XMSDOS_DEF::EXE_file, exe_min_BSS), 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {exe_max_BSS, "exe_max_BSS", offsetof(XMSDOS_DEF::EXE_file, exe_max_BSS), 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {exe_SS, "exe_SS", offsetof(XMSDOS_DEF::EXE_file, exe_SS), 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {exe_SP, "exe_SP", offsetof(XMSDOS_DEF::EXE_file, exe_SP), 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {exe_chksum, "exe_chksum", offsetof(XMSDOS_DEF::EXE_file, exe_chksum), 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {exe_IP, "exe_IP", offsetof(XMSDOS_DEF::EXE_file, exe_IP), 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {exe_CS, "exe_CS", offsetof(XMSDOS_DEF::EXE_file, exe_CS), 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {exe_rle_table, "exe_rle_table", offsetof(XMSDOS_DEF::EXE_file, exe_rle_table), 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {exe_iov, "exe_iov", offsetof(XMSDOS_DEF::EXE_file, exe_iov), 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {exe_sym_tab, "exe_sym_tab", offsetof(XMSDOS_DEF::EXE_file, exe_sym_tab), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT}};
 }
 
 namespace X_IMAGE_DOS_HEADER {
@@ -63,4 +64,4 @@ const XFW_DEF::HEADER_RECORD records[] = {
     {e_lfanew, "e_lfanew", offsetof(XMSDOS_DEF::IMAGE_DOS_HEADEREX, e_lfanew), 4, "LONG", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET}};
 }
 
-} // namespace XTYPE_MSDOS
+}  // namespace XTYPE_MSDOS

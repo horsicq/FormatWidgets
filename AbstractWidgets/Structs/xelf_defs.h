@@ -202,6 +202,6 @@ extern const XFW_DEF::HEADER_RECORD records32[__data_size];
 extern const XFW_DEF::HEADER_RECORD records64[__data_size];
 }  // namespace X_Elf_Rel
 
-} // namespace XTYPE_ELF
+}  // namespace XTYPE_ELF
 
 #endif  // XELF_DEFS_H
