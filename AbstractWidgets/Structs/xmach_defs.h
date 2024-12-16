@@ -709,7 +709,7 @@ enum DATA {
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace X_SC_SuperBlob
 
-namespace X_mach_BlobIndex {
+namespace X_CS_BlobIndex {
 enum DATA {
     type,
     offset,
@@ -717,7 +717,44 @@ enum DATA {
 };
 
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
-}  // namespace X_mach_BlobIndex
+}  // namespace X_CS_BlobIndex
+
+namespace X_CS_CodeDirectory {
+
+enum DATA {
+    magic,
+    length,
+    version,
+    flags,
+    hashOffset,
+    identOffset,
+    nSpecialSlots,
+    nCodeSlots,
+    codeLimit,
+    hashSize,
+    hashType,
+    platform,
+    pageSize,
+    spare2,
+    scatterOffset,
+    teamOffset,
+    spare3,
+    codeLimit64,
+    execSegBase,
+    execSegLimit,
+    execSegFlags,
+    runtime,
+    preEncryptOffset,
+    linkageHashType,
+    linkageTruncated,
+    spare4,
+    linkageOffset,
+    linkageSize,
+    __data_size
+};
+
+extern const XFW_DEF::HEADER_RECORD records[__data_size];
+}  // namespace X_CS_CodeDirectory
 
 namespace X_dyld_chained_fixups_header {
 enum DATA {

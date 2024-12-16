@@ -642,10 +642,43 @@ const XFW_DEF::HEADER_RECORD records[] = {
 };
 }
 
-namespace X_mach_BlobIndex {
+namespace X_CS_BlobIndex {
 const XFW_DEF::HEADER_RECORD records[] = {
-    {type, "type", offsetof(XMACH_DEF::__BlobIndex, type), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-    {offset, "offset", offsetof(XMACH_DEF::__BlobIndex, offset), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET, -1},
+    {type, "type", offsetof(XMACH_DEF::CS_BlobIndex, type), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {offset, "offset", offsetof(XMACH_DEF::CS_BlobIndex, offset), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET | XFW_DEF::VAL_TYPE_RELTOPARENT, -1},
+};
+}
+
+namespace X_CS_CodeDirectory {
+const XFW_DEF::HEADER_RECORD records[] = {
+    {magic, "magic", offsetof(XMACH_DEF::CS_CodeDirectory, magic), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {length, "length", offsetof(XMACH_DEF::CS_CodeDirectory, length), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, -1},
+    {version, "version", offsetof(XMACH_DEF::CS_CodeDirectory, version), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {flags, "flags", offsetof(XMACH_DEF::CS_CodeDirectory, flags), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {hashOffset, "hashOffset", offsetof(XMACH_DEF::CS_CodeDirectory, hashOffset), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET | XFW_DEF::VAL_TYPE_RELTOSTRUCT, -1},
+    {identOffset, "identOffset", offsetof(XMACH_DEF::CS_CodeDirectory, identOffset), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET | XFW_DEF::VAL_TYPE_RELTOSTRUCT, -1},
+    {nSpecialSlots, "nSpecialSlots", offsetof(XMACH_DEF::CS_CodeDirectory, nSpecialSlots), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {nCodeSlots, "nCodeSlots", offsetof(XMACH_DEF::CS_CodeDirectory, nCodeSlots), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {codeLimit, "codeLimit", offsetof(XMACH_DEF::CS_CodeDirectory, codeLimit), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {hashSize, "hashSize", offsetof(XMACH_DEF::CS_CodeDirectory, hashSize), 1, "uint8", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {hashType, "hashType", offsetof(XMACH_DEF::CS_CodeDirectory, hashType), 1, "uint8", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {platform, "platform", offsetof(XMACH_DEF::CS_CodeDirectory, platform), 1, "uint8", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {pageSize, "pageSize", offsetof(XMACH_DEF::CS_CodeDirectory, pageSize), 1, "uint8", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {spare2, "spare2", offsetof(XMACH_DEF::CS_CodeDirectory, spare2), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {scatterOffset, "scatterOffset", offsetof(XMACH_DEF::CS_CodeDirectory, scatterOffset), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET | XFW_DEF::VAL_TYPE_RELTOSTRUCT, -1},
+    {teamOffset, "teamOffset", offsetof(XMACH_DEF::CS_CodeDirectory, teamOffset), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET | XFW_DEF::VAL_TYPE_RELTOSTRUCT, -1},
+    {spare3, "spare3", offsetof(XMACH_DEF::CS_CodeDirectory, spare3), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {codeLimit64, "codeLimit64", offsetof(XMACH_DEF::CS_CodeDirectory, codeLimit64), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {execSegBase, "execSegBase", offsetof(XMACH_DEF::CS_CodeDirectory, execSegBase), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {execSegLimit, "execSegLimit", offsetof(XMACH_DEF::CS_CodeDirectory, execSegLimit), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {execSegFlags, "execSegFlags", offsetof(XMACH_DEF::CS_CodeDirectory, execSegFlags), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {runtime, "runtime", offsetof(XMACH_DEF::CS_CodeDirectory, runtime), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {preEncryptOffset, "preEncryptOffset", offsetof(XMACH_DEF::CS_CodeDirectory, preEncryptOffset), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET | XFW_DEF::VAL_TYPE_RELTOSTRUCT, -1},
+    {linkageHashType, "linkageHashType", offsetof(XMACH_DEF::CS_CodeDirectory, linkageHashType), 1, "uint8", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {linkageTruncated, "linkageTruncated", offsetof(XMACH_DEF::CS_CodeDirectory, linkageTruncated), 1, "uint8", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {spare4, "spare4", offsetof(XMACH_DEF::CS_CodeDirectory, spare4), 2, "uint16", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {linkageOffset, "linkageOffset", offsetof(XMACH_DEF::CS_CodeDirectory, linkageOffset), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET | XFW_DEF::VAL_TYPE_RELTOSTRUCT, -1},
+    {linkageSize, "linkageSize", offsetof(XMACH_DEF::CS_CodeDirectory, linkageSize), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, linkageOffset},
 };
 }
 

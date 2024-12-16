@@ -102,6 +102,8 @@ enum TYPE {
     TYPE_MACH_nlist_64,
     TYPE_MACH_dyld_chained_fixups_header,
     TYPE_MACH_SC_SuperBlob,
+    TYPE_MACH_CS_BlobIndex,
+    TYPE_MACH_CS_CodeDirectory,
     TYPE_MACH_section,
     TYPE_MACH_section_64,
     TYPE_MACH_END,
@@ -161,6 +163,8 @@ enum VAL_TYPE {
     VAL_TYPE_HEX = 1 << 9,
     VAL_TYPE_STRING = 1 << 10,
     VAL_TYPE_CODE = 1 << 11,
+    VAL_TYPE_RELTOSTRUCT = 1 << 12,
+    VAL_TYPE_RELTOPARENT = 1 << 13,
 };
 
 struct HEADER_RECORD {

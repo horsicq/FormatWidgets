@@ -55,7 +55,7 @@ void XProcessData::process()
         g_pListHeaderRecords->append(record);
     }
 
-    QList<XFW_DEF::HEADER_RECORD> listHeaderRecords = XFormatWidget::getHeaderRecords(g_pCwOptions);
+    QList<XFW_DEF::HEADER_RECORD> listHeaderRecords = XFormatWidget::getHeaderRecords(g_pCwOptions, -1);
 
     g_pListHeaderRecords->append(listHeaderRecords);
 
