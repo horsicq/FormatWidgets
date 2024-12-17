@@ -522,7 +522,8 @@ QList<XFW_DEF::HEADER_RECORD> XFormatWidget::getHeaderRecords(const XFW_DEF::CWO
     } else if (pCwOptions->_type == XFW_DEF::TYPE_MSDOS_EXE_file) {
         pRecords = XTYPE_MSDOS::X_Exe_file::records;
         nNumberOfRecords = XTYPE_MSDOS::X_Exe_file::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_MSDOS_IMAGE_DOS_HEADER) {
+    } else if ((pCwOptions->_type == XFW_DEF::TYPE_MSDOS_IMAGE_DOS_HEADER) || (pCwOptions->_type == XFW_DEF::TYPE_NE_IMAGE_DOS_HEADER) || (pCwOptions->_type == XFW_DEF::TYPE_LE_IMAGE_DOS_HEADER) ||
+                (pCwOptions->_type == XFW_DEF::TYPE_LX_IMAGE_DOS_HEADER) || (pCwOptions->_type == XFW_DEF::TYPE_PE_IMAGE_DOS_HEADER)) {
         pRecords = XTYPE_MSDOS::X_IMAGE_DOS_HEADER::records;
         nNumberOfRecords = XTYPE_MSDOS::X_IMAGE_DOS_HEADER::__data_size;
     } else if (pCwOptions->_type == XFW_DEF::TYPE_DEX_HEADER) {
@@ -545,6 +546,104 @@ QList<XFW_DEF::HEADER_RECORD> XFormatWidget::getHeaderRecords(const XFW_DEF::CWO
     }
 
     return listResult;
+}
+
+qint64 XFormatWidget::getStructSize(XFW_DEF::TYPE type)
+{
+    qint64 nResult = 0;
+
+    if (type == XFW_DEF::TYPE_MACH_mach_header) {
+        nResult = sizeof(XMACH_DEF::mach_header);
+    } else if (type == XFW_DEF::TYPE_MACH_mach_header_64) {
+        nResult = sizeof(XMACH_DEF::mach_header_64);
+    } else if (type == XFW_DEF::TYPE_MACH_load_command) {
+        nResult = sizeof(XMACH_DEF::load_command);
+    } else if (type == XFW_DEF::TYPE_segment_command) {
+        nResult = sizeof(XMACH_DEF::segment_command);
+    } else if (type == XFW_DEF::TYPE_segment_command_64) {
+        nResult = sizeof(XMACH_DEF::segment_command_64);
+    } else if (type == XFW_DEF::TYPE_dylib_command) {
+        nResult = sizeof(XMACH_DEF::dylib_command);
+    } else if (type == XFW_DEF::TYPE_rpath_command) {
+        nResult = sizeof(XMACH_DEF::rpath_command);
+    } else if (type == XFW_DEF::TYPE_sub_umbrella_command) {
+        nResult = sizeof(XMACH_DEF::sub_umbrella_command);
+    } else if (type == XFW_DEF::TYPE_sub_client_command) {
+        nResult = sizeof(XMACH_DEF::sub_client_command);
+    } else if (type == XFW_DEF::TYPE_sub_library_command) {
+        nResult = sizeof(XMACH_DEF::sub_library_command);
+    } else if (type == XFW_DEF::TYPE_symtab_command) {
+        nResult = sizeof(XMACH_DEF::symtab_command);
+    } else if (type == XFW_DEF::TYPE_dysymtab_command) {
+        nResult = sizeof(XMACH_DEF::dysymtab_command);
+    } else if (type == XFW_DEF::TYPE_segment_split_info_command) {
+        nResult = sizeof(XMACH_DEF::linkedit_data_command);
+    } else if (type == XFW_DEF::TYPE_atom_info_command) {
+        nResult = sizeof(XMACH_DEF::linkedit_data_command);
+    } else if (type == XFW_DEF::TYPE_function_starts_command) {
+        nResult = sizeof(XMACH_DEF::linkedit_data_command);
+    } else if (type == XFW_DEF::TYPE_dyld_exports_trie_command) {
+        nResult = sizeof(XMACH_DEF::linkedit_data_command);
+    } else if (type == XFW_DEF::TYPE_dyld_chained_fixups_command) {
+        nResult = sizeof(XMACH_DEF::linkedit_data_command);
+    } else if (type == XFW_DEF::TYPE_encryption_info_command) {
+        nResult = sizeof(XMACH_DEF::encryption_info_command);
+    } else if (type == XFW_DEF::TYPE_encryption_info_command_64) {
+        nResult = sizeof(XMACH_DEF::encryption_info_command_64);
+    } else if (type == XFW_DEF::TYPE_routines_command) {
+        nResult = sizeof(XMACH_DEF::routines_command);
+    } else if (type == XFW_DEF::TYPE_routines_command_64) {
+        nResult = sizeof(XMACH_DEF::routines_command_64);
+    } else if (type == XFW_DEF::TYPE_dyld_info_command) {
+        nResult = sizeof(XMACH_DEF::dyld_info_command);
+    } else if (type == XFW_DEF::TYPE_version_min_command) {
+        nResult = sizeof(XMACH_DEF::version_min_command);
+    } else if (type == XFW_DEF::TYPE_uuid_command) {
+        nResult = sizeof(XMACH_DEF::uuid_command);
+    } else if (type == XFW_DEF::TYPE_build_version_command) {
+        nResult = sizeof(XMACH_DEF::build_version_command);
+    } else if (type == XFW_DEF::TYPE_main_command) {
+        nResult = sizeof(XMACH_DEF::entry_point_command);
+    } else if (type == XFW_DEF::TYPE_fileset_entry_command) {
+        nResult = sizeof(XMACH_DEF::fileset_entry_command);
+    } else if (type == XFW_DEF::TYPE_source_version_command) {
+        nResult = sizeof(XMACH_DEF::source_version_command);
+    } else if (type == XFW_DEF::TYPE_dylinker_command) {
+        nResult = sizeof(XMACH_DEF::dylinker_command);
+    } else if (type == XFW_DEF::TYPE_data_in_code_command) {
+        nResult = sizeof(XMACH_DEF::linkedit_data_command);
+    } else if (type == XFW_DEF::TYPE_code_signature_command) {
+        nResult = sizeof(XMACH_DEF::linkedit_data_command);
+    } else if (type == XFW_DEF::TYPE_MACH_nlist) {
+        nResult = sizeof(XMACH_DEF::nlist);
+    } else if (type == XFW_DEF::TYPE_MACH_nlist_64) {
+        nResult = sizeof(XMACH_DEF::nlist_64);
+    } else if (type == XFW_DEF::TYPE_MACH_dyld_chained_fixups_header) {
+        nResult = sizeof(XMACH_DEF::dyld_chained_fixups_header);
+    } else if (type == XFW_DEF::TYPE_MACH_SC_SuperBlob) {
+        nResult = sizeof(XMACH_DEF::__SC_SuperBlob);
+    } else if (type == XFW_DEF::TYPE_MACH_CS_BlobIndex) {
+        nResult = sizeof(XMACH_DEF::CS_BlobIndex);
+    } else if (type == XFW_DEF::TYPE_MACH_CS_CodeDirectory) {
+        nResult = sizeof(XMACH_DEF::CS_CodeDirectory);
+    } else if (type == XFW_DEF::TYPE_MACH_section) {
+        nResult = sizeof(XMACH_DEF::section);
+    } else if (type == XFW_DEF::TYPE_MACH_section_64) {
+        nResult = sizeof(XMACH_DEF::section_64);
+    } else if (type == XFW_DEF::TYPE_Elf32_Ehdr) {
+        nResult = sizeof(XELF_DEF::Elf_Ehdr);
+    } else if (type == XFW_DEF::TYPE_Elf64_Ehdr) {
+        nResult = sizeof(XELF_DEF::Elf_Ehdr);
+    } else if (type == XFW_DEF::TYPE_MSDOS_EXE_file) {
+        nResult = sizeof(XMSDOS_DEF::EXE_file);
+    } else if ((type == XFW_DEF::TYPE_MSDOS_IMAGE_DOS_HEADER) || (type == XFW_DEF::TYPE_NE_IMAGE_DOS_HEADER) || (type == XFW_DEF::TYPE_LE_IMAGE_DOS_HEADER) ||
+                (type == XFW_DEF::TYPE_LX_IMAGE_DOS_HEADER) || (type == XFW_DEF::TYPE_PE_IMAGE_DOS_HEADER)) {
+        nResult = sizeof(XMSDOS_DEF::IMAGE_DOS_HEADEREX);
+    } else if (type == XFW_DEF::TYPE_DEX_HEADER) {
+        nResult = sizeof(XDEX_DEF::HEADER);
+    }
+
+    return nResult;
 }
 
 qint32 XFormatWidget::getHeaderSize(QList<XFW_DEF::HEADER_RECORD> *pListHeaderRecords)
@@ -1309,7 +1408,26 @@ void XFormatWidget::_addFileType(QTreeWidgetItem *pTreeWidgetItem, QIODevice *pD
     spStruct.bIsImage = bIsImage;
     spStruct.nImageBase = nImageBase;
 
-    if ((fileType == XBinary::FT_ELF) || (fileType == XBinary::FT_ELF32) || (fileType == XBinary::FT_ELF64)) {
+    if ((fileType == XBinary::FT_PE) || (fileType == XBinary::FT_PE32) || (fileType == XBinary::FT_PE64)) {
+        XPE pe(_pDevice, bIsImage, nImageBase);
+
+        if (pe.isValid()) {
+            spStruct.endian = pe.getEndian();
+            spStruct.mode = pe.getMode();
+            spStruct.nStructOffset = 0;
+            spStruct.nStructCount = 1;
+            spStruct.widgetMode = XFW_DEF::WIDGETMODE_HEADER;
+            spStruct.type = XFW_DEF::TYPE_PE_IMAGE_DOS_HEADER;
+
+            if (spStruct.mode == XBinary::MODE_32) {
+                spStruct.fileType = XBinary::FT_PE32;
+            } else if (spStruct.mode == XBinary::MODE_64) {
+                spStruct.fileType = XBinary::FT_PE64;
+            }
+
+            _addStruct(spStruct);
+        }
+    } else if ((fileType == XBinary::FT_ELF) || (fileType == XBinary::FT_ELF32) || (fileType == XBinary::FT_ELF64)) {
         XELF elf(_pDevice, bIsImage, nImageBase);
 
         if (elf.isValid()) {
@@ -1383,18 +1501,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
     }
 
     if (_spStruct.nStructSize == 0) {
-        if (_spStruct.type == XFW_DEF::TYPE_Elf32_Ehdr) {
-            _spStruct.nStructSize = sizeof(XELF_DEF::Elf32_Ehdr);
-        } else if (_spStruct.type == XFW_DEF::TYPE_Elf64_Ehdr) {
-            _spStruct.nStructSize = sizeof(XELF_DEF::Elf64_Ehdr);
-        } else if (_spStruct.type == XFW_DEF::TYPE_MACH_mach_header) {
-            _spStruct.nStructSize = sizeof(XMACH_DEF::mach_header);
-        } else if (_spStruct.type == XFW_DEF::TYPE_MACH_mach_header_64) {
-            _spStruct.nStructSize = sizeof(XMACH_DEF::mach_header_64);
-        } else if (_spStruct.type == XFW_DEF::TYPE_MACH_load_command) {
-            _spStruct.nStructSize = sizeof(XMACH_DEF::load_command);
-        }
-
+        _spStruct.nStructSize = getStructSize(_spStruct.type);
         _spStruct.nStructSize *= _spStruct.nStructCount;
     }
 
@@ -1553,6 +1660,34 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     _spStructRecord.nStructCount = 0;
                     _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEADER;
                     _spStructRecord.type = XFW_DEF::TYPE_MACH_dyld_chained_fixups_header;
+
+                    _addStruct(_spStructRecord);
+                }
+            } else if ((_spStruct.widgetMode == XFW_DEF::WIDGETMODE_HEADER) && (_spStruct.type == XFW_DEF::TYPE_MACH_dyld_chained_fixups_header)) {
+                XMACH_DEF::dyld_chained_fixups_header dcfh = mach._read_dyld_chained_fixups_header(_spStruct.nStructOffset);
+
+                // if (dcfh.starts_offset && (dcfh.imports_offset - dcfh.starts_offset > 0)) {
+                //     SPSTRUCT _spStructRecord = _spStruct;
+                //     _spStructRecord.pTreeWidgetItem = pTreeWidgetItem;
+                //     _spStructRecord.nStructOffset = _spStruct.nOffset + _spStruct.nStructOffset+ dcfh.starts_offset;
+                //     _spStructRecord.nStructSize = dcfh.imports_offset - dcfh.starts_offset;
+                //     _spStructRecord.nStructCount = 0;
+                //     _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_TABLE;
+                //     _spStructRecord.type = XFW_DEF::TYPE_MACH_dyld_chained_starts_in_image;
+
+                //     _addStruct(_spStructRecord);
+                // }
+
+                // TODO import
+
+                if (dcfh.symbols_offset && (_spStruct.nStructSize - dcfh.symbols_offset > 0)) {
+                    SPSTRUCT _spStructRecord = _spStruct;
+                    _spStructRecord.pTreeWidgetItem = pTreeWidgetItem;
+                    _spStructRecord.nStructOffset = _spStruct.nOffset + _spStruct.nStructOffset+ dcfh.symbols_offset;
+                    _spStructRecord.nStructSize = _spStruct.nStructSize - dcfh.symbols_offset;
+                    _spStructRecord.nStructCount = 0;
+                    _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_TABLE;
+                    _spStructRecord.type = XFW_DEF::TYPE_GENERIC_STRINGTABLE_ANSI;
 
                     _addStruct(_spStructRecord);
                 }
@@ -2068,11 +2203,19 @@ bool XFormatWidget::createHeaderTable(QTableWidget *pTableWidget, const QList<XF
                 }
             }
 
+            quint64 nDelta = 0;
+
+            if (pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_RELTOPARENT) {
+                nDelta = var1.toULongLong();
+            } else if (pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_RELTOSTRUCT) {
+                nDelta = nOffset;
+            }
+
             if (locType != XBinary::LT_UNKNOWN) {
                 QToolButton *pButton = new QToolButton(0);
                 pButton->setProperty("LOCATIONTYPE", locType);
                 pButton->setProperty("WIDGETTYPE", XOptions::WIDGETTYPE_HEX);
-                pButton->setProperty("DELTA", var1.toULongLong());
+                pButton->setProperty("DELTA", nDelta);
 
                 if (pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_SIZE) {
                     pButton->setText(tr("Size"));
@@ -2094,7 +2237,7 @@ bool XFormatWidget::createHeaderTable(QTableWidget *pTableWidget, const QList<XF
                 pButton->setText(tr("Disasm"));
                 pButton->setProperty("LOCATIONTYPE", locType);
                 pButton->setProperty("WIDGETTYPE", XOptions::WIDGETTYPE_DISASM);
-                pButton->setProperty("DELTA", var1.toULongLong());
+                pButton->setProperty("DELTA", nDelta);
                 XOptions::adjustToolButton(pButton, XOptions::ICONTYPE_DISASM);
                 pButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 

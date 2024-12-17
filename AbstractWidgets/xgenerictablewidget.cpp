@@ -25,6 +25,14 @@ XGenericTableWidget::XGenericTableWidget(QWidget *pParent) : XFormatWidget(pPare
 {
     ui->setupUi(this);
     g_pModel = nullptr;
+
+    XOptions::adjustToolButton(ui->toolButtonTableReload, XOptions::ICONTYPE_RELOAD);
+    XOptions::adjustToolButton(ui->toolButtonTableSize, XOptions::ICONTYPE_SIZE);
+    XOptions::adjustToolButton(ui->toolButtonTableSave, XOptions::ICONTYPE_SAVE);
+
+    ui->toolButtonTableReload->setToolTip(tr("Reload"));
+    ui->toolButtonTableSize->setToolTip(tr("Size"));
+    ui->toolButtonTableSave->setToolTip(tr("Save"));
 }
 
 XGenericTableWidget::~XGenericTableWidget()
@@ -100,6 +108,11 @@ void XGenericTableWidget::on_tableViewMain_clicked(const QModelIndex &index)
 void XGenericTableWidget::on_toolButtonTableReload_clicked()
 {
     reloadData(true);
+}
+
+void XGenericTableWidget::on_toolButtonTableSize_clicked()
+{
+    emit followLocation(getCwOptions()->nDataOffset, XBinary::LT_OFFSET, getCwOptions()->nDataSize, XOptions::WIDGETTYPE_HEX);
 }
 
 void XGenericTableWidget::on_toolButtonTableSave_clicked()

@@ -124,6 +124,8 @@ public:
     static QString getTypeTitle(const XFW_DEF::CWOPTIONS *pCwOptions);
 
     static QList<XFW_DEF::HEADER_RECORD> getHeaderRecords(const XFW_DEF::CWOPTIONS *pCwOptions, qint32 nLimit);
+    static qint64 getStructSize(XFW_DEF::TYPE type);
+
     static qint32 getHeaderSize(QList<XFW_DEF::HEADER_RECORD> *pListHeaderRecords);
 
     bool createHeaderTable(QTableWidget *pTableWidget, const QList<XFW_DEF::HEADER_RECORD> *pListHeaderRecords, QList<RECWIDGET> *pListRecWidget, qint64 nOffset,

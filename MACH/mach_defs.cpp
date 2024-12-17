@@ -579,7 +579,7 @@ const FW_DEF::HEADER_RECORD records[] = {
 
 namespace N_mach_BlobIndex {
 const FW_DEF::HEADER_RECORD records[] = {
-    {type, "type", offsetof(XMACH_DEF::__BlobIndex, type), 4, "uint32", FW_DEF::VAL_TYPE_DATA},
-    {offset, "offset", offsetof(XMACH_DEF::__BlobIndex, offset), 4, "uint32", FW_DEF::VAL_TYPE_OFFSET},
+    {type, "type", offsetof(XMACH_DEF::CS_BlobIndex, type), 4, "uint32", FW_DEF::VAL_TYPE_DATA},
+    {offset, "offset", offsetof(XMACH_DEF::CS_BlobIndex, offset), 4, "uint32", FW_DEF::VAL_TYPE_OFFSET},
 };
 }

@@ -685,12 +685,12 @@ const XFW_DEF::HEADER_RECORD records[] = {
 namespace X_dyld_chained_fixups_header {
 const XFW_DEF::HEADER_RECORD records[] = {
     {fixups_version, "fixups_version", offsetof(XMACH_DEF::dyld_chained_fixups_header, fixups_version), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-    {starts_offset, "starts_offset", offsetof(XMACH_DEF::dyld_chained_fixups_header, starts_offset), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET,
+    {starts_offset, "starts_offset", offsetof(XMACH_DEF::dyld_chained_fixups_header, starts_offset), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET | XFW_DEF::VAL_TYPE_RELTOSTRUCT,
      -1},
     {imports_offset, "imports_offset", offsetof(XMACH_DEF::dyld_chained_fixups_header, imports_offset), 4, "uint32",
-     XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET, -1},
+     XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET | XFW_DEF::VAL_TYPE_RELTOSTRUCT, -1},
     {symbols_offset, "symbols_offset", offsetof(XMACH_DEF::dyld_chained_fixups_header, symbols_offset), 4, "uint32",
-     XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET, -1},
+     XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET | XFW_DEF::VAL_TYPE_RELTOSTRUCT, -1},
     {imports_count, "imports_count", offsetof(XMACH_DEF::dyld_chained_fixups_header, imports_count), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_COUNT,
      -1},
     {imports_format, "imports_format", offsetof(XMACH_DEF::dyld_chained_fixups_header, imports_format), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},

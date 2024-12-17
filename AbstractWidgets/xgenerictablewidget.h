@@ -44,6 +44,7 @@ private slots:
     void onTableView_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
     void on_tableViewMain_clicked(const QModelIndex &index);
     void on_toolButtonTableReload_clicked();
+    void on_toolButtonTableSize_clicked();
     void on_toolButtonTableSave_clicked();
     void on_tableViewMain_doubleClicked(const QModelIndex &index);
 

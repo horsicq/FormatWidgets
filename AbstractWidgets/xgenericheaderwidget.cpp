@@ -24,6 +24,14 @@
 XGenericHeaderWidget::XGenericHeaderWidget(QWidget *pParent) : XFormatWidget(pParent), ui(new Ui::XGenericHeaderWidget)
 {
     ui->setupUi(this);
+
+    XOptions::adjustToolButton(ui->toolButtonTableReload, XOptions::ICONTYPE_RELOAD);
+    XOptions::adjustToolButton(ui->toolButtonTableSize, XOptions::ICONTYPE_SIZE);
+    XOptions::adjustToolButton(ui->toolButtonTableSave, XOptions::ICONTYPE_SAVE);
+
+    ui->toolButtonTableReload->setToolTip(tr("Reload"));
+    ui->toolButtonTableSize->setToolTip(tr("Size"));
+    ui->toolButtonTableSave->setToolTip(tr("Save"));
 }
 
 XGenericHeaderWidget::~XGenericHeaderWidget()
@@ -167,7 +175,21 @@ void XGenericHeaderWidget::on_toolButtonTableReload_clicked()
     reloadData(true);
 }
 
+void XGenericHeaderWidget::on_toolButtonTableSize_clicked()
+{
+    emit followLocation(getCwOptions()->nDataOffset, XBinary::LT_OFFSET, getCwOptions()->nDataSize, XOptions::WIDGETTYPE_HEX);
+}
+
 void XGenericHeaderWidget::on_toolButtonTableSave_clicked()
 {
     saveModel(ui->tableWidgetMain->model(), getTypeTitle(getCwOptions()));
 }
+
+void XGenericHeaderWidget::on_tableWidgetMain_cellClicked(int nRow, int nColumn)
+{
+    Q_UNUSED(nRow)
+    Q_UNUSED(nColumn)
+
+    setHeaderSelection(ui->tableWidgetMain);
+}
+
