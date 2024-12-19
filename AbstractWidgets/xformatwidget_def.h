@@ -76,7 +76,7 @@ enum TYPE {
     TYPE_segment_split_info_command,
     TYPE_atom_info_command,
     TYPE_function_starts_command,
-    TYPE_dyld_exports_trie_command,
+    TYPE_MACH_dyld_exports_trie_command,
     TYPE_dyld_chained_fixups_command,
     TYPE_encryption_info_command,
     TYPE_encryption_info_command_64,
@@ -100,6 +100,7 @@ enum TYPE {
     TYPE_MACH_CS_CodeDirectory,
     TYPE_MACH_section,
     TYPE_MACH_section_64,
+    TYPE_MACH_trie_export,
     TYPE_MACH_END,
     TYPE_NE_START,
     TYPE_NE_IMAGE_DOS_HEADER,
@@ -122,7 +123,8 @@ enum WIDGETMODE {
     WIDGETMODE_UNKNOWN = 0,
     WIDGETMODE_HEADER,
     WIDGETMODE_TABLE,
-    WIDGETMODE_DIALOG_HEADER
+    WIDGETMODE_DIALOG_HEADER,
+    WIDGETMODE_HEX
 };
 
 struct OPTIONS {

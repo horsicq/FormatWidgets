@@ -246,7 +246,6 @@ protected:
         SV_RELOADDATA
     };
 
-    virtual SV _setValue(QVariant vValue, qint32 nPosition) = 0;
     void adjustGenericHeader(QTableWidget *pTableWidget, const QList<XFW_DEF::HEADER_RECORD> *pListHeaderRecords);
     void adjustGenericTable(QTableView *pTableView, const QList<XFW_DEF::HEADER_RECORD> *pListHeaderRecords);
     virtual void adjustListTable(qint32 nType, QTableWidget *pTableWidget);

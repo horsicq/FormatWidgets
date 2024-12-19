@@ -40,14 +40,6 @@ XGenericTableWidget::~XGenericTableWidget()
     delete ui;
 }
 
-XFormatWidget::SV XGenericTableWidget::_setValue(QVariant vValue, qint32 nPosition)
-{
-    Q_UNUSED(vValue)
-    Q_UNUSED(nPosition)
-
-    return SV_NONE;
-}
-
 void XGenericTableWidget::reloadData(bool bSaveSelection)
 {
     qint32 nRow = 0;

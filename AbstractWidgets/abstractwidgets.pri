@@ -17,6 +17,7 @@ HEADERS += \
     $$PWD/xformatwidget.h \
     $$PWD/xformatwidget_def.h \
     $$PWD/xgenericheaderwidget.h \
+    $$PWD/xgenerichexwidget.h \
     $$PWD/xgenerictablewidget.h \
     $$PWD/xmainwidget.h \
     $$PWD/xmainwidgetadvanced.h \
@@ -37,6 +38,7 @@ SOURCES += \
     $$PWD/xdialogprocessdata.cpp \
     $$PWD/xformatwidget.cpp \
     $$PWD/xgenericheaderwidget.cpp \
+    $$PWD/xgenerichexwidget.cpp \
     $$PWD/xgenerictablewidget.cpp \
     $$PWD/xmainwidget.cpp \
     $$PWD/xmainwidgetadvanced.cpp \
@@ -46,6 +48,7 @@ FORMS += \
     $$PWD/dialogsetgenericwidget.ui \
     $$PWD/dialogxmainwidget.ui \
     $$PWD/xgenericheaderwidget.ui \
+    $$PWD/xgenerichexwidget.ui \
     $$PWD/xgenerictablewidget.ui \
     $$PWD/xmainwidget.ui
 

@@ -314,7 +314,7 @@ QString XFormatWidget::getTypeTitle(XFW_DEF::TYPE type, XBinary::MODE mode, XBin
         sResult = QString("atom_info_command");
     } else if (type == XFW_DEF::TYPE_function_starts_command) {
         sResult = QString("function_starts_command");
-    } else if (type == XFW_DEF::TYPE_dyld_exports_trie_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_dyld_exports_trie_command) {
         sResult = QString("dyld_exports_trie_command");
     } else if (type == XFW_DEF::TYPE_dyld_chained_fixups_command) {
         sResult = QString("dyld_chained_fixups_command");
@@ -362,6 +362,8 @@ QString XFormatWidget::getTypeTitle(XFW_DEF::TYPE type, XBinary::MODE mode, XBin
         sResult = QString("section");
     } else if (type == XFW_DEF::TYPE_MACH_section_64) {
         sResult = QString("section_64");
+    } else if (type == XFW_DEF::TYPE_MACH_trie_export) {
+        sResult = tr("Export");
     } else if (type == XFW_DEF::TYPE_DEX_HEADER) {
         sResult = QString("HEADER");
     }
@@ -432,7 +434,7 @@ QList<XFW_DEF::HEADER_RECORD> XFormatWidget::getHeaderRecords(const XFW_DEF::CWO
     } else if (pCwOptions->_type == XFW_DEF::TYPE_function_starts_command) {
         pRecords = XTYPE_MACH::X_linkedit_data_command::records;
         nNumberOfRecords = XTYPE_MACH::X_linkedit_data_command::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_dyld_exports_trie_command) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_dyld_exports_trie_command) {
         pRecords = XTYPE_MACH::X_linkedit_data_command::records;
         nNumberOfRecords = XTYPE_MACH::X_linkedit_data_command::__data_size;
     } else if (pCwOptions->_type == XFW_DEF::TYPE_dyld_chained_fixups_command) {
@@ -574,7 +576,7 @@ qint64 XFormatWidget::getStructSize(XFW_DEF::TYPE type)
         nResult = sizeof(XMACH_DEF::linkedit_data_command);
     } else if (type == XFW_DEF::TYPE_function_starts_command) {
         nResult = sizeof(XMACH_DEF::linkedit_data_command);
-    } else if (type == XFW_DEF::TYPE_dyld_exports_trie_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_dyld_exports_trie_command) {
         nResult = sizeof(XMACH_DEF::linkedit_data_command);
     } else if (type == XFW_DEF::TYPE_dyld_chained_fixups_command) {
         nResult = sizeof(XMACH_DEF::linkedit_data_command);
@@ -675,18 +677,6 @@ void XFormatWidget::setValue(QVariant vValue, qint32 nPosition, qint64 nOffset, 
             }
 
             _adjustRecWidget(&recWidget, vValue);
-
-            SV sv = _setValue(vValue, nPosition);
-            // if (sv == SV_EDITED) {
-            //     reset();
-            // } else if (sv == SV_RELOADDATA) {
-            //     reset();
-            //     reloadData(true);
-            // } else if (sv == SV_RELOADALL) {
-            //     reset();
-            //     reload();
-            //     reloadData(false);
-            // }
 
             emit dataChanged(nOffset, nSize);
         }
@@ -1107,8 +1097,13 @@ void XFormatWidget::updateRecWidgets(QIODevice *pDevice, QList<RECWIDGET> *pList
         if (pListRecWidget->at(i).pWidget) {
             bool bIsSize = false;
 
-            if ((pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_SIZE) && (pListRecWidget->at(i).nSubPosition != -1)) {
-                bIsSize = true;
+            if (pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_SIZE) {
+                if (pListRecWidget->at(i).nSubPosition != -1) {
+                    bIsSize = true;
+                }
+                else if (pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_RELTOSTRUCT) {
+                    bIsSize = true;
+                }
             }
 
             QList<QToolButton *> listWidgets = pListRecWidget->at(i).pWidget->findChildren<QToolButton *>();
@@ -1118,7 +1113,12 @@ void XFormatWidget::updateRecWidgets(QIODevice *pDevice, QList<RECWIDGET> *pList
             for (qint32 j = 0; j < nNumberOfWidgets; j++) {
                 qint64 nDelta = listWidgets.at(j)->property("DELTA").toLongLong();
                 if (bIsSize) {
-                    listWidgets.at(j)->setProperty("LOCATION", listVariants.at(pListRecWidget->at(i).nSubPosition).toULongLong() + nDelta);
+                    if (pListRecWidget->at(i).nSubPosition != -1) {
+                        listWidgets.at(j)->setProperty("LOCATION", listVariants.at(pListRecWidget->at(i).nSubPosition).toULongLong() + nDelta);
+                    } else {
+                        listWidgets.at(j)->setProperty("LOCATION", nDelta);
+                    }
+
                     listWidgets.at(j)->setProperty("SIZE", listVariants.at(i));
                 } else {
                     listWidgets.at(j)->setProperty("LOCATION", listVariants.at(i).toULongLong() + nDelta);
@@ -1141,13 +1141,17 @@ void XFormatWidget::_adjustRecWidget(RECWIDGET *pRecWidget, QVariant varValue)
 
     if (pRecWidget->pLineEdit) bBlockLineEdit = pRecWidget->pLineEdit->blockSignals(true);
 
-    QList<XComboBoxEx *> listWidgets = pRecWidget->pWidget->findChildren<XComboBoxEx *>();
+    qint32 nNumberOfWidgets = 0;
+    QList<XComboBoxEx *> listWidgets;
 
-    qint32 nNumberOfWidgets = listWidgets.count();
+    if (pRecWidget->pWidget) {
+        listWidgets = pRecWidget->pWidget->findChildren<XComboBoxEx *>();
+        nNumberOfWidgets = listWidgets.count();
 
-    for (qint32 i = 0; i < nNumberOfWidgets; i++) {
-        bool bState = listWidgets.at(i)->blockSignals(true);
-        listBlockComboBoxes.append(bState);
+        for (qint32 i = 0; i < nNumberOfWidgets; i++) {
+            bool bState = listWidgets.at(i)->blockSignals(true);
+            listBlockComboBoxes.append(bState);
+        }
     }
 
     if (pRecWidget->pLineEdit) {
@@ -1715,6 +1719,20 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
 
                     _addStruct(_spStructRecord);
                 }
+            } else if ((_spStruct.widgetMode == XFW_DEF::WIDGETMODE_HEADER) && (_spStruct.type == XFW_DEF::TYPE_MACH_dyld_exports_trie_command)) {
+                XMACH_DEF::linkedit_data_command _command = mach._read_linkedit_data_command(_spStruct.nStructOffset);
+
+                if (_command.dataoff && _command.datasize) {
+                    SPSTRUCT _spStructRecord = _spStruct;
+                    _spStructRecord.pTreeWidgetItem = pTreeWidgetItem;
+                    _spStructRecord.nStructOffset = _spStruct.nOffset + _command.dataoff;
+                    _spStructRecord.nStructSize = _command.datasize;
+                    _spStructRecord.nStructCount = 0;
+                    _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEX;
+                    _spStructRecord.type = XFW_DEF::TYPE_MACH_trie_export;
+
+                    _addStruct(_spStructRecord);
+                }
             } else if ((_spStruct.widgetMode == XFW_DEF::WIDGETMODE_HEADER) && (_spStruct.type == XFW_DEF::TYPE_segment_command)) {
                 XMACH_DEF::segment_command _command = mach._read_segment_command(_spStruct.nStructOffset);
 
@@ -1848,7 +1866,7 @@ XFW_DEF::TYPE XFormatWidget::load_commandIdToType(qint32 nCommandId)
     } else if (nCommandId == XMACH_DEF::S_LC_FUNCTION_STARTS) {
         result = XFW_DEF::TYPE_function_starts_command;
     } else if (nCommandId == XMACH_DEF::S_LC_DYLD_EXPORTS_TRIE) {
-        result = XFW_DEF::TYPE_dyld_exports_trie_command;
+        result = XFW_DEF::TYPE_MACH_dyld_exports_trie_command;
     } else if (nCommandId == XMACH_DEF::S_LC_DYLD_CHAINED_FIXUPS) {
         result = XFW_DEF::TYPE_dyld_chained_fixups_command;
     } else if (nCommandId == XMACH_DEF::S_LC_ENCRYPTION_INFO) {
@@ -2206,8 +2224,25 @@ bool XFormatWidget::createHeaderTable(QTableWidget *pTableWidget, const QList<XF
     }
 
     for (qint32 i = 0; i < nNumberOfRecords; i++) {
-        if ((pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_OFFSET) || (pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_ADDRESS) ||
-            ((pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_SIZE) && (pListRecWidget->at(i).nSubPosition != -1))) {
+        if (pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_RELTOPARENT) {
+            (*pListRecWidget)[i].varDelta = var1.toULongLong();
+        } else if (pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_RELTOSTRUCT) {
+            (*pListRecWidget)[i].varDelta = nOffset;
+        }
+
+        bool bValid = false;
+
+        if (pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_OFFSET) {
+            bValid = true;
+        } else if (pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_ADDRESS) {
+            bValid = true;
+        } else if ((pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_SIZE) && (pListRecWidget->at(i).nSubPosition != -1)) {
+            bValid = true;
+        } else if ((pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_SIZE) && (pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_RELTOSTRUCT)) {
+            bValid = true;
+        }
+
+        if (bValid) {
             _adjustCellWidget(pListRecWidget, pTableWidget, i, HEADER_COLUMN_INFO);
 
             XBinary::LT locType = XBinary::LT_UNKNOWN;
@@ -2224,13 +2259,9 @@ bool XFormatWidget::createHeaderTable(QTableWidget *pTableWidget, const QList<XF
                     } else if (pListRecWidget->at(nSubPosition).nVType & XFW_DEF::VAL_TYPE_ADDRESS) {
                         locType = XBinary::LT_ADDRESS;
                     }
+                } else if (pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_RELTOSTRUCT) {
+                    locType = XBinary::LT_OFFSET;
                 }
-            }
-
-            if (pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_RELTOPARENT) {
-                (*pListRecWidget)[i].varDelta = var1.toULongLong();
-            } else if (pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_RELTOSTRUCT) {
-                (*pListRecWidget)[i].varDelta = nOffset;
             }
 
             if (locType != XBinary::LT_UNKNOWN) {

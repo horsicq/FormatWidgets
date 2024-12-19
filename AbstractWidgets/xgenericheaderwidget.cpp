@@ -41,14 +41,6 @@ XGenericHeaderWidget::~XGenericHeaderWidget()
     delete ui;
 }
 
-XFormatWidget::SV XGenericHeaderWidget::_setValue(QVariant vValue, qint32 nPosition)
-{
-    Q_UNUSED(vValue)
-    Q_UNUSED(nPosition)
-
-    return SV_NONE;
-}
-
 void XGenericHeaderWidget::reloadData(bool bSaveSelection)
 {
     qint32 nCurrentRow = 0;
@@ -104,7 +96,7 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
         (getCwOptions()->_type == XFW_DEF::TYPE_sub_client_command) || (getCwOptions()->_type == XFW_DEF::TYPE_sub_library_command) ||
         (getCwOptions()->_type == XFW_DEF::TYPE_symtab_command) || (getCwOptions()->_type == XFW_DEF::TYPE_dysymtab_command) ||
         (getCwOptions()->_type == XFW_DEF::TYPE_segment_split_info_command) || (getCwOptions()->_type == XFW_DEF::TYPE_atom_info_command) ||
-        (getCwOptions()->_type == XFW_DEF::TYPE_function_starts_command) || (getCwOptions()->_type == XFW_DEF::TYPE_dyld_exports_trie_command) ||
+        (getCwOptions()->_type == XFW_DEF::TYPE_function_starts_command) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_dyld_exports_trie_command) ||
         (getCwOptions()->_type == XFW_DEF::TYPE_dyld_chained_fixups_command) || (getCwOptions()->_type == XFW_DEF::TYPE_encryption_info_command) ||
         (getCwOptions()->_type == XFW_DEF::TYPE_encryption_info_command_64) || (getCwOptions()->_type == XFW_DEF::TYPE_dyld_info_command) ||
         (getCwOptions()->_type == XFW_DEF::TYPE_version_min_command) || (getCwOptions()->_type == XFW_DEF::TYPE_uuid_command) ||

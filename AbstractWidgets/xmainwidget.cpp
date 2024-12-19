@@ -164,14 +164,6 @@ void XMainWidget::reload()
     // setTreeItem(ui->treeWidgetNavi, getOptions().nStartType);
 }
 
-XFormatWidget::SV XMainWidget::_setValue(QVariant vValue, qint32 nPosition)
-{
-    Q_UNUSED(vValue)
-    Q_UNUSED(nPosition)
-
-    return SV_NONE;
-}
-
 void XMainWidget::setReadonly(bool bState)
 {
     XFormatWidget::setReadonly(bState);
@@ -258,7 +250,7 @@ void XMainWidget::reloadData(bool bSaveSelection)
             connect(pWidget, SIGNAL(dataChanged(qint64, qint64)), this, SLOT(dataChangedSlot(qint64, qint64)));
             connect(pWidget, SIGNAL(followLocation(quint64, qint32, qint64, qint32)), this, SLOT(followLocationSlot(quint64, qint32, qint64, qint32)));
 
-            if ((cwOptions.widgetMode == XFW_DEF::WIDGETMODE_HEADER) || (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_TABLE)) {
+            if ((cwOptions.widgetMode == XFW_DEF::WIDGETMODE_HEADER) || (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_TABLE) || (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_HEX)) {
                 XFormatWidget *_pXFormatWidget = dynamic_cast<XFormatWidget *>(pWidget);
 
                 if (_pXFormatWidget) {
@@ -316,6 +308,10 @@ XShortcutsWidget *XMainWidget::createWidget(const XFW_DEF::CWOPTIONS &cwOptions)
         pResult = _pWidget;
     } else if (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_TABLE) {
         XGenericTableWidget *_pWidget = new XGenericTableWidget(cwOptions.pParent);
+        _pWidget->setCwOptions(cwOptions, false);
+        pResult = _pWidget;
+    } else if (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_HEX) {
+        XGenericHexWidget *_pWidget = new XGenericHexWidget(cwOptions.pParent);
         _pWidget->setCwOptions(cwOptions, false);
         pResult = _pWidget;
     }
@@ -473,7 +469,7 @@ void XMainWidget::showCwWidgetSlot(QString sInitString, bool bNewWindow)
         connect(pWidget, SIGNAL(dataChanged(qint64, qint64)), this, SLOT(dataChangedSlot(qint64, qint64)));
         connect(pWidget, SIGNAL(followLocation(quint64, qint32, qint64, qint32)), this, SLOT(followLocationSlot(quint64, qint32, qint64, qint32)));
 
-        if ((cwOptions.widgetMode == XFW_DEF::WIDGETMODE_HEADER) || (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_TABLE)) {
+        if ((cwOptions.widgetMode == XFW_DEF::WIDGETMODE_HEADER) || (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_TABLE) || (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_HEX)) {
             connect(pWidget, SIGNAL(showCwWidget(QString, bool)), this, SLOT(showCwWidgetSlot(QString, bool)));
         }
 

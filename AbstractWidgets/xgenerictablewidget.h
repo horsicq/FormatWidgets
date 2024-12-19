@@ -36,9 +36,6 @@ public:
     virtual void reloadData(bool bSaveSelection);
     virtual void adjustView();
 
-protected:
-    virtual SV _setValue(QVariant vValue, qint32 nPosition);
-
 private slots:
     void on_tableViewMain_customContextMenuRequested(const QPoint &pos);
     void onTableView_currentRowChanged(const QModelIndex &current, const QModelIndex &previous);
