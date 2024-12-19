@@ -28,15 +28,9 @@
 #include "xinfodb.h"
 
 namespace XFW_DEF {
-struct OPTIONS {
-    bool bIsImage;
-    qint64 nImageBase;  // TODO default_const
-    // TODO Last directory
-    XBinary::FT fileType;
-    bool bOffset;        // Show Offset title no Address TODO remove make auto if Address != nOffset
-    QString sTitle;      // For dialogs
-    bool bFilter;        // For Archive_widget
-    bool bNoWindowOpen;  // For Archive_widget
+enum VMODE {
+    VMODE_FILETYPE = 0,
+    VMODE_STRUCT
 };
 
 enum TYPE {
@@ -131,6 +125,22 @@ enum WIDGETMODE {
     WIDGETMODE_DIALOG_HEADER
 };
 
+struct OPTIONS {
+    qint64 nOffset;
+    bool bIsImage;
+    qint64 nImageBase;
+    XBinary::FT fileType;
+    VMODE vmode;
+
+    qint64 nStructOffset;
+    qint64 nStructSize;
+    qint32 nStructCount;
+    XFW_DEF::TYPE type;
+    XFW_DEF::WIDGETMODE widgetMode;
+    XBinary::MODE mode;
+    XBinary::ENDIAN endian;
+};
+
 struct CWOPTIONS {
     TYPE _type;
     WIDGETMODE widgetMode;
@@ -147,6 +157,7 @@ struct CWOPTIONS {
     QVariant var2;
     XBinary::ENDIAN endian;
     XBinary::MODE mode;
+    XBinary::_MEMORY_MAP memoryMap;
 };
 
 enum VAL_TYPE {
@@ -163,8 +174,9 @@ enum VAL_TYPE {
     VAL_TYPE_HEX = 1 << 9,
     VAL_TYPE_STRING = 1 << 10,
     VAL_TYPE_CODE = 1 << 11,
-    VAL_TYPE_RELTOSTRUCT = 1 << 12,
-    VAL_TYPE_RELTOPARENT = 1 << 13,
+    VAL_TYPE_VERSION = 1 << 12,
+    VAL_TYPE_RELTOSTRUCT = 1 << 13,
+    VAL_TYPE_RELTOPARENT = 1 << 14,
 };
 
 struct HEADER_RECORD {

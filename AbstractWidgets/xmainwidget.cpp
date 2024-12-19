@@ -105,6 +105,7 @@ void XMainWidget::reload()
 
     XBinary::_MEMORY_MAP _memoryMap = XFormats::getMemoryMap(fileType, XBinary::MAPMODE_UNKNOWN, getDevice(), getOptions().bIsImage, getOptions().nImageBase);
 
+    setMemoryMap(_memoryMap);
     setMode(_memoryMap.mode);
     setEndian(_memoryMap.endian);
 
@@ -116,8 +117,30 @@ void XMainWidget::reload()
         ui->widgetGlobalHex->setBytesProLine(8);
     }
 
-    QTreeWidgetItem *pItem = _addBaseItems(ui->treeWidgetNavi, fileType);
-    _addFileType(pItem, getDevice(), 0, getDevice()->size(), fileType, getOptions().bIsImage, getOptions().nImageBase);
+    if (getOptions().vmode == XFW_DEF::VMODE_FILETYPE) {
+        QTreeWidgetItem *pItem = _addBaseItems(ui->treeWidgetNavi, fileType);
+        _addFileType(pItem, getDevice(), getOptions().nOffset, getDevice()->size(), fileType, getOptions().bIsImage, getOptions().nImageBase);
+    } else {
+        QTreeWidgetItem *pItem = ui->treeWidgetNavi->invisibleRootItem();
+
+        SPSTRUCT spStruct = {};
+        spStruct.pTreeWidgetItem = pItem;
+        spStruct.pDevice = getDevice();
+        spStruct.nOffset = getOptions().nOffset;
+        spStruct.nSize = getDevice()->size();
+        spStruct.fileType = getOptions().fileType;
+        spStruct.bIsImage = getOptions().bIsImage;
+        spStruct.nImageBase = getOptions().nImageBase;
+        spStruct.endian = getOptions().endian;
+        spStruct.mode = getOptions().mode;
+        spStruct.nStructOffset = getOptions().nStructOffset;
+        spStruct.nStructSize = getOptions().nStructSize;
+        spStruct.nStructCount = getOptions().nStructCount;
+        spStruct.widgetMode = getOptions().widgetMode;
+        spStruct.type = getOptions().type;
+
+        _addStruct(spStruct);
+    }
 
     {
         QList<qint32> listSizes = ui->splitterNavi->sizes();
@@ -195,6 +218,7 @@ void XMainWidget::reloadData(bool bSaveSelection)
     XFW_DEF::CWOPTIONS cwOptions = {};
     cwOptions.pParent = this;
     cwOptions.fileType = getFileType();
+    cwOptions.memoryMap = getMemoryMap();
     cwOptions._type = (XFW_DEF::TYPE)(ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + XFW_DEF::WIDGET_DATA_TYPE).toInt());
     cwOptions.widgetMode = (XFW_DEF::WIDGETMODE)(ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + XFW_DEF::WIDGET_DATA_WIDGETMODE).toInt());
     cwOptions.pDevice = getDevice();
@@ -435,6 +459,7 @@ void XMainWidget::showCwWidgetSlot(QString sInitString, bool bNewWindow)
     cwOptions.pXInfoDB = getXInfoDB();
     cwOptions.endian = getEndian();
     cwOptions.mode = getMode();
+    cwOptions.memoryMap = getMemoryMap();
     cwOptions.nDataOffset = _getDataOffsetFromInitString(sInitString);
     cwOptions.nDataSize = _getDataSizeFromInitString(sInitString);
     cwOptions.nDataCount = _getDataCountFromInitString(sInitString);

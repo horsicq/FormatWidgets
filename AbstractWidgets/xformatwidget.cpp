@@ -38,9 +38,9 @@ XFormatWidget::XFormatWidget(QWidget *pParent) : XShortcutsWidget(pParent)
     XFormatWidget::setReadonly(true);
 }
 
-XFormatWidget::XFormatWidget(QIODevice *pDevice, XFW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent) : XFormatWidget(pParent)
+XFormatWidget::XFormatWidget(QIODevice *pDevice, XFW_DEF::OPTIONS options, QWidget *pParent) : XFormatWidget(pParent)
 {
-    XFormatWidget::setData(pDevice, options, nNumber, nOffset, nType);
+    XFormatWidget::setData(pDevice, options);
 }
 
 XFormatWidget::~XFormatWidget()
@@ -97,14 +97,14 @@ void XFormatWidget::adjustView()
     }
 }
 
-void XFormatWidget::setData(QIODevice *pDevice, XFW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType)
+void XFormatWidget::setData(QIODevice *pDevice, const XFW_DEF::OPTIONS &options)
 {
     g_pDevice = pDevice;
 
-    setData(options, nNumber, nOffset, nType);
+    setData(options);
 }
 
-void XFormatWidget::setData(const QString &sFileName, XFW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType)
+void XFormatWidget::setData(const QString &sFileName, const XFW_DEF::OPTIONS &options)
 {
     g_sFileName = sFileName;
 
@@ -112,15 +112,11 @@ void XFormatWidget::setData(const QString &sFileName, XFW_DEF::OPTIONS options, 
 
     XBinary::tryToOpen(pFile);
 
-    setData(pFile, options, nNumber, nOffset, nType);
+    setData(pFile, options);
 }
 
-void XFormatWidget::setData(XFW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType)
+void XFormatWidget::setData(const XFW_DEF::OPTIONS &options)
 {
-    g_nNumber = nNumber;
-    g_nOffset = nOffset;
-    g_nType = nType;
-
     g_listPages.clear();
     g_nPageIndex = 0;
     g_bAddPageEnable = true;
@@ -144,7 +140,7 @@ void XFormatWidget::setCwOptions(XFW_DEF::CWOPTIONS cwOptions, bool bReload)
     formatOptions.nImageBase = cwOptions.nImageBase;
     formatOptions.fileType = cwOptions.fileType;
 
-    setData(cwOptions.pDevice, formatOptions, 0, 0, 0);
+    setData(cwOptions.pDevice, formatOptions);
 
     if (bReload) {
         reloadData(false);
@@ -186,6 +182,16 @@ XBinary::ENDIAN XFormatWidget::getEndian()
     return g_endian;
 }
 
+void XFormatWidget::setMemoryMap(const XBinary::_MEMORY_MAP &memoryMap)
+{
+    g_memoryMap = memoryMap;
+}
+
+XBinary::_MEMORY_MAP XFormatWidget::getMemoryMap()
+{
+    return g_memoryMap;
+}
+
 QIODevice *XFormatWidget::getDevice()
 {
     return this->g_pDevice;
@@ -199,21 +205,6 @@ void XFormatWidget::setOptions(XFW_DEF::OPTIONS options)
 XFW_DEF::OPTIONS XFormatWidget::getOptions()
 {
     return g_fwOptions;
-}
-
-quint32 XFormatWidget::getNumber()
-{
-    return g_nNumber;
-}
-
-qint64 XFormatWidget::getOffset()
-{
-    return g_nOffset;
-}
-
-qint32 XFormatWidget::getType()
-{
-    return g_nType;
 }
 
 QTreeWidgetItem *XFormatWidget::createNewItem(XFW_DEF::TYPE type, XFW_DEF::WIDGETMODE widgetMode, XOptions::ICONTYPE iconType, qint64 nOffset, qint64 nSize,
@@ -522,8 +513,9 @@ QList<XFW_DEF::HEADER_RECORD> XFormatWidget::getHeaderRecords(const XFW_DEF::CWO
     } else if (pCwOptions->_type == XFW_DEF::TYPE_MSDOS_EXE_file) {
         pRecords = XTYPE_MSDOS::X_Exe_file::records;
         nNumberOfRecords = XTYPE_MSDOS::X_Exe_file::__data_size;
-    } else if ((pCwOptions->_type == XFW_DEF::TYPE_MSDOS_IMAGE_DOS_HEADER) || (pCwOptions->_type == XFW_DEF::TYPE_NE_IMAGE_DOS_HEADER) || (pCwOptions->_type == XFW_DEF::TYPE_LE_IMAGE_DOS_HEADER) ||
-                (pCwOptions->_type == XFW_DEF::TYPE_LX_IMAGE_DOS_HEADER) || (pCwOptions->_type == XFW_DEF::TYPE_PE_IMAGE_DOS_HEADER)) {
+    } else if ((pCwOptions->_type == XFW_DEF::TYPE_MSDOS_IMAGE_DOS_HEADER) || (pCwOptions->_type == XFW_DEF::TYPE_NE_IMAGE_DOS_HEADER) ||
+               (pCwOptions->_type == XFW_DEF::TYPE_LE_IMAGE_DOS_HEADER) || (pCwOptions->_type == XFW_DEF::TYPE_LX_IMAGE_DOS_HEADER) ||
+               (pCwOptions->_type == XFW_DEF::TYPE_PE_IMAGE_DOS_HEADER)) {
         pRecords = XTYPE_MSDOS::X_IMAGE_DOS_HEADER::records;
         nNumberOfRecords = XTYPE_MSDOS::X_IMAGE_DOS_HEADER::__data_size;
     } else if (pCwOptions->_type == XFW_DEF::TYPE_DEX_HEADER) {
@@ -637,7 +629,7 @@ qint64 XFormatWidget::getStructSize(XFW_DEF::TYPE type)
     } else if (type == XFW_DEF::TYPE_MSDOS_EXE_file) {
         nResult = sizeof(XMSDOS_DEF::EXE_file);
     } else if ((type == XFW_DEF::TYPE_MSDOS_IMAGE_DOS_HEADER) || (type == XFW_DEF::TYPE_NE_IMAGE_DOS_HEADER) || (type == XFW_DEF::TYPE_LE_IMAGE_DOS_HEADER) ||
-                (type == XFW_DEF::TYPE_LX_IMAGE_DOS_HEADER) || (type == XFW_DEF::TYPE_PE_IMAGE_DOS_HEADER)) {
+               (type == XFW_DEF::TYPE_LX_IMAGE_DOS_HEADER) || (type == XFW_DEF::TYPE_PE_IMAGE_DOS_HEADER)) {
         nResult = sizeof(XMSDOS_DEF::IMAGE_DOS_HEADEREX);
     } else if (type == XFW_DEF::TYPE_DEX_HEADER) {
         nResult = sizeof(XDEX_DEF::HEADER);
@@ -1184,8 +1176,40 @@ void XFormatWidget::_adjustRecWidget(RECWIDGET *pRecWidget, QVariant varValue)
         listWidgets.at(i)->setValue(varValue);
     }
 
-    if (pRecWidget->nVType & XFW_DEF::VAL_TYPE_SIZE) sComment = XBinary::appendText(sComment, XBinary::bytesCountToString(varValue.toULongLong()), ", ");
-    if (pRecWidget->nVType & XFW_DEF::VAL_TYPE_COUNT) sComment = XBinary::appendText(sComment, QString("%1").arg(varValue.toULongLong()), ", ");
+    if (pRecWidget->nVType & XFW_DEF::VAL_TYPE_SIZE) {
+        sComment = XBinary::appendText(sComment, XBinary::bytesCountToString(varValue.toULongLong()), ", ");
+    }
+
+    if (pRecWidget->nVType & XFW_DEF::VAL_TYPE_COUNT) {
+        sComment = XBinary::appendText(sComment, QString("%1").arg(varValue.toULongLong()), ", ");
+    }
+
+    if (pRecWidget->nVType & XFW_DEF::VAL_TYPE_VERSION) {
+        QString sVersion;
+        if (pRecWidget->nSize == 4) {
+            sVersion = QString("%1").arg(XBinary::fullVersionDwordToString(varValue.toUInt()));
+        } else if (pRecWidget->nSize == 8) {
+            sVersion = QString("%1").arg(XBinary::fullVersionQwordToString(varValue.toULongLong()));
+        }
+
+        sComment = XBinary::appendText(sComment, sVersion, ", ");
+    }
+
+    if (pRecWidget->nVType & XFW_DEF::VAL_TYPE_ANSI) {
+        QString sString;
+        if (pRecWidget->nVType & XFW_DEF::VAL_TYPE_DATA_ARRAY) {
+            sString = varValue.toString();
+        }
+
+        if (pRecWidget->nVType & XFW_DEF::VAL_TYPE_OFFSET) {
+            XBinary binary(getDevice(), getOptions().bIsImage, getOptions().nImageBase);
+            sString = binary.read_ansiString(varValue.toLongLong() + pRecWidget->varDelta.toLongLong());
+        }
+
+        if (sString != "") {
+            sComment = XBinary::appendText(sComment, QString("ANSI \"%1\"").arg(sString), ", ");
+        }
+    }
 
     for (qint32 i = 0; i < nNumberOfWidgets; i++) {
         sComment = XBinary::appendText(sComment, listWidgets.at(i)->getDescription(), " | ");
@@ -1640,7 +1664,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     SPSTRUCT _spStructRecord = _spStruct;
                     _spStructRecord.pTreeWidgetItem = pTreeWidgetItem;
                     _spStructRecord.nStructOffset = _spStruct.nOffset + _blobIndex.offset + _spStruct.var1.toLongLong();
-                    _spStructRecord.nStructSize = sizeof(XMACH_DEF::CS_BlobIndex);
+                    _spStructRecord.nStructSize = 0;
                     _spStructRecord.nStructCount = 1;
                     _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEADER;
                     _spStructRecord.type = XFW_DEF::TYPE_MACH_CS_CodeDirectory;
@@ -1683,7 +1707,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                 if (dcfh.symbols_offset && (_spStruct.nStructSize - dcfh.symbols_offset > 0)) {
                     SPSTRUCT _spStructRecord = _spStruct;
                     _spStructRecord.pTreeWidgetItem = pTreeWidgetItem;
-                    _spStructRecord.nStructOffset = _spStruct.nOffset + _spStruct.nStructOffset+ dcfh.symbols_offset;
+                    _spStructRecord.nStructOffset = _spStruct.nOffset + _spStruct.nStructOffset + dcfh.symbols_offset;
                     _spStructRecord.nStructSize = _spStruct.nStructSize - dcfh.symbols_offset;
                     _spStructRecord.nStructCount = 0;
                     _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_TABLE;
@@ -2203,19 +2227,17 @@ bool XFormatWidget::createHeaderTable(QTableWidget *pTableWidget, const QList<XF
                 }
             }
 
-            quint64 nDelta = 0;
-
             if (pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_RELTOPARENT) {
-                nDelta = var1.toULongLong();
+                (*pListRecWidget)[i].varDelta = var1.toULongLong();
             } else if (pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_RELTOSTRUCT) {
-                nDelta = nOffset;
+                (*pListRecWidget)[i].varDelta = nOffset;
             }
 
             if (locType != XBinary::LT_UNKNOWN) {
                 QToolButton *pButton = new QToolButton(0);
                 pButton->setProperty("LOCATIONTYPE", locType);
                 pButton->setProperty("WIDGETTYPE", XOptions::WIDGETTYPE_HEX);
-                pButton->setProperty("DELTA", nDelta);
+                pButton->setProperty("DELTA", pListRecWidget->at(i).varDelta);
 
                 if (pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_SIZE) {
                     pButton->setText(tr("Size"));
@@ -2237,7 +2259,7 @@ bool XFormatWidget::createHeaderTable(QTableWidget *pTableWidget, const QList<XF
                 pButton->setText(tr("Disasm"));
                 pButton->setProperty("LOCATIONTYPE", locType);
                 pButton->setProperty("WIDGETTYPE", XOptions::WIDGETTYPE_DISASM);
-                pButton->setProperty("DELTA", nDelta);
+                pButton->setProperty("DELTA", pListRecWidget->at(i).varDelta);
                 XOptions::adjustToolButton(pButton, XOptions::ICONTYPE_DISASM);
                 pButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 

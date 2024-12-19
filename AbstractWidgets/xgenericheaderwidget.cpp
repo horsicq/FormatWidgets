@@ -25,6 +25,8 @@ XGenericHeaderWidget::XGenericHeaderWidget(QWidget *pParent) : XFormatWidget(pPa
 {
     ui->setupUi(this);
 
+    g_nDataSize = 0;
+
     XOptions::adjustToolButton(ui->toolButtonTableReload, XOptions::ICONTYPE_RELOAD);
     XOptions::adjustToolButton(ui->toolButtonTableSize, XOptions::ICONTYPE_SIZE);
     XOptions::adjustToolButton(ui->toolButtonTableSave, XOptions::ICONTYPE_SAVE);
@@ -57,14 +59,16 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
 
     cleanup();
 
+    g_nDataSize = getCwOptions()->nDataSize;
+
     qint32 nLimit = -1;
 
     if (getCwOptions()->_type == XFW_DEF::TYPE_MACH_CS_CodeDirectory) {
         XBinary binary(getDevice());
-        quint32 nVersion = binary.read_int32(getCwOptions()->nDataOffset + offsetof(XMACH_DEF::CS_CodeDirectory, version), XBinary::ENDIAN_BIG);
+        quint32 nVersion = binary.read_int32(getCwOptions()->nDataOffset + offsetof(XMACH_DEF::CS_CodeDirectory, version), true);
 
         if (nVersion >= 0x20600) {
-            nLimit = - 1;
+            nLimit = -1;
         } else if (nVersion >= 0x20500) {
             nLimit = offsetof(XMACH_DEF::CS_CodeDirectory, linkageHashType);
         } else if (nVersion >= 0x20400) {
@@ -76,16 +80,23 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
         } else if (nVersion >= 0x20100) {
             nLimit = offsetof(XMACH_DEF::CS_CodeDirectory, scatterOffset);
         }
+
+        if (nLimit != -1) {
+            g_nDataSize = nLimit;
+        }
+
     } else if (getCwOptions()->_type == XFW_DEF::TYPE_routines_command_64) {
         XMACH xmach(getDevice(), getCwOptions()->bIsImage, getCwOptions()->nImageBase);
         XMACH::COMMAND_RECORD cr = xmach._readLoadCommand(getCwOptions()->nDataOffset, getCwOptions()->endian == XBinary::ENDIAN_BIG);
 
         nLimit = cr.nSize;
+        g_nDataSize = cr.nSize;
     }
 
     QList<XFW_DEF::HEADER_RECORD> listHeaderRecords = getHeaderRecords(getCwOptions(), nLimit);
 
-    createHeaderTable(ui->tableWidgetMain, &listHeaderRecords, getListRecWidgets(), getCwOptions()->nDataOffset, getCwOptions()->endian, getCwOptions()->var1, getCwOptions()->var2);
+    createHeaderTable(ui->tableWidgetMain, &listHeaderRecords, getListRecWidgets(), getCwOptions()->nDataOffset, getCwOptions()->endian, getCwOptions()->var1,
+                      getCwOptions()->var2);
 
     if ((getCwOptions()->_type == XFW_DEF::TYPE_MACH_load_command) || (getCwOptions()->_type == XFW_DEF::TYPE_segment_command) ||
         (getCwOptions()->_type == XFW_DEF::TYPE_segment_command_64) || (getCwOptions()->_type == XFW_DEF::TYPE_dylib_command) ||
@@ -132,7 +143,6 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
     } else if (getCwOptions()->_type == XFW_DEF::TYPE_build_version_command) {
         addComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getPlatformS(), XTYPE_MACH::X_build_version_command::platform, XComboBoxEx::CBTYPE_LIST, 0);
     } else if (getCwOptions()->_type == XFW_DEF::TYPE_MACH_CS_CodeDirectory) {
-
     } else if ((getCwOptions()->_type == XFW_DEF::TYPE_Elf32_Ehdr) || (getCwOptions()->_type == XFW_DEF::TYPE_Elf64_Ehdr)) {
         // adjustComboBox(getListRecWidgets(), XELF::getHeaderMagicsS(), _elf_ehdrWidget::ei_mag, XComboBoxEx::CBTYPE_LIST, 0);
         // adjustComboBox(getListRecWidgets(), XELF::getHeaderClassesS(), _elf_ehdrWidget::ei_class, XComboBoxEx::CBTYPE_LIST, 0);
@@ -177,7 +187,7 @@ void XGenericHeaderWidget::on_toolButtonTableReload_clicked()
 
 void XGenericHeaderWidget::on_toolButtonTableSize_clicked()
 {
-    emit followLocation(getCwOptions()->nDataOffset, XBinary::LT_OFFSET, getCwOptions()->nDataSize, XOptions::WIDGETTYPE_HEX);
+    emit followLocation(getCwOptions()->nDataOffset, XBinary::LT_OFFSET, g_nDataSize, XOptions::WIDGETTYPE_HEX);
 }
 
 void XGenericHeaderWidget::on_toolButtonTableSave_clicked()
@@ -192,4 +202,3 @@ void XGenericHeaderWidget::on_tableWidgetMain_cellClicked(int nRow, int nColumn)
 
     setHeaderSelection(ui->tableWidgetMain);
 }
-

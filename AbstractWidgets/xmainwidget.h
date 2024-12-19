@@ -21,6 +21,8 @@
 #ifndef XMAINWIDGET_H
 #define XMAINWIDGET_H
 
+#include <QTreeWidget>
+
 #include "xgenericheaderwidget.h"
 #include "xgenerictablewidget.h"
 #include "xformatwidget.h"

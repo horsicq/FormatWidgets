@@ -120,15 +120,15 @@ namespace X_dylib_command {
 const XFW_DEF::HEADER_RECORD records[] = {
     {cmd, "cmd", offsetof(XMACH_DEF::load_command, cmd), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {cmdsize, "cmdsize", offsetof(XMACH_DEF::load_command, cmdsize), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, -1},
-    {name, "name", sizeof(XMACH_DEF::load_command) + offsetof(XMACH_DEF::dylib, name), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET, -1},
+    {name, "name", sizeof(XMACH_DEF::load_command) + offsetof(XMACH_DEF::dylib, name), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET | XFW_DEF::VAL_TYPE_RELTOSTRUCT | XFW_DEF::VAL_TYPE_ANSI, -1},
     {timestamp, "timestamp", sizeof(XMACH_DEF::load_command) + offsetof(XMACH_DEF::dylib, timestamp), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-    {current_version, "current_version", sizeof(XMACH_DEF::load_command) + offsetof(XMACH_DEF::dylib, current_version), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {current_version, "current_version", sizeof(XMACH_DEF::load_command) + offsetof(XMACH_DEF::dylib, current_version), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_VERSION, -1},
     {compatibility_version, "compatibility_version", sizeof(XMACH_DEF::load_command) + offsetof(XMACH_DEF::dylib, compatibility_version), 4, "uint32",
-     XFW_DEF::VAL_TYPE_DATA_INT, -1},
+     XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_VERSION, -1},
 };
 }
 
-namespace X_mach_fmv_library {
+namespace X_fmv_library {
 const XFW_DEF::HEADER_RECORD records[] = {
     {name, "name", sizeof(XMACH_DEF::load_command) + offsetof(XMACH_DEF::fvmlib, name), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET, -1},
     {minor_version, "minor_version", sizeof(XMACH_DEF::load_command) + offsetof(XMACH_DEF::fvmlib, minor_version), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
@@ -165,7 +165,7 @@ namespace X_dylinker_command {
 const XFW_DEF::HEADER_RECORD records[] = {
     {cmd, "cmd", offsetof(XMACH_DEF::dylinker_command, cmd), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {cmdsize, "cmdsize", offsetof(XMACH_DEF::dylinker_command, cmdsize), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, -1},
-    {name, "name", offsetof(XMACH_DEF::dylinker_command, name), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET, -1},
+    {name, "name", offsetof(XMACH_DEF::dylinker_command, name), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET | XFW_DEF::VAL_TYPE_RELTOSTRUCT | XFW_DEF::VAL_TYPE_ANSI, -1},
 };
 }
 
@@ -173,7 +173,7 @@ namespace X_rpath_command {
 const XFW_DEF::HEADER_RECORD records[] = {
     {cmd, "cmd", offsetof(XMACH_DEF::rpath_command, cmd), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {cmdsize, "cmdsize", offsetof(XMACH_DEF::rpath_command, cmdsize), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, -1},
-    {path, "path", offsetof(XMACH_DEF::rpath_command, path), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET, -1},
+    {path, "path", offsetof(XMACH_DEF::rpath_command, path), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET | XFW_DEF::VAL_TYPE_RELTOSTRUCT | XFW_DEF::VAL_TYPE_ANSI, -1},
 };
 }
 
@@ -241,8 +241,8 @@ namespace X_version_min_command {
 const XFW_DEF::HEADER_RECORD records[] = {
     {cmd, "cmd", offsetof(XMACH_DEF::version_min_command, cmd), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {cmdsize, "cmdsize", offsetof(XMACH_DEF::version_min_command, cmdsize), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, -1},
-    {version, "version", offsetof(XMACH_DEF::version_min_command, version), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-    {sdk, "sdk", offsetof(XMACH_DEF::version_min_command, sdk), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {version, "version", offsetof(XMACH_DEF::version_min_command, version), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_VERSION, -1},
+    {sdk, "sdk", offsetof(XMACH_DEF::version_min_command, sdk), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_VERSION, -1},
 };
 }
 
@@ -251,8 +251,8 @@ const XFW_DEF::HEADER_RECORD records[] = {
     {cmd, "cmd", offsetof(XMACH_DEF::build_version_command, cmd), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {cmdsize, "cmdsize", offsetof(XMACH_DEF::build_version_command, cmdsize), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, -1},
     {platform, "platform", offsetof(XMACH_DEF::build_version_command, platform), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-    {minos, "minos", offsetof(XMACH_DEF::build_version_command, minos), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-    {sdk, "sdk", offsetof(XMACH_DEF::build_version_command, sdk), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {minos, "minos", offsetof(XMACH_DEF::build_version_command, minos), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_VERSION, -1},
+    {sdk, "sdk", offsetof(XMACH_DEF::build_version_command, sdk), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_VERSION, -1},
     {ntools, "ntools", offsetof(XMACH_DEF::build_version_command, ntools), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
 };
 }
@@ -261,7 +261,7 @@ namespace X_source_version_command {
 const XFW_DEF::HEADER_RECORD records[] = {
     {cmd, "cmd", offsetof(XMACH_DEF::source_version_command, cmd), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {cmdsize, "cmdsize", offsetof(XMACH_DEF::source_version_command, cmdsize), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, -1},
-    {version, "version", offsetof(XMACH_DEF::source_version_command, version), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {version, "version", offsetof(XMACH_DEF::source_version_command, version), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_VERSION, -1},
 };
 }
 
@@ -653,10 +653,12 @@ namespace X_CS_CodeDirectory {
 const XFW_DEF::HEADER_RECORD records[] = {
     {magic, "magic", offsetof(XMACH_DEF::CS_CodeDirectory, magic), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {length, "length", offsetof(XMACH_DEF::CS_CodeDirectory, length), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, -1},
-    {version, "version", offsetof(XMACH_DEF::CS_CodeDirectory, version), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {version, "version", offsetof(XMACH_DEF::CS_CodeDirectory, version), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_VERSION, -1},
     {flags, "flags", offsetof(XMACH_DEF::CS_CodeDirectory, flags), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-    {hashOffset, "hashOffset", offsetof(XMACH_DEF::CS_CodeDirectory, hashOffset), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET | XFW_DEF::VAL_TYPE_RELTOSTRUCT, -1},
-    {identOffset, "identOffset", offsetof(XMACH_DEF::CS_CodeDirectory, identOffset), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET | XFW_DEF::VAL_TYPE_RELTOSTRUCT, -1},
+    {hashOffset, "hashOffset", offsetof(XMACH_DEF::CS_CodeDirectory, hashOffset), 4, "uint32",
+     XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET | XFW_DEF::VAL_TYPE_RELTOSTRUCT, -1},
+    {identOffset, "identOffset", offsetof(XMACH_DEF::CS_CodeDirectory, identOffset), 4, "uint32",
+     XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET | XFW_DEF::VAL_TYPE_RELTOSTRUCT, -1},
     {nSpecialSlots, "nSpecialSlots", offsetof(XMACH_DEF::CS_CodeDirectory, nSpecialSlots), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {nCodeSlots, "nCodeSlots", offsetof(XMACH_DEF::CS_CodeDirectory, nCodeSlots), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {codeLimit, "codeLimit", offsetof(XMACH_DEF::CS_CodeDirectory, codeLimit), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
@@ -665,28 +667,32 @@ const XFW_DEF::HEADER_RECORD records[] = {
     {platform, "platform", offsetof(XMACH_DEF::CS_CodeDirectory, platform), 1, "uint8", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {pageSize, "pageSize", offsetof(XMACH_DEF::CS_CodeDirectory, pageSize), 1, "uint8", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {spare2, "spare2", offsetof(XMACH_DEF::CS_CodeDirectory, spare2), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-    {scatterOffset, "scatterOffset", offsetof(XMACH_DEF::CS_CodeDirectory, scatterOffset), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET | XFW_DEF::VAL_TYPE_RELTOSTRUCT, -1},
-    {teamOffset, "teamOffset", offsetof(XMACH_DEF::CS_CodeDirectory, teamOffset), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET | XFW_DEF::VAL_TYPE_RELTOSTRUCT, -1},
+    {scatterOffset, "scatterOffset", offsetof(XMACH_DEF::CS_CodeDirectory, scatterOffset), 4, "uint32",
+     XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET | XFW_DEF::VAL_TYPE_RELTOSTRUCT, -1},
+    {teamOffset, "teamOffset", offsetof(XMACH_DEF::CS_CodeDirectory, teamOffset), 4, "uint32",
+     XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET | XFW_DEF::VAL_TYPE_RELTOSTRUCT, -1},
     {spare3, "spare3", offsetof(XMACH_DEF::CS_CodeDirectory, spare3), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {codeLimit64, "codeLimit64", offsetof(XMACH_DEF::CS_CodeDirectory, codeLimit64), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {execSegBase, "execSegBase", offsetof(XMACH_DEF::CS_CodeDirectory, execSegBase), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {execSegLimit, "execSegLimit", offsetof(XMACH_DEF::CS_CodeDirectory, execSegLimit), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {execSegFlags, "execSegFlags", offsetof(XMACH_DEF::CS_CodeDirectory, execSegFlags), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {runtime, "runtime", offsetof(XMACH_DEF::CS_CodeDirectory, runtime), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-    {preEncryptOffset, "preEncryptOffset", offsetof(XMACH_DEF::CS_CodeDirectory, preEncryptOffset), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET | XFW_DEF::VAL_TYPE_RELTOSTRUCT, -1},
+    {preEncryptOffset, "preEncryptOffset", offsetof(XMACH_DEF::CS_CodeDirectory, preEncryptOffset), 4, "uint32",
+     XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET | XFW_DEF::VAL_TYPE_RELTOSTRUCT, -1},
     {linkageHashType, "linkageHashType", offsetof(XMACH_DEF::CS_CodeDirectory, linkageHashType), 1, "uint8", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {linkageTruncated, "linkageTruncated", offsetof(XMACH_DEF::CS_CodeDirectory, linkageTruncated), 1, "uint8", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {spare4, "spare4", offsetof(XMACH_DEF::CS_CodeDirectory, spare4), 2, "uint16", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-    {linkageOffset, "linkageOffset", offsetof(XMACH_DEF::CS_CodeDirectory, linkageOffset), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET | XFW_DEF::VAL_TYPE_RELTOSTRUCT, -1},
+    {linkageOffset, "linkageOffset", offsetof(XMACH_DEF::CS_CodeDirectory, linkageOffset), 4, "uint32",
+     XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET | XFW_DEF::VAL_TYPE_RELTOSTRUCT, -1},
     {linkageSize, "linkageSize", offsetof(XMACH_DEF::CS_CodeDirectory, linkageSize), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, linkageOffset},
 };
 }
 
 namespace X_dyld_chained_fixups_header {
 const XFW_DEF::HEADER_RECORD records[] = {
-    {fixups_version, "fixups_version", offsetof(XMACH_DEF::dyld_chained_fixups_header, fixups_version), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-    {starts_offset, "starts_offset", offsetof(XMACH_DEF::dyld_chained_fixups_header, starts_offset), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET | XFW_DEF::VAL_TYPE_RELTOSTRUCT,
-     -1},
+    {fixups_version, "fixups_version", offsetof(XMACH_DEF::dyld_chained_fixups_header, fixups_version), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_VERSION, -1},
+    {starts_offset, "starts_offset", offsetof(XMACH_DEF::dyld_chained_fixups_header, starts_offset), 4, "uint32",
+     XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET | XFW_DEF::VAL_TYPE_RELTOSTRUCT, -1},
     {imports_offset, "imports_offset", offsetof(XMACH_DEF::dyld_chained_fixups_header, imports_offset), 4, "uint32",
      XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET | XFW_DEF::VAL_TYPE_RELTOSTRUCT, -1},
     {symbols_offset, "symbols_offset", offsetof(XMACH_DEF::dyld_chained_fixups_header, symbols_offset), 4, "uint32",

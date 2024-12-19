@@ -123,7 +123,7 @@ enum DATA {
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace X_dylib_command
 
-namespace X_mach_fmv_library {
+namespace X_fmv_library {
 enum DATA {
     name,
     minor_version,

@@ -2,6 +2,7 @@ include_directories(${CMAKE_CURRENT_LIST_DIR})
 include_directories(${CMAKE_CURRENT_LIST_DIR}/Generic)
 
 set(ABSTRACTWIDGETS_SOURCES
+    ${ABSTRACTWIDGETS_SOURCES}
     ${CMAKE_CURRENT_LIST_DIR}/Structs/xdex_defs.cpp
     ${CMAKE_CURRENT_LIST_DIR}/Structs/xdex_defs.h
     ${CMAKE_CURRENT_LIST_DIR}/Structs/xelf_defs.cpp

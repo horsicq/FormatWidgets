@@ -39,3 +39,14 @@ void DialogSetGenericWidget::registerShortcuts(bool bState)
 {
     Q_UNUSED(bState)
 }
+
+void DialogSetGenericWidget::on_pushButtonCancel_clicked()
+{
+    this->close();
+}
+
+
+void DialogSetGenericWidget::on_pushButtonOK_clicked()
+{
+    // TODO
+}

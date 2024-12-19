@@ -49,6 +49,7 @@ private slots:
 
 private:
     Ui::XGenericHeaderWidget *ui;
+    qint64 g_nDataSize;
 };
 
 #endif  // XGENERICHEADERWIDGET_H

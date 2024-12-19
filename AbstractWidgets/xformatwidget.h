@@ -88,10 +88,11 @@ public:
         QWidget *pWidget;
         QTableWidgetItem *pValue;
         QTableWidgetItem *pComment;
+        QVariant varDelta;
     };
 
     XFormatWidget(QWidget *pParent = nullptr);
-    XFormatWidget(QIODevice *pDevice, XFW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent);
+    XFormatWidget(QIODevice *pDevice, XFW_DEF::OPTIONS options, QWidget *pParent);
     ~XFormatWidget();
 
     void setXInfoDB(XInfoDB *pXInfoDB);
@@ -99,9 +100,9 @@ public:
 
     void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
     virtual void adjustView();
-    void setData(QIODevice *pDevice, XFW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType);
-    void setData(const QString &sFileName, XFW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType);
-    void setData(XFW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType);
+    void setData(QIODevice *pDevice, const XFW_DEF::OPTIONS &options);
+    void setData(const QString &sFileName, const XFW_DEF::OPTIONS &options);
+    void setData(const XFW_DEF::OPTIONS &options);
     void setCwOptions(XFW_DEF::CWOPTIONS cwOptions, bool bReload);
     XFW_DEF::CWOPTIONS *getCwOptions();
 
@@ -111,13 +112,12 @@ public:
     XBinary::MODE getMode();
     void setEndian(XBinary::ENDIAN endian);
     XBinary::ENDIAN getEndian();
+    void setMemoryMap(const XBinary::_MEMORY_MAP &memoryMap);
+    XBinary::_MEMORY_MAP getMemoryMap();
 
     QIODevice *getDevice();
     virtual void setOptions(XFW_DEF::OPTIONS options);  // TODO for all Widgets
     XFW_DEF::OPTIONS getOptions();
-    quint32 getNumber();
-    qint64 getOffset();
-    qint32 getType();
     static QTreeWidgetItem *createNewItem(XFW_DEF::TYPE type, XFW_DEF::WIDGETMODE widgetMode, XOptions::ICONTYPE iconType, qint64 nOffset, qint64 nSize, qint64 nCount,
                                           QVariant var1, QVariant var2, XBinary::MODE mode, XBinary::ENDIAN endian, QString sTitle = "");
     static QString getTypeTitle(XFW_DEF::TYPE type, XBinary::MODE mode, XBinary::ENDIAN endian);
@@ -283,14 +283,12 @@ private:
     QIODevice *g_pDevice;
     QString g_sFileName;
     XFW_DEF::OPTIONS g_fwOptions;
-    quint32 g_nNumber;
-    qint64 g_nOffset;
-    quint32 g_nType;
     QColor g_colEnabled;
     QColor g_colDisabled;
     XBinary::FT g_fileType;
     XBinary::MODE g_mode;
     XBinary::ENDIAN g_endian;
+    XBinary::_MEMORY_MAP g_memoryMap;
     QList<QTreeWidgetItem *> g_listPages;
     qint32 g_nPageIndex;
     bool g_bAddPageEnable;
