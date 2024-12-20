@@ -64,9 +64,9 @@ enum TYPE {
     TYPE_MACH_mach_header,
     TYPE_MACH_mach_header_64,
     TYPE_MACH_load_command,
-    TYPE_segment_command,
-    TYPE_segment_command_64,
-    TYPE_dylib_command,
+    TYPE_MACH_segment_command,
+    TYPE_MACH_segment_command_64,
+    TYPE_MACH_dylib_command,
     TYPE_rpath_command,
     TYPE_sub_umbrella_command,
     TYPE_sub_client_command,
@@ -80,7 +80,7 @@ enum TYPE {
     TYPE_dyld_chained_fixups_command,
     TYPE_encryption_info_command,
     TYPE_encryption_info_command_64,
-    TYPE_dyld_info_command,
+    TYPE_MACH_dyld_info_command,
     TYPE_version_min_command,
     TYPE_uuid_command,
     TYPE_build_version_command,
@@ -124,7 +124,8 @@ enum WIDGETMODE {
     WIDGETMODE_HEADER,
     WIDGETMODE_TABLE,
     WIDGETMODE_DIALOG_HEADER,
-    WIDGETMODE_HEX
+    WIDGETMODE_HEX,
+    WIDGETMODE_DISASM,
 };
 
 struct OPTIONS {

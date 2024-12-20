@@ -24,16 +24,45 @@
 XGenericHexWidget::XGenericHexWidget(QWidget *pParent) : XFormatWidget(pParent), ui(new Ui::XGenericHexWidget)
 {
     ui->setupUi(this);
+
+    g_pSubDevice = nullptr;
+
+    XOptions::adjustToolButton(ui->toolButtonTableReload, XOptions::ICONTYPE_RELOAD);
+    XOptions::adjustToolButton(ui->toolButtonTableSize, XOptions::ICONTYPE_SIZE);
+
+    ui->toolButtonTableReload->setToolTip(tr("Reload"));
+    ui->toolButtonTableSize->setToolTip(tr("Size"));
+
+    connect(ui->scrollAreaHex, SIGNAL(currentLocationChanged(quint64, qint32, qint64)), this, SIGNAL(currentLocationChanged(quint64, qint32, qint64)));
+    connect(ui->scrollAreaHex, SIGNAL(dataChanged(qint64, qint64)), this, SIGNAL(dataChanged(qint64, qint64)));
+    connect(ui->scrollAreaHex, SIGNAL(followLocation(quint64, qint32, qint64, qint32)), this, SIGNAL(followLocation(quint64, qint32, qint64, qint32)));
 }
 
 XGenericHexWidget::~XGenericHexWidget()
 {
     delete ui;
+    if (g_pSubDevice) {
+        delete g_pSubDevice;
+    }
 }
 
 void XGenericHexWidget::reloadData(bool bSaveSelection)
 {
-   
+    Q_UNUSED(bSaveSelection)
+
+   if (g_pSubDevice) {
+       delete g_pSubDevice;
+   }
+
+   g_pSubDevice = new SubDevice(getDevice(), getCwOptions()->nDataOffset, getCwOptions()->nDataSize);
+
+   if (g_pSubDevice->open(QIODevice::ReadWrite)) {
+       XHexView::OPTIONS options = {};
+       options.nStartAddress = getCwOptions()->nDataOffset;
+       options.addressMode = XHexView::LOCMODE_ADDRESS;
+
+       ui->scrollAreaHex->setData(g_pSubDevice, options, true);
+   }
 }
 
 void XGenericHexWidget::adjustView()
@@ -41,3 +70,14 @@ void XGenericHexWidget::adjustView()
     XFormatWidget::adjustView();
     //getGlobalOptions()->adjustWidget(ui->tableWidgetMain, XOptions::ID_VIEW_FONT_TABLEVIEWS);
 }
+
+void XGenericHexWidget::on_toolButtonTableReload_clicked()
+{
+    reloadData(true);
+}
+
+void XGenericHexWidget::on_toolButtonTableSize_clicked()
+{
+    emit followLocation(getCwOptions()->nDataOffset, XBinary::LT_OFFSET, getCwOptions()->nDataSize, XOptions::WIDGETTYPE_HEX);
+}
+

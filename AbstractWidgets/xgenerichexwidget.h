@@ -36,8 +36,13 @@ public:
     virtual void reloadData(bool bSaveSelection);
     virtual void adjustView();
 
+private slots:
+    void on_toolButtonTableReload_clicked();
+    void on_toolButtonTableSize_clicked();
+
 private:
     Ui::XGenericHexWidget *ui;
+    SubDevice *g_pSubDevice;
 };
 
 #endif  // XGENERICHEADERWIDGET_H

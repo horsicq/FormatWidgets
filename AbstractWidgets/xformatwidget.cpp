@@ -290,11 +290,11 @@ QString XFormatWidget::getTypeTitle(XFW_DEF::TYPE type, XBinary::MODE mode, XBin
         sResult = QString("mach_header_64");
     } else if (type == XFW_DEF::TYPE_MACH_load_command) {
         sResult = QString("load_command");
-    } else if (type == XFW_DEF::TYPE_segment_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_segment_command) {
         sResult = QString("segment_command");
-    } else if (type == XFW_DEF::TYPE_segment_command_64) {
+    } else if (type == XFW_DEF::TYPE_MACH_segment_command_64) {
         sResult = QString("segment_command_64");
-    } else if (type == XFW_DEF::TYPE_dylib_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_dylib_command) {
         sResult = QString("dylib_command");
     } else if (type == XFW_DEF::TYPE_rpath_command) {
         sResult = QString("rpath_command");
@@ -326,7 +326,7 @@ QString XFormatWidget::getTypeTitle(XFW_DEF::TYPE type, XBinary::MODE mode, XBin
         sResult = QString("routines_command");
     } else if (type == XFW_DEF::TYPE_routines_command_64) {
         sResult = QString("routines_command_64");
-    } else if (type == XFW_DEF::TYPE_dyld_info_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_dyld_info_command) {
         sResult = QString("dyld_info_command");
     } else if (type == XFW_DEF::TYPE_version_min_command) {
         sResult = QString("version_min_command");
@@ -398,13 +398,13 @@ QList<XFW_DEF::HEADER_RECORD> XFormatWidget::getHeaderRecords(const XFW_DEF::CWO
     } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_load_command) {
         pRecords = XTYPE_MACH::X_load_commands::records;
         nNumberOfRecords = XTYPE_MACH::X_load_commands::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_segment_command) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_segment_command) {
         pRecords = XTYPE_MACH::X_segment_command::records32;
         nNumberOfRecords = XTYPE_MACH::X_segment_command::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_segment_command_64) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_segment_command_64) {
         pRecords = XTYPE_MACH::X_segment_command::records64;
         nNumberOfRecords = XTYPE_MACH::X_segment_command::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_dylib_command) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_dylib_command) {
         pRecords = XTYPE_MACH::X_dylib_command::records;
         nNumberOfRecords = XTYPE_MACH::X_dylib_command::__data_size;
     } else if (pCwOptions->_type == XFW_DEF::TYPE_rpath_command) {
@@ -442,7 +442,7 @@ QList<XFW_DEF::HEADER_RECORD> XFormatWidget::getHeaderRecords(const XFW_DEF::CWO
         nNumberOfRecords = XTYPE_MACH::X_linkedit_data_command::__data_size;
     } else if (pCwOptions->_type == XFW_DEF::TYPE_encryption_info_command) {
         pRecords = XTYPE_MACH::X_encryption_info_command::records32;
-        nNumberOfRecords = XTYPE_MACH::X_encryption_info_command::__data_size;
+        nNumberOfRecords = XTYPE_MACH::X_encryption_info_command::__data_size - 1;
     } else if (pCwOptions->_type == XFW_DEF::TYPE_encryption_info_command_64) {
         pRecords = XTYPE_MACH::X_encryption_info_command::records64;
         nNumberOfRecords = XTYPE_MACH::X_encryption_info_command::__data_size;
@@ -452,7 +452,7 @@ QList<XFW_DEF::HEADER_RECORD> XFormatWidget::getHeaderRecords(const XFW_DEF::CWO
     } else if (pCwOptions->_type == XFW_DEF::TYPE_routines_command_64) {
         pRecords = XTYPE_MACH::X_routines_command::records64;
         nNumberOfRecords = XTYPE_MACH::X_routines_command::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_dyld_info_command) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_dyld_info_command) {
         pRecords = XTYPE_MACH::X_dyld_info_command::records;
         nNumberOfRecords = XTYPE_MACH::X_dyld_info_command::__data_size;
     } else if (pCwOptions->_type == XFW_DEF::TYPE_version_min_command) {
@@ -552,11 +552,11 @@ qint64 XFormatWidget::getStructSize(XFW_DEF::TYPE type)
         nResult = sizeof(XMACH_DEF::mach_header_64);
     } else if (type == XFW_DEF::TYPE_MACH_load_command) {
         nResult = sizeof(XMACH_DEF::load_command);
-    } else if (type == XFW_DEF::TYPE_segment_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_segment_command) {
         nResult = sizeof(XMACH_DEF::segment_command);
-    } else if (type == XFW_DEF::TYPE_segment_command_64) {
+    } else if (type == XFW_DEF::TYPE_MACH_segment_command_64) {
         nResult = sizeof(XMACH_DEF::segment_command_64);
-    } else if (type == XFW_DEF::TYPE_dylib_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_dylib_command) {
         nResult = sizeof(XMACH_DEF::dylib_command);
     } else if (type == XFW_DEF::TYPE_rpath_command) {
         nResult = sizeof(XMACH_DEF::rpath_command);
@@ -588,7 +588,7 @@ qint64 XFormatWidget::getStructSize(XFW_DEF::TYPE type)
         nResult = sizeof(XMACH_DEF::routines_command);
     } else if (type == XFW_DEF::TYPE_routines_command_64) {
         nResult = sizeof(XMACH_DEF::routines_command_64);
-    } else if (type == XFW_DEF::TYPE_dyld_info_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_dyld_info_command) {
         nResult = sizeof(XMACH_DEF::dyld_info_command);
     } else if (type == XFW_DEF::TYPE_version_min_command) {
         nResult = sizeof(XMACH_DEF::version_min_command);
@@ -1526,6 +1526,10 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
         iconType = XOptions::ICONTYPE_HEADER;
     } else if (_spStruct.widgetMode == XFW_DEF::WIDGETMODE_TABLE) {
         iconType = XOptions::ICONTYPE_TABLE;
+    } else if (_spStruct.widgetMode == XFW_DEF::WIDGETMODE_HEX) {
+        iconType = XOptions::ICONTYPE_HEX;
+    } else if (_spStruct.widgetMode == XFW_DEF::WIDGETMODE_DISASM) {
+        iconType = XOptions::ICONTYPE_DISASM;
     }
 
     if (_spStruct.nStructSize == 0) {
@@ -1677,6 +1681,21 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
 
                     _addStruct(_spStructRecord);
                 }
+            } else if ((_spStruct.widgetMode == XFW_DEF::WIDGETMODE_HEADER) && (_spStruct.type == XFW_DEF::TYPE_MACH_dyld_info_command)) {
+                XMACH_DEF::dyld_info_command dicommand = mach._read_dyld_info_command(_spStruct.nStructOffset);
+
+                // if (dicommand.rebase_off && dicommand.rebase_size) {
+                //     SPSTRUCT _spStructRecord = _spStruct;
+                //     _spStructRecord.pTreeWidgetItem = pTreeWidgetItem;
+                //     _spStructRecord.nStructOffset = _spStruct.nOffset + dicommand.rebase_off;
+                //     _spStructRecord.nStructSize = dicommand.rebase_size;
+                //     _spStructRecord.nStructCount = 0;
+                //     _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEX;
+                //     _spStructRecord.type = XFW_DEF::TYPE_MACH_rebase;
+
+                //     _addStruct(_spStructRecord);
+                // }
+
             } else if ((_spStruct.widgetMode == XFW_DEF::WIDGETMODE_HEADER) && (_spStruct.type == XFW_DEF::TYPE_dyld_chained_fixups_command)) {
                 XMACH_DEF::linkedit_data_command _command = mach._read_linkedit_data_command(_spStruct.nStructOffset);
 
@@ -1733,7 +1752,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
 
                     _addStruct(_spStructRecord);
                 }
-            } else if ((_spStruct.widgetMode == XFW_DEF::WIDGETMODE_HEADER) && (_spStruct.type == XFW_DEF::TYPE_segment_command)) {
+            } else if ((_spStruct.widgetMode == XFW_DEF::WIDGETMODE_HEADER) && (_spStruct.type == XFW_DEF::TYPE_MACH_segment_command)) {
                 XMACH_DEF::segment_command _command = mach._read_segment_command(_spStruct.nStructOffset);
 
                 if ((_command.nsects > 0) && (_command.cmdsize - sizeof(XMACH_DEF::segment_command) > 0)) {
@@ -1753,7 +1772,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                         _addStruct(_spStructRecord);
                     }
                 }
-            } else if ((_spStruct.widgetMode == XFW_DEF::WIDGETMODE_HEADER) && (_spStruct.type == XFW_DEF::TYPE_segment_command_64)) {
+            } else if ((_spStruct.widgetMode == XFW_DEF::WIDGETMODE_HEADER) && (_spStruct.type == XFW_DEF::TYPE_MACH_segment_command_64)) {
                 XMACH_DEF::segment_command_64 _command = mach._read_segment_command_64(_spStruct.nStructOffset);
 
                 if ((_command.nsects > 0) && (_command.cmdsize - sizeof(XMACH_DEF::segment_command_64) > 0)) {
@@ -1846,7 +1865,7 @@ XFW_DEF::TYPE XFormatWidget::load_commandIdToType(qint32 nCommandId)
     // https://github.com/apple-oss-distributions/dyld/blob/main/mach_o/Header.cpp
     if ((nCommandId == XMACH_DEF::S_LC_ID_DYLIB) || (nCommandId == XMACH_DEF::S_LC_LOAD_DYLIB) || (nCommandId == XMACH_DEF::S_LC_LOAD_WEAK_DYLIB) ||
         (nCommandId == XMACH_DEF::S_LC_REEXPORT_DYLIB) || (nCommandId == XMACH_DEF::S_LC_LOAD_UPWARD_DYLIB)) {
-        result = XFW_DEF::TYPE_dylib_command;
+        result = XFW_DEF::TYPE_MACH_dylib_command;
     } else if (nCommandId == XMACH_DEF::S_LC_RPATH) {
         result = XFW_DEF::TYPE_rpath_command;
     } else if (nCommandId == XMACH_DEF::S_LC_SUB_UMBRELLA) {
@@ -1874,7 +1893,7 @@ XFW_DEF::TYPE XFormatWidget::load_commandIdToType(qint32 nCommandId)
     } else if (nCommandId == XMACH_DEF::S_LC_ENCRYPTION_INFO_64) {
         result = XFW_DEF::TYPE_encryption_info_command_64;
     } else if ((nCommandId == XMACH_DEF::S_LC_DYLD_INFO) || (nCommandId == XMACH_DEF::S_LC_DYLD_INFO_ONLY)) {
-        result = XFW_DEF::TYPE_dyld_info_command;
+        result = XFW_DEF::TYPE_MACH_dyld_info_command;
     } else if ((nCommandId == XMACH_DEF::S_LC_VERSION_MIN_MACOSX) || (nCommandId == XMACH_DEF::S_LC_VERSION_MIN_IPHONEOS) ||
                (nCommandId == XMACH_DEF::S_LC_VERSION_MIN_TVOS) || (nCommandId == XMACH_DEF::S_LC_VERSION_MIN_WATCHOS)) {
         result = XFW_DEF::TYPE_version_min_command;
@@ -1885,9 +1904,9 @@ XFW_DEF::TYPE XFormatWidget::load_commandIdToType(qint32 nCommandId)
     } else if (nCommandId == XMACH_DEF::S_LC_MAIN) {
         result = XFW_DEF::TYPE_main_command;
     } else if (nCommandId == XMACH_DEF::S_LC_SEGMENT) {
-        result = XFW_DEF::TYPE_segment_command;
+        result = XFW_DEF::TYPE_MACH_segment_command;
     } else if (nCommandId == XMACH_DEF::S_LC_SEGMENT_64) {
-        result = XFW_DEF::TYPE_segment_command_64;
+        result = XFW_DEF::TYPE_MACH_segment_command_64;
     } else if (nCommandId == XMACH_DEF::S_LC_FILESET_ENTRY) {
         result = XFW_DEF::TYPE_fileset_entry_command;
     } else if (nCommandId == XMACH_DEF::S_LC_SOURCE_VERSION) {
