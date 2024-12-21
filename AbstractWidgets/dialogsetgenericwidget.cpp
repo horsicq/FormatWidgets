@@ -45,7 +45,6 @@ void DialogSetGenericWidget::on_pushButtonCancel_clicked()
     this->close();
 }
 
-
 void DialogSetGenericWidget::on_pushButtonOK_clicked()
 {
     // TODO

@@ -50,25 +50,25 @@ void XGenericHexWidget::reloadData(bool bSaveSelection)
 {
     Q_UNUSED(bSaveSelection)
 
-   if (g_pSubDevice) {
-       delete g_pSubDevice;
-   }
+    if (g_pSubDevice) {
+        delete g_pSubDevice;
+    }
 
-   g_pSubDevice = new SubDevice(getDevice(), getCwOptions()->nDataOffset, getCwOptions()->nDataSize);
+    g_pSubDevice = new SubDevice(getDevice(), getCwOptions()->nDataOffset, getCwOptions()->nDataSize);
 
-   if (g_pSubDevice->open(QIODevice::ReadWrite)) {
-       XHexView::OPTIONS options = {};
-       options.nStartAddress = getCwOptions()->nDataOffset;
-       options.addressMode = XHexView::LOCMODE_ADDRESS;
+    if (g_pSubDevice->open(QIODevice::ReadWrite)) {
+        XHexView::OPTIONS options = {};
+        options.nStartAddress = getCwOptions()->nDataOffset;
+        options.addressMode = XHexView::LOCMODE_ADDRESS;
 
-       ui->scrollAreaHex->setData(g_pSubDevice, options, true);
-   }
+        ui->scrollAreaHex->setData(g_pSubDevice, options, true);
+    }
 }
 
 void XGenericHexWidget::adjustView()
 {
     XFormatWidget::adjustView();
-    //getGlobalOptions()->adjustWidget(ui->tableWidgetMain, XOptions::ID_VIEW_FONT_TABLEVIEWS);
+    // getGlobalOptions()->adjustWidget(ui->tableWidgetMain, XOptions::ID_VIEW_FONT_TABLEVIEWS);
 }
 
 void XGenericHexWidget::on_toolButtonTableReload_clicked()
@@ -80,4 +80,3 @@ void XGenericHexWidget::on_toolButtonTableSize_clicked()
 {
     emit followLocation(getCwOptions()->nDataOffset, XBinary::LT_OFFSET, getCwOptions()->nDataSize, XOptions::WIDGETTYPE_HEX);
 }
-

@@ -296,56 +296,60 @@ QString XFormatWidget::getTypeTitle(XFW_DEF::TYPE type, XBinary::MODE mode, XBin
         sResult = QString("segment_command_64");
     } else if (type == XFW_DEF::TYPE_MACH_dylib_command) {
         sResult = QString("dylib_command");
-    } else if (type == XFW_DEF::TYPE_rpath_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_rpath_command) {
         sResult = QString("rpath_command");
-    } else if (type == XFW_DEF::TYPE_sub_umbrella_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_sub_umbrella_command) {
         sResult = QString("sub_umbrella_command");
-    } else if (type == XFW_DEF::TYPE_sub_client_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_sub_client_command) {
         sResult = QString("sub_client_command");
-    } else if (type == XFW_DEF::TYPE_sub_library_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_sub_library_command) {
         sResult = QString("sub_library_command");
-    } else if (type == XFW_DEF::TYPE_symtab_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_symtab_command) {
         sResult = QString("symtab_command");
-    } else if (type == XFW_DEF::TYPE_dysymtab_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_dysymtab_command) {
         sResult = QString("dysymtab_command");
-    } else if (type == XFW_DEF::TYPE_segment_split_info_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_segment_split_info_command) {
         sResult = QString("segment_split_info_command");
-    } else if (type == XFW_DEF::TYPE_atom_info_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_atom_info_command) {
         sResult = QString("atom_info_command");
-    } else if (type == XFW_DEF::TYPE_function_starts_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_function_starts_command) {
         sResult = QString("function_starts_command");
     } else if (type == XFW_DEF::TYPE_MACH_dyld_exports_trie_command) {
         sResult = QString("dyld_exports_trie_command");
-    } else if (type == XFW_DEF::TYPE_dyld_chained_fixups_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_dyld_chained_fixups_command) {
         sResult = QString("dyld_chained_fixups_command");
-    } else if (type == XFW_DEF::TYPE_encryption_info_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_encryption_info_command) {
         sResult = QString("encryption_info_command");
-    } else if (type == XFW_DEF::TYPE_encryption_info_command_64) {
+    } else if (type == XFW_DEF::TYPE_MACH_encryption_info_command_64) {
         sResult = QString("encryption_info_command_64");
-    } else if (type == XFW_DEF::TYPE_routines_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_routines_command) {
         sResult = QString("routines_command");
-    } else if (type == XFW_DEF::TYPE_routines_command_64) {
+    } else if (type == XFW_DEF::TYPE_MACH_routines_command_64) {
         sResult = QString("routines_command_64");
     } else if (type == XFW_DEF::TYPE_MACH_dyld_info_command) {
         sResult = QString("dyld_info_command");
-    } else if (type == XFW_DEF::TYPE_version_min_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_version_min_command) {
         sResult = QString("version_min_command");
-    } else if (type == XFW_DEF::TYPE_uuid_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_uuid_command) {
         sResult = QString("uuid_command");
-    } else if (type == XFW_DEF::TYPE_build_version_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_build_version_command) {
         sResult = QString("build_version_command");
-    } else if (type == XFW_DEF::TYPE_main_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_main_command) {
         sResult = QString("main_command");
-    } else if (type == XFW_DEF::TYPE_fileset_entry_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_fileset_entry_command) {
         sResult = QString("fileset_entry_command");
-    } else if (type == XFW_DEF::TYPE_source_version_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_source_version_command) {
         sResult = QString("source_version_command");
-    } else if (type == XFW_DEF::TYPE_dylinker_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_dylinker_command) {
         sResult = QString("dylinker_command");
-    } else if (type == XFW_DEF::TYPE_data_in_code_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_data_in_code_command) {
         sResult = QString("data_in_code_command");
-    } else if (type == XFW_DEF::TYPE_code_signature_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_code_signature_command) {
         sResult = QString("code_signature_command");
+    } else if (type == XFW_DEF::TYPE_MACH_fvm_library_command) {
+        sResult = QString("fvm_library_command");
+    } else if (type == XFW_DEF::TYPE_MACH_unix_thread_command) {
+        sResult = QString("unix_thread_command");
     } else if (type == XFW_DEF::TYPE_MACH_nlist) {
         sResult = QString("nlist");
     } else if (type == XFW_DEF::TYPE_MACH_nlist_64) {
@@ -407,81 +411,87 @@ QList<XFW_DEF::HEADER_RECORD> XFormatWidget::getHeaderRecords(const XFW_DEF::CWO
     } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_dylib_command) {
         pRecords = XTYPE_MACH::X_dylib_command::records;
         nNumberOfRecords = XTYPE_MACH::X_dylib_command::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_rpath_command) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_rpath_command) {
         pRecords = XTYPE_MACH::X_rpath_command::records;
         nNumberOfRecords = XTYPE_MACH::X_rpath_command::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_sub_umbrella_command) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_sub_umbrella_command) {
         pRecords = XTYPE_MACH::X_sub_umbrella_command::records;
         nNumberOfRecords = XTYPE_MACH::X_sub_umbrella_command::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_sub_client_command) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_sub_client_command) {
         pRecords = XTYPE_MACH::X_sub_client_command::records;
         nNumberOfRecords = XTYPE_MACH::X_sub_client_command::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_sub_library_command) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_sub_library_command) {
         pRecords = XTYPE_MACH::X_sub_library_command::records;
         nNumberOfRecords = XTYPE_MACH::X_sub_library_command::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_symtab_command) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_symtab_command) {
         pRecords = XTYPE_MACH::X_symtab_command::records;
         nNumberOfRecords = XTYPE_MACH::X_symtab_command::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_dysymtab_command) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_dysymtab_command) {
         pRecords = XTYPE_MACH::X_dysymtab_command::records;
         nNumberOfRecords = XTYPE_MACH::X_dysymtab_command::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_segment_split_info_command) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_segment_split_info_command) {
         pRecords = XTYPE_MACH::X_linkedit_data_command::records;
         nNumberOfRecords = XTYPE_MACH::X_linkedit_data_command::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_atom_info_command) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_atom_info_command) {
         pRecords = XTYPE_MACH::X_linkedit_data_command::records;
         nNumberOfRecords = XTYPE_MACH::X_linkedit_data_command::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_function_starts_command) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_function_starts_command) {
         pRecords = XTYPE_MACH::X_linkedit_data_command::records;
         nNumberOfRecords = XTYPE_MACH::X_linkedit_data_command::__data_size;
     } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_dyld_exports_trie_command) {
         pRecords = XTYPE_MACH::X_linkedit_data_command::records;
         nNumberOfRecords = XTYPE_MACH::X_linkedit_data_command::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_dyld_chained_fixups_command) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_dyld_chained_fixups_command) {
         pRecords = XTYPE_MACH::X_linkedit_data_command::records;
         nNumberOfRecords = XTYPE_MACH::X_linkedit_data_command::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_encryption_info_command) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_encryption_info_command) {
         pRecords = XTYPE_MACH::X_encryption_info_command::records32;
         nNumberOfRecords = XTYPE_MACH::X_encryption_info_command::__data_size - 1;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_encryption_info_command_64) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_encryption_info_command_64) {
         pRecords = XTYPE_MACH::X_encryption_info_command::records64;
         nNumberOfRecords = XTYPE_MACH::X_encryption_info_command::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_routines_command) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_routines_command) {
         pRecords = XTYPE_MACH::X_routines_command::records32;
         nNumberOfRecords = XTYPE_MACH::X_routines_command::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_routines_command_64) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_routines_command_64) {
         pRecords = XTYPE_MACH::X_routines_command::records64;
         nNumberOfRecords = XTYPE_MACH::X_routines_command::__data_size;
     } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_dyld_info_command) {
         pRecords = XTYPE_MACH::X_dyld_info_command::records;
         nNumberOfRecords = XTYPE_MACH::X_dyld_info_command::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_version_min_command) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_version_min_command) {
         pRecords = XTYPE_MACH::X_version_min_command::records;
         nNumberOfRecords = XTYPE_MACH::X_version_min_command::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_uuid_command) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_uuid_command) {
         pRecords = XTYPE_MACH::X_uuid_command::records;
         nNumberOfRecords = XTYPE_MACH::X_uuid_command::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_build_version_command) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_build_version_command) {
         pRecords = XTYPE_MACH::X_build_version_command::records;
         nNumberOfRecords = XTYPE_MACH::X_build_version_command::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_main_command) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_main_command) {
         pRecords = XTYPE_MACH::X_entry_point_command::records;
         nNumberOfRecords = XTYPE_MACH::X_entry_point_command::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_fileset_entry_command) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_fileset_entry_command) {
         pRecords = XTYPE_MACH::X_fileset_entry_command::records;
         nNumberOfRecords = XTYPE_MACH::X_fileset_entry_command::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_source_version_command) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_source_version_command) {
         pRecords = XTYPE_MACH::X_source_version_command::records;
         nNumberOfRecords = XTYPE_MACH::X_source_version_command::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_dylinker_command) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_dylinker_command) {
         pRecords = XTYPE_MACH::X_dylinker_command::records;
         nNumberOfRecords = XTYPE_MACH::X_dylinker_command::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_data_in_code_command) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_data_in_code_command) {
         pRecords = XTYPE_MACH::X_linkedit_data_command::records;
         nNumberOfRecords = XTYPE_MACH::X_linkedit_data_command::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_code_signature_command) {
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_code_signature_command) {
         pRecords = XTYPE_MACH::X_linkedit_data_command::records;
         nNumberOfRecords = XTYPE_MACH::X_linkedit_data_command::__data_size;
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_fvm_library_command) {
+        pRecords = XTYPE_MACH::X_fvmlib_command::records;
+        nNumberOfRecords = XTYPE_MACH::X_fvmlib_command::__data_size;
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_unix_thread_command) {
+        pRecords = XTYPE_MACH::X_unix_thread_command::records;
+        nNumberOfRecords = XTYPE_MACH::X_unix_thread_command::__data_size;
     } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_nlist) {
         pRecords = XTYPE_MACH::X_nlist::records32;
         nNumberOfRecords = XTYPE_MACH::X_nlist::__data_size;
@@ -558,56 +568,60 @@ qint64 XFormatWidget::getStructSize(XFW_DEF::TYPE type)
         nResult = sizeof(XMACH_DEF::segment_command_64);
     } else if (type == XFW_DEF::TYPE_MACH_dylib_command) {
         nResult = sizeof(XMACH_DEF::dylib_command);
-    } else if (type == XFW_DEF::TYPE_rpath_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_rpath_command) {
         nResult = sizeof(XMACH_DEF::rpath_command);
-    } else if (type == XFW_DEF::TYPE_sub_umbrella_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_sub_umbrella_command) {
         nResult = sizeof(XMACH_DEF::sub_umbrella_command);
-    } else if (type == XFW_DEF::TYPE_sub_client_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_sub_client_command) {
         nResult = sizeof(XMACH_DEF::sub_client_command);
-    } else if (type == XFW_DEF::TYPE_sub_library_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_sub_library_command) {
         nResult = sizeof(XMACH_DEF::sub_library_command);
-    } else if (type == XFW_DEF::TYPE_symtab_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_symtab_command) {
         nResult = sizeof(XMACH_DEF::symtab_command);
-    } else if (type == XFW_DEF::TYPE_dysymtab_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_dysymtab_command) {
         nResult = sizeof(XMACH_DEF::dysymtab_command);
-    } else if (type == XFW_DEF::TYPE_segment_split_info_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_segment_split_info_command) {
         nResult = sizeof(XMACH_DEF::linkedit_data_command);
-    } else if (type == XFW_DEF::TYPE_atom_info_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_atom_info_command) {
         nResult = sizeof(XMACH_DEF::linkedit_data_command);
-    } else if (type == XFW_DEF::TYPE_function_starts_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_function_starts_command) {
         nResult = sizeof(XMACH_DEF::linkedit_data_command);
     } else if (type == XFW_DEF::TYPE_MACH_dyld_exports_trie_command) {
         nResult = sizeof(XMACH_DEF::linkedit_data_command);
-    } else if (type == XFW_DEF::TYPE_dyld_chained_fixups_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_dyld_chained_fixups_command) {
         nResult = sizeof(XMACH_DEF::linkedit_data_command);
-    } else if (type == XFW_DEF::TYPE_encryption_info_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_encryption_info_command) {
         nResult = sizeof(XMACH_DEF::encryption_info_command);
-    } else if (type == XFW_DEF::TYPE_encryption_info_command_64) {
+    } else if (type == XFW_DEF::TYPE_MACH_encryption_info_command_64) {
         nResult = sizeof(XMACH_DEF::encryption_info_command_64);
-    } else if (type == XFW_DEF::TYPE_routines_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_routines_command) {
         nResult = sizeof(XMACH_DEF::routines_command);
-    } else if (type == XFW_DEF::TYPE_routines_command_64) {
+    } else if (type == XFW_DEF::TYPE_MACH_routines_command_64) {
         nResult = sizeof(XMACH_DEF::routines_command_64);
     } else if (type == XFW_DEF::TYPE_MACH_dyld_info_command) {
         nResult = sizeof(XMACH_DEF::dyld_info_command);
-    } else if (type == XFW_DEF::TYPE_version_min_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_version_min_command) {
         nResult = sizeof(XMACH_DEF::version_min_command);
-    } else if (type == XFW_DEF::TYPE_uuid_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_uuid_command) {
         nResult = sizeof(XMACH_DEF::uuid_command);
-    } else if (type == XFW_DEF::TYPE_build_version_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_build_version_command) {
         nResult = sizeof(XMACH_DEF::build_version_command);
-    } else if (type == XFW_DEF::TYPE_main_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_main_command) {
         nResult = sizeof(XMACH_DEF::entry_point_command);
-    } else if (type == XFW_DEF::TYPE_fileset_entry_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_fileset_entry_command) {
         nResult = sizeof(XMACH_DEF::fileset_entry_command);
-    } else if (type == XFW_DEF::TYPE_source_version_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_source_version_command) {
         nResult = sizeof(XMACH_DEF::source_version_command);
-    } else if (type == XFW_DEF::TYPE_dylinker_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_dylinker_command) {
         nResult = sizeof(XMACH_DEF::dylinker_command);
-    } else if (type == XFW_DEF::TYPE_data_in_code_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_data_in_code_command) {
         nResult = sizeof(XMACH_DEF::linkedit_data_command);
-    } else if (type == XFW_DEF::TYPE_code_signature_command) {
+    } else if (type == XFW_DEF::TYPE_MACH_code_signature_command) {
         nResult = sizeof(XMACH_DEF::linkedit_data_command);
+    } else if (type == XFW_DEF::TYPE_MACH_fvm_library_command) {
+        nResult = sizeof(XMACH_DEF::fvmlib_command);
+    } else if (type == XFW_DEF::TYPE_MACH_unix_thread_command) {
+        nResult = sizeof(XMACH_DEF::unix_thread_command);
     } else if (type == XFW_DEF::TYPE_MACH_nlist) {
         nResult = sizeof(XMACH_DEF::nlist);
     } else if (type == XFW_DEF::TYPE_MACH_nlist_64) {
@@ -1100,8 +1114,7 @@ void XFormatWidget::updateRecWidgets(QIODevice *pDevice, QList<RECWIDGET> *pList
             if (pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_SIZE) {
                 if (pListRecWidget->at(i).nSubPosition != -1) {
                     bIsSize = true;
-                }
-                else if (pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_RELTOSTRUCT) {
+                } else if (pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_RELTOSTRUCT) {
                     bIsSize = true;
                 }
             }
@@ -1592,11 +1605,11 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     _spStructRecord.nStructSize = listCommands.at(i).nSize;
                     _spStructRecord.nStructCount = 1;
                     _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEADER;
-                    _spStructRecord.type = load_commandIdToType(listCommands.at(i).nId);
+                    _spStructRecord.type = load_commandIdToType(listCommands.at(i).nId, mach.getArch());
 
                     _addStruct(_spStructRecord);
                 }
-            } else if ((_spStruct.widgetMode == XFW_DEF::WIDGETMODE_HEADER) && (_spStruct.type == XFW_DEF::TYPE_symtab_command)) {
+            } else if ((_spStruct.widgetMode == XFW_DEF::WIDGETMODE_HEADER) && (_spStruct.type == XFW_DEF::TYPE_MACH_symtab_command)) {
                 XMACH_DEF::symtab_command _command = mach._read_symtab_command(_spStruct.nStructOffset);
 
                 if (_command.symoff && _command.nsyms) {
@@ -1629,7 +1642,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
 
                     _addStruct(_spStructRecord);
                 }
-            } else if ((_spStruct.widgetMode == XFW_DEF::WIDGETMODE_HEADER) && (_spStruct.type == XFW_DEF::TYPE_code_signature_command)) {
+            } else if ((_spStruct.widgetMode == XFW_DEF::WIDGETMODE_HEADER) && (_spStruct.type == XFW_DEF::TYPE_MACH_code_signature_command)) {
                 XMACH_DEF::linkedit_data_command _command = mach._read_linkedit_data_command(_spStruct.nStructOffset);
 
                 if (_command.dataoff && _command.datasize) {
@@ -1696,7 +1709,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                 //     _addStruct(_spStructRecord);
                 // }
 
-            } else if ((_spStruct.widgetMode == XFW_DEF::WIDGETMODE_HEADER) && (_spStruct.type == XFW_DEF::TYPE_dyld_chained_fixups_command)) {
+            } else if ((_spStruct.widgetMode == XFW_DEF::WIDGETMODE_HEADER) && (_spStruct.type == XFW_DEF::TYPE_MACH_dyld_chained_fixups_command)) {
                 XMACH_DEF::linkedit_data_command _command = mach._read_linkedit_data_command(_spStruct.nStructOffset);
 
                 if (_command.dataoff && _command.datasize) {
@@ -1858,7 +1871,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
 //     }
 // }
 
-XFW_DEF::TYPE XFormatWidget::load_commandIdToType(qint32 nCommandId)
+XFW_DEF::TYPE XFormatWidget::load_commandIdToType(qint32 nCommandId, QString sArch)
 {
     XFW_DEF::TYPE result = XFW_DEF::TYPE_MACH_load_command;
 
@@ -1867,60 +1880,68 @@ XFW_DEF::TYPE XFormatWidget::load_commandIdToType(qint32 nCommandId)
         (nCommandId == XMACH_DEF::S_LC_REEXPORT_DYLIB) || (nCommandId == XMACH_DEF::S_LC_LOAD_UPWARD_DYLIB)) {
         result = XFW_DEF::TYPE_MACH_dylib_command;
     } else if (nCommandId == XMACH_DEF::S_LC_RPATH) {
-        result = XFW_DEF::TYPE_rpath_command;
+        result = XFW_DEF::TYPE_MACH_rpath_command;
     } else if (nCommandId == XMACH_DEF::S_LC_SUB_UMBRELLA) {
-        result = XFW_DEF::TYPE_sub_umbrella_command;
+        result = XFW_DEF::TYPE_MACH_sub_umbrella_command;
     } else if (nCommandId == XMACH_DEF::S_LC_SUB_CLIENT) {
-        result = XFW_DEF::TYPE_sub_client_command;
+        result = XFW_DEF::TYPE_MACH_sub_client_command;
     } else if (nCommandId == XMACH_DEF::S_LC_SUB_LIBRARY) {
-        result = XFW_DEF::TYPE_sub_library_command;
+        result = XFW_DEF::TYPE_MACH_sub_library_command;
     } else if (nCommandId == XMACH_DEF::S_LC_SYMTAB) {
-        result = XFW_DEF::TYPE_symtab_command;
+        result = XFW_DEF::TYPE_MACH_symtab_command;
     } else if (nCommandId == XMACH_DEF::S_LC_DYSYMTAB) {
-        result = XFW_DEF::TYPE_dysymtab_command;
+        result = XFW_DEF::TYPE_MACH_dysymtab_command;
     } else if (nCommandId == XMACH_DEF::S_LC_SEGMENT_SPLIT_INFO) {
-        result = XFW_DEF::TYPE_segment_split_info_command;
+        result = XFW_DEF::TYPE_MACH_segment_split_info_command;
     } else if (nCommandId == XMACH_DEF::S_LC_ATOM_INFO) {
-        result = XFW_DEF::TYPE_atom_info_command;
+        result = XFW_DEF::TYPE_MACH_atom_info_command;
     } else if (nCommandId == XMACH_DEF::S_LC_FUNCTION_STARTS) {
-        result = XFW_DEF::TYPE_function_starts_command;
+        result = XFW_DEF::TYPE_MACH_function_starts_command;
     } else if (nCommandId == XMACH_DEF::S_LC_DYLD_EXPORTS_TRIE) {
         result = XFW_DEF::TYPE_MACH_dyld_exports_trie_command;
     } else if (nCommandId == XMACH_DEF::S_LC_DYLD_CHAINED_FIXUPS) {
-        result = XFW_DEF::TYPE_dyld_chained_fixups_command;
+        result = XFW_DEF::TYPE_MACH_dyld_chained_fixups_command;
     } else if (nCommandId == XMACH_DEF::S_LC_ENCRYPTION_INFO) {
-        result = XFW_DEF::TYPE_encryption_info_command;
+        result = XFW_DEF::TYPE_MACH_encryption_info_command;
     } else if (nCommandId == XMACH_DEF::S_LC_ENCRYPTION_INFO_64) {
-        result = XFW_DEF::TYPE_encryption_info_command_64;
+        result = XFW_DEF::TYPE_MACH_encryption_info_command_64;
     } else if ((nCommandId == XMACH_DEF::S_LC_DYLD_INFO) || (nCommandId == XMACH_DEF::S_LC_DYLD_INFO_ONLY)) {
         result = XFW_DEF::TYPE_MACH_dyld_info_command;
     } else if ((nCommandId == XMACH_DEF::S_LC_VERSION_MIN_MACOSX) || (nCommandId == XMACH_DEF::S_LC_VERSION_MIN_IPHONEOS) ||
                (nCommandId == XMACH_DEF::S_LC_VERSION_MIN_TVOS) || (nCommandId == XMACH_DEF::S_LC_VERSION_MIN_WATCHOS)) {
-        result = XFW_DEF::TYPE_version_min_command;
+        result = XFW_DEF::TYPE_MACH_version_min_command;
     } else if (nCommandId == XMACH_DEF::S_LC_UUID) {
-        result = XFW_DEF::TYPE_uuid_command;
+        result = XFW_DEF::TYPE_MACH_uuid_command;
     } else if (nCommandId == XMACH_DEF::S_LC_BUILD_VERSION) {
-        result = XFW_DEF::TYPE_build_version_command;
+        result = XFW_DEF::TYPE_MACH_build_version_command;
     } else if (nCommandId == XMACH_DEF::S_LC_MAIN) {
-        result = XFW_DEF::TYPE_main_command;
+        result = XFW_DEF::TYPE_MACH_main_command;
     } else if (nCommandId == XMACH_DEF::S_LC_SEGMENT) {
         result = XFW_DEF::TYPE_MACH_segment_command;
     } else if (nCommandId == XMACH_DEF::S_LC_SEGMENT_64) {
         result = XFW_DEF::TYPE_MACH_segment_command_64;
     } else if (nCommandId == XMACH_DEF::S_LC_FILESET_ENTRY) {
-        result = XFW_DEF::TYPE_fileset_entry_command;
+        result = XFW_DEF::TYPE_MACH_fileset_entry_command;
     } else if (nCommandId == XMACH_DEF::S_LC_SOURCE_VERSION) {
-        result = XFW_DEF::TYPE_source_version_command;
+        result = XFW_DEF::TYPE_MACH_source_version_command;
     } else if ((nCommandId == XMACH_DEF::S_LC_ID_DYLINKER) || (nCommandId == XMACH_DEF::S_LC_LOAD_DYLINKER)) {
-        result = XFW_DEF::TYPE_dylinker_command;
+        result = XFW_DEF::TYPE_MACH_dylinker_command;
     } else if (nCommandId == XMACH_DEF::S_LC_DATA_IN_CODE) {
-        result = XFW_DEF::TYPE_data_in_code_command;
+        result = XFW_DEF::TYPE_MACH_data_in_code_command;
     } else if (nCommandId == XMACH_DEF::S_LC_CODE_SIGNATURE) {
-        result = XFW_DEF::TYPE_code_signature_command;
+        result = XFW_DEF::TYPE_MACH_code_signature_command;
     } else if (nCommandId == XMACH_DEF::S_LC_ROUTINES) {
-        result = XFW_DEF::TYPE_routines_command;
+        result = XFW_DEF::TYPE_MACH_routines_command;
     } else if (nCommandId == XMACH_DEF::S_LC_ROUTINES_64) {
-        result = XFW_DEF::TYPE_routines_command_64;
+        result = XFW_DEF::TYPE_MACH_routines_command_64;
+    } else if (nCommandId == XMACH_DEF::S_LC_LOADFVMLIB) {
+        result = XFW_DEF::TYPE_MACH_fvm_library_command;
+    } else if (nCommandId == XMACH_DEF::S_LC_UNIXTHREAD) {
+        if (sArch == "MC68030") {
+
+        } else {
+            result = XFW_DEF::TYPE_MACH_unix_thread_command;
+        }
     } else {
         result = XFW_DEF::TYPE_MACH_load_command;
     }

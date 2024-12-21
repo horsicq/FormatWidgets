@@ -77,7 +77,7 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
             g_nDataSize = nLimit;
         }
 
-    } else if (getCwOptions()->_type == XFW_DEF::TYPE_routines_command_64) {
+    } else if (getCwOptions()->_type == XFW_DEF::TYPE_MACH_routines_command_64) {
         XMACH xmach(getDevice(), getCwOptions()->bIsImage, getCwOptions()->nImageBase);
         XMACH::COMMAND_RECORD cr = xmach._readLoadCommand(getCwOptions()->nDataOffset, getCwOptions()->endian == XBinary::ENDIAN_BIG);
 
@@ -92,19 +92,19 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
 
     if ((getCwOptions()->_type == XFW_DEF::TYPE_MACH_load_command) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_segment_command) ||
         (getCwOptions()->_type == XFW_DEF::TYPE_MACH_segment_command_64) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_dylib_command) ||
-        (getCwOptions()->_type == XFW_DEF::TYPE_rpath_command) || (getCwOptions()->_type == XFW_DEF::TYPE_sub_umbrella_command) ||
-        (getCwOptions()->_type == XFW_DEF::TYPE_sub_client_command) || (getCwOptions()->_type == XFW_DEF::TYPE_sub_library_command) ||
-        (getCwOptions()->_type == XFW_DEF::TYPE_symtab_command) || (getCwOptions()->_type == XFW_DEF::TYPE_dysymtab_command) ||
-        (getCwOptions()->_type == XFW_DEF::TYPE_segment_split_info_command) || (getCwOptions()->_type == XFW_DEF::TYPE_atom_info_command) ||
-        (getCwOptions()->_type == XFW_DEF::TYPE_function_starts_command) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_dyld_exports_trie_command) ||
-        (getCwOptions()->_type == XFW_DEF::TYPE_dyld_chained_fixups_command) || (getCwOptions()->_type == XFW_DEF::TYPE_encryption_info_command) ||
-        (getCwOptions()->_type == XFW_DEF::TYPE_encryption_info_command_64) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_dyld_info_command) ||
-        (getCwOptions()->_type == XFW_DEF::TYPE_version_min_command) || (getCwOptions()->_type == XFW_DEF::TYPE_uuid_command) ||
-        (getCwOptions()->_type == XFW_DEF::TYPE_build_version_command) || (getCwOptions()->_type == XFW_DEF::TYPE_main_command) ||
-        (getCwOptions()->_type == XFW_DEF::TYPE_fileset_entry_command) || (getCwOptions()->_type == XFW_DEF::TYPE_source_version_command) ||
-        (getCwOptions()->_type == XFW_DEF::TYPE_dylinker_command) || (getCwOptions()->_type == XFW_DEF::TYPE_data_in_code_command) ||
-        (getCwOptions()->_type == XFW_DEF::TYPE_code_signature_command) || (getCwOptions()->_type == XFW_DEF::TYPE_routines_command) ||
-        (getCwOptions()->_type == XFW_DEF::TYPE_routines_command_64)) {
+        (getCwOptions()->_type == XFW_DEF::TYPE_MACH_rpath_command) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_sub_umbrella_command) ||
+        (getCwOptions()->_type == XFW_DEF::TYPE_MACH_sub_client_command) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_sub_library_command) ||
+        (getCwOptions()->_type == XFW_DEF::TYPE_MACH_symtab_command) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_dysymtab_command) ||
+        (getCwOptions()->_type == XFW_DEF::TYPE_MACH_segment_split_info_command) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_atom_info_command) ||
+        (getCwOptions()->_type == XFW_DEF::TYPE_MACH_function_starts_command) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_dyld_exports_trie_command) ||
+        (getCwOptions()->_type == XFW_DEF::TYPE_MACH_dyld_chained_fixups_command) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_encryption_info_command) ||
+        (getCwOptions()->_type == XFW_DEF::TYPE_MACH_encryption_info_command_64) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_dyld_info_command) ||
+        (getCwOptions()->_type == XFW_DEF::TYPE_MACH_version_min_command) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_uuid_command) ||
+        (getCwOptions()->_type == XFW_DEF::TYPE_MACH_build_version_command) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_main_command) ||
+        (getCwOptions()->_type == XFW_DEF::TYPE_MACH_fileset_entry_command) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_source_version_command) ||
+        (getCwOptions()->_type == XFW_DEF::TYPE_MACH_dylinker_command) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_data_in_code_command) ||
+        (getCwOptions()->_type == XFW_DEF::TYPE_MACH_code_signature_command) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_routines_command) ||
+        (getCwOptions()->_type == XFW_DEF::TYPE_MACH_routines_command_64) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_fvm_library_command)) {
         addComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getLoadCommandTypesS(), XTYPE_MACH::X_load_commands::cmd, XComboBoxEx::CBTYPE_LIST, 0);
     }
 
@@ -132,7 +132,7 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
         //     adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getCommandsS(), N_mach_routines_command::cmd, XComboBoxEx::CBTYPE_LIST, 0);
         // } else if (getCwOptions()->_type == FW_DEF::TYPE_MACH_routines_command_64) {
         //     adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getCommandsS(), N_mach_routines_command_64::cmd, XComboBoxEx::CBTYPE_LIST, 0);
-    } else if (getCwOptions()->_type == XFW_DEF::TYPE_build_version_command) {
+    } else if (getCwOptions()->_type == XFW_DEF::TYPE_MACH_build_version_command) {
         addComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getPlatformS(), XTYPE_MACH::X_build_version_command::platform, XComboBoxEx::CBTYPE_LIST, 0);
     } else if (getCwOptions()->_type == XFW_DEF::TYPE_MACH_CS_CodeDirectory) {
     } else if ((getCwOptions()->_type == XFW_DEF::TYPE_Elf32_Ehdr) || (getCwOptions()->_type == XFW_DEF::TYPE_Elf64_Ehdr)) {

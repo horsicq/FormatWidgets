@@ -250,7 +250,8 @@ void XMainWidget::reloadData(bool bSaveSelection)
             connect(pWidget, SIGNAL(dataChanged(qint64, qint64)), this, SLOT(dataChangedSlot(qint64, qint64)));
             connect(pWidget, SIGNAL(followLocation(quint64, qint32, qint64, qint32)), this, SLOT(followLocationSlot(quint64, qint32, qint64, qint32)));
 
-            if ((cwOptions.widgetMode == XFW_DEF::WIDGETMODE_HEADER) || (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_TABLE) || (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_HEX)) {
+            if ((cwOptions.widgetMode == XFW_DEF::WIDGETMODE_HEADER) || (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_TABLE) ||
+                (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_HEX)) {
                 XFormatWidget *_pXFormatWidget = dynamic_cast<XFormatWidget *>(pWidget);
 
                 if (_pXFormatWidget) {
@@ -469,7 +470,8 @@ void XMainWidget::showCwWidgetSlot(QString sInitString, bool bNewWindow)
         connect(pWidget, SIGNAL(dataChanged(qint64, qint64)), this, SLOT(dataChangedSlot(qint64, qint64)));
         connect(pWidget, SIGNAL(followLocation(quint64, qint32, qint64, qint32)), this, SLOT(followLocationSlot(quint64, qint32, qint64, qint32)));
 
-        if ((cwOptions.widgetMode == XFW_DEF::WIDGETMODE_HEADER) || (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_TABLE) || (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_HEX)) {
+        if ((cwOptions.widgetMode == XFW_DEF::WIDGETMODE_HEADER) || (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_TABLE) ||
+            (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_HEX)) {
             connect(pWidget, SIGNAL(showCwWidget(QString, bool)), this, SLOT(showCwWidgetSlot(QString, bool)));
         }
 

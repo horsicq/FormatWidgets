@@ -123,8 +123,10 @@ enum DATA {
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace X_dylib_command
 
-namespace X_fmv_library {
+namespace X_fvmlib_command {
 enum DATA {
+    cmd = 0,
+    cmdsize,
     name,
     minor_version,
     header_addr,
@@ -132,7 +134,7 @@ enum DATA {
 };
 
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
-}  // namespace X_mach_fmv_library
+}  // namespace X_fvmlib_command
 
 namespace X_dyld_info_command {
 enum DATA {
