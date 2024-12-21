@@ -1605,7 +1605,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     _spStructRecord.nStructSize = listCommands.at(i).nSize;
                     _spStructRecord.nStructCount = 1;
                     _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEADER;
-                    _spStructRecord.type = load_commandIdToType(listCommands.at(i).nId, mach.getArch());
+                    _spStructRecord.type = load_commandIdToType(listCommands.at(i).nId);
 
                     _addStruct(_spStructRecord);
                 }
@@ -1871,7 +1871,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
 //     }
 // }
 
-XFW_DEF::TYPE XFormatWidget::load_commandIdToType(qint32 nCommandId, QString sArch)
+XFW_DEF::TYPE XFormatWidget::load_commandIdToType(qint32 nCommandId)
 {
     XFW_DEF::TYPE result = XFW_DEF::TYPE_MACH_load_command;
 
@@ -1937,11 +1937,7 @@ XFW_DEF::TYPE XFormatWidget::load_commandIdToType(qint32 nCommandId, QString sAr
     } else if (nCommandId == XMACH_DEF::S_LC_LOADFVMLIB) {
         result = XFW_DEF::TYPE_MACH_fvm_library_command;
     } else if (nCommandId == XMACH_DEF::S_LC_UNIXTHREAD) {
-        if (sArch == "MC68030") {
-
-        } else {
-            result = XFW_DEF::TYPE_MACH_unix_thread_command;
-        }
+        result = XFW_DEF::TYPE_MACH_unix_thread_command;
     } else {
         result = XFW_DEF::TYPE_MACH_load_command;
     }
