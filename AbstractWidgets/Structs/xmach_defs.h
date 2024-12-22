@@ -385,7 +385,7 @@ extern const XFW_DEF::HEADER_RECORD records32[__data_size];
 extern const XFW_DEF::HEADER_RECORD records64[__data_size];
 }  // namespace X_routines_command
 
-namespace X_mach_unix_thread_x86_32 {
+namespace X_x86_thread_state32_t {
 enum DATA {
     eax,
     ebx,
@@ -407,9 +407,9 @@ enum DATA {
 };
 
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
-}  // namespace X_mach_unix_thread_x86_32
+}  // namespace X_x86_thread_state32_t
 
-namespace X_mach_unix_thread_x86_64 {
+namespace X_x86_thread_state64_t {
 enum DATA {
     rax,
     rbx,
@@ -436,7 +436,7 @@ enum DATA {
 };
 
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
-}  // namespace X_mach_unix_thread_x86_64
+}  // namespace X_x86_thread_state64_t
 
 namespace X_mach_unix_thread_arm_32 {
 enum DATA {

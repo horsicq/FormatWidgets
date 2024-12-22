@@ -62,7 +62,7 @@ const XFW_DEF::HEADER_RECORD records32[] = {
     {vmaddr, "vmaddr", offsetof(XMACH_DEF::segment_command, vmaddr), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_ADDRESS | XFW_DEF::VAL_TYPE_CODE, -1},
     {vmsize, "vmsize", offsetof(XMACH_DEF::segment_command, vmsize), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, -1},
     {fileoff, "fileoff", offsetof(XMACH_DEF::segment_command, fileoff), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET, -1},
-    {filesize, "filesize", offsetof(XMACH_DEF::segment_command, filesize), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, -1},
+    {filesize, "filesize", offsetof(XMACH_DEF::segment_command, filesize), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, fileoff},
     {maxprot, "maxprot", offsetof(XMACH_DEF::segment_command, maxprot), 4, "int32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {initprot, "initprot", offsetof(XMACH_DEF::segment_command, initprot), 4, "int32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {nsects, "nsects", offsetof(XMACH_DEF::segment_command, nsects), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_COUNT, -1},
@@ -78,7 +78,7 @@ const XFW_DEF::HEADER_RECORD records64[] = {
     {vmaddr, "vmaddr", offsetof(XMACH_DEF::segment_command_64, vmaddr), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_ADDRESS | XFW_DEF::VAL_TYPE_CODE, -1},
     {vmsize, "vmsize", offsetof(XMACH_DEF::segment_command_64, vmsize), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, -1},
     {fileoff, "fileoff", offsetof(XMACH_DEF::segment_command_64, fileoff), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET, -1},
-    {filesize, "filesize", offsetof(XMACH_DEF::segment_command_64, filesize), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, -1},
+    {filesize, "filesize", offsetof(XMACH_DEF::segment_command_64, filesize), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, fileoff},
     {maxprot, "maxprot", offsetof(XMACH_DEF::segment_command_64, maxprot), 4, "int32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {initprot, "initprot", offsetof(XMACH_DEF::segment_command_64, initprot), 4, "int32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {nsects, "nsects", offsetof(XMACH_DEF::segment_command_64, nsects), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_COUNT, -1},
@@ -91,7 +91,7 @@ const XFW_DEF::HEADER_RECORD records[] = {
     {sectname, "sectname", offsetof(XMACH_DEF::section, sectname), 16, "char[16]", XFW_DEF::VAL_TYPE_DATA_ARRAY | XFW_DEF::VAL_TYPE_ANSI | XFW_DEF::VAL_TYPE_STRING, -1},
     {segname, "segname", offsetof(XMACH_DEF::section, segname), 16, "char[16]", XFW_DEF::VAL_TYPE_DATA_ARRAY | XFW_DEF::VAL_TYPE_ANSI | XFW_DEF::VAL_TYPE_STRING, -1},
     {addr, "addr", offsetof(XMACH_DEF::section, addr), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_ADDRESS, -1},
-    {size, "size", offsetof(XMACH_DEF::section, size), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, -1},
+    {size, "size", offsetof(XMACH_DEF::section, size), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, offset},
     {offset, "offset", offsetof(XMACH_DEF::section, offset), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET, -1},
     {align, "align", offsetof(XMACH_DEF::section, align), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {reloff, "reloff", offsetof(XMACH_DEF::section, reloff), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET, -1},
@@ -107,7 +107,7 @@ const XFW_DEF::HEADER_RECORD records[] = {
      -1},
     {segname, "segname", offsetof(XMACH_DEF::section_64, segname), 16, "char[16]", XFW_DEF::VAL_TYPE_DATA_ARRAY | XFW_DEF::VAL_TYPE_ANSI | XFW_DEF::VAL_TYPE_STRING, -1},
     {addr, "addr", offsetof(XMACH_DEF::section_64, addr), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_ADDRESS, -1},
-    {size, "size", offsetof(XMACH_DEF::section_64, size), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, -1},
+    {size, "size", offsetof(XMACH_DEF::section_64, size), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, offset},
     {offset, "offset", offsetof(XMACH_DEF::section_64, offset), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET, -1},
     {align, "align", offsetof(XMACH_DEF::section_64, align), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {reloff, "reloff", offsetof(XMACH_DEF::section_64, reloff), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET, -1},
@@ -379,7 +379,7 @@ const XFW_DEF::HEADER_RECORD records64[] = {
 };
 }  // namespace X_routines_command
 
-namespace X_mach_unix_thread_x86_32 {
+namespace X_x86_thread_state32_t {
 const XFW_DEF::HEADER_RECORD records[] = {
     {eax, "eax", offsetof(XMACH_DEF::x86_thread_state32_t, eax), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {ebx, "ebx", offsetof(XMACH_DEF::x86_thread_state32_t, ebx), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
@@ -400,7 +400,7 @@ const XFW_DEF::HEADER_RECORD records[] = {
 };
 }
 
-namespace X_mach_unix_thread_x86_64 {
+namespace X_x86_thread_state64_t {
 const XFW_DEF::HEADER_RECORD records[] = {
     {rax, "rax", offsetof(XMACH_DEF::x86_thread_state64_t, rax), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {rbx, "rbx", offsetof(XMACH_DEF::x86_thread_state64_t, rbx), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT, -1},

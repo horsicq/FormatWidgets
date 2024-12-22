@@ -350,6 +350,20 @@ QString XFormatWidget::getTypeTitle(XFW_DEF::TYPE type, XBinary::MODE mode, XBin
         sResult = QString("fvm_library_command");
     } else if (type == XFW_DEF::TYPE_MACH_unix_thread_command) {
         sResult = QString("unix_thread_command");
+    } else if (type == XFW_DEF::TYPE_MACH_x86_thread_state32_t) {
+        sResult = QString("x86_thread_state32_t");
+    } else if (type == XFW_DEF::TYPE_MACH_x86_thread_state64_t) {
+        sResult = QString("x86_thread_state64_t");
+    } else if (type == XFW_DEF::TYPE_MACH_arm_thread_state32_t) {
+        sResult = QString("arm_thread_state32_t");
+    } else if (type == XFW_DEF::TYPE_MACH_arm_thread_state64_t) {
+        sResult = QString("arm_thread_state64_t");
+    } else if (type == XFW_DEF::TYPE_MACH_ppc_thread_state32_t) {
+        sResult = QString("ppc_thread_state32_t");
+    } else if (type == XFW_DEF::TYPE_MACH_ppc_thread_state64_t) {
+        sResult = QString("ppc_thread_state64_t");
+    } else if (type == XFW_DEF::TYPE_MACH_m68k_thread_state32_t) {
+        sResult = QString("m68k_thread_state32_t");
     } else if (type == XFW_DEF::TYPE_MACH_nlist) {
         sResult = QString("nlist");
     } else if (type == XFW_DEF::TYPE_MACH_nlist_64) {
@@ -492,6 +506,27 @@ QList<XFW_DEF::HEADER_RECORD> XFormatWidget::getHeaderRecords(const XFW_DEF::CWO
     } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_unix_thread_command) {
         pRecords = XTYPE_MACH::X_unix_thread_command::records;
         nNumberOfRecords = XTYPE_MACH::X_unix_thread_command::__data_size;
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_x86_thread_state32_t) {
+        pRecords = XTYPE_MACH::X_x86_thread_state32_t::records;
+        nNumberOfRecords = XTYPE_MACH::X_x86_thread_state32_t::__data_size;
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_x86_thread_state64_t) {
+        pRecords = XTYPE_MACH::X_x86_thread_state64_t::records;
+        nNumberOfRecords = XTYPE_MACH::X_x86_thread_state64_t::__data_size;
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_arm_thread_state32_t) {
+    //     pRecords = XTYPE_MACH::X_arm_thread_state32_t::records;
+    //     nNumberOfRecords = XTYPE_MACH::X_arm_thread_state32_t::__data_size;
+    // } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_arm_thread_state64_t) {
+    //     pRecords = XTYPE_MACH::X_arm_thread_state64_t::records;
+    //     nNumberOfRecords = XTYPE_MACH::X_arm_thread_state64_t::__data_size;
+    // } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_ppc_thread_state32_t) {
+    //     pRecords = XTYPE_MACH::X_ppc_thread_state32_t::records;
+    //     nNumberOfRecords = XTYPE_MACH::X_ppc_thread_state32_t::__data_size;
+    // } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_ppc_thread_state64_t) {
+    //     pRecords = XTYPE_MACH::X_ppc_thread_state64_t::records;
+    //     nNumberOfRecords = XTYPE_MACH::X_ppc_thread_state64_t::__data_size;
+    // } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_m68k_thread_state32_t) {
+    //     pRecords = XTYPE_MACH::X_m68k_thread_state32_t::records;
+    //     nNumberOfRecords = XTYPE_MACH::X_m68k_thread_state32_t::__data_size;
     } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_nlist) {
         pRecords = XTYPE_MACH::X_nlist::records32;
         nNumberOfRecords = XTYPE_MACH::X_nlist::__data_size;
@@ -622,6 +657,20 @@ qint64 XFormatWidget::getStructSize(XFW_DEF::TYPE type)
         nResult = sizeof(XMACH_DEF::fvmlib_command);
     } else if (type == XFW_DEF::TYPE_MACH_unix_thread_command) {
         nResult = sizeof(XMACH_DEF::unix_thread_command);
+    } else if (type == XFW_DEF::TYPE_MACH_x86_thread_state32_t) {
+        nResult = sizeof(XMACH_DEF::x86_thread_state32_t);
+    } else if (type == XFW_DEF::TYPE_MACH_x86_thread_state64_t) {
+        nResult = sizeof(XMACH_DEF::x86_thread_state64_t);
+    } else if (type == XFW_DEF::TYPE_MACH_arm_thread_state32_t) {
+        nResult = sizeof(XMACH_DEF::arm_thread_state32_t);
+    } else if (type == XFW_DEF::TYPE_MACH_arm_thread_state64_t) {
+        nResult = sizeof(XMACH_DEF::arm_thread_state64_t);
+    } else if (type == XFW_DEF::TYPE_MACH_ppc_thread_state32_t) {
+        nResult = sizeof(XMACH_DEF::ppc_thread_state32_t);
+    // } else if (type == XFW_DEF::TYPE_MACH_ppc_thread_state64_t) {
+    //     nResult = sizeof(XMACH_DEF::ppc_thread_state64_t);
+    } else if (type == XFW_DEF::TYPE_MACH_m68k_thread_state32_t) {
+        nResult = sizeof(XMACH_DEF::m68k_thread_state32_t);
     } else if (type == XFW_DEF::TYPE_MACH_nlist) {
         nResult = sizeof(XMACH_DEF::nlist);
     } else if (type == XFW_DEF::TYPE_MACH_nlist_64) {

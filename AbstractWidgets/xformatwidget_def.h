@@ -101,7 +101,6 @@ enum TYPE {
     TYPE_MACH_ppc_thread_state32_t,
     TYPE_MACH_ppc_thread_state64_t,
     TYPE_MACH_m68k_thread_state32_t,
-
     TYPE_MACH_nlist,
     TYPE_MACH_nlist_64,
     TYPE_MACH_dyld_chained_fixups_header,
