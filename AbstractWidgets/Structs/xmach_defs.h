@@ -438,7 +438,7 @@ enum DATA {
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace X_x86_thread_state64_t
 
-namespace X_mach_unix_thread_arm_32 {
+namespace X_arm_thread_state32_t {
 enum DATA {
     r0,
     r1,
@@ -463,7 +463,7 @@ enum DATA {
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace X_mach_unix_thread_arm_32
 
-namespace X_mach_unix_thread_arm_64 {
+namespace X_arm_thread_state64_t {
 enum DATA {
     x0,
     x1,
@@ -506,7 +506,7 @@ enum DATA {
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace X_mach_unix_thread_arm_64
 
-namespace X_mach_unix_thread_ppc_32 {
+namespace X_ppc_thread_state32_t {
 enum DATA {
     srr0,
     srr1,
@@ -554,7 +554,7 @@ enum DATA {
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace X_mach_unix_thread_ppc_32
 
-namespace X_mach_unix_thread_m68k_32 {
+namespace X_m68k_thread_state32_t {
 enum DATA {
     dreg0,
     dreg1,

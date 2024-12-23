@@ -426,7 +426,7 @@ const XFW_DEF::HEADER_RECORD records[] = {
 };
 }
 
-namespace X_mach_unix_thread_arm_32 {
+namespace X_arm_thread_state32_t {
 const XFW_DEF::HEADER_RECORD records[] = {
     {r0, "r0", offsetof(XMACH_DEF::arm_thread_state32_t, r) + sizeof(quint32) * 0, 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {r1, "r1", offsetof(XMACH_DEF::arm_thread_state32_t, r) + sizeof(quint32) * 1, 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
@@ -448,7 +448,7 @@ const XFW_DEF::HEADER_RECORD records[] = {
 };
 }
 
-namespace X_mach_unix_thread_arm_64 {
+namespace X_arm_thread_state64_t {
 const XFW_DEF::HEADER_RECORD records[] = {
     {x0, "x0", offsetof(XMACH_DEF::arm_thread_state64_t, x) + sizeof(quint64) * 0, 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {x1, "x1", offsetof(XMACH_DEF::arm_thread_state64_t, x) + sizeof(quint64) * 1, 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT, -1},
@@ -488,7 +488,7 @@ const XFW_DEF::HEADER_RECORD records[] = {
 };
 }
 
-namespace X_mach_unix_thread_ppc_32 {
+namespace X_ppc_thread_state32_t {
 const XFW_DEF::HEADER_RECORD records[] = {
     {srr0, "srr0", offsetof(XMACH_DEF::ppc_thread_state32_t, srr0), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {srr1, "srr1", offsetof(XMACH_DEF::ppc_thread_state32_t, srr1), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
@@ -535,7 +535,7 @@ const XFW_DEF::HEADER_RECORD records[] = {
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace X_mach_unix_thread_ppc_32
 
-namespace X_mach_unix_thread_m68k_32 {
+namespace X_m68k_thread_state32_t {
 const XFW_DEF::HEADER_RECORD records[] = {
     {dreg0, "dreg0", offsetof(XMACH_DEF::m68k_thread_state32_t, dreg) + sizeof(quint32) * 0, 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {dreg1, "dreg1", offsetof(XMACH_DEF::m68k_thread_state32_t, dreg) + sizeof(quint32) * 1, 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},

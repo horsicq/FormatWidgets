@@ -360,8 +360,8 @@ QString XFormatWidget::getTypeTitle(XFW_DEF::TYPE type, XBinary::MODE mode, XBin
         sResult = QString("arm_thread_state64_t");
     } else if (type == XFW_DEF::TYPE_MACH_ppc_thread_state32_t) {
         sResult = QString("ppc_thread_state32_t");
-    } else if (type == XFW_DEF::TYPE_MACH_ppc_thread_state64_t) {
-        sResult = QString("ppc_thread_state64_t");
+    // } else if (type == XFW_DEF::TYPE_MACH_ppc_thread_state64_t) {
+    //     sResult = QString("ppc_thread_state64_t");
     } else if (type == XFW_DEF::TYPE_MACH_m68k_thread_state32_t) {
         sResult = QString("m68k_thread_state32_t");
     } else if (type == XFW_DEF::TYPE_MACH_nlist) {
@@ -513,20 +513,20 @@ QList<XFW_DEF::HEADER_RECORD> XFormatWidget::getHeaderRecords(const XFW_DEF::CWO
         pRecords = XTYPE_MACH::X_x86_thread_state64_t::records;
         nNumberOfRecords = XTYPE_MACH::X_x86_thread_state64_t::__data_size;
     } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_arm_thread_state32_t) {
-    //     pRecords = XTYPE_MACH::X_arm_thread_state32_t::records;
-    //     nNumberOfRecords = XTYPE_MACH::X_arm_thread_state32_t::__data_size;
-    // } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_arm_thread_state64_t) {
-    //     pRecords = XTYPE_MACH::X_arm_thread_state64_t::records;
-    //     nNumberOfRecords = XTYPE_MACH::X_arm_thread_state64_t::__data_size;
-    // } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_ppc_thread_state32_t) {
-    //     pRecords = XTYPE_MACH::X_ppc_thread_state32_t::records;
-    //     nNumberOfRecords = XTYPE_MACH::X_ppc_thread_state32_t::__data_size;
+        pRecords = XTYPE_MACH::X_arm_thread_state32_t::records;
+        nNumberOfRecords = XTYPE_MACH::X_arm_thread_state32_t::__data_size;
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_arm_thread_state64_t) {
+        pRecords = XTYPE_MACH::X_arm_thread_state64_t::records;
+        nNumberOfRecords = XTYPE_MACH::X_arm_thread_state64_t::__data_size;
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_ppc_thread_state32_t) {
+        pRecords = XTYPE_MACH::X_ppc_thread_state32_t::records;
+        nNumberOfRecords = XTYPE_MACH::X_ppc_thread_state32_t::__data_size;
     // } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_ppc_thread_state64_t) {
     //     pRecords = XTYPE_MACH::X_ppc_thread_state64_t::records;
     //     nNumberOfRecords = XTYPE_MACH::X_ppc_thread_state64_t::__data_size;
-    // } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_m68k_thread_state32_t) {
-    //     pRecords = XTYPE_MACH::X_m68k_thread_state32_t::records;
-    //     nNumberOfRecords = XTYPE_MACH::X_m68k_thread_state32_t::__data_size;
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_m68k_thread_state32_t) {
+        pRecords = XTYPE_MACH::X_m68k_thread_state32_t::records;
+        nNumberOfRecords = XTYPE_MACH::X_m68k_thread_state32_t::__data_size;
     } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_nlist) {
         pRecords = XTYPE_MACH::X_nlist::records32;
         nNumberOfRecords = XTYPE_MACH::X_nlist::__data_size;
@@ -1811,6 +1811,37 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     _spStructRecord.nStructCount = 0;
                     _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEX;
                     _spStructRecord.type = XFW_DEF::TYPE_MACH_trie_export;
+
+                    _addStruct(_spStructRecord);
+                }
+            } else if ((_spStruct.widgetMode == XFW_DEF::WIDGETMODE_HEADER) && (_spStruct.type == XFW_DEF::TYPE_MACH_unix_thread_command)) {
+                XMACH_DEF::unix_thread_command _command = mach._read_unix_thread_command(_spStruct.nStructOffset);
+
+                if ((_command.cmdsize - sizeof(XMACH_DEF::unix_thread_command)) > 0) {
+                    SPSTRUCT _spStructRecord = _spStruct;
+                    _spStructRecord.pTreeWidgetItem = pTreeWidgetItem;
+                    _spStructRecord.nStructOffset = _spStruct.nOffset + _spStruct.nStructOffset + sizeof(XMACH_DEF::unix_thread_command);
+                    _spStructRecord.nStructSize = _command.cmdsize - sizeof(XMACH_DEF::unix_thread_command);
+                    _spStructRecord.nStructCount = 0;
+                    _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEADER;
+
+                    QString sArch = mach.getArch();
+
+                    if (sArch == "MC68030") {
+                        _spStructRecord.type = XFW_DEF::TYPE_MACH_m68k_thread_state32_t;
+                    } else if (sArch == "I386") {
+                        _spStructRecord.type = XFW_DEF::TYPE_MACH_x86_thread_state32_t;
+                    } else if (sArch == "X86_64") {
+                        _spStructRecord.type = XFW_DEF::TYPE_MACH_x86_thread_state64_t;
+                    } else if (sArch == "ARM") {
+                        _spStructRecord.type = XFW_DEF::TYPE_MACH_arm_thread_state32_t;
+                    } else if (sArch == "ARM64E") {
+                        _spStructRecord.type = XFW_DEF::TYPE_MACH_arm_thread_state64_t;
+                    } else if (sArch == "POWERPC") {
+                        _spStructRecord.type = XFW_DEF::TYPE_MACH_ppc_thread_state32_t;
+                    } else {
+                        _spStructRecord.type = XFW_DEF::TYPE_MACH_x86_thread_state32_t;
+                    }
 
                     _addStruct(_spStructRecord);
                 }
