@@ -1498,7 +1498,21 @@ void XFormatWidget::_addFileType(QTreeWidgetItem *pTreeWidgetItem, QIODevice *pD
     spStruct.bIsImage = bIsImage;
     spStruct.nImageBase = nImageBase;
 
-    if ((fileType == XBinary::FT_PE) || (fileType == XBinary::FT_PE32) || (fileType == XBinary::FT_PE64)) {
+    if (fileType == XBinary::FT_MSDOS){
+        XMSDOS msdos(_pDevice, bIsImage, nImageBase);
+
+        if (msdos.isValid()) {
+            spStruct.endian = msdos.getEndian();
+            spStruct.mode = msdos.getMode();
+            spStruct.nStructOffset = 0;
+            spStruct.nStructCount = 1;
+            spStruct.widgetMode = XFW_DEF::WIDGETMODE_HEADER;
+            spStruct.type = XFW_DEF::TYPE_MSDOS_EXE_file;
+            spStruct.fileType = XBinary::FT_MSDOS;
+
+            _addStruct(spStruct);
+        }
+    } else if ((fileType == XBinary::FT_PE) || (fileType == XBinary::FT_PE32) || (fileType == XBinary::FT_PE64)) {
         XPE pe(_pDevice, bIsImage, nImageBase);
 
         if (pe.isValid()) {
