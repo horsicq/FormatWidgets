@@ -23,6 +23,8 @@
 
 #include "../xformatwidget_def.h"
 
+namespace XTYPE_PE {
+
 namespace X_IMAGE_NT_HEADERS {
 enum DATA {
     Signature = 0,
@@ -411,5 +413,6 @@ enum DATA {
 
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace X_IMAGE_RESOURCE_FIXEDFILEINFO
+} // namespace XTYPE_PE
 
 #endif

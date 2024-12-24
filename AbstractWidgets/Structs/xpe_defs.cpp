@@ -20,6 +20,8 @@
  */
 #include "xpe_defs.h"
 
+namespace XTYPE_PE {
+
 namespace X_IMAGE_NT_HEADERS {
 const XFW_DEF::HEADER_RECORD records[] = {
     {Signature, "Signature", offsetof(XPE_DEF::IMAGE_NT_HEADERS32, Signature), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
@@ -566,3 +568,5 @@ const XFW_DEF::HEADER_RECORD records[] = {
     {TypeOffset, "TypeOffset", 0, 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
 };
 }
+
+} // namespace X_PE

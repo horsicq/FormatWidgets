@@ -284,6 +284,8 @@ QString XFormatWidget::getTypeTitle(XFW_DEF::TYPE type, XBinary::MODE mode, XBin
     } else if ((type == XFW_DEF::TYPE_MSDOS_IMAGE_DOS_HEADER) || (type == XFW_DEF::TYPE_NE_IMAGE_DOS_HEADER) || (type == XFW_DEF::TYPE_LE_IMAGE_DOS_HEADER) ||
                (type == XFW_DEF::TYPE_LX_IMAGE_DOS_HEADER) || (type == XFW_DEF::TYPE_PE_IMAGE_DOS_HEADER)) {
         sResult = QString("IMAGE_DOS_HEADER");
+    } else if (type == XFW_DEF::TYPE_PE_IMAGE_NT_HEADERS) {
+        sResult = QString("IMAGE_NT_HEADERS");
     } else if (type == XFW_DEF::TYPE_MACH_mach_header) {
         sResult = QString("mach_header");
     } else if (type == XFW_DEF::TYPE_MACH_mach_header_64) {
@@ -565,6 +567,9 @@ QList<XFW_DEF::HEADER_RECORD> XFormatWidget::getHeaderRecords(const XFW_DEF::CWO
                (pCwOptions->_type == XFW_DEF::TYPE_PE_IMAGE_DOS_HEADER)) {
         pRecords = XTYPE_MSDOS::X_IMAGE_DOS_HEADER::records;
         nNumberOfRecords = XTYPE_MSDOS::X_IMAGE_DOS_HEADER::__data_size;
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_PE_IMAGE_NT_HEADERS) {
+        pRecords = XTYPE_PE::X_IMAGE_NT_HEADERS::records;
+        nNumberOfRecords = XTYPE_PE::X_IMAGE_NT_HEADERS::__data_size;
     } else if (pCwOptions->_type == XFW_DEF::TYPE_DEX_HEADER) {
         pRecords = XTYPE_DEX::X_HEADER::records;
         nNumberOfRecords = XTYPE_DEX::X_HEADER::__data_size;
@@ -696,6 +701,8 @@ qint64 XFormatWidget::getStructSize(XFW_DEF::TYPE type)
     } else if ((type == XFW_DEF::TYPE_MSDOS_IMAGE_DOS_HEADER) || (type == XFW_DEF::TYPE_NE_IMAGE_DOS_HEADER) || (type == XFW_DEF::TYPE_LE_IMAGE_DOS_HEADER) ||
                (type == XFW_DEF::TYPE_LX_IMAGE_DOS_HEADER) || (type == XFW_DEF::TYPE_PE_IMAGE_DOS_HEADER)) {
         nResult = sizeof(XMSDOS_DEF::IMAGE_DOS_HEADEREX);
+    } else if (type == XFW_DEF::TYPE_PE_IMAGE_NT_HEADERS) {
+        nResult = sizeof(quint32); // XPE_DEF::IMAGE_NT_HEADERS32.Signature TODO Check
     } else if (type == XFW_DEF::TYPE_DEX_HEADER) {
         nResult = sizeof(XDEX_DEF::HEADER);
     }
@@ -1621,7 +1628,14 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
     QIODevice *_pDevice = nullptr;
     SubDevice *pSd = nullptr;
 
-    if ((_spStruct.type > XFW_DEF::TYPE_MACH_START) && (_spStruct.type < XFW_DEF::TYPE_MACH_END)) {
+    if (((_spStruct.type > XFW_DEF::TYPE_MACH_START) && (_spStruct.type < XFW_DEF::TYPE_MACH_END)) ||
+        ((_spStruct.type > XFW_DEF::TYPE_ELF_START) && (_spStruct.type < XFW_DEF::TYPE_ELF_END)) ||
+        ((_spStruct.type > XFW_DEF::TYPE_DEX_START) && (_spStruct.type < XFW_DEF::TYPE_DEX_END)) ||
+        ((_spStruct.type > XFW_DEF::TYPE_MSDOS_START) && (_spStruct.type < XFW_DEF::TYPE_MSDOS_END)) ||
+        ((_spStruct.type > XFW_DEF::TYPE_NE_START) && (_spStruct.type < XFW_DEF::TYPE_NE_END)) ||
+        ((_spStruct.type > XFW_DEF::TYPE_LE_START) && (_spStruct.type < XFW_DEF::TYPE_LE_END)) ||
+        ((_spStruct.type > XFW_DEF::TYPE_LX_START) && (_spStruct.type < XFW_DEF::TYPE_LX_END)) ||
+        ((_spStruct.type > XFW_DEF::TYPE_PE_START) && (_spStruct.type < XFW_DEF::TYPE_PE_END))){
         if ((_spStruct.nOffset == 0) && (_spStruct.pDevice->size() == _spStruct.nSize)) {
             _pDevice = _spStruct.pDevice;
         } else {
@@ -1898,6 +1912,24 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
 
                         _addStruct(_spStructRecord);
                     }
+                }
+            }
+        } else if ((_spStruct.type > XFW_DEF::TYPE_PE_START) && (_spStruct.type < XFW_DEF::TYPE_PE_END)) {
+            XPE pe(_pDevice, _spStruct.bIsImage, _spStruct.nImageBase);
+
+            if ((_spStruct.widgetMode == XFW_DEF::WIDGETMODE_HEADER) && (_spStruct.type == XFW_DEF::TYPE_PE_IMAGE_DOS_HEADER)) {
+                XMSDOS_DEF::IMAGE_DOS_HEADEREX idh = pe._read_IMAGE_DOS_HEADEREX(_spStruct.nStructOffset);
+
+                if (idh.e_lfanew) {
+                    SPSTRUCT _spStructRecord = _spStruct;
+                    _spStructRecord.pTreeWidgetItem = pTreeWidgetItem;
+                    _spStructRecord.nStructOffset = _spStruct.nOffset + idh.e_lfanew;
+                    _spStructRecord.nStructSize = 0;
+                    _spStructRecord.nStructCount = 1;
+                    _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEADER;
+                    _spStructRecord.type = XFW_DEF::TYPE_PE_IMAGE_NT_HEADERS;
+
+                    _addStruct(_spStructRecord);
                 }
             }
         }
