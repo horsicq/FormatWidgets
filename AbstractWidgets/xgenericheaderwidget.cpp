@@ -55,34 +55,35 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
 
     qint32 nLimit = -1;
 
-    if (getCwOptions()->_type == XFW_DEF::TYPE_MACH_CS_CodeDirectory) {
-        XBinary binary(getDevice());
-        quint32 nVersion = binary.read_int32(getCwOptions()->nDataOffset + offsetof(XMACH_DEF::CS_CodeDirectory, version), true);
+    if ((getCwOptions()->_type > XFW_DEF::TYPE_MACH_START) && (getCwOptions()->_type < XFW_DEF::TYPE_MACH_END)) {
+        if (getCwOptions()->_type == XFW_DEF::TYPE_MACH_CS_CodeDirectory) {
+            XBinary binary(getDevice());
+            quint32 nVersion = binary.read_int32(getCwOptions()->nDataOffset + offsetof(XMACH_DEF::CS_CodeDirectory, version), true);
 
-        if (nVersion >= 0x20600) {
-            nLimit = -1;
-        } else if (nVersion >= 0x20500) {
-            nLimit = offsetof(XMACH_DEF::CS_CodeDirectory, linkageHashType);
-        } else if (nVersion >= 0x20400) {
-            nLimit = offsetof(XMACH_DEF::CS_CodeDirectory, runtime);
-        } else if (nVersion >= 0x20300) {
-            nLimit = offsetof(XMACH_DEF::CS_CodeDirectory, execSegBase);
-        } else if (nVersion >= 0x20200) {
-            nLimit = offsetof(XMACH_DEF::CS_CodeDirectory, spare3);
-        } else if (nVersion >= 0x20100) {
-            nLimit = offsetof(XMACH_DEF::CS_CodeDirectory, scatterOffset);
+            if (nVersion >= 0x20600) {
+                nLimit = -1;
+            } else if (nVersion >= 0x20500) {
+                nLimit = offsetof(XMACH_DEF::CS_CodeDirectory, linkageHashType);
+            } else if (nVersion >= 0x20400) {
+                nLimit = offsetof(XMACH_DEF::CS_CodeDirectory, runtime);
+            } else if (nVersion >= 0x20300) {
+                nLimit = offsetof(XMACH_DEF::CS_CodeDirectory, execSegBase);
+            } else if (nVersion >= 0x20200) {
+                nLimit = offsetof(XMACH_DEF::CS_CodeDirectory, spare3);
+            } else if (nVersion >= 0x20100) {
+                nLimit = offsetof(XMACH_DEF::CS_CodeDirectory, scatterOffset);
+            }
+
+            if (nLimit != -1) {
+                g_nDataSize = nLimit;
+            }
+        } else if (getCwOptions()->_type == XFW_DEF::TYPE_MACH_routines_command_64) {
+            XMACH xmach(getDevice(), getCwOptions()->bIsImage, getCwOptions()->nImageBase);
+            XMACH::COMMAND_RECORD cr = xmach._readLoadCommand(getCwOptions()->nDataOffset, getCwOptions()->endian == XBinary::ENDIAN_BIG);
+
+            nLimit = cr.nSize;
+            g_nDataSize = cr.nSize;
         }
-
-        if (nLimit != -1) {
-            g_nDataSize = nLimit;
-        }
-
-    } else if (getCwOptions()->_type == XFW_DEF::TYPE_MACH_routines_command_64) {
-        XMACH xmach(getDevice(), getCwOptions()->bIsImage, getCwOptions()->nImageBase);
-        XMACH::COMMAND_RECORD cr = xmach._readLoadCommand(getCwOptions()->nDataOffset, getCwOptions()->endian == XBinary::ENDIAN_BIG);
-
-        nLimit = cr.nSize;
-        g_nDataSize = cr.nSize;
     }
 
     QList<XFW_DEF::HEADER_RECORD> listHeaderRecords = getHeaderRecords(getCwOptions(), nLimit);
@@ -90,69 +91,76 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
     createHeaderTable(ui->tableWidgetMain, &listHeaderRecords, getListRecWidgets(), getCwOptions()->nDataOffset, getCwOptions()->endian, getCwOptions()->var1,
                       getCwOptions()->var2);
 
-    if ((getCwOptions()->_type == XFW_DEF::TYPE_MACH_load_command) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_segment_command) ||
-        (getCwOptions()->_type == XFW_DEF::TYPE_MACH_segment_command_64) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_dylib_command) ||
-        (getCwOptions()->_type == XFW_DEF::TYPE_MACH_rpath_command) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_sub_umbrella_command) ||
-        (getCwOptions()->_type == XFW_DEF::TYPE_MACH_sub_client_command) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_sub_library_command) ||
-        (getCwOptions()->_type == XFW_DEF::TYPE_MACH_symtab_command) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_dysymtab_command) ||
-        (getCwOptions()->_type == XFW_DEF::TYPE_MACH_segment_split_info_command) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_atom_info_command) ||
-        (getCwOptions()->_type == XFW_DEF::TYPE_MACH_function_starts_command) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_dyld_exports_trie_command) ||
-        (getCwOptions()->_type == XFW_DEF::TYPE_MACH_dyld_chained_fixups_command) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_encryption_info_command) ||
-        (getCwOptions()->_type == XFW_DEF::TYPE_MACH_encryption_info_command_64) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_dyld_info_command) ||
-        (getCwOptions()->_type == XFW_DEF::TYPE_MACH_version_min_command) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_uuid_command) ||
-        (getCwOptions()->_type == XFW_DEF::TYPE_MACH_build_version_command) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_main_command) ||
-        (getCwOptions()->_type == XFW_DEF::TYPE_MACH_fileset_entry_command) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_source_version_command) ||
-        (getCwOptions()->_type == XFW_DEF::TYPE_MACH_dylinker_command) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_data_in_code_command) ||
-        (getCwOptions()->_type == XFW_DEF::TYPE_MACH_code_signature_command) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_routines_command) ||
-        (getCwOptions()->_type == XFW_DEF::TYPE_MACH_routines_command_64) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_fvm_library_command) ||
-        (getCwOptions()->_type == XFW_DEF::TYPE_MACH_unix_thread_command)) {
-        addComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getLoadCommandTypesS(), XTYPE_MACH::X_load_commands::cmd, XComboBoxEx::CBTYPE_LIST, 0);
-    } else if ((getCwOptions()->_type == XFW_DEF::TYPE_MSDOS_EXE_file) ||
-               (getCwOptions()->_type == XFW_DEF::TYPE_MSDOS_IMAGE_DOS_HEADER) ||
-               (getCwOptions()->_type == XFW_DEF::TYPE_NE_IMAGE_DOS_HEADER) ||
-               (getCwOptions()->_type == XFW_DEF::TYPE_LE_IMAGE_DOS_HEADER) ||
-               (getCwOptions()->_type == XFW_DEF::TYPE_LX_IMAGE_DOS_HEADER) ||
-               (getCwOptions()->_type == XFW_DEF::TYPE_PE_IMAGE_DOS_HEADER)) {
-        addComboBox(ui->tableWidgetMain, getListRecWidgets(), XMSDOS::getImageMagicsS(), XTYPE_MSDOS::X_IMAGE_DOS_HEADER::e_magic, XComboBoxEx::CBTYPE_LIST, 0);
+    if ((getCwOptions()->_type > XFW_DEF::TYPE_MSDOS_START) && (getCwOptions()->_type < XFW_DEF::TYPE_MSDOS_END)) {
+        if (getCwOptions()->_type == XFW_DEF::TYPE_MSDOS_IMAGE_DOS_HEADER) {
+            addComboBox(ui->tableWidgetMain, getListRecWidgets(), XMSDOS::getImageMagicsS(), XTYPE_MSDOS::X_Exe_file::exe_signature, XComboBoxEx::CBTYPE_LIST, 0);
+        }
+    } else if ((getCwOptions()->_type > XFW_DEF::TYPE_PE_START) && (getCwOptions()->_type < XFW_DEF::TYPE_PE_END)) {
+        if (getCwOptions()->_type == XFW_DEF::TYPE_PE_IMAGE_DOS_HEADER) {
+            addComboBox(ui->tableWidgetMain, getListRecWidgets(), XMSDOS::getImageMagicsS(), XTYPE_MSDOS::X_IMAGE_DOS_HEADER::e_magic, XComboBoxEx::CBTYPE_LIST, 0);
+        } else if (getCwOptions()->_type == XFW_DEF::TYPE_PE_IMAGE_NT_HEADERS) {
+            addComboBox(ui->tableWidgetMain, getListRecWidgets(), XPE::getImageNtHeadersSignaturesS(), XTYPE_PE::X_IMAGE_NT_HEADERS::Signature, XComboBoxEx::CBTYPE_LIST, 0);
+        }
+    } else if ((getCwOptions()->_type > XFW_DEF::TYPE_MACH_START) && (getCwOptions()->_type < XFW_DEF::TYPE_MACH_END)) {
+        if ((getCwOptions()->_type == XFW_DEF::TYPE_MACH_load_command) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_segment_command) ||
+            (getCwOptions()->_type == XFW_DEF::TYPE_MACH_segment_command_64) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_dylib_command) ||
+            (getCwOptions()->_type == XFW_DEF::TYPE_MACH_rpath_command) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_sub_umbrella_command) ||
+            (getCwOptions()->_type == XFW_DEF::TYPE_MACH_sub_client_command) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_sub_library_command) ||
+            (getCwOptions()->_type == XFW_DEF::TYPE_MACH_symtab_command) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_dysymtab_command) ||
+            (getCwOptions()->_type == XFW_DEF::TYPE_MACH_segment_split_info_command) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_atom_info_command) ||
+            (getCwOptions()->_type == XFW_DEF::TYPE_MACH_function_starts_command) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_dyld_exports_trie_command) ||
+            (getCwOptions()->_type == XFW_DEF::TYPE_MACH_dyld_chained_fixups_command) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_encryption_info_command) ||
+            (getCwOptions()->_type == XFW_DEF::TYPE_MACH_encryption_info_command_64) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_dyld_info_command) ||
+            (getCwOptions()->_type == XFW_DEF::TYPE_MACH_version_min_command) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_uuid_command) ||
+            (getCwOptions()->_type == XFW_DEF::TYPE_MACH_build_version_command) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_main_command) ||
+            (getCwOptions()->_type == XFW_DEF::TYPE_MACH_fileset_entry_command) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_source_version_command) ||
+            (getCwOptions()->_type == XFW_DEF::TYPE_MACH_dylinker_command) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_data_in_code_command) ||
+            (getCwOptions()->_type == XFW_DEF::TYPE_MACH_code_signature_command) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_routines_command) ||
+            (getCwOptions()->_type == XFW_DEF::TYPE_MACH_routines_command_64) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_fvm_library_command) ||
+            (getCwOptions()->_type == XFW_DEF::TYPE_MACH_unix_thread_command)) {
+            addComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getLoadCommandTypesS(), XTYPE_MACH::X_load_commands::cmd, XComboBoxEx::CBTYPE_LIST, 0);
+        }
+
+        if ((getCwOptions()->_type == XFW_DEF::TYPE_MACH_mach_header) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_mach_header_64)) {
+            XBinary binary(getDevice());
+            quint32 _cputype = binary.read_int32(getCwOptions()->nDataOffset + offsetof(XMACH_DEF::mach_header, cputype), (getCwOptions()->endian == XBinary::ENDIAN_BIG));
+
+            addComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getHeaderMagicsS(), XTYPE_MACH::X_mach_header::magic, XComboBoxEx::CBTYPE_LIST, 0);
+            addComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getHeaderCpuTypesS(), XTYPE_MACH::X_mach_header::cputype, XComboBoxEx::CBTYPE_LIST, 0);
+            addComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getHeaderCpuSubTypesS(_cputype), XTYPE_MACH::X_mach_header::cpusubtype, XComboBoxEx::CBTYPE_LIST, 0);
+            addComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getHeaderFileTypesS(), XTYPE_MACH::X_mach_header::filetype, XComboBoxEx::CBTYPE_LIST, 0);
+            addComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getHeaderFlagsS(), XTYPE_MACH::X_mach_header::flags, XComboBoxEx::CBTYPE_FLAGS, 0);
+        } else if ((getCwOptions()->_type == XFW_DEF::TYPE_MACH_segment_command) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_segment_command_64)) {
+            addComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getVMProtectionsS(), XTYPE_MACH::X_segment_command::initprot, XComboBoxEx::CBTYPE_FLAGS, 0);
+            addComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getVMProtectionsS(), XTYPE_MACH::X_segment_command::maxprot, XComboBoxEx::CBTYPE_FLAGS, 0);
+            // } else if (getCwOptions()->_type == FW_DEF::TYPE_MACH_section) {
+            //     adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getSectionTypesS(), N_mach_section::flags, XComboBoxEx::CBTYPE_FLAGS, 0);
+            // } else if (getCwOptions()->_type == FW_DEF::TYPE_MACH_dyld_info_command) {
+            //     adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getCommandsS(), N_mach_dyld_info_command::cmd, XComboBoxEx::CBTYPE_LIST, 0);
+            // } else if (getCwOptions()->_type == FW_DEF::TYPE_MACH_uuid_command) {
+            //     adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getCommandsS(), N_mach_uuid_command::cmd, XComboBoxEx::CBTYPE_LIST, 0);
+            // } else if (getCwOptions()->_type == FW_DEF::TYPE_MACH_dylib_command) {
+            //     adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getCommandsS(), N_mach_dylib_command::cmd, XComboBoxEx::CBTYPE_LIST, 0);
+            // } else if (getCwOptions()->_type == FW_DEF::TYPE_MACH_routines_command) {
+            //     adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getCommandsS(), N_mach_routines_command::cmd, XComboBoxEx::CBTYPE_LIST, 0);
+            // } else if (getCwOptions()->_type == FW_DEF::TYPE_MACH_routines_command_64) {
+            //     adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getCommandsS(), N_mach_routines_command_64::cmd, XComboBoxEx::CBTYPE_LIST, 0);
+        } else if (getCwOptions()->_type == XFW_DEF::TYPE_MACH_build_version_command) {
+            addComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getPlatformS(), XTYPE_MACH::X_build_version_command::platform, XComboBoxEx::CBTYPE_LIST, 0);
+        } else if (getCwOptions()->_type == XFW_DEF::TYPE_MACH_CS_CodeDirectory) {
+        } else if ((getCwOptions()->_type == XFW_DEF::TYPE_Elf32_Ehdr) || (getCwOptions()->_type == XFW_DEF::TYPE_Elf64_Ehdr)) {
+            // adjustComboBox(getListRecWidgets(), XELF::getHeaderMagicsS(), _elf_ehdrWidget::ei_mag, XComboBoxEx::CBTYPE_LIST, 0);
+            // adjustComboBox(getListRecWidgets(), XELF::getHeaderClassesS(), _elf_ehdrWidget::ei_class, XComboBoxEx::CBTYPE_LIST, 0);
+            // adjustComboBox(getListRecWidgets(), XELF::getHeaderDataS(), _elf_ehdrWidget::ei_data, XComboBoxEx::CBTYPE_LIST, 0);
+            // adjustComboBox(getListRecWidgets(), XELF::getHeaderVersionsS(), _elf_ehdrWidget::ei_version, XComboBoxEx::CBTYPE_LIST, 0);
+            // adjustComboBox(getListRecWidgets(), XELF::getHeaderOsabisS(), _elf_ehdrWidget::ei_osabi, XComboBoxEx::CBTYPE_LIST, 0);
+            // adjustComboBox(getListRecWidgets(), XELF::getHeaderFileTypesS(), _elf_ehdrWidget::e_type, XComboBoxEx::CBTYPE_LIST, 0);
+            // adjustComboBox(getListRecWidgets(), XELF::getHeaderMachinesS(), _elf_ehdrWidget::e_machine, XComboBoxEx::CBTYPE_LIST, 0);
+            // adjustComboBox(getListRecWidgets(), XELF::getHeaderFlagsS(), _elf_ehdrWidget::e_flags, XComboBoxEx::CBTYPE_FLAGS, 0);
+        }
     }
 
-    if ((getCwOptions()->_type == XFW_DEF::TYPE_MACH_mach_header) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_mach_header_64)) {
-        XBinary binary(getDevice());
-        quint32 _cputype = binary.read_int32(getCwOptions()->nDataOffset + offsetof(XMACH_DEF::mach_header, cputype), (getCwOptions()->endian == XBinary::ENDIAN_BIG));
 
-        addComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getHeaderMagicsS(), XTYPE_MACH::X_mach_header::magic, XComboBoxEx::CBTYPE_LIST, 0);
-        addComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getHeaderCpuTypesS(), XTYPE_MACH::X_mach_header::cputype, XComboBoxEx::CBTYPE_LIST, 0);
-        addComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getHeaderCpuSubTypesS(_cputype), XTYPE_MACH::X_mach_header::cpusubtype, XComboBoxEx::CBTYPE_LIST, 0);
-        addComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getHeaderFileTypesS(), XTYPE_MACH::X_mach_header::filetype, XComboBoxEx::CBTYPE_LIST, 0);
-        addComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getHeaderFlagsS(), XTYPE_MACH::X_mach_header::flags, XComboBoxEx::CBTYPE_FLAGS, 0);
-    } else if ((getCwOptions()->_type == XFW_DEF::TYPE_MACH_segment_command) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_segment_command_64)) {
-        addComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getVMProtectionsS(), XTYPE_MACH::X_segment_command::initprot, XComboBoxEx::CBTYPE_FLAGS, 0);
-        addComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getVMProtectionsS(), XTYPE_MACH::X_segment_command::maxprot, XComboBoxEx::CBTYPE_FLAGS, 0);
-        // } else if (getCwOptions()->_type == FW_DEF::TYPE_MACH_section) {
-        //     adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getSectionTypesS(), N_mach_section::flags, XComboBoxEx::CBTYPE_FLAGS, 0);
-        // } else if (getCwOptions()->_type == FW_DEF::TYPE_MACH_dyld_info_command) {
-        //     adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getCommandsS(), N_mach_dyld_info_command::cmd, XComboBoxEx::CBTYPE_LIST, 0);
-        // } else if (getCwOptions()->_type == FW_DEF::TYPE_MACH_uuid_command) {
-        //     adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getCommandsS(), N_mach_uuid_command::cmd, XComboBoxEx::CBTYPE_LIST, 0);
-        // } else if (getCwOptions()->_type == FW_DEF::TYPE_MACH_dylib_command) {
-        //     adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getCommandsS(), N_mach_dylib_command::cmd, XComboBoxEx::CBTYPE_LIST, 0);
-        // } else if (getCwOptions()->_type == FW_DEF::TYPE_MACH_routines_command) {
-        //     adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getCommandsS(), N_mach_routines_command::cmd, XComboBoxEx::CBTYPE_LIST, 0);
-        // } else if (getCwOptions()->_type == FW_DEF::TYPE_MACH_routines_command_64) {
-        //     adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getCommandsS(), N_mach_routines_command_64::cmd, XComboBoxEx::CBTYPE_LIST, 0);
-    } else if (getCwOptions()->_type == XFW_DEF::TYPE_MACH_build_version_command) {
-        addComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getPlatformS(), XTYPE_MACH::X_build_version_command::platform, XComboBoxEx::CBTYPE_LIST, 0);
-    } else if (getCwOptions()->_type == XFW_DEF::TYPE_MACH_CS_CodeDirectory) {
-    } else if ((getCwOptions()->_type == XFW_DEF::TYPE_Elf32_Ehdr) || (getCwOptions()->_type == XFW_DEF::TYPE_Elf64_Ehdr)) {
-        // adjustComboBox(getListRecWidgets(), XELF::getHeaderMagicsS(), _elf_ehdrWidget::ei_mag, XComboBoxEx::CBTYPE_LIST, 0);
-        // adjustComboBox(getListRecWidgets(), XELF::getHeaderClassesS(), _elf_ehdrWidget::ei_class, XComboBoxEx::CBTYPE_LIST, 0);
-        // adjustComboBox(getListRecWidgets(), XELF::getHeaderDataS(), _elf_ehdrWidget::ei_data, XComboBoxEx::CBTYPE_LIST, 0);
-        // adjustComboBox(getListRecWidgets(), XELF::getHeaderVersionsS(), _elf_ehdrWidget::ei_version, XComboBoxEx::CBTYPE_LIST, 0);
-        // adjustComboBox(getListRecWidgets(), XELF::getHeaderOsabisS(), _elf_ehdrWidget::ei_osabi, XComboBoxEx::CBTYPE_LIST, 0);
-        // adjustComboBox(getListRecWidgets(), XELF::getHeaderFileTypesS(), _elf_ehdrWidget::e_type, XComboBoxEx::CBTYPE_LIST, 0);
-        // adjustComboBox(getListRecWidgets(), XELF::getHeaderMachinesS(), _elf_ehdrWidget::e_machine, XComboBoxEx::CBTYPE_LIST, 0);
-        // adjustComboBox(getListRecWidgets(), XELF::getHeaderFlagsS(), _elf_ehdrWidget::e_flags, XComboBoxEx::CBTYPE_FLAGS, 0);
-    }
 
     updateRecWidgets(getCwOptions()->pDevice, getListRecWidgets());
 
