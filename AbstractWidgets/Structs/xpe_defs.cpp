@@ -35,9 +35,9 @@ const XFW_DEF::HEADER_RECORD records[] = {
     {TimeDateStamp, "TimeDateStamp", offsetof(XPE_DEF::IMAGE_FILE_HEADER, TimeDateStamp), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {PointerToSymbolTable, "PointerToSymbolTable", offsetof(XPE_DEF::IMAGE_FILE_HEADER, PointerToSymbolTable), 4, "DWORD",
      XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET, -1},
-    {NumberOfSymbols, "NumberOfSymbols", offsetof(XPE_DEF::IMAGE_FILE_HEADER, NumberOfSymbols), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {NumberOfSymbols, "NumberOfSymbols", offsetof(XPE_DEF::IMAGE_FILE_HEADER, NumberOfSymbols), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_COUNT, -1},
     {SizeOfOptionalHeader, "SizeOfOptionalHeader", offsetof(XPE_DEF::IMAGE_FILE_HEADER, SizeOfOptionalHeader), 2, "WORD",
-     XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, -1},
+     XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE | XFW_DEF::VAL_TYPE_RELTOHEADEREND, -1},
     {Characteristics, "Characteristics", offsetof(XPE_DEF::IMAGE_FILE_HEADER, Characteristics), 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
 };
 }

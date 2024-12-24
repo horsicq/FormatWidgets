@@ -710,7 +710,7 @@ qint64 XFormatWidget::getStructSize(XFW_DEF::TYPE type)
     return nResult;
 }
 
-qint32 XFormatWidget::getHeaderSize(QList<XFW_DEF::HEADER_RECORD> *pListHeaderRecords)
+qint32 XFormatWidget::getHeaderSize(const QList<XFW_DEF::HEADER_RECORD> *pListHeaderRecords)
 {
     qint32 nResult = 0;
     qint32 nNumberOfRecords = pListHeaderRecords->count();
@@ -1170,7 +1170,9 @@ void XFormatWidget::updateRecWidgets(QIODevice *pDevice, QList<RECWIDGET> *pList
             if (pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_SIZE) {
                 if (pListRecWidget->at(i).nSubPosition != -1) {
                     bIsSize = true;
-                } else if (pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_RELTOSTRUCT) {
+                } else if (pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_RELTOHEADER) {
+                    bIsSize = true;
+                } else if (pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_RELTOHEADEREND) {
                     bIsSize = true;
                 }
             }
@@ -2300,6 +2302,8 @@ bool XFormatWidget::createHeaderTable(QTableWidget *pTableWidget, const QList<XF
 {
     qint32 nNumberOfRecords = pListHeaderRecords->count();
 
+    qint64 nTotalSize = getHeaderSize(pListHeaderRecords);
+
     pTableWidget->clear();
 
     QStringList slHeader;
@@ -2388,8 +2392,10 @@ bool XFormatWidget::createHeaderTable(QTableWidget *pTableWidget, const QList<XF
     for (qint32 i = 0; i < nNumberOfRecords; i++) {
         if (pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_RELTOPARENT) {
             (*pListRecWidget)[i].varDelta = var1.toULongLong();
-        } else if (pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_RELTOSTRUCT) {
+        } else if (pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_RELTOHEADER) {
             (*pListRecWidget)[i].varDelta = nOffset;
+        } else if (pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_RELTOHEADEREND) {
+            (*pListRecWidget)[i].varDelta = nOffset + nTotalSize;
         }
 
         bool bValid = false;
@@ -2400,7 +2406,9 @@ bool XFormatWidget::createHeaderTable(QTableWidget *pTableWidget, const QList<XF
             bValid = true;
         } else if ((pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_SIZE) && (pListRecWidget->at(i).nSubPosition != -1)) {
             bValid = true;
-        } else if ((pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_SIZE) && (pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_RELTOSTRUCT)) {
+        } else if ((pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_SIZE) && (pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_RELTOHEADER)) {
+            bValid = true;
+        } else if ((pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_SIZE) && (pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_RELTOHEADEREND)) {
             bValid = true;
         }
 
@@ -2421,7 +2429,9 @@ bool XFormatWidget::createHeaderTable(QTableWidget *pTableWidget, const QList<XF
                     } else if (pListRecWidget->at(nSubPosition).nVType & XFW_DEF::VAL_TYPE_ADDRESS) {
                         locType = XBinary::LT_ADDRESS;
                     }
-                } else if (pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_RELTOSTRUCT) {
+                } else if (pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_RELTOHEADER) {
+                    locType = XBinary::LT_OFFSET;
+                } else if (pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_RELTOHEADEREND) {
                     locType = XBinary::LT_OFFSET;
                 }
             }
