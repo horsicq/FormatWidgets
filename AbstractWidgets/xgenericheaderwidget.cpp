@@ -107,6 +107,13 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
         (getCwOptions()->_type == XFW_DEF::TYPE_MACH_routines_command_64) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_fvm_library_command) ||
         (getCwOptions()->_type == XFW_DEF::TYPE_MACH_unix_thread_command)) {
         addComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getLoadCommandTypesS(), XTYPE_MACH::X_load_commands::cmd, XComboBoxEx::CBTYPE_LIST, 0);
+    } else if ((getCwOptions()->_type == XFW_DEF::TYPE_MSDOS_EXE_file) ||
+               (getCwOptions()->_type == XFW_DEF::TYPE_MSDOS_IMAGE_DOS_HEADER) ||
+               (getCwOptions()->_type == XFW_DEF::TYPE_NE_IMAGE_DOS_HEADER) ||
+               (getCwOptions()->_type == XFW_DEF::TYPE_LE_IMAGE_DOS_HEADER) ||
+               (getCwOptions()->_type == XFW_DEF::TYPE_LX_IMAGE_DOS_HEADER) ||
+               (getCwOptions()->_type == XFW_DEF::TYPE_PE_IMAGE_DOS_HEADER)) {
+        addComboBox(ui->tableWidgetMain, getListRecWidgets(), XMSDOS::getImageMagicsS(), XTYPE_MSDOS::X_IMAGE_DOS_HEADER::e_magic, XComboBoxEx::CBTYPE_LIST, 0);
     }
 
     if ((getCwOptions()->_type == XFW_DEF::TYPE_MACH_mach_header) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_mach_header_64)) {

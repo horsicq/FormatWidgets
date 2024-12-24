@@ -1841,7 +1841,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
 
                     QString sArch = mach.getArch();
 
-                    if (sArch == "MC68030") {
+                    if ((sArch == "MC68030") || (sArch == "MC68030_ONLY") || (sArch == "MC68040")) {
                         _spStructRecord.type = XFW_DEF::TYPE_MACH_m68k_thread_state32_t;
                     } else if (sArch == "I386") {
                         _spStructRecord.type = XFW_DEF::TYPE_MACH_x86_thread_state32_t;
