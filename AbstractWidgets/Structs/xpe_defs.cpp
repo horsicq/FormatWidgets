@@ -96,7 +96,7 @@ const XFW_DEF::HEADER_RECORD records64[] = {
     {AddressOfEntryPoint, "AddressOfEntryPoint", offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64, AddressOfEntryPoint), 4, "DWORD",
      XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_RELADDRESS_, -1},
     {BaseOfCode, "BaseOfCode", offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64, BaseOfCode), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_RELADDRESS_, -1},
-    {BaseOfData, "", 0, 0, "", XFW_DEF::VAL_TYPE_UNKNOWN_, -1},
+    {BaseOfData, "", -1, 0, "", XFW_DEF::VAL_TYPE_UNKNOWN_, -1},
     {ImageBase, "ImageBase", offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64, ImageBase), 8, "ULONGLONG", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_ADDRESS, -1},
     {SectionAlignment, "SectionAlignment", offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64, SectionAlignment), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {FileAlignment, "FileAlignment", offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64, FileAlignment), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},

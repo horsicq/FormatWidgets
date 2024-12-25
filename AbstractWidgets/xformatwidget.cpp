@@ -288,6 +288,10 @@ QString XFormatWidget::getTypeTitle(XFW_DEF::TYPE type, XBinary::MODE mode, XBin
         sResult = QString("IMAGE_NT_HEADERS");
     } else if (type == XFW_DEF::TYPE_PE_IMAGE_FILE_HEADER) {
         sResult = QString("IMAGE_FILE_HEADER");
+    } else if (type == XFW_DEF::TYPE_PE_IMAGE_OPTIONAL_HEADER32) {
+        sResult = QString("IMAGE_OPTIONAL_HEADER32");
+    } else if (type == XFW_DEF::TYPE_PE_IMAGE_OPTIONAL_HEADER64) {
+        sResult = QString("IMAGE_OPTIONAL_HEADER64");
     } else if (type == XFW_DEF::TYPE_MACH_mach_header) {
         sResult = QString("mach_header");
     } else if (type == XFW_DEF::TYPE_MACH_mach_header_64) {
@@ -572,6 +576,12 @@ QList<XFW_DEF::HEADER_RECORD> XFormatWidget::getHeaderRecords(const XFW_DEF::CWO
     } else if (pCwOptions->_type == XFW_DEF::TYPE_PE_IMAGE_NT_HEADERS) {
         pRecords = XTYPE_PE::X_IMAGE_NT_HEADERS::records;
         nNumberOfRecords = XTYPE_PE::X_IMAGE_NT_HEADERS::__data_size;
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_PE_IMAGE_OPTIONAL_HEADER32) {
+        pRecords = XTYPE_PE::X_IMAGE_OPTIONAL_HEADER::records32;
+        nNumberOfRecords = XTYPE_PE::X_IMAGE_OPTIONAL_HEADER::__data_size;
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_PE_IMAGE_OPTIONAL_HEADER64) {
+        pRecords = XTYPE_PE::X_IMAGE_OPTIONAL_HEADER::records64;
+        nNumberOfRecords = XTYPE_PE::X_IMAGE_OPTIONAL_HEADER::__data_size;
     } else if (pCwOptions->_type == XFW_DEF::TYPE_PE_IMAGE_FILE_HEADER) {
         pRecords = XTYPE_PE::X_IMAGE_FILE_HEADER::records;
         nNumberOfRecords = XTYPE_PE::X_IMAGE_FILE_HEADER::__data_size;
@@ -710,6 +720,10 @@ qint64 XFormatWidget::getStructSize(XFW_DEF::TYPE type)
         nResult = sizeof(quint32); // XPE_DEF::IMAGE_NT_HEADERS32.Signature TODO Check
     } else if (type == XFW_DEF::TYPE_PE_IMAGE_FILE_HEADER) {
         nResult = sizeof(XPE_DEF::IMAGE_FILE_HEADER);
+    } else if (type == XFW_DEF::TYPE_PE_IMAGE_OPTIONAL_HEADER32) {
+        nResult = sizeof(XPE_DEF::IMAGE_OPTIONAL_HEADER32);
+    } else if (type == XFW_DEF::TYPE_PE_IMAGE_OPTIONAL_HEADER64) {
+        nResult = sizeof(XPE_DEF::IMAGE_OPTIONAL_HEADER64);
     } else if (type == XFW_DEF::TYPE_DEX_HEADER) {
         nResult = sizeof(XDEX_DEF::HEADER);
     }
@@ -1941,6 +1955,10 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     _addStruct(_spStructRecord);
                 }
             } else if ((_spStruct.widgetMode == XFW_DEF::WIDGETMODE_HEADER) && (_spStruct.type == XFW_DEF::TYPE_PE_IMAGE_NT_HEADERS)) {
+
+                XPE_DEF::IMAGE_FILE_HEADER fileHeader = pe._read_IMAGE_FILE_HEADER(_spStruct.nStructOffset + sizeof(quint32));
+                quint16 nOptionalHeaderSignature = pe.read_uint16(_spStruct.nStructOffset + sizeof(quint32) + sizeof(XPE_DEF::IMAGE_FILE_HEADER));
+
                 {
                     SPSTRUCT _spStructRecord = _spStruct;
                     _spStructRecord.pTreeWidgetItem = pTreeWidgetItem;
@@ -1952,17 +1970,22 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
 
                     _addStruct(_spStructRecord);
                 }
-                // {
-                //     SPSTRUCT _spStructRecord = _spStruct;
-                //     _spStructRecord.pTreeWidgetItem = pTreeWidgetItem;
-                //     _spStructRecord.nStructOffset = _spStruct.nOffset + sizeof(quint32) + sizeof(XPE_DEF::IMAGE_FILE_HEADER);;
-                //     _spStructRecord.nStructSize = sizeof(XPE_DEF::IMAGE_FILE_HEADER);
-                //     _spStructRecord.nStructCount = 1;
-                //     _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEADER;
-                //     _spStructRecord.type = XFW_DEF::TYPE_PE_IMAGE_
+                {
+                    SPSTRUCT _spStructRecord = _spStruct;
+                    _spStructRecord.pTreeWidgetItem = pTreeWidgetItem;
+                    _spStructRecord.nStructOffset = _spStruct.nStructOffset + sizeof(quint32) + sizeof(XPE_DEF::IMAGE_FILE_HEADER);;
+                    _spStructRecord.nStructCount = 1;
+                    _spStructRecord.nStructSize = fileHeader.SizeOfOptionalHeader;
+                    _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEADER;
 
-                //     _addStruct(_spStructRecord);
-                // }
+                    if (nOptionalHeaderSignature == XPE_DEF::S_IMAGE_NT_OPTIONAL_HDR64_MAGIC) {
+                        _spStructRecord.type = XFW_DEF::TYPE_PE_IMAGE_OPTIONAL_HEADER64;
+                    } else {
+                        _spStructRecord.type = XFW_DEF::TYPE_PE_IMAGE_OPTIONAL_HEADER32;
+                    }
+
+                    _addStruct(_spStructRecord);
+                }
             }
         }
     }
