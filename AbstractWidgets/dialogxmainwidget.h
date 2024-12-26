@@ -22,6 +22,7 @@
 #define DIALOGXMAINWIDGET_H
 
 #include "xshortcutsdialog.h"
+#include "xformatwidget.h"
 
 namespace Ui {
 class DialogXMainWidget;

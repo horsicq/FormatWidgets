@@ -2219,6 +2219,39 @@ void XFormatWidget::_followLocation(quint64 nLocation, qint32 nLocationType, qin
 #endif
 }
 
+QString XFormatWidget::widgetModeIdToString(XFW_DEF::WIDGETMODE widgetMode)
+{
+    QString sResult;
+
+    if (widgetMode == XFW_DEF::WIDGETMODE_TABLE) {
+        sResult = tr("Table");
+    } else if (widgetMode == XFW_DEF::WIDGETMODE_HEADER) {
+        sResult = tr("Header");
+    } else if (widgetMode == XFW_DEF::WIDGETMODE_HEX) {
+        sResult = tr("Hex");
+    } else if (widgetMode == XFW_DEF::WIDGETMODE_DISASM) {
+        sResult = tr("Disasm");
+    }
+
+    return sResult;
+}
+
+void XFormatWidget::adjustWidgetModeComboBox(QComboBox *pComboBox, XFW_DEF::WIDGETMODE widgetMode)
+{
+    // TODO
+
+    pComboBox->clear();
+
+    bool bBlockSignals=pComboBox->blockSignals(true);
+
+    pComboBox->addItem(widgetModeIdToString(XFW_DEF::WIDGETMODE_HEADER), XFW_DEF::WIDGETMODE_HEADER);
+    pComboBox->addItem(widgetModeIdToString(XFW_DEF::WIDGETMODE_TABLE), XFW_DEF::WIDGETMODE_TABLE);
+    pComboBox->addItem(widgetModeIdToString(XFW_DEF::WIDGETMODE_HEX), XFW_DEF::WIDGETMODE_HEX);
+    pComboBox->addItem(widgetModeIdToString(XFW_DEF::WIDGETMODE_DISASM), XFW_DEF::WIDGETMODE_DISASM);
+
+    pComboBox->blockSignals(bBlockSignals);
+}
+
 // void XFormatWidget::resizeToolsWidget(QWidget *pParent,ToolsWidget
 // *pToolWidget)
 //{

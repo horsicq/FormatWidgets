@@ -23,10 +23,18 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_3">
      <item>
-      <widget class="QLineEdit" name="lineEditOffset"/>
+      <widget class="XLineEditHEX" name="lineEditOffset">
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEditSize"/>
+      <widget class="XLineEditHEX" name="lineEditSize">
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -45,6 +53,9 @@
          <width>80</width>
          <height>16777215</height>
         </size>
+       </property>
+       <property name="minimum">
+        <number>1</number>
        </property>
        <property name="maximum">
         <number>1000</number>
@@ -99,6 +110,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>XLineEditHEX</class>
+   <extends>QLineEdit</extends>
+   <header>xlineedithex.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

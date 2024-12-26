@@ -24,6 +24,12 @@
 DialogSetGenericWidget::DialogSetGenericWidget(QWidget *parent) : XShortcutsDialog(parent), ui(new Ui::DialogSetGenericWidget)
 {
     ui->setupUi(this);
+
+    g_pDevice=nullptr;
+    g_nOffset=0;
+    g_nSize=0;
+
+    XFormatWidget::adjustWidgetModeComboBox(ui->comboBoxMode);
 }
 
 DialogSetGenericWidget::~DialogSetGenericWidget()
@@ -31,8 +37,19 @@ DialogSetGenericWidget::~DialogSetGenericWidget()
     delete ui;
 }
 
+void DialogSetGenericWidget::setData(QIODevice *pDevice, qint64 nOffset, qint64 nSize)
+{
+    g_pDevice=pDevice;
+    g_nOffset=nOffset;
+    g_nSize=nSize;
+
+    adjustView();
+}
+
 void DialogSetGenericWidget::adjustView()
 {
+    ui->lineEditOffset->setValue32_64(g_nOffset);
+    ui->lineEditSize->setValue32_64(g_nSize);
 }
 
 void DialogSetGenericWidget::registerShortcuts(bool bState)

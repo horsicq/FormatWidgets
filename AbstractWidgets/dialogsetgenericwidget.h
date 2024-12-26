@@ -35,6 +35,8 @@ public:
     explicit DialogSetGenericWidget(QWidget *pParent = nullptr);
     ~DialogSetGenericWidget();
 
+    void setData(QIODevice *pDevice, qint64 nOffset, qint64 nSize);
+
     virtual void adjustView();
 
 protected:
@@ -42,11 +44,13 @@ protected:
 
 private slots:
     void on_pushButtonCancel_clicked();
-
     void on_pushButtonOK_clicked();
 
 private:
     Ui::DialogSetGenericWidget *ui;
+    QIODevice *g_pDevice;
+    qint64 g_nOffset;
+    qint64 g_nSize;
 };
 
 #endif  // DIALOGSETGENERICWIDGET_H

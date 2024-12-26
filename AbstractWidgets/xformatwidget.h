@@ -238,6 +238,9 @@ public:
     static void _addStruct(const SPSTRUCT &spStruct);
     static XFW_DEF::TYPE load_commandIdToType(qint32 nCommandId);
 
+    static QString widgetModeIdToString(XFW_DEF::WIDGETMODE widgetMode);
+    static void adjustWidgetModeComboBox(QComboBox *pComboBox, XFW_DEF::WIDGETMODE widgetMode = XFW_DEF::WIDGETMODE_UNKNOWN);
+
 protected:
     enum SV {
         SV_NONE = 0,
