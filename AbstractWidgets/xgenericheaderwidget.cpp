@@ -100,6 +100,14 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
             addComboBox(ui->tableWidgetMain, getListRecWidgets(), XMSDOS::getImageMagicsS(), XTYPE_MSDOS::X_IMAGE_DOS_HEADER::e_magic, XComboBoxEx::CBTYPE_LIST, 0);
         } else if (getCwOptions()->_type == XFW_DEF::TYPE_PE_IMAGE_NT_HEADERS) {
             addComboBox(ui->tableWidgetMain, getListRecWidgets(), XPE::getImageNtHeadersSignaturesS(), XTYPE_PE::X_IMAGE_NT_HEADERS::Signature, XComboBoxEx::CBTYPE_LIST, 0);
+        } else if (getCwOptions()->_type == XFW_DEF::TYPE_PE_IMAGE_FILE_HEADER) {
+        } else if ((getCwOptions()->_type == XFW_DEF::TYPE_PE_IMAGE_OPTIONAL_HEADER32) || (getCwOptions()->_type == XFW_DEF::TYPE_PE_IMAGE_OPTIONAL_HEADER64)) {
+            XBinary binary(getDevice());
+            quint16 nMajorOperatingSystemVersion = binary.read_int16(getCwOptions()->nDataOffset + offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER32, MajorOperatingSystemVersion));
+
+            addComboBox(ui->tableWidgetMain, getListRecWidgets(), XPE::getImageOptionalHeaderMagicS(), XTYPE_PE::X_IMAGE_OPTIONAL_HEADER::Magic, XComboBoxEx::CBTYPE_LIST, 0);
+            addComboBox(ui->tableWidgetMain, getListRecWidgets(), XPE::getMajorOperatingSystemVersionS(), XTYPE_PE::X_IMAGE_OPTIONAL_HEADER::MajorOperatingSystemVersion, XComboBoxEx::CBTYPE_LIST, 0);
+            addComboBox(ui->tableWidgetMain, getListRecWidgets(), XPE::getMinorOperatingSystemVersionS(nMajorOperatingSystemVersion), XTYPE_PE::X_IMAGE_OPTIONAL_HEADER::MinorOperatingSystemVersion, XComboBoxEx::CBTYPE_LIST, 0);
         }
     } else if ((getCwOptions()->_type > XFW_DEF::TYPE_MACH_START) && (getCwOptions()->_type < XFW_DEF::TYPE_MACH_END)) {
         if ((getCwOptions()->_type == XFW_DEF::TYPE_MACH_load_command) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_segment_command) ||
@@ -159,8 +167,6 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
             // adjustComboBox(getListRecWidgets(), XELF::getHeaderFlagsS(), _elf_ehdrWidget::e_flags, XComboBoxEx::CBTYPE_FLAGS, 0);
         }
     }
-
-
 
     updateRecWidgets(getCwOptions()->pDevice, getListRecWidgets());
 
