@@ -2242,12 +2242,30 @@ void XFormatWidget::adjustWidgetModeComboBox(QComboBox *pComboBox, XFW_DEF::WIDG
 
     pComboBox->clear();
 
+    QList<XFW_DEF::WIDGETMODE> listModes;
+
+    listModes.append(XFW_DEF::WIDGETMODE_HEADER);
+    listModes.append(XFW_DEF::WIDGETMODE_TABLE);
+    listModes.append(XFW_DEF::WIDGETMODE_HEX);
+    listModes.append(XFW_DEF::WIDGETMODE_DISASM);
+
     bool bBlockSignals=pComboBox->blockSignals(true);
 
-    pComboBox->addItem(widgetModeIdToString(XFW_DEF::WIDGETMODE_HEADER), XFW_DEF::WIDGETMODE_HEADER);
-    pComboBox->addItem(widgetModeIdToString(XFW_DEF::WIDGETMODE_TABLE), XFW_DEF::WIDGETMODE_TABLE);
-    pComboBox->addItem(widgetModeIdToString(XFW_DEF::WIDGETMODE_HEX), XFW_DEF::WIDGETMODE_HEX);
-    pComboBox->addItem(widgetModeIdToString(XFW_DEF::WIDGETMODE_DISASM), XFW_DEF::WIDGETMODE_DISASM);
+    qint32 nCount = listModes.count();
+    qint32 nIndex = -1;
+
+    for(int i=0;i<nCount;i++)
+    {
+        pComboBox->addItem(widgetModeIdToString(listModes.at(i)),listModes.at(i));
+
+        if (listModes.at(i) == widgetMode) {
+            nIndex = i;
+        }
+    }
+
+    if (nIndex != -1) {
+        pComboBox->setCurrentIndex(nIndex);
+    }
 
     pComboBox->blockSignals(bBlockSignals);
 }
