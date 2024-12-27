@@ -413,6 +413,6 @@ enum DATA {
 
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace X_IMAGE_RESOURCE_FIXEDFILEINFO
-} // namespace XTYPE_PE
+}  // namespace XTYPE_PE
 
 #endif

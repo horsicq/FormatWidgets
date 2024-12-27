@@ -139,9 +139,12 @@ const XFW_DEF::HEADER_RECORD records[] = {
     {cmd, "cmd", offsetof(XMACH_DEF::fvmlib_command, cmd), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {cmdsize, "cmdsize", offsetof(XMACH_DEF::fvmlib_command, cmdsize), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE | XFW_DEF::VAL_TYPE_RELTOHEADER,
      -1},
-    {name, "name", sizeof(XMACH_DEF::load_command) + offsetof(XMACH_DEF::fvmlib, name), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET | XFW_DEF::VAL_TYPE_RELTOHEADER | XFW_DEF::VAL_TYPE_ANSI, -1},
-    {minor_version, "minor_version", sizeof(XMACH_DEF::load_command) + offsetof(XMACH_DEF::fvmlib, minor_version), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_VERSION, -1},
-    {header_addr, "header_addr", sizeof(XMACH_DEF::load_command) + offsetof(XMACH_DEF::fvmlib, header_addr), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_ADDRESS, -1},
+    {name, "name", sizeof(XMACH_DEF::load_command) + offsetof(XMACH_DEF::fvmlib, name), 4, "uint32",
+     XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET | XFW_DEF::VAL_TYPE_RELTOHEADER | XFW_DEF::VAL_TYPE_ANSI, -1},
+    {minor_version, "minor_version", sizeof(XMACH_DEF::load_command) + offsetof(XMACH_DEF::fvmlib, minor_version), 4, "uint32",
+     XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_VERSION, -1},
+    {header_addr, "header_addr", sizeof(XMACH_DEF::load_command) + offsetof(XMACH_DEF::fvmlib, header_addr), 4, "uint32",
+     XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_ADDRESS, -1},
 };
 }
 
@@ -533,7 +536,7 @@ const XFW_DEF::HEADER_RECORD records[] = {
 };
 
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
-}  // namespace X_mach_unix_thread_ppc_32
+}  // namespace X_ppc_thread_state32_t
 
 namespace X_m68k_thread_state32_t {
 const XFW_DEF::HEADER_RECORD records[] = {
@@ -559,7 +562,7 @@ const XFW_DEF::HEADER_RECORD records[] = {
 };
 
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
-}  // namespace X_mach_unix_thread_m68k_32
+}  // namespace X_m68k_thread_state32_t
 
 namespace X_nlist {
 const XFW_DEF::HEADER_RECORD records32[] = {

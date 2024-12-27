@@ -569,4 +569,4 @@ const XFW_DEF::HEADER_RECORD records[] = {
 };
 }
 
-} // namespace X_PE
+}  // namespace XTYPE_PE

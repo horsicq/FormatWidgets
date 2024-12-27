@@ -368,8 +368,8 @@ QString XFormatWidget::getTypeTitle(XFW_DEF::TYPE type, XBinary::MODE mode, XBin
         sResult = QString("arm_thread_state64_t");
     } else if (type == XFW_DEF::TYPE_MACH_ppc_thread_state32_t) {
         sResult = QString("ppc_thread_state32_t");
-    // } else if (type == XFW_DEF::TYPE_MACH_ppc_thread_state64_t) {
-    //     sResult = QString("ppc_thread_state64_t");
+        // } else if (type == XFW_DEF::TYPE_MACH_ppc_thread_state64_t) {
+        //     sResult = QString("ppc_thread_state64_t");
     } else if (type == XFW_DEF::TYPE_MACH_m68k_thread_state32_t) {
         sResult = QString("m68k_thread_state32_t");
     } else if (type == XFW_DEF::TYPE_MACH_nlist) {
@@ -529,9 +529,9 @@ QList<XFW_DEF::HEADER_RECORD> XFormatWidget::getHeaderRecords(const XFW_DEF::CWO
     } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_ppc_thread_state32_t) {
         pRecords = XTYPE_MACH::X_ppc_thread_state32_t::records;
         nNumberOfRecords = XTYPE_MACH::X_ppc_thread_state32_t::__data_size;
-    // } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_ppc_thread_state64_t) {
-    //     pRecords = XTYPE_MACH::X_ppc_thread_state64_t::records;
-    //     nNumberOfRecords = XTYPE_MACH::X_ppc_thread_state64_t::__data_size;
+        // } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_ppc_thread_state64_t) {
+        //     pRecords = XTYPE_MACH::X_ppc_thread_state64_t::records;
+        //     nNumberOfRecords = XTYPE_MACH::X_ppc_thread_state64_t::__data_size;
     } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_m68k_thread_state32_t) {
         pRecords = XTYPE_MACH::X_m68k_thread_state32_t::records;
         nNumberOfRecords = XTYPE_MACH::X_m68k_thread_state32_t::__data_size;
@@ -687,8 +687,8 @@ qint64 XFormatWidget::getStructSize(XFW_DEF::TYPE type)
         nResult = sizeof(XMACH_DEF::arm_thread_state64_t);
     } else if (type == XFW_DEF::TYPE_MACH_ppc_thread_state32_t) {
         nResult = sizeof(XMACH_DEF::ppc_thread_state32_t);
-    // } else if (type == XFW_DEF::TYPE_MACH_ppc_thread_state64_t) {
-    //     nResult = sizeof(XMACH_DEF::ppc_thread_state64_t);
+        // } else if (type == XFW_DEF::TYPE_MACH_ppc_thread_state64_t) {
+        //     nResult = sizeof(XMACH_DEF::ppc_thread_state64_t);
     } else if (type == XFW_DEF::TYPE_MACH_m68k_thread_state32_t) {
         nResult = sizeof(XMACH_DEF::m68k_thread_state32_t);
     } else if (type == XFW_DEF::TYPE_MACH_nlist) {
@@ -717,7 +717,7 @@ qint64 XFormatWidget::getStructSize(XFW_DEF::TYPE type)
                (type == XFW_DEF::TYPE_LX_IMAGE_DOS_HEADER) || (type == XFW_DEF::TYPE_PE_IMAGE_DOS_HEADER)) {
         nResult = sizeof(XMSDOS_DEF::IMAGE_DOS_HEADEREX);
     } else if (type == XFW_DEF::TYPE_PE_IMAGE_NT_HEADERS) {
-        nResult = sizeof(quint32); // XPE_DEF::IMAGE_NT_HEADERS32.Signature TODO Check
+        nResult = sizeof(quint32);  // XPE_DEF::IMAGE_NT_HEADERS32.Signature TODO Check
     } else if (type == XFW_DEF::TYPE_PE_IMAGE_FILE_HEADER) {
         nResult = sizeof(XPE_DEF::IMAGE_FILE_HEADER);
     } else if (type == XFW_DEF::TYPE_PE_IMAGE_OPTIONAL_HEADER32) {
@@ -1528,7 +1528,7 @@ void XFormatWidget::_addFileType(QTreeWidgetItem *pTreeWidgetItem, QIODevice *pD
     spStruct.bIsImage = bIsImage;
     spStruct.nImageBase = nImageBase;
 
-    if (fileType == XBinary::FT_MSDOS){
+    if (fileType == XBinary::FT_MSDOS) {
         XMSDOS msdos(_pDevice, bIsImage, nImageBase);
 
         if (msdos.isValid()) {
@@ -1658,7 +1658,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
         ((_spStruct.type > XFW_DEF::TYPE_NE_START) && (_spStruct.type < XFW_DEF::TYPE_NE_END)) ||
         ((_spStruct.type > XFW_DEF::TYPE_LE_START) && (_spStruct.type < XFW_DEF::TYPE_LE_END)) ||
         ((_spStruct.type > XFW_DEF::TYPE_LX_START) && (_spStruct.type < XFW_DEF::TYPE_LX_END)) ||
-        ((_spStruct.type > XFW_DEF::TYPE_PE_START) && (_spStruct.type < XFW_DEF::TYPE_PE_END))){
+        ((_spStruct.type > XFW_DEF::TYPE_PE_START) && (_spStruct.type < XFW_DEF::TYPE_PE_END))) {
         if ((_spStruct.nOffset == 0) && (_spStruct.pDevice->size() == _spStruct.nSize)) {
             _pDevice = _spStruct.pDevice;
         } else {
@@ -1955,7 +1955,6 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     _addStruct(_spStructRecord);
                 }
             } else if ((_spStruct.widgetMode == XFW_DEF::WIDGETMODE_HEADER) && (_spStruct.type == XFW_DEF::TYPE_PE_IMAGE_NT_HEADERS)) {
-
                 XPE_DEF::IMAGE_FILE_HEADER fileHeader = pe._read_IMAGE_FILE_HEADER(_spStruct.nStructOffset + sizeof(quint32));
                 quint16 nOptionalHeaderSignature = pe.read_uint16(_spStruct.nStructOffset + sizeof(quint32) + sizeof(XPE_DEF::IMAGE_FILE_HEADER));
 
@@ -1973,7 +1972,8 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                 {
                     SPSTRUCT _spStructRecord = _spStruct;
                     _spStructRecord.pTreeWidgetItem = pTreeWidgetItem;
-                    _spStructRecord.nStructOffset = _spStruct.nStructOffset + sizeof(quint32) + sizeof(XPE_DEF::IMAGE_FILE_HEADER);;
+                    _spStructRecord.nStructOffset = _spStruct.nStructOffset + sizeof(quint32) + sizeof(XPE_DEF::IMAGE_FILE_HEADER);
+                    ;
                     _spStructRecord.nStructCount = 1;
                     _spStructRecord.nStructSize = fileHeader.SizeOfOptionalHeader;
                     _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEADER;
@@ -2249,14 +2249,13 @@ void XFormatWidget::adjustWidgetModeComboBox(QComboBox *pComboBox, XFW_DEF::WIDG
     listModes.append(XFW_DEF::WIDGETMODE_HEX);
     listModes.append(XFW_DEF::WIDGETMODE_DISASM);
 
-    bool bBlockSignals=pComboBox->blockSignals(true);
+    bool bBlockSignals = pComboBox->blockSignals(true);
 
     qint32 nCount = listModes.count();
     qint32 nIndex = -1;
 
-    for(int i=0;i<nCount;i++)
-    {
-        pComboBox->addItem(widgetModeIdToString(listModes.at(i)),listModes.at(i));
+    for (int i = 0; i < nCount; i++) {
+        pComboBox->addItem(widgetModeIdToString(listModes.at(i)), listModes.at(i));
 
         if (listModes.at(i) == widgetMode) {
             nIndex = i;

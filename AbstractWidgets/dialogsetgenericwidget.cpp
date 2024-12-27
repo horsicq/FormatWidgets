@@ -25,9 +25,9 @@ DialogSetGenericWidget::DialogSetGenericWidget(QWidget *parent) : XShortcutsDial
 {
     ui->setupUi(this);
 
-    g_pDevice=nullptr;
-    g_nOffset=0;
-    g_nSize=0;
+    g_pDevice = nullptr;
+    g_nOffset = 0;
+    g_nSize = 0;
 
     XFormatWidget::adjustWidgetModeComboBox(ui->comboBoxMode);
 }
@@ -39,9 +39,9 @@ DialogSetGenericWidget::~DialogSetGenericWidget()
 
 void DialogSetGenericWidget::setData(QIODevice *pDevice, qint64 nOffset, qint64 nSize)
 {
-    g_pDevice=pDevice;
-    g_nOffset=nOffset;
-    g_nSize=nSize;
+    g_pDevice = pDevice;
+    g_nOffset = nOffset;
+    g_nSize = nSize;
 
     adjustView();
 }

@@ -99,15 +99,20 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
         if (getCwOptions()->_type == XFW_DEF::TYPE_PE_IMAGE_DOS_HEADER) {
             addComboBox(ui->tableWidgetMain, getListRecWidgets(), XMSDOS::getImageMagicsS(), XTYPE_MSDOS::X_IMAGE_DOS_HEADER::e_magic, XComboBoxEx::CBTYPE_LIST, 0);
         } else if (getCwOptions()->_type == XFW_DEF::TYPE_PE_IMAGE_NT_HEADERS) {
-            addComboBox(ui->tableWidgetMain, getListRecWidgets(), XPE::getImageNtHeadersSignaturesS(), XTYPE_PE::X_IMAGE_NT_HEADERS::Signature, XComboBoxEx::CBTYPE_LIST, 0);
+            addComboBox(ui->tableWidgetMain, getListRecWidgets(), XPE::getImageNtHeadersSignaturesS(), XTYPE_PE::X_IMAGE_NT_HEADERS::Signature, XComboBoxEx::CBTYPE_LIST,
+                        0);
         } else if (getCwOptions()->_type == XFW_DEF::TYPE_PE_IMAGE_FILE_HEADER) {
         } else if ((getCwOptions()->_type == XFW_DEF::TYPE_PE_IMAGE_OPTIONAL_HEADER32) || (getCwOptions()->_type == XFW_DEF::TYPE_PE_IMAGE_OPTIONAL_HEADER64)) {
             XBinary binary(getDevice());
-            quint16 nMajorOperatingSystemVersion = binary.read_int16(getCwOptions()->nDataOffset + offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER32, MajorOperatingSystemVersion));
+            quint16 nMajorOperatingSystemVersion =
+                binary.read_int16(getCwOptions()->nDataOffset + offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER32, MajorOperatingSystemVersion));
 
-            addComboBox(ui->tableWidgetMain, getListRecWidgets(), XPE::getImageOptionalHeaderMagicS(), XTYPE_PE::X_IMAGE_OPTIONAL_HEADER::Magic, XComboBoxEx::CBTYPE_LIST, 0);
-            addComboBox(ui->tableWidgetMain, getListRecWidgets(), XPE::getMajorOperatingSystemVersionS(), XTYPE_PE::X_IMAGE_OPTIONAL_HEADER::MajorOperatingSystemVersion, XComboBoxEx::CBTYPE_LIST, 0);
-            addComboBox(ui->tableWidgetMain, getListRecWidgets(), XPE::getMinorOperatingSystemVersionS(nMajorOperatingSystemVersion), XTYPE_PE::X_IMAGE_OPTIONAL_HEADER::MinorOperatingSystemVersion, XComboBoxEx::CBTYPE_LIST, 0);
+            addComboBox(ui->tableWidgetMain, getListRecWidgets(), XPE::getImageOptionalHeaderMagicS(), XTYPE_PE::X_IMAGE_OPTIONAL_HEADER::Magic, XComboBoxEx::CBTYPE_LIST,
+                        0);
+            addComboBox(ui->tableWidgetMain, getListRecWidgets(), XPE::getMajorOperatingSystemVersionS(), XTYPE_PE::X_IMAGE_OPTIONAL_HEADER::MajorOperatingSystemVersion,
+                        XComboBoxEx::CBTYPE_LIST, 0);
+            addComboBox(ui->tableWidgetMain, getListRecWidgets(), XPE::getMinorOperatingSystemVersionS(nMajorOperatingSystemVersion),
+                        XTYPE_PE::X_IMAGE_OPTIONAL_HEADER::MinorOperatingSystemVersion, XComboBoxEx::CBTYPE_LIST, 0);
         }
     } else if ((getCwOptions()->_type > XFW_DEF::TYPE_MACH_START) && (getCwOptions()->_type < XFW_DEF::TYPE_MACH_END)) {
         if ((getCwOptions()->_type == XFW_DEF::TYPE_MACH_load_command) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_segment_command) ||
@@ -131,11 +136,13 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
 
         if ((getCwOptions()->_type == XFW_DEF::TYPE_MACH_mach_header) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_mach_header_64)) {
             XBinary binary(getDevice());
-            quint32 _cputype = binary.read_int32(getCwOptions()->nDataOffset + offsetof(XMACH_DEF::mach_header, cputype), (getCwOptions()->endian == XBinary::ENDIAN_BIG));
+            quint32 _cputype =
+                binary.read_int32(getCwOptions()->nDataOffset + offsetof(XMACH_DEF::mach_header, cputype), (getCwOptions()->endian == XBinary::ENDIAN_BIG));
 
             addComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getHeaderMagicsS(), XTYPE_MACH::X_mach_header::magic, XComboBoxEx::CBTYPE_LIST, 0);
             addComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getHeaderCpuTypesS(), XTYPE_MACH::X_mach_header::cputype, XComboBoxEx::CBTYPE_LIST, 0);
-            addComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getHeaderCpuSubTypesS(_cputype), XTYPE_MACH::X_mach_header::cpusubtype, XComboBoxEx::CBTYPE_LIST, 0);
+            addComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getHeaderCpuSubTypesS(_cputype), XTYPE_MACH::X_mach_header::cpusubtype, XComboBoxEx::CBTYPE_LIST,
+                        0);
             addComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getHeaderFileTypesS(), XTYPE_MACH::X_mach_header::filetype, XComboBoxEx::CBTYPE_LIST, 0);
             addComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getHeaderFlagsS(), XTYPE_MACH::X_mach_header::flags, XComboBoxEx::CBTYPE_FLAGS, 0);
         } else if ((getCwOptions()->_type == XFW_DEF::TYPE_MACH_segment_command) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_segment_command_64)) {
