@@ -390,6 +390,14 @@ QString XFormatWidget::getTypeTitle(XFW_DEF::TYPE type, XBinary::MODE mode, XBin
         sResult = QString("section_64");
     } else if (type == XFW_DEF::TYPE_MACH_trie_export) {
         sResult = tr("Export");
+    } else if (type == XFW_DEF::TYPE_MACH_rebase) {
+        sResult = QString("rebase");
+    } else if (type == XFW_DEF::TYPE_MACH_bind) {
+        sResult = QString("bind");
+    } else if (type == XFW_DEF::TYPE_MACH_weak) {
+        sResult = QString("weak");
+    } else if (type == XFW_DEF::TYPE_MACH_lazy_bind) {
+        sResult = QString("lazy_bind");
     } else if (type == XFW_DEF::TYPE_DEX_HEADER) {
         sResult = QString("HEADER");
     }
@@ -1282,7 +1290,11 @@ void XFormatWidget::_adjustRecWidget(RECWIDGET *pRecWidget, QVariant varValue)
 
     if (pRecWidget->nVType & XFW_DEF::VAL_TYPE_VERSION) {
         QString sVersion;
-        if (pRecWidget->nSize == 4) {
+        if (pRecWidget->nSize == 1) {
+            sVersion = QString("%1").arg(XBinary::fullVersionByteToString(varValue.toUInt()));
+        } else if (pRecWidget->nSize == 2) {
+            sVersion = QString("%1").arg(XBinary::fullVersionWordToString(varValue.toUInt()));
+        } else if (pRecWidget->nSize == 4) {
             sVersion = QString("%1").arg(XBinary::fullVersionDwordToString(varValue.toUInt()));
         } else if (pRecWidget->nSize == 8) {
             sVersion = QString("%1").arg(XBinary::fullVersionQwordToString(varValue.toULongLong()));
@@ -1797,17 +1809,65 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
             } else if ((_spStruct.widgetMode == XFW_DEF::WIDGETMODE_HEADER) && (_spStruct.type == XFW_DEF::TYPE_MACH_dyld_info_command)) {
                 XMACH_DEF::dyld_info_command dicommand = mach._read_dyld_info_command(_spStruct.nStructOffset);
 
-                // if (dicommand.rebase_off && dicommand.rebase_size) {
-                //     SPSTRUCT _spStructRecord = _spStruct;
-                //     _spStructRecord.pTreeWidgetItem = pTreeWidgetItem;
-                //     _spStructRecord.nStructOffset = _spStruct.nOffset + dicommand.rebase_off;
-                //     _spStructRecord.nStructSize = dicommand.rebase_size;
-                //     _spStructRecord.nStructCount = 0;
-                //     _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEX;
-                //     _spStructRecord.type = XFW_DEF::TYPE_MACH_rebase;
+                if (dicommand.rebase_off && dicommand.rebase_size) {
+                    SPSTRUCT _spStructRecord = _spStruct;
+                    _spStructRecord.pTreeWidgetItem = pTreeWidgetItem;
+                    _spStructRecord.nStructOffset = _spStruct.nOffset + dicommand.rebase_off;
+                    _spStructRecord.nStructSize = dicommand.rebase_size;
+                    _spStructRecord.nStructCount = 0;
+                    _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_DISASM;
+                    _spStructRecord.type = XFW_DEF::TYPE_MACH_rebase;
 
-                //     _addStruct(_spStructRecord);
-                // }
+                    _addStruct(_spStructRecord);
+                }
+
+                if (dicommand.bind_off && dicommand.bind_size) {
+                    SPSTRUCT _spStructRecord = _spStruct;
+                    _spStructRecord.pTreeWidgetItem = pTreeWidgetItem;
+                    _spStructRecord.nStructOffset = _spStruct.nOffset + dicommand.bind_off;
+                    _spStructRecord.nStructSize = dicommand.bind_size;
+                    _spStructRecord.nStructCount = 0;
+                    _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_DISASM;
+                    _spStructRecord.type = XFW_DEF::TYPE_MACH_bind;
+
+                    _addStruct(_spStructRecord);
+                }
+
+                if (dicommand.rebase_off && dicommand.rebase_size) {
+                    SPSTRUCT _spStructRecord = _spStruct;
+                    _spStructRecord.pTreeWidgetItem = pTreeWidgetItem;
+                    _spStructRecord.nStructOffset = _spStruct.nOffset + dicommand.weak_bind_off;
+                    _spStructRecord.nStructSize = dicommand.weak_bind_size;
+                    _spStructRecord.nStructCount = 0;
+                    _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_DISASM;
+                    _spStructRecord.type = XFW_DEF::TYPE_MACH_weak;
+
+                    _addStruct(_spStructRecord);
+                }
+
+                if (dicommand.lazy_bind_off && dicommand.lazy_bind_size) {
+                    SPSTRUCT _spStructRecord = _spStruct;
+                    _spStructRecord.pTreeWidgetItem = pTreeWidgetItem;
+                    _spStructRecord.nStructOffset = _spStruct.nOffset + dicommand.lazy_bind_off;
+                    _spStructRecord.nStructSize = dicommand.lazy_bind_size;
+                    _spStructRecord.nStructCount = 0;
+                    _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_DISASM;
+                    _spStructRecord.type = XFW_DEF::TYPE_MACH_lazy_bind;
+
+                    _addStruct(_spStructRecord);
+                }
+
+                if (dicommand.export_off && dicommand.export_size) {
+                    SPSTRUCT _spStructRecord = _spStruct;
+                    _spStructRecord.pTreeWidgetItem = pTreeWidgetItem;
+                    _spStructRecord.nStructOffset = _spStruct.nOffset + dicommand.export_off;
+                    _spStructRecord.nStructSize = dicommand.rebase_size;
+                    _spStructRecord.nStructCount = 0;
+                    _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEX;
+                    _spStructRecord.type = XFW_DEF::TYPE_MACH_trie_export;
+
+                    _addStruct(_spStructRecord);
+                }
 
             } else if ((_spStruct.widgetMode == XFW_DEF::WIDGETMODE_HEADER) && (_spStruct.type == XFW_DEF::TYPE_MACH_dyld_chained_fixups_command)) {
                 XMACH_DEF::linkedit_data_command _command = mach._read_linkedit_data_command(_spStruct.nStructOffset);

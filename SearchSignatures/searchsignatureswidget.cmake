@@ -7,7 +7,6 @@ endif()
 
 set(SEARCHSIGNATURESWIDGET_SOURCES
     ${SEARCHSIGNATURESWIDGET_SOURCES}
-    ${MULTISEARCH_SOURCES}
     ${CMAKE_CURRENT_LIST_DIR}/dialogsearchsignatures.cpp
     ${CMAKE_CURRENT_LIST_DIR}/dialogsearchsignatures.h
     ${CMAKE_CURRENT_LIST_DIR}/dialogsearchsignatures.ui

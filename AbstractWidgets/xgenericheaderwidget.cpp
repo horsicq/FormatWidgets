@@ -102,6 +102,8 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
             addComboBox(ui->tableWidgetMain, getListRecWidgets(), XPE::getImageNtHeadersSignaturesS(), XTYPE_PE::X_IMAGE_NT_HEADERS::Signature, XComboBoxEx::CBTYPE_LIST,
                         0);
         } else if (getCwOptions()->_type == XFW_DEF::TYPE_PE_IMAGE_FILE_HEADER) {
+            addComboBox(ui->tableWidgetMain, getListRecWidgets(), XPE::getImageFileHeaderMachinesS(), XTYPE_PE::X_IMAGE_FILE_HEADER::Machine, XComboBoxEx::CBTYPE_LIST, 0);
+            addComboBox(ui->tableWidgetMain, getListRecWidgets(), XPE::getImageFileHeaderCharacteristicsS(), XTYPE_PE::X_IMAGE_FILE_HEADER::Characteristics, XComboBoxEx::CBTYPE_FLAGS, 0);
         } else if ((getCwOptions()->_type == XFW_DEF::TYPE_PE_IMAGE_OPTIONAL_HEADER32) || (getCwOptions()->_type == XFW_DEF::TYPE_PE_IMAGE_OPTIONAL_HEADER64)) {
             XBinary binary(getDevice());
             quint16 nMajorOperatingSystemVersion =
@@ -113,6 +115,10 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
                         XComboBoxEx::CBTYPE_LIST, 0);
             addComboBox(ui->tableWidgetMain, getListRecWidgets(), XPE::getMinorOperatingSystemVersionS(nMajorOperatingSystemVersion),
                         XTYPE_PE::X_IMAGE_OPTIONAL_HEADER::MinorOperatingSystemVersion, XComboBoxEx::CBTYPE_LIST, 0);
+            addComboBox(ui->tableWidgetMain, getListRecWidgets(), XPE::getImageOptionalHeaderSubsystemS(), XTYPE_PE::X_IMAGE_OPTIONAL_HEADER::Subsystem, XComboBoxEx::CBTYPE_LIST,
+                        0);
+            addComboBox(ui->tableWidgetMain, getListRecWidgets(), XPE::getImageOptionalHeaderDllCharacteristicsS(), XTYPE_PE::X_IMAGE_OPTIONAL_HEADER::DllCharacteristics, XComboBoxEx::CBTYPE_FLAGS,
+                        0);
         }
     } else if ((getCwOptions()->_type > XFW_DEF::TYPE_MACH_START) && (getCwOptions()->_type < XFW_DEF::TYPE_MACH_END)) {
         if ((getCwOptions()->_type == XFW_DEF::TYPE_MACH_load_command) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_segment_command) ||

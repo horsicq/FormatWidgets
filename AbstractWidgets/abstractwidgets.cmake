@@ -36,6 +36,9 @@ set(ABSTRACTWIDGETS_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/xgenerichexwidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/xgenerichexwidget.h
     ${CMAKE_CURRENT_LIST_DIR}/xgenerichexwidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/xgenericdisasmwidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/xgenericdisasmwidget.h
+    ${CMAKE_CURRENT_LIST_DIR}/xgenericdisasmwidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/xgenerictablewidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/xgenerictablewidget.h
     ${CMAKE_CURRENT_LIST_DIR}/xgenerictablewidget.ui

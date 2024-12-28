@@ -26,6 +26,7 @@
 #include "xgenericheaderwidget.h"
 #include "xgenerictablewidget.h"
 #include "xgenerichexwidget.h"
+#include "xgenericdisasmwidget.h"
 #include "xformatwidget.h"
 #include "dialogdemangle.h"
 #include "dialogwidget.h"
