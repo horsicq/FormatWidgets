@@ -36,6 +36,8 @@ public:
     virtual void reloadData(bool bSaveSelection);
     virtual void adjustView();
 
+    virtual void setReadonly(bool bState);
+
 private slots:
     void on_toolButtonTableReload_clicked();
     void on_toolButtonTableSize_clicked();

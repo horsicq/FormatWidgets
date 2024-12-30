@@ -71,6 +71,12 @@ void XGenericDisasmWidget::adjustView()
     // getGlobalOptions()->adjustWidget(ui->tableWidgetMain, XOptions::ID_VIEW_FONT_TABLEVIEWS);
 }
 
+void XGenericDisasmWidget::setReadonly(bool bState)
+{
+    ui->scrollAreaHex->setReadonly(bState);
+    XFormatWidget::setReadonly(bState);
+}
+
 void XGenericDisasmWidget::on_toolButtonTableReload_clicked()
 {
     reloadData(true);

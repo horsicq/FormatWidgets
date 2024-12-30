@@ -284,6 +284,8 @@ QString XFormatWidget::getTypeTitle(XFW_DEF::TYPE type, XBinary::MODE mode, XBin
     } else if ((type == XFW_DEF::TYPE_MSDOS_IMAGE_DOS_HEADER) || (type == XFW_DEF::TYPE_NE_IMAGE_DOS_HEADER) || (type == XFW_DEF::TYPE_LE_IMAGE_DOS_HEADER) ||
                (type == XFW_DEF::TYPE_LX_IMAGE_DOS_HEADER) || (type == XFW_DEF::TYPE_PE_IMAGE_DOS_HEADER)) {
         sResult = QString("IMAGE_DOS_HEADER");
+    } else if (type == XFW_DEF::TYPE_PE_DOS_STUB) {
+        sResult = QString("Dos stub");
     } else if (type == XFW_DEF::TYPE_PE_IMAGE_NT_HEADERS) {
         sResult = QString("IMAGE_NT_HEADERS");
     } else if (type == XFW_DEF::TYPE_PE_IMAGE_FILE_HEADER) {
@@ -2002,6 +2004,23 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
 
             if ((_spStruct.widgetMode == XFW_DEF::WIDGETMODE_HEADER) && (_spStruct.type == XFW_DEF::TYPE_PE_IMAGE_DOS_HEADER)) {
                 XMSDOS_DEF::IMAGE_DOS_HEADEREX idh = pe._read_IMAGE_DOS_HEADEREX(_spStruct.nStructOffset);
+
+                qint64 nStubSize = idh.e_lfanew - sizeof(XMSDOS_DEF::IMAGE_DOS_HEADEREX);
+
+                if (nStubSize > 0) {
+                    {
+                        SPSTRUCT _spStructRecord = _spStruct;
+                        _spStructRecord.pTreeWidgetItem = pTreeWidgetItem;
+                        _spStructRecord.nStructOffset = _spStruct.nOffset + sizeof(XMSDOS_DEF::IMAGE_DOS_HEADEREX);
+                        _spStructRecord.nStructSize = nStubSize;
+                        _spStructRecord.nStructCount = 0;
+                        _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_DISASM;
+                        _spStructRecord.type = XFW_DEF::TYPE_PE_DOS_STUB;
+
+                        _addStruct(_spStructRecord);
+                    }
+                    // TODO RICH
+                }
 
                 if (idh.e_lfanew) {
                     SPSTRUCT _spStructRecord = _spStruct;
