@@ -2079,20 +2079,21 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     _addStruct(_spStructRecord);
                 }
             } else if ((_spStruct.widgetMode == XFW_DEF::WIDGETMODE_HEADER) && (_spStruct.type == XFW_DEF::TYPE_PE_IMAGE_FILE_HEADER)) {
-                 XPE_DEF::IMAGE_FILE_HEADER fileHeader = pe._read_IMAGE_FILE_HEADER(_spStruct.nStructOffset);
+                XPE_DEF::IMAGE_FILE_HEADER fileHeader = pe._read_IMAGE_FILE_HEADER(_spStruct.nStructOffset);
 
-                if(fileHeader.NumberOfSections > 0) {
-                     SPSTRUCT _spStructRecord = _spStruct;
-                     _spStructRecord.pTreeWidgetItem = pTreeWidgetItem;
-                     _spStructRecord.nStructOffset = _spStruct.nStructOffset + fileHeader.SizeOfOptionalHeader + sizeof(XPE_DEF::IMAGE_FILE_HEADER);
-                     _spStructRecord.nStructSize = sizeof(XPE_DEF::IMAGE_SECTION_HEADER) * fileHeader.NumberOfSections;
-                     _spStructRecord.nStructCount = fileHeader.NumberOfSections;
-                     _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_TABLE;
-                     _spStructRecord.type = XFW_DEF::TYPE_PE_IMAGE_SECTION_HEADER;
+                if (fileHeader.NumberOfSections > 0) {
+                    SPSTRUCT _spStructRecord = _spStruct;
+                    _spStructRecord.pTreeWidgetItem = pTreeWidgetItem;
+                    _spStructRecord.nStructOffset = _spStruct.nStructOffset + fileHeader.SizeOfOptionalHeader + sizeof(XPE_DEF::IMAGE_FILE_HEADER);
+                    _spStructRecord.nStructSize = sizeof(XPE_DEF::IMAGE_SECTION_HEADER) * fileHeader.NumberOfSections;
+                    _spStructRecord.nStructCount = fileHeader.NumberOfSections;
+                    _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_TABLE;
+                    _spStructRecord.type = XFW_DEF::TYPE_PE_IMAGE_SECTION_HEADER;
 
-                     _addStruct(_spStructRecord);
+                    _addStruct(_spStructRecord);
                 }
-            } else if ((_spStruct.widgetMode == XFW_DEF::WIDGETMODE_HEADER) && ((_spStruct.type == XFW_DEF::TYPE_PE_IMAGE_OPTIONAL_HEADER32) || (_spStruct.type == XFW_DEF::TYPE_PE_IMAGE_OPTIONAL_HEADER64))) {
+            } else if ((_spStruct.widgetMode == XFW_DEF::WIDGETMODE_HEADER) &&
+                       ((_spStruct.type == XFW_DEF::TYPE_PE_IMAGE_OPTIONAL_HEADER32) || (_spStruct.type == XFW_DEF::TYPE_PE_IMAGE_OPTIONAL_HEADER64))) {
                 qint64 _nOffset = _spStruct.nStructOffset;
                 qint32 nNumberOfDirectories = 0;
 
@@ -2107,7 +2108,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
 
                 nNumberOfDirectories = qMin(nNumberOfDirectories, 16);
 
-                if(nNumberOfDirectories > 0) {
+                if (nNumberOfDirectories > 0) {
                     SPSTRUCT _spStructRecord = _spStruct;
                     _spStructRecord.pTreeWidgetItem = pTreeWidgetItem;
                     _spStructRecord.nStructOffset = _nOffset;
@@ -2639,6 +2640,8 @@ bool XFormatWidget::createHeaderTable(QTableWidget *pTableWidget, const QList<XF
             bValid = true;
         } else if (pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_ADDRESS) {
             bValid = true;
+        } else if (pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_RELADDRESS) {
+            bValid = true;
         } else if ((pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_SIZE) && (pListRecWidget->at(i).nSubPosition != -1)) {
             bValid = true;
         } else if ((pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_SIZE) && (pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_RELTOHEADER)) {
@@ -2656,6 +2659,8 @@ bool XFormatWidget::createHeaderTable(QTableWidget *pTableWidget, const QList<XF
                 locType = XBinary::LT_OFFSET;
             } else if (pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_ADDRESS) {
                 locType = XBinary::LT_ADDRESS;
+            } else if (pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_RELADDRESS) {
+                locType = XBinary::LT_RELADDRESS;
             } else if (pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_SIZE) {
                 if (pListRecWidget->at(i).nSubPosition != -1) {
                     qint32 nSubPosition = pListRecWidget->at(i).nSubPosition;
@@ -2663,6 +2668,8 @@ bool XFormatWidget::createHeaderTable(QTableWidget *pTableWidget, const QList<XF
                         locType = XBinary::LT_OFFSET;
                     } else if (pListRecWidget->at(nSubPosition).nVType & XFW_DEF::VAL_TYPE_ADDRESS) {
                         locType = XBinary::LT_ADDRESS;
+                    } else if (pListRecWidget->at(nSubPosition).nVType & XFW_DEF::VAL_TYPE_RELADDRESS) {
+                        locType = XBinary::LT_RELADDRESS;
                     }
                 } else if (pListRecWidget->at(i).nVType & XFW_DEF::VAL_TYPE_RELTOHEADER) {
                     locType = XBinary::LT_OFFSET;

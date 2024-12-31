@@ -15,9 +15,6 @@ endif()
 
 set(SEARCHSTRINGSWIDGET_SOURCES
     ${SEARCHSTRINGSWIDGET_SOURCES}
-    ${MULTISEARCH_SOURCES}
-    ${DIALOGEDITSTRING_SOURCES}
-    ${XTABLEVIEW_SOURCES}
     ${CMAKE_CURRENT_LIST_DIR}/dialogsearchstrings.cpp
     ${CMAKE_CURRENT_LIST_DIR}/dialogsearchstrings.h
     ${CMAKE_CURRENT_LIST_DIR}/dialogsearchstrings.ui

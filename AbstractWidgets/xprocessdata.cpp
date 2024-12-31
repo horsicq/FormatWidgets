@@ -76,7 +76,8 @@ void XProcessData::process()
 
             g_pListHeaderRecords->append(record);
         }
-    } else if (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_load_command) {
+    } else if ((g_pCwOptions->_type == XFW_DEF::TYPE_MACH_load_command) ||
+               (g_pCwOptions->_type == XFW_DEF::TYPE_PE_IMAGE_DATA_DIRECTORY)) {
         XFW_DEF::HEADER_RECORD record = {};
         record.nPosition = -1;
         record.sName = tr("Info");
@@ -91,6 +92,12 @@ void XProcessData::process()
 
     if (nHeaderSize == 0) {
         nHeaderSize = 1;
+    }
+
+    nNumberOfRows = g_pCwOptions->nDataCount;
+
+    if (nNumberOfRows == 0) {
+        nNumberOfRows = (g_pCwOptions->nDataSize) / nHeaderSize;
     }
 
     if (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_load_command) {
@@ -146,17 +153,29 @@ void XProcessData::process()
 
             XBinary::setPdStructCurrent(g_pPdStruct, g_nFreeIndex, i);
         }
+    } else if (g_pCwOptions->_type == XFW_DEF::TYPE_PE_IMAGE_DATA_DIRECTORY) {
+        XPE xpe(g_pCwOptions->pDevice, g_pCwOptions->bIsImage, g_pCwOptions->nImageBase);
+        XBinary::setPdStructTotal(g_pPdStruct, g_nFreeIndex, nNumberOfRows);
+
+        QMap<quint64, QString> mapOHDD = XPE::getImageOptionalHeaderDataDirectoryS();
+
+        (*g_ppModel) = new QStandardItemModel(nNumberOfRows, nNumberOfColumns);
+
+        qint64 _nOffset = g_pCwOptions->nDataOffset;
+
+        for (qint32 i = 0; (i < nNumberOfRows) && (!(g_pPdStruct->bIsStop)); i++) {
+            XPE_DEF::IMAGE_DATA_DIRECTORY idd = xpe.read_IMAGE_DATA_DIRECTORY(_nOffset);
+            XFormatWidget::setItemToModelData((*g_ppModel), i, 0, i, 0, g_pListHeaderRecords->at(0).vtype, g_pCwOptions->_type, _nOffset, nHeaderSize, _nOffset,
+                                              nHeaderSize, 0);
+            XFormatWidget::setItemToModel((*g_ppModel), i, 1, idd.VirtualAddress, g_pListHeaderRecords->at(1).nSize, g_pListHeaderRecords->at(1).vtype);
+            XFormatWidget::setItemToModel((*g_ppModel), i, 2, idd.Size, g_pListHeaderRecords->at(2).nSize, g_pListHeaderRecords->at(2).vtype);
+            XFormatWidget::setItemToModel((*g_ppModel), i, 3, mapOHDD.value(i), g_pListHeaderRecords->at(3).nSize, g_pListHeaderRecords->at(3).vtype);
+
+            _nOffset += nHeaderSize;
+            XBinary::setPdStructCurrent(g_pPdStruct, g_nFreeIndex, i);
+        }
     } else {
         XBinary binary(g_pCwOptions->pDevice, g_pCwOptions->bIsImage, g_pCwOptions->nImageBase);
-
-        qint32 nNumberOfHeaderRecords = g_pListHeaderRecords->count();
-
-        nNumberOfRows = g_pCwOptions->nDataCount;
-
-        if (nNumberOfRows == 0) {
-            nNumberOfRows = (g_pCwOptions->nDataSize) / nHeaderSize;
-        }
-
         XBinary::setPdStructTotal(g_pPdStruct, g_nFreeIndex, nNumberOfRows);
 
         (*g_ppModel) = new QStandardItemModel(nNumberOfRows, nNumberOfColumns);
@@ -164,7 +183,7 @@ void XProcessData::process()
         qint64 _nOffset = g_pCwOptions->nDataOffset;
 
         for (qint32 i = 0; (i < nNumberOfRows) && (!(g_pPdStruct->bIsStop)); i++) {
-            for (qint32 j = 0; j < nNumberOfHeaderRecords; j++) {
+            for (qint32 j = 0; j < nNumberOfColumns; j++) {
                 QVariant var = XFormatWidget::_readVariant(&binary, _nOffset + g_pListHeaderRecords->at(j).nOffset, g_pListHeaderRecords->at(j).nSize,
                                                            g_pListHeaderRecords->at(j).vtype, (g_pCwOptions->endian == XBinary::ENDIAN_BIG));
                 if (j == 0) {
@@ -176,7 +195,6 @@ void XProcessData::process()
             }
 
             _nOffset += nHeaderSize;
-
             XBinary::setPdStructCurrent(g_pPdStruct, g_nFreeIndex, i);
         }
     }

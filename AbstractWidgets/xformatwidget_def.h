@@ -187,7 +187,7 @@ enum VAL_TYPE {
     VAL_TYPE_UNKNOWN_ = 0,
     VAL_TYPE_DATA_INT = 1 << 0,
     VAL_TYPE_DATA_ARRAY = 1 << 1,
-    VAL_TYPE_RELADDRESS_ = 1 << 2,
+    VAL_TYPE_RELADDRESS = 1 << 2,
     VAL_TYPE_ADDRESS = 1 << 3,
     VAL_TYPE_OFFSET = 1 << 4,
     VAL_TYPE_SIZE = 1 << 5,

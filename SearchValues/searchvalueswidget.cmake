@@ -7,7 +7,6 @@ endif()
 
 set(SEARCHVALUESWIDGET_SOURCES
     ${SEARCHVALUESWIDGET_SOURCES}
-    ${MULTISEARCH_SOURCES}
     ${CMAKE_CURRENT_LIST_DIR}/dialogsearchvalues.cpp
     ${CMAKE_CURRENT_LIST_DIR}/dialogsearchvalues.h
     ${CMAKE_CURRENT_LIST_DIR}/dialogsearchvalues.ui
