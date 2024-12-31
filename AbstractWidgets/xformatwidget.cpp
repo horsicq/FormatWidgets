@@ -294,6 +294,10 @@ QString XFormatWidget::getTypeTitle(XFW_DEF::TYPE type, XBinary::MODE mode, XBin
         sResult = QString("IMAGE_OPTIONAL_HEADER32");
     } else if (type == XFW_DEF::TYPE_PE_IMAGE_OPTIONAL_HEADER64) {
         sResult = QString("IMAGE_OPTIONAL_HEADER64");
+    } else if (type == XFW_DEF::TYPE_PE_IMAGE_DATA_DIRECTORY) {
+        sResult = QString("IMAGE_DATA_DIRECTORY");
+    } else if (type == XFW_DEF::TYPE_PE_IMAGE_SECTION_HEADER) {
+        sResult = QString("IMAGE_SECTION_HEADER");
     } else if (type == XFW_DEF::TYPE_MACH_mach_header) {
         sResult = QString("mach_header");
     } else if (type == XFW_DEF::TYPE_MACH_mach_header_64) {
@@ -592,9 +596,15 @@ QList<XFW_DEF::HEADER_RECORD> XFormatWidget::getHeaderRecords(const XFW_DEF::CWO
     } else if (pCwOptions->_type == XFW_DEF::TYPE_PE_IMAGE_OPTIONAL_HEADER64) {
         pRecords = XTYPE_PE::X_IMAGE_OPTIONAL_HEADER::records64;
         nNumberOfRecords = XTYPE_PE::X_IMAGE_OPTIONAL_HEADER::__data_size;
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_PE_IMAGE_DATA_DIRECTORY) {
+        pRecords = XTYPE_PE::X_IMAGE_DATA_DIRECTORY::records;
+        nNumberOfRecords = XTYPE_PE::X_IMAGE_DATA_DIRECTORY::__data_size;
     } else if (pCwOptions->_type == XFW_DEF::TYPE_PE_IMAGE_FILE_HEADER) {
         pRecords = XTYPE_PE::X_IMAGE_FILE_HEADER::records;
         nNumberOfRecords = XTYPE_PE::X_IMAGE_FILE_HEADER::__data_size;
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_PE_IMAGE_SECTION_HEADER) {
+        pRecords = XTYPE_PE::X_IMAGE_SECTION_HEADER::records;
+        nNumberOfRecords = XTYPE_PE::X_IMAGE_SECTION_HEADER::__data_size;
     } else if (pCwOptions->_type == XFW_DEF::TYPE_DEX_HEADER) {
         pRecords = XTYPE_DEX::X_HEADER::records;
         nNumberOfRecords = XTYPE_DEX::X_HEADER::__data_size;
@@ -734,6 +744,10 @@ qint64 XFormatWidget::getStructSize(XFW_DEF::TYPE type)
         nResult = sizeof(XPE_DEF::IMAGE_OPTIONAL_HEADER32);
     } else if (type == XFW_DEF::TYPE_PE_IMAGE_OPTIONAL_HEADER64) {
         nResult = sizeof(XPE_DEF::IMAGE_OPTIONAL_HEADER64);
+    } else if (type == XFW_DEF::TYPE_PE_IMAGE_DATA_DIRECTORY) {
+        nResult = sizeof(XPE_DEF::IMAGE_DATA_DIRECTORY);
+    } else if (type == XFW_DEF::TYPE_PE_IMAGE_SECTION_HEADER) {
+        nResult = sizeof(XPE_DEF::IMAGE_SECTION_HEADER);
     } else if (type == XFW_DEF::TYPE_DEX_HEADER) {
         nResult = sizeof(XDEX_DEF::HEADER);
     }
@@ -2052,7 +2066,6 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     SPSTRUCT _spStructRecord = _spStruct;
                     _spStructRecord.pTreeWidgetItem = pTreeWidgetItem;
                     _spStructRecord.nStructOffset = _spStruct.nStructOffset + sizeof(quint32) + sizeof(XPE_DEF::IMAGE_FILE_HEADER);
-                    ;
                     _spStructRecord.nStructCount = 1;
                     _spStructRecord.nStructSize = fileHeader.SizeOfOptionalHeader;
                     _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEADER;
@@ -2062,6 +2075,46 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     } else {
                         _spStructRecord.type = XFW_DEF::TYPE_PE_IMAGE_OPTIONAL_HEADER32;
                     }
+
+                    _addStruct(_spStructRecord);
+                }
+            } else if ((_spStruct.widgetMode == XFW_DEF::WIDGETMODE_HEADER) && (_spStruct.type == XFW_DEF::TYPE_PE_IMAGE_FILE_HEADER)) {
+                 XPE_DEF::IMAGE_FILE_HEADER fileHeader = pe._read_IMAGE_FILE_HEADER(_spStruct.nStructOffset);
+
+                if(fileHeader.NumberOfSections > 0) {
+                     SPSTRUCT _spStructRecord = _spStruct;
+                     _spStructRecord.pTreeWidgetItem = pTreeWidgetItem;
+                     _spStructRecord.nStructOffset = _spStruct.nStructOffset + fileHeader.SizeOfOptionalHeader + sizeof(XPE_DEF::IMAGE_FILE_HEADER);
+                     _spStructRecord.nStructSize = sizeof(XPE_DEF::IMAGE_SECTION_HEADER) * fileHeader.NumberOfSections;
+                     _spStructRecord.nStructCount = fileHeader.NumberOfSections;
+                     _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_TABLE;
+                     _spStructRecord.type = XFW_DEF::TYPE_PE_IMAGE_SECTION_HEADER;
+
+                     _addStruct(_spStructRecord);
+                }
+            } else if ((_spStruct.widgetMode == XFW_DEF::WIDGETMODE_HEADER) && ((_spStruct.type == XFW_DEF::TYPE_PE_IMAGE_OPTIONAL_HEADER32) || (_spStruct.type == XFW_DEF::TYPE_PE_IMAGE_OPTIONAL_HEADER64))) {
+                qint64 _nOffset = _spStruct.nStructOffset;
+                qint32 nNumberOfDirectories = 0;
+
+                if (_spStruct.type == XFW_DEF::TYPE_PE_IMAGE_OPTIONAL_HEADER32) {
+                    _nOffset += sizeof(XPE_DEF::IMAGE_OPTIONAL_HEADER32);
+                    nNumberOfDirectories = pe.read_uint32(_spStruct.nStructOffset + offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER32, NumberOfRvaAndSizes));
+                } else if (_spStruct.type == XFW_DEF::TYPE_PE_IMAGE_OPTIONAL_HEADER64) {
+                    _nOffset += sizeof(XPE_DEF::IMAGE_OPTIONAL_HEADER64);
+                    nNumberOfDirectories = pe.read_uint32(_spStruct.nStructOffset + offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER64, NumberOfRvaAndSizes));
+                }
+                _nOffset -= sizeof(XPE_DEF::IMAGE_DATA_DIRECTORY) * 16;
+
+                nNumberOfDirectories = qMin(nNumberOfDirectories, 16);
+
+                if(nNumberOfDirectories > 0) {
+                    SPSTRUCT _spStructRecord = _spStruct;
+                    _spStructRecord.pTreeWidgetItem = pTreeWidgetItem;
+                    _spStructRecord.nStructOffset = _nOffset;
+                    _spStructRecord.nStructSize = sizeof(XPE_DEF::IMAGE_DATA_DIRECTORY) * nNumberOfDirectories;
+                    _spStructRecord.nStructCount = nNumberOfDirectories;
+                    _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_TABLE;
+                    _spStructRecord.type = XFW_DEF::TYPE_PE_IMAGE_DATA_DIRECTORY;
 
                     _addStruct(_spStructRecord);
                 }

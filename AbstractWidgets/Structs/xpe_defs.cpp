@@ -348,17 +348,16 @@ const XFW_DEF::HEADER_RECORD records[] = {
     {VirtualSize, "VirtualSize", offsetof(XPE_DEF::IMAGE_SECTION_HEADER, Misc.VirtualSize), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, -1},
     {VirtualAddress, "VirtualAddress", offsetof(XPE_DEF::IMAGE_SECTION_HEADER, VirtualAddress), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_RELADDRESS_,
      -1},
-    {SizeOfRawData, "SizeOfRawData", offsetof(XPE_DEF::IMAGE_SECTION_HEADER, SizeOfRawData), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, -1},
+    {SizeOfRawData, "SizeOfRawData", offsetof(XPE_DEF::IMAGE_SECTION_HEADER, SizeOfRawData), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, PointerToRawData},
     {PointerToRawData, "PointerToRawData", offsetof(XPE_DEF::IMAGE_SECTION_HEADER, PointerToRawData), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET,
      -1},
     {PointerToRelocations, "PointerToRelocations", offsetof(XPE_DEF::IMAGE_SECTION_HEADER, PointerToRelocations), 4, "DWORD",
      XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET, -1},
     {PointerToLinenumbers, "PointerToLinenumbers", offsetof(XPE_DEF::IMAGE_SECTION_HEADER, PointerToLinenumbers), 4, "DWORD",
      XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET, -1},
-    {NumberOfRelocations, "NumberOfRelocations", offsetof(XPE_DEF::IMAGE_SECTION_HEADER, NumberOfRelocations), 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-    {NumberOfLinenumbers, "NumberOfLinenumbers", offsetof(XPE_DEF::IMAGE_SECTION_HEADER, NumberOfLinenumbers), 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {NumberOfRelocations, "NumberOfRelocations", offsetof(XPE_DEF::IMAGE_SECTION_HEADER, NumberOfRelocations), 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_COUNT, -1},
+    {NumberOfLinenumbers, "NumberOfLinenumbers", offsetof(XPE_DEF::IMAGE_SECTION_HEADER, NumberOfLinenumbers), 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_COUNT, -1},
     {Characteristics, "Characteristics", offsetof(XPE_DEF::IMAGE_SECTION_HEADER, Characteristics), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-    {Characteristics, "", -1, 0, "", XFW_DEF::VAL_TYPE_UNKNOWN_, -1},
 };
 }
 
