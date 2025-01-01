@@ -275,6 +275,8 @@ QString XFormatWidget::getTypeTitle(XFW_DEF::TYPE type, XBinary::MODE mode, XBin
         sResult = tr("Tools");
     } else if (type == XFW_DEF::TYPE_GENERIC_STRINGTABLE_ANSI) {
         sResult = tr("String table");
+    } else if (type == XFW_DEF::TYPE_GENERIC_RESOURCES) {
+        sResult = tr("Resources");
     } else if (type == XFW_DEF::TYPE_Elf32_Ehdr) {
         sResult = QString("Elf32_Ehdr");
     } else if (type == XFW_DEF::TYPE_Elf64_Ehdr) {
@@ -298,6 +300,12 @@ QString XFormatWidget::getTypeTitle(XFW_DEF::TYPE type, XBinary::MODE mode, XBin
         sResult = QString("IMAGE_DATA_DIRECTORY");
     } else if (type == XFW_DEF::TYPE_PE_IMAGE_SECTION_HEADER) {
         sResult = QString("IMAGE_SECTION_HEADER");
+    } else if (type == XFW_DEF::TYPE_PE_CERTIFICATE) {
+        sResult = tr("Certificate");
+    } else if (type == XFW_DEF::TYPE_PE_IMAGE_COR20_HEADER) {
+        sResult = QString("IMAGE_COR20_HEADER");
+    } else if (type == XFW_DEF::TYPE_PE_NET_METADATA) {
+        sResult = QString(".NET metadata");
     } else if (type == XFW_DEF::TYPE_MACH_mach_header) {
         sResult = QString("mach_header");
     } else if (type == XFW_DEF::TYPE_MACH_mach_header_64) {
@@ -605,6 +613,12 @@ QList<XFW_DEF::HEADER_RECORD> XFormatWidget::getHeaderRecords(const XFW_DEF::CWO
     } else if (pCwOptions->_type == XFW_DEF::TYPE_PE_IMAGE_SECTION_HEADER) {
         pRecords = XTYPE_PE::X_IMAGE_SECTION_HEADER::records;
         nNumberOfRecords = XTYPE_PE::X_IMAGE_SECTION_HEADER::__data_size;
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_PE_IMAGE_COR20_HEADER) {
+        pRecords = XTYPE_PE::X_IMAGE_COR20_HEADER::records;;
+        nNumberOfRecords = XTYPE_PE::X_IMAGE_COR20_HEADER::__data_size;
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_PE_NET_METADATA) {
+        pRecords = XTYPE_PE::X_NET_METADATA::records;
+        nNumberOfRecords = XTYPE_PE::X_NET_METADATA::__data_size;
     } else if (pCwOptions->_type == XFW_DEF::TYPE_DEX_HEADER) {
         pRecords = XTYPE_DEX::X_HEADER::records;
         nNumberOfRecords = XTYPE_DEX::X_HEADER::__data_size;
@@ -748,6 +762,8 @@ qint64 XFormatWidget::getStructSize(XFW_DEF::TYPE type)
         nResult = sizeof(XPE_DEF::IMAGE_DATA_DIRECTORY);
     } else if (type == XFW_DEF::TYPE_PE_IMAGE_SECTION_HEADER) {
         nResult = sizeof(XPE_DEF::IMAGE_SECTION_HEADER);
+    } else if (type == XFW_DEF::TYPE_PE_IMAGE_COR20_HEADER) {
+        nResult = sizeof(XPE_DEF::IMAGE_COR20_HEADER);
     } else if (type == XFW_DEF::TYPE_DEX_HEADER) {
         nResult = sizeof(XDEX_DEF::HEADER);
     }
@@ -2016,6 +2032,8 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
         } else if ((_spStruct.type > XFW_DEF::TYPE_PE_START) && (_spStruct.type < XFW_DEF::TYPE_PE_END)) {
             XPE pe(_pDevice, _spStruct.bIsImage, _spStruct.nImageBase);
 
+            XBinary::_MEMORY_MAP memoryMap = pe.getMemoryMap();
+
             if ((_spStruct.widgetMode == XFW_DEF::WIDGETMODE_HEADER) && (_spStruct.type == XFW_DEF::TYPE_PE_IMAGE_DOS_HEADER)) {
                 XMSDOS_DEF::IMAGE_DOS_HEADEREX idh = pe._read_IMAGE_DOS_HEADEREX(_spStruct.nStructOffset);
 
@@ -2116,6 +2134,99 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     _spStructRecord.nStructCount = nNumberOfDirectories;
                     _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_TABLE;
                     _spStructRecord.type = XFW_DEF::TYPE_PE_IMAGE_DATA_DIRECTORY;
+
+                    _addStruct(_spStructRecord);
+                }
+            } else if ((_spStruct.widgetMode == XFW_DEF::WIDGETMODE_TABLE) && (_spStruct.type == XFW_DEF::TYPE_PE_IMAGE_DATA_DIRECTORY)) {
+                qint64 _nOffset = _spStruct.nStructOffset;
+                qint32 nNumberOfDirectories = _spStruct.nStructCount;
+
+                for (qint32 i = 0; i < nNumberOfDirectories; i++) {
+                    XPE_DEF::IMAGE_DATA_DIRECTORY idd = pe.read_IMAGE_DATA_DIRECTORY(_nOffset + i * sizeof(XPE_DEF::IMAGE_DATA_DIRECTORY));
+
+                    if (i == XPE_DEF::S_IMAGE_DIRECTORY_ENTRY_SECURITY) {
+                        if (XBinary::isOffsetValid(&memoryMap, idd.VirtualAddress) && idd.Size) {
+                            SPSTRUCT _spStructRecord = _spStruct;
+                            _spStructRecord.pTreeWidgetItem = pTreeWidgetItem;
+                            _spStructRecord.nStructOffset = _spStruct.nOffset + idd.VirtualAddress;
+                            _spStructRecord.nStructSize = idd.Size;
+                            _spStructRecord.nStructCount = 0;
+                            _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEX;
+                            _spStructRecord.type = XFW_DEF::TYPE_PE_CERTIFICATE;
+
+                            _addStruct(_spStructRecord);
+                        }
+                    } else {
+                        if (XBinary::isRelAddressValid(&memoryMap, idd.VirtualAddress) && idd.Size) {
+                            if (i == XPE_DEF::S_IMAGE_DIRECTORY_ENTRY_COM_DESCRIPTOR) {
+                                SPSTRUCT _spStructRecord = _spStruct;
+                                _spStructRecord.pTreeWidgetItem = pTreeWidgetItem;
+                                _spStructRecord.nStructOffset = _spStruct.nOffset + XBinary::relAddressToOffset(&memoryMap, idd.VirtualAddress);
+                                _spStructRecord.nStructSize = idd.Size;
+                                _spStructRecord.nStructCount = 0;
+                                _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEADER;
+                                _spStructRecord.type = XFW_DEF::TYPE_PE_IMAGE_COR20_HEADER;
+
+                                _addStruct(_spStructRecord);
+                            }
+                        }
+                    }
+                }
+            } else if ((_spStruct.widgetMode == XFW_DEF::WIDGETMODE_HEADER) && (_spStruct.type == XFW_DEF::TYPE_PE_IMAGE_COR20_HEADER)) {
+                XPE_DEF::IMAGE_COR20_HEADER cor20Header = pe._read_IMAGE_COR20_HEADER(_spStruct.nStructOffset);
+
+                if (XBinary::isRelAddressValid(&memoryMap, cor20Header.MetaData.VirtualAddress) && cor20Header.MetaData.Size) {
+                    SPSTRUCT _spStructRecord = _spStruct;
+                    _spStructRecord.pTreeWidgetItem = pTreeWidgetItem;
+                    _spStructRecord.nStructOffset = _spStruct.nOffset + XBinary::relAddressToOffset(&memoryMap, cor20Header.MetaData.VirtualAddress);
+                    _spStructRecord.nStructSize = cor20Header.MetaData.Size;
+                    _spStructRecord.nStructCount = 0;
+                    _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEADER;
+                    _spStructRecord.type = XFW_DEF::TYPE_PE_NET_METADATA;
+
+                    _addStruct(_spStructRecord);
+                }
+                if (XBinary::isRelAddressValid(&memoryMap, cor20Header.Resources.VirtualAddress) && cor20Header.Resources.Size) {
+                    SPSTRUCT _spStructRecord = _spStruct;
+                    _spStructRecord.pTreeWidgetItem = pTreeWidgetItem;
+                    _spStructRecord.nStructOffset = _spStruct.nOffset + XBinary::relAddressToOffset(&memoryMap, cor20Header.Resources.VirtualAddress);
+                    _spStructRecord.nStructSize = cor20Header.Resources.Size;
+                    _spStructRecord.nStructCount = 0;
+                    _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEX;
+                    _spStructRecord.type = XFW_DEF::TYPE_GENERIC_RESOURCES;
+
+                    _addStruct(_spStructRecord);
+                }
+                if (XBinary::isRelAddressValid(&memoryMap, cor20Header.StrongNameSignature.VirtualAddress) && cor20Header.StrongNameSignature.Size) {
+                    SPSTRUCT _spStructRecord = _spStruct;
+                    _spStructRecord.pTreeWidgetItem = pTreeWidgetItem;
+                    _spStructRecord.nStructOffset = _spStruct.nOffset + XBinary::relAddressToOffset(&memoryMap, cor20Header.StrongNameSignature.VirtualAddress);
+                    _spStructRecord.nStructSize = cor20Header.StrongNameSignature.Size;
+                    _spStructRecord.nStructCount = 0;
+                    _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEX;
+                    _spStructRecord.type = XFW_DEF::TYPE_GENERIC_RESOURCES;
+
+                    _addStruct(_spStructRecord);
+                }
+                if (XBinary::isRelAddressValid(&memoryMap, cor20Header.VTableFixups.VirtualAddress) && cor20Header.VTableFixups.Size) {
+                    SPSTRUCT _spStructRecord = _spStruct;
+                    _spStructRecord.pTreeWidgetItem = pTreeWidgetItem;
+                    _spStructRecord.nStructOffset = _spStruct.nOffset + XBinary::relAddressToOffset(&memoryMap, cor20Header.VTableFixups.VirtualAddress);
+                    _spStructRecord.nStructSize = cor20Header.VTableFixups.Size;
+                    _spStructRecord.nStructCount = 0;
+                    _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEX;
+                    _spStructRecord.type = XFW_DEF::TYPE_GENERIC_RESOURCES;
+
+                    _addStruct(_spStructRecord);
+                }
+                if (XBinary::isRelAddressValid(&memoryMap, cor20Header.ManagedNativeHeader.VirtualAddress) && cor20Header.ManagedNativeHeader.Size) {
+                    SPSTRUCT _spStructRecord = _spStruct;
+                    _spStructRecord.pTreeWidgetItem = pTreeWidgetItem;
+                    _spStructRecord.nStructOffset = _spStruct.nOffset + XBinary::relAddressToOffset(&memoryMap, cor20Header.ManagedNativeHeader.VirtualAddress);
+                    _spStructRecord.nStructSize = cor20Header.ManagedNativeHeader.Size;
+                    _spStructRecord.nStructCount = 0;
+                    _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEX;
+                    _spStructRecord.type = XFW_DEF::TYPE_GENERIC_RESOURCES;
 
                     _addStruct(_spStructRecord);
                 }

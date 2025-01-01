@@ -516,48 +516,48 @@ const XFW_DEF::HEADER_RECORD records[] = {
 };
 }
 
-namespace X_IMAGE_NETHEADER {
+namespace X_IMAGE_COR20_HEADER {
 const XFW_DEF::HEADER_RECORD records[] = {
-    {cb, "cb", offsetof(XPE_DEF::IMAGE_COR20_HEADER, cb), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, -1},
-    {MajorRuntimeVersion, "MajorRuntimeVersion", offsetof(XPE_DEF::IMAGE_COR20_HEADER, MajorRuntimeVersion), 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-    {MinorRuntimeVersion, "MinorRuntimeVersion", offsetof(XPE_DEF::IMAGE_COR20_HEADER, MinorRuntimeVersion), 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {cb, "cb", offsetof(XPE_DEF::IMAGE_COR20_HEADER, cb), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE | XFW_DEF::VAL_TYPE_RELTOHEADER, -1},
+    {MajorRuntimeVersion, "MajorRuntimeVersion", offsetof(XPE_DEF::IMAGE_COR20_HEADER, MajorRuntimeVersion), 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_VERSION, -1},
+    {MinorRuntimeVersion, "MinorRuntimeVersion", offsetof(XPE_DEF::IMAGE_COR20_HEADER, MinorRuntimeVersion), 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_VERSION, -1},
     {MetaData_Address, "MetaData_Address", offsetof(XPE_DEF::IMAGE_COR20_HEADER, MetaData.VirtualAddress), 4, "DWORD",
      XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_RELADDRESS, -1},
-    {MetaData_Size, "MetaData_Size", offsetof(XPE_DEF::IMAGE_COR20_HEADER, MetaData.Size), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {MetaData_Size, "MetaData_Size", offsetof(XPE_DEF::IMAGE_COR20_HEADER, MetaData.Size), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, MetaData_Address},
     {Flags, "Flags", offsetof(XPE_DEF::IMAGE_COR20_HEADER, Flags), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {EntryPoint, "EntryPoint", offsetof(XPE_DEF::IMAGE_COR20_HEADER, EntryPointRVA), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {Resources_Address, "Resources_Address", offsetof(XPE_DEF::IMAGE_COR20_HEADER, Resources.VirtualAddress), 4, "DWORD",
      XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_RELADDRESS, -1},
-    {Resources_Size, "Resources_Size", offsetof(XPE_DEF::IMAGE_COR20_HEADER, Resources.Size), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {Resources_Size, "Resources_Size", offsetof(XPE_DEF::IMAGE_COR20_HEADER, Resources.Size), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, Resources_Address},
     {StrongNameSignature_Address, "StrongNameSignature_Address", offsetof(XPE_DEF::IMAGE_COR20_HEADER, StrongNameSignature.VirtualAddress), 4, "DWORD",
      XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_RELADDRESS, -1},
-    {StrongNameSignature_Size, "StrongNameSignature_Size", offsetof(XPE_DEF::IMAGE_COR20_HEADER, StrongNameSignature.Size), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {StrongNameSignature_Size, "StrongNameSignature_Size", offsetof(XPE_DEF::IMAGE_COR20_HEADER, StrongNameSignature.Size), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, StrongNameSignature_Address},
     {CodeManagerTable_Address, "CodeManagerTable_Address", offsetof(XPE_DEF::IMAGE_COR20_HEADER, CodeManagerTable.VirtualAddress), 4, "DWORD",
      XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_RELADDRESS, -1},
-    {CodeManagerTable_Size, "CodeManagerTable_Size", offsetof(XPE_DEF::IMAGE_COR20_HEADER, CodeManagerTable.Size), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {CodeManagerTable_Size, "CodeManagerTable_Size", offsetof(XPE_DEF::IMAGE_COR20_HEADER, CodeManagerTable.Size), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, CodeManagerTable_Address},
     {VTableFixups_Address, "VTableFixups_Address", offsetof(XPE_DEF::IMAGE_COR20_HEADER, VTableFixups.VirtualAddress), 4, "DWORD",
      XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_RELADDRESS, -1},
-    {VTableFixups_Size, "VTableFixups_Size", offsetof(XPE_DEF::IMAGE_COR20_HEADER, VTableFixups.Size), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {VTableFixups_Size, "VTableFixups_Size", offsetof(XPE_DEF::IMAGE_COR20_HEADER, VTableFixups.Size), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, VTableFixups_Address},
     {ExportAddressTableJumps_Address, "ExportAddressTableJumps_Address", offsetof(XPE_DEF::IMAGE_COR20_HEADER, ExportAddressTableJumps.VirtualAddress), 4, "DWORD",
      XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_RELADDRESS, -1},
     {ExportAddressTableJumps_Size, "ExportAddressTableJumps_Size", offsetof(XPE_DEF::IMAGE_COR20_HEADER, ExportAddressTableJumps.Size), 4, "DWORD",
-     XFW_DEF::VAL_TYPE_DATA_INT, -1},
+     XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, ExportAddressTableJumps_Address},
     {ManagedNativeHeader_Address, "ManagedNativeHeader_Address", offsetof(XPE_DEF::IMAGE_COR20_HEADER, ManagedNativeHeader.VirtualAddress), 4, "DWORD",
      XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_RELADDRESS, -1},
-    {ManagedNativeHeader_Size, "ManagedNativeHeader_Size", offsetof(XPE_DEF::IMAGE_COR20_HEADER, ManagedNativeHeader.Size), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {ManagedNativeHeader_Size, "ManagedNativeHeader_Size", offsetof(XPE_DEF::IMAGE_COR20_HEADER, ManagedNativeHeader.Size), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, ManagedNativeHeader_Address},
 };
 }
 
-namespace X_IMAGE_NET_METADATA {
+namespace X_NET_METADATA {
 const XFW_DEF::HEADER_RECORD records[] = {
     {Signature, "Signature", 0, 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-    {MajorVersion, "MajorVersion", 4, 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-    {MinorVersion, "MinorVersion", 6, 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {MajorVersion, "MajorVersion", 4, 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_VERSION, -1},
+    {MinorVersion, "MinorVersion", 6, 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_VERSION, -1},
     {Reserved, "Reserved", 8, 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {VersionStringLength, "VersionStringLength", 12, 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, -1},
-    {Version, "Version", 16, 1, "TEXT", XFW_DEF::VAL_TYPE_DATA_ARRAY | XFW_DEF::VAL_TYPE_ANSI | XFW_DEF::VAL_TYPE_STRING, -1},
-    {Flags, "Flags", -1, 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-    {Streams, "Streams", -1, 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {Version, "Version", 16, 0, "TEXT", XFW_DEF::VAL_TYPE_DATA_ARRAY | XFW_DEF::VAL_TYPE_ANSI | XFW_DEF::VAL_TYPE_STRING, VersionStringLength},
+    {Flags, "Flags", 0, 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {Streams, "Streams", 2, 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
 };
 }
 
