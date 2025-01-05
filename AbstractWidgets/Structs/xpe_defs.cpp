@@ -556,8 +556,8 @@ const XFW_DEF::HEADER_RECORD records[] = {
     {Reserved, "Reserved", 8, 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {VersionStringLength, "VersionStringLength", 12, 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, -1},
     {Version, "Version", 16, 0, "TEXT", XFW_DEF::VAL_TYPE_DATA_ARRAY | XFW_DEF::VAL_TYPE_ANSI | XFW_DEF::VAL_TYPE_STRING, VersionStringLength},
-    {Flags, "Flags", 0, 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-    {Streams, "Streams", 2, 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {Flags, "Flags", -1, 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {Streams, "Streams", -1, 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
 };
 }
 

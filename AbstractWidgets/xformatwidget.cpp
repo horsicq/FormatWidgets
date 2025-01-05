@@ -778,7 +778,10 @@ qint32 XFormatWidget::getHeaderSize(const QList<XFW_DEF::HEADER_RECORD> *pListHe
 
     for (qint32 i = 0; i < nNumberOfRecords; i++) {
         XFW_DEF::HEADER_RECORD record = pListHeaderRecords->at(i);
-        nResult += record.nSize;
+
+        if (record.nSize > 0) {
+            nResult += record.nSize;
+        }
     }
 
     return nResult;
@@ -2724,9 +2727,9 @@ bool XFormatWidget::createHeaderTable(QTableWidget *pTableWidget, const QList<XF
 
             pTableWidget->setCellWidget(i, HEADER_COLUMN_VALUE, recWidget.pLineEdit);
 
-            if (pListHeaderRecords->at(i).nSize == 0) {
-                recWidget.pLineEdit->setEnabled(false);
-            }
+            // if (pListHeaderRecords->at(i).nSize == 0) {
+            //     recWidget.pLineEdit->setEnabled(false);
+            // }
         }
 
         recWidget.pComment = new QTableWidgetItem;
@@ -2834,53 +2837,6 @@ bool XFormatWidget::createHeaderTable(QTableWidget *pTableWidget, const QList<XF
     //    XOptions::setTableWidgetHeaderAlignment(pTableWidget, HEADER_COLUMN_VALUE, Qt::AlignRight | Qt::AlignVCenter);
     //    XOptions::setTableWidgetHeaderAlignment(pTableWidget, HEADER_COLUMN_INFO, Qt::AlignLeft | Qt::AlignVCenter);
     //    XOptions::setTableWidgetHeaderAlignment(pTableWidget, HEADER_COLUMN_COMMENT, Qt::AlignLeft | Qt::AlignVCenter);
-
-    return true;
-}
-
-bool XFormatWidget::createListTable(qint32 nType, QTableWidget *pTableWidget, const XFW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, qint32 nNumberOfRecords)
-{
-    pTableWidget->setColumnCount(2);
-    pTableWidget->setRowCount(nNumberOfRecords);
-
-    QStringList slHeader;
-    slHeader.append(tr("Name"));
-    slHeader.append(tr("Value"));
-
-    pTableWidget->setHorizontalHeaderLabels(slHeader);
-    pTableWidget->horizontalHeader()->setVisible(true);
-
-    for (qint32 i = 0; i < nNumberOfRecords; i++) {
-        QTableWidgetItem *pItemName = new QTableWidgetItem;
-        pItemName->setText(pRecords[i].sName);
-        pTableWidget->setItem(i, LIST_COLUMN_NAME, pItemName);
-
-        ppLineEdits[i] = new XLineEditHEX(this);
-
-        ppLineEdits[i]->setProperty("STYPE", nType);
-        ppLineEdits[i]->setProperty("NDATA", pRecords[i].nPosition);
-
-        if (pRecords[i].vtype & XFW_DEF::VAL_TYPE_ANSI) {
-            ppLineEdits[i]->setAlignment(Qt::AlignLeft);
-        }
-
-        if (pRecords[i].nOffset != -1) {
-            if (pRecords[i].vtype & XFW_DEF::VAL_TYPE_DATA_ARRAY) {
-                if (pRecords[i].nSize != -1) {
-                    ppLineEdits[i]->setMaxLength(pRecords[i].nSize);
-                }
-            }
-            connect(ppLineEdits[i], SIGNAL(valueChanged(QVariant)), this, SLOT(valueChangedSlot(QVariant)));
-        } else {
-            ppLineEdits[i]->setReadOnly(true);
-        }
-
-        pTableWidget->setCellWidget(i, LIST_COLUMN_VALUE, ppLineEdits[i]);
-    }
-
-    pTableWidget->horizontalHeader()->setSectionResizeMode(LIST_COLUMN_VALUE, QHeaderView::Stretch);
-
-    adjustListTable(nType, pTableWidget);
 
     return true;
 }

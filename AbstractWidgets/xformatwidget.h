@@ -130,8 +130,6 @@ public:
 
     bool createHeaderTable(QTableWidget *pTableWidget, const QList<XFW_DEF::HEADER_RECORD> *pListHeaderRecords, QList<RECWIDGET> *pListRecWidget, qint64 nOffset,
                            XBinary::ENDIAN endian, QVariant var1, QVariant var2);
-    bool createListTable(qint32 nType, QTableWidget *pTableWidget, const XFW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, qint32 nNumberOfRecords);
-
     void addComboBox(QTableWidget *pTableWidget, QList<RECWIDGET> *pListRecWidget, const QMap<quint64, QString> &mapData, qint32 nPosition, XComboBoxEx::CBTYPE cbtype,
                      quint64 nMask);
     void _adjustCellWidget(QList<RECWIDGET> *pListRecWidget, QTableWidget *pTableWidget, qint32 nRow, qint32 nColumn);
