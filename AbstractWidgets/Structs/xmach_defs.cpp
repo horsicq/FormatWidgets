@@ -154,15 +154,15 @@ const XFW_DEF::HEADER_RECORD records[] = {
     {cmdsize, "cmdsize", offsetof(XMACH_DEF::dyld_info_command, cmdsize), 4, "uint32",
      XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE | XFW_DEF::VAL_TYPE_RELTOHEADER, -1},
     {rebase_off, "rebase_off", offsetof(XMACH_DEF::dyld_info_command, rebase_off), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET, -1},
-    {rebase_size, "rebase_size", offsetof(XMACH_DEF::dyld_info_command, rebase_size), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, -1},
+    {rebase_size, "rebase_size", offsetof(XMACH_DEF::dyld_info_command, rebase_size), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, rebase_off},
     {bind_off, "bind_off", offsetof(XMACH_DEF::dyld_info_command, bind_off), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET, -1},
-    {bind_size, "bind_size", offsetof(XMACH_DEF::dyld_info_command, bind_size), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, -1},
+    {bind_size, "bind_size", offsetof(XMACH_DEF::dyld_info_command, bind_size), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, bind_off},
     {weak_bind_off, "weak_bind_off", offsetof(XMACH_DEF::dyld_info_command, weak_bind_off), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET, -1},
-    {weak_bind_size, "weak_bind_size", offsetof(XMACH_DEF::dyld_info_command, weak_bind_size), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, -1},
+    {weak_bind_size, "weak_bind_size", offsetof(XMACH_DEF::dyld_info_command, weak_bind_size), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, weak_bind_off},
     {lazy_bind_off, "lazy_bind_off", offsetof(XMACH_DEF::dyld_info_command, lazy_bind_off), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET, -1},
-    {lazy_bind_size, "lazy_bind_size", offsetof(XMACH_DEF::dyld_info_command, lazy_bind_size), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, -1},
+    {lazy_bind_size, "lazy_bind_size", offsetof(XMACH_DEF::dyld_info_command, lazy_bind_size), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, lazy_bind_off},
     {export_off, "export_off", offsetof(XMACH_DEF::dyld_info_command, export_off), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET, -1},
-    {export_size, "export_size", offsetof(XMACH_DEF::dyld_info_command, export_size), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, -1},
+    {export_size, "export_size", offsetof(XMACH_DEF::dyld_info_command, export_size), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, export_off},
 };
 }
 

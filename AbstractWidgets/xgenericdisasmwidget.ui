@@ -58,16 +58,22 @@
     </layout>
    </item>
    <item>
-    <widget class="XHexView" name="scrollAreaHex">
+    <widget class="XMultiDisasmWidget" name="widgetDisasm" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
     </widget>
    </item>
   </layout>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>XHexView</class>
-   <extends>QScrollArea</extends>
-   <header>xhexview.h</header>
+   <class>XMultiDisasmWidget</class>
+   <extends>QWidget</extends>
+   <header>xmultidisasmwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -33,9 +33,9 @@ XGenericDisasmWidget::XGenericDisasmWidget(QWidget *pParent) : XFormatWidget(pPa
     ui->toolButtonTableReload->setToolTip(tr("Reload"));
     ui->toolButtonTableSize->setToolTip(tr("Size"));
 
-    connect(ui->scrollAreaHex, SIGNAL(currentLocationChanged(quint64, qint32, qint64)), this, SIGNAL(currentLocationChanged(quint64, qint32, qint64)));
-    connect(ui->scrollAreaHex, SIGNAL(dataChanged(qint64, qint64)), this, SIGNAL(dataChanged(qint64, qint64)));
-    connect(ui->scrollAreaHex, SIGNAL(followLocation(quint64, qint32, qint64, qint32)), this, SIGNAL(followLocation(quint64, qint32, qint64, qint32)));
+    connect(ui->widgetDisasm, SIGNAL(currentLocationChanged(quint64, qint32, qint64)), this, SIGNAL(currentLocationChanged(quint64, qint32, qint64)));
+    connect(ui->widgetDisasm, SIGNAL(dataChanged(qint64, qint64)), this, SIGNAL(dataChanged(qint64, qint64)));
+    connect(ui->widgetDisasm, SIGNAL(followLocation(quint64, qint32, qint64, qint32)), this, SIGNAL(followLocation(quint64, qint32, qint64, qint32)));
 }
 
 XGenericDisasmWidget::~XGenericDisasmWidget()
@@ -57,11 +57,12 @@ void XGenericDisasmWidget::reloadData(bool bSaveSelection)
     g_pSubDevice = new SubDevice(getDevice(), getCwOptions()->nDataOffset, getCwOptions()->nDataSize);
 
     if (g_pSubDevice->open(QIODevice::ReadWrite)) {
-        XHexView::OPTIONS options = {};
+        XMultiDisasmWidget::OPTIONS options = {};
+        options.fileType = XBinary::FT_REGION;
         options.nStartAddress = getCwOptions()->nDataOffset;
-        options.addressMode = XHexView::LOCMODE_ADDRESS;
+        options.sArch = getCwOptions()->var1.toString();
 
-        ui->scrollAreaHex->setData(g_pSubDevice, options, true);
+        ui->widgetDisasm->setData(g_pSubDevice, options);
     }
 }
 
@@ -73,7 +74,7 @@ void XGenericDisasmWidget::adjustView()
 
 void XGenericDisasmWidget::setReadonly(bool bState)
 {
-    ui->scrollAreaHex->setReadonly(bState);
+    ui->widgetDisasm->setReadonly(bState);
     XFormatWidget::setReadonly(bState);
 }
 
