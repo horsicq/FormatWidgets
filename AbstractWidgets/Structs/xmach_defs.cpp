@@ -353,6 +353,16 @@ const XFW_DEF::HEADER_RECORD records[] = {
 };
 }
 
+namespace X_twolevel_hints_command {
+const XFW_DEF::HEADER_RECORD records[] = {
+    {cmd, "cmd", offsetof(XMACH_DEF::twolevel_hints_command, cmd), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {cmdsize, "cmdsize", offsetof(XMACH_DEF::twolevel_hints_command, cmdsize), 4, "uint32",
+     XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE | XFW_DEF::VAL_TYPE_RELTOHEADER, -1},
+    {offset, "offset", offsetof(XMACH_DEF::twolevel_hints_command, offset), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET, -1},
+    {nhints, "count", offsetof(XMACH_DEF::twolevel_hints_command, nhints), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_COUNT, -1},
+};
+}
+
 namespace X_routines_command {
 const XFW_DEF::HEADER_RECORD records32[] = {
     {cmd, "cmd", offsetof(XMACH_DEF::routines_command, cmd), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},

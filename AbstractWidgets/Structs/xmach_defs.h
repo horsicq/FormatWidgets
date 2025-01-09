@@ -366,6 +366,18 @@ enum DATA {
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace X_unix_thread_command
 
+namespace X_twolevel_hints_command {
+enum DATA {
+    cmd = 0,
+    cmdsize,
+    offset,
+    nhints,
+    __data_size
+};
+
+extern const XFW_DEF::HEADER_RECORD records[__data_size];
+}  // namespace X_twolevel_hints_command
+
 namespace X_routines_command {
 enum DATA {
     cmd = 0,

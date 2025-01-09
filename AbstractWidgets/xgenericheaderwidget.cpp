@@ -138,7 +138,7 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
             (getCwOptions()->_type == XFW_DEF::TYPE_MACH_dylinker_command) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_data_in_code_command) ||
             (getCwOptions()->_type == XFW_DEF::TYPE_MACH_code_signature_command) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_routines_command) ||
             (getCwOptions()->_type == XFW_DEF::TYPE_MACH_routines_command_64) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_fvm_library_command) ||
-            (getCwOptions()->_type == XFW_DEF::TYPE_MACH_unix_thread_command)) {
+            (getCwOptions()->_type == XFW_DEF::TYPE_MACH_unix_thread_command) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_twolevel_hints_command)) {
             addComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getLoadCommandTypesS(), XTYPE_MACH::X_load_commands::cmd, XComboBoxEx::CBTYPE_LIST, 0);
         }
 

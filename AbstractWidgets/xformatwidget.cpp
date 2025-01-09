@@ -372,6 +372,8 @@ QString XFormatWidget::getTypeTitle(XFW_DEF::TYPE type, XBinary::MODE mode, XBin
         sResult = QString("fvm_library_command");
     } else if (type == XFW_DEF::TYPE_MACH_unix_thread_command) {
         sResult = QString("unix_thread_command");
+    } else if (type == XFW_DEF::TYPE_MACH_twolevel_hints_command) {
+        sResult = QString("twolevel_hints_command");
     } else if (type == XFW_DEF::TYPE_MACH_x86_thread_state32_t) {
         sResult = QString("x86_thread_state32_t");
     } else if (type == XFW_DEF::TYPE_MACH_x86_thread_state64_t) {
@@ -536,6 +538,9 @@ QList<XFW_DEF::HEADER_RECORD> XFormatWidget::getHeaderRecords(const XFW_DEF::CWO
     } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_unix_thread_command) {
         pRecords = XTYPE_MACH::X_unix_thread_command::records;
         nNumberOfRecords = XTYPE_MACH::X_unix_thread_command::__data_size;
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_twolevel_hints_command) {
+        pRecords = XTYPE_MACH::X_twolevel_hints_command::records;
+        nNumberOfRecords = XTYPE_MACH::X_twolevel_hints_command::__data_size;
     } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_x86_thread_state32_t) {
         pRecords = XTYPE_MACH::X_x86_thread_state32_t::records;
         nNumberOfRecords = XTYPE_MACH::X_x86_thread_state32_t::__data_size;
@@ -711,6 +716,8 @@ qint64 XFormatWidget::getStructSize(XFW_DEF::TYPE type)
         nResult = sizeof(XMACH_DEF::fvmlib_command);
     } else if (type == XFW_DEF::TYPE_MACH_unix_thread_command) {
         nResult = sizeof(XMACH_DEF::unix_thread_command);
+    } else if (type == XFW_DEF::TYPE_MACH_twolevel_hints_command) {
+        nResult = sizeof(XMACH_DEF::twolevel_hints_command);
     } else if (type == XFW_DEF::TYPE_MACH_x86_thread_state32_t) {
         nResult = sizeof(XMACH_DEF::x86_thread_state32_t);
     } else if (type == XFW_DEF::TYPE_MACH_x86_thread_state64_t) {
@@ -2395,6 +2402,8 @@ XFW_DEF::TYPE XFormatWidget::load_commandIdToType(qint32 nCommandId)
         result = XFW_DEF::TYPE_MACH_fvm_library_command;
     } else if (nCommandId == XMACH_DEF::S_LC_UNIXTHREAD) {
         result = XFW_DEF::TYPE_MACH_unix_thread_command;
+    } else if (nCommandId == XMACH_DEF::S_LC_TWOLEVEL_HINTS) {
+        result = XFW_DEF::TYPE_MACH_twolevel_hints_command;
     } else {
         result = XFW_DEF::TYPE_MACH_load_command;
     }
