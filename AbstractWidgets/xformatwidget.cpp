@@ -1820,7 +1820,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     _spStructRecord.nStructOffset = _spStruct.nOffset + _command.cryptoff;
                     _spStructRecord.nStructSize = _command.cryptsize;
                     _spStructRecord.nStructCount = 0;
-                    _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEX; // TODO remove
+                    _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEX;  // TODO remove
                     _spStructRecord.type = XFW_DEF::TYPE_HEX;
 
                     _addStruct(_spStructRecord);
@@ -1834,7 +1834,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     _spStructRecord.nStructOffset = _spStruct.nOffset + _command.cryptoff;
                     _spStructRecord.nStructSize = _command.cryptsize;
                     _spStructRecord.nStructCount = 0;
-                    _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEX; // TODO remove
+                    _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEX;  // TODO remove
                     _spStructRecord.type = XFW_DEF::TYPE_HEX;
 
                     _addStruct(_spStructRecord);

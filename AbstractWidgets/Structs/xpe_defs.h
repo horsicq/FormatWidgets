@@ -354,7 +354,7 @@ enum DATA {
 };
 
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
-}  // namespace X_IMAGE_NETHEADER
+}  // namespace X_IMAGE_COR20_HEADER
 
 namespace X_NET_METADATA {
 enum DATA {
@@ -370,7 +370,7 @@ enum DATA {
 };
 
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
-}  // namespace X_IMAGE_NET_METADATA
+}  // namespace X_NET_METADATA
 
 namespace X_IMAGE_EXCEPTIONS {
 enum DATA {

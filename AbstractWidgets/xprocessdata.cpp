@@ -76,8 +76,7 @@ void XProcessData::process()
 
             g_pListHeaderRecords->append(record);
         }
-    } else if ((g_pCwOptions->_type == XFW_DEF::TYPE_MACH_load_command) ||
-               (g_pCwOptions->_type == XFW_DEF::TYPE_PE_IMAGE_DATA_DIRECTORY)) {
+    } else if ((g_pCwOptions->_type == XFW_DEF::TYPE_MACH_load_command) || (g_pCwOptions->_type == XFW_DEF::TYPE_PE_IMAGE_DATA_DIRECTORY)) {
         XFW_DEF::HEADER_RECORD record = {};
         record.nPosition = -1;
         record.sName = tr("Info");
