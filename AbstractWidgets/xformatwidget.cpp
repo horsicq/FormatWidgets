@@ -208,14 +208,23 @@ XFW_DEF::OPTIONS XFormatWidget::getOptions()
 }
 
 QTreeWidgetItem *XFormatWidget::createNewItem(XFW_DEF::TYPE type, XFW_DEF::WIDGETMODE widgetMode, XOptions::ICONTYPE iconType, qint64 nOffset, qint64 nSize,
-                                              qint64 nCount, QVariant var1, QVariant var2, XBinary::MODE mode, XBinary::ENDIAN endian, QString sTitle)
+                                              qint64 nCount, QVariant var1, QVariant var2, XBinary::MODE mode, XBinary::ENDIAN endian, QString sTitle, QString sInfo)
 {
     QTreeWidgetItem *pResult = new QTreeWidgetItem;
 
     QString _sTitle = sTitle;
+    QString _sInfo= sInfo;
+
+    if (_sInfo == "") {
+        if (widgetMode == XFW_DEF::WIDGETMODE_TABLE) {
+            if (nCount > 0) {
+                _sInfo = QString::number(nCount);
+            }
+        }
+    }
 
     if (_sTitle == "") {
-        _sTitle = getTypeTitle(type, mode, endian);
+        _sTitle = getTypeTitle(type, mode, endian, _sInfo);
     }
 
     pResult->setText(0, _sTitle);
@@ -235,7 +244,7 @@ QTreeWidgetItem *XFormatWidget::createNewItem(XFW_DEF::TYPE type, XFW_DEF::WIDGE
     return pResult;
 }
 
-QString XFormatWidget::getTypeTitle(XFW_DEF::TYPE type, XBinary::MODE mode, XBinary::ENDIAN endian)
+QString XFormatWidget::getTypeTitle(XFW_DEF::TYPE type, XBinary::MODE mode, XBinary::ENDIAN endian, QString sInfo)
 {
     Q_UNUSED(endian)
 
@@ -424,12 +433,16 @@ QString XFormatWidget::getTypeTitle(XFW_DEF::TYPE type, XBinary::MODE mode, XBin
     }
 #endif
 
+    if (sInfo != "") {
+        sResult += QString(" (%1)").arg(sInfo);
+    }
+
     return sResult;
 }
 
 QString XFormatWidget::getTypeTitle(const XFW_DEF::CWOPTIONS *pCwOptions)
 {
-    return getTypeTitle(pCwOptions->_type, pCwOptions->mode, pCwOptions->endian);
+    return getTypeTitle(pCwOptions->_type, pCwOptions->mode, pCwOptions->endian, "");
 }
 
 QList<XFW_DEF::HEADER_RECORD> XFormatWidget::getHeaderRecords(const XFW_DEF::CWOPTIONS *pCwOptions, qint32 nLimit)
@@ -1652,6 +1665,7 @@ void XFormatWidget::_addFileType(QTreeWidgetItem *pTreeWidgetItem, QIODevice *pD
                 spStruct.type = XFW_DEF::TYPE_MACH_mach_header_64;
                 spStruct.fileType = XBinary::FT_MACHO64;
             }
+            spStruct.sInfo = mach.getArch();
 
             _addStruct(spStruct);
         }
@@ -1698,7 +1712,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
     }
 
     QTreeWidgetItem *pTreeWidgetItem = createNewItem(_spStruct.type, _spStruct.widgetMode, iconType, _spStruct.nOffset + _spStruct.nStructOffset, _spStruct.nStructSize,
-                                                     _spStruct.nStructCount, _spStruct.var1, _spStruct.var2, spStruct.mode, spStruct.endian, spStruct.sTitle);
+                                                     _spStruct.nStructCount, _spStruct.var1, _spStruct.var2, spStruct.mode, spStruct.endian, spStruct.sTitle, spStruct.sInfo);
 
     spStruct.pTreeWidgetItem->addChild(pTreeWidgetItem);
 
@@ -1739,6 +1753,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                         _spStructRecord.nStructCount = nCommandCount;
                         _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_TABLE;
                         _spStructRecord.type = XFW_DEF::TYPE_MACH_load_command;
+                        _spStructRecord.sInfo = "";
 
                         _addStruct(_spStructRecord);
                     }
@@ -1760,6 +1775,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     _spStructRecord.nStructCount = 1;
                     _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEADER;
                     _spStructRecord.type = load_commandIdToType(listCommands.at(i).nId);
+                    _spStructRecord.sInfo = "";
 
                     _addStruct(_spStructRecord);
                 }
@@ -1781,6 +1797,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     } else if (_spStructRecord.mode == XBinary::MODE_64) {
                         _spStructRecord.type = XFW_DEF::TYPE_MACH_nlist_64;
                     }
+                    _spStructRecord.sInfo = "";
 
                     _addStruct(_spStructRecord);
                 }
@@ -1793,6 +1810,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     _spStructRecord.nStructCount = 0;
                     _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_TABLE;
                     _spStructRecord.type = XFW_DEF::TYPE_GENERIC_STRINGTABLE_ANSI;
+                    _spStructRecord.sInfo = "";
 
                     _addStruct(_spStructRecord);
                 }
@@ -1808,6 +1826,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEADER;
                     _spStructRecord.type = XFW_DEF::TYPE_MACH_SC_SuperBlob;
                     _spStructRecord.endian = XBinary::ENDIAN_BIG;  // Important!
+                    _spStructRecord.sInfo = "";
 
                     _addStruct(_spStructRecord);
                 }
@@ -1822,6 +1841,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     _spStructRecord.nStructCount = 0;
                     _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEX;  // TODO remove
                     _spStructRecord.type = XFW_DEF::TYPE_HEX;
+                    _spStructRecord.sInfo = "";
 
                     _addStruct(_spStructRecord);
                 }
@@ -1836,6 +1856,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     _spStructRecord.nStructCount = 0;
                     _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEX;  // TODO remove
                     _spStructRecord.type = XFW_DEF::TYPE_HEX;
+                    _spStructRecord.sInfo = "";
 
                     _addStruct(_spStructRecord);
                 }
@@ -1856,6 +1877,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                         _spStructRecord.type = XFW_DEF::TYPE_MACH_CS_BlobIndex;
                         _spStructRecord.endian = XBinary::ENDIAN_BIG;  // Important!
                         _spStructRecord.var1 = _spStruct.nOffset + _spStruct.nStructOffset;
+                        _spStructRecord.sInfo = "";
 
                         _addStruct(_spStructRecord);
                     }
@@ -1873,6 +1895,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     _spStructRecord.type = XFW_DEF::TYPE_MACH_CS_CodeDirectory;
                     _spStructRecord.endian = XBinary::ENDIAN_BIG;  // Important!
                     //_spStructRecord.var1 = _spStruct.nOffset + _spStructRecord.nStructOffset;
+                    _spStructRecord.sInfo = "";
 
                     _addStruct(_spStructRecord);
                 }
@@ -1887,6 +1910,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     _spStructRecord.nStructCount = 0;
                     _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_DISASM;
                     _spStructRecord.type = XFW_DEF::TYPE_MACH_rebase;
+                    _spStructRecord.sInfo = "";
 
                     _addStruct(_spStructRecord);
                 }
@@ -1899,6 +1923,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     _spStructRecord.nStructCount = 0;
                     _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_DISASM;
                     _spStructRecord.type = XFW_DEF::TYPE_MACH_bind;
+                    _spStructRecord.sInfo = "";
 
                     _addStruct(_spStructRecord);
                 }
@@ -1911,6 +1936,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     _spStructRecord.nStructCount = 0;
                     _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_DISASM;
                     _spStructRecord.type = XFW_DEF::TYPE_MACH_weak;
+                    _spStructRecord.sInfo = "";
 
                     _addStruct(_spStructRecord);
                 }
@@ -1923,6 +1949,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     _spStructRecord.nStructCount = 0;
                     _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_DISASM;
                     _spStructRecord.type = XFW_DEF::TYPE_MACH_lazy_bind;
+                    _spStructRecord.sInfo = "";
 
                     _addStruct(_spStructRecord);
                 }
@@ -1935,6 +1962,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     _spStructRecord.nStructCount = 0;
                     _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEX;
                     _spStructRecord.type = XFW_DEF::TYPE_MACH_trie_export;
+                    _spStructRecord.sInfo = "";
 
                     _addStruct(_spStructRecord);
                 }
@@ -1950,6 +1978,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     _spStructRecord.nStructCount = 0;
                     _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEADER;
                     _spStructRecord.type = XFW_DEF::TYPE_MACH_dyld_chained_fixups_header;
+                    _spStructRecord.sInfo = "";
 
                     _addStruct(_spStructRecord);
                 }
@@ -1978,6 +2007,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     _spStructRecord.nStructCount = 0;
                     _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_TABLE;
                     _spStructRecord.type = XFW_DEF::TYPE_GENERIC_STRINGTABLE_ANSI;
+                    _spStructRecord.sInfo = "";
 
                     _addStruct(_spStructRecord);
                 }
@@ -1992,6 +2022,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     _spStructRecord.nStructCount = 0;
                     _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEX;
                     _spStructRecord.type = XFW_DEF::TYPE_MACH_trie_export;
+                    _spStructRecord.sInfo = "";
 
                     _addStruct(_spStructRecord);
                 }
@@ -2024,6 +2055,8 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                         _spStructRecord.type = XFW_DEF::TYPE_MACH_x86_thread_state32_t;
                     }
 
+                    _spStructRecord.sInfo = "";
+
                     _addStruct(_spStructRecord);
                 }
             } else if ((_spStruct.widgetMode == XFW_DEF::WIDGETMODE_HEADER) && (_spStruct.type == XFW_DEF::TYPE_MACH_segment_command)) {
@@ -2042,6 +2075,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                         _spStructRecord.nStructCount = 1;
                         _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEADER;
                         _spStructRecord.type = XFW_DEF::TYPE_MACH_section;
+                        _spStructRecord.sInfo = "";
 
                         _addStruct(_spStructRecord);
                     }
@@ -2062,6 +2096,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                         _spStructRecord.nStructCount = 1;
                         _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEADER;
                         _spStructRecord.type = XFW_DEF::TYPE_MACH_section_64;
+                        _spStructRecord.sInfo = "";
 
                         _addStruct(_spStructRecord);
                     }
@@ -2087,6 +2122,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                         _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_DISASM;
                         _spStructRecord.type = XFW_DEF::TYPE_PE_DOS_STUB;
                         _spStructRecord.var1 = "286";
+                        _spStructRecord.sInfo = "";
 
                         _addStruct(_spStructRecord);
                     }
@@ -2101,6 +2137,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     _spStructRecord.nStructCount = 1;
                     _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEADER;
                     _spStructRecord.type = XFW_DEF::TYPE_PE_IMAGE_NT_HEADERS;
+                    _spStructRecord.sInfo = "";
 
                     _addStruct(_spStructRecord);
                 }
@@ -2116,6 +2153,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     _spStructRecord.nStructCount = 1;
                     _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEADER;
                     _spStructRecord.type = XFW_DEF::TYPE_PE_IMAGE_FILE_HEADER;
+                    _spStructRecord.sInfo = "";
 
                     _addStruct(_spStructRecord);
                 }
@@ -2132,6 +2170,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     } else {
                         _spStructRecord.type = XFW_DEF::TYPE_PE_IMAGE_OPTIONAL_HEADER32;
                     }
+                    _spStructRecord.sInfo = "";
 
                     _addStruct(_spStructRecord);
                 }
@@ -2146,6 +2185,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     _spStructRecord.nStructCount = fileHeader.NumberOfSections;
                     _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_TABLE;
                     _spStructRecord.type = XFW_DEF::TYPE_PE_IMAGE_SECTION_HEADER;
+                    _spStructRecord.sInfo = "";
 
                     _addStruct(_spStructRecord);
                 }
@@ -2173,6 +2213,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     _spStructRecord.nStructCount = nNumberOfDirectories;
                     _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_TABLE;
                     _spStructRecord.type = XFW_DEF::TYPE_PE_IMAGE_DATA_DIRECTORY;
+                    _spStructRecord.sInfo = "";
 
                     _addStruct(_spStructRecord);
                 }
@@ -2192,6 +2233,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                             _spStructRecord.nStructCount = 0;
                             _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEX;
                             _spStructRecord.type = XFW_DEF::TYPE_PE_CERTIFICATE;
+                            _spStructRecord.sInfo = "";
 
                             _addStruct(_spStructRecord);
                         }
@@ -2205,6 +2247,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                                 _spStructRecord.nStructCount = 0;
                                 _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEADER;
                                 _spStructRecord.type = XFW_DEF::TYPE_PE_IMAGE_COR20_HEADER;
+                                _spStructRecord.sInfo = "";
 
                                 _addStruct(_spStructRecord);
                             }
@@ -2222,6 +2265,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     _spStructRecord.nStructCount = 0;
                     _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEADER;
                     _spStructRecord.type = XFW_DEF::TYPE_PE_NET_METADATA;
+                    _spStructRecord.sInfo = "";
 
                     _addStruct(_spStructRecord);
                 }
@@ -2233,6 +2277,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     _spStructRecord.nStructCount = 0;
                     _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEX;
                     _spStructRecord.type = XFW_DEF::TYPE_GENERIC_RESOURCES;
+                    _spStructRecord.sInfo = "";
 
                     _addStruct(_spStructRecord);
                 }
@@ -2244,6 +2289,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     _spStructRecord.nStructCount = 0;
                     _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEX;
                     _spStructRecord.type = XFW_DEF::TYPE_GENERIC_RESOURCES;
+                    _spStructRecord.sInfo = "";
 
                     _addStruct(_spStructRecord);
                 }
@@ -2255,6 +2301,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     _spStructRecord.nStructCount = 0;
                     _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEX;
                     _spStructRecord.type = XFW_DEF::TYPE_GENERIC_RESOURCES;
+                    _spStructRecord.sInfo = "";
 
                     _addStruct(_spStructRecord);
                 }
@@ -2266,6 +2313,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     _spStructRecord.nStructCount = 0;
                     _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEX;
                     _spStructRecord.type = XFW_DEF::TYPE_GENERIC_RESOURCES;
+                    _spStructRecord.sInfo = "";
 
                     _addStruct(_spStructRecord);
                 }
