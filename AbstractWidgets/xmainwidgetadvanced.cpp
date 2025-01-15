@@ -196,7 +196,7 @@ void XMainWidgetAdvanced::findValue(quint64 nValue, XBinary::ENDIAN endian)
 void XMainWidgetAdvanced::_followLocation(quint64 nLocation, qint32 nLocationType, qint64 nSize, qint32 nWidgetType)
 {
     if (nWidgetType == XOptions::WIDGETTYPE_HEX) {
-        if (getGlobalHexView()->isEnabled()) {
+        if (isGlobalHexSyncEnabled()) {
             getGlobalHexView()->setLocation(nLocation, nLocationType, nSize);
         } else {
             setTreeItem(getTreeWidgetNavi(), XFW_DEF::TYPE_HEX);

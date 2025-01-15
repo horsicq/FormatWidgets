@@ -45,6 +45,7 @@
 #include "Structs/xpdf_defs.h"
 #include "Structs/xne_defs.h"
 #include "Structs/xpe_defs.h"
+#include "Structs/xsevenzip_defs.h"
 
 class XFormatWidget : public XShortcutsWidget {
     Q_OBJECT
@@ -103,7 +104,7 @@ public:
     void setData(QIODevice *pDevice, const XFW_DEF::OPTIONS &options);
     void setData(const QString &sFileName, const XFW_DEF::OPTIONS &options);
     void setData(const XFW_DEF::OPTIONS &options);
-    void setCwOptions(XFW_DEF::CWOPTIONS cwOptions, bool bReload);
+    virtual void setCwOptions(const XFW_DEF::CWOPTIONS &cwOptions, bool bReload);
     XFW_DEF::CWOPTIONS *getCwOptions();
 
     void setFileType(XBinary::FT fileType);

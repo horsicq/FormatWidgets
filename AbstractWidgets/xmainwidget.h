@@ -25,6 +25,7 @@
 
 #include "xgenericheaderwidget.h"
 #include "xgenerictablewidget.h"
+#include "xgenerictablehexwidget.h"
 #include "xgenerichexwidget.h"
 #include "xgenericdisasmwidget.h"
 #include "xformatwidget.h"
@@ -63,6 +64,7 @@ public:
     QTreeWidget *getTreeWidgetNavi();
     XShortcutsWidget *getCurrentWidget();
     XHexView *getGlobalHexView();
+    bool isGlobalHexSyncEnabled();
 
 private slots:
     void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurrent, QTreeWidgetItem *pItemPrevious);

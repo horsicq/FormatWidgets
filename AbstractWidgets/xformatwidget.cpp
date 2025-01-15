@@ -31,6 +31,7 @@ XFormatWidget::XFormatWidget(QWidget *pParent) : XShortcutsWidget(pParent)
     g_fileType = XBinary::FT_UNKNOWN;
     g_mode = XBinary::MODE_UNKNOWN;
     g_endian = XBinary::ENDIAN_UNKNOWN;
+    g_cwOptions = {};
 
     g_colDisabled = QWidget::palette().color(QPalette::Window);
     g_colEnabled = QWidget::palette().color(QPalette::BrightText);
@@ -130,7 +131,7 @@ void XFormatWidget::setData(const XFW_DEF::OPTIONS &options)
     setOptions(options);
 }
 
-void XFormatWidget::setCwOptions(XFW_DEF::CWOPTIONS cwOptions, bool bReload)
+void XFormatWidget::setCwOptions(const XFW_DEF::CWOPTIONS &cwOptions, bool bReload)
 {
     g_cwOptions = cwOptions;
 
@@ -141,6 +142,7 @@ void XFormatWidget::setCwOptions(XFW_DEF::CWOPTIONS cwOptions, bool bReload)
     formatOptions.fileType = cwOptions.fileType;
 
     setData(cwOptions.pDevice, formatOptions);
+    setXInfoDB(cwOptions.pXInfoDB);
 
     if (bReload) {
         reloadData(false);
@@ -216,7 +218,7 @@ QTreeWidgetItem *XFormatWidget::createNewItem(XFW_DEF::TYPE type, XFW_DEF::WIDGE
     QString _sInfo= sInfo;
 
     if (_sInfo == "") {
-        if (widgetMode == XFW_DEF::WIDGETMODE_TABLE) {
+        if ((widgetMode == XFW_DEF::WIDGETMODE_TABLE) || (widgetMode == XFW_DEF::WIDGETMODE_TABLE_HEX)) {
             if (nCount > 0) {
                 _sInfo = QString::number(nCount);
             }
@@ -425,6 +427,10 @@ QString XFormatWidget::getTypeTitle(XFW_DEF::TYPE type, XBinary::MODE mode, XBin
         sResult = QString("lazy_bind");
     } else if (type == XFW_DEF::TYPE_DEX_HEADER) {
         sResult = QString("HEADER");
+    } else if (type == XFW_DEF::TYPE_7ZIP_SIGNATUREHEADER) {
+        sResult = QString("SIGNATUREHEADER");
+    } else if (type == XFW_DEF::TYPE_7ZIP_PROPERTIES) {
+        sResult = QString("PROPERTIES");
     }
 
 #ifdef QT_DEBUG
@@ -640,6 +646,9 @@ QList<XFW_DEF::HEADER_RECORD> XFormatWidget::getHeaderRecords(const XFW_DEF::CWO
     } else if (pCwOptions->_type == XFW_DEF::TYPE_DEX_HEADER) {
         pRecords = XTYPE_DEX::X_HEADER::records;
         nNumberOfRecords = XTYPE_DEX::X_HEADER::__data_size;
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_7ZIP_SIGNATUREHEADER) {
+        pRecords = XTYPE_7ZIP::X_SIGNATUREHEADER::records;
+        nNumberOfRecords = XTYPE_7ZIP::X_SIGNATUREHEADER::__data_size;
     }
 
     for (qint32 i = 0; i < nNumberOfRecords; i++) {
@@ -786,6 +795,8 @@ qint64 XFormatWidget::getStructSize(XFW_DEF::TYPE type)
         nResult = sizeof(XPE_DEF::IMAGE_COR20_HEADER);
     } else if (type == XFW_DEF::TYPE_DEX_HEADER) {
         nResult = sizeof(XDEX_DEF::HEADER);
+    } else if (type == XFW_DEF::TYPE_7ZIP_SIGNATUREHEADER) {
+        nResult = sizeof(XSevenZip::SIGNATUREHEADER);
     }
 
     return nResult;
@@ -935,12 +946,16 @@ void XFormatWidget::setTableSelection(QTableView *pTableView)
     if (nRow != -1) {
         QModelIndex index = pTableView->model()->index(nRow, 0);
 
-        qint64 nOffset = pTableView->model()->data(index, Qt::UserRole + XFW_DEF::TABLEDATA_DATAOFFSET).toLongLong();
-        qint64 nSize = pTableView->model()->data(index, Qt::UserRole + XFW_DEF::TABLEDATA_DATASIZE).toLongLong();
+        qint64 nHeaderOffset = pTableView->model()->data(index, Qt::UserRole + XFW_DEF::TABLEDATA_HEADEROFFSET).toLongLong();
+        qint64 nHeaderSize = pTableView->model()->data(index, Qt::UserRole + XFW_DEF::TABLEDATA_HEADERSIZE).toLongLong();
+        qint64 nDataOffset = pTableView->model()->data(index, Qt::UserRole + XFW_DEF::TABLEDATA_DATAOFFSET).toLongLong();
+        qint64 nDataSize = pTableView->model()->data(index, Qt::UserRole + XFW_DEF::TABLEDATA_DATASIZE).toLongLong();
 
-        if (nOffset != -1) {
-            emit currentLocationChanged(nOffset, XBinary::LT_OFFSET, nSize);
+        if (nHeaderOffset != -1) {
+            emit currentLocationChanged(nHeaderOffset, XBinary::LT_OFFSET, nHeaderSize);
         }
+
+        emit followLocation(nDataOffset, XBinary::LT_OFFSET, nDataSize, XOptions::WIDGETTYPE_CUSTOM);
     }
 }
 
@@ -1269,7 +1284,9 @@ void XFormatWidget::updateRecWidgets(QIODevice *pDevice, QList<RECWIDGET> *pList
                 qint64 nDelta = listWidgets.at(j)->property("DELTA").toLongLong();
                 if (bIsSize) {
                     if (pListRecWidget->at(i).nSubPosition != -1) {
-                        listWidgets.at(j)->setProperty("LOCATION", listVariants.at(pListRecWidget->at(i).nSubPosition).toULongLong() + nDelta);
+                        listWidgets.at(j)->setProperty("LOCATION", listVariants.at(pListRecWidget->at(i).nSubPosition).toULongLong() +
+                                                       pListRecWidget->at(pListRecWidget->at(i).nSubPosition).varDelta.toLongLong() +
+                                                       nDelta);
                     } else {
                         listWidgets.at(j)->setProperty("LOCATION", nDelta);
                     }
@@ -1683,6 +1700,20 @@ void XFormatWidget::_addFileType(QTreeWidgetItem *pTreeWidgetItem, QIODevice *pD
 
             _addStruct(spStruct);
         }
+    } else if (fileType == XBinary::FT_7Z) {
+        XSevenZip sevenZip(_pDevice);
+
+        if (sevenZip.isValid()) {
+            spStruct.endian = sevenZip.getEndian();
+            spStruct.mode = sevenZip.getMode();
+            spStruct.nStructOffset = 0;
+            spStruct.nStructCount = 1;
+            spStruct.widgetMode = XFW_DEF::WIDGETMODE_HEADER;
+            spStruct.type = XFW_DEF::TYPE_7ZIP_SIGNATUREHEADER;
+            spStruct.fileType = XBinary::FT_7Z;
+
+            _addStruct(spStruct);
+        }
     }
 
     if (pSd) {
@@ -1698,7 +1729,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
 
     if (_spStruct.widgetMode == XFW_DEF::WIDGETMODE_HEADER) {
         iconType = XOptions::ICONTYPE_HEADER;
-    } else if (_spStruct.widgetMode == XFW_DEF::WIDGETMODE_TABLE) {
+    } else if ((_spStruct.widgetMode == XFW_DEF::WIDGETMODE_TABLE) || (_spStruct.widgetMode == XFW_DEF::WIDGETMODE_TABLE_HEX)) {
         iconType = XOptions::ICONTYPE_TABLE;
     } else if (_spStruct.widgetMode == XFW_DEF::WIDGETMODE_HEX) {
         iconType = XOptions::ICONTYPE_HEX;
@@ -1722,6 +1753,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
     if (((_spStruct.type > XFW_DEF::TYPE_MACH_START) && (_spStruct.type < XFW_DEF::TYPE_MACH_END)) ||
         ((_spStruct.type > XFW_DEF::TYPE_ELF_START) && (_spStruct.type < XFW_DEF::TYPE_ELF_END)) ||
         ((_spStruct.type > XFW_DEF::TYPE_DEX_START) && (_spStruct.type < XFW_DEF::TYPE_DEX_END)) ||
+        ((_spStruct.type > XFW_DEF::TYPE_7ZIP_START) && (_spStruct.type < XFW_DEF::TYPE_7ZIP_END)) ||
         ((_spStruct.type > XFW_DEF::TYPE_MSDOS_START) && (_spStruct.type < XFW_DEF::TYPE_MSDOS_END)) ||
         ((_spStruct.type > XFW_DEF::TYPE_NE_START) && (_spStruct.type < XFW_DEF::TYPE_NE_END)) ||
         ((_spStruct.type > XFW_DEF::TYPE_LE_START) && (_spStruct.type < XFW_DEF::TYPE_LE_END)) ||
@@ -2183,7 +2215,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     _spStructRecord.nStructOffset = _spStruct.nStructOffset + fileHeader.SizeOfOptionalHeader + sizeof(XPE_DEF::IMAGE_FILE_HEADER);
                     _spStructRecord.nStructSize = sizeof(XPE_DEF::IMAGE_SECTION_HEADER) * fileHeader.NumberOfSections;
                     _spStructRecord.nStructCount = fileHeader.NumberOfSections;
-                    _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_TABLE;
+                    _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_TABLE_HEX;
                     _spStructRecord.type = XFW_DEF::TYPE_PE_IMAGE_SECTION_HEADER;
                     _spStructRecord.sInfo = "";
 
@@ -2211,13 +2243,13 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     _spStructRecord.nStructOffset = _nOffset;
                     _spStructRecord.nStructSize = sizeof(XPE_DEF::IMAGE_DATA_DIRECTORY) * nNumberOfDirectories;
                     _spStructRecord.nStructCount = nNumberOfDirectories;
-                    _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_TABLE;
+                    _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_TABLE_HEX;
                     _spStructRecord.type = XFW_DEF::TYPE_PE_IMAGE_DATA_DIRECTORY;
                     _spStructRecord.sInfo = "";
 
                     _addStruct(_spStructRecord);
                 }
-            } else if ((_spStruct.widgetMode == XFW_DEF::WIDGETMODE_TABLE) && (_spStruct.type == XFW_DEF::TYPE_PE_IMAGE_DATA_DIRECTORY)) {
+            } else if ((_spStruct.widgetMode == XFW_DEF::WIDGETMODE_TABLE_HEX) && (_spStruct.type == XFW_DEF::TYPE_PE_IMAGE_DATA_DIRECTORY)) {
                 qint64 _nOffset = _spStruct.nStructOffset;
                 qint32 nNumberOfDirectories = _spStruct.nStructCount;
 
@@ -2317,6 +2349,23 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
 
                     _addStruct(_spStructRecord);
                 }
+            }
+        } else if ((_spStruct.type > XFW_DEF::TYPE_7ZIP_START) && (_spStruct.type < XFW_DEF::TYPE_7ZIP_END)) {
+            XSevenZip sevenZip(_pDevice);
+
+            XSevenZip::SIGNATUREHEADER signatureHeader = sevenZip._read_SIGNATUREHEADER(_spStruct.nStructOffset);
+
+            if ((_spStruct.widgetMode == XFW_DEF::WIDGETMODE_HEADER) && (_spStruct.type == XFW_DEF::TYPE_7ZIP_SIGNATUREHEADER)) {
+                SPSTRUCT _spStructRecord = _spStruct;
+                _spStructRecord.pTreeWidgetItem = pTreeWidgetItem;
+                _spStructRecord.nStructOffset = _spStruct.nOffset + sizeof(XSevenZip::SIGNATUREHEADER) + signatureHeader.NextHeaderOffset;
+                _spStructRecord.nStructSize = signatureHeader.NextHeaderSize;
+                _spStructRecord.nStructCount = 0;
+                _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_DISASM;
+                _spStructRecord.type = XFW_DEF::TYPE_7ZIP_PROPERTIES;
+                _spStructRecord.sInfo = "";
+
+                _addStruct(_spStructRecord);
             }
         }
     }

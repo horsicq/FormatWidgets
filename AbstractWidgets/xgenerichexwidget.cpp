@@ -54,14 +54,16 @@ void XGenericHexWidget::reloadData(bool bSaveSelection)
         delete g_pSubDevice;
     }
 
-    g_pSubDevice = new SubDevice(getDevice(), getCwOptions()->nDataOffset, getCwOptions()->nDataSize);
+    if (getCwOptions()->pDevice) {
+        g_pSubDevice = new SubDevice(getCwOptions()->pDevice, getCwOptions()->nDataOffset, getCwOptions()->nDataSize);
 
-    if (g_pSubDevice->open(QIODevice::ReadWrite)) {
-        XHexView::OPTIONS options = {};
-        options.nStartAddress = getCwOptions()->nDataOffset;
-        options.addressMode = XHexView::LOCMODE_ADDRESS;
+        if (g_pSubDevice->open(QIODevice::ReadWrite)) {
+            XHexView::OPTIONS options = {};
+            options.nStartLocation = getCwOptions()->nDataOffset;
+            options.addressMode = XHexView::LOCMODE_ADDRESS; // Important!
 
-        ui->scrollAreaHex->setData(g_pSubDevice, options, true);
+            ui->scrollAreaHex->setData(g_pSubDevice, options, true);
+        }
     }
 }
 

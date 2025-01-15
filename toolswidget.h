@@ -42,7 +42,7 @@ public:
     void setEdited(qint64 nDeviceOffset, qint64 nDeviceSize);
     void setReadonly(bool bState);
     void reload();
-    qint64 getStartAddress();
+    qint64 getStartLocation();
     void setSelection(qint64 nOffset, qint64 nSize, bool bGoto);
     virtual void adjustView();
     virtual void reloadData(bool bSaveSelection);

@@ -70,6 +70,13 @@
       </widget>
      </item>
      <item>
+      <widget class="QCheckBox" name="checkBoxHexSync">
+       <property name="text">
+        <string>Sync</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QCheckBox" name="checkBoxReadonly">
        <property name="text">
         <string>Readonly</string>
@@ -117,7 +124,7 @@
         </size>
        </property>
       </widget>
-      <widget class="XHexView" name="widgetGlobalHex" native="true">
+      <widget class="XHexView" name="widgetGlobalHex">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
          <horstretch>0</horstretch>
@@ -139,7 +146,7 @@
  <customwidgets>
   <customwidget>
    <class>XHexView</class>
-   <extends>QWidget</extends>
+   <extends>QScrollArea</extends>
    <header>xhexview.h</header>
    <container>1</container>
   </customwidget>

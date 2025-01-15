@@ -1211,7 +1211,7 @@ void FormatWidget::showHex(qint64 nOffset, qint64 nSize)
 {
     XHexViewWidget::OPTIONS hexOptions = {};
 
-    hexOptions.nStartAddress = 0;
+    hexOptions.nStartLocation = 0;
     hexOptions.nStartSelectionOffset = nOffset;
     hexOptions.nSizeOfSelection = nSize;
 

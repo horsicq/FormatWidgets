@@ -11,6 +11,7 @@ HEADERS += \
     $$PWD/Structs/xne_defs.h \
     $$PWD/Structs/xpdf_defs.h \
     $$PWD/Structs/xpe_defs.h \
+    $$PWD/Structs/xsevenzip_defs.h \
     $$PWD/dialogxmainwidget.h \
     $$PWD/dialogsetgenericwidget.h \
     $$PWD/xdialogprocessdata.h \
@@ -19,6 +20,7 @@ HEADERS += \
     $$PWD/xgenericheaderwidget.h \
     $$PWD/xgenerichexwidget.h \
     $$PWD/xgenericdisasmwidget.h \
+    $$PWD/xgenerictablehexwidget.h \
     $$PWD/xgenerictablewidget.h \
     $$PWD/xmainwidget.h \
     $$PWD/xmainwidgetadvanced.h \
@@ -34,6 +36,7 @@ SOURCES += \
     $$PWD/Structs/xne_defs.cpp \
     $$PWD/Structs/xpdf_defs.cpp \
     $$PWD/Structs/xpe_defs.cpp \
+    $$PWD/Structs/xsevenzip_defs.cpp \
     $$PWD/dialogxmainwidget.cpp \
     $$PWD/dialogsetgenericwidget.cpp \
     $$PWD/xdialogprocessdata.cpp \
@@ -41,6 +44,7 @@ SOURCES += \
     $$PWD/xgenericheaderwidget.cpp \
     $$PWD/xgenerichexwidget.cpp \
     $$PWD/xgenericdisasmwidget.cpp \
+    $$PWD/xgenerictablehexwidget.cpp \
     $$PWD/xgenerictablewidget.cpp \
     $$PWD/xmainwidget.cpp \
     $$PWD/xmainwidgetadvanced.cpp \
@@ -52,6 +56,7 @@ FORMS += \
     $$PWD/xgenericheaderwidget.ui \
     $$PWD/xgenerichexwidget.ui \
     $$PWD/xgenericdisasmwidget.ui \
+    $$PWD/xgenerictablehexwidget.ui \
     $$PWD/xgenerictablewidget.ui \
     $$PWD/xmainwidget.ui
 

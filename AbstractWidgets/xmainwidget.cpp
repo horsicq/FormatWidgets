@@ -43,6 +43,8 @@ XMainWidget::XMainWidget(QWidget *pParent) : XFormatWidget(pParent), ui(new Ui::
     ui->widgetGlobalHex->setEnabled(false);
 
     ui->toolButtonGlobalHex->hide();
+    ui->checkBoxHexSync->setChecked(true);
+    ui->checkBoxHexSync->hide();
 }
 
 XMainWidget::~XMainWidget()
@@ -251,6 +253,7 @@ void XMainWidget::reloadData(bool bSaveSelection)
             connect(pWidget, SIGNAL(followLocation(quint64, qint32, qint64, qint32)), this, SLOT(followLocationSlot(quint64, qint32, qint64, qint32)));
 
             if ((cwOptions.widgetMode == XFW_DEF::WIDGETMODE_HEADER) || (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_TABLE) ||
+                (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_TABLE_HEX) ||
                 (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_HEX) || (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_DISASM)) {
                 XFormatWidget *_pXFormatWidget = dynamic_cast<XFormatWidget *>(pWidget);
 
@@ -311,6 +314,10 @@ XShortcutsWidget *XMainWidget::createWidget(const XFW_DEF::CWOPTIONS &cwOptions)
         XGenericTableWidget *_pWidget = new XGenericTableWidget(cwOptions.pParent);
         _pWidget->setCwOptions(cwOptions, false);
         pResult = _pWidget;
+    } else if (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_TABLE_HEX) {
+        XGenericTableHexWidget *_pWidget = new XGenericTableHexWidget(cwOptions.pParent);
+        _pWidget->setCwOptions(cwOptions, false);
+        pResult = _pWidget;
     } else if (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_HEX) {
         XGenericHexWidget *_pWidget = new XGenericHexWidget(cwOptions.pParent);
         _pWidget->setCwOptions(cwOptions, false);
@@ -337,6 +344,11 @@ XShortcutsWidget *XMainWidget::getCurrentWidget()
 XHexView *XMainWidget::getGlobalHexView()
 {
     return ui->widgetGlobalHex;
+}
+
+bool XMainWidget::isGlobalHexSyncEnabled()
+{
+    return (ui->widgetGlobalHex->isEnabled()) && (ui->toolButtonGlobalHex->isChecked()) && (ui->checkBoxHexSync->isChecked());
 }
 
 void XMainWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurrent, QTreeWidgetItem *pItemPrevious)
@@ -396,9 +408,13 @@ void XMainWidget::on_toolButtonGlobalHex_toggled(bool bChecked)
         ui->splitterHex->setSizes(listSizes);
         ui->splitterHex->setStretchFactor(0, 1);
         ui->splitterHex->setStretchFactor(1, 0);
+
+        ui->checkBoxHexSync->show();
     } else {
         ui->widgetGlobalHex->setEnabled(false);
         ui->widgetGlobalHex->hide();
+
+        ui->checkBoxHexSync->hide();
     }
 }
 
@@ -442,7 +458,10 @@ void XMainWidget::currentLocationChangedSlot(quint64 nLocation, qint32 nLocation
     XFW_DEF::TYPE _type = (XFW_DEF::TYPE)(sender()->property("TYPE").toInt());
     if (_type != XFW_DEF::TYPE_GLOBALHEX) {
         if (g_bGlobalHexEnable) {
-            ui->widgetGlobalHex->currentLocationChangedSlot(nLocation, nLocationType, nSize);
+            if (isGlobalHexSyncEnabled()) {
+                ui->widgetGlobalHex->goToLocation(nLocation, (XBinary::LT)nLocationType, true, false, false);
+                ui->widgetGlobalHex->setLocationOffset(nLocation, (XBinary::LT)nLocationType, nSize);
+            }
         }
     }
 }
@@ -475,6 +494,7 @@ void XMainWidget::showCwWidgetSlot(QString sInitString, bool bNewWindow)
         connect(pWidget, SIGNAL(followLocation(quint64, qint32, qint64, qint32)), this, SLOT(followLocationSlot(quint64, qint32, qint64, qint32)));
 
         if ((cwOptions.widgetMode == XFW_DEF::WIDGETMODE_HEADER) || (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_TABLE) ||
+            (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_TABLE_HEX) ||
             (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_HEX) || (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_DISASM)) {
             connect(pWidget, SIGNAL(showCwWidget(QString, bool)), this, SLOT(showCwWidgetSlot(QString, bool)));
         }

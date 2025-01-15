@@ -19,6 +19,8 @@ set(ABSTRACTWIDGETS_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/Structs/xpdf_defs.h
     ${CMAKE_CURRENT_LIST_DIR}/Structs/xpe_defs.cpp
     ${CMAKE_CURRENT_LIST_DIR}/Structs/xpe_defs.h
+    ${CMAKE_CURRENT_LIST_DIR}/Structs/xsevenzip_defs.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Structs/xsevenzip_defs.h
     ${CMAKE_CURRENT_LIST_DIR}/dialogxmainwidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/dialogxmainwidget.h
     ${CMAKE_CURRENT_LIST_DIR}/dialogxmainwidget.ui
@@ -39,6 +41,9 @@ set(ABSTRACTWIDGETS_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/xgenericdisasmwidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/xgenericdisasmwidget.h
     ${CMAKE_CURRENT_LIST_DIR}/xgenericdisasmwidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/xgenerictablehexwidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/xgenerictablehexwidget.h
+    ${CMAKE_CURRENT_LIST_DIR}/xgenerictablehexwidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/xgenerictablewidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/xgenerictablewidget.h
     ${CMAKE_CURRENT_LIST_DIR}/xgenerictablewidget.ui
