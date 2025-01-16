@@ -2361,7 +2361,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                 _spStructRecord.nStructOffset = _spStruct.nOffset + sizeof(XSevenZip::SIGNATUREHEADER) + signatureHeader.NextHeaderOffset;
                 _spStructRecord.nStructSize = signatureHeader.NextHeaderSize;
                 _spStructRecord.nStructCount = 0;
-                _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_DISASM;
+                _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_TABLE;
                 _spStructRecord.type = XFW_DEF::TYPE_7ZIP_PROPERTIES;
                 _spStructRecord.sInfo = "";
 

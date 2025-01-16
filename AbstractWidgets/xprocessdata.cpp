@@ -55,6 +55,25 @@ void XProcessData::process()
         g_pListHeaderRecords->append(record);
     }
 
+    if (g_pCwOptions->_type == XFW_DEF::TYPE_7ZIP_PROPERTIES) {
+        {
+            XFW_DEF::HEADER_RECORD record = {};
+            record.nPosition = -1;
+            record.sName = tr("Offset");
+            record.vtype = XFW_DEF::VAL_TYPE_HEX;
+
+            g_pListHeaderRecords->append(record);
+        }
+        {
+            XFW_DEF::HEADER_RECORD record = {};
+            record.nPosition = -1;
+            record.sName = tr("Opcode");
+            record.vtype = XFW_DEF::VAL_TYPE_STRING;
+
+            g_pListHeaderRecords->append(record);
+        }
+    }
+
     QList<XFW_DEF::HEADER_RECORD> listHeaderRecords = XFormatWidget::getHeaderRecords(g_pCwOptions, -1);
 
     g_pListHeaderRecords->append(listHeaderRecords);
@@ -191,6 +210,36 @@ void XProcessData::process()
             _nOffset += nHeaderSize;
             XBinary::setPdStructCurrent(g_pPdStruct, g_nFreeIndex, i);
         }
+    } else if (g_pCwOptions->_type == XFW_DEF::TYPE_7ZIP_PROPERTIES) {
+        XBinary binary(g_pCwOptions->pDevice, g_pCwOptions->bIsImage, g_pCwOptions->nImageBase);
+
+        QByteArray baData = binary.read_array(g_pCwOptions->nDataOffset, g_pCwOptions->nDataSize, g_pPdStruct);
+
+        QList<XDisasmAbstract::DISASM_RESULT> listOpcodes;
+
+        if (g_pCwOptions->_type == XFW_DEF::TYPE_7ZIP_PROPERTIES) {
+            X7Zip_Properties x7zip_properties;
+            listOpcodes = x7zip_properties._disasm(baData.data(), baData.size(), g_pCwOptions->nDataOffset, XDisasmAbstract::DISASM_OPTIONS(), 0, g_pPdStruct);
+        }
+
+        nNumberOfRows = listOpcodes.count();
+
+        XBinary::setPdStructTotal(g_pPdStruct, g_nFreeIndex, nNumberOfRows);
+
+        (*g_ppModel) = new QStandardItemModel(nNumberOfRows, nNumberOfColumns);
+
+        qint64 _nOffset = g_pCwOptions->nDataOffset;
+
+        for (qint32 i = 0; (i < nNumberOfRows) && (!(g_pPdStruct->bIsStop)); i++) {
+            XFormatWidget::setItemToModelData((*g_ppModel), i, 0, i, 0, g_pListHeaderRecords->at(0).vtype, g_pCwOptions->_type, _nOffset, listOpcodes.at(i).nSize, 0,
+                                              0, 0);
+            XFormatWidget::setItemToModel((*g_ppModel), i, 1, _nOffset, g_pListHeaderRecords->at(1).nSize, g_pListHeaderRecords->at(1).vtype);
+            XFormatWidget::setItemToModel((*g_ppModel), i, 2, XDisasmAbstract::getOpcodeFullString(listOpcodes.at(i)), g_pListHeaderRecords->at(2).nSize, g_pListHeaderRecords->at(2).vtype);
+
+            _nOffset += listOpcodes.at(i).nSize;
+            XBinary::setPdStructCurrent(g_pPdStruct, g_nFreeIndex, i);
+        }
+
     } else {
         XBinary binary(g_pCwOptions->pDevice, g_pCwOptions->bIsImage, g_pCwOptions->nImageBase);
         XBinary::setPdStructTotal(g_pPdStruct, g_nFreeIndex, nNumberOfRows);
