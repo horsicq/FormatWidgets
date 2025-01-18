@@ -60,7 +60,7 @@ void XGenericHexWidget::reloadData(bool bSaveSelection)
         if (g_pSubDevice->open(QIODevice::ReadWrite)) {
             XHexView::OPTIONS options = {};
             options.nStartLocation = getCwOptions()->nDataOffset;
-            options.addressMode = XHexView::LOCMODE_ADDRESS; // Important!
+            options.addressMode = XHexView::LOCMODE_ADDRESS;  // Important!
 
             ui->scrollAreaHex->setData(g_pSubDevice, options, true);
         }

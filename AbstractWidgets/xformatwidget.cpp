@@ -215,7 +215,7 @@ QTreeWidgetItem *XFormatWidget::createNewItem(XFW_DEF::TYPE type, XFW_DEF::WIDGE
     QTreeWidgetItem *pResult = new QTreeWidgetItem;
 
     QString _sTitle = sTitle;
-    QString _sInfo= sInfo;
+    QString _sInfo = sInfo;
 
     if (_sInfo == "") {
         if ((widgetMode == XFW_DEF::WIDGETMODE_TABLE) || (widgetMode == XFW_DEF::WIDGETMODE_TABLE_HEX)) {
@@ -1285,8 +1285,7 @@ void XFormatWidget::updateRecWidgets(QIODevice *pDevice, QList<RECWIDGET> *pList
                 if (bIsSize) {
                     if (pListRecWidget->at(i).nSubPosition != -1) {
                         listWidgets.at(j)->setProperty("LOCATION", listVariants.at(pListRecWidget->at(i).nSubPosition).toULongLong() +
-                                                       pListRecWidget->at(pListRecWidget->at(i).nSubPosition).varDelta.toLongLong() +
-                                                       nDelta);
+                                                                       pListRecWidget->at(pListRecWidget->at(i).nSubPosition).varDelta.toLongLong() + nDelta);
                     } else {
                         listWidgets.at(j)->setProperty("LOCATION", nDelta);
                     }
@@ -1742,8 +1741,9 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
         _spStruct.nStructSize *= _spStruct.nStructCount;
     }
 
-    QTreeWidgetItem *pTreeWidgetItem = createNewItem(_spStruct.type, _spStruct.widgetMode, iconType, _spStruct.nOffset + _spStruct.nStructOffset, _spStruct.nStructSize,
-                                                     _spStruct.nStructCount, _spStruct.var1, _spStruct.var2, spStruct.mode, spStruct.endian, spStruct.sTitle, spStruct.sInfo);
+    QTreeWidgetItem *pTreeWidgetItem =
+        createNewItem(_spStruct.type, _spStruct.widgetMode, iconType, _spStruct.nOffset + _spStruct.nStructOffset, _spStruct.nStructSize, _spStruct.nStructCount,
+                      _spStruct.var1, _spStruct.var2, spStruct.mode, spStruct.endian, spStruct.sTitle, spStruct.sInfo);
 
     spStruct.pTreeWidgetItem->addChild(pTreeWidgetItem);
 

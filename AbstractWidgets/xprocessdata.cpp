@@ -135,8 +135,7 @@ void XProcessData::process()
         for (qint32 i = 0; (i < nNumberOfRows) && (!(g_pPdStruct->bIsStop)); i++) {
             XFW_DEF::TYPE _type = XFormatWidget::load_commandIdToType(listCommands.at(i).nId);
 
-            XFormatWidget::setItemToModelData((*g_ppModel), i, 0, i, 0, g_pListHeaderRecords->at(0).vtype, _type, listCommands.at(i).nStructOffset, nHeaderSize,
-                                              0, 0, 0);
+            XFormatWidget::setItemToModelData((*g_ppModel), i, 0, i, 0, g_pListHeaderRecords->at(0).vtype, _type, listCommands.at(i).nStructOffset, nHeaderSize, 0, 0, 0);
             XFormatWidget::setItemToModel((*g_ppModel), i, XTYPE_MACH::X_load_commands::cmd + 1, listCommands.at(i).nId,
                                           g_pListHeaderRecords->at(XTYPE_MACH::X_load_commands::cmd + 1).nSize,
                                           g_pListHeaderRecords->at(XTYPE_MACH::X_load_commands::cmd + 1).vtype);
@@ -164,8 +163,7 @@ void XProcessData::process()
 
         for (qint32 i = 0; (i < nNumberOfRows) && (!(g_pPdStruct->bIsStop)); i++) {
             XFormatWidget::setItemToModelData((*g_ppModel), i, 0, i, 0, g_pListHeaderRecords->at(0).vtype, g_pCwOptions->_type,
-                                              listSTrecords.at(i).nOffsetFromStart + _nOffset, listSTrecords.at(i).nSizeInBytes,
-                                              0, 0, 0);
+                                              listSTrecords.at(i).nOffsetFromStart + _nOffset, listSTrecords.at(i).nSizeInBytes, 0, 0, 0);
             XFormatWidget::setItemToModel((*g_ppModel), i, 1, listSTrecords.at(i).nOffsetFromStart, 0, g_pListHeaderRecords->at(1).vtype);
             XFormatWidget::setItemToModel((*g_ppModel), i, 2, listSTrecords.at(i).sString, listSTrecords.at(i).nSizeInBytes, g_pListHeaderRecords->at(2).vtype);
 
@@ -220,9 +218,11 @@ void XProcessData::process()
         qint64 _nOffset = g_pCwOptions->nDataOffset;
 
         for (qint32 i = 0; (i < nNumberOfRows) && (!(g_pPdStruct->bIsStop)); i++) {
-            XPE_DEF::IMAGE_SECTION_HEADER ish = xpe.read_IMAGE_SECTION_HEADER(_nOffset);;
+            XPE_DEF::IMAGE_SECTION_HEADER ish = xpe.read_IMAGE_SECTION_HEADER(_nOffset);
+            ;
 
-            XADDR nDataOffset = ish.PointerToRawData;;
+            XADDR nDataOffset = ish.PointerToRawData;
+            ;
             qint64 nDataSize = ish.SizeOfRawData;
 
             if (!XBinary::isOffsetAndSizeValid(&memoryMap, nDataOffset, nDataSize)) {
@@ -271,10 +271,11 @@ void XProcessData::process()
         qint64 _nOffset = g_pCwOptions->nDataOffset;
 
         for (qint32 i = 0; (i < nNumberOfRows) && (!(g_pPdStruct->bIsStop)); i++) {
-            XFormatWidget::setItemToModelData((*g_ppModel), i, 0, i, 0, g_pListHeaderRecords->at(0).vtype, g_pCwOptions->_type, _nOffset, listOpcodes.at(i).nSize, 0,
-                                              0, 0);
+            XFormatWidget::setItemToModelData((*g_ppModel), i, 0, i, 0, g_pListHeaderRecords->at(0).vtype, g_pCwOptions->_type, _nOffset, listOpcodes.at(i).nSize, 0, 0,
+                                              0);
             XFormatWidget::setItemToModel((*g_ppModel), i, 1, _nOffset, g_pListHeaderRecords->at(1).nSize, g_pListHeaderRecords->at(1).vtype);
-            XFormatWidget::setItemToModel((*g_ppModel), i, 2, XDisasmAbstract::getOpcodeFullString(listOpcodes.at(i)), g_pListHeaderRecords->at(2).nSize, g_pListHeaderRecords->at(2).vtype);
+            XFormatWidget::setItemToModel((*g_ppModel), i, 2, XDisasmAbstract::getOpcodeFullString(listOpcodes.at(i)), g_pListHeaderRecords->at(2).nSize,
+                                          g_pListHeaderRecords->at(2).vtype);
 
             _nOffset += listOpcodes.at(i).nSize;
             XBinary::setPdStructCurrent(g_pPdStruct, g_nFreeIndex, i);
@@ -293,8 +294,7 @@ void XProcessData::process()
                 QVariant var = XFormatWidget::_readVariant(&binary, _nOffset + g_pListHeaderRecords->at(j).nOffset, g_pListHeaderRecords->at(j).nSize,
                                                            g_pListHeaderRecords->at(j).vtype, (g_pCwOptions->endian == XBinary::ENDIAN_BIG));
                 if (j == 0) {
-                    XFormatWidget::setItemToModelData((*g_ppModel), i, j, i, 0, g_pListHeaderRecords->at(j).vtype, g_pCwOptions->_type, _nOffset, nHeaderSize, 0,
-                                                      0, 0);
+                    XFormatWidget::setItemToModelData((*g_ppModel), i, j, i, 0, g_pListHeaderRecords->at(j).vtype, g_pCwOptions->_type, _nOffset, nHeaderSize, 0, 0, 0);
                 } else {
                     XFormatWidget::setItemToModel((*g_ppModel), i, j, var, g_pListHeaderRecords->at(j).nSize, g_pListHeaderRecords->at(j).vtype);
                 }

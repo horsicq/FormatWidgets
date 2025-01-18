@@ -27,10 +27,11 @@ const XFW_DEF::HEADER_RECORD records[__data_size] = {
     {Major, "Major", offsetof(XSevenZip::SIGNATUREHEADER, Major), 1, "uint8", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_VERSION, -1},
     {Minor, "Minor", offsetof(XSevenZip::SIGNATUREHEADER, Minor), 1, "uint8", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_VERSION, -1},
     {StartHeaderCRC, "StartHeaderCRC", offsetof(XSevenZip::SIGNATUREHEADER, StartHeaderCRC), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-    {NextHeaderOffset, "NextHeaderOffset", offsetof(XSevenZip::SIGNATUREHEADER, NextHeaderOffset), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET | XFW_DEF::VAL_TYPE_RELTOHEADEREND, -1},
-    {NextHeaderSize, "NextHeaderSize", offsetof(XSevenZip::SIGNATUREHEADER, NextHeaderSize), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, NextHeaderOffset},
+    {NextHeaderOffset, "NextHeaderOffset", offsetof(XSevenZip::SIGNATUREHEADER, NextHeaderOffset), 8, "uint64",
+     XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET | XFW_DEF::VAL_TYPE_RELTOHEADEREND, -1},
+    {NextHeaderSize, "NextHeaderSize", offsetof(XSevenZip::SIGNATUREHEADER, NextHeaderSize), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE,
+     NextHeaderOffset},
     {NextHeaderCRC, "NextHeaderCRC", offsetof(XSevenZip::SIGNATUREHEADER, NextHeaderCRC), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
 };
 }  // namespace X_SIGNATUREHEADER
 }  // namespace XTYPE_7ZIP
-

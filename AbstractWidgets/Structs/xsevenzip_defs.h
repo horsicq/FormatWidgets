@@ -37,7 +37,7 @@ enum DATA {
 };
 
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
-}  // namespace X_SIGANTUREHEADER
+}  // namespace X_SIGNATUREHEADER
 }  // namespace XTYPE_7ZIP
 
 #endif  // XSEVENZIP_DEFS_H

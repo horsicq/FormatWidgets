@@ -21,9 +21,7 @@
 #include "xgenerictablehexwidget.h"
 #include "ui_xgenerictablehexwidget.h"
 
-XGenericTableHexWidget::XGenericTableHexWidget(QWidget *parent) :
-    XFormatWidget(parent),
-    ui(new Ui::XGenericTableHexWidget)
+XGenericTableHexWidget::XGenericTableHexWidget(QWidget *parent) : XFormatWidget(parent), ui(new Ui::XGenericTableHexWidget)
 {
     ui->setupUi(this);
 

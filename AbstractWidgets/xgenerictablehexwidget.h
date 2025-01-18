@@ -45,4 +45,4 @@ private:
     Ui::XGenericTableHexWidget *ui;
 };
 
-#endif // XGENERICTABLEHEXWIDGET_H
+#endif  // XGENERICTABLEHEXWIDGET_H
