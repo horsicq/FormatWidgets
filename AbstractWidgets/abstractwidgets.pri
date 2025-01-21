@@ -61,5 +61,5 @@ FORMS += \
     $$PWD/xmainwidget.ui
 
 DISTFILES += \
-    $$PWD/xformatwidget.cmake
+    $$PWD/abstractwidgets.cmake
     

@@ -640,9 +640,6 @@ QList<XFW_DEF::HEADER_RECORD> XFormatWidget::getHeaderRecords(const XFW_DEF::CWO
     } else if (pCwOptions->_type == XFW_DEF::TYPE_PE_IMAGE_COR20_HEADER) {
         pRecords = XTYPE_PE::X_IMAGE_COR20_HEADER::records;
         nNumberOfRecords = XTYPE_PE::X_IMAGE_COR20_HEADER::__data_size;
-    } else if (pCwOptions->_type == XFW_DEF::TYPE_PE_NET_METADATA) {
-        pRecords = XTYPE_PE::X_NET_METADATA::records;
-        nNumberOfRecords = XTYPE_PE::X_NET_METADATA::__data_size;
     } else if (pCwOptions->_type == XFW_DEF::TYPE_DEX_HEADER) {
         pRecords = XTYPE_DEX::X_HEADER::records;
         nNumberOfRecords = XTYPE_DEX::X_HEADER::__data_size;
@@ -1474,7 +1471,7 @@ QStandardItem *XFormatWidget::setItemToModelData(QStandardItemModel *pModel, qin
         pResult->setData(nHeaderSize, Qt::UserRole + (qint32)(XFW_DEF::TABLEDATA_HEADERSIZE));
         pResult->setData(nDataOffset, Qt::UserRole + (qint32)(XFW_DEF::TABLEDATA_DATAOFFSET));
         pResult->setData(nDataSize, Qt::UserRole + (qint32)(XFW_DEF::TABLEDATA_DATASIZE));
-        pResult->setData(nDataCount, Qt::UserRole + (qint32)(XFW_DEF::TABLEDATA_DATACOUNT));
+        pResult->setData(nDataCount, Qt::UserRole + (qint32)(XFW_DEF::TABLEDATA_COUNT));
     }
 
     return pResult;
@@ -1940,7 +1937,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     _spStructRecord.nStructOffset = _spStruct.nOffset + dicommand.rebase_off;
                     _spStructRecord.nStructSize = dicommand.rebase_size;
                     _spStructRecord.nStructCount = 0;
-                    _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_DISASM;
+                    _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_TABLE;
                     _spStructRecord.type = XFW_DEF::TYPE_MACH_rebase;
                     _spStructRecord.sInfo = "";
 
@@ -1953,20 +1950,20 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     _spStructRecord.nStructOffset = _spStruct.nOffset + dicommand.bind_off;
                     _spStructRecord.nStructSize = dicommand.bind_size;
                     _spStructRecord.nStructCount = 0;
-                    _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_DISASM;
+                    _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_TABLE;
                     _spStructRecord.type = XFW_DEF::TYPE_MACH_bind;
                     _spStructRecord.sInfo = "";
 
                     _addStruct(_spStructRecord);
                 }
 
-                if (dicommand.rebase_off && dicommand.rebase_size) {
+                if (dicommand.weak_bind_off && dicommand.weak_bind_size) {
                     SPSTRUCT _spStructRecord = _spStruct;
                     _spStructRecord.pTreeWidgetItem = pTreeWidgetItem;
                     _spStructRecord.nStructOffset = _spStruct.nOffset + dicommand.weak_bind_off;
                     _spStructRecord.nStructSize = dicommand.weak_bind_size;
                     _spStructRecord.nStructCount = 0;
-                    _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_DISASM;
+                    _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_TABLE;
                     _spStructRecord.type = XFW_DEF::TYPE_MACH_weak;
                     _spStructRecord.sInfo = "";
 
@@ -1979,7 +1976,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     _spStructRecord.nStructOffset = _spStruct.nOffset + dicommand.lazy_bind_off;
                     _spStructRecord.nStructSize = dicommand.lazy_bind_size;
                     _spStructRecord.nStructCount = 0;
-                    _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_DISASM;
+                    _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_TABLE;
                     _spStructRecord.type = XFW_DEF::TYPE_MACH_lazy_bind;
                     _spStructRecord.sInfo = "";
 
@@ -1990,9 +1987,9 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     SPSTRUCT _spStructRecord = _spStruct;
                     _spStructRecord.pTreeWidgetItem = pTreeWidgetItem;
                     _spStructRecord.nStructOffset = _spStruct.nOffset + dicommand.export_off;
-                    _spStructRecord.nStructSize = dicommand.rebase_size;
+                    _spStructRecord.nStructSize = dicommand.export_size;
                     _spStructRecord.nStructCount = 0;
-                    _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEX;
+                    _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_TABLE;
                     _spStructRecord.type = XFW_DEF::TYPE_MACH_trie_export;
                     _spStructRecord.sInfo = "";
 
@@ -2052,7 +2049,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     _spStructRecord.nStructOffset = _spStruct.nOffset + _command.dataoff;
                     _spStructRecord.nStructSize = _command.datasize;
                     _spStructRecord.nStructCount = 0;
-                    _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEX;
+                    _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_TABLE;
                     _spStructRecord.type = XFW_DEF::TYPE_MACH_trie_export;
                     _spStructRecord.sInfo = "";
 
@@ -2543,9 +2540,9 @@ void XFormatWidget::contextMenuGenericTableWidget(const QPoint &pos, QTableView 
         QModelIndex index = pTableView->model()->index(nRow, 0);
 
         XFW_DEF::TYPE _type = (XFW_DEF::TYPE)(pTableView->model()->data(index, Qt::UserRole + XFW_DEF::TABLEDATA_TYPE).toInt());
-        qint64 nDataOffset = (pTableView->model()->data(index, Qt::UserRole + XFW_DEF::TABLEDATA_DATAOFFSET).toLongLong());
-        qint64 nDataSize = (pTableView->model()->data(index, Qt::UserRole + XFW_DEF::TABLEDATA_DATASIZE).toLongLong());
-        qint64 nDataCount = (pTableView->model()->data(index, Qt::UserRole + XFW_DEF::TABLEDATA_DATACOUNT).toLongLong());
+        qint64 nDataOffset = (pTableView->model()->data(index, Qt::UserRole + XFW_DEF::TABLEDATA_HEADEROFFSET).toLongLong());
+        qint64 nDataSize = (pTableView->model()->data(index, Qt::UserRole + XFW_DEF::TABLEDATA_HEADERSIZE).toLongLong());
+        qint64 nDataCount = (pTableView->model()->data(index, Qt::UserRole + XFW_DEF::TABLEDATA_COUNT).toLongLong());
 
         QString sTypeString = _getInitString(_type, nDataOffset, nDataSize, nDataCount);
 
@@ -2580,9 +2577,9 @@ void XFormatWidget::tableView_doubleClicked(QTableView *pTableView, const QModel
     QModelIndex _index = pTableView->model()->index(index.row(), 0);
 
     XFW_DEF::TYPE _type = (XFW_DEF::TYPE)(pTableView->model()->data(_index, Qt::UserRole + XFW_DEF::TABLEDATA_TYPE).toInt());
-    qint64 nDataOffset = (pTableView->model()->data(_index, Qt::UserRole + XFW_DEF::TABLEDATA_DATAOFFSET).toLongLong());
-    qint64 nDataSize = (pTableView->model()->data(_index, Qt::UserRole + XFW_DEF::TABLEDATA_DATASIZE).toLongLong());
-    qint64 nDataCount = (pTableView->model()->data(index, Qt::UserRole + XFW_DEF::TABLEDATA_DATACOUNT).toLongLong());
+    qint64 nDataOffset = (pTableView->model()->data(_index, Qt::UserRole + XFW_DEF::TABLEDATA_HEADEROFFSET).toLongLong());
+    qint64 nDataSize = (pTableView->model()->data(_index, Qt::UserRole + XFW_DEF::TABLEDATA_HEADERSIZE).toLongLong());
+    qint64 nDataCount = (pTableView->model()->data(index, Qt::UserRole + XFW_DEF::TABLEDATA_COUNT).toLongLong());
 
     QString sTypeString = _getInitString(_type, nDataOffset, nDataSize, nDataCount);
 
@@ -2649,6 +2646,20 @@ void XFormatWidget::adjustWidgetModeComboBox(QComboBox *pComboBox, XFW_DEF::WIDG
     }
 
     pComboBox->blockSignals(bBlockSignals);
+}
+
+void XFormatWidget::_addHeaderRecord(QList<XFW_DEF::HEADER_RECORD> *pListHeaderRecords, qint32 nPosition, QString sName, qint32 nOffset, qint32 nSize, QString sType, qint32 vtype, qint32 nSubPosition)
+{
+    XFW_DEF::HEADER_RECORD record = {};
+    record.nPosition = nPosition;
+    record.sName = sName;
+    record.nOffset = nOffset;
+    record.nSize = nSize;
+    record.sType = sType;
+    record.vtype = vtype;
+    record.nSubPosition = nSubPosition;
+
+    pListHeaderRecords->append(record);
 }
 
 // void XFormatWidget::resizeToolsWidget(QWidget *pParent,ToolsWidget

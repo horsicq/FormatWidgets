@@ -356,22 +356,6 @@ enum DATA {
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace X_IMAGE_COR20_HEADER
 
-namespace X_NET_METADATA {
-enum DATA {
-    Signature = 0,
-    MajorVersion,
-    MinorVersion,
-    Reserved,
-    VersionStringLength,
-    Version,
-    Flags,
-    Streams,
-    __data_size
-};
-
-extern const XFW_DEF::HEADER_RECORD records[__data_size];
-}  // namespace X_NET_METADATA
-
 namespace X_IMAGE_EXCEPTIONS {
 enum DATA {
     BeginAddress = 0,

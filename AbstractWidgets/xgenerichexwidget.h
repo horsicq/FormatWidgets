@@ -35,6 +35,7 @@ public:
     ~XGenericHexWidget();
     virtual void reloadData(bool bSaveSelection);
     virtual void adjustView();
+    void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
 
     virtual void setReadonly(bool bState);
 

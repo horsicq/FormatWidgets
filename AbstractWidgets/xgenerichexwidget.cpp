@@ -73,6 +73,12 @@ void XGenericHexWidget::adjustView()
     // getGlobalOptions()->adjustWidget(ui->tableWidgetMain, XOptions::ID_VIEW_FONT_TABLEVIEWS);
 }
 
+void XGenericHexWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
+{
+    ui->scrollAreaHex->setGlobal(pShortcuts, pXOptions);
+    XShortcutsWidget::setGlobal(pShortcuts, pXOptions);
+}
+
 void XGenericHexWidget::setReadonly(bool bState)
 {
     ui->scrollAreaHex->setReadonly(bState);

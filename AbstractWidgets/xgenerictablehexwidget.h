@@ -37,6 +37,7 @@ public:
     virtual void reloadData(bool bSaveSelection);
     virtual void adjustView();
     virtual void setCwOptions(const XFW_DEF::CWOPTIONS &cwOptions, bool bReload);
+    void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
 
 private slots:
     void followLocationSlot(quint64 nLocation, qint32 nLocationType, qint64 nSize, qint32 nWidgetType);

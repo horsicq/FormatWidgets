@@ -28,6 +28,7 @@ XGenericTableHexWidget::XGenericTableHexWidget(QWidget *parent) : XFormatWidget(
     connect(ui->widgetMain, SIGNAL(currentLocationChanged(quint64, qint32, qint64)), this, SIGNAL(currentLocationChanged(quint64, qint32, qint64)));
     connect(ui->widgetMain, SIGNAL(dataChanged(qint64, qint64)), this, SIGNAL(dataChanged(qint64, qint64)));
     connect(ui->widgetMain, SIGNAL(followLocation(quint64, qint32, qint64, qint32)), this, SLOT(followLocationSlot(quint64, qint32, qint64, qint32)));
+    connect(ui->widgetMain, SIGNAL(showCwWidget(QString, bool)), this, SIGNAL(showCwWidget(QString, bool)));
     connect(ui->pageHex, SIGNAL(currentLocationChanged(quint64, qint32, qint64)), this, SIGNAL(currentLocationChanged(quint64, qint32, qint64)));
     connect(ui->pageHex, SIGNAL(dataChanged(qint64, qint64)), this, SIGNAL(dataChanged(qint64, qint64)));
     connect(ui->pageHex, SIGNAL(followLocation(quint64, qint32, qint64, qint32)), this, SIGNAL(followLocation(quint64, qint32, qint64, qint32)));
@@ -54,6 +55,13 @@ void XGenericTableHexWidget::setCwOptions(const XFW_DEF::CWOPTIONS &cwOptions, b
 {
     ui->widgetMain->setCwOptions(cwOptions, bReload);
     // ui->pageHex->setCwOptions(cwOptions, bReload);
+}
+
+void XGenericTableHexWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
+{
+    ui->widgetMain->setGlobal(pShortcuts, pXOptions);
+    ui->pageHex->setGlobal(pShortcuts, pXOptions);
+    XShortcutsWidget::setGlobal(pShortcuts, pXOptions);
 }
 
 void XGenericTableHexWidget::followLocationSlot(quint64 nLocation, qint32 nLocationType, qint64 nSize, qint32 nWidgetType)

@@ -556,19 +556,6 @@ const XFW_DEF::HEADER_RECORD records[] = {
 };
 }
 
-namespace X_NET_METADATA {
-const XFW_DEF::HEADER_RECORD records[] = {
-    {Signature, "Signature", 0, 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-    {MajorVersion, "MajorVersion", 4, 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_VERSION, -1},
-    {MinorVersion, "MinorVersion", 6, 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_VERSION, -1},
-    {Reserved, "Reserved", 8, 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-    {VersionStringLength, "VersionStringLength", 12, 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, -1},
-    {Version, "Version", 16, 0, "TEXT", XFW_DEF::VAL_TYPE_DATA_ARRAY | XFW_DEF::VAL_TYPE_ANSI | XFW_DEF::VAL_TYPE_STRING, VersionStringLength},
-    {Flags, "Flags", -1, 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-    {Streams, "Streams", -1, 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-};
-}
-
 namespace X_IMAGE_RESOURCE_FIXEDFILEINFO {
 const XFW_DEF::HEADER_RECORD records[] = {
     {dwSignature, "dwSignature", offsetof(XPE_DEF::tagVS_FIXEDFILEINFO, dwSignature), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
