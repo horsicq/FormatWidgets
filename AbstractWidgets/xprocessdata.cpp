@@ -107,6 +107,13 @@ void XProcessData::process()
         record.vtype = XFW_DEF::VAL_TYPE_STRING;
 
         g_pListHeaderRecords->append(record);
+    } else if ((g_pCwOptions->_type == XFW_DEF::TYPE_MACH_nlist) || (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_nlist_64)) {
+        XFW_DEF::HEADER_RECORD record = {};
+        record.nPosition = -1;
+        record.sName = tr("Symbol");
+        record.vtype = XFW_DEF::VAL_TYPE_STRING;
+
+        g_pListHeaderRecords->append(record);
     }
 
     qint32 nHeaderSize = XFormatWidget::getHeaderSize(g_pListHeaderRecords);
@@ -224,10 +231,8 @@ void XProcessData::process()
 
         for (qint32 i = 0; (i < nNumberOfRows) && (!(g_pPdStruct->bIsStop)); i++) {
             XPE_DEF::IMAGE_SECTION_HEADER ish = xpe.read_IMAGE_SECTION_HEADER(_nOffset);
-            ;
 
             XADDR nDataOffset = ish.PointerToRawData;
-            ;
             qint64 nDataSize = ish.SizeOfRawData;
 
             if (!XBinary::isOffsetAndSizeValid(&memoryMap, nDataOffset, nDataSize)) {
@@ -238,7 +243,7 @@ void XProcessData::process()
             QString sName = QString((char *)ish.Name);
             sName.resize(qMin(sName.length(), XPE_DEF::S_IMAGE_SIZEOF_SHORT_NAME));
 
-            XFormatWidget::setItemToModelData((*g_ppModel), i, 0, i, 0, g_pListHeaderRecords->at(0).vtype, g_pCwOptions->_type, _nOffset, nHeaderSize, nDataOffset,
+            XFormatWidget::setItemToModelData((*g_ppModel), i, 0, i + 1, 0, g_pListHeaderRecords->at(0).vtype, g_pCwOptions->_type, _nOffset, nHeaderSize, nDataOffset,
                                               nDataSize, 0);
             XFormatWidget::setItemToModel((*g_ppModel), i, 1, sName, g_pListHeaderRecords->at(1).nSize, g_pListHeaderRecords->at(1).vtype);
             XFormatWidget::setItemToModel((*g_ppModel), i, 2, ish.Misc.VirtualSize, g_pListHeaderRecords->at(2).nSize, g_pListHeaderRecords->at(2).vtype);
@@ -254,7 +259,6 @@ void XProcessData::process()
             _nOffset += nHeaderSize;
             XBinary::setPdStructCurrent(g_pPdStruct, g_nFreeIndex, i);
         }
-
     } else if ((g_pCwOptions->_type == XFW_DEF::TYPE_7ZIP_PROPERTIES) ||
                (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_bind) ||
                (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_weak) ||

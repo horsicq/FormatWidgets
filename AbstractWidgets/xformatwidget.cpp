@@ -385,6 +385,8 @@ QString XFormatWidget::getTypeTitle(XFW_DEF::TYPE type, XBinary::MODE mode, XBin
         sResult = QString("unix_thread_command");
     } else if (type == XFW_DEF::TYPE_MACH_twolevel_hints_command) {
         sResult = QString("twolevel_hints_command");
+    } else if (type == XFW_DEF::TYPE_MACH_twolevel_hint) {
+        sResult = QString("twolevel_hint");
     } else if (type == XFW_DEF::TYPE_MACH_x86_thread_state32_t) {
         sResult = QString("x86_thread_state32_t");
     } else if (type == XFW_DEF::TYPE_MACH_x86_thread_state64_t) {
@@ -560,6 +562,9 @@ QList<XFW_DEF::HEADER_RECORD> XFormatWidget::getHeaderRecords(const XFW_DEF::CWO
     } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_twolevel_hints_command) {
         pRecords = XTYPE_MACH::X_twolevel_hints_command::records;
         nNumberOfRecords = XTYPE_MACH::X_twolevel_hints_command::__data_size;
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_twolevel_hint) {
+        pRecords = XTYPE_MACH::X_twolevel_hint::records;
+        nNumberOfRecords = XTYPE_MACH::X_twolevel_hint::__data_size;
     } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_x86_thread_state32_t) {
         pRecords = XTYPE_MACH::X_x86_thread_state32_t::records;
         nNumberOfRecords = XTYPE_MACH::X_x86_thread_state32_t::__data_size;
@@ -737,6 +742,8 @@ qint64 XFormatWidget::getStructSize(XFW_DEF::TYPE type)
         nResult = sizeof(XMACH_DEF::unix_thread_command);
     } else if (type == XFW_DEF::TYPE_MACH_twolevel_hints_command) {
         nResult = sizeof(XMACH_DEF::twolevel_hints_command);
+    } else if (type == XFW_DEF::TYPE_MACH_twolevel_hint) {
+        nResult = sizeof(XMACH_DEF::twolevel_hint);
     } else if (type == XFW_DEF::TYPE_MACH_x86_thread_state32_t) {
         nResult = sizeof(XMACH_DEF::x86_thread_state32_t);
     } else if (type == XFW_DEF::TYPE_MACH_x86_thread_state64_t) {
@@ -2129,6 +2136,21 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
 
                         _addStruct(_spStructRecord);
                     }
+                }
+            } else if ((_spStruct.widgetMode == XFW_DEF::WIDGETMODE_HEADER) && (_spStruct.type == XFW_DEF::TYPE_MACH_twolevel_hints_command)) {
+                XMACH_DEF::twolevel_hints_command _command = mach._read_twolevel_hints_command(_spStruct.nStructOffset);
+
+                if (_command.offset && _command.nhints) {
+                    SPSTRUCT _spStructRecord = _spStruct;
+                    _spStructRecord.pTreeWidgetItem = pTreeWidgetItem;
+                    _spStructRecord.nStructOffset = _spStruct.nOffset + _command.offset;
+                    _spStructRecord.nStructSize = 0;
+                    _spStructRecord.nStructCount = _command.nhints;
+                    _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_TABLE;
+                    _spStructRecord.type = XFW_DEF::TYPE_MACH_twolevel_hint;
+                    _spStructRecord.sInfo = "";
+
+                    _addStruct(_spStructRecord);
                 }
             }
         } else if ((_spStruct.type > XFW_DEF::TYPE_PE_START) && (_spStruct.type < XFW_DEF::TYPE_PE_END)) {
