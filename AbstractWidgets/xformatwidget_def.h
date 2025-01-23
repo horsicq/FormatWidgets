@@ -34,7 +34,8 @@ enum VMODE {
 };
 
 enum TYPE {
-    TYPE_GLOBALHEX = 0,
+    TYPE_UNKNOWN = 0,
+    TYPE_GLOBALHEX,
     TYPE_INFO,
     TYPE_VISUALIZATION,
     TYPE_VIRUSTOTAL,
@@ -104,6 +105,7 @@ enum TYPE {
     TYPE_MACH_ppc_thread_state32_t,
     // TYPE_MACH_ppc_thread_state64_t,
     TYPE_MACH_m68k_thread_state32_t,
+    TYPE_MACH_functions,
     TYPE_MACH_nlist,
     TYPE_MACH_nlist_64,
     TYPE_MACH_dyld_chained_fixups_header,
@@ -213,6 +215,7 @@ enum VAL_TYPE {
     VAL_TYPE_RELTOPARENT = 1 << 14,
     VAL_TYPE_RELTOHEADEREND = 1 << 15,
     VAL_TYPE_TIMEDATE = 1 << 16,
+    VAL_TYPE_ULEB128 = 1 << 17,
 };
 
 struct HEADER_RECORD {

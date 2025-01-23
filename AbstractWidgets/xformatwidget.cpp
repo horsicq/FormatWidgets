@@ -401,6 +401,8 @@ QString XFormatWidget::getTypeTitle(XFW_DEF::TYPE type, XBinary::MODE mode, XBin
         //     sResult = QString("ppc_thread_state64_t");
     } else if (type == XFW_DEF::TYPE_MACH_m68k_thread_state32_t) {
         sResult = QString("m68k_thread_state32_t");
+    } else if (type == XFW_DEF::TYPE_MACH_functions) {
+        sResult = QString("functions");
     } else if (type == XFW_DEF::TYPE_MACH_nlist) {
         sResult = QString("nlist");
     } else if (type == XFW_DEF::TYPE_MACH_nlist_64) {
@@ -904,6 +906,8 @@ void XFormatWidget::adjustGenericTable(QTableView *pTableView, const QList<XFW_D
             nWidth = XOptions::getControlWidth(pTableView, 4);
         } else if (pListHeaderRecords->at(i).vtype & XFW_DEF::VAL_TYPE_HEX) {
             nWidth = XOptions::getControlWidth(pTableView, 8);
+        } else if (pListHeaderRecords->at(i).vtype & XFW_DEF::VAL_TYPE_ULEB128) {
+            nWidth = XOptions::getControlWidth(pTableView, 4);
         }
 
         if (i == (nNumberOfRecords - 1)) {
@@ -1866,6 +1870,21 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
 
                     _addStruct(_spStructRecord);
                 }
+            } else if ((_spStruct.widgetMode == XFW_DEF::WIDGETMODE_HEADER) && (_spStruct.type == XFW_DEF::TYPE_MACH_function_starts_command)) {
+                XMACH_DEF::linkedit_data_command _command = mach._read_linkedit_data_command(_spStruct.nStructOffset);
+
+                if (_command.dataoff && _command.datasize) {
+                    SPSTRUCT _spStructRecord = _spStruct;
+                    _spStructRecord.pTreeWidgetItem = pTreeWidgetItem;
+                    _spStructRecord.nStructOffset = _spStruct.nOffset + _command.dataoff;
+                    _spStructRecord.nStructSize = _command.datasize;
+                    _spStructRecord.nStructCount = 0;
+                    _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_TABLE;
+                    _spStructRecord.type = XFW_DEF::TYPE_MACH_functions;
+                    _spStructRecord.sInfo = "";
+
+                    _addStruct(_spStructRecord);
+                }
             } else if ((_spStruct.widgetMode == XFW_DEF::WIDGETMODE_HEADER) && (_spStruct.type == XFW_DEF::TYPE_MACH_encryption_info_command)) {
                 XMACH_DEF::encryption_info_command _command = mach._read_encryption_info_command(_spStruct.nStructOffset);
 
@@ -1876,7 +1895,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     _spStructRecord.nStructSize = _command.cryptsize;
                     _spStructRecord.nStructCount = 0;
                     _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEX;  // TODO remove
-                    _spStructRecord.type = XFW_DEF::TYPE_HEX;
+                    _spStructRecord.type = XFW_DEF::TYPE_UNKNOWN;
                     _spStructRecord.sInfo = "";
 
                     _addStruct(_spStructRecord);
@@ -1891,7 +1910,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     _spStructRecord.nStructSize = _command.cryptsize;
                     _spStructRecord.nStructCount = 0;
                     _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEX;  // TODO remove
-                    _spStructRecord.type = XFW_DEF::TYPE_HEX;
+                    _spStructRecord.type = XFW_DEF::TYPE_UNKNOWN;
                     _spStructRecord.sInfo = "";
 
                     _addStruct(_spStructRecord);
@@ -2002,7 +2021,6 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
 
                     _addStruct(_spStructRecord);
                 }
-
             } else if ((_spStruct.widgetMode == XFW_DEF::WIDGETMODE_HEADER) && (_spStruct.type == XFW_DEF::TYPE_MACH_dyld_chained_fixups_command)) {
                 XMACH_DEF::linkedit_data_command _command = mach._read_linkedit_data_command(_spStruct.nStructOffset);
 
@@ -2570,13 +2588,13 @@ void XFormatWidget::contextMenuGenericTableWidget(const QPoint &pos, QTableView 
         qint64 nDataSize = (pTableView->model()->data(index, Qt::UserRole + XFW_DEF::TABLEDATA_HEADERSIZE).toLongLong());
         qint64 nDataCount = (pTableView->model()->data(index, Qt::UserRole + XFW_DEF::TABLEDATA_COUNT).toLongLong());
 
-        QString sTypeString = _getInitString(_type, nDataOffset, nDataSize, nDataCount);
-
         QMenu contextMenu(this);
 
         QList<XShortcuts::MENUITEM> listMenuItems;
 
-        {
+        if (_type != XFW_DEF::TYPE_UNKNOWN) {
+            QString sTypeString = _getInitString(_type, nDataOffset, nDataSize, nDataCount);
+
             XShortcuts::MENUITEM menuItem = {};
             menuItem.nShortcutId = XShortcuts::X_ID_TABLE_SHOW;
             menuItem.pRecv = this;
