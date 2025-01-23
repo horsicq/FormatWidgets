@@ -280,7 +280,7 @@ const XFW_DEF::HEADER_RECORD records[] = {
     {platform, "platform", offsetof(XMACH_DEF::build_version_command, platform), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {minos, "minos", offsetof(XMACH_DEF::build_version_command, minos), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_VERSION, -1},
     {sdk, "sdk", offsetof(XMACH_DEF::build_version_command, sdk), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_VERSION, -1},
-    {ntools, "ntools", offsetof(XMACH_DEF::build_version_command, ntools), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {ntools, "ntools", offsetof(XMACH_DEF::build_version_command, ntools), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_COUNT, -1},
 };
 }
 

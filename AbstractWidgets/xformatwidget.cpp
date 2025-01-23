@@ -2228,12 +2228,14 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
             } else if ((_spStruct.widgetMode == XFW_DEF::WIDGETMODE_HEADER) && (_spStruct.type == XFW_DEF::TYPE_PE_IMAGE_FILE_HEADER)) {
                 XPE_DEF::IMAGE_FILE_HEADER fileHeader = pe._read_IMAGE_FILE_HEADER(_spStruct.nStructOffset);
 
-                if (fileHeader.NumberOfSections > 0) {
+                qint32 nNumberOfSections = qMin((qint32)fileHeader.NumberOfSections, XPE_DEF::S_MAX_SECTIONCOUNT);
+
+                if (nNumberOfSections > 0) {
                     SPSTRUCT _spStructRecord = _spStruct;
                     _spStructRecord.pTreeWidgetItem = pTreeWidgetItem;
                     _spStructRecord.nStructOffset = _spStruct.nStructOffset + fileHeader.SizeOfOptionalHeader + sizeof(XPE_DEF::IMAGE_FILE_HEADER);
-                    _spStructRecord.nStructSize = sizeof(XPE_DEF::IMAGE_SECTION_HEADER) * fileHeader.NumberOfSections;
-                    _spStructRecord.nStructCount = fileHeader.NumberOfSections;
+                    _spStructRecord.nStructSize = sizeof(XPE_DEF::IMAGE_SECTION_HEADER) * nNumberOfSections;
+                    _spStructRecord.nStructCount = nNumberOfSections;
                     _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_TABLE_HEX;
                     _spStructRecord.type = XFW_DEF::TYPE_PE_IMAGE_SECTION_HEADER;
                     _spStructRecord.sInfo = "";
@@ -2456,6 +2458,8 @@ XFW_DEF::TYPE XFormatWidget::load_commandIdToType(qint32 nCommandId)
     XFW_DEF::TYPE result = XFW_DEF::TYPE_MACH_load_command;
 
     // https://github.com/apple-oss-distributions/dyld/blob/main/mach_o/Header.cpp
+    // TODO LC_PREBOUND_DYLIB
+    // TODO LC_SUB_FRAMEWORK
     if ((nCommandId == XMACH_DEF::S_LC_ID_DYLIB) || (nCommandId == XMACH_DEF::S_LC_LOAD_DYLIB) || (nCommandId == XMACH_DEF::S_LC_LOAD_WEAK_DYLIB) ||
         (nCommandId == XMACH_DEF::S_LC_REEXPORT_DYLIB) || (nCommandId == XMACH_DEF::S_LC_LOAD_UPWARD_DYLIB)) {
         result = XFW_DEF::TYPE_MACH_dylib_command;
@@ -2516,7 +2520,7 @@ XFW_DEF::TYPE XFormatWidget::load_commandIdToType(qint32 nCommandId)
         result = XFW_DEF::TYPE_MACH_routines_command_64;
     } else if (nCommandId == XMACH_DEF::S_LC_LOADFVMLIB) {
         result = XFW_DEF::TYPE_MACH_fvm_library_command;
-    } else if (nCommandId == XMACH_DEF::S_LC_UNIXTHREAD) {
+    } else if ((nCommandId == XMACH_DEF::S_LC_THREAD) || (nCommandId == XMACH_DEF::S_LC_UNIXTHREAD)) {
         result = XFW_DEF::TYPE_MACH_unix_thread_command;
     } else if (nCommandId == XMACH_DEF::S_LC_TWOLEVEL_HINTS) {
         result = XFW_DEF::TYPE_MACH_twolevel_hints_command;
