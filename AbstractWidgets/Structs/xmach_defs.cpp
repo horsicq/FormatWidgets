@@ -28,7 +28,8 @@ const XFW_DEF::HEADER_RECORD records32[] = {
     {cpusubtype, "cpusubtype", offsetof(XMACH_DEF::mach_header, cpusubtype), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {filetype, "filetype", offsetof(XMACH_DEF::mach_header, filetype), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {ncmds, "ncmds", offsetof(XMACH_DEF::mach_header, ncmds), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_COUNT, -1},
-    {sizeofcmds, "sizeofcmds", offsetof(XMACH_DEF::mach_header, sizeofcmds), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE | XFW_DEF::VAL_TYPE_RELTOHEADEREND, -1},
+    {sizeofcmds, "sizeofcmds", offsetof(XMACH_DEF::mach_header, sizeofcmds), 4, "uint32",
+     XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE | XFW_DEF::VAL_TYPE_RELTOHEADEREND, -1},
     {flags, "flags", offsetof(XMACH_DEF::mach_header, flags), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
 };
 
@@ -38,7 +39,8 @@ const XFW_DEF::HEADER_RECORD records64[] = {
     {cpusubtype, "cpusubtype", offsetof(XMACH_DEF::mach_header_64, cpusubtype), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {filetype, "filetype", offsetof(XMACH_DEF::mach_header_64, filetype), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {ncmds, "ncmds", offsetof(XMACH_DEF::mach_header_64, ncmds), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_COUNT, -1},
-    {sizeofcmds, "sizeofcmds", offsetof(XMACH_DEF::mach_header_64, sizeofcmds), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE | XFW_DEF::VAL_TYPE_RELTOHEADEREND, -1},
+    {sizeofcmds, "sizeofcmds", offsetof(XMACH_DEF::mach_header_64, sizeofcmds), 4, "uint32",
+     XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE | XFW_DEF::VAL_TYPE_RELTOHEADEREND, -1},
     {flags, "flags", offsetof(XMACH_DEF::mach_header_64, flags), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {reserved, "reserved", offsetof(XMACH_DEF::mach_header_64, reserved), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
 };

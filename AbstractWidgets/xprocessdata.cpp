@@ -55,12 +55,9 @@ void XProcessData::process()
         g_pListHeaderRecords->append(record);
     }
 
-    if ((g_pCwOptions->_type == XFW_DEF::TYPE_7ZIP_PROPERTIES) ||
-       (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_bind) ||
-       (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_weak) ||
-       (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_lazy_bind) ||
-       (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_rebase) ||
-       (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_trie_export)) {
+    if ((g_pCwOptions->_type == XFW_DEF::TYPE_7ZIP_PROPERTIES) || (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_bind) || (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_weak) ||
+        (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_lazy_bind) || (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_rebase) ||
+        (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_trie_export)) {
         {
             XFW_DEF::HEADER_RECORD record = {};
             record.nPosition = -1;
@@ -126,7 +123,8 @@ void XProcessData::process()
         record.vtype = XFW_DEF::VAL_TYPE_STRING;
 
         g_pListHeaderRecords->append(record);
-    } else if ((g_pCwOptions->_type == XFW_DEF::TYPE_MACH_nlist) || (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_nlist_64) || (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_functions)) {
+    } else if ((g_pCwOptions->_type == XFW_DEF::TYPE_MACH_nlist) || (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_nlist_64) ||
+               (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_functions)) {
         XFW_DEF::HEADER_RECORD record = {};
         record.nPosition = -1;
         record.sName = tr("Symbol");
@@ -190,8 +188,8 @@ void XProcessData::process()
         (*g_ppModel) = new QStandardItemModel(nNumberOfRows, nNumberOfColumns);
 
         for (qint32 i = 0; (i < nNumberOfRows) && (!(g_pPdStruct->bIsStop)); i++) {
-            XFormatWidget::setItemToModelData((*g_ppModel), i, 0, i, 0, g_pListHeaderRecords->at(0).vtype, XFW_DEF::TYPE_UNKNOWN, listFunctions.at(i).nDataOffset, listFunctions.at(i).nDataSize, listFunctions.at(i).nFunctionOffset,
-                                              0, 0);
+            XFormatWidget::setItemToModelData((*g_ppModel), i, 0, i, 0, g_pListHeaderRecords->at(0).vtype, XFW_DEF::TYPE_UNKNOWN, listFunctions.at(i).nDataOffset,
+                                              listFunctions.at(i).nDataSize, listFunctions.at(i).nFunctionOffset, 0, 0);
             XFormatWidget::setItemToModel((*g_ppModel), i, 1, listFunctions.at(i).nValue, g_pListHeaderRecords->at(1).nSize, g_pListHeaderRecords->at(1).vtype);
             XFormatWidget::setItemToModel((*g_ppModel), i, 2, listFunctions.at(i).nFunctionOffset, g_pListHeaderRecords->at(2).nSize, g_pListHeaderRecords->at(2).vtype);
 
@@ -296,12 +294,9 @@ void XProcessData::process()
             _nOffset += nHeaderSize;
             XBinary::setPdStructCurrent(g_pPdStruct, g_nFreeIndex, i);
         }
-    } else if ((g_pCwOptions->_type == XFW_DEF::TYPE_7ZIP_PROPERTIES) ||
-               (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_bind) ||
-               (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_weak) ||
-               (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_lazy_bind) ||
-               (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_rebase) ||
-               (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_trie_export)){
+    } else if ((g_pCwOptions->_type == XFW_DEF::TYPE_7ZIP_PROPERTIES) || (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_bind) ||
+               (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_weak) || (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_lazy_bind) ||
+               (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_rebase) || (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_trie_export)) {
         XBinary binary(g_pCwOptions->pDevice, g_pCwOptions->bIsImage, g_pCwOptions->nImageBase);
 
         QByteArray baData = binary.read_array(g_pCwOptions->nDataOffset, g_pCwOptions->nDataSize, g_pPdStruct);
@@ -312,9 +307,8 @@ void XProcessData::process()
 
         if (g_pCwOptions->_type == XFW_DEF::TYPE_7ZIP_PROPERTIES) {
             disasmCore.setMode(XBinary::DM_CUSTOM_7ZIP_PROPERTIES);
-        } else if ((g_pCwOptions->_type == XFW_DEF::TYPE_MACH_bind) ||
-                   (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_weak) ||
-                   (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_lazy_bind)){
+        } else if ((g_pCwOptions->_type == XFW_DEF::TYPE_MACH_bind) || (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_weak) ||
+                   (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_lazy_bind)) {
             disasmCore.setMode(XBinary::DM_CUSTOM_MACH_BIND);
         } else if (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_rebase) {
             disasmCore.setMode(XBinary::DM_CUSTOM_MACH_REBASE);

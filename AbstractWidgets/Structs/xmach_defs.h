@@ -406,7 +406,6 @@ enum DATA {
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace X_twolevel_hint
 
-
 namespace X_x86_thread_state32_t {
 enum DATA {
     eax,
