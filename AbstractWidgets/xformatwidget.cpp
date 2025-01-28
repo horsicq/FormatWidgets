@@ -429,6 +429,8 @@ QString XFormatWidget::getTypeTitle(XFW_DEF::TYPE type, XBinary::MODE mode, XBin
         sResult = QString("weak");
     } else if (type == XFW_DEF::TYPE_MACH_lazy_bind) {
         sResult = QString("lazy_bind");
+    } else if (type == XFW_DEF::TYPE_MACH_segment_split_info) {
+        sResult = QString("segment_split_info");
     } else if (type == XFW_DEF::TYPE_DEX_HEADER) {
         sResult = QString("HEADER");
     } else if (type == XFW_DEF::TYPE_7ZIP_SIGNATUREHEADER) {
@@ -2076,6 +2078,21 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     _spStructRecord.nStructCount = 0;
                     _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_TABLE;
                     _spStructRecord.type = XFW_DEF::TYPE_MACH_trie_export;
+                    _spStructRecord.sInfo = "";
+
+                    _addStruct(_spStructRecord);
+                }
+            } else if ((_spStruct.widgetMode == XFW_DEF::WIDGETMODE_HEADER) && (_spStruct.type == XFW_DEF::TYPE_MACH_segment_split_info_command)) {
+                XMACH_DEF::linkedit_data_command _command = mach._read_linkedit_data_command(_spStruct.nStructOffset);
+
+                if (_command.dataoff && _command.datasize) {
+                    SPSTRUCT _spStructRecord = _spStruct;
+                    _spStructRecord.pTreeWidgetItem = pTreeWidgetItem;
+                    _spStructRecord.nStructOffset = _spStruct.nOffset + _command.dataoff;
+                    _spStructRecord.nStructSize = _command.datasize;
+                    _spStructRecord.nStructCount = 0;
+                    _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEX;
+                    _spStructRecord.type = XFW_DEF::TYPE_MACH_segment_split_info;
                     _spStructRecord.sInfo = "";
 
                     _addStruct(_spStructRecord);

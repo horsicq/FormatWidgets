@@ -174,8 +174,14 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
         } else if ((getCwOptions()->_type == XFW_DEF::TYPE_MACH_segment_command) || (getCwOptions()->_type == XFW_DEF::TYPE_MACH_segment_command_64)) {
             addComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getVMProtectionsS(), XTYPE_MACH::X_segment_command::initprot, XComboBoxEx::CBTYPE_FLAGS, 0);
             addComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getVMProtectionsS(), XTYPE_MACH::X_segment_command::maxprot, XComboBoxEx::CBTYPE_FLAGS, 0);
-            // } else if (getCwOptions()->_type == FW_DEF::TYPE_MACH_section) {
-            //     adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getSectionTypesS(), N_mach_section::flags, XComboBoxEx::CBTYPE_FLAGS, 0);
+        } else if (getCwOptions()->_type == XFW_DEF::TYPE_MACH_section) {
+            addComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getSectionFlagsTypesS(), XTYPE_MACH::X_section::flags, XComboBoxEx::CBTYPE_ELIST, 0xFF);
+            addComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getSectionAttributesSysS(), XTYPE_MACH::X_section::flags, XComboBoxEx::CBTYPE_ELIST, 0xFF00);
+            addComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getSectionAttributesUsrS(), XTYPE_MACH::X_section::flags, XComboBoxEx::CBTYPE_ELIST, 0xFF000000);
+        } else if (getCwOptions()->_type == XFW_DEF::TYPE_MACH_section_64) {
+            addComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getSectionFlagsTypesS(), XTYPE_MACH::X_section_64::flags, XComboBoxEx::CBTYPE_ELIST, 0xFF);
+            addComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getSectionAttributesSysS(), XTYPE_MACH::X_section_64::flags, XComboBoxEx::CBTYPE_ELIST, 0xFF00);
+            addComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getSectionAttributesUsrS(), XTYPE_MACH::X_section_64::flags, XComboBoxEx::CBTYPE_ELIST, 0xFF000000);
             // } else if (getCwOptions()->_type == FW_DEF::TYPE_MACH_dyld_info_command) {
             //     adjustComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getCommandsS(), N_mach_dyld_info_command::cmd, XComboBoxEx::CBTYPE_LIST, 0);
             // } else if (getCwOptions()->_type == FW_DEF::TYPE_MACH_uuid_command) {

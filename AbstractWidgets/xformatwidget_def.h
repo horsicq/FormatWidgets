@@ -119,6 +119,7 @@ enum TYPE {
     TYPE_MACH_bind,
     TYPE_MACH_weak,
     TYPE_MACH_lazy_bind,
+    TYPE_MACH_segment_split_info,
     TYPE_MACH_END,
     TYPE_NE_START,
     TYPE_NE_IMAGE_DOS_HEADER,
