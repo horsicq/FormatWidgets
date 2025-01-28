@@ -286,6 +286,14 @@ const XFW_DEF::HEADER_RECORD records[] = {
 };
 }
 
+namespace X_build_tool_version {
+const XFW_DEF::HEADER_RECORD records[] = {
+    {tool, "tool", offsetof(XMACH_DEF::build_tool_version, tool), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {version, "version", offsetof(XMACH_DEF::build_tool_version, version), 4, "uint32",
+     XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_VERSION, -1},
+};
+}
+
 namespace X_source_version_command {
 const XFW_DEF::HEADER_RECORD records[] = {
     {cmd, "cmd", offsetof(XMACH_DEF::source_version_command, cmd), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},

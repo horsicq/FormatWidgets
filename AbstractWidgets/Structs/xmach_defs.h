@@ -290,6 +290,16 @@ enum DATA {
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
 }  // namespace X_build_version_command
 
+namespace X_build_tool_version {
+enum DATA {
+    tool = 0,
+    version,
+    __data_size
+};
+
+extern const XFW_DEF::HEADER_RECORD records[__data_size];
+}  // namespace X_build_tool_version
+
 namespace X_source_version_command {
 enum DATA {
     cmd = 0,

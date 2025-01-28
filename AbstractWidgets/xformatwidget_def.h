@@ -98,6 +98,7 @@ enum TYPE {
     TYPE_MACH_unix_thread_command,
     TYPE_MACH_twolevel_hints_command,
     TYPE_MACH_twolevel_hint,
+    TYPE_MACH_build_tool_version,
     TYPE_MACH_x86_thread_state32_t,
     TYPE_MACH_x86_thread_state64_t,
     TYPE_MACH_arm_thread_state32_t,
