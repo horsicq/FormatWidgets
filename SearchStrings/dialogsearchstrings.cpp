@@ -26,7 +26,7 @@ DialogSearchStrings::DialogSearchStrings(QWidget *pParent) : XShortcutsDialog(pP
 {
     ui->setupUi(this);
 
-    connect(ui->widgetSearchStrings, SIGNAL(showHex(qint64, qint64)), this, SIGNAL(showHex(qint64, qint64)));
+    connect(ui->widgetSearchStrings, SIGNAL(followLocation(quint64, qint32, qint64, qint32)), this, SLOT(followLocationSlot(quint64, qint32, qint64, qint32)));
     connect(ui->widgetSearchStrings, SIGNAL(currentLocationChanged(quint64, qint32, qint64)), this, SIGNAL(currentLocationChanged(quint64, qint32, qint64)));
 
     ui->widgetSearchStrings->setReadonly(true);

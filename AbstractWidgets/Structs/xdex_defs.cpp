@@ -26,7 +26,7 @@ const XFW_DEF::HEADER_RECORD records[] = {
     {magic, "magic", offsetof(XDEX_DEF::HEADER, magic), 4, "uint32 LE", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {version, "version", offsetof(XDEX_DEF::HEADER, version), 4, "uint32 LE", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {checksum, "checksum", offsetof(XDEX_DEF::HEADER, checksum), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-    {signature, "signature", offsetof(XDEX_DEF::HEADER, signature), 20, "array", XFW_DEF::VAL_TYPE_DATA_ARRAY, -1},
+    {signature, "signature", offsetof(XDEX_DEF::HEADER, signature), 20, "array", XFW_DEF::VAL_TYPE_DATA_ARRAY | XFW_DEF::VAL_TYPE_HEX, -1},
     {file_size, "file_size", offsetof(XDEX_DEF::HEADER, file_size), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, -1},
     {header_size, "header_size", offsetof(XDEX_DEF::HEADER, header_size), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, -1},
     {endian_tag, "endian_tag", offsetof(XDEX_DEF::HEADER, endian_tag), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},

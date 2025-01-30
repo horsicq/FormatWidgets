@@ -26,7 +26,7 @@ DialogSearchSignatures::DialogSearchSignatures(QWidget *pParent) : XShortcutsDia
 {
     ui->setupUi(this);
 
-    connect(ui->searchSignaturesWidget, SIGNAL(showHex(qint64, qint64)), this, SIGNAL(showHex(qint64, qint64)));
+    connect(ui->searchSignaturesWidget, SIGNAL(followLocation(quint64, qint32, qint64, qint32)), this, SIGNAL(followLocation(quint64, qint32, qint64, qint32)));
 }
 
 DialogSearchSignatures::~DialogSearchSignatures()

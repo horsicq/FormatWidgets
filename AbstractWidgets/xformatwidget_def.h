@@ -218,6 +218,7 @@ enum VAL_TYPE {
     VAL_TYPE_RELTOHEADEREND = 1 << 15,
     VAL_TYPE_TIMEDATE = 1 << 16,
     VAL_TYPE_ULEB128 = 1 << 17,
+    VAL_TYPE_FULL = 1 << 18,
 };
 
 struct HEADER_RECORD {

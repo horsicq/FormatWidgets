@@ -57,10 +57,10 @@ const XFW_DEF::HEADER_RECORD records[] = {
     {e_cs, "e_cs", offsetof(XMSDOS_DEF::IMAGE_DOS_HEADEREX, e_cs), 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {e_lfarlc, "e_lfarlc", offsetof(XMSDOS_DEF::IMAGE_DOS_HEADEREX, e_lfarlc), 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {e_ovno, "e_ovno", offsetof(XMSDOS_DEF::IMAGE_DOS_HEADEREX, e_ovno), 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-    {e_res, "e_res", offsetof(XMSDOS_DEF::IMAGE_DOS_HEADEREX, e_res), 8, "WORD[4]", XFW_DEF::VAL_TYPE_DATA_ARRAY, -1},
+    {e_res, "e_res", offsetof(XMSDOS_DEF::IMAGE_DOS_HEADEREX, e_res), 8, "WORD[4]", XFW_DEF::VAL_TYPE_DATA_ARRAY | XFW_DEF::VAL_TYPE_HEX, -1},
     {e_oemid, "e_oemid", offsetof(XMSDOS_DEF::IMAGE_DOS_HEADEREX, e_oemid), 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {e_oeminfo, "e_oeminfo", offsetof(XMSDOS_DEF::IMAGE_DOS_HEADEREX, e_oeminfo), 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-    {e_res2, "e_res2", offsetof(XMSDOS_DEF::IMAGE_DOS_HEADEREX, e_res2), 20, "WORD[10]", XFW_DEF::VAL_TYPE_DATA_ARRAY, -1},
+    {e_res2, "e_res2", offsetof(XMSDOS_DEF::IMAGE_DOS_HEADEREX, e_res2), 20, "WORD[10]", XFW_DEF::VAL_TYPE_DATA_ARRAY | XFW_DEF::VAL_TYPE_HEX, -1},
     {e_lfanew, "e_lfanew", offsetof(XMSDOS_DEF::IMAGE_DOS_HEADEREX, e_lfanew), 4, "LONG", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET}};
 }
 

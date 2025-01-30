@@ -23,7 +23,7 @@
 namespace XTYPE_7ZIP {
 namespace X_SIGNATUREHEADER {
 const XFW_DEF::HEADER_RECORD records[__data_size] = {
-    {kSignature, "kSignature", offsetof(XSevenZip::SIGNATUREHEADER, kSignature), 6, "array", XFW_DEF::VAL_TYPE_DATA_ARRAY, -1},
+    {kSignature, "kSignature", offsetof(XSevenZip::SIGNATUREHEADER, kSignature), 6, "array", XFW_DEF::VAL_TYPE_DATA_ARRAY | XFW_DEF::VAL_TYPE_HEX, -1},
     {Major, "Major", offsetof(XSevenZip::SIGNATUREHEADER, Major), 1, "uint8", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_VERSION, -1},
     {Minor, "Minor", offsetof(XSevenZip::SIGNATUREHEADER, Minor), 1, "uint8", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_VERSION, -1},
     {StartHeaderCRC, "StartHeaderCRC", offsetof(XSevenZip::SIGNATUREHEADER, StartHeaderCRC), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},

@@ -195,6 +195,42 @@ void XProcessData::process()
 
             XBinary::setPdStructCurrent(g_pPdStruct, g_nFreeIndex, i);
         }
+    } else if ((g_pCwOptions->_type == XFW_DEF::TYPE_MACH_nlist) || (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_nlist_64)){
+        XMACH mach(g_pCwOptions->pDevice, g_pCwOptions->bIsImage, g_pCwOptions->nImageBase);
+
+        XBinary::setPdStructTotal(g_pPdStruct, g_nFreeIndex, nNumberOfRows);
+
+        QByteArray baStringTable = mach.read_array(g_pCwOptions->var1.toLongLong(), g_pCwOptions->var2.toULongLong());
+        char *pBuffer = baStringTable.data();
+        qint64 nBufferSize = baStringTable.size();
+
+        (*g_ppModel) = new QStandardItemModel(nNumberOfRows, nNumberOfColumns);
+
+        qint64 _nOffset = g_pCwOptions->nDataOffset;
+
+        for (qint32 i = 0; (i < nNumberOfRows) && (!(g_pPdStruct->bIsStop)); i++) {
+            quint64 nValue = 0;
+            for (qint32 j = 0; j < nNumberOfColumns - 1; j++) {
+                QVariant var = XFormatWidget::_readVariant(&mach, _nOffset + g_pListHeaderRecords->at(j).nOffset, g_pListHeaderRecords->at(j).nSize,
+                                                           g_pListHeaderRecords->at(j).vtype, (g_pCwOptions->endian == XBinary::ENDIAN_BIG));
+                if (j == 0) {
+                    XFormatWidget::setItemToModelData((*g_ppModel), i, j, i, 0, g_pListHeaderRecords->at(j).vtype, g_pCwOptions->_type, _nOffset, nHeaderSize, 0, 0, 0);
+                } else {
+                    XFormatWidget::setItemToModel((*g_ppModel), i, j, var, g_pListHeaderRecords->at(j).nSize, g_pListHeaderRecords->at(j).vtype);
+                }
+
+                if (j == 1) {
+                    nValue = var.toULongLong();
+                }
+            }
+
+            QString _sSymbolName = mach._read_ansiString_safe(pBuffer, nBufferSize, nValue);
+
+            XFormatWidget::setItemToModel((*g_ppModel), i, nNumberOfColumns - 1, _sSymbolName, g_pListHeaderRecords->at(nNumberOfColumns - 1).nSize, g_pListHeaderRecords->at(nNumberOfColumns - 1).vtype);
+
+            _nOffset += nHeaderSize;
+            XBinary::setPdStructCurrent(g_pPdStruct, g_nFreeIndex, i);
+        }
     } else if (g_pCwOptions->_type == XFW_DEF::TYPE_GENERIC_STRINGTABLE_ANSI) {
         XBinary binary(g_pCwOptions->pDevice, g_pCwOptions->bIsImage, g_pCwOptions->nImageBase);
 

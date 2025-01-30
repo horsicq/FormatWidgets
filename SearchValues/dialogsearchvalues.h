@@ -38,9 +38,6 @@ public:
     void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
     virtual void adjustView();
 
-signals:
-    void showHex(qint64 nOffset, qint64 nSize);
-
 private slots:
     void on_pushButtonClose_clicked();
 

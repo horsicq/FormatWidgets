@@ -853,6 +853,8 @@ void XFormatWidget::setValue(QVariant vValue, qint32 nPosition, qint64 nOffset, 
             } else if (recWidget.nVType & XFW_DEF::VAL_TYPE_DATA_ARRAY) {
                 if (recWidget.nVType & XFW_DEF::VAL_TYPE_ANSI) {
                     binary.write_ansiStringFix(recWidget.nOffset, recWidget.nSize, vValue.toString());
+                } else if (recWidget.nVType & XFW_DEF::VAL_TYPE_HEX) {
+                    binary.write_array(recWidget.nOffset, vValue.toByteArray());
                 }
             }
 
@@ -911,6 +913,8 @@ void XFormatWidget::adjustGenericTable(QTableView *pTableView, const QList<XFW_D
             } else if (pListHeaderRecords->at(i).nSize == 8) {
                 nWidth = XOptions::getControlWidth(pTableView, 16);
             }
+        } else if (pListHeaderRecords->at(i).vtype & XFW_DEF::VAL_TYPE_DATA_ARRAY) {
+            nWidth = XOptions::getControlWidth(pTableView, 8);
         } else if (pListHeaderRecords->at(i).vtype & XFW_DEF::VAL_TYPE_COUNT) {
             nWidth = XOptions::getControlWidth(pTableView, 4);
         } else if (pListHeaderRecords->at(i).vtype & XFW_DEF::VAL_TYPE_HEX) {
@@ -1379,16 +1383,24 @@ void XFormatWidget::_adjustRecWidget(RECWIDGET *pRecWidget, QVariant varValue)
     if (pRecWidget->nVType & XFW_DEF::VAL_TYPE_VERSION) {
         QString sVersion;
         if (pRecWidget->nSize == 1) {
-            sVersion = QString("%1").arg(XBinary::fullVersionByteToString(varValue.toUInt()));
+            sVersion = XBinary::get_uint8_full_version(varValue.toUInt());
         } else if (pRecWidget->nSize == 2) {
-            sVersion = QString("%1").arg(XBinary::fullVersionWordToString(varValue.toUInt()));
+            if (pRecWidget->nVType & XFW_DEF::VAL_TYPE_FULL) {
+                sVersion = XBinary::get_uint16_full_version(varValue.toUInt());
+            } else {
+                sVersion = XBinary::get_uint16_version(varValue.toUInt());
+            }
         } else if (pRecWidget->nSize == 4) {
-            sVersion = QString("%1").arg(XBinary::fullVersionDwordToString(varValue.toUInt()));
+            if (pRecWidget->nVType & XFW_DEF::VAL_TYPE_FULL) {
+                sVersion = XBinary::get_uint32_full_version(varValue.toUInt());
+            } else {
+                sVersion = XBinary::get_uint32_version(varValue.toUInt());
+            }
         } else if (pRecWidget->nSize == 8) {
-            sVersion = QString("%1").arg(XBinary::fullVersionQwordToString(varValue.toULongLong()));
+            sVersion = XBinary::get_uint64_full_version(varValue.toULongLong());
         }
 
-        sComment = XBinary::appendText(sComment, sVersion, ", ");
+        sComment = XBinary::appendText(sComment, QString("\"%1\"").arg(sVersion), ", ");
     }
 
     if (pRecWidget->nVType & XFW_DEF::VAL_TYPE_ANSI) {
@@ -1404,6 +1416,13 @@ void XFormatWidget::_adjustRecWidget(RECWIDGET *pRecWidget, QVariant varValue)
 
         if (sString != "") {
             sComment = XBinary::appendText(sComment, QString("ANSI \"%1\"").arg(sString), ", ");
+        }
+    }
+
+    if (pRecWidget->nVType & XFW_DEF::VAL_TYPE_HEX) {
+        if (pRecWidget->nVType & XFW_DEF::VAL_TYPE_DATA_ARRAY) {
+            QString sString = varValue.toByteArray().toHex().toUpper();
+            sComment = XBinary::appendText(sComment, QString("HEX \"%1\"").arg(sString), ", ");
         }
     }
 
@@ -1439,6 +1458,8 @@ QVariant XFormatWidget::_readVariant(XBinary *pBinary, qint64 nOffset, qint64 nS
     } else if (vtype & XFW_DEF::VAL_TYPE_DATA_ARRAY) {
         if (vtype & XFW_DEF::VAL_TYPE_ANSI) {
             varResult = pBinary->read_ansiString(nOffset, nSize);
+        } else if (vtype & XFW_DEF::VAL_TYPE_HEX) {
+            varResult = pBinary->read_array(nOffset, nSize);
         }
     }
 
@@ -1463,6 +1484,13 @@ QStandardItem *XFormatWidget::setItemToModel(QStandardItemModel *pModel, qint32 
         }
         pResult->setText(sString);
         pResult->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+    } else if (vtype & XFW_DEF::VAL_TYPE_DATA_ARRAY) {
+        if (vtype & XFW_DEF::VAL_TYPE_STRING) {
+            pResult->setText(var.toString());
+        } else if (vtype & XFW_DEF::VAL_TYPE_HEX) {
+            pResult->setText(var.toByteArray().toHex().toUpper());
+        }
+        pResult->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
     } else if (vtype & XFW_DEF::VAL_TYPE_COUNT) {
         pResult->setData(var.toULongLong(), Qt::DisplayRole);
         pResult->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
@@ -2660,13 +2688,16 @@ void XFormatWidget::tableView_doubleClicked(QTableView *pTableView, const QModel
     QModelIndex _index = pTableView->model()->index(index.row(), 0);
 
     XFW_DEF::TYPE _type = (XFW_DEF::TYPE)(pTableView->model()->data(_index, Qt::UserRole + XFW_DEF::TABLEDATA_TYPE).toInt());
-    qint64 nDataOffset = (pTableView->model()->data(_index, Qt::UserRole + XFW_DEF::TABLEDATA_HEADEROFFSET).toLongLong());
-    qint64 nDataSize = (pTableView->model()->data(_index, Qt::UserRole + XFW_DEF::TABLEDATA_HEADERSIZE).toLongLong());
-    qint64 nDataCount = (pTableView->model()->data(index, Qt::UserRole + XFW_DEF::TABLEDATA_COUNT).toLongLong());
 
-    QString sTypeString = _getInitString(_type, nDataOffset, nDataSize, nDataCount);
+    if (_type != XFW_DEF::TYPE_UNKNOWN) {
+        qint64 nDataOffset = (pTableView->model()->data(_index, Qt::UserRole + XFW_DEF::TABLEDATA_HEADEROFFSET).toLongLong());
+        qint64 nDataSize = (pTableView->model()->data(_index, Qt::UserRole + XFW_DEF::TABLEDATA_HEADERSIZE).toLongLong());
+        qint64 nDataCount = (pTableView->model()->data(index, Qt::UserRole + XFW_DEF::TABLEDATA_COUNT).toLongLong());
 
-    emit showCwWidget(sTypeString, true);
+        QString sTypeString = _getInitString(_type, nDataOffset, nDataSize, nDataCount);
+
+        emit showCwWidget(sTypeString, true);
+    }
 }
 
 void XFormatWidget::_followLocation(quint64 nLocation, qint32 nLocationType, qint64 nSize, qint32 nWidgetType)
