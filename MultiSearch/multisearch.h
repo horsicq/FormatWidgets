@@ -44,35 +44,6 @@ public:
         TYPE_STRINGS_XINFODB
     };
 
-    enum COLUMN_STRING {
-        COLUMN_STRING_NUMBER,
-        COLUMN_STRING_OFFSET,
-        COLUMN_STRING_ADDRESS,
-        COLUMN_STRING_REGION,
-        COLUMN_STRING_SIZE,
-        COLUMN_STRING_TYPE,
-        COLUMN_STRING_VALUE,
-        __COLUMN_STRING_SIZE
-    };
-
-    enum COLUMN_VALUE {
-        COLUMN_VALUE_NUMBER,
-        COLUMN_VALUE_OFFSET,
-        COLUMN_VALUE_ADDRESS,
-        COLUMN_VALUE_REGION,
-        COLUMN_VALUE_VALUE,
-        __COLUMN_VALUE_SIZE
-    };
-
-    enum USERROLE {
-        USERROLE_SIZE = 0,
-        USERROLE_OFFSET,
-        USERROLE_ADDRESS,
-        USERROLE_STRING,
-        USERROLE_INFO,
-        USERROLE_TYPE
-    };
-
     struct SIGNATURE_RECORD {
         qint32 nNumber;
         QString sName;
@@ -116,7 +87,6 @@ signals:
 
 public slots:
     void processSearch();
-    void processModel();
 
 private:
     QIODevice *g_pDevice;

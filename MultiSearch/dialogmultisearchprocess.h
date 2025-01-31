@@ -32,13 +32,10 @@ public:
     ~DialogMultiSearchProcess();
 
     void processSearch(QIODevice *pDevice, QVector<XBinary::MS_RECORD> *pListRecords, MultiSearch::OPTIONS options, MultiSearch::TYPE type);
-    void processModel(QVector<XBinary::MS_RECORD> *pListRecords, QStandardItemModel **ppModel, MultiSearch::OPTIONS options, MultiSearch::TYPE type);
 
 private:
     MultiSearch *g_pHandleSearch;
-    MultiSearch *g_pHandleModel;
     QThread *g_pThreadSearch;
-    QThread *g_pThreadModel;
     MultiSearch::TYPE g_type;
 };
 

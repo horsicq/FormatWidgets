@@ -25,20 +25,13 @@ DialogMultiSearchProcess::DialogMultiSearchProcess(QWidget *pParent) : XDialogPr
     g_type = MultiSearch::TYPE_STRINGS;
 
     g_pHandleSearch = new MultiSearch;
-    g_pHandleModel = new MultiSearch;
     g_pThreadSearch = new QThread;
-    g_pThreadModel = new QThread;
 
     g_pHandleSearch->moveToThread(g_pThreadSearch);
-    g_pHandleModel->moveToThread(g_pThreadModel);
 
     connect(g_pThreadSearch, SIGNAL(started()), g_pHandleSearch, SLOT(processSearch()));
     connect(g_pHandleSearch, SIGNAL(completed(qint64)), this, SLOT(onCompleted(qint64)));
     connect(g_pHandleSearch, SIGNAL(errorMessage(QString)), this, SLOT(errorMessageSlot(QString)));
-
-    connect(g_pThreadModel, SIGNAL(started()), g_pHandleModel, SLOT(processModel()));
-    connect(g_pHandleModel, SIGNAL(completed(qint64)), this, SLOT(onCompleted(qint64)));
-    connect(g_pHandleModel, SIGNAL(errorMessage(QString)), this, SLOT(errorMessageSlot(QString)));
 }
 
 DialogMultiSearchProcess::~DialogMultiSearchProcess()
@@ -49,13 +42,8 @@ DialogMultiSearchProcess::~DialogMultiSearchProcess()
     g_pThreadSearch->quit();
     g_pThreadSearch->wait();
 
-    g_pThreadModel->quit();
-    g_pThreadModel->wait();
-
     delete g_pThreadSearch;
-    delete g_pThreadModel;
     delete g_pHandleSearch;
-    delete g_pHandleModel;
 }
 
 void DialogMultiSearchProcess::processSearch(QIODevice *pDevice, QVector<XBinary::MS_RECORD> *pListRecords, MultiSearch::OPTIONS options, MultiSearch::TYPE type)
@@ -72,12 +60,4 @@ void DialogMultiSearchProcess::processSearch(QIODevice *pDevice, QVector<XBinary
 
     g_pHandleSearch->setSearchData(pDevice, pListRecords, options, type, getPdStruct());
     g_pThreadSearch->start();
-}
-
-void DialogMultiSearchProcess::processModel(QVector<XBinary::MS_RECORD> *pListRecords, QStandardItemModel **ppModel, MultiSearch::OPTIONS options, MultiSearch::TYPE type)
-{
-    setWindowTitle(tr("Create view model"));
-
-    g_pHandleModel->setModelData(pListRecords, ppModel, options, type, getPdStruct());
-    g_pThreadModel->start();
 }

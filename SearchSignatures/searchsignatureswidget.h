@@ -33,6 +33,7 @@
 #include "dialogmultisearchprocess.h"
 #include "xformats.h"
 #include "xshortcutswidget.h"
+#include "xmodel_msrecord.h"
 
 namespace Ui {
 class SearchSignaturesWidget;

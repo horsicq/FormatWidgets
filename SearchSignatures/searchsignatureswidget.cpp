@@ -204,9 +204,9 @@ void SearchSignaturesWidget::_copySignature()
     if ((nRow != -1) && (g_pModel)) {
         QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(0);
 
-        QString sString = ui->tableViewResult->model()->data(index, Qt::UserRole + MultiSearch::USERROLE_STRING).toString();
+        // QString sString = ui->tableViewResult->model()->data(index, Qt::UserRole + XModel_MSRecord::USERROLE_STRING).toString();
 
-        QApplication::clipboard()->setText(sString);
+        // QApplication::clipboard()->setText(sString);
     }
 }
 
@@ -243,8 +243,8 @@ void SearchSignaturesWidget::_hex()
     if ((nRow != -1) && (g_pModel)) {
         QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(0);
 
-        qint64 nOffset = ui->tableViewResult->model()->data(index, Qt::UserRole + MultiSearch::USERROLE_OFFSET).toLongLong();
-        qint64 nSize = ui->tableViewResult->model()->data(index, Qt::UserRole + MultiSearch::USERROLE_SIZE).toLongLong();
+        qint64 nOffset = ui->tableViewResult->model()->data(index, Qt::UserRole + XModel_MSRecord::USERROLE_OFFSET).toLongLong();
+        qint64 nSize = ui->tableViewResult->model()->data(index, Qt::UserRole + XModel_MSRecord::USERROLE_SIZE).toLongLong();
 
         XIODevice *pSubDevice = dynamic_cast<XIODevice *>(g_pDevice);
 
@@ -279,10 +279,10 @@ void SearchSignaturesWidget::search()
         dsp.processSearch(g_pDevice, &listRecords, options, MultiSearch::TYPE_SIGNATURES);
         dsp.showDialogDelay();
 
-        DialogMultiSearchProcess dmp(pParent);
-        dmp.setGlobal(getShortcuts(), getGlobalOptions());
-        dmp.processModel(&listRecords, &g_pModel, options, MultiSearch::TYPE_SIGNATURES);
-        dmp.showDialogDelay();
+        // DialogMultiSearchProcess dmp(pParent);
+        // dmp.setGlobal(getShortcuts(), getGlobalOptions());
+        // dmp.processModel(&listRecords, &g_pModel, options, MultiSearch::TYPE_SIGNATURES);
+        // dmp.showDialogDelay();
 
         ui->tableViewResult->setCustomModel(g_pModel, true);
 

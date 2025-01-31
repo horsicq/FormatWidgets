@@ -131,7 +131,8 @@ bool SearchStringsWidget::getInitStatus()
 void SearchStringsWidget::adjustView()
 {
     getGlobalOptions()->adjustWidget(this, XOptions::ID_VIEW_FONT_CONTROLS);
-    getGlobalOptions()->adjustWidget(ui->tableViewResult, XOptions::ID_VIEW_FONT_TABLEVIEWS);
+    getGlobalOptions()->adjustTableView(ui->tableViewResult, XOptions::ID_VIEW_FONT_TABLEVIEWS);
+    ui->tableViewResult->adjust();
 }
 
 void SearchStringsWidget::reloadData(bool bSaveSelection)
@@ -197,10 +198,10 @@ void SearchStringsWidget::_hex()
     qint32 nRow = ui->tableViewResult->currentIndex().row();
 
     if ((nRow != -1) && (g_listRecords.count())) {
-        QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(MultiSearch::COLUMN_STRING_NUMBER);
+        QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(XModel_MSRecord::COLUMN_NUMBER);
 
-        qint64 nOffset = ui->tableViewResult->model()->data(index, Qt::UserRole + MultiSearch::USERROLE_OFFSET).toLongLong();
-        qint64 nSize = ui->tableViewResult->model()->data(index, Qt::UserRole + MultiSearch::USERROLE_SIZE).toLongLong();
+        qint64 nOffset = ui->tableViewResult->model()->data(index, Qt::UserRole + XModel_MSRecord::USERROLE_OFFSET).toLongLong();
+        qint64 nSize = ui->tableViewResult->model()->data(index, Qt::UserRole + XModel_MSRecord::USERROLE_SIZE).toLongLong();
 
         XIODevice *pSubDevice = dynamic_cast<XIODevice *>(g_pDevice);
 
@@ -217,7 +218,7 @@ void SearchStringsWidget::_demangle()
     qint32 nRow = ui->tableViewResult->currentIndex().row();
 
     if ((nRow != -1) && (g_listRecords.count())) {
-        QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(MultiSearch::COLUMN_STRING_VALUE);
+        QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(XModel_MSRecord::COLUMN_VALUE);
 
         QString sString = ui->tableViewResult->model()->data(index).toString();
 
@@ -228,17 +229,17 @@ void SearchStringsWidget::_demangle()
 void SearchStringsWidget::_editString()
 {
     if (!isReadonly()) {
-        QModelIndex indexNumber = ui->tableViewResult->selectionModel()->selectedIndexes().at(MultiSearch::COLUMN_STRING_NUMBER);
+        QModelIndex indexNumber = ui->tableViewResult->selectionModel()->selectedIndexes().at(XModel_MSRecord::COLUMN_NUMBER);
         // QModelIndex indexOffset = ui->tableViewResult->selectionModel()->selectedIndexes().at(MultiSearch::COLUMN_STRING_OFFSET);
-        QModelIndex indexSize = ui->tableViewResult->selectionModel()->selectedIndexes().at(MultiSearch::COLUMN_STRING_SIZE);
-        QModelIndex indexType = ui->tableViewResult->selectionModel()->selectedIndexes().at(MultiSearch::COLUMN_STRING_TYPE);
-        QModelIndex indexValue = ui->tableViewResult->selectionModel()->selectedIndexes().at(MultiSearch::COLUMN_STRING_VALUE);
+        QModelIndex indexSize = ui->tableViewResult->selectionModel()->selectedIndexes().at(XModel_MSRecord::COLUMN_SIZE);
+        QModelIndex indexType = ui->tableViewResult->selectionModel()->selectedIndexes().at(XModel_MSRecord::COLUMN_TYPE);
+        QModelIndex indexValue = ui->tableViewResult->selectionModel()->selectedIndexes().at(XModel_MSRecord::COLUMN_VALUE);
 
         DialogEditString::DATA_STRUCT dataStruct = {};
 
-        dataStruct.nOffset = ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + MultiSearch::USERROLE_OFFSET).toLongLong();
-        dataStruct.nSize = ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + MultiSearch::USERROLE_SIZE).toLongLong();
-        dataStruct.recordType = (XBinary::MS_RECORD_TYPE)(ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + MultiSearch::USERROLE_TYPE).toLongLong());
+        dataStruct.nOffset = ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + XModel_MSRecord::USERROLE_OFFSET).toLongLong();
+        dataStruct.nSize = ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + XModel_MSRecord::USERROLE_SIZE).toLongLong();
+        dataStruct.recordType = (XBinary::MS_RECORD_TYPE)(ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + XModel_MSRecord::USERROLE_TYPE).toLongLong());
         dataStruct.bIsNullTerminated = false;
 
         dataStruct.sString = ui->tableViewResult->model()->data(indexValue).toString();
@@ -252,8 +253,8 @@ void SearchStringsWidget::_editString()
             if (XBinary::saveBackup(XBinary::getBackupDevice(getDevice()))) {
                 if (XBinary::write_array(g_pDevice, dataStruct.nOffset,
                                          XBinary::getStringData(dataStruct.recordType, dataStruct.sString, dataStruct.bIsNullTerminated))) {
-                    ui->tableViewResult->model()->setData(indexNumber, dataStruct.nSize, Qt::UserRole + MultiSearch::USERROLE_SIZE);
-                    ui->tableViewResult->model()->setData(indexNumber, dataStruct.recordType, Qt::UserRole + MultiSearch::USERROLE_TYPE);
+                    ui->tableViewResult->model()->setData(indexNumber, dataStruct.nSize, Qt::UserRole + XModel_MSRecord::USERROLE_SIZE);
+                    ui->tableViewResult->model()->setData(indexNumber, dataStruct.recordType, Qt::UserRole + XModel_MSRecord::USERROLE_TYPE);
 
                     ui->tableViewResult->model()->setData(indexSize, XBinary::valueToHexEx(dataStruct.sString.size()), Qt::DisplayRole);
                     ui->tableViewResult->model()->setData(indexType, XBinary::msRecordTypeIdToString(dataStruct.recordType), Qt::DisplayRole);
@@ -309,6 +310,8 @@ void SearchStringsWidget::search()
 
             QWidget *pParent = XOptions::getMainWidget(this);
 
+            ui->tableViewResult->clear();
+
             DialogMultiSearchProcess dsp(pParent);
             dsp.setGlobal(getShortcuts(), getGlobalOptions());
             dsp.processSearch(g_pDevice, &g_listRecords, options, MultiSearch::TYPE_STRINGS);
@@ -319,16 +322,9 @@ void SearchStringsWidget::search()
             // dmp.processModel(&listRecords, &g_pModel, options, MultiSearch::TYPE_STRINGS);
             // dmp.showDialogDelay();
 
-            XModel_MSRecord *g_pModel = new XModel_MSRecord(&g_listRecords, this);
+            XModel_MSRecord *pModel = new XModel_MSRecord(g_pDevice, options.memoryMap, &g_listRecords, XBinary::MS_RECORD_TYPE_STRING, this);
 
-            ui->tableViewResult->setCustomModel(g_pModel, true);
-
-            ui->tableViewResult->setColumnWidth(MultiSearch::COLUMN_STRING_NUMBER, 80);    // TODO
-            ui->tableViewResult->setColumnWidth(MultiSearch::COLUMN_STRING_OFFSET, 120);   // TODO
-            ui->tableViewResult->setColumnWidth(MultiSearch::COLUMN_STRING_ADDRESS, 120);  // TODO
-            ui->tableViewResult->setColumnWidth(MultiSearch::COLUMN_STRING_REGION, 120);   // TODO
-            ui->tableViewResult->setColumnWidth(MultiSearch::COLUMN_STRING_SIZE, 80);      // TODO
-            ui->tableViewResult->setColumnWidth(MultiSearch::COLUMN_STRING_TYPE, 30);      // TODO
+            ui->tableViewResult->setCustomModel(pModel, true);
 
             connect(ui->tableViewResult->selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)), this,
                     SLOT(on_tableViewSelection(QItemSelection, QItemSelection)));
@@ -409,10 +405,10 @@ void SearchStringsWidget::viewSelection()
         QModelIndexList listIndexes = pSelectionModel->selectedIndexes();
 
         if (listIndexes.count()) {
-            QModelIndex indexNumber = listIndexes.at(MultiSearch::COLUMN_STRING_NUMBER);
-            XADDR nVirtualAddress = ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + MultiSearch::USERROLE_ADDRESS).toULongLong();
-            qint64 nOffset = ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + MultiSearch::USERROLE_OFFSET).toULongLong();
-            qint64 nSize = ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + MultiSearch::USERROLE_SIZE).toLongLong();
+            QModelIndex indexNumber = listIndexes.at(XModel_MSRecord::COLUMN_NUMBER);
+            XADDR nVirtualAddress = ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + XModel_MSRecord::USERROLE_ADDRESS).toULongLong();
+            qint64 nOffset = ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + XModel_MSRecord::USERROLE_OFFSET).toULongLong();
+            qint64 nSize = ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + XModel_MSRecord::USERROLE_SIZE).toLongLong();
 
             if (nOffset != -1) {
                 emit currentLocationChanged(nOffset, XBinary::LT_OFFSET, nSize);
