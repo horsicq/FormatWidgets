@@ -196,7 +196,7 @@ void SearchStringsWidget::_hex()
 {
     qint32 nRow = ui->tableViewResult->currentIndex().row();
 
-    if ((nRow != -1) && (g_pModel)) {
+    if ((nRow != -1) && (g_listRecords.count())) {
         QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(MultiSearch::COLUMN_STRING_NUMBER);
 
         qint64 nOffset = ui->tableViewResult->model()->data(index, Qt::UserRole + MultiSearch::USERROLE_OFFSET).toLongLong();
@@ -216,7 +216,7 @@ void SearchStringsWidget::_demangle()
 {
     qint32 nRow = ui->tableViewResult->currentIndex().row();
 
-    if ((nRow != -1) && (g_pModel)) {
+    if ((nRow != -1) && (g_listRecords.count())) {
         QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(MultiSearch::COLUMN_STRING_VALUE);
 
         QString sString = ui->tableViewResult->model()->data(index).toString();
@@ -307,19 +307,19 @@ void SearchStringsWidget::search()
                 options.memoryMap = XFormats::getMemoryMap(fileType, mapMode, g_pDevice);
             }
 
-            QList<XBinary::MS_RECORD> listRecords;
-
             QWidget *pParent = XOptions::getMainWidget(this);
 
             DialogMultiSearchProcess dsp(pParent);
             dsp.setGlobal(getShortcuts(), getGlobalOptions());
-            dsp.processSearch(g_pDevice, &listRecords, options, MultiSearch::TYPE_STRINGS);
+            dsp.processSearch(g_pDevice, &g_listRecords, options, MultiSearch::TYPE_STRINGS);
             dsp.showDialogDelay();
 
-            DialogMultiSearchProcess dmp(pParent);
-            dmp.setGlobal(getShortcuts(), getGlobalOptions());
-            dmp.processModel(&listRecords, &g_pModel, options, MultiSearch::TYPE_STRINGS);
-            dmp.showDialogDelay();
+            // DialogMultiSearchProcess dmp(pParent);
+            // dmp.setGlobal(getShortcuts(), getGlobalOptions());
+            // dmp.processModel(&listRecords, &g_pModel, options, MultiSearch::TYPE_STRINGS);
+            // dmp.showDialogDelay();
+
+            XModel_MSRecord *g_pModel = new XModel_MSRecord(&g_listRecords, this);
 
             ui->tableViewResult->setCustomModel(g_pModel, true);
 

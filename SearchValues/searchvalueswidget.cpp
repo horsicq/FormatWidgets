@@ -148,7 +148,7 @@ void SearchValuesWidget::search()
         options.valueType = g_valueType;
         options.memoryMap = XFormats::getMemoryMap(fileType, mapMode, g_pDevice);
 
-        QList<XBinary::MS_RECORD> listRecords;
+        QVector<XBinary::MS_RECORD> listRecords;
 
         QWidget *pParent = XOptions::getMainWidget(this);
 

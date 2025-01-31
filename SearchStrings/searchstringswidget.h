@@ -32,6 +32,7 @@
 #include "dialogeditstring.h"
 #include "dialogmultisearchprocess.h"
 #include "xshortcutswidget.h"
+#include "xmodel_msrecord.h"
 
 namespace Ui {
 class SearchStringsWidget;
@@ -103,7 +104,7 @@ private:
     Ui::SearchStringsWidget *ui;
     QIODevice *g_pDevice;
     SearchStringsWidget::OPTIONS g_options;
-    QStandardItemModel *g_pModel;
+    QVector<XBinary::MS_RECORD> g_listRecords;
     bool g_bInit;
     QShortcut *g_shortCuts[__SC_SIZE];
 };

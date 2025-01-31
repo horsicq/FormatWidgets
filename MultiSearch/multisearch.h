@@ -97,14 +97,14 @@ public:
         bool bMenu_Hex;  // TODO remove
     };
 
-    const qint32 N_MAX = 100000;
+    const qint32 N_MAX = 0xFFFFFFF;
     const qint32 N_MAXNUMBEROFTHREADS = 8;
 
     explicit MultiSearch(QObject *pParent = nullptr);
     ~MultiSearch();
 
-    void setSearchData(QIODevice *pDevice, QList<XBinary::MS_RECORD> *pListRecords, OPTIONS options, TYPE type, XBinary::PDSTRUCT *pPdStruct);
-    void setModelData(QList<XBinary::MS_RECORD> *pListRecords, QStandardItemModel **ppModel, OPTIONS options, TYPE type, XBinary::PDSTRUCT *pPdStruct);
+    void setSearchData(QIODevice *pDevice, QVector<XBinary::MS_RECORD> *pListRecords, OPTIONS options, TYPE type, XBinary::PDSTRUCT *pPdStruct);
+    void setModelData(QVector<XBinary::MS_RECORD> *pListRecords, QStandardItemModel **ppModel, OPTIONS options, TYPE type, XBinary::PDSTRUCT *pPdStruct);
 
     static QList<SIGNATURE_RECORD> loadSignaturesFromFile(const QString &sFileName);
     static SIGNATURE_RECORD createSignature(const QString &sName, const QString &sSignature);
@@ -120,7 +120,7 @@ public slots:
 
 private:
     QIODevice *g_pDevice;
-    QList<XBinary::MS_RECORD> *g_pListRecords;
+    QVector<XBinary::MS_RECORD> *g_pListRecords;
     OPTIONS g_options;
     TYPE g_type;
     QStandardItemModel **g_ppModel;

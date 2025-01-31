@@ -270,7 +270,7 @@ void SearchSignaturesWidget::search()
         options.endian = (XBinary::ENDIAN)(ui->comboBoxEndianness->currentData().toUInt());
         options.pListSignatureRecords = &g_listSignatureRecords;
 
-        QList<XBinary::MS_RECORD> listRecords;
+        QVector<XBinary::MS_RECORD> listRecords;
 
         QWidget *pParent = XOptions::getMainWidget(this);
 

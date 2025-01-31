@@ -34,7 +34,7 @@ MultiSearch::~MultiSearch()
     delete g_pSemaphore;
 }
 
-void MultiSearch::setSearchData(QIODevice *pDevice, QList<XBinary::MS_RECORD> *pListRecords, OPTIONS options, TYPE type, XBinary::PDSTRUCT *pPdStruct)
+void MultiSearch::setSearchData(QIODevice *pDevice, QVector<XBinary::MS_RECORD> *pListRecords, OPTIONS options, TYPE type, XBinary::PDSTRUCT *pPdStruct)
 {
     this->g_pDevice = pDevice;
     this->g_pListRecords = pListRecords;
@@ -44,7 +44,7 @@ void MultiSearch::setSearchData(QIODevice *pDevice, QList<XBinary::MS_RECORD> *p
     g_pPdStruct = pPdStruct;
 }
 
-void MultiSearch::setModelData(QList<XBinary::MS_RECORD> *pListRecords, QStandardItemModel **ppModel, OPTIONS options, TYPE type, XBinary::PDSTRUCT *pPdStruct)
+void MultiSearch::setModelData(QVector<XBinary::MS_RECORD> *pListRecords, QStandardItemModel **ppModel, OPTIONS options, TYPE type, XBinary::PDSTRUCT *pPdStruct)
 {
     this->g_pListRecords = pListRecords;
     this->g_ppModel = ppModel;
@@ -118,7 +118,7 @@ void MultiSearch::processSignature(MultiSearch::SIGNATURE_RECORD signatureRecord
     binary.setReadWriteMutex(&g_mutex);
     binary.setDevice(g_pDevice);
 
-    QList<XBinary::MS_RECORD> listResult =
+    QVector<XBinary::MS_RECORD> listResult =
         binary.multiSearch_signature(&(g_options.memoryMap), 0, binary.getSize(), N_MAX, signatureRecord.sSignature, signatureRecord.sName, g_pPdStruct);
 
     g_pListRecords->append(listResult);
@@ -140,6 +140,18 @@ void MultiSearch::processSearch()
 
     g_nFreeIndex = XBinary::getFreeIndex(g_pPdStruct);
     XBinary::setPdStructInit(g_pPdStruct, g_nFreeIndex, 0);
+#ifdef QT_DEBUG
+        // get elapsed time
+        QElapsedTimer timer;
+        timer.start();
+        qDebug("g_pListRecords->clear() START");
+        // QList 31758 ms
+#endif
+        g_pListRecords->clear();
+#ifdef QT_DEBUG
+        qDebug("g_pListRecords->clear() Elapsed time: %lld ms", timer.elapsed());
+#endif
+
 
     if ((g_type == TYPE_STRINGS) || (g_type == TYPE_STRINGS_XINFODB)) {
         XBinary binary(g_pDevice);
@@ -182,7 +194,7 @@ void MultiSearch::processSearch()
 
             bool bSuccess = false;
 
-            if ((signatureRecord.endian == g_options.endian)) {
+            if (signatureRecord.endian == g_options.endian) {
                 bSuccess = true;
             } else if (signatureRecord.endian == XBinary::ENDIAN_UNKNOWN) {
                 bSuccess = true;
