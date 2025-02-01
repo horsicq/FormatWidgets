@@ -195,7 +195,7 @@ void XProcessData::process()
 
             XBinary::setPdStructCurrent(g_pPdStruct, g_nFreeIndex, i);
         }
-    } else if ((g_pCwOptions->_type == XFW_DEF::TYPE_MACH_nlist) || (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_nlist_64)){
+    } else if ((g_pCwOptions->_type == XFW_DEF::TYPE_MACH_nlist) || (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_nlist_64)) {
         XMACH mach(g_pCwOptions->pDevice, g_pCwOptions->bIsImage, g_pCwOptions->nImageBase);
 
         XBinary::setPdStructTotal(g_pPdStruct, g_nFreeIndex, nNumberOfRows);
@@ -226,7 +226,8 @@ void XProcessData::process()
 
             QString _sSymbolName = mach._read_ansiString_safe(pBuffer, nBufferSize, nValue);
 
-            XFormatWidget::setItemToModel((*g_ppModel), i, nNumberOfColumns - 1, _sSymbolName, g_pListHeaderRecords->at(nNumberOfColumns - 1).nSize, g_pListHeaderRecords->at(nNumberOfColumns - 1).vtype);
+            XFormatWidget::setItemToModel((*g_ppModel), i, nNumberOfColumns - 1, _sSymbolName, g_pListHeaderRecords->at(nNumberOfColumns - 1).nSize,
+                                          g_pListHeaderRecords->at(nNumberOfColumns - 1).vtype);
 
             _nOffset += nHeaderSize;
             XBinary::setPdStructCurrent(g_pPdStruct, g_nFreeIndex, i);
