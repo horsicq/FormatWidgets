@@ -124,6 +124,7 @@ XShortcutsWidget *XMainWidgetAdvanced::createWidget(const XFW_DEF::CWOPTIONS &cw
         SearchStringsWidget *_pWidget = new SearchStringsWidget(cwOptions.pParent);
         SearchStringsWidget::OPTIONS stringsOptions = {};
         stringsOptions.bMenu_Hex = true;
+        stringsOptions.bMenu_Disasm = true;
         stringsOptions.bMenu_Demangle = true;
         stringsOptions.bAnsi = true;
         stringsOptions.bUnicode = true;
@@ -137,6 +138,7 @@ XShortcutsWidget *XMainWidgetAdvanced::createWidget(const XFW_DEF::CWOPTIONS &cw
         SearchSignaturesWidget *_pWidget = new SearchSignaturesWidget(cwOptions.pParent);
         SearchSignaturesWidget::OPTIONS signaturesOptions = {};
         signaturesOptions.bMenu_Hex = true;
+        signaturesOptions.bMenu_Disasm = true;
         _pWidget->setData(cwOptions.pDevice, cwOptions.fileType, signaturesOptions, false);
         pResult = _pWidget;
     } else if (cwOptions._type == XFW_DEF::TYPE_MEMORYMAP) {

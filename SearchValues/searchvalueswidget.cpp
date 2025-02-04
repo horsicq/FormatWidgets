@@ -28,6 +28,9 @@ SearchValuesWidget::SearchValuesWidget(QWidget *pParent) : XShortcutsWidget(pPar
     g_pDevice = nullptr;
     g_options = {};
 
+    addShortcut(X_ID_TABLE_FOLLOWIN_HEX, this, SLOT(_hex()));
+    addShortcut(X_ID_TABLE_FOLLOWIN_DISASM, this, SLOT(_disasm()));
+
     XOptions::adjustToolButton(ui->toolButtonSearch, XOptions::ICONTYPE_SEARCH);
     XOptions::adjustToolButton(ui->toolButtonSave, XOptions::ICONTYPE_SAVE);
     XOptions::adjustToolButton(ui->toolButtonSearchSignature, XOptions::ICONTYPE_SIGNATURE);
@@ -46,8 +49,6 @@ SearchValuesWidget::SearchValuesWidget(QWidget *pParent) : XShortcutsWidget(pPar
     g_varValue = 0;
     g_valueType = XBinary::VT_UNKNOWN;
     g_endian = XBinary::ENDIAN_LITTLE;
-
-    memset(g_shortCuts, 0, sizeof g_shortCuts);
 
     // ui->tableViewResult->installEventFilter(this);
 }
@@ -169,20 +170,6 @@ void SearchValuesWidget::search()
     }
 }
 
-void SearchValuesWidget::registerShortcuts(bool bState)
-{
-    if (bState) {
-        // if (!shortCuts[SC_COPYSTRING]) shortCuts[SC_COPYSTRING] = new QShortcut(getShortcuts()->getShortcut(X_ID_STRINGS_COPY_STRING), this, SLOT(_copyString()));
-    } else {
-        for (qint32 i = 0; i < __SC_SIZE; i++) {
-            if (g_shortCuts[i]) {
-                delete g_shortCuts[i];
-                g_shortCuts[i] = nullptr;
-            }
-        }
-    }
-}
-
 void SearchValuesWidget::on_toolButtonSearchString_clicked()
 {
     _search(DialogSearch::SEARCHMODE_STRING);
@@ -223,28 +210,32 @@ void SearchValuesWidget::on_toolButtonSearch_clicked()
 
 void SearchValuesWidget::_hex()
 {
-    qint32 nRow = ui->tableViewResult->currentIndex().row();
+    if (g_options.bMenu_Hex) {
+        qint32 nRow = ui->tableViewResult->currentIndex().row();
 
-    if ((nRow != -1) && (g_listRecords.count())) {
-        QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(XModel_MSRecord::COLUMN_NUMBER);
+        if ((nRow != -1) && (g_listRecords.count())) {
+            QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(XModel_MSRecord::COLUMN_NUMBER);
 
-        qint64 nOffset = ui->tableViewResult->model()->data(index, Qt::UserRole + XModel_MSRecord::USERROLE_OFFSET).toLongLong();
-        qint64 nSize = ui->tableViewResult->model()->data(index, Qt::UserRole + XModel_MSRecord::USERROLE_SIZE).toLongLong();
+            qint64 nOffset = ui->tableViewResult->model()->data(index, Qt::UserRole + XModel_MSRecord::USERROLE_OFFSET).toLongLong();
+            qint64 nSize = ui->tableViewResult->model()->data(index, Qt::UserRole + XModel_MSRecord::USERROLE_SIZE).toLongLong();
 
-        emit followLocation(nOffset, XBinary::LT_OFFSET, nSize, XOptions::WIDGETTYPE_HEX);
+            emit followLocation(nOffset, XBinary::LT_OFFSET, nSize, XOptions::WIDGETTYPE_HEX);
+        }
     }
 }
 
 void SearchValuesWidget::_disasm()
 {
-    qint32 nRow = ui->tableViewResult->currentIndex().row();
+    if (g_options.bMenu_Disasm) {
+        qint32 nRow = ui->tableViewResult->currentIndex().row();
 
-    if ((nRow != -1) && (g_listRecords.count())) {
-        QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(XModel_MSRecord::COLUMN_NUMBER);
+        if ((nRow != -1) && (g_listRecords.count())) {
+            QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(XModel_MSRecord::COLUMN_NUMBER);
 
-        qint64 nOffset = ui->tableViewResult->model()->data(index, Qt::UserRole + XModel_MSRecord::USERROLE_OFFSET).toLongLong();
+            qint64 nOffset = ui->tableViewResult->model()->data(index, Qt::UserRole + XModel_MSRecord::USERROLE_OFFSET).toLongLong();
 
-        emit followLocation(nOffset, XBinary::LT_OFFSET, 0, XOptions::WIDGETTYPE_DISASM);
+            emit followLocation(nOffset, XBinary::LT_OFFSET, 0, XOptions::WIDGETTYPE_DISASM);
+        }
     }
 }
 

@@ -344,9 +344,11 @@ void XProcessData::process()
 
         if (g_pCwOptions->_type == XFW_DEF::TYPE_7ZIP_PROPERTIES) {
             disasmCore.setMode(XBinary::DM_CUSTOM_7ZIP_PROPERTIES);
-        } else if ((g_pCwOptions->_type == XFW_DEF::TYPE_MACH_bind) || (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_weak) ||
+        } else if ((g_pCwOptions->_type == XFW_DEF::TYPE_MACH_bind) ||
                    (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_lazy_bind)) {
             disasmCore.setMode(XBinary::DM_CUSTOM_MACH_BIND);
+        } else if (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_weak) {
+            disasmCore.setMode(XBinary::DM_CUSTOM_MACH_WEAK);
         } else if (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_rebase) {
             disasmCore.setMode(XBinary::DM_CUSTOM_MACH_REBASE);
         } else if (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_trie_export) {

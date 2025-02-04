@@ -41,13 +41,6 @@ class SearchStringsWidget;
 class SearchStringsWidget : public XShortcutsWidget {
     Q_OBJECT
 
-    enum SC {
-        SC_HEX = 0,
-        SC_DEMANGLE,
-        SC_EDITSTRING,
-        __SC_SIZE
-    };
-
 public:
     struct OPTIONS {
         qint64 nBaseAddress;
@@ -60,6 +53,7 @@ public:
         bool bLinks;
         QString sMask;
         bool bMenu_Hex;
+        bool bMenu_Disasm;
         bool bMenu_Demangle;
         QString sTitle;  // For dialog
     };
@@ -80,6 +74,7 @@ private slots:
     void on_toolButtonSearch_clicked();
     void on_tableViewResult_customContextMenuRequested(const QPoint &pos);
     void _hex();
+    void _disasm();
     void _demangle();
     void _editString();
     void search();
@@ -94,9 +89,6 @@ private slots:
     void on_lineEditMask_textChanged(const QString &sText);
     void on_checkBoxRegExp_stateChanged(int nArg);
 
-protected:
-    virtual void registerShortcuts(bool bState);
-
 signals:
     void showDemangle(const QString &sString);
 
@@ -106,7 +98,6 @@ private:
     SearchStringsWidget::OPTIONS g_options;
     QVector<XBinary::MS_RECORD> g_listRecords;
     bool g_bInit;
-    QShortcut *g_shortCuts[__SC_SIZE];
 };
 
 #endif  // SEARCHSTRINGSWIDGET_H

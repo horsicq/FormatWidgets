@@ -42,18 +42,10 @@ class SearchSignaturesWidget;
 class SearchSignaturesWidget : public XShortcutsWidget {
     Q_OBJECT
 
-    enum SC {
-        SC_COPYNAME = 0,
-        SC_COPYSIGNATURE,
-        SC_COPYADDRESS,
-        SC_COPYOFFSET,
-        SC_HEX,
-        __SC_SIZE
-    };
-
 public:
     struct OPTIONS {
         bool bMenu_Hex;
+        bool bMenu_Disasm;
         QString sUserSignature;  // It is not global
     };
 
@@ -74,20 +66,14 @@ private slots:
     void on_toolButtonSave_clicked();
     void on_toolButtonSearch_clicked();
     void on_tableViewResult_customContextMenuRequested(const QPoint &pos);
-    void _copyAddress();
-    void _copyOffset();
-    void _copyName();
-    void _copySignature();
     void _hex();
+    void _disasm();
     void search();
     void loadSignatures(const QString &sFileName);
     void on_comboBoxFile_currentIndexChanged(int nIndex);
     void on_tableViewSelection(const QItemSelection &itemSelected, const QItemSelection &itemDeselected);
     void on_tableViewResult_clicked(const QModelIndex &index);
     void viewSelection();
-
-protected:
-    virtual void registerShortcuts(bool bState);
 
 private:
     Ui::SearchSignaturesWidget *ui;
@@ -97,7 +83,6 @@ private:
     // QFutureWatcher<void> g_watcher;
     QList<XBinary::SIGNATUREDB_RECORD> g_listSignatureRecords;
     OPTIONS g_options;
-    QShortcut *shortCuts[__SC_SIZE];
     QVector<XBinary::MS_RECORD> g_listRecords;
 };
 

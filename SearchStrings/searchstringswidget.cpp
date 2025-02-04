@@ -26,6 +26,11 @@ SearchStringsWidget::SearchStringsWidget(QWidget *pParent) : XShortcutsWidget(pP
 {
     ui->setupUi(this);
 
+    addShortcut(X_ID_TABLE_FOLLOWIN_HEX, this, SLOT(_hex()));
+    addShortcut(X_ID_TABLE_FOLLOWIN_DISASM, this, SLOT(_disasm()));
+    addShortcut(X_ID_TABLE_DEMANGLE, this, SLOT(_demangle()));
+    addShortcut(X_ID_TABLE_EDIT_STRING, this, SLOT(_editString()));
+
     XOptions::adjustToolButton(ui->toolButtonSave, XOptions::ICONTYPE_SAVE);
     XOptions::adjustToolButton(ui->toolButtonSearch, XOptions::ICONTYPE_SEARCH);
 
@@ -61,7 +66,6 @@ SearchStringsWidget::SearchStringsWidget(QWidget *pParent) : XShortcutsWidget(pP
     ui->spinBoxMinLength->setMinimum(2);
     ui->spinBoxMinLength->setValue(5);
 
-    memset(g_shortCuts, 0, sizeof g_shortCuts);
 
     // #if (QT_VERSION_MAJOR < 6) || defined(QT_CORE5COMPAT_LIB)
     //     ui->comboBoxANSICodec->addItem("");
@@ -153,122 +157,133 @@ void SearchStringsWidget::on_toolButtonSearch_clicked()
 
 void SearchStringsWidget::on_tableViewResult_customContextMenuRequested(const QPoint &pos)
 {
-    QMenu contextMenu(this);  // TODO
+    QMenu contextMenu(this);
 
-    QMenu menuFollowIn(tr("Follow in"), this);
-    QMenu menuEdit(tr("Edit"), this);
-    QMenu menuCopy(this);
+    QList<XShortcuts::MENUITEM> listMenuItems;
 
-    getShortcuts()->adjustRowCopyMenu(&contextMenu, &menuCopy, ui->tableViewResult);
-
-    QAction actionHex(tr("Hex"), this);
-    QAction actionDemangle(tr("Demangle"), this);
+    getShortcuts()->_addMenuItem_CopyRow(&listMenuItems, ui->tableViewResult);
 
     if (g_options.bMenu_Hex) {
-        actionHex.setShortcut(getShortcuts()->getShortcut(X_ID_TABLE_FOLLOWIN_HEX));
-        connect(&actionHex, SIGNAL(triggered()), this, SLOT(_hex()));
+        getShortcuts()->_addMenuItem(&listMenuItems, X_ID_TABLE_FOLLOWIN_HEX, this, SLOT(_hex()), XShortcuts::GROUPID_FOLLOWIN);
+    }
 
-        menuFollowIn.addAction(&actionHex);
+    if (g_options.bMenu_Disasm) {
+        getShortcuts()->_addMenuItem(&listMenuItems, X_ID_TABLE_FOLLOWIN_DISASM, this, SLOT(_disasm()), XShortcuts::GROUPID_FOLLOWIN);
     }
 
     if (g_options.bMenu_Demangle) {
-        actionDemangle.setShortcut(getShortcuts()->getShortcut(X_ID_TABLE_DEMANGLE));
-        connect(&actionDemangle, SIGNAL(triggered()), this, SLOT(_demangle()));
-        contextMenu.addAction(&actionDemangle);
+        getShortcuts()->_addMenuItem(&listMenuItems, X_ID_TABLE_DEMANGLE, this, SLOT(_demangle()), XShortcuts::GROUPID_NONE);
     }
 
-    if (g_options.bMenu_Hex) {
-        contextMenu.addMenu(&menuFollowIn);
-    }
+    getShortcuts()->_addMenuItem(&listMenuItems, X_ID_TABLE_EDIT_STRING, this, SLOT(_editString()), XShortcuts::GROUPID_EDIT);
 
-    QAction actionEditString(tr("String"), this);
-    actionEditString.setShortcut(getShortcuts()->getShortcut(X_ID_TABLE_EDIT_STRING));
-    connect(&actionEditString, SIGNAL(triggered()), this, SLOT(_editString()));
-
-    menuEdit.addAction(&actionEditString);
-    menuEdit.setEnabled(!isReadonly());
-
-    contextMenu.addMenu(&menuEdit);
+    QList<QObject *> listObjects = getShortcuts()->adjustContextMenu(&contextMenu, &listMenuItems);
 
     contextMenu.exec(ui->tableViewResult->viewport()->mapToGlobal(pos));
+
+    XOptions::deleteQObjectList(&listObjects);
 }
 
 void SearchStringsWidget::_hex()
 {
-    qint32 nRow = ui->tableViewResult->currentIndex().row();
+    if (g_options.bMenu_Hex) {
+        qint32 nRow = ui->tableViewResult->currentIndex().row();
 
-    if ((nRow != -1) && (g_listRecords.count())) {
-        QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(XModel_MSRecord::COLUMN_NUMBER);
+        if ((nRow != -1) && (g_listRecords.count())) {
+            QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(XModel_MSRecord::COLUMN_NUMBER);
 
-        qint64 nOffset = ui->tableViewResult->model()->data(index, Qt::UserRole + XModel_MSRecord::USERROLE_OFFSET).toLongLong();
-        qint64 nSize = ui->tableViewResult->model()->data(index, Qt::UserRole + XModel_MSRecord::USERROLE_SIZE).toLongLong();
+            qint64 nOffset = ui->tableViewResult->model()->data(index, Qt::UserRole + XModel_MSRecord::USERROLE_OFFSET).toLongLong();
+            qint64 nSize = ui->tableViewResult->model()->data(index, Qt::UserRole + XModel_MSRecord::USERROLE_SIZE).toLongLong();
 
-        XIODevice *pSubDevice = dynamic_cast<XIODevice *>(g_pDevice);
+            XIODevice *pSubDevice = dynamic_cast<XIODevice *>(g_pDevice);
 
-        if (pSubDevice) {
-            nOffset += pSubDevice->getInitLocation();
+            if (pSubDevice) {
+                nOffset += pSubDevice->getInitLocation();
+            }
+
+            emit followLocation(nOffset, XBinary::LT_OFFSET, nSize, XOptions::WIDGETTYPE_HEX);
         }
+    }
+}
 
-        emit followLocation(nOffset, XBinary::LT_OFFSET, nSize, XOptions::WIDGETTYPE_HEX);
+void SearchStringsWidget::_disasm()
+{
+    if (g_options.bMenu_Disasm) {
+        qint32 nRow = ui->tableViewResult->currentIndex().row();
+
+        if ((nRow != -1) && (g_listRecords.count())) {
+            QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(XModel_MSRecord::COLUMN_NUMBER);
+
+            qint64 nOffset = ui->tableViewResult->model()->data(index, Qt::UserRole + XModel_MSRecord::USERROLE_OFFSET).toLongLong();
+
+            emit followLocation(nOffset, XBinary::LT_OFFSET, 0, XOptions::WIDGETTYPE_DISASM);
+        }
     }
 }
 
 void SearchStringsWidget::_demangle()
 {
-    qint32 nRow = ui->tableViewResult->currentIndex().row();
+    if (g_options.bMenu_Disasm) {
+        qint32 nRow = ui->tableViewResult->currentIndex().row();
 
-    if ((nRow != -1) && (g_listRecords.count())) {
-        QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(XModel_MSRecord::COLUMN_VALUE);
+        if ((nRow != -1) && (g_listRecords.count())) {
+            QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(XModel_MSRecord::COLUMN_VALUE);
 
-        QString sString = ui->tableViewResult->model()->data(index).toString();
+            QString sString = ui->tableViewResult->model()->data(index).toString();
 
-        emit showDemangle(sString);
+            emit showDemangle(sString);
+        }
     }
 }
 
 void SearchStringsWidget::_editString()
 {
     if (!isReadonly()) {
-        QModelIndex indexNumber = ui->tableViewResult->selectionModel()->selectedIndexes().at(XModel_MSRecord::COLUMN_NUMBER);
-        // QModelIndex indexOffset = ui->tableViewResult->selectionModel()->selectedIndexes().at(MultiSearch::COLUMN_STRING_OFFSET);
-        QModelIndex indexSize = ui->tableViewResult->selectionModel()->selectedIndexes().at(XModel_MSRecord::COLUMN_SIZE);
-        QModelIndex indexType = ui->tableViewResult->selectionModel()->selectedIndexes().at(XModel_MSRecord::COLUMN_TYPE);
-        QModelIndex indexValue = ui->tableViewResult->selectionModel()->selectedIndexes().at(XModel_MSRecord::COLUMN_VALUE);
+        qint32 nRow = ui->tableViewResult->currentIndex().row();
 
-        DialogEditString::DATA_STRUCT dataStruct = {};
+        if ((nRow != -1) && (g_listRecords.count())) {
+            QModelIndex indexNumber = ui->tableViewResult->selectionModel()->selectedIndexes().at(XModel_MSRecord::COLUMN_NUMBER);
+            // QModelIndex indexOffset = ui->tableViewResult->selectionModel()->selectedIndexes().at(MultiSearch::COLUMN_STRING_OFFSET);
+            QModelIndex indexSize = ui->tableViewResult->selectionModel()->selectedIndexes().at(XModel_MSRecord::COLUMN_SIZE);
+            QModelIndex indexType = ui->tableViewResult->selectionModel()->selectedIndexes().at(XModel_MSRecord::COLUMN_TYPE);
+            QModelIndex indexValue = ui->tableViewResult->selectionModel()->selectedIndexes().at(XModel_MSRecord::COLUMN_VALUE);
 
-        dataStruct.nOffset = ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + XModel_MSRecord::USERROLE_OFFSET).toLongLong();
-        dataStruct.nSize = ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + XModel_MSRecord::USERROLE_SIZE).toLongLong();
-        dataStruct.valueType = (XBinary::VT)(ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + XModel_MSRecord::USERROLE_TYPE).toLongLong());
-        dataStruct.bIsNullTerminated = false;
+            DialogEditString::DATA_STRUCT dataStruct = {};
 
-        dataStruct.sString = ui->tableViewResult->model()->data(indexValue).toString();
+            dataStruct.nOffset = ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + XModel_MSRecord::USERROLE_OFFSET).toLongLong();
+            dataStruct.nSize = ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + XModel_MSRecord::USERROLE_SIZE).toLongLong();
+            dataStruct.valueType = (XBinary::VT)(ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + XModel_MSRecord::USERROLE_TYPE).toLongLong());
+            dataStruct.bIsNullTerminated = false;
 
-        DialogEditString dialogEditString(this, g_pDevice, &dataStruct);
+            dataStruct.sString = ui->tableViewResult->model()->data(indexValue).toString();
 
-        if (dialogEditString.exec() == QDialog::Accepted)  // TODO use status
-        {
-            bool bSuccess = false;
+            DialogEditString dialogEditString(this, g_pDevice, &dataStruct);
+            dialogEditString.setGlobal(getShortcuts(), getGlobalOptions());
 
-            if (XBinary::saveBackup(XBinary::getBackupDevice(getDevice()))) {
-                if (XBinary::write_array(g_pDevice, dataStruct.nOffset,
-                                         XBinary::getStringData(dataStruct.valueType, dataStruct.sString, dataStruct.bIsNullTerminated))) {
-                    ui->tableViewResult->model()->setData(indexNumber, dataStruct.nSize, Qt::UserRole + XModel_MSRecord::USERROLE_SIZE);
-                    ui->tableViewResult->model()->setData(indexNumber, dataStruct.valueType, Qt::UserRole + XModel_MSRecord::USERROLE_TYPE);
+            if (dialogEditString.exec() == QDialog::Accepted)  // TODO use status
+            {
+                bool bSuccess = false;
 
-                    ui->tableViewResult->model()->setData(indexSize, XBinary::valueToHexEx(dataStruct.sString.size()), Qt::DisplayRole);
-                    ui->tableViewResult->model()->setData(indexType, XBinary::valueTypeToString(dataStruct.valueType), Qt::DisplayRole);
-                    ui->tableViewResult->model()->setData(indexValue, dataStruct.sString, Qt::DisplayRole);
+                if (XBinary::saveBackup(XBinary::getBackupDevice(getDevice()))) {
+                    if (XBinary::write_array(g_pDevice, dataStruct.nOffset,
+                                             XBinary::getStringData(dataStruct.valueType, dataStruct.sString, dataStruct.bIsNullTerminated))) {
+                        ui->tableViewResult->model()->setData(indexNumber, dataStruct.nSize, Qt::UserRole + XModel_MSRecord::USERROLE_SIZE);
+                        ui->tableViewResult->model()->setData(indexNumber, dataStruct.valueType, Qt::UserRole + XModel_MSRecord::USERROLE_TYPE);
 
-                    bSuccess = true;
+                        ui->tableViewResult->model()->setData(indexSize, XBinary::valueToHexEx(dataStruct.sString.size()), Qt::DisplayRole);
+                        ui->tableViewResult->model()->setData(indexType, XBinary::valueTypeToString(dataStruct.valueType), Qt::DisplayRole);
+                        ui->tableViewResult->model()->setData(indexValue, dataStruct.sString, Qt::DisplayRole);
+
+                        bSuccess = true;
+                    }
                 }
-            }
 
-            if (bSuccess) {
-                emit dataChanged(dataStruct.nOffset, dataStruct.nSize);
-            } else {
-                QMessageBox::critical(XOptions::getMainWidget(this), tr("Error"),
-                                      tr("Cannot save file") + QString(": %1").arg(XBinary::getBackupFileName(XBinary::getBackupDevice(getDevice()))));
+                if (bSuccess) {
+                    emit dataChanged(dataStruct.nOffset, dataStruct.nSize);
+                } else {
+                    QMessageBox::critical(XOptions::getMainWidget(this), tr("Error"),
+                                          tr("Cannot save file") + QString(": %1").arg(XBinary::getBackupFileName(XBinary::getBackupDevice(getDevice()))));
+                }
             }
         }
     }
@@ -331,22 +346,6 @@ void SearchStringsWidget::search()
         }
 
         g_bInit = true;
-    }
-}
-
-void SearchStringsWidget::registerShortcuts(bool bState)
-{
-    if (bState) {
-        if (!g_shortCuts[SC_HEX]) g_shortCuts[SC_HEX] = new QShortcut(getShortcuts()->getShortcut(X_ID_TABLE_FOLLOWIN_HEX), this, SLOT(_hex()));
-        if (!g_shortCuts[SC_DEMANGLE]) g_shortCuts[SC_DEMANGLE] = new QShortcut(getShortcuts()->getShortcut(X_ID_TABLE_DEMANGLE), this, SLOT(_demangle()));
-        if (!g_shortCuts[SC_EDITSTRING]) g_shortCuts[SC_EDITSTRING] = new QShortcut(getShortcuts()->getShortcut(X_ID_TABLE_EDIT_STRING), this, SLOT(_editString()));
-    } else {
-        for (qint32 i = 0; i < __SC_SIZE; i++) {
-            if (g_shortCuts[i]) {
-                delete g_shortCuts[i];
-                g_shortCuts[i] = nullptr;
-            }
-        }
     }
 }
 

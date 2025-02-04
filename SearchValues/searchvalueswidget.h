@@ -41,11 +41,6 @@ class SearchValuesWidget;
 class SearchValuesWidget : public XShortcutsWidget {
     Q_OBJECT
 
-    enum SC {
-        __SC_DUMMY = 0,
-        // TODO
-        __SC_SIZE
-    };
 
 public:
     struct OPTIONS {
@@ -83,8 +78,6 @@ private slots:
 private:
     void _search(DialogSearch::SEARCHMODE mode);
 
-protected:
-    virtual void registerShortcuts(bool bState);
 
 private:
     Ui::SearchValuesWidget *ui;
@@ -92,7 +85,6 @@ private:
     OPTIONS g_options;
     // QStandardItemModel *g_pOldModel;
     // QFutureWatcher<void> g_watcher;
-    QShortcut *g_shortCuts[__SC_SIZE];
     QVector<XBinary::MS_RECORD> g_listRecords;
 
     QVariant g_varValue;

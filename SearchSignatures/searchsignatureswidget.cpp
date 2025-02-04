@@ -26,6 +26,9 @@ SearchSignaturesWidget::SearchSignaturesWidget(QWidget *pParent) : XShortcutsWid
 {
     ui->setupUi(this);
 
+    addShortcut(X_ID_TABLE_FOLLOWIN_HEX, this, SLOT(_hex()));
+    addShortcut(X_ID_TABLE_FOLLOWIN_DISASM, this, SLOT(_disasm()));
+
     XOptions::adjustToolButton(ui->toolButtonSave, XOptions::ICONTYPE_SAVE);
     XOptions::adjustToolButton(ui->toolButtonSearch, XOptions::ICONTYPE_SEARCH);
 
@@ -39,8 +42,6 @@ SearchSignaturesWidget::SearchSignaturesWidget(QWidget *pParent) : XShortcutsWid
 
     g_pDevice = nullptr;
     g_bInit = false;
-
-    memset(shortCuts, 0, sizeof shortCuts);
 
     // ui->tableViewResult->installEventFilter(this);
 }
@@ -144,115 +145,61 @@ void SearchSignaturesWidget::on_toolButtonSearch_clicked()
 
 void SearchSignaturesWidget::on_tableViewResult_customContextMenuRequested(const QPoint &pos)
 {
-    QMenu contextMenu(this);  // TODO
+    QMenu contextMenu(this);
 
-    QMenu menuCopy(tr("Copy"), this);  // TODO obsolete
-    QMenu menuFollowIn(tr("Follow in"), this);
+    QList<XShortcuts::MENUITEM> listMenuItems;
 
-    QAction actionCopyName(tr("Name"), this);
-    actionCopyName.setShortcut(getShortcuts()->getShortcut(X_ID_SIGNATURES_COPY_NAME));
-    connect(&actionCopyName, SIGNAL(triggered()), this, SLOT(_copyName()));
-    menuCopy.addAction(&actionCopyName);
-
-    QAction actionCopySignature(tr("Signature"), this);
-    actionCopySignature.setShortcut(getShortcuts()->getShortcut(X_ID_SIGNATURES_COPY_SIGNATURE));
-    connect(&actionCopySignature, SIGNAL(triggered()), this, SLOT(_copySignature()));
-    menuCopy.addAction(&actionCopySignature);
-
-    QAction actionCopyAddress(tr("Address"), this);
-    actionCopyAddress.setShortcut(getShortcuts()->getShortcut(X_ID_SIGNATURES_COPY_ADDRESS));
-    connect(&actionCopyAddress, SIGNAL(triggered()), this, SLOT(_copyAddress()));
-    menuCopy.addAction(&actionCopyAddress);
-
-    QAction actionCopyOffset(tr("Offset"), this);
-    actionCopyOffset.setShortcut(getShortcuts()->getShortcut(X_ID_SIGNATURES_COPY_OFFSET));
-    connect(&actionCopyOffset, SIGNAL(triggered()), this, SLOT(_copyOffset()));
-    menuCopy.addAction(&actionCopyOffset);
-
-    contextMenu.addMenu(&menuCopy);
-
-    QAction actionHex(tr("Hex"), this);
+    getShortcuts()->_addMenuItem_CopyRow(&listMenuItems, ui->tableViewResult);
 
     if (g_options.bMenu_Hex) {
-        actionHex.setShortcut(getShortcuts()->getShortcut(X_ID_SIGNATURES_FOLLOWIN_HEX));
-        connect(&actionHex, SIGNAL(triggered()), this, SLOT(_hex()));
-        menuFollowIn.addAction(&actionHex);
-
-        contextMenu.addMenu(&menuFollowIn);
+        getShortcuts()->_addMenuItem(&listMenuItems, X_ID_TABLE_FOLLOWIN_HEX, this, SLOT(_hex()), XShortcuts::GROUPID_FOLLOWIN);
     }
+
+    if (g_options.bMenu_Disasm) {
+        getShortcuts()->_addMenuItem(&listMenuItems, X_ID_TABLE_FOLLOWIN_DISASM, this, SLOT(_disasm()), XShortcuts::GROUPID_FOLLOWIN);
+    }
+
+    QList<QObject *> listObjects = getShortcuts()->adjustContextMenu(&contextMenu, &listMenuItems);
 
     contextMenu.exec(ui->tableViewResult->viewport()->mapToGlobal(pos));
-}
 
-void SearchSignaturesWidget::_copyName()
-{
-    qint32 nRow = ui->tableViewResult->currentIndex().row();
-
-    if ((nRow != -1) && (g_listRecords.count())) {
-        QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(2);
-
-        QString sString = ui->tableViewResult->model()->data(index).toString();
-
-        QApplication::clipboard()->setText(sString);
-    }
-}
-
-void SearchSignaturesWidget::_copySignature()
-{
-    qint32 nRow = ui->tableViewResult->currentIndex().row();
-
-    if ((nRow != -1) && (g_listRecords.count())) {
-        QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(0);
-
-        // QString sString = ui->tableViewResult->model()->data(index, Qt::UserRole + XModel_MSRecord::USERROLE_STRING).toString();
-
-        // QApplication::clipboard()->setText(sString);
-    }
-}
-
-void SearchSignaturesWidget::_copyAddress()
-{
-    qint32 nRow = ui->tableViewResult->currentIndex().row();
-
-    if ((nRow != -1) && (g_listRecords.count())) {
-        QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(0);
-
-        QString sString = ui->tableViewResult->model()->data(index).toString();
-
-        QApplication::clipboard()->setText(sString);
-    }
-}
-
-void SearchSignaturesWidget::_copyOffset()
-{
-    qint32 nRow = ui->tableViewResult->currentIndex().row();
-
-    if ((nRow != -1) && (g_listRecords.count())) {
-        QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(1);
-
-        QString sString = ui->tableViewResult->model()->data(index).toString();
-
-        QApplication::clipboard()->setText(sString);
-    }
+    XOptions::deleteQObjectList(&listObjects);
 }
 
 void SearchSignaturesWidget::_hex()
 {
-    qint32 nRow = ui->tableViewResult->currentIndex().row();
+    if (g_options.bMenu_Hex) {
+        qint32 nRow = ui->tableViewResult->currentIndex().row();
 
-    if ((nRow != -1) && (g_listRecords.count())) {
-        QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(0);
+        if ((nRow != -1) && (g_listRecords.count())) {
+            QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(0);
 
-        qint64 nOffset = ui->tableViewResult->model()->data(index, Qt::UserRole + XModel_MSRecord::USERROLE_OFFSET).toLongLong();
-        qint64 nSize = ui->tableViewResult->model()->data(index, Qt::UserRole + XModel_MSRecord::USERROLE_SIZE).toLongLong();
+            qint64 nOffset = ui->tableViewResult->model()->data(index, Qt::UserRole + XModel_MSRecord::USERROLE_OFFSET).toLongLong();
+            qint64 nSize = ui->tableViewResult->model()->data(index, Qt::UserRole + XModel_MSRecord::USERROLE_SIZE).toLongLong();
 
-        XIODevice *pSubDevice = dynamic_cast<XIODevice *>(g_pDevice);
+            XIODevice *pSubDevice = dynamic_cast<XIODevice *>(g_pDevice);
 
-        if (pSubDevice) {
-            nOffset += pSubDevice->getInitLocation();
+            if (pSubDevice) {
+                nOffset += pSubDevice->getInitLocation();
+            }
+
+            emit followLocation(nOffset, XBinary::LT_OFFSET, nSize, XOptions::WIDGETTYPE_HEX);
         }
+    }
+}
 
-        emit followLocation(nOffset, XBinary::LT_OFFSET, nSize, XOptions::WIDGETTYPE_HEX);
+void SearchSignaturesWidget::_disasm()
+{
+    if (g_options.bMenu_Disasm) {
+        qint32 nRow = ui->tableViewResult->currentIndex().row();
+
+        if ((nRow != -1) && (g_listRecords.count())) {
+            QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(XModel_MSRecord::COLUMN_NUMBER);
+
+            qint64 nOffset = ui->tableViewResult->model()->data(index, Qt::UserRole + XModel_MSRecord::USERROLE_OFFSET).toLongLong();
+
+            emit followLocation(nOffset, XBinary::LT_OFFSET, 0, XOptions::WIDGETTYPE_DISASM);
+        }
     }
 }
 
@@ -358,21 +305,3 @@ void SearchSignaturesWidget::viewSelection()
     }
 }
 
-void SearchSignaturesWidget::registerShortcuts(bool bState)
-{
-    if (bState) {
-        if (!shortCuts[SC_COPYNAME]) shortCuts[SC_COPYNAME] = new QShortcut(getShortcuts()->getShortcut(X_ID_SIGNATURES_COPY_NAME), this, SLOT(_copyName()));
-        if (!shortCuts[SC_COPYSIGNATURE])
-            shortCuts[SC_COPYSIGNATURE] = new QShortcut(getShortcuts()->getShortcut(X_ID_SIGNATURES_COPY_SIGNATURE), this, SLOT(_copySignature()));
-        if (!shortCuts[SC_COPYADDRESS]) shortCuts[SC_COPYADDRESS] = new QShortcut(getShortcuts()->getShortcut(X_ID_SIGNATURES_COPY_ADDRESS), this, SLOT(_copyAddress()));
-        if (!shortCuts[SC_COPYOFFSET]) shortCuts[SC_COPYOFFSET] = new QShortcut(getShortcuts()->getShortcut(X_ID_SIGNATURES_COPY_OFFSET), this, SLOT(_copyOffset()));
-        if (!shortCuts[SC_HEX]) shortCuts[SC_HEX] = new QShortcut(getShortcuts()->getShortcut(X_ID_SIGNATURES_FOLLOWIN_HEX), this, SLOT(_hex()));
-    } else {
-        for (qint32 i = 0; i < __SC_SIZE; i++) {
-            if (shortCuts[i]) {
-                delete shortCuts[i];
-                shortCuts[i] = nullptr;
-            }
-        }
-    }
-}
