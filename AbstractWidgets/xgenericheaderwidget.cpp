@@ -216,7 +216,7 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
 void XGenericHeaderWidget::adjustView()
 {
     XFormatWidget::adjustView();
-    getGlobalOptions()->adjustWidget(ui->tableWidgetMain, XOptions::ID_VIEW_FONT_TABLEVIEWS);
+    getGlobalOptions()->adjustTableWidget(ui->tableWidgetMain, XOptions::ID_VIEW_FONT_TABLEVIEWS);
 }
 
 void XGenericHeaderWidget::on_tableWidgetMain_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)

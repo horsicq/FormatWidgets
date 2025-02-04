@@ -165,14 +165,14 @@ void SearchStringsWidget::on_tableViewResult_customContextMenuRequested(const QP
     QAction actionDemangle(tr("Demangle"), this);
 
     if (g_options.bMenu_Hex) {
-        actionHex.setShortcut(getShortcuts()->getShortcut(X_ID_STRINGS_FOLLOWIN_HEX));
+        actionHex.setShortcut(getShortcuts()->getShortcut(X_ID_TABLE_FOLLOWIN_HEX));
         connect(&actionHex, SIGNAL(triggered()), this, SLOT(_hex()));
 
         menuFollowIn.addAction(&actionHex);
     }
 
     if (g_options.bMenu_Demangle) {
-        actionDemangle.setShortcut(getShortcuts()->getShortcut(X_ID_STRINGS_DEMANGLE));
+        actionDemangle.setShortcut(getShortcuts()->getShortcut(X_ID_TABLE_DEMANGLE));
         connect(&actionDemangle, SIGNAL(triggered()), this, SLOT(_demangle()));
         contextMenu.addAction(&actionDemangle);
     }
@@ -182,7 +182,7 @@ void SearchStringsWidget::on_tableViewResult_customContextMenuRequested(const QP
     }
 
     QAction actionEditString(tr("String"), this);
-    actionEditString.setShortcut(getShortcuts()->getShortcut(X_ID_STRINGS_EDIT_STRING));
+    actionEditString.setShortcut(getShortcuts()->getShortcut(X_ID_TABLE_EDIT_STRING));
     connect(&actionEditString, SIGNAL(triggered()), this, SLOT(_editString()));
 
     menuEdit.addAction(&actionEditString);
@@ -239,7 +239,7 @@ void SearchStringsWidget::_editString()
 
         dataStruct.nOffset = ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + XModel_MSRecord::USERROLE_OFFSET).toLongLong();
         dataStruct.nSize = ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + XModel_MSRecord::USERROLE_SIZE).toLongLong();
-        dataStruct.recordType = (XBinary::MS_RECORD_TYPE)(ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + XModel_MSRecord::USERROLE_TYPE).toLongLong());
+        dataStruct.valueType = (XBinary::VT)(ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + XModel_MSRecord::USERROLE_TYPE).toLongLong());
         dataStruct.bIsNullTerminated = false;
 
         dataStruct.sString = ui->tableViewResult->model()->data(indexValue).toString();
@@ -252,12 +252,12 @@ void SearchStringsWidget::_editString()
 
             if (XBinary::saveBackup(XBinary::getBackupDevice(getDevice()))) {
                 if (XBinary::write_array(g_pDevice, dataStruct.nOffset,
-                                         XBinary::getStringData(dataStruct.recordType, dataStruct.sString, dataStruct.bIsNullTerminated))) {
+                                         XBinary::getStringData(dataStruct.valueType, dataStruct.sString, dataStruct.bIsNullTerminated))) {
                     ui->tableViewResult->model()->setData(indexNumber, dataStruct.nSize, Qt::UserRole + XModel_MSRecord::USERROLE_SIZE);
-                    ui->tableViewResult->model()->setData(indexNumber, dataStruct.recordType, Qt::UserRole + XModel_MSRecord::USERROLE_TYPE);
+                    ui->tableViewResult->model()->setData(indexNumber, dataStruct.valueType, Qt::UserRole + XModel_MSRecord::USERROLE_TYPE);
 
                     ui->tableViewResult->model()->setData(indexSize, XBinary::valueToHexEx(dataStruct.sString.size()), Qt::DisplayRole);
-                    ui->tableViewResult->model()->setData(indexType, XBinary::msRecordTypeIdToString(dataStruct.recordType), Qt::DisplayRole);
+                    ui->tableViewResult->model()->setData(indexType, XBinary::valueTypeToString(dataStruct.valueType), Qt::DisplayRole);
                     ui->tableViewResult->model()->setData(indexValue, dataStruct.sString, Qt::DisplayRole);
 
                     bSuccess = true;
@@ -322,7 +322,7 @@ void SearchStringsWidget::search()
             // dmp.processModel(&listRecords, &g_pModel, options, MultiSearch::TYPE_STRINGS);
             // dmp.showDialogDelay();
 
-            XModel_MSRecord *pModel = new XModel_MSRecord(g_pDevice, options.memoryMap, &g_listRecords, XBinary::MS_RECORD_TYPE_STRING, this);
+            XModel_MSRecord *pModel = new XModel_MSRecord(g_pDevice, options.memoryMap, &g_listRecords, XBinary::VT_STRING, this);
 
             ui->tableViewResult->setCustomModel(pModel, true);
 
@@ -337,9 +337,9 @@ void SearchStringsWidget::search()
 void SearchStringsWidget::registerShortcuts(bool bState)
 {
     if (bState) {
-        if (!g_shortCuts[SC_HEX]) g_shortCuts[SC_HEX] = new QShortcut(getShortcuts()->getShortcut(X_ID_STRINGS_FOLLOWIN_HEX), this, SLOT(_hex()));
-        if (!g_shortCuts[SC_DEMANGLE]) g_shortCuts[SC_DEMANGLE] = new QShortcut(getShortcuts()->getShortcut(X_ID_STRINGS_DEMANGLE), this, SLOT(_demangle()));
-        if (!g_shortCuts[SC_EDITSTRING]) g_shortCuts[SC_EDITSTRING] = new QShortcut(getShortcuts()->getShortcut(X_ID_STRINGS_EDIT_STRING), this, SLOT(_editString()));
+        if (!g_shortCuts[SC_HEX]) g_shortCuts[SC_HEX] = new QShortcut(getShortcuts()->getShortcut(X_ID_TABLE_FOLLOWIN_HEX), this, SLOT(_hex()));
+        if (!g_shortCuts[SC_DEMANGLE]) g_shortCuts[SC_DEMANGLE] = new QShortcut(getShortcuts()->getShortcut(X_ID_TABLE_DEMANGLE), this, SLOT(_demangle()));
+        if (!g_shortCuts[SC_EDITSTRING]) g_shortCuts[SC_EDITSTRING] = new QShortcut(getShortcuts()->getShortcut(X_ID_TABLE_EDIT_STRING), this, SLOT(_editString()));
     } else {
         for (qint32 i = 0; i < __SC_SIZE; i++) {
             if (g_shortCuts[i]) {

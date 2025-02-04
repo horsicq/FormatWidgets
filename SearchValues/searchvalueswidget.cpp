@@ -95,7 +95,9 @@ void SearchValuesWidget::findValue(quint64 nValue, XBinary::ENDIAN endian)
 void SearchValuesWidget::adjustView()
 {
     getGlobalOptions()->adjustWidget(this, XOptions::ID_VIEW_FONT_CONTROLS);
-    getGlobalOptions()->adjustWidget(ui->tableViewResult, XOptions::ID_VIEW_FONT_TABLEVIEWS);
+    getGlobalOptions()->adjustTableView(ui->tableViewResult, XOptions::ID_VIEW_FONT_TABLEVIEWS);
+
+    ui->tableViewResult->adjust();
 }
 
 void SearchValuesWidget::reloadData(bool bSaveSelection)
@@ -156,7 +158,8 @@ void SearchValuesWidget::search()
         dsp.processSearch(g_pDevice, &g_listRecords, options, MultiSearch::TYPE_VALUES);
         dsp.showDialogDelay();
 
-        XModel_MSRecord *pModel = new XModel_MSRecord(g_pDevice, options.memoryMap, &g_listRecords, XBinary::MS_RECORD_TYPE_VALUE, this);
+        XModel_MSRecord *pModel = new XModel_MSRecord(g_pDevice, options.memoryMap, &g_listRecords, XBinary::VT_VALUE, this);
+        pModel->setValue(options.endian, options.valueType, options.varValue);
 
         ui->tableViewResult->setCustomModel(pModel, true);
 

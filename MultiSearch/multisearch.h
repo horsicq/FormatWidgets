@@ -44,13 +44,6 @@ public:
         TYPE_STRINGS_XINFODB
     };
 
-    struct SIGNATURE_RECORD {
-        qint32 nNumber;
-        QString sName;
-        XBinary::ENDIAN endian;
-        QString sSignature;
-    };
-
     struct OPTIONS {
         XBinary::_MEMORY_MAP memoryMap;
         bool bAnsi;
@@ -62,7 +55,7 @@ public:
         QString sMask;
         XBinary::ENDIAN endian;
         qint32 nMinLenght;
-        QList<SIGNATURE_RECORD> *pListSignatureRecords;
+        QList<XBinary::SIGNATUREDB_RECORD> *pListSignatureRecords;
         QVariant varValue;
         XBinary::VT valueType;
         bool bMenu_Hex;  // TODO remove
@@ -77,9 +70,9 @@ public:
     void setSearchData(QIODevice *pDevice, QVector<XBinary::MS_RECORD> *pListRecords, OPTIONS options, TYPE type, XBinary::PDSTRUCT *pPdStruct);
     void setModelData(QVector<XBinary::MS_RECORD> *pListRecords, QStandardItemModel **ppModel, OPTIONS options, TYPE type, XBinary::PDSTRUCT *pPdStruct);
 
-    static QList<SIGNATURE_RECORD> loadSignaturesFromFile(const QString &sFileName);
-    static SIGNATURE_RECORD createSignature(const QString &sName, const QString &sSignature);
-    void processSignature(SIGNATURE_RECORD signatureRecord);
+    static QList<XBinary::SIGNATUREDB_RECORD> loadSignaturesFromFile(const QString &sFileName);
+    static XBinary::SIGNATUREDB_RECORD createSignature(const QString &sName, const QString &sSignature);
+    void processSignature(XBinary::SIGNATUREDB_RECORD signatureRecord);
 
 signals:
     void errorMessage(const QString &sText);

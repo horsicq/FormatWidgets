@@ -100,7 +100,8 @@ void XMainWidget::reload()
     XBinary::FT fileType = getOptions().fileType;
 
     if (getOptions().fileType == XBinary::FT_UNKNOWN) {
-        fileType = XBinary::getPrefFileType(getDevice(), true);
+        QSet<XBinary::FT> stFileType = XFormats::getFileTypes(getDevice(), true);
+        fileType = XBinary::_getPrefFileType(&stFileType);
     }
 
     setFileType(fileType);
@@ -188,7 +189,7 @@ void XMainWidget::setReadonly(bool bState)
 void XMainWidget::adjustView()
 {
     getGlobalOptions()->adjustWidget(this, XOptions::ID_VIEW_FONT_CONTROLS);
-    getGlobalOptions()->adjustWidget(ui->treeWidgetNavi, XOptions::ID_VIEW_FONT_TREEVIEWS);
+    getGlobalOptions()->adjustTreeWidget(ui->treeWidgetNavi, XOptions::ID_VIEW_FONT_TREEVIEWS);
 
     qint32 nNumberOfWidgets = ui->stackedWidgetMain->count();
 

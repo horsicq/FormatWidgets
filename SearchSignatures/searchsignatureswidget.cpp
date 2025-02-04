@@ -38,7 +38,6 @@ SearchSignaturesWidget::SearchSignaturesWidget(QWidget *pParent) : XShortcutsWid
     ui->tableViewResult->setToolTip(tr("Result"));
 
     g_pDevice = nullptr;
-    g_pModel = nullptr;
     g_bInit = false;
 
     memset(shortCuts, 0, sizeof shortCuts);
@@ -123,7 +122,8 @@ void SearchSignaturesWidget::adjustView()
     updateSignaturesPath();
 
     getGlobalOptions()->adjustWidget(this, XOptions::ID_VIEW_FONT_CONTROLS);
-    getGlobalOptions()->adjustWidget(ui->tableViewResult, XOptions::ID_VIEW_FONT_TABLEVIEWS);
+    getGlobalOptions()->adjustTableView(ui->tableViewResult, XOptions::ID_VIEW_FONT_TABLEVIEWS);
+    ui->tableViewResult->adjust();
 }
 
 void SearchSignaturesWidget::reloadData(bool bSaveSelection)
@@ -188,7 +188,7 @@ void SearchSignaturesWidget::_copyName()
 {
     qint32 nRow = ui->tableViewResult->currentIndex().row();
 
-    if ((nRow != -1) && (g_pModel)) {
+    if ((nRow != -1) && (g_listRecords.count())) {
         QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(2);
 
         QString sString = ui->tableViewResult->model()->data(index).toString();
@@ -201,7 +201,7 @@ void SearchSignaturesWidget::_copySignature()
 {
     qint32 nRow = ui->tableViewResult->currentIndex().row();
 
-    if ((nRow != -1) && (g_pModel)) {
+    if ((nRow != -1) && (g_listRecords.count())) {
         QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(0);
 
         // QString sString = ui->tableViewResult->model()->data(index, Qt::UserRole + XModel_MSRecord::USERROLE_STRING).toString();
@@ -214,7 +214,7 @@ void SearchSignaturesWidget::_copyAddress()
 {
     qint32 nRow = ui->tableViewResult->currentIndex().row();
 
-    if ((nRow != -1) && (g_pModel)) {
+    if ((nRow != -1) && (g_listRecords.count())) {
         QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(0);
 
         QString sString = ui->tableViewResult->model()->data(index).toString();
@@ -227,7 +227,7 @@ void SearchSignaturesWidget::_copyOffset()
 {
     qint32 nRow = ui->tableViewResult->currentIndex().row();
 
-    if ((nRow != -1) && (g_pModel)) {
+    if ((nRow != -1) && (g_listRecords.count())) {
         QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(1);
 
         QString sString = ui->tableViewResult->model()->data(index).toString();
@@ -240,7 +240,7 @@ void SearchSignaturesWidget::_hex()
 {
     qint32 nRow = ui->tableViewResult->currentIndex().row();
 
-    if ((nRow != -1) && (g_pModel)) {
+    if ((nRow != -1) && (g_listRecords.count())) {
         QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(0);
 
         qint64 nOffset = ui->tableViewResult->model()->data(index, Qt::UserRole + XModel_MSRecord::USERROLE_OFFSET).toLongLong();
@@ -270,13 +270,11 @@ void SearchSignaturesWidget::search()
         options.endian = (XBinary::ENDIAN)(ui->comboBoxEndianness->currentData().toUInt());
         options.pListSignatureRecords = &g_listSignatureRecords;
 
-        QVector<XBinary::MS_RECORD> listRecords;
-
         QWidget *pParent = XOptions::getMainWidget(this);
 
         DialogMultiSearchProcess dsp(pParent);
         dsp.setGlobal(getShortcuts(), getGlobalOptions());
-        dsp.processSearch(g_pDevice, &listRecords, options, MultiSearch::TYPE_SIGNATURES);
+        dsp.processSearch(g_pDevice, &g_listRecords, options, MultiSearch::TYPE_SIGNATURES);
         dsp.showDialogDelay();
 
         // DialogMultiSearchProcess dmp(pParent);
@@ -284,11 +282,13 @@ void SearchSignaturesWidget::search()
         // dmp.processModel(&listRecords, &g_pModel, options, MultiSearch::TYPE_SIGNATURES);
         // dmp.showDialogDelay();
 
-        ui->tableViewResult->setCustomModel(g_pModel, true);
+        XModel_MSRecord *pModel = new XModel_MSRecord(g_pDevice, options.memoryMap, &g_listRecords, XBinary::VT_SIGNATURE, this);
+        pModel->setSignaturesList(&g_listSignatureRecords);
 
-        ui->tableViewResult->setColumnWidth(0, 120);  // TODO
-        ui->tableViewResult->setColumnWidth(1, 120);  // TODO
-        ui->tableViewResult->setColumnWidth(2, 120);  // TODO
+        ui->tableViewResult->setCustomModel(pModel, true);
+
+        connect(ui->tableViewResult->selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)), this,
+                SLOT(on_tableViewSelection(QItemSelection, QItemSelection)));
 
         g_bInit = true;
     }
@@ -319,6 +319,43 @@ void SearchSignaturesWidget::on_comboBoxFile_currentIndexChanged(int nIndex)
     QString sFileName = ui->comboBoxFile->currentData().toString();
 
     loadSignatures(sFileName);
+}
+
+void SearchSignaturesWidget::on_tableViewSelection(const QItemSelection &itemSelected, const QItemSelection &itemDeselected)
+{
+    Q_UNUSED(itemSelected)
+    Q_UNUSED(itemDeselected)
+
+    viewSelection();
+}
+
+void SearchSignaturesWidget::on_tableViewResult_clicked(const QModelIndex &index)
+{
+    Q_UNUSED(index)
+
+    viewSelection();
+}
+
+void SearchSignaturesWidget::viewSelection()
+{
+    QItemSelectionModel *pSelectionModel = ui->tableViewResult->selectionModel();
+
+    if (pSelectionModel) {
+        QModelIndexList listIndexes = pSelectionModel->selectedIndexes();
+
+        if (listIndexes.count()) {
+            QModelIndex indexNumber = listIndexes.at(XModel_MSRecord::COLUMN_NUMBER);
+            XADDR nVirtualAddress = ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + XModel_MSRecord::USERROLE_ADDRESS).toULongLong();
+            qint64 nOffset = ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + XModel_MSRecord::USERROLE_OFFSET).toULongLong();
+            qint64 nSize = ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + XModel_MSRecord::USERROLE_SIZE).toLongLong();
+
+            if (nOffset != -1) {
+                emit currentLocationChanged(nOffset, XBinary::LT_OFFSET, nSize);
+            } else if (nVirtualAddress != (XADDR)-1) {
+                emit currentLocationChanged(nVirtualAddress, XBinary::LT_ADDRESS, nSize);
+            }
+        }
+    }
 }
 
 void SearchSignaturesWidget::registerShortcuts(bool bState)

@@ -54,9 +54,9 @@ void MultiSearch::setModelData(QVector<XBinary::MS_RECORD> *pListRecords, QStand
     g_pPdStruct = pPdStruct;
 }
 
-QList<MultiSearch::SIGNATURE_RECORD> MultiSearch::loadSignaturesFromFile(const QString &sFileName)
+QList<XBinary::SIGNATUREDB_RECORD> MultiSearch::loadSignaturesFromFile(const QString &sFileName)
 {
-    QList<SIGNATURE_RECORD> listResult;
+    QList<XBinary::SIGNATUREDB_RECORD> listResult;
 
     QFile file;
     file.setFileName(sFileName);
@@ -68,7 +68,7 @@ QList<MultiSearch::SIGNATURE_RECORD> MultiSearch::loadSignaturesFromFile(const Q
         while (!in.atEnd()) {
             QString sLine = in.readLine().trimmed();
             if (sLine != "") {
-                SIGNATURE_RECORD record = {};
+                XBinary::SIGNATUREDB_RECORD record = {};
                 record.nNumber = nIndex++;
                 record.sName = sLine.section(";", 0, 0);
                 record.sSignature = sLine.section(";", 2, -1);
@@ -93,9 +93,9 @@ QList<MultiSearch::SIGNATURE_RECORD> MultiSearch::loadSignaturesFromFile(const Q
     return listResult;
 }
 
-MultiSearch::SIGNATURE_RECORD MultiSearch::createSignature(const QString &sName, const QString &sSignature)
+XBinary::SIGNATUREDB_RECORD MultiSearch::createSignature(const QString &sName, const QString &sSignature)
 {
-    MultiSearch::SIGNATURE_RECORD result = {};
+    XBinary::SIGNATUREDB_RECORD result = {};
 
     result.endian = XBinary::ENDIAN_LITTLE;
     result.nNumber = 0;
@@ -105,7 +105,7 @@ MultiSearch::SIGNATURE_RECORD MultiSearch::createSignature(const QString &sName,
     return result;
 }
 
-void MultiSearch::processSignature(MultiSearch::SIGNATURE_RECORD signatureRecord)
+void MultiSearch::processSignature(XBinary::SIGNATUREDB_RECORD signatureRecord)
 {
     // #ifdef QT_DEBUG
     //     QElapsedTimer timer;
@@ -119,7 +119,7 @@ void MultiSearch::processSignature(MultiSearch::SIGNATURE_RECORD signatureRecord
     binary.setDevice(g_pDevice);
 
     QVector<XBinary::MS_RECORD> listResult =
-        binary.multiSearch_signature(&(g_options.memoryMap), 0, binary.getSize(), N_MAX, signatureRecord.sSignature, signatureRecord.sName, g_pPdStruct);
+        binary.multiSearch_signature(&(g_options.memoryMap), 0, binary.getSize(), N_MAX, signatureRecord.sSignature, signatureRecord.nNumber, g_pPdStruct);
 
     g_pListRecords->append(listResult);
 
@@ -178,7 +178,7 @@ void MultiSearch::processSearch()
         XBinary::setPdStructTotal(g_pPdStruct, g_nFreeIndex, nNumberOfSignatures);
 
         for (qint32 i = 0; (i < nNumberOfSignatures) && (!(g_pPdStruct->bIsStop)); i++) {
-            SIGNATURE_RECORD signatureRecord = g_options.pListSignatureRecords->at(i);
+            XBinary::SIGNATUREDB_RECORD signatureRecord = g_options.pListSignatureRecords->at(i);
 
             bool bSuccess = false;
 

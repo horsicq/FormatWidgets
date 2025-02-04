@@ -82,6 +82,9 @@ private slots:
     void search();
     void loadSignatures(const QString &sFileName);
     void on_comboBoxFile_currentIndexChanged(int nIndex);
+    void on_tableViewSelection(const QItemSelection &itemSelected, const QItemSelection &itemDeselected);
+    void on_tableViewResult_clicked(const QModelIndex &index);
+    void viewSelection();
 
 protected:
     virtual void registerShortcuts(bool bState);
@@ -89,13 +92,13 @@ protected:
 private:
     Ui::SearchSignaturesWidget *ui;
     QIODevice *g_pDevice;
-    QStandardItemModel *g_pModel;
     bool g_bInit;
     // QStandardItemModel *g_pOldModel;
     // QFutureWatcher<void> g_watcher;
-    QList<MultiSearch::SIGNATURE_RECORD> g_listSignatureRecords;
+    QList<XBinary::SIGNATUREDB_RECORD> g_listSignatureRecords;
     OPTIONS g_options;
     QShortcut *shortCuts[__SC_SIZE];
+    QVector<XBinary::MS_RECORD> g_listRecords;
 };
 
 #endif  // SEARCHSIGNATURESWIDGET_H
