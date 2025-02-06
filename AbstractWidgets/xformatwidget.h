@@ -258,7 +258,7 @@ protected:
     virtual QString typeIdToString(qint32 nType);
     virtual void _widgetValueChanged(QVariant vValue);
     void contextMenuGenericHeaderWidget(const QPoint &pos, QTableWidget *pTableWidget, QList<RECWIDGET> *pListRecWidget, XFW_DEF::CWOPTIONS *pCwOptions);
-    void contextMenuGenericTableWidget(const QPoint &pos, QTableView *pTableView, QList<RECWIDGET> *pListRecWidget, XFW_DEF::CWOPTIONS *pCwOptions);
+    void contextMenuGenericTableWidget(const QPoint &pos, QTableView *pTableView, QList<XFW_DEF::HEADER_RECORD> *pListHeaderRecords, XFW_DEF::CWOPTIONS *pCwOptions);
     void tableView_doubleClicked(QTableView *pTableView, const QModelIndex &index);
     virtual void _followLocation(quint64 nLocation, qint32 nLocationType, qint64 nSize, qint32 nWidgetType);
 
@@ -276,7 +276,12 @@ public slots:
     void dumpRegion(qint64 nOffset, qint64 nSize, const QString &sName);
     void _reload();
     void showTableRecord();
+    void followInHex();
+    void followInDisasm();
     void followLocationSlot(quint64 nLocation, qint32 nLocationType, qint64 nSize, qint32 nWidgetType);
+
+private:
+    void _followIn(XOptions::WIDGETTYPE widgetType);
 
 private slots:
     void onToolButtonClicked();
@@ -301,7 +306,7 @@ private:
     XInfoDB *g_pXInfoDB;
     XADDR g_nDisamInitAddress;
     XFW_DEF::CWOPTIONS g_cwOptions;
-    QList<RECWIDGET> listRecWidget;
+    QList<RECWIDGET> g_listRecWidget;
 };
 
 #endif  // XFORMATWIDGET_H

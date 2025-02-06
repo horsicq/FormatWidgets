@@ -48,6 +48,7 @@ private slots:
 private:
     Ui::XGenericTableWidget *ui;
     QStandardItemModel *g_pModel;
+    QList<XFW_DEF::HEADER_RECORD> g_listHeaderRecords;
 };
 
 #endif  // XGENERICTABLEWIDGET_H

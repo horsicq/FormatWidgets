@@ -93,7 +93,7 @@ void XProcessData::process()
             XFW_DEF::HEADER_RECORD record = {};
             record.nPosition = -1;
             record.sName = tr("Offset");
-            record.vtype = XFW_DEF::VAL_TYPE_HEX;
+            record.vtype = XFW_DEF::VAL_TYPE_HEX | XFW_DEF::VAL_TYPE_OFFSET | XFW_DEF::VAL_TYPE_CODE;
 
             g_pListHeaderRecords->append(record);
         }

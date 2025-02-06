@@ -50,11 +50,11 @@ void XGenericTableWidget::reloadData(bool bSaveSelection)
 
     cleanup();
 
-    QList<XFW_DEF::HEADER_RECORD> listHeaderRecords;
+    g_listHeaderRecords.clear();
 
     XDialogProcessData dialogProcessData(this);
     dialogProcessData.setGlobal(getShortcuts(), getGlobalOptions());
-    dialogProcessData.setData(&g_pModel, &listHeaderRecords, getCwOptions());
+    dialogProcessData.setData(&g_pModel, &g_listHeaderRecords, getCwOptions());
     dialogProcessData.showDialogDelay();
 
     if (g_pModel) {
@@ -64,7 +64,7 @@ void XGenericTableWidget::reloadData(bool bSaveSelection)
                 SLOT(onTableView_currentRowChanged(QModelIndex, QModelIndex)));
     }
 
-    adjustGenericTable(ui->tableViewMain, &listHeaderRecords);
+    adjustGenericTable(ui->tableViewMain, &g_listHeaderRecords);
 
     // ui->tableViewMain->resizeColumnsToContents();
     QModelIndex index = ui->tableViewMain->model()->index(nRow, 0);
@@ -79,7 +79,7 @@ void XGenericTableWidget::adjustView()
 
 void XGenericTableWidget::on_tableViewMain_customContextMenuRequested(const QPoint &pos)
 {
-    contextMenuGenericTableWidget(pos, ui->tableViewMain, getListRecWidgets(), getCwOptions());
+    contextMenuGenericTableWidget(pos, ui->tableViewMain, &g_listHeaderRecords, getCwOptions());
 }
 
 void XGenericTableWidget::onTableView_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)

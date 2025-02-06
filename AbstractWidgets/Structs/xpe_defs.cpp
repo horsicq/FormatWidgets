@@ -55,7 +55,7 @@ const XFW_DEF::HEADER_RECORD records32[] = {
     {SizeOfUninitializedData, "SizeOfUninitializedData", offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER32, SizeOfUninitializedData), 4, "DWORD",
      XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, -1},
     {AddressOfEntryPoint, "AddressOfEntryPoint", offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER32, AddressOfEntryPoint), 4, "DWORD",
-     XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_RELADDRESS, -1},
+     XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_RELADDRESS | XFW_DEF::VAL_TYPE_CODE, -1},
     {BaseOfCode, "BaseOfCode", offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER32, BaseOfCode), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_RELADDRESS, -1},
     {BaseOfData, "BaseOfData", offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER32, BaseOfData), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_RELADDRESS, -1},
     {ImageBase, "ImageBase", offsetof(XPE_DEF::IMAGE_OPTIONAL_HEADER32, ImageBase), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_ADDRESS, -1},

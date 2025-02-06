@@ -76,10 +76,10 @@ void XFormatWidget::adjustView()
     getGlobalOptions()->adjustWidget(this, XOptions::ID_VIEW_FONT_CONTROLS);
 
     {
-        qint32 nNumberOfRecords = listRecWidget.count();
+        qint32 nNumberOfRecords = g_listRecWidget.count();
 
         for (qint32 i = 0; i < nNumberOfRecords; i++) {
-            RECWIDGET recWidget = listRecWidget.at(i);
+            RECWIDGET recWidget = g_listRecWidget.at(i);
 
             if (recWidget.pLineEdit) {
                 getGlobalOptions()->adjustWidget(recWidget.pLineEdit, XOptions::ID_VIEW_FONT_TABLEVIEWS);
@@ -836,8 +836,8 @@ qint32 XFormatWidget::getHeaderSize(const QList<XFW_DEF::HEADER_RECORD> *pListHe
 void XFormatWidget::setValue(QVariant vValue, qint32 nPosition, qint64 nOffset, qint64 nSize)
 {
     if (XBinary::saveBackup(XBinary::getBackupDevice(getDevice()))) {
-        if (nPosition < listRecWidget.count()) {
-            RECWIDGET recWidget = listRecWidget.at(nPosition);
+        if (nPosition < g_listRecWidget.count()) {
+            RECWIDGET recWidget = g_listRecWidget.at(nPosition);
 
             XBinary binary(getDevice(), getOptions().bIsImage, getOptions().nImageBase);
             if (recWidget.nVType & XFW_DEF::VAL_TYPE_DATA_INT) {
@@ -1095,10 +1095,10 @@ void XFormatWidget::clear()
 
 void XFormatWidget::cleanup()
 {
-    qint32 nNumberOfRecords = listRecWidget.count();
+    qint32 nNumberOfRecords = g_listRecWidget.count();
 
     for (qint32 i = 0; i < nNumberOfRecords; i++) {
-        RECWIDGET recWidget = listRecWidget.at(i);
+        RECWIDGET recWidget = g_listRecWidget.at(i);
 
         if (recWidget.pLineEdit) {
             delete recWidget.pLineEdit;
@@ -1117,7 +1117,7 @@ void XFormatWidget::cleanup()
         }
     }
 
-    listRecWidget.clear();
+    g_listRecWidget.clear();
 }
 
 void XFormatWidget::reload()
@@ -1126,10 +1126,10 @@ void XFormatWidget::reload()
 
 void XFormatWidget::setReadonly(bool bState)
 {
-    qint32 nNumberOfRecords = listRecWidget.count();
+    qint32 nNumberOfRecords = g_listRecWidget.count();
 
     for (qint32 i = 0; i < nNumberOfRecords; i++) {
-        RECWIDGET recWidget = listRecWidget.at(i);
+        RECWIDGET recWidget = g_listRecWidget.at(i);
 
         if (recWidget.pLineEdit) {
             recWidget.pLineEdit->setReadOnly(bState);
@@ -1151,7 +1151,7 @@ void XFormatWidget::setReadonly(bool bState)
 
 QList<XFormatWidget::RECWIDGET> *XFormatWidget::getListRecWidgets()
 {
-    return &listRecWidget;
+    return &g_listRecWidget;
 }
 
 void XFormatWidget::reset()
@@ -2643,7 +2643,7 @@ void XFormatWidget::contextMenuGenericHeaderWidget(const QPoint &pos, QTableWidg
     }
 }
 
-void XFormatWidget::contextMenuGenericTableWidget(const QPoint &pos, QTableView *pTableView, QList<RECWIDGET> *pListRecWidget, XFW_DEF::CWOPTIONS *pCwOptions)
+void XFormatWidget::contextMenuGenericTableWidget(const QPoint &pos, QTableView *pTableView, QList<XFW_DEF::HEADER_RECORD> *pListHeaderRecords, XFW_DEF::CWOPTIONS *pCwOptions)
 {
     qint32 nRow = pTableView->currentIndex().row();
 
@@ -2674,6 +2674,37 @@ void XFormatWidget::contextMenuGenericTableWidget(const QPoint &pos, QTableView 
         }
 
         getShortcuts()->_addMenuItem_CopyRow(&listMenuItems, pTableView);
+
+        qint32 nNumberOfColumns = pListHeaderRecords->count();
+
+        for (qint32 i = 0; i < nNumberOfColumns; i++) {
+            if ((pListHeaderRecords->at(i).vtype & XFW_DEF::VAL_TYPE_ADDRESS) || (pListHeaderRecords->at(i).vtype & XFW_DEF::VAL_TYPE_RELADDRESS) || (pListHeaderRecords->at(i).vtype & XFW_DEF::VAL_TYPE_OFFSET)) {
+                QString sValue = pTableView->model()->data(pTableView->model()->index(nRow, i), Qt::DisplayRole).toString();
+                XShortcuts::MENUITEM menuItem = {};
+
+                menuItem.sText = QString("%1 (%2, %3)").arg(XShortcuts::baseIdToString(XShortcuts::BASEID_HEX), pListHeaderRecords->at(i).sName, sValue);
+
+                if (pListHeaderRecords->at(i).vtype & XFW_DEF::VAL_TYPE_ADDRESS) {
+                    menuItem.sPropertyName = "ADDRESS";
+                } else if (pListHeaderRecords->at(i).vtype & XFW_DEF::VAL_TYPE_RELADDRESS) {
+                    menuItem.sPropertyName = "RELADDRESS";
+                } else if (pListHeaderRecords->at(i).vtype & XFW_DEF::VAL_TYPE_OFFSET) {
+                    menuItem.sPropertyName = "OFFSET";
+                }
+                menuItem.nSubgroups = XShortcuts::GROUPID_FOLLOWIN;
+                menuItem.varProperty = sValue.toULongLong(0, 16);
+
+                menuItem.pRecv = this;
+                menuItem.pMethod = SLOT(followInHex());
+                listMenuItems.append(menuItem);
+
+                if (pListHeaderRecords->at(i).vtype & XFW_DEF::VAL_TYPE_CODE) {
+                    menuItem.sText = QString("%1 (%2, %3)").arg(XShortcuts::baseIdToString(XShortcuts::BASEID_DISASM), pListHeaderRecords->at(i).sName, sValue);
+                    menuItem.pMethod = SLOT(followInDisasm());
+                    listMenuItems.append(menuItem);
+                }
+            }
+        }
 
         QList<QObject *> listObjects = getShortcuts()->adjustContextMenu(&contextMenu, &listMenuItems);
 
@@ -2888,9 +2919,38 @@ void XFormatWidget::showTableRecord()
     emit showCwWidget(sInitString, true);
 }
 
+void XFormatWidget::followInHex()
+{
+    _followIn(XOptions::WIDGETTYPE_HEX);
+}
+
+void XFormatWidget::followInDisasm()
+{
+    _followIn(XOptions::WIDGETTYPE_DISASM);
+}
+
 void XFormatWidget::followLocationSlot(quint64 nLocation, qint32 nLocationType, qint64 nSize, qint32 nWidgetType)
 {
     _followLocation(nLocation, nLocationType, nSize, nWidgetType);
+}
+
+void XFormatWidget::_followIn(XOptions::WIDGETTYPE widgetType)
+{
+    XBinary::LT locationType = XBinary::LT_UNKNOWN;
+    quint64 nLocation = 0;
+
+    if (sender()->property("ADDRESS").toString() != "") {
+        locationType = XBinary::LT_ADDRESS;
+        nLocation = sender()->property("ADDRESS").toULongLong();
+    } else if (sender()->property("RELADDRESS").toString() != "") {
+        locationType = XBinary::LT_RELADDRESS;
+        nLocation = sender()->property("RELADDRESS").toULongLong();
+    } else if (sender()->property("OFFSET").toString() != "") {
+        locationType = XBinary::LT_OFFSET;
+        nLocation = sender()->property("OFFSET").toULongLong();
+    }
+
+    emit followLocation(nLocation, locationType, 0, widgetType);
 }
 
 void XFormatWidget::onToolButtonClicked()

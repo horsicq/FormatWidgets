@@ -175,7 +175,9 @@ void SearchStringsWidget::on_tableViewResult_customContextMenuRequested(const QP
         getShortcuts()->_addMenuItem(&listMenuItems, X_ID_TABLE_DEMANGLE, this, SLOT(_demangle()), XShortcuts::GROUPID_NONE);
     }
 
-    getShortcuts()->_addMenuItem(&listMenuItems, X_ID_TABLE_EDIT_STRING, this, SLOT(_editString()), XShortcuts::GROUPID_EDIT);
+    if (!isReadonly()) {
+        getShortcuts()->_addMenuItem(&listMenuItems, X_ID_TABLE_EDIT_STRING, this, SLOT(_editString()), XShortcuts::GROUPID_EDIT);
+    }
 
     QList<QObject *> listObjects = getShortcuts()->adjustContextMenu(&contextMenu, &listMenuItems);
 
