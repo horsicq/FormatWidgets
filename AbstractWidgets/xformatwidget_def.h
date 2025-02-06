@@ -188,6 +188,7 @@ struct CWOPTIONS {
     bool bIsImage;
     qint64 nImageBase;
     XInfoDB *pXInfoDB;
+    QString sXInfoProfile;
     qint64 nDataOffset;  // TODO location
     qint64 nDataSize;
     qint64 nDataCount;

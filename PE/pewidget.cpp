@@ -1074,7 +1074,7 @@ void PEWidget::reloadData(bool bSaveSelection)
                     options.nStartSelectionOffset = -1;
                 }
 
-                ui->widgetHex->setXInfoDB(getXInfoDB());
+                ui->widgetHex->setXInfoDB(getXInfoDB(), getXInfoProfile());
                 ui->widgetHex->setData(getDevice(), options);
                 // TODO save directory
                 // ui->widgetHex->enableReadOnly(false);
@@ -1089,7 +1089,7 @@ void PEWidget::reloadData(bool bSaveSelection)
                 options.nInitAddress = getDisasmInitAddress();
                 options.bMenu_Hex = true;
 
-                ui->widgetDisasm->setXInfoDB(getXInfoDB());
+                ui->widgetDisasm->setXInfoDB(getXInfoDB(), getXInfoProfile());
                 ui->widgetDisasm->setData(getDevice(), options);
 
                 setDisasmInitAddress(-1);
@@ -1123,7 +1123,7 @@ void PEWidget::reloadData(bool bSaveSelection)
                 options.fileType = pe.getFileType();
                 options.bIsSearchEnable = true;
 
-                ui->widgetMemoryMap->setData(getDevice(), options, getXInfoDB());
+                ui->widgetMemoryMap->setData(getDevice(), options, getXInfoDB(), getXInfoProfile());
             }
         } else if (nType == SPE::TYPE_ENTROPY) {
             if (!isInitPresent(sInit)) {
@@ -1239,7 +1239,7 @@ void PEWidget::reloadData(bool bSaveSelection)
                 options.memoryMapRegion = binary.getMemoryMap();
 
                 ui->widgetDisasm_DosStub->setData(g_subDevice[SPE::TYPE_DOS_STUB], options);
-                ui->widgetDisasm_DosStub->setXInfoDB(getXInfoDB());
+                ui->widgetDisasm_DosStub->setXInfoDB(getXInfoDB(), getXInfoProfile());
             }
         } else if (nType == SPE::TYPE_IMAGE_NT_HEADERS) {
             if (!isInitPresent(sInit)) {
@@ -2476,13 +2476,13 @@ QString PEWidget::typeIdToString(qint32 nType)
 void PEWidget::_showInDisasmWindowAddress(XADDR nAddress)
 {
     setTreeItem(ui->treeWidgetNavi, SPE::TYPE_DISASM);
-    ui->widgetDisasm->goToAddress(nAddress);
+    ui->widgetDisasm->setLocation(nAddress, XBinary::LT_ADDRESS, 0);
 }
 
 void PEWidget::_showInDisasmWindowOffset(qint64 nOffset)
 {
     setTreeItem(ui->treeWidgetNavi, SPE::TYPE_DISASM);
-    ui->widgetDisasm->goToOffset(nOffset);
+    ui->widgetDisasm->setLocation(nOffset, XBinary::LT_OFFSET, 0);
 }
 
 void PEWidget::_showInMemoryMapWindowOffset(qint64 nOffset)

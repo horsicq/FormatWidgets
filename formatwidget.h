@@ -83,8 +83,9 @@ public:
     FormatWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent);
     ~FormatWidget();
 
-    void setXInfoDB(XInfoDB *pXInfoDB);
+    void setXInfoDB(XInfoDB *pXInfoDB, QString sXInfoProfile = "");
     XInfoDB *getXInfoDB();
+    QString getXInfoProfile();
 
     void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
     virtual void adjustView();
@@ -265,6 +266,7 @@ private:
     bool g_bAddPageEnable;
     QMap<QString, QString> g_mapInit;
     XInfoDB *g_pXInfoDB;
+    QString g_sXInfoProfile;
     XADDR g_nDisamInitAddress;
 };
 

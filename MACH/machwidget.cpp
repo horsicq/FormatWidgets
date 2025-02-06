@@ -1305,13 +1305,13 @@ QString MACHWidget::typeIdToString(qint32 nType)
 void MACHWidget::_showInDisasmWindowAddress(XADDR nAddress)
 {
     setTreeItem(ui->treeWidgetNavi, SMACH::TYPE_DISASM);
-    ui->widgetDisasm->goToAddress(nAddress);
+    ui->widgetDisasm->setLocation(nAddress, XBinary::LT_ADDRESS, 0);
 }
 
 void MACHWidget::_showInDisasmWindowOffset(qint64 nOffset)
 {
     setTreeItem(ui->treeWidgetNavi, SMACH::TYPE_DISASM);
-    ui->widgetDisasm->goToOffset(nOffset);
+    ui->widgetDisasm->setLocation(nOffset, XBinary::LT_OFFSET, 0);
 }
 
 void MACHWidget::_showInMemoryMapWindowOffset(qint64 nOffset)
@@ -1369,7 +1369,7 @@ void MACHWidget::reloadData(bool bSaveSelection)
                     options.nStartSelectionOffset = -1;
                 }
 
-                ui->widgetHex->setXInfoDB(getXInfoDB());
+                ui->widgetHex->setXInfoDB(getXInfoDB(), getXInfoProfile());
                 ui->widgetHex->setData(getDevice(), options);
                 //                ui->widgetHex->enableReadOnly(false);
             }
@@ -1380,7 +1380,7 @@ void MACHWidget::reloadData(bool bSaveSelection)
                 options.fileType = mach.getFileType();
                 options.nInitAddress = getDisasmInitAddress();
                 options.bMenu_Hex = true;
-                ui->widgetDisasm->setXInfoDB(getXInfoDB());
+                ui->widgetDisasm->setXInfoDB(getXInfoDB(), getXInfoProfile());
                 ui->widgetDisasm->setData(getDevice(), options);
 
                 setDisasmInitAddress(-1);
@@ -1414,7 +1414,7 @@ void MACHWidget::reloadData(bool bSaveSelection)
                 options.fileType = mach.getFileType();
                 options.bIsSearchEnable = true;
 
-                ui->widgetMemoryMap->setData(getDevice(), options, getXInfoDB());
+                ui->widgetMemoryMap->setData(getDevice(), options, getXInfoDB(), getXInfoProfile());
             }
         } else if (nType == SMACH::TYPE_ENTROPY) {
             if (!isInitPresent(sInit)) {

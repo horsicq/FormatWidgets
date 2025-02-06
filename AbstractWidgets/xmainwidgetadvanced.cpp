@@ -104,7 +104,7 @@ XShortcutsWidget *XMainWidgetAdvanced::createWidget(const XFW_DEF::CWOPTIONS &cw
         options.fileType = cwOptions.fileType;
         options.bMenu_Disasm = true;
         options.bMenu_MemoryMap = true;
-        _pWidget->setXInfoDB(cwOptions.pXInfoDB);
+        _pWidget->setXInfoDB(cwOptions.pXInfoDB, cwOptions.sXInfoProfile);
         _pWidget->setData(cwOptions.pDevice, options);
         pResult = _pWidget;
     } else if (cwOptions._type == XFW_DEF::TYPE_DISASM) {
@@ -113,7 +113,7 @@ XShortcutsWidget *XMainWidgetAdvanced::createWidget(const XFW_DEF::CWOPTIONS &cw
         options.fileType = cwOptions.fileType;
         options.nInitAddress = XFormats::getEntryPointAddress(cwOptions.fileType, cwOptions.pDevice, cwOptions.bIsImage, cwOptions.nImageBase);
         options.bMenu_Hex = true;
-        _pWidget->setXInfoDB(cwOptions.pXInfoDB);
+        _pWidget->setXInfoDB(cwOptions.pXInfoDB, cwOptions.sXInfoProfile);
         _pWidget->setData(cwOptions.pDevice, options);
         pResult = _pWidget;
     } else if (cwOptions._type == XFW_DEF::TYPE_HASH) {
@@ -146,7 +146,7 @@ XShortcutsWidget *XMainWidgetAdvanced::createWidget(const XFW_DEF::CWOPTIONS &cw
         XMemoryMapWidget::OPTIONS options = {};
         options.fileType = cwOptions.fileType;
         options.bIsSearchEnable = true;
-        _pWidget->setData(cwOptions.pDevice, options, cwOptions.pXInfoDB);
+        _pWidget->setData(cwOptions.pDevice, options, cwOptions.pXInfoDB, cwOptions.sXInfoProfile);
 
         connect(_pWidget, SIGNAL(findValue(quint64, XBinary::ENDIAN)), this, SLOT(findValue(quint64, XBinary::ENDIAN)));
 

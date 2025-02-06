@@ -451,7 +451,7 @@ const XFW_DEF::HEADER_RECORD records[] = {
     {r13, "r13", offsetof(XMACH_DEF::x86_thread_state64_t, r13), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {r14, "r14", offsetof(XMACH_DEF::x86_thread_state64_t, r14), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {r15, "r15", offsetof(XMACH_DEF::x86_thread_state64_t, r15), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-    {rip, "rip", offsetof(XMACH_DEF::x86_thread_state64_t, rip), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {rip, "rip", offsetof(XMACH_DEF::x86_thread_state64_t, rip), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_ADDRESS | XFW_DEF::VAL_TYPE_CODE, -1},
     {rflags, "rflags", offsetof(XMACH_DEF::x86_thread_state64_t, rflags), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {cs, "cs", offsetof(XMACH_DEF::x86_thread_state64_t, cs), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {fs, "fs", offsetof(XMACH_DEF::x86_thread_state64_t, fs), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT, -1},

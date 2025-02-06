@@ -37,7 +37,7 @@ public:
     ~ToolsWidget();
 
     void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
-    void setData(QIODevice *pDevice, FW_DEF::OPTIONS options, bool bDisasm, bool bFollow, XInfoDB *pXInfoDB);
+    void setData(QIODevice *pDevice, FW_DEF::OPTIONS options, bool bDisasm, bool bFollow, XInfoDB *pXInfoDB, QString sXInfoProfile);
     void resetWidget();
     void setEdited(qint64 nDeviceOffset, qint64 nDeviceSize);
     void setReadonly(bool bState);

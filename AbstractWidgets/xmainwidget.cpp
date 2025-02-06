@@ -115,7 +115,7 @@ void XMainWidget::reload()
     if (g_bGlobalHexEnable) {
         XHexView::OPTIONS options = {};
         options.memoryMapRegion = _memoryMap;
-        ui->widgetGlobalHex->setXInfoDB(getXInfoDB());
+        ui->widgetGlobalHex->setXInfoDB(getXInfoDB(), getXInfoProfile());
         ui->widgetGlobalHex->setData(getDevice(), options, true);
         ui->widgetGlobalHex->setBytesProLine(8);
     }
@@ -220,6 +220,7 @@ void XMainWidget::reloadData(bool bSaveSelection)
     cwOptions.bIsImage = getOptions().bIsImage;
     cwOptions.nImageBase = getOptions().nImageBase;
     cwOptions.pXInfoDB = getXInfoDB();
+    cwOptions.sXInfoProfile = getXInfoProfile();
     cwOptions.endian = (XBinary::ENDIAN)(ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + XFW_DEF::WIDGET_DATA_ENDIAN).toLongLong());
     cwOptions.mode = (XBinary::MODE)(ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + XFW_DEF::WIDGET_DATA_MODE).toLongLong());
     cwOptions.nDataOffset = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + XFW_DEF::WIDGET_DATA_OFFSET).toLongLong();
@@ -257,6 +258,8 @@ void XMainWidget::reloadData(bool bSaveSelection)
                 (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_TABLE_HEX) || (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_HEX) ||
                 (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_DISASM)) {
                 XFormatWidget *_pXFormatWidget = dynamic_cast<XFormatWidget *>(pWidget);
+
+                _pXFormatWidget->setXInfoDB(cwOptions.pXInfoDB, cwOptions.sXInfoProfile);
 
                 if (_pXFormatWidget) {
                     connect(_pXFormatWidget, SIGNAL(showCwWidget(QString, bool)), this, SLOT(showCwWidgetSlot(QString, bool)));
@@ -478,6 +481,7 @@ void XMainWidget::showCwWidgetSlot(QString sInitString, bool bNewWindow)
     cwOptions.bIsImage = getOptions().bIsImage;
     cwOptions.nImageBase = getOptions().nImageBase;
     cwOptions.pXInfoDB = getXInfoDB();
+    cwOptions.sXInfoProfile = getXInfoProfile();
     cwOptions.endian = getEndian();
     cwOptions.mode = getMode();
     cwOptions.memoryMap = getMemoryMap();
@@ -497,7 +501,14 @@ void XMainWidget::showCwWidgetSlot(QString sInitString, bool bNewWindow)
         if ((cwOptions.widgetMode == XFW_DEF::WIDGETMODE_HEADER) || (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_TABLE) ||
             (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_TABLE_HEX) || (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_HEX) ||
             (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_DISASM)) {
-            connect(pWidget, SIGNAL(showCwWidget(QString, bool)), this, SLOT(showCwWidgetSlot(QString, bool)));
+
+            XFormatWidget *_pXFormatWidget = dynamic_cast<XFormatWidget *>(pWidget);
+
+            _pXFormatWidget->setXInfoDB(cwOptions.pXInfoDB, cwOptions.sXInfoProfile);
+
+            if (_pXFormatWidget) {
+                connect(_pXFormatWidget, SIGNAL(showCwWidget(QString, bool)), this, SLOT(showCwWidgetSlot(QString, bool)));
+            }
         }
 
         pWidget->setProperty("INITSTRING", sInitString);

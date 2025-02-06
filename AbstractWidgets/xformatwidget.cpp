@@ -55,14 +55,20 @@ XFormatWidget::~XFormatWidget()
     }
 }
 
-void XFormatWidget::setXInfoDB(XInfoDB *pXInfoDB)
+void XFormatWidget::setXInfoDB(XInfoDB *pXInfoDB, QString sXInfoProfile)
 {
-    this->g_pXInfoDB = pXInfoDB;
+    g_pXInfoDB = pXInfoDB;
+    g_sXInfoProfile = sXInfoProfile;
 }
 
 XInfoDB *XFormatWidget::getXInfoDB()
 {
     return g_pXInfoDB;
+}
+
+QString XFormatWidget::getXInfoProfile()
+{
+    return g_sXInfoProfile;
 }
 
 void XFormatWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
@@ -142,7 +148,7 @@ void XFormatWidget::setCwOptions(const XFW_DEF::CWOPTIONS &cwOptions, bool bRelo
     formatOptions.fileType = cwOptions.fileType;
 
     setData(cwOptions.pDevice, formatOptions);
-    setXInfoDB(cwOptions.pXInfoDB);
+    setXInfoDB(cwOptions.pXInfoDB, cwOptions.sXInfoProfile);
 
     if (bReload) {
         reloadData(false);
@@ -2955,10 +2961,10 @@ void XFormatWidget::_followIn(XOptions::WIDGETTYPE widgetType)
 
 void XFormatWidget::onToolButtonClicked()
 {
-    qint32 nLocation = sender()->property("LOCATION").toULongLong();
-    qint64 nLocationType = sender()->property("LOCATIONTYPE").toInt();
+    quint64 nLocation = sender()->property("LOCATION").toULongLong();
+    qint32 nLocationType = sender()->property("LOCATIONTYPE").toInt();
     qint64 nSize = sender()->property("SIZE").toInt();
-    qint64 nWidgetType = sender()->property("WIDGETTYPE").toInt();
+    qint32 nWidgetType = sender()->property("WIDGETTYPE").toInt();
 
     emit followLocation(nLocation, nLocationType, nSize, nWidgetType);
 }

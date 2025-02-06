@@ -155,13 +155,13 @@ void BinaryWidget::adjustHeaderTable(qint32 nType, QTableWidget *pTableWidget)
 void BinaryWidget::_showInDisasmWindowAddress(XADDR nAddress)
 {
     setTreeItem(ui->treeWidgetNavi, SBINARY::TYPE_DISASM);
-    ui->widgetDisasm->goToAddress(nAddress);
+    ui->widgetDisasm->setLocation(nAddress, XBinary::LT_ADDRESS, 0);
 }
 
 void BinaryWidget::_showInDisasmWindowOffset(qint64 nOffset)
 {
     setTreeItem(ui->treeWidgetNavi, SBINARY::TYPE_DISASM);
-    ui->widgetDisasm->goToOffset(nOffset);
+    ui->widgetDisasm->setLocation(nOffset, XBinary::LT_OFFSET, 0);
 }
 
 void BinaryWidget::_showInMemoryMapWindowOffset(qint64 nOffset)
@@ -217,7 +217,7 @@ void BinaryWidget::reloadData(bool bSaveSelection)
                     options.nStartSelectionOffset = -1;
                 }
 
-                ui->widgetHex->setXInfoDB(getXInfoDB());
+                ui->widgetHex->setXInfoDB(getXInfoDB(), getXInfoProfile());
                 ui->widgetHex->setData(getDevice(), options);
                 //                ui->widgetHex->setBackupFileName(getOptions().sBackupFileName);
                 //                ui->widgetHex->enableReadOnly(false);
@@ -231,7 +231,7 @@ void BinaryWidget::reloadData(bool bSaveSelection)
                 options.fileType = getFileType();
                 options.nInitAddress = getDisasmInitAddress();
                 options.bMenu_Hex = true;
-                ui->widgetDisasm->setXInfoDB(getXInfoDB());
+                ui->widgetDisasm->setXInfoDB(getXInfoDB(), getXInfoProfile());
                 ui->widgetDisasm->setData(getDevice(), options);
 
                 setDisasmInitAddress(-1);
@@ -265,7 +265,7 @@ void BinaryWidget::reloadData(bool bSaveSelection)
                 options.fileType = getFileType();
                 options.bIsSearchEnable = true;
 
-                ui->widgetMemoryMap->setData(getDevice(), options, getXInfoDB());
+                ui->widgetMemoryMap->setData(getDevice(), options, getXInfoDB(), getXInfoProfile());
             }
         } else if (nType == SBINARY::TYPE_ENTROPY) {
             if (!isInitPresent(sInit)) {

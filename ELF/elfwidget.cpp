@@ -310,7 +310,7 @@ void ELFWidget::reloadData(bool bSaveSelection)
                     options.nStartSelectionOffset = -1;
                 }
 
-                ui->widgetHex->setXInfoDB(getXInfoDB());
+                ui->widgetHex->setXInfoDB(getXInfoDB(), getXInfoProfile());
                 ui->widgetHex->setData(getDevice(), options);
                 //                ui->widgetHex->setBackupFileName(getOptions().sBackupFileName);
                 //                ui->widgetHex->enableReadOnly(false);
@@ -324,7 +324,7 @@ void ELFWidget::reloadData(bool bSaveSelection)
                 options.fileType = elf.getFileType();
                 options.nInitAddress = getDisasmInitAddress();
                 options.bMenu_Hex = true;
-                ui->widgetDisasm->setXInfoDB(getXInfoDB());
+                ui->widgetDisasm->setXInfoDB(getXInfoDB(), getXInfoProfile());
                 ui->widgetDisasm->setData(getDevice(), options);
 
                 setDisasmInitAddress(-1);
@@ -358,7 +358,7 @@ void ELFWidget::reloadData(bool bSaveSelection)
                 options.fileType = elf.getFileType();
                 options.bIsSearchEnable = true;
 
-                ui->widgetMemoryMap->setData(getDevice(), options, getXInfoDB());
+                ui->widgetMemoryMap->setData(getDevice(), options, getXInfoDB(), getXInfoProfile());
             }
         } else if (nType == SELF::TYPE_ENTROPY) {
             if (!isInitPresent(sInit)) {
@@ -907,13 +907,13 @@ QString ELFWidget::typeIdToString(qint32 nType)
 void ELFWidget::_showInDisasmWindowAddress(XADDR nAddress)
 {
     setTreeItem(ui->treeWidgetNavi, SELF::TYPE_DISASM);
-    ui->widgetDisasm->goToAddress(nAddress);
+    ui->widgetDisasm->setLocation(nAddress, XBinary::LT_ADDRESS, 0);
 }
 
 void ELFWidget::_showInDisasmWindowOffset(qint64 nOffset)
 {
     setTreeItem(ui->treeWidgetNavi, SELF::TYPE_DISASM);
-    ui->widgetDisasm->goToOffset(nOffset);
+    ui->widgetDisasm->setLocation(nOffset, XBinary::LT_OFFSET, 0);
 }
 
 void ELFWidget::_showInMemoryMapWindowOffset(qint64 nOffset)

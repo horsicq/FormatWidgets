@@ -295,13 +295,13 @@ QString LEWidget::typeIdToString(qint32 nType)
 void LEWidget::_showInDisasmWindowAddress(qint64 nAddress)
 {
     setTreeItem(ui->treeWidgetNavi, SLE::TYPE_DISASM);
-    ui->widgetDisasm->goToAddress(nAddress);
+    ui->widgetDisasm->setLocation(nAddress, XBinary::LT_ADDRESS, 0);
 }
 
 void LEWidget::_showInDisasmWindowOffset(qint64 nOffset)
 {
     setTreeItem(ui->treeWidgetNavi, SLE::TYPE_DISASM);
-    ui->widgetDisasm->goToOffset(nOffset);
+    ui->widgetDisasm->setLocation(nOffset, XBinary::LT_OFFSET, 0);
 }
 
 void LEWidget::_showInMemoryMapWindowOffset(qint64 nOffset)
@@ -364,7 +364,7 @@ void LEWidget::reloadData(bool bSaveSelection)
                     options.nStartSelectionOffset = -1;
                 }
 
-                ui->widgetHex->setXInfoDB(getXInfoDB());
+                ui->widgetHex->setXInfoDB(getXInfoDB(), getXInfoProfile());
                 ui->widgetHex->setData(getDevice(), options);
                 //                ui->widgetHex->setBackupFileName(getOptions().sBackupFileName);
                 //                ui->widgetHex->enableReadOnly(false);
@@ -378,7 +378,7 @@ void LEWidget::reloadData(bool bSaveSelection)
                 options.fileType = le.getFileType();
                 options.nInitAddress = getDisasmInitAddress();
                 options.bMenu_Hex = true;
-                ui->widgetDisasm->setXInfoDB(getXInfoDB());
+                ui->widgetDisasm->setXInfoDB(getXInfoDB(), getXInfoProfile());
                 ui->widgetDisasm->setData(getDevice(), options);
 
                 setDisasmInitAddress(-1);
@@ -412,7 +412,7 @@ void LEWidget::reloadData(bool bSaveSelection)
                 options.fileType = le.getFileType();
                 options.bIsSearchEnable = true;
 
-                ui->widgetMemoryMap->setData(getDevice(), options, getXInfoDB());
+                ui->widgetMemoryMap->setData(getDevice(), options, getXInfoDB(), getXInfoProfile());
             }
         } else if (nType == SLE::TYPE_ENTROPY) {
             if (!isInitPresent(sInit)) {

@@ -50,14 +50,20 @@ FormatWidget::~FormatWidget()
     }
 }
 
-void FormatWidget::setXInfoDB(XInfoDB *pXInfoDB)
+void FormatWidget::setXInfoDB(XInfoDB *pXInfoDB, QString sXInfoProfile)
 {
-    this->g_pXInfoDB = pXInfoDB;
+    g_pXInfoDB = pXInfoDB;
+    g_sXInfoProfile = sXInfoProfile;
 }
 
 XInfoDB *FormatWidget::getXInfoDB()
 {
     return g_pXInfoDB;
+}
+
+QString FormatWidget::getXInfoProfile()
+{
+    return g_sXInfoProfile;
 }
 
 void FormatWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
@@ -339,7 +345,7 @@ bool FormatWidget::loadHexSubdevice(qint64 nOffset, qint64 nSize, XADDR nAddress
     hexOptions.bOffset = bOffset;
 
     pToolsWidget->setGlobal(getShortcuts(), getGlobalOptions());
-    pToolsWidget->setData((*ppSubDevice), hexOptions, bDisasm, bFollow, getXInfoDB());
+    pToolsWidget->setData((*ppSubDevice), hexOptions, bDisasm, bFollow, getXInfoDB(), getXInfoProfile());
 
     return true;
 }
@@ -901,7 +907,7 @@ void FormatWidget::resetWidget()
             if (pChild) {
                 XMultiDisasmWidget::OPTIONS options = {};
 
-                pChild->setXInfoDB(nullptr);
+                pChild->setXInfoDB(nullptr, "");
                 pChild->setData(nullptr, options);
             }
         }
@@ -917,7 +923,7 @@ void FormatWidget::resetWidget()
             if (pChild) {
                 XMemoryMapWidget::OPTIONS options = {};
 
-                pChild->setData(nullptr, options, nullptr);
+                pChild->setData(nullptr, options, nullptr, "");
             }
         }
     }
@@ -1218,7 +1224,7 @@ void FormatWidget::showHex(qint64 nOffset, qint64 nSize)
     DialogHexView dialogHexView(this);
     dialogHexView.setGlobal(getShortcuts(), getGlobalOptions());
     dialogHexView.setData(getDevice(), hexOptions);
-    dialogHexView.setXInfoDB(getXInfoDB());
+    dialogHexView.setXInfoDB(getXInfoDB(), getXInfoProfile());
 
     connect(&dialogHexView, SIGNAL(editState(bool)), this, SLOT(setEdited(bool)));
 
