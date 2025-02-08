@@ -424,7 +424,7 @@ const XFW_DEF::HEADER_RECORD records[] = {
     {esp, "esp", offsetof(XMACH_DEF::x86_thread_state32_t, esp), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {ss, "ss", offsetof(XMACH_DEF::x86_thread_state32_t, ss), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {eflags, "eflags", offsetof(XMACH_DEF::x86_thread_state32_t, eflags), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-    {eip, "eip", offsetof(XMACH_DEF::x86_thread_state32_t, eip), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {eip, "eip", offsetof(XMACH_DEF::x86_thread_state32_t, eip), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_ADDRESS | XFW_DEF::VAL_TYPE_CODE, -1},
     {cs, "cs", offsetof(XMACH_DEF::x86_thread_state32_t, cs), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {ds, "ds", offsetof(XMACH_DEF::x86_thread_state32_t, ds), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {es, "es", offsetof(XMACH_DEF::x86_thread_state32_t, es), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
@@ -476,7 +476,7 @@ const XFW_DEF::HEADER_RECORD records[] = {
     {r12, "r12", offsetof(XMACH_DEF::arm_thread_state32_t, r) + sizeof(quint32) * 12, 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {sp, "sp", offsetof(XMACH_DEF::arm_thread_state32_t, sp), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {lr, "lr", offsetof(XMACH_DEF::arm_thread_state32_t, lr), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-    {pc, "pc", offsetof(XMACH_DEF::arm_thread_state32_t, pc), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {pc, "pc", offsetof(XMACH_DEF::arm_thread_state32_t, pc), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_ADDRESS | XFW_DEF::VAL_TYPE_CODE, -1},
     {cpsr, "cpsr", offsetof(XMACH_DEF::arm_thread_state32_t, cpsr), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
 };
 }
@@ -515,7 +515,7 @@ const XFW_DEF::HEADER_RECORD records[] = {
     {fp, "fp", offsetof(XMACH_DEF::arm_thread_state64_t, fp), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {lr, "lr", offsetof(XMACH_DEF::arm_thread_state64_t, lr), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {sp, "sp", offsetof(XMACH_DEF::arm_thread_state64_t, sp), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-    {pc, "pc", offsetof(XMACH_DEF::arm_thread_state64_t, pc), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {pc, "pc", offsetof(XMACH_DEF::arm_thread_state64_t, pc), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_ADDRESS | XFW_DEF::VAL_TYPE_CODE, -1},
     {cpsr, "cpsr", offsetof(XMACH_DEF::arm_thread_state64_t, cpsr), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {pad, "pad", offsetof(XMACH_DEF::arm_thread_state64_t, pad), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT, -1},
 };
@@ -523,7 +523,7 @@ const XFW_DEF::HEADER_RECORD records[] = {
 
 namespace X_ppc_thread_state32_t {
 const XFW_DEF::HEADER_RECORD records[] = {
-    {srr0, "srr0", offsetof(XMACH_DEF::ppc_thread_state32_t, srr0), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {srr0, "srr0", offsetof(XMACH_DEF::ppc_thread_state32_t, srr0), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_ADDRESS | XFW_DEF::VAL_TYPE_CODE, -1},
     {srr1, "srr1", offsetof(XMACH_DEF::ppc_thread_state32_t, srr1), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {r0, "r0", offsetof(XMACH_DEF::ppc_thread_state32_t, r) + sizeof(quint32) * 0, 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {r1, "r1", offsetof(XMACH_DEF::ppc_thread_state32_t, r) + sizeof(quint32) * 1, 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
@@ -588,7 +588,7 @@ const XFW_DEF::HEADER_RECORD records[] = {
     {areg7, "areg7", offsetof(XMACH_DEF::m68k_thread_state32_t, areg) + sizeof(quint32) * 7, 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {pad0, "pad0", offsetof(XMACH_DEF::m68k_thread_state32_t, pad0), 2, "uint16", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {sr, "sr", offsetof(XMACH_DEF::m68k_thread_state32_t, sr), 2, "uint16", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-    {pc, "pc", offsetof(XMACH_DEF::m68k_thread_state32_t, pc), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {pc, "pc", offsetof(XMACH_DEF::m68k_thread_state32_t, pc), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_ADDRESS | XFW_DEF::VAL_TYPE_CODE, -1},
 };
 
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
