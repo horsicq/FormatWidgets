@@ -2649,7 +2649,8 @@ void XFormatWidget::contextMenuGenericHeaderWidget(const QPoint &pos, QTableWidg
     }
 }
 
-void XFormatWidget::contextMenuGenericTableWidget(const QPoint &pos, QTableView *pTableView, QList<XFW_DEF::HEADER_RECORD> *pListHeaderRecords, XFW_DEF::CWOPTIONS *pCwOptions)
+void XFormatWidget::contextMenuGenericTableWidget(const QPoint &pos, QTableView *pTableView, QList<XFW_DEF::HEADER_RECORD> *pListHeaderRecords,
+                                                  XFW_DEF::CWOPTIONS *pCwOptions)
 {
     qint32 nRow = pTableView->currentIndex().row();
 
@@ -2684,7 +2685,8 @@ void XFormatWidget::contextMenuGenericTableWidget(const QPoint &pos, QTableView 
         qint32 nNumberOfColumns = pListHeaderRecords->count();
 
         for (qint32 i = 0; i < nNumberOfColumns; i++) {
-            if ((pListHeaderRecords->at(i).vtype & XFW_DEF::VAL_TYPE_ADDRESS) || (pListHeaderRecords->at(i).vtype & XFW_DEF::VAL_TYPE_RELADDRESS) || (pListHeaderRecords->at(i).vtype & XFW_DEF::VAL_TYPE_OFFSET)) {
+            if ((pListHeaderRecords->at(i).vtype & XFW_DEF::VAL_TYPE_ADDRESS) || (pListHeaderRecords->at(i).vtype & XFW_DEF::VAL_TYPE_RELADDRESS) ||
+                (pListHeaderRecords->at(i).vtype & XFW_DEF::VAL_TYPE_OFFSET)) {
                 QString sValue = pTableView->model()->data(pTableView->model()->index(nRow, i), Qt::DisplayRole).toString();
                 XShortcuts::MENUITEM menuItem = {};
 

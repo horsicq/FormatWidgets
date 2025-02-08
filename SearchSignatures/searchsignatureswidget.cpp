@@ -304,4 +304,3 @@ void SearchSignaturesWidget::viewSelection()
         }
     }
 }
-

@@ -66,7 +66,6 @@ SearchStringsWidget::SearchStringsWidget(QWidget *pParent) : XShortcutsWidget(pP
     ui->spinBoxMinLength->setMinimum(2);
     ui->spinBoxMinLength->setValue(5);
 
-
     // #if (QT_VERSION_MAJOR < 6) || defined(QT_CORE5COMPAT_LIB)
     //     ui->comboBoxANSICodec->addItem("");
 

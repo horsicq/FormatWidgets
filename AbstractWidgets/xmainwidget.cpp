@@ -501,7 +501,6 @@ void XMainWidget::showCwWidgetSlot(QString sInitString, bool bNewWindow)
         if ((cwOptions.widgetMode == XFW_DEF::WIDGETMODE_HEADER) || (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_TABLE) ||
             (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_TABLE_HEX) || (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_HEX) ||
             (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_DISASM)) {
-
             XFormatWidget *_pXFormatWidget = dynamic_cast<XFormatWidget *>(pWidget);
 
             _pXFormatWidget->setXInfoDB(cwOptions.pXInfoDB, cwOptions.sXInfoProfile);

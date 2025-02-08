@@ -41,7 +41,6 @@ class SearchValuesWidget;
 class SearchValuesWidget : public XShortcutsWidget {
     Q_OBJECT
 
-
 public:
     struct OPTIONS {
         XBinary::FT fileType;
@@ -77,7 +76,6 @@ private slots:
 
 private:
     void _search(DialogSearch::SEARCHMODE mode);
-
 
 private:
     Ui::SearchValuesWidget *ui;
