@@ -35,6 +35,7 @@ public:
     ~XGenericTableWidget();
     virtual void reloadData(bool bSaveSelection);
     virtual void adjustView();
+    void setCustomWidgetEnabled(bool bState);
 
 private slots:
     void on_tableViewMain_customContextMenuRequested(const QPoint &pos);
@@ -49,6 +50,7 @@ private:
     Ui::XGenericTableWidget *ui;
     QStandardItemModel *g_pModel;
     QList<XFW_DEF::HEADER_RECORD> g_listHeaderRecords;
+    bool g_bCustomWidgetEnabled;
 };
 
 #endif  // XGENERICTABLEWIDGET_H

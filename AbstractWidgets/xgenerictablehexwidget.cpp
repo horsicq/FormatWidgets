@@ -21,7 +21,7 @@
 #include "xgenerictablehexwidget.h"
 #include "ui_xgenerictablehexwidget.h"
 
-XGenericTableHexWidget::XGenericTableHexWidget(QWidget *parent) : XFormatWidget(parent), ui(new Ui::XGenericTableHexWidget)
+XGenericTableHexWidget::XGenericTableHexWidget(QWidget *pParent) : XFormatWidget(pParent), ui(new Ui::XGenericTableHexWidget)
 {
     ui->setupUi(this);
 
@@ -32,6 +32,8 @@ XGenericTableHexWidget::XGenericTableHexWidget(QWidget *parent) : XFormatWidget(
     connect(ui->pageHex, SIGNAL(currentLocationChanged(quint64, qint32, qint64)), this, SIGNAL(currentLocationChanged(quint64, qint32, qint64)));
     connect(ui->pageHex, SIGNAL(dataChanged(qint64, qint64)), this, SIGNAL(dataChanged(qint64, qint64)));
     connect(ui->pageHex, SIGNAL(followLocation(quint64, qint32, qint64, qint32)), this, SIGNAL(followLocation(quint64, qint32, qint64, qint32)));
+
+    ui->widgetMain->setCustomWidgetEnabled(true);
 }
 
 XGenericTableHexWidget::~XGenericTableHexWidget()

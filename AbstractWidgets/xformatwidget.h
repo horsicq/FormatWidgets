@@ -145,7 +145,7 @@ public:
     //    nData);
 
     void setHeaderSelection(QTableWidget *pTableWidget);
-    void setTableSelection(QTableView *pTableView);
+    void setTableSelection(QTableView *pTableView, bool bCustomWidgetEnable);
 
     QColor getEnabledColor();
     QColor getDisabledColor();

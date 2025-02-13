@@ -211,12 +211,13 @@ void XProcessData::process()
         for (qint32 i = 0; (i < nNumberOfRows) && (!(g_pPdStruct->bIsStop)); i++) {
             quint64 nValue = 0;
             for (qint32 j = 0; j < nNumberOfColumns - 1; j++) {
+                quint32 vtype = g_pListHeaderRecords->at(j).vtype;
                 QVariant var = XFormatWidget::_readVariant(&mach, _nOffset + g_pListHeaderRecords->at(j).nOffset, g_pListHeaderRecords->at(j).nSize,
-                                                           g_pListHeaderRecords->at(j).vtype, (g_pCwOptions->endian == XBinary::ENDIAN_BIG));
+                                                           vtype, (g_pCwOptions->endian == XBinary::ENDIAN_BIG));
                 if (j == 0) {
-                    XFormatWidget::setItemToModelData((*g_ppModel), i, j, i, 0, g_pListHeaderRecords->at(j).vtype, g_pCwOptions->_type, _nOffset, nHeaderSize, 0, 0, 0);
+                    XFormatWidget::setItemToModelData((*g_ppModel), i, j, i, 0, vtype, g_pCwOptions->_type, _nOffset, nHeaderSize, 0, 0, 0);
                 } else {
-                    XFormatWidget::setItemToModel((*g_ppModel), i, j, var, g_pListHeaderRecords->at(j).nSize, g_pListHeaderRecords->at(j).vtype);
+                    XFormatWidget::setItemToModel((*g_ppModel), i, j, var, g_pListHeaderRecords->at(j).nSize, vtype);
                 }
 
                 if (j == 1) {

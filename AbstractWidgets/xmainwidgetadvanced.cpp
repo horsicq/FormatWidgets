@@ -55,7 +55,11 @@ QTreeWidgetItem *XMainWidgetAdvanced::_addBaseItems(QTreeWidget *pTreeWidget, XB
                                     XBinary::ENDIAN_UNKNOWN, "", ""));
     pResult->addChild(createNewItem(XFW_DEF::TYPE_SIGNATURES, XFW_DEF::WIDGETMODE_UNKNOWN, XOptions::ICONTYPE_SIGNATURE, 0, -1, 0, 0, 0, XBinary::MODE_UNKNOWN,
                                     XBinary::ENDIAN_UNKNOWN, "", ""));
+    pResult->addChild(createNewItem(XFW_DEF::TYPE_REGIONS, XFW_DEF::WIDGETMODE_UNKNOWN, XOptions::ICONTYPE_SEGMENT, 0, -1, 0, 0, 0, XBinary::MODE_UNKNOWN,
+                                    XBinary::ENDIAN_UNKNOWN, "", ""));
     pResult->addChild(createNewItem(XFW_DEF::TYPE_MEMORYMAP, XFW_DEF::WIDGETMODE_UNKNOWN, XOptions::ICONTYPE_MEMORYMAP, 0, -1, 0, 0, 0, XBinary::MODE_UNKNOWN,
+                                    XBinary::ENDIAN_UNKNOWN, "", ""));
+    pResult->addChild(createNewItem(XFW_DEF::TYPE_SYMBOLS, XFW_DEF::WIDGETMODE_UNKNOWN, XOptions::ICONTYPE_SYMBOL, 0, -1, 0, 0, 0, XBinary::MODE_UNKNOWN,
                                     XBinary::ENDIAN_UNKNOWN, "", ""));
     pResult->addChild(createNewItem(XFW_DEF::TYPE_ENTROPY, XFW_DEF::WIDGETMODE_UNKNOWN, XOptions::ICONTYPE_ENTROPY, 0, -1, 0, 0, 0, XBinary::MODE_UNKNOWN,
                                     XBinary::ENDIAN_UNKNOWN, "", ""));
@@ -140,6 +144,14 @@ XShortcutsWidget *XMainWidgetAdvanced::createWidget(const XFW_DEF::CWOPTIONS &cw
         signaturesOptions.bMenu_Hex = true;
         signaturesOptions.bMenu_Disasm = true;
         _pWidget->setData(cwOptions.pDevice, cwOptions.fileType, signaturesOptions, false);
+        pResult = _pWidget;
+    } else if (cwOptions._type == XFW_DEF::TYPE_REGIONS) {
+        XRegionsWidget *_pWidget = new XRegionsWidget(cwOptions.pParent);
+        // TODO
+        pResult = _pWidget;
+    } else if (cwOptions._type == XFW_DEF::TYPE_SYMBOLS) {
+        XSymbolsWidget *_pWidget = new XSymbolsWidget(cwOptions.pParent);
+        // TODO
         pResult = _pWidget;
     } else if (cwOptions._type == XFW_DEF::TYPE_MEMORYMAP) {
         XMemoryMapWidget *_pWidget = new XMemoryMapWidget(cwOptions.pParent);

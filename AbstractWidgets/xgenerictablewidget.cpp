@@ -25,6 +25,7 @@ XGenericTableWidget::XGenericTableWidget(QWidget *pParent) : XFormatWidget(pPare
 {
     ui->setupUi(this);
     g_pModel = nullptr;
+    g_bCustomWidgetEnabled = false;
 
     XOptions::adjustToolButton(ui->toolButtonTableReload, XOptions::ICONTYPE_RELOAD);
     XOptions::adjustToolButton(ui->toolButtonTableSize, XOptions::ICONTYPE_SIZE);
@@ -77,6 +78,11 @@ void XGenericTableWidget::adjustView()
     getGlobalOptions()->adjustTableView(ui->tableViewMain, XOptions::ID_VIEW_FONT_TABLEVIEWS);
 }
 
+void XGenericTableWidget::setCustomWidgetEnabled(bool bState)
+{
+    g_bCustomWidgetEnabled = bState;
+}
+
 void XGenericTableWidget::on_tableViewMain_customContextMenuRequested(const QPoint &pos)
 {
     contextMenuGenericTableWidget(pos, ui->tableViewMain, &g_listHeaderRecords, getCwOptions());
@@ -87,14 +93,14 @@ void XGenericTableWidget::onTableView_currentRowChanged(const QModelIndex &curre
     Q_UNUSED(current)
     Q_UNUSED(previous)
 
-    setTableSelection(ui->tableViewMain);
+    setTableSelection(ui->tableViewMain, g_bCustomWidgetEnabled);
 }
 
 void XGenericTableWidget::on_tableViewMain_clicked(const QModelIndex &index)
 {
     Q_UNUSED(index)
 
-    setTableSelection(ui->tableViewMain);
+    setTableSelection(ui->tableViewMain, g_bCustomWidgetEnabled);
 }
 
 void XGenericTableWidget::on_toolButtonTableReload_clicked()

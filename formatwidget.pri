@@ -141,6 +141,16 @@ FORMS += \
     include($$PWD/../XVisualizationWidget/xvisualizationwidget.pri)
 }
 
+!contains(XCONFIG, xsymbolswidget) {
+    XCONFIG += xsymbolswidget
+    include($$PWD/../XSymbolsWidget/xsymbolswidget.pri)
+}
+
+!contains(XCONFIG, xregionswidget) {
+    XCONFIG += xregionswidget
+    include($$PWD/../XRegionsWidget/xregionswidget.pri)
+}
+
 !contains(XCONFIG, xoptionswidget) {
     XCONFIG += xoptionswidget
     include($$PWD/../XOptions/xoptionswidget.pri)

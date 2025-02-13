@@ -31,7 +31,7 @@ class XGenericTableHexWidget : public XFormatWidget {
     Q_OBJECT
 
 public:
-    explicit XGenericTableHexWidget(QWidget *parent = nullptr);
+    explicit XGenericTableHexWidget(QWidget *pParent = nullptr);
     ~XGenericTableHexWidget();
 
     virtual void reloadData(bool bSaveSelection);

@@ -24,6 +24,7 @@ include(${CMAKE_CURRENT_LIST_DIR}/../XDEX/xdex.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../XArchive/xarchives.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../XPDF/xpdf.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../XSymbolsWidget/xsymbolswidget.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/../XRegionsWidget/xregionswidget.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../XOnlineTools/xvirustotalwidget.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../XExtractorWidget/xextractorwidget.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../XVisualizationWidget/xvisualizationwidget.cmake)
@@ -55,6 +56,7 @@ set(FORMATWIDGET_SOURCES
     ${XARCHIVES_SOURCES}
     ${XPDF_SOURCES}
     ${XSYMBOLSWIDGET_SOURCES}
+    ${XREGIONSWIDGET_SOURCES}
     ${XVIRUSTOTALWIDGET_SOURCES}
     ${XEXTRACTORWIDGET_SOURCES}
     ${XVISUALIZATIONWIDGET_SOURCES}

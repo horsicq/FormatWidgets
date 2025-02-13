@@ -274,8 +274,12 @@ QString XFormatWidget::getTypeTitle(XFW_DEF::TYPE type, XBinary::MODE mode, XBin
         sResult = tr("Strings");
     } else if (type == XFW_DEF::TYPE_SIGNATURES) {
         sResult = tr("Signatures");
+    } else if (type == XFW_DEF::TYPE_REGIONS) {
+        sResult = tr("Regions");
     } else if (type == XFW_DEF::TYPE_MEMORYMAP) {
         sResult = tr("Memory map");
+    } else if (type == XFW_DEF::TYPE_SYMBOLS) {
+        sResult = tr("Symbols");
     } else if (type == XFW_DEF::TYPE_ENTROPY) {
         sResult = tr("Entropy");
     } else if (type == XFW_DEF::TYPE_NFDSCAN) {
@@ -966,7 +970,7 @@ void XFormatWidget::setHeaderSelection(QTableWidget *pTableWidget)
     }
 }
 
-void XFormatWidget::setTableSelection(QTableView *pTableView)
+void XFormatWidget::setTableSelection(QTableView *pTableView, bool bCustomWidgetEnable)
 {
     qint32 nRow = pTableView->currentIndex().row();
 
@@ -982,7 +986,9 @@ void XFormatWidget::setTableSelection(QTableView *pTableView)
             emit currentLocationChanged(nHeaderOffset, XBinary::LT_OFFSET, nHeaderSize);
         }
 
-        emit followLocation(nDataOffset, XBinary::LT_OFFSET, nDataSize, XOptions::WIDGETTYPE_CUSTOM);
+        if (bCustomWidgetEnable) {
+            emit followLocation(nDataOffset, XBinary::LT_OFFSET, nDataSize, XOptions::WIDGETTYPE_CUSTOM);
+        }
     }
 }
 
@@ -2670,7 +2676,7 @@ void XFormatWidget::contextMenuGenericTableWidget(const QPoint &pos, QTableView 
             QString sTypeString = _getInitString(_type, nDataOffset, nDataSize, nDataCount);
 
             XShortcuts::MENUITEM menuItem = {};
-            menuItem.nShortcutId = XShortcuts::X_ID_TABLE_SHOW;
+            menuItem.nShortcutId = X_ID_TABLE_SHOW;
             menuItem.pRecv = this;
             menuItem.pMethod = SLOT(showTableRecord());
             menuItem.nSubgroups = XShortcuts::GROUPID_NONE;
