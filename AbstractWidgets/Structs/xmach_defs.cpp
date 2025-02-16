@@ -340,7 +340,8 @@ const XFW_DEF::HEADER_RECORD records[] = {
     {cmd, "cmd", offsetof(XMACH_DEF::entry_point_command, cmd), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {cmdsize, "cmdsize", offsetof(XMACH_DEF::entry_point_command, cmdsize), 4, "uint32",
      XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE | XFW_DEF::VAL_TYPE_RELTOHEADER, -1},
-    {entryoff, "entryoff", offsetof(XMACH_DEF::entry_point_command, entryoff), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET | XFW_DEF::VAL_TYPE_CODE, -1},
+    {entryoff, "entryoff", offsetof(XMACH_DEF::entry_point_command, entryoff), 8, "uint64",
+     XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET | XFW_DEF::VAL_TYPE_CODE, -1},
     {stacksize, "stacksize", offsetof(XMACH_DEF::entry_point_command, stacksize), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, -1},
 };
 }

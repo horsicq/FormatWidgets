@@ -212,8 +212,8 @@ void XProcessData::process()
             quint64 nValue = 0;
             for (qint32 j = 0; j < nNumberOfColumns - 1; j++) {
                 quint32 vtype = g_pListHeaderRecords->at(j).vtype;
-                QVariant var = XFormatWidget::_readVariant(&mach, _nOffset + g_pListHeaderRecords->at(j).nOffset, g_pListHeaderRecords->at(j).nSize,
-                                                           vtype, (g_pCwOptions->endian == XBinary::ENDIAN_BIG));
+                QVariant var = XFormatWidget::_readVariant(&mach, _nOffset + g_pListHeaderRecords->at(j).nOffset, g_pListHeaderRecords->at(j).nSize, vtype,
+                                                           (g_pCwOptions->endian == XBinary::ENDIAN_BIG));
                 if (j == 0) {
                     XFormatWidget::setItemToModelData((*g_ppModel), i, j, i, 0, vtype, g_pCwOptions->_type, _nOffset, nHeaderSize, 0, 0, 0);
                 } else {
