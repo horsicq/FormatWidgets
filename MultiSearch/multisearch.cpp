@@ -121,7 +121,7 @@ void MultiSearch::processSignature(XBinary::SIGNATUREDB_RECORD signatureRecord)
     QVector<XBinary::MS_RECORD> listResult =
         binary.multiSearch_signature(&(g_options.memoryMap), 0, binary.getSize(), N_MAX, signatureRecord.sSignature, signatureRecord.nNumber, g_pPdStruct);
 
-    g_pListRecords->append(listResult);
+    (*g_pListRecords) += listResult;
 
     XBinary::setPdStructStatus(g_pPdStruct, g_nFreeIndex, signatureRecord.sName);
     XBinary::setPdStructCurrent(g_pPdStruct, g_nFreeIndex, signatureRecord.nNumber);
