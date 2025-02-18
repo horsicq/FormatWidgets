@@ -45,6 +45,7 @@ private slots:
     void on_toolButtonTableSize_clicked();
     void on_toolButtonTableSave_clicked();
     void on_tableViewMain_doubleClicked(const QModelIndex &index);
+    void on_comboBoxDemangle_currentIndexChanged(int nIndex);
 
 private:
     Ui::XGenericTableWidget *ui;

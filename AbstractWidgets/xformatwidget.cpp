@@ -36,6 +36,8 @@ XFormatWidget::XFormatWidget(QWidget *pParent) : XShortcutsWidget(pParent)
     g_colDisabled = QWidget::palette().color(QPalette::Window);
     g_colEnabled = QWidget::palette().color(QPalette::BrightText);
 
+    g_demangleMode = XDemangle::MODE_UNKNOWN;
+
     XFormatWidget::setReadonly(true);
 }
 
@@ -198,6 +200,16 @@ void XFormatWidget::setMemoryMap(const XBinary::_MEMORY_MAP &memoryMap)
 XBinary::_MEMORY_MAP XFormatWidget::getMemoryMap()
 {
     return g_memoryMap;
+}
+
+void XFormatWidget::setDemangleMode(XDemangle::MODE demangleMode)
+{
+    g_demangleMode = demangleMode;
+}
+
+XDemangle::MODE XFormatWidget::getDemangleMode()
+{
+    return g_demangleMode;
 }
 
 QIODevice *XFormatWidget::getDevice()
@@ -1478,7 +1490,7 @@ QVariant XFormatWidget::_readVariant(XBinary *pBinary, qint64 nOffset, qint64 nS
     return varResult;
 }
 
-QStandardItem *XFormatWidget::setItemToModel(QStandardItemModel *pModel, qint32 nRow, qint32 nColumn, const QVariant &var, qint64 nSize, qint32 vtype)
+QStandardItem *XFormatWidget::setItemToModel(QStandardItemModel *pModel, qint32 nRow, qint32 nColumn, const QVariant &var, qint64 nSize, qint32 vtype, XDemangle::MODE demangleMode)
 {
     QStandardItem *pResult = new QStandardItem;
 
@@ -1498,7 +1510,17 @@ QStandardItem *XFormatWidget::setItemToModel(QStandardItemModel *pModel, qint32 
         pResult->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
     } else if (vtype & XFW_DEF::VAL_TYPE_DATA_ARRAY) {
         if (vtype & XFW_DEF::VAL_TYPE_STRING) {
-            pResult->setText(var.toString());
+            if (vtype & XFW_DEF::VAL_TYPE_DEMANGLE) {
+                QString _sString = var.toString();
+
+                if (demangleMode != XDemangle::MODE_UNKNOWN) {
+                    _sString = XDemangle().demangle(_sString, demangleMode);
+                }
+
+                pResult->setText(_sString);
+            } else {
+                pResult->setText(var.toString());
+            }
         } else if (vtype & XFW_DEF::VAL_TYPE_HEX) {
             pResult->setText(var.toByteArray().toHex().toUpper());
         }
@@ -1511,7 +1533,17 @@ QStandardItem *XFormatWidget::setItemToModel(QStandardItemModel *pModel, qint32 
         pResult->setText(sString);
         pResult->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
     } else {
-        pResult->setText(var.toString());
+        if (vtype & XFW_DEF::VAL_TYPE_DEMANGLE) {
+            QString _sString = var.toString();
+
+            if (demangleMode != XDemangle::MODE_UNKNOWN) {
+                _sString = XDemangle().demangle(_sString, demangleMode);
+            }
+
+            pResult->setText(_sString);
+        } else {
+            pResult->setText(var.toString());
+        }
         pResult->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
     }
 
@@ -1521,9 +1553,9 @@ QStandardItem *XFormatWidget::setItemToModel(QStandardItemModel *pModel, qint32 
 }
 
 QStandardItem *XFormatWidget::setItemToModelData(QStandardItemModel *pModel, qint32 nRow, qint32 nColumn, const QVariant &var, qint64 nSize, qint32 vtype,
-                                                 XFW_DEF::TYPE type, qint64 nHeaderOffset, qint64 nHeaderSize, qint64 nDataOffset, qint64 nDataSize, qint64 nDataCount)
+                                                 XFW_DEF::TYPE type, qint64 nHeaderOffset, qint64 nHeaderSize, qint64 nDataOffset, qint64 nDataSize, qint64 nDataCount, XDemangle::MODE demangleMode)
 {
-    QStandardItem *pResult = setItemToModel(pModel, nRow, nColumn, var, nSize, vtype);
+    QStandardItem *pResult = setItemToModel(pModel, nRow, nColumn, var, nSize, vtype, demangleMode);
 
     if (pResult) {
         pResult->setData(type, Qt::UserRole + (qint32)(XFW_DEF::TABLEDATA_TYPE));

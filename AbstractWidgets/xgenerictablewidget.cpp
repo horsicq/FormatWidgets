@@ -34,6 +34,25 @@ XGenericTableWidget::XGenericTableWidget(QWidget *pParent) : XFormatWidget(pPare
     ui->toolButtonTableReload->setToolTip(tr("Reload"));
     ui->toolButtonTableSize->setToolTip(tr("Size"));
     ui->toolButtonTableSave->setToolTip(tr("Save"));
+    ui->comboBoxDemangle->setToolTip(tr("Demangle"));
+
+    const bool bBlocked1 = ui->comboBoxDemangle->blockSignals(true);
+
+    ui->comboBoxDemangle->addItem("", XDemangle::MODE_UNKNOWN);
+
+    //    QList<XDemangle::MODE> listModes=XDemangle::getAllModes();
+    QList<XDemangle::MODE> listModes = XDemangle::getSupportedModes();
+
+    qint32 nNumberOfModes = listModes.count();
+
+    for (qint32 i = 0; i < nNumberOfModes; i++) {
+        XDemangle::MODE mode = listModes.at(i);
+        ui->comboBoxDemangle->addItem(XDemangle::modeIdToString(mode), mode);
+    }
+
+    ui->comboBoxDemangle->blockSignals(bBlocked1);
+
+    ui->comboBoxDemangle->hide();
 }
 
 XGenericTableWidget::~XGenericTableWidget()
@@ -53,9 +72,12 @@ void XGenericTableWidget::reloadData(bool bSaveSelection)
 
     g_listHeaderRecords.clear();
 
+    XFW_DEF::CWOPTIONS cwOptions = *getCwOptions();
+    cwOptions.demangleMode = getDemangleMode();
+
     XDialogProcessData dialogProcessData(this);
     dialogProcessData.setGlobal(getShortcuts(), getGlobalOptions());
-    dialogProcessData.setData(&g_pModel, &g_listHeaderRecords, getCwOptions());
+    dialogProcessData.setData(&g_pModel, &g_listHeaderRecords, &cwOptions);
     dialogProcessData.showDialogDelay();
 
     if (g_pModel) {
@@ -66,6 +88,15 @@ void XGenericTableWidget::reloadData(bool bSaveSelection)
     }
 
     adjustGenericTable(ui->tableViewMain, &g_listHeaderRecords);
+
+    qint32 nNumberOfRecords = g_listHeaderRecords.count();
+
+    for (qint32 i = 0; i < nNumberOfRecords; i++) {
+        if (g_listHeaderRecords.at(i).vtype & XFW_DEF::VAL_TYPE_DEMANGLE) {
+            ui->comboBoxDemangle->show();
+            break;
+        }
+    }
 
     // ui->tableViewMain->resizeColumnsToContents();
     QModelIndex index = ui->tableViewMain->model()->index(nRow, 0);
@@ -121,4 +152,13 @@ void XGenericTableWidget::on_toolButtonTableSave_clicked()
 void XGenericTableWidget::on_tableViewMain_doubleClicked(const QModelIndex &index)
 {
     tableView_doubleClicked(ui->tableViewMain, index);
+}
+
+void XGenericTableWidget::on_comboBoxDemangle_currentIndexChanged(int nIndex)
+{
+    Q_UNUSED(nIndex)
+
+    setDemangleMode((XDemangle::MODE)(ui->comboBoxDemangle->currentData().toUInt()));
+
+    reloadData(true);
 }

@@ -33,6 +33,7 @@
 #include "xdatetimeeditx.h"
 #include "xlineedithex.h"
 #include "xshortcutswidget.h"
+#include "xdemangle.h"
 
 #include "Structs/generic_defs.h"
 #include "Structs/generic_defs.h"
@@ -117,6 +118,9 @@ public:
     void setMemoryMap(const XBinary::_MEMORY_MAP &memoryMap);
     XBinary::_MEMORY_MAP getMemoryMap();
 
+    void setDemangleMode(XDemangle::MODE demangleMode);
+    XDemangle::MODE getDemangleMode();
+
     QIODevice *getDevice();
     virtual void setOptions(XFW_DEF::OPTIONS options);  // TODO for all Widgets
     XFW_DEF::OPTIONS getOptions();
@@ -186,9 +190,9 @@ public:
     void _adjustRecWidget(RECWIDGET *pRecWidget, QVariant varValue);
 
     static QVariant _readVariant(XBinary *pBinary, qint64 nOffset, qint64 nSize, qint32 vtype, bool bIsBigEndian);
-    static QStandardItem *setItemToModel(QStandardItemModel *pModel, qint32 nRow, qint32 nColumn, const QVariant &var, qint64 nSize, qint32 vtype);
+    static QStandardItem *setItemToModel(QStandardItemModel *pModel, qint32 nRow, qint32 nColumn, const QVariant &var, qint64 nSize, qint32 vtype, XDemangle::MODE demangleMode);
     static QStandardItem *setItemToModelData(QStandardItemModel *pModel, qint32 nRow, qint32 nColumn, const QVariant &var, qint64 nSize, qint32 vtype, XFW_DEF::TYPE type,
-                                             qint64 nHeaderOffset, qint64 nHeaderSize, qint64 nDataOffset, qint64 nDataSize, qint64 nDataCount);
+                                             qint64 nHeaderOffset, qint64 nHeaderSize, qint64 nDataOffset, qint64 nDataSize, qint64 nDataCount, XDemangle::MODE demangleMode);
 
     enum CW {
         CW_UINT8 = 0,
@@ -309,6 +313,7 @@ private:
     XADDR g_nDisamInitAddress;
     XFW_DEF::CWOPTIONS g_cwOptions;
     QList<RECWIDGET> g_listRecWidget;
+    XDemangle::MODE g_demangleMode;
 };
 
 #endif  // XFORMATWIDGET_H

@@ -223,6 +223,7 @@ void XMainWidget::reloadData(bool bSaveSelection)
     cwOptions.sXInfoProfile = getXInfoProfile();
     cwOptions.endian = (XBinary::ENDIAN)(ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + XFW_DEF::WIDGET_DATA_ENDIAN).toLongLong());
     cwOptions.mode = (XBinary::MODE)(ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + XFW_DEF::WIDGET_DATA_MODE).toLongLong());
+    cwOptions.demangleMode = getDemangleMode();
     cwOptions.nDataOffset = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + XFW_DEF::WIDGET_DATA_OFFSET).toLongLong();
     cwOptions.nDataSize = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + XFW_DEF::WIDGET_DATA_SIZE).toLongLong();
     cwOptions.nDataCount = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + XFW_DEF::WIDGET_DATA_COUNT).toLongLong();
@@ -484,6 +485,7 @@ void XMainWidget::showCwWidgetSlot(QString sInitString, bool bNewWindow)
     cwOptions.sXInfoProfile = getXInfoProfile();
     cwOptions.endian = getEndian();
     cwOptions.mode = getMode();
+    cwOptions.demangleMode = getDemangleMode();
     cwOptions.memoryMap = getMemoryMap();
     cwOptions.nDataOffset = _getDataOffsetFromInitString(sInitString);
     cwOptions.nDataSize = _getDataSizeFromInitString(sInitString);

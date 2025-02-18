@@ -26,6 +26,7 @@
 #include "xshortcuts.h"
 #include "xoptions.h"
 #include "xinfodb.h"
+#include "xdemangle.h"
 
 namespace XFW_DEF {
 enum VMODE {
@@ -198,6 +199,7 @@ struct CWOPTIONS {
     QVariant var2;
     XBinary::ENDIAN endian;
     XBinary::MODE mode;
+    XDemangle::MODE demangleMode;
     XBinary::_MEMORY_MAP memoryMap;
 };
 
@@ -222,6 +224,7 @@ enum VAL_TYPE {
     VAL_TYPE_TIMEDATE = 1 << 16,
     VAL_TYPE_ULEB128 = 1 << 17,
     VAL_TYPE_FULL = 1 << 18,
+    VAL_TYPE_DEMANGLE = 1 << 19,
 };
 
 struct HEADER_RECORD {
