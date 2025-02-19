@@ -112,7 +112,7 @@ void XProcessData::process()
             XFW_DEF::HEADER_RECORD record = {};
             record.nPosition = -1;
             record.sName = tr("String");
-            record.vtype = XFW_DEF::VAL_TYPE_STRING;
+            record.vtype = XFW_DEF::VAL_TYPE_STRING | XFW_DEF::VAL_TYPE_ANSI | XFW_DEF::VAL_TYPE_DEMANGLE;
 
             g_pListHeaderRecords->append(record);
         }
