@@ -151,7 +151,8 @@ XShortcutsWidget *XMainWidgetAdvanced::createWidget(const XFW_DEF::CWOPTIONS &cw
         pResult = _pWidget;
     } else if (cwOptions._type == XFW_DEF::TYPE_SYMBOLS) {
         XSymbolsWidget *_pWidget = new XSymbolsWidget(cwOptions.pParent);
-        // TODO
+        _pWidget->setXInfoDB(cwOptions.pXInfoDB, cwOptions.sXInfoProfile);
+        _pWidget->setData(XSymbolsWidget::MODE_ALL, true);
         pResult = _pWidget;
     } else if (cwOptions._type == XFW_DEF::TYPE_MEMORYMAP) {
         XMemoryMapWidget *_pWidget = new XMemoryMapWidget(cwOptions.pParent);
