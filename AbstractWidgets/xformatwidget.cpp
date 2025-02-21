@@ -333,6 +333,8 @@ QString XFormatWidget::getTypeTitle(XFW_DEF::TYPE type, XBinary::MODE mode, XBin
         sResult = QString("IMAGE_DATA_DIRECTORY");
     } else if (type == XFW_DEF::TYPE_PE_IMAGE_SECTION_HEADER) {
         sResult = QString("IMAGE_SECTION_HEADER");
+    } else if (type == XFW_DEF::TYPE_PE_IMAGE_EXPORT_DIRECTORY) {
+        sResult = QString("IMAGE_EXPORT_DIRECTORY)");
     } else if (type == XFW_DEF::TYPE_PE_CERTIFICATE) {
         sResult = tr("Certificate");
     } else if (type == XFW_DEF::TYPE_PE_IMAGE_COR20_HEADER) {
@@ -673,6 +675,9 @@ QList<XFW_DEF::HEADER_RECORD> XFormatWidget::getHeaderRecords(const XFW_DEF::CWO
     } else if (pCwOptions->_type == XFW_DEF::TYPE_PE_IMAGE_SECTION_HEADER) {
         pRecords = XTYPE_PE::X_IMAGE_SECTION_HEADER::records;
         nNumberOfRecords = XTYPE_PE::X_IMAGE_SECTION_HEADER::__data_size;
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_PE_IMAGE_EXPORT_DIRECTORY) {
+        pRecords = XTYPE_PE::X_IMAGE_EXPORT_DIRECTORY::records;
+        nNumberOfRecords = XTYPE_PE::X_IMAGE_EXPORT_DIRECTORY::__data_size;
     } else if (pCwOptions->_type == XFW_DEF::TYPE_PE_IMAGE_COR20_HEADER) {
         pRecords = XTYPE_PE::X_IMAGE_COR20_HEADER::records;
         nNumberOfRecords = XTYPE_PE::X_IMAGE_COR20_HEADER::__data_size;
@@ -828,6 +833,8 @@ qint64 XFormatWidget::getStructSize(XFW_DEF::TYPE type)
         nResult = sizeof(XPE_DEF::IMAGE_DATA_DIRECTORY);
     } else if (type == XFW_DEF::TYPE_PE_IMAGE_SECTION_HEADER) {
         nResult = sizeof(XPE_DEF::IMAGE_SECTION_HEADER);
+    } else if (type == XFW_DEF::TYPE_PE_IMAGE_EXPORT_DIRECTORY) {
+        nResult = sizeof(XPE_DEF::IMAGE_EXPORT_DIRECTORY);
     } else if (type == XFW_DEF::TYPE_PE_IMAGE_COR20_HEADER) {
         nResult = sizeof(XPE_DEF::IMAGE_COR20_HEADER);
     } else if (type == XFW_DEF::TYPE_DEX_HEADER) {

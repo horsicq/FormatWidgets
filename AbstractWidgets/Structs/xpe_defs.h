@@ -193,7 +193,7 @@ enum DATA {
 extern const XFW_DEF::HEADER_RECORD records[__data_size + 1];
 }  // namespace X_IMAGE_SECTION_HEADER
 
-namespace X_IMAGE_EXPORT {
+namespace X_IMAGE_EXPORT_DIRECTORY {
 enum DATA {
     Characteristics = 0,
     TimeDateStamp,

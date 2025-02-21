@@ -389,7 +389,7 @@ const XFW_DEF::HEADER_RECORD records[] = {
 };
 }
 
-namespace X_IMAGE_EXPORT {
+namespace X_IMAGE_EXPORT_DIRECTORY {
 const XFW_DEF::HEADER_RECORD records[] = {
     {Characteristics, "Characteristics", offsetof(XPE_DEF::IMAGE_EXPORT_DIRECTORY, Characteristics), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {TimeDateStamp, "TimeDateStamp", offsetof(XPE_DEF::IMAGE_EXPORT_DIRECTORY, TimeDateStamp), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT, -1},
