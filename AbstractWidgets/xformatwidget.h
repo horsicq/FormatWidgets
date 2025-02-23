@@ -190,9 +190,11 @@ public:
     void _adjustRecWidget(RECWIDGET *pRecWidget, QVariant varValue);
 
     static QVariant _readVariant(XBinary *pBinary, qint64 nOffset, qint64 nSize, qint32 vtype, bool bIsBigEndian);
-    static QStandardItem *setItemToModel(QStandardItemModel *pModel, qint32 nRow, qint32 nColumn, const QVariant &var, qint64 nSize, qint32 vtype, XDemangle::MODE demangleMode);
+    static QStandardItem *setItemToModel(QStandardItemModel *pModel, qint32 nRow, qint32 nColumn, const QVariant &var, qint64 nSize, qint32 vtype,
+                                         XDemangle::MODE demangleMode);
     static QStandardItem *setItemToModelData(QStandardItemModel *pModel, qint32 nRow, qint32 nColumn, const QVariant &var, qint64 nSize, qint32 vtype, XFW_DEF::TYPE type,
-                                             qint64 nHeaderOffset, qint64 nHeaderSize, qint64 nDataOffset, qint64 nDataSize, qint64 nDataCount, XDemangle::MODE demangleMode);
+                                             qint64 nHeaderOffset, qint64 nHeaderSize, qint64 nDataOffset, qint64 nDataSize, qint64 nDataCount,
+                                             XDemangle::MODE demangleMode);
 
     enum CW {
         CW_UINT8 = 0,

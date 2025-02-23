@@ -210,7 +210,7 @@ enum DATA {
 };
 
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
-}  // namespace X_IMAGE_EXPORT
+}  // namespace X_IMAGE_EXPORT_DIRECTORY
 
 namespace X_IMAGE_RESOURCES {
 enum DATA {

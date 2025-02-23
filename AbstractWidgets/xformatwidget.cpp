@@ -1497,7 +1497,8 @@ QVariant XFormatWidget::_readVariant(XBinary *pBinary, qint64 nOffset, qint64 nS
     return varResult;
 }
 
-QStandardItem *XFormatWidget::setItemToModel(QStandardItemModel *pModel, qint32 nRow, qint32 nColumn, const QVariant &var, qint64 nSize, qint32 vtype, XDemangle::MODE demangleMode)
+QStandardItem *XFormatWidget::setItemToModel(QStandardItemModel *pModel, qint32 nRow, qint32 nColumn, const QVariant &var, qint64 nSize, qint32 vtype,
+                                             XDemangle::MODE demangleMode)
 {
     QStandardItem *pResult = new QStandardItem;
 
@@ -1560,7 +1561,8 @@ QStandardItem *XFormatWidget::setItemToModel(QStandardItemModel *pModel, qint32 
 }
 
 QStandardItem *XFormatWidget::setItemToModelData(QStandardItemModel *pModel, qint32 nRow, qint32 nColumn, const QVariant &var, qint64 nSize, qint32 vtype,
-                                                 XFW_DEF::TYPE type, qint64 nHeaderOffset, qint64 nHeaderSize, qint64 nDataOffset, qint64 nDataSize, qint64 nDataCount, XDemangle::MODE demangleMode)
+                                                 XFW_DEF::TYPE type, qint64 nHeaderOffset, qint64 nHeaderSize, qint64 nDataOffset, qint64 nDataSize, qint64 nDataCount,
+                                                 XDemangle::MODE demangleMode)
 {
     QStandardItem *pResult = setItemToModel(pModel, nRow, nColumn, var, nSize, vtype, demangleMode);
 
