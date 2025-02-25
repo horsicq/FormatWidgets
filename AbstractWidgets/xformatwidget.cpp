@@ -435,6 +435,8 @@ QString XFormatWidget::getTypeTitle(XFW_DEF::TYPE type, XBinary::MODE mode, XBin
         sResult = QString("nlist_64");
     } else if (type == XFW_DEF::TYPE_MACH_dyld_chained_fixups_header) {
         sResult = QString("dyld_chained_fixups_header");
+    } else if (type == XFW_DEF::TYPE_MACH_dyld_chained_starts_in_segment) {
+        sResult = QString("dyld_chained_starts_in_segment");
     } else if (type == XFW_DEF::TYPE_MACH_SC_SuperBlob) {
         sResult = QString("__SC_SuperBlob");
     } else if (type == XFW_DEF::TYPE_MACH_CS_BlobIndex) {
@@ -628,6 +630,9 @@ QList<XFW_DEF::HEADER_RECORD> XFormatWidget::getHeaderRecords(const XFW_DEF::CWO
     } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_dyld_chained_fixups_header) {
         pRecords = XTYPE_MACH::X_dyld_chained_fixups_header::records;
         nNumberOfRecords = XTYPE_MACH::X_dyld_chained_fixups_header::__data_size;
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_dyld_chained_starts_in_segment) {
+        pRecords = XTYPE_MACH::X_dyld_chained_starts_in_segment::records;
+        nNumberOfRecords = XTYPE_MACH::X_dyld_chained_starts_in_segment::__data_size;
     } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_SC_SuperBlob) {
         pRecords = XTYPE_MACH::X_SC_SuperBlob::records;
         nNumberOfRecords = XTYPE_MACH::X_SC_SuperBlob::__data_size;
@@ -2129,17 +2134,30 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
             } else if ((_spStruct.widgetMode == XFW_DEF::WIDGETMODE_HEADER) && (_spStruct.type == XFW_DEF::TYPE_MACH_dyld_chained_fixups_header)) {
                 XMACH_DEF::dyld_chained_fixups_header dcfh = mach._read_dyld_chained_fixups_header(_spStruct.nStructOffset);
 
-                // if (dcfh.starts_offset && (dcfh.imports_offset - dcfh.starts_offset > 0)) {
-                //     SPSTRUCT _spStructRecord = _spStruct;
-                //     _spStructRecord.pTreeWidgetItem = pTreeWidgetItem;
-                //     _spStructRecord.nStructOffset = _spStruct.nOffset + _spStruct.nStructOffset+ dcfh.starts_offset;
-                //     _spStructRecord.nStructSize = dcfh.imports_offset - dcfh.starts_offset;
-                //     _spStructRecord.nStructCount = 0;
-                //     _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_TABLE;
-                //     _spStructRecord.type = XFW_DEF::TYPE_MACH_dyld_chained_starts_in_image;
+                if (dcfh.starts_offset && (dcfh.imports_offset - dcfh.starts_offset > 0)) {
+                    qint64 nCurrentOffset = _spStruct.nOffset + _spStruct.nStructOffset+ dcfh.starts_offset;
+                    quint32 seg_count = mach.read_uint32(nCurrentOffset, mach.isBigEndian());
 
-                //     _addStruct(_spStructRecord);
-                // }
+                    nCurrentOffset += sizeof(quint32);
+
+                    for (qint32 i = 0; i < seg_count; i++) {
+                        quint32 seg_info_offset = mach.read_uint32(nCurrentOffset, mach.isBigEndian());
+
+                        if (seg_info_offset) {
+                            SPSTRUCT _spStructRecord = _spStruct;
+                            _spStructRecord.pTreeWidgetItem = pTreeWidgetItem;
+                            _spStructRecord.nStructOffset = _spStruct.nOffset + _spStruct.nStructOffset+ dcfh.starts_offset + seg_info_offset;
+                            _spStructRecord.nStructSize = 0;
+                            _spStructRecord.nStructCount = 0;
+                            _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEADER;
+                            _spStructRecord.type = XFW_DEF::TYPE_MACH_dyld_chained_starts_in_segment;
+
+                            _addStruct(_spStructRecord);
+                        }
+
+                        nCurrentOffset += sizeof(quint32);
+                    }
+                }
 
                 // TODO import
 

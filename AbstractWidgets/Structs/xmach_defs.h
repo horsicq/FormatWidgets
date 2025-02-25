@@ -814,6 +814,21 @@ extern const XFW_DEF::HEADER_RECORD records[__data_size];
 
 // extern const XFW_DEF::HEADER_RECORD records[__data_size];
 // }  // namespace X_mach_dyld_chained_starts_in_image
+
+namespace X_dyld_chained_starts_in_segment {
+enum DATA {
+    size,
+    page_size,
+    pointer_format,
+    segment_offset,
+    max_valid_pointer,
+    page_count,
+    __data_size
+};
+
+extern const XFW_DEF::HEADER_RECORD records[__data_size];
+}  // namespace X_dyld_chained_starts_in_segment
+
 }  // namespace XTYPE_MACH
 
 #endif  // XMACH_DEFS_H

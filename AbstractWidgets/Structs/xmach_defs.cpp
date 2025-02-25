@@ -779,4 +779,15 @@ const XFW_DEF::HEADER_RECORD records[] = {
 // };
 // }
 
+namespace X_dyld_chained_starts_in_segment {
+const XFW_DEF::HEADER_RECORD records[__data_size] = {
+    {size, "size", offsetof(XMACH_DEF::dyld_chained_starts_in_segment, size), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {page_size, "page_size", offsetof(XMACH_DEF::dyld_chained_starts_in_segment, page_size), 2, "uint16", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {pointer_format, "pointer_format", offsetof(XMACH_DEF::dyld_chained_starts_in_segment, pointer_format), 2, "uint16", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {segment_offset, "segment_offset", offsetof(XMACH_DEF::dyld_chained_starts_in_segment, segment_offset), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {max_valid_pointer, "max_valid_pointer", offsetof(XMACH_DEF::dyld_chained_starts_in_segment, max_valid_pointer), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {page_count, "page_count", offsetof(XMACH_DEF::dyld_chained_starts_in_segment, page_count), 2, "uint16", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+};
+}
+
 }  // namespace XTYPE_MACH

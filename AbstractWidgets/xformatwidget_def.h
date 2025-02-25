@@ -113,6 +113,7 @@ enum TYPE {
     TYPE_MACH_nlist,
     TYPE_MACH_nlist_64,
     TYPE_MACH_dyld_chained_fixups_header,
+    TYPE_MACH_dyld_chained_starts_in_segment,
     TYPE_MACH_SC_SuperBlob,
     TYPE_MACH_CS_BlobIndex,
     TYPE_MACH_CS_CodeDirectory,
