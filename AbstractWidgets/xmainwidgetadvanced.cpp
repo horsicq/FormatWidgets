@@ -147,12 +147,11 @@ XShortcutsWidget *XMainWidgetAdvanced::createWidget(const XFW_DEF::CWOPTIONS &cw
         pResult = _pWidget;
     } else if (cwOptions._type == XFW_DEF::TYPE_REGIONS) {
         XRegionsWidget *_pWidget = new XRegionsWidget(cwOptions.pParent);
-        // TODO
+        _pWidget->setData(cwOptions.pDevice, cwOptions.fileType, cwOptions.pXInfoDB, cwOptions.sXInfoProfile);
         pResult = _pWidget;
     } else if (cwOptions._type == XFW_DEF::TYPE_SYMBOLS) {
         XSymbolsWidget *_pWidget = new XSymbolsWidget(cwOptions.pParent);
-        _pWidget->setXInfoDB(cwOptions.pXInfoDB, cwOptions.sXInfoProfile);
-        _pWidget->setData(XInfoDB::SYMBOL_MODE_ALL, true);
+        _pWidget->setData(cwOptions.pXInfoDB, cwOptions.sXInfoProfile, XInfoDB::SYMBOL_MODE_ALL, true);
         pResult = _pWidget;
     } else if (cwOptions._type == XFW_DEF::TYPE_MEMORYMAP) {
         XMemoryMapWidget *_pWidget = new XMemoryMapWidget(cwOptions.pParent);
