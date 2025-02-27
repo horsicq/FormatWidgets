@@ -108,7 +108,7 @@ XShortcutsWidget *XMainWidgetAdvanced::createWidget(const XFW_DEF::CWOPTIONS &cw
         options.fileType = cwOptions.fileType;
         options.bMenu_Disasm = true;
         options.bMenu_MemoryMap = true;
-        _pWidget->setXInfoDB(cwOptions.pXInfoDB, cwOptions.sXInfoProfile);
+        _pWidget->setXInfoDB(cwOptions.pXInfoDB, cwOptions.profile);
         _pWidget->setData(cwOptions.pDevice, options);
         pResult = _pWidget;
     } else if (cwOptions._type == XFW_DEF::TYPE_DISASM) {
@@ -117,7 +117,7 @@ XShortcutsWidget *XMainWidgetAdvanced::createWidget(const XFW_DEF::CWOPTIONS &cw
         options.fileType = cwOptions.fileType;
         options.nInitAddress = XFormats::getEntryPointAddress(cwOptions.fileType, cwOptions.pDevice, cwOptions.bIsImage, cwOptions.nImageBase);
         options.bMenu_Hex = true;
-        _pWidget->setXInfoDB(cwOptions.pXInfoDB, cwOptions.sXInfoProfile);
+        _pWidget->setXInfoDB(cwOptions.pXInfoDB, cwOptions.profile);
         _pWidget->setData(cwOptions.pDevice, options);
         pResult = _pWidget;
     } else if (cwOptions._type == XFW_DEF::TYPE_HASH) {
@@ -147,18 +147,18 @@ XShortcutsWidget *XMainWidgetAdvanced::createWidget(const XFW_DEF::CWOPTIONS &cw
         pResult = _pWidget;
     } else if (cwOptions._type == XFW_DEF::TYPE_REGIONS) {
         XRegionsWidget *_pWidget = new XRegionsWidget(cwOptions.pParent);
-        _pWidget->setData(cwOptions.pDevice, cwOptions.fileType, cwOptions.pXInfoDB, cwOptions.sXInfoProfile);
+        _pWidget->setData(cwOptions.pDevice, cwOptions.fileType, cwOptions.pXInfoDB, cwOptions.profile);
         pResult = _pWidget;
     } else if (cwOptions._type == XFW_DEF::TYPE_SYMBOLS) {
         XSymbolsWidget *_pWidget = new XSymbolsWidget(cwOptions.pParent);
-        _pWidget->setData(cwOptions.pXInfoDB, cwOptions.sXInfoProfile, XInfoDB::SYMBOL_MODE_ALL, true);
+        _pWidget->setData(cwOptions.pXInfoDB, cwOptions.profile, XInfoDB::SYMBOL_MODE_ALL, true);
         pResult = _pWidget;
     } else if (cwOptions._type == XFW_DEF::TYPE_MEMORYMAP) {
         XMemoryMapWidget *_pWidget = new XMemoryMapWidget(cwOptions.pParent);
         XMemoryMapWidget::OPTIONS options = {};
         options.fileType = cwOptions.fileType;
         options.bIsSearchEnable = true;
-        _pWidget->setData(cwOptions.pDevice, options, cwOptions.pXInfoDB, cwOptions.sXInfoProfile);
+        _pWidget->setData(cwOptions.pDevice, options, cwOptions.pXInfoDB, cwOptions.profile);
 
         connect(_pWidget, SIGNAL(findValue(quint64, XBinary::ENDIAN)), this, SLOT(findValue(quint64, XBinary::ENDIAN)));
 

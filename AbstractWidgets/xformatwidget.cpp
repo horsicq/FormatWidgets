@@ -57,10 +57,10 @@ XFormatWidget::~XFormatWidget()
     }
 }
 
-void XFormatWidget::setXInfoDB(XInfoDB *pXInfoDB, QString sXInfoProfile)
+void XFormatWidget::setXInfoDB(XInfoDB *pXInfoDB, XInfoDB::PROFILE profile)
 {
     g_pXInfoDB = pXInfoDB;
-    g_sXInfoProfile = sXInfoProfile;
+    g_profile = profile;
 }
 
 XInfoDB *XFormatWidget::getXInfoDB()
@@ -68,9 +68,9 @@ XInfoDB *XFormatWidget::getXInfoDB()
     return g_pXInfoDB;
 }
 
-QString XFormatWidget::getXInfoProfile()
+XInfoDB::PROFILE XFormatWidget::getXInfoProfile()
 {
-    return g_sXInfoProfile;
+    return g_profile;
 }
 
 void XFormatWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
@@ -150,7 +150,7 @@ void XFormatWidget::setCwOptions(const XFW_DEF::CWOPTIONS &cwOptions, bool bRelo
     formatOptions.fileType = cwOptions.fileType;
 
     setData(cwOptions.pDevice, formatOptions);
-    setXInfoDB(cwOptions.pXInfoDB, cwOptions.sXInfoProfile);
+    setXInfoDB(cwOptions.pXInfoDB, cwOptions.profile);
 
     if (bReload) {
         reloadData(false);
