@@ -97,7 +97,7 @@ public:
     XFormatWidget(QIODevice *pDevice, XFW_DEF::OPTIONS options, QWidget *pParent);
     ~XFormatWidget();
 
-    void setXInfoDB(XInfoDB *pXInfoDB, XInfoDB::PROFILE profile = XInfoDB::PROFILE_MAIN);
+    void setXInfoDB(XInfoDB *pXInfoDB, XInfoDB::PROFILE profile = XInfoDB::PROFILE_UNKNOWN);
     XInfoDB *getXInfoDB();
     XInfoDB::PROFILE getXInfoProfile();
 

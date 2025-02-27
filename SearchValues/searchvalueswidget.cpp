@@ -67,6 +67,18 @@ void SearchValuesWidget::setData(QIODevice *pDevice, OPTIONS options)
         XFormats::setFileTypeComboBox(options.fileType, g_pDevice, ui->comboBoxType);
         XFormats::getMapModesList(options.fileType, ui->comboBoxMapMode);
     }
+
+    if (options.bScan) {
+        ui->toolButtonSearchSignature->hide();
+        ui->toolButtonSearchString->hide();
+        ui->toolButtonSearchValue->hide();
+
+        g_varValue = options.varValue;
+        g_valueType = options.valueType;
+        g_endian = options.endian;
+
+        search();
+    }
 }
 
 QIODevice *SearchValuesWidget::getDevice()
@@ -79,8 +91,6 @@ void SearchValuesWidget::findValue(QVariant varValue, XBinary::VT valueType, XBi
     g_varValue = varValue;
     g_valueType = valueType;
     g_endian = endian;
-
-    ui->labelSearchValue->setText(QString("%1: %2").arg(XBinary::valueTypeToString(valueType), XBinary::getValueString(varValue, valueType)));
 
     search();
 }
@@ -137,9 +147,10 @@ void SearchValuesWidget::on_tableViewResult_customContextMenuRequested(const QPo
 
 void SearchValuesWidget::search()
 {
+    ui->labelSearchValue->setText(QString("%1: %2").arg(XBinary::valueTypeToString(g_valueType), XBinary::getValueString(g_varValue, g_valueType)));
+
     if (g_pDevice && (g_valueType != XBinary::VT_UNKNOWN)) {
         // ui->tableViewResult->setModel(nullptr);
-
         XBinary::FT fileType = (XBinary::FT)(ui->comboBoxType->currentData().toInt());
         XBinary::MAPMODE mapMode = (XBinary::MAPMODE)(ui->comboBoxMapMode->currentData().toInt());
 

@@ -2326,10 +2326,10 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                         _spStructRecord.nStructOffset = _spStruct.nOffset + sizeof(XMSDOS_DEF::IMAGE_DOS_HEADEREX);
                         _spStructRecord.nStructSize = nStubSize;
                         _spStructRecord.nStructCount = 0;
-                        _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_DISASM;
+                        _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEX;
                         _spStructRecord.type = XFW_DEF::TYPE_PE_DOS_STUB;
-                        _spStructRecord.var1 = "286";
-                        _spStructRecord.sInfo = "";
+                        // _spStructRecord.var1 = "286";
+                        // _spStructRecord.sInfo = "";
 
                         _addStruct(_spStructRecord);
                     }

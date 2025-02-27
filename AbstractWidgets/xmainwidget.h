@@ -78,6 +78,8 @@ private slots:
     void currentLocationChangedSlot(quint64 nLocation, qint32 nLocationType, qint64 nSize);
     void showCwWidgetSlot(QString sInitString, bool bNewWindow);
 
+    void on_toolButtonAnalyze_clicked();
+
 private:
     Ui::XMainWidget *ui;
     bool g_bGlobalHexEnable;

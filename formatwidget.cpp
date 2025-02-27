@@ -29,6 +29,7 @@ FormatWidget::FormatWidget(QWidget *pParent) : XShortcutsWidget(pParent)
     g_nPageIndex = 0;  // TODO Check
     g_pXInfoDB = nullptr;
     g_nDisamInitAddress = -1;
+    g_profile = XInfoDB::PROFILE_UNKNOWN;
 
     g_colDisabled = QWidget::palette().color(QPalette::Window);
     g_colEnabled = QWidget::palette().color(QPalette::BrightText);
@@ -50,10 +51,10 @@ FormatWidget::~FormatWidget()
     }
 }
 
-void FormatWidget::setXInfoDB(XInfoDB *pXInfoDB, QString sXInfoProfile)
+void FormatWidget::setXInfoDB(XInfoDB *pXInfoDB, XInfoDB::PROFILE profile)
 {
     g_pXInfoDB = pXInfoDB;
-    g_sXInfoProfile = sXInfoProfile;
+    g_profile = profile;
 }
 
 XInfoDB *FormatWidget::getXInfoDB()
@@ -61,9 +62,9 @@ XInfoDB *FormatWidget::getXInfoDB()
     return g_pXInfoDB;
 }
 
-QString FormatWidget::getXInfoProfile()
+XInfoDB::PROFILE FormatWidget::getXInfoProfile()
 {
-    return g_sXInfoProfile;
+    return g_profile;
 }
 
 void FormatWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
@@ -907,7 +908,7 @@ void FormatWidget::resetWidget()
             if (pChild) {
                 XMultiDisasmWidget::OPTIONS options = {};
 
-                pChild->setXInfoDB(nullptr, "");
+                pChild->setXInfoDB(nullptr, XInfoDB::PROFILE_UNKNOWN);
                 pChild->setData(nullptr, options);
             }
         }
@@ -923,7 +924,7 @@ void FormatWidget::resetWidget()
             if (pChild) {
                 XMemoryMapWidget::OPTIONS options = {};
 
-                pChild->setData(nullptr, options, nullptr, "");
+                pChild->setData(nullptr, options, nullptr, XInfoDB::PROFILE_UNKNOWN);
             }
         }
     }

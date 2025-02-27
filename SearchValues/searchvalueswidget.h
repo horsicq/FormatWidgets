@@ -46,6 +46,10 @@ public:
         XBinary::FT fileType;
         bool bMenu_Hex;
         bool bMenu_Disasm;
+        bool bScan;
+        QVariant varValue;
+        XBinary::VT valueType;
+        XBinary::ENDIAN endian;
     };
 
     explicit SearchValuesWidget(QWidget *pParent = nullptr);
