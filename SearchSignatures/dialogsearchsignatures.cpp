@@ -34,9 +34,9 @@ DialogSearchSignatures::~DialogSearchSignatures()
     delete ui;
 }
 
-void DialogSearchSignatures::setData(QIODevice *pDevice, XBinary::FT fileType, SearchSignaturesWidget::OPTIONS options, bool bAuto)
+void DialogSearchSignatures::setData(QIODevice *pDevice, SearchSignaturesWidget::OPTIONS options, bool bAuto)
 {
-    ui->searchSignaturesWidget->setData(pDevice, fileType, options, bAuto);
+    ui->searchSignaturesWidget->setData(pDevice, options, bAuto);
 }
 
 void DialogSearchSignatures::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)

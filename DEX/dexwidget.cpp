@@ -373,8 +373,9 @@ void DEXWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 SearchSignaturesWidget::OPTIONS signaturesOptions = {};
                 signaturesOptions.bMenu_Hex = true;
+                signaturesOptions.fileType = dex.getFileType();
 
-                ui->widgetSignatures->setData(getDevice(), dex.getFileType(), signaturesOptions, false);
+                ui->widgetSignatures->setData(getDevice(), signaturesOptions, false);
             }
         } else if (nType == SDEX::TYPE_MEMORYMAP) {
             if (!isInitPresent(sInit)) {

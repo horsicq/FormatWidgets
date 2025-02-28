@@ -525,9 +525,3 @@ void XMainWidget::showCwWidgetSlot(QString sInitString, bool bNewWindow)
         dialogWidget.exec();
     }
 }
-
-void XMainWidget::on_toolButtonAnalyze_clicked()
-{
-
-}
-

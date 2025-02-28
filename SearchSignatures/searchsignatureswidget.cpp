@@ -43,6 +43,8 @@ SearchSignaturesWidget::SearchSignaturesWidget(QWidget *pParent) : XShortcutsWid
     g_pDevice = nullptr;
     g_bInit = false;
 
+    ui->toolButtonPatch->setEnabled(false);
+
     // ui->tableViewResult->installEventFilter(this);
 }
 
@@ -51,27 +53,23 @@ SearchSignaturesWidget::~SearchSignaturesWidget()
     delete ui;
 }
 
-void SearchSignaturesWidget::setData(QIODevice *pDevice, XBinary::FT fileType, OPTIONS options, bool bAuto)
+void SearchSignaturesWidget::setData(QIODevice *pDevice, OPTIONS options, bool bAuto)
 {
     this->g_pDevice = pDevice;
     g_bInit = false;
 
-    XFormats::setFileTypeComboBox(fileType, g_pDevice, ui->comboBoxType);
+    XFormats::setFileTypeComboBox(options.fileType, g_pDevice, ui->comboBoxType);
     XFormats::setEndiannessComboBox(ui->comboBoxEndianness, XBinary::ENDIAN_LITTLE);
 
     // ui->tableViewResult->setModel(nullptr);
 
-    setOptions(options);
+    g_options = options;
+
+    reloadFileType();
 
     if (bAuto) {
         search();
     }
-}
-
-void SearchSignaturesWidget::setOptions(SearchSignaturesWidget::OPTIONS options)
-{
-    g_options = options;
-    adjustView();
 }
 
 SearchSignaturesWidget::OPTIONS SearchSignaturesWidget::getOptions()
@@ -81,27 +79,28 @@ SearchSignaturesWidget::OPTIONS SearchSignaturesWidget::getOptions()
 
 void SearchSignaturesWidget::updateSignaturesPath()
 {
+    QString sArch = XBinary::disasmIdToArch((XBinary::DM)(ui->comboBoxMode->currentData().toULongLong()));
+
     const bool bBlocked1 = ui->comboBoxFile->blockSignals(true);
 
     ui->comboBoxFile->clear();
+    QList<QString> listFiles;
 
-    if (g_options.sUserSignature != "") {
-        ui->comboBoxFile->addItem("", g_options.sUserSignature);
+    QString sPath = XBinary::convertPathName(getGlobalOptions()->getSearchSignaturesPath());
+
+    if (sPath != "") {
+        listFiles.append(XBinary::getAllFilesFromDirectory(sPath + QDir::separator() + "generic", "*.db"));
+        listFiles.append(XBinary::getAllFilesFromDirectory(sPath + QDir::separator() + sArch, "*.db"));
     }
-
-    QList<QString> listFiles = XBinary::getAllFilesFromDirectory(XBinary::convertPathName(getGlobalOptions()->getSearchSignaturesPath()), "*.db");
 
     qint32 nNumberOfFiles = listFiles.count();
 
     for (qint32 i = 0; i < nNumberOfFiles; i++) {
         QString sFileName = listFiles.at(i);
-        ui->comboBoxFile->addItem(XBinary::getBaseFileName(sFileName),
-                                  XBinary::convertPathName(getGlobalOptions()->getSearchSignaturesPath()) + QDir::separator() + sFileName);
+        ui->comboBoxFile->addItem(XBinary::getBaseFileName(sFileName), listFiles.at(i));
     }
 
-    if (g_options.sUserSignature != "") {
-        loadSignatures("");
-    } else if (nNumberOfFiles) {
+    if (nNumberOfFiles) {
         loadSignatures(ui->comboBoxFile->currentData().toString());
     }
 
@@ -250,10 +249,6 @@ void SearchSignaturesWidget::loadSignatures(const QString &sFileName)
     if (sFileName != "") {
         g_listSignatureRecords = MultiSearch::loadSignaturesFromFile(sFileName);
         nNumberOfSignatures = g_listSignatureRecords.count();
-    } else {
-        // User signature
-        g_listSignatureRecords.append(MultiSearch::createSignature(g_options.sUserSignature, g_options.sUserSignature));
-        nNumberOfSignatures = 1;
     }
 
     ui->labelInfo->setText(QString("%1: %2").arg(tr("Signatures"), QString::number(nNumberOfSignatures)));
@@ -304,3 +299,51 @@ void SearchSignaturesWidget::viewSelection()
         }
     }
 }
+
+void SearchSignaturesWidget::reloadFileType()
+{
+    if (g_pDevice) {
+        XBinary::FT fileType = (XBinary::FT)(ui->comboBoxType->currentData().toInt());
+
+        XBinary::_MEMORY_MAP memoryMap = {};
+
+        if (g_options.fileType == XBinary::FT_REGION) {
+            memoryMap = XFormats::getMemoryMap(fileType, XBinary::MAPMODE_UNKNOWN, g_pDevice, true, g_options.nStartAddress);
+        } else {
+            memoryMap = XFormats::getMemoryMap(fileType, XBinary::MAPMODE_UNKNOWN, g_pDevice);
+        }
+
+        XBinary::DM disasmMode = XBinary::getDisasmMode(&memoryMap);
+        XFormats::setDisasmModeComboBox(disasmMode, ui->comboBoxMode);
+
+        {
+            const bool bBlocked1 = ui->comboBoxEndianness->blockSignals(true);
+
+            ui->comboBoxEndianness->clear();
+
+            if (disasmMode == XBinary::DM_UNKNOWN) {
+                ui->comboBoxEndianness->addItem(XBinary::endianToString(XBinary::ENDIAN_LITTLE), XBinary::ENDIAN_LITTLE);
+                ui->comboBoxEndianness->addItem(XBinary::endianToString(XBinary::ENDIAN_BIG), XBinary::ENDIAN_BIG);
+            } else {
+                ui->comboBoxEndianness->addItem(XBinary::endianToString(memoryMap.endian), memoryMap.endian);
+            }
+
+            ui->comboBoxEndianness->blockSignals(bBlocked1);
+        }
+
+        updateSignaturesPath();
+    }
+}
+
+void SearchSignaturesWidget::on_comboBoxType_currentIndexChanged(int nIndex)
+{
+    Q_UNUSED(nIndex)
+
+    reloadFileType();
+}
+
+void SearchSignaturesWidget::on_toolButtonPatch_clicked()
+{
+
+}
+

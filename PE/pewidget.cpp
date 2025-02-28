@@ -1114,8 +1114,9 @@ void PEWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 SearchSignaturesWidget::OPTIONS signaturesOptions = {};
                 signaturesOptions.bMenu_Hex = true;
+                signaturesOptions.fileType = pe.getFileType();
 
-                ui->widgetSignatures->setData(getDevice(), pe.getFileType(), signaturesOptions, false);
+                ui->widgetSignatures->setData(getDevice(), signaturesOptions, false);
             }
         } else if (nType == SPE::TYPE_MEMORYMAP) {
             if (!isInitPresent(sInit)) {

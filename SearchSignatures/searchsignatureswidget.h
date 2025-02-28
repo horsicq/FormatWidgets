@@ -44,16 +44,16 @@ class SearchSignaturesWidget : public XShortcutsWidget {
 
 public:
     struct OPTIONS {
+        XBinary::FT fileType;
         bool bMenu_Hex;
         bool bMenu_Disasm;
-        QString sUserSignature;  // It is not global
+        XADDR nStartAddress;
     };
 
     explicit SearchSignaturesWidget(QWidget *pParent = nullptr);
     ~SearchSignaturesWidget();
 
-    void setData(QIODevice *pDevice, XBinary::FT fileType, OPTIONS options, bool bAuto = false);
-    void setOptions(OPTIONS options);
+    void setData(QIODevice *pDevice, OPTIONS options, bool bAuto = false);
     OPTIONS getOptions();
     void updateSignaturesPath();
 
@@ -74,6 +74,9 @@ private slots:
     void on_tableViewSelection(const QItemSelection &itemSelected, const QItemSelection &itemDeselected);
     void on_tableViewResult_clicked(const QModelIndex &index);
     void viewSelection();
+    void reloadFileType();
+    void on_comboBoxType_currentIndexChanged(int nIndex);
+    void on_toolButtonPatch_clicked();
 
 private:
     Ui::SearchSignaturesWidget *ui;

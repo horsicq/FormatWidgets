@@ -71,7 +71,6 @@ public:
     void setModelData(QVector<XBinary::MS_RECORD> *pListRecords, QStandardItemModel **ppModel, OPTIONS options, TYPE type, XBinary::PDSTRUCT *pPdStruct);
 
     static QList<XBinary::SIGNATUREDB_RECORD> loadSignaturesFromFile(const QString &sFileName);
-    static XBinary::SIGNATUREDB_RECORD createSignature(const QString &sName, const QString &sSignature);
     void processSignature(XBinary::SIGNATUREDB_RECORD signatureRecord);
 
 signals:

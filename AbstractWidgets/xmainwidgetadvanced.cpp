@@ -143,7 +143,8 @@ XShortcutsWidget *XMainWidgetAdvanced::createWidget(const XFW_DEF::CWOPTIONS &cw
         SearchSignaturesWidget::OPTIONS signaturesOptions = {};
         signaturesOptions.bMenu_Hex = true;
         signaturesOptions.bMenu_Disasm = true;
-        _pWidget->setData(cwOptions.pDevice, cwOptions.fileType, signaturesOptions, false);
+        signaturesOptions.fileType = cwOptions.fileType;
+        _pWidget->setData(cwOptions.pDevice, signaturesOptions, false);
         pResult = _pWidget;
     } else if (cwOptions._type == XFW_DEF::TYPE_REGIONS) {
         XRegionsWidget *_pWidget = new XRegionsWidget(cwOptions.pParent);

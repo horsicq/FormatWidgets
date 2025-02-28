@@ -72,15 +72,19 @@ QList<XBinary::SIGNATUREDB_RECORD> MultiSearch::loadSignaturesFromFile(const QSt
                 record.nNumber = nIndex++;
                 record.sName = sLine.section(";", 0, 0);
                 record.sSignature = sLine.section(";", 2, -1);
+                record.sPatch = sLine.section(";", 3, 3);
+                record.endian = XBinary::ENDIAN_UNKNOWN;
 
-                QString sEndianness = sLine.section(";", 1, 1);
+                QString sInfo = sLine.section(";", 1, 1);
 
-                if (sEndianness == "BE") {
+                if (sInfo.contains("BE")) {
                     record.endian = XBinary::ENDIAN_BIG;
-                } else if (sEndianness == "LE") {
+                } else if (sInfo.contains("LE")) {
                     record.endian = XBinary::ENDIAN_LITTLE;
-                } else {
-                    record.endian = XBinary::ENDIAN_UNKNOWN;
+                }
+
+                if (sInfo.contains("P:")) {
+                    record.sPatch = sInfo.section("P:", 1, -1);
                 }
 
                 listResult.append(record);
@@ -93,17 +97,6 @@ QList<XBinary::SIGNATUREDB_RECORD> MultiSearch::loadSignaturesFromFile(const QSt
     return listResult;
 }
 
-XBinary::SIGNATUREDB_RECORD MultiSearch::createSignature(const QString &sName, const QString &sSignature)
-{
-    XBinary::SIGNATUREDB_RECORD result = {};
-
-    result.endian = XBinary::ENDIAN_LITTLE;
-    result.nNumber = 0;
-    result.sName = sName;
-    result.sSignature = sSignature;
-
-    return result;
-}
 
 void MultiSearch::processSignature(XBinary::SIGNATUREDB_RECORD signatureRecord)
 {
@@ -172,6 +165,7 @@ void MultiSearch::processSearch()
         timer.start();
         qDebug("Signatures start");
 #endif
+        g_pListRecords->clear();
 
         qint32 nNumberOfSignatures = g_options.pListSignatureRecords->count();
 
