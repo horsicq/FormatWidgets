@@ -2135,7 +2135,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                 XMACH_DEF::dyld_chained_fixups_header dcfh = mach._read_dyld_chained_fixups_header(_spStruct.nStructOffset);
 
                 if (dcfh.starts_offset && (dcfh.imports_offset - dcfh.starts_offset > 0)) {
-                    qint64 nCurrentOffset = _spStruct.nOffset + _spStruct.nStructOffset+ dcfh.starts_offset;
+                    qint64 nCurrentOffset = _spStruct.nOffset + _spStruct.nStructOffset + dcfh.starts_offset;
                     quint32 seg_count = mach.read_uint32(nCurrentOffset, mach.isBigEndian());
 
                     nCurrentOffset += sizeof(quint32);
@@ -2146,7 +2146,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                         if (seg_info_offset) {
                             SPSTRUCT _spStructRecord = _spStruct;
                             _spStructRecord.pTreeWidgetItem = pTreeWidgetItem;
-                            _spStructRecord.nStructOffset = _spStruct.nOffset + _spStruct.nStructOffset+ dcfh.starts_offset + seg_info_offset;
+                            _spStructRecord.nStructOffset = _spStruct.nOffset + _spStruct.nStructOffset + dcfh.starts_offset + seg_info_offset;
                             _spStructRecord.nStructSize = 0;
                             _spStructRecord.nStructCount = 0;
                             _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEADER;

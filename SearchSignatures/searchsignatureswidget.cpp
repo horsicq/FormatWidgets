@@ -344,6 +344,4 @@ void SearchSignaturesWidget::on_comboBoxType_currentIndexChanged(int nIndex)
 
 void SearchSignaturesWidget::on_toolButtonPatch_clicked()
 {
-
 }
-

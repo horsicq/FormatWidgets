@@ -97,7 +97,6 @@ QList<XBinary::SIGNATUREDB_RECORD> MultiSearch::loadSignaturesFromFile(const QSt
     return listResult;
 }
 
-
 void MultiSearch::processSignature(XBinary::SIGNATUREDB_RECORD signatureRecord)
 {
     // #ifdef QT_DEBUG

@@ -199,7 +199,8 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
         } else if (getCwOptions()->_type == XFW_DEF::TYPE_MACH_build_tool_version) {
             addComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getBuildToolS(), XTYPE_MACH::X_build_tool_version::tool, XComboBoxEx::CBTYPE_LIST, 0);
         } else if (getCwOptions()->_type == XFW_DEF::TYPE_MACH_dyld_chained_fixups_header) {
-            addComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getDyldChainedImportS(), XTYPE_MACH::X_dyld_chained_fixups_header::imports_format, XComboBoxEx::CBTYPE_LIST, 0);
+            addComboBox(ui->tableWidgetMain, getListRecWidgets(), XMACH::getDyldChainedImportS(), XTYPE_MACH::X_dyld_chained_fixups_header::imports_format,
+                        XComboBoxEx::CBTYPE_LIST, 0);
         } else if ((getCwOptions()->_type == XFW_DEF::TYPE_Elf32_Ehdr) || (getCwOptions()->_type == XFW_DEF::TYPE_Elf64_Ehdr)) {
             // adjustComboBox(getListRecWidgets(), XELF::getHeaderMagicsS(), _elf_ehdrWidget::ei_mag, XComboBoxEx::CBTYPE_LIST, 0);
             // adjustComboBox(getListRecWidgets(), XELF::getHeaderClassesS(), _elf_ehdrWidget::ei_class, XComboBoxEx::CBTYPE_LIST, 0);
