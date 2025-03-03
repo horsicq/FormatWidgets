@@ -447,7 +447,9 @@ QString XFormatWidget::getTypeTitle(XFW_DEF::TYPE type, XBinary::MODE mode, XBin
         sResult = QString("section");
     } else if (type == XFW_DEF::TYPE_MACH_section_64) {
         sResult = QString("section_64");
-    } else if (type == XFW_DEF::TYPE_MACH_trie_export) {
+    } else if (type == XFW_DEF::TYPE_MACH_trie_export_commands) {
+        sResult = tr("Commands");
+    } else if (type == XFW_DEF::TYPE_MACH_trie_export_table) {
         sResult = tr("Export");
     } else if (type == XFW_DEF::TYPE_MACH_rebase) {
         sResult = QString("rebase");
@@ -2111,11 +2113,19 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     _spStructRecord.nStructSize = dicommand.export_size;
                     _spStructRecord.nStructCount = 0;
                     _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_TABLE;
-                    _spStructRecord.type = XFW_DEF::TYPE_MACH_trie_export;
+                    _spStructRecord.type = XFW_DEF::TYPE_MACH_trie_export_commands;
                     _spStructRecord.sInfo = "";
 
                     _addStruct(_spStructRecord);
                 }
+            } else if ((_spStruct.widgetMode == XFW_DEF::WIDGETMODE_TABLE) && (_spStruct.type == XFW_DEF::TYPE_MACH_trie_export_commands)) {
+                SPSTRUCT _spStructRecord = _spStruct;
+                _spStructRecord.pTreeWidgetItem = pTreeWidgetItem;
+                _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_TABLE;
+                _spStructRecord.type = XFW_DEF::TYPE_MACH_trie_export_table;
+                _spStructRecord.sInfo = "";
+
+                _addStruct(_spStructRecord);
             } else if ((_spStruct.widgetMode == XFW_DEF::WIDGETMODE_HEADER) && (_spStruct.type == XFW_DEF::TYPE_MACH_dyld_chained_fixups_command)) {
                 XMACH_DEF::linkedit_data_command _command = mach._read_linkedit_data_command(_spStruct.nStructOffset);
 
@@ -2183,7 +2193,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     _spStructRecord.nStructSize = _command.datasize;
                     _spStructRecord.nStructCount = 0;
                     _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_TABLE;
-                    _spStructRecord.type = XFW_DEF::TYPE_MACH_trie_export;
+                    _spStructRecord.type = XFW_DEF::TYPE_MACH_trie_export_commands;
                     _spStructRecord.sInfo = "";
 
                     _addStruct(_spStructRecord);

@@ -57,7 +57,7 @@ void XProcessData::process()
 
     if ((g_pCwOptions->_type == XFW_DEF::TYPE_7ZIP_PROPERTIES) || (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_bind) || (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_weak) ||
         (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_lazy_bind) || (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_rebase) ||
-        (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_trie_export)) {
+        (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_trie_export_commands)) {
         {
             XFW_DEF::HEADER_RECORD record = {};
             record.nPosition = -1;
@@ -81,22 +81,30 @@ void XProcessData::process()
     g_pListHeaderRecords->append(listHeaderRecords);
 
     if (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_functions) {
-        {
-            XFW_DEF::HEADER_RECORD record = {};
-            record.nPosition = -1;
-            record.sName = tr("Value");
-            record.vtype = XFW_DEF::VAL_TYPE_ULEB128;
+        XFW_DEF::HEADER_RECORD record = {};
+        record.nPosition = -1;
+        record.sName = tr("Value");
+        record.vtype = XFW_DEF::VAL_TYPE_ULEB128;
 
-            g_pListHeaderRecords->append(record);
-        }
-        {
-            XFW_DEF::HEADER_RECORD record = {};
-            record.nPosition = -1;
-            record.sName = tr("Offset");
-            record.vtype = XFW_DEF::VAL_TYPE_HEX | XFW_DEF::VAL_TYPE_OFFSET | XFW_DEF::VAL_TYPE_CODE;
+        g_pListHeaderRecords->append(record);
+    }
 
-            g_pListHeaderRecords->append(record);
-        }
+    if ((g_pCwOptions->_type == XFW_DEF::TYPE_MACH_functions) || (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_trie_export_table)) {
+        XFW_DEF::HEADER_RECORD record = {};
+        record.nPosition = -1;
+        record.sName = tr("Offset");
+        record.vtype = XFW_DEF::VAL_TYPE_HEX | XFW_DEF::VAL_TYPE_OFFSET | XFW_DEF::VAL_TYPE_CODE;
+
+        g_pListHeaderRecords->append(record);
+    }
+
+    if (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_trie_export_table) {
+        XFW_DEF::HEADER_RECORD record = {};
+        record.nPosition = -1;
+        record.sName = tr("Flags");
+        record.vtype = XFW_DEF::VAL_TYPE_HEX;
+
+        g_pListHeaderRecords->append(record);
     }
 
     if (g_pCwOptions->_type == XFW_DEF::TYPE_GENERIC_STRINGTABLE_ANSI) {
@@ -124,7 +132,7 @@ void XProcessData::process()
 
         g_pListHeaderRecords->append(record);
     } else if ((g_pCwOptions->_type == XFW_DEF::TYPE_MACH_nlist) || (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_nlist_64) ||
-               (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_functions)) {
+               (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_functions) || (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_trie_export_table)) {
         XFW_DEF::HEADER_RECORD record = {};
         record.nPosition = -1;
         record.sName = tr("Symbol");
@@ -234,6 +242,28 @@ void XProcessData::process()
                                           g_pListHeaderRecords->at(nNumberOfColumns - 1).vtype, g_pCwOptions->demangleMode);
 
             _nOffset += nHeaderSize;
+            XBinary::setPdStructCurrent(g_pPdStruct, g_nFreeIndex, i);
+        }
+    } else if (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_trie_export_table) {
+        XMACH mach(g_pCwOptions->pDevice, g_pCwOptions->bIsImage, g_pCwOptions->nImageBase);
+
+        QList<XMACH::EXPORT_RECORD> listExportRecords;
+
+        mach.handleImport(g_pCwOptions->nDataOffset, 0, g_pCwOptions->nDataSize, &listExportRecords, "", g_pPdStruct);
+
+        nNumberOfRows = listExportRecords.count();
+
+        (*g_ppModel) = new QStandardItemModel(nNumberOfRows, nNumberOfColumns);
+
+        for (qint32 i = 0; (i < nNumberOfRows) && (!(g_pPdStruct->bIsStop)); i++) {
+            XFormatWidget::setItemToModelData((*g_ppModel), i, 0, i, 0, g_pListHeaderRecords->at(0).vtype, XFW_DEF::TYPE_UNKNOWN,
+                                              0, 0, 0, 0, 0, g_pCwOptions->demangleMode);
+            XFormatWidget::setItemToModel((*g_ppModel), i, 1, listExportRecords.at(i).nOffset, 0, g_pListHeaderRecords->at(1).vtype, g_pCwOptions->demangleMode);
+            XFormatWidget::setItemToModel((*g_ppModel), i, 2, listExportRecords.at(i).nFlags, 0, g_pListHeaderRecords->at(2).vtype,
+                                          g_pCwOptions->demangleMode);
+            XFormatWidget::setItemToModel((*g_ppModel), i, 3, listExportRecords.at(i).sName, 0, g_pListHeaderRecords->at(3).vtype,
+                                          g_pCwOptions->demangleMode);
+
             XBinary::setPdStructCurrent(g_pPdStruct, g_nFreeIndex, i);
         }
     } else if (g_pCwOptions->_type == XFW_DEF::TYPE_GENERIC_STRINGTABLE_ANSI) {
@@ -349,7 +379,7 @@ void XProcessData::process()
         }
     } else if ((g_pCwOptions->_type == XFW_DEF::TYPE_7ZIP_PROPERTIES) || (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_bind) ||
                (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_weak) || (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_lazy_bind) ||
-               (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_rebase) || (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_trie_export)) {
+               (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_rebase) || (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_trie_export_commands)) {
         XBinary binary(g_pCwOptions->pDevice, g_pCwOptions->bIsImage, g_pCwOptions->nImageBase);
 
         QByteArray baData = binary.read_array(g_pCwOptions->nDataOffset, g_pCwOptions->nDataSize, g_pPdStruct);
@@ -366,7 +396,7 @@ void XProcessData::process()
             disasmCore.setMode(XBinary::DM_CUSTOM_MACH_WEAK);
         } else if (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_rebase) {
             disasmCore.setMode(XBinary::DM_CUSTOM_MACH_REBASE);
-        } else if (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_trie_export) {
+        } else if (g_pCwOptions->_type == XFW_DEF::TYPE_MACH_trie_export_commands) {
             disasmCore.setMode(XBinary::DM_CUSTOM_MACH_EXPORT);
         }
 
