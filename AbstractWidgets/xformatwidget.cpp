@@ -437,6 +437,12 @@ QString XFormatWidget::getTypeTitle(XFW_DEF::TYPE type, XBinary::MODE mode, XBin
         sResult = QString("dyld_chained_fixups_header");
     } else if (type == XFW_DEF::TYPE_MACH_dyld_chained_starts_in_segment) {
         sResult = QString("dyld_chained_starts_in_segment");
+    } else if (type == XFW_DEF::TYPE_MACH_dyld_chained_import) {
+        sResult = QString("dyld_chained_import");
+    } else if (type == XFW_DEF::TYPE_MACH_dyld_chained_import_addend) {
+        sResult = QString("dyld_chained_import_addend");
+    } else if (type == XFW_DEF::TYPE_MACH_dyld_chained_import_addend64) {
+        sResult = QString("dyld_chained_import_addend64");
     } else if (type == XFW_DEF::TYPE_MACH_SC_SuperBlob) {
         sResult = QString("__SC_SuperBlob");
     } else if (type == XFW_DEF::TYPE_MACH_CS_BlobIndex) {
@@ -635,6 +641,15 @@ QList<XFW_DEF::HEADER_RECORD> XFormatWidget::getHeaderRecords(const XFW_DEF::CWO
     } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_dyld_chained_starts_in_segment) {
         pRecords = XTYPE_MACH::X_dyld_chained_starts_in_segment::records;
         nNumberOfRecords = XTYPE_MACH::X_dyld_chained_starts_in_segment::__data_size;
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_dyld_chained_import) {
+        pRecords = XTYPE_MACH::X_dyld_chained_import::records;
+        nNumberOfRecords = XTYPE_MACH::X_dyld_chained_import::__data_size;
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_dyld_chained_import_addend) {
+        pRecords = XTYPE_MACH::X_dyld_chained_import_addend::records32;
+        nNumberOfRecords = XTYPE_MACH::X_dyld_chained_import_addend::__data_size;
+    } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_dyld_chained_import_addend64) {
+        pRecords = XTYPE_MACH::X_dyld_chained_import_addend::records64;
+        nNumberOfRecords = XTYPE_MACH::X_dyld_chained_import_addend::__data_size;
     } else if (pCwOptions->_type == XFW_DEF::TYPE_MACH_SC_SuperBlob) {
         pRecords = XTYPE_MACH::X_SC_SuperBlob::records;
         nNumberOfRecords = XTYPE_MACH::X_SC_SuperBlob::__data_size;
@@ -2169,7 +2184,26 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     }
                 }
 
-                // TODO import
+                if (dcfh.imports_count && (dcfh.symbols_offset - dcfh.imports_offset)) {
+                    SPSTRUCT _spStructRecord = _spStruct;
+                    _spStructRecord.pTreeWidgetItem = pTreeWidgetItem;
+                    _spStructRecord.nStructOffset = _spStruct.nOffset + _spStruct.nStructOffset + dcfh.imports_offset;
+                    _spStructRecord.nStructSize = dcfh.symbols_offset - dcfh.imports_offset;
+                    _spStructRecord.nStructCount = dcfh.imports_count;
+                    _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_TABLE;
+
+                    _spStructRecord.sInfo = "";
+
+                    if (dcfh.imports_format == XMACH_DEF::S_DYLD_CHAINED_IMPORT) {
+                        _spStructRecord.type = XFW_DEF::TYPE_MACH_dyld_chained_import;
+                    } else if (dcfh.imports_format == XMACH_DEF::S_DYLD_CHAINED_IMPORT_ADDEND) {
+                        _spStructRecord.type = XFW_DEF::TYPE_MACH_dyld_chained_import_addend;
+                    } else if (dcfh.imports_format == XMACH_DEF::S_DYLD_CHAINED_IMPORT_ADDEND64) {
+                        _spStructRecord.type = XFW_DEF::TYPE_MACH_dyld_chained_import_addend64;
+                    }
+
+                    _addStruct(_spStructRecord);
+                }
 
                 if (dcfh.symbols_offset && (_spStruct.nStructSize - dcfh.symbols_offset > 0)) {
                     SPSTRUCT _spStructRecord = _spStruct;

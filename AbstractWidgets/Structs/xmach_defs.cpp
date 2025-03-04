@@ -790,4 +790,41 @@ const XFW_DEF::HEADER_RECORD records[__data_size] = {
 };
 }
 
+// namespace X_dyld_chained_import {
+// enum DATA {
+//     value,
+//     __data_size
+// };
+
+// extern const XFW_DEF::HEADER_RECORD records[__data_size];
+// }
+
+// namespace X_dyld_chained_import_addend {
+// enum DATA {
+//     value,
+//     addend,
+//     __data_size
+// };
+
+// extern const XFW_DEF::HEADER_RECORD records32[__data_size];
+// extern const XFW_DEF::HEADER_RECORD records64[__data_size];
+// }
+
+namespace X_dyld_chained_import {
+const XFW_DEF::HEADER_RECORD records[] = {
+    {value, "value", 0, 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+};
+}
+
+namespace X_dyld_chained_import_addend {
+const XFW_DEF::HEADER_RECORD records32[] = {
+    {value, "value", 0, 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {addend, "addend", offsetof(XMACH_DEF::dyld_chained_import_addend, addend), 4, "int32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+};
+const XFW_DEF::HEADER_RECORD records64[] = {
+    {value, "value", 0, 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {addend, "addend", offsetof(XMACH_DEF::dyld_chained_import_addend64, addend), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+};
+}
+
 }  // namespace XTYPE_MACH
