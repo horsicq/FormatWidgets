@@ -2570,6 +2570,31 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
 
                     _addStruct(_spStructRecord);
                 }
+            } else if ((_spStruct.widgetMode == XFW_DEF::WIDGETMODE_HEADER) && (_spStruct.type == XFW_DEF::TYPE_PE_NET_METADATA)) {
+                XPE::CLI_METADATA_HEADER cliMetadataHeader = pe._read_MetadataHeader(_spStruct.nStructOffset);
+
+                qint64 nCurrentOffset = _spStruct.nStructOffset + 20 + cliMetadataHeader.nVersionStringLength;
+
+                for (qint32 i = 0; i < cliMetadataHeader.nStreams; i++) {
+                    qint32 nStreamOffset = pe.read_uint32(nCurrentOffset + 0);
+                    qint32 nStreamSize = pe.read_uint32(nCurrentOffset + 4);
+                    QString sStreamName = pe.read_ansiString(nCurrentOffset + 8);
+
+                    SPSTRUCT _spStructRecord = _spStruct;
+                    _spStructRecord.pTreeWidgetItem = pTreeWidgetItem;
+                    _spStructRecord.nStructOffset = _spStruct.nStructOffset + nStreamOffset;
+                    _spStructRecord.nStructSize = nStreamSize;
+                    _spStructRecord.nStructCount = 0;
+                    _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_HEX;
+                    _spStructRecord.type = XFW_DEF::TYPE_GENERIC_RESOURCES;
+                    _spStructRecord.sInfo = sStreamName;
+                    _spStructRecord.var1 = _spStruct.nStructOffset;
+
+                    _addStruct(_spStructRecord);
+
+                    nCurrentOffset += 8;
+                    nCurrentOffset += S_ALIGN_UP((sStreamName.length() + 1), 4);
+                }
             }
         } else if ((_spStruct.type > XFW_DEF::TYPE_7ZIP_START) && (_spStruct.type < XFW_DEF::TYPE_7ZIP_END)) {
             XSevenZip sevenZip(_pDevice);
