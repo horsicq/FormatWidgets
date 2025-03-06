@@ -11,7 +11,7 @@ HEADERS += \
     $$PWD/Structs/xne_defs.h \
     $$PWD/Structs/xpdf_defs.h \
     $$PWD/Structs/xpe_defs.h \
-    $$PWD/Structs/xsevenzip_defs.h \
+    $$PWD/Structs/xarchives_defs.h \
     $$PWD/dialogxmainwidget.h \
     $$PWD/dialogsetgenericwidget.h \
     $$PWD/xdialogprocessdata.h \
@@ -36,7 +36,7 @@ SOURCES += \
     $$PWD/Structs/xne_defs.cpp \
     $$PWD/Structs/xpdf_defs.cpp \
     $$PWD/Structs/xpe_defs.cpp \
-    $$PWD/Structs/xsevenzip_defs.cpp \
+    $$PWD/Structs/xarchives_defs.cpp \
     $$PWD/dialogxmainwidget.cpp \
     $$PWD/dialogsetgenericwidget.cpp \
     $$PWD/xdialogprocessdata.cpp \

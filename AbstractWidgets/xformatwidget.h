@@ -46,7 +46,7 @@
 #include "Structs/xpdf_defs.h"
 #include "Structs/xne_defs.h"
 #include "Structs/xpe_defs.h"
-#include "Structs/xsevenzip_defs.h"
+#include "Structs/xarchives_defs.h"
 
 class XFormatWidget : public XShortcutsWidget {
     Q_OBJECT

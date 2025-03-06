@@ -454,7 +454,7 @@ QString XFormatWidget::getTypeTitle(XFW_DEF::TYPE type, XBinary::MODE mode, XBin
     } else if (type == XFW_DEF::TYPE_MACH_section_64) {
         sResult = QString("section_64");
     } else if (type == XFW_DEF::TYPE_MACH_trie_export_commands) {
-        sResult = tr("Commands");
+        sResult = tr("Export");
     } else if (type == XFW_DEF::TYPE_MACH_trie_export_table) {
         sResult = tr("Export");
     } else if (type == XFW_DEF::TYPE_MACH_rebase) {
@@ -1874,6 +1874,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
         ((_spStruct.type > XFW_DEF::TYPE_ELF_START) && (_spStruct.type < XFW_DEF::TYPE_ELF_END)) ||
         ((_spStruct.type > XFW_DEF::TYPE_DEX_START) && (_spStruct.type < XFW_DEF::TYPE_DEX_END)) ||
         ((_spStruct.type > XFW_DEF::TYPE_7ZIP_START) && (_spStruct.type < XFW_DEF::TYPE_7ZIP_END)) ||
+        ((_spStruct.type > XFW_DEF::TYPE_RAR_START) && (_spStruct.type < XFW_DEF::TYPE_RAR_END)) ||
         ((_spStruct.type > XFW_DEF::TYPE_MSDOS_START) && (_spStruct.type < XFW_DEF::TYPE_MSDOS_END)) ||
         ((_spStruct.type > XFW_DEF::TYPE_NE_START) && (_spStruct.type < XFW_DEF::TYPE_NE_END)) ||
         ((_spStruct.type > XFW_DEF::TYPE_LE_START) && (_spStruct.type < XFW_DEF::TYPE_LE_END)) ||
@@ -2613,6 +2614,8 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
 
                 _addStruct(_spStructRecord);
             }
+        } else if ((_spStruct.type > XFW_DEF::TYPE_RAR_START) && (_spStruct.type < XFW_DEF::TYPE_RAR_END)) {
+            XRar xrar(_pDevice);
         }
     }
 
