@@ -346,7 +346,7 @@ void DEXWidget::reloadData(bool bSaveSelection)
                     options.nStartSelectionOffset = -1;
                 }
 
-                ui->widgetHex->setXInfoDB(getXInfoDB(), getXInfoProfile());
+                ui->widgetHex->setXInfoDB(getXInfoDB());
                 ui->widgetHex->setData(getDevice(), options);
                 //                ui->widgetHex->setBackupFileName(getOptions().sBackupFileName);
                 //                ui->widgetHex->enableReadOnly(false);
@@ -383,7 +383,7 @@ void DEXWidget::reloadData(bool bSaveSelection)
                 options.fileType = dex.getFileType();
                 options.bIsSearchEnable = true;
 
-                ui->widgetMemoryMap->setData(getDevice(), options, getXInfoDB(), getXInfoProfile());
+                ui->widgetMemoryMap->setData(getDevice(), options, getXInfoDB());
             }
         } else if (nType == SDEX::TYPE_ENTROPY) {
             if (!isInitPresent(sInit)) {

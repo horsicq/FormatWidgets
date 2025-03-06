@@ -217,7 +217,7 @@ void BinaryWidget::reloadData(bool bSaveSelection)
                     options.nStartSelectionOffset = -1;
                 }
 
-                ui->widgetHex->setXInfoDB(getXInfoDB(), getXInfoProfile());
+                ui->widgetHex->setXInfoDB(getXInfoDB());
                 ui->widgetHex->setData(getDevice(), options);
                 //                ui->widgetHex->setBackupFileName(getOptions().sBackupFileName);
                 //                ui->widgetHex->enableReadOnly(false);
@@ -231,7 +231,7 @@ void BinaryWidget::reloadData(bool bSaveSelection)
                 options.fileType = getFileType();
                 options.nInitAddress = getDisasmInitAddress();
                 options.bMenu_Hex = true;
-                ui->widgetDisasm->setXInfoDB(getXInfoDB(), getXInfoProfile());
+                ui->widgetDisasm->setXInfoDB(getXInfoDB());
                 ui->widgetDisasm->setData(getDevice(), options);
 
                 setDisasmInitAddress(-1);
@@ -266,7 +266,7 @@ void BinaryWidget::reloadData(bool bSaveSelection)
                 options.fileType = getFileType();
                 options.bIsSearchEnable = true;
 
-                ui->widgetMemoryMap->setData(getDevice(), options, getXInfoDB(), getXInfoProfile());
+                ui->widgetMemoryMap->setData(getDevice(), options, getXInfoDB());
             }
         } else if (nType == SBINARY::TYPE_ENTROPY) {
             if (!isInitPresent(sInit)) {

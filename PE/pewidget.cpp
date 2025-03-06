@@ -1074,7 +1074,7 @@ void PEWidget::reloadData(bool bSaveSelection)
                     options.nStartSelectionOffset = -1;
                 }
 
-                ui->widgetHex->setXInfoDB(getXInfoDB(), getXInfoProfile());
+                ui->widgetHex->setXInfoDB(getXInfoDB());
                 ui->widgetHex->setData(getDevice(), options);
                 // TODO save directory
                 // ui->widgetHex->enableReadOnly(false);
@@ -1089,7 +1089,7 @@ void PEWidget::reloadData(bool bSaveSelection)
                 options.nInitAddress = getDisasmInitAddress();
                 options.bMenu_Hex = true;
 
-                ui->widgetDisasm->setXInfoDB(getXInfoDB(), getXInfoProfile());
+                ui->widgetDisasm->setXInfoDB(getXInfoDB());
                 ui->widgetDisasm->setData(getDevice(), options);
 
                 setDisasmInitAddress(-1);
@@ -1124,7 +1124,7 @@ void PEWidget::reloadData(bool bSaveSelection)
                 options.fileType = pe.getFileType();
                 options.bIsSearchEnable = true;
 
-                ui->widgetMemoryMap->setData(getDevice(), options, getXInfoDB(), getXInfoProfile());
+                ui->widgetMemoryMap->setData(getDevice(), options, getXInfoDB());
             }
         } else if (nType == SPE::TYPE_ENTROPY) {
             if (!isInitPresent(sInit)) {
@@ -1240,7 +1240,7 @@ void PEWidget::reloadData(bool bSaveSelection)
                 options.memoryMapRegion = binary.getMemoryMap();
 
                 ui->widgetDisasm_DosStub->setData(g_subDevice[SPE::TYPE_DOS_STUB], options);
-                ui->widgetDisasm_DosStub->setXInfoDB(getXInfoDB(), getXInfoProfile());
+                ui->widgetDisasm_DosStub->setXInfoDB(getXInfoDB());
             }
         } else if (nType == SPE::TYPE_IMAGE_NT_HEADERS) {
             if (!isInitPresent(sInit)) {

@@ -29,7 +29,6 @@ FormatWidget::FormatWidget(QWidget *pParent) : XShortcutsWidget(pParent)
     g_nPageIndex = 0;  // TODO Check
     g_pXInfoDB = nullptr;
     g_nDisamInitAddress = -1;
-    g_profile = XInfoDB::PROFILE_UNKNOWN;
 
     g_colDisabled = QWidget::palette().color(QPalette::Window);
     g_colEnabled = QWidget::palette().color(QPalette::BrightText);
@@ -51,20 +50,14 @@ FormatWidget::~FormatWidget()
     }
 }
 
-void FormatWidget::setXInfoDB(XInfoDB *pXInfoDB, XInfoDB::PROFILE profile)
+void FormatWidget::setXInfoDB(XInfoDB *pXInfoDB)
 {
     g_pXInfoDB = pXInfoDB;
-    g_profile = profile;
 }
 
 XInfoDB *FormatWidget::getXInfoDB()
 {
     return g_pXInfoDB;
-}
-
-XInfoDB::PROFILE FormatWidget::getXInfoProfile()
-{
-    return g_profile;
 }
 
 void FormatWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
@@ -346,7 +339,7 @@ bool FormatWidget::loadHexSubdevice(qint64 nOffset, qint64 nSize, XADDR nAddress
     hexOptions.bOffset = bOffset;
 
     pToolsWidget->setGlobal(getShortcuts(), getGlobalOptions());
-    pToolsWidget->setData((*ppSubDevice), hexOptions, bDisasm, bFollow, getXInfoDB(), getXInfoProfile());
+    pToolsWidget->setData((*ppSubDevice), hexOptions, bDisasm, bFollow, getXInfoDB());
 
     return true;
 }
@@ -908,7 +901,7 @@ void FormatWidget::resetWidget()
             if (pChild) {
                 XMultiDisasmWidget::OPTIONS options = {};
 
-                pChild->setXInfoDB(nullptr, XInfoDB::PROFILE_UNKNOWN);
+                pChild->setXInfoDB(nullptr);
                 pChild->setData(nullptr, options);
             }
         }
@@ -924,7 +917,7 @@ void FormatWidget::resetWidget()
             if (pChild) {
                 XMemoryMapWidget::OPTIONS options = {};
 
-                pChild->setData(nullptr, options, nullptr, XInfoDB::PROFILE_UNKNOWN);
+                pChild->setData(nullptr, options, nullptr);
             }
         }
     }
@@ -1225,7 +1218,7 @@ void FormatWidget::showHex(qint64 nOffset, qint64 nSize)
     DialogHexView dialogHexView(this);
     dialogHexView.setGlobal(getShortcuts(), getGlobalOptions());
     dialogHexView.setData(getDevice(), hexOptions);
-    dialogHexView.setXInfoDB(getXInfoDB(), getXInfoProfile());
+    dialogHexView.setXInfoDB(getXInfoDB());
 
     connect(&dialogHexView, SIGNAL(editState(bool)), this, SLOT(setEdited(bool)));
 

@@ -89,7 +89,7 @@ void MACHOFATWidget::reload()
                 pMachWidget->setGlobal(getShortcuts(), getGlobalOptions());
 
                 XInfoDB *pXInfoDB = getXInfoDB();
-                pMachWidget->setXInfoDB(pXInfoDB, getXInfoProfile());
+                pMachWidget->setXInfoDB(pXInfoDB);
 
                 ui->stackedWidget->addWidget(pMachWidget);
 
