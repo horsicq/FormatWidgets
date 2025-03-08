@@ -836,7 +836,7 @@ enum DATA {
 };
 
 extern const XFW_DEF::HEADER_RECORD records[__data_size];
-}
+}  // namespace X_dyld_chained_import
 
 namespace X_dyld_chained_import_addend {
 enum DATA {
@@ -847,7 +847,7 @@ enum DATA {
 
 extern const XFW_DEF::HEADER_RECORD records32[__data_size];
 extern const XFW_DEF::HEADER_RECORD records64[__data_size];
-}
+}  // namespace X_dyld_chained_import_addend
 
 }  // namespace XTYPE_MACH
 

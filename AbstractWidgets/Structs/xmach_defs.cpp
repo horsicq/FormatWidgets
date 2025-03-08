@@ -825,6 +825,6 @@ const XFW_DEF::HEADER_RECORD records64[] = {
     {value, "value", 0, 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT, -1},
     {addend, "addend", offsetof(XMACH_DEF::dyld_chained_import_addend64, addend), 8, "uint64", XFW_DEF::VAL_TYPE_DATA_INT, -1},
 };
-}
+}  // namespace X_dyld_chained_import_addend
 
 }  // namespace XTYPE_MACH

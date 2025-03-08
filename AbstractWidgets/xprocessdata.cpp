@@ -256,13 +256,11 @@ void XProcessData::process()
         (*g_ppModel) = new QStandardItemModel(nNumberOfRows, nNumberOfColumns);
 
         for (qint32 i = 0; (i < nNumberOfRows) && (!(g_pPdStruct->bIsStop)); i++) {
-            XFormatWidget::setItemToModelData((*g_ppModel), i, 0, i, 0, g_pListHeaderRecords->at(0).vtype, XFW_DEF::TYPE_UNKNOWN,
-                                              0, 0, 0, 0, 0, g_pCwOptions->demangleMode);
+            XFormatWidget::setItemToModelData((*g_ppModel), i, 0, i, 0, g_pListHeaderRecords->at(0).vtype, XFW_DEF::TYPE_UNKNOWN, 0, 0, 0, 0, 0,
+                                              g_pCwOptions->demangleMode);
             XFormatWidget::setItemToModel((*g_ppModel), i, 1, listExportRecords.at(i).nOffset, 0, g_pListHeaderRecords->at(1).vtype, g_pCwOptions->demangleMode);
-            XFormatWidget::setItemToModel((*g_ppModel), i, 2, listExportRecords.at(i).nFlags, 0, g_pListHeaderRecords->at(2).vtype,
-                                          g_pCwOptions->demangleMode);
-            XFormatWidget::setItemToModel((*g_ppModel), i, 3, listExportRecords.at(i).sName, 0, g_pListHeaderRecords->at(3).vtype,
-                                          g_pCwOptions->demangleMode);
+            XFormatWidget::setItemToModel((*g_ppModel), i, 2, listExportRecords.at(i).nFlags, 0, g_pListHeaderRecords->at(2).vtype, g_pCwOptions->demangleMode);
+            XFormatWidget::setItemToModel((*g_ppModel), i, 3, listExportRecords.at(i).sName, 0, g_pListHeaderRecords->at(3).vtype, g_pCwOptions->demangleMode);
 
             XBinary::setPdStructCurrent(g_pPdStruct, g_nFreeIndex, i);
         }
