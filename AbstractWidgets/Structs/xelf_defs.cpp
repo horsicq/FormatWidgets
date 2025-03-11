@@ -134,20 +134,20 @@ const XFW_DEF::HEADER_RECORD records64[] = {
 
 namespace X_ELF_LIBRARIES {
 const XFW_DEF::HEADER_RECORD records[] = {
-    {library_name, QObject::tr("Library name"), 0, 0, "", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {library_name, "Library name", 0, 0, "", XFW_DEF::VAL_TYPE_DATA_INT, -1},
 };
 }
 
 namespace X_ELF_INTERPRETER {
 const XFW_DEF::HEADER_RECORD records[] = {
-    {interpreter, QObject::tr("Interpreter"), 0, -1, "Ansi string", XFW_DEF::VAL_TYPE_DATA_ARRAY | XFW_DEF::VAL_TYPE_ANSI, -1},
+    {interpreter, "Interpreter", 0, -1, "Ansi string", XFW_DEF::VAL_TYPE_DATA_ARRAY | XFW_DEF::VAL_TYPE_ANSI, -1},
 };
 }
 
 namespace X_ELF_NOTES {
 const XFW_DEF::HEADER_RECORD records[] = {
-    {type, QObject::tr("Type"), 0, -1, "", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-    {name, QObject::tr("Name"), 0, -1, "", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {type, "Type", 0, -1, "", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {name, "Name", 0, -1, "", XFW_DEF::VAL_TYPE_DATA_INT, -1},
 };
 }
 

@@ -52,15 +52,15 @@ const XFW_DEF::HEADER_RECORD records[] = {
 
 namespace X_DEX_MAP_ITEM {
 const XFW_DEF::HEADER_RECORD records[] = {
-    {type, QObject::tr("Type"), offsetof(XDEX_DEF::MAP_ITEM, nType), 2, "uint16", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-    {count, QObject::tr("Count"), offsetof(XDEX_DEF::MAP_ITEM, nCount), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
-    {offset, QObject::tr("Offset"), offsetof(XDEX_DEF::MAP_ITEM, nOffset), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET, -1},
+    {type, "Type", offsetof(XDEX_DEF::MAP_ITEM, nType), 2, "uint16", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {count, "Count", offsetof(XDEX_DEF::MAP_ITEM, nCount), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {offset, "Offset", offsetof(XDEX_DEF::MAP_ITEM, nOffset), 4, "uint32", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_OFFSET, -1},
 };
 }
 
 namespace X_DEX_STRING {
 const XFW_DEF::HEADER_RECORD records[] = {
-    {string, QObject::tr("String"), 0, 2, "string", XFW_DEF::VAL_TYPE_DATA_INT, -1},
+    {string, "String", 0, 2, "string", XFW_DEF::VAL_TYPE_DATA_INT, -1},
 };
 }
 
