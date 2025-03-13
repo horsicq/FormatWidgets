@@ -304,6 +304,8 @@ QString XFormatWidget::getTypeTitle(XFW_DEF::TYPE type, XBinary::MODE mode, XBin
         sResult = tr("String table");
     } else if (type == XFW_DEF::TYPE_GENERIC_RESOURCES) {
         sResult = tr("Resources");
+    } else if (type == XFW_DEF::TYPE_GENERIC_TABLE) {
+        sResult = tr("Table");
     } else if (type == XFW_DEF::TYPE_Elf32_Ehdr) {
         sResult = QString("Elf32_Ehdr");
     } else if (type == XFW_DEF::TYPE_Elf64_Ehdr) {
@@ -2609,6 +2611,21 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                 XBinary::_MEMORY_MAP memoryMap = pe.getMemoryMap();
 
                 XPE::CLI_INFO cliInfo = pe.getCliInfo(true, &memoryMap);
+
+                for (qint32 i = 0; i < 0x40; i++) {
+                    if (cliInfo.metaData.Tables_TablesNumberOfIndexes[i]) {
+                        SPSTRUCT _spStructRecord = _spStruct;
+                        _spStructRecord.pTreeWidgetItem = pTreeWidgetItem;
+                        _spStructRecord.nStructOffset = _spStruct.nStructOffset + cliInfo.metaData.Tables_TablesOffsets[i];;
+                        _spStructRecord.nStructSize = cliInfo.metaData.Tables_TablesNumberOfIndexes[i] * cliInfo.metaData.Tables_TableElementSizes[i];
+                        _spStructRecord.nStructCount = cliInfo.metaData.Tables_TablesNumberOfIndexes[i];
+                        _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_TABLE;
+                        _spStructRecord.type = XFW_DEF::TYPE_GENERIC_TABLE;
+                        _spStructRecord.sInfo = XPE::mdtIdToString(i);
+
+                        _addStruct(_spStructRecord);
+                    }
+                }
             }
         } else if ((_spStruct.type > XFW_DEF::TYPE_7ZIP_START) && (_spStruct.type < XFW_DEF::TYPE_7ZIP_END)) {
             XSevenZip sevenZip(_pDevice);
