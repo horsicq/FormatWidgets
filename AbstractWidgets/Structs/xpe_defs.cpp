@@ -357,8 +357,7 @@ const XFW_DEF::HEADER_RECORD records[] = {
 
 namespace X_IMAGE_SECTION_HEADER {
 const XFW_DEF::HEADER_RECORD records[] = {
-    {Name, "Name", offsetof(XPE_DEF::IMAGE_SECTION_HEADER, Name), 8, "BYTE[8]",
-     XFW_DEF::VAL_TYPE_DATA_ARRAY | XFW_DEF::VAL_TYPE_ANSI | XFW_DEF::VAL_TYPE_STRING, -1},
+    {Name, "Name", offsetof(XPE_DEF::IMAGE_SECTION_HEADER, Name), 8, "BYTE[8]", XFW_DEF::VAL_TYPE_DATA_ARRAY | XFW_DEF::VAL_TYPE_ANSI | XFW_DEF::VAL_TYPE_STRING, -1},
     {VirtualSize, "VirtualSize", offsetof(XPE_DEF::IMAGE_SECTION_HEADER, Misc.VirtualSize), 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, -1},
     {VirtualAddress, "VirtualAddress", offsetof(XPE_DEF::IMAGE_SECTION_HEADER, VirtualAddress), 4, "DWORD",
      XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_RELADDRESS | XFW_DEF::VAL_TYPE_CODE, -1},

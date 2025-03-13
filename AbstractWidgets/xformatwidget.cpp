@@ -2489,7 +2489,7 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                         }
                     } else {
                         if (XBinary::isRelAddressValid(&memoryMap, idd.VirtualAddress) && idd.Size) {
-                            if (i == XPE_DEF::S_IMAGE_DIRECTORY_ENTRY_COM_DESCRIPTOR) {                                
+                            if (i == XPE_DEF::S_IMAGE_DIRECTORY_ENTRY_COM_DESCRIPTOR) {
                                 SPSTRUCT _spStructRecord = _spStruct;
                                 _spStructRecord.pTreeWidgetItem = pTreeWidgetItem;
                                 _spStructRecord.nStructOffset = _spStruct.nOffset + XBinary::relAddressToOffset(&memoryMap, idd.VirtualAddress);
@@ -2616,7 +2616,8 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                     if (cliInfo.metaData.Tables_TablesNumberOfIndexes[i]) {
                         SPSTRUCT _spStructRecord = _spStruct;
                         _spStructRecord.pTreeWidgetItem = pTreeWidgetItem;
-                        _spStructRecord.nStructOffset = _spStruct.nStructOffset + cliInfo.metaData.Tables_TablesOffsets[i];;
+                        _spStructRecord.nStructOffset = _spStruct.nStructOffset + cliInfo.metaData.Tables_TablesOffsets[i];
+                        ;
                         _spStructRecord.nStructSize = cliInfo.metaData.Tables_TablesNumberOfIndexes[i] * cliInfo.metaData.Tables_TableElementSizes[i];
                         _spStructRecord.nStructCount = cliInfo.metaData.Tables_TablesNumberOfIndexes[i];
                         _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_TABLE;
