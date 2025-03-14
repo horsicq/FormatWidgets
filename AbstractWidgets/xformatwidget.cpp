@@ -337,6 +337,8 @@ QString XFormatWidget::getTypeTitle(XFW_DEF::TYPE type, XBinary::MODE mode, XBin
         sResult = QString("IMAGE_COR20_HEADER");
     } else if (type == XFW_DEF::TYPE_PE_NET_METADATA) {
         sResult = QString(".NET metadata");
+    } else if (type == XFW_DEF::TYPE_PE_NET_METADATA_TABLE) {
+        sResult = tr("Table");
     } else if (type == XFW_DEF::TYPE_MACH_mach_header) {
         sResult = QString("mach_header");
     } else if (type == XFW_DEF::TYPE_MACH_mach_header_64) {
@@ -2621,8 +2623,9 @@ void XFormatWidget::_addStruct(const SPSTRUCT &spStruct)
                         _spStructRecord.nStructSize = cliInfo.metaData.Tables_TablesNumberOfIndexes[i] * cliInfo.metaData.Tables_TableElementSizes[i];
                         _spStructRecord.nStructCount = cliInfo.metaData.Tables_TablesNumberOfIndexes[i];
                         _spStructRecord.widgetMode = XFW_DEF::WIDGETMODE_TABLE;
-                        _spStructRecord.type = XFW_DEF::TYPE_GENERIC_TABLE;
+                        _spStructRecord.type = XFW_DEF::TYPE_PE_NET_METADATA_TABLE;
                         _spStructRecord.sInfo = XPE::mdtIdToString(i);
+                        _spStructRecord.var1 = i;
 
                         _addStruct(_spStructRecord);
                     }
