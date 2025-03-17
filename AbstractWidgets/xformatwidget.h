@@ -124,8 +124,8 @@ public:
     virtual void setOptions(XFW_DEF::OPTIONS options);  // TODO for all Widgets
     XFW_DEF::OPTIONS getOptions();
     static QTreeWidgetItem *createNewItem(XFW_DEF::TYPE type, XFW_DEF::WIDGETMODE widgetMode, XOptions::ICONTYPE iconType, qint64 nOffset, qint64 nSize, qint64 nCount,
-                                          QVariant var1, QVariant var2, XBinary::MODE mode, XBinary::ENDIAN endian, QString sTitle, QString sInfo);
-    static QString getTypeTitle(XFW_DEF::TYPE type, XBinary::MODE mode, XBinary::ENDIAN endian, QString sInfo);
+                                          QVariant var1, QVariant var2, XBinary::MODE mode, XBinary::ENDIAN endian, const QString &sTitle, const QString &sInfo);
+    static QString getTypeTitle(XFW_DEF::TYPE type, XBinary::MODE mode, XBinary::ENDIAN endian, const QString &sInfo);
     static QString getTypeTitle(const XFW_DEF::CWOPTIONS *pCwOptions);
 
     static QList<XFW_DEF::HEADER_RECORD> getHeaderRecords(const XFW_DEF::CWOPTIONS *pCwOptions, qint32 nLimit);

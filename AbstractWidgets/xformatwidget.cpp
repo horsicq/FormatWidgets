@@ -222,7 +222,7 @@ XFW_DEF::OPTIONS XFormatWidget::getOptions()
 }
 
 QTreeWidgetItem *XFormatWidget::createNewItem(XFW_DEF::TYPE type, XFW_DEF::WIDGETMODE widgetMode, XOptions::ICONTYPE iconType, qint64 nOffset, qint64 nSize,
-                                              qint64 nCount, QVariant var1, QVariant var2, XBinary::MODE mode, XBinary::ENDIAN endian, QString sTitle, QString sInfo)
+                                              qint64 nCount, QVariant var1, QVariant var2, XBinary::MODE mode, XBinary::ENDIAN endian, const QString &sTitle, const QString &sInfo)
 {
     QTreeWidgetItem *pResult = new QTreeWidgetItem;
 
@@ -258,7 +258,7 @@ QTreeWidgetItem *XFormatWidget::createNewItem(XFW_DEF::TYPE type, XFW_DEF::WIDGE
     return pResult;
 }
 
-QString XFormatWidget::getTypeTitle(XFW_DEF::TYPE type, XBinary::MODE mode, XBinary::ENDIAN endian, QString sInfo)
+QString XFormatWidget::getTypeTitle(XFW_DEF::TYPE type, XBinary::MODE mode, XBinary::ENDIAN endian, const QString &sInfo)
 {
     Q_UNUSED(endian)
 
