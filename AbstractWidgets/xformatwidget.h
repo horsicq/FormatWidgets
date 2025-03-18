@@ -247,7 +247,7 @@ public:
     static QString widgetModeIdToString(XFW_DEF::WIDGETMODE widgetMode);
     static void adjustWidgetModeComboBox(QComboBox *pComboBox, XFW_DEF::WIDGETMODE widgetMode = XFW_DEF::WIDGETMODE_UNKNOWN);
 
-    static void _addHeaderRecord(QList<XFW_DEF::HEADER_RECORD> *pListHeaderRecords, qint32 nPosition, QString sName, qint32 nOffset, qint32 nSize, QString sType,
+    static void _addHeaderRecord(QList<XFW_DEF::HEADER_RECORD> *pListHeaderRecords, qint32 nPosition, const QString &sName, qint32 nOffset, qint32 nSize, const QString &sType,
                                  qint32 vtype, qint32 nSubPosition);
 
 protected:
