@@ -270,7 +270,7 @@ protected:
 
 signals:
     void closeApp();
-    void showCwWidget(QString sInitString, bool nNewWindow);
+    void showCwWidget(const QString &sInitString, bool nNewWindow);
 
 public slots:
     void valueChangedSlot(QVariant varValue);
