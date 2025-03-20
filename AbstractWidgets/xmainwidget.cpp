@@ -470,7 +470,7 @@ void XMainWidget::currentLocationChangedSlot(quint64 nLocation, qint32 nLocation
     }
 }
 
-void XMainWidget::showCwWidgetSlot(QString sInitString, bool bNewWindow)
+void XMainWidget::showCwWidgetSlot(const QString &sInitString, bool bNewWindow)
 {
     XFW_DEF::CWOPTIONS cwOptions = {};
     cwOptions.pParent = this;
