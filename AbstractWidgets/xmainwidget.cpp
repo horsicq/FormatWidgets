@@ -114,7 +114,7 @@ void XMainWidget::reload()
 
     if (g_bGlobalHexEnable) {
         XHexView::OPTIONS options = {};
-        options.memoryMapRegion = _memoryMap;
+        // options.memoryMapRegion = _memoryMap;
         ui->widgetGlobalHex->setXInfoDB(getXInfoDB());
         ui->widgetGlobalHex->setData(getDevice(), options, true);
         ui->widgetGlobalHex->setBytesProLine(8);

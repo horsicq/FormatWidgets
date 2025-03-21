@@ -295,7 +295,8 @@ void FormatsWidget::reload()
                 ui->lineEditEntryPoint->setValue_uint16((quint16)com.getEntryPointAddress());
             }
         } else if (XArchives::getArchiveOpenValidFileTypes().contains(fileType)) {
-            ui->toolButtonArchive->setText(XFormats::getFileFormatInfo(fileType, &file).sString);
+            XBinary::FILEFORMATINFO fileFormatInfo = XFormats::getFileFormatInfo(fileType, &file);
+            ui->toolButtonArchive->setText(XBinary::getFileFormatString(&fileFormatInfo));
 
             bool bMANIFESTMF = false;
             bool bAndroidManifest = false;

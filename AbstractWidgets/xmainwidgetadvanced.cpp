@@ -155,6 +155,8 @@ XShortcutsWidget *XMainWidgetAdvanced::createWidget(const XFW_DEF::CWOPTIONS &cw
         XSymbolsWidget::OPTIONS options = {};
         options.fileType = cwOptions.fileType;
         options.symbolMode = XInfoDB::SYMBOL_MODE_ALL;
+        options.bMenu_Disasm = true;
+        options.bMenu_Hex = true;
         _pWidget->setData(cwOptions.pDevice, options, cwOptions.pXInfoDB, true);
         pResult = _pWidget;
     } else if (cwOptions._type == XFW_DEF::TYPE_MEMORYMAP) {

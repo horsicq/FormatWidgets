@@ -1310,6 +1310,8 @@ void PEWidget::reloadData(bool bSaveSelection)
             }
         } else if (nType == SPE::TYPE_IMAGE_OPTIONAL_HEADER) {
             if (!isInitPresent(sInit)) {
+                XBinary::PDSTRUCT pdStructEmpty = {};
+
                 createHeaderTable(SPE::TYPE_IMAGE_OPTIONAL_HEADER, ui->tableWidget_IMAGE_OPTIONAL_HEADER,
                                   pe.is64() ? (N_IMAGE_OPTIONAL_HEADER::records64) : (N_IMAGE_OPTIONAL_HEADER::records32), g_lineEdit_IMAGE_OPTIONAL_HEADER,
                                   N_IMAGE_OPTIONAL_HEADER::__data_size, 0);
@@ -1317,7 +1319,7 @@ void PEWidget::reloadData(bool bSaveSelection)
                                                                             SPE::TYPE_IMAGE_OPTIONAL_HEADER, N_IMAGE_OPTIONAL_HEADER::Magic, XComboBoxEx::CBTYPE_LIST);
 
                 g_comboBox[CB_IMAGE_OPTIONAL_HEADER_OperationSystemVersion] =
-                    createComboBox(ui->tableWidget_IMAGE_OPTIONAL_HEADER, XPE::getOperatingSystemVersions(pe.getOsInfo().osName), SPE::TYPE_IMAGE_OPTIONAL_HEADER,
+                    createComboBox(ui->tableWidget_IMAGE_OPTIONAL_HEADER, XPE::getOperatingSystemVersions(pe.getFileFormatInfo(&pdStructEmpty).osName), SPE::TYPE_IMAGE_OPTIONAL_HEADER,
                                    N_IMAGE_OPTIONAL_HEADER::MajorOperatingSystemVersion, XComboBoxEx::CBTYPE_LIST, 0, N_IMAGE_OPTIONAL_HEADER::OperatingSystemVersion);
 
                 g_comboBox[CB_IMAGE_OPTIONAL_HEADER_Subsystem] =
