@@ -25,8 +25,6 @@ XGenericHexWidget::XGenericHexWidget(QWidget *pParent) : XFormatWidget(pParent),
 {
     ui->setupUi(this);
 
-    g_pSubDevice = nullptr;
-
     XOptions::adjustToolButton(ui->toolButtonTableReload, XOptions::ICONTYPE_RELOAD);
     XOptions::adjustToolButton(ui->toolButtonTableSize, XOptions::ICONTYPE_SIZE);
 
@@ -41,30 +39,18 @@ XGenericHexWidget::XGenericHexWidget(QWidget *pParent) : XFormatWidget(pParent),
 XGenericHexWidget::~XGenericHexWidget()
 {
     delete ui;
-    if (g_pSubDevice) {
-        delete g_pSubDevice;
-    }
 }
 
 void XGenericHexWidget::reloadData(bool bSaveSelection)
 {
     Q_UNUSED(bSaveSelection)
 
-    if (g_pSubDevice) {
-        delete g_pSubDevice;
-    }
+    XHexView::OPTIONS options = {};
+    options.nStartOffset = getCwOptions()->nDataOffset;
+    options.nTotalSize = getCwOptions()->nDataSize;
+    options.addressMode = XHexView::LOCMODE_ADDRESS;  // Important!
 
-    if (getCwOptions()->pDevice) {
-        g_pSubDevice = new SubDevice(getCwOptions()->pDevice, getCwOptions()->nDataOffset, getCwOptions()->nDataSize);
-
-        if (g_pSubDevice->open(QIODevice::ReadWrite)) {
-            XHexView::OPTIONS options = {};
-            options.nStartLocation = getCwOptions()->nDataOffset;
-            options.addressMode = XHexView::LOCMODE_ADDRESS;  // Important!
-
-            ui->scrollAreaHex->setData(g_pSubDevice, options, true);
-        }
-    }
+    ui->scrollAreaHex->setData(getCwOptions()->pDevice, options, true);
 }
 
 void XGenericHexWidget::adjustView()

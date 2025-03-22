@@ -1237,7 +1237,7 @@ void PEWidget::reloadData(bool bSaveSelection)
 
                 XDisasmView::OPTIONS options = {};
                 options.nInitAddress = -1;  // TODO Check MSDOS
-                options.memoryMapRegion = binary.getMemoryMap();
+                // options.memoryMapRegion = binary.getMemoryMap();
 
                 ui->widgetDisasm_DosStub->setData(g_subDevice[SPE::TYPE_DOS_STUB], options);
                 ui->widgetDisasm_DosStub->setXInfoDB(getXInfoDB());

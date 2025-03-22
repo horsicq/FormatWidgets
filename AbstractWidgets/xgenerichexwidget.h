@@ -45,7 +45,6 @@ private slots:
 
 private:
     Ui::XGenericHexWidget *ui;
-    SubDevice *g_pSubDevice;
 };
 
 #endif  // XGENERICHEADERWIDGET_H

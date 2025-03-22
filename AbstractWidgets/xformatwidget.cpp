@@ -41,9 +41,9 @@ XFormatWidget::XFormatWidget(QWidget *pParent) : XShortcutsWidget(pParent)
     XFormatWidget::setReadonly(true);
 }
 
-XFormatWidget::XFormatWidget(QIODevice *pDevice, XFW_DEF::OPTIONS options, QWidget *pParent) : XFormatWidget(pParent)
+XFormatWidget::XFormatWidget(QIODevice *pDevice, XInfoDB *pXInfoDB, XFW_DEF::OPTIONS options, QWidget *pParent) : XFormatWidget(pParent)
 {
-    XFormatWidget::setData(pDevice, options);
+    XFormatWidget::setData(pDevice, pXInfoDB, options);
 }
 
 XFormatWidget::~XFormatWidget()
@@ -100,14 +100,14 @@ void XFormatWidget::adjustView()
     }
 }
 
-void XFormatWidget::setData(QIODevice *pDevice, const XFW_DEF::OPTIONS &options)
+void XFormatWidget::setData(QIODevice *pDevice, XInfoDB *pXInfoDB, const XFW_DEF::OPTIONS &options)
 {
     g_pDevice = pDevice;
-
+    setXInfoDB(pXInfoDB);
     setData(options);
 }
 
-void XFormatWidget::setData(const QString &sFileName, const XFW_DEF::OPTIONS &options)
+void XFormatWidget::setData(const QString &sFileName, XInfoDB *pXInfoDB, const XFW_DEF::OPTIONS &options)
 {
     g_sFileName = sFileName;
 
@@ -115,7 +115,7 @@ void XFormatWidget::setData(const QString &sFileName, const XFW_DEF::OPTIONS &op
 
     XBinary::tryToOpen(pFile);
 
-    setData(pFile, options);
+    setData(pFile, pXInfoDB, options);
 }
 
 void XFormatWidget::setData(const XFW_DEF::OPTIONS &options)
@@ -143,8 +143,7 @@ void XFormatWidget::setCwOptions(const XFW_DEF::CWOPTIONS &cwOptions, bool bRelo
     formatOptions.nImageBase = cwOptions.nImageBase;
     formatOptions.fileType = cwOptions.fileType;
 
-    setData(cwOptions.pDevice, formatOptions);
-    setXInfoDB(cwOptions.pXInfoDB);
+    setData(cwOptions.pDevice, cwOptions.pXInfoDB, formatOptions);
 
     if (bReload) {
         reloadData(false);

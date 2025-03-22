@@ -94,7 +94,7 @@ public:
     };
 
     XFormatWidget(QWidget *pParent = nullptr);
-    XFormatWidget(QIODevice *pDevice, XFW_DEF::OPTIONS options, QWidget *pParent);
+    XFormatWidget(QIODevice *pDevice, XInfoDB *pXInfoDB, XFW_DEF::OPTIONS options, QWidget *pParent);
     ~XFormatWidget();
 
     void setXInfoDB(XInfoDB *pXInfoDB);
@@ -102,8 +102,8 @@ public:
 
     void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
     virtual void adjustView();
-    void setData(QIODevice *pDevice, const XFW_DEF::OPTIONS &options);
-    void setData(const QString &sFileName, const XFW_DEF::OPTIONS &options);
+    void setData(QIODevice *pDevice, XInfoDB *pXInfoDB, const XFW_DEF::OPTIONS &options);
+    void setData(const QString &sFileName, XInfoDB *pXInfoDB, const XFW_DEF::OPTIONS &options);
     void setData(const XFW_DEF::OPTIONS &options);
     virtual void setCwOptions(const XFW_DEF::CWOPTIONS &cwOptions, bool bReload);
     XFW_DEF::CWOPTIONS *getCwOptions();

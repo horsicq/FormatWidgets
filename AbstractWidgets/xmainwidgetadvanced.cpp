@@ -153,7 +153,7 @@ XShortcutsWidget *XMainWidgetAdvanced::createWidget(const XFW_DEF::CWOPTIONS &cw
     } else if (cwOptions._type == XFW_DEF::TYPE_SYMBOLS) {
         XSymbolsWidget *_pWidget = new XSymbolsWidget(cwOptions.pParent);
         XSymbolsWidget::OPTIONS options = {};
-        options.fileType = cwOptions.fileType;
+        // options.mode = cwOptions.fileType;
         options.symbolMode = XInfoDB::SYMBOL_MODE_ALL;
         options.bMenu_Disasm = true;
         options.bMenu_Hex = true;

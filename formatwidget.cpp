@@ -873,7 +873,7 @@ void FormatWidget::resetWidget()
             XHexViewWidget *pChild = dynamic_cast<XHexViewWidget *>(listWidgets.at(i));
 
             if (pChild) {
-                pChild->setDevice(nullptr);
+                pChild->setDevice(nullptr, 0, -1);
             }
         }
     }
@@ -1211,7 +1211,6 @@ void FormatWidget::showHex(qint64 nOffset, qint64 nSize)
 {
     XHexViewWidget::OPTIONS hexOptions = {};
 
-    hexOptions.nStartLocation = 0;
     hexOptions.nStartSelectionOffset = nOffset;
     hexOptions.nSizeOfSelection = nSize;
 

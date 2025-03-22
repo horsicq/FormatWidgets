@@ -40,7 +40,7 @@ void ToolsWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS options, bool bDis
     g_pDevice = pDevice;
 
     XHexView::OPTIONS hexOptions = {};
-    hexOptions.nStartLocation = options.nImageBase;
+    hexOptions.nStartOffset = options.nImageBase;
 
     if (bFollow) {
         hexOptions.bMenu_MemoryMap = true;
@@ -76,7 +76,7 @@ void ToolsWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS options, bool bDis
 
 void ToolsWidget::resetWidget()
 {
-    ui->widgetHex->setDevice(nullptr);
+    ui->widgetHex->setDevice(nullptr, 0, -1);
     ui->widgetHex->setXInfoDB(nullptr);
 }
 
@@ -108,10 +108,10 @@ void ToolsWidget::reload()
     }
 }
 
-qint64 ToolsWidget::getStartLocation()
-{
-    return ui->widgetHex->getStartLocation();
-}
+// qint64 ToolsWidget::getStartLocation()
+// {
+//     return ui->widgetHex->getStartLocation();
+// }
 
 void ToolsWidget::setSelection(qint64 nOffset, qint64 nSize, bool bGoto)
 {
