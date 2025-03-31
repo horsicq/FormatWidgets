@@ -148,12 +148,16 @@ XShortcutsWidget *XMainWidgetAdvanced::createWidget(const XFW_DEF::CWOPTIONS &cw
         pResult = _pWidget;
     } else if (cwOptions._type == XFW_DEF::TYPE_REGIONS) {
         XRegionsWidget *_pWidget = new XRegionsWidget(cwOptions.pParent);
-        _pWidget->setData(cwOptions.pDevice, cwOptions.fileType, cwOptions.pXInfoDB);
+        XRegionsModel::OPTIONS options = {};
+        options.fileType = cwOptions.fileType;
+        options.bIsImage = cwOptions.bIsImage;
+        options.nModuleAddress = cwOptions.nImageBase;
+        _pWidget->setData(cwOptions.pDevice, cwOptions.pXInfoDB, options);
         pResult = _pWidget;
     } else if (cwOptions._type == XFW_DEF::TYPE_SYMBOLS) {
         XSymbolsWidget *_pWidget = new XSymbolsWidget(cwOptions.pParent);
         XSymbolsWidget::OPTIONS options = {};
-        // options.mode = cwOptions.fileType;
+        options.fileType = cwOptions.fileType;
         options.symbolMode = XInfoDB::SYMBOL_MODE_ALL;
         options.bMenu_Disasm = true;
         options.bMenu_Hex = true;
