@@ -79,10 +79,10 @@ void MACHOFATWidget::reload()
         qint32 nNumberOfRecords = listRecords.count();
 
         for (qint32 i = 0; i < nNumberOfRecords; i++) {
-            SubDevice *pSubDevice = new SubDevice(getDevice(), listRecords.at(i).nDataOffset, listRecords.at(i).nUncompressedSize);
+            SubDevice *pSubDevice = new SubDevice(getDevice(), listRecords.at(i).nDataOffset, listRecords.at(i).nDataSize);
 
             if (pSubDevice->open(getDevice()->openMode())) {
-                ui->comboBoxFilePart->addItem(listRecords.at(i).sFileName);
+                ui->comboBoxFilePart->addItem(listRecords.at(i).spInfo.sRecordName);
 
                 MACHWidget *pMachWidget = new MACHWidget(pSubDevice, getOptions(), this);
 
