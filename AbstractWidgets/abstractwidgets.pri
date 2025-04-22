@@ -9,9 +9,9 @@ HEADERS += \
     $$PWD/Structs/xmach_defs.h \
     $$PWD/Structs/xmsdos_defs.h \
     $$PWD/Structs/xne_defs.h \
-    $$PWD/Structs/xpdf_defs.h \
     $$PWD/Structs/xpe_defs.h \
     $$PWD/Structs/xarchives_defs.h \
+    $$PWD/Structs/xformats_defs.h \
     $$PWD/dialogxmainwidget.h \
     $$PWD/dialogsetgenericwidget.h \
     $$PWD/xdialogprocessdata.h \
@@ -34,9 +34,9 @@ SOURCES += \
     $$PWD/Structs/xmach_defs.cpp \
     $$PWD/Structs/xmsdos_defs.cpp \
     $$PWD/Structs/xne_defs.cpp \
-    $$PWD/Structs/xpdf_defs.cpp \
     $$PWD/Structs/xpe_defs.cpp \
     $$PWD/Structs/xarchives_defs.cpp \
+    $$PWD/Structs/xformats_defs.cpp \
     $$PWD/dialogxmainwidget.cpp \
     $$PWD/dialogsetgenericwidget.cpp \
     $$PWD/xdialogprocessdata.cpp \

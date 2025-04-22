@@ -15,12 +15,12 @@ set(ABSTRACTWIDGETS_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/Structs/xmsdos_defs.h
     ${CMAKE_CURRENT_LIST_DIR}/Structs/xne_defs.cpp
     ${CMAKE_CURRENT_LIST_DIR}/Structs/xne_defs.h
-    ${CMAKE_CURRENT_LIST_DIR}/Structs/xpdf_defs.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/Structs/xpdf_defs.h
     ${CMAKE_CURRENT_LIST_DIR}/Structs/xpe_defs.cpp
     ${CMAKE_CURRENT_LIST_DIR}/Structs/xpe_defs.h
     ${CMAKE_CURRENT_LIST_DIR}/Structs/xarchives_defs.cpp
     ${CMAKE_CURRENT_LIST_DIR}/Structs/xarchives_defs.h
+    ${CMAKE_CURRENT_LIST_DIR}/Structs/xformats_defs.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Structs/xformats_defs.h
     ${CMAKE_CURRENT_LIST_DIR}/dialogxmainwidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/dialogxmainwidget.h
     ${CMAKE_CURRENT_LIST_DIR}/dialogxmainwidget.ui

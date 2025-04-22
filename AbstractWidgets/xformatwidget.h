@@ -42,11 +42,10 @@
 #include "Structs/xle_defs.h"
 #include "Structs/xmach_defs.h"
 #include "Structs/xmsdos_defs.h"
-#include "Structs/xpdf_defs.h"
-#include "Structs/xpdf_defs.h"
 #include "Structs/xne_defs.h"
 #include "Structs/xpe_defs.h"
 #include "Structs/xarchives_defs.h"
+#include "Structs/xformats_defs.h"
 
 class XFormatWidget : public XShortcutsWidget {
     Q_OBJECT
