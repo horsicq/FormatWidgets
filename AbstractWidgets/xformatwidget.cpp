@@ -799,6 +799,25 @@ QList<XFW_DEF::HEADER_RECORD> XFormatWidget::getHeaderRecords(const XFW_DEF::CWO
             listResult.append(record);
         }
 
+        if (pCwOptions->_type == XFW_DEF::TYPE_MACH_dyld_chained_import) {
+            {
+                XFW_DEF::HEADER_RECORD record = {};
+                record.nPosition = -1;
+                record.sName = QString("lib");
+                record.vtype = XFW_DEF::VAL_TYPE_COUNT;
+
+                listResult.append(record);
+            }
+            {
+                XFW_DEF::HEADER_RECORD record = {};
+                record.nPosition = -1;
+                record.sName = QString("weak");
+                record.vtype = XFW_DEF::VAL_TYPE_BOOL;
+
+                listResult.append(record);
+            }
+        }
+
         if (pCwOptions->_type == XFW_DEF::TYPE_GENERIC_STRINGTABLE_ANSI) {
             {
                 XFW_DEF::HEADER_RECORD record = {};
@@ -824,7 +843,8 @@ QList<XFW_DEF::HEADER_RECORD> XFormatWidget::getHeaderRecords(const XFW_DEF::CWO
 
             listResult.append(record);
         } else if ((pCwOptions->_type == XFW_DEF::TYPE_MACH_nlist) || (pCwOptions->_type == XFW_DEF::TYPE_MACH_nlist_64) ||
-                   (pCwOptions->_type == XFW_DEF::TYPE_MACH_functions) || (pCwOptions->_type == XFW_DEF::TYPE_MACH_trie_export_table)) {
+                   (pCwOptions->_type == XFW_DEF::TYPE_MACH_functions) || (pCwOptions->_type == XFW_DEF::TYPE_MACH_trie_export_table) ||
+                   (pCwOptions->_type == XFW_DEF::TYPE_MACH_dyld_chained_import)) {
             XFW_DEF::HEADER_RECORD record = {};
             record.nPosition = -1;
             record.sName = tr("Symbol");
@@ -1077,6 +1097,8 @@ void XFormatWidget::adjustGenericTable(QTableView *pTableView, const QList<XFW_D
             nWidth = XOptions::getControlWidth(pTableView, 8);
         } else if (pListHeaderRecords->at(i).vtype & XFW_DEF::VAL_TYPE_COUNT) {
             nWidth = XOptions::getControlWidth(pTableView, 4);
+        } else if (pListHeaderRecords->at(i).vtype & XFW_DEF::VAL_TYPE_BOOL) {
+            nWidth = XOptions::getControlWidth(pTableView, 6);
         } else if (pListHeaderRecords->at(i).vtype & XFW_DEF::VAL_TYPE_HEX) {
             nWidth = XOptions::getControlWidth(pTableView, 8);
         } else if (pListHeaderRecords->at(i).vtype & XFW_DEF::VAL_TYPE_ULEB128) {
@@ -1666,6 +1688,9 @@ QStandardItem *XFormatWidget::setItemToModel(QStandardItemModel *pModel, qint32 
         pResult->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
     } else if (vtype & XFW_DEF::VAL_TYPE_COUNT) {
         pResult->setData(var.toULongLong(), Qt::DisplayRole);
+        pResult->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+    } else if (vtype & XFW_DEF::VAL_TYPE_BOOL) {
+        pResult->setData(var.toBool(), Qt::DisplayRole);
         pResult->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
     } else if (vtype & XFW_DEF::VAL_TYPE_HEX) {
         QString sString = QString("%1").arg(var.toULongLong(), 8, 16, QChar('0'));

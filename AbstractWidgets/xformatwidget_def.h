@@ -240,6 +240,7 @@ enum VAL_TYPE {
     VAL_TYPE_ULEB128 = 1 << 17,
     VAL_TYPE_FULL = 1 << 18,
     VAL_TYPE_DEMANGLE = 1 << 19,
+    VAL_TYPE_BOOL = 1 << 20,
 };
 
 struct HEADER_RECORD {
