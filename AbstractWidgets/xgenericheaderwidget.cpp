@@ -88,24 +88,6 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
 
     QList<XFW_DEF::HEADER_RECORD> listHeaderRecords = getHeaderRecords(getCwOptions(), nLimit);
 
-    if (listHeaderRecords.count() == 0) {
-        if (getCwOptions()->_type == XFW_DEF::TYPE_PE_NET_METADATA) {
-            XBinary binary(getDevice());
-            quint32 nVersionStringLength = binary.read_int32(getCwOptions()->nDataOffset + 12, getCwOptions()->endian == XBinary::ENDIAN_BIG);
-
-            XFormatWidget::_addHeaderRecord(&listHeaderRecords, 0, "Signature", 0, 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT, -1);
-            XFormatWidget::_addHeaderRecord(&listHeaderRecords, 1, "MajorVersion", 4, 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_VERSION, -1);
-            XFormatWidget::_addHeaderRecord(&listHeaderRecords, 2, "MinorVersion", 6, 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_VERSION, -1);
-            XFormatWidget::_addHeaderRecord(&listHeaderRecords, 3, "Reserved", 8, 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT, -1);
-            XFormatWidget::_addHeaderRecord(&listHeaderRecords, 4, "VersionStringLength", 12, 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, -1);
-            XFormatWidget::_addHeaderRecord(&listHeaderRecords, 5, "Version", 16, nVersionStringLength, "TEXT",
-                                            XFW_DEF::VAL_TYPE_DATA_ARRAY | XFW_DEF::VAL_TYPE_ANSI | XFW_DEF::VAL_TYPE_STRING, -1);
-            XFormatWidget::_addHeaderRecord(&listHeaderRecords, 6, "Flags", 16 + nVersionStringLength + 0, 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1);
-            XFormatWidget::_addHeaderRecord(&listHeaderRecords, 7, "Streams", 16 + nVersionStringLength + 2, 2, "WORD",
-                                            XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_COUNT, -1);
-        }
-    }
-
     createHeaderTable(ui->tableWidgetMain, &listHeaderRecords, getListRecWidgets(), getCwOptions()->nDataOffset, getCwOptions()->endian, getCwOptions()->var1,
                       getCwOptions()->var2);
 

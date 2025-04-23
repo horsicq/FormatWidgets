@@ -495,6 +495,38 @@ QList<XFW_DEF::HEADER_RECORD> XFormatWidget::getHeaderRecords(const XFW_DEF::CWO
 {
     QList<XFW_DEF::HEADER_RECORD> listResult;
 
+    if ((pCwOptions->widgetMode == XFW_DEF::WIDGETMODE_TABLE) || (pCwOptions->widgetMode == XFW_DEF::WIDGETMODE_TABLE_HEX)) {
+        {
+            XFW_DEF::HEADER_RECORD record = {};
+            record.nPosition = -1;
+            record.sName = QString("#");
+            record.vtype = XFW_DEF::VAL_TYPE_COUNT;
+
+            listResult.append(record);
+        }
+
+        if ((pCwOptions->_type == XFW_DEF::TYPE_7ZIP_PROPERTIES) || (pCwOptions->_type == XFW_DEF::TYPE_MACH_bind) || (pCwOptions->_type == XFW_DEF::TYPE_MACH_weak) ||
+            (pCwOptions->_type == XFW_DEF::TYPE_MACH_lazy_bind) || (pCwOptions->_type == XFW_DEF::TYPE_MACH_rebase) ||
+            (pCwOptions->_type == XFW_DEF::TYPE_MACH_trie_export_commands)) {
+            {
+                XFW_DEF::HEADER_RECORD record = {};
+                record.nPosition = -1;
+                record.sName = tr("Offset");
+                record.vtype = XFW_DEF::VAL_TYPE_HEX;
+
+                listResult.append(record);
+            }
+            {
+                XFW_DEF::HEADER_RECORD record = {};
+                record.nPosition = -1;
+                record.sName = tr("Opcode");
+                record.vtype = XFW_DEF::VAL_TYPE_STRING;
+
+                listResult.append(record);
+            }
+        }
+    }
+
     const XFW_DEF::HEADER_RECORD *pRecords = 0;
     qint32 nNumberOfRecords = 0;
 
@@ -719,6 +751,85 @@ QList<XFW_DEF::HEADER_RECORD> XFormatWidget::getHeaderRecords(const XFW_DEF::CWO
         }
 
         if (bSuccess) {
+            listResult.append(record);
+        }
+    }
+
+    if (pCwOptions->_type == XFW_DEF::TYPE_PE_NET_METADATA) {
+        XBinary binary(pCwOptions->pDevice);
+        quint32 nVersionStringLength = binary.read_int32(pCwOptions->nDataOffset + 12, pCwOptions->endian == XBinary::ENDIAN_BIG);
+
+        XFormatWidget::_addHeaderRecord(&listResult, 0, "Signature", 0, 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT, -1);
+        XFormatWidget::_addHeaderRecord(&listResult, 1, "MajorVersion", 4, 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_VERSION, -1);
+        XFormatWidget::_addHeaderRecord(&listResult, 2, "MinorVersion", 6, 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_VERSION, -1);
+        XFormatWidget::_addHeaderRecord(&listResult, 3, "Reserved", 8, 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT, -1);
+        XFormatWidget::_addHeaderRecord(&listResult, 4, "VersionStringLength", 12, 4, "DWORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_SIZE, -1);
+        XFormatWidget::_addHeaderRecord(&listResult, 5, "Version", 16, nVersionStringLength, "TEXT",
+                                        XFW_DEF::VAL_TYPE_DATA_ARRAY | XFW_DEF::VAL_TYPE_ANSI | XFW_DEF::VAL_TYPE_STRING, -1);
+        XFormatWidget::_addHeaderRecord(&listResult, 6, "Flags", 16 + nVersionStringLength + 0, 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1);
+        XFormatWidget::_addHeaderRecord(&listResult, 7, "Streams", 16 + nVersionStringLength + 2, 2, "WORD",
+                                        XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_COUNT, -1);
+    }
+
+    if ((pCwOptions->widgetMode == XFW_DEF::WIDGETMODE_TABLE) || (pCwOptions->widgetMode == XFW_DEF::WIDGETMODE_TABLE_HEX)) {
+        if (pCwOptions->_type == XFW_DEF::TYPE_MACH_functions) {
+            XFW_DEF::HEADER_RECORD record = {};
+            record.nPosition = -1;
+            record.sName = tr("Value");
+            record.vtype = XFW_DEF::VAL_TYPE_ULEB128;
+
+            listResult.append(record);
+        }
+
+        if ((pCwOptions->_type == XFW_DEF::TYPE_MACH_functions) || (pCwOptions->_type == XFW_DEF::TYPE_MACH_trie_export_table)) {
+            XFW_DEF::HEADER_RECORD record = {};
+            record.nPosition = -1;
+            record.sName = tr("Offset");
+            record.vtype = XFW_DEF::VAL_TYPE_HEX | XFW_DEF::VAL_TYPE_OFFSET | XFW_DEF::VAL_TYPE_CODE;
+
+            listResult.append(record);
+        }
+
+        if (pCwOptions->_type == XFW_DEF::TYPE_MACH_trie_export_table) {
+            XFW_DEF::HEADER_RECORD record = {};
+            record.nPosition = -1;
+            record.sName = tr("Flags");
+            record.vtype = XFW_DEF::VAL_TYPE_HEX;
+
+            listResult.append(record);
+        }
+
+        if (pCwOptions->_type == XFW_DEF::TYPE_GENERIC_STRINGTABLE_ANSI) {
+            {
+                XFW_DEF::HEADER_RECORD record = {};
+                record.nPosition = -1;
+                record.sName = tr("Position");
+                record.vtype = XFW_DEF::VAL_TYPE_HEX;
+
+                listResult.append(record);
+            }
+            {
+                XFW_DEF::HEADER_RECORD record = {};
+                record.nPosition = -1;
+                record.sName = tr("String");
+                record.vtype = XFW_DEF::VAL_TYPE_STRING | XFW_DEF::VAL_TYPE_ANSI | XFW_DEF::VAL_TYPE_DEMANGLE;
+
+                listResult.append(record);
+            }
+        } else if ((pCwOptions->_type == XFW_DEF::TYPE_MACH_load_command) || (pCwOptions->_type == XFW_DEF::TYPE_PE_IMAGE_DATA_DIRECTORY)) {
+            XFW_DEF::HEADER_RECORD record = {};
+            record.nPosition = -1;
+            record.sName = tr("Info");
+            record.vtype = XFW_DEF::VAL_TYPE_STRING;
+
+            listResult.append(record);
+        } else if ((pCwOptions->_type == XFW_DEF::TYPE_MACH_nlist) || (pCwOptions->_type == XFW_DEF::TYPE_MACH_nlist_64) ||
+                   (pCwOptions->_type == XFW_DEF::TYPE_MACH_functions) || (pCwOptions->_type == XFW_DEF::TYPE_MACH_trie_export_table)) {
+            XFW_DEF::HEADER_RECORD record = {};
+            record.nPosition = -1;
+            record.sName = tr("Symbol");
+            record.vtype = XFW_DEF::VAL_TYPE_STRING | XFW_DEF::VAL_TYPE_DEMANGLE;
+
             listResult.append(record);
         }
     }
