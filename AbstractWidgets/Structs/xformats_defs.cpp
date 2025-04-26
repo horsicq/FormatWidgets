@@ -19,4 +19,3 @@
  * SOFTWARE.
  */
 #include "xformats_defs.h"
-

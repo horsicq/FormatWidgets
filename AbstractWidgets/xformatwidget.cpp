@@ -767,8 +767,7 @@ QList<XFW_DEF::HEADER_RECORD> XFormatWidget::getHeaderRecords(const XFW_DEF::CWO
         XFormatWidget::_addHeaderRecord(&listResult, 5, "Version", 16, nVersionStringLength, "TEXT",
                                         XFW_DEF::VAL_TYPE_DATA_ARRAY | XFW_DEF::VAL_TYPE_ANSI | XFW_DEF::VAL_TYPE_STRING, -1);
         XFormatWidget::_addHeaderRecord(&listResult, 6, "Flags", 16 + nVersionStringLength + 0, 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT, -1);
-        XFormatWidget::_addHeaderRecord(&listResult, 7, "Streams", 16 + nVersionStringLength + 2, 2, "WORD",
-                                        XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_COUNT, -1);
+        XFormatWidget::_addHeaderRecord(&listResult, 7, "Streams", 16 + nVersionStringLength + 2, 2, "WORD", XFW_DEF::VAL_TYPE_DATA_INT | XFW_DEF::VAL_TYPE_COUNT, -1);
     }
 
     if ((pCwOptions->widgetMode == XFW_DEF::WIDGETMODE_TABLE) || (pCwOptions->widgetMode == XFW_DEF::WIDGETMODE_TABLE_HEX)) {
