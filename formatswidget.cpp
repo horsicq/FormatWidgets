@@ -1211,7 +1211,7 @@ void FormatsWidget::on_toolButtonAndroidManifest_clicked()
 
     QByteArray baData = XArchives::decompress(g_sFileName, "AndroidManifest.xml");
     if (baData.size() > 0) {
-        QString sAndroidManifest = XAndroidBinary::getDecoded(&baData);
+        QString sAndroidManifest = XAndroidBinary::getDecoded(&baData, nullptr);
         dialogTextInfo.setText(sAndroidManifest);
     }
 
