@@ -74,7 +74,7 @@ void XProcessData::process()
 
         (*g_ppModel) = new QStandardItemModel(nNumberOfRows, nNumberOfColumns);
 
-        for (qint32 i = 0; (i < nNumberOfRows) && (!(g_pPdStruct->bIsStop)); i++) {
+        for (qint32 i = 0; (i < nNumberOfRows) && XBinary::isPdStructNotCanceled(g_pPdStruct); i++) {
             XFW_DEF::TYPE _type = XFormatWidget::load_commandIdToType(listCommands.at(i).nId);
 
             XFormatWidget::setItemToModelData((*g_ppModel), i, 0, i, 0, g_pListHeaderRecords->at(0).vtype, _type, listCommands.at(i).nStructOffset, nHeaderSize, 0, 0, 0,
