@@ -170,7 +170,7 @@ void MultiSearch::processSearch()
 
         XBinary::setPdStructTotal(g_pPdStruct, g_nFreeIndex, nNumberOfSignatures);
 
-        for (qint32 i = 0; (i < nNumberOfSignatures) && (!(g_pPdStruct->bIsStop)); i++) {
+        for (qint32 i = 0; (i < nNumberOfSignatures) && XBinary::isPdStructNotCanceled(g_pPdStruct); i++) {
             XBinary::SIGNATUREDB_RECORD signatureRecord = g_options.pListSignatureRecords->at(i);
 
             bool bSuccess = false;
