@@ -101,7 +101,7 @@ void XProcessData::process()
 
         (*g_ppModel) = new QStandardItemModel(nNumberOfRows, nNumberOfColumns);
 
-        for (qint32 i = 0; (i < nNumberOfRows) && (!(g_pPdStruct->bIsStop)); i++) {
+        for (qint32 i = 0; (i < nNumberOfRows) && XBinary::isPdStructNotCanceled(g_pPdStruct); i++) {
             XFormatWidget::setItemToModelData((*g_ppModel), i, 0, i, 0, g_pListHeaderRecords->at(0).vtype, XFW_DEF::TYPE_UNKNOWN, listFunctions.at(i).nDataOffset,
                                               listFunctions.at(i).nDataSize, listFunctions.at(i).nFunctionOffset, 0, 0, g_pCwOptions->demangleMode);
             XFormatWidget::setItemToModel((*g_ppModel), i, 1, listFunctions.at(i).nValue, g_pListHeaderRecords->at(1).nSize, g_pListHeaderRecords->at(1).vtype,
@@ -182,7 +182,7 @@ void XProcessData::process()
         XBinary::setPdStructTotal(g_pPdStruct, g_nFreeIndex, nNumberOfRows);
         (*g_ppModel) = new QStandardItemModel(nNumberOfRows, nNumberOfColumns);
 
-        for (qint32 i = 0; (i < nNumberOfRows) && (!(g_pPdStruct->bIsStop)); i++) {
+        for (qint32 i = 0; (i < nNumberOfRows) && XBinary::isPdStructNotCanceled(g_pPdStruct); i++) {
             XFormatWidget::setItemToModelData((*g_ppModel), i, 0, i, 0, g_pListHeaderRecords->at(0).vtype, XFW_DEF::TYPE_UNKNOWN,
                                               listSTrecords.at(i).nOffsetFromStart + _nOffset, listSTrecords.at(i).nSizeInBytes, 0, 0, 0, g_pCwOptions->demangleMode);
             XFormatWidget::setItemToModel((*g_ppModel), i, 1, listSTrecords.at(i).nOffsetFromStart, 0, g_pListHeaderRecords->at(1).vtype, g_pCwOptions->demangleMode);
@@ -313,7 +313,7 @@ void XProcessData::process()
 
         qint64 _nOffset = g_pCwOptions->nDataOffset;
 
-        for (qint32 i = 0; (i < nNumberOfRows) && (!(g_pPdStruct->bIsStop)); i++) {
+        for (qint32 i = 0; (i < nNumberOfRows) && XBinary::isPdStructNotCanceled(g_pPdStruct); i++) {
             XFormatWidget::setItemToModelData((*g_ppModel), i, 0, i, 0, g_pListHeaderRecords->at(0).vtype, XFW_DEF::TYPE_UNKNOWN, _nOffset, listOpcodes.at(i).nSize, 0, 0,
                                               0, g_pCwOptions->demangleMode);
             XFormatWidget::setItemToModel((*g_ppModel), i, 1, _nOffset, g_pListHeaderRecords->at(1).nSize, g_pListHeaderRecords->at(1).vtype, g_pCwOptions->demangleMode);
