@@ -124,7 +124,7 @@ void XProcessData::process()
 
         qint64 _nOffset = g_pCwOptions->nDataOffset;
 
-        for (qint32 i = 0; (i < nNumberOfRows) && (!(g_pPdStruct->bIsStop)); i++) {
+        for (qint32 i = 0; (i < nNumberOfRows) && XBinary::isPdStructNotCanceled(g_pPdStruct); i++) {
             quint64 nValue = 0;
             for (qint32 j = 0; j < nNumberOfColumns - 1; j++) {
                 quint32 vtype = g_pListHeaderRecords->at(j).vtype;
