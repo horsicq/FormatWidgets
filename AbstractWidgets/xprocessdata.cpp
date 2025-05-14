@@ -160,7 +160,7 @@ void XProcessData::process()
 
         (*g_ppModel) = new QStandardItemModel(nNumberOfRows, nNumberOfColumns);
 
-        for (qint32 i = 0; (i < nNumberOfRows) && (!(g_pPdStruct->bIsStop)); i++) {
+        for (qint32 i = 0; (i < nNumberOfRows) && XBinary::isPdStructNotCanceled(g_pPdStruct); i++) {
             XFormatWidget::setItemToModelData((*g_ppModel), i, 0, i, 0, g_pListHeaderRecords->at(0).vtype, XFW_DEF::TYPE_UNKNOWN, 0, 0, 0, 0, 0,
                                               g_pCwOptions->demangleMode);
             XFormatWidget::setItemToModel((*g_ppModel), i, 1, listExportRecords.at(i).nOffset, 0, g_pListHeaderRecords->at(1).vtype, g_pCwOptions->demangleMode);
@@ -203,7 +203,7 @@ void XProcessData::process()
 
         qint64 _nOffset = g_pCwOptions->nDataOffset;
 
-        for (qint32 i = 0; (i < nNumberOfRows) && (!(g_pPdStruct->bIsStop)); i++) {
+        for (qint32 i = 0; (i < nNumberOfRows) && XBinary::isPdStructNotCanceled(g_pPdStruct); i++) {
             XPE_DEF::IMAGE_DATA_DIRECTORY idd = xpe.read_IMAGE_DATA_DIRECTORY(_nOffset);
 
             XADDR nDataOffset = 0;
@@ -241,7 +241,7 @@ void XProcessData::process()
 
         qint64 _nOffset = g_pCwOptions->nDataOffset;
 
-        for (qint32 i = 0; (i < nNumberOfRows) && (!(g_pPdStruct->bIsStop)); i++) {
+        for (qint32 i = 0; (i < nNumberOfRows) && XBinary::isPdStructNotCanceled(g_pPdStruct); i++) {
             XPE_DEF::IMAGE_SECTION_HEADER ish = xpe.read_IMAGE_SECTION_HEADER(_nOffset);
 
             XADDR nDataOffset = ish.PointerToRawData;
@@ -332,7 +332,7 @@ void XProcessData::process()
 
         qint64 _nOffset = g_pCwOptions->nDataOffset;
 
-        for (qint32 i = 0; (i < nNumberOfRows) && (!(g_pPdStruct->bIsStop)); i++) {
+        for (qint32 i = 0; (i < nNumberOfRows) && XBinary::isPdStructNotCanceled(g_pPdStruct); i++) {
             for (qint32 j = 0; j < nNumberOfColumns; j++) {
                 QVariant var = XFormatWidget::_readVariant(&binary, _nOffset + g_pListHeaderRecords->at(j).nOffset, g_pListHeaderRecords->at(j).nSize,
                                                            g_pListHeaderRecords->at(j).vtype, (g_pCwOptions->endian == XBinary::ENDIAN_BIG));
