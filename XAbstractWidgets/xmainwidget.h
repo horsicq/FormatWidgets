@@ -86,6 +86,8 @@ private:
     QIODevice *g_pDevice;
     XInfoDB *g_pInfoDB;
     OPTIONS g_options;
+    XBinary::_MEMORY_MAP g_memoryMap;
+    QList<XBinary::DATA_HEADER> g_ListDataHeaders;
 };
 
 #endif  // XMAINWIDGET_H

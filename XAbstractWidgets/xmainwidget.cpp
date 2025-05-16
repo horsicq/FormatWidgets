@@ -28,6 +28,7 @@ XMainWidget::XMainWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new U
     g_pDevice = nullptr;
     g_pInfoDB = nullptr;
     g_options = {};
+    g_memoryMap = {};
 
     XOptions::adjustToolButton(ui->toolButtonReload, XOptions::ICONTYPE_RELOAD);
     XOptions::adjustToolButton(ui->toolButtonNext, XOptions::ICONTYPE_FORWARD, Qt::ToolButtonIconOnly);
@@ -110,20 +111,17 @@ void XMainWidget::reload()
 
     ui->checkBoxReadonly->setEnabled(g_pDevice->isWritable());
 
-    // XBinary::FT fileType = getOptions().fileType;
+    XBinary::FT fileType = (XBinary::FT)(ui->comboBoxType->currentData().toInt());
+    g_memoryMap = XFormats::getMemoryMap(fileType, XBinary::MAPMODE_UNKNOWN, g_pDevice, g_options.bIsImage, g_options.nImageBase);
 
-    // if (getOptions().fileType == XBinary::FT_UNKNOWN) {
-    //     QSet<XBinary::FT> stFileType = XFormats::getFileTypes(getDevice(), true);
-    //     fileType = XBinary::_getPrefFileType(&stFileType);
-    // }
+    XBinary::DATA_HEADERS_OPTIONS dataHeadersOptions = {};
+    dataHeadersOptions.pMemoryMap = &g_memoryMap;
+    dataHeadersOptions.locType = XBinary::LT_OFFSET;
+    dataHeadersOptions.nLocation = 0;
+    dataHeadersOptions.nID = 0;
+    dataHeadersOptions.bChildren = true;
 
-    // setFileType(fileType);
-
-    // XBinary::_MEMORY_MAP _memoryMap = XFormats::getMemoryMap(fileType, XBinary::MAPMODE_UNKNOWN, getDevice(), getOptions().bIsImage, getOptions().nImageBase);
-
-    // setMemoryMap(_memoryMap);
-    // setMode(_memoryMap.mode);
-    // setEndian(_memoryMap.endian);
+    g_ListDataHeaders = XFormats::getDataHeaders(fileType, g_pDevice, dataHeadersOptions, g_options.bIsImage, g_options.nImageBase, nullptr);
 
     if (g_options.bGlobalHexEnable) {
         XHexView::OPTIONS options = {};
