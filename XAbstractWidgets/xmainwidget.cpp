@@ -310,7 +310,8 @@ QTreeWidgetItem *XMainWidget::_addBaseItems(QTreeWidget *pTreeWidget, XBinary::F
     Q_UNUSED(fileType)
 
     QTreeWidgetItem *pResult = nullptr;
-    // pResult = createNewItem(XFW_DEF::TYPE_INFO, XFW_DEF::WIDGETMODE_UNKNOWN, XOptions::ICONTYPE_INFO, 0, -1, 0, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN, "", "");
+    // pResult = createNewItem(XFW_DEF::TYPE_INFO, XFW_DEF::WIDGETMODE_UNKNOWN, XOptions::ICONTYPE_INFO, 0, -1, 0, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN,
+    // "", "");
 
     pTreeWidget->addTopLevelItem(pResult);
 
