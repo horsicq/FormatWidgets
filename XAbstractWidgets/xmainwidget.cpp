@@ -97,6 +97,8 @@ void XMainWidget::clear()
 
     ui->treeWidgetNavi->clear();
 
+    g_stWidgets.clear();
+
     // XFormatWidget::reset();
 }
 
@@ -121,7 +123,22 @@ void XMainWidget::reload()
     dataHeadersOptions.nID = 0;
     dataHeadersOptions.bChildren = true;
 
-    g_ListDataHeaders = XFormats::getDataHeaders(fileType, g_pDevice, dataHeadersOptions, g_options.bIsImage, g_options.nImageBase, nullptr);
+    g_ListDataHeaders = XFormats::getDataHeaders(fileType, g_pDevice, dataHeadersOptions, g_options.bIsImage, g_options.nImageBase, nullptr); // TODO in Progress Dialog
+
+    qint32 nNumberOfHeaders = g_ListDataHeaders.count();
+
+    QTreeWidgetItem *pRootItem = ui->treeWidgetNavi->invisibleRootItem();
+
+    for (qint32 i = 0; i < nNumberOfHeaders; i++) {
+        XBinary::DATA_HEADER dataHeader = g_ListDataHeaders.at(i);
+
+        QTreeWidgetItem *pItem = new QTreeWidgetItem(ui->treeWidgetNavi);
+        pItem->setText(0, dataHeader.sName);
+        pItem->setData(0,Qt::UserRole, dataHeader.dsID.sGUID);
+
+        pRootItem->addChild(pItem);
+    }
+
 
     if (g_options.bGlobalHexEnable) {
         XHexView::OPTIONS options = {};
@@ -220,6 +237,23 @@ void XMainWidget::adjustView()
 void XMainWidget::reloadData(bool bSaveSelection)
 {
     Q_UNUSED(bSaveSelection)
+
+    QString sGUID = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole).toString();
+
+    if (!g_stWidgets.contains(sGUID)) {
+        // XShortcutsWidget *pWidget = createWidget(sGUID);
+    } else {
+        qint32 nNumberOfWidgets = ui->stackedWidgetMain->count();
+
+        for (qint32 i = 0; i < nNumberOfWidgets; i++) {
+            QWidget *pWidget = ui->stackedWidgetMain->widget(i);
+
+            if (pWidget->property("GUID").toString() == sGUID) {
+                ui->stackedWidgetMain->setCurrentIndex(i);
+                break;
+            }
+        }
+    }
 
     // XFW_DEF::CWOPTIONS cwOptions = {};
     // cwOptions.pParent = this;

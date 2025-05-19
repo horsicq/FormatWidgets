@@ -88,6 +88,7 @@ private:
     OPTIONS g_options;
     XBinary::_MEMORY_MAP g_memoryMap;
     QList<XBinary::DATA_HEADER> g_ListDataHeaders;
+    QSet<QString> g_stWidgets;
 };
 
 #endif  // XMAINWIDGET_H
