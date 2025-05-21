@@ -143,6 +143,11 @@ void XMainWidget::reload()
         QTreeWidgetItem *pItem = new QTreeWidgetItem;
         pItem->setText(0, dataHeader.sName);
         pItem->setData(0,Qt::UserRole, dataHeader.dsID.sGUID);
+
+        XOptions::ICONTYPE iconType = getIconType(dataHeader.dsID.fileType, dataHeader.dsID.nID);
+
+        XOptions::adjustTreeWidgetItem(pItem, iconType);
+
         pParentItem->addChild(pItem);
 
         mapItems.insert(dataHeader.dsID.sGUID, pItem);
@@ -289,12 +294,12 @@ void XMainWidget::reloadData(bool bSaveSelection)
     }
 
     // XFW_DEF::CWOPTIONS cwOptions = {};
-    // cwOptions.pParent = this;
-    // cwOptions.fileType = getFileType();
+    // this = this;
+    // dataHeader.dsID_parent.fileType = getFileType();
     // cwOptions.memoryMap = getMemoryMap();
     // cwOptions._type = (XFW_DEF::TYPE)(ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + XFW_DEF::WIDGET_DATA_TYPE).toInt());
     // cwOptions.widgetMode = (XFW_DEF::WIDGETMODE)(ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + XFW_DEF::WIDGET_DATA_WIDGETMODE).toInt());
-    // cwOptions.pDevice = getDevice();
+    // g_pDevice = getDevice();
     // cwOptions.bIsImage = getOptions().bIsImage;
     // cwOptions.nImageBase = getOptions().nImageBase;
     // cwOptions.pXInfoDB = getXInfoDB();
@@ -388,19 +393,73 @@ XShortcutsWidget *XMainWidget::createWidget(const QString &sGUID)
             _pWidget->setData(g_pDevice, false, dataHeader.dsID_parent.fileType);
             pResult = _pWidget;
         } else if ((dataHeader.dsID.fileType == XBinary::FT_BINARY) && (dataHeader.dsID.nID == XBinary::STRUCTID_DIESCAN)) {
-
+            DIEWidgetAdvanced *_pWidget = new DIEWidgetAdvanced(this);
+            _pWidget->setData(g_pDevice, false, dataHeader.dsID_parent.fileType);
+            pResult = _pWidget;
         } else if ((dataHeader.dsID.fileType == XBinary::FT_BINARY) && (dataHeader.dsID.nID == XBinary::STRUCTID_YARASCAN)) {
-
+            YARAWidgetAdvanced *_pWidget = new YARAWidgetAdvanced(this);
+            _pWidget->setData(XBinary::getDeviceFileName(g_pDevice), false);
+            pResult = _pWidget;
         } else if ((dataHeader.dsID.fileType == XBinary::FT_BINARY) && (dataHeader.dsID.nID == XBinary::STRUCTID_VIRUSTOTALSCAN)) {
-
+            XVirusTotalWidget *_pWidget = new XVirusTotalWidget(this);
+            _pWidget->setData(g_pDevice);
+            pResult = _pWidget;
         } else if ((dataHeader.dsID.fileType == XBinary::FT_BINARY) && (dataHeader.dsID.nID == XBinary::STRUCTID_VISUALIZATION)) {
-
+            XVisualizationWidget *_pWidget = new XVisualizationWidget(this);
+            _pWidget->setData(g_pDevice, dataHeader.dsID_parent.fileType, false);
+            pResult = _pWidget;
+        } else if ((dataHeader.dsID.fileType == XBinary::FT_BINARY) && (dataHeader.dsID.nID == XBinary::STRUCTID_HEX)) {
+            XHexViewWidget *_pWidget = new XHexViewWidget(this);
+            XHexViewWidget::OPTIONS options = {};
+            options.fileType = dataHeader.dsID_parent.fileType;
+            options.bMenu_Disasm = true;
+            options.bMenu_MemoryMap = true;
+            _pWidget->setXInfoDB(g_pInfoDB);
+            _pWidget->setData(g_pDevice, options);
+            pResult = _pWidget;
+        } else if ((dataHeader.dsID.fileType == XBinary::FT_BINARY) && (dataHeader.dsID.nID == XBinary::STRUCTID_DISASM)) {
+            XMultiDisasmWidget *_pWidget = new XMultiDisasmWidget(this);
+            XMultiDisasmWidget::OPTIONS options = {};
+            options.fileType = dataHeader.dsID_parent.fileType;
+            options.nInitAddress = XFormats::getEntryPointAddress(dataHeader.dsID_parent.fileType, g_pDevice, g_options.bIsImage, g_options.nImageBase);
+            options.bMenu_Hex = true;
+            _pWidget->setXInfoDB(g_pInfoDB);
+            _pWidget->setData(g_pDevice, options);
+            pResult = _pWidget;
+        } else if ((dataHeader.dsID.fileType == XBinary::FT_BINARY) && (dataHeader.dsID.nID == XBinary::STRUCTID_HASH)) {
+            XHashWidget *_pWidget = new XHashWidget(this);
+            _pWidget->setData(g_pDevice, dataHeader.dsID_parent.fileType, 0, g_pDevice->size(), false);
+            pResult = _pWidget;
         } else if ((dataHeader.dsID.fileType == XBinary::FT_BINARY) && (dataHeader.dsID.nID == XBinary::STRUCTID_STRINGS)) {
+            SearchStringsWidget *_pWidget = new SearchStringsWidget(this);
+            SearchStringsWidget::OPTIONS stringsOptions = {};
+            stringsOptions.bMenu_Hex = true;
+            stringsOptions.bMenu_Disasm = true;
+            stringsOptions.bMenu_Demangle = true;
+            stringsOptions.bAnsi = true;
+            stringsOptions.bUnicode = true;
+            stringsOptions.bNullTerminated = false;
+            _pWidget->setData(g_pDevice, dataHeader.dsID_parent.fileType, stringsOptions, false);
 
+            connect(_pWidget, SIGNAL(showDemangle(QString)), this, SLOT(showDemangleSlot(QString)));
+
+            pResult = _pWidget;
         } else if ((dataHeader.dsID.fileType == XBinary::FT_BINARY) && (dataHeader.dsID.nID == XBinary::STRUCTID_SIGNATURES)) {
-
+            SearchSignaturesWidget *_pWidget = new SearchSignaturesWidget(this);
+            SearchSignaturesWidget::OPTIONS signaturesOptions = {};
+            signaturesOptions.bMenu_Hex = true;
+            signaturesOptions.bMenu_Disasm = true;
+            signaturesOptions.fileType = dataHeader.dsID_parent.fileType;
+            _pWidget->setData(g_pDevice, signaturesOptions, false);
+            pResult = _pWidget;
         } else if ((dataHeader.dsID.fileType == XBinary::FT_BINARY) && (dataHeader.dsID.nID == XBinary::STRUCTID_REGIONS)) {
-
+            XRegionsWidget *_pWidget = new XRegionsWidget(this);
+            XRegionsModel::OPTIONS options = {};
+            options.fileType = dataHeader.dsID_parent.fileType;
+            options.bIsImage = g_options.bIsImage;
+            options.nModuleAddress = g_options.nImageBase;
+            _pWidget->setData(g_pDevice, g_pInfoDB, options);
+            pResult = _pWidget;
         } else if ((dataHeader.dsID.fileType == XBinary::FT_BINARY) && (dataHeader.dsID.nID == XBinary::STRUCTID_MEMORYMAP)) {
             XMemoryMapWidget *_pWidget = new XMemoryMapWidget(this);
             XMemoryMapWidget::OPTIONS options = {};
@@ -412,13 +471,41 @@ XShortcutsWidget *XMainWidget::createWidget(const QString &sGUID)
 
             pResult = _pWidget;
         } else if ((dataHeader.dsID.fileType == XBinary::FT_BINARY) && (dataHeader.dsID.nID == XBinary::STRUCTID_SYMBOLS)) {
-
+            XSymbolsWidget *_pWidget = new XSymbolsWidget(this);
+            XSymbolsWidget::OPTIONS options = {};
+            options.fileType = dataHeader.dsID_parent.fileType;
+            options.symbolMode = XInfoDB::SYMBOL_MODE_ALL;
+            options.bMenu_Disasm = true;
+            options.bMenu_Hex = true;
+            _pWidget->setData(g_pDevice, options, g_pInfoDB, true);
+            pResult = _pWidget;
         } else if ((dataHeader.dsID.fileType == XBinary::FT_BINARY) && (dataHeader.dsID.nID == XBinary::STRUCTID_ENTROPY)) {
-
+            XEntropyWidget *_pWidget = new XEntropyWidget(this);
+            _pWidget->setData(g_pDevice, 0, g_pDevice->size(), dataHeader.dsID_parent.fileType, false);
+            pResult = _pWidget;
         } else if ((dataHeader.dsID.fileType == XBinary::FT_BINARY) && (dataHeader.dsID.nID == XBinary::STRUCTID_EXTRACTOR)) {
-
+            XExtractorWidget *_pWidget = new XExtractorWidget(this);
+            XExtractor::OPTIONS extractorOptions = XExtractor::getDefaultOptions();
+            extractorOptions.fileType = dataHeader.dsID_parent.fileType;
+            extractorOptions.bMenu_Hex = true;
+            _pWidget->setData(g_pDevice, extractorOptions, false);
+            pResult = _pWidget;
         } else if ((dataHeader.dsID.fileType == XBinary::FT_BINARY) && (dataHeader.dsID.nID == XBinary::STRUCTID_SEARCH)) {
-
+            SearchValuesWidget *_pWidget = new SearchValuesWidget(this);
+            SearchValuesWidget::OPTIONS options = {};
+            options.fileType = dataHeader.dsID_parent.fileType;
+            options.bMenu_Hex = true;
+            options.bMenu_Disasm = true;
+            _pWidget->setData(g_pDevice, options);
+            pResult = _pWidget;
+        } else if (dataHeader.dhMode == XBinary::DHMODE_HEADER) {
+            XGenericHeaderWidget *_pWidget = new XGenericHeaderWidget(this);
+            // TODO
+            pResult = _pWidget;
+        } else {
+#ifdef QT_DEBUG
+            qDebug("XMainWidget::createWidget: Unknown ID=%d", dataHeader.dsID.nID);
+#endif
         }
     }
 
@@ -430,23 +517,23 @@ XShortcutsWidget *XMainWidget::createWidget(const QString &sGUID)
 //     XShortcutsWidget *pResult = nullptr;
 
 //     if ((cwOptions.widgetMode == XFW_DEF::WIDGETMODE_HEADER) || (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_DIALOG_HEADER)) {
-//         XGenericHeaderWidget *_pWidget = new XGenericHeaderWidget(cwOptions.pParent);
+//         XGenericHeaderWidget *_pWidget = new XGenericHeaderWidget(this);
 //         _pWidget->setCwOptions(cwOptions, false);
 //         pResult = _pWidget;
 //     } else if (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_TABLE) {
-//         XGenericTableWidget *_pWidget = new XGenericTableWidget(cwOptions.pParent);
+//         XGenericTableWidget *_pWidget = new XGenericTableWidget(this);
 //         _pWidget->setCwOptions(cwOptions, false);
 //         pResult = _pWidget;
 //     } else if (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_TABLE_HEX) {
-//         XGenericTableHexWidget *_pWidget = new XGenericTableHexWidget(cwOptions.pParent);
+//         XGenericTableHexWidget *_pWidget = new XGenericTableHexWidget(this);
 //         _pWidget->setCwOptions(cwOptions, false);
 //         pResult = _pWidget;
 //     } else if (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_HEX) {
-//         XGenericHexWidget *_pWidget = new XGenericHexWidget(cwOptions.pParent);
+//         XGenericHexWidget *_pWidget = new XGenericHexWidget(this);
 //         _pWidget->setCwOptions(cwOptions, false);
 //         pResult = _pWidget;
 //     } else if (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_DISASM) {
-//         XGenericDisasmWidget *_pWidget = new XGenericDisasmWidget(cwOptions.pParent);
+//         XGenericDisasmWidget *_pWidget = new XGenericDisasmWidget(this);
 //         _pWidget->setCwOptions(cwOptions, false);
 //         pResult = _pWidget;
 //     }
@@ -472,6 +559,21 @@ XHexView *XMainWidget::getGlobalHexView()
 bool XMainWidget::isGlobalHexSyncEnabled()
 {
     return (ui->widgetGlobalHex->isEnabled()) && (ui->toolButtonGlobalHex->isChecked()) && (ui->checkBoxHexSync->isChecked());
+}
+
+XOptions::ICONTYPE XMainWidget::getIconType(XBinary::FT fileType, quint64 nID)
+{
+    XOptions::ICONTYPE iconType = XOptions::ICONTYPE_NONE;
+
+    if (nID == 0) {
+        iconType = XOptions::ICONTYPE_INFO;
+    } else if (fileType == XBinary::FT_BINARY) {
+        if (nID == XBinary::STRUCTID_MEMORYMAP) {
+            iconType = XOptions::ICONTYPE_MEMORYMAP;
+        }
+    }
+
+    return iconType;
 }
 
 void XMainWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurrent, QTreeWidgetItem *pItemPrevious)
@@ -592,11 +694,11 @@ void XMainWidget::currentLocationChangedSlot(quint64 nLocation, qint32 nLocation
 void XMainWidget::showCwWidgetSlot(const QString &sInitString, bool bNewWindow)
 {
     // XFW_DEF::CWOPTIONS cwOptions = {};
-    // cwOptions.pParent = this;
-    // cwOptions.fileType = getFileType();
+    // this = this;
+    // dataHeader.dsID_parent.fileType = getFileType();
     // cwOptions._type = _getTypeFromInitString(sInitString);
     // cwOptions.widgetMode = XFW_DEF::WIDGETMODE_DIALOG_HEADER;
-    // cwOptions.pDevice = getDevice();
+    // g_pDevice = getDevice();
     // cwOptions.bIsImage = getOptions().bIsImage;
     // cwOptions.nImageBase = getOptions().nImageBase;
     // cwOptions.pXInfoDB = getXInfoDB();

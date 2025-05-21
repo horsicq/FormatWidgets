@@ -32,6 +32,15 @@
 #include "xhexviewwidget.h"
 #include "nfdwidgetadvanced.h"
 #include "xmemorymapwidget.h"
+#include "xextractorwidget.h"
+#include "diewidgetadvanced.h"
+#include "yarawidgetadvanced.h"
+#include "xvirustotalwidget.h"
+#include "xmultidisasmwidget.h"
+#include "xregionswidget.h"
+#include "xentropywidget.h"
+#include "xhashwidget.h"
+#include "xgenericheaderwidget.h"
 
 namespace Ui {
 class XMainWidget;
@@ -69,6 +78,7 @@ public:
     XShortcutsWidget *getCurrentWidget();
     XHexView *getGlobalHexView();
     bool isGlobalHexSyncEnabled();
+    XOptions::ICONTYPE getIconType(XBinary::FT fileType, quint64 nID);
 
 private slots:
     void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurrent, QTreeWidgetItem *pItemPrevious);

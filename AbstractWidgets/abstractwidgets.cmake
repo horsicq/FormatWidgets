@@ -32,9 +32,6 @@ set(ABSTRACTWIDGETS_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/xformatwidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/xformatwidget.h
     ${CMAKE_CURRENT_LIST_DIR}/xformatwidget_def.h
-    ${CMAKE_CURRENT_LIST_DIR}/xgenericheaderwidget.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/xgenericheaderwidget.h
-    ${CMAKE_CURRENT_LIST_DIR}/xgenericheaderwidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/xgenerichexwidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/xgenerichexwidget.h
     ${CMAKE_CURRENT_LIST_DIR}/xgenerichexwidget.ui
@@ -47,11 +44,6 @@ set(ABSTRACTWIDGETS_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/xgenerictablewidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/xgenerictablewidget.h
     ${CMAKE_CURRENT_LIST_DIR}/xgenerictablewidget.ui
-    ${CMAKE_CURRENT_LIST_DIR}/xmainwidget.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/xmainwidget.h
-    ${CMAKE_CURRENT_LIST_DIR}/xmainwidget.ui
-    ${CMAKE_CURRENT_LIST_DIR}/xmainwidgetadvanced.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/xmainwidgetadvanced.h
     ${CMAKE_CURRENT_LIST_DIR}/xprocessdata.cpp
     ${CMAKE_CURRENT_LIST_DIR}/xprocessdata.h
 )
