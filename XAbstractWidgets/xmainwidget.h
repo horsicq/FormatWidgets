@@ -30,6 +30,8 @@
 #include "xtableview.h"
 #include "xfileinfowidget.h"
 #include "xhexviewwidget.h"
+#include "nfdwidgetadvanced.h"
+#include "xmemorymapwidget.h"
 
 namespace Ui {
 class XMainWidget;
@@ -62,8 +64,7 @@ public:
     virtual void reloadData(bool bSaveSelection);
     virtual void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
 
-    virtual QTreeWidgetItem *_addBaseItems(QTreeWidget *pTreeWidget, XBinary::FT fileType);
-    // virtual XShortcutsWidget *createWidget(const XFW_DEF::CWOPTIONS &cwOptions);
+    XShortcutsWidget *createWidget(const QString &sGUID);
     QTreeWidget *getTreeWidgetNavi();
     XShortcutsWidget *getCurrentWidget();
     XHexView *getGlobalHexView();
@@ -80,6 +81,7 @@ private slots:
     void dataChangedSlot(qint64 nOffset, qint64 nSize);
     void currentLocationChangedSlot(quint64 nLocation, qint32 nLocationType, qint64 nSize);
     void showCwWidgetSlot(const QString &sInitString, bool bNewWindow);
+    void on_comboBoxType_currentIndexChanged(int nIndex);
 
 private:
     Ui::XMainWidget *ui;

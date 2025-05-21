@@ -127,18 +127,26 @@ void XMainWidget::reload()
 
     qint32 nNumberOfHeaders = g_ListDataHeaders.count();
 
-    QTreeWidgetItem *pRootItem = ui->treeWidgetNavi->invisibleRootItem();
+    QMap<QString, QTreeWidgetItem *> mapItems;
 
     for (qint32 i = 0; i < nNumberOfHeaders; i++) {
         XBinary::DATA_HEADER dataHeader = g_ListDataHeaders.at(i);
 
-        QTreeWidgetItem *pItem = new QTreeWidgetItem(ui->treeWidgetNavi);
+        QTreeWidgetItem *pParentItem = nullptr;
+
+        if (mapItems.contains(dataHeader.dsID_parent.sGUID)) {
+            pParentItem = mapItems.value(dataHeader.dsID_parent.sGUID);
+        } else {
+            pParentItem = ui->treeWidgetNavi->invisibleRootItem();
+        }
+
+        QTreeWidgetItem *pItem = new QTreeWidgetItem;
         pItem->setText(0, dataHeader.sName);
         pItem->setData(0,Qt::UserRole, dataHeader.dsID.sGUID);
+        pParentItem->addChild(pItem);
 
-        pRootItem->addChild(pItem);
+        mapItems.insert(dataHeader.dsID.sGUID, pItem);
     }
-
 
     if (g_options.bGlobalHexEnable) {
         XHexView::OPTIONS options = {};
@@ -241,7 +249,32 @@ void XMainWidget::reloadData(bool bSaveSelection)
     QString sGUID = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole).toString();
 
     if (!g_stWidgets.contains(sGUID)) {
-        // XShortcutsWidget *pWidget = createWidget(sGUID);
+        XShortcutsWidget *pWidget = createWidget(sGUID);
+        if (pWidget) {
+            pWidget->setGlobal(getShortcuts(), getGlobalOptions());
+            pWidget->setReadonly(isReadonly());
+            connect(pWidget, SIGNAL(currentLocationChanged(quint64, qint32, qint64)), this, SLOT(currentLocationChangedSlot(quint64, qint32, qint64)));
+            connect(pWidget, SIGNAL(dataChanged(qint64, qint64)), this, SLOT(dataChangedSlot(qint64, qint64)));
+            // connect(pWidget, SIGNAL(followLocation(quint64, qint32, qint64, qint32)), this, SLOT(followLocationSlot(quint64, qint32, qint64, qint32)));
+
+    //         if ((cwOptions.widgetMode == XFW_DEF::WIDGETMODE_HEADER) || (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_TABLE) ||
+    //             (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_TABLE_HEX) || (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_HEX) ||
+    //             (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_DISASM)) {
+    //             XFormatWidget *_pXFormatWidget = dynamic_cast<XFormatWidget *>(pWidget);
+
+    //             _pXFormatWidget->setXInfoDB(cwOptions.pXInfoDB);
+
+    //             if (_pXFormatWidget) {
+    //                 connect(_pXFormatWidget, SIGNAL(showCwWidget(QString, bool)), this, SLOT(showCwWidgetSlot(QString, bool)));
+    //             }
+    //         }
+
+            pWidget->reloadData(false);
+            pWidget->setProperty("GUID", sGUID);
+            qint32 nPosition = ui->stackedWidgetMain->addWidget(pWidget);
+            ui->stackedWidgetMain->setCurrentIndex(nPosition);
+            g_stWidgets.insert(sGUID);
+        }
     } else {
         qint32 nNumberOfWidgets = ui->stackedWidgetMain->count();
 
@@ -324,7 +357,7 @@ void XMainWidget::reloadData(bool bSaveSelection)
 
 void XMainWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
 {
-    // XFormatWidget::setGlobal(pShortcuts, pXOptions);
+    XShortcutsWidget::setGlobal(pShortcuts, pXOptions);
 
     ui->widgetGlobalHex->setGlobal(pShortcuts, pXOptions);
 
@@ -339,15 +372,55 @@ void XMainWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
     }
 }
 
-QTreeWidgetItem *XMainWidget::_addBaseItems(QTreeWidget *pTreeWidget, XBinary::FT fileType)
+XShortcutsWidget *XMainWidget::createWidget(const QString &sGUID)
 {
-    Q_UNUSED(fileType)
+    XShortcutsWidget *pResult = nullptr;
 
-    QTreeWidgetItem *pResult = nullptr;
-    // pResult = createNewItem(XFW_DEF::TYPE_INFO, XFW_DEF::WIDGETMODE_UNKNOWN, XOptions::ICONTYPE_INFO, 0, -1, 0, 0, 0, XBinary::MODE_UNKNOWN, XBinary::ENDIAN_UNKNOWN,
-    // "", "");
+    XBinary::DATA_HEADER dataHeader = XBinary::_searchDataHeaderByGuid(sGUID, g_ListDataHeaders);
 
-    pTreeWidget->addTopLevelItem(pResult);
+    if (dataHeader.dsID.sGUID == sGUID) {
+        if (dataHeader.dsID.nID == 0) {
+            XFileInfoWidget *_pWidget = new XFileInfoWidget(this);
+            _pWidget->setData(g_pDevice, dataHeader.dsID.fileType, dataHeader.sName, false);
+            pResult = _pWidget;
+        } else if ((dataHeader.dsID.fileType == XBinary::FT_BINARY) && (dataHeader.dsID.nID == XBinary::STRUCTID_NFDSCAN)) {
+            NFDWidgetAdvanced *_pWidget = new NFDWidgetAdvanced(this);
+            _pWidget->setData(g_pDevice, false, dataHeader.dsID_parent.fileType);
+            pResult = _pWidget;
+        } else if ((dataHeader.dsID.fileType == XBinary::FT_BINARY) && (dataHeader.dsID.nID == XBinary::STRUCTID_DIESCAN)) {
+
+        } else if ((dataHeader.dsID.fileType == XBinary::FT_BINARY) && (dataHeader.dsID.nID == XBinary::STRUCTID_YARASCAN)) {
+
+        } else if ((dataHeader.dsID.fileType == XBinary::FT_BINARY) && (dataHeader.dsID.nID == XBinary::STRUCTID_VIRUSTOTALSCAN)) {
+
+        } else if ((dataHeader.dsID.fileType == XBinary::FT_BINARY) && (dataHeader.dsID.nID == XBinary::STRUCTID_VISUALIZATION)) {
+
+        } else if ((dataHeader.dsID.fileType == XBinary::FT_BINARY) && (dataHeader.dsID.nID == XBinary::STRUCTID_STRINGS)) {
+
+        } else if ((dataHeader.dsID.fileType == XBinary::FT_BINARY) && (dataHeader.dsID.nID == XBinary::STRUCTID_SIGNATURES)) {
+
+        } else if ((dataHeader.dsID.fileType == XBinary::FT_BINARY) && (dataHeader.dsID.nID == XBinary::STRUCTID_REGIONS)) {
+
+        } else if ((dataHeader.dsID.fileType == XBinary::FT_BINARY) && (dataHeader.dsID.nID == XBinary::STRUCTID_MEMORYMAP)) {
+            XMemoryMapWidget *_pWidget = new XMemoryMapWidget(this);
+            XMemoryMapWidget::OPTIONS options = {};
+            options.fileType = dataHeader.dsID_parent.fileType;
+            options.bIsSearchEnable = true;
+            _pWidget->setData(g_pDevice, options, g_pInfoDB);
+
+            // connect(_pWidget, SIGNAL(findValue(quint64, XBinary::ENDIAN)), this, SLOT(findValue(quint64, XBinary::ENDIAN)));
+
+            pResult = _pWidget;
+        } else if ((dataHeader.dsID.fileType == XBinary::FT_BINARY) && (dataHeader.dsID.nID == XBinary::STRUCTID_SYMBOLS)) {
+
+        } else if ((dataHeader.dsID.fileType == XBinary::FT_BINARY) && (dataHeader.dsID.nID == XBinary::STRUCTID_ENTROPY)) {
+
+        } else if ((dataHeader.dsID.fileType == XBinary::FT_BINARY) && (dataHeader.dsID.nID == XBinary::STRUCTID_EXTRACTOR)) {
+
+        } else if ((dataHeader.dsID.fileType == XBinary::FT_BINARY) && (dataHeader.dsID.nID == XBinary::STRUCTID_SEARCH)) {
+
+        }
+    }
 
     return pResult;
 }
@@ -569,3 +642,11 @@ void XMainWidget::showCwWidgetSlot(const QString &sInitString, bool bNewWindow)
     //     dialogWidget.exec();
     // }
 }
+
+void XMainWidget::on_comboBoxType_currentIndexChanged(int nIndex)
+{
+    Q_UNUSED(nIndex)
+
+    reload();
+}
+

@@ -32,13 +32,6 @@
       <enum>QLayout::SizeConstraint::SetDefaultConstraint</enum>
      </property>
      <item>
-      <widget class="QToolButton" name="toolButtonReload">
-       <property name="text">
-        <string>Reload</string>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QToolButton" name="toolButtonPrev">
        <property name="text">
         <string notr="true">&lt;</string>
@@ -102,17 +95,28 @@
      <property name="orientation">
       <enum>Qt::Orientation::Horizontal</enum>
      </property>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <widget class="QComboBox" name="comboBoxType">
-         <property name="minimumSize">
-          <size>
-           <width>120</width>
-           <height>0</height>
-          </size>
-         </property>
-        </widget>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <widget class="QComboBox" name="comboBoxType">
+           <property name="minimumSize">
+            <size>
+             <width>120</width>
+             <height>0</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="toolButtonReload">
+           <property name="text">
+            <string>Reload</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item>
         <widget class="QTreeWidget" name="treeWidgetNavi">
