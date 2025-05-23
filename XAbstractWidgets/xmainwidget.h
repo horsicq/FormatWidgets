@@ -92,6 +92,9 @@ private slots:
     void currentLocationChangedSlot(quint64 nLocation, qint32 nLocationType, qint64 nSize);
     void showCwWidgetSlot(const QString &sInitString, bool bNewWindow);
     void on_comboBoxType_currentIndexChanged(int nIndex);
+    void showDemangleSlot(const QString &sString);
+    void findValue(quint64 nValue, XBinary::ENDIAN endian);
+    void followLocationSlot(quint64 nLocation, qint32 nLocationType, qint64 nSize, qint32 nWidgetType);
 
 private:
     Ui::XMainWidget *ui;
@@ -101,6 +104,7 @@ private:
     XBinary::_MEMORY_MAP g_memoryMap;
     QList<XBinary::DATA_HEADER> g_ListDataHeaders;
     QSet<QString> g_stWidgets;
+    QMap<QString, QTreeWidgetItem *> g_mapItems;
 };
 
 #endif  // XMAINWIDGET_H

@@ -41,7 +41,7 @@ XMainWidget::XMainWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new U
     ui->toolButtonGlobalHex->setToolTip(tr("Hex"));
     ui->checkBoxReadonly->setToolTip(tr("Readonly"));
 
-    // ui->widgetGlobalHex->setProperty("TYPE", XFW_DEF::TYPE_GLOBALHEX);
+    ui->widgetGlobalHex->setProperty("TYPE", "GLOBALHEX");
     ui->widgetGlobalHex->hide();
     ui->widgetGlobalHex->setEnabled(false);
 
@@ -98,6 +98,7 @@ void XMainWidget::clear()
     ui->treeWidgetNavi->clear();
 
     g_stWidgets.clear();
+    g_mapItems.clear();
 
     // XFormatWidget::reset();
 }
@@ -127,15 +128,15 @@ void XMainWidget::reload()
 
     qint32 nNumberOfHeaders = g_ListDataHeaders.count();
 
-    QMap<QString, QTreeWidgetItem *> mapItems;
+    g_mapItems.clear();
 
     for (qint32 i = 0; i < nNumberOfHeaders; i++) {
         XBinary::DATA_HEADER dataHeader = g_ListDataHeaders.at(i);
 
         QTreeWidgetItem *pParentItem = nullptr;
 
-        if (mapItems.contains(dataHeader.dsID_parent.sGUID)) {
-            pParentItem = mapItems.value(dataHeader.dsID_parent.sGUID);
+        if (g_mapItems.contains(dataHeader.dsID_parent.sGUID)) {
+            pParentItem = g_mapItems.value(dataHeader.dsID_parent.sGUID);
         } else {
             pParentItem = ui->treeWidgetNavi->invisibleRootItem();
         }
@@ -150,7 +151,7 @@ void XMainWidget::reload()
 
         pParentItem->addChild(pItem);
 
-        mapItems.insert(dataHeader.dsID.sGUID, pItem);
+        g_mapItems.insert(dataHeader.dsID.sGUID, pItem);
     }
 
     if (g_options.bGlobalHexEnable) {
@@ -260,7 +261,7 @@ void XMainWidget::reloadData(bool bSaveSelection)
             pWidget->setReadonly(isReadonly());
             connect(pWidget, SIGNAL(currentLocationChanged(quint64, qint32, qint64)), this, SLOT(currentLocationChangedSlot(quint64, qint32, qint64)));
             connect(pWidget, SIGNAL(dataChanged(qint64, qint64)), this, SLOT(dataChangedSlot(qint64, qint64)));
-            // connect(pWidget, SIGNAL(followLocation(quint64, qint32, qint64, qint32)), this, SLOT(followLocationSlot(quint64, qint32, qint64, qint32)));
+            connect(pWidget, SIGNAL(followLocation(quint64, qint32, qint64, qint32)), this, SLOT(followLocationSlot(quint64, qint32, qint64, qint32)));
 
     //         if ((cwOptions.widgetMode == XFW_DEF::WIDGETMODE_HEADER) || (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_TABLE) ||
     //             (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_TABLE_HEX) || (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_HEX) ||
@@ -467,7 +468,7 @@ XShortcutsWidget *XMainWidget::createWidget(const QString &sGUID)
             options.bIsSearchEnable = true;
             _pWidget->setData(g_pDevice, options, g_pInfoDB);
 
-            // connect(_pWidget, SIGNAL(findValue(quint64, XBinary::ENDIAN)), this, SLOT(findValue(quint64, XBinary::ENDIAN)));
+            connect(_pWidget, SIGNAL(findValue(quint64, XBinary::ENDIAN)), this, SLOT(findValue(quint64, XBinary::ENDIAN)));
 
             pResult = _pWidget;
         } else if ((dataHeader.dsID.fileType == XBinary::FT_BINARY) && (dataHeader.dsID.nID == XBinary::STRUCTID_SYMBOLS)) {
@@ -680,15 +681,15 @@ void XMainWidget::dataChangedSlot(qint64 nOffset, qint64 nSize)
 
 void XMainWidget::currentLocationChangedSlot(quint64 nLocation, qint32 nLocationType, qint64 nSize)
 {
-    // XFW_DEF::TYPE _type = (XFW_DEF::TYPE)(sender()->property("TYPE").toInt());
-    // if (_type != XFW_DEF::TYPE_GLOBALHEX) {
-    //     if (g_bGlobalHexEnable) {
-    //         if (isGlobalHexSyncEnabled()) {
-    //             ui->widgetGlobalHex->goToLocation(nLocation, (XBinary::LT)nLocationType, true, false, false);
-    //             ui->widgetGlobalHex->setLocationOffset(nLocation, (XBinary::LT)nLocationType, nSize);
-    //         }
-    //     }
-    // }
+    QString sType = sender()->property("TYPE").toString();
+    if (sType != "GLOBALHEX") {
+        if (g_options.bGlobalHexEnable) {
+            if (isGlobalHexSyncEnabled()) {
+                ui->widgetGlobalHex->goToLocation(nLocation, (XBinary::LT)nLocationType, true, false, false);
+                ui->widgetGlobalHex->setLocationOffset(nLocation, (XBinary::LT)nLocationType, nSize);
+            }
+        }
+    }
 }
 
 void XMainWidget::showCwWidgetSlot(const QString &sInitString, bool bNewWindow)
@@ -750,5 +751,45 @@ void XMainWidget::on_comboBoxType_currentIndexChanged(int nIndex)
     Q_UNUSED(nIndex)
 
     reload();
+}
+
+void XMainWidget::showDemangleSlot(const QString &sString)
+{
+    DialogDemangle dialogDemangle(this, sString);
+    dialogDemangle.setGlobal(getShortcuts(), getGlobalOptions());
+
+    dialogDemangle.exec();
+}
+
+void XMainWidget::findValue(quint64 nValue, XBinary::ENDIAN endian)
+{
+    getTreeWidgetNavi()->setCurrentItem(g_mapItems.value(XBinary::_searchDataHeaderById(XBinary::FT_BINARY, XBinary::STRUCTID_SEARCH, g_ListDataHeaders).dsID.sGUID));
+    SearchValuesWidget *pWidget = dynamic_cast<SearchValuesWidget *>(getCurrentWidget());
+
+    if (pWidget) {
+        pWidget->findValue(nValue, endian);
+    }
+}
+
+void XMainWidget::followLocationSlot(quint64 nLocation, qint32 nLocationType, qint64 nSize, qint32 nWidgetType)
+{
+    if (nWidgetType == XOptions::WIDGETTYPE_HEX) {
+        if (isGlobalHexSyncEnabled()) {
+            getGlobalHexView()->setLocation(nLocation, nLocationType, nSize);
+        } else {
+            getTreeWidgetNavi()->setCurrentItem(g_mapItems.value(XBinary::_searchDataHeaderById(XBinary::FT_BINARY, XBinary::STRUCTID_HEX, g_ListDataHeaders).dsID.sGUID));
+            getCurrentWidget()->setLocation(nLocation, nLocationType, nSize);
+        }
+    } else if (nWidgetType == XOptions::WIDGETTYPE_DISASM) {
+        getTreeWidgetNavi()->setCurrentItem(g_mapItems.value(XBinary::_searchDataHeaderById(XBinary::FT_BINARY, XBinary::STRUCTID_DISASM, g_ListDataHeaders).dsID.sGUID));
+        getCurrentWidget()->setLocation(nLocation, nLocationType, nSize);
+    } else if (nWidgetType == XOptions::WIDGETTYPE_MEMORYMAP) {
+        getTreeWidgetNavi()->setCurrentItem(g_mapItems.value(XBinary::_searchDataHeaderById(XBinary::FT_BINARY, XBinary::STRUCTID_SEARCH, g_ListDataHeaders).dsID.sGUID));
+        getCurrentWidget()->setLocation(nLocation, nLocationType, nSize);
+    } else {
+#ifdef QT_DEBUG
+        qDebug("XMainWidget::followLocationSlot: Unknown widgetType=%d", nWidgetType);
+#endif
+    }
 }
 
