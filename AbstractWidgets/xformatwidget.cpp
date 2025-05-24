@@ -2938,6 +2938,9 @@ void XFormatWidget::_widgetValueChanged(QVariant vValue)
 
 void XFormatWidget::contextMenuGenericHeaderWidget(const QPoint &pos, QTableWidget *pTableWidget, QList<RECWIDGET> *pListRecWidget, XFW_DEF::CWOPTIONS *pCwOptions)
 {
+    Q_UNUSED(pListRecWidget)
+    Q_UNUSED(pCwOptions)
+
     qint32 nRow = pTableWidget->currentIndex().row();
 
     if (nRow != -1) {
