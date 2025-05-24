@@ -22,6 +22,8 @@
 #define XGENERICABSTRACTWIDGET_H
 
 #include "xshortcutswidget.h"
+#include "xformats.h"
+#include "xinfodb.h"
 
 class XGenericAbstractWidget : public XShortcutsWidget
 {
@@ -29,7 +31,19 @@ class XGenericAbstractWidget : public XShortcutsWidget
 public:
     explicit XGenericAbstractWidget(QWidget *parent = nullptr);
 
+    void setData(QIODevice *pDevice, XInfoDB *pXInfoDB, const XBinary::DATA_RECORDS_OPTIONS &dataRecordsOptions);
+
+    QIODevice *getDevice() const;
+    XInfoDB *getXInfoDB() const;
+    const XBinary::DATA_RECORDS_OPTIONS &getRecordsOptions() const;
+
+    virtual void process();
 signals:
+
+private:
+    QIODevice *g_pDevice;
+    XInfoDB *g_pXInfoDB;
+    XBinary::DATA_RECORDS_OPTIONS g_dataRecordsOptions;
 };
 
 #endif // XGENERICABSTRACTWIDGET_H

@@ -124,7 +124,7 @@ void XMainWidget::reload()
     dataHeadersOptions.nID = 0;
     dataHeadersOptions.bChildren = true;
 
-    g_ListDataHeaders = XFormats::getDataHeaders(fileType, g_pDevice, dataHeadersOptions, g_options.bIsImage, g_options.nImageBase, nullptr); // TODO in Progress Dialog
+    g_ListDataHeaders = XFormats::getDataHeaders(fileType, g_pDevice, dataHeadersOptions, nullptr); // TODO in Progress Dialog
 
     qint32 nNumberOfHeaders = g_ListDataHeaders.count();
 
@@ -501,7 +501,12 @@ XShortcutsWidget *XMainWidget::createWidget(const QString &sGUID)
             pResult = _pWidget;
         } else if (dataHeader.dhMode == XBinary::DHMODE_HEADER) {
             XGenericHeaderWidget *_pWidget = new XGenericHeaderWidget(this);
-            // TODO
+
+            XBinary::DATA_RECORDS_OPTIONS dataRecordsOptions = {};
+            dataRecordsOptions.pMemoryMap = &g_memoryMap;
+            dataRecordsOptions.dataHeader = dataHeader;
+
+            _pWidget->setData(g_pDevice, g_pInfoDB, dataRecordsOptions);
             pResult = _pWidget;
         } else {
 #ifdef QT_DEBUG
@@ -569,8 +574,40 @@ XOptions::ICONTYPE XMainWidget::getIconType(XBinary::FT fileType, quint64 nID)
     if (nID == 0) {
         iconType = XOptions::ICONTYPE_INFO;
     } else if (fileType == XBinary::FT_BINARY) {
-        if (nID == XBinary::STRUCTID_MEMORYMAP) {
+        if (nID == XBinary::STRUCTID_NFDSCAN) {
+            iconType = XOptions::ICONTYPE_NFD;
+        } else if (nID == XBinary::STRUCTID_DIESCAN) {
+            iconType = XOptions::ICONTYPE_DIE;
+        } else if (nID == XBinary::STRUCTID_YARASCAN) {
+            iconType = XOptions::ICONTYPE_YARA;
+        } else if (nID == XBinary::STRUCTID_VIRUSTOTALSCAN) {
+            iconType = XOptions::ICONTYPE_VIRUSTOTAL;
+        } else if (nID == XBinary::STRUCTID_VISUALIZATION) {
+            iconType = XOptions::ICONTYPE_VISUALIZATION;
+        } else if (nID == XBinary::STRUCTID_MEMORYMAP) {
             iconType = XOptions::ICONTYPE_MEMORYMAP;
+        } else if (nID == XBinary::STRUCTID_ENTROPY) {
+            iconType = XOptions::ICONTYPE_ENTROPY;
+        } else if (nID == XBinary::STRUCTID_DISASM) {
+            iconType = XOptions::ICONTYPE_DISASM;
+        } else if (nID == XBinary::STRUCTID_HEX) {
+            iconType = XOptions::ICONTYPE_HEX;
+        } else if (nID == XBinary::STRUCTID_HASH) {
+            iconType = XOptions::ICONTYPE_HASH;
+        } else if (nID == XBinary::STRUCTID_STRINGS) {
+            iconType = XOptions::ICONTYPE_STRING;
+        } else if (nID == XBinary::STRUCTID_SIGNATURES) {
+            iconType = XOptions::ICONTYPE_SIGNATURE;
+        } else if (nID == XBinary::STRUCTID_REGIONS) {
+            iconType = XOptions::ICONTYPE_SEGMENT;
+        } else if (nID == XBinary::STRUCTID_SYMBOLS) {
+            iconType = XOptions::ICONTYPE_SYMBOL;
+        } else if (nID == XBinary::STRUCTID_EXTRACTOR) {
+            iconType = XOptions::ICONTYPE_EXTRACTOR;
+        } else if (nID == XBinary::STRUCTID_SEARCH) {
+            iconType = XOptions::ICONTYPE_SEARCH;
+        } else if (nID == XBinary::STRUCTID_ENTROPY) {
+            iconType = XOptions::ICONTYPE_ENTROPY;
         }
     }
 

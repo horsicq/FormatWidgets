@@ -37,3 +37,13 @@ void XGenericHeaderWidget::adjustView()
 {
     // TODO
 }
+
+void XGenericHeaderWidget::process()
+{
+    // XFormats::getDataRecords()
+    // XBinary::FT fileType, QIODevice *pDevice, const XBinary::DATA_RECORDS_OPTIONS &dataRecordsOptions,
+    //     QList<XBinary::DATA_RECORD> *pListRecords, bool bIsImage, XADDR nModuleAddress, XBinary::PDSTRUCT *pPdStruct
+
+    // XBinary::DATA_HEADER dataHeader = getDataHeader();
+    // XFormats::getDataRecords(dataHeader.dsID.fileType,
+}

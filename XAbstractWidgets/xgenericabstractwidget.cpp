@@ -23,5 +23,38 @@
 XGenericAbstractWidget::XGenericAbstractWidget(QWidget *parent)
     : XShortcutsWidget(parent)
 {
+    g_dataRecordsOptions = {};
+    g_pDevice = nullptr;
+    g_pXInfoDB = nullptr;
+}
 
+void XGenericAbstractWidget::setData(QIODevice *pDevice, XInfoDB *pXInfoDB, const XBinary::DATA_RECORDS_OPTIONS &dataRecordsOptions)
+{
+    g_pDevice = pDevice;
+    g_pXInfoDB = pXInfoDB;
+    g_dataRecordsOptions = dataRecordsOptions;
+
+    process();
+}
+
+QIODevice *XGenericAbstractWidget::getDevice() const
+{
+    return g_pDevice;
+}
+
+XInfoDB *XGenericAbstractWidget::getXInfoDB() const
+{
+    return g_pXInfoDB;
+}
+
+const XBinary::DATA_RECORDS_OPTIONS &XGenericAbstractWidget::getRecordsOptions() const
+{
+    return g_dataRecordsOptions;
+}
+
+void XGenericAbstractWidget::process()
+{
+#ifdef QT_DEBUG
+    qDebug("XGenericAbstractWidget::process");
+#endif
 }

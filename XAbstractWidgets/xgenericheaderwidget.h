@@ -37,6 +37,8 @@ public:
 
     virtual void adjustView();
 
+    virtual void process();
+
 private:
     Ui::XGenericHeaderWidget *ui;
 };
