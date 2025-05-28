@@ -37,7 +37,8 @@ public:
     XInfoDB *getXInfoDB() const;
     const XBinary::DATA_RECORDS_OPTIONS &getRecordsOptions() const;
 
-    virtual void process();
+    void adjustHeaderTableWidget(QTableWidget *pWidget);
+
 signals:
 
 private:

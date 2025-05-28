@@ -37,10 +37,16 @@ public:
 
     virtual void adjustView();
 
-    virtual void process();
+    virtual void reloadData(bool bSaveSelection);
+
+private slots:
+    void on_toolButtonTableReload_clicked();
+    void on_toolButtonTableSize_clicked();
+    void on_toolButtonTableSave_clicked();
 
 private:
     Ui::XGenericHeaderWidget *ui;
+    qint64 g_nDataSize;
 };
 
 #endif // XGENERICHEADERWIDGET_H

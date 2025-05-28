@@ -34,7 +34,7 @@ void XGenericAbstractWidget::setData(QIODevice *pDevice, XInfoDB *pXInfoDB, cons
     g_pXInfoDB = pXInfoDB;
     g_dataRecordsOptions = dataRecordsOptions;
 
-    process();
+    reloadData(false);
 }
 
 QIODevice *XGenericAbstractWidget::getDevice() const
@@ -52,9 +52,33 @@ const XBinary::DATA_RECORDS_OPTIONS &XGenericAbstractWidget::getRecordsOptions()
     return g_dataRecordsOptions;
 }
 
-void XGenericAbstractWidget::process()
+void XGenericAbstractWidget::adjustHeaderTableWidget(QTableWidget *pWidget)
 {
-#ifdef QT_DEBUG
-    qDebug("XGenericAbstractWidget::process");
-#endif
+    QStringList slHeader;
+    slHeader.append(tr("Name"));
+    slHeader.append(tr("Offset"));
+    slHeader.append(tr("Size"));
+    slHeader.append(tr("Type"));
+    slHeader.append(tr("Value"));
+    slHeader.append(tr(""));
+    slHeader.append(tr("Comment"));
+
+    pWidget->setColumnCount(slHeader.count());
+    pWidget->setHorizontalHeaderLabels(slHeader);
+    pWidget->setSortingEnabled(false);
+    pWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
+    pWidget->setSelectionMode(QAbstractItemView::SingleSelection);
+    pWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    // pWidget->setShowGrid(true);
+    // pWidget->setAlternatingRowColors(true);
+    pWidget->setContextMenuPolicy(Qt::CustomContextMenu);
+    pWidget->verticalHeader()->setVisible(false);
+    pWidget->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    pWidget->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    pWidget->setWordWrap(false);
+    pWidget->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
+    pWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    // Set last column to stretch
+    pWidget->horizontalHeader()->setStretchLastSection(true);
 }
+

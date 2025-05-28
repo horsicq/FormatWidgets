@@ -26,6 +26,18 @@ XGenericHeaderWidget::XGenericHeaderWidget(QWidget *parent)
     , ui(new Ui::XGenericHeaderWidget)
 {
     ui->setupUi(this);
+
+    g_nDataSize = 0;
+
+    XOptions::adjustToolButton(ui->toolButtonTableReload, XOptions::ICONTYPE_RELOAD);
+    XOptions::adjustToolButton(ui->toolButtonTableSize, XOptions::ICONTYPE_SIZE);
+    XOptions::adjustToolButton(ui->toolButtonTableSave, XOptions::ICONTYPE_SAVE);
+
+    ui->toolButtonTableReload->setToolTip(tr("Reload"));
+    ui->toolButtonTableSize->setToolTip(tr("Size"));
+    ui->toolButtonTableSave->setToolTip(tr("Save"));
+
+    adjustHeaderTableWidget(ui->tableWidgetMain);
 }
 
 XGenericHeaderWidget::~XGenericHeaderWidget()
@@ -35,15 +47,55 @@ XGenericHeaderWidget::~XGenericHeaderWidget()
 
 void XGenericHeaderWidget::adjustView()
 {
-    // TODO
+    // XGenericAbstractWidget::adjustView();
+    getGlobalOptions()->adjustTableWidget(ui->tableWidgetMain, XOptions::ID_VIEW_FONT_TABLEVIEWS);
 }
 
-void XGenericHeaderWidget::process()
+void XGenericHeaderWidget::reloadData(bool bSaveSelection)
 {
-    // XFormats::getDataRecords()
-    // XBinary::FT fileType, QIODevice *pDevice, const XBinary::DATA_RECORDS_OPTIONS &dataRecordsOptions,
-    //     QList<XBinary::DATA_RECORD> *pListRecords, bool bIsImage, XADDR nModuleAddress, XBinary::PDSTRUCT *pPdStruct
+    qint32 nCurrentRow = 0;
 
-    // XBinary::DATA_HEADER dataHeader = getDataHeader();
-    // XFormats::getDataRecords(dataHeader.dsID.fileType,
+    if (bSaveSelection) {
+        nCurrentRow = ui->tableWidgetMain->currentRow();
+    }
+
+    QList<XBinary::DATA_RECORD> listDataRecords;
+
+    g_nDataSize = XFormats::getDataRecords(getDevice(), getRecordsOptions(), &listDataRecords, nullptr);
+
+    // Example: Populate the tableWidget with the data records
+    qint32 nNumberOfRecords = listDataRecords.count();
+
+    ui->tableWidgetMain->setRowCount(nNumberOfRecords);
+    ui->tableWidgetMain->clearContents();
+
+    for (int i = 0; i < nNumberOfRecords; ++i) {
+        const XBinary::DATA_RECORD &record = listDataRecords.at(i);
+
+        QTableWidgetItem *itemName = new QTableWidgetItem(record.sName);
+
+        ui->tableWidgetMain->setItem(i, 0, itemName);
+    }
+
+    // Optionally resize columns to fit contents
+    ui->tableWidgetMain->resizeColumnsToContents();
+
+    // Further processing can be added here as needed
+
+    ui->tableWidgetMain->setCurrentCell(nCurrentRow, 0);
+}
+
+void XGenericHeaderWidget::on_toolButtonTableReload_clicked()
+{
+    reloadData(true);
+}
+
+void XGenericHeaderWidget::on_toolButtonTableSize_clicked()
+{
+    emit followLocation(getRecordsOptions().dataHeader.nLocation, getRecordsOptions().dataHeader.locType, g_nDataSize, XOptions::WIDGETTYPE_HEX);
+}
+
+void XGenericHeaderWidget::on_toolButtonTableSave_clicked()
+{
+    // saveModel(ui->tableWidgetMain->model(), getTypeTitle(getCwOptions()));
 }
