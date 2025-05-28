@@ -59,9 +59,9 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
         nCurrentRow = ui->tableWidgetMain->currentRow();
     }
 
-    QList<XBinary::DATA_RECORD> listDataRecords;
+    QList<XBinary::DATA_RECORD> listDataRecords = getRecordsOptions().dataHeader.listRecords;
 
-    g_nDataSize = XFormats::getDataRecords(getDevice(), getRecordsOptions(), &listDataRecords, nullptr);
+    g_nDataSize = getRecordsOptions().dataHeader.nSize;
 
     // Example: Populate the tableWidget with the data records
     qint32 nNumberOfRecords = listDataRecords.count();
