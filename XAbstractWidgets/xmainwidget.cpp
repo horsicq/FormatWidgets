@@ -508,6 +508,15 @@ XShortcutsWidget *XMainWidget::createWidget(const QString &sGUID)
 
             _pWidget->setData(g_pDevice, g_pInfoDB, dataRecordsOptions);
             pResult = _pWidget;
+        } else if (dataHeader.dhMode == XBinary::DHMODE_TABLE) {
+            // XGenericTableWidget *_pWidget = new XGenericTableWidget(this);
+
+            // XBinary::DATA_RECORDS_OPTIONS dataRecordsOptions = {};
+            // dataRecordsOptions.pMemoryMap = &g_memoryMap;
+            // dataRecordsOptions.dataHeader = dataHeader;
+
+            // _pWidget->setData(g_pDevice, g_pInfoDB, dataRecordsOptions);
+            // pResult = _pWidget;
         } else {
 #ifdef QT_DEBUG
             qDebug("XMainWidget::createWidget: Unknown ID=%d", dataHeader.dsID.nID);
@@ -608,6 +617,8 @@ XOptions::ICONTYPE XMainWidget::getIconType(XBinary::FT fileType, quint64 nID)
             iconType = XOptions::ICONTYPE_SEARCH;
         } else if (nID == XBinary::STRUCTID_ENTROPY) {
             iconType = XOptions::ICONTYPE_ENTROPY;
+        } else if (nID == XBinary::STRUCTID_UNKNOWN) {
+            
         }
     }
 
