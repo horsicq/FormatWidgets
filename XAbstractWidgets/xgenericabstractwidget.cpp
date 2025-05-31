@@ -20,8 +20,7 @@
  */
 #include "xgenericabstractwidget.h"
 
-XGenericAbstractWidget::XGenericAbstractWidget(QWidget *parent)
-    : XShortcutsWidget(parent)
+XGenericAbstractWidget::XGenericAbstractWidget(QWidget *parent) : XShortcutsWidget(parent)
 {
     g_dataRecordsOptions = {};
     g_pDevice = nullptr;
@@ -81,4 +80,3 @@ void XGenericAbstractWidget::adjustHeaderTableWidget(QTableWidget *pWidget)
     // Set last column to stretch
     pWidget->horizontalHeader()->setStretchLastSection(true);
 }
-

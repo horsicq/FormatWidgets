@@ -27,8 +27,7 @@ namespace Ui {
 class XGenericHeaderWidget;
 }
 
-class XGenericHeaderWidget : public XGenericAbstractWidget
-{
+class XGenericHeaderWidget : public XGenericAbstractWidget {
     Q_OBJECT
 
 public:
@@ -49,4 +48,4 @@ private:
     qint64 g_nDataSize;
 };
 
-#endif // XGENERICHEADERWIDGET_H
+#endif  // XGENERICHEADERWIDGET_H

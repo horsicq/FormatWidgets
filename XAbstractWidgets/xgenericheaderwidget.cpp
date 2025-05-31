@@ -21,9 +21,7 @@
 #include "xgenericheaderwidget.h"
 #include "ui_xgenericheaderwidget.h"
 
-XGenericHeaderWidget::XGenericHeaderWidget(QWidget *parent)
-    : XGenericAbstractWidget(parent)
-    , ui(new Ui::XGenericHeaderWidget)
+XGenericHeaderWidget::XGenericHeaderWidget(QWidget *parent) : XGenericAbstractWidget(parent), ui(new Ui::XGenericHeaderWidget)
 {
     ui->setupUi(this);
 

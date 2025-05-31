@@ -25,8 +25,7 @@
 #include "xformats.h"
 #include "xinfodb.h"
 
-class XGenericAbstractWidget : public XShortcutsWidget
-{
+class XGenericAbstractWidget : public XShortcutsWidget {
     Q_OBJECT
 public:
     explicit XGenericAbstractWidget(QWidget *parent = nullptr);
@@ -47,4 +46,4 @@ private:
     XBinary::DATA_RECORDS_OPTIONS g_dataRecordsOptions;
 };
 
-#endif // XGENERICABSTRACTWIDGET_H
+#endif  // XGENERICABSTRACTWIDGET_H

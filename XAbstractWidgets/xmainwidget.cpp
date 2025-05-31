@@ -124,7 +124,7 @@ void XMainWidget::reload()
     dataHeadersOptions.nID = 0;
     dataHeadersOptions.bChildren = true;
 
-    g_ListDataHeaders = XFormats::getDataHeaders(fileType, g_pDevice, dataHeadersOptions, nullptr); // TODO in Progress Dialog
+    g_ListDataHeaders = XFormats::getDataHeaders(fileType, g_pDevice, dataHeadersOptions, nullptr);  // TODO in Progress Dialog
 
     qint32 nNumberOfHeaders = g_ListDataHeaders.count();
 
@@ -143,7 +143,7 @@ void XMainWidget::reload()
 
         QTreeWidgetItem *pItem = new QTreeWidgetItem;
         pItem->setText(0, dataHeader.sName);
-        pItem->setData(0,Qt::UserRole, dataHeader.dsID.sGUID);
+        pItem->setData(0, Qt::UserRole, dataHeader.dsID.sGUID);
 
         XOptions::ICONTYPE iconType = getIconType(dataHeader.dsID.fileType, dataHeader.dsID.nID);
 
@@ -263,17 +263,17 @@ void XMainWidget::reloadData(bool bSaveSelection)
             connect(pWidget, SIGNAL(dataChanged(qint64, qint64)), this, SLOT(dataChangedSlot(qint64, qint64)));
             connect(pWidget, SIGNAL(followLocation(quint64, qint32, qint64, qint32)), this, SLOT(followLocationSlot(quint64, qint32, qint64, qint32)));
 
-    //         if ((cwOptions.widgetMode == XFW_DEF::WIDGETMODE_HEADER) || (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_TABLE) ||
-    //             (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_TABLE_HEX) || (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_HEX) ||
-    //             (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_DISASM)) {
-    //             XFormatWidget *_pXFormatWidget = dynamic_cast<XFormatWidget *>(pWidget);
+            //         if ((cwOptions.widgetMode == XFW_DEF::WIDGETMODE_HEADER) || (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_TABLE) ||
+            //             (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_TABLE_HEX) || (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_HEX) ||
+            //             (cwOptions.widgetMode == XFW_DEF::WIDGETMODE_DISASM)) {
+            //             XFormatWidget *_pXFormatWidget = dynamic_cast<XFormatWidget *>(pWidget);
 
-    //             _pXFormatWidget->setXInfoDB(cwOptions.pXInfoDB);
+            //             _pXFormatWidget->setXInfoDB(cwOptions.pXInfoDB);
 
-    //             if (_pXFormatWidget) {
-    //                 connect(_pXFormatWidget, SIGNAL(showCwWidget(QString, bool)), this, SLOT(showCwWidgetSlot(QString, bool)));
-    //             }
-    //         }
+            //             if (_pXFormatWidget) {
+            //                 connect(_pXFormatWidget, SIGNAL(showCwWidget(QString, bool)), this, SLOT(showCwWidgetSlot(QString, bool)));
+            //             }
+            //         }
 
             pWidget->reloadData(false);
             pWidget->setProperty("GUID", sGUID);
@@ -618,7 +618,6 @@ XOptions::ICONTYPE XMainWidget::getIconType(XBinary::FT fileType, quint64 nID)
         } else if (nID == XBinary::STRUCTID_ENTROPY) {
             iconType = XOptions::ICONTYPE_ENTROPY;
         } else if (nID == XBinary::STRUCTID_UNKNOWN) {
-            
         }
     }
 
@@ -825,7 +824,8 @@ void XMainWidget::followLocationSlot(quint64 nLocation, qint32 nLocationType, qi
         if (isGlobalHexSyncEnabled()) {
             getGlobalHexView()->setLocation(nLocation, nLocationType, nSize);
         } else {
-            getTreeWidgetNavi()->setCurrentItem(g_mapItems.value(XBinary::_searchDataHeaderById(XBinary::FT_BINARY, XBinary::STRUCTID_HEX, g_ListDataHeaders).dsID.sGUID));
+            getTreeWidgetNavi()->setCurrentItem(
+                g_mapItems.value(XBinary::_searchDataHeaderById(XBinary::FT_BINARY, XBinary::STRUCTID_HEX, g_ListDataHeaders).dsID.sGUID));
             getCurrentWidget()->setLocation(nLocation, nLocationType, nSize);
         }
     } else if (nWidgetType == XOptions::WIDGETTYPE_DISASM) {
@@ -840,4 +840,3 @@ void XMainWidget::followLocationSlot(quint64 nLocation, qint32 nLocationType, qi
 #endif
     }
 }
-
