@@ -54,7 +54,7 @@ void ProcessData::incValue()
 
 bool ProcessData::isRun()
 {
-    return !(g_pPdStruct->bIsStop);
+    return !XBinary::isPdStructStopped(g_pPdStruct);
 }
 
 XBinary::PDSTRUCT *ProcessData::getPdStruct()
