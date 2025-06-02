@@ -509,14 +509,14 @@ XShortcutsWidget *XMainWidget::createWidget(const QString &sGUID)
             _pWidget->setData(g_pDevice, g_pInfoDB, dataRecordsOptions);
             pResult = _pWidget;
         } else if (dataHeader.dhMode == XBinary::DHMODE_TABLE) {
-            // XGenericTableWidget *_pWidget = new XGenericTableWidget(this);
+            XGenericTableWidget *_pWidget = new XGenericTableWidget(this);
 
-            // XBinary::DATA_RECORDS_OPTIONS dataRecordsOptions = {};
-            // dataRecordsOptions.pMemoryMap = &g_memoryMap;
-            // dataRecordsOptions.dataHeader = dataHeader;
+            XBinary::DATA_RECORDS_OPTIONS dataRecordsOptions = {};
+            dataRecordsOptions.pMemoryMap = &g_memoryMap;
+            dataRecordsOptions.dataHeader = dataHeader;
 
-            // _pWidget->setData(g_pDevice, g_pInfoDB, dataRecordsOptions);
-            // pResult = _pWidget;
+            _pWidget->setData(g_pDevice, g_pInfoDB, dataRecordsOptions);
+            pResult = _pWidget;
         } else {
 #ifdef QT_DEBUG
             qDebug("XMainWidget::createWidget: Unknown ID=%d", dataHeader.dsID.nID);

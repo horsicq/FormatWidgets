@@ -7,6 +7,9 @@ set(XABSTRACTWIDGETS_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/xgenericheaderwidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/xgenericheaderwidget.h
     ${CMAKE_CURRENT_LIST_DIR}/xgenericheaderwidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/xgenerictablewidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/xgenerictablewidget.h
+    ${CMAKE_CURRENT_LIST_DIR}/xgenerictablewidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/xmainwidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/xmainwidget.h
     ${CMAKE_CURRENT_LIST_DIR}/xmainwidget.ui

@@ -41,6 +41,7 @@
 #include "xentropywidget.h"
 #include "xhashwidget.h"
 #include "xgenericheaderwidget.h"
+#include "xgenerictablewidget.h"
 
 namespace Ui {
 class XMainWidget;

@@ -27,6 +27,7 @@
 
 class XGenericAbstractWidget : public XShortcutsWidget {
     Q_OBJECT
+
 public:
     explicit XGenericAbstractWidget(QWidget *parent = nullptr);
 
@@ -37,8 +38,6 @@ public:
     const XBinary::DATA_RECORDS_OPTIONS &getRecordsOptions() const;
 
     void adjustHeaderTableWidget(QTableWidget *pWidget);
-
-signals:
 
 private:
     QIODevice *g_pDevice;
