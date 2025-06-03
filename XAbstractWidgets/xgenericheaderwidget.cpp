@@ -34,8 +34,6 @@ XGenericHeaderWidget::XGenericHeaderWidget(QWidget *parent) : XGenericAbstractWi
     ui->toolButtonTableReload->setToolTip(tr("Reload"));
     ui->toolButtonTableSize->setToolTip(tr("Size"));
     ui->toolButtonTableSave->setToolTip(tr("Save"));
-
-    adjustHeaderTableWidget(ui->tableWidgetMain);
 }
 
 XGenericHeaderWidget::~XGenericHeaderWidget()
@@ -57,6 +55,8 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
         nCurrentRow = ui->tableWidgetMain->currentRow();
     }
 
+    adjustHeaderTableWidget(ui->tableWidgetMain);
+
     QList<XBinary::DATA_RECORD> listDataRecords = getRecordsOptions().dataHeader.listRecords;
 
     g_nDataSize = getRecordsOptions().dataHeader.nSize;
@@ -70,9 +70,32 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
     for (int i = 0; i < nNumberOfRecords; ++i) {
         const XBinary::DATA_RECORD &record = listDataRecords.at(i);
 
-        QTableWidgetItem *itemName = new QTableWidgetItem(record.sName);
-
-        ui->tableWidgetMain->setItem(i, 0, itemName);
+        {
+            QTableWidgetItem *itemName = new QTableWidgetItem(record.sName);
+            ui->tableWidgetMain->setItem(i, 0, itemName);
+        }
+        {
+            QTableWidgetItem *itemOffset = new QTableWidgetItem(QString::number(record.nRelOffset, 16));
+            itemOffset->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+            ui->tableWidgetMain->setItem(i, 1, itemOffset);
+        }
+        {
+            QTableWidgetItem *itemSize = new QTableWidgetItem(QString::number(record.nRelOffset, 16));
+            itemSize->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+            ui->tableWidgetMain->setItem(i, 2, itemSize);
+        }
+        {
+            QTableWidgetItem *itemType = new QTableWidgetItem(XBinary::valueTypeToString(record.valType));
+            ui->tableWidgetMain->setItem(i, 3, itemType);
+        }
+        // {
+        //     QTableWidgetItem *itemValue = new QTableWidgetItem(record.sValue);
+        //     ui->tableWidgetMain->setItem(i, 4, itemValue);
+        // }
+        // {
+        //     QTableWidgetItem *itemComment = new QTableWidgetItem(record.sComment);
+        //     ui->tableWidgetMain->setItem(i, 5, itemComment);
+        // }
     }
 
     // Optionally resize columns to fit contents
