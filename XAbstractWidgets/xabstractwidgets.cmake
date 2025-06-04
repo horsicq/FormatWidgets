@@ -12,5 +12,7 @@ set(XABSTRACTWIDGETS_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/xgenerictablewidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/xmainwidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/xmainwidget.h
-    ${CMAKE_CURRENT_LIST_DIR}/xmainwidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/xstructwidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/xstructwidget.h
+    ${CMAKE_CURRENT_LIST_DIR}/xstructwidget.ui
 )

@@ -92,8 +92,8 @@ void SearchStringsWidget::setData(QIODevice *pDevice, XBinary::FT fileType, OPTI
 {
     this->g_pDevice = pDevice;
 
-    XFormats::setFileTypeComboBox(fileType, g_pDevice, ui->comboBoxType);
-    XFormats::getMapModesList(fileType, ui->comboBoxMapMode);
+    XBinary::FT _fileType = XFormats::setFileTypeComboBox(fileType, g_pDevice, ui->comboBoxType);
+    XFormats::getMapModesList(_fileType, ui->comboBoxMapMode);
 
     ui->checkBoxAnsi->setChecked(options.bAnsi);
     // ui->checkBoxUTF8->setChecked(options.bUTF8);

@@ -21,9 +21,6 @@ set(ABSTRACTWIDGETS_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/Structs/xarchives_defs.h
     ${CMAKE_CURRENT_LIST_DIR}/Structs/xformats_defs.cpp
     ${CMAKE_CURRENT_LIST_DIR}/Structs/xformats_defs.h
-    ${CMAKE_CURRENT_LIST_DIR}/dialogxmainwidget.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/dialogxmainwidget.h
-    ${CMAKE_CURRENT_LIST_DIR}/dialogxmainwidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/dialogsetgenericwidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/dialogsetgenericwidget.h
     ${CMAKE_CURRENT_LIST_DIR}/dialogsetgenericwidget.ui

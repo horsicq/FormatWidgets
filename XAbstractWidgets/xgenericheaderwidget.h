@@ -30,6 +30,21 @@ class XGenericHeaderWidget;
 class XGenericHeaderWidget : public XGenericAbstractWidget {
     Q_OBJECT
 
+    enum HEADER_COLUMN {
+        HEADER_COLUMN_NAME = 0,
+        HEADER_COLUMN_OFFSET,
+        HEADER_COLUMN_SIZE,
+        HEADER_COLUMN_TYPE,
+        HEADER_COLUMN_VALUE,
+        HEADER_COLUMN_INFO,
+        HEADER_COLUMN_COMMENT
+    };
+
+    enum UR {
+        UR_RELOFFSET = 0,
+        UR_SIZE
+    };
+
 public:
     explicit XGenericHeaderWidget(QWidget *parent = nullptr);
     ~XGenericHeaderWidget();
@@ -42,6 +57,11 @@ private slots:
     void on_toolButtonTableReload_clicked();
     void on_toolButtonTableSize_clicked();
     void on_toolButtonTableSave_clicked();
+    void on_tableWidgetMain_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
+    void on_tableWidgetMain_cellClicked(int row, int column);
+
+private:
+    void setHeaderSelection();
 
 private:
     Ui::XGenericHeaderWidget *ui;

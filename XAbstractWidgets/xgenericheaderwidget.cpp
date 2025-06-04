@@ -49,13 +49,42 @@ void XGenericHeaderWidget::adjustView()
 
 void XGenericHeaderWidget::reloadData(bool bSaveSelection)
 {
+    QList<QVariant> listVariants;
+
+    XBinary::getDataRecordValues(getDevice(), getRecordsOptions(), &listVariants, nullptr);
+
     qint32 nCurrentRow = 0;
 
     if (bSaveSelection) {
         nCurrentRow = ui->tableWidgetMain->currentRow();
     }
 
-    adjustHeaderTableWidget(ui->tableWidgetMain);
+    QStringList slHeader;
+    slHeader.append(tr("Name"));
+    slHeader.append(tr("Offset"));
+    slHeader.append(tr("Size"));
+    slHeader.append(tr("Type"));
+    slHeader.append(tr("Value"));
+    slHeader.append(tr(""));
+    slHeader.append(tr("Comment"));
+
+    ui->tableWidgetMain->setColumnCount(slHeader.count());
+    ui->tableWidgetMain->setHorizontalHeaderLabels(slHeader);
+    ui->tableWidgetMain->setSortingEnabled(false);
+    ui->tableWidgetMain->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->tableWidgetMain->setSelectionMode(QAbstractItemView::SingleSelection);
+    ui->tableWidgetMain->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    // ui->tableWidgetMain->setShowGrid(true);
+    // ui->tableWidgetMain->setAlternatingRowColors(true);
+    ui->tableWidgetMain->setContextMenuPolicy(Qt::CustomContextMenu);
+    ui->tableWidgetMain->verticalHeader()->setVisible(false);
+    ui->tableWidgetMain->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    ui->tableWidgetMain->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    ui->tableWidgetMain->setWordWrap(false);
+    ui->tableWidgetMain->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
+    ui->tableWidgetMain->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    // Set last column to stretch
+    ui->tableWidgetMain->horizontalHeader()->setStretchLastSection(true);
 
     QList<XBinary::DATA_RECORD> listDataRecords = getRecordsOptions().dataHeader.listRecords;
 
@@ -72,36 +101,37 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
 
         {
             QTableWidgetItem *itemName = new QTableWidgetItem(record.sName);
-            ui->tableWidgetMain->setItem(i, 0, itemName);
+            itemName->setData(Qt::UserRole + UR_RELOFFSET, record.nRelOffset); // TODO
+            itemName->setData(Qt::UserRole + UR_SIZE, record.nSize);
+            ui->tableWidgetMain->setItem(i, HEADER_COLUMN_NAME, itemName);
         }
         {
             QTableWidgetItem *itemOffset = new QTableWidgetItem(QString::number(record.nRelOffset, 16));
             itemOffset->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
-            ui->tableWidgetMain->setItem(i, 1, itemOffset);
+            ui->tableWidgetMain->setItem(i, HEADER_COLUMN_OFFSET, itemOffset);
         }
         {
-            QTableWidgetItem *itemSize = new QTableWidgetItem(QString::number(record.nRelOffset, 16));
+            QTableWidgetItem *itemSize = new QTableWidgetItem(QString::number(record.nSize, 16));
             itemSize->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
-            ui->tableWidgetMain->setItem(i, 2, itemSize);
+            ui->tableWidgetMain->setItem(i, HEADER_COLUMN_SIZE, itemSize);
         }
         {
             QTableWidgetItem *itemType = new QTableWidgetItem(XBinary::valueTypeToString(record.valType));
-            ui->tableWidgetMain->setItem(i, 3, itemType);
+            ui->tableWidgetMain->setItem(i, HEADER_COLUMN_TYPE, itemType);
         }
-        // {
-        //     QTableWidgetItem *itemValue = new QTableWidgetItem(record.sValue);
-        //     ui->tableWidgetMain->setItem(i, 4, itemValue);
-        // }
-        // {
-        //     QTableWidgetItem *itemComment = new QTableWidgetItem(record.sComment);
-        //     ui->tableWidgetMain->setItem(i, 5, itemComment);
-        // }
+        {
+            QTableWidgetItem *itemValue = new QTableWidgetItem(listVariants.at(i).toString());
+            ui->tableWidgetMain->setItem(i, HEADER_COLUMN_VALUE, itemValue);
+        }
+        {
+            QTableWidgetItem *itemComment = new QTableWidgetItem("");
+            ui->tableWidgetMain->setItem(i, HEADER_COLUMN_COMMENT, itemComment);
+        }
     }
 
     // Optionally resize columns to fit contents
-    ui->tableWidgetMain->resizeColumnsToContents();
+    ui->tableWidgetMain->resizeColumnsToContents(); // TODO only init
 
-    // Further processing can be added here as needed
 
     ui->tableWidgetMain->setCurrentCell(nCurrentRow, 0);
 }
@@ -120,3 +150,37 @@ void XGenericHeaderWidget::on_toolButtonTableSave_clicked()
 {
     // saveModel(ui->tableWidgetMain->model(), getTypeTitle(getCwOptions()));
 }
+
+void XGenericHeaderWidget::on_tableWidgetMain_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
+{
+    Q_UNUSED(previousRow);
+    Q_UNUSED(previousColumn);
+    Q_UNUSED(currentColumn);
+    Q_UNUSED(currentRow);
+
+    setHeaderSelection();
+}
+
+void XGenericHeaderWidget::on_tableWidgetMain_cellClicked(int row, int column)
+{
+    Q_UNUSED(column);
+    Q_UNUSED(row);
+
+    setHeaderSelection();
+}
+
+void XGenericHeaderWidget::setHeaderSelection()
+{
+    qint32 nCurrentRow = ui->tableWidgetMain->currentRow();
+
+    if (nCurrentRow >= 0) {
+        QTableWidgetItem *pItem = ui->tableWidgetMain->item(nCurrentRow, HEADER_COLUMN_NAME);
+        if (pItem) {
+            qint64 nRelOffset = pItem->data(Qt::UserRole + UR_RELOFFSET).toLongLong();
+            qint64 nSize = pItem->data(Qt::UserRole + UR_SIZE).toLongLong();
+
+            emit currentLocationChanged(getRecordsOptions().dataHeader.nLocation + nRelOffset, getRecordsOptions().dataHeader.locType, nSize);
+        }
+    }
+}
+

@@ -21,13 +21,8 @@
 #ifndef XMAINWIDGET_H
 #define XMAINWIDGET_H
 
-#include <QTreeWidget>
+#include "xstructwidget.h"
 
-#include "dialogdemangle.h"
-#include "dialogwidget.h"
-#include "xoptions.h"
-#include "xshortcutsdialog.h"
-#include "xtableview.h"
 #include "xfileinfowidget.h"
 #include "xhexviewwidget.h"
 #include "nfdwidgetadvanced.h"
@@ -40,72 +35,15 @@
 #include "xregionswidget.h"
 #include "xentropywidget.h"
 #include "xhashwidget.h"
-#include "xgenericheaderwidget.h"
-#include "xgenerictablewidget.h"
 
-namespace Ui {
-class XMainWidget;
-}
-
-class XMainWidget : public XShortcutsWidget {
+class XMainWidget : public XStructWidget {
     Q_OBJECT
 
 public:
-    struct OPTIONS {
-        bool bIsImage;
-        XADDR nImageBase;
-        bool bGlobalHexEnable;
-        XBinary::FT fileType;
-    };
-
     explicit XMainWidget(QWidget *pParent = nullptr);
     ~XMainWidget();
 
-    void setData(QIODevice *pDevice, XInfoDB *pInfoDB = nullptr, const OPTIONS &options = OPTIONS());
-
-    void setGlobalHexEnable(bool bState);
-
-    virtual void clear();
-    virtual void cleanup();
-    virtual void reload();
-
-    virtual void setReadonly(bool bState);
-    virtual void adjustView();
-    virtual void reloadData(bool bSaveSelection);
-    virtual void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
-
-    XShortcutsWidget *createWidget(const QString &sGUID);
-    QTreeWidget *getTreeWidgetNavi();
-    XShortcutsWidget *getCurrentWidget();
-    XHexView *getGlobalHexView();
-    bool isGlobalHexSyncEnabled();
-    XOptions::ICONTYPE getIconType(XBinary::FT fileType, quint64 nID);
-
-private slots:
-    void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurrent, QTreeWidgetItem *pItemPrevious);
-    void on_toolButtonReload_clicked();
-    void enableButton();
-    void on_toolButtonPrev_clicked();
-    void on_toolButtonNext_clicked();
-    void on_toolButtonGlobalHex_toggled(bool bChecked);
-    void on_checkBoxReadonly_stateChanged(int nArg);
-    void dataChangedSlot(qint64 nOffset, qint64 nSize);
-    void currentLocationChangedSlot(quint64 nLocation, qint32 nLocationType, qint64 nSize);
-    void showCwWidgetSlot(const QString &sInitString, bool bNewWindow);
-    void on_comboBoxType_currentIndexChanged(int nIndex);
-    void showDemangleSlot(const QString &sString);
-    void findValue(quint64 nValue, XBinary::ENDIAN endian);
-    void followLocationSlot(quint64 nLocation, qint32 nLocationType, qint64 nSize, qint32 nWidgetType);
-
-private:
-    Ui::XMainWidget *ui;
-    QIODevice *g_pDevice;
-    XInfoDB *g_pInfoDB;
-    OPTIONS g_options;
-    XBinary::_MEMORY_MAP g_memoryMap;
-    QList<XBinary::DATA_HEADER> g_ListDataHeaders;
-    QSet<QString> g_stWidgets;
-    QMap<QString, QTreeWidgetItem *> g_mapItems;
+    virtual XShortcutsWidget *createWidget(const QString &sGUID);
 };
 
 #endif  // XMAINWIDGET_H
