@@ -63,7 +63,7 @@ void XStructWidget::setData(QIODevice *pDevice, XInfoDB *pInfoDB, const OPTIONS 
 
     setGlobalHexEnable(g_options.bGlobalHexEnable);
 
-    XFormats::setFileTypeComboBox(options.fileType, pDevice, ui->comboBoxType);
+    g_options.fileType = XFormats::setFileTypeComboBox(options.fileType, pDevice, ui->comboBoxType);
 
     reload();
 }
@@ -139,7 +139,7 @@ void XStructWidget::reload()
     dataHeadersOptions.nID = 0;
     dataHeadersOptions.bChildren = true;
 
-    g_ListDataHeaders = XFormats::getDataHeaders(fileType, g_pDevice, dataHeadersOptions, nullptr);  // TODO in Progress Dialog
+    g_ListDataHeaders = XFormats::getDataHeaders(fileType, g_pDevice, dataHeadersOptions);  // TODO in Progress Dialog
 
     qint32 nNumberOfHeaders = g_ListDataHeaders.count();
 
