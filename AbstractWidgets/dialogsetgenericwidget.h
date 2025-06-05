@@ -22,7 +22,7 @@
 #define DIALOGSETGENERICWIDGET_H
 
 #include "xshortcutsdialog.h"
-#include "dialogxmainwidget.h"
+//#include "dialogxmainwidget.h"
 
 namespace Ui {
 class DialogSetGenericWidget;

@@ -29,7 +29,7 @@ DialogSetGenericWidget::DialogSetGenericWidget(QWidget *pParent) : XShortcutsDia
     g_nOffset = 0;
     g_nSize = 0;
 
-    XFormatWidget::adjustWidgetModeComboBox(ui->comboBoxMode);
+    // XFormatWidget::adjustWidgetModeComboBox(ui->comboBoxMode);
 }
 
 DialogSetGenericWidget::~DialogSetGenericWidget()

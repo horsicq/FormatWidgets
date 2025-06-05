@@ -12,7 +12,6 @@ HEADERS += \
     $$PWD/Structs/xpe_defs.h \
     $$PWD/Structs/xarchives_defs.h \
     $$PWD/Structs/xformats_defs.h \
-    $$PWD/dialogxmainwidget.h \
     $$PWD/dialogsetgenericwidget.h \
     $$PWD/xdialogprocessdata.h \
     $$PWD/xformatwidget.h \
@@ -22,8 +21,6 @@ HEADERS += \
     $$PWD/xgenericdisasmwidget.h \
     $$PWD/xgenerictablehexwidget.h \
     $$PWD/xgenerictablewidget.h \
-    $$PWD/xmainwidget.h \
-    $$PWD/xmainwidgetadvanced.h \
     $$PWD/xprocessdata.h
 
 SOURCES += \
@@ -37,7 +34,6 @@ SOURCES += \
     $$PWD/Structs/xpe_defs.cpp \
     $$PWD/Structs/xarchives_defs.cpp \
     $$PWD/Structs/xformats_defs.cpp \
-    $$PWD/dialogxmainwidget.cpp \
     $$PWD/dialogsetgenericwidget.cpp \
     $$PWD/xdialogprocessdata.cpp \
     $$PWD/xformatwidget.cpp \
@@ -46,8 +42,6 @@ SOURCES += \
     $$PWD/xgenericdisasmwidget.cpp \
     $$PWD/xgenerictablehexwidget.cpp \
     $$PWD/xgenerictablewidget.cpp \
-    $$PWD/xmainwidget.cpp \
-    $$PWD/xmainwidgetadvanced.cpp \
     $$PWD/xprocessdata.cpp
     
 FORMS += \
