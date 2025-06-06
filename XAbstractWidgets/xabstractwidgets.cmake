@@ -1,18 +1,12 @@
 include_directories(${CMAKE_CURRENT_LIST_DIR})
 
+if (NOT DEFINED XSTRUCTWIDGET_SOURCES)
+    include(${CMAKE_CURRENT_LIST_DIR}/xstructwidget.cmake)
+    set(XABSTRACTWIDGETS_SOURCES ${XABSTRACTWIDGETS_SOURCES} ${XSTRUCTWIDGET_SOURCES})
+endif()
+
 set(XABSTRACTWIDGETS_SOURCES
     ${XABSTRACTWIDGETS_SOURCES}
-    ${CMAKE_CURRENT_LIST_DIR}/xgenericabstractwidget.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/xgenericabstractwidget.h
-    ${CMAKE_CURRENT_LIST_DIR}/xgenericheaderwidget.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/xgenericheaderwidget.h
-    ${CMAKE_CURRENT_LIST_DIR}/xgenericheaderwidget.ui
-    ${CMAKE_CURRENT_LIST_DIR}/xgenerictablewidget.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/xgenerictablewidget.h
-    ${CMAKE_CURRENT_LIST_DIR}/xgenerictablewidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/xmainwidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/xmainwidget.h
-    ${CMAKE_CURRENT_LIST_DIR}/xstructwidget.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/xstructwidget.h
-    ${CMAKE_CURRENT_LIST_DIR}/xstructwidget.ui
 )
