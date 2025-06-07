@@ -47,7 +47,6 @@ void XGenericTableWidget::adjustView()
 
 void XGenericTableWidget::reloadData(bool bSaveSelection)
 {
-
 }
 
 void XGenericTableWidget::on_toolButtonTableReload_clicked()

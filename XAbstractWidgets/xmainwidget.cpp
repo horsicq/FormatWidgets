@@ -23,12 +23,10 @@
 
 XMainWidget::XMainWidget(QWidget *pParent) : XStructWidget(pParent)
 {
-
 }
 
 XMainWidget::~XMainWidget()
 {
-
 }
 
 XShortcutsWidget *XMainWidget::createWidget(const QString &sGUID)

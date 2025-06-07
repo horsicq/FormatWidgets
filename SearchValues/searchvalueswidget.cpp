@@ -147,7 +147,7 @@ void SearchValuesWidget::on_tableViewResult_customContextMenuRequested(const QPo
 
 void SearchValuesWidget::search()
 {
-    ui->labelSearchValue->setText(QString("%1: %2").arg(XBinary::valueTypeToString(g_valueType), XBinary::getValueString(g_varValue, g_valueType)));
+    ui->labelSearchValue->setText(QString("%1: %2").arg(XBinary::valueTypeToString(g_valueType, 0), XBinary::getValueString(g_varValue, g_valueType)));
 
     if (g_pDevice && (g_valueType != XBinary::VT_UNKNOWN)) {
         // ui->tableViewResult->setModel(nullptr);

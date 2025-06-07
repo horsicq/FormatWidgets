@@ -101,7 +101,7 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
 
         {
             QTableWidgetItem *itemName = new QTableWidgetItem(record.sName);
-            itemName->setData(Qt::UserRole + UR_RELOFFSET, record.nRelOffset); // TODO
+            itemName->setData(Qt::UserRole + UR_RELOFFSET, record.nRelOffset);  // TODO
             itemName->setData(Qt::UserRole + UR_SIZE, record.nSize);
             ui->tableWidgetMain->setItem(i, HEADER_COLUMN_NAME, itemName);
         }
@@ -116,7 +116,7 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
             ui->tableWidgetMain->setItem(i, HEADER_COLUMN_SIZE, itemSize);
         }
         {
-            QTableWidgetItem *itemType = new QTableWidgetItem(XBinary::valueTypeToString(record.valType));
+            QTableWidgetItem *itemType = new QTableWidgetItem(XBinary::valueTypeToString(record.valType, record.nSize));
             ui->tableWidgetMain->setItem(i, HEADER_COLUMN_TYPE, itemType);
         }
         {
@@ -130,8 +130,7 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
     }
 
     // Optionally resize columns to fit contents
-    ui->tableWidgetMain->resizeColumnsToContents(); // TODO only init
-
+    ui->tableWidgetMain->resizeColumnsToContents();  // TODO only init
 
     ui->tableWidgetMain->setCurrentCell(nCurrentRow, 0);
 }
@@ -183,4 +182,3 @@ void XGenericHeaderWidget::setHeaderSelection()
         }
     }
 }
-

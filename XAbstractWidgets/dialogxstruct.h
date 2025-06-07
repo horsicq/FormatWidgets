@@ -27,8 +27,7 @@ namespace Ui {
 class DialogXStruct;
 }
 
-class DialogXStruct : public QDialog
-{
+class DialogXStruct : public QDialog {
     Q_OBJECT
 
 public:
@@ -42,4 +41,4 @@ private:
     Ui::DialogXStruct *ui;
 };
 
-#endif // DIALOGXSTRUCT_H
+#endif  // DIALOGXSTRUCT_H

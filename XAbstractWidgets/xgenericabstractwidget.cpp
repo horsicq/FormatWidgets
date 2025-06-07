@@ -50,4 +50,3 @@ const XBinary::DATA_RECORDS_OPTIONS &XGenericAbstractWidget::getRecordsOptions()
 {
     return g_dataRecordsOptions;
 }
-

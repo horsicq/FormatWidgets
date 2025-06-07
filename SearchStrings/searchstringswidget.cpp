@@ -272,7 +272,7 @@ void SearchStringsWidget::_editString()
                         ui->tableViewResult->model()->setData(indexNumber, dataStruct.valueType, Qt::UserRole + XModel_MSRecord::USERROLE_TYPE);
 
                         ui->tableViewResult->model()->setData(indexSize, XBinary::valueToHexEx(dataStruct.sString.size()), Qt::DisplayRole);
-                        ui->tableViewResult->model()->setData(indexType, XBinary::valueTypeToString(dataStruct.valueType), Qt::DisplayRole);
+                        ui->tableViewResult->model()->setData(indexType, XBinary::valueTypeToString(dataStruct.valueType, 0), Qt::DisplayRole);
                         ui->tableViewResult->model()->setData(indexValue, dataStruct.sString, Qt::DisplayRole);
 
                         bSuccess = true;
