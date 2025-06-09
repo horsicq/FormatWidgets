@@ -59,7 +59,17 @@ void ToolsWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS options, bool bDis
     //    ui->widgetHex->enableReadOnly(false);
 
     ui->widgetHex->setXInfoDB(pXInfoDB);
-    ui->widgetHex->setData(pDevice, hexOptions, true);
+
+    // Convert pDevice to SubDevice if necessary
+    SubDevice *_pSubDevice = dynamic_cast<SubDevice *>(pDevice);
+
+    if (_pSubDevice) {
+        hexOptions.nStartOffset = _pSubDevice->getInitLocation();
+        hexOptions.nTotalSize = _pSubDevice->size();
+        ui->widgetHex->setData(_pSubDevice->getOrigDevice(), hexOptions, true);
+    } else {
+        ui->widgetHex->setData(pDevice, hexOptions, true);
+    }
 
     g_stringsOptions = {};
     g_stringsOptions.nBaseAddress = options.nImageBase;
