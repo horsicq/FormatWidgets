@@ -96,6 +96,8 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
     ui->tableWidgetMain->setRowCount(nNumberOfRecords);
     ui->tableWidgetMain->clearContents();
 
+    g_listLineEditsHEX.clear();
+
     for (int i = 0; i < nNumberOfRecords; ++i) {
         const XBinary::DATA_RECORD &record = listDataRecords.at(i);
 
@@ -126,6 +128,28 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
         {
             QTableWidgetItem *itemComment = new QTableWidgetItem("");
             ui->tableWidgetMain->setItem(i, HEADER_COLUMN_COMMENT, itemComment);
+        }
+
+        if (XBinary::isIntegerType(record.valType)) {
+            XLineEditHEX *pLineEdit = new XLineEditHEX(this);
+
+            XLineEditValidator::MODE mode = XLineEditValidator::MODE_HEX_32;
+
+            if (record.nSize == 1) {
+                mode = XLineEditValidator::MODE_HEX_8;
+            } else if (record.nSize == 2) {
+                mode = XLineEditValidator::MODE_HEX_16;
+            } else if (record.nSize == 4) {
+                mode = XLineEditValidator::MODE_HEX_32;
+            } else if (record.nSize == 8) {
+                mode = XLineEditValidator::MODE_HEX_64;
+            }
+
+            pLineEdit->setValidatorModeValue(mode, listVariants.at(i));
+
+            ui->tableWidgetMain->setCellWidget(i, HEADER_COLUMN_VALUE, pLineEdit);
+
+            g_listLineEditsHEX.append(pLineEdit);
         }
     }
 

@@ -24,6 +24,7 @@
 #include "xshortcutswidget.h"
 #include "xformats.h"
 #include "xinfodb.h"
+#include "xlineedithex.h"
 
 class XGenericAbstractWidget : public XShortcutsWidget {
     Q_OBJECT

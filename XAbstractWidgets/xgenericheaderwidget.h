@@ -66,6 +66,7 @@ private:
 private:
     Ui::XGenericHeaderWidget *ui;
     qint64 g_nDataSize;
+    QList<XLineEditHEX *> g_listLineEditsHEX;
 };
 
 #endif  // XGENERICHEADERWIDGET_H
