@@ -183,20 +183,20 @@ void SearchValuesWidget::search()
 
 void SearchValuesWidget::on_toolButtonSearchString_clicked()
 {
-    _search(DialogSearch::SEARCHMODE_STRING);
+    _search(XBinary::SEARCHMODE_STRING);
 }
 
 void SearchValuesWidget::on_toolButtonSearchSignature_clicked()
 {
-    _search(DialogSearch::SEARCHMODE_SIGNATURE);
+    _search(XBinary::SEARCHMODE_SIGNATURE);
 }
 
 void SearchValuesWidget::on_toolButtonSearchValue_clicked()
 {
-    _search(DialogSearch::SEARCHMODE_VALUE);
+    _search(XBinary::SEARCHMODE_VALUE);
 }
 
-void SearchValuesWidget::_search(DialogSearch::SEARCHMODE mode)
+void SearchValuesWidget::_search(XBinary::SEARCHMODE mode)
 {
     if (g_pDevice) {
         DialogSearch::OPTIONS options = {};

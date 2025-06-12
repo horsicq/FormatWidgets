@@ -79,7 +79,7 @@ private slots:
     void on_comboBoxType_currentIndexChanged(int nIndex);
 
 private:
-    void _search(DialogSearch::SEARCHMODE mode);
+    void _search(XBinary::SEARCHMODE mode);
 
 private:
     Ui::SearchValuesWidget *ui;

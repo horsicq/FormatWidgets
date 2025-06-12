@@ -98,6 +98,8 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
 
     g_listLineEditsHEX.clear();
 
+    bool bIsReadonly = isReadonly();
+
     for (int i = 0; i < nNumberOfRecords; ++i) {
         const XBinary::DATA_RECORD &record = listDataRecords.at(i);
 
@@ -146,6 +148,7 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
             }
 
             pLineEdit->setValidatorModeValue(mode, listVariants.at(i));
+            pLineEdit->setReadOnly(bIsReadonly);
 
             ui->tableWidgetMain->setCellWidget(i, HEADER_COLUMN_VALUE, pLineEdit);
 
@@ -157,6 +160,18 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
     ui->tableWidgetMain->resizeColumnsToContents();  // TODO only init
 
     ui->tableWidgetMain->setCurrentCell(nCurrentRow, 0);
+}
+
+void XGenericHeaderWidget::setReadonly(bool bState)
+{
+    qint32 nNumberOfLineedis = g_listLineEditsHEX.count();
+
+    for (qint32 i = 0; i < nNumberOfLineedis; i++) {
+        XLineEditHEX *pLineEdit = g_listLineEditsHEX.at(i);
+        pLineEdit->setReadOnly(bState);
+    }
+
+    XShortcutsObject::setReadonly(bState);
 }
 
 void XGenericHeaderWidget::on_toolButtonTableReload_clicked()
