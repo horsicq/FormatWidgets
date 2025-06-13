@@ -20,7 +20,7 @@
  */
 #include "multisearch.h"
 
-MultiSearch::MultiSearch(QObject *pParent) : QObject(pParent)
+MultiSearch::MultiSearch(QObject *pParent) : XThreadObject(pParent)
 {
     g_options = {};
     g_ppModel = nullptr;
@@ -125,7 +125,7 @@ void MultiSearch::processSignature(XBinary::SIGNATUREDB_RECORD signatureRecord)
     // #endif
 }
 
-void MultiSearch::processSearch()
+void MultiSearch::process()
 {
     QElapsedTimer scanTimer;
     scanTimer.start();

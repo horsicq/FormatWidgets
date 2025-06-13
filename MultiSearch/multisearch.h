@@ -32,8 +32,9 @@
 #include "xformats.h"
 #include "xoptions.h"
 // #include "xinfodb.h"
+#include "xthreadobject.h"
 
-class MultiSearch : public QObject {
+class MultiSearch : public XThreadObject {
     Q_OBJECT
 
 public:
@@ -72,13 +73,7 @@ public:
 
     static QList<XBinary::SIGNATUREDB_RECORD> loadSignaturesFromFile(const QString &sFileName);
     void processSignature(XBinary::SIGNATUREDB_RECORD signatureRecord);
-
-signals:
-    void errorMessage(const QString &sText);
-    void completed(qint64 nElapsed);
-
-public slots:
-    void processSearch();
+    void process();
 
 private:
     QIODevice *g_pDevice;
