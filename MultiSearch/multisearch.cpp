@@ -226,3 +226,18 @@ void MultiSearch::process()
 
     emit completed(scanTimer.elapsed());
 }
+
+QString MultiSearch::getTitle()
+{
+    QString sResult;
+
+    if (g_type == MultiSearch::TYPE_STRINGS) {
+        sResult = tr("Search strings");
+    } else if (g_type == MultiSearch::TYPE_SIGNATURES) {
+        sResult = tr("Search signatures");
+    } else if (g_type == MultiSearch::TYPE_VALUES) {
+        sResult = tr("Search values");
+    }
+
+    return sResult;
+}

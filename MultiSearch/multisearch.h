@@ -73,7 +73,8 @@ public:
 
     static QList<XBinary::SIGNATUREDB_RECORD> loadSignaturesFromFile(const QString &sFileName);
     void processSignature(XBinary::SIGNATUREDB_RECORD signatureRecord);
-    void process();
+    virtual void process();
+    virtual QString getTitle();
 
 private:
     QIODevice *g_pDevice;
