@@ -106,9 +106,11 @@ void PEToolsWidget::dumpRegion(QWidget *pParent, QIODevice *pDevice, qint64 nOff
     QString sFileName = QFileDialog::getSaveFileName(pParent, tr("Save dump"), sSaveFileName, QString("%1 (*.bin)").arg(tr("Raw data")));
 
     if (!sFileName.isEmpty()) {
-        DialogDumpProcess dd(pParent);
-        dd.setData(pDevice, nOffset, nSize, sFileName, DumpProcess::DT_DUMP_DEVICE_OFFSET);
-
+        DumpProcess dumpProcess;
+        XDialogProcess dd(pParent, &dumpProcess);
+        // dd.setGlobal(getShortcuts(), getGlobalOptions());
+        dumpProcess.setData(pDevice, nOffset, nSize, sFileName, DumpProcess::DT_DUMP_DEVICE_OFFSET, dd.getPdStruct());
+        dd.start();
         dd.showDialogDelay();
     }
 }

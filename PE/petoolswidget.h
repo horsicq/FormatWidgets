@@ -21,9 +21,10 @@
 #ifndef PETOOLSWIDGET_H
 #define PETOOLSWIDGET_H
 
-#include "dialogdumpprocess.h"
 #include "xpe.h"
 #include "xshortcutswidget.h"
+#include "xdialogprocess.h"
+#include "dumpprocess.h"
 
 namespace Ui {
 class PEToolsWidget;
