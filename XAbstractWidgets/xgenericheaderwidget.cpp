@@ -97,6 +97,7 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
     ui->tableWidgetMain->clearContents();
 
     g_listLineEditsHEX.clear();
+    g_listComboBoxes.clear();
 
     bool bIsReadonly = isReadonly();
 
@@ -153,6 +154,35 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
             ui->tableWidgetMain->setCellWidget(i, HEADER_COLUMN_VALUE, pLineEdit);
 
             g_listLineEditsHEX.append(pLineEdit);
+        }
+
+        qint32 nNumberOfComboBoxes = record.listDataValueSets.count();
+
+        if (nNumberOfComboBoxes) {
+            QWidget *pWidget = new QWidget(ui->tableWidgetMain);
+            QLayout *pLayout = new QHBoxLayout(pWidget);
+            pLayout->setContentsMargins(0, 0, 0, 0);
+            pLayout->setSpacing(0);
+            pWidget->setLayout(pLayout);
+
+            for (qint32 j = 0; j < nNumberOfComboBoxes; j++) {
+                XComboBoxEx *pComboBox = new XComboBoxEx(this);
+
+                if (record.listDataValueSets.at(j).bFlags) {
+                    pComboBox->setData(record.listDataValueSets.at(j).mapValues, XComboBoxEx::CBTYPE_FLAGS, record.listDataValueSets.at(j).nMask);
+                } else {
+                    pComboBox->setData(record.listDataValueSets.at(j).mapValues, XComboBoxEx::CBTYPE_LIST, record.listDataValueSets.at(j).nMask);
+                }
+
+                pComboBox->setValue(listVariants.at(i));
+                pComboBox->setReadOnly(bIsReadonly);
+
+                g_listComboBoxes.append(pComboBox);
+
+                pLayout->addWidget(pComboBox);
+            }
+
+            ui->tableWidgetMain->setCellWidget(i, HEADER_COLUMN_INFO, pWidget);
         }
     }
 
