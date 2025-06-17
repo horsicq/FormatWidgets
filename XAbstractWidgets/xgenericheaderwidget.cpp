@@ -101,7 +101,7 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
 
     bool bIsReadonly = isReadonly();
 
-    for (int i = 0; i < nNumberOfRecords; ++i) {
+    for (qint32 i = 0; i < nNumberOfRecords; ++i) {
         const XBinary::DATA_RECORD &record = listDataRecords.at(i);
 
         {
