@@ -4,11 +4,9 @@ INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
 
 HEADERS += \
-    $$PWD/dialogmultisearchprocess.h \
     $$PWD/multisearch.h
 
 SOURCES += \
-    $$PWD/dialogmultisearchprocess.cpp \
     $$PWD/multisearch.cpp
 
 !contains(XCONFIG, xoptions) {

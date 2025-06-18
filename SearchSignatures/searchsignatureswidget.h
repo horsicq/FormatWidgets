@@ -30,7 +30,8 @@
 #include <QSortFilterProxyModel>
 #include <QStandardItemModel>
 
-#include "dialogmultisearchprocess.h"
+#include "multisearch.h"
+#include "xdialogprocess.h"
 #include "xformats.h"
 #include "xshortcutswidget.h"
 #include "xmodel_msrecord.h"

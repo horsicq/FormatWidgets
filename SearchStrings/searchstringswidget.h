@@ -30,7 +30,8 @@
 #include <QStandardItemModel>
 
 #include "dialogeditstring.h"
-#include "dialogmultisearchprocess.h"
+#include "multisearch.h"
+#include "xdialogprocess.h"
 #include "xshortcutswidget.h"
 #include "xmodel_msrecord.h"
 

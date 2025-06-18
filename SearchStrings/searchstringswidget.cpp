@@ -328,9 +328,11 @@ void SearchStringsWidget::search()
 
             ui->tableViewResult->clear();
 
-            DialogMultiSearchProcess dsp(pParent);
+            MultiSearch multiSearch;
+            XDialogProcess dsp(pParent, &multiSearch);
             dsp.setGlobal(getShortcuts(), getGlobalOptions());
-            dsp.processSearch(g_pDevice, &g_listRecords, options, MultiSearch::TYPE_STRINGS);
+            multiSearch.setSearchData(g_pDevice, &g_listRecords, options, MultiSearch::TYPE_STRINGS, dsp.getPdStruct());
+            dsp.start();
             dsp.showDialogDelay();
 
             // DialogMultiSearchProcess dmp(pParent);
