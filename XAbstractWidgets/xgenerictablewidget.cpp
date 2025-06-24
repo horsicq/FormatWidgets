@@ -47,6 +47,17 @@ void XGenericTableWidget::adjustView()
 
 void XGenericTableWidget::reloadData(bool bSaveSelection)
 {
+    XBinary::DATA_RECORDS_OPTIONS dataRecordsOptions = getRecordsOptions();
+
+    qint32 nCurrentRow = 0;
+
+    if (bSaveSelection) {
+        nCurrentRow = ui->tableViewMain->currentIndex().row();;
+    }
+
+    // TODO
+
+    // ui->tableViewMain->setCurrentIndex(ui->tableViewMain->model()->index(nCurrentRow, 0));
 }
 
 void XGenericTableWidget::on_toolButtonTableReload_clicked()
