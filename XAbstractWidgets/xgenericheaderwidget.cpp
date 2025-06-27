@@ -51,7 +51,7 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
 {
     QList<QVariant> listVariants;
 
-    XBinary::getDataRecordValues(getDevice(), getRecordsOptions(), &listVariants, nullptr); // TODO DialogProcess
+    XBinary::getDataRecordValues(getDevice(), getRecordsOptions(), &listVariants, nullptr);  // TODO DialogProcess
 
     qint32 nCurrentRow = 0;
 

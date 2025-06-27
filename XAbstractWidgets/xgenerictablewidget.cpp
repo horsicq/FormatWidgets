@@ -52,7 +52,8 @@ void XGenericTableWidget::reloadData(bool bSaveSelection)
     qint32 nCurrentRow = 0;
 
     if (bSaveSelection) {
-        nCurrentRow = ui->tableViewMain->currentIndex().row();;
+        nCurrentRow = ui->tableViewMain->currentIndex().row();
+        ;
     }
 
     // TODO
