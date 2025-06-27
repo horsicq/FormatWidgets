@@ -169,6 +169,7 @@ void SearchValuesWidget::search()
         XDialogProcess dsp(pParent, &multiSearch);
         dsp.setGlobal(getShortcuts(), getGlobalOptions());
         multiSearch.setSearchData(g_pDevice, &g_listRecords, options, MultiSearch::TYPE_VALUES, dsp.getPdStruct());
+        dsp.start();
         dsp.showDialogDelay();
 
         XModel_MSRecord *pModel = new XModel_MSRecord(g_pDevice, options.memoryMap, &g_listRecords, XBinary::VT_VALUE, this);
