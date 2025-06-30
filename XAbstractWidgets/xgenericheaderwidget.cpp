@@ -53,6 +53,13 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
 
     XBinary::getDataRecordValues(getDevice(), getRecordsOptions(), &listVariants, nullptr);  // TODO DialogProcess
 
+    XGetDataRecordsProcess getDataRecordsProcess;
+    XDialogProcess dd(this, &getDataRecordsProcess);
+    dd.setGlobal(getShortcuts(), getGlobalOptions());
+    getDataRecordsProcess.setData(getDevice(), getRecordsOptions(), &listVariants, dd.getPdStruct());
+    dd.start();
+    dd.showDialogDelay();
+
     qint32 nCurrentRow = 0;
 
     if (bSaveSelection) {

@@ -53,7 +53,6 @@ void XGenericTableWidget::reloadData(bool bSaveSelection)
 
     if (bSaveSelection) {
         nCurrentRow = ui->tableViewMain->currentIndex().row();
-        ;
     }
 
     // TODO

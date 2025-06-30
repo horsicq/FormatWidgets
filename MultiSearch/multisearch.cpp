@@ -127,9 +127,6 @@ void MultiSearch::processSignature(XBinary::SIGNATUREDB_RECORD signatureRecord)
 
 void MultiSearch::process()
 {
-    QElapsedTimer scanTimer;
-    scanTimer.start();
-
     g_nFreeIndex = XBinary::getFreeIndex(g_pPdStruct);
     XBinary::setPdStructInit(g_pPdStruct, g_nFreeIndex, 0);
 
@@ -223,8 +220,6 @@ void MultiSearch::process()
     }
 
     XBinary::setPdStructFinished(g_pPdStruct, g_nFreeIndex);
-
-    emit completed(scanTimer.elapsed());
 }
 
 QString MultiSearch::getTitle()

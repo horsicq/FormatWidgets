@@ -26,6 +26,8 @@
 #include "xinfodb.h"
 #include "xlineedithex.h"
 #include "xcomboboxex.h"
+#include "xdialogprocess.h"
+#include "xgetdatarecordsprocess.h"
 
 class XGenericAbstractWidget : public XShortcutsWidget {
     Q_OBJECT
