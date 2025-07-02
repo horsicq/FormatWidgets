@@ -20,15 +20,15 @@
  */
 #include "xgetdatarecordsprocess.h"
 
-XGetDataRecordsProcess::XGetDataRecordsProcess(QObject *parent)
-    : XThreadObject(parent)
+XGetDataRecordsProcess::XGetDataRecordsProcess(QObject *parent) : XThreadObject(parent)
 {
     g_pDevice = nullptr;
     g_pListValues = nullptr;
     g_pPdStruct = nullptr;
 }
 
-void XGetDataRecordsProcess::setData(QIODevice *pDevice, const XBinary::DATA_RECORDS_OPTIONS &dataRecordsOptions, QList<QVariant> *pListValues, XBinary::PDSTRUCT *pPdStruct)
+void XGetDataRecordsProcess::setData(QIODevice *pDevice, const XBinary::DATA_RECORDS_OPTIONS &dataRecordsOptions, QList<QVariant> *pListValues,
+                                     XBinary::PDSTRUCT *pPdStruct)
 {
     g_pDevice = pDevice;
     g_dataRecordsOptions = dataRecordsOptions;

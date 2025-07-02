@@ -24,8 +24,7 @@
 #include "xthreadobject.h"
 #include "xformats.h"
 
-class XGetDataRecordsProcess : public XThreadObject
-{
+class XGetDataRecordsProcess : public XThreadObject {
     Q_OBJECT
 
 public:
@@ -40,4 +39,4 @@ private:
     XBinary::PDSTRUCT *g_pPdStruct;
 };
 
-#endif // XGETDATARECORDSPROCESS_H
+#endif  // XGETDATARECORDSPROCESS_H
