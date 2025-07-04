@@ -333,7 +333,7 @@ void PEProcessData::_process()
 
             QString sName = iter.value();
 
-            qint32 nSection = XBinary::relAddressToLoadSection(&memoryMap, nRelAddress);
+            qint32 nSection = XBinary::relAddressToOffset(&memoryMap, nRelAddress);
             bool bIsHeader = false;
 
             if (nSection == -1) {
