@@ -49,16 +49,16 @@ void XGenericHeaderWidget::adjustView()
 
 void XGenericHeaderWidget::reloadData(bool bSaveSelection)
 {
-    QList<QVariant> listVariants;
-
-    XBinary::getDataRecordValues(getDevice(), getRecordsOptions(), &listVariants, nullptr);  // TODO DialogProcess
+    QList<QVariant> listValues;
 
     XGetDataRecordsProcess getDataRecordsProcess;
     XDialogProcess dd(this, &getDataRecordsProcess);
     dd.setGlobal(getShortcuts(), getGlobalOptions());
-    getDataRecordsProcess.setData(getDevice(), getRecordsOptions(), &listVariants, dd.getPdStruct());
+    getDataRecordsProcess.setData(getDevice(), getRecordsOptions(), &listValues, dd.getPdStruct());
     dd.start();
     dd.showDialogDelay();
+
+    QList<QString> listComments = XBinary::getDataRecordComments(getRecordsOptions(), &listValues, nullptr);
 
     qint32 nCurrentRow = 0;
 
@@ -132,11 +132,11 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
             ui->tableWidgetMain->setItem(i, HEADER_COLUMN_TYPE, itemType);
         }
         {
-            QTableWidgetItem *itemValue = new QTableWidgetItem(listVariants.at(i).toString());
+            QTableWidgetItem *itemValue = new QTableWidgetItem(listValues.at(i).toString());
             ui->tableWidgetMain->setItem(i, HEADER_COLUMN_VALUE, itemValue);
         }
         {
-            QTableWidgetItem *itemComment = new QTableWidgetItem("");
+            QTableWidgetItem *itemComment = new QTableWidgetItem(listComments.at(i));
             ui->tableWidgetMain->setItem(i, HEADER_COLUMN_COMMENT, itemComment);
         }
 
@@ -155,7 +155,7 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
                 mode = XLineEditValidator::MODE_HEX_64;
             }
 
-            pLineEdit->setValidatorModeValue(mode, listVariants.at(i));
+            pLineEdit->setValidatorModeValue(mode, listValues.at(i));
             pLineEdit->setReadOnly(bIsReadonly);
 
             ui->tableWidgetMain->setCellWidget(i, HEADER_COLUMN_VALUE, pLineEdit);
@@ -175,13 +175,13 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
             for (qint32 j = 0; j < nNumberOfComboBoxes; j++) {
                 XComboBoxEx *pComboBox = new XComboBoxEx(this);
 
-                if (record.listDataValueSets.at(j).bFlags) {
+                if (record.listDataValueSets.at(j).vlType == XBinary::VL_TYPE_FLAGS) {
                     pComboBox->setData(record.listDataValueSets.at(j).mapValues, XComboBoxEx::CBTYPE_FLAGS, record.listDataValueSets.at(j).nMask);
-                } else {
+                } else if (record.listDataValueSets.at(j).vlType == XBinary::VL_TYPE_LIST) {
                     pComboBox->setData(record.listDataValueSets.at(j).mapValues, XComboBoxEx::CBTYPE_LIST, record.listDataValueSets.at(j).nMask);
                 }
 
-                pComboBox->setValue(listVariants.at(i));
+                pComboBox->setValue(listValues.at(i));
                 pComboBox->setReadOnly(bIsReadonly);
 
                 g_listComboBoxes.append(pComboBox);
