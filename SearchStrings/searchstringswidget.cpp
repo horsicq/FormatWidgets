@@ -253,7 +253,7 @@ void SearchStringsWidget::_editString()
 
             dataStruct.nOffset = ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + XModel_MSRecord::USERROLE_OFFSET).toLongLong();
             dataStruct.nSize = ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + XModel_MSRecord::USERROLE_SIZE).toLongLong();
-            dataStruct.valueType = (XBinary::VT)(ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + XModel_MSRecord::USERROLE_TYPE).toLongLong());
+            dataStruct.valueType = (XBinary::VT)(ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + XModel_MSRecord::USERROLE_STRING1).toLongLong());
             dataStruct.bIsNullTerminated = false;
 
             dataStruct.sString = ui->tableViewResult->model()->data(indexValue).toString();
@@ -269,7 +269,7 @@ void SearchStringsWidget::_editString()
                     if (XBinary::write_array(g_pDevice, dataStruct.nOffset,
                                              XBinary::getStringData(dataStruct.valueType, dataStruct.sString, dataStruct.bIsNullTerminated))) {
                         ui->tableViewResult->model()->setData(indexNumber, dataStruct.nSize, Qt::UserRole + XModel_MSRecord::USERROLE_SIZE);
-                        ui->tableViewResult->model()->setData(indexNumber, dataStruct.valueType, Qt::UserRole + XModel_MSRecord::USERROLE_TYPE);
+                        ui->tableViewResult->model()->setData(indexNumber, dataStruct.valueType, Qt::UserRole + XModel_MSRecord::USERROLE_STRING1);
 
                         ui->tableViewResult->model()->setData(indexSize, XBinary::valueToHexEx(dataStruct.sString.size()), Qt::DisplayRole);
                         ui->tableViewResult->model()->setData(indexType, XBinary::valueTypeToString(dataStruct.valueType, 0), Qt::DisplayRole);
