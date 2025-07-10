@@ -292,7 +292,7 @@ void BinaryWidget::reloadData(bool bSaveSelection)
                 extractorOptions.fileType = getFileType();
                 extractorOptions.bMenu_Hex = true;
 
-                ui->widgetExtractor->setData(getDevice(), extractorOptions, true);
+                ui->widgetExtractor->setData(getDevice(), getXInfoDB(), extractorOptions, true);
             }
         } else if (nType == SBINARY::TYPE_SEARCH) {
             if (!isInitPresent(sInit)) {

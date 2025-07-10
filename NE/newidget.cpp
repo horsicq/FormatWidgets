@@ -446,7 +446,7 @@ void NEWidget::reloadData(bool bSaveSelection)
                 extractorOptions.fileType = ne.getFileType();
                 extractorOptions.bMenu_Hex = true;
 
-                ui->widgetExtractor->setData(getDevice(), extractorOptions, true);
+                ui->widgetExtractor->setData(getDevice(), getXInfoDB(), extractorOptions, true);
             }
         } else if (nType == SNE::TYPE_SEARCH) {
             if (!isInitPresent(sInit)) {

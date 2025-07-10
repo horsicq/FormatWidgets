@@ -140,7 +140,7 @@ XShortcutsWidget *XMainWidget::createWidget(const QString &sGUID)
             XExtractor::OPTIONS extractorOptions = XExtractor::getDefaultOptions();
             extractorOptions.fileType = dataHeader.dsID_parent.fileType;
             extractorOptions.bMenu_Hex = true;
-            _pWidget->setData(getDevice(), extractorOptions, false);
+            _pWidget->setData(getDevice(), getInfoDB(), extractorOptions, false);
             pResult = _pWidget;
         } else if ((dataHeader.dsID.fileType == XBinary::FT_BINARY) && (dataHeader.dsID.nID == XBinary::STRUCTID_SEARCH)) {
             SearchValuesWidget *_pWidget = new SearchValuesWidget(this);

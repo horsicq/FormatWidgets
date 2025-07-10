@@ -409,7 +409,7 @@ void DEXWidget::reloadData(bool bSaveSelection)
                 extractorOptions.fileType = dex.getFileType();
                 extractorOptions.bMenu_Hex = true;
 
-                ui->widgetExtractor->setData(getDevice(), extractorOptions, true);
+                ui->widgetExtractor->setData(getDevice(), getXInfoDB(), extractorOptions, true);
             }
         } else if (nType == SDEX::TYPE_SEARCH) {
             if (!isInitPresent(sInit)) {

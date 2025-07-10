@@ -1151,7 +1151,7 @@ void PEWidget::reloadData(bool bSaveSelection)
                 extractorOptions.fileType = pe.getFileType();
                 extractorOptions.bMenu_Hex = true;
 
-                ui->widgetExtractor->setData(getDevice(), extractorOptions, true);
+                ui->widgetExtractor->setData(getDevice(), getXInfoDB(), extractorOptions, true);
             }
         } else if (nType == SPE::TYPE_SEARCH) {
             if (!isInitPresent(sInit)) {

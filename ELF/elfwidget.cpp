@@ -385,7 +385,7 @@ void ELFWidget::reloadData(bool bSaveSelection)
                 extractorOptions.fileType = elf.getFileType();
                 extractorOptions.bMenu_Hex = true;
 
-                ui->widgetExtractor->setData(getDevice(), extractorOptions, true);
+                ui->widgetExtractor->setData(getDevice(), getXInfoDB(), extractorOptions, true);
             }
         } else if (nType == SELF::TYPE_SEARCH) {
             if (!isInitPresent(sInit)) {
