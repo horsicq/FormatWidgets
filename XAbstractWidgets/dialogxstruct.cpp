@@ -21,7 +21,7 @@
 #include "dialogxstruct.h"
 #include "ui_dialogxstruct.h"
 
-DialogXStruct::DialogXStruct(QWidget *parent) : QDialog(parent), ui(new Ui::DialogXStruct)
+DialogXStruct::DialogXStruct(QWidget *pParent) : QDialog(pParent), ui(new Ui::DialogXStruct)
 {
     ui->setupUi(this);
 }

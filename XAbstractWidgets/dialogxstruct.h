@@ -31,7 +31,7 @@ class DialogXStruct : public QDialog {
     Q_OBJECT
 
 public:
-    explicit DialogXStruct(QWidget *parent = nullptr);
+    explicit DialogXStruct(QWidget *pParent = nullptr);
     ~DialogXStruct();
 
 private slots:
