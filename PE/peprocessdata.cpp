@@ -335,6 +335,7 @@ void PEProcessData::_process()
 
             qint32 nSection = XBinary::relAddressToFileTypeNumber(&memoryMap, nRelAddress);
             bool bIsHeader = false;
+            nSection --;
 
             if (nSection == -1) {
                 bIsHeader = XBinary::isRelAddressInHeader(&memoryMap, nRelAddress);
@@ -352,7 +353,9 @@ void PEProcessData::_process()
                 listItems.append(new QStandardItem(""));  // Info
 
                 if (nSection != -1) {
-                    listItemNameSections.at(nSection)->appendRow(listItems);
+                    if (nSection < nNumberOfSections) {
+                        listItemNameSections.at(nSection)->appendRow(listItems);
+                    }
                 } else if (bIsHeader) {
                     pItemNumberHeader->appendRow(listItems);
                 }
