@@ -232,9 +232,6 @@ protected:
 
 signals:
     void closeApp();
-	void scanProgress(int value);
-    void scanStarted();
-    void scanFinished();
 
 public slots:
     void valueChangedSlot(QVariant varValue);
