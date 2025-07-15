@@ -45,6 +45,8 @@ private slots:
 private:
     Ui::XGenericTableWidget *ui;
     qint64 g_nDataSize;
+    QList<QVariant> g_listValues;
+    QList<QString> g_listTitles;
 };
 
 #endif  // XGENERICTABLEWIDGET_H

@@ -28,6 +28,7 @@
 #include "xcomboboxex.h"
 #include "xdialogprocess.h"
 #include "xgetdatarecordsprocess.h"
+#include "xmodel_binary.h"
 
 class XGenericAbstractWidget : public XShortcutsWidget {
     Q_OBJECT

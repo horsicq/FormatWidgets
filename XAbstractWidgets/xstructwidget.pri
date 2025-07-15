@@ -22,3 +22,8 @@ FORMS += \
     $$PWD/xgenerictablewidget.ui \
     $$PWD/dialogxstruct.ui
     $$PWD/xstructwidget.ui
+
+!contains(XCONFIG, xmodel_binary) {
+    XCONFIG += xmodel_binary
+    include($$PWD/../../Controls/xmodel_binary.pri)
+}

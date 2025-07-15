@@ -47,7 +47,16 @@ void XGenericTableWidget::adjustView()
 
 void XGenericTableWidget::reloadData(bool bSaveSelection)
 {
-    XBinary::DATA_RECORDS_OPTIONS dataRecordsOptions = getRecordsOptions();
+    XGetDataRecordsProcess getDataRecordsProcess;
+    XDialogProcess dd(this, &getDataRecordsProcess);
+    dd.setGlobal(getShortcuts(), getGlobalOptions());
+    getDataRecordsProcess.setData(getDevice(), getRecordsOptions(), &g_listValues, &g_listTitles, dd.getPdStruct());
+    dd.start();
+    dd.showDialogDelay();
+
+    XModel_Binary *pModel = new XModel_Binary(getRecordsOptions(), &g_listValues, &g_listTitles, this);
+
+    ui->tableViewMain->setCustomModel(pModel, true);
 
     qint32 nCurrentRow = 0;
 
