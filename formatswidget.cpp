@@ -135,12 +135,15 @@ FormatsWidget::FormatsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(n
 
     ui->stackedWidgetMain->setCurrentIndex(TABINFO_BINARY);
 
-    connect(ui->pageScanDIE, SIGNAL(scanStarted()), this, SLOT(onScanStarted()));
-    connect(ui->pageScanDIE, SIGNAL(scanFinished()), this, SLOT(onScanFinished()));
-    connect(ui->pageScanNFD, SIGNAL(scanStarted()), this, SLOT(onScanStarted()));
-    connect(ui->pageScanNFD, SIGNAL(scanFinished()), this, SLOT(onScanFinished()));
-    connect(ui->pageScanYARA, SIGNAL(scanStarted()), this, SLOT(onScanStarted()));
-    connect(ui->pageScanYARA, SIGNAL(scanFinished()), this, SLOT(onScanFinished()));
+    connect(ui->pageScanDIE, SIGNAL(scanStarted()), this, SIGNAL(scanStarted()));
+    connect(ui->pageScanDIE, SIGNAL(scanFinished()), this, SIGNAL(scanFinished()));
+    connect(ui->pageScanDIE, SIGNAL(scanProgress(int)), this, SIGNAL(scanProgress(int)));
+
+    connect(ui->pageScanNFD, SIGNAL(scanStarted()), this, SIGNAL(scanStarted()));
+    connect(ui->pageScanNFD, SIGNAL(scanFinished()), this, SIGNAL(scanFinished()));
+
+    connect(ui->pageScanYARA, SIGNAL(scanStarted()), this, SIGNAL(scanStarted()));
+    connect(ui->pageScanYARA, SIGNAL(scanFinished()), this, SIGNAL(scanFinished()));
 
     connect(ui->pageScanNFD, SIGNAL(showInfo()), this, SLOT(_showNfdInfo()));
     connect(ui->pageScanYARA, SIGNAL(showInfo()), this, SLOT(_showYaraInfo()));

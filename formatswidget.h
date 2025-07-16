@@ -66,6 +66,11 @@ class FormatsWidget : public XShortcutsWidget {
         TABINFO_MACH,
     };
 
+signals:
+    void scanProgress(int value);
+    void scanStarted();
+    void scanFinished();
+
 public:
     explicit FormatsWidget(QWidget *pParent = nullptr);
     ~FormatsWidget();
