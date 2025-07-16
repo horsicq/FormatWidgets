@@ -1,5 +1,10 @@
 include_directories(${CMAKE_CURRENT_LIST_DIR})
 
+if (NOT DEFINED XMODEL_BINARY_SOURCES)
+    include(${CMAKE_CURRENT_LIST_DIR}/../../Controls/xmodel_binary.cmake)
+    set(XSTRUCTWIDGET_SOURCES ${XSTRUCTWIDGET_SOURCES} ${XMODEL_BINARY_SOURCES})
+endif()
+
 set(XSTRUCTWIDGET_SOURCES
     ${XSTRUCTWIDGET_SOURCES}
     ${CMAKE_CURRENT_LIST_DIR}/xgenericabstractwidget.cpp

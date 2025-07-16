@@ -54,7 +54,7 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
     XGetDataRecordsProcess getDataRecordsProcess;
     XDialogProcess dd(this, &getDataRecordsProcess);
     dd.setGlobal(getShortcuts(), getGlobalOptions());
-    getDataRecordsProcess.setData(getDevice(), getRecordsOptions(), &listValues, dd.getPdStruct());
+    getDataRecordsProcess.setData(getDevice(), getRecordsOptions(), &listValues, nullptr, dd.getPdStruct());
     dd.start();
     dd.showDialogDelay();
 

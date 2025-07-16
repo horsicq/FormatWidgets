@@ -290,7 +290,7 @@ void XStructWidget::reloadData(bool bSaveSelection)
             //             }
             //         }
 
-            pWidget->reloadData(false);
+            // pWidget->reloadData(false);
             pWidget->setProperty("GUID", sGUID);
             qint32 nPosition = ui->stackedWidgetMain->addWidget(pWidget);
             ui->stackedWidgetMain->setCurrentIndex(nPosition);
