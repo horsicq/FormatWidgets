@@ -36,7 +36,7 @@ class XGenericAbstractWidget : public XShortcutsWidget {
 public:
     explicit XGenericAbstractWidget(QWidget *parent = nullptr);
 
-    void setData(QIODevice *pDevice, XInfoDB *pXInfoDB, const XBinary::DATA_RECORDS_OPTIONS &dataRecordsOptions);
+    void setData(QIODevice *pDevice, XInfoDB *pXInfoDB, const XBinary::DATA_RECORDS_OPTIONS &dataRecordsOptions, bool bProcess);
 
     QIODevice *getDevice() const;
     XInfoDB *getXInfoDB() const;
