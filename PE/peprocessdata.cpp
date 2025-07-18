@@ -148,14 +148,22 @@ void PEProcessData::_process()
 
         for (qint32 i = 0; i < nNumberOfSections; i++) {
             XInfoDB::STRRECORD strRecord = XInfoDB::handleStringDB(&listStrDb, XInfoDB::STRDB_PESECTIONS, listSectionRecords.at(i).sName, true);
-            Qt::GlobalColor globalColor = XScanEngine::typeToColor(strRecord.sType);
+            XOptions::GLOBAL_COLOR_RECORD globalColorRecord = XScanEngine::typeToGlobalColorRecord(strRecord.sType);
 
             QColor colText;
 
-            if (globalColor == Qt::transparent) {
+            if (globalColorRecord.colorMain == Qt::transparent) {
                 colText = QApplication::palette().text().color();
             } else {
-                colText = QColor(globalColor);
+                colText = QColor(globalColorRecord.colorMain);
+            }
+
+            QColor colBackground;
+
+            if (globalColorRecord.colorBackground == Qt::transparent) {
+                colBackground = QApplication::palette().text().color();
+            } else {
+                colBackground = QColor(globalColorRecord.colorBackground);
             }
 
             strRecord.sType = XScanEngine::translateType(strRecord.sType);
@@ -164,6 +172,7 @@ void PEProcessData::_process()
 
             QStandardItem *pItemName = new QStandardItem(listSectionRecords.at(i).sName);
             pItemName->setData(colText, Qt::ForegroundRole);
+            pItemName->setData(colBackground, Qt::BackgroundRole);
 
             QList<QStandardItem *> listItems;
             listItems.append(pItemNumber);
