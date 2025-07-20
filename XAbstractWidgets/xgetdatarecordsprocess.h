@@ -29,13 +29,14 @@ class XGetDataRecordsProcess : public XThreadObject {
 
 public:
     explicit XGetDataRecordsProcess(QObject *parent = nullptr);
-    void setData(QIODevice *pDevice, const XBinary::DATA_RECORDS_OPTIONS &dataRecordsOptions, QList<QVariant> *pListValues, QList<QString> *pListTitles, XBinary::PDSTRUCT *pPdStruct);
+    void setData(QIODevice *pDevice, const XBinary::DATA_RECORDS_OPTIONS &dataRecordsOptions, QList<XBinary::DATA_RECORD_ROW> *pListDataRecordsRows,
+                 QList<QString> *pListTitles, XBinary::PDSTRUCT *pPdStruct);
     virtual void process();
 
 private:
     QIODevice *g_pDevice;
     XBinary::DATA_RECORDS_OPTIONS g_dataRecordsOptions;
-    QList<QVariant> *g_pListValues;
+    QList<XBinary::DATA_RECORD_ROW> *g_pListDataRecordsRows;
     QList<QString> *g_pListTitles;
     XBinary::PDSTRUCT *g_pPdStruct;
 };

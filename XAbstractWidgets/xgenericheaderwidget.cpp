@@ -49,152 +49,158 @@ void XGenericHeaderWidget::adjustView()
 
 void XGenericHeaderWidget::reloadData(bool bSaveSelection)
 {
-    QList<QVariant> listValues;
-
-    XGetDataRecordsProcess getDataRecordsProcess;
-    XDialogProcess dd(this, &getDataRecordsProcess);
-    dd.setGlobal(getShortcuts(), getGlobalOptions());
-    getDataRecordsProcess.setData(getDevice(), getRecordsOptions(), &listValues, nullptr, dd.getPdStruct());
-    dd.start();
-    dd.showDialogDelay();
-
-    QList<QString> listComments = XBinary::getDataRecordComments(getRecordsOptions(), &listValues, nullptr);
-
     qint32 nCurrentRow = 0;
 
     if (bSaveSelection) {
         nCurrentRow = ui->tableWidgetMain->currentRow();
     }
 
-    QStringList slHeader;
-    slHeader.append(tr("Name"));
-    slHeader.append(tr("Offset"));
-    slHeader.append(tr("Size"));
-    slHeader.append(tr("Type"));
-    slHeader.append(tr("Value"));
-    slHeader.append(tr(""));
-    slHeader.append(tr("Comment"));
+    QList<XBinary::DATA_RECORD_ROW> listDataRecordsRows;
 
-    ui->tableWidgetMain->setColumnCount(slHeader.count());
-    ui->tableWidgetMain->setHorizontalHeaderLabels(slHeader);
-    ui->tableWidgetMain->setSortingEnabled(false);
-    ui->tableWidgetMain->setSelectionBehavior(QAbstractItemView::SelectRows);
-    ui->tableWidgetMain->setSelectionMode(QAbstractItemView::SingleSelection);
-    ui->tableWidgetMain->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    // ui->tableWidgetMain->setShowGrid(true);
-    // ui->tableWidgetMain->setAlternatingRowColors(true);
-    ui->tableWidgetMain->setContextMenuPolicy(Qt::CustomContextMenu);
-    ui->tableWidgetMain->verticalHeader()->setVisible(false);
-    ui->tableWidgetMain->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-    ui->tableWidgetMain->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-    ui->tableWidgetMain->setWordWrap(false);
-    ui->tableWidgetMain->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
-    ui->tableWidgetMain->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    // Set last column to stretch
-    ui->tableWidgetMain->horizontalHeader()->setStretchLastSection(true);
+    XGetDataRecordsProcess getDataRecordsProcess;
+    XDialogProcess dd(this, &getDataRecordsProcess);
+    dd.setGlobal(getShortcuts(), getGlobalOptions());
+    getDataRecordsProcess.setData(getDevice(), getRecordsOptions(), &listDataRecordsRows, nullptr, dd.getPdStruct());
+    dd.start();
+    dd.showDialogDelay();
 
-    QList<XBinary::DATA_RECORD> listDataRecords = getRecordsOptions().dataHeader.listRecords;
+    QList<QString> listComments;
 
-    g_nDataSize = getRecordsOptions().dataHeader.nSize;
+    if (listDataRecordsRows.count() > 0) {
+        XBinary::DATA_RECORD_ROW dataRecordRow = listDataRecordsRows.at(0);
 
-    // Example: Populate the tableWidget with the data records
-    qint32 nNumberOfRecords = listDataRecords.count();
+        listComments = XBinary::getDataRecordComments(getRecordsOptions(), dataRecordRow, nullptr);
 
-    ui->tableWidgetMain->setRowCount(nNumberOfRecords);
-    ui->tableWidgetMain->clearContents();
+        QStringList slHeader;
+        slHeader.append(tr("Name"));
+        slHeader.append(tr("Offset"));
+        slHeader.append(tr("Size"));
+        slHeader.append(tr("Type"));
+        slHeader.append(tr("Value"));
+        slHeader.append(tr(""));
+        slHeader.append(tr("Comment"));
 
-    g_listLineEditsHEX.clear();
-    g_listComboBoxes.clear();
+        ui->tableWidgetMain->setColumnCount(slHeader.count());
+        ui->tableWidgetMain->setHorizontalHeaderLabels(slHeader);
+        ui->tableWidgetMain->setSortingEnabled(false);
+        ui->tableWidgetMain->setSelectionBehavior(QAbstractItemView::SelectRows);
+        ui->tableWidgetMain->setSelectionMode(QAbstractItemView::SingleSelection);
+        ui->tableWidgetMain->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        // ui->tableWidgetMain->setShowGrid(true);
+        // ui->tableWidgetMain->setAlternatingRowColors(true);
+        ui->tableWidgetMain->setContextMenuPolicy(Qt::CustomContextMenu);
+        ui->tableWidgetMain->verticalHeader()->setVisible(false);
+        ui->tableWidgetMain->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+        ui->tableWidgetMain->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+        ui->tableWidgetMain->setWordWrap(false);
+        ui->tableWidgetMain->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
+        ui->tableWidgetMain->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        // Set last column to stretch
+        ui->tableWidgetMain->horizontalHeader()->setStretchLastSection(true);
 
-    bool bIsReadonly = isReadonly();
+        QList<XBinary::DATA_RECORD> listDataRecords = getRecordsOptions().dataHeader.listRecords;
 
-    for (qint32 i = 0; i < nNumberOfRecords; ++i) {
-        const XBinary::DATA_RECORD &record = listDataRecords.at(i);
+        g_nDataSize = getRecordsOptions().dataHeader.nSize;
 
-        {
-            QTableWidgetItem *itemName = new QTableWidgetItem(record.sName);
-            itemName->setData(Qt::UserRole + UR_RELOFFSET, record.nRelOffset);  // TODO
-            itemName->setData(Qt::UserRole + UR_SIZE, record.nSize);
-            ui->tableWidgetMain->setItem(i, HEADER_COLUMN_NAME, itemName);
-        }
-        {
-            QTableWidgetItem *itemOffset = new QTableWidgetItem(QString::number(record.nRelOffset, 16));
-            itemOffset->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
-            ui->tableWidgetMain->setItem(i, HEADER_COLUMN_OFFSET, itemOffset);
-        }
-        {
-            QTableWidgetItem *itemSize = new QTableWidgetItem(QString::number(record.nSize, 16));
-            itemSize->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
-            ui->tableWidgetMain->setItem(i, HEADER_COLUMN_SIZE, itemSize);
-        }
-        {
-            QTableWidgetItem *itemType = new QTableWidgetItem(XBinary::valueTypeToString(record.valType, record.nSize));
-            ui->tableWidgetMain->setItem(i, HEADER_COLUMN_TYPE, itemType);
-        }
-        {
-            QTableWidgetItem *itemValue = new QTableWidgetItem(listValues.at(i).toString());
-            ui->tableWidgetMain->setItem(i, HEADER_COLUMN_VALUE, itemValue);
-        }
-        {
-            QTableWidgetItem *itemComment = new QTableWidgetItem(listComments.at(i));
-            ui->tableWidgetMain->setItem(i, HEADER_COLUMN_COMMENT, itemComment);
-        }
+        // Example: Populate the tableWidget with the data records
+        qint32 nNumberOfRecords = listDataRecords.count();
 
-        if (XBinary::isIntegerType(record.valType)) {
-            XLineEditHEX *pLineEdit = new XLineEditHEX(this);
+        ui->tableWidgetMain->setRowCount(nNumberOfRecords);
+        ui->tableWidgetMain->clearContents();
 
-            XLineEditValidator::MODE mode = XLineEditValidator::MODE_HEX_32;
+        g_listLineEditsHEX.clear();
+        g_listComboBoxes.clear();
 
-            if (record.nSize == 1) {
-                mode = XLineEditValidator::MODE_HEX_8;
-            } else if (record.nSize == 2) {
-                mode = XLineEditValidator::MODE_HEX_16;
-            } else if (record.nSize == 4) {
-                mode = XLineEditValidator::MODE_HEX_32;
-            } else if (record.nSize == 8) {
-                mode = XLineEditValidator::MODE_HEX_64;
+        bool bIsReadonly = isReadonly();
+
+        for (qint32 i = 0; i < nNumberOfRecords; ++i) {
+            const XBinary::DATA_RECORD &record = listDataRecords.at(i);
+
+            {
+                QTableWidgetItem *itemName = new QTableWidgetItem(record.sName);
+                itemName->setData(Qt::UserRole + UR_RELOFFSET, record.nRelOffset);  // TODO
+                itemName->setData(Qt::UserRole + UR_SIZE, record.nSize);
+                ui->tableWidgetMain->setItem(i, HEADER_COLUMN_NAME, itemName);
+            }
+            {
+                QTableWidgetItem *itemOffset = new QTableWidgetItem(QString::number(record.nRelOffset, 16));
+                itemOffset->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+                ui->tableWidgetMain->setItem(i, HEADER_COLUMN_OFFSET, itemOffset);
+            }
+            {
+                QTableWidgetItem *itemSize = new QTableWidgetItem(QString::number(record.nSize, 16));
+                itemSize->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+                ui->tableWidgetMain->setItem(i, HEADER_COLUMN_SIZE, itemSize);
+            }
+            {
+                QTableWidgetItem *itemType = new QTableWidgetItem(XBinary::valueTypeToString(record.valType, record.nSize));
+                ui->tableWidgetMain->setItem(i, HEADER_COLUMN_TYPE, itemType);
+            }
+            {
+                QTableWidgetItem *itemValue = new QTableWidgetItem(dataRecordRow.listValues.at(i).toString());
+                ui->tableWidgetMain->setItem(i, HEADER_COLUMN_VALUE, itemValue);
+            }
+            {
+                QTableWidgetItem *itemComment = new QTableWidgetItem(listComments.at(i));
+                ui->tableWidgetMain->setItem(i, HEADER_COLUMN_COMMENT, itemComment);
             }
 
-            pLineEdit->setValidatorModeValue(mode, listValues.at(i));
-            pLineEdit->setReadOnly(bIsReadonly);
+            if (XBinary::isIntegerType(record.valType)) {
+                XLineEditHEX *pLineEdit = new XLineEditHEX(this);
 
-            ui->tableWidgetMain->setCellWidget(i, HEADER_COLUMN_VALUE, pLineEdit);
+                XLineEditValidator::MODE mode = XLineEditValidator::MODE_HEX_32;
 
-            g_listLineEditsHEX.append(pLineEdit);
-        }
-
-        qint32 nNumberOfComboBoxes = record.listDataValueSets.count();
-
-        if (nNumberOfComboBoxes) {
-            QWidget *pWidget = new QWidget(ui->tableWidgetMain);
-            QLayout *pLayout = new QHBoxLayout(pWidget);
-            pLayout->setContentsMargins(0, 0, 0, 0);
-            pLayout->setSpacing(0);
-            pWidget->setLayout(pLayout);
-
-            for (qint32 j = 0; j < nNumberOfComboBoxes; j++) {
-                XComboBoxEx *pComboBox = new XComboBoxEx(this);
-
-                if (record.listDataValueSets.at(j).vlType == XBinary::VL_TYPE_FLAGS) {
-                    pComboBox->setData(record.listDataValueSets.at(j).mapValues, XComboBoxEx::CBTYPE_FLAGS, record.listDataValueSets.at(j).nMask);
-                } else if (record.listDataValueSets.at(j).vlType == XBinary::VL_TYPE_LIST) {
-                    pComboBox->setData(record.listDataValueSets.at(j).mapValues, XComboBoxEx::CBTYPE_LIST, record.listDataValueSets.at(j).nMask);
+                if (record.nSize == 1) {
+                    mode = XLineEditValidator::MODE_HEX_8;
+                } else if (record.nSize == 2) {
+                    mode = XLineEditValidator::MODE_HEX_16;
+                } else if (record.nSize == 4) {
+                    mode = XLineEditValidator::MODE_HEX_32;
+                } else if (record.nSize == 8) {
+                    mode = XLineEditValidator::MODE_HEX_64;
                 }
 
-                pComboBox->setValue(listValues.at(i));
-                pComboBox->setReadOnly(bIsReadonly);
+                pLineEdit->setValidatorModeValue(mode, dataRecordRow.listValues.at(i));
+                pLineEdit->setReadOnly(bIsReadonly);
 
-                g_listComboBoxes.append(pComboBox);
+                ui->tableWidgetMain->setCellWidget(i, HEADER_COLUMN_VALUE, pLineEdit);
 
-                pLayout->addWidget(pComboBox);
+                g_listLineEditsHEX.append(pLineEdit);
             }
 
-            ui->tableWidgetMain->setCellWidget(i, HEADER_COLUMN_INFO, pWidget);
-        }
-    }
+            qint32 nNumberOfComboBoxes = record.listDataValueSets.count();
 
-    // Optionally resize columns to fit contents
-    ui->tableWidgetMain->resizeColumnsToContents();  // TODO only init
+            if (nNumberOfComboBoxes) {
+                QWidget *pWidget = new QWidget(ui->tableWidgetMain);
+                QLayout *pLayout = new QHBoxLayout(pWidget);
+                pLayout->setContentsMargins(0, 0, 0, 0);
+                pLayout->setSpacing(0);
+                pWidget->setLayout(pLayout);
+
+                for (qint32 j = 0; j < nNumberOfComboBoxes; j++) {
+                    XComboBoxEx *pComboBox = new XComboBoxEx(this);
+
+                    if (record.listDataValueSets.at(j).vlType == XBinary::VL_TYPE_FLAGS) {
+                        pComboBox->setData(record.listDataValueSets.at(j).mapValues, XComboBoxEx::CBTYPE_FLAGS, record.listDataValueSets.at(j).nMask);
+                    } else if (record.listDataValueSets.at(j).vlType == XBinary::VL_TYPE_LIST) {
+                        pComboBox->setData(record.listDataValueSets.at(j).mapValues, XComboBoxEx::CBTYPE_LIST, record.listDataValueSets.at(j).nMask);
+                    }
+
+                    pComboBox->setValue(dataRecordRow.listValues.at(i));
+                    pComboBox->setReadOnly(bIsReadonly);
+
+                    g_listComboBoxes.append(pComboBox);
+
+                    pLayout->addWidget(pComboBox);
+                }
+
+                ui->tableWidgetMain->setCellWidget(i, HEADER_COLUMN_INFO, pWidget);
+            }
+        }
+
+        // Optionally resize columns to fit contents
+        ui->tableWidgetMain->resizeColumnsToContents();  // TODO only init
+    }
 
     ui->tableWidgetMain->setCurrentCell(nCurrentRow, 0);
 }

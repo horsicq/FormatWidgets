@@ -290,7 +290,7 @@ void XStructWidget::reloadData(bool bSaveSelection)
             //             }
             //         }
 
-            // pWidget->reloadData(false);
+            pWidget->reloadData(false);
             pWidget->setProperty("GUID", sGUID);
             qint32 nPosition = ui->stackedWidgetMain->addWidget(pWidget);
             ui->stackedWidgetMain->setCurrentIndex(nPosition);
@@ -407,7 +407,7 @@ XShortcutsWidget *XStructWidget::createWidget(const QString &sGUID)
             dataRecordsOptions.pMemoryMap = &g_memoryMap;
             dataRecordsOptions.dataHeader = dataHeader;
 
-            _pWidget->setData(g_pDevice, g_pInfoDB, dataRecordsOptions);
+            _pWidget->setData(g_pDevice, g_pInfoDB, dataRecordsOptions, false);
             pResult = _pWidget;
         } else if (dataHeader.dhMode == XBinary::DHMODE_TABLE) {
             XGenericTableWidget *_pWidget = new XGenericTableWidget(this);
@@ -416,7 +416,7 @@ XShortcutsWidget *XStructWidget::createWidget(const QString &sGUID)
             dataRecordsOptions.pMemoryMap = &g_memoryMap;
             dataRecordsOptions.dataHeader = dataHeader;
 
-            _pWidget->setData(g_pDevice, g_pInfoDB, dataRecordsOptions);
+            _pWidget->setData(g_pDevice, g_pInfoDB, dataRecordsOptions, false);
             pResult = _pWidget;
         } else {
 #ifdef QT_DEBUG
