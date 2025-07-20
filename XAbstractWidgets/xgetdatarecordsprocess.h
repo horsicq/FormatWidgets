@@ -29,7 +29,8 @@ class XGetDataRecordsProcess : public XThreadObject {
 
 public:
     explicit XGetDataRecordsProcess(QObject *parent = nullptr);
-    void setData(QIODevice *pDevice, const XBinary::DATA_RECORDS_OPTIONS &dataRecordsOptions, QList<XBinary::DATA_RECORD_ROW> *pListDataRecordsRows, QList<QString> *pListTitles, XBinary::PDSTRUCT *pPdStruct);
+    void setData(QIODevice *pDevice, const XBinary::DATA_RECORDS_OPTIONS &dataRecordsOptions, QList<XBinary::DATA_RECORD_ROW> *pListDataRecordsRows,
+                 QList<QString> *pListTitles, XBinary::PDSTRUCT *pPdStruct);
     virtual void process();
 
 private:

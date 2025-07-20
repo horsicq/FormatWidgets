@@ -344,7 +344,7 @@ void PEProcessData::_process()
 
             qint32 nSection = XBinary::relAddressToFileTypeNumber(&memoryMap, nRelAddress);
             bool bIsHeader = false;
-            nSection --;
+            nSection--;
 
             if (nSection == -1) {
                 bIsHeader = XBinary::isRelAddressInHeader(&memoryMap, nRelAddress);

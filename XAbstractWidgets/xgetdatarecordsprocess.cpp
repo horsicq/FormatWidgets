@@ -28,8 +28,8 @@ XGetDataRecordsProcess::XGetDataRecordsProcess(QObject *parent) : XThreadObject(
     g_pPdStruct = nullptr;
 }
 
-void XGetDataRecordsProcess::setData(QIODevice *pDevice, const XBinary::DATA_RECORDS_OPTIONS &dataRecordsOptions, QList<XBinary::DATA_RECORD_ROW> *pListDataRecordsRows, QList<QString> *pListTitles,
-                                     XBinary::PDSTRUCT *pPdStruct)
+void XGetDataRecordsProcess::setData(QIODevice *pDevice, const XBinary::DATA_RECORDS_OPTIONS &dataRecordsOptions, QList<XBinary::DATA_RECORD_ROW> *pListDataRecordsRows,
+                                     QList<QString> *pListTitles, XBinary::PDSTRUCT *pPdStruct)
 {
     g_pDevice = pDevice;
     g_dataRecordsOptions = dataRecordsOptions;
