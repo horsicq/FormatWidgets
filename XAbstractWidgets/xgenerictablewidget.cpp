@@ -47,6 +47,8 @@ void XGenericTableWidget::adjustView()
 
 void XGenericTableWidget::reloadData(bool bSaveSelection)
 {
+    g_listDataRecordsRows.clear();
+
     XGetDataRecordsProcess getDataRecordsProcess;
     XDialogProcess dd(this, &getDataRecordsProcess);
     dd.setGlobal(getShortcuts(), getGlobalOptions());
