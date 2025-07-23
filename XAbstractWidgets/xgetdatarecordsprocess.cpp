@@ -40,5 +40,6 @@ void XGetDataRecordsProcess::setData(QIODevice *pDevice, const XBinary::DATA_REC
 
 void XGetDataRecordsProcess::process()
 {
-    XFormats::getDataRecordValues(g_dataRecordsOptions.pMemoryMap->fileType, g_pDevice, g_dataRecordsOptions, g_pListDataRecordsRows, g_pListTitles, false, -1, g_pPdStruct);
+    XFormats::getDataRecordValues(g_dataRecordsOptions.pMemoryMap->fileType, g_pDevice, g_dataRecordsOptions, g_pListDataRecordsRows, g_pListTitles, false, -1,
+                                  g_pPdStruct);
 }
