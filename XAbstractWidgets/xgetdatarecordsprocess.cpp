@@ -20,7 +20,7 @@
  */
 #include "xgetdatarecordsprocess.h"
 
-XGetDataRecordsProcess::XGetDataRecordsProcess(QObject *parent) : XThreadObject(parent)
+XGetDataRecordsProcess::XGetDataRecordsProcess(QObject *pParent) : XThreadObject(pParent)
 {
     g_pDevice = nullptr;
     g_pListDataRecordsRows = nullptr;
