@@ -100,7 +100,7 @@ void BinaryWidget::reload()
 
         ui->treeWidgetNavi->expandAll();
 
-        setDisasmInitAddress(binary.getEntryPointAddress());
+        setDisasmInitAddress(XFormats::getEntryPointAddress(getFileType(), getDevice(), getOptions().bIsImage, getOptions().nImageBase));
 
         setTreeItem(ui->treeWidgetNavi, getOptions().nStartType);
     }
