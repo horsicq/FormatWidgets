@@ -98,9 +98,9 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
         // Set last column to stretch
         ui->tableWidgetMain->horizontalHeader()->setStretchLastSection(true);
 
-        QList<XBinary::DATA_RECORD> listDataRecords = getRecordsOptions().dataHeader.listRecords;
+        QList<XBinary::DATA_RECORD> listDataRecords = getRecordsOptions().dataHeaderFirst.listRecords;
 
-        g_nDataSize = getRecordsOptions().dataHeader.nSize;
+        g_nDataSize = getRecordsOptions().dataHeaderFirst.nSize;
 
         // Example: Populate the tableWidget with the data records
         qint32 nNumberOfRecords = listDataRecords.count();
@@ -224,7 +224,7 @@ void XGenericHeaderWidget::on_toolButtonTableReload_clicked()
 
 void XGenericHeaderWidget::on_toolButtonTableSize_clicked()
 {
-    emit followLocation(getRecordsOptions().dataHeader.nLocation, getRecordsOptions().dataHeader.locType, g_nDataSize, XOptions::WIDGETTYPE_HEX);
+    emit followLocation(getRecordsOptions().dataHeaderFirst.nLocation, getRecordsOptions().dataHeaderFirst.locType, g_nDataSize, XOptions::WIDGETTYPE_HEX);
 }
 
 void XGenericHeaderWidget::on_toolButtonTableSave_clicked()
@@ -260,7 +260,7 @@ void XGenericHeaderWidget::setHeaderSelection()
             qint64 nRelOffset = pItem->data(Qt::UserRole + UR_RELOFFSET).toLongLong();
             qint64 nSize = pItem->data(Qt::UserRole + UR_SIZE).toLongLong();
 
-            emit currentLocationChanged(getRecordsOptions().dataHeader.nLocation + nRelOffset, getRecordsOptions().dataHeader.locType, nSize);
+            emit currentLocationChanged(getRecordsOptions().dataHeaderFirst.nLocation + nRelOffset, getRecordsOptions().dataHeaderFirst.locType, nSize);
         }
     }
 }
