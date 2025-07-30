@@ -378,6 +378,14 @@ void FormatsWidget::reload()
             if (ne.isValid()) {
                 ui->lineEditEntryPoint->setValue_uint32((quint32)ne.getEntryPointAddress());
             }
+        } else if (fileType == XBinary::FT_AMIGAHUNK) {
+            ui->stackedWidgetMain->setCurrentIndex(TABINFO_BINARY);
+
+            XAmigaHunk amiga(&file);
+
+            if (amiga.isValid()) {
+                ui->lineEditEntryPoint->setValue_uint32((quint32)amiga.getEntryPointAddress());
+            }
         } else if ((fileType == XBinary::FT_PE32) || (fileType == XBinary::FT_PE64)) {
             ui->stackedWidgetMain->setCurrentIndex(TABINFO_PE);
 
