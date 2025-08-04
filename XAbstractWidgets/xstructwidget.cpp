@@ -405,7 +405,7 @@ XShortcutsWidget *XStructWidget::createWidget(const QString &sGUID)
 
             XBinary::DATA_RECORDS_OPTIONS dataRecordsOptions = {};
             dataRecordsOptions.pMemoryMap = &g_memoryMap;
-            dataRecordsOptions.dataHeader = dataHeader;
+            dataRecordsOptions.dataHeaderFirst = dataHeader;
 
             _pWidget->setData(g_pDevice, g_pInfoDB, dataRecordsOptions, false);
             pResult = _pWidget;
@@ -414,7 +414,7 @@ XShortcutsWidget *XStructWidget::createWidget(const QString &sGUID)
 
             XBinary::DATA_RECORDS_OPTIONS dataRecordsOptions = {};
             dataRecordsOptions.pMemoryMap = &g_memoryMap;
-            dataRecordsOptions.dataHeader = dataHeader;
+            dataRecordsOptions.dataHeaderFirst = dataHeader;
 
             _pWidget->setData(g_pDevice, g_pInfoDB, dataRecordsOptions, false);
             pResult = _pWidget;
