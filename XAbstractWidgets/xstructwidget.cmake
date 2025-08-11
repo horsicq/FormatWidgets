@@ -23,4 +23,7 @@ set(XSTRUCTWIDGET_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/dialogxstruct.ui
     ${CMAKE_CURRENT_LIST_DIR}/xgetdatarecordsprocess.cpp
     ${CMAKE_CURRENT_LIST_DIR}/xgetdatarecordsprocess.h
+    ${CMAKE_CURRENT_LIST_DIR}/dialogxstructchooser.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/dialogxstructchooser.h
+    ${CMAKE_CURRENT_LIST_DIR}/dialogxstructchooser.ui
 )
