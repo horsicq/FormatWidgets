@@ -21,18 +21,26 @@
 #ifndef DIALOGXSTRUCT_H
 #define DIALOGXSTRUCT_H
 
-#include <QDialog>
+#include "xshortcutsdialog.h"
+#include "xinfodb.h"
+#include "xstructwidget.h"
+
+class XStructWidget;
 
 namespace Ui {
 class DialogXStruct;
 }
 
-class DialogXStruct : public QDialog {
+class DialogXStruct : public XShortcutsDialog {
     Q_OBJECT
 
 public:
     explicit DialogXStruct(QWidget *pParent = nullptr);
     ~DialogXStruct();
+
+    void setData(QIODevice *pDevice, XInfoDB *pInfoDB = nullptr, const XStructWidget::OPTIONS &options = XStructWidget::OPTIONS());
+
+    virtual void adjustView();
 
 private slots:
     void on_pushButtonOK_clicked();

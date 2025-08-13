@@ -21,7 +21,7 @@
 #include "dialogxstruct.h"
 #include "ui_dialogxstruct.h"
 
-DialogXStruct::DialogXStruct(QWidget *pParent) : QDialog(pParent), ui(new Ui::DialogXStruct)
+DialogXStruct::DialogXStruct(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogXStruct)
 {
     ui->setupUi(this);
 }
@@ -29,6 +29,17 @@ DialogXStruct::DialogXStruct(QWidget *pParent) : QDialog(pParent), ui(new Ui::Di
 DialogXStruct::~DialogXStruct()
 {
     delete ui;
+}
+
+void DialogXStruct::setData(QIODevice *pDevice, XInfoDB *pInfoDB, const XStructWidget::OPTIONS &options)
+{
+    ui->widgetStructs->setData(pDevice, pInfoDB, options);
+}
+
+void DialogXStruct::adjustView()
+{
+    ui->widgetStructs->adjustView();
+    getGlobalOptions()->adjustWidget(this, XOptions::ID_VIEW_FONT_CONTROLS);
 }
 
 void DialogXStruct::on_pushButtonOK_clicked()

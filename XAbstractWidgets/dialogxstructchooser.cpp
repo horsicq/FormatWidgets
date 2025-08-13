@@ -33,10 +33,10 @@ DialogXStructChooser::~DialogXStructChooser()
 
 void DialogXStructChooser::on_pushButtonCancel_clicked()
 {
-    this->close();
+    reject();
 }
 
 void DialogXStructChooser::on_pushButtonOK_clicked()
 {
-    // TODO
+    accept();
 }
