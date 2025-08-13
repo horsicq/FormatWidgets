@@ -21,9 +21,7 @@
 #include "dialogxstructchooser.h"
 #include "ui_dialogxstructchooser.h"
 
-DialogXStructChooser::DialogXStructChooser(QWidget *parent)
-    : QDialog(parent)
-    , ui(new Ui::DialogXStructChooser)
+DialogXStructChooser::DialogXStructChooser(QWidget *parent) : QDialog(parent), ui(new Ui::DialogXStructChooser)
 {
     ui->setupUi(this);
 }
@@ -42,4 +40,3 @@ void DialogXStructChooser::on_pushButtonOK_clicked()
 {
     // TODO
 }
-
