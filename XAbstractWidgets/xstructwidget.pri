@@ -6,7 +6,7 @@ HEADERS += \
     $$PWD/xgenericheaderwidget.h \
     $$PWD/xgenerictablewidget.h \
     $$PWD/xgetdatarecordsprocess.h \
-    $$PWD/dialogxstruct.h
+    $$PWD/dialogxstruct.h \
     $$PWD/xstructwidget.h
 
 SOURCES += \
@@ -14,13 +14,13 @@ SOURCES += \
     $$PWD/xgenericheaderwidget.cpp \
     $$PWD/xgenerictablewidget.cpp \
     $$PWD/xgetdatarecordsprocess.cpp \
-    $$PWD/dialogxstruct.cpp
+    $$PWD/dialogxstruct.cpp \
     $$PWD/xstructwidget.cpp
 
 FORMS += \
     $$PWD/xgenericheaderwidget.ui \
     $$PWD/xgenerictablewidget.ui \
-    $$PWD/dialogxstruct.ui
+    $$PWD/dialogxstruct.ui \
     $$PWD/xstructwidget.ui
 
 !contains(XCONFIG, xmodel_binary) {
