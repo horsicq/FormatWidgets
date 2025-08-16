@@ -172,8 +172,7 @@ void XStructWidget::reload()
     if (g_options.bGlobalHexEnable) {
         XHexView::OPTIONS options = {};
         // options.memoryMapRegion = _memoryMap;
-        ui->widgetGlobalHex->setXInfoDB(g_pInfoDB);
-        ui->widgetGlobalHex->setData(g_pDevice, options, true);
+        ui->widgetGlobalHex->setData(g_pDevice, options, true, g_pInfoDB);
         ui->widgetGlobalHex->setBytesProLine(8);
     }
 
