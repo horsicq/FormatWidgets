@@ -1074,7 +1074,7 @@ void PEProcessData::_process()
             (*g_ppModel)->setItem(i, 3, new QStandardItem(QString::number(listRichSignatures.at(i).nCount)));
             (*g_ppModel)
                 ->setItem(i, 4,
-                          new QStandardItem(SpecAbstract::getMsRichString(listRichSignatures.at(i).nId, listRichSignatures.at(i).nVersion,
+                          new QStandardItem(NFD_MSDOS::getMsRichString(listRichSignatures.at(i).nId, listRichSignatures.at(i).nVersion,
                                                                           listRichSignatures.at(i).nCount, getPdStruct())));
 
             incValue();
