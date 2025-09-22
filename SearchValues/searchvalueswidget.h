@@ -84,7 +84,7 @@ private:
 
 private:
     Ui::SearchValuesWidget *ui;
-    QIODevice *g_pDevice;
+    QIODevice *m_pDevice;
     OPTIONS g_options;
     // QStandardItemModel *g_pOldModel;
     // QFutureWatcher<void> g_watcher;
