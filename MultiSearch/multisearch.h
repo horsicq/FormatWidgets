@@ -84,7 +84,7 @@ private:
     QStandardItemModel **g_ppModel;
     QSemaphore *g_pSemaphore;
     QMutex g_mutex;
-    XBinary::PDSTRUCT *g_pPdStruct;
+    XBinary::PDSTRUCT *m_pPdStruct;
     qint32 g_nFreeIndex;
 };
 

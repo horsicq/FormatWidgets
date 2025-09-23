@@ -25,7 +25,7 @@ MultiSearch::MultiSearch(QObject *pParent) : XThreadObject(pParent)
     g_options = {};
     g_ppModel = nullptr;
     g_nFreeIndex = -1;
-    g_pPdStruct = nullptr;
+    m_pPdStruct = nullptr;
     g_pSemaphore = new QSemaphore(N_MAXNUMBEROFTHREADS);
 }
 
@@ -41,7 +41,7 @@ void MultiSearch::setSearchData(QIODevice *pDevice, QVector<XBinary::MS_RECORD> 
 
     g_options = options;
     g_type = type;
-    g_pPdStruct = pPdStruct;
+    m_pPdStruct = pPdStruct;
 }
 
 void MultiSearch::setModelData(QVector<XBinary::MS_RECORD> *pListRecords, QStandardItemModel **ppModel, OPTIONS options, TYPE type, XBinary::PDSTRUCT *pPdStruct)
@@ -51,7 +51,7 @@ void MultiSearch::setModelData(QVector<XBinary::MS_RECORD> *pListRecords, QStand
 
     g_options = options;
     g_type = type;
-    g_pPdStruct = pPdStruct;
+    m_pPdStruct = pPdStruct;
 }
 
 QList<XBinary::SIGNATUREDB_RECORD> MultiSearch::loadSignaturesFromFile(const QString &sFileName)
@@ -111,12 +111,12 @@ void MultiSearch::processSignature(XBinary::SIGNATUREDB_RECORD signatureRecord)
     binary.setDevice(g_pDevice);
 
     QVector<XBinary::MS_RECORD> listResult =
-        binary.multiSearch_signature(&(g_options.memoryMap), 0, binary.getSize(), N_MAX, signatureRecord.sSignature, signatureRecord.nNumber, g_pPdStruct);
+        binary.multiSearch_signature(&(g_options.memoryMap), 0, binary.getSize(), N_MAX, signatureRecord.sSignature, signatureRecord.nNumber, m_pPdStruct);
 
     (*g_pListRecords) += listResult;
 
-    XBinary::setPdStructStatus(g_pPdStruct, g_nFreeIndex, signatureRecord.sName);
-    XBinary::setPdStructCurrent(g_pPdStruct, g_nFreeIndex, signatureRecord.nNumber);
+    XBinary::setPdStructStatus(m_pPdStruct, g_nFreeIndex, signatureRecord.sName);
+    XBinary::setPdStructCurrent(m_pPdStruct, g_nFreeIndex, signatureRecord.nNumber);
 
     g_pSemaphore->release();
     // #ifdef QT_DEBUG
@@ -127,8 +127,8 @@ void MultiSearch::processSignature(XBinary::SIGNATUREDB_RECORD signatureRecord)
 
 void MultiSearch::process()
 {
-    g_nFreeIndex = XBinary::getFreeIndex(g_pPdStruct);
-    XBinary::setPdStructInit(g_pPdStruct, g_nFreeIndex, 0);
+    g_nFreeIndex = XBinary::getFreeIndex(m_pPdStruct);
+    XBinary::setPdStructInit(m_pPdStruct, g_nFreeIndex, 0);
 
     if ((g_type == TYPE_STRINGS) || (g_type == TYPE_STRINGS_XINFODB)) {
         XBinary binary(g_pDevice);
@@ -147,14 +147,14 @@ void MultiSearch::process()
         ssOptions.bLinks = g_options.bLinks;
         ssOptions.sMask = g_options.sMask;
 
-        *g_pListRecords = binary.multiSearch_allStrings(&(g_options.memoryMap), 0, g_pDevice->size(), ssOptions, g_pPdStruct);
+        *g_pListRecords = binary.multiSearch_allStrings(&(g_options.memoryMap), 0, g_pDevice->size(), ssOptions, m_pPdStruct);
     } else if (g_type == TYPE_VALUES) {
         XBinary binary(g_pDevice);
 
         connect(&binary, SIGNAL(errorMessage(QString)), this, SIGNAL(errorMessage(QString)));
 
         *g_pListRecords = binary.multiSearch_value(&(g_options.memoryMap), 0, g_pDevice->size(), N_MAX, g_options.varValue, g_options.valueType,
-                                                   (g_options.endian == XBinary::ENDIAN_BIG), g_pPdStruct);
+                                                   (g_options.endian == XBinary::ENDIAN_BIG), m_pPdStruct);
     } else if (g_type == TYPE_SIGNATURES) {
 #ifdef QT_DEBUG
         QElapsedTimer timer;
@@ -165,9 +165,9 @@ void MultiSearch::process()
 
         qint32 nNumberOfSignatures = g_options.pListSignatureRecords->count();
 
-        XBinary::setPdStructTotal(g_pPdStruct, g_nFreeIndex, nNumberOfSignatures);
+        XBinary::setPdStructTotal(m_pPdStruct, g_nFreeIndex, nNumberOfSignatures);
 
-        for (qint32 i = 0; (i < nNumberOfSignatures) && XBinary::isPdStructNotCanceled(g_pPdStruct); i++) {
+        for (qint32 i = 0; (i < nNumberOfSignatures) && XBinary::isPdStructNotCanceled(m_pPdStruct); i++) {
             XBinary::SIGNATUREDB_RECORD signatureRecord = g_options.pListSignatureRecords->at(i);
 
             bool bSuccess = false;
@@ -219,7 +219,7 @@ void MultiSearch::process()
 #endif
     }
 
-    XBinary::setPdStructFinished(g_pPdStruct, g_nFreeIndex);
+    XBinary::setPdStructFinished(m_pPdStruct, g_nFreeIndex);
 }
 
 QString MultiSearch::getTitle()
