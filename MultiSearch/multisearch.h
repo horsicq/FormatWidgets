@@ -77,7 +77,7 @@ public:
     virtual QString getTitle();
 
 private:
-    QIODevice *g_pDevice;
+    QIODevice *m_pDevice;
     QVector<XBinary::MS_RECORD> *g_pListRecords;
     OPTIONS g_options;
     TYPE g_type;

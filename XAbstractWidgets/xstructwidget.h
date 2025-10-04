@@ -93,7 +93,7 @@ private slots:
 
 private:
     Ui::XStructWidget *ui;
-    QIODevice *g_pDevice;
+    QIODevice *m_pDevice;
     XInfoDB *g_pInfoDB;
     OPTIONS g_options;
     XBinary::_MEMORY_MAP g_memoryMap;

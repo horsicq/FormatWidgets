@@ -25,7 +25,7 @@ XStructWidget::XStructWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(n
 {
     ui->setupUi(this);
 
-    g_pDevice = nullptr;
+    m_pDevice = nullptr;
     g_pInfoDB = nullptr;
     g_options = {};
     g_memoryMap = {};
@@ -57,7 +57,7 @@ XStructWidget::~XStructWidget()
 
 void XStructWidget::setData(QIODevice *pDevice, XInfoDB *pInfoDB, const OPTIONS &options)
 {
-    g_pDevice = pDevice;
+    m_pDevice = pDevice;
     g_pInfoDB = pInfoDB;
     g_options = options;
 
@@ -70,7 +70,7 @@ void XStructWidget::setData(QIODevice *pDevice, XInfoDB *pInfoDB, const OPTIONS 
 
 QIODevice *XStructWidget::getDevice() const
 {
-    return g_pDevice;
+    return m_pDevice;
 }
 
 XInfoDB *XStructWidget::getInfoDB() const
@@ -127,10 +127,10 @@ void XStructWidget::reload()
 {
     XStructWidget::clear();
 
-    ui->checkBoxReadonly->setEnabled(g_pDevice->isWritable());
+    ui->checkBoxReadonly->setEnabled(m_pDevice->isWritable());
 
     XBinary::FT fileType = (XBinary::FT)(ui->comboBoxType->currentData().toInt());
-    g_memoryMap = XFormats::getMemoryMap(fileType, XBinary::MAPMODE_UNKNOWN, g_pDevice, g_options.bIsImage, g_options.nImageBase);
+    g_memoryMap = XFormats::getMemoryMap(fileType, XBinary::MAPMODE_UNKNOWN, m_pDevice, g_options.bIsImage, g_options.nImageBase);
 
     XBinary::DATA_HEADERS_OPTIONS dataHeadersOptions = {};
     dataHeadersOptions.pMemoryMap = &g_memoryMap;
@@ -139,7 +139,7 @@ void XStructWidget::reload()
     dataHeadersOptions.nID = 0;
     dataHeadersOptions.bChildren = true;
 
-    g_ListDataHeaders = XFormats::getDataHeaders(fileType, g_pDevice, dataHeadersOptions);  // TODO in Progress Dialog
+    g_ListDataHeaders = XFormats::getDataHeaders(fileType, m_pDevice, dataHeadersOptions);  // TODO in Progress Dialog
 
     qint32 nNumberOfHeaders = g_ListDataHeaders.count();
 
@@ -172,7 +172,7 @@ void XStructWidget::reload()
     if (g_options.bGlobalHexEnable) {
         XHexView::OPTIONS options = {};
         // options.memoryMapRegion = _memoryMap;
-        ui->widgetGlobalHex->setData(g_pDevice, options, true, g_pInfoDB);
+        ui->widgetGlobalHex->setData(m_pDevice, options, true, g_pInfoDB);
         ui->widgetGlobalHex->setBytesProLine(8);
     }
 
@@ -314,7 +314,7 @@ void XStructWidget::reloadData(bool bSaveSelection)
     // cwOptions.memoryMap = getMemoryMap();
     // cwOptions._type = (XFW_DEF::TYPE)(ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + XFW_DEF::WIDGET_DATA_TYPE).toInt());
     // cwOptions.widgetMode = (XFW_DEF::WIDGETMODE)(ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + XFW_DEF::WIDGET_DATA_WIDGETMODE).toInt());
-    // g_pDevice = getDevice();
+    // m_pDevice = getDevice();
     // cwOptions.bIsImage = getOptions().bIsImage;
     // cwOptions.nImageBase = getOptions().nImageBase;
     // cwOptions.pXInfoDB = getXInfoDB();
@@ -406,7 +406,7 @@ XShortcutsWidget *XStructWidget::createWidget(const QString &sGUID)
             dataRecordsOptions.pMemoryMap = &g_memoryMap;
             dataRecordsOptions.dataHeaderFirst = dataHeader;
 
-            _pWidget->setData(g_pDevice, g_pInfoDB, dataRecordsOptions, false);
+            _pWidget->setData(m_pDevice, g_pInfoDB, dataRecordsOptions, false);
             pResult = _pWidget;
         } else if (dataHeader.dhMode == XBinary::DHMODE_TABLE) {
             XGenericTableWidget *_pWidget = new XGenericTableWidget(this);
@@ -415,7 +415,7 @@ XShortcutsWidget *XStructWidget::createWidget(const QString &sGUID)
             dataRecordsOptions.pMemoryMap = &g_memoryMap;
             dataRecordsOptions.dataHeaderFirst = dataHeader;
 
-            _pWidget->setData(g_pDevice, g_pInfoDB, dataRecordsOptions, false);
+            _pWidget->setData(m_pDevice, g_pInfoDB, dataRecordsOptions, false);
             pResult = _pWidget;
         } else {
 #ifdef QT_DEBUG
@@ -657,7 +657,7 @@ void XStructWidget::showCwWidgetSlot(const QString &sInitString, bool bNewWindow
     // dataHeader.dsID_parent.fileType = getFileType();
     // cwOptions._type = _getTypeFromInitString(sInitString);
     // cwOptions.widgetMode = XFW_DEF::WIDGETMODE_DIALOG_HEADER;
-    // g_pDevice = getDevice();
+    // m_pDevice = getDevice();
     // cwOptions.bIsImage = getOptions().bIsImage;
     // cwOptions.nImageBase = getOptions().nImageBase;
     // cwOptions.pXInfoDB = getXInfoDB();

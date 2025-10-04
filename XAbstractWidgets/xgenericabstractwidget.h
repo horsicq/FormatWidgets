@@ -43,7 +43,7 @@ public:
     const XBinary::DATA_RECORDS_OPTIONS &getRecordsOptions() const;
 
 private:
-    QIODevice *g_pDevice;
+    QIODevice *m_pDevice;
     XInfoDB *g_pXInfoDB;
     XBinary::DATA_RECORDS_OPTIONS g_dataRecordsOptions;
 };

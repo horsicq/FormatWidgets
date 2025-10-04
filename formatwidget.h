@@ -250,7 +250,7 @@ protected:
     virtual void registerShortcuts(bool bState);
 
 private:
-    QIODevice *g_pDevice;
+    QIODevice *m_pDevice;
     QString g_sFileName;
     FW_DEF::OPTIONS g_fwOptions;
     quint32 g_nNumber;

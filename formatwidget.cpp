@@ -22,7 +22,7 @@
 
 FormatWidget::FormatWidget(QWidget *pParent) : XShortcutsWidget(pParent)
 {
-    g_pDevice = nullptr;
+    m_pDevice = nullptr;
     g_bIsReadonly = false;
     g_fwOptions = {};
     g_bAddPageEnable = true;
@@ -42,7 +42,7 @@ FormatWidget::FormatWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 
 FormatWidget::~FormatWidget()
 {
     if (g_sFileName != "") {
-        QFile *pFile = dynamic_cast<QFile *>(g_pDevice);
+        QFile *pFile = dynamic_cast<QFile *>(m_pDevice);
 
         if (pFile) {
             pFile->close();
@@ -154,7 +154,7 @@ void FormatWidget::adjustView()
 
 void FormatWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType)
 {
-    g_pDevice = pDevice;
+    m_pDevice = pDevice;
     g_bIsReadonly = !(pDevice->isWritable());
 
     setData(options, nNumber, nOffset, nType);
@@ -202,7 +202,7 @@ XBinary::FT FormatWidget::getFileType()
 
 QIODevice *FormatWidget::getDevice()
 {
-    return this->g_pDevice;
+    return this->m_pDevice;
 }
 
 void FormatWidget::setOptions(FW_DEF::OPTIONS options)
@@ -540,7 +540,7 @@ void FormatWidget::dumpSection(QTableView *pTableView)
 
 void FormatWidget::dumpAll(QTableView *pTableView)
 {
-    QString sDirectory = QFileDialog::getExistingDirectory(this, tr("Dump all"), XBinary::getDeviceDirectory(g_pDevice));
+    QString sDirectory = QFileDialog::getExistingDirectory(this, tr("Dump all"), XBinary::getDeviceDirectory(m_pDevice));
 
     if (!sDirectory.isEmpty()) {
         qint32 nNumberOfRecords = pTableView->model()->rowCount();
@@ -562,12 +562,12 @@ void FormatWidget::dumpAll(QTableView *pTableView)
                 listRecords.append(record);
             }
 
-            QString sJsonFileName = XBinary::getDeviceFileName(g_pDevice) + ".patch.json";
+            QString sJsonFileName = XBinary::getDeviceFileName(m_pDevice) + ".patch.json";
 
             DumpProcess dumpProcess;
             XDialogProcess dd(this, &dumpProcess);
             dd.setGlobal(getShortcuts(), getGlobalOptions());
-            dumpProcess.setData(g_pDevice, listRecords, DumpProcess::DT_DUMP_DEVICE_OFFSET, sJsonFileName, dd.getPdStruct());
+            dumpProcess.setData(m_pDevice, listRecords, DumpProcess::DT_DUMP_DEVICE_OFFSET, sJsonFileName, dd.getPdStruct());
             dd.start();
             dd.showDialogDelay();
         }
@@ -1277,7 +1277,7 @@ void FormatWidget::dumpRegion(qint64 nOffset, qint64 nSize, const QString &sName
         DumpProcess dumpProcess;
         XDialogProcess dd(this, &dumpProcess);
         dd.setGlobal(getShortcuts(), getGlobalOptions());
-        dumpProcess.setData(g_pDevice, nOffset, nSize, sFileName, DumpProcess::DT_DUMP_DEVICE_OFFSET, dd.getPdStruct());
+        dumpProcess.setData(m_pDevice, nOffset, nSize, sFileName, DumpProcess::DT_DUMP_DEVICE_OFFSET, dd.getPdStruct());
         dd.start();
         dd.showDialogDelay();
     }

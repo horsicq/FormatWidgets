@@ -40,7 +40,7 @@ SearchSignaturesWidget::SearchSignaturesWidget(QWidget *pParent) : XShortcutsWid
     ui->labelInfo->setToolTip(tr("Info"));
     ui->tableViewResult->setToolTip(tr("Result"));
 
-    g_pDevice = nullptr;
+    m_pDevice = nullptr;
     g_bInit = false;
 
     ui->toolButtonPatch->setEnabled(false);
@@ -55,10 +55,10 @@ SearchSignaturesWidget::~SearchSignaturesWidget()
 
 void SearchSignaturesWidget::setData(QIODevice *pDevice, OPTIONS options, bool bAuto)
 {
-    this->g_pDevice = pDevice;
+    this->m_pDevice = pDevice;
     g_bInit = false;
 
-    XFormats::setFileTypeComboBox(options.fileType, g_pDevice, ui->comboBoxType);
+    XFormats::setFileTypeComboBox(options.fileType, m_pDevice, ui->comboBoxType);
     XFormats::setEndiannessComboBox(ui->comboBoxEndianness, XBinary::ENDIAN_LITTLE);
 
     // ui->tableViewResult->setModel(nullptr);
@@ -134,7 +134,7 @@ void SearchSignaturesWidget::reloadData(bool bSaveSelection)
 
 void SearchSignaturesWidget::on_toolButtonSave_clicked()
 {
-    XShortcutsWidget::saveTableModel(ui->tableViewResult->getProxyModel(), XBinary::getResultFileName(g_pDevice, QString("%1.txt").arg(tr("Signatures"))));
+    XShortcutsWidget::saveTableModel(ui->tableViewResult->getProxyModel(), XBinary::getResultFileName(m_pDevice, QString("%1.txt").arg(tr("Signatures"))));
 }
 
 void SearchSignaturesWidget::on_toolButtonSearch_clicked()
@@ -176,7 +176,7 @@ void SearchSignaturesWidget::_hex()
             qint64 nOffset = ui->tableViewResult->model()->data(index, Qt::UserRole + XModel_MSRecord::USERROLE_OFFSET).toLongLong();
             qint64 nSize = ui->tableViewResult->model()->data(index, Qt::UserRole + XModel_MSRecord::USERROLE_SIZE).toLongLong();
 
-            XIODevice *pSubDevice = dynamic_cast<XIODevice *>(g_pDevice);
+            XIODevice *pSubDevice = dynamic_cast<XIODevice *>(m_pDevice);
 
             if (pSubDevice) {
                 nOffset += pSubDevice->getInitLocation();
@@ -204,7 +204,7 @@ void SearchSignaturesWidget::_disasm()
 
 void SearchSignaturesWidget::search()
 {
-    if (g_pDevice) {
+    if (m_pDevice) {
         // ui->tableViewResult->setModel(nullptr);
 
         XBinary::FT fileType = (XBinary::FT)(ui->comboBoxType->currentData().toInt());
@@ -212,7 +212,7 @@ void SearchSignaturesWidget::search()
         MultiSearch::OPTIONS options = {};
 
         options.bMenu_Hex = g_options.bMenu_Hex;
-        options.memoryMap = XFormats::getMemoryMap(fileType, XBinary::MAPMODE_UNKNOWN, g_pDevice);
+        options.memoryMap = XFormats::getMemoryMap(fileType, XBinary::MAPMODE_UNKNOWN, m_pDevice);
         options.endian = (XBinary::ENDIAN)(ui->comboBoxEndianness->currentData().toUInt());
         options.pListSignatureRecords = &g_listSignatureRecords;
 
@@ -221,7 +221,7 @@ void SearchSignaturesWidget::search()
         MultiSearch multiSearch;
         XDialogProcess dsp(pParent, &multiSearch);
         dsp.setGlobal(getShortcuts(), getGlobalOptions());
-        multiSearch.setSearchData(g_pDevice, &g_listRecords, options, MultiSearch::TYPE_SIGNATURES, dsp.getPdStruct());
+        multiSearch.setSearchData(m_pDevice, &g_listRecords, options, MultiSearch::TYPE_SIGNATURES, dsp.getPdStruct());
         dsp.start();
         dsp.showDialogDelay();
 
@@ -230,7 +230,7 @@ void SearchSignaturesWidget::search()
         // dmp.processModel(&listRecords, &g_pModel, options, MultiSearch::TYPE_SIGNATURES);
         // dmp.showDialogDelay();
 
-        XModel_MSRecord *pModel = new XModel_MSRecord(g_pDevice, options.memoryMap, &g_listRecords, XBinary::VT_SIGNATURE, this);
+        XModel_MSRecord *pModel = new XModel_MSRecord(m_pDevice, options.memoryMap, &g_listRecords, XBinary::VT_SIGNATURE, this);
         pModel->setSignaturesList(&g_listSignatureRecords);
 
         ui->tableViewResult->setCustomModel(pModel, true);
@@ -304,15 +304,15 @@ void SearchSignaturesWidget::viewSelection()
 
 void SearchSignaturesWidget::reloadFileType()
 {
-    if (g_pDevice) {
+    if (m_pDevice) {
         XBinary::FT fileType = (XBinary::FT)(ui->comboBoxType->currentData().toInt());
 
         XBinary::_MEMORY_MAP memoryMap = {};
 
         if (g_options.fileType == XBinary::FT_REGION) {
-            memoryMap = XFormats::getMemoryMap(fileType, XBinary::MAPMODE_UNKNOWN, g_pDevice, true, g_options.nStartAddress);
+            memoryMap = XFormats::getMemoryMap(fileType, XBinary::MAPMODE_UNKNOWN, m_pDevice, true, g_options.nStartAddress);
         } else {
-            memoryMap = XFormats::getMemoryMap(fileType, XBinary::MAPMODE_UNKNOWN, g_pDevice);
+            memoryMap = XFormats::getMemoryMap(fileType, XBinary::MAPMODE_UNKNOWN, m_pDevice);
         }
 
         XBinary::DM disasmMode = XBinary::getDisasmMode(&memoryMap);

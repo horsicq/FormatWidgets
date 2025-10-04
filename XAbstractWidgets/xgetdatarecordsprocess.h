@@ -34,7 +34,7 @@ public:
     virtual void process();
 
 private:
-    QIODevice *g_pDevice;
+    QIODevice *m_pDevice;
     XBinary::DATA_RECORDS_OPTIONS g_dataRecordsOptions;
     QList<XBinary::DATA_RECORD_ROW> *g_pListDataRecordsRows;
     QList<QString> *g_pListTitles;

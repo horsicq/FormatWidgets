@@ -36,7 +36,7 @@ MultiSearch::~MultiSearch()
 
 void MultiSearch::setSearchData(QIODevice *pDevice, QVector<XBinary::MS_RECORD> *pListRecords, OPTIONS options, TYPE type, XBinary::PDSTRUCT *pPdStruct)
 {
-    this->g_pDevice = pDevice;
+    this->m_pDevice = pDevice;
     this->g_pListRecords = pListRecords;
 
     g_options = options;
@@ -108,7 +108,7 @@ void MultiSearch::processSignature(XBinary::SIGNATUREDB_RECORD signatureRecord)
     XBinary binary;
 
     binary.setReadWriteMutex(&g_mutex);
-    binary.setDevice(g_pDevice);
+    binary.setDevice(m_pDevice);
 
     QVector<XBinary::MS_RECORD> listResult =
         binary.multiSearch_signature(&(g_options.memoryMap), 0, binary.getSize(), N_MAX, signatureRecord.sSignature, signatureRecord.nNumber, m_pPdStruct);
@@ -131,7 +131,7 @@ void MultiSearch::process()
     XBinary::setPdStructInit(m_pPdStruct, g_nFreeIndex, 0);
 
     if ((g_type == TYPE_STRINGS) || (g_type == TYPE_STRINGS_XINFODB)) {
-        XBinary binary(g_pDevice);
+        XBinary binary(m_pDevice);
 
         connect(&binary, SIGNAL(errorMessage(QString)), this, SIGNAL(errorMessage(QString)));
 
@@ -147,13 +147,13 @@ void MultiSearch::process()
         ssOptions.bLinks = g_options.bLinks;
         ssOptions.sMask = g_options.sMask;
 
-        *g_pListRecords = binary.multiSearch_allStrings(&(g_options.memoryMap), 0, g_pDevice->size(), ssOptions, m_pPdStruct);
+        *g_pListRecords = binary.multiSearch_allStrings(&(g_options.memoryMap), 0, m_pDevice->size(), ssOptions, m_pPdStruct);
     } else if (g_type == TYPE_VALUES) {
-        XBinary binary(g_pDevice);
+        XBinary binary(m_pDevice);
 
         connect(&binary, SIGNAL(errorMessage(QString)), this, SIGNAL(errorMessage(QString)));
 
-        *g_pListRecords = binary.multiSearch_value(&(g_options.memoryMap), 0, g_pDevice->size(), N_MAX, g_options.varValue, g_options.valueType,
+        *g_pListRecords = binary.multiSearch_value(&(g_options.memoryMap), 0, m_pDevice->size(), N_MAX, g_options.varValue, g_options.valueType,
                                                    (g_options.endian == XBinary::ENDIAN_BIG), m_pPdStruct);
     } else if (g_type == TYPE_SIGNATURES) {
 #ifdef QT_DEBUG

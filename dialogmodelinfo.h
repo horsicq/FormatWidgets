@@ -51,7 +51,7 @@ protected:
 
 private:
     Ui::DialogModelInfo *ui;
-    QIODevice *g_pDevice;
+    QIODevice *m_pDevice;
     QString g_sTitle;
 };
 
