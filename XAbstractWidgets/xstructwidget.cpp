@@ -26,9 +26,9 @@ XStructWidget::XStructWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(n
     ui->setupUi(this);
 
     m_pDevice = nullptr;
-    g_pInfoDB = nullptr;
-    g_options = {};
-    g_memoryMap = {};
+    m_pInfoDB = nullptr;
+    m_options = {};
+    m_memoryMap = {};
 
     XOptions::adjustToolButton(ui->toolButtonReload, XOptions::ICONTYPE_RELOAD);
     XOptions::adjustToolButton(ui->toolButtonNext, XOptions::ICONTYPE_FORWARD, Qt::ToolButtonIconOnly);
@@ -58,12 +58,12 @@ XStructWidget::~XStructWidget()
 void XStructWidget::setData(QIODevice *pDevice, XInfoDB *pInfoDB, const OPTIONS &options)
 {
     m_pDevice = pDevice;
-    g_pInfoDB = pInfoDB;
-    g_options = options;
+    m_pInfoDB = pInfoDB;
+    m_options = options;
 
-    setGlobalHexEnable(g_options.bGlobalHexEnable);
+    setGlobalHexEnable(m_options.bGlobalHexEnable);
 
-    g_options.fileType = XFormats::setFileTypeComboBox(options.fileType, pDevice, ui->comboBoxType);
+    m_options.fileType = XFormats::setFileTypeComboBox(options.fileType, pDevice, ui->comboBoxType);
 
     reload();
 }
@@ -75,12 +75,12 @@ QIODevice *XStructWidget::getDevice() const
 
 XInfoDB *XStructWidget::getInfoDB() const
 {
-    return g_pInfoDB;
+    return m_pInfoDB;
 }
 
 XStructWidget::OPTIONS *XStructWidget::getOptions() const
 {
-    return const_cast<OPTIONS *>(&g_options);
+    return const_cast<OPTIONS *>(&m_options);
 }
 
 void XStructWidget::setGlobalHexEnable(bool bState)
@@ -112,8 +112,8 @@ void XStructWidget::clear()
 
     ui->treeWidgetNavi->clear();
 
-    g_stWidgets.clear();
-    g_mapItems.clear();
+    m_stWidgets.clear();
+    m_mapItems.clear();
 
     // XFormatWidget::reset();
 }
@@ -130,28 +130,28 @@ void XStructWidget::reload()
     ui->checkBoxReadonly->setEnabled(m_pDevice->isWritable());
 
     XBinary::FT fileType = (XBinary::FT)(ui->comboBoxType->currentData().toInt());
-    g_memoryMap = XFormats::getMemoryMap(fileType, XBinary::MAPMODE_UNKNOWN, m_pDevice, g_options.bIsImage, g_options.nImageBase);
+    m_memoryMap = XFormats::getMemoryMap(fileType, XBinary::MAPMODE_UNKNOWN, m_pDevice, m_options.bIsImage, m_options.nImageBase);
 
     XBinary::DATA_HEADERS_OPTIONS dataHeadersOptions = {};
-    dataHeadersOptions.pMemoryMap = &g_memoryMap;
+    dataHeadersOptions.pMemoryMap = &m_memoryMap;
     dataHeadersOptions.locType = XBinary::LT_OFFSET;
     dataHeadersOptions.nLocation = 0;
     dataHeadersOptions.nID = 0;
     dataHeadersOptions.bChildren = true;
 
-    g_ListDataHeaders = XFormats::getDataHeaders(fileType, m_pDevice, dataHeadersOptions);  // TODO in Progress Dialog
+    m_listDataHeaders = XFormats::getDataHeaders(fileType, m_pDevice, dataHeadersOptions);  // TODO in Progress Dialog
 
-    qint32 nNumberOfHeaders = g_ListDataHeaders.count();
+    qint32 nNumberOfHeaders = m_listDataHeaders.count();
 
-    g_mapItems.clear();
+    m_mapItems.clear();
 
     for (qint32 i = 0; i < nNumberOfHeaders; i++) {
-        XBinary::DATA_HEADER dataHeader = g_ListDataHeaders.at(i);
+        XBinary::DATA_HEADER dataHeader = m_listDataHeaders.at(i);
 
         QTreeWidgetItem *pParentItem = nullptr;
 
-        if (g_mapItems.contains(dataHeader.dsID_parent.sGUID)) {
-            pParentItem = g_mapItems.value(dataHeader.dsID_parent.sGUID);
+        if (m_mapItems.contains(dataHeader.dsID_parent.sGUID)) {
+            pParentItem = m_mapItems.value(dataHeader.dsID_parent.sGUID);
         } else {
             pParentItem = ui->treeWidgetNavi->invisibleRootItem();
         }
@@ -166,13 +166,13 @@ void XStructWidget::reload()
 
         pParentItem->addChild(pItem);
 
-        g_mapItems.insert(dataHeader.dsID.sGUID, pItem);
+        m_mapItems.insert(dataHeader.dsID.sGUID, pItem);
     }
 
-    if (g_options.bGlobalHexEnable) {
+    if (m_options.bGlobalHexEnable) {
         XHexView::OPTIONS options = {};
         // options.memoryMapRegion = _memoryMap;
-        ui->widgetGlobalHex->setData(m_pDevice, options, true, g_pInfoDB);
+        ui->widgetGlobalHex->setData(m_pDevice, options, true, m_pInfoDB);
         ui->widgetGlobalHex->setBytesProLine(8);
     }
 
@@ -257,7 +257,7 @@ void XStructWidget::adjustView()
         }
     }
 
-    if (g_options.bGlobalHexEnable) {
+    if (m_options.bGlobalHexEnable) {
         ui->widgetGlobalHex->adjustView();
     }
 }
@@ -268,7 +268,7 @@ void XStructWidget::reloadData(bool bSaveSelection)
 
     QString sGUID = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole).toString();
 
-    if (!g_stWidgets.contains(sGUID)) {
+    if (!m_stWidgets.contains(sGUID)) {
         XShortcutsWidget *pWidget = createWidget(sGUID);
         if (pWidget) {
             pWidget->setGlobal(getShortcuts(), getGlobalOptions());
@@ -293,7 +293,7 @@ void XStructWidget::reloadData(bool bSaveSelection)
             pWidget->setProperty("GUID", sGUID);
             qint32 nPosition = ui->stackedWidgetMain->addWidget(pWidget);
             ui->stackedWidgetMain->setCurrentIndex(nPosition);
-            g_stWidgets.insert(sGUID);
+            m_stWidgets.insert(sGUID);
         }
     } else {
         qint32 nNumberOfWidgets = ui->stackedWidgetMain->count();
@@ -403,19 +403,19 @@ XShortcutsWidget *XStructWidget::createWidget(const QString &sGUID)
             XGenericHeaderWidget *_pWidget = new XGenericHeaderWidget(this);
 
             XBinary::DATA_RECORDS_OPTIONS dataRecordsOptions = {};
-            dataRecordsOptions.pMemoryMap = &g_memoryMap;
+            dataRecordsOptions.pMemoryMap = &m_memoryMap;
             dataRecordsOptions.dataHeaderFirst = dataHeader;
 
-            _pWidget->setData(m_pDevice, g_pInfoDB, dataRecordsOptions, false);
+            _pWidget->setData(m_pDevice, m_pInfoDB, dataRecordsOptions, false);
             pResult = _pWidget;
         } else if (dataHeader.dhMode == XBinary::DHMODE_TABLE) {
             XGenericTableWidget *_pWidget = new XGenericTableWidget(this);
 
             XBinary::DATA_RECORDS_OPTIONS dataRecordsOptions = {};
-            dataRecordsOptions.pMemoryMap = &g_memoryMap;
+            dataRecordsOptions.pMemoryMap = &m_memoryMap;
             dataRecordsOptions.dataHeaderFirst = dataHeader;
 
-            _pWidget->setData(m_pDevice, g_pInfoDB, dataRecordsOptions, false);
+            _pWidget->setData(m_pDevice, m_pInfoDB, dataRecordsOptions, false);
             pResult = _pWidget;
         } else {
 #ifdef QT_DEBUG
@@ -528,8 +528,8 @@ XBinary::DATA_HEADER XStructWidget::searchDataHeaderByGuid(const QString &sGUID)
 {
     XBinary::DATA_HEADER dataHeader = {};
 
-    if (g_ListDataHeaders.count() > 0) {
-        dataHeader = XBinary::_searchDataHeaderByGuid(sGUID, g_ListDataHeaders);
+    if (m_listDataHeaders.count() > 0) {
+        dataHeader = XBinary::_searchDataHeaderByGuid(sGUID, m_listDataHeaders);
     }
 
     return dataHeader;
@@ -641,7 +641,7 @@ void XStructWidget::currentLocationChangedSlot(quint64 nLocation, qint32 nLocati
 {
     QString sType = sender()->property("TYPE").toString();
     if (sType != "GLOBALHEX") {
-        if (g_options.bGlobalHexEnable) {
+        if (m_options.bGlobalHexEnable) {
             if (isGlobalHexSyncEnabled()) {
                 ui->widgetGlobalHex->goToLocation(nLocation, (XBinary::LT)nLocationType, true, false, false);
                 ui->widgetGlobalHex->setLocationOffset(nLocation, (XBinary::LT)nLocationType, nSize);
@@ -721,7 +721,7 @@ void XStructWidget::showDemangleSlot(const QString &sString)
 
 void XStructWidget::findValue(quint64 nValue, XBinary::ENDIAN endian)
 {
-    getTreeWidgetNavi()->setCurrentItem(g_mapItems.value(XBinary::_searchDataHeaderById(XBinary::FT_BINARY, XBinary::STRUCTID_SEARCH, g_ListDataHeaders).dsID.sGUID));
+    getTreeWidgetNavi()->setCurrentItem(m_mapItems.value(XBinary::_searchDataHeaderById(XBinary::FT_BINARY, XBinary::STRUCTID_SEARCH, m_listDataHeaders).dsID.sGUID));
     SearchValuesWidget *pWidget = dynamic_cast<SearchValuesWidget *>(getCurrentWidget());
 
     if (pWidget) {
@@ -736,14 +736,14 @@ void XStructWidget::followLocationSlot(quint64 nLocation, qint32 nLocationType, 
             getGlobalHexView()->setLocation(nLocation, nLocationType, nSize);
         } else {
             getTreeWidgetNavi()->setCurrentItem(
-                g_mapItems.value(XBinary::_searchDataHeaderById(XBinary::FT_BINARY, XBinary::STRUCTID_HEX, g_ListDataHeaders).dsID.sGUID));
+                m_mapItems.value(XBinary::_searchDataHeaderById(XBinary::FT_BINARY, XBinary::STRUCTID_HEX, m_listDataHeaders).dsID.sGUID));
             getCurrentWidget()->setLocation(nLocation, nLocationType, nSize);
         }
     } else if (nWidgetType == XOptions::WIDGETTYPE_DISASM) {
-        getTreeWidgetNavi()->setCurrentItem(g_mapItems.value(XBinary::_searchDataHeaderById(XBinary::FT_BINARY, XBinary::STRUCTID_DISASM, g_ListDataHeaders).dsID.sGUID));
+        getTreeWidgetNavi()->setCurrentItem(m_mapItems.value(XBinary::_searchDataHeaderById(XBinary::FT_BINARY, XBinary::STRUCTID_DISASM, m_listDataHeaders).dsID.sGUID));
         getCurrentWidget()->setLocation(nLocation, nLocationType, nSize);
     } else if (nWidgetType == XOptions::WIDGETTYPE_MEMORYMAP) {
-        getTreeWidgetNavi()->setCurrentItem(g_mapItems.value(XBinary::_searchDataHeaderById(XBinary::FT_BINARY, XBinary::STRUCTID_SEARCH, g_ListDataHeaders).dsID.sGUID));
+        getTreeWidgetNavi()->setCurrentItem(m_mapItems.value(XBinary::_searchDataHeaderById(XBinary::FT_BINARY, XBinary::STRUCTID_SEARCH, m_listDataHeaders).dsID.sGUID));
         getCurrentWidget()->setLocation(nLocation, nLocationType, nSize);
     } else {
 #ifdef QT_DEBUG
