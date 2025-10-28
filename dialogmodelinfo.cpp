@@ -41,7 +41,7 @@ void DialogModelInfo::adjustView()
 void DialogModelInfo::setData(QIODevice *pDevice, const QString &sTitle, QStandardItemModel *pModel)
 {
     m_pDevice = pDevice;
-    g_sTitle = sTitle;
+    m_sTitle = sTitle;
 
     setWindowTitle(sTitle);
 
@@ -62,7 +62,7 @@ void DialogModelInfo::on_pushButtonOK_clicked()
 
 void DialogModelInfo::on_pushButtonSave_clicked()
 {
-    QString sFileName = XBinary::getResultFileName(m_pDevice, QString("%1.txt").arg(g_sTitle));
+    QString sFileName = XBinary::getResultFileName(m_pDevice, QString("%1.txt").arg(m_sTitle));
     sFileName = QFileDialog::getSaveFileName(this, tr("Save file"), sFileName, QString("%1 (*.txt);;%2 (*)").arg(tr("Text files"), tr("All files")));
 
     if (!sFileName.isEmpty()) {
