@@ -26,7 +26,7 @@ DialogSectionHeader::DialogSectionHeader(QWidget *pParent) : XShortcutsDialog(pP
 {
     ui->setupUi(this);
 
-    this->g_pWidget = nullptr;
+    this->m_pWidget = nullptr;
 }
 
 DialogSectionHeader::~DialogSectionHeader()
@@ -36,7 +36,7 @@ DialogSectionHeader::~DialogSectionHeader()
 
 void DialogSectionHeader::setWidget(FormatWidget *pWidget)
 {
-    this->g_pWidget = pWidget;
+    this->m_pWidget = pWidget;
     pWidget->setGlobal(getShortcuts(), getGlobalOptions());
 
     ui->WidgetLayout->addWidget(pWidget);
@@ -48,26 +48,26 @@ void DialogSectionHeader::setData(QIODevice *pDevice, FW_DEF::OPTIONS options, q
 {
     setWindowTitle(sTitle);
 
-    g_pWidget->setData(pDevice, options, nNumber, nOffset, nType);
-    g_pWidget->reload();
+    m_pWidget->setData(pDevice, options, nNumber, nOffset, nType);
+    m_pWidget->reload();
 }
 
 void DialogSectionHeader::setData(const QString &sTitle)
 {
     setWindowTitle(sTitle);
 
-    g_pWidget->reload();
+    m_pWidget->reload();
 }
 
 void DialogSectionHeader::setEdited(qint64 nDeviceOffset, qint64 nDeviceSize)
 {
-    g_pWidget->setEdited(nDeviceOffset, nDeviceSize);
+    m_pWidget->setEdited(nDeviceOffset, nDeviceSize);
 }
 
 void DialogSectionHeader::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
 {
-    if (g_pWidget) {
-        g_pWidget->setGlobal(pShortcuts, pXOptions);
+    if (m_pWidget) {
+        m_pWidget->setGlobal(pShortcuts, pXOptions);
     }
 
     XShortcutsDialog::setGlobal(pShortcuts, pXOptions);

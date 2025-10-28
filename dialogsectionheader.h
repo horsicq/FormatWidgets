@@ -49,7 +49,7 @@ protected:
 
 private:
     Ui::DialogSectionHeader *ui;
-    FormatWidget *g_pWidget;
+    FormatWidget *m_pWidget;
 };
 
 #endif  // DIALOGSECTIONHEADER_H
