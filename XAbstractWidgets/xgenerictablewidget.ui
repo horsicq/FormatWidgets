@@ -65,6 +65,9 @@
    </item>
    <item>
     <widget class="XTableView" name="tableViewMain">
+     <property name="contextMenuPolicy">
+      <enum>Qt::ContextMenuPolicy::CustomContextMenu</enum>
+     </property>
      <property name="selectionMode">
       <enum>QAbstractItemView::SelectionMode::SingleSelection</enum>
      </property>

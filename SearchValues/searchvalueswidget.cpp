@@ -138,11 +138,11 @@ void SearchValuesWidget::on_tableViewResult_customContextMenuRequested(const QPo
         getShortcuts()->_addMenuItem(&listMenuItems, X_ID_TABLE_FOLLOWIN_DISASM, this, SLOT(_disasm()), XShortcuts::GROUPID_FOLLOWIN);
     }
 
-    QList<QObject *> listObjects = getShortcuts()->adjustContextMenu(&contextMenu, &listMenuItems);
+    getShortcuts()->adjustContextMenu(&contextMenu, &listMenuItems);
 
     contextMenu.exec(ui->tableViewResult->viewport()->mapToGlobal(pos));
 
-    XOptions::deleteQObjectList(&listObjects);
+    
 }
 
 void SearchValuesWidget::search()

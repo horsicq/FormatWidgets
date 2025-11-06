@@ -178,11 +178,11 @@ void SearchStringsWidget::on_tableViewResult_customContextMenuRequested(const QP
         getShortcuts()->_addMenuItem(&listMenuItems, X_ID_TABLE_EDIT_STRING, this, SLOT(_editString()), XShortcuts::GROUPID_EDIT);
     }
 
-    QList<QObject *> listObjects = getShortcuts()->adjustContextMenu(&contextMenu, &listMenuItems);
+    getShortcuts()->adjustContextMenu(&contextMenu, &listMenuItems);
 
     contextMenu.exec(ui->tableViewResult->viewport()->mapToGlobal(pos));
 
-    XOptions::deleteQObjectList(&listObjects);
+
 }
 
 void SearchStringsWidget::_hex()
