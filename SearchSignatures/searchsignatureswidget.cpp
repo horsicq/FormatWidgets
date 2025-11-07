@@ -161,8 +161,6 @@ void SearchSignaturesWidget::on_tableViewResult_customContextMenuRequested(const
     getShortcuts()->adjustContextMenu(&contextMenu, &listMenuItems);
 
     contextMenu.exec(ui->tableViewResult->viewport()->mapToGlobal(pos));
-
-
 }
 
 void SearchSignaturesWidget::_hex()

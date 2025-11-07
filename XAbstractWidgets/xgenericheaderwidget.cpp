@@ -264,3 +264,17 @@ void XGenericHeaderWidget::setHeaderSelection()
         }
     }
 }
+
+void XGenericHeaderWidget::on_tableWidgetMain_customContextMenuRequested(const QPoint &pos)
+{
+    QMenu contextMenu(this);
+
+    QList<XShortcuts::MENUITEM> listMenuItems;
+
+    getShortcuts()->_addMenuItem_CopyRow(&listMenuItems, ui->tableWidgetMain);
+
+    getShortcuts()->adjustContextMenu(&contextMenu, &listMenuItems);
+
+    contextMenu.exec(ui->tableWidgetMain->viewport()->mapToGlobal(pos));
+}
+
