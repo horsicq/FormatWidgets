@@ -83,6 +83,4 @@ void XGenericTableWidget::on_toolButtonTableSave_clicked()
 
 void XGenericTableWidget::on_tableViewMain_customContextMenuRequested(const QPoint &pos)
 {
-
 }
-

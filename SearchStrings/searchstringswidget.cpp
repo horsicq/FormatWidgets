@@ -181,8 +181,6 @@ void SearchStringsWidget::on_tableViewResult_customContextMenuRequested(const QP
     getShortcuts()->adjustContextMenu(&contextMenu, &listMenuItems);
 
     contextMenu.exec(ui->tableViewResult->viewport()->mapToGlobal(pos));
-
-
 }
 
 void SearchStringsWidget::_hex()

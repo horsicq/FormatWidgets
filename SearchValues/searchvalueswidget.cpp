@@ -141,8 +141,6 @@ void SearchValuesWidget::on_tableViewResult_customContextMenuRequested(const QPo
     getShortcuts()->adjustContextMenu(&contextMenu, &listMenuItems);
 
     contextMenu.exec(ui->tableViewResult->viewport()->mapToGlobal(pos));
-
-    
 }
 
 void SearchValuesWidget::search()

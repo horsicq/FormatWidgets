@@ -277,4 +277,3 @@ void XGenericHeaderWidget::on_tableWidgetMain_customContextMenuRequested(const Q
 
     contextMenu.exec(ui->tableWidgetMain->viewport()->mapToGlobal(pos));
 }
-
