@@ -22,20 +22,20 @@
 
 DialogProcessData::DialogProcessData(QWidget *pParent, ProcessData *pProcessData, XOptions *pOptions) : XDialogProcess(pParent)
 {
-    this->g_pProcessData = pProcessData;
+    this->m_pProcessData = pProcessData;
 
     pProcessData->setPdStruct(getPdStruct());
     pProcessData->setOptions(pOptions);
 
-    g_pThread = new QThread;
+    m_pThread = new QThread;
 
-    pProcessData->moveToThread(g_pThread);
+    pProcessData->moveToThread(m_pThread);
 
-    connect(g_pThread, SIGNAL(started()), pProcessData, SLOT(process()));
+    connect(m_pThread, SIGNAL(started()), pProcessData, SLOT(process()));
     connect(pProcessData, SIGNAL(completed(qint64)), this, SLOT(onCompleted(qint64)));
     connect(pProcessData, SIGNAL(errorMessage(QString)), this, SLOT(errorMessageSlot(QString)));
 
-    g_pThread->start();
+    m_pThread->start();
 }
 
 DialogProcessData::~DialogProcessData()
@@ -43,8 +43,8 @@ DialogProcessData::~DialogProcessData()
     stop();
     waitForFinished();
 
-    g_pThread->quit();
-    g_pThread->wait();
+    m_pThread->quit();
+    m_pThread->wait();
 
-    delete g_pThread;
+    delete m_pThread;
 }

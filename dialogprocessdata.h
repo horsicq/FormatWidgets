@@ -36,8 +36,8 @@ public:
     ~DialogProcessData();
 
 private:
-    ProcessData *g_pProcessData;
-    QThread *g_pThread;
+    ProcessData *m_pProcessData;
+    QThread *m_pThread;
 };
 
 #endif  // DIALOGPROCESSDATA_H
