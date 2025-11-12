@@ -22,16 +22,16 @@
 
 XGenericAbstractWidget::XGenericAbstractWidget(QWidget *parent) : XShortcutsWidget(parent)
 {
-    g_dataRecordsOptions = {};
+    m_dataRecordsOptions = {};
     m_pDevice = nullptr;
-    g_pXInfoDB = nullptr;
+    m_pXInfoDB = nullptr;
 }
 
 void XGenericAbstractWidget::setData(QIODevice *pDevice, XInfoDB *pXInfoDB, const XBinary::DATA_RECORDS_OPTIONS &dataRecordsOptions, bool bProcess)
 {
     m_pDevice = pDevice;
-    g_pXInfoDB = pXInfoDB;
-    g_dataRecordsOptions = dataRecordsOptions;
+    m_pXInfoDB = pXInfoDB;
+    m_dataRecordsOptions = dataRecordsOptions;
 
     if (bProcess) {
         reloadData(false);
@@ -45,10 +45,10 @@ QIODevice *XGenericAbstractWidget::getDevice() const
 
 XInfoDB *XGenericAbstractWidget::getXInfoDB() const
 {
-    return g_pXInfoDB;
+    return m_pXInfoDB;
 }
 
 const XBinary::DATA_RECORDS_OPTIONS &XGenericAbstractWidget::getRecordsOptions() const
 {
-    return g_dataRecordsOptions;
+    return m_dataRecordsOptions;
 }

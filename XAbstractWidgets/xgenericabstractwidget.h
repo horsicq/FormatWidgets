@@ -44,8 +44,8 @@ public:
 
 private:
     QIODevice *m_pDevice;
-    XInfoDB *g_pXInfoDB;
-    XBinary::DATA_RECORDS_OPTIONS g_dataRecordsOptions;
+    XInfoDB *m_pXInfoDB;
+    XBinary::DATA_RECORDS_OPTIONS m_dataRecordsOptions;
 };
 
 #endif  // XGENERICABSTRACTWIDGET_H
