@@ -25,7 +25,7 @@ XGenericHeaderWidget::XGenericHeaderWidget(QWidget *parent) : XGenericAbstractWi
 {
     ui->setupUi(this);
 
-    g_nDataSize = 0;
+    m_nDataSize = 0;
 
     XOptions::adjustToolButton(ui->toolButtonTableReload, XOptions::ICONTYPE_RELOAD);
     XOptions::adjustToolButton(ui->toolButtonTableSize, XOptions::ICONTYPE_SIZE);
@@ -100,7 +100,7 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
 
         QList<XBinary::DATA_RECORD> listDataRecords = getRecordsOptions().dataHeaderFirst.listRecords;
 
-        g_nDataSize = getRecordsOptions().dataHeaderFirst.nSize;
+        m_nDataSize = getRecordsOptions().dataHeaderFirst.nSize;
 
         // Example: Populate the tableWidget with the data records
         qint32 nNumberOfRecords = listDataRecords.count();
@@ -108,8 +108,8 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
         ui->tableWidgetMain->setRowCount(nNumberOfRecords);
         ui->tableWidgetMain->clearContents();
 
-        g_listLineEditsHEX.clear();
-        g_listComboBoxes.clear();
+        m_listLineEditsHEX.clear();
+        m_listComboBoxes.clear();
 
         bool bIsReadonly = isReadonly();
 
@@ -165,7 +165,7 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
 
                 ui->tableWidgetMain->setCellWidget(i, HEADER_COLUMN_VALUE, pLineEdit);
 
-                g_listLineEditsHEX.append(pLineEdit);
+                m_listLineEditsHEX.append(pLineEdit);
             }
 
             qint32 nNumberOfComboBoxes = record.listDataValueSets.count();
@@ -189,7 +189,7 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
                     pComboBox->setValue(dataRecordRow.listValues.at(i));
                     pComboBox->setReadOnly(bIsReadonly);
 
-                    g_listComboBoxes.append(pComboBox);
+                    m_listComboBoxes.append(pComboBox);
 
                     pLayout->addWidget(pComboBox);
                 }
@@ -207,10 +207,10 @@ void XGenericHeaderWidget::reloadData(bool bSaveSelection)
 
 void XGenericHeaderWidget::setReadonly(bool bState)
 {
-    qint32 nNumberOfLineedis = g_listLineEditsHEX.count();
+    qint32 nNumberOfLineedis = m_listLineEditsHEX.count();
 
     for (qint32 i = 0; i < nNumberOfLineedis; i++) {
-        XLineEditHEX *pLineEdit = g_listLineEditsHEX.at(i);
+        XLineEditHEX *pLineEdit = m_listLineEditsHEX.at(i);
         pLineEdit->setReadOnly(bState);
     }
 
@@ -224,7 +224,7 @@ void XGenericHeaderWidget::on_toolButtonTableReload_clicked()
 
 void XGenericHeaderWidget::on_toolButtonTableSize_clicked()
 {
-    emit followLocation(getRecordsOptions().dataHeaderFirst.nLocation, getRecordsOptions().dataHeaderFirst.locType, g_nDataSize, XOptions::WIDGETTYPE_HEX);
+    emit followLocation(getRecordsOptions().dataHeaderFirst.nLocation, getRecordsOptions().dataHeaderFirst.locType, m_nDataSize, XOptions::WIDGETTYPE_HEX);
 }
 
 void XGenericHeaderWidget::on_toolButtonTableSave_clicked()

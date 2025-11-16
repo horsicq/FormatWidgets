@@ -66,9 +66,9 @@ private:
 
 private:
     Ui::XGenericHeaderWidget *ui;
-    qint64 g_nDataSize;
-    QList<XLineEditHEX *> g_listLineEditsHEX;
-    QList<XComboBoxEx *> g_listComboBoxes;
+    qint64 m_nDataSize;
+    QList<XLineEditHEX *> m_listLineEditsHEX;
+    QList<XComboBoxEx *> m_listComboBoxes;
 };
 
 #endif  // XGENERICHEADERWIDGET_H
