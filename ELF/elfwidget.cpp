@@ -840,11 +840,9 @@ void ELFWidget::on_tableView_SymbolTable_customContextMenuRequested(const QPoint
         getShortcuts()->_addMenuItem(&listMenuItems, X_ID_TABLE_DEMANGLE, this, SLOT(symbolDemangle()), XShortcuts::GROUPID_NONE);
         getShortcuts()->_addMenuItem_CopyRow(&listMenuItems, ui->tableView_SymbolTable);
 
-        QList<QObject *> listObjects = getShortcuts()->adjustContextMenu(&contextMenu, &listMenuItems);
+        getShortcuts()->adjustContextMenu(&contextMenu, &listMenuItems);
 
         contextMenu.exec(ui->tableView_SymbolTable->viewport()->mapToGlobal(pos));
-
-        XOptions::deleteQObjectList(&listObjects);
     }
 }
 

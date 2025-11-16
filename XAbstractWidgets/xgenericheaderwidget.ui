@@ -74,7 +74,11 @@
     </layout>
    </item>
    <item>
-    <widget class="QTableWidget" name="tableWidgetMain"/>
+    <widget class="QTableWidget" name="tableWidgetMain">
+     <property name="contextMenuPolicy">
+      <enum>Qt::ContextMenuPolicy::CustomContextMenu</enum>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

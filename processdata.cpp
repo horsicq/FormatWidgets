@@ -22,14 +22,14 @@
 
 ProcessData::ProcessData()
 {
-    g_pPdStruct = nullptr;
+    m_pPdStruct = nullptr;
     g_pOptions = nullptr;
     g_nFreeIndex = -1;
 }
 
 void ProcessData::setPdStruct(XBinary::PDSTRUCT *pPdStruct)
 {
-    g_pPdStruct = pPdStruct;
+    m_pPdStruct = pPdStruct;
 }
 
 void ProcessData::setOptions(XOptions *pOptions)
@@ -44,22 +44,22 @@ XOptions *ProcessData::getOptions()
 
 void ProcessData::setMaximum(quint64 nMaximum)
 {
-    XBinary::setPdStructTotal(g_pPdStruct, g_nFreeIndex, nMaximum);
+    XBinary::setPdStructTotal(m_pPdStruct, g_nFreeIndex, nMaximum);
 }
 
 void ProcessData::incValue()
 {
-    XBinary::setPdStructCurrentIncrement(g_pPdStruct, g_nFreeIndex);
+    XBinary::setPdStructCurrentIncrement(m_pPdStruct, g_nFreeIndex);
 }
 
 bool ProcessData::isRun()
 {
-    return !XBinary::isPdStructStopped(g_pPdStruct);
+    return !XBinary::isPdStructStopped(m_pPdStruct);
 }
 
 XBinary::PDSTRUCT *ProcessData::getPdStruct()
 {
-    return g_pPdStruct;
+    return m_pPdStruct;
 }
 
 void ProcessData::ajustTableView(qint32 nType, QTableView *pTableView)
@@ -115,12 +115,12 @@ void ProcessData::process()
     QElapsedTimer scanTimer;
     scanTimer.start();
 
-    g_nFreeIndex = XBinary::getFreeIndex(g_pPdStruct);
-    XBinary::setPdStructInit(g_pPdStruct, g_nFreeIndex, 0);
+    g_nFreeIndex = XBinary::getFreeIndex(m_pPdStruct);
+    XBinary::setPdStructInit(m_pPdStruct, g_nFreeIndex, 0);
 
     _process();
 
-    XBinary::setPdStructFinished(g_pPdStruct, g_nFreeIndex);
+    XBinary::setPdStructFinished(m_pPdStruct, g_nFreeIndex);
 
     emit completed(scanTimer.elapsed());
 }

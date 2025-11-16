@@ -77,14 +77,14 @@ public:
     virtual QString getTitle();
 
 private:
-    QIODevice *g_pDevice;
+    QIODevice *m_pDevice;
     QVector<XBinary::MS_RECORD> *g_pListRecords;
     OPTIONS g_options;
     TYPE g_type;
     QStandardItemModel **g_ppModel;
     QSemaphore *g_pSemaphore;
     QMutex g_mutex;
-    XBinary::PDSTRUCT *g_pPdStruct;
+    XBinary::PDSTRUCT *m_pPdStruct;
     qint32 g_nFreeIndex;
 };
 

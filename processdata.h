@@ -62,7 +62,7 @@ signals:
 
 private:
     XOptions *g_pOptions;
-    XBinary::PDSTRUCT *g_pPdStruct;
+    XBinary::PDSTRUCT *m_pPdStruct;
     qint32 g_nFreeIndex;
 };
 

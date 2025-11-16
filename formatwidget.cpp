@@ -22,16 +22,16 @@
 
 FormatWidget::FormatWidget(QWidget *pParent) : XShortcutsWidget(pParent)
 {
-    g_pDevice = nullptr;
-    g_bIsReadonly = false;
-    g_fwOptions = {};
-    g_bAddPageEnable = true;
-    g_nPageIndex = 0;  // TODO Check
-    g_pXInfoDB = nullptr;
-    g_nDisamInitAddress = -1;
+    m_pDevice = nullptr;
+    m_bIsReadonly = false;
+    m_fwOptions = {};
+    m_bAddPageEnable = true;
+    m_nPageIndex = 0;  // TODO Check
+    m_pXInfoDB = nullptr;
+    m_nDisamInitAddress = -1;
 
-    g_colDisabled = QWidget::palette().color(QPalette::Window);
-    g_colEnabled = QWidget::palette().color(QPalette::BrightText);
+    m_colDisabled = QWidget::palette().color(QPalette::Window);
+    m_colEnabled = QWidget::palette().color(QPalette::BrightText);
 }
 
 FormatWidget::FormatWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent) : FormatWidget(pParent)
@@ -41,8 +41,8 @@ FormatWidget::FormatWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 
 
 FormatWidget::~FormatWidget()
 {
-    if (g_sFileName != "") {
-        QFile *pFile = dynamic_cast<QFile *>(g_pDevice);
+    if (m_sFileName != "") {
+        QFile *pFile = dynamic_cast<QFile *>(m_pDevice);
 
         if (pFile) {
             pFile->close();
@@ -52,12 +52,12 @@ FormatWidget::~FormatWidget()
 
 void FormatWidget::setXInfoDB(XInfoDB *pXInfoDB)
 {
-    g_pXInfoDB = pXInfoDB;
+    m_pXInfoDB = pXInfoDB;
 }
 
 XInfoDB *FormatWidget::getXInfoDB()
 {
-    return g_pXInfoDB;
+    return m_pXInfoDB;
 }
 
 void FormatWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
@@ -154,15 +154,15 @@ void FormatWidget::adjustView()
 
 void FormatWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType)
 {
-    g_pDevice = pDevice;
-    g_bIsReadonly = !(pDevice->isWritable());
+    m_pDevice = pDevice;
+    m_bIsReadonly = !(pDevice->isWritable());
 
     setData(options, nNumber, nOffset, nType);
 }
 
 void FormatWidget::setData(const QString &sFileName, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType)
 {
-    g_sFileName = sFileName;
+    m_sFileName = sFileName;
 
     QFile *pFile = new QFile(sFileName);  // TODO delete !!! or use global
 
@@ -173,13 +173,13 @@ void FormatWidget::setData(const QString &sFileName, FW_DEF::OPTIONS options, qu
 
 void FormatWidget::setData(FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType)
 {
-    g_nNumber = nNumber;
-    g_nOffset = nOffset;
-    g_nType = nType;
+    m_nNumber = nNumber;
+    m_nOffset = nOffset;
+    m_nType = nType;
 
-    g_listPages.clear();
-    g_nPageIndex = 0;
-    g_bAddPageEnable = true;
+    m_listPages.clear();
+    m_nPageIndex = 0;
+    m_bAddPageEnable = true;
 
 #ifdef QT_DEBUG
     if (options.nImageBase == 0) {
@@ -192,47 +192,47 @@ void FormatWidget::setData(FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOff
 
 void FormatWidget::setFileType(XBinary::FT fileType)
 {
-    g_fileType = fileType;
+    m_fileType = fileType;
 }
 
 XBinary::FT FormatWidget::getFileType()
 {
-    return g_fileType;
+    return m_fileType;
 }
 
 QIODevice *FormatWidget::getDevice()
 {
-    return this->g_pDevice;
+    return this->m_pDevice;
 }
 
 void FormatWidget::setOptions(FW_DEF::OPTIONS options)
 {
-    g_fwOptions = options;
+    m_fwOptions = options;
 }
 
 FW_DEF::OPTIONS FormatWidget::getOptions()
 {
-    return g_fwOptions;
+    return m_fwOptions;
 }
 
 quint32 FormatWidget::getNumber()
 {
-    return g_nNumber;
+    return m_nNumber;
 }
 
 qint64 FormatWidget::getOffset()
 {
-    return g_nOffset;
+    return m_nOffset;
 }
 
 qint32 FormatWidget::getType()
 {
-    return g_nType;
+    return m_nType;
 }
 
 bool FormatWidget::isReadonly()
 {
-    return g_bIsReadonly;
+    return m_bIsReadonly;
 }
 
 QTreeWidgetItem *FormatWidget::createNewItem(qint32 nType, const QString &sTitle, XOptions::ICONTYPE iconType, qint64 nOffset, qint64 nSize, qint64 nExtraOffset,
@@ -402,18 +402,18 @@ void FormatWidget::setHeaderTableSelection(ToolsWidget *pToolWidget, QTableWidge
 
 QColor FormatWidget::getEnabledColor()
 {
-    return g_colEnabled;
+    return m_colEnabled;
 }
 
 QColor FormatWidget::getDisabledColor()
 {
-    return g_colDisabled;
+    return m_colDisabled;
 }
 
 void FormatWidget::setItemEnable(QTableWidgetItem *pItem, bool bState)
 {
     if (!bState) {
-        pItem->setBackground(g_colDisabled);
+        pItem->setBackground(m_colDisabled);
     }
 }
 
@@ -540,7 +540,7 @@ void FormatWidget::dumpSection(QTableView *pTableView)
 
 void FormatWidget::dumpAll(QTableView *pTableView)
 {
-    QString sDirectory = QFileDialog::getExistingDirectory(this, tr("Dump all"), XBinary::getDeviceDirectory(g_pDevice));
+    QString sDirectory = QFileDialog::getExistingDirectory(this, tr("Dump all"), XBinary::getDeviceDirectory(m_pDevice));
 
     if (!sDirectory.isEmpty()) {
         qint32 nNumberOfRecords = pTableView->model()->rowCount();
@@ -562,12 +562,12 @@ void FormatWidget::dumpAll(QTableView *pTableView)
                 listRecords.append(record);
             }
 
-            QString sJsonFileName = XBinary::getDeviceFileName(g_pDevice) + ".patch.json";
+            QString sJsonFileName = XBinary::getDeviceFileName(m_pDevice) + ".patch.json";
 
             DumpProcess dumpProcess;
             XDialogProcess dd(this, &dumpProcess);
             dd.setGlobal(getShortcuts(), getGlobalOptions());
-            dumpProcess.setData(g_pDevice, listRecords, DumpProcess::DT_DUMP_DEVICE_OFFSET, sJsonFileName, dd.getPdStruct());
+            dumpProcess.setData(m_pDevice, listRecords, DumpProcess::DT_DUMP_DEVICE_OFFSET, sJsonFileName, dd.getPdStruct());
             dd.start();
             dd.showDialogDelay();
         }
@@ -637,8 +637,8 @@ void FormatWidget::setTreeItem(QTreeWidget *pTree, qint32 nID)
 
 void FormatWidget::reset()
 {
-    g_mapInit.clear();
-    g_listPages.clear();
+    m_mapInit.clear();
+    m_listPages.clear();
 }
 
 QString FormatWidget::getInitString(QTreeWidgetItem *pItem)
@@ -656,31 +656,31 @@ QString FormatWidget::getInitString(QTreeWidgetItem *pItem)
 
 void FormatWidget::addInit(const QString &sString)
 {
-    g_mapInit.insert(sString.section("-", 0, 0), sString);
+    m_mapInit.insert(sString.section("-", 0, 0), sString);
 }
 
 bool FormatWidget::isInitPresent(const QString &sString)
 {
-    return (g_mapInit.value(sString.section("-", 0, 0)) == sString);
+    return (m_mapInit.value(sString.section("-", 0, 0)) == sString);
 }
 
 void FormatWidget::addPage(QTreeWidgetItem *pItem)
 {
-    if (g_bAddPageEnable) {
-        qint32 nNumberOfPages = g_listPages.count();
+    if (m_bAddPageEnable) {
+        qint32 nNumberOfPages = m_listPages.count();
 
-        for (qint32 i = nNumberOfPages - 1; i > g_nPageIndex; i--) {
-            g_listPages.removeAt(i);
+        for (qint32 i = nNumberOfPages - 1; i > m_nPageIndex; i--) {
+            m_listPages.removeAt(i);
         }
 
-        g_listPages.append(pItem);
-        g_nPageIndex = g_listPages.count() - 1;
+        m_listPages.append(pItem);
+        m_nPageIndex = m_listPages.count() - 1;
     }
 }
 
 void FormatWidget::setAddPageEnabled(bool bEnable)
 {
-    g_bAddPageEnable = bEnable;
+    m_bAddPageEnable = bEnable;
 }
 
 QTreeWidgetItem *FormatWidget::getPrevPage()
@@ -688,8 +688,8 @@ QTreeWidgetItem *FormatWidget::getPrevPage()
     QTreeWidgetItem *pResult = 0;
 
     if (isPrevPageAvailable()) {
-        g_nPageIndex--;
-        pResult = g_listPages.at(g_nPageIndex);
+        m_nPageIndex--;
+        pResult = m_listPages.at(m_nPageIndex);
     }
 
     return pResult;
@@ -700,8 +700,8 @@ QTreeWidgetItem *FormatWidget::getNextPage()
     QTreeWidgetItem *pResult = 0;
 
     if (isNextPageAvailable()) {
-        g_nPageIndex++;
-        pResult = g_listPages.at(g_nPageIndex);
+        m_nPageIndex++;
+        pResult = m_listPages.at(m_nPageIndex);
     }
 
     return pResult;
@@ -709,12 +709,12 @@ QTreeWidgetItem *FormatWidget::getNextPage()
 
 bool FormatWidget::isPrevPageAvailable()
 {
-    return g_nPageIndex > 0;
+    return m_nPageIndex > 0;
 }
 
 bool FormatWidget::isNextPageAvailable()
 {
-    return g_nPageIndex < (g_listPages.count() - 1);
+    return m_nPageIndex < (m_listPages.count() - 1);
 }
 
 void FormatWidget::initWidget()
@@ -1036,12 +1036,12 @@ qint32 FormatWidget::getColumnWidth(QWidget *pParent, FormatWidget::CW cw, XBina
 
 void FormatWidget::setDisasmInitAddress(XADDR nDisasmInitAddress)
 {
-    g_nDisamInitAddress = nDisasmInitAddress;
+    m_nDisamInitAddress = nDisasmInitAddress;
 }
 
 XADDR FormatWidget::getDisasmInitAddress()
 {
-    return g_nDisamInitAddress;
+    return m_nDisamInitAddress;
 }
 
 QStandardItemModel *FormatWidget::getHeaderTableModel(QTableWidget *pTableWidget)
@@ -1277,7 +1277,7 @@ void FormatWidget::dumpRegion(qint64 nOffset, qint64 nSize, const QString &sName
         DumpProcess dumpProcess;
         XDialogProcess dd(this, &dumpProcess);
         dd.setGlobal(getShortcuts(), getGlobalOptions());
-        dumpProcess.setData(g_pDevice, nOffset, nSize, sFileName, DumpProcess::DT_DUMP_DEVICE_OFFSET, dd.getPdStruct());
+        dumpProcess.setData(m_pDevice, nOffset, nSize, sFileName, DumpProcess::DT_DUMP_DEVICE_OFFSET, dd.getPdStruct());
         dd.start();
         dd.showDialogDelay();
     }

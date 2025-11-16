@@ -81,7 +81,7 @@ private slots:
 
 private:
     Ui::SearchSignaturesWidget *ui;
-    QIODevice *g_pDevice;
+    QIODevice *m_pDevice;
     bool g_bInit;
     // QStandardItemModel *g_pOldModel;
     // QFutureWatcher<void> g_watcher;

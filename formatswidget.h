@@ -66,11 +66,6 @@ class FormatsWidget : public XShortcutsWidget {
         TABINFO_MACH,
     };
 
-signals:
-    void scanProgress(int value);
-    void scanStarted();
-    void scanFinished();
-
 public:
     explicit FormatsWidget(QWidget *pParent = nullptr);
     ~FormatsWidget();
@@ -150,13 +145,18 @@ private slots:
     void on_toolButtonMANIFESTMF_clicked();
     void on_toolButtonAndroidManifest_clicked();
 
+signals:
+    void scanProgress(int value);
+    void scanStarted();
+    void scanFinished();
+
 protected:
     virtual void registerShortcuts(bool bState);
 
 private:
     Ui::FormatsWidget *ui;
-    QString g_sFileName;
-    bool g_bScan;
+    QString m_sFileName;
+    bool m_bScan;
 };
 
 #endif  // FORMATSWIDGET_H

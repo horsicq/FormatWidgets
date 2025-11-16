@@ -61,7 +61,7 @@ protected:
 
 private:
     Ui::ToolsWidget *ui;
-    QIODevice *g_pDevice;
+    QIODevice *m_pDevice;
     SearchStringsWidget::OPTIONS g_stringsOptions;
 };
 

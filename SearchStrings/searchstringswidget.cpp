@@ -48,7 +48,7 @@ SearchStringsWidget::SearchStringsWidget(QWidget *pParent) : XShortcutsWidget(pP
     ui->spinBoxMinLength->setToolTip(tr("Min length"));
     ui->tableViewResult->setToolTip(tr("Result"));
 
-    g_pDevice = nullptr;
+    m_pDevice = nullptr;
 
     g_options.nBaseAddress = 0;
     g_bInit = false;
@@ -90,9 +90,9 @@ SearchStringsWidget::~SearchStringsWidget()
 
 void SearchStringsWidget::setData(QIODevice *pDevice, XBinary::FT fileType, OPTIONS options, bool bAuto)
 {
-    this->g_pDevice = pDevice;
+    this->m_pDevice = pDevice;
 
-    XBinary::FT _fileType = XFormats::setFileTypeComboBox(fileType, g_pDevice, ui->comboBoxType);
+    XBinary::FT _fileType = XFormats::setFileTypeComboBox(fileType, m_pDevice, ui->comboBoxType);
     XFormats::getMapModesList(_fileType, ui->comboBoxMapMode);
 
     ui->checkBoxAnsi->setChecked(options.bAnsi);
@@ -118,7 +118,7 @@ void SearchStringsWidget::setData(QIODevice *pDevice, XBinary::FT fileType, OPTI
 
 QIODevice *SearchStringsWidget::getDevice()
 {
-    return g_pDevice;
+    return m_pDevice;
 }
 
 void SearchStringsWidget::reload()
@@ -146,7 +146,7 @@ void SearchStringsWidget::reloadData(bool bSaveSelection)
 
 void SearchStringsWidget::on_toolButtonSave_clicked()
 {
-    XShortcutsWidget::saveTableModel(ui->tableViewResult->getProxyModel(), XBinary::getResultFileName(g_pDevice, QString("%1.txt").arg(tr("Strings"))));
+    XShortcutsWidget::saveTableModel(ui->tableViewResult->getProxyModel(), XBinary::getResultFileName(m_pDevice, QString("%1.txt").arg(tr("Strings"))));
 }
 
 void SearchStringsWidget::on_toolButtonSearch_clicked()
@@ -178,11 +178,9 @@ void SearchStringsWidget::on_tableViewResult_customContextMenuRequested(const QP
         getShortcuts()->_addMenuItem(&listMenuItems, X_ID_TABLE_EDIT_STRING, this, SLOT(_editString()), XShortcuts::GROUPID_EDIT);
     }
 
-    QList<QObject *> listObjects = getShortcuts()->adjustContextMenu(&contextMenu, &listMenuItems);
+    getShortcuts()->adjustContextMenu(&contextMenu, &listMenuItems);
 
     contextMenu.exec(ui->tableViewResult->viewport()->mapToGlobal(pos));
-
-    XOptions::deleteQObjectList(&listObjects);
 }
 
 void SearchStringsWidget::_hex()
@@ -196,7 +194,7 @@ void SearchStringsWidget::_hex()
             qint64 nOffset = ui->tableViewResult->model()->data(index, Qt::UserRole + XModel_MSRecord::USERROLE_OFFSET).toLongLong();
             qint64 nSize = ui->tableViewResult->model()->data(index, Qt::UserRole + XModel_MSRecord::USERROLE_SIZE).toLongLong();
 
-            XIODevice *pSubDevice = dynamic_cast<XIODevice *>(g_pDevice);
+            XIODevice *pSubDevice = dynamic_cast<XIODevice *>(m_pDevice);
 
             if (pSubDevice) {
                 nOffset += pSubDevice->getInitLocation();
@@ -258,7 +256,7 @@ void SearchStringsWidget::_editString()
 
             dataStruct.sString = ui->tableViewResult->model()->data(indexValue).toString();
 
-            DialogEditString dialogEditString(this, g_pDevice, &dataStruct);
+            DialogEditString dialogEditString(this, m_pDevice, &dataStruct);
             dialogEditString.setGlobal(getShortcuts(), getGlobalOptions());
 
             if (dialogEditString.exec() == QDialog::Accepted)  // TODO use status
@@ -266,7 +264,7 @@ void SearchStringsWidget::_editString()
                 bool bSuccess = false;
 
                 if (XBinary::saveBackup(XBinary::getBackupDevice(getDevice()))) {
-                    if (XBinary::write_array(g_pDevice, dataStruct.nOffset,
+                    if (XBinary::write_array(m_pDevice, dataStruct.nOffset,
                                              XBinary::getStringData(dataStruct.valueType, dataStruct.sString, dataStruct.bIsNullTerminated))) {
                         ui->tableViewResult->model()->setData(indexNumber, dataStruct.nSize, Qt::UserRole + XModel_MSRecord::USERROLE_SIZE);
                         ui->tableViewResult->model()->setData(indexNumber, dataStruct.valueType, Qt::UserRole + XModel_MSRecord::USERROLE_STRING1);
@@ -292,7 +290,7 @@ void SearchStringsWidget::_editString()
 
 void SearchStringsWidget::search()
 {
-    if (g_pDevice) {
+    if (m_pDevice) {
         g_options.bAnsi = ui->checkBoxAnsi->isChecked();
         // g_options.bUTF8 = ui->checkBoxUTF8->isChecked();
         g_options.bUnicode = ui->checkBoxUnicode->isChecked();
@@ -319,9 +317,9 @@ void SearchStringsWidget::search()
             options.sMask = g_options.sMask;
 
             if (fileType == XBinary::FT_REGION) {
-                options.memoryMap = XBinary(g_pDevice, true, g_options.nBaseAddress).getMemoryMap();
+                options.memoryMap = XBinary(m_pDevice, true, g_options.nBaseAddress).getMemoryMap();
             } else {
-                options.memoryMap = XFormats::getMemoryMap(fileType, mapMode, g_pDevice);
+                options.memoryMap = XFormats::getMemoryMap(fileType, mapMode, m_pDevice);
             }
 
             QWidget *pParent = XOptions::getMainWidget(this);
@@ -331,7 +329,7 @@ void SearchStringsWidget::search()
             MultiSearch multiSearch;
             XDialogProcess dsp(pParent, &multiSearch);
             dsp.setGlobal(getShortcuts(), getGlobalOptions());
-            multiSearch.setSearchData(g_pDevice, &g_listRecords, options, MultiSearch::TYPE_STRINGS, dsp.getPdStruct());
+            multiSearch.setSearchData(m_pDevice, &g_listRecords, options, MultiSearch::TYPE_STRINGS, dsp.getPdStruct());
             dsp.start();
             dsp.showDialogDelay();
 
@@ -340,7 +338,7 @@ void SearchStringsWidget::search()
             // dmp.processModel(&listRecords, &g_pModel, options, MultiSearch::TYPE_STRINGS);
             // dmp.showDialogDelay();
 
-            XModel_MSRecord *pModel = new XModel_MSRecord(g_pDevice, options.memoryMap, &g_listRecords, XBinary::VT_STRING, this);
+            XModel_MSRecord *pModel = new XModel_MSRecord(m_pDevice, options.memoryMap, &g_listRecords, XBinary::VT_STRING, this);
 
             ui->tableViewResult->setCustomModel(pModel, true);
 

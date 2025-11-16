@@ -255,7 +255,7 @@ private:
     XLineEditHEX *g_lineEdit_EXPORT[N_IMAGE_EXPORT::__data_size];
     XLineEditHEX *g_lineEdit_Resources[N_IMAGE_RESOURCES::__data_size];
     XLineEditHEX *g_lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::__data_size];
-    XComboBoxEx *g_comboBox[__CB_size];
+    XComboBoxEx *m_comboBox[__CB_size];
     QPushButton *g_pushButton[__PB_size];
     XDateTimeEditX *g_dateTimeEdit[__TD_size];
     InvWidget *g_invWidget[__INV_size];

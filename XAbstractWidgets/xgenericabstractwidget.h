@@ -43,9 +43,9 @@ public:
     const XBinary::DATA_RECORDS_OPTIONS &getRecordsOptions() const;
 
 private:
-    QIODevice *g_pDevice;
-    XInfoDB *g_pXInfoDB;
-    XBinary::DATA_RECORDS_OPTIONS g_dataRecordsOptions;
+    QIODevice *m_pDevice;
+    XInfoDB *m_pXInfoDB;
+    XBinary::DATA_RECORDS_OPTIONS m_dataRecordsOptions;
 };
 
 #endif  // XGENERICABSTRACTWIDGET_H

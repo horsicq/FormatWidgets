@@ -250,22 +250,22 @@ protected:
     virtual void registerShortcuts(bool bState);
 
 private:
-    QIODevice *g_pDevice;
-    QString g_sFileName;
-    FW_DEF::OPTIONS g_fwOptions;
-    quint32 g_nNumber;
-    qint64 g_nOffset;
-    quint32 g_nType;
-    bool g_bIsReadonly;
-    QColor g_colEnabled;
-    QColor g_colDisabled;
-    XBinary::FT g_fileType;
-    QList<QTreeWidgetItem *> g_listPages;
-    qint32 g_nPageIndex;
-    bool g_bAddPageEnable;
-    QMap<QString, QString> g_mapInit;
-    XInfoDB *g_pXInfoDB;
-    XADDR g_nDisamInitAddress;
+    QIODevice *m_pDevice;
+    QString m_sFileName;
+    FW_DEF::OPTIONS m_fwOptions;
+    quint32 m_nNumber;
+    qint64 m_nOffset;
+    quint32 m_nType;
+    bool m_bIsReadonly;
+    QColor m_colEnabled;
+    QColor m_colDisabled;
+    XBinary::FT m_fileType;
+    QList<QTreeWidgetItem *> m_listPages;
+    qint32 m_nPageIndex;
+    bool m_bAddPageEnable;
+    QMap<QString, QString> m_mapInit;
+    XInfoDB *m_pXInfoDB;
+    XADDR m_nDisamInitAddress;
 };
 
 #endif  // FORMATWIDGET_H

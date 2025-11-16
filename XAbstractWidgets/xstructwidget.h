@@ -25,6 +25,7 @@
 #include "dialogdemangle.h"
 #include "dialogwidget.h"
 #include "xoptions.h"
+#include "xshortcutswidget.h"
 #include "xshortcutsdialog.h"
 #include "xtableview.h"
 #include "xgenericheaderwidget.h"
@@ -93,13 +94,13 @@ private slots:
 
 private:
     Ui::XStructWidget *ui;
-    QIODevice *g_pDevice;
-    XInfoDB *g_pInfoDB;
-    OPTIONS g_options;
-    XBinary::_MEMORY_MAP g_memoryMap;
-    QList<XBinary::DATA_HEADER> g_ListDataHeaders;
-    QSet<QString> g_stWidgets;
-    QMap<QString, QTreeWidgetItem *> g_mapItems;
+    QIODevice *m_pDevice;
+    XInfoDB *m_pInfoDB;
+    OPTIONS m_options;
+    XBinary::_MEMORY_MAP m_memoryMap;
+    QList<XBinary::DATA_HEADER> m_listDataHeaders;
+    QSet<QString> m_stWidgets;
+    QMap<QString, QTreeWidgetItem *> m_mapItems;
 };
 
 #endif  // XSTRUCTWIDGET_H

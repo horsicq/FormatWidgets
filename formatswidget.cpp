@@ -160,12 +160,12 @@ FormatsWidget::FormatsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(n
 
 void FormatsWidget::setFileName(const QString &sFileName, bool bScan)
 {
-    this->g_sFileName = sFileName;
-    this->g_bScan = bScan;
+    this->m_sFileName = sFileName;
+    this->m_bScan = bScan;
 
     enableControls(sFileName != "");
 
-    XFormats::setFileTypeComboBox(XBinary::FT_UNKNOWN, g_sFileName, ui->comboBoxFileType, XBinary::TL_OPTION_ALL);
+    XFormats::setFileTypeComboBox(XBinary::FT_UNKNOWN, m_sFileName, ui->comboBoxFileType, XBinary::TL_OPTION_ALL);
 
     reload();
 }
@@ -243,7 +243,7 @@ void FormatsWidget::reload()
     XBinary::FT fileType = getCurrentFileType();
 
     QFile file;
-    file.setFileName(g_sFileName);
+    file.setFileName(m_sFileName);
 
     if (file.open(QIODevice::ReadOnly)) {
         ui->lineEditFileSize->setValue_uint64(file.size(), XLineEditHEX::_MODE_SIZE);
@@ -494,16 +494,16 @@ void FormatsWidget::scan()
 
     adjustScanTab(sData);
 
-    if (g_sFileName != "") {
+    if (m_sFileName != "") {
         if (sData == "die") {
-            ui->pageScanDIE->setData(g_sFileName, g_bScan, getCurrentFileType());
+            ui->pageScanDIE->setData(m_sFileName, m_bScan, getCurrentFileType());
         } else if (sData == "nfd") {
-            ui->pageScanNFD->setData(g_sFileName, g_bScan, getCurrentFileType());
+            ui->pageScanNFD->setData(m_sFileName, m_bScan, getCurrentFileType());
 #ifdef USE_YARA
         } else if (sData == "yara") {
             YARA_Widget::OPTIONS options = {};
             options.bHandleInfo = true;
-            ui->pageScanYARA->setData(g_sFileName, options, g_bScan);
+            ui->pageScanYARA->setData(m_sFileName, options, m_bScan);
 #endif
         }
     }
@@ -614,7 +614,7 @@ void FormatsWidget::on_toolButtonMACHLibraries_clicked()
 void FormatsWidget::showMSDOS(SMSDOS::TYPE type)
 {
     QFile file;
-    file.setFileName(g_sFileName);
+    file.setFileName(m_sFileName);
 
     if (XBinary::tryToOpen(&file)) {
         FW_DEF::OPTIONS options = {};
@@ -635,7 +635,7 @@ void FormatsWidget::showMSDOS(SMSDOS::TYPE type)
 void FormatsWidget::showLE(SLE::TYPE type)
 {
     QFile file;
-    file.setFileName(g_sFileName);
+    file.setFileName(m_sFileName);
 
     if (XBinary::tryToOpen(&file)) {
         FW_DEF::OPTIONS options = {};
@@ -656,7 +656,7 @@ void FormatsWidget::showLE(SLE::TYPE type)
 void FormatsWidget::showNE(SNE::TYPE type)
 {
     QFile file;
-    file.setFileName(g_sFileName);
+    file.setFileName(m_sFileName);
 
     if (XBinary::tryToOpen(&file)) {
         FW_DEF::OPTIONS options = {};
@@ -677,7 +677,7 @@ void FormatsWidget::showNE(SNE::TYPE type)
 void FormatsWidget::showPE(SPE::TYPE type)
 {
     QFile file;
-    file.setFileName(g_sFileName);
+    file.setFileName(m_sFileName);
 
     if (XBinary::tryToOpen(&file)) {
         FW_DEF::OPTIONS options = {};
@@ -698,7 +698,7 @@ void FormatsWidget::showPE(SPE::TYPE type)
 void FormatsWidget::showELF(SELF::TYPE type)
 {
     QFile file;
-    file.setFileName(g_sFileName);
+    file.setFileName(m_sFileName);
 
     if (XBinary::tryToOpen(&file)) {
         FW_DEF::OPTIONS options = {};
@@ -719,7 +719,7 @@ void FormatsWidget::showELF(SELF::TYPE type)
 void FormatsWidget::showMACH(SMACH::TYPE type)
 {
     QFile file;
-    file.setFileName(g_sFileName);
+    file.setFileName(m_sFileName);
 
     if (XBinary::tryToOpen(&file)) {
         FW_DEF::OPTIONS options = {};
@@ -740,7 +740,7 @@ void FormatsWidget::showMACH(SMACH::TYPE type)
 void FormatsWidget::showDEX(SDEX::TYPE type)
 {
     QFile file;
-    file.setFileName(g_sFileName);
+    file.setFileName(m_sFileName);
 
     if (XBinary::tryToOpen(&file)) {
         FW_DEF::OPTIONS options = {};
@@ -761,7 +761,7 @@ void FormatsWidget::showDEX(SDEX::TYPE type)
 void FormatsWidget::showBinary(SBINARY::TYPE type)
 {
     QFile file;
-    file.setFileName(g_sFileName);
+    file.setFileName(m_sFileName);
 
     if (XBinary::tryToOpen(&file)) {
         FW_DEF::OPTIONS options = {};
@@ -1076,7 +1076,7 @@ void FormatsWidget::on_toolButtonFileInfo_clicked()
 
 void FormatsWidget::on_toolButtonMIME_clicked()
 {
-    QString sFileName = g_sFileName;
+    QString sFileName = m_sFileName;
 
     if (sFileName != "") {
         QFile file;
@@ -1123,7 +1123,7 @@ void FormatsWidget::on_toolButtonVirusTotal_clicked()
     if (getGlobalOptions()->getVirusTotalApiKey() != "") {
         showType(SBINARY::TYPE_VIRUSTOTAL);
     } else {
-        QString sFileName = g_sFileName;
+        QString sFileName = m_sFileName;
 
         if (sFileName != "") {
             QFile file;
@@ -1151,13 +1151,13 @@ void FormatsWidget::on_toolButtonSearch_clicked()
 
 void FormatsWidget::on_toolButtonUnpack_clicked()
 {
-    QString sInitDirectory = QFileInfo(g_sFileName).absolutePath();
+    QString sInitDirectory = QFileInfo(m_sFileName).absolutePath();
     QString sDirectoryName = QFileDialog::getExistingDirectory(this, tr("Open directory") + QString("..."), sInitDirectory, QFileDialog::ShowDirsOnly);
 
     if (!sDirectoryName.isEmpty()) {
         DialogUnpackFile dialogUnpackFile(this);
         dialogUnpackFile.setGlobal(getShortcuts(), getGlobalOptions());
-        dialogUnpackFile.setData(g_sFileName, sDirectoryName);
+        dialogUnpackFile.setData(m_sFileName, sDirectoryName);
 
         dialogUnpackFile.showDialogDelay();
     }
@@ -1170,7 +1170,7 @@ void FormatsWidget::on_toolButtonFiles_clicked()
 
     FW_DEF::OPTIONS options = {};
 
-    dialogArchive.setFileName(g_sFileName, getCurrentFileType(), options, QSet<XBinary::FT>());  // TODO Set current FT
+    dialogArchive.setFileName(m_sFileName, getCurrentFileType(), options, QSet<XBinary::FT>());  // TODO Set current FT
 
     dialogArchive.exec();
 }
@@ -1211,7 +1211,7 @@ void FormatsWidget::on_toolButtonMANIFESTMF_clicked()
 {
     DialogTextInfo dialogTextInfo(this);
 
-    dialogTextInfo.setArchive(g_sFileName, "META-INF/MANIFEST.MF");
+    dialogTextInfo.setArchive(m_sFileName, "META-INF/MANIFEST.MF");
 
     dialogTextInfo.exec();
 }
@@ -1220,7 +1220,7 @@ void FormatsWidget::on_toolButtonAndroidManifest_clicked()
 {
     DialogTextInfo dialogTextInfo(this);
 
-    QByteArray baData = XArchives::decompress(g_sFileName, "AndroidManifest.xml");
+    QByteArray baData = XArchives::decompress(m_sFileName, "AndroidManifest.xml");
     if (baData.size() > 0) {
         QString sAndroidManifest = XAndroidBinary::getDecoded(&baData, nullptr);
         dialogTextInfo.setText(sAndroidManifest);

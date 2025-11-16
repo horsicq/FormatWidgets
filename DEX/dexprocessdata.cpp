@@ -22,11 +22,11 @@
 
 DEXProcessData::DEXProcessData(qint32 nType, QStandardItemModel **ppModel, XDEX *pDEX, qint64 nOffset, qint64 nSize) : ProcessData()
 {
-    this->g_nType = nType;
-    this->g_ppModel = ppModel;
-    this->g_pDEX = pDEX;
-    this->g_nOffset = nOffset;
-    this->g_nSize = nSize;
+    g_nType = nType;
+    g_ppModel = ppModel;
+    g_pDEX = pDEX;
+    g_nOffset = nOffset;
+    g_nSize = nSize;
 }
 
 void DEXProcessData::_process()

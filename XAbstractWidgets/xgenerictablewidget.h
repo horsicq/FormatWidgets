@@ -41,6 +41,7 @@ public:
 private slots:
     void on_toolButtonTableReload_clicked();
     void on_toolButtonTableSave_clicked();
+    void on_tableViewMain_customContextMenuRequested(const QPoint &pos);
 
 private:
     Ui::XGenericTableWidget *ui;

@@ -79,7 +79,7 @@ void PEWidget::clear()
     memset(g_lineEdit_Net_Metadata, 0, sizeof g_lineEdit_Net_Metadata);
     memset(g_lineEdit_EXPORT, 0, sizeof g_lineEdit_EXPORT);
     memset(g_lineEdit_Resources, 0, sizeof g_lineEdit_Resources);
-    memset(g_comboBox, 0, sizeof g_comboBox);
+    memset(m_comboBox, 0, sizeof m_comboBox);
     memset(g_pushButton, 0, sizeof g_pushButton);
     memset(g_dateTimeEdit, 0, sizeof g_dateTimeEdit);
     memset(g_invWidget, 0, sizeof g_invWidget);
@@ -296,33 +296,33 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue, qint32 nStype, qint32 nNda
             switch (nStype) {
                 case SPE::TYPE_IMAGE_DOS_HEADER:
                     switch (nNdata) {
-                        case N_IMAGE_DOS_HEADER::e_magic: g_comboBox[CB_IMAGE_DOS_HEADER_e_magic]->setValue(nValue); break;
+                        case N_IMAGE_DOS_HEADER::e_magic: m_comboBox[CB_IMAGE_DOS_HEADER_e_magic]->setValue(nValue); break;
                         case N_IMAGE_DOS_HEADER::e_lfanew: g_invWidget[INV_IMAGE_DOS_HEADER_e_lfanew]->setOffsetAndSize(&pe, (quint32)nValue, 0); break;
                     }
                     break;
 
                 case SPE::TYPE_IMAGE_NT_HEADERS:
                     switch (nNdata) {
-                        case N_IMAGE_NT_HEADERS::Signature: g_comboBox[CB_IMAGE_NT_HEADERS_Signature]->setValue(nValue); break;
+                        case N_IMAGE_NT_HEADERS::Signature: m_comboBox[CB_IMAGE_NT_HEADERS_Signature]->setValue(nValue); break;
                     }
                     break;
 
                 case SPE::TYPE_IMAGE_FILE_HEADER:
                     switch (nNdata) {
-                        case N_IMAGE_FILE_HEADER::Machine: g_comboBox[CB_IMAGE_FILE_HEADER_Machine]->setValue(nValue); break;
+                        case N_IMAGE_FILE_HEADER::Machine: m_comboBox[CB_IMAGE_FILE_HEADER_Machine]->setValue(nValue); break;
                         case N_IMAGE_FILE_HEADER::TimeDateStamp:
                             g_dateTimeEdit[TD_IMAGE_FILE_HEADER_TimeDateStamp]->setValue(nValue, XDateTimeEditX::DT_TYPE_POSIX);
                             break;
                         case N_IMAGE_FILE_HEADER::PointerToSymbolTable:
                             g_invWidget[INV_IMAGE_FILE_HEADER_PointerToSymbolTable]->setAddressAndSize(&pe, (quint32)nValue, 0);
                             break;
-                        case N_IMAGE_FILE_HEADER::Characteristics: g_comboBox[CB_IMAGE_FILE_HEADER_Characteristics]->setValue(nValue); break;
+                        case N_IMAGE_FILE_HEADER::Characteristics: m_comboBox[CB_IMAGE_FILE_HEADER_Characteristics]->setValue(nValue); break;
                     }
                     break;
 
                 case SPE::TYPE_IMAGE_OPTIONAL_HEADER:
                     switch (nNdata) {
-                        case N_IMAGE_OPTIONAL_HEADER::Magic: g_comboBox[CB_IMAGE_OPTIONAL_HEADER_Magic]->setValue(nValue); break;
+                        case N_IMAGE_OPTIONAL_HEADER::Magic: m_comboBox[CB_IMAGE_OPTIONAL_HEADER_Magic]->setValue(nValue); break;
                         case N_IMAGE_OPTIONAL_HEADER::AddressOfEntryPoint:
                             g_invWidget[INV_IMAGE_OPTIONAL_HEADER_AddressOfEntryPoint]->setAddressAndSize(&pe, pe.getBaseAddress() + (quint32)nValue, 0);
                             break;
@@ -332,13 +332,13 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue, qint32 nStype, qint32 nNda
                         case N_IMAGE_OPTIONAL_HEADER::BaseOfData:
                             g_invWidget[INV_IMAGE_OPTIONAL_HEADER_BaseOfData]->setAddressAndSize(&pe, pe.getBaseAddress() + (quint32)nValue, 0);
                             break;
-                        case N_IMAGE_OPTIONAL_HEADER::Subsystem: g_comboBox[CB_IMAGE_OPTIONAL_HEADER_Subsystem]->setValue(nValue); break;
-                        case N_IMAGE_OPTIONAL_HEADER::DllCharacteristics: g_comboBox[CB_IMAGE_OPTIONAL_HEADER_DllCharacteristics]->setValue(nValue); break;
+                        case N_IMAGE_OPTIONAL_HEADER::Subsystem: m_comboBox[CB_IMAGE_OPTIONAL_HEADER_Subsystem]->setValue(nValue); break;
+                        case N_IMAGE_OPTIONAL_HEADER::DllCharacteristics: m_comboBox[CB_IMAGE_OPTIONAL_HEADER_DllCharacteristics]->setValue(nValue); break;
                         case N_IMAGE_OPTIONAL_HEADER::MajorOperatingSystemVersion:
                         case N_IMAGE_OPTIONAL_HEADER::MinorOperatingSystemVersion:
                         case N_IMAGE_OPTIONAL_HEADER::OperatingSystemVersion:
                             quint32 nVersion = pe.getOperatingSystemVersion();
-                            g_comboBox[CB_IMAGE_OPTIONAL_HEADER_OperationSystemVersion]->setValue(nVersion);
+                            m_comboBox[CB_IMAGE_OPTIONAL_HEADER_OperationSystemVersion]->setValue(nVersion);
                             break;
                     }
                     break;
@@ -370,16 +370,16 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue, qint32 nStype, qint32 nNda
 
                 case SPE::TYPE_NETHEADER:
                     switch (nNdata) {
-                        case N_IMAGE_NETHEADER::Flags: g_comboBox[CB_IMAGE_NETHEADER_FLAGS]->setValue((quint32)nValue); break;
+                        case N_IMAGE_NETHEADER::Flags: m_comboBox[CB_IMAGE_NETHEADER_FLAGS]->setValue((quint32)nValue); break;
                     }
                     break;
 
                 case SPE::TYPE_RESOURCES_VERSION:
                     switch (nNdata) {
-                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwSignature: g_comboBox[CB_RESOURCES_VERSION_dwSignature]->setValue((quint32)nValue); break;
-                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileFlags: g_comboBox[CB_RESOURCES_VERSION_dwFileFlags]->setValue((quint32)nValue); break;
-                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileOS: g_comboBox[CB_RESOURCES_VERSION_dwFileOS]->setValue((quint32)nValue); break;
-                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileType: g_comboBox[CB_RESOURCES_VERSION_dwFileType]->setValue((quint32)nValue); break;
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwSignature: m_comboBox[CB_RESOURCES_VERSION_dwSignature]->setValue((quint32)nValue); break;
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileFlags: m_comboBox[CB_RESOURCES_VERSION_dwFileFlags]->setValue((quint32)nValue); break;
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileOS: m_comboBox[CB_RESOURCES_VERSION_dwFileOS]->setValue((quint32)nValue); break;
+                        case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileType: m_comboBox[CB_RESOURCES_VERSION_dwFileType]->setValue((quint32)nValue); break;
                     }
                     break;
 
@@ -822,7 +822,7 @@ void PEWidget::setReadonly(bool bState)
     //    setLineEditsReadOnly(lineEdit_IMAGE_DIRECTORY_ADDRESS,N_IMAGE_DIRECORIES::__data_size,bState);
     //    setLineEditsReadOnly(lineEdit_IMAGE_DIRECTORY_SIZE,N_IMAGE_DIRECORIES::__data_size,bState);
 
-    setComboBoxesReadOnly(g_comboBox, __CB_size, bState);
+    setComboBoxesReadOnly(m_comboBox, __CB_size, bState);
     setPushButtonReadOnly(g_pushButton, __PB_size, bState);
     setDateTimeEditReadOnly(g_dateTimeEdit, __TD_size, bState);
 
@@ -870,7 +870,7 @@ void PEWidget::blockSignals(bool bState)
     //    _blockSignals((QObject
     //    **)lineEdit_IMAGE_DIRECTORY_SIZE,N_IMAGE_DIRECORIES::__data_size,bState);
 
-    _blockSignals((QObject **)g_comboBox, __CB_size, bState);
+    _blockSignals((QObject **)m_comboBox, __CB_size, bState);
     _blockSignals((QObject **)g_pushButton, __PB_size, bState);
     _blockSignals((QObject **)g_dateTimeEdit, __TD_size, bState);
 }
@@ -1170,7 +1170,7 @@ void PEWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 createHeaderTable(SPE::TYPE_IMAGE_DOS_HEADER, ui->tableWidget_IMAGE_DOS_HEADER, N_IMAGE_DOS_HEADER::records, g_lineEdit_IMAGE_DOS_HEADER,
                                   N_IMAGE_DOS_HEADER::__data_size, 0);
-                g_comboBox[CB_IMAGE_DOS_HEADER_e_magic] = createComboBox(ui->tableWidget_IMAGE_DOS_HEADER, XPE::getImageMagicsS(), SPE::TYPE_IMAGE_DOS_HEADER,
+                m_comboBox[CB_IMAGE_DOS_HEADER_e_magic] = createComboBox(ui->tableWidget_IMAGE_DOS_HEADER, XPE::getImageMagicsS(), SPE::TYPE_IMAGE_DOS_HEADER,
                                                                          N_IMAGE_DOS_HEADER::e_magic, XComboBoxEx::CBTYPE_LIST);
                 g_invWidget[INV_IMAGE_DOS_HEADER_e_lfanew] =
                     createInvWidget(ui->tableWidget_IMAGE_DOS_HEADER, SPE::TYPE_IMAGE_DOS_HEADER, N_IMAGE_DOS_HEADER::e_lfanew, InvWidget::TYPE_HEX);
@@ -1211,7 +1211,7 @@ void PEWidget::reloadData(bool bSaveSelection)
                 g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res2_9]->setValue_uint16(msdosheaderex.e_res2[9]);
                 g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_lfanew]->setValue_uint32(msdosheaderex.e_lfanew);
 
-                g_comboBox[CB_IMAGE_DOS_HEADER_e_magic]->setValue(msdosheaderex.e_magic);
+                m_comboBox[CB_IMAGE_DOS_HEADER_e_magic]->setValue(msdosheaderex.e_magic);
 
                 g_invWidget[INV_IMAGE_DOS_HEADER_e_lfanew]->setOffsetAndSize(&pe, msdosheaderex.e_lfanew, 0);
 
@@ -1246,7 +1246,7 @@ void PEWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 createHeaderTable(SPE::TYPE_IMAGE_NT_HEADERS, ui->tableWidget_IMAGE_NT_HEADERS, N_IMAGE_NT_HEADERS::records, g_lineEdit_IMAGE_NT_HEADERS,
                                   N_IMAGE_NT_HEADERS::__data_size, 0);
-                g_comboBox[CB_IMAGE_NT_HEADERS_Signature] = createComboBox(ui->tableWidget_IMAGE_NT_HEADERS, XPE::getImageNtHeadersSignaturesS(),
+                m_comboBox[CB_IMAGE_NT_HEADERS_Signature] = createComboBox(ui->tableWidget_IMAGE_NT_HEADERS, XPE::getImageNtHeadersSignaturesS(),
                                                                            SPE::TYPE_IMAGE_NT_HEADERS, N_IMAGE_NT_HEADERS::Signature, XComboBoxEx::CBTYPE_LIST);
 
                 blockSignals(true);
@@ -1254,7 +1254,7 @@ void PEWidget::reloadData(bool bSaveSelection)
                 quint32 nSignature = pe.getNtHeaders_Signature();
 
                 g_lineEdit_IMAGE_NT_HEADERS[N_IMAGE_NT_HEADERS::Signature]->setValue_uint32(nSignature);
-                g_comboBox[CB_IMAGE_NT_HEADERS_Signature]->setValue(nSignature);
+                m_comboBox[CB_IMAGE_NT_HEADERS_Signature]->setValue(nSignature);
 
                 qint64 nOffset = pe.getNtHeadersOffset();
                 qint64 nSize = 4;
@@ -1268,9 +1268,9 @@ void PEWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 createHeaderTable(SPE::TYPE_IMAGE_FILE_HEADER, ui->tableWidget_IMAGE_FILE_HEADER, N_IMAGE_FILE_HEADER::records, g_lineEdit_IMAGE_FILE_HEADER,
                                   N_IMAGE_FILE_HEADER::__data_size, 0);
-                g_comboBox[CB_IMAGE_FILE_HEADER_Machine] = createComboBox(ui->tableWidget_IMAGE_FILE_HEADER, XPE::getImageFileHeaderMachinesS(),
+                m_comboBox[CB_IMAGE_FILE_HEADER_Machine] = createComboBox(ui->tableWidget_IMAGE_FILE_HEADER, XPE::getImageFileHeaderMachinesS(),
                                                                           SPE::TYPE_IMAGE_FILE_HEADER, N_IMAGE_FILE_HEADER::Machine, XComboBoxEx::CBTYPE_LIST);
-                g_comboBox[CB_IMAGE_FILE_HEADER_Characteristics] =
+                m_comboBox[CB_IMAGE_FILE_HEADER_Characteristics] =
                     createComboBox(ui->tableWidget_IMAGE_FILE_HEADER, XPE::getImageFileHeaderCharacteristicsS(), SPE::TYPE_IMAGE_FILE_HEADER,
                                    N_IMAGE_FILE_HEADER::Characteristics, XComboBoxEx::CBTYPE_FLAGS);
 
@@ -1291,8 +1291,8 @@ void PEWidget::reloadData(bool bSaveSelection)
                 g_lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::SizeOfOptionalHeader]->setValue_uint16(fileheader.SizeOfOptionalHeader);
                 g_lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::Characteristics]->setValue_uint16(fileheader.Characteristics);
 
-                g_comboBox[CB_IMAGE_FILE_HEADER_Machine]->setValue(fileheader.Machine);
-                g_comboBox[CB_IMAGE_FILE_HEADER_Characteristics]->setValue(fileheader.Characteristics);
+                m_comboBox[CB_IMAGE_FILE_HEADER_Machine]->setValue(fileheader.Machine);
+                m_comboBox[CB_IMAGE_FILE_HEADER_Characteristics]->setValue(fileheader.Characteristics);
                 g_dateTimeEdit[TD_IMAGE_FILE_HEADER_TimeDateStamp]->setValue(fileheader.TimeDateStamp, XDateTimeEditX::DT_TYPE_POSIX);
 
                 addComment(ui->tableWidget_IMAGE_FILE_HEADER, N_IMAGE_FILE_HEADER::SizeOfOptionalHeader, HEADER_COLUMN_COMMENT,
@@ -1315,17 +1315,17 @@ void PEWidget::reloadData(bool bSaveSelection)
                 createHeaderTable(SPE::TYPE_IMAGE_OPTIONAL_HEADER, ui->tableWidget_IMAGE_OPTIONAL_HEADER,
                                   pe.is64() ? (N_IMAGE_OPTIONAL_HEADER::records64) : (N_IMAGE_OPTIONAL_HEADER::records32), g_lineEdit_IMAGE_OPTIONAL_HEADER,
                                   N_IMAGE_OPTIONAL_HEADER::__data_size, 0);
-                g_comboBox[CB_IMAGE_OPTIONAL_HEADER_Magic] = createComboBox(ui->tableWidget_IMAGE_OPTIONAL_HEADER, XPE::getImageOptionalHeaderMagicS(),
+                m_comboBox[CB_IMAGE_OPTIONAL_HEADER_Magic] = createComboBox(ui->tableWidget_IMAGE_OPTIONAL_HEADER, XPE::getImageOptionalHeaderMagicS(),
                                                                             SPE::TYPE_IMAGE_OPTIONAL_HEADER, N_IMAGE_OPTIONAL_HEADER::Magic, XComboBoxEx::CBTYPE_LIST);
 
-                g_comboBox[CB_IMAGE_OPTIONAL_HEADER_OperationSystemVersion] = createComboBox(
+                m_comboBox[CB_IMAGE_OPTIONAL_HEADER_OperationSystemVersion] = createComboBox(
                     ui->tableWidget_IMAGE_OPTIONAL_HEADER, XPE::getOperatingSystemVersions(pe.getFileFormatInfo(&pdStructEmpty).osName), SPE::TYPE_IMAGE_OPTIONAL_HEADER,
                     N_IMAGE_OPTIONAL_HEADER::MajorOperatingSystemVersion, XComboBoxEx::CBTYPE_LIST, 0, N_IMAGE_OPTIONAL_HEADER::OperatingSystemVersion);
 
-                g_comboBox[CB_IMAGE_OPTIONAL_HEADER_Subsystem] =
+                m_comboBox[CB_IMAGE_OPTIONAL_HEADER_Subsystem] =
                     createComboBox(ui->tableWidget_IMAGE_OPTIONAL_HEADER, XPE::getImageOptionalHeaderSubsystemS(), SPE::TYPE_IMAGE_OPTIONAL_HEADER,
                                    N_IMAGE_OPTIONAL_HEADER::Subsystem, XComboBoxEx::CBTYPE_LIST);
-                g_comboBox[CB_IMAGE_OPTIONAL_HEADER_DllCharacteristics] =
+                m_comboBox[CB_IMAGE_OPTIONAL_HEADER_DllCharacteristics] =
                     createComboBox(ui->tableWidget_IMAGE_OPTIONAL_HEADER, XPE::getImageOptionalHeaderDllCharacteristicsS(), SPE::TYPE_IMAGE_OPTIONAL_HEADER,
                                    N_IMAGE_OPTIONAL_HEADER::DllCharacteristics, XComboBoxEx::CBTYPE_FLAGS);
 
@@ -1378,9 +1378,9 @@ void PEWidget::reloadData(bool bSaveSelection)
                     g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::LoaderFlags]->setValue_uint32(oh64.LoaderFlags);
                     g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::NumberOfRvaAndSizes]->setValue_uint32(oh64.NumberOfRvaAndSizes);
 
-                    g_comboBox[CB_IMAGE_OPTIONAL_HEADER_Magic]->setValue(oh64.Magic);
-                    g_comboBox[CB_IMAGE_OPTIONAL_HEADER_Subsystem]->setValue(oh64.Subsystem);
-                    g_comboBox[CB_IMAGE_OPTIONAL_HEADER_DllCharacteristics]->setValue(oh64.DllCharacteristics);
+                    m_comboBox[CB_IMAGE_OPTIONAL_HEADER_Magic]->setValue(oh64.Magic);
+                    m_comboBox[CB_IMAGE_OPTIONAL_HEADER_Subsystem]->setValue(oh64.Subsystem);
+                    m_comboBox[CB_IMAGE_OPTIONAL_HEADER_DllCharacteristics]->setValue(oh64.DllCharacteristics);
 
                     addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER, N_IMAGE_OPTIONAL_HEADER::SizeOfCode, HEADER_COLUMN_COMMENT,
                                XBinary::bytesCountToString(oh64.SizeOfCode));
@@ -1445,9 +1445,9 @@ void PEWidget::reloadData(bool bSaveSelection)
                     g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::LoaderFlags]->setValue_uint32(oh32.LoaderFlags);
                     g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::NumberOfRvaAndSizes]->setValue_uint32(oh32.NumberOfRvaAndSizes);
 
-                    g_comboBox[CB_IMAGE_OPTIONAL_HEADER_Magic]->setValue(oh32.Magic);
-                    g_comboBox[CB_IMAGE_OPTIONAL_HEADER_Subsystem]->setValue(oh32.Subsystem);
-                    g_comboBox[CB_IMAGE_OPTIONAL_HEADER_DllCharacteristics]->setValue(oh32.DllCharacteristics);
+                    m_comboBox[CB_IMAGE_OPTIONAL_HEADER_Magic]->setValue(oh32.Magic);
+                    m_comboBox[CB_IMAGE_OPTIONAL_HEADER_Subsystem]->setValue(oh32.Subsystem);
+                    m_comboBox[CB_IMAGE_OPTIONAL_HEADER_DllCharacteristics]->setValue(oh32.DllCharacteristics);
 
                     addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER, N_IMAGE_OPTIONAL_HEADER::SizeOfCode, HEADER_COLUMN_COMMENT,
                                XBinary::bytesCountToString(oh32.SizeOfCode));
@@ -1484,7 +1484,7 @@ void PEWidget::reloadData(bool bSaveSelection)
                     g_invWidget[INV_IMAGE_OPTIONAL_HEADER_BaseOfData]->setAddressAndSize(&pe, pe.getBaseAddress() + oh32.BaseOfData, 0);
                 }
 
-                g_comboBox[CB_IMAGE_OPTIONAL_HEADER_OperationSystemVersion]->setValue(pe.getOperatingSystemVersion());
+                m_comboBox[CB_IMAGE_OPTIONAL_HEADER_OperationSystemVersion]->setValue(pe.getOperatingSystemVersion());
 
                 qint64 nOffset = pe.getOptionalHeaderOffset();
                 qint64 nSize = pe.getOptionalHeaderSize();
@@ -1743,16 +1743,16 @@ void PEWidget::reloadData(bool bSaveSelection)
                 createHeaderTable(SPE::TYPE_RESOURCES_VERSION, ui->tableWidget_Resources_Version, N_IMAGE_RESOURCE_FIXEDFILEINFO::records,
                                   g_lineEdit_Version_FixedFileInfo, N_IMAGE_RESOURCE_FIXEDFILEINFO::__data_size, 0);
 
-                g_comboBox[CB_RESOURCES_VERSION_dwSignature] =
+                m_comboBox[CB_RESOURCES_VERSION_dwSignature] =
                     createComboBox(ui->tableWidget_Resources_Version, XPE::getResourcesFixedFileInfoSignaturesS(), SPE::TYPE_RESOURCES_VERSION,
                                    N_IMAGE_RESOURCE_FIXEDFILEINFO::dwSignature, XComboBoxEx::CBTYPE_LIST);
-                g_comboBox[CB_RESOURCES_VERSION_dwFileFlags] =
+                m_comboBox[CB_RESOURCES_VERSION_dwFileFlags] =
                     createComboBox(ui->tableWidget_Resources_Version, XPE::getResourcesFixedFileInfoFileFlagsS(), SPE::TYPE_RESOURCES_VERSION,
                                    N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileFlags, XComboBoxEx::CBTYPE_FLAGS);
-                g_comboBox[CB_RESOURCES_VERSION_dwFileOS] =
+                m_comboBox[CB_RESOURCES_VERSION_dwFileOS] =
                     createComboBox(ui->tableWidget_Resources_Version, XPE::getResourcesFixedFileInfoFileOsesS(), SPE::TYPE_RESOURCES_VERSION,
                                    N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileOS, XComboBoxEx::CBTYPE_LIST);
-                g_comboBox[CB_RESOURCES_VERSION_dwFileType] =
+                m_comboBox[CB_RESOURCES_VERSION_dwFileType] =
                     createComboBox(ui->tableWidget_Resources_Version, XPE::getResourcesFixedFileInfoFileTypesS(), SPE::TYPE_RESOURCES_VERSION,
                                    N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileType, XComboBoxEx::CBTYPE_LIST);
 
@@ -1774,10 +1774,10 @@ void PEWidget::reloadData(bool bSaveSelection)
                 g_lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileDateMS]->setValue_uint32(resourceVersion.fileInfo.dwFileDateMS);
                 g_lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileDateLS]->setValue_uint32(resourceVersion.fileInfo.dwFileDateLS);
 
-                g_comboBox[CB_RESOURCES_VERSION_dwSignature]->setValue(resourceVersion.fileInfo.dwSignature);
-                g_comboBox[CB_RESOURCES_VERSION_dwFileFlags]->setValue(resourceVersion.fileInfo.dwFileFlags);
-                g_comboBox[CB_RESOURCES_VERSION_dwFileOS]->setValue(resourceVersion.fileInfo.dwFileOS);
-                g_comboBox[CB_RESOURCES_VERSION_dwFileType]->setValue(resourceVersion.fileInfo.dwFileType);
+                m_comboBox[CB_RESOURCES_VERSION_dwSignature]->setValue(resourceVersion.fileInfo.dwSignature);
+                m_comboBox[CB_RESOURCES_VERSION_dwFileFlags]->setValue(resourceVersion.fileInfo.dwFileFlags);
+                m_comboBox[CB_RESOURCES_VERSION_dwFileOS]->setValue(resourceVersion.fileInfo.dwFileOS);
+                m_comboBox[CB_RESOURCES_VERSION_dwFileType]->setValue(resourceVersion.fileInfo.dwFileType);
                 // TODO COMBOBOX dwFileSubtype
                 addComment(ui->tableWidget_Resources_Version, N_IMAGE_RESOURCE_FIXEDFILEINFO::dwStrucVersion, HEADER_COLUMN_COMMENT,
                            XBinary::versionDwordToString(resourceVersion.fileInfo.dwStrucVersion));
@@ -2225,7 +2225,7 @@ void PEWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 createHeaderTable(SPE::TYPE_NETHEADER, ui->tableWidget_NetHeader, N_IMAGE_NETHEADER::records, g_lineEdit_NetHeader, N_IMAGE_NETHEADER::__data_size, 0);
 
-                g_comboBox[CB_IMAGE_NETHEADER_FLAGS] =
+                m_comboBox[CB_IMAGE_NETHEADER_FLAGS] =
                     createComboBox(ui->tableWidget_NetHeader, XPE::getComImageFlagsS(), SPE::TYPE_NETHEADER, N_IMAGE_NETHEADER::Flags, XComboBoxEx::CBTYPE_FLAGS);
 
                 blockSignals(true);
@@ -2252,7 +2252,7 @@ void PEWidget::reloadData(bool bSaveSelection)
                 g_lineEdit_NetHeader[N_IMAGE_NETHEADER::ManagedNativeHeader_Address]->setValue_uint32(netHeader.ManagedNativeHeader.VirtualAddress);
                 g_lineEdit_NetHeader[N_IMAGE_NETHEADER::ManagedNativeHeader_Size]->setValue_uint32(netHeader.ManagedNativeHeader.Size);
 
-                g_comboBox[CB_IMAGE_NETHEADER_FLAGS]->setValue(netHeader.Flags);
+                m_comboBox[CB_IMAGE_NETHEADER_FLAGS]->setValue(netHeader.Flags);
 
                 qint64 nOffset = pe.getNetHeaderOffset();
                 qint64 nSize = pe.getNetHeaderSize();

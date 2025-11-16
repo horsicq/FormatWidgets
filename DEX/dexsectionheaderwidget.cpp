@@ -32,38 +32,38 @@ DEXSectionHeaderWidget::DEXSectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIO
 {
     DEXSectionHeaderWidget::setData(pDevice, options, nNumber, nOffset, nType);
 
-    g_ppLinedEdit = nullptr;
-    g_nLineEditSize = 0;
-    g_ppComboBox = nullptr;
-    g_nComboBoxSize = 0;
-    g_ppInvWidget = nullptr;
-    g_nInvWidgetSize = 0;
+    m_ppLinedEdit = nullptr;
+    m_nLineEditSize = 0;
+    m_ppComboBox = nullptr;
+    m_nComboBoxSize = 0;
+    m_ppInvWidget = nullptr;
+    m_nInvWidgetSize = 0;
 
-    if (g_nLineEditSize) {
-        g_ppLinedEdit = new PXLineEditHEX[g_nLineEditSize];
+    if (m_nLineEditSize) {
+        m_ppLinedEdit = new PXLineEditHEX[m_nLineEditSize];
     }
 
-    if (g_nComboBoxSize) {
-        g_ppComboBox = new PXComboBoxEx[g_nComboBoxSize];
+    if (m_nComboBoxSize) {
+        m_ppComboBox = new PXComboBoxEx[m_nComboBoxSize];
     }
 
-    if (g_nInvWidgetSize) {
-        g_ppInvWidget = new PInvWidget[g_nInvWidgetSize];
+    if (m_nInvWidgetSize) {
+        m_ppInvWidget = new PInvWidget[m_nInvWidgetSize];
     }
 }
 
 DEXSectionHeaderWidget::~DEXSectionHeaderWidget()
 {
-    if (g_ppLinedEdit) {
-        delete[] g_ppLinedEdit;
+    if (m_ppLinedEdit) {
+        delete[] m_ppLinedEdit;
     }
 
-    if (g_ppComboBox) {
-        delete[] g_ppComboBox;
+    if (m_ppComboBox) {
+        delete[] m_ppComboBox;
     }
 
-    if (g_ppInvWidget) {
-        delete[] g_ppInvWidget;
+    if (m_ppInvWidget) {
+        delete[] m_ppInvWidget;
     }
 
     delete ui;
@@ -73,11 +73,11 @@ void DEXSectionHeaderWidget::clear()
 {
     reset();
 
-    memset(g_ppLinedEdit, 0, g_nLineEditSize * sizeof(XLineEditHEX *));
-    memset(g_ppComboBox, 0, g_nComboBoxSize * sizeof(XComboBoxEx *));
-    memset(g_ppInvWidget, 0, g_nInvWidgetSize * sizeof(InvWidget *));
+    memset(m_ppLinedEdit, 0, m_nLineEditSize * sizeof(XLineEditHEX *));
+    memset(m_ppComboBox, 0, m_nComboBoxSize * sizeof(XComboBoxEx *));
+    memset(m_ppInvWidget, 0, m_nInvWidgetSize * sizeof(InvWidget *));
 
-    g_pSubDevice = nullptr;
+    m_pSubDevice = nullptr;
 
     ui->checkBoxReadonly->setChecked(true);
 }
@@ -98,8 +98,8 @@ void DEXSectionHeaderWidget::reload()
 
 void DEXSectionHeaderWidget::setStringTable(qint64 nStringTableOffset, qint64 nStringTableSize)
 {
-    this->g_nStringTableOffset = nStringTableOffset;
-    this->g_nStringTableSize = nStringTableSize;
+    this->m_nStringTableOffset = nStringTableOffset;
+    this->m_nStringTableSize = nStringTableSize;
 }
 
 FormatWidget::SV DEXSectionHeaderWidget::_setValue(QVariant vValue, qint32 nStype, qint32 nNdata, qint32 nVtype, qint32 nPosition, qint64 nOffset)
@@ -136,16 +136,16 @@ void DEXSectionHeaderWidget::setReadonly(bool bState)
         ui->checkBoxReadonly->blockSignals(bBlocked1);
     }
 
-    setLineEditsReadOnly(g_ppLinedEdit, g_nLineEditSize, bState);
+    setLineEditsReadOnly(m_ppLinedEdit, m_nLineEditSize, bState);
 
-    setComboBoxesReadOnly(g_ppComboBox, g_nComboBoxSize, bState);
+    setComboBoxesReadOnly(m_ppComboBox, m_nComboBoxSize, bState);
 }
 
 void DEXSectionHeaderWidget::blockSignals(bool bState)
 {
-    _blockSignals((QObject **)g_ppLinedEdit, g_nLineEditSize, bState);
+    _blockSignals((QObject **)m_ppLinedEdit, m_nLineEditSize, bState);
 
-    _blockSignals((QObject **)g_ppComboBox, g_nComboBoxSize, bState);
+    _blockSignals((QObject **)m_ppComboBox, m_nComboBoxSize, bState);
 }
 
 void DEXSectionHeaderWidget::adjustHeaderTable(qint32 nType, QTableWidget *pTableWidget)

@@ -61,7 +61,7 @@ private slots:
 
 private:
     Ui::PEToolsWidget *ui;
-    QIODevice *g_pDevice;
+    QIODevice *m_pDevice;
     bool g_bIsImage;
     XADDR g_nModuleAddress;
     bool g_bReadonly;

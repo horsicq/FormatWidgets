@@ -25,7 +25,7 @@
 SearchValuesWidget::SearchValuesWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui::SearchValuesWidget)
 {
     ui->setupUi(this);
-    g_pDevice = nullptr;
+    m_pDevice = nullptr;
     g_options = {};
 
     addShortcut(X_ID_TABLE_FOLLOWIN_HEX, this, SLOT(_hex()));
@@ -60,11 +60,11 @@ SearchValuesWidget::~SearchValuesWidget()
 
 void SearchValuesWidget::setData(QIODevice *pDevice, OPTIONS options)
 {
-    this->g_pDevice = pDevice;
+    this->m_pDevice = pDevice;
     this->g_options = options;
 
     if (pDevice) {
-        XFormats::setFileTypeComboBox(options.fileType, g_pDevice, ui->comboBoxType);
+        XFormats::setFileTypeComboBox(options.fileType, m_pDevice, ui->comboBoxType);
         XFormats::getMapModesList(options.fileType, ui->comboBoxMapMode);
     }
 
@@ -83,7 +83,7 @@ void SearchValuesWidget::setData(QIODevice *pDevice, OPTIONS options)
 
 QIODevice *SearchValuesWidget::getDevice()
 {
-    return g_pDevice;
+    return m_pDevice;
 }
 
 void SearchValuesWidget::findValue(QVariant varValue, XBinary::VT valueType, XBinary::ENDIAN endian)
@@ -119,7 +119,7 @@ void SearchValuesWidget::reloadData(bool bSaveSelection)
 
 void SearchValuesWidget::on_toolButtonSave_clicked()
 {
-    XShortcutsWidget::saveTableModel(ui->tableViewResult->getProxyModel(), XBinary::getResultFileName(g_pDevice, QString("%1.txt").arg(tr("Values"))));
+    XShortcutsWidget::saveTableModel(ui->tableViewResult->getProxyModel(), XBinary::getResultFileName(m_pDevice, QString("%1.txt").arg(tr("Values"))));
 }
 
 void SearchValuesWidget::on_tableViewResult_customContextMenuRequested(const QPoint &pos)
@@ -138,18 +138,16 @@ void SearchValuesWidget::on_tableViewResult_customContextMenuRequested(const QPo
         getShortcuts()->_addMenuItem(&listMenuItems, X_ID_TABLE_FOLLOWIN_DISASM, this, SLOT(_disasm()), XShortcuts::GROUPID_FOLLOWIN);
     }
 
-    QList<QObject *> listObjects = getShortcuts()->adjustContextMenu(&contextMenu, &listMenuItems);
+    getShortcuts()->adjustContextMenu(&contextMenu, &listMenuItems);
 
     contextMenu.exec(ui->tableViewResult->viewport()->mapToGlobal(pos));
-
-    XOptions::deleteQObjectList(&listObjects);
 }
 
 void SearchValuesWidget::search()
 {
     ui->labelSearchValue->setText(QString("%1: %2").arg(XBinary::valueTypeToString(g_valueType, 0), XBinary::getValueString(g_varValue, g_valueType)));
 
-    if (g_pDevice && (g_valueType != XBinary::VT_UNKNOWN)) {
+    if (m_pDevice && (g_valueType != XBinary::VT_UNKNOWN)) {
         // ui->tableViewResult->setModel(nullptr);
         XBinary::FT fileType = (XBinary::FT)(ui->comboBoxType->currentData().toInt());
         XBinary::MAPMODE mapMode = (XBinary::MAPMODE)(ui->comboBoxMapMode->currentData().toInt());
@@ -159,7 +157,7 @@ void SearchValuesWidget::search()
         options.endian = g_endian;
         options.varValue = g_varValue;
         options.valueType = g_valueType;
-        options.memoryMap = XFormats::getMemoryMap(fileType, mapMode, g_pDevice);
+        options.memoryMap = XFormats::getMemoryMap(fileType, mapMode, m_pDevice);
 
         QWidget *pParent = XOptions::getMainWidget(this);
 
@@ -168,11 +166,11 @@ void SearchValuesWidget::search()
         MultiSearch multiSearch;
         XDialogProcess dsp(pParent, &multiSearch);
         dsp.setGlobal(getShortcuts(), getGlobalOptions());
-        multiSearch.setSearchData(g_pDevice, &g_listRecords, options, MultiSearch::TYPE_VALUES, dsp.getPdStruct());
+        multiSearch.setSearchData(m_pDevice, &g_listRecords, options, MultiSearch::TYPE_VALUES, dsp.getPdStruct());
         dsp.start();
         dsp.showDialogDelay();
 
-        XModel_MSRecord *pModel = new XModel_MSRecord(g_pDevice, options.memoryMap, &g_listRecords, XBinary::VT_VALUE, this);
+        XModel_MSRecord *pModel = new XModel_MSRecord(m_pDevice, options.memoryMap, &g_listRecords, XBinary::VT_VALUE, this);
         pModel->setValue(options.endian, options.valueType, options.varValue);
 
         ui->tableViewResult->setCustomModel(pModel, true);
@@ -200,7 +198,7 @@ void SearchValuesWidget::on_toolButtonSearchValue_clicked()
 
 void SearchValuesWidget::_search(XBinary::SEARCHMODE mode)
 {
-    if (g_pDevice) {
+    if (m_pDevice) {
         DialogSearch::OPTIONS options = {};
         XBinary::SEARCHDATA searchData;
 

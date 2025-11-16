@@ -1,4 +1,4 @@
-/* Copyright (c) 2017-2025 hors<horsicq@gmail.com>
+/* Copyright (c) 2025 hors<horsicq@gmail.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -18,38 +18,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef DIALOGSECTIONHEADER_H
-#define DIALOGSECTIONHEADER_H
+#include "dialogxstructchooser.h"
+#include "ui_dialogxstructchooser.h"
 
-#include <QDialog>
-
-#include "formatwidget.h"
-#include "xshortcutsdialog.h"
-
-namespace Ui {
-class DialogSectionHeader;
+DialogXStructChooser::DialogXStructChooser(QWidget *parent) : QDialog(parent), ui(new Ui::DialogXStructChooser)
+{
+    ui->setupUi(this);
 }
 
-class DialogSectionHeader : public XShortcutsDialog {
-    Q_OBJECT
+DialogXStructChooser::~DialogXStructChooser()
+{
+    delete ui;
+}
 
-public:
-    explicit DialogSectionHeader(QWidget *pParent);
-    ~DialogSectionHeader();
+void DialogXStructChooser::on_pushButtonCancel_clicked()
+{
+    reject();
+}
 
-    void setWidget(FormatWidget *pWidget);
-    void setData(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, const QString &sTitle, qint32 nType);  // TODO remove
-    void setData(const QString &sTitle);
-    void setEdited(qint64 nDeviceOffset, qint64 nDeviceSize);
-    virtual void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
-    virtual void adjustView();
-
-protected:
-    virtual void registerShortcuts(bool bState);
-
-private:
-    Ui::DialogSectionHeader *ui;
-    FormatWidget *m_pWidget;
-};
-
-#endif  // DIALOGSECTIONHEADER_H
+void DialogXStructChooser::on_pushButtonOK_clicked()
+{
+    accept();
+}

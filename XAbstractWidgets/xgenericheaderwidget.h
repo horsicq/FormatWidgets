@@ -59,15 +59,16 @@ private slots:
     void on_toolButtonTableSave_clicked();
     void on_tableWidgetMain_currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     void on_tableWidgetMain_cellClicked(int row, int column);
+    void on_tableWidgetMain_customContextMenuRequested(const QPoint &pos);
 
 private:
     void setHeaderSelection();
 
 private:
     Ui::XGenericHeaderWidget *ui;
-    qint64 g_nDataSize;
-    QList<XLineEditHEX *> g_listLineEditsHEX;
-    QList<XComboBoxEx *> g_listComboBoxes;
+    qint64 m_nDataSize;
+    QList<XLineEditHEX *> m_listLineEditsHEX;
+    QList<XComboBoxEx *> m_listComboBoxes;
 };
 
 #endif  // XGENERICHEADERWIDGET_H

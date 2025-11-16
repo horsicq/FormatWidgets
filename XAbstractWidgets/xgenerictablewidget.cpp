@@ -80,3 +80,7 @@ void XGenericTableWidget::on_toolButtonTableSave_clicked()
 {
     // saveModel(ui->tableWidgetMain->model(), getTypeTitle(getCwOptions()));
 }
+
+void XGenericTableWidget::on_tableViewMain_customContextMenuRequested(const QPoint &pos)
+{
+}
