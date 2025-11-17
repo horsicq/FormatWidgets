@@ -26,7 +26,7 @@ SearchValuesWidget::SearchValuesWidget(QWidget *pParent) : XShortcutsWidget(pPar
 {
     ui->setupUi(this);
     m_pDevice = nullptr;
-    g_options = {};
+    m_options = {};
 
     addShortcut(X_ID_TABLE_FOLLOWIN_HEX, this, SLOT(_hex()));
     addShortcut(X_ID_TABLE_FOLLOWIN_DISASM, this, SLOT(_disasm()));
@@ -46,9 +46,9 @@ SearchValuesWidget::SearchValuesWidget(QWidget *pParent) : XShortcutsWidget(pPar
     ui->toolButtonSave->setToolTip(tr("Save"));
     ui->tableViewResult->setToolTip(tr("Result"));
 
-    g_varValue = 0;
-    g_valueType = XBinary::VT_UNKNOWN;
-    g_endian = XBinary::ENDIAN_LITTLE;
+    m_varValue = 0;
+    m_valueType = XBinary::VT_UNKNOWN;
+    m_endian = XBinary::ENDIAN_LITTLE;
 
     // ui->tableViewResult->installEventFilter(this);
 }
@@ -61,7 +61,7 @@ SearchValuesWidget::~SearchValuesWidget()
 void SearchValuesWidget::setData(QIODevice *pDevice, OPTIONS options)
 {
     this->m_pDevice = pDevice;
-    this->g_options = options;
+    this->m_options = options;
 
     if (pDevice) {
         XFormats::setFileTypeComboBox(options.fileType, m_pDevice, ui->comboBoxType);
@@ -73,9 +73,9 @@ void SearchValuesWidget::setData(QIODevice *pDevice, OPTIONS options)
         ui->toolButtonSearchString->hide();
         ui->toolButtonSearchValue->hide();
 
-        g_varValue = options.varValue;
-        g_valueType = options.valueType;
-        g_endian = options.endian;
+        m_varValue = options.varValue;
+        m_valueType = options.valueType;
+        m_endian = options.endian;
 
         search();
     }
@@ -88,9 +88,9 @@ QIODevice *SearchValuesWidget::getDevice()
 
 void SearchValuesWidget::findValue(QVariant varValue, XBinary::VT valueType, XBinary::ENDIAN endian)
 {
-    g_varValue = varValue;
-    g_valueType = valueType;
-    g_endian = endian;
+    m_varValue = varValue;
+    m_valueType = valueType;
+    m_endian = endian;
 
     search();
 }
@@ -130,11 +130,11 @@ void SearchValuesWidget::on_tableViewResult_customContextMenuRequested(const QPo
 
     getShortcuts()->_addMenuItem_CopyRow(&listMenuItems, ui->tableViewResult);
 
-    if (g_options.bMenu_Hex) {
+    if (m_options.bMenu_Hex) {
         getShortcuts()->_addMenuItem(&listMenuItems, X_ID_TABLE_FOLLOWIN_HEX, this, SLOT(_hex()), XShortcuts::GROUPID_FOLLOWIN);
     }
 
-    if (g_options.bMenu_Disasm) {
+    if (m_options.bMenu_Disasm) {
         getShortcuts()->_addMenuItem(&listMenuItems, X_ID_TABLE_FOLLOWIN_DISASM, this, SLOT(_disasm()), XShortcuts::GROUPID_FOLLOWIN);
     }
 
@@ -145,18 +145,18 @@ void SearchValuesWidget::on_tableViewResult_customContextMenuRequested(const QPo
 
 void SearchValuesWidget::search()
 {
-    ui->labelSearchValue->setText(QString("%1: %2").arg(XBinary::valueTypeToString(g_valueType, 0), XBinary::getValueString(g_varValue, g_valueType)));
+    ui->labelSearchValue->setText(QString("%1: %2").arg(XBinary::valueTypeToString(m_valueType, 0), XBinary::getValueString(m_varValue, m_valueType)));
 
-    if (m_pDevice && (g_valueType != XBinary::VT_UNKNOWN)) {
+    if (m_pDevice && (m_valueType != XBinary::VT_UNKNOWN)) {
         // ui->tableViewResult->setModel(nullptr);
         XBinary::FT fileType = (XBinary::FT)(ui->comboBoxType->currentData().toInt());
         XBinary::MAPMODE mapMode = (XBinary::MAPMODE)(ui->comboBoxMapMode->currentData().toInt());
 
         MultiSearch::OPTIONS options = {};
 
-        options.endian = g_endian;
-        options.varValue = g_varValue;
-        options.valueType = g_valueType;
+        options.endian = m_endian;
+        options.varValue = m_varValue;
+        options.valueType = m_valueType;
         options.memoryMap = XFormats::getMemoryMap(fileType, mapMode, m_pDevice);
 
         QWidget *pParent = XOptions::getMainWidget(this);
@@ -166,11 +166,11 @@ void SearchValuesWidget::search()
         MultiSearch multiSearch;
         XDialogProcess dsp(pParent, &multiSearch);
         dsp.setGlobal(getShortcuts(), getGlobalOptions());
-        multiSearch.setSearchData(m_pDevice, &g_listRecords, options, MultiSearch::TYPE_VALUES, dsp.getPdStruct());
+        multiSearch.setSearchData(m_pDevice, &m_listRecords, options, MultiSearch::TYPE_VALUES, dsp.getPdStruct());
         dsp.start();
         dsp.showDialogDelay();
 
-        XModel_MSRecord *pModel = new XModel_MSRecord(m_pDevice, options.memoryMap, &g_listRecords, XBinary::VT_VALUE, this);
+        XModel_MSRecord *pModel = new XModel_MSRecord(m_pDevice, options.memoryMap, &m_listRecords, XBinary::VT_VALUE, this);
         pModel->setValue(options.endian, options.valueType, options.varValue);
 
         ui->tableViewResult->setCustomModel(pModel, true);
@@ -221,10 +221,10 @@ void SearchValuesWidget::on_toolButtonSearch_clicked()
 
 void SearchValuesWidget::_hex()
 {
-    if (g_options.bMenu_Hex) {
+    if (m_options.bMenu_Hex) {
         qint32 nRow = ui->tableViewResult->currentIndex().row();
 
-        if ((nRow != -1) && (g_listRecords.count())) {
+        if ((nRow != -1) && (m_listRecords.count())) {
             QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(XModel_MSRecord::COLUMN_NUMBER);
 
             qint64 nOffset = ui->tableViewResult->model()->data(index, Qt::UserRole + XModel_MSRecord::USERROLE_OFFSET).toLongLong();
@@ -237,10 +237,10 @@ void SearchValuesWidget::_hex()
 
 void SearchValuesWidget::_disasm()
 {
-    if (g_options.bMenu_Disasm) {
+    if (m_options.bMenu_Disasm) {
         qint32 nRow = ui->tableViewResult->currentIndex().row();
 
-        if ((nRow != -1) && (g_listRecords.count())) {
+        if ((nRow != -1) && (m_listRecords.count())) {
             QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(XModel_MSRecord::COLUMN_NUMBER);
 
             qint64 nOffset = ui->tableViewResult->model()->data(index, Qt::UserRole + XModel_MSRecord::USERROLE_OFFSET).toLongLong();
