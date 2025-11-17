@@ -35,7 +35,7 @@ DEXWidget::DEXWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::DEXWi
     ui->toolButtonPrev->setToolTip(tr("Previous visited"));
     ui->checkBoxReadonly->setToolTip(tr("Readonly"));
 
-    memset(g_subDevice, 0, sizeof g_subDevice);
+    memset(m_subDevice, 0, sizeof m_subDevice);
 
     initWidget();
 }
@@ -55,12 +55,12 @@ void DEXWidget::clear()
 {
     DEXWidget::reset();
 
-    memset(g_lineEdit_HEADER, 0, sizeof g_lineEdit_HEADER);
-    memset(g_comboBox, 0, sizeof g_comboBox);
-    memset(g_invWidget, 0, sizeof g_invWidget);
-    memset(g_tvModel, 0, sizeof g_tvModel);
+    memset(m_lineEdit_HEADER, 0, sizeof m_lineEdit_HEADER);
+    memset(m_comboBox, 0, sizeof m_comboBox);
+    memset(m_invWidget, 0, sizeof m_invWidget);
+    memset(m_tvModel, 0, sizeof m_tvModel);
 
-    _deleteSubdevices(g_subDevice, (sizeof g_subDevice) / (sizeof(SubDevice *)));
+    _deleteSubdevices(m_subDevice, (sizeof m_subDevice) / (sizeof(SubDevice *)));
 
     resetWidget();
 
@@ -163,50 +163,50 @@ FormatWidget::SV DEXWidget::_setValue(QVariant vValue, qint32 nStype, qint32 nNd
             switch (nStype) {
                 case SDEX::TYPE_HEADER:
                     switch (nNdata) {
-                        case N_DEX_HEADER::magic: g_comboBox[CB_Dex_Header_magic]->setValue(nValue); break;
-                        case N_DEX_HEADER::version: g_comboBox[CB_Dex_Header_version]->setValue(nValue); break;
-                        case N_DEX_HEADER::endian_tag: g_comboBox[CB_Dex_Header_endian_tag]->setValue(nValue); break;
-                        case N_DEX_HEADER::link_size: g_invWidget[INV_link]->setOffsetAndSize(&dex, dex.getHeader_link_off(), (quint32)nValue); break;
-                        case N_DEX_HEADER::link_off: g_invWidget[INV_link]->setOffsetAndSize(&dex, (quint32)nValue, dex.getHeader_link_size()); break;
-                        case N_DEX_HEADER::map_off: g_invWidget[INV_map]->setOffsetAndSize(&dex, (quint32)nValue, 0); break;
+                        case N_DEX_HEADER::magic: m_comboBox[CB_Dex_Header_magic]->setValue(nValue); break;
+                        case N_DEX_HEADER::version: m_comboBox[CB_Dex_Header_version]->setValue(nValue); break;
+                        case N_DEX_HEADER::endian_tag: m_comboBox[CB_Dex_Header_endian_tag]->setValue(nValue); break;
+                        case N_DEX_HEADER::link_size: m_invWidget[INV_link]->setOffsetAndSize(&dex, dex.getHeader_link_off(), (quint32)nValue); break;
+                        case N_DEX_HEADER::link_off: m_invWidget[INV_link]->setOffsetAndSize(&dex, (quint32)nValue, dex.getHeader_link_size()); break;
+                        case N_DEX_HEADER::map_off: m_invWidget[INV_map]->setOffsetAndSize(&dex, (quint32)nValue, 0); break;
                         case N_DEX_HEADER::string_ids_size:
-                            g_invWidget[INV_string_ids]->setOffsetAndSize(&dex, dex.getHeader_string_ids_off(), (quint32)nValue * sizeof(XDEX_DEF::STRING_ITEM_ID));
+                            m_invWidget[INV_string_ids]->setOffsetAndSize(&dex, dex.getHeader_string_ids_off(), (quint32)nValue * sizeof(XDEX_DEF::STRING_ITEM_ID));
                             break;
                         case N_DEX_HEADER::string_ids_off:
-                            g_invWidget[INV_string_ids]->setOffsetAndSize(&dex, (quint32)nValue, dex.getHeader_string_ids_size() * sizeof(XDEX_DEF::STRING_ITEM_ID));
+                            m_invWidget[INV_string_ids]->setOffsetAndSize(&dex, (quint32)nValue, dex.getHeader_string_ids_size() * sizeof(XDEX_DEF::STRING_ITEM_ID));
                             break;
                         case N_DEX_HEADER::type_ids_size:
-                            g_invWidget[INV_type_ids]->setOffsetAndSize(&dex, dex.getHeader_type_ids_off(), (quint32)nValue * sizeof(XDEX_DEF::TYPE_ITEM_ID));
+                            m_invWidget[INV_type_ids]->setOffsetAndSize(&dex, dex.getHeader_type_ids_off(), (quint32)nValue * sizeof(XDEX_DEF::TYPE_ITEM_ID));
                             break;
                         case N_DEX_HEADER::type_ids_off:
-                            g_invWidget[INV_type_ids]->setOffsetAndSize(&dex, (quint32)nValue, dex.getHeader_type_ids_size() * sizeof(XDEX_DEF::TYPE_ITEM_ID));
+                            m_invWidget[INV_type_ids]->setOffsetAndSize(&dex, (quint32)nValue, dex.getHeader_type_ids_size() * sizeof(XDEX_DEF::TYPE_ITEM_ID));
                             break;
                         case N_DEX_HEADER::proto_ids_size:
-                            g_invWidget[INV_proto_ids]->setOffsetAndSize(&dex, dex.getHeader_proto_ids_off(), (quint32)nValue * sizeof(XDEX_DEF::PROTO_ITEM_ID));
+                            m_invWidget[INV_proto_ids]->setOffsetAndSize(&dex, dex.getHeader_proto_ids_off(), (quint32)nValue * sizeof(XDEX_DEF::PROTO_ITEM_ID));
                             break;
                         case N_DEX_HEADER::proto_ids_off:
-                            g_invWidget[INV_proto_ids]->setOffsetAndSize(&dex, (quint32)nValue, dex.getHeader_proto_ids_size() * sizeof(XDEX_DEF::PROTO_ITEM_ID));
+                            m_invWidget[INV_proto_ids]->setOffsetAndSize(&dex, (quint32)nValue, dex.getHeader_proto_ids_size() * sizeof(XDEX_DEF::PROTO_ITEM_ID));
                             break;
                         case N_DEX_HEADER::field_ids_size:
-                            g_invWidget[INV_field_ids]->setOffsetAndSize(&dex, dex.getHeader_field_ids_off(), (quint32)nValue * sizeof(XDEX_DEF::FIELD_ITEM_ID));
+                            m_invWidget[INV_field_ids]->setOffsetAndSize(&dex, dex.getHeader_field_ids_off(), (quint32)nValue * sizeof(XDEX_DEF::FIELD_ITEM_ID));
                             break;
                         case N_DEX_HEADER::field_ids_off:
-                            g_invWidget[INV_field_ids]->setOffsetAndSize(&dex, (quint32)nValue, dex.getHeader_field_ids_size() * sizeof(XDEX_DEF::FIELD_ITEM_ID));
+                            m_invWidget[INV_field_ids]->setOffsetAndSize(&dex, (quint32)nValue, dex.getHeader_field_ids_size() * sizeof(XDEX_DEF::FIELD_ITEM_ID));
                             break;
                         case N_DEX_HEADER::method_ids_size:
-                            g_invWidget[INV_method_ids]->setOffsetAndSize(&dex, dex.getHeader_method_ids_off(), (quint32)nValue * sizeof(XDEX_DEF::METHOD_ITEM_ID));
+                            m_invWidget[INV_method_ids]->setOffsetAndSize(&dex, dex.getHeader_method_ids_off(), (quint32)nValue * sizeof(XDEX_DEF::METHOD_ITEM_ID));
                             break;
                         case N_DEX_HEADER::method_ids_off:
-                            g_invWidget[INV_method_ids]->setOffsetAndSize(&dex, (quint32)nValue, dex.getHeader_method_ids_size() * sizeof(XDEX_DEF::METHOD_ITEM_ID));
+                            m_invWidget[INV_method_ids]->setOffsetAndSize(&dex, (quint32)nValue, dex.getHeader_method_ids_size() * sizeof(XDEX_DEF::METHOD_ITEM_ID));
                             break;
                         case N_DEX_HEADER::class_defs_size:
-                            g_invWidget[INV_class_defs]->setOffsetAndSize(&dex, dex.getHeader_class_defs_off(), (quint32)nValue * sizeof(XDEX_DEF::CLASS_ITEM_DEF));
+                            m_invWidget[INV_class_defs]->setOffsetAndSize(&dex, dex.getHeader_class_defs_off(), (quint32)nValue * sizeof(XDEX_DEF::CLASS_ITEM_DEF));
                             break;
                         case N_DEX_HEADER::class_defs_off:
-                            g_invWidget[INV_class_defs]->setOffsetAndSize(&dex, (quint32)nValue, dex.getHeader_class_defs_size() * sizeof(XDEX_DEF::CLASS_ITEM_DEF));
+                            m_invWidget[INV_class_defs]->setOffsetAndSize(&dex, (quint32)nValue, dex.getHeader_class_defs_size() * sizeof(XDEX_DEF::CLASS_ITEM_DEF));
                             break;
-                        case N_DEX_HEADER::data_size: g_invWidget[INV_data]->setOffsetAndSize(&dex, dex.getHeader_data_off(), (quint32)nValue); break;
-                        case N_DEX_HEADER::data_off: g_invWidget[INV_data]->setOffsetAndSize(&dex, (quint32)nValue, dex.getHeader_data_size()); break;
+                        case N_DEX_HEADER::data_size: m_invWidget[INV_data]->setOffsetAndSize(&dex, dex.getHeader_data_off(), (quint32)nValue); break;
+                        case N_DEX_HEADER::data_off: m_invWidget[INV_data]->setOffsetAndSize(&dex, (quint32)nValue, dex.getHeader_data_size()); break;
                     }
 
                     break;
@@ -262,8 +262,8 @@ void DEXWidget::setReadonly(bool bState)
         ui->checkBoxReadonly->blockSignals(bBlocked1);
     }
 
-    setLineEditsReadOnly(g_lineEdit_HEADER, N_DEX_HEADER::__data_size, bState);
-    setComboBoxesReadOnly(g_comboBox, __CB_size, bState);
+    setLineEditsReadOnly(m_lineEdit_HEADER, N_DEX_HEADER::__data_size, bState);
+    setComboBoxesReadOnly(m_comboBox, __CB_size, bState);
 
     ui->widgetHex->setReadonly(bState);
     ui->widgetStrings->setReadonly(bState);
@@ -271,8 +271,8 @@ void DEXWidget::setReadonly(bool bState)
 
 void DEXWidget::blockSignals(bool bState)
 {
-    _blockSignals((QObject **)g_lineEdit_HEADER, N_DEX_HEADER::__data_size, bState);
-    _blockSignals((QObject **)g_comboBox, __CB_size, bState);
+    _blockSignals((QObject **)m_lineEdit_HEADER, N_DEX_HEADER::__data_size, bState);
+    _blockSignals((QObject **)m_comboBox, __CB_size, bState);
 }
 
 void DEXWidget::adjustHeaderTable(qint32 nType, QTableWidget *pTableWidget)
@@ -422,140 +422,140 @@ void DEXWidget::reloadData(bool bSaveSelection)
             }
         } else if (nType == SDEX::TYPE_HEADER) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SDEX::TYPE_HEADER, ui->tableWidget_Header, N_DEX_HEADER::records, g_lineEdit_HEADER, N_DEX_HEADER::__data_size, 0);
+                createHeaderTable(SDEX::TYPE_HEADER, ui->tableWidget_Header, N_DEX_HEADER::records, m_lineEdit_HEADER, N_DEX_HEADER::__data_size, 0);
 
-                g_comboBox[CB_Dex_Header_magic] =
+                m_comboBox[CB_Dex_Header_magic] =
                     createComboBox(ui->tableWidget_Header, XDEX::getHeaderMagics(), SDEX::TYPE_HEADER, N_DEX_HEADER::magic, XComboBoxEx::CBTYPE_LIST);
-                g_comboBox[CB_Dex_Header_version] =
+                m_comboBox[CB_Dex_Header_version] =
                     createComboBox(ui->tableWidget_Header, XDEX::getHeaderVersions(), SDEX::TYPE_HEADER, N_DEX_HEADER::version, XComboBoxEx::CBTYPE_LIST);
-                g_comboBox[CB_Dex_Header_endian_tag] =
+                m_comboBox[CB_Dex_Header_endian_tag] =
                     createComboBox(ui->tableWidget_Header, XDEX::getHeaderEndianTags(), SDEX::TYPE_HEADER, N_DEX_HEADER::endian_tag, XComboBoxEx::CBTYPE_LIST);
 
-                g_invWidget[INV_link] = createInvWidget(ui->tableWidget_Header, SDEX::TYPE_HEADER, N_DEX_HEADER::link_off, InvWidget::TYPE_HEX);
-                g_invWidget[INV_map] = createInvWidget(ui->tableWidget_Header, SDEX::TYPE_HEADER, N_DEX_HEADER::map_off, InvWidget::TYPE_HEX);
-                g_invWidget[INV_string_ids] = createInvWidget(ui->tableWidget_Header, SDEX::TYPE_HEADER, N_DEX_HEADER::string_ids_off, InvWidget::TYPE_HEX);
-                g_invWidget[INV_type_ids] = createInvWidget(ui->tableWidget_Header, SDEX::TYPE_HEADER, N_DEX_HEADER::type_ids_off, InvWidget::TYPE_HEX);
-                g_invWidget[INV_proto_ids] = createInvWidget(ui->tableWidget_Header, SDEX::TYPE_HEADER, N_DEX_HEADER::proto_ids_off, InvWidget::TYPE_HEX);
-                g_invWidget[INV_field_ids] = createInvWidget(ui->tableWidget_Header, SDEX::TYPE_HEADER, N_DEX_HEADER::field_ids_off, InvWidget::TYPE_HEX);
-                g_invWidget[INV_method_ids] = createInvWidget(ui->tableWidget_Header, SDEX::TYPE_HEADER, N_DEX_HEADER::method_ids_off, InvWidget::TYPE_HEX);
-                g_invWidget[INV_class_defs] = createInvWidget(ui->tableWidget_Header, SDEX::TYPE_HEADER, N_DEX_HEADER::class_defs_off, InvWidget::TYPE_HEX);
-                g_invWidget[INV_data] = createInvWidget(ui->tableWidget_Header, SDEX::TYPE_HEADER, N_DEX_HEADER::data_off, InvWidget::TYPE_HEX);
+                m_invWidget[INV_link] = createInvWidget(ui->tableWidget_Header, SDEX::TYPE_HEADER, N_DEX_HEADER::link_off, InvWidget::TYPE_HEX);
+                m_invWidget[INV_map] = createInvWidget(ui->tableWidget_Header, SDEX::TYPE_HEADER, N_DEX_HEADER::map_off, InvWidget::TYPE_HEX);
+                m_invWidget[INV_string_ids] = createInvWidget(ui->tableWidget_Header, SDEX::TYPE_HEADER, N_DEX_HEADER::string_ids_off, InvWidget::TYPE_HEX);
+                m_invWidget[INV_type_ids] = createInvWidget(ui->tableWidget_Header, SDEX::TYPE_HEADER, N_DEX_HEADER::type_ids_off, InvWidget::TYPE_HEX);
+                m_invWidget[INV_proto_ids] = createInvWidget(ui->tableWidget_Header, SDEX::TYPE_HEADER, N_DEX_HEADER::proto_ids_off, InvWidget::TYPE_HEX);
+                m_invWidget[INV_field_ids] = createInvWidget(ui->tableWidget_Header, SDEX::TYPE_HEADER, N_DEX_HEADER::field_ids_off, InvWidget::TYPE_HEX);
+                m_invWidget[INV_method_ids] = createInvWidget(ui->tableWidget_Header, SDEX::TYPE_HEADER, N_DEX_HEADER::method_ids_off, InvWidget::TYPE_HEX);
+                m_invWidget[INV_class_defs] = createInvWidget(ui->tableWidget_Header, SDEX::TYPE_HEADER, N_DEX_HEADER::class_defs_off, InvWidget::TYPE_HEX);
+                m_invWidget[INV_data] = createInvWidget(ui->tableWidget_Header, SDEX::TYPE_HEADER, N_DEX_HEADER::data_off, InvWidget::TYPE_HEX);
 
                 blockSignals(true);
 
                 XDEX_DEF::HEADER header = dex.getHeader();
 
-                g_lineEdit_HEADER[N_DEX_HEADER::magic]->setValue_uint32(header.magic);
-                g_lineEdit_HEADER[N_DEX_HEADER::version]->setValue_uint32(header.version);
-                g_lineEdit_HEADER[N_DEX_HEADER::checksum]->setValue_uint32(header.checksum);
-                g_lineEdit_HEADER[N_DEX_HEADER::file_size]->setValue_uint32(header.file_size);
-                g_lineEdit_HEADER[N_DEX_HEADER::header_size]->setValue_uint32(header.header_size);
-                g_lineEdit_HEADER[N_DEX_HEADER::endian_tag]->setValue_uint32(header.endian_tag);
-                g_lineEdit_HEADER[N_DEX_HEADER::link_size]->setValue_uint32(header.link_size);
-                g_lineEdit_HEADER[N_DEX_HEADER::link_off]->setValue_uint32(header.link_off);
-                g_lineEdit_HEADER[N_DEX_HEADER::map_off]->setValue_uint32(header.map_off);
-                g_lineEdit_HEADER[N_DEX_HEADER::string_ids_size]->setValue_uint32(header.string_ids_size);
-                g_lineEdit_HEADER[N_DEX_HEADER::string_ids_off]->setValue_uint32(header.string_ids_off);
-                g_lineEdit_HEADER[N_DEX_HEADER::type_ids_size]->setValue_uint32(header.type_ids_size);
-                g_lineEdit_HEADER[N_DEX_HEADER::type_ids_off]->setValue_uint32(header.type_ids_off);
-                g_lineEdit_HEADER[N_DEX_HEADER::proto_ids_size]->setValue_uint32(header.proto_ids_size);
-                g_lineEdit_HEADER[N_DEX_HEADER::proto_ids_off]->setValue_uint32(header.proto_ids_off);
-                g_lineEdit_HEADER[N_DEX_HEADER::field_ids_size]->setValue_uint32(header.field_ids_size);
-                g_lineEdit_HEADER[N_DEX_HEADER::field_ids_off]->setValue_uint32(header.field_ids_off);
-                g_lineEdit_HEADER[N_DEX_HEADER::method_ids_size]->setValue_uint32(header.method_ids_size);
-                g_lineEdit_HEADER[N_DEX_HEADER::method_ids_off]->setValue_uint32(header.method_ids_off);
-                g_lineEdit_HEADER[N_DEX_HEADER::class_defs_size]->setValue_uint32(header.class_defs_size);
-                g_lineEdit_HEADER[N_DEX_HEADER::class_defs_off]->setValue_uint32(header.class_defs_off);
-                g_lineEdit_HEADER[N_DEX_HEADER::data_size]->setValue_uint32(header.data_size);
-                g_lineEdit_HEADER[N_DEX_HEADER::data_off]->setValue_uint32(header.data_off);
+                m_lineEdit_HEADER[N_DEX_HEADER::magic]->setValue_uint32(header.magic);
+                m_lineEdit_HEADER[N_DEX_HEADER::version]->setValue_uint32(header.version);
+                m_lineEdit_HEADER[N_DEX_HEADER::checksum]->setValue_uint32(header.checksum);
+                m_lineEdit_HEADER[N_DEX_HEADER::file_size]->setValue_uint32(header.file_size);
+                m_lineEdit_HEADER[N_DEX_HEADER::header_size]->setValue_uint32(header.header_size);
+                m_lineEdit_HEADER[N_DEX_HEADER::endian_tag]->setValue_uint32(header.endian_tag);
+                m_lineEdit_HEADER[N_DEX_HEADER::link_size]->setValue_uint32(header.link_size);
+                m_lineEdit_HEADER[N_DEX_HEADER::link_off]->setValue_uint32(header.link_off);
+                m_lineEdit_HEADER[N_DEX_HEADER::map_off]->setValue_uint32(header.map_off);
+                m_lineEdit_HEADER[N_DEX_HEADER::string_ids_size]->setValue_uint32(header.string_ids_size);
+                m_lineEdit_HEADER[N_DEX_HEADER::string_ids_off]->setValue_uint32(header.string_ids_off);
+                m_lineEdit_HEADER[N_DEX_HEADER::type_ids_size]->setValue_uint32(header.type_ids_size);
+                m_lineEdit_HEADER[N_DEX_HEADER::type_ids_off]->setValue_uint32(header.type_ids_off);
+                m_lineEdit_HEADER[N_DEX_HEADER::proto_ids_size]->setValue_uint32(header.proto_ids_size);
+                m_lineEdit_HEADER[N_DEX_HEADER::proto_ids_off]->setValue_uint32(header.proto_ids_off);
+                m_lineEdit_HEADER[N_DEX_HEADER::field_ids_size]->setValue_uint32(header.field_ids_size);
+                m_lineEdit_HEADER[N_DEX_HEADER::field_ids_off]->setValue_uint32(header.field_ids_off);
+                m_lineEdit_HEADER[N_DEX_HEADER::method_ids_size]->setValue_uint32(header.method_ids_size);
+                m_lineEdit_HEADER[N_DEX_HEADER::method_ids_off]->setValue_uint32(header.method_ids_off);
+                m_lineEdit_HEADER[N_DEX_HEADER::class_defs_size]->setValue_uint32(header.class_defs_size);
+                m_lineEdit_HEADER[N_DEX_HEADER::class_defs_off]->setValue_uint32(header.class_defs_off);
+                m_lineEdit_HEADER[N_DEX_HEADER::data_size]->setValue_uint32(header.data_size);
+                m_lineEdit_HEADER[N_DEX_HEADER::data_off]->setValue_uint32(header.data_off);
 
-                g_comboBox[CB_Dex_Header_magic]->setValue(header.magic);
-                g_comboBox[CB_Dex_Header_version]->setValue(header.version);
-                g_comboBox[CB_Dex_Header_endian_tag]->setValue(header.endian_tag);
+                m_comboBox[CB_Dex_Header_magic]->setValue(header.magic);
+                m_comboBox[CB_Dex_Header_version]->setValue(header.version);
+                m_comboBox[CB_Dex_Header_endian_tag]->setValue(header.endian_tag);
 
-                g_invWidget[INV_link]->setOffsetAndSize(&dex, header.link_off, header.link_size);
-                g_invWidget[INV_map]->setOffsetAndSize(&dex, header.map_off, 0);
-                g_invWidget[INV_string_ids]->setOffsetAndSize(&dex, header.string_ids_off, header.string_ids_size * sizeof(XDEX_DEF::STRING_ITEM_ID));
-                g_invWidget[INV_type_ids]->setOffsetAndSize(&dex, header.type_ids_off, header.type_ids_size * sizeof(XDEX_DEF::TYPE_ITEM_ID));
-                g_invWidget[INV_proto_ids]->setOffsetAndSize(&dex, header.proto_ids_off, header.proto_ids_size * sizeof(XDEX_DEF::PROTO_ITEM_ID));
-                g_invWidget[INV_field_ids]->setOffsetAndSize(&dex, header.field_ids_off, header.field_ids_size * sizeof(XDEX_DEF::FIELD_ITEM_ID));
-                g_invWidget[INV_method_ids]->setOffsetAndSize(&dex, header.method_ids_off, header.method_ids_size * sizeof(XDEX_DEF::METHOD_ITEM_ID));
-                g_invWidget[INV_class_defs]->setOffsetAndSize(&dex, header.class_defs_off, header.class_defs_size * sizeof(XDEX_DEF::CLASS_ITEM_DEF));
-                g_invWidget[INV_data]->setOffsetAndSize(&dex, header.data_off, header.data_size);
+                m_invWidget[INV_link]->setOffsetAndSize(&dex, header.link_off, header.link_size);
+                m_invWidget[INV_map]->setOffsetAndSize(&dex, header.map_off, 0);
+                m_invWidget[INV_string_ids]->setOffsetAndSize(&dex, header.string_ids_off, header.string_ids_size * sizeof(XDEX_DEF::STRING_ITEM_ID));
+                m_invWidget[INV_type_ids]->setOffsetAndSize(&dex, header.type_ids_off, header.type_ids_size * sizeof(XDEX_DEF::TYPE_ITEM_ID));
+                m_invWidget[INV_proto_ids]->setOffsetAndSize(&dex, header.proto_ids_off, header.proto_ids_size * sizeof(XDEX_DEF::PROTO_ITEM_ID));
+                m_invWidget[INV_field_ids]->setOffsetAndSize(&dex, header.field_ids_off, header.field_ids_size * sizeof(XDEX_DEF::FIELD_ITEM_ID));
+                m_invWidget[INV_method_ids]->setOffsetAndSize(&dex, header.method_ids_off, header.method_ids_size * sizeof(XDEX_DEF::METHOD_ITEM_ID));
+                m_invWidget[INV_class_defs]->setOffsetAndSize(&dex, header.class_defs_off, header.class_defs_size * sizeof(XDEX_DEF::CLASS_ITEM_DEF));
+                m_invWidget[INV_data]->setOffsetAndSize(&dex, header.data_off, header.data_size);
 
                 quint32 nHeaderSize = dex.getHeaderSize();
 
-                loadHexSubdevice(0, nHeaderSize, 0, &g_subDevice[SDEX::TYPE_HEADER], ui->widgetHex_Header, false, false);
+                loadHexSubdevice(0, nHeaderSize, 0, &m_subDevice[SDEX::TYPE_HEADER], ui->widgetHex_Header, false, false);
 
                 blockSignals(false);
             }
         } else if (nType == SDEX::TYPE_MAPITEMS) {
             if (!isInitPresent(sInit)) {
-                DEXProcessData dexProcessData(SDEX::TYPE_MAPITEMS, &g_tvModel[SDEX::TYPE_MAPITEMS], &dex, nDataOffset, nDataSize);
+                DEXProcessData dexProcessData(SDEX::TYPE_MAPITEMS, &m_tvModel[SDEX::TYPE_MAPITEMS], &dex, nDataOffset, nDataSize);
 
-                ajustTableView(nType, &dexProcessData, &g_tvModel[SDEX::TYPE_MAPITEMS], ui->tableView_MapItems);
+                ajustTableView(nType, &dexProcessData, &m_tvModel[SDEX::TYPE_MAPITEMS], ui->tableView_MapItems);
 
-                if (g_tvModel[SDEX::TYPE_MAPITEMS]->rowCount()) {
+                if (m_tvModel[SDEX::TYPE_MAPITEMS]->rowCount()) {
                     ui->tableView_MapItems->setCurrentIndex(ui->tableView_MapItems->model()->index(0, 0));
                 }
             }
         } else if (nType == SDEX::TYPE_STRING_ID_ITEM) {
             if (!isInitPresent(sInit)) {
-                DEXProcessData dexProcessData(SDEX::TYPE_STRING_ID_ITEM, &g_tvModel[SDEX::TYPE_STRING_ID_ITEM], &dex, nDataOffset, nDataSize);
+                DEXProcessData dexProcessData(SDEX::TYPE_STRING_ID_ITEM, &m_tvModel[SDEX::TYPE_STRING_ID_ITEM], &dex, nDataOffset, nDataSize);
 
-                ajustTableView(nType, &dexProcessData, &g_tvModel[SDEX::TYPE_STRING_ID_ITEM], ui->tableView_STRING_ID_ITEM);
+                ajustTableView(nType, &dexProcessData, &m_tvModel[SDEX::TYPE_STRING_ID_ITEM], ui->tableView_STRING_ID_ITEM);
 
-                if (g_tvModel[SDEX::TYPE_STRING_ID_ITEM]->rowCount()) {
+                if (m_tvModel[SDEX::TYPE_STRING_ID_ITEM]->rowCount()) {
                     ui->tableView_STRING_ID_ITEM->setCurrentIndex(ui->tableView_STRING_ID_ITEM->model()->index(0, 0));
                 }
             }
         } else if (nType == SDEX::TYPE_TYPE_ID_ITEM) {
             if (!isInitPresent(sInit)) {
-                DEXProcessData dexProcessData(SDEX::TYPE_TYPE_ID_ITEM, &g_tvModel[SDEX::TYPE_TYPE_ID_ITEM], &dex, nDataOffset, nDataSize);
+                DEXProcessData dexProcessData(SDEX::TYPE_TYPE_ID_ITEM, &m_tvModel[SDEX::TYPE_TYPE_ID_ITEM], &dex, nDataOffset, nDataSize);
 
-                ajustTableView(nType, &dexProcessData, &g_tvModel[SDEX::TYPE_TYPE_ID_ITEM], ui->tableView_TYPE_ID_ITEM);
+                ajustTableView(nType, &dexProcessData, &m_tvModel[SDEX::TYPE_TYPE_ID_ITEM], ui->tableView_TYPE_ID_ITEM);
 
-                if (g_tvModel[SDEX::TYPE_TYPE_ID_ITEM]->rowCount()) {
+                if (m_tvModel[SDEX::TYPE_TYPE_ID_ITEM]->rowCount()) {
                     ui->tableView_TYPE_ID_ITEM->setCurrentIndex(ui->tableView_TYPE_ID_ITEM->model()->index(0, 0));
                 }
             }
         } else if (nType == SDEX::TYPE_PROTO_ID_ITEM) {
             if (!isInitPresent(sInit)) {
-                DEXProcessData dexProcessData(SDEX::TYPE_PROTO_ID_ITEM, &g_tvModel[SDEX::TYPE_PROTO_ID_ITEM], &dex, nDataOffset, nDataSize);
+                DEXProcessData dexProcessData(SDEX::TYPE_PROTO_ID_ITEM, &m_tvModel[SDEX::TYPE_PROTO_ID_ITEM], &dex, nDataOffset, nDataSize);
 
-                ajustTableView(nType, &dexProcessData, &g_tvModel[SDEX::TYPE_PROTO_ID_ITEM], ui->tableView_PROTO_ID_ITEM);
+                ajustTableView(nType, &dexProcessData, &m_tvModel[SDEX::TYPE_PROTO_ID_ITEM], ui->tableView_PROTO_ID_ITEM);
 
-                if (g_tvModel[SDEX::TYPE_PROTO_ID_ITEM]->rowCount()) {
+                if (m_tvModel[SDEX::TYPE_PROTO_ID_ITEM]->rowCount()) {
                     ui->tableView_PROTO_ID_ITEM->setCurrentIndex(ui->tableView_PROTO_ID_ITEM->model()->index(0, 0));
                 }
             }
         } else if (nType == SDEX::TYPE_FIELD_ID_ITEM) {
             if (!isInitPresent(sInit)) {
-                DEXProcessData dexProcessData(SDEX::TYPE_FIELD_ID_ITEM, &g_tvModel[SDEX::TYPE_FIELD_ID_ITEM], &dex, nDataOffset, nDataSize);
+                DEXProcessData dexProcessData(SDEX::TYPE_FIELD_ID_ITEM, &m_tvModel[SDEX::TYPE_FIELD_ID_ITEM], &dex, nDataOffset, nDataSize);
 
-                ajustTableView(nType, &dexProcessData, &g_tvModel[SDEX::TYPE_FIELD_ID_ITEM], ui->tableView_FIELD_ID_ITEM);
+                ajustTableView(nType, &dexProcessData, &m_tvModel[SDEX::TYPE_FIELD_ID_ITEM], ui->tableView_FIELD_ID_ITEM);
 
-                if (g_tvModel[SDEX::TYPE_FIELD_ID_ITEM]->rowCount()) {
+                if (m_tvModel[SDEX::TYPE_FIELD_ID_ITEM]->rowCount()) {
                     ui->tableView_FIELD_ID_ITEM->setCurrentIndex(ui->tableView_FIELD_ID_ITEM->model()->index(0, 0));
                 }
             }
         } else if (nType == SDEX::TYPE_METHOD_ID_ITEM) {
             if (!isInitPresent(sInit)) {
-                DEXProcessData dexProcessData(SDEX::TYPE_METHOD_ID_ITEM, &g_tvModel[SDEX::TYPE_METHOD_ID_ITEM], &dex, nDataOffset, nDataSize);
+                DEXProcessData dexProcessData(SDEX::TYPE_METHOD_ID_ITEM, &m_tvModel[SDEX::TYPE_METHOD_ID_ITEM], &dex, nDataOffset, nDataSize);
 
-                ajustTableView(nType, &dexProcessData, &g_tvModel[SDEX::TYPE_METHOD_ID_ITEM], ui->tableView_METHOD_ID_ITEM);
+                ajustTableView(nType, &dexProcessData, &m_tvModel[SDEX::TYPE_METHOD_ID_ITEM], ui->tableView_METHOD_ID_ITEM);
 
-                if (g_tvModel[SDEX::TYPE_METHOD_ID_ITEM]->rowCount()) {
+                if (m_tvModel[SDEX::TYPE_METHOD_ID_ITEM]->rowCount()) {
                     ui->tableView_METHOD_ID_ITEM->setCurrentIndex(ui->tableView_METHOD_ID_ITEM->model()->index(0, 0));
                 }
             }
         } else if (nType == SDEX::TYPE_CLASS_DEF_ITEM) {
             if (!isInitPresent(sInit)) {
-                DEXProcessData dexProcessData(SDEX::TYPE_CLASS_DEF_ITEM, &g_tvModel[SDEX::TYPE_CLASS_DEF_ITEM], &dex, nDataOffset, nDataSize);
+                DEXProcessData dexProcessData(SDEX::TYPE_CLASS_DEF_ITEM, &m_tvModel[SDEX::TYPE_CLASS_DEF_ITEM], &dex, nDataOffset, nDataSize);
 
-                ajustTableView(nType, &dexProcessData, &g_tvModel[SDEX::TYPE_CLASS_DEF_ITEM], ui->tableView_CLASS_DEF_ITEM, false);
+                ajustTableView(nType, &dexProcessData, &m_tvModel[SDEX::TYPE_CLASS_DEF_ITEM], ui->tableView_CLASS_DEF_ITEM, false);
 
-                if (g_tvModel[SDEX::TYPE_CLASS_DEF_ITEM]->rowCount()) {
+                if (m_tvModel[SDEX::TYPE_CLASS_DEF_ITEM]->rowCount()) {
                     ui->tableView_CLASS_DEF_ITEM->setCurrentIndex(ui->tableView_CLASS_DEF_ITEM->model()->index(0, 0));
                 }
             }
@@ -596,7 +596,7 @@ void DEXWidget::_widgetValueChanged(QVariant vValue)
     switch (nStype) {
         case SDEX::TYPE_HEADER:
             switch (nNdata) {
-                case N_DEX_HEADER::magic: g_lineEdit_HEADER[N_DEX_HEADER::magic]->setValue_uint32((quint32)nValue); break;
+                case N_DEX_HEADER::magic: m_lineEdit_HEADER[N_DEX_HEADER::magic]->setValue_uint32((quint32)nValue); break;
             }
 
             break;

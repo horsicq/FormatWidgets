@@ -95,13 +95,13 @@ private:
 
     Ui::DEXWidget *ui;
 
-    XLineEditHEX *g_lineEdit_HEADER[N_DEX_HEADER::__data_size];
+    XLineEditHEX *m_lineEdit_HEADER[N_DEX_HEADER::__data_size];
 
-    XComboBoxEx *g_comboBox[__CB_size];
-    InvWidget *g_invWidget[__INV_size];
+    XComboBoxEx *m_comboBox[__CB_size];
+    InvWidget *m_invWidget[__INV_size];
 
-    SubDevice *g_subDevice[SDEX::__TYPE_size];
-    QStandardItemModel *g_tvModel[SDEX::__TYPE_size];
+    SubDevice *m_subDevice[SDEX::__TYPE_size];
+    QStandardItemModel *m_tvModel[SDEX::__TYPE_size];
 };
 
 #endif  // DEXWIDGET_H
