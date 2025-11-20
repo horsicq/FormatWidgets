@@ -22,31 +22,31 @@
 
 InvWidget::InvWidget(QWidget *pParent, TYPE type) : XShortcutsWidget(pParent)
 {
-    g_pHexPushButton = nullptr;
-    g_pDisasmPushButton = nullptr;
+    m_pHexPushButton = nullptr;
+    m_pDisasmPushButton = nullptr;
 
     QHBoxLayout *pLayot = new QHBoxLayout(this);
     pLayot->setContentsMargins(0, 0, 0, 0);
 
     if (type == TYPE_HEX) {
-        g_pHexPushButton = new QPushButton(tr("Hex"), this);
+        m_pHexPushButton = new QPushButton(tr("Hex"), this);
 
-        connect(g_pHexPushButton, SIGNAL(clicked()), this, SLOT(showHexSlot()));
+        connect(m_pHexPushButton, SIGNAL(clicked()), this, SLOT(showHexSlot()));
 
-        pLayot->addWidget(g_pHexPushButton);
+        pLayot->addWidget(m_pHexPushButton);
     } else if (type == TYPE_DISASM) {
-        g_pDisasmPushButton = new QPushButton(tr("Disasm"), this);
+        m_pDisasmPushButton = new QPushButton(tr("Disasm"), this);
 
-        connect(g_pDisasmPushButton, SIGNAL(clicked()), this, SLOT(showDisasmSlot()));
+        connect(m_pDisasmPushButton, SIGNAL(clicked()), this, SLOT(showDisasmSlot()));
 
-        pLayot->addWidget(g_pDisasmPushButton);
+        pLayot->addWidget(m_pDisasmPushButton);
     }
 
     setLayout(pLayot);
 
-    g_nOffset = 0;
-    g_nAddress = 0;
-    g_nSize = 0;
+    m_nOffset = 0;
+    m_nAddress = 0;
+    m_nSize = 0;
 }
 
 InvWidget::~InvWidget()
@@ -66,13 +66,13 @@ void InvWidget::setOffsetAndSize(XBinary *pBinary, qint64 nOffset, qint64 nSize,
     if (bValid) {
         _setEnabled(true);
 
-        this->g_nOffset = nOffset;
-        this->g_nSize = nSize;
+        this->m_nOffset = nOffset;
+        this->m_nSize = nSize;
     } else {
         _setEnabled(false);
 
-        this->g_nOffset = 0;
-        this->g_nSize = 0;
+        this->m_nOffset = 0;
+        this->m_nSize = 0;
     }
 }
 
@@ -80,7 +80,7 @@ void InvWidget::setAddressAndSize(XBinary *pBinary, XADDR nAddress, qint64 nSize
 {
     bool bValid = false;
 
-    this->g_nAddress = nAddress;
+    this->m_nAddress = nAddress;
 
     XBinary::_MEMORY_MAP memoryMap = pBinary->getMemoryMap();
 
@@ -93,24 +93,24 @@ void InvWidget::setAddressAndSize(XBinary *pBinary, XADDR nAddress, qint64 nSize
     if (bValid) {
         _setEnabled(true);
 
-        this->g_nOffset = pBinary->addressToOffset(&memoryMap, nAddress);
-        this->g_nSize = nSize;
+        this->m_nOffset = pBinary->addressToOffset(&memoryMap, nAddress);
+        this->m_nSize = nSize;
     } else {
         _setEnabled(false);
 
-        this->g_nOffset = 0;
-        this->g_nSize = 0;
+        this->m_nOffset = 0;
+        this->m_nSize = 0;
     }
 }
 
 void InvWidget::_setEnabled(bool bState)
 {
-    if (g_pHexPushButton) {
-        g_pHexPushButton->setEnabled(bState);
+    if (m_pHexPushButton) {
+        m_pHexPushButton->setEnabled(bState);
     }
 
-    if (g_pDisasmPushButton) {
-        g_pDisasmPushButton->setEnabled(bState);
+    if (m_pDisasmPushButton) {
+        m_pDisasmPushButton->setEnabled(bState);
     }
 }
 
@@ -126,12 +126,12 @@ void InvWidget::reloadData(bool bSaveSelection)
 
 void InvWidget::showHexSlot()
 {
-    emit showHex(g_nOffset, g_nSize);
+    emit showHex(m_nOffset, m_nSize);
 }
 
 void InvWidget::showDisasmSlot()
 {
-    emit showDisasm(g_nAddress);
+    emit showDisasm(m_nAddress);
 }
 
 void InvWidget::registerShortcuts(bool bState)
