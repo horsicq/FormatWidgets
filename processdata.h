@@ -46,8 +46,8 @@ public:
     bool isRun();
     XBinary::PDSTRUCT *getPdStruct();
     virtual void _process() = 0;
-    virtual void ajustTableView(qint32 nType, QTableView *pTableView);
-    virtual void ajustTreeView(qint32 nType, QTreeView *pTreeView);
+    virtual void adjustTableView(qint32 nType, QTableView *pTableView);
+    virtual void adjustTreeView(qint32 nType, QTreeView *pTreeView);
     static QList<QString> getStructList(const FW_DEF::HEADER_RECORD *pRecords, qint32 nRecordCount);
     static void setTableHeader(QStandardItemModel *pModel, QList<QString> *pListStrings);
     static void setTreeHeader(QStandardItemModel *pModel, QList<QString> *pListStrings);
@@ -61,9 +61,9 @@ signals:
     void completed(qint64 nElapsed);
 
 private:
-    XOptions *g_pOptions;
+    XOptions *m_pOptions;
     XBinary::PDSTRUCT *m_pPdStruct;
-    qint32 g_nFreeIndex;
+    qint32 m_nFreeIndex;
 };
 
 #endif  // PROCESSDATA_H
