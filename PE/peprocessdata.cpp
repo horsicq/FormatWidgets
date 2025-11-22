@@ -1228,7 +1228,7 @@ void PEProcessData::ajustTableView(qint32 nType, QTableView *pTableView)
         XOptions::setTableViewHeaderWidth(pTableView, 2, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 3, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_STRINGSHORT, mode));
     } else {
-        ProcessData::ajustTableView(nType, pTableView);
+        ProcessData::adjustTableView(nType, pTableView);
     }
 }
 

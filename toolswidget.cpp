@@ -71,15 +71,15 @@ void ToolsWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS options, bool bDis
         ui->widgetHex->setData(pDevice, hexOptions, true);
     }
 
-    g_stringsOptions = {};
-    g_stringsOptions.nBaseAddress = options.nImageBase;
-    g_stringsOptions.bMenu_Hex = true;
-    g_stringsOptions.bMenu_Demangle = true;
-    g_stringsOptions.bAnsi = true;
-    g_stringsOptions.bUnicode = true;
-    g_stringsOptions.bNullTerminated = false;
+    m_stringsOptions = {};
+    m_stringsOptions.nBaseAddress = options.nImageBase;
+    m_stringsOptions.bMenu_Hex = true;
+    m_stringsOptions.bMenu_Demangle = true;
+    m_stringsOptions.bAnsi = true;
+    m_stringsOptions.bUnicode = true;
+    m_stringsOptions.bNullTerminated = false;
 
-    ui->widgetStrings->setData(pDevice, XBinary::FT_REGION, g_stringsOptions, false);
+    ui->widgetStrings->setData(pDevice, XBinary::FT_REGION, m_stringsOptions, false);
 
     reload();
 }

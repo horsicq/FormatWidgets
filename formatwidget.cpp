@@ -438,7 +438,7 @@ void FormatWidget::ajustTableView(qint32 nType, ProcessData *pProcessData, QStan
 
     pTableView->setCustomModel(*ppModel, true);
 
-    pProcessData->ajustTableView(nType, pTableView);
+    pProcessData->adjustTableView(nType, pTableView);
 
     if (bSort) {
         pTableView->setSortingEnabled(true);
@@ -458,7 +458,7 @@ void FormatWidget::ajustTreeView(qint32 nType, ProcessData *pProcessData, QStand
 
     pTreeView->setModel(*ppModel);
 
-    pProcessData->ajustTreeView(nType, pTreeView);
+    pProcessData->adjustTreeView(nType, pTreeView);
 
     deleteOldAbstractModel(&pOldModel);
 }

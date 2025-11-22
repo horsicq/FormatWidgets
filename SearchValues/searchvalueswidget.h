@@ -85,14 +85,14 @@ private:
 private:
     Ui::SearchValuesWidget *ui;
     QIODevice *m_pDevice;
-    OPTIONS g_options;
+    OPTIONS m_options;
     // QStandardItemModel *g_pOldModel;
     // QFutureWatcher<void> g_watcher;
-    QVector<XBinary::MS_RECORD> g_listRecords;
+    QVector<XBinary::MS_RECORD> m_listRecords;
 
-    QVariant g_varValue;
-    XBinary::VT g_valueType;
-    XBinary::ENDIAN g_endian;
+    QVariant m_varValue;
+    XBinary::VT m_valueType;
+    XBinary::ENDIAN m_endian;
 };
 
 #endif  // SEARCHVALUESWIDGET_H

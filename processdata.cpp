@@ -23,8 +23,8 @@
 ProcessData::ProcessData()
 {
     m_pPdStruct = nullptr;
-    g_pOptions = nullptr;
-    g_nFreeIndex = -1;
+    m_pOptions = nullptr;
+    m_nFreeIndex = -1;
 }
 
 void ProcessData::setPdStruct(XBinary::PDSTRUCT *pPdStruct)
@@ -34,22 +34,22 @@ void ProcessData::setPdStruct(XBinary::PDSTRUCT *pPdStruct)
 
 void ProcessData::setOptions(XOptions *pOptions)
 {
-    g_pOptions = pOptions;
+    m_pOptions = pOptions;
 }
 
 XOptions *ProcessData::getOptions()
 {
-    return g_pOptions;
+    return m_pOptions;
 }
 
 void ProcessData::setMaximum(quint64 nMaximum)
 {
-    XBinary::setPdStructTotal(m_pPdStruct, g_nFreeIndex, nMaximum);
+    XBinary::setPdStructTotal(m_pPdStruct, m_nFreeIndex, nMaximum);
 }
 
 void ProcessData::incValue()
 {
-    XBinary::setPdStructCurrentIncrement(m_pPdStruct, g_nFreeIndex);
+    XBinary::setPdStructCurrentIncrement(m_pPdStruct, m_nFreeIndex);
 }
 
 bool ProcessData::isRun()
@@ -62,7 +62,7 @@ XBinary::PDSTRUCT *ProcessData::getPdStruct()
     return m_pPdStruct;
 }
 
-void ProcessData::ajustTableView(qint32 nType, QTableView *pTableView)
+void ProcessData::adjustTableView(qint32 nType, QTableView *pTableView)
 {
     Q_UNUSED(nType)
 
@@ -73,7 +73,7 @@ void ProcessData::ajustTableView(qint32 nType, QTableView *pTableView)
     }
 }
 
-void ProcessData::ajustTreeView(qint32 nType, QTreeView *pTreeView)
+void ProcessData::adjustTreeView(qint32 nType, QTreeView *pTreeView)
 {
     Q_UNUSED(nType)
 
@@ -115,12 +115,12 @@ void ProcessData::process()
     QElapsedTimer scanTimer;
     scanTimer.start();
 
-    g_nFreeIndex = XBinary::getFreeIndex(m_pPdStruct);
-    XBinary::setPdStructInit(m_pPdStruct, g_nFreeIndex, 0);
+    m_nFreeIndex = XBinary::getFreeIndex(m_pPdStruct);
+    XBinary::setPdStructInit(m_pPdStruct, m_nFreeIndex, 0);
 
     _process();
 
-    XBinary::setPdStructFinished(m_pPdStruct, g_nFreeIndex);
+    XBinary::setPdStructFinished(m_pPdStruct, m_nFreeIndex);
 
     emit completed(scanTimer.elapsed());
 }

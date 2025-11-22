@@ -58,11 +58,11 @@ protected:
     virtual void registerShortcuts(bool bState);
 
 private:
-    qint64 g_nAddress;
-    qint64 g_nOffset;
-    qint64 g_nSize;
-    QPushButton *g_pHexPushButton;
-    QPushButton *g_pDisasmPushButton;
+    qint64 m_nAddress;
+    qint64 m_nOffset;
+    qint64 m_nSize;
+    QPushButton *m_pHexPushButton;
+    QPushButton *m_pDisasmPushButton;
 };
 
 #define PInvWidget InvWidget *
