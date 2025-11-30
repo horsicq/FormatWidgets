@@ -34,11 +34,11 @@ public:
     virtual void ajustTableView(qint32 nType, QTableView *pTableView);
 
 private:
-    qint32 g_nType;
-    XDEX *g_pDEX;
-    QStandardItemModel **g_ppModel;
-    qint64 g_nOffset;
-    qint64 g_nSize;
+    qint32 m_nType;
+    XDEX *m_pDEX;
+    QStandardItemModel **m_ppModel;
+    qint64 m_nOffset;
+    qint64 m_nSize;
 };
 
 #endif  // DEXPROCESSDATA_H

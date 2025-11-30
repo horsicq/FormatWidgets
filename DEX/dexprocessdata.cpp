@@ -22,31 +22,31 @@
 
 DEXProcessData::DEXProcessData(qint32 nType, QStandardItemModel **ppModel, XDEX *pDEX, qint64 nOffset, qint64 nSize) : ProcessData()
 {
-    g_nType = nType;
-    g_ppModel = ppModel;
-    g_pDEX = pDEX;
-    g_nOffset = nOffset;
-    g_nSize = nSize;
+    m_nType = nType;
+    m_ppModel = ppModel;
+    m_pDEX = pDEX;
+    m_nOffset = nOffset;
+    m_nSize = nSize;
 }
 
 void DEXProcessData::_process()
 {
-    if (g_nType == SDEX::TYPE_MAPITEMS) {
+    if (m_nType == SDEX::TYPE_MAPITEMS) {
         QList<QString> listLabels;
         listLabels.append("");
         listLabels.append("");
 
         listLabels.append(getStructList(N_DEX_MAP_ITEM::records, N_DEX_MAP_ITEM::__data_size));
 
-        QList<XDEX_DEF::MAP_ITEM> listMapItems = g_pDEX->getMapItems(getPdStruct());
+        QList<XDEX_DEF::MAP_ITEM> listMapItems = m_pDEX->getMapItems(getPdStruct());
 
         qint32 nNumberOfMapItems = listMapItems.count();
 
-        *g_ppModel = new QStandardItemModel(nNumberOfMapItems, listLabels.count());
+        *m_ppModel = new QStandardItemModel(nNumberOfMapItems, listLabels.count());
 
         setMaximum(nNumberOfMapItems);
 
-        setTableHeader(*g_ppModel, &listLabels);
+        setTableHeader(*m_ppModel, &listLabels);
 
         QMap<quint64, QString> mapTypes = XDEX::getTypesS();
 
@@ -56,84 +56,84 @@ void DEXProcessData::_process()
             //            pItem->setData(nStringTableOffset,Qt::UserRole+FW_DEF::SECTION_DATA_STRINGTABLEOFFSET);
             //            pItem->setData(nStringTableSize,Qt::UserRole+FW_DEF::SECTION_DATA_STRINGTABLESIZE);
 
-            (*g_ppModel)->setItem(i, 0, pItem);
-            (*g_ppModel)->setItem(i, 1, new QStandardItem(XBinary::valueToHex(listMapItems.at(i).nType)));
-            (*g_ppModel)
+            (*m_ppModel)->setItem(i, 0, pItem);
+            (*m_ppModel)->setItem(i, 1, new QStandardItem(XBinary::valueToHex(listMapItems.at(i).nType)));
+            (*m_ppModel)
                 ->setItem(i, N_DEX_MAP_ITEM::type + 2, new QStandardItem(mapTypes.value(listMapItems.at(i).nType, XBinary::valueToHex(listMapItems.at(i).nType))));
-            (*g_ppModel)->setItem(i, N_DEX_MAP_ITEM::count + 2, new QStandardItem(XBinary::valueToHex(listMapItems.at(i).nCount)));
-            (*g_ppModel)->setItem(i, N_DEX_MAP_ITEM::offset + 2, new QStandardItem(XBinary::valueToHex(listMapItems.at(i).nOffset)));
+            (*m_ppModel)->setItem(i, N_DEX_MAP_ITEM::count + 2, new QStandardItem(XBinary::valueToHex(listMapItems.at(i).nCount)));
+            (*m_ppModel)->setItem(i, N_DEX_MAP_ITEM::offset + 2, new QStandardItem(XBinary::valueToHex(listMapItems.at(i).nOffset)));
 
             incValue();
         }
-    } else if (g_nType == SDEX::TYPE_STRING_ID_ITEM) {
+    } else if (m_nType == SDEX::TYPE_STRING_ID_ITEM) {
         QList<QString> listLabels;
         listLabels.append("");
         listLabels.append("");
         listLabels.append(getStructList(N_DEX_STRING_ID::records, N_DEX_STRING_ID::__data_size));
         listLabels.append("");
 
-        QList<XDEX_DEF::STRING_ITEM_ID> listStringItemIds = g_pDEX->getList_STRING_ITEM_ID(getPdStruct());
-        qint64 nDataOffset = g_pDEX->getHeader_data_off();
-        qint64 nDataSize = g_pDEX->getHeader_data_size();
-        QByteArray baData = g_pDEX->read_array(nDataOffset, nDataSize);
+        QList<XDEX_DEF::STRING_ITEM_ID> listStringItemIds = m_pDEX->getList_STRING_ITEM_ID(getPdStruct());
+        qint64 nDataOffset = m_pDEX->getHeader_data_off();
+        qint64 nDataSize = m_pDEX->getHeader_data_size();
+        QByteArray baData = m_pDEX->read_array(nDataOffset, nDataSize);
 
         qint32 nNumberOfIds = listStringItemIds.count();
 
-        *g_ppModel = new QStandardItemModel(nNumberOfIds, listLabels.count());
+        *m_ppModel = new QStandardItemModel(nNumberOfIds, listLabels.count());
 
         setMaximum(nNumberOfIds);
 
-        setTableHeader(*g_ppModel, &listLabels);
+        setTableHeader(*m_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfIds) && (isRun()); i++) {
             QStandardItem *pItem = new QStandardItem(QString::number(i));
 
-            QString sString = g_pDEX->getStringItemIdString(listStringItemIds.at(i), baData.data(), nDataSize, nDataOffset);
+            QString sString = m_pDEX->getStringItemIdString(listStringItemIds.at(i), baData.data(), nDataSize, nDataOffset);
 
-            (*g_ppModel)->setItem(i, 0, pItem);
-            (*g_ppModel)->setItem(i, 1, new QStandardItem(XBinary::valueToHex(i)));
-            (*g_ppModel)->setItem(i, N_DEX_STRING_ID::string_data_off + 2, new QStandardItem(XBinary::valueToHex(listStringItemIds.at(i).string_data_off)));
-            (*g_ppModel)->setItem(i, N_DEX_STRING_ID::string_data_off + 3, new QStandardItem(sString));
+            (*m_ppModel)->setItem(i, 0, pItem);
+            (*m_ppModel)->setItem(i, 1, new QStandardItem(XBinary::valueToHex(i)));
+            (*m_ppModel)->setItem(i, N_DEX_STRING_ID::string_data_off + 2, new QStandardItem(XBinary::valueToHex(listStringItemIds.at(i).string_data_off)));
+            (*m_ppModel)->setItem(i, N_DEX_STRING_ID::string_data_off + 3, new QStandardItem(sString));
 
             incValue();
         }
-    } else if (g_nType == SDEX::TYPE_TYPE_ID_ITEM) {
+    } else if (m_nType == SDEX::TYPE_TYPE_ID_ITEM) {
         QList<QString> listLabels;
         listLabels.append("");
         listLabels.append("");
         listLabels.append(getStructList(N_DEX_TYPE_ID::records, N_DEX_TYPE_ID::__data_size));
         listLabels.append("");
 
-        QList<XDEX_DEF::MAP_ITEM> listMapItems = g_pDEX->getMapItems(getPdStruct());
-        qint64 nDataOffset = g_pDEX->getHeader_data_off();
-        qint64 nDataSize = g_pDEX->getHeader_data_size();
-        QByteArray baData = g_pDEX->read_array(nDataOffset, nDataSize);
+        QList<XDEX_DEF::MAP_ITEM> listMapItems = m_pDEX->getMapItems(getPdStruct());
+        qint64 nDataOffset = m_pDEX->getHeader_data_off();
+        qint64 nDataSize = m_pDEX->getHeader_data_size();
+        QByteArray baData = m_pDEX->read_array(nDataOffset, nDataSize);
 
-        QList<XDEX_DEF::TYPE_ITEM_ID> listTypeItemIds = g_pDEX->getList_TYPE_ITEM_ID(&listMapItems, getPdStruct());
+        QList<XDEX_DEF::TYPE_ITEM_ID> listTypeItemIds = m_pDEX->getList_TYPE_ITEM_ID(&listMapItems, getPdStruct());
 
-        XDEX_DEF::MAP_ITEM mapItemStrings = g_pDEX->getMapItem(XDEX_DEF::TYPE_STRING_ID_ITEM, &listMapItems, getPdStruct());
+        XDEX_DEF::MAP_ITEM mapItemStrings = m_pDEX->getMapItem(XDEX_DEF::TYPE_STRING_ID_ITEM, &listMapItems, getPdStruct());
 
         qint32 nNumberOfIds = listTypeItemIds.count();
 
-        *g_ppModel = new QStandardItemModel(nNumberOfIds, listLabels.count());
+        *m_ppModel = new QStandardItemModel(nNumberOfIds, listLabels.count());
 
         setMaximum(nNumberOfIds);
 
-        setTableHeader(*g_ppModel, &listLabels);
+        setTableHeader(*m_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfIds) && (isRun()); i++) {
-            QString sString = g_pDEX->getTypeItemIdString(listTypeItemIds.at(i), &mapItemStrings, baData.data(), nDataSize, nDataOffset);
+            QString sString = m_pDEX->getTypeItemIdString(listTypeItemIds.at(i), &mapItemStrings, baData.data(), nDataSize, nDataOffset);
 
             QStandardItem *pItem = new QStandardItem(QString::number(i));
 
-            (*g_ppModel)->setItem(i, 0, pItem);
-            (*g_ppModel)->setItem(i, 1, new QStandardItem(XBinary::valueToHex(i)));
-            (*g_ppModel)->setItem(i, N_DEX_TYPE_ID::descriptor_idx + 2, new QStandardItem(XBinary::valueToHex(listTypeItemIds.at(i).descriptor_idx)));
-            (*g_ppModel)->setItem(i, N_DEX_TYPE_ID::descriptor_idx + 3, new QStandardItem(sString));
+            (*m_ppModel)->setItem(i, 0, pItem);
+            (*m_ppModel)->setItem(i, 1, new QStandardItem(XBinary::valueToHex(i)));
+            (*m_ppModel)->setItem(i, N_DEX_TYPE_ID::descriptor_idx + 2, new QStandardItem(XBinary::valueToHex(listTypeItemIds.at(i).descriptor_idx)));
+            (*m_ppModel)->setItem(i, N_DEX_TYPE_ID::descriptor_idx + 3, new QStandardItem(sString));
 
             incValue();
         }
-    } else if (g_nType == SDEX::TYPE_PROTO_ID_ITEM) {
+    } else if (m_nType == SDEX::TYPE_PROTO_ID_ITEM) {
         QList<QString> listLabels;
         listLabels.append("");
         listLabels.append("");
@@ -141,25 +141,25 @@ void DEXProcessData::_process()
         listLabels.append("shorty");
         listLabels.append("return_type");
 
-        QList<XDEX_DEF::MAP_ITEM> listMapItems = g_pDEX->getMapItems(getPdStruct());
-        XDEX_DEF::MAP_ITEM mapItemString = g_pDEX->getMapItem(XDEX_DEF::TYPE_STRING_ID_ITEM, &listMapItems, getPdStruct());
+        QList<XDEX_DEF::MAP_ITEM> listMapItems = m_pDEX->getMapItems(getPdStruct());
+        XDEX_DEF::MAP_ITEM mapItemString = m_pDEX->getMapItem(XDEX_DEF::TYPE_STRING_ID_ITEM, &listMapItems, getPdStruct());
 
-        QList<XDEX_DEF::STRING_ITEM_ID> listStringID = g_pDEX->getList_STRING_ITEM_ID(&listMapItems, getPdStruct());
-        QList<XDEX_DEF::TYPE_ITEM_ID> listItemID = g_pDEX->getList_TYPE_ITEM_ID(&listMapItems, getPdStruct());
+        QList<XDEX_DEF::STRING_ITEM_ID> listStringID = m_pDEX->getList_STRING_ITEM_ID(&listMapItems, getPdStruct());
+        QList<XDEX_DEF::TYPE_ITEM_ID> listItemID = m_pDEX->getList_TYPE_ITEM_ID(&listMapItems, getPdStruct());
 
-        qint64 nDataOffset = g_pDEX->getHeader_data_off();
-        qint64 nDataSize = g_pDEX->getHeader_data_size();
-        QByteArray baData = g_pDEX->read_array(nDataOffset, nDataSize);
+        qint64 nDataOffset = m_pDEX->getHeader_data_off();
+        qint64 nDataSize = m_pDEX->getHeader_data_size();
+        QByteArray baData = m_pDEX->read_array(nDataOffset, nDataSize);
 
-        QList<XDEX_DEF::PROTO_ITEM_ID> listProtoIDs = g_pDEX->getList_PROTO_ITEM_ID(&listMapItems, getPdStruct());
+        QList<XDEX_DEF::PROTO_ITEM_ID> listProtoIDs = m_pDEX->getList_PROTO_ITEM_ID(&listMapItems, getPdStruct());
 
         qint32 nNumberOfIds = listProtoIDs.count();
 
-        *g_ppModel = new QStandardItemModel(nNumberOfIds, listLabels.count());
+        *m_ppModel = new QStandardItemModel(nNumberOfIds, listLabels.count());
 
         setMaximum(nNumberOfIds);
 
-        setTableHeader(*g_ppModel, &listLabels);
+        setTableHeader(*m_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfIds) && (isRun()); i++) {
             //            QString
@@ -167,21 +167,21 @@ void DEXProcessData::_process()
 
             QStandardItem *pItem = new QStandardItem(QString::number(i));
 
-            (*g_ppModel)->setItem(i, 0, pItem);
-            (*g_ppModel)->setItem(i, 1, new QStandardItem(XBinary::valueToHex(i)));
-            (*g_ppModel)->setItem(i, N_DEX_PROTO_ID::shorty_idx + 2, new QStandardItem(XBinary::valueToHex(listProtoIDs.at(i).shorty_idx)));
-            (*g_ppModel)->setItem(i, N_DEX_PROTO_ID::return_type_idx + 2, new QStandardItem(XBinary::valueToHex(listProtoIDs.at(i).return_type_idx)));
-            (*g_ppModel)->setItem(i, N_DEX_PROTO_ID::parameters_off + 2, new QStandardItem(XBinary::valueToHex(listProtoIDs.at(i).parameters_off)));
+            (*m_ppModel)->setItem(i, 0, pItem);
+            (*m_ppModel)->setItem(i, 1, new QStandardItem(XBinary::valueToHex(i)));
+            (*m_ppModel)->setItem(i, N_DEX_PROTO_ID::shorty_idx + 2, new QStandardItem(XBinary::valueToHex(listProtoIDs.at(i).shorty_idx)));
+            (*m_ppModel)->setItem(i, N_DEX_PROTO_ID::return_type_idx + 2, new QStandardItem(XBinary::valueToHex(listProtoIDs.at(i).return_type_idx)));
+            (*m_ppModel)->setItem(i, N_DEX_PROTO_ID::parameters_off + 2, new QStandardItem(XBinary::valueToHex(listProtoIDs.at(i).parameters_off)));
 
-            QString sShorty = g_pDEX->getStringItemIdString(&listStringID, listProtoIDs.at(i).shorty_idx, baData.data(), nDataSize, nDataOffset);
-            QString sReturnType = g_pDEX->getTypeItemIdString(&listItemID, listProtoIDs.at(i).return_type_idx, &mapItemString, baData.data(), nDataSize, nDataOffset);
+            QString sShorty = m_pDEX->getStringItemIdString(&listStringID, listProtoIDs.at(i).shorty_idx, baData.data(), nDataSize, nDataOffset);
+            QString sReturnType = m_pDEX->getTypeItemIdString(&listItemID, listProtoIDs.at(i).return_type_idx, &mapItemString, baData.data(), nDataSize, nDataOffset);
 
-            (*g_ppModel)->setItem(i, N_DEX_PROTO_ID::parameters_off + 3, new QStandardItem(sShorty));
-            (*g_ppModel)->setItem(i, N_DEX_PROTO_ID::parameters_off + 4, new QStandardItem(sReturnType));
+            (*m_ppModel)->setItem(i, N_DEX_PROTO_ID::parameters_off + 3, new QStandardItem(sShorty));
+            (*m_ppModel)->setItem(i, N_DEX_PROTO_ID::parameters_off + 4, new QStandardItem(sReturnType));
 
             incValue();
         }
-    } else if (g_nType == SDEX::TYPE_FIELD_ID_ITEM) {
+    } else if (m_nType == SDEX::TYPE_FIELD_ID_ITEM) {
         QList<QString> listLabels;
         listLabels.append("");
         listLabels.append("");
@@ -189,110 +189,110 @@ void DEXProcessData::_process()
         // TODO type
         listLabels.append("name");
 
-        QList<XDEX_DEF::MAP_ITEM> listMapItems = g_pDEX->getMapItems(getPdStruct());
+        QList<XDEX_DEF::MAP_ITEM> listMapItems = m_pDEX->getMapItems(getPdStruct());
 
-        QList<XDEX_DEF::STRING_ITEM_ID> listStringID = g_pDEX->getList_STRING_ITEM_ID(&listMapItems, getPdStruct());
+        QList<XDEX_DEF::STRING_ITEM_ID> listStringID = m_pDEX->getList_STRING_ITEM_ID(&listMapItems, getPdStruct());
 
-        qint64 nDataOffset = g_pDEX->getHeader_data_off();
-        qint64 nDataSize = g_pDEX->getHeader_data_size();
-        QByteArray baData = g_pDEX->read_array(nDataOffset, nDataSize);
+        qint64 nDataOffset = m_pDEX->getHeader_data_off();
+        qint64 nDataSize = m_pDEX->getHeader_data_size();
+        QByteArray baData = m_pDEX->read_array(nDataOffset, nDataSize);
 
-        QList<XDEX_DEF::FIELD_ITEM_ID> listFieldIDs = g_pDEX->getList_FIELD_ITEM_ID(&listMapItems);
+        QList<XDEX_DEF::FIELD_ITEM_ID> listFieldIDs = m_pDEX->getList_FIELD_ITEM_ID(&listMapItems);
 
         qint32 nNumberOfIds = listFieldIDs.count();
 
-        *g_ppModel = new QStandardItemModel(nNumberOfIds, listLabels.count());
+        *m_ppModel = new QStandardItemModel(nNumberOfIds, listLabels.count());
 
         setMaximum(nNumberOfIds);
 
-        setTableHeader(*g_ppModel, &listLabels);
+        setTableHeader(*m_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfIds) && (isRun()); i++) {
             QStandardItem *pItem = new QStandardItem(QString::number(i));
 
-            (*g_ppModel)->setItem(i, 0, pItem);
-            (*g_ppModel)->setItem(i, 1, new QStandardItem(XBinary::valueToHex(i)));
-            (*g_ppModel)->setItem(i, N_DEX_FIELD_ID::class_idx + 2, new QStandardItem(XBinary::valueToHex(listFieldIDs.at(i).class_idx)));
-            (*g_ppModel)->setItem(i, N_DEX_FIELD_ID::type_idx + 2, new QStandardItem(XBinary::valueToHex(listFieldIDs.at(i).type_idx)));
-            (*g_ppModel)->setItem(i, N_DEX_FIELD_ID::name_idx + 2, new QStandardItem(XBinary::valueToHex(listFieldIDs.at(i).name_idx)));
+            (*m_ppModel)->setItem(i, 0, pItem);
+            (*m_ppModel)->setItem(i, 1, new QStandardItem(XBinary::valueToHex(i)));
+            (*m_ppModel)->setItem(i, N_DEX_FIELD_ID::class_idx + 2, new QStandardItem(XBinary::valueToHex(listFieldIDs.at(i).class_idx)));
+            (*m_ppModel)->setItem(i, N_DEX_FIELD_ID::type_idx + 2, new QStandardItem(XBinary::valueToHex(listFieldIDs.at(i).type_idx)));
+            (*m_ppModel)->setItem(i, N_DEX_FIELD_ID::name_idx + 2, new QStandardItem(XBinary::valueToHex(listFieldIDs.at(i).name_idx)));
 
-            QString sName = g_pDEX->getStringItemIdString(&listStringID, listFieldIDs.at(i).name_idx, baData.data(), nDataSize, nDataOffset);
+            QString sName = m_pDEX->getStringItemIdString(&listStringID, listFieldIDs.at(i).name_idx, baData.data(), nDataSize, nDataOffset);
 
-            (*g_ppModel)->setItem(i, N_DEX_FIELD_ID::name_idx + 3, new QStandardItem(sName));
+            (*m_ppModel)->setItem(i, N_DEX_FIELD_ID::name_idx + 3, new QStandardItem(sName));
 
             incValue();
         }
-    } else if (g_nType == SDEX::TYPE_METHOD_ID_ITEM) {
+    } else if (m_nType == SDEX::TYPE_METHOD_ID_ITEM) {
         QList<QString> listLabels;
         listLabels.append("");
         listLabels.append("");
         listLabels.append(getStructList(N_DEX_METHOD_ID::records, N_DEX_METHOD_ID::__data_size));
         listLabels.append("name");
 
-        QList<XDEX_DEF::MAP_ITEM> listMapItems = g_pDEX->getMapItems(getPdStruct());
+        QList<XDEX_DEF::MAP_ITEM> listMapItems = m_pDEX->getMapItems(getPdStruct());
 
-        QList<XDEX_DEF::STRING_ITEM_ID> listStringID = g_pDEX->getList_STRING_ITEM_ID(&listMapItems, getPdStruct());
+        QList<XDEX_DEF::STRING_ITEM_ID> listStringID = m_pDEX->getList_STRING_ITEM_ID(&listMapItems, getPdStruct());
 
-        qint64 nDataOffset = g_pDEX->getHeader_data_off();
-        qint64 nDataSize = g_pDEX->getHeader_data_size();
-        QByteArray baData = g_pDEX->read_array(nDataOffset, nDataSize);
+        qint64 nDataOffset = m_pDEX->getHeader_data_off();
+        qint64 nDataSize = m_pDEX->getHeader_data_size();
+        QByteArray baData = m_pDEX->read_array(nDataOffset, nDataSize);
 
-        QList<XDEX_DEF::METHOD_ITEM_ID> listMethodIDs = g_pDEX->getList_METHOD_ITEM_ID(&listMapItems);
+        QList<XDEX_DEF::METHOD_ITEM_ID> listMethodIDs = m_pDEX->getList_METHOD_ITEM_ID(&listMapItems);
 
         qint32 nNumberOfIds = listMethodIDs.count();
 
-        *g_ppModel = new QStandardItemModel(nNumberOfIds, listLabels.count());
+        *m_ppModel = new QStandardItemModel(nNumberOfIds, listLabels.count());
 
         setMaximum(nNumberOfIds);
 
-        setTableHeader(*g_ppModel, &listLabels);
+        setTableHeader(*m_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfIds) && (isRun()); i++) {
             QStandardItem *pItem = new QStandardItem(QString::number(i));
 
-            (*g_ppModel)->setItem(i, 0, pItem);
-            (*g_ppModel)->setItem(i, 1, new QStandardItem(XBinary::valueToHex(i)));
-            (*g_ppModel)->setItem(i, N_DEX_METHOD_ID::class_idx + 2, new QStandardItem(XBinary::valueToHex(listMethodIDs.at(i).class_idx)));
-            (*g_ppModel)->setItem(i, N_DEX_METHOD_ID::proto_idx + 2, new QStandardItem(XBinary::valueToHex(listMethodIDs.at(i).proto_idx)));
-            (*g_ppModel)->setItem(i, N_DEX_METHOD_ID::name_idx + 2, new QStandardItem(XBinary::valueToHex(listMethodIDs.at(i).name_idx)));
+            (*m_ppModel)->setItem(i, 0, pItem);
+            (*m_ppModel)->setItem(i, 1, new QStandardItem(XBinary::valueToHex(i)));
+            (*m_ppModel)->setItem(i, N_DEX_METHOD_ID::class_idx + 2, new QStandardItem(XBinary::valueToHex(listMethodIDs.at(i).class_idx)));
+            (*m_ppModel)->setItem(i, N_DEX_METHOD_ID::proto_idx + 2, new QStandardItem(XBinary::valueToHex(listMethodIDs.at(i).proto_idx)));
+            (*m_ppModel)->setItem(i, N_DEX_METHOD_ID::name_idx + 2, new QStandardItem(XBinary::valueToHex(listMethodIDs.at(i).name_idx)));
 
-            QString sName = g_pDEX->getStringItemIdString(&listStringID, listMethodIDs.at(i).name_idx, baData.data(), nDataSize, nDataOffset);
+            QString sName = m_pDEX->getStringItemIdString(&listStringID, listMethodIDs.at(i).name_idx, baData.data(), nDataSize, nDataOffset);
 
-            (*g_ppModel)->setItem(i, N_DEX_METHOD_ID::name_idx + 3, new QStandardItem(sName));
+            (*m_ppModel)->setItem(i, N_DEX_METHOD_ID::name_idx + 3, new QStandardItem(sName));
 
             incValue();
         }
-    } else if (g_nType == SDEX::TYPE_CLASS_DEF_ITEM) {
+    } else if (m_nType == SDEX::TYPE_CLASS_DEF_ITEM) {
         QList<QString> listLabels;
         listLabels.append("");
         listLabels.append("");
         listLabels.append(getStructList(N_DEX_CLASS_ITEM_DEF::records, N_DEX_CLASS_ITEM_DEF::__data_size));
 
-        QList<XDEX_DEF::MAP_ITEM> listMapItems = g_pDEX->getMapItems(getPdStruct());
+        QList<XDEX_DEF::MAP_ITEM> listMapItems = m_pDEX->getMapItems(getPdStruct());
 
-        QList<XDEX_DEF::CLASS_ITEM_DEF> listClassDefss = g_pDEX->getList_CLASS_ITEM_DEF(&listMapItems, getPdStruct());
+        QList<XDEX_DEF::CLASS_ITEM_DEF> listClassDefss = m_pDEX->getList_CLASS_ITEM_DEF(&listMapItems, getPdStruct());
 
         qint32 nNumberOfDefs = listClassDefss.count();
 
-        *g_ppModel = new QStandardItemModel(nNumberOfDefs, listLabels.count());
+        *m_ppModel = new QStandardItemModel(nNumberOfDefs, listLabels.count());
 
         setMaximum(nNumberOfDefs);
 
-        setTableHeader(*g_ppModel, &listLabels);
+        setTableHeader(*m_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfDefs) && (isRun()); i++) {
             QStandardItem *pItem = new QStandardItem(QString::number(i));
 
-            (*g_ppModel)->setItem(i, 0, pItem);
-            (*g_ppModel)->setItem(i, 1, new QStandardItem(XBinary::valueToHex(i)));
-            (*g_ppModel)->setItem(i, N_DEX_CLASS_ITEM_DEF::class_idx + 2, new QStandardItem(XBinary::valueToHex(listClassDefss.at(i).class_idx)));
-            (*g_ppModel)->setItem(i, N_DEX_CLASS_ITEM_DEF::access_flags + 2, new QStandardItem(XBinary::valueToHex(listClassDefss.at(i).access_flags)));
-            (*g_ppModel)->setItem(i, N_DEX_CLASS_ITEM_DEF::superclass_idx + 2, new QStandardItem(XBinary::valueToHex(listClassDefss.at(i).superclass_idx)));
-            (*g_ppModel)->setItem(i, N_DEX_CLASS_ITEM_DEF::interfaces_off + 2, new QStandardItem(XBinary::valueToHex(listClassDefss.at(i).interfaces_off)));
-            (*g_ppModel)->setItem(i, N_DEX_CLASS_ITEM_DEF::source_file_idx + 2, new QStandardItem(XBinary::valueToHex(listClassDefss.at(i).source_file_idx)));
-            (*g_ppModel)->setItem(i, N_DEX_CLASS_ITEM_DEF::annotations_off + 2, new QStandardItem(XBinary::valueToHex(listClassDefss.at(i).annotations_off)));
-            (*g_ppModel)->setItem(i, N_DEX_CLASS_ITEM_DEF::class_data_off + 2, new QStandardItem(XBinary::valueToHex(listClassDefss.at(i).class_data_off)));
-            (*g_ppModel)->setItem(i, N_DEX_CLASS_ITEM_DEF::static_values_off + 2, new QStandardItem(XBinary::valueToHex(listClassDefss.at(i).static_values_off)));
+            (*m_ppModel)->setItem(i, 0, pItem);
+            (*m_ppModel)->setItem(i, 1, new QStandardItem(XBinary::valueToHex(i)));
+            (*m_ppModel)->setItem(i, N_DEX_CLASS_ITEM_DEF::class_idx + 2, new QStandardItem(XBinary::valueToHex(listClassDefss.at(i).class_idx)));
+            (*m_ppModel)->setItem(i, N_DEX_CLASS_ITEM_DEF::access_flags + 2, new QStandardItem(XBinary::valueToHex(listClassDefss.at(i).access_flags)));
+            (*m_ppModel)->setItem(i, N_DEX_CLASS_ITEM_DEF::superclass_idx + 2, new QStandardItem(XBinary::valueToHex(listClassDefss.at(i).superclass_idx)));
+            (*m_ppModel)->setItem(i, N_DEX_CLASS_ITEM_DEF::interfaces_off + 2, new QStandardItem(XBinary::valueToHex(listClassDefss.at(i).interfaces_off)));
+            (*m_ppModel)->setItem(i, N_DEX_CLASS_ITEM_DEF::source_file_idx + 2, new QStandardItem(XBinary::valueToHex(listClassDefss.at(i).source_file_idx)));
+            (*m_ppModel)->setItem(i, N_DEX_CLASS_ITEM_DEF::annotations_off + 2, new QStandardItem(XBinary::valueToHex(listClassDefss.at(i).annotations_off)));
+            (*m_ppModel)->setItem(i, N_DEX_CLASS_ITEM_DEF::class_data_off + 2, new QStandardItem(XBinary::valueToHex(listClassDefss.at(i).class_data_off)));
+            (*m_ppModel)->setItem(i, N_DEX_CLASS_ITEM_DEF::static_values_off + 2, new QStandardItem(XBinary::valueToHex(listClassDefss.at(i).static_values_off)));
 
             incValue();
         }
@@ -301,7 +301,7 @@ void DEXProcessData::_process()
 
 void DEXProcessData::ajustTableView(qint32 nType, QTableView *pTableView)
 {
-    XBinary::MODE mode = g_pDEX->getMode();
+    XBinary::MODE mode = m_pDEX->getMode();
 
     if (nType == SDEX::TYPE_MAPITEMS) {
         XOptions::setTableViewHeaderWidth(pTableView, 0, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT16, mode));
