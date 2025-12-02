@@ -55,12 +55,12 @@ private slots:
 
 private:
     Ui::MACHSectionHeaderWidget *ui;
-    XLineEditHEX **g_ppLinedEdit;
-    qint32 g_nLineEditSize;
-    XComboBoxEx **g_ppComboBox;
-    qint32 g_nComboBoxSize;
-    InvWidget **g_ppInvWidget;
-    qint32 g_nInvWidgetSize;
-    SubDevice *g_pSubDevice;
+    XLineEditHEX **m_ppLinedEdit;
+    qint32 m_nLineEditSize;
+    XComboBoxEx **m_ppComboBox;
+    qint32 m_nComboBoxSize;
+    InvWidget **m_ppInvWidget;
+    qint32 m_nInvWidgetSize;
+    SubDevice *m_pSubDevice;
 };
 #endif  // MACHSECTIONHEADERWIDGET_H

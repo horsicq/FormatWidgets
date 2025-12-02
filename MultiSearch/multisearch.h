@@ -78,14 +78,14 @@ public:
 
 private:
     QIODevice *m_pDevice;
-    QVector<XBinary::MS_RECORD> *g_pListRecords;
-    OPTIONS g_options;
-    TYPE g_type;
-    QStandardItemModel **g_ppModel;
-    QSemaphore *g_pSemaphore;
-    QMutex g_mutex;
+    QVector<XBinary::MS_RECORD> *m_pListRecords;
+    OPTIONS m_options;
+    TYPE m_type;
+    QStandardItemModel **m_ppModel;
+    QSemaphore *m_pSemaphore;
+    QMutex m_mutex;
     XBinary::PDSTRUCT *m_pPdStruct;
-    qint32 g_nFreeIndex;
+    qint32 m_nFreeIndex;
 };
 
 #endif  // MULTISEARCH_H

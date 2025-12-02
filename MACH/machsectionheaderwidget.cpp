@@ -36,106 +36,106 @@ MACHSectionHeaderWidget::MACHSectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPT
 
     bool bIs64 = mach.is64();
 
-    g_ppLinedEdit = 0;
-    g_nLineEditSize = 0;
-    g_ppComboBox = 0;
-    g_nComboBoxSize = 0;
-    g_ppInvWidget = 0;
-    g_nInvWidgetSize = 0;
+    m_ppLinedEdit = 0;
+    m_nLineEditSize = 0;
+    m_ppComboBox = 0;
+    m_nComboBoxSize = 0;
+    m_ppInvWidget = 0;
+    m_nInvWidgetSize = 0;
 
     if (nType == SMACH::TYPE_mach_commands) {
-        g_nLineEditSize = N_mach_commands::__data_size;
-        g_nComboBoxSize = N_mach_commands::__CB_size;
-        g_nInvWidgetSize = N_mach_commands::__INV_size;
+        m_nLineEditSize = N_mach_commands::__data_size;
+        m_nComboBoxSize = N_mach_commands::__CB_size;
+        m_nInvWidgetSize = N_mach_commands::__INV_size;
     }
     if ((nType == SMACH::TYPE_mach_libraries) || (nType == SMACH::TYPE_mach_weak_libraries) || (nType == SMACH::TYPE_mach_id_library)) {
-        g_nLineEditSize = N_mach_library::__data_size;
-        g_nComboBoxSize = N_mach_library::__CB_size;
-        g_nInvWidgetSize = N_mach_library::__INV_size;
+        m_nLineEditSize = N_mach_library::__data_size;
+        m_nComboBoxSize = N_mach_library::__CB_size;
+        m_nInvWidgetSize = N_mach_library::__INV_size;
     }
     if ((nType == SMACH::TYPE_mach_LOADFVMLIB) || (nType == SMACH::TYPE_mach_IDFVMLIB)) {
-        g_nLineEditSize = N_mach_fmv_library::__data_size;
-        g_nComboBoxSize = N_mach_fmv_library::__CB_size;
-        g_nInvWidgetSize = N_mach_fmv_library::__INV_size;
+        m_nLineEditSize = N_mach_fmv_library::__data_size;
+        m_nComboBoxSize = N_mach_fmv_library::__CB_size;
+        m_nInvWidgetSize = N_mach_fmv_library::__INV_size;
     } else if (nType == SMACH::TYPE_mach_segments) {
-        g_nLineEditSize = N_mach_segments::__data_size;
-        g_nComboBoxSize = N_mach_segments::__CB_size;
-        g_nInvWidgetSize = N_mach_segments::__INV_size;
+        m_nLineEditSize = N_mach_segments::__data_size;
+        m_nComboBoxSize = N_mach_segments::__CB_size;
+        m_nInvWidgetSize = N_mach_segments::__INV_size;
     } else if (nType == SMACH::TYPE_mach_sections) {
         if (bIs64) {
-            g_nLineEditSize = N_mach_sections64_E::__data_size;
-            g_nComboBoxSize = N_mach_sections64_E::__CB_size;
-            g_nInvWidgetSize = N_mach_sections64_E::__INV_size;
+            m_nLineEditSize = N_mach_sections64_E::__data_size;
+            m_nComboBoxSize = N_mach_sections64_E::__CB_size;
+            m_nInvWidgetSize = N_mach_sections64_E::__INV_size;
         } else {
-            g_nLineEditSize = N_mach_sections32_E::__data_size;
-            g_nComboBoxSize = N_mach_sections32_E::__CB_size;
-            g_nInvWidgetSize = N_mach_sections32_E::__INV_size;
+            m_nLineEditSize = N_mach_sections32_E::__data_size;
+            m_nComboBoxSize = N_mach_sections32_E::__CB_size;
+            m_nInvWidgetSize = N_mach_sections32_E::__INV_size;
         }
     } else if (nType == SMACH::TYPE_SYMBOLTABLE) {
-        g_nLineEditSize = N_mach_nlist::__data_size;
-        g_nComboBoxSize = N_mach_nlist::__CB_size;
-        g_nInvWidgetSize = N_mach_nlist::__INV_size;
+        m_nLineEditSize = N_mach_nlist::__data_size;
+        m_nComboBoxSize = N_mach_nlist::__CB_size;
+        m_nInvWidgetSize = N_mach_nlist::__INV_size;
     } else if (nType == SMACH::TYPE_DICE) {
-        g_nLineEditSize = N_mach_data_in_code_entry::__data_size;
-        g_nComboBoxSize = N_mach_data_in_code_entry::__CB_size;
-        g_nInvWidgetSize = N_mach_data_in_code_entry::__INV_size;
+        m_nLineEditSize = N_mach_data_in_code_entry::__data_size;
+        m_nComboBoxSize = N_mach_data_in_code_entry::__CB_size;
+        m_nInvWidgetSize = N_mach_data_in_code_entry::__INV_size;
     } else if (nType == SMACH::TYPE_DYSYMTAB_modtab) {
         if (bIs64) {
-            g_nLineEditSize = N_mach_modtab64::__data_size;
-            g_nComboBoxSize = N_mach_modtab64::__CB_size;
-            g_nInvWidgetSize = N_mach_modtab64::__INV_size;
+            m_nLineEditSize = N_mach_modtab64::__data_size;
+            m_nComboBoxSize = N_mach_modtab64::__CB_size;
+            m_nInvWidgetSize = N_mach_modtab64::__INV_size;
         } else {
-            g_nLineEditSize = N_mach_modtab32::__data_size;
-            g_nComboBoxSize = N_mach_modtab32::__CB_size;
-            g_nInvWidgetSize = N_mach_modtab32::__INV_size;
+            m_nLineEditSize = N_mach_modtab32::__data_size;
+            m_nComboBoxSize = N_mach_modtab32::__CB_size;
+            m_nInvWidgetSize = N_mach_modtab32::__INV_size;
         }
     } else if (nType == SMACH::TYPE_DYSYMTAB_toc) {
-        g_nLineEditSize = N_mach_table_of_contents::__data_size;
-        g_nComboBoxSize = N_mach_table_of_contents::__CB_size;
-        g_nInvWidgetSize = N_mach_table_of_contents::__INV_size;
+        m_nLineEditSize = N_mach_table_of_contents::__data_size;
+        m_nComboBoxSize = N_mach_table_of_contents::__CB_size;
+        m_nInvWidgetSize = N_mach_table_of_contents::__INV_size;
     } else if (nType == SMACH::TYPE_DYSYMTAB_extrel) {
-        g_nLineEditSize = N_mach_relocs::__data_size;
-        g_nComboBoxSize = N_mach_relocs::__CB_size;
-        g_nInvWidgetSize = N_mach_relocs::__INV_size;
+        m_nLineEditSize = N_mach_relocs::__data_size;
+        m_nComboBoxSize = N_mach_relocs::__CB_size;
+        m_nInvWidgetSize = N_mach_relocs::__INV_size;
     } else if (nType == SMACH::TYPE_DYSYMTAB_locrel) {
-        g_nLineEditSize = N_mach_relocs::__data_size;
-        g_nComboBoxSize = N_mach_relocs::__CB_size;
-        g_nInvWidgetSize = N_mach_relocs::__INV_size;
+        m_nLineEditSize = N_mach_relocs::__data_size;
+        m_nComboBoxSize = N_mach_relocs::__CB_size;
+        m_nInvWidgetSize = N_mach_relocs::__INV_size;
     } else if (nType == SMACH::TYPE_DYSYMTAB_indirectsyms) {
-        g_nLineEditSize = N_mach_value::__data_size;
-        g_nComboBoxSize = N_mach_value::__CB_size;
-        g_nInvWidgetSize = N_mach_value::__INV_size;
+        m_nLineEditSize = N_mach_value::__data_size;
+        m_nComboBoxSize = N_mach_value::__CB_size;
+        m_nInvWidgetSize = N_mach_value::__INV_size;
     } else if (nType == SMACH::TYPE_DYSYMTAB_extrefsyms) {
-        g_nLineEditSize = N_mach_value::__data_size;
-        g_nComboBoxSize = N_mach_value::__CB_size;
-        g_nInvWidgetSize = N_mach_value::__INV_size;
+        m_nLineEditSize = N_mach_value::__data_size;
+        m_nComboBoxSize = N_mach_value::__CB_size;
+        m_nInvWidgetSize = N_mach_value::__INV_size;
     }
 
-    if (g_nLineEditSize) {
-        g_ppLinedEdit = new PXLineEditHEX[g_nLineEditSize];
+    if (m_nLineEditSize) {
+        m_ppLinedEdit = new PXLineEditHEX[m_nLineEditSize];
     }
 
-    if (g_nComboBoxSize) {
-        g_ppComboBox = new PXComboBoxEx[g_nComboBoxSize];
+    if (m_nComboBoxSize) {
+        m_ppComboBox = new PXComboBoxEx[m_nComboBoxSize];
     }
 
-    if (g_nInvWidgetSize) {
-        g_ppInvWidget = new PInvWidget[g_nInvWidgetSize];
+    if (m_nInvWidgetSize) {
+        m_ppInvWidget = new PInvWidget[m_nInvWidgetSize];
     }
 }
 
 MACHSectionHeaderWidget::~MACHSectionHeaderWidget()
 {
-    if (g_ppLinedEdit) {
-        delete[] g_ppLinedEdit;
+    if (m_ppLinedEdit) {
+        delete[] m_ppLinedEdit;
     }
 
-    if (g_ppComboBox) {
-        delete[] g_ppComboBox;
+    if (m_ppComboBox) {
+        delete[] m_ppComboBox;
     }
 
-    if (g_ppInvWidget) {
-        delete[] g_ppInvWidget;
+    if (m_ppInvWidget) {
+        delete[] m_ppInvWidget;
     }
 
     delete ui;
@@ -145,11 +145,11 @@ void MACHSectionHeaderWidget::clear()
 {
     reset();
 
-    memset(g_ppLinedEdit, 0, g_nLineEditSize * sizeof(XLineEditHEX *));
-    memset(g_ppComboBox, 0, g_nComboBoxSize * sizeof(XComboBoxEx *));
-    memset(g_ppInvWidget, 0, g_nInvWidgetSize * sizeof(InvWidget *));
+    memset(m_ppLinedEdit, 0, m_nLineEditSize * sizeof(XLineEditHEX *));
+    memset(m_ppComboBox, 0, m_nComboBoxSize * sizeof(XComboBoxEx *));
+    memset(m_ppInvWidget, 0, m_nInvWidgetSize * sizeof(InvWidget *));
 
-    g_pSubDevice = nullptr;
+    m_pSubDevice = nullptr;
 
     ui->checkBoxReadonly->setChecked(true);
 }
@@ -191,22 +191,22 @@ FormatWidget::SV MACHSectionHeaderWidget::_setValue(QVariant vValue, qint32 nSty
             switch (nStype) {
                 case SMACH::TYPE_mach_commands:
                     switch (nNdata) {
-                        case N_mach_commands::cmd: g_ppComboBox[N_mach_commands::CB_CMD]->setValue(nValue); break;
+                        case N_mach_commands::cmd: m_ppComboBox[N_mach_commands::CB_CMD]->setValue(nValue); break;
                     }
 
                     break;
 
                 case SMACH::TYPE_mach_segments:
                     switch (nNdata) {
-                        case N_mach_segments::initprot: g_ppComboBox[N_mach_segments::CB_initprot]->setValue(nValue); break;
-                        case N_mach_segments::maxprot: g_ppComboBox[N_mach_segments::CB_maxprot]->setValue(nValue); break;
+                        case N_mach_segments::initprot: m_ppComboBox[N_mach_segments::CB_initprot]->setValue(nValue); break;
+                        case N_mach_segments::maxprot: m_ppComboBox[N_mach_segments::CB_maxprot]->setValue(nValue); break;
                     }
 
                     break;
 
                 case SMACH::TYPE_DICE:
                     switch (nNdata) {
-                        case N_mach_data_in_code_entry::kind: g_ppComboBox[N_mach_data_in_code_entry::CB_kind]->setValue(nValue); break;
+                        case N_mach_data_in_code_entry::kind: m_ppComboBox[N_mach_data_in_code_entry::CB_kind]->setValue(nValue); break;
                     }
 
                     break;
@@ -443,14 +443,14 @@ void MACHSectionHeaderWidget::setReadonly(bool bState)
         ui->checkBoxReadonly->blockSignals(bBlocked1);
     }
 
-    setLineEditsReadOnly(g_ppLinedEdit, g_nLineEditSize, bState);
-    setComboBoxesReadOnly(g_ppComboBox, g_nComboBoxSize, bState);
+    setLineEditsReadOnly(m_ppLinedEdit, m_nLineEditSize, bState);
+    setComboBoxesReadOnly(m_ppComboBox, m_nComboBoxSize, bState);
 }
 
 void MACHSectionHeaderWidget::blockSignals(bool bState)
 {
-    _blockSignals((QObject **)g_ppLinedEdit, g_nLineEditSize, bState);
-    _blockSignals((QObject **)g_ppComboBox, g_nComboBoxSize, bState);
+    _blockSignals((QObject **)m_ppLinedEdit, m_nLineEditSize, bState);
+    _blockSignals((QObject **)m_ppComboBox, m_nComboBoxSize, bState);
 }
 
 void MACHSectionHeaderWidget::adjustHeaderTable(qint32 nType, QTableWidget *pTableWidget)
@@ -476,9 +476,9 @@ void MACHSectionHeaderWidget::reloadData(bool bSaveSelection)
         bool bIsBigEndian = mach.isBigEndian();
 
         if (nType == SMACH::TYPE_mach_commands) {
-            createHeaderTable(SMACH::TYPE_mach_commands, ui->tableWidget, N_mach_commands::records, g_ppLinedEdit, N_mach_commands::__data_size, getNumber(),
+            createHeaderTable(SMACH::TYPE_mach_commands, ui->tableWidget, N_mach_commands::records, m_ppLinedEdit, N_mach_commands::__data_size, getNumber(),
                               getOffset());
-            g_ppComboBox[N_mach_commands::CB_CMD] =
+            m_ppComboBox[N_mach_commands::CB_CMD] =
                 createComboBox(ui->tableWidget, XMACH::getLoadCommandTypesS(), SMACH::TYPE_mach_commands, N_mach_commands::cmd, XComboBoxEx::CBTYPE_LIST);
 
             blockSignals(true);
@@ -487,20 +487,20 @@ void MACHSectionHeaderWidget::reloadData(bool bSaveSelection)
 
             XMACH::COMMAND_RECORD cr = mach._readLoadCommand(nHeaderOffset, bIsBigEndian);
 
-            g_ppLinedEdit[N_mach_commands::cmd]->setValue_uint32((quint32)cr.nId);
-            g_ppLinedEdit[N_mach_commands::cmdsize]->setValue_uint32((quint32)cr.nSize);
+            m_ppLinedEdit[N_mach_commands::cmd]->setValue_uint32((quint32)cr.nId);
+            m_ppLinedEdit[N_mach_commands::cmdsize]->setValue_uint32((quint32)cr.nSize);
 
-            g_ppComboBox[N_mach_commands::CB_CMD]->setValue(cr.nId);
+            m_ppComboBox[N_mach_commands::CB_CMD]->setValue(cr.nId);
 
             qint64 nOffset = nHeaderOffset;
             qint64 nSize = mach.getCommandHeaderSize();
             qint64 nAddress = mach.offsetToRelAddress(nOffset);
 
-            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex, false, false, false);
+            loadHexSubdevice(nOffset, nSize, nAddress, &m_pSubDevice, ui->widgetHex, false, false, false);
 
             blockSignals(false);
         } else if ((nType == SMACH::TYPE_mach_libraries) || (nType == SMACH::TYPE_mach_weak_libraries) || (nType == SMACH::TYPE_mach_id_library)) {
-            createHeaderTable(nType, ui->tableWidget, N_mach_library::records, g_ppLinedEdit, N_mach_library::__data_size, getNumber(), getOffset());
+            createHeaderTable(nType, ui->tableWidget, N_mach_library::records, m_ppLinedEdit, N_mach_library::__data_size, getNumber(), getOffset());
 
             blockSignals(true);
 
@@ -509,10 +509,10 @@ void MACHSectionHeaderWidget::reloadData(bool bSaveSelection)
             XMACH::LIBRARY_RECORD lr = mach._readLibraryRecord(nHeaderOffset, bIsBigEndian);
             XMACH::COMMAND_RECORD cr = mach._readLoadCommand(nHeaderOffset, bIsBigEndian);
 
-            g_ppLinedEdit[N_mach_library::timestamp]->setValue_uint32((quint32)lr.timestamp);
-            g_ppLinedEdit[N_mach_library::current_version]->setValue_uint32((quint32)lr.current_version);
-            g_ppLinedEdit[N_mach_library::compatibility_version]->setValue_uint32((quint32)lr.compatibility_version);
-            g_ppLinedEdit[N_mach_library::name]->setValue_String(lr.sFullName, lr.nMaxStringSize);
+            m_ppLinedEdit[N_mach_library::timestamp]->setValue_uint32((quint32)lr.timestamp);
+            m_ppLinedEdit[N_mach_library::current_version]->setValue_uint32((quint32)lr.current_version);
+            m_ppLinedEdit[N_mach_library::compatibility_version]->setValue_uint32((quint32)lr.compatibility_version);
+            m_ppLinedEdit[N_mach_library::name]->setValue_String(lr.sFullName, lr.nMaxStringSize);
 
             if (lr.nMaxStringSize) {
                 QTableWidgetItem *pItem = ui->tableWidget->item(N_mach_library::name, 0);
@@ -526,11 +526,11 @@ void MACHSectionHeaderWidget::reloadData(bool bSaveSelection)
             qint64 nSize = cr.nSize;
             qint64 nAddress = mach.offsetToRelAddress(nOffset);
 
-            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex, false, false, false);
+            loadHexSubdevice(nOffset, nSize, nAddress, &m_pSubDevice, ui->widgetHex, false, false, false);
 
             blockSignals(false);
         } else if ((nType == SMACH::TYPE_mach_LOADFVMLIB) || (nType == SMACH::TYPE_mach_IDFVMLIB)) {
-            createHeaderTable(nType, ui->tableWidget, N_mach_fmv_library::records, g_ppLinedEdit, N_mach_fmv_library::__data_size, getNumber(), getOffset());
+            createHeaderTable(nType, ui->tableWidget, N_mach_fmv_library::records, m_ppLinedEdit, N_mach_fmv_library::__data_size, getNumber(), getOffset());
 
             blockSignals(true);
 
@@ -539,9 +539,9 @@ void MACHSectionHeaderWidget::reloadData(bool bSaveSelection)
             XMACH::FVM_LIBRARY_RECORD lr = mach._readFvmLibraryRecord(nHeaderOffset, bIsBigEndian);
             XMACH::COMMAND_RECORD cr = mach._readLoadCommand(nHeaderOffset, bIsBigEndian);
 
-            g_ppLinedEdit[N_mach_fmv_library::minor_version]->setValue_uint32((quint32)lr.minor_version);
-            g_ppLinedEdit[N_mach_fmv_library::header_addr]->setValue_uint32((quint32)lr.header_addr);
-            g_ppLinedEdit[N_mach_fmv_library::name]->setValue_String(lr.sFullName, lr.nMaxStringSize);
+            m_ppLinedEdit[N_mach_fmv_library::minor_version]->setValue_uint32((quint32)lr.minor_version);
+            m_ppLinedEdit[N_mach_fmv_library::header_addr]->setValue_uint32((quint32)lr.header_addr);
+            m_ppLinedEdit[N_mach_fmv_library::name]->setValue_String(lr.sFullName, lr.nMaxStringSize);
 
             if (lr.nMaxStringSize) {
                 QTableWidgetItem *pItem = ui->tableWidget->item(N_mach_fmv_library::name, 0);
@@ -555,15 +555,15 @@ void MACHSectionHeaderWidget::reloadData(bool bSaveSelection)
             qint64 nSize = cr.nSize;
             qint64 nAddress = mach.offsetToRelAddress(nOffset);
 
-            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex, false, false, false);
+            loadHexSubdevice(nOffset, nSize, nAddress, &m_pSubDevice, ui->widgetHex, false, false, false);
 
             blockSignals(false);
         } else if (nType == SMACH::TYPE_mach_segments) {
-            createHeaderTable(SMACH::TYPE_mach_segments, ui->tableWidget, bIs64 ? (N_mach_segments::records64) : (N_mach_segments::records32), g_ppLinedEdit,
+            createHeaderTable(SMACH::TYPE_mach_segments, ui->tableWidget, bIs64 ? (N_mach_segments::records64) : (N_mach_segments::records32), m_ppLinedEdit,
                               N_mach_segments::__data_size, getNumber(), getOffset());
-            g_ppComboBox[N_mach_segments::CB_initprot] =
+            m_ppComboBox[N_mach_segments::CB_initprot] =
                 createComboBox(ui->tableWidget, XMACH::getVMProtectionsS(), SMACH::TYPE_mach_segments, N_mach_segments::initprot, XComboBoxEx::CBTYPE_FLAGS);
-            g_ppComboBox[N_mach_segments::CB_maxprot] =
+            m_ppComboBox[N_mach_segments::CB_maxprot] =
                 createComboBox(ui->tableWidget, XMACH::getVMProtectionsS(), SMACH::TYPE_mach_segments, N_mach_segments::maxprot, XComboBoxEx::CBTYPE_FLAGS);
 
             blockSignals(true);
@@ -573,48 +573,48 @@ void MACHSectionHeaderWidget::reloadData(bool bSaveSelection)
             if (bIs64) {
                 XMACH_DEF::segment_command_64 segment = mach._read_segment_command_64(nHeaderOffset, bIsBigEndian);
 
-                g_ppLinedEdit[N_mach_segments::segname]->setValue_String(segment.segname);
-                g_ppLinedEdit[N_mach_segments::vmaddr]->setValue_uint64(segment.vmaddr);
-                g_ppLinedEdit[N_mach_segments::vmsize]->setValue_uint64(segment.vmsize);
-                g_ppLinedEdit[N_mach_segments::fileoff]->setValue_uint64(segment.fileoff);
-                g_ppLinedEdit[N_mach_segments::filesize]->setValue_uint64(segment.filesize);
-                g_ppLinedEdit[N_mach_segments::maxprot]->setValue_uint32(segment.maxprot);
-                g_ppLinedEdit[N_mach_segments::initprot]->setValue_uint32(segment.initprot);
-                g_ppLinedEdit[N_mach_segments::nsects]->setValue_uint32(segment.nsects);
-                g_ppLinedEdit[N_mach_segments::flags]->setValue_uint32(segment.flags);
+                m_ppLinedEdit[N_mach_segments::segname]->setValue_String(segment.segname);
+                m_ppLinedEdit[N_mach_segments::vmaddr]->setValue_uint64(segment.vmaddr);
+                m_ppLinedEdit[N_mach_segments::vmsize]->setValue_uint64(segment.vmsize);
+                m_ppLinedEdit[N_mach_segments::fileoff]->setValue_uint64(segment.fileoff);
+                m_ppLinedEdit[N_mach_segments::filesize]->setValue_uint64(segment.filesize);
+                m_ppLinedEdit[N_mach_segments::maxprot]->setValue_uint32(segment.maxprot);
+                m_ppLinedEdit[N_mach_segments::initprot]->setValue_uint32(segment.initprot);
+                m_ppLinedEdit[N_mach_segments::nsects]->setValue_uint32(segment.nsects);
+                m_ppLinedEdit[N_mach_segments::flags]->setValue_uint32(segment.flags);
 
-                g_ppComboBox[N_mach_segments::CB_initprot]->setValue(segment.initprot);
-                g_ppComboBox[N_mach_segments::CB_maxprot]->setValue(segment.maxprot);
+                m_ppComboBox[N_mach_segments::CB_initprot]->setValue(segment.initprot);
+                m_ppComboBox[N_mach_segments::CB_maxprot]->setValue(segment.maxprot);
             } else {
                 XMACH_DEF::segment_command segment = mach._read_segment_command(nHeaderOffset, bIsBigEndian);
 
-                g_ppLinedEdit[N_mach_segments::segname]->setValue_String(segment.segname);
-                g_ppLinedEdit[N_mach_segments::vmaddr]->setValue_uint32(segment.vmaddr);
-                g_ppLinedEdit[N_mach_segments::vmsize]->setValue_uint32(segment.vmsize);
-                g_ppLinedEdit[N_mach_segments::fileoff]->setValue_uint32(segment.fileoff);
-                g_ppLinedEdit[N_mach_segments::filesize]->setValue_uint32(segment.filesize);
-                g_ppLinedEdit[N_mach_segments::maxprot]->setValue_uint32(segment.maxprot);
-                g_ppLinedEdit[N_mach_segments::initprot]->setValue_uint32(segment.initprot);
-                g_ppLinedEdit[N_mach_segments::nsects]->setValue_uint32(segment.nsects);
-                g_ppLinedEdit[N_mach_segments::flags]->setValue_uint32(segment.flags);
+                m_ppLinedEdit[N_mach_segments::segname]->setValue_String(segment.segname);
+                m_ppLinedEdit[N_mach_segments::vmaddr]->setValue_uint32(segment.vmaddr);
+                m_ppLinedEdit[N_mach_segments::vmsize]->setValue_uint32(segment.vmsize);
+                m_ppLinedEdit[N_mach_segments::fileoff]->setValue_uint32(segment.fileoff);
+                m_ppLinedEdit[N_mach_segments::filesize]->setValue_uint32(segment.filesize);
+                m_ppLinedEdit[N_mach_segments::maxprot]->setValue_uint32(segment.maxprot);
+                m_ppLinedEdit[N_mach_segments::initprot]->setValue_uint32(segment.initprot);
+                m_ppLinedEdit[N_mach_segments::nsects]->setValue_uint32(segment.nsects);
+                m_ppLinedEdit[N_mach_segments::flags]->setValue_uint32(segment.flags);
 
-                g_ppComboBox[N_mach_segments::CB_initprot]->setValue(segment.initprot);
-                g_ppComboBox[N_mach_segments::CB_maxprot]->setValue(segment.maxprot);
+                m_ppComboBox[N_mach_segments::CB_initprot]->setValue(segment.initprot);
+                m_ppComboBox[N_mach_segments::CB_maxprot]->setValue(segment.maxprot);
             }
 
             qint64 nOffset = nHeaderOffset;
             qint64 nSize = mach.getSegmentHeaderSize();
             qint64 nAddress = mach.offsetToRelAddress(nOffset);
 
-            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex, false, false, false);
+            loadHexSubdevice(nOffset, nSize, nAddress, &m_pSubDevice, ui->widgetHex, false, false, false);
 
             blockSignals(false);
         } else if (nType == SMACH::TYPE_mach_sections) {
             if (bIs64) {
-                createHeaderTable(SMACH::TYPE_mach_sections, ui->tableWidget, N_mach_sections64_E::records, g_ppLinedEdit, N_mach_sections64_E::__data_size, getNumber(),
+                createHeaderTable(SMACH::TYPE_mach_sections, ui->tableWidget, N_mach_sections64_E::records, m_ppLinedEdit, N_mach_sections64_E::__data_size, getNumber(),
                                   getOffset());
             } else {
-                createHeaderTable(SMACH::TYPE_mach_sections, ui->tableWidget, N_mach_sections32_E::records, g_ppLinedEdit, N_mach_sections32_E::__data_size, getNumber(),
+                createHeaderTable(SMACH::TYPE_mach_sections, ui->tableWidget, N_mach_sections32_E::records, m_ppLinedEdit, N_mach_sections32_E::__data_size, getNumber(),
                                   getOffset());
             }
 
@@ -623,71 +623,71 @@ void MACHSectionHeaderWidget::reloadData(bool bSaveSelection)
             qint64 nHeaderOffset = getOffset();
 
             if (bIs64) {
-                g_ppComboBox[N_mach_sections64_E::CB_flag0] = createComboBox(ui->tableWidget, XMACH::getSectionFlagsTypesS(), SMACH::TYPE_mach_sections,
+                m_ppComboBox[N_mach_sections64_E::CB_flag0] = createComboBox(ui->tableWidget, XMACH::getSectionFlagsTypesS(), SMACH::TYPE_mach_sections,
                                                                              N_mach_sections64_E::flags_0, XComboBoxEx::CBTYPE_ELIST, XMACH_DEF::S_SECTION_TYPE);
-                g_ppComboBox[N_mach_sections64_E::CB_flag1] =
+                m_ppComboBox[N_mach_sections64_E::CB_flag1] =
                     createComboBox(ui->tableWidget, XMACH::getSectionAttributesSysS(), SMACH::TYPE_mach_sections, N_mach_sections64_E::flags_1, XComboBoxEx::CBTYPE_ELIST,
                                    XMACH_DEF::S_SECTION_ATTRIBUTES_SYS);
-                g_ppComboBox[N_mach_sections64_E::CB_flag2] =
+                m_ppComboBox[N_mach_sections64_E::CB_flag2] =
                     createComboBox(ui->tableWidget, XMACH::getSectionAttributesUsrS(), SMACH::TYPE_mach_sections, N_mach_sections64_E::flags_2, XComboBoxEx::CBTYPE_ELIST,
                                    XMACH_DEF::S_SECTION_ATTRIBUTES_USR);
 
                 XMACH_DEF::section_64 section = mach._read_section_64(nHeaderOffset, bIsBigEndian);
 
-                g_ppLinedEdit[N_mach_sections64_E::sectname]->setValue_String(section.sectname);
-                g_ppLinedEdit[N_mach_sections64_E::segname]->setValue_String(section.segname);
-                g_ppLinedEdit[N_mach_sections64_E::addr]->setValue_uint64(section.addr);
-                g_ppLinedEdit[N_mach_sections64_E::size]->setValue_uint64(section.size);
-                g_ppLinedEdit[N_mach_sections64_E::offset]->setValue_uint32(section.offset);
-                g_ppLinedEdit[N_mach_sections64_E::align]->setValue_uint32(section.align);
-                g_ppLinedEdit[N_mach_sections64_E::reloff]->setValue_uint32(section.reloff);
-                g_ppLinedEdit[N_mach_sections64_E::nreloc]->setValue_uint32(section.nreloc);
-                g_ppLinedEdit[N_mach_sections64_E::flags_0]->setValue_uint32(section.flags);
-                g_ppLinedEdit[N_mach_sections64_E::reserved1]->setValue_uint32(section.reserved1);
-                g_ppLinedEdit[N_mach_sections64_E::reserved2]->setValue_uint32(section.reserved2);
-                g_ppLinedEdit[N_mach_sections64_E::reserved3]->setValue_uint32(section.reserved3);
+                m_ppLinedEdit[N_mach_sections64_E::sectname]->setValue_String(section.sectname);
+                m_ppLinedEdit[N_mach_sections64_E::segname]->setValue_String(section.segname);
+                m_ppLinedEdit[N_mach_sections64_E::addr]->setValue_uint64(section.addr);
+                m_ppLinedEdit[N_mach_sections64_E::size]->setValue_uint64(section.size);
+                m_ppLinedEdit[N_mach_sections64_E::offset]->setValue_uint32(section.offset);
+                m_ppLinedEdit[N_mach_sections64_E::align]->setValue_uint32(section.align);
+                m_ppLinedEdit[N_mach_sections64_E::reloff]->setValue_uint32(section.reloff);
+                m_ppLinedEdit[N_mach_sections64_E::nreloc]->setValue_uint32(section.nreloc);
+                m_ppLinedEdit[N_mach_sections64_E::flags_0]->setValue_uint32(section.flags);
+                m_ppLinedEdit[N_mach_sections64_E::reserved1]->setValue_uint32(section.reserved1);
+                m_ppLinedEdit[N_mach_sections64_E::reserved2]->setValue_uint32(section.reserved2);
+                m_ppLinedEdit[N_mach_sections64_E::reserved3]->setValue_uint32(section.reserved3);
 
-                g_ppComboBox[N_mach_sections64_E::CB_flag0]->setValue(section.flags);
-                g_ppComboBox[N_mach_sections64_E::CB_flag1]->setValue(section.flags);
-                g_ppComboBox[N_mach_sections64_E::CB_flag2]->setValue(section.flags);
+                m_ppComboBox[N_mach_sections64_E::CB_flag0]->setValue(section.flags);
+                m_ppComboBox[N_mach_sections64_E::CB_flag1]->setValue(section.flags);
+                m_ppComboBox[N_mach_sections64_E::CB_flag2]->setValue(section.flags);
             } else {
-                g_ppComboBox[N_mach_sections32_E::CB_flag0] = createComboBox(ui->tableWidget, XMACH::getSectionFlagsTypesS(), SMACH::TYPE_mach_sections,
+                m_ppComboBox[N_mach_sections32_E::CB_flag0] = createComboBox(ui->tableWidget, XMACH::getSectionFlagsTypesS(), SMACH::TYPE_mach_sections,
                                                                              N_mach_sections32_E::flags_0, XComboBoxEx::CBTYPE_ELIST, XMACH_DEF::S_SECTION_TYPE);
-                g_ppComboBox[N_mach_sections32_E::CB_flag1] =
+                m_ppComboBox[N_mach_sections32_E::CB_flag1] =
                     createComboBox(ui->tableWidget, XMACH::getSectionAttributesSysS(), SMACH::TYPE_mach_sections, N_mach_sections32_E::flags_1, XComboBoxEx::CBTYPE_ELIST,
                                    XMACH_DEF::S_SECTION_ATTRIBUTES_SYS);
-                g_ppComboBox[N_mach_sections32_E::CB_flag2] =
+                m_ppComboBox[N_mach_sections32_E::CB_flag2] =
                     createComboBox(ui->tableWidget, XMACH::getSectionAttributesUsrS(), SMACH::TYPE_mach_sections, N_mach_sections32_E::flags_2, XComboBoxEx::CBTYPE_ELIST,
                                    XMACH_DEF::S_SECTION_ATTRIBUTES_USR);
 
                 XMACH_DEF::section section = mach._read_section(nHeaderOffset, bIsBigEndian);
 
-                g_ppLinedEdit[N_mach_sections32_E::sectname]->setValue_String(section.sectname);
-                g_ppLinedEdit[N_mach_sections32_E::segname]->setValue_String(section.segname);
-                g_ppLinedEdit[N_mach_sections32_E::addr]->setValue_uint32(section.addr);
-                g_ppLinedEdit[N_mach_sections32_E::size]->setValue_uint32(section.size);
-                g_ppLinedEdit[N_mach_sections32_E::offset]->setValue_uint32(section.offset);
-                g_ppLinedEdit[N_mach_sections32_E::align]->setValue_uint32(section.align);
-                g_ppLinedEdit[N_mach_sections32_E::reloff]->setValue_uint32(section.reloff);
-                g_ppLinedEdit[N_mach_sections32_E::nreloc]->setValue_uint32(section.nreloc);
-                g_ppLinedEdit[N_mach_sections32_E::flags_0]->setValue_uint32(section.flags);
-                g_ppLinedEdit[N_mach_sections32_E::reserved1]->setValue_uint32(section.reserved1);
-                g_ppLinedEdit[N_mach_sections32_E::reserved2]->setValue_uint32(section.reserved2);
+                m_ppLinedEdit[N_mach_sections32_E::sectname]->setValue_String(section.sectname);
+                m_ppLinedEdit[N_mach_sections32_E::segname]->setValue_String(section.segname);
+                m_ppLinedEdit[N_mach_sections32_E::addr]->setValue_uint32(section.addr);
+                m_ppLinedEdit[N_mach_sections32_E::size]->setValue_uint32(section.size);
+                m_ppLinedEdit[N_mach_sections32_E::offset]->setValue_uint32(section.offset);
+                m_ppLinedEdit[N_mach_sections32_E::align]->setValue_uint32(section.align);
+                m_ppLinedEdit[N_mach_sections32_E::reloff]->setValue_uint32(section.reloff);
+                m_ppLinedEdit[N_mach_sections32_E::nreloc]->setValue_uint32(section.nreloc);
+                m_ppLinedEdit[N_mach_sections32_E::flags_0]->setValue_uint32(section.flags);
+                m_ppLinedEdit[N_mach_sections32_E::reserved1]->setValue_uint32(section.reserved1);
+                m_ppLinedEdit[N_mach_sections32_E::reserved2]->setValue_uint32(section.reserved2);
 
-                g_ppComboBox[N_mach_sections32_E::CB_flag0]->setValue(section.flags);
-                g_ppComboBox[N_mach_sections32_E::CB_flag1]->setValue(section.flags);
-                g_ppComboBox[N_mach_sections32_E::CB_flag2]->setValue(section.flags);
+                m_ppComboBox[N_mach_sections32_E::CB_flag0]->setValue(section.flags);
+                m_ppComboBox[N_mach_sections32_E::CB_flag1]->setValue(section.flags);
+                m_ppComboBox[N_mach_sections32_E::CB_flag2]->setValue(section.flags);
             }
 
             qint64 nOffset = nHeaderOffset;
             qint64 nSize = mach.getSectionHeaderSize();
             qint64 nAddress = mach.offsetToRelAddress(nOffset);
 
-            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex, false, false, false);
+            loadHexSubdevice(nOffset, nSize, nAddress, &m_pSubDevice, ui->widgetHex, false, false, false);
 
             blockSignals(false);
         } else if (nType == SMACH::TYPE_SYMBOLTABLE) {
-            createHeaderTable(SMACH::TYPE_SYMBOLTABLE, ui->tableWidget, bIs64 ? (N_mach_nlist::records64) : (N_mach_nlist::records32), g_ppLinedEdit,
+            createHeaderTable(SMACH::TYPE_SYMBOLTABLE, ui->tableWidget, bIs64 ? (N_mach_nlist::records64) : (N_mach_nlist::records32), m_ppLinedEdit,
                               N_mach_nlist::__data_size, getNumber(), getOffset());
 
             blockSignals(true);
@@ -699,22 +699,22 @@ void MACHSectionHeaderWidget::reloadData(bool bSaveSelection)
             if (bIs64) {
                 XMACH_DEF::nlist_64 nlist = mach._read_nlist_64(nHeaderOffset);
 
-                g_ppLinedEdit[N_mach_nlist::n_strx]->setValue_uint32(nlist.n_strx);
-                g_ppLinedEdit[N_mach_nlist::n_type]->setValue_uint8(nlist.n_type);
-                g_ppLinedEdit[N_mach_nlist::n_sect]->setValue_uint8(nlist.n_sect);
-                g_ppLinedEdit[N_mach_nlist::n_desc]->setValue_uint16(nlist.n_desc);
-                g_ppLinedEdit[N_mach_nlist::n_value]->setValue_uint64(nlist.n_value);
+                m_ppLinedEdit[N_mach_nlist::n_strx]->setValue_uint32(nlist.n_strx);
+                m_ppLinedEdit[N_mach_nlist::n_type]->setValue_uint8(nlist.n_type);
+                m_ppLinedEdit[N_mach_nlist::n_sect]->setValue_uint8(nlist.n_sect);
+                m_ppLinedEdit[N_mach_nlist::n_desc]->setValue_uint16(nlist.n_desc);
+                m_ppLinedEdit[N_mach_nlist::n_value]->setValue_uint64(nlist.n_value);
 
                 addComment(ui->tableWidget, N_mach_nlist::n_strx, HEADER_COLUMN_COMMENT,
                            mach.getStringFromIndex(osStringTable.nOffset, osStringTable.nSize, nlist.n_strx));
             } else {
                 XMACH_DEF::nlist nlist = mach._read_nlist(nHeaderOffset);
 
-                g_ppLinedEdit[N_mach_nlist::n_strx]->setValue_uint32(nlist.n_strx);
-                g_ppLinedEdit[N_mach_nlist::n_type]->setValue_uint8(nlist.n_type);
-                g_ppLinedEdit[N_mach_nlist::n_sect]->setValue_uint8(nlist.n_sect);
-                g_ppLinedEdit[N_mach_nlist::n_desc]->setValue_uint16(nlist.n_desc);
-                g_ppLinedEdit[N_mach_nlist::n_value]->setValue_uint32(nlist.n_value);
+                m_ppLinedEdit[N_mach_nlist::n_strx]->setValue_uint32(nlist.n_strx);
+                m_ppLinedEdit[N_mach_nlist::n_type]->setValue_uint8(nlist.n_type);
+                m_ppLinedEdit[N_mach_nlist::n_sect]->setValue_uint8(nlist.n_sect);
+                m_ppLinedEdit[N_mach_nlist::n_desc]->setValue_uint16(nlist.n_desc);
+                m_ppLinedEdit[N_mach_nlist::n_value]->setValue_uint32(nlist.n_value);
 
                 addComment(ui->tableWidget, N_mach_nlist::n_strx, HEADER_COLUMN_COMMENT,
                            mach.getStringFromIndex(osStringTable.nOffset, osStringTable.nSize, nlist.n_strx));
@@ -731,13 +731,13 @@ void MACHSectionHeaderWidget::reloadData(bool bSaveSelection)
 
             qint64 nAddress = mach.offsetToRelAddress(nOffset);
 
-            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex, false, false, false);
+            loadHexSubdevice(nOffset, nSize, nAddress, &m_pSubDevice, ui->widgetHex, false, false, false);
 
             blockSignals(false);
         } else if (nType == SMACH::TYPE_DICE) {
-            createHeaderTable(SMACH::TYPE_DICE, ui->tableWidget, N_mach_data_in_code_entry::records, g_ppLinedEdit, N_mach_data_in_code_entry::__data_size, getNumber(),
+            createHeaderTable(SMACH::TYPE_DICE, ui->tableWidget, N_mach_data_in_code_entry::records, m_ppLinedEdit, N_mach_data_in_code_entry::__data_size, getNumber(),
                               getOffset());
-            g_ppComboBox[N_mach_data_in_code_entry::CB_kind] =
+            m_ppComboBox[N_mach_data_in_code_entry::CB_kind] =
                 createComboBox(ui->tableWidget, XMACH::getDICEKindsS(), SMACH::TYPE_DICE, N_mach_data_in_code_entry::kind, XComboBoxEx::CBTYPE_LIST);
 
             blockSignals(true);
@@ -746,25 +746,25 @@ void MACHSectionHeaderWidget::reloadData(bool bSaveSelection)
 
             XMACH_DEF::data_in_code_entry dice = mach._read_data_in_code_entry(nHeaderOffset);
 
-            g_ppLinedEdit[N_mach_data_in_code_entry::offset]->setValue_uint32(dice.offset);
-            g_ppLinedEdit[N_mach_data_in_code_entry::length]->setValue_uint16(dice.length);
-            g_ppLinedEdit[N_mach_data_in_code_entry::kind]->setValue_uint16(dice.kind);
+            m_ppLinedEdit[N_mach_data_in_code_entry::offset]->setValue_uint32(dice.offset);
+            m_ppLinedEdit[N_mach_data_in_code_entry::length]->setValue_uint16(dice.length);
+            m_ppLinedEdit[N_mach_data_in_code_entry::kind]->setValue_uint16(dice.kind);
 
-            g_ppComboBox[N_mach_data_in_code_entry::CB_kind]->setValue(dice.kind);
+            m_ppComboBox[N_mach_data_in_code_entry::CB_kind]->setValue(dice.kind);
 
             qint64 nOffset = nHeaderOffset;
             qint64 nSize = mach.get_data_in_code_entry_size();
             qint64 nAddress = mach.offsetToRelAddress(nOffset);
 
-            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex, false, false, false);
+            loadHexSubdevice(nOffset, nSize, nAddress, &m_pSubDevice, ui->widgetHex, false, false, false);
 
             blockSignals(false);
         } else if (nType == SMACH::TYPE_DYSYMTAB_modtab) {
             if (bIs64) {
-                createHeaderTable(SMACH::TYPE_DYSYMTAB_modtab, ui->tableWidget, N_mach_modtab64::records, g_ppLinedEdit, N_mach_modtab64::__data_size, getNumber(),
+                createHeaderTable(SMACH::TYPE_DYSYMTAB_modtab, ui->tableWidget, N_mach_modtab64::records, m_ppLinedEdit, N_mach_modtab64::__data_size, getNumber(),
                                   getOffset());
             } else {
-                createHeaderTable(SMACH::TYPE_DYSYMTAB_modtab, ui->tableWidget, N_mach_modtab32::records, g_ppLinedEdit, N_mach_modtab32::__data_size, getNumber(),
+                createHeaderTable(SMACH::TYPE_DYSYMTAB_modtab, ui->tableWidget, N_mach_modtab32::records, m_ppLinedEdit, N_mach_modtab32::__data_size, getNumber(),
                                   getOffset());
             }
 
@@ -775,35 +775,35 @@ void MACHSectionHeaderWidget::reloadData(bool bSaveSelection)
             if (bIs64) {
                 XMACH_DEF::dylib_module_64 record = mach._read_dylib_module_64(nHeaderOffset);
 
-                g_ppLinedEdit[N_mach_modtab64::module_name]->setValue_uint32(record.module_name);
-                g_ppLinedEdit[N_mach_modtab64::iextdefsym]->setValue_uint32(record.iextdefsym);
-                g_ppLinedEdit[N_mach_modtab64::nextdefsym]->setValue_uint32(record.nextdefsym);
-                g_ppLinedEdit[N_mach_modtab64::irefsym]->setValue_uint32(record.irefsym);
-                g_ppLinedEdit[N_mach_modtab64::nrefsym]->setValue_uint32(record.nrefsym);
-                g_ppLinedEdit[N_mach_modtab64::ilocalsym]->setValue_uint32(record.ilocalsym);
-                g_ppLinedEdit[N_mach_modtab64::nlocalsym]->setValue_uint32(record.nlocalsym);
-                g_ppLinedEdit[N_mach_modtab64::iextrel]->setValue_uint32(record.iextrel);
-                g_ppLinedEdit[N_mach_modtab64::nextrel]->setValue_uint32(record.nextrel);
-                g_ppLinedEdit[N_mach_modtab64::iinit_iterm]->setValue_uint32(record.iinit_iterm);
-                g_ppLinedEdit[N_mach_modtab64::ninit_nterm]->setValue_uint32(record.ninit_nterm);
-                g_ppLinedEdit[N_mach_modtab64::objc_module_info_size]->setValue_uint32(record.objc_module_info_size);
-                g_ppLinedEdit[N_mach_modtab64::objc_module_info_addr]->setValue_uint64(record.objc_module_info_addr);
+                m_ppLinedEdit[N_mach_modtab64::module_name]->setValue_uint32(record.module_name);
+                m_ppLinedEdit[N_mach_modtab64::iextdefsym]->setValue_uint32(record.iextdefsym);
+                m_ppLinedEdit[N_mach_modtab64::nextdefsym]->setValue_uint32(record.nextdefsym);
+                m_ppLinedEdit[N_mach_modtab64::irefsym]->setValue_uint32(record.irefsym);
+                m_ppLinedEdit[N_mach_modtab64::nrefsym]->setValue_uint32(record.nrefsym);
+                m_ppLinedEdit[N_mach_modtab64::ilocalsym]->setValue_uint32(record.ilocalsym);
+                m_ppLinedEdit[N_mach_modtab64::nlocalsym]->setValue_uint32(record.nlocalsym);
+                m_ppLinedEdit[N_mach_modtab64::iextrel]->setValue_uint32(record.iextrel);
+                m_ppLinedEdit[N_mach_modtab64::nextrel]->setValue_uint32(record.nextrel);
+                m_ppLinedEdit[N_mach_modtab64::iinit_iterm]->setValue_uint32(record.iinit_iterm);
+                m_ppLinedEdit[N_mach_modtab64::ninit_nterm]->setValue_uint32(record.ninit_nterm);
+                m_ppLinedEdit[N_mach_modtab64::objc_module_info_size]->setValue_uint32(record.objc_module_info_size);
+                m_ppLinedEdit[N_mach_modtab64::objc_module_info_addr]->setValue_uint64(record.objc_module_info_addr);
             } else {
                 XMACH_DEF::dylib_module record = mach._read_dylib_module(nHeaderOffset);
 
-                g_ppLinedEdit[N_mach_modtab32::module_name]->setValue_uint32(record.module_name);
-                g_ppLinedEdit[N_mach_modtab32::iextdefsym]->setValue_uint32(record.iextdefsym);
-                g_ppLinedEdit[N_mach_modtab32::nextdefsym]->setValue_uint32(record.nextdefsym);
-                g_ppLinedEdit[N_mach_modtab32::irefsym]->setValue_uint32(record.irefsym);
-                g_ppLinedEdit[N_mach_modtab32::nrefsym]->setValue_uint32(record.nrefsym);
-                g_ppLinedEdit[N_mach_modtab32::ilocalsym]->setValue_uint32(record.ilocalsym);
-                g_ppLinedEdit[N_mach_modtab32::nlocalsym]->setValue_uint32(record.nlocalsym);
-                g_ppLinedEdit[N_mach_modtab32::iextrel]->setValue_uint32(record.iextrel);
-                g_ppLinedEdit[N_mach_modtab32::nextrel]->setValue_uint32(record.nextrel);
-                g_ppLinedEdit[N_mach_modtab32::iinit_iterm]->setValue_uint32(record.iinit_iterm);
-                g_ppLinedEdit[N_mach_modtab32::ninit_nterm]->setValue_uint32(record.ninit_nterm);
-                g_ppLinedEdit[N_mach_modtab32::objc_module_info_addr]->setValue_uint32(record.objc_module_info_addr);
-                g_ppLinedEdit[N_mach_modtab32::objc_module_info_size]->setValue_uint32(record.objc_module_info_size);
+                m_ppLinedEdit[N_mach_modtab32::module_name]->setValue_uint32(record.module_name);
+                m_ppLinedEdit[N_mach_modtab32::iextdefsym]->setValue_uint32(record.iextdefsym);
+                m_ppLinedEdit[N_mach_modtab32::nextdefsym]->setValue_uint32(record.nextdefsym);
+                m_ppLinedEdit[N_mach_modtab32::irefsym]->setValue_uint32(record.irefsym);
+                m_ppLinedEdit[N_mach_modtab32::nrefsym]->setValue_uint32(record.nrefsym);
+                m_ppLinedEdit[N_mach_modtab32::ilocalsym]->setValue_uint32(record.ilocalsym);
+                m_ppLinedEdit[N_mach_modtab32::nlocalsym]->setValue_uint32(record.nlocalsym);
+                m_ppLinedEdit[N_mach_modtab32::iextrel]->setValue_uint32(record.iextrel);
+                m_ppLinedEdit[N_mach_modtab32::nextrel]->setValue_uint32(record.nextrel);
+                m_ppLinedEdit[N_mach_modtab32::iinit_iterm]->setValue_uint32(record.iinit_iterm);
+                m_ppLinedEdit[N_mach_modtab32::ninit_nterm]->setValue_uint32(record.ninit_nterm);
+                m_ppLinedEdit[N_mach_modtab32::objc_module_info_addr]->setValue_uint32(record.objc_module_info_addr);
+                m_ppLinedEdit[N_mach_modtab32::objc_module_info_size]->setValue_uint32(record.objc_module_info_size);
             }
 
             qint64 nOffset = nHeaderOffset;
@@ -817,11 +817,11 @@ void MACHSectionHeaderWidget::reloadData(bool bSaveSelection)
 
             qint64 nAddress = mach.offsetToRelAddress(nOffset);
 
-            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex, false, false, false);
+            loadHexSubdevice(nOffset, nSize, nAddress, &m_pSubDevice, ui->widgetHex, false, false, false);
 
             blockSignals(false);
         } else if (nType == SMACH::TYPE_DYSYMTAB_toc) {
-            createHeaderTable(SMACH::TYPE_DYSYMTAB_toc, ui->tableWidget, N_mach_table_of_contents::records, g_ppLinedEdit, N_mach_table_of_contents::__data_size,
+            createHeaderTable(SMACH::TYPE_DYSYMTAB_toc, ui->tableWidget, N_mach_table_of_contents::records, m_ppLinedEdit, N_mach_table_of_contents::__data_size,
                               getNumber(), getOffset());
 
             blockSignals(true);
@@ -830,8 +830,8 @@ void MACHSectionHeaderWidget::reloadData(bool bSaveSelection)
 
             XMACH_DEF::dylib_table_of_contents toc = mach._read_dylib_table_of_contents(nHeaderOffset);
 
-            g_ppLinedEdit[N_mach_table_of_contents::symbol_index]->setValue_uint32(toc.symbol_index);
-            g_ppLinedEdit[N_mach_table_of_contents::module_index]->setValue_uint32(toc.module_index);
+            m_ppLinedEdit[N_mach_table_of_contents::symbol_index]->setValue_uint32(toc.symbol_index);
+            m_ppLinedEdit[N_mach_table_of_contents::module_index]->setValue_uint32(toc.module_index);
 
             addComment(ui->tableWidget, N_mach_table_of_contents::symbol_index, HEADER_COLUMN_COMMENT, mach.getIndexSymbolName(toc.symbol_index));
 
@@ -839,11 +839,11 @@ void MACHSectionHeaderWidget::reloadData(bool bSaveSelection)
             qint64 nSize = mach.get_dylib_table_of_contents_size();
             qint64 nAddress = mach.offsetToRelAddress(nOffset);
 
-            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex, false, false, false);
+            loadHexSubdevice(nOffset, nSize, nAddress, &m_pSubDevice, ui->widgetHex, false, false, false);
 
             blockSignals(false);
         } else if ((nType == SMACH::TYPE_DYSYMTAB_extrel) || (nType == SMACH::TYPE_DYSYMTAB_locrel)) {
-            createHeaderTable(nType, ui->tableWidget, N_mach_relocs::records, g_ppLinedEdit, N_mach_relocs::__data_size, getNumber(), getOffset());
+            createHeaderTable(nType, ui->tableWidget, N_mach_relocs::records, m_ppLinedEdit, N_mach_relocs::__data_size, getNumber(), getOffset());
 
             blockSignals(true);
 
@@ -851,18 +851,18 @@ void MACHSectionHeaderWidget::reloadData(bool bSaveSelection)
 
             XMACH_DEF::relocation_info reloc = mach._read_relocation_info(nHeaderOffset);
 
-            g_ppLinedEdit[N_mach_relocs::r_address]->setValue_uint32(reloc.r_address);
-            g_ppLinedEdit[N_mach_relocs::value]->setValue_uint32(reloc.s.value);
+            m_ppLinedEdit[N_mach_relocs::r_address]->setValue_uint32(reloc.r_address);
+            m_ppLinedEdit[N_mach_relocs::value]->setValue_uint32(reloc.s.value);
 
             qint64 nOffset = nHeaderOffset;
             qint64 nSize = mach.get_relocation_info_size();
             qint64 nAddress = mach.offsetToRelAddress(nOffset);
 
-            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex, false, false, false);
+            loadHexSubdevice(nOffset, nSize, nAddress, &m_pSubDevice, ui->widgetHex, false, false, false);
 
             blockSignals(false);
         } else if ((nType == SMACH::TYPE_DYSYMTAB_indirectsyms) || (nType == SMACH::TYPE_DYSYMTAB_extrefsyms)) {
-            createHeaderTable(SMACH::TYPE_DYSYMTAB_indirectsyms, ui->tableWidget, N_mach_value::records, g_ppLinedEdit, N_mach_value::__data_size, getNumber(),
+            createHeaderTable(SMACH::TYPE_DYSYMTAB_indirectsyms, ui->tableWidget, N_mach_value::records, m_ppLinedEdit, N_mach_value::__data_size, getNumber(),
                               getOffset());
 
             blockSignals(true);
@@ -871,7 +871,7 @@ void MACHSectionHeaderWidget::reloadData(bool bSaveSelection)
 
             quint32 nValue = mach.read_uint32(nHeaderOffset, mach.isBigEndian());
 
-            g_ppLinedEdit[N_mach_value::value]->setValue_uint32(nValue);
+            m_ppLinedEdit[N_mach_value::value]->setValue_uint32(nValue);
 
             if (nType == SMACH::TYPE_DYSYMTAB_indirectsyms) {
                 addComment(ui->tableWidget, N_mach_value::value, HEADER_COLUMN_COMMENT, mach.getIndexSymbolName(nValue));
@@ -881,7 +881,7 @@ void MACHSectionHeaderWidget::reloadData(bool bSaveSelection)
             qint64 nSize = mach.get_value32_size();
             qint64 nAddress = mach.offsetToRelAddress(nOffset);
 
-            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex, false, false, false);
+            loadHexSubdevice(nOffset, nSize, nAddress, &m_pSubDevice, ui->widgetHex, false, false, false);
 
             blockSignals(false);
         }
@@ -904,20 +904,20 @@ void MACHSectionHeaderWidget::_widgetValueChanged(QVariant vValue)
         switch (nStype) {
             case SMACH::TYPE_mach_commands:
                 switch (nNdata) {
-                    case N_mach_commands::cmd: g_ppLinedEdit[N_mach_commands::cmd]->setValue_uint32((quint32)nValue); break;
+                    case N_mach_commands::cmd: m_ppLinedEdit[N_mach_commands::cmd]->setValue_uint32((quint32)nValue); break;
                 }
                 break;
 
             case SMACH::TYPE_mach_segments:
                 switch (nNdata) {
-                    case N_mach_segments::initprot: g_ppLinedEdit[N_mach_segments::initprot]->setValue_uint32((quint32)nValue); break;
-                    case N_mach_segments::maxprot: g_ppLinedEdit[N_mach_segments::maxprot]->setValue_uint32((quint32)nValue); break;
+                    case N_mach_segments::initprot: m_ppLinedEdit[N_mach_segments::initprot]->setValue_uint32((quint32)nValue); break;
+                    case N_mach_segments::maxprot: m_ppLinedEdit[N_mach_segments::maxprot]->setValue_uint32((quint32)nValue); break;
                 }
                 break;
 
             case SMACH::TYPE_DICE:
                 switch (nNdata) {
-                    case N_mach_data_in_code_entry::kind: g_ppLinedEdit[N_mach_data_in_code_entry::kind]->setValue_uint64(nValue); break;
+                    case N_mach_data_in_code_entry::kind: m_ppLinedEdit[N_mach_data_in_code_entry::kind]->setValue_uint64(nValue); break;
                 }
 
                 break;
@@ -929,10 +929,10 @@ void MACHSectionHeaderWidget::_widgetValueChanged(QVariant vValue)
                         case N_mach_sections64_E::flags_0:
                         case N_mach_sections64_E::flags_1:
                         case N_mach_sections64_E::flags_2:
-                            g_ppLinedEdit[N_mach_sections64_E::flags_0]->setValue_uint32((quint32)nValue);
-                            g_ppComboBox[N_mach_sections64_E::CB_flag0]->setValue(nValue);
-                            g_ppComboBox[N_mach_sections64_E::CB_flag1]->setValue(nValue);
-                            g_ppComboBox[N_mach_sections64_E::CB_flag2]->setValue(nValue);
+                            m_ppLinedEdit[N_mach_sections64_E::flags_0]->setValue_uint32((quint32)nValue);
+                            m_ppComboBox[N_mach_sections64_E::CB_flag0]->setValue(nValue);
+                            m_ppComboBox[N_mach_sections64_E::CB_flag1]->setValue(nValue);
+                            m_ppComboBox[N_mach_sections64_E::CB_flag2]->setValue(nValue);
                             break;
                     }
                 } else {
@@ -940,10 +940,10 @@ void MACHSectionHeaderWidget::_widgetValueChanged(QVariant vValue)
                         case N_mach_sections32_E::flags_0:
                         case N_mach_sections32_E::flags_1:
                         case N_mach_sections32_E::flags_2:
-                            g_ppLinedEdit[N_mach_sections32_E::flags_0]->setValue_uint32((quint32)nValue);
-                            g_ppComboBox[N_mach_sections32_E::CB_flag0]->setValue(nValue);
-                            g_ppComboBox[N_mach_sections32_E::CB_flag1]->setValue(nValue);
-                            g_ppComboBox[N_mach_sections32_E::CB_flag2]->setValue(nValue);
+                            m_ppLinedEdit[N_mach_sections32_E::flags_0]->setValue_uint32((quint32)nValue);
+                            m_ppComboBox[N_mach_sections32_E::CB_flag0]->setValue(nValue);
+                            m_ppComboBox[N_mach_sections32_E::CB_flag1]->setValue(nValue);
+                            m_ppComboBox[N_mach_sections32_E::CB_flag2]->setValue(nValue);
                             break;
                     }
                 }
