@@ -31,17 +31,17 @@ public:
     explicit ELFProcessData(qint32 nType, QStandardItemModel **ppModel, XELF *pELF, qint64 nOffset, qint64 nSize, qint64 nStringTableOffset, qint64 nStringTableSize);
 
     virtual void _process();
-    virtual void ajustTableView(qint32 nType, QTableView *pTableView);
+    virtual void adjustTableView(qint32 nType, QTableView *pTableView);
     virtual void adjustModel(QStandardItemModel *pModel);
 
 private:
-    qint32 g_nType;
-    XELF *g_pELF;
-    QStandardItemModel **g_ppModel;
-    qint64 g_nOffset;
-    qint64 g_nSize;
-    qint64 g_nStringTableOffset;
-    qint64 g_nStringTableSize;
+    qint32 m_nType;
+    XELF *m_pELF;
+    QStandardItemModel **m_ppModel;
+    qint64 m_nOffset;
+    qint64 m_nSize;
+    qint64 m_nStringTableOffset;
+    qint64 m_nStringTableSize;
 };
 
 #endif  // ELFPROCESSDATA_H
