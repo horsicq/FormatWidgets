@@ -35,7 +35,7 @@ ELFWidget::ELFWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::ELFWi
     ui->toolButtonPrev->setToolTip(tr("Previous visited"));
     ui->checkBoxReadonly->setToolTip(tr("Readonly"));
 
-    memset(g_subDevice, 0, sizeof g_subDevice);
+    memset(m_subDevice, 0, sizeof m_subDevice);
 
     initWidget();
 }
@@ -55,14 +55,14 @@ void ELFWidget::clear()
 {
     ELFWidget::reset();
 
-    memset(g_lineEdit_Elf_Ehdr, 0, sizeof g_lineEdit_Elf_Ehdr);
-    memset(g_lineEdit_Elf_Interpreter, 0, sizeof g_lineEdit_Elf_Interpreter);
-    memset(g_lineEdit_Elf_RunPath, 0, sizeof g_lineEdit_Elf_RunPath);
-    memset(g_comboBox, 0, sizeof g_comboBox);
-    memset(g_invWidget, 0, sizeof g_invWidget);
-    memset(g_tvModel, 0, sizeof g_tvModel);
+    memset(m_lineEdit_Elf_Ehdr, 0, sizeof m_lineEdit_Elf_Ehdr);
+    memset(m_lineEdit_Elf_Interpreter, 0, sizeof m_lineEdit_Elf_Interpreter);
+    memset(m_lineEdit_Elf_RunPath, 0, sizeof m_lineEdit_Elf_RunPath);
+    memset(m_comboBox, 0, sizeof m_comboBox);
+    memset(m_invWidget, 0, sizeof m_invWidget);
+    memset(m_tvModel, 0, sizeof m_tvModel);
 
-    _deleteSubdevices(g_subDevice, (sizeof g_subDevice) / (sizeof(SubDevice *)));
+    _deleteSubdevices(m_subDevice, (sizeof m_subDevice) / (sizeof(SubDevice *)));
 
     resetWidget();
 
@@ -161,15 +161,15 @@ FormatWidget::SV ELFWidget::_setValue(QVariant vValue, qint32 nStype, qint32 nNd
             switch (nStype) {
                 case SELF::TYPE_Elf_Ehdr:
                     switch (nNdata) {
-                        case N_Elf_Ehdr::ei_class: g_comboBox[CB_Elf_Ehdr_iclass]->setValue(nValue); break;
-                        case N_Elf_Ehdr::ei_data: g_comboBox[CB_Elf_Ehdr_idata]->setValue(nValue); break;
-                        case N_Elf_Ehdr::ei_version: g_comboBox[CB_Elf_Ehdr_iversion]->setValue(nValue); break;
-                        case N_Elf_Ehdr::ei_osabi: g_comboBox[CB_Elf_Ehdr_iosabi]->setValue(nValue); break;
-                        case N_Elf_Ehdr::e_type: g_comboBox[CB_Elf_Ehdr_type]->setValue(nValue); break;
-                        case N_Elf_Ehdr::e_machine: g_comboBox[CB_Elf_Ehdr_machine]->setValue(nValue); break;
-                        case N_Elf_Ehdr::e_entry: g_invWidget[INV_Elf_e_entry]->setAddressAndSize(&elf, elf.is64() ? ((quint64)nValue) : ((quint32)nValue), 0); break;
-                        case N_Elf_Ehdr::e_phoff: g_invWidget[INV_Elf_e_phoff]->setOffsetAndSize(&elf, elf.is64() ? ((quint64)nValue) : ((quint32)nValue), 0); break;
-                        case N_Elf_Ehdr::e_shoff: g_invWidget[INV_Elf_e_shoff]->setOffsetAndSize(&elf, elf.is64() ? ((quint64)nValue) : ((quint32)nValue), 0); break;
+                        case N_Elf_Ehdr::ei_class: m_comboBox[CB_Elf_Ehdr_iclass]->setValue(nValue); break;
+                        case N_Elf_Ehdr::ei_data: m_comboBox[CB_Elf_Ehdr_idata]->setValue(nValue); break;
+                        case N_Elf_Ehdr::ei_version: m_comboBox[CB_Elf_Ehdr_iversion]->setValue(nValue); break;
+                        case N_Elf_Ehdr::ei_osabi: m_comboBox[CB_Elf_Ehdr_iosabi]->setValue(nValue); break;
+                        case N_Elf_Ehdr::e_type: m_comboBox[CB_Elf_Ehdr_type]->setValue(nValue); break;
+                        case N_Elf_Ehdr::e_machine: m_comboBox[CB_Elf_Ehdr_machine]->setValue(nValue); break;
+                        case N_Elf_Ehdr::e_entry: m_invWidget[INV_Elf_e_entry]->setAddressAndSize(&elf, elf.is64() ? ((quint64)nValue) : ((quint32)nValue), 0); break;
+                        case N_Elf_Ehdr::e_phoff: m_invWidget[INV_Elf_e_phoff]->setOffsetAndSize(&elf, elf.is64() ? ((quint64)nValue) : ((quint32)nValue), 0); break;
+                        case N_Elf_Ehdr::e_shoff: m_invWidget[INV_Elf_e_shoff]->setOffsetAndSize(&elf, elf.is64() ? ((quint64)nValue) : ((quint32)nValue), 0); break;
                     }
                     break;
             }
@@ -241,11 +241,11 @@ void ELFWidget::setReadonly(bool bState)
         ui->checkBoxReadonly->blockSignals(bBlocked1);
     }
 
-    setLineEditsReadOnly(g_lineEdit_Elf_Ehdr, N_Elf_Ehdr::__data_size, bState);
-    setLineEditsReadOnly(g_lineEdit_Elf_Interpreter, N_ELF_INTERPRETER::__data_size, bState);
-    setLineEditsReadOnly(g_lineEdit_Elf_RunPath, N_ELF_RUNPATH::__data_size, bState);
+    setLineEditsReadOnly(m_lineEdit_Elf_Ehdr, N_Elf_Ehdr::__data_size, bState);
+    setLineEditsReadOnly(m_lineEdit_Elf_Interpreter, N_ELF_INTERPRETER::__data_size, bState);
+    setLineEditsReadOnly(m_lineEdit_Elf_RunPath, N_ELF_RUNPATH::__data_size, bState);
 
-    setComboBoxesReadOnly(g_comboBox, __CB_size, bState);
+    setComboBoxesReadOnly(m_comboBox, __CB_size, bState);
 
     ui->widgetHex->setReadonly(bState);
     ui->widgetDisasm->setReadonly(bState);
@@ -259,11 +259,11 @@ void ELFWidget::setReadonly(bool bState)
 
 void ELFWidget::blockSignals(bool bState)
 {
-    _blockSignals((QObject **)g_lineEdit_Elf_Ehdr, N_Elf_Ehdr::__data_size, bState);
-    _blockSignals((QObject **)g_lineEdit_Elf_Interpreter, N_ELF_INTERPRETER::__data_size, bState);
-    _blockSignals((QObject **)g_lineEdit_Elf_RunPath, N_ELF_RUNPATH::__data_size, bState);
+    _blockSignals((QObject **)m_lineEdit_Elf_Ehdr, N_Elf_Ehdr::__data_size, bState);
+    _blockSignals((QObject **)m_lineEdit_Elf_Interpreter, N_ELF_INTERPRETER::__data_size, bState);
+    _blockSignals((QObject **)m_lineEdit_Elf_RunPath, N_ELF_RUNPATH::__data_size, bState);
 
-    _blockSignals((QObject **)g_comboBox, __CB_size, bState);
+    _blockSignals((QObject **)m_comboBox, __CB_size, bState);
 }
 
 void ELFWidget::adjustHeaderTable(qint32 nType, QTableWidget *pTableWidget)
@@ -399,95 +399,95 @@ void ELFWidget::reloadData(bool bSaveSelection)
         } else if (nType == SELF::TYPE_Elf_Ehdr) {
             if (!isInitPresent(sInit)) {
                 if (elf.is64()) {
-                    createHeaderTable(SELF::TYPE_Elf_Ehdr, ui->tableWidget_Elf_Ehdr, N_Elf_Ehdr::records64, g_lineEdit_Elf_Ehdr, N_Elf_Ehdr::__data_size, 0);
+                    createHeaderTable(SELF::TYPE_Elf_Ehdr, ui->tableWidget_Elf_Ehdr, N_Elf_Ehdr::records64, m_lineEdit_Elf_Ehdr, N_Elf_Ehdr::__data_size, 0);
                 } else {
-                    createHeaderTable(SELF::TYPE_Elf_Ehdr, ui->tableWidget_Elf_Ehdr, N_Elf_Ehdr::records32, g_lineEdit_Elf_Ehdr, N_Elf_Ehdr::__data_size, 0);
+                    createHeaderTable(SELF::TYPE_Elf_Ehdr, ui->tableWidget_Elf_Ehdr, N_Elf_Ehdr::records32, m_lineEdit_Elf_Ehdr, N_Elf_Ehdr::__data_size, 0);
                 }
 
-                g_comboBox[CB_Elf_Ehdr_mag] =
+                m_comboBox[CB_Elf_Ehdr_mag] =
                     createComboBox(ui->tableWidget_Elf_Ehdr, XELF::getIndentMagS(), SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::ei_mag, XComboBoxEx::CBTYPE_LIST);
-                g_comboBox[CB_Elf_Ehdr_iclass] =
+                m_comboBox[CB_Elf_Ehdr_iclass] =
                     createComboBox(ui->tableWidget_Elf_Ehdr, XELF::getIndentClassesS(), SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::ei_class, XComboBoxEx::CBTYPE_LIST);
-                g_comboBox[CB_Elf_Ehdr_idata] =
+                m_comboBox[CB_Elf_Ehdr_idata] =
                     createComboBox(ui->tableWidget_Elf_Ehdr, XELF::getIndentDatasS(), SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::ei_data, XComboBoxEx::CBTYPE_LIST);
-                g_comboBox[CB_Elf_Ehdr_iversion] =
+                m_comboBox[CB_Elf_Ehdr_iversion] =
                     createComboBox(ui->tableWidget_Elf_Ehdr, XELF::getIndentVersionsS(), SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::ei_version, XComboBoxEx::CBTYPE_LIST);
-                g_comboBox[CB_Elf_Ehdr_iosabi] =
+                m_comboBox[CB_Elf_Ehdr_iosabi] =
                     createComboBox(ui->tableWidget_Elf_Ehdr, XELF::getIndentOsabisS(), SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::ei_osabi, XComboBoxEx::CBTYPE_LIST);
-                g_comboBox[CB_Elf_Ehdr_type] =
+                m_comboBox[CB_Elf_Ehdr_type] =
                     createComboBox(ui->tableWidget_Elf_Ehdr, XELF::getTypesS(), SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::e_type, XComboBoxEx::CBTYPE_LIST);
-                g_comboBox[CB_Elf_Ehdr_machine] =
+                m_comboBox[CB_Elf_Ehdr_machine] =
                     createComboBox(ui->tableWidget_Elf_Ehdr, XELF::getMachinesS(), SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::e_machine, XComboBoxEx::CBTYPE_LIST);
 
-                g_invWidget[INV_Elf_e_entry] = createInvWidget(ui->tableWidget_Elf_Ehdr, SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::e_entry, InvWidget::TYPE_HEX);
-                g_invWidget[INV_Elf_e_phoff] = createInvWidget(ui->tableWidget_Elf_Ehdr, SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::e_phoff, InvWidget::TYPE_HEX);
-                g_invWidget[INV_Elf_e_shoff] = createInvWidget(ui->tableWidget_Elf_Ehdr, SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::e_shoff, InvWidget::TYPE_HEX);
+                m_invWidget[INV_Elf_e_entry] = createInvWidget(ui->tableWidget_Elf_Ehdr, SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::e_entry, InvWidget::TYPE_HEX);
+                m_invWidget[INV_Elf_e_phoff] = createInvWidget(ui->tableWidget_Elf_Ehdr, SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::e_phoff, InvWidget::TYPE_HEX);
+                m_invWidget[INV_Elf_e_shoff] = createInvWidget(ui->tableWidget_Elf_Ehdr, SELF::TYPE_Elf_Ehdr, N_Elf_Ehdr::e_shoff, InvWidget::TYPE_HEX);
 
                 blockSignals(true);
 
-                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_mag]->setValue_uint32(elf.getIdent_mag_LE());
-                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_class]->setValue_uint8(elf.getIdent_class());
-                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_data]->setValue_uint8(elf.getIdent_data());
-                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_version]->setValue_uint8(elf.getIdent_version());
-                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_osabi]->setValue_uint8(elf.getIdent_osabi());
-                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_abiversion]->setValue_uint8(elf.getIdent_abiversion());
-                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_0]->setValue_uint8(elf.getIdent_pad(0));
-                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_1]->setValue_uint8(elf.getIdent_pad(1));
-                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_2]->setValue_uint8(elf.getIdent_pad(2));
-                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_3]->setValue_uint8(elf.getIdent_pad(3));
-                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_4]->setValue_uint8(elf.getIdent_pad(4));
-                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_5]->setValue_uint8(elf.getIdent_pad(5));
-                g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_6]->setValue_uint8(elf.getIdent_pad(6));
+                m_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_mag]->setValue_uint32(elf.getIdent_mag_LE());
+                m_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_class]->setValue_uint8(elf.getIdent_class());
+                m_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_data]->setValue_uint8(elf.getIdent_data());
+                m_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_version]->setValue_uint8(elf.getIdent_version());
+                m_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_osabi]->setValue_uint8(elf.getIdent_osabi());
+                m_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_abiversion]->setValue_uint8(elf.getIdent_abiversion());
+                m_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_0]->setValue_uint8(elf.getIdent_pad(0));
+                m_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_1]->setValue_uint8(elf.getIdent_pad(1));
+                m_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_2]->setValue_uint8(elf.getIdent_pad(2));
+                m_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_3]->setValue_uint8(elf.getIdent_pad(3));
+                m_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_4]->setValue_uint8(elf.getIdent_pad(4));
+                m_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_5]->setValue_uint8(elf.getIdent_pad(5));
+                m_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_pad_6]->setValue_uint8(elf.getIdent_pad(6));
 
                 if (elf.is64()) {
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_type]->setValue_uint16(elf.getHdr64_type());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_machine]->setValue_uint16(elf.getHdr64_machine());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_version]->setValue_uint32(elf.getHdr64_version());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_entry]->setValue_uint64(elf.getHdr64_entry());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_phoff]->setValue_uint64(elf.getHdr64_phoff());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shoff]->setValue_uint64(elf.getHdr64_shoff());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_flags]->setValue_uint32(elf.getHdr64_flags());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_ehsize]->setValue_uint16(elf.getHdr64_ehsize());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_phentsize]->setValue_uint16(elf.getHdr64_phentsize());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_phnum]->setValue_uint16(elf.getHdr64_phnum());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shentsize]->setValue_uint16(elf.getHdr64_shentsize());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shnum]->setValue_uint16(elf.getHdr64_shnum());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shstrndx]->setValue_uint16(elf.getHdr64_shstrndx());
+                    m_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_type]->setValue_uint16(elf.getHdr64_type());
+                    m_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_machine]->setValue_uint16(elf.getHdr64_machine());
+                    m_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_version]->setValue_uint32(elf.getHdr64_version());
+                    m_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_entry]->setValue_uint64(elf.getHdr64_entry());
+                    m_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_phoff]->setValue_uint64(elf.getHdr64_phoff());
+                    m_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shoff]->setValue_uint64(elf.getHdr64_shoff());
+                    m_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_flags]->setValue_uint32(elf.getHdr64_flags());
+                    m_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_ehsize]->setValue_uint16(elf.getHdr64_ehsize());
+                    m_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_phentsize]->setValue_uint16(elf.getHdr64_phentsize());
+                    m_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_phnum]->setValue_uint16(elf.getHdr64_phnum());
+                    m_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shentsize]->setValue_uint16(elf.getHdr64_shentsize());
+                    m_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shnum]->setValue_uint16(elf.getHdr64_shnum());
+                    m_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shstrndx]->setValue_uint16(elf.getHdr64_shstrndx());
 
-                    g_comboBox[CB_Elf_Ehdr_type]->setValue(elf.getHdr64_type());
-                    g_comboBox[CB_Elf_Ehdr_machine]->setValue(elf.getHdr64_machine());
+                    m_comboBox[CB_Elf_Ehdr_type]->setValue(elf.getHdr64_type());
+                    m_comboBox[CB_Elf_Ehdr_machine]->setValue(elf.getHdr64_machine());
 
-                    g_invWidget[INV_Elf_e_entry]->setAddressAndSize(&elf, elf.getHdr64_entry(), 0);
-                    g_invWidget[INV_Elf_e_phoff]->setOffsetAndSize(&elf, elf.getHdr64_phoff(), 0);  // TODO Size
-                    g_invWidget[INV_Elf_e_shoff]->setOffsetAndSize(&elf, elf.getHdr64_shoff(), 0);  // TODO Size
+                    m_invWidget[INV_Elf_e_entry]->setAddressAndSize(&elf, elf.getHdr64_entry(), 0);
+                    m_invWidget[INV_Elf_e_phoff]->setOffsetAndSize(&elf, elf.getHdr64_phoff(), 0);  // TODO Size
+                    m_invWidget[INV_Elf_e_shoff]->setOffsetAndSize(&elf, elf.getHdr64_shoff(), 0);  // TODO Size
                 } else {
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_type]->setValue_uint16(elf.getHdr32_type());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_machine]->setValue_uint16(elf.getHdr32_machine());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_version]->setValue_uint32(elf.getHdr32_version());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_entry]->setValue_uint32(elf.getHdr32_entry());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_phoff]->setValue_uint32(elf.getHdr32_phoff());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shoff]->setValue_uint32(elf.getHdr32_shoff());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_flags]->setValue_uint32(elf.getHdr32_flags());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_ehsize]->setValue_uint16(elf.getHdr32_ehsize());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_phentsize]->setValue_uint16(elf.getHdr32_phentsize());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_phnum]->setValue_uint16(elf.getHdr32_phnum());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shentsize]->setValue_uint16(elf.getHdr32_shentsize());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shnum]->setValue_uint16(elf.getHdr32_shnum());
-                    g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shstrndx]->setValue_uint16(elf.getHdr32_shstrndx());
+                    m_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_type]->setValue_uint16(elf.getHdr32_type());
+                    m_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_machine]->setValue_uint16(elf.getHdr32_machine());
+                    m_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_version]->setValue_uint32(elf.getHdr32_version());
+                    m_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_entry]->setValue_uint32(elf.getHdr32_entry());
+                    m_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_phoff]->setValue_uint32(elf.getHdr32_phoff());
+                    m_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shoff]->setValue_uint32(elf.getHdr32_shoff());
+                    m_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_flags]->setValue_uint32(elf.getHdr32_flags());
+                    m_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_ehsize]->setValue_uint16(elf.getHdr32_ehsize());
+                    m_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_phentsize]->setValue_uint16(elf.getHdr32_phentsize());
+                    m_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_phnum]->setValue_uint16(elf.getHdr32_phnum());
+                    m_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shentsize]->setValue_uint16(elf.getHdr32_shentsize());
+                    m_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shnum]->setValue_uint16(elf.getHdr32_shnum());
+                    m_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_shstrndx]->setValue_uint16(elf.getHdr32_shstrndx());
 
-                    g_comboBox[CB_Elf_Ehdr_type]->setValue(elf.getHdr32_type());
-                    g_comboBox[CB_Elf_Ehdr_machine]->setValue(elf.getHdr32_machine());
+                    m_comboBox[CB_Elf_Ehdr_type]->setValue(elf.getHdr32_type());
+                    m_comboBox[CB_Elf_Ehdr_machine]->setValue(elf.getHdr32_machine());
 
-                    g_invWidget[INV_Elf_e_entry]->setAddressAndSize(&elf, elf.getHdr32_entry(), 0);
-                    g_invWidget[INV_Elf_e_phoff]->setOffsetAndSize(&elf, elf.getHdr32_phoff(), 0);  // TODO Size
-                    g_invWidget[INV_Elf_e_shoff]->setOffsetAndSize(&elf, elf.getHdr32_shoff(), 0);  // TODO Size
+                    m_invWidget[INV_Elf_e_entry]->setAddressAndSize(&elf, elf.getHdr32_entry(), 0);
+                    m_invWidget[INV_Elf_e_phoff]->setOffsetAndSize(&elf, elf.getHdr32_phoff(), 0);  // TODO Size
+                    m_invWidget[INV_Elf_e_shoff]->setOffsetAndSize(&elf, elf.getHdr32_shoff(), 0);  // TODO Size
                 }
 
-                g_comboBox[CB_Elf_Ehdr_mag]->setValue(elf.getIdent_mag_LE());
-                g_comboBox[CB_Elf_Ehdr_iclass]->setValue(elf.getIdent_class());
-                g_comboBox[CB_Elf_Ehdr_idata]->setValue(elf.getIdent_data());
-                g_comboBox[CB_Elf_Ehdr_iversion]->setValue(elf.getIdent_version());
-                g_comboBox[CB_Elf_Ehdr_iosabi]->setValue(elf.getIdent_osabi());
+                m_comboBox[CB_Elf_Ehdr_mag]->setValue(elf.getIdent_mag_LE());
+                m_comboBox[CB_Elf_Ehdr_iclass]->setValue(elf.getIdent_class());
+                m_comboBox[CB_Elf_Ehdr_idata]->setValue(elf.getIdent_data());
+                m_comboBox[CB_Elf_Ehdr_iversion]->setValue(elf.getIdent_version());
+                m_comboBox[CB_Elf_Ehdr_iosabi]->setValue(elf.getIdent_osabi());
 
                 qint64 nOffset = elf.getEhdrOffset();
                 qint64 nSize = 0;
@@ -498,122 +498,122 @@ void ELFWidget::reloadData(bool bSaveSelection)
                     nSize = elf.getEhdr32Size();
                 }
 
-                loadHexSubdevice(nOffset, nSize, nOffset, &g_subDevice[SELF::TYPE_Elf_Ehdr], ui->widgetHex_Elf_Ehdr);
+                loadHexSubdevice(nOffset, nSize, nOffset, &m_subDevice[SELF::TYPE_Elf_Ehdr], ui->widgetHex_Elf_Ehdr);
 
                 blockSignals(false);
             }
         } else if (nType == SELF::TYPE_Elf_Shdr) {
             if (!isInitPresent(sInit)) {
-                ELFProcessData elfProcessData(SELF::TYPE_Elf_Shdr, &g_tvModel[SELF::TYPE_Elf_Shdr], &elf, nDataOffset, nDataSize, nDataExtraOffset, nDataExtraSize);
+                ELFProcessData elfProcessData(SELF::TYPE_Elf_Shdr, &m_tvModel[SELF::TYPE_Elf_Shdr], &elf, nDataOffset, nDataSize, nDataExtraOffset, nDataExtraSize);
 
-                ajustTableView(nType, &elfProcessData, &g_tvModel[SELF::TYPE_Elf_Shdr], ui->tableView_Elf_Shdr, false);
+                ajustTableView(nType, &elfProcessData, &m_tvModel[SELF::TYPE_Elf_Shdr], ui->tableView_Elf_Shdr, false);
 
                 connect(ui->tableView_Elf_Shdr->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_Elf_Shdr_currentRowChanged(QModelIndex, QModelIndex)));
 
-                if (g_tvModel[SELF::TYPE_Elf_Shdr]->rowCount()) {
+                if (m_tvModel[SELF::TYPE_Elf_Shdr]->rowCount()) {
                     ui->tableView_Elf_Shdr->setCurrentIndex(ui->tableView_Elf_Shdr->model()->index(0, 0));
                 }
             }
         } else if (nType == SELF::TYPE_Elf_Phdr) {
             if (!isInitPresent(sInit)) {
-                ELFProcessData elfProcessData(SELF::TYPE_Elf_Phdr, &g_tvModel[SELF::TYPE_Elf_Phdr], &elf, nDataOffset, nDataSize, nDataExtraOffset, nDataExtraSize);
+                ELFProcessData elfProcessData(SELF::TYPE_Elf_Phdr, &m_tvModel[SELF::TYPE_Elf_Phdr], &elf, nDataOffset, nDataSize, nDataExtraOffset, nDataExtraSize);
 
-                ajustTableView(nType, &elfProcessData, &g_tvModel[SELF::TYPE_Elf_Phdr], ui->tableView_Elf_Phdr, false);
+                ajustTableView(nType, &elfProcessData, &m_tvModel[SELF::TYPE_Elf_Phdr], ui->tableView_Elf_Phdr, false);
 
                 connect(ui->tableView_Elf_Phdr->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_Elf_Phdr_currentRowChanged(QModelIndex, QModelIndex)));
 
-                if (g_tvModel[SELF::TYPE_Elf_Phdr]->rowCount()) {
+                if (m_tvModel[SELF::TYPE_Elf_Phdr]->rowCount()) {
                     ui->tableView_Elf_Phdr->setCurrentIndex(ui->tableView_Elf_Phdr->model()->index(0, 0));
                 }
             }
         } else if (nType == SELF::TYPE_Elf_DynamicArrayTags) {
             if (!isInitPresent(sInit)) {
-                ELFProcessData elfProcessData(SELF::TYPE_Elf_DynamicArrayTags, &g_tvModel[SELF::TYPE_Elf_DynamicArrayTags], &elf, nDataOffset, nDataSize,
+                ELFProcessData elfProcessData(SELF::TYPE_Elf_DynamicArrayTags, &m_tvModel[SELF::TYPE_Elf_DynamicArrayTags], &elf, nDataOffset, nDataSize,
                                               nDataExtraOffset, nDataExtraSize);
 
-                ajustTableView(nType, &elfProcessData, &g_tvModel[SELF::TYPE_Elf_DynamicArrayTags], ui->tableView_DynamicArrayTags);
+                ajustTableView(nType, &elfProcessData, &m_tvModel[SELF::TYPE_Elf_DynamicArrayTags], ui->tableView_DynamicArrayTags);
 
                 connect(ui->tableView_DynamicArrayTags->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_DynamicArrayTags_currentRowChanged(QModelIndex, QModelIndex)));
 
-                if (g_tvModel[SELF::TYPE_Elf_DynamicArrayTags]->rowCount()) {
+                if (m_tvModel[SELF::TYPE_Elf_DynamicArrayTags]->rowCount()) {
                     ui->tableView_DynamicArrayTags->setCurrentIndex(ui->tableView_DynamicArrayTags->model()->index(0, 0));
                 }
             }
         } else if (nType == SELF::TYPE_LIBRARIES) {
             if (!isInitPresent(sInit)) {
-                ELFProcessData elfProcessData(SELF::TYPE_LIBRARIES, &g_tvModel[SELF::TYPE_LIBRARIES], &elf, nDataOffset, nDataSize, nDataExtraOffset, nDataExtraSize);
+                ELFProcessData elfProcessData(SELF::TYPE_LIBRARIES, &m_tvModel[SELF::TYPE_LIBRARIES], &elf, nDataOffset, nDataSize, nDataExtraOffset, nDataExtraSize);
 
-                ajustTableView(nType, &elfProcessData, &g_tvModel[SELF::TYPE_LIBRARIES], ui->tableView_Libraries);
+                ajustTableView(nType, &elfProcessData, &m_tvModel[SELF::TYPE_LIBRARIES], ui->tableView_Libraries);
 
                 connect(ui->tableView_Libraries->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_Libraries_currentRowChanged(QModelIndex, QModelIndex)));
 
-                if (g_tvModel[SELF::TYPE_LIBRARIES]->rowCount()) {
+                if (m_tvModel[SELF::TYPE_LIBRARIES]->rowCount()) {
                     ui->tableView_Libraries->setCurrentIndex(ui->tableView_Libraries->model()->index(0, 0));
                 }
             }
         } else if (nType == SELF::TYPE_INTERPRETER) {
             if (!isInitPresent(sInit)) {
-                createListTable(SELF::TYPE_INTERPRETER, ui->tableWidget_Interpreter, N_ELF_INTERPRETER::records, g_lineEdit_Elf_Interpreter,
+                createListTable(SELF::TYPE_INTERPRETER, ui->tableWidget_Interpreter, N_ELF_INTERPRETER::records, m_lineEdit_Elf_Interpreter,
                                 N_ELF_INTERPRETER::__data_size);
 
                 blockSignals(true);
 
                 XBinary::OS_STRING osAnsiString = elf.getOsAnsiString(nDataOffset, nDataSize);
 
-                setLineEdit(g_lineEdit_Elf_Interpreter[N_ELF_INTERPRETER::interpreter], osAnsiString.nSize, osAnsiString.sString, osAnsiString.nOffset);
+                setLineEdit(m_lineEdit_Elf_Interpreter[N_ELF_INTERPRETER::interpreter], osAnsiString.nSize, osAnsiString.sString, osAnsiString.nOffset);
 
                 blockSignals(false);
             }
         } else if (nType == SELF::TYPE_NOTES) {
             if (!isInitPresent(sInit)) {
-                ELFProcessData elfProcessData(SELF::TYPE_NOTES, &g_tvModel[SELF::TYPE_NOTES], &elf, nDataOffset, nDataSize, nDataExtraOffset, nDataExtraSize);
+                ELFProcessData elfProcessData(SELF::TYPE_NOTES, &m_tvModel[SELF::TYPE_NOTES], &elf, nDataOffset, nDataSize, nDataExtraOffset, nDataExtraSize);
 
-                ajustTableView(nType, &elfProcessData, &g_tvModel[SELF::TYPE_NOTES], ui->tableView_Notes);
+                ajustTableView(nType, &elfProcessData, &m_tvModel[SELF::TYPE_NOTES], ui->tableView_Notes);
 
                 connect(ui->tableView_Notes->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_Notes_currentRowChanged(QModelIndex, QModelIndex)));
 
-                if (g_tvModel[SELF::TYPE_NOTES]->rowCount()) {
+                if (m_tvModel[SELF::TYPE_NOTES]->rowCount()) {
                     ui->tableView_Notes->setCurrentIndex(ui->tableView_Notes->model()->index(0, 0));
                 }
             }
         } else if (nType == SELF::TYPE_RUNPATH) {
             if (!isInitPresent(sInit)) {
-                createListTable(SELF::TYPE_RUNPATH, ui->tableWidget_RunPath, N_ELF_RUNPATH::records, g_lineEdit_Elf_RunPath, N_ELF_RUNPATH::__data_size);
+                createListTable(SELF::TYPE_RUNPATH, ui->tableWidget_RunPath, N_ELF_RUNPATH::records, m_lineEdit_Elf_RunPath, N_ELF_RUNPATH::__data_size);
 
                 blockSignals(true);
 
                 XBinary::OS_STRING osAnsiString = elf.getOsAnsiString(nDataOffset, nDataSize);
 
-                setLineEdit(g_lineEdit_Elf_RunPath[N_ELF_RUNPATH::runpath], osAnsiString.nSize, osAnsiString.sString, osAnsiString.nOffset);
+                setLineEdit(m_lineEdit_Elf_RunPath[N_ELF_RUNPATH::runpath], osAnsiString.nSize, osAnsiString.sString, osAnsiString.nOffset);
 
                 blockSignals(false);
             }
         } else if (nType == SELF::TYPE_STRINGTABLE) {
             if (!isInitPresent(sInit)) {
-                loadHexSubdevice(nDataOffset, nDataSize, 0, &g_subDevice[SELF::TYPE_STRINGTABLE], ui->widgetHex_StringTable);
+                loadHexSubdevice(nDataOffset, nDataSize, 0, &m_subDevice[SELF::TYPE_STRINGTABLE], ui->widgetHex_StringTable);
             }
         } else if (nType == SELF::TYPE_SYMBOLTABLE) {
             if (!isInitPresent(sInit)) {
-                ELFProcessData elfProcessData(SELF::TYPE_SYMBOLTABLE, &g_tvModel[SELF::TYPE_SYMBOLTABLE], &elf, nDataOffset, nDataSize, nDataExtraOffset, nDataExtraSize);
+                ELFProcessData elfProcessData(SELF::TYPE_SYMBOLTABLE, &m_tvModel[SELF::TYPE_SYMBOLTABLE], &elf, nDataOffset, nDataSize, nDataExtraOffset, nDataExtraSize);
 
-                ajustTableView(nType, &elfProcessData, &g_tvModel[SELF::TYPE_SYMBOLTABLE], ui->tableView_SymbolTable, false);
+                ajustTableView(nType, &elfProcessData, &m_tvModel[SELF::TYPE_SYMBOLTABLE], ui->tableView_SymbolTable, false);
             }
         } else if (nType == SELF::TYPE_Elf_Rela) {
             if (!isInitPresent(sInit)) {
-                ELFProcessData elfProcessData(SELF::TYPE_Elf_Rela, &g_tvModel[SELF::TYPE_Elf_Rela], &elf, nDataOffset, nDataSize, nDataExtraOffset, nDataExtraSize);
+                ELFProcessData elfProcessData(SELF::TYPE_Elf_Rela, &m_tvModel[SELF::TYPE_Elf_Rela], &elf, nDataOffset, nDataSize, nDataExtraOffset, nDataExtraSize);
 
-                ajustTableView(nType, &elfProcessData, &g_tvModel[SELF::TYPE_Elf_Rela], ui->tableView_Rela, false);
+                ajustTableView(nType, &elfProcessData, &m_tvModel[SELF::TYPE_Elf_Rela], ui->tableView_Rela, false);
             }
         } else if (nType == SELF::TYPE_Elf_Rel) {
             if (!isInitPresent(sInit)) {
-                ELFProcessData elfProcessData(SELF::TYPE_Elf_Rel, &g_tvModel[SELF::TYPE_Elf_Rel], &elf, nDataOffset, nDataSize, nDataExtraOffset, nDataExtraSize);
+                ELFProcessData elfProcessData(SELF::TYPE_Elf_Rel, &m_tvModel[SELF::TYPE_Elf_Rel], &elf, nDataOffset, nDataSize, nDataExtraOffset, nDataExtraSize);
 
-                ajustTableView(nType, &elfProcessData, &g_tvModel[SELF::TYPE_Elf_Rel], ui->tableView_Rel, false);
+                ajustTableView(nType, &elfProcessData, &m_tvModel[SELF::TYPE_Elf_Rel], ui->tableView_Rel, false);
             }
         }
 
@@ -681,12 +681,12 @@ void ELFWidget::_widgetValueChanged(QVariant vValue)
     switch (nStype) {
         case SELF::TYPE_Elf_Ehdr:
             switch (nNdata) {
-                case N_Elf_Ehdr::ei_class: g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_class]->setValue_uint8((quint8)nValue); break;
-                case N_Elf_Ehdr::ei_data: g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_data]->setValue_uint8((quint8)nValue); break;
-                case N_Elf_Ehdr::ei_version: g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_version]->setValue_uint8((quint8)nValue); break;
-                case N_Elf_Ehdr::ei_osabi: g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_osabi]->setValue_uint8((quint8)nValue); break;
-                case N_Elf_Ehdr::e_type: g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_type]->setValue_uint16((quint16)nValue); break;
-                case N_Elf_Ehdr::e_machine: g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_machine]->setValue_uint16((quint16)nValue); break;
+                case N_Elf_Ehdr::ei_class: m_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_class]->setValue_uint8((quint8)nValue); break;
+                case N_Elf_Ehdr::ei_data: m_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_data]->setValue_uint8((quint8)nValue); break;
+                case N_Elf_Ehdr::ei_version: m_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_version]->setValue_uint8((quint8)nValue); break;
+                case N_Elf_Ehdr::ei_osabi: m_lineEdit_Elf_Ehdr[N_Elf_Ehdr::ei_osabi]->setValue_uint8((quint8)nValue); break;
+                case N_Elf_Ehdr::e_type: m_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_type]->setValue_uint16((quint16)nValue); break;
+                case N_Elf_Ehdr::e_machine: m_lineEdit_Elf_Ehdr[N_Elf_Ehdr::e_machine]->setValue_uint16((quint16)nValue); break;
             }
 
             break;
@@ -732,7 +732,7 @@ void ELFWidget::loadShdr(qint32 nRow)
         qint64 nSize = ui->tableView_Elf_Shdr->model()->data(index, Qt::UserRole + FW_DEF::SECTION_DATA_SIZE).toLongLong();
         qint64 nAddress = ui->tableView_Elf_Shdr->model()->data(index, Qt::UserRole + FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
 
-        loadHexSubdevice(nOffset, nSize, nAddress, &g_subDevice[SELF::TYPE_Elf_Shdr], ui->widgetHex_Elf_Shdr);
+        loadHexSubdevice(nOffset, nSize, nAddress, &m_subDevice[SELF::TYPE_Elf_Shdr], ui->widgetHex_Elf_Shdr);
     }
 }
 
@@ -745,7 +745,7 @@ void ELFWidget::loadPhdr(qint32 nRow)
         qint64 nSize = ui->tableView_Elf_Phdr->model()->data(index, Qt::UserRole + FW_DEF::SECTION_DATA_SIZE).toLongLong();
         qint64 nAddress = ui->tableView_Elf_Phdr->model()->data(index, Qt::UserRole + FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
 
-        loadHexSubdevice(nOffset, nSize, nAddress, &g_subDevice[SELF::TYPE_Elf_Phdr], ui->widgetHex_Elf_Phdr);
+        loadHexSubdevice(nOffset, nSize, nAddress, &m_subDevice[SELF::TYPE_Elf_Phdr], ui->widgetHex_Elf_Phdr);
     }
 }
 
@@ -758,7 +758,7 @@ void ELFWidget::loadNote(qint32 nRow)
         qint64 nSize = ui->tableView_Notes->model()->data(index, Qt::UserRole + FW_DEF::SECTION_DATA_SIZE).toLongLong();
         qint64 nAddress = ui->tableView_Notes->model()->data(index, Qt::UserRole + FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
 
-        loadHexSubdevice(nOffset, nSize, nAddress, &g_subDevice[SELF::TYPE_NOTES], ui->widgetHex_Notes);
+        loadHexSubdevice(nOffset, nSize, nAddress, &m_subDevice[SELF::TYPE_NOTES], ui->widgetHex_Notes);
     }
 }
 
@@ -986,7 +986,7 @@ void ELFWidget::onTableView_Elf_Shdr_currentRowChanged(const QModelIndex &curren
     Q_UNUSED(current)
     Q_UNUSED(previous)
 
-    loadHexSubdeviceByTableView(current.row(), SELF::TYPE_Elf_Shdr, ui->widgetHex_Elf_Shdr, ui->tableView_Elf_Shdr, &g_subDevice[SELF::TYPE_Elf_Shdr]);
+    loadHexSubdeviceByTableView(current.row(), SELF::TYPE_Elf_Shdr, ui->widgetHex_Elf_Shdr, ui->tableView_Elf_Shdr, &m_subDevice[SELF::TYPE_Elf_Shdr]);
 }
 
 void ELFWidget::onTableView_Elf_Phdr_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
@@ -994,7 +994,7 @@ void ELFWidget::onTableView_Elf_Phdr_currentRowChanged(const QModelIndex &curren
     Q_UNUSED(current)
     Q_UNUSED(previous)
 
-    loadHexSubdeviceByTableView(current.row(), SELF::TYPE_Elf_Phdr, ui->widgetHex_Elf_Phdr, ui->tableView_Elf_Phdr, &g_subDevice[SELF::TYPE_Elf_Phdr]);
+    loadHexSubdeviceByTableView(current.row(), SELF::TYPE_Elf_Phdr, ui->widgetHex_Elf_Phdr, ui->tableView_Elf_Phdr, &m_subDevice[SELF::TYPE_Elf_Phdr]);
 }
 
 void ELFWidget::onTableView_DynamicArrayTags_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
@@ -1010,7 +1010,7 @@ void ELFWidget::onTableView_Notes_currentRowChanged(const QModelIndex &current, 
     Q_UNUSED(current)
     Q_UNUSED(previous)
 
-    loadHexSubdeviceByTableView(current.row(), SELF::TYPE_NOTES, ui->widgetHex_Notes, ui->tableView_Notes, &g_subDevice[SELF::TYPE_NOTES]);
+    loadHexSubdeviceByTableView(current.row(), SELF::TYPE_NOTES, ui->widgetHex_Notes, ui->tableView_Notes, &m_subDevice[SELF::TYPE_NOTES]);
 }
 
 void ELFWidget::onTableView_Libraries_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)

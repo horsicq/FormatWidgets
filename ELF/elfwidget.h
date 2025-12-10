@@ -134,14 +134,14 @@ private:
 
     Ui::ELFWidget *ui;
 
-    XLineEditHEX *g_lineEdit_Elf_Ehdr[N_Elf_Ehdr::__data_size];
-    XLineEditHEX *g_lineEdit_Elf_Interpreter[N_ELF_INTERPRETER::__data_size];
-    XLineEditHEX *g_lineEdit_Elf_RunPath[N_ELF_RUNPATH::__data_size];
-    XComboBoxEx *g_comboBox[__CB_size];
-    InvWidget *g_invWidget[__INV_size];
+    XLineEditHEX *m_lineEdit_Elf_Ehdr[N_Elf_Ehdr::__data_size];
+    XLineEditHEX *m_lineEdit_Elf_Interpreter[N_ELF_INTERPRETER::__data_size];
+    XLineEditHEX *m_lineEdit_Elf_RunPath[N_ELF_RUNPATH::__data_size];
+    XComboBoxEx *m_comboBox[__CB_size];
+    InvWidget *m_invWidget[__INV_size];
 
-    SubDevice *g_subDevice[SELF::__TYPE_size];
-    QStandardItemModel *g_tvModel[SELF::__TYPE_size];
+    SubDevice *m_subDevice[SELF::__TYPE_size];
+    QStandardItemModel *m_tvModel[SELF::__TYPE_size];
 };
 
 #endif  // ELFWIDGET_H
