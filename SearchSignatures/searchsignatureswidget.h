@@ -82,10 +82,10 @@ private slots:
 private:
     Ui::SearchSignaturesWidget *ui;
     QIODevice *m_pDevice;
-    bool g_bInit;
+    bool m_bInit;
     // QStandardItemModel *g_pOldModel;
     // QFutureWatcher<void> g_watcher;
-    QList<XBinary::SIGNATUREDB_RECORD> g_listSignatureRecords;
+    QList<XBinary::SIGNATUREDB_RECORD> m_listSignatureRecords;
     OPTIONS g_options;
     QVector<XBinary::MS_RECORD> g_listRecords;
 };

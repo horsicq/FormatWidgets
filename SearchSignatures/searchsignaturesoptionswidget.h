@@ -54,7 +54,7 @@ protected:
 
 private:
     Ui::SearchSignaturesOptionsWidget *ui;
-    XOptions *g_pOptions;
+    XOptions *m_pOptions;
 };
 
 #endif  // SEARCHSIGNATURESOPTIONSWIDGET_H

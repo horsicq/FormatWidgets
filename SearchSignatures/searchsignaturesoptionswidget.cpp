@@ -26,7 +26,7 @@ SearchSignaturesOptionsWidget::SearchSignaturesOptionsWidget(QWidget *pParent) :
 {
     ui->setupUi(this);
 
-    g_pOptions = nullptr;
+    m_pOptions = nullptr;
 
     setProperty("GROUPID", XOptions::GROUPID_SIGNATURES);
 }
@@ -38,7 +38,7 @@ SearchSignaturesOptionsWidget::~SearchSignaturesOptionsWidget()
 
 void SearchSignaturesOptionsWidget::setOptions(XOptions *pOptions)
 {
-    g_pOptions = pOptions;
+    m_pOptions = pOptions;
 
     reload();
 }
@@ -50,7 +50,7 @@ void SearchSignaturesOptionsWidget::adjustView()
 
 void SearchSignaturesOptionsWidget::save()
 {
-    g_pOptions->getLineEdit(ui->lineEditSearchSignaturesPath, XOptions::ID_SIGNATURES_PATH);
+    m_pOptions->getLineEdit(ui->lineEditSearchSignaturesPath, XOptions::ID_SIGNATURES_PATH);
 }
 
 void SearchSignaturesOptionsWidget::setDefaultValues(XOptions *pOptions)
@@ -66,7 +66,7 @@ void SearchSignaturesOptionsWidget::reloadData(bool bSaveSelection)
 
 void SearchSignaturesOptionsWidget::reload()
 {
-    g_pOptions->setLineEdit(ui->lineEditSearchSignaturesPath, XOptions::ID_SIGNATURES_PATH);
+    m_pOptions->setLineEdit(ui->lineEditSearchSignaturesPath, XOptions::ID_SIGNATURES_PATH);
 }
 
 void SearchSignaturesOptionsWidget::on_toolButtonSearchSignaturesPath_clicked()

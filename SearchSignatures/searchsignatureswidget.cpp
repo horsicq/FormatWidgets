@@ -41,7 +41,7 @@ SearchSignaturesWidget::SearchSignaturesWidget(QWidget *pParent) : XShortcutsWid
     ui->tableViewResult->setToolTip(tr("Result"));
 
     m_pDevice = nullptr;
-    g_bInit = false;
+    m_bInit = false;
 
     ui->toolButtonPatch->setEnabled(false);
 
@@ -56,7 +56,7 @@ SearchSignaturesWidget::~SearchSignaturesWidget()
 void SearchSignaturesWidget::setData(QIODevice *pDevice, OPTIONS options, bool bAuto)
 {
     this->m_pDevice = pDevice;
-    g_bInit = false;
+    m_bInit = false;
 
     XFormats::setFileTypeComboBox(options.fileType, m_pDevice, ui->comboBoxType);
     XFormats::setEndiannessComboBox(ui->comboBoxEndianness, XBinary::ENDIAN_LITTLE);
@@ -114,7 +114,7 @@ void SearchSignaturesWidget::reload()
 
 bool SearchSignaturesWidget::getInitStatus()
 {
-    return g_bInit;
+    return m_bInit;
 }
 
 void SearchSignaturesWidget::adjustView()
@@ -212,7 +212,7 @@ void SearchSignaturesWidget::search()
         options.bMenu_Hex = g_options.bMenu_Hex;
         options.memoryMap = XFormats::getMemoryMap(fileType, XBinary::MAPMODE_UNKNOWN, m_pDevice);
         options.endian = (XBinary::ENDIAN)(ui->comboBoxEndianness->currentData().toUInt());
-        options.pListSignatureRecords = &g_listSignatureRecords;
+        options.pListSignatureRecords = &m_listSignatureRecords;
 
         QWidget *pParent = XOptions::getMainWidget(this);
 
@@ -229,14 +229,14 @@ void SearchSignaturesWidget::search()
         // dmp.showDialogDelay();
 
         XModel_MSRecord *pModel = new XModel_MSRecord(m_pDevice, options.memoryMap, &g_listRecords, XBinary::VT_SIGNATURE, this);
-        pModel->setSignaturesList(&g_listSignatureRecords);
+        pModel->setSignaturesList(&m_listSignatureRecords);
 
         ui->tableViewResult->setCustomModel(pModel, true);
 
         connect(ui->tableViewResult->selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)), this,
                 SLOT(on_tableViewSelection(QItemSelection, QItemSelection)));
 
-        g_bInit = true;
+        m_bInit = true;
     }
 }
 
@@ -244,11 +244,11 @@ void SearchSignaturesWidget::loadSignatures(const QString &sFileName)
 {
     qint32 nNumberOfSignatures = 0;
 
-    g_listSignatureRecords.clear();
+    m_listSignatureRecords.clear();
 
     if (sFileName != "") {
-        g_listSignatureRecords = MultiSearch::loadSignaturesFromFile(sFileName);
-        nNumberOfSignatures = g_listSignatureRecords.count();
+        m_listSignatureRecords = MultiSearch::loadSignaturesFromFile(sFileName);
+        nNumberOfSignatures = m_listSignatureRecords.count();
     }
 
     ui->labelInfo->setText(QString("%1: %2").arg(tr("Signatures"), QString::number(nNumberOfSignatures)));
