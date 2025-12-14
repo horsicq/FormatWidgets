@@ -96,9 +96,9 @@ signals:
 private:
     Ui::SearchStringsWidget *ui;
     QIODevice *m_pDevice;
-    SearchStringsWidget::OPTIONS g_options;
-    QVector<XBinary::MS_RECORD> g_listRecords;
-    bool g_bInit;
+    SearchStringsWidget::OPTIONS m_options;
+    QVector<XBinary::MS_RECORD> m_listRecords;
+    bool m_bInit;
 };
 
 #endif  // SEARCHSTRINGSWIDGET_H

@@ -50,9 +50,9 @@ SearchStringsWidget::SearchStringsWidget(QWidget *pParent) : XShortcutsWidget(pP
 
     m_pDevice = nullptr;
 
-    g_options.nBaseAddress = 0;
-    g_bInit = false;
-    g_options = {};
+    m_options.nBaseAddress = 0;
+    m_bInit = false;
+    m_options = {};
 
     ui->checkBoxNullTerminated->setEnabled(false);
 
@@ -101,14 +101,14 @@ void SearchStringsWidget::setData(QIODevice *pDevice, XBinary::FT fileType, OPTI
     ui->checkBoxNullTerminated->setChecked(options.bNullTerminated);
     ui->checkBoxLinks->setChecked(options.bLinks);
 
-    g_bInit = false;
+    m_bInit = false;
 
     // ui->tableViewResult->setModel(nullptr);
 
-    g_options = options;
+    m_options = options;
 
-    if (g_options.nBaseAddress == -1) {
-        g_options.nBaseAddress = 0;
+    if (m_options.nBaseAddress == -1) {
+        m_options.nBaseAddress = 0;
     }
 
     if (bAuto) {
@@ -128,7 +128,7 @@ void SearchStringsWidget::reload()
 
 bool SearchStringsWidget::getInitStatus()
 {
-    return g_bInit;
+    return m_bInit;
 }
 
 void SearchStringsWidget::adjustView()
@@ -162,15 +162,15 @@ void SearchStringsWidget::on_tableViewResult_customContextMenuRequested(const QP
 
     getShortcuts()->_addMenuItem_CopyRow(&listMenuItems, ui->tableViewResult);
 
-    if (g_options.bMenu_Hex) {
+    if (m_options.bMenu_Hex) {
         getShortcuts()->_addMenuItem(&listMenuItems, X_ID_TABLE_FOLLOWIN_HEX, this, SLOT(_hex()), XShortcuts::GROUPID_FOLLOWIN);
     }
 
-    if (g_options.bMenu_Disasm) {
+    if (m_options.bMenu_Disasm) {
         getShortcuts()->_addMenuItem(&listMenuItems, X_ID_TABLE_FOLLOWIN_DISASM, this, SLOT(_disasm()), XShortcuts::GROUPID_FOLLOWIN);
     }
 
-    if (g_options.bMenu_Demangle) {
+    if (m_options.bMenu_Demangle) {
         getShortcuts()->_addMenuItem(&listMenuItems, X_ID_TABLE_DEMANGLE, this, SLOT(_demangle()), XShortcuts::GROUPID_NONE);
     }
 
@@ -185,10 +185,10 @@ void SearchStringsWidget::on_tableViewResult_customContextMenuRequested(const QP
 
 void SearchStringsWidget::_hex()
 {
-    if (g_options.bMenu_Hex) {
+    if (m_options.bMenu_Hex) {
         qint32 nRow = ui->tableViewResult->currentIndex().row();
 
-        if ((nRow != -1) && (g_listRecords.count())) {
+        if ((nRow != -1) && (m_listRecords.count())) {
             QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(XModel_MSRecord::COLUMN_NUMBER);
 
             qint64 nOffset = ui->tableViewResult->model()->data(index, Qt::UserRole + XModel_MSRecord::USERROLE_OFFSET).toLongLong();
@@ -207,10 +207,10 @@ void SearchStringsWidget::_hex()
 
 void SearchStringsWidget::_disasm()
 {
-    if (g_options.bMenu_Disasm) {
+    if (m_options.bMenu_Disasm) {
         qint32 nRow = ui->tableViewResult->currentIndex().row();
 
-        if ((nRow != -1) && (g_listRecords.count())) {
+        if ((nRow != -1) && (m_listRecords.count())) {
             QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(XModel_MSRecord::COLUMN_NUMBER);
 
             qint64 nOffset = ui->tableViewResult->model()->data(index, Qt::UserRole + XModel_MSRecord::USERROLE_OFFSET).toLongLong();
@@ -222,10 +222,10 @@ void SearchStringsWidget::_disasm()
 
 void SearchStringsWidget::_demangle()
 {
-    if (g_options.bMenu_Disasm) {
+    if (m_options.bMenu_Disasm) {
         qint32 nRow = ui->tableViewResult->currentIndex().row();
 
-        if ((nRow != -1) && (g_listRecords.count())) {
+        if ((nRow != -1) && (m_listRecords.count())) {
             QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(XModel_MSRecord::COLUMN_VALUE);
 
             QString sString = ui->tableViewResult->model()->data(index).toString();
@@ -240,7 +240,7 @@ void SearchStringsWidget::_editString()
     if (!isReadonly()) {
         qint32 nRow = ui->tableViewResult->currentIndex().row();
 
-        if ((nRow != -1) && (g_listRecords.count())) {
+        if ((nRow != -1) && (m_listRecords.count())) {
             QModelIndex indexNumber = ui->tableViewResult->selectionModel()->selectedIndexes().at(XModel_MSRecord::COLUMN_NUMBER);
             // QModelIndex indexOffset = ui->tableViewResult->selectionModel()->selectedIndexes().at(MultiSearch::COLUMN_STRING_OFFSET);
             QModelIndex indexSize = ui->tableViewResult->selectionModel()->selectedIndexes().at(XModel_MSRecord::COLUMN_SIZE);
@@ -291,33 +291,33 @@ void SearchStringsWidget::_editString()
 void SearchStringsWidget::search()
 {
     if (m_pDevice) {
-        g_options.bAnsi = ui->checkBoxAnsi->isChecked();
+        m_options.bAnsi = ui->checkBoxAnsi->isChecked();
         // g_options.bUTF8 = ui->checkBoxUTF8->isChecked();
-        g_options.bUnicode = ui->checkBoxUnicode->isChecked();
-        g_options.bNullTerminated = ui->checkBoxNullTerminated->isChecked();
+        m_options.bUnicode = ui->checkBoxUnicode->isChecked();
+        m_options.bNullTerminated = ui->checkBoxNullTerminated->isChecked();
         // g_options.sANSICodec = ui->comboBoxANSICodec->currentText();
-        g_options.nMinLenght = ui->spinBoxMinLength->value();
-        g_options.bLinks = ui->checkBoxLinks->isChecked();
-        g_options.sMask = ui->lineEditMask->text().trimmed();
+        m_options.nMinLenght = ui->spinBoxMinLength->value();
+        m_options.bLinks = ui->checkBoxLinks->isChecked();
+        m_options.sMask = ui->lineEditMask->text().trimmed();
 
-        if (g_options.bAnsi || g_options.bUnicode) {
+        if (m_options.bAnsi || m_options.bUnicode) {
             XBinary::FT fileType = (XBinary::FT)(ui->comboBoxType->currentData().toInt());
             XBinary::MAPMODE mapMode = (XBinary::MAPMODE)(ui->comboBoxMapMode->currentData().toInt());
 
             MultiSearch::OPTIONS options = {};
 
-            options.bAnsi = g_options.bAnsi;
+            options.bAnsi = m_options.bAnsi;
             // options.bUTF8 = g_options.bUTF8;
-            options.bUnicode = g_options.bUnicode;
-            options.bNullTerminated = g_options.bNullTerminated;
+            options.bUnicode = m_options.bUnicode;
+            options.bNullTerminated = m_options.bNullTerminated;
             // options.sANSICodec = g_options.sANSICodec;
-            options.bLinks = g_options.bLinks;
-            options.bMenu_Hex = g_options.bMenu_Hex;
-            options.nMinLenght = g_options.nMinLenght;
-            options.sMask = g_options.sMask;
+            options.bLinks = m_options.bLinks;
+            options.bMenu_Hex = m_options.bMenu_Hex;
+            options.nMinLenght = m_options.nMinLenght;
+            options.sMask = m_options.sMask;
 
             if (fileType == XBinary::FT_REGION) {
-                options.memoryMap = XBinary(m_pDevice, true, g_options.nBaseAddress).getMemoryMap();
+                options.memoryMap = XBinary(m_pDevice, true, m_options.nBaseAddress).getMemoryMap();
             } else {
                 options.memoryMap = XFormats::getMemoryMap(fileType, mapMode, m_pDevice);
             }
@@ -329,7 +329,7 @@ void SearchStringsWidget::search()
             MultiSearch multiSearch;
             XDialogProcess dsp(pParent, &multiSearch);
             dsp.setGlobal(getShortcuts(), getGlobalOptions());
-            multiSearch.setSearchData(m_pDevice, &g_listRecords, options, MultiSearch::TYPE_STRINGS, dsp.getPdStruct());
+            multiSearch.setSearchData(m_pDevice, &m_listRecords, options, MultiSearch::TYPE_STRINGS, dsp.getPdStruct());
             dsp.start();
             dsp.showDialogDelay();
 
@@ -338,7 +338,7 @@ void SearchStringsWidget::search()
             // dmp.processModel(&listRecords, &g_pModel, options, MultiSearch::TYPE_STRINGS);
             // dmp.showDialogDelay();
 
-            XModel_MSRecord *pModel = new XModel_MSRecord(m_pDevice, options.memoryMap, &g_listRecords, XBinary::VT_STRING, this);
+            XModel_MSRecord *pModel = new XModel_MSRecord(m_pDevice, options.memoryMap, &m_listRecords, XBinary::VT_STRING, this);
 
             ui->tableViewResult->setCustomModel(pModel, true);
 
@@ -346,7 +346,7 @@ void SearchStringsWidget::search()
                     SLOT(on_tableViewSelection(QItemSelection, QItemSelection)));
         }
 
-        g_bInit = true;
+        m_bInit = true;
     }
 }
 
