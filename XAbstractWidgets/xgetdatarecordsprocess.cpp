@@ -24,7 +24,7 @@ XGetDataRecordsProcess::XGetDataRecordsProcess(QObject *pParent) : XThreadObject
 {
     m_pDevice = nullptr;
     g_pListDataRecordsRows = nullptr;
-    g_pListTitles = nullptr;
+    m_pListTitles = nullptr;
     m_pPdStruct = nullptr;
 }
 
@@ -32,14 +32,14 @@ void XGetDataRecordsProcess::setData(QIODevice *pDevice, const XBinary::DATA_REC
                                      QList<QString> *pListTitles, XBinary::PDSTRUCT *pPdStruct)
 {
     m_pDevice = pDevice;
-    g_dataRecordsOptions = dataRecordsOptions;
+    m_dataRecordsOptions = dataRecordsOptions;
     g_pListDataRecordsRows = pListDataRecordsRows;
-    g_pListTitles = pListTitles;
+    m_pListTitles = pListTitles;
     m_pPdStruct = pPdStruct;
 }
 
 void XGetDataRecordsProcess::process()
 {
-    XFormats::getDataRecordValues(g_dataRecordsOptions.pMemoryMap->fileType, m_pDevice, g_dataRecordsOptions, g_pListDataRecordsRows, g_pListTitles, false, -1,
+    XFormats::getDataRecordValues(m_dataRecordsOptions.pMemoryMap->fileType, m_pDevice, m_dataRecordsOptions, g_pListDataRecordsRows, m_pListTitles, false, -1,
                                   m_pPdStruct);
 }
