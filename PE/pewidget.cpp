@@ -89,7 +89,7 @@ void PEWidget::clear()
     resetWidget();
 
     ui->widgetTools->setData(0);
-    XDisasmView::OPTIONS options = {};
+    XBinaryView::OPTIONS options = {};
     ui->widgetDisasm_DosStub->setData(0, options);
 
     ui->checkBoxReadonly->setChecked(true);
@@ -1235,7 +1235,7 @@ void PEWidget::reloadData(bool bSaveSelection)
                 binary.setFileType(XBinary::FT_REGION);
                 binary.setArch("8086");
 
-                XDisasmView::OPTIONS options = {};
+                XBinaryView::OPTIONS options = {};
                 options.nInitAddress = -1;  // TODO Check MSDOS
                 // options.memoryMapRegion = binary.getMemoryMap();
 
