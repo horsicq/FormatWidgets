@@ -32,72 +32,72 @@ PESectionHeaderWidget::PESectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS
 {
     PESectionHeaderWidget::setData(pDevice, options, nNumber, nOffset, nType);
 
-    g_ppLinedEdit = 0;
-    g_nLineEditSize = 0;
-    g_ppComboBox = 0;
-    g_nComboBoxSize = 0;
-    g_ppInvWidget = 0;
-    g_nInvWidgetSize = 0;
+    m_ppLinedEdit = 0;
+    m_nLineEditSize = 0;
+    m_ppComboBox = 0;
+    m_nComboBoxSize = 0;
+    m_ppInvWidget = 0;
+    m_nInvWidgetSize = 0;
 
     if (nType == SPE::TYPE_IMAGE_SECTION_HEADER) {
-        g_nLineEditSize = N_IMAGE_SECTION_HEADER::__data_size + 1;
-        g_nComboBoxSize = N_IMAGE_SECTION_HEADER::__CB_size;
-        g_nInvWidgetSize = N_IMAGE_SECTION_HEADER::__INV_size;
+        m_nLineEditSize = N_IMAGE_SECTION_HEADER::__data_size + 1;
+        m_nComboBoxSize = N_IMAGE_SECTION_HEADER::__CB_size;
+        m_nInvWidgetSize = N_IMAGE_SECTION_HEADER::__INV_size;
     } else if (nType == SPE::TYPE_IMPORT) {
-        g_nLineEditSize = N_IMAGE_IMPORT::__data_size;
-        g_nComboBoxSize = N_IMAGE_IMPORT::__CB_size;
-        g_nInvWidgetSize = N_IMAGE_IMPORT::__INV_size;
+        m_nLineEditSize = N_IMAGE_IMPORT::__data_size;
+        m_nComboBoxSize = N_IMAGE_IMPORT::__CB_size;
+        m_nInvWidgetSize = N_IMAGE_IMPORT::__INV_size;
     } else if (nType == SPE::TYPE_DEBUG) {
-        g_nLineEditSize = N_IMAGE_DEBUG::__data_size;
-        g_nComboBoxSize = N_IMAGE_DEBUG::__CB_size;
-        g_nInvWidgetSize = N_IMAGE_DEBUG::__INV_size;
+        m_nLineEditSize = N_IMAGE_DEBUG::__data_size;
+        m_nComboBoxSize = N_IMAGE_DEBUG::__CB_size;
+        m_nInvWidgetSize = N_IMAGE_DEBUG::__INV_size;
     } else if (nType == SPE::TYPE_RELOCS) {
-        g_nLineEditSize = N_IMAGE_RELOCS::__data_size;
-        g_nComboBoxSize = N_IMAGE_RELOCS::__CB_size;
-        g_nInvWidgetSize = N_IMAGE_RELOCS::__INV_size;
+        m_nLineEditSize = N_IMAGE_RELOCS::__data_size;
+        m_nComboBoxSize = N_IMAGE_RELOCS::__CB_size;
+        m_nInvWidgetSize = N_IMAGE_RELOCS::__INV_size;
     } else if (nType == SPE::TYPE_EXCEPTION) {
-        g_nLineEditSize = N_IMAGE_EXCEPTIONS::__data_size;
-        g_nComboBoxSize = N_IMAGE_EXCEPTIONS::__CB_size;
-        g_nInvWidgetSize = N_IMAGE_EXCEPTIONS::__INV_size;
+        m_nLineEditSize = N_IMAGE_EXCEPTIONS::__data_size;
+        m_nComboBoxSize = N_IMAGE_EXCEPTIONS::__CB_size;
+        m_nInvWidgetSize = N_IMAGE_EXCEPTIONS::__INV_size;
     } else if (nType == SPE::TYPE_DELAYIMPORT) {
-        g_nLineEditSize = N_IMAGE_DELAYIMPORT::__data_size;
-        g_nComboBoxSize = N_IMAGE_DELAYIMPORT::__CB_size;
-        g_nInvWidgetSize = N_IMAGE_DELAYIMPORT::__INV_size;
+        m_nLineEditSize = N_IMAGE_DELAYIMPORT::__data_size;
+        m_nComboBoxSize = N_IMAGE_DELAYIMPORT::__CB_size;
+        m_nInvWidgetSize = N_IMAGE_DELAYIMPORT::__INV_size;
     } else if (nType == SPE::TYPE_BOUNDIMPORT) {
-        g_nLineEditSize = N_IMAGE_BOUNDIMPORT::__data_size;
-        g_nComboBoxSize = N_IMAGE_BOUNDIMPORT::__CB_size;
-        g_nInvWidgetSize = N_IMAGE_BOUNDIMPORT::__INV_size;
+        m_nLineEditSize = N_IMAGE_BOUNDIMPORT::__data_size;
+        m_nComboBoxSize = N_IMAGE_BOUNDIMPORT::__CB_size;
+        m_nInvWidgetSize = N_IMAGE_BOUNDIMPORT::__INV_size;
     } else if (nType == SPE::TYPE_IMAGE_DIRECTORY_ENTRIES) {
-        g_nLineEditSize = N_IMAGE_DATA_DIRECTORY::__data_size;
-        g_nComboBoxSize = N_IMAGE_DATA_DIRECTORY::__CB_size;
-        g_nInvWidgetSize = N_IMAGE_DATA_DIRECTORY::__INV_size;
+        m_nLineEditSize = N_IMAGE_DATA_DIRECTORY::__data_size;
+        m_nComboBoxSize = N_IMAGE_DATA_DIRECTORY::__CB_size;
+        m_nInvWidgetSize = N_IMAGE_DATA_DIRECTORY::__INV_size;
     }
 
-    if (g_nLineEditSize) {
-        g_ppLinedEdit = new PXLineEditHEX[g_nLineEditSize];
+    if (m_nLineEditSize) {
+        m_ppLinedEdit = new PXLineEditHEX[m_nLineEditSize];
     }
 
-    if (g_nComboBoxSize) {
-        g_ppComboBox = new PXComboBoxEx[g_nComboBoxSize];
+    if (m_nComboBoxSize) {
+        m_ppComboBox = new PXComboBoxEx[m_nComboBoxSize];
     }
 
-    if (g_nInvWidgetSize) {
-        g_ppInvWidget = new PInvWidget[g_nInvWidgetSize];
+    if (m_nInvWidgetSize) {
+        m_ppInvWidget = new PInvWidget[m_nInvWidgetSize];
     }
 }
 
 PESectionHeaderWidget::~PESectionHeaderWidget()
 {
-    if (g_ppLinedEdit) {
-        delete[] g_ppLinedEdit;
+    if (m_ppLinedEdit) {
+        delete[] m_ppLinedEdit;
     }
 
-    if (g_ppComboBox) {
-        delete[] g_ppComboBox;
+    if (m_ppComboBox) {
+        delete[] m_ppComboBox;
     }
 
-    if (g_ppInvWidget) {
-        delete[] g_ppInvWidget;
+    if (m_ppInvWidget) {
+        delete[] m_ppInvWidget;
     }
 
     delete ui;
@@ -107,11 +107,11 @@ void PESectionHeaderWidget::clear()
 {
     reset();
 
-    memset(g_ppLinedEdit, 0, g_nLineEditSize * sizeof(XLineEditHEX *));
-    memset(g_ppComboBox, 0, g_nComboBoxSize * sizeof(XComboBoxEx *));
-    memset(g_ppInvWidget, 0, g_nInvWidgetSize * sizeof(InvWidget *));
+    memset(m_ppLinedEdit, 0, m_nLineEditSize * sizeof(XLineEditHEX *));
+    memset(m_ppComboBox, 0, m_nComboBoxSize * sizeof(XComboBoxEx *));
+    memset(m_ppInvWidget, 0, m_nInvWidgetSize * sizeof(InvWidget *));
 
-    g_pSubDevice = nullptr;
+    m_pSubDevice = nullptr;
 
     ui->checkBoxReadonly->setChecked(true);
 }
@@ -154,15 +154,15 @@ FormatWidget::SV PESectionHeaderWidget::_setValue(QVariant vValue, qint32 nStype
                 case SPE::TYPE_IMAGE_SECTION_HEADER:
                     switch (nNdata) {
                         case N_IMAGE_SECTION_HEADER::VirtualAddress:
-                            g_ppInvWidget[N_IMAGE_SECTION_HEADER::INV_VirtualAddress]->setAddressAndSize(&pe, pe.getBaseAddress() + (quint32)nValue, 0);
+                            m_ppInvWidget[N_IMAGE_SECTION_HEADER::INV_VirtualAddress]->setAddressAndSize(&pe, pe.getBaseAddress() + (quint32)nValue, 0);
                             break;
                         case N_IMAGE_SECTION_HEADER::PointerToRawData:
-                            g_ppInvWidget[N_IMAGE_SECTION_HEADER::INV_PointerToRawData]->setOffsetAndSize(&pe, (quint32)nValue, 0);
+                            m_ppInvWidget[N_IMAGE_SECTION_HEADER::INV_PointerToRawData]->setOffsetAndSize(&pe, (quint32)nValue, 0);
                             break;
                         case N_IMAGE_SECTION_HEADER::Characteristics:
                         case N_IMAGE_SECTION_HEADER::Characteristics + 1:
-                            g_ppComboBox[N_IMAGE_SECTION_HEADER::CB_CHARACTERISTICS]->setValue((quint32)nValue);
-                            g_ppComboBox[N_IMAGE_SECTION_HEADER::CB_ALIGH]->setValue((quint32)nValue);
+                            m_ppComboBox[N_IMAGE_SECTION_HEADER::CB_CHARACTERISTICS]->setValue((quint32)nValue);
+                            m_ppComboBox[N_IMAGE_SECTION_HEADER::CB_ALIGH]->setValue((quint32)nValue);
                             break;
                     }
                     break;
@@ -170,18 +170,18 @@ FormatWidget::SV PESectionHeaderWidget::_setValue(QVariant vValue, qint32 nStype
                 case SPE::TYPE_IMPORT:
                     switch (nNdata) {
                         case N_IMAGE_IMPORT::OriginalFirstThunk:
-                            g_ppInvWidget[N_IMAGE_IMPORT::INV_OriginalFirstThunk]->setAddressAndSize(&pe, pe.getBaseAddress() + (quint32)nValue, 0);
+                            m_ppInvWidget[N_IMAGE_IMPORT::INV_OriginalFirstThunk]->setAddressAndSize(&pe, pe.getBaseAddress() + (quint32)nValue, 0);
                             break;
-                        case N_IMAGE_IMPORT::Name: g_ppInvWidget[N_IMAGE_IMPORT::INV_Name]->setAddressAndSize(&pe, pe.getBaseAddress() + (quint32)nValue, 0); break;
+                        case N_IMAGE_IMPORT::Name: m_ppInvWidget[N_IMAGE_IMPORT::INV_Name]->setAddressAndSize(&pe, pe.getBaseAddress() + (quint32)nValue, 0); break;
                         case N_IMAGE_IMPORT::FirstThunk:
-                            g_ppInvWidget[N_IMAGE_IMPORT::INV_FirstThunk]->setAddressAndSize(&pe, pe.getBaseAddress() + (quint32)nValue, 0);
+                            m_ppInvWidget[N_IMAGE_IMPORT::INV_FirstThunk]->setAddressAndSize(&pe, pe.getBaseAddress() + (quint32)nValue, 0);
                             break;
                     }
                     break;
 
                 case SPE::TYPE_DEBUG:
                     switch (nNdata) {
-                        case N_IMAGE_DEBUG::Type: g_ppComboBox[N_IMAGE_DEBUG::CB_TYPE]->setValue((quint32)nValue); break;
+                        case N_IMAGE_DEBUG::Type: m_ppComboBox[N_IMAGE_DEBUG::CB_TYPE]->setValue((quint32)nValue); break;
                     }
                     break;
             }
@@ -302,14 +302,14 @@ void PESectionHeaderWidget::setReadonly(bool bState)
         ui->checkBoxReadonly->blockSignals(bBlocked1);
     }
 
-    setLineEditsReadOnly(g_ppLinedEdit, g_nLineEditSize, bState);
-    setComboBoxesReadOnly(g_ppComboBox, g_nComboBoxSize, bState);
+    setLineEditsReadOnly(m_ppLinedEdit, m_nLineEditSize, bState);
+    setComboBoxesReadOnly(m_ppComboBox, m_nComboBoxSize, bState);
 }
 
 void PESectionHeaderWidget::blockSignals(bool bState)
 {
-    _blockSignals((QObject **)g_ppLinedEdit, g_nLineEditSize, bState);
-    _blockSignals((QObject **)g_ppComboBox, g_nComboBoxSize, bState);
+    _blockSignals((QObject **)m_ppLinedEdit, m_nLineEditSize, bState);
+    _blockSignals((QObject **)m_ppComboBox, m_nComboBoxSize, bState);
 }
 
 void PESectionHeaderWidget::adjustHeaderTable(qint32 nType, QTableWidget *pTableWidget)
@@ -337,17 +337,17 @@ void PESectionHeaderWidget::reloadData(bool bSaveSelection)
 
     if (pe.isValid()) {
         if (nType == SPE::TYPE_IMAGE_SECTION_HEADER) {
-            createHeaderTable(SPE::TYPE_IMAGE_SECTION_HEADER, ui->tableWidget, N_IMAGE_SECTION_HEADER::records, g_ppLinedEdit, N_IMAGE_SECTION_HEADER::__data_size + 1,
+            createHeaderTable(SPE::TYPE_IMAGE_SECTION_HEADER, ui->tableWidget, N_IMAGE_SECTION_HEADER::records, m_ppLinedEdit, N_IMAGE_SECTION_HEADER::__data_size + 1,
                               getNumber());
-            g_ppComboBox[N_IMAGE_SECTION_HEADER::CB_CHARACTERISTICS] = createComboBox(ui->tableWidget, XPE::getImageSectionHeaderFlagsS(), SPE::TYPE_IMAGE_SECTION_HEADER,
+            m_ppComboBox[N_IMAGE_SECTION_HEADER::CB_CHARACTERISTICS] = createComboBox(ui->tableWidget, XPE::getImageSectionHeaderFlagsS(), SPE::TYPE_IMAGE_SECTION_HEADER,
                                                                                       N_IMAGE_SECTION_HEADER::Characteristics, XComboBoxEx::CBTYPE_FLAGS);
-            g_ppComboBox[N_IMAGE_SECTION_HEADER::CB_ALIGH] =
+            m_ppComboBox[N_IMAGE_SECTION_HEADER::CB_ALIGH] =
                 createComboBox(ui->tableWidget, XPE::getImageSectionHeaderAlignsS(), SPE::TYPE_IMAGE_SECTION_HEADER, N_IMAGE_SECTION_HEADER::Characteristics + 1,
                                XComboBoxEx::CBTYPE_ELIST, XPE_DEF::S_IMAGE_SCN_ALIGN_MASK);
 
-            g_ppInvWidget[N_IMAGE_SECTION_HEADER::INV_VirtualAddress] =
+            m_ppInvWidget[N_IMAGE_SECTION_HEADER::INV_VirtualAddress] =
                 createInvWidget(ui->tableWidget, SPE::TYPE_IMAGE_SECTION_HEADER, N_IMAGE_SECTION_HEADER::VirtualAddress, InvWidget::TYPE_HEX);
-            g_ppInvWidget[N_IMAGE_SECTION_HEADER::INV_PointerToRawData] =
+            m_ppInvWidget[N_IMAGE_SECTION_HEADER::INV_PointerToRawData] =
                 createInvWidget(ui->tableWidget, SPE::TYPE_IMAGE_SECTION_HEADER, N_IMAGE_SECTION_HEADER::PointerToRawData, InvWidget::TYPE_HEX);
 
             blockSignals(true);
@@ -357,37 +357,37 @@ void PESectionHeaderWidget::reloadData(bool bSaveSelection)
             QString sName = QString((char *)ish.Name);
             sName.resize(qMin(sName.length(), XPE_DEF::S_IMAGE_SIZEOF_SHORT_NAME));
 
-            g_ppLinedEdit[N_IMAGE_SECTION_HEADER::Name]->setValue_String(sName, XPE_DEF::S_IMAGE_SIZEOF_SHORT_NAME);  // TODO Check
-            g_ppLinedEdit[N_IMAGE_SECTION_HEADER::VirtualSize]->setValue_uint32(ish.Misc.VirtualSize);
-            g_ppLinedEdit[N_IMAGE_SECTION_HEADER::VirtualAddress]->setValue_uint32(ish.VirtualAddress);
-            g_ppLinedEdit[N_IMAGE_SECTION_HEADER::SizeOfRawData]->setValue_uint32(ish.SizeOfRawData);
-            g_ppLinedEdit[N_IMAGE_SECTION_HEADER::PointerToRawData]->setValue_uint32(ish.PointerToRawData);
-            g_ppLinedEdit[N_IMAGE_SECTION_HEADER::PointerToRelocations]->setValue_uint32(ish.PointerToRelocations);
-            g_ppLinedEdit[N_IMAGE_SECTION_HEADER::PointerToLinenumbers]->setValue_uint32(ish.PointerToLinenumbers);
-            g_ppLinedEdit[N_IMAGE_SECTION_HEADER::NumberOfRelocations]->setValue_uint16(ish.NumberOfRelocations);
-            g_ppLinedEdit[N_IMAGE_SECTION_HEADER::NumberOfLinenumbers]->setValue_uint16(ish.NumberOfLinenumbers);
-            g_ppLinedEdit[N_IMAGE_SECTION_HEADER::Characteristics]->setValue_uint32(ish.Characteristics);
+            m_ppLinedEdit[N_IMAGE_SECTION_HEADER::Name]->setValue_String(sName, XPE_DEF::S_IMAGE_SIZEOF_SHORT_NAME);  // TODO Check
+            m_ppLinedEdit[N_IMAGE_SECTION_HEADER::VirtualSize]->setValue_uint32(ish.Misc.VirtualSize);
+            m_ppLinedEdit[N_IMAGE_SECTION_HEADER::VirtualAddress]->setValue_uint32(ish.VirtualAddress);
+            m_ppLinedEdit[N_IMAGE_SECTION_HEADER::SizeOfRawData]->setValue_uint32(ish.SizeOfRawData);
+            m_ppLinedEdit[N_IMAGE_SECTION_HEADER::PointerToRawData]->setValue_uint32(ish.PointerToRawData);
+            m_ppLinedEdit[N_IMAGE_SECTION_HEADER::PointerToRelocations]->setValue_uint32(ish.PointerToRelocations);
+            m_ppLinedEdit[N_IMAGE_SECTION_HEADER::PointerToLinenumbers]->setValue_uint32(ish.PointerToLinenumbers);
+            m_ppLinedEdit[N_IMAGE_SECTION_HEADER::NumberOfRelocations]->setValue_uint16(ish.NumberOfRelocations);
+            m_ppLinedEdit[N_IMAGE_SECTION_HEADER::NumberOfLinenumbers]->setValue_uint16(ish.NumberOfLinenumbers);
+            m_ppLinedEdit[N_IMAGE_SECTION_HEADER::Characteristics]->setValue_uint32(ish.Characteristics);
 
-            g_ppComboBox[N_IMAGE_SECTION_HEADER::CB_CHARACTERISTICS]->setValue(ish.Characteristics);
-            g_ppComboBox[N_IMAGE_SECTION_HEADER::CB_ALIGH]->setValue(ish.Characteristics);
+            m_ppComboBox[N_IMAGE_SECTION_HEADER::CB_CHARACTERISTICS]->setValue(ish.Characteristics);
+            m_ppComboBox[N_IMAGE_SECTION_HEADER::CB_ALIGH]->setValue(ish.Characteristics);
 
-            g_ppInvWidget[N_IMAGE_SECTION_HEADER::INV_VirtualAddress]->setAddressAndSize(&pe, pe.getBaseAddress() + ish.VirtualAddress, 0);
-            g_ppInvWidget[N_IMAGE_SECTION_HEADER::INV_PointerToRawData]->setOffsetAndSize(&pe, ish.PointerToRawData, 0);
+            m_ppInvWidget[N_IMAGE_SECTION_HEADER::INV_VirtualAddress]->setAddressAndSize(&pe, pe.getBaseAddress() + ish.VirtualAddress, 0);
+            m_ppInvWidget[N_IMAGE_SECTION_HEADER::INV_PointerToRawData]->setOffsetAndSize(&pe, ish.PointerToRawData, 0);
 
             qint64 nOffset = pe.getSectionHeaderOffset(getNumber());
             qint64 nSize = pe.getSectionHeaderSize();
             qint64 nAddress = pe.offsetToRelAddress(nOffset);
 
-            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex, false, false, false);
+            loadHexSubdevice(nOffset, nSize, nAddress, &m_pSubDevice, ui->widgetHex, false, false, false);
 
             blockSignals(false);
         } else if (nType == SPE::TYPE_IMPORT) {
-            createHeaderTable(SPE::TYPE_IMPORT, ui->tableWidget, N_IMAGE_IMPORT::records, g_ppLinedEdit, N_IMAGE_IMPORT::__data_size, getNumber());
+            createHeaderTable(SPE::TYPE_IMPORT, ui->tableWidget, N_IMAGE_IMPORT::records, m_ppLinedEdit, N_IMAGE_IMPORT::__data_size, getNumber());
 
-            g_ppInvWidget[N_IMAGE_IMPORT::INV_OriginalFirstThunk] =
+            m_ppInvWidget[N_IMAGE_IMPORT::INV_OriginalFirstThunk] =
                 createInvWidget(ui->tableWidget, SPE::TYPE_IMPORT, N_IMAGE_IMPORT::OriginalFirstThunk, InvWidget::TYPE_HEX);
-            g_ppInvWidget[N_IMAGE_IMPORT::INV_Name] = createInvWidget(ui->tableWidget, SPE::TYPE_IMPORT, N_IMAGE_IMPORT::Name, InvWidget::TYPE_HEX);
-            g_ppInvWidget[N_IMAGE_IMPORT::INV_FirstThunk] = createInvWidget(ui->tableWidget, SPE::TYPE_IMPORT, N_IMAGE_IMPORT::FirstThunk, InvWidget::TYPE_HEX);
+            m_ppInvWidget[N_IMAGE_IMPORT::INV_Name] = createInvWidget(ui->tableWidget, SPE::TYPE_IMPORT, N_IMAGE_IMPORT::Name, InvWidget::TYPE_HEX);
+            m_ppInvWidget[N_IMAGE_IMPORT::INV_FirstThunk] = createInvWidget(ui->tableWidget, SPE::TYPE_IMPORT, N_IMAGE_IMPORT::FirstThunk, InvWidget::TYPE_HEX);
 
             blockSignals(true);
 
@@ -395,15 +395,15 @@ void PESectionHeaderWidget::reloadData(bool bSaveSelection)
 
             XPE_DEF::IMAGE_IMPORT_DESCRIPTOR idh = pe.getImportDescriptor(getNumber());
 
-            g_ppLinedEdit[N_IMAGE_IMPORT::OriginalFirstThunk]->setValue_uint32(idh.OriginalFirstThunk);
-            g_ppLinedEdit[N_IMAGE_IMPORT::TimeDateStamp]->setValue_uint32(idh.TimeDateStamp);
-            g_ppLinedEdit[N_IMAGE_IMPORT::ForwarderChain]->setValue_uint32(idh.ForwarderChain);
-            g_ppLinedEdit[N_IMAGE_IMPORT::Name]->setValue_uint32(idh.Name);
-            g_ppLinedEdit[N_IMAGE_IMPORT::FirstThunk]->setValue_uint32(idh.FirstThunk);
+            m_ppLinedEdit[N_IMAGE_IMPORT::OriginalFirstThunk]->setValue_uint32(idh.OriginalFirstThunk);
+            m_ppLinedEdit[N_IMAGE_IMPORT::TimeDateStamp]->setValue_uint32(idh.TimeDateStamp);
+            m_ppLinedEdit[N_IMAGE_IMPORT::ForwarderChain]->setValue_uint32(idh.ForwarderChain);
+            m_ppLinedEdit[N_IMAGE_IMPORT::Name]->setValue_uint32(idh.Name);
+            m_ppLinedEdit[N_IMAGE_IMPORT::FirstThunk]->setValue_uint32(idh.FirstThunk);
 
-            g_ppInvWidget[N_IMAGE_IMPORT::INV_OriginalFirstThunk]->setAddressAndSize(&pe, pe.getBaseAddress() + idh.OriginalFirstThunk, 0);
-            g_ppInvWidget[N_IMAGE_IMPORT::INV_Name]->setAddressAndSize(&pe, pe.getBaseAddress() + idh.Name, 0);
-            g_ppInvWidget[N_IMAGE_IMPORT::INV_FirstThunk]->setAddressAndSize(&pe, pe.getBaseAddress() + idh.FirstThunk, 0);
+            m_ppInvWidget[N_IMAGE_IMPORT::INV_OriginalFirstThunk]->setAddressAndSize(&pe, pe.getBaseAddress() + idh.OriginalFirstThunk, 0);
+            m_ppInvWidget[N_IMAGE_IMPORT::INV_Name]->setAddressAndSize(&pe, pe.getBaseAddress() + idh.Name, 0);
+            m_ppInvWidget[N_IMAGE_IMPORT::INV_FirstThunk]->setAddressAndSize(&pe, pe.getBaseAddress() + idh.FirstThunk, 0);
 
             addComment(ui->tableWidget, N_IMAGE_IMPORT::OriginalFirstThunk, HEADER_COLUMN_COMMENT,
                        pe.getMemoryRecordInfoByRelAddress(&memoryMap, idh.OriginalFirstThunk));
@@ -414,37 +414,37 @@ void PESectionHeaderWidget::reloadData(bool bSaveSelection)
             qint64 nSize = pe.getImportDescriptorSize();
             qint64 nAddress = pe.offsetToRelAddress(nOffset);
 
-            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex, false, false, false);
+            loadHexSubdevice(nOffset, nSize, nAddress, &m_pSubDevice, ui->widgetHex, false, false, false);
 
             blockSignals(false);
         } else if (nType == SPE::TYPE_DEBUG) {
-            createHeaderTable(SPE::TYPE_DEBUG, ui->tableWidget, N_IMAGE_DEBUG::records, g_ppLinedEdit, N_IMAGE_DEBUG::__data_size, getNumber());
-            g_ppComboBox[N_IMAGE_DEBUG::CB_TYPE] = createComboBox(ui->tableWidget, XPE::getDebugTypesS(), SPE::TYPE_DEBUG, N_IMAGE_DEBUG::Type, XComboBoxEx::CBTYPE_LIST);
+            createHeaderTable(SPE::TYPE_DEBUG, ui->tableWidget, N_IMAGE_DEBUG::records, m_ppLinedEdit, N_IMAGE_DEBUG::__data_size, getNumber());
+            m_ppComboBox[N_IMAGE_DEBUG::CB_TYPE] = createComboBox(ui->tableWidget, XPE::getDebugTypesS(), SPE::TYPE_DEBUG, N_IMAGE_DEBUG::Type, XComboBoxEx::CBTYPE_LIST);
 
             blockSignals(true);
 
             XPE_DEF::S_IMAGE_DEBUG_DIRECTORY idd = pe.getDebugHeader(getNumber());
 
-            g_ppLinedEdit[N_IMAGE_DEBUG::Characteristics]->setValue_uint32(idd.Characteristics);
-            g_ppLinedEdit[N_IMAGE_DEBUG::TimeDateStamp]->setValue_uint32(idd.TimeDateStamp);
-            g_ppLinedEdit[N_IMAGE_DEBUG::MajorVersion]->setValue_uint16(idd.MajorVersion);
-            g_ppLinedEdit[N_IMAGE_DEBUG::MinorVersion]->setValue_uint16(idd.MinorVersion);
-            g_ppLinedEdit[N_IMAGE_DEBUG::Type]->setValue_uint32(idd.Type);
-            g_ppLinedEdit[N_IMAGE_DEBUG::SizeOfData]->setValue_uint32(idd.SizeOfData);
-            g_ppLinedEdit[N_IMAGE_DEBUG::AddressOfRawData]->setValue_uint32(idd.AddressOfRawData);
-            g_ppLinedEdit[N_IMAGE_DEBUG::PointerToRawData]->setValue_uint32(idd.PointerToRawData);
+            m_ppLinedEdit[N_IMAGE_DEBUG::Characteristics]->setValue_uint32(idd.Characteristics);
+            m_ppLinedEdit[N_IMAGE_DEBUG::TimeDateStamp]->setValue_uint32(idd.TimeDateStamp);
+            m_ppLinedEdit[N_IMAGE_DEBUG::MajorVersion]->setValue_uint16(idd.MajorVersion);
+            m_ppLinedEdit[N_IMAGE_DEBUG::MinorVersion]->setValue_uint16(idd.MinorVersion);
+            m_ppLinedEdit[N_IMAGE_DEBUG::Type]->setValue_uint32(idd.Type);
+            m_ppLinedEdit[N_IMAGE_DEBUG::SizeOfData]->setValue_uint32(idd.SizeOfData);
+            m_ppLinedEdit[N_IMAGE_DEBUG::AddressOfRawData]->setValue_uint32(idd.AddressOfRawData);
+            m_ppLinedEdit[N_IMAGE_DEBUG::PointerToRawData]->setValue_uint32(idd.PointerToRawData);
 
-            g_ppComboBox[N_IMAGE_DEBUG::CB_TYPE]->setValue(idd.Type);
+            m_ppComboBox[N_IMAGE_DEBUG::CB_TYPE]->setValue(idd.Type);
 
             qint64 nOffset = pe.getDebugHeaderOffset(getNumber());
             qint64 nSize = pe.getDebugHeaderSize();
             qint64 nAddress = pe.offsetToRelAddress(nOffset);
 
-            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex, false, false, false);
+            loadHexSubdevice(nOffset, nSize, nAddress, &m_pSubDevice, ui->widgetHex, false, false, false);
 
             blockSignals(false);
         } else if (nType == SPE::TYPE_RELOCS) {
-            createHeaderTable(SPE::TYPE_RELOCS, ui->tableWidget, N_IMAGE_RELOCS::records, g_ppLinedEdit, N_IMAGE_RELOCS::__data_size, getNumber());
+            createHeaderTable(SPE::TYPE_RELOCS, ui->tableWidget, N_IMAGE_RELOCS::records, m_ppLinedEdit, N_IMAGE_RELOCS::__data_size, getNumber());
 
             blockSignals(true);
 
@@ -453,17 +453,17 @@ void PESectionHeaderWidget::reloadData(bool bSaveSelection)
             quint32 nVirtualAddress = pe.getRelocsVirtualAddress(nOffset);
             quint32 nSizeOfBlock = pe.getRelocsSizeOfBlock(nOffset);
 
-            g_ppLinedEdit[N_IMAGE_RELOCS::VirtualAddress]->setValue_uint32(nVirtualAddress);
-            g_ppLinedEdit[N_IMAGE_RELOCS::SizeOfBlock]->setValue_uint32(nSizeOfBlock);
+            m_ppLinedEdit[N_IMAGE_RELOCS::VirtualAddress]->setValue_uint32(nVirtualAddress);
+            m_ppLinedEdit[N_IMAGE_RELOCS::SizeOfBlock]->setValue_uint32(nSizeOfBlock);
 
             qint64 nSize = nSizeOfBlock;
             qint64 nAddress = pe.offsetToRelAddress(nOffset);
 
-            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex, false, false, false);
+            loadHexSubdevice(nOffset, nSize, nAddress, &m_pSubDevice, ui->widgetHex, false, false, false);
 
             blockSignals(false);
         } else if (nType == SPE::TYPE_EXCEPTION) {
-            createHeaderTable(SPE::TYPE_EXCEPTION, ui->tableWidget, N_IMAGE_EXCEPTIONS::records, g_ppLinedEdit, N_IMAGE_EXCEPTIONS::__data_size, getNumber());
+            createHeaderTable(SPE::TYPE_EXCEPTION, ui->tableWidget, N_IMAGE_EXCEPTIONS::records, m_ppLinedEdit, N_IMAGE_EXCEPTIONS::__data_size, getNumber());
 
             blockSignals(true);
 
@@ -471,18 +471,18 @@ void PESectionHeaderWidget::reloadData(bool bSaveSelection)
 
             XPE_DEF::S_IMAGE_RUNTIME_FUNCTION_ENTRY exception = pe._read_IMAGE_RUNTIME_FUNCTION_ENTRY(nOffset);
 
-            g_ppLinedEdit[N_IMAGE_EXCEPTIONS::BeginAddress]->setValue_uint32(exception.BeginAddress);
-            g_ppLinedEdit[N_IMAGE_EXCEPTIONS::EndAddress]->setValue_uint32(exception.EndAddress);
-            g_ppLinedEdit[N_IMAGE_EXCEPTIONS::UnwindInfoAddress]->setValue_uint32(exception.UnwindInfoAddress);
+            m_ppLinedEdit[N_IMAGE_EXCEPTIONS::BeginAddress]->setValue_uint32(exception.BeginAddress);
+            m_ppLinedEdit[N_IMAGE_EXCEPTIONS::EndAddress]->setValue_uint32(exception.EndAddress);
+            m_ppLinedEdit[N_IMAGE_EXCEPTIONS::UnwindInfoAddress]->setValue_uint32(exception.UnwindInfoAddress);
 
             qint64 nSize = pe.getExceptionRecordSize();
             qint64 nAddress = pe.offsetToRelAddress(nOffset);
 
-            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex, false, false, false);
+            loadHexSubdevice(nOffset, nSize, nAddress, &m_pSubDevice, ui->widgetHex, false, false, false);
 
             blockSignals(false);
         } else if (nType == SPE::TYPE_DELAYIMPORT) {
-            createHeaderTable(SPE::TYPE_DELAYIMPORT, ui->tableWidget, N_IMAGE_DELAYIMPORT::records, g_ppLinedEdit, N_IMAGE_DELAYIMPORT::__data_size, getNumber());
+            createHeaderTable(SPE::TYPE_DELAYIMPORT, ui->tableWidget, N_IMAGE_DELAYIMPORT::records, m_ppLinedEdit, N_IMAGE_DELAYIMPORT::__data_size, getNumber());
 
             blockSignals(true);
 
@@ -490,23 +490,23 @@ void PESectionHeaderWidget::reloadData(bool bSaveSelection)
 
             XPE_DEF::S_IMAGE_DELAYLOAD_DESCRIPTOR delayImport = pe._read_IMAGE_DELAYLOAD_DESCRIPTOR(nOffset);
 
-            g_ppLinedEdit[N_IMAGE_DELAYIMPORT::AllAttributes]->setValue_uint32(delayImport.AllAttributes);
-            g_ppLinedEdit[N_IMAGE_DELAYIMPORT::DllNameRVA]->setValue_uint32(delayImport.DllNameRVA);
-            g_ppLinedEdit[N_IMAGE_DELAYIMPORT::ModuleHandleRVA]->setValue_uint32(delayImport.ModuleHandleRVA);
-            g_ppLinedEdit[N_IMAGE_DELAYIMPORT::ImportAddressTableRVA]->setValue_uint32(delayImport.ImportAddressTableRVA);
-            g_ppLinedEdit[N_IMAGE_DELAYIMPORT::ImportNameTableRVA]->setValue_uint32(delayImport.ImportNameTableRVA);
-            g_ppLinedEdit[N_IMAGE_DELAYIMPORT::BoundImportAddressTableRVA]->setValue_uint32(delayImport.BoundImportAddressTableRVA);
-            g_ppLinedEdit[N_IMAGE_DELAYIMPORT::UnloadInformationTableRVA]->setValue_uint32(delayImport.UnloadInformationTableRVA);
-            g_ppLinedEdit[N_IMAGE_DELAYIMPORT::TimeDateStamp]->setValue_uint32(delayImport.TimeDateStamp);
+            m_ppLinedEdit[N_IMAGE_DELAYIMPORT::AllAttributes]->setValue_uint32(delayImport.AllAttributes);
+            m_ppLinedEdit[N_IMAGE_DELAYIMPORT::DllNameRVA]->setValue_uint32(delayImport.DllNameRVA);
+            m_ppLinedEdit[N_IMAGE_DELAYIMPORT::ModuleHandleRVA]->setValue_uint32(delayImport.ModuleHandleRVA);
+            m_ppLinedEdit[N_IMAGE_DELAYIMPORT::ImportAddressTableRVA]->setValue_uint32(delayImport.ImportAddressTableRVA);
+            m_ppLinedEdit[N_IMAGE_DELAYIMPORT::ImportNameTableRVA]->setValue_uint32(delayImport.ImportNameTableRVA);
+            m_ppLinedEdit[N_IMAGE_DELAYIMPORT::BoundImportAddressTableRVA]->setValue_uint32(delayImport.BoundImportAddressTableRVA);
+            m_ppLinedEdit[N_IMAGE_DELAYIMPORT::UnloadInformationTableRVA]->setValue_uint32(delayImport.UnloadInformationTableRVA);
+            m_ppLinedEdit[N_IMAGE_DELAYIMPORT::TimeDateStamp]->setValue_uint32(delayImport.TimeDateStamp);
 
             qint64 nSize = pe.getDelayImportRecordSize();
             qint64 nAddress = pe.offsetToRelAddress(nOffset);
 
-            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex, false, false, false);
+            loadHexSubdevice(nOffset, nSize, nAddress, &m_pSubDevice, ui->widgetHex, false, false, false);
 
             blockSignals(false);
         } else if (nType == SPE::TYPE_BOUNDIMPORT) {
-            createHeaderTable(SPE::TYPE_BOUNDIMPORT, ui->tableWidget, N_IMAGE_BOUNDIMPORT::records, g_ppLinedEdit, N_IMAGE_BOUNDIMPORT::__data_size, getNumber());
+            createHeaderTable(SPE::TYPE_BOUNDIMPORT, ui->tableWidget, N_IMAGE_BOUNDIMPORT::records, m_ppLinedEdit, N_IMAGE_BOUNDIMPORT::__data_size, getNumber());
 
             blockSignals(true);
 
@@ -514,18 +514,18 @@ void PESectionHeaderWidget::reloadData(bool bSaveSelection)
 
             XPE_DEF::IMAGE_BOUND_IMPORT_DESCRIPTOR boundImport = pe._read_IMAGE_BOUND_IMPORT_DESCRIPTOR(nOffset);
 
-            g_ppLinedEdit[N_IMAGE_BOUNDIMPORT::TimeDateStamp]->setValue_uint32(boundImport.TimeDateStamp);
-            g_ppLinedEdit[N_IMAGE_BOUNDIMPORT::OffsetModuleName]->setValue_uint16(boundImport.OffsetModuleName);
-            g_ppLinedEdit[N_IMAGE_BOUNDIMPORT::NumberOfModuleForwarderRefs]->setValue_uint16(boundImport.NumberOfModuleForwarderRefs);
+            m_ppLinedEdit[N_IMAGE_BOUNDIMPORT::TimeDateStamp]->setValue_uint32(boundImport.TimeDateStamp);
+            m_ppLinedEdit[N_IMAGE_BOUNDIMPORT::OffsetModuleName]->setValue_uint16(boundImport.OffsetModuleName);
+            m_ppLinedEdit[N_IMAGE_BOUNDIMPORT::NumberOfModuleForwarderRefs]->setValue_uint16(boundImport.NumberOfModuleForwarderRefs);
 
             qint64 nSize = pe.getBoundImportRecordSize();
             qint64 nAddress = pe.offsetToRelAddress(nOffset);
 
-            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex, false, false, false);
+            loadHexSubdevice(nOffset, nSize, nAddress, &m_pSubDevice, ui->widgetHex, false, false, false);
 
             blockSignals(false);
         } else if (nType == SPE::TYPE_IMAGE_DIRECTORY_ENTRIES) {
-            createHeaderTable(SPE::TYPE_IMAGE_DIRECTORY_ENTRIES, ui->tableWidget, N_IMAGE_DATA_DIRECTORY::records, g_ppLinedEdit, N_IMAGE_DATA_DIRECTORY::__data_size,
+            createHeaderTable(SPE::TYPE_IMAGE_DIRECTORY_ENTRIES, ui->tableWidget, N_IMAGE_DATA_DIRECTORY::records, m_ppLinedEdit, N_IMAGE_DATA_DIRECTORY::__data_size,
                               getNumber());
 
             blockSignals(true);
@@ -534,13 +534,13 @@ void PESectionHeaderWidget::reloadData(bool bSaveSelection)
 
             XPE_DEF::IMAGE_DATA_DIRECTORY dataDirectory = pe.read_IMAGE_DATA_DIRECTORY(nOffset);
 
-            g_ppLinedEdit[N_IMAGE_DATA_DIRECTORY::Address]->setValue_uint32(dataDirectory.VirtualAddress);
-            g_ppLinedEdit[N_IMAGE_DATA_DIRECTORY::Size]->setValue_uint32(dataDirectory.Size);
+            m_ppLinedEdit[N_IMAGE_DATA_DIRECTORY::Address]->setValue_uint32(dataDirectory.VirtualAddress);
+            m_ppLinedEdit[N_IMAGE_DATA_DIRECTORY::Size]->setValue_uint32(dataDirectory.Size);
 
             qint64 nSize = pe.getDataDirectoryHeaderSize();
             qint64 nAddress = pe.offsetToRelAddress(nOffset);
 
-            loadHexSubdevice(nOffset, nSize, nAddress, &g_pSubDevice, ui->widgetHex, false, false, false);
+            loadHexSubdevice(nOffset, nSize, nAddress, &m_pSubDevice, ui->widgetHex, false, false, false);
 
             blockSignals(false);
         }
@@ -562,16 +562,16 @@ void PESectionHeaderWidget::_widgetValueChanged(QVariant vValue)
             switch (nNdata) {
                 case N_IMAGE_SECTION_HEADER::Characteristics:
                 case N_IMAGE_SECTION_HEADER::Characteristics + 1:
-                    g_ppLinedEdit[N_IMAGE_SECTION_HEADER::Characteristics]->setValue_uint32((quint32)nValue);
-                    g_ppComboBox[N_IMAGE_SECTION_HEADER::CB_CHARACTERISTICS]->setValue(nValue);
-                    g_ppComboBox[N_IMAGE_SECTION_HEADER::CB_ALIGH]->setValue(nValue);
+                    m_ppLinedEdit[N_IMAGE_SECTION_HEADER::Characteristics]->setValue_uint32((quint32)nValue);
+                    m_ppComboBox[N_IMAGE_SECTION_HEADER::CB_CHARACTERISTICS]->setValue(nValue);
+                    m_ppComboBox[N_IMAGE_SECTION_HEADER::CB_ALIGH]->setValue(nValue);
                     break;
             }
             break;
 
         case SPE::TYPE_DEBUG:
             switch (nNdata) {
-                case N_IMAGE_DEBUG::Type: g_ppLinedEdit[N_IMAGE_DEBUG::Type]->setValue_uint32((quint32)nValue); break;
+                case N_IMAGE_DEBUG::Type: m_ppLinedEdit[N_IMAGE_DEBUG::Type]->setValue_uint32((quint32)nValue); break;
             }
             break;
     }
