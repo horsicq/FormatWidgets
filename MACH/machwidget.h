@@ -201,36 +201,36 @@ private:
 
     Ui::MACHWidget *ui;
 
-    XLineEditHEX *g_lineEdit_mach_header[N_mach_header::__data_size];
-    XLineEditHEX *g_lineEdit_mach_dyld_info_only[N_mach_dyld_info::__data_size];
-    XLineEditHEX *g_lineEdit_mach_uuid[N_mach_uuid::__data_size];
-    XLineEditHEX *g_lineEdit_mach_dylinker[N_mach_dylinker::__data_size];
-    XLineEditHEX *g_lineEdit_mach_rpath[N_mach_rpath::__data_size];
-    XLineEditHEX *g_lineEdit_mach_symtab[N_mach_symtab::__data_size];
-    XLineEditHEX *g_lineEdit_mach_dysymtab[N_mach_dysymtab::__data_size];
-    XLineEditHEX *g_lineEdit_mach_version_min[N_mach_version_min::__data_size];
-    XLineEditHEX *g_lineEdit_mach_build_version[N_mach_build_version::__data_size];
-    XLineEditHEX *g_lineEdit_mach_source_version[N_mach_source_version::__data_size];
-    XLineEditHEX *g_lineEdit_mach_encryption_info[N_mach_encryption_info::__data_size];
-    XLineEditHEX *g_lineEdit_mach_function_starts[N_mach_linkedit_data::__data_size];
-    XLineEditHEX *g_lineEdit_mach_data_in_code[N_mach_linkedit_data::__data_size];
-    XLineEditHEX *g_lineEdit_mach_code_signature[N_mach_linkedit_data::__data_size];
-    XLineEditHEX *g_lineEdit_mach_dyld_chained_fixups[N_mach_linkedit_data::__data_size];
-    XLineEditHEX *g_lineEdit_mach_dyld_exports_trie[N_mach_linkedit_data::__data_size];
-    XLineEditHEX *g_lineEdit_mach_SuperBlob[N_mach_SuperBlob::__data_size];
-    XLineEditHEX *g_lineEdit_mach_main[N_mach_main::__data_size];
-    XLineEditHEX *g_lineEdit_mach_unix_thread[N_mach_unix_thread::__data_size];
-    XLineEditHEX *g_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::__data_size];
-    XLineEditHEX *g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::__data_size];
-    XLineEditHEX *g_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::__data_size];
-    XLineEditHEX *g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::__data_size];
-    XLineEditHEX *g_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::__data_size];
-    XLineEditHEX *g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::__data_size];
+    XLineEditHEX *m_lineEdit_mach_header[N_mach_header::__data_size];
+    XLineEditHEX *m_lineEdit_mach_dyld_info_only[N_mach_dyld_info::__data_size];
+    XLineEditHEX *m_lineEdit_mach_uuid[N_mach_uuid::__data_size];
+    XLineEditHEX *m_lineEdit_mach_dylinker[N_mach_dylinker::__data_size];
+    XLineEditHEX *m_lineEdit_mach_rpath[N_mach_rpath::__data_size];
+    XLineEditHEX *m_lineEdit_mach_symtab[N_mach_symtab::__data_size];
+    XLineEditHEX *m_lineEdit_mach_dysymtab[N_mach_dysymtab::__data_size];
+    XLineEditHEX *m_lineEdit_mach_version_min[N_mach_version_min::__data_size];
+    XLineEditHEX *m_lineEdit_mach_build_version[N_mach_build_version::__data_size];
+    XLineEditHEX *m_lineEdit_mach_source_version[N_mach_source_version::__data_size];
+    XLineEditHEX *m_lineEdit_mach_encryption_info[N_mach_encryption_info::__data_size];
+    XLineEditHEX *m_lineEdit_mach_function_starts[N_mach_linkedit_data::__data_size];
+    XLineEditHEX *m_lineEdit_mach_data_in_code[N_mach_linkedit_data::__data_size];
+    XLineEditHEX *m_lineEdit_mach_code_signature[N_mach_linkedit_data::__data_size];
+    XLineEditHEX *m_lineEdit_mach_dyld_chained_fixups[N_mach_linkedit_data::__data_size];
+    XLineEditHEX *m_lineEdit_mach_dyld_exports_trie[N_mach_linkedit_data::__data_size];
+    XLineEditHEX *m_lineEdit_mach_SuperBlob[N_mach_SuperBlob::__data_size];
+    XLineEditHEX *m_lineEdit_mach_main[N_mach_main::__data_size];
+    XLineEditHEX *m_lineEdit_mach_unix_thread[N_mach_unix_thread::__data_size];
+    XLineEditHEX *m_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::__data_size];
+    XLineEditHEX *m_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::__data_size];
+    XLineEditHEX *m_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::__data_size];
+    XLineEditHEX *m_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::__data_size];
+    XLineEditHEX *m_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::__data_size];
+    XLineEditHEX *m_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::__data_size];
 
-    XComboBoxEx *g_comboBox[__CB_size];
-    InvWidget *g_invWidget[__INV_size];
+    XComboBoxEx *m_comboBox[__CB_size];
+    InvWidget *m_invWidget[__INV_size];
 
-    SubDevice *g_subDevice[SMACH::__TYPE_size];
+    SubDevice *m_subDevice[SMACH::__TYPE_size];
     QStandardItemModel *tvModel[SMACH::__TYPE_size];
 };
 

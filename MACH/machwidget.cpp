@@ -35,7 +35,7 @@ MACHWidget::MACHWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::MAC
     ui->toolButtonPrev->setToolTip(tr("Previous visited"));
     ui->checkBoxReadonly->setToolTip(tr("Readonly"));
 
-    memset(g_subDevice, 0, sizeof g_subDevice);
+    memset(m_subDevice, 0, sizeof m_subDevice);
 
     initWidget();
 }
@@ -55,36 +55,36 @@ void MACHWidget::clear()
 {
     MACHWidget::reset();
 
-    memset(g_lineEdit_mach_header, 0, sizeof g_lineEdit_mach_header);
-    memset(g_lineEdit_mach_dyld_info_only, 0, sizeof g_lineEdit_mach_dyld_info_only);
-    memset(g_lineEdit_mach_uuid, 0, sizeof g_lineEdit_mach_uuid);
-    memset(g_lineEdit_mach_dylinker, 0, sizeof g_lineEdit_mach_dylinker);
-    memset(g_lineEdit_mach_rpath, 0, sizeof g_lineEdit_mach_rpath);
-    memset(g_lineEdit_mach_symtab, 0, sizeof g_lineEdit_mach_symtab);
-    memset(g_lineEdit_mach_dysymtab, 0, sizeof g_lineEdit_mach_dysymtab);
-    memset(g_lineEdit_mach_version_min, 0, sizeof g_lineEdit_mach_version_min);
-    memset(g_lineEdit_mach_build_version, 0, sizeof g_lineEdit_mach_build_version);
-    memset(g_lineEdit_mach_source_version, 0, sizeof g_lineEdit_mach_source_version);
-    memset(g_lineEdit_mach_encryption_info, 0, sizeof g_lineEdit_mach_encryption_info);
-    memset(g_lineEdit_mach_function_starts, 0, sizeof g_lineEdit_mach_function_starts);
-    memset(g_lineEdit_mach_data_in_code, 0, sizeof g_lineEdit_mach_data_in_code);
-    memset(g_lineEdit_mach_code_signature, 0, sizeof g_lineEdit_mach_code_signature);
-    memset(g_lineEdit_mach_dyld_chained_fixups, 0, sizeof g_lineEdit_mach_dyld_chained_fixups);
-    memset(g_lineEdit_mach_dyld_exports_trie, 0, sizeof g_lineEdit_mach_dyld_exports_trie);
-    memset(g_lineEdit_mach_SuperBlob, 0, sizeof g_lineEdit_mach_SuperBlob);
-    memset(g_lineEdit_mach_main, 0, sizeof g_lineEdit_mach_main);
-    memset(g_lineEdit_mach_unix_thread, 0, sizeof g_lineEdit_mach_unix_thread);
-    memset(g_lineEdit_mach_unix_thread_x86_32, 0, sizeof g_lineEdit_mach_unix_thread_x86_32);
-    memset(g_lineEdit_mach_unix_thread_x86_64, 0, sizeof g_lineEdit_mach_unix_thread_x86_64);
-    memset(g_lineEdit_mach_unix_thread_arm_32, 0, sizeof g_lineEdit_mach_unix_thread_arm_32);
-    memset(g_lineEdit_mach_unix_thread_arm_64, 0, sizeof g_lineEdit_mach_unix_thread_arm_64);
-    memset(g_lineEdit_mach_unix_thread_m68k_32, 0, sizeof g_lineEdit_mach_unix_thread_m68k_32);
-    memset(g_lineEdit_mach_unix_thread_ppc_32, 0, sizeof g_lineEdit_mach_unix_thread_ppc_32);
+    memset(m_lineEdit_mach_header, 0, sizeof m_lineEdit_mach_header);
+    memset(m_lineEdit_mach_dyld_info_only, 0, sizeof m_lineEdit_mach_dyld_info_only);
+    memset(m_lineEdit_mach_uuid, 0, sizeof m_lineEdit_mach_uuid);
+    memset(m_lineEdit_mach_dylinker, 0, sizeof m_lineEdit_mach_dylinker);
+    memset(m_lineEdit_mach_rpath, 0, sizeof m_lineEdit_mach_rpath);
+    memset(m_lineEdit_mach_symtab, 0, sizeof m_lineEdit_mach_symtab);
+    memset(m_lineEdit_mach_dysymtab, 0, sizeof m_lineEdit_mach_dysymtab);
+    memset(m_lineEdit_mach_version_min, 0, sizeof m_lineEdit_mach_version_min);
+    memset(m_lineEdit_mach_build_version, 0, sizeof m_lineEdit_mach_build_version);
+    memset(m_lineEdit_mach_source_version, 0, sizeof m_lineEdit_mach_source_version);
+    memset(m_lineEdit_mach_encryption_info, 0, sizeof m_lineEdit_mach_encryption_info);
+    memset(m_lineEdit_mach_function_starts, 0, sizeof m_lineEdit_mach_function_starts);
+    memset(m_lineEdit_mach_data_in_code, 0, sizeof m_lineEdit_mach_data_in_code);
+    memset(m_lineEdit_mach_code_signature, 0, sizeof m_lineEdit_mach_code_signature);
+    memset(m_lineEdit_mach_dyld_chained_fixups, 0, sizeof m_lineEdit_mach_dyld_chained_fixups);
+    memset(m_lineEdit_mach_dyld_exports_trie, 0, sizeof m_lineEdit_mach_dyld_exports_trie);
+    memset(m_lineEdit_mach_SuperBlob, 0, sizeof m_lineEdit_mach_SuperBlob);
+    memset(m_lineEdit_mach_main, 0, sizeof m_lineEdit_mach_main);
+    memset(m_lineEdit_mach_unix_thread, 0, sizeof m_lineEdit_mach_unix_thread);
+    memset(m_lineEdit_mach_unix_thread_x86_32, 0, sizeof m_lineEdit_mach_unix_thread_x86_32);
+    memset(m_lineEdit_mach_unix_thread_x86_64, 0, sizeof m_lineEdit_mach_unix_thread_x86_64);
+    memset(m_lineEdit_mach_unix_thread_arm_32, 0, sizeof m_lineEdit_mach_unix_thread_arm_32);
+    memset(m_lineEdit_mach_unix_thread_arm_64, 0, sizeof m_lineEdit_mach_unix_thread_arm_64);
+    memset(m_lineEdit_mach_unix_thread_m68k_32, 0, sizeof m_lineEdit_mach_unix_thread_m68k_32);
+    memset(m_lineEdit_mach_unix_thread_ppc_32, 0, sizeof m_lineEdit_mach_unix_thread_ppc_32);
 
-    memset(g_comboBox, 0, sizeof g_comboBox);
-    memset(g_invWidget, 0, sizeof g_invWidget);
+    memset(m_comboBox, 0, sizeof m_comboBox);
+    memset(m_invWidget, 0, sizeof m_invWidget);
 
-    _deleteSubdevices(g_subDevice, (sizeof g_subDevice) / (sizeof(SubDevice *)));
+    _deleteSubdevices(m_subDevice, (sizeof m_subDevice) / (sizeof(SubDevice *)));
 
     resetWidget();
 
@@ -557,58 +557,58 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, qint32 nStype, qint32 nN
             switch (nStype) {
                 case SMACH::TYPE_mach_header:
                     switch (nNdata) {
-                        case N_mach_header::magic: g_comboBox[CB_mach_header_magic]->setValue(nValue); break;
-                        case N_mach_header::cputype: g_comboBox[CB_mach_header_cputype]->setValue(nValue); break;
-                        case N_mach_header::cpusubtype: g_comboBox[CB_mach_header_cpusubtype]->setValue(nValue); break;
-                        case N_mach_header::filetype: g_comboBox[CB_mach_header_filetype]->setValue(nValue); break;
-                        case N_mach_header::flags: g_comboBox[CB_mach_header_flags]->setValue(nValue); break;
+                        case N_mach_header::magic: m_comboBox[CB_mach_header_magic]->setValue(nValue); break;
+                        case N_mach_header::cputype: m_comboBox[CB_mach_header_cputype]->setValue(nValue); break;
+                        case N_mach_header::cpusubtype: m_comboBox[CB_mach_header_cpusubtype]->setValue(nValue); break;
+                        case N_mach_header::filetype: m_comboBox[CB_mach_header_filetype]->setValue(nValue); break;
+                        case N_mach_header::flags: m_comboBox[CB_mach_header_flags]->setValue(nValue); break;
                     }
                     break;
 
                 case SMACH::TYPE_mach_dyld_info_only:
                     switch (nNdata) {
-                        case N_mach_dyld_info::rebase_off: g_invWidget[INV_rebase_off]->setOffsetAndSize(&mach, nValue, mach.get_dyld_info().rebase_size, true); break;
-                        case N_mach_dyld_info::rebase_size: g_invWidget[INV_rebase_off]->setOffsetAndSize(&mach, mach.get_dyld_info().rebase_off, nValue, true); break;
-                        case N_mach_dyld_info::bind_off: g_invWidget[INV_bind_off]->setOffsetAndSize(&mach, nValue, mach.get_dyld_info().bind_size, true); break;
-                        case N_mach_dyld_info::bind_size: g_invWidget[INV_bind_off]->setOffsetAndSize(&mach, mach.get_dyld_info().bind_off, nValue, true); break;
+                        case N_mach_dyld_info::rebase_off: m_invWidget[INV_rebase_off]->setOffsetAndSize(&mach, nValue, mach.get_dyld_info().rebase_size, true); break;
+                        case N_mach_dyld_info::rebase_size: m_invWidget[INV_rebase_off]->setOffsetAndSize(&mach, mach.get_dyld_info().rebase_off, nValue, true); break;
+                        case N_mach_dyld_info::bind_off: m_invWidget[INV_bind_off]->setOffsetAndSize(&mach, nValue, mach.get_dyld_info().bind_size, true); break;
+                        case N_mach_dyld_info::bind_size: m_invWidget[INV_bind_off]->setOffsetAndSize(&mach, mach.get_dyld_info().bind_off, nValue, true); break;
                         case N_mach_dyld_info::weak_bind_off:
-                            g_invWidget[INV_weak_bind_off]->setOffsetAndSize(&mach, nValue, mach.get_dyld_info().weak_bind_size, true);
+                            m_invWidget[INV_weak_bind_off]->setOffsetAndSize(&mach, nValue, mach.get_dyld_info().weak_bind_size, true);
                             break;
                         case N_mach_dyld_info::weak_bind_size:
-                            g_invWidget[INV_weak_bind_off]->setOffsetAndSize(&mach, mach.get_dyld_info().weak_bind_off, nValue, true);
+                            m_invWidget[INV_weak_bind_off]->setOffsetAndSize(&mach, mach.get_dyld_info().weak_bind_off, nValue, true);
                             break;
                         case N_mach_dyld_info::lazy_bind_off:
-                            g_invWidget[INV_lazy_bind_off]->setOffsetAndSize(&mach, nValue, mach.get_dyld_info().lazy_bind_size, true);
+                            m_invWidget[INV_lazy_bind_off]->setOffsetAndSize(&mach, nValue, mach.get_dyld_info().lazy_bind_size, true);
                             break;
                         case N_mach_dyld_info::lazy_bind_size:
-                            g_invWidget[INV_lazy_bind_off]->setOffsetAndSize(&mach, mach.get_dyld_info().lazy_bind_off, nValue, true);
+                            m_invWidget[INV_lazy_bind_off]->setOffsetAndSize(&mach, mach.get_dyld_info().lazy_bind_off, nValue, true);
                             break;
-                        case N_mach_dyld_info::export_off: g_invWidget[INV_export_off]->setOffsetAndSize(&mach, nValue, mach.get_dyld_info().export_size, true); break;
-                        case N_mach_dyld_info::export_size: g_invWidget[INV_export_off]->setOffsetAndSize(&mach, mach.get_dyld_info().export_off, nValue, true); break;
+                        case N_mach_dyld_info::export_off: m_invWidget[INV_export_off]->setOffsetAndSize(&mach, nValue, mach.get_dyld_info().export_size, true); break;
+                        case N_mach_dyld_info::export_size: m_invWidget[INV_export_off]->setOffsetAndSize(&mach, mach.get_dyld_info().export_off, nValue, true); break;
                     }
                     break;
 
                 case SMACH::TYPE_mach_symtab:
                     switch (nNdata) {
                         case N_mach_symtab::symoff:
-                            g_invWidget[INV_symoff]->setOffsetAndSize(&mach, nValue, mach.get_symtab().nsyms * mach.get_nlist_MODE_size(), true);
+                            m_invWidget[INV_symoff]->setOffsetAndSize(&mach, nValue, mach.get_symtab().nsyms * mach.get_nlist_MODE_size(), true);
                             break;
                         case N_mach_symtab::nsyms:
-                            g_invWidget[INV_symoff]->setOffsetAndSize(&mach, mach.get_symtab().symoff, nValue * mach.get_nlist_MODE_size(), true);
+                            m_invWidget[INV_symoff]->setOffsetAndSize(&mach, mach.get_symtab().symoff, nValue * mach.get_nlist_MODE_size(), true);
                             break;
-                        case N_mach_symtab::stroff: g_invWidget[INV_stroff]->setOffsetAndSize(&mach, nValue, mach.get_symtab().strsize, true); break;
-                        case N_mach_symtab::strsize: g_invWidget[INV_stroff]->setOffsetAndSize(&mach, mach.get_symtab().stroff, nValue, true); break;
+                        case N_mach_symtab::stroff: m_invWidget[INV_stroff]->setOffsetAndSize(&mach, nValue, mach.get_symtab().strsize, true); break;
+                        case N_mach_symtab::strsize: m_invWidget[INV_stroff]->setOffsetAndSize(&mach, mach.get_symtab().stroff, nValue, true); break;
                     }
                     break;
 
                 case SMACH::TYPE_mach_dysymtab:
                     switch (nNdata) {
-                        case N_mach_dysymtab::tocoff: g_invWidget[INV_tocoff]->setOffsetAndSize(&mach, nValue, 0, true); break;                  // TODO Size
-                        case N_mach_dysymtab::modtaboff: g_invWidget[INV_modtaboff]->setOffsetAndSize(&mach, nValue, 0, true); break;            // TODO Size
-                        case N_mach_dysymtab::extrefsymoff: g_invWidget[INV_extrefsymoff]->setOffsetAndSize(&mach, nValue, 0, true); break;      // TODO Size
-                        case N_mach_dysymtab::indirectsymoff: g_invWidget[INV_indirectsymoff]->setOffsetAndSize(&mach, nValue, 0, true); break;  // TODO Size
-                        case N_mach_dysymtab::extreloff: g_invWidget[INV_extreloff]->setOffsetAndSize(&mach, nValue, 0, true); break;            // TODO Size
-                        case N_mach_dysymtab::locreloff: g_invWidget[INV_locreloff]->setOffsetAndSize(&mach, nValue, 0, true); break;            // TODO Size
+                        case N_mach_dysymtab::tocoff: m_invWidget[INV_tocoff]->setOffsetAndSize(&mach, nValue, 0, true); break;                  // TODO Size
+                        case N_mach_dysymtab::modtaboff: m_invWidget[INV_modtaboff]->setOffsetAndSize(&mach, nValue, 0, true); break;            // TODO Size
+                        case N_mach_dysymtab::extrefsymoff: m_invWidget[INV_extrefsymoff]->setOffsetAndSize(&mach, nValue, 0, true); break;      // TODO Size
+                        case N_mach_dysymtab::indirectsymoff: m_invWidget[INV_indirectsymoff]->setOffsetAndSize(&mach, nValue, 0, true); break;  // TODO Size
+                        case N_mach_dysymtab::extreloff: m_invWidget[INV_extreloff]->setOffsetAndSize(&mach, nValue, 0, true); break;            // TODO Size
+                        case N_mach_dysymtab::locreloff: m_invWidget[INV_locreloff]->setOffsetAndSize(&mach, nValue, 0, true); break;            // TODO Size
                     }
                     break;
 
@@ -616,19 +616,19 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, qint32 nStype, qint32 nN
                     if (mach.is64()) {
                         switch (nNdata) {
                             case N_mach_encryption_info::cryptoff:
-                                g_invWidget[INV_cryptoff]->setOffsetAndSize(&mach, nValue, mach.get_encryption_info_64().cryptsize, true);
+                                m_invWidget[INV_cryptoff]->setOffsetAndSize(&mach, nValue, mach.get_encryption_info_64().cryptsize, true);
                                 break;
                             case N_mach_encryption_info::cryptsize:
-                                g_invWidget[INV_cryptoff]->setOffsetAndSize(&mach, mach.get_encryption_info_64().cryptoff, nValue, true);
+                                m_invWidget[INV_cryptoff]->setOffsetAndSize(&mach, mach.get_encryption_info_64().cryptoff, nValue, true);
                                 break;
                         }
                     } else {
                         switch (nNdata) {
                             case N_mach_encryption_info::cryptoff:
-                                g_invWidget[INV_cryptoff]->setOffsetAndSize(&mach, nValue, mach.get_encryption_info().cryptsize, true);
+                                m_invWidget[INV_cryptoff]->setOffsetAndSize(&mach, nValue, mach.get_encryption_info().cryptsize, true);
                                 break;
                             case N_mach_encryption_info::cryptsize:
-                                g_invWidget[INV_cryptoff]->setOffsetAndSize(&mach, mach.get_encryption_info().cryptoff, nValue, true);
+                                m_invWidget[INV_cryptoff]->setOffsetAndSize(&mach, mach.get_encryption_info().cryptoff, nValue, true);
                                 break;
                         }
                     }
@@ -638,10 +638,10 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, qint32 nStype, qint32 nN
                 case SMACH::TYPE_mach_data_in_code:
                     switch (nNdata) {
                         case N_mach_linkedit_data::dataoff:
-                            g_invWidget[INV_DATA_IN_CODE_dataoff]->setOffsetAndSize(&mach, nValue, mach.get_linkedit_data(XMACH_DEF::S_LC_DATA_IN_CODE).datasize, true);
+                            m_invWidget[INV_DATA_IN_CODE_dataoff]->setOffsetAndSize(&mach, nValue, mach.get_linkedit_data(XMACH_DEF::S_LC_DATA_IN_CODE).datasize, true);
                             break;
                         case N_mach_linkedit_data::datasize:
-                            g_invWidget[INV_DATA_IN_CODE_dataoff]->setOffsetAndSize(&mach, mach.get_linkedit_data(XMACH_DEF::S_LC_DATA_IN_CODE).dataoff, nValue, true);
+                            m_invWidget[INV_DATA_IN_CODE_dataoff]->setOffsetAndSize(&mach, mach.get_linkedit_data(XMACH_DEF::S_LC_DATA_IN_CODE).dataoff, nValue, true);
                             break;
                     }
                     break;
@@ -649,11 +649,11 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, qint32 nStype, qint32 nN
                 case SMACH::TYPE_mach_function_starts:
                     switch (nNdata) {
                         case N_mach_linkedit_data::dataoff:
-                            g_invWidget[INV_FUNCTION_STARTS_dataoff]->setOffsetAndSize(&mach, nValue, mach.get_linkedit_data(XMACH_DEF::S_LC_FUNCTION_STARTS).datasize,
+                            m_invWidget[INV_FUNCTION_STARTS_dataoff]->setOffsetAndSize(&mach, nValue, mach.get_linkedit_data(XMACH_DEF::S_LC_FUNCTION_STARTS).datasize,
                                                                                        true);
                             break;
                         case N_mach_linkedit_data::datasize:
-                            g_invWidget[INV_FUNCTION_STARTS_dataoff]->setOffsetAndSize(&mach, mach.get_linkedit_data(XMACH_DEF::S_LC_FUNCTION_STARTS).dataoff, nValue,
+                            m_invWidget[INV_FUNCTION_STARTS_dataoff]->setOffsetAndSize(&mach, mach.get_linkedit_data(XMACH_DEF::S_LC_FUNCTION_STARTS).dataoff, nValue,
                                                                                        true);
                             break;
                     }
@@ -662,11 +662,11 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, qint32 nStype, qint32 nN
                 case SMACH::TYPE_mach_code_signature:
                     switch (nNdata) {
                         case N_mach_linkedit_data::dataoff:
-                            g_invWidget[INV_CODE_SIGNATURE_dataoff]->setOffsetAndSize(&mach, nValue, mach.get_linkedit_data(XMACH_DEF::S_LC_CODE_SIGNATURE).datasize,
+                            m_invWidget[INV_CODE_SIGNATURE_dataoff]->setOffsetAndSize(&mach, nValue, mach.get_linkedit_data(XMACH_DEF::S_LC_CODE_SIGNATURE).datasize,
                                                                                       true);
                             break;
                         case N_mach_linkedit_data::datasize:
-                            g_invWidget[INV_CODE_SIGNATURE_dataoff]->setOffsetAndSize(&mach, mach.get_linkedit_data(XMACH_DEF::S_LC_CODE_SIGNATURE).dataoff, nValue,
+                            m_invWidget[INV_CODE_SIGNATURE_dataoff]->setOffsetAndSize(&mach, mach.get_linkedit_data(XMACH_DEF::S_LC_CODE_SIGNATURE).dataoff, nValue,
                                                                                       true);
                             break;
                     }
@@ -675,11 +675,11 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, qint32 nStype, qint32 nN
                 case SMACH::TYPE_mach_dyld_chained_fixups:
                     switch (nNdata) {
                         case N_mach_linkedit_data::dataoff:
-                            g_invWidget[INV_CHAINED_FIXUPS_dataoff]->setOffsetAndSize(&mach, nValue, mach.get_linkedit_data(XMACH_DEF::S_LC_DYLD_CHAINED_FIXUPS).datasize,
+                            m_invWidget[INV_CHAINED_FIXUPS_dataoff]->setOffsetAndSize(&mach, nValue, mach.get_linkedit_data(XMACH_DEF::S_LC_DYLD_CHAINED_FIXUPS).datasize,
                                                                                       true);
                             break;
                         case N_mach_linkedit_data::datasize:
-                            g_invWidget[INV_CHAINED_FIXUPS_dataoff]->setOffsetAndSize(&mach, mach.get_linkedit_data(XMACH_DEF::S_LC_DYLD_CHAINED_FIXUPS).dataoff, nValue,
+                            m_invWidget[INV_CHAINED_FIXUPS_dataoff]->setOffsetAndSize(&mach, mach.get_linkedit_data(XMACH_DEF::S_LC_DYLD_CHAINED_FIXUPS).dataoff, nValue,
                                                                                       true);
                             break;
                     }
@@ -688,11 +688,11 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, qint32 nStype, qint32 nN
                 case SMACH::TYPE_mach_dyld_exports_trie:
                     switch (nNdata) {
                         case N_mach_linkedit_data::dataoff:
-                            g_invWidget[INV_EXPORTS_TREE_dataoff]->setOffsetAndSize(&mach, nValue, mach.get_linkedit_data(XMACH_DEF::S_LC_DYLD_EXPORTS_TRIE).datasize,
+                            m_invWidget[INV_EXPORTS_TREE_dataoff]->setOffsetAndSize(&mach, nValue, mach.get_linkedit_data(XMACH_DEF::S_LC_DYLD_EXPORTS_TRIE).datasize,
                                                                                     true);
                             break;
                         case N_mach_linkedit_data::datasize:
-                            g_invWidget[INV_EXPORTS_TREE_dataoff]->setOffsetAndSize(&mach, mach.get_linkedit_data(XMACH_DEF::S_LC_DYLD_EXPORTS_TRIE).dataoff, nValue,
+                            m_invWidget[INV_EXPORTS_TREE_dataoff]->setOffsetAndSize(&mach, mach.get_linkedit_data(XMACH_DEF::S_LC_DYLD_EXPORTS_TRIE).dataoff, nValue,
                                                                                     true);
                             break;
                     }
@@ -700,7 +700,7 @@ FormatWidget::SV MACHWidget::_setValue(QVariant vValue, qint32 nStype, qint32 nN
 
                 case SMACH::TYPE_mach_main:
                     switch (nNdata) {
-                        case N_mach_main::entryoff: g_invWidget[INV_MAIN_entryoff]->setOffsetAndSize(&mach, nValue, 0, true); break;
+                        case N_mach_main::entryoff: m_invWidget[INV_MAIN_entryoff]->setOffsetAndSize(&mach, nValue, 0, true); break;
                     }
                     break;
             }
@@ -1176,32 +1176,32 @@ void MACHWidget::setReadonly(bool bState)
         ui->checkBoxReadonly->blockSignals(bBlocked1);
     }
 
-    setLineEditsReadOnly(g_lineEdit_mach_header, N_mach_header::__data_size, bState);
-    setLineEditsReadOnly(g_lineEdit_mach_dyld_info_only, N_mach_dyld_info::__data_size, bState);
-    setLineEditsReadOnly(g_lineEdit_mach_uuid, N_mach_uuid::__data_size, bState);
-    setLineEditsReadOnly(g_lineEdit_mach_dylinker, N_mach_dylinker::__data_size, bState);
-    setLineEditsReadOnly(g_lineEdit_mach_rpath, N_mach_rpath::__data_size, bState);
-    setLineEditsReadOnly(g_lineEdit_mach_symtab, N_mach_symtab::__data_size, bState);
-    setLineEditsReadOnly(g_lineEdit_mach_dysymtab, N_mach_dysymtab::__data_size, bState);
-    setLineEditsReadOnly(g_lineEdit_mach_version_min, N_mach_version_min::__data_size, bState);
-    setLineEditsReadOnly(g_lineEdit_mach_build_version, N_mach_build_version::__data_size, bState);
-    setLineEditsReadOnly(g_lineEdit_mach_source_version, N_mach_source_version::__data_size, bState);
-    setLineEditsReadOnly(g_lineEdit_mach_encryption_info, N_mach_encryption_info::__data_size, bState);
-    setLineEditsReadOnly(g_lineEdit_mach_function_starts, N_mach_linkedit_data::__data_size, bState);
-    setLineEditsReadOnly(g_lineEdit_mach_data_in_code, N_mach_linkedit_data::__data_size, bState);
-    setLineEditsReadOnly(g_lineEdit_mach_code_signature, N_mach_linkedit_data::__data_size, bState);
-    setLineEditsReadOnly(g_lineEdit_mach_dyld_chained_fixups, N_mach_linkedit_data::__data_size, bState);
-    setLineEditsReadOnly(g_lineEdit_mach_dyld_exports_trie, N_mach_linkedit_data::__data_size, bState);
-    setLineEditsReadOnly(g_lineEdit_mach_SuperBlob, N_mach_SuperBlob::__data_size, bState);
-    setLineEditsReadOnly(g_lineEdit_mach_main, N_mach_main::__data_size, bState);
-    setLineEditsReadOnly(g_lineEdit_mach_unix_thread, N_mach_unix_thread::__data_size, bState);
-    setLineEditsReadOnly(g_lineEdit_mach_unix_thread_x86_32, N_mach_unix_thread_x86_32::__data_size, bState);
-    setLineEditsReadOnly(g_lineEdit_mach_unix_thread_x86_64, N_mach_unix_thread_x86_64::__data_size, bState);
-    setLineEditsReadOnly(g_lineEdit_mach_unix_thread_arm_32, N_mach_unix_thread_arm_32::__data_size, bState);
-    setLineEditsReadOnly(g_lineEdit_mach_unix_thread_arm_64, N_mach_unix_thread_arm_64::__data_size, bState);
-    setLineEditsReadOnly(g_lineEdit_mach_unix_thread_m68k_32, N_mach_unix_thread_m68k_32::__data_size, bState);
-    setLineEditsReadOnly(g_lineEdit_mach_unix_thread_ppc_32, N_mach_unix_thread_ppc_32::__data_size, bState);
-    setComboBoxesReadOnly(g_comboBox, __CB_size, bState);
+    setLineEditsReadOnly(m_lineEdit_mach_header, N_mach_header::__data_size, bState);
+    setLineEditsReadOnly(m_lineEdit_mach_dyld_info_only, N_mach_dyld_info::__data_size, bState);
+    setLineEditsReadOnly(m_lineEdit_mach_uuid, N_mach_uuid::__data_size, bState);
+    setLineEditsReadOnly(m_lineEdit_mach_dylinker, N_mach_dylinker::__data_size, bState);
+    setLineEditsReadOnly(m_lineEdit_mach_rpath, N_mach_rpath::__data_size, bState);
+    setLineEditsReadOnly(m_lineEdit_mach_symtab, N_mach_symtab::__data_size, bState);
+    setLineEditsReadOnly(m_lineEdit_mach_dysymtab, N_mach_dysymtab::__data_size, bState);
+    setLineEditsReadOnly(m_lineEdit_mach_version_min, N_mach_version_min::__data_size, bState);
+    setLineEditsReadOnly(m_lineEdit_mach_build_version, N_mach_build_version::__data_size, bState);
+    setLineEditsReadOnly(m_lineEdit_mach_source_version, N_mach_source_version::__data_size, bState);
+    setLineEditsReadOnly(m_lineEdit_mach_encryption_info, N_mach_encryption_info::__data_size, bState);
+    setLineEditsReadOnly(m_lineEdit_mach_function_starts, N_mach_linkedit_data::__data_size, bState);
+    setLineEditsReadOnly(m_lineEdit_mach_data_in_code, N_mach_linkedit_data::__data_size, bState);
+    setLineEditsReadOnly(m_lineEdit_mach_code_signature, N_mach_linkedit_data::__data_size, bState);
+    setLineEditsReadOnly(m_lineEdit_mach_dyld_chained_fixups, N_mach_linkedit_data::__data_size, bState);
+    setLineEditsReadOnly(m_lineEdit_mach_dyld_exports_trie, N_mach_linkedit_data::__data_size, bState);
+    setLineEditsReadOnly(m_lineEdit_mach_SuperBlob, N_mach_SuperBlob::__data_size, bState);
+    setLineEditsReadOnly(m_lineEdit_mach_main, N_mach_main::__data_size, bState);
+    setLineEditsReadOnly(m_lineEdit_mach_unix_thread, N_mach_unix_thread::__data_size, bState);
+    setLineEditsReadOnly(m_lineEdit_mach_unix_thread_x86_32, N_mach_unix_thread_x86_32::__data_size, bState);
+    setLineEditsReadOnly(m_lineEdit_mach_unix_thread_x86_64, N_mach_unix_thread_x86_64::__data_size, bState);
+    setLineEditsReadOnly(m_lineEdit_mach_unix_thread_arm_32, N_mach_unix_thread_arm_32::__data_size, bState);
+    setLineEditsReadOnly(m_lineEdit_mach_unix_thread_arm_64, N_mach_unix_thread_arm_64::__data_size, bState);
+    setLineEditsReadOnly(m_lineEdit_mach_unix_thread_m68k_32, N_mach_unix_thread_m68k_32::__data_size, bState);
+    setLineEditsReadOnly(m_lineEdit_mach_unix_thread_ppc_32, N_mach_unix_thread_ppc_32::__data_size, bState);
+    setComboBoxesReadOnly(m_comboBox, __CB_size, bState);
 
     ui->widgetHex->setReadonly(bState);
     ui->widgetDisasm->setReadonly(bState);
@@ -1244,32 +1244,32 @@ void MACHWidget::setReadonly(bool bState)
 
 void MACHWidget::blockSignals(bool bState)
 {
-    _blockSignals((QObject **)g_lineEdit_mach_header, N_mach_header::__data_size, bState);
-    _blockSignals((QObject **)g_lineEdit_mach_dyld_info_only, N_mach_dyld_info::__data_size, bState);
-    _blockSignals((QObject **)g_lineEdit_mach_uuid, N_mach_uuid::__data_size, bState);
-    _blockSignals((QObject **)g_lineEdit_mach_dylinker, N_mach_dylinker::__data_size, bState);
-    _blockSignals((QObject **)g_lineEdit_mach_rpath, N_mach_rpath::__data_size, bState);
-    _blockSignals((QObject **)g_lineEdit_mach_symtab, N_mach_symtab::__data_size, bState);
-    _blockSignals((QObject **)g_lineEdit_mach_dysymtab, N_mach_dysymtab::__data_size, bState);
-    _blockSignals((QObject **)g_lineEdit_mach_version_min, N_mach_version_min::__data_size, bState);
-    _blockSignals((QObject **)g_lineEdit_mach_build_version, N_mach_build_version::__data_size, bState);
-    _blockSignals((QObject **)g_lineEdit_mach_source_version, N_mach_source_version::__data_size, bState);
-    _blockSignals((QObject **)g_lineEdit_mach_encryption_info, N_mach_encryption_info::__data_size, bState);
-    _blockSignals((QObject **)g_lineEdit_mach_function_starts, N_mach_linkedit_data::__data_size, bState);
-    _blockSignals((QObject **)g_lineEdit_mach_data_in_code, N_mach_linkedit_data::__data_size, bState);
-    _blockSignals((QObject **)g_lineEdit_mach_code_signature, N_mach_linkedit_data::__data_size, bState);
-    _blockSignals((QObject **)g_lineEdit_mach_dyld_chained_fixups, N_mach_linkedit_data::__data_size, bState);
-    _blockSignals((QObject **)g_lineEdit_mach_dyld_exports_trie, N_mach_linkedit_data::__data_size, bState);
-    _blockSignals((QObject **)g_lineEdit_mach_SuperBlob, N_mach_SuperBlob::__data_size, bState);
-    _blockSignals((QObject **)g_lineEdit_mach_main, N_mach_main::__data_size, bState);
-    _blockSignals((QObject **)g_lineEdit_mach_unix_thread, N_mach_unix_thread::__data_size, bState);
-    _blockSignals((QObject **)g_lineEdit_mach_unix_thread_x86_32, N_mach_unix_thread_x86_32::__data_size, bState);
-    _blockSignals((QObject **)g_lineEdit_mach_unix_thread_x86_64, N_mach_unix_thread_x86_64::__data_size, bState);
-    _blockSignals((QObject **)g_lineEdit_mach_unix_thread_arm_32, N_mach_unix_thread_arm_32::__data_size, bState);
-    _blockSignals((QObject **)g_lineEdit_mach_unix_thread_arm_64, N_mach_unix_thread_arm_64::__data_size, bState);
-    _blockSignals((QObject **)g_lineEdit_mach_unix_thread_m68k_32, N_mach_unix_thread_m68k_32::__data_size, bState);
-    _blockSignals((QObject **)g_lineEdit_mach_unix_thread_ppc_32, N_mach_unix_thread_ppc_32::__data_size, bState);
-    _blockSignals((QObject **)g_comboBox, __CB_size, bState);
+    _blockSignals((QObject **)m_lineEdit_mach_header, N_mach_header::__data_size, bState);
+    _blockSignals((QObject **)m_lineEdit_mach_dyld_info_only, N_mach_dyld_info::__data_size, bState);
+    _blockSignals((QObject **)m_lineEdit_mach_uuid, N_mach_uuid::__data_size, bState);
+    _blockSignals((QObject **)m_lineEdit_mach_dylinker, N_mach_dylinker::__data_size, bState);
+    _blockSignals((QObject **)m_lineEdit_mach_rpath, N_mach_rpath::__data_size, bState);
+    _blockSignals((QObject **)m_lineEdit_mach_symtab, N_mach_symtab::__data_size, bState);
+    _blockSignals((QObject **)m_lineEdit_mach_dysymtab, N_mach_dysymtab::__data_size, bState);
+    _blockSignals((QObject **)m_lineEdit_mach_version_min, N_mach_version_min::__data_size, bState);
+    _blockSignals((QObject **)m_lineEdit_mach_build_version, N_mach_build_version::__data_size, bState);
+    _blockSignals((QObject **)m_lineEdit_mach_source_version, N_mach_source_version::__data_size, bState);
+    _blockSignals((QObject **)m_lineEdit_mach_encryption_info, N_mach_encryption_info::__data_size, bState);
+    _blockSignals((QObject **)m_lineEdit_mach_function_starts, N_mach_linkedit_data::__data_size, bState);
+    _blockSignals((QObject **)m_lineEdit_mach_data_in_code, N_mach_linkedit_data::__data_size, bState);
+    _blockSignals((QObject **)m_lineEdit_mach_code_signature, N_mach_linkedit_data::__data_size, bState);
+    _blockSignals((QObject **)m_lineEdit_mach_dyld_chained_fixups, N_mach_linkedit_data::__data_size, bState);
+    _blockSignals((QObject **)m_lineEdit_mach_dyld_exports_trie, N_mach_linkedit_data::__data_size, bState);
+    _blockSignals((QObject **)m_lineEdit_mach_SuperBlob, N_mach_SuperBlob::__data_size, bState);
+    _blockSignals((QObject **)m_lineEdit_mach_main, N_mach_main::__data_size, bState);
+    _blockSignals((QObject **)m_lineEdit_mach_unix_thread, N_mach_unix_thread::__data_size, bState);
+    _blockSignals((QObject **)m_lineEdit_mach_unix_thread_x86_32, N_mach_unix_thread_x86_32::__data_size, bState);
+    _blockSignals((QObject **)m_lineEdit_mach_unix_thread_x86_64, N_mach_unix_thread_x86_64::__data_size, bState);
+    _blockSignals((QObject **)m_lineEdit_mach_unix_thread_arm_32, N_mach_unix_thread_arm_32::__data_size, bState);
+    _blockSignals((QObject **)m_lineEdit_mach_unix_thread_arm_64, N_mach_unix_thread_arm_64::__data_size, bState);
+    _blockSignals((QObject **)m_lineEdit_mach_unix_thread_m68k_32, N_mach_unix_thread_m68k_32::__data_size, bState);
+    _blockSignals((QObject **)m_lineEdit_mach_unix_thread_ppc_32, N_mach_unix_thread_ppc_32::__data_size, bState);
+    _blockSignals((QObject **)m_comboBox, __CB_size, bState);
 }
 
 void MACHWidget::adjustHeaderTable(qint32 nType, QTableWidget *pTableWidget)
@@ -1455,48 +1455,48 @@ void MACHWidget::reloadData(bool bSaveSelection)
         } else if (nType == SMACH::TYPE_mach_header) {
             if (!isInitPresent(sInit)) {
                 if (!mach.is64()) {
-                    createHeaderTable(SMACH::TYPE_mach_header, ui->tableWidget_mach_header, N_mach_header::records32, g_lineEdit_mach_header,
+                    createHeaderTable(SMACH::TYPE_mach_header, ui->tableWidget_mach_header, N_mach_header::records32, m_lineEdit_mach_header,
                                       N_mach_header::__data_size - 1, 0);
                 } else {
-                    createHeaderTable(SMACH::TYPE_mach_header, ui->tableWidget_mach_header, N_mach_header::records64, g_lineEdit_mach_header, N_mach_header::__data_size,
+                    createHeaderTable(SMACH::TYPE_mach_header, ui->tableWidget_mach_header, N_mach_header::records64, m_lineEdit_mach_header, N_mach_header::__data_size,
                                       0);
                 }
 
-                g_comboBox[CB_mach_header_magic] =
+                m_comboBox[CB_mach_header_magic] =
                     createComboBox(ui->tableWidget_mach_header, XMACH::getHeaderMagicsS(), SMACH::TYPE_mach_header, N_mach_header::magic, XComboBoxEx::CBTYPE_LIST);
-                g_comboBox[CB_mach_header_cputype] =
+                m_comboBox[CB_mach_header_cputype] =
                     createComboBox(ui->tableWidget_mach_header, XMACH::getHeaderCpuTypesS(), SMACH::TYPE_mach_header, N_mach_header::cputype, XComboBoxEx::CBTYPE_LIST);
-                g_comboBox[CB_mach_header_cpusubtype] = createComboBox(ui->tableWidget_mach_header, XMACH::getHeaderCpuSubTypesS(mach.getHeader_cputype()),
+                m_comboBox[CB_mach_header_cpusubtype] = createComboBox(ui->tableWidget_mach_header, XMACH::getHeaderCpuSubTypesS(mach.getHeader_cputype()),
                                                                        SMACH::TYPE_mach_header, N_mach_header::cpusubtype, XComboBoxEx::CBTYPE_LIST);
-                g_comboBox[CB_mach_header_filetype] =
+                m_comboBox[CB_mach_header_filetype] =
                     createComboBox(ui->tableWidget_mach_header, XMACH::getHeaderFileTypesS(), SMACH::TYPE_mach_header, N_mach_header::filetype, XComboBoxEx::CBTYPE_LIST);
-                g_comboBox[CB_mach_header_flags] =
+                m_comboBox[CB_mach_header_flags] =
                     createComboBox(ui->tableWidget_mach_header, XMACH::getHeaderFlagsS(), SMACH::TYPE_mach_header, N_mach_header::flags, XComboBoxEx::CBTYPE_FLAGS);
 
                 blockSignals(true);
 
-                g_lineEdit_mach_header[N_mach_header::magic]->setValue_uint32(mach.getHeader_magic());
-                g_lineEdit_mach_header[N_mach_header::cputype]->setValue_uint32(mach.getHeader_cputype());
-                g_lineEdit_mach_header[N_mach_header::cpusubtype]->setValue_uint32(mach.getHeader_cpusubtype());
-                g_lineEdit_mach_header[N_mach_header::filetype]->setValue_uint32(mach.getHeader_filetype());
-                g_lineEdit_mach_header[N_mach_header::ncmds]->setValue_uint32(mach.getHeader_ncmds());
-                g_lineEdit_mach_header[N_mach_header::sizeofcmds]->setValue_uint32(mach.getHeader_sizeofcmds());
-                g_lineEdit_mach_header[N_mach_header::flags]->setValue_uint32(mach.getHeader_flags());
+                m_lineEdit_mach_header[N_mach_header::magic]->setValue_uint32(mach.getHeader_magic());
+                m_lineEdit_mach_header[N_mach_header::cputype]->setValue_uint32(mach.getHeader_cputype());
+                m_lineEdit_mach_header[N_mach_header::cpusubtype]->setValue_uint32(mach.getHeader_cpusubtype());
+                m_lineEdit_mach_header[N_mach_header::filetype]->setValue_uint32(mach.getHeader_filetype());
+                m_lineEdit_mach_header[N_mach_header::ncmds]->setValue_uint32(mach.getHeader_ncmds());
+                m_lineEdit_mach_header[N_mach_header::sizeofcmds]->setValue_uint32(mach.getHeader_sizeofcmds());
+                m_lineEdit_mach_header[N_mach_header::flags]->setValue_uint32(mach.getHeader_flags());
 
                 if (mach.is64()) {
-                    g_lineEdit_mach_header[N_mach_header::reserved]->setValue_uint32(mach.getHeader_reserved());
+                    m_lineEdit_mach_header[N_mach_header::reserved]->setValue_uint32(mach.getHeader_reserved());
                 }
 
-                g_comboBox[CB_mach_header_magic]->setValue(mach.getHeader_magic());
-                g_comboBox[CB_mach_header_cputype]->setValue((quint32)mach.getHeader_cputype());
-                g_comboBox[CB_mach_header_cpusubtype]->setValue((quint32)mach.getHeader_cpusubtype());
-                g_comboBox[CB_mach_header_filetype]->setValue((quint32)mach.getHeader_filetype());
-                g_comboBox[CB_mach_header_flags]->setValue((quint32)mach.getHeader_flags());
+                m_comboBox[CB_mach_header_magic]->setValue(mach.getHeader_magic());
+                m_comboBox[CB_mach_header_cputype]->setValue((quint32)mach.getHeader_cputype());
+                m_comboBox[CB_mach_header_cpusubtype]->setValue((quint32)mach.getHeader_cpusubtype());
+                m_comboBox[CB_mach_header_filetype]->setValue((quint32)mach.getHeader_filetype());
+                m_comboBox[CB_mach_header_flags]->setValue((quint32)mach.getHeader_flags());
 
                 qint64 nOffset = mach.getHeaderOffset();
                 qint64 nSize = mach.getHeaderSize();
 
-                loadHexSubdevice(nOffset, nSize, nOffset, &g_subDevice[SMACH::TYPE_mach_header], ui->widgetHex_mach_header);
+                loadHexSubdevice(nOffset, nSize, nOffset, &m_subDevice[SMACH::TYPE_mach_header], ui->widgetHex_mach_header);
 
                 blockSignals(false);
             }
@@ -1606,166 +1606,166 @@ void MACHWidget::reloadData(bool bSaveSelection)
             }
         } else if (nType == SMACH::TYPE_mach_dyld_info_only) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SMACH::TYPE_mach_dyld_info_only, ui->tableWidget_dyld_info_only, N_mach_dyld_info::records, g_lineEdit_mach_dyld_info_only,
+                createHeaderTable(SMACH::TYPE_mach_dyld_info_only, ui->tableWidget_dyld_info_only, N_mach_dyld_info::records, m_lineEdit_mach_dyld_info_only,
                                   N_mach_dyld_info::__data_size, 0, nDataOffset);
 
-                g_invWidget[INV_rebase_off] =
+                m_invWidget[INV_rebase_off] =
                     createInvWidget(ui->tableWidget_dyld_info_only, SMACH::TYPE_mach_dyld_info_only, N_mach_dyld_info::rebase_off, InvWidget::TYPE_HEX);
-                g_invWidget[INV_bind_off] =
+                m_invWidget[INV_bind_off] =
                     createInvWidget(ui->tableWidget_dyld_info_only, SMACH::TYPE_mach_dyld_info_only, N_mach_dyld_info::bind_off, InvWidget::TYPE_HEX);
-                g_invWidget[INV_weak_bind_off] =
+                m_invWidget[INV_weak_bind_off] =
                     createInvWidget(ui->tableWidget_dyld_info_only, SMACH::TYPE_mach_dyld_info_only, N_mach_dyld_info::weak_bind_off, InvWidget::TYPE_HEX);
-                g_invWidget[INV_lazy_bind_off] =
+                m_invWidget[INV_lazy_bind_off] =
                     createInvWidget(ui->tableWidget_dyld_info_only, SMACH::TYPE_mach_dyld_info_only, N_mach_dyld_info::lazy_bind_off, InvWidget::TYPE_HEX);
-                g_invWidget[INV_export_off] =
+                m_invWidget[INV_export_off] =
                     createInvWidget(ui->tableWidget_dyld_info_only, SMACH::TYPE_mach_dyld_info_only, N_mach_dyld_info::export_off, InvWidget::TYPE_HEX);
 
                 blockSignals(true);
 
                 XMACH_DEF::dyld_info_command dyld_info = mach._read_dyld_info_command(nDataOffset);
 
-                g_lineEdit_mach_dyld_info_only[N_mach_dyld_info::rebase_off]->setValue_uint32(dyld_info.rebase_off);
-                g_lineEdit_mach_dyld_info_only[N_mach_dyld_info::rebase_size]->setValue_uint32(dyld_info.rebase_size);
-                g_lineEdit_mach_dyld_info_only[N_mach_dyld_info::bind_off]->setValue_uint32(dyld_info.bind_off);
-                g_lineEdit_mach_dyld_info_only[N_mach_dyld_info::bind_size]->setValue_uint32(dyld_info.bind_size);
-                g_lineEdit_mach_dyld_info_only[N_mach_dyld_info::weak_bind_off]->setValue_uint32(dyld_info.weak_bind_off);
-                g_lineEdit_mach_dyld_info_only[N_mach_dyld_info::weak_bind_size]->setValue_uint32(dyld_info.weak_bind_size);
-                g_lineEdit_mach_dyld_info_only[N_mach_dyld_info::lazy_bind_off]->setValue_uint32(dyld_info.lazy_bind_off);
-                g_lineEdit_mach_dyld_info_only[N_mach_dyld_info::lazy_bind_size]->setValue_uint32(dyld_info.lazy_bind_size);
-                g_lineEdit_mach_dyld_info_only[N_mach_dyld_info::export_off]->setValue_uint32(dyld_info.export_off);
-                g_lineEdit_mach_dyld_info_only[N_mach_dyld_info::export_size]->setValue_uint32(dyld_info.export_size);
+                m_lineEdit_mach_dyld_info_only[N_mach_dyld_info::rebase_off]->setValue_uint32(dyld_info.rebase_off);
+                m_lineEdit_mach_dyld_info_only[N_mach_dyld_info::rebase_size]->setValue_uint32(dyld_info.rebase_size);
+                m_lineEdit_mach_dyld_info_only[N_mach_dyld_info::bind_off]->setValue_uint32(dyld_info.bind_off);
+                m_lineEdit_mach_dyld_info_only[N_mach_dyld_info::bind_size]->setValue_uint32(dyld_info.bind_size);
+                m_lineEdit_mach_dyld_info_only[N_mach_dyld_info::weak_bind_off]->setValue_uint32(dyld_info.weak_bind_off);
+                m_lineEdit_mach_dyld_info_only[N_mach_dyld_info::weak_bind_size]->setValue_uint32(dyld_info.weak_bind_size);
+                m_lineEdit_mach_dyld_info_only[N_mach_dyld_info::lazy_bind_off]->setValue_uint32(dyld_info.lazy_bind_off);
+                m_lineEdit_mach_dyld_info_only[N_mach_dyld_info::lazy_bind_size]->setValue_uint32(dyld_info.lazy_bind_size);
+                m_lineEdit_mach_dyld_info_only[N_mach_dyld_info::export_off]->setValue_uint32(dyld_info.export_off);
+                m_lineEdit_mach_dyld_info_only[N_mach_dyld_info::export_size]->setValue_uint32(dyld_info.export_size);
 
-                g_invWidget[INV_rebase_off]->setOffsetAndSize(&mach, dyld_info.rebase_off, dyld_info.rebase_size, true);
-                g_invWidget[INV_bind_off]->setOffsetAndSize(&mach, dyld_info.bind_off, dyld_info.bind_size, true);
-                g_invWidget[INV_weak_bind_off]->setOffsetAndSize(&mach, dyld_info.weak_bind_off, dyld_info.weak_bind_size, true);
-                g_invWidget[INV_lazy_bind_off]->setOffsetAndSize(&mach, dyld_info.lazy_bind_off, dyld_info.lazy_bind_size, true);
-                g_invWidget[INV_export_off]->setOffsetAndSize(&mach, dyld_info.export_off, dyld_info.export_size, true);
+                m_invWidget[INV_rebase_off]->setOffsetAndSize(&mach, dyld_info.rebase_off, dyld_info.rebase_size, true);
+                m_invWidget[INV_bind_off]->setOffsetAndSize(&mach, dyld_info.bind_off, dyld_info.bind_size, true);
+                m_invWidget[INV_weak_bind_off]->setOffsetAndSize(&mach, dyld_info.weak_bind_off, dyld_info.weak_bind_size, true);
+                m_invWidget[INV_lazy_bind_off]->setOffsetAndSize(&mach, dyld_info.lazy_bind_off, dyld_info.lazy_bind_size, true);
+                m_invWidget[INV_export_off]->setOffsetAndSize(&mach, dyld_info.export_off, dyld_info.export_size, true);
 
                 qint64 nOffset = nDataOffset;
                 qint64 nSize = mach.get_dyld_info_command_size();
 
-                loadHexSubdevice(nOffset, nSize, nOffset, &g_subDevice[SMACH::TYPE_mach_dyld_info_only], ui->widgetHex_dyld_info_only);
+                loadHexSubdevice(nOffset, nSize, nOffset, &m_subDevice[SMACH::TYPE_mach_dyld_info_only], ui->widgetHex_dyld_info_only);
 
                 blockSignals(false);
             }
         } else if (nType == SMACH::TYPE_mach_uuid) {
             if (!isInitPresent(sInit)) {
-                createListTable(SMACH::TYPE_mach_uuid, ui->tableWidget_uuid, N_mach_uuid::records, g_lineEdit_mach_uuid, N_mach_uuid::__data_size);
+                createListTable(SMACH::TYPE_mach_uuid, ui->tableWidget_uuid, N_mach_uuid::records, m_lineEdit_mach_uuid, N_mach_uuid::__data_size);
 
                 blockSignals(true);
 
-                g_lineEdit_mach_uuid[N_mach_uuid::uuid]->setValue_UUID(mach.getModuleUUID());
+                m_lineEdit_mach_uuid[N_mach_uuid::uuid]->setValue_UUID(mach.getModuleUUID());
 
                 blockSignals(false);
             }
         } else if (nType == SMACH::TYPE_mach_dylinker) {
             if (!isInitPresent(sInit)) {
-                createListTable(SMACH::TYPE_mach_dylinker, ui->tableWidget_dylinker, N_mach_dylinker::records, g_lineEdit_mach_dylinker, N_mach_dylinker::__data_size);
+                createListTable(SMACH::TYPE_mach_dylinker, ui->tableWidget_dylinker, N_mach_dylinker::records, m_lineEdit_mach_dylinker, N_mach_dylinker::__data_size);
 
                 blockSignals(true);
 
-                g_lineEdit_mach_dylinker[N_mach_dylinker::dylinker]->setValue_String(mach.getLoadDylinker());  // TODO Max Size!!!
+                m_lineEdit_mach_dylinker[N_mach_dylinker::dylinker]->setValue_String(mach.getLoadDylinker());  // TODO Max Size!!!
 
                 blockSignals(false);
             }
         } else if (nType == SMACH::TYPE_mach_rpath) {
             if (!isInitPresent(sInit)) {
-                createListTable(SMACH::TYPE_mach_rpath, ui->tableWidget_rpath, N_mach_rpath::records, g_lineEdit_mach_rpath, N_mach_rpath::__data_size);
+                createListTable(SMACH::TYPE_mach_rpath, ui->tableWidget_rpath, N_mach_rpath::records, m_lineEdit_mach_rpath, N_mach_rpath::__data_size);
 
                 blockSignals(true);
 
-                g_lineEdit_mach_rpath[N_mach_rpath::path]->setValue_String(mach.getRPath());  // TODO Max Size!!!
+                m_lineEdit_mach_rpath[N_mach_rpath::path]->setValue_String(mach.getRPath());  // TODO Max Size!!!
 
                 blockSignals(false);
             }
         } else if (nType == SMACH::TYPE_mach_symtab) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SMACH::TYPE_mach_symtab, ui->tableWidget_symtab, N_mach_symtab::records, g_lineEdit_mach_symtab, N_mach_symtab::__data_size, 0,
+                createHeaderTable(SMACH::TYPE_mach_symtab, ui->tableWidget_symtab, N_mach_symtab::records, m_lineEdit_mach_symtab, N_mach_symtab::__data_size, 0,
                                   nDataOffset);
 
-                g_invWidget[INV_symoff] = createInvWidget(ui->tableWidget_symtab, SMACH::TYPE_mach_symtab, N_mach_symtab::symoff, InvWidget::TYPE_HEX);
-                g_invWidget[INV_stroff] = createInvWidget(ui->tableWidget_symtab, SMACH::TYPE_mach_symtab, N_mach_symtab::stroff, InvWidget::TYPE_HEX);
+                m_invWidget[INV_symoff] = createInvWidget(ui->tableWidget_symtab, SMACH::TYPE_mach_symtab, N_mach_symtab::symoff, InvWidget::TYPE_HEX);
+                m_invWidget[INV_stroff] = createInvWidget(ui->tableWidget_symtab, SMACH::TYPE_mach_symtab, N_mach_symtab::stroff, InvWidget::TYPE_HEX);
 
                 blockSignals(true);
 
                 XMACH_DEF::symtab_command symtab = mach._read_symtab_command(nDataOffset);
 
-                g_lineEdit_mach_symtab[N_mach_symtab::symoff]->setValue_uint32(symtab.symoff);
-                g_lineEdit_mach_symtab[N_mach_symtab::nsyms]->setValue_uint32(symtab.nsyms);
-                g_lineEdit_mach_symtab[N_mach_symtab::stroff]->setValue_uint32(symtab.stroff);
-                g_lineEdit_mach_symtab[N_mach_symtab::strsize]->setValue_uint32(symtab.strsize);
+                m_lineEdit_mach_symtab[N_mach_symtab::symoff]->setValue_uint32(symtab.symoff);
+                m_lineEdit_mach_symtab[N_mach_symtab::nsyms]->setValue_uint32(symtab.nsyms);
+                m_lineEdit_mach_symtab[N_mach_symtab::stroff]->setValue_uint32(symtab.stroff);
+                m_lineEdit_mach_symtab[N_mach_symtab::strsize]->setValue_uint32(symtab.strsize);
 
-                g_invWidget[INV_symoff]->setOffsetAndSize(&mach, symtab.symoff, symtab.nsyms * mach.get_nlist_MODE_size(), true);
-                g_invWidget[INV_stroff]->setOffsetAndSize(&mach, symtab.stroff, symtab.strsize, true);
+                m_invWidget[INV_symoff]->setOffsetAndSize(&mach, symtab.symoff, symtab.nsyms * mach.get_nlist_MODE_size(), true);
+                m_invWidget[INV_stroff]->setOffsetAndSize(&mach, symtab.stroff, symtab.strsize, true);
 
                 qint64 nOffset = nDataOffset;
                 qint64 nSize = mach.get_symtab_command_size();
 
-                loadHexSubdevice(nOffset, nSize, nOffset, &g_subDevice[SMACH::TYPE_mach_symtab], ui->widgetHex_symtab);
+                loadHexSubdevice(nOffset, nSize, nOffset, &m_subDevice[SMACH::TYPE_mach_symtab], ui->widgetHex_symtab);
 
                 blockSignals(false);
             }
         } else if (nType == SMACH::TYPE_mach_dysymtab) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SMACH::TYPE_mach_dysymtab, ui->tableWidget_dysymtab, N_mach_dysymtab::records, g_lineEdit_mach_dysymtab, N_mach_dysymtab::__data_size,
+                createHeaderTable(SMACH::TYPE_mach_dysymtab, ui->tableWidget_dysymtab, N_mach_dysymtab::records, m_lineEdit_mach_dysymtab, N_mach_dysymtab::__data_size,
                                   0, nDataOffset);
 
-                g_invWidget[INV_tocoff] = createInvWidget(ui->tableWidget_dysymtab, SMACH::TYPE_mach_dysymtab, N_mach_dysymtab::tocoff, InvWidget::TYPE_HEX);
-                g_invWidget[INV_modtaboff] = createInvWidget(ui->tableWidget_dysymtab, SMACH::TYPE_mach_dysymtab, N_mach_dysymtab::modtaboff, InvWidget::TYPE_HEX);
-                g_invWidget[INV_extrefsymoff] = createInvWidget(ui->tableWidget_dysymtab, SMACH::TYPE_mach_dysymtab, N_mach_dysymtab::extrefsymoff, InvWidget::TYPE_HEX);
-                g_invWidget[INV_indirectsymoff] =
+                m_invWidget[INV_tocoff] = createInvWidget(ui->tableWidget_dysymtab, SMACH::TYPE_mach_dysymtab, N_mach_dysymtab::tocoff, InvWidget::TYPE_HEX);
+                m_invWidget[INV_modtaboff] = createInvWidget(ui->tableWidget_dysymtab, SMACH::TYPE_mach_dysymtab, N_mach_dysymtab::modtaboff, InvWidget::TYPE_HEX);
+                m_invWidget[INV_extrefsymoff] = createInvWidget(ui->tableWidget_dysymtab, SMACH::TYPE_mach_dysymtab, N_mach_dysymtab::extrefsymoff, InvWidget::TYPE_HEX);
+                m_invWidget[INV_indirectsymoff] =
                     createInvWidget(ui->tableWidget_dysymtab, SMACH::TYPE_mach_dysymtab, N_mach_dysymtab::indirectsymoff, InvWidget::TYPE_HEX);
-                g_invWidget[INV_extreloff] = createInvWidget(ui->tableWidget_dysymtab, SMACH::TYPE_mach_dysymtab, N_mach_dysymtab::extreloff, InvWidget::TYPE_HEX);
-                g_invWidget[INV_locreloff] = createInvWidget(ui->tableWidget_dysymtab, SMACH::TYPE_mach_dysymtab, N_mach_dysymtab::locreloff, InvWidget::TYPE_HEX);
+                m_invWidget[INV_extreloff] = createInvWidget(ui->tableWidget_dysymtab, SMACH::TYPE_mach_dysymtab, N_mach_dysymtab::extreloff, InvWidget::TYPE_HEX);
+                m_invWidget[INV_locreloff] = createInvWidget(ui->tableWidget_dysymtab, SMACH::TYPE_mach_dysymtab, N_mach_dysymtab::locreloff, InvWidget::TYPE_HEX);
 
                 blockSignals(true);
 
                 XMACH_DEF::dysymtab_command dysymtab = mach._read_dysymtab_command(nDataOffset);
 
-                g_lineEdit_mach_dysymtab[N_mach_dysymtab::ilocalsym]->setValue_uint32(dysymtab.ilocalsym);
-                g_lineEdit_mach_dysymtab[N_mach_dysymtab::nlocalsym]->setValue_uint32(dysymtab.nlocalsym);
-                g_lineEdit_mach_dysymtab[N_mach_dysymtab::iextdefsym]->setValue_uint32(dysymtab.iextdefsym);
-                g_lineEdit_mach_dysymtab[N_mach_dysymtab::nextdefsym]->setValue_uint32(dysymtab.nextdefsym);
-                g_lineEdit_mach_dysymtab[N_mach_dysymtab::iundefsym]->setValue_uint32(dysymtab.iundefsym);
-                g_lineEdit_mach_dysymtab[N_mach_dysymtab::nundefsym]->setValue_uint32(dysymtab.nundefsym);
-                g_lineEdit_mach_dysymtab[N_mach_dysymtab::tocoff]->setValue_uint32(dysymtab.tocoff);
-                g_lineEdit_mach_dysymtab[N_mach_dysymtab::ntoc]->setValue_uint32(dysymtab.ntoc);
-                g_lineEdit_mach_dysymtab[N_mach_dysymtab::modtaboff]->setValue_uint32(dysymtab.modtaboff);
-                g_lineEdit_mach_dysymtab[N_mach_dysymtab::nmodtab]->setValue_uint32(dysymtab.nmodtab);
-                g_lineEdit_mach_dysymtab[N_mach_dysymtab::extrefsymoff]->setValue_uint32(dysymtab.extrefsymoff);
-                g_lineEdit_mach_dysymtab[N_mach_dysymtab::nextrefsyms]->setValue_uint32(dysymtab.nextrefsyms);
-                g_lineEdit_mach_dysymtab[N_mach_dysymtab::indirectsymoff]->setValue_uint32(dysymtab.indirectsymoff);
-                g_lineEdit_mach_dysymtab[N_mach_dysymtab::nindirectsyms]->setValue_uint32(dysymtab.nindirectsyms);
-                g_lineEdit_mach_dysymtab[N_mach_dysymtab::extreloff]->setValue_uint32(dysymtab.extreloff);
-                g_lineEdit_mach_dysymtab[N_mach_dysymtab::nextrel]->setValue_uint32(dysymtab.nextrel);
-                g_lineEdit_mach_dysymtab[N_mach_dysymtab::locreloff]->setValue_uint32(dysymtab.locreloff);
-                g_lineEdit_mach_dysymtab[N_mach_dysymtab::nlocrel]->setValue_uint32(dysymtab.nlocrel);
+                m_lineEdit_mach_dysymtab[N_mach_dysymtab::ilocalsym]->setValue_uint32(dysymtab.ilocalsym);
+                m_lineEdit_mach_dysymtab[N_mach_dysymtab::nlocalsym]->setValue_uint32(dysymtab.nlocalsym);
+                m_lineEdit_mach_dysymtab[N_mach_dysymtab::iextdefsym]->setValue_uint32(dysymtab.iextdefsym);
+                m_lineEdit_mach_dysymtab[N_mach_dysymtab::nextdefsym]->setValue_uint32(dysymtab.nextdefsym);
+                m_lineEdit_mach_dysymtab[N_mach_dysymtab::iundefsym]->setValue_uint32(dysymtab.iundefsym);
+                m_lineEdit_mach_dysymtab[N_mach_dysymtab::nundefsym]->setValue_uint32(dysymtab.nundefsym);
+                m_lineEdit_mach_dysymtab[N_mach_dysymtab::tocoff]->setValue_uint32(dysymtab.tocoff);
+                m_lineEdit_mach_dysymtab[N_mach_dysymtab::ntoc]->setValue_uint32(dysymtab.ntoc);
+                m_lineEdit_mach_dysymtab[N_mach_dysymtab::modtaboff]->setValue_uint32(dysymtab.modtaboff);
+                m_lineEdit_mach_dysymtab[N_mach_dysymtab::nmodtab]->setValue_uint32(dysymtab.nmodtab);
+                m_lineEdit_mach_dysymtab[N_mach_dysymtab::extrefsymoff]->setValue_uint32(dysymtab.extrefsymoff);
+                m_lineEdit_mach_dysymtab[N_mach_dysymtab::nextrefsyms]->setValue_uint32(dysymtab.nextrefsyms);
+                m_lineEdit_mach_dysymtab[N_mach_dysymtab::indirectsymoff]->setValue_uint32(dysymtab.indirectsymoff);
+                m_lineEdit_mach_dysymtab[N_mach_dysymtab::nindirectsyms]->setValue_uint32(dysymtab.nindirectsyms);
+                m_lineEdit_mach_dysymtab[N_mach_dysymtab::extreloff]->setValue_uint32(dysymtab.extreloff);
+                m_lineEdit_mach_dysymtab[N_mach_dysymtab::nextrel]->setValue_uint32(dysymtab.nextrel);
+                m_lineEdit_mach_dysymtab[N_mach_dysymtab::locreloff]->setValue_uint32(dysymtab.locreloff);
+                m_lineEdit_mach_dysymtab[N_mach_dysymtab::nlocrel]->setValue_uint32(dysymtab.nlocrel);
 
-                g_invWidget[INV_tocoff]->setOffsetAndSize(&mach, dysymtab.tocoff, 0, true);
-                g_invWidget[INV_modtaboff]->setOffsetAndSize(&mach, dysymtab.modtaboff, 0, true);
-                g_invWidget[INV_extrefsymoff]->setOffsetAndSize(&mach, dysymtab.extrefsymoff, 0, true);
-                g_invWidget[INV_indirectsymoff]->setOffsetAndSize(&mach, dysymtab.indirectsymoff, 0, true);
-                g_invWidget[INV_extreloff]->setOffsetAndSize(&mach, dysymtab.extreloff, 0, true);
-                g_invWidget[INV_locreloff]->setOffsetAndSize(&mach, dysymtab.locreloff, 0, true);
+                m_invWidget[INV_tocoff]->setOffsetAndSize(&mach, dysymtab.tocoff, 0, true);
+                m_invWidget[INV_modtaboff]->setOffsetAndSize(&mach, dysymtab.modtaboff, 0, true);
+                m_invWidget[INV_extrefsymoff]->setOffsetAndSize(&mach, dysymtab.extrefsymoff, 0, true);
+                m_invWidget[INV_indirectsymoff]->setOffsetAndSize(&mach, dysymtab.indirectsymoff, 0, true);
+                m_invWidget[INV_extreloff]->setOffsetAndSize(&mach, dysymtab.extreloff, 0, true);
+                m_invWidget[INV_locreloff]->setOffsetAndSize(&mach, dysymtab.locreloff, 0, true);
 
                 qint64 nOffset = nDataOffset;
                 qint64 nSize = mach.get_dysymtab_command_size();
 
-                loadHexSubdevice(nOffset, nSize, nOffset, &g_subDevice[SMACH::TYPE_mach_dysymtab], ui->widgetHex_dysymtab);
+                loadHexSubdevice(nOffset, nSize, nOffset, &m_subDevice[SMACH::TYPE_mach_dysymtab], ui->widgetHex_dysymtab);
 
                 blockSignals(false);
             }
         } else if (nType == SMACH::TYPE_mach_version_min) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SMACH::TYPE_mach_version_min, ui->tableWidget_version_min, N_mach_version_min::records, g_lineEdit_mach_version_min,
+                createHeaderTable(SMACH::TYPE_mach_version_min, ui->tableWidget_version_min, N_mach_version_min::records, m_lineEdit_mach_version_min,
                                   N_mach_version_min::__data_size, 0, nDataOffset);
 
                 blockSignals(true);
 
                 XMACH_DEF::version_min_command version_min = mach._read_version_min_command(nDataOffset);
 
-                g_lineEdit_mach_version_min[N_mach_version_min::version]->setValue_uint32(version_min.version);
-                g_lineEdit_mach_version_min[N_mach_version_min::sdk]->setValue_uint32(version_min.sdk);
+                m_lineEdit_mach_version_min[N_mach_version_min::version]->setValue_uint32(version_min.version);
+                m_lineEdit_mach_version_min[N_mach_version_min::sdk]->setValue_uint32(version_min.sdk);
 
                 addComment(ui->tableWidget_version_min, N_mach_version_min::version, HEADER_COLUMN_COMMENT, XBinary::fullVersionDwordToString(version_min.version));
                 addComment(ui->tableWidget_version_min, N_mach_version_min::sdk, HEADER_COLUMN_COMMENT, XBinary::fullVersionDwordToString(version_min.sdk));
@@ -1773,23 +1773,23 @@ void MACHWidget::reloadData(bool bSaveSelection)
                 qint64 nOffset = nDataOffset;
                 qint64 nSize = mach.get_version_min_command_size();
 
-                loadHexSubdevice(nOffset, nSize, nOffset, &g_subDevice[SMACH::TYPE_mach_version_min], ui->widgetHex_version_min);
+                loadHexSubdevice(nOffset, nSize, nOffset, &m_subDevice[SMACH::TYPE_mach_version_min], ui->widgetHex_version_min);
 
                 blockSignals(false);
             }
         } else if (nType == SMACH::TYPE_mach_build_version) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SMACH::TYPE_mach_build_version, ui->tableWidget_build_version, N_mach_build_version::records, g_lineEdit_mach_build_version,
+                createHeaderTable(SMACH::TYPE_mach_build_version, ui->tableWidget_build_version, N_mach_build_version::records, m_lineEdit_mach_build_version,
                                   N_mach_build_version::__data_size, 0, nDataOffset);
 
                 blockSignals(true);
 
                 XMACH_DEF::build_version_command build_version = mach._read_build_version_command(nDataOffset);
 
-                g_lineEdit_mach_build_version[N_mach_build_version::platform]->setValue_uint32(build_version.platform);
-                g_lineEdit_mach_build_version[N_mach_build_version::minos]->setValue_uint32(build_version.minos);
-                g_lineEdit_mach_build_version[N_mach_build_version::sdk]->setValue_uint32(build_version.sdk);
-                g_lineEdit_mach_build_version[N_mach_build_version::ntools]->setValue_uint32(build_version.ntools);
+                m_lineEdit_mach_build_version[N_mach_build_version::platform]->setValue_uint32(build_version.platform);
+                m_lineEdit_mach_build_version[N_mach_build_version::minos]->setValue_uint32(build_version.minos);
+                m_lineEdit_mach_build_version[N_mach_build_version::sdk]->setValue_uint32(build_version.sdk);
+                m_lineEdit_mach_build_version[N_mach_build_version::ntools]->setValue_uint32(build_version.ntools);
 
                 addComment(ui->tableWidget_build_version, N_mach_build_version::minos, HEADER_COLUMN_COMMENT, XBinary::fullVersionDwordToString(build_version.minos));
                 addComment(ui->tableWidget_build_version, N_mach_build_version::sdk, HEADER_COLUMN_COMMENT, XBinary::fullVersionDwordToString(build_version.sdk));
@@ -1797,25 +1797,25 @@ void MACHWidget::reloadData(bool bSaveSelection)
                 qint64 nOffset = nDataOffset;
                 qint64 nSize = mach.get_build_version_command_size();
 
-                loadHexSubdevice(nOffset, nSize, nOffset, &g_subDevice[SMACH::TYPE_mach_build_version], ui->widgetHex_build_version);
+                loadHexSubdevice(nOffset, nSize, nOffset, &m_subDevice[SMACH::TYPE_mach_build_version], ui->widgetHex_build_version);
 
                 blockSignals(false);
             }
         } else if (nType == SMACH::TYPE_mach_source_version) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SMACH::TYPE_mach_source_version, ui->tableWidget_source_version, N_mach_source_version::records, g_lineEdit_mach_source_version,
+                createHeaderTable(SMACH::TYPE_mach_source_version, ui->tableWidget_source_version, N_mach_source_version::records, m_lineEdit_mach_source_version,
                                   N_mach_source_version::__data_size, 0, nDataOffset);
 
                 blockSignals(true);
 
                 XMACH_DEF::source_version_command source_version = mach._read_source_version_command(nDataOffset);
 
-                g_lineEdit_mach_source_version[N_mach_source_version::version]->setValue_uint64(source_version.version);
+                m_lineEdit_mach_source_version[N_mach_source_version::version]->setValue_uint64(source_version.version);
 
                 qint64 nOffset = nDataOffset;
                 qint64 nSize = mach.get_source_version_command_size();
 
-                loadHexSubdevice(nOffset, nSize, nOffset, &g_subDevice[SMACH::TYPE_mach_source_version], ui->widgetHex_source_version);
+                loadHexSubdevice(nOffset, nSize, nOffset, &m_subDevice[SMACH::TYPE_mach_source_version], ui->widgetHex_source_version);
 
                 blockSignals(false);
             }
@@ -1823,484 +1823,484 @@ void MACHWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 if (nDataSize == mach.get_encryption_info_command_64_size()) {
                     createHeaderTable(SMACH::TYPE_mach_encryption_info, ui->tableWidget_encryption_info, N_mach_encryption_info::records64,
-                                      g_lineEdit_mach_encryption_info, N_mach_encryption_info::__data_size, 0, nDataOffset);
+                                      m_lineEdit_mach_encryption_info, N_mach_encryption_info::__data_size, 0, nDataOffset);
 
-                    g_invWidget[INV_cryptoff] =
+                    m_invWidget[INV_cryptoff] =
                         createInvWidget(ui->tableWidget_encryption_info, SMACH::TYPE_mach_encryption_info, N_mach_encryption_info::cryptoff, InvWidget::TYPE_HEX);
 
                     blockSignals(true);
 
                     XMACH_DEF::encryption_info_command_64 encryption_info = mach._read_encryption_info_command_64(nDataOffset);
 
-                    g_lineEdit_mach_encryption_info[N_mach_encryption_info::cryptoff]->setValue_uint32(encryption_info.cryptoff);
-                    g_lineEdit_mach_encryption_info[N_mach_encryption_info::cryptsize]->setValue_uint32(encryption_info.cryptsize);
-                    g_lineEdit_mach_encryption_info[N_mach_encryption_info::cryptid]->setValue_uint32(encryption_info.cryptid);
-                    g_lineEdit_mach_encryption_info[N_mach_encryption_info::pad]->setValue_uint32(encryption_info.pad);
+                    m_lineEdit_mach_encryption_info[N_mach_encryption_info::cryptoff]->setValue_uint32(encryption_info.cryptoff);
+                    m_lineEdit_mach_encryption_info[N_mach_encryption_info::cryptsize]->setValue_uint32(encryption_info.cryptsize);
+                    m_lineEdit_mach_encryption_info[N_mach_encryption_info::cryptid]->setValue_uint32(encryption_info.cryptid);
+                    m_lineEdit_mach_encryption_info[N_mach_encryption_info::pad]->setValue_uint32(encryption_info.pad);
 
-                    g_invWidget[INV_cryptoff]->setOffsetAndSize(&mach, encryption_info.cryptoff, encryption_info.cryptsize, true);
+                    m_invWidget[INV_cryptoff]->setOffsetAndSize(&mach, encryption_info.cryptoff, encryption_info.cryptsize, true);
                 } else {
                     createHeaderTable(SMACH::TYPE_mach_encryption_info, ui->tableWidget_encryption_info, N_mach_encryption_info::records32,
-                                      g_lineEdit_mach_encryption_info, N_mach_encryption_info::__data_size - 1, 0, nDataOffset);
+                                      m_lineEdit_mach_encryption_info, N_mach_encryption_info::__data_size - 1, 0, nDataOffset);
 
-                    g_invWidget[INV_cryptoff] =
+                    m_invWidget[INV_cryptoff] =
                         createInvWidget(ui->tableWidget_encryption_info, SMACH::TYPE_mach_encryption_info, N_mach_encryption_info::cryptoff, InvWidget::TYPE_HEX);
 
                     blockSignals(true);
 
                     XMACH_DEF::encryption_info_command encryption_info = mach._read_encryption_info_command(nDataOffset);
 
-                    g_lineEdit_mach_encryption_info[N_mach_encryption_info::cryptoff]->setValue_uint32(encryption_info.cryptoff);
-                    g_lineEdit_mach_encryption_info[N_mach_encryption_info::cryptsize]->setValue_uint32(encryption_info.cryptsize);
-                    g_lineEdit_mach_encryption_info[N_mach_encryption_info::cryptid]->setValue_uint32(encryption_info.cryptid);
+                    m_lineEdit_mach_encryption_info[N_mach_encryption_info::cryptoff]->setValue_uint32(encryption_info.cryptoff);
+                    m_lineEdit_mach_encryption_info[N_mach_encryption_info::cryptsize]->setValue_uint32(encryption_info.cryptsize);
+                    m_lineEdit_mach_encryption_info[N_mach_encryption_info::cryptid]->setValue_uint32(encryption_info.cryptid);
 
-                    g_invWidget[INV_cryptoff]->setOffsetAndSize(&mach, encryption_info.cryptoff, encryption_info.cryptsize, true);
+                    m_invWidget[INV_cryptoff]->setOffsetAndSize(&mach, encryption_info.cryptoff, encryption_info.cryptsize, true);
                 }
 
                 qint64 nOffset = nDataOffset;
                 qint64 nSize = nDataSize;
 
-                loadHexSubdevice(nOffset, nSize, nOffset, &g_subDevice[SMACH::TYPE_mach_encryption_info], ui->widgetHex_encryption_info);
+                loadHexSubdevice(nOffset, nSize, nOffset, &m_subDevice[SMACH::TYPE_mach_encryption_info], ui->widgetHex_encryption_info);
 
                 blockSignals(false);
             }
         } else if (nType == SMACH::TYPE_mach_function_starts) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SMACH::TYPE_mach_function_starts, ui->tableWidget_function_starts, N_mach_linkedit_data::records, g_lineEdit_mach_function_starts,
+                createHeaderTable(SMACH::TYPE_mach_function_starts, ui->tableWidget_function_starts, N_mach_linkedit_data::records, m_lineEdit_mach_function_starts,
                                   N_mach_linkedit_data::__data_size, 0, nDataOffset);
 
-                g_invWidget[INV_FUNCTION_STARTS_dataoff] =
+                m_invWidget[INV_FUNCTION_STARTS_dataoff] =
                     createInvWidget(ui->tableWidget_function_starts, SMACH::TYPE_mach_function_starts, N_mach_linkedit_data::dataoff, InvWidget::TYPE_HEX);
 
                 blockSignals(true);
 
                 XMACH_DEF::linkedit_data_command linkedit_data = mach._read_linkedit_data_command(nDataOffset);
 
-                g_lineEdit_mach_function_starts[N_mach_linkedit_data::dataoff]->setValue_uint32(linkedit_data.dataoff);
-                g_lineEdit_mach_function_starts[N_mach_linkedit_data::datasize]->setValue_uint32(linkedit_data.datasize);
+                m_lineEdit_mach_function_starts[N_mach_linkedit_data::dataoff]->setValue_uint32(linkedit_data.dataoff);
+                m_lineEdit_mach_function_starts[N_mach_linkedit_data::datasize]->setValue_uint32(linkedit_data.datasize);
 
-                g_invWidget[INV_FUNCTION_STARTS_dataoff]->setOffsetAndSize(&mach, linkedit_data.dataoff, linkedit_data.datasize, true);
+                m_invWidget[INV_FUNCTION_STARTS_dataoff]->setOffsetAndSize(&mach, linkedit_data.dataoff, linkedit_data.datasize, true);
 
                 qint64 nOffset = nDataOffset;
                 qint64 nSize = mach.get_linkedit_data_command_size();
 
-                loadHexSubdevice(nOffset, nSize, nOffset, &g_subDevice[SMACH::TYPE_mach_function_starts], ui->widgetHex_function_starts);
+                loadHexSubdevice(nOffset, nSize, nOffset, &m_subDevice[SMACH::TYPE_mach_function_starts], ui->widgetHex_function_starts);
 
                 blockSignals(false);
             }
         } else if (nType == SMACH::TYPE_mach_data_in_code) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SMACH::TYPE_mach_data_in_code, ui->tableWidget_data_in_code, N_mach_linkedit_data::records, g_lineEdit_mach_data_in_code,
+                createHeaderTable(SMACH::TYPE_mach_data_in_code, ui->tableWidget_data_in_code, N_mach_linkedit_data::records, m_lineEdit_mach_data_in_code,
                                   N_mach_linkedit_data::__data_size, 0, nDataOffset);
 
-                g_invWidget[INV_DATA_IN_CODE_dataoff] =
+                m_invWidget[INV_DATA_IN_CODE_dataoff] =
                     createInvWidget(ui->tableWidget_data_in_code, SMACH::TYPE_mach_data_in_code, N_mach_linkedit_data::dataoff, InvWidget::TYPE_HEX);
 
                 blockSignals(true);
 
                 XMACH_DEF::linkedit_data_command linkedit_data = mach._read_linkedit_data_command(nDataOffset);
 
-                g_lineEdit_mach_data_in_code[N_mach_linkedit_data::dataoff]->setValue_uint32(linkedit_data.dataoff);
-                g_lineEdit_mach_data_in_code[N_mach_linkedit_data::datasize]->setValue_uint32(linkedit_data.datasize);
+                m_lineEdit_mach_data_in_code[N_mach_linkedit_data::dataoff]->setValue_uint32(linkedit_data.dataoff);
+                m_lineEdit_mach_data_in_code[N_mach_linkedit_data::datasize]->setValue_uint32(linkedit_data.datasize);
 
-                g_invWidget[INV_DATA_IN_CODE_dataoff]->setOffsetAndSize(&mach, linkedit_data.dataoff, linkedit_data.datasize, true);
+                m_invWidget[INV_DATA_IN_CODE_dataoff]->setOffsetAndSize(&mach, linkedit_data.dataoff, linkedit_data.datasize, true);
 
                 qint64 nOffset = nDataOffset;
                 qint64 nSize = mach.get_linkedit_data_command_size();
 
-                loadHexSubdevice(nOffset, nSize, nOffset, &g_subDevice[SMACH::TYPE_mach_data_in_code], ui->widgetHex_data_in_code);
+                loadHexSubdevice(nOffset, nSize, nOffset, &m_subDevice[SMACH::TYPE_mach_data_in_code], ui->widgetHex_data_in_code);
 
                 blockSignals(false);
             }
         } else if (nType == SMACH::TYPE_mach_code_signature) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SMACH::TYPE_mach_code_signature, ui->tableWidget_code_signature, N_mach_linkedit_data::records, g_lineEdit_mach_code_signature,
+                createHeaderTable(SMACH::TYPE_mach_code_signature, ui->tableWidget_code_signature, N_mach_linkedit_data::records, m_lineEdit_mach_code_signature,
                                   N_mach_linkedit_data::__data_size, 0, nDataOffset);
 
-                g_invWidget[INV_CODE_SIGNATURE_dataoff] =
+                m_invWidget[INV_CODE_SIGNATURE_dataoff] =
                     createInvWidget(ui->tableWidget_code_signature, SMACH::TYPE_mach_code_signature, N_mach_linkedit_data::dataoff, InvWidget::TYPE_HEX);
 
                 blockSignals(true);
 
                 XMACH_DEF::linkedit_data_command linkedit_data = mach._read_linkedit_data_command(nDataOffset);
 
-                g_lineEdit_mach_code_signature[N_mach_linkedit_data::dataoff]->setValue_uint32(linkedit_data.dataoff);
-                g_lineEdit_mach_code_signature[N_mach_linkedit_data::datasize]->setValue_uint32(linkedit_data.datasize);
+                m_lineEdit_mach_code_signature[N_mach_linkedit_data::dataoff]->setValue_uint32(linkedit_data.dataoff);
+                m_lineEdit_mach_code_signature[N_mach_linkedit_data::datasize]->setValue_uint32(linkedit_data.datasize);
 
-                g_invWidget[INV_CODE_SIGNATURE_dataoff]->setOffsetAndSize(&mach, linkedit_data.dataoff, linkedit_data.datasize, true);
+                m_invWidget[INV_CODE_SIGNATURE_dataoff]->setOffsetAndSize(&mach, linkedit_data.dataoff, linkedit_data.datasize, true);
 
                 qint64 nOffset = nDataOffset;
                 qint64 nSize = mach.get_linkedit_data_command_size();
 
-                loadHexSubdevice(nOffset, nSize, nOffset, &g_subDevice[SMACH::TYPE_mach_code_signature], ui->widgetHex_code_signature);
+                loadHexSubdevice(nOffset, nSize, nOffset, &m_subDevice[SMACH::TYPE_mach_code_signature], ui->widgetHex_code_signature);
 
                 blockSignals(false);
             }
         } else if (nType == SMACH::TYPE_mach_dyld_chained_fixups) {
             if (!isInitPresent(sInit)) {
                 createHeaderTable(SMACH::TYPE_mach_dyld_chained_fixups, ui->tableWidget_dyld_chained_fixups, N_mach_linkedit_data::records,
-                                  g_lineEdit_mach_dyld_chained_fixups, N_mach_linkedit_data::__data_size, 0, nDataOffset);
+                                  m_lineEdit_mach_dyld_chained_fixups, N_mach_linkedit_data::__data_size, 0, nDataOffset);
 
-                g_invWidget[INV_CHAINED_FIXUPS_dataoff] =
+                m_invWidget[INV_CHAINED_FIXUPS_dataoff] =
                     createInvWidget(ui->tableWidget_dyld_chained_fixups, SMACH::TYPE_mach_dyld_chained_fixups, N_mach_linkedit_data::dataoff, InvWidget::TYPE_HEX);
 
                 blockSignals(true);
 
                 XMACH_DEF::linkedit_data_command linkedit_data = mach._read_linkedit_data_command(nDataOffset);
 
-                g_lineEdit_mach_dyld_chained_fixups[N_mach_linkedit_data::dataoff]->setValue_uint32(linkedit_data.dataoff);
-                g_lineEdit_mach_dyld_chained_fixups[N_mach_linkedit_data::datasize]->setValue_uint32(linkedit_data.datasize);
+                m_lineEdit_mach_dyld_chained_fixups[N_mach_linkedit_data::dataoff]->setValue_uint32(linkedit_data.dataoff);
+                m_lineEdit_mach_dyld_chained_fixups[N_mach_linkedit_data::datasize]->setValue_uint32(linkedit_data.datasize);
 
-                g_invWidget[INV_CHAINED_FIXUPS_dataoff]->setOffsetAndSize(&mach, linkedit_data.dataoff, linkedit_data.datasize, true);
+                m_invWidget[INV_CHAINED_FIXUPS_dataoff]->setOffsetAndSize(&mach, linkedit_data.dataoff, linkedit_data.datasize, true);
 
                 qint64 nOffset = nDataOffset;
                 qint64 nSize = mach.get_linkedit_data_command_size();
 
-                loadHexSubdevice(nOffset, nSize, nOffset, &g_subDevice[SMACH::TYPE_mach_dyld_chained_fixups], ui->widgetHex_dyld_chained_fixups);
+                loadHexSubdevice(nOffset, nSize, nOffset, &m_subDevice[SMACH::TYPE_mach_dyld_chained_fixups], ui->widgetHex_dyld_chained_fixups);
 
                 blockSignals(false);
             }
         } else if (nType == SMACH::TYPE_mach_dyld_exports_trie) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SMACH::TYPE_mach_dyld_exports_trie, ui->tableWidget_dyld_exports_trie, N_mach_linkedit_data::records, g_lineEdit_mach_dyld_exports_trie,
+                createHeaderTable(SMACH::TYPE_mach_dyld_exports_trie, ui->tableWidget_dyld_exports_trie, N_mach_linkedit_data::records, m_lineEdit_mach_dyld_exports_trie,
                                   N_mach_linkedit_data::__data_size, 0, nDataOffset);
 
-                g_invWidget[INV_EXPORTS_TREE_dataoff] =
+                m_invWidget[INV_EXPORTS_TREE_dataoff] =
                     createInvWidget(ui->tableWidget_dyld_exports_trie, SMACH::TYPE_mach_dyld_exports_trie, N_mach_linkedit_data::dataoff, InvWidget::TYPE_HEX);
 
                 blockSignals(true);
 
                 XMACH_DEF::linkedit_data_command linkedit_data = mach._read_linkedit_data_command(nDataOffset);
 
-                g_lineEdit_mach_dyld_exports_trie[N_mach_linkedit_data::dataoff]->setValue_uint32(linkedit_data.dataoff);
-                g_lineEdit_mach_dyld_exports_trie[N_mach_linkedit_data::datasize]->setValue_uint32(linkedit_data.datasize);
+                m_lineEdit_mach_dyld_exports_trie[N_mach_linkedit_data::dataoff]->setValue_uint32(linkedit_data.dataoff);
+                m_lineEdit_mach_dyld_exports_trie[N_mach_linkedit_data::datasize]->setValue_uint32(linkedit_data.datasize);
 
-                g_invWidget[INV_EXPORTS_TREE_dataoff]->setOffsetAndSize(&mach, linkedit_data.dataoff, linkedit_data.datasize, true);
+                m_invWidget[INV_EXPORTS_TREE_dataoff]->setOffsetAndSize(&mach, linkedit_data.dataoff, linkedit_data.datasize, true);
 
                 qint64 nOffset = nDataOffset;
                 qint64 nSize = mach.get_linkedit_data_command_size();
 
-                loadHexSubdevice(nOffset, nSize, nOffset, &g_subDevice[SMACH::TYPE_mach_dyld_exports_trie], ui->widgetHex_dyld_exports_trie);
+                loadHexSubdevice(nOffset, nSize, nOffset, &m_subDevice[SMACH::TYPE_mach_dyld_exports_trie], ui->widgetHex_dyld_exports_trie);
 
                 blockSignals(false);
             }
         } else if (nType == SMACH::TYPE_mach_SuperBlob) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SMACH::TYPE_mach_SuperBlob, ui->tableWidget_SuperBlob, N_mach_SuperBlob::records, g_lineEdit_mach_SuperBlob,
+                createHeaderTable(SMACH::TYPE_mach_SuperBlob, ui->tableWidget_SuperBlob, N_mach_SuperBlob::records, m_lineEdit_mach_SuperBlob,
                                   N_mach_SuperBlob::__data_size, 0, nDataOffset);
 
                 blockSignals(true);
 
                 XMACH_DEF::__SC_SuperBlob super_blob = mach._read_SC_SuperBlob(nDataOffset);
 
-                g_lineEdit_mach_SuperBlob[N_mach_SuperBlob::magic]->setValue_uint32(super_blob.magic);
-                g_lineEdit_mach_SuperBlob[N_mach_SuperBlob::length]->setValue_uint32(super_blob.length);
-                g_lineEdit_mach_SuperBlob[N_mach_SuperBlob::count]->setValue_uint32(super_blob.count);
+                m_lineEdit_mach_SuperBlob[N_mach_SuperBlob::magic]->setValue_uint32(super_blob.magic);
+                m_lineEdit_mach_SuperBlob[N_mach_SuperBlob::length]->setValue_uint32(super_blob.length);
+                m_lineEdit_mach_SuperBlob[N_mach_SuperBlob::count]->setValue_uint32(super_blob.count);
 
                 qint64 nOffset = nDataOffset;
                 qint64 nSize = super_blob.length;
 
-                loadHexSubdevice(nOffset, nSize, nOffset, &g_subDevice[SMACH::TYPE_mach_SuperBlob], ui->widgetHex_SuperBlob);
+                loadHexSubdevice(nOffset, nSize, nOffset, &m_subDevice[SMACH::TYPE_mach_SuperBlob], ui->widgetHex_SuperBlob);
 
                 blockSignals(false);
             }
         } else if (nType == SMACH::TYPE_mach_main) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SMACH::TYPE_mach_main, ui->tableWidget_main, N_mach_main::records, g_lineEdit_mach_main, N_mach_main::__data_size, 0, nDataOffset);
+                createHeaderTable(SMACH::TYPE_mach_main, ui->tableWidget_main, N_mach_main::records, m_lineEdit_mach_main, N_mach_main::__data_size, 0, nDataOffset);
 
-                g_invWidget[INV_MAIN_entryoff] = createInvWidget(ui->tableWidget_main, SMACH::TYPE_mach_main, N_mach_main::entryoff, InvWidget::TYPE_DISASM);
+                m_invWidget[INV_MAIN_entryoff] = createInvWidget(ui->tableWidget_main, SMACH::TYPE_mach_main, N_mach_main::entryoff, InvWidget::TYPE_DISASM);
 
                 blockSignals(true);
 
                 XMACH_DEF::entry_point_command entry_point = mach._read_entry_point_command(nDataOffset);
 
-                g_lineEdit_mach_main[N_mach_main::entryoff]->setValue_uint64(entry_point.entryoff);
-                g_lineEdit_mach_main[N_mach_main::stacksize]->setValue_uint64(entry_point.stacksize);
+                m_lineEdit_mach_main[N_mach_main::entryoff]->setValue_uint64(entry_point.entryoff);
+                m_lineEdit_mach_main[N_mach_main::stacksize]->setValue_uint64(entry_point.stacksize);
 
                 XBinary::_MEMORY_MAP memoryMap = mach.getMemoryMap();
 
                 XADDR nAddress = XBinary::offsetToAddress(&memoryMap, entry_point.entryoff);
 
-                g_invWidget[INV_MAIN_entryoff]->setAddressAndSize(&mach, nAddress, 0, true);
+                m_invWidget[INV_MAIN_entryoff]->setAddressAndSize(&mach, nAddress, 0, true);
 
                 qint64 nOffset = nDataOffset;
                 qint64 nSize = mach.get_entry_point_command_size();
 
-                loadHexSubdevice(nOffset, nSize, nOffset, &g_subDevice[SMACH::TYPE_mach_main], ui->widgetHex_main);
+                loadHexSubdevice(nOffset, nSize, nOffset, &m_subDevice[SMACH::TYPE_mach_main], ui->widgetHex_main);
 
                 blockSignals(false);
             }
         } else if (nType == SMACH::TYPE_mach_unix_thread) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SMACH::TYPE_mach_unix_thread, ui->tableWidget_unix_thread, N_mach_unix_thread::records, g_lineEdit_mach_unix_thread,
+                createHeaderTable(SMACH::TYPE_mach_unix_thread, ui->tableWidget_unix_thread, N_mach_unix_thread::records, m_lineEdit_mach_unix_thread,
                                   N_mach_unix_thread::__data_size, 0, nDataOffset);
 
                 blockSignals(true);
 
                 XMACH_DEF::unix_thread_command unix_thread = mach._read_unix_thread_command(nDataOffset);
 
-                g_lineEdit_mach_unix_thread[N_mach_unix_thread::flavor]->setValue_uint32(unix_thread.flavor);
-                g_lineEdit_mach_unix_thread[N_mach_unix_thread::count]->setValue_uint32(unix_thread.count);
+                m_lineEdit_mach_unix_thread[N_mach_unix_thread::flavor]->setValue_uint32(unix_thread.flavor);
+                m_lineEdit_mach_unix_thread[N_mach_unix_thread::count]->setValue_uint32(unix_thread.count);
 
                 qint64 nOffset = nDataOffset;
                 qint64 nSize = mach.get_unix_thread_command_size();
 
-                loadHexSubdevice(nOffset, nSize, nOffset, &g_subDevice[SMACH::TYPE_mach_unix_thread], ui->widgetHex_unix_thread);
+                loadHexSubdevice(nOffset, nSize, nOffset, &m_subDevice[SMACH::TYPE_mach_unix_thread], ui->widgetHex_unix_thread);
 
                 blockSignals(false);
             }
         } else if (nType == SMACH::TYPE_mach_unix_thread_x86_32) {
             if (!isInitPresent(sInit)) {
                 createHeaderTable(SMACH::TYPE_mach_unix_thread_x86_32, ui->tableWidget_unix_thread_x86_32, N_mach_unix_thread_x86_32::records,
-                                  g_lineEdit_mach_unix_thread_x86_32, N_mach_unix_thread_x86_32::__data_size, 0, nDataOffset);
+                                  m_lineEdit_mach_unix_thread_x86_32, N_mach_unix_thread_x86_32::__data_size, 0, nDataOffset);
 
                 blockSignals(true);
 
                 XMACH_DEF::x86_thread_state32_t state = mach._read_x86_thread_state32_t(nDataOffset);
 
-                g_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::eax]->setValue_uint32(state.eax);
-                g_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::ebx]->setValue_uint32(state.ebx);
-                g_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::ecx]->setValue_uint32(state.ecx);
-                g_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::edx]->setValue_uint32(state.edx);
-                g_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::edi]->setValue_uint32(state.edi);
-                g_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::esi]->setValue_uint32(state.esi);
-                g_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::ebp]->setValue_uint32(state.ebp);
-                g_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::esp]->setValue_uint32(state.esp);
-                g_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::ss]->setValue_uint32(state.ss);
-                g_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::eflags]->setValue_uint32(state.eflags);
-                g_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::eip]->setValue_uint32(state.eip);
-                g_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::cs]->setValue_uint32(state.cs);
-                g_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::ds]->setValue_uint32(state.ds);
-                g_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::es]->setValue_uint32(state.es);
-                g_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::fs]->setValue_uint32(state.fs);
-                g_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::gs]->setValue_uint32(state.gs);
+                m_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::eax]->setValue_uint32(state.eax);
+                m_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::ebx]->setValue_uint32(state.ebx);
+                m_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::ecx]->setValue_uint32(state.ecx);
+                m_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::edx]->setValue_uint32(state.edx);
+                m_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::edi]->setValue_uint32(state.edi);
+                m_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::esi]->setValue_uint32(state.esi);
+                m_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::ebp]->setValue_uint32(state.ebp);
+                m_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::esp]->setValue_uint32(state.esp);
+                m_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::ss]->setValue_uint32(state.ss);
+                m_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::eflags]->setValue_uint32(state.eflags);
+                m_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::eip]->setValue_uint32(state.eip);
+                m_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::cs]->setValue_uint32(state.cs);
+                m_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::ds]->setValue_uint32(state.ds);
+                m_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::es]->setValue_uint32(state.es);
+                m_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::fs]->setValue_uint32(state.fs);
+                m_lineEdit_mach_unix_thread_x86_32[N_mach_unix_thread_x86_32::gs]->setValue_uint32(state.gs);
 
                 qint64 nOffset = nDataOffset;
                 qint64 nSize = mach.get_x86_thread_state32_t_size();
 
-                loadHexSubdevice(nOffset, nSize, nOffset, &g_subDevice[SMACH::TYPE_mach_unix_thread_x86_32], ui->widgetHex_unix_thread_x86_32);
+                loadHexSubdevice(nOffset, nSize, nOffset, &m_subDevice[SMACH::TYPE_mach_unix_thread_x86_32], ui->widgetHex_unix_thread_x86_32);
 
                 blockSignals(false);
             }
         } else if (nType == SMACH::TYPE_mach_unix_thread_x86_64) {
             if (!isInitPresent(sInit)) {
                 createHeaderTable(SMACH::TYPE_mach_unix_thread_x86_64, ui->tableWidget_unix_thread_x86_64, N_mach_unix_thread_x86_64::records,
-                                  g_lineEdit_mach_unix_thread_x86_64, N_mach_unix_thread_x86_64::__data_size, 0, nDataOffset);
+                                  m_lineEdit_mach_unix_thread_x86_64, N_mach_unix_thread_x86_64::__data_size, 0, nDataOffset);
 
                 blockSignals(true);
 
                 XMACH_DEF::x86_thread_state64_t state = mach._read_x86_thread_state64_t(nDataOffset);
 
-                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rax]->setValue_uint64(state.rax);
-                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rbx]->setValue_uint64(state.rbx);
-                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rcx]->setValue_uint64(state.rcx);
-                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rdx]->setValue_uint64(state.rdx);
-                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rdi]->setValue_uint64(state.rdi);
-                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rsi]->setValue_uint64(state.rsi);
-                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rbp]->setValue_uint64(state.rbp);
-                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rsp]->setValue_uint64(state.rsp);
-                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::r8]->setValue_uint64(state.r8);
-                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::r9]->setValue_uint64(state.r9);
-                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::r10]->setValue_uint64(state.r10);
-                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::r11]->setValue_uint64(state.r11);
-                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::r12]->setValue_uint64(state.r12);
-                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::r13]->setValue_uint64(state.r13);
-                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::r14]->setValue_uint64(state.r14);
-                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::r15]->setValue_uint64(state.r15);
-                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rip]->setValue_uint64(state.rip);
-                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rflags]->setValue_uint64(state.rflags);
-                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::cs]->setValue_uint64(state.cs);
-                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::fs]->setValue_uint64(state.fs);
-                g_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::gs]->setValue_uint64(state.gs);
+                m_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rax]->setValue_uint64(state.rax);
+                m_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rbx]->setValue_uint64(state.rbx);
+                m_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rcx]->setValue_uint64(state.rcx);
+                m_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rdx]->setValue_uint64(state.rdx);
+                m_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rdi]->setValue_uint64(state.rdi);
+                m_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rsi]->setValue_uint64(state.rsi);
+                m_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rbp]->setValue_uint64(state.rbp);
+                m_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rsp]->setValue_uint64(state.rsp);
+                m_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::r8]->setValue_uint64(state.r8);
+                m_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::r9]->setValue_uint64(state.r9);
+                m_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::r10]->setValue_uint64(state.r10);
+                m_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::r11]->setValue_uint64(state.r11);
+                m_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::r12]->setValue_uint64(state.r12);
+                m_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::r13]->setValue_uint64(state.r13);
+                m_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::r14]->setValue_uint64(state.r14);
+                m_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::r15]->setValue_uint64(state.r15);
+                m_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rip]->setValue_uint64(state.rip);
+                m_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::rflags]->setValue_uint64(state.rflags);
+                m_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::cs]->setValue_uint64(state.cs);
+                m_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::fs]->setValue_uint64(state.fs);
+                m_lineEdit_mach_unix_thread_x86_64[N_mach_unix_thread_x86_64::gs]->setValue_uint64(state.gs);
 
                 qint64 nOffset = nDataOffset;
                 qint64 nSize = mach.get_x86_thread_state64_t_size();
 
-                loadHexSubdevice(nOffset, nSize, nOffset, &g_subDevice[SMACH::TYPE_mach_unix_thread_x86_64], ui->widgetHex_unix_thread_x86_64);
+                loadHexSubdevice(nOffset, nSize, nOffset, &m_subDevice[SMACH::TYPE_mach_unix_thread_x86_64], ui->widgetHex_unix_thread_x86_64);
 
                 blockSignals(false);
             }
         } else if (nType == SMACH::TYPE_mach_unix_thread_arm_32) {
             if (!isInitPresent(sInit)) {
                 createHeaderTable(SMACH::TYPE_mach_unix_thread_arm_32, ui->tableWidget_unix_thread_arm_32, N_mach_unix_thread_arm_32::records,
-                                  g_lineEdit_mach_unix_thread_arm_32, N_mach_unix_thread_arm_32::__data_size, 0, nDataOffset);
+                                  m_lineEdit_mach_unix_thread_arm_32, N_mach_unix_thread_arm_32::__data_size, 0, nDataOffset);
 
                 blockSignals(true);
 
                 XMACH_DEF::arm_thread_state32_t state = mach._read_arm_thread_state32_t(nDataOffset);
 
-                g_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::r0]->setValue_uint32(state.r[0]);
-                g_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::r1]->setValue_uint32(state.r[1]);
-                g_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::r2]->setValue_uint32(state.r[2]);
-                g_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::r3]->setValue_uint32(state.r[3]);
-                g_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::r4]->setValue_uint32(state.r[4]);
-                g_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::r5]->setValue_uint32(state.r[5]);
-                g_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::r6]->setValue_uint32(state.r[6]);
-                g_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::r7]->setValue_uint32(state.r[7]);
-                g_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::r8]->setValue_uint32(state.r[8]);
-                g_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::r9]->setValue_uint32(state.r[9]);
-                g_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::r10]->setValue_uint32(state.r[10]);
-                g_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::r11]->setValue_uint32(state.r[11]);
-                g_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::r12]->setValue_uint32(state.r[12]);
-                g_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::sp]->setValue_uint32(state.sp);
-                g_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::lr]->setValue_uint32(state.lr);
-                g_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::pc]->setValue_uint32(state.pc);
-                g_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::cpsr]->setValue_uint32(state.cpsr);
+                m_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::r0]->setValue_uint32(state.r[0]);
+                m_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::r1]->setValue_uint32(state.r[1]);
+                m_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::r2]->setValue_uint32(state.r[2]);
+                m_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::r3]->setValue_uint32(state.r[3]);
+                m_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::r4]->setValue_uint32(state.r[4]);
+                m_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::r5]->setValue_uint32(state.r[5]);
+                m_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::r6]->setValue_uint32(state.r[6]);
+                m_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::r7]->setValue_uint32(state.r[7]);
+                m_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::r8]->setValue_uint32(state.r[8]);
+                m_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::r9]->setValue_uint32(state.r[9]);
+                m_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::r10]->setValue_uint32(state.r[10]);
+                m_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::r11]->setValue_uint32(state.r[11]);
+                m_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::r12]->setValue_uint32(state.r[12]);
+                m_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::sp]->setValue_uint32(state.sp);
+                m_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::lr]->setValue_uint32(state.lr);
+                m_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::pc]->setValue_uint32(state.pc);
+                m_lineEdit_mach_unix_thread_arm_32[N_mach_unix_thread_arm_32::cpsr]->setValue_uint32(state.cpsr);
 
                 qint64 nOffset = nDataOffset;
                 qint64 nSize = mach.get_arm_thread_state32_t_size();
 
-                loadHexSubdevice(nOffset, nSize, nOffset, &g_subDevice[SMACH::TYPE_mach_unix_thread_arm_32], ui->widgetHex_unix_thread_arm_32);
+                loadHexSubdevice(nOffset, nSize, nOffset, &m_subDevice[SMACH::TYPE_mach_unix_thread_arm_32], ui->widgetHex_unix_thread_arm_32);
 
                 blockSignals(false);
             }
         } else if (nType == SMACH::TYPE_mach_unix_thread_arm_64) {
             if (!isInitPresent(sInit)) {
                 createHeaderTable(SMACH::TYPE_mach_unix_thread_arm_64, ui->tableWidget_unix_thread_arm_64, N_mach_unix_thread_arm_64::records,
-                                  g_lineEdit_mach_unix_thread_arm_64, N_mach_unix_thread_arm_64::__data_size, 0, nDataOffset);
+                                  m_lineEdit_mach_unix_thread_arm_64, N_mach_unix_thread_arm_64::__data_size, 0, nDataOffset);
 
                 blockSignals(true);
 
                 XMACH_DEF::arm_thread_state64_t state = mach._read_arm_thread_state64_t(nDataOffset);
 
-                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x0]->setValue_uint64(state.x[0]);
-                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x1]->setValue_uint64(state.x[1]);
-                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x2]->setValue_uint64(state.x[2]);
-                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x3]->setValue_uint64(state.x[3]);
-                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x4]->setValue_uint64(state.x[4]);
-                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x5]->setValue_uint64(state.x[5]);
-                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x6]->setValue_uint64(state.x[6]);
-                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x7]->setValue_uint64(state.x[7]);
-                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x8]->setValue_uint64(state.x[8]);
-                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x9]->setValue_uint64(state.x[9]);
-                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x10]->setValue_uint64(state.x[10]);
-                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x11]->setValue_uint64(state.x[11]);
-                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x12]->setValue_uint64(state.x[12]);
-                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x13]->setValue_uint64(state.x[13]);
-                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x14]->setValue_uint64(state.x[14]);
-                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x15]->setValue_uint64(state.x[15]);
-                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x16]->setValue_uint64(state.x[16]);
-                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x17]->setValue_uint64(state.x[17]);
-                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x18]->setValue_uint64(state.x[18]);
-                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x19]->setValue_uint64(state.x[19]);
-                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x20]->setValue_uint64(state.x[20]);
-                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x21]->setValue_uint64(state.x[21]);
-                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x22]->setValue_uint64(state.x[22]);
-                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x23]->setValue_uint64(state.x[23]);
-                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x24]->setValue_uint64(state.x[24]);
-                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x25]->setValue_uint64(state.x[25]);
-                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x26]->setValue_uint64(state.x[26]);
-                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x27]->setValue_uint64(state.x[27]);
-                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x28]->setValue_uint64(state.x[28]);
-                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::fp]->setValue_uint64(state.fp);
-                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::lr]->setValue_uint64(state.lr);
-                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::sp]->setValue_uint64(state.sp);
-                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::pc]->setValue_uint64(state.pc);
-                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::cpsr]->setValue_uint32(state.cpsr);
-                g_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::pad]->setValue_uint32(state.pad);
+                m_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x0]->setValue_uint64(state.x[0]);
+                m_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x1]->setValue_uint64(state.x[1]);
+                m_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x2]->setValue_uint64(state.x[2]);
+                m_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x3]->setValue_uint64(state.x[3]);
+                m_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x4]->setValue_uint64(state.x[4]);
+                m_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x5]->setValue_uint64(state.x[5]);
+                m_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x6]->setValue_uint64(state.x[6]);
+                m_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x7]->setValue_uint64(state.x[7]);
+                m_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x8]->setValue_uint64(state.x[8]);
+                m_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x9]->setValue_uint64(state.x[9]);
+                m_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x10]->setValue_uint64(state.x[10]);
+                m_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x11]->setValue_uint64(state.x[11]);
+                m_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x12]->setValue_uint64(state.x[12]);
+                m_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x13]->setValue_uint64(state.x[13]);
+                m_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x14]->setValue_uint64(state.x[14]);
+                m_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x15]->setValue_uint64(state.x[15]);
+                m_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x16]->setValue_uint64(state.x[16]);
+                m_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x17]->setValue_uint64(state.x[17]);
+                m_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x18]->setValue_uint64(state.x[18]);
+                m_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x19]->setValue_uint64(state.x[19]);
+                m_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x20]->setValue_uint64(state.x[20]);
+                m_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x21]->setValue_uint64(state.x[21]);
+                m_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x22]->setValue_uint64(state.x[22]);
+                m_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x23]->setValue_uint64(state.x[23]);
+                m_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x24]->setValue_uint64(state.x[24]);
+                m_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x25]->setValue_uint64(state.x[25]);
+                m_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x26]->setValue_uint64(state.x[26]);
+                m_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x27]->setValue_uint64(state.x[27]);
+                m_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::x28]->setValue_uint64(state.x[28]);
+                m_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::fp]->setValue_uint64(state.fp);
+                m_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::lr]->setValue_uint64(state.lr);
+                m_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::sp]->setValue_uint64(state.sp);
+                m_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::pc]->setValue_uint64(state.pc);
+                m_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::cpsr]->setValue_uint32(state.cpsr);
+                m_lineEdit_mach_unix_thread_arm_64[N_mach_unix_thread_arm_64::pad]->setValue_uint32(state.pad);
 
                 qint64 nOffset = nDataOffset;
                 qint64 nSize = mach.get_arm_thread_state64_t_size();
 
-                loadHexSubdevice(nOffset, nSize, nOffset, &g_subDevice[SMACH::TYPE_mach_unix_thread_arm_64], ui->widgetHex_unix_thread_arm_64);
+                loadHexSubdevice(nOffset, nSize, nOffset, &m_subDevice[SMACH::TYPE_mach_unix_thread_arm_64], ui->widgetHex_unix_thread_arm_64);
 
                 blockSignals(false);
             }
         } else if (nType == SMACH::TYPE_mach_unix_thread_m68k_32) {
             if (!isInitPresent(sInit)) {
                 createHeaderTable(SMACH::TYPE_mach_unix_thread_m68k_32, ui->tableWidget_unix_thread_m68k_32, N_mach_unix_thread_m68k_32::records,
-                                  g_lineEdit_mach_unix_thread_m68k_32, N_mach_unix_thread_m68k_32::__data_size, 0, nDataOffset);
+                                  m_lineEdit_mach_unix_thread_m68k_32, N_mach_unix_thread_m68k_32::__data_size, 0, nDataOffset);
 
                 blockSignals(true);
 
                 XMACH_DEF::m68k_thread_state32_t state = mach._read_m68k_thread_state32_t(nDataOffset);
 
-                g_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::dreg0]->setValue_uint32(state.dreg[0]);
-                g_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::dreg1]->setValue_uint32(state.dreg[1]);
-                g_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::dreg2]->setValue_uint32(state.dreg[2]);
-                g_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::dreg3]->setValue_uint32(state.dreg[3]);
-                g_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::dreg4]->setValue_uint32(state.dreg[4]);
-                g_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::dreg5]->setValue_uint32(state.dreg[5]);
-                g_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::dreg6]->setValue_uint32(state.dreg[6]);
-                g_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::dreg7]->setValue_uint32(state.dreg[7]);
-                g_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::areg0]->setValue_uint32(state.areg[0]);
-                g_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::areg1]->setValue_uint32(state.areg[1]);
-                g_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::areg2]->setValue_uint32(state.areg[2]);
-                g_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::areg3]->setValue_uint32(state.areg[3]);
-                g_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::areg4]->setValue_uint32(state.areg[4]);
-                g_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::areg5]->setValue_uint32(state.areg[5]);
-                g_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::areg6]->setValue_uint32(state.areg[6]);
-                g_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::areg7]->setValue_uint32(state.areg[7]);
-                g_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::pad0]->setValue_uint16(state.pad0);
-                g_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::sr]->setValue_uint16(state.sr);
-                g_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::pc]->setValue_uint32(state.pc);
+                m_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::dreg0]->setValue_uint32(state.dreg[0]);
+                m_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::dreg1]->setValue_uint32(state.dreg[1]);
+                m_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::dreg2]->setValue_uint32(state.dreg[2]);
+                m_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::dreg3]->setValue_uint32(state.dreg[3]);
+                m_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::dreg4]->setValue_uint32(state.dreg[4]);
+                m_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::dreg5]->setValue_uint32(state.dreg[5]);
+                m_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::dreg6]->setValue_uint32(state.dreg[6]);
+                m_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::dreg7]->setValue_uint32(state.dreg[7]);
+                m_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::areg0]->setValue_uint32(state.areg[0]);
+                m_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::areg1]->setValue_uint32(state.areg[1]);
+                m_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::areg2]->setValue_uint32(state.areg[2]);
+                m_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::areg3]->setValue_uint32(state.areg[3]);
+                m_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::areg4]->setValue_uint32(state.areg[4]);
+                m_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::areg5]->setValue_uint32(state.areg[5]);
+                m_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::areg6]->setValue_uint32(state.areg[6]);
+                m_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::areg7]->setValue_uint32(state.areg[7]);
+                m_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::pad0]->setValue_uint16(state.pad0);
+                m_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::sr]->setValue_uint16(state.sr);
+                m_lineEdit_mach_unix_thread_m68k_32[N_mach_unix_thread_m68k_32::pc]->setValue_uint32(state.pc);
 
                 qint64 nOffset = nDataOffset;
                 qint64 nSize = mach.get_m68k_thread_state32_t_size();
 
-                loadHexSubdevice(nOffset, nSize, nOffset, &g_subDevice[SMACH::TYPE_mach_unix_thread_m68k_32], ui->widgetHex_unix_thread_m68k_32);
+                loadHexSubdevice(nOffset, nSize, nOffset, &m_subDevice[SMACH::TYPE_mach_unix_thread_m68k_32], ui->widgetHex_unix_thread_m68k_32);
 
                 blockSignals(false);
             }
         } else if (nType == SMACH::TYPE_mach_unix_thread_ppc_32) {
             if (!isInitPresent(sInit)) {
                 createHeaderTable(SMACH::TYPE_mach_unix_thread_ppc_32, ui->tableWidget_unix_thread_ppc_32, N_mach_unix_thread_ppc_32::records,
-                                  g_lineEdit_mach_unix_thread_ppc_32, N_mach_unix_thread_ppc_32::__data_size, 0, nDataOffset);
+                                  m_lineEdit_mach_unix_thread_ppc_32, N_mach_unix_thread_ppc_32::__data_size, 0, nDataOffset);
 
                 blockSignals(true);
 
                 XMACH_DEF::ppc_thread_state32_t state = mach._read_ppc_thread_state32_t(nDataOffset);
 
-                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::srr0]->setValue_uint32(state.srr0);
-                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::srr1]->setValue_uint32(state.srr1);
-                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r0]->setValue_uint32(state.r[0]);
-                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r1]->setValue_uint32(state.r[1]);
-                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r2]->setValue_uint32(state.r[2]);
-                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r3]->setValue_uint32(state.r[3]);
-                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r4]->setValue_uint32(state.r[4]);
-                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r5]->setValue_uint32(state.r[5]);
-                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r6]->setValue_uint32(state.r[6]);
-                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r7]->setValue_uint32(state.r[7]);
-                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r8]->setValue_uint32(state.r[8]);
-                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r9]->setValue_uint32(state.r[9]);
-                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r10]->setValue_uint32(state.r[10]);
-                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r11]->setValue_uint32(state.r[11]);
-                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r12]->setValue_uint32(state.r[12]);
-                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r13]->setValue_uint32(state.r[13]);
-                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r14]->setValue_uint32(state.r[14]);
-                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r15]->setValue_uint32(state.r[15]);
-                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r16]->setValue_uint32(state.r[16]);
-                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r17]->setValue_uint32(state.r[17]);
-                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r18]->setValue_uint32(state.r[18]);
-                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r19]->setValue_uint32(state.r[19]);
-                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r20]->setValue_uint32(state.r[20]);
-                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r21]->setValue_uint32(state.r[21]);
-                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r22]->setValue_uint32(state.r[22]);
-                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r23]->setValue_uint32(state.r[23]);
-                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r24]->setValue_uint32(state.r[24]);
-                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r25]->setValue_uint32(state.r[25]);
-                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r26]->setValue_uint32(state.r[26]);
-                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r27]->setValue_uint32(state.r[27]);
-                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r28]->setValue_uint32(state.r[28]);
-                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r29]->setValue_uint32(state.r[29]);
-                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r30]->setValue_uint32(state.r[30]);
-                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r31]->setValue_uint32(state.r[31]);
-                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::ct]->setValue_uint32(state.ct);
-                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::xer]->setValue_uint32(state.xer);
-                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::lr]->setValue_uint32(state.lr);
-                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::ctr]->setValue_uint32(state.ctr);
-                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::mq]->setValue_uint32(state.mq);
-                g_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::vrsave]->setValue_uint32(state.vrsave);
+                m_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::srr0]->setValue_uint32(state.srr0);
+                m_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::srr1]->setValue_uint32(state.srr1);
+                m_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r0]->setValue_uint32(state.r[0]);
+                m_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r1]->setValue_uint32(state.r[1]);
+                m_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r2]->setValue_uint32(state.r[2]);
+                m_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r3]->setValue_uint32(state.r[3]);
+                m_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r4]->setValue_uint32(state.r[4]);
+                m_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r5]->setValue_uint32(state.r[5]);
+                m_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r6]->setValue_uint32(state.r[6]);
+                m_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r7]->setValue_uint32(state.r[7]);
+                m_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r8]->setValue_uint32(state.r[8]);
+                m_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r9]->setValue_uint32(state.r[9]);
+                m_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r10]->setValue_uint32(state.r[10]);
+                m_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r11]->setValue_uint32(state.r[11]);
+                m_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r12]->setValue_uint32(state.r[12]);
+                m_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r13]->setValue_uint32(state.r[13]);
+                m_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r14]->setValue_uint32(state.r[14]);
+                m_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r15]->setValue_uint32(state.r[15]);
+                m_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r16]->setValue_uint32(state.r[16]);
+                m_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r17]->setValue_uint32(state.r[17]);
+                m_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r18]->setValue_uint32(state.r[18]);
+                m_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r19]->setValue_uint32(state.r[19]);
+                m_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r20]->setValue_uint32(state.r[20]);
+                m_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r21]->setValue_uint32(state.r[21]);
+                m_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r22]->setValue_uint32(state.r[22]);
+                m_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r23]->setValue_uint32(state.r[23]);
+                m_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r24]->setValue_uint32(state.r[24]);
+                m_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r25]->setValue_uint32(state.r[25]);
+                m_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r26]->setValue_uint32(state.r[26]);
+                m_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r27]->setValue_uint32(state.r[27]);
+                m_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r28]->setValue_uint32(state.r[28]);
+                m_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r29]->setValue_uint32(state.r[29]);
+                m_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r30]->setValue_uint32(state.r[30]);
+                m_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::r31]->setValue_uint32(state.r[31]);
+                m_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::ct]->setValue_uint32(state.ct);
+                m_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::xer]->setValue_uint32(state.xer);
+                m_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::lr]->setValue_uint32(state.lr);
+                m_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::ctr]->setValue_uint32(state.ctr);
+                m_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::mq]->setValue_uint32(state.mq);
+                m_lineEdit_mach_unix_thread_ppc_32[N_mach_unix_thread_ppc_32::vrsave]->setValue_uint32(state.vrsave);
 
                 qint64 nOffset = nDataOffset;
                 qint64 nSize = mach.get_ppc_thread_state32_t_size();
 
-                loadHexSubdevice(nOffset, nSize, nOffset, &g_subDevice[SMACH::TYPE_mach_unix_thread_arm_32], ui->widgetHex_unix_thread_arm_32);
+                loadHexSubdevice(nOffset, nSize, nOffset, &m_subDevice[SMACH::TYPE_mach_unix_thread_arm_32], ui->widgetHex_unix_thread_arm_32);
 
                 blockSignals(false);
             }
         } else if (nType == SMACH::TYPE_STRINGTABLE) {
             if (!isInitPresent(sInit)) {
-                loadHexSubdevice(nDataOffset, nDataSize, nDataOffset, &g_subDevice[SMACH::TYPE_STRINGTABLE], ui->widgetHex_StringTable);
+                loadHexSubdevice(nDataOffset, nDataSize, nDataOffset, &m_subDevice[SMACH::TYPE_STRINGTABLE], ui->widgetHex_StringTable);
             }
         } else if (nType == SMACH::TYPE_SYMBOLTABLE) {
             if (!isInitPresent(sInit)) {
@@ -2329,7 +2329,7 @@ void MACHWidget::reloadData(bool bSaveSelection)
                 connect(ui->tableView_DYLD_INFO_rebase->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_DYLD_INFO_rebase_currentRowChanged(QModelIndex, QModelIndex)));
 
-                loadHexSubdevice(nDataOffset, nDataSize, nDataOffset, &g_subDevice[SMACH::TYPE_DYLD_INFO_rebase], ui->widgetHex_DYLD_INFO_rebase);
+                loadHexSubdevice(nDataOffset, nDataSize, nDataOffset, &m_subDevice[SMACH::TYPE_DYLD_INFO_rebase], ui->widgetHex_DYLD_INFO_rebase);
             }
         } else if (nType == SMACH::TYPE_DYLD_INFO_bind) {
             if (!isInitPresent(sInit)) {
@@ -2340,7 +2340,7 @@ void MACHWidget::reloadData(bool bSaveSelection)
                 connect(ui->tableView_DYLD_INFO_bind->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_DYLD_INFO_bind_currentRowChanged(QModelIndex, QModelIndex)));
 
-                loadHexSubdevice(nDataOffset, nDataSize, nDataOffset, &g_subDevice[SMACH::TYPE_DYLD_INFO_bind], ui->widgetHex_DYLD_INFO_bind);
+                loadHexSubdevice(nDataOffset, nDataSize, nDataOffset, &m_subDevice[SMACH::TYPE_DYLD_INFO_bind], ui->widgetHex_DYLD_INFO_bind);
             }
         } else if (nType == SMACH::TYPE_DYLD_INFO_weak_bind) {
             if (!isInitPresent(sInit)) {
@@ -2351,7 +2351,7 @@ void MACHWidget::reloadData(bool bSaveSelection)
                 connect(ui->tableView_DYLD_INFO_weak_bind->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_DYLD_INFO_weak_bind_currentRowChanged(QModelIndex, QModelIndex)));
 
-                loadHexSubdevice(nDataOffset, nDataSize, nDataOffset, &g_subDevice[SMACH::TYPE_DYLD_INFO_weak_bind], ui->widgetHex_DYLD_INFO_weak_bind);
+                loadHexSubdevice(nDataOffset, nDataSize, nDataOffset, &m_subDevice[SMACH::TYPE_DYLD_INFO_weak_bind], ui->widgetHex_DYLD_INFO_weak_bind);
             }
         } else if (nType == SMACH::TYPE_DYLD_INFO_lazy_bind) {
             if (!isInitPresent(sInit)) {
@@ -2362,7 +2362,7 @@ void MACHWidget::reloadData(bool bSaveSelection)
                 connect(ui->tableView_DYLD_INFO_lazy_bind->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_DYLD_INFO_lazy_bind_currentRowChanged(QModelIndex, QModelIndex)));
 
-                loadHexSubdevice(nDataOffset, nDataSize, nDataOffset, &g_subDevice[SMACH::TYPE_DYLD_INFO_lazy_bind], ui->widgetHex_DYLD_INFO_lazy_bind);
+                loadHexSubdevice(nDataOffset, nDataSize, nDataOffset, &m_subDevice[SMACH::TYPE_DYLD_INFO_lazy_bind], ui->widgetHex_DYLD_INFO_lazy_bind);
             }
         } else if (nType == SMACH::TYPE_DYLD_INFO_export) {
             if (!isInitPresent(sInit)) {
@@ -2373,7 +2373,7 @@ void MACHWidget::reloadData(bool bSaveSelection)
                 connect(ui->tableView_DYLD_INFO_export->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_DYLD_INFO_export_currentRowChanged(QModelIndex, QModelIndex)));
 
-                loadHexSubdevice(nDataOffset, nDataSize, nDataOffset, &g_subDevice[SMACH::TYPE_DYLD_INFO_export], ui->widgetHex_DYLD_INFO_export);
+                loadHexSubdevice(nDataOffset, nDataSize, nDataOffset, &m_subDevice[SMACH::TYPE_DYLD_INFO_export], ui->widgetHex_DYLD_INFO_export);
             }
         } else if (nType == SMACH::TYPE_DYSYMTAB_toc) {
             if (!isInitPresent(sInit)) {
@@ -2430,10 +2430,10 @@ void MACHWidget::_widgetValueChanged(QVariant vValue)
     switch (nStype) {
         case SMACH::TYPE_mach_header:
             switch (nNdata) {
-                case N_mach_header::magic: g_lineEdit_mach_header[N_mach_header::magic]->setValue_uint32((quint32)nValue); break;
-                case N_mach_header::cputype: g_lineEdit_mach_header[N_mach_header::cputype]->setValue_uint32((quint32)nValue); break;
-                case N_mach_header::filetype: g_lineEdit_mach_header[N_mach_header::filetype]->setValue_uint32((quint32)nValue); break;
-                case N_mach_header::flags: g_lineEdit_mach_header[N_mach_header::flags]->setValue_uint32((quint32)nValue); break;
+                case N_mach_header::magic: m_lineEdit_mach_header[N_mach_header::magic]->setValue_uint32((quint32)nValue); break;
+                case N_mach_header::cputype: m_lineEdit_mach_header[N_mach_header::cputype]->setValue_uint32((quint32)nValue); break;
+                case N_mach_header::filetype: m_lineEdit_mach_header[N_mach_header::filetype]->setValue_uint32((quint32)nValue); break;
+                case N_mach_header::flags: m_lineEdit_mach_header[N_mach_header::flags]->setValue_uint32((quint32)nValue); break;
             }
 
             break;
@@ -2678,21 +2678,21 @@ void MACHWidget::onTableView_commands_currentRowChanged(const QModelIndex &curre
 {
     Q_UNUSED(previous)
 
-    loadHexSubdeviceByTableView(current.row(), SMACH::TYPE_mach_commands, ui->widgetHex_commands, ui->tableView_commands, &g_subDevice[SMACH::TYPE_mach_commands]);
+    loadHexSubdeviceByTableView(current.row(), SMACH::TYPE_mach_commands, ui->widgetHex_commands, ui->tableView_commands, &m_subDevice[SMACH::TYPE_mach_commands]);
 }
 
 void MACHWidget::onTableView_segments_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
 {
     Q_UNUSED(previous)
 
-    loadHexSubdeviceByTableView(current.row(), SMACH::TYPE_mach_segments, ui->widgetHex_segments, ui->tableView_segments, &g_subDevice[SMACH::TYPE_mach_segments]);
+    loadHexSubdeviceByTableView(current.row(), SMACH::TYPE_mach_segments, ui->widgetHex_segments, ui->tableView_segments, &m_subDevice[SMACH::TYPE_mach_segments]);
 }
 
 void MACHWidget::onTableView_sections_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
 {
     Q_UNUSED(previous)
 
-    loadHexSubdeviceByTableView(current.row(), SMACH::TYPE_mach_sections, ui->widgetHex_sections, ui->tableView_sections, &g_subDevice[SMACH::TYPE_mach_sections]);
+    loadHexSubdeviceByTableView(current.row(), SMACH::TYPE_mach_sections, ui->widgetHex_sections, ui->tableView_sections, &m_subDevice[SMACH::TYPE_mach_sections]);
 }
 
 void MACHWidget::onTableView_libraries_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
@@ -2700,7 +2700,7 @@ void MACHWidget::onTableView_libraries_currentRowChanged(const QModelIndex &curr
     Q_UNUSED(current)
     Q_UNUSED(previous)
 
-    loadHexSubdeviceByTableView(current.row(), SMACH::TYPE_mach_libraries, ui->widgetHex_libraries, ui->tableView_libraries, &g_subDevice[SMACH::TYPE_mach_libraries]);
+    loadHexSubdeviceByTableView(current.row(), SMACH::TYPE_mach_libraries, ui->widgetHex_libraries, ui->tableView_libraries, &m_subDevice[SMACH::TYPE_mach_libraries]);
 }
 
 void MACHWidget::onTableView_weak_libraries_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
@@ -2709,7 +2709,7 @@ void MACHWidget::onTableView_weak_libraries_currentRowChanged(const QModelIndex 
     Q_UNUSED(previous)
 
     loadHexSubdeviceByTableView(current.row(), SMACH::TYPE_mach_weak_libraries, ui->widgetHex_weak_libraries, ui->tableView_weak_libraries,
-                                &g_subDevice[SMACH::TYPE_mach_weak_libraries]);
+                                &m_subDevice[SMACH::TYPE_mach_weak_libraries]);
 }
 
 void MACHWidget::onTableView_id_library_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
@@ -2718,7 +2718,7 @@ void MACHWidget::onTableView_id_library_currentRowChanged(const QModelIndex &cur
     Q_UNUSED(previous)
 
     loadHexSubdeviceByTableView(current.row(), SMACH::TYPE_mach_id_library, ui->widgetHex_id_library, ui->tableView_id_library,
-                                &g_subDevice[SMACH::TYPE_mach_id_library]);
+                                &m_subDevice[SMACH::TYPE_mach_id_library]);
 }
 
 void MACHWidget::onTableView_LOADFVMLIB_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
@@ -2727,7 +2727,7 @@ void MACHWidget::onTableView_LOADFVMLIB_currentRowChanged(const QModelIndex &cur
     Q_UNUSED(previous)
 
     loadHexSubdeviceByTableView(current.row(), SMACH::TYPE_mach_LOADFVMLIB, ui->widgetHex_LOADFVMLIB, ui->tableView_LOADFVMLIB,
-                                &g_subDevice[SMACH::TYPE_mach_LOADFVMLIB]);
+                                &m_subDevice[SMACH::TYPE_mach_LOADFVMLIB]);
 }
 
 void MACHWidget::onTableView_IDFVMLIB_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
@@ -2735,7 +2735,7 @@ void MACHWidget::onTableView_IDFVMLIB_currentRowChanged(const QModelIndex &curre
     Q_UNUSED(current)
     Q_UNUSED(previous)
 
-    loadHexSubdeviceByTableView(current.row(), SMACH::TYPE_mach_IDFVMLIB, ui->widgetHex_IDFVMLIB, ui->tableView_IDFVMLIB, &g_subDevice[SMACH::TYPE_mach_IDFVMLIB]);
+    loadHexSubdeviceByTableView(current.row(), SMACH::TYPE_mach_IDFVMLIB, ui->widgetHex_IDFVMLIB, ui->tableView_IDFVMLIB, &m_subDevice[SMACH::TYPE_mach_IDFVMLIB]);
 }
 
 void MACHWidget::on_tableView_commands_doubleClicked(const QModelIndex &index)
