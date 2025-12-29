@@ -36,7 +36,7 @@ public:
 private:
     QIODevice *m_pDevice;
     XBinary::DATA_RECORDS_OPTIONS m_dataRecordsOptions;
-    QList<XBinary::DATA_RECORD_ROW> *g_pListDataRecordsRows;
+    QList<XBinary::DATA_RECORD_ROW> *m_pListDataRecordsRows;
     QList<QString> *m_pListTitles;
     XBinary::PDSTRUCT *m_pPdStruct;
 };
