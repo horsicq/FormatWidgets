@@ -35,7 +35,7 @@ PEWidget::PEWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::PEWidge
     ui->toolButtonPrev->setToolTip(tr("Previous visited"));
     ui->checkBoxReadonly->setToolTip(tr("Readonly"));
 
-    memset(g_subDevice, 0, sizeof g_subDevice);
+    memset(m_subDevice, 0, sizeof m_subDevice);
 
     initWidget();
     initDisasmView(ui->widgetDisasm_DosStub);
@@ -68,23 +68,23 @@ void PEWidget::clear()
 {
     PEWidget::reset();
 
-    memset(g_lineEdit_IMAGE_DOS_HEADER, 0, sizeof g_lineEdit_IMAGE_DOS_HEADER);
-    memset(g_lineEdit_IMAGE_NT_HEADERS, 0, sizeof g_lineEdit_IMAGE_NT_HEADERS);
-    memset(g_lineEdit_IMAGE_FILE_HEADER, 0, sizeof g_lineEdit_IMAGE_FILE_HEADER);
-    memset(g_lineEdit_IMAGE_OPTIONAL_HEADER, 0, sizeof g_lineEdit_IMAGE_OPTIONAL_HEADER);
-    memset(g_lineEdit_TLS, 0, sizeof g_lineEdit_TLS);
-    memset(g_lineEdit_LoadConfig, 0, sizeof g_lineEdit_LoadConfig);
-    memset(g_lineEdit_Version_FixedFileInfo, 0, sizeof g_lineEdit_Version_FixedFileInfo);
-    memset(g_lineEdit_NetHeader, 0, sizeof g_lineEdit_NetHeader);
-    memset(g_lineEdit_Net_Metadata, 0, sizeof g_lineEdit_Net_Metadata);
-    memset(g_lineEdit_EXPORT, 0, sizeof g_lineEdit_EXPORT);
-    memset(g_lineEdit_Resources, 0, sizeof g_lineEdit_Resources);
+    memset(m_lineEdit_IMAGE_DOS_HEADER, 0, sizeof m_lineEdit_IMAGE_DOS_HEADER);
+    memset(m_lineEdit_IMAGE_NT_HEADERS, 0, sizeof m_lineEdit_IMAGE_NT_HEADERS);
+    memset(m_lineEdit_IMAGE_FILE_HEADER, 0, sizeof m_lineEdit_IMAGE_FILE_HEADER);
+    memset(m_lineEdit_IMAGE_OPTIONAL_HEADER, 0, sizeof m_lineEdit_IMAGE_OPTIONAL_HEADER);
+    memset(m_lineEdit_TLS, 0, sizeof m_lineEdit_TLS);
+    memset(m_lineEdit_LoadConfig, 0, sizeof m_lineEdit_LoadConfig);
+    memset(m_lineEdit_Version_FixedFileInfo, 0, sizeof m_lineEdit_Version_FixedFileInfo);
+    memset(m_lineEdit_NetHeader, 0, sizeof m_lineEdit_NetHeader);
+    memset(m_lineEdit_Net_Metadata, 0, sizeof m_lineEdit_Net_Metadata);
+    memset(m_lineEdit_EXPORT, 0, sizeof m_lineEdit_EXPORT);
+    memset(m_lineEdit_Resources, 0, sizeof m_lineEdit_Resources);
     memset(m_comboBox, 0, sizeof m_comboBox);
-    memset(g_pushButton, 0, sizeof g_pushButton);
-    memset(g_dateTimeEdit, 0, sizeof g_dateTimeEdit);
-    memset(g_invWidget, 0, sizeof g_invWidget);
+    memset(m_pushButton, 0, sizeof m_pushButton);
+    memset(m_dateTimeEdit, 0, sizeof m_dateTimeEdit);
+    memset(m_invWidget, 0, sizeof m_invWidget);
 
-    _deleteSubdevices(g_subDevice, (sizeof g_subDevice) / (sizeof(SubDevice *)));
+    _deleteSubdevices(m_subDevice, (sizeof m_subDevice) / (sizeof(SubDevice *)));
 
     resetWidget();
 
@@ -297,7 +297,7 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue, qint32 nStype, qint32 nNda
                 case SPE::TYPE_IMAGE_DOS_HEADER:
                     switch (nNdata) {
                         case N_IMAGE_DOS_HEADER::e_magic: m_comboBox[CB_IMAGE_DOS_HEADER_e_magic]->setValue(nValue); break;
-                        case N_IMAGE_DOS_HEADER::e_lfanew: g_invWidget[INV_IMAGE_DOS_HEADER_e_lfanew]->setOffsetAndSize(&pe, (quint32)nValue, 0); break;
+                        case N_IMAGE_DOS_HEADER::e_lfanew: m_invWidget[INV_IMAGE_DOS_HEADER_e_lfanew]->setOffsetAndSize(&pe, (quint32)nValue, 0); break;
                     }
                     break;
 
@@ -311,10 +311,10 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue, qint32 nStype, qint32 nNda
                     switch (nNdata) {
                         case N_IMAGE_FILE_HEADER::Machine: m_comboBox[CB_IMAGE_FILE_HEADER_Machine]->setValue(nValue); break;
                         case N_IMAGE_FILE_HEADER::TimeDateStamp:
-                            g_dateTimeEdit[TD_IMAGE_FILE_HEADER_TimeDateStamp]->setValue(nValue, XDateTimeEditX::DT_TYPE_POSIX);
+                            m_dateTimeEdit[TD_IMAGE_FILE_HEADER_TimeDateStamp]->setValue(nValue, XDateTimeEditX::DT_TYPE_POSIX);
                             break;
                         case N_IMAGE_FILE_HEADER::PointerToSymbolTable:
-                            g_invWidget[INV_IMAGE_FILE_HEADER_PointerToSymbolTable]->setAddressAndSize(&pe, (quint32)nValue, 0);
+                            m_invWidget[INV_IMAGE_FILE_HEADER_PointerToSymbolTable]->setAddressAndSize(&pe, (quint32)nValue, 0);
                             break;
                         case N_IMAGE_FILE_HEADER::Characteristics: m_comboBox[CB_IMAGE_FILE_HEADER_Characteristics]->setValue(nValue); break;
                     }
@@ -324,13 +324,13 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue, qint32 nStype, qint32 nNda
                     switch (nNdata) {
                         case N_IMAGE_OPTIONAL_HEADER::Magic: m_comboBox[CB_IMAGE_OPTIONAL_HEADER_Magic]->setValue(nValue); break;
                         case N_IMAGE_OPTIONAL_HEADER::AddressOfEntryPoint:
-                            g_invWidget[INV_IMAGE_OPTIONAL_HEADER_AddressOfEntryPoint]->setAddressAndSize(&pe, pe.getBaseAddress() + (quint32)nValue, 0);
+                            m_invWidget[INV_IMAGE_OPTIONAL_HEADER_AddressOfEntryPoint]->setAddressAndSize(&pe, pe.getBaseAddress() + (quint32)nValue, 0);
                             break;
                         case N_IMAGE_OPTIONAL_HEADER::BaseOfCode:
-                            g_invWidget[INV_IMAGE_OPTIONAL_HEADER_BaseOfCode]->setAddressAndSize(&pe, pe.getBaseAddress() + (quint32)nValue, 0);
+                            m_invWidget[INV_IMAGE_OPTIONAL_HEADER_BaseOfCode]->setAddressAndSize(&pe, pe.getBaseAddress() + (quint32)nValue, 0);
                             break;
                         case N_IMAGE_OPTIONAL_HEADER::BaseOfData:
-                            g_invWidget[INV_IMAGE_OPTIONAL_HEADER_BaseOfData]->setAddressAndSize(&pe, pe.getBaseAddress() + (quint32)nValue, 0);
+                            m_invWidget[INV_IMAGE_OPTIONAL_HEADER_BaseOfData]->setAddressAndSize(&pe, pe.getBaseAddress() + (quint32)nValue, 0);
                             break;
                         case N_IMAGE_OPTIONAL_HEADER::Subsystem: m_comboBox[CB_IMAGE_OPTIONAL_HEADER_Subsystem]->setValue(nValue); break;
                         case N_IMAGE_OPTIONAL_HEADER::DllCharacteristics: m_comboBox[CB_IMAGE_OPTIONAL_HEADER_DllCharacteristics]->setValue(nValue); break;
@@ -345,26 +345,26 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue, qint32 nStype, qint32 nNda
 
                 case SPE::TYPE_EXPORT:
                     switch (nNdata) {
-                        case N_IMAGE_EXPORT::TimeDateStamp: g_dateTimeEdit[TD_IMAGE_EXPORT_TimeDateStamp]->setValue(nValue, XDateTimeEditX::DT_TYPE_POSIX); break;
-                        case N_IMAGE_EXPORT::Name: g_invWidget[INV_IMAGE_EXPORT_Name]->setAddressAndSize(&pe, pe.getBaseAddress() + (quint32)nValue, 0); break;
+                        case N_IMAGE_EXPORT::TimeDateStamp: m_dateTimeEdit[TD_IMAGE_EXPORT_TimeDateStamp]->setValue(nValue, XDateTimeEditX::DT_TYPE_POSIX); break;
+                        case N_IMAGE_EXPORT::Name: m_invWidget[INV_IMAGE_EXPORT_Name]->setAddressAndSize(&pe, pe.getBaseAddress() + (quint32)nValue, 0); break;
                         case N_IMAGE_EXPORT::AddressOfFunctions:
-                            g_invWidget[INV_IMAGE_EXPORT_AddressOfFunctions]->setAddressAndSize(&pe, pe.getBaseAddress() + (quint32)nValue, 0);
+                            m_invWidget[INV_IMAGE_EXPORT_AddressOfFunctions]->setAddressAndSize(&pe, pe.getBaseAddress() + (quint32)nValue, 0);
                             break;
                         case N_IMAGE_EXPORT::AddressOfNames:
-                            g_invWidget[INV_IMAGE_EXPORT_AddressOfNames]->setAddressAndSize(&pe, pe.getBaseAddress() + (quint32)nValue, 0);
+                            m_invWidget[INV_IMAGE_EXPORT_AddressOfNames]->setAddressAndSize(&pe, pe.getBaseAddress() + (quint32)nValue, 0);
                             break;
                         case N_IMAGE_EXPORT::AddressOfNameOrdinals:
-                            g_invWidget[INV_IMAGE_EXPORT_AddressOfNameOrdinals]->setAddressAndSize(&pe, pe.getBaseAddress() + (quint32)nValue, 0);
+                            m_invWidget[INV_IMAGE_EXPORT_AddressOfNameOrdinals]->setAddressAndSize(&pe, pe.getBaseAddress() + (quint32)nValue, 0);
                             break;
                     }
                     break;
 
                 case SPE::TYPE_TLS:
                     switch (nNdata) {
-                        case N_IMAGE_TLS::StartAddressOfRawData: g_invWidget[INV_IMAGE_TLS_StartAddressOfRawData]->setAddressAndSize(&pe, (quint64)nValue, 0); break;
-                        case N_IMAGE_TLS::EndAddressOfRawData: g_invWidget[INV_IMAGE_TLS_EndAddressOfRawData]->setAddressAndSize(&pe, (quint64)nValue, 0); break;
-                        case N_IMAGE_TLS::AddressOfIndex: g_invWidget[INV_IMAGE_TLS_AddressOfIndex]->setAddressAndSize(&pe, (quint64)nValue, 0); break;
-                        case N_IMAGE_TLS::AddressOfCallBacks: g_invWidget[INV_IMAGE_TLS_AddressOfCallBacks]->setAddressAndSize(&pe, (quint64)nValue, 0); break;
+                        case N_IMAGE_TLS::StartAddressOfRawData: m_invWidget[INV_IMAGE_TLS_StartAddressOfRawData]->setAddressAndSize(&pe, (quint64)nValue, 0); break;
+                        case N_IMAGE_TLS::EndAddressOfRawData: m_invWidget[INV_IMAGE_TLS_EndAddressOfRawData]->setAddressAndSize(&pe, (quint64)nValue, 0); break;
+                        case N_IMAGE_TLS::AddressOfIndex: m_invWidget[INV_IMAGE_TLS_AddressOfIndex]->setAddressAndSize(&pe, (quint64)nValue, 0); break;
+                        case N_IMAGE_TLS::AddressOfCallBacks: m_invWidget[INV_IMAGE_TLS_AddressOfCallBacks]->setAddressAndSize(&pe, (quint64)nValue, 0); break;
                     }
                     break;
 
@@ -385,16 +385,16 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue, qint32 nStype, qint32 nNda
 
                 case SPE::TYPE_LOADCONFIG:
                     switch (nNdata) {
-                        case N_IMAGE_LOADCONFIG::SecurityCookie: g_invWidget[INV_IMAGE_LOADCONFIG_SecurityCookie]->setAddressAndSize(&pe, (quint64)nValue, 0); break;
-                        case N_IMAGE_LOADCONFIG::SEHandlerTable: g_invWidget[INV_IMAGE_LOADCONFIG_SEHandlerTable]->setAddressAndSize(&pe, (quint64)nValue, 0); break;
+                        case N_IMAGE_LOADCONFIG::SecurityCookie: m_invWidget[INV_IMAGE_LOADCONFIG_SecurityCookie]->setAddressAndSize(&pe, (quint64)nValue, 0); break;
+                        case N_IMAGE_LOADCONFIG::SEHandlerTable: m_invWidget[INV_IMAGE_LOADCONFIG_SEHandlerTable]->setAddressAndSize(&pe, (quint64)nValue, 0); break;
                         case N_IMAGE_LOADCONFIG::GuardCFCheckFunctionPointer:
-                            g_invWidget[INV_IMAGE_LOADCONFIG_GuardCFCheckFunctionPointer]->setAddressAndSize(&pe, (quint64)nValue, 0);
+                            m_invWidget[INV_IMAGE_LOADCONFIG_GuardCFCheckFunctionPointer]->setAddressAndSize(&pe, (quint64)nValue, 0);
                             break;
                         case N_IMAGE_LOADCONFIG::GuardCFDispatchFunctionPointer:
-                            g_invWidget[INV_IMAGE_LOADCONFIG_GuardCFDispatchFunctionPointer]->setAddressAndSize(&pe, (quint64)nValue, 0);
+                            m_invWidget[INV_IMAGE_LOADCONFIG_GuardCFDispatchFunctionPointer]->setAddressAndSize(&pe, (quint64)nValue, 0);
                             break;
                         case N_IMAGE_LOADCONFIG::GuardMemcpyFunctionPointer:
-                            g_invWidget[INV_IMAGE_LOADCONFIG_GuardMemcpyFunctionPointer]->setAddressAndSize(&pe, (quint64)nValue, 0);
+                            m_invWidget[INV_IMAGE_LOADCONFIG_GuardMemcpyFunctionPointer]->setAddressAndSize(&pe, (quint64)nValue, 0);
                             break;
                     }
                     break;
@@ -809,22 +809,22 @@ void PEWidget::setReadonly(bool bState)
         ui->checkBoxReadonly->blockSignals(bBlocked1);
     }
 
-    setLineEditsReadOnly(g_lineEdit_IMAGE_DOS_HEADER, N_IMAGE_DOS_HEADER::__data_size, bState);
-    setLineEditsReadOnly(g_lineEdit_IMAGE_NT_HEADERS, N_IMAGE_NT_HEADERS::__data_size, bState);
-    setLineEditsReadOnly(g_lineEdit_IMAGE_FILE_HEADER, N_IMAGE_FILE_HEADER::__data_size, bState);
-    setLineEditsReadOnly(g_lineEdit_IMAGE_OPTIONAL_HEADER, N_IMAGE_OPTIONAL_HEADER::__data_size, bState);
-    setLineEditsReadOnly(g_lineEdit_TLS, N_IMAGE_TLS::__data_size, bState);
-    setLineEditsReadOnly(g_lineEdit_Version_FixedFileInfo, N_IMAGE_RESOURCE_FIXEDFILEINFO::__data_size, bState);
-    setLineEditsReadOnly(g_lineEdit_LoadConfig, N_IMAGE_LOADCONFIG::__data_size, bState);
-    setLineEditsReadOnly(g_lineEdit_EXPORT, N_IMAGE_EXPORT::__data_size, bState);
-    setLineEditsReadOnly(g_lineEdit_NetHeader, N_IMAGE_NETHEADER::__data_size, bState);
-    setLineEditsReadOnly(g_lineEdit_Net_Metadata, N_IMAGE_NET_METADATA::__data_size, bState);
+    setLineEditsReadOnly(m_lineEdit_IMAGE_DOS_HEADER, N_IMAGE_DOS_HEADER::__data_size, bState);
+    setLineEditsReadOnly(m_lineEdit_IMAGE_NT_HEADERS, N_IMAGE_NT_HEADERS::__data_size, bState);
+    setLineEditsReadOnly(m_lineEdit_IMAGE_FILE_HEADER, N_IMAGE_FILE_HEADER::__data_size, bState);
+    setLineEditsReadOnly(m_lineEdit_IMAGE_OPTIONAL_HEADER, N_IMAGE_OPTIONAL_HEADER::__data_size, bState);
+    setLineEditsReadOnly(m_lineEdit_TLS, N_IMAGE_TLS::__data_size, bState);
+    setLineEditsReadOnly(m_lineEdit_Version_FixedFileInfo, N_IMAGE_RESOURCE_FIXEDFILEINFO::__data_size, bState);
+    setLineEditsReadOnly(m_lineEdit_LoadConfig, N_IMAGE_LOADCONFIG::__data_size, bState);
+    setLineEditsReadOnly(m_lineEdit_EXPORT, N_IMAGE_EXPORT::__data_size, bState);
+    setLineEditsReadOnly(m_lineEdit_NetHeader, N_IMAGE_NETHEADER::__data_size, bState);
+    setLineEditsReadOnly(m_lineEdit_Net_Metadata, N_IMAGE_NET_METADATA::__data_size, bState);
     //    setLineEditsReadOnly(lineEdit_IMAGE_DIRECTORY_ADDRESS,N_IMAGE_DIRECORIES::__data_size,bState);
     //    setLineEditsReadOnly(lineEdit_IMAGE_DIRECTORY_SIZE,N_IMAGE_DIRECORIES::__data_size,bState);
 
     setComboBoxesReadOnly(m_comboBox, __CB_size, bState);
-    setPushButtonReadOnly(g_pushButton, __PB_size, bState);
-    setDateTimeEditReadOnly(g_dateTimeEdit, __TD_size, bState);
+    setPushButtonReadOnly(m_pushButton, __PB_size, bState);
+    setDateTimeEditReadOnly(m_dateTimeEdit, __TD_size, bState);
 
     ui->widgetHex->setReadonly(bState);
     ui->widgetStrings->setReadonly(bState);
@@ -853,17 +853,17 @@ void PEWidget::setReadonly(bool bState)
 
 void PEWidget::blockSignals(bool bState)
 {
-    _blockSignals((QObject **)g_lineEdit_IMAGE_DOS_HEADER, N_IMAGE_DOS_HEADER::__data_size, bState);
-    _blockSignals((QObject **)g_lineEdit_IMAGE_NT_HEADERS, N_IMAGE_NT_HEADERS::__data_size, bState);
-    _blockSignals((QObject **)g_lineEdit_IMAGE_FILE_HEADER, N_IMAGE_FILE_HEADER::__data_size, bState);
-    _blockSignals((QObject **)g_lineEdit_IMAGE_OPTIONAL_HEADER, N_IMAGE_OPTIONAL_HEADER::__data_size, bState);
-    _blockSignals((QObject **)g_lineEdit_TLS, N_IMAGE_TLS::__data_size, bState);
-    _blockSignals((QObject **)g_lineEdit_Version_FixedFileInfo, N_IMAGE_RESOURCE_FIXEDFILEINFO::__data_size, bState);
-    _blockSignals((QObject **)g_lineEdit_LoadConfig, N_IMAGE_LOADCONFIG::__data_size, bState);
-    _blockSignals((QObject **)g_lineEdit_EXPORT, N_IMAGE_EXPORT::__data_size, bState);
-    _blockSignals((QObject **)g_lineEdit_NetHeader, N_IMAGE_NETHEADER::__data_size, bState);
-    _blockSignals((QObject **)g_lineEdit_Net_Metadata, N_IMAGE_NET_METADATA::__data_size, bState);
-    _blockSignals((QObject **)g_lineEdit_Resources, N_IMAGE_RESOURCES::__data_size, bState);
+    _blockSignals((QObject **)m_lineEdit_IMAGE_DOS_HEADER, N_IMAGE_DOS_HEADER::__data_size, bState);
+    _blockSignals((QObject **)m_lineEdit_IMAGE_NT_HEADERS, N_IMAGE_NT_HEADERS::__data_size, bState);
+    _blockSignals((QObject **)m_lineEdit_IMAGE_FILE_HEADER, N_IMAGE_FILE_HEADER::__data_size, bState);
+    _blockSignals((QObject **)m_lineEdit_IMAGE_OPTIONAL_HEADER, N_IMAGE_OPTIONAL_HEADER::__data_size, bState);
+    _blockSignals((QObject **)m_lineEdit_TLS, N_IMAGE_TLS::__data_size, bState);
+    _blockSignals((QObject **)m_lineEdit_Version_FixedFileInfo, N_IMAGE_RESOURCE_FIXEDFILEINFO::__data_size, bState);
+    _blockSignals((QObject **)m_lineEdit_LoadConfig, N_IMAGE_LOADCONFIG::__data_size, bState);
+    _blockSignals((QObject **)m_lineEdit_EXPORT, N_IMAGE_EXPORT::__data_size, bState);
+    _blockSignals((QObject **)m_lineEdit_NetHeader, N_IMAGE_NETHEADER::__data_size, bState);
+    _blockSignals((QObject **)m_lineEdit_Net_Metadata, N_IMAGE_NET_METADATA::__data_size, bState);
+    _blockSignals((QObject **)m_lineEdit_Resources, N_IMAGE_RESOURCES::__data_size, bState);
 
     //    _blockSignals((QObject
     //    **)lineEdit_IMAGE_DIRECTORY_ADDRESS,N_IMAGE_DIRECORIES::__data_size,bState);
@@ -871,8 +871,8 @@ void PEWidget::blockSignals(bool bState)
     //    **)lineEdit_IMAGE_DIRECTORY_SIZE,N_IMAGE_DIRECORIES::__data_size,bState);
 
     _blockSignals((QObject **)m_comboBox, __CB_size, bState);
-    _blockSignals((QObject **)g_pushButton, __PB_size, bState);
-    _blockSignals((QObject **)g_dateTimeEdit, __TD_size, bState);
+    _blockSignals((QObject **)m_pushButton, __PB_size, bState);
+    _blockSignals((QObject **)m_dateTimeEdit, __TD_size, bState);
 }
 
 void PEWidget::on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pItemCurrent, QTreeWidgetItem *pItemPrevious)
@@ -898,66 +898,66 @@ void PEWidget::_widgetValueChanged(QVariant vValue)
     switch (nStype) {
         case SPE::TYPE_IMAGE_DOS_HEADER:
             switch (nNdata) {
-                case N_IMAGE_DOS_HEADER::e_magic: g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_magic]->setValue_uint16((quint16)nValue); break;
+                case N_IMAGE_DOS_HEADER::e_magic: m_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_magic]->setValue_uint16((quint16)nValue); break;
             }
             break;
 
         case SPE::TYPE_IMAGE_NT_HEADERS:
             switch (nNdata) {
-                case N_IMAGE_NT_HEADERS::Signature: g_lineEdit_IMAGE_NT_HEADERS[N_IMAGE_NT_HEADERS::Signature]->setValue_uint32((quint32)nValue); break;
+                case N_IMAGE_NT_HEADERS::Signature: m_lineEdit_IMAGE_NT_HEADERS[N_IMAGE_NT_HEADERS::Signature]->setValue_uint32((quint32)nValue); break;
             }
             break;
 
         case SPE::TYPE_IMAGE_FILE_HEADER:
             switch (nNdata) {
-                case N_IMAGE_FILE_HEADER::Machine: g_lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::Machine]->setValue_uint16((quint16)nValue); break;
-                case N_IMAGE_FILE_HEADER::TimeDateStamp: g_lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::TimeDateStamp]->setValue_uint32((quint32)nValue); break;
-                case N_IMAGE_FILE_HEADER::Characteristics: g_lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::Characteristics]->setValue_uint16((quint16)nValue); break;
+                case N_IMAGE_FILE_HEADER::Machine: m_lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::Machine]->setValue_uint16((quint16)nValue); break;
+                case N_IMAGE_FILE_HEADER::TimeDateStamp: m_lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::TimeDateStamp]->setValue_uint32((quint32)nValue); break;
+                case N_IMAGE_FILE_HEADER::Characteristics: m_lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::Characteristics]->setValue_uint16((quint16)nValue); break;
             }
             break;
 
         case SPE::TYPE_IMAGE_OPTIONAL_HEADER:
             switch (nNdata) {
-                case N_IMAGE_OPTIONAL_HEADER::Magic: g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::Magic]->setValue_uint16((quint16)nValue); break;
-                case N_IMAGE_OPTIONAL_HEADER::Subsystem: g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::Subsystem]->setValue_uint16((quint16)nValue); break;
+                case N_IMAGE_OPTIONAL_HEADER::Magic: m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::Magic]->setValue_uint16((quint16)nValue); break;
+                case N_IMAGE_OPTIONAL_HEADER::Subsystem: m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::Subsystem]->setValue_uint16((quint16)nValue); break;
                 case N_IMAGE_OPTIONAL_HEADER::DllCharacteristics:
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::DllCharacteristics]->setValue_uint16((quint16)nValue);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::DllCharacteristics]->setValue_uint16((quint16)nValue);
                     break;
                 // Extra
                 case N_IMAGE_OPTIONAL_HEADER::OperatingSystemVersion: {
                     // TODO set correct
                     XBinary::XDWORD xdword = XBinary::make_xdword((quint32)nValue);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MajorOperatingSystemVersion]->setValue_uint16((quint16)xdword.nValue1);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MinorOperatingSystemVersion]->setValue_uint16((quint16)xdword.nValue2);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MajorOperatingSystemVersion]->setValue_uint16((quint16)xdword.nValue1);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MinorOperatingSystemVersion]->setValue_uint16((quint16)xdword.nValue2);
                 }
             }
             break;
 
         case SPE::TYPE_EXPORT:
             switch (nNdata) {
-                case N_IMAGE_EXPORT::TimeDateStamp: g_dateTimeEdit[TD_IMAGE_EXPORT_TimeDateStamp]->setValue(nValue, XDateTimeEditX::DT_TYPE_POSIX); break;
+                case N_IMAGE_EXPORT::TimeDateStamp: m_dateTimeEdit[TD_IMAGE_EXPORT_TimeDateStamp]->setValue(nValue, XDateTimeEditX::DT_TYPE_POSIX); break;
             }
             break;
 
         case SPE::TYPE_NETHEADER:
             switch (nNdata) {
-                case N_IMAGE_NETHEADER::Flags: g_lineEdit_NetHeader[N_IMAGE_NETHEADER::Flags]->setValue_uint32((quint32)nValue); break;
+                case N_IMAGE_NETHEADER::Flags: m_lineEdit_NetHeader[N_IMAGE_NETHEADER::Flags]->setValue_uint32((quint32)nValue); break;
             }
             break;
 
         case SPE::TYPE_RESOURCES_VERSION:
             switch (nNdata) {
                 case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwSignature:
-                    g_lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwSignature]->setValue_uint32((quint32)nValue);
+                    m_lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwSignature]->setValue_uint32((quint32)nValue);
                     break;
                 case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileFlags:
-                    g_lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileFlags]->setValue_uint32((quint32)nValue);
+                    m_lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileFlags]->setValue_uint32((quint32)nValue);
                     break;
                 case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileOS:
-                    g_lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileOS]->setValue_uint32((quint32)nValue);
+                    m_lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileOS]->setValue_uint32((quint32)nValue);
                     break;
                 case N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileType:
-                    g_lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileType]->setValue_uint32((quint32)nValue);
+                    m_lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileType]->setValue_uint32((quint32)nValue);
                     break;
             }
             break;
@@ -978,7 +978,7 @@ void PEWidget::widgetAction()
 
                     if (pe.isValid()) {
                         quint32 nCheckSum = pe.calculateCheckSum();
-                        g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::CheckSum]->setValue_uint32(nCheckSum);
+                        m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::CheckSum]->setValue_uint32(nCheckSum);
                     }
                     break;
             }
@@ -1168,58 +1168,58 @@ void PEWidget::reloadData(bool bSaveSelection)
             }
         } else if (nType == SPE::TYPE_IMAGE_DOS_HEADER) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SPE::TYPE_IMAGE_DOS_HEADER, ui->tableWidget_IMAGE_DOS_HEADER, N_IMAGE_DOS_HEADER::records, g_lineEdit_IMAGE_DOS_HEADER,
+                createHeaderTable(SPE::TYPE_IMAGE_DOS_HEADER, ui->tableWidget_IMAGE_DOS_HEADER, N_IMAGE_DOS_HEADER::records, m_lineEdit_IMAGE_DOS_HEADER,
                                   N_IMAGE_DOS_HEADER::__data_size, 0);
                 m_comboBox[CB_IMAGE_DOS_HEADER_e_magic] = createComboBox(ui->tableWidget_IMAGE_DOS_HEADER, XPE::getImageMagicsS(), SPE::TYPE_IMAGE_DOS_HEADER,
                                                                          N_IMAGE_DOS_HEADER::e_magic, XComboBoxEx::CBTYPE_LIST);
-                g_invWidget[INV_IMAGE_DOS_HEADER_e_lfanew] =
+                m_invWidget[INV_IMAGE_DOS_HEADER_e_lfanew] =
                     createInvWidget(ui->tableWidget_IMAGE_DOS_HEADER, SPE::TYPE_IMAGE_DOS_HEADER, N_IMAGE_DOS_HEADER::e_lfanew, InvWidget::TYPE_HEX);
 
                 blockSignals(true);
 
                 XMSDOS_DEF::IMAGE_DOS_HEADEREX msdosheaderex = pe.getDosHeaderEx();
 
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_magic]->setValue_uint16(msdosheaderex.e_magic);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_cblp]->setValue_uint16(msdosheaderex.e_cblp);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_cp]->setValue_uint16(msdosheaderex.e_cp);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_crlc]->setValue_uint16(msdosheaderex.e_crlc);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_cparhdr]->setValue_uint16(msdosheaderex.e_cparhdr);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_minalloc]->setValue_uint16(msdosheaderex.e_minalloc);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_maxalloc]->setValue_uint16(msdosheaderex.e_maxalloc);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_ss]->setValue_uint16(msdosheaderex.e_ss);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_sp]->setValue_uint16(msdosheaderex.e_sp);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_csum]->setValue_uint16(msdosheaderex.e_csum);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_ip]->setValue_uint16(msdosheaderex.e_ip);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_cs]->setValue_uint16(msdosheaderex.e_cs);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_lfarlc]->setValue_uint16(msdosheaderex.e_lfarlc);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_ovno]->setValue_uint16(msdosheaderex.e_ovno);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res_0]->setValue_uint16(msdosheaderex.e_res[0]);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res_1]->setValue_uint16(msdosheaderex.e_res[1]);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res_2]->setValue_uint16(msdosheaderex.e_res[2]);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res_3]->setValue_uint16(msdosheaderex.e_res[3]);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_oemid]->setValue_uint16(msdosheaderex.e_oemid);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_oeminfo]->setValue_uint16(msdosheaderex.e_oeminfo);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res2_0]->setValue_uint16(msdosheaderex.e_res2[0]);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res2_1]->setValue_uint16(msdosheaderex.e_res2[1]);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res2_2]->setValue_uint16(msdosheaderex.e_res2[2]);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res2_3]->setValue_uint16(msdosheaderex.e_res2[3]);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res2_4]->setValue_uint16(msdosheaderex.e_res2[4]);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res2_5]->setValue_uint16(msdosheaderex.e_res2[5]);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res2_6]->setValue_uint16(msdosheaderex.e_res2[6]);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res2_7]->setValue_uint16(msdosheaderex.e_res2[7]);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res2_8]->setValue_uint16(msdosheaderex.e_res2[8]);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res2_9]->setValue_uint16(msdosheaderex.e_res2[9]);
-                g_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_lfanew]->setValue_uint32(msdosheaderex.e_lfanew);
+                m_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_magic]->setValue_uint16(msdosheaderex.e_magic);
+                m_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_cblp]->setValue_uint16(msdosheaderex.e_cblp);
+                m_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_cp]->setValue_uint16(msdosheaderex.e_cp);
+                m_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_crlc]->setValue_uint16(msdosheaderex.e_crlc);
+                m_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_cparhdr]->setValue_uint16(msdosheaderex.e_cparhdr);
+                m_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_minalloc]->setValue_uint16(msdosheaderex.e_minalloc);
+                m_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_maxalloc]->setValue_uint16(msdosheaderex.e_maxalloc);
+                m_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_ss]->setValue_uint16(msdosheaderex.e_ss);
+                m_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_sp]->setValue_uint16(msdosheaderex.e_sp);
+                m_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_csum]->setValue_uint16(msdosheaderex.e_csum);
+                m_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_ip]->setValue_uint16(msdosheaderex.e_ip);
+                m_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_cs]->setValue_uint16(msdosheaderex.e_cs);
+                m_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_lfarlc]->setValue_uint16(msdosheaderex.e_lfarlc);
+                m_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_ovno]->setValue_uint16(msdosheaderex.e_ovno);
+                m_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res_0]->setValue_uint16(msdosheaderex.e_res[0]);
+                m_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res_1]->setValue_uint16(msdosheaderex.e_res[1]);
+                m_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res_2]->setValue_uint16(msdosheaderex.e_res[2]);
+                m_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res_3]->setValue_uint16(msdosheaderex.e_res[3]);
+                m_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_oemid]->setValue_uint16(msdosheaderex.e_oemid);
+                m_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_oeminfo]->setValue_uint16(msdosheaderex.e_oeminfo);
+                m_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res2_0]->setValue_uint16(msdosheaderex.e_res2[0]);
+                m_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res2_1]->setValue_uint16(msdosheaderex.e_res2[1]);
+                m_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res2_2]->setValue_uint16(msdosheaderex.e_res2[2]);
+                m_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res2_3]->setValue_uint16(msdosheaderex.e_res2[3]);
+                m_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res2_4]->setValue_uint16(msdosheaderex.e_res2[4]);
+                m_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res2_5]->setValue_uint16(msdosheaderex.e_res2[5]);
+                m_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res2_6]->setValue_uint16(msdosheaderex.e_res2[6]);
+                m_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res2_7]->setValue_uint16(msdosheaderex.e_res2[7]);
+                m_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res2_8]->setValue_uint16(msdosheaderex.e_res2[8]);
+                m_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_res2_9]->setValue_uint16(msdosheaderex.e_res2[9]);
+                m_lineEdit_IMAGE_DOS_HEADER[N_IMAGE_DOS_HEADER::e_lfanew]->setValue_uint32(msdosheaderex.e_lfanew);
 
                 m_comboBox[CB_IMAGE_DOS_HEADER_e_magic]->setValue(msdosheaderex.e_magic);
 
-                g_invWidget[INV_IMAGE_DOS_HEADER_e_lfanew]->setOffsetAndSize(&pe, msdosheaderex.e_lfanew, 0);
+                m_invWidget[INV_IMAGE_DOS_HEADER_e_lfanew]->setOffsetAndSize(&pe, msdosheaderex.e_lfanew, 0);
 
                 qint64 nOffset = pe.getDosHeaderExOffset();
                 qint64 nSize = pe.getDosHeaderExSize();
                 qint64 nAddress = pe.offsetToRelAddress(nOffset);
 
-                loadHexSubdevice(nOffset, nSize, nAddress, &g_subDevice[SPE::TYPE_IMAGE_DOS_HEADER], ui->widgetHex_IMAGE_DOS_HEADER);
+                loadHexSubdevice(nOffset, nSize, nAddress, &m_subDevice[SPE::TYPE_IMAGE_DOS_HEADER], ui->widgetHex_IMAGE_DOS_HEADER);
 
                 blockSignals(false);
             }
@@ -1229,9 +1229,9 @@ void PEWidget::reloadData(bool bSaveSelection)
                 qint64 nSize = pe.getDosStubSize();
                 qint64 nAddress = pe.offsetToRelAddress(nOffset);
 
-                loadHexSubdevice(nOffset, nSize, nAddress, &g_subDevice[SPE::TYPE_DOS_STUB], ui->widgetHex_DosStub);
+                loadHexSubdevice(nOffset, nSize, nAddress, &m_subDevice[SPE::TYPE_DOS_STUB], ui->widgetHex_DosStub);
 
-                XBinary binary(g_subDevice[SPE::TYPE_DOS_STUB], true, nAddress);
+                XBinary binary(m_subDevice[SPE::TYPE_DOS_STUB], true, nAddress);
                 binary.setFileType(XBinary::FT_REGION);
                 binary.setArch("8086");
 
@@ -1239,12 +1239,12 @@ void PEWidget::reloadData(bool bSaveSelection)
                 options.nInitAddress = -1;  // TODO Check MSDOS
                 // options.memoryMapRegion = binary.getMemoryMap();
 
-                ui->widgetDisasm_DosStub->setData(g_subDevice[SPE::TYPE_DOS_STUB], options);
+                ui->widgetDisasm_DosStub->setData(m_subDevice[SPE::TYPE_DOS_STUB], options);
                 ui->widgetDisasm_DosStub->setXInfoDB(getXInfoDB());
             }
         } else if (nType == SPE::TYPE_IMAGE_NT_HEADERS) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SPE::TYPE_IMAGE_NT_HEADERS, ui->tableWidget_IMAGE_NT_HEADERS, N_IMAGE_NT_HEADERS::records, g_lineEdit_IMAGE_NT_HEADERS,
+                createHeaderTable(SPE::TYPE_IMAGE_NT_HEADERS, ui->tableWidget_IMAGE_NT_HEADERS, N_IMAGE_NT_HEADERS::records, m_lineEdit_IMAGE_NT_HEADERS,
                                   N_IMAGE_NT_HEADERS::__data_size, 0);
                 m_comboBox[CB_IMAGE_NT_HEADERS_Signature] = createComboBox(ui->tableWidget_IMAGE_NT_HEADERS, XPE::getImageNtHeadersSignaturesS(),
                                                                            SPE::TYPE_IMAGE_NT_HEADERS, N_IMAGE_NT_HEADERS::Signature, XComboBoxEx::CBTYPE_LIST);
@@ -1253,20 +1253,20 @@ void PEWidget::reloadData(bool bSaveSelection)
 
                 quint32 nSignature = pe.getNtHeaders_Signature();
 
-                g_lineEdit_IMAGE_NT_HEADERS[N_IMAGE_NT_HEADERS::Signature]->setValue_uint32(nSignature);
+                m_lineEdit_IMAGE_NT_HEADERS[N_IMAGE_NT_HEADERS::Signature]->setValue_uint32(nSignature);
                 m_comboBox[CB_IMAGE_NT_HEADERS_Signature]->setValue(nSignature);
 
                 qint64 nOffset = pe.getNtHeadersOffset();
                 qint64 nSize = 4;
                 qint64 nAddress = pe.offsetToRelAddress(nOffset);
 
-                loadHexSubdevice(nOffset, nSize, nAddress, &g_subDevice[SPE::TYPE_IMAGE_NT_HEADERS], ui->widgetHex_IMAGE_NT_HEADERS);
+                loadHexSubdevice(nOffset, nSize, nAddress, &m_subDevice[SPE::TYPE_IMAGE_NT_HEADERS], ui->widgetHex_IMAGE_NT_HEADERS);
 
                 blockSignals(false);
             }
         } else if (nType == SPE::TYPE_IMAGE_FILE_HEADER) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SPE::TYPE_IMAGE_FILE_HEADER, ui->tableWidget_IMAGE_FILE_HEADER, N_IMAGE_FILE_HEADER::records, g_lineEdit_IMAGE_FILE_HEADER,
+                createHeaderTable(SPE::TYPE_IMAGE_FILE_HEADER, ui->tableWidget_IMAGE_FILE_HEADER, N_IMAGE_FILE_HEADER::records, m_lineEdit_IMAGE_FILE_HEADER,
                                   N_IMAGE_FILE_HEADER::__data_size, 0);
                 m_comboBox[CB_IMAGE_FILE_HEADER_Machine] = createComboBox(ui->tableWidget_IMAGE_FILE_HEADER, XPE::getImageFileHeaderMachinesS(),
                                                                           SPE::TYPE_IMAGE_FILE_HEADER, N_IMAGE_FILE_HEADER::Machine, XComboBoxEx::CBTYPE_LIST);
@@ -1274,37 +1274,37 @@ void PEWidget::reloadData(bool bSaveSelection)
                     createComboBox(ui->tableWidget_IMAGE_FILE_HEADER, XPE::getImageFileHeaderCharacteristicsS(), SPE::TYPE_IMAGE_FILE_HEADER,
                                    N_IMAGE_FILE_HEADER::Characteristics, XComboBoxEx::CBTYPE_FLAGS);
 
-                g_dateTimeEdit[TD_IMAGE_FILE_HEADER_TimeDateStamp] =
+                m_dateTimeEdit[TD_IMAGE_FILE_HEADER_TimeDateStamp] =
                     createTimeDateEdit(ui->tableWidget_IMAGE_FILE_HEADER, SPE::TYPE_IMAGE_FILE_HEADER, N_IMAGE_FILE_HEADER::TimeDateStamp);
-                g_invWidget[INV_IMAGE_FILE_HEADER_PointerToSymbolTable] =
+                m_invWidget[INV_IMAGE_FILE_HEADER_PointerToSymbolTable] =
                     createInvWidget(ui->tableWidget_IMAGE_FILE_HEADER, SPE::TYPE_IMAGE_FILE_HEADER, N_IMAGE_FILE_HEADER::PointerToSymbolTable, InvWidget::TYPE_HEX);
 
                 blockSignals(true);
 
                 XPE_DEF::IMAGE_FILE_HEADER fileheader = pe.getFileHeader();
 
-                g_lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::Machine]->setValue_uint16(fileheader.Machine);
-                g_lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::NumberOfSections]->setValue_uint16(fileheader.NumberOfSections);
-                g_lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::TimeDateStamp]->setValue_uint32(fileheader.TimeDateStamp);
-                g_lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::PointerToSymbolTable]->setValue_uint32(fileheader.PointerToSymbolTable);
-                g_lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::NumberOfSymbols]->setValue_uint32(fileheader.NumberOfSymbols);
-                g_lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::SizeOfOptionalHeader]->setValue_uint16(fileheader.SizeOfOptionalHeader);
-                g_lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::Characteristics]->setValue_uint16(fileheader.Characteristics);
+                m_lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::Machine]->setValue_uint16(fileheader.Machine);
+                m_lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::NumberOfSections]->setValue_uint16(fileheader.NumberOfSections);
+                m_lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::TimeDateStamp]->setValue_uint32(fileheader.TimeDateStamp);
+                m_lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::PointerToSymbolTable]->setValue_uint32(fileheader.PointerToSymbolTable);
+                m_lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::NumberOfSymbols]->setValue_uint32(fileheader.NumberOfSymbols);
+                m_lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::SizeOfOptionalHeader]->setValue_uint16(fileheader.SizeOfOptionalHeader);
+                m_lineEdit_IMAGE_FILE_HEADER[N_IMAGE_FILE_HEADER::Characteristics]->setValue_uint16(fileheader.Characteristics);
 
                 m_comboBox[CB_IMAGE_FILE_HEADER_Machine]->setValue(fileheader.Machine);
                 m_comboBox[CB_IMAGE_FILE_HEADER_Characteristics]->setValue(fileheader.Characteristics);
-                g_dateTimeEdit[TD_IMAGE_FILE_HEADER_TimeDateStamp]->setValue(fileheader.TimeDateStamp, XDateTimeEditX::DT_TYPE_POSIX);
+                m_dateTimeEdit[TD_IMAGE_FILE_HEADER_TimeDateStamp]->setValue(fileheader.TimeDateStamp, XDateTimeEditX::DT_TYPE_POSIX);
 
                 addComment(ui->tableWidget_IMAGE_FILE_HEADER, N_IMAGE_FILE_HEADER::SizeOfOptionalHeader, HEADER_COLUMN_COMMENT,
                            XBinary::bytesCountToString(fileheader.SizeOfOptionalHeader));
 
-                g_invWidget[INV_IMAGE_FILE_HEADER_PointerToSymbolTable]->setOffsetAndSize(&pe, fileheader.PointerToSymbolTable, 0);  // TODO Check addresses
+                m_invWidget[INV_IMAGE_FILE_HEADER_PointerToSymbolTable]->setOffsetAndSize(&pe, fileheader.PointerToSymbolTable, 0);  // TODO Check addresses
 
                 qint64 nOffset = pe.getFileHeaderOffset();
                 qint64 nSize = pe.getFileHeaderSize();
                 qint64 nAddress = pe.offsetToRelAddress(nOffset);
 
-                loadHexSubdevice(nOffset, nSize, nAddress, &g_subDevice[SPE::TYPE_IMAGE_FILE_HEADER], ui->widgetHex_IMAGE_FILE_HEADER);
+                loadHexSubdevice(nOffset, nSize, nAddress, &m_subDevice[SPE::TYPE_IMAGE_FILE_HEADER], ui->widgetHex_IMAGE_FILE_HEADER);
 
                 blockSignals(false);
             }
@@ -1313,7 +1313,7 @@ void PEWidget::reloadData(bool bSaveSelection)
                 XBinary::PDSTRUCT pdStructEmpty = {};
 
                 createHeaderTable(SPE::TYPE_IMAGE_OPTIONAL_HEADER, ui->tableWidget_IMAGE_OPTIONAL_HEADER,
-                                  pe.is64() ? (N_IMAGE_OPTIONAL_HEADER::records64) : (N_IMAGE_OPTIONAL_HEADER::records32), g_lineEdit_IMAGE_OPTIONAL_HEADER,
+                                  pe.is64() ? (N_IMAGE_OPTIONAL_HEADER::records64) : (N_IMAGE_OPTIONAL_HEADER::records32), m_lineEdit_IMAGE_OPTIONAL_HEADER,
                                   N_IMAGE_OPTIONAL_HEADER::__data_size, 0);
                 m_comboBox[CB_IMAGE_OPTIONAL_HEADER_Magic] = createComboBox(ui->tableWidget_IMAGE_OPTIONAL_HEADER, XPE::getImageOptionalHeaderMagicS(),
                                                                             SPE::TYPE_IMAGE_OPTIONAL_HEADER, N_IMAGE_OPTIONAL_HEADER::Magic, XComboBoxEx::CBTYPE_LIST);
@@ -1329,17 +1329,17 @@ void PEWidget::reloadData(bool bSaveSelection)
                     createComboBox(ui->tableWidget_IMAGE_OPTIONAL_HEADER, XPE::getImageOptionalHeaderDllCharacteristicsS(), SPE::TYPE_IMAGE_OPTIONAL_HEADER,
                                    N_IMAGE_OPTIONAL_HEADER::DllCharacteristics, XComboBoxEx::CBTYPE_FLAGS);
 
-                g_invWidget[INV_IMAGE_OPTIONAL_HEADER_AddressOfEntryPoint] = createInvWidget(ui->tableWidget_IMAGE_OPTIONAL_HEADER, SPE::TYPE_IMAGE_OPTIONAL_HEADER,
+                m_invWidget[INV_IMAGE_OPTIONAL_HEADER_AddressOfEntryPoint] = createInvWidget(ui->tableWidget_IMAGE_OPTIONAL_HEADER, SPE::TYPE_IMAGE_OPTIONAL_HEADER,
                                                                                              N_IMAGE_OPTIONAL_HEADER::AddressOfEntryPoint, InvWidget::TYPE_DISASM);
-                g_invWidget[INV_IMAGE_OPTIONAL_HEADER_BaseOfCode] =
+                m_invWidget[INV_IMAGE_OPTIONAL_HEADER_BaseOfCode] =
                     createInvWidget(ui->tableWidget_IMAGE_OPTIONAL_HEADER, SPE::TYPE_IMAGE_OPTIONAL_HEADER, N_IMAGE_OPTIONAL_HEADER::BaseOfCode, InvWidget::TYPE_HEX);
 
                 if (!bIs64) {
-                    g_invWidget[INV_IMAGE_OPTIONAL_HEADER_BaseOfData] =
+                    m_invWidget[INV_IMAGE_OPTIONAL_HEADER_BaseOfData] =
                         createInvWidget(ui->tableWidget_IMAGE_OPTIONAL_HEADER, SPE::TYPE_IMAGE_OPTIONAL_HEADER, N_IMAGE_OPTIONAL_HEADER::BaseOfData, InvWidget::TYPE_HEX);
                 }
 
-                g_pushButton[PB_CalculateChecksum] =
+                m_pushButton[PB_CalculateChecksum] =
                     createPushButton(ui->tableWidget_IMAGE_OPTIONAL_HEADER, SPE::TYPE_IMAGE_OPTIONAL_HEADER, N_IMAGE_OPTIONAL_HEADER::CheckSum, tr("Calculate"));
 
                 blockSignals(true);
@@ -1348,35 +1348,35 @@ void PEWidget::reloadData(bool bSaveSelection)
 
                 if (bIs64) {
                     XPE_DEF::IMAGE_OPTIONAL_HEADER64S oh64 = pe.getOptionalHeader64S();
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::Magic]->setValue_uint16(oh64.Magic);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MajorLinkerVersion]->setValue_uint8(oh64.MajorLinkerVersion);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MinorLinkerVersion]->setValue_uint8(oh64.MinorLinkerVersion);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::SizeOfCode]->setValue_uint32(oh64.SizeOfCode);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::SizeOfInitializedData]->setValue_uint32(oh64.SizeOfInitializedData);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::SizeOfUninitializedData]->setValue_uint32(oh64.SizeOfUninitializedData);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::AddressOfEntryPoint]->setValue_uint32(oh64.AddressOfEntryPoint);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::BaseOfCode]->setValue_uint32(oh64.BaseOfCode);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::ImageBase]->setValue_int64(oh64.ImageBase);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::SectionAlignment]->setValue_uint32(oh64.SectionAlignment);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::FileAlignment]->setValue_uint32(oh64.FileAlignment);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MajorOperatingSystemVersion]->setValue_uint16(oh64.MajorOperatingSystemVersion);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MinorOperatingSystemVersion]->setValue_uint16(oh64.MinorOperatingSystemVersion);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MajorImageVersion]->setValue_uint16(oh64.MajorImageVersion);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MinorImageVersion]->setValue_uint16(oh64.MinorImageVersion);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MajorSubsystemVersion]->setValue_uint16(oh64.MajorSubsystemVersion);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MinorSubsystemVersion]->setValue_uint16(oh64.MinorSubsystemVersion);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::Win32VersionValue]->setValue_uint32(oh64.Win32VersionValue);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::SizeOfImage]->setValue_uint32(oh64.SizeOfImage);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::SizeOfHeaders]->setValue_uint32(oh64.SizeOfHeaders);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::CheckSum]->setValue_uint32(oh64.CheckSum);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::Subsystem]->setValue_uint16(oh64.Subsystem);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::DllCharacteristics]->setValue_uint16(oh64.DllCharacteristics);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::SizeOfStackReserve]->setValue_uint64(oh64.SizeOfStackReserve);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::SizeOfStackCommit]->setValue_uint64(oh64.SizeOfStackCommit);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::SizeOfHeapReserve]->setValue_uint64(oh64.SizeOfHeapReserve);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::SizeOfHeapCommit]->setValue_uint64(oh64.SizeOfHeapCommit);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::LoaderFlags]->setValue_uint32(oh64.LoaderFlags);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::NumberOfRvaAndSizes]->setValue_uint32(oh64.NumberOfRvaAndSizes);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::Magic]->setValue_uint16(oh64.Magic);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MajorLinkerVersion]->setValue_uint8(oh64.MajorLinkerVersion);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MinorLinkerVersion]->setValue_uint8(oh64.MinorLinkerVersion);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::SizeOfCode]->setValue_uint32(oh64.SizeOfCode);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::SizeOfInitializedData]->setValue_uint32(oh64.SizeOfInitializedData);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::SizeOfUninitializedData]->setValue_uint32(oh64.SizeOfUninitializedData);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::AddressOfEntryPoint]->setValue_uint32(oh64.AddressOfEntryPoint);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::BaseOfCode]->setValue_uint32(oh64.BaseOfCode);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::ImageBase]->setValue_int64(oh64.ImageBase);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::SectionAlignment]->setValue_uint32(oh64.SectionAlignment);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::FileAlignment]->setValue_uint32(oh64.FileAlignment);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MajorOperatingSystemVersion]->setValue_uint16(oh64.MajorOperatingSystemVersion);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MinorOperatingSystemVersion]->setValue_uint16(oh64.MinorOperatingSystemVersion);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MajorImageVersion]->setValue_uint16(oh64.MajorImageVersion);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MinorImageVersion]->setValue_uint16(oh64.MinorImageVersion);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MajorSubsystemVersion]->setValue_uint16(oh64.MajorSubsystemVersion);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MinorSubsystemVersion]->setValue_uint16(oh64.MinorSubsystemVersion);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::Win32VersionValue]->setValue_uint32(oh64.Win32VersionValue);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::SizeOfImage]->setValue_uint32(oh64.SizeOfImage);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::SizeOfHeaders]->setValue_uint32(oh64.SizeOfHeaders);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::CheckSum]->setValue_uint32(oh64.CheckSum);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::Subsystem]->setValue_uint16(oh64.Subsystem);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::DllCharacteristics]->setValue_uint16(oh64.DllCharacteristics);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::SizeOfStackReserve]->setValue_uint64(oh64.SizeOfStackReserve);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::SizeOfStackCommit]->setValue_uint64(oh64.SizeOfStackCommit);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::SizeOfHeapReserve]->setValue_uint64(oh64.SizeOfHeapReserve);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::SizeOfHeapCommit]->setValue_uint64(oh64.SizeOfHeapCommit);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::LoaderFlags]->setValue_uint32(oh64.LoaderFlags);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::NumberOfRvaAndSizes]->setValue_uint32(oh64.NumberOfRvaAndSizes);
 
                     m_comboBox[CB_IMAGE_OPTIONAL_HEADER_Magic]->setValue(oh64.Magic);
                     m_comboBox[CB_IMAGE_OPTIONAL_HEADER_Subsystem]->setValue(oh64.Subsystem);
@@ -1410,40 +1410,40 @@ void PEWidget::reloadData(bool bSaveSelection)
                     addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER, N_IMAGE_OPTIONAL_HEADER::BaseOfCode, HEADER_COLUMN_COMMENT,
                                pe.getMemoryRecordInfoByRelAddress(&memoryMap, oh64.BaseOfCode));
 
-                    g_invWidget[INV_IMAGE_OPTIONAL_HEADER_AddressOfEntryPoint]->setAddressAndSize(&pe, pe.getBaseAddress() + oh64.AddressOfEntryPoint, 0);
-                    g_invWidget[INV_IMAGE_OPTIONAL_HEADER_BaseOfCode]->setAddressAndSize(&pe, pe.getBaseAddress() + oh64.BaseOfCode, 0);
+                    m_invWidget[INV_IMAGE_OPTIONAL_HEADER_AddressOfEntryPoint]->setAddressAndSize(&pe, pe.getBaseAddress() + oh64.AddressOfEntryPoint, 0);
+                    m_invWidget[INV_IMAGE_OPTIONAL_HEADER_BaseOfCode]->setAddressAndSize(&pe, pe.getBaseAddress() + oh64.BaseOfCode, 0);
                 } else {
                     XPE_DEF::IMAGE_OPTIONAL_HEADER32S oh32 = pe.getOptionalHeader32S();
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::Magic]->setValue_uint16(oh32.Magic);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MajorLinkerVersion]->setValue_uint8(oh32.MajorLinkerVersion);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MinorLinkerVersion]->setValue_uint8(oh32.MinorLinkerVersion);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::SizeOfCode]->setValue_uint32(oh32.SizeOfCode);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::SizeOfInitializedData]->setValue_uint32(oh32.SizeOfInitializedData);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::SizeOfUninitializedData]->setValue_uint32(oh32.SizeOfUninitializedData);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::AddressOfEntryPoint]->setValue_uint32(oh32.AddressOfEntryPoint);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::BaseOfCode]->setValue_uint32(oh32.BaseOfCode);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::BaseOfData]->setValue_uint32(oh32.BaseOfData);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::ImageBase]->setValue_uint32(oh32.ImageBase);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::SectionAlignment]->setValue_uint32(oh32.SectionAlignment);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::FileAlignment]->setValue_uint32(oh32.FileAlignment);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MajorOperatingSystemVersion]->setValue_uint16(oh32.MajorOperatingSystemVersion);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MinorOperatingSystemVersion]->setValue_uint16(oh32.MinorOperatingSystemVersion);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MajorImageVersion]->setValue_uint16(oh32.MajorImageVersion);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MinorImageVersion]->setValue_uint16(oh32.MinorImageVersion);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MajorSubsystemVersion]->setValue_uint16(oh32.MajorSubsystemVersion);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MinorSubsystemVersion]->setValue_uint16(oh32.MinorSubsystemVersion);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::Win32VersionValue]->setValue_uint32(oh32.Win32VersionValue);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::SizeOfImage]->setValue_uint32(oh32.SizeOfImage);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::SizeOfHeaders]->setValue_uint32(oh32.SizeOfHeaders);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::CheckSum]->setValue_uint32(oh32.CheckSum);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::Subsystem]->setValue_uint16(oh32.Subsystem);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::DllCharacteristics]->setValue_uint16(oh32.DllCharacteristics);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::SizeOfStackReserve]->setValue_uint32(oh32.SizeOfStackReserve);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::SizeOfStackCommit]->setValue_uint32(oh32.SizeOfStackCommit);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::SizeOfHeapReserve]->setValue_uint32(oh32.SizeOfHeapReserve);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::SizeOfHeapCommit]->setValue_uint32(oh32.SizeOfHeapCommit);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::LoaderFlags]->setValue_uint32(oh32.LoaderFlags);
-                    g_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::NumberOfRvaAndSizes]->setValue_uint32(oh32.NumberOfRvaAndSizes);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::Magic]->setValue_uint16(oh32.Magic);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MajorLinkerVersion]->setValue_uint8(oh32.MajorLinkerVersion);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MinorLinkerVersion]->setValue_uint8(oh32.MinorLinkerVersion);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::SizeOfCode]->setValue_uint32(oh32.SizeOfCode);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::SizeOfInitializedData]->setValue_uint32(oh32.SizeOfInitializedData);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::SizeOfUninitializedData]->setValue_uint32(oh32.SizeOfUninitializedData);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::AddressOfEntryPoint]->setValue_uint32(oh32.AddressOfEntryPoint);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::BaseOfCode]->setValue_uint32(oh32.BaseOfCode);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::BaseOfData]->setValue_uint32(oh32.BaseOfData);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::ImageBase]->setValue_uint32(oh32.ImageBase);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::SectionAlignment]->setValue_uint32(oh32.SectionAlignment);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::FileAlignment]->setValue_uint32(oh32.FileAlignment);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MajorOperatingSystemVersion]->setValue_uint16(oh32.MajorOperatingSystemVersion);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MinorOperatingSystemVersion]->setValue_uint16(oh32.MinorOperatingSystemVersion);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MajorImageVersion]->setValue_uint16(oh32.MajorImageVersion);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MinorImageVersion]->setValue_uint16(oh32.MinorImageVersion);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MajorSubsystemVersion]->setValue_uint16(oh32.MajorSubsystemVersion);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::MinorSubsystemVersion]->setValue_uint16(oh32.MinorSubsystemVersion);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::Win32VersionValue]->setValue_uint32(oh32.Win32VersionValue);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::SizeOfImage]->setValue_uint32(oh32.SizeOfImage);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::SizeOfHeaders]->setValue_uint32(oh32.SizeOfHeaders);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::CheckSum]->setValue_uint32(oh32.CheckSum);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::Subsystem]->setValue_uint16(oh32.Subsystem);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::DllCharacteristics]->setValue_uint16(oh32.DllCharacteristics);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::SizeOfStackReserve]->setValue_uint32(oh32.SizeOfStackReserve);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::SizeOfStackCommit]->setValue_uint32(oh32.SizeOfStackCommit);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::SizeOfHeapReserve]->setValue_uint32(oh32.SizeOfHeapReserve);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::SizeOfHeapCommit]->setValue_uint32(oh32.SizeOfHeapCommit);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::LoaderFlags]->setValue_uint32(oh32.LoaderFlags);
+                    m_lineEdit_IMAGE_OPTIONAL_HEADER[N_IMAGE_OPTIONAL_HEADER::NumberOfRvaAndSizes]->setValue_uint32(oh32.NumberOfRvaAndSizes);
 
                     m_comboBox[CB_IMAGE_OPTIONAL_HEADER_Magic]->setValue(oh32.Magic);
                     m_comboBox[CB_IMAGE_OPTIONAL_HEADER_Subsystem]->setValue(oh32.Subsystem);
@@ -1479,9 +1479,9 @@ void PEWidget::reloadData(bool bSaveSelection)
                     addComment(ui->tableWidget_IMAGE_OPTIONAL_HEADER, N_IMAGE_OPTIONAL_HEADER::BaseOfData, HEADER_COLUMN_COMMENT,
                                pe.getMemoryRecordInfoByRelAddress(&memoryMap, oh32.BaseOfData));
 
-                    g_invWidget[INV_IMAGE_OPTIONAL_HEADER_AddressOfEntryPoint]->setAddressAndSize(&pe, pe.getBaseAddress() + oh32.AddressOfEntryPoint, 0);
-                    g_invWidget[INV_IMAGE_OPTIONAL_HEADER_BaseOfCode]->setAddressAndSize(&pe, pe.getBaseAddress() + oh32.BaseOfCode, 0);
-                    g_invWidget[INV_IMAGE_OPTIONAL_HEADER_BaseOfData]->setAddressAndSize(&pe, pe.getBaseAddress() + oh32.BaseOfData, 0);
+                    m_invWidget[INV_IMAGE_OPTIONAL_HEADER_AddressOfEntryPoint]->setAddressAndSize(&pe, pe.getBaseAddress() + oh32.AddressOfEntryPoint, 0);
+                    m_invWidget[INV_IMAGE_OPTIONAL_HEADER_BaseOfCode]->setAddressAndSize(&pe, pe.getBaseAddress() + oh32.BaseOfCode, 0);
+                    m_invWidget[INV_IMAGE_OPTIONAL_HEADER_BaseOfData]->setAddressAndSize(&pe, pe.getBaseAddress() + oh32.BaseOfData, 0);
                 }
 
                 m_comboBox[CB_IMAGE_OPTIONAL_HEADER_OperationSystemVersion]->setValue(pe.getOperatingSystemVersion());
@@ -1490,7 +1490,7 @@ void PEWidget::reloadData(bool bSaveSelection)
                 qint64 nSize = pe.getOptionalHeaderSize();
                 qint64 nAddress = pe.offsetToRelAddress(nOffset);
 
-                loadHexSubdevice(nOffset, nSize, nAddress, &g_subDevice[SPE::TYPE_IMAGE_OPTIONAL_HEADER], ui->widgetHex_IMAGE_OPTIONAL_HEADER);
+                loadHexSubdevice(nOffset, nSize, nAddress, &m_subDevice[SPE::TYPE_IMAGE_OPTIONAL_HEADER], ui->widgetHex_IMAGE_OPTIONAL_HEADER);
 
                 blockSignals(false);
             }
@@ -1571,9 +1571,9 @@ void PEWidget::reloadData(bool bSaveSelection)
             }
         } else if (nType == SPE::TYPE_RICH) {
             if (!isInitPresent(sInit)) {
-                PEProcessData peProcessData(SPE::TYPE_RICH, &g_tvModel[SPE::TYPE_RICH], &pe, 0, 0, 0);
+                PEProcessData peProcessData(SPE::TYPE_RICH, &m_tvModel[SPE::TYPE_RICH], &pe, 0, 0, 0);
 
-                ajustTableView(nType, &peProcessData, &g_tvModel[SPE::TYPE_RICH], ui->tableView_RICH, true);
+                ajustTableView(nType, &peProcessData, &m_tvModel[SPE::TYPE_RICH], ui->tableView_RICH, true);
             }
         } else if (nType == SPE::TYPE_SECTIONS) {
             if (!isInitPresent(sInit)) {
@@ -1585,62 +1585,62 @@ void PEWidget::reloadData(bool bSaveSelection)
                     ui->checkBoxSectionsStringTable->hide();
                 }
 
-                PEProcessData peProcessData(SPE::TYPE_SECTIONS, &g_tvModel[SPE::TYPE_SECTIONS], &pe, 0, 0, 0, false);
+                PEProcessData peProcessData(SPE::TYPE_SECTIONS, &m_tvModel[SPE::TYPE_SECTIONS], &pe, 0, 0, 0, false);
 
-                ajustTableView(nType, &peProcessData, &g_tvModel[SPE::TYPE_SECTIONS], ui->tableView_Sections, false);
+                ajustTableView(nType, &peProcessData, &m_tvModel[SPE::TYPE_SECTIONS], ui->tableView_Sections, false);
 
                 connect(ui->tableView_Sections->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_Sections_currentRowChanged(QModelIndex, QModelIndex)));
 
-                if (g_tvModel[SPE::TYPE_SECTIONS]->rowCount()) {
+                if (m_tvModel[SPE::TYPE_SECTIONS]->rowCount()) {
                     ui->tableView_Sections->setCurrentIndex(ui->tableView_Sections->model()->index(0, 0));
                 }
             }
         } else if (nType == SPE::TYPE_SECTIONS_INFO) {
             if (!isInitPresent(sInit)) {
-                PEProcessData peProcessDataTree(SPE::TYPE_SECTIONS_INFO, &g_tvModel[SPE::TYPE_SECTIONS_INFO], &pe, 0, 0, 0, true);
+                PEProcessData peProcessDataTree(SPE::TYPE_SECTIONS_INFO, &m_tvModel[SPE::TYPE_SECTIONS_INFO], &pe, 0, 0, 0, true);
 
-                ajustTreeView(nType, &peProcessDataTree, &g_tvModel[SPE::TYPE_SECTIONS_INFO], ui->treeView_Sections_Info);
+                ajustTreeView(nType, &peProcessDataTree, &m_tvModel[SPE::TYPE_SECTIONS_INFO], ui->treeView_Sections_Info);
 
                 //                connect(ui->treeView_Sections_Info->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                 //                        SLOT(onTreeView_Sections_Info_currentRowChanged(QModelIndex, QModelIndex)));
             }
         } else if (nType == SPE::TYPE_EXPORT) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SPE::TYPE_EXPORT, ui->tableWidget_ExportHeader, N_IMAGE_EXPORT::records, g_lineEdit_EXPORT, N_IMAGE_EXPORT::__data_size, 0);
+                createHeaderTable(SPE::TYPE_EXPORT, ui->tableWidget_ExportHeader, N_IMAGE_EXPORT::records, m_lineEdit_EXPORT, N_IMAGE_EXPORT::__data_size, 0);
 
-                g_invWidget[INV_IMAGE_EXPORT_Name] = createInvWidget(ui->tableWidget_ExportHeader, SPE::TYPE_EXPORT, N_IMAGE_EXPORT::Name, InvWidget::TYPE_HEX);
-                g_invWidget[INV_IMAGE_EXPORT_AddressOfFunctions] =
+                m_invWidget[INV_IMAGE_EXPORT_Name] = createInvWidget(ui->tableWidget_ExportHeader, SPE::TYPE_EXPORT, N_IMAGE_EXPORT::Name, InvWidget::TYPE_HEX);
+                m_invWidget[INV_IMAGE_EXPORT_AddressOfFunctions] =
                     createInvWidget(ui->tableWidget_ExportHeader, SPE::TYPE_EXPORT, N_IMAGE_EXPORT::AddressOfFunctions, InvWidget::TYPE_HEX);
-                g_invWidget[INV_IMAGE_EXPORT_AddressOfNameOrdinals] =
+                m_invWidget[INV_IMAGE_EXPORT_AddressOfNameOrdinals] =
                     createInvWidget(ui->tableWidget_ExportHeader, SPE::TYPE_EXPORT, N_IMAGE_EXPORT::AddressOfNameOrdinals, InvWidget::TYPE_HEX);
-                g_invWidget[INV_IMAGE_EXPORT_AddressOfNames] =
+                m_invWidget[INV_IMAGE_EXPORT_AddressOfNames] =
                     createInvWidget(ui->tableWidget_ExportHeader, SPE::TYPE_EXPORT, N_IMAGE_EXPORT::AddressOfNames, InvWidget::TYPE_HEX);
 
-                g_dateTimeEdit[TD_IMAGE_EXPORT_TimeDateStamp] = createTimeDateEdit(ui->tableWidget_ExportHeader, SPE::TYPE_EXPORT, N_IMAGE_EXPORT::TimeDateStamp);
+                m_dateTimeEdit[TD_IMAGE_EXPORT_TimeDateStamp] = createTimeDateEdit(ui->tableWidget_ExportHeader, SPE::TYPE_EXPORT, N_IMAGE_EXPORT::TimeDateStamp);
 
                 blockSignals(true);
 
                 XPE::EXPORT_HEADER eh = pe.getExport();
 
-                g_lineEdit_EXPORT[N_IMAGE_EXPORT::Characteristics]->setValue_uint32(eh.directory.Characteristics);
-                g_lineEdit_EXPORT[N_IMAGE_EXPORT::TimeDateStamp]->setValue_uint32(eh.directory.TimeDateStamp);
-                g_lineEdit_EXPORT[N_IMAGE_EXPORT::MajorVersion]->setValue_uint16(eh.directory.MajorVersion);
-                g_lineEdit_EXPORT[N_IMAGE_EXPORT::MinorVersion]->setValue_uint16(eh.directory.MinorVersion);
-                g_lineEdit_EXPORT[N_IMAGE_EXPORT::Name]->setValue_uint32(eh.directory.Name);
-                g_lineEdit_EXPORT[N_IMAGE_EXPORT::Base]->setValue_uint32(eh.directory.Base);
-                g_lineEdit_EXPORT[N_IMAGE_EXPORT::NumberOfFunctions]->setValue_uint32(eh.directory.NumberOfFunctions);
-                g_lineEdit_EXPORT[N_IMAGE_EXPORT::NumberOfNames]->setValue_uint32(eh.directory.NumberOfNames);
-                g_lineEdit_EXPORT[N_IMAGE_EXPORT::AddressOfFunctions]->setValue_uint32(eh.directory.AddressOfFunctions);
-                g_lineEdit_EXPORT[N_IMAGE_EXPORT::AddressOfNames]->setValue_uint32(eh.directory.AddressOfNames);
-                g_lineEdit_EXPORT[N_IMAGE_EXPORT::AddressOfNameOrdinals]->setValue_uint32(eh.directory.AddressOfNameOrdinals);
+                m_lineEdit_EXPORT[N_IMAGE_EXPORT::Characteristics]->setValue_uint32(eh.directory.Characteristics);
+                m_lineEdit_EXPORT[N_IMAGE_EXPORT::TimeDateStamp]->setValue_uint32(eh.directory.TimeDateStamp);
+                m_lineEdit_EXPORT[N_IMAGE_EXPORT::MajorVersion]->setValue_uint16(eh.directory.MajorVersion);
+                m_lineEdit_EXPORT[N_IMAGE_EXPORT::MinorVersion]->setValue_uint16(eh.directory.MinorVersion);
+                m_lineEdit_EXPORT[N_IMAGE_EXPORT::Name]->setValue_uint32(eh.directory.Name);
+                m_lineEdit_EXPORT[N_IMAGE_EXPORT::Base]->setValue_uint32(eh.directory.Base);
+                m_lineEdit_EXPORT[N_IMAGE_EXPORT::NumberOfFunctions]->setValue_uint32(eh.directory.NumberOfFunctions);
+                m_lineEdit_EXPORT[N_IMAGE_EXPORT::NumberOfNames]->setValue_uint32(eh.directory.NumberOfNames);
+                m_lineEdit_EXPORT[N_IMAGE_EXPORT::AddressOfFunctions]->setValue_uint32(eh.directory.AddressOfFunctions);
+                m_lineEdit_EXPORT[N_IMAGE_EXPORT::AddressOfNames]->setValue_uint32(eh.directory.AddressOfNames);
+                m_lineEdit_EXPORT[N_IMAGE_EXPORT::AddressOfNameOrdinals]->setValue_uint32(eh.directory.AddressOfNameOrdinals);
 
-                g_dateTimeEdit[TD_IMAGE_EXPORT_TimeDateStamp]->setValue(eh.directory.TimeDateStamp, XDateTimeEditX::DT_TYPE_POSIX);
+                m_dateTimeEdit[TD_IMAGE_EXPORT_TimeDateStamp]->setValue(eh.directory.TimeDateStamp, XDateTimeEditX::DT_TYPE_POSIX);
 
-                g_invWidget[INV_IMAGE_EXPORT_Name]->setAddressAndSize(&pe, pe.getBaseAddress() + eh.directory.Name, 0);
-                g_invWidget[INV_IMAGE_EXPORT_AddressOfFunctions]->setAddressAndSize(&pe, pe.getBaseAddress() + eh.directory.AddressOfFunctions, 0);
-                g_invWidget[INV_IMAGE_EXPORT_AddressOfNameOrdinals]->setAddressAndSize(&pe, pe.getBaseAddress() + eh.directory.AddressOfNameOrdinals, 0);
-                g_invWidget[INV_IMAGE_EXPORT_AddressOfNames]->setAddressAndSize(&pe, pe.getBaseAddress() + eh.directory.AddressOfNames, 0);
+                m_invWidget[INV_IMAGE_EXPORT_Name]->setAddressAndSize(&pe, pe.getBaseAddress() + eh.directory.Name, 0);
+                m_invWidget[INV_IMAGE_EXPORT_AddressOfFunctions]->setAddressAndSize(&pe, pe.getBaseAddress() + eh.directory.AddressOfFunctions, 0);
+                m_invWidget[INV_IMAGE_EXPORT_AddressOfNameOrdinals]->setAddressAndSize(&pe, pe.getBaseAddress() + eh.directory.AddressOfNameOrdinals, 0);
+                m_invWidget[INV_IMAGE_EXPORT_AddressOfNames]->setAddressAndSize(&pe, pe.getBaseAddress() + eh.directory.AddressOfNames, 0);
 
                 XBinary::_MEMORY_MAP memoryMap = pe.getMemoryMap();
 
@@ -1656,11 +1656,11 @@ void PEWidget::reloadData(bool bSaveSelection)
 
                 blockSignals(false);
 
-                PEProcessData peProcessData(SPE::TYPE_EXPORT_FUNCTION, &g_tvModel[SPE::TYPE_EXPORT_FUNCTION], &pe, 0, 0, 0, ui->checkBoxExportShowValid->isChecked());
+                PEProcessData peProcessData(SPE::TYPE_EXPORT_FUNCTION, &m_tvModel[SPE::TYPE_EXPORT_FUNCTION], &pe, 0, 0, 0, ui->checkBoxExportShowValid->isChecked());
 
-                ajustTableView(nType, &peProcessData, &g_tvModel[SPE::TYPE_EXPORT_FUNCTION], ui->tableView_ExportFunctions);
+                ajustTableView(nType, &peProcessData, &m_tvModel[SPE::TYPE_EXPORT_FUNCTION], ui->tableView_ExportFunctions);
 
-                if (g_tvModel[SPE::TYPE_EXPORT_FUNCTION]->rowCount()) {
+                if (m_tvModel[SPE::TYPE_EXPORT_FUNCTION]->rowCount()) {
                     ui->tableView_ExportFunctions->setCurrentIndex(ui->tableView_ExportFunctions->model()->index(0, 0));
                 }
             }
@@ -1672,22 +1672,22 @@ void PEWidget::reloadData(bool bSaveSelection)
                 ui->lineEditHash64->setValue_uint64(pe.getImportHash64(&listImportRecords));
                 ui->lineEditHash32->setValue_uint32(pe.getImportHash32(&listImportRecords));
 
-                PEProcessData peProcessData(SPE::TYPE_IMPORT, &g_tvModel[SPE::TYPE_IMPORT], &pe, 0, 0, 0);
+                PEProcessData peProcessData(SPE::TYPE_IMPORT, &m_tvModel[SPE::TYPE_IMPORT], &pe, 0, 0, 0);
 
-                ajustTableView(nType, &peProcessData, &g_tvModel[SPE::TYPE_IMPORT], ui->tableView_ImportLibraries);
+                ajustTableView(nType, &peProcessData, &m_tvModel[SPE::TYPE_IMPORT], ui->tableView_ImportLibraries);
 
                 connect(ui->tableView_ImportLibraries->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_ImportLibraries_currentRowChanged(QModelIndex, QModelIndex)));
 
-                if (g_tvModel[SPE::TYPE_IMPORT]->rowCount()) {
+                if (m_tvModel[SPE::TYPE_IMPORT]->rowCount()) {
                     ui->tableView_ImportLibraries->setCurrentIndex(ui->tableView_ImportLibraries->model()->index(0, 0));
                 }
             }
         } else if (nType == SPE::TYPE_IMPORT_INFO) {
             if (!isInitPresent(sInit)) {
-                PEProcessData peProcessDataTree(SPE::TYPE_IMPORT_INFO, &g_tvModel[SPE::TYPE_IMPORT_INFO], &pe, 0, 0, 0, true);
+                PEProcessData peProcessDataTree(SPE::TYPE_IMPORT_INFO, &m_tvModel[SPE::TYPE_IMPORT_INFO], &pe, 0, 0, 0, true);
 
-                ajustTreeView(nType, &peProcessDataTree, &g_tvModel[SPE::TYPE_IMPORT_INFO], ui->treeView_Import_Info);
+                ajustTreeView(nType, &peProcessDataTree, &m_tvModel[SPE::TYPE_IMPORT_INFO], ui->treeView_Import_Info);
 
                 //                connect(ui->treeView_Sections_Info->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                 //                        SLOT(onTreeView_Sections_Info_currentRowChanged(QModelIndex, QModelIndex)));
@@ -1696,25 +1696,25 @@ void PEWidget::reloadData(bool bSaveSelection)
             if (!isInitPresent(sInit)) {
                 // Table
                 {
-                    PEProcessData peProcessData(SPE::TYPE_RESOURCES, &g_tvModel[SPE::TYPE_RESOURCES], &pe, 0, 0, 0, false);
+                    PEProcessData peProcessData(SPE::TYPE_RESOURCES, &m_tvModel[SPE::TYPE_RESOURCES], &pe, 0, 0, 0, false);
 
-                    ajustTableView(nType, &peProcessData, &g_tvModel[SPE::TYPE_RESOURCES], ui->tableView_Resources, true);
+                    ajustTableView(nType, &peProcessData, &m_tvModel[SPE::TYPE_RESOURCES], ui->tableView_Resources, true);
 
                     connect(ui->tableView_Resources->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                             SLOT(onTableView_Resources_currentRowChanged(QModelIndex, QModelIndex)));
 
-                    if (g_tvModel[SPE::TYPE_RESOURCES]->rowCount()) {
+                    if (m_tvModel[SPE::TYPE_RESOURCES]->rowCount()) {
                         ui->tableView_Resources->setCurrentIndex(ui->tableView_Resources->model()->index(0, 0));
                     }
                 }
 
                 // Tree
                 {
-                    createListTable(SPE::TYPE_RESOURCES, ui->tableWidget_Resources, N_IMAGE_RESOURCES::records, g_lineEdit_Resources, N_IMAGE_RESOURCES::__data_size);
+                    createListTable(SPE::TYPE_RESOURCES, ui->tableWidget_Resources, N_IMAGE_RESOURCES::records, m_lineEdit_Resources, N_IMAGE_RESOURCES::__data_size);
 
-                    PEProcessData peProcessDataTree(SPE::TYPE_RESOURCES, &g_tvModel[SPE::TYPE_RESOURCES_TREE], &pe, 0, 0, 0, true);
+                    PEProcessData peProcessDataTree(SPE::TYPE_RESOURCES, &m_tvModel[SPE::TYPE_RESOURCES_TREE], &pe, 0, 0, 0, true);
 
-                    ajustTreeView(nType, &peProcessDataTree, &g_tvModel[SPE::TYPE_RESOURCES_TREE], ui->treeView_Resources);
+                    ajustTreeView(nType, &peProcessDataTree, &m_tvModel[SPE::TYPE_RESOURCES_TREE], ui->treeView_Resources);
 
                     connect(ui->treeView_Resources->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                             SLOT(onTreeView_Resources_currentRowChanged(QModelIndex, QModelIndex)));
@@ -1727,13 +1727,13 @@ void PEWidget::reloadData(bool bSaveSelection)
             }
         } else if (nType == SPE::TYPE_RESOURCES_STRINGTABLE) {
             if (!isInitPresent(sInit)) {
-                PEProcessData peProcessData(SPE::TYPE_RESOURCES_STRINGTABLE, &g_tvModel[SPE::TYPE_RESOURCES_STRINGTABLE], &pe, 0, 0, 0, false);
+                PEProcessData peProcessData(SPE::TYPE_RESOURCES_STRINGTABLE, &m_tvModel[SPE::TYPE_RESOURCES_STRINGTABLE], &pe, 0, 0, 0, false);
 
-                ajustTableView(nType, &peProcessData, &g_tvModel[SPE::TYPE_RESOURCES_STRINGTABLE], ui->tableView_Resources_StringTable, true);
+                ajustTableView(nType, &peProcessData, &m_tvModel[SPE::TYPE_RESOURCES_STRINGTABLE], ui->tableView_Resources_StringTable, true);
 
                 //                connect(ui->tableView_Resources_StringTable->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_Resources_StringTable_currentRowChanged(QModelIndex,QModelIndex)));
 
-                //                if(g_tvModel[SPE::TYPE_RESOURCES_STRINGTABLE]->rowCount())
+                //                if(m_tvModel[SPE::TYPE_RESOURCES_STRINGTABLE]->rowCount())
                 //                {
                 //                    ui->tableView_Resources_StringTable->setCurrentIndex(ui->tableView_Resources_StringTable->model()->index(0,0));
                 //                }
@@ -1741,7 +1741,7 @@ void PEWidget::reloadData(bool bSaveSelection)
         } else if (nType == SPE::TYPE_RESOURCES_VERSION) {
             if (!isInitPresent(sInit)) {
                 createHeaderTable(SPE::TYPE_RESOURCES_VERSION, ui->tableWidget_Resources_Version, N_IMAGE_RESOURCE_FIXEDFILEINFO::records,
-                                  g_lineEdit_Version_FixedFileInfo, N_IMAGE_RESOURCE_FIXEDFILEINFO::__data_size, 0);
+                                  m_lineEdit_Version_FixedFileInfo, N_IMAGE_RESOURCE_FIXEDFILEINFO::__data_size, 0);
 
                 m_comboBox[CB_RESOURCES_VERSION_dwSignature] =
                     createComboBox(ui->tableWidget_Resources_Version, XPE::getResourcesFixedFileInfoSignaturesS(), SPE::TYPE_RESOURCES_VERSION,
@@ -1760,19 +1760,19 @@ void PEWidget::reloadData(bool bSaveSelection)
 
                 XPE::RESOURCES_VERSION resourceVersion = pe.getResourcesVersion();
 
-                g_lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwSignature]->setValue_uint32(resourceVersion.fileInfo.dwSignature);
-                g_lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwStrucVersion]->setValue_uint32(resourceVersion.fileInfo.dwStrucVersion);
-                g_lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileVersionMS]->setValue_uint32(resourceVersion.fileInfo.dwFileVersionMS);
-                g_lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileVersionLS]->setValue_uint32(resourceVersion.fileInfo.dwFileVersionLS);
-                g_lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwProductVersionMS]->setValue_uint32(resourceVersion.fileInfo.dwProductVersionMS);
-                g_lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwProductVersionLS]->setValue_uint32(resourceVersion.fileInfo.dwProductVersionLS);
-                g_lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileFlagsMask]->setValue_uint32(resourceVersion.fileInfo.dwFileFlagsMask);
-                g_lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileFlags]->setValue_uint32(resourceVersion.fileInfo.dwFileFlags);
-                g_lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileOS]->setValue_uint32(resourceVersion.fileInfo.dwFileOS);
-                g_lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileType]->setValue_uint32(resourceVersion.fileInfo.dwFileType);
-                g_lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileSubtype]->setValue_uint32(resourceVersion.fileInfo.dwFileSubtype);
-                g_lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileDateMS]->setValue_uint32(resourceVersion.fileInfo.dwFileDateMS);
-                g_lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileDateLS]->setValue_uint32(resourceVersion.fileInfo.dwFileDateLS);
+                m_lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwSignature]->setValue_uint32(resourceVersion.fileInfo.dwSignature);
+                m_lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwStrucVersion]->setValue_uint32(resourceVersion.fileInfo.dwStrucVersion);
+                m_lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileVersionMS]->setValue_uint32(resourceVersion.fileInfo.dwFileVersionMS);
+                m_lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileVersionLS]->setValue_uint32(resourceVersion.fileInfo.dwFileVersionLS);
+                m_lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwProductVersionMS]->setValue_uint32(resourceVersion.fileInfo.dwProductVersionMS);
+                m_lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwProductVersionLS]->setValue_uint32(resourceVersion.fileInfo.dwProductVersionLS);
+                m_lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileFlagsMask]->setValue_uint32(resourceVersion.fileInfo.dwFileFlagsMask);
+                m_lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileFlags]->setValue_uint32(resourceVersion.fileInfo.dwFileFlags);
+                m_lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileOS]->setValue_uint32(resourceVersion.fileInfo.dwFileOS);
+                m_lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileType]->setValue_uint32(resourceVersion.fileInfo.dwFileType);
+                m_lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileSubtype]->setValue_uint32(resourceVersion.fileInfo.dwFileSubtype);
+                m_lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileDateMS]->setValue_uint32(resourceVersion.fileInfo.dwFileDateMS);
+                m_lineEdit_Version_FixedFileInfo[N_IMAGE_RESOURCE_FIXEDFILEINFO::dwFileDateLS]->setValue_uint32(resourceVersion.fileInfo.dwFileDateLS);
 
                 m_comboBox[CB_RESOURCES_VERSION_dwSignature]->setValue(resourceVersion.fileInfo.dwSignature);
                 m_comboBox[CB_RESOURCES_VERSION_dwFileFlags]->setValue(resourceVersion.fileInfo.dwFileFlags);
@@ -1810,53 +1810,53 @@ void PEWidget::reloadData(bool bSaveSelection)
             }
         } else if (nType == SPE::TYPE_EXCEPTION) {
             if (!isInitPresent(sInit)) {
-                PEProcessData peProcessData(SPE::TYPE_EXCEPTION, &g_tvModel[SPE::TYPE_EXCEPTION], &pe, 0, 0, 0);
+                PEProcessData peProcessData(SPE::TYPE_EXCEPTION, &m_tvModel[SPE::TYPE_EXCEPTION], &pe, 0, 0, 0);
 
-                ajustTableView(nType, &peProcessData, &g_tvModel[SPE::TYPE_EXCEPTION], ui->tableView_Exceptions, false);
+                ajustTableView(nType, &peProcessData, &m_tvModel[SPE::TYPE_EXCEPTION], ui->tableView_Exceptions, false);
 
                 connect(ui->tableView_Exceptions->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_Exceptions_currentRowChanged(QModelIndex, QModelIndex)));
 
-                if (g_tvModel[SPE::TYPE_EXCEPTION]->rowCount()) {
+                if (m_tvModel[SPE::TYPE_EXCEPTION]->rowCount()) {
                     ui->tableView_Exceptions->setCurrentIndex(ui->tableView_Exceptions->model()->index(0, 0));
                 }
             }
         } else if (nType == SPE::TYPE_RELOCS) {
             if (!isInitPresent(sInit)) {
-                PEProcessData peProcessData(SPE::TYPE_RELOCS, &g_tvModel[SPE::TYPE_RELOCS], &pe, 0, 0, 0);
+                PEProcessData peProcessData(SPE::TYPE_RELOCS, &m_tvModel[SPE::TYPE_RELOCS], &pe, 0, 0, 0);
 
-                ajustTableView(nType, &peProcessData, &g_tvModel[SPE::TYPE_RELOCS], ui->tableView_Relocs, false);
+                ajustTableView(nType, &peProcessData, &m_tvModel[SPE::TYPE_RELOCS], ui->tableView_Relocs, false);
 
                 connect(ui->tableView_Relocs->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_Relocs_currentRowChanged(QModelIndex, QModelIndex)));
 
-                if (g_tvModel[SPE::TYPE_RELOCS]->rowCount()) {
+                if (m_tvModel[SPE::TYPE_RELOCS]->rowCount()) {
                     ui->tableView_Relocs->setCurrentIndex(ui->tableView_Relocs->model()->index(0, 0));
                 }
             }
         } else if (nType == SPE::TYPE_DEBUG) {
             if (!isInitPresent(sInit)) {
-                PEProcessData peProcessData(SPE::TYPE_DEBUG, &g_tvModel[SPE::TYPE_DEBUG], &pe, 0, 0, 0);
+                PEProcessData peProcessData(SPE::TYPE_DEBUG, &m_tvModel[SPE::TYPE_DEBUG], &pe, 0, 0, 0);
 
-                ajustTableView(nType, &peProcessData, &g_tvModel[SPE::TYPE_DEBUG], ui->tableView_Debug, false);
+                ajustTableView(nType, &peProcessData, &m_tvModel[SPE::TYPE_DEBUG], ui->tableView_Debug, false);
 
                 connect(ui->tableView_Debug->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_Debug_currentRowChanged(QModelIndex, QModelIndex)));
 
-                if (g_tvModel[SPE::TYPE_DEBUG]->rowCount()) {
+                if (m_tvModel[SPE::TYPE_DEBUG]->rowCount()) {
                     ui->tableView_Debug->setCurrentIndex(ui->tableView_Debug->model()->index(0, 0));
                 }
             }
         } else if (nType == SPE::TYPE_TLS) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SPE::TYPE_TLS, ui->tableWidget_TLS, pe.is64() ? (N_IMAGE_TLS::records64) : (N_IMAGE_TLS::records32), g_lineEdit_TLS,
+                createHeaderTable(SPE::TYPE_TLS, ui->tableWidget_TLS, pe.is64() ? (N_IMAGE_TLS::records64) : (N_IMAGE_TLS::records32), m_lineEdit_TLS,
                                   N_IMAGE_TLS::__data_size, 0);
 
-                g_invWidget[INV_IMAGE_TLS_AddressOfCallBacks] = createInvWidget(ui->tableWidget_TLS, SPE::TYPE_TLS, N_IMAGE_TLS::AddressOfCallBacks, InvWidget::TYPE_HEX);
-                g_invWidget[INV_IMAGE_TLS_AddressOfIndex] = createInvWidget(ui->tableWidget_TLS, SPE::TYPE_TLS, N_IMAGE_TLS::AddressOfIndex, InvWidget::TYPE_HEX);
-                g_invWidget[INV_IMAGE_TLS_EndAddressOfRawData] =
+                m_invWidget[INV_IMAGE_TLS_AddressOfCallBacks] = createInvWidget(ui->tableWidget_TLS, SPE::TYPE_TLS, N_IMAGE_TLS::AddressOfCallBacks, InvWidget::TYPE_HEX);
+                m_invWidget[INV_IMAGE_TLS_AddressOfIndex] = createInvWidget(ui->tableWidget_TLS, SPE::TYPE_TLS, N_IMAGE_TLS::AddressOfIndex, InvWidget::TYPE_HEX);
+                m_invWidget[INV_IMAGE_TLS_EndAddressOfRawData] =
                     createInvWidget(ui->tableWidget_TLS, SPE::TYPE_TLS, N_IMAGE_TLS::EndAddressOfRawData, InvWidget::TYPE_HEX);
-                g_invWidget[INV_IMAGE_TLS_StartAddressOfRawData] =
+                m_invWidget[INV_IMAGE_TLS_StartAddressOfRawData] =
                     createInvWidget(ui->tableWidget_TLS, SPE::TYPE_TLS, N_IMAGE_TLS::StartAddressOfRawData, InvWidget::TYPE_HEX);
 
                 blockSignals(true);
@@ -1865,17 +1865,17 @@ void PEWidget::reloadData(bool bSaveSelection)
 
                 if (bIs64) {
                     XPE_DEF::S_IMAGE_TLS_DIRECTORY64 tls64 = pe.getTLSDirectory64();
-                    g_lineEdit_TLS[N_IMAGE_TLS::StartAddressOfRawData]->setValue_uint64(tls64.StartAddressOfRawData);
-                    g_lineEdit_TLS[N_IMAGE_TLS::EndAddressOfRawData]->setValue_uint64(tls64.EndAddressOfRawData);
-                    g_lineEdit_TLS[N_IMAGE_TLS::AddressOfIndex]->setValue_uint64(tls64.AddressOfIndex);
-                    g_lineEdit_TLS[N_IMAGE_TLS::AddressOfCallBacks]->setValue_uint64(tls64.AddressOfCallBacks);
-                    g_lineEdit_TLS[N_IMAGE_TLS::SizeOfZeroFill]->setValue_uint32(tls64.SizeOfZeroFill);
-                    g_lineEdit_TLS[N_IMAGE_TLS::Characteristics]->setValue_uint32(tls64.Characteristics);
+                    m_lineEdit_TLS[N_IMAGE_TLS::StartAddressOfRawData]->setValue_uint64(tls64.StartAddressOfRawData);
+                    m_lineEdit_TLS[N_IMAGE_TLS::EndAddressOfRawData]->setValue_uint64(tls64.EndAddressOfRawData);
+                    m_lineEdit_TLS[N_IMAGE_TLS::AddressOfIndex]->setValue_uint64(tls64.AddressOfIndex);
+                    m_lineEdit_TLS[N_IMAGE_TLS::AddressOfCallBacks]->setValue_uint64(tls64.AddressOfCallBacks);
+                    m_lineEdit_TLS[N_IMAGE_TLS::SizeOfZeroFill]->setValue_uint32(tls64.SizeOfZeroFill);
+                    m_lineEdit_TLS[N_IMAGE_TLS::Characteristics]->setValue_uint32(tls64.Characteristics);
 
-                    g_invWidget[INV_IMAGE_TLS_AddressOfCallBacks]->setAddressAndSize(&pe, tls64.AddressOfCallBacks, 0);
-                    g_invWidget[INV_IMAGE_TLS_AddressOfIndex]->setAddressAndSize(&pe, tls64.AddressOfIndex, 0);
-                    g_invWidget[INV_IMAGE_TLS_EndAddressOfRawData]->setAddressAndSize(&pe, tls64.EndAddressOfRawData, 0);
-                    g_invWidget[INV_IMAGE_TLS_StartAddressOfRawData]->setAddressAndSize(&pe, tls64.StartAddressOfRawData, 0);
+                    m_invWidget[INV_IMAGE_TLS_AddressOfCallBacks]->setAddressAndSize(&pe, tls64.AddressOfCallBacks, 0);
+                    m_invWidget[INV_IMAGE_TLS_AddressOfIndex]->setAddressAndSize(&pe, tls64.AddressOfIndex, 0);
+                    m_invWidget[INV_IMAGE_TLS_EndAddressOfRawData]->setAddressAndSize(&pe, tls64.EndAddressOfRawData, 0);
+                    m_invWidget[INV_IMAGE_TLS_StartAddressOfRawData]->setAddressAndSize(&pe, tls64.StartAddressOfRawData, 0);
 
                     addComment(ui->tableWidget_TLS, N_IMAGE_TLS::AddressOfCallBacks, HEADER_COLUMN_COMMENT,
                                pe.getMemoryRecordInfoByAddress(&memoryMap, tls64.AddressOfCallBacks));
@@ -1887,17 +1887,17 @@ void PEWidget::reloadData(bool bSaveSelection)
                                pe.getMemoryRecordInfoByAddress(&memoryMap, tls64.StartAddressOfRawData));
                 } else {
                     XPE_DEF::S_IMAGE_TLS_DIRECTORY32 tls32 = pe.getTLSDirectory32();
-                    g_lineEdit_TLS[N_IMAGE_TLS::StartAddressOfRawData]->setValue_uint32(tls32.StartAddressOfRawData);
-                    g_lineEdit_TLS[N_IMAGE_TLS::EndAddressOfRawData]->setValue_uint32(tls32.EndAddressOfRawData);
-                    g_lineEdit_TLS[N_IMAGE_TLS::AddressOfIndex]->setValue_uint32(tls32.AddressOfIndex);
-                    g_lineEdit_TLS[N_IMAGE_TLS::AddressOfCallBacks]->setValue_uint32(tls32.AddressOfCallBacks);
-                    g_lineEdit_TLS[N_IMAGE_TLS::SizeOfZeroFill]->setValue_uint32(tls32.SizeOfZeroFill);
-                    g_lineEdit_TLS[N_IMAGE_TLS::Characteristics]->setValue_uint32(tls32.Characteristics);
+                    m_lineEdit_TLS[N_IMAGE_TLS::StartAddressOfRawData]->setValue_uint32(tls32.StartAddressOfRawData);
+                    m_lineEdit_TLS[N_IMAGE_TLS::EndAddressOfRawData]->setValue_uint32(tls32.EndAddressOfRawData);
+                    m_lineEdit_TLS[N_IMAGE_TLS::AddressOfIndex]->setValue_uint32(tls32.AddressOfIndex);
+                    m_lineEdit_TLS[N_IMAGE_TLS::AddressOfCallBacks]->setValue_uint32(tls32.AddressOfCallBacks);
+                    m_lineEdit_TLS[N_IMAGE_TLS::SizeOfZeroFill]->setValue_uint32(tls32.SizeOfZeroFill);
+                    m_lineEdit_TLS[N_IMAGE_TLS::Characteristics]->setValue_uint32(tls32.Characteristics);
 
-                    g_invWidget[INV_IMAGE_TLS_AddressOfCallBacks]->setAddressAndSize(&pe, tls32.AddressOfCallBacks, 0);
-                    g_invWidget[INV_IMAGE_TLS_AddressOfIndex]->setAddressAndSize(&pe, tls32.AddressOfIndex, 0);
-                    g_invWidget[INV_IMAGE_TLS_EndAddressOfRawData]->setAddressAndSize(&pe, tls32.EndAddressOfRawData, 0);
-                    g_invWidget[INV_IMAGE_TLS_StartAddressOfRawData]->setAddressAndSize(&pe, tls32.StartAddressOfRawData, 0);
+                    m_invWidget[INV_IMAGE_TLS_AddressOfCallBacks]->setAddressAndSize(&pe, tls32.AddressOfCallBacks, 0);
+                    m_invWidget[INV_IMAGE_TLS_AddressOfIndex]->setAddressAndSize(&pe, tls32.AddressOfIndex, 0);
+                    m_invWidget[INV_IMAGE_TLS_EndAddressOfRawData]->setAddressAndSize(&pe, tls32.EndAddressOfRawData, 0);
+                    m_invWidget[INV_IMAGE_TLS_StartAddressOfRawData]->setAddressAndSize(&pe, tls32.StartAddressOfRawData, 0);
 
                     addComment(ui->tableWidget_TLS, N_IMAGE_TLS::AddressOfCallBacks, HEADER_COLUMN_COMMENT,
                                pe.getMemoryRecordInfoByAddress(&memoryMap, tls32.AddressOfCallBacks));
@@ -1913,19 +1913,19 @@ void PEWidget::reloadData(bool bSaveSelection)
                 qint64 nSize = pe.getTLSHeaderSize();
                 qint64 nAddress = pe.offsetToRelAddress(nOffset);
 
-                loadHexSubdevice(nOffset, nSize, nAddress, &g_subDevice[SPE::TYPE_TLS], ui->widgetHex_TLS);
+                loadHexSubdevice(nOffset, nSize, nAddress, &m_subDevice[SPE::TYPE_TLS], ui->widgetHex_TLS);
 
                 blockSignals(false);
             }
         } else if (nType == SPE::TYPE_TLSCALLBACKS) {
             if (!isInitPresent(sInit)) {
-                PEProcessData peProcessData(SPE::TYPE_TLSCALLBACKS, &g_tvModel[SPE::TYPE_TLSCALLBACKS], &pe, 0, 0, 0);
+                PEProcessData peProcessData(SPE::TYPE_TLSCALLBACKS, &m_tvModel[SPE::TYPE_TLSCALLBACKS], &pe, 0, 0, 0);
 
-                ajustTableView(nType, &peProcessData, &g_tvModel[SPE::TYPE_TLSCALLBACKS], ui->tableView_TLSCallbacks, true);
+                ajustTableView(nType, &peProcessData, &m_tvModel[SPE::TYPE_TLSCALLBACKS], ui->tableView_TLSCallbacks, true);
 
                 // connect(ui->tableView_Sections->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),this,SLOT(onTableView_Sections_currentRowChanged(QModelIndex,QModelIndex)));
 
-                if (g_tvModel[SPE::TYPE_TLSCALLBACKS]->rowCount()) {
+                if (m_tvModel[SPE::TYPE_TLSCALLBACKS]->rowCount()) {
                     ui->tableView_TLSCallbacks->setCurrentIndex(ui->tableView_TLSCallbacks->model()->index(0, 0));
                 }
             }
@@ -1944,22 +1944,22 @@ void PEWidget::reloadData(bool bSaveSelection)
                 }
 
                 createHeaderTable(SPE::TYPE_LOADCONFIG, ui->tableWidget_LoadConfig, bIs64 ? (N_IMAGE_LOADCONFIG::records64) : (N_IMAGE_LOADCONFIG::records32),
-                                  g_lineEdit_LoadConfig, nRecordSize, 0);
+                                  m_lineEdit_LoadConfig, nRecordSize, 0);
 
                 if (nRecordSize > N_IMAGE_LOADCONFIG::SecurityCookie)
-                    g_invWidget[INV_IMAGE_LOADCONFIG_SecurityCookie] =
+                    m_invWidget[INV_IMAGE_LOADCONFIG_SecurityCookie] =
                         createInvWidget(ui->tableWidget_LoadConfig, SPE::TYPE_LOADCONFIG, N_IMAGE_LOADCONFIG::SecurityCookie, InvWidget::TYPE_HEX);
                 if (nRecordSize > N_IMAGE_LOADCONFIG::SEHandlerTable)
-                    g_invWidget[INV_IMAGE_LOADCONFIG_SEHandlerTable] =
+                    m_invWidget[INV_IMAGE_LOADCONFIG_SEHandlerTable] =
                         createInvWidget(ui->tableWidget_LoadConfig, SPE::TYPE_LOADCONFIG, N_IMAGE_LOADCONFIG::SEHandlerTable, InvWidget::TYPE_HEX);
                 if (nRecordSize > N_IMAGE_LOADCONFIG::GuardCFCheckFunctionPointer)
-                    g_invWidget[INV_IMAGE_LOADCONFIG_GuardCFCheckFunctionPointer] =
+                    m_invWidget[INV_IMAGE_LOADCONFIG_GuardCFCheckFunctionPointer] =
                         createInvWidget(ui->tableWidget_LoadConfig, SPE::TYPE_LOADCONFIG, N_IMAGE_LOADCONFIG::GuardCFCheckFunctionPointer, InvWidget::TYPE_HEX);
                 if (nRecordSize > N_IMAGE_LOADCONFIG::GuardCFDispatchFunctionPointer)
-                    g_invWidget[INV_IMAGE_LOADCONFIG_GuardCFDispatchFunctionPointer] =
+                    m_invWidget[INV_IMAGE_LOADCONFIG_GuardCFDispatchFunctionPointer] =
                         createInvWidget(ui->tableWidget_LoadConfig, SPE::TYPE_LOADCONFIG, N_IMAGE_LOADCONFIG::GuardCFDispatchFunctionPointer, InvWidget::TYPE_HEX);
                 if (nRecordSize > N_IMAGE_LOADCONFIG::GuardMemcpyFunctionPointer)
-                    g_invWidget[INV_IMAGE_LOADCONFIG_GuardMemcpyFunctionPointer] =
+                    m_invWidget[INV_IMAGE_LOADCONFIG_GuardMemcpyFunctionPointer] =
                         createInvWidget(ui->tableWidget_LoadConfig, SPE::TYPE_LOADCONFIG, N_IMAGE_LOADCONFIG::GuardMemcpyFunctionPointer, InvWidget::TYPE_HEX);
 
                 blockSignals(true);
@@ -1967,263 +1967,263 @@ void PEWidget::reloadData(bool bSaveSelection)
                 if (bIs64) {
                     XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY64 lc64 = pe.getLoadConfigDirectory64();
 
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::Size) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::Size]->setValue_uint32(lc64.Size);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::TimeDateStamp) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::TimeDateStamp]->setValue_uint32(lc64.TimeDateStamp);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::MinorVersion) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::MinorVersion]->setValue_uint16(lc64.MinorVersion);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::MajorVersion) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::MajorVersion]->setValue_uint16(lc64.MajorVersion);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::Size) m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::Size]->setValue_uint32(lc64.Size);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::TimeDateStamp) m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::TimeDateStamp]->setValue_uint32(lc64.TimeDateStamp);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::MinorVersion) m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::MinorVersion]->setValue_uint16(lc64.MinorVersion);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::MajorVersion) m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::MajorVersion]->setValue_uint16(lc64.MajorVersion);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GlobalFlagsClear)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GlobalFlagsClear]->setValue_uint32(lc64.GlobalFlagsClear);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::GlobalFlagsSet) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GlobalFlagsSet]->setValue_uint32(lc64.GlobalFlagsSet);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GlobalFlagsClear]->setValue_uint32(lc64.GlobalFlagsClear);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::GlobalFlagsSet) m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GlobalFlagsSet]->setValue_uint32(lc64.GlobalFlagsSet);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::CriticalSectionDefaultTimeout)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CriticalSectionDefaultTimeout]->setValue_uint32(lc64.CriticalSectionDefaultTimeout);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CriticalSectionDefaultTimeout]->setValue_uint32(lc64.CriticalSectionDefaultTimeout);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::DeCommitFreeBlockThreshold)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DeCommitFreeBlockThreshold]->setValue_uint64(lc64.DeCommitFreeBlockThreshold);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DeCommitFreeBlockThreshold]->setValue_uint64(lc64.DeCommitFreeBlockThreshold);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::DeCommitTotalFreeThreshold)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DeCommitTotalFreeThreshold]->setValue_uint64(lc64.DeCommitTotalFreeThreshold);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DeCommitTotalFreeThreshold]->setValue_uint64(lc64.DeCommitTotalFreeThreshold);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::LockPrefixTable)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::LockPrefixTable]->setValue_uint64(lc64.LockPrefixTable);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::LockPrefixTable]->setValue_uint64(lc64.LockPrefixTable);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::MaximumAllocationSize)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::MaximumAllocationSize]->setValue_uint64(lc64.MaximumAllocationSize);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::MaximumAllocationSize]->setValue_uint64(lc64.MaximumAllocationSize);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::VirtualMemoryThreshold)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::VirtualMemoryThreshold]->setValue_uint64(lc64.VirtualMemoryThreshold);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::VirtualMemoryThreshold]->setValue_uint64(lc64.VirtualMemoryThreshold);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::ProcessAffinityMask)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::ProcessAffinityMask]->setValue_uint64(lc64.ProcessAffinityMask);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::CSDVersion) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CSDVersion]->setValue_uint16(lc64.CSDVersion);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::ProcessAffinityMask]->setValue_uint64(lc64.ProcessAffinityMask);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::CSDVersion) m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CSDVersion]->setValue_uint16(lc64.CSDVersion);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::DependentLoadFlags)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DependentLoadFlags]->setValue_uint16(lc64.DependentLoadFlags);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::EditList) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::EditList]->setValue_uint64(lc64.EditList);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::SecurityCookie) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SecurityCookie]->setValue_uint64(lc64.SecurityCookie);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::SEHandlerTable) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SEHandlerTable]->setValue_uint64(lc64.SEHandlerTable);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::SEHandlerCount) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SEHandlerCount]->setValue_uint64(lc64.SEHandlerCount);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DependentLoadFlags]->setValue_uint16(lc64.DependentLoadFlags);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::EditList) m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::EditList]->setValue_uint64(lc64.EditList);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::SecurityCookie) m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SecurityCookie]->setValue_uint64(lc64.SecurityCookie);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::SEHandlerTable) m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SEHandlerTable]->setValue_uint64(lc64.SEHandlerTable);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::SEHandlerCount) m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SEHandlerCount]->setValue_uint64(lc64.SEHandlerCount);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardCFCheckFunctionPointer)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardCFCheckFunctionPointer]->setValue_uint64(lc64.GuardCFCheckFunctionPointer);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardCFCheckFunctionPointer]->setValue_uint64(lc64.GuardCFCheckFunctionPointer);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardCFDispatchFunctionPointer)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardCFDispatchFunctionPointer]->setValue_uint64(lc64.GuardCFDispatchFunctionPointer);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardCFDispatchFunctionPointer]->setValue_uint64(lc64.GuardCFDispatchFunctionPointer);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardCFFunctionTable)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardCFFunctionTable]->setValue_uint64(lc64.GuardCFFunctionTable);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardCFFunctionTable]->setValue_uint64(lc64.GuardCFFunctionTable);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardCFFunctionCount)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardCFFunctionCount]->setValue_uint64(lc64.GuardCFFunctionCount);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::GuardFlags) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardFlags]->setValue_uint32(lc64.GuardFlags);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardCFFunctionCount]->setValue_uint64(lc64.GuardCFFunctionCount);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::GuardFlags) m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardFlags]->setValue_uint32(lc64.GuardFlags);
 
                     if (nRecordSize > N_IMAGE_LOADCONFIG::CodeIntegrity_Flags)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CodeIntegrity_Flags]->setValue_uint16(lc64.CodeIntegrity.Flags);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CodeIntegrity_Flags]->setValue_uint16(lc64.CodeIntegrity.Flags);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::CodeIntegrity_Catalog)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CodeIntegrity_Catalog]->setValue_uint16(lc64.CodeIntegrity.Catalog);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CodeIntegrity_Catalog]->setValue_uint16(lc64.CodeIntegrity.Catalog);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::CodeIntegrity_CatalogOffset)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CodeIntegrity_CatalogOffset]->setValue_uint32(lc64.CodeIntegrity.CatalogOffset);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CodeIntegrity_CatalogOffset]->setValue_uint32(lc64.CodeIntegrity.CatalogOffset);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::CodeIntegrity_Reserved)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CodeIntegrity_Reserved]->setValue_uint32(lc64.CodeIntegrity.Reserved);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CodeIntegrity_Reserved]->setValue_uint32(lc64.CodeIntegrity.Reserved);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardAddressTakenIatEntryTable)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardAddressTakenIatEntryTable]->setValue_uint64(lc64.GuardAddressTakenIatEntryTable);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardAddressTakenIatEntryTable]->setValue_uint64(lc64.GuardAddressTakenIatEntryTable);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardAddressTakenIatEntryCount)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardAddressTakenIatEntryCount]->setValue_uint64(lc64.GuardAddressTakenIatEntryCount);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardAddressTakenIatEntryCount]->setValue_uint64(lc64.GuardAddressTakenIatEntryCount);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardLongJumpTargetTable)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardLongJumpTargetTable]->setValue_uint64(lc64.GuardLongJumpTargetTable);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardLongJumpTargetTable]->setValue_uint64(lc64.GuardLongJumpTargetTable);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardLongJumpTargetCount)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardLongJumpTargetCount]->setValue_uint64(lc64.GuardLongJumpTargetCount);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardLongJumpTargetCount]->setValue_uint64(lc64.GuardLongJumpTargetCount);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::DynamicValueRelocTable)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DynamicValueRelocTable]->setValue_uint64(lc64.DynamicValueRelocTable);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DynamicValueRelocTable]->setValue_uint64(lc64.DynamicValueRelocTable);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::CHPEMetadataPointer)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CHPEMetadataPointer]->setValue_uint64(lc64.CHPEMetadataPointer);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CHPEMetadataPointer]->setValue_uint64(lc64.CHPEMetadataPointer);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardRFFailureRoutine)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardRFFailureRoutine]->setValue_uint64(lc64.GuardRFFailureRoutine);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardRFFailureRoutine]->setValue_uint64(lc64.GuardRFFailureRoutine);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardRFFailureRoutineFunctionPointer)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardRFFailureRoutineFunctionPointer]->setValue_uint64(lc64.GuardRFFailureRoutineFunctionPointer);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardRFFailureRoutineFunctionPointer]->setValue_uint64(lc64.GuardRFFailureRoutineFunctionPointer);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::DynamicValueRelocTableOffset)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DynamicValueRelocTableOffset]->setValue_uint32(lc64.DynamicValueRelocTableOffset);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DynamicValueRelocTableOffset]->setValue_uint32(lc64.DynamicValueRelocTableOffset);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::DynamicValueRelocTableSection)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DynamicValueRelocTableSection]->setValue_uint16(lc64.DynamicValueRelocTableSection);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::Reserved2) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::Reserved2]->setValue_uint16(lc64.Reserved2);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DynamicValueRelocTableSection]->setValue_uint16(lc64.DynamicValueRelocTableSection);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::Reserved2) m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::Reserved2]->setValue_uint16(lc64.Reserved2);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardRFVerifyStackPointerFunctionPointer)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardRFVerifyStackPointerFunctionPointer]->setValue_uint64(
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardRFVerifyStackPointerFunctionPointer]->setValue_uint64(
                             lc64.GuardRFVerifyStackPointerFunctionPointer);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::HotPatchTableOffset)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::HotPatchTableOffset]->setValue_uint32(lc64.HotPatchTableOffset);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::Reserved3) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::Reserved3]->setValue_uint32(lc64.Reserved3);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::HotPatchTableOffset]->setValue_uint32(lc64.HotPatchTableOffset);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::Reserved3) m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::Reserved3]->setValue_uint32(lc64.Reserved3);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::EnclaveConfigurationPointer)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::EnclaveConfigurationPointer]->setValue_uint64(lc64.EnclaveConfigurationPointer);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::EnclaveConfigurationPointer]->setValue_uint64(lc64.EnclaveConfigurationPointer);
 
                     if (nRecordSize > N_IMAGE_LOADCONFIG::VolatileMetadataPointer)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::VolatileMetadataPointer]->setValue_uint64(lc64.VolatileMetadataPointer);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::VolatileMetadataPointer]->setValue_uint64(lc64.VolatileMetadataPointer);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardEHContinuationTable)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardEHContinuationTable]->setValue_uint64(lc64.GuardEHContinuationTable);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardEHContinuationTable]->setValue_uint64(lc64.GuardEHContinuationTable);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardEHContinuationCount)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardEHContinuationCount]->setValue_uint64(lc64.GuardEHContinuationCount);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardEHContinuationCount]->setValue_uint64(lc64.GuardEHContinuationCount);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardXFGCheckFunctionPointer)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardXFGCheckFunctionPointer]->setValue_uint64(lc64.GuardXFGCheckFunctionPointer);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardXFGCheckFunctionPointer]->setValue_uint64(lc64.GuardXFGCheckFunctionPointer);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardXFGDispatchFunctionPointer)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardXFGDispatchFunctionPointer]->setValue_uint64(lc64.GuardXFGDispatchFunctionPointer);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardXFGDispatchFunctionPointer]->setValue_uint64(lc64.GuardXFGDispatchFunctionPointer);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardXFGTableDispatchFunctionPointer)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardXFGTableDispatchFunctionPointer]->setValue_uint64(lc64.GuardXFGTableDispatchFunctionPointer);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardXFGTableDispatchFunctionPointer]->setValue_uint64(lc64.GuardXFGTableDispatchFunctionPointer);
 
                     if (nRecordSize > N_IMAGE_LOADCONFIG::CastGuardOsDeterminedFailureMode)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CastGuardOsDeterminedFailureMode]->setValue_uint64(lc64.CastGuardOsDeterminedFailureMode);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CastGuardOsDeterminedFailureMode]->setValue_uint64(lc64.CastGuardOsDeterminedFailureMode);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardMemcpyFunctionPointer)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardMemcpyFunctionPointer]->setValue_uint64(lc64.GuardMemcpyFunctionPointer);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardMemcpyFunctionPointer]->setValue_uint64(lc64.GuardMemcpyFunctionPointer);
 
                     if (nRecordSize > N_IMAGE_LOADCONFIG::Size)
                         addComment(ui->tableWidget_LoadConfig, N_IMAGE_LOADCONFIG::Size, HEADER_COLUMN_COMMENT, XBinary::bytesCountToString(lc64.Size));
 
                     if (nRecordSize > N_IMAGE_LOADCONFIG::SecurityCookie)
-                        g_invWidget[INV_IMAGE_LOADCONFIG_SecurityCookie]->setAddressAndSize(&pe, lc64.SecurityCookie, 0);
+                        m_invWidget[INV_IMAGE_LOADCONFIG_SecurityCookie]->setAddressAndSize(&pe, lc64.SecurityCookie, 0);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::SEHandlerTable)
-                        g_invWidget[INV_IMAGE_LOADCONFIG_SEHandlerTable]->setAddressAndSize(&pe, lc64.SEHandlerTable, 0);
+                        m_invWidget[INV_IMAGE_LOADCONFIG_SEHandlerTable]->setAddressAndSize(&pe, lc64.SEHandlerTable, 0);
 
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardCFCheckFunctionPointer)
-                        g_invWidget[INV_IMAGE_LOADCONFIG_GuardCFCheckFunctionPointer]->setAddressAndSize(&pe, lc64.GuardCFCheckFunctionPointer, 0);
+                        m_invWidget[INV_IMAGE_LOADCONFIG_GuardCFCheckFunctionPointer]->setAddressAndSize(&pe, lc64.GuardCFCheckFunctionPointer, 0);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardCFDispatchFunctionPointer)
-                        g_invWidget[INV_IMAGE_LOADCONFIG_GuardCFDispatchFunctionPointer]->setAddressAndSize(&pe, lc64.GuardCFDispatchFunctionPointer, 0);
+                        m_invWidget[INV_IMAGE_LOADCONFIG_GuardCFDispatchFunctionPointer]->setAddressAndSize(&pe, lc64.GuardCFDispatchFunctionPointer, 0);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardMemcpyFunctionPointer)
-                        g_invWidget[INV_IMAGE_LOADCONFIG_GuardMemcpyFunctionPointer]->setAddressAndSize(&pe, lc64.GuardMemcpyFunctionPointer, 0);
+                        m_invWidget[INV_IMAGE_LOADCONFIG_GuardMemcpyFunctionPointer]->setAddressAndSize(&pe, lc64.GuardMemcpyFunctionPointer, 0);
                 } else {
                     XPE_DEF::S_IMAGE_LOAD_CONFIG_DIRECTORY32 lc32 = pe.getLoadConfigDirectory32();
 
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::Size) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::Size]->setValue_uint32(lc32.Size);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::TimeDateStamp) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::TimeDateStamp]->setValue_uint32(lc32.TimeDateStamp);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::MinorVersion) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::MinorVersion]->setValue_uint16(lc32.MinorVersion);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::MajorVersion) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::MajorVersion]->setValue_uint16(lc32.MajorVersion);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::Size) m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::Size]->setValue_uint32(lc32.Size);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::TimeDateStamp) m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::TimeDateStamp]->setValue_uint32(lc32.TimeDateStamp);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::MinorVersion) m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::MinorVersion]->setValue_uint16(lc32.MinorVersion);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::MajorVersion) m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::MajorVersion]->setValue_uint16(lc32.MajorVersion);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GlobalFlagsClear)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GlobalFlagsClear]->setValue_uint32(lc32.GlobalFlagsClear);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::GlobalFlagsSet) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GlobalFlagsSet]->setValue_uint32(lc32.GlobalFlagsSet);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GlobalFlagsClear]->setValue_uint32(lc32.GlobalFlagsClear);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::GlobalFlagsSet) m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GlobalFlagsSet]->setValue_uint32(lc32.GlobalFlagsSet);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::CriticalSectionDefaultTimeout)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CriticalSectionDefaultTimeout]->setValue_uint32(lc32.CriticalSectionDefaultTimeout);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CriticalSectionDefaultTimeout]->setValue_uint32(lc32.CriticalSectionDefaultTimeout);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::DeCommitFreeBlockThreshold)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DeCommitFreeBlockThreshold]->setValue_uint32(lc32.DeCommitFreeBlockThreshold);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DeCommitFreeBlockThreshold]->setValue_uint32(lc32.DeCommitFreeBlockThreshold);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::DeCommitTotalFreeThreshold)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DeCommitTotalFreeThreshold]->setValue_uint32(lc32.DeCommitTotalFreeThreshold);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DeCommitTotalFreeThreshold]->setValue_uint32(lc32.DeCommitTotalFreeThreshold);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::LockPrefixTable)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::LockPrefixTable]->setValue_uint32(lc32.LockPrefixTable);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::LockPrefixTable]->setValue_uint32(lc32.LockPrefixTable);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::MaximumAllocationSize)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::MaximumAllocationSize]->setValue_uint32(lc32.MaximumAllocationSize);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::MaximumAllocationSize]->setValue_uint32(lc32.MaximumAllocationSize);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::VirtualMemoryThreshold)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::VirtualMemoryThreshold]->setValue_uint32(lc32.VirtualMemoryThreshold);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::VirtualMemoryThreshold]->setValue_uint32(lc32.VirtualMemoryThreshold);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::ProcessAffinityMask)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::ProcessAffinityMask]->setValue_uint32(lc32.ProcessAffinityMask);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::CSDVersion) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CSDVersion]->setValue_uint16(lc32.CSDVersion);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::ProcessAffinityMask]->setValue_uint32(lc32.ProcessAffinityMask);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::CSDVersion) m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CSDVersion]->setValue_uint16(lc32.CSDVersion);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::DependentLoadFlags)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DependentLoadFlags]->setValue_uint16(lc32.DependentLoadFlags);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::EditList) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::EditList]->setValue_uint32(lc32.EditList);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::SecurityCookie) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SecurityCookie]->setValue_uint32(lc32.SecurityCookie);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::SEHandlerTable) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SEHandlerTable]->setValue_uint32(lc32.SEHandlerTable);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::SEHandlerCount) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SEHandlerCount]->setValue_uint32(lc32.SEHandlerCount);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DependentLoadFlags]->setValue_uint16(lc32.DependentLoadFlags);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::EditList) m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::EditList]->setValue_uint32(lc32.EditList);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::SecurityCookie) m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SecurityCookie]->setValue_uint32(lc32.SecurityCookie);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::SEHandlerTable) m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SEHandlerTable]->setValue_uint32(lc32.SEHandlerTable);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::SEHandlerCount) m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::SEHandlerCount]->setValue_uint32(lc32.SEHandlerCount);
 
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardCFCheckFunctionPointer)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardCFCheckFunctionPointer]->setValue_uint32(lc32.GuardCFCheckFunctionPointer);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardCFCheckFunctionPointer]->setValue_uint32(lc32.GuardCFCheckFunctionPointer);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardCFDispatchFunctionPointer)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardCFDispatchFunctionPointer]->setValue_uint32(lc32.GuardCFDispatchFunctionPointer);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardCFDispatchFunctionPointer]->setValue_uint32(lc32.GuardCFDispatchFunctionPointer);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardCFFunctionTable)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardCFFunctionTable]->setValue_uint32(lc32.GuardCFFunctionTable);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardCFFunctionTable]->setValue_uint32(lc32.GuardCFFunctionTable);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardCFFunctionCount)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardCFFunctionCount]->setValue_uint32(lc32.GuardCFFunctionCount);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::GuardFlags) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardFlags]->setValue_uint32(lc32.GuardFlags);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardCFFunctionCount]->setValue_uint32(lc32.GuardCFFunctionCount);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::GuardFlags) m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardFlags]->setValue_uint32(lc32.GuardFlags);
 
                     if (nRecordSize > N_IMAGE_LOADCONFIG::CodeIntegrity_Flags)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CodeIntegrity_Flags]->setValue_uint16(lc32.CodeIntegrity.Flags);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CodeIntegrity_Flags]->setValue_uint16(lc32.CodeIntegrity.Flags);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::CodeIntegrity_Catalog)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CodeIntegrity_Catalog]->setValue_uint16(lc32.CodeIntegrity.Catalog);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CodeIntegrity_Catalog]->setValue_uint16(lc32.CodeIntegrity.Catalog);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::CodeIntegrity_CatalogOffset)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CodeIntegrity_CatalogOffset]->setValue_uint32(lc32.CodeIntegrity.CatalogOffset);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CodeIntegrity_CatalogOffset]->setValue_uint32(lc32.CodeIntegrity.CatalogOffset);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::CodeIntegrity_Reserved)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CodeIntegrity_Reserved]->setValue_uint32(lc32.CodeIntegrity.Reserved);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CodeIntegrity_Reserved]->setValue_uint32(lc32.CodeIntegrity.Reserved);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardAddressTakenIatEntryTable)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardAddressTakenIatEntryTable]->setValue_uint32(lc32.GuardAddressTakenIatEntryTable);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardAddressTakenIatEntryTable]->setValue_uint32(lc32.GuardAddressTakenIatEntryTable);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardAddressTakenIatEntryCount)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardAddressTakenIatEntryCount]->setValue_uint32(lc32.GuardAddressTakenIatEntryCount);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardAddressTakenIatEntryCount]->setValue_uint32(lc32.GuardAddressTakenIatEntryCount);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardLongJumpTargetTable)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardLongJumpTargetTable]->setValue_uint32(lc32.GuardLongJumpTargetTable);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardLongJumpTargetTable]->setValue_uint32(lc32.GuardLongJumpTargetTable);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardLongJumpTargetCount)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardLongJumpTargetCount]->setValue_uint32(lc32.GuardLongJumpTargetCount);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardLongJumpTargetCount]->setValue_uint32(lc32.GuardLongJumpTargetCount);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::DynamicValueRelocTable)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DynamicValueRelocTable]->setValue_uint32(lc32.DynamicValueRelocTable);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DynamicValueRelocTable]->setValue_uint32(lc32.DynamicValueRelocTable);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::CHPEMetadataPointer)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CHPEMetadataPointer]->setValue_uint32(lc32.CHPEMetadataPointer);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CHPEMetadataPointer]->setValue_uint32(lc32.CHPEMetadataPointer);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardRFFailureRoutine)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardRFFailureRoutine]->setValue_uint32(lc32.GuardRFFailureRoutine);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardRFFailureRoutine]->setValue_uint32(lc32.GuardRFFailureRoutine);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardRFFailureRoutineFunctionPointer)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardRFFailureRoutineFunctionPointer]->setValue_uint32(lc32.GuardRFFailureRoutineFunctionPointer);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardRFFailureRoutineFunctionPointer]->setValue_uint32(lc32.GuardRFFailureRoutineFunctionPointer);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::DynamicValueRelocTableOffset)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DynamicValueRelocTableOffset]->setValue_uint32(lc32.DynamicValueRelocTableOffset);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DynamicValueRelocTableOffset]->setValue_uint32(lc32.DynamicValueRelocTableOffset);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::DynamicValueRelocTableSection)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DynamicValueRelocTableSection]->setValue_uint16(lc32.DynamicValueRelocTableSection);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::Reserved2) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::Reserved2]->setValue_uint16(lc32.Reserved2);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::DynamicValueRelocTableSection]->setValue_uint16(lc32.DynamicValueRelocTableSection);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::Reserved2) m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::Reserved2]->setValue_uint16(lc32.Reserved2);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardRFVerifyStackPointerFunctionPointer)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardRFVerifyStackPointerFunctionPointer]->setValue_uint32(
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardRFVerifyStackPointerFunctionPointer]->setValue_uint32(
                             lc32.GuardRFVerifyStackPointerFunctionPointer);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::HotPatchTableOffset)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::HotPatchTableOffset]->setValue_uint32(lc32.HotPatchTableOffset);
-                    if (nRecordSize > N_IMAGE_LOADCONFIG::Reserved3) g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::Reserved3]->setValue_uint32(lc32.Reserved3);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::HotPatchTableOffset]->setValue_uint32(lc32.HotPatchTableOffset);
+                    if (nRecordSize > N_IMAGE_LOADCONFIG::Reserved3) m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::Reserved3]->setValue_uint32(lc32.Reserved3);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::EnclaveConfigurationPointer)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::EnclaveConfigurationPointer]->setValue_uint32(lc32.EnclaveConfigurationPointer);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::EnclaveConfigurationPointer]->setValue_uint32(lc32.EnclaveConfigurationPointer);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::VolatileMetadataPointer)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::VolatileMetadataPointer]->setValue_uint32(lc32.VolatileMetadataPointer);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::VolatileMetadataPointer]->setValue_uint32(lc32.VolatileMetadataPointer);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardEHContinuationTable)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardEHContinuationTable]->setValue_uint32(lc32.GuardEHContinuationTable);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardEHContinuationTable]->setValue_uint32(lc32.GuardEHContinuationTable);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardEHContinuationCount)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardEHContinuationCount]->setValue_uint32(lc32.GuardEHContinuationCount);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardEHContinuationCount]->setValue_uint32(lc32.GuardEHContinuationCount);
 
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardXFGCheckFunctionPointer)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardXFGCheckFunctionPointer]->setValue_uint32(lc32.GuardXFGCheckFunctionPointer);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardXFGCheckFunctionPointer]->setValue_uint32(lc32.GuardXFGCheckFunctionPointer);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardXFGDispatchFunctionPointer)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardXFGDispatchFunctionPointer]->setValue_uint32(lc32.GuardXFGDispatchFunctionPointer);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardXFGDispatchFunctionPointer]->setValue_uint32(lc32.GuardXFGDispatchFunctionPointer);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardXFGTableDispatchFunctionPointer)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardXFGTableDispatchFunctionPointer]->setValue_uint32(lc32.GuardXFGTableDispatchFunctionPointer);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardXFGTableDispatchFunctionPointer]->setValue_uint32(lc32.GuardXFGTableDispatchFunctionPointer);
 
                     if (nRecordSize > N_IMAGE_LOADCONFIG::CastGuardOsDeterminedFailureMode)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CastGuardOsDeterminedFailureMode]->setValue_uint32(lc32.CastGuardOsDeterminedFailureMode);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::CastGuardOsDeterminedFailureMode]->setValue_uint32(lc32.CastGuardOsDeterminedFailureMode);
 
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardMemcpyFunctionPointer)
-                        g_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardMemcpyFunctionPointer]->setValue_uint32(lc32.GuardMemcpyFunctionPointer);
+                        m_lineEdit_LoadConfig[N_IMAGE_LOADCONFIG::GuardMemcpyFunctionPointer]->setValue_uint32(lc32.GuardMemcpyFunctionPointer);
 
                     if (nRecordSize > N_IMAGE_LOADCONFIG::Size)
                         addComment(ui->tableWidget_LoadConfig, N_IMAGE_LOADCONFIG::Size, HEADER_COLUMN_COMMENT, XBinary::bytesCountToString(lc32.Size));
 
                     if (nRecordSize > N_IMAGE_LOADCONFIG::SecurityCookie)
-                        g_invWidget[INV_IMAGE_LOADCONFIG_SecurityCookie]->setAddressAndSize(&pe, lc32.SecurityCookie, 0);
+                        m_invWidget[INV_IMAGE_LOADCONFIG_SecurityCookie]->setAddressAndSize(&pe, lc32.SecurityCookie, 0);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::SEHandlerTable)
-                        g_invWidget[INV_IMAGE_LOADCONFIG_SEHandlerTable]->setAddressAndSize(&pe, lc32.SEHandlerTable, 0);
+                        m_invWidget[INV_IMAGE_LOADCONFIG_SEHandlerTable]->setAddressAndSize(&pe, lc32.SEHandlerTable, 0);
 
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardCFCheckFunctionPointer)
-                        g_invWidget[INV_IMAGE_LOADCONFIG_GuardCFCheckFunctionPointer]->setAddressAndSize(&pe, lc32.GuardCFCheckFunctionPointer, 0);
+                        m_invWidget[INV_IMAGE_LOADCONFIG_GuardCFCheckFunctionPointer]->setAddressAndSize(&pe, lc32.GuardCFCheckFunctionPointer, 0);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardCFDispatchFunctionPointer)
-                        g_invWidget[INV_IMAGE_LOADCONFIG_GuardCFDispatchFunctionPointer]->setAddressAndSize(&pe, lc32.GuardCFDispatchFunctionPointer, 0);
+                        m_invWidget[INV_IMAGE_LOADCONFIG_GuardCFDispatchFunctionPointer]->setAddressAndSize(&pe, lc32.GuardCFDispatchFunctionPointer, 0);
                     if (nRecordSize > N_IMAGE_LOADCONFIG::GuardMemcpyFunctionPointer)
-                        g_invWidget[INV_IMAGE_LOADCONFIG_GuardMemcpyFunctionPointer]->setAddressAndSize(&pe, lc32.GuardMemcpyFunctionPointer, 0);
+                        m_invWidget[INV_IMAGE_LOADCONFIG_GuardMemcpyFunctionPointer]->setAddressAndSize(&pe, lc32.GuardMemcpyFunctionPointer, 0);
                 }
 
                 qint64 nOffset = pe.getLoadConfigDirectoryOffset();
                 qint64 nSize = pe.getLoadConfigDirectorySize();
                 qint64 nAddress = pe.offsetToRelAddress(nOffset);
 
-                loadHexSubdevice(nOffset, nSize, nAddress, &g_subDevice[SPE::TYPE_LOADCONFIG], ui->widgetHex_LoadConfig);
+                loadHexSubdevice(nOffset, nSize, nAddress, &m_subDevice[SPE::TYPE_LOADCONFIG], ui->widgetHex_LoadConfig);
 
                 blockSignals(false);
             }
         } else if (nType == SPE::TYPE_BOUNDIMPORT) {
             if (!isInitPresent(sInit)) {
-                PEProcessData peProcessData(SPE::TYPE_BOUNDIMPORT, &g_tvModel[SPE::TYPE_BOUNDIMPORT], &pe, 0, 0, 0);
+                PEProcessData peProcessData(SPE::TYPE_BOUNDIMPORT, &m_tvModel[SPE::TYPE_BOUNDIMPORT], &pe, 0, 0, 0);
 
-                ajustTableView(nType, &peProcessData, &g_tvModel[SPE::TYPE_BOUNDIMPORT], ui->tableView_BoundImport);
+                ajustTableView(nType, &peProcessData, &m_tvModel[SPE::TYPE_BOUNDIMPORT], ui->tableView_BoundImport);
 
-                if (g_tvModel[SPE::TYPE_BOUNDIMPORT]->rowCount()) {
+                if (m_tvModel[SPE::TYPE_BOUNDIMPORT]->rowCount()) {
                     ui->tableView_BoundImport->setCurrentIndex(ui->tableView_BoundImport->model()->index(0, 0));
                 }
             }
         } else if (nType == SPE::TYPE_DELAYIMPORT) {
             if (!isInitPresent(sInit)) {
-                PEProcessData peProcessData(SPE::TYPE_DELAYIMPORT, &g_tvModel[SPE::TYPE_DELAYIMPORT], &pe, 0, 0, 0);
+                PEProcessData peProcessData(SPE::TYPE_DELAYIMPORT, &m_tvModel[SPE::TYPE_DELAYIMPORT], &pe, 0, 0, 0);
 
-                ajustTableView(nType, &peProcessData, &g_tvModel[SPE::TYPE_DELAYIMPORT], ui->tableView_DelayImportLibraries);
+                ajustTableView(nType, &peProcessData, &m_tvModel[SPE::TYPE_DELAYIMPORT], ui->tableView_DelayImportLibraries);
 
                 connect(ui->tableView_DelayImportLibraries->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_DelayImportLibraries_currentRowChanged(QModelIndex, QModelIndex)));
 
-                if (g_tvModel[SPE::TYPE_DELAYIMPORT]->rowCount()) {
+                if (m_tvModel[SPE::TYPE_DELAYIMPORT]->rowCount()) {
                     ui->tableView_DelayImportLibraries->setCurrentIndex(ui->tableView_DelayImportLibraries->model()->index(0, 0));
                 }
             }
         } else if (nType == SPE::TYPE_NETHEADER) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SPE::TYPE_NETHEADER, ui->tableWidget_NetHeader, N_IMAGE_NETHEADER::records, g_lineEdit_NetHeader, N_IMAGE_NETHEADER::__data_size, 0);
+                createHeaderTable(SPE::TYPE_NETHEADER, ui->tableWidget_NetHeader, N_IMAGE_NETHEADER::records, m_lineEdit_NetHeader, N_IMAGE_NETHEADER::__data_size, 0);
 
                 m_comboBox[CB_IMAGE_NETHEADER_FLAGS] =
                     createComboBox(ui->tableWidget_NetHeader, XPE::getComImageFlagsS(), SPE::TYPE_NETHEADER, N_IMAGE_NETHEADER::Flags, XComboBoxEx::CBTYPE_FLAGS);
@@ -2232,25 +2232,25 @@ void PEWidget::reloadData(bool bSaveSelection)
 
                 XPE_DEF::IMAGE_COR20_HEADER netHeader = pe.getNetHeader();
 
-                g_lineEdit_NetHeader[N_IMAGE_NETHEADER::cb]->setValue_uint32(netHeader.cb);
-                g_lineEdit_NetHeader[N_IMAGE_NETHEADER::MajorRuntimeVersion]->setValue_uint16(netHeader.MajorRuntimeVersion);
-                g_lineEdit_NetHeader[N_IMAGE_NETHEADER::MinorRuntimeVersion]->setValue_uint16(netHeader.MinorRuntimeVersion);
-                g_lineEdit_NetHeader[N_IMAGE_NETHEADER::MetaData_Address]->setValue_uint32(netHeader.MetaData.VirtualAddress);
-                g_lineEdit_NetHeader[N_IMAGE_NETHEADER::MetaData_Size]->setValue_uint32(netHeader.MetaData.Size);
-                g_lineEdit_NetHeader[N_IMAGE_NETHEADER::Flags]->setValue_uint32(netHeader.Flags);
-                g_lineEdit_NetHeader[N_IMAGE_NETHEADER::EntryPoint]->setValue_uint32(netHeader.EntryPointRVA);
-                g_lineEdit_NetHeader[N_IMAGE_NETHEADER::Resources_Address]->setValue_uint32(netHeader.Resources.VirtualAddress);
-                g_lineEdit_NetHeader[N_IMAGE_NETHEADER::Resources_Size]->setValue_uint32(netHeader.Resources.Size);
-                g_lineEdit_NetHeader[N_IMAGE_NETHEADER::StrongNameSignature_Address]->setValue_uint32(netHeader.StrongNameSignature.VirtualAddress);
-                g_lineEdit_NetHeader[N_IMAGE_NETHEADER::StrongNameSignature_Size]->setValue_uint32(netHeader.StrongNameSignature.Size);
-                g_lineEdit_NetHeader[N_IMAGE_NETHEADER::CodeManagerTable_Address]->setValue_uint32(netHeader.CodeManagerTable.VirtualAddress);
-                g_lineEdit_NetHeader[N_IMAGE_NETHEADER::CodeManagerTable_Size]->setValue_uint32(netHeader.CodeManagerTable.Size);
-                g_lineEdit_NetHeader[N_IMAGE_NETHEADER::VTableFixups_Address]->setValue_uint32(netHeader.VTableFixups.VirtualAddress);
-                g_lineEdit_NetHeader[N_IMAGE_NETHEADER::VTableFixups_Size]->setValue_uint32(netHeader.VTableFixups.Size);
-                g_lineEdit_NetHeader[N_IMAGE_NETHEADER::ExportAddressTableJumps_Address]->setValue_uint32(netHeader.ExportAddressTableJumps.VirtualAddress);
-                g_lineEdit_NetHeader[N_IMAGE_NETHEADER::ExportAddressTableJumps_Size]->setValue_uint32(netHeader.ExportAddressTableJumps.Size);
-                g_lineEdit_NetHeader[N_IMAGE_NETHEADER::ManagedNativeHeader_Address]->setValue_uint32(netHeader.ManagedNativeHeader.VirtualAddress);
-                g_lineEdit_NetHeader[N_IMAGE_NETHEADER::ManagedNativeHeader_Size]->setValue_uint32(netHeader.ManagedNativeHeader.Size);
+                m_lineEdit_NetHeader[N_IMAGE_NETHEADER::cb]->setValue_uint32(netHeader.cb);
+                m_lineEdit_NetHeader[N_IMAGE_NETHEADER::MajorRuntimeVersion]->setValue_uint16(netHeader.MajorRuntimeVersion);
+                m_lineEdit_NetHeader[N_IMAGE_NETHEADER::MinorRuntimeVersion]->setValue_uint16(netHeader.MinorRuntimeVersion);
+                m_lineEdit_NetHeader[N_IMAGE_NETHEADER::MetaData_Address]->setValue_uint32(netHeader.MetaData.VirtualAddress);
+                m_lineEdit_NetHeader[N_IMAGE_NETHEADER::MetaData_Size]->setValue_uint32(netHeader.MetaData.Size);
+                m_lineEdit_NetHeader[N_IMAGE_NETHEADER::Flags]->setValue_uint32(netHeader.Flags);
+                m_lineEdit_NetHeader[N_IMAGE_NETHEADER::EntryPoint]->setValue_uint32(netHeader.EntryPointRVA);
+                m_lineEdit_NetHeader[N_IMAGE_NETHEADER::Resources_Address]->setValue_uint32(netHeader.Resources.VirtualAddress);
+                m_lineEdit_NetHeader[N_IMAGE_NETHEADER::Resources_Size]->setValue_uint32(netHeader.Resources.Size);
+                m_lineEdit_NetHeader[N_IMAGE_NETHEADER::StrongNameSignature_Address]->setValue_uint32(netHeader.StrongNameSignature.VirtualAddress);
+                m_lineEdit_NetHeader[N_IMAGE_NETHEADER::StrongNameSignature_Size]->setValue_uint32(netHeader.StrongNameSignature.Size);
+                m_lineEdit_NetHeader[N_IMAGE_NETHEADER::CodeManagerTable_Address]->setValue_uint32(netHeader.CodeManagerTable.VirtualAddress);
+                m_lineEdit_NetHeader[N_IMAGE_NETHEADER::CodeManagerTable_Size]->setValue_uint32(netHeader.CodeManagerTable.Size);
+                m_lineEdit_NetHeader[N_IMAGE_NETHEADER::VTableFixups_Address]->setValue_uint32(netHeader.VTableFixups.VirtualAddress);
+                m_lineEdit_NetHeader[N_IMAGE_NETHEADER::VTableFixups_Size]->setValue_uint32(netHeader.VTableFixups.Size);
+                m_lineEdit_NetHeader[N_IMAGE_NETHEADER::ExportAddressTableJumps_Address]->setValue_uint32(netHeader.ExportAddressTableJumps.VirtualAddress);
+                m_lineEdit_NetHeader[N_IMAGE_NETHEADER::ExportAddressTableJumps_Size]->setValue_uint32(netHeader.ExportAddressTableJumps.Size);
+                m_lineEdit_NetHeader[N_IMAGE_NETHEADER::ManagedNativeHeader_Address]->setValue_uint32(netHeader.ManagedNativeHeader.VirtualAddress);
+                m_lineEdit_NetHeader[N_IMAGE_NETHEADER::ManagedNativeHeader_Size]->setValue_uint32(netHeader.ManagedNativeHeader.Size);
 
                 m_comboBox[CB_IMAGE_NETHEADER_FLAGS]->setValue(netHeader.Flags);
 
@@ -2258,13 +2258,13 @@ void PEWidget::reloadData(bool bSaveSelection)
                 qint64 nSize = pe.getNetHeaderSize();
                 qint64 nAddress = pe.offsetToRelAddress(nOffset);
 
-                loadHexSubdevice(nOffset, nSize, nAddress, &g_subDevice[SPE::TYPE_NETHEADER], ui->widgetHex_NetHeader);
+                loadHexSubdevice(nOffset, nSize, nAddress, &m_subDevice[SPE::TYPE_NETHEADER], ui->widgetHex_NetHeader);
 
                 blockSignals(false);
             }
         } else if (nType == SPE::TYPE_NET_METADATA) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SPE::TYPE_NET_METADATA, ui->tableWidget_Net_Metadata, N_IMAGE_NET_METADATA::records, g_lineEdit_Net_Metadata,
+                createHeaderTable(SPE::TYPE_NET_METADATA, ui->tableWidget_Net_Metadata, N_IMAGE_NET_METADATA::records, m_lineEdit_Net_Metadata,
                                   N_IMAGE_NET_METADATA::__data_size, 0);
 
                 blockSignals(true);
@@ -2273,14 +2273,14 @@ void PEWidget::reloadData(bool bSaveSelection)
 
                 XPE::CLI_METADATA_HEADER header = pe._read_MetadataHeader(osMetadata.nOffset);
 
-                g_lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::Signature]->setValue_uint32(header.nSignature);
-                g_lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::MajorVersion]->setValue_uint16(header.nMajorVersion);
-                g_lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::MinorVersion]->setValue_uint16(header.nMinorVersion);
-                g_lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::Reserved]->setValue_uint32(header.nReserved);
-                g_lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::VersionStringLength]->setValue_uint32(header.nVersionStringLength);
-                g_lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::Version]->setValue_String(header.sVersion, header.nVersionStringLength);
-                g_lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::Flags]->setValue_uint16(header.nFlags);
-                g_lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::Streams]->setValue_uint16(header.nStreams);
+                m_lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::Signature]->setValue_uint32(header.nSignature);
+                m_lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::MajorVersion]->setValue_uint16(header.nMajorVersion);
+                m_lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::MinorVersion]->setValue_uint16(header.nMinorVersion);
+                m_lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::Reserved]->setValue_uint32(header.nReserved);
+                m_lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::VersionStringLength]->setValue_uint32(header.nVersionStringLength);
+                m_lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::Version]->setValue_String(header.sVersion, header.nVersionStringLength);
+                m_lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::Flags]->setValue_uint16(header.nFlags);
+                m_lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::Streams]->setValue_uint16(header.nStreams);
 
                 updateTableRecord(ui->tableWidget_Net_Metadata, N_IMAGE_NET_METADATA::Version, 16, header.nVersionStringLength);
                 updateTableRecord(ui->tableWidget_Net_Metadata, N_IMAGE_NET_METADATA::Flags, 16 + header.nVersionStringLength, 2);
@@ -2290,7 +2290,7 @@ void PEWidget::reloadData(bool bSaveSelection)
                 qint64 nSize = osMetadata.nSize;
                 qint64 nAddress = pe.offsetToRelAddress(nOffset);
 
-                loadHexSubdevice(nOffset, nSize, nAddress, &g_subDevice[SPE::TYPE_NET_METADATA], ui->widgetHex_Net_Metadata);
+                loadHexSubdevice(nOffset, nSize, nAddress, &m_subDevice[SPE::TYPE_NET_METADATA], ui->widgetHex_Net_Metadata);
 
                 blockSignals(false);
             }
@@ -2300,18 +2300,18 @@ void PEWidget::reloadData(bool bSaveSelection)
                 qint64 nSize = nDataSize;
                 qint64 nAddress = pe.offsetToRelAddress(nOffset);
 
-                loadHexSubdevice(nOffset, nSize, nAddress, &g_subDevice[SPE::TYPE_NET_METADATA_STREAM], ui->widgetHex_Net_Metadata_Stream);
+                loadHexSubdevice(nOffset, nSize, nAddress, &m_subDevice[SPE::TYPE_NET_METADATA_STREAM], ui->widgetHex_Net_Metadata_Stream);
             }
         } else if (nType == SPE::TYPE_NET_METADATA_TABLE) {
             if (!isInitPresent(sInit)) {
-                PEProcessData peProcessData(SPE::TYPE_NET_METADATA_TABLE, &g_tvModel[SPE::TYPE_NET_METADATA_TABLE], &pe, 0, 0, 0);
+                PEProcessData peProcessData(SPE::TYPE_NET_METADATA_TABLE, &m_tvModel[SPE::TYPE_NET_METADATA_TABLE], &pe, 0, 0, 0);
 
-                ajustTableView(nType, &peProcessData, &g_tvModel[SPE::TYPE_NET_METADATA_TABLE], ui->tableView_Net_Metadata_Table, false);
+                ajustTableView(nType, &peProcessData, &m_tvModel[SPE::TYPE_NET_METADATA_TABLE], ui->tableView_Net_Metadata_Table, false);
 
                 connect(ui->tableView_Net_Metadata_Table->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTableView_Net_Metadata_Table_currentRowChanged(QModelIndex, QModelIndex)));
 
-                if (g_tvModel[SPE::TYPE_NET_METADATA_TABLE]->rowCount()) {
+                if (m_tvModel[SPE::TYPE_NET_METADATA_TABLE]->rowCount()) {
                     ui->tableView_Net_Metadata_Table->setCurrentIndex(ui->tableView_Net_Metadata_Table->model()->index(0, 0));
                 }
 
@@ -2319,15 +2319,15 @@ void PEWidget::reloadData(bool bSaveSelection)
                 qint64 nSize = nDataSize;
                 qint64 nAddress = pe.offsetToRelAddress(nOffset);
 
-                loadHexSubdevice(nOffset, nSize, nAddress, &g_subDevice[SPE::TYPE_NET_METADATA_TABLE], ui->widgetHex_Net_Metadata_Table);
+                loadHexSubdevice(nOffset, nSize, nAddress, &m_subDevice[SPE::TYPE_NET_METADATA_TABLE], ui->widgetHex_Net_Metadata_Table);
             }
         } else if (nType == SPE::TYPE_CERTIFICATE) {
             if (!isInitPresent(sInit)) {
                 // TODO
 
-                PEProcessData peProcessData(SPE::TYPE_CERTIFICATE, &g_tvModel[SPE::TYPE_CERTIFICATE], &pe, 0, 0, 0);
+                PEProcessData peProcessData(SPE::TYPE_CERTIFICATE, &m_tvModel[SPE::TYPE_CERTIFICATE], &pe, 0, 0, 0);
 
-                ajustTreeView(nType, &peProcessData, &g_tvModel[SPE::TYPE_CERTIFICATE], ui->treeView_Certificate);
+                ajustTreeView(nType, &peProcessData, &m_tvModel[SPE::TYPE_CERTIFICATE], ui->treeView_Certificate);
 
                 connect(ui->treeView_Certificate->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                         SLOT(onTreeView_Certificate_currentRowChanged(QModelIndex, QModelIndex)));
@@ -2337,7 +2337,7 @@ void PEWidget::reloadData(bool bSaveSelection)
                 qint64 nOverLayOffset = pe.getOverlayOffset();
                 qint64 nOverlaySize = pe.getOverlaySize();
 
-                loadHexSubdevice(nOverLayOffset, nOverlaySize, nOverLayOffset, &g_subDevice[SPE::TYPE_OVERLAY], ui->widgetHex_Overlay, true);
+                loadHexSubdevice(nOverLayOffset, nOverlaySize, nOverLayOffset, &m_subDevice[SPE::TYPE_OVERLAY], ui->widgetHex_Overlay, true);
             }
         }
 
@@ -2386,11 +2386,11 @@ void PEWidget::loadImportLibrary(qint32 nRow)
     XPE pe(getDevice(), getOptions().bIsImage, getOptions().nImageBase);
 
     if (pe.isValid()) {
-        PEProcessData peProcessData(SPE::TYPE_IMPORT_FUNCTION, &g_tvModel[SPE::TYPE_IMPORT_FUNCTION], &pe, nRow, 0, 0);
+        PEProcessData peProcessData(SPE::TYPE_IMPORT_FUNCTION, &m_tvModel[SPE::TYPE_IMPORT_FUNCTION], &pe, nRow, 0, 0);
 
-        ajustTableView(SPE::TYPE_IMPORT_FUNCTION, &peProcessData, &g_tvModel[SPE::TYPE_IMPORT_FUNCTION], ui->tableView_ImportFunctions);
+        ajustTableView(SPE::TYPE_IMPORT_FUNCTION, &peProcessData, &m_tvModel[SPE::TYPE_IMPORT_FUNCTION], ui->tableView_ImportFunctions);
 
-        if (g_tvModel[SPE::TYPE_IMPORT_FUNCTION]->rowCount()) {
+        if (m_tvModel[SPE::TYPE_IMPORT_FUNCTION]->rowCount()) {
             ui->tableView_ImportFunctions->setCurrentIndex(ui->tableView_ImportFunctions->model()->index(0, 0));
         }
     }
@@ -2405,11 +2405,11 @@ void PEWidget::loadRelocs(qint32 nRow)
     XPE pe(getDevice(), getOptions().bIsImage, getOptions().nImageBase);
 
     if (pe.isValid()) {
-        PEProcessData peProcessData(SPE::TYPE_RELOCS_POSITION, &g_tvModel[SPE::TYPE_RELOCS_POSITION], &pe, 0, nOffset, 0);
+        PEProcessData peProcessData(SPE::TYPE_RELOCS_POSITION, &m_tvModel[SPE::TYPE_RELOCS_POSITION], &pe, 0, nOffset, 0);
 
-        ajustTableView(SPE::TYPE_RELOCS_POSITION, &peProcessData, &g_tvModel[SPE::TYPE_RELOCS_POSITION], ui->tableView_RelocsPositions, false);
+        ajustTableView(SPE::TYPE_RELOCS_POSITION, &peProcessData, &m_tvModel[SPE::TYPE_RELOCS_POSITION], ui->tableView_RelocsPositions, false);
 
-        if (g_tvModel[SPE::TYPE_RELOCS_POSITION]->rowCount()) {
+        if (m_tvModel[SPE::TYPE_RELOCS_POSITION]->rowCount()) {
             ui->tableView_RelocsPositions->setCurrentIndex(ui->tableView_RelocsPositions->model()->index(0, 0));
         }
     }
@@ -2417,12 +2417,12 @@ void PEWidget::loadRelocs(qint32 nRow)
 
 void PEWidget::loadSection(qint32 nRow)
 {
-    loadHexSubdeviceByTableView(nRow, SPE::TYPE_SECTIONS, ui->widgetHex_Section, ui->tableView_Sections, &g_subDevice[SPE::TYPE_SECTIONS]);
+    loadHexSubdeviceByTableView(nRow, SPE::TYPE_SECTIONS, ui->widgetHex_Section, ui->tableView_Sections, &m_subDevice[SPE::TYPE_SECTIONS]);
 }
 
 void PEWidget::loadException(qint32 nRow)
 {
-    loadHexSubdeviceByTableView(nRow, SPE::TYPE_EXCEPTION, ui->widgetHex_Exception, ui->tableView_Exceptions, &g_subDevice[SPE::TYPE_EXCEPTION]);
+    loadHexSubdeviceByTableView(nRow, SPE::TYPE_EXCEPTION, ui->widgetHex_Exception, ui->tableView_Exceptions, &m_subDevice[SPE::TYPE_EXCEPTION]);
 }
 
 void PEWidget::loadDirectory(qint32 nRow)
@@ -2431,12 +2431,12 @@ void PEWidget::loadDirectory(qint32 nRow)
     qint64 nSize = ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->item(nRow, 0)->data(Qt::UserRole + FW_DEF::SECTION_DATA_SIZE).toLongLong();
     XADDR nAddress = ui->tableWidget_IMAGE_DIRECTORY_ENTRIES->item(nRow, 0)->data(Qt::UserRole + FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
 
-    loadHexSubdevice(nOffset, nSize, nAddress, &g_subDevice[SPE::TYPE_IMAGE_DIRECTORY_ENTRIES], ui->widgetHex_IMAGE_DIRECTORY_ENTRIES);
+    loadHexSubdevice(nOffset, nSize, nAddress, &m_subDevice[SPE::TYPE_IMAGE_DIRECTORY_ENTRIES], ui->widgetHex_IMAGE_DIRECTORY_ENTRIES);
 }
 
 void PEWidget::loadDebug(qint32 nRow)
 {
-    loadHexSubdeviceByTableView(nRow, SPE::TYPE_DEBUG, ui->widgetHex_Debug, ui->tableView_Debug, &g_subDevice[SPE::TYPE_DEBUG]);
+    loadHexSubdeviceByTableView(nRow, SPE::TYPE_DEBUG, ui->widgetHex_Debug, ui->tableView_Debug, &m_subDevice[SPE::TYPE_DEBUG]);
 }
 
 void PEWidget::loadDelayImport(qint32 nRow)
@@ -2444,11 +2444,11 @@ void PEWidget::loadDelayImport(qint32 nRow)
     XPE pe(getDevice(), getOptions().bIsImage, getOptions().nImageBase);
 
     if (pe.isValid()) {
-        PEProcessData peProcessData(SPE::TYPE_DELAYIMPORT_FUNCTION, &g_tvModel[SPE::TYPE_DELAYIMPORT_FUNCTION], &pe, nRow, 0, 0);
+        PEProcessData peProcessData(SPE::TYPE_DELAYIMPORT_FUNCTION, &m_tvModel[SPE::TYPE_DELAYIMPORT_FUNCTION], &pe, nRow, 0, 0);
 
-        ajustTableView(SPE::TYPE_DELAYIMPORT_FUNCTION, &peProcessData, &g_tvModel[SPE::TYPE_DELAYIMPORT_FUNCTION], ui->tableView_DelayImportFunctions);
+        ajustTableView(SPE::TYPE_DELAYIMPORT_FUNCTION, &peProcessData, &m_tvModel[SPE::TYPE_DELAYIMPORT_FUNCTION], ui->tableView_DelayImportFunctions);
 
-        if (g_tvModel[SPE::TYPE_DELAYIMPORT]->rowCount()) {
+        if (m_tvModel[SPE::TYPE_DELAYIMPORT]->rowCount()) {
             ui->tableView_DelayImportFunctions->setCurrentIndex(ui->tableView_DelayImportFunctions->model()->index(0, 0));
         }
     }
@@ -2751,7 +2751,7 @@ void PEWidget::onTableView_Sections_currentRowChanged(const QModelIndex &current
     Q_UNUSED(current)
     Q_UNUSED(previous)
 
-    loadHexSubdeviceByTableView(current.row(), SPE::TYPE_SECTIONS, ui->widgetHex_Section, ui->tableView_Sections, &g_subDevice[SPE::TYPE_SECTIONS]);
+    loadHexSubdeviceByTableView(current.row(), SPE::TYPE_SECTIONS, ui->widgetHex_Section, ui->tableView_Sections, &m_subDevice[SPE::TYPE_SECTIONS]);
 }
 
 void PEWidget::onTableView_Net_Metadata_Table_currentRowChanged(const QModelIndex &current, const QModelIndex &previous)
@@ -2897,7 +2897,7 @@ void PEWidget::onTableView_Resources_currentRowChanged(const QModelIndex &curren
 {
     Q_UNUSED(previous)
 
-    loadHexSubdeviceByTableView(current.row(), SPE::TYPE_RESOURCES, ui->widgetHex_Resources, ui->tableView_Resources, &g_subDevice[SPE::TYPE_RESOURCES]);
+    loadHexSubdeviceByTableView(current.row(), SPE::TYPE_RESOURCES, ui->widgetHex_Resources, ui->tableView_Resources, &m_subDevice[SPE::TYPE_RESOURCES]);
 }
 
 void PEWidget::on_tableView_Exceptions_customContextMenuRequested(const QPoint &pos)
@@ -3012,14 +3012,14 @@ void PEWidget::onTreeView_Resources_currentRowChanged(const QModelIndex &current
         qint64 nSize = ui->treeView_Resources->model()->data(current, Qt::UserRole + FW_DEF::SECTION_DATA_SIZE).toLongLong();
         XADDR nAddress = ui->treeView_Resources->model()->data(current, Qt::UserRole + FW_DEF::SECTION_DATA_ADDRESS).toLongLong();
 
-        g_lineEdit_Resources[N_IMAGE_RESOURCES::ID1]->setValue_String(sID1);
-        g_lineEdit_Resources[N_IMAGE_RESOURCES::ID2]->setValue_String(sID2);
-        g_lineEdit_Resources[N_IMAGE_RESOURCES::ID3]->setValue_String(sID3);
-        g_lineEdit_Resources[N_IMAGE_RESOURCES::ADDRESS]->setValue_uint32((quint32)nAddress);
-        g_lineEdit_Resources[N_IMAGE_RESOURCES::OFFSET]->setValue_uint32((quint32)nOffset);
-        g_lineEdit_Resources[N_IMAGE_RESOURCES::SIZE]->setValue_uint32((quint32)nSize);
+        m_lineEdit_Resources[N_IMAGE_RESOURCES::ID1]->setValue_String(sID1);
+        m_lineEdit_Resources[N_IMAGE_RESOURCES::ID2]->setValue_String(sID2);
+        m_lineEdit_Resources[N_IMAGE_RESOURCES::ID3]->setValue_String(sID3);
+        m_lineEdit_Resources[N_IMAGE_RESOURCES::ADDRESS]->setValue_uint32((quint32)nAddress);
+        m_lineEdit_Resources[N_IMAGE_RESOURCES::OFFSET]->setValue_uint32((quint32)nOffset);
+        m_lineEdit_Resources[N_IMAGE_RESOURCES::SIZE]->setValue_uint32((quint32)nSize);
 
-        loadHexSubdevice(nOffset, nSize, nAddress, &g_subDevice[SPE::TYPE_RESOURCES], ui->widgetHex_Resources);
+        loadHexSubdevice(nOffset, nSize, nAddress, &m_subDevice[SPE::TYPE_RESOURCES], ui->widgetHex_Resources);
     }
 }
 
@@ -3031,7 +3031,7 @@ void PEWidget::onTreeView_Certificate_currentRowChanged(const QModelIndex &curre
         qint64 nOffset = ui->treeView_Certificate->model()->data(current, Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET).toLongLong();
         qint64 nSize = ui->treeView_Certificate->model()->data(current, Qt::UserRole + FW_DEF::SECTION_DATA_SIZE).toLongLong();
 
-        loadHexSubdevice(nOffset, nSize, nOffset, &g_subDevice[SPE::TYPE_CERTIFICATE], ui->widgetHex_Certificate, true);
+        loadHexSubdevice(nOffset, nSize, nOffset, &m_subDevice[SPE::TYPE_CERTIFICATE], ui->widgetHex_Certificate, true);
     }
 }
 
@@ -3093,9 +3093,9 @@ void PEWidget::on_checkBoxExportShowValid_stateChanged(int nState)
     XPE pe(getDevice(), getOptions().bIsImage, getOptions().nImageBase);
 
     if (pe.isValid()) {
-        PEProcessData peProcessData(SPE::TYPE_EXPORT_FUNCTION, &g_tvModel[SPE::TYPE_EXPORT_FUNCTION], &pe, 0, 0, 0, ui->checkBoxExportShowValid->isChecked());
+        PEProcessData peProcessData(SPE::TYPE_EXPORT_FUNCTION, &m_tvModel[SPE::TYPE_EXPORT_FUNCTION], &pe, 0, 0, 0, ui->checkBoxExportShowValid->isChecked());
 
-        ajustTableView(SPE::TYPE_EXPORT_FUNCTION, &peProcessData, &g_tvModel[SPE::TYPE_EXPORT_FUNCTION], ui->tableView_ExportFunctions);
+        ajustTableView(SPE::TYPE_EXPORT_FUNCTION, &peProcessData, &m_tvModel[SPE::TYPE_EXPORT_FUNCTION], ui->tableView_ExportFunctions);
     }
 }
 
@@ -3123,9 +3123,9 @@ void PEWidget::on_pushButtonCertificateCheck_clicked()
     XPE pe(getDevice(), getOptions().bIsImage, getOptions().nImageBase);
 
     if (pe.isValid()) {
-        PEProcessData peProcessData(SPE::TYPE_CERTIFICATE_CHECK, &g_tvModel[SPE::TYPE_CERTIFICATE_CHECK], &pe, 0, 0, 0);
+        PEProcessData peProcessData(SPE::TYPE_CERTIFICATE_CHECK, &m_tvModel[SPE::TYPE_CERTIFICATE_CHECK], &pe, 0, 0, 0);
 
-        ajustDialogModel(&peProcessData, &g_tvModel[SPE::TYPE_CERTIFICATE_CHECK], tr("Certificate"));
+        ajustDialogModel(&peProcessData, &m_tvModel[SPE::TYPE_CERTIFICATE_CHECK], tr("Certificate"));
     }
 }
 
@@ -3574,9 +3574,9 @@ void PEWidget::on_checkBoxSectionsStringTable_stateChanged(int nState)
     XPE pe(getDevice(), getOptions().bIsImage, getOptions().nImageBase);
 
     if (pe.isValid()) {
-        PEProcessData peProcessData(SPE::TYPE_SECTIONS, &g_tvModel[SPE::TYPE_SECTIONS], &pe, 0, 0, 0, ui->checkBoxSectionsStringTable->isChecked());
+        PEProcessData peProcessData(SPE::TYPE_SECTIONS, &m_tvModel[SPE::TYPE_SECTIONS], &pe, 0, 0, 0, ui->checkBoxSectionsStringTable->isChecked());
 
-        ajustTableView(SPE::TYPE_SECTIONS, &peProcessData, &g_tvModel[SPE::TYPE_SECTIONS], ui->tableView_Sections, false);
+        ajustTableView(SPE::TYPE_SECTIONS, &peProcessData, &m_tvModel[SPE::TYPE_SECTIONS], ui->tableView_Sections, false);
 
         connect(ui->tableView_Sections->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
                 SLOT(onTableView_Sections_currentRowChanged(QModelIndex, QModelIndex)));

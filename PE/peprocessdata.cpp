@@ -22,37 +22,37 @@
 
 PEProcessData::PEProcessData(qint32 nType, QStandardItemModel **ppModel, XPE *pPE, qint32 nNumber, qint64 nOffset, qint64 nSize, QVariant varInfo) : ProcessData()
 {
-    this->g_nType = nType;
-    this->g_ppModel = ppModel;
-    this->g_pPE = pPE;
-    this->g_nNumber = nNumber;
-    this->g_nOffset = nOffset;
-    this->g_nSize = nSize;
-    this->g_varInfo = varInfo;
+    this->m_nType = nType;
+    this->m_ppModel = ppModel;
+    this->m_pPE = pPE;
+    this->m_nNumber = nNumber;
+    this->m_nOffset = nOffset;
+    this->m_nSize = nSize;
+    this->m_varInfo = varInfo;
 }
 
 void PEProcessData::_process()
 {
-    bool bIs64 = g_pPE->is64();
+    bool bIs64 = m_pPE->is64();
 
-    if (g_nType == SPE::TYPE_SECTIONS) {
+    if (m_nType == SPE::TYPE_SECTIONS) {
         QList<QString> listLabels;
         listLabels.append("#");
         listLabels.append(getStructList(N_IMAGE_SECTION_HEADER::records, N_IMAGE_SECTION_HEADER::__data_size));
 
-        XBinary::_MEMORY_MAP memoryMap = g_pPE->getMemoryMap(XBinary::MAPMODE_UNKNOWN, getPdStruct());
+        XBinary::_MEMORY_MAP memoryMap = m_pPE->getMemoryMap(XBinary::MAPMODE_UNKNOWN, getPdStruct());
 
-        XBinary::OFFSETSIZE osStringTable = g_pPE->getStringTable();
+        XBinary::OFFSETSIZE osStringTable = m_pPE->getStringTable();
 
-        QList<XPE_DEF::IMAGE_SECTION_HEADER> listSections = g_pPE->getSectionHeaders(getPdStruct());  // TODO pdsStruct
+        QList<XPE_DEF::IMAGE_SECTION_HEADER> listSections = m_pPE->getSectionHeaders(getPdStruct());  // TODO pdsStruct
 
         qint32 nNumberOfRecords = listSections.count();
 
-        *g_ppModel = new QStandardItemModel(nNumberOfRecords, listLabels.count());
+        *m_ppModel = new QStandardItemModel(nNumberOfRecords, listLabels.count());
 
         setMaximum(nNumberOfRecords);
 
-        setTableHeader(*g_ppModel, &listLabels);
+        setTableHeader(*m_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfRecords) && (isRun()); i++) {
             QStandardItem *pItemNumber = new QStandardItem;
@@ -60,7 +60,7 @@ void PEProcessData::_process()
 
             pItemNumber->setData(memoryMap.nModuleAddress + listSections.at(i).VirtualAddress, Qt::UserRole + FW_DEF::SECTION_DATA_ADDRESS);
 
-            if (g_pPE->isImage()) {
+            if (m_pPE->isImage()) {
                 pItemNumber->setData(listSections.at(i).Misc.VirtualSize, Qt::UserRole + FW_DEF::SECTION_DATA_SIZE);
                 pItemNumber->setData(listSections.at(i).VirtualAddress, Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET);
             } else {
@@ -68,14 +68,14 @@ void PEProcessData::_process()
                 pItemNumber->setData(listSections.at(i).PointerToRawData, Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET);
             }
 
-            (*g_ppModel)->setItem(i, 0, pItemNumber);
+            (*m_ppModel)->setItem(i, 0, pItemNumber);
 
             QStandardItem *pItemName = new QStandardItem();
             QString sName = QString((char *)listSections.at(i).Name);
             sName.resize(qMin(sName.length(), XPE_DEF::S_IMAGE_SIZEOF_SHORT_NAME));
 
-            if (g_varInfo.toBool()) {
-                sName = g_pPE->convertSectionName(sName, &osStringTable);
+            if (m_varInfo.toBool()) {
+                sName = m_pPE->convertSectionName(sName, &osStringTable);
             }
 
             pItemName->setText(sName);
@@ -83,22 +83,22 @@ void PEProcessData::_process()
             pItemNumber->setData(QString("%1_%2_%3.bin").arg(tr("Section"), QString::number(i), XBinary::convertFileNameSymbols(sName)),
                                  Qt::UserRole + FW_DEF::SECTION_DATA_NAME);
 
-            (*g_ppModel)->setItem(i, N_IMAGE_SECTION_HEADER::Name + 1, pItemName);
+            (*m_ppModel)->setItem(i, N_IMAGE_SECTION_HEADER::Name + 1, pItemName);
 
-            (*g_ppModel)->setItem(i, N_IMAGE_SECTION_HEADER::VirtualSize + 1, new QStandardItem(XBinary::valueToHex(listSections.at(i).Misc.VirtualSize)));
-            (*g_ppModel)->setItem(i, N_IMAGE_SECTION_HEADER::VirtualAddress + 1, new QStandardItem(XBinary::valueToHex(listSections.at(i).VirtualAddress)));
-            (*g_ppModel)->setItem(i, N_IMAGE_SECTION_HEADER::SizeOfRawData + 1, new QStandardItem(XBinary::valueToHex(listSections.at(i).SizeOfRawData)));
-            (*g_ppModel)->setItem(i, N_IMAGE_SECTION_HEADER::PointerToRawData + 1, new QStandardItem(XBinary::valueToHex(listSections.at(i).PointerToRawData)));
-            (*g_ppModel)->setItem(i, N_IMAGE_SECTION_HEADER::PointerToRelocations + 1, new QStandardItem(XBinary::valueToHex(listSections.at(i).PointerToRelocations)));
-            (*g_ppModel)->setItem(i, N_IMAGE_SECTION_HEADER::PointerToLinenumbers + 1, new QStandardItem(XBinary::valueToHex(listSections.at(i).PointerToLinenumbers)));
-            (*g_ppModel)->setItem(i, N_IMAGE_SECTION_HEADER::NumberOfRelocations + 1, new QStandardItem(XBinary::valueToHex(listSections.at(i).NumberOfRelocations)));
-            (*g_ppModel)->setItem(i, N_IMAGE_SECTION_HEADER::NumberOfLinenumbers + 1, new QStandardItem(XBinary::valueToHex(listSections.at(i).NumberOfLinenumbers)));
-            (*g_ppModel)->setItem(i, N_IMAGE_SECTION_HEADER::Characteristics + 1, new QStandardItem(XBinary::valueToHex(listSections.at(i).Characteristics)));
+            (*m_ppModel)->setItem(i, N_IMAGE_SECTION_HEADER::VirtualSize + 1, new QStandardItem(XBinary::valueToHex(listSections.at(i).Misc.VirtualSize)));
+            (*m_ppModel)->setItem(i, N_IMAGE_SECTION_HEADER::VirtualAddress + 1, new QStandardItem(XBinary::valueToHex(listSections.at(i).VirtualAddress)));
+            (*m_ppModel)->setItem(i, N_IMAGE_SECTION_HEADER::SizeOfRawData + 1, new QStandardItem(XBinary::valueToHex(listSections.at(i).SizeOfRawData)));
+            (*m_ppModel)->setItem(i, N_IMAGE_SECTION_HEADER::PointerToRawData + 1, new QStandardItem(XBinary::valueToHex(listSections.at(i).PointerToRawData)));
+            (*m_ppModel)->setItem(i, N_IMAGE_SECTION_HEADER::PointerToRelocations + 1, new QStandardItem(XBinary::valueToHex(listSections.at(i).PointerToRelocations)));
+            (*m_ppModel)->setItem(i, N_IMAGE_SECTION_HEADER::PointerToLinenumbers + 1, new QStandardItem(XBinary::valueToHex(listSections.at(i).PointerToLinenumbers)));
+            (*m_ppModel)->setItem(i, N_IMAGE_SECTION_HEADER::NumberOfRelocations + 1, new QStandardItem(XBinary::valueToHex(listSections.at(i).NumberOfRelocations)));
+            (*m_ppModel)->setItem(i, N_IMAGE_SECTION_HEADER::NumberOfLinenumbers + 1, new QStandardItem(XBinary::valueToHex(listSections.at(i).NumberOfLinenumbers)));
+            (*m_ppModel)->setItem(i, N_IMAGE_SECTION_HEADER::Characteristics + 1, new QStandardItem(XBinary::valueToHex(listSections.at(i).Characteristics)));
 
             incValue();
         }
-    } else if (g_nType == SPE::TYPE_SECTIONS_INFO) {
-        *g_ppModel = new QStandardItemModel;
+    } else if (m_nType == SPE::TYPE_SECTIONS_INFO) {
+        *m_ppModel = new QStandardItemModel;
 
         QList<QString> listLabels;
         listLabels.append("#");
@@ -110,11 +110,11 @@ void PEProcessData::_process()
         listLabels.append(tr("Flags"));
         listLabels.append(tr("Info"));
 
-        setTreeHeader(*g_ppModel, &listLabels);
+        setTreeHeader(*m_ppModel, &listLabels);
 
-        QList<XPE_DEF::IMAGE_SECTION_HEADER> listSectionHeaders = g_pPE->getSectionHeaders(getPdStruct());
-        QList<XPE::SECTION_RECORD> listSectionRecords = g_pPE->getSectionRecords(&listSectionHeaders, getPdStruct());
-        XBinary::_MEMORY_MAP memoryMap = g_pPE->getMemoryMap(XBinary::MAPMODE_UNKNOWN, getPdStruct());
+        QList<XPE_DEF::IMAGE_SECTION_HEADER> listSectionHeaders = m_pPE->getSectionHeaders(getPdStruct());
+        QList<XPE::SECTION_RECORD> listSectionRecords = m_pPE->getSectionRecords(&listSectionHeaders, getPdStruct());
+        XBinary::_MEMORY_MAP memoryMap = m_pPE->getMemoryMap(XBinary::MAPMODE_UNKNOWN, getPdStruct());
 
         QList<QString> listStrDb = XInfoDB::loadStrDB(getOptions()->getInfoPath(), XInfoDB::STRDB_PESECTIONS);
 
@@ -135,13 +135,13 @@ void PEProcessData::_process()
             listItems.append(pItemNumberHeader);
             listItems.append(new QStandardItem(""));
             listItems.append(new QStandardItem(XBinary::valueToHex((quint32)0)));
-            listItems.append(new QStandardItem(XBinary::valueToHex(S_ALIGN_UP32(g_pPE->getOptionalHeader_SizeOfHeaders(), g_pPE->getOptionalHeader_SectionAlignment()))));
+            listItems.append(new QStandardItem(XBinary::valueToHex(S_ALIGN_UP32(m_pPE->getOptionalHeader_SizeOfHeaders(), m_pPE->getOptionalHeader_SectionAlignment()))));
             listItems.append(new QStandardItem(XBinary::valueToHex((quint32)0)));
-            listItems.append(new QStandardItem(XBinary::valueToHex(g_pPE->getOptionalHeader_SizeOfHeaders())));
+            listItems.append(new QStandardItem(XBinary::valueToHex(m_pPE->getOptionalHeader_SizeOfHeaders())));
             listItems.append(new QStandardItem(""));
             listItems.append(new QStandardItem(tr("Header")));  // Info
 
-            (*g_ppModel)->appendRow(listItems);
+            (*m_ppModel)->appendRow(listItems);
 
             incValue();
         }
@@ -184,14 +184,14 @@ void PEProcessData::_process()
             listItems.append(new QStandardItem(XPE::sectionCharacteristicToString(listSectionHeaders.at(i).Characteristics)));
             listItems.append(new QStandardItem(strRecord.sDescription));  // Info
 
-            (*g_ppModel)->appendRow(listItems);
+            (*m_ppModel)->appendRow(listItems);
 
             listItemNameSections.append(pItemNumber);
 
             incValue();
         }
 
-        if (g_pPE->isOverlayPresent(&memoryMap, getPdStruct())) {
+        if (m_pPE->isOverlayPresent(&memoryMap, getPdStruct())) {
             pItemOverlay = new QStandardItem("");
 
             QList<QStandardItem *> listItems;
@@ -199,12 +199,12 @@ void PEProcessData::_process()
             listItems.append(new QStandardItem(""));
             listItems.append(new QStandardItem(""));
             listItems.append(new QStandardItem(""));
-            listItems.append(new QStandardItem(XBinary::valueToHex((quint32)(g_pPE->getOverlayOffset(&memoryMap, getPdStruct())))));
-            listItems.append(new QStandardItem(XBinary::valueToHex((quint32)(g_pPE->getOverlaySize(&memoryMap, getPdStruct())))));
+            listItems.append(new QStandardItem(XBinary::valueToHex((quint32)(m_pPE->getOverlayOffset(&memoryMap, getPdStruct())))));
+            listItems.append(new QStandardItem(XBinary::valueToHex((quint32)(m_pPE->getOverlaySize(&memoryMap, getPdStruct())))));
             listItems.append(new QStandardItem(""));
             listItems.append(new QStandardItem(tr("Overlay")));  // Info
 
-            (*g_ppModel)->appendRow(listItems);
+            (*m_ppModel)->appendRow(listItems);
 
             incValue();
         }
@@ -215,113 +215,113 @@ void PEProcessData::_process()
         {
             QString sRecord = tr("Entry point");
 
-            mapRegionAddresses.insert(g_pPE->getOptionalHeader_AddressOfEntryPoint(), sRecord);
+            mapRegionAddresses.insert(m_pPE->getOptionalHeader_AddressOfEntryPoint(), sRecord);
             mapRegionSizes.insert(0, sRecord);
         }
 
-        if (g_pPE->isExportPresent()) {
+        if (m_pPE->isExportPresent()) {
             QString sRecord = tr("Export");
 
-            XPE_DEF::IMAGE_DATA_DIRECTORY dd = g_pPE->getOptionalHeader_DataDirectory(XPE_DEF::S_IMAGE_DIRECTORY_ENTRY_EXPORT);
+            XPE_DEF::IMAGE_DATA_DIRECTORY dd = m_pPE->getOptionalHeader_DataDirectory(XPE_DEF::S_IMAGE_DIRECTORY_ENTRY_EXPORT);
 
             mapRegionAddresses.insert(dd.VirtualAddress, sRecord);
             mapRegionSizes.insert(dd.Size, sRecord);
         }
 
-        if (g_pPE->isImportPresent()) {
+        if (m_pPE->isImportPresent()) {
             QString sRecord = tr("Import");
 
-            XPE_DEF::IMAGE_DATA_DIRECTORY dd = g_pPE->getOptionalHeader_DataDirectory(XPE_DEF::S_IMAGE_DIRECTORY_ENTRY_IMPORT);
+            XPE_DEF::IMAGE_DATA_DIRECTORY dd = m_pPE->getOptionalHeader_DataDirectory(XPE_DEF::S_IMAGE_DIRECTORY_ENTRY_IMPORT);
 
             mapRegionAddresses.insert(dd.VirtualAddress, sRecord);
             mapRegionSizes.insert(dd.Size, sRecord);
         }
 
-        if (g_pPE->isResourcesPresent()) {
+        if (m_pPE->isResourcesPresent()) {
             QString sRecord = tr("Resources");
 
-            XPE_DEF::IMAGE_DATA_DIRECTORY dd = g_pPE->getOptionalHeader_DataDirectory(XPE_DEF::S_IMAGE_DIRECTORY_ENTRY_RESOURCE);
+            XPE_DEF::IMAGE_DATA_DIRECTORY dd = m_pPE->getOptionalHeader_DataDirectory(XPE_DEF::S_IMAGE_DIRECTORY_ENTRY_RESOURCE);
 
             mapRegionAddresses.insert(dd.VirtualAddress, sRecord);
             mapRegionSizes.insert(dd.Size, sRecord);
         }
 
-        if (g_pPE->isExceptionPresent()) {
+        if (m_pPE->isExceptionPresent()) {
             QString sRecord = tr("Exceptions");
 
-            XPE_DEF::IMAGE_DATA_DIRECTORY dd = g_pPE->getOptionalHeader_DataDirectory(XPE_DEF::S_IMAGE_DIRECTORY_ENTRY_EXCEPTION);
+            XPE_DEF::IMAGE_DATA_DIRECTORY dd = m_pPE->getOptionalHeader_DataDirectory(XPE_DEF::S_IMAGE_DIRECTORY_ENTRY_EXCEPTION);
 
             mapRegionAddresses.insert(dd.VirtualAddress, sRecord);
             mapRegionSizes.insert(dd.Size, sRecord);
         }
 
-        if (g_pPE->isRelocsPresent()) {
+        if (m_pPE->isRelocsPresent()) {
             QString sRecord = tr("Relocs");
 
-            XPE_DEF::IMAGE_DATA_DIRECTORY dd = g_pPE->getOptionalHeader_DataDirectory(XPE_DEF::S_IMAGE_DIRECTORY_ENTRY_BASERELOC);
+            XPE_DEF::IMAGE_DATA_DIRECTORY dd = m_pPE->getOptionalHeader_DataDirectory(XPE_DEF::S_IMAGE_DIRECTORY_ENTRY_BASERELOC);
 
             mapRegionAddresses.insert(dd.VirtualAddress, sRecord);
             mapRegionSizes.insert(dd.Size, sRecord);
         }
 
-        if (g_pPE->isDebugPresent()) {
+        if (m_pPE->isDebugPresent()) {
             QString sRecord = tr("Debug");
 
-            XPE_DEF::IMAGE_DATA_DIRECTORY dd = g_pPE->getOptionalHeader_DataDirectory(XPE_DEF::S_IMAGE_DIRECTORY_ENTRY_DEBUG);
+            XPE_DEF::IMAGE_DATA_DIRECTORY dd = m_pPE->getOptionalHeader_DataDirectory(XPE_DEF::S_IMAGE_DIRECTORY_ENTRY_DEBUG);
 
             mapRegionAddresses.insert(dd.VirtualAddress, sRecord);
             mapRegionSizes.insert(dd.Size, sRecord);
         }
 
-        if (g_pPE->isTLSPresent()) {
+        if (m_pPE->isTLSPresent()) {
             QString sRecord = QString("TLS");
 
-            XPE_DEF::IMAGE_DATA_DIRECTORY dd = g_pPE->getOptionalHeader_DataDirectory(XPE_DEF::S_IMAGE_DIRECTORY_ENTRY_TLS);
+            XPE_DEF::IMAGE_DATA_DIRECTORY dd = m_pPE->getOptionalHeader_DataDirectory(XPE_DEF::S_IMAGE_DIRECTORY_ENTRY_TLS);
 
             mapRegionAddresses.insert(dd.VirtualAddress, sRecord);
             mapRegionSizes.insert(dd.Size, sRecord);
         }
 
-        if (g_pPE->isLoadConfigPresent()) {
+        if (m_pPE->isLoadConfigPresent()) {
             QString sRecord = tr("Load config");
 
-            XPE_DEF::IMAGE_DATA_DIRECTORY dd = g_pPE->getOptionalHeader_DataDirectory(XPE_DEF::S_IMAGE_DIRECTORY_ENTRY_LOAD_CONFIG);
+            XPE_DEF::IMAGE_DATA_DIRECTORY dd = m_pPE->getOptionalHeader_DataDirectory(XPE_DEF::S_IMAGE_DIRECTORY_ENTRY_LOAD_CONFIG);
 
             mapRegionAddresses.insert(dd.VirtualAddress, sRecord);
             mapRegionSizes.insert(dd.Size, sRecord);
         }
 
-        if (g_pPE->isBoundImportPresent()) {
+        if (m_pPE->isBoundImportPresent()) {
             QString sRecord = tr("Bound import");
 
-            XPE_DEF::IMAGE_DATA_DIRECTORY dd = g_pPE->getOptionalHeader_DataDirectory(XPE_DEF::S_IMAGE_DIRECTORY_ENTRY_BOUND_IMPORT);
+            XPE_DEF::IMAGE_DATA_DIRECTORY dd = m_pPE->getOptionalHeader_DataDirectory(XPE_DEF::S_IMAGE_DIRECTORY_ENTRY_BOUND_IMPORT);
 
             mapRegionAddresses.insert(dd.VirtualAddress, sRecord);
             mapRegionSizes.insert(dd.Size, sRecord);
         }
 
-        if (g_pPE->isIATPresent()) {
+        if (m_pPE->isIATPresent()) {
             QString sRecord = QString("IAT");
 
-            XPE_DEF::IMAGE_DATA_DIRECTORY dd = g_pPE->getOptionalHeader_DataDirectory(XPE_DEF::S_IMAGE_DIRECTORY_ENTRY_IAT);
+            XPE_DEF::IMAGE_DATA_DIRECTORY dd = m_pPE->getOptionalHeader_DataDirectory(XPE_DEF::S_IMAGE_DIRECTORY_ENTRY_IAT);
 
             mapRegionAddresses.insert(dd.VirtualAddress, sRecord);
             mapRegionSizes.insert(dd.Size, sRecord);
         }
 
-        if (g_pPE->isDelayImportPresent()) {
+        if (m_pPE->isDelayImportPresent()) {
             QString sRecord = tr("Delay import");
 
-            XPE_DEF::IMAGE_DATA_DIRECTORY dd = g_pPE->getOptionalHeader_DataDirectory(XPE_DEF::S_IMAGE_DIRECTORY_ENTRY_DELAY_IMPORT);
+            XPE_DEF::IMAGE_DATA_DIRECTORY dd = m_pPE->getOptionalHeader_DataDirectory(XPE_DEF::S_IMAGE_DIRECTORY_ENTRY_DELAY_IMPORT);
 
             mapRegionAddresses.insert(dd.VirtualAddress, sRecord);
             mapRegionSizes.insert(dd.Size, sRecord);
         }
 
-        if (g_pPE->isNETPresent()) {
+        if (m_pPE->isNETPresent()) {
             QString sRecord = QString(".NET");
 
-            XPE_DEF::IMAGE_DATA_DIRECTORY dd = g_pPE->getOptionalHeader_DataDirectory(XPE_DEF::S_IMAGE_DIRECTORY_ENTRY_COM_DESCRIPTOR);
+            XPE_DEF::IMAGE_DATA_DIRECTORY dd = m_pPE->getOptionalHeader_DataDirectory(XPE_DEF::S_IMAGE_DIRECTORY_ENTRY_COM_DESCRIPTOR);
 
             mapRegionAddresses.insert(dd.VirtualAddress, sRecord);
             mapRegionSizes.insert(dd.Size, sRecord);
@@ -333,7 +333,7 @@ void PEProcessData::_process()
             iter.next();
 
             qint64 nRelAddress = iter.key();
-            qint64 nOffset = g_pPE->relAddressToOffset(&memoryMap, nRelAddress);
+            qint64 nOffset = m_pPE->relAddressToOffset(&memoryMap, nRelAddress);
             QString sOffset;
 
             if (nOffset != -1) {
@@ -370,8 +370,8 @@ void PEProcessData::_process()
                 }
             }
         }
-    } else if (g_nType == SPE::TYPE_IMPORT_INFO) {
-        *g_ppModel = new QStandardItemModel;
+    } else if (m_nType == SPE::TYPE_IMPORT_INFO) {
+        *m_ppModel = new QStandardItemModel;
 
         QList<QString> listLabels;
         listLabels.append("#");
@@ -379,10 +379,10 @@ void PEProcessData::_process()
         listLabels.append(tr("Tags"));
         listLabels.append(tr("Description"));
 
-        setTreeHeader(*g_ppModel, &listLabels);
-        XBinary::_MEMORY_MAP memoryMap = g_pPE->getMemoryMap(XBinary::MAPMODE_UNKNOWN, getPdStruct());
+        setTreeHeader(*m_ppModel, &listLabels);
+        XBinary::_MEMORY_MAP memoryMap = m_pPE->getMemoryMap(XBinary::MAPMODE_UNKNOWN, getPdStruct());
 
-        QList<XPE::IMPORT_HEADER> listImports = g_pPE->getImports(&memoryMap, getPdStruct());
+        QList<XPE::IMPORT_HEADER> listImports = m_pPE->getImports(&memoryMap, getPdStruct());
 
         qint32 nNumberOfImports = listImports.count();
         setMaximum(nNumberOfImports);
@@ -399,129 +399,129 @@ void PEProcessData::_process()
             listItems.append(new QStandardItem(strRecord.sTags));
             listItems.append(new QStandardItem(strRecord.sDescription));
 
-            (*g_ppModel)->appendRow(listItems);
+            (*m_ppModel)->appendRow(listItems);
 
             incValue();
         }
-    } else if (g_nType == SPE::TYPE_RELOCS) {
+    } else if (m_nType == SPE::TYPE_RELOCS) {
         QList<QString> listLabels;
         listLabels.append("#");
         listLabels.append(getStructList(N_IMAGE_RELOCS::records, N_IMAGE_RELOCS::__data_size));
         listLabels.append("");
         listLabels.append("");
 
-        QList<XPE::RELOCS_HEADER> listRelocsHeaders = g_pPE->getRelocsHeaders(getPdStruct());
+        QList<XPE::RELOCS_HEADER> listRelocsHeaders = m_pPE->getRelocsHeaders(getPdStruct());
 
         qint32 nNumberOfRecords = listRelocsHeaders.count();
 
-        *g_ppModel = new QStandardItemModel(nNumberOfRecords, listLabels.count());
+        *m_ppModel = new QStandardItemModel(nNumberOfRecords, listLabels.count());
 
         setMaximum(nNumberOfRecords);
 
-        setTableHeader(*g_ppModel, &listLabels);
+        setTableHeader(*m_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfRecords) && (isRun()); i++) {
             QStandardItem *pItem = new QStandardItem;
             pItem->setData(i, Qt::DisplayRole);
             pItem->setData(listRelocsHeaders.at(i).nOffset, Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET);
             pItem->setData(listRelocsHeaders.at(i).nOffset, Qt::UserRole + FW_DEF::SECTION_DATA_HEADEROFFSET);
-            (*g_ppModel)->setItem(i, 0, pItem);
-            (*g_ppModel)->setItem(i, N_IMAGE_RELOCS::VirtualAddress + 1, new QStandardItem(XBinary::valueToHex(listRelocsHeaders.at(i).baseRelocation.VirtualAddress)));
-            (*g_ppModel)->setItem(i, N_IMAGE_RELOCS::SizeOfBlock + 1, new QStandardItem(XBinary::valueToHex(listRelocsHeaders.at(i).baseRelocation.SizeOfBlock)));
-            (*g_ppModel)->setItem(i, N_IMAGE_RELOCS::SizeOfBlock + 2, new QStandardItem(QString::number(listRelocsHeaders.at(i).nCount)));
-            (*g_ppModel)
+            (*m_ppModel)->setItem(i, 0, pItem);
+            (*m_ppModel)->setItem(i, N_IMAGE_RELOCS::VirtualAddress + 1, new QStandardItem(XBinary::valueToHex(listRelocsHeaders.at(i).baseRelocation.VirtualAddress)));
+            (*m_ppModel)->setItem(i, N_IMAGE_RELOCS::SizeOfBlock + 1, new QStandardItem(XBinary::valueToHex(listRelocsHeaders.at(i).baseRelocation.SizeOfBlock)));
+            (*m_ppModel)->setItem(i, N_IMAGE_RELOCS::SizeOfBlock + 2, new QStandardItem(QString::number(listRelocsHeaders.at(i).nCount)));
+            (*m_ppModel)
                 ->setItem(i, N_IMAGE_RELOCS::SizeOfBlock + 3,
-                          new QStandardItem(g_pPE->getMemoryRecordInfoByRelAddress(listRelocsHeaders.at(i).baseRelocation.VirtualAddress)));  // Comment
+                          new QStandardItem(m_pPE->getMemoryRecordInfoByRelAddress(listRelocsHeaders.at(i).baseRelocation.VirtualAddress)));  // Comment
 
             incValue();
         }
-    } else if (g_nType == SPE::TYPE_RELOCS_POSITION) {
+    } else if (m_nType == SPE::TYPE_RELOCS_POSITION) {
         QList<QString> listLabels;
         listLabels.append("#");
         listLabels.append(getStructList(N_IMAGE_RELOCS_POSITION::records, N_IMAGE_RELOCS_POSITION::__data_size));
         listLabels.append(tr("Type"));
         listLabels.append(tr("Address"));
 
-        QList<XPE::RELOCS_POSITION> listRelocsPositions = g_pPE->getRelocsPositions(g_nOffset);  // TODO pdsStruct
+        QList<XPE::RELOCS_POSITION> listRelocsPositions = m_pPE->getRelocsPositions(m_nOffset);  // TODO pdsStruct
 
         qint32 nNumberOfRelocs = listRelocsPositions.count();
 
-        *g_ppModel = new QStandardItemModel(nNumberOfRelocs, listLabels.count());
+        *m_ppModel = new QStandardItemModel(nNumberOfRelocs, listLabels.count());
 
         setMaximum(nNumberOfRelocs);
 
-        setTableHeader(*g_ppModel, &listLabels);
+        setTableHeader(*m_ppModel, &listLabels);
 
-        QMap<quint64, QString> mapTypes = g_pPE->getImageRelBasedS();
+        QMap<quint64, QString> mapTypes = m_pPE->getImageRelBasedS();
 
         for (qint32 i = 0; (i < nNumberOfRelocs) && (isRun()); i++) {
             QStandardItem *pItem = new QStandardItem;
             pItem->setData(i, Qt::DisplayRole);
-            (*g_ppModel)->setItem(i, 0, pItem);
-            (*g_ppModel)->setItem(i, N_IMAGE_RELOCS_POSITION::TypeOffset + 1, new QStandardItem(XBinary::valueToHex(listRelocsPositions.at(i).nTypeOffset)));
-            (*g_ppModel)->setItem(i, N_IMAGE_RELOCS_POSITION::TypeOffset + 2, new QStandardItem(mapTypes.value(listRelocsPositions.at(i).nType)));
-            (*g_ppModel)->setItem(i, N_IMAGE_RELOCS_POSITION::TypeOffset + 3, new QStandardItem(XBinary::valueToHex((quint32)listRelocsPositions.at(i).nAddress)));
+            (*m_ppModel)->setItem(i, 0, pItem);
+            (*m_ppModel)->setItem(i, N_IMAGE_RELOCS_POSITION::TypeOffset + 1, new QStandardItem(XBinary::valueToHex(listRelocsPositions.at(i).nTypeOffset)));
+            (*m_ppModel)->setItem(i, N_IMAGE_RELOCS_POSITION::TypeOffset + 2, new QStandardItem(mapTypes.value(listRelocsPositions.at(i).nType)));
+            (*m_ppModel)->setItem(i, N_IMAGE_RELOCS_POSITION::TypeOffset + 3, new QStandardItem(XBinary::valueToHex((quint32)listRelocsPositions.at(i).nAddress)));
 
             incValue();
         }
-    } else if (g_nType == SPE::TYPE_IMPORT) {
+    } else if (m_nType == SPE::TYPE_IMPORT) {
         QList<QString> listLabels;
         listLabels.append("#");
         listLabels.append(getStructList(N_IMAGE_IMPORT::records, N_IMAGE_IMPORT::__data_size));
         listLabels.append(tr("Hash"));
         listLabels.append(tr("Name"));
 
-        XBinary::_MEMORY_MAP memoryMap = g_pPE->getMemoryMap(XBinary::MAPMODE_UNKNOWN, getPdStruct());
+        XBinary::_MEMORY_MAP memoryMap = m_pPE->getMemoryMap(XBinary::MAPMODE_UNKNOWN, getPdStruct());
 
-        QList<XPE::IMPORT_HEADER> listImport = g_pPE->getImports(&memoryMap);  // TODO pdsStruct
+        QList<XPE::IMPORT_HEADER> listImport = m_pPE->getImports(&memoryMap);  // TODO pdsStruct
 
-        QList<quint32> listImportPositionHashes = g_pPE->getImportPositionHashes(&listImport);  // TODO pdsStruct
+        QList<quint32> listImportPositionHashes = m_pPE->getImportPositionHashes(&listImport);  // TODO pdsStruct
 
-        QList<XPE::IMAGE_IMPORT_DESCRIPTOR_EX> listID = g_pPE->getImportDescriptorsEx(&memoryMap);  // TODO pdsStruct
+        QList<XPE::IMAGE_IMPORT_DESCRIPTOR_EX> listID = m_pPE->getImportDescriptorsEx(&memoryMap);  // TODO pdsStruct
 
         qint32 nNumberOfIDs = listID.count();
 
-        *g_ppModel = new QStandardItemModel(nNumberOfIDs, listLabels.count());
+        *m_ppModel = new QStandardItemModel(nNumberOfIDs, listLabels.count());
 
         setMaximum(nNumberOfIDs);
 
-        setTableHeader(*g_ppModel, &listLabels);
+        setTableHeader(*m_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfIDs) && (isRun()); i++) {
             QStandardItem *pItem = new QStandardItem;
             pItem->setData(i, Qt::DisplayRole);
-            (*g_ppModel)->setItem(i, 0, pItem);
-            (*g_ppModel)->setItem(i, N_IMAGE_IMPORT::OriginalFirstThunk + 1, new QStandardItem(XBinary::valueToHex(listID.at(i).OriginalFirstThunk)));
-            (*g_ppModel)->setItem(i, N_IMAGE_IMPORT::TimeDateStamp + 1, new QStandardItem(XBinary::valueToHex(listID.at(i).TimeDateStamp)));
-            (*g_ppModel)->setItem(i, N_IMAGE_IMPORT::ForwarderChain + 1, new QStandardItem(XBinary::valueToHex(listID.at(i).ForwarderChain)));
-            (*g_ppModel)->setItem(i, N_IMAGE_IMPORT::Name + 1, new QStandardItem(XBinary::valueToHex(listID.at(i).Name)));
-            (*g_ppModel)->setItem(i, N_IMAGE_IMPORT::FirstThunk + 1, new QStandardItem(XBinary::valueToHex(listID.at(i).FirstThunk)));
-            (*g_ppModel)->setItem(i, N_IMAGE_IMPORT::FirstThunk + 2, new QStandardItem(XBinary::valueToHex(listImportPositionHashes.at(i))));
-            (*g_ppModel)->setItem(i, N_IMAGE_IMPORT::FirstThunk + 3, new QStandardItem(listID.at(i).sLibrary));
+            (*m_ppModel)->setItem(i, 0, pItem);
+            (*m_ppModel)->setItem(i, N_IMAGE_IMPORT::OriginalFirstThunk + 1, new QStandardItem(XBinary::valueToHex(listID.at(i).OriginalFirstThunk)));
+            (*m_ppModel)->setItem(i, N_IMAGE_IMPORT::TimeDateStamp + 1, new QStandardItem(XBinary::valueToHex(listID.at(i).TimeDateStamp)));
+            (*m_ppModel)->setItem(i, N_IMAGE_IMPORT::ForwarderChain + 1, new QStandardItem(XBinary::valueToHex(listID.at(i).ForwarderChain)));
+            (*m_ppModel)->setItem(i, N_IMAGE_IMPORT::Name + 1, new QStandardItem(XBinary::valueToHex(listID.at(i).Name)));
+            (*m_ppModel)->setItem(i, N_IMAGE_IMPORT::FirstThunk + 1, new QStandardItem(XBinary::valueToHex(listID.at(i).FirstThunk)));
+            (*m_ppModel)->setItem(i, N_IMAGE_IMPORT::FirstThunk + 2, new QStandardItem(XBinary::valueToHex(listImportPositionHashes.at(i))));
+            (*m_ppModel)->setItem(i, N_IMAGE_IMPORT::FirstThunk + 3, new QStandardItem(listID.at(i).sLibrary));
 
             incValue();
         }
-    } else if (g_nType == SPE::TYPE_IMPORT_FUNCTION) {
+    } else if (m_nType == SPE::TYPE_IMPORT_FUNCTION) {
         QList<QString> listLabels;
         listLabels.append("#");
         listLabels.append(getStructList(N_IMAGE_IMPORT_FUNCTION::records32, N_IMAGE_IMPORT_FUNCTION::__data_size));
         listLabels.append(tr("Name"));
 
-        QList<XPE::IMPORT_POSITION> listImportPositions = g_pPE->getImportPositions(g_nNumber);  // TODO pdsStruct
+        QList<XPE::IMPORT_POSITION> listImportPositions = m_pPE->getImportPositions(m_nNumber);  // TODO pdsStruct
 
         qint32 nNumberOfIPs = listImportPositions.count();
 
-        *g_ppModel = new QStandardItemModel(nNumberOfIPs, listLabels.count());
+        *m_ppModel = new QStandardItemModel(nNumberOfIPs, listLabels.count());
 
         setMaximum(nNumberOfIPs);
 
-        setTableHeader(*g_ppModel, &listLabels);
+        setTableHeader(*m_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfIPs) && (isRun()); i++) {
             QStandardItem *pItem = new QStandardItem;
             pItem->setData(i, Qt::DisplayRole);
 
-            (*g_ppModel)->setItem(i, 0, pItem);
+            (*m_ppModel)->setItem(i, 0, pItem);
 
             if (listImportPositions.at(i).nOrdinal) {
                 QString sOrdinal;
@@ -532,7 +532,7 @@ void PEProcessData::_process()
                     sOrdinal = XBinary::valueToHex((quint32)listImportPositions.at(i).nOrdinal);
                 }
 
-                (*g_ppModel)->setItem(i, N_IMAGE_IMPORT_FUNCTION::Ordinal + 1, new QStandardItem(sOrdinal));
+                (*m_ppModel)->setItem(i, N_IMAGE_IMPORT_FUNCTION::Ordinal + 1, new QStandardItem(sOrdinal));
             } else {
                 QString sThunk;
 
@@ -542,30 +542,30 @@ void PEProcessData::_process()
                     sThunk = XBinary::valueToHex((quint32)listImportPositions.at(i).nThunkValue);
                 }
 
-                (*g_ppModel)->setItem(i, N_IMAGE_IMPORT_FUNCTION::Thunk + 1, new QStandardItem(sThunk));
-                (*g_ppModel)->setItem(i, N_IMAGE_IMPORT_FUNCTION::Hint + 1, new QStandardItem(XBinary::valueToHex(listImportPositions.at(i).nHint)));
-                (*g_ppModel)->setItem(i, N_IMAGE_IMPORT_FUNCTION::Hint + 2, new QStandardItem(listImportPositions.at(i).sName));
+                (*m_ppModel)->setItem(i, N_IMAGE_IMPORT_FUNCTION::Thunk + 1, new QStandardItem(sThunk));
+                (*m_ppModel)->setItem(i, N_IMAGE_IMPORT_FUNCTION::Hint + 1, new QStandardItem(XBinary::valueToHex(listImportPositions.at(i).nHint)));
+                (*m_ppModel)->setItem(i, N_IMAGE_IMPORT_FUNCTION::Hint + 2, new QStandardItem(listImportPositions.at(i).sName));
             }
 
             incValue();
         }
-    } else if (g_nType == SPE::TYPE_EXCEPTION) {
+    } else if (m_nType == SPE::TYPE_EXCEPTION) {
         QList<QString> listLabels;
         listLabels.append("#");
         listLabels.append(getStructList(N_IMAGE_EXCEPTIONS::records, N_IMAGE_EXCEPTIONS::__data_size));
         listLabels.append("");
 
-        QList<XPE_DEF::S_IMAGE_RUNTIME_FUNCTION_ENTRY> listRFE = g_pPE->getExceptionsList();  // TODO pdsStruct
+        QList<XPE_DEF::S_IMAGE_RUNTIME_FUNCTION_ENTRY> listRFE = m_pPE->getExceptionsList();  // TODO pdsStruct
 
         qint32 nNumberOfRFEs = listRFE.count();
 
-        *g_ppModel = new QStandardItemModel(nNumberOfRFEs, listLabels.count());
+        *m_ppModel = new QStandardItemModel(nNumberOfRFEs, listLabels.count());
 
         setMaximum(nNumberOfRFEs);
 
-        setTableHeader(*g_ppModel, &listLabels);
+        setTableHeader(*m_ppModel, &listLabels);
 
-        XBinary::_MEMORY_MAP memoryMap = g_pPE->getMemoryMap(XBinary::MAPMODE_UNKNOWN, getPdStruct());
+        XBinary::_MEMORY_MAP memoryMap = m_pPE->getMemoryMap(XBinary::MAPMODE_UNKNOWN, getPdStruct());
 
         for (qint32 i = 0; (i < nNumberOfRFEs) && (isRun()); i++) {
             QStandardItem *pItem = new QStandardItem;
@@ -573,77 +573,77 @@ void PEProcessData::_process()
 
             pItem->setData(listRFE.at(i).BeginAddress, Qt::UserRole + FW_DEF::SECTION_DATA_ADDRESS);
             pItem->setData(listRFE.at(i).EndAddress - listRFE.at(i).BeginAddress, Qt::UserRole + FW_DEF::SECTION_DATA_SIZE);
-            pItem->setData(g_pPE->addressToOffset(&memoryMap, memoryMap.nModuleAddress + listRFE.at(i).BeginAddress), Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET);
+            pItem->setData(m_pPE->addressToOffset(&memoryMap, memoryMap.nModuleAddress + listRFE.at(i).BeginAddress), Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET);
 
-            (*g_ppModel)->setItem(i, 0, pItem);
-            (*g_ppModel)->setItem(i, N_IMAGE_EXCEPTIONS::BeginAddress + 1, new QStandardItem(XBinary::valueToHex(listRFE.at(i).BeginAddress)));
-            (*g_ppModel)->setItem(i, N_IMAGE_EXCEPTIONS::EndAddress + 1, new QStandardItem(XBinary::valueToHex(listRFE.at(i).EndAddress)));
-            (*g_ppModel)->setItem(i, N_IMAGE_EXCEPTIONS::UnwindInfoAddress + 1, new QStandardItem(XBinary::valueToHex(listRFE.at(i).UnwindInfoAddress)));
-            (*g_ppModel)
+            (*m_ppModel)->setItem(i, 0, pItem);
+            (*m_ppModel)->setItem(i, N_IMAGE_EXCEPTIONS::BeginAddress + 1, new QStandardItem(XBinary::valueToHex(listRFE.at(i).BeginAddress)));
+            (*m_ppModel)->setItem(i, N_IMAGE_EXCEPTIONS::EndAddress + 1, new QStandardItem(XBinary::valueToHex(listRFE.at(i).EndAddress)));
+            (*m_ppModel)->setItem(i, N_IMAGE_EXCEPTIONS::UnwindInfoAddress + 1, new QStandardItem(XBinary::valueToHex(listRFE.at(i).UnwindInfoAddress)));
+            (*m_ppModel)
                 ->setItem(i, N_IMAGE_EXCEPTIONS::UnwindInfoAddress + 2,
-                          new QStandardItem(g_pPE->getMemoryRecordInfoByRelAddress(listRFE.at(i).BeginAddress)));  // Comment
+                          new QStandardItem(m_pPE->getMemoryRecordInfoByRelAddress(listRFE.at(i).BeginAddress)));  // Comment
 
             incValue();
         }
-    } else if (g_nType == SPE::TYPE_DELAYIMPORT) {
+    } else if (m_nType == SPE::TYPE_DELAYIMPORT) {
         QList<QString> listLabels;
         listLabels.append("#");
         listLabels.append(getStructList(N_IMAGE_DELAYIMPORT::records, N_IMAGE_DELAYIMPORT::__data_size));
         listLabels.append("");
 
-        QList<XPE_DEF::S_IMAGE_DELAYLOAD_DESCRIPTOR> listDelayImport = g_pPE->getDelayImportsList();  // TODO pdsStruct
+        QList<XPE_DEF::S_IMAGE_DELAYLOAD_DESCRIPTOR> listDelayImport = m_pPE->getDelayImportsList();  // TODO pdsStruct
 
         qint32 nNumberOfDelayImports = listDelayImport.count();
 
-        *g_ppModel = new QStandardItemModel(nNumberOfDelayImports, listLabels.count());
+        *m_ppModel = new QStandardItemModel(nNumberOfDelayImports, listLabels.count());
 
         setMaximum(nNumberOfDelayImports);
 
-        setTableHeader(*g_ppModel, &listLabels);
+        setTableHeader(*m_ppModel, &listLabels);
 
-        XBinary::_MEMORY_MAP memoryMap = g_pPE->getMemoryMap(XBinary::MAPMODE_UNKNOWN, getPdStruct());
+        XBinary::_MEMORY_MAP memoryMap = m_pPE->getMemoryMap(XBinary::MAPMODE_UNKNOWN, getPdStruct());
 
         for (qint32 i = 0; (i < nNumberOfDelayImports) && (isRun()); i++) {
-            QString sLibraryName = g_pPE->read_ansiString(g_pPE->relAddressToOffset(&memoryMap, listDelayImport.at(i).DllNameRVA));
+            QString sLibraryName = m_pPE->read_ansiString(m_pPE->relAddressToOffset(&memoryMap, listDelayImport.at(i).DllNameRVA));
 
             QStandardItem *pItem = new QStandardItem;
             pItem->setData(i, Qt::DisplayRole);
 
-            (*g_ppModel)->setItem(i, 0, pItem);
-            (*g_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT::AllAttributes + 1, new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).AllAttributes)));
-            (*g_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT::DllNameRVA + 1, new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).DllNameRVA)));
-            (*g_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT::ModuleHandleRVA + 1, new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).ModuleHandleRVA)));
-            (*g_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT::ImportAddressTableRVA + 1, new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).ImportAddressTableRVA)));
-            (*g_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT::ImportNameTableRVA + 1, new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).ImportNameTableRVA)));
-            (*g_ppModel)
+            (*m_ppModel)->setItem(i, 0, pItem);
+            (*m_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT::AllAttributes + 1, new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).AllAttributes)));
+            (*m_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT::DllNameRVA + 1, new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).DllNameRVA)));
+            (*m_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT::ModuleHandleRVA + 1, new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).ModuleHandleRVA)));
+            (*m_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT::ImportAddressTableRVA + 1, new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).ImportAddressTableRVA)));
+            (*m_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT::ImportNameTableRVA + 1, new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).ImportNameTableRVA)));
+            (*m_ppModel)
                 ->setItem(i, N_IMAGE_DELAYIMPORT::BoundImportAddressTableRVA + 1,
                           new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).BoundImportAddressTableRVA)));
-            (*g_ppModel)
+            (*m_ppModel)
                 ->setItem(i, N_IMAGE_DELAYIMPORT::UnloadInformationTableRVA + 1, new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).UnloadInformationTableRVA)));
-            (*g_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT::TimeDateStamp + 1, new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).TimeDateStamp)));
-            (*g_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT::TimeDateStamp + 2, new QStandardItem(sLibraryName));
+            (*m_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT::TimeDateStamp + 1, new QStandardItem(XBinary::valueToHex(listDelayImport.at(i).TimeDateStamp)));
+            (*m_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT::TimeDateStamp + 2, new QStandardItem(sLibraryName));
 
             incValue();
         }
-    } else if (g_nType == SPE::TYPE_EXPORT_FUNCTION) {
+    } else if (m_nType == SPE::TYPE_EXPORT_FUNCTION) {
         QList<QString> listLabels;
         // No need number
         listLabels.append(getStructList(N_IMAGE_EXPORT_FUNCTION::records, N_IMAGE_EXPORT_FUNCTION::__data_size));
         listLabels.append("");
 
-        bool bFilter = g_varInfo.toBool();
+        bool bFilter = m_varInfo.toBool();
 
-        XPE::EXPORT_HEADER eh = g_pPE->getExport(bFilter);  // TODO pdsStruct
+        XPE::EXPORT_HEADER eh = m_pPE->getExport(bFilter);  // TODO pdsStruct
 
         qint32 nNumberOfPositions = eh.listPositions.count();
 
-        *g_ppModel = new QStandardItemModel(nNumberOfPositions, listLabels.count());
+        *m_ppModel = new QStandardItemModel(nNumberOfPositions, listLabels.count());
 
         setMaximum(nNumberOfPositions);
 
-        setTableHeader(*g_ppModel, &listLabels);
+        setTableHeader(*m_ppModel, &listLabels);
 
-        XBinary::_MEMORY_MAP memoryMap = g_pPE->getMemoryMap(XBinary::MAPMODE_UNKNOWN, getPdStruct());
+        XBinary::_MEMORY_MAP memoryMap = m_pPE->getMemoryMap(XBinary::MAPMODE_UNKNOWN, getPdStruct());
 
         for (qint32 i = 0; (i < nNumberOfPositions) && (isRun()); i++) {
             QStandardItem *pItem = new QStandardItem;
@@ -651,66 +651,66 @@ void PEProcessData::_process()
 
             pItem->setData(memoryMap.nModuleAddress + eh.listPositions.at(i).nRVA, Qt::UserRole + FW_DEF::SECTION_DATA_ADDRESS);
             pItem->setData(1, Qt::UserRole + FW_DEF::SECTION_DATA_SIZE);
-            pItem->setData(g_pPE->addressToOffset(&memoryMap, memoryMap.nModuleAddress + eh.listPositions.at(i).nRVA), Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET);
+            pItem->setData(m_pPE->addressToOffset(&memoryMap, memoryMap.nModuleAddress + eh.listPositions.at(i).nRVA), Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET);
 
-            (*g_ppModel)->setItem(i, N_IMAGE_EXPORT_FUNCTION::Ordinal, pItem);
-            (*g_ppModel)->setItem(i, N_IMAGE_EXPORT_FUNCTION::RVA, new QStandardItem(XBinary::valueToHex(eh.listPositions.at(i).nRVA)));
-            (*g_ppModel)->setItem(i, N_IMAGE_EXPORT_FUNCTION::Name, new QStandardItem(XBinary::valueToHex(eh.listPositions.at(i).nNameRVA)));
-            (*g_ppModel)->setItem(i, N_IMAGE_EXPORT_FUNCTION::Name + 1, new QStandardItem(eh.listPositions.at(i).sFunctionName));
+            (*m_ppModel)->setItem(i, N_IMAGE_EXPORT_FUNCTION::Ordinal, pItem);
+            (*m_ppModel)->setItem(i, N_IMAGE_EXPORT_FUNCTION::RVA, new QStandardItem(XBinary::valueToHex(eh.listPositions.at(i).nRVA)));
+            (*m_ppModel)->setItem(i, N_IMAGE_EXPORT_FUNCTION::Name, new QStandardItem(XBinary::valueToHex(eh.listPositions.at(i).nNameRVA)));
+            (*m_ppModel)->setItem(i, N_IMAGE_EXPORT_FUNCTION::Name + 1, new QStandardItem(eh.listPositions.at(i).sFunctionName));
 
             incValue();
         }
-    } else if (g_nType == SPE::TYPE_BOUNDIMPORT) {
+    } else if (m_nType == SPE::TYPE_BOUNDIMPORT) {
         QList<QString> listLabels;
         listLabels.append("#");
         listLabels.append(getStructList(N_IMAGE_BOUNDIMPORT::records, N_IMAGE_BOUNDIMPORT::__data_size));
         listLabels.append("");
         listLabels.append("");
 
-        QList<XPE::BOUND_IMPORT_POSITION> listBoundImportPositions = g_pPE->getBoundImportPositions();  // TODO pdsStruct
+        QList<XPE::BOUND_IMPORT_POSITION> listBoundImportPositions = m_pPE->getBoundImportPositions();  // TODO pdsStruct
 
         qint32 nNumberOfPositions = listBoundImportPositions.count();
 
-        *g_ppModel = new QStandardItemModel(nNumberOfPositions, listLabels.count());
+        *m_ppModel = new QStandardItemModel(nNumberOfPositions, listLabels.count());
 
         setMaximum(nNumberOfPositions);
 
-        setTableHeader(*g_ppModel, &listLabels);
+        setTableHeader(*m_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfPositions) && (isRun()); i++) {
             QStandardItem *pItem = new QStandardItem;
             pItem->setData(i, Qt::DisplayRole);
 
-            (*g_ppModel)->setItem(i, 0, pItem);
-            (*g_ppModel)
+            (*m_ppModel)->setItem(i, 0, pItem);
+            (*m_ppModel)
                 ->setItem(i, N_IMAGE_BOUNDIMPORT::TimeDateStamp + 1, new QStandardItem(XBinary::valueToHex(listBoundImportPositions.at(i).descriptor.TimeDateStamp)));
-            (*g_ppModel)
+            (*m_ppModel)
                 ->setItem(i, N_IMAGE_BOUNDIMPORT::OffsetModuleName + 1,
                           new QStandardItem(XBinary::valueToHex(listBoundImportPositions.at(i).descriptor.OffsetModuleName)));
-            (*g_ppModel)
+            (*m_ppModel)
                 ->setItem(i, N_IMAGE_BOUNDIMPORT::NumberOfModuleForwarderRefs + 1,
                           new QStandardItem(XBinary::valueToHex(listBoundImportPositions.at(i).descriptor.NumberOfModuleForwarderRefs)));
-            (*g_ppModel)
+            (*m_ppModel)
                 ->setItem(i, N_IMAGE_BOUNDIMPORT::NumberOfModuleForwarderRefs + 2,
                           new QStandardItem(XBinary::valueToTimeString(listBoundImportPositions.at(i).descriptor.TimeDateStamp, XBinary::DT_TYPE_POSIX)));
-            (*g_ppModel)->setItem(i, N_IMAGE_BOUNDIMPORT::NumberOfModuleForwarderRefs + 3, new QStandardItem(listBoundImportPositions.at(i).sName));
+            (*m_ppModel)->setItem(i, N_IMAGE_BOUNDIMPORT::NumberOfModuleForwarderRefs + 3, new QStandardItem(listBoundImportPositions.at(i).sName));
 
             incValue();
         }
-    } else if (g_nType == SPE::TYPE_DEBUG) {
+    } else if (m_nType == SPE::TYPE_DEBUG) {
         QList<QString> listLabels;
         listLabels.append("#");
         listLabels.append(getStructList(N_IMAGE_DEBUG::records, N_IMAGE_DEBUG::__data_size));
 
-        QList<XPE_DEF::S_IMAGE_DEBUG_DIRECTORY> listDebug = g_pPE->getDebugList();  // TODO pdsStruct
+        QList<XPE_DEF::S_IMAGE_DEBUG_DIRECTORY> listDebug = m_pPE->getDebugList();  // TODO pdsStruct
 
         qint32 nNumberOfDebugs = listDebug.count();
 
-        *g_ppModel = new QStandardItemModel(nNumberOfDebugs, listLabels.count());
+        *m_ppModel = new QStandardItemModel(nNumberOfDebugs, listLabels.count());
 
         setMaximum(nNumberOfDebugs);
 
-        setTableHeader(*g_ppModel, &listLabels);
+        setTableHeader(*m_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfDebugs) && (isRun()); i++) {
             QStandardItem *pItem = new QStandardItem;
@@ -718,33 +718,33 @@ void PEProcessData::_process()
             pItem->setData(listDebug.at(i).AddressOfRawData, Qt::UserRole + FW_DEF::SECTION_DATA_ADDRESS);
             pItem->setData(listDebug.at(i).SizeOfData, Qt::UserRole + FW_DEF::SECTION_DATA_SIZE);
             pItem->setData(listDebug.at(i).PointerToRawData, Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET);
-            (*g_ppModel)->setItem(i, 0, pItem);
-            (*g_ppModel)->setItem(i, N_IMAGE_DEBUG::Characteristics + 1, new QStandardItem(XBinary::valueToHex(listDebug.at(i).Characteristics)));
-            (*g_ppModel)->setItem(i, N_IMAGE_DEBUG::TimeDateStamp + 1, new QStandardItem(XBinary::valueToHex(listDebug.at(i).TimeDateStamp)));
-            (*g_ppModel)->setItem(i, N_IMAGE_DEBUG::MajorVersion + 1, new QStandardItem(XBinary::valueToHex(listDebug.at(i).MajorVersion)));
-            (*g_ppModel)->setItem(i, N_IMAGE_DEBUG::MinorVersion + 1, new QStandardItem(XBinary::valueToHex(listDebug.at(i).MinorVersion)));
-            (*g_ppModel)->setItem(i, N_IMAGE_DEBUG::Type + 1, new QStandardItem(XBinary::valueToHex(listDebug.at(i).Type)));
-            (*g_ppModel)->setItem(i, N_IMAGE_DEBUG::SizeOfData + 1, new QStandardItem(XBinary::valueToHex(listDebug.at(i).SizeOfData)));
-            (*g_ppModel)->setItem(i, N_IMAGE_DEBUG::AddressOfRawData + 1, new QStandardItem(XBinary::valueToHex(listDebug.at(i).AddressOfRawData)));
-            (*g_ppModel)->setItem(i, N_IMAGE_DEBUG::PointerToRawData + 1, new QStandardItem(XBinary::valueToHex(listDebug.at(i).PointerToRawData)));
+            (*m_ppModel)->setItem(i, 0, pItem);
+            (*m_ppModel)->setItem(i, N_IMAGE_DEBUG::Characteristics + 1, new QStandardItem(XBinary::valueToHex(listDebug.at(i).Characteristics)));
+            (*m_ppModel)->setItem(i, N_IMAGE_DEBUG::TimeDateStamp + 1, new QStandardItem(XBinary::valueToHex(listDebug.at(i).TimeDateStamp)));
+            (*m_ppModel)->setItem(i, N_IMAGE_DEBUG::MajorVersion + 1, new QStandardItem(XBinary::valueToHex(listDebug.at(i).MajorVersion)));
+            (*m_ppModel)->setItem(i, N_IMAGE_DEBUG::MinorVersion + 1, new QStandardItem(XBinary::valueToHex(listDebug.at(i).MinorVersion)));
+            (*m_ppModel)->setItem(i, N_IMAGE_DEBUG::Type + 1, new QStandardItem(XBinary::valueToHex(listDebug.at(i).Type)));
+            (*m_ppModel)->setItem(i, N_IMAGE_DEBUG::SizeOfData + 1, new QStandardItem(XBinary::valueToHex(listDebug.at(i).SizeOfData)));
+            (*m_ppModel)->setItem(i, N_IMAGE_DEBUG::AddressOfRawData + 1, new QStandardItem(XBinary::valueToHex(listDebug.at(i).AddressOfRawData)));
+            (*m_ppModel)->setItem(i, N_IMAGE_DEBUG::PointerToRawData + 1, new QStandardItem(XBinary::valueToHex(listDebug.at(i).PointerToRawData)));
 
             incValue();
         }
-    } else if (g_nType == SPE::TYPE_TLSCALLBACKS) {
+    } else if (m_nType == SPE::TYPE_TLSCALLBACKS) {
         QList<QString> listLabels;
         listLabels.append("#");
         listLabels.append(tr("Address"));
         listLabels.append("");
 
-        QList<XADDR> listCallbacks = g_pPE->getTLS_CallbacksList();  // TODO pdsStruct
+        QList<XADDR> listCallbacks = m_pPE->getTLS_CallbacksList();  // TODO pdsStruct
 
         qint32 nNumberOfRecords = listCallbacks.count();
 
-        *g_ppModel = new QStandardItemModel(nNumberOfRecords, listLabels.count());
+        *m_ppModel = new QStandardItemModel(nNumberOfRecords, listLabels.count());
 
         setMaximum(nNumberOfRecords);
 
-        setTableHeader(*g_ppModel, &listLabels);
+        setTableHeader(*m_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfRecords) && (isRun()); i++) {
             XADDR nAddress = listCallbacks.at(i);
@@ -754,45 +754,45 @@ void PEProcessData::_process()
             pItem->setData(nAddress, Qt::UserRole + FW_DEF::SECTION_DATA_ADDRESS);
             //                        pItem->setData(listCallbacks.at(i).SizeOfData,Qt::UserRole+FW_DEF::SECTION_DATA_SIZE);
             //                        pItem->setData(listCallbacks.at(i).PointerToRawData,Qt::UserRole+FW_DEF::SECTION_DATA_OFFSET);
-            (*g_ppModel)->setItem(i, 0, pItem);
+            (*m_ppModel)->setItem(i, 0, pItem);
             if (bIs64) {
-                (*g_ppModel)->setItem(i, 1, new QStandardItem(XBinary::valueToHex((quint64)nAddress)));
+                (*m_ppModel)->setItem(i, 1, new QStandardItem(XBinary::valueToHex((quint64)nAddress)));
             } else {
-                (*g_ppModel)->setItem(i, 1, new QStandardItem(XBinary::valueToHex((quint32)nAddress)));
+                (*m_ppModel)->setItem(i, 1, new QStandardItem(XBinary::valueToHex((quint32)nAddress)));
             }
 
-            (*g_ppModel)->setItem(i, 2, new QStandardItem(g_pPE->getMemoryRecordInfoByAddress(nAddress)));
+            (*m_ppModel)->setItem(i, 2, new QStandardItem(m_pPE->getMemoryRecordInfoByAddress(nAddress)));
 
             incValue();
         }
-    } else if (g_nType == SPE::TYPE_DELAYIMPORT_FUNCTION) {
+    } else if (m_nType == SPE::TYPE_DELAYIMPORT_FUNCTION) {
         QList<QString> listLabels;
         listLabels.append("#");
         listLabels.append(getStructList(N_IMAGE_DELAYIMPORT_FUNCTION::records32, N_IMAGE_DELAYIMPORT_FUNCTION::__data_size));
         listLabels.append(tr("Name"));
 
-        QList<XPE::DELAYIMPORT_POSITION> listDIP = g_pPE->getDelayImportPositions(g_nNumber);  // TODO pdsStruct
+        QList<XPE::DELAYIMPORT_POSITION> listDIP = m_pPE->getDelayImportPositions(m_nNumber);  // TODO pdsStruct
 
         qint32 nNumberOfDIPs = listDIP.count();
 
-        *g_ppModel = new QStandardItemModel(nNumberOfDIPs, listLabels.count());
+        *m_ppModel = new QStandardItemModel(nNumberOfDIPs, listLabels.count());
 
         setMaximum(nNumberOfDIPs);
 
-        setTableHeader(*g_ppModel, &listLabels);
+        setTableHeader(*m_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfDIPs) && (isRun()); i++) {
             QStandardItem *pItem = new QStandardItem;
             pItem->setData(i, Qt::DisplayRole);
 
-            (*g_ppModel)->setItem(i, 0, pItem);
+            (*m_ppModel)->setItem(i, 0, pItem);
 
             if (bIs64) {
-                (*g_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT_FUNCTION::AddressThunk + 1, new QStandardItem(XBinary::valueToHex((quint64)listDIP.at(i).nAddressThunkRVA)));
-                (*g_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT_FUNCTION::BoundThunk + 1, new QStandardItem(XBinary::valueToHex((quint64)listDIP.at(i).nBoundThunkRVA)));
+                (*m_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT_FUNCTION::AddressThunk + 1, new QStandardItem(XBinary::valueToHex((quint64)listDIP.at(i).nAddressThunkRVA)));
+                (*m_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT_FUNCTION::BoundThunk + 1, new QStandardItem(XBinary::valueToHex((quint64)listDIP.at(i).nBoundThunkRVA)));
             } else {
-                (*g_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT_FUNCTION::AddressThunk + 1, new QStandardItem(XBinary::valueToHex((quint32)listDIP.at(i).nAddressThunkRVA)));
-                (*g_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT_FUNCTION::BoundThunk + 1, new QStandardItem(XBinary::valueToHex((quint32)listDIP.at(i).nBoundThunkRVA)));
+                (*m_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT_FUNCTION::AddressThunk + 1, new QStandardItem(XBinary::valueToHex((quint32)listDIP.at(i).nAddressThunkRVA)));
+                (*m_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT_FUNCTION::BoundThunk + 1, new QStandardItem(XBinary::valueToHex((quint32)listDIP.at(i).nBoundThunkRVA)));
             }
 
             if (listDIP.at(i).nOrdinal) {
@@ -804,7 +804,7 @@ void PEProcessData::_process()
                     sOrdinal = XBinary::valueToHex((quint32)listDIP.at(i).nOrdinal);
                 }
 
-                (*g_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT_FUNCTION::Ordinal + 1, new QStandardItem(sOrdinal));
+                (*m_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT_FUNCTION::Ordinal + 1, new QStandardItem(sOrdinal));
             } else {
                 QString sThunk;
 
@@ -814,18 +814,18 @@ void PEProcessData::_process()
                     sThunk = XBinary::valueToHex((quint32)listDIP.at(i).nNameThunkValue);
                 }
 
-                (*g_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT_FUNCTION::NameThunk + 1, new QStandardItem(sThunk));
-                (*g_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT_FUNCTION::Hint + 1, new QStandardItem(XBinary::valueToHex(listDIP.at(i).nHint)));
-                (*g_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT_FUNCTION::Hint + 2, new QStandardItem(listDIP.at(i).sName));
+                (*m_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT_FUNCTION::NameThunk + 1, new QStandardItem(sThunk));
+                (*m_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT_FUNCTION::Hint + 1, new QStandardItem(XBinary::valueToHex(listDIP.at(i).nHint)));
+                (*m_ppModel)->setItem(i, N_IMAGE_DELAYIMPORT_FUNCTION::Hint + 2, new QStandardItem(listDIP.at(i).sName));
             }
 
             incValue();
         }
-    } else if (g_nType == SPE::TYPE_RESOURCES) {
-        if (g_varInfo.toBool()) {
-            XPE::RESOURCE_HEADER rh = g_pPE->getResourceHeader();  // TODO pdsStruct
+    } else if (m_nType == SPE::TYPE_RESOURCES) {
+        if (m_varInfo.toBool()) {
+            XPE::RESOURCE_HEADER rh = m_pPE->getResourceHeader();  // TODO pdsStruct
 
-            *g_ppModel = new QStandardItemModel;
+            *m_ppModel = new QStandardItemModel;
 
             qint32 nNumberOfPositions = rh.listPositions.count();
 
@@ -833,7 +833,7 @@ void PEProcessData::_process()
                 QStandardItem *pRoot = new QStandardItem();
                 pRoot->setText(tr("Resources"));
 
-                (*g_ppModel)->appendRow(pRoot);
+                (*m_ppModel)->appendRow(pRoot);
 
                 for (qint32 i = 0; i < nNumberOfPositions; i++) {
                     XPE::RESOURCE_POSITION pos = rh.listPositions.at(i);
@@ -875,7 +875,7 @@ void PEProcessData::_process()
                             pRecord->setData(record3.dataEntry.Size, Qt::UserRole + FW_DEF::SECTION_DATA_SIZE);
                             pRecord->setData(record3.dataEntry.OffsetToData, Qt::UserRole + FW_DEF::SECTION_DATA_ADDRESS);
 
-                            if (g_pPE->isImage()) {
+                            if (m_pPE->isImage()) {
                                 pRecord->setData(record3.dataEntry.OffsetToData, Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET);
                             } else {
                                 pRecord->setData(record3.nDataOffset, Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET);
@@ -899,15 +899,15 @@ void PEProcessData::_process()
             listLabels.append(tr("Size"));
             listLabels.append("");
 
-            QList<XPE::RESOURCE_RECORD> listResources = g_pPE->getResources(10000, getPdStruct());
+            QList<XPE::RESOURCE_RECORD> listResources = m_pPE->getResources(10000, getPdStruct());
 
             qint32 nNumberOfRecords = listResources.count();
 
-            *g_ppModel = new QStandardItemModel(nNumberOfRecords, listLabels.count());
+            *m_ppModel = new QStandardItemModel(nNumberOfRecords, listLabels.count());
 
             setMaximum(nNumberOfRecords);
 
-            setTableHeader(*g_ppModel, &listLabels);
+            setTableHeader(*m_ppModel, &listLabels);
 
             for (qint32 i = 0; (i < nNumberOfRecords) && (isRun()); i++) {
                 QStandardItem *pItemNumber = new QStandardItem;
@@ -923,20 +923,20 @@ void PEProcessData::_process()
 
                 //                pItemNumber->setData(QString("%1_%2_%3.bin").arg(sResID1, sResID2, sResID3), Qt::UserRole + FW_DEF::SECTION_DATA_NAME);
 
-                QString sResName = XBinary::convertFileNameSymbols(g_pPE->resourceRecordToString(listResources.at(i)));
+                QString sResName = XBinary::convertFileNameSymbols(m_pPE->resourceRecordToString(listResources.at(i)));
 
                 pItemNumber->setData(sResName, Qt::UserRole + FW_DEF::SECTION_DATA_NAME);
 
-                (*g_ppModel)->setItem(i, 0, pItemNumber);
+                (*m_ppModel)->setItem(i, 0, pItemNumber);
 
-                //                (*g_ppModel)->setItem(i,1,pItemName);
-                (*g_ppModel)->setItem(i, 1, new QStandardItem(sResID1));
-                (*g_ppModel)->setItem(i, 2, new QStandardItem(sResID2));
-                (*g_ppModel)->setItem(i, 3, new QStandardItem(sResID3));
+                //                (*m_ppModel)->setItem(i,1,pItemName);
+                (*m_ppModel)->setItem(i, 1, new QStandardItem(sResID1));
+                (*m_ppModel)->setItem(i, 2, new QStandardItem(sResID2));
+                (*m_ppModel)->setItem(i, 3, new QStandardItem(sResID3));
 
-                (*g_ppModel)->setItem(i, 4, new QStandardItem(XBinary::valueToHexEx(listResources.at(i).nAddress)));
-                (*g_ppModel)->setItem(i, 5, new QStandardItem(XBinary::valueToHexEx(listResources.at(i).nOffset)));
-                (*g_ppModel)->setItem(i, 6, new QStandardItem(XBinary::valueToHexEx(listResources.at(i).nSize)));
+                (*m_ppModel)->setItem(i, 4, new QStandardItem(XBinary::valueToHexEx(listResources.at(i).nAddress)));
+                (*m_ppModel)->setItem(i, 5, new QStandardItem(XBinary::valueToHexEx(listResources.at(i).nOffset)));
+                (*m_ppModel)->setItem(i, 6, new QStandardItem(XBinary::valueToHexEx(listResources.at(i).nSize)));
 
                 XScanEngine::SCAN_OPTIONS scanOptions = {};
                 scanOptions.bUseCustomDatabase = true;
@@ -948,29 +948,29 @@ void PEProcessData::_process()
                 scanOptions.initFilePart = XBinary::FILEPART_RESOURCE;
 
                 XScanEngine::SCAN_RESULT scanResult =
-                    SpecAbstract().scanSubdevice(g_pPE->getDevice(), listResources.at(i).nOffset, listResources.at(i).nSize, &scanOptions, getPdStruct());
+                    SpecAbstract().scanSubdevice(m_pPE->getDevice(), listResources.at(i).nOffset, listResources.at(i).nSize, &scanOptions, getPdStruct());
 
-                (*g_ppModel)->setItem(i, 7, new QStandardItem(XScanEngine::createShortResultString(&scanOptions, scanResult)));
+                (*m_ppModel)->setItem(i, 7, new QStandardItem(XScanEngine::createShortResultString(&scanOptions, scanResult)));
 
                 incValue();
             }
         }
-    } else if (g_nType == SPE::TYPE_RESOURCES_STRINGTABLE) {
+    } else if (m_nType == SPE::TYPE_RESOURCES_STRINGTABLE) {
         QList<QString> listLabels;
         listLabels.append("#");
         listLabels.append(QString("Id"));
         listLabels.append(tr("Language"));
         listLabels.append(tr("String"));
 
-        QList<XPE::RESOURCE_STRINGTABLE_RECORD> listSTR = g_pPE->getResourceStringTableRecords();  // TODO pdsStruct
+        QList<XPE::RESOURCE_STRINGTABLE_RECORD> listSTR = m_pPE->getResourceStringTableRecords();  // TODO pdsStruct
 
         qint32 nNumberOfRecords = listSTR.count();
 
-        *g_ppModel = new QStandardItemModel(nNumberOfRecords, listLabels.count());
+        *m_ppModel = new QStandardItemModel(nNumberOfRecords, listLabels.count());
 
         setMaximum(nNumberOfRecords);
 
-        setTableHeader(*g_ppModel, &listLabels);
+        setTableHeader(*m_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfRecords) && (isRun()); i++) {
             QStandardItem *pItem = new QStandardItem;
@@ -980,21 +980,21 @@ void PEProcessData::_process()
             pItem->setData(listSTR.at(i).nOffset, Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET);
             pItem->setData(listSTR.at(i).nSize, Qt::UserRole + FW_DEF::SECTION_DATA_SIZE);
 
-            (*g_ppModel)->setItem(i, 0, pItem);
-            (*g_ppModel)->setItem(i, 1, new QStandardItem(QString::number(listSTR.at(i).nID)));
-            (*g_ppModel)->setItem(i, 2, new QStandardItem(QString::number(listSTR.at(i).nLanguage)));
-            (*g_ppModel)->setItem(i, 3, new QStandardItem(listSTR.at(i).sString));
+            (*m_ppModel)->setItem(i, 0, pItem);
+            (*m_ppModel)->setItem(i, 1, new QStandardItem(QString::number(listSTR.at(i).nID)));
+            (*m_ppModel)->setItem(i, 2, new QStandardItem(QString::number(listSTR.at(i).nLanguage)));
+            (*m_ppModel)->setItem(i, 3, new QStandardItem(listSTR.at(i).sString));
 
             incValue();
         }
-    } else if (g_nType == SPE::TYPE_CERTIFICATE) {
-        //        g_pPE->getCertInfo();
+    } else if (m_nType == SPE::TYPE_CERTIFICATE) {
+        //        m_pPE->getCertInfo();
 
-        *g_ppModel = new QStandardItemModel;
+        *m_ppModel = new QStandardItemModel;
 
-        XPE_DEF::IMAGE_DATA_DIRECTORY ddSecurity = g_pPE->getOptionalHeader_DataDirectory(XPE_DEF::S_IMAGE_DIRECTORY_ENTRY_SECURITY);
+        XPE_DEF::IMAGE_DATA_DIRECTORY ddSecurity = m_pPE->getOptionalHeader_DataDirectory(XPE_DEF::S_IMAGE_DIRECTORY_ENTRY_SECURITY);
 
-        QList<XPE::CERT> listCert = g_pPE->getCertList(ddSecurity.VirtualAddress, ddSecurity.Size);
+        QList<XPE::CERT> listCert = m_pPE->getCertList(ddSecurity.VirtualAddress, ddSecurity.Size);
 
         if (listCert.count()) {
             qint32 nNumberOfCerts = listCert.count();
@@ -1017,34 +1017,34 @@ void PEProcessData::_process()
                     pRoot->appendRow(pRecord);
                 }
 
-                (*g_ppModel)->appendRow(pRoot);
+                (*m_ppModel)->appendRow(pRoot);
             }
         }
-    } else if (g_nType == SPE::TYPE_CERTIFICATE_CHECK) {
-        *g_ppModel = new QStandardItemModel;
+    } else if (m_nType == SPE::TYPE_CERTIFICATE_CHECK) {
+        *m_ppModel = new QStandardItemModel;
 
         QTemporaryDir tempDir;
         if (tempDir.isValid()) {
             QString sFileName = tempDir.path() + QDir::separator() + "CERT.DAT";
 
-            if (g_pPE->dumpToFile(sFileName, (qint64)0, g_pPE->getSize())) {
+            if (m_pPE->dumpToFile(sFileName, (qint64)0, m_pPE->getSize())) {
                 XPE::XCERT_INFO xsertInfo = XPE::getCertInfo(sFileName);
 
-                (*g_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Status"), xsertInfo.sStatus)));
+                (*m_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Status"), xsertInfo.sStatus)));
 
-                if (xsertInfo.sProgramName != "") (*g_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Program name"), xsertInfo.sProgramName)));
-                if (xsertInfo.sPublisher != "") (*g_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Publisher"), xsertInfo.sPublisher)));
-                if (xsertInfo.sMoreInfo != "") (*g_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("More info"), xsertInfo.sMoreInfo)));
-                if (xsertInfo.sSerialNumber != "") (*g_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Serial number"), xsertInfo.sSerialNumber)));
-                if (xsertInfo.sIssuer != "") (*g_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Issuer"), xsertInfo.sIssuer)));
-                if (xsertInfo.sSubject != "") (*g_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Subject"), xsertInfo.sSubject)));
-                if (xsertInfo.sAlgorithm != "") (*g_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Algorithm"), xsertInfo.sAlgorithm)));
-                if (xsertInfo.sTSSerialNumber != "") (*g_ppModel)->appendRow(new QStandardItem(QString("TS %1: %2").arg(tr("Serial number"), xsertInfo.sTSSerialNumber)));
-                if (xsertInfo.sTSIssuer != "") (*g_ppModel)->appendRow(new QStandardItem(QString("TS %1: %2").arg(tr("Issuer"), xsertInfo.sTSIssuer)));
-                if (xsertInfo.sTSSubject != "") (*g_ppModel)->appendRow(new QStandardItem(QString("TS %1: %2").arg(tr("Subject"), xsertInfo.sTSSubject)));
+                if (xsertInfo.sProgramName != "") (*m_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Program name"), xsertInfo.sProgramName)));
+                if (xsertInfo.sPublisher != "") (*m_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Publisher"), xsertInfo.sPublisher)));
+                if (xsertInfo.sMoreInfo != "") (*m_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("More info"), xsertInfo.sMoreInfo)));
+                if (xsertInfo.sSerialNumber != "") (*m_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Serial number"), xsertInfo.sSerialNumber)));
+                if (xsertInfo.sIssuer != "") (*m_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Issuer"), xsertInfo.sIssuer)));
+                if (xsertInfo.sSubject != "") (*m_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Subject"), xsertInfo.sSubject)));
+                if (xsertInfo.sAlgorithm != "") (*m_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Algorithm"), xsertInfo.sAlgorithm)));
+                if (xsertInfo.sTSSerialNumber != "") (*m_ppModel)->appendRow(new QStandardItem(QString("TS %1: %2").arg(tr("Serial number"), xsertInfo.sTSSerialNumber)));
+                if (xsertInfo.sTSIssuer != "") (*m_ppModel)->appendRow(new QStandardItem(QString("TS %1: %2").arg(tr("Issuer"), xsertInfo.sTSIssuer)));
+                if (xsertInfo.sTSSubject != "") (*m_ppModel)->appendRow(new QStandardItem(QString("TS %1: %2").arg(tr("Subject"), xsertInfo.sTSSubject)));
             }
         }
-    } else if (g_nType == SPE::TYPE_RICH) {
+    } else if (m_nType == SPE::TYPE_RICH) {
         QList<QString> listLabels;
         listLabels.append("#");
         listLabels.append(QString("Id"));
@@ -1052,50 +1052,50 @@ void PEProcessData::_process()
         listLabels.append(tr("Count"));
         listLabels.append("");
 
-        QList<XMSDOS::MS_RICH_RECORD> listRichSignatures = g_pPE->getRichSignatureRecords(getPdStruct());
+        QList<XMSDOS::MS_RICH_RECORD> listRichSignatures = m_pPE->getRichSignatureRecords(getPdStruct());
 
         qint32 nNumberOfRecords = listRichSignatures.count();
 
-        *g_ppModel = new QStandardItemModel(nNumberOfRecords, listLabels.count());
+        *m_ppModel = new QStandardItemModel(nNumberOfRecords, listLabels.count());
 
         setMaximum(nNumberOfRecords);
 
-        setTableHeader(*g_ppModel, &listLabels);
+        setTableHeader(*m_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfRecords) && (isRun()); i++) {
             QStandardItem *pItemNumber = new QStandardItem;
             pItemNumber->setData(i, Qt::DisplayRole);
 
-            (*g_ppModel)->setItem(i, 0, pItemNumber);
+            (*m_ppModel)->setItem(i, 0, pItemNumber);
 
-            //                (*g_ppModel)->setItem(i,1,pItemName);
-            (*g_ppModel)->setItem(i, 1, new QStandardItem(XBinary::valueToHex(listRichSignatures.at(i).nId)));
-            (*g_ppModel)->setItem(i, 2, new QStandardItem(QString::number(listRichSignatures.at(i).nVersion)));
-            (*g_ppModel)->setItem(i, 3, new QStandardItem(QString::number(listRichSignatures.at(i).nCount)));
-            (*g_ppModel)
+            //                (*m_ppModel)->setItem(i,1,pItemName);
+            (*m_ppModel)->setItem(i, 1, new QStandardItem(XBinary::valueToHex(listRichSignatures.at(i).nId)));
+            (*m_ppModel)->setItem(i, 2, new QStandardItem(QString::number(listRichSignatures.at(i).nVersion)));
+            (*m_ppModel)->setItem(i, 3, new QStandardItem(QString::number(listRichSignatures.at(i).nCount)));
+            (*m_ppModel)
                 ->setItem(i, 4,
                           new QStandardItem(NFD_MSDOS::getMsRichString(listRichSignatures.at(i).nId, listRichSignatures.at(i).nVersion, listRichSignatures.at(i).nCount,
                                                                        getPdStruct())));
 
             incValue();
         }
-    } else if (g_nType == SPE::TYPE_NET_METADATA_TABLE) {
+    } else if (m_nType == SPE::TYPE_NET_METADATA_TABLE) {
         QList<QString> listLabels;
         listLabels.append("#");
         listLabels.append(QString("Id"));
         listLabels.append(tr("Count"));
         listLabels.append(tr("Sorted"));
 
-        XPE::CLI_INFO cliInfo = g_pPE->getCliInfo(true);  // TODO pdStruct
-        QList<XPE::CLI_METADATA_RECORD> listMetaDataTables = g_pPE->getCliMetadataRecords(&cliInfo, getPdStruct());
+        XPE::CLI_INFO cliInfo = m_pPE->getCliInfo(true);  // TODO pdStruct
+        QList<XPE::CLI_METADATA_RECORD> listMetaDataTables = m_pPE->getCliMetadataRecords(&cliInfo, getPdStruct());
 
         qint32 nNumberOfRecords = listMetaDataTables.count();
 
-        *g_ppModel = new QStandardItemModel(nNumberOfRecords, listLabels.count());
+        *m_ppModel = new QStandardItemModel(nNumberOfRecords, listLabels.count());
 
         setMaximum(nNumberOfRecords);
 
-        setTableHeader(*g_ppModel, &listLabels);
+        setTableHeader(*m_ppModel, &listLabels);
 
         for (qint32 i = 0; (i < nNumberOfRecords) && (isRun()); i++) {
             QStandardItem *pItemNumber = new QStandardItem;
@@ -1105,21 +1105,21 @@ void PEProcessData::_process()
             // pItemNumber->setData(listMetaDataTables.at(i).nTableOffset - cliInfo.metaData.osMetadata.nOffset, Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET);
             pItemNumber->setData(listMetaDataTables.at(i).nTableOffset, Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET);
 
-            (*g_ppModel)->setItem(i, 0, pItemNumber);
-            (*g_ppModel)->setItem(i, 1, new QStandardItem(listMetaDataTables.at(i).sId));
-            (*g_ppModel)->setItem(i, 2, new QStandardItem(QString::number(listMetaDataTables.at(i).nCount)));
-            (*g_ppModel)->setItem(i, 3, new QStandardItem(XBinary::boolToString(listMetaDataTables.at(i).bIsSorted)));
+            (*m_ppModel)->setItem(i, 0, pItemNumber);
+            (*m_ppModel)->setItem(i, 1, new QStandardItem(listMetaDataTables.at(i).sId));
+            (*m_ppModel)->setItem(i, 2, new QStandardItem(QString::number(listMetaDataTables.at(i).nCount)));
+            (*m_ppModel)->setItem(i, 3, new QStandardItem(XBinary::boolToString(listMetaDataTables.at(i).bIsSorted)));
 
             incValue();
         }
     }
 
-    adjustModel(*g_ppModel);
+    adjustModel(*m_ppModel);
 }
 
 void PEProcessData::ajustTableView(qint32 nType, QTableView *pTableView)
 {
-    XBinary::MODE mode = g_pPE->getMode();
+    XBinary::MODE mode = m_pPE->getMode();
 
     if (nType == SPE::TYPE_SECTIONS) {
         XOptions::setTableViewHeaderWidth(pTableView, 0, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT16, mode));
@@ -1234,7 +1234,7 @@ void PEProcessData::ajustTableView(qint32 nType, QTableView *pTableView)
 
 void PEProcessData::ajustTreeView(qint32 nType, QTreeView *pTreeView)
 {
-    XBinary::MODE mode = g_pPE->getMode();
+    XBinary::MODE mode = m_pPE->getMode();
 
     if (nType == SPE::TYPE_SECTIONS_INFO) {
         XOptions::setTreeViewHeaderWidth(pTreeView, 0, FormatWidget::getColumnWidth(pTreeView, FormatWidget::CW_UINT16, mode));
@@ -1287,7 +1287,7 @@ void PEProcessData::handleCertRecord(QStandardItem *pParent, XPE::CERT_RECORD ce
 
 void PEProcessData::adjustModel(QStandardItemModel *pModel)
 {
-    if (g_nType == SPE::TYPE_SECTIONS) {
+    if (m_nType == SPE::TYPE_SECTIONS) {
         XOptions::setModelTextAlignment(pModel, 0, Qt::AlignRight | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 1, Qt::AlignLeft | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 2, Qt::AlignRight | Qt::AlignVCenter);
@@ -1299,7 +1299,7 @@ void PEProcessData::adjustModel(QStandardItemModel *pModel)
         XOptions::setModelTextAlignment(pModel, 8, Qt::AlignRight | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 9, Qt::AlignRight | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 10, Qt::AlignRight | Qt::AlignVCenter);
-    } else if (g_nType == SPE::TYPE_SECTIONS_INFO) {
+    } else if (m_nType == SPE::TYPE_SECTIONS_INFO) {
         XOptions::setModelTextAlignment(pModel, 0, Qt::AlignRight | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 1, Qt::AlignLeft | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 2, Qt::AlignRight | Qt::AlignVCenter);
@@ -1307,18 +1307,18 @@ void PEProcessData::adjustModel(QStandardItemModel *pModel)
         XOptions::setModelTextAlignment(pModel, 4, Qt::AlignRight | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 5, Qt::AlignRight | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 6, Qt::AlignLeft | Qt::AlignVCenter);
-    } else if (g_nType == SPE::TYPE_RELOCS) {
+    } else if (m_nType == SPE::TYPE_RELOCS) {
         XOptions::setModelTextAlignment(pModel, 0, Qt::AlignRight | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 1, Qt::AlignRight | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 2, Qt::AlignRight | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 3, Qt::AlignRight | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 4, Qt::AlignLeft | Qt::AlignVCenter);
-    } else if (g_nType == SPE::TYPE_RELOCS_POSITION) {
+    } else if (m_nType == SPE::TYPE_RELOCS_POSITION) {
         XOptions::setModelTextAlignment(pModel, 0, Qt::AlignRight | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 1, Qt::AlignRight | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 2, Qt::AlignLeft | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 3, Qt::AlignRight | Qt::AlignVCenter);
-    } else if (g_nType == SPE::TYPE_IMPORT) {
+    } else if (m_nType == SPE::TYPE_IMPORT) {
         XOptions::setModelTextAlignment(pModel, 0, Qt::AlignRight | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 1, Qt::AlignRight | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 2, Qt::AlignRight | Qt::AlignVCenter);
@@ -1327,19 +1327,19 @@ void PEProcessData::adjustModel(QStandardItemModel *pModel)
         XOptions::setModelTextAlignment(pModel, 5, Qt::AlignRight | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 6, Qt::AlignRight | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 7, Qt::AlignLeft | Qt::AlignVCenter);
-    } else if (g_nType == SPE::TYPE_IMPORT_FUNCTION) {
+    } else if (m_nType == SPE::TYPE_IMPORT_FUNCTION) {
         XOptions::setModelTextAlignment(pModel, 0, Qt::AlignRight | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 1, Qt::AlignRight | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 2, Qt::AlignRight | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 3, Qt::AlignRight | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 4, Qt::AlignLeft | Qt::AlignVCenter);
-    } else if (g_nType == SPE::TYPE_EXCEPTION) {
+    } else if (m_nType == SPE::TYPE_EXCEPTION) {
         XOptions::setModelTextAlignment(pModel, 0, Qt::AlignRight | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 1, Qt::AlignRight | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 2, Qt::AlignRight | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 3, Qt::AlignRight | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 4, Qt::AlignLeft | Qt::AlignVCenter);
-    } else if (g_nType == SPE::TYPE_DELAYIMPORT) {
+    } else if (m_nType == SPE::TYPE_DELAYIMPORT) {
         XOptions::setModelTextAlignment(pModel, 0, Qt::AlignRight | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 1, Qt::AlignRight | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 2, Qt::AlignRight | Qt::AlignVCenter);
@@ -1350,19 +1350,19 @@ void PEProcessData::adjustModel(QStandardItemModel *pModel)
         XOptions::setModelTextAlignment(pModel, 7, Qt::AlignRight | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 8, Qt::AlignRight | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 9, Qt::AlignLeft | Qt::AlignVCenter);
-    } else if (g_nType == SPE::TYPE_EXPORT_FUNCTION) {
+    } else if (m_nType == SPE::TYPE_EXPORT_FUNCTION) {
         XOptions::setModelTextAlignment(pModel, 0, Qt::AlignRight | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 1, Qt::AlignRight | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 2, Qt::AlignRight | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 3, Qt::AlignLeft | Qt::AlignVCenter);
-    } else if (g_nType == SPE::TYPE_BOUNDIMPORT) {
+    } else if (m_nType == SPE::TYPE_BOUNDIMPORT) {
         XOptions::setModelTextAlignment(pModel, 0, Qt::AlignRight | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 1, Qt::AlignRight | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 2, Qt::AlignRight | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 3, Qt::AlignRight | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 4, Qt::AlignLeft | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 5, Qt::AlignLeft | Qt::AlignVCenter);
-    } else if (g_nType == SPE::TYPE_DEBUG) {
+    } else if (m_nType == SPE::TYPE_DEBUG) {
         XOptions::setModelTextAlignment(pModel, 0, Qt::AlignRight | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 1, Qt::AlignRight | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 2, Qt::AlignRight | Qt::AlignVCenter);
@@ -1372,7 +1372,7 @@ void PEProcessData::adjustModel(QStandardItemModel *pModel)
         XOptions::setModelTextAlignment(pModel, 6, Qt::AlignRight | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 7, Qt::AlignRight | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 8, Qt::AlignRight | Qt::AlignVCenter);
-    } else if (g_nType == SPE::TYPE_DELAYIMPORT_FUNCTION) {
+    } else if (m_nType == SPE::TYPE_DELAYIMPORT_FUNCTION) {
         XOptions::setModelTextAlignment(pModel, 0, Qt::AlignRight | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 1, Qt::AlignLeft | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 2, Qt::AlignLeft | Qt::AlignVCenter);
@@ -1380,11 +1380,11 @@ void PEProcessData::adjustModel(QStandardItemModel *pModel)
         XOptions::setModelTextAlignment(pModel, 4, Qt::AlignLeft | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 5, Qt::AlignLeft | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 6, Qt::AlignLeft | Qt::AlignVCenter);
-    } else if (g_nType == SPE::TYPE_TLSCALLBACKS) {
+    } else if (m_nType == SPE::TYPE_TLSCALLBACKS) {
         XOptions::setModelTextAlignment(pModel, 0, Qt::AlignRight | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 1, Qt::AlignRight | Qt::AlignVCenter);
-    } else if (g_nType == SPE::TYPE_RESOURCES) {
-        if (!g_varInfo.toBool()) {
+    } else if (m_nType == SPE::TYPE_RESOURCES) {
+        if (!m_varInfo.toBool()) {
             XOptions::setModelTextAlignment(pModel, 0, Qt::AlignRight | Qt::AlignVCenter);
             XOptions::setModelTextAlignment(pModel, 1, Qt::AlignLeft | Qt::AlignVCenter);
             XOptions::setModelTextAlignment(pModel, 2, Qt::AlignLeft | Qt::AlignVCenter);
@@ -1393,12 +1393,12 @@ void PEProcessData::adjustModel(QStandardItemModel *pModel)
             XOptions::setModelTextAlignment(pModel, 5, Qt::AlignRight | Qt::AlignVCenter);
             XOptions::setModelTextAlignment(pModel, 6, Qt::AlignRight | Qt::AlignVCenter);
         }
-    } else if (g_nType == SPE::TYPE_RICH) {
+    } else if (m_nType == SPE::TYPE_RICH) {
         XOptions::setModelTextAlignment(pModel, 0, Qt::AlignRight | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 1, Qt::AlignRight | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 2, Qt::AlignRight | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 3, Qt::AlignRight | Qt::AlignVCenter);
-    } else if (g_nType == SPE::TYPE_NET_METADATA_TABLE) {
+    } else if (m_nType == SPE::TYPE_NET_METADATA_TABLE) {
         XOptions::setModelTextAlignment(pModel, 0, Qt::AlignRight | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 1, Qt::AlignLeft | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 2, Qt::AlignRight | Qt::AlignVCenter);

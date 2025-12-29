@@ -27,9 +27,9 @@ PEToolsWidget::PEToolsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(n
     ui->setupUi(this);
 
     m_pDevice = nullptr;
-    g_bIsImage = false;
-    g_nModuleAddress = -1;
-    g_bReadonly = true;
+    m_bIsImage = false;
+    m_nModuleAddress = -1;
+    m_bReadonly = true;
 }
 
 PEToolsWidget::~PEToolsWidget()
@@ -40,8 +40,8 @@ PEToolsWidget::~PEToolsWidget()
 void PEToolsWidget::setData(QIODevice *pDevice, bool bIsImage, XADDR nModuleAddress)
 {
     m_pDevice = pDevice;
-    g_bIsImage = bIsImage;
-    g_nModuleAddress = nModuleAddress;
+    m_bIsImage = bIsImage;
+    m_nModuleAddress = nModuleAddress;
 
     reload();
 }
@@ -49,18 +49,18 @@ void PEToolsWidget::setData(QIODevice *pDevice, bool bIsImage, XADDR nModuleAddr
 void PEToolsWidget::reload()
 {
     if (m_pDevice) {
-        XPE pe(m_pDevice, g_bIsImage, g_nModuleAddress);
+        XPE pe(m_pDevice, m_bIsImage, m_nModuleAddress);
 
         if (pe.isValid()) {
             bool bIsDosStubPresent = pe.isDosStubPresent();
             bool bIsOverlayPresent = pe.isOverlayPresent();
 
-            ui->pushButtonDosStubAdd->setEnabled((!bIsDosStubPresent) && (!g_bReadonly));
-            ui->pushButtonDosStubRemove->setEnabled(bIsDosStubPresent && (!g_bReadonly));
+            ui->pushButtonDosStubAdd->setEnabled((!bIsDosStubPresent) && (!m_bReadonly));
+            ui->pushButtonDosStubRemove->setEnabled(bIsDosStubPresent && (!m_bReadonly));
             ui->pushButtonDosStubDump->setEnabled(bIsDosStubPresent);
 
-            ui->pushButtonOverlayAdd->setEnabled((!bIsOverlayPresent) && (!g_bReadonly));
-            ui->pushButtonOverlayRemove->setEnabled(bIsOverlayPresent && (!g_bReadonly));
+            ui->pushButtonOverlayAdd->setEnabled((!bIsOverlayPresent) && (!m_bReadonly));
+            ui->pushButtonOverlayRemove->setEnabled(bIsOverlayPresent && (!m_bReadonly));
             ui->pushButtonOverlayDump->setEnabled(bIsOverlayPresent);
         }
     }
@@ -68,7 +68,7 @@ void PEToolsWidget::reload()
 
 void PEToolsWidget::setReadonly(bool bState)
 {
-    g_bReadonly = bState;
+    m_bReadonly = bState;
 
     reload();
 }
@@ -151,7 +151,7 @@ void PEToolsWidget::on_pushButtonDosStubAdd_clicked()
 
         if (!sFileName.isEmpty()) {
             if (!sFileName.isEmpty()) {
-                XPE pe(m_pDevice, g_bIsImage, g_nModuleAddress);
+                XPE pe(m_pDevice, m_bIsImage, m_nModuleAddress);
 
                 if (pe.isValid()) {
                     if (pe.addDosStub(sFileName)) {
@@ -168,7 +168,7 @@ void PEToolsWidget::on_pushButtonDosStubAdd_clicked()
 void PEToolsWidget::on_pushButtonDosStubRemove_clicked()
 {
     if (saveBackup()) {
-        XPE pe(m_pDevice, g_bIsImage, g_nModuleAddress);
+        XPE pe(m_pDevice, m_bIsImage, m_nModuleAddress);
 
         if (pe.isValid()) {
             if (pe.removeDosStub()) {
@@ -182,7 +182,7 @@ void PEToolsWidget::on_pushButtonDosStubRemove_clicked()
 
 void PEToolsWidget::on_pushButtonDosStubDump_clicked()
 {
-    dumpDosStub(this, m_pDevice, g_bIsImage, g_nModuleAddress);
+    dumpDosStub(this, m_pDevice, m_bIsImage, m_nModuleAddress);
 }
 
 void PEToolsWidget::on_pushButtonOverlayAdd_clicked()
@@ -191,7 +191,7 @@ void PEToolsWidget::on_pushButtonOverlayAdd_clicked()
         QString sFileName = XShortcutsWidget::getOpenFileName(XBinary::getDeviceDirectory(m_pDevice));
 
         if (!sFileName.isEmpty()) {
-            XPE pe(m_pDevice, g_bIsImage, g_nModuleAddress);
+            XPE pe(m_pDevice, m_bIsImage, m_nModuleAddress);
 
             if (pe.isValid()) {
                 if (pe.addOverlay(sFileName)) {
@@ -207,7 +207,7 @@ void PEToolsWidget::on_pushButtonOverlayAdd_clicked()
 void PEToolsWidget::on_pushButtonOverlayRemove_clicked()
 {
     if (saveBackup()) {
-        XPE pe(m_pDevice, g_bIsImage, g_nModuleAddress);
+        XPE pe(m_pDevice, m_bIsImage, m_nModuleAddress);
 
         if (pe.isValid()) {
             if (pe.removeOverlay()) {
@@ -221,5 +221,5 @@ void PEToolsWidget::on_pushButtonOverlayRemove_clicked()
 
 void PEToolsWidget::on_pushButtonOverlayDump_clicked()
 {
-    dumpOverlay(this, m_pDevice, g_bIsImage, g_nModuleAddress);
+    dumpOverlay(this, m_pDevice, m_bIsImage, m_nModuleAddress);
 }
