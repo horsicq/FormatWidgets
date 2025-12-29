@@ -91,13 +91,13 @@ private:
 
     Ui::NEWidget *ui;
 
-    XLineEditHEX *g_lineEdit_DOS_HEADER[N_NE_DOS_HEADER::__data_size];
-    XLineEditHEX *g_lineEdit_OS2_HEADER[N_OS2_HEADER::__data_size];
-    XComboBoxEx *g_comboBox[__CB_size];
+    XLineEditHEX *m_lineEdit_DOS_HEADER[N_NE_DOS_HEADER::__data_size];
+    XLineEditHEX *m_lineEdit_OS2_HEADER[N_OS2_HEADER::__data_size];
+    XComboBoxEx *m_comboBox[__CB_size];
 
-    InvWidget *g_invWidget[__INV_size];
-    SubDevice *g_subDevice[SNE::__TYPE_size];
-    QStandardItemModel *g_tvModel[SNE::__TYPE_size];
+    InvWidget *m_invWidget[__INV_size];
+    SubDevice *m_subDevice[SNE::__TYPE_size];
+    QStandardItemModel *m_tvModel[SNE::__TYPE_size];
 };
 
 #endif  // NEWIDGET_H

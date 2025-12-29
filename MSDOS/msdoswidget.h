@@ -72,10 +72,10 @@ private:
 
     Ui::MSDOSWidget *ui;
 
-    XLineEditHEX *g_lineEdit_DOS_HEADER[N_DOS_HEADER::__data_size];
-    XComboBoxEx *g_comboBox[__CB_size];
+    XLineEditHEX *m_lineEdit_DOS_HEADER[N_DOS_HEADER::__data_size];
+    XComboBoxEx *m_comboBox[__CB_size];
 
-    SubDevice *g_subDevice[SMSDOS::__TYPE_size];
+    SubDevice *m_subDevice[SMSDOS::__TYPE_size];
 };
 
 #endif  // MSDOSWIDGET_H

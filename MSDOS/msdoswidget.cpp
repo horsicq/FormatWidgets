@@ -35,7 +35,7 @@ MSDOSWidget::MSDOSWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::M
     ui->toolButtonPrev->setToolTip(tr("Previous visited"));
     ui->checkBoxReadonly->setToolTip(tr("Readonly"));
 
-    memset(g_subDevice, 0, sizeof g_subDevice);
+    memset(m_subDevice, 0, sizeof m_subDevice);
 
     initWidget();
 }
@@ -55,10 +55,10 @@ void MSDOSWidget::clear()
 {
     MSDOSWidget::reset();
 
-    memset(g_lineEdit_DOS_HEADER, 0, sizeof g_lineEdit_DOS_HEADER);
-    memset(g_comboBox, 0, sizeof g_comboBox);
+    memset(m_lineEdit_DOS_HEADER, 0, sizeof m_lineEdit_DOS_HEADER);
+    memset(m_comboBox, 0, sizeof m_comboBox);
 
-    _deleteSubdevices(g_subDevice, (sizeof g_subDevice) / (sizeof(SubDevice *)));
+    _deleteSubdevices(m_subDevice, (sizeof m_subDevice) / (sizeof(SubDevice *)));
 
     resetWidget();
 
@@ -135,7 +135,7 @@ FormatWidget::SV MSDOSWidget::_setValue(QVariant vValue, qint32 nStype, qint32 n
             switch (nStype) {
                 case SMSDOS::TYPE_DOS_HEADER:
                     switch (nNdata) {
-                        case N_DOS_HEADER::e_magic: g_comboBox[CB_DOS_HEADER_e_magic]->setValue(nValue); break;
+                        case N_DOS_HEADER::e_magic: m_comboBox[CB_DOS_HEADER_e_magic]->setValue(nValue); break;
                     }
                     break;
             }
@@ -181,9 +181,9 @@ void MSDOSWidget::setReadonly(bool bState)
         ui->checkBoxReadonly->blockSignals(bBlocked1);
     }
 
-    setLineEditsReadOnly(g_lineEdit_DOS_HEADER, N_DOS_HEADER::__data_size, bState);
+    setLineEditsReadOnly(m_lineEdit_DOS_HEADER, N_DOS_HEADER::__data_size, bState);
 
-    setComboBoxesReadOnly(g_comboBox, __CB_size, bState);
+    setComboBoxesReadOnly(m_comboBox, __CB_size, bState);
 
     ui->widgetHex->setReadonly(bState);
     ui->widgetDisasm->setReadonly(bState);
@@ -192,9 +192,9 @@ void MSDOSWidget::setReadonly(bool bState)
 
 void MSDOSWidget::blockSignals(bool bState)
 {
-    _blockSignals((QObject **)g_lineEdit_DOS_HEADER, N_DOS_HEADER::__data_size, bState);
+    _blockSignals((QObject **)m_lineEdit_DOS_HEADER, N_DOS_HEADER::__data_size, bState);
 
-    _blockSignals((QObject **)g_comboBox, __CB_size, bState);
+    _blockSignals((QObject **)m_comboBox, __CB_size, bState);
 }
 
 void MSDOSWidget::adjustHeaderTable(qint32 nType, QTableWidget *pTableWidget)
@@ -368,35 +368,35 @@ void MSDOSWidget::reloadData(bool bSaveSelection)
             }
         } else if (nType == SMSDOS::TYPE_DOS_HEADER) {
             if (!isInitPresent(sInit)) {
-                createHeaderTable(SMSDOS::TYPE_DOS_HEADER, ui->tableWidget_DOS_HEADER, N_DOS_HEADER::records, g_lineEdit_DOS_HEADER, N_DOS_HEADER::__data_size, 0);
-                g_comboBox[CB_DOS_HEADER_e_magic] =
+                createHeaderTable(SMSDOS::TYPE_DOS_HEADER, ui->tableWidget_DOS_HEADER, N_DOS_HEADER::records, m_lineEdit_DOS_HEADER, N_DOS_HEADER::__data_size, 0);
+                m_comboBox[CB_DOS_HEADER_e_magic] =
                     createComboBox(ui->tableWidget_DOS_HEADER, XMSDOS::getImageMagicsS(), SMSDOS::TYPE_DOS_HEADER, N_DOS_HEADER::e_magic, XComboBoxEx::CBTYPE_LIST);
 
                 blockSignals(true);
 
                 XMSDOS_DEF::IMAGE_DOS_HEADEREX msdosheaderex = msdos.getDosHeaderEx();
 
-                g_lineEdit_DOS_HEADER[N_DOS_HEADER::e_magic]->setValue_uint16(msdosheaderex.e_magic);
-                g_lineEdit_DOS_HEADER[N_DOS_HEADER::e_cblp]->setValue_uint16(msdosheaderex.e_cblp);
-                g_lineEdit_DOS_HEADER[N_DOS_HEADER::e_cp]->setValue_uint16(msdosheaderex.e_cp);
-                g_lineEdit_DOS_HEADER[N_DOS_HEADER::e_crlc]->setValue_uint16(msdosheaderex.e_crlc);
-                g_lineEdit_DOS_HEADER[N_DOS_HEADER::e_cparhdr]->setValue_uint16(msdosheaderex.e_cparhdr);
-                g_lineEdit_DOS_HEADER[N_DOS_HEADER::e_minalloc]->setValue_uint16(msdosheaderex.e_minalloc);
-                g_lineEdit_DOS_HEADER[N_DOS_HEADER::e_maxalloc]->setValue_uint16(msdosheaderex.e_maxalloc);
-                g_lineEdit_DOS_HEADER[N_DOS_HEADER::e_ss]->setValue_uint16(msdosheaderex.e_ss);
-                g_lineEdit_DOS_HEADER[N_DOS_HEADER::e_sp]->setValue_uint16(msdosheaderex.e_sp);
-                g_lineEdit_DOS_HEADER[N_DOS_HEADER::e_csum]->setValue_uint16(msdosheaderex.e_csum);
-                g_lineEdit_DOS_HEADER[N_DOS_HEADER::e_ip]->setValue_uint16(msdosheaderex.e_ip);
-                g_lineEdit_DOS_HEADER[N_DOS_HEADER::e_cs]->setValue_uint16(msdosheaderex.e_cs);
-                g_lineEdit_DOS_HEADER[N_DOS_HEADER::e_lfarlc]->setValue_uint16(msdosheaderex.e_lfarlc);
-                g_lineEdit_DOS_HEADER[N_DOS_HEADER::e_ovno]->setValue_uint16(msdosheaderex.e_ovno);
+                m_lineEdit_DOS_HEADER[N_DOS_HEADER::e_magic]->setValue_uint16(msdosheaderex.e_magic);
+                m_lineEdit_DOS_HEADER[N_DOS_HEADER::e_cblp]->setValue_uint16(msdosheaderex.e_cblp);
+                m_lineEdit_DOS_HEADER[N_DOS_HEADER::e_cp]->setValue_uint16(msdosheaderex.e_cp);
+                m_lineEdit_DOS_HEADER[N_DOS_HEADER::e_crlc]->setValue_uint16(msdosheaderex.e_crlc);
+                m_lineEdit_DOS_HEADER[N_DOS_HEADER::e_cparhdr]->setValue_uint16(msdosheaderex.e_cparhdr);
+                m_lineEdit_DOS_HEADER[N_DOS_HEADER::e_minalloc]->setValue_uint16(msdosheaderex.e_minalloc);
+                m_lineEdit_DOS_HEADER[N_DOS_HEADER::e_maxalloc]->setValue_uint16(msdosheaderex.e_maxalloc);
+                m_lineEdit_DOS_HEADER[N_DOS_HEADER::e_ss]->setValue_uint16(msdosheaderex.e_ss);
+                m_lineEdit_DOS_HEADER[N_DOS_HEADER::e_sp]->setValue_uint16(msdosheaderex.e_sp);
+                m_lineEdit_DOS_HEADER[N_DOS_HEADER::e_csum]->setValue_uint16(msdosheaderex.e_csum);
+                m_lineEdit_DOS_HEADER[N_DOS_HEADER::e_ip]->setValue_uint16(msdosheaderex.e_ip);
+                m_lineEdit_DOS_HEADER[N_DOS_HEADER::e_cs]->setValue_uint16(msdosheaderex.e_cs);
+                m_lineEdit_DOS_HEADER[N_DOS_HEADER::e_lfarlc]->setValue_uint16(msdosheaderex.e_lfarlc);
+                m_lineEdit_DOS_HEADER[N_DOS_HEADER::e_ovno]->setValue_uint16(msdosheaderex.e_ovno);
 
-                g_comboBox[CB_DOS_HEADER_e_magic]->setValue(msdosheaderex.e_magic);
+                m_comboBox[CB_DOS_HEADER_e_magic]->setValue(msdosheaderex.e_magic);
 
                 qint64 nOffset = msdos.getDosHeaderExOffset();  // Ex!
                 qint64 nSize = msdos.getDosHeaderExSize();
 
-                loadHexSubdevice(nOffset, nSize, nOffset, &g_subDevice[SMSDOS::TYPE_DOS_HEADER], ui->widgetHex_DOS_HEADER);
+                loadHexSubdevice(nOffset, nSize, nOffset, &m_subDevice[SMSDOS::TYPE_DOS_HEADER], ui->widgetHex_DOS_HEADER);
 
                 blockSignals(false);
             }
@@ -405,7 +405,7 @@ void MSDOSWidget::reloadData(bool bSaveSelection)
                 qint64 nOverLayOffset = msdos.getOverlayOffset();
                 qint64 nOverlaySize = msdos.getOverlaySize();
 
-                loadHexSubdevice(nOverLayOffset, nOverlaySize, nOverLayOffset, &g_subDevice[SMSDOS::TYPE_OVERLAY], ui->widgetHex_OVERLAY);
+                loadHexSubdevice(nOverLayOffset, nOverlaySize, nOverLayOffset, &m_subDevice[SMSDOS::TYPE_OVERLAY], ui->widgetHex_OVERLAY);
             }
         }
 
@@ -426,7 +426,7 @@ void MSDOSWidget::_widgetValueChanged(QVariant vValue)
     switch (nStype) {
         case SMSDOS::TYPE_DOS_HEADER:
             switch (nNdata) {
-                case N_DOS_HEADER::e_magic: g_lineEdit_DOS_HEADER[N_DOS_HEADER::e_magic]->setValue_uint16((quint16)nValue); break;
+                case N_DOS_HEADER::e_magic: m_lineEdit_DOS_HEADER[N_DOS_HEADER::e_magic]->setValue_uint16((quint16)nValue); break;
             }
 
             break;
