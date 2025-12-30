@@ -49,7 +49,7 @@ private slots:
 
 private:
     Ui::MACHOFATWidget *ui;
-    QList<SubDevice *> g_listDevices;
+    QList<SubDevice *> m_listDevices;
 };
 
 #endif  // MACHOFATWIDGET_H

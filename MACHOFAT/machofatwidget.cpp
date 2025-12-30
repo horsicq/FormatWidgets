@@ -46,14 +46,14 @@ void MACHOFATWidget::clear()
         delete pWidget;
     }
 
-    qint32 nNumberOfRecords = g_listDevices.count();
+    qint32 nNumberOfRecords = m_listDevices.count();
 
     for (qint32 i = 0; i < nNumberOfRecords; i++) {
-        g_listDevices.at(i)->close();
-        delete g_listDevices.at(i);
+        m_listDevices.at(i)->close();
+        delete m_listDevices.at(i);
     }
 
-    g_listDevices.clear();
+    m_listDevices.clear();
 }
 
 void MACHOFATWidget::cleanup()
@@ -93,7 +93,7 @@ void MACHOFATWidget::reload()
 
                 ui->stackedWidget->addWidget(pMachWidget);
 
-                g_listDevices.append(pSubDevice);
+                m_listDevices.append(pSubDevice);
             }
         }
     }
