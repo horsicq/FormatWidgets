@@ -86,8 +86,8 @@ private:
     // QStandardItemModel *g_pOldModel;
     // QFutureWatcher<void> g_watcher;
     QList<XBinary::SIGNATUREDB_RECORD> m_listSignatureRecords;
-    OPTIONS g_options;
-    QVector<XBinary::MS_RECORD> g_listRecords;
+    OPTIONS m_options;
+    QVector<XBinary::MS_RECORD> m_listRecords;
 };
 
 #endif  // SEARCHSIGNATURESWIDGET_H

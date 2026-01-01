@@ -63,7 +63,7 @@ void SearchSignaturesWidget::setData(QIODevice *pDevice, OPTIONS options, bool b
 
     // ui->tableViewResult->setModel(nullptr);
 
-    g_options = options;
+    m_options = options;
 
     reloadFileType();
 
@@ -74,7 +74,7 @@ void SearchSignaturesWidget::setData(QIODevice *pDevice, OPTIONS options, bool b
 
 SearchSignaturesWidget::OPTIONS SearchSignaturesWidget::getOptions()
 {
-    return g_options;
+    return m_options;
 }
 
 void SearchSignaturesWidget::updateSignaturesPath()
@@ -150,11 +150,11 @@ void SearchSignaturesWidget::on_tableViewResult_customContextMenuRequested(const
 
     getShortcuts()->_addMenuItem_CopyRow(&listMenuItems, ui->tableViewResult);
 
-    if (g_options.bMenu_Hex) {
+    if (m_options.bMenu_Hex) {
         getShortcuts()->_addMenuItem(&listMenuItems, X_ID_TABLE_FOLLOWIN_HEX, this, SLOT(_hex()), XShortcuts::GROUPID_FOLLOWIN);
     }
 
-    if (g_options.bMenu_Disasm) {
+    if (m_options.bMenu_Disasm) {
         getShortcuts()->_addMenuItem(&listMenuItems, X_ID_TABLE_FOLLOWIN_DISASM, this, SLOT(_disasm()), XShortcuts::GROUPID_FOLLOWIN);
     }
 
@@ -165,10 +165,10 @@ void SearchSignaturesWidget::on_tableViewResult_customContextMenuRequested(const
 
 void SearchSignaturesWidget::_hex()
 {
-    if (g_options.bMenu_Hex) {
+    if (m_options.bMenu_Hex) {
         qint32 nRow = ui->tableViewResult->currentIndex().row();
 
-        if ((nRow != -1) && (g_listRecords.count())) {
+        if ((nRow != -1) && (m_listRecords.count())) {
             QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(0);
 
             qint64 nOffset = ui->tableViewResult->model()->data(index, Qt::UserRole + XModel_MSRecord::USERROLE_OFFSET).toLongLong();
@@ -187,10 +187,10 @@ void SearchSignaturesWidget::_hex()
 
 void SearchSignaturesWidget::_disasm()
 {
-    if (g_options.bMenu_Disasm) {
+    if (m_options.bMenu_Disasm) {
         qint32 nRow = ui->tableViewResult->currentIndex().row();
 
-        if ((nRow != -1) && (g_listRecords.count())) {
+        if ((nRow != -1) && (m_listRecords.count())) {
             QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(XModel_MSRecord::COLUMN_NUMBER);
 
             qint64 nOffset = ui->tableViewResult->model()->data(index, Qt::UserRole + XModel_MSRecord::USERROLE_OFFSET).toLongLong();
@@ -209,7 +209,7 @@ void SearchSignaturesWidget::search()
 
         MultiSearch::OPTIONS options = {};
 
-        options.bMenu_Hex = g_options.bMenu_Hex;
+        options.bMenu_Hex = m_options.bMenu_Hex;
         options.memoryMap = XFormats::getMemoryMap(fileType, XBinary::MAPMODE_UNKNOWN, m_pDevice);
         options.endian = (XBinary::ENDIAN)(ui->comboBoxEndianness->currentData().toUInt());
         options.pListSignatureRecords = &m_listSignatureRecords;
@@ -219,7 +219,7 @@ void SearchSignaturesWidget::search()
         MultiSearch multiSearch;
         XDialogProcess dsp(pParent, &multiSearch);
         dsp.setGlobal(getShortcuts(), getGlobalOptions());
-        multiSearch.setSearchData(m_pDevice, &g_listRecords, options, MultiSearch::TYPE_SIGNATURES, dsp.getPdStruct());
+        multiSearch.setSearchData(m_pDevice, &m_listRecords, options, MultiSearch::TYPE_SIGNATURES, dsp.getPdStruct());
         dsp.start();
         dsp.showDialogDelay();
 
@@ -228,7 +228,7 @@ void SearchSignaturesWidget::search()
         // dmp.processModel(&listRecords, &g_pModel, options, MultiSearch::TYPE_SIGNATURES);
         // dmp.showDialogDelay();
 
-        XModel_MSRecord *pModel = new XModel_MSRecord(m_pDevice, options.memoryMap, &g_listRecords, XBinary::VT_SIGNATURE, this);
+        XModel_MSRecord *pModel = new XModel_MSRecord(m_pDevice, options.memoryMap, &m_listRecords, XBinary::VT_SIGNATURE, this);
         pModel->setSignaturesList(&m_listSignatureRecords);
 
         ui->tableViewResult->setCustomModel(pModel, true);
@@ -307,8 +307,8 @@ void SearchSignaturesWidget::reloadFileType()
 
         XBinary::_MEMORY_MAP memoryMap = {};
 
-        if (g_options.fileType == XBinary::FT_REGION) {
-            memoryMap = XFormats::getMemoryMap(fileType, XBinary::MAPMODE_UNKNOWN, m_pDevice, true, g_options.nStartAddress);
+        if (m_options.fileType == XBinary::FT_REGION) {
+            memoryMap = XFormats::getMemoryMap(fileType, XBinary::MAPMODE_UNKNOWN, m_pDevice, true, m_options.nStartAddress);
         } else {
             memoryMap = XFormats::getMemoryMap(fileType, XBinary::MAPMODE_UNKNOWN, m_pDevice);
         }
