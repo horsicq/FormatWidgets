@@ -25,7 +25,7 @@ XGenericTableWidget::XGenericTableWidget(QWidget *parent) : XGenericAbstractWidg
 {
     ui->setupUi(this);
 
-    g_nDataSize = 0;
+    m_nDataSize = 0;
 
     XOptions::adjustToolButton(ui->toolButtonTableReload, XOptions::ICONTYPE_RELOAD);
     XOptions::adjustToolButton(ui->toolButtonTableSave, XOptions::ICONTYPE_SAVE);
@@ -47,16 +47,16 @@ void XGenericTableWidget::adjustView()
 
 void XGenericTableWidget::reloadData(bool bSaveSelection)
 {
-    g_listDataRecordsRows.clear();
+    m_listDataRecordsRows.clear();
 
     XGetDataRecordsProcess getDataRecordsProcess;
     XDialogProcess dd(this, &getDataRecordsProcess);
     dd.setGlobal(getShortcuts(), getGlobalOptions());
-    getDataRecordsProcess.setData(getDevice(), getRecordsOptions(), &g_listDataRecordsRows, &g_listTitles, dd.getPdStruct());
+    getDataRecordsProcess.setData(getDevice(), getRecordsOptions(), &m_listDataRecordsRows, &m_listTitles, dd.getPdStruct());
     dd.start();
     dd.showDialogDelay();
 
-    XModel_Binary *pModel = new XModel_Binary(getRecordsOptions(), &g_listDataRecordsRows, &g_listTitles, this);
+    XModel_Binary *pModel = new XModel_Binary(getRecordsOptions(), &m_listDataRecordsRows, &m_listTitles, this);
 
     ui->tableViewMain->setCustomModel(pModel, true);
 
