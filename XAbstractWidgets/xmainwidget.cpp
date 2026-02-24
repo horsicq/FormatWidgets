@@ -78,6 +78,8 @@ XShortcutsWidget *XMainWidget::createWidget(const QString &sGUID)
             _pWidget->setXInfoDB(getInfoDB());
             _pWidget->setData(getDevice(), options);
             pResult = _pWidget;
+        } else if ((dataHeader.dsID.fileType == XBinary::FT_BINARY) && (dataHeader.dsID.nID == XBinary::STRUCTID_ARCHIVE)) {
+            // TODO
         } else if ((dataHeader.dsID.fileType == XBinary::FT_BINARY) && (dataHeader.dsID.nID == XBinary::STRUCTID_HASH)) {
             XHashWidget *_pWidget = new XHashWidget(this);
             _pWidget->setData(getDevice(), dataHeader.dsID_parent.fileType, 0, getDevice()->size(), false);
