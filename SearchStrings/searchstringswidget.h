@@ -23,9 +23,11 @@
 
 #include <QApplication>
 #include <QClipboard>
+#include <QElapsedTimer>
 #include <QFileDialog>
 #include <QFutureWatcher>
 #include <QMenu>
+#include <QProgressBar>
 #include <QSortFilterProxyModel>
 #include <QStandardItemModel>
 
@@ -67,6 +69,9 @@ public:
 
     void reload();
     bool getInitStatus();
+    void sortByColumn(qint32 nColumn, Qt::SortOrder order);
+    void setFilterForColumn(qint32 nColumn, bool bEnabled);
+    void setColumnFilterString(qint32 nColumn, const QString &sFilter);
     virtual void adjustView();
     virtual void reloadData(bool bSaveSelection);
 
@@ -89,6 +94,7 @@ private slots:
     void on_comboBoxType_currentIndexChanged(int nIndex);
     void on_lineEditMask_textChanged(const QString &sText);
     void on_checkBoxRegExp_stateChanged(int nArg);
+    void onFilterUpdated();
 
 signals:
     void showDemangle(const QString &sString);
