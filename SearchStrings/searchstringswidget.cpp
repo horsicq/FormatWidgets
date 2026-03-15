@@ -466,13 +466,15 @@ void SearchStringsWidget::sortByColumn(qint32 nColumn, Qt::SortOrder order)
             pMSModel->buildValueCache();
         }
 
-        // Block proxy signals to avoid expensive layoutChanged processing in view
-        bool bOldBlocked = pProxyModel->blockSignals(true);
-        pProxyModel->sort(nColumn, order);
-        pProxyModel->blockSignals(bOldBlocked);
+        bool bOldDynamic = pProxyModel->dynamicSortFilter();
+        pProxyModel->setDynamicSortFilter(false);
 
-        // Efficient view refresh instead of processing layoutChanged for all rows
-        ui->tableViewResult->reset();
+        ui->tableViewResult->setUpdatesEnabled(false);
+
+        pProxyModel->sort(nColumn, order);
+
+        ui->tableViewResult->setUpdatesEnabled(true);
+        pProxyModel->setDynamicSortFilter(bOldDynamic);
 
         QApplication::restoreOverrideCursor();
     } else {
@@ -501,6 +503,7 @@ void SearchStringsWidget::setColumnFilterString(qint32 nColumn, const QString &s
     timer.start();
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
+    ui->tableViewResult->setUpdatesEnabled(false);
 
     XSortFilterProxyModel *pProxyModel = ui->tableViewResult->getProxyModel();
     if (pProxyModel) {
@@ -512,6 +515,7 @@ void SearchStringsWidget::setColumnFilterString(qint32 nColumn, const QString &s
 
     ui->tableViewResult->setColumnFilterString(nColumn, sFilter);
 
+    ui->tableViewResult->setUpdatesEnabled(true);
     QApplication::restoreOverrideCursor();
 
     qint64 nElapsed = timer.elapsed();
