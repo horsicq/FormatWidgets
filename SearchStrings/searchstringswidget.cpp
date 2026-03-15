@@ -466,15 +466,13 @@ void SearchStringsWidget::sortByColumn(qint32 nColumn, Qt::SortOrder order)
             pMSModel->buildValueCache();
         }
 
-        bool bOldDynamic = pProxyModel->dynamicSortFilter();
-        pProxyModel->setDynamicSortFilter(false);
-
-        ui->tableViewResult->setUpdatesEnabled(false);
-
+        // Block proxy signals to avoid expensive layoutChanged processing in view
+        bool bOldBlocked = pProxyModel->blockSignals(true);
         pProxyModel->sort(nColumn, order);
+        pProxyModel->blockSignals(bOldBlocked);
 
-        ui->tableViewResult->setUpdatesEnabled(true);
-        pProxyModel->setDynamicSortFilter(bOldDynamic);
+        // Efficient view refresh instead of processing layoutChanged for all rows
+        ui->tableViewResult->reset();
 
         QApplication::restoreOverrideCursor();
     } else {
@@ -503,7 +501,6 @@ void SearchStringsWidget::setColumnFilterString(qint32 nColumn, const QString &s
     timer.start();
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
-    ui->tableViewResult->setUpdatesEnabled(false);
 
     XSortFilterProxyModel *pProxyModel = ui->tableViewResult->getProxyModel();
     if (pProxyModel) {
@@ -515,12 +512,20 @@ void SearchStringsWidget::setColumnFilterString(qint32 nColumn, const QString &s
 
     ui->tableViewResult->setColumnFilterString(nColumn, sFilter);
 
-    ui->tableViewResult->setUpdatesEnabled(true);
     QApplication::restoreOverrideCursor();
 
     qint64 nElapsed = timer.elapsed();
 
-    qint32 nFiltered = pProxyModel ? pProxyModel->rowCount() : 0;
+    // Use model's visible row count to avoid triggering expensive proxy mapping rebuild
+    qint32 nFiltered = 0;
+    if (pProxyModel) {
+        XModel_MSRecord *pMSModel2 = dynamic_cast<XModel_MSRecord *>(pProxyModel->sourceModel());
+        if (pMSModel2) {
+            nFiltered = pMSModel2->getVisibleRowCount();
+        } else {
+            nFiltered = pProxyModel->rowCount();
+        }
+    }
     qint32 nTotal = m_listRecords.count();
 
     ui->progressBarFilter->setValue(100);
