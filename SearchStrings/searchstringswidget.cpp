@@ -466,15 +466,11 @@ void SearchStringsWidget::sortByColumn(qint32 nColumn, Qt::SortOrder order)
             pMSModel->buildValueCache();
         }
 
-        bool bOldDynamic = pProxyModel->dynamicSortFilter();
-        pProxyModel->setDynamicSortFilter(false);
-
-        ui->tableViewResult->setUpdatesEnabled(false);
-
+        pProxyModel->blockSignals(true);
         pProxyModel->sort(nColumn, order);
+        pProxyModel->blockSignals(false);
 
-        ui->tableViewResult->setUpdatesEnabled(true);
-        pProxyModel->setDynamicSortFilter(bOldDynamic);
+        ui->tableViewResult->viewport()->update();
 
         QApplication::restoreOverrideCursor();
     } else {
