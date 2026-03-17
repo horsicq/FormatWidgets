@@ -532,8 +532,7 @@ void SearchStringsWidget::setColumnFilterString(qint32 nColumn, const QString &s
     ui->progressBarFilter->setFormat(QString(tr("%1 / %2 strings (%3 ms)")).arg(nFiltered).arg(nTotal).arg(nElapsed));
 
 #ifdef QT_DEBUG
-    qDebug("SearchStringsWidget::setColumnFilterString(%d, \"%s\") elapsed: %lld ms, %d / %d",
-           nColumn, sFilter.toUtf8().constData(), nElapsed, nFiltered, nTotal);
+    qDebug("SearchStringsWidget::setColumnFilterString(%d, \"%s\") elapsed: %lld ms, %d / %d", nColumn, sFilter.toUtf8().constData(), nElapsed, nFiltered, nTotal);
 #endif
 }
 

@@ -78,8 +78,8 @@ XFWidget::XFWidget(QWidget *pParent) : QWidget(pParent)
     pLayout->addWidget(m_pSplitter);
 
     connect(m_pTreeView, SIGNAL(headerSelected(XBinary::XFHEADER)), this, SLOT(onHeaderSelected(XBinary::XFHEADER)));
-    connect(m_pTableView, SIGNAL(fieldSelected(qint32,quint64,XBinary::XFRECORD)), this, SIGNAL(fieldSelected(qint32,quint64,XBinary::XFRECORD)));
-    connect(m_pTableView, SIGNAL(fieldDoubleClicked(qint32,quint64,XBinary::XFRECORD)), this, SIGNAL(fieldDoubleClicked(qint32,quint64,XBinary::XFRECORD)));
+    connect(m_pTableView, SIGNAL(fieldSelected(qint32, quint64, XBinary::XFRECORD)), this, SIGNAL(fieldSelected(qint32, quint64, XBinary::XFRECORD)));
+    connect(m_pTableView, SIGNAL(fieldDoubleClicked(qint32, quint64, XBinary::XFRECORD)), this, SIGNAL(fieldDoubleClicked(qint32, quint64, XBinary::XFRECORD)));
     connect(m_pPushButtonSave, SIGNAL(clicked()), this, SLOT(onSaveClicked()));
     connect(m_pCheckBoxShowOffsets, SIGNAL(toggled(bool)), this, SLOT(onShowOffsetsToggled(bool)));
     connect(m_pCheckBoxShowPresentation, SIGNAL(toggled(bool)), this, SLOT(onShowPresentationToggled(bool)));
