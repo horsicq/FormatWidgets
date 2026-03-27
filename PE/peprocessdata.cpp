@@ -148,7 +148,7 @@ void PEProcessData::_process()
 
         for (qint32 i = 0; i < nNumberOfSections; i++) {
             XInfoDB::STRRECORD strRecord = XInfoDB::handleStringDB(&listStrDb, XInfoDB::STRDB_PESECTIONS, listSectionRecords.at(i).sName, true);
-            XOptions::COLOR_RECORD globalColorRecord = XScanEngine::typeToColorRecord(strRecord.sType);
+            XOptions::COLOR_RECORD globalColorRecord = XScanEngine::typeToColorRecord(strRecord.sType, nullptr);
 
             QColor colText;
 

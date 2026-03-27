@@ -72,7 +72,7 @@ void SearchSignaturesOptionsWidget::reload()
 void SearchSignaturesOptionsWidget::on_toolButtonSearchSignaturesPath_clicked()
 {
     QString sText = ui->lineEditSearchSignaturesPath->text();
-    QString sInitDirectory = XBinary::convertPathName(sText);
+    QString sInitDirectory = XOptions::convertPathName(sText);
 
     QString sDirectoryName = QFileDialog::getExistingDirectory(this, tr("Open directory") + QString("..."), sInitDirectory, QFileDialog::ShowDirsOnly);
 

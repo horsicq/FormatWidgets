@@ -86,7 +86,7 @@ void SearchSignaturesWidget::updateSignaturesPath()
     ui->comboBoxFile->clear();
     QList<QString> listFiles;
 
-    QString sPath = XBinary::convertPathName(getGlobalOptions()->getSearchSignaturesPath());
+    QString sPath = XOptions::convertPathName(getGlobalOptions()->getSearchSignaturesPath());
 
     if (sPath != "") {
         listFiles.append(XBinary::getAllFilesFromDirectory(sPath + QDir::separator() + "generic", "*.db"));
