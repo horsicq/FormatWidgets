@@ -161,7 +161,7 @@ void PEProcessData::_process()
             QColor colBackground;
 
             if (globalColorRecord.sColorBackground == "") {
-                colBackground = QApplication::palette().text().color();
+                colBackground = QApplication::palette().background().color();
             } else {
                 colBackground = QColor(globalColorRecord.sColorBackground);
             }
