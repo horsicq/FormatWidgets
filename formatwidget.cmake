@@ -14,6 +14,7 @@ include(${CMAKE_CURRENT_LIST_DIR}/../XEntropyWidget/xentropywidget.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../nfd_widget/nfd_widget.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../yara_widget/yara_widget.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../die_widget/die_widget.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/../peid_widget/peid_widget.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../XScanEngine/xscanengine.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../XHashWidget/xhashwidget.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../XDisasmView/xdisasmview.cmake)
@@ -48,6 +49,7 @@ set(FORMATWIDGET_SOURCES
     ${YARA_WIDGET_SOURCES}
     ${XSCANENGINE_SOURCES}
     ${DIE_WIDGET_SOURCES}
+    ${PEID_WIDGET_SOURCES}
     ${XHASHWIDGET_SOURCES}
     ${XDISASMVIEW_SOURCES}
     ${XDEMANGLEWIDGET_SOURCES}

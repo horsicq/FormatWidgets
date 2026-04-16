@@ -106,6 +106,11 @@ FORMS += \
     include($$PWD/../yara_widget/yara_widget.pri)
 }
 
+!contains(XCONFIG, peid_widget) {
+    XCONFIG += peid_widget
+    include($$PWD/../peid_widget/peid_widget.pri)
+}
+
 !contains(XCONFIG, xscanwidgets) {
     XCONFIG += xscanwidgets
     include($$PWD/../XScanEngine/xscanwidgets.pri)

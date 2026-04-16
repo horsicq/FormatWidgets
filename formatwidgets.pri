@@ -73,11 +73,6 @@ FORMS += \
     include($$PWD/../archive_widget/archive_widget.pri)
 }
 
-!contains(XCONFIG, peid_widget) {
-    XCONFIG += peid_widget
-    include($$PWD/../peid_widget/peid_widget.pri)
-}
-
 !contains(XCONFIG, xshortcuts) {
     XCONFIG += xshortcuts
     include($$PWD/../XShortcuts/xshortcuts.pri)
