@@ -10,6 +10,7 @@ include(${CMAKE_CURRENT_LIST_DIR}/MSDOS/msdoswidget.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/NE/newidget.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/PE/pewidget.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../archive_widget/archive_widget.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/../peid_widget/peid_widget.cmake)
 
 set(FORMATWIDGETS_SOURCES
     ${BINARYWIDGET_SOURCES}
@@ -22,6 +23,7 @@ set(FORMATWIDGETS_SOURCES
     ${NEWIDGET_SOURCES}
     ${PEWIDGET_SOURCES}
     ${ARCHIVE_WIDGET_SOURCES}
+    ${PEID_WIDGET_SOURCES}
     ${CMAKE_CURRENT_LIST_DIR}/formatswidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/formatswidget.ui
     )
