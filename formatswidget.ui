@@ -2151,6 +2151,7 @@
      <widget class="DIE_Widget" name="pageScanDIE"/>
      <widget class="NFD_Widget" name="pageScanNFD"/>
      <widget class="YARA_Widget" name="pageScanYARA"/>
+     <widget class="PEID_Widget" name="pageScanPEID"/>
     </widget>
    </item>
   </layout>
@@ -2177,6 +2178,12 @@
    <class>YARA_Widget</class>
    <extends>QWidget</extends>
    <header>yara_widget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>PEID_Widget</class>
+   <extends>QWidget</extends>
+   <header>peid_widget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

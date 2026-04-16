@@ -145,6 +145,10 @@ FormatsWidget::FormatsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(n
     connect(ui->pageScanYARA, SIGNAL(scanStarted()), this, SIGNAL(scanStarted()));
     connect(ui->pageScanYARA, SIGNAL(scanFinished()), this, SIGNAL(scanFinished()));
 
+    connect(ui->pageScanPEID, SIGNAL(scanStarted()), this, SIGNAL(scanStarted()));
+    connect(ui->pageScanPEID, SIGNAL(scanFinished()), this, SIGNAL(scanFinished()));
+    connect(ui->pageScanPEID, SIGNAL(currentFileType(qint32)), this, SLOT(_currentFileType(qint32)));
+
     connect(ui->pageScanNFD, SIGNAL(showInfo()), this, SLOT(_showNfdInfo()));
     connect(ui->pageScanYARA, SIGNAL(showInfo()), this, SLOT(_showYaraInfo()));
 
@@ -178,6 +182,7 @@ void FormatsWidget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
     ui->pageScanDIE->setGlobal(pShortcuts, pXOptions);
     ui->pageScanNFD->setGlobal(pShortcuts, pXOptions);
     ui->pageScanYARA->setGlobal(pShortcuts, pXOptions);
+    ui->pageScanPEID->setGlobal(pShortcuts, pXOptions);
 
     XShortcutsWidget::setGlobal(pShortcuts, pXOptions);
 }
@@ -195,11 +200,14 @@ void FormatsWidget::adjustView()
     } else if (sScanEngine == "yara") {
         ui->comboBoxScanEngine->setCurrentIndex(2);
 #endif
+    } else if (sScanEngine == "peid") {
+        ui->comboBoxScanEngine->setCurrentIndex(3);
     }
 
     ui->pageScanDIE->adjustView();
     ui->pageScanNFD->adjustView();
     ui->pageScanYARA->adjustView();
+    ui->pageScanPEID->adjustView();
 }
 
 void FormatsWidget::setAdvanced(bool bState)
@@ -505,6 +513,8 @@ void FormatsWidget::scan()
             options.bHandleInfo = true;
             ui->pageScanYARA->setData(m_sFileName, options, m_bScan);
 #endif
+        } else if (sData == "peid") {
+            ui->pageScanPEID->setData(m_sFileName, m_bScan, getCurrentFileType());
         }
     }
 }
@@ -1031,6 +1041,8 @@ void FormatsWidget::adjustScanTab(const QString &sIndex)
     } else if (sIndex == "yara") {
         ui->stackedWidgetScan->setCurrentIndex(2);
 #endif
+    } else if (sIndex == "peid") {
+        ui->stackedWidgetScan->setCurrentIndex(3);
     }
 }
 

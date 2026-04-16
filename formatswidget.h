@@ -22,6 +22,7 @@
 #define FORMATSWIDGET_H
 
 #include "dialogarchive.h"
+#include "peid_widget.h"
 #include "dialogbinary.h"
 #include "dialogdex.h"
 #include "dialogelf.h"
