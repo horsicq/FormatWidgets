@@ -330,7 +330,7 @@ void SearchStringsWidget::search()
             ui->tableViewResult->clear();
 
             ui->progressBarFilter->setValue(0);
-            ui->progressBarFilter->setFormat(tr("Searching..."));
+            ui->progressBarFilter->setFormat(tr("Searching") + QString("..."));
 
             MultiSearch multiSearch;
             XDialogProcess dsp(pParent, &multiSearch);
@@ -354,7 +354,7 @@ void SearchStringsWidget::search()
             connect(ui->tableViewResult->getProxyModel(), SIGNAL(layoutChanged()), this, SLOT(onFilterUpdated()));
 
             ui->progressBarFilter->setValue(100);
-            ui->progressBarFilter->setFormat(QString(tr("%1 strings found")).arg(m_listRecords.count()));
+            ui->progressBarFilter->setFormat((QString("%1 ") + tr("strings found")).arg(m_listRecords.count()));
         }
 
         m_bInit = true;
@@ -458,7 +458,7 @@ void SearchStringsWidget::sortByColumn(qint32 nColumn, Qt::SortOrder order)
     XSortFilterProxyModel *pProxyModel = ui->tableViewResult->getProxyModel();
 
     if (pProxyModel) {
-        ui->progressBarFilter->setFormat(tr("Sorting..."));
+        ui->progressBarFilter->setFormat(tr("Sorting") + QString("..."));
         QApplication::setOverrideCursor(Qt::WaitCursor);
 
         XModel_MSRecord *pMSModel = dynamic_cast<XModel_MSRecord *>(pProxyModel->sourceModel());
@@ -481,7 +481,7 @@ void SearchStringsWidget::sortByColumn(qint32 nColumn, Qt::SortOrder order)
 
     qint32 nTotal = m_listRecords.count();
     ui->progressBarFilter->setValue(100);
-    ui->progressBarFilter->setFormat(QString(tr("%1 strings found (%2 ms)")).arg(nTotal).arg(nElapsed));
+    ui->progressBarFilter->setFormat((QString("%1 ") + tr("strings found") + QString(" (%2 ") + tr("msec") + QString(")")).arg(nTotal).arg(nElapsed));
 
 #ifdef QT_DEBUG
     qDebug("SearchStringsWidget::sortByColumn(%d) elapsed: %lld ms, rows: %d", nColumn, nElapsed, nTotal);
@@ -529,7 +529,7 @@ void SearchStringsWidget::setColumnFilterString(qint32 nColumn, const QString &s
     qint32 nTotal = m_listRecords.count();
 
     ui->progressBarFilter->setValue(100);
-    ui->progressBarFilter->setFormat(QString(tr("%1 / %2 strings (%3 ms)")).arg(nFiltered).arg(nTotal).arg(nElapsed));
+    ui->progressBarFilter->setFormat((QString("%1 / %2 ") + tr("strings") + QString(" (%3 ") + tr("msec") + QString(")")).arg(nFiltered).arg(nTotal).arg(nElapsed));
 
 #ifdef QT_DEBUG
     qDebug("SearchStringsWidget::setColumnFilterString(%d, \"%s\") elapsed: %lld ms, %d / %d", nColumn, sFilter.toUtf8().constData(), nElapsed, nFiltered, nTotal);
@@ -546,11 +546,11 @@ void SearchStringsWidget::onFilterUpdated()
 
         if (nFiltered == nTotal) {
             ui->progressBarFilter->setValue(100);
-            ui->progressBarFilter->setFormat(QString(tr("%1 strings found")).arg(nTotal));
+            ui->progressBarFilter->setFormat((QString("%1 ") + tr("strings found")).arg(nTotal));
         } else {
             qint32 nPercent = (nTotal > 0) ? ((nFiltered * 100) / nTotal) : 0;
             ui->progressBarFilter->setValue(nPercent);
-            ui->progressBarFilter->setFormat(QString(tr("%1 / %2 strings")).arg(nFiltered).arg(nTotal));
+            ui->progressBarFilter->setFormat((QString("%1 / %2 ") + tr("strings")).arg(nFiltered).arg(nTotal));
         }
     }
 }

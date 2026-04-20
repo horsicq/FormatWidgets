@@ -63,7 +63,7 @@ XFWidget::XFWidget(QWidget *pParent) : QWidget(pParent)
     m_pLineEditTag = new QLineEdit(m_pTablePanel);
     m_pLineEditTag->setReadOnly(true);
 
-    m_pPushButtonSave = new QPushButton(tr("Save..."), m_pTablePanel);
+    m_pPushButtonSave = new QPushButton(tr("Save") + QString("..."), m_pTablePanel);
 
     pBottomLayout->addWidget(m_pLineEditTag);
     pBottomLayout->addWidget(m_pPushButtonSave);
