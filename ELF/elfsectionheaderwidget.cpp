@@ -215,29 +215,29 @@ FormatWidget::SV ELFSectionHeaderWidget::_setValue(QVariant vValue, qint32 nStyp
                 case SELF::TYPE_Elf_Shdr:
                     if (elf.is64()) {
                         switch (nNdata) {
-                            case N_Elf_Shdr::sh_name: elf.setElf64_Shdr_name((quint32)nPosition, (quint32)nValue); break;
-                            case N_Elf_Shdr::sh_type: elf.setElf64_Shdr_type((quint32)nPosition, (quint32)nValue); break;
-                            case N_Elf_Shdr::sh_flags: elf.setElf64_Shdr_flags((quint64)nPosition, (quint32)nValue); break;
-                            case N_Elf_Shdr::sh_addr: elf.setElf64_Shdr_addr((quint64)nPosition, (quint32)nValue); break;
-                            case N_Elf_Shdr::sh_offset: elf.setElf64_Shdr_offset((quint64)nPosition, (quint32)nValue); break;
-                            case N_Elf_Shdr::sh_size: elf.setElf64_Shdr_size((quint64)nPosition, (quint32)nValue); break;
-                            case N_Elf_Shdr::sh_link: elf.setElf64_Shdr_link((quint32)nPosition, (quint32)nValue); break;
-                            case N_Elf_Shdr::sh_info: elf.setElf64_Shdr_info((quint32)nPosition, (quint32)nValue); break;
-                            case N_Elf_Shdr::sh_addralign: elf.setElf64_Shdr_addralign((quint64)nPosition, (quint32)nValue); break;
-                            case N_Elf_Shdr::sh_entsize: elf.setElf64_Shdr_entsize((quint64)nPosition, (quint32)nValue); break;
+                            case N_Elf_Shdr::sh_name: elf._setElf64_Shdr_name(elf.getShdrOffset(nPosition), (quint32)nValue); break;
+                            case N_Elf_Shdr::sh_type: elf._setElf64_Shdr_type(elf.getShdrOffset(nPosition), (quint32)nValue); break;
+                            case N_Elf_Shdr::sh_flags: elf._setElf64_Shdr_flags(elf.getShdrOffset(nPosition), (quint64)nValue); break;
+                            case N_Elf_Shdr::sh_addr: elf._setElf64_Shdr_addr(elf.getShdrOffset(nPosition), (quint64)nValue); break;
+                            case N_Elf_Shdr::sh_offset: elf._setElf64_Shdr_offset(elf.getShdrOffset(nPosition), (quint64)nValue); break;
+                            case N_Elf_Shdr::sh_size: elf._setElf64_Shdr_size(elf.getShdrOffset(nPosition), (quint64)nValue); break;
+                            case N_Elf_Shdr::sh_link: elf._setElf64_Shdr_link(elf.getShdrOffset(nPosition), (quint32)nValue); break;
+                            case N_Elf_Shdr::sh_info: elf._setElf64_Shdr_info(elf.getShdrOffset(nPosition), (quint32)nValue); break;
+                            case N_Elf_Shdr::sh_addralign: elf._setElf64_Shdr_addralign(elf.getShdrOffset(nPosition), (quint64)nValue); break;
+                            case N_Elf_Shdr::sh_entsize: elf._setElf64_Shdr_entsize(elf.getShdrOffset(nPosition), (quint64)nValue); break;
                         }
                     } else {
                         switch (nNdata) {
-                            case N_Elf_Shdr::sh_name: elf.setElf32_Shdr_name((quint32)nPosition, (quint32)nValue); break;
-                            case N_Elf_Shdr::sh_type: elf.setElf32_Shdr_type((quint32)nPosition, (quint32)nValue); break;
-                            case N_Elf_Shdr::sh_flags: elf.setElf32_Shdr_flags((quint32)nPosition, (quint32)nValue); break;
-                            case N_Elf_Shdr::sh_addr: elf.setElf32_Shdr_addr((quint32)nPosition, (quint32)nValue); break;
-                            case N_Elf_Shdr::sh_offset: elf.setElf32_Shdr_offset((quint32)nPosition, (quint32)nValue); break;
-                            case N_Elf_Shdr::sh_size: elf.setElf32_Shdr_size((quint32)nPosition, (quint32)nValue); break;
-                            case N_Elf_Shdr::sh_link: elf.setElf32_Shdr_link((quint32)nPosition, (quint32)nValue); break;
-                            case N_Elf_Shdr::sh_info: elf.setElf32_Shdr_info((quint32)nPosition, (quint32)nValue); break;
-                            case N_Elf_Shdr::sh_addralign: elf.setElf32_Shdr_addralign((quint32)nPosition, (quint32)nValue); break;
-                            case N_Elf_Shdr::sh_entsize: elf.setElf32_Shdr_entsize((quint32)nPosition, (quint32)nValue); break;
+                            case N_Elf_Shdr::sh_name: elf._setElf32_Shdr_name(elf.getShdrOffset(nPosition), (quint32)nValue); break;
+                            case N_Elf_Shdr::sh_type: elf._setElf32_Shdr_type(elf.getShdrOffset(nPosition), (quint32)nValue); break;
+                            case N_Elf_Shdr::sh_flags: elf._setElf32_Shdr_flags(elf.getShdrOffset(nPosition), (quint32)nValue); break;
+                            case N_Elf_Shdr::sh_addr: elf._setElf32_Shdr_addr(elf.getShdrOffset(nPosition), (quint32)nValue); break;
+                            case N_Elf_Shdr::sh_offset: elf._setElf32_Shdr_offset(elf.getShdrOffset(nPosition), (quint32)nValue); break;
+                            case N_Elf_Shdr::sh_size: elf._setElf32_Shdr_size(elf.getShdrOffset(nPosition), (quint32)nValue); break;
+                            case N_Elf_Shdr::sh_link: elf._setElf32_Shdr_link(elf.getShdrOffset(nPosition), (quint32)nValue); break;
+                            case N_Elf_Shdr::sh_info: elf._setElf32_Shdr_info(elf.getShdrOffset(nPosition), (quint32)nValue); break;
+                            case N_Elf_Shdr::sh_addralign: elf._setElf32_Shdr_addralign(elf.getShdrOffset(nPosition), (quint32)nValue); break;
+                            case N_Elf_Shdr::sh_entsize: elf._setElf32_Shdr_entsize(elf.getShdrOffset(nPosition), (quint32)nValue); break;
                         }
                     }
 
@@ -246,25 +246,25 @@ FormatWidget::SV ELFSectionHeaderWidget::_setValue(QVariant vValue, qint32 nStyp
                 case SELF::TYPE_Elf_Phdr:
                     if (elf.is64()) {
                         switch (nNdata) {
-                            case N_Elf_Phdr64::p_type: elf.setElf64_Phdr_type((quint32)nPosition, (quint32)nValue); break;
-                            case N_Elf_Phdr64::p_flags: elf.setElf64_Phdr_flags((quint32)nPosition, (quint32)nValue); break;
-                            case N_Elf_Phdr64::p_offset: elf.setElf64_Phdr_offset((quint64)nPosition, (quint32)nValue); break;
-                            case N_Elf_Phdr64::p_vaddr: elf.setElf64_Phdr_vaddr((quint64)nPosition, (quint32)nValue); break;
-                            case N_Elf_Phdr64::p_paddr: elf.setElf64_Phdr_paddr((quint64)nPosition, (quint32)nValue); break;
-                            case N_Elf_Phdr64::p_filesz: elf.setElf64_Phdr_filesz((quint64)nPosition, (quint32)nValue); break;
-                            case N_Elf_Phdr64::p_memsz: elf.setElf64_Phdr_memsz((quint64)nPosition, (quint32)nValue); break;
-                            case N_Elf_Phdr64::p_align: elf.setElf64_Phdr_align((quint64)nPosition, (quint32)nValue); break;
+                            case N_Elf_Phdr64::p_type: elf._setElf64_Phdr_type(elf.getPhdrOffset(nPosition), (quint32)nValue); break;
+                            case N_Elf_Phdr64::p_flags: elf._setElf64_Phdr_flags(elf.getPhdrOffset(nPosition), (quint32)nValue); break;
+                            case N_Elf_Phdr64::p_offset: elf._setElf64_Phdr_offset(elf.getPhdrOffset(nPosition), (quint64)nValue); break;
+                            case N_Elf_Phdr64::p_vaddr: elf._setElf64_Phdr_vaddr(elf.getPhdrOffset(nPosition), (quint64)nValue); break;
+                            case N_Elf_Phdr64::p_paddr: elf._setElf64_Phdr_paddr(elf.getPhdrOffset(nPosition), (quint64)nValue); break;
+                            case N_Elf_Phdr64::p_filesz: elf._setElf64_Phdr_filesz(elf.getPhdrOffset(nPosition), (quint64)nValue); break;
+                            case N_Elf_Phdr64::p_memsz: elf._setElf64_Phdr_memsz(elf.getPhdrOffset(nPosition), (quint64)nValue); break;
+                            case N_Elf_Phdr64::p_align: elf._setElf64_Phdr_align(elf.getPhdrOffset(nPosition), (quint64)nValue); break;
                         }
                     } else {
                         switch (nNdata) {
-                            case N_Elf_Phdr32::p_type: elf.setElf32_Phdr_type((quint32)nPosition, (quint32)nValue); break;
-                            case N_Elf_Phdr32::p_offset: elf.setElf32_Phdr_offset((quint32)nPosition, (quint32)nValue); break;
-                            case N_Elf_Phdr32::p_vaddr: elf.setElf32_Phdr_vaddr((quint32)nPosition, (quint32)nValue); break;
-                            case N_Elf_Phdr32::p_paddr: elf.setElf32_Phdr_paddr((quint32)nPosition, (quint32)nValue); break;
-                            case N_Elf_Phdr32::p_filesz: elf.setElf32_Phdr_filesz((quint32)nPosition, (quint32)nValue); break;
-                            case N_Elf_Phdr32::p_memsz: elf.setElf32_Phdr_memsz((quint32)nPosition, (quint32)nValue); break;
-                            case N_Elf_Phdr32::p_flags: elf.setElf32_Phdr_flags((quint32)nPosition, (quint32)nValue); break;
-                            case N_Elf_Phdr32::p_align: elf.setElf32_Phdr_align((quint32)nPosition, (quint32)nValue); break;
+                            case N_Elf_Phdr32::p_type: elf._setElf32_Phdr_type(elf.getPhdrOffset(nPosition), (quint32)nValue); break;
+                            case N_Elf_Phdr32::p_offset: elf._setElf32_Phdr_offset(elf.getPhdrOffset(nPosition), (quint32)nValue); break;
+                            case N_Elf_Phdr32::p_vaddr: elf._setElf32_Phdr_vaddr(elf.getPhdrOffset(nPosition), (quint32)nValue); break;
+                            case N_Elf_Phdr32::p_paddr: elf._setElf32_Phdr_paddr(elf.getPhdrOffset(nPosition), (quint32)nValue); break;
+                            case N_Elf_Phdr32::p_filesz: elf._setElf32_Phdr_filesz(elf.getPhdrOffset(nPosition), (quint32)nValue); break;
+                            case N_Elf_Phdr32::p_memsz: elf._setElf32_Phdr_memsz(elf.getPhdrOffset(nPosition), (quint32)nValue); break;
+                            case N_Elf_Phdr32::p_flags: elf._setElf32_Phdr_flags(elf.getPhdrOffset(nPosition), (quint32)nValue); break;
+                            case N_Elf_Phdr32::p_align: elf._setElf32_Phdr_align(elf.getPhdrOffset(nPosition), (quint32)nValue); break;
                         }
                     }
 
@@ -281,21 +281,21 @@ FormatWidget::SV ELFSectionHeaderWidget::_setValue(QVariant vValue, qint32 nStyp
                 case SELF::TYPE_SYMBOLTABLE:
                     if (elf.is64()) {
                         switch (nNdata) {
-                            case N_Elf64_Sym::st_name: elf.setElf64_Sym_st_name(nOffset, (quint32)nValue, elf.isBigEndian()); break;
-                            case N_Elf64_Sym::st_info: elf.setElf64_Sym_st_info(nOffset, (quint8)nValue); break;
-                            case N_Elf64_Sym::st_other: elf.setElf64_Sym_st_other(nOffset, (quint8)nValue); break;
-                            case N_Elf64_Sym::st_shndx: elf.setElf64_Sym_st_shndx(nOffset, (quint16)nValue, elf.isBigEndian()); break;
-                            case N_Elf64_Sym::st_value: elf.setElf64_Sym_st_value(nOffset, (quint64)nValue, elf.isBigEndian()); break;
-                            case N_Elf64_Sym::st_size: elf.setElf64_Sym_st_size(nOffset, (quint64)nValue, elf.isBigEndian()); break;
+                            case N_Elf64_Sym::st_name: elf._setElf64_Sym_st_name(nOffset, (quint32)nValue); break;
+                            case N_Elf64_Sym::st_info: elf._setElf64_Sym_st_info(nOffset, (quint8)nValue); break;
+                            case N_Elf64_Sym::st_other: elf._setElf64_Sym_st_other(nOffset, (quint8)nValue); break;
+                            case N_Elf64_Sym::st_shndx: elf._setElf64_Sym_st_shndx(nOffset, (quint16)nValue); break;
+                            case N_Elf64_Sym::st_value: elf._setElf64_Sym_st_value(nOffset, (quint64)nValue); break;
+                            case N_Elf64_Sym::st_size: elf._setElf64_Sym_st_size(nOffset, (quint64)nValue); break;
                         }
                     } else {
                         switch (nNdata) {
-                            case N_Elf32_Sym::st_name: elf.setElf32_Sym_st_name(nOffset, (quint32)nValue, elf.isBigEndian()); break;
-                            case N_Elf32_Sym::st_value: elf.setElf32_Sym_st_value(nOffset, (quint32)nValue, elf.isBigEndian()); break;
-                            case N_Elf32_Sym::st_size: elf.setElf32_Sym_st_size(nOffset, (quint32)nValue, elf.isBigEndian()); break;
-                            case N_Elf32_Sym::st_info: elf.setElf32_Sym_st_info(nOffset, (quint8)nValue); break;
-                            case N_Elf32_Sym::st_other: elf.setElf32_Sym_st_other(nOffset, (quint8)nValue); break;
-                            case N_Elf32_Sym::st_shndx: elf.setElf32_Sym_st_shndx(nOffset, (quint16)nValue, elf.isBigEndian()); break;
+                            case N_Elf32_Sym::st_name: elf._setElf32_Sym_st_name(nOffset, (quint32)nValue); break;
+                            case N_Elf32_Sym::st_value: elf._setElf32_Sym_st_value(nOffset, (quint32)nValue); break;
+                            case N_Elf32_Sym::st_size: elf._setElf32_Sym_st_size(nOffset, (quint32)nValue); break;
+                            case N_Elf32_Sym::st_info: elf._setElf32_Sym_st_info(nOffset, (quint8)nValue); break;
+                            case N_Elf32_Sym::st_other: elf._setElf32_Sym_st_other(nOffset, (quint8)nValue); break;
+                            case N_Elf32_Sym::st_shndx: elf._setElf32_Sym_st_shndx(nOffset, (quint16)nValue); break;
                         }
                     }
 
@@ -304,15 +304,15 @@ FormatWidget::SV ELFSectionHeaderWidget::_setValue(QVariant vValue, qint32 nStyp
                 case SELF::TYPE_Elf_Rela:
                     if (elf.is64()) {
                         switch (nNdata) {
-                            case N_Elf_Rela::r_offset: elf.setElf64_Rela_r_offset(nOffset, (quint32)nValue, elf.isBigEndian()); break;
-                            case N_Elf_Rela::r_info: elf.setElf64_Rela_r_info(nOffset, (quint32)nValue, elf.isBigEndian()); break;
-                            case N_Elf_Rela::r_addend: elf.setElf64_Rela_r_addend(nOffset, (quint32)nValue, elf.isBigEndian()); break;
+                            case N_Elf_Rela::r_offset: elf._setElf64_Rela_r_offset(nOffset, (quint64)nValue); break;
+                            case N_Elf_Rela::r_info: elf._setElf64_Rela_r_info(nOffset, (quint64)nValue); break;
+                            case N_Elf_Rela::r_addend: elf._setElf64_Rela_r_addend(nOffset, (qint64)nValue); break;
                         }
                     } else {
                         switch (nNdata) {
-                            case N_Elf_Rela::r_offset: elf.setElf32_Rela_r_offset(nOffset, (quint64)nValue, elf.isBigEndian()); break;
-                            case N_Elf_Rela::r_info: elf.setElf32_Rela_r_info(nOffset, (quint64)nValue, elf.isBigEndian()); break;
-                            case N_Elf_Rela::r_addend: elf.setElf32_Rela_r_addend(nOffset, (quint64)nValue, elf.isBigEndian()); break;
+                            case N_Elf_Rela::r_offset: elf._setElf32_Rela_r_offset(nOffset, (quint32)nValue); break;
+                            case N_Elf_Rela::r_info: elf._setElf32_Rela_r_info(nOffset, (quint32)nValue); break;
+                            case N_Elf_Rela::r_addend: elf._setElf32_Rela_r_addend(nOffset, (qint32)nValue); break;
                         }
                     }
 
@@ -321,13 +321,13 @@ FormatWidget::SV ELFSectionHeaderWidget::_setValue(QVariant vValue, qint32 nStyp
                 case SELF::TYPE_Elf_Rel:
                     if (elf.is64()) {
                         switch (nNdata) {
-                            case N_Elf_Rel::r_offset: elf.setElf64_Rel_r_offset(nOffset, (quint32)nValue, elf.isBigEndian()); break;
-                            case N_Elf_Rel::r_info: elf.setElf64_Rel_r_info(nOffset, (quint32)nValue, elf.isBigEndian()); break;
+                            case N_Elf_Rel::r_offset: elf._setElf64_Rel_r_offset(nOffset, (quint64)nValue); break;
+                            case N_Elf_Rel::r_info: elf._setElf64_Rel_r_info(nOffset, (quint64)nValue); break;
                         }
                     } else {
                         switch (nNdata) {
-                            case N_Elf_Rel::r_offset: elf.setElf32_Rel_r_offset(nOffset, (quint64)nValue, elf.isBigEndian()); break;
-                            case N_Elf_Rel::r_info: elf.setElf32_Rel_r_info(nOffset, (quint64)nValue, elf.isBigEndian()); break;
+                            case N_Elf_Rel::r_offset: elf._setElf32_Rel_r_offset(nOffset, (quint32)nValue); break;
+                            case N_Elf_Rel::r_info: elf._setElf32_Rel_r_info(nOffset, (quint32)nValue); break;
                         }
                     }
 
