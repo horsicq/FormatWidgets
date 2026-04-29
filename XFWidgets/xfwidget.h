@@ -19,21 +19,19 @@
  * SOFTWARE.
  */
 
-#ifndef XFWIDGET_H
-#define XFWIDGET_H
+#ifndef XFWIDGET_CLASS_H
+#define XFWIDGET_CLASS_H
 
 #include <QWidget>
-#include <QSplitter>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QPushButton>
-#include <QLineEdit>
-#include <QCheckBox>
-#include <QFileDialog>
+#include <QMap>
+#include <QString>
 #include "xftreeview.h"
 #include "xftableview.h"
 #include "xbinary.h"
-#include "xfmodel.h"
+
+namespace Ui {
+class XFWidget;
+}
 
 class XFWidget : public QWidget {
     Q_OBJECT
@@ -62,19 +60,11 @@ private slots:
     void onShowPresentationToggled(bool bChecked);
 
 private:
+    Ui::XFWidget *ui;
     XBinary *m_pXBinary;
-    QSplitter *m_pSplitter;
-    XFTreeView *m_pTreeView;
-    XFTableView *m_pTableView;
-    QWidget *m_pTablePanel;
-    QPushButton *m_pPushButtonSave;
-    QLineEdit *m_pLineEditTag;
-    QWidget *m_pToolBar;
-    QCheckBox *m_pCheckBoxShowOffsets;
-    QCheckBox *m_pCheckBoxShowPresentation;
     QString m_sCurrentTag;
     QMap<QString, XBinary::XFHEADER> m_mapHeaders;
     bool m_bIsReadonly;
 };
 
-#endif  // XFWIDGET_H
+#endif  // XFWIDGET_CLASS_H

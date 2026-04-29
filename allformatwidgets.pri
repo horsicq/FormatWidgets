@@ -48,6 +48,11 @@ contains(XCONFIG, use_dex) {
     }
 }
 
+!contains(XCONFIG, xfwidgets) {
+    XCONFIG += xfwidgets
+    include($$PWD/XFWidgets/xfwidgets.pri)
+}
+
 !contains(XCONFIG, xoptionswidget) {
     XCONFIG += xoptionswidget
     include($$PWD/../XOptions/xoptionswidget.pri)

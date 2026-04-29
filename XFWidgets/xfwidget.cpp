@@ -21,72 +21,36 @@
 
 #include "xfwidget.h"
 
-XFWidget::XFWidget(QWidget *pParent) : QWidget(pParent)
+#include "ui_xfwidget.h"
+
+#include <QAbstractItemModel>
+#include <QFileDialog>
+#include <QRegExp>
+
+#include "xfmodel.h"
+
+XFWidget::XFWidget(QWidget *pParent) : QWidget(pParent), ui(new Ui::XFWidget)
 {
+    ui->setupUi(this);
+
     m_pXBinary = nullptr;
     m_bIsReadonly = false;
 
-    QVBoxLayout *pLayout = new QVBoxLayout(this);
-    pLayout->setContentsMargins(0, 0, 0, 0);
+    ui->toolBar->setVisible(false);
+    ui->splitter->setStretchFactor(0, 1);
+    ui->splitter->setStretchFactor(1, 2);
 
-    m_pSplitter = new QSplitter(Qt::Horizontal, this);
-
-    m_pTreeView = new XFTreeView(m_pSplitter);
-
-    m_pTablePanel = new QWidget(m_pSplitter);
-    QVBoxLayout *pTableLayout = new QVBoxLayout(m_pTablePanel);
-    pTableLayout->setContentsMargins(0, 0, 0, 0);
-
-    m_pTableView = new XFTableView(m_pTablePanel);
-    pTableLayout->addWidget(m_pTableView);
-
-    m_pToolBar = new QWidget(m_pTablePanel);
-    QHBoxLayout *pToolBarLayout = new QHBoxLayout(m_pToolBar);
-    pToolBarLayout->setContentsMargins(0, 0, 0, 0);
-
-    m_pCheckBoxShowOffsets = new QCheckBox(tr("Show Offsets"), m_pToolBar);
-    m_pCheckBoxShowOffsets->setChecked(false);
-    m_pCheckBoxShowPresentation = new QCheckBox(tr("Show Presentation"), m_pToolBar);
-    m_pCheckBoxShowPresentation->setChecked(true);
-
-    pToolBarLayout->addWidget(m_pCheckBoxShowOffsets);
-    pToolBarLayout->addWidget(m_pCheckBoxShowPresentation);
-    pToolBarLayout->addStretch(1);
-
-    m_pToolBar->setVisible(false);
-
-    pTableLayout->insertWidget(0, m_pToolBar);
-
-    QHBoxLayout *pBottomLayout = new QHBoxLayout();
-    pBottomLayout->setContentsMargins(0, 0, 0, 0);
-
-    m_pLineEditTag = new QLineEdit(m_pTablePanel);
-    m_pLineEditTag->setReadOnly(true);
-
-    m_pPushButtonSave = new QPushButton(tr("Save") + QString("..."), m_pTablePanel);
-
-    pBottomLayout->addWidget(m_pLineEditTag);
-    pBottomLayout->addWidget(m_pPushButtonSave);
-
-    pTableLayout->addLayout(pBottomLayout);
-
-    m_pSplitter->addWidget(m_pTreeView);
-    m_pSplitter->addWidget(m_pTablePanel);
-    m_pSplitter->setStretchFactor(0, 1);
-    m_pSplitter->setStretchFactor(1, 2);
-
-    pLayout->addWidget(m_pSplitter);
-
-    connect(m_pTreeView, SIGNAL(headerSelected(XBinary::XFHEADER)), this, SLOT(onHeaderSelected(XBinary::XFHEADER)));
-    connect(m_pTableView, SIGNAL(fieldSelected(qint32, quint64, XBinary::XFRECORD)), this, SIGNAL(fieldSelected(qint32, quint64, XBinary::XFRECORD)));
-    connect(m_pTableView, SIGNAL(fieldDoubleClicked(qint32, quint64, XBinary::XFRECORD)), this, SIGNAL(fieldDoubleClicked(qint32, quint64, XBinary::XFRECORD)));
-    connect(m_pPushButtonSave, SIGNAL(clicked()), this, SLOT(onSaveClicked()));
-    connect(m_pCheckBoxShowOffsets, SIGNAL(toggled(bool)), this, SLOT(onShowOffsetsToggled(bool)));
-    connect(m_pCheckBoxShowPresentation, SIGNAL(toggled(bool)), this, SLOT(onShowPresentationToggled(bool)));
+    connect(ui->treeView, SIGNAL(headerSelected(XBinary::XFHEADER)), this, SLOT(onHeaderSelected(XBinary::XFHEADER)));
+    connect(ui->tableView, SIGNAL(fieldSelected(qint32, quint64, XBinary::XFRECORD)), this, SIGNAL(fieldSelected(qint32, quint64, XBinary::XFRECORD)));
+    connect(ui->tableView, SIGNAL(fieldDoubleClicked(qint32, quint64, XBinary::XFRECORD)), this, SIGNAL(fieldDoubleClicked(qint32, quint64, XBinary::XFRECORD)));
+    connect(ui->pushButtonSave, SIGNAL(clicked()), this, SLOT(onSaveClicked()));
+    connect(ui->checkBoxShowOffsets, SIGNAL(toggled(bool)), this, SLOT(onShowOffsetsToggled(bool)));
+    connect(ui->checkBoxShowPresentation, SIGNAL(toggled(bool)), this, SLOT(onShowPresentationToggled(bool)));
 }
 
 XFWidget::~XFWidget()
 {
+    delete ui;
 }
 
 void XFWidget::setData(XBinary *pXBinary, const QList<XBinary::XFHEADER> &listHeaders)
@@ -98,10 +62,10 @@ void XFWidget::setData(XBinary *pXBinary, const QList<XBinary::XFHEADER> &listHe
         m_mapHeaders.insert(listHeaders.at(i).sTag, listHeaders.at(i));
     }
 
-    m_pTreeView->setData(pXBinary, listHeaders);
+    ui->treeView->setData(pXBinary, listHeaders);
 
     if (!listHeaders.isEmpty()) {
-        m_pTableView->setData(pXBinary, listHeaders.at(0));
+        ui->tableView->setData(pXBinary, listHeaders.at(0));
 
         QString sStructName;
         if (m_pXBinary) {
@@ -109,22 +73,22 @@ void XFWidget::setData(XBinary *pXBinary, const QList<XBinary::XFHEADER> &listHe
         }
 
         m_sCurrentTag = XBinary::xfHeaderToTag(listHeaders.at(0), sStructName, listHeaders.at(0).sParentTag);
-        m_pLineEditTag->setText(m_sCurrentTag);
+        ui->lineEditTag->setText(m_sCurrentTag);
 
         bool bIsTable = (listHeaders.at(0).xfType == XBinary::XFTYPE_TABLE);
-        m_pToolBar->setVisible(bIsTable);
+        ui->toolBar->setVisible(bIsTable);
 
         if (bIsTable) {
-            m_pTableView->setShowOffset(m_pCheckBoxShowOffsets->isChecked());
-            m_pTableView->setShowPresentation(m_pCheckBoxShowPresentation->isChecked());
+            ui->tableView->setShowOffset(ui->checkBoxShowOffsets->isChecked());
+            ui->tableView->setShowPresentation(ui->checkBoxShowPresentation->isChecked());
         }
     }
 }
 
 void XFWidget::clear()
 {
-    m_pTreeView->clear();
-    m_pTableView->clear();
+    ui->treeView->clear();
+    ui->tableView->clear();
     m_pXBinary = nullptr;
     m_mapHeaders.clear();
 }
@@ -136,18 +100,18 @@ void XFWidget::setReadonly(bool bIsReadonly)
 
 XFTreeView *XFWidget::getTreeView()
 {
-    return m_pTreeView;
+    return ui->treeView;
 }
 
 XFTableView *XFWidget::getTableView()
 {
-    return m_pTableView;
+    return ui->tableView;
 }
 
 void XFWidget::onHeaderSelected(const XBinary::XFHEADER &xfHeader)
 {
     if (m_pXBinary) {
-        m_pTableView->setData(m_pXBinary, xfHeader);
+        ui->tableView->setData(m_pXBinary, xfHeader);
     }
 
     QString sStructName;
@@ -156,14 +120,14 @@ void XFWidget::onHeaderSelected(const XBinary::XFHEADER &xfHeader)
     }
 
     m_sCurrentTag = XBinary::xfHeaderToTag(xfHeader, sStructName, xfHeader.sParentTag);
-    m_pLineEditTag->setText(m_sCurrentTag);
+    ui->lineEditTag->setText(m_sCurrentTag);
 
     bool bIsTable = (xfHeader.xfType == XBinary::XFTYPE_TABLE);
-    m_pToolBar->setVisible(bIsTable);
+    ui->toolBar->setVisible(bIsTable);
 
     if (bIsTable) {
-        m_pTableView->setShowOffset(m_pCheckBoxShowOffsets->isChecked());
-        m_pTableView->setShowPresentation(m_pCheckBoxShowPresentation->isChecked());
+        ui->tableView->setShowOffset(ui->checkBoxShowOffsets->isChecked());
+        ui->tableView->setShowPresentation(ui->checkBoxShowPresentation->isChecked());
     }
 
     emit headerSelected(xfHeader);
@@ -171,7 +135,7 @@ void XFWidget::onHeaderSelected(const XBinary::XFHEADER &xfHeader)
 
 void XFWidget::onSaveClicked()
 {
-    QAbstractItemModel *pModel = m_pTableView->model();
+    QAbstractItemModel *pModel = ui->tableView->model();
 
     if (pModel) {
         QString sDefaultName = m_sCurrentTag;
@@ -189,10 +153,10 @@ void XFWidget::onSaveClicked()
 
 void XFWidget::onShowOffsetsToggled(bool bChecked)
 {
-    m_pTableView->setShowOffset(bChecked);
+    ui->tableView->setShowOffset(bChecked);
 }
 
 void XFWidget::onShowPresentationToggled(bool bChecked)
 {
-    m_pTableView->setShowPresentation(bChecked);
+    ui->tableView->setShowPresentation(bChecked);
 }

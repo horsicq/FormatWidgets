@@ -68,6 +68,11 @@ FORMS += \
     include($$PWD/DEX/dexwidget.pri)
 }
 
+!contains(XCONFIG, xfwidgets) {
+    XCONFIG += xfwidgets
+    include($$PWD/XFWidgets/xfwidgets.pri)
+}
+
 !contains(XCONFIG, archive_widget) {
     XCONFIG += archive_widget
     include($$PWD/../archive_widget/archive_widget.pri)
