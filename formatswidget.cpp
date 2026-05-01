@@ -149,7 +149,7 @@ FormatsWidget::FormatsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(n
     connect(ui->pageScanPEID, SIGNAL(scanFinished()), this, SIGNAL(scanFinished()));
     connect(ui->pageScanPEID, SIGNAL(currentFileType(qint32)), this, SLOT(_currentFileType(qint32)));
 
-    connect(ui->pageScanNFD, SIGNAL(showInfo()), this, SLOT(_showNfdInfo()));
+    // connect(ui->pageScanNFD, SIGNAL(showInfo()), this, SLOT(_showNfdInfo()));
     connect(ui->pageScanYARA, SIGNAL(showInfo()), this, SLOT(_showYaraInfo()));
 
     connect(ui->pageScanDIE, SIGNAL(currentFileType(qint32)), this, SLOT(_currentFileType(qint32)));
