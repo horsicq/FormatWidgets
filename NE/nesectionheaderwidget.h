@@ -39,16 +39,14 @@ public:
     };
     NESectionHeaderWidget(QWidget *pParent = nullptr);
     NESectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent = nullptr);
-    ~NESectionHeaderWidget();
-
-    virtual void clear();
-    virtual void reload();
+    void clear() override;
+    void reload() override;
 
 protected:
-    virtual SV _setValue(QVariant vValue, qint32 nStype, qint32 nNdata, qint32 nVtype, qint32 nPosition, qint64 nOffset);
-    virtual void setReadonly(bool bState);
-    virtual void blockSignals(bool bState);
-    virtual void adjustHeaderTable(qint32 nType, QTableWidget *pTableWidget);
+    SV _setValue(QVariant vValue, qint32 nStype, qint32 nNdata, qint32 nVtype, qint32 nPosition, qint64 nOffset) override;
+    void setReadonly(bool bState) override;
+    void blockSignals(bool bState) override;
+    void adjustHeaderTable(qint32 nType, QTableWidget *pTableWidget) override;
 
 private slots:
     void on_checkBoxReadonly_toggled(bool bChecked);

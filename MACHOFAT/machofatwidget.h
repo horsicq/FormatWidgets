@@ -34,14 +34,14 @@ public:
     explicit MACHOFATWidget(QWidget *pParent = nullptr);
     ~MACHOFATWidget();
 
-    virtual void clear();
-    virtual void cleanup();
-    virtual void reload();
+    void clear() override;
+    void cleanup() override;
+    void reload() override;
 
 protected:
-    virtual SV _setValue(QVariant vValue, qint32 nStype, qint32 nNdata, qint32 nVtype, qint32 nPosition, qint64 nOffset);
-    virtual void setReadonly(bool bState);
-    virtual void blockSignals(bool bState);
+    SV _setValue(QVariant vValue, qint32 nStype, qint32 nNdata, qint32 nVtype, qint32 nPosition, qint64 nOffset) override;
+    void setReadonly(bool bState) override;
+    void blockSignals(bool bState) override;
 
 private slots:
     void reloadData(bool bSaveSelection);

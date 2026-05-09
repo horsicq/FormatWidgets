@@ -36,21 +36,16 @@ void MACHOFATWidget::clear()
 {
     ui->comboBoxFilePart->clear();
 
-    QObjectList listWidgets = ui->stackedWidget->children();
-
-    for (qint32 i = 0; i < listWidgets.count(); i++) {
-        QWidget *pWidget = qobject_cast<QWidget *>(listWidgets.at(i));
-
+    const QObjectList listWidgets = ui->stackedWidget->children();
+    for (QObject *pChild : listWidgets) {
+        QWidget *pWidget = qobject_cast<QWidget *>(pChild);
         ui->stackedWidget->removeWidget(pWidget);
-
         delete pWidget;
     }
 
-    qint32 nNumberOfRecords = m_listDevices.count();
-
-    for (qint32 i = 0; i < nNumberOfRecords; i++) {
-        m_listDevices.at(i)->close();
-        delete m_listDevices.at(i);
+    for (SubDevice *pDevice : m_listDevices) {
+        pDevice->close();
+        delete pDevice;
     }
 
     m_listDevices.clear();
@@ -76,20 +71,17 @@ void MACHOFATWidget::reload()
 
         QList<XArchive::RECORD> listRecords = machofat.getRecords(-1, &pdStruct);
 
-        qint32 nNumberOfRecords = listRecords.count();
-
-        for (qint32 i = 0; i < nNumberOfRecords; i++) {
-            SubDevice *pSubDevice = new SubDevice(getDevice(), listRecords.at(i).nDataOffset, listRecords.at(i).nDataSize);
+        for (const XArchive::RECORD &record : listRecords) {
+            SubDevice *pSubDevice = new SubDevice(getDevice(), record.nDataOffset, record.nDataSize);
 
             if (pSubDevice->open(getDevice()->openMode())) {
-                ui->comboBoxFilePart->addItem(listRecords.at(i).spInfo.sRecordName);
+                ui->comboBoxFilePart->addItem(record.spInfo.sRecordName);
 
                 MACHWidget *pMachWidget = new MACHWidget(pSubDevice, getOptions(), this);
 
                 pMachWidget->setGlobal(getShortcuts(), getGlobalOptions());
 
-                XInfoDB *pXInfoDB = getXInfoDB();
-                pMachWidget->setXInfoDB(pXInfoDB);
+                pMachWidget->setXInfoDB(getXInfoDB());
 
                 ui->stackedWidget->addWidget(pMachWidget);
 

@@ -38,25 +38,25 @@ public:
     LEWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, QWidget *pParent = nullptr);
     ~LEWidget();
 
-    virtual void clear();
-    virtual void cleanup();
-    virtual void reload();
+    void clear() override;
+    void cleanup() override;
+    void reload() override;
 
 protected:
-    virtual SV _setValue(QVariant vValue, qint32 nStype, qint32 nNdata, qint32 nVtype, qint32 nPosition, qint64 nOffset);
-    virtual void setReadonly(bool bState);
-    virtual void blockSignals(bool bState);
-    virtual void adjustHeaderTable(qint32 nType, QTableWidget *pTableWidget);
-    virtual QString typeIdToString(qint32 nType);
-    virtual void _showInDisasmWindowAddress(qint64 nAddress);
-    virtual void _showInDisasmWindowOffset(qint64 nOffset);
-    virtual void _showInMemoryMapWindowOffset(qint64 nOffset);
-    virtual void _showInHexWindow(qint64 nOffset, qint64 nSize);
-    virtual void _findValue(quint64 nValue, XBinary::ENDIAN endian);
-    virtual void _widgetValueChanged(QVariant vValue);
+    SV _setValue(QVariant vValue, qint32 nStype, qint32 nNdata, qint32 nVtype, qint32 nPosition, qint64 nOffset) override;
+    void setReadonly(bool bState) override;
+    void blockSignals(bool bState) override;
+    void adjustHeaderTable(qint32 nType, QTableWidget *pTableWidget) override;
+    QString typeIdToString(qint32 nType) override;
+    void _showInDisasmWindowAddress(qint64 nAddress) override;
+    void _showInDisasmWindowOffset(qint64 nOffset) override;
+    void _showInMemoryMapWindowOffset(qint64 nOffset) override;
+    void _showInHexWindow(qint64 nOffset, qint64 nSize) override;
+    void _findValue(quint64 nValue, XBinary::ENDIAN endian) override;
+    void _widgetValueChanged(QVariant vValue) override;
 
 private slots:
-    virtual void reloadData(bool bSaveSelection);
+    void reloadData(bool bSaveSelection) override;
     void on_treeWidgetNavi_currentItemChanged(QTreeWidgetItem *pCurrent, QTreeWidgetItem *pPrevious);
     void on_checkBoxReadonly_toggled(bool bChecked);
     void on_toolButtonReload_clicked();

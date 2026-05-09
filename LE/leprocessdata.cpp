@@ -22,11 +22,11 @@
 
 LEProcessData::LEProcessData(qint32 nType, QStandardItemModel **ppModel, XLE *pLE, qint64 nOffset, qint64 nSize) : ProcessData()
 {
-    this->m_nType = nType;
-    this->m_ppModel = ppModel;
-    this->m_pLE = pLE;
-    this->m_nOffset = nOffset;
-    this->m_nSize = nSize;
+    m_nType = nType;
+    m_ppModel = ppModel;
+    m_pLE = pLE;
+    m_nOffset = nOffset;
+    m_nSize = nSize;
 }
 
 void LEProcessData::_process()

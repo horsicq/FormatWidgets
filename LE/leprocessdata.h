@@ -30,7 +30,7 @@ class LEProcessData : public ProcessData {
 public:
     explicit LEProcessData(qint32 nType, QStandardItemModel **ppModel, XLE *pLE, qint64 nOffset, qint64 nSize);
 
-    virtual void _process();
+    void _process() override;
     virtual void ajustTableView(qint32 nType, QTableView *pTableView);
 
 private:

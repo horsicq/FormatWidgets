@@ -33,10 +33,6 @@ NESectionHeaderWidget::NESectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS
     NESectionHeaderWidget::setData(pDevice, options, nNumber, nOffset, nType);
 }
 
-NESectionHeaderWidget::~NESectionHeaderWidget()
-{
-}
-
 void NESectionHeaderWidget::clear()
 {
 }

@@ -140,7 +140,7 @@ FormatWidget::SV LEWidget::_setValue(QVariant vValue, qint32 nStype, qint32 nNda
                 case SLE::TYPE_DOS_HEADER:
                     switch (nNdata) {
                         case N_LE_DOS_HEADER::e_magic: m_comboBox[CB_DOS_HEADER_e_magic]->setValue(nValue); break;
-                        case N_LE_DOS_HEADER::e_lfanew: m_invWidget[INV_DOS_HEADER_e_lfanew]->setOffsetAndSize(&le, (quint32)nValue, 0); break;
+                        case N_LE_DOS_HEADER::e_lfanew: m_invWidget[INV_DOS_HEADER_e_lfanew]->setOffsetAndSize(&le, static_cast<quint32>(nValue), 0); break;
                     }
                     break;
                 case SLE::TYPE_VXD_HEADER:
@@ -155,37 +155,37 @@ FormatWidget::SV LEWidget::_setValue(QVariant vValue, qint32 nStype, qint32 nNda
             switch (nStype) {
                 case SLE::TYPE_DOS_HEADER:
                     switch (nNdata) {
-                        case N_LE_DOS_HEADER::e_magic: le.set_e_magic((quint16)nValue); break;
-                        case N_LE_DOS_HEADER::e_cblp: le.set_e_cblp((quint16)nValue); break;
-                        case N_LE_DOS_HEADER::e_cp: le.set_e_cp((quint16)nValue); break;
-                        case N_LE_DOS_HEADER::e_crlc: le.set_e_crlc((quint16)nValue); break;
-                        case N_LE_DOS_HEADER::e_cparhdr: le.set_e_cparhdr((quint16)nValue); break;
-                        case N_LE_DOS_HEADER::e_minalloc: le.set_e_minalloc((quint16)nValue); break;
-                        case N_LE_DOS_HEADER::e_maxalloc: le.set_e_maxalloc((quint16)nValue); break;
-                        case N_LE_DOS_HEADER::e_ss: le.set_e_ss((quint16)nValue); break;
-                        case N_LE_DOS_HEADER::e_sp: le.set_e_sp((quint16)nValue); break;
-                        case N_LE_DOS_HEADER::e_csum: le.set_e_csum((quint16)nValue); break;
-                        case N_LE_DOS_HEADER::e_ip: le.set_e_ip((quint16)nValue); break;
-                        case N_LE_DOS_HEADER::e_cs: le.set_e_cs((quint16)nValue); break;
-                        case N_LE_DOS_HEADER::e_lfarlc: le.set_e_lfarlc((quint16)nValue); break;
-                        case N_LE_DOS_HEADER::e_ovno: le.set_e_ovno((quint16)nValue); break;
-                        case N_LE_DOS_HEADER::e_res_0: le.set_e_res(0, (quint16)nValue); break;
-                        case N_LE_DOS_HEADER::e_res_1: le.set_e_res(1, (quint16)nValue); break;
-                        case N_LE_DOS_HEADER::e_res_2: le.set_e_res(2, (quint16)nValue); break;
-                        case N_LE_DOS_HEADER::e_res_3: le.set_e_res(3, (quint16)nValue); break;
-                        case N_LE_DOS_HEADER::e_oemid: le.set_e_oemid((quint16)nValue); break;
-                        case N_LE_DOS_HEADER::e_oeminfo: le.set_e_oeminfo((quint16)nValue); break;
-                        case N_LE_DOS_HEADER::e_res2_0: le.set_e_res2(0, (quint16)nValue); break;
-                        case N_LE_DOS_HEADER::e_res2_1: le.set_e_res2(1, (quint16)nValue); break;
-                        case N_LE_DOS_HEADER::e_res2_2: le.set_e_res2(2, (quint16)nValue); break;
-                        case N_LE_DOS_HEADER::e_res2_3: le.set_e_res2(3, (quint16)nValue); break;
-                        case N_LE_DOS_HEADER::e_res2_4: le.set_e_res2(4, (quint16)nValue); break;
-                        case N_LE_DOS_HEADER::e_res2_5: le.set_e_res2(5, (quint16)nValue); break;
-                        case N_LE_DOS_HEADER::e_res2_6: le.set_e_res2(6, (quint16)nValue); break;
-                        case N_LE_DOS_HEADER::e_res2_7: le.set_e_res2(7, (quint16)nValue); break;
-                        case N_LE_DOS_HEADER::e_res2_8: le.set_e_res2(8, (quint16)nValue); break;
-                        case N_LE_DOS_HEADER::e_res2_9: le.set_e_res2(9, (quint16)nValue); break;
-                        case N_LE_DOS_HEADER::e_lfanew: le.set_e_lfanew((quint32)nValue); break;
+                        case N_LE_DOS_HEADER::e_magic: le.set_e_magic(static_cast<quint16>(nValue)); break;
+                        case N_LE_DOS_HEADER::e_cblp: le.set_e_cblp(static_cast<quint16>(nValue)); break;
+                        case N_LE_DOS_HEADER::e_cp: le.set_e_cp(static_cast<quint16>(nValue)); break;
+                        case N_LE_DOS_HEADER::e_crlc: le.set_e_crlc(static_cast<quint16>(nValue)); break;
+                        case N_LE_DOS_HEADER::e_cparhdr: le.set_e_cparhdr(static_cast<quint16>(nValue)); break;
+                        case N_LE_DOS_HEADER::e_minalloc: le.set_e_minalloc(static_cast<quint16>(nValue)); break;
+                        case N_LE_DOS_HEADER::e_maxalloc: le.set_e_maxalloc(static_cast<quint16>(nValue)); break;
+                        case N_LE_DOS_HEADER::e_ss: le.set_e_ss(static_cast<quint16>(nValue)); break;
+                        case N_LE_DOS_HEADER::e_sp: le.set_e_sp(static_cast<quint16>(nValue)); break;
+                        case N_LE_DOS_HEADER::e_csum: le.set_e_csum(static_cast<quint16>(nValue)); break;
+                        case N_LE_DOS_HEADER::e_ip: le.set_e_ip(static_cast<quint16>(nValue)); break;
+                        case N_LE_DOS_HEADER::e_cs: le.set_e_cs(static_cast<quint16>(nValue)); break;
+                        case N_LE_DOS_HEADER::e_lfarlc: le.set_e_lfarlc(static_cast<quint16>(nValue)); break;
+                        case N_LE_DOS_HEADER::e_ovno: le.set_e_ovno(static_cast<quint16>(nValue)); break;
+                        case N_LE_DOS_HEADER::e_res_0: le.set_e_res(0, static_cast<quint16>(nValue)); break;
+                        case N_LE_DOS_HEADER::e_res_1: le.set_e_res(1, static_cast<quint16>(nValue)); break;
+                        case N_LE_DOS_HEADER::e_res_2: le.set_e_res(2, static_cast<quint16>(nValue)); break;
+                        case N_LE_DOS_HEADER::e_res_3: le.set_e_res(3, static_cast<quint16>(nValue)); break;
+                        case N_LE_DOS_HEADER::e_oemid: le.set_e_oemid(static_cast<quint16>(nValue)); break;
+                        case N_LE_DOS_HEADER::e_oeminfo: le.set_e_oeminfo(static_cast<quint16>(nValue)); break;
+                        case N_LE_DOS_HEADER::e_res2_0: le.set_e_res2(0, static_cast<quint16>(nValue)); break;
+                        case N_LE_DOS_HEADER::e_res2_1: le.set_e_res2(1, static_cast<quint16>(nValue)); break;
+                        case N_LE_DOS_HEADER::e_res2_2: le.set_e_res2(2, static_cast<quint16>(nValue)); break;
+                        case N_LE_DOS_HEADER::e_res2_3: le.set_e_res2(3, static_cast<quint16>(nValue)); break;
+                        case N_LE_DOS_HEADER::e_res2_4: le.set_e_res2(4, static_cast<quint16>(nValue)); break;
+                        case N_LE_DOS_HEADER::e_res2_5: le.set_e_res2(5, static_cast<quint16>(nValue)); break;
+                        case N_LE_DOS_HEADER::e_res2_6: le.set_e_res2(6, static_cast<quint16>(nValue)); break;
+                        case N_LE_DOS_HEADER::e_res2_7: le.set_e_res2(7, static_cast<quint16>(nValue)); break;
+                        case N_LE_DOS_HEADER::e_res2_8: le.set_e_res2(8, static_cast<quint16>(nValue)); break;
+                        case N_LE_DOS_HEADER::e_res2_9: le.set_e_res2(9, static_cast<quint16>(nValue)); break;
+                        case N_LE_DOS_HEADER::e_lfanew: le.set_e_lfanew(static_cast<quint32>(nValue)); break;
                     }
 
                     ui->widgetHex_DOS_HEADER->reload();
@@ -194,52 +194,52 @@ FormatWidget::SV LEWidget::_setValue(QVariant vValue, qint32 nStype, qint32 nNda
 
                 case SLE::TYPE_VXD_HEADER:
                     switch (nNdata) {
-                        case N_VXD_HEADER::e32_magic: le.setImageVxdHeader_magic((quint16)nValue); break;
-                        case N_VXD_HEADER::e32_border: le.setImageVxdHeader_border((quint8)nValue); break;
-                        case N_VXD_HEADER::e32_worder: le.setImageVxdHeader_worder((quint8)nValue); break;
-                        case N_VXD_HEADER::e32_level: le.setImageVxdHeader_level((quint32)nValue); break;
-                        case N_VXD_HEADER::e32_cpu: le.setImageVxdHeader_cpu((quint16)nValue); break;
-                        case N_VXD_HEADER::e32_os: le.setImageVxdHeader_os((quint16)nValue); break;
-                        case N_VXD_HEADER::e32_ver: le.setImageVxdHeader_ver((quint32)nValue); break;
-                        case N_VXD_HEADER::e32_mflags: le.setImageVxdHeader_mflags((quint32)nValue); break;
-                        case N_VXD_HEADER::e32_mpages: le.setImageVxdHeader_mpages((quint32)nValue); break;
-                        case N_VXD_HEADER::e32_startobj: le.setImageVxdHeader_startobj((quint32)nValue); break;
-                        case N_VXD_HEADER::e32_eip: le.setImageVxdHeader_eip((quint32)nValue); break;
-                        case N_VXD_HEADER::e32_stackobj: le.setImageVxdHeader_stackobj((quint32)nValue); break;
-                        case N_VXD_HEADER::e32_esp: le.setImageVxdHeader_esp((quint32)nValue); break;
-                        case N_VXD_HEADER::e32_pagesize: le.setImageVxdHeader_pagesize((quint32)nValue); break;
-                        case N_VXD_HEADER::e32_lastpagesize: le.setImageVxdHeader_lastpagesize((quint32)nValue); break;
-                        case N_VXD_HEADER::e32_fixupsize: le.setImageVxdHeader_fixupsize((quint32)nValue); break;
-                        case N_VXD_HEADER::e32_fixupsum: le.setImageVxdHeader_fixupsum((quint32)nValue); break;
-                        case N_VXD_HEADER::e32_ldrsize: le.setImageVxdHeader_ldrsize((quint32)nValue); break;
-                        case N_VXD_HEADER::e32_ldrsum: le.setImageVxdHeader_ldrsum((quint32)nValue); break;
-                        case N_VXD_HEADER::e32_objtab: le.setImageVxdHeader_objtab((quint32)nValue); break;
-                        case N_VXD_HEADER::e32_objcnt: le.setImageVxdHeader_objcnt((quint32)nValue); break;
-                        case N_VXD_HEADER::e32_objmap: le.setImageVxdHeader_objmap((quint32)nValue); break;
-                        case N_VXD_HEADER::e32_itermap: le.setImageVxdHeader_itermap((quint32)nValue); break;
-                        case N_VXD_HEADER::e32_rsrctab: le.setImageVxdHeader_rsrctab((quint32)nValue); break;
-                        case N_VXD_HEADER::e32_rsrccnt: le.setImageVxdHeader_rsrccnt((quint32)nValue); break;
-                        case N_VXD_HEADER::e32_restab: le.setImageVxdHeader_restab((quint32)nValue); break;
-                        case N_VXD_HEADER::e32_enttab: le.setImageVxdHeader_enttab((quint32)nValue); break;
-                        case N_VXD_HEADER::e32_dirtab: le.setImageVxdHeader_dirtab((quint32)nValue); break;
-                        case N_VXD_HEADER::e32_dircnt: le.setImageVxdHeader_dircnt((quint32)nValue); break;
-                        case N_VXD_HEADER::e32_fpagetab: le.setImageVxdHeader_fpagetab((quint32)nValue); break;
-                        case N_VXD_HEADER::e32_frectab: le.setImageVxdHeader_frectab((quint32)nValue); break;
-                        case N_VXD_HEADER::e32_impmod: le.setImageVxdHeader_impmod((quint32)nValue); break;
-                        case N_VXD_HEADER::e32_impmodcnt: le.setImageVxdHeader_impmodcnt((quint32)nValue); break;
-                        case N_VXD_HEADER::e32_impproc: le.setImageVxdHeader_impproc((quint32)nValue); break;
-                        case N_VXD_HEADER::e32_pagesum: le.setImageVxdHeader_pagesum((quint32)nValue); break;
-                        case N_VXD_HEADER::e32_datapage: le.setImageVxdHeader_datapage((quint32)nValue); break;
-                        case N_VXD_HEADER::e32_preload: le.setImageVxdHeader_preload((quint32)nValue); break;
-                        case N_VXD_HEADER::e32_nrestab: le.setImageVxdHeader_nrestab((quint32)nValue); break;
-                        case N_VXD_HEADER::e32_cbnrestab: le.setImageVxdHeader_cbnrestab((quint32)nValue); break;
-                        case N_VXD_HEADER::e32_nressum: le.setImageVxdHeader_nressum((quint32)nValue); break;
-                        case N_VXD_HEADER::e32_autodata: le.setImageVxdHeader_autodata((quint32)nValue); break;
-                        case N_VXD_HEADER::e32_debuginfo: le.setImageVxdHeader_debuginfo((quint32)nValue); break;
-                        case N_VXD_HEADER::e32_debuglen: le.setImageVxdHeader_debuglen((quint32)nValue); break;
-                        case N_VXD_HEADER::e32_instpreload: le.setImageVxdHeader_instpreload((quint32)nValue); break;
-                        case N_VXD_HEADER::e32_instdemand: le.setImageVxdHeader_instdemand((quint32)nValue); break;
-                        case N_VXD_HEADER::e32_heapsize: le.setImageVxdHeader_heapsize((quint32)nValue); break;
+                        case N_VXD_HEADER::e32_magic: le.setImageVxdHeader_magic(static_cast<quint16>(nValue)); break;
+                        case N_VXD_HEADER::e32_border: le.setImageVxdHeader_border(static_cast<quint8>(nValue)); break;
+                        case N_VXD_HEADER::e32_worder: le.setImageVxdHeader_worder(static_cast<quint8>(nValue)); break;
+                        case N_VXD_HEADER::e32_level: le.setImageVxdHeader_level(static_cast<quint32>(nValue)); break;
+                        case N_VXD_HEADER::e32_cpu: le.setImageVxdHeader_cpu(static_cast<quint16>(nValue)); break;
+                        case N_VXD_HEADER::e32_os: le.setImageVxdHeader_os(static_cast<quint16>(nValue)); break;
+                        case N_VXD_HEADER::e32_ver: le.setImageVxdHeader_ver(static_cast<quint32>(nValue)); break;
+                        case N_VXD_HEADER::e32_mflags: le.setImageVxdHeader_mflags(static_cast<quint32>(nValue)); break;
+                        case N_VXD_HEADER::e32_mpages: le.setImageVxdHeader_mpages(static_cast<quint32>(nValue)); break;
+                        case N_VXD_HEADER::e32_startobj: le.setImageVxdHeader_startobj(static_cast<quint32>(nValue)); break;
+                        case N_VXD_HEADER::e32_eip: le.setImageVxdHeader_eip(static_cast<quint32>(nValue)); break;
+                        case N_VXD_HEADER::e32_stackobj: le.setImageVxdHeader_stackobj(static_cast<quint32>(nValue)); break;
+                        case N_VXD_HEADER::e32_esp: le.setImageVxdHeader_esp(static_cast<quint32>(nValue)); break;
+                        case N_VXD_HEADER::e32_pagesize: le.setImageVxdHeader_pagesize(static_cast<quint32>(nValue)); break;
+                        case N_VXD_HEADER::e32_lastpagesize: le.setImageVxdHeader_lastpagesize(static_cast<quint32>(nValue)); break;
+                        case N_VXD_HEADER::e32_fixupsize: le.setImageVxdHeader_fixupsize(static_cast<quint32>(nValue)); break;
+                        case N_VXD_HEADER::e32_fixupsum: le.setImageVxdHeader_fixupsum(static_cast<quint32>(nValue)); break;
+                        case N_VXD_HEADER::e32_ldrsize: le.setImageVxdHeader_ldrsize(static_cast<quint32>(nValue)); break;
+                        case N_VXD_HEADER::e32_ldrsum: le.setImageVxdHeader_ldrsum(static_cast<quint32>(nValue)); break;
+                        case N_VXD_HEADER::e32_objtab: le.setImageVxdHeader_objtab(static_cast<quint32>(nValue)); break;
+                        case N_VXD_HEADER::e32_objcnt: le.setImageVxdHeader_objcnt(static_cast<quint32>(nValue)); break;
+                        case N_VXD_HEADER::e32_objmap: le.setImageVxdHeader_objmap(static_cast<quint32>(nValue)); break;
+                        case N_VXD_HEADER::e32_itermap: le.setImageVxdHeader_itermap(static_cast<quint32>(nValue)); break;
+                        case N_VXD_HEADER::e32_rsrctab: le.setImageVxdHeader_rsrctab(static_cast<quint32>(nValue)); break;
+                        case N_VXD_HEADER::e32_rsrccnt: le.setImageVxdHeader_rsrccnt(static_cast<quint32>(nValue)); break;
+                        case N_VXD_HEADER::e32_restab: le.setImageVxdHeader_restab(static_cast<quint32>(nValue)); break;
+                        case N_VXD_HEADER::e32_enttab: le.setImageVxdHeader_enttab(static_cast<quint32>(nValue)); break;
+                        case N_VXD_HEADER::e32_dirtab: le.setImageVxdHeader_dirtab(static_cast<quint32>(nValue)); break;
+                        case N_VXD_HEADER::e32_dircnt: le.setImageVxdHeader_dircnt(static_cast<quint32>(nValue)); break;
+                        case N_VXD_HEADER::e32_fpagetab: le.setImageVxdHeader_fpagetab(static_cast<quint32>(nValue)); break;
+                        case N_VXD_HEADER::e32_frectab: le.setImageVxdHeader_frectab(static_cast<quint32>(nValue)); break;
+                        case N_VXD_HEADER::e32_impmod: le.setImageVxdHeader_impmod(static_cast<quint32>(nValue)); break;
+                        case N_VXD_HEADER::e32_impmodcnt: le.setImageVxdHeader_impmodcnt(static_cast<quint32>(nValue)); break;
+                        case N_VXD_HEADER::e32_impproc: le.setImageVxdHeader_impproc(static_cast<quint32>(nValue)); break;
+                        case N_VXD_HEADER::e32_pagesum: le.setImageVxdHeader_pagesum(static_cast<quint32>(nValue)); break;
+                        case N_VXD_HEADER::e32_datapage: le.setImageVxdHeader_datapage(static_cast<quint32>(nValue)); break;
+                        case N_VXD_HEADER::e32_preload: le.setImageVxdHeader_preload(static_cast<quint32>(nValue)); break;
+                        case N_VXD_HEADER::e32_nrestab: le.setImageVxdHeader_nrestab(static_cast<quint32>(nValue)); break;
+                        case N_VXD_HEADER::e32_cbnrestab: le.setImageVxdHeader_cbnrestab(static_cast<quint32>(nValue)); break;
+                        case N_VXD_HEADER::e32_nressum: le.setImageVxdHeader_nressum(static_cast<quint32>(nValue)); break;
+                        case N_VXD_HEADER::e32_autodata: le.setImageVxdHeader_autodata(static_cast<quint32>(nValue)); break;
+                        case N_VXD_HEADER::e32_debuginfo: le.setImageVxdHeader_debuginfo(static_cast<quint32>(nValue)); break;
+                        case N_VXD_HEADER::e32_debuglen: le.setImageVxdHeader_debuglen(static_cast<quint32>(nValue)); break;
+                        case N_VXD_HEADER::e32_instpreload: le.setImageVxdHeader_instpreload(static_cast<quint32>(nValue)); break;
+                        case N_VXD_HEADER::e32_instdemand: le.setImageVxdHeader_instdemand(static_cast<quint32>(nValue)); break;
+                        case N_VXD_HEADER::e32_heapsize: le.setImageVxdHeader_heapsize(static_cast<quint32>(nValue)); break;
                     }
 
                     ui->widgetHex_VXD_HEADER->reload();
@@ -612,14 +612,14 @@ void LEWidget::_widgetValueChanged(QVariant vValue)
     switch (nStype) {
         case SLE::TYPE_DOS_HEADER:
             switch (nNdata) {
-                case N_LE_DOS_HEADER::e_magic: m_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_magic]->setValue_uint16((quint16)nValue); break;
+                case N_LE_DOS_HEADER::e_magic: m_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::e_magic]->setValue_uint16(static_cast<quint16>(nValue)); break;
             }
             break;
         case SLE::TYPE_VXD_HEADER:
             switch (nNdata) {
-                case N_VXD_HEADER::e32_magic: m_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_magic]->setValue_uint16((quint16)nValue); break;
-                case N_VXD_HEADER::e32_cpu: m_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_cpu]->setValue_uint16((quint16)nValue); break;
-                case N_VXD_HEADER::e32_os: m_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_os]->setValue_uint16((quint16)nValue); break;
+                case N_VXD_HEADER::e32_magic: m_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_magic]->setValue_uint16(static_cast<quint16>(nValue)); break;
+                case N_VXD_HEADER::e32_cpu: m_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_cpu]->setValue_uint16(static_cast<quint16>(nValue)); break;
+                case N_VXD_HEADER::e32_os: m_lineEdit_VXD_HEADER[N_VXD_HEADER::e32_os]->setValue_uint16(static_cast<quint16>(nValue)); break;
             }
             break;
     }

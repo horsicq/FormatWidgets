@@ -87,7 +87,7 @@ public:
     XInfoDB *getXInfoDB();
 
     void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
-    virtual void adjustView();
+    void adjustView() override;
     void setData(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType);
     void setData(const QString &sFileName, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType);
     void setData(FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType);
@@ -108,8 +108,6 @@ public:
     bool createListTable(qint32 nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, qint32 nNumberOfRecords);
     void addComment(QTableWidget *pTableWidget, qint32 nRow, qint32 nColumn, const QString &sComment);
     void updateTableRecord(QTableWidget *pTableWidget, qint32 nRow, qint64 nOffset, qint64 nSize);
-    //    bool createDirectoryTable(int type,QTableWidget *pTableWidget,const
-    //    DIRECTORY_ENTRY_RECORD *pRecords,int nRecordCount);
     bool createSectionTable(qint32 nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, qint32 nNumberOfRecords);
     void setLineEditsReadOnly(XLineEditHEX **ppLineEdits, qint32 nCount, bool bState);
     void setComboBoxesReadOnly(XComboBoxEx **ppComboBoxes, qint32 nCount, bool bState);
@@ -127,9 +125,6 @@ public:
     void setValue(QVariant vValue, qint32 nStype, qint32 nNdata, qint32 nVtype, qint32 nPosition, qint64 nOffset);
 
     bool isEdited();
-
-    //    QPushButton *createHexButton(QTableWidget *pTableWidget,int nType,int
-    //    nData);
 
     bool loadHexSubdevice(qint64 nOffset, qint64 nSize, XADDR nAddress, SubDevice **ppSubDevice, ToolsWidget *pToolsWidget, bool bOffset = false, bool bDisasm = true,
                           bool bFollow = true);
@@ -247,7 +242,7 @@ public slots:
     bool saveBackup();
 
 protected:
-    virtual void registerShortcuts(bool bState);
+    void registerShortcuts(bool bState) override;
 
 private:
     QIODevice *m_pDevice;

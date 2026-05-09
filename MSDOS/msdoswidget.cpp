@@ -143,20 +143,20 @@ FormatWidget::SV MSDOSWidget::_setValue(QVariant vValue, qint32 nStype, qint32 n
             switch (nStype) {
                 case SMSDOS::TYPE_DOS_HEADER:
                     switch (nNdata) {
-                        case N_DOS_HEADER::e_magic: msdos.set_e_magic((quint16)nValue); break;
-                        case N_DOS_HEADER::e_cblp: msdos.set_e_cblp((quint16)nValue); break;
-                        case N_DOS_HEADER::e_cp: msdos.set_e_cp((quint16)nValue); break;
-                        case N_DOS_HEADER::e_crlc: msdos.set_e_crlc((quint16)nValue); break;
-                        case N_DOS_HEADER::e_cparhdr: msdos.set_e_cparhdr((quint16)nValue); break;
-                        case N_DOS_HEADER::e_minalloc: msdos.set_e_minalloc((quint16)nValue); break;
-                        case N_DOS_HEADER::e_maxalloc: msdos.set_e_maxalloc((quint16)nValue); break;
-                        case N_DOS_HEADER::e_ss: msdos.set_e_ss((quint16)nValue); break;
-                        case N_DOS_HEADER::e_sp: msdos.set_e_sp((quint16)nValue); break;
-                        case N_DOS_HEADER::e_csum: msdos.set_e_csum((quint16)nValue); break;
-                        case N_DOS_HEADER::e_ip: msdos.set_e_ip((quint16)nValue); break;
-                        case N_DOS_HEADER::e_cs: msdos.set_e_cs((quint16)nValue); break;
-                        case N_DOS_HEADER::e_lfarlc: msdos.set_e_lfarlc((quint16)nValue); break;
-                        case N_DOS_HEADER::e_ovno: msdos.set_e_ovno((quint16)nValue); break;
+                        case N_DOS_HEADER::e_magic: msdos.set_e_magic(static_cast<quint16>(nValue)); break;
+                        case N_DOS_HEADER::e_cblp: msdos.set_e_cblp(static_cast<quint16>(nValue)); break;
+                        case N_DOS_HEADER::e_cp: msdos.set_e_cp(static_cast<quint16>(nValue)); break;
+                        case N_DOS_HEADER::e_crlc: msdos.set_e_crlc(static_cast<quint16>(nValue)); break;
+                        case N_DOS_HEADER::e_cparhdr: msdos.set_e_cparhdr(static_cast<quint16>(nValue)); break;
+                        case N_DOS_HEADER::e_minalloc: msdos.set_e_minalloc(static_cast<quint16>(nValue)); break;
+                        case N_DOS_HEADER::e_maxalloc: msdos.set_e_maxalloc(static_cast<quint16>(nValue)); break;
+                        case N_DOS_HEADER::e_ss: msdos.set_e_ss(static_cast<quint16>(nValue)); break;
+                        case N_DOS_HEADER::e_sp: msdos.set_e_sp(static_cast<quint16>(nValue)); break;
+                        case N_DOS_HEADER::e_csum: msdos.set_e_csum(static_cast<quint16>(nValue)); break;
+                        case N_DOS_HEADER::e_ip: msdos.set_e_ip(static_cast<quint16>(nValue)); break;
+                        case N_DOS_HEADER::e_cs: msdos.set_e_cs(static_cast<quint16>(nValue)); break;
+                        case N_DOS_HEADER::e_lfarlc: msdos.set_e_lfarlc(static_cast<quint16>(nValue)); break;
+                        case N_DOS_HEADER::e_ovno: msdos.set_e_ovno(static_cast<quint16>(nValue)); break;
                     }
 
                     ui->widgetHex_DOS_HEADER->reload();
@@ -206,11 +206,7 @@ QString MSDOSWidget::typeIdToString(qint32 nType)
 {
     Q_UNUSED(nType)
 
-    QString sResult;
-
-    // TODO
-
-    return sResult;
+    return {};
 }
 
 void MSDOSWidget::_showInDisasmWindowAddress(qint64 nAddress)
@@ -426,7 +422,7 @@ void MSDOSWidget::_widgetValueChanged(QVariant vValue)
     switch (nStype) {
         case SMSDOS::TYPE_DOS_HEADER:
             switch (nNdata) {
-                case N_DOS_HEADER::e_magic: m_lineEdit_DOS_HEADER[N_DOS_HEADER::e_magic]->setValue_uint16((quint16)nValue); break;
+                case N_DOS_HEADER::e_magic: m_lineEdit_DOS_HEADER[N_DOS_HEADER::e_magic]->setValue_uint16(static_cast<quint16>(nValue)); break;
             }
 
             break;

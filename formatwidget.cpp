@@ -41,7 +41,7 @@ FormatWidget::FormatWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 
 
 FormatWidget::~FormatWidget()
 {
-    if (m_sFileName != "") {
+    if (!m_sFileName.isEmpty()) {
         QFile *pFile = dynamic_cast<QFile *>(m_pDevice);
 
         if (pFile) {
@@ -73,7 +73,7 @@ void FormatWidget::adjustView()
     XShortcutstScrollArea::adjustViewChildren(this);
 
     {
-        QList<QTreeWidget *> listWidgets = this->findChildren<QTreeWidget *>();
+        QList<QTreeWidget *> listWidgets = findChildren<QTreeWidget *>();
 
         qint32 nNumberOfWidgets = listWidgets.count();
 
@@ -86,7 +86,7 @@ void FormatWidget::adjustView()
         }
     }
     {
-        QList<QTreeView *> listWidgets = this->findChildren<QTreeView *>();
+        QList<QTreeView *> listWidgets = findChildren<QTreeView *>();
 
         qint32 nNumberOfWidgets = listWidgets.count();
 
@@ -99,7 +99,7 @@ void FormatWidget::adjustView()
         }
     }
     {
-        QList<QTableWidget *> listWidgets = this->findChildren<QTableWidget *>();
+        QList<QTableWidget *> listWidgets = findChildren<QTableWidget *>();
 
         qint32 nNumberOfWidgets = listWidgets.count();
 
@@ -112,7 +112,7 @@ void FormatWidget::adjustView()
         }
     }
     {
-        QList<QTableView *> listWidgets = this->findChildren<QTableView *>();
+        QList<QTableView *> listWidgets = findChildren<QTableView *>();
 
         qint32 nNumberOfWidgets = listWidgets.count();
 
@@ -125,7 +125,7 @@ void FormatWidget::adjustView()
         }
     }
     {
-        QList<QTextEdit *> listWidgets = this->findChildren<QTextEdit *>();
+        QList<QTextEdit *> listWidgets = findChildren<QTextEdit *>();
 
         qint32 nNumberOfWidgets = listWidgets.count();
 
@@ -138,7 +138,7 @@ void FormatWidget::adjustView()
         }
     }
     {
-        QList<QPlainTextEdit *> listWidgets = this->findChildren<QPlainTextEdit *>();
+        QList<QPlainTextEdit *> listWidgets = findChildren<QPlainTextEdit *>();
 
         qint32 nNumberOfWidgets = listWidgets.count();
 
@@ -202,7 +202,7 @@ XBinary::FT FormatWidget::getFileType()
 
 QIODevice *FormatWidget::getDevice()
 {
-    return this->m_pDevice;
+    return m_pDevice;
 }
 
 void FormatWidget::setOptions(FW_DEF::OPTIONS options)
@@ -298,16 +298,12 @@ QString FormatWidget::typeIdToString(qint32 nType)
 {
     Q_UNUSED(nType)
 
-    return "";
+    return {};
 }
 
 bool FormatWidget::isEdited()
 {
-    bool bResult = false;
-
-    bResult = XBinary::isBackupPresent(XBinary::getBackupDevice(getDevice()));
-
-    return bResult;
+    return XBinary::isBackupPresent(XBinary::getBackupDevice(getDevice()));
 }
 
 bool FormatWidget::loadHexSubdevice(qint64 nOffset, qint64 nSize, XADDR nAddress, SubDevice **ppSubDevice, ToolsWidget *pToolsWidget, bool bOffset, bool bDisasm,
@@ -317,7 +313,7 @@ bool FormatWidget::loadHexSubdevice(qint64 nOffset, qint64 nSize, XADDR nAddress
         (*ppSubDevice)->close();
         delete (*ppSubDevice);
 
-        (*ppSubDevice) = 0;
+        (*ppSubDevice) = nullptr;
     }
 
     if ((nOffset == -1) || (nSize == 0)) {
@@ -685,7 +681,7 @@ void FormatWidget::setAddPageEnabled(bool bEnable)
 
 QTreeWidgetItem *FormatWidget::getPrevPage()
 {
-    QTreeWidgetItem *pResult = 0;
+    QTreeWidgetItem *pResult = nullptr;
 
     if (isPrevPageAvailable()) {
         m_nPageIndex--;
@@ -697,7 +693,7 @@ QTreeWidgetItem *FormatWidget::getPrevPage()
 
 QTreeWidgetItem *FormatWidget::getNextPage()
 {
-    QTreeWidgetItem *pResult = 0;
+    QTreeWidgetItem *pResult = nullptr;
 
     if (isNextPageAvailable()) {
         m_nPageIndex++;
@@ -719,25 +715,8 @@ bool FormatWidget::isNextPageAvailable()
 
 void FormatWidget::initWidget()
 {
-    //    {
-    //        QList<XHexViewWidget *>
-    //        listWidgets=this->findChildren<XHexViewWidget *>();
-
-    //        qint32 nNumberOfWidgets=listWidgets.count();
-
-    //        for(qint32 i=0;i<nNumberOfWidgets;i++)
-    //        {
-    //            XHexViewWidget *pChild=dynamic_cast<XHexViewWidget
-    //            *>(listWidgets.at(i));
-
-    //            if(pChild)
-    //            {
-    //                initHexViewWidget(pChild);
-    //            }
-    //        }
-    //    }
     {
-        QList<XHexView *> listWidgets = this->findChildren<XHexView *>();
+        QList<XHexView *> listWidgets = findChildren<XHexView *>();
 
         qint32 nNumberOfWidgets = listWidgets.count();
 
@@ -750,7 +729,7 @@ void FormatWidget::initWidget()
         }
     }
     {
-        QList<XMultiDisasmWidget *> listWidgets = this->findChildren<XMultiDisasmWidget *>();
+        QList<XMultiDisasmWidget *> listWidgets = findChildren<XMultiDisasmWidget *>();
 
         qint32 nNumberOfWidgets = listWidgets.count();
 
@@ -763,7 +742,7 @@ void FormatWidget::initWidget()
         }
     }
     {
-        QList<XMemoryMapWidget *> listWidgets = this->findChildren<XMemoryMapWidget *>();
+        QList<XMemoryMapWidget *> listWidgets = findChildren<XMemoryMapWidget *>();
 
         qint32 nNumberOfWidgets = listWidgets.count();
 
@@ -776,7 +755,7 @@ void FormatWidget::initWidget()
         }
     }
     {
-        QList<SearchSignaturesWidget *> listWidgets = this->findChildren<SearchSignaturesWidget *>();
+        QList<SearchSignaturesWidget *> listWidgets = findChildren<SearchSignaturesWidget *>();
 
         qint32 nNumberOfWidgets = listWidgets.count();
 
@@ -789,7 +768,7 @@ void FormatWidget::initWidget()
         }
     }
     {
-        QList<SearchStringsWidget *> listWidgets = this->findChildren<SearchStringsWidget *>();
+        QList<SearchStringsWidget *> listWidgets = findChildren<SearchStringsWidget *>();
 
         qint32 nNumberOfWidgets = listWidgets.count();
 
@@ -802,7 +781,7 @@ void FormatWidget::initWidget()
         }
     }
     {
-        QList<SearchValuesWidget *> listWidgets = this->findChildren<SearchValuesWidget *>();
+        QList<SearchValuesWidget *> listWidgets = findChildren<SearchValuesWidget *>();
 
         qint32 nNumberOfWidgets = listWidgets.count();
 
@@ -814,29 +793,8 @@ void FormatWidget::initWidget()
             }
         }
     }
-    //    {
-    //        QList<ToolsWidget *> listWidgets=this->findChildren<ToolsWidget
-    //        *>();
-
-    //        qint32 nNumberOfWidgets=listWidgets.count();
-
-    //        for(qint32 i=0;i<nNumberOfWidgets;i++)
-    //        {
-    //            ToolsWidget *pChild=dynamic_cast<ToolsWidget
-    //            *>(listWidgets.at(i));
-
-    //            if(pChild)
-    //            {
-    //                qDebug("Size: %d",pChild->height());
-
-    //                pChild->resize(pChild->width(),150); // TODO Check
-
-    //                qDebug("Size: %d",pChild->height());
-    //            }
-    //        }
-    //    }
     {
-        QList<XExtractorWidget *> listWidgets = this->findChildren<XExtractorWidget *>();
+        QList<XExtractorWidget *> listWidgets = findChildren<XExtractorWidget *>();
 
         qint32 nNumberOfWidgets = listWidgets.count();
 
@@ -849,7 +807,7 @@ void FormatWidget::initWidget()
         }
     }
     {
-        QList<YARAWidgetAdvanced *> listWidgets = this->findChildren<YARAWidgetAdvanced *>();
+        QList<YARAWidgetAdvanced *> listWidgets = findChildren<YARAWidgetAdvanced *>();
 
         qint32 nNumberOfWidgets = listWidgets.count();
 
@@ -866,7 +824,7 @@ void FormatWidget::initWidget()
 void FormatWidget::resetWidget()
 {
     {
-        QList<XHexViewWidget *> listWidgets = this->findChildren<XHexViewWidget *>();
+        QList<XHexViewWidget *> listWidgets = findChildren<XHexViewWidget *>();
 
         qint32 nNumberOfWidgets = listWidgets.count();
 
@@ -879,7 +837,7 @@ void FormatWidget::resetWidget()
         }
     }
     {
-        QList<ToolsWidget *> listWidgets = this->findChildren<ToolsWidget *>();
+        QList<ToolsWidget *> listWidgets = findChildren<ToolsWidget *>();
 
         qint32 nNumberOfWidgets = listWidgets.count();
 
@@ -892,7 +850,7 @@ void FormatWidget::resetWidget()
         }
     }
     {
-        QList<XMultiDisasmWidget *> listWidgets = this->findChildren<XMultiDisasmWidget *>();
+        QList<XMultiDisasmWidget *> listWidgets = findChildren<XMultiDisasmWidget *>();
 
         qint32 nNumberOfWidgets = listWidgets.count();
 
@@ -908,7 +866,7 @@ void FormatWidget::resetWidget()
         }
     }
     {
-        QList<XMemoryMapWidget *> listWidgets = this->findChildren<XMemoryMapWidget *>();
+        QList<XMemoryMapWidget *> listWidgets = findChildren<XMemoryMapWidget *>();
 
         qint32 nNumberOfWidgets = listWidgets.count();
 
@@ -923,7 +881,7 @@ void FormatWidget::resetWidget()
         }
     }
     {
-        QList<XVisualizationWidget *> listWidgets = this->findChildren<XVisualizationWidget *>();
+        QList<XVisualizationWidget *> listWidgets = findChildren<XVisualizationWidget *>();
 
         qint32 nNumberOfWidgets = listWidgets.count();
 
@@ -1182,15 +1140,6 @@ void FormatWidget::setEdited(qint64 nDeviceOffset, qint64 nDeviceSize)
 #endif
     reset();
     reloadData(true);
-
-    //    reset();
-
-    //    if(bState)
-    //    {
-    //        reloadData();
-    //    }
-
-    //    emit changed();
 }
 
 void FormatWidget::allReload(qint64 nDeviceOffset, qint64 nDeviceSize)
@@ -1266,7 +1215,7 @@ void FormatWidget::dumpRegion(qint64 nOffset, qint64 nSize, const QString &sName
 {
     QString _sName = sName;
 
-    if (_sName == "") {
+    if (_sName.isEmpty()) {
         _sName = tr("Dump");
     }
 
@@ -1296,7 +1245,6 @@ bool FormatWidget::saveBackup()
     bool bResult = true;
 
     if ((getGlobalOptions()->isSaveBackup()) && (!isEdited())) {
-        // Save backup
         bResult = XBinary::saveBackup(XBinary::getBackupDevice(getDevice()));
     }
 
@@ -1335,7 +1283,7 @@ bool FormatWidget::createHeaderTable(qint32 nType, QTableWidget *pTableWidget, c
         QTableWidgetItem *pItemOffset = new QTableWidgetItem;
 
         if (pRecords[i].nOffset != -1) {
-            pItemOffset->setText(XBinary::valueToHex((quint16)pRecords[i].nOffset));
+            pItemOffset->setText(XBinary::valueToHex(static_cast<quint16>(pRecords[i].nOffset)));
         }
 
         pItemOffset->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);  // TODO
@@ -1440,67 +1388,9 @@ void FormatWidget::updateTableRecord(QTableWidget *pTableWidget, qint32 nRow, qi
 {
     pTableWidget->item(nRow, HEADER_COLUMN_NAME)->setData(Qt::UserRole + HEADER_DATA_OFFSET, nOffset);
     pTableWidget->item(nRow, HEADER_COLUMN_NAME)->setData(Qt::UserRole + HEADER_DATA_SIZE, nSize);
-    pTableWidget->item(nRow, HEADER_COLUMN_OFFSET)->setText(XBinary::valueToHex((quint16)nOffset));
+    pTableWidget->item(nRow, HEADER_COLUMN_OFFSET)->setText(XBinary::valueToHex(static_cast<quint16>(nOffset)));
     pTableWidget->cellWidget(nRow, HEADER_COLUMN_VALUE)->setProperty("OFFSET", nOffset);
 }
-
-// bool FormatWidget::createDirectoryTable(int type,QTableWidget
-// *pTableWidget,const DIRECTORY_ENTRY_RECORD *pRecords,int nRecordCount)
-//{
-//     Q_UNUSED(type)
-
-//    pTableWidget->setColumnCount(4);
-//    pTableWidget->setRowCount(nRecordCount);
-
-//    qint32 nSymbolWidth=getSymbolWidth();
-
-//    pTableWidget->setColumnWidth(0,nSymbolWidth*3);
-//    pTableWidget->setColumnWidth(1,nSymbolWidth*12);
-//    pTableWidget->setColumnWidth(2,nSymbolWidth*8);
-//    pTableWidget->setColumnWidth(3,nSymbolWidth*8);
-
-//    QStringList slHeader;
-//    slHeader.append(tr(""));
-//    slHeader.append(tr("Name"));
-//    slHeader.append(tr("Address"));
-//    slHeader.append(tr("Size"));
-
-//    pTableWidget->setHorizontalHeaderLabels(slHeader);
-//    pTableWidget->horizontalHeader()->setVisible(true);
-
-//    for(qint32 i=0;i<nRecordCount;i++)
-//    {
-//        QTableWidgetItem *newItemNumber=new QTableWidgetItem;
-//        newItemNumber->setText(QString("%1").arg(i));
-//        pTableWidget->setItem(i,DIRECTORY_COLUMN_NUMBER,newItemNumber);
-
-//        QTableWidgetItem *newItemName=new QTableWidgetItem;
-//        newItemName->setText(pRecords[i].pszName);
-//        pTableWidget->setItem(i,DIRECTORY_COLUMN_NAME,newItemName);
-
-////        ppLineEdits1[i]=new XLineEditHEX(this);
-////        ppLineEdits1[i]->setProperty("STYPE",type);
-////        ppLineEdits1[i]->setProperty("NDATA",pRecords[i].nData);
-////        ppLineEdits1[i]->setProperty("VTYPE",pRecords[i].vtype[0]);
-
-////
-/// connect(ppLineEdits1[i],SIGNAL(valueChanged(quint64)),this,SLOT(hexValueChanged(quint64)));
-
-//// pTableWidget->setCellWidget(i,DIRECTORY_COLUMN_ADDRESS,ppLineEdits1[i]);
-
-////        ppLineEdits2[i]=new XLineEditHEX(this);
-////        ppLineEdits2[i]->setProperty("STYPE",type);
-////        ppLineEdits2[i]->setProperty("NDATA",pRecords[i].nData);
-////        ppLineEdits2[i]->setProperty("VTYPE",pRecords[i].vtype[1]);
-
-////
-/// connect(ppLineEdits2[i],SIGNAL(valueChanged(quint64)),this,SLOT(hexValueChanged(quint64)));
-
-//// pTableWidget->setCellWidget(i,DIRECTORY_COLUMN_SIZE,ppLineEdits2[i]);
-//    }
-
-//    return true;
-//}
 
 bool FormatWidget::createSectionTable(qint32 nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, qint32 nNumberOfRecords)
 {
@@ -1563,8 +1453,8 @@ void FormatWidget::_deleteObjects(QObject **ppObjects, qint32 nCount)
 
     for (qint32 i = 0; i < nCount; i++) {
         if (ppObjects[i]) {
-            delete (ppObjects[i]);
-            ppObjects[i] = 0;
+            delete ppObjects[i];
+            ppObjects[i] = nullptr;
         }
     }
 }
@@ -1575,8 +1465,8 @@ void FormatWidget::_deleteSubdevices(SubDevice **ppSubdevices, qint32 nCount)
         if (ppSubdevices[i]) {
             ppSubdevices[i]->close();
 
-            delete (ppSubdevices[i]);
-            ppSubdevices[i] = 0;
+            delete ppSubdevices[i];
+            ppSubdevices[i] = nullptr;
         }
     }
 }
