@@ -209,7 +209,7 @@ QString MSDOSWidget::typeIdToString(qint32 nType)
     return {};
 }
 
-void MSDOSWidget::_showInDisasmWindowAddress(qint64 nAddress)
+void MSDOSWidget::_showInDisasmWindowAddress(XADDR nAddress)
 {
     setTreeItem(ui->treeWidgetNavi, SMSDOS::TYPE_DISASM);
     ui->widgetDisasm->setLocation(nAddress, XBinary::LT_ADDRESS, 0);

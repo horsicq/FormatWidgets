@@ -48,7 +48,7 @@ protected:
     void blockSignals(bool bState) override;
     void adjustHeaderTable(qint32 nType, QTableWidget *pTableWidget) override;
     QString typeIdToString(qint32 nType) override;
-    void _showInDisasmWindowAddress(qint64 nAddress) override;
+    void _showInDisasmWindowAddress(XADDR nAddress) override;
     void _showInDisasmWindowOffset(qint64 nOffset) override;
     void _showInMemoryMapWindowOffset(qint64 nOffset) override;
     void _showInHexWindow(qint64 nOffset, qint64 nSize) override;

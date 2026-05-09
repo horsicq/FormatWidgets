@@ -298,7 +298,7 @@ QString NEWidget::typeIdToString(qint32 nType)
     return sResult;
 }
 
-void NEWidget::_showInDisasmWindowAddress(qint64 nAddress)
+void NEWidget::_showInDisasmWindowAddress(XADDR nAddress)
 {
     setTreeItem(ui->treeWidgetNavi, SNE::TYPE_DISASM);
     ui->widgetDisasm->setLocation(nAddress, XBinary::LT_ADDRESS, 0);
