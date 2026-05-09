@@ -20,6 +20,8 @@
  */
 #include "neprocessdata.h"
 
+#include <QStringList>
+
 NEProcessData::NEProcessData(qint32 nType, QStandardItemModel **ppModel, XNE *pNE, qint64 nOffset, qint64 nSize) : ProcessData()
 {
     this->m_nType = nType;
@@ -31,8 +33,12 @@ NEProcessData::NEProcessData(qint32 nType, QStandardItemModel **ppModel, XNE *pN
 
 void NEProcessData::_process()
 {
+    if (!(m_pNE && m_ppModel)) {
+        return;
+    }
+
     if (m_nType == SNE::TYPE_SEGMENTS) {
-        QList<QString> listLabels;
+        QStringList listLabels;
         listLabels.append("");
 
         listLabels.append(getStructList(N_NE_SEGMENT::records, N_NE_SEGMENT::__data_size));
@@ -40,10 +46,11 @@ void NEProcessData::_process()
         QList<XNE_DEF::NE_SEGMENT> listSegments = m_pNE->getSegmentList();
 
         quint16 nShift = m_pNE->getImageOS2Header_align();
+        qint64 nTotalSize = m_pNE->getSize();
 
-        qint32 nNumberOfSegments = listSegments.count();
+        qint32 nNumberOfSegments = listSegments.size();
 
-        *m_ppModel = new QStandardItemModel(nNumberOfSegments, listLabels.count());
+        *m_ppModel = new QStandardItemModel(nNumberOfSegments, listLabels.size());
 
         setMaximum(nNumberOfSegments);
 
@@ -51,11 +58,19 @@ void NEProcessData::_process()
 
         for (qint32 i = 0; (i < nNumberOfSegments) && (isRun()); i++) {
             QStandardItem *pItem = new QStandardItem(QString::number(i));
+            qint64 nFileOffset = (qint64)listSegments.at(i).dwFileOffset << nShift;
+            qint64 nFileSize = listSegments.at(i).dwFileSize ? listSegments.at(i).dwFileSize : 0x10000;
 
-            pItem->setData((listSegments.at(i).dwFileOffset << nShift), Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET);
+            if (nFileOffset > nTotalSize) {
+                nFileSize = 0;
+            } else if ((nFileOffset + nFileSize) > nTotalSize) {
+                nFileSize = nTotalSize - nFileOffset;
+            }
+
+            pItem->setData(nFileOffset, Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET);
             //            pItem->setData(listSegments.at(i).dwFileOffset,Qt::UserRole+FW_DEF::SECTION_DATA_HEADEROFFSET);
             pItem->setData((i + 1) * 0x10000, Qt::UserRole + FW_DEF::SECTION_DATA_ADDRESS);
-            pItem->setData(listSegments.at(i).dwFileSize, Qt::UserRole + FW_DEF::SECTION_DATA_SIZE);
+            pItem->setData(nFileSize, Qt::UserRole + FW_DEF::SECTION_DATA_SIZE);
 
             (*m_ppModel)->setItem(i, 0, pItem);
             (*m_ppModel)->setItem(i, N_NE_SEGMENT::dwFileOffset + 1, new QStandardItem(XBinary::valueToHex(listSegments.at(i).dwFileOffset)));

@@ -24,6 +24,7 @@
 #include <QElapsedTimer>
 #include <QFuture>
 #include <QIODevice>
+#include <QMutex>
 #include <QSemaphore>
 #include <QStandardItemModel>
 #include <QtConcurrent>
@@ -38,7 +39,7 @@ class MultiSearch : public XThreadObject {
     Q_OBJECT
 
 public:
-    enum TYPE {
+    enum TYPE : qint32 {
         TYPE_STRINGS = 0,
         TYPE_SIGNATURES,
         TYPE_VALUES,

@@ -34,7 +34,7 @@ DialogMACHOFAT::~DialogMACHOFAT()
 
 void DialogMACHOFAT::setData(QIODevice *pDevice, FW_DEF::OPTIONS options)
 {
-    if (options.sTitle != "") {
+    if (!options.sTitle.isEmpty()) {
         setWindowTitle(options.sTitle);
     }
 
