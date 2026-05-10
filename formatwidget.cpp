@@ -23,6 +23,7 @@
 FormatWidget::FormatWidget(QWidget *pParent) : XShortcutsWidget(pParent)
 {
     m_pDevice = nullptr;
+    m_pOwnedFile = nullptr;
     m_bIsReadonly = false;
     m_fwOptions = {};
     m_bAddPageEnable = true;
@@ -41,12 +42,10 @@ FormatWidget::FormatWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 
 
 FormatWidget::~FormatWidget()
 {
-    if (!m_sFileName.isEmpty()) {
-        QFile *pFile = dynamic_cast<QFile *>(m_pDevice);
-
-        if (pFile) {
-            pFile->close();
-        }
+    if (m_pOwnedFile) {
+        m_pOwnedFile->close();
+        delete m_pOwnedFile;
+        m_pOwnedFile = nullptr;
     }
 }
 
@@ -154,6 +153,13 @@ void FormatWidget::adjustView()
 
 void FormatWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType)
 {
+    if (m_pOwnedFile && (m_pOwnedFile != pDevice)) {
+        m_pOwnedFile->close();
+        delete m_pOwnedFile;
+        m_pOwnedFile = nullptr;
+        m_sFileName.clear();
+    }
+
     m_pDevice = pDevice;
     m_bIsReadonly = !(pDevice->isWritable());
 
@@ -162,9 +168,16 @@ void FormatWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 
 
 void FormatWidget::setData(const QString &sFileName, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType)
 {
+    if (m_pOwnedFile) {
+        m_pOwnedFile->close();
+        delete m_pOwnedFile;
+        m_pOwnedFile = nullptr;
+    }
+
     m_sFileName = sFileName;
 
-    QFile *pFile = new QFile(sFileName);  // TODO delete !!! or use global
+    QFile *pFile = new QFile(sFileName);
+    m_pOwnedFile = pFile;
 
     XBinary::tryToOpen(pFile);
 
@@ -645,7 +658,7 @@ QString FormatWidget::getInitString(QTreeWidgetItem *pItem)
     qint64 nDataOffset = pItem->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET).toLongLong();
     qint64 nDataSize = pItem->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_SIZE).toLongLong();
 
-    sResult = QString("%1-%2-%3").arg(QString::number(nType), QString::number(nDataOffset), QString::number(nDataSize));
+    sResult = QString("%1-%2-%3").arg(QString::number(nType)).arg(QString::number(nDataOffset)).arg(QString::number(nDataSize));
 
     return sResult;
 }
@@ -1045,13 +1058,13 @@ QStandardItemModel *FormatWidget::getHeaderTableModel(QTableWidget *pTableWidget
 
 void FormatWidget::saveHeaderTable(QTableWidget *pTableWidget, const QString &sFileName)
 {
-    QString _sFileName = QFileDialog::getSaveFileName(this, tr("Save"), sFileName, QString("%1 (*.txt);;%2 (*)").arg(tr("Text files"), tr("All files")));
+    QString _sFileName = QFileDialog::getSaveFileName(this, tr("Save"), sFileName, QString("%1 (*.txt);;%2 (*)").arg(tr("Text files")).arg(tr("All files")));
 
     if (!_sFileName.isEmpty()) {
         QStandardItemModel *pModel = getHeaderTableModel(pTableWidget);
 
         if (!XOptions::saveTableModel(pModel, _sFileName)) {
-            QMessageBox::critical(XOptions::getMainWidget(this), tr("Error"), QString("%1: %2").arg(tr("Cannot save file"), _sFileName));
+            QMessageBox::critical(XOptions::getMainWidget(this), tr("Error"), QString("%1: %2").arg(tr("Cannot save file")).arg(_sFileName));
         }
 
         delete pModel;

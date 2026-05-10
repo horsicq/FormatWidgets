@@ -38,7 +38,7 @@ void DialogNE::adjustView()
 
 void DialogNE::setData(QIODevice *pDevice, FW_DEF::OPTIONS options)
 {
-    if (options.sTitle != "") {
+    if (!options.sTitle.isEmpty()) {
         setWindowTitle(options.sTitle);
     }
 

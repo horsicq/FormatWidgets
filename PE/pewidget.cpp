@@ -238,7 +238,7 @@ void PEWidget::reload()
                 QTreeWidgetItem *pNetMetadata = createNewItem(SPE::TYPE_NET_METADATA, tr("Metadata"), XOptions::ICONTYPE_TABLE);
                 pNetHeader->addChild(pNetMetadata);
 
-                qint32 nNumberOfStreams = cliInfo.metaData.listStreams.count();
+                qint32 nNumberOfStreams = cliInfo.metaData.listStreams.size();
 
                 for (qint32 i = 0; i < nNumberOfStreams; i++) {
                     QTreeWidgetItem *pNetMetadataStream =
@@ -1038,11 +1038,17 @@ void PEWidget::resourceDump()
 
 void PEWidget::reloadData(bool bSaveSelection)
 {
-    qint32 nType = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_TYPE).toInt();
-    qint64 nDataOffset = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET).toLongLong();
-    qint64 nDataSize = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_SIZE).toLongLong();
+    QTreeWidgetItem *pCurrentItem = ui->treeWidgetNavi->currentItem();
 
-    QString sInit = getInitString(ui->treeWidgetNavi->currentItem());
+    if (!pCurrentItem) {
+        return;
+    }
+
+    qint32 nType = pCurrentItem->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_TYPE).toInt();
+    qint64 nDataOffset = pCurrentItem->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET).toLongLong();
+    qint64 nDataSize = pCurrentItem->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_SIZE).toLongLong();
+
+    QString sInit = getInitString(pCurrentItem);
 
     ui->stackedWidgetInfo->setCurrentIndex(nType);
 
@@ -1792,7 +1798,7 @@ void PEWidget::reloadData(bool bSaveSelection)
 
                 ui->textEditResources_Version->clear();
 
-                qint32 nNumberOfResources = resourceVersion.listRecords.count();
+                qint32 nNumberOfResources = resourceVersion.listRecords.size();
 
                 QString sVersion;
 

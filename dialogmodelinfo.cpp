@@ -22,6 +22,8 @@
 
 #include "ui_dialogmodelinfo.h"
 
+#include <QMessageBox>
+
 DialogModelInfo::DialogModelInfo(QWidget *pParent) : XShortcutsDialog(pParent, true), ui(new Ui::DialogModelInfo)
 {
     ui->setupUi(this);
@@ -63,10 +65,12 @@ void DialogModelInfo::on_pushButtonOK_clicked()
 void DialogModelInfo::on_pushButtonSave_clicked()
 {
     QString sFileName = XBinary::getResultFileName(m_pDevice, QString("%1.txt").arg(m_sTitle));
-    sFileName = QFileDialog::getSaveFileName(this, tr("Save file"), sFileName, QString("%1 (*.txt);;%2 (*)").arg(tr("Text files"), tr("All files")));
+    sFileName = QFileDialog::getSaveFileName(this, tr("Save file"), sFileName, QString("%1 (*.txt);;%2 (*)").arg(tr("Text files")).arg(tr("All files")));
 
     if (!sFileName.isEmpty()) {
-        XOptions::saveTextEdit(ui->textEdit, sFileName);
+        if (!XOptions::saveTextEdit(ui->textEdit, sFileName)) {
+            QMessageBox::critical(XOptions::getMainWidget(this), tr("Error"), QString("%1: %2").arg(tr("Cannot save file")).arg(sFileName));
+        }
     }
 }
 

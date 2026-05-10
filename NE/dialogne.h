@@ -36,13 +36,13 @@ public:
     explicit DialogNE(QWidget *pParent = nullptr);
     ~DialogNE();
 
-    virtual void adjustView();
+    void adjustView() override;
 
     void setData(QIODevice *pDevice, FW_DEF::OPTIONS options);
-    void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
+    void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions) override;
 
 protected:
-    virtual void registerShortcuts(bool bState);
+    void registerShortcuts(bool bState) override;
 
 private:
     Ui::DialogNE *ui;

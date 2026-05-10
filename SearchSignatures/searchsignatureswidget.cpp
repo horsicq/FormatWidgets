@@ -251,7 +251,7 @@ void SearchSignaturesWidget::loadSignatures(const QString &sFileName)
         nNumberOfSignatures = m_listSignatureRecords.count();
     }
 
-    ui->labelInfo->setText(QString("%1: %2").arg(tr("Signatures"), QString::number(nNumberOfSignatures)));
+    ui->labelInfo->setText(QString("%1: %2").arg(tr("Signatures")).arg(QString::number(nNumberOfSignatures)));
 }
 
 void SearchSignaturesWidget::on_comboBoxFile_currentIndexChanged(int nIndex)
@@ -261,6 +261,10 @@ void SearchSignaturesWidget::on_comboBoxFile_currentIndexChanged(int nIndex)
     QString sFileName = ui->comboBoxFile->currentData().toString();
 
     loadSignatures(sFileName);
+
+    if (m_bInit) {
+        search();
+    }
 }
 
 void SearchSignaturesWidget::on_tableViewSelection(const QItemSelection &itemSelected, const QItemSelection &itemDeselected)

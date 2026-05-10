@@ -29,6 +29,7 @@ MACHOFATWidget::MACHOFATWidget(QWidget *pParent) : FormatWidget(pParent), ui(new
 
 MACHOFATWidget::~MACHOFATWidget()
 {
+    clear();
     delete ui;
 }
 
@@ -86,6 +87,8 @@ void MACHOFATWidget::reload()
                 ui->stackedWidget->addWidget(pMachWidget);
 
                 m_listDevices.append(pSubDevice);
+            } else {
+                delete pSubDevice;
             }
         }
     }

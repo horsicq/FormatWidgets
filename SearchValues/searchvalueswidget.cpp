@@ -145,7 +145,7 @@ void SearchValuesWidget::on_tableViewResult_customContextMenuRequested(const QPo
 
 void SearchValuesWidget::search()
 {
-    ui->labelSearchValue->setText(QString("%1: %2").arg(XBinary::valueTypeToString(m_valueType, 0), XBinary::getValueString(m_varValue, m_valueType)));
+    ui->labelSearchValue->setText(QString("%1: %2").arg(XBinary::valueTypeToString(m_valueType, 0)).arg(XBinary::getValueString(m_varValue, m_valueType)));
 
     if (m_pDevice && (m_valueType != XBinary::VT_UNKNOWN)) {
         // ui->tableViewResult->setModel(nullptr);
@@ -224,7 +224,7 @@ void SearchValuesWidget::_hex()
     if (m_options.bMenu_Hex) {
         qint32 nRow = ui->tableViewResult->currentIndex().row();
 
-        if ((nRow != -1) && (m_listRecords.count())) {
+        if ((nRow != -1) && (!m_listRecords.isEmpty())) {
             QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(XModel_MSRecord::COLUMN_NUMBER);
 
             qint64 nOffset = ui->tableViewResult->model()->data(index, Qt::UserRole + XModel_MSRecord::USERROLE_OFFSET).toLongLong();
@@ -240,7 +240,7 @@ void SearchValuesWidget::_disasm()
     if (m_options.bMenu_Disasm) {
         qint32 nRow = ui->tableViewResult->currentIndex().row();
 
-        if ((nRow != -1) && (m_listRecords.count())) {
+        if ((nRow != -1) && (!m_listRecords.isEmpty())) {
             QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(XModel_MSRecord::COLUMN_NUMBER);
 
             qint64 nOffset = ui->tableViewResult->model()->data(index, Qt::UserRole + XModel_MSRecord::USERROLE_OFFSET).toLongLong();
@@ -257,7 +257,7 @@ void SearchValuesWidget::viewSelection()
     if (pSelectionModel) {
         QModelIndexList listIndexes = pSelectionModel->selectedIndexes();
 
-        if (listIndexes.count()) {
+        if (!listIndexes.isEmpty()) {
             QModelIndex indexNumber = listIndexes.at(XModel_MSRecord::COLUMN_NUMBER);
             XADDR nVirtualAddress = ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + XModel_MSRecord::USERROLE_ADDRESS).toULongLong();
             qint64 nOffset = ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + XModel_MSRecord::USERROLE_OFFSET).toULongLong();

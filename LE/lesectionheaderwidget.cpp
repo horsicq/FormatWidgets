@@ -35,6 +35,7 @@ LESectionHeaderWidget::LESectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS
 
 LESectionHeaderWidget::~LESectionHeaderWidget()
 {
+    delete ui;
 }
 
 void LESectionHeaderWidget::clear()

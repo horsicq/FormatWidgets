@@ -49,6 +49,8 @@
 #include "yarawidgetadvanced.h"
 #include "xtableview.h"
 
+class QFile;
+
 class FormatWidget : public XShortcutsWidget {
     Q_OBJECT
 
@@ -246,6 +248,7 @@ protected:
 
 private:
     QIODevice *m_pDevice;
+    QFile *m_pOwnedFile;
     QString m_sFileName;
     FW_DEF::OPTIONS m_fwOptions;
     quint32 m_nNumber;

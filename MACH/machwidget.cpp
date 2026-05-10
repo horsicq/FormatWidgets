@@ -1334,11 +1334,17 @@ void MACHWidget::_findValue(quint64 nValue, XBinary::ENDIAN endian)
 
 void MACHWidget::reloadData(bool bSaveSelection)
 {
-    qint32 nType = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_TYPE).toInt();
-    qint64 nDataOffset = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET).toLongLong();
-    qint64 nDataSize = ui->treeWidgetNavi->currentItem()->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_SIZE).toLongLong();
+    QTreeWidgetItem *pCurrentItem = ui->treeWidgetNavi->currentItem();
 
-    QString sInit = getInitString(ui->treeWidgetNavi->currentItem());
+    if (!pCurrentItem) {
+        return;
+    }
+
+    qint32 nType = pCurrentItem->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_TYPE).toInt();
+    qint64 nDataOffset = pCurrentItem->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET).toLongLong();
+    qint64 nDataSize = pCurrentItem->data(0, Qt::UserRole + FW_DEF::SECTION_DATA_SIZE).toLongLong();
+
+    QString sInit = getInitString(pCurrentItem);
 
     ui->stackedWidgetInfo->setCurrentIndex(nType);
 

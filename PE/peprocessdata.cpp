@@ -80,7 +80,7 @@ void PEProcessData::_process()
 
             pItemName->setText(sName);
 
-            pItemNumber->setData(QString("%1_%2_%3.bin").arg(tr("Section"), QString::number(i), XBinary::convertFileNameSymbols(sName)),
+            pItemNumber->setData(QString("%1_%2_%3.bin").arg(tr("Section")).arg(QString::number(i)).arg(XBinary::convertFileNameSymbols(sName)),
                                  Qt::UserRole + FW_DEF::SECTION_DATA_NAME);
 
             (*m_ppModel)->setItem(i, N_IMAGE_SECTION_HEADER::Name + 1, pItemName);
@@ -921,7 +921,7 @@ void PEProcessData::_process()
                 QString sResID2 = XPE::resourceIdNameToString(listResources.at(i).irin[1], 1);
                 QString sResID3 = XPE::resourceIdNameToString(listResources.at(i).irin[2], 2);
 
-                //                pItemNumber->setData(QString("%1_%2_%3.bin").arg(sResID1, sResID2, sResID3), Qt::UserRole + FW_DEF::SECTION_DATA_NAME);
+                //                pItemNumber->setData(QString("%1_%2_%3.bin").arg(sResID1).arg(sResID2).arg(sResID3), Qt::UserRole + FW_DEF::SECTION_DATA_NAME);
 
                 QString sResName = XBinary::convertFileNameSymbols(m_pPE->resourceRecordToString(listResources.at(i)));
 
@@ -1030,18 +1030,18 @@ void PEProcessData::_process()
             if (m_pPE->dumpToFile(sFileName, (qint64)0, m_pPE->getSize())) {
                 XPE::XCERT_INFO xsertInfo = XPE::getCertInfo(sFileName);
 
-                (*m_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Status"), xsertInfo.sStatus)));
+                (*m_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Status")).arg(xsertInfo.sStatus)));
 
-                if (xsertInfo.sProgramName != "") (*m_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Program name"), xsertInfo.sProgramName)));
-                if (xsertInfo.sPublisher != "") (*m_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Publisher"), xsertInfo.sPublisher)));
-                if (xsertInfo.sMoreInfo != "") (*m_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("More info"), xsertInfo.sMoreInfo)));
-                if (xsertInfo.sSerialNumber != "") (*m_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Serial number"), xsertInfo.sSerialNumber)));
-                if (xsertInfo.sIssuer != "") (*m_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Issuer"), xsertInfo.sIssuer)));
-                if (xsertInfo.sSubject != "") (*m_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Subject"), xsertInfo.sSubject)));
-                if (xsertInfo.sAlgorithm != "") (*m_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Algorithm"), xsertInfo.sAlgorithm)));
-                if (xsertInfo.sTSSerialNumber != "") (*m_ppModel)->appendRow(new QStandardItem(QString("TS %1: %2").arg(tr("Serial number"), xsertInfo.sTSSerialNumber)));
-                if (xsertInfo.sTSIssuer != "") (*m_ppModel)->appendRow(new QStandardItem(QString("TS %1: %2").arg(tr("Issuer"), xsertInfo.sTSIssuer)));
-                if (xsertInfo.sTSSubject != "") (*m_ppModel)->appendRow(new QStandardItem(QString("TS %1: %2").arg(tr("Subject"), xsertInfo.sTSSubject)));
+                if (xsertInfo.sProgramName != "") (*m_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Program name")).arg(xsertInfo.sProgramName)));
+                if (xsertInfo.sPublisher != "") (*m_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Publisher")).arg(xsertInfo.sPublisher)));
+                if (xsertInfo.sMoreInfo != "") (*m_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("More info")).arg(xsertInfo.sMoreInfo)));
+                if (xsertInfo.sSerialNumber != "") (*m_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Serial number")).arg(xsertInfo.sSerialNumber)));
+                if (xsertInfo.sIssuer != "") (*m_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Issuer")).arg(xsertInfo.sIssuer)));
+                if (xsertInfo.sSubject != "") (*m_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Subject")).arg(xsertInfo.sSubject)));
+                if (xsertInfo.sAlgorithm != "") (*m_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Algorithm")).arg(xsertInfo.sAlgorithm)));
+                if (xsertInfo.sTSSerialNumber != "") (*m_ppModel)->appendRow(new QStandardItem(QString("TS %1: %2").arg(tr("Serial number")).arg(xsertInfo.sTSSerialNumber)));
+                if (xsertInfo.sTSIssuer != "") (*m_ppModel)->appendRow(new QStandardItem(QString("TS %1: %2").arg(tr("Issuer")).arg(xsertInfo.sTSIssuer)));
+                if (xsertInfo.sTSSubject != "") (*m_ppModel)->appendRow(new QStandardItem(QString("TS %1: %2").arg(tr("Subject")).arg(xsertInfo.sTSSubject)));
             }
         }
     } else if (m_nType == SPE::TYPE_RICH) {
@@ -1253,7 +1253,7 @@ void PEProcessData::ajustTreeView(qint32 nType, QTreeView *pTreeView)
 
 void PEProcessData::handleCertRecord(QStandardItem *pParent, XPE::CERT_RECORD certRecord)
 {
-    QString sText = QString("%1 (%2)").arg(XBinary::valueToHex(XBinary::MODE_UNKNOWN, certRecord.certTag.nTag), XPE::certTagToString(certRecord.certTag.nTag));
+    QString sText = QString("%1 (%2)").arg(XBinary::valueToHex(XBinary::MODE_UNKNOWN, certRecord.certTag.nTag)).arg(XPE::certTagToString(certRecord.certTag.nTag));
 
     QString sValue = certRecord.varValue.toString();
 

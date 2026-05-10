@@ -193,7 +193,7 @@ private slots:
     void on_checkBoxSectionsStringTable_stateChanged(int nState);
 
 private:
-    enum CB {
+    enum CB : qint32 {
         CB_IMAGE_DOS_HEADER_e_magic = 0,
         CB_IMAGE_NT_HEADERS_Signature,
         CB_IMAGE_FILE_HEADER_Machine,
@@ -210,18 +210,18 @@ private:
         __CB_size
     };
 
-    enum PB {
+    enum PB : qint32 {
         PB_CalculateChecksum,
         __PB_size
     };
 
-    enum TD {
+    enum TD : qint32 {
         TD_IMAGE_FILE_HEADER_TimeDateStamp,
         TD_IMAGE_EXPORT_TimeDateStamp,
         __TD_size
     };
 
-    enum INV {
+    enum INV : qint32 {
         INV_IMAGE_DOS_HEADER_e_lfanew,
         INV_IMAGE_FILE_HEADER_PointerToSymbolTable,
         INV_IMAGE_OPTIONAL_HEADER_AddressOfEntryPoint,
