@@ -30,10 +30,11 @@
 #include <QFileInfo>
 #include <QGuiApplication>
 #include <QHeaderView>
+#include <QItemSelectionModel>
 #include <QMenu>
 #include <QUrl>
 
-XFileExplorer::XFileExplorer(QWidget *pParent) : QWidget(pParent), ui(new Ui::XFileExplorer), m_pModel(new QFileSystemModel(this))
+XFileExplorer::XFileExplorer(QWidget *pParent) : QWidget(pParent), ui(new Ui::XFileExplorer), m_pModel(new XFileSystemModel(this))
 {
     ui->setupUi(this);
 
@@ -45,6 +46,10 @@ XFileExplorer::XFileExplorer(QWidget *pParent) : QWidget(pParent), ui(new Ui::XF
     ui->treeViewFileSystem->setModel(m_pModel);
     ui->treeViewFileSystem->setSortingEnabled(true);
     ui->treeViewFileSystem->sortByColumn(0, Qt::AscendingOrder);
+    ui->treeViewFileSystem->setRootIsDecorated(false);
+    ui->treeViewFileSystem->setItemsExpandable(false);
+    ui->treeViewFileSystem->setExpandsOnDoubleClick(false);
+    ui->treeViewFileSystem->setIndentation(0);
     ui->treeViewFileSystem->header()->setStretchLastSection(false);
     ui->treeViewFileSystem->header()->setSectionResizeMode(0, QHeaderView::Stretch);
     ui->treeViewFileSystem->header()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
@@ -130,7 +135,7 @@ bool XFileExplorer::getNameFilterDisables() const
     return m_bNameFilterDisables;
 }
 
-QFileSystemModel *XFileExplorer::getModel()
+XFileSystemModel *XFileExplorer::getModel()
 {
     return m_pModel;
 }
@@ -266,6 +271,29 @@ bool XFileExplorer::selectPath(const QString &sPath)
 
     if (!fileInfo.exists()) {
         return false;
+    }
+
+    QString sFilePath = QDir::cleanPath(fileInfo.absoluteFilePath());
+    QString sRootPath = QDir::cleanPath(m_sRootPath);
+#ifdef Q_OS_WIN
+    bool bRootPath = (QString::compare(sFilePath, sRootPath, Qt::CaseInsensitive) == 0);
+#else
+    bool bRootPath = (sFilePath == sRootPath);
+#endif
+
+    if (bRootPath) {
+        ui->treeViewFileSystem->clearSelection();
+
+        if (ui->treeViewFileSystem->selectionModel()) {
+            ui->treeViewFileSystem->selectionModel()->clearCurrentIndex();
+        }
+
+        if (m_sCurrentPath != sFilePath) {
+            m_sCurrentPath = sFilePath;
+            emit currentPathChanged(m_sCurrentPath);
+        }
+
+        return true;
     }
 
     QModelIndex index = m_pModel->index(fileInfo.absoluteFilePath());

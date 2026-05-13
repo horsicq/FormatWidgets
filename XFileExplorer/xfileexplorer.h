@@ -21,7 +21,8 @@
 #ifndef XFILEEXPLORER_H
 #define XFILEEXPLORER_H
 
-#include <QFileSystemModel>
+#include "xfilesystemmodel.h"
+
 #include <QModelIndex>
 #include <QStringList>
 #include <QWidget>
@@ -51,7 +52,7 @@ public:
     void setNameFilterDisables(bool bState);
     bool getNameFilterDisables() const;
 
-    QFileSystemModel *getModel();
+    XFileSystemModel *getModel();
     QTreeView *getTreeView();
 
 public slots:
@@ -83,7 +84,7 @@ private:
     void showContextMenu(const QModelIndex &index, const QPoint &pos);
 
     Ui::XFileExplorer *ui;
-    QFileSystemModel *m_pModel;
+    XFileSystemModel *m_pModel;
     QString m_sRootPath;
     QString m_sCurrentPath;
     bool m_bNameFilterDisables;
