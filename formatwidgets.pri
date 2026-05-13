@@ -73,6 +73,11 @@ FORMS += \
     include($$PWD/XFWidgets/xfwidgets.pri)
 }
 
+!contains(XCONFIG, xfileexplorer) {
+    XCONFIG += xfileexplorer
+    include($$PWD/XFileExplorer/xfileexplorer.pri)
+}
+
 !contains(XCONFIG, archive_widget) {
     XCONFIG += archive_widget
     include($$PWD/../archive_widget/archive_widget.pri)

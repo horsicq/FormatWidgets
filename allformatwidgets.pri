@@ -53,6 +53,11 @@ contains(XCONFIG, use_dex) {
     include($$PWD/XFWidgets/xfwidgets.pri)
 }
 
+!contains(XCONFIG, xfileexplorer) {
+    XCONFIG += xfileexplorer
+    include($$PWD/XFileExplorer/xfileexplorer.pri)
+}
+
 !contains(XCONFIG, xoptionswidget) {
     XCONFIG += xoptionswidget
     include($$PWD/../XOptions/xoptionswidget.pri)

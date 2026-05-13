@@ -9,6 +9,7 @@ include(${CMAKE_CURRENT_LIST_DIR}/MACHOFAT/machofatwidget.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/MSDOS/msdoswidget.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/NE/newidget.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/PE/pewidget.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/XFileExplorer/xfileexplorer.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/XFWidgets/xfwidgets.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../XOptions/xoptionswidget.cmake)
 
@@ -23,5 +24,6 @@ set(ALLFORMATWIDGETS_SOURCES
     ${MSDOSWIDGET_SOURCES}
     ${NEWIDGET_SOURCES}
     ${PEWIDGET_SOURCES}
+    ${XFILEEXPLORER_SOURCES}
     ${XFWIDGETS_SOURCES}
 )
