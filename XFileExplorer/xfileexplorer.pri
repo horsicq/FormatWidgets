@@ -12,5 +12,10 @@ SOURCES += \
 FORMS += \
     $$PWD/xfileexplorer.ui
 
+!contains(XCONFIG, xcomboboxex) {
+    XCONFIG += xcomboboxex
+    include($$PWD/../../Controls/xcomboboxex.pri)
+}
+
 DISTFILES += \
     $$PWD/xfileexplorer.cmake
