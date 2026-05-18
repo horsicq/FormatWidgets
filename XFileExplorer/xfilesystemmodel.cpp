@@ -28,11 +28,12 @@
 
 XFileSystemModel::XFileSystemModel(QObject *pParent)
     : QAbstractTableModel(pParent),
-      m_filters(QDir::AllEntries | QDir::AllDirs | QDir::NoDotAndDotDot),
+      m_filters(QDir::AllEntries | QDir::AllDirs | QDir::NoDotDot),
       m_sortOrder(Qt::AscendingOrder),
-      m_nSortColumn(COLUMN_NAME),
+      m_nSortColumn(0),
       m_bNameFilterDisables(true)
 {
+    m_pData = nullptr;
 }
 
 void XFileSystemModel::setFilter(QDir::Filters filters)
@@ -46,6 +47,11 @@ void XFileSystemModel::setFilter(QDir::Filters filters)
 QDir::Filters XFileSystemModel::filter() const
 {
     return m_filters;
+}
+
+void XFileSystemModel::setData(XFileInfoValues::XFIDATA *pData)
+{
+    m_pData = pData;
 }
 
 QModelIndex XFileSystemModel::setRootPath(const QString &sRootPath)
@@ -79,9 +85,13 @@ QModelIndex XFileSystemModel::index(const QString &sPath) const
 {
     QString sNormalizedPath = normalizePath(sPath);
 
-    for (int i = 0; i < m_listRecordInfo.count(); i++) {
-        if (isSamePath(m_listRecordInfo.at(i).sFilePath, sNormalizedPath)) {
-            return QAbstractTableModel::index(i, COLUMN_NAME);
+    if (!m_pData) {
+        return QModelIndex();
+    }
+
+    for (int i = 0; i < m_pData->listRecords.count(); i++) {
+        if (isSamePath(m_pData->listRecords.at(i).sFilePath, sNormalizedPath)) {
+            return QAbstractTableModel::index(i, 0);
         }
     }
 
@@ -90,7 +100,7 @@ QModelIndex XFileSystemModel::index(const QString &sPath) const
 
 QString XFileSystemModel::filePath(const QModelIndex &index) const
 {
-    const RecordInfo *pRecordInfo = recordInfo(index);
+    const XFileInfoValues::RecordInfo *pRecordInfo = recordInfo(index);
 
     return pRecordInfo ? pRecordInfo->sFilePath : QString();
 }
@@ -131,27 +141,27 @@ void XFileSystemModel::reload()
 {
     beginResetModel();
 
-    m_listRecordInfo.clear();
+    if (m_pData) {
+        m_pData->listRecords.clear();
+    }
 
-    if (!m_sRootPath.isEmpty()) {
+    if (m_pData && !m_sRootPath.isEmpty()) {
         QDir dir(m_sRootPath);
         QFileInfoList listFileInfo = dir.entryInfoList(m_filters, QDir::NoSort);
 
         for (int i = 0; i < listFileInfo.count(); i++) {
             const QFileInfo &fileInfo = listFileInfo.at(i);
-            RecordInfo recordInfo;
+            XFileInfoValues::RecordInfo recordInfo;
 
             recordInfo.sFileName = fileInfo.fileName();
             recordInfo.sFilePath = fileInfo.absoluteFilePath();
-            recordInfo.sType = m_iconProvider.type(fileInfo);
-            recordInfo.dtLastModified = fileInfo.lastModified();
             recordInfo.icon = m_iconProvider.icon(fileInfo);
-            recordInfo.nSize = fileInfo.size();
             recordInfo.bIsDir = fileInfo.isDir();
             recordInfo.bEnabled = matchesNameFilters(recordInfo);
+            recordInfo.mapValues.clear();
 
             if (m_bNameFilterDisables || recordInfo.bEnabled) {
-                m_listRecordInfo.append(recordInfo);
+                m_pData->listRecords.append(recordInfo);
             }
         }
 
@@ -161,42 +171,79 @@ void XFileSystemModel::reload()
     endResetModel();
 }
 
+void XFileSystemModel::updateFileInfoValues()
+{
+    if (!m_pData || m_pData->listRecords.isEmpty() || m_pData->listFIV.isEmpty()) {
+        return;
+    }
+
+    emit layoutAboutToBeChanged();
+    sortEntries();
+    emit layoutChanged();
+
+    emit dataChanged(index(0, 1), index(m_pData->listRecords.count() - 1, m_pData->listFIV.count()));
+}
+
 int XFileSystemModel::rowCount(const QModelIndex &parent) const
 {
-    return parent.isValid() ? 0 : m_listRecordInfo.count();
+    return (parent.isValid() || !m_pData) ? 0 : m_pData->listRecords.count();
 }
 
 int XFileSystemModel::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
 
-    return COLUMN_COUNT;
+    return m_pData ? m_pData->listFIV.count() + 1 : 1;
 }
 
 QVariant XFileSystemModel::data(const QModelIndex &index, int nRole) const
 {
-    const RecordInfo *pRecordInfo = recordInfo(index);
+    const XFileInfoValues::RecordInfo *pRecordInfo = recordInfo(index);
 
     if (!pRecordInfo) {
         return QVariant();
     }
 
     if (nRole == Qt::DisplayRole || nRole == Qt::EditRole) {
-        if (index.column() == COLUMN_NAME) {
+        if (index.column() == 0) {
             return pRecordInfo->sFileName;
-        } else if (index.column() == COLUMN_SIZE) {
-            return pRecordInfo->bIsDir ? QString() : sizeToString(pRecordInfo->nSize);
-        } else if (index.column() == COLUMN_TYPE) {
-            return pRecordInfo->sType;
-        } else if (index.column() == COLUMN_MODIFIED) {
-            return QLocale().toString(pRecordInfo->dtLastModified, QLocale::ShortFormat);
         }
-    } else if (nRole == Qt::DecorationRole) {
-        if (index.column() == COLUMN_NAME) {
-            return pRecordInfo->icon;
+
+        qint32 nValueIndex = index.column() - 1;
+
+        if (m_pData && (nValueIndex >= 0) && (nValueIndex < m_pData->listFIV.count())) {
+            XFileInfoValues::XFIV value = m_pData->listFIV.at(nValueIndex);
+            QVariant varValue = pRecordInfo->mapValues.value(value);
+
+            if ((nRole == Qt::DisplayRole) && (value == XFileInfoValues::XFIV_FILE_SIZE) && varValue.isValid()) {
+                return sizeToString(varValue.toLongLong());
+            } else if ((nRole == Qt::DisplayRole) && (value == XFileInfoValues::XFIV_FILE_ENTROPY) && varValue.isValid()) {
+                return QString::number(varValue.toDouble(), 'f', 4);
+            }
+
+            return varValue;
         }
+
+        // else if (index.column() == COLUMN_SIZE) {
+        //     return pRecordInfo->bIsDir ? QString() : sizeToString(pRecordInfo->nSize);
+        // } else if (index.column() == COLUMN_TYPE) {
+        //     return pRecordInfo->sType;
+        // } else if (index.column() == COLUMN_MODIFIED) {
+        //     return QLocale().toString(pRecordInfo->dtLastModified, QLocale::ShortFormat);
+        // }
+    // } else if (nRole == Qt::DecorationRole) {
+    //     if (index.column() == COLUMN_NAME) {
+    //         return pRecordInfo->icon;
+    //     }
+    // } else if (nRole == Qt::TextAlignmentRole) {
+    //     if (index.column() == COLUMN_SIZE) {
+    //         return QVariant(Qt::AlignRight | Qt::AlignVCenter);
+    //     }
     } else if (nRole == Qt::TextAlignmentRole) {
-        if (index.column() == COLUMN_SIZE) {
+        qint32 nValueIndex = index.column() - 1;
+
+        if (m_pData && (nValueIndex >= 0) && (nValueIndex < m_pData->listFIV.count()) &&
+            ((m_pData->listFIV.at(nValueIndex) == XFileInfoValues::XFIV_FILE_SIZE) || (m_pData->listFIV.at(nValueIndex) == XFileInfoValues::XFIV_FILE_ENTROPY))) {
             return QVariant(Qt::AlignRight | Qt::AlignVCenter);
         }
     } else if (nRole == Qt::ToolTipRole) {
@@ -214,14 +261,20 @@ QVariant XFileSystemModel::headerData(int nSection, Qt::Orientation orientation,
         return QVariant();
     }
 
-    if (nSection == COLUMN_NAME) {
+    if (nSection == 0) {
         return tr("Name");
-    } else if (nSection == COLUMN_SIZE) {
-        return tr("Size");
-    } else if (nSection == COLUMN_TYPE) {
-        return tr("Type");
-    } else if (nSection == COLUMN_MODIFIED) {
-        return tr("Date modified");
+    }
+
+    qint32 nValueIndex = nSection - 1;
+
+    if (m_pData && (nValueIndex >= 0) && (nValueIndex < m_pData->listFIV.count())) {
+        if (m_pData->listFIV.at(nValueIndex) == XFileInfoValues::XFIV_FILE_SIZE) {
+            return tr("Size");
+        } else if (m_pData->listFIV.at(nValueIndex) == XFileInfoValues::XFIV_FILE_EXTENSION) {
+            return tr("Extension");
+        } else if (m_pData->listFIV.at(nValueIndex) == XFileInfoValues::XFIV_FILE_ENTROPY) {
+            return tr("Entropy");
+        }
     }
 
     return QVariant();
@@ -234,7 +287,7 @@ Qt::ItemFlags XFileSystemModel::flags(const QModelIndex &index) const
     }
 
     Qt::ItemFlags flags = Qt::ItemIsSelectable;
-    const RecordInfo *pRecordInfo = recordInfo(index);
+    const XFileInfoValues::RecordInfo *pRecordInfo = recordInfo(index);
 
     if (pRecordInfo && pRecordInfo->bEnabled) {
         flags |= Qt::ItemIsEnabled;
@@ -245,14 +298,14 @@ Qt::ItemFlags XFileSystemModel::flags(const QModelIndex &index) const
 
 void XFileSystemModel::sort(int nColumn, Qt::SortOrder order)
 {
-    if ((nColumn < 0) || (nColumn >= COLUMN_COUNT)) {
-        nColumn = COLUMN_NAME;
+    if (nColumn < 0) {
+        nColumn = 0;
     }
 
     m_nSortColumn = nColumn;
     m_sortOrder = order;
 
-    if (m_listRecordInfo.isEmpty()) {
+    if (!m_pData || m_pData->listRecords.isEmpty()) {
         return;
     }
 
@@ -272,13 +325,13 @@ QString XFileSystemModel::normalizePath(const QString &sPath) const
     return QDir::cleanPath(QFileInfo(sResult).absoluteFilePath());
 }
 
-const XFileSystemModel::RecordInfo *XFileSystemModel::recordInfo(const QModelIndex &index) const
+const XFileInfoValues::RecordInfo *XFileSystemModel::recordInfo(const QModelIndex &index) const
 {
-    if (!index.isValid() || index.row() < 0 || index.row() >= m_listRecordInfo.count()) {
+    if (!m_pData || !index.isValid() || index.row() < 0 || index.row() >= m_pData->listRecords.count()) {
         return nullptr;
     }
 
-    return &(m_listRecordInfo.at(index.row()));
+    return &(m_pData->listRecords.at(index.row()));
 }
 
 bool XFileSystemModel::isSamePath(const QString &sPath1, const QString &sPath2) const
@@ -293,7 +346,7 @@ bool XFileSystemModel::isSamePath(const QString &sPath1, const QString &sPath2) 
 #endif
 }
 
-bool XFileSystemModel::matchesNameFilters(const RecordInfo &recordInfo) const
+bool XFileSystemModel::matchesNameFilters(const XFileInfoValues::RecordInfo &recordInfo) const
 {
     if (recordInfo.bIsDir || m_listNameFilters.isEmpty()) {
         return true;
@@ -302,7 +355,7 @@ bool XFileSystemModel::matchesNameFilters(const RecordInfo &recordInfo) const
     return QDir::match(m_listNameFilters, recordInfo.sFileName);
 }
 
-int XFileSystemModel::compareRecordInfo(const RecordInfo &recordInfo1, const RecordInfo &recordInfo2) const
+int XFileSystemModel::compareRecordInfo(const XFileInfoValues::RecordInfo &recordInfo1, const XFileInfoValues::RecordInfo &recordInfo2) const
 {
     if (recordInfo1.bIsDir != recordInfo2.bIsDir) {
         return recordInfo1.bIsDir ? -1 : 1;
@@ -310,21 +363,21 @@ int XFileSystemModel::compareRecordInfo(const RecordInfo &recordInfo1, const Rec
 
     int nResult = 0;
 
-    if (m_nSortColumn == COLUMN_SIZE) {
-        if (recordInfo1.nSize < recordInfo2.nSize) {
-            nResult = -1;
-        } else if (recordInfo1.nSize > recordInfo2.nSize) {
-            nResult = 1;
-        }
-    } else if (m_nSortColumn == COLUMN_TYPE) {
-        nResult = compareText(recordInfo1.sType, recordInfo2.sType);
-    } else if (m_nSortColumn == COLUMN_MODIFIED) {
-        if (recordInfo1.dtLastModified < recordInfo2.dtLastModified) {
-            nResult = -1;
-        } else if (recordInfo1.dtLastModified > recordInfo2.dtLastModified) {
-            nResult = 1;
-        }
-    }
+    // if (m_nSortColumn == COLUMN_SIZE) {
+    //     if (recordInfo1.nSize < recordInfo2.nSize) {
+    //         nResult = -1;
+    //     } else if (recordInfo1.nSize > recordInfo2.nSize) {
+    //         nResult = 1;
+    //     }
+    // } else if (m_nSortColumn == COLUMN_TYPE) {
+    //     nResult = compareText(recordInfo1.sType, recordInfo2.sType);
+    // } else if (m_nSortColumn == COLUMN_MODIFIED) {
+    //     if (recordInfo1.dtLastModified < recordInfo2.dtLastModified) {
+    //         nResult = -1;
+    //     } else if (recordInfo1.dtLastModified > recordInfo2.dtLastModified) {
+    //         nResult = 1;
+    //     }
+    // }
 
     if (nResult == 0) {
         nResult = compareText(recordInfo1.sFileName, recordInfo2.sFileName);
@@ -349,7 +402,16 @@ QString XFileSystemModel::sizeToString(qint64 nSize) const
 
 void XFileSystemModel::sortEntries()
 {
-    std::sort(m_listRecordInfo.begin(), m_listRecordInfo.end(), [this](const RecordInfo &recordInfo1, const RecordInfo &recordInfo2) {
-        return compareRecordInfo(recordInfo1, recordInfo2) < 0;
-    });
+    XFileInfoValues::XFIV value = XFileInfoValues::XFIV_FILE_UNKNNOWN;
+    qint32 nValueIndex = m_nSortColumn - 1;
+
+    if (m_pData && (nValueIndex >= 0) && (nValueIndex < m_pData->listFIV.count())) {
+        value = m_pData->listFIV.at(nValueIndex);
+    }
+
+    XFileInfoValues_Sort xfiv;
+    xfiv.sortOrder = m_sortOrder;
+    xfiv.xFIV = value;
+
+    std::sort(m_pData->listRecords.begin(), m_pData->listRecords.end(), xfiv);
 }

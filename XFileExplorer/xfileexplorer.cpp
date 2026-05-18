@@ -21,6 +21,8 @@
 #include "xfileexplorer.h"
 
 #include "ui_xfileexplorer.h"
+#include "xcomboboxex.h"
+#include "xdialogprocess.h"
 
 #include <QAction>
 #include <QClipboard>
@@ -33,12 +35,22 @@
 #include <QItemSelectionModel>
 #include <QMenu>
 #include <QUrl>
+#include <QVariant>
 
 XFileExplorer::XFileExplorer(QWidget *pParent) : QWidget(pParent), ui(new Ui::XFileExplorer), m_pModel(new XFileSystemModel(this))
 {
     ui->setupUi(this);
 
     m_bNameFilterDisables = true;
+
+    m_pModel->setData(&m_fileInfoValuesData);
+
+    QList<XComboBoxEx::CUSTOM_FLAG> listColumnFlags;
+    XComboBoxEx::_addCustomFlag(&listColumnFlags, 0, tr("Name"), true, true);
+    XComboBoxEx::_addCustomFlag(&listColumnFlags, XFileInfoValues::XFIV_FILE_SIZE, tr("Size"), true);
+    XComboBoxEx::_addCustomFlag(&listColumnFlags, XFileInfoValues::XFIV_FILE_EXTENSION, tr("Extension"), true);
+    XComboBoxEx::_addCustomFlag(&listColumnFlags, XFileInfoValues::XFIV_FILE_ENTROPY, tr("Entropy"), false);
+    ui->comboBoxColumns->addCustomFlags(tr("Columns"), listColumnFlags);
 
     m_pModel->setFilter(QDir::AllEntries | QDir::AllDirs | QDir::NoDotAndDotDot);
     m_pModel->setNameFilterDisables(m_bNameFilterDisables);
@@ -52,14 +64,15 @@ XFileExplorer::XFileExplorer(QWidget *pParent) : QWidget(pParent), ui(new Ui::XF
     ui->treeViewFileSystem->setIndentation(0);
     ui->treeViewFileSystem->header()->setStretchLastSection(false);
     ui->treeViewFileSystem->header()->setSectionResizeMode(0, QHeaderView::Stretch);
-    ui->treeViewFileSystem->header()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
-    ui->treeViewFileSystem->header()->setSectionResizeMode(2, QHeaderView::ResizeToContents);
-    ui->treeViewFileSystem->header()->setSectionResizeMode(3, QHeaderView::ResizeToContents);
+    // ui->treeViewFileSystem->header()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
+    // ui->treeViewFileSystem->header()->setSectionResizeMode(2, QHeaderView::ResizeToContents);
+    // ui->treeViewFileSystem->header()->setSectionResizeMode(3, QHeaderView::ResizeToContents);
 
     ui->toolButtonBrowse->setToolTip(tr("Browse"));
     ui->toolButtonUp->setToolTip(tr("Up"));
     ui->toolButtonRefresh->setToolTip(tr("Refresh"));
     ui->lineEditPath->setToolTip(tr("Path"));
+    ui->comboBoxColumns->setToolTip(tr("Columns"));
     ui->treeViewFileSystem->setToolTip(tr("File explorer"));
 
     connect(ui->treeViewFileSystem->selectionModel(), SIGNAL(currentChanged(QModelIndex, QModelIndex)), this,
@@ -75,7 +88,9 @@ XFileExplorer::~XFileExplorer()
 
 void XFileExplorer::setRootPath(const QString &sRootPath)
 {
-    setRootPathInternal(sRootPath, true);
+    if (setRootPathInternal(sRootPath, true)) {
+        reload();
+    }
 }
 
 QString XFileExplorer::getRootPath() const
@@ -105,6 +120,7 @@ void XFileExplorer::setCurrentPath(const QString &sPath)
     }
 
     if (setRootPathInternal(sRootPath, (sRootPath != m_sRootPath))) {
+        reload();
         selectPath(fileInfo.absoluteFilePath());
     }
 }
@@ -154,8 +170,40 @@ void XFileExplorer::reload()
         sRootPath = QDir::homePath();
     }
 
-    if (setRootPathInternal(sRootPath, false) && !sCurrentPath.isEmpty()) {
-        selectPath(sCurrentPath);
+    m_fileInfoValuesData.listFIV.clear();
+
+    QList<QVariant> listColumns = ui->comboBoxColumns->getCustomFlags();
+
+    qint32 nNumberOfColumns = listColumns.count();
+
+    for (qint32 i = 0; i < nNumberOfColumns; i++) {
+        XFileInfoValues::XFIV value = (XFileInfoValues::XFIV)(listColumns.at(i).toInt());
+
+        if (value != XFileInfoValues::XFIV_FILE_UNKNNOWN) {
+            m_fileInfoValuesData.listFIV.append(value);
+        }
+    }
+
+    if (setRootPathInternal(sRootPath, false)) {
+        if (!m_fileInfoValuesData.listRecords.isEmpty() && !m_fileInfoValuesData.listFIV.isEmpty()) {
+            XFileInfoValues fileInfoValues;
+            XDialogProcess dialogProcess(this, &fileInfoValues);
+            fileInfoValues.setData(&m_fileInfoValuesData, dialogProcess.getPdStruct());
+            dialogProcess.start();
+            dialogProcess.showDialogDelay();
+
+            if (!dialogProcess.isSuccess()) {
+                for (qint32 i = 0; i < m_fileInfoValuesData.listRecords.count(); i++) {
+                    m_fileInfoValuesData.listRecords[i].mapValues.clear();
+                }
+            }
+        }
+
+        m_pModel->updateFileInfoValues();
+
+        if (!sCurrentPath.isEmpty()) {
+            selectPath(sCurrentPath);
+        }
     }
 }
 

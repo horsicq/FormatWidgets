@@ -22,6 +22,7 @@
 #define XFILEEXPLORER_H
 
 #include "xfilesystemmodel.h"
+#include "xfileinfovalues.h"
 
 #include <QModelIndex>
 #include <QStringList>
@@ -88,6 +89,7 @@ private:
     QString m_sRootPath;
     QString m_sCurrentPath;
     bool m_bNameFilterDisables;
+    XFileInfoValues::XFIDATA m_fileInfoValuesData;
 };
 
 #endif  // XFILEEXPLORER_H

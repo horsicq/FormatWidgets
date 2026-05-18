@@ -21,6 +21,8 @@
 #ifndef XFILESYSTEMMODEL_H
 #define XFILESYSTEMMODEL_H
 
+#include "xfileinfovalues.h"
+
 #include <QAbstractTableModel>
 #include <QDateTime>
 #include <QDir>
@@ -31,13 +33,6 @@
 
 class XFileSystemModel : public QAbstractTableModel {
 public:
-    enum COLUMN {
-        COLUMN_NAME = 0,
-        COLUMN_SIZE,
-        COLUMN_TYPE,
-        COLUMN_MODIFIED,
-        COLUMN_COUNT
-    };
 
     explicit XFileSystemModel(QObject *pParent = nullptr);
 
@@ -45,6 +40,8 @@ public:
 
     void setFilter(QDir::Filters filters);
     QDir::Filters filter() const;
+
+    void setData(XFileInfoValues::XFIDATA *pData);
 
     QModelIndex setRootPath(const QString &sRootPath);
     QString rootPath() const;
@@ -59,6 +56,7 @@ public:
     bool nameFilterDisables() const;
 
     void reload();
+    void updateFileInfoValues();
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;
@@ -68,30 +66,20 @@ public:
     void sort(int nColumn, Qt::SortOrder order = Qt::AscendingOrder) override;
 
 private:
-    struct RecordInfo {
-        QString sFileName;
-        QString sFilePath;
-        QString sType;
-        QDateTime dtLastModified;
-        QIcon icon;
-        qint64 nSize;
-        bool bIsDir;
-        bool bEnabled;
-    };
-
-    const RecordInfo *recordInfo(const QModelIndex &index) const;
+    const XFileInfoValues::RecordInfo *recordInfo(const QModelIndex &index) const;
     QString normalizePath(const QString &sPath) const;
     bool isSamePath(const QString &sPath1, const QString &sPath2) const;
-    bool matchesNameFilters(const RecordInfo &recordInfo) const;
-    int compareRecordInfo(const RecordInfo &recordInfo1, const RecordInfo &recordInfo2) const;
+    bool matchesNameFilters(const XFileInfoValues::RecordInfo &recordInfo) const;
+    int compareRecordInfo(const XFileInfoValues::RecordInfo &recordInfo1, const XFileInfoValues::RecordInfo &recordInfo2) const;
     int compareText(const QString &sValue1, const QString &sValue2) const;
     QString sizeToString(qint64 nSize) const;
     void sortEntries();
 
-    QFileIconProvider m_iconProvider;
-    QVector<RecordInfo> m_listRecordInfo;
-    QStringList m_listNameFilters;
     QString m_sRootPath;
+    XFileInfoValues::XFIDATA *m_pData;
+    QFileIconProvider m_iconProvider;
+    QStringList m_listNameFilters;
+
     QDir::Filters m_filters;
     Qt::SortOrder m_sortOrder;
     int m_nSortColumn;
