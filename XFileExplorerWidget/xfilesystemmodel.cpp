@@ -21,6 +21,7 @@
 #include "xfilesystemmodel.h"
 
 #include <QFileInfo>
+#include <QFont>
 #include <QLocale>
 #include <QVariant>
 
@@ -28,7 +29,7 @@
 
 XFileSystemModel::XFileSystemModel(QObject *pParent)
     : QAbstractTableModel(pParent),
-      m_filters(QDir::AllEntries | QDir::AllDirs | QDir::NoDotDot),
+      m_filters(QDir::AllEntries | QDir::AllDirs | QDir::NoDotDot | QDir::Hidden),
       m_sortOrder(Qt::AscendingOrder),
       m_nSortColumn(0),
       m_bNameFilterDisables(true)
@@ -157,6 +158,7 @@ void XFileSystemModel::reload()
             recordInfo.sFilePath = fileInfo.absoluteFilePath();
             recordInfo.icon = m_iconProvider.icon(fileInfo);
             recordInfo.bIsDir = fileInfo.isDir();
+            recordInfo.bIsHidden = fileInfo.isHidden();
             recordInfo.bEnabled = matchesNameFilters(recordInfo);
             recordInfo.mapValues.clear();
 
@@ -173,7 +175,7 @@ void XFileSystemModel::reload()
 
 void XFileSystemModel::updateFileInfoValues()
 {
-    if (!m_pData || m_pData->listRecords.isEmpty() || m_pData->listFIV.isEmpty()) {
+    if (!m_pData || m_pData->listRecords.isEmpty()) {
         return;
     }
 
@@ -181,19 +183,37 @@ void XFileSystemModel::updateFileInfoValues()
     sortEntries();
     emit layoutChanged();
 
-    emit dataChanged(index(0, 1), index(m_pData->listRecords.count() - 1, m_pData->listFIV.count()));
+    emit dataChanged(index(0, 0), index(m_pData->listRecords.count() - 1, m_pData->listFIV.count() - 1));
 }
 
 int XFileSystemModel::rowCount(const QModelIndex &parent) const
 {
-    return (parent.isValid() || !m_pData) ? 0 : m_pData->listRecords.count();
+    int nResult = 0;
+
+    if (parent.isValid() || !m_pData) {
+        nResult = 0;
+    } else {
+        nResult = m_pData->listRecords.count();
+    }
+
+    return nResult;
 }
 
 int XFileSystemModel::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
 
-    return m_pData ? m_pData->listFIV.count() : 0;
+    int nResult = 0;
+
+    if (m_pData) {
+        nResult =m_pData->listFIV.count();
+    }
+
+    if (nResult == 0) {
+        nResult = 1; // at least one column for file name
+    }
+
+    return nResult;
 }
 
 QVariant XFileSystemModel::data(const QModelIndex &index, int nRole) const
@@ -207,8 +227,12 @@ QVariant XFileSystemModel::data(const QModelIndex &index, int nRole) const
     if (nRole == Qt::DisplayRole || nRole == Qt::EditRole) {
         qint32 nValueIndex = index.column();
 
-        if (m_pData && (nValueIndex >= 0) && (nValueIndex < m_pData->listFIV.count())) {
-            XFileInfoValues::XFIV value = m_pData->listFIV.at(nValueIndex);
+        if (m_pData && (nValueIndex >= 0)) {
+            XFileInfoValues::XFIV value = XFileInfoValues::XFIV_NAME;
+
+            if (nValueIndex < m_pData->listFIV.count()) {
+                value = m_pData->listFIV.at(nValueIndex);
+            }
 
             if (value == XFileInfoValues::XFIV_NAME) {
                 return pRecordInfo->sFileName;
@@ -226,11 +250,25 @@ QVariant XFileSystemModel::data(const QModelIndex &index, int nRole) const
         qint32 nValueIndex = index.column();
 
         if (m_pData && (nValueIndex >= 0) && (nValueIndex < m_pData->listFIV.count())) {
-            Qt::AlignmentFlag alignment = XFileInfoValues::getTextAlignmentRole(m_pData->listFIV.at(nValueIndex));
+            XFileInfoValues::XFIV value = XFileInfoValues::XFIV_NAME;
 
-            if (alignment != static_cast<Qt::AlignmentFlag>(0)) {
-                return QVariant(static_cast<int>(alignment));
+            if (nValueIndex < m_pData->listFIV.count()) {
+                value = m_pData->listFIV.at(nValueIndex);
             }
+
+            int alignment = XFileInfoValues::getTextAlignmentRole(value);
+
+            if (alignment) {
+                return QVariant(alignment);
+            }
+        }
+    } else if (nRole == Qt::FontRole) {
+        if (pRecordInfo->bIsDir || pRecordInfo->bIsHidden) {
+            QFont font;
+            font.setBold(pRecordInfo->bIsDir);
+            font.setItalic(pRecordInfo->bIsHidden);
+
+            return font;
         }
     } else if (nRole == Qt::ToolTipRole) {
         return QDir::toNativeSeparators(pRecordInfo->sFilePath);

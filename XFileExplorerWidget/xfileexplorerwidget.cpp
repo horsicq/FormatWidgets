@@ -77,7 +77,7 @@ XFileExplorerWidget::XFileExplorerWidget(QWidget *pParent) : XShortcutsWidget(pP
     connect(ui->treeViewFileSystem->selectionModel(), SIGNAL(currentChanged(QModelIndex, QModelIndex)), this,
             SLOT(onCurrentChanged(QModelIndex, QModelIndex)));
 
-    setRootPath(QDir::homePath());
+    // setRootPath(QDir::homePath());
 }
 
 XFileExplorerWidget::~XFileExplorerWidget()
@@ -88,7 +88,7 @@ XFileExplorerWidget::~XFileExplorerWidget()
 void XFileExplorerWidget::setRootPath(const QString &sRootPath)
 {
     if (setRootPathInternal(sRootPath, true)) {
-        reload();
+        reloadData(true);
     }
 }
 
@@ -119,7 +119,7 @@ void XFileExplorerWidget::setCurrentPath(const QString &sPath)
     }
 
     if (setRootPathInternal(sRootPath, (sRootPath != m_sRootPath))) {
-        reload();
+        reloadData(true);
         selectPath(fileInfo.absoluteFilePath());
     }
 }
@@ -191,26 +191,22 @@ void XFileExplorerWidget::adjustView()
 
     if (pHeader) {
         pHeader->setStretchLastSection(false);
-        pHeader->setSectionResizeMode(0, QHeaderView::Stretch);
 
         qint32 nNumberOfColumns = m_pModel->columnCount();
 
-        for (qint32 i = 1; i < nNumberOfColumns; i++) {
-            pHeader->setSectionResizeMode(i, QHeaderView::Interactive);
-            ui->treeViewFileSystem->resizeColumnToContents(i);
+        if (nNumberOfColumns > 0) {
+            pHeader->setSectionResizeMode(0, QHeaderView::Stretch);
+
+            for (qint32 i = 1; i < nNumberOfColumns; i++) {
+                pHeader->setSectionResizeMode(i, QHeaderView::Interactive);
+                ui->treeViewFileSystem->resizeColumnToContents(i);
+            }
         }
     }
 }
 
 void XFileExplorerWidget::reloadData(bool bSaveSelection)
 {
-    QString sRootPath = m_sRootPath;
-    QString sCurrentPath = bSaveSelection ? m_sCurrentPath : QString();
-
-    if (sRootPath.isEmpty()) {
-        sRootPath = QDir::homePath();
-    }
-
     m_fileInfoValuesData.listFIV.clear();
 
     QString sColumns = ui->comboBoxColumns->getValueAsString();
@@ -231,34 +227,49 @@ void XFileExplorerWidget::reloadData(bool bSaveSelection)
         m_fileInfoValuesData.listFIV.append(value);
     }
 
+    QString sRootPath = m_sRootPath;
+    QString sCurrentPath = bSaveSelection ? m_sCurrentPath : QString();
+
+    if (sRootPath.isEmpty()) {
+        sRootPath = QDir::homePath();
+    }
+
     if (setRootPathInternal(sRootPath, false)) {
-        if (!m_fileInfoValuesData.listRecords.isEmpty() && !m_fileInfoValuesData.listFIV.isEmpty()) {
-            XFileInfoValues fileInfoValues;
-            XDialogProcess dialogProcess(this, &fileInfoValues);
-            fileInfoValues.setData(&m_fileInfoValuesData, dialogProcess.getPdStruct());
-            dialogProcess.start();
-            dialogProcess.showDialogDelay();
-
-            if (!dialogProcess.isSuccess()) {
-                for (qint32 i = 0; i < m_fileInfoValuesData.listRecords.count(); i++) {
-                    m_fileInfoValuesData.listRecords[i].mapValues.clear();
-                }
-            }
-        }
-
-        m_pModel->updateFileInfoValues();
-
         if (!sCurrentPath.isEmpty()) {
             selectPath(sCurrentPath);
         }
+
+        m_pModel->updateFileInfoValues();
 
         adjustView();
     }
 }
 
+void XFileExplorerWidget::reloadValues()
+{
+    if (!m_fileInfoValuesData.listRecords.isEmpty() && !m_fileInfoValuesData.listFIV.isEmpty()) {
+        XFileInfoValues fileInfoValues;
+        XDialogProcess dialogProcess(this, &fileInfoValues);
+        fileInfoValues.setData(&m_fileInfoValuesData, dialogProcess.getPdStruct());
+        dialogProcess.start();
+        dialogProcess.showDialogDelay();
+
+        if (!dialogProcess.isSuccess()) {
+            for (qint32 i = 0; i < m_fileInfoValuesData.listRecords.count(); i++) {
+                m_fileInfoValuesData.listRecords[i].mapValues.clear();
+            }
+        }
+    }
+
+    m_pModel->updateFileInfoValues();
+
+    adjustView();
+}
+
 void XFileExplorerWidget::reload()
 {
     reloadData(true);
+    reloadValues();
 }
 
 void XFileExplorerWidget::on_toolButtonBrowse_clicked()
@@ -281,7 +292,8 @@ void XFileExplorerWidget::on_toolButtonUp_clicked()
 
 void XFileExplorerWidget::on_toolButtonRefresh_clicked()
 {
-    reload();
+    reloadData(true);
+    reloadValues();
 }
 
 void XFileExplorerWidget::on_lineEditPath_returnPressed()

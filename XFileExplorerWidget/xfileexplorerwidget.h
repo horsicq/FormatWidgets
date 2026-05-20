@@ -59,6 +59,7 @@ public:
     void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions) override;
     void adjustView() override;
     void reloadData(bool bSaveSelection) override;
+    void reloadValues();
 
 public slots:
     void reload();
