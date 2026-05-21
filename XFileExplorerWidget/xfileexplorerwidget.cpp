@@ -63,9 +63,6 @@ XFileExplorerWidget::XFileExplorerWidget(QWidget *pParent) : XShortcutsWidget(pP
     ui->treeViewFileSystem->header()->setStretchLastSection(false);
     // ui->treeViewFileSystem->header()->setSectionResizeMode(0, QHeaderView::Stretch);
     XOptions::setMonoFont(ui->treeViewFileSystem);
-    // ui->treeViewFileSystem->header()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
-    // ui->treeViewFileSystem->header()->setSectionResizeMode(2, QHeaderView::ResizeToContents);
-    // ui->treeViewFileSystem->header()->setSectionResizeMode(3, QHeaderView::ResizeToContents);
 
     ui->toolButtonBrowse->setToolTip(tr("Browse"));
     ui->toolButtonUp->setToolTip(tr("Up"));
@@ -195,9 +192,7 @@ void XFileExplorerWidget::adjustView()
         qint32 nNumberOfColumns = m_pModel->columnCount();
 
         if (nNumberOfColumns > 0) {
-            pHeader->setSectionResizeMode(0, QHeaderView::Stretch);
-
-            for (qint32 i = 1; i < nNumberOfColumns; i++) {
+            for (qint32 i = 0; i < nNumberOfColumns; i++) {
                 pHeader->setSectionResizeMode(i, QHeaderView::Interactive);
                 ui->treeViewFileSystem->resizeColumnToContents(i);
             }
@@ -250,7 +245,7 @@ void XFileExplorerWidget::reloadValues()
     if (!m_fileInfoValuesData.listRecords.isEmpty() && !m_fileInfoValuesData.listFIV.isEmpty()) {
         XFileInfoValues fileInfoValues;
         XDialogProcess dialogProcess(this, &fileInfoValues);
-        fileInfoValues.setData(&m_fileInfoValuesData, dialogProcess.getPdStruct());
+        fileInfoValues.setData(&m_fileInfoValuesData, dialogProcess.getPdStruct(), getGlobalOptions());
         dialogProcess.start();
         dialogProcess.showDialogDelay();
 
@@ -458,7 +453,11 @@ void XFileExplorerWidget::activateIndex(const QModelIndex &index)
         setRootPath(fileInfo.absoluteFilePath());
         emit directoryActivated(fileInfo.absoluteFilePath());
     } else if (fileInfo.isFile()) {
-        emit fileActivated(fileInfo.absoluteFilePath());
+        if (XFormats::isArchive(fileInfo.absoluteFilePath())) {
+            emit archiveActivated(fileInfo.absoluteFilePath());
+        } else {
+            emit fileActivated(fileInfo.absoluteFilePath());
+        }
     }
 }
 

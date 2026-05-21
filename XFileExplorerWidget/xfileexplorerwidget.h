@@ -69,6 +69,7 @@ signals:
     void currentPathChanged(const QString &sPath);
     void fileActivated(const QString &sFileName);
     void directoryActivated(const QString &sDirectoryName);
+    void archiveActivated(const QString &sFileName);
 
 private slots:
     void on_toolButtonBrowse_clicked();
