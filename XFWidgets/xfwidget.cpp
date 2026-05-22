@@ -25,7 +25,13 @@
 
 #include <QAbstractItemModel>
 #include <QFileDialog>
+#include <QtGlobal>
+
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#include <QRegularExpression>
+#else
 #include <QRegExp>
+#endif
 
 #include "xfmodel.h"
 
@@ -139,7 +145,11 @@ void XFWidget::onSaveClicked()
 
     if (pModel) {
         QString sDefaultName = m_sCurrentTag;
-        sDefaultName.replace(QRegExp("[\\\\/:*?\"<>|]"), "_");
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+        sDefaultName.replace(QRegularExpression(QStringLiteral(R"([\\/:*?"<>|])")), QStringLiteral("_"));
+#else
+        sDefaultName.replace(QRegExp(QStringLiteral("[\\\\/:*?\"<>|]")), QStringLiteral("_"));
+#endif
 
         QString sSelectedFilter;
         QString sFileName = QFileDialog::getSaveFileName(this, tr("Save"), sDefaultName, XFModel::exportAllFilters(), &sSelectedFilter);

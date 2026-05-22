@@ -465,50 +465,60 @@ void XFileExplorerWidget::showContextMenu(const QModelIndex &index, const QPoint
 {
     QMenu contextMenu(this);
 
-    QAction *pActionOpen = contextMenu.addAction(tr("Open"));
-    QAction *pActionOpenExternal = contextMenu.addAction(tr("Open externally"));
-    QAction *pActionShowInFolder = contextMenu.addAction(tr("Show in folder"));
-    QAction *pActionCopyPath = contextMenu.addAction(tr("Copy path"));
-    contextMenu.addSeparator();
-    QAction *pActionRefresh = contextMenu.addAction(tr("Refresh"));
+    QList<XShortcuts::MENUITEM> listMenuItems;
 
-    bool bHasSelection = index.isValid();
+    getShortcuts()->_addMenuItem_CopyRow(&listMenuItems, ui->treeViewFileSystem);
+    getShortcuts()->adjustContextMenu(&contextMenu, &listMenuItems);
 
-    pActionOpen->setEnabled(bHasSelection);
-    pActionOpenExternal->setEnabled(bHasSelection);
-    pActionShowInFolder->setEnabled(bHasSelection);
-    pActionCopyPath->setEnabled(bHasSelection);
+    contextMenu.exec(ui->treeViewFileSystem->viewport()->mapToGlobal(pos));
 
-    QAction *pAction = contextMenu.exec(ui->treeViewFileSystem->viewport()->mapToGlobal(pos));
 
-    if (!pAction) {
-        return;
-    }
+    // QMenu contextMenu(this);
 
-    if (pAction == pActionRefresh) {
-        reload();
-        return;
-    }
+    // QAction *pActionOpen = contextMenu.addAction(tr("Open"));
+    // QAction *pActionOpenExternal = contextMenu.addAction(tr("Open externally"));
+    // QAction *pActionShowInFolder = contextMenu.addAction(tr("Show in folder"));
+    // QAction *pActionCopyPath = contextMenu.addAction(tr("Copy path"));
+    // contextMenu.addSeparator();
+    // QAction *pActionRefresh = contextMenu.addAction(tr("Refresh"));
 
-    if (!bHasSelection) {
-        return;
-    }
+    // bool bHasSelection = index.isValid();
 
-    QString sPath = m_pModel->filePath(index);
-    QFileInfo fileInfo(sPath);
+    // pActionOpen->setEnabled(bHasSelection);
+    // pActionOpenExternal->setEnabled(bHasSelection);
+    // pActionShowInFolder->setEnabled(bHasSelection);
+    // pActionCopyPath->setEnabled(bHasSelection);
 
-    if (pAction == pActionOpen) {
-        activateIndex(index);
-    } else if (pAction == pActionOpenExternal) {
-        QDesktopServices::openUrl(QUrl::fromLocalFile(fileInfo.absoluteFilePath()));
-    } else if (pAction == pActionShowInFolder) {
-        QString sDirectoryName = fileInfo.isDir() ? fileInfo.absoluteFilePath() : fileInfo.absolutePath();
-        QDesktopServices::openUrl(QUrl::fromLocalFile(sDirectoryName));
-    } else if (pAction == pActionCopyPath) {
-        QClipboard *pClipboard = QGuiApplication::clipboard();
+    // QAction *pAction = contextMenu.exec(ui->treeViewFileSystem->viewport()->mapToGlobal(pos));
 
-        if (pClipboard) {
-            pClipboard->setText(QDir::toNativeSeparators(fileInfo.absoluteFilePath()));
-        }
-    }
+    // if (!pAction) {
+    //     return;
+    // }
+
+    // if (pAction == pActionRefresh) {
+    //     reload();
+    //     return;
+    // }
+
+    // if (!bHasSelection) {
+    //     return;
+    // }
+
+    // QString sPath = m_pModel->filePath(index);
+    // QFileInfo fileInfo(sPath);
+
+    // if (pAction == pActionOpen) {
+    //     activateIndex(index);
+    // } else if (pAction == pActionOpenExternal) {
+    //     QDesktopServices::openUrl(QUrl::fromLocalFile(fileInfo.absoluteFilePath()));
+    // } else if (pAction == pActionShowInFolder) {
+    //     QString sDirectoryName = fileInfo.isDir() ? fileInfo.absoluteFilePath() : fileInfo.absolutePath();
+    //     QDesktopServices::openUrl(QUrl::fromLocalFile(sDirectoryName));
+    // } else if (pAction == pActionCopyPath) {
+    //     QClipboard *pClipboard = QGuiApplication::clipboard();
+
+    //     if (pClipboard) {
+    //         pClipboard->setText(QDir::toNativeSeparators(fileInfo.absoluteFilePath()));
+    //     }
+    // }
 }
