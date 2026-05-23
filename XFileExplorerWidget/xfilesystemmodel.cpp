@@ -206,11 +206,11 @@ int XFileSystemModel::columnCount(const QModelIndex &parent) const
     int nResult = 0;
 
     if (m_pData) {
-        nResult =m_pData->listFIV.count();
+        nResult = m_pData->listFIV.count();
     }
 
     if (nResult == 0) {
-        nResult = 1; // at least one column for file name
+        nResult = 1;  // at least one column for file name
     }
 
     return nResult;

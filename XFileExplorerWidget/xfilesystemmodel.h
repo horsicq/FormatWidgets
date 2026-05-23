@@ -33,7 +33,6 @@
 
 class XFileSystemModel : public QAbstractTableModel {
 public:
-
     explicit XFileSystemModel(QObject *pParent = nullptr);
 
     using QAbstractTableModel::index;

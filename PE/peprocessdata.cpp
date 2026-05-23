@@ -1039,7 +1039,8 @@ void PEProcessData::_process()
                 if (xsertInfo.sIssuer != "") (*m_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Issuer")).arg(xsertInfo.sIssuer)));
                 if (xsertInfo.sSubject != "") (*m_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Subject")).arg(xsertInfo.sSubject)));
                 if (xsertInfo.sAlgorithm != "") (*m_ppModel)->appendRow(new QStandardItem(QString("%1: %2").arg(tr("Algorithm")).arg(xsertInfo.sAlgorithm)));
-                if (xsertInfo.sTSSerialNumber != "") (*m_ppModel)->appendRow(new QStandardItem(QString("TS %1: %2").arg(tr("Serial number")).arg(xsertInfo.sTSSerialNumber)));
+                if (xsertInfo.sTSSerialNumber != "")
+                    (*m_ppModel)->appendRow(new QStandardItem(QString("TS %1: %2").arg(tr("Serial number")).arg(xsertInfo.sTSSerialNumber)));
                 if (xsertInfo.sTSIssuer != "") (*m_ppModel)->appendRow(new QStandardItem(QString("TS %1: %2").arg(tr("Issuer")).arg(xsertInfo.sTSIssuer)));
                 if (xsertInfo.sTSSubject != "") (*m_ppModel)->appendRow(new QStandardItem(QString("TS %1: %2").arg(tr("Subject")).arg(xsertInfo.sTSSubject)));
             }

@@ -71,8 +71,7 @@ XFileExplorerWidget::XFileExplorerWidget(QWidget *pParent) : XShortcutsWidget(pP
     ui->comboBoxColumns->setToolTip(tr("Columns"));
     ui->treeViewFileSystem->setToolTip(tr("File explorer"));
 
-    connect(ui->treeViewFileSystem->selectionModel(), SIGNAL(currentChanged(QModelIndex, QModelIndex)), this,
-            SLOT(onCurrentChanged(QModelIndex, QModelIndex)));
+    connect(ui->treeViewFileSystem->selectionModel(), SIGNAL(currentChanged(QModelIndex, QModelIndex)), this, SLOT(onCurrentChanged(QModelIndex, QModelIndex)));
 
     // setRootPath(QDir::homePath());
 }
@@ -106,9 +105,8 @@ void XFileExplorerWidget::setCurrentPath(const QString &sPath)
 
     if (!m_sRootPath.isEmpty()) {
         QString sRelativePath = QDir(m_sRootPath).relativeFilePath(fileInfo.absoluteFilePath());
-        bool bInsideRoot = (sRelativePath == QString(".")) ||
-                           (!QDir::isAbsolutePath(sRelativePath) && (sRelativePath != QString("..")) && !sRelativePath.startsWith(QString("../")) &&
-                            !sRelativePath.startsWith(QString("..\\")));
+        bool bInsideRoot = (sRelativePath == QString(".")) || (!QDir::isAbsolutePath(sRelativePath) && (sRelativePath != QString("..")) &&
+                                                               !sRelativePath.startsWith(QString("../")) && !sRelativePath.startsWith(QString("..\\")));
 
         if (bInsideRoot) {
             sRootPath = m_sRootPath;
@@ -471,7 +469,6 @@ void XFileExplorerWidget::showContextMenu(const QModelIndex &index, const QPoint
     getShortcuts()->adjustContextMenu(&contextMenu, &listMenuItems);
 
     contextMenu.exec(ui->treeViewFileSystem->viewport()->mapToGlobal(pos));
-
 
     // QMenu contextMenu(this);
 
