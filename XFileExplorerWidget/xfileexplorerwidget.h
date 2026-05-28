@@ -80,6 +80,7 @@ private slots:
     void on_treeViewFileSystem_doubleClicked(const QModelIndex &index);
     void on_treeViewFileSystem_customContextMenuRequested(const QPoint &pos);
     void onCurrentChanged(const QModelIndex &current, const QModelIndex &previous);
+    void onHeaderSectionResized(int nLogicalIndex, int nOldSize, int nNewSize);
 
 private:
     QString normalizePath(const QString &sPath) const;
@@ -87,8 +88,11 @@ private:
     bool selectPath(const QString &sPath);
     void updateCurrentPath(const QModelIndex &index);
     void updatePathControls(const QString &sPath);
+    void saveLastDirectory();
     void activateIndex(const QModelIndex &index);
     void showContextMenu(const QModelIndex &index, const QPoint &pos);
+    void saveColumnSizes();
+    void restoreColumnSizes();
 
     Ui::XFileExplorerWidget *ui;
     XFileSystemModel *m_pModel;

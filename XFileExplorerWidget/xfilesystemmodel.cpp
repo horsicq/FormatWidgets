@@ -417,7 +417,7 @@ QString XFileSystemModel::sizeToString(qint64 nSize) const
 void XFileSystemModel::sortEntries()
 {
     XFileInfoValues::XFIV value = XFileInfoValues::XFIV_NAME;
-    qint32 nValueIndex = m_nSortColumn - 1;
+    qint32 nValueIndex = m_nSortColumn;
 
     if (m_pData && (nValueIndex >= 0) && (nValueIndex < m_pData->listFIV.count())) {
         value = m_pData->listFIV.at(nValueIndex);

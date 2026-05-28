@@ -32,12 +32,72 @@
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QGuiApplication>
+#include <QHash>
 #include <QHeaderView>
 #include <QItemSelectionModel>
 #include <QMenu>
+#include <QPainter>
 #include <QSignalBlocker>
+#include <QStyledItemDelegate>
+#include <QTreeView>
 #include <QUrl>
 #include <QVariant>
+
+namespace {
+QHash<XFileInfoValues::XFIV, qint32> getColumnSizeMap(const QString &sColumnSizes)
+{
+    QHash<XFileInfoValues::XFIV, qint32> result;
+    QStringList listRecords = sColumnSizes.split("|", Qt::SkipEmptyParts);
+
+    for (qint32 i = 0; i < listRecords.count(); i++) {
+        QString sRecord = listRecords.at(i).trimmed();
+        QStringList listParts = sRecord.split(":", Qt::SkipEmptyParts);
+
+        if (listParts.count() == 2) {
+            bool bIsColumn = false;
+            bool bIsSize = false;
+            quint64 nColumn = listParts.at(0).trimmed().toULongLong(&bIsColumn);
+            qint32 nSize = listParts.at(1).trimmed().toInt(&bIsSize);
+
+            if (bIsColumn && bIsSize && (nSize > 0)) {
+                result.insert(static_cast<XFileInfoValues::XFIV>(nColumn), nSize);
+            }
+        }
+    }
+
+    return result;
+}
+
+class XFileExplorerItemDelegate : public QStyledItemDelegate {
+public:
+    explicit XFileExplorerItemDelegate(QTreeView *pParent) : QStyledItemDelegate(pParent), m_pTreeView(pParent)
+    {
+    }
+
+    void paint(QPainter *pPainter, const QStyleOptionViewItem &styleOptionViewItem, const QModelIndex &modelIndex) const override
+    {
+        QStyledItemDelegate::paint(pPainter, styleOptionViewItem, modelIndex);
+
+        if (!m_pTreeView || !m_pTreeView->header() || !modelIndex.isValid()) {
+            return;
+        }
+
+        qint32 nVisualIndex = m_pTreeView->header()->visualIndex(modelIndex.column());
+
+        if ((nVisualIndex < 0) || (nVisualIndex == (m_pTreeView->header()->count() - 1))) {
+            return;
+        }
+
+        pPainter->save();
+        pPainter->setPen(styleOptionViewItem.palette.color(QPalette::Mid));
+        pPainter->drawLine(styleOptionViewItem.rect.topRight(), styleOptionViewItem.rect.bottomRight());
+        pPainter->restore();
+    }
+
+private:
+    QTreeView *m_pTreeView;
+};
+}  // namespace
 
 XFileExplorerWidget::XFileExplorerWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui::XFileExplorerWidget), m_pModel(new XFileSystemModel(this))
 {
@@ -60,6 +120,7 @@ XFileExplorerWidget::XFileExplorerWidget(QWidget *pParent) : XShortcutsWidget(pP
     ui->treeViewFileSystem->setItemsExpandable(false);
     ui->treeViewFileSystem->setExpandsOnDoubleClick(false);
     ui->treeViewFileSystem->setIndentation(0);
+    ui->treeViewFileSystem->setItemDelegate(new XFileExplorerItemDelegate(ui->treeViewFileSystem));
     ui->treeViewFileSystem->header()->setStretchLastSection(false);
     // ui->treeViewFileSystem->header()->setSectionResizeMode(0, QHeaderView::Stretch);
     XOptions::setMonoFont(ui->treeViewFileSystem);
@@ -72,6 +133,7 @@ XFileExplorerWidget::XFileExplorerWidget(QWidget *pParent) : XShortcutsWidget(pP
     ui->treeViewFileSystem->setToolTip(tr("File explorer"));
 
     connect(ui->treeViewFileSystem->selectionModel(), SIGNAL(currentChanged(QModelIndex, QModelIndex)), this, SLOT(onCurrentChanged(QModelIndex, QModelIndex)));
+    connect(ui->treeViewFileSystem->header(), SIGNAL(sectionResized(int,int,int)), this, SLOT(onHeaderSectionResized(int,int,int)));
 
     // setRootPath(QDir::homePath());
 }
@@ -192,14 +254,18 @@ void XFileExplorerWidget::adjustView()
         if (nNumberOfColumns > 0) {
             for (qint32 i = 0; i < nNumberOfColumns; i++) {
                 pHeader->setSectionResizeMode(i, QHeaderView::Interactive);
-                ui->treeViewFileSystem->resizeColumnToContents(i);
             }
+
+            restoreColumnSizes();
+            saveColumnSizes();
         }
     }
 }
 
 void XFileExplorerWidget::reloadData(bool bSaveSelection)
 {
+    saveColumnSizes();
+
     m_fileInfoValuesData.listFIV.clear();
 
     QString sColumns = ui->comboBoxColumns->getValueAsString();
@@ -327,6 +393,15 @@ void XFileExplorerWidget::onCurrentChanged(const QModelIndex &current, const QMo
     updateCurrentPath(current);
 }
 
+void XFileExplorerWidget::onHeaderSectionResized(int nLogicalIndex, int nOldSize, int nNewSize)
+{
+    Q_UNUSED(nLogicalIndex)
+    Q_UNUSED(nOldSize)
+    Q_UNUSED(nNewSize)
+
+    saveColumnSizes();
+}
+
 QString XFileExplorerWidget::normalizePath(const QString &sPath) const
 {
     QString sResult = QDir::fromNativeSeparators(sPath.trimmed());
@@ -364,6 +439,10 @@ bool XFileExplorerWidget::setRootPathInternal(const QString &sRootPath, bool bEm
 
     updatePathControls(m_sRootPath);
     selectPath(m_sRootPath);
+
+    if (bChanged) {
+        saveLastDirectory();
+    }
 
     if (bEmitSignal && bChanged) {
         emit rootPathChanged(m_sRootPath);
@@ -436,6 +515,15 @@ void XFileExplorerWidget::updatePathControls(const QString &sPath)
 
     QDir dir(sPath);
     ui->toolButtonUp->setEnabled(dir.cdUp());
+}
+
+void XFileExplorerWidget::saveLastDirectory()
+{
+    XOptions *pOptions = getGlobalOptions();
+
+    if (pOptions && pOptions->isIDPresent(XOptions::ID_FILE_SAVELASTDIRECTORY)) {
+        pOptions->setLastDirectory(m_sRootPath);
+    }
 }
 
 void XFileExplorerWidget::activateIndex(const QModelIndex &index)
@@ -518,4 +606,62 @@ void XFileExplorerWidget::showContextMenu(const QModelIndex &index, const QPoint
     //         pClipboard->setText(QDir::toNativeSeparators(fileInfo.absoluteFilePath()));
     //     }
     // }
+}
+
+void XFileExplorerWidget::saveColumnSizes()
+{
+    XOptions *pOptions = getGlobalOptions();
+
+    if (!pOptions || !pOptions->isIDPresent(XOptions::ID_VIEW_COLUMN_SIZES) || m_fileInfoValuesData.listFIV.isEmpty()) {
+        return;
+    }
+
+    QHeaderView *pHeader = ui->treeViewFileSystem->header();
+
+    if (!pHeader) {
+        return;
+    }
+
+    QStringList listColumnSizes;
+    qint32 nNumberOfColumns = qMin(m_fileInfoValuesData.listFIV.count(), pHeader->count());
+
+    for (qint32 i = 0; i < nNumberOfColumns; i++) {
+        XFileInfoValues::XFIV value = m_fileInfoValuesData.listFIV.at(i);
+        qint32 nSize = pHeader->sectionSize(i);
+
+        if (nSize > 0) {
+            listColumnSizes.append(QString("%1:%2").arg(static_cast<quint64>(value)).arg(nSize));
+        }
+    }
+
+    pOptions->setValue(XOptions::ID_VIEW_COLUMN_SIZES, listColumnSizes.join(" | "));
+}
+
+void XFileExplorerWidget::restoreColumnSizes()
+{
+    XOptions *pOptions = getGlobalOptions();
+    QHeaderView *pHeader = ui->treeViewFileSystem->header();
+
+    if (!pHeader) {
+        return;
+    }
+
+    QHash<XFileInfoValues::XFIV, qint32> mapColumnSizes;
+
+    if (pOptions && pOptions->isIDPresent(XOptions::ID_VIEW_COLUMN_SIZES)) {
+        mapColumnSizes = getColumnSizeMap(pOptions->getValue(XOptions::ID_VIEW_COLUMN_SIZES).toString());
+    }
+
+    qint32 nNumberOfColumns = qMin(m_fileInfoValuesData.listFIV.count(), pHeader->count());
+
+    for (qint32 i = 0; i < nNumberOfColumns; i++) {
+        XFileInfoValues::XFIV value = m_fileInfoValuesData.listFIV.at(i);
+        qint32 nSize = mapColumnSizes.value(value, 0);
+
+        if (nSize > 0) {
+            ui->treeViewFileSystem->setColumnWidth(i, nSize);
+        } else {
+            ui->treeViewFileSystem->resizeColumnToContents(i);
+        }
+    }
 }
