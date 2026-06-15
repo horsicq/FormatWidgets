@@ -10,9 +10,17 @@ if (NOT DEFINED XFCONTROLS_SOURCES)
     set(XFWIDGETS_SOURCES ${XFWIDGETS_SOURCES} ${XFCONTROLS_SOURCES})
 endif()
 
+if (NOT DEFINED XSHORTCUTS_SOURCES)
+    include(${CMAKE_CURRENT_LIST_DIR}/../../XShortcuts/xshortcuts.cmake)
+    set(XFWIDGETS_SOURCES ${XFWIDGETS_SOURCES} ${XSHORTCUTS_SOURCES})
+endif()
+
 set(XFWIDGETS_SOURCES
     ${XFWIDGETS_SOURCES}
     ${CMAKE_CURRENT_LIST_DIR}/xfwidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/xfwidget.h
     ${CMAKE_CURRENT_LIST_DIR}/xfwidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/xfwidgetadvanced.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/xfwidgetadvanced.h
+    ${CMAKE_CURRENT_LIST_DIR}/xfwidgetadvanced.ui
 )

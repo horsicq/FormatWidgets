@@ -11,14 +11,22 @@ DEPENDPATH += $$PWD
     include($$PWD/../../Controls/XFControls/xfcontrols.pri)
 }
 
+!contains(XCONFIG, xshortcuts) {
+    XCONFIG += xshortcuts
+    include($$PWD/../../XShortcuts/xshortcuts.pri)
+}
+
 HEADERS += \
-    $$PWD/xfwidget.h
+    $$PWD/xfwidget.h \
+    $$PWD/xfwidgetadvanced.h
 
 SOURCES += \
-    $$PWD/xfwidget.cpp
+    $$PWD/xfwidget.cpp \
+    $$PWD/xfwidgetadvanced.cpp
 
 FORMS += \
-    $$PWD/xfwidget.ui
+    $$PWD/xfwidget.ui \
+    $$PWD/xfwidgetadvanced.ui
 
 DISTFILES += \
     $$PWD/xfwidgets.cmake
