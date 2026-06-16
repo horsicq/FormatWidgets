@@ -39,19 +39,13 @@ XFWidgetAdvanced::XFWidgetAdvanced(QWidget *pParent) : XShortcutsWidget(pParent)
 {
     ui->setupUi(this);
 
-    m_pXBinary = nullptr;
+    // m_pXBinary = nullptr;
     m_bIsReadonly = false;
 
-    ui->toolBar->setVisible(false);
     ui->splitter->setStretchFactor(0, 1);
     ui->splitter->setStretchFactor(1, 2);
 
     connect(ui->treeView, SIGNAL(headerSelected(XBinary::XFHEADER)), this, SLOT(onHeaderSelected(XBinary::XFHEADER)));
-    connect(ui->tableView, SIGNAL(fieldSelected(qint32, quint64, XBinary::XFRECORD)), this, SIGNAL(fieldSelected(qint32, quint64, XBinary::XFRECORD)));
-    connect(ui->tableView, SIGNAL(fieldDoubleClicked(qint32, quint64, XBinary::XFRECORD)), this, SIGNAL(fieldDoubleClicked(qint32, quint64, XBinary::XFRECORD)));
-    connect(ui->pushButtonSave, SIGNAL(clicked()), this, SLOT(onSaveClicked()));
-    connect(ui->checkBoxShowOffsets, SIGNAL(toggled(bool)), this, SLOT(onShowOffsetsToggled(bool)));
-    connect(ui->checkBoxShowPresentation, SIGNAL(toggled(bool)), this, SLOT(onShowPresentationToggled(bool)));
 }
 
 XFWidgetAdvanced::~XFWidgetAdvanced()
@@ -59,44 +53,50 @@ XFWidgetAdvanced::~XFWidgetAdvanced()
     delete ui;
 }
 
-void XFWidgetAdvanced::setData(XBinary *pXBinary, const QList<XBinary::XFHEADER> &listHeaders)
+void XFWidgetAdvanced::setData(QIODevice *pDevice, const OPTIONS &options)
 {
-    m_pXBinary = pXBinary;
-    m_mapHeaders.clear();
+    m_pDevice = pDevice;
+    m_options = options;
 
-    for (qint32 i = 0; i < listHeaders.count(); i++) {
-        m_mapHeaders.insert(listHeaders.at(i).sTag, listHeaders.at(i));
-    }
+    reload();
+    // m_pXBinary = pXBinary;
+    // m_mapHeaders.clear();
 
-    ui->treeView->setData(pXBinary, listHeaders);
+    // for (qint32 i = 0; i < listHeaders.count(); i++) {
+    //     m_mapHeaders.insert(listHeaders.at(i).sTag, listHeaders.at(i));
+    // }
 
-    if (!listHeaders.isEmpty()) {
-        ui->tableView->setData(pXBinary, listHeaders.at(0));
+    // ui->treeView->setData(pXBinary, listHeaders);
 
-        QString sStructName;
-        if (m_pXBinary) {
-            sStructName = m_pXBinary->structIDToString(listHeaders.at(0).structID);
-        }
+    // if (!listHeaders.isEmpty()) {
+    //     ui->tableView->setData(pXBinary, listHeaders.at(0));
 
-        m_sCurrentTag = XBinary::xfHeaderToTag(listHeaders.at(0), sStructName, listHeaders.at(0).sParentTag);
-        ui->lineEditTag->setText(m_sCurrentTag);
+    //     QString sStructName;
+    //     if (m_pXBinary) {
+    //         sStructName = m_pXBinary->structIDToString(listHeaders.at(0).structID);
+    //     }
 
-        bool bIsTable = (listHeaders.at(0).xfType == XBinary::XFTYPE_TABLE);
-        ui->toolBar->setVisible(bIsTable);
+    //     m_sCurrentTag = XBinary::xfHeaderToTag(listHeaders.at(0), sStructName, listHeaders.at(0).sParentTag);
+    //     ui->lineEditTag->setText(m_sCurrentTag);
 
-        if (bIsTable) {
-            ui->tableView->setShowOffset(ui->checkBoxShowOffsets->isChecked());
-            ui->tableView->setShowPresentation(ui->checkBoxShowPresentation->isChecked());
-        }
-    }
+    //     bool bIsTable = (listHeaders.at(0).xfType == XBinary::XFTYPE_TABLE);
+    //     ui->toolBar->setVisible(bIsTable);
+
+    //     if (bIsTable) {
+    //         ui->tableView->setShowOffset(ui->checkBoxShowOffsets->isChecked());
+    //         ui->tableView->setShowPresentation(ui->checkBoxShowPresentation->isChecked());
+    //     }
+    // }
 }
 
 void XFWidgetAdvanced::clear()
 {
     ui->treeView->clear();
-    ui->tableView->clear();
-    m_pXBinary = nullptr;
-    m_mapHeaders.clear();
+}
+
+void XFWidgetAdvanced::reload()
+{
+    // TODO
 }
 
 void XFWidgetAdvanced::setReadonly(bool bIsReadonly)
@@ -104,20 +104,9 @@ void XFWidgetAdvanced::setReadonly(bool bIsReadonly)
     m_bIsReadonly = bIsReadonly;
 }
 
-XFTreeView *XFWidgetAdvanced::getTreeView()
-{
-    return ui->treeView;
-}
-
-XFTableView *XFWidgetAdvanced::getTableView()
-{
-    return ui->tableView;
-}
-
 void XFWidgetAdvanced::adjustView()
 {
     getGlobalOptions()->adjustTreeView(ui->treeView, XOptions::ID_VIEW_FONT_TREEVIEWS);
-    getGlobalOptions()->adjustTableView(ui->tableView, XOptions::ID_VIEW_FONT_TABLEVIEWS);
 }
 
 void XFWidgetAdvanced::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
@@ -137,57 +126,31 @@ void XFWidgetAdvanced::registerShortcuts(bool bState)
 
 void XFWidgetAdvanced::onHeaderSelected(const XBinary::XFHEADER &xfHeader)
 {
-    if (m_pXBinary) {
-        ui->tableView->setData(m_pXBinary, xfHeader);
-    }
+    // if (m_pXBinary) {
+    //     ui->tableView->setData(m_pXBinary, xfHeader);
+    // }
 
-    QString sStructName;
-    if (m_pXBinary) {
-        sStructName = m_pXBinary->structIDToString(xfHeader.structID);
-    }
+    // QString sStructName;
+    // if (m_pXBinary) {
+    //     sStructName = m_pXBinary->structIDToString(xfHeader.structID);
+    // }
 
-    m_sCurrentTag = XBinary::xfHeaderToTag(xfHeader, sStructName, xfHeader.sParentTag);
-    ui->lineEditTag->setText(m_sCurrentTag);
+    // m_sCurrentTag = XBinary::xfHeaderToTag(xfHeader, sStructName, xfHeader.sParentTag);
+    // ui->lineEditTag->setText(m_sCurrentTag);
 
-    bool bIsTable = (xfHeader.xfType == XBinary::XFTYPE_TABLE);
-    ui->toolBar->setVisible(bIsTable);
+    // bool bIsTable = (xfHeader.xfType == XBinary::XFTYPE_TABLE);
+    // ui->toolBar->setVisible(bIsTable);
 
-    if (bIsTable) {
-        ui->tableView->setShowOffset(ui->checkBoxShowOffsets->isChecked());
-        ui->tableView->setShowPresentation(ui->checkBoxShowPresentation->isChecked());
-    }
+    // if (bIsTable) {
+    //     ui->tableView->setShowOffset(ui->checkBoxShowOffsets->isChecked());
+    //     ui->tableView->setShowPresentation(ui->checkBoxShowPresentation->isChecked());
+    // }
 
     emit headerSelected(xfHeader);
 }
 
-void XFWidgetAdvanced::onSaveClicked()
+void XFWidgetAdvanced::on_toolButtonReload_clicked()
 {
-    QAbstractItemModel *pModel = ui->tableView->model();
-
-    if (pModel) {
-        QString sDefaultName = m_sCurrentTag;
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-        sDefaultName.replace(QRegularExpression(QStringLiteral(R"([\\/:*?"<>|])")), QStringLiteral("_"));
-#else
-        sDefaultName.replace(QRegExp(QStringLiteral("[\\\\/:*?\"<>|]")), QStringLiteral("_"));
-#endif
-
-        QString sSelectedFilter;
-        QString sFileName = QFileDialog::getSaveFileName(this, tr("Save"), sDefaultName, XFModel::exportAllFilters(), &sSelectedFilter);
-
-        if (!sFileName.isEmpty()) {
-            XFModel::EXPORT_FORMAT exportFormat = XFModel::filterToExportFormat(sSelectedFilter);
-            XFModel::exportToFile(pModel, exportFormat, sFileName);
-        }
-    }
+    reload();
 }
 
-void XFWidgetAdvanced::onShowOffsetsToggled(bool bChecked)
-{
-    ui->tableView->setShowOffset(bChecked);
-}
-
-void XFWidgetAdvanced::onShowPresentationToggled(bool bChecked)
-{
-    ui->tableView->setShowPresentation(bChecked);
-}

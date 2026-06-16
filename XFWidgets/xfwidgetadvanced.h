@@ -37,16 +37,19 @@ class XFWidgetAdvanced : public XShortcutsWidget {
     Q_OBJECT
 
 public:
+    struct OPTIONS {
+        XBinary::FT fileType;
+    };
+
     explicit XFWidgetAdvanced(QWidget *pParent = nullptr);
     ~XFWidgetAdvanced();
 
-    void setData(XBinary *pXBinary, const QList<XBinary::XFHEADER> &listHeaders);
+    void setData(QIODevice *pDevice, const OPTIONS &options);
     void clear();
 
-    void setReadonly(bool bIsReadonly);
+    void reload();
 
-    XFTreeView *getTreeView();
-    XFTableView *getTableView();
+    void setReadonly(bool bIsReadonly);
 
     virtual void adjustView();
     void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
@@ -62,14 +65,12 @@ protected:
 
 private slots:
     void onHeaderSelected(const XBinary::XFHEADER &xfHeader);
-    void onSaveClicked();
-    void onShowOffsetsToggled(bool bChecked);
-    void onShowPresentationToggled(bool bChecked);
+    void on_toolButtonReload_clicked();
 
 private:
     Ui::XFWidgetAdvanced *ui;
-    XBinary *m_pXBinary;
-    QString m_sCurrentTag;
+    QIODevice *m_pDevice;
+    OPTIONS m_options;
     QMap<QString, XBinary::XFHEADER> m_mapHeaders;
     bool m_bIsReadonly;
 };
