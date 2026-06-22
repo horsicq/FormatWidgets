@@ -18,15 +18,21 @@ DEPENDPATH += $$PWD
 
 HEADERS += \
     $$PWD/xfwidget.h \
-    $$PWD/xfwidgetadvanced.h
+    $$PWD/xfwidgetadvanced.h \
+    $$PWD/xfwidget_header.h \
+    $$PWD/xfwidget_table.h
 
 SOURCES += \
     $$PWD/xfwidget.cpp \
-    $$PWD/xfwidgetadvanced.cpp
+    $$PWD/xfwidgetadvanced.cpp \
+    $$PWD/xfwidget_header.cpp \
+    $$PWD/xfwidget_table.cpp
 
 FORMS += \
     $$PWD/xfwidget.ui \
-    $$PWD/xfwidgetadvanced.ui
+    $$PWD/xfwidgetadvanced.ui \
+    $$PWD/xfwidget_header.ui \
+    $$PWD/xfwidget_table.ui
 
 DISTFILES += \
     $$PWD/xfwidgets.cmake

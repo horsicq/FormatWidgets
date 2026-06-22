@@ -39,7 +39,7 @@ XFWidgetAdvanced::XFWidgetAdvanced(QWidget *pParent) : XShortcutsWidget(pParent)
 {
     ui->setupUi(this);
 
-    // m_pXBinary = nullptr;
+    m_pDevice = nullptr;
     m_bIsReadonly = false;
 
     ui->splitter->setStretchFactor(0, 1);
@@ -96,7 +96,22 @@ void XFWidgetAdvanced::clear()
 
 void XFWidgetAdvanced::reload()
 {
-    // TODO
+    XFormats::setFileTypeComboBox(m_options.fileType, m_pDevice, ui->comboBoxFileType);
+    reloadFileType();
+}
+
+void XFWidgetAdvanced::reloadFileType()
+{
+    XBinary::FT fileType = (XBinary::FT)(ui->comboBoxFileType->currentData().toUInt());
+
+    XBinary *pBinary = XFormats::getClass(fileType, m_pDevice, m_options.bIsImage, m_options.nModuleAddress);
+
+    if (pBinary) {
+        QList<XBinary::XFHEADER> listHeaders = pBinary->_getXFHeaders();
+        ui->treeView->setData(pBinary, listHeaders);
+
+        delete pBinary;
+    }
 }
 
 void XFWidgetAdvanced::setReadonly(bool bIsReadonly)
@@ -152,5 +167,10 @@ void XFWidgetAdvanced::onHeaderSelected(const XBinary::XFHEADER &xfHeader)
 void XFWidgetAdvanced::on_toolButtonReload_clicked()
 {
     reload();
+}
+
+void XFWidgetAdvanced::on_comboBoxFileType_currentIndexChanged(int index)
+{
+
 }
 

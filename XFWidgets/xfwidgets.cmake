@@ -23,4 +23,10 @@ set(XFWIDGETS_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/xfwidgetadvanced.cpp
     ${CMAKE_CURRENT_LIST_DIR}/xfwidgetadvanced.h
     ${CMAKE_CURRENT_LIST_DIR}/xfwidgetadvanced.ui
+    ${CMAKE_CURRENT_LIST_DIR}/xfwidget_header.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/xfwidget_header.h
+    ${CMAKE_CURRENT_LIST_DIR}/xfwidget_header.ui
+    ${CMAKE_CURRENT_LIST_DIR}/xfwidget_table.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/xfwidget_table.h
+    ${CMAKE_CURRENT_LIST_DIR}/xfwidget_table.ui
 )

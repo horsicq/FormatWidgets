@@ -26,7 +26,7 @@
 #include <QString>
 #include "xftreeview.h"
 #include "xftableview.h"
-#include "xbinary.h"
+#include "xformats.h"
 #include "xshortcutswidget.h"
 
 namespace Ui {
@@ -38,7 +38,9 @@ class XFWidgetAdvanced : public XShortcutsWidget {
 
 public:
     struct OPTIONS {
-        XBinary::FT fileType;
+        XBinary::FT fileType = XBinary::FT_UNKNOWN;
+        bool bIsImage = false;
+        XADDR nModuleAddress = -1;
     };
 
     explicit XFWidgetAdvanced(QWidget *pParent = nullptr);
@@ -48,6 +50,7 @@ public:
     void clear();
 
     void reload();
+    void reloadFileType();
 
     void setReadonly(bool bIsReadonly);
 
@@ -57,8 +60,8 @@ public:
 
 signals:
     void headerSelected(const XBinary::XFHEADER &xfHeader);
-    void fieldSelected(qint32 nFieldIndex, quint64 nValue, const XBinary::XFRECORD &xfRecord);
-    void fieldDoubleClicked(qint32 nFieldIndex, quint64 nValue, const XBinary::XFRECORD &xfRecord);
+    void fieldSelected(qint32 nFieldIndex, QVariant value, const XBinary::XFRECORD &xfRecord);
+    void fieldDoubleClicked(qint32 nFieldIndex, QVariant value, const XBinary::XFRECORD &xfRecord);
 
 protected:
     virtual void registerShortcuts(bool bState);
@@ -66,6 +69,8 @@ protected:
 private slots:
     void onHeaderSelected(const XBinary::XFHEADER &xfHeader);
     void on_toolButtonReload_clicked();
+
+    void on_comboBoxFileType_currentIndexChanged(int index);
 
 private:
     Ui::XFWidgetAdvanced *ui;

@@ -50,8 +50,8 @@ public:
 
 signals:
     void headerSelected(const XBinary::XFHEADER &xfHeader);
-    void fieldSelected(qint32 nFieldIndex, quint64 nValue, const XBinary::XFRECORD &xfRecord);
-    void fieldDoubleClicked(qint32 nFieldIndex, quint64 nValue, const XBinary::XFRECORD &xfRecord);
+    void fieldSelected(qint32 nFieldIndex, QVariant value, const XBinary::XFRECORD &xfRecord);
+    void fieldDoubleClicked(qint32 nFieldIndex, QVariant value, const XBinary::XFRECORD &xfRecord);
 
 private slots:
     void onHeaderSelected(const XBinary::XFHEADER &xfHeader);
