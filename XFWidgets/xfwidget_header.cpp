@@ -38,9 +38,24 @@ XFWidget_Header::~XFWidget_Header()
     delete ui;
 }
 
-void XFWidget_Header::setData(XBinary *pXBinary, const XBinary::XFHEADER &xfHeader)
+void XFWidget_Header::setData(const XFormats::INDATA &inData, const XBinary::XFHEADER &xfHeader)
 {
-    ui->tableView->setData(pXBinary, xfHeader);
+    ui->tableView->setData(inData, xfHeader);
+
+    QString sStructName;
+    QIODevice *pDevice = XFormats::createDevice(inData);
+    XBinary *pBinary = XFormats::createClass(inData.fileType, pDevice, inData.bIsImage, inData.nModuleAddress);
+    if (pBinary) {
+        sStructName = pBinary->structIDToString(xfHeader.structID);
+        delete pBinary;
+    }
+    XFormats::removeDevice(pDevice, inData);
+
+    QString sTag = XBinary::xfHeaderToTag(xfHeader, sStructName, xfHeader.sParentTag);
+    ui->tableView->setStatusBarText(sTag);
+
+    ui->tableView->setStretchLastColumn(true);
+    ui->tableView->resizeColumnsToContents();
 }
 
 void XFWidget_Header::clear()

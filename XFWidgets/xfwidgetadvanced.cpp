@@ -34,12 +34,13 @@
 #endif
 
 #include "xfmodel.h"
+#include "xfwidget_header.h"
+#include "xfwidget_table.h"
 
 XFWidgetAdvanced::XFWidgetAdvanced(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui::XFWidgetAdvanced)
 {
     ui->setupUi(this);
 
-    m_pDevice = nullptr;
     m_bIsReadonly = false;
 
     ui->splitter->setStretchFactor(0, 1);
@@ -53,9 +54,9 @@ XFWidgetAdvanced::~XFWidgetAdvanced()
     delete ui;
 }
 
-void XFWidgetAdvanced::setData(QIODevice *pDevice, const OPTIONS &options)
+void XFWidgetAdvanced::setData(const XFormats::INDATA &inData, const OPTIONS &options)
 {
-    m_pDevice = pDevice;
+    m_inData = inData;
     m_options = options;
 
     reload();
@@ -96,7 +97,10 @@ void XFWidgetAdvanced::clear()
 
 void XFWidgetAdvanced::reload()
 {
-    XFormats::setFileTypeComboBox(m_options.fileType, m_pDevice, ui->comboBoxFileType);
+    QIODevice *pDevice = XFormats::createDevice(m_inData);
+    XFormats::setFileTypeComboBox(m_inData.fileType, pDevice, ui->comboBoxFileType);
+    XFormats::removeDevice(pDevice, m_inData);
+
     reloadFileType();
 }
 
@@ -104,14 +108,20 @@ void XFWidgetAdvanced::reloadFileType()
 {
     XBinary::FT fileType = (XBinary::FT)(ui->comboBoxFileType->currentData().toUInt());
 
-    XBinary *pBinary = XFormats::getClass(fileType, m_pDevice, m_options.bIsImage, m_options.nModuleAddress);
+    QIODevice *pDevice = XFormats::createDevice(m_inData);
+    XBinary *pBinary = XFormats::createClass(fileType, pDevice, m_inData.bIsImage, m_inData.nModuleAddress);
 
     if (pBinary) {
         QList<XBinary::XFHEADER> listHeaders = pBinary->_getXFHeaders();
-        ui->treeView->setData(pBinary, listHeaders);
+
+        XFormats::INDATA inData = m_inData;
+        inData.fileType = fileType;
+        ui->treeView->setData(inData, listHeaders);
 
         delete pBinary;
     }
+
+    XFormats::removeDevice(pDevice, m_inData);
 }
 
 void XFWidgetAdvanced::setReadonly(bool bIsReadonly)
@@ -141,27 +151,73 @@ void XFWidgetAdvanced::registerShortcuts(bool bState)
 
 void XFWidgetAdvanced::onHeaderSelected(const XBinary::XFHEADER &xfHeader)
 {
-    // if (m_pXBinary) {
-    //     ui->tableView->setData(m_pXBinary, xfHeader);
-    // }
+    XBinary::FT fileType = (XBinary::FT)(ui->comboBoxFileType->currentData().toUInt());
 
-    // QString sStructName;
-    // if (m_pXBinary) {
-    //     sStructName = m_pXBinary->structIDToString(xfHeader.structID);
-    // }
+    QIODevice *pDevice = XFormats::createDevice(m_inData);
+    XBinary *pBinary = XFormats::createClass(fileType, pDevice, m_inData.bIsImage, m_inData.nModuleAddress);
+    QString sStructName;
 
-    // m_sCurrentTag = XBinary::xfHeaderToTag(xfHeader, sStructName, xfHeader.sParentTag);
-    // ui->lineEditTag->setText(m_sCurrentTag);
+    if (pBinary) {
+        sStructName = pBinary->structIDToString(xfHeader.structID);
+        delete pBinary;
+    }
 
-    // bool bIsTable = (xfHeader.xfType == XBinary::XFTYPE_TABLE);
-    // ui->toolBar->setVisible(bIsTable);
+    XFormats::removeDevice(pDevice, m_inData);
 
-    // if (bIsTable) {
-    //     ui->tableView->setShowOffset(ui->checkBoxShowOffsets->isChecked());
-    //     ui->tableView->setShowPresentation(ui->checkBoxShowPresentation->isChecked());
-    // }
+    QString sCurrentTag = XBinary::xfHeaderToTag(xfHeader, sStructName, xfHeader.sParentTag);
+
+    XFormats::INDATA inData = m_inData;
+    inData.fileType = fileType;
+
+    QWidget *pWidget = getOrCreateWidget(sCurrentTag, inData, xfHeader);
+
+    if (xfHeader.xfType == XBinary::XFTYPE_TABLE) {
+        qobject_cast<XFWidget_Table *>(pWidget)->setReadonly(m_bIsReadonly);
+    } else {
+        qobject_cast<XFWidget_Header *>(pWidget)->setReadonly(m_bIsReadonly);
+    }
 
     emit headerSelected(xfHeader);
+}
+
+QWidget *XFWidgetAdvanced::getOrCreateWidget(const QString &sName, const XFormats::INDATA &inData, const XBinary::XFHEADER &xfHeader)
+{
+    if (m_mapWidgets.contains(sName)) {
+        m_lruOrder.removeOne(sName);
+        m_lruOrder.append(sName);
+        QWidget *pWidget = m_mapWidgets.value(sName);
+        ui->stackedWidget->setCurrentWidget(pWidget);
+        return pWidget;
+    }
+
+    if (m_mapWidgets.size() >= 20) {
+        const QString sEvict = m_lruOrder.takeFirst();
+        QWidget *pEvicted = m_mapWidgets.take(sEvict);
+        ui->stackedWidget->removeWidget(pEvicted);
+        delete pEvicted;
+    }
+
+    QWidget *pWidget = nullptr;
+
+    if (xfHeader.xfType == XBinary::XFTYPE_TABLE) {
+        XFWidget_Table *pTable = new XFWidget_Table(this);
+        connect(pTable, SIGNAL(fieldSelected(qint32, QVariant, XBinary::XFRECORD)), this, SIGNAL(fieldSelected(qint32, QVariant, XBinary::XFRECORD)));
+        connect(pTable, SIGNAL(fieldDoubleClicked(qint32, QVariant, XBinary::XFRECORD)), this, SIGNAL(fieldDoubleClicked(qint32, QVariant, XBinary::XFRECORD)));
+        pTable->setData(inData, xfHeader);
+        pWidget = pTable;
+    } else {
+        XFWidget_Header *pHeader = new XFWidget_Header(this);
+        connect(pHeader, SIGNAL(fieldSelected(qint32, QVariant, XBinary::XFRECORD)), this, SIGNAL(fieldSelected(qint32, QVariant, XBinary::XFRECORD)));
+        connect(pHeader, SIGNAL(fieldDoubleClicked(qint32, QVariant, XBinary::XFRECORD)), this, SIGNAL(fieldDoubleClicked(qint32, QVariant, XBinary::XFRECORD)));
+        pHeader->setData(inData, xfHeader);
+        pWidget = pHeader;
+    }
+
+    m_mapWidgets.insert(sName, pWidget);
+    m_lruOrder.append(sName);
+    ui->stackedWidget->addWidget(pWidget);
+    ui->stackedWidget->setCurrentWidget(pWidget);
+    return pWidget;
 }
 
 void XFWidgetAdvanced::on_toolButtonReload_clicked()
@@ -169,8 +225,10 @@ void XFWidgetAdvanced::on_toolButtonReload_clicked()
     reload();
 }
 
-void XFWidgetAdvanced::on_comboBoxFileType_currentIndexChanged(int index)
+void XFWidgetAdvanced::on_comboBoxFileType_currentIndexChanged(int nIndex)
 {
+    Q_UNUSED(nIndex)
 
+    reloadFileType();
 }
 

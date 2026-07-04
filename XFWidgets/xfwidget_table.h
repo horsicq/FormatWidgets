@@ -24,7 +24,7 @@
 
 #include <QWidget>
 #include "xftableview.h"
-#include "xbinary.h"
+#include "xformats.h"
 
 namespace Ui {
 class XFWidget_Table;
@@ -37,7 +37,7 @@ public:
     explicit XFWidget_Table(QWidget *pParent = nullptr);
     virtual ~XFWidget_Table();
 
-    void setData(XBinary *pXBinary, const XBinary::XFHEADER &xfHeader);
+    void setData(const XFormats::INDATA &inData, const XBinary::XFHEADER &xfHeader);
     void clear();
 
     void setReadonly(bool bIsReadonly);
@@ -55,7 +55,7 @@ private slots:
 
 private:
     Ui::XFWidget_Table *ui;
-    XBinary *m_pXBinary;
+    XFormats::INDATA m_inData;
     QString m_sCurrentTag;
     bool m_bIsReadonly;
 };

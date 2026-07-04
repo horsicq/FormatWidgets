@@ -38,15 +38,13 @@ class XFWidgetAdvanced : public XShortcutsWidget {
 
 public:
     struct OPTIONS {
-        XBinary::FT fileType = XBinary::FT_UNKNOWN;
-        bool bIsImage = false;
-        XADDR nModuleAddress = -1;
+        qint32 nDummy;
     };
 
     explicit XFWidgetAdvanced(QWidget *pParent = nullptr);
     ~XFWidgetAdvanced();
 
-    void setData(QIODevice *pDevice, const OPTIONS &options);
+    void setData(const XFormats::INDATA &inData, const OPTIONS &options);
     void clear();
 
     void reload();
@@ -69,14 +67,16 @@ protected:
 private slots:
     void onHeaderSelected(const XBinary::XFHEADER &xfHeader);
     void on_toolButtonReload_clicked();
+    void on_comboBoxFileType_currentIndexChanged(int nIndex);
 
-    void on_comboBoxFileType_currentIndexChanged(int index);
+    QWidget *getOrCreateWidget(const QString &sName, const XFormats::INDATA &inData, const XBinary::XFHEADER &xfHeader);
 
 private:
     Ui::XFWidgetAdvanced *ui;
-    QIODevice *m_pDevice;
+    XFormats::INDATA m_inData;
     OPTIONS m_options;
-    QMap<QString, XBinary::XFHEADER> m_mapHeaders;
+    QMap<QString, QWidget *> m_mapWidgets;
+    QList<QString> m_lruOrder;
     bool m_bIsReadonly;
 };
 

@@ -39,12 +39,11 @@ XFWidget_Table::XFWidget_Table(QWidget *pParent) : QWidget(pParent), ui(new Ui::
 {
     ui->setupUi(this);
 
-    m_pXBinary = nullptr;
+    // m_pXBinary = nullptr;
     m_bIsReadonly = false;
 
     connect(ui->tableView, SIGNAL(fieldSelected(qint32, QVariant, XBinary::XFRECORD)), this, SIGNAL(fieldSelected(qint32, QVariant, XBinary::XFRECORD)));
     connect(ui->tableView, SIGNAL(fieldDoubleClicked(qint32, QVariant, XBinary::XFRECORD)), this, SIGNAL(fieldDoubleClicked(qint32, QVariant, XBinary::XFRECORD)));
-    connect(ui->pushButtonSave, SIGNAL(clicked()), this, SLOT(onSaveClicked()));
     connect(ui->checkBoxShowOffsets, SIGNAL(toggled(bool)), this, SLOT(onShowOffsetsToggled(bool)));
     connect(ui->checkBoxShowPresentation, SIGNAL(toggled(bool)), this, SLOT(onShowPresentationToggled(bool)));
 }
@@ -54,29 +53,32 @@ XFWidget_Table::~XFWidget_Table()
     delete ui;
 }
 
-void XFWidget_Table::setData(XBinary *pXBinary, const XBinary::XFHEADER &xfHeader)
+void XFWidget_Table::setData(const XFormats::INDATA &inData, const XBinary::XFHEADER &xfHeader)
 {
-    m_pXBinary = pXBinary;
-    ui->tableView->setData(pXBinary, xfHeader);
+    m_inData = inData;
+    ui->tableView->setData(inData, xfHeader);
 
     QString sStructName;
-    if (m_pXBinary) {
-        sStructName = m_pXBinary->structIDToString(xfHeader.structID);
+    QIODevice *pDevice = XFormats::createDevice(m_inData);
+    XBinary *pBinary = XFormats::createClass(m_inData.fileType, pDevice, m_inData.bIsImage, m_inData.nModuleAddress);
+    if (pBinary) {
+        sStructName = pBinary->structIDToString(xfHeader.structID);
+        delete pBinary;
     }
+    XFormats::removeDevice(pDevice, m_inData);
 
     m_sCurrentTag = XBinary::xfHeaderToTag(xfHeader, sStructName, xfHeader.sParentTag);
-    ui->lineEditTag->setText(m_sCurrentTag);
+    ui->tableView->setStatusBarText(m_sCurrentTag);
 
     ui->tableView->setShowOffset(ui->checkBoxShowOffsets->isChecked());
     ui->tableView->setShowPresentation(ui->checkBoxShowPresentation->isChecked());
+    ui->tableView->resizeColumnsToContents();
 }
 
 void XFWidget_Table::clear()
 {
     ui->tableView->clear();
-    m_pXBinary = nullptr;
     m_sCurrentTag.clear();
-    ui->lineEditTag->clear();
 }
 
 void XFWidget_Table::setReadonly(bool bIsReadonly)

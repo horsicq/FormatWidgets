@@ -27,7 +27,7 @@
 #include <QString>
 #include "xftreeview.h"
 #include "xftableview.h"
-#include "xbinary.h"
+#include "xformats.h"
 
 namespace Ui {
 class XFWidget;
@@ -40,7 +40,7 @@ public:
     explicit XFWidget(QWidget *pParent = nullptr);
     virtual ~XFWidget();
 
-    void setData(XBinary *pXBinary, const QList<XBinary::XFHEADER> &listHeaders);
+    void setData(const XFormats::INDATA &inData, const QList<XBinary::XFHEADER> &listHeaders);
     void clear();
 
     void setReadonly(bool bIsReadonly);
@@ -61,7 +61,7 @@ private slots:
 
 private:
     Ui::XFWidget *ui;
-    XBinary *m_pXBinary;
+    XFormats::INDATA m_inData;
     QString m_sCurrentTag;
     QMap<QString, XBinary::XFHEADER> m_mapHeaders;
     bool m_bIsReadonly;

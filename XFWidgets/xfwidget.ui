@@ -141,7 +141,7 @@
   </customwidget>
   <customwidget>
    <class>XFTableView</class>
-   <extends>QTableView</extends>
+   <extends>QWidget</extends>
    <header>xftableview.h</header>
   </customwidget>
  </customwidgets>

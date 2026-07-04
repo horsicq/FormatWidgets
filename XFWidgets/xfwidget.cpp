@@ -39,7 +39,6 @@ XFWidget::XFWidget(QWidget *pParent) : QWidget(pParent), ui(new Ui::XFWidget)
 {
     ui->setupUi(this);
 
-    m_pXBinary = nullptr;
     m_bIsReadonly = false;
 
     ui->toolBar->setVisible(false);
@@ -59,24 +58,24 @@ XFWidget::~XFWidget()
     delete ui;
 }
 
-void XFWidget::setData(XBinary *pXBinary, const QList<XBinary::XFHEADER> &listHeaders)
+void XFWidget::setData(const XFormats::INDATA &inData, const QList<XBinary::XFHEADER> &listHeaders)
 {
-    m_pXBinary = pXBinary;
+    m_inData = inData;
     m_mapHeaders.clear();
 
     for (qint32 i = 0; i < listHeaders.count(); i++) {
         m_mapHeaders.insert(listHeaders.at(i).sTag, listHeaders.at(i));
     }
 
-    ui->treeView->setData(pXBinary, listHeaders);
+    ui->treeView->setData(inData, listHeaders);
 
     if (!listHeaders.isEmpty()) {
-        ui->tableView->setData(pXBinary, listHeaders.at(0));
+        ui->tableView->setData(inData, listHeaders.at(0));
 
         QString sStructName;
-        if (m_pXBinary) {
-            sStructName = m_pXBinary->structIDToString(listHeaders.at(0).structID);
-        }
+        // if (m_pXBinary) {
+        //     sStructName = m_pXBinary->structIDToString(listHeaders.at(0).structID);
+        // }
 
         m_sCurrentTag = XBinary::xfHeaderToTag(listHeaders.at(0), sStructName, listHeaders.at(0).sParentTag);
         ui->lineEditTag->setText(m_sCurrentTag);
@@ -95,7 +94,6 @@ void XFWidget::clear()
 {
     ui->treeView->clear();
     ui->tableView->clear();
-    m_pXBinary = nullptr;
     m_mapHeaders.clear();
 }
 
@@ -116,14 +114,14 @@ XFTableView *XFWidget::getTableView()
 
 void XFWidget::onHeaderSelected(const XBinary::XFHEADER &xfHeader)
 {
-    if (m_pXBinary) {
-        ui->tableView->setData(m_pXBinary, xfHeader);
-    }
+    // if (m_pXBinary) {
+    //     ui->tableView->setData(m_pXBinary, xfHeader);
+    // }
 
     QString sStructName;
-    if (m_pXBinary) {
-        sStructName = m_pXBinary->structIDToString(xfHeader.structID);
-    }
+    // if (m_pXBinary) {
+    //     sStructName = m_pXBinary->structIDToString(xfHeader.structID);
+    // }
 
     m_sCurrentTag = XBinary::xfHeaderToTag(xfHeader, sStructName, xfHeader.sParentTag);
     ui->lineEditTag->setText(m_sCurrentTag);
