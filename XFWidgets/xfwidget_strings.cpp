@@ -59,6 +59,11 @@ XFWidget_Strings::~XFWidget_Strings()
     delete ui;
 }
 
+void XFWidget_Strings::setData(const XFormats::INDATA &inData)
+{
+    setData(inData, OPTIONS());
+}
+
 void XFWidget_Strings::setData(const XFormats::INDATA &inData, const OPTIONS &options)
 {
     clear();

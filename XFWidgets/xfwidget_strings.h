@@ -54,7 +54,8 @@ public:
     explicit XFWidget_Strings(QWidget *pParent = nullptr);
     virtual ~XFWidget_Strings();
 
-    void setData(const XFormats::INDATA &inData, const OPTIONS &options = OPTIONS());
+    void setData(const XFormats::INDATA &inData);
+    void setData(const XFormats::INDATA &inData, const OPTIONS &options);
     void clear();
     void reload();
 
