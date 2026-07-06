@@ -29,4 +29,7 @@ set(XFWIDGETS_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/xfwidget_table.cpp
     ${CMAKE_CURRENT_LIST_DIR}/xfwidget_table.h
     ${CMAKE_CURRENT_LIST_DIR}/xfwidget_table.ui
+    ${CMAKE_CURRENT_LIST_DIR}/xfwidget_strings.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/xfwidget_strings.h
+    ${CMAKE_CURRENT_LIST_DIR}/xfwidget_strings.ui
 )

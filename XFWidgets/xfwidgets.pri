@@ -20,19 +20,22 @@ HEADERS += \
     $$PWD/xfwidget.h \
     $$PWD/xfwidgetadvanced.h \
     $$PWD/xfwidget_header.h \
-    $$PWD/xfwidget_table.h
+    $$PWD/xfwidget_table.h \
+    $$PWD/xfwidget_strings.h
 
 SOURCES += \
     $$PWD/xfwidget.cpp \
     $$PWD/xfwidgetadvanced.cpp \
     $$PWD/xfwidget_header.cpp \
-    $$PWD/xfwidget_table.cpp
+    $$PWD/xfwidget_table.cpp \
+    $$PWD/xfwidget_strings.cpp
 
 FORMS += \
     $$PWD/xfwidget.ui \
     $$PWD/xfwidgetadvanced.ui \
     $$PWD/xfwidget_header.ui \
-    $$PWD/xfwidget_table.ui
+    $$PWD/xfwidget_table.ui \
+    $$PWD/xfwidget_strings.ui
 
 DISTFILES += \
     $$PWD/xfwidgets.cmake
