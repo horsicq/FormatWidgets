@@ -1,0 +1,270 @@
+/* Copyright (c) 2025-2026 hors<horsicq@gmail.com>
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+#include "xfwidget_strings.h"
+
+#include "ui_xfwidget_strings.h"
+
+#include <QAbstractItemView>
+#include <QAbstractItemModel>
+#include <QApplication>
+#include <QHeaderView>
+#include <QItemSelectionModel>
+#include <QVariant>
+#include <QtGlobal>
+
+XFWidget_Strings::XFWidget_Strings(QWidget *pParent) : QWidget(pParent), ui(new Ui::XFWidget_Strings)
+{
+    ui->setupUi(this);
+
+    m_pCurrentDevice = nullptr;
+    m_bIsReadonly = false;
+
+    ui->tableView->setThreadedFilterSortEnabled(true);
+    ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->tableView->setSelectionMode(QAbstractItemView::SingleSelection);
+    ui->tableView->horizontalHeader()->setStretchLastSection(true);
+
+    applyOptionsToUi(m_options);
+
+    connect(ui->toolButtonSearch, SIGNAL(clicked()), this, SLOT(onSearchClicked()));
+    connect(ui->comboBoxFileType, SIGNAL(currentIndexChanged(int)), this, SLOT(onFileTypeIndexChanged(int)));
+    connect(ui->tableView, SIGNAL(busyChanged(bool)), this, SLOT(onTableBusyChanged(bool)));
+
+    updateStatusText();
+}
+
+XFWidget_Strings::~XFWidget_Strings()
+{
+    clear();
+
+    delete ui;
+}
+
+void XFWidget_Strings::setData(const XFormats::INDATA &inData, const OPTIONS &options)
+{
+    clear();
+
+    m_inData = inData;
+    m_options = options;
+
+    m_pCurrentDevice = XFormats::createDevice(m_inData);
+
+    if (m_pCurrentDevice) {
+        XBinary::FT fileType = XFormats::setFileTypeComboBox(m_inData.fileType, m_pCurrentDevice, ui->comboBoxFileType);
+        applyOptionsToUi(m_options);
+        updateMapModeComboBox(fileType, m_options.mapMode);
+        reload();
+    }
+}
+
+void XFWidget_Strings::clear()
+{
+    ui->tableView->clear();
+    m_listRecords.clear();
+    m_memoryMap = {};
+
+    if (m_pCurrentDevice) {
+        XFormats::removeDevice(m_pCurrentDevice, m_inData);
+        m_pCurrentDevice = nullptr;
+    }
+
+    updateStatusText();
+}
+
+void XFWidget_Strings::reload()
+{
+    if (!m_pCurrentDevice) {
+        return;
+    }
+
+    m_options = getOptionsFromUi();
+    m_listRecords.clear();
+    ui->tableView->clear();
+
+    if (!(m_options.bANSI || m_options.bUTF8 || m_options.bUTF16 || m_options.bUTF32)) {
+        updateStatusText();
+        return;
+    }
+
+    QApplication::setOverrideCursor(Qt::WaitCursor);
+
+    XBinary::FT fileType = (XBinary::FT)(ui->comboBoxFileType->currentData().toUInt());
+    XBinary *pBinary = XFormats::createClass(fileType, m_pCurrentDevice, m_inData.bIsImage, m_inData.nModuleAddress);
+
+    if (pBinary) {
+        XBinary::PDSTRUCT pdStruct = XBinary::createPdStruct();
+
+        m_memoryMap = pBinary->getMemoryMap(m_options.mapMode, &pdStruct);
+
+        XBinary::XFSS_OPTIONS ssOptions = {};
+        ssOptions.nLimit = m_options.nLimit;
+        ssOptions.nMinLenght = m_options.nMinLength;
+        ssOptions.nMaxLenght = m_options.nMaxLength;
+        ssOptions.bANSI = m_options.bANSI;
+        ssOptions.bUTF8 = m_options.bUTF8;
+        ssOptions.bUTF16 = m_options.bUTF16;
+        ssOptions.bUTF32 = m_options.bUTF32;
+        ssOptions.nCodepage = XBinary::CODEPAGE_ASCII;
+        ssOptions.endian = m_options.endian;
+
+        m_listRecords = pBinary->multiSearch_strings(&m_memoryMap, m_options.nOffset, m_options.nSize, ssOptions, &pdStruct);
+
+        delete pBinary;
+    }
+
+    XModel_MSRecord *pModel = new XModel_MSRecord(m_pCurrentDevice, m_memoryMap, &m_listRecords, XBinary::VT_STRING, this);
+    pModel->setValue(m_options.endian, XBinary::VT_STRING, QVariant());
+
+    ui->tableView->setCustomModel(pModel, true);
+    ui->tableView->resizeColumnsToContents();
+    ui->tableView->horizontalHeader()->setStretchLastSection(true);
+
+    QItemSelectionModel *pSelectionModel = ui->tableView->selectionModel();
+
+    if (pSelectionModel) {
+        connect(pSelectionModel, SIGNAL(currentChanged(QModelIndex, QModelIndex)), this, SLOT(onSelectionChanged(QModelIndex, QModelIndex)), Qt::UniqueConnection);
+    }
+
+    QApplication::restoreOverrideCursor();
+
+    updateStatusText();
+}
+
+void XFWidget_Strings::setReadonly(bool bIsReadonly)
+{
+    m_bIsReadonly = bIsReadonly;
+}
+
+XTableView *XFWidget_Strings::getTableView()
+{
+    return ui->tableView;
+}
+
+void XFWidget_Strings::onSearchClicked()
+{
+    reload();
+}
+
+void XFWidget_Strings::onFileTypeIndexChanged(int nIndex)
+{
+    Q_UNUSED(nIndex)
+
+    XBinary::FT fileType = (XBinary::FT)(ui->comboBoxFileType->currentData().toUInt());
+    updateMapModeComboBox(fileType, m_options.mapMode);
+}
+
+void XFWidget_Strings::onSelectionChanged(const QModelIndex &current, const QModelIndex &previous)
+{
+    Q_UNUSED(previous)
+
+    if (!current.isValid()) {
+        return;
+    }
+
+    QAbstractItemModel *pModel = ui->tableView->model();
+
+    if (!pModel) {
+        return;
+    }
+
+    QModelIndex indexNumber = current.sibling(current.row(), XModel_MSRecord::COLUMN_NUMBER);
+
+    if (!indexNumber.isValid()) {
+        return;
+    }
+
+    QVariant varOffset = pModel->data(indexNumber, Qt::UserRole + XModel_MSRecord::USERROLE_OFFSET);
+    QVariant varAddress = pModel->data(indexNumber, Qt::UserRole + XModel_MSRecord::USERROLE_ADDRESS);
+    QVariant varSize = pModel->data(indexNumber, Qt::UserRole + XModel_MSRecord::USERROLE_SIZE);
+    QVariant varValueType = pModel->data(indexNumber, Qt::UserRole + XModel_MSRecord::USERROLE_STRING1);
+
+    qint64 nOffset = varOffset.isValid() ? varOffset.toLongLong() : -1;
+    XADDR nAddress = varAddress.isValid() ? varAddress.toULongLong() : (XADDR)-1;
+    qint64 nSize = varSize.toLongLong();
+    XBinary::VT valueType = (XBinary::VT)(varValueType.toUInt());
+
+    if (nOffset != -1) {
+        emit currentLocationChanged(nOffset, XBinary::LT_OFFSET, nSize);
+    } else if (nAddress != (XADDR)-1) {
+        emit currentLocationChanged(nAddress, XBinary::LT_ADDRESS, nSize);
+    }
+
+    emit stringSelected(nOffset, nAddress, nSize, valueType);
+}
+
+void XFWidget_Strings::onTableBusyChanged(bool bBusy)
+{
+    if (bBusy) {
+        ui->progressBar->setRange(0, 0);
+        ui->progressBar->setFormat(tr("Filtering") + QString("..."));
+    } else {
+        ui->progressBar->setRange(0, 100);
+        updateStatusText();
+    }
+}
+
+void XFWidget_Strings::applyOptionsToUi(const OPTIONS &options)
+{
+    ui->checkBoxANSI->setChecked(options.bANSI);
+    ui->checkBoxUTF8->setChecked(options.bUTF8);
+    ui->checkBoxUTF16->setChecked(options.bUTF16);
+    ui->checkBoxUTF32->setChecked(options.bUTF32);
+    ui->spinBoxMinLength->setValue(qMax(1, options.nMinLength));
+    ui->spinBoxMaxLength->setValue(qMax(1, options.nMaxLength));
+    ui->spinBoxLimit->setValue(qMax(0, options.nLimit));
+    XFormats::setEndiannessComboBox(ui->comboBoxEndian, options.endian);
+}
+
+XFWidget_Strings::OPTIONS XFWidget_Strings::getOptionsFromUi() const
+{
+    OPTIONS result = m_options;
+
+    result.bANSI = ui->checkBoxANSI->isChecked();
+    result.bUTF8 = ui->checkBoxUTF8->isChecked();
+    result.bUTF16 = ui->checkBoxUTF16->isChecked();
+    result.bUTF32 = ui->checkBoxUTF32->isChecked();
+    result.nMinLength = ui->spinBoxMinLength->value();
+    result.nMaxLength = ui->spinBoxMaxLength->value();
+    result.nLimit = ui->spinBoxLimit->value();
+    result.endian = (XBinary::ENDIAN)(ui->comboBoxEndian->currentData().toUInt());
+    result.mapMode = (XBinary::MAPMODE)(ui->comboBoxMapMode->currentData().toUInt());
+
+    return result;
+}
+
+void XFWidget_Strings::updateMapModeComboBox(XBinary::FT fileType, XBinary::MAPMODE mapMode)
+{
+    XBinary::MAPMODE currentMapMode = XFormats::getMapModesList(fileType, ui->comboBoxMapMode);
+
+    if (mapMode != XBinary::MAPMODE_UNKNOWN) {
+        XFormats::setComboBoxCurrent(ui->comboBoxMapMode, mapMode);
+    } else if (currentMapMode != XBinary::MAPMODE_UNKNOWN) {
+        XFormats::setComboBoxCurrent(ui->comboBoxMapMode, currentMapMode);
+    }
+}
+
+void XFWidget_Strings::updateStatusText()
+{
+    ui->progressBar->setRange(0, 100);
+    ui->progressBar->setValue(m_listRecords.isEmpty() ? 0 : 100);
+    ui->progressBar->setFormat((QString("%1 ") + tr("strings found")).arg(m_listRecords.count()));
+}
