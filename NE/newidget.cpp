@@ -392,7 +392,7 @@ void NEWidget::reloadData(bool bSaveSelection)
                 options.nInitAddress = getDisasmInitAddress();
                 options.bMenu_Hex = true;
                 ui->widgetDisasm->setXInfoDB(getXInfoDB());
-                ui->widgetDisasm->setData(getDevice(), options);
+                ui->widgetDisasm->setData(XFormats::createINDATA(options.fileType, getDevice()), options);
 
                 setDisasmInitAddress(-1);
             }

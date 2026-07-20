@@ -90,7 +90,7 @@ void PEWidget::clear()
 
     ui->widgetTools->setData(0);
     XBinaryView::OPTIONS options = {};
-    ui->widgetDisasm_DosStub->setData(0, options);
+    ui->widgetDisasm_DosStub->setData(XFormats::createINDATA(options.fileType, nullptr, options.bIsImage, options.nModuleAddress), options);
 
     ui->checkBoxReadonly->setChecked(true);
 
@@ -1096,7 +1096,7 @@ void PEWidget::reloadData(bool bSaveSelection)
                 options.bMenu_Hex = true;
 
                 ui->widgetDisasm->setXInfoDB(getXInfoDB());
-                ui->widgetDisasm->setData(getDevice(), options);
+                ui->widgetDisasm->setData(XFormats::createINDATA(options.fileType, getDevice()), options);
 
                 setDisasmInitAddress(-1);
             }
@@ -1245,7 +1245,8 @@ void PEWidget::reloadData(bool bSaveSelection)
                 options.nInitAddress = -1;  // TODO Check MSDOS
                 // options.memoryMapRegion = binary.getMemoryMap();
 
-                ui->widgetDisasm_DosStub->setData(m_subDevice[SPE::TYPE_DOS_STUB], options);
+                ui->widgetDisasm_DosStub->setData(
+                    XFormats::createINDATA(options.fileType, m_subDevice[SPE::TYPE_DOS_STUB], options.bIsImage, options.nModuleAddress), options);
                 ui->widgetDisasm_DosStub->setXInfoDB(getXInfoDB());
             }
         } else if (nType == SPE::TYPE_IMAGE_NT_HEADERS) {
