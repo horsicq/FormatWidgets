@@ -119,11 +119,14 @@
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
        </property>
+       <property name="specialValueText">
+        <string>No limit</string>
+       </property>
        <property name="minimum">
         <number>0</number>
        </property>
        <property name="maximum">
-        <number>2147483647</number>
+        <number>2000000000</number>
        </property>
        <property name="value">
         <number>100000</number>
