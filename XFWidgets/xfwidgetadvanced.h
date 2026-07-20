@@ -44,7 +44,7 @@ public:
     explicit XFWidgetAdvanced(QWidget *pParent = nullptr);
     ~XFWidgetAdvanced();
 
-    void setData(const XFormats::INDATA &inData, const OPTIONS &options);
+    void setData(const XBinary::INDATA &inData, const OPTIONS &options);
     void clear();
 
     void reload();
@@ -69,11 +69,11 @@ private slots:
     void on_toolButtonReload_clicked();
     void on_comboBoxFileType_currentIndexChanged(int nIndex);
 
-    QWidget *getOrCreateWidget(const QString &sName, const XFormats::INDATA &inData, const XBinary::XFHEADER &xfHeader);
+    QWidget *getOrCreateWidget(const QString &sName, const XBinary::INDATA &inData, const XBinary::XFHEADER &xfHeader);
 
 private:
     Ui::XFWidgetAdvanced *ui;
-    XFormats::INDATA m_inData;
+    XBinary::INDATA m_inData;
     OPTIONS m_options;
     QMap<QString, QWidget *> m_mapWidgets;
     QList<QString> m_lruOrder;

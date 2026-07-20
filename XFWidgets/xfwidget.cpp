@@ -58,7 +58,7 @@ XFWidget::~XFWidget()
     delete ui;
 }
 
-void XFWidget::setData(const XFormats::INDATA &inData, const QList<XBinary::XFHEADER> &listHeaders)
+void XFWidget::setData(const XBinary::INDATA &inData, const QList<XBinary::XFHEADER> &listHeaders)
 {
     m_inData = inData;
     m_mapHeaders.clear();

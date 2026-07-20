@@ -61,48 +61,17 @@
       </widget>
      </item>
      <item>
-      <widget class="QCheckBox" name="checkBoxANSI">
-       <property name="text">
-        <string notr="true">ANSI</string>
+      <spacer name="horizontalSpacerToolBar">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
        </property>
-       <property name="checked">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QCheckBox" name="checkBoxUTF8">
-       <property name="text">
-        <string notr="true">UTF-8</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QCheckBox" name="checkBoxUTF16">
-       <property name="text">
-        <string notr="true">UTF-16</string>
-       </property>
-       <property name="checked">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QCheckBox" name="checkBoxUTF32">
-       <property name="text">
-        <string notr="true">UTF-32</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="comboBoxEndian">
-       <property name="minimumSize">
+       <property name="sizeHint" stdset="0">
         <size>
-         <width>90</width>
-         <height>0</height>
+         <width>40</width>
+         <height>20</height>
         </size>
        </property>
-      </widget>
+      </spacer>
      </item>
      <item>
       <widget class="QSpinBox" name="spinBoxMinLength">
@@ -162,7 +131,72 @@
       </widget>
      </item>
      <item>
-      <spacer name="horizontalSpacerToolBar">
+      <widget class="QToolButton" name="toolButtonSearch">
+       <property name="text">
+        <string>Search</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QCheckBox" name="checkBoxANSI">
+       <property name="text">
+        <string notr="true">ANSI</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBoxANSICode">
+       <property name="minimumSize">
+        <size>
+         <width>90</width>
+         <height>0</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBoxUTF8">
+       <property name="text">
+        <string notr="true">UTF-8</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBoxUTF16">
+       <property name="text">
+        <string notr="true">UTF-16</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBoxUTF32">
+       <property name="text">
+        <string notr="true">UTF-32</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBoxEndian">
+       <property name="minimumSize">
+        <size>
+         <width>90</width>
+         <height>0</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -174,17 +208,10 @@
        </property>
       </spacer>
      </item>
-     <item>
-      <widget class="QToolButton" name="toolButtonSearch">
-       <property name="text">
-        <string>Search</string>
-       </property>
-      </widget>
-     </item>
     </layout>
    </item>
    <item>
-    <widget class="XTableView" name="tableView">
+    <widget class="XFTableView" name="tableView">
      <property name="editTriggers">
       <set>QAbstractItemView::NoEditTriggers</set>
      </property>
@@ -205,32 +232,13 @@
      </attribute>
     </widget>
    </item>
-   <item>
-    <widget class="QProgressBar" name="progressBar">
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>16</height>
-      </size>
-     </property>
-     <property name="maximum">
-      <number>100</number>
-     </property>
-     <property name="value">
-      <number>0</number>
-     </property>
-     <property name="textVisible">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
   </layout>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>XTableView</class>
+   <class>XFTableView</class>
    <extends>QTableView</extends>
-   <header>xtableview.h</header>
+   <header>xftableview.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

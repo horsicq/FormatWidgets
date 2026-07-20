@@ -25,6 +25,10 @@
 #include <QWidget>
 #include "xftableview.h"
 #include "xformats.h"
+#include "xmodel_ximport.h"
+#include "xmodel_xexport.h"
+#include "xmodel_xsymbol.h"
+#include "xmodel_xresource.h"
 
 namespace Ui {
 class XFWidget_Table;
@@ -37,7 +41,11 @@ public:
     explicit XFWidget_Table(QWidget *pParent = nullptr);
     virtual ~XFWidget_Table();
 
-    void setData(const XFormats::INDATA &inData, const XBinary::XFHEADER &xfHeader);
+    void setData(const XBinary::INDATA &inData, const XBinary::XFHEADER &xfHeader);
+    void setData(const XBinary::INDATA &inData, const QVector<XBinary::XIMPORT_STRUCT> &listImports);
+    void setData(const XBinary::INDATA &inData, const QVector<XBinary::XEXPORT_STRUCT> &listExports);
+    void setData(const XBinary::INDATA &inData, const QVector<XBinary::XSYMBOL_STRUCT> &listSymbols);
+    void setData(const XBinary::INDATA &inData, const QVector<XBinary::XRESOURCE_STRUCT> &listResources);
     void clear();
 
     void setReadonly(bool bIsReadonly);
@@ -54,10 +62,17 @@ private slots:
     void onShowPresentationToggled(bool bChecked);
 
 private:
+    void setListMode(const QString &sTag);
+
     Ui::XFWidget_Table *ui;
-    XFormats::INDATA m_inData;
+    XBinary::INDATA m_inData;
     QString m_sCurrentTag;
     bool m_bIsReadonly;
+
+    QVector<XBinary::XIMPORT_STRUCT> m_listImports;
+    QVector<XBinary::XEXPORT_STRUCT> m_listExports;
+    QVector<XBinary::XSYMBOL_STRUCT> m_listSymbols;
+    QVector<XBinary::XRESOURCE_STRUCT> m_listResources;
 };
 
 #endif  // XFWIDGET_TABLE_H

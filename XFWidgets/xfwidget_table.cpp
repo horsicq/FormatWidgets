@@ -53,7 +53,7 @@ XFWidget_Table::~XFWidget_Table()
     delete ui;
 }
 
-void XFWidget_Table::setData(const XFormats::INDATA &inData, const XBinary::XFHEADER &xfHeader)
+void XFWidget_Table::setData(const XBinary::INDATA &inData, const XBinary::XFHEADER &xfHeader)
 {
     m_inData = inData;
     ui->tableView->setData(inData, xfHeader);
@@ -75,10 +75,66 @@ void XFWidget_Table::setData(const XFormats::INDATA &inData, const XBinary::XFHE
     ui->tableView->resizeColumnsToContents();
 }
 
+void XFWidget_Table::setListMode(const QString &sTag)
+{
+    m_sCurrentTag = sTag;
+    ui->tableView->setStatusBarText(m_sCurrentTag);
+    ui->toolBar->setVisible(false);
+    ui->tableView->resizeColumnsToContents();
+}
+
+void XFWidget_Table::setData(const XBinary::INDATA &inData, const QVector<XBinary::XIMPORT_STRUCT> &listImports)
+{
+    m_inData = inData;
+    m_listImports = listImports;
+
+    XModel_XImport *pModel = new XModel_XImport(&m_listImports, this);
+    ui->tableView->setCustomModel(pModel, true);
+
+    setListMode(tr("Import"));
+}
+
+void XFWidget_Table::setData(const XBinary::INDATA &inData, const QVector<XBinary::XEXPORT_STRUCT> &listExports)
+{
+    m_inData = inData;
+    m_listExports = listExports;
+
+    XModel_XExport *pModel = new XModel_XExport(&m_listExports, this);
+    ui->tableView->setCustomModel(pModel, true);
+
+    setListMode(tr("Export"));
+}
+
+void XFWidget_Table::setData(const XBinary::INDATA &inData, const QVector<XBinary::XSYMBOL_STRUCT> &listSymbols)
+{
+    m_inData = inData;
+    m_listSymbols = listSymbols;
+
+    XModel_XSymbol *pModel = new XModel_XSymbol(&m_listSymbols, this);
+    ui->tableView->setCustomModel(pModel, true);
+
+    setListMode(tr("Symbols"));
+}
+
+void XFWidget_Table::setData(const XBinary::INDATA &inData, const QVector<XBinary::XRESOURCE_STRUCT> &listResources)
+{
+    m_inData = inData;
+    m_listResources = listResources;
+
+    XModel_XResource *pModel = new XModel_XResource(&m_listResources, this);
+    ui->tableView->setCustomModel(pModel, true);
+
+    setListMode(tr("Resources"));
+}
+
 void XFWidget_Table::clear()
 {
     ui->tableView->clear();
     m_sCurrentTag.clear();
+    m_listImports.clear();
+    m_listExports.clear();
+    m_listSymbols.clear();
+    m_listResources.clear();
 }
 
 void XFWidget_Table::setReadonly(bool bIsReadonly)

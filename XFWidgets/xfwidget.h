@@ -40,7 +40,7 @@ public:
     explicit XFWidget(QWidget *pParent = nullptr);
     virtual ~XFWidget();
 
-    void setData(const XFormats::INDATA &inData, const QList<XBinary::XFHEADER> &listHeaders);
+    void setData(const XBinary::INDATA &inData, const QList<XBinary::XFHEADER> &listHeaders);
     void clear();
 
     void setReadonly(bool bIsReadonly);
@@ -61,7 +61,7 @@ private slots:
 
 private:
     Ui::XFWidget *ui;
-    XFormats::INDATA m_inData;
+    XBinary::INDATA m_inData;
     QString m_sCurrentTag;
     QMap<QString, XBinary::XFHEADER> m_mapHeaders;
     bool m_bIsReadonly;

@@ -23,9 +23,13 @@
 
 #include "ui_xfwidget_strings.h"
 
+#include "xdialogprocess.h"
+#include "xsearchprocess.h"
+
 #include <QAbstractItemView>
 #include <QAbstractItemModel>
 #include <QApplication>
+#include <QFile>
 #include <QHeaderView>
 #include <QItemSelectionModel>
 #include <QVariant>
@@ -47,7 +51,7 @@ XFWidget_Strings::XFWidget_Strings(QWidget *pParent) : QWidget(pParent), ui(new 
 
     connect(ui->toolButtonSearch, SIGNAL(clicked()), this, SLOT(onSearchClicked()));
     connect(ui->comboBoxFileType, SIGNAL(currentIndexChanged(int)), this, SLOT(onFileTypeIndexChanged(int)));
-    connect(ui->tableView, SIGNAL(busyChanged(bool)), this, SLOT(onTableBusyChanged(bool)));
+    connect(ui->checkBoxANSI, SIGNAL(toggled(bool)), ui->comboBoxANSICode, SLOT(setEnabled(bool)));
 
     updateStatusText();
 }
@@ -59,12 +63,12 @@ XFWidget_Strings::~XFWidget_Strings()
     delete ui;
 }
 
-void XFWidget_Strings::setData(const XFormats::INDATA &inData)
+void XFWidget_Strings::setData(const XBinary::INDATA &inData)
 {
     setData(inData, OPTIONS());
 }
 
-void XFWidget_Strings::setData(const XFormats::INDATA &inData, const OPTIONS &options)
+void XFWidget_Strings::setData(const XBinary::INDATA &inData, const OPTIONS &options)
 {
     clear();
 
@@ -103,6 +107,7 @@ void XFWidget_Strings::reload()
 
     m_options = getOptionsFromUi();
     m_listRecords.clear();
+    m_memoryMap = {};
     ui->tableView->clear();
 
     if (!(m_options.bANSI || m_options.bUTF8 || m_options.bUTF16 || m_options.bUTF32)) {
@@ -110,33 +115,46 @@ void XFWidget_Strings::reload()
         return;
     }
 
-    QApplication::setOverrideCursor(Qt::WaitCursor);
+    ui->tableView->setProgressVisible(true);
+    ui->tableView->setProgressRange(0, 100);
+    ui->tableView->setProgressValue(0);
+    ui->tableView->setProgressFormat(tr("Searching") + QString("... %p%"));
 
     XBinary::FT fileType = (XBinary::FT)(ui->comboBoxFileType->currentData().toUInt());
-    XBinary *pBinary = XFormats::createClass(fileType, m_pCurrentDevice, m_inData.bIsImage, m_inData.nModuleAddress);
 
-    if (pBinary) {
-        XBinary::PDSTRUCT pdStruct = XBinary::createPdStruct();
+    XBinary::XFSS_OPTIONS ssOptions = {};
+    ssOptions.nLimit = m_options.nLimit;
+    ssOptions.nMinLenght = m_options.nMinLength;
+    ssOptions.nMaxLenght = m_options.nMaxLength;
+    ssOptions.bANSI = m_options.bANSI;
+    ssOptions.bUTF8 = m_options.bUTF8;
+    ssOptions.bUTF16 = m_options.bUTF16;
+    ssOptions.bUTF32 = m_options.bUTF32;
+    ssOptions.nCodepage = m_options.codepage;
+    ssOptions.endian = m_options.endian;
 
-        m_memoryMap = pBinary->getMemoryMap(m_options.mapMode, &pdStruct);
+    XBinary::INDATA inData = m_inData;
+    inData.fileType = fileType;
 
-        XBinary::XFSS_OPTIONS ssOptions = {};
-        ssOptions.nLimit = m_options.nLimit;
-        ssOptions.nMinLenght = m_options.nMinLength;
-        ssOptions.nMaxLenght = m_options.nMaxLength;
-        ssOptions.bANSI = m_options.bANSI;
-        ssOptions.bUTF8 = m_options.bUTF8;
-        ssOptions.bUTF16 = m_options.bUTF16;
-        ssOptions.bUTF32 = m_options.bUTF32;
-        ssOptions.nCodepage = XBinary::CODEPAGE_ASCII;
-        ssOptions.endian = m_options.endian;
+    if (inData.inDataMode == XBinary::INDATA_MODE_DEVICE) {
+        QFile *pFile = qobject_cast<QFile *>(m_pCurrentDevice);
 
-        m_listRecords = pBinary->multiSearch_strings(&m_memoryMap, m_options.nOffset, m_options.nSize, ssOptions, &pdStruct);
-
-        delete pBinary;
+        if (pFile) {
+            inData = XFormats::createINDATA(fileType, pFile->fileName(), m_inData.bIsImage, m_inData.nModuleAddress);
+        }
     }
 
-    XModel_MSRecord *pModel = new XModel_MSRecord(m_pCurrentDevice, m_memoryMap, &m_listRecords, XBinary::VT_STRING, this);
+    XBinary::XLOC location = XBinary::offsetToLoc(m_options.nOffset);
+
+    XSearchProcess searchProcess;
+    XDialogProcess dialogProcess(XOptions::getMainWidget(this), &searchProcess);
+    connect(&searchProcess, &XSearchProcess::progressChanged, this, &XFWidget_Strings::onSearchProgressChanged, Qt::QueuedConnection);
+    m_memoryMap = XFormats::getMemoryMap(fileType, m_options.mapMode, m_pCurrentDevice, m_inData.bIsImage, m_inData.nModuleAddress, dialogProcess.getPdStruct());
+    searchProcess.setData(inData, location, m_options.nSize, ssOptions, &m_memoryMap, &m_listRecords, dialogProcess.getPdStruct());
+    dialogProcess.start();
+    dialogProcess.showDialogDelay();
+
+    XModel_MSRecord *pModel = new XModel_MSRecord(inData, m_memoryMap, &m_listRecords, XBinary::VT_STRING, this);
     pModel->setValue(m_options.endian, XBinary::VT_STRING, QVariant());
 
     ui->tableView->setCustomModel(pModel, true);
@@ -149,8 +167,6 @@ void XFWidget_Strings::reload()
         connect(pSelectionModel, SIGNAL(currentChanged(QModelIndex, QModelIndex)), this, SLOT(onSelectionChanged(QModelIndex, QModelIndex)), Qt::UniqueConnection);
     }
 
-    QApplication::restoreOverrideCursor();
-
     updateStatusText();
 }
 
@@ -159,7 +175,7 @@ void XFWidget_Strings::setReadonly(bool bIsReadonly)
     m_bIsReadonly = bIsReadonly;
 }
 
-XTableView *XFWidget_Strings::getTableView()
+XFTableView *XFWidget_Strings::getTableView()
 {
     return ui->tableView;
 }
@@ -216,20 +232,30 @@ void XFWidget_Strings::onSelectionChanged(const QModelIndex &current, const QMod
     emit stringSelected(nOffset, nAddress, nSize, valueType);
 }
 
-void XFWidget_Strings::onTableBusyChanged(bool bBusy)
+void XFWidget_Strings::onSearchProgressChanged(qint32 nValue, qint64 nCurrent, qint64 nTotal, const QString &sStatus)
 {
-    if (bBusy) {
-        ui->progressBar->setRange(0, 0);
-        ui->progressBar->setFormat(tr("Filtering") + QString("..."));
-    } else {
-        ui->progressBar->setRange(0, 100);
-        updateStatusText();
+    ui->tableView->setProgressVisible(true);
+    ui->tableView->setProgressRange(0, 100);
+    ui->tableView->setProgressValue(qBound(0, nValue, 100));
+
+    QString sFormat = tr("Searching") + QString("... %p%");
+
+    if (nTotal > 0) {
+        sFormat += QString(" [%1/%2]").arg(QString::number(nCurrent), QString::number(nTotal));
     }
+
+    if (!sStatus.isEmpty()) {
+        sFormat += QString(" ") + sStatus;
+    }
+
+    ui->tableView->setProgressFormat(sFormat);
 }
 
 void XFWidget_Strings::applyOptionsToUi(const OPTIONS &options)
 {
     ui->checkBoxANSI->setChecked(options.bANSI);
+    XFormats::setCodepageComboBox(ui->comboBoxANSICode, options.codepage);
+    ui->comboBoxANSICode->setEnabled(options.bANSI);
     ui->checkBoxUTF8->setChecked(options.bUTF8);
     ui->checkBoxUTF16->setChecked(options.bUTF16);
     ui->checkBoxUTF32->setChecked(options.bUTF32);
@@ -244,6 +270,7 @@ XFWidget_Strings::OPTIONS XFWidget_Strings::getOptionsFromUi() const
     OPTIONS result = m_options;
 
     result.bANSI = ui->checkBoxANSI->isChecked();
+    result.codepage = (XBinary::CODEPAGE)(ui->comboBoxANSICode->currentData().toUInt());
     result.bUTF8 = ui->checkBoxUTF8->isChecked();
     result.bUTF16 = ui->checkBoxUTF16->isChecked();
     result.bUTF32 = ui->checkBoxUTF32->isChecked();
@@ -269,7 +296,8 @@ void XFWidget_Strings::updateMapModeComboBox(XBinary::FT fileType, XBinary::MAPM
 
 void XFWidget_Strings::updateStatusText()
 {
-    ui->progressBar->setRange(0, 100);
-    ui->progressBar->setValue(m_listRecords.isEmpty() ? 0 : 100);
-    ui->progressBar->setFormat((QString("%1 ") + tr("strings found")).arg(m_listRecords.count()));
+    ui->tableView->setProgressVisible(true);
+    ui->tableView->setProgressRange(0, 100);
+    ui->tableView->setProgressValue(m_listRecords.isEmpty() ? 0 : 100);
+    ui->tableView->setProgressFormat((QString("%1 ") + tr("strings found")).arg(m_listRecords.count()));
 }

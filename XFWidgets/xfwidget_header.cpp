@@ -38,7 +38,7 @@ XFWidget_Header::~XFWidget_Header()
     delete ui;
 }
 
-void XFWidget_Header::setData(const XFormats::INDATA &inData, const XBinary::XFHEADER &xfHeader)
+void XFWidget_Header::setData(const XBinary::INDATA &inData, const XBinary::XFHEADER &xfHeader)
 {
     ui->tableView->setData(inData, xfHeader);
 

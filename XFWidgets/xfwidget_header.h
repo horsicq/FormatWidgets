@@ -37,7 +37,7 @@ public:
     explicit XFWidget_Header(QWidget *pParent = nullptr);
     virtual ~XFWidget_Header();
 
-    void setData(const XFormats::INDATA &inData, const XBinary::XFHEADER &xfHeader);
+    void setData(const XBinary::INDATA &inData, const XBinary::XFHEADER &xfHeader);
     void clear();
 
     void setReadonly(bool bIsReadonly);

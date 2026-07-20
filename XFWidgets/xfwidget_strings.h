@@ -25,9 +25,9 @@
 #include <QModelIndex>
 #include <QWidget>
 
+#include "xftableview.h"
 #include "xformats.h"
 #include "xmodel_msrecord.h"
-#include "xtableview.h"
 
 namespace Ui {
 class XFWidget_Strings;
@@ -44,6 +44,7 @@ public:
         qint32 nMinLength = 5;
         qint32 nMaxLength = 128;
         bool bANSI = true;
+        XBinary::CODEPAGE codepage = XBinary::CODEPAGE_ASCII;
         bool bUTF8 = false;
         bool bUTF16 = true;
         bool bUTF32 = false;
@@ -54,14 +55,14 @@ public:
     explicit XFWidget_Strings(QWidget *pParent = nullptr);
     virtual ~XFWidget_Strings();
 
-    void setData(const XFormats::INDATA &inData);
-    void setData(const XFormats::INDATA &inData, const OPTIONS &options);
+    void setData(const XBinary::INDATA &inData);
+    void setData(const XBinary::INDATA &inData, const OPTIONS &options);
     void clear();
     void reload();
 
     void setReadonly(bool bIsReadonly);
 
-    XTableView *getTableView();
+    XFTableView *getTableView();
 
 signals:
     void currentLocationChanged(quint64 nLocation, qint32 nLocationType, qint64 nSize);
@@ -71,7 +72,7 @@ private slots:
     void onSearchClicked();
     void onFileTypeIndexChanged(int nIndex);
     void onSelectionChanged(const QModelIndex &current, const QModelIndex &previous);
-    void onTableBusyChanged(bool bBusy);
+    void onSearchProgressChanged(qint32 nValue, qint64 nCurrent, qint64 nTotal, const QString &sStatus);
 
 private:
     void applyOptionsToUi(const OPTIONS &options);
@@ -81,7 +82,7 @@ private:
 
 private:
     Ui::XFWidget_Strings *ui;
-    XFormats::INDATA m_inData;
+    XBinary::INDATA m_inData;
     OPTIONS m_options;
     QVector<XBinary::MS_RECORD> m_listRecords;
     XBinary::_MEMORY_MAP m_memoryMap;
