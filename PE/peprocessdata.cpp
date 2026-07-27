@@ -1080,39 +1080,6 @@ void PEProcessData::_process()
 
             incValue();
         }
-    } else if (m_nType == SPE::TYPE_NET_METADATA_TABLE) {
-        QList<QString> listLabels;
-        listLabels.append("#");
-        listLabels.append(QString("Id"));
-        listLabels.append(tr("Count"));
-        listLabels.append(tr("Sorted"));
-
-        XPE::CLI_INFO cliInfo = m_pPE->getCliInfo(true);  // TODO pdStruct
-        QList<XPE::CLI_METADATA_RECORD> listMetaDataTables = m_pPE->getCliMetadataRecords(&cliInfo, getPdStruct());
-
-        qint32 nNumberOfRecords = listMetaDataTables.count();
-
-        *m_ppModel = new QStandardItemModel(nNumberOfRecords, listLabels.count());
-
-        setMaximum(nNumberOfRecords);
-
-        setTableHeader(*m_ppModel, &listLabels);
-
-        for (qint32 i = 0; (i < nNumberOfRecords) && (isRun()); i++) {
-            QStandardItem *pItemNumber = new QStandardItem;
-            pItemNumber->setData(listMetaDataTables.at(i).nNumber, Qt::DisplayRole);
-
-            pItemNumber->setData(listMetaDataTables.at(i).nTableSize, Qt::UserRole + FW_DEF::SECTION_DATA_SIZE);
-            // pItemNumber->setData(listMetaDataTables.at(i).nTableOffset - cliInfo.metaData.osMetadata.nOffset, Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET);
-            pItemNumber->setData(listMetaDataTables.at(i).nTableOffset, Qt::UserRole + FW_DEF::SECTION_DATA_OFFSET);
-
-            (*m_ppModel)->setItem(i, 0, pItemNumber);
-            (*m_ppModel)->setItem(i, 1, new QStandardItem(listMetaDataTables.at(i).sId));
-            (*m_ppModel)->setItem(i, 2, new QStandardItem(QString::number(listMetaDataTables.at(i).nCount)));
-            (*m_ppModel)->setItem(i, 3, new QStandardItem(XBinary::boolToString(listMetaDataTables.at(i).bIsSorted)));
-
-            incValue();
-        }
     }
 
     adjustModel(*m_ppModel);
@@ -1223,11 +1190,6 @@ void PEProcessData::ajustTableView(qint32 nType, QTableView *pTableView)
         XOptions::setTableViewHeaderWidth(pTableView, 1, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 2, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
         XOptions::setTableViewHeaderWidth(pTableView, 3, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
-    } else if (nType == SPE::TYPE_NET_METADATA_TABLE) {
-        XOptions::setTableViewHeaderWidth(pTableView, 0, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT16, mode));
-        XOptions::setTableViewHeaderWidth(pTableView, 1, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_STRINGSHORT2, mode));
-        XOptions::setTableViewHeaderWidth(pTableView, 2, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_UINT32, mode));
-        XOptions::setTableViewHeaderWidth(pTableView, 3, FormatWidget::getColumnWidth(pTableView, FormatWidget::CW_STRINGSHORT, mode));
     } else {
         ProcessData::adjustTableView(nType, pTableView);
     }
@@ -1399,10 +1361,5 @@ void PEProcessData::adjustModel(QStandardItemModel *pModel)
         XOptions::setModelTextAlignment(pModel, 1, Qt::AlignRight | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 2, Qt::AlignRight | Qt::AlignVCenter);
         XOptions::setModelTextAlignment(pModel, 3, Qt::AlignRight | Qt::AlignVCenter);
-    } else if (m_nType == SPE::TYPE_NET_METADATA_TABLE) {
-        XOptions::setModelTextAlignment(pModel, 0, Qt::AlignRight | Qt::AlignVCenter);
-        XOptions::setModelTextAlignment(pModel, 1, Qt::AlignLeft | Qt::AlignVCenter);
-        XOptions::setModelTextAlignment(pModel, 2, Qt::AlignRight | Qt::AlignVCenter);
-        XOptions::setModelTextAlignment(pModel, 3, Qt::AlignLeft | Qt::AlignVCenter);
     }
 }

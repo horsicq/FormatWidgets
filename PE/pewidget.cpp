@@ -232,30 +232,7 @@ void PEWidget::reload()
             QTreeWidgetItem *pNetHeader = createNewItem(SPE::TYPE_NETHEADER, QString(".NET"), XOptions::ICONTYPE_DOTNET);
             ui->treeWidgetNavi->addTopLevelItem(pNetHeader);
 
-            XPE::CLI_INFO cliInfo = pe.getCliInfo(true);
-
-            if (pe.isNetMetadataPresent(&cliInfo, &memoryMap)) {
-                QTreeWidgetItem *pNetMetadata = createNewItem(SPE::TYPE_NET_METADATA, tr("Metadata"), XOptions::ICONTYPE_TABLE);
-                pNetHeader->addChild(pNetMetadata);
-
-                qint32 nNumberOfStreams = cliInfo.metaData.listStreams.size();
-
-                for (qint32 i = 0; i < nNumberOfStreams; i++) {
-                    QTreeWidgetItem *pNetMetadataStream =
-                        createNewItem(SPE::TYPE_NET_METADATA_STREAM, cliInfo.metaData.listStreams.at(i).sName, XOptions::ICONTYPE_METADATA,
-                                      cliInfo.metaData.listStreams.at(i).nOffset, cliInfo.metaData.listStreams.at(i).nSize);
-                    pNetMetadata->addChild(pNetMetadataStream);
-
-                    if ((cliInfo.metaData.listStreams.at(i).sName == "#~") || (cliInfo.metaData.listStreams.at(i).sName == "#-")) {
-                        QTreeWidgetItem *pNetMetadataTable = createNewItem(SPE::TYPE_NET_METADATA_TABLE, tr("Metadata table"), XOptions::ICONTYPE_TABLE,
-                                                                           cliInfo.metaData.listStreams.at(i).nOffset, cliInfo.metaData.listStreams.at(i).nSize);
-                        pNetMetadataStream->addChild(pNetMetadataTable);
-                    }
-                }
-            }
-
-            // TODO NET Resources
-            // TODO more NET
+            // .NET metadata analysis has moved to the DOTNET (XCLIAssembly) viewer
         }
 
         if (pe.isOverlayPresent()) {
@@ -573,20 +550,6 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue, qint32 nStype, qint32 nNda
                     ui->widgetHex_NetHeader->reload();
                     break;
 
-                case SPE::TYPE_NET_METADATA:
-                    switch (nNdata) {
-                        case N_IMAGE_NET_METADATA::Signature: pe.setMetadataHeader_Signature((quint32)nValue); break;
-                        case N_IMAGE_NET_METADATA::MajorVersion: pe.setMetadataHeader_MajorVersion((quint16)nValue); break;
-                        case N_IMAGE_NET_METADATA::MinorVersion: pe.setMetadataHeader_MinorVersion((quint16)nValue); break;
-                        case N_IMAGE_NET_METADATA::Reserved: pe.setMetadataHeader_Reserved((quint32)nValue); break;
-                        case N_IMAGE_NET_METADATA::VersionStringLength: pe.setMetadataHeader_VersionStringLength((quint32)nValue); break;  // TODO reload!!!
-                        case N_IMAGE_NET_METADATA::Version: pe.setMetadataHeader_Version(sValue); break;
-                        case N_IMAGE_NET_METADATA::Flags: pe.setMetadataHeader_Flags((quint16)nValue); break;
-                        case N_IMAGE_NET_METADATA::Streams: pe.setMetadataHeader_Streams((quint16)nValue); break;
-                    }
-
-                    ui->widgetHex_Net_Metadata->reload();
-                    break;
 
                 case SPE::TYPE_LOADCONFIG:
                     switch (nNdata) {
@@ -2268,65 +2231,6 @@ void PEWidget::reloadData(bool bSaveSelection)
                 loadHexSubdevice(nOffset, nSize, nAddress, &m_subDevice[SPE::TYPE_NETHEADER], ui->widgetHex_NetHeader);
 
                 blockSignals(false);
-            }
-        } else if (nType == SPE::TYPE_NET_METADATA) {
-            if (!isInitPresent(sInit)) {
-                createHeaderTable(SPE::TYPE_NET_METADATA, ui->tableWidget_Net_Metadata, N_IMAGE_NET_METADATA::records, m_lineEdit_Net_Metadata,
-                                  N_IMAGE_NET_METADATA::__data_size, 0);
-
-                blockSignals(true);
-
-                XBinary::OFFSETSIZE osMetadata = pe.getNet_MetadataOffsetSize();
-
-                XPE::CLI_METADATA_HEADER header = pe._read_MetadataHeader(osMetadata.nOffset);
-
-                m_lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::Signature]->setValue_uint32(header.nSignature);
-                m_lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::MajorVersion]->setValue_uint16(header.nMajorVersion);
-                m_lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::MinorVersion]->setValue_uint16(header.nMinorVersion);
-                m_lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::Reserved]->setValue_uint32(header.nReserved);
-                m_lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::VersionStringLength]->setValue_uint32(header.nVersionStringLength);
-                m_lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::Version]->setValue_String(header.sVersion, header.nVersionStringLength);
-                m_lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::Flags]->setValue_uint16(header.nFlags);
-                m_lineEdit_Net_Metadata[N_IMAGE_NET_METADATA::Streams]->setValue_uint16(header.nStreams);
-
-                updateTableRecord(ui->tableWidget_Net_Metadata, N_IMAGE_NET_METADATA::Version, 16, header.nVersionStringLength);
-                updateTableRecord(ui->tableWidget_Net_Metadata, N_IMAGE_NET_METADATA::Flags, 16 + header.nVersionStringLength, 2);
-                updateTableRecord(ui->tableWidget_Net_Metadata, N_IMAGE_NET_METADATA::Streams, 16 + header.nVersionStringLength + 2, 2);
-
-                qint64 nOffset = osMetadata.nOffset;
-                qint64 nSize = osMetadata.nSize;
-                qint64 nAddress = pe.offsetToRelAddress(nOffset);
-
-                loadHexSubdevice(nOffset, nSize, nAddress, &m_subDevice[SPE::TYPE_NET_METADATA], ui->widgetHex_Net_Metadata);
-
-                blockSignals(false);
-            }
-        } else if (nType == SPE::TYPE_NET_METADATA_STREAM) {
-            if (!isInitPresent(sInit)) {
-                qint64 nOffset = nDataOffset;
-                qint64 nSize = nDataSize;
-                qint64 nAddress = pe.offsetToRelAddress(nOffset);
-
-                loadHexSubdevice(nOffset, nSize, nAddress, &m_subDevice[SPE::TYPE_NET_METADATA_STREAM], ui->widgetHex_Net_Metadata_Stream);
-            }
-        } else if (nType == SPE::TYPE_NET_METADATA_TABLE) {
-            if (!isInitPresent(sInit)) {
-                PEProcessData peProcessData(SPE::TYPE_NET_METADATA_TABLE, &m_tvModel[SPE::TYPE_NET_METADATA_TABLE], &pe, 0, 0, 0);
-
-                ajustTableView(nType, &peProcessData, &m_tvModel[SPE::TYPE_NET_METADATA_TABLE], ui->tableView_Net_Metadata_Table, false);
-
-                connect(ui->tableView_Net_Metadata_Table->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this,
-                        SLOT(onTableView_Net_Metadata_Table_currentRowChanged(QModelIndex, QModelIndex)));
-
-                if (m_tvModel[SPE::TYPE_NET_METADATA_TABLE]->rowCount()) {
-                    ui->tableView_Net_Metadata_Table->setCurrentIndex(ui->tableView_Net_Metadata_Table->model()->index(0, 0));
-                }
-
-                qint64 nOffset = nDataOffset;
-                qint64 nSize = nDataSize;
-                qint64 nAddress = pe.offsetToRelAddress(nOffset);
-
-                loadHexSubdevice(nOffset, nSize, nAddress, &m_subDevice[SPE::TYPE_NET_METADATA_TABLE], ui->widgetHex_Net_Metadata_Table);
             }
         } else if (nType == SPE::TYPE_CERTIFICATE) {
             if (!isInitPresent(sInit)) {
