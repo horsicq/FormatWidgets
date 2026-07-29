@@ -70,6 +70,8 @@ private slots:
     void on_comboBoxFileType_currentIndexChanged(int nIndex);
 
     QWidget *getOrCreateWidget(const QString &sName, const XBinary::INDATA &inData, const XBinary::XFHEADER &xfHeader);
+    QString getWidgetCacheKey(const QString &sName, const XBinary::XFHEADER &xfHeader) const;
+    void clearWidgetCache();
 
 private:
     Ui::XFWidgetAdvanced *ui;

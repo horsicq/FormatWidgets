@@ -61,11 +61,6 @@ XFWidget::~XFWidget()
 void XFWidget::setData(const XBinary::INDATA &inData, const QList<XBinary::XFHEADER> &listHeaders)
 {
     m_inData = inData;
-    m_mapHeaders.clear();
-
-    for (qint32 i = 0; i < listHeaders.count(); i++) {
-        m_mapHeaders.insert(listHeaders.at(i).sTag, listHeaders.at(i));
-    }
 
     ui->treeView->setData(inData, listHeaders);
 
@@ -94,7 +89,6 @@ void XFWidget::clear()
 {
     ui->treeView->clear();
     ui->tableView->clear();
-    m_mapHeaders.clear();
 }
 
 void XFWidget::setReadonly(bool bIsReadonly)
@@ -144,9 +138,9 @@ void XFWidget::onSaveClicked()
     if (pModel) {
         QString sDefaultName = m_sCurrentTag;
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-        sDefaultName.replace(QRegularExpression(QStringLiteral(R"([\\/:*?"<>|])")), QStringLiteral("_"));
+        sDefaultName.replace(QRegularExpression(QStringLiteral(R"([\\/:*?\"<>|])")), QStringLiteral("_"));
 #else
-        sDefaultName.replace(QRegExp(QStringLiteral("[\\\\/:*?\"<>|]")), QStringLiteral("_"));
+        sDefaultName.replace(QRegExp(QStringLiteral("[\\\\/:*?\"<>|"]")), QStringLiteral("_"));
 #endif
 
         QString sSelectedFilter;

@@ -62,6 +62,7 @@ XFWidgetAdvanced::XFWidgetAdvanced(QWidget *pParent) : XShortcutsWidget(pParent)
 
 XFWidgetAdvanced::~XFWidgetAdvanced()
 {
+    clearWidgetCache();
     delete ui;
 }
 
@@ -103,6 +104,7 @@ void XFWidgetAdvanced::setData(const XBinary::INDATA &inData, const OPTIONS &opt
 
 void XFWidgetAdvanced::clear()
 {
+    clearWidgetCache();
     ui->treeView->clear();
 }
 
@@ -118,6 +120,8 @@ void XFWidgetAdvanced::reload()
 void XFWidgetAdvanced::reloadFileType()
 {
     XBinary::FT fileType = (XBinary::FT)(ui->comboBoxFileType->currentData().toUInt());
+
+    clearWidgetCache();
 
     QIODevice *pDevice = XFormats::createDevice(m_inData);
     XBinary *pBinary = XFormats::createClass(fileType, pDevice, m_inData.bIsImage, m_inData.nModuleAddress);
@@ -186,7 +190,8 @@ void XFWidgetAdvanced::onHeaderSelected(const XBinary::XFHEADER &xfHeader)
     XBinary::INDATA inData = m_inData;
     inData.fileType = fileType;
 
-    QWidget *pWidget = getOrCreateWidget(sCurrentTag, inData, xfHeader);
+    QString sWidgetKey = getWidgetCacheKey(sCurrentTag, xfHeader);
+    QWidget *pWidget = getOrCreateWidget(sWidgetKey, inData, xfHeader);
 
     bool bIsListCommand = (xfHeader.xfType == XBinary::XFTYPE_COMMAND) &&
                           ((xfHeader.structID == XBinary::STRUCTID_IMPORT) || (xfHeader.structID == XBinary::STRUCTID_EXPORT) ||
@@ -223,12 +228,41 @@ void XFWidgetAdvanced::onHeaderSelected(const XBinary::XFHEADER &xfHeader)
     emit headerSelected(xfHeader);
 }
 
+QString XFWidgetAdvanced::getWidgetCacheKey(const QString &sName, const XBinary::XFHEADER &xfHeader) const
+{
+    return QString("%1|%2|%3|%4|%5|%6|%7")
+        .arg(sName)
+        .arg((quint32)xfHeader.xfType)
+        .arg((quint32)xfHeader.structID)
+        .arg(xfHeader.sParentTag)
+        .arg((quint64)xfHeader.xLoc.nLocation, 0, 16)
+        .arg((quint32)xfHeader.xLoc.locType)
+        .arg((quint64)xfHeader.nSize);
+}
+
+void XFWidgetAdvanced::clearWidgetCache()
+{
+    for (QWidget *pWidget : m_mapWidgets) {
+        if (!pWidget) {
+            continue;
+        }
+
+        ui->stackedWidget->removeWidget(pWidget);
+        delete pWidget;
+    }
+
+    m_mapWidgets.clear();
+    m_lruOrder.clear();
+}
+
 QWidget *XFWidgetAdvanced::getOrCreateWidget(const QString &sName, const XBinary::INDATA &inData, const XBinary::XFHEADER &xfHeader)
 {
-    if (m_mapWidgets.contains(sName)) {
-        m_lruOrder.removeOne(sName);
-        m_lruOrder.append(sName);
-        QWidget *pWidget = m_mapWidgets.value(sName);
+    QString sCacheKey = getWidgetCacheKey(sName, xfHeader);
+
+    if (m_mapWidgets.contains(sCacheKey)) {
+        m_lruOrder.removeOne(sCacheKey);
+        m_lruOrder.append(sCacheKey);
+        QWidget *pWidget = m_mapWidgets.value(sCacheKey);
         ui->stackedWidget->setCurrentWidget(pWidget);
         return pWidget;
     }
@@ -236,8 +270,11 @@ QWidget *XFWidgetAdvanced::getOrCreateWidget(const QString &sName, const XBinary
     if (m_mapWidgets.size() >= 20) {
         const QString sEvict = m_lruOrder.takeFirst();
         QWidget *pEvicted = m_mapWidgets.take(sEvict);
-        ui->stackedWidget->removeWidget(pEvicted);
-        delete pEvicted;
+
+        if (pEvicted) {
+            ui->stackedWidget->removeWidget(pEvicted);
+            delete pEvicted;
+        }
     }
 
     QWidget *pWidget = nullptr;
@@ -339,8 +376,8 @@ QWidget *XFWidgetAdvanced::getOrCreateWidget(const QString &sName, const XBinary
         pWidget = pHeader;
     }
 
-    m_mapWidgets.insert(sName, pWidget);
-    m_lruOrder.append(sName);
+    m_mapWidgets.insert(sCacheKey, pWidget);
+    m_lruOrder.append(sCacheKey);
     ui->stackedWidget->addWidget(pWidget);
     ui->stackedWidget->setCurrentWidget(pWidget);
     return pWidget;

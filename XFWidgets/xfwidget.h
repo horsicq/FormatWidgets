@@ -23,7 +23,6 @@
 #define XFWIDGET_CLASS_H
 
 #include <QWidget>
-#include <QMap>
 #include <QString>
 #include "xftreeview.h"
 #include "xftableview.h"
@@ -63,7 +62,6 @@ private:
     Ui::XFWidget *ui;
     XBinary::INDATA m_inData;
     QString m_sCurrentTag;
-    QMap<QString, XBinary::XFHEADER> m_mapHeaders;
     bool m_bIsReadonly;
 };
 
