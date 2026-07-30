@@ -36,7 +36,13 @@
 #include <QtGlobal>
 
 namespace {
-const qint32 N_MAX_RECORDS_IN_MEMORY = 100000;  // If more strings are found, the values are cached to disk
+const qint32 N_MAX_SEARCH_RESULTS = 100000;
+const qint32 N_MAX_RECORDS_IN_MEMORY = 100000;  // At this threshold, decoded values are cached to disk
+
+qint32 getBoundedSearchResultLimit(qint32 nLimit)
+{
+    return (nLimit > 0) ? qMin(nLimit, N_MAX_SEARCH_RESULTS) : N_MAX_SEARCH_RESULTS;
+}
 }
 
 XFWidget_Strings::XFWidget_Strings(QWidget *pParent) : QWidget(pParent), ui(new Ui::XFWidget_Strings)
@@ -78,6 +84,7 @@ void XFWidget_Strings::setData(const XBinary::INDATA &inData, const OPTIONS &opt
 
     m_inData = inData;
     m_options = options;
+    m_options.nLimit = getBoundedSearchResultLimit(m_options.nLimit);
 
     m_pCurrentDevice = XFormats::createDevice(m_inData);
 
@@ -127,7 +134,7 @@ void XFWidget_Strings::reload()
     XBinary::FT fileType = (XBinary::FT)(ui->comboBoxFileType->currentData().toUInt());
 
     XBinary::XFSS_OPTIONS ssOptions = {};
-    ssOptions.nLimit = m_options.nLimit;
+    ssOptions.nLimit = getBoundedSearchResultLimit(m_options.nLimit);
     ssOptions.nMinLenght = m_options.nMinLength;
     ssOptions.nMaxLenght = m_options.nMaxLength;
     ssOptions.bANSI = m_options.bANSI;
@@ -161,7 +168,7 @@ void XFWidget_Strings::reload()
     XModel_MSRecord *pModel = new XModel_MSRecord(inData, m_memoryMap, &m_listRecords, XBinary::VT_STRING, this);
     pModel->setValue(m_options.endian, XBinary::VT_STRING, QVariant());
 
-    if (m_listRecords.count() > N_MAX_RECORDS_IN_MEMORY) {
+    if (m_listRecords.count() >= N_MAX_RECORDS_IN_MEMORY) {
         pModel->spillValuesToDisk();  // Cache the string values to disk; filters and sorts read them back on demand
     }
 
@@ -269,6 +276,7 @@ void XFWidget_Strings::applyOptionsToUi(const OPTIONS &options)
     ui->checkBoxUTF32->setChecked(options.bUTF32);
     ui->spinBoxMinLength->setValue(qMax(1, options.nMinLength));
     ui->spinBoxMaxLength->setValue(qMax(1, options.nMaxLength));
+    ui->spinBoxLimit->setValue(getBoundedSearchResultLimit(options.nLimit));
     XFormats::setEndiannessComboBox(ui->comboBoxEndian, options.endian);
 }
 
@@ -283,7 +291,7 @@ XFWidget_Strings::OPTIONS XFWidget_Strings::getOptionsFromUi() const
     result.bUTF32 = ui->checkBoxUTF32->isChecked();
     result.nMinLength = ui->spinBoxMinLength->value();
     result.nMaxLength = ui->spinBoxMaxLength->value();
-    result.nLimit = -1;
+    result.nLimit = getBoundedSearchResultLimit(ui->spinBoxLimit->value());
     result.endian = (XBinary::ENDIAN)(ui->comboBoxEndian->currentData().toUInt());
     result.mapMode = (XBinary::MAPMODE)(ui->comboBoxMapMode->currentData().toUInt());
 
