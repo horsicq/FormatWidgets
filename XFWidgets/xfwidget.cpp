@@ -140,7 +140,7 @@ void XFWidget::onSaveClicked()
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
         sDefaultName.replace(QRegularExpression(QStringLiteral(R"([\\/:*?\"<>|])")), QStringLiteral("_"));
 #else
-        sDefaultName.replace(QRegExp(QStringLiteral("[\\\\/:*?\"<>|"]")), QStringLiteral("_"));
+        sDefaultName.replace(QRegExp(QStringLiteral("[\\\\/:*?\"<>|]")), QStringLiteral("_"));
 #endif
 
         QString sSelectedFilter;
