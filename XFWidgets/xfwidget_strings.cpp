@@ -185,6 +185,13 @@ void XFWidget_Strings::reload()
     updateStatusText();
 }
 
+void XFWidget_Strings::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
+{
+    Q_UNUSED(pShortcuts)
+
+    ui->tableView->adjustView(pXOptions);
+}
+
 void XFWidget_Strings::setReadonly(bool bIsReadonly)
 {
     m_bIsReadonly = bIsReadonly;

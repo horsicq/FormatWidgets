@@ -23,7 +23,7 @@ void XFWidget_NFDScan::setData(const XBinary::INDATA &inData)
     layout()->addWidget(m_pNFDWidget);
     m_pNFDWidget->setGlobal(getShortcuts(), getGlobalOptions());
     m_pNFDWidget->setReadonly(isReadonly());
-    m_pNFDWidget->setData(m_inData, false);
+    m_pNFDWidget->setData(m_inData, true);
 }
 
 void XFWidget_NFDScan::clear()

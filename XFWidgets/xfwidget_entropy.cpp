@@ -23,7 +23,7 @@ void XFWidget_Entropy::setData(const XBinary::INDATA &inData)
     layout()->addWidget(m_pEntropyWidget);
     m_pEntropyWidget->setGlobal(getShortcuts(), getGlobalOptions());
     m_pEntropyWidget->setReadonly(isReadonly());
-    m_pEntropyWidget->setData(m_inData, 0, -1, false);
+    m_pEntropyWidget->setData(m_inData, 0, -1, true);
 }
 
 void XFWidget_Entropy::clear()

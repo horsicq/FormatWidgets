@@ -121,6 +121,10 @@ void XFWidgetAdvanced::reloadFileType()
 {
     XBinary::FT fileType = (XBinary::FT)(ui->comboBoxFileType->currentData().toUInt());
 
+    // Persist the currently viewed type so Reload refreshes it instead of reverting
+    // to the auto-detected type (reload() re-selects m_inData.fileType in the combo).
+    m_inData.fileType = fileType;
+
     clearWidgetCache();
 
     QIODevice *pDevice = XFormats::createDevice(m_inData);
@@ -147,6 +151,40 @@ void XFWidgetAdvanced::setReadonly(bool bIsReadonly)
 void XFWidgetAdvanced::adjustView()
 {
     getGlobalOptions()->adjustTreeView(ui->treeView, XOptions::ID_VIEW_FONT_TREEVIEWS);
+
+    // Re-apply globals to the already-created panels so a runtime Options change (fonts, etc.)
+    // is honored immediately instead of only on the next panel (re)creation. The cached widgets
+    // are heterogeneous: the XShortcutsWidget-based ones re-propagate via their virtual setGlobal;
+    // the three plain-QWidget wrappers carry their own setGlobal (font only).
+    for (QWidget *pWidget : m_mapWidgets) {
+        if (!pWidget) {
+            continue;
+        }
+
+        XShortcutsWidget *pShortcutsWidget = qobject_cast<XShortcutsWidget *>(pWidget);
+        if (pShortcutsWidget) {
+            pShortcutsWidget->setGlobal(getShortcuts(), getGlobalOptions());
+            continue;
+        }
+
+        XFWidget_Header *pHeader = qobject_cast<XFWidget_Header *>(pWidget);
+        if (pHeader) {
+            pHeader->setGlobal(getShortcuts(), getGlobalOptions());
+            continue;
+        }
+
+        XFWidget_Table *pTable = qobject_cast<XFWidget_Table *>(pWidget);
+        if (pTable) {
+            pTable->setGlobal(getShortcuts(), getGlobalOptions());
+            continue;
+        }
+
+        XFWidget_Strings *pStrings = qobject_cast<XFWidget_Strings *>(pWidget);
+        if (pStrings) {
+            pStrings->setGlobal(getShortcuts(), getGlobalOptions());
+            continue;
+        }
+    }
 }
 
 void XFWidgetAdvanced::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
@@ -335,12 +373,14 @@ QWidget *XFWidgetAdvanced::getOrCreateWidget(const QString &sName, const XBinary
         pWidget = pSearch;
     } else if ((xfHeader.xfType == XBinary::XFTYPE_COMMAND) && (xfHeader.structID == XBinary::STRUCTID_STRINGS)) {
         XFWidget_Strings *pStrings = new XFWidget_Strings(this);
+        pStrings->setGlobal(getShortcuts(), getGlobalOptions());
         pStrings->setData(inData);
         pWidget = pStrings;
     } else if (bIsListCommand) {
         XFWidget_Table *pTable = new XFWidget_Table(this);
         connect(pTable, SIGNAL(fieldSelected(qint32, QVariant, XBinary::XFRECORD)), this, SIGNAL(fieldSelected(qint32, QVariant, XBinary::XFRECORD)));
         connect(pTable, SIGNAL(fieldDoubleClicked(qint32, QVariant, XBinary::XFRECORD)), this, SIGNAL(fieldDoubleClicked(qint32, QVariant, XBinary::XFRECORD)));
+        pTable->setGlobal(getShortcuts(), getGlobalOptions());
 
         QIODevice *pListDevice = XFormats::createDevice(inData);
         XBinary *pListBinary = XFormats::createClass(inData.fileType, pListDevice, inData.bIsImage, inData.nModuleAddress);
@@ -366,12 +406,14 @@ QWidget *XFWidgetAdvanced::getOrCreateWidget(const QString &sName, const XBinary
         XFWidget_Table *pTable = new XFWidget_Table(this);
         connect(pTable, SIGNAL(fieldSelected(qint32, QVariant, XBinary::XFRECORD)), this, SIGNAL(fieldSelected(qint32, QVariant, XBinary::XFRECORD)));
         connect(pTable, SIGNAL(fieldDoubleClicked(qint32, QVariant, XBinary::XFRECORD)), this, SIGNAL(fieldDoubleClicked(qint32, QVariant, XBinary::XFRECORD)));
+        pTable->setGlobal(getShortcuts(), getGlobalOptions());
         pTable->setData(inData, xfHeader);
         pWidget = pTable;
     } else {
         XFWidget_Header *pHeader = new XFWidget_Header(this);
         connect(pHeader, SIGNAL(fieldSelected(qint32, QVariant, XBinary::XFRECORD)), this, SIGNAL(fieldSelected(qint32, QVariant, XBinary::XFRECORD)));
         connect(pHeader, SIGNAL(fieldDoubleClicked(qint32, QVariant, XBinary::XFRECORD)), this, SIGNAL(fieldDoubleClicked(qint32, QVariant, XBinary::XFRECORD)));
+        pHeader->setGlobal(getShortcuts(), getGlobalOptions());
         pHeader->setData(inData, xfHeader);
         pWidget = pHeader;
     }

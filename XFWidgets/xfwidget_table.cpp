@@ -137,6 +137,13 @@ void XFWidget_Table::clear()
     m_listResources.clear();
 }
 
+void XFWidget_Table::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
+{
+    Q_UNUSED(pShortcuts)
+
+    ui->tableView->adjustView(pXOptions);
+}
+
 void XFWidget_Table::setReadonly(bool bIsReadonly)
 {
     m_bIsReadonly = bIsReadonly;

@@ -63,6 +63,13 @@ void XFWidget_Header::clear()
     ui->tableView->clear();
 }
 
+void XFWidget_Header::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
+{
+    Q_UNUSED(pShortcuts)
+
+    ui->tableView->adjustView(pXOptions);
+}
+
 void XFWidget_Header::setReadonly(bool bIsReadonly)
 {
     m_bIsReadonly = bIsReadonly;

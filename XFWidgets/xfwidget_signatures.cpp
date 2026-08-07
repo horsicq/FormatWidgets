@@ -28,7 +28,7 @@ void XFWidget_Signatures::setData(const XBinary::INDATA &inData)
     options.fileType = m_inData.fileType;
     options.bMenu_Hex = true;
     options.bMenu_Disasm = true;
-    m_pSignaturesWidget->setData(m_inData.pDevice, options, false);
+    m_pSignaturesWidget->setData(m_inData.pDevice, options, true);
 }
 
 void XFWidget_Signatures::clear()

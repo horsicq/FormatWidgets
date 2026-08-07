@@ -27,7 +27,7 @@ void XFWidget_Extractor::setData(const XBinary::INDATA &inData)
     XExtractor::OPTIONS options = XExtractor::getDefaultOptions();
     options.fileType = m_inData.fileType;
     options.bMenu_Hex = true;
-    m_pExtractorWidget->setData(m_inData, nullptr, options, false);
+    m_pExtractorWidget->setData(m_inData, nullptr, options, true);
 
     m_pXInfoDB = new XInfoDB(this);
     if (m_pExtractorWidget->getDevice()) m_pXInfoDB->setData(m_pExtractorWidget->getDevice(), m_inData.fileType);

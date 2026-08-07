@@ -39,7 +39,7 @@ XFWidget_Visualization::~XFWidget_Visualization()
 
 void XFWidget_Visualization::setData(const XBinary::INDATA &inData)
 {
-    m_pVisualizationWidget->setData(inData, false);
+    m_pVisualizationWidget->setData(inData, true);
 }
 
 void XFWidget_Visualization::clear()

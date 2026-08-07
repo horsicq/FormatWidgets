@@ -25,7 +25,7 @@ void XFWidget_Hash::setData(const XBinary::INDATA &inData)
     m_pHashWidget->setGlobal(getShortcuts(), getGlobalOptions());
     m_pHashWidget->setReadonly(isReadonly());
     qint64 nSize = m_inData.pDevice ? m_inData.pDevice->size() : 0;
-    m_pHashWidget->setData(m_inData.pDevice, m_inData.fileType, 0, nSize, false);
+    m_pHashWidget->setData(m_inData.pDevice, m_inData.fileType, 0, nSize, true);
 }
 
 void XFWidget_Hash::clear()

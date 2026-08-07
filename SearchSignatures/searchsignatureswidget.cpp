@@ -167,9 +167,10 @@ void SearchSignaturesWidget::_hex()
 {
     if (m_options.bMenu_Hex) {
         qint32 nRow = ui->tableViewResult->currentIndex().row();
+        QModelIndexList listSelected = ui->tableViewResult->selectionModel()->selectedIndexes();
 
-        if ((nRow != -1) && (m_listRecords.count())) {
-            QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(0);
+        if ((nRow != -1) && (m_listRecords.count()) && !listSelected.isEmpty()) {
+            QModelIndex index = listSelected.at(0);
 
             qint64 nOffset = ui->tableViewResult->model()->data(index, Qt::UserRole + XModel_MSRecord::USERROLE_OFFSET).toLongLong();
             qint64 nSize = ui->tableViewResult->model()->data(index, Qt::UserRole + XModel_MSRecord::USERROLE_SIZE).toLongLong();
@@ -189,9 +190,10 @@ void SearchSignaturesWidget::_disasm()
 {
     if (m_options.bMenu_Disasm) {
         qint32 nRow = ui->tableViewResult->currentIndex().row();
+        QModelIndexList listSelected = ui->tableViewResult->selectionModel()->selectedIndexes();
 
-        if ((nRow != -1) && (m_listRecords.count())) {
-            QModelIndex index = ui->tableViewResult->selectionModel()->selectedIndexes().at(XModel_MSRecord::COLUMN_NUMBER);
+        if ((nRow != -1) && (m_listRecords.count()) && (listSelected.count() > XModel_MSRecord::COLUMN_NUMBER)) {
+            QModelIndex index = listSelected.at(XModel_MSRecord::COLUMN_NUMBER);
 
             qint64 nOffset = ui->tableViewResult->model()->data(index, Qt::UserRole + XModel_MSRecord::USERROLE_OFFSET).toLongLong();
 
@@ -203,7 +205,9 @@ void SearchSignaturesWidget::_disasm()
 void SearchSignaturesWidget::search()
 {
     if (m_pDevice) {
-        // ui->tableViewResult->setModel(nullptr);
+        // Detach the previous result model before the worker rewrites m_listRecords,
+        // otherwise a re-scan mutates the vector a live model still points at (UAF/race).
+        ui->tableViewResult->clear();
 
         XBinary::FT fileType = (XBinary::FT)(ui->comboBoxType->currentData().toInt());
 

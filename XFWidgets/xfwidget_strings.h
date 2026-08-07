@@ -33,6 +33,8 @@ namespace Ui {
 class XFWidget_Strings;
 }
 
+class XShortcuts;
+
 class XFWidget_Strings : public QWidget {
     Q_OBJECT
 
@@ -59,6 +61,9 @@ public:
     void setData(const XBinary::INDATA &inData, const OPTIONS &options);
     void clear();
     void reload();
+
+    // Not an XShortcutsWidget; this only forwards the table font to the inner XFTableView.
+    void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
 
     void setReadonly(bool bIsReadonly);
 
