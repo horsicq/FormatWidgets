@@ -200,7 +200,7 @@ void SearchValuesWidget::_search(XBinary::SEARCHMODE mode)
 {
     if (m_pDevice) {
         DialogSearch::OPTIONS options = {};
-        XBinary::SEARCHDATA searchData;
+        XBinary::SEARCHDATA searchData = {};
 
         DialogSearch dialogSearch(this, getDevice(), &searchData, mode, options);
         dialogSearch.setGlobal(getShortcuts(), getGlobalOptions());
