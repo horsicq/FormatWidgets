@@ -27,6 +27,7 @@
 
 XFWidget_Disasm::XFWidget_Disasm(QWidget *pParent) : XShortcutsWidget(pParent)
 {
+    m_inData = {};
     m_pXInfoDB = nullptr;
     m_pDevice = nullptr;
     m_pDisasmWidget = new XMultiDisasmWidget(this);

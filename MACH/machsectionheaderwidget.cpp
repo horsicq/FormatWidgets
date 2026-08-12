@@ -24,6 +24,14 @@
 
 MACHSectionHeaderWidget::MACHSectionHeaderWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::MACHSectionHeaderWidget)
 {
+    m_ppLinedEdit = nullptr;
+    m_nLineEditSize = 0;
+    m_ppComboBox = nullptr;
+    m_nComboBoxSize = 0;
+    m_ppInvWidget = nullptr;
+    m_nInvWidgetSize = 0;
+    m_pSubDevice = nullptr;
+
     ui->setupUi(this);
 }
 
@@ -35,13 +43,6 @@ MACHSectionHeaderWidget::MACHSectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPT
     XMACH mach(getDevice(), getOptions().bIsImage, getOptions().nImageBase);
 
     bool bIs64 = mach.is64();
-
-    m_ppLinedEdit = 0;
-    m_nLineEditSize = 0;
-    m_ppComboBox = 0;
-    m_nComboBoxSize = 0;
-    m_ppInvWidget = 0;
-    m_nInvWidgetSize = 0;
 
     if (nType == SMACH::TYPE_mach_commands) {
         m_nLineEditSize = N_mach_commands::__data_size;
@@ -126,6 +127,8 @@ MACHSectionHeaderWidget::MACHSectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPT
 
 MACHSectionHeaderWidget::~MACHSectionHeaderWidget()
 {
+    _deleteSubdevices(&m_pSubDevice, 1);
+
     if (m_ppLinedEdit) {
         delete[] m_ppLinedEdit;
     }
@@ -143,13 +146,19 @@ MACHSectionHeaderWidget::~MACHSectionHeaderWidget()
 
 void MACHSectionHeaderWidget::clear()
 {
+    _deleteSubdevices(&m_pSubDevice, 1);
     reset();
 
-    memset(m_ppLinedEdit, 0, m_nLineEditSize * sizeof(XLineEditHEX *));
-    memset(m_ppComboBox, 0, m_nComboBoxSize * sizeof(XComboBoxEx *));
-    memset(m_ppInvWidget, 0, m_nInvWidgetSize * sizeof(InvWidget *));
+    if (m_ppLinedEdit) {
+        memset(m_ppLinedEdit, 0, m_nLineEditSize * sizeof(XLineEditHEX *));
+    }
+    if (m_ppComboBox) {
+        memset(m_ppComboBox, 0, m_nComboBoxSize * sizeof(XComboBoxEx *));
+    }
+    if (m_ppInvWidget) {
+        memset(m_ppInvWidget, 0, m_nInvWidgetSize * sizeof(InvWidget *));
+    }
 
-    m_pSubDevice = nullptr;
 
     ui->checkBoxReadonly->setChecked(true);
 }

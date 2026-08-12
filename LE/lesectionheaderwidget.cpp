@@ -24,6 +24,9 @@
 
 LESectionHeaderWidget::LESectionHeaderWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::LESectionHeaderWidget)
 {
+    memset(g_invWidget, 0, sizeof(g_invWidget));
+    g_pSubDevice = nullptr;
+
     ui->setupUi(this);
 }
 
@@ -40,6 +43,11 @@ LESectionHeaderWidget::~LESectionHeaderWidget()
 
 void LESectionHeaderWidget::clear()
 {
+}
+
+void LESectionHeaderWidget::cleanup()
+{
+    clear();
 }
 
 void LESectionHeaderWidget::reload()

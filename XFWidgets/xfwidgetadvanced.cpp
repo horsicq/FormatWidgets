@@ -27,15 +27,12 @@
 #include <QFileDialog>
 #include <QtGlobal>
 
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-#include <QRegularExpression>
-#else
-#include <QRegExp>
-#endif
-
 #include "xfmodel.h"
+#include "xfwidget_demangle.h"
+#include "xfwidget_diescan.h"
 #include "xfwidget_disasm.h"
 #include "xfwidget_entropy.h"
+#include "xfwidget_fileinfo.h"
 #include "xfwidget_extractor.h"
 #include "xfwidget_hash.h"
 #include "xfwidget_header.h"
@@ -46,16 +43,32 @@
 #include "xfwidget_signatures.h"
 #include "xfwidget_strings.h"
 #include "xfwidget_table.h"
+#include "xfwidget_tools.h"
+#include "xfwidget_virustotal.h"
 #include "xfwidget_visualization.h"
+#include "xfwidget_yarascan.h"
 
 XFWidgetAdvanced::XFWidgetAdvanced(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui::XFWidgetAdvanced)
 {
     ui->setupUi(this);
 
     m_bIsReadonly = false;
+    m_inData = {};
+    m_options = {};
+
+    XOptions::adjustToolButton(ui->toolButtonReload, XOptions::ICONTYPE_RELOAD);
+    ui->toolButtonReload->setToolTip(tr("Reload"));
+    ui->comboBoxFileType->setToolTip(tr("File type"));
+
+    m_bSplitterInitialized = false;
 
     ui->splitter->setStretchFactor(0, 1);
     ui->splitter->setStretchFactor(1, 2);
+    // A detail page with a wide minimumSizeHint can make QSplitter honor that
+    // minimum over setSizes() and collapse the tree to a sliver. Guarantee the
+    // tree a modest floor (kept small so it does not inflate the window's own
+    // minimum width); seedSplitterSizes() then picks the actual split.
+    ui->treeView->setMinimumWidth(140);
 
     connect(ui->treeView, SIGNAL(headerSelected(XBinary::XFHEADER)), this, SLOT(onHeaderSelected(XBinary::XFHEADER)));
 }
@@ -106,13 +119,21 @@ void XFWidgetAdvanced::clear()
 {
     clearWidgetCache();
     ui->treeView->clear();
+    ui->treeView->clearFilters();
+    m_inData = {};
+    m_options = {};
 }
 
 void XFWidgetAdvanced::reload()
 {
     QIODevice *pDevice = XFormats::createDevice(m_inData);
-    XFormats::setFileTypeComboBox(m_inData.fileType, pDevice, ui->comboBoxFileType);
-    XFormats::removeDevice(pDevice, m_inData);
+
+    // createDevice returns nullptr if the file vanished or is locked; the
+    // combo-box helpers dereference the device unconditionally.
+    if (pDevice) {
+        XFormats::setFileTypeComboBox(m_inData.fileType, pDevice, ui->comboBoxFileType);
+        XFormats::removeDevice(pDevice, m_inData);
+    }
 
     reloadFileType();
 }
@@ -128,6 +149,12 @@ void XFWidgetAdvanced::reloadFileType()
     clearWidgetCache();
 
     QIODevice *pDevice = XFormats::createDevice(m_inData);
+
+    if (!pDevice) {
+        ui->treeView->clear();
+        return;
+    }
+
     XBinary *pBinary = XFormats::createClass(fileType, pDevice, m_inData.bIsImage, m_inData.nModuleAddress);
 
     if (pBinary) {
@@ -135,7 +162,10 @@ void XFWidgetAdvanced::reloadFileType()
 
         XBinary::INDATA inData = m_inData;
         inData.fileType = fileType;
+        // setData re-applies the header filters to the fresh model, so the
+        // selection below can only land on a row the filter keeps visible
         ui->treeView->setData(inData, listHeaders, true);
+        ui->treeView->selectFirstItem();
 
         delete pBinary;
     }
@@ -146,6 +176,53 @@ void XFWidgetAdvanced::reloadFileType()
 void XFWidgetAdvanced::setReadonly(bool bIsReadonly)
 {
     m_bIsReadonly = bIsReadonly;
+}
+
+QByteArray XFWidgetAdvanced::saveSplitterState() const
+{
+    return ui->splitter->saveState();
+}
+
+void XFWidgetAdvanced::restoreSplitterState(const QByteArray &baState)
+{
+    if (!baState.isEmpty()) {
+        ui->splitter->restoreState(baState);
+        // An explicit restore wins - suppress the first-show default below.
+        m_bSplitterInitialized = true;
+    }
+}
+
+void XFWidgetAdvanced::showEvent(QShowEvent *pEvent)
+{
+    XShortcutsWidget::showEvent(pEvent);
+    seedSplitterSizes();
+}
+
+void XFWidgetAdvanced::resizeEvent(QResizeEvent *pEvent)
+{
+    XShortcutsWidget::resizeEvent(pEvent);
+    // showEvent may fire before the splitter has its final width; the initial
+    // layout resize does have it, so seed here too (guarded to run once).
+    seedSplitterSizes();
+}
+
+void XFWidgetAdvanced::seedSplitterSizes()
+{
+    // Stretch factors only distribute EXTRA space; on a fresh widget a wide
+    // detail page (e.g. the Info panel) can starve the tree to a sliver. Seed a
+    // ~1:2.3 split the first time we have real geometry, unless a saved splitter
+    // state was already restored.
+    if (m_bSplitterInitialized) {
+        return;
+    }
+
+    qint32 nTotalWidth = ui->splitter->width();
+
+    if (nTotalWidth > 0) {
+        qint32 nTreeWidth = (nTotalWidth * 3) / 10;
+        ui->splitter->setSizes(QList<int>() << nTreeWidth << (nTotalWidth - nTreeWidth));
+        m_bSplitterInitialized = true;
+    }
 }
 
 void XFWidgetAdvanced::adjustView()
@@ -237,6 +314,18 @@ void XFWidgetAdvanced::onHeaderSelected(const XBinary::XFHEADER &xfHeader)
 
     if ((xfHeader.xfType == XBinary::XFTYPE_COMMAND) && (xfHeader.structID == XBinary::STRUCTID_VISUALIZATION)) {
         qobject_cast<XFWidget_Visualization *>(pWidget)->setReadonly(m_bIsReadonly);
+    } else if ((xfHeader.xfType == XBinary::XFTYPE_COMMAND) && (xfHeader.structID == XBinary::STRUCTID_INFO)) {
+        qobject_cast<XFWidget_FileInfo *>(pWidget)->setReadonly(m_bIsReadonly);
+    } else if ((xfHeader.xfType == XBinary::XFTYPE_COMMAND) && (xfHeader.structID == XBinary::STRUCTID_DIESCAN)) {
+        qobject_cast<XFWidget_DIEScan *>(pWidget)->setReadonly(m_bIsReadonly);
+    } else if ((xfHeader.xfType == XBinary::XFTYPE_COMMAND) && (xfHeader.structID == XBinary::STRUCTID_YARASCAN)) {
+        qobject_cast<XFWidget_YaraScan *>(pWidget)->setReadonly(m_bIsReadonly);
+    } else if ((xfHeader.xfType == XBinary::XFTYPE_COMMAND) && (xfHeader.structID == XBinary::STRUCTID_VIRUSTOTALSCAN)) {
+        qobject_cast<XFWidget_VirusTotal *>(pWidget)->setReadonly(m_bIsReadonly);
+    } else if ((xfHeader.xfType == XBinary::XFTYPE_COMMAND) && (xfHeader.structID == XBinary::STRUCTID_DEMANGLE)) {
+        qobject_cast<XFWidget_Demangle *>(pWidget)->setReadonly(m_bIsReadonly);
+    } else if ((xfHeader.xfType == XBinary::XFTYPE_COMMAND) && (xfHeader.structID == XBinary::STRUCTID_TOOLS)) {
+        qobject_cast<XFWidget_Tools *>(pWidget)->setReadonly(m_bIsReadonly);
     } else if ((xfHeader.xfType == XBinary::XFTYPE_COMMAND) && (xfHeader.structID == XBinary::STRUCTID_HEX)) {
         qobject_cast<XFWidget_Hex *>(pWidget)->setReadonly(m_bIsReadonly);
     } else if ((xfHeader.xfType == XBinary::XFTYPE_COMMAND) && (xfHeader.structID == XBinary::STRUCTID_DISASM)) {
@@ -326,6 +415,39 @@ QWidget *XFWidgetAdvanced::getOrCreateWidget(const QString &sName, const XBinary
         pVisualization->setGlobal(getShortcuts(), getGlobalOptions());
         pVisualization->setData(inData);
         pWidget = pVisualization;
+    } else if ((xfHeader.xfType == XBinary::XFTYPE_COMMAND) && (xfHeader.structID == XBinary::STRUCTID_INFO)) {
+        XFWidget_FileInfo *pFileInfo = new XFWidget_FileInfo(this);
+        pFileInfo->setGlobal(getShortcuts(), getGlobalOptions());
+        pFileInfo->setData(inData);
+        pWidget = pFileInfo;
+    } else if ((xfHeader.xfType == XBinary::XFTYPE_COMMAND) && (xfHeader.structID == XBinary::STRUCTID_DIESCAN)) {
+        XFWidget_DIEScan *pDIEScan = new XFWidget_DIEScan(this);
+        pDIEScan->setGlobal(getShortcuts(), getGlobalOptions());
+        pDIEScan->setData(inData);
+        pWidget = pDIEScan;
+    } else if ((xfHeader.xfType == XBinary::XFTYPE_COMMAND) && (xfHeader.structID == XBinary::STRUCTID_YARASCAN)) {
+        XFWidget_YaraScan *pYaraScan = new XFWidget_YaraScan(this);
+        pYaraScan->setGlobal(getShortcuts(), getGlobalOptions());
+        pYaraScan->setData(inData);
+        pWidget = pYaraScan;
+    } else if ((xfHeader.xfType == XBinary::XFTYPE_COMMAND) && (xfHeader.structID == XBinary::STRUCTID_VIRUSTOTALSCAN)) {
+        XFWidget_VirusTotal *pVirusTotal = new XFWidget_VirusTotal(this);
+        pVirusTotal->setGlobal(getShortcuts(), getGlobalOptions());
+        pVirusTotal->setData(inData);
+        pWidget = pVirusTotal;
+    } else if ((xfHeader.xfType == XBinary::XFTYPE_COMMAND) && (xfHeader.structID == XBinary::STRUCTID_DEMANGLE)) {
+        XFWidget_Demangle *pDemangle = new XFWidget_Demangle(this);
+        pDemangle->setGlobal(getShortcuts(), getGlobalOptions());
+        pDemangle->setData(inData);
+        pWidget = pDemangle;
+    } else if ((xfHeader.xfType == XBinary::XFTYPE_COMMAND) && (xfHeader.structID == XBinary::STRUCTID_TOOLS)) {
+        XFWidget_Tools *pTools = new XFWidget_Tools(this);
+        pTools->setGlobal(getShortcuts(), getGlobalOptions());
+        // Queued: a file mutation reloads the whole view, which deletes this
+        // widget - defer so the emitting slot returns first.
+        connect(pTools, SIGNAL(dataChanged(qint64, qint64)), this, SLOT(onToolsDataChanged()), Qt::QueuedConnection);
+        pTools->setData(inData);
+        pWidget = pTools;
     } else if ((xfHeader.xfType == XBinary::XFTYPE_COMMAND) && (xfHeader.structID == XBinary::STRUCTID_HEX)) {
         XFWidget_Hex *pHex = new XFWidget_Hex(this);
         pHex->setGlobal(getShortcuts(), getGlobalOptions());
@@ -423,6 +545,12 @@ QWidget *XFWidgetAdvanced::getOrCreateWidget(const QString &sName, const XBinary
     ui->stackedWidget->addWidget(pWidget);
     ui->stackedWidget->setCurrentWidget(pWidget);
     return pWidget;
+}
+
+void XFWidgetAdvanced::onToolsDataChanged()
+{
+    // The file was modified by the Tools panel - rebuild everything from disk.
+    reload();
 }
 
 void XFWidgetAdvanced::on_toolButtonReload_clicked()

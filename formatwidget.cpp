@@ -30,6 +30,10 @@ FormatWidget::FormatWidget(QWidget *pParent) : XShortcutsWidget(pParent)
     m_nPageIndex = 0;  // TODO Check
     m_pXInfoDB = nullptr;
     m_nDisamInitAddress = -1;
+    m_nNumber = 0;
+    m_nOffset = 0;
+    m_nType = 0;
+    m_fileType = XBinary::FT_UNKNOWN;
 
     m_colDisabled = QWidget::palette().color(QPalette::Window);
     m_colEnabled = QWidget::palette().color(QPalette::BrightText);
@@ -161,7 +165,7 @@ void FormatWidget::setData(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 
     }
 
     m_pDevice = pDevice;
-    m_bIsReadonly = !(pDevice->isWritable());
+    m_bIsReadonly = !pDevice || !pDevice->isWritable();
 
     setData(options, nNumber, nOffset, nType);
 }

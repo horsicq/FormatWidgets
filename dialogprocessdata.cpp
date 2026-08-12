@@ -20,9 +20,15 @@
  */
 #include "dialogprocessdata.h"
 
+#include <QCoreApplication>
+
 DialogProcessData::DialogProcessData(QWidget *pParent, ProcessData *pProcessData, XOptions *pOptions) : XDialogProcess(pParent)
 {
     this->m_pProcessData = pProcessData;
+
+    if (!pProcessData) {
+        return;
+    }
 
     pProcessData->setPdStruct(getPdStruct());
     pProcessData->setOptions(pOptions);
@@ -32,7 +38,16 @@ DialogProcessData::DialogProcessData(QWidget *pParent, ProcessData *pProcessData
     pProcessData->moveToThread(m_pThread);
 
     connect(m_pThread, SIGNAL(started()), pProcessData, SLOT(process()));
+    connect(
+        pProcessData, &ProcessData::completed, pProcessData,
+        [pProcessData]() {
+            if (QCoreApplication::instance()) {
+                pProcessData->moveToThread(QCoreApplication::instance()->thread());
+            }
+        },
+        Qt::DirectConnection);
     connect(pProcessData, SIGNAL(completed(qint64)), this, SLOT(onCompleted(qint64)));
+    connect(pProcessData, &ProcessData::completed, m_pThread, &QThread::quit, Qt::DirectConnection);
     connect(pProcessData, SIGNAL(errorMessage(QString)), this, SLOT(errorMessageSlot(QString)));
 
     m_pThread->start();
@@ -40,11 +55,13 @@ DialogProcessData::DialogProcessData(QWidget *pParent, ProcessData *pProcessData
 
 DialogProcessData::~DialogProcessData()
 {
-    stop();
-    waitForFinished();
+    if (m_pThread) {
+        stop();
+        waitForFinished();
 
-    m_pThread->quit();
-    m_pThread->wait();
+        m_pThread->quit();
+        m_pThread->wait();
 
-    delete m_pThread;
+        delete m_pThread;
+    }
 }

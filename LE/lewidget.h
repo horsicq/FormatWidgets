@@ -85,9 +85,9 @@ private:
 
     Ui::LEWidget *ui;
 
-    XLineEditHEX *m_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::__data_size];
-    XLineEditHEX *m_lineEdit_VXD_HEADER[N_VXD_HEADER::__data_size];
-    XComboBoxEx *m_comboBox[__CB_size];
+    XLineEditHEX *m_lineEdit_DOS_HEADER[N_LE_DOS_HEADER::__data_size] = {};
+    XLineEditHEX *m_lineEdit_VXD_HEADER[N_VXD_HEADER::__data_size] = {};
+    XComboBoxEx *m_comboBox[__CB_size] = {};
 
     InvWidget *m_invWidget[__INV_size];
     SubDevice *m_subDevice[SLE::__TYPE_size];

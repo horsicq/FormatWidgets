@@ -91,9 +91,9 @@ private:
 
     Ui::NEWidget *ui;
 
-    XLineEditHEX *m_lineEdit_DOS_HEADER[N_NE_DOS_HEADER::__data_size];
-    XLineEditHEX *m_lineEdit_OS2_HEADER[N_OS2_HEADER::__data_size];
-    XComboBoxEx *m_comboBox[__CB_size];
+    XLineEditHEX *m_lineEdit_DOS_HEADER[N_NE_DOS_HEADER::__data_size] = {};
+    XLineEditHEX *m_lineEdit_OS2_HEADER[N_OS2_HEADER::__data_size] = {};
+    XComboBoxEx *m_comboBox[__CB_size] = {};
 
     InvWidget *m_invWidget[__INV_size];
     SubDevice *m_subDevice[SNE::__TYPE_size];

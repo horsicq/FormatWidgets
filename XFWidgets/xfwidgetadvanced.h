@@ -23,6 +23,8 @@
 #define XFWIDGETADVANCED_H
 
 #include <QMap>
+#include <QResizeEvent>
+#include <QShowEvent>
 #include <QString>
 #include "xftreeview.h"
 #include "xftableview.h"
@@ -52,9 +54,16 @@ public:
 
     void setReadonly(bool bIsReadonly);
 
+    QByteArray saveSplitterState() const;
+    void restoreSplitterState(const QByteArray &baState);
+
     virtual void adjustView();
     void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
     virtual void reloadData(bool bSaveSelection);
+
+protected:
+    void showEvent(QShowEvent *pEvent) override;
+    void resizeEvent(QResizeEvent *pEvent) override;
 
 signals:
     void headerSelected(const XBinary::XFHEADER &xfHeader);
@@ -66,6 +75,7 @@ protected:
 
 private slots:
     void onHeaderSelected(const XBinary::XFHEADER &xfHeader);
+    void onToolsDataChanged();
     void on_toolButtonReload_clicked();
     void on_comboBoxFileType_currentIndexChanged(int nIndex);
 
@@ -74,12 +84,15 @@ private slots:
     void clearWidgetCache();
 
 private:
+    void seedSplitterSizes();
+
     Ui::XFWidgetAdvanced *ui;
     XBinary::INDATA m_inData;
     OPTIONS m_options;
     QMap<QString, QWidget *> m_mapWidgets;
     QList<QString> m_lruOrder;
     bool m_bIsReadonly;
+    bool m_bSplitterInitialized;
 };
 
 #endif  // XFWIDGETADVANCED_H

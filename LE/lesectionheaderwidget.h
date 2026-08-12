@@ -41,6 +41,7 @@ public:
     LESectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent = nullptr);
     ~LESectionHeaderWidget();
     virtual void clear();
+    void cleanup() override;
     virtual void reload();
 
 protected:

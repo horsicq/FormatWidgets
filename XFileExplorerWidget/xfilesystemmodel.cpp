@@ -162,6 +162,11 @@ void XFileSystemModel::reload()
             recordInfo.bEnabled = matchesNameFilters(recordInfo);
             recordInfo.mapValues.clear();
 
+            if (!recordInfo.bIsDir) {
+                recordInfo.mapValues.insert(XFileInfoValues::XFIV_SIZE, fileInfo.size());
+                recordInfo.mapValues.insert(XFileInfoValues::XFIV_EXTENSION, fileInfo.suffix());
+            }
+
             if (m_bNameFilterDisables || recordInfo.bEnabled) {
                 m_pData->listRecords.append(recordInfo);
             }
@@ -261,6 +266,10 @@ QVariant XFileSystemModel::data(const QModelIndex &index, int nRole) const
             if (alignment) {
                 return QVariant(alignment);
             }
+        }
+    } else if (nRole == Qt::DecorationRole) {
+        if (index.column() == 0) {
+            return pRecordInfo->icon;
         }
     } else if (nRole == Qt::FontRole) {
         if (pRecordInfo->bIsDir || pRecordInfo->bIsHidden) {

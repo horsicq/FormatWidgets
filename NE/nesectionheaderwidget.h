@@ -39,7 +39,9 @@ public:
     };
     NESectionHeaderWidget(QWidget *pParent = nullptr);
     NESectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS options, quint32 nNumber, qint64 nOffset, qint32 nType, QWidget *pParent = nullptr);
+    ~NESectionHeaderWidget() override;
     void clear() override;
+    void cleanup() override;
     void reload() override;
 
 protected:

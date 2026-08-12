@@ -24,6 +24,16 @@
 
 DEXSectionHeaderWidget::DEXSectionHeaderWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::DEXSectionHeaderWidget)
 {
+    m_ppLinedEdit = nullptr;
+    m_nLineEditSize = 0;
+    m_ppComboBox = nullptr;
+    m_nComboBoxSize = 0;
+    m_ppInvWidget = nullptr;
+    m_nInvWidgetSize = 0;
+    m_pSubDevice = nullptr;
+    m_nStringTableOffset = 0;
+    m_nStringTableSize = 0;
+
     ui->setupUi(this);
 }
 
@@ -31,13 +41,6 @@ DEXSectionHeaderWidget::DEXSectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIO
     : DEXSectionHeaderWidget(pParent)
 {
     DEXSectionHeaderWidget::setData(pDevice, options, nNumber, nOffset, nType);
-
-    m_ppLinedEdit = nullptr;
-    m_nLineEditSize = 0;
-    m_ppComboBox = nullptr;
-    m_nComboBoxSize = 0;
-    m_ppInvWidget = nullptr;
-    m_nInvWidgetSize = 0;
 
     if (m_nLineEditSize) {
         m_ppLinedEdit = new PXLineEditHEX[m_nLineEditSize];
@@ -73,9 +76,15 @@ void DEXSectionHeaderWidget::clear()
 {
     reset();
 
-    memset(m_ppLinedEdit, 0, m_nLineEditSize * sizeof(XLineEditHEX *));
-    memset(m_ppComboBox, 0, m_nComboBoxSize * sizeof(XComboBoxEx *));
-    memset(m_ppInvWidget, 0, m_nInvWidgetSize * sizeof(InvWidget *));
+    if (m_ppLinedEdit) {
+        memset(m_ppLinedEdit, 0, m_nLineEditSize * sizeof(XLineEditHEX *));
+    }
+    if (m_ppComboBox) {
+        memset(m_ppComboBox, 0, m_nComboBoxSize * sizeof(XComboBoxEx *));
+    }
+    if (m_ppInvWidget) {
+        memset(m_ppInvWidget, 0, m_nInvWidgetSize * sizeof(InvWidget *));
+    }
 
     m_pSubDevice = nullptr;
 

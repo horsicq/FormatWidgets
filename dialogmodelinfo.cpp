@@ -46,6 +46,14 @@ void DialogModelInfo::setData(QIODevice *pDevice, const QString &sTitle, QStanda
     m_sTitle = sTitle;
 
     setWindowTitle(sTitle);
+    ui->textEdit->clear();
+
+    if (!pModel) {
+        ui->pushButtonSave->setEnabled(false);
+        return;
+    }
+
+    ui->pushButtonSave->setEnabled(true);
 
     qint32 nNumberOfRecords = pModel->rowCount();
 

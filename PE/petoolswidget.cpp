@@ -30,6 +30,8 @@ PEToolsWidget::PEToolsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(n
     m_bIsImage = false;
     m_nModuleAddress = -1;
     m_bReadonly = true;
+
+    reload();
 }
 
 PEToolsWidget::~PEToolsWidget()
@@ -48,6 +50,13 @@ void PEToolsWidget::setData(QIODevice *pDevice, bool bIsImage, XADDR nModuleAddr
 
 void PEToolsWidget::reload()
 {
+    ui->pushButtonDosStubAdd->setEnabled(false);
+    ui->pushButtonDosStubRemove->setEnabled(false);
+    ui->pushButtonDosStubDump->setEnabled(false);
+    ui->pushButtonOverlayAdd->setEnabled(false);
+    ui->pushButtonOverlayRemove->setEnabled(false);
+    ui->pushButtonOverlayDump->setEnabled(false);
+
     if (m_pDevice) {
         XPE pe(m_pDevice, m_bIsImage, m_nModuleAddress);
 
@@ -75,6 +84,10 @@ void PEToolsWidget::setReadonly(bool bState)
 
 bool PEToolsWidget::saveBackup()
 {
+    if (!m_pDevice) {
+        return false;
+    }
+
     bool bResult = true;
 
     if (getGlobalOptions()->isSaveBackup()) {
@@ -97,6 +110,10 @@ void PEToolsWidget::reloadData(bool bSaveSelection)
 
 void PEToolsWidget::dumpRegion(QWidget *pParent, QIODevice *pDevice, qint64 nOffset, qint64 nSize, const QString &sName)
 {
+    if (!pDevice || (nOffset < 0) || (nSize <= 0)) {
+        return;
+    }
+
     QString _sName = sName;
     if (_sName == "") {
         _sName = tr("Dump");
@@ -117,6 +134,10 @@ void PEToolsWidget::dumpRegion(QWidget *pParent, QIODevice *pDevice, qint64 nOff
 
 void PEToolsWidget::dumpOverlay(QWidget *pParent, QIODevice *pDevice, bool bIsImage, XADDR nModuleAddress)
 {
+    if (!pDevice) {
+        return;
+    }
+
     XPE pe(pDevice, bIsImage, nModuleAddress);
 
     if (pe.isValid()) {
@@ -129,6 +150,10 @@ void PEToolsWidget::dumpOverlay(QWidget *pParent, QIODevice *pDevice, bool bIsIm
 
 void PEToolsWidget::dumpDosStub(QWidget *pParent, QIODevice *pDevice, bool bIsImage, XADDR nModuleAddress)
 {
+    if (!pDevice) {
+        return;
+    }
+
     XPE pe(pDevice, bIsImage, nModuleAddress);
 
     if (pe.isValid()) {
@@ -146,6 +171,10 @@ void PEToolsWidget::registerShortcuts(bool bState)
 
 void PEToolsWidget::on_pushButtonDosStubAdd_clicked()
 {
+    if (!m_pDevice) {
+        return;
+    }
+
     if (saveBackup()) {
         QString sFileName = XShortcutsWidget::getOpenFileName(XBinary::getDeviceDirectory(m_pDevice));
 
@@ -167,6 +196,10 @@ void PEToolsWidget::on_pushButtonDosStubAdd_clicked()
 
 void PEToolsWidget::on_pushButtonDosStubRemove_clicked()
 {
+    if (!m_pDevice) {
+        return;
+    }
+
     if (saveBackup()) {
         XPE pe(m_pDevice, m_bIsImage, m_nModuleAddress);
 
@@ -182,11 +215,19 @@ void PEToolsWidget::on_pushButtonDosStubRemove_clicked()
 
 void PEToolsWidget::on_pushButtonDosStubDump_clicked()
 {
+    if (!m_pDevice) {
+        return;
+    }
+
     dumpDosStub(this, m_pDevice, m_bIsImage, m_nModuleAddress);
 }
 
 void PEToolsWidget::on_pushButtonOverlayAdd_clicked()
 {
+    if (!m_pDevice) {
+        return;
+    }
+
     if (saveBackup()) {
         QString sFileName = XShortcutsWidget::getOpenFileName(XBinary::getDeviceDirectory(m_pDevice));
 
@@ -200,12 +241,16 @@ void PEToolsWidget::on_pushButtonOverlayAdd_clicked()
             }
         }
 
-        void reload();
+        reload();
     }
 }
 
 void PEToolsWidget::on_pushButtonOverlayRemove_clicked()
 {
+    if (!m_pDevice) {
+        return;
+    }
+
     if (saveBackup()) {
         XPE pe(m_pDevice, m_bIsImage, m_nModuleAddress);
 
@@ -221,5 +266,9 @@ void PEToolsWidget::on_pushButtonOverlayRemove_clicked()
 
 void PEToolsWidget::on_pushButtonOverlayDump_clicked()
 {
+    if (!m_pDevice) {
+        return;
+    }
+
     dumpOverlay(this, m_pDevice, m_bIsImage, m_nModuleAddress);
 }

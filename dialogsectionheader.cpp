@@ -36,6 +36,10 @@ DialogSectionHeader::~DialogSectionHeader()
 
 void DialogSectionHeader::setWidget(FormatWidget *pWidget)
 {
+    if (!pWidget) {
+        return;
+    }
+
     this->m_pWidget = pWidget;
     pWidget->setGlobal(getShortcuts(), getGlobalOptions());
 
@@ -48,20 +52,26 @@ void DialogSectionHeader::setData(QIODevice *pDevice, FW_DEF::OPTIONS options, q
 {
     setWindowTitle(sTitle);
 
-    m_pWidget->setData(pDevice, options, nNumber, nOffset, nType);
-    m_pWidget->reload();
+    if (m_pWidget) {
+        m_pWidget->setData(pDevice, options, nNumber, nOffset, nType);
+        m_pWidget->reload();
+    }
 }
 
 void DialogSectionHeader::setData(const QString &sTitle)
 {
     setWindowTitle(sTitle);
 
-    m_pWidget->reload();
+    if (m_pWidget) {
+        m_pWidget->reload();
+    }
 }
 
 void DialogSectionHeader::setEdited(qint64 nDeviceOffset, qint64 nDeviceSize)
 {
-    m_pWidget->setEdited(nDeviceOffset, nDeviceSize);
+    if (m_pWidget) {
+        m_pWidget->setEdited(nDeviceOffset, nDeviceSize);
+    }
 }
 
 void DialogSectionHeader::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)

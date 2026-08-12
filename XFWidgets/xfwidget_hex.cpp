@@ -27,6 +27,7 @@
 
 XFWidget_Hex::XFWidget_Hex(QWidget *pParent) : XShortcutsWidget(pParent)
 {
+    m_inData = {};
     m_pXInfoDB = nullptr;
     m_pHexViewWidget = new XHexViewWidget(this);
 

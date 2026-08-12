@@ -95,9 +95,9 @@ private:
 
     Ui::DEXWidget *ui;
 
-    XLineEditHEX *m_lineEdit_HEADER[N_DEX_HEADER::__data_size];
+    XLineEditHEX *m_lineEdit_HEADER[N_DEX_HEADER::__data_size] = {};
 
-    XComboBoxEx *m_comboBox[__CB_size];
+    XComboBoxEx *m_comboBox[__CB_size] = {};
     InvWidget *m_invWidget[__INV_size];
 
     SubDevice *m_subDevice[SDEX::__TYPE_size];

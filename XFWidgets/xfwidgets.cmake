@@ -80,6 +80,31 @@ if (NOT DEFINED SEARCHVALUESWIDGET_SOURCES)
     set(XFWIDGETS_SOURCES ${XFWIDGETS_SOURCES} ${SEARCHVALUESWIDGET_SOURCES})
 endif()
 
+if (NOT DEFINED DIE_WIDGET_SOURCES)
+    include(${CMAKE_CURRENT_LIST_DIR}/../../die_widget/die_widget.cmake)
+    set(XFWIDGETS_SOURCES ${XFWIDGETS_SOURCES} ${DIE_WIDGET_SOURCES})
+endif()
+
+if (NOT DEFINED YARA_WIDGET_SOURCES)
+    include(${CMAKE_CURRENT_LIST_DIR}/../../yara_widget/yara_widget.cmake)
+    set(XFWIDGETS_SOURCES ${XFWIDGETS_SOURCES} ${YARA_WIDGET_SOURCES})
+endif()
+
+if (NOT DEFINED XVIRUSTOTALWIDGET_SOURCES)
+    include(${CMAKE_CURRENT_LIST_DIR}/../../XOnlineTools/xvirustotalwidget.cmake)
+    set(XFWIDGETS_SOURCES ${XFWIDGETS_SOURCES} ${XVIRUSTOTALWIDGET_SOURCES})
+endif()
+
+if (NOT DEFINED XFILEINFOWIDGET_SOURCES)
+    include(${CMAKE_CURRENT_LIST_DIR}/../../XFileInfo/xfileinfowidget.cmake)
+    set(XFWIDGETS_SOURCES ${XFWIDGETS_SOURCES} ${XFILEINFOWIDGET_SOURCES})
+endif()
+
+if (NOT DEFINED XDEMANGLEWIDGET_SOURCES)
+    include(${CMAKE_CURRENT_LIST_DIR}/../../XDemangleWidget/xdemanglewidget.cmake)
+    set(XFWIDGETS_SOURCES ${XFWIDGETS_SOURCES} ${XDEMANGLEWIDGET_SOURCES})
+endif()
+
 set(XFWIDGETS_SOURCES
     ${XFWIDGETS_SOURCES}
     ${CMAKE_CURRENT_LIST_DIR}/xfwidget.cpp
@@ -120,4 +145,16 @@ set(XFWIDGETS_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/xfwidget_extractor.h
     ${CMAKE_CURRENT_LIST_DIR}/xfwidget_search.cpp
     ${CMAKE_CURRENT_LIST_DIR}/xfwidget_search.h
+    ${CMAKE_CURRENT_LIST_DIR}/xfwidget_fileinfo.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/xfwidget_fileinfo.h
+    ${CMAKE_CURRENT_LIST_DIR}/xfwidget_diescan.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/xfwidget_diescan.h
+    ${CMAKE_CURRENT_LIST_DIR}/xfwidget_yarascan.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/xfwidget_yarascan.h
+    ${CMAKE_CURRENT_LIST_DIR}/xfwidget_virustotal.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/xfwidget_virustotal.h
+    ${CMAKE_CURRENT_LIST_DIR}/xfwidget_demangle.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/xfwidget_demangle.h
+    ${CMAKE_CURRENT_LIST_DIR}/xfwidget_tools.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/xfwidget_tools.h
 )

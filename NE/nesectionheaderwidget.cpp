@@ -24,6 +24,9 @@
 
 NESectionHeaderWidget::NESectionHeaderWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::NESectionHeaderWidget)
 {
+    memset(g_invWidget, 0, sizeof(g_invWidget));
+    g_pSubDevice = nullptr;
+
     ui->setupUi(this);
 }
 
@@ -33,8 +36,18 @@ NESectionHeaderWidget::NESectionHeaderWidget(QIODevice *pDevice, FW_DEF::OPTIONS
     NESectionHeaderWidget::setData(pDevice, options, nNumber, nOffset, nType);
 }
 
+NESectionHeaderWidget::~NESectionHeaderWidget()
+{
+    delete ui;
+}
+
 void NESectionHeaderWidget::clear()
 {
+}
+
+void NESectionHeaderWidget::cleanup()
+{
+    clear();
 }
 
 void NESectionHeaderWidget::reload()

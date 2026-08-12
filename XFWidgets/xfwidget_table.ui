@@ -59,6 +59,23 @@
        </widget>
       </item>
       <item>
+       <widget class="QLabel" name="labelDemangle">
+        <property name="text">
+         <string>Demangle</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="comboBoxDemangle">
+        <property name="minimumSize">
+         <size>
+          <width>120</width>
+          <height>0</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
        <spacer name="horizontalSpacerToolBar">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>

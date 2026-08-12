@@ -42,6 +42,7 @@ SearchSignaturesWidget::SearchSignaturesWidget(QWidget *pParent) : XShortcutsWid
 
     m_pDevice = nullptr;
     m_bInit = false;
+    m_options = {};
 
     ui->toolButtonPatch->setEnabled(false);
 

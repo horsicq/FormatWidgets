@@ -23,6 +23,7 @@
 #define XFWIDGET_TABLE_H
 
 #include <QWidget>
+#include "xdemangle.h"
 #include "xftableview.h"
 #include "xformats.h"
 #include "xmodel_ximport.h"
@@ -65,18 +66,35 @@ private slots:
     void onSaveClicked();
     void onShowOffsetsToggled(bool bChecked);
     void onShowPresentationToggled(bool bChecked);
+    void onDemangleModeChanged(int nIndex);
 
 private:
-    void setListMode(const QString &sTag);
+    enum LISTTYPE {
+        LISTTYPE_NONE = 0,
+        LISTTYPE_IMPORT,
+        LISTTYPE_EXPORT,
+        LISTTYPE_SYMBOL,
+        LISTTYPE_RESOURCE
+    };
+
+    void setListMode(const QString &sTag, bool bDemanglable);
+    void _applyDemangle();
 
     Ui::XFWidget_Table *ui;
     XBinary::INDATA m_inData;
     QString m_sCurrentTag;
     bool m_bIsReadonly;
+    LISTTYPE m_listType;
+    XDemangle m_demangle;
 
+    // The "*Raw" copies keep the original mangled names; the plain lists are the
+    // display copies bound to the model (rewritten when the demangle mode changes).
     QVector<XBinary::XIMPORT_STRUCT> m_listImports;
+    QVector<XBinary::XIMPORT_STRUCT> m_listImportsRaw;
     QVector<XBinary::XEXPORT_STRUCT> m_listExports;
+    QVector<XBinary::XEXPORT_STRUCT> m_listExportsRaw;
     QVector<XBinary::XSYMBOL_STRUCT> m_listSymbols;
+    QVector<XBinary::XSYMBOL_STRUCT> m_listSymbolsRaw;
     QVector<XBinary::XRESOURCE_STRUCT> m_listResources;
 };
 
