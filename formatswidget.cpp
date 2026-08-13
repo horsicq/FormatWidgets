@@ -1222,6 +1222,7 @@ void FormatsWidget::_currentFileType(qint32 nFT)
 void FormatsWidget::on_toolButtonMANIFESTMF_clicked()
 {
     DialogTextInfo dialogTextInfo(this);
+    dialogTextInfo.setGlobal(getShortcuts(), getGlobalOptions());
 
     dialogTextInfo.setArchive(m_sFileName, "META-INF/MANIFEST.MF");
 
@@ -1231,6 +1232,7 @@ void FormatsWidget::on_toolButtonMANIFESTMF_clicked()
 void FormatsWidget::on_toolButtonAndroidManifest_clicked()
 {
     DialogTextInfo dialogTextInfo(this);
+    dialogTextInfo.setGlobal(getShortcuts(), getGlobalOptions());
 
     QByteArray baData = XArchives::decompress(m_sFileName, "AndroidManifest.xml");
     if (baData.size() > 0) {
