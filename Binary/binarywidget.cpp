@@ -73,7 +73,7 @@ void BinaryWidget::reload()
     XBinary binary(getDevice(), getOptions().bIsImage, getOptions().nImageBase);
 
     if (binary.isValid()) {
-        QSet<XBinary::FT> stFT = XFormats::getFileTypes(getDevice(), true);
+        QSet<XBinary::FT> stFT = XFormats::getFileTypes(getDevice(), XBinary::FT_FLAG_FORMATS);
         setFileType(binary._getPrefFileType(&stFT));
 
         QTreeWidgetItem *pItemInfo = createNewItem(SBINARY::TYPE_INFO, tr("Info"), XOptions::ICONTYPE_INFO);

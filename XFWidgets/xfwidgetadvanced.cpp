@@ -58,7 +58,13 @@ XFWidgetAdvanced::XFWidgetAdvanced(QWidget *pParent) : XShortcutsWidget(pParent)
 
     XOptions::adjustToolButton(ui->toolButtonReload, XOptions::ICONTYPE_RELOAD);
     ui->toolButtonReload->setToolTip(tr("Reload"));
+    ui->toolButtonReload->setAccessibleName(tr("Reload current file"));
+    ui->toolButtonReload->setAccessibleDescription(tr("Re-read the current file using the selected interpretation"));
+    ui->toolButtonReload->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     ui->comboBoxFileType->setToolTip(tr("File type"));
+    ui->comboBoxFileType->setAccessibleName(tr("File type interpretation"));
+    ui->comboBoxFileType->setAccessibleDescription(tr("Choose how the file should be parsed"));
+    ui->comboBoxFileType->setMinimumWidth(180);
 
     m_bSplitterInitialized = false;
 

@@ -14,24 +14,37 @@
    <string notr="true">Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>8</number>
+   </property>
    <property name="leftMargin">
-    <number>0</number>
+    <number>8</number>
    </property>
    <property name="topMargin">
-    <number>0</number>
+    <number>8</number>
    </property>
    <property name="rightMargin">
-    <number>0</number>
+    <number>8</number>
    </property>
    <property name="bottomMargin">
-    <number>0</number>
+    <number>8</number>
    </property>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QToolButton" name="toolButtonReload">
+     <widget class="QToolButton" name="toolButtonReload">
        <property name="text">
         <string>Reload</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelFileType">
+       <property name="text">
+        <string>Interpret as:</string>
+       </property>
+       <property name="buddy">
+        <cstring>comboBoxFileType</cstring>
        </property>
       </widget>
      </item>
@@ -42,6 +55,9 @@
          <width>120</width>
          <height>0</height>
         </size>
+       </property>
+       <property name="accessibleName">
+        <string>File type interpretation</string>
        </property>
       </widget>
      </item>
@@ -71,7 +87,14 @@
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
-     <widget class="XFTreeView" name="treeView"/>
+     <property name="handleWidth">
+      <number>2</number>
+     </property>
+     <widget class="XFTreeView" name="treeView">
+      <property name="accessibleName">
+       <string>File structures and analysis tools</string>
+      </property>
+     </widget>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
