@@ -940,7 +940,6 @@ void PEProcessData::_process()
 
                 XScanEngine::SCAN_OPTIONS scanOptions = {};
                 scanOptions.bUseCustomDatabase = true;
-                scanOptions.bUseExtraDatabase = true;
                 scanOptions.bShowType = true;
                 scanOptions.bShowVersion = true;
                 scanOptions.bShowInfo = true;

@@ -169,7 +169,7 @@ void FormatsWidget::setFileName(const QString &sFileName, bool bScan)
 
     enableControls(sFileName != "");
 
-    XFormats::setFileTypeComboBox(XBinary::FT_UNKNOWN, m_sFileName, ui->comboBoxFileType, XBinary::TL_OPTION_ALL);
+    XFormats::setFileTypeComboBox(XBinary::FT_UNKNOWN, m_sFileName, ui->comboBoxFileType, XBinary::FT_FLAG_FORMATS);
 
     reload();
 }
