@@ -106,6 +106,12 @@ void SearchStringsWidget::setData(QIODevice *pDevice, XBinary::FT fileType, OPTI
     ui->checkBoxNullTerminated->setChecked(options.bNullTerminated);
     ui->checkBoxLinks->setChecked(options.bLinks);
 
+    if (options.nMinLenght > 0) {
+        ui->spinBoxMinLength->setValue(options.nMinLenght);
+    }
+
+    ui->lineEditMask->setText(options.sMask);
+
     m_bInit = false;
 
     // ui->tableViewResult->setModel(nullptr);
