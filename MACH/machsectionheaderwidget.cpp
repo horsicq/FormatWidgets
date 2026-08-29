@@ -159,7 +159,6 @@ void MACHSectionHeaderWidget::clear()
         memset(m_ppInvWidget, 0, m_nInvWidgetSize * sizeof(InvWidget *));
     }
 
-
     ui->checkBoxReadonly->setChecked(true);
 }
 

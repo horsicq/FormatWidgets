@@ -43,7 +43,7 @@ qint32 getBoundedSearchResultLimit(qint32 nLimit)
 {
     return (nLimit > 0) ? qMin(nLimit, N_MAX_SEARCH_RESULTS) : N_MAX_SEARCH_RESULTS;
 }
-}
+}  // namespace
 
 XFWidget_Strings::XFWidget_Strings(QWidget *pParent) : QWidget(pParent), ui(new Ui::XFWidget_Strings)
 {

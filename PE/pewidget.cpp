@@ -550,7 +550,6 @@ FormatWidget::SV PEWidget::_setValue(QVariant vValue, qint32 nStype, qint32 nNda
                     ui->widgetHex_NetHeader->reload();
                     break;
 
-
                 case SPE::TYPE_LOADCONFIG:
                     switch (nNdata) {
                         case N_IMAGE_LOADCONFIG::Size: pe.setLoadConfig_Size((quint32)nValue); break;
@@ -1208,8 +1207,8 @@ void PEWidget::reloadData(bool bSaveSelection)
                 options.nInitAddress = -1;  // TODO Check MSDOS
                 // options.memoryMapRegion = binary.getMemoryMap();
 
-                ui->widgetDisasm_DosStub->setData(
-                    XFormats::createINDATA(options.fileType, m_subDevice[SPE::TYPE_DOS_STUB], options.bIsImage, options.nModuleAddress), options);
+                ui->widgetDisasm_DosStub->setData(XFormats::createINDATA(options.fileType, m_subDevice[SPE::TYPE_DOS_STUB], options.bIsImage, options.nModuleAddress),
+                                                  options);
                 ui->widgetDisasm_DosStub->setXInfoDB(getXInfoDB());
             }
         } else if (nType == SPE::TYPE_IMAGE_NT_HEADERS) {

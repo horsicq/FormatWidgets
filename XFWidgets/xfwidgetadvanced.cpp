@@ -164,7 +164,7 @@ void XFWidgetAdvanced::reloadFileType()
     XBinary *pBinary = XFormats::createClass(fileType, pDevice, m_inData.bIsImage, m_inData.nModuleAddress);
 
     if (pBinary) {
-        QList<XBinary::XFHEADER> listHeaders = pBinary->_getXFHeaders(); // TODO Thread
+        QList<XBinary::XFHEADER> listHeaders = pBinary->_getXFHeaders();  // TODO Thread
 
         XBinary::INDATA inData = m_inData;
         inData.fileType = fileType;
@@ -314,9 +314,9 @@ void XFWidgetAdvanced::onHeaderSelected(const XBinary::XFHEADER &xfHeader)
     QString sWidgetKey = getWidgetCacheKey(sCurrentTag, xfHeader);
     QWidget *pWidget = getOrCreateWidget(sWidgetKey, inData, xfHeader);
 
-    bool bIsListCommand = (xfHeader.xfType == XBinary::XFTYPE_COMMAND) &&
-                          ((xfHeader.structID == XBinary::STRUCTID_IMPORT) || (xfHeader.structID == XBinary::STRUCTID_EXPORT) ||
-                           (xfHeader.structID == XBinary::STRUCTID_SYMBOLS) || (xfHeader.structID == XBinary::STRUCTID_RESOURCES));
+    bool bIsListCommand =
+        (xfHeader.xfType == XBinary::XFTYPE_COMMAND) && ((xfHeader.structID == XBinary::STRUCTID_IMPORT) || (xfHeader.structID == XBinary::STRUCTID_EXPORT) ||
+                                                         (xfHeader.structID == XBinary::STRUCTID_SYMBOLS) || (xfHeader.structID == XBinary::STRUCTID_RESOURCES));
 
     if ((xfHeader.xfType == XBinary::XFTYPE_COMMAND) && (xfHeader.structID == XBinary::STRUCTID_VISUALIZATION)) {
         qobject_cast<XFWidget_Visualization *>(pWidget)->setReadonly(m_bIsReadonly);
@@ -412,9 +412,9 @@ QWidget *XFWidgetAdvanced::getOrCreateWidget(const QString &sName, const XBinary
 
     QWidget *pWidget = nullptr;
 
-    bool bIsListCommand = (xfHeader.xfType == XBinary::XFTYPE_COMMAND) &&
-                          ((xfHeader.structID == XBinary::STRUCTID_IMPORT) || (xfHeader.structID == XBinary::STRUCTID_EXPORT) ||
-                           (xfHeader.structID == XBinary::STRUCTID_SYMBOLS) || (xfHeader.structID == XBinary::STRUCTID_RESOURCES));
+    bool bIsListCommand =
+        (xfHeader.xfType == XBinary::XFTYPE_COMMAND) && ((xfHeader.structID == XBinary::STRUCTID_IMPORT) || (xfHeader.structID == XBinary::STRUCTID_EXPORT) ||
+                                                         (xfHeader.structID == XBinary::STRUCTID_SYMBOLS) || (xfHeader.structID == XBinary::STRUCTID_RESOURCES));
 
     if ((xfHeader.xfType == XBinary::XFTYPE_COMMAND) && (xfHeader.structID == XBinary::STRUCTID_VISUALIZATION)) {
         XFWidget_Visualization *pVisualization = new XFWidget_Visualization(this);

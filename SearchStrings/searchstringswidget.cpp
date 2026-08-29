@@ -284,12 +284,9 @@ void SearchStringsWidget::_editString()
             dataStruct.bIsNullTerminated = false;
 
             const qint64 nTerminatorSize = (dataStruct.valueType == XBinary::VT_U) ? 2 : 1;
-            if (m_pDevice && (dataStruct.nOffset >= 0) && (dataStruct.nSize >= 0) &&
-                (dataStruct.nOffset <= m_pDevice->size()) &&
-                (dataStruct.nSize <= m_pDevice->size() - dataStruct.nOffset) &&
-                (nTerminatorSize <= m_pDevice->size() - dataStruct.nOffset - dataStruct.nSize)) {
-                const QByteArray baTerminator =
-                    XBinary::read_array(m_pDevice, dataStruct.nOffset + dataStruct.nSize, nTerminatorSize);
+            if (m_pDevice && (dataStruct.nOffset >= 0) && (dataStruct.nSize >= 0) && (dataStruct.nOffset <= m_pDevice->size()) &&
+                (dataStruct.nSize <= m_pDevice->size() - dataStruct.nOffset) && (nTerminatorSize <= m_pDevice->size() - dataStruct.nOffset - dataStruct.nSize)) {
+                const QByteArray baTerminator = XBinary::read_array(m_pDevice, dataStruct.nOffset + dataStruct.nSize, nTerminatorSize);
                 if (baTerminator == QByteArray(nTerminatorSize, '\0')) {
                     dataStruct.bIsNullTerminated = true;
                     dataStruct.nMaxSize += nTerminatorSize;
@@ -297,8 +294,7 @@ void SearchStringsWidget::_editString()
             }
 
             dataStruct.sString = ui->tableViewResult->model()->data(indexValue).toString();
-            const qint32 nRecordIndex =
-                ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + XModel_MSRecord::USERROLE_ORIGINDEX).toInt();
+            const qint32 nRecordIndex = ui->tableViewResult->model()->data(indexNumber, Qt::UserRole + XModel_MSRecord::USERROLE_ORIGINDEX).toInt();
 
             if ((nRecordIndex < 0) || (nRecordIndex >= m_listRecords.size())) {
                 return;
@@ -312,8 +308,7 @@ void SearchStringsWidget::_editString()
                 bool bSuccess = false;
                 bool bRestoredAfterFailure = false;
                 bool bDeviceMayHaveChanged = false;
-                const QByteArray baEncoded =
-                    XBinary::getStringData(dataStruct.valueType, dataStruct.sString, dataStruct.bIsNullTerminated);
+                const QByteArray baEncoded = XBinary::getStringData(dataStruct.valueType, dataStruct.sString, dataStruct.bIsNullTerminated);
                 QByteArray baOriginal;
                 XSortFilterProxyModel *pProxyModel = ui->tableViewResult->getProxyModel();
                 XModel_MSRecord *pMSModel = pProxyModel ? dynamic_cast<XModel_MSRecord *>(pProxyModel->sourceModel()) : nullptr;
@@ -322,8 +317,8 @@ void SearchStringsWidget::_editString()
                     baOriginal = XBinary::read_array(m_pDevice, dataStruct.nOffset, baEncoded.size());
                 }
 
-                if ((dataStruct.nSize >= 0) && (dataStruct.nSize <= (std::numeric_limits<quint16>::max)()) &&
-                    pMSModel && (baOriginal.size() == baEncoded.size()) && XBinary::saveBackup(XBinary::getBackupDevice(getDevice()))) {
+                if ((dataStruct.nSize >= 0) && (dataStruct.nSize <= (std::numeric_limits<quint16>::max)()) && pMSModel && (baOriginal.size() == baEncoded.size()) &&
+                    XBinary::saveBackup(XBinary::getBackupDevice(getDevice()))) {
                     const qint64 nWritten = XBinary::write_array(m_pDevice, dataStruct.nOffset, baEncoded);
                     if (nWritten == baEncoded.size()) {
                         bSuccess = pMSModel->updateStringRecord(nRecordIndex, dataStruct.nSize, dataStruct.valueType, dataStruct.sString);
@@ -335,8 +330,7 @@ void SearchStringsWidget::_editString()
                             pMSModel->invalidateStringRecord(nRecordIndex);
                         }
                     } else if (nWritten > 0) {
-                        bRestoredAfterFailure =
-                            (XBinary::write_array(m_pDevice, dataStruct.nOffset, baOriginal) == baOriginal.size());
+                        bRestoredAfterFailure = (XBinary::write_array(m_pDevice, dataStruct.nOffset, baOriginal) == baOriginal.size());
                         if (!bRestoredAfterFailure) {
                             bDeviceMayHaveChanged = true;
                             pMSModel->invalidateStringRecord(nRecordIndex);
@@ -352,11 +346,11 @@ void SearchStringsWidget::_editString()
                     if (bDeviceMayHaveChanged) {
                         emit dataChanged(dataStruct.nOffset, baEncoded.size());
                     }
-                    QMessageBox::critical(XOptions::getMainWidget(this), tr("Error"),
-                                          (bDeviceMayHaveChanged
-                                               ? tr("Cannot save file and could not fully restore the original bytes.")
+                    QMessageBox::critical(
+                        XOptions::getMainWidget(this), tr("Error"),
+                        (bDeviceMayHaveChanged ? tr("Cannot save file and could not fully restore the original bytes.")
                                                : (bRestoredAfterFailure ? tr("Cannot save file; the original bytes were restored.") : tr("Cannot save file"))) +
-                                              QString(": %1").arg(XBinary::getBackupFileName(XBinary::getBackupDevice(getDevice()))));
+                            QString(": %1").arg(XBinary::getBackupFileName(XBinary::getBackupDevice(getDevice()))));
                 }
             }
         }

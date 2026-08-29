@@ -133,7 +133,7 @@ XFileExplorerWidget::XFileExplorerWidget(QWidget *pParent) : XShortcutsWidget(pP
     ui->treeViewFileSystem->setToolTip(tr("File explorer"));
 
     connect(ui->treeViewFileSystem->selectionModel(), SIGNAL(currentChanged(QModelIndex, QModelIndex)), this, SLOT(onCurrentChanged(QModelIndex, QModelIndex)));
-    connect(ui->treeViewFileSystem->header(), SIGNAL(sectionResized(int,int,int)), this, SLOT(onHeaderSectionResized(int,int,int)));
+    connect(ui->treeViewFileSystem->header(), SIGNAL(sectionResized(int, int, int)), this, SLOT(onHeaderSectionResized(int, int, int)));
 
     // setRootPath(QDir::homePath());
 }
