@@ -1,10 +1,6 @@
 INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
 
-!contains(XCONFIG, use_dex) {
-    XCONFIG += use_dex
-}
-
 !contains(XCONFIG, use_archive) {
     XCONFIG += use_archive
 }
