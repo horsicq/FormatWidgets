@@ -21,29 +21,30 @@ void setErrorString(QString *pErrorString, const QString &sErrorString)
     }
 }
 
+bool setTailOverlay(qint64 nFileSize, qint64 *pOffset, qint64 *pSize, XBinary::FILEPART filePart, qint64 nOffset, qint64 nSize)
+{
+    if ((filePart != XBinary::FILEPART_OVERLAY) || (nOffset <= 0) || (nSize <= 0) || (nOffset > nFileSize) || (nSize != (nFileSize - nOffset))) {
+        return false;
+    }
+    if (pOffset) {
+        *pOffset = nOffset;
+    }
+    if (pSize) {
+        *pSize = nSize;
+    }
+    return true;
+}
+
 bool getOverlayPart(XBinary *pBinary, qint64 nFileSize, qint64 *pOffset, qint64 *pSize)
 {
     if (!pBinary || !pBinary->isValid() || (nFileSize < 0)) {
         return false;
     }
 
-    const auto setTailOverlay = [nFileSize, pOffset, pSize](XBinary::FILEPART filePart, qint64 nOffset, qint64 nSize) {
-        if ((filePart != XBinary::FILEPART_OVERLAY) || (nOffset <= 0) || (nSize <= 0) || (nOffset > nFileSize) || (nSize != (nFileSize - nOffset))) {
-            return false;
-        }
-        if (pOffset) {
-            *pOffset = nOffset;
-        }
-        if (pSize) {
-            *pSize = nSize;
-        }
-        return true;
-    };
-
     const QList<XBinary::FPART> listOverlayParts = pBinary->getFileParts(XBinary::FILEPART_OVERLAY, 1);
     if (!listOverlayParts.isEmpty()) {
         const XBinary::FPART &overlayPart = listOverlayParts.constFirst();
-        if (setTailOverlay(overlayPart.filePart, overlayPart.nFileOffset, overlayPart.nFileSize)) {
+        if (setTailOverlay(nFileSize, pOffset, pSize, overlayPart.filePart, overlayPart.nFileOffset, overlayPart.nFileSize)) {
             return true;
         }
     }

@@ -22,6 +22,23 @@
 
 #include <QCoreApplication>
 
+namespace {
+struct MoveProcessDataToApplicationThread {
+    explicit MoveProcessDataToApplicationThread(ProcessData *pProcessData) : m_pProcessData(pProcessData)
+    {
+    }
+
+    void operator()() const
+    {
+        if (QCoreApplication::instance()) {
+            m_pProcessData->moveToThread(QCoreApplication::instance()->thread());
+        }
+    }
+
+    ProcessData *m_pProcessData;
+};
+}  // namespace
+
 DialogProcessData::DialogProcessData(QWidget *pParent, ProcessData *pProcessData, XOptions *pOptions) : XDialogProcess(pParent)
 {
     this->m_pProcessData = pProcessData;
@@ -38,14 +55,7 @@ DialogProcessData::DialogProcessData(QWidget *pParent, ProcessData *pProcessData
     pProcessData->moveToThread(m_pThread);
 
     connect(m_pThread, SIGNAL(started()), pProcessData, SLOT(process()));
-    connect(
-        pProcessData, &ProcessData::completed, pProcessData,
-        [pProcessData]() {
-            if (QCoreApplication::instance()) {
-                pProcessData->moveToThread(QCoreApplication::instance()->thread());
-            }
-        },
-        Qt::DirectConnection);
+    connect(pProcessData, &ProcessData::completed, pProcessData, MoveProcessDataToApplicationThread(pProcessData), Qt::DirectConnection);
     connect(pProcessData, SIGNAL(completed(qint64)), this, SLOT(onCompleted(qint64)));
     connect(pProcessData, &ProcessData::completed, m_pThread, &QThread::quit, Qt::DirectConnection);
     connect(pProcessData, SIGNAL(errorMessage(QString)), this, SLOT(errorMessageSlot(QString)));

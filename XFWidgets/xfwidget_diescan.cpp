@@ -24,6 +24,8 @@ void XFWidget_DIEScan::setData(const XBinary::INDATA &inData)
 
     if (m_pDevice) {
         m_pDIEWidget = new DIEWidgetAdvanced(this);
+        connect(m_pDIEWidget, SIGNAL(followLocation(quint64, qint32, qint64, qint32)), this, SIGNAL(followLocation(quint64, qint32, qint64, qint32)));
+        connect(m_pDIEWidget, SIGNAL(currentLocationChanged(quint64, qint32, qint64)), this, SIGNAL(currentLocationChanged(quint64, qint32, qint64)));
         layout()->addWidget(m_pDIEWidget);
         m_pDIEWidget->setGlobal(getShortcuts(), getGlobalOptions());
         m_pDIEWidget->setReadonly(isReadonly());

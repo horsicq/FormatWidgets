@@ -20,6 +20,8 @@ void XFWidget_Entropy::setData(const XBinary::INDATA &inData)
     clear();
     m_inData = inData;
     m_pEntropyWidget = new XEntropyWidget(this);
+    connect(m_pEntropyWidget, SIGNAL(followLocation(quint64, qint32, qint64, qint32)), this, SIGNAL(followLocation(quint64, qint32, qint64, qint32)));
+    connect(m_pEntropyWidget, SIGNAL(currentLocationChanged(quint64, qint32, qint64)), this, SIGNAL(currentLocationChanged(quint64, qint32, qint64)));
     layout()->addWidget(m_pEntropyWidget);
     m_pEntropyWidget->setGlobal(getShortcuts(), getGlobalOptions());
     m_pEntropyWidget->setReadonly(isReadonly());

@@ -21,6 +21,8 @@ void XFWidget_Search::setData(const XBinary::INDATA &inData)
     m_inData = inData;
     m_inData.pDevice = XFormats::createDevice(inData);
     m_pSearchWidget = new SearchValuesWidget(this);
+    connect(m_pSearchWidget, SIGNAL(followLocation(quint64, qint32, qint64, qint32)), this, SIGNAL(followLocation(quint64, qint32, qint64, qint32)));
+    connect(m_pSearchWidget, SIGNAL(currentLocationChanged(quint64, qint32, qint64)), this, SIGNAL(currentLocationChanged(quint64, qint32, qint64)));
     layout()->addWidget(m_pSearchWidget);
     m_pSearchWidget->setGlobal(getShortcuts(), getGlobalOptions());
     m_pSearchWidget->setReadonly(isReadonly());
@@ -54,6 +56,11 @@ void XFWidget_Search::setReadonly(bool bIsReadonly)
 {
     XShortcutsWidget::setReadonly(bIsReadonly);
     if (m_pSearchWidget) m_pSearchWidget->setReadonly(bIsReadonly);
+}
+
+void XFWidget_Search::findValue(quint64 nValue, XBinary::ENDIAN endian)
+{
+    if (m_pSearchWidget) m_pSearchWidget->findValue(nValue, endian);
 }
 
 SearchValuesWidget *XFWidget_Search::getSearchWidget()

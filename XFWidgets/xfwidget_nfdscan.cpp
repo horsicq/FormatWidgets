@@ -20,6 +20,8 @@ void XFWidget_NFDScan::setData(const XBinary::INDATA &inData)
     clear();
     m_inData = inData;
     m_pNFDWidget = new NFDWidgetAdvanced(this);
+    connect(m_pNFDWidget, SIGNAL(followLocation(quint64, qint32, qint64, qint32)), this, SIGNAL(followLocation(quint64, qint32, qint64, qint32)));
+    connect(m_pNFDWidget, SIGNAL(currentLocationChanged(quint64, qint32, qint64)), this, SIGNAL(currentLocationChanged(quint64, qint32, qint64)));
     layout()->addWidget(m_pNFDWidget);
     m_pNFDWidget->setGlobal(getShortcuts(), getGlobalOptions());
     m_pNFDWidget->setReadonly(isReadonly());

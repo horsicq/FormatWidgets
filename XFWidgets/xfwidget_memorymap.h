@@ -16,7 +16,11 @@ public:
     void reload();
     void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions) override;
     void setReadonly(bool bIsReadonly) override;
+    void setLocation(quint64 nLocation, qint32 nLocationType, qint64 nSize) override;
     XMemoryMapWidget *getMemoryMapWidget();
+
+signals:
+    void findValue(quint64 nValue, XBinary::ENDIAN endian);
 
 private:
     XBinary::INDATA m_inData;

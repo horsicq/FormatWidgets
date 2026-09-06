@@ -21,6 +21,8 @@ void XFWidget_Extractor::setData(const XBinary::INDATA &inData)
     clear();
     m_inData = inData;
     m_pExtractorWidget = new XExtractorWidget(this);
+    connect(m_pExtractorWidget, SIGNAL(followLocation(quint64, qint32, qint64, qint32)), this, SIGNAL(followLocation(quint64, qint32, qint64, qint32)));
+    connect(m_pExtractorWidget, SIGNAL(currentLocationChanged(quint64, qint32, qint64)), this, SIGNAL(currentLocationChanged(quint64, qint32, qint64)));
     layout()->addWidget(m_pExtractorWidget);
     m_pExtractorWidget->setGlobal(getShortcuts(), getGlobalOptions());
     m_pExtractorWidget->setReadonly(isReadonly());

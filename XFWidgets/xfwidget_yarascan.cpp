@@ -27,10 +27,27 @@ void XFWidget_YaraScan::setData(const XBinary::INDATA &inData)
     }
 
     m_pYaraWidget = new YARAWidgetAdvanced(this);
+    connect(m_pYaraWidget, SIGNAL(followLocation(quint64, qint32, qint64, qint32)), this, SIGNAL(followLocation(quint64, qint32, qint64, qint32)));
+    connect(m_pYaraWidget, SIGNAL(currentLocationChanged(quint64, qint32, qint64)), this, SIGNAL(currentLocationChanged(quint64, qint32, qint64)));
     layout()->addWidget(m_pYaraWidget);
     m_pYaraWidget->setGlobal(getShortcuts(), getGlobalOptions());
     m_pYaraWidget->setReadonly(isReadonly());
-    m_pYaraWidget->setData(sFileName, true);
+
+    // Auto-scan only when the configured rules path exists; otherwise merely selecting the
+    // node would pop a modal "YARA rules path not found" error. The user can still press
+    // Scan, which reports the error on demand.
+    bool bScan = false;
+    XOptions *pOptions = getGlobalOptions();
+
+    if (pOptions) {
+        QString sRulesPath = pOptions->getValue(XOptions::ID_SCAN_YARA_DATABASE_PATH).toString();
+
+        if (!sRulesPath.isEmpty()) {
+            bScan = XOptions::isPathExists(XOptions::convertPathName(sRulesPath));
+        }
+    }
+
+    m_pYaraWidget->setData(sFileName, bScan);
 }
 
 void XFWidget_YaraScan::clear()

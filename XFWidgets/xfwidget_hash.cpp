@@ -21,6 +21,8 @@ void XFWidget_Hash::setData(const XBinary::INDATA &inData)
     m_inData = inData;
     m_inData.pDevice = XFormats::createDevice(inData);
     m_pHashWidget = new XHashWidget(this);
+    connect(m_pHashWidget, SIGNAL(followLocation(quint64, qint32, qint64, qint32)), this, SIGNAL(followLocation(quint64, qint32, qint64, qint32)));
+    connect(m_pHashWidget, SIGNAL(currentLocationChanged(quint64, qint32, qint64)), this, SIGNAL(currentLocationChanged(quint64, qint32, qint64)));
     layout()->addWidget(m_pHashWidget);
     m_pHashWidget->setGlobal(getShortcuts(), getGlobalOptions());
     m_pHashWidget->setReadonly(isReadonly());

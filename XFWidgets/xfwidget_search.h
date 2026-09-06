@@ -16,6 +16,7 @@ public:
     void reload();
     void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions) override;
     void setReadonly(bool bIsReadonly) override;
+    void findValue(quint64 nValue, XBinary::ENDIAN endian);
     SearchValuesWidget *getSearchWidget();
 
 private:

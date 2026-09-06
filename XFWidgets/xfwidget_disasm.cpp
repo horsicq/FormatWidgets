@@ -32,6 +32,9 @@ XFWidget_Disasm::XFWidget_Disasm(QWidget *pParent) : XShortcutsWidget(pParent)
     m_pDevice = nullptr;
     m_pDisasmWidget = new XMultiDisasmWidget(this);
 
+    connect(m_pDisasmWidget, SIGNAL(followLocation(quint64, qint32, qint64, qint32)), this, SIGNAL(followLocation(quint64, qint32, qint64, qint32)));
+    connect(m_pDisasmWidget, SIGNAL(currentLocationChanged(quint64, qint32, qint64)), this, SIGNAL(currentLocationChanged(quint64, qint32, qint64)));
+
     QVBoxLayout *pLayout = new QVBoxLayout(this);
     pLayout->setContentsMargins(0, 0, 0, 0);
     pLayout->addWidget(m_pDisasmWidget);
@@ -67,12 +70,14 @@ void XFWidget_Disasm::setData(const XBinary::INDATA &inData)
 
 void XFWidget_Disasm::clear()
 {
+    // Reset the view first: its cleanup() disconnects from the XInfoDB, so the
+    // DB must still be alive at that point.
+    m_pDisasmWidget->setData(XBinary::INDATA(), XMultiDisasmWidget::OPTIONS());
+
     if (m_pXInfoDB) {
         delete m_pXInfoDB;
         m_pXInfoDB = nullptr;
     }
-
-    m_pDisasmWidget->setData(XBinary::INDATA(), XMultiDisasmWidget::OPTIONS());
 
     XFormats::removeDevice(m_pDevice, m_inData);
     m_pDevice = nullptr;
@@ -97,6 +102,11 @@ void XFWidget_Disasm::setReadonly(bool bIsReadonly)
 {
     XShortcutsWidget::setReadonly(bIsReadonly);
     m_pDisasmWidget->setReadonly(bIsReadonly);
+}
+
+void XFWidget_Disasm::setLocation(quint64 nLocation, qint32 nLocationType, qint64 nSize)
+{
+    m_pDisasmWidget->setLocation(nLocation, nLocationType, nSize);
 }
 
 XMultiDisasmWidget *XFWidget_Disasm::getDisasmWidget()

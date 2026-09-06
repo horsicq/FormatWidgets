@@ -68,6 +68,10 @@ void XFWidget_Regions::setData(const XBinary::INDATA &inData, const XRegionsMode
 
 void XFWidget_Regions::clear()
 {
+    // Drop the widget's device/XInfoDB pointers before they dangle (bReload=false:
+    // no model rebuild, and a null device only clears the type combo).
+    ui->widgetRegions->setData(nullptr, nullptr, XRegionsModel::OPTIONS(), false);
+
     if (m_pXInfoDB) {
         delete m_pXInfoDB;
         m_pXInfoDB = nullptr;

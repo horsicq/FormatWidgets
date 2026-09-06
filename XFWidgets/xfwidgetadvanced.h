@@ -69,6 +69,7 @@ signals:
     void headerSelected(const XBinary::XFHEADER &xfHeader);
     void fieldSelected(qint32 nFieldIndex, QVariant value, const XBinary::XFRECORD &xfRecord);
     void fieldDoubleClicked(qint32 nFieldIndex, QVariant value, const XBinary::XFRECORD &xfRecord);
+    void fileTypeChanged(XBinary::FT fileType);
 
 protected:
     virtual void registerShortcuts(bool bState);
@@ -76,6 +77,8 @@ protected:
 private slots:
     void onHeaderSelected(const XBinary::XFHEADER &xfHeader);
     void onToolsDataChanged();
+    void onFollowLocation(quint64 nLocation, qint32 nLocationType, qint64 nSize, qint32 nWidgetType);
+    void onFindValue(quint64 nValue, XBinary::ENDIAN endian);
     void on_toolButtonReload_clicked();
     void on_comboBoxFileType_currentIndexChanged(int nIndex);
 
@@ -85,6 +88,8 @@ private slots:
 
 private:
     void seedSplitterSizes();
+    QModelIndex findHeaderIndex(const XBinary::XFHEADER &xfHeader, bool bMatchTag, const QModelIndex &parentIndex);
+    XShortcutsWidget *selectCommandPanel(XBinary::STRUCTID structID);
 
     Ui::XFWidgetAdvanced *ui;
     XBinary::INDATA m_inData;

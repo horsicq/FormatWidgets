@@ -42,9 +42,16 @@ void XFWidget_Header::setData(const XBinary::INDATA &inData, const XBinary::XFHE
 {
     ui->tableView->setData(inData, xfHeader);
 
+    // The numeric STRUCTID is per-format: resolve it with the class of the format the header
+    // belongs to (e.g. MSDOS for the DOS header of a PE), not the current interpretation.
+    XBinary::FT fileType = xfHeader.fileType;
+    if (fileType == XBinary::FT_UNKNOWN) {
+        fileType = inData.fileType;
+    }
+
     QString sStructName;
     QIODevice *pDevice = XFormats::createDevice(inData);
-    XBinary *pBinary = XFormats::createClass(inData.fileType, pDevice, inData.bIsImage, inData.nModuleAddress);
+    XBinary *pBinary = XFormats::createClass(fileType, pDevice, inData.bIsImage, inData.nModuleAddress);
     if (pBinary) {
         sStructName = pBinary->structIDToString(xfHeader.structID);
         delete pBinary;

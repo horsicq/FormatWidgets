@@ -21,6 +21,8 @@ void XFWidget_Signatures::setData(const XBinary::INDATA &inData)
     m_inData = inData;
     m_inData.pDevice = XFormats::createDevice(inData);
     m_pSignaturesWidget = new SearchSignaturesWidget(this);
+    connect(m_pSignaturesWidget, SIGNAL(followLocation(quint64, qint32, qint64, qint32)), this, SIGNAL(followLocation(quint64, qint32, qint64, qint32)));
+    connect(m_pSignaturesWidget, SIGNAL(currentLocationChanged(quint64, qint32, qint64)), this, SIGNAL(currentLocationChanged(quint64, qint32, qint64)));
     layout()->addWidget(m_pSignaturesWidget);
     m_pSignaturesWidget->setGlobal(getShortcuts(), getGlobalOptions());
     m_pSignaturesWidget->setReadonly(isReadonly());

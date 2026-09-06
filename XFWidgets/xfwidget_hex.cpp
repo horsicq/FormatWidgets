@@ -31,6 +31,9 @@ XFWidget_Hex::XFWidget_Hex(QWidget *pParent) : XShortcutsWidget(pParent)
     m_pXInfoDB = nullptr;
     m_pHexViewWidget = new XHexViewWidget(this);
 
+    connect(m_pHexViewWidget, SIGNAL(followLocation(quint64, qint32, qint64, qint32)), this, SIGNAL(followLocation(quint64, qint32, qint64, qint32)));
+    connect(m_pHexViewWidget, SIGNAL(currentLocationChanged(quint64, qint32, qint64)), this, SIGNAL(currentLocationChanged(quint64, qint32, qint64)));
+
     QVBoxLayout *pLayout = new QVBoxLayout(this);
     pLayout->setContentsMargins(0, 0, 0, 0);
     pLayout->addWidget(m_pHexViewWidget);
@@ -65,12 +68,15 @@ void XFWidget_Hex::setData(const XBinary::INDATA &inData)
 
 void XFWidget_Hex::clear()
 {
+    // Detach the view first: cleanup() disconnects from the XInfoDB, so the
+    // DB must still be alive at that point.
+    m_pHexViewWidget->cleanup();
+
     if (m_pXInfoDB) {
         delete m_pXInfoDB;
         m_pXInfoDB = nullptr;
     }
 
-    m_pHexViewWidget->cleanup();
     m_inData = {};
 }
 
@@ -91,6 +97,11 @@ void XFWidget_Hex::setReadonly(bool bIsReadonly)
 {
     XShortcutsWidget::setReadonly(bIsReadonly);
     m_pHexViewWidget->setReadonly(bIsReadonly);
+}
+
+void XFWidget_Hex::setLocation(quint64 nLocation, qint32 nLocationType, qint64 nSize)
+{
+    m_pHexViewWidget->setLocation(nLocation, nLocationType, nSize);
 }
 
 XHexViewWidget *XFWidget_Hex::getHexViewWidget()

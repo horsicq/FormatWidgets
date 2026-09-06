@@ -27,6 +27,9 @@ XFWidget_Visualization::XFWidget_Visualization(QWidget *pParent) : XShortcutsWid
 {
     m_pVisualizationWidget = new XVisualizationWidget(this);
 
+    connect(m_pVisualizationWidget, SIGNAL(followLocation(quint64, qint32, qint64, qint32)), this, SIGNAL(followLocation(quint64, qint32, qint64, qint32)));
+    connect(m_pVisualizationWidget, SIGNAL(currentLocationChanged(quint64, qint32, qint64)), this, SIGNAL(currentLocationChanged(quint64, qint32, qint64)));
+
     QVBoxLayout *pLayout = new QVBoxLayout(this);
     pLayout->setContentsMargins(0, 0, 0, 0);
     pLayout->addWidget(m_pVisualizationWidget);

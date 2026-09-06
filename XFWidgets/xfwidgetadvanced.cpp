@@ -156,27 +156,32 @@ void XFWidgetAdvanced::reloadFileType()
 
     QIODevice *pDevice = XFormats::createDevice(m_inData);
 
-    if (!pDevice) {
+    if (pDevice) {
+        XBinary *pBinary = XFormats::createClass(fileType, pDevice, m_inData.bIsImage, m_inData.nModuleAddress);
+
+        if (pBinary) {
+            QList<XBinary::XFHEADER> listHeaders = pBinary->_getXFHeaders();  // TODO Thread
+
+            XBinary::INDATA inData = m_inData;
+            inData.fileType = fileType;
+            // setData re-applies the header filters to the fresh model, so the
+            // selection below can only land on a row the filter keeps visible
+            ui->treeView->setData(inData, listHeaders, true);
+            ui->treeView->selectFirstItem();
+
+            delete pBinary;
+        } else {
+            // No parser for this interpretation: the panel cache is already
+            // gone, so the old tree must not stay on screen either.
+            ui->treeView->clear();
+        }
+
+        XFormats::removeDevice(pDevice, m_inData);
+    } else {
         ui->treeView->clear();
-        return;
     }
 
-    XBinary *pBinary = XFormats::createClass(fileType, pDevice, m_inData.bIsImage, m_inData.nModuleAddress);
-
-    if (pBinary) {
-        QList<XBinary::XFHEADER> listHeaders = pBinary->_getXFHeaders();  // TODO Thread
-
-        XBinary::INDATA inData = m_inData;
-        inData.fileType = fileType;
-        // setData re-applies the header filters to the fresh model, so the
-        // selection below can only land on a row the filter keeps visible
-        ui->treeView->setData(inData, listHeaders, true);
-        ui->treeView->selectFirstItem();
-
-        delete pBinary;
-    }
-
-    XFormats::removeDevice(pDevice, m_inData);
+    emit fileTypeChanged(fileType);
 }
 
 void XFWidgetAdvanced::setReadonly(bool bIsReadonly)
@@ -289,8 +294,16 @@ void XFWidgetAdvanced::onHeaderSelected(const XBinary::XFHEADER &xfHeader)
 {
     XBinary::FT fileType = (XBinary::FT)(ui->comboBoxFileType->currentData().toUInt());
 
+    // The numeric STRUCTID is per-format: resolve the struct name with the class of the format
+    // the header belongs to (e.g. MSDOS for the DOS header of a PE), so the tag matches the one
+    // shown by XFWidget_Header/XFWidget_Table. COMMAND nodes use XBinary's own STRUCTID space.
+    XBinary::FT structFileType = xfHeader.fileType;
+    if (structFileType == XBinary::FT_UNKNOWN) {
+        structFileType = fileType;
+    }
+
     QIODevice *pDevice = XFormats::createDevice(m_inData);
-    XBinary *pBinary = XFormats::createClass(fileType, pDevice, m_inData.bIsImage, m_inData.nModuleAddress);
+    XBinary *pBinary = XFormats::createClass(structFileType, pDevice, m_inData.bIsImage, m_inData.nModuleAddress);
     QString sStructName;
 
     if (pBinary) {
@@ -481,6 +494,7 @@ QWidget *XFWidgetAdvanced::getOrCreateWidget(const QString &sName, const XBinary
         pWidget = pSignatures;
     } else if ((xfHeader.xfType == XBinary::XFTYPE_COMMAND) && (xfHeader.structID == XBinary::STRUCTID_MEMORYMAP)) {
         XFWidget_MemoryMap *pMemoryMap = new XFWidget_MemoryMap(this);
+        connect(pMemoryMap, SIGNAL(findValue(quint64, XBinary::ENDIAN)), this, SLOT(onFindValue(quint64, XBinary::ENDIAN)));
         pMemoryMap->setGlobal(getShortcuts(), getGlobalOptions());
         pMemoryMap->setData(inData);
         pWidget = pMemoryMap;
@@ -546,6 +560,16 @@ QWidget *XFWidgetAdvanced::getOrCreateWidget(const QString &sName, const XBinary
         pWidget = pHeader;
     }
 
+    XShortcutsWidget *pShortcutsWidget = qobject_cast<XShortcutsWidget *>(pWidget);
+
+    if (pShortcutsWidget) {
+        // Queued: following a location switches the tree node, which can evict
+        // cached panels - defer so the emitting panel's slot returns first.
+        connect(pShortcutsWidget, SIGNAL(followLocation(quint64, qint32, qint64, qint32)), this, SLOT(onFollowLocation(quint64, qint32, qint64, qint32)),
+                Qt::QueuedConnection);
+        connect(pShortcutsWidget, SIGNAL(currentLocationChanged(quint64, qint32, qint64)), this, SIGNAL(currentLocationChanged(quint64, qint32, qint64)));
+    }
+
     m_mapWidgets.insert(sCacheKey, pWidget);
     m_lruOrder.append(sCacheKey);
     ui->stackedWidget->addWidget(pWidget);
@@ -553,10 +577,102 @@ QWidget *XFWidgetAdvanced::getOrCreateWidget(const QString &sName, const XBinary
     return pWidget;
 }
 
+QModelIndex XFWidgetAdvanced::findHeaderIndex(const XBinary::XFHEADER &xfHeader, bool bMatchTag, const QModelIndex &parentIndex)
+{
+    QModelIndex result;
+
+    XFTreeModel *pModel = ui->treeView->getTreeModel();
+
+    if (pModel) {
+        qint32 nRowCount = pModel->rowCount(parentIndex);
+
+        for (qint32 i = 0; (i < nRowCount) && (!result.isValid()); i++) {
+            // Rows hidden by the header filter are not selectable targets
+            // (selectFirstItem() skips them for the same reason).
+            if (ui->treeView->isRowHidden(i, parentIndex)) {
+                continue;
+            }
+
+            QModelIndex index = pModel->index(i, 0, parentIndex);
+            const XFTreeModel::TREEITEM *pItem = pModel->itemFromIndex(index);
+
+            if (pItem && (pItem->xfHeader.xfType == xfHeader.xfType) && (pItem->xfHeader.structID == xfHeader.structID) &&
+                ((!bMatchTag) || ((pItem->xfHeader.sTag == xfHeader.sTag) && (pItem->xfHeader.sParentTag == xfHeader.sParentTag)))) {
+                result = index;
+            } else {
+                result = findHeaderIndex(xfHeader, bMatchTag, index);
+            }
+        }
+    }
+
+    return result;
+}
+
+XShortcutsWidget *XFWidgetAdvanced::selectCommandPanel(XBinary::STRUCTID structID)
+{
+    XShortcutsWidget *pResult = nullptr;
+
+    XBinary::XFHEADER xfHeader = {};
+    xfHeader.xfType = XBinary::XFTYPE_COMMAND;
+    xfHeader.structID = structID;
+
+    QModelIndex index = findHeaderIndex(xfHeader, false, QModelIndex());
+
+    if (index.isValid()) {
+        // currentChanged -> headerSelected -> onHeaderSelected creates/shows the panel
+        ui->treeView->setCurrentIndex(index);
+        pResult = qobject_cast<XShortcutsWidget *>(ui->stackedWidget->currentWidget());
+    }
+
+    return pResult;
+}
+
 void XFWidgetAdvanced::onToolsDataChanged()
 {
-    // The file was modified by the Tools panel - rebuild everything from disk.
+    // The file was modified by the Tools panel - rebuild everything from disk,
+    // then return to the node the user was on (reload() selects the first one).
+    XBinary::XFHEADER xfHeader = ui->treeView->getSelectedHeader();
+
     reload();
+
+    QModelIndex index = findHeaderIndex(xfHeader, true, QModelIndex());
+
+    if (index.isValid()) {
+        ui->treeView->setCurrentIndex(index);
+    }
+}
+
+void XFWidgetAdvanced::onFollowLocation(quint64 nLocation, qint32 nLocationType, qint64 nSize, qint32 nWidgetType)
+{
+    XBinary::STRUCTID structID = XBinary::STRUCTID_UNKNOWN;
+
+    if (nWidgetType == XOptions::WIDGETTYPE_HEX) {
+        structID = XBinary::STRUCTID_HEX;
+    } else if (nWidgetType == XOptions::WIDGETTYPE_DISASM) {
+        structID = XBinary::STRUCTID_DISASM;
+    } else if (nWidgetType == XOptions::WIDGETTYPE_MEMORYMAP) {
+        structID = XBinary::STRUCTID_MEMORYMAP;
+    } else if (nLocationType == XBinary::LT_ADDRESS) {
+        // Same default as FormatWidget::followLocationSlot
+        structID = XBinary::STRUCTID_DISASM;
+    }
+
+    if (structID != XBinary::STRUCTID_UNKNOWN) {
+        XShortcutsWidget *pPanel = selectCommandPanel(structID);
+
+        if (pPanel) {
+            pPanel->setLocation(nLocation, nLocationType, nSize);
+        }
+    }
+}
+
+void XFWidgetAdvanced::onFindValue(quint64 nValue, XBinary::ENDIAN endian)
+{
+    XFWidget_Search *pSearch = qobject_cast<XFWidget_Search *>(selectCommandPanel(XBinary::STRUCTID_SEARCH));
+
+    if (pSearch) {
+        pSearch->findValue(nValue, endian);
+    }
 }
 
 void XFWidgetAdvanced::on_toolButtonReload_clicked()

@@ -21,6 +21,9 @@ void XFWidget_MemoryMap::setData(const XBinary::INDATA &inData)
     clear();
     m_inData = inData;
     m_pMemoryMapWidget = new XMemoryMapWidget(this);
+    connect(m_pMemoryMapWidget, SIGNAL(followLocation(quint64, qint32, qint64, qint32)), this, SIGNAL(followLocation(quint64, qint32, qint64, qint32)));
+    connect(m_pMemoryMapWidget, SIGNAL(currentLocationChanged(quint64, qint32, qint64)), this, SIGNAL(currentLocationChanged(quint64, qint32, qint64)));
+    connect(m_pMemoryMapWidget, SIGNAL(findValue(quint64, XBinary::ENDIAN)), this, SIGNAL(findValue(quint64, XBinary::ENDIAN)));
     layout()->addWidget(m_pMemoryMapWidget);
     m_pMemoryMapWidget->setGlobal(getShortcuts(), getGlobalOptions());
     m_pMemoryMapWidget->setReadonly(isReadonly());
@@ -58,6 +61,11 @@ void XFWidget_MemoryMap::setReadonly(bool bIsReadonly)
 {
     XShortcutsWidget::setReadonly(bIsReadonly);
     if (m_pMemoryMapWidget) m_pMemoryMapWidget->setReadonly(bIsReadonly);
+}
+
+void XFWidget_MemoryMap::setLocation(quint64 nLocation, qint32 nLocationType, qint64 nSize)
+{
+    if (m_pMemoryMapWidget) m_pMemoryMapWidget->setLocation(nLocation, nLocationType, nSize);
 }
 
 XMemoryMapWidget *XFWidget_MemoryMap::getMemoryMapWidget()

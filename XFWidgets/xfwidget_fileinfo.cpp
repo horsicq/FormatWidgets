@@ -24,6 +24,8 @@ void XFWidget_FileInfo::setData(const XBinary::INDATA &inData)
 
     if (m_pDevice) {
         m_pFileInfoWidget = new XFileInfoWidget(this);
+        connect(m_pFileInfoWidget, SIGNAL(followLocation(quint64, qint32, qint64, qint32)), this, SIGNAL(followLocation(quint64, qint32, qint64, qint32)));
+        connect(m_pFileInfoWidget, SIGNAL(currentLocationChanged(quint64, qint32, qint64)), this, SIGNAL(currentLocationChanged(quint64, qint32, qint64)));
         layout()->addWidget(m_pFileInfoWidget);
         m_pFileInfoWidget->setGlobal(getShortcuts(), getGlobalOptions());
         m_pFileInfoWidget->setReadonly(isReadonly());
