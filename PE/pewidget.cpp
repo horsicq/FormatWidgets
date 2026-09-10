@@ -37,6 +37,8 @@ PEWidget::PEWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::PEWidge
 
     memset(m_subDevice, 0, sizeof m_subDevice);
 
+    setupNavigationSplitter();
+
     initWidget();
     initDisasmView(ui->widgetDisasm_DosStub);
     connect(ui->widgetTools, SIGNAL(dataChanged(qint64, qint64)), this, SLOT(allReload(qint64, qint64)));

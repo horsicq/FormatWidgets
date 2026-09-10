@@ -50,6 +50,8 @@
 #include "xtableview.h"
 
 class QFile;
+class QSplitter;
+class QStackedWidget;
 
 class FormatWidget : public XShortcutsWidget {
     Q_OBJECT
@@ -245,8 +247,18 @@ public slots:
 
 protected:
     void registerShortcuts(bool bState) override;
+    // Call from a derived constructor, after setupUi(), when the .ui pairs a
+    // "treeWidgetNavi" with a "stackedWidgetInfo" inside a "splitter".
+    void setupNavigationSplitter();
+    bool eventFilter(QObject *pObject, QEvent *pEvent) override;
 
 private:
+    void seedNavigationSplitter();
+
+    QSplitter *m_pNaviSplitter;
+    QTreeWidget *m_pNaviTree;
+    QStackedWidget *m_pNaviStack;
+    bool m_bNaviSplitterSeeded;
     QIODevice *m_pDevice;
     QFile *m_pOwnedFile;
     QString m_sFileName;

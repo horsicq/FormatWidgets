@@ -37,6 +37,8 @@ MACHWidget::MACHWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::MAC
 
     memset(m_subDevice, 0, sizeof m_subDevice);
 
+    setupNavigationSplitter();
+
     initWidget();
 }
 
