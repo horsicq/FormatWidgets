@@ -37,6 +37,8 @@ DEXWidget::DEXWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::DEXWi
 
     memset(m_subDevice, 0, sizeof m_subDevice);
 
+    setupNavigationSplitter();
+
     initWidget();
 }
 

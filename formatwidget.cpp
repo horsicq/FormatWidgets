@@ -20,6 +20,10 @@
  */
 #include "formatwidget.h"
 
+#include <QSplitter>
+#include <QStackedWidget>
+#include <QTreeWidget>
+
 FormatWidget::FormatWidget(QWidget *pParent) : XShortcutsWidget(pParent)
 {
     m_pDevice = nullptr;
@@ -34,6 +38,10 @@ FormatWidget::FormatWidget(QWidget *pParent) : XShortcutsWidget(pParent)
     m_nOffset = 0;
     m_nType = 0;
     m_fileType = XBinary::FT_UNKNOWN;
+    m_pNaviSplitter = nullptr;
+    m_pNaviTree = nullptr;
+    m_pNaviStack = nullptr;
+    m_bNaviSplitterSeeded = false;
 
     m_colDisabled = QWidget::palette().color(QPalette::Window);
     m_colEnabled = QWidget::palette().color(QPalette::BrightText);
@@ -1272,6 +1280,68 @@ bool FormatWidget::saveBackup()
 void FormatWidget::registerShortcuts(bool bState)
 {
     Q_UNUSED(bState)
+}
+
+void FormatWidget::setupNavigationSplitter()
+{
+    m_pNaviSplitter = findChild<QSplitter *>("splitter");
+    m_pNaviTree = findChild<QTreeWidget *>("treeWidgetNavi");
+    m_pNaviStack = findChild<QStackedWidget *>("stackedWidgetInfo");
+
+    if (!m_pNaviSplitter || !m_pNaviTree || !m_pNaviStack) {
+        return;
+    }
+
+    // A QStackedWidget's minimum is the widest of ALL its pages, and the header
+    // and list tables here need close to a thousand points. That floor reached
+    // the main window as its own minimum width, and left the splitter too little
+    // to honour the tree's minimum, so the tree collapsed to a sliver of clipped
+    // labels. An explicit minimum overrides the hint (qSmartMinSize), so the
+    // window can shrink again; a page wider than the pane simply clips, exactly
+    // as it already did whenever the window was merely narrow.
+    m_pNaviStack->setMinimumSize(320, 200);
+    // Wide enough for a navigation label plus its icon. The splitter must not be
+    // able to drag or squeeze either side away.
+    m_pNaviTree->setMinimumWidth(180);
+    m_pNaviSplitter->setChildrenCollapsible(false);
+    m_pNaviSplitter->setStretchFactor(0, 1);
+    m_pNaviSplitter->setStretchFactor(1, 2);
+    // The splitter has no width yet; seed it once it does.
+    m_pNaviSplitter->installEventFilter(this);
+}
+
+bool FormatWidget::eventFilter(QObject *pObject, QEvent *pEvent)
+{
+    if ((pObject == m_pNaviSplitter) && ((pEvent->type() == QEvent::Show) || (pEvent->type() == QEvent::Resize))) {
+        seedNavigationSplitter();
+    }
+
+    return XShortcutsWidget::eventFilter(pObject, pEvent);
+}
+
+void FormatWidget::seedNavigationSplitter()
+{
+    // Stretch factors only distribute EXTRA space, so seed an explicit split the
+    // first time the splitter has real geometry.
+    if (m_bNaviSplitterSeeded) {
+        return;
+    }
+
+    qint32 nTotalWidth = m_pNaviSplitter->width();
+
+    if (nTotalWidth <= 0) {
+        return;
+    }
+
+    // Fit the tree to the labels it actually shows rather than to a fixed
+    // fraction, which is too narrow to read on a small window and wasted space
+    // on a large one. Clamp it so it stays readable either way.
+    m_pNaviTree->resizeColumnToContents(0);  // QTreeView::sizeHintForColumn() is protected
+    qint32 nMinWidth = m_pNaviTree->minimumWidth();
+    qint32 nTreeWidth = qBound(nMinWidth, m_pNaviTree->columnWidth(0) + 32, qMax(nMinWidth, (nTotalWidth * 2) / 5));
+
+    m_pNaviSplitter->setSizes(QList<qint32>() << nTreeWidth << (nTotalWidth - nTreeWidth));
+    m_bNaviSplitterSeeded = true;
 }
 
 bool FormatWidget::createHeaderTable(qint32 nType, QTableWidget *pTableWidget, const FW_DEF::HEADER_RECORD *pRecords, XLineEditHEX **ppLineEdits, qint32 nNumberOfRecords,

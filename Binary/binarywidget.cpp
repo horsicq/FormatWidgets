@@ -35,6 +35,8 @@ BinaryWidget::BinaryWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui:
     ui->toolButtonPrev->setToolTip(tr("Previous visited"));
     ui->checkBoxReadonly->setToolTip(tr("Readonly"));
 
+    setupNavigationSplitter();
+
     initWidget();
 }
 

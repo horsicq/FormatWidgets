@@ -26,6 +26,8 @@ PDFWidget::PDFWidget(QWidget *pParent) : FormatWidget(pParent), ui(new Ui::PDFWi
 {
     ui->setupUi(this);
 
+    setupNavigationSplitter();
+
     initWidget();
 }
 
